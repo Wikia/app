@@ -11,12 +11,11 @@
 
 putenv ("SERVER_ID=177");
 
+define('S3CMD_CONFIG', '/etc/s3cmd/amazon_ro.cfg');
+
 $dirName = dirname(__FILE__);
 
 require_once( $dirName . "/../commandLine.inc" );
-
-$wgDBdevboxUser = 'devbox';
-$wgDBdevboxPass = 'devbox';
 
 $USAGE =
 	"Usage:\tphp getDatabase.php [[-h [hostname] | [-f [hostname] | -i [filename] | [ -p [env] ]  | -?]\n" .
@@ -38,23 +37,32 @@ if (array_key_exists('p', $opts)) {
 }
 switch($wgWikiaDatacenter) {
 	case WIKIA_DC_POZ:
-		$wgDBdevboxServer1 = 'dev-db-a1-p2';
-		$wgDBdevboxServer2 = 'dev-db-a1-p2';
-		$wgDBdevboxCentral = 'dev-db-central-p2';
+		$wgDBdevboxServer = 'dev-db-p1';
 		break;
 	case WIKIA_DC_SJC:
-		$wgDBdevboxServer1 = 'dev-db-a1';
-		$wgDBdevboxServer2 = 'dev-db-b1';
-		$wgDBdevboxCentral = 'dev-db-central';
+		$wgDBdevboxServer = 'dev-db-s1';
 		break;
 	default:
 		die("unknown data center: {$opts['p']}\n$USAGE");
 }
 
+// Get db credentials from production. This is pretty gross. :)
+if ( file_exists( $dirName . "/../../../config/DB.php" ) ) {
+	require_once( $dirName . "/../../../config/DB.php" );
+}
+
+if ( isset( $wgDBbackenduser, $wgDBbackendpassword, $wgDBdevboxUser, $wgDBdevboxPass ) ) {
+	$prod = new mysqlwrapper($wgDBbackenduser, $wgDBbackendpassword, 'slave.db-sharedb.service.sjc.consul');
+	$dev = new mysqlwrapper($wgDBdevboxUser, $wgDBdevboxPass, $wgDBdevboxServer);
+} else {
+	print "Error loading production database configuration\n";
+	exit;
+}
+
 $hostname = $opts['h'] ? $opts['h'] : $opts['f'];
 $filedir = $opts['h'] ? sys_get_temp_dir() . '/' : "";
 
-// Step 1) Hit production to get the dbname and cluster
+// Step 1) Scrape production host to get the dbname and cluster
 if ( array_key_exists('h', $opts) || array_key_exists ('f', $opts) ) {
 	if (stripos($hostname, "wikia.com") > 0) {
 		// use full hostname given by user
@@ -67,22 +75,22 @@ if ( array_key_exists('h', $opts) || array_key_exists ('f', $opts) ) {
 	$page = file_get_contents($url);
 	if ($page) {
 		$pattern = '/city_id: (\d+), cluster: c([1-9])/';
-		preg_match($pattern, $page, $matches);
-		$city_id = $matches[1];
-		$clusterNumberParam = $matches[2];
+		if ( preg_match($pattern, $page, $matches) ) {
+			$city_id = $matches[1];
+			$clusterNumberParam = $matches[2];
+		} else {
+			echo "Wiki not found.\n";
+			exit;
+		}
 		if ( $clusterNumberParam > 26 ) {
 			echo "Clusters higher than 26 (Z letter) are not yet operated by this script. Time to update the script.\n";
 			exit;
 		}
 		/* Map cluster numbers to letters
-		 * 1->A, 2->B
+		 * 1->a, 2->b
 		 * chr(65)=='A' */
 		$clusterLetter = chr( 64 + $clusterNumberParam );
-		$databaseDirectory = "database_{$clusterLetter}";
-		if ( $clusterNumberParam >= 6 ) {
-			// Way of combining s3_bucket name changed from cluster 6
-			$databaseDirectory = 'database-' . strtolower( $clusterLetter );
-		}
+		$databaseDirectory = 'database-' . strtolower( $clusterLetter );
 		// just being lazy - easier to do this as a separate regex
 		$pattern = '/wgDBname="(.*)"/';
 		preg_match($pattern, $page, $matches);
@@ -98,14 +106,14 @@ if ( array_key_exists('h', $opts) || array_key_exists ('f', $opts) ) {
 
 }
 
-// Fetch the backup from s3
+// Step 2: Fetch the backup from s3
 
 if ( array_key_exists('h', $opts) || array_key_exists ('f', $opts) ) {
 	echo "Fetching $dbname...\n";
 	// first check to make sure s3cmd is available
 
 	function getFile($databaseDirectory, $dbname, $filedir) {
-		$response = shell_exec("s3cmd ls s3://".$databaseDirectory."/fulldump* 2>&1");
+		$response = shell_exec("s3cmd --config=" . S3CMD_CONFIG . " ls s3://".$databaseDirectory."/fulldump* 2>&1");
 		if (preg_match('/ERROR/', $response) || preg_match ('/command not found/', $response)) {
 			// some kind of error, print and die
 			exit($response);
@@ -154,7 +162,7 @@ if ( array_key_exists('h', $opts) || array_key_exists ('f', $opts) ) {
 				echo "Searching $dirname...\n";
 				$filename = $databaseDirectory."/$dirname/".$dbname."_$date".".sql.gz" ;
 				echo "Searching for $filename...\n";
-				$response = shell_exec("s3cmd ls s3://".$databaseDirectory."/$dirname/".$dbname."_$date".".sql.gz");
+				$response = shell_exec("s3cmd --config=" . S3CMD_CONFIG . " ls s3://".$databaseDirectory."/$dirname/".$dbname."_$date".".sql.gz");
 				$file_list = explode("\n", $response);
 				$file_list_count = count( $file_list ) - 1;
 				echo "Found " . $file_list_count . " items...\n";
@@ -170,7 +178,7 @@ if ( array_key_exists('h', $opts) || array_key_exists ('f', $opts) ) {
 
 						echo "Found a match: $file\n";
 								echo "Saving to local filesystem:".$filename."\n";
-						shell_exec("s3cmd get --skip-existing ".$file." ".$filename);
+						shell_exec("s3cmd --config=" . S3CMD_CONFIG . " get --skip-existing ".$file." ".$filename);
 						return $filename;
 					}
 				}
@@ -190,42 +198,31 @@ if ( array_key_exists('h', $opts) || array_key_exists ('f', $opts) ) {
 		exit;
 	}
 
-	// update wikicities variables from production database.  This is pretty gross. :)
-	if ( file_exists( $dirName . "/../../../config/DB.php" ) ) {
-		require_once( $dirName . "/../../../config/DB.php" );
-	}
+	// Step 3: import wikicities variables from production database.
+	// copy tables city_list, city_domains, city_variables_pool and city_variables
+	$file = "/tmp/city_list.csv";
+	$prod->csv("SELECT * from city_list where city_id = $city_id", $file);
+	$dev->import($file);
 
-	if ( isset( $wgDBbackenduser, $wgDBbackendpassword, $wgLBFactoryConf['hostsByName']['sharedb-s4'] ) ) {
-		// prepare raw output for consumption as csv. changes " => \"; \t => ","; beginning of line => ", end of line => "
-		$prepareCsv = "sed 's/\"/\\\\\"/g;s/\\t/\",\"/g;s/^/\"/;s/$/\"/;s/\\n//g'";
+	$file = "/tmp/city_domains.csv";
+	$prod->csv("SELECT * from city_domains where city_id = $city_id", $file);
+	$dev->import($file);
 
-		$dbhost = $wgLBFactoryConf['hostsByName']['sharedb-s4'];
-	    // dump city_list row to local CSV file and import into local database
-		$response = `mysql -u $wgDBbackenduser -p$wgDBbackendpassword --database wikicities -h $dbhost -ss -e "SELECT * from city_list where city_id = $city_id " | $prepareCsv > /tmp/city_list.csv`;
-		print "city_list dump ok\n";
-		$response = `mysqlimport -u $wgDBdevboxUser -p$wgDBdevboxPass -h $wgDBdevboxCentral --replace --fields-enclosed-by=\\" --fields-terminated-by=, --local wikicities /tmp/city_list.csv`;
-		print $response;
-		unlink ("/tmp/city_list.csv");
-		// dump city_domains rows to local CSV file and improt into local database
-		$response = `mysql -u $wgDBbackenduser -p$wgDBbackendpassword --database wikicities -h $dbhost -ss -e "SELECT * from city_domains where city_id = $city_id " | $prepareCsv > /tmp/city_domains.csv`;
-		print "city_domains dump ok\n";
-		$response = `mysqlimport -u $wgDBdevboxUser -p$wgDBdevboxPass -h $wgDBdevboxCentral --replace --fields-enclosed-by=\\" --fields-terminated-by=, --local wikicities /tmp/city_domains.csv`;
-		print $response;
-		unlink ("/tmp/city_domains.csv");
-		// dump city_vars rows to local CVS file and import into local database
-		$response = `mysql -u $wgDBbackenduser -p$wgDBbackendpassword --database wikicities -h $dbhost -ss -e "SELECT * from city_variables where cv_city_id = $city_id " | $prepareCsv > /tmp/city_variables.csv`;
-		print "city_vars dump ok\n";
-		$response = `mysqlimport -u $wgDBdevboxUser -p$wgDBdevboxPass -h $wgDBdevboxCentral --replace --fields-enclosed-by=\\" --fields-terminated-by=, --local wikicities /tmp/city_variables.csv`;
-		print $response;
-		unlink ("/tmp/city_variables.csv");
+	# commented out due to PLATFORM-1672 - the REPLACE was removing city_variables entries on other wikis
+	/**
+	$file = "/tmp/city_variables_pool.csv";
+	$prod->csv("SELECT * from city_variables_pool where cv_id in (select cv_variable_id from city_variables where cv_city_id = $city_id)", $file);
+	$dev->import($file);
+	**/
 
-	} else {
-		print "Error loading production database configuration\n";
-	}
+	$file = "/tmp/city_variables.csv";
+	$prod->csv("SELECT * from city_variables where cv_city_id = $city_id", $file);
+	$dev->import($file);
 
 }
 
 if ( array_key_exists('h', $opts) || array_key_exists ('i', $opts) ) {
+	// If .sql.gz file was specified on command line, use that
 	if (array_key_exists('i', $opts) && file_exists($opts['i'])) {
 		$fullpath = $opts['i'];
 		$filename = basename($opts['i']);
@@ -238,52 +235,53 @@ if ( array_key_exists('h', $opts) || array_key_exists ('i', $opts) ) {
 	print("filename = $filename\n");
 	print("fullpath = $fullpath\n");
 
-	// Figure out which cluster we need to load this into by connecting to central directly
-
-	if ($dbname == 'wikicities') {
-		$wgDBdevboxServer = $wgDBdevboxServer1;
-	} else {
-		$response = `mysql -u $wgDBdevboxUser -p$wgDBdevboxPass -h $wgDBdevboxCentral -s -N -e "SELECT city_cluster from wikicities.city_list where city_dbname = '$dbname';" 2>&1`;
-		if (trim($response) != "" && substr($response, 0, 5) != 'ERROR') {
-			$cluster_name = trim($response);
-		} else {
-			if ($response == "") {
-				die ("Database error: $dbname not found in city_list.");
-			} else {
-				die ("Database error: " . $response);
-			}
-		}
-		if ( $cluster_name == 'c1' ) {
-			$wgDBdevboxServer = $wgDBdevboxServer1;
-		} else if ( $cluster_name != null ) {
-			$wgDBdevboxServer = $wgDBdevboxServer2;
-		} else {
-			print "Cluster was NULL in wikicities, aborting.";
-			exit();
-		}
-	}
-
 	echo "That database is supposed to live on server:" . $wgDBdevboxServer . "\n";
 
-	// Now we create the database on the relevant server
-
-	$response = `mysql -u $wgDBdevboxUser -p$wgDBdevboxPass -h $wgDBdevboxServer -e "CREATE DATABASE IF NOT EXISTS $dbname" 2>&1`;
-	if(trim($response) != ""){
-		print "CREATE DATABASE attempt returned the error:\n$response\n";
+	// Step 4: Now we create the database on the relevant server
+	$dev->sql("CREATE DATABASE IF NOT EXISTS $dbname");
+	if(trim($dev->response) != ""){
+		print "CREATE DATABASE attempt returned the error:\n$dev->response\n";
 	} else {
 		print "\"$dbname\" created on \"$wgDBdevboxServer\".\n";
 	}
 
 	print "Loading \"$fullpath\" into \"$wgDBdevboxServer\"...\n";
-	$source = "zcat $fullpath";
-	if (is_executable("/usr/bin/bar"))
-		$source = "cat $fullpath | bar | zcat";
-	$response = `$source | mysql -u $wgDBdevboxUser -p$wgDBdevboxPass -h $wgDBdevboxServer $dbname 2>&1`;
-	if(trim($response) != ""){
-		print "Error loading the database dump into $wgDBdevboxServer:\n$response\n";
+	$dev->zcat($fullpath, $dbname);
+	if(trim($dev->response) != ""){
+		print "Error loading the database dump into $wgDBdevboxServer:\n$dev->response\n";
 	} else {
 		print "Database loaded successfully!\n";
 	}
 	unlink($fullpath);
 
+}
+
+// Simple mysql commandline wrapper helper
+class mysqlwrapper {
+	function __construct($dbuser, $dbpass, $dbserver) {
+		$this->creds = "-u {$dbuser} -p{$dbpass} -h {$dbserver}";
+	}
+	// invoke mysql command line to run arbitrary sql statement
+	function sql($sql) {
+		$this->response = `mysql {$this->creds} -e "$sql" 2>&1`;
+	}
+	// invoke mysql and pipe to csv file
+	function csv($sql, $filename) {
+		$prepareCsv = "sed 's/\"/\\\\\"/g;s/\\t/\",\"/g;s/^/\"/;s/$/\"/;s/\\n//g'";
+		$this->response = `mysql {$this->creds} --database wikicities -ss -e "$sql" | $prepareCsv > $filename`;
+		print "Dump $filename\n";
+	}
+	// mysqlimport from csv file to mysql
+	function import($filename) {
+		$this->response = `mysqlimport {$this->creds} --replace --fields-enclosed-by=\\" --fields-terminated-by=, --local wikicities $filename`;
+		print "Import {$this->response}";
+		unlink ($filename);
+	}
+	// cat from SQL gz file to mysql
+	function zcat($fullpath, $dbname) {
+		$source = "zcat $fullpath";
+		if (is_executable("/usr/bin/bar"))
+			$source = "cat $fullpath | bar | zcat";
+		$this->response = `$source | mysql {$this->creds} $dbname 2>&1`;
+	}
 }

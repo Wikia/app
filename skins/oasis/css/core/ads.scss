@@ -4,13 +4,16 @@
 @import 'breakpoints-variables';
 @import 'skins/shared/mixins/clearfix';
 @import 'skins/shared/mixins/gradient';
+@import 'skins/shared/mixins/transform';
 @import 'ads-floor';
 @import 'ads-in-content';
+
+$wikia-top-ads-index: 2;
+$taboola-small-breakpoint: "#{$screen} and (max-width: 420px)";
 
 /** Hide invisible slots and 1x1 iframes **/
 .wikia-ad[id^="INVISIBLE_"],
 .wikia-ad.hidden,
-.wikia-ad iframe[width="1"][height="1"],
 .wikia-ad .hidden {
 	display: none !important;
 }
@@ -24,7 +27,7 @@
 	padding: 10px 0;
 	text-align: center;
 	width: $width-outside;
-	z-index: 0;
+	z-index: $wikia-top-ads-index;
 	.WikiaTopAdsInner {
 		@include clearfix;
 		display: inline-block;
@@ -62,10 +65,60 @@
 	}
 }
 
+#TOP_LEADERBOARD_AB {
+	background: rgba($color-page, $page-opacity);
+	max-width: $page-width-medium;
+	margin: 10px auto;
+	padding: 0 $padding-width-medium;
+	position: relative;
+	z-index: $wikia-top-ads-index;
+
+	.thumbnails-h-abp {
+		border: none;
+	}
+}
+
+@if $widthType == 0 {
+	@media #{$breakpoint-small-only} {
+		#TOP_LEADERBOARD_AB {
+			padding: 0 $padding-width-small;
+			width: $page-width-small - 2 * $content-border-width;
+		}
+	}
+
+	@media #{$breakpoint-medium-only} {
+		#TOP_LEADERBOARD_AB {
+			padding: 0 $padding-width-medium;
+			width: $page-width-medium;
+		}
+	}
+
+	@media #{$breakpoint-large-up} {
+		#TOP_LEADERBOARD_AB {
+			padding: 0 $padding-width-large;
+			width: $page-width-large;
+		}
+	}
+
+	@media #{$taboola-small-breakpoint} {
+		#TOP_LEADERBOARD_AB {
+			width: auto;
+		}
+	}
+}
+
 /** Skyscrapers **/
 @media #{$breakpoint-small-plus-up} {
 	#WikiaRail.left-skyscraper-3-present {
 		padding-bottom: 660px;
+	}
+}
+
+#INCONTENT_LEADERBOARD {
+	text-align: center;
+	>div {
+		margin-left: auto;
+		margin-right: auto;
 	}
 }
 
@@ -81,8 +134,10 @@
 #LEFT_SKYSCRAPER_3 {
 	clear: both;
 	position: absolute;
-	right: 70px;
-	top: -640px;
+	right: 0;
+	text-align: center;
+	top: -600px;
+	width: 300px;
 }
 
 /** Box ads **/
@@ -125,7 +180,7 @@
 	height: 250px;
 }
 
-#PREFOOTER_LEFT_BOXAD, #PREFOOTER_RIGHT_BOXAD {
+#PREFOOTER_LEFT_BOXAD, #PREFOOTER_MIDDLE_BOXAD, #PREFOOTER_RIGHT_BOXAD {
 	float: left;
 	margin: 0 15px;
 
@@ -228,14 +283,31 @@ body >a >img[src$="noad.gif"] {
 #WikiaAdInContentPlaceHolder {
 	position: absolute;
 	#INCONTENT_BOXAD_1 {
-		height: 250px;
-		width: 300px;
 		position: relative;
+		text-align: center;
+		width: 300px;
 	}
 }
 
-#NATIVE_TABOOLA {
+#NATIVE_TABOOLA_ARTICLE {
 	max-width: 700px;
+}
+
+#NATIVE_TABOOLA_ARTICLE, #NATIVE_TABOOLA_RAIL, #TOP_LEADERBOARD_AB, #RECIRCULATION_RAIL {
+	.trc_rbox_header .trc_rbox_header_span {
+		color: $color-page-opposite;
+	}
+	.trc_header_ext, .trc-widget-footer {
+		.logoDiv a span {
+			color: $color-links;
+		}
+	}
+	.trc_rbox_div .video-label-box .video-title {
+		color: $color-text;
+	}
+	.trc_rbox_div .video-label-box .branding {
+		color: $color-alternate-text;
+	}
 }
 
 .wikia-ad-interactive-map {
@@ -251,11 +323,118 @@ body >a >img[src$="noad.gif"] {
 	}
 }
 
+#ext-wikia-adEngine-template-modal {
+	> section {
+		overflow: hidden;
+		padding: 0px;
+		> div {
+			overflow: hidden;
+		}
+	}
+
+	> header .close-counter {
+		float: right;
+		font-size: 17px;
+	}
+}
 
 //@TODO remove .oasis-responsive after deprecating responsive (July 2015)
 .oasis-breakpoints, .oasis-responsive {
 	#WikiaArticleBottomAd {
 		clear: both;
 		margin: 0;
+	}
+}
+
+// Recovered message
+.recovered-message {
+	margin: 0 auto;
+	position: relative;
+	text-align: center;
+	padding-top: 10px;
+
+	.message {
+		background: #fff;
+		color: #000;
+		padding: 10px 12px;
+		border: 2px solid #000;
+		font-size: 1.1em;
+		line-height: 1.4em;
+		position: relative;
+
+		h3 {
+			font-size: 1.2em;
+			font-weight: bold;
+		}
+
+		.action-accept {
+			color: #000;
+			cursor: pointer;
+			font-weight: bold;
+
+			&:hover {
+				text-decoration: underline;
+			}
+		}
+
+		.dialog-pointer {
+			width: 15px;
+			height: 15px;
+			border-top: 2px solid #000;
+			border-left: 2px solid #000;
+			position: absolute;
+			background: #fff;
+			top: -10px;
+			left: 110px;
+			@include transform-rotate(45deg);
+		}
+
+		.close-button {
+			width: 13px;
+			height: 13px;
+			background: url(/skins/oasis/images/icon_close.png) 1px 0 no-repeat #aaa; /* $wgCdnStylePath */
+			background-size: 12px 12px;
+			position: absolute;
+			top: 0;
+			right: 0;
+			cursor: pointer;
+
+			&:hover {
+				background-color: #444;
+			}
+		}
+	}
+
+	.icon {
+		width: 140px;
+		height: 100px;
+		margin: 0 auto -5px auto;
+		cursor: pointer;
+		background: url(/skins/oasis/images/recovered_message_icon.png) no-repeat; /* $wgCdnStylePath */
+	}
+
+	&.recovered-message-right-rail {
+		width: 300px;
+	}
+
+	&.recovered-message-top {
+		width: 600px;
+
+		.message {
+			max-width: 425px;
+			display: inline-block;
+
+			.dialog-pointer {
+				top: 60px;
+				left: auto;
+				right: -10px;
+				@include transform-rotate(135deg);
+			}
+		}
+
+		.icon {
+			margin: 0;
+			float: right;
+		}
 	}
 }

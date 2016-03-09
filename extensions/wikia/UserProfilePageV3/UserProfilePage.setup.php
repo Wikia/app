@@ -4,12 +4,12 @@
  */
 $dir = dirname( __FILE__ );
 
-define ('AVATAR_DEFAULT_WIDTH', 200);
-define ('AVATAR_DEFAULT_HEIGHT', 200);
-define ('AVATAR_LOG_NAME', 'useravatar');
-define ('AVATAR_USER_OPTION_NAME', 'avatar');
-define ('AVATAR_MAX_SIZE', 512000 );
-define ('AVATAR_UPLOAD_FIELD', 'wkUserAvatar');
+define ( 'AVATAR_DEFAULT_WIDTH', 200 );
+define ( 'AVATAR_DEFAULT_HEIGHT', 200 );
+define ( 'AVATAR_LOG_NAME', 'useravatar' );
+define ( 'AVATAR_USER_OPTION_NAME', 'avatar' );
+define ( 'AVATAR_MAX_SIZE', 512000 );
+define ( 'AVATAR_UPLOAD_FIELD', 'wkUserAvatar' );
 
 /**
  * models
@@ -26,7 +26,12 @@ $wgAutoloadClasses['UserProfilePageHelper'] =  $dir . '/UserProfilePageHelper.cl
  * controllers
  */
 $wgAutoloadClasses['UserProfilePageController'] =  $dir . '/UserProfilePageController.class.php';
+
+/**
+ * avatars handling
+ */
 $wgAutoloadClasses['Masthead'] =  $dir . '/Masthead.class.php';
+$wgAutoloadClasses['UserAvatarsService'] =  $dir . '/api/UserAvatarsService.class.php';
 
 /**
  * helper classes (strategies)
@@ -51,7 +56,6 @@ $wgAutoloadClasses['UserWikisFilterPrivateDecorator'] = $dir . '/filters/UserWik
 $wgAutoloadClasses['UserProfilePageHooks'] =  $dir . '/UserProfilePageHooks.class.php';
 
 $wgHooks['SkinTemplateOutputPageBeforeExec'][] = 'UserProfilePageHooks::onSkinTemplateOutputPageBeforeExec';
-$wgHooks['BeforeDisplayNoArticleText'][] = 'UserProfilePageHooks::onBeforeDisplayNoArticleText';
 $wgHooks['SkinSubPageSubtitleAfterTitle'][] = 'UserProfilePageHooks::onSkinSubPageSubtitleAfterTitle';
 $wgHooks['ArticleSaveComplete'][] = 'UserProfilePageHooks::onArticleSaveComplete';
 $wgHooks['WikiaMobileAssetsPackages'][] = 'UserProfilePageHooks::onWikiaMobileAssetsPackages';
@@ -68,7 +72,7 @@ $wgHooks['ArticleSaveComplete'][] = 'Masthead::userMastheadInvalidateCache';
  */
 $wgExtensionMessagesFiles['UserProfilePageV3'] = $dir . '/UserProfilePage.i18n.php';
 
-//register messages package for JS
+// register messages package for JS
 JSMessages::registerPackage( 'UserProfilePageV3', array(
 	'userprofilepage-edit-modal-header',
 	'user-identity-box-avatar-cancel',
@@ -86,11 +90,11 @@ $UPPNamespaces = array();
 $UPPNamespaces[] = NS_USER;
 $UPPNamespaces[] = NS_USER_TALK;
 
-if( defined('NS_USER_WALL') ) {
+if ( defined( 'NS_USER_WALL' ) ) {
 	$UPPNamespaces[] = NS_USER_WALL;
 }
 
-if( defined('NS_BLOG_ARTICLE') ) {
+if ( defined( 'NS_BLOG_ARTICLE' ) ) {
 	$UPPNamespaces[] = NS_BLOG_ARTICLE;
 }
 
@@ -99,28 +103,5 @@ $wgLogHeaders[AVATAR_LOG_NAME] = 'blog-avatar-alt';
 $wgLogNames[AVATAR_LOG_NAME] = "useravatar-log";
 $wgLogActions[AVATAR_LOG_NAME . '/avatar_chn'] = 'blog-avatar-changed-log';
 $wgLogActions[AVATAR_LOG_NAME . '/avatar_rem'] = 'blog-avatar-removed-log';
-
-#--- permissions
-$wgAvailableRights[] = 'removeavatar';
-$wgGroupPermissions['staff']['removeavatar'] = true;
-#$wgGroupPermissions['sysop']['removeavatar'] = true;
-$wgGroupPermissions['helper']['removeavatar'] = true;
-
-
-//new right for dropdown menu of action button
-$wgGroupPermissions['sysop']['renameprofilev3'] = true;
-$wgGroupPermissions['vstf']['renameprofilev3'] = true;
-$wgGroupPermissions['staff']['renameprofilev3'] = true;
-$wgGroupPermissions['helper']['renameprofilev3'] = true;
-
-$wgGroupPermissions['sysop']['deleteprofilev3'] = true;
-$wgGroupPermissions['vstf']['deleteprofilev3'] = true;
-$wgGroupPermissions['staff']['deleteprofilev3'] = true;
-$wgGroupPermissions['helper']['deleteprofilev3'] = true;
-
-//new right to edit profile v3
-$wgGroupPermissions['staff']['editprofilev3'] = true;
-$wgGroupPermissions['vstf']['editprofilev3'] = true;
-$wgGroupPermissions['helper']['editprofilev3'] = true;
 
 $wgSpecialPageGroups['RemoveUserAvatar'] = 'users';

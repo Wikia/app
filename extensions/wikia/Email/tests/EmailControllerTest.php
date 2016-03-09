@@ -25,4 +25,5 @@ class EmailControllerTest extends WikiaBaseTest {
 		$obj = new EmailController;
 		$this->assertTrue( $obj->assertValidFromAddress( 'valid@email.com' ) );
 	}
+
 }

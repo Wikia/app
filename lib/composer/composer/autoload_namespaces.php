@@ -9,6 +9,7 @@ return array(
     'Symfony\\Component\\Yaml\\' => array($vendorDir . '/symfony/yaml'),
     'Symfony\\Component\\CssSelector\\' => array($vendorDir . '/symfony/css-selector'),
     'Psr\\Log\\' => array($vendorDir . '/psr/log'),
+    'ProxyManager\\' => array($vendorDir . '/ocramius/proxy-manager/src'),
     'PhpAmqpLib' => array($vendorDir . '/videlalvaro/php-amqplib'),
     'Doctrine\\Common\\Lexer\\' => array($vendorDir . '/doctrine/lexer/lib'),
     'Doctrine\\Common\\Cache\\' => array($vendorDir . '/doctrine/cache/lib'),

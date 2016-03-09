@@ -9,7 +9,6 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  */
 
-use Flags\FlagsCache;
 use Flags\FlagsHelper;
 use Flags\Views\FlagView;
 use Wikia\Logger\Loggable;
@@ -84,9 +83,12 @@ class FlagsController extends WikiaController {
 		$flagsText = $flagsParserOutput->getText();
 
 		/**
-		 * Update the mText of the original ParserOutput object and merge other properties
+		 * Update the mText of the original ParserOutput object and merge other properties.
+		 * If the __FLAGS__ magic word is matched - replace the CSS class of the flags container
+		 * to an inline one.
 		 */
 		if ( $mwf->match( $pageText ) ) {
+			$flagsText = $this->makeFlagsInline( $flagsText );
 			$pageText = $mwf->replace( $flagsText, $pageText );
 		} else {
 			$pageText = $flagsText . $pageText;
@@ -108,6 +110,15 @@ class FlagsController extends WikiaController {
 			throw new MissingParameterApiException( 'page_id' );
 		}
 
+		$title = Title::newFromID( $pageId );
+		if ( $title === null ) {
+			throw new InvalidParameterApiException( 'page_id' );
+		}
+
+		if ( !$title->userCan( 'edit' , $this->wg->User ) ) {
+			throw new PermissionsException( 'edit' );
+		}
+
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 
 		/**
@@ -126,12 +137,23 @@ class FlagsController extends WikiaController {
 			);
 		} elseif ( $this->getResponseStatus( $response ) ) {
 			$flags = array_values( $this->getResponseData( $response ) );
+
+			foreach ( $flags as $i => $flag ) {
+				$title = Title::newFromText( $flag['flag_view'], NS_TEMPLATE );
+				$flags[$i]['flag_view_link'] = Linker::link(
+					$title,
+					wfMessage( 'flags-edit-form-more-info' )->plain(),
+					[
+						'target' => '_blank',
+					]
+				);
+			}
+
 			$this->setVal( 'editToken', $this->wg->User->getEditToken() );
 			$this->setVal( 'flags', $flags );
 			$this->setVal( 'formSubmitUrl', $this->getLocalUrl( 'postFlagsEditForm' ) );
 			$this->setVal( 'inputNamePrefix', FlagsHelper::FLAGS_INPUT_NAME_PREFIX );
 			$this->setVal( 'inputNameCheckbox', FlagsHelper::FLAGS_INPUT_NAME_CHECKBOX );
-			$this->setVal( 'moreInfo', wfMessage( 'flags-edit-form-more-info' )->plain() );
 			$this->setVal( 'pageId', $pageId );
 		} else {
 			$this->setVal(
@@ -175,6 +197,10 @@ class FlagsController extends WikiaController {
 			$title = Title::newFromID( $pageId );
 			if ( $title === null ) {
 				throw new InvalidParameterApiException( 'page_id' );
+			}
+
+			if ( !$title->userCan( 'edit', $this->wg->User ) ) {
+				throw new PermissionsException( 'edit' );
 			}
 
 			/**
@@ -225,8 +251,7 @@ class FlagsController extends WikiaController {
 				wfMessage( 'flags-edit-modal-post-exception' )
 					->params( $exception->getText() )
 					->parse(),
-				BannerNotificationsController::CONFIRMATION_ERROR,
-				true
+				BannerNotificationsController::CONFIRMATION_ERROR
 			);
 
 			$pageUrl = $title->getFullURL();
@@ -450,7 +475,7 @@ class FlagsController extends WikiaController {
 		return $this->helper;
 	}
 
-	private function logResponseException( Exception $e, WikiaRequest $request ) {
+	private function logResponseException( \Exception $e, \WikiaRequest $request ) {
 		$this->error(
 			'FlagsLog Exception',
 			[
@@ -458,5 +483,9 @@ class FlagsController extends WikiaController {
 				'prms' => $request->getParams(),
 			]
 		);
+	}
+
+	private function makeFlagsInline( $flagsHtml ) {
+		return str_replace( FlagView::FLAGS_CSS_CLASS, FlagView::FLAGS_CSS_CLASS_INLINE, $flagsHtml );
 	}
 }

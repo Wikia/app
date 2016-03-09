@@ -8,7 +8,7 @@ $messages = array();
 
 $messages['en'] = array(
 	'wam-page-desc' => 'WAM Page',
-	'wam-html-title' => 'Wikia Activity Monitor (WAM) - Wikia.com/WAM',
+	'wam-html-title' => 'Wikia Activity Monitor (WAM)',
 	'wampage-header' => 'Wam',
 	'wampage-header-faq' => 'Frequently asked questions',
 	'wam-all' => 'All',
@@ -86,7 +86,7 @@ $messages['qqq'] = array(
 );
 
 $messages['de'] = array(
-	'wam-html-title' => 'Wikia Aktivitätsmonitor (WAM) - de.wikia.com/WAM',
+	'wam-html-title' => 'Wikia Aktivitätsmonitor (WAM)',
 	'wampage-header' => 'WAM',
 	'wam-Gaming' => 'Videospiele',
 	'wam-Entertainment' => 'Entertainment',
@@ -151,7 +151,7 @@ Dem Community-Team unter [mailto:support@wikia-inc.com support@wikia-inc.com].',
 );
 
 $messages['es'] = array(
-	'wam-html-title' => 'Monitor de Actividad de Wikia (WAM) - es.wikia.com/WAM',
+	'wam-html-title' => 'Monitor de Actividad de Wikia (WAM)',
 	'wampage-header' => 'WAM',
 	'wam-Gaming' => 'Videojuegos',
 	'wam-Entertainment' => 'Entretenimiento',
@@ -211,7 +211,7 @@ Por favor, ponte en contacto con el equipo de soporte comunitario en [mailto:sup
 );
 
 $messages['fr'] = array(
-	'wam-html-title' => "Moniteur d'Activité Wikia (WAM) - fr.wikia.com/WAM",
+	'wam-html-title' => "Moniteur d'Activité Wikia (WAM)",
 	'wampage-header' => 'Wam',
 	'wam-Gaming' => 'Jeux vidéo',
 	'wam-Entertainment' => 'Divertissement',
@@ -270,7 +270,7 @@ Veuillez contacter le support de la communauté via [mailto:support@wikia-inc.co
 );
 
 $messages['it'] = array(
-	'wam-html-title' => 'Wikia Activity Monitor (WAM) - Wikia.com/WAM',
+	'wam-html-title' => 'Wikia Activity Monitor (WAM)',
 	'wampage-header' => 'Wam',
 	'wampage-header-faq' => 'Domande frequenti',
 	'wam-all' => 'Tutte',
@@ -326,7 +326,7 @@ Per favore contatta il community support tramite [mailto:support@wikia-inc.com s
 );
 
 $messages['ja'] = array(
-	'wam-html-title' => 'ウィキア・アクティビティ・モニター (WAM) - ja.wikia.com/WAM',
+	'wam-html-title' => 'ウィキア・アクティビティ・モニター (WAM)',
 	'wampage-header' => 'Wam',
 	'wam-Gaming' => 'ゲーム',
 	'wam-Entertainment' => 'エンターテイメント',
@@ -383,7 +383,7 @@ WAMスコアやランキングをウィキ上にのせることは、ウィキ�
 );
 
 $messages['nl'] = array(
-	'wam-html-title' => 'Wikia Activity Monitor (WAM) - Wikia.com/WAM',
+	'wam-html-title' => 'Wikia Activity Monitor (WAM)',
 	'wampage-header' => 'Wam',
 	'wampage-header-faq' => 'Frequently asked questions',
 	'wam-all' => 'All',
@@ -438,7 +438,7 @@ Please contact community support at [mailto:support@wikia-inc.com support@wikia-
 );
 
 $messages['pl'] = array(
-	'wam-html-title' => 'Wikia Activity Monitor (WAM) - pl.wikia.com/WAM',
+	'wam-html-title' => 'Wikia Activity Monitor (WAM)',
 	'wampage-header' => 'WAM',
 	'wam-Gaming' => 'Gry',
 	'wam-Entertainment' => 'Rozrywka',
@@ -491,7 +491,7 @@ Skontaktuj się z nami poprzez [mailto:support@wikia-inc.com support@wikia-inc.c
 );
 
 $messages['pt'] = array(
-	'wam-html-title' => 'Monitor de Atividade da Wikia (WAM) - Wikia.com/WAM',
+	'wam-html-title' => 'Monitor de Atividade da Wikia (WAM)',
 	'wampage-header' => 'WAM',
 	'wampage-header-faq' => 'Perguntas mais frequentes',
 	'wam-all' => 'Todos',
@@ -546,7 +546,7 @@ Por favor, entre em contato com a equipe de apoio pelo endereço [mailto:support
 );
 
 $messages['ru'] = array(
-	'wam-html-title' => 'Wikia Activity Monitor (WAM) - Wikia.com/WAM',
+	'wam-html-title' => 'Wikia Activity Monitor (WAM)',
 	'wampage-header' => 'Wam',
 	'wampage-header-faq' => 'Часто задаваемые вопросы',
 	'wam-all' => 'Все',
@@ -601,7 +601,7 @@ $messages['ru'] = array(
 );
 
 $messages['zh-hans'] = array(
-	'wam-html-title' => 'Wikia活动监视器(WAM) - Wikia.com/WAM',
+	'wam-html-title' => 'Wikia活动监视器(WAM)',
 	'wampage-header' => 'Wam',
 	'wampage-header-faq' => '常见问题',
 	'wam-all' => '所有',
@@ -656,7 +656,7 @@ WAM上的数据最早可以追溯到2012年1月1日
 );
 
 $messages['zh-tw'] = array(
-	'wam-html-title' => 'Wikia活動監視器(WAM) - Wikia.com/WAM',
+	'wam-html-title' => 'Wikia活動監視器(WAM)',
 	'wampage-header' => 'Wam',
 	'wampage-header-faq' => '常見問題',
 	'wam-all' => '所有',

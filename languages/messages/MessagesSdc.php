@@ -224,23 +224,12 @@ $messages = array(
 'navigation'    => 'Nabiggazioni',
 'and'           => '&#32;e',
 
-# Cologne Blue skin
 'qbfind'         => 'Acciappa',
 'qbbrowse'       => 'Iffuglia',
-'qbedit'         => 'Mudifigga',
 'qbpageoptions'  => 'Prifirenzi pàgina',
 'qbpageinfo'     => "Infuimmazioni i' la pàgina",
-'qbmyoptions'    => "Li me' pàgini",
-'qbspecialpages' => 'Pàgini ippiziari',
 'faq'            => 'FAQ (infuimmazioni e aggiuddu)',
-'faqpage'        => 'Project:FAQ (infuimmazioni e aggiuddu)',
 
-# Vector skin
-'vector-action-delete' => 'Canzella',
-'vector-action-move'   => 'Ippustha',
-'vector-view-create'   => 'Cria',
-'vector-view-edit'     => 'Mudifigga',
-'vector-view-view'     => 'Leggi',
 
 'errorpagetitle'    => 'Errori',
 'returnto'          => 'Turra a $1.',
@@ -259,7 +248,6 @@ $messages = array(
 'edit'              => 'Mudifigga',
 'create'            => 'Cria',
 'editthispage'      => 'Mudìfigga chistha pàgina',
-'create-this-page'  => 'Cria chistha pàgina',
 'delete'            => 'Canzella',
 'deletethispage'    => 'Canzella chistha pàgina',
 'undelete_short'    => 'Ricùpara {{PLURAL:$1|una ribisioni|$1 ribisioni}}',
@@ -273,19 +261,9 @@ $messages = array(
 'talkpagelinktext'  => 'Dischussioni',
 'specialpage'       => 'Pagina ippiziari',
 'personaltools'     => 'Isthrumenti passunari',
-'postcomment'       => 'Noba sezzioni',
-'articlepage'       => 'Vedi la bozi',
 'talk'              => 'dischussioni',
 'views'             => 'Vìsiti',
 'toolbox'           => 'Isthrumenti',
-'userpage'          => 'Visuarizza la pàgina utenti',
-'projectpage'       => 'Visuarizza la pàgina di saivvìziu',
-'imagepage'         => 'Visuarizza la pagina di lu file',
-'mediawikipage'     => 'Visuarizza la imbasciadda',
-'templatepage'      => 'Visuarizza lu mudellu',
-'viewhelppage'      => 'Visuarizza la pàgina di aggiuddu',
-'categorypage'      => 'Visuarizza la categuria',
-'viewtalkpage'      => 'Visuarizza la pàgina di dischussioni',
 'otherlanguages'    => 'Althri linghi',
 'redirectedfrom'    => '(Rinviu da $1)',
 'redirectpagesub'   => 'Pàgina di rinviu',
@@ -608,7 +586,6 @@ S'ài sighiddu lu cullegamentu pa un'errori, è suffizenti incalchà lu buttoni 
 'userjsyoucanpreview'              => "'''Suggerimentu:''' Usa lu buttoni '''Visuarizza antiprimma''' pa prubà li nobi JS primma di sàivvaddi.",
 'usercsspreview'                   => "'''Ammitanti ch'è soru un'antiprimma di lu propriu CSS passunari; li mudìfigghi nò so ancora isthaddi sàivvaddi!'''",
 'userjspreview'                    => "'''Ammitanti ch'è soru un'antiprimma pa prubà lu propriu JavaScript passunari; li mudìfigghi nò so ancora isthaddi sàivvaddi!'''",
-'userinvalidcssjstitle'            => "'''Attinzioni:''' Nò isisthi nisciun aipettu gràficu \"\$1\". Amminta chi li pàgini pa li .css e .js passunari àni lu primu caràtteri di lu tìturu minori, cumenti {{ns:user}}:Foo/vector.css e nò {{ns:user}}:Foo/Vector.css.",
 'updated'                          => '(Aggiornaddu)',
 'note'                             => "'''NOTA:'''",
 'previewnote'                      => "'''Attinzioni: chistha è soru un'antiprimma. Li mudifigghi a la pagina NÒ so ancora isthaddi saivvaddi!'''",
@@ -807,13 +784,6 @@ Cunsulthà lu [{{fullurl:{{#Special:Log}}/suppress|page={{FULLPAGENAMEE}}}} rigi
 'powersearch-togglenone'    => 'Nisciunu',
 'searchdisabled'            => 'Abà no pói zirchà in {{SITENAME}}; proba cun Google o sìmiri, ma ammèntaddi chi li cuntinuddi di {{SITENAME}} poni assé no aggiornaddi.',
 
-# Quickbar
-'qbsettings'               => 'Prifirenzi di lu menù',
-'qbsettings-none'          => 'Nisciunu',
-'qbsettings-fixedleft'     => 'Fissu a manca',
-'qbsettings-fixedright'    => 'Fissu a drestha',
-'qbsettings-floatingleft'  => 'Galliggianti a manca',
-'qbsettings-floatingright' => 'Galliggianti a drestha',
 
 # Preferences page
 'preferences'               => 'Prifirenzi',

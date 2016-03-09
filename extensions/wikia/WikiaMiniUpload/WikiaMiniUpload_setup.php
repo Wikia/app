@@ -64,13 +64,10 @@ function WMUSetupVars(Array &$vars) {
 $wgAjaxExportList[] = 'WMU';
 
 function WMU() {
-	global $wgRequest, $wgGroupPermissions, $wgAllowCopyUploads;
+	global $wgRequest, $wgAllowCopyUploads;
 
 	// Overwrite configuration settings needed by image import functionality
 	$wgAllowCopyUploads = true;
-	$wgGroupPermissions['user']['upload_by_url']   = true;
-	$dir = dirname(__FILE__).'/';
-	require_once($dir.'WikiaMiniUpload_body.php');
 
 	$method = $wgRequest->getVal('method');
 	$wmu = new WikiaMiniUpload();
@@ -91,6 +88,8 @@ function WMU() {
 	}
 	return $ar;
 }
+
+$wgAutoloadClasses['WikiaMiniUpload'] = __DIR__ . '/WikiaMiniUpload_body.php';
 
 $wgResourceModules['ext.wikia.WMU'] = array(
 	'scripts' => 'js/WMU.js',

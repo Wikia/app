@@ -327,30 +327,12 @@ $messages = array(
 'navigation'    => 'Navigation',
 'and'           => '&#32;og',
 
-# Cologne Blue skin
 'qbfind'         => 'Søg',
 'qbbrowse'       => 'Gennemse',
-'qbedit'         => 'Redigér',
 'qbpageoptions'  => 'Indstillinger for side',
 'qbpageinfo'     => 'Information om side',
-'qbmyoptions'    => 'Mine indstillinger',
-'qbspecialpages' => 'Specielle sider',
 'faq'            => 'OSS',
-'faqpage'        => 'Project:OSS',
 
-# Vector skin
-'vector-action-addsection'       => 'Nyt emne',
-'vector-action-delete'           => 'Slet',
-'vector-action-move'             => 'Flyt',
-'vector-action-protect'          => 'Beskyt',
-'vector-action-undelete'         => 'Gendan',
-'vector-action-unprotect'        => 'Ændr beskyttelse',
-'vector-simplesearch-preference' => 'Aktivér forbedrede søgeforslag (kun Vector-udseendet)',
-'vector-view-create'             => 'Opret',
-'vector-view-edit'               => 'Redigér',
-'vector-view-history'            => 'Se historik',
-'vector-view-view'               => 'Vis',
-'vector-view-viewsource'         => 'Se kilden',
 'actions'                        => 'Handlinger',
 'namespaces'                     => 'Navnerum',
 'variants'                       => 'Varianter',
@@ -373,7 +355,6 @@ $messages = array(
 'edit'              => 'Redigér',
 'create'            => 'opret',
 'editthispage'      => 'Redigér side',
-'create-this-page'  => 'opret ny side',
 'delete'            => 'Slet',
 'deletethispage'    => 'Slet side',
 'undelete_short'    => 'Fortryd sletning af {{PLURAL:$1|$1 version|$1 versioner}}',
@@ -388,19 +369,9 @@ $messages = array(
 'talkpagelinktext'  => 'diskussion',
 'specialpage'       => 'Speciel side',
 'personaltools'     => 'Personlige værktøjer',
-'postcomment'       => 'Nyt afsnit',
-'articlepage'       => 'Se artiklen',
 'talk'              => 'Diskussion',
 'views'             => 'Visninger',
 'toolbox'           => 'Værktøjer',
-'userpage'          => 'Se brugersiden',
-'projectpage'       => 'Se projektsiden',
-'imagepage'         => 'Se filsiden',
-'mediawikipage'     => 'Vise indholdsside',
-'templatepage'      => 'Vise skabelonside',
-'viewhelppage'      => 'Vise hjælpeside',
-'categorypage'      => 'Vise kategoriside',
-'viewtalkpage'      => 'Se diskussion',
 'otherlanguages'    => 'Andre sprog',
 'redirectedfrom'    => '(Omdirigeret fra $1)',
 'redirectpagesub'   => 'Omdirigering',
@@ -578,8 +549,9 @@ $2',
 # Login and logout pages
 'logouttext'                 => "'''Du er nu logget af.'''
 
-Du kan fortsætte med at bruge {{SITENAME}} anonymt, eller du kan [[Special:UserLogin|logge på igen]] som den samme eller en anden bruger.
+Du kan fortsætte med at bruge {{SITENAME}} anonymt, eller du kan $1 som den samme eller en anden bruger.
 Bemærk, at nogle sider stadigvæk kan vises som om du var logget på, indtil du tømmer din browsers cache.",
+'logouttext-link-text'       => 'logge på igen',
 'welcomecreation'            => '== Velkommen, $1! ==
 
 Din konto er blevet oprettet. Glem ikke at personliggøre dine [[Special:Preferences|{{SITENAME}}-indstillinger]].',
@@ -693,36 +665,6 @@ Vent venligst før du prøver igen.',
 'resetpass-wrong-oldpass'   => 'Ugyldig midlertidig eller gældende adgangskode.
 Du har muligvis allerede skiftet din adgangskode eller anmodet om en ny midlertidig kode.',
 'resetpass-temp-password'   => 'Midlertidig adgangskode',
-
-# Special:PasswordReset
-'passwordreset'                    => 'Nulstil adgangskode',
-'passwordreset-text'               => 'Udfyld denne formular for at modtage en påmindelse om dine kontooplysninger som e-mail.',
-'passwordreset-legend'             => 'Nulstil adgangskode',
-'passwordreset-disabled'           => 'Nulstilling af kodeord er slået fra på denne wiki.',
-'passwordreset-pretext'            => '{{PLURAL:$1||Indtast en af de nedenstående oplysninger}}',
-'passwordreset-username'           => 'Brugernavn:',
-'passwordreset-domain'             => 'Domæne:',
-'passwordreset-capture'            => 'Se den resulterende email?',
-'passwordreset-capture-help'       => 'Hvis du krydser dette felt af, vil emailen (med den midlertidige adgangskode) blive vist til dig i tillæg til at blive sendt til brugeren.',
-'passwordreset-email'              => 'E-mail adresse:',
-'passwordreset-emailtitle'         => 'Kontooplysninger på {{SITENAME}}',
-'passwordreset-emailtext-ip'       => 'Nogen (sandsynligvis dig, fra IP-adressen $1) har anmodet om en påmindelse om dine kontooplysninger for {{SITENAME}} ($4). Følgende {{PLURAL:$3|brugerkonto|brugerkonti}} er associerede med denne e-mail-adresse:
-
-$2
-
-{{PLURAL:$3|Denne midlertidige adgangskode|Disse midlertidige adgangskoder}} vil udløbe om {{PLURAL:$5|en dag|$5 dage}}.
-Du bør logge på og vælge en ny adgangskode nu. Hvis en anden end dig har anmodet om denne påmindelse, eller hvis du er kommet i tanke om din oprindelig adgangskode og ikke længere ønsker at ændre den, kan du ignorere denne meddelelse og fortsætte med at bruge din gamle adgangskode.',
-'passwordreset-emailtext-user'     => 'Brugeren $1 har anmodet om en påmindelse om dine kontooplysninger for {{SITENAME}} ($4). Følgende {{PLURAL:$3|brugerkonto|brugerkonti}} er associerede med denne e-mail-adresse:
-
-$2
-
-{{PLURAL:$3|Denne midlertidige adgangskode|Disse midlertidige adgangskoder}} vil udløbe om {{PLURAL:$5|en dag|$5 dage}}.
-Du bør logge på og vælge en ny adgangskode nu. Hvis en anden end dig har anmodet om denne påmindelse, eller hvis du er kommet i tanke om din oprindelig adgangskode og ikke længere ønsker at ændre den, kan du ignorere denne meddelelse og fortsætte med at bruge din gamle adgangskode.',
-'passwordreset-emailelement'       => 'Brugernavn: $1
-Midlertidig adgangskode: $2',
-'passwordreset-emailsent'          => 'En påmindelse er blevet sendt som e-mail.',
-'passwordreset-emailsent-capture'  => 'En påmindelsesemail, som vist nedenfor, er blevet sendt.',
-'passwordreset-emailerror-capture' => 'En påmindelsesemail, som vist nedenfor, blev genereret, men det lykkedes ikke at sende den til brugeren: $1',
 
 # Special:ChangeEmail
 'changeemail'          => 'Ændr email-adresse',
@@ -850,7 +792,6 @@ Loggen over den seneste blokering ses nedenfor:',
 '''Det er endnu ikke gemt!'''",
 'sitejspreview'                    => "'''Husk, at du kun ser en forhåndsvisning af denne JavaScriptkode.'''
 '''Det er endnu ikke gemt!'''",
-'userinvalidcssjstitle'            => "'''Advarsel:''' Der findes intet skin „$1“. Tænk på, at brugerspecifikke .css- og .js-sider begynder med små bogstaver, altså f.eks. ''{{ns:user}}:Hansen/vector.css'' og ikke ''{{ns:user}}:Hansen/Vector.css''.",
 'updated'                          => '(Opdateret)',
 'note'                             => "'''Bemærk:'''",
 'previewnote'                      => 'Husk at dette er kun en forhåndsvisning, siden er ikke gemt endnu!',
@@ -1188,14 +1129,6 @@ Du kan prøve at bruge \"all:\" som præfiks for at søge i alt indhold (inkl. d
 'search-external'                  => 'Brug anden søgemaskine',
 'searchdisabled'                   => '<p>Beklager! Fuldtekstsøgningen er midlertidigt afbrudt på grund af for stor belastning på serverne. I mellemtidem kan du anvende Google- eller Yahoo!-søgefelterne herunder. Bemærk at deres kopier af {{SITENAME}}s indhold kan være forældet.</p>',
 
-# Quickbar
-'qbsettings'                => 'Hurtigmenu',
-'qbsettings-none'           => 'Ingen',
-'qbsettings-fixedleft'      => 'Fast venstre',
-'qbsettings-fixedright'     => 'Fast højre',
-'qbsettings-floatingleft'   => 'Flydende venstre',
-'qbsettings-floatingright'  => 'Flydende højre',
-'qbsettings-directionality' => 'Fast, afhængigt af dit sprogs skriveretning',
 
 # Preferences page
 'preferences'                   => 'Indstillinger',
@@ -2841,14 +2774,7 @@ Dette skyldes sandsynligvis en henvisning til et sortlistet eksternt websted.',
 'pageinfo-viewsperedit'     => 'Visninger per redigering',
 
 # Skin names
-'skinname-standard'    => 'Klassik',
-'skinname-nostalgia'   => 'Nostalgi',
-'skinname-cologneblue' => 'Kølnerblå',
 'skinname-monobook'    => 'MonoBook',
-'skinname-myskin'      => 'Eget udseende',
-'skinname-chick'       => 'Chick',
-'skinname-simple'      => 'Enkelt',
-'skinname-modern'      => 'Moderne',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Markér som patruljeret',
@@ -3519,9 +3445,9 @@ Du kan også [[Special:EditWatchlist|bruge standard editoren]].',
 'version-license'               => 'Licens',
 'version-poweredby-credits'     => "Denne wiki er drevet af '''[//www.mediawiki.org/ MediaWiki ]''', copyright © 2001-$1 $2.",
 'version-poweredby-others'      => 'andre',
-'version-license-info'          => 'MediaWiki er gratis software; du kan redistribuere det og/eller ændre det under betingelserne i GNU General Public License som offentliggjort af Free Software Foundation; enten version 2 af licensen eller (efter eget valg) enhver senere version. 
+'version-license-info'          => 'MediaWiki er gratis software; du kan redistribuere det og/eller ændre det under betingelserne i GNU General Public License som offentliggjort af Free Software Foundation; enten version 2 af licensen eller (efter eget valg) enhver senere version.
 
-MediaWiki distribueres i håb om at det vil være nyttigt, men UDEN NOGEN GARANTI; uden selv de underforståede garantier SALGBARHED eller EGNETHED TIL ET BESTEMT FORMÅL. Se GNU General Public License for yderligere detaljer. 
+MediaWiki distribueres i håb om at det vil være nyttigt, men UDEN NOGEN GARANTI; uden selv de underforståede garantier SALGBARHED eller EGNETHED TIL ET BESTEMT FORMÅL. Se GNU General Public License for yderligere detaljer.
 
 Du skulle have modtaget [{{SERVER}}{{SCRIPTPATH}}/COPYING en kopi af GNU General Public License] sammen med dette program; og hvis ikke, så skriv til Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA or [//www.gnu.org/licenses/old-licenses/gpl-2.0.html læs den online].',
 'version-software'              => 'Installeret software',

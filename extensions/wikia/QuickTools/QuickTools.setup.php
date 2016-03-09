@@ -13,36 +13,29 @@ $wgExtensionCredits['antispam'][] = array(
 	'name' => 'QuickTools',
 	'descriptionmsg' => 'quicktools-desc',
 	'author' => array(
-		'[http://community.wikia.com/wiki/User:Grunny Daniel Grunwell (grunny)]'
+		'[http://community.wikia.com/wiki/User:Grunny Daniel Grunwell (Grunny)]'
 	),
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/QuickTools'
 );
 
-$dir = dirname(__FILE__) . '/';
-
 // Classes
-$wgAutoloadClasses[ 'QuickToolsController'] =  $dir . 'QuickToolsController.class.php';
-$wgAutoloadClasses[ 'QuickToolsHooksHelper'] =  $dir . 'QuickToolsHooksHelper.class.php';
-
-// rights
-$wgAvailableRights[] = 'quicktools';
-$wgAvailableRights[] = 'quickadopt';
-$wgGroupPermissions['util']['quicktools'] = true;
-$wgGroupPermissions['vstf']['quicktools'] = true;
-$wgGroupPermissions['util']['quickadopt'] = true;
+$wgAutoloadClasses[ 'QuickToolsController'] =  __DIR__ . '/QuickToolsController.class.php';
+$wgAutoloadClasses[ 'QuickToolsHelper'] =  __DIR__ . '/QuickToolsHelper.class.php';
+$wgAutoloadClasses[ 'QuickToolsHooksHelper'] =  __DIR__ . '/QuickToolsHooksHelper.class.php';
 
 // i18n
-$wgExtensionMessagesFiles['QuickTools'] = $dir . 'QuickTools.i18n.php' ;
+$wgExtensionMessagesFiles['QuickTools'] = __DIR__ . '/QuickTools.i18n.php';
 
 // Resource Loader modules
 $qtResourceTemplate = array(
-	'localBasePath' => dirname( __FILE__ ) . '/modules',
+	'localBasePath' => __DIR__ . '/modules',
 	'remoteExtPath' => 'wikia/QuickTools/modules'
 );
 $wgResourceModules['ext.quickTools'] = $qtResourceTemplate + array(
 	'scripts' => 'ext.quickTools.js',
 	'styles' => 'ext.quickTools.css',
 	'dependencies' => array(
+		'mediawiki.user',
 		'mediawiki.util'
 	),
 	'messages' => array(
@@ -61,7 +54,8 @@ $wgResourceModules['ext.createUserPage'] = $qtResourceTemplate + array(
 	'messages' => array(
 		'quicktools-createuserpage-reason',
 		'quicktools-createuserpage-success',
-		'quicktools-createuserpage-exists'
+		'quicktools-createuserpage-exists',
+		'quicktools-createuserpage-error',
 	)
 );
 $wgResourceModules['ext.quickAdopt'] = $qtResourceTemplate + array(

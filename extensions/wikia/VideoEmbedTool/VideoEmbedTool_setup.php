@@ -96,9 +96,9 @@ function VET() {
 	$vet = new VideoEmbedTool();
 
 	$html = $vet->$method();
-	$domain = $wgRequest->getVal('domain', null);
+	$domain = $wgRequest->getVal('domain', '');
 	if(!empty($domain)) {
-		$html .= '<script type="text/javascript">document.domain = "' . $domain  . '"</script>';
+		$html .= '<script type="text/javascript">document.domain = ' . json_encode($domain) . '</script>';
 	}
 	$resp = new AjaxResponse( $html );
 	$resp->setContentType( 'text/html' );

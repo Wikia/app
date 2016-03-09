@@ -400,30 +400,12 @@ $messages = array(
 'navigation'    => 'Navigazione',
 'and'           => '&#32;e',
 
-# Cologne Blue skin
 'qbfind'         => 'Trova',
 'qbbrowse'       => 'Sfoglia',
-'qbedit'         => 'Modifica',
 'qbpageoptions'  => 'Opzioni pagina',
 'qbpageinfo'     => 'Informazioni sulla pagina',
-'qbmyoptions'    => 'Le mie pagine',
-'qbspecialpages' => 'Pagine speciali',
 'faq'            => 'Domande frequenti',
-'faqpage'        => 'Project:Domande frequenti',
 
-# Vector skin
-'vector-action-addsection'       => 'Aggiungi discussione',
-'vector-action-delete'           => 'Cancella',
-'vector-action-move'             => 'Sposta',
-'vector-action-protect'          => 'Proteggi',
-'vector-action-undelete'         => 'Recupera',
-'vector-action-unprotect'        => 'Cambia la protezione',
-'vector-simplesearch-preference' => 'Abilita i suggerimenti di ricerca avanzata (solo per la skin Vector)',
-'vector-view-create'             => 'Crea',
-'vector-view-edit'               => 'Modifica',
-'vector-view-history'            => 'Visualizza cronologia',
-'vector-view-view'               => 'Leggi',
-'vector-view-viewsource'         => 'Visualizza sorgente',
 'actions'                        => 'Azioni',
 'namespaces'                     => 'Namespace',
 'variants'                       => 'Varianti',
@@ -446,7 +428,6 @@ $messages = array(
 'edit'              => 'Modifica',
 'create'            => 'Crea',
 'editthispage'      => 'Modifica questa pagina',
-'create-this-page'  => 'Crea questa pagina',
 'delete'            => 'Cancella',
 'deletethispage'    => 'Cancella questa pagina',
 'undelete_short'    => 'Recupera {{PLURAL:$1|una revisione|$1 revisioni}}',
@@ -461,19 +442,9 @@ $messages = array(
 'talkpagelinktext'  => 'Discussione',
 'specialpage'       => 'Pagina speciale',
 'personaltools'     => 'Strumenti personali',
-'postcomment'       => 'Nuova sezione',
-'articlepage'       => 'Vedi la voce',
 'talk'              => 'Discussione',
 'views'             => 'Visite',
 'toolbox'           => 'Strumenti',
-'userpage'          => 'Visualizza la pagina utente',
-'projectpage'       => 'Visualizza la pagina di servizio',
-'imagepage'         => 'Visualizza la pagina del file',
-'mediawikipage'     => 'Visualizza il messaggio',
-'templatepage'      => 'Visualizza il template',
-'viewhelppage'      => 'Visualizza la pagina di aiuto',
-'categorypage'      => 'Visualizza la categoria',
-'viewtalkpage'      => 'Visualizza la pagina di discussione',
 'otherlanguages'    => 'Altre lingue',
 'redirectedfrom'    => '(Reindirizzamento da <b>$1</b>)',
 'redirectpagesub'   => 'Pagina di reindirizzamento',
@@ -653,8 +624,9 @@ La motivazione è la seguente: ''$2''.",
 # Login and logout pages
 'logouttext'                 => "'''Logout effettuato.'''
 
-Si può continuare ad usare {{SITENAME}} come utente anonimo oppure [[Special:UserLogin|eseguire un nuovo accesso]], con lo stesso nome utente o un nome diverso.
+Si può continuare ad usare {{SITENAME}} come utente anonimo oppure $1, con lo stesso nome utente o un nome diverso.
 Nota che alcune pagine potrebbero continuare ad apparire come se il logout non fosse avvenuto finché non viene pulita la cache del proprio browser.",
+'logouttext-link-text'       => 'eseguire un nuovo accesso',
 'welcomecreation'            => "== Benvenuto, $1! ==
 
 L'account è stato creato correttamente. Non dimenticare di personalizzare le [[Special:Preferences|preferenze di {{SITENAME}}]].",
@@ -763,40 +735,6 @@ Riprovare più tardi.',
 La password potrebbe essere stata già cambiata, oppure potrebbe essere stata richiesta una nuova password temporanea.',
 'resetpass-temp-password'   => 'Password temporanea:',
 
-# Special:PasswordReset
-'passwordreset'                    => 'Reimposta password',
-'passwordreset-text'               => 'Completa questo modulo per ricevere i dettagli del tuo account via e-mail.',
-'passwordreset-legend'             => 'Reimposta password',
-'passwordreset-disabled'           => 'La reimpostazione delle password è stata disabilitata su questa wiki',
-'passwordreset-pretext'            => '{{PLURAL:$1||Immetti una delle porzioni di dati qui sotto}}',
-'passwordreset-username'           => 'Nome utente:',
-'passwordreset-domain'             => 'Dominio:',
-'passwordreset-capture'            => 'Visualizzare il contenuto del messaggio e-mail?',
-'passwordreset-capture-help'       => "Se si seleziona questa casella, l'indirizzo e-mail (con la password temporanea), verrà mostrato a voi, oltre ad essere inviato all'utente.",
-'passwordreset-email'              => 'Indirizzo e-mail:',
-'passwordreset-emailtitle'         => 'Dettagli account su {{SITENAME}}',
-'passwordreset-emailtext-ip'       => "Qualcuno (probabilmente tu, con indirizzo IP $1) ha richiesto l'invio di una nuova password per l'accesso a {{SITENAME}} ($4). {{PLURAL:$3|L'utente associato|Gli utenti associati}} a questo indirizzo e-mail sono:
-
-$2
-
-{{PLURAL:$3|Questa password temporanea scadrà|Queste password temporanee scadranno}} dopo {{PLURAL:$5|un giorno|$5 giorni}}.
-Dovresti accedere e scegliere una nuova password ora. 
-
-Se non sei stato tu a fare la richiesta, o se ti sei ricordato la password originale e non vuoi più cambiarla, puoi ignorare questo messaggio e continuare al utilizzare la tua vecchia password.",
-'passwordreset-emailtext-user'     => "L'utente $1 di {{SITENAME}} ha richiesto l'invio di una nuova password per l'accesso a {{SITENAME}} ($4). {{PLURAL:$3|L'utente associato|Gli utenti associati}} a questo indirizzo e-mail sono:
-
-$2
-
-{{PLURAL:$3|Questa password temporanea scadrà|Queste password temporanee scadranno}} dopo {{PLURAL:$5|un giorno|$5 giorni}}.
-Dovresti accedere e scegliere una nuova password ora. 
-
-Se non sei stato tu a fare la richiesta, o se ti sei ricordato la password originale e non vuoi più cambiarla, puoi ignorare questo messaggio e continuare al utilizzare la tua vecchia password.",
-'passwordreset-emailelement'       => 'Nome utente: $1
-Password temporanea: $2',
-'passwordreset-emailsent'          => 'È stata inviata una e-mail di promemoria.',
-'passwordreset-emailsent-capture'  => "E' stato inviato un e-mail promemoria, il contenuto è riportato di seguito.",
-'passwordreset-emailerror-capture' => "E' stata generata l'e-mail promemoria riportata di seguito. L'invio all'utente non è riuscito: $1",
-
 # Special:ChangeEmail
 'changeemail'          => "Modifica l'indirizzo e-mail",
 'changeemail-header'   => "Modifica l'indirizzo e-mail dell'account",
@@ -899,11 +837,11 @@ Se il collegamento è stato aperto per errore, è sufficiente fare clic sul puls
 'userpage-userdoesnotexist-view'   => 'L\'account utente "$1" non è registrato.',
 'blocked-notice-logextract'        => "Questo utente è attualmente bloccato.
 L'ultimo elemento del registro dei blocchi è riportato di seguito per informazione:",
-'clearyourcache'                   => "'''Nota:''' dopo aver salvato, potrebbe essere necessario pulire la cache del tuo browser per vedere i cambiamenti. 
+'clearyourcache'                   => "'''Nota:''' dopo aver salvato, potrebbe essere necessario pulire la cache del tuo browser per vedere i cambiamenti.
 *'''Firefox / Safari''': tieni premuto il tasto delle maiuscole e fai clic su ''Ricarica'', oppure premi ''Ctrl-F5'' o ''Ctrl-R'' (''⌘-R'' su Mac)
 *'''Google Chrome''': premi ''Ctrl-Shift-R'' (''⌘-Shift-R'' su un Mac)
 *'''Internet Explorer''': tieni premuto il tasto ''Ctrl'' mentre clicchi su ''Refresh'', oppure premi ''Ctrl-F5''
-*'''Konqueror''': premi il pulsante ''Ricarica'' o il tasto ''F5''; 
+*'''Konqueror''': premi il pulsante ''Ricarica'' o il tasto ''F5'';
 *'''Opera''': svuota completamente la cache dal menu ''Strumenti → Preferenze''",
 'usercssyoucanpreview'             => "'''Suggerimento:''' usa il pulsante 'Visualizza anteprima' per provare il tuo nuovo CSS prima di salvarlo.",
 'userjsyoucanpreview'              => "'''Suggerimento:''' usa il pulsante 'Visualizza anteprima' per provare il tuo nuovo JavaScript prima di salvarlo.",
@@ -911,7 +849,6 @@ L'ultimo elemento del registro dei blocchi è riportato di seguito per informazi
 'userjspreview'                    => "'''Questa è solo un'anteprima per provare il proprio JavaScript personale; le modifiche non sono ancora state salvate!'''",
 'sitecsspreview'                   => "Questa è solo un'anteprima del CSS. Le modifiche non sono ancora state salvate!'''",
 'sitejspreview'                    => "Questa è solo un'anteprima per provare il JavaScript; le modifiche non sono ancora state salvate!'''",
-'userinvalidcssjstitle'            => "'''Attenzione:'''  Non esiste alcuna skin con nome \"\$1\". Si noti che le pagine per i .css e .js personalizzati hanno l'iniziale del titolo minuscola, ad esempio {{ns:user}}:Esempio/vector.css e non {{ns:user}}:Esempio/Vector.css.",
 'updated'                          => '(Aggiornato)',
 'note'                             => "'''NOTA:'''",
 'previewnote'                      => "'''Questa è solo un'anteprima; le modifiche alla pagina NON sono ancora state salvate!'''",
@@ -1246,14 +1183,6 @@ $1",
 'search-external'                  => 'Ricerca esterna',
 'searchdisabled'                   => 'La ricerca interna di {{SITENAME}} non è attiva; nel frattempo si può provare ad usare un motore di ricerca esterno come Google. (Si noti però che i contenuti di {{SITENAME}} presenti in tali motori potrebbero non essere aggiornati.)',
 
-# Quickbar
-'qbsettings'                => 'Quickbar',
-'qbsettings-none'           => 'Nessuno',
-'qbsettings-fixedleft'      => 'Fisso a sinistra',
-'qbsettings-fixedright'     => 'Fisso a destra',
-'qbsettings-floatingleft'   => 'Fluttuante a sinistra',
-'qbsettings-floatingright'  => 'Fluttuante a destra',
-'qbsettings-directionality' => 'Fisso, a seconda della direzione del testo nella tua lingua',
 
 # Preferences page
 'preferences'                   => 'Preferenze',
@@ -2215,10 +2144,10 @@ Non verranno inviate altre notifiche in caso di ulteriori cambiamenti, a meno ch
              Il sistema di notifica di {{SITENAME}}, al tuo servizio
 
 --
-Per modificare le impostazioni delle notifiche via e-mail, visita 
+Per modificare le impostazioni delle notifiche via e-mail, visita
 {{canonicalurl:{{#special:Preferences}}}}
 
-Per modificare la lista degli osservati speciali, visita 
+Per modificare la lista degli osservati speciali, visita
 {{canonicalurl:{{#special:EditWatchlist}}}}
 
 Per rimuovere la pagina dalla lista degli osservati speciali, visita
@@ -2854,15 +2783,7 @@ Tutte le operazioni di importazione trans-wiki sono registrate nel [[Special:Log
 
 # Stylesheets
 'common.css'              => '/* Gli stili CSS inseriti qui si applicano a tutte le skin */',
-'standard.css'            => '/* Gli stili CSS inseriti qui si applicano agli utenti che usano la skin Standard */',
-'nostalgia.css'           => '/* Gli stili CSS inseriti qui si applicano agli utenti che usano la skin Nostalgia */',
-'cologneblue.css'         => '/* Gli stili CSS inseriti qui si applicano agli utenti che usano la skin Cologne Blue */',
 'monobook.css'            => '/* Gli stili CSS inseriti qui si applicano agli utenti che usano la skin Monobook */',
-'myskin.css'              => '/* Gli stili CSS inseriti qui si applicano agli utenti che usano la skin MySkin */',
-'chick.css'               => '/* Gli stili CSS inseriti qui si applicano agli utenti che usano la skin Chick */',
-'simple.css'              => '/* Gli stili CSS inseriti qui si applicano agli utenti che usano la skin Simple */',
-'modern.css'              => '/* Gli stili CSS inseriti qui si applicano agli utenti che usano la skin Modern */',
-'vector.css'              => '/* Gli stili CSS inseriti qui si applicano agli utenti che usano la skin Vector */',
 'print.css'               => "/* Gli stili CSS inseriti qui si applicano all'output in stampa */",
 'handheld.css'            => '/* Gli stili CSS inseriti qui si applicano ai dispositivi portatili basati sulla skin configurata in $wgHandheldStyle */',
 'noscript.css'            => '/ * Gli stili CSS inseriti qui si applicano agli utenti che hanno JavaScript disabilitato * /',
@@ -2873,15 +2794,7 @@ Tutte le operazioni di importazione trans-wiki sono registrate nel [[Special:Log
 
 # Scripts
 'common.js'              => '/* Il codice JavaScript inserito qui viene caricato da ciascuna pagina, per tutti gli utenti. */',
-'standard.js'            => '/* Il codice JavaScript inserito qui viene caricato dagli utenti che usano la skin Standard */',
-'nostalgia.js'           => '/* Il codice JavaScript inserito qui viene caricato dagli utenti che usano la skin Nostalgia */',
-'cologneblue.js'         => '/* Il codice JavaScript inserito qui viene caricato dagli utenti che usano la skin Cologne Blue */',
 'monobook.js'            => '/* Il codice JavaScript inserito qui viene caricato dagli utenti che usano la skin MonoBook */',
-'myskin.js'              => '/* Il codice JavaScript inserito qui viene caricato dagli utenti che usano la skin MySkin */',
-'chick.js'               => '/* Il codice JavaScript inserito qui viene caricato dagli utenti che usano la skin Chick */',
-'simple.js'              => '/* Il codice JavaScript inserito qui viene caricato dagli utenti che usano la skin Simple */',
-'modern.js'              => '/* Il codice JavaScript inserito qui viene caricato dagli utenti che usano la skin Modern */',
-'vector.js'              => '/* Il codice JavaScript inserito qui viene caricato dagli utenti che usano la skin Vector */',
 'group-autoconfirmed.js' => '/ * Il codice JavaScript inserito qui viene caricato solo per gli utenti autoconvalidati * /',
 'group-bot.js'           => '/ * Il codice JavaScript inserito qui viene caricato solo per i bot * /',
 'group-sysop.js'         => '/ * Il codice JavaScript inserito qui viene caricato solo per gli amministratori/sysop * /',

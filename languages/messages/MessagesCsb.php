@@ -171,30 +171,12 @@ $messages = array(
 'navigation'    => 'Nawigacëjô',
 'and'           => '&#32;ë',
 
-# Cologne Blue skin
 'qbfind'         => 'Nalézë',
 'qbbrowse'       => 'Przezeranié',
-'qbedit'         => 'Edicëjô',
 'qbpageoptions'  => 'Òptacëje starnë',
 'qbpageinfo'     => 'Ò starnie',
-'qbmyoptions'    => 'Mòje òptacëje',
-'qbspecialpages' => 'Specjalné starnë',
 'faq'            => 'FAQ',
-'faqpage'        => 'Project:FAQ',
 
-# Vector skin
-'vector-action-addsection'       => 'Dodôj témã',
-'vector-action-delete'           => 'Rëmôj',
-'vector-action-move'             => 'Przeniesë',
-'vector-action-protect'          => 'Zazychrëjë',
-'vector-action-undelete'         => 'Doprowôdzë nazôd',
-'vector-action-unprotect'        => 'Òdzychrëjë',
-'vector-simplesearch-preference' => 'Włączë awansowóné pòdpòwiescë szëkbë (blós dlô skórczi Wektor)',
-'vector-view-create'             => 'Ùsôdzë',
-'vector-view-edit'               => 'Edicëjô',
-'vector-view-history'            => 'Historëjô lopka',
-'vector-view-view'               => 'Czëtôj',
-'vector-view-viewsource'         => 'Zdrojowi tekst',
 'actions'                        => 'Dzéjania',
 'namespaces'                     => 'Rum mionów:',
 'variants'                       => 'Wariantë',
@@ -216,7 +198,6 @@ $messages = array(
 'edit'              => 'Edicëjô',
 'create'            => 'Ùsôdzë',
 'editthispage'      => 'Editëjë nã starnã',
-'create-this-page'  => 'Ùsôdzë nã starnã',
 'delete'            => 'Rëmôj',
 'deletethispage'    => 'Rëmôj nã starnã',
 'undelete_short'    => 'Doprowôdzë nazôd {{PLURAL:$1|1 edicëjã|$1 edicëje|$1 edicëjów}}',
@@ -230,19 +211,9 @@ $messages = array(
 'talkpagelinktext'  => 'Diskùsëjô',
 'specialpage'       => 'Specjalnô starna',
 'personaltools'     => 'Priwatné przërëchtënczi',
-'postcomment'       => 'Nowi dzél',
-'articlepage'       => 'Starna artikla',
 'talk'              => 'Diskùsëjô',
 'views'             => 'Pòdzérków',
 'toolbox'           => 'Przërëchtënczi',
-'userpage'          => 'Wëskrzëni starnã brëkòwnika',
-'projectpage'       => 'Wëskrzëni stranã ùdbë',
-'imagepage'         => 'Starna lopka',
-'mediawikipage'     => 'Wëskrzëni starnã wiadła',
-'templatepage'      => 'Wëskrzëni starnã wëzdrzatkù',
-'viewhelppage'      => 'Wëskrzëni starnã pòmòcë',
-'categorypage'      => 'Wëskrzëni starnã kategòrëji',
-'viewtalkpage'      => 'Starna diskùsëji',
 'otherlanguages'    => 'W jinych jãzëkach',
 'redirectedfrom'    => '(Przeczerowóné z $1)',
 'redirectpagesub'   => 'Przeczerëjë starnã',
@@ -353,8 +324,9 @@ Przemëszlë dolmaczënié na [//translatewiki.net/wiki/Main_Page?setlang=csb tr
 
 # Login and logout pages
 'logouttext'                 => "'''Jes wëlogòwóny.'''
-Mòżesz robic dali na {{SITENAME}} jakno anonimòwi brëkòwnik abò sã [[Special:UserLogin|wlogòwac]] znowa jakno równy, a bò jinszi brëkòwnik.
+Mòżesz robic dali na {{SITENAME}} jakno anonimòwi brëkòwnik abò sã $1 znowa jakno równy, a bò jinszi brëkòwnik.
 Bôczë, że do czasu wëczëszczenia pòdrãczny pamiãcë przezérnika, niejedné starnë bãdą wëzdrzëc jakbë të bëł wlogòwóny.",
+'logouttext-link-text'       => 'wlogòwac',
 'welcomecreation'            => ' == Witôj, $1! ==
 Twòjé kònto òstało prawie ùsôdzoné.
 Nie zbëjë zmienic swòjich nastôwów na [[Special:Preferences|{{SITENAME}}]].',
@@ -589,8 +561,6 @@ Spróbùjë szëkbë z przëdôwkã ''all:'' dlô całowny zamkłoscë starnów 
 'powersearch-redir'         => 'Lësta przeczerowaniów',
 'powersearch-field'         => 'Szëkba za',
 
-# Quickbar
-'qbsettings' => 'Sztrépk chùtczégò przistãpù',
 
 # Preferences page
 'preferences'               => 'Preferencëje',

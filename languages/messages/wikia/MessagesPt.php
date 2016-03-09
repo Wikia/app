@@ -37,4 +37,12 @@ $messages = array_merge( $messages, array(
 'review_reason_5' => 'Motivo revisão 5',
 'copyrightpage' => 'w:Wikia:Licensing|Wikia:Licensing',
 'addnewtalksection-link' => 'Iniciar uma nova secção',
+
+'tog-enableuserjs' => 'Autorizar JavaScript pessoal ([[Ajuda:CSS_e_JS_pessoal|Saiba mais]])',
+
+'group-content-moderator' => 'Moderadores de conteúdo',
+'group-content-moderator-member' => 'Moderador de conteúdo',
+
+	'wikia-read-only-mode' => 'Nosso centro de dados principal está indisponível, então este é o nosso backup. Infelizmente, isto significa que talvez você não possa fazer certas coisas como editar, carregar ou entrar no chat.
+ + Estamos trabalhando para corrigir o problema, obrigado por sua paciência! Se isso demorar muito, entre em contato com a Wikia na community@wikia.com.',
 ) );

@@ -54,9 +54,6 @@ $messages = array(
 'mypage'     => 'Mening beti',
 'navigation' => 'Körüsh',
 
-# Cologne Blue skin
-'qbedit'         => 'Uzgartish',
-'qbspecialpages' => 'Alahida tor batleri',
 
 'help'             => 'Yardem',
 'search'           => 'Izdash',
@@ -102,9 +99,6 @@ $messages = array(
 'userlogout'         => 'Chikish',
 'gotaccountlink'     => 'Kirish',
 'loginlanguagelabel' => 'Til: $1',
-
-# Special:PasswordReset
-'passwordreset-username' => 'Ishletkuchi ismi:',
 
 # Edit pages
 'summary'      => 'Hulasa:',

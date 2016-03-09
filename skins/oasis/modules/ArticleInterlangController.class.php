@@ -6,7 +6,6 @@
  */
 
 class ArticleInterlangController extends WikiaController {
-
 	public function init() {
 		if($this->app->getSkinTemplateObj()) {
 			$this->language_urls = $this->app->getSkinTemplateObj()->data['language_urls'];
@@ -29,7 +28,6 @@ class ArticleInterlangController extends WikiaController {
 		if(!empty($request_language_urls)) {
 			$this->language_urls = $request_language_urls;
 		}
-
 		$language_urls = $this->language_urls;
 		$langSortBy = array();
 		// only display the interlang links if there are interlanguage links
@@ -63,5 +61,11 @@ class ArticleInterlangController extends WikiaController {
 			$this->language_list = $langSortBy;
 		}
 		wfProfileOut(__METHOD__);
+	}
+
+	public static function onMakeGlobalVariablesScript(Array &$vars) {
+		global $wgOut;
+		$vars['wgArticleInterlangList'] = $wgOut->getLanguageLinks();
+		return true;
 	}
 }

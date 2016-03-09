@@ -50,7 +50,7 @@ $WikiNavWidth: $width-outside - 271px;
 		width: $WikiNavWidth - 155px /* 155px is a spacing for contribute button (BugId:12490) */;
 		z-index: 3;
 
-		>h1 {
+		>h2 {
 			display: none;
 		}
 

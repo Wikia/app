@@ -56,17 +56,17 @@ class ExactTargetUserDataVerificationTask extends ExactTargetTask {
 	public function verifyUserPropertiesData( $iUserId ) {
 		// Fetch data from ExactTarget
 		$oRetrieveUserTask = $this->getRetrieveUserTask();
-		$oExactTargetUserProperties = $oRetrieveUserTask->retrieveUserPropertiesByUserId( $iUserId );
-		$this->info( __METHOD__ . ' ExactTarget user_properties data record: ' . json_encode( $oExactTargetUserProperties ) );
+		$aExactTargetUserProperties = $oRetrieveUserTask->retrieveUserPropertiesByUserId( $iUserId );
+		$this->info( __METHOD__ . ' ExactTarget user_properties data record: ' . json_encode( $aExactTargetUserProperties ) );
 
 		// Fetch data from Wikia DB
 		$oWikiaUser = \User::newFromId( $iUserId );
 		$oUserHooksHelper = $this->getUserHooksHelper();
-		$oWikiaUserPropertiesData = $oUserHooksHelper->prepareUserPropertiesParams( $oWikiaUser );
-		$this->info( __METHOD__ . ' Wikia DB user data record: ' . json_encode( $oWikiaUserPropertiesData ) );
+		$aWikiaUserPropertiesData = $oUserHooksHelper->prepareUserPropertiesParams( $oWikiaUser );
+		$this->info( __METHOD__ . ' Wikia DB user data record: ' . json_encode( $aWikiaUserPropertiesData ) );
 
 		// Compare results
-		$bResult = $this->compareResults( $oExactTargetUserProperties, $oWikiaUserPropertiesData, __METHOD__ );
+		$bResult = $this->compareResults( $aExactTargetUserProperties, $aWikiaUserPropertiesData, __METHOD__ );
 
 		return $bResult;
 	}

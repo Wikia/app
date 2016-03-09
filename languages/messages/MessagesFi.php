@@ -459,30 +459,12 @@ $messages = array(
 'navigation'    => 'Valikko',
 'and'           => '&#32;ja',
 
-# Cologne Blue skin
 'qbfind'         => 'Etsi',
 'qbbrowse'       => 'Selaa',
-'qbedit'         => 'Muokkaa',
 'qbpageoptions'  => 'Sivuasetukset',
 'qbpageinfo'     => 'Sivun tiedot',
-'qbmyoptions'    => 'Asetukset',
-'qbspecialpages' => 'Toimintosivut',
 'faq'            => 'Usein kysytyt kysymykset',
-'faqpage'        => 'Project:Usein kysytyt kysymykset',
 
-# Vector skin
-'vector-action-addsection'       => 'Lisää aihe',
-'vector-action-delete'           => 'Poista',
-'vector-action-move'             => 'Siirrä',
-'vector-action-protect'          => 'Suojaa',
-'vector-action-undelete'         => 'Palauta',
-'vector-action-unprotect'        => 'Muuta suojausta',
-'vector-simplesearch-preference' => 'Ota käyttöön parannetut hakuehdotukset (vain Vector-ulkoasu)',
-'vector-view-create'             => 'Luo',
-'vector-view-edit'               => 'Muokkaa',
-'vector-view-history'            => 'Näytä historia',
-'vector-view-view'               => 'Lue',
-'vector-view-viewsource'         => 'Näytä lähdekoodi',
 'actions'                        => 'Toiminnot',
 'namespaces'                     => 'Nimiavaruudet',
 'variants'                       => 'Muuttujat',
@@ -505,7 +487,6 @@ $messages = array(
 'edit'              => 'Muokkaa',
 'create'            => 'Luo sivu',
 'editthispage'      => 'Muokkaa tätä sivua',
-'create-this-page'  => 'Luo tämä sivu',
 'delete'            => 'Poista',
 'deletethispage'    => 'Poista tämä sivu',
 'undelete_short'    => 'Palauta {{PLURAL:$1|yksi muokkaus|$1 muokkausta}}',
@@ -520,19 +501,9 @@ $messages = array(
 'talkpagelinktext'  => 'keskustelu',
 'specialpage'       => 'Toimintosivu',
 'personaltools'     => 'Henkilökohtaiset työkalut',
-'postcomment'       => 'Uusi osio',
-'articlepage'       => 'Näytä varsinainen sivu',
 'talk'              => 'Keskustelu',
 'views'             => 'Näkymät',
 'toolbox'           => 'Työkalut',
-'userpage'          => 'Näytä käyttäjäsivu',
-'projectpage'       => 'Näytä projektisivu',
-'imagepage'         => 'Näytä tiedostosivu',
-'mediawikipage'     => 'Näytä viestisivu',
-'templatepage'      => 'Näytä mallinesivu',
-'viewhelppage'      => 'Näytä ohjesivu',
-'categorypage'      => 'Näytä luokkasivu',
-'viewtalkpage'      => 'Näytä keskustelusivu',
 'otherlanguages'    => 'Muilla kielillä',
 'redirectedfrom'    => 'Ohjattu sivulta $1',
 'redirectpagesub'   => 'Ohjaussivu',
@@ -707,8 +678,9 @@ $2',
 # Login and logout pages
 'logouttext'                 => "'''Olet nyt kirjautunut ulos.'''
 
-Voit jatkaa {{GRAMMAR:genitive|{{SITENAME}}}} käyttöä nimettömänä, tai [[Special:UserLogin|kirjautua uudelleen sisään]].
+Voit jatkaa {{GRAMMAR:genitive|{{SITENAME}}}} käyttöä nimettömänä, tai $1.
 Huomaa, että jotkut sivut saattavat näkyä edelleen kuin olisit kirjautunut sisään, kunnes tyhjennät selaimen välimuistin.",
+'logouttext-link-text'       => 'kirjautua uudelleen sisään',
 'welcomecreation'            => '== Tervetuloa $1! ==
 Käyttäjätunnuksesi on luotu.
 Älä unohda virittää {{GRAMMAR:genitive|{{SITENAME}}}} [[Special:Preferences|asetuksiasi]].',
@@ -809,42 +781,6 @@ Odota ennen kuin yrität uudelleen.',
 'resetpass-wrong-oldpass'   => 'Virheellinen väliaikainen tai nykyinen salasana.
 Olet saattanut jo onnistuneesti vaihtaa salasanasi tai pyytää uutta väliaikaista salasanaa.',
 'resetpass-temp-password'   => 'Väliaikainen salasana:',
-
-# Special:PasswordReset
-'passwordreset'                    => 'Salasanan alustus',
-'passwordreset-text'               => 'Saat sähköpostimuistutuksen tunnuksesi tiedoista, kun täytät tämän lomakkeen.',
-'passwordreset-legend'             => 'Salasanan vaihto',
-'passwordreset-disabled'           => 'Salasanojen alustus ei ole mahdollista tässä wikissä.',
-'passwordreset-pretext'            => '{{PLURAL:$1||Kirjoita jokin jäljempänä pyydetty tieto}}',
-'passwordreset-username'           => 'Käyttäjätunnus',
-'passwordreset-domain'             => 'Verkkotunnus',
-'passwordreset-capture'            => 'Näytä lähetettävä sähköpostiviesti',
-'passwordreset-capture-help'       => 'Jos valitset tämän, sähköposti (tilapäisellä salasanalla) näytetään sinulle sekä lähetetään käyttäjälle.',
-'passwordreset-email'              => 'Sähköpostiosoite',
-'passwordreset-emailtitle'         => 'Tunnuksen tiedot {{GRAMMAR:inessive|{{SITENAME}}}}',
-'passwordreset-emailtext-ip'       => 'Joku (todennäköisesti sinä, IP-osoitteesta $1) pyysi muistutusta tunnuksesi tiedoista sivustolla {{SITENAME}} ($4).
-{{PLURAL:$3|Seuraava käyttäjätunnus on|Seuraavat käyttäjätunnukset ovat}} liitetty tähän sähköpostiosoitteeseen:
-
-$2
-
-{{PLURAL:$3|Tämä väliaikainen salasana vanhentuu|Nämä väliaikaiset salasanat vanhentuvat}} {{PLURAL:$5|yhden päivän|$5 päivän}} kuluttua.
-Sinun kannattaa kirjautua sisään ja valita uusi salasana. Jos joku toinen teki tämän
-pyynnön, tai muistat sittenkin vanhan salasanasi, etkä halua muuttaa sitä,
-voit jättää tämän viestin huomiotta ja jatkaa vanhan salasanan käyttöä.',
-'passwordreset-emailtext-user'     => 'Käyttäjä $1 pyysi muistutusta tunnuksesi tiedoista sivustolla {{SITENAME}} ($4).
-{{PLURAL:$3|Seuraava käyttäjätunnus on|Seuraavat käyttäjätunnukset ovat}} liitetty tähän sähköpostiosoitteeseen:
-
-$2
-
-{{PLURAL:$3|Tämä väliaikainen salasana vanhentuu|Nämä väliaikaiset salasanat vanhentuvat}} {{PLURAL:$5|yhden päivän|$5 päivän}} kuluttua.
-Sinun kannattaa kirjautua sisään ja valita uusi salasana. Jos joku toinen teki tämän
-pyynnön, tai muistat sittenkin vanhan salasanasi, etkä halua muuttaa sitä,
-voit jättää tämän viestin huomiotta ja jatkaa vanhan salasanan käyttöä.',
-'passwordreset-emailelement'       => 'Käyttäjätunnus: $1
-Väliaikainen salasana: $2',
-'passwordreset-emailsent'          => 'Sähköpostimuistutus on lähetetty.',
-'passwordreset-emailsent-capture'  => 'Muistutussähköposti on lähetetty. Se näkyy myös alla.',
-'passwordreset-emailerror-capture' => 'Alla näytettävä sähköpostiviesti luotiin, mutta sen lähettäminen käyttäjälle epäonnistui: $1',
 
 # Special:ChangeEmail
 'changeemail'          => 'Muuta sähköpostiosoitetta',
@@ -963,11 +899,10 @@ Alla on viimeisin estolokin tapahtuma:',
 'userjsyoucanpreview'              => 'Voit testata uutta JavaScriptiä ennen tallennusta käyttämällä painiketta ”{{int:showpreview}}”.',
 'usercsspreview'                   => "'''Tämä on CSS:n esikatselu. Muutoksia ei ole vielä tallennettu.'''",
 'userjspreview'                    => "'''Tämä on JavaScriptin esikatselu.'''",
-'sitecsspreview'                   => "'''Huomaa, että tämä on vasta CSS:n esikatselu.''' 
+'sitecsspreview'                   => "'''Huomaa, että tämä on vasta CSS:n esikatselu.'''
 '''Muutoksia ei ole vielä tallennettu.'''",
 'sitejspreview'                    => "'''Huomaa, että tämä on vasta JavaScript-koodin esikatselu.'''
 '''Muutoksia ei ole vielä tallennettu.'''",
-'userinvalidcssjstitle'            => "'''Varoitus:''' Tyyliä nimeltä ”$1” ei ole olemassa. Muista, että käyttäjän määrittelemät .css- ja .js-sivut alkavat pienellä alkukirjaimella, esim. {{ns:user}}:Matti Meikäläinen/vector.css eikä {{ns:user}}:Matti Meikäläinen/Vector.css.",
 'updated'                          => '(Päivitetty)',
 'note'                             => "'''Huomautus:'''",
 'previewnote'                      => "'''Tämä on vasta sivun esikatselu. Sivua ei ole vielä tallennettu!'''",
@@ -1296,14 +1231,6 @@ Kokeile lisätä haun alkuun ''all:'', niin haku kohdistuu kaikkeen sisältöön
 'search-external'                  => 'Ulkoinen haku',
 'searchdisabled'                   => 'Tekstihaku on poistettu toistaiseksi käytöstä suuren kuorman vuoksi. Voit käyttää alla olevaa Googlen hakukenttää sivujen etsimiseen, kunnes haku tulee taas käyttöön. <small>Huomaa, että ulkopuoliset kopiot {{GRAMMAR:genitive|{{SITENAME}}}} sisällöstä eivät välttämättä ole ajan tasalla.</small>',
 
-# Quickbar
-'qbsettings'                => 'Pikavalikko',
-'qbsettings-none'           => 'Ei mitään',
-'qbsettings-fixedleft'      => 'Tekstin mukana, vasen',
-'qbsettings-fixedright'     => 'Tekstin mukana, oikea',
-'qbsettings-floatingleft'   => 'Pysyen vasemmalla',
-'qbsettings-floatingright'  => 'Pysyen oikealla',
-'qbsettings-directionality' => 'Kiinteä, riippuen käyttämäsi kielen kirjoitusjärjestelmän suunnasta',
 
 # Preferences page
 'preferences'                   => 'Asetukset',
@@ -2885,15 +2812,7 @@ Tallenna tiedot koneellesi ja tuo ne tällä sivulla.',
 
 # Stylesheets
 'common.css'              => '/* Tämä sivu sisältää koko sivustoa muuttavia tyylejä. */',
-'standard.css'            => '/* Tämä sivu sisältää Perus-ulkoasua muuttavia tyylejä. */',
-'nostalgia.css'           => '/* Tämä sivu sisältää Nostalgia-ulkoasua muuttavia tyylejä. */',
-'cologneblue.css'         => '/* Tämä sivu sisältää Kölnin sininen -ulkoasua muuttavia tyylejä. */',
 'monobook.css'            => '/* Tämä sivu sisältää Monobook-ulkoasua muuttavia tyylejä. */',
-'myskin.css'              => '/* Tämä sivu sisältää Oma tyylisivu -ulkoasua muuttavia tyylejä. */',
-'chick.css'               => '/* Tämä sivu sisältää Chick-ulkoasua muuttavia tyylejä. */',
-'simple.css'              => '/* Tämä sivu sisältää Yksinkertainen-ulkoasua muuttavia tyylejä. */',
-'modern.css'              => '/* Tämä sivu sisältää Moderni-ulkoasua muuttavia tyylejä. */',
-'vector.css'              => '/* Tämä sivu sisältää Vector-ulkoasua muuttavia tyylejä. */',
 'print.css'               => '/* Tämä sivu sisältää tulostettua sivua muuttavia tyylejä */',
 'noscript.css'            => '/* Tämä sivun tyylit muuttavat niiden käyttäjien tyylejä, joilla JavaScript ei ole käytössä */',
 'group-autoconfirmed.css' => '/* Tämä sivun tyylit muuttavat automaattisesti hyväksyttyjen käyttäjien tyylejä */',
@@ -2903,15 +2822,7 @@ Tallenna tiedot koneellesi ja tuo ne tällä sivulla.',
 
 # Scripts
 'common.js'              => '/* Tämän sivun JavaScript-koodi liitetään jokaiseen sivulataukseen */',
-'standard.js'            => '/* Tämän sivun JavaScript-koodi liitetään Perus-tyyliin */',
-'nostalgia.js'           => '/* Tämän sivun JavaScript-koodi liitetään Nostalgia-tyyliin */',
-'cologneblue.js'         => '/* Tämän sivun JavaScript-koodi liitetään Kölnin sininen -tyyliin */',
 'monobook.js'            => '/* Tämän sivun JavaScript-koodi liitetään Monobook-tyyliin */',
-'myskin.js'              => '/* Tämän sivun JavaScript-koodi liitetään Oma tyylisivu -tyyliin */',
-'chick.js'               => '/* Tämän sivun JavaScript-koodi liitetään Chick-tyyliin */',
-'simple.js'              => '/* Tämän sivun JavaScript-koodi liitetään Yksinkertaistettuun tyyliin */',
-'modern.js'              => '/* Tämän sivun JavaScript-koodi liitetään Moderni-tyyliin */',
-'vector.js'              => '/* Tämän sivun JavaScript-koodi liitetään Vector-tyyliin */',
 'group-autoconfirmed.js' => '/* Tämän sivun JavaScript-koodi liitetään vain automaattisesti hyväksytyille käyttäjille */',
 'group-bot.js'           => '/* Tämän sivun JavaScript-koodi liitetään vain boteille */',
 'group-sysop.js'         => '/* Tämän sivun JavaScript-koodi liitetään vain ylläpitäjille */',
@@ -2954,14 +2865,7 @@ Tallenna tiedot koneellesi ja tuo ne tällä sivulla.',
 'pageinfo-viewsperedit'     => 'Katseluita per muokkaus',
 
 # Skin names
-'skinname-standard'    => 'Perus',
-'skinname-nostalgia'   => 'Nostalgia',
-'skinname-cologneblue' => 'Kölnin sininen',
 'skinname-monobook'    => 'Monobook',
-'skinname-myskin'      => 'Oma tyylisivu',
-'skinname-chick'       => 'Chick',
-'skinname-simple'      => 'Yksinkertainen',
-'skinname-modern'      => 'Moderni',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Merkitse tarkastetuksi',
@@ -3525,7 +3429,7 @@ Varmennuskoodi vanhenee $4.',
 'confirmrecreate'          => "Käyttäjä '''[[User:$1|$1]]''' ([[User talk:$1|keskustelu]]) on poistanut sivun sen jälkeen, kun aloit muokata sitä. Syy oli:
 : ''$2''
 Varmista, että haluat luoda sivun uudelleen.",
-'confirmrecreate-noreason' => "Käyttäjä '''[[User:$1|$1]]''' ([[User talk:$1|keskustelu]]) on poistanut tämän sivun sen jälkeen, kun aloit muokata sitä. 
+'confirmrecreate-noreason' => "Käyttäjä '''[[User:$1|$1]]''' ([[User talk:$1|keskustelu]]) on poistanut tämän sivun sen jälkeen, kun aloit muokata sitä.
 Varmista, että haluat luoda sivun uudelleen.",
 'recreate'                 => 'Luo uudelleen',
 

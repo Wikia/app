@@ -15,7 +15,6 @@ class AdminDashboardLogic {
 			'Listusers' => true,
 			'ListUsers' => true,
 			'MultipleUpload' => true,
-			'Promote' => true,
 			'Recentchanges' => true,
 			'RecentChanges' => true,
 			'ThemeDesigner' => true,
@@ -44,77 +43,80 @@ class AdminDashboardLogic {
 
 
 			// NOTE: keep this list in alphabetical order
-			static $exclusionList = array(
-				"AbTesting",
-				"ApiExplorer",
-				"ApiGate",
-				"Chat",
-				"CloseWiki",
-				"Code",
-				"Confirmemail",
-				"Connect",
-				"Contact",
-				"Contributions",
-				"CreateBlogPage",
-				"CreatePage",
-				"CreateNewWiki",
-				"CreateTopList",
-				"Crunchyroll",
-				"EditAccount",
-				"EditTopList",
-				"Following",
-				"Forum",
-				"ImageReview",
-				"Invalidateemail",
-				"LandingPageSmurfs",
-				"LayoutBuilder",
-				"LayoutBuilderForm",
-				"Leaderboard",
-				"LicensedVideoSwap",
-				"LookupContribs",
-				"LookupUser",
-				"ManageWikiaHome",
-				"MiniEditor",
-				"MovePage",
-				"Maps",
-				"MultiLookup",
-				"NewFiles",
-				"Newimages",
-				"Our404Handler",
-				"Phalanx",
-				"PhalanxStats",
-				"Places",
-				"Play",
-				"Preferences",
-				"PromoteImageReview",
-				"ScavengerHunt",
-				"Search",
-				"SendEmail",
-				"Signup",
-				"SiteWideMessages",
-				"SponsorshipDashboard",
-				"TaskManager",
-				"ThemeDesigner",
-				"ThemeDesignerPreview",
-				"UnusedVideos",
-				"Userlogin",
-				"UserManagement",
-				"UserPathPrediction",
-				"UserSignup",
-				"Version",
-				"VideoPageAdmin",
-				"Videos",
-				"WDACReview",
-				"WhereIsExtension",
-				"WikiActivity",
-				"WikiaConfirmEmail",
-				"WikiaHubsV3",
-				"WikiaSearch",
-				"WikiaStyleGuide",
-				"WikiFactory",
-				"WikiFactoryReporter",
-				"WikiStats",
-			);
+			static $exclusionList = [
+				'AbTesting',
+				'ApiExplorer',
+				'ApiGate',
+				'Chat',
+				'CloseWiki',
+				'Code',
+				'Confirmemail',
+				'Connect',
+				'Contact',
+				'Contributions',
+				'CreateBlogPage',
+				'CreatePage',
+				'CreateNewWiki',
+				'CreateTopList',
+				'Crunchyroll',
+				'EditAccount',
+				'EditTopList',
+				'Flags',
+				'Following',
+				'Forum',
+				'ImageReview',
+				'Images',
+				'InfoboxBuilder',
+				'Insights',
+				'Invalidateemail',
+				'LandingPageSmurfs',
+				'LayoutBuilder',
+				'LayoutBuilderForm',
+				'Leaderboard',
+				'LookupContribs',
+				'LookupUser',
+				'ManageWikiaHome',
+				'MiniEditor',
+				'MovePage',
+				'Maps',
+				'MultiLookup',
+				'NewFiles',
+				'Newimages',
+				'Our404Handler',
+				'Phalanx',
+				'PhalanxStats',
+				'Places',
+				'Play',
+				'Preferences',
+				'PromoteImageReview',
+				'ScavengerHunt',
+				'Search',
+				'SendEmail',
+				'Signup',
+				'SiteWideMessages',
+				'SponsorshipDashboard',
+				'TaskManager',
+				'ThemeDesigner',
+				'ThemeDesignerPreview',
+				'UnusedVideos',
+				'UserActivity',
+				'Userlogin',
+				'UserManagement',
+				'UserPathPrediction',
+				'UserSignup',
+				'Version',
+				'VideoPageAdmin',
+				'Videos',
+				'WDACReview',
+				'WhereIsExtension',
+				'WikiActivity',
+				'WikiaConfirmEmail',
+				'WikiaHubsV3',
+				'WikiaSearch',
+				'WikiaStyleGuide',
+				'WikiFactory',
+				'WikiFactoryReporter',
+			];
 			return (!in_array($alias, $exclusionList));
 		}
 		return false;
@@ -123,30 +125,34 @@ class AdminDashboardLogic {
 	/**
 	 *  @brief hook to add toolbar item for admin dashboard
 	 */
-	static function onBeforeToolbarMenu(&$items) {
+	static function onBeforeToolbarMenu( &$items, $type ) {
 		$wg = F::app()->wg;
-		if( $wg->User->isAllowed('admindashboard') ) {
-			$item = array(
+		if( $wg->User->isAllowed( 'admindashboard' ) && $type == 'main' ) {
+			$items[] =  [
 				'type' => 'html',
-				'html' => Wikia::specialPageLink('AdminDashboard', 'admindashboard-toolbar-link', array('data-tracking' => 'admindashboard/toolbar/admin') )
-			);
+				'html' => Wikia::specialPageLink(
+					'AdminDashboard',
+					'admindashboard-toolbar-link',
+					['data-tracking' => 'admindashboard/toolbar/admin']
+				)
+			];
+		}
+		return true;
+	}
 
-			if( is_array($items) ) {
-				$isMenuSubElPresent = false;
-
-				foreach($items as $el) {
-					if( isset($el['type']) && $el['type'] === 'menu' ) {
-						$isMenuSubElPresent = true;
-						break;
-					}
-				}
-
-				if( $isMenuSubElPresent ) {
-					$items[] = $item;
-				}
-			} else {
-				$items = array($item);
-			}
+	/**
+	 * For the special pages grouped in admin dashboard, update the HTML title, so it says:
+	 * "Name of the special page - Admin Dashboard - Wiki name - Wikia"
+	 *
+	 * This hook adds the "Admin Dashboard" part.
+	 *
+	 * @param Title $title
+	 * @param array $extraParts
+	 * @return bool
+	 */
+	static function onWikiaHtmlTitleExtraParts( Title $title, array &$extraParts ) {
+		if ( self::displayAdminDashboard( F::app(), $title ) ) {
+			$extraParts = [ wfMessage( 'admindashboard-header' ) ];
 		}
 		return true;
 	}

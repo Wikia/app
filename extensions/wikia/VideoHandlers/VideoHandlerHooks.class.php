@@ -3,13 +3,6 @@ class VideoHandlerHooks {
 
 	const VIDEO_WIKI = 298117;
 
-	static public function WikiaVideoNewImagesBeforeQuery( &$where ) {
-		$where[] = 'img_media_type != \'VIDEO\'';
-		$where[] = 'img_major_mime != \'video\'';
-		$where[] = 'img_media_type != \'swf\'';
-		return true;
-	}
-
 	static public function WikiaVideo_isMovable( $result, $index ) {
 		return true;
 	}
@@ -211,6 +204,21 @@ class VideoHandlerHooks {
 			// reset to default
 			F::app()->wg->DisableProxy = false;
 		}
+
+		return true;
+	}
+
+	/**
+	 * SUS-81: bind to hooks that are triggered when clearing the video_info cache
+	 *
+	 * This allow us to purge the cached responses of getVideoList method when a video is added / re-uploaded / deleted.
+	 *
+	 * @param VideoInfo $video
+	 * @return bool
+	 */
+	public static function clearVideoCache( VideoInfo $video ) {
+		Wikia\Logger\WikiaLogger::instance()->info( __METHOD__ );
+		CeleryPurge::purgeBySurrogateKey( VideoHandlerController::getVideoListSurrogateKey() );
 
 		return true;
 	}

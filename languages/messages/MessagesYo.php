@@ -178,39 +178,11 @@ $messages = array(
 'navigation'    => 'Atọ́ka',
 'and'           => '&#32;àti',
 
-# Cologne Blue skin
 'qbfind'         => 'Wíwárí',
 'qbbrowse'       => 'Ìṣíwò',
-'qbedit'         => 'Àtúnṣe',
 'qbpageoptions'  => 'Ojúewé yi',
-'qbmyoptions'    => 'Àwọn ojúewé mi',
-'qbspecialpages' => 'Àwọn ojúewé pàtàkì',
 'faq'            => 'FAQ',
-'faqpage'        => 'Project:FAQ',
 
-# Vector skin
-'vector-action-addsection'   => 'Àfikún orí-ọ̀rọ̀',
-'vector-action-delete'       => 'Ìparẹ́',
-'vector-action-move'         => 'Ìyípòdà',
-'vector-action-protect'      => 'Àbò',
-'vector-action-undelete'     => 'Ìmúkúrò ìparẹ́',
-'vector-action-unprotect'    => 'Ìjáwọ́ àbò',
-'vector-namespace-category'  => 'Ẹ̀ka',
-'vector-namespace-help'      => 'Ojúewé ìrànwọ́',
-'vector-namespace-image'     => 'Fáìlì',
-'vector-namespace-main'      => 'Ojúewé',
-'vector-namespace-media'     => 'Ojúewé amóhùnmáwòrán',
-'vector-namespace-mediawiki' => 'Ìránṣẹ́',
-'vector-namespace-project'   => 'Ojúewé iṣẹ́-ọwọ́',
-'vector-namespace-special'   => 'Ojúewé pàtàkì',
-'vector-namespace-talk'      => 'Ìfọ̀rọ̀wérọ̀',
-'vector-namespace-template'  => 'Àdàkọ',
-'vector-namespace-user'      => 'Ojúewé oníṣe',
-'vector-view-create'         => "Ṣ'èdá",
-'vector-view-edit'           => 'Àtúnṣe',
-'vector-view-history'        => 'Wo ìtàn',
-'vector-view-view'           => 'Kíkà',
-'vector-view-viewsource'     => 'Wo àmìọ̀rọ̀',
 'actions'                    => 'Àwọn ìgbéṣe',
 'namespaces'                 => 'Àwọn orúkọàyè',
 
@@ -233,7 +205,6 @@ $messages = array(
 'edit'              => 'Àtúnṣe',
 'create'            => 'Ṣèdá',
 'editthispage'      => "S'àtúnṣe ojúewé yi",
-'create-this-page'  => "Ṣè'dá ojúewé yìí",
 'delete'            => 'Ìparẹ́',
 'deletethispage'    => 'Pa ojúewé yi rẹ́',
 'undelete_short'    => 'Ìdápadà ìparẹ́ {{PLURAL:$1|àtúnṣe kan|àwọn àtúnṣe $1}}',
@@ -247,19 +218,9 @@ $messages = array(
 'talkpagelinktext'  => 'Ọ̀rọ̀',
 'specialpage'       => 'Ojúewé Pàtàkì',
 'personaltools'     => 'Àwọn irinṣẹ́ àdáni',
-'postcomment'       => 'Abala tuntun',
-'articlepage'       => 'Ìfihàn àkóónú ojúewé',
 'talk'              => 'Ìfọ̀rọ̀wérọ̀',
 'views'             => 'Àwọn ìfihàn',
 'toolbox'           => 'Àpótí irinṣẹ',
-'userpage'          => 'Wo ojúewé oníṣe',
-'projectpage'       => 'Wo ojúewé iṣẹ́ọwọ́',
-'imagepage'         => 'Wo ojúewé fáìlì',
-'mediawikipage'     => 'Wo ojúewé ìránṣẹ́',
-'templatepage'      => 'Wo ojúewé àdàkọ',
-'viewhelppage'      => 'Wo ojúewé ìrànlọ́wọ́',
-'categorypage'      => 'Wo ojúewé ẹ̀ka',
-'viewtalkpage'      => 'Wo ìfọ̀rọ̀wérọ̀',
 'otherlanguages'    => 'Àwọn èdè míràn',
 'redirectedfrom'    => '(Àtúnjúwe láti $1)',
 'redirectpagesub'   => 'Ojúewé àtúnjúwe',
@@ -416,8 +377,9 @@ Fún ìyédèpadà, ẹ jọ̀wọ́ ẹ lo [http://translatewiki.net/wiki/Main_
 # Login and logout pages
 'logouttext'                 => "'''Ẹ ti bọ́sọ́de.'''
 
-Ẹ le tẹ̀síwájú sí ní lo {{SITENAME}} láìmorúkọ yín, tàbí kí ẹ [[Special:UserLogin|padà wọlé]] bí ẹnikanan tàbí ẹlòmíràn.
+Ẹ le tẹ̀síwájú sí ní lo {{SITENAME}} láìmorúkọ yín, tàbí kí ẹ $1 bí ẹnikanan tàbí ẹlòmíràn.
 Àkíyèsí wípé àwọn ojúewé kan le hàn b'ígbà tójẹ́pé ẹ sì wọlé títí tí ẹ ó fi jọ̀wọ́ cache browser yín.",
+'logouttext-link-text'       => 'padà wọlé',
 'welcomecreation'            => "== Ẹ kú àbọ̀, $1! ==
 
 A ti ṣ'èdá àpamọ́ yín.
@@ -923,12 +885,6 @@ Gẹ́gẹ́ bíi olùmójútó ẹ ṣì le wo ìyàtọ̀ yìí; ẹ̀kúnrẹ
 Ní báyìí ná ẹ le ṣàwárí lọ́dọ̀ Google.
 Àkíyèsí pé àwọn atọ́ka wọn fún àkóónú {{SITENAME}} le mọ́ jẹ́ tuntun.',
 
-# Quickbar
-'qbsettings-none'          => 'Ìkankan',
-'qbsettings-fixedleft'     => 'Kíkàn sí òsì',
-'qbsettings-fixedright'    => 'Kíkàn sí ọ̀tún',
-'qbsettings-floatingleft'  => 'Léfòó sí òsì',
-'qbsettings-floatingright' => 'Léfòó sí ọ̀tún',
 
 # Preferences page
 'preferences'                 => 'Àwọn ìfẹ́ràn',
@@ -1303,7 +1259,7 @@ Bákannáà ẹ le è yàn láti jẹ́ kí àwọn ẹlòmíràn kó báyiín s
 'filedelete-nofile'           => "'''$1''' kò sí.",
 'filedelete-otherreason'      => 'Ìdíẹ̀ míràn/àfikún:',
 'filedelete-reason-otherlist' => 'Ìdí mìíràn',
-'filedelete-reason-dropdown'  => '*Àwọn ìdí fún ìparẹ́ 
+'filedelete-reason-dropdown'  => '*Àwọn ìdí fún ìparẹ́
 **Ìtakùnà ẹ̀tọ́àwòkọ
 **Fáìlì ẹ̀mejì',
 'filedelete-edit-reasonlist'  => 'Àtúnṣe àwọn ìdí ìparẹ́',
@@ -1562,7 +1518,7 @@ wiki: $PAGEEDITOR_WIKI
 Kò ní sí ìfitọ́nilétí míràn mọ́ fún àyípadà ọjọ́ọwájú àyàfi tí ẹ bá ṣàbẹ̀wò ojúewé yìí.
 Ẹ sì tún le ṣe àtúntò àwọn àmì ìfitọ́nilétí fún gbogbo àwọn ojúewé mímójútó nínú ìmójútó yín.
 
-             Sístẹ́mù ìfitọ́nilétí {{SITENAME}} yín 
+             Sístẹ́mù ìfitọ́nilétí {{SITENAME}} yín
 
 --
 Láti ṣèyípadà ìṣètò ìmójútó yín, ẹ lọ sí

@@ -49,9 +49,6 @@ $messages = array(
 'mytalk'     => 'Haaku tutala',
 'navigation' => 'Navikati',
 
-# Cologne Blue skin
-'qbedit'         => 'Fakahakohako',
-'qbspecialpages' => 'Tau Lau Mahuiga',
 
 'help'             => 'Lagomatai',
 'search'           => 'Kumi',
@@ -107,9 +104,6 @@ Ua nimo ke hiki e haau tau [[Special:Preferences|manako {{SITENAME}}]].',
 'notloggedin'             => 'Ai la hu ki loto',
 'createaccount'           => 'Talaga e poko',
 'gotaccountlink'          => 'Hu ki loto',
-
-# Special:PasswordReset
-'passwordreset-username' => 'Matahigoa he tagata',
 
 # Edit pages
 'summary'      => 'Fakakatoakatoa:',

@@ -11,14 +11,14 @@
 				// render badge notification
 				case NotificationsController::NOTIFICATION_NEW_ACHIEVEMENTS_BADGE:
 ?>
-		<div data-type="<?= $notification['type'] ?>" class="WikiaBadgeNotification">
+		<div data-type="<?= Sanitizer::encodeAttribute( $notification['type'] ); ?>" class="WikiaBadgeNotification">
 			<a class="sprite close-notification"></a>
-			<img class="badge" src="<?= $notification['data']['picture'] ?>" width="90" height="90" alt="<?= $notification['data']['name'] ?>">
+			<img class="badge" src="<?= Sanitizer::encodeAttribute( $notification['data']['picture'] ); ?>" width="90" height="90" alt="<?= Sanitizer::encodeAttribute( $notification['data']['name'] ); ?>">
 			<p>
-				<big><?= $notification['data']['points'] ?></big>
+				<big><?= htmlspecialchars( $notification['data']['points'] ) ?></big>
 				<?= $notification['message'] ?>
 			</p>
-			<div class="notification-details"><a href="<?= htmlspecialchars($notification['data']['userPage']) ?>"><?= wfMsg('oasis-badge-notification-see-more') ?></a></div>
+			<div class="notification-details"><a href="<?= htmlspecialchars($notification['data']['userPage']) ?>"><?= wfMessage( 'oasis-badge-notification-see-more' )->escaped(); ?></a></div>
 		</div>
 <?php
 					break;

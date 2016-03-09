@@ -79,8 +79,8 @@ class NormalizerFormatter implements FormatterInterface
 
         if (is_object($data)) {
             if ($data instanceof Exception) {
-                return $this->normalizeException($data);
-            }
+				return $this->normalizeException($data);
+			}
 
             return sprintf("[object] (%s: %s)", get_class($data), $this->toJson($data, true));
         }

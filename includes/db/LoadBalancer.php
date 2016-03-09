@@ -21,11 +21,15 @@ class LoadBalancer {
 	private $mParentInfo, $mLagTimes;
 	private $mLoadMonitorClass, $mLoadMonitor;
 
+	/** @var string|bool Reason the LB is read-only or false if not */
+	private $readOnlyReason = false;
+
 	/**
 	 * @param $params Array with keys:
 	 *    servers           Required. Array of server info structures.
 	 *    masterWaitTimeout Replication lag wait timeout
 	 *    loadMonitor       Name of a class used to fetch server lag and load.
+	 *    readOnlyReason    Reason the master DB is read-only if so [optional]
 	 */
 	function __construct( $params ) {
 		if ( !isset( $params['servers'] ) ) {
@@ -50,6 +54,10 @@ class LoadBalancer {
 		$this->mLaggedSlaveMode = false;
 		$this->mErrorConnection = false;
 		$this->mAllowLagged = false;
+
+		if ( isset( $params['readOnlyReason'] ) && is_string( $params['readOnlyReason'] ) ) {
+			$this->readOnlyReason = $params['readOnlyReason'];
+		}
 
 		if ( isset( $params['loadMonitor'] ) ) {
 			$this->mLoadMonitorClass = $params['loadMonitor'];
@@ -137,16 +145,19 @@ class LoadBalancer {
 	 * @return bool|int|string
 	 */
 	function getRandomNonLagged( $loads, $wiki = false ) {
-		# Unset excessively lagged servers
-		$lags = $this->getLagTimes( $wiki );
-		foreach ( $lags as $i => $lag ) {
-			if ( $i != 0 ) {
-				if ( $lag === false ) {
-					wfDebugLog( 'replication', "Server #$i ({$this->mServers[$i]['host']}) is not replicating\n" );
-					unset( $loads[$i] );
-				} elseif ( isset( $this->mServers[$i]['max lag'] ) && $lag > $this->mServers[$i]['max lag'] ) {
-					wfDebugLog( 'replication', "Server #$i ({$this->mServers[$i]['host']}) is excessively lagged ($lag seconds)\n" );
-					unset( $loads[$i] );
+		// PLATFORM-1489: only check slave lags when we're not using consul (it performs its own healtchecks)
+		if ( !$this->hasConsulConfig() ) {
+			# Unset excessively lagged servers
+			$lags = $this->getLagTimes($wiki);
+			foreach ($lags as $i => $lag) {
+				if ($i != 0) {
+					if ($lag === false) {
+						wfDebugLog('replication', "Server #$i ({$this->mServers[$i]['host']}) is not replicating\n");
+						unset($loads[$i]);
+					} elseif (isset($this->mServers[$i]['max lag']) && $lag > $this->mServers[$i]['max lag']) {
+						wfDebugLog('replication', "Server #$i ({$this->mServers[$i]['host']}) is excessively lagged ($lag seconds)\n");
+						unset($loads[$i]);
+					}
 				}
 			}
 		}
@@ -250,10 +261,13 @@ class LoadBalancer {
 						$laggedSlaveMode = true;
 
 						// Wikia change - begin
+						global $wgDBname, $wgDBcluster;
+
 						Wikia\Logger\WikiaLogger::instance()->error( 'All slaves lagged', [
 							'exception' => new Exception(),
 							'group'     => $group,
-							'wiki'      => $wiki
+							'wiki'      => $wiki ?: $wgDBname, # $wiki = false means a local DB
+							'cluster'   => $wgDBcluster,
 						] );
 						// Wikia change - end
 					}
@@ -430,7 +444,7 @@ class LoadBalancer {
 
 		$then = microtime( true ); // Wikia change
 
-		wfDebug( __METHOD__.": Waiting for slave #$index to catch up...\n" );
+		wfDebug( __METHOD__.": Waiting for slave #$index ({$conn->getServer()}) to catch up...\n" );
 		$result = $conn->masterPosWait( $this->mWaitForPos, $this->mWaitTimeout );
 
 		if ( $result == -1 || is_null( $result ) ) {
@@ -729,6 +743,19 @@ class LoadBalancer {
 		}
 
 		$db->setLBInfo( $server );
+
+		/**
+		 * Wikia change
+		 *
+		 * Manually apply https://github.com/wikimedia/mediawiki/commit/52010e6d21d8bdefa1c89fbc9421850185cc5011
+		 *
+		 * Thanks to this we can call $db->getLBInfo( 'readOnlyReason' )
+		 *
+		 * @see SUS-108
+		 * @author macbre
+		 */
+		$db->setLBInfo( 'readOnlyReason', $this->readOnlyReason );
+
 		if ( isset( $server['fakeSlaveLag'] ) ) {
 			$db->setFakeSlaveLag( $server['fakeSlaveLag'] );
 		}
@@ -825,7 +852,7 @@ class LoadBalancer {
 	/**
 	 * Return the server info structure for a given index, or false if the index is invalid.
 	 * @param $i
-	 * @return bool
+	 * @return array|bool
 	 */
 	function getServerInfo( $i ) {
 		if ( isset( $this->mServers[$i] ) ) {
@@ -968,6 +995,18 @@ class LoadBalancer {
 	}
 
 	/**
+	 * @return string|bool Reason the master is read-only or false if it is not
+	 * @since 1.27
+	 */
+	public function getReadOnlyReason() {
+		if ( $this->readOnlyReason !== false ) {
+			return $this->readOnlyReason;
+		}
+
+		return false;
+	}
+
+	/**
 	 * Disables/enables lag checks
 	 * @param $mode null
 	 * @return bool
@@ -1102,5 +1141,16 @@ class LoadBalancer {
 	 */
 	function clearLagTimeCache() {
 		$this->mLagTimes = null;
+	}
+
+	/**
+	 * Wikia change: return true if this load balancer has slave nodes config powered by Consul
+	 *
+	 * @see PLATFORM-1489
+	 * @return bool
+	 */
+	function hasConsulConfig() {
+		$firstSlaveInfo = $this->getServerInfo( 1 ); // e.g. slave.db-g.service.consul
+		return is_array( $firstSlaveInfo ) && Wikia\Consul\Client::isConsulAddress( $firstSlaveInfo['hostName'] );
 	}
 }

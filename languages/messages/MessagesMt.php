@@ -415,30 +415,12 @@ $messages = array(
 'navigation'    => 'Navigazzjoni',
 'and'           => '&#32;u',
 
-# Cologne Blue skin
 'qbfind'         => 'Fittex',
 'qbbrowse'       => 'Qalleb',
-'qbedit'         => 'Immodifika',
 'qbpageoptions'  => 'Din il-paġna',
 'qbpageinfo'     => 'Kuntest',
-'qbmyoptions'    => 'Il-paġni tiegħi',
-'qbspecialpages' => 'Paġni speċjali',
 'faq'            => 'Mistoqsijiet komuni',
-'faqpage'        => 'Project:FAQ',
 
-# Vector skin
-'vector-action-addsection'       => 'Żid diskussjoni',
-'vector-action-delete'           => 'Ħassar',
-'vector-action-move'             => 'Mexxi',
-'vector-action-protect'          => 'Ipproteġi',
-'vector-action-undelete'         => 'Irkupra',
-'vector-action-unprotect'        => 'Biddel il-protezzjoni',
-'vector-simplesearch-preference' => 'Ippermetti suġġerimenti għat-tfittxija avvanzata (disponibbli biss għall-aspett grafiku Vector)',
-'vector-view-create'             => 'Oħloq',
-'vector-view-edit'               => 'Editja',
-'vector-view-history'            => 'Ara l-kronoloġija',
-'vector-view-view'               => 'Aqra',
-'vector-view-viewsource'         => 'Ara s-sors',
 'actions'                        => 'Azzjonijiet',
 'namespaces'                     => 'Spazji tal-isem',
 'variants'                       => 'Varjanti',
@@ -461,7 +443,6 @@ $messages = array(
 'edit'              => 'Editja',
 'create'            => 'Oħloq',
 'editthispage'      => 'Immodifika din il-paġna',
-'create-this-page'  => 'Oħloq din il-paġna',
 'delete'            => 'Ħassar',
 'deletethispage'    => 'Ħassar din il-paġna',
 'undelete_short'    => 'Irkupra {{PLURAL:$1|modifika waħda|$1 modifiki}}',
@@ -476,19 +457,9 @@ $messages = array(
 'talkpagelinktext'  => 'Diskussjoni',
 'specialpage'       => 'Paġna speċjali',
 'personaltools'     => 'Għodda personali',
-'postcomment'       => 'Sezzjoni ġdida',
-'articlepage'       => 'Ara l-artiklu',
 'talk'              => 'Diskussjoni',
 'views'             => 'Veduti',
 'toolbox'           => 'Għodda',
-'userpage'          => 'Ara l-paġna tal-utent',
-'projectpage'       => 'Ara l-paġna tal-proġett',
-'imagepage'         => 'Ara l-paġna tal-fajl',
-'mediawikipage'     => 'Ara l-paġna tal-messaġġ',
-'templatepage'      => 'Ara l-mudell',
-'viewhelppage'      => 'Ara l-paġna tal-għajnuna',
-'categorypage'      => 'Ara l-kategorija',
-'viewtalkpage'      => 'Ara d-diskussjoni',
 'otherlanguages'    => "F'lingwi oħrajn",
 'redirectedfrom'    => '(Riindirizzat minn $1)',
 'redirectpagesub'   => "Paġna ta' rindirizz",
@@ -666,8 +637,9 @@ Ir-raġuni li ġiet mogħtija kienet ''$2''.",
 # Login and logout pages
 'logouttext'                 => "'''Bħalissa tinsab barra mill-kont tiegħek.'''
 
-Tista' tkompli tuża' {{SITENAME}} bħala utent anonimu, jew tista' terġa [[Special:UserLogin|tidħol]] bħala l-istess utent jew wieħed differenti.
+Tista' tkompli tuża' {{SITENAME}} bħala utent anonimu, jew tista' terġa $1 bħala l-istess utent jew wieħed differenti.
 Kun af li ċerti paġni jistgħu jkomplu jidhru bħallikieku l-illogjar 'l barra mill-kont qatt ma seħħ, sakemm ma tħassarx il-cache tal-browser.",
+'logouttext-link-text'       => 'tidħol',
 'welcomecreation'            => "== Merħba, $1! ==
 Il-kont tiegħek ġie maħluq.<br />
 Tinsiex tippersonalizza l-[[Special:Preferences|preferenzi]] ta' {{SITENAME}}.",
@@ -779,34 +751,6 @@ Biex tkompli l-aċċess tal-kont tiegħek huwa neċessarju li toħloq password �
 'resetpass-wrong-oldpass'   => "Password temporanja jew kurrenti invalida.
 Jista' jkun li int diġà biddilt il-password, jew għamilt rikjesta għal password temporanja ġdida.",
 'resetpass-temp-password'   => 'Password temporanja:',
-
-# Special:PasswordReset
-'passwordreset'                    => 'Irrisettja l-password',
-'passwordreset-text'               => 'Imla din il-formola sabiex tirċievi notifikazzjoni permezz tal-posta elettronika tad-dettalji tal-kont tiegħek.',
-'passwordreset-legend'             => 'Irrisettja l-password',
-'passwordreset-disabled'           => 'L-irrisettjar tal-password fuq din il-wiki ġie diżattivat.',
-'passwordreset-pretext'            => "{{PLURAL:$1||Daħħal wieħed mill-biċċiet ta' informazzjoni t'hawn taħt}}",
-'passwordreset-username'           => 'Isem tal-utent:',
-'passwordreset-domain'             => 'Dominju:',
-'passwordreset-capture'            => 'Ara l-kontenut tal-messaġġ?',
-'passwordreset-capture-help'       => 'Jekk tagħżel din il-kaxxa, l-indirizz elettroniku (bil-password temporanja) se jiġi muri lilek barra milli jintbagħat lill-utent.',
-'passwordreset-email'              => 'Indirizz elettroniku:',
-'passwordreset-emailtitle'         => 'Dettalji tal-kont fuq {{SITENAME}}',
-'passwordreset-emailtext-ip'       => "Xi ħadd (probabilment int, mill-indirizz IP $1) għamel rikjesta sabiex jingħata password ġdida sabiex jaċċessa l-{{SITENAME}} ($4). {{PLURAL:$3|L-utent assoċjat|L-utenti assoċjati}} ma' dan l-indirizz elettroniku huma:
-
-$2
-
-{{PLURAL:$3|Din il-password temporanja se tiskadi|Dawn il-passwords temporanji se jiskadu}} fi żmien {{PLURAL:$5|ġurnata|$5 jum}}. Inti għadek tidħol fil-kont tiegħek u tagħżel password ġdida issa. Jekk xi ħadd ieħor għamel din ir-rikjesta, jew jekk ftakart il-password oriġinali, u m'għadikx trid tbiddilha, inti tista' tinjora dan il-messaġġ u tibqa' tuża' l-password il-qadima.",
-'passwordreset-emailtext-user'     => "L-utent $1 fuq {{SITENAME}} għamel rikjesta sabiex jingħata password ġdida sabiex jaċċessa l-{{SITENAME}} ($4). {{PLURAL:$3|L-utent assoċjat|L-utenti assoċjati}} ma' dan l-indirizz elettroniku huma:
-
-$2
-
-{{PLURAL:$3|Din il-password temporanja se tiskadi|Dawn il-passwords temporanji se jiskadu}} fi żmien {{PLURAL:$5|ġurnata|$5 jum}}. Inti għadek tidħol fil-kont tiegħek u tagħżel password ġdida issa. Jekk xi ħadd ieħor għamel din ir-rikjesta, jew jekk ftakart il-password oriġinali, u m'għadikx trid tbiddilha, inti tista' tinjora dan il-messaġġ u tibqa' tuża' l-password il-qadima.",
-'passwordreset-emailelement'       => 'Isem tal-utent: $1
-Password temporanja: $2',
-'passwordreset-emailsent'          => 'Intbagħtet ittra-e bħala tfakkira.',
-'passwordreset-emailsent-capture'  => 'Intbagħtet ittra-e bħala tfakkira, bil-kontenut jidher hawn taħt.',
-'passwordreset-emailerror-capture' => "Ġiet ġenerata ittra-e ta' tfakkira, li l-kontenut tagħha jidher hawn taħt. Madanakollu, il-posta ma ntbagħtitx lill-utent: $1",
 
 # Special:ChangeEmail
 'changeemail'          => 'Biddel l-indirizz elettroniku',
@@ -1277,14 +1221,6 @@ Ipprova għamel prefiss għall-inkjesta tiegħek ma' ''all:'' sabiex tfittex il-
 Sadanittant, tista' tipprova tfittex bil-Google.
 Innota però li l-werreja tal-kontenut ta' {{SITENAME}} f'dawn is-siti, jistgħu ma jkunux aġġornati.",
 
-# Quickbar
-'qbsettings'                => "''Quickbar''",
-'qbsettings-none'           => 'Xejn',
-'qbsettings-fixedleft'      => 'Mehmuż fix-xellug',
-'qbsettings-fixedright'     => 'Mehmuż fil-lemin',
-'qbsettings-floatingleft'   => "''Floating'' lejn ix-xellug",
-'qbsettings-floatingright'  => "''Floating'' lejn il-lemin",
-'qbsettings-directionality' => 'Fiss, skont id-direzzjoni tat-test fil-lingwa tiegħek',
 
 # Preferences page
 'preferences'                   => 'Preferenzi',
@@ -2843,25 +2779,11 @@ Kull azzjonijiet ta' importazzjoni tal-transwiki jiġu reġistrati fil-[[Special
 
 # Stylesheets
 'common.css'      => '/* CSS li tpoġġa hawnhekk irrid jiġi applikat fl-iskins kollha */',
-'standard.css'    => '/* CSS li tpoġġa hawnhekk se jaffetwa l-utenti li jagħmlu użu mill-iskin Standard */',
-'nostalgia.css'   => '/* CSS li tpoġġa hawnhekk se jaffetwa l-utenti li jagħmlu użu mill-aspett grafiku Nostalgia */',
-'cologneblue.css' => '/* CSS li tpoġġa hawnhekk se jaffetwa dawk l-utenti li jagħmlu użu mill-aspett grafiku Cologne Blue */',
 'monobook.css'    => "/* CSS li tpoġġa hawnhekk se jaffetwa dawk l-utenti li jagħmlu użu mill-iskin ''Monobook'' */",
-'myskin.css'      => "/* CSS li tpoġġa hawnhekk se jaffetwa dawk l-utenti li jagħmlu użu mill-iskin ''L-Iskin tiegħi'' */",
-'chick.css'       => '/* CSS li tpoġġa hawnhekk se jaffetwa dawk l-utenti li jagħmlu użu mill-aspett grafiku Ckick */',
-'simple.css'      => '/* CSS li tpoġġa hawnhekk se jaffetwa dawk l-utenti li jagħmlu użu mill-aspett grafiku Simple */',
-'modern.css'      => '/* CSS li tpoġġa hawnhekk se jaffetwa dawk l-utenti li jagħmlu użu mill-aspett grafiku Modern */',
 
 # Scripts
 'common.js'      => "/* Kull ''JavaScript'' hawnhekk jiġi mniżżel għal kull utent f'kull tniżżil ta' paġna. */",
-'standard.js'    => "/* Kull ''JavaScript'' hawnhekk jiġi mniżżel għal dawk l-utenti li qegħdin jagħmlu użu mill-iskin ''Standard'' */",
-'nostalgia.js'   => "/* Kull ''JavaScript'' hawnhekk jiġi mniżżel għal dawk l-utenti li qegħdin jagħmlu użu mill-iskin ''Nostalgia'' */",
-'cologneblue.js' => "/* Kull ''JavaScript'' hawnhekk jiġi mniżżel għal dawk l-utenti li qegħdin jagħmlu użu mill-iskin ''Cologne Blue'' */",
 'monobook.js'    => "/* Kull ''JavaScript'' hawnhekk jiġi mniżżel għal dawk l-utenti li qegħdin jagħmlu użu mill-iskin ''Monobook'' */",
-'myskin.js'      => "/* Kull ''JavaScript'' hawnhekk jiġi mniżżel għal dawk l-utenti li qegħdin jagħmlu użu mill-iskin ''MySkin'' */",
-'chick.js'       => "/* Kull ''JavaScript'' hawnhekk jiġi mniżżel għal dawk l-utenti li qegħdin jagħmlu użu mill-iskin ''Chick'' */",
-'simple.js'      => "/* Kull ''JavaScript'' hawnhekk jiġi mniżżel għal dawk l-utenti li qegħdin jagħmlu użu mill-iskin ''Simple'' */",
-'modern.js'      => "/* Kull ''JavaScript'' hawnhekk jiġi mniżżel għal dawk l-utenti li qegħdin jagħmlu użu mill-iskin ''Modern''*/",
 
 # Metadata
 'notacceptable' => "Is-Server tal-wiki m'għandux format li l-klijent tiegħek ikun jista' jaqra.",
@@ -2900,14 +2822,7 @@ Kull azzjonijiet ta' importazzjoni tal-transwiki jiġu reġistrati fil-[[Special
 'pageinfo-viewsperedit'     => 'Viżti kull modifika',
 
 # Skin names
-'skinname-standard'    => 'Classic',
-'skinname-nostalgia'   => 'Nostalgia',
-'skinname-cologneblue' => 'Cologne Blue',
 'skinname-monobook'    => 'Monobook',
-'skinname-myskin'      => 'MySkin',
-'skinname-chick'       => 'Chick',
-'skinname-simple'      => 'Simple',
-'skinname-modern'      => 'Modern',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Marka l-modifiki bħalha verifikati',

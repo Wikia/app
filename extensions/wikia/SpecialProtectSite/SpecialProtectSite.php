@@ -18,9 +18,6 @@ if (!defined('MEDIAWIKI')) {
 
 $dir = dirname(__FILE__);
 
-/* Register the new user rights level */
-$wgAvailableRights[] = 'protectsite';
-
 /* Set the group access permissions */
 #$wgGroupPermissions['sysop']['protectsite'] = true; //is conditionally set outside of extension
 

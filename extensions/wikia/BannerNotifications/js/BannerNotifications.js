@@ -82,6 +82,9 @@
 
 		this.hidden = false;
 
+		// If the page is already scrolled, make sure we update our position
+		handleScrolling();
+
 		// Close notification after specified amount of time
 		if (typeof this.timeout === 'number') {
 			setTimeout(function () {
@@ -177,7 +180,7 @@
 				onScroll.bind(handleScrolling);
 			});
 		}
-		createBackendNotification();
+		createBackendNotifications();
 	}
 
 	/**
@@ -185,12 +188,11 @@
 	 * passed from the server on page load.
 	 * (if such one exists)
 	 */
-	function createBackendNotification() {
-		var $backendNotification = $('.banner-notification');
-		if ($backendNotification.length) {
-			backendNotification = new BannerNotification($backendNotification);
+	function createBackendNotifications() {
+		$('.banner-notification').each(function () {
+			var backendNotification = new BannerNotification($(this));
 			setUpClose(backendNotification);
-		}
+		});
 	}
 
 	/**

@@ -485,16 +485,11 @@ $messages = array(
 'navigation'    => 'Şarlaw',
 'and'           => '&#32;jäne',
 
-# Cologne Blue skin
 'qbfind'         => 'Tabw',
 'qbbrowse'       => 'Şolw',
-'qbedit'         => 'Öñdew',
 'qbpageoptions'  => 'Bul bet',
 'qbpageinfo'     => 'Aýnala',
-'qbmyoptions'    => 'Betterim',
-'qbspecialpages' => 'Arnaýı better',
 'faq'            => 'Jïi qoýılğan sawaldar',
-'faqpage'        => 'Project:Jïi qoýılğan sawaldar',
 
 'errorpagetitle'    => 'Qatelik',
 'returnto'          => '$1 degenge qaýta kelw.',
@@ -513,7 +508,6 @@ $messages = array(
 'edit'              => 'Öñdew',
 'create'            => 'Bastaw',
 'editthispage'      => 'Betti öñdew',
-'create-this-page'  => 'Jaña bet bastaw',
 'delete'            => 'Joyw',
 'deletethispage'    => 'Betti joyw',
 'undelete_short'    => '$1 öñdeme joywın boldırmaw',
@@ -527,19 +521,9 @@ $messages = array(
 'talkpagelinktext'  => 'Talqılawı',
 'specialpage'       => 'Arnaýı bet',
 'personaltools'     => 'Jeke quraldar',
-'postcomment'       => 'Mändeme jöneltw',
-'articlepage'       => 'Mağlumat betin qaraw',
 'talk'              => 'Talqılaw',
 'views'             => 'Körinis',
 'toolbox'           => 'Quraldar',
-'userpage'          => 'Qatıswşı betin qaraw',
-'projectpage'       => 'Joba betin qaraw',
-'imagepage'         => 'Taspa betin qaraw',
-'mediawikipage'     => 'Xabar betin qaraw',
-'templatepage'      => 'Ülgi betin qaraw',
-'viewhelppage'      => 'Anıqtama betin qaraw',
-'categorypage'      => 'Sanat betin qaraw',
-'viewtalkpage'      => 'Talqılaw betin qaraw',
 'otherlanguages'    => 'Basqa tilderde',
 'redirectedfrom'    => '($1 betinen aýdatılğan)',
 'redirectpagesub'   => 'Aýdatw beti',
@@ -1118,13 +1102,6 @@ Añğartpa: bağıttaw siltemelerin qoldanğanda bul bağan qaýta qoýıladı.'
 Äzirşe Google arqılı izdewge boladı.
 Añğartpa: {{SITENAME}} torabınıñ mağlumat tizbeleri eskirgen bolwı mümkin.',
 
-# Quickbar
-'qbsettings'               => 'Mäzir',
-'qbsettings-none'          => 'Eşqandaý',
-'qbsettings-fixedleft'     => 'Solğa bekitilgen',
-'qbsettings-fixedright'    => 'Oñğa bekitilgen',
-'qbsettings-floatingleft'  => 'Solğa qalqığan',
-'qbsettings-floatingright' => 'Oñğa qalqığan',
 
 # Preferences page
 'preferences'               => 'Baptalımdar',
@@ -2255,25 +2232,11 @@ Wïkï-aparw üşin sırttan alw barlıq äreketter [[{{#special:Log}}/import|s�
 
 # Stylesheets
 'common.css'      => '/* Mında ornalastırılğan CSS barlıq mänerlerde qoldanıladı */',
-'standard.css'    => '/* Mında ornalastırılğan CSS tek «Dağdılı» (standard) mänerin paýdalanwşılarına ıqpal etedi */',
-'nostalgia.css'   => '/* Mında ornalastırılğan CSS tek «Añsaw» (nostalgia) mänerin paýdalanwşılarına ıqpal etedi */',
-'cologneblue.css' => '/* Mında ornalastırılğan CSS tek «Köln zeñgirligi» (cologneblue) mänerin paýdalanwşılarına ıqpal etedi skin */',
 'monobook.css'    => '/* Mında ornalastırılğan CSS tek «Dara kitap» (monobook) mänerin paýdalanwşılarına ıqpal etedi */',
-'myskin.css'      => '/* Mında ornalastırılğan CSS tek «Öz mänerim» (myskin) mänerin paýdalanwşılarına ıqpal etedi */',
-'chick.css'       => '/* Mında ornalastırılğan CSS tek «Balapan» (chick) mänerin paýdalanwşılarına ıqpal etedi */',
-'simple.css'      => '/* Mında ornalastırılğan CSS tek «Kädimgi» (simple) mänerin paýdalanwşılarına ıqpal etedi */',
-'modern.css'      => '/* Mında ornalastırılğan CSS tek «Zamanawï» (modern) mänerin paýdalanwşılarına ıqpal etedi */',
 
 # Scripts
 'common.js'      => '/* Mındağı ärtürli JavaScript kez kelgen bet qotarılğanda barlıq paýdalanwşılar üşin jegiledi. */',
-'standard.js'    => '/* Mındağı JavaScript tek «Dağdılı» (standard) mänerin paýdalanwşılar üşin jegiledi */',
-'nostalgia.js'   => '/* Mındağı JavaScript tek «Añsaw» (nostalgia) mänerin paýdalanwşılar üşin jegiledi*/',
-'cologneblue.js' => '/* Mındağı JavaScript tek «Köln zeñgirligi» (cologneblue) mänerin paýdalanwşılar üşin jegiledi */',
 'monobook.js'    => '/* Mındağı JavaScript tek «Dara kitap» (monobook) mänerin paýdalanwşılar üşin jegiledi */',
-'myskin.js'      => '/* Mındağı JavaScript tek «Öz mänerim» (myskin) mänerin paýdalanwşılar üşin jegiledi */',
-'chick.js'       => '/* Mındağı JavaScript tek «Balapan» (chick) mänerin paýdalanwşılar üşin jegiledi */',
-'simple.js'      => '/* Mındağı JavaScript tek «Kädimgi» (simple) mänerin paýdalanwşılar üşin jegiledi */',
-'modern.js'      => '/* Mındağı JavaScript tek «Zamanawï» (modern) mänerin paýdalanwşılar üşin jegiledi */',
 
 # Metadata
 'notacceptable' => 'Tutınğışıñız oqï alatın pişimi bar derekterdi bul wïkï server jetistire almaýdı.',
@@ -2298,14 +2261,7 @@ Bunıñ sebebi şettik torap siltemesinen bolwı mümkin.',
 'spam_blanking'       => '$1 degenge siltemeleri bar barlıq tüzetwler tazartıldı',
 
 # Skin names
-'skinname-standard'    => 'Dağdılı (standard)',
-'skinname-nostalgia'   => 'Añsaw (nostalgia)',
-'skinname-cologneblue' => 'Köln zeñgirligi (cologneblue)',
 'skinname-monobook'    => 'Dara kitap (monobook)',
-'skinname-myskin'      => 'Öz mänerim (myskin)',
-'skinname-chick'       => 'Balapan (chick)',
-'skinname-simple'      => 'Kädimgi (simple)',
-'skinname-modern'      => 'Zamanawï (modern)',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Zertteldi dep belgilew',

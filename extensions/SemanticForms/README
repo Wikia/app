@@ -1,8 +1,9 @@
 == About ==
 
-Semantic Forms is an extension to MediaWiki that works in
-conjunction with another extension, Semantic MediaWiki, to allow
-for the creation and usage of forms to add and edit semantic data.
+Semantic Forms is an extension to MediaWiki that allows for the
+creation and usage of forms to add and edit semantic data. It can
+work in conjuction with two other extensions that both handle the
+storage of data: Semantic MediaWiki and Cargo.
 For much more information on Semantic Forms, see the extension
 homepage at
 http://www.mediawiki.org/wiki/Extension:Semantic_Forms
@@ -19,14 +20,26 @@ Much of the jQuery and related Javascript functionality was initially
 created by Sanyam Goyal as part of the 2010 Google Summer of Code
 program.
 
-Important code contributions were also made by Christoph Burgmer,
-Daniel Friesen, Daniel Hansch, Eugene Mednikov, Harold Solbrig, Jayson
-Harshbarger, Jeffrey Stuckman, Jeroen De Dauw, Louis Gerbarg, Matt
-Williamson, Nils Opperman, Patrick Nagel, Remco de Boer, Sergey
-Chernyshev, wheresmytab and others.
+Integration into the Page Schemas extension was initially created by
+Ankit Garg as part of the 2011 Google Summer of Code.
 
-Language translations were provided by many people; see each file in
-the /languages directory for the full listings.
+Support for section handling, and PHPUnit tests, were added by Himeshi
+De Silva as part of the 2013 Google Summer of Code.
+
+The "tokens" and updated "combobox" input types were created by
+Jatin Mehta as part of the 2014 Google Summer of Code.
+
+Important code contributions were also made by Christoph Burgmer,
+Cindy Cicalese, Daniel Friesen, Daniel Hansch, Eugene Mednikov,
+Harold Solbrig, lmārs Poikāns, Jayson Harshbarger, Jeffrey Stuckman,
+Joel Natividad, Jeroen De Dauw, Joel Natividad, Louis Gerbarg, LY Meng,
+ Mathias Lidal, Matt Williamson, MWJames, Niklas Laxstrom, Nils
+Opperman, Patrick Nagel, Remco de Boer, Sebastian Richter, Sergey
+Chernyshev, Siebrand Mazeland, Simon Heimler, Solitarius, Vedmaka,
+wheresmytab and others.
+
+Language translations were provided by many people; see the files in
+the /i18n and /languages directories for the full listings.
 
 == Contact ==
 
@@ -47,3 +60,11 @@ Bug reports should be submitted at the MediaWiki Bugzilla site:
 * Semantic Forms includes the FancyBox JavaScript library by
 Janis Skarnelis (http://fancybox.net). FancyBox is distributed
 under both the MIT and GPL licenses.
+
+* Semantic Forms also includes the Dynatree JavaScript library by
+Martin Wendt (https://code.google.com/p/dynatree/). Dynatree is also
+distributed under both the MIT and GPL licenses.
+
+* Semantic Forms also includes the Select2 JavaScript library by Igor
+Vaynberg (https://github.com/ivaynberg/select2). Select2 is
+distributed under both the Apache and GPL licenses.

@@ -339,6 +339,7 @@ function wfRandom() {
  * so no fancy : for IIS7.
  *
  * %2F in the page titles seems to fatally break for some reason.
+ * @see http://httpd.apache.org/docs/2.2/mod/core.html#allowencodedslashes
  *
  * @param $s String:
  * @return string
@@ -1274,9 +1275,8 @@ function wfReadOnly() {
  * @return bool
  */
 function wfReadOnlyReason() {
-	global $wgReadOnly;
 	wfReadOnly();
-	return $wgReadOnly;
+	return wfMessage( 'wikia-read-only-mode' )->plain();
 }
 
 /**
@@ -2322,13 +2322,6 @@ function wfSuppressWarnings( $end = false ) {
 		}
 	} else {
 		if ( !$suppressCount ) {
-			// E_DEPRECATED and E_USER_DEPRECATED are undefined in PHP 5.2
-			if( !defined( 'E_DEPRECATED' ) ) {
-				define( 'E_DEPRECATED', 8192 );
-			}
-			if( !defined( 'E_USER_DEPRECATED' ) ) {
-				define( 'E_USER_DEPRECATED', 16384 );
-			}
 			$originalLevel = error_reporting( E_ALL & ~( E_WARNING | E_NOTICE | E_USER_WARNING | E_USER_NOTICE | E_DEPRECATED | E_USER_DEPRECATED | E_STRICT ) );
 		}
 		++$suppressCount;
@@ -2423,9 +2416,9 @@ function wfTimestamp( $outputtype = TS_UNIX, $ts = 0 ) {
 		# TS_EXIF
 	} elseif ( preg_match( '/^(\d{4})(\d\d)(\d\d)(\d\d)(\d\d)(\d\d)$/D', $ts, $da ) ) {
 		# TS_MW
-	} elseif ( preg_match( '/^-?\d{1,13}$/D', $ts ) ) {
+	} elseif ( preg_match( '/^-?\d{1,13}(\.\d+)?$/D', $ts ) ) {
 		# TS_UNIX
-		$uts = $ts;
+		$uts = (int) $ts;
 		$strtime = "@$ts"; // http://php.net/manual/en/datetime.formats.compound.php
 	} elseif ( preg_match( '/^\d{2}-\d{2}-\d{4} \d{2}:\d{2}:\d{2}.\d{6}$/', $ts ) ) {
 		# TS_ORACLE // session altered to DD-MM-YYYY HH24:MI:SS.FF6
@@ -2969,9 +2962,10 @@ function wfShellExec( $cmd, &$retval = null, $environ = array() ) {
 	ob_end_clean();
 
 	// Wikia change - begin
-	if ( $retval > 0 ) {
+	if ( $retval !== 0 ) {
 		Wikia\Logger\WikiaLogger::instance()->error( 'wfShellExec failed', [
 			'exception' => new Exception( $cmd, $retval ),
+			'caller' => wfGetCaller(),
 			'output' => $output,
 			'load_avg' => implode( ', ', sys_getloadavg() ),
 		]);
@@ -3628,7 +3622,7 @@ function wfSplitWikiID( $wiki ) {
  * Note 2: use $this->getDB() in maintenance scripts that may be invoked by
  * updater to ensure that a proper database is being updated.
  *
- * @return DatabaseBase
+ * @return DatabaseMysqli
  */
 function &wfGetDB( $db, $groups = array(), $wiki = false ) {
 	// wikia change begin -- SMW DB separation project, @author Krzysztof Krzyżaniak (eloy)
@@ -3814,28 +3808,32 @@ function wfWaitForSlaves( $wiki = false ) {
 	// bug 27975 - Don't try to wait for slaves if there are none
 	// Prevents permission error when getting master position
 	if ( $lb->getServerCount() > 1 ) {
+		// Wikia change - begin
+		// PLATFORM-1489: check if we're using consul configuration for DB slave
+		if ( $lb->hasConsulConfig() ) {
+			// get the list of IP addresses of all slave nodes from consul
+			// so that we can check all of them explicitly
+			$consul = new Wikia\Consul\Client();
+
+			$slaveInfo = $lb->getServerInfo( 1 ); // e.g. slave.db-g.service.consul
+			$slaves = $consul->getNodesFromHostname( $slaveInfo['hostName'] );
+
+			// clone the loadbalancer and add all slaves that we've got from Consul
+			$lb = clone $lb;
+
+			for ( $i=0; $i < count( $slaves ); $i++ ) {
+				$entry = $slaveInfo;
+				$entry['host'] = $slaves[ $i ];
+
+				$lb->setServerInfo( $i+1, $entry );
+			}
+		}
+		// Wikia change - end
+
 		/* Wikia change - added array() and $wiki parameters to getConnection to be able to wait for various DBs */
 		$dbw = $lb->getConnection( DB_MASTER, array(), $wiki );
 		$pos = $dbw->getMasterPos();
 		$lb->waitForAll( $pos, $wiki );
-
-		// Wikia change - begin
-		// OPS-6313 - sleep-based implementaion for consul-powered DB clusters
-		$masterHostName = $lb->getServerName(0);
-		if ( strpos( $masterHostName, '.service.consul' ) !== false ) {
-			# I am terribly sorry, but we do really need to wait for all slaves
-			# not just the one returned by consul
-			sleep( 1 );
-
-			/* @var MySQLMasterPos $pos */
-			\Wikia\Logger\WikiaLogger::instance()->info( 'wfWaitForSlaves for consul clusters',  [
-				'exception' => new Exception(),
-				'master' => $masterHostName,
-				'pos' => $pos->__toString(),
-				'wiki' => $wiki
-			] );
-		}
-		// Wikia change - end
 	}
 }
 
@@ -3935,13 +3933,14 @@ function wfMemoryLimit() {
 /**
  * Converts shorthand byte notation to integer form
  *
- * @param $string String
+ * @param string $string
+ * @param int $default Returned if $string is empty
  * @return Integer
  */
-function wfShorthandToInteger( $string = '' ) {
+function wfShorthandToInteger( $string = '', $default = -1 ) {
 	$string = trim( $string );
-	if( $string === '' ) {
-		return -1;
+	if ( $string === '' ) {
+		return $default;
 	}
 	$last = $string[strlen( $string ) - 1];
 	$val = intval( $string );
@@ -4081,4 +4080,21 @@ function wfUnpack( $format, $data, $length=false ) {
 		throw new MWException( "unpack could not unpack binary data" );
 	}
 	return $result;
+}
+
+/**
+ * Get a random string containing a number of pseudo-random hex
+ * characters.
+ * @note This is not secure, if you are trying to generate some sort
+ *       of token please use MWCryptRand instead.
+ *
+ * @param int $length The length of the string to generate
+ * @return string
+ */
+function wfRandomString( $length = 32 ) {
+	$str = '';
+	for ( $n = 0; $n < $length; $n += 7 ) {
+		$str .= sprintf( '%07x', mt_rand() & 0xfffffff );
+	}
+	return substr( $str, 0, $length );
 }

@@ -20,9 +20,9 @@
 	<div id=wkTopBar>
 		<a href="<?= Sanitizer::encodeAttribute( Title::newMainPage()->getFullURL() ) ?>">
 		<? if( $wordmarkType == "graphic" ) :?>
-			<img id=wkImgMrk src="<?= Sanitizer::encodeAttribute( $wordmarkUrl ); ?>">
+			<img id="wkImgMrk" src="<?= Sanitizer::encodeAttribute( $wordmarkUrl ); ?>">
 		<? else :?>
-			<div id=wkWrdMrk><?= $wikiName ;?></div>
+			<div id="wkWrdMrk"><?= htmlspecialchars( $wikiName ); ?></div>
 		<? endif ;?>
 		</a>
 	<a href=#wkNavSrh id=wkSrhTgl class=tgl></a>

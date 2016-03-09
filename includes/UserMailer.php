@@ -98,15 +98,48 @@ class UserMailer {
 	 * @return Status
 	 */
 	protected static function sendWithPear( $mailer, $dest, $headers, $body ) {
-		$mailResult = $mailer->send( $dest, $headers, $body );
 
-		# Based on the result return an error string,
-		if ( PEAR::isError( $mailResult ) ) {
-			wfDebug( "PEAR::Mail failed: " . $mailResult->getMessage() . "\n" );
-			return Status::newFatal( 'pear-mail-error', $mailResult->getMessage() );
-		} else {
-			return Status::newGood();
+		// I wrote this code against my will. They made me do it.
+		//
+		// The send() method called below may:
+		//
+		// a) throw InvalidArgumentException when $headers are bad in some way
+		// b) return an instance of PEAR_Error when $headers are bad in some other way
+		// c) return false when message cannot be sent
+		// d) return true on success
+
+		$success = true; // don't worry, be happy!
+
+		try {
+			$mailResult = $mailer->send( $dest, $headers, $body );
+
+			// handle the b) case:
+			if ( is_a( $mailResult, 'PEAR_Error' ) ) {
+				$success = false;
+				$message = $mailResult->getMessage();
+
+			// handle the c) case:
+			} else if ( false === $mailResult ) {
+				$success = false;
+				$message = 'PHP mail() failed.';
+			}
 		}
+
+		// handle the a) case:
+		catch ( InvalidArgumentException $e ) {
+			$success = false;
+			$message = $e->getMessage();
+		}
+
+		if ( !$success ) {
+			Wikia\Logger\WikiaLogger::instance()->error(
+				'UserMailerError',
+				[ 'exception' => new Exception( $message ) ]
+			);
+			return Status::newFatal( 'pear-mail-error', $message );
+		}
+
+		return Status::newGood();
 	}
 
 	/**
@@ -170,7 +203,8 @@ class UserMailer {
 		$contentType = null,
 		$category = 'UserMailer',
 		$priority = 0,
-		$attachments = []
+		$attachments = [],
+		$sourceType = 'mediawiki' // remove when no more 'mediawiki' types are sent
 	) {
 
 		if ( !is_array( $to ) ) {
@@ -241,7 +275,7 @@ class UserMailer {
 			$headers['X-Priority'] = $priority;
 		}
 
-		$ret = wfRunHooks( 'AlternateUserMailer', [ $headers, $to, $from, $subject, $body , $priority, $attachments ] );
+		$ret = wfRunHooks( 'AlternateUserMailer', [ $headers, $to, $from, $subject, $body , $priority, $attachments, $sourceType ] );
 		if ( $ret === false ) {
 			return Status::newGood();
 		} elseif ( $ret !== true ) {
@@ -260,23 +294,29 @@ class UserMailer {
 			#
 
 			if ( function_exists( 'stream_resolve_include_path' ) ) {
-				$found = stream_resolve_include_path( 'Mail.php' );
+				$found = stream_resolve_include_path( 'Mail2.php' );
 			} else {
-				$found = Fallback::stream_resolve_include_path( 'Mail.php' );
+				$found = Fallback::stream_resolve_include_path( 'Mail2.php' );
 			}
 			if ( !$found ) {
 				throw new MWException( 'PEAR mail package is not installed' );
 			}
-			require_once( 'Mail.php' );
+			require_once( 'Mail2.php' );
 
 			wfSuppressWarnings();
 
 			// Create the mail object using the Mail::factory method
-			$mail_object =& Mail::factory( 'smtp', F::app()->wg->SMTP );
-			if ( PEAR::isError( $mail_object ) ) {
-				wfDebug( "PEAR::Mail factory failed: " . $mail_object->getMessage() . "\n" );
+			try {
+				$mail_object =& Mail2::factory( 'smtp', F::app()->wg->SMTP );
+			}
+
+			catch ( Mail2_Exception $e ) {
+				Wikia\Logger\WikiaLogger::instance()->error(
+					'UserMailerError',
+					[ 'exception' => $e ]
+				);
 				wfRestoreWarnings();
-				return Status::newFatal( 'pear-mail-error', $mail_object->getMessage() );
+				return Status::newFatal( 'pear-mail-error', $e->getMessage() );
 			}
 
 			wfDebug( "Sending mail via PEAR::Mail\n" );

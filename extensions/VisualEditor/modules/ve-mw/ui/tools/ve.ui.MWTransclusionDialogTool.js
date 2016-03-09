@@ -54,6 +54,11 @@ ve.ui.MWTransclusionDialogTool.static.template = null;
 ve.ui.MWTransclusionDialogTool.static.isCompatibleWith = function ( model ) {
 	var compatible;
 
+	//if wikiaInfoboxTransclusionBlock use ve.ui.WikiaInfoboxDialogTool instead
+	if ( model.type === ve.dm.WikiaInfoboxTransclusionBlockNode.static.name ) {
+		return false;
+	}
+
 	// Parent method
 	compatible = ve.ui.DialogTool.static.isCompatibleWith.call( this, model );
 

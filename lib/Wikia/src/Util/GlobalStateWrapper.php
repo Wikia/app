@@ -15,7 +15,7 @@ namespace Wikia\Util;
 class GlobalStateWrapper {
 
 
-	/*
+	/**
 	 * @var array $globalsToWrap
 	 */
 	private $globalsToWrap = null;
@@ -60,7 +60,7 @@ class GlobalStateWrapper {
 	protected function captureState() {
 		$this->capturedState = array();
 		foreach ( $this->globalsToWrap as $globalKey => $globalValue ) {
-			$this->capturedState[$globalKey] = $GLOBALS[$globalKey];
+			$this->capturedState[$globalKey] = array_key_exists( $globalKey, $GLOBALS ) ? $GLOBALS[$globalKey] : null;
 			$GLOBALS[$globalKey] = $globalValue;
 		}
 	}

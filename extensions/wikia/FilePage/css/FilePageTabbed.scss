@@ -39,21 +39,14 @@
 		position: relative;
 	}
 	.page-listing-image {
-		display: block;
-		height: 90px;
-		width: 160px;
 		img {
-			display: block;
-			height: 90px;
-			margin: 0 auto;
-			max-width: 160px;
 			&.no-image {
 				background-color: #f0f0f0;
 				background-image: url(/extensions/wikia/VideoHandlers/images/Brackets.png);	/* inline */
-				background-position: 50px 25px;
+				background-position: 70px 30px;
 				background-repeat: no-repeat;
-				height: 90px;
-				width: 160px;
+				height: 100px;
+				width: 200px;
 			}
 		}
 	}

@@ -2,22 +2,39 @@
 describe('ext.wikia.adEngine.provider.gpt.adSizeFilter', function () {
 	'use strict';
 
-	function noop() { return; }
+	function noop() {
+		return;
+	}
 
 	var mocks = {
-			getDocument: function () {
-				return {
-					documentElement: {
-						offsetWidth: mocks.getDocumentWidth()
-					}
-				};
-			},
-			getDocumentWidth: noop,
-			log: noop
-		};
+		breakpointsLayout: {
+			getLargeContentWidth: function () {
+				return 1238;
+			}
+		},
+		getDocument: function () {
+			return {
+				documentElement: {
+					offsetWidth: mocks.getDocumentWidth()
+				},
+				getElementById: function () {
+					return {
+						offsetWidth: mocks.getContentWidth()
+					};
+				}
+			};
+		},
+		getDocumentWidth: noop,
+		getContentWidth: noop,
+		log: noop
+	};
 
 	function getModule() {
-		return modules['ext.wikia.adEngine.provider.gpt.adSizeFilter'](mocks.getDocument(), mocks.log);
+		return modules['ext.wikia.adEngine.provider.gpt.adSizeFilter'](
+			mocks.getDocument(),
+			mocks.log,
+			mocks.breakpointsLayout
+		);
 	}
 
 	it('Returns sizes unmodified for non-specific slots', function () {
@@ -79,5 +96,23 @@ describe('ext.wikia.adEngine.provider.gpt.adSizeFilter', function () {
 			sizesOut = [[1, 1]];
 
 		expect(getModule().filter('INVISIBLE_SKIN', sizesIn)).toEqual(sizesOut);
+	});
+
+	it('Returns sizes unmodified for INCONTENT_LEADERBOARD for large screens', function () {
+		spyOn(mocks, 'getContentWidth').and.returnValue(2000);
+
+		var sizesIn = [[728, 90], [468, 60], [300, 250]],
+			sizesOut = [[728, 90], [468, 60], [300, 250]];
+
+		expect(getModule().filter('INCONTENT_LEADERBOARD', sizesIn)).toEqual(sizesOut);
+	});
+
+	it('Filter 728x90 size for INCONTENT_LEADERBOARD for small screens', function () {
+		spyOn(mocks, 'getContentWidth').and.returnValue(1000);
+
+		var sizesIn = [[728, 90], [468, 60], [300, 250]],
+			sizesOut = [[468, 60], [300, 250]];
+
+		expect(getModule().filter('INCONTENT_LEADERBOARD', sizesIn)).toEqual(sizesOut);
 	});
 });

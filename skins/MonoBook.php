@@ -39,7 +39,7 @@ class SkinMonoBook extends WikiaSkinMonoBook {
 
 		// Ugh. Can't do this properly because $wgHandheldStyle may be a URL
 		if( $wgHandheldStyle ) {
-			// Currently in testing... try 'chick/main.css'
+			// Currently in testing... 
 			$out->addStyle( $wgHandheldStyle, 'handheld' );
 		}
 

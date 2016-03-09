@@ -23,6 +23,18 @@ class ExactTargetApiSubscriber extends ExactTargetApi {
 		return $oResults;
 	}
 
+
+	/**
+	 * Entry point for Subscriber object update requests
+	 * @param  Array  $aApiCallParams
+	 * @return stdObject|false  Returns false when an Exception is encountered and a stdObject otherwise
+	 */
+	public function updateRequest( Array $apiCallParams ) {
+		$aSubscribers = $this->helper->prepareSubscriberObjects( $apiCallParams['Subscriber'] );
+		$oResults = $this->makeUpdateRequest( $aSubscribers, 'Subscriber' );
+		return $oResults;
+	}
+
 	/**
 	 * An entry point for Subscriber Delete requests
 	 * @param  Array  $aApiCallParams

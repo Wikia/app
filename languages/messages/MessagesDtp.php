@@ -153,30 +153,12 @@ $messages = array(
 'navigation'    => 'Popotunud',
 'and'           => '&#32;om',
 
-# Cologne Blue skin
 'qbfind'         => 'Ihum',
 'qbbrowse'       => 'Pogihum',
-'qbedit'         => 'Idito',
 'qbpageoptions'  => 'Bolikon diti',
 'qbpageinfo'     => 'Pogiromutan',
-'qbmyoptions'    => 'Bobolikonku ngawi',
-'qbspecialpages' => 'Bobolikon suaikowokon',
 'faq'            => 'Ponguhatan Koinsoruan om Poninimbar',
-'faqpage'        => 'Project:Ponguhatan Koinsoruan om Pininimbar',
 
-# Vector skin
-'vector-action-addsection'       => 'Ruhangai piboboroson',
-'vector-action-delete'           => 'Pugaso',
-'vector-action-move'             => 'Poundoliho',
-'vector-action-protect'          => 'Tingoligai',
-'vector-action-undelete'         => 'Kada pugaso',
-'vector-action-unprotect'        => 'Alanai tingolig',
-'vector-simplesearch-preference' => 'Pasagao pogigihum ponontonudon pinoingkawas (Pongulit tuntuduk nopo)',
-'vector-view-create'             => 'Pomonsoi',
-'vector-view-edit'               => 'Idito',
-'vector-view-history'            => 'Intaai susuyan',
-'vector-view-view'               => 'Basao',
-'vector-view-viewsource'         => 'Intaai wowonod',
 'actions'                        => 'Pongkinaraja',
 'namespaces'                     => 'Ponuratan ngaran',
 'variants'                       => 'Kopogisuaian',
@@ -199,7 +181,6 @@ $messages = array(
 'edit'              => 'Idito',
 'create'            => 'Pomonsoi',
 'editthispage'      => 'Idito iti bolikon',
-'create-this-page'  => 'Pudoliai iti bolikon',
 'delete'            => 'Pugaso',
 'deletethispage'    => 'Pugaso iti bolikon',
 'undelete_short'    => 'Kada pugaso {{PLURAL:$1|iso niditan|$1 niniditan}}',
@@ -214,19 +195,9 @@ $messages = array(
 'talkpagelinktext'  => 'Boroson',
 'specialpage'       => 'Bolikon suaikowokon',
 'personaltools'     => 'Kakamot minsosondiri',
-'postcomment'       => 'Bogian wagu',
-'articlepage'       => 'Intaai suang bolikon',
 'talk'              => 'Pogigibarasan',
 'views'             => 'Pongintangan',
 'toolbox'           => 'Kabankamot',
-'userpage'          => 'Intaai bolikon momomoguno',
-'projectpage'       => 'Intaai bolikon purujik',
-'imagepage'         => 'Intaai bolikon pail',
-'mediawikipage'     => 'Intaai bolikon pason',
-'templatepage'      => 'Intaai tompilat bolikon',
-'viewhelppage'      => 'Intaai bolikan sokodung',
-'categorypage'      => 'Intaai bolikon koinansar',
-'viewtalkpage'      => 'Intaai pitimbungakan',
 'otherlanguages'    => 'Id woyoboros suai',
 'redirectedfrom'    => '(Pinotilombus mantad $1)',
 'redirectpagesub'   => 'Bolikon pinotilombus',
@@ -405,8 +376,9 @@ Sasabab no do "\'\'$2\'\'".',
 # Login and logout pages
 'logouttext'                 => "'''Baino nakalabus log ko noh.'''
 
-Milo ko do monilombus mongoguno {{SITENAME}} poinlisok, toi [[Special:UserLogin|sumuang log koh kawagu]] miagal ngaran di tiinu toi mongoguno ngaran suai.
+Milo ko do monilombus mongoguno {{SITENAME}} poinlisok, toi $1 miagal ngaran di tiinu toi mongoguno ngaran suai.
 Birio do kipipiro bolikon popokito do maso poinsuang log koh poh gisom no do opugas nu dangkob do pogigihumnu.",
+'logouttext-link-text'       => 'sumuang log koh kawagu',
 'welcomecreation'            => '== Kopiwosian, $1! ==
 Nowonsoi no takaunnu.
 Soroho no do mongolon [[Special:Preferences|{{SITENAME}} komoisoonnu]].',
@@ -525,10 +497,6 @@ Baino sumuang log...',
 'resetpass-wrong-oldpass'   => 'Nokosilap kaatalib daamot toi iy maso gunoon.
 Naalanannu noh kaatalib toi nokopokianu koh no do kaatalib daamot.',
 'resetpass-temp-password'   => 'Kaatalib daamot:',
-
-# Special:PasswordReset
-'passwordreset-username'   => 'Ngarandait:',
-'passwordreset-emailtitle' => 'Kointalangan takaun id {{SITENAME}}',
 
 # Special:ChangeEmail
 'changeemail-no-info' => 'Mositi sumuang log ko do mongoguno monilombus id bolikon diti.',
@@ -908,13 +876,6 @@ Umbalai momogonop it ihumonnu miampai do ''all:'' mooi do oihum ot oinsanan suan
 Milo ko mogihum maya Googol do daamot.
 Imurai no do indik suang diti {{SITENAME}} nopo nga nokolipas.',
 
-# Quickbar
-'qbsettings'               => 'Barposikap',
-'qbsettings-none'          => 'Ingaa',
-'qbsettings-fixedleft'     => 'Pogolibango',
-'qbsettings-fixedright'    => 'Pawanano',
-'qbsettings-floatingleft'  => 'Posoibaho gibang',
-'qbsettings-floatingright' => 'Posoibaho wanan',
 
 # Preferences page
 'preferences'             => 'Pipilion',
@@ -1224,7 +1185,7 @@ Milo ko nogi do mongolon tingkat tingolig diti, nga ingaa it kosimbanon montok t
 'movepagetext'     => "Momoguno do poom id siriba diti kopongolon do ngaran bolikon om popoundalih oinsanan susuyan data dau in ngaran kawawagu.
 Tuluhon dau mantad potilombuson id nokoolihon tuluhon bolikon  kawawagu.
 Milo ko nogi do mongodoropi di nokoolihon di momoguno do tuluhon antad maya do kangkaraja oporian.
-Mada ko nopo do momili dilo, simakon no poingonop it [[Special:DoubleRedirects|nosugut]] toi 
+Mada ko nopo do momili dilo, simakon no poingonop it [[Special:DoubleRedirects|nosugut]] toi
 [[Special:BrokenRedirects|lombuson naraag]].
 Kitonggungan ko do momorisa di noputan do pointopot ot korikoton.
 

@@ -151,28 +151,10 @@ $messages = array(
 'navigation'    => 'Endagiriro',
 'and'           => '&#32;ne',
 
-# Cologne Blue skin
 'qbfind'         => 'Noonya',
 'qbbrowse'       => 'Lambula',
-'qbedit'         => 'Kyusa',
-'qbmyoptions'    => 'Empapula zange',
-'qbspecialpages' => 'Empapula enjawule',
 'faq'            => 'Ebitera okubuuzibwa',
-'faqpage'        => 'Project:Ebitera okubuuzibwa ku',
 
-# Vector skin
-'vector-action-addsection'       => 'Tandikawo emboozi endala',
-'vector-action-delete'           => 'Gyawo olupapula luno',
-'vector-action-move'             => 'Simbuliza',
-'vector-action-protect'          => 'Ssiba',
-'vector-action-undelete'         => 'Zawo',
-'vector-action-unprotect'        => 'Kyusa ebikugizo',
-'vector-simplesearch-preference' => "Wiki esobole okukuwa amagezi ku by'onoonya (kino kikolera mu ndabika ya Vector yokka)",
-'vector-view-create'             => 'Lukolewo',
-'vector-view-edit'               => 'Kyusa',
-'vector-view-history'            => 'Ennanda ya fayiro eno',
-'vector-view-view'               => 'Soma',
-'vector-view-viewsource'         => "Kebera obulambike obw'ennono obw'olupapula luno",
 'actions'                        => "By'oyinza okukola",
 'namespaces'                     => 'Makuŋaanyizo',
 
@@ -194,7 +176,6 @@ $messages = array(
 'edit'              => 'Kyusa',
 'create'            => 'Kolawo',
 'editthispage'      => 'Olupapula luno lukyusemu',
-'create-this-page'  => 'Olupapula luno lukolewo',
 'delete'            => 'Gyawo olupapula luno',
 'deletethispage'    => 'Olupapula luno lugyewo',
 'undelete_short'    => 'Julula {{PLURAL:$1|enkyukakyuka emu|enkyukakyuka $1}}',
@@ -209,19 +190,9 @@ $messages = array(
 'talkpagelinktext'  => 'Yogera nange',
 'specialpage'       => 'Olupapula olwawule',
 'personaltools'     => "Ebikola ku akawunti n'enfo yo",
-'postcomment'       => 'Kitundu kipya',
-'articlepage'       => 'Kebera olupapula',
 'talk'              => 'Emboozi',
 'views'             => "Kyusa endabika ya by'olaba wano",
 'toolbox'           => 'Ebikozesebwa',
-'userpage'          => 'Kebera enfo ya memba',
-'projectpage'       => 'Kebera ekkuŋaanizo erya kawefube ono',
-'imagepage'         => 'Kebera olupapula oluliko ekifaananyi',
-'mediawikipage'     => "Kebera olupapula lw'obubaka",
-'templatepage'      => 'Kebera olutiba',
-'viewhelppage'      => 'Kebera olupapula oluliko obuyambi',
-'categorypage'      => "Kebera olupapula lw'ettuluba lino",
-'viewtalkpage'      => "Kebera okuwanyisagana kw'ebirowozo",
 'otherlanguages'    => 'Mu nnimi ndala',
 'redirectedfrom'    => '(Oleetedwa wano okuva ku $1)',
 'redirectpagesub'   => 'Olupapula luno lukutwalabutwazi ku lunnaalwo',
@@ -401,8 +372,9 @@ Ensonga gy\'awadde eri nti "\'\'$2\'\'".',
 # Login and logout pages
 'logouttext'                 => "'''Kati ovuddemu.'''
 
-Osobola okusigala nga okozesa {{SITENAME}} nga at'eyanjudde, ate osobola [[Special:UserLogin|n'okuddamu okuyingira]] nga bw'obadde oba nga okozesezza ery'obwa memba eddala.
+Osobola okusigala nga okozesa {{SITENAME}} nga at'eyanjudde, ate osobola $1 nga bw'obadde oba nga okozesezza ery'obwa memba eddala.
 Wekkaanye, empapula ezimu ziyinza okukweyolekera nga bwe zibadde nga oyingidde - okutuusa lw'okunkumula eggwanika ezzibizi erya kalambula-neti yo.",
+'logouttext-link-text'       => "n'okuddamu okuyingira",
 'welcomecreation'            => "== $1 tukwanirizza! == <br />
 Akawunti yo ekoledwa.<br />
 Tewerabira kwetereereza [[Special:Preferences|enteekateeka yo ey'oku {{SITENAME}}]].",
@@ -524,18 +496,6 @@ Kati oyingira...',
 'resetpass-wrong-oldpass'   => "Okozesezza ekyama eky'ekiseerabuseera oba ekyaddala ekitakola.<br />
 Oyinz'okuba nga wamaze okutegeka ekya ddala ekipya oba nga wakasabayo eky'ekiseerabuseera.",
 'resetpass-temp-password'   => "Ekyama kyo eky'ekiseerabuseera:",
-
-# Special:PasswordReset
-'passwordreset'              => 'Damu okutegeka ekyama',
-'passwordreset-text'         => "Oba oyagala okufuna 'email' ekujjukiza ebikwata ku akawunti yo, jjuza foomu eno.",
-'passwordreset-legend'       => 'Damu okutegeka ekyama',
-'passwordreset-disabled'     => "Eby'okuddamu okutegeka ebyama biymirizidwa ku wiki eno.",
-'passwordreset-pretext'      => '{{PLURAL:$1||Wandika wo kimu ku ebiri mu lukalala}}',
-'passwordreset-username'     => "Ery'obwa memba:",
-'passwordreset-email'        => "Endagiriro eya 'email':",
-'passwordreset-emailtitle'   => "Ebya akawunti ey'oku {{SITENAME}}",
-'passwordreset-emailelement' => "Ery'obwa memba: $1 <br />
-Ekyama kyo eky'ekiseerabuseera: $2",
 
 # Edit page toolbar
 'bold_sample'     => "Ennukuta z'owandika wano zonna ziba nziggumivu",
@@ -667,7 +627,7 @@ zonna ziteekwa okuba ntono, okugeza ''{{ns:user}}:Foo/vector.css'' so ssi ''{{ns
 'previewnote'                      => "'''Kuno kugezaamubugeza; by'okoze tebinnakazibwa!'''",
 'previewconflict'                  => "Okulagako kuno y'engeri ebiri w'owandikira gye binaafaananamu singa oba obikazizza.",
 'session_fail_preview'             => "'''Tetusobodde okukola ku by'okyusizza olw'okubanga olutuula'''<br />
-'''lwa wiki luno luzzemu okugootaana olwa data okubula.'''<br /> 
+'''lwa wiki luno luzzemu okugootaana olwa data okubula.'''<br />
 Kikwetaagisa okuddamu by'okoze. <br />
 Ekyo bwe kitagonjoola ebizibu sooka [[Special:UserLogout|oveemu]] mu wiki oddemu ate okugiyingira.",
 'session_fail_preview_html'        => "'''Tukwetondera! Tekisobose okukola ku nkyukakyuka z'okozewo kubanga data ekwata ku lutuula lwo evuddewo.'''<br />

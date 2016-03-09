@@ -23,6 +23,20 @@ ve.ui.commandRegistry.register(
 
 ve.ui.commandRegistry.register(
 	new ve.ui.Command(
+		'wikiaImageInsert', 'window', 'open',
+		{ args: ['wikiaImageInsert'] }
+	)
+);
+
+ve.ui.commandRegistry.register(
+	new ve.ui.Command(
+		'wikiaVideoInsert', 'window', 'open',
+		{ args: ['wikiaVideoInsert'] }
+	)
+);
+
+ve.ui.commandRegistry.register(
+	new ve.ui.Command(
 		'wikiaSingleMedia', 'window', 'open',
 		{ args: ['wikiaSingleMedia'] }
 	)
@@ -32,6 +46,20 @@ ve.ui.commandRegistry.register(
 	new ve.ui.Command(
 		'wikiaMapInsert', 'window', 'open',
 		{ args: ['wikiaMapInsert'] }
+	)
+);
+
+ve.ui.commandRegistry.register(
+	new ve.ui.Command(
+		'wikiaInfoboxInsert', 'window', 'open',
+		{ args: ['wikiaInfoboxInsert'] }
+	)
+);
+
+ve.ui.commandRegistry.register(
+	new ve.ui.Command(
+		'wikiaInfobox', 'window', 'open',
+		{ args: ['wikiaInfobox'] }
 	)
 );
 

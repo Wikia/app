@@ -195,29 +195,12 @@ $messages = array(
 'navigation'    => 'Орм медлһн',
 'and'           => '&#32;болн',
 
-# Cologne Blue skin
 'qbfind'         => 'Хәәлһн',
 'qbbrowse'       => 'Гүүһәд хәләх',
-'qbedit'         => 'Чиклх',
 'qbpageoptions'  => 'Тер халх',
 'qbpageinfo'     => 'Халхин туск',
-'qbmyoptions'    => 'Тана халхс',
-'qbspecialpages' => 'Көдлхнә халхс',
 'faq'            => 'Юм би',
-'faqpage'        => 'Project:Юм би',
 
-# Vector skin
-'vector-action-addsection' => 'Төриг немх',
-'vector-action-delete'     => 'Һарһх',
-'vector-action-move'       => 'Көндәх',
-'vector-action-protect'    => 'Харсх',
-'vector-action-undelete'   => 'Һарһх биш',
-'vector-action-unprotect'  => 'Харсх биш',
-'vector-view-create'       => 'Бүтәх',
-'vector-view-edit'         => 'Чиклх',
-'vector-view-history'      => 'Тууҗин хәләвр',
-'vector-view-view'         => 'Умшлһн',
-'vector-view-viewsource'   => 'Темдгллһнә хәләвр',
 'actions'                  => 'Үүлд',
 'namespaces'               => 'Нернә ус',
 'variants'                 => 'Суңһлтс',
@@ -239,7 +222,6 @@ $messages = array(
 'edit'              => 'Чиклх',
 'create'            => 'Бүтәх',
 'editthispage'      => 'Эн халхиг чиклх',
-'create-this-page'  => 'Эн халхиг бүтәх',
 'delete'            => 'Һарһх',
 'deletethispage'    => 'Эн халхиг һарһх',
 'undelete_short'    => '$1 {{PLURAL:$1|сольлһиг|сольлһиг|сольлһиг}} босхҗ тохрар',
@@ -253,19 +235,9 @@ $messages = array(
 'talkpagelinktext'  => 'Меткән',
 'specialpage'       => 'Көдлхнә халх',
 'personaltools'     => 'Эврән зер-зев',
-'postcomment'       => 'Шин хүв',
-'articlepage'       => 'Зүүл үзх',
 'talk'              => 'Меткән',
 'views'             => 'Хәләврүд',
 'toolbox'           => 'Зер-зев',
-'userpage'          => 'Демнчна халх үзх',
-'projectpage'       => 'Төсвин халх үзх',
-'imagepage'         => 'Боомгин халх үзх',
-'mediawikipage'     => 'Зәңгин халх үзх',
-'templatepage'      => 'Кевләр халх үзх',
-'viewhelppage'      => 'Цәәлһлһиг узх',
-'categorypage'      => 'Әәшлин халх үзх',
-'viewtalkpage'      => 'Меткән халх узх',
 'otherlanguages'    => 'Талдан келәр',
 'redirectedfrom'    => '($1 гидг һазрас авч одсмн)',
 'redirectpagesub'   => 'Авч оддг халх',
@@ -398,8 +370,9 @@ $1',
 # Login and logout pages
 'logouttext'              => "'''Та һарад бәәнәт.'''
 
-Та {{SITENAME}} гидг ормиг нертә уга олзлҗ чаднат, аль та [[Special:UserLogin|дәкәд орҗ]] цацу аль талдан нертә чаднат.
+Та {{SITENAME}} гидг ормиг нертә уга олзлҗ чаднат, аль та $1 цацу аль талдан нертә чаднат.
 Зәрм халхс цааранднь та ода чигн орсн мет үзүлҗ чаддг тускар темдглтн (та хәләчин санлиг цеврлтл).",
+'logouttext-link-text'       => 'дәкәд орҗ',
 'welcomecreation'         => '== Ирхитн эрҗәнәвидн, $1! ==
 Таднар шин бичгдлһн бүтв.
 Тадна [[Special:Preferences|{{SITENAME}} preferences]] сольҗ бичә мартн.',
@@ -502,7 +475,6 @@ $1',
 'userjsyoucanpreview'              => "'''Селвг:''' тана шин JS боомг шүүҗ хадһлар, «{{int:showpreview}}» товч олзлтн.",
 'usercsspreview'                   => "'''Тана CSS боомгин мел хәләвр бәәдг тускар тодлтн, тер ода чигн хадһлсн уга!'''",
 'userjspreview'                    => "'''Тана JavaScript боомгин мел хәләвр бәәдг тускар тодлтн. Тана сольлһн ода чигн хадһлсн уга!'''",
-'userinvalidcssjstitle'            => "'''Оньг өгтн:''' «$1» гидг нерәдлһтә хувцнь олҗ биш. Күүнә .css болн .js халхс һанцхн бичкн үзгүдтә бичсн кергтә, үлгүрнь «{{ns:user}}:Болвчн/vector.css»; «{{ns:user}}:Болвчн/Vector.css» - буру.",
 'updated'                          => '(Шинрүлсн)',
 'note'                             => "'''Аҗгллһн:'''",
 'previewnote'                      => "'''Эн мел хәләвр бәәдг тускар тодлтн.'''
@@ -612,8 +584,6 @@ $1',
 'powersearch-field'              => 'Хәәх',
 'powersearch-togglenone'         => 'Уга',
 
-# Quickbar
-'qbsettings' => 'Ормин самбр',
 
 # Preferences page
 'preferences'                 => 'Дурллһн',

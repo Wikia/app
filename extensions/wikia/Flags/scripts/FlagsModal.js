@@ -64,8 +64,19 @@ require(
 	labelForSubmitAction = 'submit-form-untouched';
 
 	function init() {
-		$('#ca-flags').on('click', showModal);
+		$('body').on('click', '#ca-flags, .bn-flags-entry-point', showModal);
+		require(['FlagsGlobalShortcuts'], function (FlagsGlobalShortcuts) {
+			FlagsGlobalShortcuts.add(showModalDirectly);
+		});
 		addFlagsButton();
+	}
+
+	/**
+	 * Open modal entry point caused by event
+	 */
+	function showModal(event) {
+		event.preventDefault();
+		showModalDirectly();
 	}
 
 	/**
@@ -73,8 +84,7 @@ require(
 	 * First function in showing modal process.
 	 * Performs all necessary job to display modal with flags ready to edit
 	 */
-	function showModal(event) {
-		event.preventDefault();
+	function showModalDirectly() {
 		$.when(
 				nirvana.sendRequest({
 					controller: 'Flags',
@@ -129,6 +139,7 @@ require(
 					param = [];
 					param['param_name'] = paramName;
 					param['param_description'] = paramsNames[paramName];
+					param['param_placeholder'] = paramsNames[paramName].length ? paramsNames[paramName] : paramName;
 					param['param_value'] = flagsData[flagTypeId].params ? flagsData[flagTypeId].params[paramName] : '';
 					params.push(param);
 				}
@@ -242,7 +253,15 @@ require(
 			$div = $(document.createElement('div'))
 				.addClass('flags-edit')
 				.html($a);
-		$('.portable-flags').prepend($div).append($div.clone(true));
+		var flagsContainer = $('.portable-flags');
+		if (flagsContainer.length !== 0) {
+			flagsContainer.prepend($div).append($div.clone(true));
+		} else {
+			flagsContainer = $('.portable-flags-inline');
+			if (flagsContainer.length !== 0) {
+				flagsContainer.prepend($div).append($div.clone(true));
+			}
+		}
 	}
 
 	// Run initialization method on DOM ready

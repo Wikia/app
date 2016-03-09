@@ -17,9 +17,7 @@ $messages = array(
 'mytalk'        => 'می گب',
 'anontalk'      => 'اَ آی.پیˇ گب',
 
-# Cologne Blue skin
 'qbfind' => 'یاتن',
-'qbedit' => 'دچین واچین',
 
 'returnto'         => 'واگرد به $1.',
 'search'           => 'واموج',
@@ -31,7 +29,6 @@ $messages = array(
 'permalink'        => 'مؤنسنی پیوند',
 'edit'             => 'دچین واچین',
 'editthispage'     => 'اَ هنه‌شره (صفحه‌یه) دچین‌واچین بکون.',
-'create-this-page' => 'اَ هنه‌شره (صفحه‌یه) چاکون.',
 'deletethispage'   => 'اَ هنه‌شره پاکأ کون.',
 'newpage'          => 'تازه هنه‌شر (تازه صفحه)',
 'talkpagelinktext' => 'گب',

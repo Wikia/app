@@ -92,7 +92,6 @@ $wgExtensionMessagesFiles['VideoHandlers'] = "$dir/VideoHandlers.i18n.php";
 **/
 
 $wgHooks['MWNamespace:isMovable'][] = 'VideoHandlerHooks::WikiaVideo_isMovable';
-$wgHooks['SpecialNewImages::beforeQuery'][] = 'VideoHandlerHooks::WikiaVideoNewImagesBeforeQuery';
 $wgHooks['ParserBeforeStrip'][] = 'VideoHandlerHooks::WikiaVideoParserBeforeStrip'; // <videogallery>
 
 $wgHooks['FileRevertFormBeforeUpload'][] = 'VideoHandlerHooks::onFileRevertFormBeforeUpload';
@@ -124,13 +123,8 @@ if ( !empty($wgVideoHandlersVideosMigrated) ) {
 	$wgHooks['ParserFirstCallInit'][] = 'VideoHandlerHooks::initParserHook';
 }
 
-// permissions
-$wgAvailableRights[] = 'specialvideohandler';
-$wgGroupPermissions['staff']['specialvideohandler'] = true;
-
-$wgAvailableRights[] = 'uploadpremiumvideo';
-$wgGroupPermissions['*']['uploadpremiumvideo'] = false;
-$wgGroupPermissions['staff']['uploadpremiumvideo'] = true;
+$wgHooks['VideoInfoSaveToCache'][] = 'VideoHandlerHooks::clearVideoCache';
+$wgHooks['VideoInfoInvalidateCache'][] = 'VideoHandlerHooks::clearVideoCache';
 
 /*
  * handlers

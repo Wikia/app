@@ -43,6 +43,7 @@
 			$.nirvana.sendRequest({
 				controller: this.pageController,
 				method: 'postNewMessage',
+				type: 'POST',
 				data: {
 					body: body,
 					messagetitle: title,
@@ -50,7 +51,8 @@
 					pagetitle: page.title,
 					pagenamespace: page.namespace,
 					convertToFormat: convertToFormat,
-					relatedTopics: relatedTopics
+					relatedTopics: relatedTopics,
+					token: window.mw.user.tokens.get('editToken')
 				},
 				callback: this.proxy(function (data) {
 					var newmsg = $(data.message);
@@ -71,6 +73,7 @@
 			$.nirvana.sendRequest({
 				controller: this.pageController,
 				method: 'replyToMessage',
+				type: 'POST',
 				data: {
 					body: body,
 					parent: parent,
@@ -78,7 +81,8 @@
 					pagetitle: page.title,
 					pagenamespace: page.namespace,
 					convertToFormat: convertToFormat,
-					quotedFrom: quotedFrom || ''
+					quotedFrom: quotedFrom || '',
+					token: window.mw.user.tokens.get('editToken')
 				},
 				callback: this.proxy(function (data) {
 					var newMessage = $(data.message);
@@ -147,6 +151,7 @@
 				controller: this.pageController,
 				method: 'editMessageSave',
 				format: 'json',
+				type: 'POST',
 				data: {
 					msgid: id,
 					newtitle: title,
@@ -154,7 +159,8 @@
 					isreply: isreply,
 					pagetitle: page.title,
 					pagenamespace: page.namespace,
-					convertToFormat: convertToFormat
+					convertToFormat: convertToFormat,
+					token: window.mw.user.tokens.get('editToken')
 				},
 				callback: this.proxy(function (data) {
 					if ($.isFunction(callback)) {
@@ -175,6 +181,7 @@
 				controller: this.pageController,
 				method: 'switchWatch',
 				format: 'json',
+				type: 'POST',
 				data: {
 					isWatched: isWatched,
 					commentId: commentId
@@ -197,6 +204,7 @@
 				controller: this.pageController,
 				method: 'notifyEveryoneSave',
 				format: 'json',
+				type: 'POST',
 				data: {
 					msgid: msgid,
 					dir: dir
@@ -219,11 +227,11 @@
 				controller: this.pageController,
 				method: 'updateTopics',
 				format: 'json',
+				type: 'POST',
 				data: {
 					msgid: msgid,
 					relatedTopics: relatedTopics
 				},
-				type: 'post',
 				callback: this.proxy(function (json) {
 					if ($.isFunction(callback)) {
 						callback(json);

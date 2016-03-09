@@ -1,0 +1,44 @@
+@import './settings';
+
+/* Special page */
+.flags-special-list {
+	width: 100%;
+}
+
+.flags-special-zero-status {
+	margin: 20px 0;
+	text-align: center;
+	width: 100%;
+}
+
+.flags-special-list-item-actions {
+	min-width: 130px;
+	text-align: center;
+
+	a {
+		margin-left: 10px;
+
+		&:first-child {
+			margin-left: 0;
+		}
+	}
+}
+
+.flags-icons-special {
+	background-position: left center;
+	background-repeat: no-repeat;
+	padding: $flags-icons-actions;
+}
+.flags-icons-special.flags-icons-edit {
+	padding-left: 25px;
+}
+
+.flags-icons-insights {
+	background-image: url($flags-icons-insights);
+}
+.flags-icons-trash {
+	background-image: url($flags-icons-trash);
+}
+.flags-icons-edit {
+	background-image: url($flags-icons-edit);
+}

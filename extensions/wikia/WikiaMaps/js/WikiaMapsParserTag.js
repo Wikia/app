@@ -3,7 +3,8 @@ require([
 	'wikia.mustache',
 	'wikia.tracker',
 	'wikia.loader',
-	require.optional('ext.wikia.adEngine.slot.interactiveMaps')
+	//FIXME: turning off ads on map because of JS errors - should be fixed in ADEN-1784
+	//require.optional('ext.wikia.adEngine.slot.interactiveMaps')
 ], function ($, mustache, tracker, loader, mapAds) {
 	'use strict';
 

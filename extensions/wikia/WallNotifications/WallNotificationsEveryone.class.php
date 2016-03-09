@@ -6,14 +6,12 @@ class WallNotificationsEveryone extends WallNotifications {
 	const DELETE_IDS_BATCH_SIZE = 100;
 
 	public function __construct() {
+		parent::__construct();
+
 		global $wgCityId, $wgWikiaEnvironment;
 
 		$this->app = F::app();
 		$this->cityId = $wgCityId;
-
-		if ( $wgWikiaEnvironment == WIKIA_ENV_INTERNAL ) {
-			$this->cityId = 11;
-		}
 	}
 
 	/**

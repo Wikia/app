@@ -116,9 +116,6 @@ $messages = array(
 'navigation' => 'Saytda harakatlanish',
 'and'        => '&#32;va',
 
-# Cologne Blue skin
-'qbedit'         => 'Tahrirlash',
-'qbspecialpages' => 'Maxsus sahifalar',
 
 'errorpagetitle'   => 'Xato',
 'returnto'         => '$1 sahifasiga qaytish.',

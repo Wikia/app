@@ -288,30 +288,12 @@ $messages = array(
 'navigation'    => 'Navigasion',
 'and'           => '&#32;e',
 
-# Cologne Blue skin
 'qbfind'         => 'Trova',
 'qbbrowse'       => 'Sfoja',
-'qbedit'         => 'Canbia',
 'qbpageoptions'  => 'Opsion pajina',
 'qbpageinfo'     => 'Informasion so ła pajina',
-'qbmyoptions'    => 'Łe me pajine',
-'qbspecialpages' => 'Pagine speciali',
 'faq'            => 'Domande frequenti',
-'faqpage'        => 'Project:Domande frequenti',
 
-# Vector skin
-'vector-action-addsection'       => 'Zonta discusion',
-'vector-action-delete'           => 'Scanseła',
-'vector-action-move'             => 'Sposta',
-'vector-action-protect'          => 'Protezi',
-'vector-action-undelete'         => 'Recupera',
-'vector-action-unprotect'        => 'Sbloca',
-'vector-simplesearch-preference' => "Intaca i sugerimenti di ricerca avansadi (solo par l'interfacia Vector)",
-'vector-view-create'             => 'Crea',
-'vector-view-edit'               => 'Canbia',
-'vector-view-history'            => 'Varda la storia',
-'vector-view-view'               => 'Lezi',
-'vector-view-viewsource'         => 'Varda el testo',
 'actions'                        => 'Asion',
 'namespaces'                     => 'Namespace',
 'variants'                       => 'Varianse',
@@ -333,7 +315,6 @@ $messages = array(
 'edit'              => 'Canbia',
 'create'            => 'Crea',
 'editthispage'      => 'Canbia sta pagina',
-'create-this-page'  => 'Crea sta pagina',
 'delete'            => 'Scansela',
 'deletethispage'    => 'Scansela sta pagina',
 'undelete_short'    => 'Recupera {{PLURAL:$1|na revision|$1 revision}}',
@@ -347,19 +328,9 @@ $messages = array(
 'talkpagelinktext'  => 'Discussion',
 'specialpage'       => 'Pagina speciale',
 'personaltools'     => 'Strumenti personali',
-'postcomment'       => 'Nova sesion',
-'articlepage'       => 'Varda ła voxe',
 'talk'              => 'Discussion',
 'views'             => 'Visite',
 'toolbox'           => 'Strumenti',
-'userpage'          => 'Varda la pagina utente',
-'projectpage'       => 'Varda la pagina de progeto',
-'imagepage'         => 'Varda la pagina del file',
-'mediawikipage'     => 'Varda el mesajo',
-'templatepage'      => 'Varda el modeło',
-'viewhelppage'      => 'Varda la pagina de ajuto',
-'categorypage'      => 'Varda la categoria',
-'viewtalkpage'      => 'Varda la pagina de discussion',
 'otherlanguages'    => 'Altre lengue',
 'redirectedfrom'    => '(Rimando da <b>$1</b>)',
 'redirectpagesub'   => 'Pagina de rimando',
@@ -502,7 +473,7 @@ Podaria esare sta zà scansełà da qualcun altro.',
 'badtitletext'         => "El titoło de ła pajina richiesta xè vodo, erà o con carateri no amesi opure el deriva da n'erore ne i cołegamenti tra siti wiki diversi o version en łengue diverse de ło steso sito.",
 'perfcached'           => 'Sti dati qua no i vien mia azornà in tenpo reale, ma solo na olta ogni tanto. A maximum of {{PLURAL:$1|one result is|$1 results are}} available in the cache.',
 'perfcachedts'         => "Sti dati qua i xe stà azornà l'ultima olta el $1. A maximum of {{PLURAL:$4|one result is|$4 results are}} available in the cache.",
-'querypage-no-updates' => "L'azornamento periodico de sta pagina el xe sospeso. 
+'querypage-no-updates' => "L'azornamento periodico de sta pagina el xe sospeso.
 I dati che ghè qua drento no i xe azornà.",
 'wrong_wfQuery_params' => 'Erore ne i parametri invià a ła funsion wfQuery()<br />
 Funsion: $1<br />
@@ -531,8 +502,9 @@ $2',
 # Login and logout pages
 'logouttext'                 => "'''Te sì 'ndà fora da la to utensa.'''
 
-Te poli 'ndar vanti doparando {{SITENAME}} come utente anonimo o se nò [[Special:UserLogin|entrar da novo]], col stesso nome utente o uno difarente.
+Te poli 'ndar vanti doparando {{SITENAME}} come utente anonimo o se nò $1, col stesso nome utente o uno difarente.
 Ocio che serte pagine podarìa èssar che ti 'e vedi come se te fussi 'ncora drento col to nome de prima, fin che no te neti la ''cache'' del to browser.",
+'logouttext-link-text'       => 'entrar da novo',
 'welcomecreation'            => '== Benvegnù, $1! ==
 
 El to nome utente el xe stà creà.
@@ -738,7 +710,6 @@ L'ultimo ełemento del rejistro de i blochi xè riportà de seguito par informas
 'usercsspreview'                   => "'''Sta qua la xe solo n'anteprima del proprio CSS personal.
 Le modifiche no le xe gnancora stà salvà!'''",
 'userjspreview'                    => "'''Sta qua la xe solo n'anteprima par proar el proprio JavaScript personal; le modifiche no le xe gnancora stà salvà!'''",
-'userinvalidcssjstitle'            => "'''Ocio:'''  No ghe xe nissuna skin con nome \"\$1\". Nota che le pagine par i .css e .js personalizà le gà l'iniziale del titolo minuscola, par esenpio {{ns:user}}:Esenpio/vector.css e no {{ns:user}}:Esenpio/Vector.css.",
 'updated'                          => '(Agiornà)',
 'note'                             => "'''Nota:'''",
 'previewnote'                      => "'''Sta qua la xe solo n'anteprima; i canbiamenti a la pagina NO i xe gnancora stà salvà!'''",
@@ -1062,7 +1033,7 @@ Assicùrete che la continuità storica de la pagina no la vegna alterà.',
 'showingresults'                   => "Qua de soto vien mostrà al massimo {{PLURAL:$1|'''1''' risultato|'''$1''' risultati}} a partir dal nùmaro '''$2'''.",
 'showingresultsnum'                => "Qua soto ghe xe {{PLURAL:$3|'''1''' risultato|'''$3''' risultati}} a partir da #'''$2'''.",
 'showingresultsheader'             => "{{PLURAL:$5|Risultato '''$1''' de '''$3'''|Risultati '''$1 - $2''' de '''$3'''}} par '''$4'''",
-'nonefound'                        => "'''Ocio''': par default se serca solo in certi namespace. 
+'nonefound'                        => "'''Ocio''': par default se serca solo in certi namespace.
 Prova a métarghe \"all:\" davanti al testo che te serchi par vardar in tuti i namespace (conpresi pagine de discussion, modèi, ecc.) o se nò métighe davanti el namespace che te voli.",
 'search-nonefound'                 => 'La riserca no la gà catà gnente.',
 'powersearch'                      => 'Riserca',
@@ -1076,13 +1047,6 @@ Prova a métarghe \"all:\" davanti al testo che te serchi par vardar in tuti i n
 'search-external'                  => 'Riserca esterna',
 'searchdisabled'                   => 'La riserca interna de {{SITENAME}} no la xe ativa; par intanto te pol proár a doparar un motore de riserca esterno come Google. (Nota però che i contenuti de {{SITENAME}} presenti in sti motori i podarìa èssar mìà agiornà.)',
 
-# Quickbar
-'qbsettings'               => 'Settaggio barra menu',
-'qbsettings-none'          => 'Nessun',
-'qbsettings-fixedleft'     => 'Fisso a sinistra',
-'qbsettings-fixedright'    => 'Fisso a destra',
-'qbsettings-floatingleft'  => 'Fluttuante a sinistra',
-'qbsettings-floatingright' => 'Fluttuante a destra',
 
 # Preferences page
 'preferences'                   => 'Prefarense',
@@ -2628,7 +2592,7 @@ La so esecuzion la podarìa danegiar el to computer.",
 # Bad image list
 'bad_image_list' => 'El formato xe sto qua:
 
-Xe boni solo i elenchi puntai (righe che scumissia col caratere *). 
+Xe boni solo i elenchi puntai (righe che scumissia col caratere *).
 El primo colegamento su de ogni riga el gà da èssar un colegamento a un file indesiderà.
 I colegamenti dopo, su la stessa riga, i xe considerai come ecession (cioè, pagine in do che el file se pole riciamarlo normalmente).',
 
@@ -3033,16 +2997,16 @@ Doparar l\'anteprima standard.',
 'watchlistedit-noitems'        => 'La lista dei osservati speciali la xe voda.',
 'watchlistedit-normal-title'   => 'Modifica osservati speciali',
 'watchlistedit-normal-legend'  => 'Elimina de pagine dai osservati speciali',
-'watchlistedit-normal-explain' => 'De seguito xe elencà tute le pagine tegnùe d\'ocio. 
-Par cavar una o più pagine da la lista, seleziona le casele relative e struca el boton "{{int:Watchlistedit-normal-submit}}". 
+'watchlistedit-normal-explain' => 'De seguito xe elencà tute le pagine tegnùe d\'ocio.
+Par cavar una o più pagine da la lista, seleziona le casele relative e struca el boton "{{int:Watchlistedit-normal-submit}}".
 Nota che se pol anca [[Special:EditWatchlist/raw|modificar la lista in formato testual]].',
 'watchlistedit-normal-submit'  => 'Elimina pagine',
 'watchlistedit-normal-done'    => 'Da la lista dei osservati speciali xe stà eliminà {{PLURAL:$1|una pagina|$1 pagine}}:',
 'watchlistedit-raw-title'      => 'Modifica dei osservati speciali in forma testual',
 'watchlistedit-raw-legend'     => 'Modifica testual osservati speciali',
-'watchlistedit-raw-explain'    => "De seguito xe elencàe tute le pagine tegnùe d'ocio. 
-Par modificar la lista, zónteghe o càveghe i rispetivi titoli, uno par riga. 
-Na olta che the ghè finìo, struca el boton \"{{int:Watchlistedit-raw-submit}}\" in fondo all'elenco. 
+'watchlistedit-raw-explain'    => "De seguito xe elencàe tute le pagine tegnùe d'ocio.
+Par modificar la lista, zónteghe o càveghe i rispetivi titoli, uno par riga.
+Na olta che the ghè finìo, struca el boton \"{{int:Watchlistedit-raw-submit}}\" in fondo all'elenco.
 Nota che te pol anca [[Special:EditWatchlist|modificar la lista con l'interfacia standard]].",
 'watchlistedit-raw-titles'     => 'Pagine:',
 'watchlistedit-raw-submit'     => 'Agiorna la lista',

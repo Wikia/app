@@ -1,23 +1,29 @@
-/* global wgNamespaceIds, wgFormattedNamespaces, mw, wgServer, wgScript */
+/* global mw, wgServer, wgScript */
 /* jshint maxlen: false */
 /* jshint loopfunc: false */
 /* jshint camelcase: false */
 'use strict';
 
-require(['wikia.window', 'jquery', 'wikia.nirvana', 'wikia.tracker', 'JSMessages'], function (window, $, nirvana, tracker, msg) {
+require(
+	['wikia.window', 'jquery', 'wikia.nirvana', 'wikia.tracker', 'JSMessages'],
+	function (window, $, nirvana, tracker, msg)
+{
 	// usefull shortcuts
 	$.fn.removeError = function () {
 		return this.removeClass('error').popover('destroy');
 	};
+
 	$.fn.addError = function (message) {
 		return this.addClass('error')
 			.popover('destroy')
 			.popover({content: message});
 	};
+	$.fn.findSelectorFromList = function(list, reason) {
+		return this.find(list[reason] || list.default);
+	};
 
 	$(function () {
 		mw.loader.using(['jquery.autocomplete', 'jquery.ui.sortable', 'wikia.aim', 'wikia.yui'], function () {
-
 
 			var d = document,
 				item = mw.config.get('itemTemplate'),
@@ -64,6 +70,7 @@ require(['wikia.window', 'jquery', 'wikia.nirvana', 'wikia.tracker', 'JSMessages
 					// validate form on init
 					checkForm();
 				},
+
 				addNew = function (row, elem) {
 					var cat;
 
@@ -84,17 +91,17 @@ require(['wikia.window', 'jquery', 'wikia.nirvana', 'wikia.tracker', 'JSMessages
 				/**
 				 * Validate input elements
 				 *
-				 * @param elements
-				 * @param options array consists of ['checkEmpty', 'required', 'limit']
+				 * @param {jQuery} elements
+				 * @param {array} options array consists of ['required', 'limit', 'duplicates']
 				 */
 				checkInputs = function (elements, options) {
 					var cachedVals = [],
-						optionCheckEmpty, optionRequired, optionLimit;
+						optionRequired, optionLimit, optionDuplicates;
 
 					if (Array.isArray(options)) {
-						optionCheckEmpty = options.indexOf('checkEmpty') !== -1;
 						optionRequired = options.indexOf('required') !== -1;
 						optionLimit = options.indexOf('limit') !== -1;
+						optionDuplicates = options.indexOf('duplicates') !== -1;
 					}
 
 					elements.each(function () {
@@ -104,29 +111,25 @@ require(['wikia.window', 'jquery', 'wikia.nirvana', 'wikia.tracker', 'JSMessages
 						// check if field value is empty and it's required
 						if (optionRequired && val === '') {
 							$this.addError(requiredError);
-							return true;
 						}
 						// check if field value is too long
 						if (optionLimit && val.length > maxAllowedLength) {
 							$this.addError(tooLongLabelError);
-							return true;
 						}
-						// check if value already exists (in cachedVals variable)
-						if (cachedVals.indexOf(val) === -1) {
-							// not exists, add it to cachedVals and remove previous errors
-							cachedVals.push(val);
-
-							$this.removeError();
-							return true;
-						} else if (optionCheckEmpty || val !== '') {
-							// if it exists and it's not empty it's duplication
-							$this.addError(duplicateError);
+						if (optionDuplicates && val !== '') {
+							// check if value already exists (in cachedVals variable)
+							if (cachedVals.indexOf(val) === -1) {
+								// not exists, add it to cachedVals
+								cachedVals.push(val);
+							} else {
+								// if it exists and it's not empty it's duplication
+								$this.addError(duplicateError);
+							}
 						}
 					});
 				},
-				checkImages = function () {
-					$ul.find('.image.error').removeError();
 
+				checkImages = function () {
 					// find all images for items and sections except Featured Section and...
 					$ul.find('.section:not(.featured), .item')
 						.find('.image:not([style*="background-image"])')
@@ -137,17 +140,20 @@ require(['wikia.window', 'jquery', 'wikia.nirvana', 'wikia.tracker', 'JSMessages
 						$lastSection.parent().find('.image').removeError();
 					}
 				},
+
 				checkForm = function () {
 					$save.removeClass();
 
-					checkInputs($ul.find('.section-input'), ['limit', 'checkEmpty']);
-					checkInputs($ul.find('.item-input'), ['required', 'checkEmpty']);
+					// clear errors from all possible items / sections / images
+					$ul.find('.section-input.error, .item-input.error, .name.error, .image.error').removeError();
+
+					checkInputs($ul.find('.section-input'), ['limit', 'duplicates']);
+					checkInputs($ul.find('.item-input'), ['required']);
 
 					// check images for non-featured sections and items
 					checkImages();
 
 					// validate orphans
-					$ul.find('.section ~ .item.error').removeError();
 					$ul.find('.item:not(.section ~ .item)').addError(orphanError);
 
 					$ul.find('.section').each(function () {
@@ -161,6 +167,11 @@ require(['wikia.window', 'jquery', 'wikia.nirvana', 'wikia.tracker', 'JSMessages
 						}
 					});
 
+					// validate duplicates in featured items
+					checkInputs($ul.find('.featured').nextUntil('.section').find('.name'), ['duplicates']);
+					// check for duplicated in items
+					checkInputs($ul.find('.section:not(.featured)').first().nextAll().find('.name'), ['duplicates']);
+
 					if (d.getElementsByClassName('error').length > 0) {
 						$save.attr('disabled', true);
 						return false;
@@ -169,11 +180,13 @@ require(['wikia.window', 'jquery', 'wikia.nirvana', 'wikia.tracker', 'JSMessages
 						return true;
 					}
 				},
+
 				track = tracker.buildTrackingFunction({
 					action: Wikia.Tracker.ACTIONS.CLICK,
 					category: 'special-curated-content',
 					trackingMethod: 'analytics'
 				}),
+
 				onImageLoadFail = function ($image) {
 					$image
 						.addError(imageMissingError)
@@ -184,14 +197,15 @@ require(['wikia.window', 'jquery', 'wikia.nirvana', 'wikia.tracker', 'JSMessages
 					$image.stopThrobbing();
 					checkForm();
 				},
+
 				loadImage = function ($image, imgTitle, catImage) {
 					$image.startThrobbing();
 
 					nirvana.getJson(
-						'CuratedContentSpecial',
+						'CuratedContent',
 						'getImage',
 						{
-							file: imgTitle
+							title: imgTitle
 						}
 					).done(
 						function (data) {
@@ -200,7 +214,9 @@ require(['wikia.window', 'jquery', 'wikia.nirvana', 'wikia.tracker', 'JSMessages
 									.removeError()
 									.css('backgroundImage', 'url(' + data.url + ')')
 									.data('id', data.id)
-									.attr('data-id', data.id);
+									.attr('data-id', data.id)
+									.data('crop', '')
+									.removeAttr('data-crop');
 
 								if (!catImage) {
 									$image.siblings().last().addClass('photo-remove');
@@ -238,10 +254,11 @@ require(['wikia.window', 'jquery', 'wikia.nirvana', 'wikia.tracker', 'JSMessages
 							// This has to happen inside setTimeout because updating value from autocomplete
 							// happens after blur event so value passed to loadImage is wrong.
 							// With setTimeout we are waiting for correct value to appear inside input
-							setTimeout(function() {
-								loadImage($imageForSection, $(self).val())
+							setTimeout(function () {
+								loadImage($imageForSection, $(self).val());
 							}, 500);
 						}
+						checkForm();
 					} else {
 						this.value = val;
 						checkForm();
@@ -273,7 +290,8 @@ require(['wikia.window', 'jquery', 'wikia.nirvana', 'wikia.tracker', 'JSMessages
 				return {
 					title: $lia.find('.item-input').val(),
 					label: $lia.find('.name').val(),
-					image_id: $lia.find('.image').data('id') || 0
+					image_id: $lia.find('.image').data('id') || 0,
+					image_crop: $lia.find('.image').data('crop') || ''
 				};
 			}
 
@@ -281,9 +299,10 @@ require(['wikia.window', 'jquery', 'wikia.nirvana', 'wikia.tracker', 'JSMessages
 				var $lia = $(li),
 					name = $lia.find('.section-input').val() || '',
 					imageId = $lia.find('.image').data('id') || 0,
+					imageCrop = $lia.find('.image').data('crop') || '',
 					featured = $lia.hasClass('featured') || false,
 					items = [],
-					result = {};
+					result;
 
 				$lia.nextUntil('.section').each(function () {
 					items.push(getItemData(this));
@@ -292,12 +311,96 @@ require(['wikia.window', 'jquery', 'wikia.nirvana', 'wikia.tracker', 'JSMessages
 				result = {
 					title: name,
 					image_id: imageId,
+					image_crop: imageCrop,
 					items: items
 				};
+
 				if (featured) {
 					result.featured = true;
 				}
+
 				return result;
+			}
+
+			function gerErrorMessageFromErrReason(errReason) {
+				if (errReason === 'articleNotFound') {
+					return articleNotFoundError;
+				}
+				if (errReason === 'emptyLabel') {
+					return emptyLabelError;
+				}
+				if (errReason === 'tooLongLabel') {
+					return tooLongLabelError;
+				}
+				if (errReason === 'videoNotSupportProvider') {
+					return videoNotSupportedError;
+				}
+				if (errReason === 'notSupportedType') {
+					return notSupportedType;
+				}
+				if (errReason === 'noCategoryInTag') {
+					return noCategoryInTag;
+				}
+				if (errReason === 'imageMissing') {
+					return imageMissingError;
+				}
+				if (errReason === 'duplicatedLabel') {
+					return duplicateError;
+				}
+				return errReason;
+			}
+			function addErrorToItem($selector, reason, message) {
+				$selector.findSelectorFromList({
+						imageMissing: '.image',
+						emptyLabel: '.name',
+						duplicatedLabel: '.name',
+						tooLongLabel: '.name',
+						default: '.item-input'
+					}, reason).addError(message);
+			}
+			function addErrorToSection($selector, reason, message) {
+				$selector.findSelectorFromList({
+					imageMissing: '.image',
+					default: '.section-input'
+				}, reason).addError(message);
+			}
+			function isFeaturedItem($node) {
+				return $node.closest('li').prevUntil('.section').prev().last().hasClass('featured');
+			}
+			function iterateItemsForErrors($nodes, err, message) {
+				var errLabel = err.target;
+
+				if (err.type === 'item' ) {
+					$nodes.each(function () {
+						var $this = $(this);
+						// label for items is held in .name
+						if ($this.find('.name').val() === errLabel && !isFeaturedItem($this)) {
+							addErrorToItem($this, err.reason, message);
+						}
+					});
+				} else if (err.type === 'featured') {
+					$nodes.each(function () {
+						var $this = $(this);
+						// label for items is held in .name
+						if ($this.find('.name').val() === errLabel && isFeaturedItem($this)) {
+							addErrorToItem($this, err.reason, message);
+						}
+					});
+				}
+			}
+			function iterateSectionsForErrors($nodes, err, message) {
+				var errLabel = err.target;
+
+				if (err.type === 'section') {
+					$nodes.each(function () {
+						var $this = $(this);
+						// label for items is held in .name
+						if ($this.find('.section-input').val() === errLabel) {
+							addErrorToSection($this, err.reason, message);
+						}
+					});
+				}
+
 			}
 
 			window._gaq.push(['_setSampleRate', '100']);
@@ -324,83 +427,41 @@ require(['wikia.window', 'jquery', 'wikia.nirvana', 'wikia.tracker', 'JSMessages
 						}
 						data.push(sectionData);
 					});
+
 					nirvana.sendRequest({
 						controller: 'CuratedContentSpecial',
 						method: 'save',
 						data: {
 							sections: data
 						}
-					}).done(
-						function (data) {
-							function getReasonMessage(errReason) {
-								if (errReason === 'articleNotFound') {
-									return articleNotFoundError;
-								}
-								if (errReason === 'emptyLabel') {
-									return emptyLabelError;
-								}
-								if (errReason === 'tooLongLabel') {
-									return tooLongLabelError;
-								}
-								if (errReason === 'videoNotSupportProvider') {
-									return videoNotSupportedError;
-								}
-								if (errReason === 'notSupportedType') {
-									return notSupportedType;
-								}
-								if (errReason === 'noCategoryInTag') {
-									return noCategoryInTag;
-								}
-								if (errReason === 'imageMissing') {
-									return imageMissingError;
-								}
-								return errReason;
-							}
+					}).done(function (data) {
+						var $featuredItems = $ul.find('.featured').nextUntil('.section'),
+							$items = $ul.find('.section:not(.featured)').first().nextAll(),
+							$sections = $ul.find('.section:not(.featured)');
 
-							if (data.error) {
-								var items = $form.find('.item-input, .section-input');
+						if (data.error) {
+							[].forEach.call(data.error, function (err) {
+								// err := { target: <label>, type: [item,section,featured], reason: <error> }
+								var message = gerErrorMessageFromErrReason(err.reason);
 
-								$.each(data.error, function() {
-									var errTitle = this.title,
-										errReason = this.reason,
-										reasonMessage = getReasonMessage(errReason);
+								iterateItemsForErrors($items, err, message);
+								iterateItemsForErrors($featuredItems, err, message);
+								iterateSectionsForErrors($sections, err, message);
+							});
 
-									items.each(function () {
-										if (this.value === errTitle) {
-											var $itemWithError;
-
-											switch (errReason) {
-												case 'missingImage':
-													$itemWithError = $(this).parent().find('.image');
-													break;
-												case 'emptyLabel':
-												case 'tooLongLabel':
-													$itemWithError = $(this).next();
-													break;
-												default:
-													$itemWithError = $(this);
-											}
-
-											$itemWithError.addError(reasonMessage);
-											return false;
-										}
-										return true;
-									});
-								});
-
-								$save.addClass('err');
-								$save.attr('disabled', true);
-								track({label: 'save-error'});
-							} else if (data.status) {
-								$save.addClass('ok');
-								track({label: 'save'});
-							}
-						}).fail(function () {
 							$save.addClass('err');
+							$save.attr('disabled', true);
 							track({label: 'save-error'});
-						}).then(function () {
-							$form.stopThrobbing();
-						});
+						} else if (data.status) {
+							$save.addClass('ok');
+							track({label: 'save'});
+						}
+					}).fail(function () {
+						$save.addClass('err');
+						track({label: 'save-error'});
+					}).then(function () {
+						$form.stopThrobbing();
+					});
 				}
 			});
 
@@ -408,7 +469,12 @@ require(['wikia.window', 'jquery', 'wikia.nirvana', 'wikia.tracker', 'JSMessages
 				on('click', '.photo-remove', function () {
 					var $this = $(this),
 						$line = $this.parent(),
-						$image = $line.find('.image').removeAttr('data-id');
+						$image = $line
+							.find('.image')
+							.data('id', 0)
+							.removeAttr('data-id')
+							.data('crop', '')
+							.removeAttr('data-crop');
 
 					$this.removeClass('photo-remove');
 					loadImage($image, $line.find('.item-input').val(), true);

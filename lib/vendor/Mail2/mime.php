@@ -72,7 +72,7 @@ require_once 'PEAR.php';
  * create all the different parts a mail can
  * consist of.
  */
-require_once 'Mail/mimePart.php';
+require_once 'Mail2/mimePart.php';
 
 
 /**

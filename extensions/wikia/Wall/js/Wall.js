@@ -292,6 +292,7 @@
 				controller: 'WallNotificationsExternalController',
 				method: 'markAsRead',
 				format: 'json',
+				type: 'POST',
 				data: {
 					id: commentId
 				}
@@ -301,14 +302,17 @@
 		vote: function (e) {
 			e.preventDefault();
 			if (!window.wgUserName) {
-				window.UserLoginModal.show({
-					origin: 'wall-and-forum',
-					callback: this.proxy(function () {
-						this.voteBase(e, function () {
-							window.location.reload();
-						});
-					})
-				});
+				require(['AuthModal'], function (authModal) {
+					authModal.load({
+						url: '/signin?redirect=' + encodeURIComponent(window.location.href),
+						origin: 'wall-and-forum',
+						onAuthSuccess: this.proxy(function () {
+							this.voteBase(e, function () {
+								window.location.reload();
+							});
+						})
+					});
+				}.bind(this));
 			} else {
 				this.voteBase(e, this.proxy(function (target, data, dir) {
 					var votes = target.closest('li.message').find('.votes:first'),
@@ -344,6 +348,7 @@
 				controller: 'WallExternalController',
 				method: 'vote',
 				format: 'json',
+				type: 'POST',
 				data: {
 					dir: dir,
 					id: id
@@ -397,6 +402,7 @@
 			$.nirvana.sendRequest({
 				controller: 'WallExternalController',
 				method: 'undoAction',
+				type: 'POST',
 				data: {
 					msgid: id
 				},
@@ -416,6 +422,7 @@
 			$.nirvana.sendRequest({
 				controller: 'WallExternalController',
 				method: 'restoreMessage',
+				type: 'POST',
 				data: {
 					msgid: id,
 					formdata: formdata
@@ -568,6 +575,7 @@
 			$.nirvana.sendRequest({
 				controller: 'WallExternalController',
 				method: 'deleteMessage',
+				type: 'POST',
 				format: 'json',
 				data: {
 					mode: mode,
@@ -603,6 +611,7 @@
 				controller: 'WallExternalController',
 				method: 'changeThreadStatus',
 				format: 'json',
+				type: 'POST',
 				data: {
 					msgid: id,
 					newState: newState,
@@ -729,12 +738,15 @@
 			e.preventDefault();
 			var rootMessageId = $(e.target).closest('.message').data('id');
 			if (window.wgDisableAnonymousEditing && !window.wgUserName) {
-				window.UserLoginModal.show({
-					origin: 'wall-and-forum',
-					callback: this.proxy(function () {
-						this.editTopics(rootMessageId);
-					})
-				});
+				require(['AuthModal'], function (authModal) {
+					authModal.load({
+						url: '/signin?redirect=' + encodeURIComponent(window.location.href),
+						origin: 'wall-and-forum',
+						onAuthSuccess: this.proxy(function () {
+							this.editTopics(rootMessageId);
+						})
+					});
+				}.bind(this));
 			} else {
 				this.editTopics(rootMessageId);
 			}
@@ -796,6 +808,7 @@
 				controller: 'WallExternalController',
 				method: 'moveModal',
 				format: 'html',
+				type: 'POST',
 				data: {
 					id: id
 				},
@@ -840,6 +853,7 @@
 										controller: 'WallExternalController',
 										method: 'moveThread',
 										format: 'json',
+										type: 'POST',
 										data: {
 											destinationBoardId: moveThreadModal.$content
 												.find('.destinationBoardId option:selected').val(),

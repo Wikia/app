@@ -257,30 +257,12 @@ $messages = array(
 'navigation'    => 'Panel llywio',
 'and'           => '&#32;a/ac',
 
-# Cologne Blue skin
 'qbfind'         => 'Canfod',
 'qbbrowse'       => 'Pori',
-'qbedit'         => 'Golygu',
 'qbpageoptions'  => 'Y dudalen hon',
 'qbpageinfo'     => 'Cyd-destun',
-'qbmyoptions'    => 'Fy nhudalennau',
-'qbspecialpages' => 'Tudalennau arbennig',
 'faq'            => 'Cwestiynau cyffredin',
-'faqpage'        => 'Project:Cwestiynau cyffredin',
 
-# Vector skin
-'vector-action-addsection'       => 'Ychwanegu adran',
-'vector-action-delete'           => 'Dileu',
-'vector-action-move'             => 'Symud',
-'vector-action-protect'          => 'Diogelu',
-'vector-action-undelete'         => 'Adfer',
-'vector-action-unprotect'        => 'Newid y diogelwch',
-'vector-simplesearch-preference' => 'Galluogi awgrymiadau chwilio uwch (gwedd Vector yn unig)',
-'vector-view-create'             => 'Dechrau',
-'vector-view-edit'               => 'Golygu',
-'vector-view-history'            => 'Gweld yr hanes',
-'vector-view-view'               => 'Darllen',
-'vector-view-viewsource'         => 'Dangos côd y dudalen',
 'actions'                        => 'Gweithrediadau',
 'namespaces'                     => 'Parthau',
 'variants'                       => 'Amrywiolion',
@@ -303,7 +285,6 @@ $messages = array(
 'edit'              => 'Golygu',
 'create'            => 'Creu',
 'editthispage'      => 'Golygwch y dudalen hon',
-'create-this-page'  => "Creu'r dudalen",
 'delete'            => 'Dileu',
 'deletethispage'    => 'Dileer y dudalen hon',
 'undelete_short'    => 'Adfer $1 {{PLURAL:$1|golygiad|golygiad|olygiad|golygiad|golygiad|golygiad}}',
@@ -318,19 +299,9 @@ $messages = array(
 'talkpagelinktext'  => 'Sgwrs',
 'specialpage'       => 'Tudalen Arbennig',
 'personaltools'     => 'Offer personol',
-'postcomment'       => 'Adran newydd',
-'articlepage'       => 'Dangos tudalen bwnc',
 'talk'              => 'Sgwrs',
 'views'             => 'Golygon',
 'toolbox'           => 'Blwch offer',
-'userpage'          => 'Gweld tudalen y defnyddiwr',
-'projectpage'       => 'Gweld tudalen y wici',
-'imagepage'         => 'Gweld tudalen y ffeil',
-'mediawikipage'     => 'Gweld tudalen y neges',
-'templatepage'      => 'Dangos y dudalen nodyn',
-'viewhelppage'      => 'Dangos y dudalen gymorth',
-'categorypage'      => 'Dangos tudalen y categori',
-'viewtalkpage'      => 'Gweld y sgwrs',
 'otherlanguages'    => 'Ieithoedd eraill',
 'redirectedfrom'    => '(Ailgyfeiriad oddi wrth $1)',
 'redirectpagesub'   => 'Tudalen ailgyfeirio',
@@ -510,8 +481,9 @@ Rhoddwyd y rheswm hwn - ''$2''.",
 # Login and logout pages
 'logouttext'                 => "'''Rydych wedi allgofnodi.'''
 
-Gallwch ddefnyddio {{SITENAME}} yn anhysbys, neu fe allwch [[Special:UserLogin|fewngofnodi eto]] wrth yr un un enw neu wrth enw arall.
+Gallwch ddefnyddio {{SITENAME}} yn anhysbys, neu fe allwch $1 wrth yr un un enw neu wrth enw arall.
 Sylwer y bydd rhai tudalennau yn parhau i ymddangos fel ag yr oeddent pan oeddech wedi mewngofnodi hyd nes i chi glirio celc eich porwr.",
+'logouttext-link-text'       => 'fewngofnodi eto',
 'welcomecreation'            => "==Croeso, $1!==
 Mae eich cyfrif wedi'i greu.
 Cofiwch osod y [[Special:Preferences|dewisiadau]] sydd fwyaf hwylus i chi ar {{SITENAME}}.",
@@ -539,7 +511,7 @@ Cofiwch osod y [[Special:Preferences|dewisiadau]] sydd fwyaf hwylus i chi ar {{S
 'createaccountmail'          => 'trwy e-bost',
 'createaccountreason'        => 'Rheswm:',
 'badretype'                  => "Nid yw'r cyfrineiriau'n union yr un fath.",
-'userexists'                 => 'Mae rhywun arall wedi dewis yr enw defnyddiwr hwn. 
+'userexists'                 => 'Mae rhywun arall wedi dewis yr enw defnyddiwr hwn.
 Dewiswch un arall os gwelwch yn dda.',
 'loginerror'                 => 'Problem mewngofnodi',
 'createaccounterror'         => "Ni lwyddwyd i greu'r cyfrif: $1",
@@ -618,36 +590,6 @@ Er mwyn cwblhau'r mewngofnodi, rhaid i chi osod cyfrinair newydd fel hyn:",
 'resetpass-wrong-oldpass'   => "Mae'r cyfrinair dros dro neu gyfredol yn annilys.
 Gall fod eich bod wedi llwyddo newid eich cyfrinair eisoes neu eich bod wedi gofyn am gyfrinair dros dro newydd.",
 'resetpass-temp-password'   => 'Cyfrinair dros dro:',
-
-# Special:PasswordReset
-'passwordreset'                    => 'Ailosod cyfrinair',
-'passwordreset-text'               => "Cwblhewch y ffurflen hon er mwyn derbyn e-bost i'ch atgoffa o fanylion eich cyfrif.",
-'passwordreset-legend'             => 'Ailosod y cyfrinair',
-'passwordreset-disabled'           => 'Analluogwyd ailosod cyfrineiriau ar y wici hwn.',
-'passwordreset-pretext'            => "{{PLURAL:$1|||Rhowch un o'r darnau o ddata isod|Rhowch un o'r darnau o ddata isod|Rhowch un o'r darnau o ddata isod|Rhowch un o'r darnau o ddata isod|Rhowch un o'r darnau o ddata isod}}",
-'passwordreset-username'           => 'Eich enw defnyddiwr:',
-'passwordreset-domain'             => 'Parth:',
-'passwordreset-capture'            => 'Gweld yr e-bost a gaiff ei anfon?',
-'passwordreset-capture-help'       => "Os y ticiwch y blwch hwn, bydd yr e-bost (gyda'r cyfrinair dros dro) yn cael ei ddangos i chi yn ogystal a chael ei anfon at y defnyddiwr.",
-'passwordreset-email'              => 'Eich cyfeiriad e-bost:',
-'passwordreset-emailtitle'         => 'Manylion eich cyfrif ar {{SITENAME}}',
-'passwordreset-emailtext-ip'       => "Mae rhywun (chi yn ôl pob tebyg, o'r cyfeiriad IP $1) wedi gofyn am nodyn atgoffa o fanylion eich cyfrif ar {{SITENAME}} ($4). Mae'r {{PLURAL:$3|cyfrif|cyfrif|cyfrifon|cyfrifon|cyfrifon|cyfrifon}} canlynol ynghlwm wrth y cyfeiriad e-bost hwn:
-
-$2
-
-Bydd y {{PLURAL:$3||cyfrinair dros dro hwn|cyfrineiriau dros dro hyn|cyfrineiriau dros dro hyn|cyfrineiriau dros dro hyn|cyfrineiriau dros dro hyn}} yn dod i ben ymhen {{PLURAL:$5||diwrnod |deuddydd|tridiau|$5 diwrnod|$5 diwrnod}}. Dylech fewngofnodi nawr a dewis cyfrinair newydd. Os mai rhywun arall a ofynodd am ailosod y cyfrinair, neu os ydych wedi cofio eich cyfrinair gwreiddiol, neu os nad ydych am ei newid bellach, gallwch anwybyddu'r neges hon a pharhau i ddefnyddio eich hen gyfrinair.",
-'passwordreset-emailtext-user'     => "Gofynodd y defnyddiwr $1 ar {{SITENAME}} am gael ei atgoffa o fanylion eich cyfrif ar {{SITENAME}}
-($4). Mae'r {{PLURAL:$3||cyfrif|cyfrifon|cyfrifon|cyfrifon|cyfrifon}} canlynol ynghlwm wrth y cyfeiriad e-bost hwn:
-
-$2
-
-Bydd y {{PLURAL:$3||cyfrinair|cyfrineiriau|cyfrineiriau|cyfrineiriau|cyfrineiriau}} dros dro hyn yn dod i ben ymhen {{PLURAL:$5||diwrnod|deuddydd|tridiau|$5 diwrnod|$5 diwrnod}}.
-Dylech fewngofnodi nawr a dewis cyfrinair newydd. Os mai rhywun arall a ofynodd am ailosod y cyfrinair, neu os ydych wedi cofio eich cyfrinair gwreiddiol, neu os nad ydych am ei newid bellach, gallwch anwybyddu'r neges hon a pharhau i ddefnyddio eich hen gyfrinair.",
-'passwordreset-emailelement'       => "Enw'r defnyddiwr: $1
-Y cyfrinair dros dro: $2",
-'passwordreset-emailsent'          => 'Anfonwyd nodyn atgoffa drwy e-bost.',
-'passwordreset-emailsent-capture'  => 'Anfonwyd e-bost atgoffa, a ddangosir isod.',
-'passwordreset-emailerror-capture' => "Lluniwyd e-bost atgoffa fel ag a welir isod, ond ni lwyddwyd i'w anfon at y defnyddiwr: $1",
 
 # Special:ChangeEmail
 'changeemail'          => 'Newid y cyfeiriad e-bost',
@@ -756,8 +698,8 @@ Dyma'r cofnod lòg diweddaraf, er gwybodaeth:",
 'clearyourcache'                   => "'''Sylwer - Wedi i chi roi'r dudalen ar gadw, efallai y bydd angen mynd heibio celc eich porwr er mwyn gweld y newidiadau.'''
 *'''Firefox / Safari:''' Pwyswch ar ''Shift'' tra'n clicio ''Ail-lwytho/Reload'', neu gwasgwch ''Ctrl-F5'' neu ''Ctrl-R'' (''⌘-R'' ar Mac);
 *'''Google Chrome:'''Pwyswch ar Ctrl-Shift-R'' (''⌘-Shift-R'' ar Mac)
-*'''Internet Explorer:''' Pwyswch ar ''Ctrl'' tra'n clicio ''Adnewyddu/Refresh'', neu gwasgwch ''Ctrl-F5''. 
-*'''Konqueror:''' Cliciwch y botwm ''Ail-lwytho/Reload'', neu gwasgwch ''F5''; 
+*'''Internet Explorer:''' Pwyswch ar ''Ctrl'' tra'n clicio ''Adnewyddu/Refresh'', neu gwasgwch ''Ctrl-F5''.
+*'''Konqueror:''' Cliciwch y botwm ''Ail-lwytho/Reload'', neu gwasgwch ''F5'';
 *'''Opera:''' gwacewch y celc yn llwyr trwy ''Offer → Dewisiadau / Tools→Preferences'';",
 'usercssyoucanpreview'             => "'''Tip:''' Defnyddiwch y botwm \"{{int:showpreview}}\" er mwyn profi eich CSS newydd cyn ei gadw.",
 'userjsyoucanpreview'              => "'''Tip:''' Defnyddiwch y botwm \"{{int:showpreview}}\" er mwyn profi eich JS newydd cyn ei gadw.",
@@ -1115,14 +1057,6 @@ Pan yn gwneud hyn dylid sicrhau nad yw dilyniant hanes tudalennau yn cael ei ddi
 Yn y cyfamser gallwch chwilio drwy Google.
 Cofiwch y gall mynegeion Google o gynnwys {{SITENAME}} fod ar ei hôl hi.",
 
-# Quickbar
-'qbsettings'                => 'Panel llywio',
-'qbsettings-none'           => 'Dim',
-'qbsettings-fixedleft'      => 'Sefydlog ar y chwith',
-'qbsettings-fixedright'     => 'Sefydlog ar y dde',
-'qbsettings-floatingleft'   => 'Yn arnofio ar y chwith',
-'qbsettings-floatingright'  => 'Yn arnofio ar y dde',
-'qbsettings-directionality' => "Yn sefydlog, ar yr ochr o'r ddalen lle rydych yn dechrau ysgrifennu eich iaith",
 
 # Preferences page
 'preferences'                   => 'Dewisiadau',
@@ -1604,7 +1538,7 @@ Os yw'r broblem yn parhau, cysylltwch â [[Special:ListUsers/sysop|gweinyddwr]].
 # ZipDirectoryReader
 'zip-file-open-error' => 'Cafwyd gwall wrth agor y ffeil er mwyn gwneud gwiriadau ZIP.',
 'zip-wrong-format'    => "Nid ffeil ZIP yw'r ffeil a enwyd.",
-'zip-bad'             => "Mae'r ffeil yn ffeil ZIP llygredig neu annarllenadwy. 
+'zip-bad'             => "Mae'r ffeil yn ffeil ZIP llygredig neu annarllenadwy.
 Ni all gael ei wirio'n ddigonol er sicrhau diogelwch.",
 'zip-unsupported'     => "Ffeil ZIP yw hon sy'n defnyddio nodweddion na chefnogir gan MediaWiki.
 Ni all gael ei wirio'n ddigonol er sicrhau diogelwch.",
@@ -2082,7 +2016,7 @@ Os digwydd mwy o olygiadau i\'r dudalen cyn i chi ymweld â hi, ni chewch ragor 
              Sustem hysbysu {{SITENAME}}
 
 --
-I newid eich gosodiadau negeseuon hysbysu, ewch i 
+I newid eich gosodiadau negeseuon hysbysu, ewch i
 {{canonicalurl:{{#special:Preferences}}}}
 
 I newid eich gosodiadau gwylio, ewch i
@@ -2292,7 +2226,7 @@ $1',
 'sp-contributions-logs'                => 'logiau',
 'sp-contributions-talk'                => 'sgwrs',
 'sp-contributions-userrights'          => 'rheoli galluoedd defnyddwyr',
-'sp-contributions-blocked-notice'      => "Mae'r defnyddiwr hwn wedi'i rwystro ar hyn o bryd. 
+'sp-contributions-blocked-notice'      => "Mae'r defnyddiwr hwn wedi'i rwystro ar hyn o bryd.
 Mae'r cofnod diweddaraf yn y lòg blocio i'w weld isod:",
 'sp-contributions-blocked-notice-anon' => "Mae'r cyfeiriad IP hwn wedi'i rwystro ar hyn o bryd.
 Mae'r cofnod diweddaraf yn y lòg blocio i'w weld isod:",
@@ -2327,8 +2261,8 @@ Mae'r cofnod diweddaraf yn y lòg blocio i'w weld isod:",
 'blockip'                         => "Rhwystro'r defnyddiwr",
 'blockip-title'                   => "Rhwystro'r defnyddiwr",
 'blockip-legend'                  => "Rhwystro'r defnyddiwr",
-'blockiptext'                     => "Defnyddiwch y ffurflen hon i rwystro cyfeiriad IP neu ddefnyddiwr rhag ysgrifennu i'r gronfa ddata. 
-Dylech chi ddim ond gwneud hyn er mwyn rhwystro fandaliaeth, a chan ddilyn [[{{MediaWiki:Policy-url}}|polisi'r wici]]. 
+'blockiptext'                     => "Defnyddiwch y ffurflen hon i rwystro cyfeiriad IP neu ddefnyddiwr rhag ysgrifennu i'r gronfa ddata.
+Dylech chi ddim ond gwneud hyn er mwyn rhwystro fandaliaeth, a chan ddilyn [[{{MediaWiki:Policy-url}}|polisi'r wici]].
 Rhowch reswm dros rwystro'r defnyddiwr (er enghraifft, dywedwch pa dudalen(au) a fandaleiddiwyd).",
 'ipadressorusername'              => 'Cyfeiriad IP neu enw defnyddiwr:',
 'ipbexpiry'                       => 'Am gyfnod:',
@@ -2403,7 +2337,7 @@ Gwelwch y [[Special:BlockList|rhestr flociau IP]] er mwyn arolygu blociau.',
 'change-blocklink'                => 'newid y rhwystr',
 'contribslink'                    => 'cyfraniadau',
 'emaillink'                       => 'anfon e-bost',
-'autoblocker'                     => 'Rydych wedi cael eich rhwystro\'n awtomatig oherwydd bod eich cyfeiriad IP wedi cael ei ddefnyddio gan "[[User:$1|$1]]" yn ddiweddar. 
+'autoblocker'                     => 'Rydych wedi cael eich rhwystro\'n awtomatig oherwydd bod eich cyfeiriad IP wedi cael ei ddefnyddio gan "[[User:$1|$1]]" yn ddiweddar.
 Dyma\'r rheswm a roddwyd dros rwystro $1: "$2".',
 'blocklogpage'                    => 'Lòg rhwystrau',
 'blocklog-showlog'                => "Cafodd y defnyddiwr hwn ei flocio o'r blaen.
@@ -2488,7 +2422,7 @@ Byddwch gystal â thrwsio [[Special:DoubleRedirects|ailgyfeiriadau dwbl]] ac [[S
 Eich cyfrifoldeb chi yw sicrhau bod cysylltiadau wici'n dal i arwain at y man iawn.
 
 Sylwch '''na fydd''' y dudalen yn symud os oes yna dudalen o'r enw newydd ar gael yn barod (heblaw ei bod hi'n wag neu'n ailgyfeiriad heb unrhyw hanes golygu).
-Felly, os y gwnewch gamgymeriad wrth ail-enwi tudalen dylai fod yn bosibl ei hail-enwi eto ar unwaith wrth yr enw gwreiddiol. 
+Felly, os y gwnewch gamgymeriad wrth ail-enwi tudalen dylai fod yn bosibl ei hail-enwi eto ar unwaith wrth yr enw gwreiddiol.
 Hefyd, mae'n amhosibl ysgrifennu dros ben tudalen sydd yn bodoli'n barod.
 
 '''Dalier Sylw!'''
@@ -2784,9 +2718,6 @@ Achos hyn yn fwy na thebyg yw presenoldeb cysylltiad i wefan ar y rhestr gwahard
 'pageinfo-viewsperedit'     => 'Ymweliadau wrth y golygiad',
 
 # Skin names
-'skinname-standard'    => 'Safonol',
-'skinname-nostalgia'   => 'Hiraeth',
-'skinname-cologneblue' => 'Glas Cwlen',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Marcio ei bod wedi derbyn ymweliad patrôl',
@@ -3303,7 +3234,7 @@ Nid oes rhaid wrth y côd wrth fewngofnodi, ond rhaid ei ddefnyddio er mwyn gall
 Dychwelodd yr ebostydd: $1",
 'confirmemail_invalid'      => 'Côd cadarnhau annilys. Efallai fod y côd wedi dod i ben.',
 'confirmemail_needlogin'    => 'Rhaid $1 er mwyn cadarnhau eich cyfeiriad e-bost.',
-'confirmemail_success'      => "Mae eich cyfeiriad e-bost wedi'i gadarnhau. 
+'confirmemail_success'      => "Mae eich cyfeiriad e-bost wedi'i gadarnhau.
 Cewch [[Special:UserLogin|fewngofnodi]] a mwynhau'r wici.",
 'confirmemail_loggedin'     => 'Cadarnhawyd eich cyfeiriad e-bost.',
 'confirmemail_error'        => 'Cafwyd gwall wrth ddanfon eich cadarnhad.',

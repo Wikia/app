@@ -9,11 +9,11 @@ define('ext.wikia.adEngine.config.desktop', [
 	'ext.wikia.adEngine.adDecoratorPageDimensions',
 
 	// adProviders
-	'ext.wikia.adEngine.provider.evolve',
 	'ext.wikia.adEngine.provider.directGpt',
+	'ext.wikia.adEngine.provider.evolve',
+	'ext.wikia.adEngine.provider.evolve2',
 	'ext.wikia.adEngine.provider.liftium',
 	'ext.wikia.adEngine.provider.monetizationService',
-	'ext.wikia.adEngine.provider.openX',
 	'ext.wikia.adEngine.provider.remnantGpt',
 	'ext.wikia.adEngine.provider.sevenOneMedia',
 	'ext.wikia.adEngine.provider.turtle',
@@ -28,11 +28,11 @@ define('ext.wikia.adEngine.config.desktop', [
 	adDecoratorPageDimensions,
 
 	// AdProviders
-	adProviderEvolve,
 	adProviderDirectGpt,
+	adProviderEvolve,
+	adProviderEvolve2,
 	adProviderLiftium,
 	adProviderMonetizationService,
-	adProviderOpenX,
 	adProviderRemnantGpt,
 	adProviderSevenOneMedia,
 	adProviderTurtle,
@@ -50,7 +50,7 @@ define('ext.wikia.adEngine.config.desktop', [
 			'TOP_BUTTON_WIDE.force': true
 		},
 		ie8 = window.navigator && window.navigator.userAgent && window.navigator.userAgent.match(/MSIE [6-8]\./),
-		dartEnabled = !instantGlobals.wgSitewideDisableGpt;
+		gptEnabled = !instantGlobals.wgSitewideDisableGpt;
 
 	function getDecorators() {
 		return [adDecoratorPageDimensions];
@@ -73,10 +73,10 @@ define('ext.wikia.adEngine.config.desktop', [
 			return [adProviderTurtle];
 		}
 
-		// Force OpenX
-		if (context.forcedProvider === 'openx') {
-			log(['getProvider', slotName, 'OpenX (wgAdDriverForcedProvider)'], 'info', logGroup);
-			return [adProviderOpenX];
+		// Force Evolve2
+		if (context.forcedProvider === 'evolve2') {
+			log(['getProvider', slotName, 'Evolve (wgAdDriverForcedProvider)'], 'info', logGroup);
+			return [adProviderEvolve2];
 		}
 
 		// Force Liftium
@@ -117,25 +117,23 @@ define('ext.wikia.adEngine.config.desktop', [
 		}
 
 		// First provider: Turtle, Evolve or Direct GPT?
-		if (context.providers.turtle) {
+		if (context.providers.turtle && adProviderTurtle.canHandleSlot(slotName)) {
 			providerList.push(adProviderTurtle);
+		} else if (context.providers.evolve2 && adProviderEvolve2.canHandleSlot(slotName)) {
+			providerList.push(adProviderEvolve2);
 		} else if (evolveCountry && adProviderEvolve.canHandleSlot(slotName)) {
 			providerList.push(adProviderEvolve);
-		} else if (dartEnabled) {
+		} else if (gptEnabled) {
 			providerList.push(adProviderDirectGpt);
 		}
 
 		// Second provider: Remnant GPT
-		if (dartEnabled) {
+		if (gptEnabled) {
 			providerList.push(adProviderRemnantGpt);
 		}
 
-		// Last resort provider: OpenX or Liftium
-		if (context.providers.openX && adProviderOpenX.canHandleSlot(slotName)) {
-			providerList.push(adProviderOpenX);
-		} else {
-			providerList.push(adProviderLiftium);
-		}
+		// Last resort provider: Liftium
+		providerList.push(adProviderLiftium);
 
 		return providerList;
 	}

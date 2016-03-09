@@ -169,30 +169,12 @@ $messages = array(
 'navigation'    => 'Naveghesce',
 'and'           => '&#32;e',
 
-# Cologne Blue skin
 'qbfind'         => 'Cirche',
 'qbbrowse'       => 'Sfoglie',
-'qbedit'         => 'Cange',
 'qbpageoptions'  => 'Pàgene currende',
 'qbpageinfo'     => 'Condeste',
-'qbmyoptions'    => 'Pàggene mije',
-'qbspecialpages' => 'Pàggene speciale',
 'faq'            => 'FAQ',
-'faqpage'        => 'Project:FAQ',
 
-# Vector skin
-'vector-action-addsection'       => "Aggiunge 'na discussiona",
-'vector-action-delete'           => 'Scangille',
-'vector-action-move'             => 'Spuèste',
-'vector-action-protect'          => 'Protegge',
-'vector-action-undelete'         => 'Repristine',
-'vector-action-unprotect'        => "Cange 'a protezione",
-'vector-simplesearch-preference' => "Abbilete le suggereminde d'a ricerche avanzate (Sulamende pe le scheme a vettore)",
-'vector-view-create'             => 'Ccreje',
-'vector-view-edit'               => 'Cange',
-'vector-view-history'            => "Vide 'u cunde",
-'vector-view-view'               => 'Ligge',
-'vector-view-viewsource'         => "Vide 'u sorgende",
 'actions'                        => 'Aziune',
 'namespaces'                     => 'Namespace',
 'variants'                       => 'Variande',
@@ -215,7 +197,6 @@ $messages = array(
 'edit'              => 'Cange',
 'create'            => 'Ccreje',
 'editthispage'      => 'Cange sta pàgene',
-'create-this-page'  => "Ccreje 'a pàgene",
 'delete'            => 'Scangìlle',
 'deletethispage'    => 'Scangille sta pàgene',
 'undelete_short'    => "Annulle {{PLURAL:$1|'nu camgiamende|$1 cangiaminde}}",
@@ -230,19 +211,9 @@ $messages = array(
 'talkpagelinktext'  => 'Parle',
 'specialpage'       => 'Pàgene Speciele',
 'personaltools'     => 'Struminde personele',
-'postcomment'       => 'Seziona nove',
-'articlepage'       => "Vide 'a pàgene de le condenute",
 'talk'              => "'Ngazzaminde",
 'views'             => 'Visite',
 'toolbox'           => 'Cascette de le struminde',
-'userpage'          => "Vide a pàgene de l'utende",
-'projectpage'       => 'Vide a pàgene de le pruggette',
-'imagepage'         => 'Vide a pàgene de le file',
-'mediawikipage'     => 'Vide a pàgene de le messàgge',
-'templatepage'      => 'Vide a pàgene de le template',
-'viewhelppage'      => "Vide a pàgene de l'ajute",
-'categorypage'      => 'Vide a pàgene de le categorije',
-'viewtalkpage'      => "Vide le 'ngazzaminde",
 'otherlanguages'    => "Jndr'à l'otre lènghe",
 'redirectedfrom'    => '(Riderette da $1)',
 'redirectpagesub'   => 'Pàgene de redirezione',
@@ -433,8 +404,9 @@ $2',
 # Login and logout pages
 'logouttext'                 => "'''Tu tè scolleghete.'''
 
-Tu puè condinuà a ausà {{SITENAME}} in mode anonime, o tu puè [[Special:UserLogin|collegarte 'n'otra vote]] cumme 'u stesse utende o cumme 'n'otre utende.
+Tu puè condinuà a ausà {{SITENAME}} in mode anonime, o tu puè $1 cumme 'u stesse utende o cumme 'n'otre utende.
 Note Bbuene ca certe pàggene ponne condinuà a essere viste cumme ce tu ste angore colleghete, fine a quanne a cache d'u browser no se sdeveche.",
+'logouttext-link-text'       => "collegarte 'n'otra vote",
 'welcomecreation'            => "== Bovegne, $1! ==
 'U cunde tue ha state ccrejete.
 No te sce scurdanne de cangià le [[Special:Preferences|{{SITENAME}} preferenze tue]].",
@@ -559,37 +531,6 @@ Pe spiccià 'a procedure de collegamende, tu a 'mbostà 'na password nove aqquà
 'resetpass-wrong-oldpass'   => "'A password temboranea o quedda corrende jè invalide.
 Pò essere ca tu è già cangete 'a password toje o è richieste una temboranea nove.",
 'resetpass-temp-password'   => 'Password temboranea:',
-
-# Special:PasswordReset
-'passwordreset'                    => "Azzere 'a passuord",
-'passwordreset-text'               => "Comblete stu module pe avè 'na mail pe arrecurdarte le dettaglie d'u cunde tune.",
-'passwordreset-legend'             => "Azzere 'a passuord",
-'passwordreset-disabled'           => "'U reset de le passuord ha state desabbilitate sus a sta uicchi.",
-'passwordreset-pretext'            => '{{PLURAL:$1||Mitte une de le stuèzze de le date aqquà sotte}}',
-'passwordreset-username'           => 'Nome utende:',
-'passwordreset-domain'             => 'Dominie:',
-'passwordreset-capture'            => "Vide 'a mail resultande?",
-'passwordreset-capture-help'       => "Ce tu signe sta sckatele, 'a mail (cu 'a passuord temboranèe) t'avène fatte vedè cumme adda essere mannate a l'utende.",
-'passwordreset-email'              => 'Indirizze e-mail:',
-'passwordreset-emailtitle'         => "Dettaglie d'u cunde utende sus a {{SITENAME}}",
-'passwordreset-emailtext-ip'       => "Quacchedune (pò essere tu, da 'u 'ndirizze IP $1) ha richieste 'na mail pe arrecurdarse de le dettaglie d'u cunde sue pe {{SITENAME}} ($4). {{PLURAL:$3|'U cunde utende seguende jè|le cunde utinde seguende sonde}} associate cu st'indirizze e-mail:
-
-$2
-
-{{PLURAL:$3|Sta passuord temboranèe scade|Ste passuord temboranèe scadene}}  'mbrà {{PLURAL:$5|'nu sciurne|$5 sciurne}}.
-Tu avissa trasè e scacchià 'na passuord nova. Ce quacchedun'otre ha fatte sta richieste, o ce tu t'è arrecurdate 'a passuord origgenale toje, e non g'a vuè ccu cange cchiù, tu puè ignorà stu messagge e condinuà ausanne 'a passuord vecchie.",
-'passwordreset-emailtext-user'     => "L'utende $1 sus a {{SITENAME}} ave richieste 'na mail pe arrecurdarse le dettaglie d'u cunde sue pe {{SITENAME}}
-($4). {{PLURAL:$3|'U cunde utende seguende jè|le cunde utinde seguende sonde}} associate cu st'indirizze e-mail:
-
-$2
-
-{{PLURAL:$3|Sta passuord temboranèe scade|Ste passuord temboranèe scadene}}  'mbrà {{PLURAL:$5|'nu sciurne|$5 sciurne}}.
-Tu avissa trasè e scacchià 'na passuord nova. Ce quacchedun'otre ha fatte sta richieste, o ce tu t'è arrecurdate 'a passuord origgenale toje, e non g'a vuè ccu cange cchiù, tu puè ignorà stu messagge e condinuà ausanne 'a passuord vecchie.",
-'passwordreset-emailelement'       => 'Nome utende: $1<br />
-Passuord temboranèe: $2',
-'passwordreset-emailsent'          => "'N'e-mail pe arrecurdarte ha state mannate.",
-'passwordreset-emailsent-capture'  => "'Na e-mail de promemorie ha state mannate, ca jè fatte vedè aqquà sotte.",
-'passwordreset-emailerror-capture' => "'Na e-mail de promemorie ha state generate, ca jè fatte vedè aqquà sotte, ma 'u 'nvie a l'utende ha fallite: $1",
 
 # Special:ChangeEmail
 'changeemail'          => "Cange 'u 'ndirizze e-mail",
@@ -1079,14 +1020,6 @@ Prueve mettènne nnande a l'inderrogaziona toje 'u prefisse '''all:''' pe cercà
 Tu puè cercà ausanne Google.
 Però fa attenzione purcè l'indice lore sus a {{SITENAME}} ponne condenè pàggene ca non ge sonde aggiornate.",
 
-# Quickbar
-'qbsettings'                => 'Barra veloce',
-'qbsettings-none'           => 'Ninde',
-'qbsettings-fixedleft'      => 'Fissete a sinistre (Fixed left)',
-'qbsettings-fixedright'     => 'Fissete a destre (Fixed right)',
-'qbsettings-floatingleft'   => 'Volanne a sinistre (Floating left)',
-'qbsettings-floatingright'  => 'Volanne a destre (Floating right)',
-'qbsettings-directionality' => "Corrette, depende da 'a direzionalità d'u script tune e da 'a lènga toje",
 
 # Preferences page
 'preferences'                   => 'Me piece accussì',
@@ -2761,15 +2694,7 @@ Permette de aggiungere 'nu mutive jndr'à 'u riepileghe",
 
 # Stylesheets
 'common.css'              => "/* 'U CSS ca se iacchie aqquà avène applicate a tutte le masckere */",
-'standard.css'            => "/* 'U CSS ca se iacchie aqquà 'u 'ndrucane le utinde d'a masckere Standard */",
-'nostalgia.css'           => "/* 'U CSS ca se iacchie aqquà 'u 'ndrucane le utinde d'a masckere Nostalgie */",
-'cologneblue.css'         => "/* 'U CSS ca se iacchie aqquà 'u 'ndrucane le utinde d'a masckere Blu Cologne */",
 'monobook.css'            => "/* 'U CSS ca se iacchie aqquà 'u 'ndrucane le utinde d'a masckere Monobook */",
-'myskin.css'              => "/* 'U CSS ca se iacchie aqquà 'u 'ndrucane le utinde d'a masckere Personalizzate */",
-'chick.css'               => "/* 'U CSS ca se iacchie aqquà 'u 'ndrucane le utinde d'a masckere Purecine */",
-'simple.css'              => "/* 'U CSS ca se iacchie aqquà 'u 'ndrucane le utinde d'a masckere Semblice */",
-'modern.css'              => "/* 'U CSS ca se iacchie aqquà 'u 'ndrucane le utinde d'a masckere Moderne */",
-'vector.css'              => "/* 'U CSS ca se iacchie aqquà 'u 'ndrucane le utinde d'a masckere Vettore */",
 'print.css'               => "/* 'U CSS ca se iacchie aqquà avène applicate a 'u resultate d'a stambe */",
 'handheld.css'            => "/* 'U CSS ca se iacchie aqquà l'ausane le dispositive de gestione manuale basate sus a masckere configurate in \$wgHandheldStyle */",
 'noscript.css'            => "/* 'U CSS ca se iacchie aqquà l'ausane le utinde cu 'u Javascript disabbilitate */",
@@ -2780,14 +2705,7 @@ Permette de aggiungere 'nu mutive jndr'à 'u riepileghe",
 
 # Scripts
 'common.js'              => '/* Ogne JavaScript aqquà avène carecate pe tutte le utinde sus a ogne pàgene carecate. */',
-'standard.js'            => "/* Ogne JavaScript aqquà avène carecate pe le utinde ca ausane 'a masckere Standard */",
-'nostalgia.js'           => "/* Ogne JavaScript aqquà avène carecate pe le utinde ca ausane 'a masckere Nostalgie */",
-'cologneblue.js'         => "/* Ogne JavaScript aqquà avène carecate pe le utinde ca ausane 'a masckere Blu Cologne */",
 'monobook.js'            => "/* Ogne JavaScript aqquà avène carecate pe le utinde ca ausane 'a masckere MonoBook */",
-'myskin.js'              => "/* Ogne JavaScript aqquà avène carecate pe le utinde ca ausane 'a masckere Personalizzate */",
-'chick.js'               => "/* Ogne JavaScript aqquà avène carecate pe le utinde ca ausane 'a masckere Purecine */",
-'modern.js'              => "/* Ogne JavaScript aqquà avène carecate pe le utinde ca ausane 'a masckere Moderne */",
-'vector.js'              => "/* Ogne JavaScript aqquà avène carecate pe le utinde ca ausane 'a masckere Vettore */",
 'group-autoconfirmed.js' => '/* Ogne JavaScript aqquà avène carecate pe le utinde autoconfirmatarie */',
 'group-bot.js'           => '/* Ogne JavaScript aqquà avène carecate pe le bot */',
 'group-sysop.js'         => '/* Ogne JavaScript aqquà avène carecate pe le utinde amministrature */',
@@ -2831,15 +2749,7 @@ Stu fatte ha state causate da 'nu collegamende a 'nu site esterne ca appartene a
 'pageinfo-viewsperedit'     => 'Visite pe cangiaminde',
 
 # Skin names
-'skinname-standard'    => 'Classeche',
-'skinname-nostalgia'   => 'Nostalgie',
-'skinname-cologneblue' => 'Blu Cologne',
 'skinname-monobook'    => 'MonoBook',
-'skinname-myskin'      => 'Personalizzate',
-'skinname-chick'       => 'Purecine',
-'skinname-simple'      => 'Semblice',
-'skinname-modern'      => 'Moderne',
-'skinname-vector'      => 'Vettore',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Signe cumme condrollate',

@@ -4,12 +4,12 @@ if ($wg->EnableMiniEditorExtForWall) {
 }
 ?>
 
-<?= $app->renderView('WallController', 'brickHeader', array('id' => $title->getText())); ?>
+<?= $app->renderView('WallController', 'brickHeader', [ 'id' => $title->getText() ] ); ?>
 	
 <div class="Wall <?= $type ?>" id="Wall">
 	<ul class="comments">
 		<? foreach($threads as $value): ?>
-			<?= $app->renderView( 'WallController', 'message', array( 'isThreadPage' => true, 'condense' => $condenseMessage, 'title' => $title, 'replies' => $value->getRepliesWallMessages(), 'comment' => $value->getThreadMainMsg(), 'isreply' => false ) ); ?>
+			<?= $app->renderView( 'WallController', 'message', [ 'isThreadPage' => true, 'condense' => $condenseMessage, 'title' => $title, 'replies' => $value->getRepliesWallMessages(), 'comment' => $value->getThreadMainMsg(), 'isreply' => false ] ); ?>
 		<? endforeach; ?>
 	</ul>
 	<?= $app->renderPartial('Wall', 'TooltipMeta' ); ?>

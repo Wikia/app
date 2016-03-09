@@ -17,12 +17,6 @@
 
 if(!defined('MEDIAWIKI')) die();
 
-// Allows anyone to view the page.
-$wgAvailableRights[] = 'linkstoredirects';
-$wgGroupPermissions['*']['linkstoredirects'] = true;
-$wgGroupPermissions['user']['linkstoredirects'] = true;
-$wgGroupPermissions['sysop']['linkstoredirects'] = true;
-
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'Links To Redirects',
 	'url' => 'http://lyrics.wikia.com/User:Sean_Colombo',

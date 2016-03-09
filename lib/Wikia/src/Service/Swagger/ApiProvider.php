@@ -2,18 +2,30 @@
 
 namespace Wikia\Service\Swagger;
 
-use Swagger\Client\ApiClient;
 use Swagger\Client\Configuration;
 use Wikia\Service\Gateway\UrlProvider;
+use Wikia\Service\Constants;
+use Wikia\Util\Statistics\BernoulliTrial;
 
 class ApiProvider {
-	const AUTH_KEY = 'X-Wikia-UserId';
 
 	/** @var UrlProvider */
 	private $urlProvider;
 
-	public function __construct(UrlProvider $urlProvider) {
+	/** @var BernoulliTrial */
+	private $clientLogSampler;
+
+	/**
+	 * @Inject({
+	 *   Wikia\Service\Gateway\UrlProvider::class,
+	 *   Wikia\Service\Swagger\ApiProviderModule::API_CLIENT_LOG_SAMPLER})
+	 * ApiProvider constructor.
+	 * @param UrlProvider $urlProvider
+	 * @param BernoulliTrial $clientLogSampler
+	 */
+	public function __construct(UrlProvider $urlProvider, BernoulliTrial $clientLogSampler) {
 		$this->urlProvider = $urlProvider;
+		$this->clientLogSampler = $clientLogSampler;
 	}
 
 	public function getApi($serviceName, $apiClass) {
@@ -23,7 +35,7 @@ class ApiProvider {
 
 	public function getAuthenticatedApi($serviceName, $userId, $apiClass) {
 		$apiClient = $this->getApiClient($serviceName);
-		$apiClient->getConfig()->setApiKey(self::AUTH_KEY, $userId);
+		$apiClient->getConfig()->setApiKey(Constants::HELIOS_AUTH_HEADER, $userId);
 
 		return new $apiClass($apiClient);
 	}
@@ -32,6 +44,6 @@ class ApiProvider {
 		$config = (new Configuration())
 			->setHost($this->urlProvider->getUrl($serviceName));
 
-		return new ApiClient($config);
+		return new ApiClient($config, $this->clientLogSampler, $serviceName);
 	}
 }

@@ -353,30 +353,12 @@ $messages = array(
 'navigation'    => 'Jangk noh de',
 'and'           => ', un',
 
-# Cologne Blue skin
 'qbfind'         => 'Fingk',
 'qbbrowse'       => 'Aanluure',
-'qbedit'         => 'Ändere',
 'qbpageoptions'  => 'Sigge Enstellunge',
 'qbpageinfo'     => 'Üvver de Sigg',
-'qbmyoptions'    => 'Ming Sigge',
-'qbspecialpages' => 'Spezial Sigge',
 'faq'            => 'FAQ',
-'faqpage'        => 'Project:FAQ',
 
-# Vector skin
-'vector-action-addsection'       => 'Ne neue Afschnet onge draan!',
-'vector-action-delete'           => 'Fottschmiiße!',
-'vector-action-move'             => 'Ömnänne!',
-'vector-action-protect'          => 'Schöze!',
-'vector-action-undelete'         => 'Zerökholle!',
-'vector-action-unprotect'        => 'Schoz ändere!',
-'vector-simplesearch-preference' => 'Donn de verbäßerte Vörschlääsch beim Söke aanschallde (bloß mem Ußsinn „Vektor“ zesamme ze hann)',
-'vector-view-create'             => 'Neu Schriive!',
-'vector-view-edit'               => 'Ändere!',
-'vector-view-history'            => 'Versione zeije!',
-'vector-view-view'               => 'Lesse!',
-'vector-view-viewsource'         => 'Wikitex aanlooere!',
 'actions'                        => 'Akßjuhne',
 'namespaces'                     => 'Appachtemangs',
 'variants'                       => 'Variante',
@@ -399,7 +381,6 @@ $messages = array(
 'edit'              => 'Ändere',
 'create'            => 'Aanläje',
 'editthispage'      => 'De Sigg ändere',
-'create-this-page'  => 'Neu aanläje',
 'delete'            => 'Fottschmieße',
 'deletethispage'    => 'De Sigg fottschmieße',
 'undelete_short'    => '{{PLURAL:$1|ein Änderung|$1 Änderunge}} zeröckholle',
@@ -414,19 +395,9 @@ $messages = array(
 'talkpagelinktext'  => 'Klaaf',
 'specialpage'       => '{{int:nstab-special}}',
 'personaltools'     => 'Metmaacher Werkzüch',
-'postcomment'       => 'Neu Avschnedd op de Klaafsigg donn',
-'articlepage'       => 'Aanluure wat op dä Sigg drop steiht',
 'talk'              => 'Klaafe',
 'views'             => 'Aansichte',
 'toolbox'           => 'Werkzüch',
-'userpage'          => 'Däm Metmaacher sing Sigg aanluure',
-'projectpage'       => 'De Projeksigg aanluure',
-'imagepage'         => 'De Sigg övver die Dattei aanluure',
-'mediawikipage'     => 'Di Sigg med enem Tex uss em Ingerfäjß vum Wiki aanluure',
-'templatepage'      => 'De Schablohn ier Sigk aanluere',
-'viewhelppage'      => 'De Hölpsigg aanluure',
-'categorypage'      => 'De Saachjruppesigg aanluure',
-'viewtalkpage'      => 'Klaaf aanluure',
 'otherlanguages'    => 'En ander Sproche',
 'redirectedfrom'    => '(Ömjeleit vun $1)',
 'redirectpagesub'   => 'Ömleitungssigg',
@@ -624,8 +595,9 @@ $2',
 # Login and logout pages
 'logouttext'                 => "'''Jetz bes de usjelogg'''
 
-Do künnts heh em Wiki wigger maache, als ene namelose Metmaacher. Do kanns De ävver och [[Special:UserLogin|widder enlogge]], als däselve oder och ene andere Metmaacher.
+Do künnts heh em Wiki wigger maache, als ene namelose Metmaacher. Do kanns De ävver och $1, als däselve oder och ene andere Metmaacher.
 Künnt sin, dat De de ein oder ander Sigg immer wigger aanjezeich kriss, wie wann de noch enjelogg wörs. Dun Dingem Brauser singe <i lang=\"en\">Cache</i> fottschmieße oder leddich maache, öm us dä Nummer erus ze kumme!",
+'logouttext-link-text'       => 'widder enlogge',
 'welcomecreation'            => '== Dach, $1! ==
 Dinge Zojang för heh es do.
 Do bes jetz aanjemeldt.
@@ -777,48 +749,6 @@ Et süht us, wi wann ene kappodde Brauser udder <i lang=\"en\">proxy</i>ẞööv
 Müjjelesch, Do häs Ding Passwood ald jetuusch, künnt och sin,
 Do häs Der enzwesche e neuZweschepasswood jehollt.',
 'resetpass-temp-password'   => 'Zweschepasswood:',
-
-# Special:PasswordReset
-'passwordreset'                    => 'Et Paßwoot zeröck säze',
-'passwordreset-text'               => 'Donn dat Fommulaa heh ußfölle, öm en <i lang="en">e-mail</i> ze krijje, woh jät övver der Zohjang heh obb et Wiki för Desch dren shteiht.',
-'passwordreset-legend'             => 'Et Paßwoot zeröck säze',
-'passwordreset-disabled'           => 'Et Paßwoot zeröck ze säze es heh em Wiki afjeschalldt.',
-'passwordreset-pretext'            => '{{PLURAL:$1||Jiff ein vun dä Saache heh dronger enn|}}',
-'passwordreset-username'           => 'Metmaacher Name:',
-'passwordreset-domain'             => 'Domähn:',
-'passwordreset-capture'            => 'Wells De di <i lang="en">e-mail</i> beloore?',
-'passwordreset-capture-help'       => 'Wann De heh e Krüzje määß, kriß de di <i lang="en">e-mail</i> met däm neue Paßwoot aanjezeish, ußer dat dä Metmaacher se och zohjescheck kritt.',
-'passwordreset-email'              => 'De Adräß för de <i lang="en">e-mail</i>:',
-'passwordreset-emailtitle'         => 'Einzelheite för der Zohjang op {{GRAMMAR:Akkusativ|{{SITENAME}}}}',
-'passwordreset-emailtext-ip'       => 'Do künns et sällver jewääse sin, öhnswää hät vun dä Adräß $1 en Internet öm
-en e-mail jefrooch, met Daate övver Dinge Zohjäng op {{GRAMMAR:Akkusativ|{{SITENAME}}}}
-$4
-Heh {{PLURAL:$3|dä Metmaacher hät|di Metmaacher han|hät keine Metmaacher}} Ding e-mail Addräß:
-
-$2
-
-{{PLURAL:$3|Dat Zweschepaßwoot leuf|Di Zweschepaßwööter loufe|Kein Zweschepaßwoot leuf}} en {{PLURAL:$5|enem Daach|$5 Dääsch|keinem Daach}} uß.
-Donn Desch jäz enlogge, un e neu Paßwoot faßlääje. Wann ene Andere wi
-Do dat heh aanjestüßße hät, udder wann De Desch widder aan Ding Paßwoot
-entsenne kanns, un et nimmieh ändere wells, udder es suwwisu weiß, dann
-moß De jäz jaa nix donn, un kanns Ding Paßwoot wigger bruche.',
-'passwordreset-emailtext-user'     => 'Dä Metmaacher $1 vun {{GRAMMAR:Dativ|{{SITENAME}}}} hät öm en e-mail jefrooch,
-met Daate övver Dinge Zohjäng op {{GRAMMAR:Akkusativ|{{SITENAME}}}}
-$4
-Heh {{PLURAL:$3|dä Metmaacher hät|di Metmaacher han|hät keine Metmaacher}} Ding e-mail Addräß:
-
-$2
-
-{{PLURAL:$3|Dat Zweschepaßwoot leuf|Di Zweschepaßwööter loufe|Kein Zweschepaßwoot leuf}} en {{PLURAL:$5|enem Daach|$5 Dääsch|keinem Daach}} uß.
-Donn Desch jäz enlogge, un e neu Paßwoot faßlääje. Wann ene Andere wi
-Do dat heh aanjestüßße hät, udder wann De Desch widder aan Ding Paßwoot
-entsenne kanns, un et nimmieh ändere wells, udder es suwwisu weiß, dann
-moß De jäz jaa nix donn, un kanns Ding Paßwoot wigger bruche.',
-'passwordreset-emailelement'       => 'Metmaacher Name: $1
-Eijmohl-Paßwoot: $2',
-'passwordreset-emailsent'          => 'En <i lang="en">e-mail</i> met Aanjaabe zom Zohjang heh es verscheck.',
-'passwordreset-emailsent-capture'  => 'En <i lang="en">e-mail</i> es verscheck. Heh dronger kanns De se lässe.',
-'passwordreset-emailerror-capture' => 'En <i lang="en">e-mail</i> sullt verscheck wääde. Heh dronger kanns De se lässe. Dat Verschecke hät ävver nit jeflup, wääje: $1.',
 
 # Special:ChangeEmail
 'changeemail'          => 'Donn Ding Address för de <i lang="en">e-mail</i> ändere',
@@ -1348,14 +1278,6 @@ Et es nit jesaht,
 dat dänne ihr Daate topaktuell sin,
 ävver et es besser wie jaa_nix.',
 
-# Quickbar
-'qbsettings'                => '„Flöcke Links“',
-'qbsettings-none'           => 'Fottlooße, dat well ich nit sinn',
-'qbsettings-fixedleft'      => 'Am linke Rand fass aanjepapp',
-'qbsettings-fixedright'     => 'Am rächte Rand fass aanjepapp',
-'qbsettings-floatingleft'   => 'Am linke Rand am Schwevve',
-'qbsettings-floatingright'  => 'Am rächte Rand am Schwevve',
-'qbsettings-directionality' => 'Faß, passend för wi eröm de Schreff för Ding Schprooch jeiht',
 
 # Preferences page
 'preferences'                   => 'ming Enstellunge',
@@ -2233,7 +2155,7 @@ eins vun all däm op eimol.',
 'linksearch-ok'    => 'Söhke',
 'linksearch-text'  => 'Di {{int:nstab-special}} heh mäd_et müjjelesch noh Sigge ze söke, woh beshtemmpte Links op Websigge dren enthallde sin.
 
-Beim Söke künnd_Er Schtäänsche aanjevve för e Schtöcksche fun ennem Name, wo mer nit jenou weiß, wi et heiß udder wat me nit kenne deit,  zem Beishpöll esu: <tt>http://*.example.com</tt> un ene bövverschte Name för en Domain moß aanjejovve sin, zem Beishpöll esu: <tt>http://*.org</tt> 
+Beim Söke künnd_Er Schtäänsche aanjevve för e Schtöcksche fun ennem Name, wo mer nit jenou weiß, wi et heiß udder wat me nit kenne deit,  zem Beishpöll esu: <tt>http://*.example.com</tt> un ene bövverschte Name för en Domain moß aanjejovve sin, zem Beishpöll esu: <tt>http://*.org</tt>
 
 De Brauserprotokolle, di beim Söke aanjejovve wäde künne, sen: <tt>$1</tt>es',
 'linksearch-line'  => '„$2“ hät ene Link op $1',
@@ -2387,7 +2309,7 @@ Do kanns ävver och all die Merker för e-mail för die Sigge en Dinger Oppassli
 
 Ene schöne Jroß {{GRAMMAR:vun|{{SITENAME}}}}.
 
--- 
+--
 Öm de Enshtällonge för Nohreeschet aan Desch ze ändere, jangk op:
 {{canonicalurl:{{#special:Preferences}}}}
 
@@ -3058,15 +2980,7 @@ Esu kam_mer noch en Aanmerkung en „{{int:summary}}“ maache.',
 
 # Stylesheets
 'common.css'              => '/* CSS heh aan dä Stell hät Uswirkunge op all Ovverflääsche */',
-'standard.css'            => '/* CSS heh aan dä Stell wirrek nur op de Ovverflääsch „Klassesch“ */',
-'nostalgia.css'           => '/* CSS heh aan dä Stell wirrek nur op de Ovverflääsch „Nostaljesch“ */',
-'cologneblue.css'         => '/* CSS heh aan dä Stell wirrek nur op de Ovverflääsch „Kölsch Blau“ */',
 'monobook.css'            => '/* CSS heh aan dä Stell wirrek nur op de Ovverflääsch „Monobooch“ */',
-'myskin.css'              => '/* CSS heh aan dä Stell wirrek nur op de Ovverflääsch „Ming Skin“ */',
-'chick.css'               => '/* CSS heh aan dä Stell wirrek nur op de Ovverflääsch „Höhnsche“ */',
-'simple.css'              => '/* CSS heh aan dä Stell wirrek nur op de Ovverflääsch „Eijfach“ */',
-'modern.css'              => '/* CSS heh aan dä Stell wirrek nur op de Ovverflääsch „Modern“ */',
-'vector.css'              => '/* CSS heh aan dä Stell wirrek nur op de Ovverflääsch „Vector“ */',
 'print.css'               => '/* CSS heh aan dä Stell wirrek nur op et Sigge Drökke */',
 'handheld.css'            => '/* dat CSS hee wirrek sesch uß op su jeannte Handheld-Apparaate, opjebout op de Ovverflääsch uß $wgHandheldStyle */',
 'noscript.css'            => '/* Dat CSS heh aan dä Stell krijje nur de Metmaacher met affjeschaldt JavaSkrepp jescheck */',
@@ -3077,15 +2991,7 @@ Esu kam_mer noch en Aanmerkung en „{{int:summary}}“ maache.',
 
 # Scripts
 'common.js'              => '/* Jedes JavaScrip hee kütt för jede Metmaacher in jede Sigg erinn */',
-'standard.js'            => '/* De JavaSkrippte fun hee krijje alle Sigge met de Ovverflääsch "Klassesch" jescheck */',
-'nostalgia.js'           => '/* De JavaSkrippte fun hee krijje alle Sigge met de Ovverflääsch "Nostaljesch" jescheck */',
-'cologneblue.js'         => '/* De JavaSkrippte fun hee krijje alle Sigge met de Ovverflääsch "Kölsch Blou" jescheck */',
 'monobook.js'            => '/* De JavaSkrippte fun hee krijje alle Sigge met de Ovverflääsch "Monnobooch" jescheck */',
-'myskin.js'              => '/* De JavaSkrippte fun hee krijje alle Sigge met de Ovverflääsch "Ming Skin" jescheck */',
-'chick.js'               => '/* De JavaSkrippte fun hee krijje alle Sigge met de Ovverflääsch "Höhnsche" jescheck */',
-'simple.js'              => '/* De JavaSkrippte fun hee krijje alle Sigge met de Ovverflääsch "Eijfach" jescheck */',
-'modern.js'              => '/* De JavaSkrippte fun hee krijje alle Sigge met de Ovverflääsch "Modern" jescheck */',
-'vector.js'              => '/* De JavaSkrippte fun hee krijje alle Sigge met de Ovverflääsch "Vector" jescheck */',
 'group-autoconfirmed.js' => '/* De JavaSkreppte fun hee krijje bloß de autemattesch beshtääteschte Metmaacher jescheck */',
 'group-bot.js'           => '/* De JavaSkreppte fun hee krijje bloß de Bots jescheck */',
 'group-sysop.js'         => '/* De JavaSkreppte fun hee krijje bloß de Wiki_Köbeße jescheck */',
@@ -3128,15 +3034,7 @@ Esu kam_mer noch en Aanmerkung en „{{int:summary}}“ maache.',
 'pageinfo-viewsperedit'     => 'De Aanzahl Affroofe pro Änderong',
 
 # Skin names
-'skinname-standard'    => 'Klassesch',
-'skinname-nostalgia'   => 'Nostaljesch',
-'skinname-cologneblue' => 'Kölsch Blau',
 'skinname-monobook'    => 'MonoBoch',
-'skinname-myskin'      => 'Ming Skin',
-'skinname-chick'       => 'Höhnche',
-'skinname-simple'      => 'Eifach',
-'skinname-modern'      => 'Modern',
-'skinname-vector'      => 'Vektor',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Nohjeluurt. Dun dat fasshallde.',

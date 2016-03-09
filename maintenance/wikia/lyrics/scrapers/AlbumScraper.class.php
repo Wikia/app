@@ -18,11 +18,11 @@ class AlbumScraper extends BaseScraper {
 			'article_id' => $article->getId(),
 		];
 		$albumData = array_merge( $albumData, $this->getHeader( $article ) );
-		$albumData['album_lowercase'] = LyricsUtils::lowercase( $albumData['Album'] );
+		$albumData['album_lowercase'] = LyricsUtils::lowercase( $albumData['album'] );
 
 		$albumData['genres'] = $this->getGenres( $article );
-		if ( isset( $albumData['Genre']) && !in_array($albumData['Genre'], $albumData['genres'] ) ) {
-			$albumData['genres'][] = $albumData['Genre'];
+		if ( isset( $albumData['genre']) && !in_array($albumData['genre'], $albumData['genres'] ) ) {
+			$albumData['genres'][] = $albumData['genre'];
 		}
 		return array_merge( $albumData, $this->getFooter( $article ) );
 	}
@@ -55,14 +55,14 @@ class AlbumScraper extends BaseScraper {
 	public function getDataMap() {
 		return [
 			'article_id' => 'id',
-			'Cover' => 'image',
+			'cover' => 'image',
 			'year' => 'release_date',
 			'Album' => 'album_name',
 			'album_lowercase' => 'album_name_lc',
 			'iTunes' => 'itunes',
 			'genres' => 'genres',
-			'Length' => 'length',
-			'Wikipedia' => 'wikipedia',
+			'length' => 'length',
+			'wikipedia' => 'wikipedia',
 			'romanizedAlbum' => 'romanized_album_name',
 			'asin' => 'asin',
 			'allmusic' => 'allmusic',

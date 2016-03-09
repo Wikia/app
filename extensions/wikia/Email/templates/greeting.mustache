@@ -1,4 +1,7 @@
 <div class="greeting">
 	<p>{{salutation}}</p>
-	<p>{{{summary}}}</p>
+	<p class="bold">{{{summary}}}</p>
+	{{# extendedSummary}}
+		<p>{{extendedSummary}}</p>
+	{{/extendedSummary}}
 </div>

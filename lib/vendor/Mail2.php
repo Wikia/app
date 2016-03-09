@@ -175,8 +175,8 @@ class Mail2
 
         foreach ($headers as $key => $value) {
             if (strcasecmp($key, 'From') === 0) {
-                include_once 'Mail/RFC822.php';
-                $parser = new Mail_RFC822();
+                include_once 'Mail2/RFC822.php';
+                $parser = new Mail2_RFC822();
                 $addresses = $parser->parseAddressList($value, 'localhost', false);
                 if (is_a($addresses, 'PEAR_Error')) {
                     return $addresses;
@@ -241,7 +241,7 @@ class Mail2
         // Parse recipients, leaving out all personal info. This is
         // for smtp recipients, etc. All relevant personal information
         // should already be in the headers.
-        $Mail_RFC822 = new Mail_RFC822();
+        $Mail_RFC822 = new Mail2_RFC822();
         $addresses = $Mail_RFC822->parseAddressList($recipients, 'localhost', false);
 
         $recipients = array();
