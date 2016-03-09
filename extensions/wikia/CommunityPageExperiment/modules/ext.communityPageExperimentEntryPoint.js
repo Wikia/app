@@ -18,17 +18,26 @@ require([
 
 	function addCommunityPageEntryPoint() {
 		var entryPointHtml = '',
+			useTasksPage = inCommunityTasksBucket(),
+			linkUrl = '/wiki/Special:Community',
 			trackingLabel = 'entry-point',
+			callToActionMsg = 'communitypageexperiment-entry-join',
 			buttonMsg = 'communitypageexperiment-entry-learn-more';
 
+		if (useTasksPage) {
+			linkUrl = '/wiki/Special:CommunityTasks';
+			trackingLabel = 'tasks-entry-point';
+			callToActionMsg = 'communitypageexperiment-entry-tasks';
+		}
+
 		if (mw.user.anonymous()) {
-			entryPointHtml += '<span>' + mw.message('communitypageexperiment-entry-join').escaped() + '</span>';
+			entryPointHtml += '<span>' + mw.message(callToActionMsg).escaped() + '</span>';
 		} else {
 			trackingLabel += '-loggedin';
 			buttonMsg = 'communitypageexperiment-entry-button';
 		}
 
-		entryPointHtml += '<a class="community-page-button" href="/wiki/Special:Community">' +
+		entryPointHtml += '<a class="community-page-button" href="' + linkUrl + '">' +
 			mw.message(buttonMsg).escaped() + '</a>';
 
 		$('#WikiaPageHeader').find('.header-buttons').append(
@@ -39,15 +48,34 @@ require([
 		);
 	}
 
-	$(function () {
-		var inTestGroup = abTest.inGroup('COMMUNITY_PAGE_EXPERIMENT', 'COMMUNITY_PAGE_ENTRY_POINT'),
+	function inCommunityPageBucket() {
+		return abTest.inGroup('COMMUNITY_PAGE_EXPERIMENT', 'COMMUNITY_PAGE_ENTRY_POINT');
+	}
+
+	function inCommunityTasksBucket() {
+		return abTest.inGroup('COMMUNITY_PAGE_EXPERIMENT', 'COMMUNITY_TASKS_ENTRY_POINT');
+	}
+
+	function entryPointEnabled() {
+		var inCommunityPageGroup = inCommunityPageBucket(),
+			inTestGroups = inCommunityPageGroup || inCommunityTasksBucket(),
 			isAnon = mw.user.anonymous(),
 			signedUpViaCommunity = cache.get('communityPageSignedUp');
 
+		return (
+			(inTestGroups && isAnon) ||
+			(
+				!isAnon &&
+				inCommunityPageGroup &&
+				signedUpViaCommunity
+			)
+		);
+	}
+
+	$(function () {
 		if (
 			mw.config.get('wgNamespaceNumber') === 0 &&
-			inTestGroup &&
-			(isAnon || (!isAnon && signedUpViaCommunity))
+			entryPointEnabled()
 		) {
 			mw.loader.using('ext.communityPageExperimentEntryPoint').then(addCommunityPageEntryPoint);
 		}

@@ -51,6 +51,7 @@ class AdminDashboardLogic {
 				'CloseWiki',
 				'Code',
 				'Community',
+				'CommunityTasks',
 				'Confirmemail',
 				'Connect',
 				'Contact',

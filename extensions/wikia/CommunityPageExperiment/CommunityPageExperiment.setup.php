@@ -8,13 +8,15 @@
  */
 
 $wgAutoloadClasses['CommunityPageExperimentSpecialController'] =  __DIR__ . '/CommunityPageExperimentSpecialController.class.php';
+$wgAutoloadClasses['CommunityTasksPageSpecialController'] =  __DIR__ . '/CommunityTasksPageSpecialController.class.php';
+$wgAutoloadClasses['CommunityPageExperimentHelper'] =  __DIR__ . '/CommunityPageExperimentHelper.class.php';
 $wgAutoloadClasses['CommunityPageExperimentHooks'] =  __DIR__ . '/CommunityPageExperimentHooks.class.php';
 
 $wgExtensionMessagesFiles['CommunityPageExperiment'] = __DIR__ . '/CommunityPageExperiment.i18n.php' ;
 
 $wgSpecialPages['Community'] = 'CommunityPageExperimentSpecialController';
+$wgSpecialPages['CommunityTasks'] = 'CommunityTasksPageSpecialController';
 
-// $wgHooks['PageHeaderIndexExtraButtons'][] = 'CommunityPageExperimentHooks::onPageHeaderIndexExtraButtons';
 $wgHooks['BeforePageDisplay'][] = 'CommunityPageExperimentHooks::onBeforePageDisplay';
 
 $wgResourceModules['ext.communityPageExperiment'] = [
@@ -41,5 +43,6 @@ $wgResourceModules['ext.communityPageExperimentEntryPoint'] = [
 		'communitypageexperiment-entry-join',
 		'communitypageexperiment-entry-learn-more',
 		'communitypageexperiment-entry-button',
+		'communitypageexperiment-entry-tasks',
 	]
 ];

@@ -95,6 +95,16 @@ $color-community-page-admin-text: #808080;
 	width: 850px;
 }
 
+.task-page-content {
+	margin: 20px auto;
+	width: 478px;
+
+	.admin-message {
+		margin-bottom: 20px;
+		text-align: center;
+	}
+}
+
 .community-page-top-contributors {
 	background: $color-community-page-white;
 	border: 1px solid $color-community-page-dark-gray;
@@ -148,7 +158,10 @@ $color-community-page-admin-text: #808080;
 .community-page-page-list {
 	float: right;
 	width: 500px;
+}
 
+.community-page-page-list,
+.task-page-page-list {
 	ul {
 		line-height: 50px;
 		list-style: none;

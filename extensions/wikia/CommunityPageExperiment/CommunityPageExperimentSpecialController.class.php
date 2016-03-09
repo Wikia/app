@@ -33,16 +33,18 @@ class CommunityPageExperimentSpecialController extends WikiaSpecialPageControlle
 			                          ->numParams( $topContributors['numextra'] )->text();
 		}
 
+		$helper = new CommunityPageExperimentHelper();
+
 		$this->response->setValues( [
 			'isLoggedIn' => $this->getUser()->isLoggedIn(),
 			'signupUrl' => $this->getSignupUrl(),
 			'admins' => $admins,
 			'topContributors' => $topContributors['list'],
 			'extraContributors' => $extraContributors,
-			'pageList' => $this->getPageList(),
+			'pageList' => $helper->getPageList(),
 			'blankImage' => $this->wg->BlankImgUrl,
 			// Hacky
-			'headerImage' => $this->getHeaderImage(),
+			'headerImage' => $helper->getHeaderImage(),
 		] );
 
 		$this->setMessages();
@@ -112,33 +114,6 @@ class CommunityPageExperimentSpecialController extends WikiaSpecialPageControlle
 		return [ 'list' => $topEditorList, 'numextra' => $numOtherEditors ];
 	}
 
-	private function getPageList() {
-		global $wgCommunityPageExperimentPages;
-
-		$pages = [];
-
-		if ( empty( $wgCommunityPageExperimentPages ) ) {
-			return $pages;
-		}
-
-		foreach ( $wgCommunityPageExperimentPages as $page ) {
-			$title = Title::newFromText( $page );
-			if ( !( $title instanceof Title ) ) {
-				continue;
-			}
-
-			$editActionParam = ( EditorPreference::isVisualEditorPrimary() ? 'veaction' : 'action' );
-
-			$pages[] = [
-				'titleText' => $title->getPrefixedText(),
-				'titleUrl' => $title->getLocalURL(),
-				'editUrl' => $title->getLocalURL( [ $editActionParam => 'edit' ] ),
-			];
-		}
-
-		return $pages;
-	}
-
 	private function setMessages() {
 		$this->response->setValues( [
 			'headerWelcomeLoggedInMsg' => $this->msg( 'communitypageexperiment-header-welcome' )->text(),
@@ -155,15 +130,5 @@ class CommunityPageExperimentSpecialController extends WikiaSpecialPageControlle
 	private function getSignupUrl() {
 		$userLoginHelper = new UserLoginHelper();
 		return $userLoginHelper->getNewAuthUrl( '/register' );
-	}
-
-	private function getHeaderImage() {
-		$title = Title::newFromText( self::HEADER_IMAGE_NAME, NS_FILE );
-		$file = wfFindFile( $title );
-		if ( $file instanceof File ) {
-			return $file->getUrl();
-		}
-
-		return false;
 	}
 }

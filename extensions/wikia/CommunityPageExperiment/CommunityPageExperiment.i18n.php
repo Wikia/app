@@ -15,7 +15,10 @@ $messages['en'] = array(
 	'communitypageexperiment-entry-join' => 'Join this community!',
 	'communitypageexperiment-entry-learn-more' => 'Learn more',
 	'communitypageexperiment-entry-button' => 'Community Page',
+	'communitypageexperiment-tasks-title' => 'Tasks',
+	'communitypageexperiment-entry-tasks' => 'Help us edit this wikia',
 	'communitypageexperiment-tasks-header-welcome' => 'This wikia needs your help!',
+	'communitypageexperiment-tasks-admin-welcome' => 'Welcome to {{SITENAME}}. This wikia needs your contributions and your help. Here are some example pages that could use your edits. Happy editing!',
 );
 
 $messages['qqq'] = array(
@@ -32,7 +35,10 @@ $messages['qqq'] = array(
 	'communitypageexperiment-entry-join' => 'Text shown on article pages in next to the button that links to the Community page.',
 	'communitypageexperiment-entry-learn-more' => 'Button text for the link to the Community page.',
 	'communitypageexperiment-entry-button' => 'Button text for the link to the Community page after the user has joined the community.',
+	'communitypageexperiment-tasks-title' => 'Title of the Tasks special page.',
+	'communitypageexperiment-entry-tasks' => 'Text shown on article pages in next to the button that links to the Tasks page.',
 	'communitypageexperiment-tasks-header-welcome' => 'Welcome message shown on Tasks page.',
+	'communitypageexperiment-tasks-admin-welcome' => 'Welcome message from the admins on the Tasks page.',
 );
 
 $messages['ja'] = array(
