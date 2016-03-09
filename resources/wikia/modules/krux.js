@@ -7,8 +7,9 @@ define('wikia.krux', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adTracker',
 	'wikia.document',
+	'wikia.tracker',
 	'wikia.window'
-], function (adContext, adTracker, doc, win) {
+], function (adContext, adTracker, doc, wikiaTracker, win) {
 	'use strict';
 
 	var maxNumberOfKruxSegments = 50,
@@ -64,6 +65,13 @@ define('wikia.krux', [
 				// Add Krux pixel
 				addConfigScript(confid);
 				kruxLoaded = true;
+
+				// Add GA tracking
+				adTracker.track('krux/load');
+				wikiaTracker.track({
+					action: 'krux-load',
+					trackingMethod: 'analytics'
+				});
 			}
 		});
 	}
