@@ -50,9 +50,20 @@
 			overflow: hidden;
 			width: 553px;
 		}
-        .toc ul {
-            list-style-type: none;
-        }
+
+		.toc ul {
+			list-style-type: none;
+		}
+
+		figure {
+			height: auto;
+			max-width: 100%;
+
+			img {
+				height: auto;
+				max-width: 100%;
+			}
+		}
 	}
 
 	.speech-bubble-message:before {
