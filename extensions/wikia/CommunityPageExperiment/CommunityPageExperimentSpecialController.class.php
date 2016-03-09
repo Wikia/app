@@ -140,7 +140,7 @@ class CommunityPageExperimentSpecialController extends WikiaSpecialPageControlle
 
 	private function setMessages() {
 		$this->response->setValues( [
-			'headerWelcomeLoggedInMsg' => $this->msg( 'communitypageexperiment-header-welcome' )->plain(),
+			'headerWelcomeLoggedInMsg' => $this->msg( 'communitypageexperiment-header-welcome' )->text(),
 			'headerWelcomeAnonMsg' => $this->msg( 'communitypageexperiment-header-welcome-anon' )->plain(),
 			'joinButtonText' => $this->msg( 'communitypageexperiment-header-join-button' )->plain(),
 			'adminWelcomeMsg' => $this->msg( 'communitypageexperiment-admin-welcome' )->text(),
