@@ -170,6 +170,7 @@ class PortableInfoboxBuilderService extends WikiaService {
 	 */
 	protected function createInfoboxXml( $infobox ) {
 		$xml = new SimpleXMLElement( '<' . PortableInfoboxParserTagController::PARSER_TAG_NAME . '/>' );
+
 		foreach ( $infobox as $key => $value ) {
 			if ( $key !== 'data' ) {
 				$xml->addAttribute( $key, $value );
@@ -180,12 +181,12 @@ class PortableInfoboxBuilderService extends WikiaService {
 	}
 
 	/**
-	 * @param $xml \SimpleXMLElement
+	 * @param $xml \SimpleXMLElement SimpleXML object representing the entire infobox in linear structure
 	 * @param $formatted make the output document human-readable (true) or condensed (false)
 	 * @return string
 	 */
 	protected function getFormattedMarkup( $xml, $formatted ) {
-		$infoboxDom = $this->createInfoboxDom( $formatted );
+		$infoboxDom = $this->createInfoboxDom( $xml, $formatted );
 
 		$inGroup = false;
 		$currentGroupDom = null;
@@ -279,14 +280,21 @@ class PortableInfoboxBuilderService extends WikiaService {
 	}
 
 	/**
+	 * @param $xml \SimpleXMLElement SimpleXML object representing the entire infobox in linear structure
 	 * @param $formatted make the document human-readable (true) or condensed (false)
 	 * @return DOMElement
 	 */
-	protected function createInfoboxDom( $formatted ) {
+	protected function createInfoboxDom( $xml, $formatted ) {
 		// make the output document human-readable (formatted) or condensed (no additional whitespace)
 		$newXml = new SimpleXMLElement( '<' . PortableInfoboxParserTagController::PARSER_TAG_NAME . '/>' );
 		$infoboxDom = dom_import_simplexml( $newXml );
 		$infoboxDom->ownerDocument->formatOutput = $formatted;
+
+		// propagate the top infobox node attributes
+		foreach ( $xml->attributes() as $attribute => $value ) {
+			$infoboxDom->setAttribute( $attribute, $value );
+		}
+
 		return $infoboxDom;
 	}
 }
