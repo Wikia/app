@@ -45,22 +45,32 @@ class SpoofUser {
 	/**
 	 * Does the username pass Unicode legality and script-mixing checks?
 	 *
+	 * @param $skipExactMatch - when true exact match username is not returned
+	 *
 	 * @return array empty if no conflict, or array containing conflicting user names
 	 */
-	public function getConflicts() {
+	public function getConflicts( $skipExactMatch = false ) {
 		$dbr = self::getDBSlave();
 
 		// Join against the user table to ensure that we skip stray
 		// entries left after an account is renamed or otherwise munged.
-		/* Wikia Change - begin : Quote the table names, otherwise the select method
-		   tries to prefix the tablenames with the current user DB */
+		/* Wikia Change - begin :
+			Quote the table names, otherwise the select method
+				tries to prefix the tablenames with the current user DB
+			Added $skipExactMatch */
+		$conds = array(
+			'su_normalized' => $this->mNormalized,
+			'su_name=user_name',
+		);
+		if ( $skipExactMatch ) {
+			// BINARY enforces case sensitive comparison
+			$conds[] = "BINARY su_name != {$dbr->addQuotes( $this->mName )}";
+		}
+
 		$spoofedUsers = $dbr->select(
 			array( '`spoofuser`', '`user`' ),
 			array( 'user_name' ),
-			array(
-				'su_normalized' => $this->mNormalized,
-				'su_name=user_name',
-			),
+			$conds,
 			__METHOD__,
 			array(
 				'LIMIT' => 5
