@@ -19,6 +19,12 @@ $empty-header-height: 28px;
 	background-color: $infobox-background;
 }
 
+.pi-title,
+.pi-header,
+.pi-data-label {
+	color: inherit;
+}
+
 .pi-data {
 	overflow: visible;
 }
