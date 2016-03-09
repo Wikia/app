@@ -525,7 +525,7 @@ class VideoFileUploader {
 		$oUploader = new self();
 		$oUploader->setExternalUrl( $url );
 		$oUploader->setTargetTitle( $sTitle );
-		if ( $oUploader->getApiWrapper() !== null ) {
+		if ( !empty( $oUploader->getApiWrapper() ) ) {
 			if ( !empty($sDescription) ) {
 				$categoryVideosTxt = self::getCategoryVideosWikitext();
 				if ( strpos( $sDescription, $categoryVideosTxt ) === false ) {
