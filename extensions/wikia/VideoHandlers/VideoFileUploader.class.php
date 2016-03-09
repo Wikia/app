@@ -83,13 +83,12 @@ class VideoFileUploader {
 	 * @throws Exception
 	 */
 	public function upload( &$oTitle ) {
-		$apiWrapper = $this->getApiWrapper();
-		$thumbnailUrl = null;
-		if ( method_exists( $apiWrapper, 'getThumbnailUrl' ) ) {
-			// Some providers will sometimes return error codes when attempting
-			// to fetch a thumbnail
+		$flags = 0;
+		$thumbnailUrl = $this->getExistingForeignVideoThumbnailUrl( $oTitle );
+		if ( $thumbnailUrl === null ) {
+			$flags = File::DELETE_SOURCE;
 			try {
-				$upload = $this->uploadBestThumbnail( $apiWrapper->getThumbnailUrl() );
+				$thumbnailUrl = $this->uploadThumbnailFromApi();
 			} catch ( Exception $e ) {
 				WikiaLogger::instance()->error('Video upload failed', [
 					'targetFile' => $this->sTargetTitle,
@@ -100,15 +99,6 @@ class VideoFileUploader {
 				]);
 				return Status::newFatal($e->getMessage());
 			}
-		} else {
-			WikiaLogger::instance()->error( 'Api wrapper corrupted', [
-				'targetFile' => $this->sTargetTitle,
-				'overrideMetadata' => $this->aOverrideMetadata,
-				'externalURL' => $this->sExternalUrl,
-				'videoID' => $this->sVideoId,
-				'provider' => $this->sProvider,
-				'apiWrapper' => get_class( $apiWrapper )
-			]);
 		}
 		$oTitle = Title::newFromText( $this->getNormalizedDestinationTitle(), NS_FILE );
 
@@ -170,10 +160,10 @@ class VideoFileUploader {
 
 		/* real upload */
 		$result = $file->upload(
-			$upload->getTempPath(),
+			$thumbnailUrl,
 			wfMessage( 'videos-initial-upload-edit-summary' )->inContentLanguage()->text(),
 			\UtfNormal::toNFC( $this->getDescription() ),
-			File::DELETE_SOURCE
+			$flags
 		);
 
 		wfRunHooks('AfterVideoFileUploaderUpload', array($file, $result));
@@ -585,5 +575,36 @@ class VideoFileUploader {
 		}
 
 		return false;
+	}
+
+	private function getExistingForeignVideoThumbnailUrl( $title ) {
+		$file = WikiaFileHelper::getForeignVideoFromTitle( $title );
+		if ( $file !== null && $file->getVideoId() === $this->getVideoId() ) {
+			return $file->getUrl();
+		}
+
+		return null;
+	}
+
+	private function uploadThumbnailFromApi() {
+		$apiWrapper = $this->getApiWrapper();
+		$thumbnailUrl = null;
+		if ( method_exists( $apiWrapper, 'getThumbnailUrl' ) ) {
+			// Some providers will sometimes return error codes when attempting
+			// to fetch a thumbnail
+			$upload = $this->uploadBestThumbnail( $apiWrapper->getThumbnailUrl() );
+			$thumbnailUrl = $upload->getTempPath();
+		} else {
+			WikiaLogger::instance()->error( 'Api wrapper corrupted', [
+				'targetFile' => $this->sTargetTitle,
+				'overrideMetadata' => $this->aOverrideMetadata,
+				'externalURL' => $this->sExternalUrl,
+				'videoID' => $this->sVideoId,
+				'provider' => $this->sProvider,
+				'apiWrapper' => get_class( $apiWrapper )
+			]);
+		}
+
+		return $thumbnailUrl;
 	}
 }
