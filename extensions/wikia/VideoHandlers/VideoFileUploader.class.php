@@ -99,6 +99,14 @@ class VideoFileUploader {
 				]);
 				return Status::newFatal($e->getMessage());
 			}
+		} else {
+			WikiaLogger::instance()->info('Video already uploaded on another wiki', [
+				'targetFile' => $this->sTargetTitle,
+				'externalURL' => $this->sExternalUrl,
+				'thumbnailURL' => $thumbnailUrl,
+				'videoID' => $this->sVideoId,
+				'provider' => $this->sProvider
+			]);
 		}
 		$oTitle = Title::newFromText( $this->getNormalizedDestinationTitle(), NS_FILE );
 
