@@ -20,6 +20,7 @@ class CommunityPageExperimentSpecialController extends WikiaSpecialPageControlle
 		$output->addModuleScripts( 'ext.communityPageExperiment' );
 		$this->wg->SuppressPageHeader = true;
 		$this->wg->SuppressWikiHeader = true;
+		$this->wg->SuppressFooter = true;
 
 		$numAdmins = $this->getRequest()->getBool( 'singleadmin' ) ? 1 : 2;
 
