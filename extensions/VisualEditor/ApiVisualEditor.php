@@ -164,8 +164,8 @@ class ApiVisualEditor extends ApiBase {
 		} else {
 			$content = '';
 			$timestamp = wfTimestampNow();
-  			$oldid = 0;
-  		}
+			$oldid = 0;
+		}
 		return array(
 			'result' => array(
 				'content' => $content,
@@ -364,7 +364,6 @@ class ApiVisualEditor extends ApiBase {
 		switch ( $params['paction'] ) {
 			case 'parse':
 				$parsed = $this->getHTML( $page, $parserParams );
-
 				// Dirty hack to provide the correct context for edit notices
 				global $wgTitle; // FIXME NOOOOOOOOES
 				$wgTitle = $page;
@@ -654,7 +653,6 @@ class ApiVisualEditor extends ApiBase {
 			'html' => null,
 			'cachekey' => null,
 			'pst' => false,
-			'preload' => null,
 		);
 	}
 
