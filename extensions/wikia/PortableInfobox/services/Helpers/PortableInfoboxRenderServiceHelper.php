@@ -218,7 +218,7 @@ class PortableInfoboxRenderServiceHelper {
 			$height = $thumbnail->getHeight();
 		}
 
-		return [ 'height' => $height, 'width' => $width ];
+		return [ 'height' => round( $height ), 'width' => round( $width ) ];
 	}
 
 	/**

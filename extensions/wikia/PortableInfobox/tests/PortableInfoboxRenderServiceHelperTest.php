@@ -548,7 +548,7 @@ class PortableInfoboxRenderServiceHelperTest extends WikiaBaseTest {
 				'isWikiaMobile' => false,
 				'wgPortableInfoboxCustomImageWidth' => 540,
 				'result' => [
-					'height' => 277.77777777777777146184234879910945892333984375,
+					'height' => 278,
 					'width' => 300
 				],
 				'description' => 'Regular thumbnail image on desktop with double custom width; landscape'
