@@ -10,27 +10,29 @@ class AnalyticsProviderNielsen implements iAnalyticsProvider {
 		return null;
 	}
 
-	function trackEvent( $event, $eventDetails=array() ) {
-		global $wgCityId;
+	public function trackEvent($event, $eventDetails=array()){
+		return '';
+	}
 
-		if (!$this->isEnabled()) {
-			return '<!-- Nielsen is disabled -->';
+	static function onWikiaSkinTopScripts(&$vars, &$scripts, $skin) {
+		global $wgCityId, $wgDBName;
+
+		if (!self::isEnabled()) {
+			$scripts .= '<!-- Nielsen is disabled -->';
+			return true;
 		}
 
-		switch ($event) {
-			case AnalyticsEngine::EVENT_PAGEVIEW:
-				return \MustacheService::getInstance()->render(
-					self::$template,
-					[
-						'url' => self::$libraryUrl,
-						'appId' => self::$apid,
-						'section' => HubService::getVerticalNameForComscore( $wgCityId ),
-						'dbName' => F::app()->wg->DBname
-					]
-				);
-			default:
-				return '<!-- Unsupported event for Nielsen -->';
-		}
+		$scripts .= \MustacheService::getInstance()->render(
+			self::$template,
+			[
+				'url' => self::$libraryUrl,
+				'appId' => self::$apid,
+				'section' => HubService::getVerticalNameForComscore( $wgCityId ),
+				'dbName' => $wgDBName
+			]
+		);
+
+		return true;
 	}
 
 	static public function isEnabled() {
