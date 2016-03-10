@@ -257,8 +257,8 @@ class MercuryApiController extends WikiaController {
 		$dimensions[18] = $wikiCategoryNames;
 		$dimensions[19] = WikiaPageType::getArticleType( $title );
 
-		$dimensions[23] = $powerUserTypes['poweruser_lifetime'] ? 'yes' : 'no';
-		$dimensions[24] = $powerUserTypes['poweruser_frequent'] ? 'yes' : 'no';
+		$dimensions[23] = in_array( 'poweruser_lifetime', $powerUserTypes ) ? 'yes' : 'no';
+		$dimensions[24] = in_array( 'poweruser_frequent', $powerUserTypes ) ? 'yes' : 'no';
 		$dimensions[25] = strval( $title->getNamespace() );
 
 		$this->response->setVal('dimensions', $dimensions);
