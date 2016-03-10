@@ -1,7 +1,8 @@
 define('AuthModal', ['jquery', 'wikia.window'], function ($, window) {
 	'use strict';
 
-	var modal,
+	var authPopUp,
+		modal,
 		$blackout,
 		isOpen,
 		track;
@@ -10,10 +11,7 @@ define('AuthModal', ['jquery', 'wikia.window'], function ($, window) {
 		if (isOpen) {
 			close();
 		}
-		$('.WikiaSiteWrapper').append(
-			'<div class="auth-blackout visible"><div class="auth-modal loading">' +
-				'<a class="close" href="#"></div></div>'
-		);
+		$('.WikiaSiteWrapper').append('<div class="auth-blackout visible"><div class="auth-modal loading">');
 		isOpen = true;
 		$blackout = $('.auth-blackout');
 		modal = $blackout.find('.auth-modal')[0];
@@ -26,8 +24,8 @@ define('AuthModal', ['jquery', 'wikia.window'], function ($, window) {
 		});
 
 		$(window).on({
-			'keyup.authModal' : onKeyUp,
-			'message.authModal': function (event) {
+			'keyup.authPopUp' : onKeyUp,
+			'message.authPopUp': function (event) {
 				var e = event.originalEvent;
 
 				if (typeof e.data !== 'undefined' && e.data.isUserAuthorized) {
@@ -68,54 +66,43 @@ define('AuthModal', ['jquery', 'wikia.window'], function ($, window) {
 				action: Wikia.Tracker.ACTIONS.CLOSE,
 				label: 'username-login-modal'
 			});
-			$blackout.remove();
+			authPopUp.close();
+
 			isOpen = false;
 		}
-
 		$(window).off('.authModal');
 	}
 
 	function onPageLoaded () {
 		if (modal) {
 			$(modal).removeClass('loading');
+			$blackout.remove();
 		}
-	}
-	function authSuccess(event) {
-		console.log('Paent event', event);
 	}
 
 	function loadPage (url, onPageLoaded) {
-
 
 		var modalParam = 'modal=1',
 			src = url + (url.indexOf('?') === -1 ? '?' : '&') + modalParam,
 			PopUpWidth= 768,
 			PopUpHeight= 670,
 			left = (window.screen.width /2) - PopUpWidth/2,
-			top = (window.screen.height/2) - PopUpHeight/2,
-			authPopUp = window.open(src, 'Wikia Authentication','width='+PopUpWidth+',height='+PopUpHeight+'top='+top+',left='+left);
+			top = (window.screen.height/2) - PopUpHeight/2;
 
-		authPopUp.addEventListener('message', function (event) {
-			alert('Event has been send');
-			console.log(event);
-		}, false);
+		authPopUp = window.open(src, 'Wikia Authentication','width='+PopUpWidth+',height='+PopUpHeight+'top='+top+',left='+left);
 
 		console.log('src', src);
 		console.log('url', url);
 
-		authPopUp.onload = function () {
-			authPopUp.postMessage('asdasd');
-		};
-
 		//for the selenium tests:
-		/*		authIframe.id = 'auth-modal-iframe';
-		 authIframe.onload = function () {
-		 if (typeof onPageLoaded === 'function') {
-		 onPageLoaded();
-		 }
-		 };*/
-		//modal.appendChild(authIframe);
-		window.addEventListener('message', authSuccess, false);
+		//		authIframe.id = 'auth-modal-iframe';
+		 authPopUp.onload = function () {
+		 	if (typeof onPageLoaded === 'function') {
+
+				authPopUp.window.postMessage('Hello kiddo', 'http://fallout.rszczesny.wikia-dev.com/');
+		 		onPageLoaded();
+		 	}
+		 };
 	}
 
 	return {
