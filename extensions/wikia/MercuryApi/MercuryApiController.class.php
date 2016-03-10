@@ -226,12 +226,19 @@ class MercuryApiController extends WikiaController {
 	public function getTrackingDimensions() {
 		global $wgDBname, $wgUser, $wgCityId, $wgLanguageCode, $wgTitle;
 
+		$title = $wgTitle;
+		$article = Article::newFromID( $title->getArticleId() );
+
+		if ( $article instanceof Article && $title->isRedirect() ) {
+			$title = $this->handleRedirect( $title, $article, [] )[0];
+		}
+
 		$wikiCategoryNames = WikiFactoryHub::getInstance()->getWikiCategoryNames( $wgCityId );
-		$wikiCategoryNames = join(',', $wikiCategoryNames);
+		$wikiCategoryNames = join( ',', $wikiCategoryNames );
 
-		$adContext = ( new AdEngine2ContextService() )->getContext( $wgTitle, 'mercury' );
+		$adContext = ( new AdEngine2ContextService() )->getContext( $title, 'mercury' );
+		$powerUserTypes = ( new \Wikia\PowerUser\PowerUser( $wgUser ) )->getTypesForUser();
 
-		// wgContentLanguage - dim2 is null
 		$dimensions = [];
 
 		$dimensions[1] = $wgDBname;
@@ -239,30 +246,23 @@ class MercuryApiController extends WikiaController {
 		$dimensions[3] = $adContext['targeting']['wikiVertical'];
 		$dimensions[4] = 'mercury';
 		$dimensions[5] = $wgUser->isAnon() ? 'anon' : 'user';
-		//6
-		//7
+
 		$dimensions[8] = WikiaPageType::getPageType();
 		$dimensions[9] = $wgCityId;
+
 		$dimensions[14] = $adContext['opts']['showAds'] ? 'yes' : 'no';
 		$dimensions[15] = WikiaPageType::isCorporatePage() ? 'yes' : 'no';
-		$dimensions[17] = WikiFactoryHub::getInstance()->getWikiVertical( $wgCityId )[ 'short' ];
+
+		$dimensions[17] = WikiFactoryHub::getInstance()->getWikiVertical( $wgCityId )['short'];
 		$dimensions[18] = $wikiCategoryNames;
-		$dimensions[19] = WikiaPageType::getArticleType();
-		//23
-		//24
-		//25
+		$dimensions[19] = WikiaPageType::getArticleType( $title );
 
+		$dimensions[23] = $powerUserTypes['poweruser_lifetime'] ? 'yes' : 'no';
+		$dimensions[24] = $powerUserTypes['poweruser_frequent'] ? 'yes' : 'no';
+		$dimensions[25] = strval( $title->getNamespace() );
 
-//		var_dump((new ArticleService( $wgTitle ))->getArticleType());die;
-		var_dump($powerUserTypes = ( new \Wikia\PowerUser\PowerUser( $wgUser ) )->getTypesForUser());die;
-		var_dump($dimensions);die;
-
-		$this->response->setVal('dimension0', 'test');
-
+		$this->response->setVal('dimensions', $dimensions);
 		$this->response->setContentType( 'application/javascript; charset=utf-8' );
-
-
-
 	}
 
 	/**
