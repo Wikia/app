@@ -1,23 +1,38 @@
 <!-- Begin Nielsen Tag -->
-<script type="text/javascript" src="{{url}}"></script>
 <script type="text/javascript">
-	var _nolggGlobalParams = {
-		sfcode: 'dcr-cert',
-		apid: '{{appId}}',
-		apn : 'test-static'
-	};
+	(function() {
+		function sendNielsenPageView() {
+			var _nolggGlobalParams = {
+				sfcode: 'dcr-cert',
+				apid: '{{appId}}',
+				apn: 'test-static'
+			};
 
-	gg1 = NOLCMB.getInstance(_nolggGlobalParams);
-	staticmeta = {
-		type: 'static',
-		assetid: '{{section}}',
-		section: '{{section}}',
-		segA: '{{dbName}}',
-		segB: '',
-		segC: ''
-	};
+			gg1 = NOLCMB.getInstance(_nolggGlobalParams);
+			staticmeta = {
+				type: 'static',
+				assetid: '{{section}}',
+				section: '{{section}}',
+				segA: '{{dbName}}',
+				segB: '',
+				segC: ''
+			};
 
-	gg1.ggInitialize(_nolggGlobalParams);
-	gg1.ggPM('staticstart', staticmeta);
+			gg1.ggInitialize(_nolggGlobalParams);
+			gg1.ggPM('staticstart', staticmeta);
+		}
+
+		window.trackNielsenPageView = function () {
+			var scriptTag = document.createElement('script'),
+					firstScriptInDocument = document.getElementsByTagName('script')[0];
+
+			scriptTag.async = 1;
+			scriptTag.src = '{{url}}';
+			scriptTag.onload = sendNielsenPageView;
+			firstScriptInDocument.parentNode.insertBefore(scriptTag, firstScriptInDocument);
+		};
+
+		window.trackNielsenPageView();
+	})();
 </script>
 <!-- End Nielsen Tag -->

@@ -15,7 +15,7 @@ class AnalyticsProviderNielsen implements iAnalyticsProvider {
 	}
 
 	static function onWikiaSkinTopScripts(&$vars, &$scripts, $skin) {
-		global $wgCityId, $wgDBName;
+		global $wgCityId, $wgDBname;
 
 		if (!self::isEnabled()) {
 			$scripts .= '<!-- Nielsen is disabled -->';
@@ -28,7 +28,7 @@ class AnalyticsProviderNielsen implements iAnalyticsProvider {
 				'url' => self::$libraryUrl,
 				'appId' => self::$apid,
 				'section' => HubService::getVerticalNameForComscore( $wgCityId ),
-				'dbName' => $wgDBName
+				'dbName' => $wgDBname
 			]
 		);
 
