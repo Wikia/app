@@ -14,6 +14,11 @@ use Exception;
 class LogstashFormatter extends \Monolog\Formatter\LogstashFormatter implements DevModeFormatterInterface {
 	private $devMode = false;
 
+	public function __construct() {
+		// prevent "Undefined variable: applicationName" notice
+		parent::__construct(null);
+	}
+
 	public function enableDevMode() {
 		$this->devMode = true;
 	}
