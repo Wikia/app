@@ -448,9 +448,6 @@ Por preventer misusa, solmen un parol-clave amemora va esser inviat per {{PLURAL
 'newpassword' => 'Nov passa-parol:',
 'retypenew'   => 'Confirmar nov passa-parol',
 
-# Special:PasswordReset
-'passwordreset-username' => 'Vor nómine usatori',
-
 # Edit page toolbar
 'bold_sample'     => 'Textu in nigri',
 'bold_tip'        => 'Textu in nigri',

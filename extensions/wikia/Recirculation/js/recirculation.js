@@ -1,31 +1,20 @@
-/*global define*/
+/*global define,require*/
 define('ext.wikia.recirculation.recirculation', [
 	'jquery',
 	'wikia.window',
 	'wikia.abTest',
-	'wikia.tracker',
 	'wikia.nirvana',
-	'videosmodule.controllers.rail',
-	'ext.wikia.adEngine.taboolaHelper'
-], function ($, w, abTest, tracker, nirvana, videosModule, taboolaHelper) {
+	'ext.wikia.adEngine.taboolaHelper',
+	'ext.wikia.recirculation.googleMatchHelper',
+	'ext.wikia.recirculation.tracker',
+	require.optional('videosmodule.controllers.rail')
+], function ($, w, abTest, nirvana, taboolaHelper, googleMatchHelper, tracker, videosModule) {
 	'use strict';
 
-	function trackClick() {
-		tracker.track({
-			action: tracker.ACTIONS.CLICK,
-			category: 'recirculation',
-			label: 'rail',
-			trackingMethod: 'analytics'
-		});
-	}
+	var experimentName = 'RECIRCULATION_RAIL';
 
-	function trackImpression() {
-		tracker.track({
-			action: tracker.ACTIONS.IMPRESSION,
-			category: 'recirculation',
-			label: 'rail',
-			trackingMethod: 'analytics'
-		});
+	function trackClick() {
+		tracker.trackVerboseClick(experimentName, 'rail-item');
 	}
 
 	function injectFandomPosts(type, element) {
@@ -44,14 +33,17 @@ define('ext.wikia.recirculation.recirculation', [
 	}
 
 	function injectRecirculationModule(element) {
-		if (w.wgContentLanguage !== 'en') {
+		if (w.wgContentLanguage !== 'en' && videosModule) {
 			videosModule(element);
 			return;
 		}
 
-		var group = abTest.getGroup('RECIRCULATION_RAIL');
+		var group = abTest.getGroup(experimentName);
 
 		switch (group) {
+			case 'GOOGLE_MATCH':
+				googleMatchHelper.injectGoogleMatchedContent(element);
+				break;
 			case 'RECENT_POPULAR':
 				injectFandomPosts('recent_popular', element);
 				break;
@@ -70,14 +62,16 @@ define('ext.wikia.recirculation.recirculation', [
 				});
 				break;
 			case 'VIDEOS_MODULE':
+				if (!videosModule) {
+					return;
+				}
 				videosModule(element);
 				break;
 			default:
-				videosModule(element);
 				return;
 		}
 
-		trackImpression();
+		tracker.trackVerboseImpression(experimentName, 'rail');
 		$(element).on('mousedown', 'a', trackClick);
 	}
 

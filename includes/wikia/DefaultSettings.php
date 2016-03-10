@@ -153,6 +153,7 @@ $wgAutoloadClasses['DiscoverApiController'] = "{$IP}/includes/wikia/api/Discover
 $wgAutoloadClasses['NavigationApiController'] = "{$IP}/includes/wikia/api/NavigationApiController.class.php";
 $wgAutoloadClasses['ArticlesApiController'] = "{$IP}/includes/wikia/api/ArticlesApiController.class.php";
 $wgAutoloadClasses['RevisionApiController'] = "{$IP}/includes/wikia/api/RevisionApiController.class.php";
+$wgAutoloadClasses['RevisionUpvotesApiController'] = "{$IP}/includes/wikia/api/RevisionUpvotesApiController.class.php";
 $wgAutoloadClasses['SearchSuggestionsApiController'] = "{$IP}/includes/wikia/api/SearchSuggestionsApiController.class.php";
 $wgAutoloadClasses['StatsApiController'] = "{$IP}/includes/wikia/api/StatsApiController.class.php";
 $wgAutoloadClasses['RelatedPagesApiController'] = "{$IP}/includes/wikia/api/RelatedPagesApiController.class.php";
@@ -178,6 +179,7 @@ $wgWikiaApiControllers['MoviesApiController'] = "{$IP}/includes/wikia/api/Movies
 $wgWikiaApiControllers['InfoboxApiController'] = "{$IP}/includes/wikia/api/InfoboxApiController.class.php";
 $wgWikiaApiControllers['LogEventsApiController'] = "{$IP}/includes/wikia/api/LogEventsApiController.class.php";
 $wgWikiaApiControllers['RevisionApiController'] = "{$IP}/includes/wikia/api/RevisionApiController.class.php";
+$wgWikiaApiControllers['RevisionUpvotesApiController'] = "{$IP}/includes/wikia/api/RevisionUpvotesApiController.class.php";
 
 //Wikia Api exceptions classes
 $wgAutoloadClasses[ 'ApiAccessService' ] = "{$IP}/includes/wikia/api/services/ApiAccessService.php";
@@ -330,6 +332,7 @@ $wgAutoloadClasses['AvatarService'] = $IP.'/includes/wikia/services/AvatarServic
 $wgAutoloadClasses['MediaQueryService'] = $IP.'/includes/wikia/services/MediaQueryService.class.php';
 $wgAutoloadClasses['OasisService']  =  $IP.'/includes/wikia/services/OasisService.php';
 $wgAutoloadClasses['PageStatsService']  =  $IP.'/includes/wikia/services/PageStatsService.class.php';
+$wgAutoloadClasses['RevisionUpvotesService'] = $IP . '/includes/wikia/services/RevisionUpvotesService.class.php';
 $wgAutoloadClasses['UserContribsProviderService'] = $IP.'/includes/wikia/services/UserContribsProviderService.class.php';
 $wgAutoloadClasses['UserStatsService'] = $IP.'/includes/wikia/services/UserStatsService.class.php';
 $wgAutoloadClasses['CategoriesService'] = $IP.'/includes/wikia/services/CategoriesService.class.php';
@@ -359,6 +362,7 @@ $wgAutoloadClasses['FormBuilderService']  =  $IP.'/includes/wikia/services/FormB
 $wgAutoloadClasses['LicensedWikisService']  =  $IP.'/includes/wikia/services/LicensedWikisService.class.php';
 $wgAutoloadClasses['ArticleQualityService'] = $IP.'/includes/wikia/services/ArticleQualityService.php';
 $wgAutoloadClasses['PortableInfoboxDataService'] = $IP . '/extensions/wikia/PortableInfobox/services/PortableInfoboxDataService.class.php';
+$wgAutoloadClasses['PortableInfoboxBuilderService'] = $IP . '/extensions/wikia/PortableInfoboxBuilder/services/PortableInfoboxBuilderService.class.php';
 $wgAutoloadClasses['TemplateClassificationService'] = $IP . '/includes/wikia/services/TemplateClassificationService.class.php';
 $wgAutoloadClasses['CommunityDataService'] = $IP . '/includes/wikia/services/CommunityDataService.class.php';
 
@@ -765,6 +769,7 @@ $wgSpecialsDB = 'specials';
 $wgSwiftSyncDB = 'swift_sync';
 $wgSharedKeyPrefix = "wikicities"; // default value for shared key prefix, @see wfSharedMemcKey
 $wgWikiaMailerDB = 'wikia_mailer';
+$wgRevisionUpvotesDB = 'revision_upvotes';
 $wgForceMasterDatabase = false;  // true only during wiki creation process
 
 $wgAutoloadClasses['LBFactory_Wikia'] = "$IP/includes/wikia/LBFactory_Wikia.php";
@@ -1172,7 +1177,7 @@ $wgEnableQuickToolsExt = true;
  * Use phalanx external service
  */
 $wgPhalanxService = true;
-$wgPhalanxServiceUrl = "http://phalanx.service.consul:4666"; # PLATFORM-1744
+$wgPhalanxBaseUrl = "phalanx.service.consul:4666";
 $wgPhalanxServiceOptions = [
 	'noProxy' => true, # PLATFORM-1744: do not use the default HTTP proxy (defined in $wgHTTPProxy) for Phalanx requests
 ];
@@ -1255,6 +1260,13 @@ $wgAdDriverEnableRubiconFastlane = true;
 $wgAdDriverRubiconFastlaneCountries = null;
 
 /**
+ * @name $wgAdDriverOverridePrefootersCountries
+ * Enables overriding prefooters sizes on Oasis in these countries.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverOverridePrefootersCountries = null;
+
+/**
  * @name $wgAdPageLevelCategoryLangs
  * Enables DART category page param for these content languages
  * "Utility" var, don't change it here.
@@ -1329,12 +1341,6 @@ $wgAdDriverUseTaboola = true;
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverTaboolaConfig = null;
-
-/**
- * @name $wgAdDriverUseTopInContentBoxad
- * Whether to enable the in-content ads for Oasis (for narrow screens)
- */
-$wgAdDriverUseTopInContentBoxad = true;
 
 /** @name $wgSitewideDisableAdsOnMercury
  * Disable ads on Mercury if set to true.
@@ -1770,11 +1776,6 @@ $wgOasisTypography = true;
 $wgOasisBreakpoints = true;
 
 /**
- * Add poweruser to implicit groups
- */
-$wgImplicitGroups[] = 'poweruser';
-
-/**
  * Enable updated GlobalFooter
  * @TODO CONCF-444 - remove this variable
  */
@@ -1792,6 +1793,13 @@ $wgEnablePageShareExt = true;
  * https://one.wikia-inc.com/wiki/Ad_Engineering/Paid_Asset_Drop
  */
 $wgPaidAssetDropConfig = false;
+
+/**
+ * @name $wgAdDriverIncontentLeaderboardSlotCountries
+ * Enables INCONTENT_LEADERBOARD slot in these countries
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverIncontentLeaderboardSlotCountries = null;
 
 /**
  * @name $wgAdDriverIncontentPlayerSlotCountries
@@ -1843,3 +1851,15 @@ $wgEnableHostnameInHtmlTitle = true;
  */
 include_once("$IP/includes/wikia/parser/templatetypes/TemplateTypes.setup.php");
 
+/**
+ * @name $wgEnableReviveSpotlights
+ * Enables Revive Spotlights
+ */
+$wgEnableReviveSpotlights = true;
+
+/**
+ * @name $wgReviveSpotlightsCountries
+ * Enables Revive Spotlights in these countries (given wgEnableReviveSpotlights is also true).
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgReviveSpotlightsCountries = null;

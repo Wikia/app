@@ -519,35 +519,6 @@ daba hanta ka-tdĥol...',
 ymkn ṫkon bddalṫiha bĝda wlla ṫlbti klmṫ srr mo'qaṫa jdida.",
 'resetpass-temp-password'   => 'mot de passe moaqata',
 
-# Special:PasswordReset
-'passwordreset'                => 'ĝawd klmṫ s-srr',
-'passwordreset-text'           => 'ĝmmer had l-istimara baċ iwṣlek email ṫaĝ ṫdkir b-ṫṫafaṣil dl-ḫisab ṫaĝk.',
-'passwordreset-legend'         => 'ĝawd klmṫ s-srr',
-'passwordreset-disabled'       => 'maymkn-ċ ṫĝawd klmṫ s-srr f-had l-wiki.',
-'passwordreset-pretext'        => '{{PLURAL:$1||kṫb wḫda mn l-bayanaṫ l-ṫḫṫ}}',
-'passwordreset-username'       => 'smiṫ l-mosṫĥdim:',
-'passwordreset-email'          => 'ĝonwan l-email:',
-'passwordreset-emailtitle'     => 'ṫafaṣil l-ḫisab f-{{SITENAME}}',
-'passwordreset-emailtext-ip'   => "ċi waḫd (ġaliban nṫa, mn ĝonwan l-IP $1) tlḅ ṫdkir
-b-ṫṫafaṣil dial l-ḫisab ṫaĝk f-{{SITENAME}} ($4). {{PLURAL:$3|l-ḫisab lli mrṫabt|l-ḫisabat lli mrṫabta}}
-b-had l-ĝonwan dl-email {{PLURAL:$3|howa|hiya}}:
-
-$2
-
-had {{PLURAL:$3|klmṫ|klmaṫ}} s-srr l-mo'qaṫa ġadi ṫṫḫyyad mn bĝd {{PLURAL:$5|nhar waḫd|$5 yyam/yom}}.
-ĥaṣṣk ṫdĥol o-ṫbddal klmṫ s-srr. ila kan ċi waḫd aĥor hwwa lli dar had
-talab, wlla ila ṫfkkarṫi klmṫ s-srr l-qdima, o-ma bqiti-ċ baġi ṫbddalha, ġir bqa ĥddam biha o-nsa ĝlik had l-mesaj.",
-'passwordreset-emailtext-user' => "l_mosṫĥdim $1 f-{{SITENAME}} tlḅ ṫdkir b-ṫṫafaṣil dial l-ḫisab ṫaĝk f-{{SITENAME}} ($4). {{PLURAL:$3|l-ḫisab lli mrṫabt|l-ḫisabat lli mrṫabta}} b-had l-ĝonwan dl-email {{PLURAL:$3|howa|hiya}}:
-
-$2
-
-had {{PLURAL:$3|klmṫ|klmaṫ}} s-srr l-mo'qaṫa ġadi ṫṫḫyyad mn bĝd {{PLURAL:$5|nhar waḫd|$5 yyam/yom}}.
-ĥaṣṣk ṫdĥol o-ṫbddal klmṫ s-srr. ila kan ċi waḫd aĥor hwwa lli dar had
-talab, wlla ila ṫfkkarṫi klmṫ s-srr l-qdima, o-ma bqiti-ċ baġi ṫbddalha, ġir bqa ĥddam biha o-nsa ĝlik had l-mesaj.",
-'passwordreset-emailelement'   => "smiṫ l-mosṫĥdim: $1
-klmṫ s-srr l-mo'qaṫa: $2",
-'passwordreset-emailsent'      => 'ṫsift email liṫ-ṫdkir.',
-
 # Special:ChangeEmail
 'changeemail'          => 'bddel ĝonwan l-email',
 'changeemail-header'   => 'bddel ĝonwan l-email dl-ḫisab',

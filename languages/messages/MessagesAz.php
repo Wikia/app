@@ -549,20 +549,6 @@ Sistemə daxil olmanı yekunlaşdırmaq üçün yeni parolu bura yazmalısınız
 Ola bilər siz parolu müvəffəqiyyətlə dəyişmisiniz yaxud müvəqqəti parol üçün müraciət etmisiniz.',
 'resetpass-temp-password'   => 'Müvəqqəti parol:',
 
-# Special:PasswordReset
-'passwordreset'              => 'Parolu yenilə',
-'passwordreset-text'         => 'Akkauntunuz haqqında xatırlatmanı elektron poçt vasitəsilə ala bilməniz üçün bu formanı doldurun.',
-'passwordreset-legend'       => 'Parolu yenilə',
-'passwordreset-disabled'     => 'Yenidən qurulma parolu bu vikidə işləmir',
-'passwordreset-pretext'      => '{{PLURAL:$1||Enter one of the pieces of data below}}',
-'passwordreset-username'     => 'İstifadəçi adı:',
-'passwordreset-domain'       => 'Domen:',
-'passwordreset-email'        => 'E-mail ünvanı:',
-'passwordreset-emailtitle'   => '{{SITENAME}} hesabın yaradılması',
-'passwordreset-emailelement' => 'İstifadəçi adı: $1
-Müvəqqəti parol: $2',
-'passwordreset-emailsent'    => 'Xəbərdarlıq məktubu e-maillə göndərildi.',
-
 # Special:ChangeEmail
 'changeemail'          => 'E-məktub ünvanını dəyiş',
 'changeemail-oldemail' => 'Hazırki e-poçt ünvanı:',

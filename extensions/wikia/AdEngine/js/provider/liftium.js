@@ -1,12 +1,13 @@
 /*global define, require, Liftium*/
 /*jshint maxparams:false*/
 define('ext.wikia.adEngine.provider.liftium', [
+	'ext.wikia.adEngine.adContext',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window',
 	'ext.wikia.adEngine.slotTweaker',
 	require.optional('wikia.instantGlobals')
-], function (doc, log, win, slotTweaker, instantGlobals) {
+], function (adContext, doc, log, win, slotTweaker, instantGlobals) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.liftium',
@@ -27,9 +28,6 @@ define('ext.wikia.adEngine.provider.liftium', [
 		// TOP_BUTTON_WIDE after TOP_LEADERBOARD hack:
 		'TOP_BUTTON_WIDE.force': 'hack',
 
-		'INCONTENT_1A': {'size': '300x250'},
-		'INCONTENT_1B': {'size': '300x250'},
-		'INCONTENT_1C': {'size': '300x250'},
 		'TOP_LEADERBOARD': {'size': '728x90'},
 		'TOP_RIGHT_BOXAD': {'size': '300x250'},
 		'PREFOOTER_LEFT_BOXAD': {'size': '300x250'},
@@ -37,6 +35,10 @@ define('ext.wikia.adEngine.provider.liftium', [
 		'PREFOOTER_RIGHT_BOXAD': {'size': '300x250'},
 		'WIKIA_BAR_BOXAD_1': {'size': '300x250'}
 	};
+
+	if (adContext.getContext().opts.overridePrefootersSizes) {
+		delete slotMap.PREFOOTER_RIGHT_BOXAD;
+	}
 
 	canHandleSlot = function (slotname) {
 		log(['canHandleSlot', slotname], 'debug', logGroup);

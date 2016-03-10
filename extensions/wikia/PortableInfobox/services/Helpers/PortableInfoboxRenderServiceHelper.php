@@ -8,7 +8,8 @@ class PortableInfoboxRenderServiceHelper {
 	const LOGGER_LABEL = 'portable-infobox-render-not-supported-type';
 	//todo: https://wikia-inc.atlassian.net/browse/DAT-3075
 	//todo: figure out what to do when user changes default infobox width via custom theming
-	const DESKTOP_THUMBNAIL_WIDTH = 270;
+	// changed value from 270 to 300 to support default theme europa width
+	const DESKTOP_THUMBNAIL_WIDTH = 300;
 	const MOBILE_THUMBNAIL_WIDTH = 360;
 	const MINIMAL_HERO_IMG_WIDTH = 300;
 	const MAX_DESKTOP_THUMBNAIL_HEIGHT = 500;
@@ -217,7 +218,7 @@ class PortableInfoboxRenderServiceHelper {
 			$height = $thumbnail->getHeight();
 		}
 
-		return [ 'height' => $height, 'width' => $width ];
+		return [ 'height' => round( $height ), 'width' => round( $width ) ];
 	}
 
 	/**

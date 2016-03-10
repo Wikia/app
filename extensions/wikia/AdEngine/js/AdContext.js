@@ -121,6 +121,9 @@ define('ext.wikia.adEngine.adContext', [
 		context.slots.incontentPlayer = geo.isProperGeo(instantGlobals.wgAdDriverIncontentPlayerSlotCountries) ||
 			isUrlParamSet('incontentplayer');
 
+		// INCONTENT_LEADERBOARD slot
+		context.slots.incontentLeaderboard = geo.isProperGeo(instantGlobals.wgAdDriverIncontentLeaderboardSlotCountries);
+
 		context.opts.scrollHandlerConfig = instantGlobals.wgAdDriverScrollHandlerConfig;
 		context.opts.enableScrollHandler = geo.isProperGeo(instantGlobals.wgAdDriverScrollHandlerCountries) ||
 			isUrlParamSet('scrollhandler');
@@ -139,6 +142,19 @@ define('ext.wikia.adEngine.adContext', [
 			context.opts.showAds && context.opts.adsInContent &&
 			(isPageType('article') || isPageType('search')) &&
 			!context.targeting.wikiIsCorporate
+		);
+
+		// Override prefooters sizes
+		context.opts.overridePrefootersSizes =  !!(
+			context.targeting.skin === 'oasis' &&
+			geo.isProperGeo(instantGlobals.wgAdDriverOverridePrefootersCountries) &&
+			!isPageType('home')
+		);
+
+		// Override leaderboard sizes
+		context.opts.overrideLeaderboardSizes = !!(
+			context.targeting.skin === 'oasis' &&
+			geo.isProperGeo(['JP'])
 		);
 
 		// Export the context back to ads.context

@@ -112,21 +112,26 @@ require([
 
 // Inject extra slots
 require([
-	'ext.wikia.adEngine.slot.inContentPlayer',
+	'ext.wikia.adEngine.adContext',
+	'ext.wikia.adEngine.slot.inContent',
 	'ext.wikia.adEngine.slot.skyScraper3',
 	'wikia.document',
 	'wikia.window',
-	require.optional('ext.wikia.adEngine.slot.exitstitial'),
-	require.optional('ext.wikia.adEngine.slot.inContentDesktop'),
-], function (inContentPlayer, skyScraper3, doc, win, exitstitial, inContentDesktop) {
+	require.optional('ext.wikia.adEngine.slot.exitstitial')
+], function (adContext, inContent, skyScraper3, doc, win, exitstitial) {
 	'use strict';
 
+	var context = adContext.getContext();
+
 	function initDesktopSlots() {
-		inContentPlayer.init();
 		skyScraper3.init();
 
-		if (inContentDesktop) {
-			inContentDesktop.init();
+		if (context.slots.incontentPlayer) {
+			inContent.init('INCONTENT_PLAYER');
+		}
+
+		if (context.slots.incontentLeaderboard) {
+			inContent.init('INCONTENT_LEADERBOARD');
 		}
 
 		if (exitstitial) {

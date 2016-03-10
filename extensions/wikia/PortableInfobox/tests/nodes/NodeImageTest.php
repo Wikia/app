@@ -7,7 +7,7 @@ class NodeImageTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @covers       NodeImage::getGalleryData
+	 * @covers       \Wikia\PortableInfobox\Parser\Nodes\NodeImage::getGalleryData
 	 */
 	public function testGalleryData() {
 		$input = '<div data-model="[{&quot;caption&quot;:&quot;_caption_&quot;,&quot;title&quot;:&quot;_title_&quot;}]"></div>';
@@ -21,7 +21,7 @@ class NodeImageTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @covers       NodeImage::getTabberData
+	 * @covers       \Wikia\PortableInfobox\Parser\Nodes\NodeImage::getTabberData
 	 */
 	public function testTabberData() {
 		$input = '<div class="tabber"><div class="tabbertab" title="_title_"><p><a><img data-image-key="_data-image-key_"></a></p></div></div>';
@@ -35,7 +35,7 @@ class NodeImageTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @covers       NodeImage::getMarkers
+	 * @covers       \Wikia\PortableInfobox\Parser\Nodes\NodeImage::getMarkers
 	 * @dataProvider markersProvider
 	 *
 	 * @param $markup
@@ -64,7 +64,7 @@ class NodeImageTest extends WikiaBaseTest {
 
 
 	/**
-	 * @covers       NodeImage::getData
+	 * @covers       \Wikia\PortableInfobox\Parser\Nodes\NodeImage::getData
 	 * @dataProvider dataProvider
 	 *
 	 * @param $markup
@@ -109,7 +109,7 @@ class NodeImageTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @covers       NodeImage::isEmpty
+	 * @covers       \Wikia\PortableInfobox\Parser\Nodes\NodeImage::isEmpty
 	 * @dataProvider isEmptyProvider
 	 *
 	 * @param $markup
@@ -129,7 +129,7 @@ class NodeImageTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @covers       NodeImage::getSource
+	 * @covers       \Wikia\PortableInfobox\Parser\Nodes\NodeImage::getSource
 	 * @dataProvider sourceProvider
 	 *
 	 * @param $markup

@@ -111,8 +111,8 @@ abstract class MapsGeocoder {
 	 * @return array or false
 	 */
 	public function geocode( $address ) {
-		$response = Http::get( $this->getRequestUrl( $address ) );
-		
+		$response = ExternalHttp::get( $this->getRequestUrl( $address ) ); # Wikia change
+
 		if ( $response === false ) {
 			return false;
 		}

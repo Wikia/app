@@ -7,12 +7,12 @@
  *
  */
 
-$wgExtensionCredits['specialpage'][] = array(
+$wgExtensionCredits['specialpage'][] = [
 	'name' => 'Forum',
-	'author' => array( 'Hyun Lim', 'Kyle Florence', 'Saipetch Kongkatong', 'Tomasz Odrobny' ),
+	'author' => [ 'Hyun Lim', 'Kyle Florence', 'Saipetch Kongkatong', 'Tomasz Odrobny' ],
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/Forum',
 	'descriptionmsg' => 'forum-desc'
-);
+];
 
 $dir = __DIR__ . '/';
 
@@ -96,12 +96,8 @@ include ( $dir . '/Forum.namespace.setup.php' );
 $app->registerNamespaceControler( NS_WIKIA_FORUM_BOARD, 'ForumController', 'board', true );
 $app->registerNamespaceControler( NS_WIKIA_FORUM_TOPIC_BOARD, 'ForumController', 'board', true );
 
-// permissions
-include ( $dir . '/Forum.rights.setup.php' );
-
-JSMessages::registerPackage( 'Forum', array(
+JSMessages::registerPackage( 'Forum', [
 	'back',
 	'forum-specialpage-policies-edit',
 	'forum-specialpage-policies'
-) );
-
+] );

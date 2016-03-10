@@ -61,11 +61,11 @@ class Forum extends Walls {
 
 		// get board list
 		$result = (int)$dbw->selectField(
-			array( 'page' ),
-			array( 'count(*) as cnt' ),
-			array( 'page_namespace' => NS_WIKIA_FORUM_BOARD ),
+			[ 'page' ],
+			[ 'count(*) as cnt' ],
+			[ 'page_namespace' => NS_WIKIA_FORUM_BOARD ],
 			__METHOD__,
-			array()
+			[ ]
 		);
 
 		wfProfileOut( __METHOD__ );
@@ -85,13 +85,13 @@ class Forum extends Walls {
 		if ( $totalThreads === false ) {
 			$db = wfGetDB( DB_SLAVE );
 
-			$sqlWhere = array(
+			$sqlWhere = [
 				'parent_comment_id' => 0,
 				'archived' => 0,
 				'deleted' => 0,
 				'removed' => 0,
 				'page_namespace' => NS_WIKIA_FORUM_BOARD_THREAD
-			);
+			];
 
 			// active threads
 			if ( !empty( $days ) ) {
@@ -99,12 +99,12 @@ class Forum extends Walls {
 			}
 
 			$row = $db->selectRow(
-				array( 'comments_index', 'page' ),
-				array( 'count(*) cnt' ),
+				[ 'comments_index', 'page' ],
+				[ 'count(*) cnt' ],
 				$sqlWhere,
 				__METHOD__,
-				array(),
-				array( 'page' => array( 'LEFT JOIN', array( 'page_id=comment_id' ) ) )
+				[ ],
+				[ 'page' => [ 'LEFT JOIN', [ 'page_id=comment_id' ] ] ]
 			);
 
 			$totalThreads = 0;
@@ -151,7 +151,7 @@ class Forum extends Walls {
 			$db = wfGetDB( DB_MASTER );
 			// check if there is more then 5 forum pages (5 is number of forum pages from starter)
 			// limit 6 is faster solution then count(*) and the compare in php
-			$result = $db->select( array( 'page' ), array( 'page_id' ), array( 'page_namespace' => $ns ), __METHOD__, array( 'LIMIT' => $count + 1 ) );
+			$result = $db->select( [ 'page' ], [ 'page_id' ], [ 'page_namespace' => $ns ], __METHOD__, [ 'LIMIT' => $count + 1 ] );
 
 			$rowCount = $db->numRows( $result );
 			// string value is a work around for false value problem in memc
@@ -193,10 +193,10 @@ class Forum extends Walls {
 
 		// get board list
 		$result = $dbw->select(
-			array( 'page' ),
-			array( 'page_id, page_title' ),
-			array( 'page_namespace' => NS_WIKIA_FORUM_BOARD ),
-			__METHOD__, array( 'ORDER BY' => 'page_title' )
+			[ 'page' ],
+			[ 'page_id, page_title' ],
+			[ 'page_namespace' => NS_WIKIA_FORUM_BOARD ],
+			__METHOD__, [ 'ORDER BY' => 'page_title' ]
 		);
 
 		while ( $row = $dbw->fetchObject( $result ) ) {
@@ -220,6 +220,12 @@ class Forum extends Walls {
 
 	/**
 	 *  create or edit board, if $board = null then we are creating new one
+	 * @param ForumBoard $board
+	 * @param $titletext
+	 * @param $body
+	 * @param bool $bot
+	 * @return Status
+	 * @throws MWException
 	 */
 	protected function createOrEditBoard( $board, $titletext, $body, $bot = false ) {
 		wfProfileIn( __METHOD__ );
@@ -250,10 +256,10 @@ class Forum extends Walls {
 		$article = new Article( $title );
 		$editPage = new EditPage( $article );
 
-		$editPage->edittime = $article->getTimestamp();
+		$editPage->edittime = $article->getPage()->getTimestamp();
 		$editPage->textbox1 = $body;
 
-		$result = array();
+		$result = [ ];
 		$retval = $editPage->internalAttemptSave( $result, $bot );
 
 		if ( $id == null ) {
@@ -307,6 +313,7 @@ class Forum extends Walls {
 
 	/**
 	 * delete board
+	 * @param ForumBoard $board
 	 */
 
 	public function deleteBoard( $board ) {

@@ -33,14 +33,6 @@ $wgExtensionCredits['specialpage'][] = array(
 	'descriptionmsg' => 'checkuser-desc',
 );
 
-// New user rights
-// 'checkuser' right is required to query IPs/users through Special:CheckUser
-// 'checkuser-log' is required to view the private log of checkuser checks
-$wgAvailableRights[] = 'checkuser';
-$wgAvailableRights[] = 'checkuser-log';
-$wgGroupPermissions['checkuser']['checkuser'] = true;
-$wgGroupPermissions['checkuser']['checkuser-log'] = true;
-
 // Legacy variable, no longer used. Used to point to a file in the server where
 // CheckUser would log all queries done through Special:CheckUser.
 // If this file exists, the installer will try to import data from this file to

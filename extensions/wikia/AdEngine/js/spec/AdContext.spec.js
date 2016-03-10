@@ -549,6 +549,19 @@ describe('AdContext', function () {
 		expect(adContext.getContext().slots.incontentPlayer).toBeFalsy();
 	});
 
+	it('enables incontent_leaderboard slot when ' +
+	'country in instatnGlobals.wgAdDriverIncontentLeaderboardSlotCountries', function () {
+		var adContext;
+
+		mocks.instantGlobals = {wgAdDriverIncontentLeaderboardSlotCountries: ['HH', 'CURRENT_COUNTRY', 'ZZ']};
+		adContext = getModule();
+		expect(adContext.getContext().slots.incontentLeaderboard).toBeTruthy();
+
+		mocks.instantGlobals = {wgAdDriverIncontentLeaderboardSlotCountries: ['YY']};
+		adContext = getModule();
+		expect(adContext.getContext().slots.incontentLeaderboard).toBeFalsy();
+	});
+
 	it('enables incontent_player slot when url param incontentplayer is set', function () {
 		spyOn(mocks.querystring, 'getVal').and.callFake(function (param) {
 			return param === 'incontentplayer' ?  '1' : '0';
@@ -891,5 +904,114 @@ describe('AdContext', function () {
 		mocks.instantGlobals = {wgAdDriverEvolve2Countries: ['HH', 'CURRENT_COUNTRY', 'ZZ']};
 		adContext = getModule();
 		expect(adContext.getContext().providers.evolve2).toBeFalsy();
+	});
+
+	it('disable overriding prefooters sizes for mercury', function () {
+		mocks.instantGlobals = {wgAdDriverOverridePrefootersCountries: ['CURRENT_COUNTRY']};
+		mocks.win = {
+			ads: {
+				context: {
+					targeting: {
+						skin: 'mercury',
+						pageType: 'article'
+					}
+				}
+			}
+		};
+
+		expect(getModule().getContext().opts.overridePrefootersSizes).toBeFalsy();
+	});
+
+	it('disable overriding prefooters sizes for home page', function () {
+		mocks.instantGlobals = {wgAdDriverOverridePrefootersCountries: ['CURRENT_COUNTRY']};
+		mocks.win = {
+			ads: {
+				context: {
+					targeting: {
+						skin: 'oasis',
+						pageType: 'home'
+					}
+				}
+			}
+		};
+
+		expect(getModule().getContext().opts.overridePrefootersSizes).toBeFalsy();
+	});
+
+	it('disable overriding prefooters sizes by country', function () {
+		mocks.instantGlobals = {wgAdDriverOverridePrefootersCountries: ['ZZ']};
+		mocks.win = {
+			ads: {
+				context: {
+					targeting: {
+						skin: 'oasis',
+						pageType: 'article'
+					}
+				}
+			}
+		};
+
+		expect(getModule().getContext().opts.overridePrefootersSizes).toBeFalsy();
+	});
+
+	it('enable overriding prefooters sizes', function () {
+		mocks.instantGlobals = {wgAdDriverOverridePrefootersCountries: ['CURRENT_COUNTRY']};
+		mocks.win = {
+			ads: {
+				context: {
+					targeting: {
+						skin: 'oasis',
+						pageType: 'article'
+					}
+				}
+			}
+		};
+
+		expect(getModule().getContext().opts.overridePrefootersSizes).toBeTruthy();
+	});
+
+	it('disable overriding leaderboard sizes for mercury', function () {
+		mocks.instantGlobals = {wgAdDriverOverridePrefootersCountries: ['JP']};
+		mocks.win = {
+			ads: {
+				context: {
+					targeting: {
+						skin: 'mercury'
+					}
+				}
+			}
+		};
+
+		expect(getModule().getContext().opts.overridyLeaderboardSizes).toBeFalsy();
+	});
+
+	it('disable overriding leaderboard sizes by country', function () {
+		mocks.instantGlobals = {wgAdDriverOverridePrefootersCountries: ['ZZ']};
+		mocks.win = {
+			ads: {
+				context: {
+					targeting: {
+						skin: 'oasis'
+					}
+				}
+			}
+		};
+
+		expect(getModule().getContext().opts.overridyLeaderboardSizes).toBeFalsy();
+	});
+
+	it('enable overriding leaderboard sizes', function () {
+		mocks.instantGlobals = {wgAdDriverOverridePrefootersCountries: ['JP']};
+		mocks.win = {
+			ads: {
+				context: {
+					targeting: {
+						skin: 'oasis'
+					}
+				}
+			}
+		};
+
+		expect(getModule().getContext().opts.overridyLeaderboardSizes).toBeFalsy();
 	});
 });
