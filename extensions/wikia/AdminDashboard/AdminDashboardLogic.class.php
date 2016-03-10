@@ -152,7 +152,9 @@ class AdminDashboardLogic {
 	 */
 	static function onWikiaHtmlTitleExtraParts( Title $title, array &$extraParts ) {
 		if ( self::displayAdminDashboard( F::app(), $title ) ) {
-			$extraParts = [ wfMessage( 'admindashboard-header' ) ];
+			if ( !$title->isSpecial( 'AdminDashboard' ) ) {
+				$extraParts = [ wfMessage( 'admindashboard-header' ) ];
+			}
 		}
 		return true;
 	}
