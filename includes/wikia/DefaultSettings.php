@@ -1782,11 +1782,6 @@ $wgOasisBreakpoints = true;
 $wgEnableUpdatedGlobalFooter = true;
 
 /**
- * Enable page share icons worldwide
- */
-$wgEnablePageShareExt = true;
-
-/**
  * @name $wgPaidAssetDropConfig
  *
  * Disables Paid Asset Drop campaign if set to false. Enables it if set to an array with two dates (YYYY-MM-DD format).
