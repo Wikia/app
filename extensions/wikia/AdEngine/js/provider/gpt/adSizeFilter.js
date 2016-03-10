@@ -26,6 +26,8 @@ define('ext.wikia.adEngine.provider.gpt.adSizeFilter', [
 			}
 		}
 
+		log(['getNewSizes', 'sizes: ', sizes, 'goodSizes: ', goodSizes], 'debug', logGroup);
+
 		return goodSizes.length ? goodSizes : fallbackSizes;
 	}
 
