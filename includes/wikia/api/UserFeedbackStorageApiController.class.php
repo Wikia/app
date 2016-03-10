@@ -22,12 +22,12 @@ class UserFeedbackStorageApiController extends WikiaApiController {
 		$this->checkWriteRequest();
 		$request = $this->getRequest();
 
-		$requestParams = $this->getRequestData( $request );
+		$requestParams = $this->getRequestParams( $request );
 
 		$db = $this->getDatabaseForWrite();
-		$status = $db->insert( self::FEEDBACK_TABLE_NAME, $requestParams );
+		$status = $db->insert( self::FEEDBACK_TABLE_NAME, $requestParams, __METHOD__ );
 
-		if ($status) {
+		if ( $status ) {
 			$db->commit();
 		}
 
@@ -39,8 +39,8 @@ class UserFeedbackStorageApiController extends WikiaApiController {
 	 * @return array
 	 * @throws MissingParameterApiException
 	 */
-	private function getRequestData( IRequest $request ) {
-		$requestData = [];
+	private function getRequestParams( IRequest $request ) {
+		$requestParams = [];
 		$positiveIntRequired = [
 			'experimentId' => 'experiment_id',
 			'variationId' => 'variation_id',
@@ -54,18 +54,18 @@ class UserFeedbackStorageApiController extends WikiaApiController {
 			if ( $paramValue === 0 ) {
 				throw new MissingParameterApiException( $paramName );
 			} else {
-				$requestData[$dbFieldName] = $paramValue;
+				$requestParams[$dbFieldName] = $paramValue;
 			}
 		}
 
-		$requestData = $requestData + [
-			'user_id' => $request->getInt( 'userId' ),
-			'feedback' => $request->getVal( 'feedback', '' ),
-			'feedback_impressions_count' => $request->getInt( 'feedbackImpressionsCount' ),
-			'feedback_previous_count' => $request->getInt( 'feedbackPreviousCount' ),
-		];
+		$requestParams = $requestParams + [
+				'user_id' => $request->getInt( 'userId' ),
+				'feedback' => $request->getVal( 'feedback', '' ),
+				'feedback_impressions_count' => $request->getInt( 'feedbackImpressionsCount' ),
+				'feedback_previous_count' => $request->getInt( 'feedbackPreviousCount' ),
+			];
 
-		return $requestData;
+		return $requestParams;
 	}
 
 	/**
