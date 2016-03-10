@@ -29,19 +29,21 @@ class PermissionsServiceImpl implements PermissionsService {
 
 	public function getExplicitGroups( \User $user ) {
 		return array_unique( array_merge (
-			$this->getExplicitLocalGroups( $user ) ? : [],
-			$this->getExplicitGlobalGroups( $user ) ? : []
+			$this->getExplicitLocalGroups( $user ),
+			$this->getExplicitGlobalGroups( $user )
 		) );
 	}
 
 	public function getExplicitLocalGroups( \User $user ) {
 		$this->loadLocalGroups( $user->getId() );
-		return $this->localExplicitUserGroups[ $user->getId() ];
+		return isset( $this->localExplicitUserGroups[ $user->getId() ] ) ?
+			$this->localExplicitUserGroups[ $user->getId() ] : [];
 	}
 
 	public function getExplicitGlobalGroups( \User $user ) {
 		$this->loadGlobalUserGroups( $user->getId() );
-		return $this->globalExplicitUserGroups[ $user->getId() ];
+		return isset( $this->globalExplicitUserGroups[ $user->getId() ] ) ?
+			$this->globalExplicitUserGroups[ $user->getId() ] : [];
 	}
 
 	public function isInGroup( \User $user, $group ) {
