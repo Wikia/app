@@ -224,42 +224,44 @@ class MercuryApiController extends WikiaController {
 	 * @desc Returns UA dimensions
 	 */
 	public function getTrackingDimensions() {
-		global $wgDBname, $wgUser, $wgCityId, $wgLanguageCode;
+		global $wgDBname, $wgUser, $wgCityId, $wgLanguageCode, $wgTitle;
+
+		$wikiCategoryNames = WikiFactoryHub::getInstance()->getWikiCategoryNames( $wgCityId );
+		$wikiCategoryNames = join(',', $wikiCategoryNames);
+
+		$adContext = ( new AdEngine2ContextService() )->getContext( $wgTitle, 'mercury' );
 
 		// wgContentLanguage - dim2 is null
 		$dimensions = [];
 
 		$dimensions[1] = $wgDBname;
 		$dimensions[2] = $wgLanguageCode;
+		$dimensions[3] = $adContext['targeting']['wikiVertical'];
 		$dimensions[4] = 'mercury';
 		$dimensions[5] = $wgUser->isAnon() ? 'anon' : 'user';
+		//6
+		//7
 		$dimensions[8] = WikiaPageType::getPageType();
 		$dimensions[9] = $wgCityId;
+		$dimensions[14] = $adContext['opts']['showAds'] ? 'yes' : 'no';
 		$dimensions[15] = WikiaPageType::isCorporatePage() ? 'yes' : 'no';
 		$dimensions[17] = WikiFactoryHub::getInstance()->getWikiVertical( $wgCityId )[ 'short' ];
+		$dimensions[18] = $wikiCategoryNames;
+		$dimensions[19] = WikiaPageType::getArticleType();
+		//23
+		//24
+		//25
 
 
+//		var_dump((new ArticleService( $wgTitle ))->getArticleType());die;
+		var_dump($powerUserTypes = ( new \Wikia\PowerUser\PowerUser( $wgUser ) )->getTypesForUser());die;
 		var_dump($dimensions);die;
 
 		$this->response->setVal('dimension0', 'test');
 
 		$this->response->setContentType( 'application/javascript; charset=utf-8' );
 
-		/*
-		dimensions[2] = Mercury.wiki.language.content;
-		// TODO: Krux segmenting not implemented in Mercury https://wikia-inc.atlassian.net/browse/HG-456
-		// ga(prefix + 'set', 'dimension16', getKruxSegment());
 
-		if (adsContext) {
-			// Hub
-			dimensions[3] = adsContext.targeting.wikiVertical;
-			// HasAds
-			dimensions[14] = adsContext.opts.showAds ? 'Yes' : 'No';
-		}
-
-		if (Mercury.wiki.wikiCategories instanceof Array) {
-			dimensions[18] = Mercury.wiki.wikiCategories.join(',');
-		}*/
 
 	}
 
