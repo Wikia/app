@@ -9,7 +9,8 @@ define('ext.wikia.adEngine.provider.gpt.adSizeFilter', [
 
 	var logGroup = 'ext.wikia.adEngine.provider.gpt.adSizeFilter',
 		context = adContext.getContext(),
-		leaderboardWidth = 728;
+		maxAdSize = 704,
+		minSkinWidth = 1240;
 
 	function isLargeBreakpoints() {
 		return breakpointsLayout &&
@@ -32,13 +33,13 @@ define('ext.wikia.adEngine.provider.gpt.adSizeFilter', [
 		log(['filterSizes', slotName, slotSizes], 'debug', logGroup);
 
 		switch (true) {
-			case slotName.match(/TOP_LEADERBOARD/):
+			case slotName.indexOf('TOP_LEADERBOARD') > -1:
 				return getNewSizes(slotSizes, doc.documentElement.offsetWidth, [[728, 90]]);
 			case slotName === 'INVISIBLE_SKIN':
-				return isLargeBreakpoints() ? slotSizes : [[1, 1]];
+				return doc.documentElement.offsetWidth >= minSkinWidth ? slotSizes : [[1, 1]];
 			case slotName === 'INCONTENT_LEADERBOARD':
 			case slotName === 'PREFOOTER_LEFT_BOXAD' && context.opts.overridePrefootersSizes:
-				return isLargeBreakpoints() ? slotSizes : getNewSizes(slotSizes, leaderboardWidth - 1, [[300, 250]]);
+				return isLargeBreakpoints() ? slotSizes : getNewSizes(slotSizes, maxAdSize, [[300, 250]]);
 			default:
 				return slotSizes;
 		}
