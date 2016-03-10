@@ -44,6 +44,10 @@ class UpdateThumbnailTask extends BaseTask {
 			return Status::newFatal( $msg );
 		}
 
+		if ( !$file->isLocal() ) {
+			return Status::newFatal( "Cannot update foreign video thumbnail" );
+		}
+
 		$delayIndex++;
 		$this->log( "start", $delayIndex, $title->getText(), $provider );
 
