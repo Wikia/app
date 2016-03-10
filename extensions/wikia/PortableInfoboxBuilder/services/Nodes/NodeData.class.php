@@ -7,7 +7,7 @@ class NodeData extends Node {
 	 * allowed node attributes
 	 * @var array of string
 	 */
-	protected $allowedAttributes = [ 'source' ];
+	protected $allowedAttributes = [ 'source' => [] ];
 
 	/**
 	 * allowed child nodes
