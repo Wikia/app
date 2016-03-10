@@ -60,6 +60,12 @@ $wgResourceModules['wikia.ext.abtesting'] = array(
 	'class' => 'ResourceLoaderAbTestingModule',
 );
 
+$wgResourceModules['wikia.ext.abtest'] = array(
+	'scripts' => array(
+		'extensions/wikia/AbTesting/js/AbTest.js',
+	)
+);
+
 $wgResourceModules['wikia.ext.abtesting.edit.styles'] = array(
 	'styles' => array(
 		'extensions/wikia/AbTesting/css/AbTestEditor.scss',
