@@ -260,7 +260,7 @@ class MercuryApiController extends WikiaController {
 		$dimensions[24] = in_array( 'poweruser_frequent', $powerUserTypes ) ? 'yes' : 'no';
 		$dimensions[25] = strval( $title->getNamespace() );
 
-		$this->response->setVal('dimensions', $dimensions);
+		$this->response->setVal( 'dimensions', $dimensions );
 		$this->response->setContentType( 'application/javascript; charset=utf-8' );
 	}
 
