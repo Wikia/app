@@ -247,7 +247,6 @@ class MercuryApiController extends WikiaController {
 		$dimensions[4] = 'mercury';
 		$dimensions[5] = $wgUser->isAnon() ? 'anon' : 'user';
 
-		$dimensions[8] = WikiaPageType::getPageType();
 		$dimensions[9] = $wgCityId;
 
 		$dimensions[14] = $adContext['opts']['showAds'] ? 'yes' : 'no';
