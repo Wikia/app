@@ -571,6 +571,21 @@ class WikiaFileHelper extends Service {
 	}
 
 	/**
+	 * Returns video file from foreign wiki if exists
+	 *
+	 * @param Title|string $title
+	 * @return ForeignDBFile|null
+	 */
+	public static function getForeignVideoFromTitle( &$title ) {
+		$file = self::getFileFromTitle( $title );
+		if ( $file instanceof ForeignDBFile && $file->getHandler() instanceof VideoHandler ) {
+			return $file;
+		}
+
+		return null;
+	}
+
+	/**
 	 * Check if a url is a wikia file by parsing it for 'File' (or i18n'ed namespace).
 	 * Return the title if found, otherwise null.
 	 *

@@ -83,13 +83,12 @@ class VideoFileUploader {
 	 * @throws Exception
 	 */
 	public function upload( &$oTitle ) {
-		$apiWrapper = $this->getApiWrapper();
-		$thumbnailUrl = null;
-		if ( method_exists( $apiWrapper, 'getThumbnailUrl' ) ) {
-			// Some providers will sometimes return error codes when attempting
-			// to fetch a thumbnail
+		$flags = 0;
+		$thumbnailUrl = $this->getExistingForeignVideoThumbnailUrl( $oTitle );
+		if ( $thumbnailUrl === null ) {
+			$flags = File::DELETE_SOURCE;
 			try {
-				$upload = $this->uploadBestThumbnail( $apiWrapper->getThumbnailUrl() );
+				$thumbnailUrl = $this->uploadThumbnailFromApi();
 			} catch ( Exception $e ) {
 				WikiaLogger::instance()->error('Video upload failed', [
 					'targetFile' => $this->sTargetTitle,
@@ -101,34 +100,17 @@ class VideoFileUploader {
 				return Status::newFatal($e->getMessage());
 			}
 		} else {
-			WikiaLogger::instance()->error( 'Api wrapper corrupted', [
+			WikiaLogger::instance()->info('Video already uploaded on another wiki', [
 				'targetFile' => $this->sTargetTitle,
-				'overrideMetadata' => $this->aOverrideMetadata,
 				'externalURL' => $this->sExternalUrl,
+				'thumbnailURL' => $thumbnailUrl,
 				'videoID' => $this->sVideoId,
-				'provider' => $this->sProvider,
-				'apiWrapper' => get_class( $apiWrapper )
+				'provider' => $this->sProvider
 			]);
 		}
 		$oTitle = Title::newFromText( $this->getNormalizedDestinationTitle(), NS_FILE );
 
-		// Check if the user has the proper permissions
-		// Mimicks Special:Upload's behavior
-		$user = F::app()->wg->User;
-		$permErrors = $oTitle->getUserPermissionsErrors( 'edit', $user );
-		$permErrorsUpload = $oTitle->getUserPermissionsErrors( 'upload', $user );
-		if ( !$oTitle->exists() ) {
-			$permErrorsCreate = $oTitle->getUserPermissionsErrors( 'create', $user );
-		} else {
-			$permErrorsCreate = [];
-		}
-
-		if ( $permErrors || $permErrorsUpload || $permErrorsCreate ) {
-			$permErrors = array_merge( $permErrors, wfArrayDiff2( $permErrorsUpload, $permErrors ) );
-			$permErrors = array_merge( $permErrors, wfArrayDiff2( $permErrorsCreate, $permErrors ) );
-			$msgKey = array_shift( $permErrors[0] );
-			throw new Exception( wfMessage( $msgKey, $permErrors[0] )->parse()  );
-		}
+		$this->checkUserPermissions($oTitle);
 
 		if ( $oTitle->exists() ) {
 			$article = new Article( $oTitle );
@@ -139,41 +121,14 @@ class VideoFileUploader {
 			}
 		}
 
-		$class = !empty( $this->bUndercover ) ? 'WikiaNoArticleLocalFile' : 'WikiaLocalFile';
-
-		/** @var WikiaLocalFile $file */
-		$file = new $class(
-				$oTitle,
-				RepoGroup::singleton()->getLocalRepo()
-		);
-
-		/* override thumbnail metadata with video metadata */
-		$file->forceMime( $this->getApiWrapper()->getMimeType() );
-		$file->setVideoId( $this->getVideoId() );
-
-		/* ingestion video won't be able to load anything so we need to spoon feed it the correct data */
-		if ( $this->getApiWrapper()->isIngestion() ) {
-			$file->forceMetadata( serialize( $this->getNormalizedMetadata() ) );
-		}
-
-
-		$forceMime = $file->forceMime;
-
-		$file->getMetadata();
-
-		//In case of video replacement - Title already exists - preserve forceMime value.
-		//By default it is changed to false in WikiaLocalFileShared::afterSetProps method
-		//which is called by $file->getMetadata().
-		if ( $oTitle->exists() ) {
-			$file->forceMime = $forceMime;
-		}
+		$file = $this->prepareVideoFile($oTitle);
 
 		/* real upload */
 		$result = $file->upload(
-			$upload->getTempPath(),
+			$thumbnailUrl,
 			wfMessage( 'videos-initial-upload-edit-summary' )->inContentLanguage()->text(),
 			\UtfNormal::toNFC( $this->getDescription() ),
-			File::DELETE_SOURCE
+			$flags
 		);
 
 		wfRunHooks('AfterVideoFileUploaderUpload', array($file, $result));
@@ -586,5 +541,87 @@ class VideoFileUploader {
 		}
 
 		return false;
+	}
+
+	private function getExistingForeignVideoThumbnailUrl( $title ) {
+		$file = WikiaFileHelper::getForeignVideoFromTitle( $title );
+		if ( $file !== null && $file->getVideoId() === $this->getVideoId() ) {
+			return $file->getUrl();
+		}
+
+		return null;
+	}
+
+	private function uploadThumbnailFromApi() {
+		$apiWrapper = $this->getApiWrapper();
+		$thumbnailUrl = null;
+		if ( method_exists( $apiWrapper, 'getThumbnailUrl' ) ) {
+			// Some providers will sometimes return error codes when attempting
+			// to fetch a thumbnail
+			$upload = $this->uploadBestThumbnail( $apiWrapper->getThumbnailUrl() );
+			$thumbnailUrl = $upload->getTempPath();
+		} else {
+			WikiaLogger::instance()->error( 'Api wrapper corrupted', [
+				'targetFile' => $this->sTargetTitle,
+				'overrideMetadata' => $this->aOverrideMetadata,
+				'externalURL' => $this->sExternalUrl,
+				'videoID' => $this->sVideoId,
+				'provider' => $this->sProvider,
+				'apiWrapper' => get_class( $apiWrapper )
+			]);
+		}
+
+		return $thumbnailUrl;
+	}
+
+	private function checkUserPermissions( Title &$oTitle ) {
+		$user = F::app()->wg->User;
+		$permErrors = $oTitle->getUserPermissionsErrors( 'edit', $user );
+		$permErrorsUpload = $oTitle->getUserPermissionsErrors( 'upload', $user );
+		if ( !$oTitle->exists() ) {
+			$permErrorsCreate = $oTitle->getUserPermissionsErrors( 'create', $user );
+		} else {
+			$permErrorsCreate = [];
+		}
+
+		if ( $permErrors || $permErrorsUpload || $permErrorsCreate ) {
+			$permErrors = array_merge( $permErrors, wfArrayDiff2( $permErrorsUpload, $permErrors ) );
+			$permErrors = array_merge( $permErrors, wfArrayDiff2( $permErrorsCreate, $permErrors ) );
+			$msgKey = array_shift( $permErrors[0] );
+			throw new Exception( wfMessage( $msgKey, $permErrors[0] )->parse() );
+		}
+	}
+
+	private function prepareVideoFile( &$oTitle ) {
+		$class = !empty( $this->bUndercover ) ? 'WikiaNoArticleLocalFile' : 'WikiaLocalFile';
+
+		/** @var WikiaLocalFile $file */
+		$file = new $class(
+			$oTitle,
+			RepoGroup::singleton()->getLocalRepo()
+		);
+
+		/* override thumbnail metadata with video metadata */
+		$file->forceMime( $this->getApiWrapper()->getMimeType() );
+		$file->setVideoId( $this->getVideoId() );
+
+		/* ingestion video won't be able to load anything so we need to spoon feed it the correct data */
+		if ( $this->getApiWrapper()->isIngestion() ) {
+			$file->forceMetadata( serialize( $this->getNormalizedMetadata() ) );
+		}
+
+
+		$forceMime = $file->forceMime;
+
+		$file->getMetadata();
+
+		//In case of video replacement - Title already exists - preserve forceMime value.
+		//By default it is changed to false in WikiaLocalFileShared::afterSetProps method
+		//which is called by $file->getMetadata().
+		if ( $oTitle->exists() ) {
+			$file->forceMime = $forceMime;
+		}
+
+		return $file;
 	}
 }
