@@ -54,4 +54,9 @@ $messages['ja'] = array(
 	'communitypageexperiment-entry-join' => 'このコミュニティに参加',
 	'communitypageexperiment-entry-learn-more' => 'もっと見る',
 	'communitypageexperiment-tasks-header-welcome' => 'このWikiaコミュニティはあなたの力を必要としています！',
+	'communitypageexperiment-header-welcome' => '{{SITENAME}} コミュニティへようこそ！',
+	'communitypageexperiment-entry-button' => 'コミュニティ・ページ',
+	'communitypageexperiment-tasks-title' => 'タスク',
+	'communitypageexperiment-entry-tasks' => 'このコミュニティの編集を助けてください',
+	'communitypageexperiment-tasks-admin-welcome' => '{{SITENAME}} へようこそ。このコミュニティはあなたの投稿を必要としています。編集が必要なページの一部をこちらに紹介しています。よろしくお願いします！',
 );
