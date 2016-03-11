@@ -69,7 +69,10 @@ define('wikia.krux', [
 				// Add GA tracking
 				adTracker.track('krux/load');
 				wikiaTracker.track({
-					action: 'krux-load',
+					category: 'ads-trackers',
+					action: 'krux',
+					label: 'load',
+					value: 0,
 					trackingMethod: 'analytics'
 				});
 			}
