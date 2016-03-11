@@ -25,7 +25,9 @@ describe('Krux module', function () {
 			}
 		},
 		document: {},
-		wikiaTracker: noop
+		wikiaTracker: {
+			track: noop
+		}
 	};
 
 	it('Expects to get user from localStorage', function () {
