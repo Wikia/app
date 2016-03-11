@@ -136,7 +136,7 @@ class ApiService extends Service {
 
 		if ( $app->wg->EnableHeliosExt ) {
 			$token = \Wikia\Helios\User::getAccessToken( $app->wg->Request );
-			if ( !empty($token) ) {
+			if ( !empty( $token ) ) {
 				$cookie .= HeliosCookieHelper::ACCESS_TOKEN_COOKIE_NAME . "=" . $token . ";";
 			}
 		}
