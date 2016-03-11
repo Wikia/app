@@ -22,13 +22,19 @@
 			gg1.ggPM('staticstart', staticmeta);
 		}
 
+		function onNielsenScriptLoaded() {
+			document.addEventListener("DOMContentLoaded", function() {
+				sendNielsenPageView();
+			});
+		}
+
 		window.trackNielsenPageView = function () {
 			var scriptTag = document.createElement('script'),
 					firstScriptInDocument = document.getElementsByTagName('script')[0];
 
 			scriptTag.async = 1;
 			scriptTag.src = '{{url}}';
-			scriptTag.onload = sendNielsenPageView;
+			scriptTag.onload = onNielsenScriptLoaded;
 			firstScriptInDocument.parentNode.insertBefore(scriptTag, firstScriptInDocument);
 		};
 
