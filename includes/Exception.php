@@ -596,6 +596,13 @@ class MWExceptionHandler {
 			} else {
 				self::escapeEchoAndDie( $message );
 			}
+
+			# Wikia change - begin
+			# @see PLATFORM-2008 - report non-MediawWiki exceptions to ELK
+			Wikia\Logger\WikiaLogger::instance()->error( __METHOD__ . ' - unexpected non-MediaWiki exception encountered', [
+				'exception' => $e,
+			] );
+			# Wikia change - end
 		}
 	}
 
