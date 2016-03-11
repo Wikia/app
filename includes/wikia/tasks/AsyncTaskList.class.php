@@ -336,7 +336,7 @@ class AsyncTaskList {
 			}
 
 			if ( $exception !== null ) {
-				WikiaLogger::instance()->critical( 'AsyncTaskList::queue', [
+				WikiaLogger::instance()->error( 'AsyncTaskList::queue', [
 					'exception' => $exception
 				] );
 				return null;
@@ -427,7 +427,7 @@ class AsyncTaskList {
 	 */
 	public static function batch( $taskLists ) {
 		$logError = function( \Exception $e ) {
-			WikiaLogger::instance()->critical( 'AsyncTaskList::batch', [
+			WikiaLogger::instance()->error( 'AsyncTaskList::batch', [
 				'exception' => $e,
 				'caller' => wfGetCallerClassMethod( [ __CLASS__, 'Wikia\\Tasks\\Tasks\\BaseTask' ] ),
 			] );
