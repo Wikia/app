@@ -5,20 +5,15 @@ class ApiAccessServiceTest extends \WikiaBaseTest {
 
 	public function testCall() {
 
-		$this->markTestSkipped("testing");
 		$mockResults = array("key", "value");
-
 		$apiMock = $this->mockClassWithMethods("ApiMain", array ('execute' => null, 'getResultData' => $mockResults));
 
 		$result = ApiService::call(array());
-
 		$this->assertEquals($result, $mockResults);
-
 	}
 
 	public function testForeignCall() {
 
-		$this->markTestSkipped("testing");
 		# used by private method ApiService::getHostByDbName
 		$this->mockStaticMethod("WikiFactory", 'DBtoID', "1");
 		$this->mockStaticMethod("WikiFactory", 'getVarValueByName', "foo.wikia.com");
@@ -27,9 +22,7 @@ class ApiAccessServiceTest extends \WikiaBaseTest {
 		$httpMock = $this->mockStaticMethod("Http", 'get', $fakeJson);
 
 		$result = ApiService::foreignCall("foo", array());
-
 		$this->assertEquals($result, json_decode($fakeJson, true));
-
 	}
 
 	public function testLoginAsUser() {
@@ -54,7 +47,6 @@ class ApiAccessServiceTest extends \WikiaBaseTest {
 
         // test that calling with setUser==true calls loginAsUser and passes the returned data to Http::get as $options
 		$result = ApiService::foreignCall("foo", array(), "wikia.php", true);
-
 		$this->assertEquals($result, json_decode($fakeJson, true));
 	}
  }
