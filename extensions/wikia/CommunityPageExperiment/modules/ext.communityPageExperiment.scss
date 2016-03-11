@@ -184,6 +184,19 @@ $color-community-page-admin-text: #808080;
 			padding-right: 10px;
 		}
 
+		.page-title {
+			display: inline-block;
+			margin-left: 5px;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			width: 75%;
+		}
+
+		.page-list-edit-link {
+			float: left;
+		}
+
 		.edit-icon {
 			background-image: url('/extensions/wikia/CommunityPageExperiment/images/pencil.svg'); /* inline */
 			background-position: center;
