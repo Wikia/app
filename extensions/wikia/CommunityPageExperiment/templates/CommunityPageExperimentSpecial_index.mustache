@@ -4,7 +4,7 @@
 		<h1>{{headerWelcomeLoggedInMsg}}</h1>
 		{{/isLoggedIn}}
 		{{^isLoggedIn}}
-		<h1>{{headerWelcomeAnonMsg}}</h1>
+		<h1>{{{headerWelcomeAnonMsg}}}</h1>
 		<a href="{{signupUrl}}" class="signup-button">{{joinButtonText}}</a>
 		{{/isLoggedIn}}
 	</div>

@@ -43,8 +43,8 @@ $messages['qqq'] = array(
 
 $messages['ja'] = array(
 	'communitypageexperiment-title' => 'コミュニティ',
-	'communitypageexperiment-header-welcome-anon' => 'あなたもこのコミュニティの一員になって、一緒にコミュニティを成長させてみませんか？',
-	'communitypageexperiment-header-join-button' => '今すぐ参加',
+	'communitypageexperiment-header-welcome-anon' => 'あなたもこのコミュニティの <br> 一員になって、一緒にコミュニティを <br> 成長させてみませんか？',
+	'communitypageexperiment-header-join-button' => 'いますぐ参加',
 	'communitypageexperiment-admin-welcome' => '{{SITENAME}} へようこそ！ はじめまして、私たちはこのコミュニティのアドミン（管理者）です。あなたの力でこのWikiがもっと充実するよう、ぜひコミュニティにご参加ください。下記のページはいま助けを必要としているページです。少しでも良いので、知っていることを追加していただけませんか？分からないことや質問があったら、いつでもお気軽にメッセージください。楽しみにお待ちしています！',
 	'communitypageexperiment-admin-group-name' => 'アドミン',
 	'communitypageexperiment-top-contributors' => 'トップ編集メンバー',

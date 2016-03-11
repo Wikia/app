@@ -117,7 +117,7 @@ class CommunityPageExperimentSpecialController extends WikiaSpecialPageControlle
 	private function setMessages() {
 		$this->response->setValues( [
 			'headerWelcomeLoggedInMsg' => $this->msg( 'communitypageexperiment-header-welcome' )->text(),
-			'headerWelcomeAnonMsg' => $this->msg( 'communitypageexperiment-header-welcome-anon' )->plain(),
+			'headerWelcomeAnonMsg' => $this->msg( 'communitypageexperiment-header-welcome-anon' )->parse(),
 			'joinButtonText' => $this->msg( 'communitypageexperiment-header-join-button' )->plain(),
 			'adminWelcomeMsg' => $this->msg( 'communitypageexperiment-admin-welcome' )->text(),
 			'adminGroupName' => $this->msg( 'communitypageexperiment-admin-group-name' )->plain(),
