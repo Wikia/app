@@ -1014,7 +1014,7 @@ ve.init.mw.Target.prototype.load = function ( additionalModules ) {
 		data.oldid = this.revid;
 	}
 
-	if ( uri.query.preload && mw.config.get('wgArticleId') === 0 ) {
+	if ( uri.query.preload && mw.config.get( 'wgArticleId' ) === 0 ) {
 		data.page = uri.query.preload;
 	}
 
