@@ -19,6 +19,12 @@ class UpdateThumbnailTask extends BaseTask {
 			"1 week" ]
 	];
 
+	private $videoHandlerHelper;
+
+	public function __construct($videoHandlerHelper = null) {
+		$this->videoHandlerHelper = $videoHandlerHelper;
+	}
+
 	/**
 	 * This task is run when a video is uploaded but the provider does not have a
 	 * thumbnail for us to use. This gets triggered the first time a thumbnail
@@ -63,8 +69,7 @@ class UpdateThumbnailTask extends BaseTask {
 				$status = Status::newFatal( $msg );
 			}
 		} else {
-			$helper = new VideoHandlerHelper();
-			$status = $helper->resetVideoThumb( $file, null, $delayIndex );
+			$status = $this->getVideoHandlerHelper()->resetVideoThumb( $file, null, $delayIndex );
 		}
 
 		if ( $status->isGood() ) {
@@ -130,5 +135,16 @@ class UpdateThumbnailTask extends BaseTask {
 		} else {
 			WikiaLogger::instance()->info( "UpdateThumbnailTaskLogging", $context );
 		}
+	}
+
+	/**
+	 * @return null|VideoHandlerHelper
+	 */
+	private function getVideoHandlerHelper() {
+		if ( $this->videoHandlerHelper === null ) {
+			$this->videoHandlerHelper = new VideoHandlerHelper();
+		}
+
+		return $this->videoHandlerHelper;
 	}
 }
