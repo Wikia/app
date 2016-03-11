@@ -8,15 +8,17 @@ class RevisionApiController extends WikiaApiController {
 	 * Gets diff between two revisions.
 	 * Also includes data about revision and article
 	 *
-	 * @param int $oldId old revision id (required)
-	 * @param int $newId new revision id (required)
-	 * @param bool $avatar should get user avatar
-	 * @param bool $oldRev should get data about old revision
+	 * @requestParam int $oldId old revision id (required)
+	 * @requestParam int $newId new revision id (required)
+	 * @requestParam bool $avatar should get user avatar
+	 * @requestParam bool $oldRev should get data about old revision
+	 * @requestParam bool $upvote check if a user has already upvoted a revision
 	 *
 	 * @throws MissingParameterApiException
 	 */
 	public function getRevisionsDiff() {
 		$request = $this->getRequest();
+		$currentUser = $this->getContext()->getUser();
 
 		$oldId = $request->getVal( 'oldId' );
 		$newId = $request->getVal( 'newId' );
@@ -31,6 +33,7 @@ class RevisionApiController extends WikiaApiController {
 
 		$avatar = $request->getBool( 'avatar' );
 		$oldRev = $request->getBool( 'oldRev' );
+		$upvote = $request->getBool( 'upvote' );
 
 		$data = [];
 		$revision = Revision::newFromId( $newId );
@@ -39,6 +42,17 @@ class RevisionApiController extends WikiaApiController {
 			$diffs = $this->getDiffs( $revision->getTitle(), $oldId, $newId );
 			$revisionData = $this->prepareRevisionData( $revision, $avatar );
 			$pageData = $this->preparePageData( $revision );
+
+			if ( $upvote && $currentUser->isLoggedIn() ) {
+				$currentUserId = $currentUser->getId();
+				$wikiId = $this->wg->CityId;
+				$service = new RevisionUpvotesService();
+				$revisionData['hasUpvoted'] = $service->hasUserUpvotedRevision(
+					$wikiId,
+					$newId,
+					$currentUserId
+				);
+			}
 
 			$data = [
 				'article' => $pageData,
