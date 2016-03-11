@@ -112,7 +112,7 @@ class VideoFileUploader {
 		}
 		$oTitle = Title::newFromText( $this->getNormalizedDestinationTitle(), NS_FILE );
 
-		if ( $oTitle == null ) {
+		if ( $oTitle === null ) {
 			throw new Exception ( wfMessage ('videohandler-unknown-title')->inContentLanguage()->text() );
 		}
 
