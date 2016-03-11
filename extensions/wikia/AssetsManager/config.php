@@ -2452,7 +2452,8 @@ $config['portable_infobox_scss'] = [
 	'skin' => [ 'oasis' ],
 	'assets' => [
 		'//extensions/wikia/PortableInfobox/styles/PortableInfobox.scss'
-		// TODO: temporary disable europa theme https://wikia-inc.atlassian.net/browse/DAT-3940
+		// temporary disable europa theme
+		// TODO: reenable europa theme https://wikia-inc.atlassian.net/browse/DAT-3940
 //		'//extensions/wikia/PortableInfobox/styles/PortableInfoboxEuropaTheme.scss'
 	]
 ];
@@ -2495,7 +2496,8 @@ $config[ 'portable_infobox_builder_preview_scss' ] = [
 	'skin' => ['oasis'],
 	'assets' => [
 		'//extensions/wikia/PortableInfoboxBuilder/styles/PortableInfoboxBuilderPreview.scss'
-		// TODO: temporary disable europa theme https://wikia-inc.atlassian.net/browse/DAT-3940
+		// temporary disable europa theme
+		// TODO: reenable europa theme https://wikia-inc.atlassian.net/browse/DAT-3940
 //		'//extensions/wikia/PortableInfobox/styles/PortableInfoboxEuropaTheme.scss'
 	]
 ];
