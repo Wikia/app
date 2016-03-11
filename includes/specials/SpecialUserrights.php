@@ -546,7 +546,7 @@ class UserrightsPage extends SpecialPage {
 		# Put all column info into an associative array so that extensions can
 		# more easily manage it.
 		$columns = array( 'unchangeable' => array(), 'changeable' => array() );
-		$changeableGroups = $user->changeableGroups();
+		$changeableGroups = $this->getUser()->changeableGroups();
 
 		foreach( $allgroups as $group ) {
 			$set = in_array( $group, $usergroups );

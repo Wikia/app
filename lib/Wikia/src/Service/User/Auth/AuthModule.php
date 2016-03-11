@@ -22,14 +22,6 @@ class AuthModule implements Module {
 					/** @var UrlProvider $urlProvider */
 					$urlProvider = $c->get(UrlProvider::class);
 					return "http://".$urlProvider->getUrl($wgAuthServiceName)."/";
-			} )
-			->bind( HeliosClientImpl::CLIENT_ID )->to( function () {
-					global $wgHeliosClientId;
-					return $wgHeliosClientId;
-			} )
-			->bind( HeliosClientImpl::CLIENT_SECRET )->to( function () {
-					global $wgHeliosClientSecret;
-					return $wgHeliosClientSecret;
 			} );
 	}
 }

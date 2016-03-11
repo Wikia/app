@@ -2205,7 +2205,7 @@ $messages['ja'] = array(
 	'oasis-toolbar-edit-cancel' => 'キャンセル',
 	'oasis-toolbar-for-admins-only' => 'こちらはコミュニティ管理者専用ツールです。',
 	'oasis-toolbar-not-enabled-here' => 'このツールはこのWikiaではご利用いただけません。',
-	'oasis-comments-header' => '$1件の{PLURAL:$1|comment|comments}',
+	'oasis-comments-header' => '$1件の{{PLURAL:$1|コメント|コメント}}',
 	'oasis-comments-showing-most-recent' => '最近の$1件を表示しています',
 	'oasis-comments-anonymous-prompt' => '匿名ユーザー<br /> <a href="#" class="ajaxLogin">ログインしますか？</a>',
 	'oasis-comments-show-all' => 'すべて表示',
