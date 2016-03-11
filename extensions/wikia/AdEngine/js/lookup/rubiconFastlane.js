@@ -4,10 +4,9 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 	'ext.wikia.adEngine.lookup.lookupFactory',
 	'ext.wikia.adEngine.utils.adLogicZoneParams',
 	'wikia.document',
-	'wikia.geo',
 	'wikia.log',
 	'wikia.window'
-], function (adContext, factory, adLogicZoneParams, doc, geo, log, win) {
+], function (adContext, factory, adLogicZoneParams, doc, log, win) {
 	'use strict';
 
 	var config = {
@@ -18,11 +17,11 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 					targeting: {loc: 'top'}
 				},
 				TOP_RIGHT_BOXAD: {
-					sizes: [[300, 250], [300, 600]],
+					sizes: [[300, 250], [300, 600], [300, 1050]],
 					targeting: {loc: 'top'}
 				},
 				LEFT_SKYSCRAPER_2: {
-					sizes: [[160, 600], [300, 600]],
+					sizes: [[160, 600], [120, 600], [300, 600]],
 					targeting: {loc: 'middle'}
 				},
 				LEFT_SKYSCRAPER_3: {
@@ -30,11 +29,11 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 					targeting: {loc: 'footer'}
 				},
 				INCONTENT_BOXAD_1: {
-					sizes: [[300, 250], [160, 600], [300, 600]],
+					sizes: [[300, 250], [120, 600], [160, 600], [300, 600], [300, 1050]],
 					targeting: {loc: 'hivi'}
 				},
 				PREFOOTER_LEFT_BOXAD: {
-					sizes: [[300, 250]],
+					sizes: [[300, 250], [336, 280]],
 					targeting: {loc: 'footer'}
 				},
 				PREFOOTER_RIGHT_BOXAD: {
@@ -44,13 +43,13 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 			},
 			mercury: {
 				MOBILE_IN_CONTENT: {
-					sizes: [[300, 250]]
+					sizes: [[300, 250], [320, 480]]
 				},
 				MOBILE_PREFOOTER: {
 					sizes: [[300, 250]]
 				},
 				MOBILE_TOP_LEADERBOARD: {
-					sizes: [[320, 50], [300, 250]]
+					sizes: [[300, 50], [320, 50], [300, 250]]
 				}
 			}
 		},
@@ -134,7 +133,7 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 		}
 
 		if (context.opts.overridePrefootersSizes) {
-			slots.PREFOOTER_LEFT_BOXAD.sizes = [[300, 250], [468, 60], [728, 90]];
+			slots.PREFOOTER_LEFT_BOXAD.sizes = [[300, 250], [336, 280], [468, 60], [728, 90], [970, 250]];
 			delete slots.PREFOOTER_RIGHT_BOXAD;
 		}
 
@@ -143,22 +142,6 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 				sizes: [[300, 250], [728, 90], [468, 60]],
 				targeting: {loc: 'hivi'}
 			};
-		}
-
-		// ADEN-3044
-		if (geo.isProperGeo(['US','GB','FR'])) {
-			if (skin === 'oasis') {
-				slots.TOP_RIGHT_BOXAD.sizes.push([120, 600], [336, 280]);
-				slots.LEFT_SKYSCRAPER_2.sizes.push([120, 600], [336, 280]);
-				slots.LEFT_SKYSCRAPER_3.sizes.push([120, 600], [336, 280]);
-				slots.INCONTENT_BOXAD_1.sizes.push([120, 600], [336, 280]);
-				slots.PREFOOTER_LEFT_BOXAD.sizes.push([336, 280]);
-				slots.PREFOOTER_RIGHT_BOXAD.sizes.push([336, 280]);
-			} else if (skin === 'mercury') {
-				slots.MOBILE_IN_CONTENT.sizes.push([300, 50], [320, 480]);
-				slots.MOBILE_PREFOOTER.sizes.push([300, 50], [320, 480]);
-				slots.MOBILE_TOP_LEADERBOARD.sizes.push([300, 50], [320, 480]);
-			}
 		}
 
 		return slots;
