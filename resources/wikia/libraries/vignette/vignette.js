@@ -240,8 +240,8 @@ var Vignette = (function () {
 		return modeParameters.join('/');
 	};
 	Vignette.imagePathRegExp = /\/\/vignette(\d|-poz)?\.wikia/;
-	Vignette.domainRegExp = /(wikia-dev.com|wikia.nocookie.net)/;
-	Vignette.legacyPathRegExp = /(wikia-dev.com|wikia.nocookie.net)\/__cb[\d]+\/.*$/;
+	Vignette.domainRegExp = /(wikia-dev.com|[^.]+.nocookie.net)/;
+	Vignette.legacyPathRegExp = /(wikia-dev.com|[^.]+.nocookie.net)\/__cb[\d]+\/.*$/;
 	Vignette.mode = {
 		fixedAspectRatio: 'fixed-aspect-ratio',
 		fixedAspectRatioDown: 'fixed-aspect-ratio-down',
