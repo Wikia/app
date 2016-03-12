@@ -2,36 +2,22 @@ define('AuthModal', ['jquery', 'wikia.window'], function ($, window) {
 	'use strict';
 
 	var authPopUp,
-		modal,
-		$blackout,
-		isOpen,
 		track;
 
 	function open (onAuthSuccess) {
-		if (isOpen) {
-			close();
-		}
-		$('.WikiaSiteWrapper').append('<div class="auth-blackout visible"><div class="auth-modal loading"></div></div>');
-		isOpen = true;
-		$blackout = $('.auth-blackout');
-		modal = $blackout.find('.auth-modal')[0];
-
 		track = getTrackingFunction();
 		track({
 			action: Wikia.Tracker.ACTIONS.OPEN,
 			label: 'username-login-modal'
 		});
 
-		$(window).on({
-			'keyup.authPopUp' : onKeyUp,
-			'message.authPopUp': function (event) {
-				var e = event.originalEvent;
+		$(window).on('message.authPopUp', function (event) {
+			var e = event.originalEvent;
 
-				if (typeof e.data !== 'undefined' && e.data.isUserAuthorized) {
-					close();
-					if (typeof onAuthSuccess === 'function') {
-						onAuthSuccess();
-					}
+			if (typeof e.data !== 'undefined' && e.data.isUserAuthorized) {
+				close();
+				if (typeof onAuthSuccess === 'function') {
+					onAuthSuccess();
 				}
 			}
 		});
@@ -49,53 +35,31 @@ define('AuthModal', ['jquery', 'wikia.window'], function ($, window) {
 		return track;
 	}
 
-	function onKeyUp (event) {
-		if (event.keyCode === 27) {
-			close();
-		}
-	}
-
 	function close (event) {
 		if (event) {
 			event.preventDefault();
 		}
-
-		if (modal) {
+		if (authPopUp) {
 			track({
 				action: Wikia.Tracker.ACTIONS.CLOSE,
 				label: 'username-login-modal'
 			});
 			authPopUp.close();
-
-			isOpen = false;
 		}
 		$(window).off('.authPopUp');
 	}
 
-	function onPageLoaded () {
-		if (modal) {
-			$(modal).removeClass('loading');
-			$blackout.remove();
-		}
-	}
-
-	function loadPage (url, onPageLoaded) {
-		var browserWindowWidth = window.innerWidth,
-			modalParam = 'modal=1',
-			popUpHeight= 670,
+	function loadPage (url) {
+		var modalParam = 'modal=1',
+			pageWidth = window.innerWidth,
+			popUpHeight = 670,
 			popUpMaxWidth = 768,
-			popUpWidth= browserWindowWidth < popUpMaxWidth ? browserWindowWidth : popUpMaxWidth,
+			popUpWidth = pageWidth < popUpMaxWidth ? pageWidth : popUpMaxWidth,
 			popUpLeft = window.screenX + (browserWindowWidth/2) - (popUpWidth/2),
 			popUpTop = window.screenY + (window.innerHeight/2) - (popUpHeight/2),
 			src = url + (url.indexOf('?') === -1 ? '?' : '&') + modalParam;
 
-		authPopUp = window.open(src, '_blank','width='+popUpWidth+',height='+popUpHeight+',top='+popUpTop+',left='+popUpLeft);
-
-		$(authPopUp).ready(function () {
-			if (typeof onPageLoaded === 'function') {
-				onPageLoaded();
-			}
-		});
+		authPopUp = window.open(src, '_blank', 'width='+popUpWidth+',height='+popUpHeight+',top='+popUpTop+',left='+popUpLeft);
 	}
 
 	return {
@@ -126,7 +90,7 @@ define('AuthModal', ['jquery', 'wikia.window'], function ($, window) {
 					label: 'from-' + params.origin
 				});
 
-				loadPage(params.url, onPageLoaded);
+				loadPage(params.url);
 
 			} else {
 				window.UserLoginModal.show({
