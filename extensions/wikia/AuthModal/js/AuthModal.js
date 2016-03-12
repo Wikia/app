@@ -11,10 +11,9 @@ define('AuthModal', ['jquery', 'wikia.window'], function ($, window) {
 		if (isOpen) {
 			close();
 		}
-		$('.WikiaSiteWrapper').append('<div class="auth-blackout visible"><div class="auth-modal loading">');
+		$('.WikiaSiteWrapper').append('<div class="auth-blackout visible"><div class="auth-modal loading"></div></div>');
 		isOpen = true;
 		$blackout = $('.auth-blackout');
-		$blackout.click(close);
 		modal = $blackout.find('.auth-modal')[0];
 
 		track = getTrackingFunction();
@@ -74,10 +73,13 @@ define('AuthModal', ['jquery', 'wikia.window'], function ($, window) {
 	}
 
 	function onPageLoaded () {
+		console.log('page loaded!');
+		console.log('modal: modal');
 		if (modal) {
 			$(modal).removeClass('loading');
 			$blackout.remove();
 		}
+		debugger;
 	}
 
 	function loadPage (url, onPageLoaded) {
@@ -92,8 +94,6 @@ define('AuthModal', ['jquery', 'wikia.window'], function ($, window) {
 
 		authPopUp = window.open(src, '_blank','width='+popUpWidth+',height='+popUpHeight+',top='+popUpTop+',left='+popUpLeft);
 
-		//for the selenium tests:
-		//		authIframe.id = 'auth-modal-iframe';
 		 authPopUp.onload = function () {
 		 	if (typeof onPageLoaded === 'function') {
 		 		onPageLoaded();
