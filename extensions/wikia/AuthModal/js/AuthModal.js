@@ -84,11 +84,11 @@ define('AuthModal', ['jquery', 'wikia.window'], function ($, window) {
 		var modalParam = 'modal=1',
 			popUpHeight= 670,
 			popUpWidth= 768,
-			popUpLeft = (window.screen.width/2) - (popUpWidth/2),
-			popUpTop = (window.screen.height/2) - (popUpHeight/2),
+			popUpLeft = window.screenX + (window.outerWidth/2) - (popUpWidth/2),
+			popUpTop = window.screenY + (window.outerHeight/2) - (popUpHeight/2),
 			src = url + (url.indexOf('?') === -1 ? '?' : '&') + modalParam;
 
-		authPopUp = window.open(src, 'Wikia Authentication','width='+popUpWidth+',height='+popUpHeight+'top='+popUpTop+',left='+popUpLeft);
+		authPopUp = window.open(src, 'Wikia Authentication','width='+popUpWidth+',height='+popUpHeight+',top='+popUpTop+',left='+popUpLeft);
 
 		//for the selenium tests:
 		//		authIframe.id = 'auth-modal-iframe';
