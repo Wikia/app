@@ -33,14 +33,6 @@ $wgExtensionMessagesFiles['AdminDashboardAliases'] = $dir . 'AdminDashboard.alia
 // special pages
 $wgSpecialPages[ 'AdminDashboard'] = 'AdminDashboardSpecialPageController';
 
-$wgAvailableRights[] = 'admindashboard';
-
-$wgGroupPermissions['*']['admindashboard'] = false;
-$wgGroupPermissions['staff']['admindashboard'] = true;
-$wgGroupPermissions['sysop']['admindashboard'] = true;
-$wgGroupPermissions['bureaucrat']['admindashboard'] = true;
-$wgGroupPermissions['helper']['admindashboard'] = true;
-
 // register messages package for JS (BugId:41451)
 JSMessages::registerPackage('AdminDashboard', array(
 	'admindashboard-loading',

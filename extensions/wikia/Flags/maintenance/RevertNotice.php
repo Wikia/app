@@ -26,8 +26,9 @@ class RevertNotice extends Maintenance {
 		$flagModel = new Flag();
 		$mwf = \MagicWord::get( 'flags' );
 
+		$user = User::newFromName( 'Wikia' );
 		$wrapper = new GlobalStateWrapper( [
-			'wgUser' => User::newFromName( 'Wikia' )
+			'wgUser' => $user
 		] );
 
 		$wrapper->wrap( function() use ( $wgCityId ) {
@@ -57,7 +58,7 @@ class RevertNotice extends Maintenance {
 					}
 
 					if ( strcmp( $content, $text ) !== 0 ) {
-						$wiki->doEdit( $text, self::EDIT_SUMMARY, EDIT_FORCE_BOT );
+						$wiki->doEdit( $text, self::EDIT_SUMMARY, EDIT_FORCE_BOT, /* $baseRevId = */ false, $user );
 
 						$log = sprintf(
 							"Templates: %s were added to %s (%d) \n",

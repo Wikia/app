@@ -32,8 +32,6 @@ $wgExtensionCredits[ 'specialpage' ][ ] = array(
 $wgExtensionMessagesFiles['SpecialInterwikiEdit'] = dirname(__FILE__) . '/SpecialInterwikiEdit.i18n.php';
 $wgSpecialPageGroups['InterwikiEdit'] = 'wiki';
 
-$wgAvailableRights [] = 'InterwikiEdit';
-$wgGroupPermissions ['staff']['InterwikiEdit'] = true;
 require_once($IP . '/includes/SpecialPage.php');
 $wgSpecialPages['InterwikiEdit'] = 'InterwikiEdit';
 

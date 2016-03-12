@@ -34,7 +34,17 @@ define('ext.wikia.recirculation.utils', [
 		return dfd.promise();
 	}
 
+	function renderTemplate(templateName, data) {
+		var templateName = 'extensions/wikia/Recirculation/templates/client/' + templateName;
+		
+		return loadTemplate(templateName)
+			.then(function(template) {
+				return $(Mustache.render(template, data));
+			});
+	}
+
 	return {
-		loadTemplate: loadTemplate
+		loadTemplate: loadTemplate,
+		renderTemplate: renderTemplate
 	};
 });

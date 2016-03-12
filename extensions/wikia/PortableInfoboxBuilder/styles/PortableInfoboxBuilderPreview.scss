@@ -13,10 +13,24 @@ $empty-header-height: 28px;
 .portable-infobox {
 	color: $color-text;
 	width: $infobox-width;
+
+	// disable infobox background inside infobox builder
+	&.pi-theme-europa {
+		&.pi-background {
+			background-color: transparent;
+		}
+	}
 }
 
+// move infobox background color to items - required for sortable
 .pi-item:not(.pi-secondary-background) {
 	background-color: $infobox-background;
+}
+
+.pi-title,
+.pi-header,
+.pi-data-label {
+	color: inherit;
 }
 
 .pi-data {
@@ -33,4 +47,9 @@ $empty-header-height: 28px;
 			box-sizing: content-box;
 		}
 	}
+}
+
+// use this class inside infobox builder to show article background color in preview
+.article-background-color {
+	background-color: $color-page;
 }

@@ -97,7 +97,7 @@ $config['adengine2_desktop_js'] = array(
 		'//extensions/wikia/AdEngine/js/recovery/helper.js',
 		'//extensions/wikia/AdEngine/js/slot/adSlot.js',
 		'//extensions/wikia/AdEngine/js/slot/floatingMedrec.js',
-		'//extensions/wikia/AdEngine/js/slot/inContentPlayer.js',
+		'//extensions/wikia/AdEngine/js/slot/inContent.js',
 		'//extensions/wikia/AdEngine/js/slot/scrollHandler.js',
 		'//extensions/wikia/AdEngine/js/slot/skyScraper3.js',
 		'//extensions/wikia/AdEngine/js/template/floor.js',
@@ -120,7 +120,6 @@ $config['adengine2_desktop_js'] = array(
 		'//extensions/wikia/AdEngine/js/provider/liftium.js',
 		'//extensions/wikia/AdEngine/js/provider/monetizationService.js',
 		'//extensions/wikia/AdEngine/js/provider/sevenOneMedia.js',
-		'//extensions/wikia/AdEngine/js/provider/recirculation.js',
 
 		'//extensions/wikia/AdEngine/js/run/desktop.run.js',
 	),
@@ -133,8 +132,12 @@ $config['recirculation_js'] = array(
 		'//extensions/wikia/Recirculation/js/helpers/GoogleMatchHelper.js',
 		'//extensions/wikia/Recirculation/js/tracker.js',
 		'//extensions/wikia/Recirculation/js/utils.js',
-		'//extensions/wikia/Recirculation/js/incontent.js',
-		'//extensions/wikia/Recirculation/js/recirculation.js',
+		'//extensions/wikia/Recirculation/js/helpers/ContentLinksHelper.js',
+		'//extensions/wikia/Recirculation/js/helpers/FandomHelper.js',
+		'//extensions/wikia/Recirculation/js/views/incontent.js',
+		'//extensions/wikia/Recirculation/js/views/rail.js',
+		'//extensions/wikia/Recirculation/js/views/footer.js',
+		'//extensions/wikia/Recirculation/js/experiments/placement.js',
 	),
 );
 
@@ -2448,7 +2451,8 @@ $config['portable_infobox_scss'] = [
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => [ 'oasis' ],
 	'assets' => [
-		'//extensions/wikia/PortableInfobox/styles/PortableInfobox.scss'
+		'//extensions/wikia/PortableInfobox/styles/PortableInfobox.scss',
+		'//extensions/wikia/PortableInfobox/styles/PortableInfoboxEuropaTheme.scss'
 	]
 ];
 
@@ -2470,6 +2474,13 @@ $config[ 'portable_infobox_builder_js' ] = [
 	]
 ];
 
+$config[ 'portable_infobox_builder_template_classification_helper_js' ] = [
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => [
+		'//extensions/wikia/PortableInfoboxBuilder/js/PortableInfoboxBuilderTemplateClassificationHelper.js'
+	]
+];
+
 $config[ 'portable_infobox_builder_scss' ] = [
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => ['oasis'],
@@ -2482,7 +2493,8 @@ $config[ 'portable_infobox_builder_preview_scss' ] = [
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => ['oasis'],
 	'assets' => [
-		'//extensions/wikia/PortableInfoboxBuilder/styles/PortableInfoboxBuilderPreview.scss'
+		'//extensions/wikia/PortableInfoboxBuilder/styles/PortableInfoboxBuilderPreview.scss',
+		'//extensions/wikia/PortableInfobox/styles/PortableInfoboxEuropaTheme.scss'
 	]
 ];
 

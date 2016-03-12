@@ -6,7 +6,7 @@ class SpecialAchievementsSharing extends UnlistedSpecialPage {
 		parent::__construct('AchievementsSharing');
 	}
 
-	function execute() {
+	function execute( $par ) {
 		wfProfileIn(__METHOD__);
 
 		global $wgOut, $wgRequest;

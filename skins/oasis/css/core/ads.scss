@@ -114,6 +114,14 @@ $taboola-small-breakpoint: "#{$screen} and (max-width: 420px)";
 	}
 }
 
+#INCONTENT_LEADERBOARD {
+	text-align: center;
+	>div {
+		margin-left: auto;
+		margin-right: auto;
+	}
+}
+
 #LEFT_SKYSCRAPER_2 {
 	margin-bottom: 20px;
 	font-size: 0;

@@ -25,7 +25,4 @@ $wgAutoloadClasses['CoppaImageReviewSpecialController'] =  __DIR__ . '/modules/C
 $wgAutoloadClasses['CoppaImageReviewHelper'] =  __DIR__ . '/modules/CoppaImageReview/CoppaImageReviewHelper.class.php';
 $wgSpecialPages['CoppaImageReview'] = 'CoppaImageReviewSpecialController';
 
-$wgAvailableRights[] = 'coppaimagereview';
-$wgGroupPermissions['util']['coppaimagereview'] = true;
-
 $wgExtensionMessagesFiles['CoppaImageReview'] = __DIR__ . '/modules/CoppaImageReview/CoppaImageReview.i18n.php';
