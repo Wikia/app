@@ -73,13 +73,10 @@ define('AuthModal', ['jquery', 'wikia.window'], function ($, window) {
 	}
 
 	function onPageLoaded () {
-		console.log('page loaded!');
-		console.log('modal: modal');
 		if (modal) {
 			$(modal).removeClass('loading');
 			$blackout.remove();
 		}
-		debugger;
 	}
 
 	function loadPage (url, onPageLoaded) {
@@ -94,11 +91,11 @@ define('AuthModal', ['jquery', 'wikia.window'], function ($, window) {
 
 		authPopUp = window.open(src, '_blank','width='+popUpWidth+',height='+popUpHeight+',top='+popUpTop+',left='+popUpLeft);
 
-		 authPopUp.onload = function () {
-		 	if (typeof onPageLoaded === 'function') {
-		 		onPageLoaded();
-		 	}
-		 };
+		$(authPopUp).ready(function () {
+			if (typeof onPageLoaded === 'function') {
+				onPageLoaded();
+			}
+		});
 	}
 
 	return {
