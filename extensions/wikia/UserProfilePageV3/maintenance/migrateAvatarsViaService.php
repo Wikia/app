@@ -21,6 +21,7 @@ class AvatarsMigratorException extends Exception {}
 class AvatarsMigrator extends Maintenance {
 
 	private $isDryRun = true;
+	private $dfsProxy = '';
 
 	/**
 	 * Set script options
@@ -35,6 +36,8 @@ class AvatarsMigrator extends Maintenance {
 		$this->addOption( 'to', 'User ID to stop the migration at' );
 		$this->addOption( 'ids', 'Comma-separated list of user IDs to perform the migration for' );
 
+		$this->addOption( 'dfs-dc', 'DFS cluster to use to get the old avatars [sjc|res]' );
+
 		$this->mDescription = 'This script migrates the user avatars from DFS to user avatars service';
 	}
 
@@ -42,9 +45,16 @@ class AvatarsMigrator extends Maintenance {
 		$this->output( date( 'r' ) . "\n" );
 
 		// read options
+		// --dry-run
 		$this->isDryRun = $this->hasOption( 'dry-run' ) || !$this->hasOption( 'force' );
-
 		if ( $this->isDryRun ) $this->output( "Running in dry-run mode!\n\n" );
+
+		// --dfs-dc=sjc|res
+		global $wgFSSwiftDC;
+		$dc = $this->getOption( 'dfs-dc', 'sjc' );
+		$this->dfsProxy = $wgFSSwiftDC[ $dc ][ 'server' ];
+		$this->output( "Will use DFS cluster in '{$dc}' via {$this->dfsProxy}\n\n" );
+
 
 		$this->output( "Getting the list of all accounts...\n" );
 
@@ -139,7 +149,7 @@ class AvatarsMigrator extends Maintenance {
 
 			if ( $this->isDryRun ) return;
 
-			$avatarContent = Http::get( $avatarUrl, 'default', [ 'noProxy' => true ] );
+			$avatarContent = Http::get( $avatarUrl, 'default', [ 'proxy' => $this->dfsProxy ] );
 			if ( empty( $avatarContent ) ) {
 				$this->setAvatarUrl( $user, '' );
 				throw new AvatarsMigratorException( 'Avatar fetch failed' );

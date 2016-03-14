@@ -105,27 +105,12 @@ class GlobalFooterController extends WikiaController {
 	private function generateSitemapLinks() {
 		$sitemapLinks = [];
 
-// SEO-84 Exploring the possibility of sitemap links update (SEO-6) breaking the SEO:
-		$useGlobalSitemap = true;
-		$useLocalSitemap = false;
+		$sitemapLinks[] = parseItem(
+			'*' . self::SITEMAP_GLOBAL . '|' . wfMessage( 'global-footer-global-sitemap' )->escaped()
+		);
 
-// Regular behaviour:
-//		if ( WikiaPageType::isCorporatePage() || $this->wg->CityId === COMMUNITY_CENTRAL_CITY_ID ) {
-//			$useGlobalSitemap = true;
-//		} elseif ( WikiaPageType::isMainPage() ) {
-//			$useGlobalSitemap = true;
-//			$useLocalSitemap = true;
-//		} else {
-//			$useLocalSitemap = true;
-//		}
-
-		if ( $useGlobalSitemap ) {
-			$sitemapLinks[] = parseItem(
-				'*' . self::SITEMAP_GLOBAL . '|' . wfMessage( 'global-footer-global-sitemap' )->escaped()
-			);
-		}
-
-		if ( $useLocalSitemap ) {
+		// Don't link to local sitemap on corporate sites and community.wikia.com (controlled via WikiFactory)
+		if ( $this->wg->EnableLocalSitemap ) {
 			$sitemapLinks[] = parseItem(
 				'*' . self::SITEMAP_LOCAL . '|' . wfMessage( 'global-footer-local-sitemap' )->escaped()
 			);

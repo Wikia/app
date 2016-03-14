@@ -133,10 +133,10 @@ class ContentReviewApiControllerTest extends WikiaBaseTest {
 
 		$requestMock = $this->preparePostRequestValidatingMock( $inputData['wasPosted'], $inputData['requestToken'], [ 'getInt' ] );
 
-		$userMock = $this->prepareUserMockWithEditToken( $inputData['userEditToken'], [ 'getRights' ] );
+		$userMock = $this->prepareUserMockWithEditToken( $inputData['userEditToken'], [ 'isAllowed' ] );
 		$userMock->expects( $this->any() )
-			->method( 'getRights' )
-			->willReturn( $inputData['userGetRights'] );
+			->method( 'isAllowed' )
+			->willReturn( $inputData['userIsAllowed'] );
 		$this->mockGlobalVariable( 'wgUser', $userMock );
 
 		$currentRevisionModelMock = $this->getMock( 'Wikia\ContentReview\Models\CurrentRevisionModel', [
@@ -506,9 +506,7 @@ class ContentReviewApiControllerTest extends WikiaBaseTest {
 					'wasPosted' => true,
 					'requestToken' => $validToken,
 					'userEditToken' => $validToken,
-					'userGetRights' => [
-						// empty array - no content-review rights
-					],
+					'userIsAllowed' => false
 				],
 				$expected = 'PermissionsException',
 				$message = 'User does not have content-review rights.',
@@ -519,9 +517,7 @@ class ContentReviewApiControllerTest extends WikiaBaseTest {
 					'wasPosted' => true,
 					'requestToken' => $validToken,
 					'userEditToken' => $validToken,
-					'userGetRights' => [
-						'content-review',
-					],
+					'userIsAllowed' => true,
 					'hasPageApprovedId' => true,
 					'isDiffPageInReviewProcess' => true,
 					'inReviewRevision' => [

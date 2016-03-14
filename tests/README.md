@@ -21,6 +21,12 @@ make phpunit-single test=../extensions/wikia/AssetsManager/tests/AssetsManagerTe
 
 will run all tests (except of ``@group Broken``) from ``/extensions/wikia/FooExtension``.
 
+Adding additional parameter ``-c`` will make it generate a coverage report, HTML saved in ``/coverage`` path.
+
+```
+./php-extension -c FooExtension
+```
+
 ### Running all tests for a given group or groups
 
 ```

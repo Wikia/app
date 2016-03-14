@@ -56,22 +56,22 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 		JSMessages::enqueuePackage( 'CuratedContentMsg', JSMessages::INLINE );
 
 		$this->response->setVal( 'descriptions', [
-			wfMessage( 'wikiacuratedcontent-content-description-items' ),
-			wfMessage( 'wikiacuratedcontent-content-description-supported-items-for-sections' ),
-			wfMessage( 'wikiacuratedcontent-content-description-tag-needs-image' ),
-			wfMessage( 'wikiacuratedcontent-content-description-section' ),
-			wfMessage( 'wikiacuratedcontent-content-description-organize' ),
-			wfMessage( 'wikiacuratedcontent-content-description-no-section' ),
-			wfMessage( 'wikiacuratedcontent-content-description-items-input' )
+			wfMessage( 'wikiacuratedcontent-content-description-items' )->plain(),
+			wfMessage( 'wikiacuratedcontent-content-description-supported-items-for-sections' )->plain(),
+			wfMessage( 'wikiacuratedcontent-content-description-tag-needs-image' )->plain(),
+			wfMessage( 'wikiacuratedcontent-content-description-section' )->plain(),
+			wfMessage( 'wikiacuratedcontent-content-description-organize' )->plain(),
+			wfMessage( 'wikiacuratedcontent-content-description-no-section' )->plain(),
+			wfMessage( 'wikiacuratedcontent-content-description-items-input' )->text(),
 		] );
 
-		$this->response->setVal( 'addSection', wfMessage( 'wikiacuratedcontent-content-add-section' ) );
-		$this->response->setVal( 'addItem', wfMessage( 'wikiacuratedcontent-content-add-item' ) );
-		$this->response->setVal( 'save', wfMessage( 'wikiacuratedcontent-content-save' ) );
+		$this->response->setVal( 'addSection', wfMessage( 'wikiacuratedcontent-content-add-section' )->plain() );
+		$this->response->setVal( 'addItem', wfMessage( 'wikiacuratedcontent-content-add-item' )->plain() );
+		$this->response->setVal( 'save', wfMessage( 'wikiacuratedcontent-content-save' )->plain() );
 
-		$this->response->setVal( 'section_placeholder', wfMessage( 'wikiacuratedcontent-content-section' ) );
-		$this->response->setVal( 'item_placeholder', wfMessage( 'wikiacuratedcontent-content-item' ) );
-		$this->response->setVal( 'name_placeholder', wfMessage( 'wikiacuratedcontent-content-name' ) );
+		$this->response->setVal( 'section_placeholder', wfMessage( 'wikiacuratedcontent-content-section' )->plain() );
+		$this->response->setVal( 'item_placeholder', wfMessage( 'wikiacuratedcontent-content-item' )->plain() );
+		$this->response->setVal( 'name_placeholder', wfMessage( 'wikiacuratedcontent-content-name' )->plain() );
 
 		$itemTemplate = $this->sendSelfRequest( 'item' )->toString();
 		$sectionTemplate = $this->sendSelfRequest( 'section' )->toString();
@@ -112,7 +112,7 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 		$imageId = $this->request->getVal( 'image_id', 0 );
 		$imageCrop = $this->request->getArray( 'image_crop', [ ] );
 
-		$this->response->setVal( 'value', wfMessage( 'wikiacuratedcontent-featured-section-name' ) );
+		$this->response->setVal( 'value', wfMessage( 'wikiacuratedcontent-featured-section-name' )->plain() );
 		$this->response->setVal( 'image_id', $imageId );
 		$this->response->setVal( 'image_crop', $this->helper->encodeCrop( $imageCrop ) );
 		$this->response->setVal( 'image_url', CuratedContentHelper::getImageUrl( $imageId ) );
@@ -135,7 +135,7 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 			$this->response->setVal( 'image_set', true );
 		}
 
-		$this->response->setVal( 'section_placeholder', wfMessage( 'wikiacuratedcontent-content-section' ) );
+		$this->response->setVal( 'section_placeholder', wfMessage( 'wikiacuratedcontent-content-section' )->plain() );
 	}
 
 	public function item() {
@@ -161,8 +161,8 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 
 		$this->response->setVal( 'image_url', CuratedContentHelper::getImageUrl( $imageId ) );
 		$this->response->setVal( 'image_crop', $this->helper->encodeCrop( $imageCrop ) );
-		$this->response->setVal( 'item_placeholder', wfMessage( 'wikiacuratedcontent-content-item' ) );
-		$this->response->setVal( 'name_placeholder', wfMessage( 'wikiacuratedcontent-content-name' ) );
+		$this->response->setVal( 'item_placeholder', wfMessage( 'wikiacuratedcontent-content-item' )->plain() );
+		$this->response->setVal( 'name_placeholder', wfMessage( 'wikiacuratedcontent-content-name' )->plain() );
 	}
 
 	public function save() {

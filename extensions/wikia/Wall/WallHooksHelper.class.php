@@ -595,7 +595,7 @@ class WallHooksHelper {
 	 * @param $canEdit
 	 * @return array
 	 */
-	private static function getAction( Title $userTalkPageTitle, boolean $canEdit ) {
+	private static function getAction( Title $userTalkPageTitle, $canEdit ) {
 		$action = [
 			'class' => '',
 			'text' => wfMessage( 'viewsource' )->text(),
@@ -1541,11 +1541,20 @@ class WallHooksHelper {
 		// Since we need a real Title backed by a DB row, we need to reconstruct a title object
 		// if the current one looks fake.  If this already is a real Title the normal unwatch handling
 		// that called this hook will take care of this for us.
-		if ( ( $article->getId()  == 0 ) && preg_match( '/^(\d+)$/', $title->getText(), $matches ) ) {
+		if ( ( $article->getId() == 0 ) && preg_match( '/^(\d+)$/', $title->getText(), $matches ) ) {
 			$id = $matches[1];
-			$title = Title::newFromID( $id );
+			$realTitle = Title::newFromID( $id );
 
-			static::processActionOnWatchlist( $user, $title, 'remove' );
+			if ( empty( $realTitle ) ) {
+				\Wikia\Logger\WikiaLogger::instance()->debug( 'Unknown thread ID', [
+					'method' => __METHOD__,
+					'titleText' => $title->getText(),
+					'titleId' => $id,
+				] );
+				return false;
+			}
+
+			static::processActionOnWatchlist( $user, $realTitle, 'remove' );
 		}
 
 		return true;

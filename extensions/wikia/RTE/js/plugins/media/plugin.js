@@ -1,4 +1,4 @@
-/* global CKEDITOR, RTE, WikiaEditor, UserLogin, CreateWikiaPoll */
+/* global CKEDITOR, RTE, WikiaEditor, UserLogin */
 CKEDITOR.plugins.add('rte-media', {
 	init: function (editor) {
 		'use strict';
@@ -73,8 +73,7 @@ CKEDITOR.plugins.add('rte-media', {
 			standardButtons,
 			mediaWithCaption,
 			image,
-			video,
-			poll;
+			video;
 
 		// no media to setup - leave
 		if (!media.exists()) {
@@ -275,15 +274,12 @@ CKEDITOR.plugins.add('rte-media', {
 			$(this).css('backgroundPosition', '5px ' + parseInt($(this).attr('height') + 10) + 'px');
 		});
 
-		// images / videos / poll specific setup
+		// images / videos specific setup
 		image = media.filter('img.image');
 		self.setupImage(image);
 
 		video = media.filter('img.video');
 		self.setupVideo(video);
-
-		poll = media.filter('img.placeholder-poll');
-		self.setupPoll(poll);
 
 		// RT #69635
 		if (RTE.config.disableDragDrop) {
@@ -335,17 +331,6 @@ CKEDITOR.plugins.add('rte-media', {
 					RTE.tools.callFunction(window.vetWikiaEditor, $(self));
 				});
 			}
-		});
-	},
-
-	// poll specific setup
-	setupPoll: function (poll) {
-		'use strict';
-
-		poll.bind('edit.media', function (ev) {
-			RTE.log('poll clicked');
-
-			CreateWikiaPoll.showEditor(ev);
 		});
 	},
 
@@ -450,10 +435,6 @@ CKEDITOR.plugins.add('rte-media', {
 
 		case 'image-gallery':
 			type = 'photoGallery';
-			break;
-
-		case 'poll':
-			type = 'poll';
 			break;
 		}
 

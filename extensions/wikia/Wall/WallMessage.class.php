@@ -185,7 +185,7 @@ class WallMessage {
 			$class->setOrderId( 1 );
 			$class->getWall()->invalidateCache();
 		} else {
-			$count = $parent->getOrderId( true ); // this is not work perfect with transations
+			$count = $parent->getOrderId( $userMaster = true );
 			if ( is_numeric( $count ) ) {
 				$count++;
 				$parent->setOrderId( $count );
@@ -1521,7 +1521,7 @@ class WallMessage {
 	 * @param boolean $useMaster
 	 * @param CommentsIndex $commentsIndex
 	 */
-	private function updateParentLastComment( boolean $useMaster, CommentsIndex $commentsIndex ) {
+	private function updateParentLastComment( $useMaster, CommentsIndex $commentsIndex ) {
 		$lastChildCommentId = $commentsIndex->getParentLastCommentId( $useMaster );
 		$commentsIndex->updateParentLastCommentId( $lastChildCommentId );
 		wfRunHooks( 'EditCommentsIndex', [ $this->getTitle(), $commentsIndex ] );

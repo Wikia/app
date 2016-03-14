@@ -66,6 +66,7 @@ class AdminDashboardLogic {
 				'Forum',
 				'ImageReview',
 				'Images',
+				'InfoboxBuilder',
 				'Insights',
 				'Invalidateemail',
 				'LandingPageSmurfs',
@@ -86,7 +87,6 @@ class AdminDashboardLogic {
 				'PhalanxStats',
 				'Places',
 				'Play',
-				'PortableInfoboxBuilder',
 				'Preferences',
 				'PromoteImageReview',
 				'ScavengerHunt',
@@ -136,6 +136,23 @@ class AdminDashboardLogic {
 					['data-tracking' => 'admindashboard/toolbar/admin']
 				)
 			];
+		}
+		return true;
+	}
+
+	/**
+	 * For the special pages grouped in admin dashboard, update the HTML title, so it says:
+	 * "Name of the special page - Admin Dashboard - Wiki name - Wikia"
+	 *
+	 * This hook adds the "Admin Dashboard" part.
+	 *
+	 * @param Title $title
+	 * @param array $extraParts
+	 * @return bool
+	 */
+	static function onWikiaHtmlTitleExtraParts( Title $title, array &$extraParts ) {
+		if ( self::displayAdminDashboard( F::app(), $title ) ) {
+			$extraParts = [ wfMessage( 'admindashboard-header' ) ];
 		}
 		return true;
 	}

@@ -38,8 +38,9 @@ describe('Method ext.wikia.adEngine.lookup.amazonMatch', function () {
 		adContext: {
 			getContext: function () {
 				return {
-					targeting: mocks.targeting,
-					opts: noop
+					opts: noop,
+					slots: noop,
+					targeting: mocks.targeting
 				};
 			}
 		},
@@ -96,25 +97,53 @@ describe('Method ext.wikia.adEngine.lookup.amazonMatch', function () {
 
 	testCases = [
 		// Empty
-		{skin: 'oasis', input: [], expected: {}},
-		{skin: 'oasis', input: ['invalid-input'], expected: {}},
+		{
+			skin: 'oasis', input: [], expected: {}
+		},
+		{
+			skin: 'oasis', input: ['invalid-input'], expected: {}
+		},
 
 		// Single values
-		{skin: 'oasis', input: ['a1x6p14'], expected: {skyscraper: ['a1x6p14']}},
-		{skin: 'mercury', input: ['a3x2p14'], expected: {mobileprefooter: ['a3x2p14'], mobileincontent: ['a3x2p14']}},
-		{skin: 'mercury', input: ['a3x5p14'], expected: {mobileleaderboard: ['a3x5p14']}},
-		{skin: 'oasis', input: ['a3x6p14'], expected: {medrec: ['a3x6p14'], skyscraper: ['a3x6p14']}},
-		{skin: 'oasis', input: ['a7x9p14'], expected: {leaderboard: ['a7x9p14']}},
+		{
+			skin: 'oasis', input: ['a1x6p14'],
+			expected: {skyscraper: ['a1x6p14'], incontentBoxad: ['a1x6p14']}
+		},
+		{
+			skin: 'mercury', input: ['a3x2p14'],
+			expected: {mobileprefooter: ['a3x2p14'], mobileincontent: ['a3x2p14']}
+		},
+		{
+			skin: 'mercury', input: ['a3x5p14'],
+			expected: {mobileleaderboard: ['a3x5p14']}
+		},
+		{
+			skin: 'oasis', input: ['a3x6p14'],
+			expected: {medrec: ['a3x6p14'], skyscraper: ['a3x6p14'], incontentBoxad: ['a3x6p14']}},
+		{
+			skin: 'oasis', input: ['a7x9p14'],
+			expected: {leaderboard: ['a7x9p14']}
+		},
 
 		// Pick the lowest price point (single size)
-		{skin: 'oasis', input: ['a1x6p14', 'a1x6p5', 'a1x6p12'], expected: {skyscraper: ['a1x6p5']}},
-		{skin: 'mercury', input: ['a3x2p12', 'a3x2p10'], expected: {mobileprefooter: ['a3x2p10'], mobileincontent: ['a3x2p10']}},
+		{
+			skin: 'oasis', input: ['a1x6p14', 'a1x6p5', 'a1x6p12'],
+			expected: {skyscraper: ['a1x6p5'], incontentBoxad: ['a1x6p5']}},
+		{
+			skin: 'mercury', input: ['a3x2p12', 'a3x2p10'],
+			expected: {mobileprefooter: ['a3x2p10'], mobileincontent: ['a3x2p10']}
+		},
 
 		// Medrec should get both 3x2 and 3x6 sizes
 		{
 			skin: 'oasis',
 			input: ['a3x2p12', 'a3x2p13', 'a3x6p5', 'a7x9p5'],
-			expected: {medrec: ['a3x2p12', 'a3x6p5'], leaderboard: ['a7x9p5'], skyscraper: ['a3x6p5']}
+			expected: {
+				medrec: ['a3x2p12', 'a3x6p5'],
+				leaderboard: ['a7x9p5'],
+				skyscraper: ['a3x6p5'],
+				incontentBoxad: ['a3x2p12', 'a3x6p5']
+			}
 		},
 
 		// More complete example
@@ -139,6 +168,7 @@ describe('Method ext.wikia.adEngine.lookup.amazonMatch', function () {
 				leaderboard: ['a7x9p4'],
 				skyscraper: ['a1x6p3', 'a3x6p8'],
 				medrec: ['a3x2p5', 'a3x6p8'],
+				incontentBoxad: ['a3x2p5', 'a1x6p3', 'a3x6p8']
 			}
 		}
 	];
@@ -166,6 +196,8 @@ describe('Method ext.wikia.adEngine.lookup.amazonMatch', function () {
 				.toEqual(testCase.expected.mobileleaderboard);
 			expect(amazonMatch.getSlotParams('MOBILE_IN_CONTENT').amznslots).toEqual(testCase.expected.mobileincontent);
 			expect(amazonMatch.getSlotParams('MOBILE_PREFOOTER').amznslots).toEqual(testCase.expected.mobileprefooter);
+
+			expect(amazonMatch.getSlotParams('INCONTENT_BOXAD_1').amznslots).toEqual(testCase.expected.incontentBoxad);
 		});
 	});
 

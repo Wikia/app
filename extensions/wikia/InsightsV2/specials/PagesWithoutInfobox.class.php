@@ -32,7 +32,7 @@ class PagesWithoutInfobox extends PageQueryPage {
 	 *
 	 * @param bool $limit Only for consistency
 	 * @param bool $ignoreErrors Only for consistency
-	 * @return bool|int
+	 * @return int
 	 */
 	public function recache( $limit = false, $ignoreErrors = true ) {
 		$dbw = wfGetDB( DB_MASTER );
@@ -41,7 +41,6 @@ class PagesWithoutInfobox extends PageQueryPage {
 		 * 1. Get the new data first
 		 */
 		$pagesWithoutInfobox = $this->reallyDoQuery();
-		$dbw->begin();
 
 		/**
 		 * 2. Delete the existing records
@@ -54,31 +53,19 @@ class PagesWithoutInfobox extends PageQueryPage {
 		/**
 		 * 3. Insert the new records if the $pagesWithoutInfobox array is not empty
 		 */
-		$num = 0;
-		if ( !empty( $pagesWithoutInfobox ) ) {
-
-			( new WikiaSQL() )
-				->INSERT()->INTO( 'querycache', [
-					'qc_type',
-					'qc_value',
-					'qc_namespace',
-					'qc_title'
-				] )
-				->VALUES( $pagesWithoutInfobox )
-				->run( $dbw );
-
-			$num = $dbw->affectedRows();
-			if ( $num === 0 ) {
-				$dbw->rollback();
-				$num = false;
-			} else {
-				$dbw->commit();
-			}
-		}
+		( new WikiaSQL() )
+			->INSERT()->INTO( 'querycache', [
+				'qc_type',
+				'qc_value',
+				'qc_namespace',
+				'qc_title'
+			] )
+			->VALUES( $pagesWithoutInfobox )
+			->run( $dbw );
 
 		wfRunHooks( 'PagesWithoutInfoboxQueryRecached' );
 
-		return $num;
+		return count( $pagesWithoutInfobox );
 	}
 
 	/**
