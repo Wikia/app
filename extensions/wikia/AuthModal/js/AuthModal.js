@@ -40,10 +40,6 @@ define('AuthModal', ['jquery', 'wikia.window'], function ($, window) {
 			event.preventDefault();
 		}
 		if (authPopUp) {
-			track({
-				action: Wikia.Tracker.ACTIONS.CLOSE,
-				label: 'username-login-modal'
-			});
 			authPopUp.close();
 		}
 		$(window).off('.authPopUp');
