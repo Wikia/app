@@ -61,12 +61,16 @@ define('AuthModal', ['jquery', 'wikia.window'], function ($, window) {
 
 		authPopUp = window.open(src, '_blank', 'width='+popUpWidth+',height='+popUpHeight+',top='+popUpTop+',left='+popUpLeft);
 
-		authPopUp.onbeforeunload = function () {
-			track({
-				action: Wikia.Tracker.ACTIONS.CLOSE,
-				label: 'username-login-modal'
-			});
-		};
+		if (authPopUp) {
+			authPopUp.onbeforeunload = function () {
+				track({
+					action: Wikia.Tracker.ACTIONS.CLOSE,
+					label: 'username-login-modal'
+				});
+			};
+		} else {
+			window.location = url;
+		}
 	}
 
 	return {
