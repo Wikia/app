@@ -6,15 +6,10 @@ use \Wikia\Logger\WikiaLogger;
 
 class PortableInfoboxRenderServiceHelper {
 	const LOGGER_LABEL = 'portable-infobox-render-not-supported-type';
-	//todo: https://wikia-inc.atlassian.net/browse/DAT-3075
-	//todo: figure out what to do when user changes default infobox width via custom theming
-	// changed value from 270 to 300 to support default theme europa width
 	const DESKTOP_THUMBNAIL_WIDTH = 270;
-	const EUROPA_THUMBNAIL_WIDTH = 300;
 	const MOBILE_THUMBNAIL_WIDTH = 360;
 	const MINIMAL_HERO_IMG_WIDTH = 300;
 	const MAX_DESKTOP_THUMBNAIL_HEIGHT = 500;
-	const EUROPA_THEME = 'europa';
 
 	/**
 	 * creates special data structure for horizontal group from group data
@@ -51,12 +46,11 @@ class PortableInfoboxRenderServiceHelper {
 	 * extends image data
 	 *
 	 * @param array $data
-	 * @param string $theme
 	 *
 	 * @return bool|array
 	 */
-	public function extendImageData( $data, $theme ) {
-		$thumbnail = $this->getThumbnail( $data[ 'name' ], $theme );
+	public function extendImageData( $data ) {
+		$thumbnail = $this->getThumbnail( $data[ 'name' ] );
 		$ref = null;
 
 		if ( !$thumbnail ) {
@@ -64,7 +58,7 @@ class PortableInfoboxRenderServiceHelper {
 		}
 
 		wfRunHooks( 'PortableInfoboxRenderServiceHelper::extendImageData', [ $data, &$ref ] );
-		$dimensions = self::getImageSizesToDisplay( $thumbnail, $theme );
+		$dimensions = self::getImageSizesToDisplay( $thumbnail );
 
 		$data[ 'ref' ] = $ref;
 		$data[ 'height' ] = $dimensions[ 'height' ];
@@ -149,14 +143,13 @@ class PortableInfoboxRenderServiceHelper {
 	/**
 	 * @desc create a thumb of the image from file title.
 	 * @param Title $title
-	 * @param string $theme
 	 * @return bool|MediaTransformOutput
 	 */
-	private function getThumbnail( $title, $theme ) {
+	private function getThumbnail( $title ) {
 		$file = \WikiaFileHelper::getFileFromTitle( $title );
 
 		if ( $file ) {
-			$size = $this->getImageSizesForThumbnailer( $file, $theme );
+			$size = $this->getImageSizesForThumbnailer( $file );
 			$thumb = $file->transform( $size );
 
 			if ( !is_null( $thumb ) && !$thumb->isError() ) {
@@ -176,21 +169,17 @@ class PortableInfoboxRenderServiceHelper {
 	 * if $wgPortableInfoboxCustomImageWidth is set, do not change max height
 	 * and set width to $wgPortableInfoboxCustomImageWidth.
 	 * @param $image
-	 * @param string $theme
 	 * @return array width and height
 	 */
-	public function getImageSizesForThumbnailer( $image, $theme ) {
+	public function getImageSizesForThumbnailer( $image ) {
 		global $wgPortableInfoboxCustomImageWidth;
-
-		$desktopThumbnailWidth = $theme === self::EUROPA_THEME ? self::EUROPA_THUMBNAIL_WIDTH :
-			self::DESKTOP_THUMBNAIL_WIDTH;
 
 		if ( $this->isWikiaMobile() ) {
 			$width = self::MOBILE_THUMBNAIL_WIDTH;
 			$height = null;
 		} else if ( empty( $wgPortableInfoboxCustomImageWidth ) ) {
 			$height = min( self::MAX_DESKTOP_THUMBNAIL_HEIGHT, $image->getHeight() );
-			$width = $desktopThumbnailWidth;
+			$width = self::DESKTOP_THUMBNAIL_WIDTH;
 		} else {
 			$height = $image->getHeight();
 			$width = $wgPortableInfoboxCustomImageWidth;
@@ -205,22 +194,19 @@ class PortableInfoboxRenderServiceHelper {
 	 * to adjust it to DESKTOP_THUMBNAIL_WIDTH to look good in the infobox.
 	 * Also, the $height have to be adjusted here to make image look good in infobox.
 	 * @param $thumbnail \MediaTransformOutput
-	 * @param string $theme
 	 * @return array width and height which will be displayed i.e. in the width
 	 * and height properties of the img tag
 	 */
-	public function getImageSizesToDisplay( $thumbnail, $theme ) {
+	public function getImageSizesToDisplay( $thumbnail ) {
 		global $wgPortableInfoboxCustomImageWidth;
-
-		$desktopThumbnailWidth = $theme === self::EUROPA_THEME ? self::EUROPA_THUMBNAIL_WIDTH : self::DESKTOP_THUMBNAIL_WIDTH;
 
 		if ( !$this->isWikiaMobile() && !empty( $wgPortableInfoboxCustomImageWidth ) ) {
 			if ( $this->isThumbAboveMaxAspectRatio( $thumbnail ) ) {
 				$height = min( self::MAX_DESKTOP_THUMBNAIL_HEIGHT, $thumbnail->getHeight() );
-				$width = min( $desktopThumbnailWidth, $height * $thumbnail->getWidth() /
+				$width = min( self::DESKTOP_THUMBNAIL_WIDTH, $height * $thumbnail->getWidth() /
 						$thumbnail->getHeight() );
 			} else {
-				$width = min( $desktopThumbnailWidth, $thumbnail->getWidth() );
+				$width = min( self::DESKTOP_THUMBNAIL_WIDTH, $thumbnail->getWidth() );
 				$height = min( self::MAX_DESKTOP_THUMBNAIL_HEIGHT, $width * $thumbnail->getHeight() /
 						$thumbnail->getWidth() );
 			}
