@@ -138,6 +138,7 @@ $config['recirculation_js'] = array(
 		'//extensions/wikia/Recirculation/js/views/rail.js',
 		'//extensions/wikia/Recirculation/js/views/footer.js',
 		'//extensions/wikia/Recirculation/js/experiments/placement.js',
+		'//extensions/wikia/Recirculation/js/scrolldepth.js',
 	),
 );
 
