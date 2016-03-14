@@ -45,7 +45,7 @@ define('wikia.backgroundchanger', ['wikia.document'], function(doc)  {
 		// preload adskin image
 		imagePreload.src = options.skinImage;
 
-		var onCssLoadCallBak = function(options) {
+		var onCssLoadCallBack = function(options) {
 			if (options.skinImage !== '' && options.skinImageWidth > 0 && options.skinImageHeight > 0) {
 				if ((options.backgroundFixed === undefined) || !!options.backgroundFixed) {
 					$('body').addClass('background-fixed');
@@ -82,13 +82,13 @@ define('wikia.backgroundchanger', ['wikia.document'], function(doc)  {
 		if (nodeIndex > -1) {
 			$('link.backgroundChanger').attr('disabled', true);
 			$('link.backgroundChanger.cssNode' + nodeIndex).attr('disabled', false);
-			onCssLoadCallBak(options);
+			onCssLoadCallBack(options);
 		} else {
 			doc.loadedCss.push(sassUrl);
 			// load CSS and apply class changes to body element after loading
 			$.getCSS(sassUrl, function(link) {
 				link.className = 'backgroundChanger cssNode' + nodeIndex;
-				onCssLoadCallBak(options);
+				onCssLoadCallBack(options);
 			});
 		}
 	}
