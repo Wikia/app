@@ -217,27 +217,7 @@ class CloseWikiMaintenance {
 				);
 				$this->log( "{$row->city_id} removed from WikiFactory tables" );
 
-				/**
-				 * remove records from dataware
-				 */
-				global $wgExternalDatawareDB;
-				$datawareDB = wfGetDB( DB_MASTER, array(), $wgExternalDatawareDB );
-				$datawareDB->delete( "pages", array( "page_wikia_id" => $row->city_id ), __METHOD__ );
-				$this->log( "{$row->city_id} removed from pages table" );
-
-				/**
-				 * remove images from D.I.R.T.
-				 */
-				$datawareDB->delete( "image_review", array( "wiki_id" => $row->city_id ), __METHOD__  );
-				$this->log( "{$row->city_id} removed from image_review table" );
-
-				$datawareDB->delete( "image_review_stats", array( "wiki_id" => $row->city_id ), __METHOD__  );
-				$this->log( "{$row->city_id} removed from image_review_stats table" );
-
-				$datawareDB->delete( "image_review_wikis", array( "wiki_id" => $row->city_id ), __METHOD__  );
-				$this->log( "{$row->city_id} removed from image_review_wikis table" );
-
-				$datawareDB->commit();
+				$this->cleanupSharedData( intval( $row->city_id ) );
 
 				/**
 				 * drop database, get db handler for proper cluster
@@ -456,6 +436,62 @@ class CloseWikiMaintenance {
 				'exception' => $ex,
 				'city_id' => $cityid
 			] );
+		}
+	}
+
+	/**
+	 * Clean up the shared data for a given wiki ID
+	 *
+	 * @see PLATFORM-1173
+	 * @see PLATFORM-1204
+	 * @see PLATFORM-1849
+	 *
+	 * @author Macbre
+	 *
+	 * @param int $city_id
+	 */
+	private function cleanupSharedData( $city_id ) {
+		global $wgExternalDatawareDB, $wgSpecialsDB, $wgStatsDB;
+		$dataware = wfGetDB( DB_MASTER, [], $wgExternalDatawareDB );
+		$specials = wfGetDB( DB_MASTER, [], $wgSpecialsDB );
+		$stats    = wfGetDB( DB_MASTER, [], $wgStatsDB );
+
+		/**
+		 * remove records from image_review
+		 */
+		$this->doTableCleanup( $dataware, 'image_review',       $city_id );
+		$this->doTableCleanup( $dataware, 'image_review_stats', $city_id );
+		$this->doTableCleanup( $dataware, 'image_review_wikis', $city_id );
+
+		/**
+		 * remove records from stats-related tables
+		 */
+		$this->doTableCleanup( $dataware, 'pages',              $city_id, 'page_wikia_id' );
+		$this->doTableCleanup( $specials, 'events_local_users', $city_id );
+		$this->doTableCleanup( $stats,    'events',             $city_id );
+	}
+
+	/**
+	 * Perform a database cleanup for a given wiki
+	 *
+	 * This method waits for slaves to catch up after every DELETE query that affected at least one row
+	 *
+	 * @param DatabaseBase $db database handler
+	 * @param string $table name of table to clean up
+	 * @param int $city_id ID of wiki to remove from the table
+	 * @param string $wiki_id_column table column name to use when querying for wiki ID (defaults to "wiki_id")
+	 *
+	 * @throws DBUnexpectedError
+	 * @throws MWException
+	 */
+	private function doTableCleanup( DatabaseBase $db, $table, $city_id, $wiki_id_column = 'wiki_id' ) {
+		$db->delete( $table, [ $wiki_id_column => $city_id ], __METHOD__ );
+
+		$this->log( sprintf( "#%d: removed %d rows from %s.%s table", $city_id, $db->affectedRows(), $db->getDBname(), $table ) );
+
+		// throttle delete queries
+		if ( $db->affectedRows() > 0 ) {
+			wfWaitForSlaves( $db->getDBname() );
 		}
 	}
 

@@ -6,6 +6,8 @@
  * @method setText
  * @method getText
  * @method getLang
+ * @method setShouldLogInStats
+ * @method getShouldLogInStats
  */
 abstract class PhalanxModel extends WikiaObject {
 	public $model = null;

@@ -475,7 +475,7 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 				],
 				'output' => '<aside class="portable-infobox pi-background">
 								<section class="pi-item pi-group pi-border-color">
-									<table class="pi-horizontal-group">
+									<table class="pi-horizontal-group pi-horizontal-group-no-labels">
 										<tbody>
 											<tr>
 												<td

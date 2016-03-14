@@ -126,14 +126,6 @@ if ( !empty($wgVideoHandlersVideosMigrated) ) {
 $wgHooks['VideoInfoSaveToCache'][] = 'VideoHandlerHooks::clearVideoCache';
 $wgHooks['VideoInfoInvalidateCache'][] = 'VideoHandlerHooks::clearVideoCache';
 
-// permissions
-$wgAvailableRights[] = 'specialvideohandler';
-$wgGroupPermissions['staff']['specialvideohandler'] = true;
-
-$wgAvailableRights[] = 'uploadpremiumvideo';
-$wgGroupPermissions['*']['uploadpremiumvideo'] = false;
-$wgGroupPermissions['staff']['uploadpremiumvideo'] = true;
-
 /*
  * handlers
  */

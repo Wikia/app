@@ -31,12 +31,6 @@
 
 if(!defined('MEDIAWIKI')) die();
 
-// Allows anyone to view the page.
-$wgAvailableRights[] = 'soapfailures';
-$wgGroupPermissions['*']['soapfailures'] = true;
-$wgGroupPermissions['user']['soapfailures'] = true;
-$wgGroupPermissions['sysop']['soapfailures'] = true;
-
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'SOAP Failures',
 	'url' => 'http://lyrics.wikia.com/User:Sean_Colombo',

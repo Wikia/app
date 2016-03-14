@@ -43,6 +43,7 @@
 			$.nirvana.sendRequest({
 				controller: this.pageController,
 				method: 'postNewMessage',
+				type: 'POST',
 				data: {
 					body: body,
 					messagetitle: title,
@@ -72,6 +73,7 @@
 			$.nirvana.sendRequest({
 				controller: this.pageController,
 				method: 'replyToMessage',
+				type: 'POST',
 				data: {
 					body: body,
 					parent: parent,
@@ -149,6 +151,7 @@
 				controller: this.pageController,
 				method: 'editMessageSave',
 				format: 'json',
+				type: 'POST',
 				data: {
 					msgid: id,
 					newtitle: title,
@@ -178,6 +181,7 @@
 				controller: this.pageController,
 				method: 'switchWatch',
 				format: 'json',
+				type: 'POST',
 				data: {
 					isWatched: isWatched,
 					commentId: commentId
@@ -200,6 +204,7 @@
 				controller: this.pageController,
 				method: 'notifyEveryoneSave',
 				format: 'json',
+				type: 'POST',
 				data: {
 					msgid: msgid,
 					dir: dir
@@ -222,11 +227,11 @@
 				controller: this.pageController,
 				method: 'updateTopics',
 				format: 'json',
+				type: 'POST',
 				data: {
 					msgid: msgid,
 					relatedTopics: relatedTopics
 				},
-				type: 'post',
 				callback: this.proxy(function (json) {
 					if ($.isFunction(callback)) {
 						callback(json);

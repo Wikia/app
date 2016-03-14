@@ -480,7 +480,7 @@ class PortableInfoboxRenderServiceHelperTest extends WikiaBaseTest {
 					'width' => 360
 				],
 				'description' => 'Big image on mobile with custom image width'
-			],
+			]
 		];
 	}
 
@@ -593,20 +593,20 @@ class PortableInfoboxRenderServiceHelperTest extends WikiaBaseTest {
 				],
 				'description' => 'Regular thumbnail image on desktop with double custom width; landscape; logical size = physical size'
 			],
-				[
-					'thumbnailSizes' => [
-							'height' => 600,
-							'width' => 210
-					],
-					'isWikiaMobile' => false,
-					'wgPortableInfoboxCustomImageWidth' => 540,
-					'result' => [
-							'height' => 500,
-							'width' => 175
-					],
-					'description' => 'Regular thumbnail image on desktop with double custom width; portrait extra
-					thin image edge case'
-				]
+			[
+				'thumbnailSizes' => [
+						'height' => 600,
+						'width' => 210
+				],
+				'isWikiaMobile' => false,
+				'wgPortableInfoboxCustomImageWidth' => 540,
+				'result' => [
+						'height' => 500,
+						'width' => 175
+				],
+				'description' => 'Regular thumbnail image on desktop with double custom width; portrait extra
+				thin image edge case'
+			]
 		];
 	}
 }

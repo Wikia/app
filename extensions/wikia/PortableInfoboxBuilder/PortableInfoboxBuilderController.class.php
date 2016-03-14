@@ -7,17 +7,22 @@ class PortableInfoboxBuilderController extends WikiaController {
 	public function getAssets() {
 		$response = $this->getResponse();
 		$response->setFormat( WikiaResponse::FORMAT_JSON );
-		$response->setVal( 'css', AssetsManager::getInstance()->getURL( 'portable_infobox_scss' ) );
+		$response->setVal( 'css', AssetsManager::getInstance()->getURL( 'portable_infobox_builder_preview_scss' ) );
 
 		$params = $this->getRequest()->getParams();
-		if ( isset( $params['title'] ) ) {
+		if ( isset( $params[ 'title' ] ) ) {
 			$infoboxes = PortableInfoboxDataService::newFromTitle(
-				Title::newFromText($params['title'],NS_TEMPLATE)
+				Title::newFromText( $params[ 'title' ], NS_TEMPLATE )
 			)->getInfoboxes();
 
 			$builderService = new PortableInfoboxBuilderService();
 			if ( $builderService->isValidInfoboxArray( $infoboxes ) ) {
-				$response->setVal( 'data', $builderService->translateMarkupToData( $infoboxes[0] ) );
+				$response->setVal( 'data', $builderService->translateMarkupToData( $infoboxes[ 0 ] ) );
+
+				// There are no infoboxes yet
+				if ( empty( $infoboxes ) ) {
+					$response->setVal( 'isNew', true );
+				}
 			}
 		} else {
 			$status = new Status();
@@ -40,15 +45,30 @@ class PortableInfoboxBuilderController extends WikiaController {
 	private function attemptSave( $params ) {
 		$status = new Status();
 
-		$title = $this->getTitle($params[ 'title' ], $status);
+		$title = $this->getTitle( $params[ 'title' ], $status );
 
-		$status = $this->checkUserPermissions($title, $status);
+		$status = $this->checkRequestValidity( $status );
+		$status = $this->checkUserPermissions( $title, $status );
 
-		$infoboxDataService = PortableInfoboxDataService::newFromTitle($title);
+		$infoboxDataService = PortableInfoboxDataService::newFromTitle( $title );
 		$infoboxes = $infoboxDataService->getInfoboxes();
-		$status = $this->checkSaveEligibility($infoboxes, $status);
+		$status = $this->checkSaveEligibility( $infoboxes, $status );
 
-		return $status->isGood() ? $this->save( $title, $params[ 'data' ], $infoboxes[0] ) : $status;
+		return $status->isGood() ? $this->save( $title, $params[ 'data' ], $infoboxes[ 0 ] ) : $status;
+	}
+
+	/**
+	 * Wraps WikiaDispatchableObject::checkWriteRequest
+	 * @param $status
+	 * @return Status
+	 */
+	private function checkRequestValidity( &$status ) {
+		try {
+			$this->checkWriteRequest();
+		} catch ( BadRequestException $e ) {
+			$status->fatal( 'invalid-write-request' );
+		}
+		return $status;
 	}
 
 	/**
@@ -58,7 +78,7 @@ class PortableInfoboxBuilderController extends WikiaController {
 	 * @return Title
 	 * @throws MWException
 	 */
-	private function getTitle($titleParam, &$status) {
+	private function getTitle( $titleParam, &$status ) {
 		if ( !$titleParam ) {
 			$status->fatal( 'no-title-provided' );
 		}
@@ -77,7 +97,7 @@ class PortableInfoboxBuilderController extends WikiaController {
 	 * @param $status
 	 * @return mixed
 	 */
-	private function checkUserPermissions($title, $status) {
+	private function checkUserPermissions( $title, $status ) {
 		if ( $status->isGood() && !$title->userCan( 'edit' ) ) {
 			$status->fatal( 'user-cant-edit' );
 		}
@@ -90,31 +110,31 @@ class PortableInfoboxBuilderController extends WikiaController {
 	 * @param $status
 	 * @return mixed
 	 */
-	private function checkSaveEligibility($infoboxes, $status) {
+	private function checkSaveEligibility( $infoboxes, $status ) {
 		//if there are more than one infobox in template it means that someone else added it manually.
-		if ( $status->isGood() && count($infoboxes) > 1 ) {
+		if ( $status->isGood() && count( $infoboxes ) > 1 ) {
 			$status->fatal( 'article-usupported' );
 		}
 		return $status;
 	}
 
-	private function save( Title $title, $data, $oldInfobox) {
-		$article = new Article($title);
+	private function save( Title $title, $data, $oldInfobox ) {
+		$article = new Article( $title );
 		$editPage = new EditPage( $article );
 		$editPage->initialiseForm();
 		$editPage->edittime = $article->getTimestamp();
 
-		$infoboxBuilderService = new PortableInfoboxBuilderService() ;
+		$infoboxBuilderService = new PortableInfoboxBuilderService();
 		$infoboxMarkup = $infoboxBuilderService->translateDataToMarkup( $data );
 		$infoboxDocumentation = $infoboxBuilderService->getDocumentation( $infoboxMarkup, $title );
 
 		$oldContent = $article->fetchContent();
-		if (empty($oldInfobox)) {
+		if ( empty( $oldInfobox ) ) {
 			$editPage->textbox1 = implode( "\n", [ $infoboxMarkup, $infoboxDocumentation, $oldContent ] );
 		} else {
-			$oldDocumentation = $infoboxBuilderService->getDocumentation($oldInfobox, $title);
-			$content = $infoboxBuilderService->updateInfobox($oldInfobox, $infoboxMarkup, $oldContent);
-			$editPage->textbox1 = $infoboxBuilderService->updateDocumentation($oldDocumentation, $infoboxDocumentation, $content);
+			$oldDocumentation = $infoboxBuilderService->getDocumentation( $oldInfobox, $title );
+			$content = $infoboxBuilderService->updateInfobox( $oldInfobox, $infoboxMarkup, $oldContent );
+			$editPage->textbox1 = $infoboxBuilderService->updateDocumentation( $oldDocumentation, $infoboxDocumentation, $content );
 		}
 
 		$status = $editPage->internalAttemptSave( $result );

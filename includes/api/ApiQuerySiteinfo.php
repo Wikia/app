@@ -368,7 +368,7 @@ class ApiQuerySiteinfo extends ApiQueryBase {
 	}
 
 	protected function appendUserGroups( $property, $numberInGroup ) {
-		global $wgGroupPermissions, $wgAddGroups, $wgRemoveGroups, $wgGroupsAddToSelf, $wgGroupsRemoveFromSelf;
+		global $wgGroupPermissions;
 
 		$data = array();
 		$result = $this->getResult();
@@ -390,16 +390,11 @@ class ApiQuerySiteinfo extends ApiQueryBase {
 				}
 			}
 
-			$groupArr = array(
-				'add' => $wgAddGroups,
-				'remove' => $wgRemoveGroups,
-				'add-self' => $wgGroupsAddToSelf,
-				'remove-self' => $wgGroupsRemoveFromSelf
-			);
+			$groupArr = User::changeableByGroup( $group );
 
 			foreach ( $groupArr as $type => $rights ) {
-				if ( isset( $rights[$group] ) ) {
-					$arr[$type] = $rights[$group];
+				if ( !empty( $rights ) ) {
+					$arr[$type] = $rights;
 					$result->setIndexedTagName( $arr[$type], 'group' );
 				}
 			}

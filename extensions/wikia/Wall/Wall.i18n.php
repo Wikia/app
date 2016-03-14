@@ -2100,8 +2100,8 @@ Der Original-Post und deine Zusammenfassung bleiben in der Wiki-Historie sichtba
 	'wall-topic-edit' => 'Themen bearbeiten',
 	'wall-topic-edit-save' => 'Speichern',
 	'wall-topic-edit-cancel' => 'Abbrechen',
-	'group-threadmoderator' => 'Diskussionsmoderatoren',
-	'group-threadmoderator-member' => 'Diskussionsmoderator',
+	'group-threadmoderator' => 'Diskussions-Moderatoren',
+	'group-threadmoderator-member' => 'Diskussions-Moderator',
 	'grouppage-threadmoderator' => 'w:c:community:Help:Moderatoren',
 ];
 

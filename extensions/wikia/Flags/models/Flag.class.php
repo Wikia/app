@@ -275,6 +275,20 @@ class Flag extends FlagsBaseModel {
 		}
 	}
 
+	public function getWikisWithFlags() {
+		$db = $this->getDatabaseForRead();
+
+		$wikiIds = ( new \WikiaSQL() )
+			->SELECT()
+			->DISTINCT( 'wiki_id' )
+			->FROM( self::FLAGS_TO_PAGES_TABLE )
+			->runLoop( $db, function( &$wikiIds, $row ) {
+				$wikiIds[] = $row->wiki_id;
+			} );
+
+		return $wikiIds;
+	}
+
 	/**
 	 * Performs a removal SQL query on instances of flags based on the passed flags_ids
 	 * @param array $flagsIds

@@ -7,7 +7,7 @@ class NodeData extends Node {
 	 * allowed node attributes
 	 * @var array of string
 	 */
-	protected $allowedAttributes = [ 'source' ];
+	protected $allowedAttributes = [ 'source' => [] ];
 
 	/**
 	 * allowed child nodes
@@ -25,12 +25,12 @@ class NodeData extends Node {
 	/**
 	 * At the moment label is the only supported child node and there can be only one of such
 	 */
-	public function getChildrenAsJson() {
+	public function getChildrenAsJsonObjects() {
 		$data = null;
 
 		if($this->xmlNode->label) {
 			$builderNode = NodeBuilder::createFromNode( $this->xmlNode->label );
-			$data = $builderNode->asJson();
+			$data = $builderNode->asJsonObject();
 		}
 		return $data;
 	}

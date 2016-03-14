@@ -7,27 +7,50 @@ if ( !defined( 'MW_NO_SETUP' ) ) {
 require_once( __DIR__ . '/includes/WebStart.php' );
 require_once( __DIR__ . '/includes/Setup.php' );
 
-$allowRobots = ( $wgWikiaEnvironment === WIKIA_ENV_PROD || $wgRequest->getBool( 'forcerobots' ) );
-
 $robots = new RobotsTxt();
+$allowRobots = ( $wgWikiaEnvironment === WIKIA_ENV_PROD || $wgRequest->getBool( 'forcerobots' ) );
+$experimentalRobots = null;
+
+if ( !empty( $wgExperimentalRobotsTxt ) && preg_match( '/^[a-z0-9-]+$/m', $wgExperimentalRobotsTxt ) ) {
+	$file = __DIR__ . '/robots.txt.d/' . $wgExperimentalRobotsTxt . '.txt';
+	if ( is_file( $file ) && is_readable( $file ) ) {
+		$experimentalRobots = file_get_contents( $file );
+	}
+}
 
 if ( !$allowRobots ) {
 	// No crawling preview, verify, sandboxes, showcase, etc
 	$robots->disallowPath( '/' );
+} elseif ( $experimentalRobots ) {
+	// Sitemap
+	if ( !empty( $wgEnableSpecialSitemapExt ) ) {
+		$robots->setSitemap( sprintf( 'http://%s/sitemap-index.xml', $_SERVER['SERVER_NAME'] ) );
+	}
+
+	// Experimental content
+	$robots->setExperimentalAllowDisallowSection( $experimentalRobots );
 } else {
 	// Sitemap
-	$robots->setSitemap( sprintf( 'http://%s/sitemap-index.xml', $_SERVER['SERVER_NAME'] ) );
+	if ( !empty( $wgEnableSpecialSitemapExt ) ) {
+		$robots->setSitemap( sprintf( 'http://%s/sitemap-index.xml', $_SERVER['SERVER_NAME'] ) );
+	}
 
 	// Special pages
 	$robots->disallowNamespace( NS_SPECIAL );
 	$robots->disallowNamespace( NS_TEMPLATE );
 	$robots->disallowNamespace( NS_TEMPLATE_TALK );
 
-	//$robots->allowSpecialPage( 'Allpages' ); // TODO: SEO-64
+	if ( !empty( $wgEnableLocalSitemap ) ) {
+		$robots->allowSpecialPage( 'Allpages' );
+	}
 	$robots->allowSpecialPage( 'CreateNewWiki' );
 	$robots->allowSpecialPage( 'Forum' );
 	$robots->allowSpecialPage( 'Sitemap' );
 	$robots->allowSpecialPage( 'Videos' );
+
+	if ( !empty( $wgAllowSpecialImagesInRobots ) ) {
+		$robots->allowSpecialPage( 'Images' );
+	}
 
 	// Params
 	$robots->disallowParam( 'action' );
@@ -36,6 +59,17 @@ if ( !$allowRobots ) {
 	$robots->disallowParam( 'printable' );
 	$robots->disallowParam( 'useskin' );
 	$robots->disallowParam( 'uselang' );
+
+	// SEO-302: Allow Googlebot to crawl Android app contents
+	// @see http://developer.android.com/training/app-indexing/enabling-app-indexing.html)
+	// The order of precedence between those two is undefined:
+	// "Disallow: /*?*action=" and "Allow: /api.php"
+	// @see https://developers.google.com/webmasters/control-crawl-index/docs/robots_txt#order-of-precedence-for-group-member-records
+	// That's why we're adding quite explicit "Allow: /api.php?*action=" (even though it's redundant)
+	// robots.txt Tester in Google Search Console shows this will do:
+	// @see https://www.google.com/webmasters/tools/robots-testing-tool?hl=en&siteUrl=http://muppet.wikia.com/
+	$robots->allowPath( '/api.php?' );
+	$robots->allowPath( '/api.php?*action=' );
 
 	// Nasty robots
 	$robots->blockRobot( 'IsraBot' );
