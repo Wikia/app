@@ -27,6 +27,11 @@ class VideosController extends WikiaController {
 			return;
 		}
 
+		if ( wfReadOnly() ) {
+			$this->error = wfMsg ( 'videos-error-readonly' );
+			return;
+		}
+
 		$videoService = new VideoService();
 		$retval = $videoService->addVideo( $url );
 

@@ -34,9 +34,6 @@ $wgSpecialPages['LookupUser'] = 'LookupUserPage';
 // Special page group for MW 1.13+
 $wgSpecialPageGroups['LookupUser'] = 'users';
 
-// New user right, required to use the special page
-$wgAvailableRights[] = 'lookupuser';
-
 // Hooked function
 $wgHooks['ContributionsToolLinks'][] = 'efLoadLookupUserLink';
 

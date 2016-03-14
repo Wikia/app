@@ -17,7 +17,6 @@ define('ext.wikia.adEngine.config.desktop', [
 	'ext.wikia.adEngine.provider.remnantGpt',
 	'ext.wikia.adEngine.provider.sevenOneMedia',
 	'ext.wikia.adEngine.provider.turtle',
-	'ext.wikia.adEngine.provider.recirculation',
 	require.optional('ext.wikia.adEngine.provider.taboola')
 ], function (
 	// regular dependencies
@@ -37,7 +36,6 @@ define('ext.wikia.adEngine.config.desktop', [
 	adProviderRemnantGpt,
 	adProviderSevenOneMedia,
 	adProviderTurtle,
-	adProviderRecirculation,
 	adProviderTaboola
 ) {
 	'use strict';
@@ -63,11 +61,6 @@ define('ext.wikia.adEngine.config.desktop', [
 
 		log('getProvider', 5, logGroup);
 		log(slotName, 5, logGroup);
-
-		// Recirculation is not advertising, even if we're using AdEngine. So we show it even if $wgShowAds is false
-		if (adProviderRecirculation && adProviderRecirculation.canHandleSlot(slotName) && !context.opts.noExternals) {
-			return [adProviderRecirculation];
-		}
 
 		// If wgShowAds set to false, hide slots
 		if (!context.opts.showAds) {

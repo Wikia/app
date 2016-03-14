@@ -34,22 +34,29 @@ class RecirculationController extends WikiaController {
 	public function discussions() {
 		global $wgCityId;
 
-		$discussionsDataService = new DiscussionsDataService();
-		$posts = $discussionsDataService->getPosts();
+		if ( RecirculationHooks::canShowDiscussions() ) {
+			$discussionsDataService = new DiscussionsDataService();
+			$posts = $discussionsDataService->getPosts();
 
-		if ( count( $posts ) > 0 ) {
-			$discussionsUrl = "/d/f/$wgCityId/trending";
+			if ( count( $posts ) > 0 ) {
+				$discussionsUrl = "/d/f/$wgCityId/trending";
 
-			$this->response->setCacheValidity( WikiaResponse::CACHE_VERY_SHORT );
-			$this->response->setData( [
-				'title' => wfMessage( 'recirculation-discussion-title' )->plain(),
-				'linkText' => wfMessage( 'recirculation-discussion-link-text' )->plain(),
-				'discussionsUrl' => $discussionsUrl,
-				'posts' => $posts,
-			] );
-			return true;
-		} else {
-			return false;
+				$this->response->setCacheValidity( WikiaResponse::CACHE_VERY_SHORT );
+				$this->response->setData( [
+					'title' => wfMessage( 'recirculation-discussion-title' )->plain(),
+					'linkText' => wfMessage( 'recirculation-discussion-link-text' )->plain(),
+					'discussionsUrl' => $discussionsUrl,
+					'posts' => $posts,
+				] );
+				return true;
+			}
 		}
+
+		return false;
+	}
+
+	public function container( $params ) {
+		$containerId = $this->request->getVal('containerId');
+		$this->response->setVal('containerId', $containerId);
 	}
 }

@@ -52,7 +52,7 @@ class AvatarsMigrator extends Maintenance {
 		// --dfs-dc=sjc|res
 		global $wgFSSwiftDC;
 		$dc = $this->getOption( 'dfs-dc', 'sjc' );
-		$this->dfsProxy = $wgFSSwiftDC[ $dc ][ 'servers' ][ 0 ];
+		$this->dfsProxy = $wgFSSwiftDC[ $dc ][ 'server' ];
 		$this->output( "Will use DFS cluster in '{$dc}' via {$this->dfsProxy}\n\n" );
 
 

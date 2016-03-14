@@ -1,0 +1,42 @@
+@import 'skins/shared/color';
+
+.WikiaRail .recirculation-rail {
+	.title-thumbnail {
+		margin-bottom: 15px;
+	}
+
+	.image-thumbnail {
+		background-color: $color-headline-border;
+		display: block;
+		margin-bottom: 7px;
+		max-height: 166px;
+		max-width: 268px;
+
+		img {
+			display: block;
+			max-height: 100%;
+			max-width: 100%;
+		}
+	}
+
+	.title a {
+		color: $color-text;
+		display: block;
+		font-size: 15px;
+
+		&:hover {
+			color: $color-links;
+		}
+	}
+}
+
+// GOOGLE MATCHED CONTENT
+.recirculation-rail.adsbygoogle {
+	border: 1px solid $color-page-border;
+	margin: 10px 0;
+	overflow: hidden;
+
+	iframe {
+		margin: -1px;
+	}
+}

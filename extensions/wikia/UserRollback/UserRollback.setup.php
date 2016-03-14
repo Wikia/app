@@ -25,10 +25,3 @@ $wgSpecialPages['UserRollback'] = 'UserRollbackSpecialController';
  * message files
  */
 $wgExtensionMessagesFiles['UserRollback'] = $dir . 'UserRollback.i18n.php';
-
-/**
- * setup rights
- */
-$wgAvailableRights[] = 'userrollback';
-$wgGroupPermissions['*']['userrollback'] = false;
-$wgGroupPermissions['util']['userrollback'] = true;

@@ -149,7 +149,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 			googleApi.push(queueAd);
 		}
 
-		if (!extra.sraEnabled || sraHelper.shouldFlush(slot.name)) {
+		if (!sraHelper || !extra.sraEnabled || sraHelper.shouldFlush(slot.name)) {
 			log('flushing', 'debug', logGroup);
 			googleApi.flush();
 		}

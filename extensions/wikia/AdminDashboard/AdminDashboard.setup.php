@@ -21,7 +21,9 @@ $wgAutoloadClasses['AdminDashboardController'] =  $dir . 'AdminDashboardControll
 $wgAutoloadClasses['AdminDashboardLogic'] =  $dir . 'AdminDashboardLogic.class.php';
 $wgAutoloadClasses['QuickStatsController'] =  $dir . 'QuickStatsController.class.php';
 
+// hooks
 $wgHooks['BeforeToolbarMenu'][] = 'AdminDashboardLogic::onBeforeToolbarMenu';
+$wgHooks['WikiaHtmlTitleExtraParts'][] = 'AdminDashboardLogic::onWikiaHtmlTitleExtraParts';
 
 // i18n mapping
 $wgExtensionMessagesFiles['AdminDashboard'] = $dir . 'AdminDashboard.i18n.php';
@@ -30,14 +32,6 @@ $wgExtensionMessagesFiles['AdminDashboardAliases'] = $dir . 'AdminDashboard.alia
 
 // special pages
 $wgSpecialPages[ 'AdminDashboard'] = 'AdminDashboardSpecialPageController';
-
-$wgAvailableRights[] = 'admindashboard';
-
-$wgGroupPermissions['*']['admindashboard'] = false;
-$wgGroupPermissions['staff']['admindashboard'] = true;
-$wgGroupPermissions['sysop']['admindashboard'] = true;
-$wgGroupPermissions['bureaucrat']['admindashboard'] = true;
-$wgGroupPermissions['helper']['admindashboard'] = true;
 
 // register messages package for JS (BugId:41451)
 JSMessages::registerPackage('AdminDashboard', array(

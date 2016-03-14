@@ -12,9 +12,13 @@
 namespace Wikia\PowerUser;
 
 use Wikia\Logger\Loggable;
+use Wikia\DependencyInjection\Injector;
+use Wikia\Service\User\Permissions\PermissionsServiceAccessor;
+use Wikia\Service\User\Permissions\PermissionsService;
 
 class PowerUser {
 	use Loggable;
+	use PermissionsServiceAccessor;
 
 	/**
 	 * Names of properties used to described PowerUsers
@@ -122,10 +126,11 @@ class PowerUser {
 	public function addPowerUserAddGroup( $sProperty ) {
 		if ( in_array( $sProperty, self::$aPowerUserProperties )
 			&& $this->bUseGroups
-			&& !in_array( self::GROUP_NAME, \UserRights::getGlobalGroups( $this->oUser ) )
+			&& !$this->permissionsService()->isInGroup( $this->oUser, self::GROUP_NAME )
 		) {
-				\UserRights::addGlobalGroup( $this->oUser, self::GROUP_NAME );
-				$this->logSuccess( $sProperty, self::ACTION_ADD_GROUP );
+			global $wgUser;
+			$this->permissionsService()->addToGroup( $wgUser, $this->oUser, self::GROUP_NAME );
+			$this->logSuccess( $sProperty, self::ACTION_ADD_GROUP );
 		}
 		return true;
 	}
@@ -174,7 +179,8 @@ class PowerUser {
 			&& $this->bUseGroups
 			&& $this->isGroupForRemoval( $sProperty )
 		) {
-			\UserRights::removeGlobalGroup( $this->oUser, self::GROUP_NAME );
+			global $wgUser;
+			$this->permissionsService()->removeFromGroup( $wgUser, $this->oUser, self::GROUP_NAME );
 			$this->logSuccess( $sProperty, self::ACTION_REMOVE_GROUP );
 		}
 		return true;
@@ -196,7 +202,7 @@ class PowerUser {
 				return false;
 			}
 		}
-		return in_array( self::GROUP_NAME, \UserRights::getGlobalGroups( $this->oUser ) );
+		return $this->permissionsService()->isInGroup( $this->oUser, self::GROUP_NAME );
 	}
 
 	/**

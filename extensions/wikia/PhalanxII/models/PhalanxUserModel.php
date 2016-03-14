@@ -6,9 +6,40 @@ class PhalanxUserModel extends PhalanxModel {
 	public function __construct( $user, $lang = '', $id = 0 ) {
 		parent::__construct( __CLASS__, array( 'user' => $user, 'lang' => $lang, 'id' => $id ) );
 	}
-	
+
+	/**
+	 * Return the list of string to be checked by Phalanx.
+	 *
+	 * It can be:
+	 *  - an email address (provided via setText method)
+	 *  - a user name (passed via $user constructor argument)
+	 *  - the IP address taken from the current request (only when performing an action that can be blocked) - see SUS-141
+	 *
+	 * @return array|string
+	 */
 	public function getText() {
-		return ( !empty( $this->text ) ) ? $this->text : array( ( $this->user instanceof User ) ? $this->user->getName() : "", $this->ip );
+		if ( !empty( $this->text ) ) {
+			// text is used for checking email addresses
+			$ret = $this->text;
+		}
+		else {
+			$ret = [
+				$this->user instanceof User ? $this->user->getName() : ""
+			];
+
+			/**
+			 * SUS-141: only check the current user ($wgUser, not $this->user) IP address
+			 * when checking the block when trying to perform an action
+			 *
+			 * Example: do not pass the current IP address when checking the block status
+			 * of the owner of user page we're currently visiting (via Masthead code)
+			 */
+			if ( $this->getShouldLogInStats() === true ) {
+				$ret[] = $this->ip;
+			}
+		}
+
+		return $ret;
 	}
 	
 	public function userBlock( $type = 'exact' ) {

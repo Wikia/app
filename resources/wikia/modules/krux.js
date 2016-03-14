@@ -7,11 +7,12 @@ define('wikia.krux', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adTracker',
 	'wikia.document',
+	'wikia.tracker',
 	'wikia.window'
-], function (adContext, adTracker, doc, win) {
+], function (adContext, adTracker, doc, wikiaTracker, win) {
 	'use strict';
 
-	var maxNumberOfKruxSegments = 27,
+	var maxNumberOfKruxSegments = 50,
 		kruxScriptId = 'krux-control-tag',
 		kruxLoaded = false,
 		segmentsCountTracked = false;
@@ -64,6 +65,16 @@ define('wikia.krux', [
 				// Add Krux pixel
 				addConfigScript(confid);
 				kruxLoaded = true;
+
+				// Add GA tracking
+				adTracker.track('krux/load');
+				wikiaTracker.track({
+					category: 'ads-trackers',
+					action: 'krux',
+					label: 'load',
+					value: 0,
+					trackingMethod: 'analytics'
+				});
 			}
 		});
 	}

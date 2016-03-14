@@ -26,9 +26,6 @@ $wgAutoloadClasses['DMCARequest\ChillingEffectsClient'] =  __DIR__ . '/ChillingE
 
 $wgExtensionMessagesFiles['DMCARequest'] = __DIR__ . '/DMCARequest.i18n.php' ;
 
-$wgAvailableRights[] = 'dmcarequestmanagement';
-$wgGroupPermissions['util']['dmcarequestmanagement'] = true;
-
 $wgSpecialPages['DMCARequest'] = 'DMCARequestSpecialController';
 $wgSpecialPages['DMCARequestManagement'] = 'DMCARequestManagementSpecialController';
 $wgSpecialPageGroups['DMCARequest'] = 'wikia';

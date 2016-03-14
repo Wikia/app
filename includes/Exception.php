@@ -548,8 +548,10 @@ class MWExceptionHandler {
 
 	/**
 	 * Report an exception to the user
+	 *
+	 * @param Exception|Throwable $e
 	 */
-	protected static function report( Exception $e ) {
+	protected static function report( $e ) {
 		global $wgShowExceptionDetails;
 
 		$cmdLine = MWException::isCommandLine();
@@ -594,6 +596,13 @@ class MWExceptionHandler {
 			} else {
 				self::escapeEchoAndDie( $message );
 			}
+
+			# Wikia change - begin
+			# @see PLATFORM-2008 - report non-MediawWiki exceptions to ELK
+			Wikia\Logger\WikiaLogger::instance()->error( __METHOD__ . ' - unexpected non-MediaWiki exception encountered', [
+				'exception' => $e,
+			] );
+			# Wikia change - end
 		}
 	}
 

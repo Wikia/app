@@ -1,0 +1,166 @@
+@import 'skins/shared/color';
+@import 'skins/shared/mixins/flexbox';
+
+$background-color-mix: 10%;
+$black: #000;
+$collapsible-chevron-size: 9px;
+$collapsible-chevron-negative-margin: -7px;
+$infobox-data-spacing: 10px;
+$infobox-header-spacing: 9px;
+$infobox-side-spacing: 14px;
+$infobox-width: 300px;
+$header-font-size: 16px;
+$header-line-height: 20px;
+$horizontal-group-label-spacing: 6px;
+$label-width: 88px;
+$tabber-lightness-condition: 30;
+$title-font-size: 24px;
+$title-line-height: 28px;
+$white: #fff;
+
+// color mixes
+$background-color: mix($black, $color-page, $background-color-mix);
+$horizontal-group-stripe-background: mix($black, $color-page, $background-color-mix * 2);
+$tabber-background-color: mix($black, $color-buttons, $background-color-mix * 4);
+
+@if $is-dark-wiki {
+	$background-color: mix($white, $color-page, $background-color-mix);
+	$horizontal-group-stripe-background: mix($white, $color-page, $background-color-mix * 2);
+}
+
+@if lightness($color-buttons) < $tabber-lightness-condition {
+	$tabber-background-color: mix($white, $color-buttons, $background-color-mix * 4);
+}
+
+.pi-theme-europa {
+	&.portable-infobox {
+		color: $color-text;
+		width: $infobox-width;
+	}
+
+	&.pi-background {
+		background-color: $background-color;
+	}
+
+	&.pi-layout-stacked {
+		.pi-data-label {
+			padding-bottom: $horizontal-group-label-spacing;
+			padding-right: 0;
+		}
+	}
+
+	.pi-item-spacing {
+		padding: $infobox-data-spacing $infobox-side-spacing;
+	}
+
+	.pi-title,
+	.pi-header {
+		background-color: $color-buttons;
+		color: $color-button-text;
+		text-align: center;
+	}
+
+	.pi-title {
+		font-size: $title-font-size;
+		font-weight: bold;
+		line-height: $title-line-height;
+		padding: $infobox-side-spacing;
+	}
+
+	.pi-header,
+	.pi-image-collection-tabs {
+		font-size: $header-font-size;
+		line-height: $header-line-height;
+	}
+
+	.pi-header,
+	.pi-tab-link {
+		padding: $infobox-header-spacing $infobox-side-spacing;
+	}
+
+	.pi-navigation {
+		background-color: inherit;
+		color: inherit;
+		font-weight: inherit;
+	}
+
+	.pi-data,
+	.pi-group {
+		border-bottom: 0;
+	}
+
+	.pi-data-label {
+		@include flex-basis($label-width);
+		color: inherit;
+		padding-right: $infobox-side-spacing;
+	}
+
+	.pi-data-value {
+		padding-left: 0;
+	}
+
+	.pi-caption {
+		color: inherit;
+		font-style: normal;
+	}
+
+	.pi-image-collection-tabs {
+		background-color: $tabber-background-color;
+		color: $color-button-text;
+		margin: 0;
+		text-align: left;
+
+		.current {
+			background-color: $color-buttons;
+		}
+	}
+
+	.pi-image-collection-tab-content {
+		background-color: inherit;
+	}
+
+	.pi-tab-link {
+		border: 0;
+		margin: 0;
+	}
+
+	.pi-collapse .pi-header::after {
+		border-color: $color-button-text;
+		height: $collapsible-chevron-size;
+		right: $infobox-side-spacing;
+		width: $collapsible-chevron-size;
+	}
+
+	.pi-collapse-closed .pi-header::after {
+		margin-top: $collapsible-chevron-negative-margin;
+	}
+
+	.pi-horizontal-group {
+		text-align: left;
+
+		.pi-horizontal-group-item {
+			border-left: 0;
+		}
+
+		.pi-data-label {
+			padding: $infobox-data-spacing $infobox-side-spacing $horizontal-group-label-spacing;
+		}
+
+		.pi-data-value {
+			padding-left: $infobox-side-spacing;
+			padding-top: 0;
+		}
+	}
+
+	.pi-horizontal-group-no-labels {
+		.pi-data-value {
+			padding-top: $infobox-data-spacing;
+		}
+	}
+
+	.pi-horizontal-group-item {
+		&:nth-child(even) {
+			background-color: $horizontal-group-stripe-background;
+		}
+	}
+}
