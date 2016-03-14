@@ -6,7 +6,7 @@
  * @type {{load: Function}}
  */
 
-define('wikia.backgroundchanger', function()  {
+define('wikia.backgroundchanger', ['wikia.document'], function(doc)  {
 	'use strict';
 	/**
 	 * Load background.scss with params
@@ -45,8 +45,7 @@ define('wikia.backgroundchanger', function()  {
 		// preload adskin image
 		imagePreload.src = options.skinImage;
 
-		// load CSS and apply class changes to body element after loading
-		$.getCSS(sassUrl, function() {
+		var onCssLoadCallBak = function(options) {
 			if (options.skinImage !== '' && options.skinImageWidth > 0 && options.skinImageHeight > 0) {
 				if ((options.backgroundFixed === undefined) || !!options.backgroundFixed) {
 					$('body').addClass('background-fixed');
@@ -72,7 +71,26 @@ define('wikia.backgroundchanger', function()  {
 			} else {
 				$('body').removeClass('background-dynamic background-not-tiled background-fixed');
 			}
-		});
+		};
+
+		if (!$.isArray(doc.loadedCss)) {
+			doc.loadedCss = [];
+		}
+
+		var nodeIndex = doc.loadedCss.indexOf(sassUrl);
+
+		if (nodeIndex > -1) {
+			$('link.backgroundChanger').attr('disabled', true);
+			$('link.backgroundChanger.cssNode' + nodeIndex).attr('disabled', false);
+			onCssLoadCallBak(options);
+		} else {
+			doc.loadedCss.push(sassUrl);
+			// load CSS and apply class changes to body element after loading
+			$.getCSS(sassUrl, function(link) {
+				link.className = 'backgroundChanger cssNode' + nodeIndex;
+				onCssLoadCallBak(options);
+			});
+		}
 	}
 
 	return {
