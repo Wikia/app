@@ -32,7 +32,7 @@ class ForumController extends WallBaseController {
 		parent::index( self::BOARD_PER_PAGE );
 
 		$this->addAssets();
-		$this->description = '';
+		$this->response->setVal( 'description', '' );
 		/** @var Wall $wall */
 		$wall = $this->response->getVal( 'wall' );
 
@@ -56,7 +56,7 @@ class ForumController extends WallBaseController {
 			$this->response->setVal( 'activeThreads', $board->getTotalActiveThreads() );
 			$this->response->setVal( 'isTopicPage', false );
 
-			$this->description = $board->getDescription();
+			$this->response->setVal( 'description', $board->getDescription() );
 
 			$this->app->wg->Out->setPageTitle( wfMessage( 'forum-board-title', $this->wg->title->getBaseText() )->plain() );
 		}
@@ -103,17 +103,29 @@ class ForumController extends WallBaseController {
 
 	public function boardNewThread() {
 		parent::newMessage();
-		$this->isTopicPage = $this->getVal( 'isTopicPage', false );
-		if ( $this->isTopicPage ) {
+		$isTopicPage = $this->getVal( 'isTopicPage', false );
+		$this->response->setVal( 'isTopicPage', $isTopicPage );
+
+		if ( $isTopicPage ) {
 			$forum = new Forum();
 
 			$list = $forum->getBoardList();
 
-			$this->destinationBoards = [ [ 'value' => '', 'content' => wfMessage( 'forum-board-destination-empty' )->escaped() ] ];
+			$destinationBoards = [
+				[
+					'value' => '',
+					'content' => wfMessage( 'forum-board-destination-empty' )->escaped()
+				]
+			];
 
 			foreach ( $list as $value ) {
-				$this->destinationBoards[] = [ 'value' => htmlspecialchars( $value[ 'name' ] ), 'content' => htmlspecialchars( $value[ 'name' ] ) ];
+				$destinationBoards[] = [
+					'value' => htmlspecialchars( $value[ 'name' ] ),
+					'content' => htmlspecialchars( $value[ 'name' ] )
+				];
 			}
+
+			$this->response->setVal( 'destinationBoards', $destinationBoards );
 		}
 	}
 
@@ -129,7 +141,8 @@ class ForumController extends WallBaseController {
 
 		$this->response->setVal( 'id', $wallMessage->getId() );
 		$this->response->setVal( 'feedtitle', htmlspecialchars( $wallMessage->getMetaTitle() ) );
-		$this->response->setVal( 'isWatched', $wallMessage->isWatched( $this->wg->User ) || $this->request->getVal( 'new', false ) );
+		$isWatched = $wallMessage->isWatched( $this->wg->User ) || $this->request->getVal( 'new', false );
+		$this->response->setVal( 'isWatched', $isWatched );
 		$this->response->setVal( 'fullpageurl', $wallMessage->getMessagePageUrl() );
 		$this->response->setVal( 'kudosNumber', $wallMessage->getVoteCount() );
 
@@ -155,7 +168,7 @@ class ForumController extends WallBaseController {
 			$name = $lastReply->getUser()->getName();
 		}
 
-		if ( $lastReply->getUser()->getId() == 0 ) {// anynymous contributor
+		if ( $lastReply->getUser()->isAnon() ) {
 			$displayname = wfMessage( 'oasis-anon-user' )->escaped();
 			$displayname2 = $lastReply->getUser()->getName();
 			$url = Skin::makeSpecialUrl( 'Contributions' ) . '/' . $lastReply->getUser()->getName();
@@ -203,15 +216,16 @@ class ForumController extends WallBaseController {
 		$title = $this->wg->Title;
 		$pageHeading = wfMessage( 'forum-specialpage-heading' )->escaped();
 		$pageDescription = '';
-		$this->showStats = true;
+		$showStats = true;
+
 		$nameSpace = $title->getNamespace();
 		if ( $nameSpace === NS_WIKIA_FORUM_BOARD ) {
-			$this->showStats = false;
+			$showStats = false;
 			$pageHeading = wfMessage( 'forum-board-title', $title->getText() )->escaped();
 			$board = ForumBoard::newFromTitle( $title );
 			$pageDescription = $board->getDescription();
 		} else if ( $nameSpace === NS_USER_WALL_MESSAGE ) {
-			$this->showStats = false;
+			$showStats = false;
 			$messageKey = $title->getText();
 			$message = WallMessage::newFromId( $messageKey );
 			if ( !empty( $message ) ) {
@@ -220,8 +234,9 @@ class ForumController extends WallBaseController {
 			}
 		}
 
-		$this->pageHeading = $pageHeading;
-		$this->pageDescription = $pageDescription;
+		$this->response->setVal('showStats', $showStats);
+		$this->response->setVal('pageHeading', $pageHeading);
+		$this->response->setVal('pageDescription', $pageDescription);
 	}
 
 	public function threadMessage() {
@@ -357,7 +372,7 @@ class ForumController extends WallBaseController {
 		$this->response->addAsset( 'extensions/wikia/Forum/css/ForumOld.scss' );
 
 		$forumTitle = SpecialPage::getTitleFor( 'Forum' );
-		$this->forumUrl = $forumTitle->getLocalUrl();
+		$this->response->setVal( 'forumUrl', $forumTitle->getLocalUrl() );
 		return true;
 	}
 
