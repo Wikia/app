@@ -73,7 +73,7 @@ class PortableInfoboxRenderService extends WikiaService {
 					}
 
 					if ( $helper->isTypeSupportedInTemplates( $type, self::getTemplates() ) ) {
-						$infoboxHtmlContent .= $this->renderItem( $type, $data );
+						$infoboxHtmlContent .= $this->renderItem( $type, $data, $theme );
 					};
 			}
 		}
@@ -171,10 +171,11 @@ class PortableInfoboxRenderService extends WikiaService {
 	 *
 	 * @param string $type
 	 * @param array $data
+	 * @param string $theme
 	 *
 	 * @return bool|string - HTML
 	 */
-	private function renderItem( $type, array $data ) {
+	private function renderItem( $type, array $data, $theme ) {
 		global $wgEnableSeoFriendlyImagesForMobile;
 
 		$helper = new PortableInfoboxRenderServiceHelper();
@@ -184,7 +185,7 @@ class PortableInfoboxRenderService extends WikiaService {
 
 			for ( $i = 0; $i < count($data); $i++ ) {
 				$data[$i][ 'context' ] = self::MEDIA_CONTEXT_INFOBOX;
-				$data[$i] = $helper->extendImageData( $data[$i] );
+				$data[$i] = $helper->extendImageData( $data[$i], $theme );
 
 				if ( !!$data[$i] ) {
 					$images[] = $data[$i];
