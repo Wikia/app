@@ -33,6 +33,7 @@ class Forum extends Walls {
 		$boards = [ ];
 		arsort( $orderIndexes );
 		foreach ( array_keys( $orderIndexes ) as $pageId ) {
+			/** @var Title $title */
 			$title = $titlesBatch->getById( $pageId );
 
 			if ( empty( $title ) ) {
@@ -42,7 +43,6 @@ class Forum extends Walls {
 
 			/** @var $board ForumBoard */
 			$board = ForumBoard::newFromTitle( $title );
-			$title = $board->getTitle();
 
 			$boardInfo = $board->getBoardInfo();
 			$boardInfo['id'] = $title->getArticleID();
