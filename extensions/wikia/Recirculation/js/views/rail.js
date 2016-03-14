@@ -23,7 +23,9 @@ define('ext.wikia.recirculation.views.rail', [
 			tracker.trackVerboseImpression(experimentName, 'rail');
 
 			$html.on('mousedown', 'a', function() {
-				tracker.trackVerboseClick(experimentName, 'rail');
+				var slot = $(this).parent().index() + 1,
+					label = 'rail=slot-' + slot;
+				tracker.trackVerboseClick(experimentName, label);
 			});
 		}
 	}
