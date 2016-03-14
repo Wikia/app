@@ -153,6 +153,9 @@ class DumpStarters extends Maintenance {
 				$this->dumpStarter($starter);
 			}
 			catch (Exception $ex) {
+				Wikia\Logger\WikiaLogger::instance()->error( __METHOD__, [
+					'exception' => $ex,
+				] );
 				$this->output( " \t[err] {$ex->getMessage()}" );
 			}
 		}
