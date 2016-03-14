@@ -307,7 +307,7 @@ class PortableInfoboxRenderServiceHelperTest extends WikiaBaseTest {
 	 * @param $description
 	 * @dataProvider testGetImageSizesForThumbnailerDataProvider
 	 */
-	public function testGetImageSizesForThumbnailer( $mockParams, $isWikiaMobile, $wgPortableInfoboxCustomImageWidth, $result, $description ) {
+	public function testGetImageSizesForThumbnailer( $mockParams, $isWikiaMobile, $theme, $wgPortableInfoboxCustomImageWidth, $result, $description ) {
 		$this->mockGlobalVariable('wgPortableInfoboxCustomImageWidth', $wgPortableInfoboxCustomImageWidth);
 		$mock = $this->getMockBuilder( 'Wikia\PortableInfobox\Helpers\PortableInfoboxRenderServiceHelper' )
 			->setMethods( [ 'isWikiaMobile' ] )
@@ -318,7 +318,7 @@ class PortableInfoboxRenderServiceHelperTest extends WikiaBaseTest {
 
 		$this->assertEquals(
 			$result,
-			$mock->getImageSizesForThumbnailer( $file ),
+			$mock->getImageSizesForThumbnailer( $file, $theme ),
 			$description
 		);
 	}
@@ -331,10 +331,11 @@ class PortableInfoboxRenderServiceHelperTest extends WikiaBaseTest {
 					'fileWidth' => 3000
 				],
 				'isWikiaMobile' => false,
+				'theme' => '',
 				'wgPortableInfoboxCustomImageWidth' => null,
 				'result' => [
 					'height' => 500,
-					'width' => 300
+					'width' => 270
 				],
 				'description' => 'Big image on desktop'
 			],
@@ -344,10 +345,11 @@ class PortableInfoboxRenderServiceHelperTest extends WikiaBaseTest {
 					'fileWidth' => 250
 				],
 				'isWikiaMobile' => false,
+				'theme' => '',
 				'wgPortableInfoboxCustomImageWidth' => null,
 				'result' => [
 					'height' => 500,
-					'width' => 300
+					'width' => 270
 				],
 				'description' => 'Tall image on desktop'
 			],
@@ -357,10 +359,11 @@ class PortableInfoboxRenderServiceHelperTest extends WikiaBaseTest {
 					'fileWidth' => 2000
 				],
 				'isWikiaMobile' => false,
+				'theme' => '',
 				'wgPortableInfoboxCustomImageWidth' => null,
 				'result' => [
 					'height' => 200,
-					'width' => 300
+					'width' => 270
 				],
 				'description' => 'Wide image on desktop'
 			],
@@ -370,10 +373,11 @@ class PortableInfoboxRenderServiceHelperTest extends WikiaBaseTest {
 					'fileWidth' => 45
 				],
 				'isWikiaMobile' => false,
+				'theme' => '',
 				'wgPortableInfoboxCustomImageWidth' => null,
 				'result' => [
 					'height' => 50,
-					'width' => 300
+					'width' => 270
 				],
 				'description' => 'Small image on desktop'
 			],
@@ -383,6 +387,7 @@ class PortableInfoboxRenderServiceHelperTest extends WikiaBaseTest {
 					'fileWidth' => 3000
 				],
 				'isWikiaMobile' => true,
+				'theme' => '',
 				'wgPortableInfoboxCustomImageWidth' => null,
 				'result' => [
 					'height' => null,
@@ -396,6 +401,7 @@ class PortableInfoboxRenderServiceHelperTest extends WikiaBaseTest {
 					'fileWidth' => 250
 				],
 				'isWikiaMobile' => true,
+				'theme' => '',
 				'wgPortableInfoboxCustomImageWidth' => null,
 				'result' => [
 					'height' => null,
@@ -409,6 +415,7 @@ class PortableInfoboxRenderServiceHelperTest extends WikiaBaseTest {
 					'fileWidth' => 2000
 				],
 				'isWikiaMobile' => true,
+				'theme' => '',
 				'wgPortableInfoboxCustomImageWidth' => null,
 				'result' => [
 					'height' => null,
@@ -422,6 +429,7 @@ class PortableInfoboxRenderServiceHelperTest extends WikiaBaseTest {
 					'fileWidth' => 45
 				],
 				'isWikiaMobile' => true,
+				'theme' => '',
 				'wgPortableInfoboxCustomImageWidth' => null,
 				'result' => [
 					'height' => null,
@@ -435,6 +443,7 @@ class PortableInfoboxRenderServiceHelperTest extends WikiaBaseTest {
 					'fileWidth' => 3000
 				],
 				'isWikiaMobile' => false,
+				'theme' => '',
 				'wgPortableInfoboxCustomImageWidth' => 400,
 				'result' => [
 					'height' => 2000,
@@ -448,6 +457,7 @@ class PortableInfoboxRenderServiceHelperTest extends WikiaBaseTest {
 					'fileWidth' => 250
 				],
 				'isWikiaMobile' => false,
+				'theme' => '',
 				'wgPortableInfoboxCustomImageWidth' => 400,
 				'result' => [
 					'height' => 3000,
@@ -461,6 +471,7 @@ class PortableInfoboxRenderServiceHelperTest extends WikiaBaseTest {
 					'fileWidth' => 2000
 				],
 				'isWikiaMobile' => false,
+				'theme' => '',
 				'wgPortableInfoboxCustomImageWidth' => 400,
 				'result' => [
 					'height' => 200,
@@ -474,12 +485,27 @@ class PortableInfoboxRenderServiceHelperTest extends WikiaBaseTest {
 					'fileWidth' => 3000
 				],
 				'isWikiaMobile' => true,
+				'theme' => '',
 				'wgPortableInfoboxCustomImageWidth' => 400,
 				'result' => [
 					'height' => null,
 					'width' => 360
 				],
 				'description' => 'Big image on mobile with custom image width'
+			],
+			[
+				'mockParams' => [
+					'fileHeight' => 2000,
+					'fileWidth' => 3000
+				],
+				'isWikiaMobile' => false,
+				'theme' => 'europa',
+				'wgPortableInfoboxCustomImageWidth' => null,
+				'result' => [
+					'height' => 500,
+					'width' => 300
+				],
+				'description' => 'Big image on desktop with europa theme'
 			],
 		];
 	}
@@ -496,7 +522,7 @@ class PortableInfoboxRenderServiceHelperTest extends WikiaBaseTest {
 	 * @param $description
 	 * @dataProvider testGetImageSizesToDisplayDataProvider
 	 */
-	public function testGetImageSizesToDisplay( $thumbnailSizes, $isWikiaMobile, $wgPortableInfoboxCustomImageWidth, $result, $description ) {
+	public function testGetImageSizesToDisplay( $thumbnailSizes, $isWikiaMobile, $theme, $wgPortableInfoboxCustomImageWidth, $result, $description ) {
 		$this->mockGlobalVariable('wgPortableInfoboxCustomImageWidth', $wgPortableInfoboxCustomImageWidth);
 		$mock = $this->getMockBuilder( 'Wikia\PortableInfobox\Helpers\PortableInfoboxRenderServiceHelper' )
 			->setMethods( [ 'isWikiaMobile' ] )
@@ -507,7 +533,7 @@ class PortableInfoboxRenderServiceHelperTest extends WikiaBaseTest {
 
 		$this->assertEquals(
 			$result,
-			$mock->getImageSizesToDisplay( $thumbnailMock ),
+			$mock->getImageSizesToDisplay( $thumbnailMock, $theme ),
 			$description
 		);
 	}
@@ -520,6 +546,7 @@ class PortableInfoboxRenderServiceHelperTest extends WikiaBaseTest {
 					'width' => 270
 				],
 				'isWikiaMobile' => false,
+				'theme' => '',
 				'wgPortableInfoboxCustomImageWidth' => null,
 				'result' => [
 					'height' => 500,
@@ -533,6 +560,7 @@ class PortableInfoboxRenderServiceHelperTest extends WikiaBaseTest {
 					'width' => 540
 				],
 				'isWikiaMobile' => false,
+				'theme' => '',
 				'wgPortableInfoboxCustomImageWidth' => 540,
 				'result' => [
 					'height' => 500,
@@ -546,10 +574,11 @@ class PortableInfoboxRenderServiceHelperTest extends WikiaBaseTest {
 					'width' => 540
 				],
 				'isWikiaMobile' => false,
+				'theme' => '',
 				'wgPortableInfoboxCustomImageWidth' => 540,
 				'result' => [
-					'height' => 278,
-					'width' => 300
+					'height' => 250,
+					'width' => 270
 				],
 				'description' => 'Regular thumbnail image on desktop with double custom width; landscape'
 			],
@@ -559,6 +588,7 @@ class PortableInfoboxRenderServiceHelperTest extends WikiaBaseTest {
 					'width' => 270
 				],
 				'isWikiaMobile' => true,
+				'theme' => '',
 				'wgPortableInfoboxCustomImageWidth' => null,
 				'result' => [
 					'height' => 250,
@@ -573,6 +603,7 @@ class PortableInfoboxRenderServiceHelperTest extends WikiaBaseTest {
 
 				],
 				'isWikiaMobile' => true,
+				'theme' => '',
 				'wgPortableInfoboxCustomImageWidth' => 540,
 				'result' => [
 					'height' => 360,
@@ -586,6 +617,7 @@ class PortableInfoboxRenderServiceHelperTest extends WikiaBaseTest {
 					'width' => 360
 				],
 				'isWikiaMobile' => true,
+				'theme' => '',
 				'wgPortableInfoboxCustomImageWidth' => 540,
 				'result' => [
 					'height' => 270,
@@ -593,20 +625,35 @@ class PortableInfoboxRenderServiceHelperTest extends WikiaBaseTest {
 				],
 				'description' => 'Regular thumbnail image on desktop with double custom width; landscape; logical size = physical size'
 			],
-				[
-					'thumbnailSizes' => [
-							'height' => 600,
-							'width' => 210
-					],
-					'isWikiaMobile' => false,
-					'wgPortableInfoboxCustomImageWidth' => 540,
-					'result' => [
-							'height' => 500,
-							'width' => 175
-					],
-					'description' => 'Regular thumbnail image on desktop with double custom width; portrait extra
-					thin image edge case'
-				]
+			[
+				'thumbnailSizes' => [
+						'height' => 600,
+						'width' => 210
+				],
+				'isWikiaMobile' => false,
+				'theme' => '',
+				'wgPortableInfoboxCustomImageWidth' => 540,
+				'result' => [
+						'height' => 500,
+						'width' => 175
+				],
+				'description' => 'Regular thumbnail image on desktop with double custom width; portrait extra
+				thin image edge case'
+			],
+			[
+				'thumbnailSizes' => [
+					'height' => 500,
+					'width' => 300
+				],
+				'isWikiaMobile' => false,
+				'theme' => 'europa',
+				'wgPortableInfoboxCustomImageWidth' => null,
+				'result' => [
+					'height' => 500,
+					'width' => 300
+				],
+				'description' => 'Regular thumbnail image on desktop with theme europa'
+			],
 		];
 	}
 }
