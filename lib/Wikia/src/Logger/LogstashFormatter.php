@@ -14,6 +14,11 @@ use Exception;
 class LogstashFormatter extends \Monolog\Formatter\LogstashFormatter implements DevModeFormatterInterface {
 	private $devMode = false;
 
+	public function __construct() {
+		// prevent "Undefined variable: applicationName" notice
+		parent::__construct(null);
+	}
+
 	public function enableDevMode() {
 		$this->devMode = true;
 	}
@@ -57,7 +62,15 @@ class LogstashFormatter extends \Monolog\Formatter\LogstashFormatter implements 
 		return $message;
 	}
 
-	protected function normalizeException(Exception $e) {
+	/**
+	 * @param Exception}Throwable $e
+	 * @return array
+	 */
+	protected function normalizeException($e) {
+		if (!$e instanceof Exception && !$e instanceof \Throwable) {
+			throw new \InvalidArgumentException('Exception/Throwable expected, got '.gettype($e).' / '.get_class($e));
+		}
+
 		$data = array(
 			'class' => get_class($e),
 			'message' => $e->getMessage(),

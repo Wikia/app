@@ -40,7 +40,9 @@ if ( !$allowRobots ) {
 	$robots->disallowNamespace( NS_TEMPLATE );
 	$robots->disallowNamespace( NS_TEMPLATE_TALK );
 
-	//$robots->allowSpecialPage( 'Allpages' ); // TODO: SEO-64
+	if ( !empty( $wgEnableLocalSitemap ) ) {
+		$robots->allowSpecialPage( 'Allpages' );
+	}
 	$robots->allowSpecialPage( 'CreateNewWiki' );
 	$robots->allowSpecialPage( 'Forum' );
 	$robots->allowSpecialPage( 'Sitemap' );
@@ -57,6 +59,17 @@ if ( !$allowRobots ) {
 	$robots->disallowParam( 'printable' );
 	$robots->disallowParam( 'useskin' );
 	$robots->disallowParam( 'uselang' );
+
+	// SEO-302: Allow Googlebot to crawl Android app contents
+	// @see http://developer.android.com/training/app-indexing/enabling-app-indexing.html)
+	// The order of precedence between those two is undefined:
+	// "Disallow: /*?*action=" and "Allow: /api.php"
+	// @see https://developers.google.com/webmasters/control-crawl-index/docs/robots_txt#order-of-precedence-for-group-member-records
+	// That's why we're adding quite explicit "Allow: /api.php?*action=" (even though it's redundant)
+	// robots.txt Tester in Google Search Console shows this will do:
+	// @see https://www.google.com/webmasters/tools/robots-testing-tool?hl=en&siteUrl=http://muppet.wikia.com/
+	$robots->allowPath( '/api.php?' );
+	$robots->allowPath( '/api.php?*action=' );
 
 	// Nasty robots
 	$robots->blockRobot( 'IsraBot' );

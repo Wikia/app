@@ -4,7 +4,7 @@ namespace Wikia\PortableInfoboxBuilder\Nodes;
 
 abstract class Node {
 	/**
-	 * @var array of string
+	 * @var array of attribute => array of accepted values, empty array = all values
 	 */
 	protected $allowedAttributes = [ ];
 
@@ -51,7 +51,7 @@ abstract class Node {
 		$requiredChildren = array_flip( $this->requiredChildNodes );
 		foreach ( $this->xmlNode->children() as $childNode ) {
 			if ( in_array( $childNode->getName(), $this->requiredChildNodes ) ) {
-				unset( $requiredChildren[$childNode->getName()] );
+				unset( $requiredChildren[ $childNode->getName() ] );
 			}
 		}
 		return empty( $requiredChildren );
@@ -66,12 +66,12 @@ abstract class Node {
 
 		$data = $this->getChildrenAsJsonObjects();
 
-		if(!empty($data)) {
+		if ( !empty( $data ) ) {
 			$result->data = $data;
 		}
 		$type = $this->getType();
-		if(!empty($type)) {
-			$result->type= $type;
+		if ( !empty( $type ) ) {
+			$result->type = $type;
 		}
 
 		return $result;
@@ -83,16 +83,23 @@ abstract class Node {
 
 	protected function hasValidAttributes() {
 		foreach ( $this->xmlNode->attributes() as $attribute => $value ) {
-			if ( !in_array( $attribute, $this->allowedAttributes ) ) {
+			if ( !isset( $this->allowedAttributes[ $attribute ] )
+				 || !$this->hasValidAttributeValues( $attribute, $value )
+			) {
 				return false;
 			}
 		}
 		return true;
 	}
 
+	protected function hasValidAttributeValues( $attribute, $value ) {
+		return empty( $this->allowedAttributes[ $attribute ] )
+			   || in_array( $value, $this->allowedAttributes[ $attribute ] );
+	}
+
 	protected function hasValidChildren() {
 		foreach ( $this->xmlNode->children() as $childNode ) {
-			if ( !in_array( $childNode->getName(), $this->allowedChildNodes) ) {
+			if ( !in_array( $childNode->getName(), $this->allowedChildNodes ) ) {
 				return false;
 			}
 
@@ -108,8 +115,8 @@ abstract class Node {
 	 * @return array
 	 * @throws \Wikia\PortableInfobox\Parser\Nodes\UnimplementedNodeException
 	 */
-	public function getChildrenAsJsonObjects() {
-		$data = [];
+	protected function getChildrenAsJsonObjects() {
+		$data = [ ];
 
 		foreach ( $this->xmlNode->children() as $childNode ) {
 			$builderNode = NodeBuilder::createFromNode( $childNode );

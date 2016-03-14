@@ -32,6 +32,17 @@ class RobotsTxt {
 	}
 
 	/**
+	 * Allow a specific path
+	 *
+	 * It emits the Allow directive
+	 *
+	 * @param string $path path prefix to allow (some robots accept wildcards)
+	 */
+	public function allowPath( $path ) {
+		$this->allowed[] = $path;
+	}
+
+	/**
 	 * Disallow a specific robot to crawl all the pages
 	 *
 	 * @param string $robot User-agent (fragment) of the robot

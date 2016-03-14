@@ -75,3 +75,10 @@ a {
 	border-color: $color-page;
 	color: $color-text;
 }
+
+// Customization for Special:Allpages
+.mw-special-Allpages {
+	#mw-content-text a span {
+		color: $color-text;
+	}
+}
