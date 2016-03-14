@@ -19,8 +19,8 @@ class UserFeedbackStorageApiController extends WikiaApiController {
 	 * @throws MissingParameterApiException
 	 */
 	public function saveUserFeedback() {
+		$this->checkWriteRequest();
 		$request = $this->getRequest();
-		$this->verifyRequest( $request );
 
 		$requestParams = $this->getRequestParams( $request );
 
@@ -32,20 +32,6 @@ class UserFeedbackStorageApiController extends WikiaApiController {
 		}
 
 		$this->response->setVal( 'status', $status );
-	}
-
-	/**
-	 * Verifies if a request was posted and comes from a wikia's domain.
-	 * @param IRequest $request
-	 * @return bool
-	 * @throws BadRequestApiException
-	 */
-	private function verifyRequest( IRequest $request ) {
-		if ( $request->wasPosted() && preg_match( '/wikia(\-dev)?\.com$/', $_SERVER['HTTP_HOST'] ) ) {
-			return true;
-		} else {
-			throw new BadRequestApiException;
-		}
 	}
 
 	/**
