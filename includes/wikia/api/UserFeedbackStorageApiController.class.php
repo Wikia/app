@@ -39,7 +39,7 @@ class UserFeedbackStorageApiController extends WikiaApiController {
 	 * @responseParam string editToken
 	 */
 	public function getEditToken() {
-		$this->response->setFormat('json');
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 		$this->response->setVal( 'token', $this->getContext()->getUser()->getEditToken() );
 	}
 
