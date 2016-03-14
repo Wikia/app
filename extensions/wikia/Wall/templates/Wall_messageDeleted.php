@@ -1,16 +1,18 @@
-<header id="WikiaPageHeader" class="WikiaPageHeader separator">
-	<h1><?= wfMsg('wall-deleted-msg-pagetitle'); ?></h1>
+<header id="pageHeader" class="page-header separator">
+	<h1><?= wfMessage( 'wall-deleted-msg-pagetitle' )->escaped() ?></h1>
 </header>
 <div class="WikiaArticle" id="WikiaArticle">
-	<?= wfMsg('wall-deleted-msg-text'); ?>
-	<?php if(!empty($wallUrl)): ?>
+	<?= wfMessage( 'wall-deleted-msg-text' )->escaped(); ?>
+
+	<?php if ( !empty( $wallUrl ) ) { ?>
 		<a href="<?= $wallUrl ?>"><?=  $returnTo ?></a>
-	<?php endif; ?>
-	<?php if($showViewLink): ?>
+	<?php }
+
+	if ( $showViewLink ) { ?>
 		<p>
-			<a href="<?php echo $viewUrl; ?>" >
-				<?php echo wfMsg('wall-deleted-msg-view'); ?>
+			<a href="<?= $viewUrl ?>">
+				<?= wfMessage( 'wall-deleted-msg-view' )->escaped() ?>
 			</a>
 		</p> 
-	<?php endif; ?>
+	<?php } ?>
 </div>

@@ -25,6 +25,10 @@ $wgExtensionMessagesFiles['WikiaNewFilesAliases'] = __DIR__ . '/WikiaNewFiles.al
 $wgAutoloadClasses['WikiaNewFilesSpecialController'] = __DIR__ . '/WikiaNewFilesSpecialController.class.php';
 $wgAutoloadClasses['WikiaNewFilesGallery'] = __DIR__ . '/WikiaNewFilesGallery.class.php';
 $wgAutoloadClasses['WikiaNewFilesModel'] = __DIR__ . '/WikiaNewFilesModel.class.php';
+$wgAutoloadClasses['WikiaNewFilesHooks'] = __DIR__ . '/WikiaNewFilesHooks.class.php';
+
+// Hooks
+$wgHooks['PageHeaderIndexExtraButtons'][] = 'WikiaNewFilesHooks::onPageHeaderIndexExtraButtons';
 
 // Special page registration
 $wgSpecialPages['Images'] = 'WikiaNewFilesSpecialController';

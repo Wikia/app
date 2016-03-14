@@ -70,7 +70,7 @@ jQuery(function ($) {
 			return;
 		}
 
-		$('#WikiaPageHeader').on('mousedown', 'a', function (e) {
+		$('#pageHeader').on('mousedown', 'a', function (e) {
 			var label,
 				el = $(e.currentTarget),
 				id = el.data('id');
@@ -216,48 +216,6 @@ jQuery(function ($) {
 			});
 		}
 	})();
-
-	/** contribute **/
-
-	$wikiHeader.find('.buttons .contribute').on('mousedown', 'a', function (e) {
-		var label,
-			el = $(e.target),
-			id = el.data('id');
-
-		// Primary mouse button only
-		if (e.which !== 1) {
-			return;
-		}
-
-		switch (id) {
-		case 'createpage':
-			label = 'add-a-page';
-			break;
-		case 'edit':
-			label = 'edit-a-page';
-			break;
-		case 'upload':
-			label = 'add-a-photo';
-			break;
-		case 'wikiavideoadd':
-			label = 'add-a-video';
-			break;
-		case 'wikiactivity':
-			label = 'wiki-activity';
-			break;
-		case 'wikinavedit':
-			label = 'edit-wiki-navigation';
-			break;
-		}
-
-		if (label !== undefined) {
-			track({
-				browserEvent: e,
-				category: 'contribute',
-				label: label
-			});
-		}
-	});
 
 	/** recent-changes **/
 
@@ -681,6 +639,47 @@ jQuery(function ($) {
 				track({
 					browserEvent: e,
 					category: 'recent-wiki-activity',
+					label: label
+				});
+			}
+		});
+
+		/** contribute **/
+		$wikiaRail.find('.buttons .contribute').on('mousedown', 'a', function (e) {
+			var label,
+				el = $(e.target),
+				id = el.data('id');
+
+			// Primary mouse button only
+			if (e.which !== 1) {
+				return;
+			}
+
+			switch (id) {
+				case 'createpage':
+					label = 'add-a-page';
+					break;
+				case 'edit':
+					label = 'edit-a-page';
+					break;
+				case 'upload':
+					label = 'add-a-photo';
+					break;
+				case 'wikiavideoadd':
+					label = 'add-a-video';
+					break;
+				case 'wikiactivity':
+					label = 'wiki-activity';
+					break;
+				case 'wikinavedit':
+					label = 'edit-wiki-navigation';
+					break;
+			}
+
+			if (label !== undefined) {
+				track({
+					browserEvent: e,
+					category: 'contribute',
 					label: label
 				});
 			}

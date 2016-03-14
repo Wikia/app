@@ -690,7 +690,8 @@ $dark-wiki: 1;
 // Responsive Quiz End
 
 /* Overwrites */
-.WikiaPageHeader h2,.commentslikes,.wikia-menu-button {
+.page-header h2,
+.wikia-menu-button {
 	display: none;
 }
 

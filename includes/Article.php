@@ -610,13 +610,24 @@ class Article extends Page {
 					} elseif( !wfRunHooks( 'ArticleViewCustom', array( $this->mContent, $this->getTitle(), $wgOut ) ) ) {
 						# Allow extensions do their own custom view for certain pages
 						$outputDone = true;
-					} else {
+					} else {	
+						// wikia change begin
+						// VOLDEV-145
+						// used to suppress "redirect page" subtitle
+						// which is re-implemented in PageHeaderController::executeIndex
+						$appendSubTitle = !F::app()->checkSkin( ['oasis'] );
+						// end wikia change;
+
 						$text = $this->getContent();
 						$rt = Title::newFromRedirectArray( $text );
 						if ( $rt ) {
 							wfDebug( __METHOD__ . ": showing redirect=no page\n" );
 							# Viewing a redirect page (e.g. with parameter redirect=no)
-							$wgOut->addHTML( $this->viewRedirect( $rt ) );
+							// begin wikia change
+							// VOLDEV-145
+							$wgOut->addHTML( $this->viewRedirect( $rt, $appendSubtitle ) );
+							// end wikia change
+
 							# Parse just to get categories, displaytitle, etc.
 							$this->mParserOutput = $wgParser->parse( $text, $this->getTitle(), $parserOptions );
 							$wgOut->addParserOutputNoText( $this->mParserOutput );

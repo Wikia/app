@@ -543,16 +543,13 @@ class WallHooksHelper {
 	/**
 	 * @brief Adds an action button on user talk archive page
 	 *
-	 * @param WikiaResponse $response
-	 * @param $ns
-	 * @param $skin
-	 * @return bool
+	 * @param array $button 'Edit' button and dropdown
+	 * @return bool true
 	 *
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
-	static public function onPageHeaderIndexAfterActionButtonPrepared( $response, $ns, $skin ) {
+	static public function onPageHeaderIndexAfterActionButtonPrepared( array &$button ) {
 		$app = F::App();
-		$helper = new WallHelper();
 
 		//return early instead wrap everything with brackets
 		if ( empty( $app->wg->EnableWallExt ) ) {
@@ -560,70 +557,50 @@ class WallHooksHelper {
 		}
 
 		$title = $app->wg->Title;
+		$ns = $title->getNamespace();
 		$parts = explode( '/', $title->getText() );
-		$action = $response->getVal( 'action' );
-		$dropdown = $response->getVal( 'dropdown' );
 		$canEdit = $app->wg->User->isAllowed( 'editwallarchivedpages' );
 
-		if ( $title->isSubpage() && !empty( $parts[ 1 ] ) ) {
+		if (
+			$ns === NS_USER_WALL
+			&& $title->isSubpage()
+			&& !empty( $parts[1] )
+		) {
+			$helper = new WallHelper();
+			$parts1 = mb_strtolower( str_replace( ' ', '_', $parts[1] ) );
+			$archiveSubPageText = mb_strtolower( $helper->getArchiveSubPageText() );			
+
 			// user talk archive
-			if ($ns === NS_USER_WALL
-				&& mb_strtolower( str_replace( ' ', '_', $parts[ 1 ] ) ) === mb_strtolower( $helper->getArchiveSubPageText())){
-
+			if ( $parts1 === $archiveSubPageText ){
 				$userTalkPageTitle = $helper->getTitle( NS_USER_TALK );
-				$action = self::getAction( $userTalkPageTitle, $canEdit );
-				$dropdown = self::getDropDown( $userTalkPageTitle );
-			}
-
 			// subpage
-			if($title->getNamespace() === NS_USER_WALL
-				&& mb_strtolower( str_replace( ' ', '_', $parts[ 1 ] ) ) !== mb_strtolower( $helper->getArchiveSubPageText())){
-
+			} else {
 				$userTalkPageTitle = $helper->getTitle( NS_USER_TALK, $parts[ 1 ] );
-				$action = self::getAction( $userTalkPageTitle, $canEdit );
-				$dropdown = self::getDropDown( $userTalkPageTitle );
 			}
+
+			$button['action'] = [
+				'class' => '',
+				'text' => wfMessage( 'viewsource' )->escaped(),
+				'href' => $userTalkPageTitle->getLocalUrl( [ 'action' => 'edit' ] ),
+			];
+
+			$button['image'] = MenuButtonController::LOCK_ICON;
+
+			$button['dropdown'] = [
+				'history' => [
+					'href' => $userTalkPageTitle->getLocalUrl( [ 'action' => 'history' ] ),
+					'text' => wfMessage( 'history_short' )->escaped(),
+				],
+			];
+
+			if ( $canEdit ) {
+				$button['action']['text'] = wfMessage( 'edit' )->escaped();
+				$button['action']['id'] = 'talkArchiveEditButton';
+				$button['image'] = MenuButtonController::EDIT_ICON;
+			}	
 		}
-		// update the response object with any changes
-		$response->setVal( 'action', $action );
-		$response->setVal( 'dropdown', $dropdown );
 		return true;
 	}
-
-	/**
-	 * @param Title $userTalkPageTitle
-	 * @param $canEdit
-	 * @return array
-	 */
-	private static function getAction( Title $userTalkPageTitle, $canEdit ) {
-		$action = [
-			'class' => '',
-			'text' => wfMessage( 'viewsource' )->text(),
-			'href' => $userTalkPageTitle->getLocalUrl( [ 'action' => 'edit' ] ),
-		];
-
-		if ( $canEdit ) {
-			$action[ 'text' ] = wfMessage( 'edit' )->text();
-			$action[ 'id' ] = 'talkArchiveEditButton';
-			return $action;
-		}
-		return $action;
-	}
-
-	/**
-	 * @param Title $userTalkPageTitle
-	 * @return array
-	 */
-	private static function getDropDown( Title $userTalkPageTitle ) {
-		$dropdown = [
-			'history' => [
-				'href' => $userTalkPageTitle->getLocalUrl( [ 'action' => 'history' ] ),
-				'text' => wfMessage( 'history_short' )->text(),
-			],
-		];
-		return $dropdown;
-	}
-
 
 	/**
 	 * @brief Redirects to current title if it is in NS_USER_WALL namespace
@@ -1827,8 +1804,8 @@ class WallHooksHelper {
 	 *
 	 * @return true
 	 */
-	static public function onPageHeaderEditPage( $pageHeaderModule, $ns, $isPreview, $isShowChanges, $isDiff, $isEdit, $isHistory ) {
-		if (  WallHelper::isWallNamespace( $ns ) && $isDiff ) {
+	static public function onPageHeaderEditPage( PageHeaderController $pageHeaderModule, $ns, $isPreview, $isShowChanges, $isDiff, $isEdit, $isHistory ) {
+		if ( WallHelper::isWallNamespace( $ns ) && $isDiff ) {
 			$app = F::App();
 
 			$app->wg->Out->addExtensionStyle( AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/Wall/css/WallDiffPage.scss' ) );

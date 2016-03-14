@@ -2,7 +2,7 @@ var GeoEnableButton = {
 	offButton: null,
 	onButton: null,
 	init: function() {
-		$('#WikiaPageHeader').
+		$('#pageHeader').
 			delegate('a[data-id="places-category-switch-off"]', 'click', GeoEnableButton.switchOn).
 			delegate('a[data-id="places-category-switch-on"]', 'click', GeoEnableButton.switchOff);
 	},

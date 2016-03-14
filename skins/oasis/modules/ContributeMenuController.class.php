@@ -19,9 +19,11 @@ class ContributeMenuController extends WikiaController {
 	public function executeIndex() {
 		// add "edit this page" item
 		$dropdownItems = array();
-		$content_actions = $this->app->getSkinTemplateObj()->data[ 'content_actions' ];
-		if ( isset($content_actions[ 'edit' ] ) ) {
-			$dropdownItems[ 'edit' ] = $this->getEditPageItem( $content_actions[ 'edit' ][ 'href' ] );
+		$title = $this->wg->title;
+		$user = $this->wg->user;
+
+		if ($title->quickUserCan( 'edit', $user ) && ( $title->exists() || $title->quickUserCan( 'create', $user ) )) {
+			$dropdownItems[ 'edit' ] = $this->getEditPageItem( $title->getLocalURL( [ 'action' => 'edit' ] ) );
 		}
 
 		// menu items linking to special pages
