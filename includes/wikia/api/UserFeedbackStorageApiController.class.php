@@ -16,6 +16,7 @@ class UserFeedbackStorageApiController extends WikiaApiController {
 	 * @requestParam string feedback
 	 * @requestParam int feedback_impression_count
 	 * @requestParam int feedback_previous_count
+	 * @responseParam bool status
 	 * @throws MissingParameterApiException
 	 */
 	public function saveUserFeedback() {
@@ -32,6 +33,13 @@ class UserFeedbackStorageApiController extends WikiaApiController {
 		}
 
 		$this->response->setVal( 'status', $status );
+	}
+
+	/**
+	 * @responseParam string editToken
+	 */
+	public function getEditToken() {
+		$this->response->setVal( 'token', $this->getContext()->getUser()->getEditToken() );
 	}
 
 	/**
