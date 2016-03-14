@@ -19,8 +19,8 @@ class UserFeedbackStorageApiController extends WikiaApiController {
 	 * @throws MissingParameterApiException
 	 */
 	public function saveUserFeedback() {
-		$this->checkWriteRequest();
 		$request = $this->getRequest();
+		$this->verifyRequest( $request );
 
 		$requestParams = $this->getRequestParams( $request );
 
@@ -35,6 +35,20 @@ class UserFeedbackStorageApiController extends WikiaApiController {
 	}
 
 	/**
+	 * Verifies if a request was posted and comes from a wikia's domain.
+	 * @param IRequest $request
+	 * @return bool
+	 * @throws BadRequestApiException
+	 */
+	private function verifyRequest( IRequest $request ) {
+		if ( $request->wasPosted() && preg_match( '/wikia(\-dev)?\.com$/', $_SERVER['HTTP_HOST'] ) ) {
+			return true;
+		} else {
+			throw new BadRequestApiException;
+		}
+	}
+
+	/**
 	 * @param IRequest $request
 	 * @return array
 	 * @throws MissingParameterApiException
@@ -43,7 +57,6 @@ class UserFeedbackStorageApiController extends WikiaApiController {
 		$requestParams = [];
 		$positiveIntRequired = [
 			'experimentId' => 'experiment_id',
-			'variationId' => 'variation_id',
 			'wikiId' => 'wiki_id',
 			'pageId' => 'page_id',
 		];
@@ -59,7 +72,8 @@ class UserFeedbackStorageApiController extends WikiaApiController {
 		}
 
 		$requestParams = $requestParams + [
-				'user_id' => $request->getInt( 'userId' ),
+				'user_id' => $this->getContext()->getUser()->getId(),
+				'variation_id' => $this->getInt( 'variationId' ),
 				'feedback' => $request->getVal( 'feedback', '' ),
 				'feedback_impressions_count' => $request->getInt( 'feedbackImpressionsCount' ),
 				'feedback_previous_count' => $request->getInt( 'feedbackPreviousCount' ),
