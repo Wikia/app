@@ -73,7 +73,7 @@ class UserFeedbackStorageApiController extends WikiaApiController {
 
 		$requestParams = $requestParams + [
 				'user_id' => $this->getContext()->getUser()->getId(),
-				'variation_id' => $this->getInt( 'variationId' ),
+				'variation_id' => $request->getInt( 'variationId' ),
 				'feedback' => $request->getVal( 'feedback', '' ),
 				'feedback_impressions_count' => $request->getInt( 'feedbackImpressionsCount' ),
 				'feedback_previous_count' => $request->getInt( 'feedbackPreviousCount' ),
