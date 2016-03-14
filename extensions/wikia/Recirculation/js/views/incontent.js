@@ -54,9 +54,7 @@ define('ext.wikia.recirculation.views.incontent', [
 			tracker.trackVerboseImpression(experimentName, 'in-content');
 
 			$html.on('mousedown', 'a', function() {
-				var slot = $(this).parent().index() + 1,
-					label = 'in-content=slot-' + slot;
-				tracker.trackVerboseClick(experimentName, label);
+				tracker.trackVerboseClick(experimentName, utils.buildLabel(this, 'in-content'));
 			});
 		}
 	}

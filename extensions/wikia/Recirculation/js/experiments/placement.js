@@ -96,9 +96,7 @@ require([
 	function setupLegacyTracking() {
 		tracker.trackVerboseImpression(experimentName, 'rail');
 		$(railSelector).on('mousedown', 'a', function() {
-			var slot = $(this).parent().index() + 1,
-				label = 'rail=slot-' + slot;
-			tracker.trackVerboseClick(experimentName, label);
+			tracker.trackVerboseClick(experimentName, utils.buildLabel(this, 'rail'));
 		});
 	}
 });
