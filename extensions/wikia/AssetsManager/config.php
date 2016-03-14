@@ -318,6 +318,7 @@ $config['oasis_jquery'] = array(
 		'//resources/wikia/libraries/jquery/store/jquery.store.js',
 		'//resources/wikia/libraries/jquery/throttle-debounce/jquery.throttle-debounce.js',
 		'//resources/wikia/libraries/jquery/floating-scrollbar/jquery.floating-scrollbar.js',
+		'//resources/wikia/libraries/jquery/scrolldepth/jquery.scrolldepth.js',
 
 		// Wikia plugins
 		'//resources/wikia/jquery.wikia.js',
