@@ -143,7 +143,7 @@ class GlobalNavigationAccountNavigationController extends WikiaController {
 		return wfMessage( 'global-navigation-account-navigation-options', [
 			Xml::element( 'a', [
 				'class' => $loginMarkupObj['class'], 'href' => $loginMarkupObj['href']
-			], $loginMarkupObj['title'] ),
+			], $loginMarkupObj['text'] ),
 			Xml::element( 'a',[
 				'class' => $registerMarkupObj['class'], 'href' => $registerMarkupObj['href']
 			], $registerMarkupObj['text'] )
@@ -168,7 +168,7 @@ class GlobalNavigationAccountNavigationController extends WikiaController {
 			if ($this->enableNewAuthModal) {
 				$userLoginHelper = new UserLoginHelper();
 				$this->personalUrls['login'] = [
-					'title' => wfMessage( 'global-navigation-sign-in' )->text(),
+					'text' => wfMessage( 'global-navigation-sign-in' )->text(),
 					'href' => $userLoginHelper->getNewAuthUrl('/signin'),
 					'class' => 'auth-link sign-in'
 				];
@@ -179,7 +179,7 @@ class GlobalNavigationAccountNavigationController extends WikiaController {
 				];
 			} else {
 				$this->personalUrls['login'] = [
-					'title' => wfMessage( 'login' )->text(),
+					'text' => wfMessage( 'login' )->text(),
 					'href' => Skin::makeSpecialUrl( 'UserLogin', $returnto ),
 					'class' => 'ajaxLogin table-cell'
 				];
@@ -190,7 +190,11 @@ class GlobalNavigationAccountNavigationController extends WikiaController {
 				];
 			}
 		} else {
-			$this->personalUrls[ 'userpage' ] = [ 'title' => $this->username . ' - ' . wfMessage( 'mypage' )->text(), 'href' => AvatarService::getUrl( $this->username ), 'class' => 'ajaxLogin table-cell' ];
+			$this->personalUrls[ 'userpage' ] = [
+				'text' => $this->username . ' - ' . wfMessage( 'mypage' )->text(),
+				'href' => AvatarService::getUrl( $this->username ),
+				'class' => 'ajaxLogin table-cell'
+			];
 		}
 	}
 }
