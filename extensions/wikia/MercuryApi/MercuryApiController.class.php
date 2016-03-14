@@ -224,9 +224,9 @@ class MercuryApiController extends WikiaController {
 	 * @desc Returns UA dimensions
 	 */
 	public function getTrackingDimensions() {
-		global $wgDBname, $wgUser, $wgCityId, $wgLanguageCode, $wgTitle;
+		global $wgDBname, $wgUser, $wgCityId, $wgLanguageCode;
 
-		$title = $wgTitle;
+		$title = $this->getTitleFromRequest();
 		$article = Article::newFromID( $title->getArticleId() );
 
 		if ( $article instanceof Article && $title->isRedirect() ) {
