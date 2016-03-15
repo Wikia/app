@@ -106,6 +106,8 @@ class PortableInfoboxBuilderHooks {
 	 * @return bool
 	 */
 	protected function shouldPassInfoboxBuilderVars( $context ) {
-		return ( new \Wikia\TemplateClassification\Permissions() )->shouldDisplayEntryPoint( $context->getUser(), $context->getTitle() ) && \RequestContext::getMain()->getRequest()->getVal( 'action' ) === 'edit' && !\PortableInfoboxBuilderHelper::isForcedSourceMode( $context->getRequest() );
+		return ( new \Wikia\TemplateClassification\Permissions() )->shouldDisplayEntryPoint( $context->getUser(), $context->getTitle() )
+			&& \RequestContext::getMain()->getRequest()->getVal( 'action' ) === 'edit'
+			&& !\PortableInfoboxBuilderHelper::isForcedSourceMode( $context->getRequest() );
 	}
 }
