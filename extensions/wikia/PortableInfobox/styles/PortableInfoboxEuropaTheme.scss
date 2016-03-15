@@ -13,23 +13,27 @@ $header-font-size: 16px;
 $header-line-height: 20px;
 $horizontal-group-label-spacing: 6px;
 $label-width: 88px;
+$list-item-line-height: 18px;
+$list-item-spacing: 8px;
 $tabber-lightness-condition: 30;
-$title-font-size: 24px;
-$title-line-height: 28px;
+$title-font-size: 20px;
+$title-line-height: 24px;
+$title-spacing: 12px;
 $white: #fff;
 
 // color mixes
-$background-color: mix($black, $color-page, $background-color-mix);
+// 5% color, 5% black/white, 90% background
+$background-color: mix(mix($color-buttons, $black, $background-color-mix * 5), $color-page, $background-color-mix);
 $horizontal-group-stripe-background: mix($black, $color-page, $background-color-mix * 2);
-$tabber-background-color: mix($black, $color-buttons, $background-color-mix * 4);
+$tabber-background-color: mix($color-buttons, $color-page, $background-color-mix * 3);
 
 @if $is-dark-wiki {
-	$background-color: mix($white, $color-page, $background-color-mix);
+	$background-color: mix(mix($color-buttons, $white, $background-color-mix * 5), $color-page, $background-color-mix);
 	$horizontal-group-stripe-background: mix($white, $color-page, $background-color-mix * 2);
 }
 
 @if lightness($color-buttons) < $tabber-lightness-condition {
-	$tabber-background-color: mix($white, $color-buttons, $background-color-mix * 4);
+	$tabber-background-color: mix($color-buttons, $white, $background-color-mix * 3);
 }
 
 .pi-theme-europa {
@@ -57,19 +61,23 @@ $tabber-background-color: mix($black, $color-buttons, $background-color-mix * 4)
 	.pi-header {
 		background-color: $color-buttons;
 		color: $color-button-text;
+		font-size: $header-font-size;
 		text-align: center;
+		a {
+			color: $white;
+			text-decoration: underline;
+		}
 	}
 
 	.pi-title {
 		font-size: $title-font-size;
 		font-weight: bold;
 		line-height: $title-line-height;
-		padding: $infobox-side-spacing;
+		padding: ($title-spacing + 2) $title-spacing ($title-spacing - 2) $title-spacing;
 	}
 
 	.pi-header,
 	.pi-image-collection-tabs {
-		font-size: $header-font-size;
 		line-height: $header-line-height;
 	}
 
@@ -97,6 +105,15 @@ $tabber-background-color: mix($black, $color-buttons, $background-color-mix * 4)
 
 	.pi-data-value {
 		padding-left: 0;
+
+		li {
+			line-height: $list-item-line-height;
+			padding-bottom: $list-item-spacing;
+		}
+
+		li:last-child {
+			padding-bottom: 0;
+		}
 	}
 
 	.pi-caption {
@@ -105,13 +122,12 @@ $tabber-background-color: mix($black, $color-buttons, $background-color-mix * 4)
 	}
 
 	.pi-image-collection-tabs {
-		background-color: $tabber-background-color;
-		color: $color-button-text;
+		background-color: $background-color;
 		margin: 0;
 		text-align: left;
 
 		.current {
-			background-color: $color-buttons;
+			background-color: $tabber-background-color;
 		}
 	}
 
