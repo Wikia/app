@@ -170,6 +170,8 @@ function doDumpBackup( $row, $path, array $args = [] ) {
 					'exception' => new Exception( 'putToAmazonS3 failed', $res ),
 					'row' => (array) $row,
 				] );
+
+				exit( 1 );
 			}
 		}
 	}
@@ -178,6 +180,8 @@ function doDumpBackup( $row, $path, array $args = [] ) {
 			'exception' => new Exception( $cmd, $status ),
 			'row' => (array) $row,
 		]);
+
+		exit( 2 );
 	}
 }
 
