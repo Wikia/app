@@ -17,7 +17,7 @@ class ForumTest extends WikiaBaseTest {
 		$wikiaPropsReturn = [ 1 => 4, 2 => 7, 3 => 6, 5 => 2 ];
 		$expectedBoardsTitle = [ 1, 2, 3 ];
 
-		$titleBatchMock = $this->getMock( 'TitleBatch', [ 'getById', 'getWikiaProperties' ], [ ], '', false );
+		$titleBatchMock = $this->getMock( 'TitleBatch', [ ], [ ], '', false );
 
 		$titleBatchMock->expects( $this->any() )
 			->method( 'getById' )
@@ -33,8 +33,8 @@ class ForumTest extends WikiaBaseTest {
 		$this->mockStaticMethod( 'TitleBatch', 'newFromConds', $titleBatchMock );
 
 		$this->mockStaticMethodWithCallBack( 'ForumBoard', 'newFromTitle',
-			function ( $Title ) {
-				return $this->getBoardMock( $Title );
+			function ( $title ) {
+				return $this->getBoardMock();
 			}
 		);
 
@@ -54,7 +54,7 @@ class ForumTest extends WikiaBaseTest {
 		return $titleMock;
 	}
 
-	private function getBoardMock( $title ) {
+	private function getBoardMock() {
 		$boardMock = $this->getMock( 'ForumBoard', [ 'getBoardInfo', 'getDescriptionWithoutTemplates', 'getTitle' ] );
 		return $boardMock;
 	}

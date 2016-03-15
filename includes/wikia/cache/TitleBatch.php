@@ -20,6 +20,8 @@ class TitleBatch {
 	 * Creates a new TitleBatch object
 	 *
 	 * @param $titles array List of Title objects or title texts
+	 *
+	 * @todo: load article ids (if they aren't loaded yet) in a more efficient way than one by one
 	 */
 	public function __construct( $titles ) {
 		$this->titles = [ ];
@@ -139,7 +141,7 @@ class TitleBatch {
 	 */
 	public function getById( $pageId ) {
 		if ( empty( $this->titles[ $pageId ] ) ) {
-			WikiaLogger::instance()->warning( "Title Batch does not have cached title", [ "pageId" => $pageId ] );
+			WikiaLogger::instance()->warning( "TitleBatch does not have cached title", [ "pageId" => $pageId ] );
 		}
 		return $this->titles[ $pageId ];
 	}
@@ -147,7 +149,7 @@ class TitleBatch {
 	/**
 	 * Get wikia-properties requested by its ID
 	 *
-	 * @param $propertyIds int property ID to fetch
+	 * @param $propertyId int property ID to fetch
 	 * @param $dbType int Database connection type
 	 * @return array representing fetched properties
 	 */

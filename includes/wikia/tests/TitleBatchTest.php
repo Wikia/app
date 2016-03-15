@@ -46,11 +46,7 @@ class TitleBatchTest extends WikiaBaseTest {
 			->with( $fields, $table, $cond, 'TitleBatch::getWikiaProperties' )
 			->will( $this->returnValue( $result ) );
 
-		$mockGetDB = $this->getGlobalFunctionMock( 'wfGetDB' );
-		$mockGetDB->expects( $this->once() )
-			->method( 'wfGetDB' )
-			->with( DB_SLAVE )
-			->will( $this->returnValue( $mockDb ) );
+		$this->mockGlobalFunction( 'wfGetDB', $mockDb );
 
 		$titleBatch = new TitleBatch( $titles );
 		$props = $titleBatch->getWikiaProperties( $expectedProperty );
