@@ -53,6 +53,10 @@ class PortableInfoboxBuilderHooks {
 			if ( $templateTitleText ) {
 				$templateTitle = Title::newFromText( $templateTitleText, NS_TEMPLATE );
 				$vars['templatePageUrl'] = $templateTitle->getFullUrl();
+				$vars['sourceEditorUrl'] = $templateTitle->getFullUrl( [
+					'action' => 'edit',
+					'useeditor' => 'source'
+				] );
 			}
 		}
 
