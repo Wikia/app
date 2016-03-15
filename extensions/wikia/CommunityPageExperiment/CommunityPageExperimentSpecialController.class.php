@@ -1,15 +1,10 @@
 <?php
 
 class CommunityPageExperimentSpecialController extends WikiaSpecialPageController {
-	private $wikiService;
-
 	const DEFAULT_TEMPLATE_ENGINE = \WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
-	const HEADER_IMAGE_NAME = 'Community-Page-Header.jpg';
 
 	public function __construct() {
 		parent::__construct( 'Community', '', /* $listed = */ false );
-
-		$this->wikiService = new WikiService();
 	}
 
 	public function index() {
@@ -22,18 +17,16 @@ class CommunityPageExperimentSpecialController extends WikiaSpecialPageControlle
 		$this->wg->SuppressWikiHeader = true;
 		$this->wg->SuppressFooter = true;
 
-		$numAdmins = $this->getRequest()->getBool( 'singleadmin' ) ? 1 : 2;
+		$helper = new CommunityPageExperimentHelper();
 
-		$admins = $this->getRandomAdmins( $numAdmins );
+		$admins = $helper->getRandomAdmins();
 
-		$topContributors = $this->getTopContributors();
+		$topContributors = $helper->getTopContributors();
 		$extraContributors = false;
 		if ( $topContributors['numextra'] > 0 ) {
 			$extraContributors = $this->msg( 'communitypageexperiment-top-contributors-more' )
 			                          ->numParams( $topContributors['numextra'] )->text();
 		}
-
-		$helper = new CommunityPageExperimentHelper();
 
 		$this->response->setValues( [
 			'isLoggedIn' => $this->getUser()->isLoggedIn(),
@@ -48,70 +41,6 @@ class CommunityPageExperimentSpecialController extends WikiaSpecialPageControlle
 		] );
 
 		$this->setMessages();
-	}
-
-	private function getRandomAdmins( $num = 1 ) {
-		$adminIds = $this->wikiService->getWikiAdminIds( $this->wg->CityId, /* $useMaster = */ false, /* $excludeBots = */ true );
-		if ( empty( $adminIds ) ) {
-			return [];
-		}
-		$numAdmins = count( $adminIds );
-		if ( $numAdmins < $num ) {
-			$num = $numAdmins;
-		}
-
-		$randomAdminIds = array_rand( $adminIds, $num );
-		if ( !is_array( $randomAdminIds ) ) {
-			$randomAdminIds = [ $randomAdminIds ];
-		}
-
-		$admins = [];
-		foreach ( $randomAdminIds as $adminId ) {
-			$admins[] = $this->getAdminData( $adminIds[$adminId] );
-		}
-
-		return $admins;
-	}
-
-	private function getAdminData( $userId ) {
-		$adminUser = User::newFromId( $userId );
-		$adminUserName = $adminUser->getName();
-		$adminAvatar = '';
-		$extraAvatarClasses = 'logged-avatar-placeholder';
-
-		if ( !AvatarService::isEmptyOrFirstDefault( $adminUserName ) ) {
-			$extraAvatarClasses = 'logged-avatar';
-			$adminAvatar = AvatarService::renderAvatar( $adminUser->getName(), AvatarService::AVATAR_SIZE_MEDIUM - 2 );
-		}
-
-		return [
-			'adminUserName' => $adminUserName,
-			'adminUserUrl' => $adminUser->getUserPage()->getLocalURL(),
-			'extraAvatarClasses' => $extraAvatarClasses,
-			'adminAvatar' => $adminAvatar,
-		];
-	}
-
-	private function getTopContributors() {
-		$topEditors = $this->wikiService->getTopEditors( $this->wg->CityId, /* $limit = */ WikiService::TOPUSER_LIMIT, /* $excludeBots = */ true );
-		$limit = 5;
-		$limitedTopEditors = array_slice( $topEditors, 0, $limit, true );
-		$numOtherEditors = count( $topEditors ) - $limit;
-
-		$topEditorList = [];
-		foreach ( $limitedTopEditors as $userId => $edits ) {
-			$user = User::newFromId( $userId );
-			$userName = $user->getName();
-			$avatar = AvatarService::renderAvatar( $userName, AvatarService::AVATAR_SIZE_SMALL_PLUS - 2 );
-
-			$topEditorList[] = [
-				'username' => $userName,
-				'userpage' => $user->getUserPage()->getLocalURL(),
-				'avatar' => $avatar,
-				'edits' => $this->getLanguage()->formatNum( $edits ),
-			];
-		}
-		return [ 'list' => $topEditorList, 'numextra' => $numOtherEditors ];
 	}
 
 	private function setMessages() {

@@ -1,8 +1,6 @@
 <?php
 
 class CommunityTasksPageSpecialController extends WikiaSpecialPageController {
-	private $wikiService;
-
 	const DEFAULT_TEMPLATE_ENGINE = \WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
 
 	public function __construct() {
