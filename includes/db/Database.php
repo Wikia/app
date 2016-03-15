@@ -3747,6 +3747,7 @@ abstract class DatabaseBase implements DatabaseType {
 			'server'      => $this->mServer,
 			'server_role' => $isMaster ? 'master' : 'slave',
 			'db_name'     => $this->mDBname,
+			'db_user'     => $this->getLBInfo( 'user' ),
 			'exception'   => new Exception(), // log the backtrace
 		];
 
