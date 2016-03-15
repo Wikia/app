@@ -69,7 +69,7 @@ class DumpStarters extends Maintenance {
 		$info = $dbr->getLBInfo();
 
 		// dump tables data only
-		$cmd = sprintf("%s --no-create-info -h%s -u%s -p%s %s %s",
+		$cmd = sprintf("%s --no-create-info --set-gtid-purged=OFF -h%s -u%s -p%s %s %s",
 			"/usr/bin/mysqldump",
 			$info[ "host"      ],
 			$info[ "user"      ],
