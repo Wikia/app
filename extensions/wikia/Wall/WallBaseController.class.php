@@ -50,15 +50,23 @@ class WallBaseController extends WikiaController {
 
 		$id = $this->request->getVal( 'id', null );
 
-		$this->getThread( $id );
+
+		$wallthread = WallThread::newFromId( $id );
+		$wallthread->loadIfCached();
+
+		$threads = [ $id => $wallthread ];
+
+		$this->response->setVal('threads', $threads);
+		$this->response->setVal('title', $this->wg->Title);
+
 
 		$this->response->setVal( 'showNewMessage', false );
 		$this->response->setVal( 'type', 'Thread' );
 		$this->response->setVal( 'condenseMessage', false );
 
-		if ( count( $this->threads ) > 0 ) {
+		if ( count( $threads ) > 0 ) {
 			$wn = new WallNotifications();
-			foreach ( $this->threads as $key => $val ) {
+			foreach ( $threads as $key => $val ) {
 				$wn->markRead( $this->wg->User->getId(), $this->wg->CityId, $key );
 				break;
 			}
@@ -612,18 +620,7 @@ class WallBaseController extends WikiaController {
 
 	}
 
-	public function getThread( $filterid ) {
-		wfProfileIn( __METHOD__ );
 
-		$wallthread = WallThread::newFromId( $filterid );
-		$wallthread->loadIfCached();
-
-		$this->threads = [ $filterid => $wallthread ];
-
-		$this->title = $this->wg->Title;
-
-		wfProfileOut( __METHOD__ );
-	}
 
 	public function message_error() {
 
