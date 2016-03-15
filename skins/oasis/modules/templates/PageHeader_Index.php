@@ -102,6 +102,11 @@ if ( $runNjord ) {
 				</div>
 			</div>
 			<?php
+			// Temp for CommunityPageExperiment
+			if ( !empty( $wg->EnableCommunityPageExperiment ) ) {
+				echo Html::openElement( 'div', [ 'class' => 'header-buttons' ] );
+			}
+
 			// edit button with actions dropdown
 			if ( !empty( $action ) ) {
 				echo F::app()->renderView( 'MenuButton', 'Index', array( 'action' => $action, 'image' => $actionImage, 'dropdown' => $dropdown, 'name' => $actionName ) );
@@ -129,6 +134,11 @@ if ( $runNjord ) {
 
 			foreach ( $extraButtons as $button ) {
 				echo $button;
+			}
+
+			// Temp for CommunityPageExperiment
+			if ( !empty( $wg->EnableCommunityPageExperiment ) ) {
+				echo Html::closeElement( 'div' );
 			}
 			?>
 	</header>
