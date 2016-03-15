@@ -11,22 +11,17 @@ class PortableInfoboxBuilderHooksTest extends WikiaBaseTest {
 	 * @dataProvider titleTextProvider
 	 */
 	public function testGetUrlPath( $titleText, $expected ) {
-		$reflectionMethod = new ReflectionMethod( 'PortableInfoboxBuilderHooks', 'getUrlPath' );
-		$reflectionMethod->setAccessible( true );
-		$this->assertEquals( $expected, $reflectionMethod->invoke( null, $titleText ) );
+		$this->assertEquals( $expected, PortableInfoboxBuilderHelper::getUrlPath( $titleText ) );
 	}
 
 	/**
 	 * @dataProvider requestModeProvider
 	 */
 	public function testForcedSourceModeTest( $queryStringValue, $expectedResult ) {
-		$reflectionMethod = new ReflectionMethod( 'PortableInfoboxBuilderHooks', 'isForcedSourceMode' );
-		$reflectionMethod->setAccessible( true );
-
 		$requestMock = $this->getMockBuilder( 'WebRequest' )->setMethods( [ 'getVal' ] )->getMock();
 		$requestMock->expects( $this->any() )->method( 'getVal' )->willReturn( $queryStringValue );
 
-		$this->assertEquals( $expectedResult, $reflectionMethod->invoke( null, $requestMock ) );
+		$this->assertEquals( $expectedResult, PortableInfoboxBuilderHelper::isForcedSourceMode( $requestMock ) );
 	}
 
 	public function titleTextProvider() {

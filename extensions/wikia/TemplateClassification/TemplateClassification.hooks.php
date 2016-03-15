@@ -97,7 +97,7 @@ class Hooks {
 	 * @return bool
 	 */
 	public function onEditPageShowEditFormFields( \EditPage $editPage, \OutputPage $out ) {
-		global $wgCityId, $wgEnablePortableInfoboxBuilderExt;
+		global $wgCityId;
 
 		$context = \RequestContext::getMain();
 		$title = $context->getTitle();
@@ -112,11 +112,7 @@ class Hooks {
 
 			// add additional class to body for new templates in order to hide editor while template classification
 			// modal is visible and builder is available
-			if (
-				$wgEnablePortableInfoboxBuilderExt
-				&& $title->getArticleID() === 0
-				&& empty( $types['current'] && $types['new'] )
-			) {
+			if ( $this->isInfoboxBuilderAvailable( $context, $types ) ) {
 				\OasisController::addBodyClass( self::TC_BODY_CLASS_NAME );
 			}
 		}
@@ -291,5 +287,20 @@ class Hooks {
 		$actions[] = 'bulk-classification';
 
 		return true;
+	}
+
+	/**
+	 * @param $wgEnablePortableInfoboxBuilderExt
+	 * @param $context
+	 * @param $types
+	 * @return bool
+	 */
+	protected function isInfoboxBuilderAvailable( $context, $types ) {
+		global $wgEnablePortableInfoboxBuilderExt;
+
+		return $wgEnablePortableInfoboxBuilderExt
+		&& $context->getTitle()->getArticleID() === 0
+		&& empty( $types['current'] && $types['new'] )
+		&& !\PortableInfoboxBuilderHelper::isForcedSourceMode( $context->getRequest() );
 	}
 }
