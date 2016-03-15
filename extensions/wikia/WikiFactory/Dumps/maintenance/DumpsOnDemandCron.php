@@ -2,7 +2,7 @@
 include __DIR__ . '/../../../../../maintenance/Maintenance.php';
 
 class DumpsOnDemandCron extends Maintenance {
-    
+
     const PIDFILE = '/var/run/MediaWikiDumpsOnDemandCron.pid';
 
     public function execute() {
@@ -93,7 +93,7 @@ class DumpsOnDemandCron extends Maintenance {
             __METHOD__
         );
 
-        DumpsOnDemand::purgeLatestDumpInfo(intval($sWikiaId));
+        DumpsOnDemand::purgeLatestDumpInfo( intval( $sWikiaId ) );
 
         $this->output( "Done.\n" );
         unlink( self::PIDFILE );
