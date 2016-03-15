@@ -296,8 +296,8 @@ class Hooks {
 		global $wgEnablePortableInfoboxBuilderExt;
 
 		return $wgEnablePortableInfoboxBuilderExt
-		&& $context->getTitle()->getArticleID() === 0
-		&& empty( $types['current'] && $types['new'] )
-		&& !\PortableInfoboxBuilderHelper::isForcedSourceMode( $context->getRequest() );
+			&& $context->getTitle()->getArticleID() === 0
+			&& empty( $types['current'] && $types['new'] )
+			&& !\PortableInfoboxBuilderHelper::isForcedSourceMode( $context->getRequest() );
 	}
 }
