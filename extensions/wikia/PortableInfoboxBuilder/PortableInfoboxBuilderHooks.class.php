@@ -1,9 +1,8 @@
 <?php
 
 class PortableInfoboxBuilderHooks {
-	const QUERYSTRING_EDITOR_KEY = 'useeditor';
 	const INFOBOX_BUILDER_SPECIAL_PAGE = 'Special:InfoboxBuilder';
-	const QUERYSTRING_SOURCE_MODE = 'source';
+
 
 	/**
 	 * Adds infobox builder helper js assets to Template Classification on Edit page
@@ -48,7 +47,7 @@ class PortableInfoboxBuilderHooks {
 		$title = $skin->getTitle();
 
 		if ( $title && $title->isSpecial( PortableInfoboxBuilderSpecialController::PAGE_NAME ) ) {
-			$templateTitleText = self::getUrlPath( $title->getText() );
+			$templateTitleText = PortableInfoboxBuilderHelper::getUrlPath( $title->getText() );
 
 			// We need the variable only if Infobox Builder launches (there is a template title provided)
 			if ( $templateTitleText ) {
@@ -65,17 +64,6 @@ class PortableInfoboxBuilderHooks {
 	}
 
 	/**
-	 * remove the special page name from the title and return name of the template
-	 * passed after the slash without the namespace, i.e.
-	 * Special:InfoboxBuilder/TemplateName/Subpage => TemplateName/Subpage
-	 * @param $titleText
-	 * @return string
-	 */
-	private static function getUrlPath( $titleText ) {
-		return implode( '/', array_slice( explode( '/', $titleText ), 1 ) );
-	}
-
-	/**
 	 * Add global variables for Javascript
 	 * @param array $aVars
 	 * @return bool
@@ -83,10 +71,7 @@ class PortableInfoboxBuilderHooks {
 	public function onEditPageMakeGlobalVariablesScript( array &$aVars ) {
 		$context = \RequestContext::getMain();
 		$title = $context->getTitle();
-		if (
-			( new \Wikia\TemplateClassification\Permissions() )->shouldDisplayEntryPoint( $context->getUser(), $title )
-			&& \RequestContext::getMain()->getRequest()->getVal( 'action' ) === 'edit'
-		) {
+		if ( self::shouldPassInfoboxBuilderVars( $context ) ) {
 			$aVars['isTemplateBodySupportedInfobox'] =
 				( new \PortableInfoboxBuilderService() )->isValidInfoboxArray(
 					\PortableInfoboxDataService::newFromTitle( $title )->getInfoboxes()
@@ -109,8 +94,8 @@ class PortableInfoboxBuilderHooks {
 		$title = $page->getTitle();
 
 		if (
-			self::canUseInfoboxBuilder( $title, $user )
-			&& !self::isForcedSourceMode( RequestContext::getMain()->getRequest() )
+			PortableInfoboxBuilderHelper::canUseInfoboxBuilder( $title, $user )
+			&& !PortableInfoboxBuilderHelper::isForcedSourceMode( RequestContext::getMain()->getRequest() )
 		) {
 			$url = SpecialPage::getTitleFor( 'InfoboxBuilder', $title->getText() )->getInternalURL();
 			F::app()->wg->out->redirect( $url );
@@ -121,40 +106,10 @@ class PortableInfoboxBuilderHooks {
 	}
 
 	/**
-	 * @param $title
+	 * @param $context
 	 * @return bool
 	 */
-	private static function isInfoboxTemplate( $title ) {
-		$tc = new TemplateClassificationService();
-		$isInfobox = false;
-
-		try {
-			$type = $tc->getType( F::app()->wg->CityId, $title->getArticleID() );
-			$isInfobox = ( $type === TemplateClassificationService::TEMPLATE_INFOBOX );
-		} catch ( Swagger\Client\ApiException $e ) {
-			// If we cannot reach the service assume the default (false) to avoid overwriting data
-		}
-		return $isInfobox;
-	}
-
-	/**
-	 * @param $request WebRequest
-	 * @return bool
-	 */
-	private static function isForcedSourceMode( $request ) {
-		return ( $request->getVal( self::QUERYSTRING_EDITOR_KEY ) === self::QUERYSTRING_SOURCE_MODE );
-	}
-
-	/**
-	 * @param $user
-	 * @param $title
-	 * @return bool
-	 */
-	private static function canUseInfoboxBuilder( $title, $user ) {
-		return self::isInfoboxTemplate( $title )
-		&& ( new \PortableInfoboxBuilderService() )->isValidInfoboxArray(
-			\PortableInfoboxDataService::newFromTitle( $title )->getInfoboxes()
-		)
-		&& ( new \Wikia\TemplateClassification\Permissions() )->userCanChangeType( $user, $title );
+	protected function shouldPassInfoboxBuilderVars( $context ) {
+		return ( new \Wikia\TemplateClassification\Permissions() )->shouldDisplayEntryPoint( $context->getUser(), $context->getTitle() ) && \RequestContext::getMain()->getRequest()->getVal( 'action' ) === 'edit' && !\PortableInfoboxBuilderHelper::isForcedSourceMode( $context->getRequest() );
 	}
 }
