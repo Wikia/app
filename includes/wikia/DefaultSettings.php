@@ -554,6 +554,7 @@ include_once("$IP/includes/wikia/validators/WikiaValidatorsExceptions.php");
  * MediaWiki Config
  */
 $wgAutoloadClasses['Config'] = $IP . '/includes/config/Config.php';
+$wgAutoloadClasses['ConfigException'] = $IP . '/includes/config/ConfigException.php';
 $wgAutoloadClasses['ConfigFactory'] = $IP . '/includes/config/ConfigFactory.php';
 $wgAutoloadClasses['GlobalVarConfig'] = $IP . '/includes/config/GlobalVarConfig.php';
 
@@ -1782,11 +1783,6 @@ $wgOasisBreakpoints = true;
  * @TODO CONCF-444 - remove this variable
  */
 $wgEnableUpdatedGlobalFooter = true;
-
-/**
- * Enable page share icons worldwide
- */
-$wgEnablePageShareExt = true;
 
 /**
  * @name $wgPaidAssetDropConfig

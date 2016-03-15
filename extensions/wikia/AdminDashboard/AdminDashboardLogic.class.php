@@ -50,6 +50,8 @@ class AdminDashboardLogic {
 				'Chat',
 				'CloseWiki',
 				'Code',
+				'Community',
+				'CommunityTasks',
 				'Confirmemail',
 				'Connect',
 				'Contact',
