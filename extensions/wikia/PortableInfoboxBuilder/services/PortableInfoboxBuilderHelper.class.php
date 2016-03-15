@@ -54,9 +54,9 @@ class PortableInfoboxBuilderHelper {
 	 */
 	public static function canUseInfoboxBuilder( $title, $user ) {
 		return PortableInfoboxBuilderHelper::isInfoboxTemplate( $title )
-		&& ( new \PortableInfoboxBuilderService() )->isValidInfoboxArray(
-			\PortableInfoboxDataService::newFromTitle( $title )->getInfoboxes()
-		)
-		&& ( new \Wikia\TemplateClassification\Permissions() )->userCanChangeType( $user, $title );
+			&& ( new \PortableInfoboxBuilderService() )->isValidInfoboxArray(
+				\PortableInfoboxDataService::newFromTitle( $title )->getInfoboxes()
+			)
+			&& ( new \Wikia\TemplateClassification\Permissions() )->userCanChangeType( $user, $title );
 	}
 }
