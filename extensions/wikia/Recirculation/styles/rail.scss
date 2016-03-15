@@ -11,6 +11,7 @@
 		margin-bottom: 7px;
 		max-height: 166px;
 		max-width: 268px;
+		overflow: hidden;
 
 		img {
 			display: block;
@@ -19,10 +20,12 @@
 		}
 	}
 
-	.title a {
-		color: $color-text;
-		display: block;
+	.title {
 		font-size: 15px;
+	}
+
+	a {
+		color: $color-text;
 
 		&:hover {
 			color: $color-links;
