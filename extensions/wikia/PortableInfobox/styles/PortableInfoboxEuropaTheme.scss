@@ -108,6 +108,7 @@ $tabber-background-color: mix($color-buttons, $color-page, $background-color-mix
 
 		li {
 			line-height: $list-item-line-height;
+			list-style-type: disc;
 			padding-bottom: $list-item-spacing;
 		}
 
