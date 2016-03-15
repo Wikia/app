@@ -26,7 +26,9 @@ require([
 			$('.discussion-timestamp').timeago();
 
 			$('.discussion-thread').click(function () {
-				tracker.trackVerboseClick(experimentName, 'discussions-tile');
+				var slot = $(this).index() + 1,
+					label = 'discussions-tile=slot-' + slot;
+				tracker.trackVerboseClick(experimentName, label);
 				window.location = $(this).data('link');
 			});
 

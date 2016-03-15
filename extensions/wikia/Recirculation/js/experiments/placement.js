@@ -96,7 +96,7 @@ require([
 	function setupLegacyTracking() {
 		tracker.trackVerboseImpression(experimentName, 'rail');
 		$(railSelector).on('mousedown', 'a', function() {
-			tracker.trackVerboseClick(experimentName, 'rail');
+			tracker.trackVerboseClick(experimentName, utils.buildLabel(this, 'rail'));
 		});
 	}
 });
