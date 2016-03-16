@@ -109,7 +109,7 @@ class Hooks {
 
 			// add additional class to body for new templates in order to hide editor while template classification
 			// modal is visible and builder is available
-			if ( $this->isInfoboxBuilderAvailable( $context, $types ) ) {
+			if ( $this->shouldHideEditorForInfoboxBuilder( $context, $types ) ) {
 				\OasisController::addBodyClass( self::TC_BODY_CLASS_NAME );
 			}
 		}
@@ -287,17 +287,17 @@ class Hooks {
 	}
 
 	/**
-	 * @param $wgEnablePortableInfoboxBuilderExt
-	 * @param $context
+	 * @param \RequestContext $context
 	 * @param $types
 	 * @return bool
 	 */
-	protected function isInfoboxBuilderAvailable( $context, $types ) {
+	private function shouldHideEditorForInfoboxBuilder( \RequestContext $context, $types ) {
 		global $wgEnablePortableInfoboxBuilderExt;
 
 		return $wgEnablePortableInfoboxBuilderExt
-			&& $context->getTitle()->getArticleID() === 0
-			&& empty( $types['current'] && $types['new'] )
-			&& !\PortableInfoboxBuilderHelper::isForcedSourceMode( $context->getRequest() );
+			   && $context->getTitle()->getArticleID() === 0
+			   && empty( $types[ 'current' ] )
+			   && empty( $types[ 'new' ] )
+			   && !\PortableInfoboxBuilderHelper::isForcedSourceMode( $context->getRequest() );
 	}
 }
