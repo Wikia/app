@@ -7,7 +7,6 @@ use \Wikia\Logger\WikiaLogger;
 class PortableInfoboxRenderServiceHelper {
 	const LOGGER_LABEL = 'portable-infobox-render-not-supported-type';
 	const DESKTOP_THUMBNAIL_WIDTH = 300;
-	const DESKTOP_IMAGE_ITEM_WIDTH = '100%';
 	const MOBILE_THUMBNAIL_WIDTH = 360;
 	const MINIMAL_HERO_IMG_WIDTH = 300;
 	const MAX_DESKTOP_THUMBNAIL_HEIGHT = 500;
@@ -63,7 +62,7 @@ class PortableInfoboxRenderServiceHelper {
 
 		$data[ 'ref' ] = $ref;
 		$data[ 'height' ] = $dimensions[ 'height' ];
-		$data[ 'width' ] = self::DESKTOP_IMAGE_ITEM_WIDTH;
+		$data[ 'width' ] = $dimensions[ 'width' ];
 		$data[ 'thumbnail' ] = $thumbnail->getUrl();
 		$data[ 'key' ] = urlencode( $data[ 'key' ] );
 		$data[ 'media-type' ] = $data[ 'isVideo' ] ? 'video' : 'image';
