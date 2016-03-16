@@ -6,7 +6,7 @@ use \Wikia\Logger\WikiaLogger;
 
 class PortableInfoboxRenderServiceHelper {
 	const LOGGER_LABEL = 'portable-infobox-render-not-supported-type';
-	const DESKTOP_THUMBNAIL_WIDTH = 270;
+	const DESKTOP_THUMBNAIL_WIDTH = 300;
 	const MOBILE_THUMBNAIL_WIDTH = 360;
 	const MINIMAL_HERO_IMG_WIDTH = 300;
 	const MAX_DESKTOP_THUMBNAIL_HEIGHT = 500;
