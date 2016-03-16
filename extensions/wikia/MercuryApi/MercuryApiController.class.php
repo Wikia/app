@@ -355,6 +355,7 @@ class MercuryApiController extends WikiaController {
 							$titleBuilder->setParts( [ $data['article']['displayTitle'] ] );
 						} elseif ( !empty( $data['nsSpecificContent']['members']['sections'] ) ) {
 							$data['details'] = MercuryApiCategoryHandler::getCategoryMockedDetails( $title );
+							$titleBuilder->setParts( [ $title->getPrefixedText() ] );
 						} else {
 							throw new NotFoundApiException( 'Article is empty and category has no members' );
 						}
