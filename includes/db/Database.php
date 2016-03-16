@@ -981,7 +981,8 @@ abstract class DatabaseBase implements DatabaseType {
 			$sqlx = strtr( $sqlx, "\t\n", '  ' );
 
 			$master = $isMaster ? 'master' : 'slave';
-			wfDebug( "Query {$this->mDBname} ($cnt) ($master): $sqlx\n" );
+			$DBuser = $this->getLBInfo( 'user' );
+			wfDebug( "Query {$this->mDBname} (DB user: {$DBuser}) ($cnt) ($master): $sqlx\n" );
 		}
 
 		if ( istainted( $sql ) & TC_MYSQL ) {
