@@ -401,27 +401,29 @@ class PermissionsConfigurationImpl implements PermissionsConfiguration {
 	private function loadGroupsChangeableByGroups() {
 		global $wgAddGroupsLocal, $wgRemoveGroupsLocal, $wgGroupsAddToSelfLocal, $wgGroupsRemoveFromSelfLocal;
 
-		$this->groupsAddableByGroup['bureaucrat'] = array( 'bureaucrat', 'rollback', 'sysop', 'content-moderator' );
-		$this->groupsRemovableByGroup['bureaucrat'] = array( 'rollback', 'sysop', 'bot', 'content-moderator' );
-		$this->groupsSelfRemovableByGroup['bureaucrat'] = array( 'bureaucrat' );
+		$this->groupsAddableByGroup['bureaucrat'] = [ 'bureaucrat', 'rollback', 'sysop', 'content-moderator' ];
+		$this->groupsRemovableByGroup['bureaucrat'] = [ 'rollback', 'sysop', 'bot', 'content-moderator' ];
+		$this->groupsSelfRemovableByGroup['bureaucrat'] = [ 'bureaucrat' ];
 
-		$this->groupsAddableByGroup['staff'] = array( 'rollback', 'bot', 'sysop', 'bureaucrat', 'content-moderator', 'chatmoderator', 'translator', 'threadmoderator' );
-		$this->groupsRemovableByGroup['staff'] = array( 'rollback', 'bot', 'sysop', 'bureaucrat', 'content-moderator', 'chatmoderator', 'translator', 'threadmoderator' );
+		$this->groupsAddableByGroup['staff'] = [ 'rollback', 'bot', 'sysop', 'bureaucrat', 'content-moderator', 'chatmoderator', 'translator', 'threadmoderator' ];
+		$this->groupsRemovableByGroup['staff'] = [ 'rollback', 'bot', 'sysop', 'bureaucrat', 'content-moderator', 'chatmoderator', 'translator', 'threadmoderator' ];
 
-		$this->groupsAddableByGroup['helper'] = array( 'rollback', 'bot', 'sysop', 'bureaucrat', 'content-moderator', 'chatmoderator', 'threadmoderator' );
-		$this->groupsRemovableByGroup['helper'] = array( 'rollback', 'bot', 'sysop', 'bureaucrat', 'content-moderator', 'chatmoderator', 'threadmoderator' );
+		$this->groupsAddableByGroup['helper'] = [ 'rollback', 'bot', 'sysop', 'bureaucrat', 'content-moderator', 'chatmoderator', 'threadmoderator' ];
+		$this->groupsRemovableByGroup['helper'] = [ 'rollback', 'bot', 'sysop', 'bureaucrat', 'content-moderator', 'chatmoderator', 'threadmoderator' ];
 
-		$this->groupsAddableByGroup['sysop'] = array( 'chatmoderator', 'threadmoderator' );
-		$this->groupsRemovableByGroup['sysop'] = array( 'chatmoderator', 'threadmoderator' );
-		$this->groupsSelfRemovableByGroup['sysop'] = array( 'sysop' );
+		$this->groupsAddableByGroup['sysop'] = [ 'chatmoderator', 'threadmoderator' ];
+		$this->groupsRemovableByGroup['sysop'] = [ 'chatmoderator', 'threadmoderator' ];
+		$this->groupsSelfRemovableByGroup['sysop'] = [ 'sysop' ];
 
-		$this->groupsAddableByGroup['content-reviewer'] = array( 'content-reviewer' );
-		$this->groupsRemovableByGroup['content-reviewer'] = array( 'content-reviewer' );
+		$this->groupsAddableByGroup['content-reviewer'] = [ 'content-reviewer' ];
+		$this->groupsRemovableByGroup['content-reviewer'] = [ 'content-reviewer' ];
 
-		$this->groupsAddableByGroup['vstf'] = array( 'rollback', 'bot' );
-		$this->groupsRemovableByGroup['vstf'] = array( 'rollback', 'bot' );
-		$this->groupsSelfAddableByGroup['vstf'] = array( 'sysop' );
-		$this->groupsSelfRemovableByGroup['vstf'] = array( 'sysop', 'bureaucrat' );
+		$this->groupsSelfAddableByGroup['vstf'] = [ 'rollback', 'bot', 'sysop' ];
+		$this->groupsSelfRemovableByGroup['vstf'] = [ 'rollback', 'bot', 'sysop', 'bureaucrat' ];
+
+		$this->groupsSelfRemovableByGroup['chatmoderator'] = [ 'chatmoderator' ];
+		$this->groupsSelfRemovableByGroup['threadmoderator'] = [ 'threadmoderator' ];
+		$this->groupsSelfRemovableByGroup['content-moderator'] = [ 'content-moderator' ];
 
 		// the $wgXXXLocal variables are loaded from wiki factory - we should use it as is
 		if ( !empty( $wgAddGroupsLocal ) )
