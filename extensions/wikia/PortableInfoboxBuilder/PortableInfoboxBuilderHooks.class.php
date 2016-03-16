@@ -95,8 +95,8 @@ class PortableInfoboxBuilderHooks {
 
 		if (
 			PortableInfoboxBuilderHelper::canUseInfoboxBuilder( $title, $user )
-			&& !PortableInfoboxBuilderHelper::isSubmitAction( $request )
-			&& !PortableInfoboxBuilderHelper::isForcedSourceMode( $request )
+				&& !PortableInfoboxBuilderHelper::isSubmitAction( $request )
+				&& !PortableInfoboxBuilderHelper::isForcedSourceMode( $request )
 		) {
 			$url = SpecialPage::getTitleFor( 'InfoboxBuilder', $title->getText() )->getInternalURL();
 			F::app()->wg->out->redirect( $url );
