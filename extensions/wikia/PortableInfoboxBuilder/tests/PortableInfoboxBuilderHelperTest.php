@@ -1,6 +1,6 @@
 <?php
 
-class PortableInfoboxBuilderHooksTest extends WikiaBaseTest {
+class PortableInfoboxBuilderHelperTest extends WikiaBaseTest {
 
 	protected function setUp() {
 		$this->setupFile = dirname( __FILE__ ) . '/../PortableInfoboxBuilder.setup.php';
@@ -17,11 +17,21 @@ class PortableInfoboxBuilderHooksTest extends WikiaBaseTest {
 	/**
 	 * @dataProvider requestModeProvider
 	 */
-	public function testForcedSourceModeTest( $queryStringValue, $expectedResult ) {
+	public function testForcedSourceMode( $queryStringValue, $expectedResult ) {
 		$requestMock = $this->getMockBuilder( 'WebRequest' )->setMethods( [ 'getVal' ] )->getMock();
 		$requestMock->expects( $this->any() )->method( 'getVal' )->willReturn( $queryStringValue );
 
 		$this->assertEquals( $expectedResult, PortableInfoboxBuilderHelper::isForcedSourceMode( $requestMock ) );
+	}
+
+	/**
+	 * @dataProvider requestActionProvider
+	 */
+	public function testActionSubmit( $queryStringValue, $expectedResult ) {
+		$requestMock = $this->getMockBuilder( 'WebRequest' )->setMethods( [ 'getVal' ] )->getMock();
+		$requestMock->expects( $this->any() )->method( 'getVal' )->willReturn( $queryStringValue );
+
+		$this->assertEquals( $expectedResult, PortableInfoboxBuilderHelper::isSubmitAction( $requestMock ) );
 	}
 
 	public function titleTextProvider() {
@@ -39,6 +49,16 @@ class PortableInfoboxBuilderHooksTest extends WikiaBaseTest {
 			[ 'source', true ],
 			[ 'mediawiki', false ],
 			[ '', false ],
+			[ null, false ]
+		];
+	}
+
+	public function requestActionProvider() {
+		return [
+			[ 'submit', true ],
+			[ 'raw', false ],
+			[ 'source', false ],
+			[ 'edit', false ],
 			[ null, false ]
 		];
 	}

@@ -94,6 +94,7 @@ class PortableInfoboxBuilderHooks {
 
 		if (
 			PortableInfoboxBuilderHelper::canUseInfoboxBuilder( $title, $user )
+			&& !PortableInfoboxBuilderHelper::isSubmitAction( RequestContext::getMain()->getRequest() )
 			&& !PortableInfoboxBuilderHelper::isForcedSourceMode( RequestContext::getMain()->getRequest() )
 		) {
 			$url = SpecialPage::getTitleFor( 'InfoboxBuilder', $title->getText() )->getInternalURL();

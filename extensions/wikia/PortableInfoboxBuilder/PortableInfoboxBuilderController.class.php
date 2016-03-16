@@ -138,6 +138,28 @@ class PortableInfoboxBuilderController extends WikiaController {
 		}
 
 		$status = $editPage->internalAttemptSave( $result );
+
+		if ($status->isGood()) {
+			$this->classifyAsInfobox( $title );
+		}
+
 		return $status;
+	}
+
+	/**
+	 * @param Title $title
+	 * @return int
+	 */
+	private function classifyAsInfobox( Title $title ) {
+		$this->sendRequest(
+			'TemplateClassificationApi',
+			'classifyTemplate',
+			[
+				'pageId' => $title->getArticleID(),
+				'type' => TemplateClassificationService::TEMPLATE_INFOBOX,
+				'editToken' => $this->wg->user->getEditToken()
+			],
+			true
+		);
 	}
 }

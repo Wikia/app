@@ -3,6 +3,8 @@
 class PortableInfoboxBuilderHelper {
 	const QUERYSTRING_EDITOR_KEY = 'useeditor';
 	const QUERYSTRING_SOURCE_MODE = 'source';
+	const QUERYSTRING_ACTION_KEY = 'action';
+	const QUERYSTRING_SUBMIT_ACTION = 'submit';
 
 	/**
 	 * Checks if template is classified as an infobox
@@ -58,5 +60,16 @@ class PortableInfoboxBuilderHelper {
 				\PortableInfoboxDataService::newFromTitle( $title )->getInfoboxes()
 			)
 			&& ( new \Wikia\TemplateClassification\Permissions() )->userCanChangeType( $user, $title );
+	}
+
+
+	/**
+	 * Checks if request is a submit action
+	 *
+	 * @param $request WebRequest
+	 * @return bool
+	 */
+	public static function isSubmitAction( $request ) {
+		return ( $request->getVal( self::QUERYSTRING_ACTION_KEY ) === self::QUERYSTRING_SUBMIT_ACTION );
 	}
 }
