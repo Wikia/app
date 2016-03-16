@@ -34,7 +34,7 @@ class ForumTest extends WikiaBaseTest {
 
 		$this->mockStaticMethodWithCallBack( 'ForumBoard', 'newFromTitle',
 			function ( $title ) {
-				return $this->getBoardMock();
+				return $this->getBoardMock( $title );
 			}
 		);
 
@@ -54,8 +54,17 @@ class ForumTest extends WikiaBaseTest {
 		return $titleMock;
 	}
 
-	private function getBoardMock() {
-		$boardMock = $this->getMock( 'ForumBoard', [ 'getBoardInfo', 'getDescriptionWithoutTemplates', 'getTitle' ] );
+	/**
+	 * @param $title Title
+	 * @return PHPUnit_Framework_MockObject_MockObject
+	 */
+	private function getBoardMock( Title $title ) {
+		$boardMock = $this->getMock( 'ForumBoard', [ 'getBoardInfo' ] );
+		$forumBoardInfo = new ForumBoardInfo();
+		$forumBoardInfo->setId( $title->getArticleID() );
+		$boardMock->expects( $this->any() )
+			->method( 'getBoardInfo' )
+			->willReturn( $forumBoardInfo );
 		return $boardMock;
 	}
 }
