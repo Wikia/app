@@ -57,15 +57,17 @@ class TemplatesWithoutTypePage extends PageQueryPage {
 		/**
 		 * 3. Insert the new records if the $templatesWithoutType array is not empty
 		 */
-		( new WikiaSQL() )
-			->INSERT()->INTO( 'querycache', [
-				'qc_type',
-				'qc_value',
-				'qc_namespace',
-				'qc_title'
-			] )
-			->VALUES( $templatesWithoutType )
-			->run( $dbw );
+		if ( !empty( $templatesWithoutType ) ) {
+			( new WikiaSQL() )
+				->INSERT()->INTO( 'querycache', [
+					'qc_type',
+					'qc_value',
+					'qc_namespace',
+					'qc_title'
+				] )
+				->VALUES( $templatesWithoutType )
+				->run( $dbw );
+		}
 
 		return count( $templatesWithoutType );
 	}

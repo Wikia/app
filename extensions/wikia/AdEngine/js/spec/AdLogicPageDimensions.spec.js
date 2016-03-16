@@ -21,14 +21,6 @@ describe('AdLogicPageDimensions', function () {
 		var matchingMediaQueryDict = {},
 			i,
 			len,
-			contextMock = {
-				opts: noop
-			},
-			adContextMock = {
-				getContext: function () {
-					return contextMock;
-				}
-			},
 			windowMock = {
 				wgOasisResponsive: (layoutName === 'responsive'),
 				wgOasisBreakpoints: (layoutName === 'breakpoints'),
@@ -46,7 +38,6 @@ describe('AdLogicPageDimensions', function () {
 				windowMock,
 				documentMock,
 				logMock,
-				adContextMock,
 				slotTweakerMock,
 				adHelperMock
 			),
@@ -180,14 +171,6 @@ describe('AdLogicPageDimensions', function () {
 		var slotName = 'LEFT_SKYSCRAPER_3',
 			resizeListener = function () { return; },
 			isNarrow,
-			contextMock = {
-				opts: noop
-			},
-			adContextMock = {
-				getContext: function () {
-					return contextMock;
-				}
-			},
 			windowMock = {
 				wgOasisResponsive: true,
 				addEventListener: function (eventName, listener) {
@@ -214,7 +197,6 @@ describe('AdLogicPageDimensions', function () {
 				windowMock,
 				documentMock,
 				logMock,
-				adContextMock,
 				slotTweakerMock,
 				adHelperMock
 			),
