@@ -52,48 +52,20 @@ $tabber-background-color: mix($color-buttons, $color-page, $background-color-mix
 		}
 	}
 
-	.pi-item-spacing {
-		padding: $infobox-data-spacing $infobox-side-spacing;
-	}
-
-	.pi-title,
-	.pi-header {
-		background-color: $color-buttons;
-		color: $color-button-text;
-		font-size: $header-font-size;
-		text-align: center;
-		a {
-			color: $white;
-			text-decoration: underline;
-		}
-	}
-
-	.pi-title {
-		font-size: $title-font-size;
-		font-weight: bold;
-		line-height: $title-line-height;
-		padding-top: $infobox-side-spacing;
-	}
-
-	.pi-header,
-	.pi-image-collection-tabs {
-		line-height: $header-line-height;
-	}
-
-	.pi-header,
-	.pi-tab-link {
-		padding: $infobox-header-spacing $infobox-side-spacing;
-	}
-
-	.pi-navigation {
-		background-color: inherit;
+	.pi-caption {
 		color: inherit;
-		font-weight: inherit;
+		font-style: normal;
 	}
 
-	.pi-data,
-	.pi-group {
-		border-bottom: 0;
+	.pi-collapse .pi-header::after {
+		border-color: $color-button-text;
+		height: $collapsible-chevron-size;
+		right: $infobox-side-spacing;
+		width: $collapsible-chevron-size;
+	}
+
+	.pi-collapse-closed .pi-header::after {
+		margin-top: $collapsible-chevron-negative-margin;
 	}
 
 	.pi-data-label {
@@ -116,39 +88,34 @@ $tabber-background-color: mix($color-buttons, $color-page, $background-color-mix
 		}
 	}
 
-	.pi-caption {
-		color: inherit;
-		font-style: normal;
+	.pi-data,
+	.pi-group {
+		border-bottom: 0;
 	}
 
+	.pi-header {
+		font-size: $header-font-size;
+	}
+
+	.pi-header,
 	.pi-image-collection-tabs {
-		background-color: $background-color;
-		margin: 0;
-		text-align: left;
-
-		.current {
-			background-color: $tabber-background-color;
-		}
+		line-height: $header-line-height;
 	}
 
-	.pi-image-collection-tab-content {
-		background-color: inherit;
-	}
-
+	.pi-header,
 	.pi-tab-link {
-		border: 0;
-		margin: 0;
+		padding: $infobox-header-spacing $infobox-side-spacing;
 	}
 
-	.pi-collapse .pi-header::after {
-		border-color: $color-button-text;
-		height: $collapsible-chevron-size;
-		right: $infobox-side-spacing;
-		width: $collapsible-chevron-size;
-	}
-
-	.pi-collapse-closed .pi-header::after {
-		margin-top: $collapsible-chevron-negative-margin;
+	.pi-header,
+	.pi-title {
+		background-color: $color-buttons;
+		color: $color-button-text;
+		text-align: center;
+		a {
+			color: $white;
+			text-decoration: underline;
+		}
 	}
 
 	.pi-horizontal-group {
@@ -168,15 +135,51 @@ $tabber-background-color: mix($color-buttons, $color-page, $background-color-mix
 		}
 	}
 
+	.pi-horizontal-group-item {
+		&:nth-child(even) {
+			background-color: $horizontal-group-stripe-background;
+		}
+	}
+
 	.pi-horizontal-group-no-labels {
 		.pi-data-value {
 			padding-top: $infobox-data-spacing;
 		}
 	}
 
-	.pi-horizontal-group-item {
-		&:nth-child(even) {
-			background-color: $horizontal-group-stripe-background;
+	.pi-image-collection-tabs {
+		background-color: $background-color;
+		margin: 0;
+		text-align: left;
+
+		.current {
+			background-color: $tabber-background-color;
 		}
+	}
+
+	.pi-image-collection-tab-content {
+		background-color: inherit;
+	}
+
+	.pi-item-spacing {
+		padding: $infobox-data-spacing $infobox-side-spacing;
+	}
+
+	.pi-navigation {
+		background-color: inherit;
+		color: inherit;
+		font-weight: inherit;
+	}
+
+	.pi-tab-link {
+		border: 0;
+		margin: 0;
+	}
+
+	.pi-title {
+		font-size: $title-font-size;
+		font-weight: bold;
+		line-height: $title-line-height;
+		padding-top: $infobox-side-spacing;
 	}
 }
