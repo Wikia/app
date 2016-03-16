@@ -1,3 +1,18 @@
 @import 'horizontal';
 @import 'rail';
 @import 'discussions';
+
+
+// GOOGLE MATCHED CONTENT
+.recirculation-incontent.adsbygoogle {
+	border: 1px solid $color-page-border;
+	display: block;
+	height: 230px;
+	margin: 20px auto;
+	overflow: hidden;
+	width: 95%;
+
+	iframe {
+		margin: -1px;
+	}
+}
