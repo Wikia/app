@@ -4,6 +4,7 @@ require([
 	'wikia.window',
 	'wikia.abTest',
 	'ext.wikia.recirculation.tracker',
+	'ext.wikia.recirculation.utils',
 	'ext.wikia.recirculation.views.incontent',
 	'ext.wikia.recirculation.views.rail',
 	'ext.wikia.recirculation.views.footer',
@@ -11,7 +12,7 @@ require([
 	'ext.wikia.recirculation.helpers.fandom',
 	'ext.wikia.adEngine.taboolaHelper',
 	require.optional('videosmodule.controllers.rail')
-], function($, w, abTest, tracker, incontentView, railView, footerView, contentLinksHelper, fandomHelper, taboolaHelper, videosModule) {
+], function($, w, abTest, tracker, utils, incontentView, railView, footerView, contentLinksHelper, fandomHelper, taboolaHelper, videosModule) {
 	var experimentName = 'RECIRCULATION_PLACEMENT',
 		railContainerId = 'RECIRCULATION_RAIL',
 		railSelector = '#' + railContainerId,

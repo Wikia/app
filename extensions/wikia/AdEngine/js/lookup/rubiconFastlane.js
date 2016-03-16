@@ -132,7 +132,7 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 		}
 
 		if (context.opts.overridePrefootersSizes) {
-			slots.PREFOOTER_LEFT_BOXAD.sizes = [[300, 250], [728, 90], [970, 250]];
+			slots.PREFOOTER_LEFT_BOXAD.sizes = [[300, 250], [468, 60], [728, 90]];
 			delete slots.PREFOOTER_RIGHT_BOXAD;
 		}
 
