@@ -224,10 +224,8 @@ class MercuryApiController extends WikiaController {
 	 * @desc Returns UA dimensions
 	 */
 	public function getTrackingDimensions() {
-		global $wgDBname, $wgUser, $wgCityId, $wgLanguageCode, $wgTitle;
+		global $wgDBname, $wgUser, $wgCityId, $wgLanguageCode;
 
-		$title = $wgTitle;
-		$titleExists = true;
 		$dimensions = [];
 
 		// Exception is thrown when empty title is send
@@ -235,11 +233,7 @@ class MercuryApiController extends WikiaController {
 		// Title parameter is empty for URLs like /main/edit, /d etc. (all pages outside /wiki/ space)
 		try {
 			$title = $this->getTitleFromRequest();
-		} catch (Exception $ex) {
-			$titleExists = false;
-		}
 
-		if ( !empty ( $titleExists ) ) {
 			$article = Article::newFromID( $title->getArticleId() );
 
 			if ( $article instanceof Article && $title->isRedirect() ) {
@@ -251,6 +245,8 @@ class MercuryApiController extends WikiaController {
 				$dimensions[19] = WikiaPageType::getArticleType( $title );
 				$dimensions[25] = strval( $title->getNamespace() );
 			}
+		} catch (Exception $ex) {
+			// In case of exception - don't set the dimensions
 		}
 
 		$wikiCategoryNames = WikiFactoryHub::getInstance()->getWikiCategoryNames( $wgCityId );
