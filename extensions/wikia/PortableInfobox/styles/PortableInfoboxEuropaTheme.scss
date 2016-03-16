@@ -16,6 +16,7 @@ $label-width: 88px;
 $list-item-line-height: 18px;
 $list-item-spacing: 8px;
 $tabber-lightness-condition: 30;
+$tab-font-size: 14px;
 $title-font-size: 20px;
 $title-line-height: 24px;
 $white: #fff;
@@ -149,6 +150,7 @@ $tabber-background-color: mix($color-buttons, $color-page, $background-color-mix
 
 	.pi-image-collection-tabs {
 		background-color: $background-color;
+		//font-size: ;
 		margin: 0;
 		text-align: left;
 
@@ -173,6 +175,7 @@ $tabber-background-color: mix($color-buttons, $color-page, $background-color-mix
 
 	.pi-tab-link {
 		border: 0;
+		font-size: $tab-font-size;
 		margin: 0;
 	}
 
