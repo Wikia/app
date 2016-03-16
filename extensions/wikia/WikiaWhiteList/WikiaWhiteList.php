@@ -139,7 +139,7 @@ class WikiaWhitelist
 		    $settings['previousFilter'] = false;
         }
 		if (empty($settings['files'])) {
-		    $settings['files'] = array("DB: wikicities MediaWiki:External_links_whitelist");
+		    $settings['files'] = array("DB: wikia MediaWiki:External_links_whitelist");
         } else {
             $use_prefix = 1;
         }
