@@ -151,15 +151,12 @@ class PortableInfoboxBuilderController extends WikiaController {
 	 * @return int
 	 */
 	private function classifyAsInfobox( Title $title ) {
-		$this->sendRequest(
-			'TemplateClassificationApi',
-			'classifyTemplate',
-			[
-				'pageId' => $title->getArticleID(),
-				'type' => TemplateClassificationService::TEMPLATE_INFOBOX,
-				'editToken' => $this->wg->user->getEditToken()
-			],
-			true
+		( new TemplateClassificationService() )->classifyTemplate(
+			$this->wg->cityId,
+			$title->getArticleID(),
+			TemplateClassificationService::TEMPLATE_INFOBOX,
+			'user',
+			$this->wg->user->getName()
 		);
 	}
 }
