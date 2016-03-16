@@ -78,13 +78,13 @@ define('wikia.backgroundchanger', function()  {
 
 		if (nodeIndex > -1) {
 			$('link[data-background-changer]').attr('disabled', true);
-			$('link[data-background-changer="'+nodeIndex+'"]').attr('disabled', false);
+			$('link[data-background-changer="'+sassUrl+'"]').attr('disabled', false);
 			onCssLoadCallBack();
 		} else {
 			// load CSS and apply class changes to body element after loading
 			$.getCSS(sassUrl, function(link) {
 				loadedCss.push(sassUrl);
-				$(link).attr('data-background-changer', loadedCss.length-1);
+				$(link).attr('data-background-changer', sassUrl);
 				onCssLoadCallBack();
 			});
 		}
