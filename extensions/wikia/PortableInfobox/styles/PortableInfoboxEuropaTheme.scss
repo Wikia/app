@@ -18,7 +18,6 @@ $list-item-spacing: 8px;
 $tabber-lightness-condition: 30;
 $title-font-size: 20px;
 $title-line-height: 24px;
-$title-spacing: 12px;
 $white: #fff;
 
 // color mixes
@@ -73,7 +72,7 @@ $tabber-background-color: mix($color-buttons, $color-page, $background-color-mix
 		font-size: $title-font-size;
 		font-weight: bold;
 		line-height: $title-line-height;
-		padding: ($title-spacing + 2) $title-spacing ($title-spacing - 2) $title-spacing;
+		padding-top: $infobox-side-spacing;
 	}
 
 	.pi-header,
