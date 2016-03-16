@@ -51,7 +51,6 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 
 	function collapseElement(element) {
 		slotTweaker.removeDefaultHeight(element.getSlotName());
-		slotTweaker.removeTopButtonIfNeeded(element.getSlotName());
 		slotTweaker.hide(
 			element.getSlotContainerId(),
 			recoveryHelper.isBlocking() && recoveryHelper.isRecoveryEnabled()
@@ -87,11 +86,6 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 
 		element = new AdElement(slot.name, slotPath, slotTargeting);
 
-		slot.pre('success', function (adInfo) {
-			if (adInfo && adInfo.adType === 'collapse') {
-				collapseElement(element);
-			}
-		});
 		slot.pre('collapse', function () {
 			collapseElement(element);
 		});

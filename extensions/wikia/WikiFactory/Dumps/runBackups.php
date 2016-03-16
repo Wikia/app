@@ -140,7 +140,7 @@ function doDumpBackup( $row, $path, array $args = [] ) {
 	$server = wfGetDB( DB_SLAVE, 'dumps', $row->city_dbname )->getProperty( "mServer" );
 	$cmd = implode( ' ', array_merge( [
 		"SERVER_ID={$row->city_id}",
-		"php",
+		"php -d display_errors=1",
 		"{$IP}/maintenance/dumpBackup.php",
 		"--conf {$wgWikiaLocalSettingsPath}",
 		"--aconf {$wgWikiaAdminSettingsPath}",
@@ -149,6 +149,9 @@ function doDumpBackup( $row, $path, array $args = [] ) {
 		"--server=$server",
 		"--output=".DumpsOnDemand::DEFAULT_COMPRESSION_FORMAT.":{$path}"
 	], $args ) );
+
+	// redirect stderr to stdout, so it becames a part of $output
+	$cmd .= ' 2>&1';
 
 	Wikia::log( __METHOD__, "info", "{$row->city_id} {$row->city_dbname} command: {$cmd}", true, true);
 
@@ -167,6 +170,8 @@ function doDumpBackup( $row, $path, array $args = [] ) {
 					'exception' => new Exception( 'putToAmazonS3 failed', $res ),
 					'row' => (array) $row,
 				] );
+
+				exit( 1 );
 			}
 		}
 	}
@@ -175,6 +180,8 @@ function doDumpBackup( $row, $path, array $args = [] ) {
 			'exception' => new Exception( $cmd, $status ),
 			'row' => (array) $row,
 		]);
+
+		exit( 2 );
 	}
 }
 

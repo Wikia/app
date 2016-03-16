@@ -23,7 +23,7 @@ define('ext.wikia.recirculation.views.footer', [
 			tracker.trackVerboseImpression(experimentName, 'footer');
 
 			$html.on('mousedown', 'a', function() {
-				tracker.trackVerboseClick(experimentName, 'footer');
+				tracker.trackVerboseClick(experimentName, utils.buildLabel(this, 'footer'));
 			});
 		}
 	}

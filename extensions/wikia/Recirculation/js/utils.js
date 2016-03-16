@@ -43,7 +43,14 @@ define('ext.wikia.recirculation.utils', [
 			});
 	}
 
+	function buildLabel(element, label) {
+		var slot = $(element).parent().index() + 1;
+		
+		return label + '=slot-' + slot;
+	}
+
 	return {
+		buildLabel: buildLabel,
 		loadTemplate: loadTemplate,
 		renderTemplate: renderTemplate
 	};

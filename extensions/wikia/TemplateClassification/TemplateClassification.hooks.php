@@ -3,8 +3,6 @@
 namespace Wikia\TemplateClassification;
 
 use Swagger\Client\ApiException;
-use Wikia\Interfaces\IRequest;
-use Wikia\TemplateClassification\Permissions;
 use Wikia\TemplateClassification\UnusedTemplates\Handler;
 
 class Hooks {
@@ -50,8 +48,8 @@ class Hooks {
 		 * so we exit early to prevent polluting of the results.
 		 */
 		if ( empty( $typeNew )
-			|| $typeNew === \TemplateClassificationService::NOT_AVAILABLE
-			|| $typeNew === $typeCurrent
+			 || $typeNew === \TemplateClassificationService::NOT_AVAILABLE
+			 || $typeNew === $typeCurrent
 		) {
 			return true;
 		}
@@ -83,9 +81,9 @@ class Hooks {
 		$title = $context->getTitle();
 		// Enable TemplateClassificationEditorPlugin
 		if ( ( new Permissions() )->shouldDisplayEntryPoint( $context->getUser(), $title )
-			&& $this->isEditPage()
+			 && $this->isEditPage()
 		) {
-			$aVars['enableTemplateClassificationEditorPlugin'] = true;
+			$aVars[ 'enableTemplateClassificationEditorPlugin' ] = true;
 		}
 		return true;
 	}
@@ -105,14 +103,14 @@ class Hooks {
 		if ( ( new Permissions() )->shouldDisplayEntryPoint( $context->getUser(), $title ) ) {
 			$types = $this->getTemplateTypeForEdit( $editPage->getTitle(), $wgCityId );
 
-			$out->addHTML( \Html::hidden( 'templateClassificationTypeCurrent', $types['current'],
-				['autocomplete' => 'off'] ) );
-			$out->addHTML( \Html::hidden( 'templateClassificationTypeNew', $types['new'],
-				['autocomplete' => 'off'] ) );
+			$out->addHTML( \Html::hidden( 'templateClassificationTypeCurrent', $types[ 'current' ],
+				[ 'autocomplete' => 'off' ] ) );
+			$out->addHTML( \Html::hidden( 'templateClassificationTypeNew', $types[ 'new' ],
+				[ 'autocomplete' => 'off' ] ) );
 
 			// add additional class to body for new templates in order to hide editor while template classification
 			// modal is visible and builder is available
-			if ( $this->isInfoboxBuilderAvailable( $context, $types ) ) {
+			if ( $this->shouldHideEditorForInfoboxBuilder( $title, $types ) ) {
 				\OasisController::addBodyClass( self::TC_BODY_CLASS_NAME );
 			}
 		}
@@ -145,7 +143,7 @@ class Hooks {
 				\Wikia::addAssetsToOutput( 'template_classification_in_edit_js' );
 				\Wikia::addAssetsToOutput( 'template_classification_scss' );
 
-				wfRunHooks('TemplateClassificationHooks::afterEditPageAssets');
+				wfRunHooks( 'TemplateClassificationHooks::afterEditPageAssets' );
 			}
 		} elseif ( $permissions->shouldDisplayBulkActions( $user, $title ) ) {
 			\Wikia::addAssetsToOutput( 'template_classification_in_category_js' );
@@ -186,7 +184,7 @@ class Hooks {
 			$handler = $this->getUnusedTemplatesHandler();
 			if ( $results instanceof \ResultWrapper ) {
 				$handler->markAsUnusedFromResults( $results );
-				$db->dataSeek( $results, 0 );	// CE-3024: reset cursor because hook caller needs the results also
+				$db->dataSeek( $results, 0 );    // CE-3024: reset cursor because hook caller needs the results also
 			} else {
 				$handler->markAllAsUsed();
 			}
@@ -238,19 +236,19 @@ class Hooks {
 		];
 
 		if ( !empty( $wgEnableTemplateDraftExt )
-			&& \TemplateDraftHelper::isInfoboxDraftConversion( $title )
+			 && \TemplateDraftHelper::isInfoboxDraftConversion( $title )
 		) {
-			$types['new'] = \TemplateClassificationService::TEMPLATE_INFOBOX;
+			$types[ 'new' ] = \TemplateClassificationService::TEMPLATE_INFOBOX;
 		} else {
 			try {
-				$types['current'] = ( new \UserTemplateClassificationService() )->getType( $wikiaId, $title->getArticleID() );
+				$types[ 'current' ] = ( new \UserTemplateClassificationService() )->getType( $wikiaId, $title->getArticleID() );
 			} catch ( ApiException $e ) {
 				( new Logger() )->exception( $e );
 				/**
 				 * If the service is unreachable - fill the field with a not-available string
 				 * which instructs front-end tools to skip the classification part.
 				 */
-				$types['current'] = \TemplateClassificationService::NOT_AVAILABLE;
+				$types[ 'current' ] = \TemplateClassificationService::NOT_AVAILABLE;
 			}
 		}
 
@@ -266,7 +264,7 @@ class Hooks {
 	 */
 	public function onSkinTemplateNavigation( \Skin $skin, &$links ) {
 		if ( ( new Permissions() )->shouldDisplayBulkActions( $skin->getUser(), $skin->getTitle() ) ) {
-			$links['views']['bulk-classification'] = [
+			$links[ 'views' ][ 'bulk-classification' ] = [
 				'href' => '#',
 				'text' => wfMessage( 'template-classification-edit-modal-title-bulk-types' )->escaped(),
 				'class' => 'template-classification-type-text',
@@ -289,18 +287,13 @@ class Hooks {
 		return true;
 	}
 
-	/**
-	 * @param $wgEnablePortableInfoboxBuilderExt
-	 * @param $context
-	 * @param $types
-	 * @return bool
-	 */
-	protected function isInfoboxBuilderAvailable( $context, $types ) {
+	private function shouldHideEditorForInfoboxBuilder( \Title $title, $types ) {
 		global $wgEnablePortableInfoboxBuilderExt;
 
 		return $wgEnablePortableInfoboxBuilderExt
-			&& $context->getTitle()->getArticleID() === 0
-			&& empty( $types['current'] && $types['new'] )
-			&& !\PortableInfoboxBuilderHelper::isForcedSourceMode( $context->getRequest() );
+			   && $title->getArticleID() === 0
+			   && empty( $types[ 'current' ] )
+			   && empty( $types[ 'new' ] )
+			   && !\PortableInfoboxBuilderHelper::isForcedSourceMode( $context->getRequest() );
 	}
 }
