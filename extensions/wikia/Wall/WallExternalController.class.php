@@ -52,11 +52,12 @@ class WallExternalController extends WikiaController {
 
 		$forum = new Forum();
 
-		$list = $forum->getListTitles( DB_SLAVE, NS_WIKIA_FORUM_BOARD );
+		//** TitleBatch $titleBatch */
+		$titleBatch = $forum->getTitlesForNamespace( DB_SLAVE, NS_WIKIA_FORUM_BOARD );
 
 		$this->destinationBoards = [ [ 'value' => '', 'content' => wfMsg( 'forum-board-destination-empty' ) ] ];
 		/** @var $title Title */
-		foreach ( $list as $title ) {
+		foreach ( $titleBatch->getAll() as $title ) {
 			$value = $title->getArticleID();
 			if ( $mainWall->getId() != $value ) {
 				$wall = Wall::newFromTitle( $title );
