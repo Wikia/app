@@ -155,7 +155,7 @@ class PortableInfoboxBuilderController extends WikiaController {
 			$this->wg->cityId,
 			$title->getArticleID(),
 			TemplateClassificationService::TEMPLATE_INFOBOX,
-			'user',
+			UserTemplateClassificationService::USER_PROVIDER,
 			$this->wg->user->getName()
 		);
 	}
