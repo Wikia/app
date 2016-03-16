@@ -7,6 +7,8 @@
  * @author Kyle Florence, Saipetch Kongkatong, Tomasz Odrobny
  */
 class ForumBoard extends Wall {
+	const CACHE_VERSION = 1;
+	const FORUM_BOARD_INFO = 'forum_board_info';
 
 	/**
 	 * @return ForumBoard
@@ -22,7 +24,7 @@ class ForumBoard extends Wall {
 	public function getBoardInfo() {
 		wfProfileIn( __METHOD__ );
 
-		$memKey = wfMemcKey( 'forum_board_info', $this->getId() );
+		$memKey = self::getBoardInfoCacheKey( $this->getId() );
 		$info = $this->wg->Memc->get( $memKey );
 		wfProfileOut( __METHOD__ );
 		return empty( $info ) ? $this->getBoardInfoFromMaster() : new ForumBoardInfo( $info );
@@ -100,14 +102,13 @@ class ForumBoard extends Wall {
 		$forumBoardInfo->setName( $this->getTitle()->getText() );
 		$forumBoardInfo->setUrl( $this->getTitle()->getFullURL() );
 		$forumBoardInfo->setDescription( $this->getDescriptionWithoutTemplates() );
-		$memKey = wfMemcKey( 'forum_board_info', $this->getId() );
+		$memKey = self::getBoardInfoCacheKey( $this->getId() );
 		$this->wg->Memc->set( $memKey, $forumBoardInfo->toArray(), 60 * 60 * 12 );
 		return $forumBoardInfo;
 	}
 
 	/**
 	 * clear cache for board info
-	 * @param array $parentPageIds
 	 */
 	public function clearCacheBoardInfo() {
 		$this->getBoardInfoFromMaster();
@@ -132,5 +133,13 @@ class ForumBoard extends Wall {
 			$postInfo->setTimestamp($revision->getTimestamp());
 		}
 		return $postInfo;
+	}
+
+	/**
+	 * @param $forumBoardId integer
+	 * @return string cache key for getBoardInfo()
+	 */
+	private static function getBoardInfoCacheKey( $forumBoardId ) {
+		return wfMemcKey( self::FORUM_BOARD_INFO, self::CACHE_VERSION, $forumBoardId );
 	}
 }
