@@ -418,10 +418,12 @@ class PermissionsConfigurationImpl implements PermissionsConfiguration {
 		$this->groupsAddableByGroup['content-reviewer'] = array( 'content-reviewer' );
 		$this->groupsRemovableByGroup['content-reviewer'] = array( 'content-reviewer' );
 
-		$this->groupsAddableByGroup['vstf'] = array( 'rollback', 'bot' );
-		$this->groupsRemovableByGroup['vstf'] = array( 'rollback', 'bot' );
-		$this->groupsSelfAddableByGroup['vstf'] = array( 'sysop' );
-		$this->groupsSelfRemovableByGroup['vstf'] = array( 'sysop', 'bureaucrat' );
+		$this->groupsSelfAddableByGroup['vstf'] = array( 'rollback', 'bot', 'sysop' );
+		$this->groupsSelfRemovableByGroup['vstf'] = array( 'rollback', 'bot', 'sysop', 'bureaucrat' );
+
+		$this->groupsSelfRemovableByGroup['chatmoderator'] = array( 'chatmoderator' );
+		$this->groupsSelfRemovableByGroup['threadmoderator'] = array( 'threadmoderator' );
+		$this->groupsSelfRemovableByGroup['content-moderator'] = array( 'content-moderator' );
 
 		// the $wgXXXLocal variables are loaded from wiki factory - we should use it as is
 		if ( !empty( $wgAddGroupsLocal ) )
