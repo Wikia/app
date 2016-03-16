@@ -91,11 +91,12 @@ class PortableInfoboxBuilderHooks {
 	 */
 	public static function onCustomEditor( $page, $user ) {
 		$title = $page->getTitle();
+		$request = RequestContext::getMain()->getRequest();
 
 		if (
 			PortableInfoboxBuilderHelper::canUseInfoboxBuilder( $title, $user )
-			&& !PortableInfoboxBuilderHelper::isSubmitAction( RequestContext::getMain()->getRequest() )
-			&& !PortableInfoboxBuilderHelper::isForcedSourceMode( RequestContext::getMain()->getRequest() )
+			&& !PortableInfoboxBuilderHelper::isSubmitAction( $request )
+			&& !PortableInfoboxBuilderHelper::isForcedSourceMode( $request )
 		) {
 			$url = SpecialPage::getTitleFor( 'InfoboxBuilder', $title->getText() )->getInternalURL();
 			F::app()->wg->out->redirect( $url );
