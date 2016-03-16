@@ -84,7 +84,13 @@ require([
 	}
 
 	function afterRailLoads(callback) {
-		$('#WikiaRail').on('afterLoad.rail', callback);
+		var $rail = $('#WikiaRail');
+
+		if ($rail.find('.loading').exists()) {
+			$rail.one('afterLoad.rail', callback);
+		} else {
+			callback();
+		}
 	}
 
 	function runExperiment() {
