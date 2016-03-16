@@ -258,6 +258,11 @@ class PermissionsConfigurationImpl implements PermissionsConfiguration {
 	public function __construct() {
 		$this->loadExplicitGroups();
 		$this->loadGroupsChangeableByGroups();
+
+		//This global is not used in wikia app any more, but it is queried through api from backend,
+		//so we need to retain it
+		global $wgWikiaGlobalUserGroups;
+		$wgWikiaGlobalUserGroups = $this->globalGroups;
 	}
 
 	/**
