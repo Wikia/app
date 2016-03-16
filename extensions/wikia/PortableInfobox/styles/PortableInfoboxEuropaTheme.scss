@@ -82,10 +82,10 @@ $tabber-background-color: mix($color-buttons, $color-page, $background-color-mix
 			line-height: $list-item-line-height;
 			list-style-type: disc;
 			padding-bottom: $list-item-spacing;
-		}
 
-		li:last-child {
-			padding-bottom: 0;
+			&:last-child {
+				padding-bottom: 0;
+			}
 		}
 	}
 
@@ -113,6 +113,7 @@ $tabber-background-color: mix($color-buttons, $color-page, $background-color-mix
 		background-color: $color-buttons;
 		color: $color-button-text;
 		text-align: center;
+
 		a {
 			color: $white;
 			text-decoration: underline;
@@ -136,16 +137,12 @@ $tabber-background-color: mix($color-buttons, $color-page, $background-color-mix
 		}
 	}
 
-	.pi-horizontal-group-item {
-		&:nth-child(even) {
-			background-color: $horizontal-group-stripe-background;
-		}
+	.pi-horizontal-group-item:nth-child(even) {
+		background-color: $horizontal-group-stripe-background;
 	}
 
-	.pi-horizontal-group-no-labels {
-		.pi-data-value {
-			padding-top: $infobox-data-spacing;
-		}
+	.pi-horizontal-group-no-labels .pi-data-value {
+		padding-top: $infobox-data-spacing;
 	}
 
 	.pi-image-collection-tabs {
