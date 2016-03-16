@@ -10,9 +10,24 @@ require([
 	'ext.wikia.recirculation.views.footer',
 	'ext.wikia.recirculation.helpers.contentLinks',
 	'ext.wikia.recirculation.helpers.fandom',
+	'ext.wikia.recirculation.helpers.googleMatch',
 	'ext.wikia.adEngine.taboolaHelper',
 	require.optional('videosmodule.controllers.rail')
-], function($, w, abTest, tracker, utils, incontentView, railView, footerView, contentLinksHelper, fandomHelper, taboolaHelper, videosModule) {
+], function(
+	$,
+	w,
+	abTest,
+	tracker,
+	utils,
+	incontentView,
+	railView,
+	footerView,
+	contentLinksHelper,
+	fandomHelper,
+	googleMatchHelper,
+	taboolaHelper,
+	videosModule
+) {
 	var experimentName = 'RECIRCULATION_PLACEMENT',
 		railContainerId = 'RECIRCULATION_RAIL',
 		railSelector = '#' + railContainerId,
@@ -56,6 +71,14 @@ require([
 			helper = contentLinksHelper;
 			view = footerView;
 			break;
+		case 'GOOGLE_INCONTENT':
+			var section = incontentView.findSuitableSection();
+
+			if (section.exists()) {
+				googleMatchHelper.injectGoogleMatchedContent(section);
+				tracker.trackVerboseImpression(experimentName, 'in-content');
+			}
+			return;
 		case 'CONTROL':
 			afterRailLoads(function() {
 				fandomHelper.injectLegacyHtml('recent_popular', railSelector);

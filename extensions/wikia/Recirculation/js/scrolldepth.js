@@ -27,7 +27,7 @@ require([
 					action: 'scroll',
 					category: 'recirculation',
 					label: label,
-					trackingMethod: 'analytics'
+					trackingMethod: 'internal'
 				});
 			}
 		});
