@@ -21,6 +21,15 @@ define('wikia.infoboxBuilder.ponto', ['wikia.window', 'ponto'], function (w, pon
 			w.location = w.templatePageUrl;
 			return true;
 		};
+
+		/**
+		 * redirects to source editor
+		 * @returns {Boolean}
+		 */
+		this.redirectToSourceEditor = function () {
+			w.location = w.sourceEditorUrl;
+			return true;
+		}
 	}
 
 	// PontoBaseHandler extension pattern - check Ponto documentation for details
