@@ -435,6 +435,17 @@ class PermissionsConfigurationImpl implements PermissionsConfiguration {
 		if ( !empty( $wgGroupsRemoveFromSelfLocal ) )
 			$this->groupsSelfRemovableByGroup = array_merge( $this->groupsSelfRemovableByGroup, $wgGroupsRemoveFromSelfLocal );
 
+		//This group management control should be always possible, independently of any local customization that might
+		//override default group control
+		$this->groupsAddableByGroup['bureaucrat'] = array_unique( array_merge( $this->groupsAddableByGroup['bureaucrat'],
+			[ 'content-moderator' ] ) );
+		$this->groupsRemovableByGroup['bureaucrat'] = array_unique( array_merge( $this->groupsRemovableByGroup['bureaucrat'],
+			[ 'content-moderator' ] ) );
+		$this->groupsAddableByGroup['sysop'] = array_unique( array_merge( $this->groupsAddableByGroup['sysop'],
+			[ 'chatmoderator', 'threadmoderator' ] ) );
+		$this->groupsRemovableByGroup['sysop'] = array_unique( array_merge( $this->groupsRemovableByGroup['sysop'],
+			[ 'chatmoderator', 'threadmoderator' ] ) );
+
 		$this->groupsAddableByGroup['util'] = array_diff( $this->getExplicitGroups(),
 			array_merge( [ 'wikifactory', 'content-reviewer', 'staff', 'util' ], $this->getImplicitGroups() ) );
 		$this->groupsRemovableByGroup['util'] = array_diff( $this->getExplicitGroups(),
