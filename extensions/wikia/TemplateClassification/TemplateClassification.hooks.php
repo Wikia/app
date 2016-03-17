@@ -3,7 +3,6 @@
 namespace Wikia\TemplateClassification;
 
 use Swagger\Client\ApiException;
-use Wikia\TemplateClassification\UnusedTemplates\Handler;
 
 class Hooks {
 	const TC_BODY_CLASS_NAME = 'show-template-classification-modal';
@@ -110,7 +109,7 @@ class Hooks {
 
 			// add additional class to body for new templates in order to hide editor while template classification
 			// modal is visible and builder is available
-			if ( $this->shouldHideEditorForInfoboxBuilder( $title, $types ) ) {
+			if ( $this->shouldHideEditorForInfoboxBuilder( $context, $types ) ) {
 				\OasisController::addBodyClass( self::TC_BODY_CLASS_NAME );
 			}
 		}
@@ -287,12 +286,18 @@ class Hooks {
 		return true;
 	}
 
-	private function shouldHideEditorForInfoboxBuilder( \Title $title, $types ) {
+	/**
+	 * @param \RequestContext $context
+	 * @param $types
+	 * @return bool
+	 */
+	private function shouldHideEditorForInfoboxBuilder( \RequestContext $context, $types ) {
 		global $wgEnablePortableInfoboxBuilderExt;
 
 		return $wgEnablePortableInfoboxBuilderExt
-			   && $title->getArticleID() === 0
+			   && $context->getTitle()->getArticleID() === 0
 			   && empty( $types[ 'current' ] )
-			   && empty( $types[ 'new' ] );
+			   && empty( $types[ 'new' ] )
+			   && !\PortableInfoboxBuilderHelper::isForcedSourceMode( $context->getRequest() );
 	}
 }
