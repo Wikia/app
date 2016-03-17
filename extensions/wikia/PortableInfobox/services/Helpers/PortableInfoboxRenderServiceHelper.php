@@ -170,7 +170,6 @@ class PortableInfoboxRenderServiceHelper {
 	 */
 	public function getThumbnailSizes( $preferredWidth, $maxHeight, $originalWidth, $originalHeight ) {
 		if ( ( $originalHeight / $originalWidth ) > ( $maxHeight / $preferredWidth ) ) {
-			//		width should be
 			$height = min( $maxHeight, $originalHeight );
 			$width = min( $preferredWidth, $height * $originalWidth / $originalHeight );
 		} else {
