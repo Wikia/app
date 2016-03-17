@@ -111,6 +111,10 @@ abstract class MapsGeocoder {
 	 * @return array or false
 	 */
 	public function geocode( $address ) {
+
+		// MAIN-6654: slow down this api call to max 9/sec to avoid blowing up google maps API limit
+		// Remove this code once we get the limits removed
+		usleep(111111);
 		$response = ExternalHttp::get( $this->getRequestUrl( $address ) ); # Wikia change
 
 		if ( $response === false ) {
