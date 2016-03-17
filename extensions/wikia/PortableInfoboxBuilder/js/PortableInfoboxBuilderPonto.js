@@ -1,6 +1,6 @@
 'use strict';
 
-define('wikia.infoboxBuilder.ponto', ['wikia.window', 'ponto'], function (window, ponto) {
+define('wikia.infoboxBuilder.ponto', ['wikia.window', 'ponto'], function (w, ponto) {
 	function InfoboxBuilderPonto() {
 		/**
 		 * sends wiki context to infobox builder in mercury
@@ -9,24 +9,32 @@ define('wikia.infoboxBuilder.ponto', ['wikia.window', 'ponto'], function (window
 		this.isWikiaContext = function () {
 			return {
 				isWikiaContext: true,
-				isLoggedIn: window.wqUserName !== null ? true : false
-			}
+				isLoggedIn: w.wqUserName !== null
+			};
 		};
 
 		/**
 		 * redirects to template page
-		 * @param {String} title
 		 * @returns {Boolean}
 		 */
-		this.redirectToTemplatePage = function (title) {
-			window.location = window.location.origin + '/wiki/Template:' + title;
+		this.redirectToTemplatePage = function () {
+			w.location = w.templatePageUrl;
+			return true;
+		};
+
+		/**
+		 * redirects to source editor
+		 * @returns {Boolean}
+		 */
+		this.redirectToSourceEditor = function () {
+			w.location = w.sourceEditorUrl;
 			return true;
 		}
 	}
 
 	// PontoBaseHandler extension pattern - check Ponto documentation for details
 	ponto.PontoBaseHandler.derive(InfoboxBuilderPonto);
-	InfoboxBuilderPonto.getInstance = function() {
+	InfoboxBuilderPonto.getInstance = function () {
 		return new InfoboxBuilderPonto();
 	};
 

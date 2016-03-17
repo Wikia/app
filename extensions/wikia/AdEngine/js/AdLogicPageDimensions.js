@@ -4,10 +4,9 @@ define('ext.wikia.adEngine.adLogicPageDimensions', [
 	'wikia.window',
 	'wikia.document',
 	'wikia.log',
-	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.slotTweaker',
 	'ext.wikia.adEngine.adHelper'
-], function (win, doc, log, adContext, slotTweaker, adHelper) {
+], function (win, doc, log, slotTweaker, adHelper) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.adLogicPageDimensions',
@@ -67,10 +66,6 @@ define('ext.wikia.adEngine.adLogicPageDimensions', [
 
 	if (!matchMedia) {
 		log('No working matchMedia implementation found', 'user', logGroup);
-	}
-
-	if (adContext.getContext().opts.overridePrefootersSizes) {
-		slotsToHideOnMediaQuery.PREFOOTER_LEFT_BOXAD = 'oneColumn';
 	}
 
 	/**

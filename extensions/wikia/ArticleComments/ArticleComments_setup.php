@@ -42,21 +42,6 @@ $wgAutoloadClasses['CommentsIndex'] = __DIR__ . '/classes/CommentsIndex.class.ph
 
 $wgExtensionMessagesFiles['ArticleComments'] = __DIR__ . '/ArticleComments.i18n.php';
 
-$wgAvailableRights[] = 'commentcreate';
-$wgAvailableRights[] = 'commentmove';
-$wgAvailableRights[] = 'commentedit';
-$wgAvailableRights[] = 'commentdelete';
-
-$wgGroupPermissions['*']['commentcreate'] = true;
-$wgGroupPermissions['sysop']['commentmove'] = true;
-$wgGroupPermissions['sysop']['commentedit'] = true;
-$wgGroupPermissions['sysop']['commentdelete'] = true;
-
-# PLATFORM-1707: threadmoderator additional rights
-$wgGroupPermissions['threadmoderator']['commentmove'] = true;
-$wgGroupPermissions['threadmoderator']['commentedit'] = true;
-$wgGroupPermissions['threadmoderator']['commentdelete'] = true;
-
 if (!empty($wgEnableWallEngine) || !empty($wgEnableArticleCommentsExt) || !empty($wgEnableBlogArticles)) {
 
 	$wgHooks['ArticleDelete'][] = 'ArticleCommentList::articleDelete';

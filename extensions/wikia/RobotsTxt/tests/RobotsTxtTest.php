@@ -110,19 +110,28 @@ class RobotsTxtTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * Test disallowPath and limited URI encoding
+	 * Test disallowPath and allowPath, and limited URI encoding
 	 *
 	 * @covers RobotsTxt::disallowPath
+	 * @covers RobotsTxt::allowPath
 	 */
-	public function testDisallowPath() {
+	public function testDisallowAndAllowPath() {
 		$robots = new RobotsTxt();
 		$robots->disallowPath( '/some-path' );
 		$robots->disallowPath( '/some-path:ąść' );
 		$robots->disallowPath( '/some-path:サイトマップ' );
 		$robots->disallowPath( '/*/*%$' );
+		$robots->allowPath( '/other-path' );
+		$robots->allowPath( '/other-path:ąść' );
+		$robots->allowPath( '/other-path:サイトマップ' );
+		$robots->allowPath( '/*/*^$' );
 
 		$this->assertEquals( [
 			'User-agent: *',
+			'Allow: /other-path',
+			'Allow: /other-path:%C4%85%C5%9B%C4%87',
+			'Allow: /other-path:%E3%82%B5%E3%82%A4%E3%83%88%E3%83%9E%E3%83%83%E3%83%97',
+			'Allow: /*/*%5E$',
 			'Disallow: /some-path',
 			'Disallow: /some-path:%C4%85%C5%9B%C4%87',
 			'Disallow: /some-path:%E3%82%B5%E3%82%A4%E3%83%88%E3%83%9E%E3%83%83%E3%83%97',
