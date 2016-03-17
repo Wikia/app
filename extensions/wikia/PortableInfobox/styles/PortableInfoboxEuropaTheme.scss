@@ -77,15 +77,28 @@ $tabber-background-color: mix($color-buttons, $color-page, $background-color-mix
 
 	.pi-data-value {
 		padding-left: 0;
+		word-break: break-all;
 
 		li {
 			line-height: $list-item-line-height;
-			list-style-type: disc;
 			padding-bottom: $list-item-spacing;
 
 			&:last-child {
 				padding-bottom: 0;
 			}
+		}
+
+		ul {
+			list-style-type: disc;
+		}
+
+		ol {
+			margin-left: $infobox-side-spacing;
+		}
+
+		ol, ul {
+			list-style-position: outside;
+			margin-left: $infobox-side-spacing;
 		}
 	}
 
