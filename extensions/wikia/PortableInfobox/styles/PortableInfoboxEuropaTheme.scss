@@ -24,7 +24,7 @@ $white: #fff;
 // color mixes
 // 5% color, 5% black/white, 90% background
 $background-color: mix(mix($color-buttons, $black, $background-color-mix * 5), $color-page, $background-color-mix);
-$horizontal-group-stripe-background: mix($black, $color-page, $background-color-mix * 2);
+$horizontal-group-stripe-background: mix($color-buttons, $background-color, $background-color-mix / 2);
 $tabber-background-color: mix($color-buttons, $color-page, $background-color-mix * 3);
 
 @if $is-dark-wiki {
@@ -56,6 +56,7 @@ $tabber-background-color: mix($color-buttons, $color-page, $background-color-mix
 	.pi-caption {
 		color: inherit;
 		font-style: normal;
+		line-height: $list-item-line-height;
 	}
 
 	.pi-collapse .pi-header::after {
@@ -77,7 +78,6 @@ $tabber-background-color: mix($color-buttons, $color-page, $background-color-mix
 
 	.pi-data-value {
 		padding-left: 0;
-		word-break: break-all;
 
 		li {
 			line-height: $list-item-line-height;
