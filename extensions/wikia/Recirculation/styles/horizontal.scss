@@ -30,10 +30,12 @@ $recirculation-horizontal-border-color: rgba($color-headline-border, 0.5);
 
 	.thumbnail {
 		background-color: $color-headline-border;
-		overflow: hidden;
 		margin-bottom: 5px;
+		overflow: hidden;
+		text-align: center;
 
 		img {
+			max-height: 100%;
 			max-width: 100%;
 		}
 	}

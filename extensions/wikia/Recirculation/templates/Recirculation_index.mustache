@@ -3,12 +3,12 @@
 	<ul class="thumbnails">
 		{{#posts}}
 			<li class="title-thumbnail">
-				<a href="{{ url }}" class="image image-thumbnail fluid small">
-					<img src="{{ image_url }}" alt="{{ title }}" itemprop="thumbnail">
+				<a href="{{ url }}">
+					<div class="image image-thumbnail fluid small">
+						<img src="{{ image_url }}" alt="{{ title }}" itemprop="thumbnail">
+					</div>
+					<div class="title" title="{{ title }}">{{ title }}</div>
 				</a>
-				<div class="title" title="{{ title }}">
-					<a href="{{ url }}">{{ title }}</a>
-				</div>
 			</li>
 		{{/posts}}
 	</ul>

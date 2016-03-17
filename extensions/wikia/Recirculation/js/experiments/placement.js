@@ -4,14 +4,30 @@ require([
 	'wikia.window',
 	'wikia.abTest',
 	'ext.wikia.recirculation.tracker',
+	'ext.wikia.recirculation.utils',
 	'ext.wikia.recirculation.views.incontent',
 	'ext.wikia.recirculation.views.rail',
 	'ext.wikia.recirculation.views.footer',
 	'ext.wikia.recirculation.helpers.contentLinks',
 	'ext.wikia.recirculation.helpers.fandom',
+	'ext.wikia.recirculation.helpers.googleMatch',
 	'ext.wikia.adEngine.taboolaHelper',
 	require.optional('videosmodule.controllers.rail')
-], function($, w, abTest, tracker, incontentView, railView, footerView, contentLinksHelper, fandomHelper, taboolaHelper, videosModule) {
+], function(
+	$,
+	w,
+	abTest,
+	tracker,
+	utils,
+	incontentView,
+	railView,
+	footerView,
+	contentLinksHelper,
+	fandomHelper,
+	googleMatchHelper,
+	taboolaHelper,
+	videosModule
+) {
 	var experimentName = 'RECIRCULATION_PLACEMENT',
 		railContainerId = 'RECIRCULATION_RAIL',
 		railSelector = '#' + railContainerId,
@@ -55,6 +71,14 @@ require([
 			helper = contentLinksHelper;
 			view = footerView;
 			break;
+		case 'GOOGLE_INCONTENT':
+			var section = incontentView.findSuitableSection();
+
+			if (section.exists()) {
+				googleMatchHelper.injectGoogleMatchedContent(section);
+				tracker.trackVerboseImpression(experimentName, 'in-content');
+			}
+			return;
 		case 'CONTROL':
 			afterRailLoads(function() {
 				fandomHelper.injectLegacyHtml('recent_popular', railSelector);
@@ -83,7 +107,13 @@ require([
 	}
 
 	function afterRailLoads(callback) {
-		$('#WikiaRail').on('afterLoad.rail', callback);
+		var $rail = $('#WikiaRail');
+
+		if ($rail.find('.loading').exists()) {
+			$rail.one('afterLoad.rail', callback);
+		} else {
+			callback();
+		}
 	}
 
 	function runExperiment() {
@@ -96,7 +126,7 @@ require([
 	function setupLegacyTracking() {
 		tracker.trackVerboseImpression(experimentName, 'rail');
 		$(railSelector).on('mousedown', 'a', function() {
-			tracker.trackVerboseClick(experimentName, 'rail');
+			tracker.trackVerboseClick(experimentName, utils.buildLabel(this, 'rail'));
 		});
 	}
 });

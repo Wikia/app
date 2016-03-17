@@ -221,6 +221,50 @@ class MercuryApiController extends WikiaController {
 	}
 
 	/**
+	 * @desc Returns UA dimensions
+	 */
+	public function getTrackingDimensions() {
+		global $wgDBname, $wgUser, $wgCityId, $wgLanguageCode;
+
+		$title = $this->getTitleFromRequest();
+		$article = Article::newFromID( $title->getArticleId() );
+
+		if ( $article instanceof Article && $title->isRedirect() ) {
+			$title = $this->handleRedirect( $title, $article, [] )[0];
+		}
+
+		$wikiCategoryNames = WikiFactoryHub::getInstance()->getWikiCategoryNames( $wgCityId );
+		$wikiCategoryNames = join( ',', $wikiCategoryNames );
+
+		$adContext = ( new AdEngine2ContextService() )->getContext( $title, 'mercury' );
+		$powerUserTypes = ( new \Wikia\PowerUser\PowerUser( $wgUser ) )->getTypesForUser();
+
+		$dimensions = [];
+
+		$dimensions[1] = $wgDBname;
+		$dimensions[2] = $wgLanguageCode;
+		$dimensions[3] = $adContext['targeting']['wikiVertical'];
+		$dimensions[4] = 'mercury';
+		$dimensions[5] = $wgUser->isAnon() ? 'anon' : 'user';
+
+		$dimensions[9] = $wgCityId;
+
+		$dimensions[14] = $adContext['opts']['showAds'] ? 'yes' : 'no';
+		$dimensions[15] = WikiaPageType::isCorporatePage() ? 'yes' : 'no';
+
+		$dimensions[17] = WikiFactoryHub::getInstance()->getWikiVertical( $wgCityId )['short'];
+		$dimensions[18] = $wikiCategoryNames;
+		$dimensions[19] = WikiaPageType::getArticleType( $title );
+
+		$dimensions[23] = in_array( 'poweruser_lifetime', $powerUserTypes ) ? 'yes' : 'no';
+		$dimensions[24] = in_array( 'poweruser_frequent', $powerUserTypes ) ? 'yes' : 'no';
+		$dimensions[25] = strval( $title->getNamespace() );
+
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
+		$this->response->setVal( 'dimensions', $dimensions );
+	}
+
+	/**
 	 * @desc for classic or CK editor markup return
 	 * wikitext ready to process and display in Mercury skin
 	 *

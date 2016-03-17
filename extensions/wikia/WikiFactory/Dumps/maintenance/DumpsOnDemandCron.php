@@ -2,13 +2,9 @@
 include __DIR__ . '/../../../../../maintenance/Maintenance.php';
 
 class DumpsOnDemandCron extends Maintenance {
-    
+
     const PIDFILE = '/var/run/MediaWikiDumpsOnDemandCron.pid';
-    
-    public function __construct() {
-        parent::__construct();
-    }
-    
+
     public function execute() {
 
         global $wgExternalSharedDB;
@@ -49,13 +45,19 @@ class DumpsOnDemandCron extends Maintenance {
 
         $this->output( "INFO: Creating dumps for Wikia #{$sWikiaId}.\n" );
 
-        $sCommand = sprintf( 'SERVER_ID=177 php %s/extensions/wikia/WikiFactory/Dumps/runBackups.php --conf %s --id=%d --both --tmp --s3', $IP, $wgWikiaLocalSettingsPath, $sWikiaId );
-
-        wfShellExec( $sCommand, $iStatus );
+        $sCommand = sprintf( 'SERVER_ID=%d php %s/extensions/wikia/WikiFactory/Dumps/runBackups.php --conf %s --id=%d --both --tmp --s3 2>&1', Wikia::COMMUNITY_WIKI_ID, $IP, $wgWikiaLocalSettingsPath, $sWikiaId );
+		$sOutput = wfShellExec( $sCommand, $iStatus );
 
         $oDB = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
 
-        if ( $iStatus ) {
+		$logger = Wikia\Logger\WikiaLogger::instance();
+
+        if ( $iStatus > 0 ) {
+			$logger->error( __METHOD__ . ' - failed creating dumps', [
+				'exception' => new Exception( $sCommand, $iStatus ),
+				'output' => $sOutput,
+			] );
+
             $this->output( "ERROR: Failed creating dumps. Terminating.\n" );
             $oDB->update(
                 'dumps',
@@ -91,7 +93,7 @@ class DumpsOnDemandCron extends Maintenance {
             __METHOD__
         );
 
-        DumpsOnDemand::purgeLatestDumpInfo(intval($sWikiaId));
+        DumpsOnDemand::purgeLatestDumpInfo( intval( $sWikiaId ) );
 
         $this->output( "Done.\n" );
         unlink( self::PIDFILE );
@@ -99,5 +101,5 @@ class DumpsOnDemandCron extends Maintenance {
     }
 }
 
-$maintClass = 'DumpsOnDemandCron';
+$maintClass = DumpsOnDemandCron::class;
 include RUN_MAINTENANCE_IF_MAIN;
