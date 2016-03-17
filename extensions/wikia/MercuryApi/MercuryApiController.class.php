@@ -238,13 +238,13 @@ class MercuryApiController extends WikiaController {
 
 			if ( $article instanceof Article && $title->isRedirect() ) {
 				$title = $this->handleRedirect( $title, $article, [] )[0];
-
-				$adContext = ( new AdEngine2ContextService() )->getContext( $title, 'mercury' );
-				$dimensions[3] = $adContext['targeting']['wikiVertical'];
-				$dimensions[14] = $adContext['opts']['showAds'] ? 'yes' : 'no';
-				$dimensions[19] = WikiaPageType::getArticleType( $title );
-				$dimensions[25] = strval( $title->getNamespace() );
 			}
+
+			$adContext = ( new AdEngine2ContextService() )->getContext( $title, 'mercury' );
+			$dimensions[3] = $adContext['targeting']['wikiVertical'];
+			$dimensions[14] = $adContext['opts']['showAds'] ? 'yes' : 'no';
+			$dimensions[19] = WikiaPageType::getArticleType( $title );
+			$dimensions[25] = strval( $title->getNamespace() );
 		} catch (Exception $ex) {
 			// In case of exception - don't set the dimensions
 		}
