@@ -21,13 +21,6 @@ $wgSpecialPages['WikiaWidget'] = 'WikiaWidget'; # Let MediaWiki know about your 
 $wgExtensionMessagesFiles['WikiaWidget'] = $dir . '/WikiaWidget.i18n.php';
 
 
-/**
- * permissions
- */
-$wgAvailableRights[] = 'wikiawidget';
-$wgGroupPermissions['staff']['wikiawidget'] = true;
-$wgGroupPermissions['sysop']['wikiawidget'] = true;
-$wgGroupPermissions['wikiawidget']['wikiawidget'] = true;
 
 extAddSpecialPage( dirname(__FILE__) . '/WikiaWidget_body.php', 'WikiaWidget', 'WikiaWidget' );
 $wgSpecialPageGroups['WikiaWidget'] = 'wikia';

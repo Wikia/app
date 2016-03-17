@@ -41,12 +41,14 @@ define('bucky.resourceTiming', ['jquery', 'wikia.window', 'wikia.log', 'bucky'],
 	/**
 	 * Returns the domain name from the full URL
 	 *
+	 * Only last two segments will be returned, e.g. "vignette1.wikia.nocookie.net" will give you "nocookie.net"
+	 *
 	 * @param {string} url URL to get domain for
 	 * @return {string|false} domain or false when URLs in invalid
 	 */
 	function getDomain(url) {
 		var matches = url.match(/\/\/([^/]+)/);
-		return !!matches && matches[1];
+		return !!matches && matches[1].split('.').slice(-2).join('.');
 	}
 
 	/**

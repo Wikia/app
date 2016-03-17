@@ -36,9 +36,6 @@
 	 			</div>
 			</div>
 		</div>
-		<? if($showAdModalRectangle) { ?>
-			<div id="MODAL_RECTANGLE" class="wikia-ad noprint"></div>
-		<? } ?>
 	</div>
 
 	<div class="more-info">

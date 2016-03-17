@@ -7,7 +7,7 @@ class NodeTitle extends Node {
 	 * allowed node attributes
 	 * @var array of string
 	 */
-	protected $allowedAttributes = [ 'source' ];
+	protected $allowedAttributes = [ 'source' => [ ] ];
 
 	/**
 	 * allowed child nodes
@@ -21,7 +21,7 @@ class NodeTitle extends Node {
 	public function getChildrenAsJsonObjects() {
 		$data = null;
 
-		if($this->xmlNode->default) {
+		if ( $this->xmlNode->default ) {
 			$builderNode = NodeBuilder::createFromNode( $this->xmlNode->default );
 			$data = $builderNode->asJsonObject();
 		}

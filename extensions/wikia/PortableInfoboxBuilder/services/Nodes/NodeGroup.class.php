@@ -19,13 +19,13 @@ class NodeGroup extends Node {
 	/**
 	 * @var array of string
 	 */
-	protected $allowedAttributes = [ 'collapse' ];
+	protected $allowedAttributes = [ 'collapse' => [ 'open' ] ];
 
 	public function asJsonObject() {
 		$data = $this->getChildrenAsJsonObjects();
 		$collapsible = false;
 
-		if ( ( (string)$this->xmlNode['collapse'] ) === 'open' ) {
+		if ( ( (string)$this->xmlNode[ 'collapse' ] ) === 'open' ) {
 			$collapsible = true;
 		}
 
@@ -37,15 +37,5 @@ class NodeGroup extends Node {
 		}
 
 		return $data;
-	}
-
-	protected function hasValidAttributes() {
-		foreach ( $this->xmlNode->attributes() as $attr => $val ) {
-			if ( $attr === 'collapse' && (string)$val !== 'open' ) {
-				return false;
-			}
-		}
-
-		return parent::hasValidAttributes();
 	}
 }

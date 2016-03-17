@@ -20,7 +20,7 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 		}
 
 		if (context.opts.overridePrefootersSizes) {
-			slotMap.PREFOOTER_LEFT_BOXAD.size = '300x250,728x90,970x250';
+			slotMap.PREFOOTER_LEFT_BOXAD.size = '300x250,468x60,728x90';
 			delete slotMap.PREFOOTER_RIGHT_BOXAD;
 		}
 	}

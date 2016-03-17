@@ -6,20 +6,15 @@ define('ext.wikia.adEngine.provider.taboola', [
 	'ext.wikia.adEngine.recovery.helper',
 	'ext.wikia.adEngine.slotTweaker',
 	'ext.wikia.adEngine.taboolaHelper',
-	'wikia.abTest',
 	'wikia.geo',
 	'wikia.instantGlobals',
 	'wikia.log',
 	'wikia.window',
 	'wikia.document'
-], function (adContext, recoveryHelper, slotTweaker, taboolaHelper, abTest, geo, instantGlobals, log, window, document) {
+], function (adContext, recoveryHelper, slotTweaker, taboolaHelper, geo, instantGlobals, log, window, document) {
 	'use strict';
 
-	var abGroups = {
-			recovery: abTest.getGroup('PROJECT_43_TABOOLA') === 'YES',
-			regular: abTest.getGroup('NATIVE_ADS_TABOOLA') === 'YES'
-		},
-		config = instantGlobals.wgAdDriverTaboolaConfig || {},
+	var config = instantGlobals.wgAdDriverTaboolaConfig || {},
 		context = adContext.getContext(),
 		logGroup = 'ext.wikia.adEngine.provider.taboola',
 		mappedVerticals = {
@@ -65,13 +60,13 @@ define('ext.wikia.adEngine.provider.taboola', [
 			return false;
 		}
 
-		if (slots[slotName] && config[slotName] && abGroups.regular && geo.isProperGeo(config[slotName].regular)) {
+		if (slots[slotName] && config[slotName] && geo.isProperGeo(config[slotName].regular)) {
 			log(['canHandleSlot', 'Using regular taboola', slotName], 'debug', logGroup);
 			supportedSlots.regular.push(slotName);
 			return true;
 		}
 
-		if (slots[slotName] && config[slotName] && abGroups.recovery && geo.isProperGeo(config[slotName].recovery)) {
+		if (slots[slotName] && config[slotName] && geo.isProperGeo(config[slotName].recovery)) {
 			log(['canHandleSlot', 'Using recovery taboola', slotName], 'debug', logGroup);
 			supportedSlots.recovery.push(slotName);
 			return true;

@@ -15,7 +15,11 @@ $wgExtensionCredits['specialpage'][] = [
 
 // classes
 $wgAutoloadClasses['SpecialDiscussionsLogController'] = $dir . 'SpecialDiscussionsLogController.class.php';
+$wgAutoloadClasses['SpecialDiscussionsLogHooks'] = $dir . 'SpecialDiscussionsLogHooks.class.php';
 $wgAutoloadClasses['UserLogRecord'] = $dir . 'UserLogRecord.class.php';
+
+// hooks
+$wgHooks['ContributionsToolLinks'][] = 'SpecialDiscussionsLogHooks::onContributionsToolLinks';
 
 // special page
 $wgSpecialPages['DiscussionsLog'] = 'SpecialDiscussionsLogController';

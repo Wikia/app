@@ -1,0 +1,34 @@
+@import 'skins/shared/color';
+
+.WikiaRail .recirculation-rail {
+	.title-thumbnail {
+		margin-bottom: 15px;
+	}
+
+	.image-thumbnail {
+		background-color: $color-headline-border;
+		display: block;
+		margin-bottom: 7px;
+		max-height: 166px;
+		max-width: 268px;
+		overflow: hidden;
+
+		img {
+			display: block;
+			max-height: 100%;
+			max-width: 100%;
+		}
+	}
+
+	.title {
+		font-size: 15px;
+	}
+
+	a {
+		color: $color-text;
+
+		&:hover {
+			color: $color-links;
+		}
+	}
+}

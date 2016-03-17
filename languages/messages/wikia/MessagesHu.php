@@ -1,5 +1,5 @@
 <?php
-$messages = array_merge( $messages, array(
+$messages = array_merge( $messages, [
 
 // Widgets 
 'widget-title-activetalkpages' => 'Aktív vitalapok',
@@ -46,5 +46,9 @@ $messages = array_merge( $messages, array(
 'copyrightpage' => 'w:Wikia:Licensing|Wikia:Licensing',
 'addnewtalksection-link' => 'Új szakasz nyitása',
 
-) );
+// VOLDEV-144: Update anon purge messages for friendliness
+'confirm-purge-top' => 'Szeretnéd törölni ennek a lapnak a gyorsítótárát?',
+'confirm_purge_button' => 'Igen, nem vagyok robot',
+'confirm-purge-bottom' => 'A lap gyorsítótárának törlése biztosítja, hogy a legújabb változat jelenjen meg.',
+] );
 
