@@ -61,10 +61,11 @@ class PortableInfoboxRenderServiceHelper {
 			return false;
 		}
 		// get dimensions
+		$originalWidth = $file->getWidth();
 		$dimensions = $this->getThumbnailSizes(
-			$width, self::MAX_DESKTOP_THUMBNAIL_HEIGHT, $file->getWidth(), $file->getHeight() );
-		// if custom, scale thumbnail size
-		$ratio = !empty( $wgPortableInfoboxCustomImageWidth ) ?
+			$width, self::MAX_DESKTOP_THUMBNAIL_HEIGHT, $originalWidth, $file->getHeight() );
+		// if custom and big enough, scale thumbnail size
+		$ratio = !empty( $wgPortableInfoboxCustomImageWidth ) && $originalWidth > $wgPortableInfoboxCustomImageWidth ?
 			$wgPortableInfoboxCustomImageWidth / $dimensions[ 'width' ] : 1;
 		// get thumbnail
 		$thumbnail = $file->transform( [

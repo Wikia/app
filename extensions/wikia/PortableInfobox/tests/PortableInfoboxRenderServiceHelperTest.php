@@ -356,4 +356,102 @@ class PortableInfoboxRenderServiceHelperTest extends WikiaBaseTest {
 			],
 		];
 	}
+
+
+	/**
+	 * @param $customWidth
+	 * @param $preferredWidth
+	 * @param $resultDimensions
+	 * @param $thumbnailDimensions
+	 * @param $originalDimension
+	 * @dataProvider customWidthProvider
+	 */
+	public function testCustomWidthLogic( $customWidth, $preferredWidth, $resultDimensions, $thumbnailDimensions, $originalDimension ) {
+		$expected = [
+			'name' => 'test',
+			'ref' => null,
+			'thumbnail' => null,
+			'key' => '',
+			'media-type' => 'image',
+			'width' => $resultDimensions[ 'width' ],
+			'height' => $resultDimensions[ 'height' ]
+		];
+		$thumb = $this->getMockBuilder( 'ThumbnailImage' )
+			->disableOriginalConstructor()
+			->setMethods( [ 'isError', 'getUrl' ] )
+			->getMock();
+		$file = $this->getMockBuilder( 'File' )
+			->disableOriginalConstructor()
+			->setMethods( [ 'exists', 'transform', 'getWidth', 'getHeight' ] )
+			->getMock();
+		$file->expects( $this->once() )->method( 'exists' )->will( $this->returnValue( true ) );
+		$file->expects( $this->once() )->method( 'getWidth' )->will( $this->returnValue( $originalDimension[ 'width' ] ) );
+		$file->expects( $this->once() )->method( 'getHeight' )->will( $this->returnValue( $originalDimension[ 'height' ] ) );
+
+		$file->expects( $this->any() )
+			->method( 'transform' )
+			->with( $this->equalTo( $thumbnailDimensions ) )
+			->will( $this->returnValue( $thumb ) );
+		$this->mockStaticMethod( 'WikiaFileHelper', 'getFileFromTitle', $file );
+		$this->mockGlobalFunction( 'wfRunHooks', true );
+
+		$globals = new \Wikia\Util\GlobalStateWrapper( [
+			'wgPortableInfoboxCustomImageWidth' => $customWidth
+		] );
+
+		$helper = new PortableInfoboxRenderServiceHelper();
+		$result = $globals->wrap( function () use ( $helper, $preferredWidth ) {
+			return $helper->extendImageData( [ 'name' => 'test' ], $preferredWidth );
+		} );
+
+		$this->assertEquals( $expected, $result );
+	}
+
+	public function customWidthProvider() {
+		return [
+			[
+				'custom' => false,
+				'preferred' => 300,
+				'result' => [ 'width' => 300, 'height' => 200 ],
+				'thumbnail' => [ 'width' => 300, 'height' => 200 ],
+				'original' => [ 'width' => 300, 'height' => 200 ]
+			],
+			[
+				'custom' => 400,
+				'preferred' => 300,
+				'result' => [ 'width' => 300, 'height' => 200 ],
+				'thumbnail' => [ 'width' => 300, 'height' => 200 ],
+				'original' => [ 'width' => 300, 'height' => 200 ]
+			],
+			[
+				'custom' => 400,
+				'preferred' => 300,
+				'result' => [ 'width' => 300, 'height' => 180 ],
+				'thumbnail' => [ 'width' => 400, 'height' => 240 ],
+				'original' => [ 'width' => 500, 'height' => 300 ]
+			],
+			[
+				'custom' => 600,
+				'preferred' => 300,
+				'result' => [ 'width' => 300, 'height' => 500 ],
+				'thumbnail' => [ 'width' => 300, 'height' => 500 ],
+				'original' => [ 'width' => 300, 'height' => 500 ]
+			],
+			[
+				'custom' => 600,
+				'preferred' => 300,
+				'result' => [ 'width' => 188, 'height' => 500 ],
+				'thumbnail' => [ 'width' => 188, 'height' => 500 ],
+				'original' => [ 'width' => 300, 'height' => 800 ]
+			],
+			[
+				'custom' => 600,
+				'preferred' => 300,
+				'result' => [ 'width' => 300, 'height' => 375 ],
+				'thumbnail' => [ 'width' => 600, 'height' => 750 ],
+				'original' => [ 'width' => 1200, 'height' => 1500 ]
+			],
+		];
+	}
+
 }
