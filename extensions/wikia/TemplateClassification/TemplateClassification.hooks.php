@@ -3,6 +3,7 @@
 namespace Wikia\TemplateClassification;
 
 use Swagger\Client\ApiException;
+use Wikia\TemplateClassification\UnusedTemplates\Handler;
 
 class Hooks {
 	const TC_BODY_CLASS_NAME = 'show-template-classification-modal';
