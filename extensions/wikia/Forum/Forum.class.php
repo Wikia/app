@@ -1,5 +1,6 @@
 <?php
 use Wikia\Logger\WikiaLogger;
+use Wikia\Util\GlobalStateWrapper;
 
 /**
  * Forum
@@ -335,27 +336,30 @@ class Forum extends Walls {
 	}
 
 	public function createDefaultBoard() {
-		wfProfileIn( __METHOD__ );
-		$app = F::App();
 		if ( !$this->hasAtLeast( NS_WIKIA_FORUM_BOARD, 0 ) ) {
 			WikiaDataAccess::cachePurge( wfMemcKey( 'Forum_hasAtLeast', NS_WIKIA_FORUM_BOARD, 0 ) );
-			/* the wgUser swap is the only way to create page as other user then current */
-			$tmpUser = $app->wg->User;
-			$app->wg->User = User::newFromName( Forum::AUTOCREATE_USER );
-			for ( $i = 1; $i <= 5; $i++ ) {
-				$body = wfMessage( 'forum-autoboard-body-' . $i, $app->wg->Sitename )->inContentLanguage()->text();
-				$title = wfMessage( 'forum-autoboard-title-' . $i, $app->wg->Sitename )->inContentLanguage()->text();
 
-				$this->createBoard( $title, $body, true );
-			}
+			// The wgUser swap is the only way to create page as other user then current
+			$autoCreateUser = User::newFromName( Forum::AUTOCREATE_USER );
+			$wrapper = new GlobalStateWrapper( [ 'wgUser' => $autoCreateUser ] );
+			$wrapper->wrap( function () {
+				$app = F::App();
 
-			$app->wg->User = $tmpUser;
+				// Label used (for grep): forum-autoboard-title-1, forum-autoboard-body-1, forum-autoboard-title-2
+				// forum-autoboard-body-2, forum-autoboard-title-3, forum-autoboard-body-3, forum-autoboard-title-4,
+				// forum-autoboard-body-4, forum-autoboard-title-5, forum-autoboard-body-5
 
-			wfProfileOut( __METHOD__ );
+				for ( $i = 1; $i <= 5; $i++ ) {
+					$body = wfMessage( 'forum-autoboard-body-' . $i, $app->wg->Sitename )->inContentLanguage()->text();
+					$title = wfMessage( 'forum-autoboard-title-' . $i, $app->wg->Sitename )->inContentLanguage()->text();
+
+					$this->createBoard( $title, $body, true );
+				}
+			} );
+
 			return true;
 		}
 
-		wfProfileOut( __METHOD__ );
 		return false;
 	}
 
