@@ -24,13 +24,12 @@ $white: #fff;
 // color mixes
 // 5% color, 5% black/white, 90% background
 $background-color: mix(mix($color-buttons, $black, $background-color-mix * 5), $color-page, $background-color-mix);
-$horizontal-group-stripe-background: mix($color-buttons, $background-color, $background-color-mix / 2);
 $tabber-background-color: mix($color-buttons, $color-page, $background-color-mix * 3);
 
 @if $is-dark-wiki {
 	$background-color: mix(mix($color-buttons, $white, $background-color-mix * 5), $color-page, $background-color-mix);
-	$horizontal-group-stripe-background: mix($white, $color-page, $background-color-mix * 2);
 }
+$horizontal-group-stripe-background: mix($color-buttons, $background-color, $background-color-mix / 2);
 
 @if lightness($color-buttons) < $tabber-lightness-condition {
 	$tabber-background-color: mix($color-buttons, $white, $background-color-mix * 3);
