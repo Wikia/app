@@ -15,7 +15,7 @@ class AnalyticsProviderNielsen implements iAnalyticsProvider {
 		global $wgCityId, $wgDBname;
 
 		if ( !self::isEnabled() ) {
-			return '<!-- Nielsen is disabled -->';
+			return;
 		}
 
 		switch ( $event ) {
