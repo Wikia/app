@@ -21,7 +21,7 @@ $title-line-height: 24px;
 $white: #fff;
 
 // color mixes
-// 5% color, 5% black/white, 90% background
+// 5% button color, 5% black/white, 90% background
 $background-color: mix(mix($color-buttons, $black, $background-color-mix * 5), $color-page, $background-color-mix);
 $tabber-background-color: mix($color-buttons, $background-color, $background-color-mix * 4);
 
