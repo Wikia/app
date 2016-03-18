@@ -16,6 +16,20 @@ class TaskRunnerMaintenance extends Maintenance {
 		$this->addOption('wiki_id', '', false, true);
 	}
 
+	/**
+	 * Use a dedicated mysql user / pass for running tasks
+	 *
+	 * Wikia change
+	 *
+	 * @author macbre
+	 * @see PLATFORM-2025
+	 * @return array consisting of mysql user and pass
+	 */
+	protected function getDatabaseCredentials() {
+		global $wgDBtasksuser, $wgDBtaskspass;
+		return [ $wgDBtasksuser, $wgDBtaskspass ];
+	}
+
 	public function loadParamsAndArgs( $self = null, $opts = null, $args = null ) {
 		parent::loadParamsAndArgs($self, $opts, $args);
 
@@ -77,5 +91,5 @@ class TaskRunnerMaintenance extends Maintenance {
 	}
 }
 
-$maintClass = 'TaskRunnerMaintenance';
+$maintClass = TaskRunnerMaintenance::class;
 require( RUN_MAINTENANCE_IF_MAIN );

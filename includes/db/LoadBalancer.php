@@ -766,9 +766,10 @@ class LoadBalancer {
 		// Wikia change - begin
 		if ( $db->getSampler()->shouldSample() ) {
 			$db->getWikiaLogger()->info( "LoadBalancer::reallyOpenConnection", [
-				'caller' => wfGetCallerClassMethod( __CLASS__ ),
-				'host'   => $server['hostName'], // eg. db-archive-s7
-				'dbname' => $dbname
+				'caller'  => wfGetCallerClassMethod( __CLASS__ ),
+				'host'    => $server['hostName'], // eg. db-archive-s7
+				'db_name' => $dbname,
+				'db_user' => $server['user'],
 			] );
 		}
 		// Wikia change - end

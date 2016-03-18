@@ -10,17 +10,18 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 	'use strict';
 
 	var config = {
+			// check also method getSlots() as it's overriding defaults
 			oasis: {
 				TOP_LEADERBOARD: {
 					sizes: [[728, 90], [970, 250]],
 					targeting: {loc: 'top'}
 				},
 				TOP_RIGHT_BOXAD: {
-					sizes: [[300, 250], [300, 600]],
+					sizes: [[300, 250], [300, 600], [300, 1050]],
 					targeting: {loc: 'top'}
 				},
 				LEFT_SKYSCRAPER_2: {
-					sizes: [[160, 600], [300, 600]],
+					sizes: [[160, 600], [120, 600], [300, 600]],
 					targeting: {loc: 'middle'}
 				},
 				LEFT_SKYSCRAPER_3: {
@@ -28,11 +29,11 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 					targeting: {loc: 'footer'}
 				},
 				INCONTENT_BOXAD_1: {
-					sizes: [[300, 250], [160, 600], [300, 600]],
+					sizes: [[300, 250], [120, 600], [160, 600], [300, 600], [300, 1050]],
 					targeting: {loc: 'hivi'}
 				},
 				PREFOOTER_LEFT_BOXAD: {
-					sizes: [[300, 250]],
+					sizes: [[300, 250], [336, 280]],
 					targeting: {loc: 'footer'}
 				},
 				PREFOOTER_RIGHT_BOXAD: {
@@ -42,13 +43,13 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 			},
 			mercury: {
 				MOBILE_IN_CONTENT: {
-					sizes: [[300, 250]]
+					sizes: [[300, 250], [320, 480]]
 				},
 				MOBILE_PREFOOTER: {
 					sizes: [[300, 250]]
 				},
 				MOBILE_TOP_LEADERBOARD: {
-					sizes: [[320, 50], [300, 250]]
+					sizes: [[300, 50], [320, 50], [300, 250]]
 				}
 			}
 		},
@@ -99,7 +100,7 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 	function defineSingleSlot(slotName, slot, skin) {
 		var position = slotName.indexOf('TOP') !== -1 ? 'atf' : 'btf',
 			provider = skin === 'oasis' ? 'gpt' : 'mobile';
-
+		log(['defineSlot', slotName, slot], 'debug', logGroup);
 		win.rubicontag.cmd.push(function () {
 			var rubiconSlot = win.rubicontag.defineSlot(slotName, slot.sizes, slotName);
 			if (skin === 'oasis') {
@@ -132,7 +133,7 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 		}
 
 		if (context.opts.overridePrefootersSizes) {
-			slots.PREFOOTER_LEFT_BOXAD.sizes = [[300, 250], [728, 90], [970, 250]];
+			slots.PREFOOTER_LEFT_BOXAD.sizes = [[300, 250], [336, 280], [468, 60], [728, 90]];
 			delete slots.PREFOOTER_RIGHT_BOXAD;
 		}
 
