@@ -764,7 +764,7 @@ class LoginForm extends SpecialPage {
 		// which is needed or the personal links will be
 		// wrong.
 		$this->getContext()->setUser( $u );
-		wfRunHooks( 'AfterUserLogin', array( $u ) );
+		wfRunHooks( 'AfterUserLogin', array( $u ) ); // Wikia change
 
 		// Please reset throttle for successful logins, thanks!
 		if ( $throttleCount ) {

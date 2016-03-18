@@ -495,7 +495,7 @@ $wgContLang->initContLang();
 
 $wgRequest->interpolateTitle();
 $wgUser = RequestContext::getMain()->getUser(); # BackCompat
-wfRunHooks( 'AfterSetupUser', array( $wgUser ) );
+wfRunHooks( 'AfterSetupUser', array( $wgUser ) ); // Wikia change
 
 /**
  * @var Language
