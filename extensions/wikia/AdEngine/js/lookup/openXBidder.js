@@ -69,7 +69,7 @@ define('ext.wikia.adEngine.lookup.openXBidder', [
 		return slots;
 	}
 
-	function getAds(skin) {
+	function getAds() {
 		var ads = [],
 			sizes,
 			slotName,
@@ -81,8 +81,6 @@ define('ext.wikia.adEngine.lookup.openXBidder', [
 				adLogicZoneParams.getPageType()
 			].join('/');
 
-		//TODO: refactor getSlots (move it to "call" function and rename to setupSlots)
-		slots = getSlots(skin);
 		for (slotName in slots) {
 			if (slots.hasOwnProperty(slotName)) {
 				sizes = slots[slotName].sizes;
@@ -148,7 +146,8 @@ define('ext.wikia.adEngine.lookup.openXBidder', [
 		var openx = doc.createElement('script'),
 			node = doc.getElementsByTagName('script')[0];
 
-		win.OX_dfp_ads = getAds(skin);
+		slots = getSlots(skin);
+		win.OX_dfp_ads = getAds();
 
 		win.OX_dfp_options = {
 			callback: onResponse
