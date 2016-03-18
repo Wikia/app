@@ -36,6 +36,11 @@ $horizontal-group-stripe-background: mix($color-buttons, $background-color, $bac
 	$tabber-background-color: mix($color-buttons, $white, $background-color-mix * 3);
 }
 
+$caption-color-text: mix($color-text, $white, $background-color-mix * 7);
+@if $is-dark-wiki {
+	$caption-color-text: mix($color-text, $black, $background-color-mix * 7);
+}
+
 .pi-theme-europa {
 	&.portable-infobox {
 		color: $color-text;
@@ -54,7 +59,7 @@ $horizontal-group-stripe-background: mix($color-buttons, $background-color, $bac
 	}
 
 	.pi-caption {
-		color: inherit;
+		color: $caption-color-text;
 		font-style: normal;
 		line-height: $list-item-line-height;
 	}
@@ -175,6 +180,10 @@ $horizontal-group-stripe-background: mix($color-buttons, $background-color, $bac
 
 	.pi-item-spacing {
 		padding: $infobox-data-spacing $infobox-side-spacing;
+
+		&.pi-caption {
+			padding-bottom: $infobox-side-spacing;
+		}
 	}
 
 	.pi-navigation {
