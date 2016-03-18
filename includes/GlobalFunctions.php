@@ -2913,6 +2913,8 @@ function wfShellExec( $cmd, &$retval = null, $environ = array() ) {
 
 	wfInitShellLocale();
 
+	wfRunHooks( 'wfShellExecBeforeEnviron', [ &$cmd, &$environ ] ); // Wikia change
+
 	$envcmd = '';
 	foreach( $environ as $k => $v ) {
 		if ( wfIsWindows() ) {
