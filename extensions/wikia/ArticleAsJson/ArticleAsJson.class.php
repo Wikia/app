@@ -441,7 +441,7 @@ class ArticleAsJson extends WikiaService {
 	 * @param $media
 	 */
 	private static function linkifyMediaCaption( Parser $parser, &$media ) {
-		if ( in_array('caption', $media)) {
+		if ( array_key_exists( 'caption', $media ) ) {
 			$caption = $media['caption'];
 
 			if ( is_string( $caption ) &&
@@ -470,11 +470,26 @@ class ArticleAsJson extends WikiaService {
 	}
 
 	/**
+	 * Safely get property from an array with an optional default
+	 *
+	 * @param array $array
+	 * @param string $key
+	 * @param bool $default
+	 *
+	 * @return bool
+	 */
+	private static function getWithDefault( $array, $key, $default = false ) {
+		if ( array_key_exists( $key, $array ) ) {
+			return $array[$key];
+		}
+
+		return $default;
+	}
+
+	/**
 	 * @desc Determines if image is a small image used by users on desktop
 	 * as an icon. Users to it by explicitly adding
 	 * '{width}px' or 'x{height}px' to image wikitext or uploading a small image.
-	 *
-	 * returns false if handlerParams is an empty var - that happens for broken images etc.
 	 *
 	 * @param $details - media details
 	 * @param $handlerParams
@@ -482,16 +497,11 @@ class ArticleAsJson extends WikiaService {
 	 * @return bool true if one of the image sizes is smaller than ICON_MAX_SIZE
 	 */
 	private static function isIconImage( $details, $handlerParams ) {
-		if ( empty( $handlerParams ) ) {
-			return false;
-		}
-
-		$smallFixedWidth = self::isIconSize( $handlerParams['width'] );
-		$smallFixedHeight = self::isIconSize( $handlerParams['height'] );
-		$smallWidth = self::isIconSize( $details['width'] );
-		$smallHeight = self::isIconSize( $details['height'] );
-		$templateType = isset ( $handlerParams['template-type'] ) ? $handlerParams['template-type'] : '';
-		$isInfoIcon = self::isInfoIcon( $templateType );
+		$smallFixedWidth = self::isIconSize( $handlerParams, 'width' );
+		$smallFixedHeight = self::isIconSize( $handlerParams, 'height' );
+		$smallWidth = self::isIconSize( $details, 'width' );
+		$smallHeight = self::isIconSize( $details, 'height' );
+		$isInfoIcon = self::isInfoIcon( self::getWithDefault( $handlerParams, 'template-type' ) );
 
 		return $smallFixedWidth || $smallFixedHeight || $smallWidth || $smallHeight || $isInfoIcon;
 	}
@@ -499,12 +509,16 @@ class ArticleAsJson extends WikiaService {
 	/**
 	 * @desc Checks if passed property is set and if it's value is smaller than ICON_MAX_SIZE
 	 *
-	 * @param $sizeParam - width or height property
+	 * @param array $param an array with data
+	 * @param string $key
 	 *
 	 * @return bool true if size is smaller than ICON_MAX_SIZE
+	 * and returns false if $param[$key] does not exist
 	 */
-	private static function isIconSize( $sizeParam ) {
-		return isset( $sizeParam ) ? $sizeParam <= self::ICON_MAX_SIZE : false;
+	private static function isIconSize( $param, $key ) {
+		$value = self::getWithDefault( $param, $key );
+
+		return $value ? $value <= self::ICON_MAX_SIZE : false;
 	}
 
 	private static function isInfoIcon( $templateType ) {
