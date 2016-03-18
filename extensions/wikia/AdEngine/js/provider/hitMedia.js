@@ -58,7 +58,7 @@ define('ext.wikia.adEngine.provider.hitMedia', [
 
 		gptHelper.pushAd(
 			slot,
-			'/35020072/ru_wikia//' + getMappedVertical(),
+			'/35020072/ru_wikia//' + getMappedVertical() + '/' + slot.name,
 			slotMap[slot.name],
 			{
 				forcedAdType: 'partner/HitMedia',
