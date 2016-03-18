@@ -111,6 +111,10 @@ define('ext.wikia.adEngine.adContext', [
 			context.providers.turtle = true;
 		}
 
+		if (geo.isProperGeo(instantGlobals.wgAdDriverHitMediaCountries)) {
+			context.providers.hitMedia = true;
+		}
+
 		// INVISIBLE_HIGH_IMPACT slot
 		context.slots.invisibleHighImpact = (
 			context.slots.invisibleHighImpact &&
