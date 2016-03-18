@@ -33,8 +33,8 @@ class AnalyticsProviderNielsen implements iAnalyticsProvider {
 		}
 	}
 
-	static function onWikiaSkinTopScripts(&$vars, &$scripts, $skin) {
-		if (!self::isEnabled()) {
+	static function onWikiaSkinTopScripts( &$vars, &$scripts, $skin ) {
+		if ( !self::isEnabled() ) {
 			$scripts .= '<!-- Nielsen is disabled -->';
 			return true;
 		}
