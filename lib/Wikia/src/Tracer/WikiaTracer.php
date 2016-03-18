@@ -6,6 +6,8 @@ use Wikia\Logger\ContextSource;
 
 class WikiaTracer {
 
+	const APPLICATION_NAME = 'mediawiki';
+
 	const TRACE_ID_HEADER_NAME = 'X-Trace-Id';
 	const CLIENT_IP_HEADER_NAME = 'X-Client-Ip';
 	const CLIENT_BEACON_ID_HEADER_NAME = 'X-Client-Beacon-Id';
@@ -25,6 +27,7 @@ class WikiaTracer {
 	private $clientBeaconId;
 	private $clientDeviceId;
 	private $userId;
+	private $appVersion = '';
 
 	/**
 	 * @var ContextSource
@@ -67,10 +70,24 @@ class WikiaTracer {
 		}
 	}
 
+	/**
+	 * @return string
+	 */
+	private function getAppVersion() {
+		if ( !$this->appVersion && class_exists( 'WikiaSpecialVersion' ) ) {
+			$this->appVersion = trim( \WikiaSpecialVersion::getWikiaCodeVersion() );
+		}
+
+		return $this->appVersion;
+	}
+
 	private function getApplicationContext() {
 		global $wgDBname, $wgCityId, $maintClass;
 
-		$context = [ ];
+		$context = [
+			'app_name' => self::APPLICATION_NAME,
+			'app_version' => $this->getAppVersion(), // please note that this field won't always be filled (if logging is called pretty early)
+		];
 
 		if ( !empty( $wgDBname ) ) {
 			$context['wiki_dbname'] = $wgDBname;
