@@ -150,10 +150,6 @@ $wgAutoloadClasses['GametrailersVideoHandler'] =  $dir . '/handlers/Gametrailers
 $wgAutoloadClasses['GametrailersApiWrapper'] =  $dir . '/apiwrappers/GametrailersApiWrapper.class.php';
 $wgMediaHandlers['video/gametrailers'] = 'GametrailersVideoHandler';
 
-$wgAutoloadClasses['MetacafeVideoHandler'] =  $dir . '/handlers/MetacafeVideoHandler.class.php';
-$wgAutoloadClasses['MetacafeApiWrapper'] =  $dir . '/apiwrappers/MetacafeApiWrapper.class.php';
-$wgMediaHandlers['video/metacafe'] = 'MetacafeVideoHandler';
-
 $wgAutoloadClasses['MovieclipsVideoHandler'] =  $dir . '/handlers/MovieclipsVideoHandler.class.php';
 $wgAutoloadClasses['MovieclipsApiWrapper'] =  $dir . '/apiwrappers/MovieclipsApiWrapper.class.php';
 $wgMediaHandlers['video/movieclips'] = 'MovieclipsVideoHandler';
@@ -247,7 +243,6 @@ $wgVideoMigrationProviderMap = array(
 	5 => 'Youtube',
 	6 => 'Hulu',
 	10 => 'Bliptv',
-	11 => 'Metacafe',
 	12 => 'Sevenload',
 	13 => 'Vimeo',
 	18 => 'Dailymotion',

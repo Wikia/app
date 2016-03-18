@@ -1,6 +1,6 @@
 <?php
 
-use Wikia\Util\RequestId;
+use Wikia\Tracer\RequestId;
 
 /**
  * Tests RequestId class

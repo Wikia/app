@@ -21,7 +21,7 @@ class CreateWiki {
 	/* @var $mDBw DatabaseMysql */
 	/* @var $mClusterDB string */
 	private $mName, $mDomain, $mLanguage, $mVertical, $mCategories, $mIP,
-		$mPHPbin, $mMYSQLbin, $mMYSQLdump, $mNewWiki, $mFounder,
+		$mPHPbin, $mNewWiki, $mFounder,
 		$mLangSubdomain, $mDBw, $mWFSettingVars, $mWFVars,
 		$mDefaultTables, $mAdditionalTables,
 		$sDbStarter, $mFounderIp,
@@ -449,24 +449,10 @@ class CreateWiki {
 	 * @return integer status of check, 0 for success, non 0 otherwise
 	 */
 	private function checkExecutables( ) {
-		/**
-		 * set paths for external tools
-		 */
+		// php-cli is required for spawning PHP maintenance scripts
 		$this->mPHPbin = "/usr/bin/php";
 		if( !file_exists( $this->mPHPbin ) && !is_executable( $this->mPHPbin ) ) {
 			wfDebugLog( "createwiki", __METHOD__ . ": {$this->mPHPbin} doesn't exists or is not executable\n", true );
-			return self::ERROR_BAD_EXECUTABLE_PATH;
-		}
-
-		$this->mMYSQLdump = "/usr/bin/mysqldump";
-		if( !file_exists( $this->mMYSQLdump ) && !is_executable( $this->mMYSQLdump ) ) {
-			wfDebugLog( "createwiki", __METHOD__ . ": {$this->mMYSQLdump} doesn't exists or is not executable\n", true );
-			return self::ERROR_BAD_EXECUTABLE_PATH;
-		}
-
-		$this->mMYSQLbin = "/usr/bin/mysql";
-		if( !file_exists( $this->mMYSQLbin ) && !is_executable( $this->mMYSQLbin ) ) {
-			wfDebug( __METHOD__ . ": {$this->mMYSQLbin} doesn't exists or is not executable\n" );
 			return self::ERROR_BAD_EXECUTABLE_PATH;
 		}
 		return 0;

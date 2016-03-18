@@ -5,17 +5,15 @@
  *
  * Usage:
  *
- * Wikia\Util\RequestId::instance()->getRequestId()
+ * Wikia\Tracer\RequestId::instance()->getRequestId()
  *
  * @see PLATFORM-362
  */
 
-namespace Wikia\Util;
+namespace Wikia\Tracer;
 
 class RequestId {
 
-	const REQUEST_HEADER_NAME = 'X-Request-Id';
-	const REQUEST_HEADER_ORIGIN_HOST = 'X-Request-Origin-Host';
 	private $requestId = false;
 
 	/**
@@ -45,9 +43,10 @@ class RequestId {
 			return $this->requestId;
 		}
 
-		// try to get the value from request header
+		// try to get the value from request X-Request-Id header
 		// we can't simply use $wgRequest as it's not yet set at this point
 		// this method is called on WikiFactoryExecuteComplete hook
+		// TODO: handle X-Trace-Id header as well
 		$headerValue = !empty( $_SERVER['HTTP_X_REQUEST_ID'] ) ? $_SERVER['HTTP_X_REQUEST_ID'] : false;
 
 		if ( self::isValidId( $headerValue ) ) {

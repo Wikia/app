@@ -112,6 +112,10 @@ class VideoFileUploader {
 		}
 		$oTitle = Title::newFromText( $this->getNormalizedDestinationTitle(), NS_FILE );
 
+		if ( $oTitle === null ) {
+			throw new Exception ( wfMessage ('videohandler-unknown-title')->inContentLanguage()->text() );
+		}
+
 		// Check if the user has the proper permissions
 		// Mimicks Special:Upload's behavior
 		$user = F::app()->wg->User;

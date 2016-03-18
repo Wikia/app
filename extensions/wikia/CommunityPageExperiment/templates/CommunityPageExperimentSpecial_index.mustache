@@ -1,0 +1,50 @@
+<div id="CommunityPageHeader" class="community-page-header"{{#headerImage}} style="background-image: url('{{headerImage}}');"{{/headerImage}}>
+	<div class="community-page-header-content">
+		{{#isLoggedIn}}
+		<h1>{{headerWelcomeLoggedInMsg}}</h1>
+		{{/isLoggedIn}}
+		{{^isLoggedIn}}
+		<h1>{{{headerWelcomeAnonMsg}}}</h1>
+		<a href="{{signupUrl}}" class="signup-button">{{joinButtonText}}</a>
+		{{/isLoggedIn}}
+	</div>
+</div>
+<div id="CommunityPageAdminMessage" class="community-page-admin-message">
+	<div class="community-page-admin-message-content">
+		{{#admins}}
+		<div class="admin-profile">
+			<div class="avatar-container {{extraAvatarClasses}}">
+				{{{adminAvatar}}}
+			</div>
+			<div class="profile-links">
+				<a class="user-page" data-tracking-label="admin-link" href="{{adminUserUrl}}">{{adminUserName}}</a>
+				<span class="group-name">{{adminGroupName}}</span>
+			</div>
+		</div>
+		{{/admins}}
+		<div class="admin-message">{{adminWelcomeMsg}}</div>
+	</div>
+</div>
+<div id="CommunityPageContent" class="community-page-content">
+	<section class="community-page-top-contributors">
+		<h2>{{topContributorsHeading}}</h2>
+		<ul>
+		{{#topContributors}}
+			<li><span class="avatar-container">{{{avatar}}}</span> <a class="user-page" data-tracking-label="top-contributor-link" href="{{userpage}}">{{username}}</a></li>
+		{{/topContributors}}
+		</ul>
+		{{#extraContributors}}
+		<span class="more-contributors">{{extraContributors}}</span>
+		{{/extraContributors}}
+	</section>
+	<section class="community-page-page-list">
+		{{^pageList}}
+		<p>{{pageListEmptyText}}</p>
+		{{/pageList}}
+		<ul>
+			{{#pageList}}
+			<li><a class="page-list-edit-link" href="{{editUrl}}"><image data-tracking-label="stub-page-edit-link" src="{{blankImage}}" class="edit-icon"></a> <a class="page-title" data-tracking-label="stub-page-title" href="{{titleUrl}}">{{titleText}}</a> <a class="page-list-edit" data-tracking-label="stub-page-edit-link" href="{{editUrl}}">{{pageListEditText}}</a></li>
+			{{/pageList}}
+		</ul>
+	</section>
+</div>

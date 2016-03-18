@@ -4,10 +4,10 @@
 
 	To avoid code duplication common parts are extracted to mixins.
 */
-
+@import 'skins/shared/mixins/chevron';
 @import 'skins/shared/color';
 @import 'skins/shared/mixins/flexbox';
-@import 'skins/shared/mixins/chevron';
+@import 'skins/shared/mixins/hyphens';
 @import 'extensions/wikia/PortableInfobox/styles/PortableInfoboxVariables';
 
 @mixin commonElementsStyles() {
@@ -60,6 +60,7 @@
 
 	.pi-data-label {
 		@include flex-basis($infobox-width / 3);
+		@include hyphens();
 		overflow: hidden;
 		word-wrap: break-word;
 	}

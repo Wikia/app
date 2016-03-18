@@ -9,30 +9,26 @@
 		background-color: $color-headline-border;
 		display: block;
 		margin-bottom: 7px;
+		max-height: 166px;
+		max-width: 268px;
+		overflow: hidden;
 
 		img {
 			display: block;
+			max-height: 100%;
+			max-width: 100%;
 		}
 	}
 
-	.title a {
-		color: $color-text;
-		display: block;
+	.title {
 		font-size: 15px;
+	}
+
+	a {
+		color: $color-text;
 
 		&:hover {
 			color: $color-links;
 		}
-	}
-}
-
-// GOOGLE MATCHED CONTENT
-.recirculation-rail.adsbygoogle {
-	border: 1px solid $color-page-border;
-	margin: 10px 0;
-	overflow: hidden;
-
-	iframe {
-		margin: -1px;
 	}
 }

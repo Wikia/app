@@ -30,7 +30,7 @@ define('ext.wikia.recirculation.helpers.contentLinks', [
 
 		topTitles = findTopTitles($links);
 		if (topTitles.length < 3) {
-			log('Recirculation in-content widget not shown - No enough top links', 'debug', logGroup);
+			log('Recirculation in-content widget not shown - Not enough top links', 'debug', logGroup);
 			return deferred.reject().promise();
 		}
 
@@ -46,7 +46,13 @@ define('ext.wikia.recirculation.helpers.contentLinks', [
 				height: 150
 			},
 			callback: function(data) {
-				deferred.resolve(formatData(data));
+				data = formatData(data);
+				if (data.items && data.items.length >=3 ) {
+					deferred.resolve(data);
+				} else {
+					log('Recirculation in-content widget not shown - Not enough items returned from API', 'debug', logGroup);
+					deferred.reject();
+				}
 			}
 		});
 

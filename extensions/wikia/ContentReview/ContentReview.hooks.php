@@ -123,7 +123,11 @@ class Hooks {
 	 * @throws \MWException
 	 */
 	public function onSkinAfterBottomScripts( $skin, &$bottomScripts ) {
-		$bottomScripts .= ( new ImportJS() )->getImportScripts();
+		global $wgUseSiteJs;
+
+		if ( !empty( $wgUseSiteJs ) ) {
+			$bottomScripts .= ( new ImportJS() )->getImportScripts();
+		}
 
 		return true;
 	}
