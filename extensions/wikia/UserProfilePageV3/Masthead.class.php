@@ -122,7 +122,7 @@ class Masthead {
 		wfProfileIn( __METHOD__ );
 
 		$this->mDefaultAvatars = array();
-		$images = getMessageForContentAsArray( 'blog-avatar-defaults' );
+		$images = getMessageAsArray( 'blog-avatar-defaults' );
 
 		if ( is_array( $images ) ) {
 			foreach ( $images as $image ) {
