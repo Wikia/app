@@ -100,16 +100,18 @@ define('ext.wikia.adEngine.lookup.openXBidder', [
 	function getSlotParams(slotName) {
 		var dfpParams = {},
 			dfpKey,
-			price;
+			price,
+			size;
 
-		price = priceMap[slotName];
+		price = priceMap[slotName].price;
+		size = priceMap[slotName].size;
 
 		if (!price) {
 			log(['getSlotParams', 'No price for the slot', slotName], 'debug', logGroup);
 			return {};
 		}
 
-		dfpKey = 'ox' + slots[slotName];
+		dfpKey = 'ox' + size;
 		dfpParams[dfpKey] = price;
 		log(['getSlotParams', dfpKey, price], 'debug', logGroup);
 
@@ -137,7 +139,7 @@ define('ext.wikia.adEngine.lookup.openXBidder', [
 		for (slotName in prices) {
 			if (prices.hasOwnProperty(slotName) && prices[slotName].price !== priceTimeout) {
 				shortSlotName = adSlot.getShortSlotName(slotName);
-				priceMap[shortSlotName] = prices[slotName].price;
+				priceMap[shortSlotName] = prices[slotName];
 			}
 		}
 	}
