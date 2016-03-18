@@ -78,14 +78,12 @@ $global-nav-inverse-link-hover-color: #C5CED9;
 			}
 		}
 
-		.start-wikia-container {
-			.start-wikia {
-				border-color: $global-nav-inverse-text-color;
-				color: $global-nav-inverse-text-color;
+		.start-wikia {
+			border-color: $global-nav-inverse-text-color;
+			color: $global-nav-inverse-text-color;
 
-				&:hover {
-					background-color: $global-nav-inverse-background-hover;
-				}
+			&:hover {
+				background-color: $global-nav-inverse-background-hover;
 			}
 		}
 	}
