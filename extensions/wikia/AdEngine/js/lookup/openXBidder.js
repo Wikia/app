@@ -71,7 +71,7 @@ define('ext.wikia.adEngine.lookup.openXBidder', [
 
 	function getAds(skin) {
 		var ads = [],
-			size,
+			sizes,
 			slotName,
 			slotPath = [
 				'/5441',
@@ -81,13 +81,14 @@ define('ext.wikia.adEngine.lookup.openXBidder', [
 				adLogicZoneParams.getPageType()
 			].join('/');
 
+		//TODO: refactor getSlots (move it to "call" function and rename to setupSlots)
 		slots = getSlots(skin);
 		for (slotName in slots) {
 			if (slots.hasOwnProperty(slotName)) {
-				size = slots[slotName];
+				sizes = slots[slotName].sizes;
 				ads.push([
 					slotPath,
-					[size],
+					sizes,
 					'wikia_gpt' + slotPath + '/gpt/' + slotName
 				]);
 			}
