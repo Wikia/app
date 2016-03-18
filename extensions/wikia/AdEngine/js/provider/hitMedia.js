@@ -61,7 +61,7 @@ define('ext.wikia.adEngine.provider.hitMedia', [
 			'/35020072/ru_wikia//' + getMappedVertical(),
 			slotMap[slot.name],
 			{
-				forcedAdType: 'hitMedia',
+				forcedAdType: 'partner/HitMedia',
 				sraEnabled: true
 			}
 		);
