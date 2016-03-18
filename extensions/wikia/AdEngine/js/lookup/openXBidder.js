@@ -54,7 +54,7 @@ define('ext.wikia.adEngine.lookup.openXBidder', [
 				delete slots[slotName];
 			}
 		}
-		slots.PREFOOTER_MIDDLE_BOXAD = '300x250';
+		slots.PREFOOTER_MIDDLE_BOXAD = {sizes: ['300x250']};
 	}
 
 	function getSlots(skin) {
