@@ -1061,4 +1061,13 @@ We are working to fix the problem, thank you for your patience! If you see this 
 'confirm-purge-top' => 'Would you like to clear the cache for this page?',
 'confirm_purge_button' => 'Yes, I am not a robot',
 'confirm-purge-bottom' => 'Clearing a page\'s cache helps ensure the latest version will appear.',
+
+// Moved from the Blogs extension since it should be always available.
+'blog-avatar-defaults' => 'Avatar.jpg
+Avatar2.jpg
+Avatar3.jpg
+Avatar4.jpg
+Avatar5.jpg
+Avatar6.jpg'
 ] );
+
