@@ -47,7 +47,7 @@ class ConnectionBase {
 					'delivery_mode' => self::DURABLE_MESSAGE,
 					'expiration' => self::MESSAGE_TTL,
 					'app_id' => 'mediawiki',
-					'trace_id' => WikiaTracer::instance()->getTraceId(),
+					'correlation_id' => WikiaTracer::instance()->getTraceId(),
 				] ),
 				$this->exchange,
 				$routingKey
