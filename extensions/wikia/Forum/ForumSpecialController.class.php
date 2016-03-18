@@ -1,7 +1,6 @@
 <?php
 
 use Wikia\Logger\WikiaLogger;
-use Wikia\Security\CSRFDetector;
 
 /**
  * Forum Special Page
@@ -68,11 +67,9 @@ class ForumSpecialController extends WikiaSpecialPageController {
 
 		$forum = new Forum();
 
-		$forumCreatedJustNow = CSRFDetector::disableCheck( function () use ( $forum ) {
-			return $forum->createDefaultBoard();
-		}, 'Default forum board created on first visit on Special:Forum. CRSF not possible here.' );
-
-		if ( $forumCreatedJustNow ) {
+		// TODO: once we're sure the forums are properly created when importing starter wiki
+		// don't call createDefaultBoard anymore
+		if ( $forum->createDefaultBoard() ) {
 			$this->boards = $forum->getBoardList( DB_MASTER );
 		} else {
 			$this->boards = $forum->getBoardList( DB_SLAVE );

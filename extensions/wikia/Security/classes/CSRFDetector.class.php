@@ -14,7 +14,6 @@ class CSRFDetector {
 	// flags to be checked when performing certain actions
 	private static $userMatchEditTokenCalled = false;
 	private static $requestWasPostedCalled = false;
-	private static $disabledReason = false;
 
 	/**
 	 * Set a flag when User::matchEditToken is called
@@ -34,23 +33,6 @@ class CSRFDetector {
 	public static function onRequestWasPosted() {
 		self::$requestWasPostedCalled = true;
 		return true;
-	}
-
-	/**
-	 * Run code that would trigger the CSRF error without triggering it
-	 *
-	 * You never want to use this function, but sometimes you must. That is when pages are created
-	 * automatically on the fly and the user cannot override any of the params of that process.
-	 *
-	 * @see ForumSpecialController::index
-	 *
-	 * @param \Closure $closure
-	 * @param string $reason
-	 */
-	public static function disableCheck( \Closure $closure, $reason ) {
-		self::$disabledReason = $reason;
-		$closure();
-		self::$disabledReason = false;
 	}
 
 	/**
@@ -84,11 +66,6 @@ class CSRFDetector {
 
 		if ( self::$userMatchEditTokenCalled === false || self::$requestWasPostedCalled == false ) {
 			wfDebug( __METHOD__ . ": {$hookName} hook triggered, but edit token and / or HTTP method was not checked\n" );
-
-			if ( is_string( self::$disabledReason ) ) {
-				wfDebug( __METHOD__ . ': Not logging, because ' . self::$disabledReason . PHP_EOL );
-				return;
-			}
 
 			WikiaLogger::instance()->warning( __METHOD__, [
 				'hookName' => $hookName,

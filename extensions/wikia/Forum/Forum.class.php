@@ -1,6 +1,5 @@
 <?php
 use Wikia\Logger\WikiaLogger;
-use Wikia\Util\GlobalStateWrapper;
 
 /**
  * Forum
@@ -332,34 +331,32 @@ class Forum extends Walls {
 		wfProfileOut( __METHOD__ );
 	}
 
+	/**
+	 * @deprecated Remove as soon as SUS-302 and SUS-303 are completed
+	 */
 	public function createDefaultBoard() {
-		if ( $this->hasMoreThan( NS_WIKIA_FORUM_BOARD, 0 ) ) {
-			return false;
-		}
-
-		WikiaDataAccess::cachePurge( wfMemcKey( 'Forum_hasMoreThan', NS_WIKIA_FORUM_BOARD, 0 ) );
-
-		// The wgUser swap is the only way to create page as other user then current
-		$autoCreateUser = User::newFromName( Forum::AUTOCREATE_USER );
-		$wrapper = new GlobalStateWrapper( [ 'wgUser' => $autoCreateUser ] );
-		$wrapper->wrap( function () {
-			$app = F::App();
-
-			// Labels used (for grep): forum-autoboard-title-1, forum-autoboard-body-1, forum-autoboard-title-2
-			// forum-autoboard-body-2, forum-autoboard-title-3, forum-autoboard-body-3, forum-autoboard-title-4,
-			// forum-autoboard-body-4, forum-autoboard-title-5, forum-autoboard-body-5
-
+		wfProfileIn( __METHOD__ );
+		$app = F::App();
+		if ( !$this->hasAtLeast( NS_WIKIA_FORUM_BOARD, 0 ) ) {
+			WikiaDataAccess::cachePurge( wfMemcKey( 'Forum_hasAtLeast', NS_WIKIA_FORUM_BOARD, 0 ) );
+			/* the wgUser swap is the only way to create page as other user then current */
+			$tmpUser = $app->wg->User;
+			$app->wg->User = User::newFromName( Forum::AUTOCREATE_USER );
 			for ( $i = 1; $i <= 5; $i++ ) {
 				$body = wfMessage( 'forum-autoboard-body-' . $i, $app->wg->Sitename )->inContentLanguage()->text();
 				$title = wfMessage( 'forum-autoboard-title-' . $i, $app->wg->Sitename )->inContentLanguage()->text();
 
-				// Ignoring the result here :-(
-				// This returns EditPage::AS_BLOCKED_PAGE_FOR_USER (215) on permissions error
 				$this->createBoard( $title, $body, true );
 			}
-		} );
 
-		return true;
+			$app->wg->User = $tmpUser;
+
+			wfProfileOut( __METHOD__ );
+			return true;
+		}
+
+		wfProfileOut( __METHOD__ );
+		return false;
 	}
 
 }
