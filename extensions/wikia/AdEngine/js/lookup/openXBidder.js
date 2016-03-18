@@ -16,13 +16,13 @@ define('ext.wikia.adEngine.lookup.openXBidder', [
 		config = {
 			oasis: {
 				TOP_LEADERBOARD: {
-					sizes: ['728x90']
+					sizes: ['728x90', '970x250']
 				},
 				TOP_RIGHT_BOXAD: {
-					sizes: ['300x250']
+					sizes: ['300x250', '300x600']
 				},
 				LEFT_SKYSCRAPER_2: {
-					sizes: ['160x600']
+					sizes: ['160x600', '300x600']
 				},
 				PREFOOTER_LEFT_BOXAD: {
 					sizes: ['300x250']
@@ -39,7 +39,7 @@ define('ext.wikia.adEngine.lookup.openXBidder', [
 					sizes: ['300x250']
 				},
 				MOBILE_TOP_LEADERBOARD: {
-					sizes: ['320x50']
+					sizes: ['320x50', '300x250']
 				}
 			}
 		},
