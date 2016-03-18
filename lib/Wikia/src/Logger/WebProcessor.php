@@ -53,7 +53,7 @@ class WebProcessor {
 			$this->contextStack[$type] = [];
 		}
 		if (is_null($this->listener)) {
-			$this->listener = function($cs) {
+			$this->listener = function(ContextSource $cs) {
 				wfDebug("WebProcessor::listener - got update ".json_encode($cs->getContext())."\n");
 				$this->refreshContext();
 			};
