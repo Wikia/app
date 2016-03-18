@@ -60,17 +60,29 @@ class InputBoxHooks {
 		}
 
 		$params = $request->getValues();
+
+		if ( $request->getText( 'preload', '' ) !== '' ){
+			# Make sure any call with preload uses VE when it matches the user's prefs
+			if ( EditorPreference::isVisualEditorPrimary() && $wgUser->isLoggedIn() ) {
+				$params['veaction'] = 'edit';
+				unset( $params['action'] );
+
+				$output->redirect( wfAppendQuery( $wgScript, $params ), '301' );
+				return false;
+			}
+		}
+
+		if( $request->getText( 'prefix', '' ) === '' ){
+			# Fine
+			return true;
+		}
+
 		$title = $params['prefix'];
 		if ( isset( $params['title'] ) ){
 			$title .= $params['title'];
 		}
 		unset( $params['prefix'] );
 		$params['title'] = $title;
-
-		if ( EditorPreference::isVisualEditorPrimary() && $wgUser->isLoggedIn() ) {
-			$params['veaction'] = 'edit';
-			unset( $params['action'] );
-		}
 
 		$output->redirect( wfAppendQuery( $wgScript, $params ), '301' );
 		return false;
