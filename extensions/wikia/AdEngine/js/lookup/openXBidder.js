@@ -15,16 +15,32 @@ define('ext.wikia.adEngine.lookup.openXBidder', [
 		priceTimeout = 't',
 		config = {
 			oasis: {
-				TOP_LEADERBOARD: '728x90',
-				TOP_RIGHT_BOXAD: '300x250',
-				LEFT_SKYSCRAPER_2: '160x600',
-				PREFOOTER_LEFT_BOXAD: '300x250',
-				PREFOOTER_RIGHT_BOXAD: '300x250'
+				TOP_LEADERBOARD: {
+					sizes: ['728x90']
+				},
+				TOP_RIGHT_BOXAD: {
+					sizes: ['300x250']
+				},
+				LEFT_SKYSCRAPER_2: {
+					sizes: ['160x600']
+				},
+				PREFOOTER_LEFT_BOXAD: {
+					sizes: ['300x250']
+				},
+				PREFOOTER_RIGHT_BOXAD: {
+					sizes: ['300x250']
+				}
 			},
 			mercury: {
-				MOBILE_IN_CONTENT: '300x250',
-				MOBILE_PREFOOTER: '300x250',
-				MOBILE_TOP_LEADERBOARD: '320x50'
+				MOBILE_IN_CONTENT: {
+					sizes: ['300x250']
+				},
+				MOBILE_PREFOOTER: {
+					sizes: ['300x250']
+				},
+				MOBILE_TOP_LEADERBOARD: {
+					sizes: ['320x50']
+				}
 			}
 		},
 		priceMap = {},
