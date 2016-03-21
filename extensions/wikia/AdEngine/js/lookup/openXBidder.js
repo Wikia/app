@@ -24,6 +24,12 @@ define('ext.wikia.adEngine.lookup.openXBidder', [
 				LEFT_SKYSCRAPER_2: {
 					sizes: ['160x600', '300x600']
 				},
+				LEFT_SKYSCRAPER_3: {
+					sizes: ['160x600', '300x600']
+				},
+				INCONTENT_BOXAD_1: {
+					sizes: ['300x250', '300x600', '160x600']
+				},
 				PREFOOTER_LEFT_BOXAD: {
 					sizes: ['300x250']
 				},
