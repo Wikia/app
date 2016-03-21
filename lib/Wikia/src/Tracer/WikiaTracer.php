@@ -22,6 +22,8 @@ class WikiaTracer {
 	const LEGACY_TRACE_ID_HEADER_NAME = 'X-Request-Id';
 	const LEGACY_BEACON_HEADER_NAME = 'X-Beacon';
 
+	const ENV_VARIABLES_PREFIX = 'WIKIA_TRACER_';
+
 	private $traceId;
 	private $clientIp;
 	private $clientBeaconId;
@@ -54,13 +56,15 @@ class WikiaTracer {
 	private function getTraceEntry( $entryName ) {
 		$entryName = str_replace( '-', '_', $entryName );
 		$entryName = strtoupper( $entryName );
+
 		$serverHeaderName = 'HTTP_' . $entryName;
+		$envName = self::ENV_VARIABLES_PREFIX . $entryName;
 
 		if ( isset( $_SERVER[$serverHeaderName] ) && $_SERVER[$serverHeaderName] !== '' ) {
 			return $_SERVER[$serverHeaderName];
 		}
-		else if ( isset( $_ENV[$entryName] ) && $_ENV[$entryName] !== '' ) {
-			return $_ENV[$entryName];
+		else if ( isset( $_ENV[$envName] ) && $_ENV[$envName] !== '' ) {
+			return $_ENV[$envName];
 		}
 		else {
 			return null;
@@ -259,7 +263,7 @@ class WikiaTracer {
 			$key = str_replace( '-', '_', $key );
 			$key = strtoupper( $key );
 
-			$traceEnviron[ $key ] = $val;
+			$traceEnviron[ self::ENV_VARIABLES_PREFIX . $key ] = $val;
 		}
 
 		$environ = array_merge(

@@ -48,7 +48,7 @@ class RequestId {
 		// this method is called on WikiFactoryExecuteComplete hook
 		// TODO: handle X-Trace-Id header as well
 		$headerValue = !empty( $_SERVER['HTTP_X_REQUEST_ID'] ) ? $_SERVER['HTTP_X_REQUEST_ID'] : false;
-		$envValue = !empty( $_ENV['X_TRACE_ID'] ) ? $_ENV['X_TRACE_ID'] : false;
+		$envValue = !empty( $_ENV[WikiaTracer::ENV_VARIABLES_PREFIX . 'X_TRACE_ID'] ) ? $_ENV[WikiaTracer::ENV_VARIABLES_PREFIX . 'X_TRACE_ID'] : false;
 
 		if ( self::isValidId( $headerValue ) ) {
 			$this->requestId = $headerValue;
