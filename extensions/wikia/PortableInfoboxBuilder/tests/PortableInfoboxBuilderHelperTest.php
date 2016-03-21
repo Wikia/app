@@ -15,7 +15,7 @@ class PortableInfoboxBuilderHelperTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @dataProvider namespaceProvider
+	 * @dataProvider infoboxTemplateDetectionProvider
 	 */
 	public function testIsInfoboxTemplate( $namespace, $templateType, $expResult ) {
 		$titleMock = $this->getMockBuilder( 'Title' )->setMethods( [ 'getNamespace' ] )->getMock();
@@ -82,7 +82,7 @@ class PortableInfoboxBuilderHelperTest extends WikiaBaseTest {
 		];
 	}
 
-	public function namespaceProvider() {
+	public function infoboxTemplateDetectionProvider() {
 		return [
 			[ NS_MAIN, TemplateClassificationService::TEMPLATE_INFOBOX, false ],
 			[ NS_TALK, TemplateClassificationService::TEMPLATE_INFOBOX, false ],
