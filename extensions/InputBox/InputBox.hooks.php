@@ -52,18 +52,18 @@ class InputBoxHooks {
 		$request, 
 		$wiki )
 	{
-		global $wgScript, $wgUser;
+		global $wgScript;
 
-		if( $wiki->getAction( $request ) !== 'edit' ){
+		if( $wiki->getAction( $request ) !== 'edit' ) {
 			# not our problem
 			return true;
 		}
 
 		$params = $request->getValues();
 
-		if ( $request->getText( 'preload', '' ) !== '' ){
+		if ( $request->getText( 'preload', '' ) !== '' ) {
 			# Make sure any call with preload uses VE when it matches the user's prefs
-			if ( EditorPreference::isVisualEditorPrimary() && $wgUser->isLoggedIn() ) {
+			if ( EditorPreference::isVisualEditorPrimary() && $user->isLoggedIn() ) {
 				$params['veaction'] = 'edit';
 				unset( $params['action'] );
 
@@ -72,13 +72,13 @@ class InputBoxHooks {
 			}
 		}
 
-		if( $request->getText( 'prefix', '' ) === '' ){
+		if( $request->getText( 'prefix', '' ) === '' ) {
 			# Fine
 			return true;
 		}
 
 		$title = $params['prefix'];
-		if ( isset( $params['title'] ) ){
+		if ( isset( $params['title'] ) ) {
 			$title .= $params['title'];
 		}
 		unset( $params['prefix'] );
