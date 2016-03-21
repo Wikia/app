@@ -9,20 +9,15 @@ class PortableInfoboxBuilderHelper {
 	/**
 	 * Checks if template is classified as an infobox
 	 *
-	 * @param $title
+	 * @param $title Title
 	 * @return bool
 	 */
 	public static function isInfoboxTemplate( $title ) {
-		$tc = new TemplateClassificationService();
-		$isInfobox = false;
-
-		try {
-			$type = $tc->getType( F::app()->wg->CityId, $title->getArticleID() );
-			$isInfobox = ( $type === TemplateClassificationService::TEMPLATE_INFOBOX );
-		} catch ( Swagger\Client\ApiException $e ) {
-			// If we cannot reach the service assume the default (false) to avoid overwriting data
+		if ( $title->getNamespace() === NS_TEMPLATE ) {
+			return self::isTemplateClassifiedAsInfobox( $title );
+		} else {
+			return false;
 		}
-		return $isInfobox;
 	}
 
 	/**
@@ -71,5 +66,20 @@ class PortableInfoboxBuilderHelper {
 	 */
 	public static function isSubmitAction( $request ) {
 		return ( $request->getVal( self::QUERYSTRING_ACTION_KEY ) === self::QUERYSTRING_SUBMIT_ACTION );
+	}
+
+	/**
+	 * @param $title
+	 * @return bool
+	 */
+	private static function isTemplateClassifiedAsInfobox( $title ) {
+		try {
+			$tc = new TemplateClassificationService();
+			$type = $tc->getType( F::app()->wg->CityId, $title->getArticleID() );
+			return ( $type === TemplateClassificationService::TEMPLATE_INFOBOX );
+		} catch ( Swagger\Client\ApiException $e ) {
+			// If we cannot reach the service assume the default (false) to avoid overwriting data
+			return false;
+		}
 	}
 }
