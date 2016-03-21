@@ -46,6 +46,8 @@ class WikiaTracer {
 	}
 
 	/**
+	 * Get trace entry from either HTTP request header or env variable. Returns null if none of these are set.
+	 *
 	 * @param string $entryName
 	 * @return string|null
 	 */
