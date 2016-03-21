@@ -36,6 +36,12 @@ define('AuthModal', ['jquery', 'wikia.window'], function ($, window) {
 		$(window).off('.authPopUpWindow');
 	}
 
+	function onKeyUp (event) {
+		if (event.keyCode === 27) {
+			close();
+		}
+	}
+
 	function getPopUpWindowSpecs() {
 		var pageWidth = window.innerWidth,
 			popUpWindowWidth = pageWidth < popUpWindowMaxWidth ? pageWidth : popUpWindowMaxWidth,
@@ -69,6 +75,7 @@ define('AuthModal', ['jquery', 'wikia.window'], function ($, window) {
 					label: 'username-login-modal'
 				});
 			};
+			authPopUpWindow.onkeyup = onKeyUp;
 		} else {
 			window.location = url;
 		}
