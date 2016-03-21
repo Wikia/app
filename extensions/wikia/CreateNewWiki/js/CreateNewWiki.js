@@ -69,7 +69,7 @@
 						wikiDomain: self.wikiDomain.val(),
 						wikiLang: self.wikiLanguage.find('option:selected').val()
 					});
-					if (self.$nameWikiWrapper.length()) {
+					if (self.$nameWikiWrapper.length) {
 						require(['AuthModal'], function (authModal) {
 							authModal.load({
 								url: url,
