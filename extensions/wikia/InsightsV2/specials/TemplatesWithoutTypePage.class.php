@@ -57,15 +57,17 @@ class TemplatesWithoutTypePage extends PageQueryPage {
 		/**
 		 * 3. Insert the new records if the $templatesWithoutType array is not empty
 		 */
-		( new WikiaSQL() )
-			->INSERT()->INTO( 'querycache', [
-				'qc_type',
-				'qc_value',
-				'qc_namespace',
-				'qc_title'
-			] )
-			->VALUES( $templatesWithoutType )
-			->run( $dbw );
+		if ( !empty( $templatesWithoutType ) ) {
+			( new WikiaSQL() )
+				->INSERT()->INTO( 'querycache', [
+					'qc_type',
+					'qc_value',
+					'qc_namespace',
+					'qc_title'
+				] )
+				->VALUES( $templatesWithoutType )
+				->run( $dbw );
+		}
 
 		return count( $templatesWithoutType );
 	}
@@ -94,7 +96,12 @@ class TemplatesWithoutTypePage extends PageQueryPage {
 
 		$cnNotRecognizedTemplates = $recognizedProvider->getNotRecognizedTemplates();
 
+		$templatesCounter = 0;
 		foreach( $cnNotRecognizedTemplates as $pageId => $notRecognizedTemplate ) {
+			if ( $templatesCounter === self::LIMIT ) {
+				break;
+			}
+
 			$title = Title::newFromID( $pageId );
 			if ( $title instanceof Title && !$title->isRedirect() ) {
 				$links = $title->getIndirectLinks();
@@ -105,6 +112,7 @@ class TemplatesWithoutTypePage extends PageQueryPage {
 						NS_TEMPLATE,
 						$title->getDBkey()
 					];
+				$templatesCounter++;
 			}
 		}
 

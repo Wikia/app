@@ -1,7 +1,10 @@
 define('AuthModal', ['jquery', 'wikia.window'], function ($, window) {
 	'use strict';
 
-	var authPopUp,
+	var popUpWindowHeight = 670,
+		popUpWindowMaxWidth = 768,
+		popUpWindowParam = 'modal=1',
+		authPopUpWindow,
 		track;
 
 	function open (onAuthSuccess) {
@@ -11,7 +14,7 @@ define('AuthModal', ['jquery', 'wikia.window'], function ($, window) {
 			label: 'username-login-modal'
 		});
 
-		$(window).on('message.authPopUp', function (event) {
+		$(window).on('message.authPopUpWindow', function (event) {
 			var e = event.originalEvent;
 
 			if (typeof e.data !== 'undefined' && e.data.isUserAuthorized) {
@@ -21,6 +24,25 @@ define('AuthModal', ['jquery', 'wikia.window'], function ($, window) {
 				}
 			}
 		});
+	}
+
+	function close (event) {
+		if (event) {
+			event.preventDefault();
+		}
+		if (authPopUpWindow) {
+			authPopUpWindow.close();
+		}
+		$(window).off('.authPopUpWindow');
+	}
+
+	function getPopUpWindowSpecs() {
+		var pageWidth = window.innerWidth,
+			popUpWindowWidth = pageWidth < popUpWindowMaxWidth ? pageWidth : popUpWindowMaxWidth,
+			popUpWindowLeft = window.screenX + (pageWidth / 2) - (popUpWindowWidth / 2),
+			popUpWindowTop = window.screenY + (window.innerHeight / 2) - (popUpWindowHeight / 2);
+
+		return 'width=' + popUpWindowWidth + ',height=' + popUpWindowHeight + ',top=' + popUpWindowTop + ',left=' + popUpWindowLeft;
 	}
 
 	function getTrackingFunction () {
@@ -35,30 +57,13 @@ define('AuthModal', ['jquery', 'wikia.window'], function ($, window) {
 		return track;
 	}
 
-	function close (event) {
-		if (event) {
-			event.preventDefault();
-		}
-		if (authPopUp) {
-			authPopUp.close();
-		}
-		$(window).off('.authPopUp');
-	}
-
 	function loadPage (url) {
-		var modalParam = 'modal=1',
-			pageWidth = window.innerWidth,
-			popUpHeight = 670,
-			popUpMaxWidth = 768,
-			popUpWidth = pageWidth < popUpMaxWidth ? pageWidth : popUpMaxWidth,
-			popUpLeft = window.screenX + (pageWidth / 2) - (popUpWidth / 2),
-			popUpTop = window.screenY + (window.innerHeight / 2) - (popUpHeight / 2),
-			src = url + (url.indexOf('?') === -1 ? '?' : '&') + modalParam;
+		var src = url + (url.indexOf('?') === -1 ? '?' : '&') + popUpWindowParam;
 
-		authPopUp = window.open(src, '_blank', 'width=' + popUpWidth + ',height=' + popUpHeight + ',top=' + popUpTop + ',left=' + popUpLeft);
+		authPopUpWindow = window.open(src, '_blank', getPopUpWindowSpecs());
 
-		if (authPopUp) {
-			authPopUp.onbeforeunload = function () {
+		if (authPopUpWindow || authPopUpWindow.closed) {
+			authPopUpWindow.onbeforeunload = function () {
 				track({
 					action: Wikia.Tracker.ACTIONS.CLOSE,
 					label: 'username-login-modal'

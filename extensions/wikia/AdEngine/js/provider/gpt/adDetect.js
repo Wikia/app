@@ -255,8 +255,12 @@ define('ext.wikia.adEngine.provider.gpt.adDetect', [
 
 		log(['onAdLoad', slot.name, 'adType', adType], 'info', logGroup);
 
-		if (adType === 'forced_success' || adType === 'always_success' || adType === 'collapse') {
+		if (adType === 'forced_success' || adType === 'always_success') {
 			return callAdCallback();
+		}
+
+		if (adType === 'collapse') {
+			return callCollapseAdCallback();
 		}
 
 		if (adType === 'empty') {

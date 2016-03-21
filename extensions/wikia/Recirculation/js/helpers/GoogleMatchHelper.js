@@ -1,5 +1,5 @@
 /*global define*/
-define('ext.wikia.recirculation.googleMatchHelper', [
+define('ext.wikia.recirculation.helpers.googleMatch', [
 	'jquery',
 	'wikia.document',
 	'wikia.window'
@@ -35,16 +35,14 @@ define('ext.wikia.recirculation.googleMatchHelper', [
 		}
 
 		$ins = $('<ins>', {
-			'class': 'adsbygoogle recirculation-rail',
-			'style': 'display: block;',
+			'class': 'adsbygoogle recirculation-incontent',
 			'data-ad-client': 'ca-pub-4086838842346968',
-			'data-ad-format': 'autorelaxed',
 			'data-ad-slot': '7831067424',
 			'data-color-link': sass['color-links'],
 			'data-color-bg': sass['color-page'],
 		});
 
-		$(element).append($ins);
+		$(element).before($ins);
 
 		window.adsbygoogle.push({});
 	}

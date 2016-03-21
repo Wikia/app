@@ -138,6 +138,7 @@ $config['recirculation_js'] = array(
 		'//extensions/wikia/Recirculation/js/views/rail.js',
 		'//extensions/wikia/Recirculation/js/views/footer.js',
 		'//extensions/wikia/Recirculation/js/experiments/placement.js',
+		'//extensions/wikia/Recirculation/js/scrolldepth.js',
 	),
 );
 
@@ -318,6 +319,7 @@ $config['oasis_jquery'] = array(
 		'//resources/wikia/libraries/jquery/store/jquery.store.js',
 		'//resources/wikia/libraries/jquery/throttle-debounce/jquery.throttle-debounce.js',
 		'//resources/wikia/libraries/jquery/floating-scrollbar/jquery.floating-scrollbar.js',
+		'//resources/wikia/libraries/jquery/scrolldepth/jquery.scrolldepth.js',
 
 		// Wikia plugins
 		'//resources/wikia/jquery.wikia.js',
@@ -2452,9 +2454,6 @@ $config['portable_infobox_scss'] = [
 	'skin' => [ 'oasis' ],
 	'assets' => [
 		'//extensions/wikia/PortableInfobox/styles/PortableInfobox.scss'
-		// temporary disable europa theme
-		// TODO: reenable europa theme https://wikia-inc.atlassian.net/browse/DAT-3940
-//		'//extensions/wikia/PortableInfobox/styles/PortableInfoboxEuropaTheme.scss'
 	]
 ];
 
@@ -2464,6 +2463,14 @@ $config['portable_infobox_monobook_scss'] = [
 	'assets' => [
 		'#group_portable_infobox_scss',
 		'//extensions/wikia/PortableInfobox/styles/PortableInfoboxMonobook.scss'
+	]
+];
+
+$config['portable_infobox_europa_theme_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/PortableInfobox/styles/PortableInfoboxEuropaTheme.scss'
 	]
 ];
 
@@ -2496,9 +2503,6 @@ $config[ 'portable_infobox_builder_preview_scss' ] = [
 	'skin' => ['oasis'],
 	'assets' => [
 		'//extensions/wikia/PortableInfoboxBuilder/styles/PortableInfoboxBuilderPreview.scss'
-		// temporary disable europa theme
-		// TODO: reenable europa theme https://wikia-inc.atlassian.net/browse/DAT-3940
-//		'//extensions/wikia/PortableInfobox/styles/PortableInfoboxEuropaTheme.scss'
 	]
 ];
 
@@ -2638,11 +2642,6 @@ $config['content_review_special_page_scss'] = [
 		'//extensions/wikia/ContentReview/styles/ContentReviewSpecialPage.scss'
 	],
 ];
-
-$config['auth_modal_scss'] = array(
-	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => [ 'oasis' ]
-);
 
 $config['auth_modal_js'] = array(
 	'type' => AssetsManager::TYPE_JS,

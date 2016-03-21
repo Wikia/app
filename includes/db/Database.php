@@ -946,13 +946,13 @@ abstract class DatabaseBase implements DatabaseType {
 		}
 
 		# @author: wladek
-		$requestIdComment = '';
-		if ( class_exists("\\Wikia\\Util\\RequestId") ) {
-			$requestIdComment = sprintf(" - %s",\Wikia\Util\RequestId::instance()->getRequestId());
+		$traceIdComment = '';
+		if ( class_exists("\\Wikia\\Tracer\\WikiaTracer") ) {
+			$traceIdComment = sprintf(" - %s",\Wikia\Tracer\WikiaTracer::instance()->getTraceId());
 		}
 		# Wikia change - end
 
-		$commentedSql = preg_replace( '/\s/', " /* $fname $userName$requestIdComment */ ", $sql, 1 );
+		$commentedSql = preg_replace( '/\s/', " /* $fname $userName$traceIdComment */ ", $sql, 1 );
 
 		# Wikia change - begin
 		# @author macbre
@@ -981,7 +981,8 @@ abstract class DatabaseBase implements DatabaseType {
 			$sqlx = strtr( $sqlx, "\t\n", '  ' );
 
 			$master = $isMaster ? 'master' : 'slave';
-			wfDebug( "Query {$this->mDBname} ($cnt) ($master): $sqlx\n" );
+			$DBuser = $this->getLBInfo( 'user' );
+			wfDebug( "Query {$this->mDBname} (DB user: {$DBuser}) ($cnt) ($master): $sqlx\n" );
 		}
 
 		if ( istainted( $sql ) & TC_MYSQL ) {
@@ -3747,6 +3748,7 @@ abstract class DatabaseBase implements DatabaseType {
 			'server'      => $this->mServer,
 			'server_role' => $isMaster ? 'master' : 'slave',
 			'db_name'     => $this->mDBname,
+			'db_user'     => $this->getLBInfo( 'user' ),
 			'exception'   => new Exception(), // log the backtrace
 		];
 
