@@ -248,7 +248,7 @@ class WikiaTracer {
 	 * @param array $environ
 	 * @return bool true - it's a hook
 	 */
-	public static function onWfShellExecBeforeEnviron( &$cmd, array &$environ ) {
+	public static function onBeforeWfShellExec( &$cmd, array &$environ ) {
 		$traceEnviron = [];
 		$traceHeaders = array_merge(
 			self::instance()->getInternalHeaders(),
