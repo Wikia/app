@@ -4,11 +4,16 @@ class PortableInfoboxHooks {
 	const PARSER_TAG_GALLERY = 'gallery';
 
 	public static function onBeforePageDisplay( OutputPage $out, Skin $skin ) {
+		global $wgEnablePortableInfoboxEuropaTheme;
+
 		Wikia::addAssetsToOutput( 'portable_infobox_js' );
 		if ( F::app()->checkSkin( 'monobook', $skin ) ) {
 			Wikia::addAssetsToOutput( 'portable_infobox_monobook_scss' );
 		} else {
 			Wikia::addAssetsToOutput( 'portable_infobox_scss' );
+			if ( !empty( $wgEnablePortableInfoboxEuropaTheme ) ) {
+				Wikia::addAssetsToOutput( 'portable_infobox_europa_theme_scss' );
+			}
 		}
 
 		return true;
