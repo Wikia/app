@@ -28,6 +28,7 @@ class SpecialCreateNewWiki extends UnlistedSpecialPage {
 		$wgOut->addScript('<script src="'.$wgExtensionsPath.'/wikia/ThemeDesigner/js/ThemeDesigner.js"></script>');
 		$wgOut->addScript('<script src="'.$wgExtensionsPath.'/wikia/CreateNewWiki/js/CreateNewWiki.js"></script>');
 		$wgOut->addScript('<script src="'.$wgExtensionsPath.'/wikia/CreateNewWiki/js/CreateNewWikiSupplemental.js"></script>');
+		$wgOut->addScript('<sctipt src="'.$wgExtensionsPath.'/wikia/AuthModal/js/AuthModal.js"></script>');
 		$wgOut->addModules('wikia.stringhelper');
 		$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/UserLogin/css/UserLoginModal.scss'));
 

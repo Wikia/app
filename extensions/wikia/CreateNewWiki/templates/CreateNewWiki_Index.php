@@ -89,21 +89,21 @@
 		</li>
 
 		<? if ( !$isUserLoggedIn ): ?>
-		<li id="UserAuth" class="step">
-			<h2 class="headline"><?= wfMessage( 'cnw-userauth-headline' )->escaped() ?></h2>
-			<p class="creative"><?= wfMessage( 'cnw-userauth-creative' )->escaped() ?></p>
-			<div class="signup-loginmodal"><?= F::app()->sendRequest( 'UserLoginSpecial', 'modal' ) ?></div>
+<!--		<li id="UserAuth" class="step">
+			<h2 class="headline"><?/*= wfMessage( 'cnw-userauth-headline' )->escaped() */?></h2>
+			<p class="creative"><?/*= wfMessage( 'cnw-userauth-creative' )->escaped() */?></p>
+			<div class="signup-loginmodal"><?/*= F::app()->sendRequest( 'UserLoginSpecial', 'modal' ) */?></div>
 			<div class="signup-marketing">
-				<h3><?= wfMessage( 'cnw-userauth-marketing-heading' )->escaped() ?></h3>
-				<p><?= wfMessage( 'cnw-userauth-marketing-body' )->parse() ?></p>
-				<form method="post" action="<?= $signupUrl ?>" id="SignupRedirect">
+				<h3><?/*= wfMessage( 'cnw-userauth-marketing-heading' )->escaped() */?></h3>
+				<p><?/*= wfMessage( 'cnw-userauth-marketing-body' )->parse() */?></p>
+				<form method="post" action="<?/*= $signupUrl */?>" id="SignupRedirect">
 					<input type="hidden" name="returnto" value="">
 					<input type="hidden" name="redirected" value="true">
-					<input type="hidden" name="uselang" value="<?= Sanitizer::encodeAttribute( $params['wikiLanguage'] ) ?>">
-					<input type="submit" value="<?= wfMessage( 'cnw-userauth-signup-button' )->escaped() ?>">
+					<input type="hidden" name="uselang" value="<?/*= Sanitizer::encodeAttribute( $params['wikiLanguage'] ) */?>">
+					<input type="submit" value="<?/*= wfMessage( 'cnw-userauth-signup-button' )->escaped() */?>">
 				</form>
 			</div>
-		</li>
+		</li>-->
 		<? endif; // if isLoggedIn ?>
 		<li id="DescWiki" class="step">
 			<h2><?= wfMessage( 'cnw-desc-headline' ) ?></h2>

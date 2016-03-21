@@ -69,7 +69,17 @@
 						wikiDomain: self.wikiDomain.val(),
 						wikiLang: self.wikiLanguage.find('option:selected').val()
 					});
-					if (self.$authWrapper.length) {
+					if (self.$nameWikiWrapper.length()) {
+						require(['AuthModal'], function (authModal) {
+							authModal.load({
+								url: url,
+								origin: 'create-new-wikia',
+								onAuthSuccess: window.location.href
+							});
+						});
+					}
+
+					/*if (self.$authWrapper.length) {
 						// Init user auth
 						self.userAuth = {
 							el: self.$authWrapper,
@@ -89,7 +99,7 @@
 								FacebookLogin.closeSignupModal();
 							};
 						}
-					}
+					}*/
 
 					self.transition('NameWiki', true, '+');
 
