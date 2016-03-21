@@ -33,10 +33,12 @@
 	}
 
 	.pi-caption {
+		@include hyphens();
 		color: $color-alternate-text;
 		font-size: 12px;
 		font-style: italic;
 		text-align: left;
+		word-wrap: break-word;
 	}
 
 	.pi-data:not(:last-of-type),
@@ -66,9 +68,11 @@
 	}
 
 	.pi-data-value {
+		@include hyphens();
 		font-size: 12px;
 		line-height: 18px;
 		padding-left: 0;
+		word-break: break-word;
 
 		&:not(:first-child) {
 			@include flex-basis($infobox-width * 2 / 3);

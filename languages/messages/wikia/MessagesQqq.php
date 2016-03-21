@@ -36,4 +36,6 @@ $messages = array_merge( $messages, array(
 'recentchanges-on-wikia-content' => 'A content of a message to users about recent changes across the wikia\'s platform.',
 
 'wikia-read-only-mode' => 'A message shown to users when Wikia is in a read-only mode due to a maintenance work.',
+
+'blog-avatar-defaults' => '{{doc-important|Do not translate ".jpg"}}',
 ) );
