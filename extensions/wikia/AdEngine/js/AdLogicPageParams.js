@@ -97,6 +97,14 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 		return params;
 	}
 
+	function overrideEsrbRating(params) {
+		params.esrb = context.targeting.esrbRating || params.esrb;
+
+		if (!params.esrb) {
+			params.esrb = context.targeting.wikiDirectedAtChildren ? 'ec' : 'teen';
+		}
+	}
+
 	function getRefParam() {
 		var hostnameMatch,
 			ref = doc.referrer,
@@ -202,10 +210,7 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 		}
 
 		extend(params, decodeLegacyDartParams(targeting.wikiCustomKeyValues));
-
-		if (!params.esrb) {
-			params.esrb = targeting.wikiDirectedAtChildren ? 'ec' : 'teen';
-		}
+		overrideEsrbRating(params);
 
 		log(params, 9, logGroup);
 		return params;
