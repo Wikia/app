@@ -260,6 +260,7 @@ class MercuryApiController extends WikiaController {
 		$dimensions[4] = 'mercury';
 		$dimensions[5] = $wgUser->isAnon() ? 'anon' : 'user';
 		$dimensions[9] = $wgCityId;
+		$dimensions[13] = AdTargeting::getEsrbRating();
 		$dimensions[15] = WikiaPageType::isCorporatePage() ? 'yes' : 'no';
 		$dimensions[17] = WikiFactoryHub::getInstance()->getWikiVertical( $wgCityId )['short'];
 		$dimensions[18] = $wikiCategoryNames;
