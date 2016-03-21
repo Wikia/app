@@ -125,6 +125,7 @@
 	 *
 	 * @public
 	 *
+	 * @example define(function () { return {hello: 'World'}; });
 	 * @example define('mymod', function () { return {hello: 'World'}; });
 	 * @example define('mymod', ['dep1', 'dep2'], function (dep1, dep2) { ... });
 	 *
