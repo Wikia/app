@@ -101,6 +101,10 @@ define('ext.wikia.adEngine.lookup.openXBidder', [
 			price,
 			size;
 
+		if (!priceMap[slotName]) {
+			return {};
+		}
+
 		price = priceMap[slotName].price;
 		size = priceMap[slotName].size;
 
