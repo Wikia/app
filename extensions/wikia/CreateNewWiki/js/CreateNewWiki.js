@@ -72,7 +72,7 @@
 					if (self.$nameWikiWrapper.length) {
 						require(['AuthModal'], function (authModal) {
 							authModal.load({
-								url: url,
+								url: 'signin',
 								origin: 'create-new-wikia',
 								onAuthSuccess: window.location.href
 							});
