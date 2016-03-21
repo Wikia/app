@@ -146,3 +146,28 @@ $recirculation-fandom-trending-color: #F08A24;
 		}
 	}
 }
+
+// Update Taboola in Right Rail to match other right rail modules
+// Right rail module code found: skins/oasis/css/core/page.scss
+#RECIRCULATION_RAIL .trc_rbox_container {
+	background: $color-page;
+	border: 1px solid $color-page-border;
+	margin-bottom: 10px;
+	padding: 20px 15px 15px;
+
+	@if ($is-dark-wiki) {
+		background: $color-module-background;
+	}
+
+	.thumbnails-rr2 {
+		padding: 0;
+
+		.video-title {
+			font-weight: 400;
+		}
+	}
+
+	.trc_rbox_header {
+		margin-bottom: 25px;
+	}
+}
