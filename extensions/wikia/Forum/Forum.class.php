@@ -337,8 +337,8 @@ class Forum extends Walls {
 	public function createDefaultBoard() {
 		wfProfileIn( __METHOD__ );
 		$app = F::App();
-		if ( !$this->hasAtLeast( NS_WIKIA_FORUM_BOARD, 0 ) ) {
-			WikiaDataAccess::cachePurge( wfMemcKey( 'Forum_hasAtLeast', NS_WIKIA_FORUM_BOARD, 0 ) );
+		if ( !$this->hasMoreThan( NS_WIKIA_FORUM_BOARD, 0 ) ) {
+			WikiaDataAccess::cachePurge( wfMemcKey( 'Forum_hasMoreThan', NS_WIKIA_FORUM_BOARD, 0 ) );
 			/* the wgUser swap is the only way to create page as other user then current */
 			$tmpUser = $app->wg->User;
 			$app->wg->User = User::newFromName( Forum::AUTOCREATE_USER );
