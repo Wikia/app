@@ -68,7 +68,7 @@ class WikiaApiQuerySiteinfo extends ApiQuerySiteinfo {
 			$data[$id] = array( 'id' => $variableName );
 			switch ($variableName) {
 				case 'wgWikiaGlobalUserGroups':
-					/** @var \Wikia\Service\User\Permissions\PermissionsServiceImpl $permissionsService */
+					/** @var \Wikia\Service\User\Permissions\PermissionsService $permissionsService */
 					$permissionsService = \Wikia\DependencyInjection\Injector::getInjector()->get( \Wikia\Service\User\Permissions\PermissionsService::class );
 					$value = $permissionsService->getConfiguration()->getGlobalGroups();
 					break;
