@@ -48,6 +48,7 @@ class RevisionUpvotesApiController extends WikiaApiController {
 	 * Remove upvote for given revision made by current user
 	 *
 	 * @requestParam int upvote id
+	 * @requestParam int user id who made an edit
 	 *
 	 * @throws MissingParameterApiException
 	 * @throws BadRequestApiException
@@ -66,7 +67,12 @@ class RevisionUpvotesApiController extends WikiaApiController {
 			throw new MissingParameterApiException( 'id' );
 		}
 
-		$removed = ( new RevisionUpvotesService() )->removeUpvote( $id, $user->getId() );
+		$userId = $request->getInt( 'userId' );
+		if ( empty( $userId ) ) {
+			throw new MissingParameterApiException( 'userId' );
+		}
+
+		$removed = ( new RevisionUpvotesService() )->removeUpvote( $id, $user->getId(), $userId );
 
 		$this->setResponseData( [
 			'success' => (bool) $removed

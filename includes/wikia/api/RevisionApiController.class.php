@@ -87,7 +87,7 @@ class RevisionApiController extends WikiaApiController {
 			'isMinor' => $revision->isMinor(),
 			'parsedComment' => Linker::formatComment( $comment, $revision->getTitle() ),
 			'revisionId' => $revision->getId(),
-			'userId' => $revision->getId(),
+			'userId' => $revision->getUser(),
 			'userName' => $revision->getUserText(),
 			'timestamp' => wfTimestamp( TS_UNIX, $revision->getTimestamp() )
 		];
