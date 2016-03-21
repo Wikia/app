@@ -21,14 +21,21 @@ class AdTargeting {
 	];
 
 	static public function getEsrbRating() {
-		global $wgDartCustomKeyValues, $wgWikiDirectedAtChildrenByFounder, $wgWikiDirectedAtChildrenByStaff;
+		global $wgWikiDirectedAtChildrenByFounder, $wgWikiDirectedAtChildrenByStaff;
 
 		$directedAtChildren = $wgWikiDirectedAtChildrenByFounder || $wgWikiDirectedAtChildrenByStaff;
 		$rating = $directedAtChildren ? self::EARLY_CHILDHOOD : self::TEEN;
+		$dartRating = self::getEsrbRatingFromDartKeyValues();
 
-		$pairs = explode(';', $wgDartCustomKeyValues);
+		return $dartRating !== null ? $dartRating : $rating;
+	}
+
+	static private function getEsrbRatingFromDartKeyValues() {
+		global $wgDartCustomKeyValues;
 
 		$dartRating = null;
+		$pairs = explode(';', $wgDartCustomKeyValues);
+
 		foreach ($pairs as $pair) {
 			list($key, $value) = explode('=', $pair);
 			if ($key === 'esrb' && ($dartRating === null || self::$esrbRating[$value] > self::$esrbRating[$dartRating])) {
@@ -36,7 +43,7 @@ class AdTargeting {
 			}
 		}
 
-		return $dartRating !== null ? $dartRating : $rating;
+		return $dartRating;
 	}
 
 }
