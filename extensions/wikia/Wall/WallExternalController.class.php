@@ -234,7 +234,7 @@ class WallExternalController extends WikiaController {
 		if ( $wallMessage === false ) {
 			error_log( 'WALL_NOAC_ON_POST' );
 			$this->response->setVal( 'status', false );
-			$this->response->setCode(WikiaResponse::RESPONSE_CODE_INTERNAL_SERVER_ERROR);
+			$this->response->setCode( WikiaResponse::RESPONSE_CODE_INTERNAL_SERVER_ERROR );
 			return;
 		}
 

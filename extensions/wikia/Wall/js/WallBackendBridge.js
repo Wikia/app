@@ -172,8 +172,8 @@
 			}).done(this.proxy(function (data) {
 				if ($.isFunction(successCallback)) {
 					successCallback(data);
-					}
-					this.fire('editSaved', data);
+				}
+				this.fire('editSaved', data);
 			})).fail(this.proxy(function (data) {
 				if ($.isFunction(failCallback)) {
 					failCallback(data);
