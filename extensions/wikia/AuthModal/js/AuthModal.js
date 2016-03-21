@@ -39,8 +39,8 @@ define('AuthModal', ['jquery', 'wikia.window'], function ($, window) {
 	function getPopUpWindowSpecs() {
 		var pageWidth = window.innerWidth,
 			popUpWindowWidth = pageWidth < popUpWindowMaxWidth ? pageWidth : popUpWindowMaxWidth,
-			popUpWindowLeft = window.screenX + (pageWidth / 2) - (popUpWidth / 2),
-			popUpWindowTop = window.screenY + (window.innerHeight / 2) - (popUpHeight / 2);
+			popUpWindowLeft = window.screenX + (pageWidth / 2) - (popUpWindowWidth / 2),
+			popUpWindowTop = window.screenY + (window.innerHeight / 2) - (popUpWindowHeight / 2);
 
 		return 'width=' + popUpWindowWidth + ',height=' + popUpWindowHeight + ',top=' + popUpWindowTop + ',left=' + popUpWindowLeft;
 	}
