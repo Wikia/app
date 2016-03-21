@@ -62,7 +62,7 @@ define('AuthModal', ['jquery', 'wikia.window'], function ($, window) {
 
 		authPopUpWindow = window.open(src, '_blank', getPopUpWindowSpecs());
 
-		if (authPopUpWindow || authPopUpWindow.closed) {
+		if (authPopUpWindow || !authPopUpWindow.closed) {
 			authPopUpWindow.onbeforeunload = function () {
 				track({
 					action: Wikia.Tracker.ACTIONS.CLOSE,
