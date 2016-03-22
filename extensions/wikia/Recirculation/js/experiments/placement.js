@@ -134,7 +134,9 @@ require([
 	}
 
 	function injectSubtitle($html) {
-		$html.find('.trending').after('<h2>'+ $.msg('recirculation-fandom-subtitle') +'</h2>');
+		var subtitle = $('<h2>').text($.msg('recirculation-fandom-subtitle'));
+
+		$html.find('.trending').after(subtitle);
 		return $html;
 	}
 

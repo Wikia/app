@@ -3,11 +3,10 @@ define('ext.wikia.recirculation.views.rail', [
 	'jquery',
 	'wikia.window',
 	'wikia.log',
-	'wikia.mustache',
 	'wikia.abTest',
 	'ext.wikia.recirculation.tracker',
 	'ext.wikia.recirculation.utils'
-], function ($, w, log, Mustache, abTest, tracker, utils) {
+], function ($, w, log, abTest, tracker, utils) {
 
 	var logGroup = 'ext.wikia.recirculation.views.rail',
 		options = {

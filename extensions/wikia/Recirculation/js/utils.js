@@ -1,8 +1,9 @@
 /*global define*/
 define('ext.wikia.recirculation.utils', [
 	'wikia.loader',
-	'wikia.cache'
-], function (loader, cache) {
+	'wikia.cache',
+	'wikia.mustache'
+], function (loader, cache, Mustache) {
 	'use strict';
 
 	/**
@@ -44,9 +45,7 @@ define('ext.wikia.recirculation.utils', [
 	}
 
 	function buildLabel(element, label) {
-		// This is a work around to make sure we only get the index based on actual list items
-		var $listItem = $(element).parent();
-		var slot = $listItem.closest('ul').children('li').index($listItem) + 1;
+		var slot = $(element).parent().data('index') + 1;
 
 		return label + '=slot-' + slot;
 	}
