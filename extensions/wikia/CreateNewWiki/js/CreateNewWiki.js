@@ -69,12 +69,11 @@
 						wikiDomain: self.wikiDomain.val(),
 						wikiLang: self.wikiLanguage.find('option:selected').val()
 					});
-					debugger;
 					require(['AuthModal'], function (authModal) {
 						authModal.load({
-							url: '/signin',
+							url: '/signin?redirect=' + encodeURIComponent(window.location.href),
 							origin: 'create-new-wikia',
-							onAuthSuccess: self.transition('NameWiki', true, '+')
+							onAuthSuccess: onAuthSuccess
 						});
 					});
 				}
@@ -256,7 +255,9 @@
 			}
 			this.answer = v;
 		},
-
+		onAuthSuccess: function () {
+			this.transition('NameWiki', true, '+');
+		},
 		checkWikiName: function () {
 			var self = this,
 				name = this.wikiName.val(),
