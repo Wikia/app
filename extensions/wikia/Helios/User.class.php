@@ -303,8 +303,6 @@ class User {
 	 * @return bool true - hook handler
 	 */
 	public static function onUserCheckPassword( $id, $username, $hash, $password, &$result, &$errorMessageKey ) {
-		global $wgHeliosLoginShadowMode;
-
 		$heliosResult = null;
 		$heliosException = null;
 		try {
@@ -314,30 +312,10 @@ class User {
 			$heliosException = $e;
 		}
 
-		// If we are in shadow mode calculate mediawiki response and log comparison result
-		if ( $wgHeliosLoginShadowMode ) {
-			$mediawikiResult = \User::comparePasswords( $hash, $password, $id );
-
-			// Detect discrepancies between Helios and MediaWiki results.
-			if ( $heliosResult !== null && $heliosResult != $mediawikiResult ) {
-				self::debugLogin( $password, __METHOD__ );
-				WikiaLogger::instance()->error(
-					'HELIOS_LOGIN check_password_discrepancy',
-					[	'helios'         => $heliosResult,
-						'mediawiki'      => $mediawikiResult,
-						'user_id'        => $id,
-						'username'       => $username ]
-				);
-			}
-
-			$result = $mediawikiResult;
-		} else { // pure-Helios mode
-			if ( $heliosException ) {
-				$errorMessageKey = 'login-abort-service-unavailable';
-			}
-
-			$result = $heliosResult;
+		if ( $heliosException ) {
+			$errorMessageKey = 'login-abort-service-unavailable';
 		}
+		$result = $heliosResult;
 
 		return true;
 	}
