@@ -36,7 +36,7 @@ define('ext.wikia.recirculation.utils', [
 
 	function renderTemplate(templateName, data) {
 		var templateName = 'extensions/wikia/Recirculation/templates/client/' + templateName;
-		
+
 		return loadTemplate(templateName)
 			.then(function(template) {
 				return $(Mustache.render(template, data));
@@ -44,8 +44,10 @@ define('ext.wikia.recirculation.utils', [
 	}
 
 	function buildLabel(element, label) {
-		var slot = $(element).parent().index() + 1;
-		
+		// This is a work around to make sure we only get the index based on actual list items
+		var $listItem = $(element).parent();
+		var slot = $listItem.closest('ul').children('li').index($listItem) + 1;
+
 		return label + '=slot-' + slot;
 	}
 

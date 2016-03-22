@@ -45,6 +45,28 @@ require([
 	}
 
 	switch (group) {
+		case 'DESIGN_ONE':
+		case 'DESIGN_TWO':
+		case 'DESIGN_THREE':
+		case 'DESIGN_FIVE':
+			helper = fandomHelper({
+				limit: 5
+			});
+			view = railView({
+				formatTitle: true
+			});
+			isRail = true;
+			break;
+		case 'DESIGN_FOUR':
+			helper = fandomHelper({
+				limit: 5
+			});
+			view = railView({
+				formatTitle: true,
+				before: injectSubtitle
+			});
+			isRail = true;
+			break;
 		case 'FANDOM_RAIL':
 			helper = fandomHelper();
 			view = railView();
@@ -111,10 +133,36 @@ require([
 			.fail(function() {});
 	}
 
-	function setupLegacyTracking() {
-		tracker.trackVerboseImpression(experimentName, 'rail');
-		$(railSelector).on('mousedown', 'a', function() {
-			tracker.trackVerboseClick(experimentName, utils.buildLabel(this, 'rail'));
+	function injectSubtitle($html) {
+		$html.find('.trending').after('<h2>'+ $.msg('recirculation-fandom-subtitle') +'</h2>');
+		return $html;
+	}
+
+	function renderGoogleIncontent() {
+		var section = incontentView().findSuitableSection();
+
+		if (section.exists()) {
+			googleMatchHelper.injectGoogleMatchedContent(section);
+			tracker.trackVerboseImpression(experimentName, 'in-content');
+		}
+	}
+
+	function renderTaboola() {
+		afterRailLoads(function() {
+			taboolaHelper.initializeWidget({
+				mode: 'thumbnails-rr2',
+				container: railContainerId,
+				placement: 'Right Rail Thumbnails 3rd',
+				target_type: 'mix'
+			});
+
+			tracker.trackVerboseImpression(experimentName, 'rail');
+			$(railSelector).on('mousedown', 'a', function() {
+				var slot = $(element).parent().index() + 1,
+					label = 'rail=slot-' + slot;
+
+				tracker.trackVerboseClick(experimentName, label);
+			});
 		});
 	}
 });
