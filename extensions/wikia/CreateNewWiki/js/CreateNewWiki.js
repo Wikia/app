@@ -261,7 +261,8 @@
 		},
 
 		onAuthSuccess: function () {
-			this.transition('NameWiki', true, '+');
+			debugger;
+			//this.transition('NameWiki', true, '+');
 		},
 
 		checkWikiName: function () {
