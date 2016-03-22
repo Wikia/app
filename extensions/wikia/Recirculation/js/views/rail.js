@@ -15,11 +15,8 @@ define('ext.wikia.recirculation.views.rail', [
 		};
 
 	function render(data) {
+		data.titleHtml = options.formatTitle ? formatTitle(data.title) : data.title;
 		data.group = abTest.getGroup('RECIRCULATION_PLACEMENT');
-
-		if (options.formatTitle) {
-			data.title = formatTitle(data.title);
-		}
 
 		data.items[0].flag = 'Featured';
 		data.items[0].classes = 'featured';
