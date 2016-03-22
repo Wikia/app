@@ -10,16 +10,9 @@ class AdTargeting {
 	const RATING_PENDING = 'rp';
 	const TEEN = 'teen';
 
-	static private $esrbRating = [
-		self::EARLY_CHILDHOOD => 1,
-		self::EVERYONE => 2,
-		self::EVERYONE_10_PLUS => 3,
-		self::TEEN => 4,
-		self::MATURE => 5,
-		self::ADULTS_ONLY => 6,
-		self::RATING_PENDING => 7
-	];
-
+	/**
+	 * @return string
+	 */
 	static public function getEsrbRating() {
 		global $wgWikiDirectedAtChildrenByFounder, $wgWikiDirectedAtChildrenByStaff;
 
@@ -30,6 +23,9 @@ class AdTargeting {
 		return $dartRating !== null ? $dartRating : $rating;
 	}
 
+	/**
+	 * @return null|string
+	 */
 	static private function getEsrbRatingFromDartKeyValues() {
 		global $wgDartCustomKeyValues;
 
@@ -38,7 +34,7 @@ class AdTargeting {
 
 		foreach ($pairs as $pair) {
 			list($key, $value) = explode('=', $pair);
-			if ($key === 'esrb' && ($dartRating === null || self::$esrbRating[$value] > self::$esrbRating[$dartRating])) {
+			if ($key === 'esrb') {
 				$dartRating = $value;
 			}
 		}

@@ -46,11 +46,11 @@ class AdTargetingTest extends WikiaBaseTest {
 		$this->assertEquals(AdTargeting::EVERYONE, AdTargeting::getEsrbRating());
 	}
 
-	public function testPickBiggestRating() {
+	public function testPickLastRatingFromDartParams() {
 		$this->mockGlobalVariable('wgWikiDirectedAtChildrenByStaff', true);
 		$this->mockGlobalVariable('wgDartCustomKeyValues', 'esrb=mature;key1=value1;esrb=everyone');
 
-		$this->assertEquals(AdTargeting::MATURE, AdTargeting::getEsrbRating());
+		$this->assertEquals(AdTargeting::EVERYONE, AdTargeting::getEsrbRating());
 	}
 
 }
