@@ -74,7 +74,7 @@
 							authModal.load({
 								url: '/signin?redirect=' + encodeURIComponent(window.location.href),
 								origin: 'create-new-wikia',
-								onAuthSuccess: self.onAuthSuccess
+								onAuthSuccess: $.proxy(self.onAuthSuccess, self)
 							});
 						});
 					} else {
@@ -261,8 +261,7 @@
 		},
 
 		onAuthSuccess: function () {
-			debugger;
-			//this.transition('NameWiki', true, '+');
+			this.transition('NameWiki', true, '+');
 		},
 
 		checkWikiName: function () {
