@@ -50,12 +50,9 @@
 	.WikiaMainContent,
 	.WikiaRail,
 	.WikiaFooter {
+		height: 0;
 		overflow: hidden;
 		visibility: hidden;
-	}
-
-	.WikiaMainContent {
-		height: 0;
 	}
 
 	.WikiaRail {
