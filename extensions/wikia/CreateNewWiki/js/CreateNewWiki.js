@@ -69,42 +69,13 @@
 						wikiDomain: self.wikiDomain.val(),
 						wikiLang: self.wikiLanguage.find('option:selected').val()
 					});
-					if (self.$nameWikiWrapper.length) {
-						require(['AuthModal'], function (authModal) {
-							authModal.load({
-								url: 'signin',
-								origin: 'create-new-wikia',
-								onAuthSuccess: window.location.href
-							});
+					require(['AuthModal'], function (authModal) {
+						authModal.load({
+							url: '/signin',
+							origin: 'create-new-wikia',
+							onAuthSuccess: self.transition('NameWiki', true, '+')
 						});
-					}
-
-					/*if (self.$authWrapper.length) {
-						// Init user auth
-						self.userAuth = {
-							el: self.$authWrapper,
-							loginAjaxForm: new UserLoginAjaxForm(
-								'#UserAuth .UserLoginModal',
-								{
-									ajaxLogin: true,
-									callback: function () {
-										self.transition('UserAuth', true, '+');
-									}
-								}
-							)
-						};
-						if (typeof FacebookLogin !== 'undefined') {
-							FacebookLogin.callbacks['login-success'] = function () {
-								self.transition('UserAuth', true, '+');
-								FacebookLogin.closeSignupModal();
-							};
-						}
-					}*/
-
-					self.transition('NameWiki', true, '+');
-
-					// Load facebook assets before going to the login form
-					$.loadFacebookSDK();
+					});
 				}
 			});
 			this.wikiDomain.keyup(function () {
