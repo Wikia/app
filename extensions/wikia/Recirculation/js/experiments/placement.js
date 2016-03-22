@@ -46,55 +46,43 @@ require([
 
 	switch (group) {
 		case 'FANDOM_RAIL':
-			helper = fandomHelper;
-			view = railView;
+			helper = fandomHelper();
+			view = railView();
 			isRail = true;
 			break;
 		case 'FANDOM_INCONTENT':
-			helper = fandomHelper;
-			view = incontentView;
+			helper = fandomHelper();
+			view = incontentView();
 			break;
 		case 'FANDOM_FOOTER':
-			helper = fandomHelper;
-			view = footerView;
+			helper = fandomHelper();
+			view = footerView();
 			break;
 		case 'LINKS_RAIL':
-			helper = contentLinksHelper;
-			view = railView;
+			helper = contentLinksHelper();
+			view = railView();
 			isRail = true;
 			break;
 		case 'LINKS_INCONTENT':
-			helper = contentLinksHelper;
-			view = incontentView;
+			helper = contentLinksHelper();
+			view = incontentView();
 			break;
 		case 'LINKS_FOOTER':
-			helper = contentLinksHelper;
-			view = footerView;
+			helper = contentLinksHelper();
+			view = footerView();
+			break;
+		case 'CONTROL':
+			helper = fandomHelper({
+				limit: 5
+			});
+			view = railView();
+			isRail = true;
 			break;
 		case 'GOOGLE_INCONTENT':
-			var section = incontentView.findSuitableSection();
-
-			if (section.exists()) {
-				googleMatchHelper.injectGoogleMatchedContent(section);
-				tracker.trackVerboseImpression(experimentName, 'in-content');
-			}
-			return;
-		case 'CONTROL':
-			afterRailLoads(function() {
-				fandomHelper.injectLegacyHtml('recent_popular', railSelector);
-				setupLegacyTracking();
-			});
+			renderGoogleIncontent();
 			return;
 		case 'TABOOLA':
-			afterRailLoads(function() {
-				taboolaHelper.initializeWidget({
-					mode: 'thumbnails-rr2',
-					container: railContainerId,
-					placement: 'Right Rail Thumbnails 3rd',
-					target_type: 'mix'
-				});
-				setupLegacyTracking();
-			});
+			renderTaboola();
 			return;
 		default:
 			return;

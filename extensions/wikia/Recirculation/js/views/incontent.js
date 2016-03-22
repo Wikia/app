@@ -59,9 +59,12 @@ define('ext.wikia.recirculation.views.incontent', [
 		}
 	}
 
-	return {
-		render: render,
-		setupTracking: setupTracking,
-		findSuitableSection: findSuitableSection
+	return function() {
+
+		return {
+			render: render,
+			setupTracking: setupTracking,
+			findSuitableSection: findSuitableSection
+		}
 	}
 });

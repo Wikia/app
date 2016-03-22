@@ -111,7 +111,9 @@ define('ext.wikia.recirculation.helpers.contentLinks', [
 		return true;
 	}
 
-	return {
-		loadData: loadData
+	return function() {
+		return {
+			loadData: loadData
+		}
 	}
 });

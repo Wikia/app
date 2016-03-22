@@ -28,8 +28,12 @@ define('ext.wikia.recirculation.views.rail', [
 		}
 	}
 
-	return {
-		render: render,
-		setupTracking: setupTracking
+	return function(config) {
+		$.extend(options, config);
+
+		return {
+			render: render,
+			setupTracking: setupTracking
+		}
 	}
 });

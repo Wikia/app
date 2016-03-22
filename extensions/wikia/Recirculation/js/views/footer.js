@@ -28,8 +28,10 @@ define('ext.wikia.recirculation.views.footer', [
 		}
 	}
 
-	return {
-		render: render,
-		setupTracking: setupTracking
+	return function() {
+		return {
+			render: render,
+			setupTracking: setupTracking
+		}
 	}
 });
