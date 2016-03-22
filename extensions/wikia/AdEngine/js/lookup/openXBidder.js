@@ -108,6 +108,7 @@ define('ext.wikia.adEngine.lookup.openXBidder', [
 			size;
 
 		if (!priceMap[slotName]) {
+			log(['getSlotParams', 'No response for the slot', slotName], 'debug', logGroup);
 			return {};
 		}
 
@@ -171,7 +172,13 @@ define('ext.wikia.adEngine.lookup.openXBidder', [
 	}
 
 	function getPrices() {
-		return priceMap;
+		var prices = {};
+		for (var slotName in priceMap) {
+			if (priceMap.hasOwnProperty(slotName)) {
+				prices[slotName] = priceMap[slotName].price;
+			}
+		}
+		return prices;
 	}
 
 	function isSlotSupported(slotName) {

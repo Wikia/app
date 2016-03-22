@@ -100,7 +100,6 @@ define('ext.wikia.adEngine.lookup.lookupFactory', [
 			getSlotParams: getSlotParams,
 			hasResponse: hasResponse,
 			trackState: trackState,
-			onResponse: onResponse,
 			wasCalled: wasCalled
 		};
 	}

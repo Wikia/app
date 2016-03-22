@@ -117,7 +117,8 @@ describe('ext.wikia.adEngine.lookup.openXBidder', function () {
 		slotParams = {};
 		openXBidder = getOpenXBidder();
 		openXBidder.call('oasis', function(){});
-		openXBidder.onResponse();
+		spyOn(mocks.adTracker, 'track');
+		mocks.win.OX_dfp_options.callback();
 
 	});
 
@@ -135,6 +136,15 @@ describe('ext.wikia.adEngine.lookup.openXBidder', function () {
 	it('Check if OpenXDFPBidder paramas properly define slot name', function () {
 		var openXDfpParams = mocks.win.OX_dfp_ads[0];
 		expect(openXDfpParams[2]).toContain('TOP_LEADERBOARD');
+	});
+
+	it('Check if getSlotsParams works properly', function() {
+		var params = openXBidder.getSlotParams('TOP_LEADERBOARD');
+		expect(params.ox728x90).toEqual(10);
+	});
+
+	it('Check if getPrices work properly', function() {
+		expect(mocks.adTracker.track.calls.argsFor(0)[1].TOP_LEADERBOARD).toBe(10);
 	});
 
 });
