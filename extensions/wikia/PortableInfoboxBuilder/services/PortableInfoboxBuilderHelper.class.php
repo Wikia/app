@@ -13,11 +13,7 @@ class PortableInfoboxBuilderHelper {
 	 * @return bool
 	 */
 	public static function isInfoboxTemplate( $title ) {
-		if ( $title->getNamespace() === NS_TEMPLATE ) {
-			return self::isTemplateClassifiedAsInfobox( $title );
-		} else {
-			return false;
-		}
+		return $title->inNamespace( NS_TEMPLATE ) && self::isTemplateClassifiedAsInfobox( $title );
 	}
 
 	/**
