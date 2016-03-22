@@ -10,6 +10,10 @@ describe('ext.wikia.adEngine.config.mobile', function () {
 			name: 'Evolve2',
 			canHandleSlot: function () { return true; }
 		},
+		adProviderHitMediaMock = {
+			name: 'HitMedia',
+			canHandleSlot: function () { return true; }
+		},
 		adProviderPaidAssetDropMock = {
 			name: 'PaidAssetDropMock',
 			canHandleSlot: function () { return false; }
@@ -47,6 +51,7 @@ describe('ext.wikia.adEngine.config.mobile', function () {
 			mocks.adContext,
 			adProviderDirectMock,
 			adProviderEvolveMock,
+			adProviderHitMediaMock,
 			adProviderPaidAssetDropMock,
 			adProviderRemnantMock
 		);
@@ -86,9 +91,24 @@ describe('ext.wikia.adEngine.config.mobile', function () {
 		expect(adConfigMobile.getProviderList('foo')).toEqual([adProviderEvolveMock, adProviderRemnantMock]);
 	});
 
+	it('getProviderLists returns HitMedia, RemnantGPT when hitMedia is enabled', function () {
+		context.providers.hitMedia = true;
+		var adConfigMobile = getConfig();
+
+		expect(adConfigMobile.getProviderList('foo')).toEqual([adProviderHitMediaMock, adProviderRemnantMock]);
+	});
+
 	it('getProviderLists returns DirectGpt, RemnantGPT when evolve is enabled but cannot handle the slot', function () {
 		spyOn(adProviderEvolveMock, 'canHandleSlot').and.returnValue(false);
 		context.providers.evolve2 = true;
+		var adConfigMobile = getConfig();
+
+		expect(adConfigMobile.getProviderList('foo')).toEqual([adProviderDirectMock, adProviderRemnantMock]);
+	});
+
+	it('getProviderLists returns DirectGpt, RemnantGPT when hitMedia is enabled but cannot handle the slot', function () {
+		spyOn(adProviderHitMediaMock, 'canHandleSlot').and.returnValue(false);
+		context.providers.hitMedia = true;
 		var adConfigMobile = getConfig();
 
 		expect(adConfigMobile.getProviderList('foo')).toEqual([adProviderDirectMock, adProviderRemnantMock]);
@@ -99,5 +119,12 @@ describe('ext.wikia.adEngine.config.mobile', function () {
 		var adConfigMobile = getConfig();
 
 		expect(adConfigMobile.getProviderList('foo')).toEqual([adProviderEvolveMock]);
+	});
+
+	it('getProviderLists returns HitMedia when force provider is set', function () {
+		context.forcedProvider = 'hitmedia';
+		var adConfigMobile = getConfig();
+
+		expect(adConfigMobile.getProviderList('foo')).toEqual([adProviderHitMediaMock]);
 	});
 });
