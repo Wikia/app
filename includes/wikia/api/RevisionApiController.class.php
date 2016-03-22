@@ -90,7 +90,8 @@ class RevisionApiController extends WikiaApiController {
 			'revisionId' => $revision->getId(),
 			'userId' => $revision->getId(),
 			'userName' => $revision->getUserText(),
-			'timestamp' => wfTimestamp( TS_UNIX, $revision->getTimestamp() )
+			'timestamp' => wfTimestamp( TS_UNIX, $revision->getTimestamp() ),
+			'bytechange' => $revision->getSize() - $revision->getPrevious()->getSize(),
 		];
 
 		if ( $avatar ) {
