@@ -30,13 +30,6 @@ class PortableInfoboxBuilderSpecialController extends WikiaSpecialPageController
 		$this->forward( __CLASS__, $this->getMethodName() );
 	}
 
-	public function noTitle() {
-		$this->wg->SuppressPageHeader = true;
-		$this->response->setVal( 'setTemplateNameCallToAction', wfMessage(
-			'portable-infobox-builder-no-template-title-set' )->text() );
-		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
-	}
-
 	public function builder() {
 		$title = $this->getPar();
 		RenderContentOnlyHelper::setRenderContentVar( true );
@@ -53,7 +46,7 @@ class PortableInfoboxBuilderSpecialController extends WikiaSpecialPageController
 
 	private function getMethodName() {
 		if (empty($this->getPar())) {
-			return 'notitle';
+			return 'builder';
 		}
 
 		$title = Title::newFromText($this->getPar(), NS_TEMPLATE);
