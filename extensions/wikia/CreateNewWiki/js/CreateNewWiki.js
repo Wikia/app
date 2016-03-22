@@ -69,6 +69,7 @@
 						wikiDomain: self.wikiDomain.val(),
 						wikiLang: self.wikiLanguage.find('option:selected').val()
 					});
+					debugger;
 					require(['AuthModal'], function (authModal) {
 						authModal.load({
 							url: '/signin',
