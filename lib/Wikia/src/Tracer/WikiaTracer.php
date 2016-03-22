@@ -246,13 +246,11 @@ class WikiaTracer {
 	}
 
 	/**
-	 * Pass request context to maintenance scripts run via wfShellExec
+	 * Get the array of env variables with client data
 	 *
-	 * @param string $cmd
-	 * @param array $environ
-	 * @return bool true - it's a hook
+	 * @return array
 	 */
-	public static function onBeforeWfShellExec( &$cmd, array &$environ ) {
+	public function getEnvVariables() {
 		$traceEnviron = [];
 		$traceHeaders = array_merge(
 			self::instance()->getInternalHeaders(),
@@ -266,9 +264,20 @@ class WikiaTracer {
 			$traceEnviron[ self::ENV_VARIABLES_PREFIX . $key ] = $val;
 		}
 
+		return $traceEnviron;
+	}
+
+	/**
+	 * Pass request context to maintenance scripts run via wfShellExec
+	 *
+	 * @param string $cmd
+	 * @param array $environ
+	 * @return bool true - it's a hook
+	 */
+	public static function onBeforeWfShellExec( &$cmd, array &$environ ) {
 		$environ = array_merge(
 			$environ,
-			$traceEnviron
+			self::instance()->getEnvVariables()
 		);
 
 		return true;
