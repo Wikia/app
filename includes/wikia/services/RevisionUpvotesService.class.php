@@ -49,7 +49,7 @@ class RevisionUpvotesService {
 
 		$rowRemoved = $db->affectedRows();
 
-		if ( $userId > 0 ) {
+		if ( $this->shouldStoreUserData( $userId ) ) {
 			( new \WikiaSQL() )
 				->UPDATE( self::UPVOTE_USERS_TABLE )
 				->SET_RAW( 'total', 'IF(`total` > 0, `total` - 1, 0)' )
@@ -268,7 +268,7 @@ class RevisionUpvotesService {
 
 		$lastId = $db->insertId();
 
-		if ( $userId > 0 ) {
+		if ( $this->shouldStoreUserData( $userId ) ) {
 			$db->upsert(
 				self::UPVOTE_USERS_TABLE,
 				[
@@ -306,5 +306,9 @@ class RevisionUpvotesService {
 
 	private function getDatabase( $db = DB_SLAVE ) {
 		return wfGetDB( $db, [], F::app()->wg->RevisionUpvotesDB );
+	}
+
+	private function shouldStoreUserData( $userId ) {
+		return $userId > 0;
 	}
 }
