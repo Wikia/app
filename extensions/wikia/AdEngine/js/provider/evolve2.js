@@ -88,7 +88,6 @@ define('ext.wikia.adEngine.provider.evolve2', [
 			slotCopy = JSON.parse(JSON.stringify(slotMap[slot.name]));
 
 		if (!slotCopy.flushOnly) {
-			slotCopy.sect = section;
 			slotCopy.wpos = slot.name;
 			setTargeting(slotCopy);
 		}
