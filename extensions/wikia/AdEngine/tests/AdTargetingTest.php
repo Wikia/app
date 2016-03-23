@@ -3,10 +3,10 @@
 class AdTargetingTest extends WikiaBaseTest {
 
 	public function setUp() {
-		global $IP, $wgDartCustomKeyValues, $wgWikiDirectedAtChildrenByFounder, $wgWikiDirectedAtChildrenByStaff;
-		$wgDartCustomKeyValues = null;
-		$wgWikiDirectedAtChildrenByFounder = false;
-		$wgWikiDirectedAtChildrenByStaff = false;
+		global $IP;
+		$this->mockGlobalVariable('wgDartCustomKeyValues', null);
+		$this->mockGlobalVariable('wgWikiDirectedAtChildrenByFounder', false);
+		$this->mockGlobalVariable('wgWikiDirectedAtChildrenByStaff', false);
 
 		$this->setupFile = "$IP/extensions/wikia/AdEngine/AdEngine2.setup.php";
 		parent::setUp();
