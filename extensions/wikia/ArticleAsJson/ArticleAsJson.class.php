@@ -27,11 +27,16 @@ class ArticleAsJson extends WikiaService {
 	private static function renderIcon( $media ) {
 		$scaledSize = self::scaleIconSize( $media['height'], $media['width'] );
 
-		$thumbUrl = VignetteRequest::fromUrl( $media['url'] )
-			->thumbnailDown()
-			->height( $scaledSize['height'] )
-			->width( $scaledSize['width'] )
-			->url();
+		try {
+			$thumbUrl = VignetteRequest::fromUrl( $media['url'] )
+				->thumbnailDown()
+				->height( $scaledSize['height'] )
+				->width( $scaledSize['width'] )
+				->url();
+		} catch (InvalidArgumentException $e) {
+			// Media URL isn't valid Vignette URL so we can't generate the thumbnail
+			$thumbUrl = null;
+		}
 
 		return self::removeNewLines(
 			\MustacheService::getInstance()->render(
