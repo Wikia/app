@@ -1,7 +1,7 @@
 <?php
 
-/*
- * Generate unique request ID or use the value when passed as HTTP request header
+/**
+ * Generate unique request ID or use the value when passed as HTTP request header or env variable
  *
  * Usage:
  *
@@ -9,7 +9,6 @@
  *
  * @see PLATFORM-362
  */
-
 namespace Wikia\Tracer;
 
 class RequestId {
@@ -29,10 +28,11 @@ class RequestId {
 		return $instance;
 	}
 
-	/*
+	/**
 	 * Return unique request ID. Either:
 	 *
-	 * - get it from HTTP request header
+	 * - get it from HTTP request header (X-Request-Id)
+	 * - get it from env variable (X_TRACE_ID)
 	 * - generate a new one
 	 *
 	 * @return string unique ID
@@ -43,25 +43,38 @@ class RequestId {
 			return $this->requestId;
 		}
 
-		// try to get the value from request X-Request-Id header
+		// try to get the value from request's X-Request-Id header or env variable
 		// we can't simply use $wgRequest as it's not yet set at this point
 		// this method is called on WikiFactoryExecuteComplete hook
 		// TODO: handle X-Trace-Id header as well
 		$headerValue = !empty( $_SERVER['HTTP_X_REQUEST_ID'] ) ? $_SERVER['HTTP_X_REQUEST_ID'] : false;
+		$envValue = !empty( $_ENV[WikiaTracer::ENV_VARIABLES_PREFIX . 'X_TRACE_ID'] ) ? $_ENV[WikiaTracer::ENV_VARIABLES_PREFIX . 'X_TRACE_ID'] : false;
 
 		if ( self::isValidId( $headerValue ) ) {
 			$this->requestId = $headerValue;
 			wfDebug( __METHOD__ . ": from HTTP request\n" );
 		}
+		else if ( self::isValidId( $envValue ) ) {
+			$this->requestId = $envValue;
+			wfDebug( __METHOD__ . ": from env variable\n" );
+		}
 		else {
-			// return 23 characters long unique ID + mw prefix
-			// e.g. mw5405bb3d129e76.46189257
-			$this->requestId = uniqid( 'mw', true );
+			$this->requestId = self::generateId();
 			wfDebug( __METHOD__ . ": generated a new one\n" );
 		}
 
 		wfDebug( __METHOD__ . ": {$this->requestId}\n" );
 		return $this->requestId;
+	}
+
+	/**
+	 * Return 23 characters long unique ID + mw prefix
+	 * e.g. mw5405bb3d129e76.46189257
+	 *
+	 * @return string
+	 */
+	public static function generateId() {
+		return uniqid( 'mw', true );
 	}
 
 	/**

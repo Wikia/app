@@ -45,56 +45,66 @@ require([
 	}
 
 	switch (group) {
+		case 'DESIGN_ONE':
+		case 'DESIGN_TWO':
+		case 'DESIGN_THREE':
+		case 'DESIGN_FIVE':
+			helper = fandomHelper({
+				limit: 5
+			});
+			view = railView({
+				formatTitle: true
+			});
+			isRail = true;
+			break;
+		case 'DESIGN_FOUR':
+			helper = fandomHelper({
+				limit: 5
+			});
+			view = railView({
+				formatTitle: true,
+				before: injectSubtitle
+			});
+			isRail = true;
+			break;
 		case 'FANDOM_RAIL':
-			helper = fandomHelper;
-			view = railView;
+			helper = fandomHelper();
+			view = railView();
 			isRail = true;
 			break;
 		case 'FANDOM_INCONTENT':
-			helper = fandomHelper;
-			view = incontentView;
+			helper = fandomHelper();
+			view = incontentView();
 			break;
 		case 'FANDOM_FOOTER':
-			helper = fandomHelper;
-			view = footerView;
+			helper = fandomHelper();
+			view = footerView();
 			break;
 		case 'LINKS_RAIL':
-			helper = contentLinksHelper;
-			view = railView;
+			helper = contentLinksHelper();
+			view = railView();
 			isRail = true;
 			break;
 		case 'LINKS_INCONTENT':
-			helper = contentLinksHelper;
-			view = incontentView;
+			helper = contentLinksHelper();
+			view = incontentView();
 			break;
 		case 'LINKS_FOOTER':
-			helper = contentLinksHelper;
-			view = footerView;
+			helper = contentLinksHelper();
+			view = footerView();
+			break;
+		case 'CONTROL':
+			helper = fandomHelper({
+				limit: 5
+			});
+			view = railView();
+			isRail = true;
 			break;
 		case 'GOOGLE_INCONTENT':
-			var section = incontentView.findSuitableSection();
-
-			if (section.exists()) {
-				googleMatchHelper.injectGoogleMatchedContent(section);
-				tracker.trackVerboseImpression(experimentName, 'in-content');
-			}
-			return;
-		case 'CONTROL':
-			afterRailLoads(function() {
-				fandomHelper.injectLegacyHtml('recent_popular', railSelector);
-				setupLegacyTracking();
-			});
+			renderGoogleIncontent();
 			return;
 		case 'TABOOLA':
-			afterRailLoads(function() {
-				taboolaHelper.initializeWidget({
-					mode: 'thumbnails-rr2',
-					container: railContainerId,
-					placement: 'Right Rail Thumbnails 3rd',
-					target_type: 'mix'
-				});
-				setupLegacyTracking();
-			});
+			renderTaboola();
 			return;
 		default:
 			return;
@@ -123,10 +133,38 @@ require([
 			.fail(function() {});
 	}
 
-	function setupLegacyTracking() {
-		tracker.trackVerboseImpression(experimentName, 'rail');
-		$(railSelector).on('mousedown', 'a', function() {
-			tracker.trackVerboseClick(experimentName, utils.buildLabel(this, 'rail'));
+	function injectSubtitle($html) {
+		var subtitle = $('<h2>').text($.msg('recirculation-fandom-subtitle'));
+
+		$html.find('.trending').after(subtitle);
+		return $html;
+	}
+
+	function renderGoogleIncontent() {
+		var section = incontentView().findSuitableSection();
+
+		if (section.exists()) {
+			googleMatchHelper.injectGoogleMatchedContent(section);
+			tracker.trackVerboseImpression(experimentName, 'in-content');
+		}
+	}
+
+	function renderTaboola() {
+		afterRailLoads(function() {
+			taboolaHelper.initializeWidget({
+				mode: 'thumbnails-rr2',
+				container: railContainerId,
+				placement: 'Right Rail Thumbnails 3rd',
+				target_type: 'mix'
+			});
+
+			tracker.trackVerboseImpression(experimentName, 'rail');
+			$(railSelector).on('mousedown', 'a', function() {
+				var slot = $(element).parent().index() + 1,
+					label = 'rail=slot-' + slot;
+
+				tracker.trackVerboseClick(experimentName, label);
+			});
 		});
 	}
 });

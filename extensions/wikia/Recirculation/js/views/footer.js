@@ -3,10 +3,9 @@ define('ext.wikia.recirculation.views.footer', [
 	'jquery',
 	'wikia.window',
 	'wikia.log',
-	'wikia.mustache',
 	'ext.wikia.recirculation.tracker',
 	'ext.wikia.recirculation.utils'
-], function ($, w, log, Mustache, tracker, utils) {
+], function ($, w, log, tracker, utils) {
 
 	var logGroup = 'ext.wikia.recirculation.views.footer';
 
@@ -28,8 +27,10 @@ define('ext.wikia.recirculation.views.footer', [
 		}
 	}
 
-	return {
-		render: render,
-		setupTracking: setupTracking
+	return function() {
+		return {
+			render: render,
+			setupTracking: setupTracking
+		}
 	}
 });

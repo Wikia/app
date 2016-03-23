@@ -36,7 +36,7 @@ class RevisionUpvotesService {
 	 * @param int $id
 	 * @param int $fromUser
 	 */
-	public function removeUpvote( $id, $fromUser ) {
+	public function removeUpvote( $id, $fromUser, $userId ) {
 		$db = $this->getDatabaseForWrite();
 
 		$db->begin();
@@ -53,8 +53,7 @@ class RevisionUpvotesService {
 			->UPDATE( self::UPVOTE_USERS_TABLE )
 			->SET_RAW( 'total', 'IF(`total` > 0, `total` - 1, 0)' )
 			->SET_RAW( 'new', 'IF(`new` > 0, `new` - 1, 0)' )
-			->WHERE( 'id' )->EQUAL_TO( $id )
-			->AND_( 'from_user' )->EQUAL_TO( $fromUser )
+			->WHERE( 'user_id' )->EQUAL_TO( $userId )
 			->run( $db );
 
 		if ( $rowRemoved ) {
@@ -95,6 +94,7 @@ class RevisionUpvotesService {
 				}
 
 				$upvote['upvotes'][] = [
+					'id' => $row->id,
 					'from_user' => $row->from_user
 				];
 			} );
@@ -133,6 +133,7 @@ class RevisionUpvotesService {
 				}
 
 				$upvotes[$row->revision_id]['upvotes'][] = [
+					'id' => $row->id,
 					'from_user' => $row->from_user
 				];
 			} );

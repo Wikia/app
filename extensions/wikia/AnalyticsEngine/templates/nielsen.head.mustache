@@ -1,0 +1,25 @@
+<!-- Begin Nielsen head tag -->
+<script type="text/javascript">
+	window.nielsenCmd = [];
+	(function() {
+		var scriptTag = document.createElement('script'),
+			firstScriptInDocument = document.getElementsByTagName('script')[0];
+
+		function runCallback(cmd) {
+			if (typeof cmd === 'function') {
+				cmd();
+			}
+		}
+
+		scriptTag.async = true;
+		scriptTag.src = '{{url}}';
+		scriptTag.onload = function () {
+			window.nielsenCmd.push = runCallback;
+			while (window.nielsenCmd.length > 0) {
+				runCallback(window.nielsenCmd.shift());
+			}
+		};
+		firstScriptInDocument.parentNode.insertBefore(scriptTag, firstScriptInDocument);
+	})();
+</script>
+<!-- End Nielsen head tag -->

@@ -117,7 +117,7 @@ class SitemapPage extends UnlistedSpecialPage {
 	 * @access public
 	 */
 	public function getNamespacesList() {
-		global $wgSitemapNamespaces;
+		global $wgSitemapNamespaces, $wgEnableForumExt;
 
 		if ( is_array( $wgSitemapNamespaces ) ) {
 			$this->mNamespaces = $wgSitemapNamespaces;
@@ -125,6 +125,9 @@ class SitemapPage extends UnlistedSpecialPage {
 		}
 
 		$excludeList = array(NS_USER, NS_PROJECT, NS_MEDIAWIKI, NS_TEMPLATE, NS_HELP, 110, 1100, 1200, 1202);
+		if ( empty( $wgEnableForumExt ) ) {
+			$excludeList[] = 2000;	// for NS_WIKIA_FORUM_BOARD
+		}
 
 		$includeList = array();
 
