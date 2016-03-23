@@ -87,6 +87,7 @@ define('ext.wikia.adEngine.provider.evolve2', [
 
 		if (!slotCopy.flushOnly) {
 			slotCopy.sect = section;
+			slotCopy.wpos = slot.name;
 			setTargeting(slotCopy);
 		}
 		slot.pre('success', function () {
