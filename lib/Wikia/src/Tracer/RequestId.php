@@ -1,21 +1,18 @@
 <?php
 
-/*
- * Generate unique request ID or use the value when passed as HTTP request header
+/**
+ * Generate unique request ID or use the value when passed as HTTP request header or env variable
  *
  * Usage:
  *
- * Wikia\Util\RequestId::instance()->getRequestId()
+ * Wikia\Tracer\RequestId::instance()->getRequestId()
  *
  * @see PLATFORM-362
  */
-
-namespace Wikia\Util;
+namespace Wikia\Tracer;
 
 class RequestId {
 
-	const REQUEST_HEADER_NAME = 'X-Request-Id';
-	const REQUEST_HEADER_ORIGIN_HOST = 'X-Request-Origin-Host';
 	private $requestId = false;
 
 	/**
@@ -31,10 +28,11 @@ class RequestId {
 		return $instance;
 	}
 
-	/*
+	/**
 	 * Return unique request ID. Either:
 	 *
-	 * - get it from HTTP request header
+	 * - get it from HTTP request header (X-Request-Id)
+	 * - get it from env variable (X_TRACE_ID)
 	 * - generate a new one
 	 *
 	 * @return string unique ID
@@ -45,14 +43,20 @@ class RequestId {
 			return $this->requestId;
 		}
 
-		// try to get the value from request header
+		// try to get the value from request's X-Request-Id header or env variable
 		// we can't simply use $wgRequest as it's not yet set at this point
 		// this method is called on WikiFactoryExecuteComplete hook
+		// TODO: handle X-Trace-Id header as well
 		$headerValue = !empty( $_SERVER['HTTP_X_REQUEST_ID'] ) ? $_SERVER['HTTP_X_REQUEST_ID'] : false;
+		$envValue = !empty( $_ENV[WikiaTracer::ENV_VARIABLES_PREFIX . 'X_TRACE_ID'] ) ? $_ENV[WikiaTracer::ENV_VARIABLES_PREFIX . 'X_TRACE_ID'] : false;
 
 		if ( self::isValidId( $headerValue ) ) {
 			$this->requestId = $headerValue;
 			wfDebug( __METHOD__ . ": from HTTP request\n" );
+		}
+		else if ( self::isValidId( $envValue ) ) {
+			$this->requestId = $envValue;
+			wfDebug( __METHOD__ . ": from env variable\n" );
 		}
 		else {
 			// return 23 characters long unique ID + mw prefix

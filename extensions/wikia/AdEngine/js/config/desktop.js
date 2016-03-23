@@ -12,6 +12,7 @@ define('ext.wikia.adEngine.config.desktop', [
 	'ext.wikia.adEngine.provider.directGpt',
 	'ext.wikia.adEngine.provider.evolve',
 	'ext.wikia.adEngine.provider.evolve2',
+	'ext.wikia.adEngine.provider.hitMedia',
 	'ext.wikia.adEngine.provider.liftium',
 	'ext.wikia.adEngine.provider.monetizationService',
 	'ext.wikia.adEngine.provider.remnantGpt',
@@ -31,6 +32,7 @@ define('ext.wikia.adEngine.config.desktop', [
 	adProviderDirectGpt,
 	adProviderEvolve,
 	adProviderEvolve2,
+	adProviderHitMedia,
 	adProviderLiftium,
 	adProviderMonetizationService,
 	adProviderRemnantGpt,
@@ -50,7 +52,13 @@ define('ext.wikia.adEngine.config.desktop', [
 			'TOP_BUTTON_WIDE.force': true
 		},
 		ie8 = window.navigator && window.navigator.userAgent && window.navigator.userAgent.match(/MSIE [6-8]\./),
-		gptEnabled = !instantGlobals.wgSitewideDisableGpt;
+		gptEnabled = !instantGlobals.wgSitewideDisableGpt,
+		forcedProviders = {
+			evolve2:  [adProviderEvolve2],
+			hitmedia: [adProviderHitMedia],
+			liftium:  [adProviderLiftium],
+			turtle:   [adProviderTurtle]
+		};
 
 	function getDecorators() {
 		return [adDecoratorPageDimensions];
@@ -67,22 +75,10 @@ define('ext.wikia.adEngine.config.desktop', [
 			return [];
 		}
 
-		// Force Turtle
-		if (context.forcedProvider === 'turtle') {
-			log(['getProvider', slotName, 'Turtle (wgAdDriverForcedProvider)'], 'info', logGroup);
-			return [adProviderTurtle];
-		}
-
-		// Force Evolve2
-		if (context.forcedProvider === 'evolve2') {
-			log(['getProvider', slotName, 'Evolve (wgAdDriverForcedProvider)'], 'info', logGroup);
-			return [adProviderEvolve2];
-		}
-
-		// Force Liftium
-		if (context.forcedProvider === 'liftium') {
-			log(['getProvider', slotName, 'Liftium (wgAdDriverForcedProvider)'], 'info', logGroup);
-			return [adProviderLiftium];
+		// Force provider
+		if (context.forcedProvider && !!forcedProviders[context.forcedProvider]) {
+			log(['getProvider', slotName, context.forcedProvider + ' (wgAdDriverForcedProvider)'], 'info', logGroup);
+			return forcedProviders[context.forcedProvider];
 		}
 
 		// SevenOne Media
@@ -116,13 +112,15 @@ define('ext.wikia.adEngine.config.desktop', [
 			return [adProviderMonetizationService];
 		}
 
-		// First provider: Turtle, Evolve or Direct GPT?
+		// First provider: Turtle, Evolve, HitMedia or Direct GPT?
 		if (context.providers.turtle && adProviderTurtle.canHandleSlot(slotName)) {
 			providerList.push(adProviderTurtle);
 		} else if (context.providers.evolve2 && adProviderEvolve2.canHandleSlot(slotName)) {
 			providerList.push(adProviderEvolve2);
 		} else if (evolveCountry && adProviderEvolve.canHandleSlot(slotName)) {
 			providerList.push(adProviderEvolve);
+		} else if (context.providers.hitMedia && adProviderHitMedia.canHandleSlot(slotName)) {
+			providerList.push(adProviderHitMedia);
 		} else if (gptEnabled) {
 			providerList.push(adProviderDirectGpt);
 		}

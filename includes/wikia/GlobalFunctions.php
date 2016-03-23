@@ -466,13 +466,14 @@ function parseItem( $line ) {
 
 /**
  * @author Inez Korczynski <inez@wikia.com>
- * @return array
+ * @author Adam Karmiński <adamk@wikia-inc.com>
+ * @param string $messageKey
+ * @return array|null
  */
 function getMessageForContentAsArray( $messageKey ) {
-
-	$message = trim( wfMsgForContent( $messageKey ) );
-	if ( !wfEmptyMsg( $messageKey, $message ) ) {
-		$lines = explode( "\n", $message );
+	$message = wfMessage( $messageKey )->inContentLanguage();
+	if ( !$message->isBlank() ) {
+		$lines = explode( "\n", trim( $message->plain() ) );
 		if ( count( $lines ) > 0 ) {
 			return $lines;
 		}

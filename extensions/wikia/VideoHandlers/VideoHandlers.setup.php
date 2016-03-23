@@ -130,10 +130,6 @@ $wgHooks['VideoInfoInvalidateCache'][] = 'VideoHandlerHooks::clearVideoCache';
  * handlers
  */
 
-$wgAutoloadClasses['BliptvVideoHandler'] =  $dir . '/handlers/BliptvVideoHandler.class.php';
-$wgAutoloadClasses['BliptvApiWrapper'] =  $dir . '/apiwrappers/BliptvApiWrapper.class.php';
-$wgMediaHandlers['video/bliptv'] = 'BliptvVideoHandler';
-
 $wgAutoloadClasses['DailymotionVideoHandler'] =  $dir . '/handlers/DailymotionVideoHandler.class.php';
 $wgAutoloadClasses['DailymotionApiWrapper'] =  $dir . '/apiwrappers/DailymotionApiWrapper.class.php';
 $wgMediaHandlers['video/dailymotion'] = 'DailymotionVideoHandler';
@@ -242,7 +238,6 @@ $wgVideoMigrationProviderMap = array(
 	4 => 'Fivemin',
 	5 => 'Youtube',
 	6 => 'Hulu',
-	10 => 'Bliptv',
 	12 => 'Sevenload',
 	13 => 'Vimeo',
 	18 => 'Dailymotion',
