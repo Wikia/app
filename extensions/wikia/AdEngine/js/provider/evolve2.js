@@ -67,6 +67,7 @@ define('ext.wikia.adEngine.provider.evolve2', [
 
 		slot.pos = position;
 		slot.site = site;
+		slot.wsrc = 'evolve';
 
 		// Increment pos value
 		posTargetingValue[slot.size] = nextChar(position);
