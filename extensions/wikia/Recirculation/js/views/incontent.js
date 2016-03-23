@@ -3,10 +3,9 @@ define('ext.wikia.recirculation.views.incontent', [
 	'jquery',
 	'wikia.window',
 	'wikia.log',
-	'wikia.mustache',
 	'ext.wikia.recirculation.tracker',
 	'ext.wikia.recirculation.utils'
-], function ($, w, log, Mustache, tracker, utils) {
+], function ($, w, log, tracker, utils) {
 
 	var logGroup = 'ext.wikia.recirculation.views.incontent',
 		$container = $('#mw-content-text'),
@@ -59,9 +58,12 @@ define('ext.wikia.recirculation.views.incontent', [
 		}
 	}
 
-	return {
-		render: render,
-		setupTracking: setupTracking,
-		findSuitableSection: findSuitableSection
+	return function() {
+
+		return {
+			render: render,
+			setupTracking: setupTracking,
+			findSuitableSection: findSuitableSection
+		}
 	}
 });
