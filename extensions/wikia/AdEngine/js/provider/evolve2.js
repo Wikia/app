@@ -1,22 +1,15 @@
 /*global define*/
 define('ext.wikia.adEngine.provider.evolve2', [
+	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.provider.gpt.helper',
 	'ext.wikia.adEngine.slotTweaker',
 	'ext.wikia.adEngine.utils.adLogicZoneParams',
 	'wikia.log'
-], function (gptHelper, slotTweaker, zoneParams, log) {
+], function (adContext, gptHelper, slotTweaker, zoneParams, log) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.evolve2',
-		posTargetingValue = {
-			'728x90,970x250,970x300,970x90': 'a',
-			'300x250,300x600': 'a',
-			'1000x1000,1x1': 'a',
-			'160x600': 'b',
-
-			'320x50,320x100,300x250': 'a',
-			'300x250': 'a'
-		},
+		posTargetingValue,
 		site = 'wikia_intl',
 		slotMap = {
 			EVOLVE_FLUSH:             {flushOnly: true},
@@ -32,6 +25,18 @@ define('ext.wikia.adEngine.provider.evolve2', [
 			MOBILE_IN_CONTENT:        {size: '300x250'},
 			MOBILE_PREFOOTER:         {size: '300x250'}
 		};
+
+	function resetPosTargeting() {
+		posTargetingValue = {
+			'728x90,970x250,970x300,970x90': 'a',
+			'300x250,300x600': 'a',
+			'1000x1000,1x1': 'a',
+			'160x600': 'b',
+
+			'320x50,320x100,300x250': 'a',
+			'300x250': 'a'
+		};
+	}
 
 	function getSection() {
 		var vertical = zoneParams.getVertical(),
@@ -101,6 +106,11 @@ define('ext.wikia.adEngine.provider.evolve2', [
 
 		log(['fillInSlot', slot.name, 'done'], 'debug', logGroup);
 	}
+
+	resetPosTargeting();
+	adContext.addCallback(function () {
+		resetPosTargeting();
+	});
 
 	return {
 		name: 'Evolve2',

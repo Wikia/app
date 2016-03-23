@@ -5,6 +5,9 @@ describe('Evolve2 Provider targeting', function () {
 	var evolve2,
 		noop = function () {},
 		mocks = {
+			adContext: {
+				addCallback: noop
+			},
 			gptHelper: {
 				pushAd: noop
 			},
@@ -24,6 +27,7 @@ describe('Evolve2 Provider targeting', function () {
 
 	function getEvolve2Provider() {
 		return modules['ext.wikia.adEngine.provider.evolve2'](
+			mocks.adContext,
 			mocks.gptHelper,
 			mocks.slotTweaker,
 			mocks.zoneParams,
