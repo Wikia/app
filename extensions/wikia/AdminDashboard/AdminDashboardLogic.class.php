@@ -52,6 +52,7 @@ class AdminDashboardLogic {
 				'Code',
 				'CommunityExperiment',
 				'CommunityExperimentTasks',
+				'Community',
 				'Confirmemail',
 				'Connect',
 				'Contact',
