@@ -14,8 +14,8 @@ $wgAutoloadClasses['CommunityPageExperimentHooks'] =  __DIR__ . '/CommunityPageE
 
 $wgExtensionMessagesFiles['CommunityPageExperiment'] = __DIR__ . '/CommunityPageExperiment.i18n.php' ;
 
-$wgSpecialPages['Community'] = 'CommunityPageExperimentSpecialController';
-$wgSpecialPages['CommunityTasks'] = 'CommunityTasksPageSpecialController';
+$wgSpecialPages['CommunityExperiment'] = 'CommunityPageExperimentSpecialController';
+$wgSpecialPages['CommunityExperimentTasks'] = 'CommunityTasksPageSpecialController';
 
 $wgHooks['BeforePageDisplay'][] = 'CommunityPageExperimentHooks::onBeforePageDisplay';
 
