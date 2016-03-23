@@ -71,7 +71,10 @@ describe('Evolve2 Provider targeting', function () {
 				size: '728x90,970x250,970x300,970x90',
 				pos: 'a',
 				sect: 'ros',
-				site: 'wikia_intl'
+				site: 'wikia_intl',
+				wloc: 'top',
+				wpos: 'TOP_LEADERBOARD',
+				wsrc: 'evolve'
 			};
 
 		evolve2.fillInSlot(createSlot('TOP_LEADERBOARD'));
