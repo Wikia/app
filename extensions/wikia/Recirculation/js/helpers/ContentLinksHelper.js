@@ -64,6 +64,7 @@ define('ext.wikia.recirculation.helpers.contentLinks', [
 
 		$.each(data.items, function(index, item) {
 			item.thumbnail = item.thumbnail || placeholderImage;
+			item.index = index;
 			items.push(item);
 		});
 
@@ -111,7 +112,9 @@ define('ext.wikia.recirculation.helpers.contentLinks', [
 		return true;
 	}
 
-	return {
-		loadData: loadData
+	return function() {
+		return {
+			loadData: loadData
+		}
 	}
 });

@@ -5,6 +5,9 @@ define('ext.wikia.recirculation.helpers.fandom', [
 	'wikia.nirvana',
 	'wikia.mustache'
 ], function ($, abTest, nirvana, Mustache) {
+	var options = {
+		limit: 3
+	};
 
 	function loadData() {
 		var deferred = $.Deferred();
@@ -29,8 +32,9 @@ define('ext.wikia.recirculation.helpers.fandom', [
 		var items = [];
 
 		$.each(data.posts, function(index, item) {
-			if (items.length < 3) {
+			if (items.length < options.limit) {
 				item.thumbnail = item.image_url;
+				item.index = index;
 				items.push(item);
 			}
 		});
@@ -41,23 +45,10 @@ define('ext.wikia.recirculation.helpers.fandom', [
 		};
 	}
 
-	function injectLegacyHtml(type, element) {
-		nirvana.sendRequest({
-			controller: 'Recirculation',
-			method: 'index',
-			data: {
-				type: type
-			},
-			format: 'html',
-			type: 'get',
-			callback: function (response) {
-				$(element).append(response);
-			}
-		});
-	}
-
-	return {
-		loadData: loadData,
-		injectLegacyHtml: injectLegacyHtml
+	return function(config) {
+		$.extend(options, config);
+		return {
+			loadData: loadData
+		}
 	}
 });
