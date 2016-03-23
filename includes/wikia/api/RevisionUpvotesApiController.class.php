@@ -68,9 +68,6 @@ class RevisionUpvotesApiController extends WikiaApiController {
 		}
 
 		$userId = $request->getInt( 'userId' );
-		if ( empty( $userId ) ) {
-			throw new MissingParameterApiException( 'userId' );
-		}
 
 		$removed = ( new RevisionUpvotesService() )->removeUpvote( $id, $user->getId(), $userId );
 
