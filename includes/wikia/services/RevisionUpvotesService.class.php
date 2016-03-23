@@ -78,7 +78,7 @@ class RevisionUpvotesService {
 		$upvote = ( new \WikiaSQL() )
 			->SELECT_ALL()
 			->FROM( self::UPVOTE_REVISIONS_TABLE )->AS_( 'revs' )
-			->LEFT_JOIN( self::UPVOTE_TABLE )->AS_( 'uv' )
+			->INNER_JOIN( self::UPVOTE_TABLE )->AS_( 'uv' )
 			->ON( 'revs.upvote_id', 'uv.upvote_id' )
 			->WHERE( 'wiki_id' )->EQUAL_TO( $wikiId )
 			->AND_( 'revision_id' )->EQUAL_TO( $revisionId )
@@ -93,12 +93,10 @@ class RevisionUpvotesService {
 					];
 				}
 
-				if ( !empty( $row->id ) ) {
-					$upvote['upvotes'][] = [
-						'id' => $row->id,
-						'from_user' => $row->from_user
-					];
-				}
+				$upvote['upvotes'][] = [
+					'id' => $row->id,
+					'from_user' => $row->from_user
+				];
 			} );
 
 		$upvote['count'] = count( $upvote['upvotes'] );
