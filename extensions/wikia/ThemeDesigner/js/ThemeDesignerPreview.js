@@ -7,7 +7,6 @@ var ThemeDesignerPreview = {
 				'<a href="#" class="image image-thumbnail" title="">' +
 				'<img width="100%" src="' + wgExtensionsPath + '/wikia/ThemeDesigner/images/aquarium.jpg">' +
 				'</a>' +
-				'<figcaption class="pi-item-spacing pi-caption">Aliquam porttitor orci ac augue dictum</figcaption>' +
 				'</figure>'
 			);
 
