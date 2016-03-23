@@ -117,7 +117,7 @@ class RevisionUpvotesService {
 		$upvotes = ( new \WikiaSQL() )
 			->SELECT_ALL()
 			->FROM( self::UPVOTE_REVISIONS_TABLE )->AS_( 'revs' )
-			->LEFT_JOIN( self::UPVOTE_TABLE )->AS_( 'uv' )
+			->INNER_JOIN( self::UPVOTE_TABLE )->AS_( 'uv' )
 			->ON( 'revs.upvote_id', 'uv.upvote_id' )
 			->WHERE( 'wiki_id' )->EQUAL_TO( $wikiId )
 			->AND_( 'revision_id' )->IN( $revisionsIds )
