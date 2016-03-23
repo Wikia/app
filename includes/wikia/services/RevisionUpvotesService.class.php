@@ -93,10 +93,12 @@ class RevisionUpvotesService {
 					];
 				}
 
-				$upvote['upvotes'][] = [
-					'id' => $row->id,
-					'from_user' => $row->from_user
-				];
+				if ( !empty( $row->id ) ) {
+					$upvote['upvotes'][] = [
+						'id' => $row->id,
+						'from_user' => $row->from_user
+					];
+				}
 			} );
 
 		$upvote['count'] = count( $upvote['upvotes'] );
