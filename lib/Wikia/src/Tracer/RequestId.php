@@ -59,14 +59,22 @@ class RequestId {
 			wfDebug( __METHOD__ . ": from env variable\n" );
 		}
 		else {
-			// return 23 characters long unique ID + mw prefix
-			// e.g. mw5405bb3d129e76.46189257
-			$this->requestId = uniqid( 'mw', true );
+			$this->requestId = self::generateId();
 			wfDebug( __METHOD__ . ": generated a new one\n" );
 		}
 
 		wfDebug( __METHOD__ . ": {$this->requestId}\n" );
 		return $this->requestId;
+	}
+
+	/**
+	 * Return 23 characters long unique ID + mw prefix
+	 * e.g. mw5405bb3d129e76.46189257
+	 *
+	 * @return string
+	 */
+	public static function generateId() {
+		return uniqid( 'mw', true );
 	}
 
 	/**
