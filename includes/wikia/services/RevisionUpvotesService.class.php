@@ -49,12 +49,14 @@ class RevisionUpvotesService {
 
 		$rowRemoved = $db->affectedRows();
 
-		( new \WikiaSQL() )
-			->UPDATE( self::UPVOTE_USERS_TABLE )
-			->SET_RAW( 'total', 'IF(`total` > 0, `total` - 1, 0)' )
-			->SET_RAW( 'new', 'IF(`new` > 0, `new` - 1, 0)' )
-			->WHERE( 'user_id' )->EQUAL_TO( $userId )
-			->run( $db );
+		if ( $userId > 0 ) {
+			( new \WikiaSQL() )
+				->UPDATE( self::UPVOTE_USERS_TABLE )
+				->SET_RAW( 'total', 'IF(`total` > 0, `total` - 1, 0)' )
+				->SET_RAW( 'new', 'IF(`new` > 0, `new` - 1, 0)' )
+				->WHERE( 'user_id' )->EQUAL_TO( $userId )
+				->run( $db );
+		}
 
 		if ( $rowRemoved ) {
 			$db->commit();
@@ -266,20 +268,22 @@ class RevisionUpvotesService {
 
 		$lastId = $db->insertId();
 
-		$db->upsert(
-			self::UPVOTE_USERS_TABLE,
-			[
-				'user_id' => $userId,
-				'total' => 1,
-				'new' => 1
-			],
-			[],
-			[
-				'total = total + 1',
-				'new = new + 1',
-				'notified' => false
-			]
-		);
+		if ( $userId > 0 ) {
+			$db->upsert(
+				self::UPVOTE_USERS_TABLE,
+				[
+					'user_id' => $userId,
+					'total' => 1,
+					'new' => 1
+				],
+				[ ],
+				[
+					'total = total + 1',
+					'new = new + 1',
+					'notified' => false
+				]
+			);
+		}
 
 		$db->commit();
 
