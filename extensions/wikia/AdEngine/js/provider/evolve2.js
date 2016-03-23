@@ -66,7 +66,6 @@ define('ext.wikia.adEngine.provider.evolve2', [
 		var position = posTargetingValue[slot.size];
 
 		slot.pos = position;
-		slot.site = site;
 		if (!slot.wsrc) {
 			slot.wsrc = 'evolve';
 		}

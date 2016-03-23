@@ -71,7 +71,6 @@ describe('Evolve2 Provider targeting', function () {
 				size: '728x90,970x250,970x300,970x90',
 				pos: 'a',
 				sect: 'ros',
-				site: 'wikia_intl',
 				wloc: 'top',
 				wpos: 'TOP_LEADERBOARD',
 				wsrc: 'evolve'
@@ -87,7 +86,6 @@ describe('Evolve2 Provider targeting', function () {
 			size: '160x600',
 			pos: 'b',
 			sect: 'ros',
-			site: 'wikia_intl',
 			wloc: 'middle',
 			wpos: 'LEFT_SKYSCRAPER_2',
 			wsrc: 'evolve'
@@ -103,7 +101,6 @@ describe('Evolve2 Provider targeting', function () {
 				size: '300x250',
 				pos: 'a',
 				sect: 'ros',
-				site: 'wikia_intl',
 				wpos: 'MOBILE_IN_CONTENT',
 				wsrc: 'mobile_evolve'
 			};
