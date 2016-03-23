@@ -82,6 +82,37 @@ describe('Evolve2 Provider targeting', function () {
 		expect(mocks.gptHelper.pushAd.calls.mostRecent().args[2]).toEqual(expectedTargeting);
 	});
 
+	it('Should push ad to helper with proper targeting', function () {
+		var expectedTargeting = {
+			size: '160x600',
+			pos: 'b',
+			sect: 'ros',
+			site: 'wikia_intl',
+			wloc: 'middle',
+			wpos: 'LEFT_SKYSCRAPER_2',
+			wsrc: 'evolve'
+		};
+
+		evolve2.fillInSlot(createSlot('LEFT_SKYSCRAPER_2'));
+
+		expect(mocks.gptHelper.pushAd.calls.mostRecent().args[2]).toEqual(expectedTargeting);
+	});
+
+	it('Should push ad to helper with proper targeting', function () {
+		var expectedTargeting = {
+				size: '300x250',
+				pos: 'a',
+				sect: 'ros',
+				site: 'wikia_intl',
+				wpos: 'MOBILE_IN_CONTENT',
+				wsrc: 'evolve'
+			};
+
+		evolve2.fillInSlot(createSlot('MOBILE_IN_CONTENT'));
+
+		expect(mocks.gptHelper.pushAd.calls.mostRecent().args[2]).toEqual(expectedTargeting);
+	});
+
 	it('Should push ad to helper with proper vertical', function () {
 		var expectedSection = 'tv';
 

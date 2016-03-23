@@ -17,7 +17,7 @@ define('ext.wikia.adEngine.provider.evolve2', [
 			HOME_TOP_RIGHT_BOXAD:     {size: '300x250,300x600', wloc: 'top'},
 			HUB_TOP_LEADERBOARD:      {size: '728x90,970x250,970x300,970x90', wloc: 'top'},
 			INVISIBLE_SKIN:           {size: '1000x1000,1x1', wloc: 'top'},
-			LEFT_SKYSCRAPER_2:        {size: '160x600', loc: 'middle'},
+			LEFT_SKYSCRAPER_2:        {size: '160x600', wloc: 'middle'},
 			TOP_LEADERBOARD:          {size: '728x90,970x250,970x300,970x90', wloc: 'top'},
 			TOP_RIGHT_BOXAD:          {size: '300x250,300x600', wloc: 'top'},
 
