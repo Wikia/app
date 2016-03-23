@@ -113,7 +113,7 @@
 		doPostNewMessage: function (title) {
 			var topics = this.messageTopic ? this.messageTopic.data('messageTopic').getTopics() : [];
 			//disable buttons for user to not send multiply posts
-			buttons.attr('disabled', true);
+			this.buttons.attr('disabled', true);
 			this.model.postNew(
 				this.page,
 				title ? this.messageTitle.val() : '',
