@@ -105,7 +105,7 @@ describe('Evolve2 Provider targeting', function () {
 				sect: 'ros',
 				site: 'wikia_intl',
 				wpos: 'MOBILE_IN_CONTENT',
-				wsrc: 'evolve'
+				wsrc: 'mobile_evolve'
 			};
 
 		evolve2.fillInSlot(createSlot('MOBILE_IN_CONTENT'));
