@@ -148,9 +148,8 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 	}
 
 	function defineSlots(skin, onResponse) {
-		var definedSlots = getSlots(skin);
-		Object.keys(definedSlots).forEach(function (slotName) {
-			defineSingleSlot(slotName, definedSlots[slotName], skin);
+		Object.keys(slots).forEach(function (slotName) {
+			defineSingleSlot(slotName, slots[slotName], skin);
 		});
 		win.rubicontag.cmd.push(function () {
 			win.rubicontag.run(onResponse, {
@@ -213,6 +212,7 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 
 		node.parentNode.insertBefore(rubicon, node);
 		context = adContext.getContext();
+		slots = getSlots(skin);
 		defineSlots(skin, onResponse);
 	}
 
