@@ -261,6 +261,8 @@ class Forum extends Walls {
 
 		$editPage->edittime = $article->getPage()->getTimestamp();
 		$editPage->textbox1 = $body;
+		// Maintain the "watch" status for the page after the edit
+		$editPage->watchthis = $article->getTitle()->userIsWatching();
 
 		$result = [ ];
 		$retval = $editPage->internalAttemptSave( $result, $bot );
