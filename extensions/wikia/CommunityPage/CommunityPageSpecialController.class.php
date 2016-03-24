@@ -8,7 +8,23 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	}
 
 	public function index() {
-		$this->foo = 'hello world';
+		$this->specialPage->setHeaders();
+		$output = $this->getOutput();
+		$output->setPageTitle( $this->msg( 'communitypageexperiment-title' )->plain() );
+
+		$output->addScript(
+			'<script src="' .
+			AssetsManager::getInstance()->getOneCommonURL('extensions/wikia/CommunityPage/scripts/ext.communityPage.js') .
+			'"></script>');
+
+		$output->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/CommunityPage/styles/ext.communityPageOverrides.scss'));
+		$output->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/CommunityPage/styles/ext.communityPage.scss'));
+
+		$this->wg->SuppressPageHeader = true;
+		$this->wg->SuppressWikiHeader = true;
+		$this->wg->SuppressFooter = true;
+
+		$this->foo = $this->msg( 'communitypageexperiment-title' )->plain();
 	}
 
 }
