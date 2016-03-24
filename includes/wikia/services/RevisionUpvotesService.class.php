@@ -97,7 +97,7 @@ class RevisionUpvotesService {
 
 				$upvote['upvotes'][] = [
 					'id' => $row->id,
-					'from_user' => $row->from_user
+					'from_user' => (int) $row->from_user
 				];
 			} );
 
@@ -136,7 +136,7 @@ class RevisionUpvotesService {
 
 				$upvotes[$row->revision_id]['upvotes'][] = [
 					'id' => $row->id,
-					'from_user' => $row->from_user
+					'from_user' => (int) $row->from_user
 				];
 			} );
 
@@ -174,7 +174,7 @@ class RevisionUpvotesService {
 				}
 
 				$upvotes[$row->upvote_id]['upvotes'][] = [
-					'from_user' => $row->from_user
+					'from_user' => (int) $row->from_user
 				];
 			} );
 
