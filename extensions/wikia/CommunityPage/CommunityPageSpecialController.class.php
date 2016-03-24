@@ -24,6 +24,11 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		$this->wg->SuppressFooter = true;
 
 		$this->foo = $this->msg( 'communitypageexperiment-title' )->plain();
+
+		$contributors = ( new CommunityPageSpecialModel() )->getTopContributors();
+		$this->contributors = $contributors;
 	}
+
+
 
 }
