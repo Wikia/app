@@ -218,6 +218,9 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 	}
 
 	function calculatePrices() {
+		if (!win.rubicontag || !win.rubicontag.getAllSlots) {
+			return;
+		}
 		win.rubicontag.getAllSlots().forEach(function (slot) {
 			addSlotPrice(slot.getSlotName(), slot.getAdServerTargeting());
 		});
