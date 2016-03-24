@@ -56,10 +56,25 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 		context,
 		logGroup = 'ext.wikia.adEngine.lookup.rubiconFastlane',
 		priceMap = {},
+		response,
 		rubiconSlots = [],
 		rubiconElementKey = 'rpfl_elemid',
 		rubiconTierKey = 'rpfl_7450',
 		rubiconLibraryUrl = '//ads.rubiconproject.com/header/7450.js',
+		sizeMap = {
+			'300x250': 15,
+			'728x90': 2,
+			'160x600': 9,
+			'300x600': 10,
+			'320x50': 43,
+			'300x1050': 54,
+			'970x250': 57,
+			'468x60': 1,
+			'120x600': 8,
+			'300x50': 44,
+			'336x280': 49,
+			'320x480': 67
+		},
 		slots = {};
 
 	function compareTiers(a,b) {
@@ -212,7 +227,11 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 		node.parentNode.insertBefore(rubicon, node);
 		context = adContext.getContext();
 		slots = getSlots(skin);
-		defineSlots(skin, onResponse);
+		response = false;
+		defineSlots(skin, function () {
+			response = true;
+			onResponse();
+		});
 	}
 
 	function getPrices() {
