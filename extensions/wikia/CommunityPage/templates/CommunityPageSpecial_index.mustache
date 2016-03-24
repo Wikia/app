@@ -1,11 +1,9 @@
 <div class="community-page-header">
-	Community page header
-</div>
-<div>
-	{{foo}}
+	{{pageTitle}}
 </div>
 
 
 {{#contributors}}
-	<p>User: {{userId}} / Contribs: {{contributions}}</p>
+	<p>{{{avatar}}} <a href="{{profilePage}}">{{userName}}</a><br>
+		{{contributions}} contributions</p>
 {{/contributors}}

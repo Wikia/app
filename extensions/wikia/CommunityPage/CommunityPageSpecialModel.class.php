@@ -6,7 +6,7 @@
 class CommunityPageSpecialModel {
 	const MCACHE_KEY = 'communitypage';
 
-	public function getTopContributors() {
+	public function getTopContributorsRaw() {
 		$data = WikiaDataAccess::cache( wfMemcKey( self::MCACHE_KEY ), WikiaResponse::CACHE_STANDARD, function () {
 			global $wgDatamartDB;
 			$db = wfGetDB( DB_SLAVE, [], $wgDatamartDB );
@@ -34,7 +34,23 @@ class CommunityPageSpecialModel {
 
 			return $sqlData;
 		} );
-
 		return $data;
+	}
+
+	public function getTopContributorsDetails() {
+		$contributors = $this->getTopContributorsRaw();
+
+		return array_map( function ( $contributor ) {
+			$user = User::newFromId( $contributor['userId'] );
+			$userName = $user->getName();
+			$avatar = AvatarService::renderAvatar( $userName, AvatarService::AVATAR_SIZE_SMALL_PLUS - 2 );
+
+			return [
+				'userName' => $userName,
+				'avatar' => $avatar,
+				'contributions' => $contributor['contributions'],
+				'profilePage' => $user->getUserPage()->getLocalURL()
+			];
+		}, $contributors );
 	}
 }
