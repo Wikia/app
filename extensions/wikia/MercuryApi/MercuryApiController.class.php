@@ -339,7 +339,6 @@ class MercuryApiController extends WikiaController {
 			$isMainPage = $title->isMainPage();
 			$data['isMainPage'] = $isMainPage;
 			$data['ns'] = $title->getNamespace();
-			$data['isContentNamespace'] = $title->isContentPage();
 
 			$titleBuilder = new WikiaHtmlTitle();
 			if ( MercuryApiMainPageHandler::shouldGetMainPageData( $isMainPage ) ) {
