@@ -14,20 +14,11 @@ define('wikia.infoboxBuilder.ponto', ['wikia.window', 'ponto'], function (w, pon
 		};
 
 		/**
-		 * redirects to template page
+		 * redirects to given page
 		 * @returns {Boolean}
 		 */
-		this.redirectToTemplatePage = function () {
-			w.location = w.templatePageUrl;
-			return true;
-		};
-
-		/**
-		 * redirects to source editor
-		 * @returns {Boolean}
-		 */
-		this.redirectToSourceEditor = function () {
-			w.location = w.sourceEditorUrl;
+		this.redirectToPage = function (url) {
+			w.location = url;
 			return true;
 		};
 

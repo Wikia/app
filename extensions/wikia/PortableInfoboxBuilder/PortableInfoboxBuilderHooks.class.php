@@ -43,21 +43,22 @@ class PortableInfoboxBuilderHooks {
 	 * @return Boolean True - to continue hooks execution
 	 */
 	public static function onWikiaSkinTopScripts( &$vars, &$scripts, $skin ) {
-		$title = $skin->getTitle();
-
-		if ( $title && $title->isSpecial( PortableInfoboxBuilderSpecialController::PAGE_NAME ) ) {
-			$templateTitleText = PortableInfoboxBuilderHelper::getUrlPath( $title->getText() );
-
-			// We need the variable only if Infobox Builder launches (there is a template title provided)
-			if ( $templateTitleText ) {
-				$templateTitle = Title::newFromText( $templateTitleText, NS_TEMPLATE );
-				$vars['templatePageUrl'] = $templateTitle->getFullUrl();
-				$vars['sourceEditorUrl'] = $templateTitle->getFullUrl( [
-					'action' => 'edit',
-					'useeditor' => 'source'
-				] );
-			}
-		}
+//		$title = $skin->getTitle();
+//
+//		if ( $title && $title->isSpecial( PortableInfoboxBuilderSpecialController::PAGE_NAME ) ) {
+//			$templateTitleText = PortableInfoboxBuilderHelper::getUrlPath( $title->getText() );
+//
+//			//remove me!
+//			// We need the variable only if Infobox Builder launches (there is a template title provided)
+//			if ( $templateTitleText ) {
+//				$templateTitle = Title::newFromText( $templateTitleText, NS_TEMPLATE );
+//				$vars['templatePageUrl'] = $templateTitle->getFullUrl();
+//				$vars['sourceEditorUrl'] = $templateTitle->getFullUrl( [
+//					'action' => 'edit',
+//					'useeditor' => 'source'
+//				] );
+//			}
+//		}
 
 		return true;
 	}
