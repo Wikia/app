@@ -54,7 +54,6 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 			}
 		},
 		context,
-		definedSlots = {},
 		logGroup = 'ext.wikia.adEngine.lookup.rubiconFastlane',
 		priceMap = {},
 		response,
@@ -76,7 +75,7 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 			'336x280': 49,
 			'320x480': 67
 		},
-		slots = {};
+		slots;
 
 	function compareTiers(a,b) {
 		var aMatches = /^(\d+)/.exec(a),
@@ -124,7 +123,6 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 			}
 			setTargeting(slotName, slot.targeting, rubiconSlot, provider);
 			rubiconSlots.push(rubiconSlot);
-			definedSlots[slotName] = rubiconSlot;
 		});
 	}
 
@@ -192,11 +190,11 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 		var targeting,
 			parameters = {};
 
-		if (!definedSlots[slotName].getAdServerTargeting) {
+		if (!win.rubicontag || !win.rubicontag.getSlot) {
 			return {};
 		}
 
-		targeting = definedSlots[slotName].getAdServerTargeting();
+		targeting = win.rubicontag.getSlot(slotName).getAdServerTargeting();
 		targeting.forEach(function (params) {
 			if (params.key !== rubiconElementKey) {
 				parameters[params.key] = params.values;
@@ -220,13 +218,9 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 	}
 
 	function calculatePrices() {
-		var slotName;
-
-		for (slotName in definedSlots) {
-			if (definedSlots.hasOwnProperty(slotName)) {
-				addSlotPrice(slotName, definedSlots[slotName].getAdServerTargeting());
-			}
-		}
+		win.rubicontag.getAllSlots().forEach(function (slot) {
+			addSlotPrice(slot.getSlotName(), slot.getAdServerTargeting());
+		});
 	}
 
 	function call(skin, onResponse) {

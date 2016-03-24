@@ -68,6 +68,9 @@ describe('ext.wikia.adEngine.lookup.rubiconFastlane', function () {
 					slotParams[key] = value;
 				},
 				setPosition: noop,
+				getSlotName: function () {
+					return 'SLOT_NAME';
+				},
 				getAdServerTargeting: function () {
 					return [
 						{
@@ -90,6 +93,12 @@ describe('ext.wikia.adEngine.lookup.rubiconFastlane', function () {
 					},
 					defineSlot: function () {
 						return mocks.slot;
+					},
+					getSlot: function () {
+						return mocks.slot;
+					},
+					getAllSlots: function () {
+						return [mocks.slot];
 					}
 				}
 			}
