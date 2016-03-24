@@ -71,7 +71,7 @@ describe('ext.wikia.adEngine.lookup.rubiconFastlane', function () {
 				getAdServerTargeting: function () {
 					return [
 						{
-							key: 'rpflKey',
+							key: 'rpfl_7450',
 							values: mocks.tiers
 						},
 						{
@@ -210,7 +210,7 @@ describe('ext.wikia.adEngine.lookup.rubiconFastlane', function () {
 		rubiconFastlane.call();
 
 		expect(rubiconFastlane.getSlotParams('MOBILE_TOP_LEADERBOARD')).toEqual({
-			rpflKey: ['1_tier', '3_tier']
+			'rpfl_7450': ['1_tier', '3_tier']
 		});
 	});
 
@@ -222,7 +222,7 @@ describe('ext.wikia.adEngine.lookup.rubiconFastlane', function () {
 		rubiconFastlane.call();
 
 		expect(rubiconFastlane.getSlotParams('MOBILE_TOP_LEADERBOARD')).toEqual({
-			rpflKey: ['4_tier', '9_tier', '10_tier', '13_tier']
+			'rpfl_7450': ['4_tier', '9_tier', '10_tier', '13_tier']
 		});
 	});
 

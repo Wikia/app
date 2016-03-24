@@ -160,7 +160,6 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 
 	function getSlotParams(slotName) {
 		var targeting,
-			values,
 			parameters = {};
 
 		if (!slots[slotName].getAdServerTargeting) {
@@ -170,13 +169,13 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 		targeting = slots[slotName].getAdServerTargeting();
 		targeting.forEach(function (params) {
 			if (params.key !== rubiconElementKey) {
-				values = params.values;
-				if (typeof values.sort === 'function') {
-					values.sort(compareTiers);
-				}
 				parameters[params.key] = params.values;
 			}
 		});
+		if (parameters[rubiconTierKey] && typeof parameters[rubiconTierKey].sort === 'function') {
+			parameters[rubiconTierKey].sort(compareTiers);
+		}
+
 		log(['getSlotParams', slotName, parameters], 'debug', logGroup);
 		return parameters;
 	}
