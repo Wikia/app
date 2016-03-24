@@ -262,7 +262,7 @@
 		},
 
 		onAuthSuccess: function () {
-			window.location.href = decodeURIComponent(redirectUrl).replace(/&/, '?');
+			window.location.href = decodeURIComponent(this.redirectUrl).replace(/&/, '?');
 		},
 
 		checkWikiName: function () {
