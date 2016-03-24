@@ -62,17 +62,17 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 		rubiconTierKey = 'rpfl_7450',
 		rubiconLibraryUrl = '//ads.rubiconproject.com/header/7450.js',
 		sizeMap = {
-			'300x250': 15,
+			'468x60': 1,
 			'728x90': 2,
+			'120x600': 8,
 			'160x600': 9,
 			'300x600': 10,
+			'300x250': 15,
 			'320x50': 43,
-			'300x1050': 54,
-			'970x250': 57,
-			'468x60': 1,
-			'120x600': 8,
 			'300x50': 44,
 			'336x280': 49,
+			'300x1050': 54,
+			'970x250': 57,
 			'320x480': 67
 		},
 		slots;
@@ -171,17 +171,19 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 	}
 
 	function fillInWithMissingTiers(slotName, parameters) {
+		var allTiers;
 		if (!response) {
 			return;
 		}
 
 		parameters[rubiconTierKey] = parameters[rubiconTierKey] || [];
+		allTiers = ';' + parameters[rubiconTierKey].join(';');
 		slots[slotName].sizes.forEach(function (dimensions) {
 			var size = dimensions[0] + 'x' + dimensions[1],
-				tierRegex = sizeMap[size] + '_tier';
+				tierSize = sizeMap[size] + '_tier';
 
-			if (parameters[rubiconTierKey].indexOf(tierRegex) === -1) {
-				parameters[rubiconTierKey].push(tierRegex + 'NONE');
+			if (allTiers.indexOf(';' + tierSize) === -1) {
+				parameters[rubiconTierKey].push(tierSize + 'NONE');
 			}
 		});
 	}
@@ -190,7 +192,7 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 		var targeting,
 			parameters = {};
 
-		if (!win.rubicontag || !win.rubicontag.getSlot) {
+		if (!win.rubicontag || !win.rubicontag.getSlot(slotName)) {
 			return {};
 		}
 
@@ -203,6 +205,9 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 		fillInWithMissingTiers(slotName, parameters);
 		if (parameters[rubiconTierKey] && typeof parameters[rubiconTierKey].sort === 'function') {
 			parameters[rubiconTierKey].sort(compareTiers);
+		}
+		if (parameters[rubiconTierKey] && parameters[rubiconTierKey].length > 0) {
+			parameters.bid = 'Rxx';
 		}
 
 		log(['getSlotParams', slotName, parameters], 'debug', logGroup);

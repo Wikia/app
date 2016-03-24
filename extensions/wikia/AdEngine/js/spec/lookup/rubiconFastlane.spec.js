@@ -214,25 +214,27 @@ describe('ext.wikia.adEngine.lookup.rubiconFastlane', function () {
 
 	it('Returns parameters list on defined slot', function () {
 		var rubiconFastlane = getRubiconFastlane();
-		mocks.tiers = ['15_tier', '43_tier', '44_tier'];
+		mocks.tiers = ['15_tier0000', '43_tier0000', '44_tier0000'];
 		mocks.targeting.skin = 'mercury';
 
 		rubiconFastlane.call();
 
 		expect(rubiconFastlane.getSlotParams('MOBILE_TOP_LEADERBOARD')).toEqual({
-			'rpfl_7450': ['15_tier', '43_tier', '44_tier']
+			'bid': 'Rxx',
+			'rpfl_7450': ['15_tier0000', '43_tier0000', '44_tier0000']
 		});
 	});
 
 	it('Returns parameters list on defined slot with sorted values', function () {
 		var rubiconFastlane = getRubiconFastlane();
-		mocks.tiers = ['15_tier', '54_tier', '8_tier'];
+		mocks.tiers = ['15_tier0010', '54_tier0050', '8_tier0100'];
 		mocks.targeting.skin = 'oasis';
 
 		rubiconFastlane.call();
 
 		expect(rubiconFastlane.getSlotParams('INCONTENT_BOXAD_1')).toEqual({
-			'rpfl_7450': ['8_tier', '9_tierNONE', '10_tierNONE', '15_tier', '54_tier']
+			'bid': 'Rxx',
+			'rpfl_7450': ['8_tier0100', '9_tierNONE', '10_tierNONE', '15_tier0010', '54_tier0050'],
 		});
 	});
 
