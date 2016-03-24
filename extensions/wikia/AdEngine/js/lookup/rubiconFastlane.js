@@ -10,7 +10,7 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 	'use strict';
 
 	var config = {
-			// check also method getSlots() as it's overriding defaults
+			// check also method configureSlots() as it's overriding defaults
 			oasis: {
 				TOP_LEADERBOARD: {
 					sizes: [[728, 90], [970, 250]],
@@ -54,6 +54,7 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 			}
 		},
 		context,
+		definedSlots = {},
 		logGroup = 'ext.wikia.adEngine.lookup.rubiconFastlane',
 		priceMap = {},
 		response,
@@ -123,7 +124,7 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 			}
 			setTargeting(slotName, slot.targeting, rubiconSlot, provider);
 			rubiconSlots.push(rubiconSlot);
-			slots[slotName] = rubiconSlot;
+			definedSlots[slotName] = rubiconSlot;
 		});
 	}
 
@@ -141,7 +142,7 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 		};
 	}
 
-	function getSlots(skin) {
+	function configureSlots(skin) {
 		slots = config[skin];
 		if (skin === 'oasis' && context.targeting.pageType === 'home') {
 			configureHomePageSlots();
@@ -158,8 +159,6 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 				targeting: {loc: 'hivi'}
 			};
 		}
-
-		return slots;
 	}
 
 	function defineSlots(skin, onResponse) {
@@ -173,20 +172,37 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 		});
 	}
 
+	function fillInWithMissingTiers(slotName, parameters) {
+		if (!response) {
+			return;
+		}
+
+		parameters[rubiconTierKey] = parameters[rubiconTierKey] || [];
+		slots[slotName].sizes.forEach(function (dimensions) {
+			var size = dimensions[0] + 'x' + dimensions[1],
+				tierRegex = sizeMap[size] + '_tier';
+
+			if (parameters[rubiconTierKey].indexOf(tierRegex) === -1) {
+				parameters[rubiconTierKey].push(tierRegex + 'NONE');
+			}
+		});
+	}
+
 	function getSlotParams(slotName) {
 		var targeting,
 			parameters = {};
 
-		if (!slots[slotName].getAdServerTargeting) {
+		if (!definedSlots[slotName].getAdServerTargeting) {
 			return {};
 		}
 
-		targeting = slots[slotName].getAdServerTargeting();
+		targeting = definedSlots[slotName].getAdServerTargeting();
 		targeting.forEach(function (params) {
 			if (params.key !== rubiconElementKey) {
 				parameters[params.key] = params.values;
 			}
 		});
+		fillInWithMissingTiers(slotName, parameters);
 		if (parameters[rubiconTierKey] && typeof parameters[rubiconTierKey].sort === 'function') {
 			parameters[rubiconTierKey].sort(compareTiers);
 		}
@@ -206,9 +222,9 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 	function calculatePrices() {
 		var slotName;
 
-		for (slotName in slots) {
-			if (slots.hasOwnProperty(slotName)) {
-				addSlotPrice(slotName, slots[slotName].getAdServerTargeting());
+		for (slotName in definedSlots) {
+			if (definedSlots.hasOwnProperty(slotName)) {
+				addSlotPrice(slotName, definedSlots[slotName].getAdServerTargeting());
 			}
 		}
 	}
@@ -226,7 +242,7 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 
 		node.parentNode.insertBefore(rubicon, node);
 		context = adContext.getContext();
-		slots = getSlots(skin);
+		configureSlots(skin);
 		response = false;
 		defineSlots(skin, function () {
 			response = true;
