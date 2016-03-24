@@ -77,7 +77,7 @@
 							authModal.load({
 								url: '/signin?redirect=' + redirect,
 								origin: 'create-new-wikia',
-								onAuthSuccess: $.proxy(self.onAuthSuccess(redirect), self)
+								onAuthSuccess: $.proxy(self.onAuthSuccess.bind({url: redirect}), self)
 							});
 						});
 					}
@@ -261,8 +261,7 @@
 			this.answer = v;
 		},
 
-		onAuthSuccess: function (url) {
-			console.log(arguments);
+		onAuthSuccess: function () {
 			window.location.href = decodeURIComponent(url).replace(/&/, '?');
 		},
 
