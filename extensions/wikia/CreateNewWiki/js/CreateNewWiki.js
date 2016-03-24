@@ -72,12 +72,12 @@
 					if (window.wgUserName) {
 						self.transition('NameWiki', true, '+');
 					} else {
-						var redirect = encodeURIComponent(window.location.href + '&wikiName=' + self.wikiName.val() + '&wikiDomain=' + self.wikiDomain.val() + '&wikiLanguage=' + self.wikiLanguage.find('option:selected').val());
+						var redirectUrl = encodeURIComponent(window.location.href + '&wikiName=' + self.wikiName.val() + '&wikiDomain=' + self.wikiDomain.val() + '&wikiLanguage=' + self.wikiLanguage.find('option:selected').val());
 						require(['AuthModal'], function (authModal) {
 							authModal.load({
 								url: '/signin?redirect=' + redirect,
 								origin: 'create-new-wikia',
-								onAuthSuccess: $.proxy(self.onAuthSuccess.bind({url: redirect}), self)
+								onAuthSuccess: $.proxy(self.onAuthSuccess.bind({redirectUrl: redirectUrl}), self)
 							});
 						});
 					}
@@ -262,7 +262,7 @@
 		},
 
 		onAuthSuccess: function () {
-			window.location.href = decodeURIComponent(url).replace(/&/, '?');
+			window.location.href = decodeURIComponent(redirectUrl).replace(/&/, '?');
 		},
 
 		checkWikiName: function () {
