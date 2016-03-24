@@ -69,16 +69,17 @@
 						wikiDomain: self.wikiDomain.val(),
 						wikiLang: self.wikiLanguage.find('option:selected').val()
 					});
-					if (!window.wgUserName) {
+					if (window.wgUserName) {
+						self.transition('NameWiki', true, '+');
+					} else {
+						var redirect = encodeURIComponent(window.location.href + '&wikiName=' + self.wikiName.val() + '&wikiDomain=' + self.wikiDomain.val() + '&wikiLanguage=' + self.wikiLanguage.find('option:selected').val());
 						require(['AuthModal'], function (authModal) {
 							authModal.load({
-								url: '/signin?redirect=' + encodeURIComponent(window.location.href) + '&wikiName=' + self.wikiName.val() + '&wikiDomain=' + self.wikiDomain.val() + '&wikiLanguage=' + self.wikiLanguage.find('option:selected').val(),
+								url: '/signin?redirect=' + redirect,
 								origin: 'create-new-wikia',
-								onAuthSuccess: $.proxy(self.onAuthSuccess, self)
+								onAuthSuccess: $.proxy(self.onAuthSuccess(redirect), self)
 							});
 						});
-					} else {
-						self.onAuthSuccess();
 					}
 				}
 			});
@@ -260,8 +261,9 @@
 			this.answer = v;
 		},
 
-		onAuthSuccess: function () {
-			this.transition('NameWiki', true, '+');
+		onAuthSuccess: function (url) {
+			console.log(arguments);
+			window.location.href = decodeURIComponent(url);
 		},
 
 		checkWikiName: function () {
