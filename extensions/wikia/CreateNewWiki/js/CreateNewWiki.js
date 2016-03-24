@@ -263,7 +263,7 @@
 
 		onAuthSuccess: function (url) {
 			console.log(arguments);
-			window.location.href = decodeURIComponent(url);
+			window.location.href = decodeURIComponent(url).replace(/&/, '?');
 		},
 
 		checkWikiName: function () {
