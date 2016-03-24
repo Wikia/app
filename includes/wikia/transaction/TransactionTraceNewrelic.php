@@ -1,6 +1,6 @@
 <?php
 
-use Wikia\Util\RequestId;
+use Wikia\Tracer\WikiaTracer;
 
 /**
  * TransactionTraceNewrelic implements the TransactionTrace plugin interface and handles reporting
@@ -38,7 +38,7 @@ class TransactionTraceNewrelic {
 
 		// report request ID as a custom request parameter for easier debugging of slow transactions
 		if ( function_exists( 'newrelic_add_custom_parameter' ) ) {
-			newrelic_add_custom_parameter( 'requestId', RequestId::instance()->getRequestId() );
+			newrelic_add_custom_parameter( 'traceId', WikiaTracer::instance()->getTraceId() );
 		}
 	}
 

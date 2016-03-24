@@ -11,24 +11,11 @@ namespace Wikia\Logger;
 use Exception;
 
 
-class LogstashFormatter extends \Monolog\Formatter\LogstashFormatter implements DevModeFormatterInterface {
-	private $devMode = false;
-
-	public function __construct() {
+class LogstashFormatter extends \Monolog\Formatter\LogstashFormatter {
+	public function __construct()
+	{
 		// prevent "Undefined variable: applicationName" notice
 		parent::__construct(null);
-	}
-
-	public function enableDevMode() {
-		$this->devMode = true;
-	}
-
-	public function disableDevMode() {
-		$this->devMode = false;
-	}
-
-	public function isInDevMode() {
-		return $this->devMode === true;
 	}
 
 	protected function formatV0(array $record) {
@@ -53,10 +40,6 @@ class LogstashFormatter extends \Monolog\Formatter\LogstashFormatter implements 
 			}
 
 			$message['@context'] = $record['context'];
-		}
-
-		if ($this->isInDevMode()) {
-			$message['@message'] = "DEV_ES_MESSAGE {$message['@message']}";
 		}
 
 		return $message;

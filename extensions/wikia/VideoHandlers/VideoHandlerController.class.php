@@ -390,6 +390,9 @@ class VideoHandlerController extends WikiaController {
 
 		$this->response->setVal( 'videos', $videoList );
 
+		// SUS-291: This method is only called via ajax/internal requests expecting json data
+		$this->response->setFormat( \WikiaResponse::FORMAT_JSON );
+
 		/**
 		 * SUS-81: let's rely on CDN cache only
 		 *

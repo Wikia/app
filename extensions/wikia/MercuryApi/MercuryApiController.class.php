@@ -226,39 +226,45 @@ class MercuryApiController extends WikiaController {
 	public function getTrackingDimensions() {
 		global $wgDBname, $wgUser, $wgCityId, $wgLanguageCode;
 
-		$title = $this->getTitleFromRequest();
-		$article = Article::newFromID( $title->getArticleId() );
+		$dimensions = [];
 
-		if ( $article instanceof Article && $title->isRedirect() ) {
-			$title = $this->handleRedirect( $title, $article, [] )[0];
+		// Exception is thrown when empty title is send
+		// In that case we don't want to set dimensions which depend on title
+		// Title parameter is empty for URLs like /main/edit, /d etc. (all pages outside /wiki/ space)
+		try {
+			$title = $this->getTitleFromRequest();
+
+			$article = Article::newFromID( $title->getArticleId() );
+
+			if ( $article instanceof Article && $title->isRedirect() ) {
+				$title = $this->handleRedirect( $title, $article, [] )[0];
+			}
+
+			$adContext = ( new AdEngine2ContextService() )->getContext( $title, 'mercury' );
+			$dimensions[3] = $adContext['targeting']['wikiVertical'];
+			$dimensions[14] = $adContext['opts']['showAds'] ? 'yes' : 'no';
+			$dimensions[19] = WikiaPageType::getArticleType( $title );
+			$dimensions[25] = strval( $title->getNamespace() );
+		} catch (Exception $ex) {
+			// In case of exception - don't set the dimensions
 		}
 
 		$wikiCategoryNames = WikiFactoryHub::getInstance()->getWikiCategoryNames( $wgCityId );
 		$wikiCategoryNames = join( ',', $wikiCategoryNames );
 
-		$adContext = ( new AdEngine2ContextService() )->getContext( $title, 'mercury' );
-		$powerUserTypes = ( new \Wikia\PowerUser\PowerUser( $wgUser ) )->getTypesForUser();
 
-		$dimensions = [];
+		$powerUserTypes = ( new \Wikia\PowerUser\PowerUser( $wgUser ) )->getTypesForUser();
 
 		$dimensions[1] = $wgDBname;
 		$dimensions[2] = $wgLanguageCode;
-		$dimensions[3] = $adContext['targeting']['wikiVertical'];
 		$dimensions[4] = 'mercury';
 		$dimensions[5] = $wgUser->isAnon() ? 'anon' : 'user';
-
 		$dimensions[9] = $wgCityId;
-
-		$dimensions[14] = $adContext['opts']['showAds'] ? 'yes' : 'no';
 		$dimensions[15] = WikiaPageType::isCorporatePage() ? 'yes' : 'no';
-
 		$dimensions[17] = WikiFactoryHub::getInstance()->getWikiVertical( $wgCityId )['short'];
 		$dimensions[18] = $wikiCategoryNames;
-		$dimensions[19] = WikiaPageType::getArticleType( $title );
-
 		$dimensions[23] = in_array( 'poweruser_lifetime', $powerUserTypes ) ? 'yes' : 'no';
 		$dimensions[24] = in_array( 'poweruser_frequent', $powerUserTypes ) ? 'yes' : 'no';
-		$dimensions[25] = strval( $title->getNamespace() );
 
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 		$this->response->setVal( 'dimensions', $dimensions );
@@ -355,6 +361,7 @@ class MercuryApiController extends WikiaController {
 							$titleBuilder->setParts( [ $data['article']['displayTitle'] ] );
 						} elseif ( !empty( $data['nsSpecificContent']['members']['sections'] ) ) {
 							$data['details'] = MercuryApiCategoryHandler::getCategoryMockedDetails( $title );
+							$titleBuilder->setParts( [ $title->getPrefixedText() ] );
 						} else {
 							throw new NotFoundApiException( 'Article is empty and category has no members' );
 						}

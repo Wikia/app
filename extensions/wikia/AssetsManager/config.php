@@ -117,6 +117,7 @@ $config['adengine2_desktop_js'] = array(
 		'//extensions/wikia/AdEngine/js/TaboolaHelper.js',
 		'//extensions/wikia/AdEngine/js/provider/evolve.js',
 		'//extensions/wikia/AdEngine/js/provider/evolve2.js',
+		'//extensions/wikia/AdEngine/js/provider/hitMedia.js',
 		'//extensions/wikia/AdEngine/js/provider/liftium.js',
 		'//extensions/wikia/AdEngine/js/provider/monetizationService.js',
 		'//extensions/wikia/AdEngine/js/provider/sevenOneMedia.js',
@@ -805,6 +806,7 @@ $config['mobile_base_ads_js'] = array(
 		'//extensions/wikia/AdEngine/js/lookup/services.js',
 		'//extensions/wikia/AdEngine/js/provider/directGptMobile.js',
 		'//extensions/wikia/AdEngine/js/provider/evolve2.js',
+		'//extensions/wikia/AdEngine/js/provider/hitMedia.js',
 		'//extensions/wikia/AdEngine/js/provider/factoryWikiaGpt.js',
 		'//extensions/wikia/AdEngine/js/provider/gpt/adDetect.js',
 		'//extensions/wikia/AdEngine/js/provider/gpt/adElement.js',
@@ -2454,9 +2456,6 @@ $config['portable_infobox_scss'] = [
 	'skin' => [ 'oasis' ],
 	'assets' => [
 		'//extensions/wikia/PortableInfobox/styles/PortableInfobox.scss'
-		// temporary disable europa theme
-		// TODO: reenable europa theme https://wikia-inc.atlassian.net/browse/DAT-3940
-//		'//extensions/wikia/PortableInfobox/styles/PortableInfoboxEuropaTheme.scss'
 	]
 ];
 
@@ -2466,6 +2465,14 @@ $config['portable_infobox_monobook_scss'] = [
 	'assets' => [
 		'#group_portable_infobox_scss',
 		'//extensions/wikia/PortableInfobox/styles/PortableInfoboxMonobook.scss'
+	]
+];
+
+$config['portable_infobox_europa_theme_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/PortableInfobox/styles/PortableInfoboxEuropaTheme.scss'
 	]
 ];
 
@@ -2498,9 +2505,6 @@ $config[ 'portable_infobox_builder_preview_scss' ] = [
 	'skin' => ['oasis'],
 	'assets' => [
 		'//extensions/wikia/PortableInfoboxBuilder/styles/PortableInfoboxBuilderPreview.scss'
-		// temporary disable europa theme
-		// TODO: reenable europa theme https://wikia-inc.atlassian.net/browse/DAT-3940
-//		'//extensions/wikia/PortableInfobox/styles/PortableInfoboxEuropaTheme.scss'
 	]
 ];
 

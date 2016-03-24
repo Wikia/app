@@ -96,7 +96,12 @@ class TemplatesWithoutTypePage extends PageQueryPage {
 
 		$cnNotRecognizedTemplates = $recognizedProvider->getNotRecognizedTemplates();
 
+		$templatesCounter = 0;
 		foreach( $cnNotRecognizedTemplates as $pageId => $notRecognizedTemplate ) {
+			if ( $templatesCounter === self::LIMIT ) {
+				break;
+			}
+
 			$title = Title::newFromID( $pageId );
 			if ( $title instanceof Title && !$title->isRedirect() ) {
 				$links = $title->getIndirectLinks();
@@ -107,6 +112,7 @@ class TemplatesWithoutTypePage extends PageQueryPage {
 						NS_TEMPLATE,
 						$title->getDBkey()
 					];
+				$templatesCounter++;
 			}
 		}
 

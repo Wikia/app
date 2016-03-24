@@ -164,7 +164,8 @@ class WikiaLogger implements LoggerInterface {
 	 */
 	public function getSyslogHandler() {
 		if ($this->syslogHandler == null) {
-			$this->syslogHandler = new SyslogHandler($this->detectIdent());
+			// all logs from WikiaLogger will have 'program' set to 'mediawiki'
+			$this->syslogHandler = new SyslogHandler('mediawiki');
 		}
 
 		return $this->syslogHandler;
@@ -233,41 +234,6 @@ class WikiaLogger implements LoggerInterface {
 		);
 	}
 
-	/**
-		* @return string enum['php', 'apache2']
-	 */
-	public function detectIdent() {
-		return PHP_SAPI == 'cli' ? 'php' : 'apache2';
-	}
-
-	/**
-	 * Set production mode. Sends logs to logstash/es.
-	 * @return WikiaLogger
-	 */
-	public function setProductionMode() {
-		$this->getSyslogHandler()->setModeLogstashFormat();
-		return $this;
-	}
-
-	/**
-	 * Set development mode. Sends logs to syslog.
-	 * @return WikiaLogger
-	 */
-	public function setDevMode() {
-		$this->getSyslogHandler()->setModeLineFormat();
-		return $this;
-	}
-
-	/**
-	 * Set development mode with logstash/es support.
-	 * return WikiaLogger
-	 */
-	public function setDevModeWithES() {
-		$this->getSyslogHandler()->setModeLogstashFormat();
-		$this->getSyslogHandler()->getFormatter()->enableDevMode();
-		return $this;
-	}
-
 	public function getErrorReporting() {
 		return error_reporting();
 	}
@@ -275,6 +241,11 @@ class WikiaLogger implements LoggerInterface {
 	/** @see \Wikia\Logger\WebProcessor::pushContext */
 	public function pushContext(array $context, $type=WebProcessor::RECORD_TYPE_CONTEXT) {
 		$this->getWebProcessor()->pushContext($context, $type);
+	}
+
+	/** @see \Wikia\Logger\WebProcessor::pushContextSource */
+	public function pushContextSource(ContextSource $contextSource, $type=WebProcessor::RECORD_TYPE_CONTEXT) {
+		$this->getWebProcessor()->pushContextSource($contextSource, $type);
 	}
 
 	/** @see \Wikia\Logger\WebProcessor::popContext */

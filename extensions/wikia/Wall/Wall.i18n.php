@@ -128,6 +128,9 @@ The original post and your summary will still appear in the wiki's history.",
 	'wall-action-move-thread-ok' => 'Move thread',
 	'wall-action-move-board-label' => 'Select a board to move to',
 
+	'wall-posting-message-failed-title' => 'An error occurred while posting a message',
+	'wall-posting-message-failed-body' => 'Copy your work and try again later',
+
 	'wall-notifications' => 'Notifications',
 	'wall-notifications-all' => 'All Notifications',
 	'wall-notifications-markasread' => 'Mark all as read',
@@ -479,6 +482,8 @@ See also:
 	'wall-action-move-topics-summary' => 'Summery for change in user contribution',
 	'wall-action-move-thread-ok' => 'Confirmation button for moving thread',
 	'wall-action-move-board-label' => 'Label for list of board dropdown',
+	'wall-posting-message-failed-title' => 'Popup title when posting message failed',
+	'wall-posting-message-failed-body' => 'Popup body when posting message failed',
 	'wall-notifications' => 'Title of notification dropdown.
 {{Identical|Notification}}',
 	'wall-notifications-all' => 'Text in notification dropdown menu.
@@ -5730,6 +5735,8 @@ Oryginał wiadomości i twój komentarz wciąż pozostaną w historii wiki.',
 	'wall-action-move-topics-summary' => 'Wątek przeniesiono',
 	'wall-action-move-thread-ok' => 'Przenieś wątek',
 	'wall-action-move-board-label' => 'Wybierz subforum, do którego przenieść wątek',
+	'wall-posting-message-failed-title' => 'Wystąpił błąd podczas wysyłania wiadomości',
+	'wall-posting-message-failed-body' => 'Skopiuj swoją wiadomość i spróbuj jeszcze raz później',
 	'wall-notifications' => 'Powiadomienia',
 	'wall-notifications-all' => 'Wszystkie powiadomienia',
 	'wall-notifications-markasread' => 'Oznacz wszystkie jako przeczytane',

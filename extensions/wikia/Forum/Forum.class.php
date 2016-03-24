@@ -143,10 +143,10 @@ class Forum extends Walls {
 		$this->clearCacheTotalThreads( self::ACTIVE_DAYS );
 	}
 
-	public function hasAtLeast( $ns, $count ) {
+	public function hasMoreThan( $ns, $count ) {
 		wfProfileIn( __METHOD__ );
 
-		$out = WikiaDataAccess::cache( wfMemcKey( 'Forum_hasAtLeast', $ns, $count ), 24 * 60 * 60/* one day */, function () use ( $ns, $count ) {
+		$out = WikiaDataAccess::cache( wfMemcKey( 'Forum_hasMoreThan', $ns, $count ), 24 * 60 * 60/* one day */, function() use ( $ns, $count ) {
 			$db = wfGetDB( DB_MASTER );
 			// check if there is more then 5 forum pages (5 is number of forum pages from starter)
 			// limit 6 is faster solution then count(*) and the compare in php
@@ -166,7 +166,7 @@ class Forum extends Walls {
 	}
 
 	public function haveOldForums() {
-		return $this->hasAtLeast( NS_FORUM, 5 );
+		return $this->hasMoreThan( NS_FORUM, 5 );
 	}
 
 	public function swapBoards( $boardId1, $boardId2 ) {
@@ -227,7 +227,6 @@ class Forum extends Walls {
 	 * @throws MWException
 	 */
 	protected function createOrEditBoard( $board, $titletext, $body, $bot = false ) {
-		wfProfileIn( __METHOD__ );
 		$id = null;
 		if ( !empty( $board ) ) {
 			$id = $board->getId();
@@ -237,7 +236,6 @@ class Forum extends Walls {
 			self::LEN_OK !== $this->validateLength( $titletext, 'title' ) ||
 			self::LEN_OK !== $this->validateLength( $body, 'desc' )
 		) {
-			wfProfileOut( __METHOD__ );
 			return false;
 		}
 
@@ -270,7 +268,6 @@ class Forum extends Walls {
 
 		Forum::$allowToEditBoard = false;
 
-		wfProfileOut( __METHOD__ );
 		return $retval;
 	}
 
@@ -328,11 +325,14 @@ class Forum extends Walls {
 		wfProfileOut( __METHOD__ );
 	}
 
+	/**
+	 * @deprecated Remove as soon as SUS-302 and SUS-303 are completed
+	 */
 	public function createDefaultBoard() {
 		wfProfileIn( __METHOD__ );
 		$app = F::App();
-		if ( !$this->hasAtLeast( NS_WIKIA_FORUM_BOARD, 0 ) ) {
-			WikiaDataAccess::cachePurge( wfMemcKey( 'Forum_hasAtLeast', NS_WIKIA_FORUM_BOARD, 0 ) );
+		if ( !$this->hasMoreThan( NS_WIKIA_FORUM_BOARD, 0 ) ) {
+			WikiaDataAccess::cachePurge( wfMemcKey( 'Forum_hasMoreThan', NS_WIKIA_FORUM_BOARD, 0 ) );
 			/* the wgUser swap is the only way to create page as other user then current */
 			$tmpUser = $app->wg->User;
 			$app->wg->User = User::newFromName( Forum::AUTOCREATE_USER );
