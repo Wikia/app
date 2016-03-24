@@ -2832,3 +2832,19 @@ $config['special_user_activity_scss'] = [
 		'//extensions/wikia/UserActivity/css/UserActivity.scss',
 	],
 ];
+
+$config['special_community_page_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => [
+		'//extensions/wikia/CommunityPage/scripts/ext.communityPage.js',
+	],
+
+];
+
+$config['special_community_page_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'assets' => [
+		'//extensions/wikia/CommunityPage/styles/ext.communityPage.scss',
+		'//extensions/wikia/CommunityPage/styles/ext.communityPageOverrides.scss',
+	],
+];

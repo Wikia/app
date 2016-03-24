@@ -7,18 +7,17 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		parent::__construct( 'Community', '', /* $listed = */ false );
 	}
 
+	protected function addAssets() {
+		$this->response->addAsset( 'special_community_page_js' );
+		$this->response->addAsset( 'special_community_page_scss' );
+	}
+
 	public function index() {
 		$this->specialPage->setHeaders();
 		$output = $this->getOutput();
 		$output->setPageTitle( $this->msg( 'communitypageexperiment-title' )->plain() );
 
-		$output->addScript(
-			'<script src="' .
-			AssetsManager::getInstance()->getOneCommonURL('extensions/wikia/CommunityPage/scripts/ext.communityPage.js') .
-			'"></script>');
-
-		$output->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/CommunityPage/styles/ext.communityPageOverrides.scss'));
-		$output->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/CommunityPage/styles/ext.communityPage.scss'));
+		$this->addAssets();
 
 		$this->wg->SuppressPageHeader = true;
 		$this->wg->SuppressWikiHeader = true;
