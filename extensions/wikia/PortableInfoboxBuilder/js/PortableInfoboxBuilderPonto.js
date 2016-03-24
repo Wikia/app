@@ -29,7 +29,16 @@ define('wikia.infoboxBuilder.ponto', ['wikia.window', 'ponto'], function (w, pon
 		this.redirectToSourceEditor = function () {
 			w.location = w.sourceEditorUrl;
 			return true;
-		}
+		};
+
+		/**
+		 * redirects to previous page
+		 * @returns {Boolean}
+		 */
+		this.redirectToPreviousPage = function () {
+			w.history.back();
+			return true;
+		};
 	}
 
 	// PontoBaseHandler extension pattern - check Ponto documentation for details
