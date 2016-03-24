@@ -20,7 +20,7 @@ class PortableInfoboxBuilderController extends WikiaController {
 
 		$params = $this->getRequest()->getParams();
 		$isNew = true;
-		$data = json_encode(new stdClass());
+		$data = new stdClass();
 
 		if ( isset( $params[ 'title' ] ) ) {
 			$infoboxes = PortableInfoboxDataService::newFromTitle(
@@ -34,7 +34,7 @@ class PortableInfoboxBuilderController extends WikiaController {
 			}
 		}
 
-		$response->setVal( 'data', $data );
+		$response->setVal( 'data', json_encode( $data ) );
 		$response->setVal( 'isNew', $isNew );
 	}
 
