@@ -72,7 +72,7 @@
 					if (!window.wgUserName) {
 						require(['AuthModal'], function (authModal) {
 							authModal.load({
-								url: '/signin?redirect=' + encodeURIComponent(window.location.href),
+								url: '/signin?redirect=' + encodeURIComponent(window.location.href) + '&wikiName=' + self.wikiName.val() + '&wikiDomain=' + self.wikiDomain.val() + '&wikiLanguage=' + self.wikiLanguage.find('option:selected').val(),
 								origin: 'create-new-wikia',
 								onAuthSuccess: $.proxy(self.onAuthSuccess, self)
 							});
