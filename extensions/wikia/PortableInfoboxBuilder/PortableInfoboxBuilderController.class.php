@@ -19,25 +19,23 @@ class PortableInfoboxBuilderController extends WikiaController {
 		}
 
 		$params = $this->getRequest()->getParams();
+		$isNew = true;
+		$data = json_encode(new stdClass());
+
 		if ( isset( $params[ 'title' ] ) ) {
 			$infoboxes = PortableInfoboxDataService::newFromTitle(
 				Title::newFromText( $params[ 'title' ], NS_TEMPLATE )
 			)->getInfoboxes();
 
 			$builderService = new PortableInfoboxBuilderService();
-			if ( $builderService->isValidInfoboxArray( $infoboxes ) ) {
-				$response->setVal( 'data', $builderService->translateMarkupToData( $infoboxes[ 0 ] ) );
-
-				// There are no infoboxes yet
-				if ( empty( $infoboxes ) ) {
-					$response->setVal( 'isNew', true );
-				}
+			if ( !empty( $infoboxes ) && $builderService->isValidInfoboxArray( $infoboxes ) ) {
+				$data = $builderService->translateMarkupToData( $infoboxes[ 0 ] );
+				$isNew = false;
 			}
-		} else {
-			$status = new Status();
-			$status->warning( 'no-title-provided' );
-			$response->setVal( 'warnings', $status->getWarningsArray() );
 		}
+
+		$response->setVal( 'data', $data );
+		$response->setVal( 'isNew', $isNew );
 	}
 
 	public function publish() {
