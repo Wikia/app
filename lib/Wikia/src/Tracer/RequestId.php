@@ -11,6 +11,8 @@
  */
 namespace Wikia\Tracer;
 
+use Ramsey\Uuid\Uuid;
+
 class RequestId {
 
 	private $requestId = false;
@@ -68,24 +70,21 @@ class RequestId {
 	}
 
 	/**
-	 * Return 23 characters long unique ID + mw prefix
-	 * e.g. mw5405bb3d129e76.46189257
+	 * Return timestamp-based UUID (e.g. 8454441a-f0e1-11e5-9c4a-00163e046284)
 	 *
 	 * @return string
 	 */
 	public static function generateId() {
-		return uniqid( 'mw', true );
+		return Uuid::uuid1()->toString();
 	}
 
 	/**
 	 * Validate provided request ID
 	 *
-	 * @param $id
+	 * @param string $id
 	 * @return bool
 	 */
 	public static function isValidId( $id ) {
-		return is_string( $id ) &&
-			strlen( $id ) === 25 &&
-			startsWith( $id, 'mw' );
+		return Uuid::isValid( $id );
 	}
 }
