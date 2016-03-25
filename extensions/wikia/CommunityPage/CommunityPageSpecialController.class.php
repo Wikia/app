@@ -19,6 +19,8 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		$this->response->setValues( [
 			'adminWelcomeMsg' => $this->msg( 'communitypage-tasks-admin-welcome' )->text(),
 			'pageListEmptyText' => $this->msg( 'communitypage-page-list-empty' )->plain(),
+			'showPopupMessage' => true,
+			'popupMessageText' => 'This is just a test message for the popup message box',
 		] );
 
 		$this->userIsMember = CommunityPageSpecialHelper::userHasEdited( $this->wg->User );

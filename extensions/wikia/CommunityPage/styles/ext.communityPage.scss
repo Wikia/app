@@ -8,9 +8,10 @@ $color-community-page-admin-text: #808080;
 
 $color-activity-background: #f6f6f6;
 $color-activity-text: #383838;
+$color-message-background: #1a5eb8;
+$color-popup-text: #ffffff;
 
 $font-activity-summary: HelveticaNeue;
-
 
 .community-page-header {
 	align-items: center;
@@ -101,6 +102,44 @@ $font-activity-summary: HelveticaNeue;
 		font-size: 14px;
 		line-height: 2;
 		text-transform: uppercase;
+	}
+}
+
+.community-page-message {
+	background-color: $color-message-background;
+	height: 60px;
+	position: relative;
+	width: 100%;
+
+	.text {
+		color: $color-popup-text;
+		font-family: $font-activity-summary;
+		font-size: 14px;
+		line-height: 1.3;
+		padding-left: 46px;
+		position: relative;
+		top: 50%;
+		transform: translateY(-50%);
+	}
+
+	.info-icon {
+		background-color: red;
+		height: 24px;
+		position: absolute;
+		left: 12px;
+		top: 50%;
+		transform: translateY(-50%);
+		width: 24px;
+	}
+
+	.close-icon {
+		background-color: red;
+		height: 24px;
+		position: absolute;
+		left: 12px;
+		top: 50%;
+		transform: translateY(-50%);
+		width: 24px;
 	}
 }
 
