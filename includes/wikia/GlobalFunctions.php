@@ -1534,7 +1534,10 @@ function wfFixMalformedHTML( $html ) {
 
 	// Make sure loadHTML knows that text is utf-8 (it assumes ISO-88591)
 	// CONN-130 - Added <!DOCTYPE html> to allow HTML5 tags in the article comment
-	$htmlHeader = '<!DOCTYPE html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"></head>';
+	$htmlHeader = '<!DOCTYPE html><html>';
+	$htmlHeader .= '<head><meta http-equiv="content-type" content="text/html; charset=utf-8"></head>';
+	$htmlHeader .= '<div id="wfFixMalformedHTML">';
+
 	$domDocument->loadHTML( $htmlHeader . $html );
 
 	// Strip doctype declaration, <html>, <body> tags created by saveHTML, as well as <meta> tag added to
@@ -1544,6 +1547,8 @@ function wfFixMalformedHTML( $html ) {
 			'/^.*?<body>/si', '/^.*?charset=utf-8">/si',
 			'/<\/body><\/html>$/si',
 			'/<\/head><\/html>$/si',
+			'/^<div id="wfFixMalformedHTML">/',
+			'/<\\/div>$/',
 		),
 		'',
 		$domDocument->saveHTML()
