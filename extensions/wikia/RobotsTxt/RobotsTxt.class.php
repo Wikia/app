@@ -172,7 +172,7 @@ class RobotsTxt {
 			return;
 		}
 
-		foreach( $wgRobotsTxtCustomRules as $rule => $values ) {
+		foreach ( $wgRobotsTxtCustomRules as $rule => $values ) {
 			if ( in_array( $rule, self::CUSTOM_RULES ) ) {
 				if ( !is_array( $values ) ) {
 					$values = [ $values ];
