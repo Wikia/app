@@ -19,25 +19,23 @@ class PortableInfoboxBuilderController extends WikiaController {
 		}
 
 		$params = $this->getRequest()->getParams();
+		$isNew = true;
+		$data = new stdClass();
+
 		if ( isset( $params[ 'title' ] ) ) {
 			$infoboxes = PortableInfoboxDataService::newFromTitle(
 				Title::newFromText( $params[ 'title' ], NS_TEMPLATE )
 			)->getInfoboxes();
 
 			$builderService = new PortableInfoboxBuilderService();
-			if ( $builderService->isValidInfoboxArray( $infoboxes ) ) {
-				$response->setVal( 'data', $builderService->translateMarkupToData( $infoboxes[ 0 ] ) );
-
-				// There are no infoboxes yet
-				if ( empty( $infoboxes ) ) {
-					$response->setVal( 'isNew', true );
-				}
+			if ( !empty( $infoboxes ) && $builderService->isValidInfoboxArray( $infoboxes ) ) {
+				$data = $builderService->translateMarkupToData( $infoboxes[ 0 ] );
+				$isNew = false;
 			}
-		} else {
-			$status = new Status();
-			$status->warning( 'no-title-provided' );
-			$response->setVal( 'warnings', $status->getWarningsArray() );
 		}
+
+		$response->setVal( 'data', json_encode( $data ) );
+		$response->setVal( 'isNew', $isNew );
 	}
 
 	public function publish() {
@@ -46,15 +44,35 @@ class PortableInfoboxBuilderController extends WikiaController {
 
 		$status = $this->attemptSave( $this->getRequest()->getParams() );
 
+		$requestParams = $this->getRequest()->getParams();
+		$urls = PortableInfoboxBuilderHelper::createRedirectUrls( $requestParams['title'] );
+
+		$response->setVal( 'urls', $urls );
 		$response->setVal( 'success', $status->isOK() );
 		$response->setVal( 'errors', $status->getErrorsArray() );
 		$response->setVal( 'warnings', $status->getWarningsArray() );
 	}
 
+	public function getRedirectUrls() {
+		$response = $this->getResponse();
+		$response->setFormat( WikiaResponse::FORMAT_JSON );
+
+		$requestParams = $this->getRequest()->getParams();
+		$urls = PortableInfoboxBuilderHelper::createRedirectUrls( $requestParams['title'] );
+
+		if  ( !empty( $urls ) ) {
+			$response->setVal( 'urls', $urls );
+			$response->setVal( 'success', true );
+		} else {
+			$response->setCode( 400 );
+			$response->setVal( 'errors', [ 'Could not create URLs from given string' ] );
+		}
+	}
+
 	private function attemptSave( $params ) {
 		$status = new Status();
 
-		$title = $this->getTitle( $params[ 'title' ], $status );
+		$title = PortableInfoboxBuilderHelper::getTitle( $params[ 'title' ], $status );
 
 		$status = $this->checkRequestValidity( $status );
 		$status = $this->checkUserPermissions( $title, $status );
@@ -78,26 +96,6 @@ class PortableInfoboxBuilderController extends WikiaController {
 			$status->fatal( 'invalid-write-request' );
 		}
 		return $status;
-	}
-
-	/**
-	 * creates Title object from provided title string. If Title object can not be created then status is updated
-	 * @param $titleParam
-	 * @param $status
-	 * @return Title
-	 * @throws MWException
-	 */
-	private function getTitle( $titleParam, &$status ) {
-		if ( !$titleParam ) {
-			$status->fatal( 'no-title-provided' );
-		}
-
-		$title = $status->isGood() ? Title::newFromText( $titleParam, NS_TEMPLATE ) : false;
-		// check if title object created
-		if ( $status->isGood() && !$title ) {
-			$status->fatal( 'bad-title' );
-		}
-		return $title;
 	}
 
 	/**
