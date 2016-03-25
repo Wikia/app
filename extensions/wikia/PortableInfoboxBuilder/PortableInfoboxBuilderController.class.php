@@ -77,6 +77,7 @@ class PortableInfoboxBuilderController extends WikiaController {
 		$title = PortableInfoboxBuilderHelper::getTitle( $requestParams[ 'title' ], $status );
 
 		$response->setVal( 'exists', $title->isKnown() );
+		$response->setVal( 'success', true );
 	}
 
 	private function attemptSave( $params ) {
