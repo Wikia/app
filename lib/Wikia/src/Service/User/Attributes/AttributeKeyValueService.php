@@ -93,9 +93,9 @@ class AttributeKeyValueService implements AttributeService {
 	}
 
 	private function logError( $userId, \Exception $e ) {
-		$this->error( $e->getMessage(), [
+		$this->error( 'USER_ATTRIBUTE error contacting service' , [
 			'user' => $userId,
-			'exceptionType' => get_class( $e ),
+			'exception' => $e
 		] );
 	}
 
