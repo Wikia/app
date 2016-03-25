@@ -1,0 +1,29 @@
+
+.text-border {
+	line-height: 0.5;
+	text-align: center;
+}
+.text-border span {
+	display: inline-block;
+	position: relative;
+}
+
+.text-border span:before,
+.text-border span:after {
+	border: solid 1px #000000;
+	content: "";
+	height: 0;
+	opacity: 0.1;
+	position: absolute;
+	top: 2px;
+	width: 154px;
+}
+
+.text-border span:before {
+	right: 100%;
+	margin-right: 10px;
+}
+.text-border span:after {
+	left: 100%;
+	margin-left: 10px;
+}

@@ -1,4 +1,5 @@
 @import 'skins/shared/color';
+@import '_partials/index';
 
 $color-community-page-white: #fff;
 $color-community-page-gray: #eee;
@@ -40,6 +41,59 @@ $color-community-page-admin-text: #808080;
 			background-color: $color-button-highlight;
 			text-decoration: none;
 		}
+	}
+}
+
+.community-page-monthly-summary {
+	align-items: center;
+	background-color: #f6f6f6;
+	display: flex;
+	flex-direction: column;
+	height: 129px;
+	justify-content: center;
+	text-align: center;
+
+	.heading {
+		color: #383838;
+		font-family: HelveticaNeue-Bold;
+		font-size: 14px;
+		text-transform: uppercase;
+	}
+
+	.padding {
+		height: 15px;
+		width: 100%;
+	}
+
+	.stats {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		padding-top: 10px;
+		width: 420px;
+	}
+
+	.stat-container {
+		display: flex;
+		flex-direction: column;
+		height: 40px;
+		padding: 5px;
+		text-align: center;
+	}
+
+	.stat-number {
+		color: #383838;
+		font-family: HelveticaNeue;
+		font-size: 24px;
+		line-height: 0.8;
+	}
+
+	.stat-name {
+		color: #383838;
+		font-family: HelveticaNeue;
+		font-size: 14px;
+		line-height: 2;
+		text-transform: uppercase;
 	}
 }
 
@@ -248,3 +302,4 @@ $color-community-page-admin-text: #808080;
 		border: 1px solid $color-page-opposite;
 	}
 }
+

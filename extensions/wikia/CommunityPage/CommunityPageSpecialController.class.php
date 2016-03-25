@@ -22,6 +22,17 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 			'pageListEmptyText' => $this->msg( 'communitypage-page-list-empty' )->plain(),
 			'pageListEditText' => $this->msg( 'communitypage-page-list-edit' )->plain(),
 			'inviteFriendsText' => $this->msg( 'communitypage-invite-friends' )->plain(),
+			'thisMonthText' => $this->msg( 'communitypage-this-month' )->plain(),
+			'showMonthlySummary' => true,
+			'statPagesTitle' => $this->msg( 'communitypage-pages' )->plain(),
+			'statPagesNumber' => 45,
+			'statPageViewsTitle' => $this->msg( 'communitypage-pageviews' )->plain(),
+			'statPageViewsNumber' => '1,049',
+			'statEditsTitle' => $this->msg( 'communitypage-edits' )->plain(),
+			'statEditsNumber' => 621,
+			'statEditorsTitle' => $this->msg( 'communitypage-editors' )->plain(),
+			'statEditorsNumber' => 23,
+
 		] );
 
 		$this->userIsMember = CommunityPageSpecialHelper::userHasEdited( $this->wg->User );
