@@ -74,9 +74,10 @@ class PortableInfoboxBuilderHelper {
 	}
 
 	/**
-	 * Fir given title string create urls to redirect
-	 * @param $titleString
-	 * @return array
+	 * Fir given title string create urls to template page and source editor
+	 * @param $titleString string
+	 * @return array with key value url pairs or empty array
+	 * if invalid string passed
 	 */
 	public static function createRedirectUrls( $titleString ) {
 		$status = new Status();

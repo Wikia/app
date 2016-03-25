@@ -53,11 +53,12 @@ class PortableInfoboxBuilderController extends WikiaController {
 		$response->setVal( 'warnings', $status->getWarningsArray() );
 	}
 
-	public function getRedirectUrls( $title ) {
+	public function getRedirectUrls() {
 		$response = $this->getResponse();
 		$response->setFormat( WikiaResponse::FORMAT_JSON );
 
-		$urls =  PortableInfoboxBuilderHelper::createRedirectUrls( $title );
+		$requestParams = $this->getRequest()->getParams();
+		$urls = PortableInfoboxBuilderHelper::createRedirectUrls( $requestParams['title'] );
 
 		if  ( !empty( $urls ) ) {
 			$response->setVal( 'urls', $urls );
