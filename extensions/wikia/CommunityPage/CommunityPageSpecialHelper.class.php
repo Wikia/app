@@ -9,7 +9,7 @@ class CommunityPageSpecialHelper {
 	 * @return bool
 	 */
 	public static function userHasEdited( User $user ) {
-		$firstRev = CommunityPageSpecialModel::getFirstRevision( $user );
+		$firstRev = ( new CommunityPageSpecialUsersModel() )->getFirstRevisionDate( $user );
 		return !is_null( $firstRev );
 	}
 }

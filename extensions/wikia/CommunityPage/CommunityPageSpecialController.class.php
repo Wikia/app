@@ -2,9 +2,11 @@
 
 class CommunityPageSpecialController extends WikiaSpecialPageController {
 	const DEFAULT_TEMPLATE_ENGINE = \WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
+	public $usersModel;
 
 	public function __construct() {
-		parent::__construct( 'Community', '', /* $listed = */ false );
+		parent::__construct( 'Community' );
+		$this->usersModel = new CommunityPageSpecialUsersModel();
 	}
 
 	protected function addAssets() {
@@ -13,7 +15,6 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	}
 
 	protected function populateData() {
-		$model = new CommunityPageSpecialModel();
 
 		$this->response->setValues( [
 			'headerWelcomeMsg' => $this->msg( 'communitypage-tasks-header-welcome' )->plain(),
@@ -25,7 +26,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 
 		$this->userIsMember = CommunityPageSpecialHelper::userHasEdited( $this->wg->User );
 		$this->pageTitle = $this->msg( 'communitypage-title' )->plain();
-		$this->contributors = $model->getTopContributorsDetails();
+		$this->contributors = $this->getTopContributorsDetails();
 	}
 
 	public function index() {
@@ -40,4 +41,28 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		$this->wg->SuppressWikiHeader = true;
 		$this->wg->SuppressFooter = true;
 	}
+
+	/**
+	 * Get details for display of top contributors
+	 *
+	 * @return array
+	 */
+	protected function getTopContributorsDetails() {
+		$contributors = $this->usersModel->getTopContributorsRaw();
+
+		return array_map( function ( $contributor ) {
+			$user = User::newFromId( $contributor['userId'] );
+			$userName = $user->getName();
+			$avatar = AvatarService::renderAvatar( $userName, AvatarService::AVATAR_SIZE_SMALL_PLUS - 2 );
+
+			return [
+				'userName' => $userName,
+				'avatar' => $avatar,
+				'contributions' => $contributor['contributions'],
+				'profilePage' => $user->getUserPage()->getLocalURL()
+			];
+		}, $contributors );
+	}
+
+
 }
