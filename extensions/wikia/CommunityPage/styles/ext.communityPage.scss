@@ -9,7 +9,7 @@ $color-community-page-admin-text: #808080;
 $color-activity-background: #f6f6f6;
 $color-activity-text: #383838;
 $color-message-background: #1a5eb8;
-$color-popup-text: #ffffff;
+$color-popup-text: #fff;
 
 $font-activity-summary: HelveticaNeue;
 
@@ -54,7 +54,7 @@ $font-activity-summary: HelveticaNeue;
 .community-page-monthly-summary {
 	align-items: center;
 	background-color: $color-activity-background;
-	display: flex;
+	display: flex; // todo: use mixins for this
 	flex-direction: column;
 	height: 129px;
 	justify-content: center;
@@ -63,8 +63,8 @@ $font-activity-summary: HelveticaNeue;
 	.heading {
 		color: $color-activity-text;
 		font-family: $font-activity-summary;
-		font-weight: bold;
 		font-size: 14px;
+		font-weight: bold;
 		text-transform: uppercase;
 	}
 
@@ -93,7 +93,7 @@ $font-activity-summary: HelveticaNeue;
 		color: $color-activity-text;
 		font-family: $font-activity-summary;
 		font-size: 24px;
-		line-height: 0.8;
+		line-height: .8;
 	}
 
 	.stat-name {
@@ -123,17 +123,17 @@ $font-activity-summary: HelveticaNeue;
 	}
 
 	.info-icon {
-		background-color: red;
+		background-color: $color-black;
 		height: 24px;
-		position: absolute;
 		left: 12px;
+		position: absolute;
 		top: 50%;
 		transform: translateY(-50%);
 		width: 24px;
 	}
 
 	.close-icon {
-		background-color: red;
+		background-color: $color-black;
 		height: 24px;
 		position: absolute;
 		right: 12px;

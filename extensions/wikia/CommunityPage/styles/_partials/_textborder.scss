@@ -1,5 +1,5 @@
 .text-border {
-	line-height: 0.5;
+	line-height: .5;
 	text-align: center;
 
 	span {
@@ -7,18 +7,18 @@
 		position: relative;
 
 		&:before, &:after {
-			border: solid 1px #000000;
-			content: "";
+			border: solid 1px $color-black;
+			content: '';
 			height: 0;
-			opacity: 0.1;
+			opacity: .1;
 			position: absolute;
 			top: 2px;
 			width: 154px;
 		}
 
 		&:before {
-			right: 100%;
 			margin-right: 10px;
+			right: 100%;
 		}
 
 		&:after {
