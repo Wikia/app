@@ -57,6 +57,7 @@ if ( !$allowRobots ) {
 	$robots->disallowParam( 'feed' );
 	$robots->disallowParam( 'oldid' );
 	$robots->disallowParam( 'printable' );
+	$robots->disallowParam( 'redirect' );
 	$robots->disallowParam( 'useskin' );
 	$robots->disallowParam( 'uselang' );
 
