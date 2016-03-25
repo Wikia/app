@@ -45,9 +45,7 @@ class PortableInfoboxBuilderController extends WikiaController {
 		$status = $this->attemptSave( $this->getRequest()->getParams() );
 
 		$requestParams = $this->getRequest()->getParams();
-		$title = Title::newFromText( $requestParams['title'], NS_TEMPLATE );
-		// use helper method
-		$urls = $this->createRedirectUrls( $title );
+		$urls = PortableInfoboxBuilderHelper::createRedirectUrls( $requestParams['title'] );
 
 		$response->setVal( 'urls', $urls );
 		$response->setVal( 'success', $status->isOK() );
@@ -55,10 +53,23 @@ class PortableInfoboxBuilderController extends WikiaController {
 		$response->setVal( 'warnings', $status->getWarningsArray() );
 	}
 
+	public function getRedirectUrls( $title ) {
+		$response = $this->getResponse();
+		$response->setFormat( WikiaResponse::FORMAT_JSON );
+
+		$urls =  PortableInfoboxBuilderHelper::createRedirectUrls( $title );
+
+		if  ( !empty( $urls ) ) {
+			$response->setVal( 'urls', $urls );
+		} else {
+			$response->setCode( 500 );
+		}
+	}
+
 	private function attemptSave( $params ) {
 		$status = new Status();
 
-		$title = $this->getTitle( $params[ 'title' ], $status );
+		$title = PortableInfoboxBuilderHelper::getTitle( $params[ 'title' ], $status );
 
 		$status = $this->checkRequestValidity( $status );
 		$status = $this->checkUserPermissions( $title, $status );
@@ -82,26 +93,6 @@ class PortableInfoboxBuilderController extends WikiaController {
 			$status->fatal( 'invalid-write-request' );
 		}
 		return $status;
-	}
-
-	/**
-	 * creates Title object from provided title string. If Title object can not be created then status is updated
-	 * @param $titleParam
-	 * @param $status
-	 * @return Title
-	 * @throws MWException
-	 */
-	private function getTitle( $titleParam, &$status ) {
-		if ( !$titleParam ) {
-			$status->fatal( 'no-title-provided' );
-		}
-
-		$title = $status->isGood() ? Title::newFromText( $titleParam, NS_TEMPLATE ) : false;
-		// check if title object created
-		if ( $status->isGood() && !$title ) {
-			$status->fatal( 'bad-title' );
-		}
-		return $title;
 	}
 
 	/**
