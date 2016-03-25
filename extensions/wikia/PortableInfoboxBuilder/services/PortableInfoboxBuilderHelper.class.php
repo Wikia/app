@@ -72,4 +72,18 @@ class PortableInfoboxBuilderHelper {
 	public static function isSubmitAction( $request ) {
 		return ( $request->getVal( self::QUERYSTRING_ACTION_KEY ) === self::QUERYSTRING_SUBMIT_ACTION );
 	}
+
+	/**
+	 * @param Title $title
+	 * @return array
+	 */
+	public static function createRedirectUrls( $title ) {
+		return [
+			'templatePageUrl' => $title->getFullUrl(),
+			'sourceEditorUrl' => $title->getFullUrl( [
+				'action' => 'edit',
+				'useeditor' => 'source'
+			] )
+		];
+	}
 }

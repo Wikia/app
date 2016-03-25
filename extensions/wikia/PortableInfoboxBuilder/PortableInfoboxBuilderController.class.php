@@ -44,16 +44,10 @@ class PortableInfoboxBuilderController extends WikiaController {
 
 		$status = $this->attemptSave( $this->getRequest()->getParams() );
 
-		// TODO: clean me up!!
-		$p = $this->getRequest()->getParams();
-		$title = Title::newFromText( $p['title'], NS_TEMPLATE );
-
-		$urls = [];
-		$urls['templatePageUrl'] = $title->getFullUrl();
-		$urls['sourceEditorUrl'] = $title->getFullUrl( [
-			'action' => 'edit',
-			'useeditor' => 'source'
-		] );
+		$requestParams = $this->getRequest()->getParams();
+		$title = Title::newFromText( $requestParams['title'], NS_TEMPLATE );
+		// use helper method
+		$urls = $this->createRedirectUrls( $title );
 
 		$response->setVal( 'urls', $urls );
 		$response->setVal( 'success', $status->isOK() );
