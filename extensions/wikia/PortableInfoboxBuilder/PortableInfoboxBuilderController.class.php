@@ -69,13 +69,11 @@ class PortableInfoboxBuilderController extends WikiaController {
 		}
 	}
 
-	public function checkIfTemplateExists() {
-		$status = new Status();
+	public function getTemplateExists() {
+		$title = PortableInfoboxBuilderHelper::getTitle( $this->getRequest()->getVal('title'), new Status() );
+
 		$response = $this->getResponse();
 		$response->setFormat( WikiaResponse::FORMAT_JSON );
-		$requestParams = $this->getRequest()->getParams();
-		$title = PortableInfoboxBuilderHelper::getTitle( $requestParams[ 'title' ], $status );
-
 		$response->setVal( 'exists', $title->isKnown() );
 		$response->setVal( 'success', true );
 	}
