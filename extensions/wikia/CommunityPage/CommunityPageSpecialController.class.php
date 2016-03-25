@@ -25,7 +25,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 			'popupMessageText' => 'This is just a test message for the popup message box',
 			'userIsMember' => CommunityPageSpecialHelper::userHasEdited( $this->wg->User ),
 			'pageTitle' => $this->msg( 'communitypage-title' )->plain(),
-			'contributors' => $this->getTopContributorsDetails(),
+			'contributors' => $this->getContributorsDetails( $this->usersModel->getTopContributors() ),
 		] );
 	}
 
@@ -55,10 +55,10 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	/**
 	 * Get details for display of top contributors
 	 *
+	 * @param array $contributors List of contributors containing userId and contributions for each user
 	 * @return array
 	 */
-	protected function getTopContributorsDetails() {
-		$contributors = $this->usersModel->getTopContributorsRaw();
+	protected function getContributorsDetails( $contributors ) {
 
 		return array_map( function ( $contributor ) {
 			$user = User::newFromId( $contributor['userId'] );

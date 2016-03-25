@@ -21,7 +21,7 @@ class CommunityPageSpecialUsersModel {
 	 * @param int $limit
 	 * @return Mixed|null
 	 */
-	public function getTopContributorsRaw( $limit = 10 ) {
+	public function getTopContributors( $limit = 10 ) {
 		$data = WikiaDataAccess::cache(
 			wfMemcKey( self::TOP_CONTRIB_MCACHE_KEY ),
 			WikiaResponse::CACHE_STANDARD,
@@ -53,6 +53,7 @@ class CommunityPageSpecialUsersModel {
 				return $sqlData;
 			}
 		);
+
 		return $data;
 	}
 
