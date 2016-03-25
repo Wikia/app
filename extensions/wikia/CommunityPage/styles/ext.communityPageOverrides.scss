@@ -1,7 +1,7 @@
 // body styles
 $comm-page-body-color: #FFF;
 
-.special-community-page.skin-oasis {
+body.special-community-page.skin-oasis {
 	background-color: $comm-page-body-color;
 
 	&::before, &::after, .background-image-gradient {
