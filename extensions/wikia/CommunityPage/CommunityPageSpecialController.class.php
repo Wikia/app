@@ -13,6 +13,8 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	}
 
 	public function index() {
+		global $wgUser;
+
 		$this->specialPage->setHeaders();
 		$output = $this->getOutput();
 		$output->setPageTitle( $this->msg( 'communitypageexperiment-title' )->plain() );
@@ -23,6 +25,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		$this->wg->SuppressWikiHeader = true;
 		$this->wg->SuppressFooter = true;
 
+		$this->userIsMember = CommunityPageSpecialHelper::userHasEdited( $wgUser );
 		$this->pageTitle = $this->msg( 'communitypageexperiment-title' )->plain();
 		$this->contributors = ( new CommunityPageSpecialModel() )->getTopContributorsDetails();
 	}

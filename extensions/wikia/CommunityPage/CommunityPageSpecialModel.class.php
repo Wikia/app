@@ -4,10 +4,12 @@
 
 
 class CommunityPageSpecialModel {
-	const MCACHE_KEY = 'communitypage';
+	const TOP_CONTRIB_MCACHE_KEY = 'community_page_top_contrib';
+	const TOP_CONTRIB_DETAILS_MCACHE_KEY = 'community_page_top_contrib_details'; // todo not used
+	const FIRST_REV_MCACHE_KEY = 'community_page_first_revision';
 
 	public function getTopContributorsRaw() {
-		$data = WikiaDataAccess::cache( wfMemcKey( self::MCACHE_KEY ), WikiaResponse::CACHE_STANDARD, function () {
+		$data = WikiaDataAccess::cache( wfMemcKey( self::TOP_CONTRIB_MCACHE_KEY ), WikiaResponse::CACHE_STANDARD, function () {
 			global $wgDatamartDB;
 			$db = wfGetDB( DB_SLAVE, [], $wgDatamartDB );
 
@@ -52,5 +54,39 @@ class CommunityPageSpecialModel {
 				'profilePage' => $user->getUserPage()->getLocalURL()
 			];
 		}, $contributors );
+	}
+
+	public static function getFirstRevision( User $user ) {
+		if ( $user->isAnon() ) {
+			return null;
+		}
+
+		$data = WikiaDataAccess::cache(
+			wfMemcKey( self::FIRST_REV_MCACHE_KEY ),
+			WikiaResponse::CACHE_STANDARD,
+			function () use ($user) {
+				$db = wfGetDB( DB_SLAVE );
+
+				$sqlData = ( new WikiaSQL() )
+					->SELECT( 'rev_timestamp' )
+					->FROM ( 'revision' )
+					->WHERE ( 'rev_user' )->EQUAL_TO( $user->getID() )
+					->LIMIT( 1 )
+					->run( $db, function ( ResultWrapper $result ) {
+						$out = [];
+						while ( $row = $result->fetchRow() ) {
+							$out[] = [
+								'rev_timestamp' => $row['rev_timestamp']
+							];
+						}
+
+						return $out;
+					} );
+
+				return $sqlData;
+			}
+		);
+
+		return $data;
 	}
 }

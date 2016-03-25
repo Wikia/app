@@ -2,6 +2,8 @@
 	{{pageTitle}}
 </div>
 
+{{#userIsMember}}<p>Current User is a Member of this Wiki</p>{{/userIsMember}}
+{{^userIsMember}}<p>Current User is not a member or is Anon</p>{{/userIsMember}}
 
 {{#contributors}}
 	<p>{{{avatar}}} <a href="{{profilePage}}">{{userName}}</a><br>
