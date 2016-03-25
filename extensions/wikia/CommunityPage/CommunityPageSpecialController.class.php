@@ -17,22 +17,8 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	protected function populateData() {
 
 		$this->response->setValues( [
-			'headerWelcomeMsg' => $this->msg( 'communitypage-tasks-header-welcome' )->plain(),
 			'adminWelcomeMsg' => $this->msg( 'communitypage-tasks-admin-welcome' )->text(),
 			'pageListEmptyText' => $this->msg( 'communitypage-page-list-empty' )->plain(),
-			'pageListEditText' => $this->msg( 'communitypage-page-list-edit' )->plain(),
-			'inviteFriendsText' => $this->msg( 'communitypage-invite-friends' )->plain(),
-			'thisMonthText' => $this->msg( 'communitypage-this-month' )->plain(),
-			'showMonthlySummary' => true,
-			'statPagesTitle' => $this->msg( 'communitypage-pages' )->plain(),
-			'statPagesNumber' => 45,
-			'statPageViewsTitle' => $this->msg( 'communitypage-pageviews' )->plain(),
-			'statPageViewsNumber' => '1,049',
-			'statEditsTitle' => $this->msg( 'communitypage-edits' )->plain(),
-			'statEditsNumber' => 621,
-			'statEditorsTitle' => $this->msg( 'communitypage-editors' )->plain(),
-			'statEditorsNumber' => 23,
-
 		] );
 
 		$this->userIsMember = CommunityPageSpecialHelper::userHasEdited( $this->wg->User );
@@ -51,6 +37,24 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		$this->wg->SuppressPageHeader = true;
 		$this->wg->SuppressWikiHeader = true;
 		$this->wg->SuppressFooter = true;
+	}
+
+	public function header() {
+		$this->response->setValues( [
+			'inviteFriendsText' => $this->msg( 'communitypage-invite-friends' )->plain(),
+			'headerWelcomeMsg' => $this->msg( 'communitypage-tasks-header-welcome' )->plain(),
+			'pageListEditText' => $this->msg( 'communitypage-page-list-edit' )->plain(),
+			'thisMonthText' => $this->msg( 'communitypage-this-month' )->plain(),
+			'showMonthlySummary' => true,
+			'statPagesTitle' => $this->msg( 'communitypage-pages' )->plain(),
+			'statPagesNumber' => 45,
+			'statPageViewsTitle' => $this->msg( 'communitypage-pageviews' )->plain(),
+			'statPageViewsNumber' => '1,049',
+			'statEditsTitle' => $this->msg( 'communitypage-edits' )->plain(),
+			'statEditsNumber' => 621,
+			'statEditorsTitle' => $this->msg( 'communitypage-editors' )->plain(),
+			'statEditorsNumber' => 23,
+		] );
 	}
 
 	/**

@@ -1,4 +1,7 @@
+body.special-community-page.skin-oasis {
+	background-color: #FFF;
 
-.community-full-width-page {
-	width: 100%;
+	&::before, &::after, .background-image-gradient {
+		display: none;
+	}
 }
