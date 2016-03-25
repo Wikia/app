@@ -35,35 +35,6 @@ class PortableInfoboxBuilderHooks {
 	}
 
 	/**
-	 * Hook that exports url to the current template page
-	 *
-	 * @param Array $vars - (reference) js variables
-	 * @param Array $scripts - (reference) js scripts
-	 * @param Skin $skin - skins
-	 * @return Boolean True - to continue hooks execution
-	 */
-	public static function onWikiaSkinTopScripts( &$vars, &$scripts, $skin ) {
-//		$title = $skin->getTitle();
-//
-//		if ( $title && $title->isSpecial( PortableInfoboxBuilderSpecialController::PAGE_NAME ) ) {
-//			$templateTitleText = PortableInfoboxBuilderHelper::getUrlPath( $title->getText() );
-//
-//			//remove me!
-//			// We need the variable only if Infobox Builder launches (there is a template title provided)
-//			if ( $templateTitleText ) {
-//				$templateTitle = Title::newFromText( $templateTitleText, NS_TEMPLATE );
-//				$vars['templatePageUrl'] = $templateTitle->getFullUrl();
-//				$vars['sourceEditorUrl'] = $templateTitle->getFullUrl( [
-//					'action' => 'edit',
-//					'useeditor' => 'source'
-//				] );
-//			}
-//		}
-
-		return true;
-	}
-
-	/**
 	 * Add global variables for Javascript
 	 * @param array $aVars
 	 * @return bool

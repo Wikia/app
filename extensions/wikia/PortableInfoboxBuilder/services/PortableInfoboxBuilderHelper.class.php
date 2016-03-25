@@ -83,7 +83,7 @@ class PortableInfoboxBuilderHelper {
 		$status = new Status();
 		$title = self::getTitle( $titleString, $status );
 
-		if ( $title ) {
+		if ( $status->isGood() ) {
 			return [
 				'templatePageUrl' => $title->getFullUrl(),
 				'sourceEditorUrl' => $title->getFullUrl( [
