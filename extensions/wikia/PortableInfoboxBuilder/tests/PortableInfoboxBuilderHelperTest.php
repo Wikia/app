@@ -42,6 +42,20 @@ class PortableInfoboxBuilderHelperTest extends WikiaBaseTest {
 		$this->assertEquals( $expected, PortableInfoboxBuilderHelper::getTitle( $title, $status ) );
 	}
 
+	/**
+	 * @dataProvider createRedirectUrlsProvider
+	 */
+	public function testCreateRedirectUrls( $isGood, $expected ) {
+		$statusMock = $this->getMockBuilder( 'Status' )->setMethods( [ 'isGood' ] )->getMock();
+		$statusMock->expects( $this->any() )->method( 'isGood' )->willReturn( $isGood );
+		$this->mockClass( 'Status', $statusMock );
+		$fullUrlMock = $this->getMockBuilder( 'Title' )->setMethods( [ 'getFullUrl' ] )->getMock();
+		$fullUrlMock->expects( $this->any() )->method( 'getFullUrl' )->willReturn( 'full_url' );
+		$this->mockClass( 'Title', $fullUrlMock );
+
+		$this->assertEquals( $expected, PortableInfoboxBuilderHelper::createRedirectUrls( 'test' ) );
+	}
+
 	public function titleTextProvider() {
 		return [
 			[ '', ''],
@@ -77,6 +91,18 @@ class PortableInfoboxBuilderHelperTest extends WikiaBaseTest {
 			[ 't t', Title::newFromText( 't t', NS_TEMPLATE ) ],
 			[ '', false ],
 			[ null, false ]
+		];
+	}
+
+	public function createRedirectUrlsProvider() {
+		return [
+			[ false, []],
+			[ true,
+				[
+					'templatePageUrl' => 'full_url',
+					'sourceEditorUrl' => 'full_url'
+				]
+			]
 		];
 	}
 }
