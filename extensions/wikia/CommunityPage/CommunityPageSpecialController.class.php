@@ -9,36 +9,24 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		$this->usersModel = new CommunityPageSpecialUsersModel();
 	}
 
-	protected function addAssets() {
-		$this->response->addAsset( 'special_community_page_js' );
-		$this->response->addAsset( 'special_community_page_scss' );
-	}
+	public function index() {
+		$this->specialPage->setHeaders();
+		$this->getOutput()->setPageTitle( $this->msg( 'communitypage-title' )->plain() );
+		$this->addAssets();
 
-	protected function populateData() {
+		$this->wg->SuppressPageHeader = true;
+		$this->wg->SuppressWikiHeader = true;
+		$this->wg->SuppressFooter = true;
 
 		$this->response->setValues( [
 			'adminWelcomeMsg' => $this->msg( 'communitypage-tasks-admin-welcome' )->text(),
 			'pageListEmptyText' => $this->msg( 'communitypage-page-list-empty' )->plain(),
 			'showPopupMessage' => true,
 			'popupMessageText' => 'This is just a test message for the popup message box',
+			'userIsMember' => CommunityPageSpecialHelper::userHasEdited( $this->wg->User ),
+			'pageTitle' => $this->msg( 'communitypage-title' )->plain(),
+			'contributors' => $this->getTopContributorsDetails(),
 		] );
-
-		$this->userIsMember = CommunityPageSpecialHelper::userHasEdited( $this->wg->User );
-		$this->pageTitle = $this->msg( 'communitypage-title' )->plain();
-		$this->contributors = $this->getTopContributorsDetails();
-	}
-
-	public function index() {
-		$this->specialPage->setHeaders();
-		$output = $this->getOutput();
-		$output->setPageTitle( $this->msg( 'communitypage-title' )->plain() );
-
-		$this->addAssets();
-		$this->populateData();
-
-		$this->wg->SuppressPageHeader = true;
-		$this->wg->SuppressWikiHeader = true;
-		$this->wg->SuppressFooter = true;
 	}
 
 	public function header() {
@@ -57,6 +45,11 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 			'statEditorsTitle' => $this->msg( 'communitypage-editors' )->plain(),
 			'statEditorsNumber' => 23,
 		] );
+	}
+
+	protected function addAssets() {
+		$this->response->addAsset( 'special_community_page_js' );
+		$this->response->addAsset( 'special_community_page_scss' );
 	}
 
 	/**
