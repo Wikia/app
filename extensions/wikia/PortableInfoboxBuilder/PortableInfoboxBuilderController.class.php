@@ -64,7 +64,7 @@ class PortableInfoboxBuilderController extends WikiaController {
 			$response->setVal( 'urls', $urls );
 			$response->setVal( 'success', true );
 		} else {
-			$response->setCode( 500 );
+			$response->setCode( 400 );
 			$response->setVal( 'errors', [ 'Could not create URLs from given string' ] );
 		}
 	}
