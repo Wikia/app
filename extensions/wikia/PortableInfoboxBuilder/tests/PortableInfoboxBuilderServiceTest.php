@@ -24,6 +24,10 @@ class PortableInfoboxBuilderServiceTest extends WikiaBaseTest {
 	 * @dataProvider markupTranslationsDataProvider
 	 */
 	public function testTranslationFromMarkup( $markup, $expected ) {
+		// we are encoding and decoding here to be able to easly compare two structures. json_encode works
+		// differently according to context where object/array is placed and thus, A' != json_decode(json_encode(A))
+		// Other solution would be to build proper stdClass structure in $expected field but that would require
+		// much more work and would decrease readability.
 		$generated_json = json_decode( json_encode( $this->builderService->translateMarkupToData( $markup ) ) );
 		$expected_json = json_decode( $expected );
 		$this->assertEquals( $expected_json, $generated_json );
