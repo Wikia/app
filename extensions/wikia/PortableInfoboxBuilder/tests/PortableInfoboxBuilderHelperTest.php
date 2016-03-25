@@ -34,6 +34,14 @@ class PortableInfoboxBuilderHelperTest extends WikiaBaseTest {
 		$this->assertEquals( $expectedResult, PortableInfoboxBuilderHelper::isSubmitAction( $requestMock ) );
 	}
 
+	/**
+	 * @dataProvider getTitleProvider
+	 */
+	public function testGetTitle( $title, $expected ) {
+		$status = new Status();
+		$this->assertEquals( $expected, PortableInfoboxBuilderHelper::getTitle( $title, $status ) );
+	}
+
 	public function titleTextProvider() {
 		return [
 			[ '', ''],
@@ -59,6 +67,15 @@ class PortableInfoboxBuilderHelperTest extends WikiaBaseTest {
 			[ 'raw', false ],
 			[ 'source', false ],
 			[ 'edit', false ],
+			[ null, false ]
+		];
+	}
+
+	public function getTitleProvider() {
+		return [
+			[ 'testtitle', Title::newFromText( 'testtitle', NS_TEMPLATE ) ],
+			[ 't t', Title::newFromText( 't t', NS_TEMPLATE ) ],
+			[ '', false ],
 			[ null, false ]
 		];
 	}

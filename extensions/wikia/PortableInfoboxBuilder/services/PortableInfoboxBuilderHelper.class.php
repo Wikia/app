@@ -74,7 +74,7 @@ class PortableInfoboxBuilderHelper {
 	}
 
 	/**
-	 * Fir given title string create urls to template page and source editor
+	 * For given title string create urls to template page and source editor
 	 * @param $titleString string
 	 * @return array with key value url pairs or empty array
 	 * if invalid string passed
@@ -102,7 +102,7 @@ class PortableInfoboxBuilderHelper {
 	 * If Title object can not be created then status is updated
 	 * @param $titleParam
 	 * @param $status
-	 * @return Title
+	 * @return Title or false if invalid data passed
 	 * @throws MWException
 	 */
 	public static function getTitle( $titleParam, &$status ) {
