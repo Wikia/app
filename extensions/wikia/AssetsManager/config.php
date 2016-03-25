@@ -2844,7 +2844,7 @@ $config['special_community_page_js'] = [
 $config['special_community_page_scss'] = [
 	'type' => AssetsManager::TYPE_SCSS,
 	'assets' => [
-		'//extensions/wikia/CommunityPage/styles/ext.communityPage.scss',
-		'//extensions/wikia/CommunityPage/styles/ext.communityPageOverrides.scss',
+		'//extensions/wikia/CommunityPage/styles/CommunityPage.scss',
+		'//extensions/wikia/CommunityPage/styles/CommunityPageOverrides.scss',
 	],
 ];

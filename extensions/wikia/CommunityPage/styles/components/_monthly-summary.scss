@@ -1,0 +1,55 @@
+$font-activity-summary: HelveticaNeue;
+
+.community-page-monthly-summary {
+	align-items: center;
+	background-color: $color-activity-background;
+	display: flex; // todo: use mixins for this
+	flex-direction: column;
+	height: 129px;
+	justify-content: center;
+	text-align: center;
+
+	.heading {
+		color: $color-activity-text;
+		font-family: $font-activity-summary;
+		font-size: 14px;
+		font-weight: bold;
+		text-transform: uppercase;
+	}
+
+	.padding {
+		height: 15px;
+		width: 100%;
+	}
+
+	.stats {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		padding-top: 10px;
+		width: 420px;
+	}
+
+	.stat-container {
+		display: flex;
+		flex-direction: column;
+		height: 40px;
+		padding: 5px;
+		text-align: center;
+	}
+
+	.stat-number {
+		color: $color-activity-text;
+		font-family: $font-activity-summary;
+		font-size: 24px;
+		line-height: .8;
+	}
+
+	.stat-name {
+		color: $color-activity-text;
+		font-family: $font-activity-summary;
+		font-size: 14px;
+		line-height: 2;
+		text-transform: uppercase;
+	}
+}
