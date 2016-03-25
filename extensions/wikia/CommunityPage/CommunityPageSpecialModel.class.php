@@ -1,12 +1,19 @@
 <?php
 
-//select user_id, sum(creates + edits + deletes + undeletes) as contr from rollup_wiki_namespace_user_events where period_id = 1 and  time_id <= now()  and time_id > DATE_SUB(now(), INTERVAL 6 YEAR) GROUP BY user_id  ORDER BY contr desc LIMIT 10 ;
-
-
 class CommunityPageSpecialModel {
 	const TOP_CONTRIB_MCACHE_KEY = 'community_page_top_contrib';
 	const TOP_CONTRIB_DETAILS_MCACHE_KEY = 'community_page_top_contrib_details'; // todo not used
 	const FIRST_REV_MCACHE_KEY = 'community_page_first_revision';
+
+	private $wikiService;
+
+	private function getWikiService() {
+		return $this->wikiService;
+	}
+
+	public function __construct() {
+		$this->wikiService = new WikiService();
+	}
 
 	public function getTopContributorsRaw() {
 		$data = WikiaDataAccess::cache( wfMemcKey( self::TOP_CONTRIB_MCACHE_KEY ), WikiaResponse::CACHE_STANDARD, function () {

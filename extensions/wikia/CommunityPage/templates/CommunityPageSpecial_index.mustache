@@ -1,5 +1,12 @@
-<div class="community-page-header">
-	{{pageTitle}}
+<div id="CommunityPageHeader"  class="community-page-header">
+	<div class="community-page-header-content">
+		<h1>
+			{{headerWelcomeMsg}}
+		</h1>
+		<p>
+			<a id="CommunityPageInviteFriends" href="#" class="wikia-button">{{inviteFriendsText}}</a>
+		</p>
+	</div>
 </div>
 
 {{#userIsMember}}<p>Current User is a Member of this Wiki</p>{{/userIsMember}}
