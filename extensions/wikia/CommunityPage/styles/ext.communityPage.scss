@@ -6,6 +6,12 @@ $color-community-page-gray: #eee;
 $color-community-page-dark-gray: #ccc;
 $color-community-page-admin-text: #808080;
 
+$color-activity-background: #f6f6f6;
+$color-activity-text: #383838;
+
+$font-activity-summary: HelveticaNeue;
+
+
 .community-page-header {
 	align-items: center;
 	background-image: url('/extensions/wikia/WAMPage/images/hero.jpg'); /* inline */
@@ -46,7 +52,7 @@ $color-community-page-admin-text: #808080;
 
 .community-page-monthly-summary {
 	align-items: center;
-	background-color: #f6f6f6;
+	background-color: $color-activity-background;
 	display: flex;
 	flex-direction: column;
 	height: 129px;
@@ -54,8 +60,9 @@ $color-community-page-admin-text: #808080;
 	text-align: center;
 
 	.heading {
-		color: #383838;
-		font-family: HelveticaNeue-Bold;
+		color: $color-activity-text;
+		font-family: $font-activity-summary;
+		font-weight: bold;
 		font-size: 14px;
 		text-transform: uppercase;
 	}
@@ -82,15 +89,15 @@ $color-community-page-admin-text: #808080;
 	}
 
 	.stat-number {
-		color: #383838;
-		font-family: HelveticaNeue;
+		color: $color-activity-text;
+		font-family: $font-activity-summary;
 		font-size: 24px;
 		line-height: 0.8;
 	}
 
 	.stat-name {
-		color: #383838;
-		font-family: HelveticaNeue;
+		color: $color-activity-text;
+		font-family: $font-activity-summary;
 		font-size: 14px;
 		line-height: 2;
 		text-transform: uppercase;
