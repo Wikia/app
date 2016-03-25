@@ -44,15 +44,35 @@ class PortableInfoboxBuilderController extends WikiaController {
 
 		$status = $this->attemptSave( $this->getRequest()->getParams() );
 
+		$requestParams = $this->getRequest()->getParams();
+		$urls = PortableInfoboxBuilderHelper::createRedirectUrls( $requestParams['title'] );
+
+		$response->setVal( 'urls', $urls );
 		$response->setVal( 'success', $status->isOK() );
 		$response->setVal( 'errors', $status->getErrorsArray() );
 		$response->setVal( 'warnings', $status->getWarningsArray() );
 	}
 
+	public function getRedirectUrls() {
+		$response = $this->getResponse();
+		$response->setFormat( WikiaResponse::FORMAT_JSON );
+
+		$requestParams = $this->getRequest()->getParams();
+		$urls = PortableInfoboxBuilderHelper::createRedirectUrls( $requestParams['title'] );
+
+		if  ( !empty( $urls ) ) {
+			$response->setVal( 'urls', $urls );
+			$response->setVal( 'success', true );
+		} else {
+			$response->setCode( 400 );
+			$response->setVal( 'errors', [ 'Could not create URLs from given string' ] );
+		}
+	}
+
 	private function attemptSave( $params ) {
 		$status = new Status();
 
-		$title = $this->getTitle( $params[ 'title' ], $status );
+		$title = PortableInfoboxBuilderHelper::getTitle( $params[ 'title' ], $status );
 
 		$status = $this->checkRequestValidity( $status );
 		$status = $this->checkUserPermissions( $title, $status );
@@ -76,26 +96,6 @@ class PortableInfoboxBuilderController extends WikiaController {
 			$status->fatal( 'invalid-write-request' );
 		}
 		return $status;
-	}
-
-	/**
-	 * creates Title object from provided title string. If Title object can not be created then status is updated
-	 * @param $titleParam
-	 * @param $status
-	 * @return Title
-	 * @throws MWException
-	 */
-	private function getTitle( $titleParam, &$status ) {
-		if ( !$titleParam ) {
-			$status->fatal( 'no-title-provided' );
-		}
-
-		$title = $status->isGood() ? Title::newFromText( $titleParam, NS_TEMPLATE ) : false;
-		// check if title object created
-		if ( $status->isGood() && !$title ) {
-			$status->fatal( 'bad-title' );
-		}
-		return $title;
 	}
 
 	/**
