@@ -234,7 +234,7 @@ describe('ext.wikia.adEngine.lookup.rubiconFastlane', function () {
 
 		expect(rubiconFastlane.getSlotParams('INCONTENT_BOXAD_1')).toEqual({
 			'bid': 'Rxx',
-			'rpfl_7450': ['8_tier0100', '9_tierNONE', '10_tierNONE', '15_tier0010', '54_tier0050'],
+			'rpfl_7450': ['8_tier0100', '9_tierNONE', '10_tierNONE', '15_tier0010', '54_tier0050']
 		});
 	});
 
