@@ -1,7 +1,18 @@
-body.special-community-page.skin-oasis {
-	background-color: #FFF;
+// body styles
+$comm-page-body-color: #FFF;
+
+.special-community-page.skin-oasis {
+	background-color: $comm-page-body-color;
 
 	&::before, &::after, .background-image-gradient {
 		display: none;
+	}
+
+	.WikiaTopAds {
+		display: none;
+	}
+
+	.WikiaPage {
+		border: 0;
 	}
 }
