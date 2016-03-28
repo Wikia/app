@@ -4,20 +4,35 @@ define('ext.wikia.recirculation.helpers.lateral', [
 	'wikia.window',
 	'wikia.abTest',
 ], function ($, w, abTest) {
-	var options = {
-		count: 5,
-		width: 268,
-		height: 166,
-		type: 'fandom'
-	};
+	var libraryLoaded = false,
+		options = {
+			count: 5,
+			width: 160,
+			height: 90,
+			type: 'fandom'
+		};
 
-	function loadLateral() {
+	function loadLateral(callback) {
+		if (libraryLoaded && callback && typeof callback === 'function') {
+			callback(w.lateral);
+		}
+
 		var lateralScript = document.createElement('script'),
 			url = 'https://assets.lateral.io/recommendations.js';
 
 		lateralScript.src = url;
 
 		document.getElementsByTagName('body')[0].appendChild(lateralScript);
+
+		// This function is called when the Lateral script has loaded
+		w.onLoadLateral = function(lateral) {
+			w.lateral = lateral;
+			libraryLoaded = true;
+
+			if (callback && typeof callback === 'function') {
+				callback(lateral);
+			}
+		}
 	}
 
 	function recommendFandom(lateral, callback) {
@@ -44,8 +59,7 @@ define('ext.wikia.recirculation.helpers.lateral', [
 			deferred.resolve(formatData(data));
 		}
 
-		// This function is called when the Lateral script has loaded
-		w.onLoadLateral = function(lateral) {
+		loadLateral(function(lateral) {
 			switch (type) {
 				case 'fandom':
 					recommendFandom(lateral, resolveFormattedData);
@@ -54,12 +68,9 @@ define('ext.wikia.recirculation.helpers.lateral', [
 					recommendCommunity(lateral, resolveFormattedData);
 					break;
 			}
-		}
-
-		loadLateral();
+		});
 
 		return deferred.promise();
-
 	}
 
 	function formatData(data) {

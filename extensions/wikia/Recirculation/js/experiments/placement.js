@@ -54,10 +54,10 @@ require([
 			break;
 		case 'LATERAL_COMMUNITY':
 			helper = lateralHelper({
-				type: 'community'
+				type: 'community',
+				count: 3
 			});
-			view = railView();
-			isRail = true;
+			view = incontentView();
 			break;
 		case 'DESIGN_ONE':
 		case 'DESIGN_TWO':
@@ -120,6 +120,9 @@ require([
 		case 'TABOOLA':
 			renderTaboola();
 			return;
+		case 'LATERAL_BOTH':
+			renderBothLateralExperiments();
+			return;
 		default:
 			return;
 	}
@@ -144,7 +147,11 @@ require([
 		helper.loadData()
 			.then(view.render)
 			.then(view.setupTracking(experimentName))
-			.fail(function() {});
+			.fail(handleError);
+	}
+
+	function handleError() {
+		// Currently a noop as it's fine for us to fail silently in this case
 	}
 
 	function injectSubtitle($html) {
@@ -152,6 +159,29 @@ require([
 
 		$html.find('.trending').after(subtitle);
 		return $html;
+	}
+
+	function renderBothLateralExperiments() {
+		var incontent = incontentView();
+
+		lateralHelper({
+			type: 'community',
+			count: 3
+		}).loadData()
+			.then(incontent.render)
+			.then(incontent.setupTracking(experimentName))
+			.fail(handleError);
+
+		afterRailLoads(function() {
+			var rail = railView();
+			lateralHelper({
+				type: 'fandom',
+				count: 5
+			}).loadData()
+				.then(rail.render)
+				.then(rail.setupTracking(experimentName))
+				.fail(handleError);
+		});
 	}
 
 	function renderGoogleIncontent() {
