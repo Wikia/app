@@ -60,7 +60,9 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 			'userContributionsText' => $this->msg( 'communitypage-user-contributions' )
 				->numParams( $userContribCount )
 				->text(),
-			'contributors' => $this->getContributorsDetails( $this->usersModel->getTopContributors() ),
+			'contributors' => $this->getContributorsDetails(
+				DataMartService::getTopContributorsByWiki( 5 )
+			),
 			'userAvatar' => AvatarService::renderAvatar(
 				$this->wg->user->getName(),
 				AvatarService::AVATAR_SIZE_SMALL_PLUS
@@ -83,11 +85,13 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	 * @return array
 	 */
 	protected function getContributorsDetails( $contributors ) {
+		$count = 0;
 
-		return array_map( function ( $contributor ) {
+		return array_map( function ( $contributor ) use ( &$count ) {
 			$user = User::newFromId( $contributor['userId'] );
 			$userName = $user->getName();
 			$avatar = AvatarService::renderAvatar( $userName, AvatarService::AVATAR_SIZE_SMALL_PLUS - 2 );
+			$count += 1;
 
 			return [
 				'userName' => $userName,
@@ -95,7 +99,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 				'contributionsText' => $this->msg( 'communitypage-contributions' )
 					->numParams( $contributor['contributions'] )->text(),
 				'profilePage' => $user->getUserPage()->getLocalURL(),
-				'count' => '1'
+				'count' => $count,
 			];
 		}, $contributors );
 	}

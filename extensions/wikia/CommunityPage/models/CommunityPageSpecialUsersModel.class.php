@@ -16,48 +16,6 @@ class CommunityPageSpecialUsersModel {
 	}
 
 	/**
-	 * Get the user id and contribution count of the top n contributors to the current wiki
-	 *
-	 * @param int $limit
-	 * @return Mixed|null
-	 */
-	public function getTopContributors( $limit = 10 ) {
-		$data = WikiaDataAccess::cache(
-			wfMemcKey( self::TOP_CONTRIB_MCACHE_KEY ),
-			WikiaResponse::CACHE_STANDARD,
-			function () use ( $limit ) {
-				$db = wfGetDB( DB_SLAVE, [], F::app()->wg->DatamartDB );
-
-				$sqlData = ( new WikiaSQL() )
-					->SELECT( 'user_id, sum(creates + edits + deletes + undeletes) as contributions' )
-					->FROM ( 'rollup_wiki_namespace_user_events' )
-					->WHERE ( 'period_id' )->EQUAL_TO( 1 )
-					->AND_( 'time_id' )->LESS_THAN_OR_EQUAL( 'now()' )
-					// TODO - this interval is to get data from devbox
-					->AND_( 'time_id > DATE_SUB(now(), INTERVAL 6 YEAR)' )
-					->GROUP_BY( 'user_id' )
-					->ORDER_BY( 'contributions' )->DESC()
-					->LIMIT( $limit )
-					->run( $db, function ( ResultWrapper $result ) {
-						$out = [];
-						while ($row = $result->fetchRow()) {
-							$out[] = [
-								'userId' => $row['user_id'],
-								'contributions' => $row['contributions']
-							];
-						}
-
-						return $out;
-					} );
-
-				return $sqlData;
-			}
-		);
-
-		return $data;
-	}
-
-	/**
 	 * Get the date a user made their first edit to a wiki
 	 *
 	 * @param User $user
