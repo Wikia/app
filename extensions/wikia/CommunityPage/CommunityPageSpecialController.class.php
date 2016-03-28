@@ -57,13 +57,13 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		return [
 			'topContribsHeaderText' => $this->msg( 'communitypage-top-contributors-week' )->plain(),
 			'yourRankText' => $this->msg( 'communitypage-user-rank' )->plain(),
-			'contributionsText' => $this->msg( 'communitypage-contributions' )
+			'userContributionsText' => $this->msg( 'communitypage-user-contributions' )
 				->numParams( $userContribCount )
 				->text(),
 			'contributors' => $this->getContributorsDetails( $this->usersModel->getTopContributors() ),
 			'userAvatar' => AvatarService::renderAvatar(
 				$this->wg->user->getName(),
-				AvatarService::AVATAR_SIZE_SMALL_PLUS - 2
+				AvatarService::AVATAR_SIZE_SMALL_PLUS
 			),
 			'userRank' => 302,
 			'memberCount' => 309,
@@ -92,8 +92,10 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 			return [
 				'userName' => $userName,
 				'avatar' => $avatar,
-				'contributions' => $contributor['contributions'],
-				'profilePage' => $user->getUserPage()->getLocalURL()
+				'contributionsText' => $this->msg( 'communitypage-contributions' )
+					->numParams( $contributor['contributions'] )->text(),
+				'profilePage' => $user->getUserPage()->getLocalURL(),
+				'count' => '1'
 			];
 		}, $contributors );
 	}

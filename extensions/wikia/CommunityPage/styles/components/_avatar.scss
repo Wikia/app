@@ -1,0 +1,18 @@
+.avatar-container {
+	border: 2px solid #CCC;
+	border-radius: 50%;
+	height: 29px;
+	overflow: hidden;
+	width: 30px;
+
+	img {
+		border: 0;
+	}
+
+	&.logged-avatar-placeholder {
+		background-image: url('/extensions/wikia/GlobalNavigation/images/signin_icon.svg'); /* inline */
+		background-position: center;
+		background-repeat: no-repeat;
+	}
+}
+

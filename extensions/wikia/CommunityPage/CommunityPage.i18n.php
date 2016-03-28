@@ -29,7 +29,8 @@ $messages['en'] = array(
 	// new - needs qqq
 	'communitypage-top-contributors-week' => 'Top Contributors This Week',
 	'communitypage-user-rank' => 'Your Rank',
-	'communitypage-contributions' => '{{PLURAL:$1|contribution|contributions}}',
+	'communitypage-user-contributions' => '{{PLURAL:$1|contribution|contributions}}',
+	'communitypage-contributions' => '$1 {{PLURAL:$1|contribution|contributions}}',
 );
 
 $messages['qqq'] = array(

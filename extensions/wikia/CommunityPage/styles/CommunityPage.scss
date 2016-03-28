@@ -5,8 +5,10 @@
 @import 'components/header';
 @import 'components/monthly-summary';
 @import 'components/banner-message';
+@import 'components/avatar';
 
-// Todo: copy/pasted code from here down
+// TODO: handle dark themes
+// TODO: copy/pasted code from here down
 
 .community-page-admin-message {
 	align-items: center;
@@ -20,21 +22,6 @@
 	.admin-profile {
 		display: inline-block;
 		margin: 0 20px;
-	}
-
-	.avatar-container {
-		border: 1px solid rgb(199, 209, 216);
-		border-radius: 50%;
-		height: 50px;
-		margin: 0 auto;
-		overflow: hidden;
-		width: 50px;
-
-		&.logged-avatar-placeholder {
-			background-image: url('/extensions/wikia/GlobalNavigation/images/signin_icon.svg'); /* inline */
-			background-position: center;
-			background-repeat: no-repeat;
-		}
 	}
 
 	.profile-links {
