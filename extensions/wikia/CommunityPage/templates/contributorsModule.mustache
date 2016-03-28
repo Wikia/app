@@ -1,5 +1,5 @@
 {{#contributorsModule}}
-	<div class="module">
+	<div class="module ContributorsModule">
 		<h2>{{topContribsHeaderText}}</h2>
 		<div class="user-details">
 			<div class="avatar-container">
@@ -14,7 +14,7 @@
 				<span class="subtle">{{userContributionsText}}</span>
 			</div>
 		</div>
-		<ul>
+		<ul class="reset top-contributors">
 			{{#contributors}}
 				<li>
 					<div class="avatar-container">
@@ -29,5 +29,4 @@
 			{{/contributors}}
 		</ul>
 	</div>
-	{{foo}}
 {{/contributorsModule}}

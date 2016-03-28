@@ -1,0 +1,14 @@
+@import "skins/shared/mixins/clearfix";
+
+.ContributorsModule {
+	.top-contributors {
+		li {
+			@include clearfix;
+		}
+	}
+
+	.avatar-container {
+		float: left;
+		margin-right: 10px;
+	}
+}
