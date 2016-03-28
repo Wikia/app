@@ -25,7 +25,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 			'popupMessageText' => 'This is just a test message for the popup message box',
 			'userIsMember' => CommunityPageSpecialHelper::userHasEdited( $this->wg->User ),
 			'pageTitle' => $this->msg( 'communitypage-title' )->plain(),
-			'contributors' => $this->getContributorsDetails( $this->usersModel->getTopContributors() ),
+			'contributorsModule' => $this->getContributorsModuleData(),
 		] );
 	}
 
@@ -45,6 +45,30 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 			'statEditorsTitle' => $this->msg( 'communitypage-editors' )->plain(),
 			'statEditorsNumber' => 23,
 		] );
+	}
+
+	/**
+	 * Set context for contributorsModule template. Needs to be passed through the index method in order to work.
+	 * @return array
+	 */
+	protected function getContributorsModuleData() {
+		$userContribCount = 2;
+
+		return [
+			'topContribsHeaderText' => $this->msg( 'communitypage-top-contributors-week' )->plain(),
+			'yourRankText' => $this->msg( 'communitypage-user-rank' )->plain(),
+			'contributionsText' => $this->msg( 'communitypage-contributions' )
+				->numParams( $userContribCount )
+				->text(),
+			'contributors' => $this->getContributorsDetails( $this->usersModel->getTopContributors() ),
+			'userAvatar' => AvatarService::renderAvatar(
+				$this->wg->user->getName(),
+				AvatarService::AVATAR_SIZE_SMALL_PLUS - 2
+			),
+			'userRank' => 302,
+			'memberCount' => 309,
+			'userContribCount' => $userContribCount
+		];
 	}
 
 	protected function addAssets() {

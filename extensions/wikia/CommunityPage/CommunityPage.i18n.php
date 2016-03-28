@@ -25,6 +25,11 @@ $messages['en'] = array(
 	'communitypage-pageviews' => 'Pageviews',
 	'communitypage-edits' => 'Edits',
 	'communitypage-editors' => 'Editors',
+
+	// new - needs qqq
+	'communitypage-top-contributors-week' => 'Top Contributors This Week',
+	'communitypage-user-rank' => 'Your Rank',
+	'communitypage-contributions' => '{{PLURAL:$1|contribution|contributions}}',
 );
 
 $messages['qqq'] = array(

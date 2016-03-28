@@ -1,0 +1,21 @@
+{{#contributorsModule}}
+	<div class="module">
+		<h2>{{topContribsHeaderText}}</h2>
+		<div class="user-details">
+			{{{userAvatar}}}
+			<div class="rank">
+				<span>{{userRank}} <small>/ {{memberCount}}</small></span>
+				<span class="subtle">{{yourRankText}}</span>
+			</div>
+			<div class="user-contrib-count">
+				<span>{{userContribCount}}</span>
+				<span class="subtle">{{contributionsText}}</span>
+			</div>
+		</div>
+		{{#contributors}}
+			<p>{{{avatar}}} <a href="{{profilePage}}">{{userName}}</a><br>
+				{{contributions}} contributions</p>
+		{{/contributors}}
+	</div>
+	{{foo}}
+{{/contributorsModule}}
