@@ -395,7 +395,7 @@ class DataMartService extends Service {
 		return $events;
 	}
 
-	public static function getTopContributorsByWiki( $limit = 10, $interval = '1 YEAR', $wikiId = null ) {
+	public static function getTopContributorsByWiki( $limit = 10, $interval = '1 WEEK', $wikiId = null ) {
 		$app = F::app();
 
 		if ( empty( $wikiId ) ) {
@@ -405,9 +405,9 @@ class DataMartService extends Service {
 		$periodId = self::PERIOD_ID_DAILY;
 
 		$data = WikiaDataAccess::cache(
-			wfSharedMemcKey( 'datamart', 'user_edits', $wikiId, $limit, $periodId, $interval ),
+			wfSharedMemcKey( 'datamart', 'top_contributors', $wikiId, $limit, $periodId, $interval ),
 			WikiaResponse::CACHE_STANDARD,
-			function () use ( $limit, $periodId, $interval ) {
+			function () use ( $limit, $periodId, $interval, $wikiId ) {
 				$db = DataMartService::getDB();
 
 				$sqlData = ( new WikiaSQL() )
@@ -416,6 +416,7 @@ class DataMartService extends Service {
 					->WHERE ( 'period_id' )->EQUAL_TO( $periodId )
 					->AND_( 'time_id' )->LESS_THAN_OR_EQUAL( 'now()' )
 					->AND_( 'time_id > DATE_SUB(now(), INTERVAL ' . $interval. ')' )
+					->AND_( 'wiki_id' )->EQUAL_TO( $wikiId )
 					->GROUP_BY( 'user_id' )
 					->ORDER_BY( 'contributions' )->DESC()
 					->LIMIT( $limit )
