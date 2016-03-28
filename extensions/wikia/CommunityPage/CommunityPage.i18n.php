@@ -31,6 +31,8 @@ $messages['en'] = array(
 	'communitypage-user-rank' => 'Your Rank',
 	'communitypage-user-contributions' => '{{PLURAL:$1|contribution|contributions}}',
 	'communitypage-contributions' => '$1 {{PLURAL:$1|contribution|contributions}}',
+	'communitypage-admins' => 'Admins',
+	'communitypage-other-admins' => 'Other Admins',
 );
 
 $messages['qqq'] = array(

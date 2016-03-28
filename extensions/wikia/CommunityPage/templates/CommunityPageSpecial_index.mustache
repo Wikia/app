@@ -16,7 +16,10 @@
 		{{^userIsMember}}<p>Current User is not a member or is Anon</p>{{/userIsMember}}
 	</div>
 	<div id="WikiaRail" class="WikiaRail">
-		{{>contributorsModule}}
+		<div class="module">
+			{{>contributorsModule}}
+			{{>adminsModule}}
+		</div>
 	</div>
 </div>
 

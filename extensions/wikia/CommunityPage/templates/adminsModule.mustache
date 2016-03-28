@@ -1,0 +1,16 @@
+{{#adminsModule}}
+	<h2>{{topAdminsHeaderText}}</h2>
+	{{#admins}}
+		<li>
+			<div class="avatar-container">
+				{{{avatarUrl}}}
+			</div>
+			<div class="contributor-details">
+				<a href="{{userPageUrl}}">{{name}}</a>
+			</div>
+		</li>
+	{{/admins}}
+	{{#haveOtherAdmins}}
+		{{otherAdminCount}} {{otherAdmins}}
+	{{/haveOtherAdmins}}
+{{/adminsModule}}

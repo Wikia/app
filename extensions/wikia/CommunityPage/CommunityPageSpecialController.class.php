@@ -26,6 +26,8 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 			'userIsMember' => CommunityPageSpecialHelper::userHasEdited( $this->wg->User ),
 			'pageTitle' => $this->msg( 'communitypage-title' )->plain(),
 			'contributorsModule' => $this->getContributorsModuleData(),
+			'adminsModule' => $this->getAdminsModuleData(),
+
 		] );
 	}
 
@@ -72,6 +74,22 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 			'userContribCount' => $userContribCount
 		];
 	}
+	/**
+	 * Set context for adminsModule template. Needs to be passed through the index method in order to work.
+	 * @return array
+	 */
+	protected function getAdminsModuleData() {
+		$topAdmins = $this->usersModel->getTopAdmins();
+		$remainingAdminCount = count ( $topAdmins ) - 2;
+
+		return [
+			'topAdminsHeaderText' => $this->msg( 'communitypage-admins' )->plain(),
+			'otherAdmins' => $this->msg( 'communitypage-other-admins' )->plain(),
+			'admins' => array_slice( $topAdmins, 0, 2 ),
+			'otherAdminCount' => $remainingAdminCount,
+			'haveOtherAdmins' => $remainingAdminCount > 0,
+		];
+	}
 
 	protected function addAssets() {
 		$this->response->addAsset( 'special_community_page_js' );
@@ -103,6 +121,4 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 			];
 		}, $contributors );
 	}
-
-
 }

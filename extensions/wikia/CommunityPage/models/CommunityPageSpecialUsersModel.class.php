@@ -83,14 +83,17 @@ class CommunityPageSpecialUsersModel {
 	/**
 	 * Get a list of admins in order of their edit count in the last n days or all time if null
 	 *
-	 * @param int|null $limit Total number of Admins to get or get all if null
-	 * @param int|null $days Count only contributions in the last n days or all if null
 	 * @return array Array of admin data
 	 */
-	public function getTopAdmins( $limit = null, $days = null ) {
-		return [
-			'id' => 1
-		];
+	public function getTopAdmins( $wikiId = null) {
+		// fixme: $limit and $days not supported by WikiService::getMostActiveAdmins
+		$app = F::app();
+
+		if ( empty( $wikiId ) ) {
+			$wikiId = $app->wg->CityId;
+		}
+
+		return $this->getWikiService()->getMostActiveAdmins( $wikiId, AvatarService::AVATAR_SIZE_SMALL_PLUS );
 	}
 
 	/**
