@@ -10,6 +10,7 @@ require([
 	'ext.wikia.recirculation.views.footer',
 	'ext.wikia.recirculation.helpers.contentLinks',
 	'ext.wikia.recirculation.helpers.fandom',
+	'ext.wikia.recirculation.helpers.lateral',
 	'ext.wikia.recirculation.helpers.googleMatch',
 	'ext.wikia.adEngine.taboolaHelper',
 	require.optional('videosmodule.controllers.rail')
@@ -24,6 +25,7 @@ require([
 	footerView,
 	contentLinksHelper,
 	fandomHelper,
+	lateralHelper,
 	googleMatchHelper,
 	taboolaHelper,
 	videosModule
@@ -45,6 +47,18 @@ require([
 	}
 
 	switch (group) {
+		case 'LATERAL_FANDOM':
+			helper = lateralHelper();
+			view = railView();
+			isRail = true;
+			break;
+		case 'LATERAL_COMMUNITY':
+			helper = lateralHelper({
+				type: 'community'
+			});
+			view = railView();
+			isRail = true;
+			break;
 		case 'DESIGN_ONE':
 		case 'DESIGN_TWO':
 		case 'DESIGN_THREE':
