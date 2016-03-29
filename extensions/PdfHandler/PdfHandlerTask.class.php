@@ -19,7 +19,7 @@ class PdfHandlerTask extends BaseTask {
 	}
 
 	public static function onUploadVerifyFile($upload, $mime, &$error) {
-		\Wikia\Logger\WikiaLogger::instance()->critical('About to instantiate CreatePdfThumbnailsJob. MIGRATE!');
+		\Wikia\Logger\WikiaLogger::instance()->error('About to instantiate CreatePdfThumbnailsJob. MIGRATE!');
 		return CreatePdfThumbnailsJob::insertJobs($upload, $mime, $error);
 	}
 }

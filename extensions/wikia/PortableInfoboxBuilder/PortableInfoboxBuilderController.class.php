@@ -5,9 +5,18 @@ class PortableInfoboxBuilderController extends WikiaController {
 	const INFOBOX_BUILDER_PARAM = 'portableInfoboxBuilder';
 
 	public function getAssets() {
+		global $wgEnablePortableInfoboxEuropaTheme;
+
 		$response = $this->getResponse();
 		$response->setFormat( WikiaResponse::FORMAT_JSON );
-		$response->setVal( 'css', AssetsManager::getInstance()->getURL( 'portable_infobox_builder_preview_scss' ) );
+		if ( !empty( $wgEnablePortableInfoboxEuropaTheme ) ) {
+			$response->setVal( 'css', array_merge(
+				AssetsManager::getInstance()->getURL( 'portable_infobox_builder_preview_scss' ),
+				AssetsManager::getInstance()->getURL( 'portable_infobox_europa_theme_scss' )
+			) );
+		} else {
+			$response->setVal( 'css', AssetsManager::getInstance()->getURL( 'portable_infobox_builder_preview_scss' ) );
+		}
 
 		$params = $this->getRequest()->getParams();
 		if ( isset( $params[ 'title' ] ) ) {
@@ -138,6 +147,25 @@ class PortableInfoboxBuilderController extends WikiaController {
 		}
 
 		$status = $editPage->internalAttemptSave( $result );
+
+		if ($status->isGood()) {
+			$this->classifyAsInfobox( $title );
+		}
+
 		return $status;
+	}
+
+	/**
+	 * @param Title $title
+	 * @return int
+	 */
+	private function classifyAsInfobox( Title $title ) {
+		( new TemplateClassificationService() )->classifyTemplate(
+			$this->wg->cityId,
+			$title->getArticleID(),
+			TemplateClassificationService::TEMPLATE_INFOBOX,
+			UserTemplateClassificationService::USER_PROVIDER,
+			$this->wg->user->getName()
+		);
 	}
 }

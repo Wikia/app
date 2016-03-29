@@ -50,7 +50,7 @@ class ResourceLoaderAdEngineSourcePointRecoveryModule extends ResourceLoaderAdEn
 		);
 
 		if (!$content) {
-			\Wikia\Logger\WikiaLogger::instance()->warning( 'Failed to fetch SourcePoint script', ['url' => $url] );
+			\Wikia\Logger\WikiaLogger::instance()->error( 'Failed to fetch SourcePoint script', ['url' => $url] );
 		}
 
 		return $content;

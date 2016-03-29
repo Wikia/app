@@ -3,6 +3,7 @@ define('ext.wikia.adEngine.config.mobile', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.provider.directGptMobile',
 	'ext.wikia.adEngine.provider.evolve2',
+	'ext.wikia.adEngine.provider.hitMedia',
 	'ext.wikia.adEngine.provider.paidAssetDrop',
 	'ext.wikia.adEngine.provider.remnantGptMobile',
 	require.optional('wikia.instantGlobals')
@@ -10,6 +11,7 @@ define('ext.wikia.adEngine.config.mobile', [
 	adContext,
 	directGptMobile,
 	evolve2,
+	hitMedia,
 	paidAssetDrop,
 	remnantGptMobile,
 	instantGlobals
@@ -40,6 +42,8 @@ define('ext.wikia.adEngine.config.mobile', [
 		switch (context.forcedProvider) {
 			case 'evolve2':
 				return [evolve2];
+			case 'hitmedia':
+				return [hitMedia];
 		}
 
 		if (!context.slots.invisibleHighImpact && slotName === 'INVISIBLE_HIGH_IMPACT') {
@@ -52,6 +56,8 @@ define('ext.wikia.adEngine.config.mobile', [
 
 		if (context.providers.evolve2 && evolve2.canHandleSlot(slotName)) {
 			providerList.push(evolve2);
+		} else if (context.providers.hitMedia && hitMedia.canHandleSlot(slotName)) {
+			providerList.push(hitMedia);
 		} else if (gptEnabled) {
 			providerList.push(directGptMobile);
 		}

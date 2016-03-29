@@ -740,7 +740,7 @@ class DifferenceEngine extends ContextSource {
 		if ( $wgExternalDiffEngine != 'wikidiff3' && $wgExternalDiffEngine !== false ) {
 			# Wikia change - begin
 			# PLATFORM-1668: log fallback to external diff engine
-			Wikia\Logger\WikiaLogger::instance()->warning( 'External diff engine used', [
+			Wikia\Logger\WikiaLogger::instance()->error( 'External diff engine used', [
 				'engine' => $wgExternalDiffEngine
 			] );
 			# Wikia change - end

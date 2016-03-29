@@ -147,13 +147,21 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 				'titleMockType' => 'article',
 				'flags' => ['wgWikiDirectedAtChildrenByFounder'],
 				'expectedOpts' => [],
-				'expectedTargeting' => [ 'newWikiCategories' => [ 'test' ], 'wikiDirectedAtChildren' => true ]
+				'expectedTargeting' => [
+					'newWikiCategories' => [ 'test' ],
+					'wikiDirectedAtChildren' => true,
+					'esrbRating' => 'ec'
+				]
 			],
 			[
 				'titleMockType' => 'article',
 				'flags' => ['wgWikiDirectedAtChildrenByStaff'],
 				'expectedOpts' => [],
-				'expectedTargeting' => [ 'newWikiCategories' => [ 'test' ], 'wikiDirectedAtChildren' => true ]
+				'expectedTargeting' => [
+					'newWikiCategories' => [ 'test' ],
+					'wikiDirectedAtChildren' => true,
+					'esrbRating' => 'ec'
+				]
 			],
 			[
 				'titleMockType' => 'mainpage',
@@ -351,6 +359,7 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 				'showAds' => true,
 			],
 			'targeting' => [
+				'esrbRating' => 'teen',
 				'pageName' => $artDbKey,
 				'pageType' => 'article',
 				'sevenOneMediaSub2Site' => $sevenOneMediaSub2Site,

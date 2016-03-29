@@ -506,17 +506,8 @@ class MWHttpRequest {
 			$this->setUserAgent( Http::userAgent() );
 		}
 
-		// @author macbre
-		// pass Request ID to internal requests
-		$this->setHeader( Wikia\Util\RequestId::REQUEST_HEADER_NAME, Wikia\Util\RequestId::instance()->getRequestId() );
-		// PLATFORM-1473: pass X-Wikia-Internal-Request
-		$this->setHeader( WebRequest::WIKIA_INTERNAL_REQUEST_HEADER, 'mediawiki' );
-
 		// Wikia change - begin - @author: wladek
-		// Append extra headers for internal requests, currently only X-Request-Origin-Host
-		if ( $this->internalRequest ) {
-			$this->setHeader( Wikia\Util\RequestId::REQUEST_HEADER_ORIGIN_HOST, wfHostname() );
-		}
+		\Wikia\Tracer\WikiaTracer::instance()->setRequestHeaders( $this->reqHeaders, /* bool */$this->internalRequest );
 		// Wikia change - end
 	}
 
@@ -862,7 +853,7 @@ class CurlHttpRequest extends MWHttpRequest {
 			if ( !curl_setopt( $curlHandle, $option, $value ) ) {
 				$e = new MWException( "Error setting curl options." );
 				if ( class_exists( 'Wikia\\Logger\\WikiaLogger' ) ) {
-					\Wikia\Logger\WikiaLogger::instance()->debug(
+					\Wikia\Logger\WikiaLogger::instance()->error(
 						'PLATFORM-1317' ,
 						[
 							'option'     => $option,

@@ -71,11 +71,6 @@ class PageHeaderController extends WikiaController {
 			unset( $this->content_actions['edit'] );
 		}
 
-		// PvX's rate (RT #76386)
-		if ( isset( $this->content_actions['rate'] ) ) {
-			$this->action = $this->content_actions['rate'];
-			$this->actionName = 'rate';
-		}
 		// "Add topic"
 		else if ( isset( $this->content_actions['addsection'] ) ) {
 			$action = $this->content_actions['addsection'];

@@ -47,7 +47,7 @@ class AttributeKeyValueService implements AttributeService {
 
 			return $ret;
 		} catch ( \Exception $e ) {
-			$this->logError( $userId, $e );
+			$this->logError( $userId, $e, "USER_ATTRIBUTES error saving to service" );
 			return false;
 		}
 	}
@@ -66,7 +66,7 @@ class AttributeKeyValueService implements AttributeService {
 		try {
 			$attributeArray = $this->persistenceAdapter->getAttributes( $userId );
 		} catch ( \Exception $e ) {
-			$this->logError( $userId, $e );
+			$this->logError( $userId, $e, "USER_ATTRIBUTES error getting from service" );
 		}
 
 		return $attributeArray;
@@ -87,15 +87,15 @@ class AttributeKeyValueService implements AttributeService {
 			$ret = $this->persistenceAdapter->deleteAttribute( $userId, $attribute );
 			return $ret;
 		} catch ( \Exception $e ) {
-			$this->logError( $userId, $e );
+			$this->logError( $userId, $e, "USER_ATTRIBUTES error deleting from service" );
 			return false;
 		}
 	}
 
-	private function logError( $userId, \Exception $e ) {
-		$this->error( $e->getMessage(), [
+	private function logError( $userId, \Exception $e, $msg ) {
+		$this->error( $msg , [
 			'user' => $userId,
-			'exceptionType' => get_class( $e ),
+			'exception' => $e
 		] );
 	}
 

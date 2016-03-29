@@ -1,5 +1,8 @@
 <?php
 
+use Wikia\DependencyInjection\Injector;
+use Wikia\Service\User\Permissions\PermissionsService;
+
 /**
  * Class for managing a Chat (aka: chat-room)
  * This is for a demo & if the prototype works out, this will probably need to be thrown away and
@@ -16,6 +19,22 @@ class Chat {
 
 	// Value to store in memcache when no ban information is found
 	const NO_BAN_INFORMATION = -1;
+
+	/**
+	 * @var PermissionsService
+	 */
+	private static $permissionsService;
+
+	/**
+	 * @return PermissionsService
+	 */
+	private static function permissionsService() {
+		if ( is_null( self::$permissionsService ) ) {
+			self::$permissionsService = Injector::getInjector()->get( PermissionsService::class );
+		}
+
+		return self::$permissionsService;
+	}
 
 	/**
 	 * The return value of this method gets passed to Javascript as the global wgChatKey.  It then becomes the 'key'
@@ -457,8 +476,7 @@ class Chat {
 				// Adding the group is allowed. Add the group, clear the cache, run necessary hooks, and log the change.
 				$oldGroups = $userToPromote->getGroups();
 
-				$userToPromote->addGroup( $CHAT_MOD_GROUP );
-				$userToPromote->invalidateCache();
+				self::permissionsService()->addToGroup( $promotingUser, $userToPromote, $CHAT_MOD_GROUP );
 
 				if ( $userToPromote instanceof User ) {
 					$removegroups = [];

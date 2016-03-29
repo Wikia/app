@@ -29,15 +29,14 @@ class RevisionApiController extends WikiaApiController {
 			throw new MissingParameterApiException( 'newId' );
 		}
 
-		$avatar = $request->getBool( 'avatar' );
-		$oldRev = $request->getBool( 'oldRev' );
+		$params = $this->getParams( $request );
 
 		$data = [];
 		$revision = Revision::newFromId( $newId );
 
 		if ( $revision ) {
 			$diffs = $this->getDiffs( $revision->getTitle(), $oldId, $newId );
-			$revisionData = $this->prepareRevisionData( $revision, $avatar );
+			$revisionData = $this->prepareRevisionData( $revision, $params );
 			$pageData = $this->preparePageData( $revision );
 
 			$data = [
@@ -46,7 +45,7 @@ class RevisionApiController extends WikiaApiController {
 				'revision' => $revisionData
 			];
 
-			if ( $oldRev ) {
+			if ( $params['oldRev'] ) {
 				$oldRevision = Revision::newFromId( $oldId );
 				if ( $oldRevision ) {
 					$data['oldRevision'] = $this->prepareRevisionData( $oldRevision, $avatar );
@@ -77,10 +76,10 @@ class RevisionApiController extends WikiaApiController {
 	 * Prepares data about revision
 	 *
 	 * @param Revision $revision
-	 * @param bool $avatar should include user avatar
+	 * @param array $params
 	 * @return array
 	 */
-	private function prepareRevisionData( Revision $revision, $avatar ) {
+	private function prepareRevisionData( Revision $revision, $params ) {
 		$comment = $revision->getComment();
 		$revisionData = [
 			'comment' => $comment,
@@ -88,16 +87,37 @@ class RevisionApiController extends WikiaApiController {
 			'isMinor' => $revision->isMinor(),
 			'parsedComment' => Linker::formatComment( $comment, $revision->getTitle() ),
 			'revisionId' => $revision->getId(),
-			'userId' => $revision->getId(),
+			'userId' => $revision->getUser(),
 			'userName' => $revision->getUserText(),
-			'timestamp' => wfTimestamp( TS_UNIX, $revision->getTimestamp() )
+			'timestamp' => wfTimestamp( TS_UNIX, $revision->getTimestamp() ),
+			'size' => $revision->getSize(),
 		];
 
-		if ( $avatar ) {
+		if ( $params['avatar'] ) {
 			$revisionData['userAvatar'] = AvatarService::getAvatarUrl( $revision->getUserText() );
 		}
 
+		if ( $params['upvotes'] ) {
+			$upvotes = ( new RevisionUpvotesService() )->getRevisionUpvotes( $this->wg->CityId, $revision->getId() );
+			$revisionData['upvotes'] = $upvotes['upvotes'];
+			$revisionData['upvotesCount'] = $upvotes['count'];
+		}
+
 		return $revisionData;
+	}
+
+	/**
+	 * Get params from request
+	 *
+	 * @param WikiaRequest $request
+	 * @return array
+	 */
+	private function getParams( WikiaRequest $request ) {
+		return [
+			'avatar' => $request->getBool( 'avatar' ),
+			'oldRev' => $request->getBool( 'oldRev' ),
+			'upvotes' => $request->getBool( 'upvotes' )
+		];
 	}
 
 	/**
