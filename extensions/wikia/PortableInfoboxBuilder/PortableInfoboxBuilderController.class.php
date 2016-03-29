@@ -80,7 +80,7 @@ class PortableInfoboxBuilderController extends WikiaController {
 			$response->setVal( 'success', true );
 		} else {
 			$response->setCode( 400 );
-			$response->setVal( 'errors', [ 'Invalid title string has been passed' ] );
+			$response->setVal( 'errors', [ 'Invalid title string passed' ] );
 		}
 	}
 
