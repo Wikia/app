@@ -91,9 +91,9 @@ class WScribeClient {
      * Send a message to a destination
      *
      * @param string $message JSON encoded message
-     * @return boolean
+     * @throws TException
      */
-    public function send ($message) {
+    public function send($message) {
 		$messages = array();
 
 		if ( !is_array($message) ) {
@@ -111,21 +111,17 @@ class WScribeClient {
 			$messages[] = $logEntry;
 		}
 
-		$result = false;
 		if ( !empty($messages) ) {
 			try {
 				$this->connect();
 
 				$this->transport->open();
 				$result = $this->client->Log($messages);
+				$this->transport->close();
 
 				if ( $result != self::SCRIBE_RESULT_OK ) {
-					$this->error( __METHOD__, [
-						'exception' => new TException( 'Scribe response is not ok', $result )
-					] );
+					throw new TException( 'Scribe response is not ok', $result );
 				}
-
-				$this->transport->close();
 
 				$this->info( 'Scribe', [
 					'cmd' => 'send',
@@ -138,8 +134,10 @@ class WScribeClient {
 					'exception' => $e
 				] );
 				$this->connected = false;
+
+				// re-throw the exception
+				throw $e;
 			}
 		}
-		return $result;
     }
 }
