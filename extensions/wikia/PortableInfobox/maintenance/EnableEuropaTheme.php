@@ -16,7 +16,7 @@ class EnableEuropaTheme extends Maintenance {
 		parent::__construct();
 
 		$this->mDescription = 'Enable Europa Theme on wikis that do not use Portable Infoboxes yet';
-		$this->addOption( 'make-changes', 'Do real delete. By default performs a dry run.' );
+		$this->addOption( 'make-changes', 'Do real changes to Wiki Factory for all wikis w/o PIs. By default performs a dry run.' );
 	}
 
 	public function execute() {
