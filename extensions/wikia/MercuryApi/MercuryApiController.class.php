@@ -245,7 +245,7 @@ class MercuryApiController extends WikiaController {
 			$dimensions[14] = $adContext['opts']['showAds'] ? 'yes' : 'no';
 			$dimensions[19] = WikiaPageType::getArticleType( $title );
 			$dimensions[25] = strval( $title->getNamespace() );
-		} catch (Exception $ex) {
+		} catch ( Exception $ex ) {
 			// In case of exception - don't set the dimensions
 		}
 
@@ -353,29 +353,29 @@ class MercuryApiController extends WikiaController {
 				switch ( $data['ns'] ) {
 					// Handling namespaces other than content ones
 					case NS_CATEGORY:
-						$data['nsSpecificContent'] = MercuryApiCategoryHandler::getCategoryContent($title);
+						$data['nsSpecificContent'] = MercuryApiCategoryHandler::getCategoryContent( $title );
 
-						if (MercuryApiCategoryHandler::hasArticle($this->request, $article)) {
-							$data['article'] = MercuryApiArticleHandler::getArticleJson($this->request, $article);
-							$data['details'] = MercuryApiArticleHandler::getArticleDetails($article);
-							$titleBuilder->setParts([$data['article']['displayTitle']]);
-						} elseif (!empty($data['nsSpecificContent']['members']['sections'])) {
-							$data['details'] = MercuryApiCategoryHandler::getCategoryMockedDetails($title);
-							$titleBuilder->setParts([$title->getPrefixedText()]);
+						if ( MercuryApiCategoryHandler::hasArticle( $this->request, $article ) ) {
+							$data['article'] = MercuryApiArticleHandler::getArticleJson( $this->request, $article );
+							$data['details'] = MercuryApiArticleHandler::getArticleDetails( $article );
+							$titleBuilder->setParts( [$data['article']['displayTitle']] );
+						} elseif ( !empty( $data['nsSpecificContent']['members']['sections'] ) ) {
+							$data['details'] = MercuryApiCategoryHandler::getCategoryMockedDetails( $title );
+							$titleBuilder->setParts( [$title->getPrefixedText()] );
 						} else {
-							throw new NotFoundApiException('Article is empty and category has no members');
+							throw new NotFoundApiException( 'Article is empty and category has no members' );
 						}
 						break;
 					default:
 						if ( $title->isContentPage() ) {
-							if ($title->isKnown() && $articleExists) {
+							if ( $title->isKnown() && $articleExists ) {
 								$data = array_merge(
 									$data,
-									MercuryApiArticleHandler::getArticleData($this->request, $this->mercuryApi, $article)
+									MercuryApiArticleHandler::getArticleData( $this->request, $this->mercuryApi, $article )
 								);
 
-								if (!$isMainPage) {
-									$titleBuilder->setParts([$data['article']['displayTitle']]);
+								if ( !$isMainPage ) {
+									$titleBuilder->setParts( [$data['article']['displayTitle']] );
 								}
 							} else {
 								\Wikia\Logger\WikiaLogger::instance()->error(
@@ -383,7 +383,7 @@ class MercuryApiController extends WikiaController {
 									['article' => $article]
 								);
 
-								throw new NotFoundApiException('Article is empty');
+								throw new NotFoundApiException( 'Article is empty' );
 							}
 						}
 				}
@@ -532,7 +532,7 @@ class MercuryApiController extends WikiaController {
 				'articleTitle' => str_replace( '_', ' ', $articleTitle ),
 				'url' => $url,
 			];
-		}, array_keys( $links ), array_values( $links ) );
+		} , array_keys( $links ), array_values( $links ) );
 
 		// Sort by localized language name
 		$c = Collator::create( 'en_US.UTF-8' );
