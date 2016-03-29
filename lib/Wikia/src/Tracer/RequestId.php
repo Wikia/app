@@ -71,11 +71,12 @@ class RequestId {
 
 	/**
 	 * Return timestamp-based UUID (e.g. 8454441a-f0e1-11e5-9c4a-00163e046284)
-	 *
+	 * TODO: UUID generation has too much overhead, fall back to php uniqid()
 	 * @return string
 	 */
 	public static function generateId() {
-		return Uuid::uuid1()->toString();
+		return uniqid( 'mw', true );
+		//return Uuid::uuid1()->toString();
 	}
 
 	/**
