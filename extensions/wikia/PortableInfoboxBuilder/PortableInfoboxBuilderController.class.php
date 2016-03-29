@@ -74,8 +74,14 @@ class PortableInfoboxBuilderController extends WikiaController {
 
 		$response = $this->getResponse();
 		$response->setFormat( WikiaResponse::FORMAT_JSON );
-		$response->setVal( 'exists', $title->isKnown() );
-		$response->setVal( 'success', true );
+
+		if  ( $title ) {
+			$response->setVal( 'exists', $title->isKnown() );
+			$response->setVal( 'success', true );
+		} else {
+			$response->setCode( 400 );
+			$response->setVal( 'errors', [ 'Invalid title string has been passed' ] );
+		}
 	}
 
 	private function attemptSave( $params ) {
