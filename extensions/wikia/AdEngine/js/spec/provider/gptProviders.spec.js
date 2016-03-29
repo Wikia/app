@@ -248,9 +248,9 @@ describe('ext.wikia.adEngine.provider.*', function () {
 	it('directGptMobile: Push ad with specific slot sizes', function () {
 		var expectedSizes = {
 			INVISIBLE_HIGH_IMPACT: '1x1',
-			MOBILE_TOP_LEADERBOARD: '320x50,320x100,300x250,1x1',
-			MOBILE_IN_CONTENT: '300x250,1x1',
-			MOBILE_PREFOOTER: '300x250,1x1'
+			MOBILE_TOP_LEADERBOARD: '320x50,320x100,300x250,300x50,1x1',
+			MOBILE_IN_CONTENT: '320x50,300x250,300x50,1x1',
+			MOBILE_PREFOOTER: '320x50,300x250,300x50,1x1'
 		};
 
 		assertProviderSlotMap(getProvider('directGptMobile'), expectedSizes);
@@ -259,9 +259,9 @@ describe('ext.wikia.adEngine.provider.*', function () {
 	it('remnantGptMobile: Push ad with specific slot sizes', function () {
 		var expectedSizes = {
 			INVISIBLE_HIGH_IMPACT: null,
-			MOBILE_TOP_LEADERBOARD: '320x50,320x100,300x250,1x1',
-			MOBILE_IN_CONTENT: '300x250,1x1',
-			MOBILE_PREFOOTER: '300x250,1x1'
+			MOBILE_TOP_LEADERBOARD: '320x50,320x100,300x250,300x50,1x1',
+			MOBILE_IN_CONTENT: '320x50,300x250,300x50,1x1',
+			MOBILE_PREFOOTER: '320x50,300x250,300x50,1x1'
 		};
 
 		assertProviderSlotMap(getProvider('remnantGptMobile'), expectedSizes);
