@@ -115,6 +115,7 @@ class PortableInfoboxBuilderHelper {
 		if ( $status->isGood() && !$title ) {
 			$status->fatal( 'bad-title' );
 		}
+
 		return $title;
 	}
 }
