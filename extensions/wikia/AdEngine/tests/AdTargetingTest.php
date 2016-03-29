@@ -53,4 +53,14 @@ class AdTargetingTest extends WikiaBaseTest {
 		$this->assertEquals(AdTargeting::EVERYONE, AdTargeting::getEsrbRating());
 	}
 
+	public function testIsDirectedAtChildren() {
+		$this->mockGlobalVariable('wgWikiDirectedAtChildrenByStaff', true);
+
+		$this->assertTrue(AdTargeting::isDirectedAtChildren());
+	}
+
+	public function testIsNotDirectedAtChildren() {
+		$this->assertFalse(AdTargeting::isDirectedAtChildren());
+	}
+
 }

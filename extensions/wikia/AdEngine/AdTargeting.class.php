@@ -24,6 +24,13 @@ class AdTargeting {
 	}
 
 	/**
+	 * @return bool
+	 */
+	static public function isDirectedAtChildren() {
+		return self::getEsrbRating() === self::EARLY_CHILDHOOD;
+	}
+
+	/**
 	 * @return null|string
 	 */
 	static private function getEsrbRatingFromDartKeyValues() {
