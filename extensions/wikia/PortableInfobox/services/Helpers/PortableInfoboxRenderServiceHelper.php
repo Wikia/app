@@ -148,12 +148,15 @@ class PortableInfoboxRenderServiceHelper {
 
 	/**
 	 * Checks if europa theme is enabled and used
+	 *
+	 * @param string $theme theme name to check
 	 * @return bool
 	 */
-	public function isEuropaTheme() {
+	public function isEuropaTheme( $theme ) {
 		global $wgEnablePortableInfoboxEuropaTheme;
 
-		return !empty( $wgEnablePortableInfoboxEuropaTheme );
+		return !empty( $wgEnablePortableInfoboxEuropaTheme )
+			   && strcasecmp( $theme, self::EUROPA_THEME_NAME ) === 0;
 	}
 
 	/**

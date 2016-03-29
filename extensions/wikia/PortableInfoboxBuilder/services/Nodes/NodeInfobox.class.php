@@ -9,7 +9,7 @@ class NodeInfobox extends Node {
 	 */
 	protected $allowedChildNodes = [ 'data', 'image', 'title', 'group' ];
 
-	protected $allowedAttributes = [ 'theme' => [ '' ] ];
+	protected $allowedAttributes = [ 'theme' => [ 'europa', '' ] ];
 
 	/**
 	 * Parent node explicitly does NOT provide type

@@ -27,7 +27,7 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 
 		$mock = $this->getMockBuilder( 'Wikia\PortableInfobox\Helpers\PortableInfoboxRenderServiceHelper' )
 			->setMethods( [ 'isValidHeroDataItem', 'validateType', 'isWikiaMobile',
-							'createHorizontalGroupData', 'extendImageData' ] )
+				'createHorizontalGroupData', 'extendImageData' ] )
 			->getMock();
 		$mock->expects( $this->any() )
 			->method( 'isValidHeroDataItem' )
@@ -53,28 +53,12 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 	 * @return string
 	 */
 	private function normalizeHTML( $html ) {
-		$DOM = new DOMDocument( '1.0' );
+		$DOM = new DOMDocument('1.0');
 		$DOM->formatOutput = true;
 		$DOM->preserveWhiteSpace = false;
 		$DOM->loadXML( $html );
 
 		return $DOM->saveXML();
-	}
-
-	public function testEuropaThemeEnabled() {
-		$wrapper = new \Wikia\Util\GlobalStateWrapper( [ 'wgEnablePortableInfoboxEuropaTheme' => true ] );
-
-		$infoboxRenderService = new PortableInfoboxRenderService();
-		$output = $wrapper->wrap( function () use ( $infoboxRenderService ) {
-			return $infoboxRenderService->renderInfobox(
-				[ [ 'type' => 'title', 'data' => [ 'value' => 'Test' ] ] ], '', '' );
-		} );
-
-		$expected = $this->normalizeHTML( '<aside class="portable-infobox pi-background pi-europa">
-								<h2 class="pi-item pi-item-spacing pi-title">Test</h2>
-							</aside>' );
-		$result = $this->normalizeHTML( $output );
-		$this->assertEquals( $expected, $result );
 	}
 
 	/**
@@ -89,7 +73,7 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 
 		$infoboxRenderService = new PortableInfoboxRenderService();
 		$actualOutput = $infoboxRenderService->renderInfobox( $input, '', '' );
-		$expectedHtml = $this->normalizeHTML( $expectedOutput );
+		$expectedHtml = $this->normalizeHTML( $expectedOutput) ;
 		$actualHtml = $this->normalizeHTML( $actualOutput );
 
 		$this->assertEquals( $expectedHtml, $actualHtml, $description );
@@ -98,7 +82,7 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 	public function testRenderInfoboxDataProvider() {
 		return [
 			[
-				'input' => [ ],
+				'input' => [],
 				'output' => '',
 				'description' => 'Empty data should yield no infobox markup'
 			],
@@ -303,7 +287,7 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 					],
 					[
 						'type' => 'image',
-						'data' => [ ]
+						'data' => []
 					],
 					[
 						'type' => 'data',
@@ -458,8 +442,8 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 				'mockParams' => [
 					'createHorizontalGroupData' => [
 						'header' => 'Test header',
-						'labels' => [ 'test label', 'test label' ],
-						'values' => [ 'test value', 'test value' ],
+						'labels' => ['test label', 'test label'],
+						'values' => ['test value', 'test value'],
 						'renderLabels' => true
 					]
 				]
@@ -506,8 +490,8 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 				'description' => 'Infobox with horizontal group without header and labels',
 				'mockParams' => [
 					'createHorizontalGroupData' => [
-						'labels' => [ '', '' ],
-						'values' => [ 'test value', 'test value' ],
+						'labels' => ['', ''],
+						'values' => ['test value', 'test value'],
 						'renderLabels' => false
 					]
 				]
