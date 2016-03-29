@@ -15,7 +15,7 @@ $empty-header-height: 28px;
 	width: $infobox-width;
 
 	// disable infobox background inside infobox builder
-	&.pi-europa {
+	&.pi-theme-europa {
 		&.pi-background {
 			background-color: transparent;
 		}

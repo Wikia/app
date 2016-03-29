@@ -36,7 +36,7 @@ $caption-color-text: mix($color-text, $white, $background-color-mix * 7);
 	$caption-color-text: mix($color-text, $black, $background-color-mix * 7);
 }
 
-.pi-europa {
+.pi-theme-europa {
 	&.portable-infobox {
 		color: $color-text;
 		width: $infobox-width;
