@@ -15,7 +15,9 @@ class WScribeClient {
 
 	protected $category, $connected = false;
 	/* @var scribeClient $client */
-	protected $host, $port, $socket, $client, $protocol, $transport;
+	protected $host, $port, $socket, $client, $protocol;
+	/* @var TFramedTransport $transport */
+	protected $transport;
 
 	const CATEGORY_KEY = 'category';
 	const MESSAGE_KEY = 'message';
