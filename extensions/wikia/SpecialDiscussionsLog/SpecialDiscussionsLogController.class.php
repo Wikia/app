@@ -133,14 +133,15 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 					]
 				);
 			} catch ( \GuzzleHttp\Exception\RequestException $requestException ) {
-				$logger->warning(
-					sprintf( 'Request to elasticsearch failed: %s', $requestException->getMessage() )
+				$logger->error(
+					sprintf( 'Request to elasticsearch failed: %s', $requestException->getMessage() ),
+					[ 'exceptiobn' => $requestException ]
 				);
 				break;
 			}
 
 			if ( $response->getStatusCode() !== self::HTTP_STATUS_OK ) {
-				$logger->warning(
+				$logger->error(
 					sprintf( 'Elasticsearch request error; status code %d', $response->getStatusCode() )
 				);
 				break;
