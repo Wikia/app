@@ -135,7 +135,7 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 			} catch ( \GuzzleHttp\Exception\RequestException $requestException ) {
 				$logger->error(
 					sprintf( 'Request to elasticsearch failed: %s', $requestException->getMessage() ),
-					[ 'exceptiobn' => $requestException ]
+					[ 'exception' => $requestException ]
 				);
 				break;
 			}
