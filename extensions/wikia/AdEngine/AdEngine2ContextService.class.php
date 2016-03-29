@@ -57,7 +57,7 @@ class AdEngine2ContextService {
 					'sourcePointRecoveryUrl' => $sourcePointRecoveryUrl,
 				] ),
 				'targeting' => $this->filterOutEmptyItems( [
-					'enableKruxTargeting' => $wg->EnableKruxTargeting,
+					'enableKruxTargeting' => AnalyticsProviderKrux::isEnabled(),
 					'enablePageCategories' => array_search( $langCode, $wg->AdPageLevelCategoryLangs ) !== false,
 					'esrbRating' => AdTargeting::getEsrbRating(),
 					'mappedVerticalName' => $this->getMappedVerticalName( $oldWikiVertical, $newWikiVertical ), //wikiCategory replacement for AdLogicPageParams.js::getPageLevelParams
