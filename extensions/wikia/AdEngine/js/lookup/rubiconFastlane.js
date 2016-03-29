@@ -223,12 +223,16 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 	}
 
 	function calculatePrices() {
+		var allSlots;
 		if (!win.rubicontag || !win.rubicontag.getAllSlots) {
 			return;
 		}
-		win.rubicontag.getAllSlots().forEach(function (slot) {
-			addSlotPrice(slot.getSlotName(), slot.getAdServerTargeting());
-		});
+		allSlots = win.rubicontag.getAllSlots();
+		if (allSlots.length) {
+			win.rubicontag.getAllSlots().forEach(function (slot) {
+				addSlotPrice(slot.getSlotName(), slot.getAdServerTargeting());
+			});
+		}
 	}
 
 	function call(skin, onResponse) {
