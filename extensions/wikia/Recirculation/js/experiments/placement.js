@@ -35,6 +35,7 @@ require([
 		railSelector = '#' + railContainerId,
 		group = abTest.getGroup(experimentName),
 		isRail = false,
+		errorHandled = false,
 		footerView,
 		view,
 		helper;
@@ -151,7 +152,23 @@ require([
 	}
 
 	function handleError() {
-		// Currently a noop as it's fine for us to fail silently in this case
+		// If there is an error somewhere we render the control group with no tracking
+		if (errorHandled) {
+			return;
+		}
+
+		errorHandled = true;
+		afterRailLoads(function() {
+			var rail = railView();
+
+			fandomHelper({
+				limit: 5
+			}).loadData()
+				.then(rail.render)
+				.fail(function() {
+					// No-op if this doesn't work. We tried our best.
+				});
+		});
 	}
 
 	function injectSubtitle($html) {

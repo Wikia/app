@@ -53,9 +53,11 @@ define('ext.wikia.recirculation.helpers.lateral', [
 
 	function loadData() {
 		var deferred = $.Deferred(),
-			type = options.type;
+			type = options.type,
+			foundData = false;
 
 		function resolveFormattedData(data) {
+			foundData = true;
 			deferred.resolve(formatData(data));
 		}
 
@@ -69,6 +71,15 @@ define('ext.wikia.recirculation.helpers.lateral', [
 					break;
 			}
 		});
+
+		// If we don't recieve anything in 3 seconds we want to reject the promise
+		setTimeout(function() {
+			if (foundData) {
+				return;
+			} else {
+				deferred.reject();
+			}
+		}, 3000);
 
 		return deferred.promise();
 	}
