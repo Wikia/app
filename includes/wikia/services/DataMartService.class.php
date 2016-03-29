@@ -395,6 +395,14 @@ class DataMartService extends Service {
 		return $events;
 	}
 
+	/**
+	 * Get the users with the most edits in the time period specified.
+	 *
+	 * @param int $limit Number of users to return
+	 * @param string $interval Period of time to count the contributions, ex: n WEEK, n MONTh, n YEAR
+	 * @param null $wikiId
+	 * @return Mixed|null
+	 */
 	public static function getTopContributorsByWiki( $limit = 10, $interval = '1 WEEK', $wikiId = null ) {
 		$app = F::app();
 

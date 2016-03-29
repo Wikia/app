@@ -18,6 +18,8 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		$this->wg->SuppressWikiHeader = true;
 		$this->wg->SuppressFooter = true;
 
+		lizbug(CommunityPageSpecialUsersModel::getTopContributors());
+
 		$this->response->setValues( [
 			'adminWelcomeMsg' => $this->msg( 'communitypage-tasks-admin-welcome' )->text(),
 			'pageListEmptyText' => $this->msg( 'communitypage-page-list-empty' )->plain(),
@@ -25,7 +27,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 			'popupMessageText' => 'This is just a test message for the popup message box',
 			'userIsMember' => CommunityPageSpecialHelper::userHasEdited( $this->wg->User ),
 			'pageTitle' => $this->msg( 'communitypage-title' )->plain(),
-			'contributorsModule' => $this->getContributorsModuleData(),
+			//'contributorsModule' => $this->getContributorsModuleData(),
 		] );
 	}
 
@@ -53,6 +55,13 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	 */
 	protected function getContributorsModuleData() {
 		$userContribCount = 2;
+		$contributors = CommunityPageSpecialUsersModel::filterGlobalBots(
+				// get extra contributors so if there's global bots they can be filtered out
+				CommunityPageSpecialUsersModel::getTopContributors( 50 )
+			);
+		// get details for only 5 of the remaining contributors
+		$contributorDetails = $this->getContributorsDetails( array_slice( $contributors, 0, 5 ) );
+
 
 		return [
 			'topContribsHeaderText' => $this->msg( 'communitypage-top-contributors-week' )->plain(),
@@ -60,9 +69,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 			'userContributionsText' => $this->msg( 'communitypage-user-contributions' )
 				->numParams( $userContribCount )
 				->text(),
-			'contributors' => $this->getContributorsDetails(
-				DataMartService::getTopContributorsByWiki( 5 )
-			),
+			'contributors' => $contributorDetails,
 			'userAvatar' => AvatarService::renderAvatar(
 				$this->wg->user->getName(),
 				AvatarService::AVATAR_SIZE_SMALL_PLUS
