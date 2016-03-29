@@ -44,7 +44,7 @@ define('ext.wikia.recirculation.helpers.lateral', [
 
 	function recommendCommunity(lateral, callback) {
 		lateral.recommendationsWikia({
-			count: options.count,
+			count: options.count * 2, // We load twice as many as we need in case some options do not have images
 			width: options.width,
 			height: options.height,
 			onResults: callback
@@ -77,7 +77,10 @@ define('ext.wikia.recirculation.helpers.lateral', [
 		var items = [];
 
 		$.each(data, function(index, item) {
-			item.thumbnail = item.image || placeholderImage;
+			if (!item.image) {
+				return;
+			}
+			item.thumbnail = item.image;
 			item.index = index;
 			items.push(item);
 		});
@@ -86,7 +89,7 @@ define('ext.wikia.recirculation.helpers.lateral', [
 
 		return {
 			title: title,
-			items: items
+			items: items.slice(0, options.count)
 		};
 	}
 

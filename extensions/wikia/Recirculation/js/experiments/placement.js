@@ -170,18 +170,19 @@ require([
 		}).loadData()
 			.then(incontent.render)
 			.then(incontent.setupTracking(experimentName))
+			.then(function() {
+				afterRailLoads(function() {
+					var rail = railView();
+					lateralHelper({
+						type: 'fandom',
+						count: 5
+					}).loadData()
+						.then(rail.render)
+						.then(rail.setupTracking(experimentName))
+						.fail(handleError);
+				});
+			})
 			.fail(handleError);
-
-		afterRailLoads(function() {
-			var rail = railView();
-			lateralHelper({
-				type: 'fandom',
-				count: 5
-			}).loadData()
-				.then(rail.render)
-				.then(rail.setupTracking(experimentName))
-				.fail(handleError);
-		});
 	}
 
 	function renderGoogleIncontent() {
