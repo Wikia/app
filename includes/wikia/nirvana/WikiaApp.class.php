@@ -656,8 +656,8 @@ class WikiaApp {
 	 *
 	 * @return WikiaResponse a response object with the data produced by the method call
 	 */
-	public function sendExternalRequest( $controllerName, $methodName, $params = array() ) {
-		return $this->sendRequest( $controllerName, $methodName, $params, /* internal */ false );
+	public function sendExternalRequest( $controllerName, $methodName, $params = array(), $exceptionMode = null ) {
+		return $this->sendRequest( $controllerName, $methodName, $params, /* internal */ false, $exceptionMode );
 	}
 
 	/**
