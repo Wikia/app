@@ -61,8 +61,7 @@ class PortableInfoboxRenderService extends WikiaService {
 		$this->imagesWidth = $helper->isWikiaMobile() ?
 			PortableInfoboxRenderServiceHelper::MOBILE_THUMBNAIL_WIDTH :
 			// if europa go with bigger images! else default size
-			$helper->isEuropaTheme( $theme ) ?
-				PortableInfoboxRenderServiceHelper::EUROPA_THUMBNAIL_WIDTH :
+			$helper->isEuropaTheme() ? PortableInfoboxRenderServiceHelper::EUROPA_THUMBNAIL_WIDTH :
 				PortableInfoboxRenderServiceHelper::DEFAULT_DESKTOP_THUMBNAIL_WIDTH;
 
 		foreach ( $infoboxdata as $item ) {
@@ -93,12 +92,12 @@ class PortableInfoboxRenderService extends WikiaService {
 		}
 
 		if ( !empty( $infoboxHtmlContent ) ) {
-			$output = $this->renderItem('wrapper', [
+			$output = $this->renderItem( 'wrapper', [
 				'content' => $infoboxHtmlContent,
 				'theme' => $theme,
 				'layout' => $layout,
-				'isEuropaEnabled' => $helper->isEuropaTheme( $theme )
-			]);
+				'isEuropaEnabled' => $helper->isEuropaTheme()
+			] );
 		} else {
 			$output = '';
 		}
