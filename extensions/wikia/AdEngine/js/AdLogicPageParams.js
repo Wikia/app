@@ -100,7 +100,7 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 	function overrideEsrbRating(params) {
 		params.esrb = context.targeting.esrbRating || params.esrb;
 
-		if (!params.esrb) {
+		if (!params.esrb) { // FIXME ADEN-3147
 			params.esrb = context.targeting.wikiDirectedAtChildren ? 'ec' : 'teen';
 		}
 	}
