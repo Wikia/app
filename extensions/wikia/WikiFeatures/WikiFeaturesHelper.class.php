@@ -39,7 +39,6 @@ class WikiFeaturesHelper extends WikiaModel {
 		'wgEnableWikiaInteractiveMaps' => 260,
 		'wgEnableMediaGalleryExt' => 1,
 		'wgEnableNjordExt' => 2,
-		'wgEnablePortableInfoboxEuropaTheme' => 3
 	);
 
 	// no need to add feature to $release_date if not require "new" flag
