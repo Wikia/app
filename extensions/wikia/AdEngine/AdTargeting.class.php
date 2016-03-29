@@ -40,6 +40,9 @@ class AdTargeting {
 		$pairs = explode(';', $wgDartCustomKeyValues);
 
 		foreach ($pairs as $pair) {
+			if (strpos($pair, '=') === false) {
+				continue;
+			}
 			list($key, $value) = explode('=', $pair);
 			if ($key === 'esrb') {
 				$dartRating = $value;
