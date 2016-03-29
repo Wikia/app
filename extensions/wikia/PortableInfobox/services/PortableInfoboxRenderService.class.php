@@ -93,8 +93,12 @@ class PortableInfoboxRenderService extends WikiaService {
 		}
 
 		if ( !empty( $infoboxHtmlContent ) ) {
-			$output = $this->renderItem( 'wrapper',
-				[ 'content' => $infoboxHtmlContent, 'theme' => $theme, 'layout' => $layout ] );
+			$output = $this->renderItem('wrapper', [
+				'content' => $infoboxHtmlContent,
+				'theme' => $theme,
+				'layout' => $layout,
+				'isEuropaEnabled' => $helper->isEuropaTheme( $theme )
+			]);
 		} else {
 			$output = '';
 		}
