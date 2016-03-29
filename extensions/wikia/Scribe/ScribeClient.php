@@ -1,6 +1,6 @@
 <?php
 
-use \Wikia\Logger\WikiaLogger;
+use \Wikia\Logger\Loggable;
 
 $GLOBALS['THRIFT_ROOT'] = $IP . '/lib/vendor/scribe';
 
@@ -10,11 +10,17 @@ include_once $GLOBALS['THRIFT_ROOT'] . '/transport/TFramedTransport.php';
 include_once $GLOBALS['THRIFT_ROOT'] . '/protocol/TBinaryProtocol.php';
 
 class WScribeClient {
+
+	use Loggable;
+
 	protected $category, $connected = false;
+	/* @var scribeClient $client */
 	protected $host, $port, $socket, $client, $protocol, $transport;
 
 	const CATEGORY_KEY = 'category';
 	const MESSAGE_KEY = 'message';
+
+	const SCRIBE_RESULT_OK = 0; // taken from E_ResultCode['OK']
 
 	/**
 	 * @static
@@ -72,7 +78,9 @@ class WScribeClient {
 			$this->client = new scribeClient($this->protocol, $this->protocol);
 		}
 		catch( TException $e ) {
-			Wikia::log( __METHOD__, 'scribeClient exception', $e->getMessage() );
+			$this->error( __METHOD__, [
+				'exception' => $e
+			] );
 			$this->connected = false;
 		}
 
@@ -111,25 +119,24 @@ class WScribeClient {
 				$this->transport->open();
 				$result = $this->client->Log($messages);
 
-				if ( $result == $GLOBALS['E_ResultCode']['TRY_LATER'] ) {
-					Wikia::log( __METHOD__, "scribe", "Returned 'TRY_LATER' value" );
-				}
-
-				if ( $result != $GLOBALS['E_ResultCode']['OK'] ) {
-					Wikia::log( __METHOD__, "scribe", "Unknown result ($result)" );
+				if ( $result != self::SCRIBE_RESULT_OK ) {
+					$this->error( __METHOD__, [
+						'exception' => new TException( 'Scribe response is not ok', $result )
+					] );
 				}
 
 				$this->transport->close();
 
-				WikiaLogger::instance()->info('Scribe', [
+				$this->info( 'Scribe', [
 					'cmd' => 'send',
 					'category' => $this->category,
-					'caller' => wfGetCallerClassMethod(__CLASS__)
-				]);
+					'caller' => wfGetCallerClassMethod( __CLASS__ )
+				] );
 			}
 			catch( TException $e ) {
-				// socket error
-				Wikia::log( __METHOD__, 'scribeClient log', $e->getMessage() );
+				$this->error( __METHOD__, [
+					'exception' => $e
+				] );
 				$this->connected = false;
 			}
 		}
