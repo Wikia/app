@@ -69,6 +69,21 @@ class PortableInfoboxBuilderController extends WikiaController {
 		}
 	}
 
+	public function getTemplateExists() {
+		$title = PortableInfoboxBuilderHelper::getTitle( $this->getRequest()->getVal('title'), new Status() );
+
+		$response = $this->getResponse();
+		$response->setFormat( WikiaResponse::FORMAT_JSON );
+
+		if  ( $title ) {
+			$response->setVal( 'exists', $title->isKnown() );
+			$response->setVal( 'success', true );
+		} else {
+			$response->setCode( 400 );
+			$response->setVal( 'errors', [ 'Invalid title string passed' ] );
+		}
+	}
+
 	private function attemptSave( $params ) {
 		$status = new Status();
 
