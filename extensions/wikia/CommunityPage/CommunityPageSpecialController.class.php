@@ -18,8 +18,6 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		$this->wg->SuppressWikiHeader = true;
 		$this->wg->SuppressFooter = true;
 
-		lizbug(CommunityPageSpecialUsersModel::getTopContributors());
-
 		$this->response->setValues( [
 			'adminWelcomeMsg' => $this->msg( 'communitypage-tasks-admin-welcome' )->text(),
 			'pageListEmptyText' => $this->msg( 'communitypage-page-list-empty' )->plain(),
@@ -27,7 +25,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 			'popupMessageText' => 'This is just a test message for the popup message box',
 			'userIsMember' => CommunityPageSpecialHelper::userHasEdited( $this->wg->User ),
 			'pageTitle' => $this->msg( 'communitypage-title' )->plain(),
-			//'contributorsModule' => $this->getContributorsModuleData(),
+			'contributorsModule' => $this->getContributorsModuleData(),
 		] );
 	}
 
@@ -57,7 +55,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		$userContribCount = 2;
 		$contributors = CommunityPageSpecialUsersModel::filterGlobalBots(
 				// get extra contributors so if there's global bots they can be filtered out
-				CommunityPageSpecialUsersModel::getTopContributors( 50 )
+				CommunityPageSpecialUsersModel::getTopContributors( 50, '1 MONTH' )
 			);
 		// get details for only 5 of the remaining contributors
 		$contributorDetails = $this->getContributorsDetails( array_slice( $contributors, 0, 5 ) );

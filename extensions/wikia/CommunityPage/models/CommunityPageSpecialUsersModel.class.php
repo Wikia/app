@@ -75,11 +75,11 @@ class CommunityPageSpecialUsersModel {
 	 * @param int $limit
 	 * @return Mixed|null
 	 */
-	public static function getTopContributors( $limit = 10 ) {
+	public static function getTopContributors( $limit = 10, $interval = '2 WEEK' ) {
 		$data = WikiaDataAccess::cache(
 			wfMemcKey( self::TOP_CONTRIB_MCACHE_KEY ),
 			0, // WikiaResponse::CACHE_STANDARD,
-			function () use ( $limit ) {
+			function () use ( $limit, $interval ) {
 				global $wgExternalSharedDB;
 				$db = wfGetDB( DB_SLAVE );
 				$sqlData = ( new WikiaSQL() )
@@ -88,24 +88,22 @@ class CommunityPageSpecialUsersModel {
 					->LEFT_JOIN( $wgExternalSharedDB . '.user')->ON( '(rev_user <> 0) AND (user_id = rev_user)' )
 					->LEFT_JOIN( 'user_groups ON (user_id = ug_user)' )
 					->WHERE( 'user_id' )->IS_NOT_NULL()
-//					->AND_( 'rev_timestamp' )->GREATER_THAN( 'DATE_SUB(now(), INTERVAL 7 DAY)' )
-					->AND_( 'rev_timestamp > DATE_SUB(now(), INTERVAL 1 DAY)' )
-					->AND_( 'ug_group IS NULL or (ug_group <> "bot")')
+					->AND_( 'rev_timestamp > DATE_SUB(now(), INTERVAL '. $interval . ')' )
+					->AND_( '(ug_group IS NULL or (ug_group <> "bot"))')
 					->GROUP_BY( 'user_name' )
 					->ORDER_BY( 'revision_count' )->DESC()
 					->LIMIT( $limit )
-					->__toString();
-//					->run( $db, function ( ResultWrapper $result ) {
-//						$out = [];
-//						while ( $row = $result->fetchRow() ) {
-//							$out[] = [
-//								'userId' => $row['user_id'],
-//								'userName' => $row['user_name'],
-//								'contributions' => $row['revision_count']
-//							];
-//						}
-//						return $out;
-//					} );
+					->run( $db, function ( ResultWrapper $result ) {
+						$out = [];
+						while ( $row = $result->fetchRow() ) {
+							$out[] = [
+								'userId' => $row['user_id'],
+								'userName' => $row['user_name'],
+								'contributions' => $row['revision_count']
+							];
+						}
+						return $out;
+					} );
 				return $sqlData;
 			}
 		);
@@ -143,7 +141,10 @@ class CommunityPageSpecialUsersModel {
 		$botIds = self::getGlobalBotIds();
 
 		return array_filter( $users, function ( $user ) use ( $botIds ) {
-			return !in_array( $user['userId'], $botIds );
+			$userIdIsBot = in_array( $user['userId'], $botIds );
+			$userIsWikia = strtolower( $user['userName'] ) === 'wikia';
+
+			return !$userIdIsBot && !$userIsWikia;
 		} );
 	}
 
