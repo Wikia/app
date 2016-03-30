@@ -94,6 +94,9 @@ $messages['qqq'] = array(
 	'wikifeatures-feature-description-wgEnableMediaGalleryExt' => 'Description text for enabling the Media Gallery feature',
 	'wikifeatures-feature-heading-wgDisableAnonymousEditing' => 'Header text for requiring all contributors to log in to edit.',
 	'wikifeatures-feature-description-wgDisableAnonymousEditing' => 'Description for requiring all contributors to log in to edit.',
+	'wikifeatures-feature-heading-wgEnablePortableInfoboxEuropaTheme' => 'Header text for Europa Infobox Theme',
+	'wikifeatures-feature-description-wgEnablePortableInfoboxEuropaTheme' => 'Description for Europa Infobox Theme feature',
+
 	'action-wikifeaturesview' => '{{doc-action|wikifeaturesview}}',
 );
 
