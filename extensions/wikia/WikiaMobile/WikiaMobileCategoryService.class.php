@@ -106,7 +106,7 @@ class WikiaMobileCategoryService extends WikiaService {
 			$title = $categoryPage->getTitle();
 			$category = Category::newFromTitle( $title );
 			$collections = $this->model->getCollection( $category, $format );
-			uksort( $collections['items'], 'self::collatorUcaDefaultStringCompare' );
+			uksort( $collections['items'], [ $this, 'collatorUcaDefaultStringCompare' ] );
 
 			$this->response->setVal( 'total', $collections['count'] );
 			$this->response->setVal( 'collections', $collections['items'] );
