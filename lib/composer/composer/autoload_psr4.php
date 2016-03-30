@@ -12,7 +12,6 @@ return array(
     'TijsVerkoyen\\CssToInlineStyles\\' => array($vendorDir . '/tijsverkoyen/css-to-inline-styles/src'),
     'SensioLabs\\Consul\\' => array($vendorDir . '/sensiolabs/consul-php-sdk/Consul'),
     'React\\Promise\\' => array($vendorDir . '/react/promise/src'),
-    'Ramsey\\Uuid\\' => array($vendorDir . '/ramsey/uuid/src'),
     'PhpDocReader\\' => array($vendorDir . '/php-di/phpdoc-reader/src/PhpDocReader'),
     'Monolog\\' => array($vendorDir . '/monolog/monolog/src/Monolog'),
     'Invoker\\' => array($vendorDir . '/php-di/invoker/src'),
