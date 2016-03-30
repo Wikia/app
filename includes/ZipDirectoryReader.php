@@ -672,17 +672,21 @@ class ZipDirectoryReader {
  * Internal exception class. Will be caught by private code.
  */
 class ZipDirectoryReaderError extends Exception {
-	var $code;
 
-	function __construct( $code ) {
-		$this->code = $code;
-		parent::__construct( "ZipDirectoryReader error: $code" );
+	protected $errorCode;
+
+	/**
+	 * @param string $errorCode
+	 */
+	function __construct( $errorCode ) {
+		$this->errorCode = $errorCode;
+		parent::__construct( "ZipDirectoryReader error: $errorCode"  );
 	}
 
 	/**
 	 * @return mixed
 	 */
 	function getErrorCode() {
-		return $this->code;
+		return $this->errorCode;
 	}
 }

@@ -50,6 +50,8 @@ class AdminDashboardLogic {
 				'Chat',
 				'CloseWiki',
 				'Code',
+				'Community',
+				'CommunityTasks',
 				'Confirmemail',
 				'Connect',
 				'Contact',
@@ -151,7 +153,7 @@ class AdminDashboardLogic {
 	 * @return bool
 	 */
 	static function onWikiaHtmlTitleExtraParts( Title $title, array &$extraParts ) {
-		if ( self::displayAdminDashboard( F::app(), $title ) ) {
+		if ( self::displayAdminDashboard( F::app(), $title ) && !$title->isSpecial( 'AdminDashboard' ) ) {
 			$extraParts = [ wfMessage( 'admindashboard-header' ) ];
 		}
 		return true;

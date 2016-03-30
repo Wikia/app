@@ -9,11 +9,13 @@ class NodeInfobox extends Node {
 	 */
 	protected $allowedChildNodes = [ 'data', 'image', 'title', 'group' ];
 
+	protected $allowedAttributes = [ 'theme' => [ '' ] ];
+
 	/**
 	 * Parent node explicitly does NOT provide type
 	 * @return null
 	 */
-	public function getType() {
+	protected function getType() {
 		return null;
 	}
 }

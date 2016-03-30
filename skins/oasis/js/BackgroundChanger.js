@@ -8,6 +8,7 @@
 
 define('wikia.backgroundchanger', function()  {
 	'use strict';
+	var loadedCss = [];
 	/**
 	 * Load background.scss with params
 	 *
@@ -45,8 +46,7 @@ define('wikia.backgroundchanger', function()  {
 		// preload adskin image
 		imagePreload.src = options.skinImage;
 
-		// load CSS and apply class changes to body element after loading
-		$.getCSS(sassUrl, function() {
+		var onCssLoadCallBack = function() {
 			if (options.skinImage !== '' && options.skinImageWidth > 0 && options.skinImageHeight > 0) {
 				if ((options.backgroundFixed === undefined) || !!options.backgroundFixed) {
 					$('body').addClass('background-fixed');
@@ -72,7 +72,22 @@ define('wikia.backgroundchanger', function()  {
 			} else {
 				$('body').removeClass('background-dynamic background-not-tiled background-fixed');
 			}
-		});
+		};
+
+		var nodeIndex = loadedCss.indexOf(sassUrl);
+
+		if (nodeIndex > -1) {
+			$('link[data-background-changer]').attr('disabled', true);
+			$('link[data-background-changer="'+sassUrl+'"]').attr('disabled', false);
+			onCssLoadCallBack();
+		} else {
+			// load CSS and apply class changes to body element after loading
+			$.getCSS(sassUrl, function(link) {
+				loadedCss.push(sassUrl);
+				$(link).attr('data-background-changer', sassUrl);
+				onCssLoadCallBack();
+			});
+		}
 	}
 
 	return {

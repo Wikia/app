@@ -1,14 +1,15 @@
-<section class="recirculation-rail module">
-	<h2>{{ title }}</h2>
+<section class="recirculation-rail module group-{{ group }}">
+	<h2>{{{ titleHtml }}}</h2>
 	<ul class="thumbnails">
 		{{#items}}
-			<li class="title-thumbnail">
-				<a href="{{ url }}" class="image image-thumbnail fluid small">
-					<img src="{{ thumbnail }}" alt="{{ title }}" itemprop="thumbnail">
+			<li class="rail-item {{classes}}" data-flag="{{ flag }}" data-index="{{ index }}">
+				<a href="{{ url }}">
+					<div class="image image-thumbnail fluid small">
+						<img src="{{ thumbnail }}" alt="{{ title }}" itemprop="thumbnail">
+					</div>
+					<div class="title" title="{{ title }}">{{ title }}</div>
+					<div class="metadata">{{ author }} &middot; <time class="timeago" datetime="{{ pub_date }}">{{ pub_date }}</time></div>
 				</a>
-				<div class="title" title="{{ title }}">
-					<a href="{{ url }}">{{ title }}</a>
-				</div>
 			</li>
 		{{/items}}
 	</ul>

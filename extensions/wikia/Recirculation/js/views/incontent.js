@@ -3,10 +3,9 @@ define('ext.wikia.recirculation.views.incontent', [
 	'jquery',
 	'wikia.window',
 	'wikia.log',
-	'wikia.mustache',
 	'ext.wikia.recirculation.tracker',
 	'ext.wikia.recirculation.utils'
-], function ($, w, log, Mustache, tracker, utils) {
+], function ($, w, log, tracker, utils) {
 
 	var logGroup = 'ext.wikia.recirculation.views.incontent',
 		$container = $('#mw-content-text'),
@@ -54,13 +53,17 @@ define('ext.wikia.recirculation.views.incontent', [
 			tracker.trackVerboseImpression(experimentName, 'in-content');
 
 			$html.on('mousedown', 'a', function() {
-				tracker.trackVerboseClick(experimentName, 'in-content');
+				tracker.trackVerboseClick(experimentName, utils.buildLabel(this, 'in-content'));
 			});
 		}
 	}
 
-	return {
-		render: render,
-		setupTracking: setupTracking
+	return function() {
+
+		return {
+			render: render,
+			setupTracking: setupTracking,
+			findSuitableSection: findSuitableSection
+		}
 	}
 });

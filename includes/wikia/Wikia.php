@@ -2014,7 +2014,9 @@ class Wikia {
 		$isValid = ($retVal === 0);
 
 		if (!$isValid) {
-			Wikia::log(__METHOD__, 'failed',  rtrim($output), true);
+			Wikia\Logger\WikiaLogger::instance()->warning( __METHOD__ . ' failed', [
+				'output' => rtrim($output),
+			] );
 
 			// pass an error to UploadBase class
 			$error = array('verification-error');

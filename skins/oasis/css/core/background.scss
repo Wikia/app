@@ -13,10 +13,10 @@ $background-height: get_command_line_param( "background-image-height", 0 );
 $background-width: get_command_line_param( "background-image-width", 0 );
 
 // convert unitless int values to pixels
-@if unitless($background-height) {
+@if type-of($background-height) == number and unitless($background-height) {
   $background-height : $background-height * 1px;
 }
-@if unitless($background-width) {
+@if type-of($background-width) == number and unitless($background-width) {
   $background-width : $background-width * 1px;
 }
 

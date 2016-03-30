@@ -221,6 +221,57 @@ class MercuryApiController extends WikiaController {
 	}
 
 	/**
+	 * @desc Returns UA dimensions
+	 */
+	public function getTrackingDimensions() {
+		global $wgDBname, $wgUser, $wgCityId, $wgLanguageCode;
+
+		$dimensions = [];
+
+		// Exception is thrown when empty title is send
+		// In that case we don't want to set dimensions which depend on title
+		// Title parameter is empty for URLs like /main/edit, /d etc. (all pages outside /wiki/ space)
+		try {
+			$title = $this->getTitleFromRequest();
+
+			$article = Article::newFromID( $title->getArticleId() );
+
+			if ( $article instanceof Article && $title->isRedirect() ) {
+				$title = $this->handleRedirect( $title, $article, [] )[0];
+			}
+
+			$adContext = ( new AdEngine2ContextService() )->getContext( $title, 'mercury' );
+			$dimensions[3] = $adContext['targeting']['wikiVertical'];
+			$dimensions[14] = $adContext['opts']['showAds'] ? 'yes' : 'no';
+			$dimensions[19] = WikiaPageType::getArticleType( $title );
+			$dimensions[25] = strval( $title->getNamespace() );
+		} catch ( Exception $ex ) {
+			// In case of exception - don't set the dimensions
+		}
+
+		$wikiCategoryNames = WikiFactoryHub::getInstance()->getWikiCategoryNames( $wgCityId );
+		$wikiCategoryNames = join( ',', $wikiCategoryNames );
+
+
+		$powerUserTypes = ( new \Wikia\PowerUser\PowerUser( $wgUser ) )->getTypesForUser();
+
+		$dimensions[1] = $wgDBname;
+		$dimensions[2] = $wgLanguageCode;
+		$dimensions[4] = 'mercury';
+		$dimensions[5] = $wgUser->isAnon() ? 'anon' : 'user';
+		$dimensions[9] = $wgCityId;
+		$dimensions[13] = AdTargeting::getEsrbRating();
+		$dimensions[15] = WikiaPageType::isCorporatePage() ? 'yes' : 'no';
+		$dimensions[17] = WikiFactoryHub::getInstance()->getWikiVertical( $wgCityId )['short'];
+		$dimensions[18] = $wikiCategoryNames;
+		$dimensions[23] = in_array( 'poweruser_lifetime', $powerUserTypes ) ? 'yes' : 'no';
+		$dimensions[24] = in_array( 'poweruser_frequent', $powerUserTypes ) ? 'yes' : 'no';
+
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
+		$this->response->setVal( 'dimensions', $dimensions );
+	}
+
+	/**
 	 * @desc for classic or CK editor markup return
 	 * wikitext ready to process and display in Mercury skin
 	 *
@@ -308,31 +359,33 @@ class MercuryApiController extends WikiaController {
 						if ( MercuryApiCategoryHandler::hasArticle( $this->request, $article ) ) {
 							$data['article'] = MercuryApiArticleHandler::getArticleJson( $this->request, $article );
 							$data['details'] = MercuryApiArticleHandler::getArticleDetails( $article );
-							$titleBuilder->setParts( [ $data['article']['displayTitle'] ] );
+							$titleBuilder->setParts( [$data['article']['displayTitle']] );
 						} elseif ( !empty( $data['nsSpecificContent']['members']['sections'] ) ) {
 							$data['details'] = MercuryApiCategoryHandler::getCategoryMockedDetails( $title );
+							$titleBuilder->setParts( [$title->getPrefixedText()] );
 						} else {
 							throw new NotFoundApiException( 'Article is empty and category has no members' );
 						}
 						break;
-					// Handling content namespaces
 					default:
-						if ( $title->isContentPage() && $title->isKnown() && $articleExists ) {
-							$data = array_merge(
-								$data,
-								MercuryApiArticleHandler::getArticleData( $this->request, $this->mercuryApi, $article )
-							);
+						if ( $title->isContentPage() ) {
+							if ( $title->isKnown() && $articleExists ) {
+								$data = array_merge(
+									$data,
+									MercuryApiArticleHandler::getArticleData( $this->request, $this->mercuryApi, $article )
+								);
 
-							if ( !$isMainPage ) {
-								$titleBuilder->setParts( [ $data['article']['displayTitle'] ] );
+								if ( !$isMainPage ) {
+									$titleBuilder->setParts( [$data['article']['displayTitle']] );
+								}
+							} else {
+								\Wikia\Logger\WikiaLogger::instance()->error(
+									'$article should be an instance of an Article',
+									['article' => $article]
+								);
+
+								throw new NotFoundApiException( 'Article is empty' );
 							}
-						} else {
-							\Wikia\Logger\WikiaLogger::instance()->error(
-								'$article should be an instance of an Article',
-								[ 'article' => $article ]
-							);
-
-							throw new NotFoundApiException( 'Article is empty' );
 						}
 				}
 			}
@@ -480,7 +533,7 @@ class MercuryApiController extends WikiaController {
 				'articleTitle' => str_replace( '_', ' ', $articleTitle ),
 				'url' => $url,
 			];
-		}, array_keys( $links ), array_values( $links ) );
+		} , array_keys( $links ), array_values( $links ) );
 
 		// Sort by localized language name
 		$c = Collator::create( 'en_US.UTF-8' );

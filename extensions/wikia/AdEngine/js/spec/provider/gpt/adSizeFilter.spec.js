@@ -7,6 +7,15 @@ describe('ext.wikia.adEngine.provider.gpt.adSizeFilter', function () {
 	}
 
 	var mocks = {
+		adContext: {
+			getContext: function () {
+				return {
+					opts: {
+						overridePrefootersSizes: mocks.overridePrefootersSizes
+					}
+				};
+			}
+		},
 		breakpointsLayout: {
 			getLargeContentWidth: function () {
 				return 1238;
@@ -26,11 +35,13 @@ describe('ext.wikia.adEngine.provider.gpt.adSizeFilter', function () {
 		},
 		getDocumentWidth: noop,
 		getContentWidth: noop,
+		overridePrefootersSizes: false,
 		log: noop
 	};
 
 	function getModule() {
 		return modules['ext.wikia.adEngine.provider.gpt.adSizeFilter'](
+			mocks.adContext,
 			mocks.getDocument(),
 			mocks.log,
 			mocks.breakpointsLayout
@@ -80,7 +91,7 @@ describe('ext.wikia.adEngine.provider.gpt.adSizeFilter', function () {
 		expect(getModule().filter('HOME_TOP_LEADERBOARD', sizesIn)).toEqual(sizesOut);
 	});
 
-	it('Returns sizes unmodified for INVISIBLE_SKIN for screens > 1240', function () {
+	it('Returns sizes unmodified for INVISIBLE_SKIN for screens >= 1240', function () {
 		spyOn(mocks, 'getDocumentWidth').and.returnValue(1245);
 
 		var sizesIn = [[1000, 1000], [1, 1]],
@@ -114,5 +125,49 @@ describe('ext.wikia.adEngine.provider.gpt.adSizeFilter', function () {
 			sizesOut = [[468, 60], [300, 250]];
 
 		expect(getModule().filter('INCONTENT_LEADERBOARD', sizesIn)).toEqual(sizesOut);
+	});
+
+	it('Returns sizes unmodified for PREFOOTER_LEFT_BOXAD for large screens' +
+		' when override prefooters feature disabled', function () {
+		spyOn(mocks, 'getContentWidth').and.returnValue(2000);
+		mocks.overridePrefootersSizes = false;
+
+		var sizesIn = [[728, 90], [468, 60], [300, 250]],
+			sizesOut = [[728, 90], [468, 60], [300, 250]];
+
+		expect(getModule().filter('PREFOOTER_LEFT_BOXAD', sizesIn)).toEqual(sizesOut);
+	});
+
+	it('Returns sizes unmodified for PREFOOTER_LEFT_BOXAD for large screens' +
+		' when override prefooters feature enabled', function () {
+		spyOn(mocks, 'getContentWidth').and.returnValue(2000);
+		mocks.overridePrefootersSizes = true;
+
+		var sizesIn = [[728, 90], [468, 60], [300, 250]],
+			sizesOut = [[728, 90], [468, 60], [300, 250]];
+
+		expect(getModule().filter('PREFOOTER_LEFT_BOXAD', sizesIn)).toEqual(sizesOut);
+	});
+
+	it('Returns sizes unmodified for PREFOOTER_LEFT_BOXAD for small screens' +
+		' when override prefooters feature disabled', function () {
+		spyOn(mocks, 'getContentWidth').and.returnValue(1000);
+		mocks.overridePrefootersSizes = false;
+
+		var sizesIn = [[728, 90], [468, 60], [300, 250]],
+			sizesOut = [[728, 90], [468, 60], [300, 250]];
+
+		expect(getModule().filter('PREFOOTER_LEFT_BOXAD', sizesIn)).toEqual(sizesOut);
+	});
+
+	it('Filter 728x90 size for PREFOOTER_LEFT_BOXAD for small screens' +
+		' when override prefooters feature enabled', function () {
+		spyOn(mocks, 'getContentWidth').and.returnValue(1000);
+		mocks.overridePrefootersSizes = true;
+
+		var sizesIn = [[728, 90], [468, 60], [300, 250]],
+			sizesOut = [[468, 60], [300, 250]];
+
+		expect(getModule().filter('PREFOOTER_LEFT_BOXAD', sizesIn)).toEqual(sizesOut);
 	});
 });

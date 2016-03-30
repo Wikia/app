@@ -111,6 +111,10 @@ define('ext.wikia.adEngine.adContext', [
 			context.providers.turtle = true;
 		}
 
+		if (geo.isProperGeo(instantGlobals.wgAdDriverHitMediaCountries)) {
+			context.providers.hitMedia = true;
+		}
+
 		// INVISIBLE_HIGH_IMPACT slot
 		context.slots.invisibleHighImpact = (
 			context.slots.invisibleHighImpact &&
@@ -122,7 +126,8 @@ define('ext.wikia.adEngine.adContext', [
 			isUrlParamSet('incontentplayer');
 
 		// INCONTENT_LEADERBOARD slot
-		context.slots.incontentLeaderboard = geo.isProperGeo(instantGlobals.wgAdDriverIncontentLeaderboardSlotCountries);
+		context.slots.incontentLeaderboard =
+			geo.isProperGeo(instantGlobals.wgAdDriverIncontentLeaderboardSlotCountries);
 
 		context.opts.scrollHandlerConfig = instantGlobals.wgAdDriverScrollHandlerConfig;
 		context.opts.enableScrollHandler = geo.isProperGeo(instantGlobals.wgAdDriverScrollHandlerCountries) ||
@@ -133,8 +138,8 @@ define('ext.wikia.adEngine.adContext', [
 			context.targeting.enableKruxTargeting &&
 			geo.isProperGeo(instantGlobals.wgAdDriverKruxCountries) &&
 			!instantGlobals.wgSitewideDisableKrux &&
-			!context.targeting.wikiDirectedAtChildren &&
-			!noExternals
+			context.targeting.esrbRating !== 'ec' && // FIXME ADEN-3147
+			!noExternals // FIXME ADEN-3147
 		);
 
 		// Floating medrec

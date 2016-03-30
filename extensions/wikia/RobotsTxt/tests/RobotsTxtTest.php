@@ -110,19 +110,28 @@ class RobotsTxtTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * Test disallowPath and limited URI encoding
+	 * Test disallowPath and allowPath, and limited URI encoding
 	 *
 	 * @covers RobotsTxt::disallowPath
+	 * @covers RobotsTxt::allowPath
 	 */
-	public function testDisallowPath() {
+	public function testDisallowAndAllowPath() {
 		$robots = new RobotsTxt();
 		$robots->disallowPath( '/some-path' );
 		$robots->disallowPath( '/some-path:ąść' );
 		$robots->disallowPath( '/some-path:サイトマップ' );
 		$robots->disallowPath( '/*/*%$' );
+		$robots->allowPath( '/other-path' );
+		$robots->allowPath( '/other-path:ąść' );
+		$robots->allowPath( '/other-path:サイトマップ' );
+		$robots->allowPath( '/*/*^$' );
 
 		$this->assertEquals( [
 			'User-agent: *',
+			'Allow: /other-path',
+			'Allow: /other-path:%C4%85%C5%9B%C4%87',
+			'Allow: /other-path:%E3%82%B5%E3%82%A4%E3%83%88%E3%83%9E%E3%83%83%E3%83%97',
+			'Allow: /*/*%5E$',
 			'Disallow: /some-path',
 			'Disallow: /some-path:%C4%85%C5%9B%C4%87',
 			'Disallow: /some-path:%E3%82%B5%E3%82%A4%E3%83%88%E3%83%9E%E3%83%83%E3%83%97',
@@ -248,4 +257,130 @@ class RobotsTxtTest extends WikiaBaseTest {
 		], $robots->getContents() );
 		$this->assertEquals( self::EXPERIMENTAL_HEADERS, $robots->getHeaders() );
 	}
+
+	/**
+	 * Test setCustomRules
+	 * @dataProvider setCustomRulesDataProvider
+	 * @covers RobotsTxt::setCustomRules
+	 *
+	 * @param $mockWgRobotsTxtCustomRules
+	 * @param $expResult
+	 */
+	public function testSetCustomRules( $mockWgRobotsTxtCustomRules, $lang, $expResult ) {
+		$this->mockGlobalVariable( 'wgRobotsTxtCustomRules', $mockWgRobotsTxtCustomRules );
+		$this->mockGlobalVariable( 'wgContLang', Language::factory( $lang ) );
+
+		$robots = new RobotsTxt();
+		$robots->setCustomRules();
+		$result = $robots->getContents();
+		$this->assertEquals( $expResult, $result );
+	}
+
+	public function setCustomRulesDataProvider()
+	{
+		$expResult1 = [];
+		$mockWgRobotsTxtCustomRules11 = [];
+		$mockWgRobotsTxtCustomRules12 = '';
+
+		$expResult2En = [
+			'User-agent: *',
+			'Disallow: /wiki/Help:',
+			'Disallow: /*?*title=Help:',
+			'Disallow: /index.php/Help:',
+			'Noindex: /wiki/Help:',
+			'Noindex: /*?*title=Help:',
+			'Noindex: /index.php/Help:',
+			'',
+		];
+		$expResult2De = [
+			'User-agent: *',
+			'Disallow: /wiki/Hilfe:',
+			'Disallow: /*?*title=Hilfe:',
+			'Disallow: /index.php/Hilfe:',
+			'Disallow: /wiki/Help:',
+			'Disallow: /*?*title=Help:',
+			'Disallow: /index.php/Help:',
+			'Noindex: /wiki/Hilfe:',
+			'Noindex: /*?*title=Hilfe:',
+			'Noindex: /index.php/Hilfe:',
+			'Noindex: /wiki/Help:',
+			'Noindex: /*?*title=Help:',
+			'Noindex: /index.php/Help:',
+			'',
+		];
+		$mockWgRobotsTxtCustomRules21 = [ 'disallowNamespace' => NS_HELP ];
+		$mockWgRobotsTxtCustomRules22 = [ 'disallowNamespace' => [ NS_HELP ] ];
+
+		$expResult3 = [
+			'User-agent: *',
+			'Disallow: /wiki/Help:',
+			'Disallow: /*?*title=Help:',
+			'Disallow: /index.php/Help:',
+			'Disallow: /wiki/User:',
+			'Disallow: /*?*title=User:',
+			'Disallow: /index.php/User:',
+			'Noindex: /wiki/Help:',
+			'Noindex: /*?*title=Help:',
+			'Noindex: /index.php/Help:',
+			'Noindex: /wiki/User:',
+			'Noindex: /*?*title=User:',
+			'Noindex: /index.php/User:',
+			'',
+		];
+		$mockWgRobotsTxtCustomRules3 = [ 'disallowNamespace' => [ NS_HELP, NS_USER ] ];
+
+		$expResult4En = [
+			'User-agent: *',
+			'Allow: /wiki/Special:Videos',
+			'Allow: /wiki/Special:Video',
+			'',
+		];
+		$expResult4De = [
+			'User-agent: *',
+			'Allow: /wiki/Spezial:Videos',
+			'Allow: /wiki/Spezial:Video',
+			'Allow: /wiki/Special:Videos',
+			'Allow: /wiki/Special:Video',
+			'',
+		];
+		$mockWgRobotsTxtCustomRules41 = [ 'allowSpecialPage' => 'Videos' ];
+		$mockWgRobotsTxtCustomRules42 = [ 'allowSpecialPage' => [ 'Videos' ] ];
+
+		$expResult5 = [
+			'User-agent: *',
+			'Allow: /wiki/Special:Forum',
+			'Allow: /wiki/Special:Forums',
+			'Allow: /wiki/Special:Videos',
+			'Allow: /wiki/Special:Video',
+			'Disallow: /wiki/Help:',
+			'Disallow: /*?*title=Help:',
+			'Disallow: /index.php/Help:',
+			'Noindex: /wiki/Help:',
+			'Noindex: /*?*title=Help:',
+			'Noindex: /index.php/Help:',
+			'',
+		];
+		$mockWgRobotsTxtCustomRules5 = [
+			'allowSpecialPage' => [ 'Forum', 'Videos' ],
+			'disallowNamespace' => [ NS_HELP ],
+		];
+
+		return [
+			// No custom rules
+			[ $mockWgRobotsTxtCustomRules11, 'en', $expResult1 ],
+			[ $mockWgRobotsTxtCustomRules12, 'en', $expResult1 ],
+			// disallow namespace
+			[ $mockWgRobotsTxtCustomRules21, 'en', $expResult2En ],
+			[ $mockWgRobotsTxtCustomRules22, 'en', $expResult2En ],
+			[ $mockWgRobotsTxtCustomRules22, 'de', $expResult2De ],
+			[ $mockWgRobotsTxtCustomRules3, 'en', $expResult3 ],
+			// allow special pages
+			[ $mockWgRobotsTxtCustomRules41, 'en', $expResult4En ],
+			[ $mockWgRobotsTxtCustomRules42, 'en', $expResult4En ],
+			[ $mockWgRobotsTxtCustomRules42, 'de', $expResult4De ],
+			// disallow namespace + allow special pages
+			[ $mockWgRobotsTxtCustomRules5, 'en', $expResult5 ],
+		];
+	}
+
 }

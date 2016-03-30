@@ -1,8 +1,10 @@
 <?php
 
 class RobotsTxt {
+
 	const CACHE_PERIOD_REGULAR = 24 * 3600;
 	const CACHE_PERIOD_EXPERIMENTAL = 3600;
+	const CUSTOM_RULES = [ 'allowSpecialPage', 'disallowNamespace' ];
 
 	private $allowed = [];
 	private $blockedRobots = [];
@@ -29,6 +31,17 @@ class RobotsTxt {
 				$this->allowed[] = $this->buildUrl( $specialNamespaceAlias, $localPageName );
 			}
 		}
+	}
+
+	/**
+	 * Allow a specific path
+	 *
+	 * It emits the Allow directive
+	 *
+	 * @param string $path path prefix to allow (some robots accept wildcards)
+	 */
+	public function allowPath( $path ) {
+		$this->allowed[] = $path;
 	}
 
 	/**
@@ -147,6 +160,29 @@ class RobotsTxt {
 	 */
 	public function setSitemap( $sitemapUrl ) {
 		$this->sitemap = $sitemapUrl;
+	}
+
+	/**
+	 * Set custom rules
+	 */
+	public function setCustomRules() {
+		global $wgRobotsTxtCustomRules;
+
+		if ( !is_array( $wgRobotsTxtCustomRules ) ) {
+			return;
+		}
+
+		foreach ( $wgRobotsTxtCustomRules as $rule => $values ) {
+			if ( in_array( $rule, self::CUSTOM_RULES ) ) {
+				if ( !is_array( $values ) ) {
+					$values = [ $values ];
+				}
+
+				foreach ( $values as $value ) {
+					$this->$rule( $value );
+				}
+			}
+		}
 	}
 
 	// Private methods follow:
