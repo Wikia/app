@@ -34,6 +34,10 @@ $messages['en'] = array(
 	'communitypage-admins' => 'Admins',
 	'communitypage-other-admins' => 'Other Admins',
 	'communitypage-recently-joined' => 'Recently Joined',
+	'communitypage-activity' => '$1 $2 the page $3',
+	'communitypage-created' => 'created',
+	'communitypage-edited' => 'edited',
+	'communitypage-deleted' => 'deleted',
 );
 
 $messages['qqq'] = array(
