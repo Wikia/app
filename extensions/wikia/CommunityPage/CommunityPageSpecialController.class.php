@@ -2,11 +2,13 @@
 
 class CommunityPageSpecialController extends WikiaSpecialPageController {
 	const DEFAULT_TEMPLATE_ENGINE = \WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
-	public $usersModel;
+	protected $usersModel;
+	protected $wikiModel;
 
 	public function __construct() {
 		parent::__construct( 'Community' );
 		$this->usersModel = new CommunityPageSpecialUsersModel();
+		$this->wikiModel = new CommunityPageSpecialWikiModel();
 	}
 
 	public function index() {
@@ -125,7 +127,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	 * @return array
 	 */
 	protected function getRecentActivityData() {
-		return $this->usersModel->getRecentActivityData();
+		return $this->wikiModel->getRecentActivityData();
 	}
 
 	protected function addAssets() {
