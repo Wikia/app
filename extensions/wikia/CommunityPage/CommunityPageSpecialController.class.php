@@ -25,9 +25,9 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 			'popupMessageText' => 'This is just a test message for the popup message box',
 			'userIsMember' => CommunityPageSpecialHelper::userHasEdited( $this->wg->User ),
 			'pageTitle' => $this->msg( 'communitypage-title' )->plain(),
-			'contributorsModule' => $this->getContributorsModuleData(),
-			'adminsModule' => $this->getAdminsModuleData(),
-			'recentlyJoinedModule' => $this->getRecentlyJoinedData(),
+			'topContributors' => $this->getTopContributorsData(),
+			'admins' => $this->getAdminsModuleData(),
+			'recentlyJoined' => $this->getRecentlyJoinedData(),
 		] );
 	}
 
@@ -53,7 +53,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	 * Set context for contributorsModule template. Needs to be passed through the index method in order to work.
 	 * @return array
 	 */
-	protected function getContributorsModuleData() {
+	protected function getTopContributorsData() {
 		$userContribCount = 2;
 
 		return [
