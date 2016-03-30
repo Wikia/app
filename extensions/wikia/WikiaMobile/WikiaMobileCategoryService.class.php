@@ -33,7 +33,6 @@ class WikiaMobileCategoryService extends WikiaService {
 
 	/**
 	 * Unicode Collation Algorithm (UCA) (http://www.unicode.org/reports/tr10/) string comparison.
-	 * Used in alphabeticalList method.
 	 *
 	 * @param $str1
 	 * @param $str2
