@@ -11,6 +11,11 @@ class WikiaMobileCategoryService extends WikiaService {
 	 */
 	private $model;
 
+	/**
+	 * @var $collator Collator
+	 */
+	private $collator;
+
 	// 3 hours
 	const CACHE_TIME = 10800;
 
@@ -20,6 +25,9 @@ class WikiaMobileCategoryService extends WikiaService {
 		}
 	}
 
+	private function getCollator() {
+		return !empty( $this->collator ) ? $this->collator : Collation::factory('uca-default')->primaryCollator;
+	}
 
 	/**
 	 * Unicode Collation Algorithm (UCA) (http://www.unicode.org/reports/tr10/) string comparison.
@@ -28,11 +36,11 @@ class WikiaMobileCategoryService extends WikiaService {
 	 * @param $str1
 	 * @param $str2
 	 *
-	 * @return {int|bool}
+	 * @return int|bool
 	 * @throws MWException
 	 */
-	private static function collatorUcaDefaultStringCompare( $str1, $str2 ) {
-		return Collation::factory('uca-default')->primaryCollator->compare( $str1, $str2 );
+	private function collatorUcaDefaultStringCompare( $str1, $str2 ) {
+		return $this->getCollator()->compare( $str1, $str2 );
 	}
 
 	public function index() {
