@@ -363,13 +363,14 @@ class MercuryApiController extends WikiaController {
 						if ( MercuryApiCategoryHandler::hasArticle( $this->request, $article ) ) {
 							$data['article'] = MercuryApiArticleHandler::getArticleJson( $this->request, $article );
 							$data['details'] = MercuryApiArticleHandler::getArticleDetails( $article );
-							$titleBuilder->setParts( [$data['article']['displayTitle']] );
 						} elseif ( !empty( $data['nsSpecificContent']['members']['sections'] ) ) {
 							$data['details'] = MercuryApiCategoryHandler::getCategoryMockedDetails( $title );
-							$titleBuilder->setParts( [$title->getPrefixedText()] );
 						} else {
 							throw new NotFoundApiException( 'Article is empty and category has no members' );
 						}
+
+						$data['details']['documentTitle'] = htmlspecialchars( $article->getTitle()->getPrefixedText() );
+						$titleBuilder->setParts( [$data['details']['documentTitle']] );
 						break;
 					default:
 						if ( $title->isContentPage() ) {
