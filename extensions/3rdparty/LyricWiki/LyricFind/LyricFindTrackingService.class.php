@@ -5,6 +5,8 @@
  */
 class LyricFindTrackingService extends WikiaService {
 
+	use Wikia\Logger\Loggable;
+
 	// LyricFind API response codes
 	const CODE_LYRIC_IS_AVAILABLE = 101;
 	const CODE_LYRIC_IS_INSTRUMENTAL = 102;
@@ -17,8 +19,6 @@ class LyricFindTrackingService extends WikiaService {
 
 	const DEFAULT_USER_AGENT = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/535.19 (KHTML, like Gecko) Chrome/18.0.1025.142 Safari/535.19';
 
-	const LOG_GROUP = 'lyricfind-tracking';
-
 	/**
 	 * Marks given page with lyric for removal
 	 *
@@ -28,7 +28,7 @@ class LyricFindTrackingService extends WikiaService {
 	private function markLyricForRemoval($pageId) {
 		$this->wf->SetWikiaPageProp(WPP_LYRICFIND_MARKED_FOR_REMOVAL, $pageId, 1);
 
-		self::log(__METHOD__, "marked page #{$pageId} for removal");
+		$this->info( __METHOD__, [ 'page_id' => $pageId ] );
 		return true;
 	}
 
@@ -44,7 +44,7 @@ class LyricFindTrackingService extends WikiaService {
 	private function markLyricAsNotRemoved($pageId) {
 		$this->wf->SetWikiaPageProp(WPP_LYRICFIND_MARKED_FOR_REMOVAL, $pageId, 0);
 
-		self::log(__METHOD__, "marked page #{$pageId} as no longer removed");
+		$this->info( __METHOD__, [ 'page_id' => $pageId ] );
 		return true;
 	}
 
@@ -154,12 +154,18 @@ class LyricFindTrackingService extends WikiaService {
 
 				default:
 					$status->fatal('not expected response code');
-					self::log(__METHOD__, "got #{$code} response code from API (track amg#{$amgId} / gn#{$gracenoteId} / '{$title->getPrefixedText()}')");
+
+					$this->error( __METHOD__, [
+						'exception' => new LyricFindTrackingException( 'Unexpected response code', $code ),
+						'amg_id' => (string) $amgId,
+						'gracenote_id' => (string) $gracenoteId,
+						'page_title' => $title->getPrefixedText()
+					] );
 			}
 		}
 		else {
+			// failed HTTP requests are logged to ELK internally by ExternalHttp::post
 			$status = Status::newFatal("API request failed!");
-			self::log(__METHOD__, "LyricFind API request failed!");
 		}
 
 		wfProfileOut(__METHOD__);
@@ -225,24 +231,20 @@ class LyricFindTrackingService extends WikiaService {
 					break;
 
 				default:
-					self::log(__METHOD__, "got #{$code} response code from API (track amg#{$amgId} / gn#{$gracenoteId} / '{$pageTitleText}')");
+					Wikia\Logger\WikiaLogger::instance()->error( __METHOD__, [
+						'exception' => new LyricFindTrackingException( 'Unexpected response code', $code ),
+						'amg_id' => (string) $amgId,
+						'gracenote_id' => (string) $gracenoteId,
+						'page_title' => $pageTitleText
+					] );
 			}
 		} else {
-			self::log(__METHOD__, "LyricFind API request failed in isPageBlockedViaApi()!");
+			// failed HTTP requests are logged to ELK internally by ExternalHttp::post
 		}
 
 		wfProfileOut(__METHOD__);
 		return $isBlocked;
 	}
-
-	/**
-	 * Log to /var/log/private file
-	 *
-	 * @param $method string method
-	 * @param $msg string message to log
-	 */
-	private static function log($method, $msg) {
-		Wikia::log(self::LOG_GROUP . '-WIKIA', false, $method . ': ' . $msg, true /* $force */);
-	}
 }
 
+class LyricFindTrackingException extends Exception {}
