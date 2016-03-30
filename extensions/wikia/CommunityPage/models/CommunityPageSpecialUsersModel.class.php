@@ -1,8 +1,7 @@
 <?php
 
 class CommunityPageSpecialUsersModel {
-	const TOP_CONTRIB_MCACHE_KEY = 'community_page_top_contrib12471fsgsadf';
-	const TOP_CONTRIB_DETAILS_MCACHE_KEY = 'community_page_top_contrib_details'; // todo not used
+	const TOP_CONTRIB_MCACHE_KEY = 'community_page_top_contrib';
 	const FIRST_REV_MCACHE_KEY = 'community_page_first_revision';
 	const GLOBAL_BOTS_MCACHE_KEY = 'community_page_global_bots';
 	const ALL_MEMBERS_MCACHE_KEY = 'community_page_all_members';
