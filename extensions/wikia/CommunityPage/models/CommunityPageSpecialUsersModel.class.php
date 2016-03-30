@@ -4,6 +4,8 @@ class CommunityPageSpecialUsersModel {
 	const TOP_CONTRIB_MCACHE_KEY = 'community_page_top_contrib';
 	const TOP_CONTRIB_DETAILS_MCACHE_KEY = 'community_page_top_contrib_details'; // todo not used
 	const FIRST_REV_MCACHE_KEY = 'community_page_first_revision';
+	const ALL_MEMBERS_MCACHE_KEY = 'community_page_all_members';
+	const RECENTLY_JOINED_MCACHE_KEY = 'community_page_recently_joined';
 
 	private $wikiService;
 
@@ -16,7 +18,8 @@ class CommunityPageSpecialUsersModel {
 	}
 
 	/**
-	 * Get the date a user made their first edit to a wiki
+	 * Get the date a member made their first edit to a wiki.
+	 * Membership is defined as having edited in the last two years
 	 *
 	 * @param User $user
 	 * @return Mixed|null
@@ -36,7 +39,8 @@ class CommunityPageSpecialUsersModel {
 					->SELECT( 'rev_timestamp' )
 					->FROM ( 'revision' )
 					->WHERE ( 'rev_user' )->EQUAL_TO( $user->getID() )
-					->LIMIT( 1 )
+					->AND_( 'rev_timestamp > DATE_SUB(now(), INTERVAL 2 YEAR)' )
+					->ORDER_BY( 'rev_timestamp' )
 					->run( $db, function ( ResultWrapper $result ) {
 						$out = [];
 						while ( $row = $result->fetchRow() ) {
@@ -54,6 +58,52 @@ class CommunityPageSpecialUsersModel {
 
 		return $data;
 	}
+
+	/**
+	 * Get all members for the community, with the date of their oldest edit in the last 2 years and the number
+	 * of contributions
+	 * Membership is defined as the user having made an edit within the last 2 years
+	 * @return Mixed|null
+	 */
+	public function getAllMembers() {
+		$data = WikiaDataAccess::cache(
+			wfMemcKey( self::ALL_MEMBERS_MCACHE_KEY ),
+			WikiaResponse::CACHE_STANDARD,
+			function () {
+				$db = wfGetDB( DB_SLAVE );
+
+				$sqlData = ( new WikiaSQL() )
+					->SELECT( 'DISTINCT rev_user, rev_timestamp, count(rev_user) AS contributions' )
+					->FROM ( 'revision' )
+					->WHERE( 'rev_timestamp > DATE_SUB(now(), INTERVAL 2 YEAR)' )
+					->GROUP_BY( 'rev_user' )
+					->ORDER_BY( 'rev_timestamp' )
+					->run( $db, function ( ResultWrapper $result ) {
+						$out = [];
+						while ( $row = $result->fetchRow() ) {
+							$user = User::newFromId( $row['rev_user'] );
+							$userName = $user->getName();
+							$avatar = AvatarService::renderAvatar( $userName, AvatarService::AVATAR_SIZE_SMALL_PLUS - 2 );
+
+							$out[] = [
+								'userId' => $row['rev_user'],
+								'oldestRevision' => $row['rev_timestamp'],
+								'contributions' => $row['contributions'],
+								'userName' => $userName,
+								'avatarUrl' => $avatar,
+							];
+						}
+
+						return $out;
+					} );
+
+				return $sqlData;
+			}
+		);
+
+		return $data;
+	}
+
 
 	/**
 	 * @param User $user
@@ -113,6 +163,15 @@ class CommunityPageSpecialUsersModel {
 	 * @return array
 	 */
 	public function getRecentlyJoinedUsers( $days = 14 ) {
-		return [];
+		$out = [];
+		$allMembers = $this->getAllMembers();
+
+		foreach ($allMembers as $member) {
+			if (strtotime($member['oldestRevision']) > strtotime("-$days days")) {
+				$out[] = $member;
+			}
+		}
+
+		return $out;
 	}
 }

@@ -33,6 +33,7 @@ $messages['en'] = array(
 	'communitypage-contributions' => '$1 {{PLURAL:$1|contribution|contributions}}',
 	'communitypage-admins' => 'Admins',
 	'communitypage-other-admins' => 'Other Admins',
+	'communitypage-recently-joined' => 'Recently Joined',
 );
 
 $messages['qqq'] = array(
