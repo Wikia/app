@@ -26,6 +26,8 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 			'userIsMember' => CommunityPageSpecialHelper::userHasEdited( $this->wg->User ),
 			'pageTitle' => $this->msg( 'communitypage-title' )->plain(),
 			'contributorsModule' => $this->getContributorsModuleData(),
+			'adminsModule' => $this->getAdminsModuleData(),
+			'recentlyJoinedModule' => $this->getRecentlyJoinedData(),
 		] );
 	}
 
@@ -78,6 +80,37 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		];
 	}
 
+	/**
+	 * Set context for adminsModule template. Needs to be passed through the index method in order to work.
+	 * @return array
+	 */
+	protected function getAdminsModuleData() {
+		$topAdmins = $this->usersModel->getTopAdmins();
+		$remainingAdminCount = count ( $topAdmins ) - 2;
+
+		return [
+			'topAdminsHeaderText' => $this->msg( 'communitypage-admins' )->plain(),
+			'otherAdmins' => $this->msg( 'communitypage-other-admins' )->plain(),
+			'admins' => array_slice( $topAdmins, 0, 2 ),
+			'otherAdminCount' => $remainingAdminCount,
+			'haveOtherAdmins' => $remainingAdminCount > 0,
+		];
+	}
+
+	/**
+	 * Set context for recentlyJoinedModule template. Needs to be passed through the index method in order to work.
+	 * @return array
+	 */
+	protected function getRecentlyJoinedData() {
+		$recentlyJoined = $this->usersModel->getRecentlyJoinedUsers();
+
+		return [
+			'recentlyJoined' => $recentlyJoined,
+			'recentlyJoinedHeaderText' => $this->msg( 'communitypage-recently-joined' )->plain(),
+			'members' => $recentlyJoined,
+		];
+	}
+
 	protected function addAssets() {
 		$this->response->addAsset( 'special_community_page_js' );
 		$this->response->addAsset( 'special_community_page_scss' );
@@ -108,6 +141,4 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 			];
 		}, $contributors );
 	}
-
-
 }
