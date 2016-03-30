@@ -42,16 +42,7 @@
 			this.descWikiNext = this.$descWikiWrapper.find('nav .next');
 
 			var self = this,
-				$signupRedirect = $('#SignupRedirect'),
 				pane;
-
-			$signupRedirect.submit(function () {
-				var queryString = 'wikiName=' + self.wikiName.val() +
-					'&wikiDomain=' + self.wikiDomain.val() +
-					'&uselang=' + self.wikiLanguage.find('option:selected').val();
-				$().log(queryString);
-				$signupRedirect.find('input[name=returnto]').val(queryString);
-			});
 
 			// Name Wiki event handlers
 			this.checkNextButtonStep1();
@@ -70,14 +61,14 @@
 						wikiLang: self.wikiLanguage.find('option:selected').val()
 					});
 					if (window.wgUserName) {
-						self.transition('NameWiki', true, '+');
+						self.onAuthSuccess();
 					} else {
 						var redirectUrl = encodeURIComponent(window.location.href + '&wikiName=' + self.wikiName.val() + '&wikiDomain=' + self.wikiDomain.val() + '&wikiLanguage=' + self.wikiLanguage.find('option:selected').val());
 						require(['AuthModal'], function (authModal) {
 							authModal.load({
 								url: '/signin?redirect=' + redirectUrl,
 								origin: 'create-new-wikia',
-								onAuthSuccess: $.proxy(self.onAuthSuccess.bind({redirectUrl: redirectUrl}), self)
+								onAuthSuccess: $.proxy(self.onAuthSuccess, self)
 							});
 						});
 					}
@@ -262,7 +253,7 @@
 		},
 
 		onAuthSuccess: function () {
-			window.location.href = decodeURIComponent(this.redirectUrl).replace(/&/, '?');
+			this.transition('NameWiki', true, '+');
 		},
 
 		checkWikiName: function () {
