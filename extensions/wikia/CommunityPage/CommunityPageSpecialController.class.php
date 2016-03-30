@@ -20,6 +20,9 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		$this->wg->SuppressWikiHeader = true;
 		$this->wg->SuppressFooter = true;
 
+		// remove user styles and js
+		$this->getOutput()->disallowUserJs();
+
 		$this->response->setValues( [
 			'adminWelcomeMsg' => $this->msg( 'communitypage-tasks-admin-welcome' )->text(),
 			'pageListEmptyText' => $this->msg( 'communitypage-page-list-empty' )->plain(),
@@ -60,7 +63,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	 * @return array
 	 */
 	protected function getTopContributorsData() {
-		$userContribCount = 2;
+		$userContribCount = $this->usersModel->getUserContributions( $this->wg->user );
 		$contributors = CommunityPageSpecialUsersModel::filterGlobalBots(
 				// get extra contributors so if there's global bots they can be filtered out
 				CommunityPageSpecialUsersModel::getTopContributors( 50, '1 MONTH' )

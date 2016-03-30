@@ -6,6 +6,7 @@ class CommunityPageSpecialUsersModel {
 	const GLOBAL_BOTS_MCACHE_KEY = 'community_page_global_bots';
 	const ALL_MEMBERS_MCACHE_KEY = 'community_page_all_members';
 	const RECENTLY_JOINED_MCACHE_KEY = 'community_page_recently_joined';
+	const CURR_USER_CONTRIBUTIONS_MCACHE_KEY = 'community_page_current_user_contributions';
 
 	private $wikiService;
 
@@ -173,7 +174,7 @@ class CommunityPageSpecialUsersModel {
 						while ( $row = $result->fetchRow() ) {
 							$user = User::newFromId( $row['rev_user'] );
 							$userName = $user->getName();
-							$avatar = AvatarService::renderAvatar( $userName, AvatarService::AVATAR_SIZE_SMALL_PLUS - 2 );
+							$avatar = AvatarService::renderAvatar( $userName, AvatarService::AVATAR_SIZE_SMALL_PLUS );
 
 							$out[] = [
 								'userId' => $row['rev_user'],
@@ -181,6 +182,7 @@ class CommunityPageSpecialUsersModel {
 								'contributions' => $row['contributions'],
 								'userName' => $userName,
 								'avatar' => $avatar,
+								'profilePage' => $user->getUserPage()->getLocalURL(),
 							];
 						}
 
@@ -212,12 +214,38 @@ class CommunityPageSpecialUsersModel {
 	 * Get all contributions for a user, limited by most recent n days if $days is not null
 	 *
 	 * @param User $user
-	 * @param int|null $days
+	 * @param string $interval Time interval for DATE_SUB()
 	 * @return int Number of contributions
 	 */
-	public function getUserContributions( User $user, $days = null ) {
+	public function getUserContributions( User $user, $interval = '2 WEEK' ) {
+		$userId = $user->getId();
 
-		return 100;
+		$revisionCount = WikiaDataAccess::cache(
+			// TODO: Should purge this when user edits
+			wfMemcKey( self::CURR_USER_CONTRIBUTIONS_MCACHE_KEY, $userId, $interval ),
+			WikiaResponse::CACHE_VERY_SHORT, // short cache b/c it's for the current user's info
+			function () use ( $userId, $interval ) {
+				$db = wfGetDB( DB_SLAVE );
+
+				$sqlData = ( new WikiaSQL() )
+					->SELECT( 'count(rev_id) AS revision_count' )
+					->FROM( 'revision' )
+					->WHERE('rev_user')->EQUAL_TO( $userId )
+					->AND_( 'rev_timestamp > DATE_SUB(now(), INTERVAL ' . $interval . ')' )
+					->run( $db, function ( ResultWrapper $result ) {
+						$out = 0;
+						while ( $row = $result->fetchRow() ) {
+							$out = $row['revision_count'];
+						}
+
+						return $out;
+					} );
+
+				return $sqlData;
+			}
+		);
+
+		return $revisionCount;
 	}
 
 	/**
