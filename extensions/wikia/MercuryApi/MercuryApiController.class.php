@@ -267,7 +267,7 @@ class MercuryApiController extends WikiaController {
 		$dimensions[23] = in_array( 'poweruser_lifetime', $powerUserTypes ) ? 'yes' : 'no';
 		$dimensions[24] = in_array( 'poweruser_frequent', $powerUserTypes ) ? 'yes' : 'no';
 
-		if ($this->request->getBool('isanon')) {
+		if ( !empty( $this->request->getBool( 'isanon' ) ) ) {
 			$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
 		}
 
