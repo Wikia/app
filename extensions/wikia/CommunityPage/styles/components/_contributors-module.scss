@@ -41,6 +41,9 @@
 	}
 
 	.top-contributors, .top-admins {
+		font-size: 14px;
+		line-height: 20px;
+
 		li {
 			@include clearfix;
 			padding-bottom: 10px;
@@ -50,6 +53,16 @@
 	.top-contributors {
 		font-size: 14px;
 		line-height: 20px;
+
+		.avatar-container {
+			@include transform-translate(0, 3px);
+		}
+	}
+
+	.top-admins {
+		.contributor-details {
+			@include transform-translate(0, 5px);
+		}
 	}
 
 }
