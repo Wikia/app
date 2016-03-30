@@ -63,10 +63,15 @@
 					if (window.wgUserName) {
 						self.onAuthSuccess();
 					} else {
-						var redirectUrl = encodeURIComponent(window.location.href + '?wikiName=' + self.wikiName.val() + '&wikiDomain=' + self.wikiDomain.val() + '&wikiLanguage=' + self.wikiLanguage.find('option:selected').val());
-						require(['AuthModal'], function (authModal) {
+						require(['AuthModal', 'wikia.querystring'], function (authModal, querystring) {
+							var redirectUrl = new querystring();
+
+							redirectUrl.setVal({wikiName: self.wikiName.val(),
+								wikiDomain: self.wikiDomain.val(),
+								wikiLanguage: self.wikiLanguage.find('option:selected').val()});
+
 							authModal.load({
-								url: '/signin?redirect=' + redirectUrl,
+								url: '/signin?redirect=' + redirectUrl.toString(),
 								origin: 'create-new-wikia',
 								onAuthSuccess: $.proxy(self.onAuthSuccess, self)
 							});
