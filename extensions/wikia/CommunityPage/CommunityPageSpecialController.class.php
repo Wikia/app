@@ -2,11 +2,13 @@
 
 class CommunityPageSpecialController extends WikiaSpecialPageController {
 	const DEFAULT_TEMPLATE_ENGINE = \WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
-	public $usersModel;
+	protected $usersModel;
+	protected $wikiModel;
 
 	public function __construct() {
 		parent::__construct( 'Community' );
 		$this->usersModel = new CommunityPageSpecialUsersModel();
+		$this->wikiModel = new CommunityPageSpecialWikiModel();
 	}
 
 	public function index() {
@@ -28,6 +30,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 			'topContributors' => $this->getTopContributorsData(),
 			'topAdmins' => $this->getTopAdminsData(),
 			'recentlyJoined' => $this->getRecentlyJoinedData(),
+			'recentActivityModule' => $this->getRecentActivityData(),
 		] );
 	}
 
@@ -116,6 +119,32 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 			'recentlyJoined' => $recentlyJoined,
 			'recentlyJoinedHeaderText' => $this->msg( 'communitypage-recently-joined' )->plain(),
 			'members' => $recentlyJoined,
+		];
+	}
+
+	/**
+	 * Set context for recentActivityModule template. Needs to be passed through the index method in order to work.
+	 * @return array
+	 */
+	protected function getRecentActivityData() {
+		$data = $this->sendRequest('LatestActivityController', executeIndex)->getData();
+		$recentActivity = [];
+
+		foreach ($data['changeList'] as $activity) {
+			$recentActivity[] = [
+				'timeAgo' => $activity['time_ago'],
+				'userAvatar' => AvatarService::renderAvatar(
+					$activity['user_name'],
+					AvatarService::AVATAR_SIZE_SMALL_PLUS ),
+				'changeMessage' => $activity['changemessage'],
+				'editedPageTitle' => $activity['page_title'],
+			];
+		}
+
+		return [
+			'activityHeading' => $data['moduleHeader'],
+			'moreActivityLink' => Wikia::specialPageLink( 'WikiActivity', 'oasis-more', 'more-activity' ),
+			'activity' => $recentActivity,
 		];
 	}
 
