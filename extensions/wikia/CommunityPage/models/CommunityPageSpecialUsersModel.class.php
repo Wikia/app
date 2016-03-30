@@ -39,8 +39,9 @@ class CommunityPageSpecialUsersModel {
 					->SELECT( 'rev_timestamp' )
 					->FROM ( 'revision' )
 					->WHERE ( 'rev_user' )->EQUAL_TO( $user->getID() )
-					->AND_( 'rev_timestamp > DATE_SUB(now(), INTERVAL 2 YEAR)' )
+					->AND_ ( 'rev_timestamp > DATE_SUB(now(), INTERVAL 2 YEAR)' )
 					->ORDER_BY( 'rev_timestamp' )
+					->GROUP_BY( 'rev_user' )
 					->run( $db, function ( ResultWrapper $result ) {
 						$out = [];
 						while ( $row = $result->fetchRow() ) {
@@ -56,7 +57,11 @@ class CommunityPageSpecialUsersModel {
 			}
 		);
 
-		return $data;
+		if (count( $data ) > 0) {
+			return $data[0]['rev_timestamp'];
+		} else {
+			return null;
+		}
 	}
 
 	/**
