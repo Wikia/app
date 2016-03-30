@@ -39,13 +39,13 @@ define('ext.wikia.adEngine.lookup.openXBidder', [
 			},
 			mercury: {
 				MOBILE_IN_CONTENT: {
-					sizes: ['300x50', '300x250', '320x50']
+					sizes: ['300x250', '320x50']
 				},
 				MOBILE_PREFOOTER: {
-					sizes: ['300x50', '300x250', '320x50']
+					sizes: ['300x250', '320x50']
 				},
 				MOBILE_TOP_LEADERBOARD: {
-					sizes: ['300x50', '300x250', '320x50']
+					sizes: ['300x250', '320x50']
 				}
 			}
 		},
