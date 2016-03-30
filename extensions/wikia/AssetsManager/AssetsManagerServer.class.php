@@ -8,6 +8,19 @@ use \Wikia\Logger\WikiaLogger;
 
 class AssetsManagerServer {
 
+	/**
+	 * Add X-Served-By and X-Backend-Response-Time headers to all AssetsManager responses
+	 *
+	 * @see BAC-550
+	 * @see Wikia::addExtraHeaders
+	 * @author Macbre
+	 */
+	private static function addExtraHeaders() {
+		global $wgRequestTime;
+		header( sprintf( 'X-Served-By: %s', wfHostname() ) );
+		header( sprintf( 'X-Backend-Response-Time: %.3f', microtime( true ) - $wgRequestTime ) );
+	}
+
 	public static function serve(WebRequest $request) {
 
 		$type = $request->getText('type');
@@ -41,6 +54,7 @@ class AssetsManagerServer {
 		} catch (Exception $e) {
 			header('HTTP/1.1 404 Not Found');
 			header('Content-Type: text/plain;  charset=UTF-8');
+			self::addExtraHeaders();
 			echo $e->getMessage();
 
 			WikiaLogger::instance()->error( __METHOD__, [
@@ -95,17 +109,11 @@ class AssetsManagerServer {
 
 		$headers['Last-Modified'] = gmdate('D, d M Y H:i:s \G\M\T');
 
-		// Add X-Served-By and X-Backend-Response-Time response headers to MediaWiki pages
-		// See BAC-550 for details
-		// @macbre
-		global $wgRequestTime;
-		$headers['X-Served-By'] = wfHostname();
-		$headers['X-Backend-Response-Time'] = round(microtime( true ) - $wgRequestTime, 3);
-
 		foreach($headers as $k => $v) {
 			header($k . ': ' . $v);
 		}
 
+		self::addExtraHeaders();
 		echo $content;
 	}
 }
