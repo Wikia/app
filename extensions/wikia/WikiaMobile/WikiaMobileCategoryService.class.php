@@ -20,6 +20,21 @@ class WikiaMobileCategoryService extends WikiaService {
 		}
 	}
 
+
+	/**
+	 * Unicode Collation Algorithm (UCA) (http://www.unicode.org/reports/tr10/) string comparison.
+	 * Used in alphabeticalList method.
+	 *
+	 * @param $str1
+	 * @param $str2
+	 *
+	 * @return {int|bool}
+	 * @throws MWException
+	 */
+	private static function collatorUcaDefaultStringCompare( $str1, $str2 ) {
+		return Collation::factory('uca-default')->primaryCollator->compare( $str1, $str2 );
+	}
+
 	public function index() {
 		if ( WikiaPageType::isCorporatePage() ) {
 			return false;
@@ -80,7 +95,7 @@ class WikiaMobileCategoryService extends WikiaService {
 			$title = $categoryPage->getTitle();
 			$category = Category::newFromTitle( $title );
 			$collections = $this->model->getCollection( $category, $format );
-			ksort( $collections['items'] );
+			uksort( $collections['items'], 'self::collatorUcaDefaultStringCompare' );
 
 			$this->response->setVal( 'total', $collections['count'] );
 			$this->response->setVal( 'collections', $collections['items'] );
