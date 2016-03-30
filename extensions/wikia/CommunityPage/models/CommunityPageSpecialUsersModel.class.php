@@ -1,18 +1,5 @@
 <?php
 
-//SELECT  user_name,user_id, count(rev_id) AS revision_count, ug_user, ug_group
-//FROM `revision`
-//FORCE INDEX (user_timestamp)
-//  INNER JOIN `page` ON ((page_id = rev_page))
-//  LEFT JOIN `wikicities`.`user` ON ((rev_user != 0) AND (user_id = rev_user))
-//  LEFT JOIN `wikicities`.`user_groups` ON (user_id = ug_user)
-//  LEFT JOIN `tag_summary` ON ((ts_rev_id=rev_id))
-//WHERE user_id != 'NULL' AND rev_timestamp > '20151001000000' AND (ug_group IS NULL or (ug_group !='bot' AND ug_group !='bot-global'))
-//GROUP BY user_name
-//ORDER BY revision_count DESC
-//LIMIT 5 \G;
-
-
 class CommunityPageSpecialUsersModel {
 	const TOP_CONTRIB_MCACHE_KEY = 'community_page_top_contrib12471fsgsadf';
 	const TOP_CONTRIB_DETAILS_MCACHE_KEY = 'community_page_top_contrib_details'; // todo not used
@@ -78,7 +65,7 @@ class CommunityPageSpecialUsersModel {
 	public static function getTopContributors( $limit = 10, $interval = '2 WEEK' ) {
 		$data = WikiaDataAccess::cache(
 			wfMemcKey( self::TOP_CONTRIB_MCACHE_KEY ),
-			0, // WikiaResponse::CACHE_STANDARD,
+			WikiaResponse::CACHE_STANDARD,
 			function () use ( $limit, $interval ) {
 				global $wgExternalSharedDB;
 				$db = wfGetDB( DB_SLAVE );
@@ -134,7 +121,6 @@ class CommunityPageSpecialUsersModel {
 			}
 		);
 		return $botIds;
-
 	}
 
 	public static function filterGlobalBots( array $users ) {
