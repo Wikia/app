@@ -28,6 +28,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 			'topContributors' => $this->getTopContributorsData(),
 			'topAdmins' => $this->getTopAdminsData(),
 			'recentlyJoined' => $this->getRecentlyJoinedData(),
+			'recentActivityModule' => $this->getRecentActivityData(),
 		] );
 	}
 
@@ -117,6 +118,14 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 			'recentlyJoinedHeaderText' => $this->msg( 'communitypage-recently-joined' )->plain(),
 			'members' => $recentlyJoined,
 		];
+	}
+
+	/**
+	 * Set context for recentActivityModule template. Needs to be passed through the index method in order to work.
+	 * @return array
+	 */
+	protected function getRecentActivityData() {
+		return $this->usersModel->getRecentActivityData();
 	}
 
 	protected function addAssets() {
