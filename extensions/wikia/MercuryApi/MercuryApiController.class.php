@@ -267,8 +267,10 @@ class MercuryApiController extends WikiaController {
 		$dimensions[23] = in_array( 'poweruser_lifetime', $powerUserTypes ) ? 'yes' : 'no';
 		$dimensions[24] = in_array( 'poweruser_frequent', $powerUserTypes ) ? 'yes' : 'no';
 
-		$this->response->setVary( 'Accept-Encoding, Cookie' ); # cache for anons only
-		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
+		if ($this->request->getBool('isanon')) {
+			$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
+		}
+
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 		$this->response->setVal( 'dimensions', $dimensions );
 	}
