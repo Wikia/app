@@ -63,7 +63,7 @@
 					if (window.wgUserName) {
 						self.onAuthSuccess();
 					} else {
-						var redirectUrl = encodeURIComponent(window.location.href + '&wikiName=' + self.wikiName.val() + '&wikiDomain=' + self.wikiDomain.val() + '&wikiLanguage=' + self.wikiLanguage.find('option:selected').val());
+						var redirectUrl = encodeURIComponent(window.location.href + '?wikiName=' + self.wikiName.val() + '&wikiDomain=' + self.wikiDomain.val() + '&wikiLanguage=' + self.wikiLanguage.find('option:selected').val());
 						require(['AuthModal'], function (authModal) {
 							authModal.load({
 								url: '/signin?redirect=' + redirectUrl,
