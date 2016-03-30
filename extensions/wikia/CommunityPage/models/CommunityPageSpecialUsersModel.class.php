@@ -82,7 +82,7 @@ class CommunityPageSpecialUsersModel {
 				$db = wfGetDB( DB_SLAVE );
 				$adminFilter = '';
 				if ( $onlyAdmins ) {
-					$adminFilter = ' AND ((ug_group = "sysop") or (ug_group = "bureaucrat"))';
+					$adminFilter = ' AND (ug_group = "sysop")';
 				}
 
 				$sqlData = ( new WikiaSQL() )
@@ -218,22 +218,6 @@ class CommunityPageSpecialUsersModel {
 	public function getUserContributions( User $user, $days = null ) {
 
 		return 100;
-	}
-
-	/**
-	 * Get a list of admins in order of their edit count in the last n days or all time if null
-	 *
-	 * @return array Array of admin data
-	 */
-	public function getTopAdmins( $wikiId = null) {
-		// fixme: $limit and $days not supported by WikiService::getMostActiveAdmins
-		$app = F::app();
-
-		if ( empty( $wikiId ) ) {
-			$wikiId = $app->wg->CityId;
-		}
-
-		return $this->getWikiService()->getMostActiveAdmins( $wikiId, AvatarService::AVATAR_SIZE_SMALL_PLUS );
 	}
 
 	/**

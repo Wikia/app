@@ -1,17 +1,15 @@
-$font-activity-summary: HelveticaNeue;
-
 .community-page-monthly-summary {
 	align-items: center;
 	background-color: $color-activity-background;
 	display: flex; // todo: use mixins for this
 	flex-direction: column;
+	font-family: $community-page-font-family;
 	height: 129px;
 	justify-content: center;
 	text-align: center;
 
 	.heading {
 		color: $color-activity-text;
-		font-family: $font-activity-summary;
 		font-size: 14px;
 		font-weight: bold;
 		text-transform: uppercase;
@@ -40,14 +38,12 @@ $font-activity-summary: HelveticaNeue;
 
 	.stat-number {
 		color: $color-activity-text;
-		font-family: $font-activity-summary;
 		font-size: 24px;
 		line-height: .8;
 	}
 
 	.stat-name {
 		color: $color-activity-text;
-		font-family: $font-activity-summary;
 		font-size: 14px;
 		line-height: 2;
 		text-transform: uppercase;

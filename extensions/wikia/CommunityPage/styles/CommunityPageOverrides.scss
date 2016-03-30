@@ -1,8 +1,10 @@
 // body styles
+@import 'components/variables';
+
 $comm-page-body-color: #FFF;
 
-body.special-community-page.skin-oasis {
-	background-color: $comm-page-body-color;
+body.page-Special_Community.skin-oasis {
+	background: $comm-page-body-color;
 
 	&::before, &::after, .background-image-gradient {
 		display: none;
@@ -14,5 +16,6 @@ body.special-community-page.skin-oasis {
 
 	.WikiaPage {
 		border: 0;
+		font-family: $community-page-font-family;
 	}
 }

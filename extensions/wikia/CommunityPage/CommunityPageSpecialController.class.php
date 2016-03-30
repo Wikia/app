@@ -94,7 +94,6 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		);
 		$topAdminsDetails = $this->getContributorsDetails( $topAdmins );
 
-//		$topAdmins = $this->usersModel->getTopAdmins();
 		$remainingAdminCount = count ( $topAdmins ) - 2;
 
 		return [

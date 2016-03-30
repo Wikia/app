@@ -2,11 +2,6 @@
 
 class CommunityPageSpecialHooks {
 
-	public static function onBeforePageDisplay( OutputPage &$out, &$skin ) {
-		OasisController::addBodyClass( 'special-community-page' );
-		return true;
-	}
-
 	/**
 	 * Render the community page header outside of the .WikiaPage element
 	 *

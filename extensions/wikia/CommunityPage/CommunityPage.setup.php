@@ -8,7 +8,6 @@ $wgAutoloadClasses['CommunityPageSpecialController'] =  __DIR__ . '/CommunityPag
 $wgAutoloadClasses['CommunityPageSpecialHooks'] =  __DIR__ . '/CommunityPageSpecialHooks.class.php';
 
 /* hooks */
-$wgHooks['BeforePageDisplay'][] = 'CommunityPageSpecialHooks::onBeforePageDisplay';
 $wgHooks['GetHTMLBeforeWikiaPage'][] = 'CommunityPageSpecialHooks::getHTMLBeforeWikiaPage';
 
 /* i18n */
