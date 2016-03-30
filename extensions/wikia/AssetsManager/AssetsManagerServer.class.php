@@ -4,6 +4,8 @@
  * @author Inez Korczyński <korczynski@gmail.com>
  */
 
+use \Wikia\Logger\WikiaLogger;
+
 class AssetsManagerServer {
 
 	public static function serve(WebRequest $request) {
@@ -33,15 +35,19 @@ class AssetsManagerServer {
 					break;
 
 				default:
-					Wikia::log(__METHOD__, false, "Unknown type: {$_SERVER['REQUEST_URI']}", true /* $always */);
-					Wikia::log(__METHOD__, false, AssetsManager::getRequestDetails(), true /* $always */);
-					throw new Exception('Unknown type.');
+					throw new InvalidArgumentException( "Unknown type: {$type}" );
 			}
 
 		} catch (Exception $e) {
 			header('HTTP/1.1 404 Not Found');
 			header('Content-Type: text/plain;  charset=UTF-8');
 			echo $e->getMessage();
+
+			WikiaLogger::instance()->error( __METHOD__, [
+				'type' => $type,
+				'exception' => $e
+			] );
+
 			return;
 		}
 
@@ -72,7 +78,7 @@ class AssetsManagerServer {
 			header('Content-Type: text/plain;  charset=UTF-8');
 
 			// log exception messages
-			\Wikia\Logger\WikiaLogger::instance()->error( 'AssetsManagerServer::serve failed', [
+			WikiaLogger::instance()->error( __METHOD__, [
 				'type' => $type,
 				'exception' => $e
 			]);
