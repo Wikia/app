@@ -2,8 +2,8 @@
 
 class CommunityPageSpecialUsersModel {
 	const TOP_CONTRIB_MCACHE_KEY = 'community_page_top_contrib';
-	const TOP_CONTRIB_DETAILS_MCACHE_KEY = 'community_page_top_contrib_details'; // todo not used
 	const FIRST_REV_MCACHE_KEY = 'community_page_first_revision';
+	const GLOBAL_BOTS_MCACHE_KEY = 'community_page_global_bots';
 	const ALL_MEMBERS_MCACHE_KEY = 'community_page_all_members';
 	const RECENTLY_JOINED_MCACHE_KEY = 'community_page_recently_joined';
 
@@ -65,7 +65,85 @@ class CommunityPageSpecialUsersModel {
 	}
 
 	/**
-	 * Get all members for the community, with the date of their oldest edit in the last 2 years and the number
+	 * Get the user id and contribution count of the top n contributors to the current wiki
+	 *
+	 * @param int $limit Number of rows to fetch
+	 * @param string $interval Time interval for DATE_SUB()
+	 * @return Mixed|null
+	 */
+	public static function getTopContributors( $limit = 10, $interval = '1 WEEK' ) {
+		$data = WikiaDataAccess::cache(
+			wfMemcKey( self::TOP_CONTRIB_MCACHE_KEY ),
+			WikiaResponse::CACHE_STANDARD,
+			function () use ( $limit, $interval ) {
+				global $wgExternalSharedDB;
+				$db = wfGetDB( DB_SLAVE );
+				$sqlData = ( new WikiaSQL() )
+					->SELECT( 'user_name, user_id, count(rev_id) AS revision_count' )
+					->FROM ( 'revision FORCE INDEX (user_timestamp)' )
+					->LEFT_JOIN( $wgExternalSharedDB . '.user')->ON( '(rev_user <> 0) AND (user_id = rev_user)' )
+					->LEFT_JOIN( 'user_groups ON (user_id = ug_user)' )
+					->WHERE( 'user_id' )->IS_NOT_NULL()
+					->AND_( 'rev_timestamp > DATE_SUB(now(), INTERVAL '. $interval . ')' )
+					->AND_( '(ug_group IS NULL or (ug_group <> "bot"))')
+					->GROUP_BY( 'user_name' )
+					->ORDER_BY( 'revision_count' )->DESC()
+					->LIMIT( $limit )
+					->run( $db, function ( ResultWrapper $result ) {
+						$out = [];
+						while ( $row = $result->fetchRow() ) {
+							$out[] = [
+								'userId' => $row['user_id'],
+								'userName' => $row['user_name'],
+								'contributions' => $row['revision_count']
+							];
+						}
+						return $out;
+					} );
+				return $sqlData;
+			}
+		);
+		return $data;
+	}
+
+	public static function getGlobalBotIds() {
+		$botIds = WikiaDataAccess::cache(
+			wfMemcKey( self::GLOBAL_BOTS_MCACHE_KEY ),
+			WikiaResponse::CACHE_STANDARD,
+			function () {
+				global $wgExternalSharedDB;
+				$db = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
+
+				$sqlData = ( new WikiaSQL() )
+					->SELECT( 'user_id' )
+					->FROM ( 'user' )
+					->LEFT_JOIN( 'user_groups ON (user_id = ug_user)' )
+					->WHERE( 'ug_group' )->EQUAL_TO( 'bot-global' )
+					->run( $db, function ( ResultWrapper $result ) {
+						$out = [];
+						while ( $row = $result->fetchRow() ) {
+							$out[] = $row['user_id'];
+						}
+						return $out;
+					} );
+				return $sqlData;
+			}
+		);
+		return $botIds;
+	}
+
+	public static function filterGlobalBots( array $users ) {
+		$botIds = self::getGlobalBotIds();
+
+		return array_filter( $users, function ( $user ) use ( $botIds ) {
+			$userIdIsBot = in_array( $user['userId'], $botIds );
+			$userIsWikia = strtolower( $user['userName'] ) === 'wikia';
+
+			return !$userIdIsBot && !$userIsWikia;
+		} );
+	}
+
+	/** Get all members for the community, with the date of their oldest edit in the last 2 years and the number
 	 * of contributions
 	 * Membership is defined as the user having made an edit within the last 2 years
 	 * @return Mixed|null

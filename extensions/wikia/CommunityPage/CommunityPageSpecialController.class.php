@@ -55,6 +55,13 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	 */
 	protected function getTopContributorsData() {
 		$userContribCount = 2;
+		$contributors = CommunityPageSpecialUsersModel::filterGlobalBots(
+				// get extra contributors so if there's global bots they can be filtered out
+				CommunityPageSpecialUsersModel::getTopContributors( 50, '1 MONTH' )
+			);
+		// get details for only 5 of the remaining contributors
+		$contributorDetails = $this->getContributorsDetails( array_slice( $contributors, 0, 5 ) );
+
 
 		return [
 			'topContribsHeaderText' => $this->msg( 'communitypage-top-contributors-week' )->plain(),
@@ -62,9 +69,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 			'userContributionsText' => $this->msg( 'communitypage-user-contributions' )
 				->numParams( $userContribCount )
 				->text(),
-			'contributors' => $this->getContributorsDetails(
-				DataMartService::getTopContributorsByWiki( 5 )
-			),
+			'contributors' => $contributorDetails,
 			'userAvatar' => AvatarService::renderAvatar(
 				$this->wg->user->getName(),
 				AvatarService::AVATAR_SIZE_SMALL_PLUS
