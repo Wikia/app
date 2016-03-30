@@ -1,0 +1,18 @@
+{{#topAdmins}}
+	<h2>{{topAdminsHeaderText}}</h2>
+	<ul class="reset top-admins">
+		{{#admins}}
+			<li>
+				<div class="avatar-container">
+					{{{avatar}}}
+				</div>
+				<div class="contributor-details">
+					<a href="{{profilePage}}">{{userName}}</a>
+				</div>
+			</li>
+		{{/admins}}
+	</ul>
+	{{#haveOtherAdmins}}
+		{{otherAdminCount}} {{otherAdmins}}
+	{{/haveOtherAdmins}}
+{{/topAdmins}}

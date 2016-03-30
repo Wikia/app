@@ -20,6 +20,20 @@ $messages['en'] = array(
 	'communitypage-tasks-header-welcome' => 'This wikia needs your help!',
 	'communitypage-tasks-admin-welcome' => 'Welcome to {{SITENAME}}. This wikia needs your contributions and your help. Here are some example pages that could use your edits. Happy editing!',
 	'communitypage-invite-friends' => 'Invite Friends',
+	'communitypage-this-month' => 'This Month',
+	'communitypage-pages' => 'Pages',
+	'communitypage-pageviews' => 'Pageviews',
+	'communitypage-edits' => 'Edits',
+	'communitypage-editors' => 'Editors',
+
+	// new - needs qqq
+	'communitypage-top-contributors-week' => 'Top Contributors This Week',
+	'communitypage-user-rank' => 'Your Rank',
+	'communitypage-user-contributions' => '{{PLURAL:$1|contribution|contributions}}',
+	'communitypage-contributions' => '$1 {{PLURAL:$1|contribution|contributions}}',
+	'communitypage-admins' => 'Admins',
+	'communitypage-other-admins' => 'Other Admins',
+	'communitypage-recently-joined' => 'Recently Joined',
 );
 
 $messages['qqq'] = array(
@@ -41,6 +55,11 @@ $messages['qqq'] = array(
 	'communitypage-tasks-header-welcome' => 'Welcome message shown on Tasks page.',
 	'communitypage-tasks-admin-welcome' => 'Welcome message from the admins on the Tasks page.',
 	'communitypage-invite-friends' => 'Button for inviting friends',
+	'communitypage-this-month' => 'Heading for this month\'s activity box',
+	'communitypage-pages' => 'Heading for pages this month\'s activity box',
+	'communitypage-pageviews' => 'Heading for pageviews this month\'s activity box',
+	'communitypage-edits' => 'Heading for edits this month\'s activity box',
+	'communitypage-editors' => 'Heading for editors this month\'s activity box',
 );
 
 $messages['ja'] = array(

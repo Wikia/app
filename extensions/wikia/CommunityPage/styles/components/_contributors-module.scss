@@ -1,0 +1,47 @@
+@import 'skins/shared/mixins/clearfix';
+
+.ContributorsModule {
+	.user-details {
+		@include clearfix;
+		border-bottom: 2px solid $color-community-page-light-gray;
+		margin-bottom: 13px;
+		padding-bottom: 10px;
+
+		> div {
+			float: left;
+		}
+
+		small {
+			font-size: 12px;
+		}
+
+		span {
+			display: block;
+			font-size: 16px;
+			line-height: 18px;
+			text-align: center;
+		}
+
+		.subtle {
+			color: $color-rank-subtle-text;
+			font-size: 10px;
+			line-height: 12px;
+			text-transform: uppercase;
+		}
+
+		.rank {
+			margin-right: 28px;
+		}
+	}
+
+	.top-contributors, .top-admins {
+		li {
+			@include clearfix;
+		}
+	}
+
+	.avatar-container {
+		float: left;
+		margin-right: 10px;
+	}
+}

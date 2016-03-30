@@ -394,7 +394,7 @@ class DataMartService extends Service {
 
 		return $events;
 	}
-
+	
 	private static function makeUserIdsMemCacheKey( $userIds ) {
 		$idsKey = md5( implode( ',', $userIds ) );
 		return $idsKey;

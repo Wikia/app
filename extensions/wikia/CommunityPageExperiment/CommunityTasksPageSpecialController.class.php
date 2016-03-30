@@ -4,7 +4,7 @@ class CommunityTasksPageSpecialController extends WikiaSpecialPageController {
 	const DEFAULT_TEMPLATE_ENGINE = \WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
 
 	public function __construct() {
-		parent::__construct( 'CommunityTasks', '', /* $listed = */ false );
+		parent::__construct( 'CommunityExperimentTasks', '', /* $listed = */ false );
 	}
 
 	public function index() {
