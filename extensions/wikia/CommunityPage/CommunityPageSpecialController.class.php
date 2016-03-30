@@ -131,13 +131,35 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		$recentActivity = [];
 
 		foreach ($data['changeList'] as $activity) {
+			$changeType = $activity['changetype'];
+
+			switch ($changeType) {
+				case 'new':
+					$changeTypeString = $this->msg( 'communitypage-created' )->plain();
+					break;
+				case 'delete':
+					$changeTypeString = $this->msg( 'communitypage-deleted' )->plain();
+					break;
+				case 'edit':
+					// fall through
+				default:
+					$changeTypeString = $this->msg( 'communitypage-edited' )->plain();
+					break;
+			}
+
+			$changeMessage = $this->msg( 'communitypage-activity',
+				$activity['user_href'], $changeTypeString, $activity['page_href'] )->plain();
+
 			$recentActivity[] = [
 				'timeAgo' => $activity['time_ago'],
 				'userAvatar' => AvatarService::renderAvatar(
 					$activity['user_name'],
 					AvatarService::AVATAR_SIZE_SMALL_PLUS ),
-				'changeMessage' => $activity['changemessage'],
+				'userName' => $activity['user_name'],
+				'userHref' => $activity['user_href'],
+				'changeTypeString' => $changeTypeString,
 				'editedPageTitle' => $activity['page_title'],
+				'changeMessage' => $changeMessage,
 			];
 		}
 

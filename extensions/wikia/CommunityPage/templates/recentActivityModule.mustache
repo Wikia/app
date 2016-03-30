@@ -1,15 +1,19 @@
 {{#recentActivityModule}}
 	<div class="module RecentActivityModule">
 		<h2 class="activity-heading">{{activityHeading}}</h2>
-		<ul>
+		<ul class="reset recent-changes">
 			{{#activity}}
 				<li>
 					<div class="avatar-container">
 						{{{userAvatar}}}
 					</div>
-					{{{changeMessage}}}{{editedPageTitle}}
+					<div class="change-message">
+						{{{changeMessage}}}
+					</div>
 					{{#timeAgo}}
-						{{timeAgo}}
+						<div class="subtle">
+							{{timeAgo}}
+						</div>
 					{{/timeAgo}}
 				</li>
 			{{/activity}}
