@@ -127,7 +127,25 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	 * @return array
 	 */
 	protected function getRecentActivityData() {
-		return $this->wikiModel->getRecentActivityData();
+		$data = $this->sendRequest('LatestActivityController', executeIndex)->getData();
+		$recentActivity = [];
+
+		foreach ($data['changeList'] as $activity) {
+			$recentActivity[] = [
+				'timeAgo' => $activity['time_ago'],
+				'userAvatar' => AvatarService::renderAvatar(
+					$activity['user_name'],
+					AvatarService::AVATAR_SIZE_SMALL_PLUS ),
+				'changeMessage' => $activity['changemessage'],
+				'editedPageTitle' => $activity['page_title'],
+			];
+		}
+
+		return [
+			'activityHeading' => $data['moduleHeader'],
+			'moreActivityLink' => Wikia::specialPageLink( 'WikiActivity', 'oasis-more', 'more-activity' ),
+			'activity' => $recentActivity,
+		];
 	}
 
 	protected function addAssets() {
