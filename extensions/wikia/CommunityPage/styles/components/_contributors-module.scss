@@ -1,6 +1,12 @@
 @import 'skins/shared/mixins/clearfix';
+@import 'skins/shared/mixins/transform';
 
 .ContributorsModule {
+	.avatar-container {
+		float: left;
+		margin-right: 10px;
+	}
+
 	.user-details {
 		@include clearfix;
 		border-bottom: 2px solid $color-community-page-light-gray;
@@ -37,11 +43,23 @@
 	.top-contributors, .top-admins {
 		li {
 			@include clearfix;
+			padding-bottom: 10px;
+		}
+
+		.avatar-container {
+			@include transform-translate(0, 3px);
 		}
 	}
 
-	.avatar-container {
-		float: left;
-		margin-right: 10px;
+	.top-contributors {
+		font-size: 14px;
+		line-height: 20px;
+
+		.subtle {
+			color: $color-top-contribs-subtle-text;
+			display: block;
+			font-size: 12px;
+		}
 	}
+
 }
