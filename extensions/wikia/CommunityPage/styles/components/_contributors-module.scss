@@ -45,10 +45,6 @@
 			@include clearfix;
 			padding-bottom: 10px;
 		}
-
-		.avatar-container {
-			@include transform-translate(0, 3px);
-		}
 	}
 
 	.top-contributors {
