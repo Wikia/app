@@ -66,9 +66,11 @@
 						require(['AuthModal', 'wikia.querystring'], function (authModal, querystring) {
 							var redirectUrl = new querystring();
 
-							redirectUrl.setVal({wikiName: self.wikiName.val(),
+							redirectUrl.setVal({
+								wikiName: self.wikiName.val(),
 								wikiDomain: self.wikiDomain.val(),
-								wikiLanguage: self.wikiLanguage.find('option:selected').val()});
+								wikiLanguage: self.wikiLanguage.find('option:selected').val()
+							});
 
 							authModal.load({
 								url: '/signin?redirect=' + encodeURIComponent(redirectUrl.toString()),
