@@ -32,12 +32,15 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	}
 
 	public function header() {
+		$isMember = CommunityPageSpecialHelper::userHasEdited( $this->wg->User );
+
 		$this->response->setValues( [
 			'inviteFriendsText' => $this->msg( 'communitypage-invite-friends' )->plain(),
 			'headerWelcomeMsg' => $this->msg( 'communitypage-tasks-header-welcome' )->plain(),
 			'pageListEditText' => $this->msg( 'communitypage-page-list-edit' )->plain(),
 			'thisMonthText' => $this->msg( 'communitypage-this-month' )->plain(),
-			'showMonthlySummary' => true,
+			'showMonthlySummary' => $isMember,
+			'showAdminsSummary' => !$isMember,
 			'statPagesTitle' => $this->msg( 'communitypage-pages' )->plain(),
 			'statPagesNumber' => 45,
 			'statPageViewsTitle' => $this->msg( 'communitypage-pageviews' )->plain(),
