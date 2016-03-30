@@ -43,11 +43,11 @@ class RequestIdTest extends WikiaBaseTest {
 			],
 			[
 				'id' => 'mw5405bb3c76f364.47661604', // the legacy ID
-				'valid' => false,
+				'valid' => true,
 			],
 			[
 				'id' => 'd09dd88e-f1a6-11e5-8db2-00163e046284',
-				'valid' => true,
+				'valid' => false,
 			],
 		];
 	}
@@ -100,11 +100,11 @@ class RequestIdTest extends WikiaBaseTest {
 			],
 			[
 				'value' => 'mw5405bb3d129e76.46189257', // the legacy ID
-				'isUsed' => false,
+				'isUsed' => true,
 			],
 			[
 				'value' => 'd09dd88e-f1a6-11e5-8db2-00163e046284',
-				'isUsed' => true,
+				'isUsed' => false,
 			],
 		];
 	}

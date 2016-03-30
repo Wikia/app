@@ -75,7 +75,7 @@ class RequestId {
 	 * @return string
 	 */
 	public static function generateId() {
-		return Uuid::uuid1()->toString();
+		return uniqid( 'mw', true );
 	}
 
 	/**
@@ -85,6 +85,8 @@ class RequestId {
 	 * @return bool
 	 */
 	public static function isValidId( $id ) {
-		return Uuid::isValid( $id );
+		return is_string( $id ) &&
+			strlen( $id ) === 25 &&
+			startsWith( $id, 'mw' );
 	}
 }
