@@ -13,6 +13,13 @@ class CategoryAddController extends EmailController {
 	/** @var \Title */
 	private $pageAddedToCategory;
 
+	/**
+	 * To prevent flooding users with category add emails, we're
+	 * going to throttle how many we send for now. See SOC-1358
+	 */
+	const THROTTLE_PERIOD = 1800; // 30 mins
+	const EMAILS_PER_THROTTLE_PERIOD = 10;
+
 	public function initEmail() {
 		$pageTitle = $this->request->getVal( 'pageTitle' );
 		$titleNamespace = $this->request->getVal( 'namespace', NS_MAIN );
@@ -56,6 +63,41 @@ class CategoryAddController extends EmailController {
 				throw new Check( "pageAddedToCategory doesn't exist." );
 			}
 		}
+	}
+
+	public function assertCanEmail() {
+		parent::assertCanEmail();
+		$this->assertEmailsNotThrottled();
+	}
+
+	private function assertEmailsNotThrottled() {
+		global $wgMemc;
+		$emailsSent = $wgMemc->get( $this->getTargetUserCacheKey() );
+		if ( $emailsSent != false && $emailsSent['sent'] >=  self::EMAILS_PER_THROTTLE_PERIOD ) {
+			throw new Check( 'Attempt to send too many emails' );
+		}
+	}
+
+	protected function afterSuccess() {
+		$this->incrementEmailsSentCount();
+	}
+
+	private function incrementEmailsSentCount() {
+		global $wgMemc;
+		$emailsSent = $wgMemc->get( $this->getTargetUserCacheKey() );
+		if ( $emailsSent == false ) {
+			$emailsSent = [
+				'sent' => 0,
+				'ttl' => time() + self::THROTTLE_PERIOD
+			];
+		}
+		$emailsSent['sent']++;
+
+		$wgMemc->set( $this->getTargetUserCacheKey(), $emailsSent, $emailsSent['ttl'] );
+	}
+
+	private function getTargetUserCacheKey() {
+		return $this->targetUser->getId() . ":sentCategoryAddEmailCount";
 	}
 
 	/**
