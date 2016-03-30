@@ -62,10 +62,11 @@ class CommunityPageSpecialUsersModel {
 	/**
 	 * Get the user id and contribution count of the top n contributors to the current wiki
 	 *
-	 * @param int $limit
+	 * @param int $limit Number of rows to fetch
+	 * @param string $interval Time interval for DATE_SUB()
 	 * @return Mixed|null
 	 */
-	public static function getTopContributors( $limit = 10, $interval = '2 WEEK' ) {
+	public static function getTopContributors( $limit = 10, $interval = '1 WEEK' ) {
 		$data = WikiaDataAccess::cache(
 			wfMemcKey( self::TOP_CONTRIB_MCACHE_KEY ),
 			WikiaResponse::CACHE_STANDARD,
