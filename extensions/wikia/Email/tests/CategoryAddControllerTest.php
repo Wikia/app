@@ -2,7 +2,7 @@
 
 use \Email\Controller\CategoryAddController;
 
-class EmailControllerTest extends WikiaBaseTest {
+class CategoryAddControllerTest extends WikiaBaseTest {
 
 	private $wikiaRequestMock;
 
