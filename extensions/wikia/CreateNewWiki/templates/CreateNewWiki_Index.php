@@ -185,13 +185,13 @@
 	</ol>
 	<ul id="StepsIndicator">
 		<?php
-			$steps = 4;
-			$active = empty( $currentStep ) ? 1 : 3;
-			for( $i = 0; $i < $steps; $i++ ) {
+			$createNewWikiSteps = 4;
+			$currentStep = empty( $currentStep ) ? 1 : 3;
+			for( $i = 0; $i < $createNewWikiSteps; $i++ ) {
 		?>
-			<li class="step<?= $active > 0 ? ' active' : '' ?>"></li>
+			<li class="step<?= $currentStep > 0 ? ' active' : '' ?>"></li>
 		<?php
-				$active--;
+				$currentStep--;
 			}
 		?>
 	</ul>
