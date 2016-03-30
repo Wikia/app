@@ -65,19 +65,26 @@ class CommunityPageSpecialUsersModel {
 	}
 
 	/**
-	 * Get the user id and contribution count of the top n contributors to the current wiki
+	 * Get the user id and contribution count of the top n contributors to the current wiki,
+	 * optionally filtered by admins only
 	 *
 	 * @param int $limit Number of rows to fetch
 	 * @param string $interval Time interval for DATE_SUB()
+	 * @param bool $onlyAdmins Whether to filter by admins
 	 * @return Mixed|null
 	 */
-	public static function getTopContributors( $limit = 10, $interval = '1 WEEK' ) {
+	public static function getTopContributors( $limit = 10, $interval = '1 WEEK', $onlyAdmins = false ) {
 		$data = WikiaDataAccess::cache(
-			wfMemcKey( self::TOP_CONTRIB_MCACHE_KEY ),
+			wfMemcKey( self::TOP_CONTRIB_MCACHE_KEY, $limit, $interval, $onlyAdmins ),
 			WikiaResponse::CACHE_STANDARD,
-			function () use ( $limit, $interval ) {
+			function () use ( $limit, $interval, $onlyAdmins ) {
 				global $wgExternalSharedDB;
 				$db = wfGetDB( DB_SLAVE );
+				$adminFilter = '';
+				if ( $onlyAdmins ) {
+					$adminFilter = ' AND ((ug_group = "sysop") or (ug_group = "bureaucrat"))';
+				}
+
 				$sqlData = ( new WikiaSQL() )
 					->SELECT( 'user_name, user_id, count(rev_id) AS revision_count' )
 					->FROM ( 'revision FORCE INDEX (user_timestamp)' )
@@ -85,7 +92,7 @@ class CommunityPageSpecialUsersModel {
 					->LEFT_JOIN( 'user_groups ON (user_id = ug_user)' )
 					->WHERE( 'user_id' )->IS_NOT_NULL()
 					->AND_( 'rev_timestamp > DATE_SUB(now(), INTERVAL '. $interval . ')' )
-					->AND_( '(ug_group IS NULL or (ug_group <> "bot"))')
+					->AND_( '(ug_group IS NULL or (ug_group <> "bot"))' . $adminFilter)
 					->GROUP_BY( 'user_name' )
 					->ORDER_BY( 'revision_count' )->DESC()
 					->LIMIT( $limit )
@@ -173,7 +180,7 @@ class CommunityPageSpecialUsersModel {
 								'oldestRevision' => $row['rev_timestamp'],
 								'contributions' => $row['contributions'],
 								'userName' => $userName,
-								'avatarUrl' => $avatar,
+								'avatar' => $avatar,
 							];
 						}
 

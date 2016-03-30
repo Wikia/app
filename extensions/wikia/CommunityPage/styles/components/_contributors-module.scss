@@ -1,14 +1,10 @@
 @import "skins/shared/mixins/clearfix";
 
 .ContributorsModule {
-	.top-contributors {
+	.top-contributors, .top-admins {
 		li {
 			@include clearfix;
 		}
-	}
-
-	.admins {
-
 	}
 
 	.recently-joined {

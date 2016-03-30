@@ -26,7 +26,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 			'userIsMember' => CommunityPageSpecialHelper::userHasEdited( $this->wg->User ),
 			'pageTitle' => $this->msg( 'communitypage-title' )->plain(),
 			'topContributors' => $this->getTopContributorsData(),
-			'admins' => $this->getAdminsModuleData(),
+			'topAdmins' => $this->getTopAdminsData(),
 			'recentlyJoined' => $this->getRecentlyJoinedData(),
 		] );
 	}
@@ -87,14 +87,20 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	 * Set context for adminsModule template. Needs to be passed through the index method in order to work.
 	 * @return array
 	 */
-	protected function getAdminsModuleData() {
-		$topAdmins = $this->usersModel->getTopAdmins();
+	protected function getTopAdminsData() {
+		$topAdmins = CommunityPageSpecialUsersModel::filterGlobalBots(
+			// get all admins who have contributed in the last two years ordered by contributions
+			CommunityPageSpecialUsersModel::getTopContributors( 10, '2 YEAR', true )
+		);
+		$topAdminsDetails = $this->getContributorsDetails( $topAdmins );
+
+//		$topAdmins = $this->usersModel->getTopAdmins();
 		$remainingAdminCount = count ( $topAdmins ) - 2;
 
 		return [
 			'topAdminsHeaderText' => $this->msg( 'communitypage-admins' )->plain(),
 			'otherAdmins' => $this->msg( 'communitypage-other-admins' )->plain(),
-			'admins' => array_slice( $topAdmins, 0, 2 ),
+			'admins' => array_slice( $topAdminsDetails, 0, 2 ),
 			'otherAdminCount' => $remainingAdminCount,
 			'haveOtherAdmins' => $remainingAdminCount > 0,
 		];
