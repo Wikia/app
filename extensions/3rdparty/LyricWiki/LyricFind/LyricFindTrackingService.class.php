@@ -28,7 +28,7 @@ class LyricFindTrackingService extends WikiaService {
 	private function markLyricForRemoval($pageId) {
 		$this->wf->SetWikiaPageProp(WPP_LYRICFIND_MARKED_FOR_REMOVAL, $pageId, 1);
 
-		$this->info( __METHOD__, [ 'page_id' => $pageId ] );
+		$this->info( __METHOD__ . ' marked page for removal', [ 'page_id' => $pageId ] );
 		return true;
 	}
 
