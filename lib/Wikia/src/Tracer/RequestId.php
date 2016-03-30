@@ -71,12 +71,11 @@ class RequestId {
 
 	/**
 	 * Return timestamp-based UUID (e.g. 8454441a-f0e1-11e5-9c4a-00163e046284)
-	 * TODO: UUID generation has too much overhead, fall back to php uniqid()
+	 *
 	 * @return string
 	 */
 	public static function generateId() {
 		return uniqid( 'mw', true );
-		//return Uuid::uuid1()->toString();
 	}
 
 	/**
@@ -86,6 +85,8 @@ class RequestId {
 	 * @return bool
 	 */
 	public static function isValidId( $id ) {
-		return Uuid::isValid( $id );
+		return is_string( $id ) &&
+			strlen( $id ) === 25 &&
+			startsWith( $id, 'mw' );
 	}
 }
