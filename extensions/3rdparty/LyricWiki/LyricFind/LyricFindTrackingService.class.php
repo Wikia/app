@@ -28,7 +28,7 @@ class LyricFindTrackingService extends WikiaService {
 	private function markLyricForRemoval($pageId) {
 		$this->wf->SetWikiaPageProp(WPP_LYRICFIND_MARKED_FOR_REMOVAL, $pageId, 1);
 
-		$this->info( __METHOD__ . ' marked page for removal', [ 'page_id' => $pageId ] );
+		$this->info( __METHOD__ . ' - marked page for removal', [ 'page_id' => $pageId ] );
 		return true;
 	}
 
@@ -44,7 +44,7 @@ class LyricFindTrackingService extends WikiaService {
 	private function markLyricAsNotRemoved($pageId) {
 		$this->wf->SetWikiaPageProp(WPP_LYRICFIND_MARKED_FOR_REMOVAL, $pageId, 0);
 
-		$this->info( __METHOD__, [ 'page_id' => $pageId ] );
+		$this->info( __METHOD__ . ' - marked page as no longer removed', [ 'page_id' => $pageId ] );
 		return true;
 	}
 
@@ -153,9 +153,9 @@ class LyricFindTrackingService extends WikiaService {
 					break;
 
 				default:
-					$status->fatal('not expected response code');
+					$status->fatal('Unexpected response code');
 
-					$this->error( __METHOD__, [
+					$this->error( __METHOD__ . ' - unexpected response code', [
 						'exception' => new LyricFindTrackingException( 'Unexpected response code', $code ),
 						'amg_id' => (string) $amgId,
 						'gracenote_id' => (string) $gracenoteId,
@@ -231,7 +231,7 @@ class LyricFindTrackingService extends WikiaService {
 					break;
 
 				default:
-					Wikia\Logger\WikiaLogger::instance()->error( __METHOD__, [
+					Wikia\Logger\WikiaLogger::instance()->error( __METHOD__ . ' - unexpected response code', [
 						'exception' => new LyricFindTrackingException( 'Unexpected response code', $code ),
 						'amg_id' => (string) $amgId,
 						'gracenote_id' => (string) $gracenoteId,
