@@ -11,6 +11,8 @@
  */
 namespace Wikia\Tracer;
 
+use Ramsey\Uuid\Uuid;
+
 class RequestId {
 
 	private $requestId = false;
@@ -59,9 +61,7 @@ class RequestId {
 			wfDebug( __METHOD__ . ": from env variable\n" );
 		}
 		else {
-			// return 23 characters long unique ID + mw prefix
-			// e.g. mw5405bb3d129e76.46189257
-			$this->requestId = uniqid( 'mw', true );
+			$this->requestId = self::generateId();
 			wfDebug( __METHOD__ . ": generated a new one\n" );
 		}
 
@@ -70,14 +70,22 @@ class RequestId {
 	}
 
 	/**
+	 * Return timestamp-based UUID (e.g. 8454441a-f0e1-11e5-9c4a-00163e046284)
+	 * TODO: UUID generation has too much overhead, fall back to php uniqid()
+	 * @return string
+	 */
+	public static function generateId() {
+		return uniqid( 'mw', true );
+		//return Uuid::uuid1()->toString();
+	}
+
+	/**
 	 * Validate provided request ID
 	 *
-	 * @param $id
+	 * @param string $id
 	 * @return bool
 	 */
 	public static function isValidId( $id ) {
-		return is_string( $id ) &&
-			strlen( $id ) === 25 &&
-			startsWith( $id, 'mw' );
+		return Uuid::isValid( $id );
 	}
 }

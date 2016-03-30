@@ -20,7 +20,7 @@ class Hooks {
 	 *
 	 */
 	public static function onWikiaSkinTopScripts( &$vars, &$scripts ) {
-		global $wgDevelEnvironment, $wgIsGASpecialWiki, $wgEnableJavaScriptErrorLogging, $wgCacheBuster, $wgMemc;
+		global $wgDevelEnvironment, $wgIsGASpecialWiki, $wgEnableJavaScriptErrorLogging, $wgMemc;
 
 		if ( !$wgDevelEnvironment ) {
 			$onError = $wgIsGASpecialWiki || $wgEnableJavaScriptErrorLogging;
@@ -80,16 +80,9 @@ class Hooks {
 	/**
 	 * A hook for setting up the WikiaLogger early in the app initialization process.
 	 *
-	 * @param \WikiFactoryLoader $wikiFactoryLoader
 	 * @return boolean true
 	 */
-	public static function onWikiFactoryExecute( \WikiFactoryLoader $wikiFactoryLoader ) {
-		global $wgDevelEnvironment;
-		if ( $wgDevelEnvironment ) {
-			// default to syslog in dev. you can override this in DevBoxSettings.php
-			WikiaLogger::instance()->setDevMode();
-		}
-
+	public static function onWikiFactoryExecute() {
 		/**
 		 * Setup the WikiaLogger as the error handler
 		 */
@@ -104,10 +97,9 @@ class Hooks {
 	/**
 	 * A hook for setting additional fields that will be sent to Logstash
 	 *
-	 * @param \WikiFactoryLoader $wikiFactoryLoader
 	 * @return bool true
 	 */
-	public static function onWikiFactoryExecuteComplete( \WikiFactoryLoader $wikiFactoryLoader ) {
+	public static function onWikiFactoryExecuteComplete() {
 		WikiaLogger::instance()->pushContextSource(
 			WikiaTracer::instance()->getContextSource(), WebProcessor::RECORD_TYPE_FIELDS );
 

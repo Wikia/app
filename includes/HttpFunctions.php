@@ -853,7 +853,7 @@ class CurlHttpRequest extends MWHttpRequest {
 			if ( !curl_setopt( $curlHandle, $option, $value ) ) {
 				$e = new MWException( "Error setting curl options." );
 				if ( class_exists( 'Wikia\\Logger\\WikiaLogger' ) ) {
-					\Wikia\Logger\WikiaLogger::instance()->debug(
+					\Wikia\Logger\WikiaLogger::instance()->error(
 						'PLATFORM-1317' ,
 						[
 							'option'     => $option,

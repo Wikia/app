@@ -1,8 +1,9 @@
 /*global define*/
 define('ext.wikia.recirculation.utils', [
 	'wikia.loader',
-	'wikia.cache'
-], function (loader, cache) {
+	'wikia.cache',
+	'wikia.mustache'
+], function (loader, cache, Mustache) {
 	'use strict';
 
 	/**
@@ -36,7 +37,7 @@ define('ext.wikia.recirculation.utils', [
 
 	function renderTemplate(templateName, data) {
 		var templateName = 'extensions/wikia/Recirculation/templates/client/' + templateName;
-		
+
 		return loadTemplate(templateName)
 			.then(function(template) {
 				return $(Mustache.render(template, data));
@@ -44,8 +45,8 @@ define('ext.wikia.recirculation.utils', [
 	}
 
 	function buildLabel(element, label) {
-		var slot = $(element).parent().index() + 1;
-		
+		var slot = $(element).parent().data('index') + 1;
+
 		return label + '=slot-' + slot;
 	}
 

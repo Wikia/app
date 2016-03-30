@@ -4,18 +4,23 @@ use Wikia\Tracer\RequestId;
 
 /**
  * Tests RequestId class
+ *
+ * @group WikiaTracer
  */
 class RequestIdTest extends WikiaBaseTest {
 
+	private $envOriginal;
 	private $serverOriginal;
 
 	function setUp() {
 		parent::setUp();
+		$this->envOriginal = $_ENV;
 		$this->serverOriginal = $_SERVER;
 	}
 
 	function tearDown() {
 		parent::tearDown();
+		$_ENV = $this->envOriginal;
 		$_SERVER = $this->serverOriginal;
 	}
 
@@ -37,14 +42,18 @@ class RequestIdTest extends WikiaBaseTest {
 				'valid' => false,
 			],
 			[
-				'id' => 'mw5405bb3c76f364.47661604',
+				'id' => 'mw5405bb3c76f364.47661604', // the legacy ID
+				'valid' => false,
+			],
+			[
+				'id' => 'd09dd88e-f1a6-11e5-8db2-00163e046284',
 				'valid' => true,
 			],
 		];
 	}
 
 	/**
-	 * @dataProvider getRequestIdFromHeaderData
+	 * @dataProvider getRequestIdFromData
 	 */
 	function testGetRequestIdFromHeader( $headerValue, $isUsed ) {
 		if ( !empty( $headerValue ) ) {
@@ -61,18 +70,40 @@ class RequestIdTest extends WikiaBaseTest {
 		}
 	}
 
-	function getRequestIdFromHeaderData() {
+	/**
+	 * @dataProvider getRequestIdFromData
+	 */
+	function testGetRequestIdFromEnv( $envValue, $isUsed ) {
+		if ( !empty( $envValue ) ) {
+			$_ENV['WIKIA_TRACER_X_TRACE_ID'] = $envValue;
+		}
+
+		$requestId = ( new RequestId() )->getRequestId();
+
+		if ( $isUsed ) {
+			$this->assertEquals( $envValue, $requestId );
+		}
+		else {
+			$this->assertNotEquals( 'foo', $requestId );
+		}
+	}
+
+	function getRequestIdFromData() {
 		return [
 			[
-				'headerValue' => false,
+				'value' => false,
 				'isUsed' => false,
 			],
 			[
-				'headerValue' => 'foo',
+				'value' => 'foo',
 				'isUsed' => false,
 			],
 			[
-				'headerValue' => 'mw5405bb3d129e76.46189257',
+				'value' => 'mw5405bb3d129e76.46189257', // the legacy ID
+				'isUsed' => false,
+			],
+			[
+				'value' => 'd09dd88e-f1a6-11e5-8db2-00163e046284',
 				'isUsed' => true,
 			],
 		];

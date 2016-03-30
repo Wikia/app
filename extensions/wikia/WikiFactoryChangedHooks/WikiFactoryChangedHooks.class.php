@@ -31,7 +31,7 @@ Class WikiFactoryChangedHooks {
 					$result = $dbw->sourceFile( __DIR__ . '/../AchievementsII/schema_local.sql' );
 
 					if ( $result !== true ) {
-						$logger->debug( "Error running {$sqlPath}: {$result}", [ 'method' => __METHOD__ ] );
+						$logger->error( "Error running {$sqlPath}: {$result}", [ 'method' => __METHOD__ ] );
 					}
 
 					$dbw->commit();
@@ -39,7 +39,7 @@ Class WikiFactoryChangedHooks {
 					// We unfortunately need to do this so that the badge can be awarded below
 					wfWaitForSlaves( $wiki->city_dbname );
 				} catch ( Exception $e ) {
-					$logger->debug( "Error running {$sqlPath}: {$e->getMessage()}", [ 'method' => __METHOD__, 'exception' => $e ] );
+					$logger->error( "Error running {$sqlPath}: {$e->getMessage()}", [ 'method' => __METHOD__, 'exception' => $e ] );
 				}
 			}
 
