@@ -25,8 +25,10 @@ class WikiaMobileCategoryService extends WikiaService {
 		}
 	}
 
-	private function getCollator() {
-		return !empty( $this->collator ) ? $this->collator : Collation::factory('uca-default')->primaryCollator;
+	private function initCollator() {
+		if ( !isset( $this->collator ) ) {
+			$this->collator = Collation::factory( 'uca-default' )->primaryCollator;
+		}
 	}
 
 	/**
@@ -40,7 +42,7 @@ class WikiaMobileCategoryService extends WikiaService {
 	 * @throws MWException
 	 */
 	private function collatorUcaDefaultStringCompare( $str1, $str2 ) {
-		return $this->getCollator()->compare( $str1, $str2 );
+		return $this->collator->compare( $str1, $str2 );
 	}
 
 	public function index() {
@@ -99,6 +101,7 @@ class WikiaMobileCategoryService extends WikiaService {
 
 		if ( $categoryPage instanceof CategoryPage ) {
 			$this->initModel();
+			$this->initCollator();
 
 			$title = $categoryPage->getTitle();
 			$category = Category::newFromTitle( $title );
