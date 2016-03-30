@@ -4,13 +4,7 @@ define('ext.wikia.recirculation.helpers.lateral', [
 	'wikia.window',
 	'wikia.abTest',
 ], function ($, w, abTest) {
-	var libraryLoaded = false,
-		options = {
-			count: 5,
-			width: 160,
-			height: 90,
-			type: 'fandom'
-		};
+	var libraryLoaded = false;
 
 	function loadLateral(callback) {
 		if (libraryLoaded && callback && typeof callback === 'function') {
@@ -35,77 +29,83 @@ define('ext.wikia.recirculation.helpers.lateral', [
 		}
 	}
 
-	function recommendFandom(lateral, callback) {
-		lateral.recommendationsFandom({
-			count: options.count,
-			onResults: callback
-		});
-	}
+	return function(config) {
+		var defaults = {
+				count: 5,
+				width: 160,
+				height: 90,
+				type: 'fandom'
+			},
+			options = $.extend(defaults, config);
 
-	function recommendCommunity(lateral, callback) {
-		lateral.recommendationsWikia({
-			count: options.count * 2, // We load twice as many as we need in case some options do not have images
-			width: options.width,
-			height: options.height,
-			onResults: callback
-		});
-	}
-
-	function loadData() {
-		var deferred = $.Deferred(),
-			type = options.type,
-			foundData = false;
-
-		function resolveFormattedData(data) {
-			foundData = true;
-			deferred.resolve(formatData(data));
+		function recommendFandom(lateral, callback) {
+			lateral.recommendationsFandom({
+				count: options.count,
+				onResults: callback
+			});
 		}
 
-		loadLateral(function(lateral) {
-			switch (type) {
-				case 'fandom':
-					recommendFandom(lateral, resolveFormattedData);
-					break;
-				case 'community':
-					recommendCommunity(lateral, resolveFormattedData);
-					break;
+		function recommendCommunity(lateral, callback) {
+			lateral.recommendationsWikia({
+				count: options.count * 2, // We load twice as many as we need in case some options do not have images
+				width: options.width,
+				height: options.height,
+				onResults: callback
+			});
+		}
+
+		function loadData() {
+			var deferred = $.Deferred(),
+				type = options.type,
+				foundData = false;
+
+			function resolveFormattedData(data) {
+				foundData = true;
+				deferred.resolve(formatData(data));
 			}
-		});
 
-		// If we don't recieve anything in 3 seconds we want to reject the promise
-		setTimeout(function() {
-			if (foundData) {
-				return;
-			} else {
-				deferred.reject();
-			}
-		}, 3000);
+			loadLateral(function(lateral) {
+				switch (type) {
+					case 'fandom':
+						recommendFandom(lateral, resolveFormattedData);
+						break;
+					case 'community':
+						recommendCommunity(lateral, resolveFormattedData);
+						break;
+				}
+			});
 
-		return deferred.promise();
-	}
+			// If we don't recieve anything in 3 seconds we want to reject the promise
+			setTimeout(function() {
+				if (foundData) {
+					return;
+				} else {
+					deferred.reject();
+				}
+			}, 3000);
 
-	function formatData(data) {
-		var items = [];
+			return deferred.promise();
+		}
 
-		$.each(data, function(index, item) {
-			if (!item.image) {
-				return;
-			}
-			item.thumbnail = item.image;
-			item.index = index;
-			items.push(item);
-		});
+		function formatData(data) {
+			var items = [];
 
-		var title = options.type === 'fandom' ? $.msg('recirculation-fandom-title') : $.msg('recirculation-incontent-title');
+			$.each(data, function(index, item) {
+				if (!item.image) {
+					return;
+				}
+				item.thumbnail = item.image;
+				item.index = index;
+				items.push(item);
+			});
 
-		return {
-			title: title,
-			items: items.slice(0, options.count)
-		};
-	}
+			var title = options.type === 'fandom' ? $.msg('recirculation-fandom-title') : $.msg('recirculation-incontent-title');
 
-	return function(config) {
-		$.extend(options, config);
+			return {
+				title: title,
+				items: items.slice(0, options.count)
+			};
+		}
 
 		return {
 			loadData: loadData
