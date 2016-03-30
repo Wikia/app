@@ -7,15 +7,16 @@ define('ext.wikia.recirculation.helpers.lateral', [
 	var libraryLoaded = false;
 
 	function loadLateral(callback) {
-		if (libraryLoaded && callback && typeof callback === 'function') {
-			callback(w.lateral);
+		if (libraryLoaded) {
+			if (callback) {
+				callback(w.lateral);
+			}
+			return;
 		}
 
-		var lateralScript = document.createElement('script'),
-			url = 'https://assets.lateral.io/recommendations.js';
+		var lateralScript = document.createElement('script');
 
-		lateralScript.src = url;
-
+		lateralScript.src = 'https://assets.lateral.io/recommendations.js';
 		document.getElementsByTagName('body')[0].appendChild(lateralScript);
 
 		// This function is called when the Lateral script has loaded
@@ -23,7 +24,7 @@ define('ext.wikia.recirculation.helpers.lateral', [
 			w.lateral = lateral;
 			libraryLoaded = true;
 
-			if (callback && typeof callback === 'function') {
+			if (callback) {
 				callback(lateral);
 			}
 		}
@@ -88,7 +89,14 @@ define('ext.wikia.recirculation.helpers.lateral', [
 		}
 
 		function formatData(data) {
-			var items = [];
+			var items = [],
+				title;
+
+			if (options.type === 'fandom') {
+				title = $.msg('recirculation-fandom-title');
+			} else {
+				title = $.msg('recirculation-incontent-title');
+			}
 
 			$.each(data, function(index, item) {
 				if (!item.image) {
@@ -98,8 +106,6 @@ define('ext.wikia.recirculation.helpers.lateral', [
 				item.index = index;
 				items.push(item);
 			});
-
-			var title = options.type === 'fandom' ? $.msg('recirculation-fandom-title') : $.msg('recirculation-incontent-title');
 
 			return {
 				title: title,
