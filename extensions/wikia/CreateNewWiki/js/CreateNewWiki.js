@@ -71,7 +71,7 @@
 								wikiLanguage: self.wikiLanguage.find('option:selected').val()});
 
 							authModal.load({
-								url: '/signin?redirect=' + redirectUrl.toString(),
+								url: '/signin?redirect=' + encodeURIComponent(redirectUrl.toString()),
 								origin: 'create-new-wikia',
 								onAuthSuccess: $.proxy(self.onAuthSuccess, self)
 							});
