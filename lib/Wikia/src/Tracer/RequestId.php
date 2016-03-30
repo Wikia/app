@@ -11,8 +11,6 @@
  */
 namespace Wikia\Tracer;
 
-use Ramsey\Uuid\Uuid;
-
 class RequestId {
 
 	private $requestId = false;
@@ -74,7 +72,7 @@ class RequestId {
 	 * @return string
 	 */
 	public static function generateId() {
-		return Uuid::uuid4()->toString();
+		return Uuid::v4();
 	}
 
 	/**
