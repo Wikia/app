@@ -43,32 +43,48 @@ class GlobalWatchlistTask extends BaseTask {
 
 			// Skip revisions that doesn't exist
 			if ( !empty( $revision ) ) {
+				$watchersToAdd = [];
 				$globalWatchlistBot = new GlobalWatchlistBot();
-
-				$db = wfGetDB( DB_MASTER, [ ], \F::app()->wg->ExternalDatawareDB );
 				foreach ( $watchers as $watcherID ) {
 					if ( $globalWatchlistBot->shouldNotSendDigest( $watcherID ) ) {
-						$this->clearGlobalWatchlistAll( $watcherID );
 						continue;
 					}
-
-					( new WikiaSQL() )
-						->INSERT()->INTO( GlobalWatchlistTable::TABLE_NAME )
-						->SET( GlobalWatchlistTable::COLUMN_USER_ID, $watcherID )
-						->SET( GlobalWatchlistTable::COLUMN_CITY_ID, \F::app()->wg->CityId )
-						->SET( GlobalWatchlistTable::COLUMN_TITLE, $databaseKey )
-						->SET( GlobalWatchlistTable::COLUMN_NAMESPACE, $nameSpace )
-						->SET( GlobalWatchlistTable::COLUMN_REVISION_ID, $revision->getId() )
-						->SET( GlobalWatchlistTable::COLUMN_REVISION_TIMESTAMP, $revision->getTimestamp() )
-						->SET( GlobalWatchlistTable::COLUMN_TIMESTAMP, $revision->getTimestamp() )
-						// Do nothing on duplicate key - we already have that record in place
-						->ON_DUPLICATE_KEY_UPDATE(
-							[ GlobalWatchlistTable::COLUMN_USER_ID => $watcherID ]
-						)
-						->run( $db );
+					$watchersToAdd[] = [
+						$watcherID,
+						\F::app()->wg->CityId,
+						$databaseKey,
+						$nameSpace,
+						$revision->getId(),
+						$revision->getTimestamp(),
+						$revision->getTimestamp()
+					];
 				}
+
+				$this->addWatchersToDb( $watchersToAdd );
 			}
 		}
+	}
+
+	private function addWatchersToDb( array $watchers ) {
+		$columns = [
+			GlobalWatchlistTable::COLUMN_USER_ID,
+			GlobalWatchlistTable::COLUMN_CITY_ID,
+			GlobalWatchlistTable::COLUMN_TITLE,
+			GlobalWatchlistTable::COLUMN_NAMESPACE,
+			GlobalWatchlistTable::COLUMN_REVISION_ID,
+			GlobalWatchlistTable::COLUMN_REVISION_TIMESTAMP,
+			GlobalWatchlistTable::COLUMN_TIMESTAMP
+		];
+
+		$db = wfGetDB( DB_MASTER, [ ], \F::app()->wg->ExternalDatawareDB );
+		( new WikiaSQL() )
+			->INSERT()->INTO( GlobalWatchlistTable::TABLE_NAME, $columns )
+			->VALUES( $watchers )
+			// Do nothing on duplicate key - we already have that record in place
+			->ON_DUPLICATE_KEY_UPDATE(
+				[ GlobalWatchlistTable::COLUMN_TIMESTAMP => GlobalWatchlistTable::COLUMN_TIMESTAMP ]
+			)
+			->run( $db );
 	}
 
 	/**
