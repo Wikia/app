@@ -132,8 +132,11 @@ function acRedirect( $title, $action ) {
 	global $wgRequest, $wgOut, $wgUser;
 
 	$actionParam = 'action';
+	$params = $wgRequest->getValues();
+	$preload = $params['preload'];
+	$preloadIsMediaWikiPage = !empty( $preload ) && strpos($preload, 'MediaWiki:') === 0;
 
-	if ( EditorPreference::isVisualEditorPrimary() && $wgUser->isLoggedIn() ) {
+	if ( $preloadIsMediaWikiPage && EditorPreference::isVisualEditorPrimary() && $wgUser->isLoggedIn() ) {
 		$actionParam = 'veaction';
 	}
 

@@ -60,14 +60,16 @@ class InputBoxHooks {
 		}
 
 		$params = $request->getValues();
+		$preload = $params['preload'];
+		$preloadIsMediaWikiPage = !empty( $preload ) && strpos($preload, 'MediaWiki:') === 0;
 
-		if ( empty( $params['prefix'] ) && empty( $params['preload'] ) ) {
+		if ( empty( $params['prefix'] ) && !$preloadIsMediaWikiPage ) {
 			// Fine
 			return true;
 		}
 
 		if (
-			!empty( $params['preload'] )
+			$preloadIsMediaWikiPage
 			&& EditorPreference::isVisualEditorPrimary()
 			&& $user->isLoggedIn()
 		) {
