@@ -182,7 +182,7 @@ class OwnWallMessageController extends WallMessageController {
 	}
 }
 
-class ReplyWallMessageController extends OwnWallMessageController {
+class ReplyWallMessageController extends WallMessageController {
 
 	/** @var \Title */
 	protected $containingThread;
