@@ -41,6 +41,7 @@ class Walls extends WikiaModel {
 		/** @var TitleBatch $titleBatch */
 		$titleBatch = TitleBatch::newFromConds( 'page_wikia_props', [
 				'page.page_namespace' => $namespace,
+				'page_wikia_props.page_id = page.page_id'
 		],
 			__METHOD__,
 			[ 'ORDER BY' => 'page_title' ],
