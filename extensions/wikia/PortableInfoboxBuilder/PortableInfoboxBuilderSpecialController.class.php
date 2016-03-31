@@ -30,13 +30,6 @@ class PortableInfoboxBuilderSpecialController extends WikiaSpecialPageController
 		$this->forward( __CLASS__, $this->getMethodName() );
 	}
 
-	public function noTitle() {
-		$this->wg->SuppressPageHeader = true;
-		$this->response->setVal( 'setTemplateNameCallToAction', wfMessage(
-			'portable-infobox-builder-no-template-title-set' )->text() );
-		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
-	}
-
 	public function builder() {
 		$title = $this->getPar();
 		RenderContentOnlyHelper::setRenderContentVar( true );
@@ -51,18 +44,22 @@ class PortableInfoboxBuilderSpecialController extends WikiaSpecialPageController
 		$this->wg->out->redirect(Title::newFromText($this->getPar(), NS_TEMPLATE)->getEditURL());
 	}
 
+	/**
+	 * @desc Decide what method to use according to rule, that we should redirect
+	 * to source editor only when there's not supported infobox markup in the template.
+	 * @return string
+	 * @throws \MWException
+	 */
 	private function getMethodName() {
-		if (empty($this->getPar())) {
-			return 'notitle';
+		if ( !empty( $this->getPar() ) ) {
+			$title = Title::newFromText( $this->getPar(), NS_TEMPLATE );
+			$infoboxes = PortableInfoboxDataService::newFromTitle( $title )->getInfoboxes();
+
+			if (! ( new PortableInfoboxBuilderService() )->isValidInfoboxArray( $infoboxes ) ) {
+				return 'sourceEditor';
+			}
 		}
 
-		$title = Title::newFromText($this->getPar(), NS_TEMPLATE);
-		$infoboxes = PortableInfoboxDataService::newFromTitle($title)->getInfoboxes();
-
-		if ( ( new PortableInfoboxBuilderService() )->isValidInfoboxArray( $infoboxes ) ) {
-			return 'builder';
-		} else {
-			return 'sourceEditor';
-		}
+		return 'builder';
 	}
 }

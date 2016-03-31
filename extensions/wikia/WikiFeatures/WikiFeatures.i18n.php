@@ -71,6 +71,8 @@ $messages['en'] = array(
 	'wikifeatures-feature-description-wgGameGuidesContentForAdmins' => 'Use the Special:GameGuidesContent page of your wiki to manage which categories appear in the [[w:c:community:Help:Game Guides|Game Guides]] mobile app. Expand your potential audience!',
 	'wikifeatures-feature-heading-wgEnableNjordExt' => 'Hero Image',
 	'wikifeatures-feature-description-wgEnableNjordExt' => 'Make your wiki more attractive by uploading an image to represent it on its home page!',
+	'wikifeatures-feature-heading-wgEnablePortableInfoboxEuropaTheme' => 'Europa Infobox Theme',
+	'wikifeatures-feature-description-wgEnablePortableInfoboxEuropaTheme' => 'Enable new look for your infoboxes to fully benefit from your wiki\'s color theme!',
 	'wikifeatures-feature-heading-wgDisableAnonymousEditing' => 'Require all contributors to log in',
 	'wikifeatures-feature-description-wgDisableAnonymousEditing' => 'Do you want all contributors on your wikia to be logged in? When this feature is enabled, no anonymous visitors will be allowed to edit pages or participate in comments, Forum or Message Wall without logging in. Anyone can still create a Wikia account to join your community!',
 	'wikifeatures-feature-heading-emptylabs' => 'Looks like the lab is taking a break',
@@ -92,6 +94,9 @@ $messages['qqq'] = array(
 	'wikifeatures-feature-description-wgEnableMediaGalleryExt' => 'Description text for enabling the Media Gallery feature',
 	'wikifeatures-feature-heading-wgDisableAnonymousEditing' => 'Header text for requiring all contributors to log in to edit.',
 	'wikifeatures-feature-description-wgDisableAnonymousEditing' => 'Description for requiring all contributors to log in to edit.',
+	'wikifeatures-feature-heading-wgEnablePortableInfoboxEuropaTheme' => 'Header text for Europa Infobox Theme',
+	'wikifeatures-feature-description-wgEnablePortableInfoboxEuropaTheme' => 'Description for Europa Infobox Theme feature',
+
 	'action-wikifeaturesview' => '{{doc-action|wikifeaturesview}}',
 );
 

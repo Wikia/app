@@ -24,7 +24,11 @@ class PortableInfoboxBuilderServiceTest extends WikiaBaseTest {
 	 * @dataProvider markupTranslationsDataProvider
 	 */
 	public function testTranslationFromMarkup( $markup, $expected ) {
-		$generated_json = json_decode( $this->builderService->translateMarkupToData( $markup ) );
+		// we are encoding and decoding here to be able to easly compare two structures. json_encode works
+		// differently according to context where object/array is placed and thus, A' != json_decode(json_encode(A))
+		// Other solution would be to build proper stdClass structure in $expected field but that would require
+		// much more work and would decrease readability.
+		$generated_json = json_decode( json_encode( $this->builderService->translateMarkupToData( $markup ) ) );
 		$expected_json = json_decode( $expected );
 		$this->assertEquals( $expected_json, $generated_json );
 	}
@@ -170,7 +174,8 @@ class PortableInfoboxBuilderServiceTest extends WikiaBaseTest {
 			[ '<infobox theme="adsf"><group><header>asdf</header></group></infobox>', false, "user theme is not supported attrib" ],
 			[ '<infobox><title source="title1"/><image source="image1"><caption source="caption1"/></image><data source="row1"><label>Label 1</label></data><data source="row2"><label>Label 2</label></data><group><header>Header 1</header><data source="row3"><label>Label 3</label></data></group><group><header>Header 2</header><image source="image2"><caption source="caption2"/></image></group><group><header>Header 3</header><data source="row4"><label>Label 4</label></data></group><title source="title2"/><group><header>Header 4</header><image source="image3"><caption source="caption3"/></image></group><title source="title3"/></infobox>', true, "" ],
 			[ '<infobox theme=""><data source="asdf"/></infobox>', true, "empty theme is supported value" ],
-			[ '<infobox theme="europa"><data source="asdf"/></infobox>', true, "europa theme is supported value" ],
+			[ '<infobox theme="europa"><data source="asdf"/></infobox>', false, "europa theme is not supported value" ],
+			[ '<infobox theme="other"><data source="asdf"/></infobox>', false, "other theme is not supported value" ],
 		];
 	}
 

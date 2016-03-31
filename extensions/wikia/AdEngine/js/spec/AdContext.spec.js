@@ -385,12 +385,12 @@ describe('AdContext', function () {
 	it('disables krux when wiki is directed at children', function () {
 		var adContext;
 
-		mocks.win = {ads: {context: {targeting: {wikiDirectedAtChildren: false, enableKruxTargeting: true}}}};
+		mocks.win = {ads: {context: {targeting: {esrbRating: 'teen', enableKruxTargeting: true}}}};
 		mocks.instantGlobals = {wgAdDriverKruxCountries: ['CURRENT_COUNTRY']};
 		adContext = getModule();
 		expect(adContext.getContext().targeting.enableKruxTargeting).toBeTruthy();
 
-		mocks.win = {ads: {context: {targeting: {wikiDirectedAtChildren: true, enableKruxTargeting: true}}}};
+		mocks.win = {ads: {context: {targeting: {esrbRating: 'ec', enableKruxTargeting: true}}}};
 		mocks.instantGlobals = {wgAdDriverKruxCountries: ['CURRENT_COUNTRY']};
 		adContext = getModule();
 		expect(adContext.getContext().targeting.enableKruxTargeting).toBeFalsy();

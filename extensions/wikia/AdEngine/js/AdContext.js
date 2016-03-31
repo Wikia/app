@@ -126,7 +126,8 @@ define('ext.wikia.adEngine.adContext', [
 			isUrlParamSet('incontentplayer');
 
 		// INCONTENT_LEADERBOARD slot
-		context.slots.incontentLeaderboard = geo.isProperGeo(instantGlobals.wgAdDriverIncontentLeaderboardSlotCountries);
+		context.slots.incontentLeaderboard =
+			geo.isProperGeo(instantGlobals.wgAdDriverIncontentLeaderboardSlotCountries);
 
 		context.opts.scrollHandlerConfig = instantGlobals.wgAdDriverScrollHandlerConfig;
 		context.opts.enableScrollHandler = geo.isProperGeo(instantGlobals.wgAdDriverScrollHandlerCountries) ||
@@ -137,8 +138,8 @@ define('ext.wikia.adEngine.adContext', [
 			context.targeting.enableKruxTargeting &&
 			geo.isProperGeo(instantGlobals.wgAdDriverKruxCountries) &&
 			!instantGlobals.wgSitewideDisableKrux &&
-			!context.targeting.wikiDirectedAtChildren &&
-			!noExternals
+			context.targeting.esrbRating !== 'ec' && // FIXME ADEN-3147
+			!noExternals // FIXME ADEN-3147
 		);
 
 		// Floating medrec

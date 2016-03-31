@@ -34,6 +34,28 @@ class PortableInfoboxBuilderHelperTest extends WikiaBaseTest {
 		$this->assertEquals( $expectedResult, PortableInfoboxBuilderHelper::isSubmitAction( $requestMock ) );
 	}
 
+	/**
+	 * @dataProvider getTitleProvider
+	 */
+	public function testGetTitle( $title, $expected ) {
+		$status = new Status();
+		$this->assertEquals( $expected, PortableInfoboxBuilderHelper::getTitle( $title, $status ) );
+	}
+
+	/**
+	 * @dataProvider createRedirectUrlsProvider
+	 */
+	public function testCreateRedirectUrls( $isGood, $expected ) {
+		$statusMock = $this->getMockBuilder( 'Status' )->setMethods( [ 'isGood' ] )->getMock();
+		$statusMock->expects( $this->any() )->method( 'isGood' )->willReturn( $isGood );
+		$this->mockClass( 'Status', $statusMock );
+		$fullUrlMock = $this->getMockBuilder( 'Title' )->setMethods( [ 'getFullUrl' ] )->getMock();
+		$fullUrlMock->expects( $this->any() )->method( 'getFullUrl' )->willReturn( 'full_url' );
+		$this->mockClass( 'Title', $fullUrlMock );
+
+		$this->assertEquals( $expected, PortableInfoboxBuilderHelper::createRedirectUrls( 'test' ) );
+	}
+
 	public function titleTextProvider() {
 		return [
 			[ '', ''],
@@ -60,6 +82,27 @@ class PortableInfoboxBuilderHelperTest extends WikiaBaseTest {
 			[ 'source', false ],
 			[ 'edit', false ],
 			[ null, false ]
+		];
+	}
+
+	public function getTitleProvider() {
+		return [
+			[ 'testtitle', Title::newFromText( 'testtitle', NS_TEMPLATE ) ],
+			[ 't t', Title::newFromText( 't t', NS_TEMPLATE ) ],
+			[ '', false ],
+			[ null, false ]
+		];
+	}
+
+	public function createRedirectUrlsProvider() {
+		return [
+			[ false, []],
+			[ true,
+				[
+					'templatePageUrl' => 'full_url',
+					'sourceEditorUrl' => 'full_url'
+				]
+			]
 		];
 	}
 }

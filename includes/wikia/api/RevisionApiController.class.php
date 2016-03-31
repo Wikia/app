@@ -89,7 +89,8 @@ class RevisionApiController extends WikiaApiController {
 			'revisionId' => $revision->getId(),
 			'userId' => $revision->getUser(),
 			'userName' => $revision->getUserText(),
-			'timestamp' => wfTimestamp( TS_UNIX, $revision->getTimestamp() )
+			'timestamp' => wfTimestamp( TS_UNIX, $revision->getTimestamp() ),
+			'size' => $revision->getSize(),
 		];
 
 		if ( $params['avatar'] ) {
