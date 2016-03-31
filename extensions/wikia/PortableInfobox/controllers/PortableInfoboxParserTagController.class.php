@@ -134,7 +134,7 @@ class PortableInfoboxParserTagController extends WikiaController {
 		// (see: PortableInfoboxDataService.class.php)
 		if ( $raw ) {
 			$infoboxes = json_decode( $parserOutput->getProperty( PortableInfoboxDataService::INFOBOXES_PROPERTY_NAME ), true );
-			$infoboxes[] = [ 'data' => $raw->getRenderData(), 'sources' => $raw->getSource() ];
+			$infoboxes[] = [ 'data' => $raw->getRenderData(), 'sources' => $raw->getSource(), 'labels' => $raw->getSourceLabel() ];
 			$parserOutput->setProperty( PortableInfoboxDataService::INFOBOXES_PROPERTY_NAME, json_encode( $infoboxes ) );
 		}
 	}
