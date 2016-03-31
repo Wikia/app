@@ -369,8 +369,6 @@ class MercuryApiController extends WikiaController {
 							throw new NotFoundApiException( 'Article is empty and category has no members' );
 						}
 
-						$data['details']['documentTitle'] = htmlspecialchars( $title->getPrefixedText() );
-						$titleBuilder->setParts( [$data['details']['documentTitle']] );
 						break;
 					default:
 						if ( $title->isContentPage() ) {
@@ -395,6 +393,8 @@ class MercuryApiController extends WikiaController {
 				}
 			}
 
+			$data['details']['documentTitle'] = htmlspecialchars( $title->getPrefixedText() );
+			$titleBuilder->setParts( [$data['details']['documentTitle']] );
 			$data['htmlTitle'] = $titleBuilder->getTitle();
 		} catch ( WikiaHttpException $exception ) {
 			$this->response->setCode( $exception->getCode() );
