@@ -30,6 +30,12 @@ class Forum extends Walls {
 		$titlesBatch = $this->getTitlesForNamespace( $db, NS_WIKIA_FORUM_BOARD );
 		$orderIndexes = $titlesBatch->getWikiaProperties( WPP_WALL_ORDER_INDEX, $db );
 
+		foreach ( $titlesBatch->getArticleIds() as $id ) {
+			if ( !isset( $orderIndexes[ $id ] ) ) {
+				$orderIndexes[ $id ] = $id;
+			}
+		}
+
 		$boards = [ ];
 		arsort( $orderIndexes );
 		foreach ( array_keys( $orderIndexes ) as $pageId ) {
