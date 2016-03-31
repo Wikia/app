@@ -166,7 +166,6 @@ class OwnWallMessageController extends WallMessageController {
 	 * @return string
 	 */
 	protected function getSummary() {
-		jmark();
 		return $this->getMessage( 'emailext-wallmessage-owned-summary',
 			$this->wallMessageTitle->getFullURL(),
 			$this->titleText
