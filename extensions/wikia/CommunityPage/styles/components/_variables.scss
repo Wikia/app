@@ -1,3 +1,5 @@
+@import 'skins/shared/color';
+
 // colors
 $color-community-page-white: #fff;
 $color-community-page-gray: #eee;
@@ -15,3 +17,9 @@ $color-module-subtle-text: #9da4a9;
 
 // fonts
 $community-page-font-family: "HelveticaNeue", Helvetica, Arial, sans-serif;
+
+// theme
+$community-page-background-color: #fff;
+@if ($is-dark-wiki) {
+	$community-page-background-color: #000;
+}

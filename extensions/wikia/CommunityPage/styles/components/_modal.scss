@@ -1,0 +1,9 @@
+.CommunityPageModalDialog.modal {
+	> header {
+		background-color: $community-page-background-color;
+	}
+
+	> footer {
+		display: none;
+	}
+}

@@ -38,6 +38,10 @@ $messages['en'] = array(
 	'communitypage-created' => 'created',
 	'communitypage-edited' => 'edited',
 	'communitypage-deleted' => 'deleted',
+	'communitypage-modal-title' => 'All Members',
+	'communitypage-modal-tab-all' => 'All',
+	'communitypage-modal-tab-admins' => 'Admins',
+	'communitypage-modal-tab-leaderboard' => 'This Week\'s Leaderboard',
 );
 
 $messages['qqq'] = array(

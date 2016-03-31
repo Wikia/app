@@ -20,6 +20,9 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		$this->wg->SuppressWikiHeader = true;
 		$this->wg->SuppressFooter = true;
 
+		// queue i18n messages for export to JS
+		JSMessages::enqueuePackage( 'CommunityPageSpecial', JSMessages::EXTERNAL );
+
 		// remove user styles and js
 		$this->getOutput()->disallowUserJs();
 

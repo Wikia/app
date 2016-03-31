@@ -4,15 +4,16 @@ require([
 ], function ($, uiFactory) {
 	'use strict';
 
+	// "private" var - don't access directly. Use getUiModalInstance().
 	var uiModalInstance;
 
 	function getUiModalInstance() {
 		var $deferred = $.Deferred();
 
-		if ( uiModalInstance ) {
+		if (uiModalInstance) {
 			$deferred.resolve(uiModalInstance);
 		} else {
-			uiFactory.init( [ 'modal' ]).then(function (uiModal){
+			uiFactory.init(['modal']).then(function (uiModal) {
 				uiModalInstance = uiModal;
 				$deferred.resolve(uiModalInstance);
 			});
@@ -22,17 +23,17 @@ require([
 	}
 
 	function openCommunityModal() {
-		getUiModalInstance().then( function( uiModal ) {
+		getUiModalInstance().then(function (uiModal) {
 			var createPageModalConfig = {
 				vars: {
 					id: 'CommunityPageModalDialog',
 					size: 'medium',
-					title: 'foo',
+					title: $.msg('communitypage-modal-title'),
 					content: 'bar',
-					classes: [ 'modalContent' ]
+					classes: ['modalContent, CommunityPageModalDialog']
 				}
 			};
-			uiModal.createComponent( createPageModalConfig, function( modal ) {
+			uiModal.createComponent(createPageModalConfig, function (modal) {
 				console.log(modal);
 
 				modal.show();
