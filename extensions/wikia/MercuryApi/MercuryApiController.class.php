@@ -331,6 +331,7 @@ class MercuryApiController extends WikiaController {
 	public function getPage() {
 		try {
 			$title = $this->getTitleFromRequest();
+			$documentTitle = '';
 			$data = [ ];
 
 			// getPage is cached (see the bottom of the method body) so there is no need for additional caching here
@@ -345,7 +346,6 @@ class MercuryApiController extends WikiaController {
 			$data['isMainPage'] = $isMainPage;
 			$data['ns'] = $title->getNamespace();
 
-			$titleBuilder = new WikiaHtmlTitle();
 			if ( MercuryApiMainPageHandler::shouldGetMainPageData( $isMainPage ) ) {
 				$data['mainPageData'] = MercuryApiMainPageHandler::getMainPageData( $this->mercuryApi );
 
@@ -355,7 +355,7 @@ class MercuryApiController extends WikiaController {
 					$data['details'] = MercuryApiMainPageHandler::getMainPageMockedDetails( $title );
 				}
 
-				$data['details']['documentTitle'] = $data['details']['title'];
+				$documentTitle = $data['details']['title'];
 			} else {
 				switch ( $data['ns'] ) {
 					// Handling namespaces other than content ones
@@ -371,8 +371,8 @@ class MercuryApiController extends WikiaController {
 							throw new NotFoundApiException( 'Article is empty and category has no members' );
 						}
 
-						$data['details']['documentTitle'] = htmlspecialchars( $title->getPrefixedText() );
-						$titleBuilder->setParts( [$data['details']['documentTitle']] );
+						$documentTitle = $title->getPrefixedText();
+
 						break;
 					default:
 						if ( $title->isContentPage() ) {
@@ -382,11 +382,7 @@ class MercuryApiController extends WikiaController {
 									MercuryApiArticleHandler::getArticleData( $this->request, $this->mercuryApi, $article )
 								);
 
-								if ( !$isMainPage ) {
-									$titleBuilder->setParts( [$data['article']['displayTitle']] );
-								}
-
-								$data['details']['documentTitle'] = $data['article']['displayTitle'];
+								$documentTitle = $data['article']['displayTitle'];
 							} else {
 								\Wikia\Logger\WikiaLogger::instance()->error(
 									'$article should be an instance of an Article',
@@ -399,7 +395,7 @@ class MercuryApiController extends WikiaController {
 				}
 			}
 
-			$data['htmlTitle'] = $titleBuilder->getTitle();
+			$data['documentTitle'] = ( new WikiaHtmlTitle() )->setParts( [$documentTitle] )->getTitle();
 		} catch ( WikiaHttpException $exception ) {
 			$this->response->setCode( $exception->getCode() );
 
