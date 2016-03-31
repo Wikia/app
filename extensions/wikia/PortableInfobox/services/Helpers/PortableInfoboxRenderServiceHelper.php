@@ -85,7 +85,8 @@ class PortableInfoboxRenderServiceHelper {
 			'width' => $dimensions[ 'width' ],
 			'thumbnail' => $thumbnail->getUrl(),
 			'key' => urlencode( $data[ 'key' ] ),
-			'media-type' => $data[ 'isVideo' ] ? 'video' : 'image'
+			'media-type' => $data[ 'isVideo' ] ? 'video' : 'image',
+			'media-attrs' => json_encode( [ 'ref' => $ref ] ),
 		] );
 	}
 
