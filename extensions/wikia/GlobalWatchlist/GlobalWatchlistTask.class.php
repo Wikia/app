@@ -60,11 +60,14 @@ class GlobalWatchlistTask extends BaseTask {
 						$revision->getTimestamp(),
 						$revision->getTimestamp()
 					];
+
+					if ( count( $watchersToAdd ) >= self::MAX_BULK_WRITES ) {
+						$this->addWatchersToDb( $watchersToAdd );
+						$watchersToAdd = [];
+					}
 				}
 
-				foreach ( array_chunk( $watchers, self::MAX_BULK_WRITES ) as $watchersArray ) {
-					$this->addWatchersToDb( $watchersArray );
-				}
+				$this->addWatchersToDb( $watchersToAdd );
 			}
 		}
 	}
