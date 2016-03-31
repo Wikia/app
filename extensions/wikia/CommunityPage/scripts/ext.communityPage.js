@@ -1,7 +1,10 @@
 require([
 	'jquery',
-	'wikia.ui.factory'
-], function ($, uiFactory) {
+	'wikia.ui.factory',
+    'wikia.mustache',
+    'communitypage.templates.mustache',
+    'wikia.nirvana'
+], function ($, uiFactory, mustache, templates, nirvana) {
 	'use strict';
 
 	// "private" var - don't access directly. Use getUiModalInstance().
@@ -36,7 +39,18 @@ require([
 			uiModal.createComponent(createPageModalConfig, function (modal) {
 				console.log(modal);
 
-				modal.show();
+				nirvana.sendRequest({
+					controller: 'CommunityPageSpecial',
+					method: 'getTopContributorsData',
+					format: 'json',
+					type: 'get'
+				}).then(function (response) {
+					var html = mustache.render(templates.topContributors, response);
+
+					modal.$content.html(html);
+
+					modal.show();
+				});
 			});
 		});
 	}

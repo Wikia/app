@@ -33,8 +33,10 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 			'popupMessageText' => 'This is just a test message for the popup message box',
 			'userIsMember' => CommunityPageSpecialHelper::userHasEdited( $this->wg->User ),
 			'pageTitle' => $this->msg( 'communitypage-title' )->plain(),
-			'topContributors' => $this->getTopContributorsData(),
-			'topAdmins' => $this->getTopAdminsData(),
+			'topContributors' => $this->sendRequest( 'CommunityPageSpecialController', 'getTopContributorsData' )
+				->getData(),
+			'topAdmins' => $this->sendRequest( 'CommunityPageSpecialController', 'getTopAdminsData' )
+				->getData(),
 			'recentlyJoined' => $this->getRecentlyJoinedData(),
 			'recentActivityModule' => $this->getRecentActivityData(),
 		] );
@@ -65,7 +67,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	 * Set context for contributorsModule template. Needs to be passed through the index method in order to work.
 	 * @return array
 	 */
-	protected function getTopContributorsData() {
+	public function getTopContributorsData() {
 		$userContribCount = $this->usersModel->getUserContributions( $this->wg->user );
 		$contributors = CommunityPageSpecialUsersModel::filterGlobalBots(
 				// get extra contributors so if there's global bots they can be filtered out
@@ -74,8 +76,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		// get details for only 5 of the remaining contributors
 		$contributorDetails = $this->getContributorsDetails( array_slice( $contributors, 0, 5 ) );
 
-
-		return [
+		$this->response->setData( [
 			'topContribsHeaderText' => $this->msg( 'communitypage-top-contributors-week' )->plain(),
 			'yourRankText' => $this->msg( 'communitypage-user-rank' )->plain(),
 			'userContributionsText' => $this->msg( 'communitypage-user-contributions' )
@@ -89,14 +90,14 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 			'userRank' => 302,
 			'memberCount' => 309,
 			'userContribCount' => $userContribCount
-		];
+		] );
 	}
 
 	/**
 	 * Set context for adminsModule template. Needs to be passed through the index method in order to work.
 	 * @return array
 	 */
-	protected function getTopAdminsData() {
+	public function getTopAdminsData() {
 		$topAdmins = CommunityPageSpecialUsersModel::filterGlobalBots(
 			// get all admins who have contributed in the last two years ordered by contributions
 			CommunityPageSpecialUsersModel::getTopContributors( 10, '2 YEAR', true )
@@ -105,13 +106,13 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 
 		$remainingAdminCount = count ( $topAdmins ) - 2;
 
-		return [
+		$this->response->setData( [
 			'topAdminsHeaderText' => $this->msg( 'communitypage-admins' )->plain(),
 			'otherAdmins' => $this->msg( 'communitypage-other-admins' )->plain(),
 			'admins' => array_slice( $topAdminsDetails, 0, 2 ),
 			'otherAdminCount' => $remainingAdminCount,
 			'haveOtherAdmins' => $remainingAdminCount > 0,
-		];
+		] );
 	}
 
 	/**
@@ -133,7 +134,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	 * @return array
 	 */
 	protected function getRecentActivityData() {
-		$data = $this->sendRequest('LatestActivityController', executeIndex)->getData();
+		$data = $this->sendRequest('LatestActivityController', 'executeIndex')->getData();
 		$recentActivity = [];
 
 		foreach ($data['changeList'] as $activity) {
