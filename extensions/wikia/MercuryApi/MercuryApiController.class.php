@@ -355,7 +355,7 @@ class MercuryApiController extends WikiaController {
 					$data['details'] = MercuryApiMainPageHandler::getMainPageMockedDetails( $title );
 				}
 
-				$documentTitle = $data['details']['title'];
+				$documentTitle = '';
 			} else {
 				switch ( $data['ns'] ) {
 					// Handling namespaces other than content ones
@@ -395,7 +395,7 @@ class MercuryApiController extends WikiaController {
 				}
 			}
 
-			$data['documentTitle'] = ( new WikiaHtmlTitle() )->setParts( [$documentTitle] )->getTitle();
+			$data['details']['documentTitle'] = ( new WikiaHtmlTitle() )->setParts( [$documentTitle] )->getTitle();
 		} catch ( WikiaHttpException $exception ) {
 			$this->response->setCode( $exception->getCode() );
 
