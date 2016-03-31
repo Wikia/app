@@ -11,7 +11,7 @@ class RecirculationApiController extends WikiaApiController {
 
 		$fandomDataService = new FandomDataService();
 
-		$posts = $fandomDataService->getPosts( $this->type );
+		$posts = $fandomDataService->getPosts( $type );
 
 		$this->response->setCacheValidity( WikiaResponse::CACHE_VERY_SHORT );
 		$this->response->setData( [
