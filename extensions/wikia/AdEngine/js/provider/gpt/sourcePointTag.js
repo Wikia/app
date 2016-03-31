@@ -23,26 +23,26 @@ define('ext.wikia.adEngine.provider.gpt.sourcePointTag', [
 	SourcePointTag.prototype.init = function () {
 		log('init', 'debug', logGroup);
 
-		//var gads = doc.createElement('script'),
-		//	node = doc.getElementsByTagName('script')[0];
-		//
-		//gads.async = true;
-		//gads.type = 'text/javascript';
-		//gads.src = context.opts.sourcePointRecoveryUrl;
-		//gads.setAttribute('data-client-id', sourcePoint.getClientId());
-		//
-		//gads.addEventListener('load', function () {
-		//	var spReadyEvent = new window.Event('sp.ready');
-		//	window.dispatchEvent(spReadyEvent);
-		//});
+		var gads = doc.createElement('script'),
+			node = doc.getElementsByTagName('script')[0];
+
+		gads.async = true;
+		gads.type = 'text/javascript';
+		gads.src = context.opts.sourcePointRecoveryUrl;
+		gads.setAttribute('data-client-id', sourcePoint.getClientId());
+
+		gads.addEventListener('load', function () {
+			var spReadyEvent = new window.Event('sp.ready');
+			window.dispatchEvent(spReadyEvent);
+		});
 
 		// Override previously created googletag object to prevent running stored cmd queue with regular gpt
-		//window.googletag = {
-		//	cmd: []
-		//};
+		window.googletag = {
+			cmd: []
+		};
 
 		log('Appending GPT script to head', 'debug', logGroup);
-		//node.parentNode.insertBefore(gads, node);
+		node.parentNode.insertBefore(gads, node);
 
 		this.initialized = true;
 		this.enableServices();
