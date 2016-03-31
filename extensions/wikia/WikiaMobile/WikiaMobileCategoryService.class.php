@@ -11,6 +11,11 @@ class WikiaMobileCategoryService extends WikiaService {
 	 */
 	private $model;
 
+	/**
+	 * @var $collator Collator
+	 */
+	private $collator;
+
 	// 3 hours
 	const CACHE_TIME = 10800;
 
@@ -18,6 +23,25 @@ class WikiaMobileCategoryService extends WikiaService {
 		if ( !isset( $this->model ) ) {
 			$this->model = new WikiaMobileCategoryModel;
 		}
+	}
+
+	private function initCollator() {
+		if ( !isset( $this->collator ) ) {
+			$this->collator = Collation::factory( 'uca-default' )->primaryCollator;
+		}
+	}
+
+	/**
+	 * Unicode Collation Algorithm (UCA) (http://www.unicode.org/reports/tr10/) string comparison.
+	 *
+	 * @param $str1
+	 * @param $str2
+	 *
+	 * @return int|bool
+	 * @throws MWException
+	 */
+	private function collatorUcaDefaultStringCompare( $str1, $str2 ) {
+		return $this->collator->compare( $str1, $str2 );
 	}
 
 	public function index() {
@@ -76,11 +100,12 @@ class WikiaMobileCategoryService extends WikiaService {
 
 		if ( $categoryPage instanceof CategoryPage ) {
 			$this->initModel();
+			$this->initCollator();
 
 			$title = $categoryPage->getTitle();
 			$category = Category::newFromTitle( $title );
 			$collections = $this->model->getCollection( $category, $format );
-			ksort( $collections['items'] );
+			uksort( $collections['items'], [ $this, 'collatorUcaDefaultStringCompare' ] );
 
 			$this->response->setVal( 'total', $collections['count'] );
 			$this->response->setVal( 'collections', $collections['items'] );
