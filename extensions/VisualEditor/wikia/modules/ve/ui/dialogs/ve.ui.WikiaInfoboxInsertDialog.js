@@ -245,6 +245,28 @@ ve.ui.WikiaInfoboxInsertDialog.prototype.createEmptyStateContent = function ( un
  */
 ve.ui.WikiaInfoboxInsertDialog.prototype.setDialogContent = function ( $content ) {
 	this.$body.html( $content );
+    this.$body.append( this.addNewTemplateWidget() );
+};
+
+ve.ui.WikiaInfoboxInsertDialog.prototype.addNewTemplateWidget = function () {
+    var button = new OO.ui.ButtonWidget( {
+        label: 'Add new template',
+        icon: 'add',
+        iconTitle: 'Add new template'
+    } );
+
+    button.connect( this, {
+        click: 'onAddNewTemplateClick'
+    } );
+
+    return button.$element;
+};
+
+ve.ui.WikiaInfoboxInsertDialog.prototype.onAddNewTemplateClick = function () {
+    var dialog = new ve.ui.WikiaInfoboxBuilderDialog();
+    dialog.initialize();
+
+    debugger;
 };
 
 /**
