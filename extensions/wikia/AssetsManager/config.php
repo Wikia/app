@@ -2646,14 +2646,6 @@ $config['content_review_special_page_scss'] = [
 	],
 ];
 
-$config['auth_modal_scss'] = array(
-	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => [ 'oasis' ],
-	'assets' => [
-		'//extensions/wikia/AuthModal/css/AuthModal.scss',
-	]
-);
-
 $config['auth_modal_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'oasis' ],
