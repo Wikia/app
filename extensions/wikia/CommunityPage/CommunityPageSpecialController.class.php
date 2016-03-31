@@ -177,6 +177,16 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		];
 	}
 
+	public function getModalHeaderData() {
+		$this->response->setData([
+			'allText' => $this->msg( 'communitypage-modal-tab-all' )->plain(),
+			'allCount' => 'N', // TODO: fill this in
+			'adminsText' => $this->msg( 'communitypage-modal-tab-admins' )->plain(),
+			'adminsCount' => 'N', // TODO: fill this in
+			'leaderboardText' => $this->msg( 'communitypage-modal-tab-leaderboard' )->plain(),
+		]);
+	}
+
 	protected function addAssets() {
 		$this->response->addAsset( 'special_community_page_js' );
 		$this->response->addAsset( 'special_community_page_scss' );

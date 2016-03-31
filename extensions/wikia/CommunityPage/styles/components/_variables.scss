@@ -13,6 +13,7 @@ $color-message-background: #1a5eb8;
 $color-popup-text: #fff;
 
 $color-rank-subtle-text: #999;
+$color-nav-inactive-text: #999;
 $color-module-subtle-text: #9da4a9;
 
 // fonts
@@ -23,3 +24,6 @@ $community-page-background-color: #fff;
 @if ($is-dark-wiki) {
 	$community-page-background-color: #000;
 }
+
+// other
+$modal-horizontal-padding: 25px;

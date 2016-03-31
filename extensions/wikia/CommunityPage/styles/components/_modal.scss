@@ -1,9 +1,24 @@
 .CommunityPageModalDialog.modal {
 	> header {
 		background-color: $community-page-background-color;
+		height: auto;
+		padding: 18px $modal-horizontal-padding
 	}
 
 	> footer {
 		display: none;
+	}
+
+	.modal-nav {
+		padding: 18px $modal-horizontal-padding
+
+		li {
+			display: inline-block;
+			padding-right: 31px;
+		}
+
+		a {
+			color: $color-nav-inactive-text;
+		}
 	}
 }

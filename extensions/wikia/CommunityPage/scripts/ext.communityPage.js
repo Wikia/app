@@ -7,8 +7,8 @@ require([
 ], function ($, uiFactory, mustache, templates, nirvana) {
 	'use strict';
 
-	// "private" var - don't access directly. Use getUiModalInstance().
-	var uiModalInstance;
+	// "private" vars - don't access directly. Use getUiModalInstance().
+	var uiModalInstance, modalNavHtml;
 
 	function getUiModalInstance() {
 		var $deferred = $.Deferred();
@@ -25,15 +25,39 @@ require([
 		return $deferred;
 	}
 
+	function getModalNavHtml() {
+		var $deferred = $.Deferred();
+
+		if (modalNavHtml) {
+			$deferred.resolve(modalNavHtml);
+		} else {
+			nirvana.sendRequest({
+				controller: 'CommunityPageSpecial',
+				method: 'getModalHeaderData',
+				format: 'json',
+				type: 'get'
+			})
+			.then(function (response) {
+				modalNavHtml = mustache.render(templates.modalHeader, response);
+				$deferred.resolve(modalNavHtml);
+			});
+		}
+
+		return $deferred;
+	}
+
 	function openCommunityModal() {
-		getUiModalInstance().then(function (uiModal) {
+		$.when(
+			getUiModalInstance(),
+			getModalNavHtml()
+		).then(function (uiModal, navHtml) {
 			var createPageModalConfig = {
 				vars: {
 					id: 'CommunityPageModalDialog',
 					size: 'medium',
+					content: '',
 					title: $.msg('communitypage-modal-title'),
-					content: 'bar',
-					classes: ['modalContent, CommunityPageModalDialog']
+					classes: ['CommunityPageModalDialog']
 				}
 			};
 			uiModal.createComponent(createPageModalConfig, function (modal) {
@@ -45,9 +69,11 @@ require([
 					format: 'json',
 					type: 'get'
 				}).then(function (response) {
-					var html = mustache.render(templates.topContributors, response);
+					var html = navHtml + mustache.render(templates.topContributors, response);
 
-					modal.$content.html(html);
+					modal.$content
+						.addClass('ContributorsModule ContributorsModuleModal')
+						.html(html);
 
 					modal.show();
 				});
@@ -61,5 +87,6 @@ require([
 
 		// test code to open modal on demand
 		window.openCommModal = openCommunityModal;
+		openCommunityModal();
 	});
 });
