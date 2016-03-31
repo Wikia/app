@@ -369,7 +369,7 @@ class MercuryApiController extends WikiaController {
 							throw new NotFoundApiException( 'Article is empty and category has no members' );
 						}
 
-						$data['details']['documentTitle'] = htmlspecialchars( $article->getTitle()->getPrefixedText() );
+						$data['details']['documentTitle'] = htmlspecialchars( $title->getPrefixedText() );
 						$titleBuilder->setParts( [$data['details']['documentTitle']] );
 						break;
 					default:
