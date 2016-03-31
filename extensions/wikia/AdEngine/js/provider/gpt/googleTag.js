@@ -62,23 +62,21 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 	GoogleTag.prototype.init = function (onLoadCallback) {
 		log('init', 'debug', logGroup);
 
-		if (typeof onLoadCallback === 'function') {
-			onLoadCallback();
-		}
+		var gads = doc.createElement('script'),
+			node = doc.getElementsByTagName('script')[0];
 
-		//var gads = doc.createElement('script'),
-		//	node = doc.getElementsByTagName('script')[0];
-		//
-		//gads.async = true;
-		//gads.type = 'text/javascript';
-		//gads.src = '//www.googletagservices.com/tag/js/gpt.js';
-		//gads.addEventListener('load', function () {
-		//	log('GPT loaded', 'debug', logGroup);
-		//
-		//});
-		//
-		//log('Appending GPT script to head', 'debug', logGroup);
-		//node.parentNode.insertBefore(gads, node);
+		gads.async = true;
+		gads.type = 'text/javascript';
+		gads.src = '//www.googletagservices.com/tag/js/gpt.js';
+		gads.addEventListener('load', function () {
+			log('GPT loaded', 'debug', logGroup);
+			if (typeof onLoadCallback === 'function') {
+				onLoadCallback();
+			}
+		});
+
+		log('Appending GPT script to head', 'debug', logGroup);
+		node.parentNode.insertBefore(gads, node);
 
 		window.googletag = window.googletag || {};
 		window.googletag.cmd = window.googletag.cmd || [];
@@ -124,7 +122,6 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 			log(['flush', 'start'], 'info', logGroup);
 
 			log(['flush', 'refresh', slotQueue], 'debug', logGroup);
-			console.log("PUSHING SLOT: ", JSON.stringify(slotQueue));
 			if (slotQueue.length) {
 				pubAds.refresh(slotQueue, {changeCorrelator: false});
 				slotQueue = [];
@@ -153,7 +150,6 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 		}
 
 		adElement.configureSlot(slot);
-		console.log("PUSHING SLOT: ", JSON.stringify(slot));
 		slotQueue.push(slot);
 
 		return slot;
