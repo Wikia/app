@@ -70,7 +70,7 @@ ve.dm.WikiaTransclusionModel.prototype.fetchRequestDone = function ( specs, data
  * extend their param array with received infobox params.
  */
 ve.dm.WikiaTransclusionModel.prototype.fetchInfoboxParamsRequestDone = function ( specs, data ) {
-	var id, page, i, j, denormalizedData;
+	var id, page, i, j, denormalizedData, source;
 
 	if ( data && Object.keys( data.query ).length && Object.keys( data.query.pages ).length ) {
 		denormalizedData = this.denormalizeInfoboxTemplateTitles( data );
@@ -93,8 +93,10 @@ ve.dm.WikiaTransclusionModel.prototype.fetchInfoboxParamsRequestDone = function 
 
 			for ( i = 0; i < page.infoboxes.length; i++ ) {
 				for ( j = 0; j < page.infoboxes[i].sources.length; j++ ) {
-					specs[page.title].params[ page.infoboxes[i].sources[j] ] = {};
-					specs[page.title].paramOrder.push( page.infoboxes[i].sources[j] );
+					source = page.infoboxes[i].sources[j];
+
+					specs[page.title].params[ source ] = { label: page.infoboxes[i].labels[source] };
+					specs[page.title].paramOrder.push( source );
 				}
 			}
 		}
