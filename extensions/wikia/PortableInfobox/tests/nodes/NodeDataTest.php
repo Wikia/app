@@ -39,6 +39,32 @@ class NodeDataTest extends WikiaBaseTest {
 	}
 
 	/**
+	 * @covers       \Wikia\PortableInfobox\Parser\Nodes\Node::getSourceLabel
+	 * @dataProvider sourceLabelDataProvider
+	 *
+	 * @param $markup
+	 * @param $params
+	 * @param $expected
+	 */
+	public function testSourceLabel( $markup, $params, $expected ) {
+		$node = \Wikia\PortableInfobox\Parser\Nodes\NodeFactory::newFromXML( $markup, $params );
+
+		$this->assertEquals( $expected, $node->getSourceLabel() );
+	}
+
+	public function sourceLabelDataProvider() {
+		return [
+			[ '<data source="test"></data>', [ ], '' ],
+			[ '<data source="test"><default>{{{test}}}</default></data>',
+				[ ], '' ],
+			[ '<data source="test"><label source="test">{{{test}}}</label><default>{{{test}}}</default></data>',
+				[ ], '{{{test}}}' ],
+			[ '<data source="test"><label>testLabel</label></data>', [ ], 'testLabel' ],
+			[ '<data></data>', [ ], '' ],
+		];
+	}
+
+	/**
 	 * @covers       \Wikia\PortableInfobox\Parser\Nodes\Node::getExternalParser
 	 * @covers       \Wikia\PortableInfobox\Parser\Nodes\Node::setExternalParser
 	 * @dataProvider parserTestDataProvider
