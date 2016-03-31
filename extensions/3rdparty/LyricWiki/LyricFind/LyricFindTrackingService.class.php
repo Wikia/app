@@ -113,6 +113,8 @@ class LyricFindTrackingService extends WikiaService {
 		$url = $this->wg->LyricFindApiUrl . '/lyric.do';
 		$data = [
 			'apikey' => $this->wg->LyricFindApiKeys['display'],
+			//'ipaddress' => $this->wg->Request->getIP(), // territory is better. If we used IP and someone hit from a place where a song is banned, it would ban accross the site.
+			'territory' => 'US',
 			'reqtype' => 'offlineviews',
 			'count' => 1,
 			'trackid' => $trackId,
@@ -192,6 +194,8 @@ class LyricFindTrackingService extends WikiaService {
 		$url = $app->wg->LyricFindApiUrl . '/lyric.do';
 		$data = [
 			'apikey' => $app->wg->LyricFindApiKeys['display'],
+			//'ipaddress' => $this->wg->Request->getIP(), // territory is better. If we used IP and someone hit from a place where a song is banned, it would ban accross the site.
+			'territory' => 'US',
 			'reqtype' => 'offlineviews',
 			'count' => 1, // This is overcounting since we know it's not a view (page doesn't exist yet), but their API won't accept "0"
 			'trackid' => $trackId,
