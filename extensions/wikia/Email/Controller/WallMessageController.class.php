@@ -224,6 +224,22 @@ class ReplyWallMessageController extends WallMessageController {
 		];
 		return array_merge( $footerMessages, parent::getFooterMessages() );
 	}
+
+	protected static function getEmailSpecificFormFields() {
+		$formFields = [
+			"inputs" => [
+				[
+					'type'  => 'text',
+					'name' => 'parentId',
+					'label' => 'parentID',
+					'tooltip' => 'Message thread ID, eg. http://community.wikia.com/wiki/Thread:<threadId>. ' .
+						'Use the same value as you did for threadId.'
+				]
+			]
+		];
+
+		return array_merge_recursive( parent::getEmailSpecificFormFields(), $formFields );
+	}
 }
 
 class FollowedWallMessageController extends WallMessageController {
