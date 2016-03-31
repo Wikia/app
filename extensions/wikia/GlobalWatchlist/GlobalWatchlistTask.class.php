@@ -4,6 +4,8 @@ use Wikia\Tasks\Tasks\BaseTask;
 
 class GlobalWatchlistTask extends BaseTask {
 
+	CONST MAX_BULK_WRITES = 1000;
+
 	/**
 	 * Clear all watched pages from all wikis for the given user in
 	 * the global_watchlist table. This logic was already implemented in
@@ -77,14 +79,16 @@ class GlobalWatchlistTask extends BaseTask {
 		];
 
 		$db = wfGetDB( DB_MASTER, [ ], \F::app()->wg->ExternalDatawareDB );
-		( new WikiaSQL() )
-			->INSERT()->INTO( GlobalWatchlistTable::TABLE_NAME, $columns )
-			->VALUES( $watchers )
-			// Do nothing on duplicate key - we already have that record in place
-			->ON_DUPLICATE_KEY_UPDATE(
-				[ GlobalWatchlistTable::COLUMN_TIMESTAMP => GlobalWatchlistTable::COLUMN_TIMESTAMP ]
-			)
-			->run( $db );
+		foreach ( array_chunk( $watchers, self::MAX_BULK_WRITES ) as $watchersArray ) {
+			( new WikiaSQL() )
+				->INSERT()->INTO( GlobalWatchlistTable::TABLE_NAME, $columns )
+				->VALUES( $watchersArray )
+				// Do nothing on duplicate key - we already have that record in place
+				->ON_DUPLICATE_KEY_UPDATE(
+					[ GlobalWatchlistTable::COLUMN_TIMESTAMP => GlobalWatchlistTable::COLUMN_TIMESTAMP ]
+				)
+				->run( $db );
+		}
 	}
 
 	/**
