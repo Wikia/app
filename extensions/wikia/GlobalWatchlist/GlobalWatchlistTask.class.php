@@ -62,7 +62,9 @@ class GlobalWatchlistTask extends BaseTask {
 					];
 				}
 
-				$this->addWatchersToDb( $watchersToAdd );
+				foreach ( array_chunk( $watchers, self::MAX_BULK_WRITES ) as $watchersArray ) {
+					$this->addWatchersToDb( $watchersArray );
+				}
 			}
 		}
 	}
@@ -79,16 +81,14 @@ class GlobalWatchlistTask extends BaseTask {
 		];
 
 		$db = wfGetDB( DB_MASTER, [ ], \F::app()->wg->ExternalDatawareDB );
-		foreach ( array_chunk( $watchers, self::MAX_BULK_WRITES ) as $watchersArray ) {
-			( new WikiaSQL() )
-				->INSERT()->INTO( GlobalWatchlistTable::TABLE_NAME, $columns )
-				->VALUES( $watchersArray )
-				// Do nothing on duplicate key - we already have that record in place
-				->ON_DUPLICATE_KEY_UPDATE(
-					[ GlobalWatchlistTable::COLUMN_TIMESTAMP => GlobalWatchlistTable::COLUMN_TIMESTAMP ]
-				)
-				->run( $db );
-		}
+		( new WikiaSQL() )
+			->INSERT()->INTO( GlobalWatchlistTable::TABLE_NAME, $columns )
+			->VALUES( $watchers )
+			// Do nothing on duplicate key - we already have that record in place
+			->ON_DUPLICATE_KEY_UPDATE(
+				[ GlobalWatchlistTable::COLUMN_TIMESTAMP => GlobalWatchlistTable::COLUMN_TIMESTAMP ]
+			)
+			->run( $db );
 	}
 
 	/**
