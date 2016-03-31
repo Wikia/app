@@ -32,7 +32,7 @@ define('ext.wikia.adEngine.recovery.helper', [
 	}
 
 	function addSlotToRecover(slotName) {
-		log(['Add slot to recover', slotName], 'debug', logGroup);
+		log(['addSlotToRecover', slotName], 'debug', logGroup);
 		slotsToRecover.push(slotName);
 	}
 
@@ -45,7 +45,7 @@ define('ext.wikia.adEngine.recovery.helper', [
 	}
 
 	function isRecoveryEnabled() {
-		log(['IsRecoveryEnabled', !!(context.opts.sourcePointRecovery && SourcePointTag)], 'debug', logGroup);
+		log(['isRecoveryEnabled', !!(context.opts.sourcePointRecovery && SourcePointTag)], 'debug', logGroup);
 		return !!(context.opts.sourcePointRecovery && SourcePointTag);
 	}
 
