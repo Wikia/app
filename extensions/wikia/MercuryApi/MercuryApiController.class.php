@@ -354,6 +354,8 @@ class MercuryApiController extends WikiaController {
 				} else {
 					$data['details'] = MercuryApiMainPageHandler::getMainPageMockedDetails( $title );
 				}
+
+				$data['details']['documentTitle'] = $data['details']['title'];
 			} else {
 				switch ( $data['ns'] ) {
 					// Handling namespaces other than content ones
@@ -369,6 +371,8 @@ class MercuryApiController extends WikiaController {
 							throw new NotFoundApiException( 'Article is empty and category has no members' );
 						}
 
+						$data['details']['documentTitle'] = htmlspecialchars( $title->getPrefixedText() );
+						$titleBuilder->setParts( [$data['details']['documentTitle']] );
 						break;
 					default:
 						if ( $title->isContentPage() ) {
@@ -381,6 +385,8 @@ class MercuryApiController extends WikiaController {
 								if ( !$isMainPage ) {
 									$titleBuilder->setParts( [$data['article']['displayTitle']] );
 								}
+
+								$data['details']['documentTitle'] = $data['article']['displayTitle'];
 							} else {
 								\Wikia\Logger\WikiaLogger::instance()->error(
 									'$article should be an instance of an Article',
@@ -393,8 +399,6 @@ class MercuryApiController extends WikiaController {
 				}
 			}
 
-			$data['details']['documentTitle'] = htmlspecialchars( $title->getPrefixedText() );
-			$titleBuilder->setParts( [$data['details']['documentTitle']] );
 			$data['htmlTitle'] = $titleBuilder->getTitle();
 		} catch ( WikiaHttpException $exception ) {
 			$this->response->setCode( $exception->getCode() );
