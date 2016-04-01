@@ -27,7 +27,7 @@ class BatchAntiSpoof extends Maintenance {
 		$batchSize = 1000;
 
 		$this->output( "Creating username spoofs...\n" );
-		$result = $dbw->select( 'user', 'user_name', null, __FUNCTION__ );
+		$result = $dbw->select( '`user`', 'user_name', null, __FUNCTION__ );
 		$n = 0;
 		$items = array();
 		foreach( $result as $row ) {
