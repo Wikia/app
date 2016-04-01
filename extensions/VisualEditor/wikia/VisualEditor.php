@@ -198,6 +198,7 @@ $wgResourceModules += array(
 			'wikia-visualeditor-dialogbutton-infobox-tooltip',
 			'wikia-visualeditor-dialog-transclusion-zerostate',
 			'wikia-visualeditor-dialog-infobox-insert-title',
+			'wikia-visualeditor-dialog-infobox-insert-add-new-template',
 			'wikia-visualeditor-dialog-infobox-insert-empty-state',
 			'wikia-visualeditor-dialog-infobox-insert-empty-state-has-unconverted-infoboxes',
 			'wikia-visualeditor-savedialog-label-save',

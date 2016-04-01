@@ -38,6 +38,7 @@ $messages['en'] = array(
 	'wikia-visualeditor-dialogbutton-transclusion-tooltip' => 'Template',
 	'wikia-visualeditor-dialogbutton-infobox-tooltip' => 'Infobox',
 	'wikia-visualeditor-dialog-infobox-insert-title' => 'Select infobox to insert',
+	'wikia-visualeditor-dialog-infobox-insert-add-new-template' => 'Add a new template',
 	'wikia-visualeditor-dialog-infobox-insert-empty-state' => 'Sorry. No infoboxes found',
 	'wikia-visualeditor-dialog-infobox-insert-empty-state-has-unconverted-infoboxes' => 'Convert some old infoboxes into new format',
 	'wikia-visualeditor-savedialog-label-save' => 'Publish',
@@ -134,6 +135,7 @@ $messages['qqq'] = array(
 {{Identical|Template}}',
 	'wikia-visualeditor-dialogbutton-infobox-tooltip' => 'Infobox label used in menu.',
 	'wikia-visualeditor-dialog-infobox-insert-title' => 'Call to action to choose infobox from the given list',
+	'wikia-visualeditor-dialog-infobox-insert-add-new-template' => 'Label of a button that opens the Infobox Builder and allows for a new infobox creation.',
 	'wikia-visualeditor-dialog-infobox-insert-empty-state' => 'Information that no indfoboxes were found',
 	'wikia-visualeditor-dialog-infobox-insert-empty-state-has-unconverted-infoboxes' => 'Call to action link to
 	convert old infoboxes to new format so they will appear in this dialog',

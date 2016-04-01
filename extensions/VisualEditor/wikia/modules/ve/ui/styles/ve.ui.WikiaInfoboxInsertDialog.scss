@@ -1,6 +1,34 @@
 .ve-ui-wikiaInfoboxInsertDialog {
 
 	.oo-ui-window-body {
-		overflow: auto
+		overflow: auto;
+	}
+}
+
+.oo-ui-selectWidget {
+	margin-bottom: 5em;
+}
+
+.ve-ui-wikiaInfoboxInsertDialog-add-container {
+	background-color: $color-page;
+	border-top: 1px solid $color-page-border;
+	bottom: 0;
+	box-sizing: border-box;
+	margin-top: 1em;
+	padding: 1em 3em;
+	position: fixed;
+	width: 100%;
+}
+
+.ve-ui-wikiaInfoboxInsertDialog-add-button {
+	border: 1px dashed $color-page-border;
+	width: 100%;
+
+	.oo-ui-buttonElement-button {
+		width: 100%;
+
+		&:hover {
+			background-color: $color-ve-hover;
+		}
 	}
 }
