@@ -245,22 +245,24 @@ ve.ui.WikiaInfoboxInsertDialog.prototype.createEmptyStateContent = function ( un
  * @param {HTMLElement} $content
  */
 ve.ui.WikiaInfoboxInsertDialog.prototype.setDialogContent = function ( $content ) {
-	this.$body.html( $content );
-    this.$body.append( this.addNewTemplateWidget() );
+	this.$body.html( $content ).append( this.addNewTemplateWidget() );
 };
 
 ve.ui.WikiaInfoboxInsertDialog.prototype.addNewTemplateWidget = function () {
-    var button = new OO.ui.ButtonWidget( {
-        label: 'Add new template',
-        icon: 'add',
-        iconTitle: 'Add new template'
-    } );
+    var $container = $( '<div>', { class: 've-ui-wikiaInfoboxInsertDialog-add-container' } ),
+        button = new OO.ui.ButtonWidget( {
+            classes: [ 've-ui-wikiaInfoboxInsertDialog-add-button' ],
+            framed: false,
+            icon: 'add',
+            iconTitle: OO.ui.deferMsg( 'wikia-visualeditor-dialog-infobox-insert-add-new-template' ),
+            label: OO.ui.deferMsg( 'wikia-visualeditor-dialog-infobox-insert-add-new-template' )
+        } );
 
     button.connect( this, {
         click: 'onAddNewTemplateClick'
     } );
 
-    return button.$element;
+    return $container.html( button.$element );
 };
 
 ve.ui.WikiaInfoboxInsertDialog.prototype.onAddNewTemplateClick = function () {

@@ -18,15 +18,14 @@ ve.ui.WikiaInfoboxBuilderDialog = function VeUiWikiaInfoboxBuilderDialog(config)
 
 /* Inheritance */
 
-OO.inheritClass(ve.ui.WikiaInfoboxBuilderDialog, OO.ui.Dialog);
+OO.inheritClass(ve.ui.WikiaInfoboxBuilderDialog, OO.ui.ProcessDialog);
 
 /* Static Properties */
 
 ve.ui.WikiaInfoboxBuilderDialog.static.name = 'wikiaInfoboxBuilder';
-
 ve.ui.WikiaInfoboxBuilderDialog.static.title = 'Infobox Builder';
-
-ve.ui.WikiaInfoboxBuilderDialog.static.size = 'full';
+ve.ui.WikiaInfoboxBuilderDialog.static.size = 'page';
+ve.ui.WikiaInfoboxBuilderDialog.static.overlay = false;
 
 /**
  * @inheritdoc
@@ -68,7 +67,7 @@ ve.ui.WikiaInfoboxBuilderDialog.prototype.initialize = function () {
 			loader.processScript(assets.scripts);
 
 			// Content
-			self.content = new OO.ui.PanelLayout({padded: true, expanded: false});
+			self.content = new OO.ui.PanelLayout({padded: false, expanded: true});
 			self.content.$element.append(html);
 			self.$body.append(self.content.$element);
 		});
