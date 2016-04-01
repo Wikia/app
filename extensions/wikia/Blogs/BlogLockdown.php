@@ -152,4 +152,23 @@ class BlogLockdown {
 
 		return $return;
 	}
+
+	/**
+	 * Checks permission before delete action on blog articles
+	 *
+	 * @param Article $article
+	 * @param Title $title
+	 * @param User $user
+	 * @param array $permission_errors
+	 *
+	 * @return boolean because it's a hook
+	 */
+	public static function onBeforeDeletePermissionErrors( &$article, &$title, &$user, &$permission_errors ) {
+		// Only users with delete permission can delete a blog article
+		if ( $title->getNamespace() == NS_BLOG_ARTICLE && !$user->isAllowed( 'delete' ) ) {
+			$permission_errors[] = [ 'badaccess-group0' ];
+		}
+
+		return true;
+	}
 }
