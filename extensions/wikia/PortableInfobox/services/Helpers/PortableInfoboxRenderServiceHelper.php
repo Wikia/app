@@ -125,7 +125,6 @@ class PortableInfoboxRenderServiceHelper {
 	 * @return bool
 	 */
 	public function isWikiaMobile() {
-		var_dump(\F::app()->checkSkin( 'wikiamobile' ));die;
 		return \F::app()->checkSkin( 'wikiamobile' );
 	}
 
