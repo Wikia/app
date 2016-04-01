@@ -20,7 +20,7 @@ class BatchAntiSpoof extends Maintenance {
 	 * Do the actual work. All child classes will need to implement this
 	 */
 	public function execute() {
-		$dbw = $this->getDB( DB_MASTER );
+		$dbw = wfGetDB( DB_MASTER, null, 'wikicities' );
 
 		$dbw->bufferResults( false );
 
