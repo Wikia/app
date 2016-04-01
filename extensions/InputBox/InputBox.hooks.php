@@ -61,16 +61,16 @@ class InputBoxHooks {
 
 		$params = $request->getValues();
 
-		if ( empty( $params['prefix'] ) && empty( $params['preload'] ) ) {
+		$redirectToVE = !empty( $params['preload'] ) &&
+			EditorPreference::isVisualEditorPrimary() &&
+			$user->isLoggedIn();
+
+		if ( empty( $params['prefix'] ) && !$redirectToVE ) {
 			// Fine
 			return true;
 		}
 
-		if (
-			!empty( $params['preload'] )
-			&& EditorPreference::isVisualEditorPrimary()
-			&& $user->isLoggedIn()
-		) {
+		if ( $redirectToVE ) {
 			$params['veaction'] = 'edit';
 			unset( $params['action'] );
 		}
