@@ -135,6 +135,7 @@ $config['recirculation_js'] = array(
 		'//extensions/wikia/Recirculation/js/utils.js',
 		'//extensions/wikia/Recirculation/js/helpers/ContentLinksHelper.js',
 		'//extensions/wikia/Recirculation/js/helpers/FandomHelper.js',
+		'//extensions/wikia/Recirculation/js/helpers/LateralHelper.js',
 		'//extensions/wikia/Recirculation/js/views/incontent.js',
 		'//extensions/wikia/Recirculation/js/views/rail.js',
 		'//extensions/wikia/Recirculation/js/views/footer.js',
@@ -2644,14 +2645,6 @@ $config['content_review_special_page_scss'] = [
 		'//extensions/wikia/ContentReview/styles/ContentReviewSpecialPage.scss'
 	],
 ];
-
-$config['auth_modal_scss'] = array(
-	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => [ 'oasis' ],
-	'assets' => [
-		'//extensions/wikia/AuthModal/css/AuthModal.scss',
-	]
-);
 
 $config['auth_modal_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
