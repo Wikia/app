@@ -19,7 +19,7 @@ class PortableInfoboxBuilderHelperTest extends WikiaBaseTest {
 	 */
 	public function testIsInfoboxTemplate( $namespace, $templateType, $expResult ) {
 		$titleMock = $this->getMockBuilder( 'Title' )->setMethods( [ 'getNamespace' ] )->getMock();
-		$titleMock->expects( $this->any() )->method( 'getNamespace' )->willReturn( $namespace  );
+		$titleMock->expects( $this->any() )->method( 'getNamespace' )->willReturn( $namespace );
 
 		$tcsMock = $this->getMockBuilder( 'TemplateClassificationService' )->setMethods( [ 'getType' ] )->getMock();
 		$tcsMock->expects( $this->any() )->method( 'getType' )->willReturn( $templateType );
@@ -75,9 +75,31 @@ class PortableInfoboxBuilderHelperTest extends WikiaBaseTest {
 		$this->assertEquals( $expected, PortableInfoboxBuilderHelper::createRedirectUrls( 'test' ) );
 	}
 
+	/**
+	 * @dataProvider canBeEditedProvider
+	 */
+	public function testIfBuilderShouldBeUsed( $infoboxes, $titleExists, $canEdit, $expected, $message ) {
+		$mock = $this->getMockBuilder( 'PortableInfoboxDataService' )
+			->disableOriginalConstructor()->setMethods( [ 'getInfoboxes' ] )->getMock();
+		$mock->expects( $this->any() )->method( 'getInfoboxes' )->will( $this->returnValue( $infoboxes ) );
+		$this->mockStaticMethod( 'PortableInfoboxDataService', 'newFromTitle', $mock );
+		$this->mockStaticMethod( 'PortableInfoboxBuilderHelper', 'isInfoboxTemplate', true );
+
+		$user = $this->getMockBuilder( 'User' )->disableOriginalConstructor()
+			->setMethods( [ 'isLoggedIn' ] )->getMock();
+		$user->expects( $this->any() )->method( 'isLoggedIn' )->will( $this->returnValue( true ) );
+
+		$title = $this->getMockBuilder( 'Title' )->disableOriginalConstructor()
+			->setMethods( [ 'userCan', 'isKnown' ] )->getMock();
+		$title->expects( $this->any() )->method( 'userCan' )->will( $this->returnValue( $canEdit ) );
+		$title->expects( $this->any() )->method( 'isKnown' )->will( $this->returnValue( $titleExists ) );
+
+		$this->assertEquals( $expected, PortableInfoboxBuilderHelper::canUseInfoboxBuilder( $title, $user ), $message );
+	}
+
 	public function titleTextProvider() {
 		return [
-			[ '', ''],
+			[ '', '' ],
 			[ 'Special:InfoboxBuilder', '' ],
 			[ 'Special:InfoboxBuilder/', '' ],
 			[ 'Special:InfoboxBuilder/TemplateName', 'TemplateName' ],
@@ -116,7 +138,12 @@ class PortableInfoboxBuilderHelperTest extends WikiaBaseTest {
 	public function createRedirectUrlsProvider() {
 		return [
 			[ false, [ ] ],
-			[ true, [ 'templatePageUrl' => 'full_url', 'sourceEditorUrl' => 'full_url' ] ]
+			[ true,
+			  [
+				  'templatePageUrl' => 'full_url',
+				  'sourceEditorUrl' => 'full_url'
+			  ]
+			]
 		];
 	}
 
@@ -154,6 +181,16 @@ class PortableInfoboxBuilderHelperTest extends WikiaBaseTest {
 			[ NS_HELP_TALK, null, false ],
 			[ NS_CATEGORY, null, false ],
 			[ NS_CATEGORY_TALK, null, false ]
+		];
+	}
+
+	public function canBeEditedProvider() {
+		return [
+			// infoboxes, template exists, user can edit, expected
+			[ [ ], false, false, false, 'user without permissions cannot edit' ],
+			[ [ ], false, true, false, 'not existing title cannot be edited' ],
+			[ [ '<infobox><data source="adsf"/></infobox>' ], true, true, true, 'editable existing template' ],
+			[ [ '' ], true, true, false, 'existing no portable infoboxes cannot be edited' ],
 		];
 	}
 }
