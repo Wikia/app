@@ -58,7 +58,6 @@ $wgExtensionCredits["parserhook"][]=array(
 if(isset($wgScriptPath))
 {
 	#Instruct mediawiki to call LyricExtension to initialise new extension
-	$wgExtensionFunctions[] = "lyricTag";
 	$wgHooks['ParserFirstCallInit'][] = "lyricTag_InstallParser";
 	$wgHooks['BeforePageDisplay'][] = "lyricTagCss";
 
@@ -66,19 +65,10 @@ if(isset($wgScriptPath))
 	$wgHooks['AfterViewUpdates'][] = "efApplyIndexPolicy";
 }
 
-#Install extension
-function lyricTag()
-{
-	// Keep track of whether this is the first <lyric> tag on the page - this is to prevent too many Ringtones ad links.
-	global $wgFirstLyricTag;
-	$wgFirstLyricTag = true;
-}
-
 function lyricTag_InstallParser( $parser ) {
 	#install hook on the element <lyric>
 	$parser->setHook("lyric", "renderLyricTag");
 	$parser->setHook("lyrics", "renderLyricTag");
-	$parser->setHook("tonefuze", "renderToneFuzeTag");
 	return true;
 }
 
@@ -111,35 +101,6 @@ function renderLyricTag($input, $argv, $parser)
 
 	$isInstrumental = (strtolower(trim($transform)) == "{{instrumental}}");
 
-	// If appropriate, build ringtones links.
-	GLOBAL $wgFirstLyricTag, $wgLyricTagDisplayRingtone;
-	$ringtoneLink = "";
-
-	// For whatever reason, the links were not showing up after page-edits.
-	// It seems that the parser is called multiple-times when saving a page-edit.
-	$wgFirstLyricTag = true;
-
-	$retVal = "";
-	// NOTE: we put the link here even if wfAdPrefs_doRingtones() is false since ppl all share the article-cache, so the ad will always be in the HTML.
-	// If a user has ringtone-ads turned off, their CSS will make the ad invisible.
-	if( !empty( $wgLyricTagDisplayRingtone ) && $wgFirstLyricTag ){
-		GLOBAL $wgExtensionsPath;
-		$imgPath = "$wgExtensionsPath/3rdparty/LyricWiki";
-		$artist = $parser->mTitle->getDBkey();
-		$colonIndex = strpos("$artist", ":");
-		$songTitle = "";
-		if($colonIndex !== false){
-			$artist = substr($artist, 0, $colonIndex);
-			$songTitle = $parser->mTitle->getText();
-			$songTitle = substr($songTitle, $colonIndex+1);
-		}
-
-		// The links have different adunit_ids above/below lyrics now. This will differentiate them for tracking.
-		$aboveLink = getToneFuzeLink($isAboveLyrics=true, $artist, $songTitle);
-		$belowLink = getToneFuzeLink($isAboveLyrics=false, $artist, $songTitle);
-
-		$wgFirstLyricTag = false;
-	}
 
 	// FogBugz 8675 - if a page is on the Gracenote takedown list, make it not spiderable (because it's not actually good content... more of a placeholder to indicate to the community that we KNOW about the song, but just legally can't display it).
 	if(0 < preg_match("/\{\{gracenote[ _]takedown\}\}/i", $transform)){
@@ -149,11 +110,10 @@ function renderLyricTag($input, $argv, $parser)
 	#parse embedded wikitext
 	$transform = $parser->parse($transform, $parser->mTitle, $parser->mOptions, false, false)->getText();
 
+	$retVal = "";
 	$retVal.= gracenote_getNoscriptTag();
 	$retVal.= "<div class='lyricbox'>";
-	$retVal.= ($isInstrumental?"":$aboveLink); // if this is an instrumental, just a ringtone link on the bottom is plenty.
 	$retVal.= gracenote_obfuscateText($transform);
-	$retVal.= $belowLink;
 	$retVal.= "<div class='lyricsbreak'></div>\n"; // so that we can have stuff in the box (like videos & awards) even if the lyrics are short.
 	$retVal.= "</div>";
 
@@ -163,64 +123,6 @@ function renderLyricTag($input, $argv, $parser)
 	wfProfileOut( __METHOD__ );
 	return $retVal;
 } // end renderLyricTag()
-
-/**
- * Parses <tonefuze> tag. This tag just lets us lay out the location of
- * the tone-fuze ads more easily on artist pages. The tonefuze ads are
- * automatically injected into lyrics pages by the <lyrics> tag.
- */
-function renderToneFuzeTag($input, $argv, $parser){
-	wfProfileIn( __METHOD__ );
-	
-	// Find out if this tag is above or below main content of the page (either lyrics or artist discog).
-	$isAbove = (isset($argv['location']) && ($argv['location'] == "above"));
-
-	// Parse out artist and/or song-title from the page title.
-	$artist = $parser->mTitle->getDBkey();
-	$colonIndex = strpos("$artist", ":");
-	$songTitle = "";
-	if($colonIndex !== false){
-		$artist = substr($artist, 0, $colonIndex);
-		$songTitle = $parser->mTitle->getText();
-		$songTitle = substr($songTitle, $colonIndex+1);
-	}
-	$retVal = getToneFuzeLink($isAbove, $artist, $songTitle);	
-	
-	wfProfileOut( __METHOD__ );
-	return $retVal;
-} // end renderToneFuzeTag()
-
-/**
- * Returns the HTML for a ToneFuze link for the given position, artist, and song title.
- * This can be used for artist pages or song pages.
- */
-function getToneFuzeLink($isAboveLyrics=true, $artist, $songTitle=""){
-	$ID_ABOVE_LYRICS = 39382076;
-	$ID_BELOW_LYRICS = 39382077;
-	$AD_ID_STRING = "AD_ID_STRING";
-	$ringtoneLink = "";
-	$ringtoneLink = "<script>";
-	$ringtoneLink .= "(function() {";
-	$ringtoneLink .= "var opts = {";
-	$ringtoneLink .= "artist: \"{$artist}\",";
-	$ringtoneLink .= "song: \"{$songTitle}\",";
-	$ringtoneLink .= "adunit_id: {$AD_ID_STRING},";
-	$ringtoneLink .= "div_id: \"cf_async_\" + Math.floor((Math.random() * 999999999))";
-	$ringtoneLink .= "};";
-	$ringtoneLink .= "if($('.ArticlePreview').length == 0){"; // prevent this code from obliterating the preview
-		$ringtoneLink .= "document.write('<div id=\"'+opts.div_id+'\"></div>');var c=function(){cf.showAsyncAd(opts)};if(window.cf)c();else{cf_async=!0;var r=document.createElement(\"script\"),s=document.getElementsByTagName(\"script\")[0];r.async=!0;r.src=\"//srv.tonefuse.com/showads/showad.js\";r.readyState?r.onreadystatechange=function(){if(\"loaded\"==r.readyState||\"complete\"==r.readyState)r.onreadystatechange=null,c()}:r.onload=c;s.parentNode.insertBefore(r,s)};";
-	$ringtoneLink .= "}";
-	$ringtoneLink .= "})();";
-	$ringtoneLink .= "</script>";
-	
-	if($isAboveLyrics){
-		$ringtoneLink = str_replace($AD_ID_STRING, $ID_ABOVE_LYRICS, $ringtoneLink);
-	} else {
-		$ringtoneLink = str_replace($AD_ID_STRING, $ID_BELOW_LYRICS, $ringtoneLink);
-	}
-
-	return $ringtoneLink;
-} // end getToneFuzeLink()
 
 /**
  * The parser tag may have set a parser option (which gets cached in the parser-cache) indicating that
