@@ -2728,9 +2728,6 @@ OO.ui.WindowManager.static.sizes = {
 	},
 	'800px': {
 		width: 800
-	},
-	page: {
-		width: function () { return $( '#WikiaPage' ).outerWidth(); }
 	}
 };
 

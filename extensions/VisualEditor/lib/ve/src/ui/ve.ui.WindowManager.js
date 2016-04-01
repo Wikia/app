@@ -47,3 +47,41 @@ ve.ui.WindowManager.prototype.getReadyDelay = function () {
 	// HACK: Really this should be measured by OOjs UI so it can vary by theme
 	return 250;
 };
+
+/**
+ * Set dialog size.
+ *
+ * Fullscreen mode will be used if the dialog is too wide to fit in the screen.
+ *
+ * @chainable
+ */
+ve.ui.WindowManager.prototype.updateWindowSize = function ( win ) {
+	// Bypass for non-current, and thus invisible, windows
+	if ( win !== this.currentWindow ) {
+		return;
+	}
+
+	var viewport = OO.ui.Element.static.getDimensions( win.getElementWindow() ),
+		sizes = this.constructor.static.sizes,
+		size = win.getSize();
+
+	if ( size === 'dynamic' && typeof win.getDynamicSize === 'function' ) {
+		sizes.dynamic = { width: function () { return win.getDynamicSize() } };
+	}
+
+	if ( !sizes[size] ) {
+		size = this.constructor.static.defaultSize;
+	}
+
+	if ( size !== 'full' && viewport.rect.right - viewport.rect.left < sizes[size].width ) {
+		size = 'full';
+	}
+
+	this.$element.toggleClass( 'oo-ui-windowManager-fullscreen', size === 'full' );
+	this.$element.toggleClass( 'oo-ui-windowManager-floating', size !== 'full' );
+	win.setDimensions( sizes[size] );
+
+	this.emit( 'resize', win );
+
+	return this;
+};

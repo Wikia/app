@@ -24,8 +24,7 @@ OO.inheritClass(ve.ui.WikiaInfoboxBuilderDialog, OO.ui.ProcessDialog);
 
 ve.ui.WikiaInfoboxBuilderDialog.static.name = 'wikiaInfoboxBuilder';
 ve.ui.WikiaInfoboxBuilderDialog.static.title = 'Infobox Builder';
-ve.ui.WikiaInfoboxBuilderDialog.static.size = 'page';
-ve.ui.WikiaInfoboxBuilderDialog.static.overlay = false;
+ve.ui.WikiaInfoboxBuilderDialog.static.size = 'dynamic';
 
 /**
  * @inheritdoc
@@ -75,6 +74,13 @@ ve.ui.WikiaInfoboxBuilderDialog.prototype.initialize = function () {
 
 
 };
+
+/**
+ * @returns {string}
+ */
+ve.ui.WikiaInfoboxBuilderDialog.prototype.getDynamicSize = function () {
+	return $( '#WikiaPage' ).outerWidth();
+}
 
 /**
  * @inheritdoc
