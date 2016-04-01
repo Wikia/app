@@ -14,15 +14,18 @@ class PortableInfoboxRenderService extends WikiaService {
 		'image' => 'PortableInfoboxItemImage.mustache',
 		'image-mobile' => 'PortableInfoboxItemImageMobile.mustache',
 		'image-mobile-experimental' => 'PortableInfoboxItemImageMobileExperimental.mustache',
+		'image-mobile-wikiamobile' => 'PortableInfoboxItemImageMobileWikiaMobile.mustache',
 		'data' => 'PortableInfoboxItemData.mustache',
 		'group' => 'PortableInfoboxItemGroup.mustache',
 		'horizontal-group-content' => 'PortableInfoboxHorizontalGroupContent.mustache',
 		'navigation' => 'PortableInfoboxItemNavigation.mustache',
 		'hero-mobile' => 'PortableInfoboxItemHeroMobile.mustache',
 		'hero-mobile-experimental' => 'PortableInfoboxItemHeroMobileExperimental.mustache',
+		'hero-mobile-wikiamobile' => 'PortableInfoboxItemHeroMobileWikiaMobile.mustache',
 		'image-collection' => 'PortableInfoboxItemImageCollection.mustache',
 		'image-collection-mobile' => 'PortableInfoboxItemImageCollectionMobile.mustache',
-		'image-collection-mobile-experimental' => 'PortableInfoboxItemImageCollectionMobileExperimental.mustache'
+		'image-collection-mobile-experimental' => 'PortableInfoboxItemImageCollectionMobileExperimental.mustache',
+		'image-collection-mobile-wikiamobile' => 'PortableInfoboxItemImageCollectionMobileWikiaMobile.mustache'
 	];
 	private $templateEngine;
 	private $imagesWidth;
@@ -156,7 +159,7 @@ class PortableInfoboxRenderService extends WikiaService {
 	 * @return string
 	 */
 	private function renderInfoboxHero( $data ) {
-		global $wgEnableSeoFriendlyImagesForMobile;
+		global $wgArticleAsJson, $wgEnableSeoFriendlyImagesForMobile;
 
 		$helper = new PortableInfoboxRenderServiceHelper();
 
@@ -166,7 +169,10 @@ class PortableInfoboxRenderService extends WikiaService {
 			$image = $helper->extendImageData( $image, PortableInfoboxRenderServiceHelper::MOBILE_THUMBNAIL_WIDTH );
 			$data[ 'image' ] = $image;
 
-			if ( !empty( $wgEnableSeoFriendlyImagesForMobile ) ) {
+			if ( empty( $wgArticleAsJson ) ) {
+				$markup = $this->renderItem( 'hero-mobile-wikiamobile', $data );
+			} else if ( !empty( $wgEnableSeoFriendlyImagesForMobile ) ) {
+				// @todo XW-1225 this should be the only template used for Mercury
 				$markup = $this->renderItem( 'hero-mobile-experimental', $data );
 			} else {
 				$markup = $this->renderItem( 'hero-mobile', $data );
@@ -188,7 +194,7 @@ class PortableInfoboxRenderService extends WikiaService {
 	 * @return bool|string - HTML
 	 */
 	private function renderItem( $type, array $data ) {
-		global $wgEnableSeoFriendlyImagesForMobile;
+		global $wgArticleAsJson, $wgEnableSeoFriendlyImagesForMobile;
 
 		$helper = new PortableInfoboxRenderServiceHelper();
 
@@ -206,19 +212,26 @@ class PortableInfoboxRenderService extends WikiaService {
 
 			if ( count( $images ) === 0 ) {
 				return false;
+			} else if ( count( $images ) === 1 ) {
+				$data = $images[ 0 ];
+				$templateName = $type;
 			} else {
-				if ( count( $images ) === 1 ) {
+				if ( $helper->isWikiaMobile() && empty( $wgArticleAsJson ) ) {
+					// Display only the first image on WikiaMobile
 					$data = $images[ 0 ];
-					$templateName = $type;
 				} else {
 					$images[ 0 ][ 'isFirst' ] = true;
 					$data = array( 'images' => $images );
-					$templateName = 'image-collection';
 				}
+				
+				$templateName = 'image-collection';
 			}
 
 			if ( $helper->isWikiaMobile() ) {
-				if ( !empty( $wgEnableSeoFriendlyImagesForMobile ) ) {
+				if ( empty( $wgArticleAsJson ) ) {
+					$templateName = $templateName . self::MOBILE_TEMPLATE_POSTFIX . '-wikiamobile';
+				} else if ( !empty( $wgEnableSeoFriendlyImagesForMobile ) ) {
+					// @todo XW-1225 this should be the only template used for Mercury
 					$templateName = $templateName . self::MOBILE_TEMPLATE_POSTFIX . '-experimental';
 				} else {
 					$templateName = $templateName . self::MOBILE_TEMPLATE_POSTFIX;
