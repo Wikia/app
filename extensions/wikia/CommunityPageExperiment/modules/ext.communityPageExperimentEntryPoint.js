@@ -21,13 +21,12 @@ require([
 			useTasksPage = inCommunityTasksBucket(),
 			linkUrl = '/wiki/Special:Community',
 			trackingLabel = 'entry-point',
-			callToActionMsg = 'communitypageexperiment-entry-join',
+			callToActionMsg = 'communitypageexperiment-entry-tasks',
 			buttonMsg = 'communitypageexperiment-entry-learn-more';
 
 		if (useTasksPage) {
 			linkUrl = '/wiki/Special:CommunityTasks';
 			trackingLabel = 'tasks-entry-point';
-			callToActionMsg = 'communitypageexperiment-entry-tasks';
 		}
 
 		if (mw.user.anonymous()) {
