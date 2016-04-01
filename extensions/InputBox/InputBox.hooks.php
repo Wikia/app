@@ -76,6 +76,7 @@ class InputBoxHooks {
 
 		if (
 			!empty( $params['preload'] ) &&
+			empty( $params['section'] ) &&
 			EditorPreference::isVisualEditorPrimary() &&
 			$user->isLoggedIn() &&
 			$title instanceof Title &&
