@@ -41,16 +41,17 @@ class PortableInfoboxBuilderHelper {
 	 * Checks whether the template is a valid infobox-builder compliant Infobox template
 	 * editable by the given user
 	 *
-	 * @param $user
-	 * @param $title
+	 * @param \User $user
+	 * @param \Title $title
 	 * @return bool
 	 */
 	public static function canUseInfoboxBuilder( $title, $user ) {
+		$infoboxes = \PortableInfoboxDataService::newFromTitle( $title )->getInfoboxes();
+
 		return PortableInfoboxBuilderHelper::isInfoboxTemplate( $title )
-			&& ( new \PortableInfoboxBuilderService() )->isValidInfoboxArray(
-				\PortableInfoboxDataService::newFromTitle( $title )->getInfoboxes()
-			)
-			&& ( new \Wikia\TemplateClassification\Permissions() )->userCanChangeType( $user, $title );
+			   && ( $title->isKnown() && !empty( $infoboxes ) )
+			   && ( new \PortableInfoboxBuilderService() )->isValidInfoboxArray( $infoboxes )
+			   && ( new \Wikia\TemplateClassification\Permissions() )->userCanChangeType( $user, $title );
 	}
 
 
@@ -84,7 +85,7 @@ class PortableInfoboxBuilderHelper {
 			];
 		}
 
-		return [];
+		return [ ];
 	}
 
 
