@@ -10,7 +10,7 @@ define('ext.wikia.adEngine.provider.gpt.adElement', [
 	var logGroup = 'ext.wikia.adEngine.provider.gpt.adElement';
 
 	function AdElement(slotName, slotPath, slotTargeting) {
-		this.id = 'wikia_gpt' + slotPath;
+		this.id = 'wikia_gpt' + slotPath.replace(/\/|\./g, ''); //temp solution
 		this.node = doc.getElementById(this.id);
 		this.slotPath = slotPath;
 		this.slotName = slotName;
