@@ -86,7 +86,10 @@ class PortableInfoboxRenderServiceHelper {
 			'thumbnail' => $thumbnail->getUrl(),
 			'key' => urlencode( $data[ 'key' ] ),
 			'media-type' => $data[ 'isVideo' ] ? 'video' : 'image',
-			'media-attrs' => json_encode( [ 'ref' => $ref ] ),
+			'mercury-component-attrs' => json_encode( [
+				'itemContext' => 'portable-infobox',
+				'ref' => $ref
+			] )
 		] );
 	}
 
@@ -122,6 +125,7 @@ class PortableInfoboxRenderServiceHelper {
 	 * @return bool
 	 */
 	public function isWikiaMobile() {
+		var_dump(\F::app()->checkSkin( 'wikiamobile' ));die;
 		return \F::app()->checkSkin( 'wikiamobile' );
 	}
 
