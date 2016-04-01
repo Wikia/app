@@ -14,22 +14,19 @@
 ve.ui.WikiaInfoboxBuilderDialog = function VeUiWikiaInfoboxBuilderDialog( config ) {
     // Parent constructor
     ve.ui.WikiaInfoboxBuilderDialog.super.call( this, config );
-
-    // Properties
-    this.surface = null;
 };
 
 /* Inheritance */
 
-OO.inheritClass( ve.ui.WikiaInfoboxBuilderDialog, ve.ui.Dialog );
+OO.inheritClass( ve.ui.WikiaInfoboxBuilderDialog, OO.ui.Dialog );
 
 /* Static Properties */
 
-ve.ui.WikiaInfoboxInsertDialog.static.name = 'wikiaInfoboxBuilderDialog';
+ve.ui.WikiaInfoboxBuilderDialog.static.name = 'wikiaInfoboxBuilder';
 
-ve.ui.WikiaInfoboxInsertDialog.static.title = OO.ui.deferMsg( 'wikia-visualeditor-dialog-infobox-insert-title' );
+ve.ui.WikiaInfoboxBuilderDialog.static.title = 'Infobox Builder';
 
-ve.ui.WikiaInfoboxInsertDialog.static.size = 'full';
+ve.ui.WikiaInfoboxBuilderDialog.static.size = 'full';
 
 /**
  * @inheritdoc
@@ -50,7 +47,7 @@ ve.ui.WikiaInfoboxBuilderDialog.prototype.getBodyHeight = function () {
 
 /* Methods */
 
-ve.ui.WikiaInfoboxBuilderDialog.initialize = function () {
+ve.ui.WikiaInfoboxBuilderDialog.prototype.initialize = function () {
     // Parent method
     ve.ui.WikiaInfoboxBuilderDialog.super.prototype.initialize.call( this );
 

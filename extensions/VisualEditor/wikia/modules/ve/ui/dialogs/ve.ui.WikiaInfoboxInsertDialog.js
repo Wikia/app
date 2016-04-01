@@ -81,6 +81,7 @@ ve.ui.WikiaInfoboxInsertDialog.prototype.onInfoboxTemplateSelect = function ( it
 		template = ve.dm.MWTemplateModel.newFromName(
 			this.transclusionModel, itemData.data
 		);
+
 		this.transclusionModel.addPart( template )
 			.done( this.insertInfoboxTemplate.bind( this ) );
 
@@ -263,10 +264,12 @@ ve.ui.WikiaInfoboxInsertDialog.prototype.addNewTemplateWidget = function () {
 };
 
 ve.ui.WikiaInfoboxInsertDialog.prototype.onAddNewTemplateClick = function () {
-    var dialog = new ve.ui.WikiaInfoboxBuilderDialog();
-    dialog.initialize();
+	this.$frame.stopThrobbing();
+	this.close();
 
-    debugger;
+	setTimeout( function () {
+		ve.ui.commandRegistry.getCommandByName( 'wikiaInfoboxBuilder' ).execute( this.surface );
+	}.bind( this ), 0 );
 };
 
 /**
