@@ -331,7 +331,6 @@ class MercuryApiController extends WikiaController {
 	public function getPage() {
 		try {
 			$title = $this->getTitleFromRequest();
-			$documentTitle = '';
 			$data = [ ];
 
 			// getPage is cached (see the bottom of the method body) so there is no need for additional caching here
@@ -355,6 +354,7 @@ class MercuryApiController extends WikiaController {
 					$data['details'] = MercuryApiMainPageHandler::getMainPageMockedDetails( $title );
 				}
 
+				// On Curated Main Pages page title and Wiki name are equal and to avoid duplicates we don't use page title
 				$documentTitle = '';
 			} else {
 				switch ( $data['ns'] ) {
