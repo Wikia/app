@@ -131,11 +131,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 		}
 
 		if (!googleApi.isInitialized()) {
-			if (recoveryHelper.isRecoveryEnabled()) {
-				googleApi.init(loadSourcePoint);
-			} else {
-				googleApi.init();
-			}
+			googleApi.init(loadSourcePoint);
 			googleApi.setPageLevelParams(adLogicPageParams.getPageLevelParams());
 		}
 
@@ -143,10 +139,6 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 			log(['Push blocked', slot.name], 'debug', logGroup);
 			slotTweaker.removeDefaultHeight(slot.name);
 			return;
-		}
-
-		if (!recoveryHelper.isBlocking() && recoveryHelper.isRecoveryEnabled()) {
-			recoveryHelper.addSlotToRecover(slot.name);
 		}
 
 		log(['pushAd', slot.name], 'info', logGroup);
