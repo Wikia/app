@@ -90,6 +90,6 @@ require([
 
 		// test code to open modal on demand
 		window.openCommModal = openCommunityModal;
-		openCommunityModal();
+		//openCommunityModal();
 	});
 });
