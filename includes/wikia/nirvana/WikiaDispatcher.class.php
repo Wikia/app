@@ -250,7 +250,15 @@ class WikiaDispatcher {
 				}
 
 				$response->setException($e);
-				Wikia::log(__METHOD__, $e->getMessage() );
+
+				Wikia\Logger\WikiaLogger::instance()->error(
+					__METHOD__ . " - {$controllerClassName} controller dispatch exception",
+					[
+						'exception' => $e,
+						'controller_name' => $controllerClassName,
+						'method_name' => $method
+					]
+				);
 
 				// if we catch an exception, forward to the WikiaError controller unless we are already dispatching Error
 				if ( empty($controllerClassName) || $controllerClassName != 'WikiaErrorController' ) {
