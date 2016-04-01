@@ -9,20 +9,11 @@ class PortableInfoboxBuilderHelper {
 	/**
 	 * Checks if template is classified as an infobox
 	 *
-	 * @param $title
+	 * @param $title Title
 	 * @return bool
 	 */
 	public static function isInfoboxTemplate( $title ) {
-		$tc = new TemplateClassificationService();
-		$isInfobox = false;
-
-		try {
-			$type = $tc->getType( F::app()->wg->CityId, $title->getArticleID() );
-			$isInfobox = ( $type === TemplateClassificationService::TEMPLATE_INFOBOX );
-		} catch ( Swagger\Client\ApiException $e ) {
-			// If we cannot reach the service assume the default (false) to avoid overwriting data
-		}
-		return $isInfobox;
+		return $title->inNamespace( NS_TEMPLATE ) && self::isTemplateClassifiedAsInfobox( $title );
 	}
 
 	/**
@@ -50,16 +41,17 @@ class PortableInfoboxBuilderHelper {
 	 * Checks whether the template is a valid infobox-builder compliant Infobox template
 	 * editable by the given user
 	 *
-	 * @param $user
-	 * @param $title
+	 * @param \User $user
+	 * @param \Title $title
 	 * @return bool
 	 */
 	public static function canUseInfoboxBuilder( $title, $user ) {
+		$infoboxes = \PortableInfoboxDataService::newFromTitle( $title )->getInfoboxes();
+
 		return PortableInfoboxBuilderHelper::isInfoboxTemplate( $title )
-			&& ( new \PortableInfoboxBuilderService() )->isValidInfoboxArray(
-				\PortableInfoboxDataService::newFromTitle( $title )->getInfoboxes()
-			)
-			&& ( new \Wikia\TemplateClassification\Permissions() )->userCanChangeType( $user, $title );
+			   && ( $title->isKnown() && !empty( $infoboxes ) )
+			   && ( new \PortableInfoboxBuilderService() )->isValidInfoboxArray( $infoboxes )
+			   && ( new \Wikia\TemplateClassification\Permissions() )->userCanChangeType( $user, $title );
 	}
 
 
@@ -93,9 +85,8 @@ class PortableInfoboxBuilderHelper {
 			];
 		}
 
-		return [];
+		return [ ];
 	}
-
 
 	/**
 	 * creates Title object from provided title string.
@@ -117,5 +108,20 @@ class PortableInfoboxBuilderHelper {
 		}
 
 		return $title;
+	}
+
+	/**
+	 * @param $title
+	 * @return bool
+	 */
+	private static function isTemplateClassifiedAsInfobox( $title ) {
+		try {
+			$tc = new TemplateClassificationService();
+			$type = $tc->getType( F::app()->wg->CityId, $title->getArticleID() );
+			return ( $type === TemplateClassificationService::TEMPLATE_INFOBOX );
+		} catch ( Swagger\Client\ApiException $e ) {
+			// If we cannot reach the service assume the default (false) to avoid overwriting data
+			return false;
+		}
 	}
 }
