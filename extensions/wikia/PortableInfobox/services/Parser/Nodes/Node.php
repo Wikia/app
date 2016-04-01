@@ -31,14 +31,24 @@ class Node {
 	}
 
 	public function getSourceLabel() {
-		$source = $this->extractSourceFromNode( $this->xmlNode )[0];
+		$sourceLabels = [];
+		$sources = $this->extractSourceFromNode( $this->xmlNode );
 		$label = \Sanitizer::stripAllTags( $this->getInnerValue( $this->xmlNode->{self::LABEL_TAG_NAME} ) );
 
-		if ( !empty( $source ) ) {
-			return [ $source => $label ];
+		if ( count( $sources ) > 1 ) {
+			foreach ( $sources as $source ) {
+				if ( !empty( $source ) ) {
+					$sourceLabel = !empty( $label ) ? "{$label} ({$source})" : $label;
+					$sourceLabels = array_merge( $sourceLabels, [ $source => $sourceLabel ] );
+				}
+			}
+		} else {
+			if ( !empty( $sources[0] ) ) {
+				return [ $sources[0] => $label ];
+			}
 		}
 
-		return [];
+		return $sourceLabels;
 	}
 
 	/**
