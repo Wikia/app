@@ -331,6 +331,7 @@ class MercuryApiController extends WikiaController {
 	public function getPage() {
 		try {
 			$title = $this->getTitleFromRequest();
+			$documentTitle = '';
 			$data = [ ];
 
 			// getPage is cached (see the bottom of the method body) so there is no need for additional caching here
@@ -382,7 +383,7 @@ class MercuryApiController extends WikiaController {
 									MercuryApiArticleHandler::getArticleData( $this->request, $this->mercuryApi, $article )
 								);
 
-								$documentTitle = $data['article']['displayTitle'];
+								$documentTitle = $isMainPage ? '' : $data['article']['displayTitle'];
 							} else {
 								\Wikia\Logger\WikiaLogger::instance()->error(
 									'$article should be an instance of an Article',
