@@ -79,13 +79,9 @@ require([
 
 		// Recovery
 		recoveryHelper.initEventQueue();
-		sourcePoint.initDetection();
 
-		if (context.opts.sourcePointRecovery && win.ads) {
-			win.ads.runtime.sp.slots = win.ads.runtime.sp.slots || [];
-			recoveryHelper.addOnBlockingCallback(function () {
-				adEngineRunner.run(adConfigDesktop, win.ads.runtime.sp.slots, 'queue.sp', false);
-			});
+		if (!context.opts.sourcePointRecovery) {
+			sourcePoint.initDetection();
 		}
 
 		if (context.opts.googleConsumerSurveys && gcs) {

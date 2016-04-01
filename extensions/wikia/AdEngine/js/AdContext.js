@@ -63,6 +63,7 @@ define('ext.wikia.adEngine.adContext', [
 		if (geo.isProperGeo(instantGlobals.wgAdDriverDelayCountries)) {
 			context.opts.delayEngine = true;
 		}
+		context.opts.delayEngine = true;
 
 		// SourcePoint detection integration
 		if (!noExternals && context.opts.sourcePointDetectionUrl) {
@@ -75,10 +76,11 @@ define('ext.wikia.adEngine.adContext', [
 		}
 
 		// SourcePoint recovery integration
-		if (!context.opts.delayEngine && context.opts.sourcePointDetection && context.opts.sourcePointRecoveryUrl) {
+		if (context.opts.sourcePointDetection && context.opts.sourcePointRecoveryUrl) {
 			context.opts.sourcePointRecovery = isUrlParamSet('sourcepointrecovery') ||
 				geo.isProperGeo(instantGlobals.wgAdDriverSourcePointRecoveryCountries);
 		}
+		context.opts.sourcePointRecovery = true;
 
 		// Recoverable ads message
 		if (context.opts.sourcePointDetection && !context.opts.sourcePointRecovery && context.opts.showAds) {
