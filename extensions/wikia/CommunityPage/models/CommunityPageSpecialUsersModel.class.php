@@ -37,17 +37,17 @@ class CommunityPageSpecialUsersModel {
 				$db = wfGetDB( DB_SLAVE );
 
 				$sqlData = ( new WikiaSQL() )
-					->SELECT( 'rev_timestamp' )
-					->FROM ( 'revision' )
-					->WHERE ( 'rev_user' )->EQUAL_TO( $user->getID() )
-					->AND_ ( 'rev_timestamp > DATE_SUB(now(), INTERVAL 2 YEAR)' )
-					->ORDER_BY( 'rev_timestamp' )
-					->GROUP_BY( 'rev_user' )
+					->SELECT( '*' )
+					->FROM ( 'wikia_user_properties' )
+					->WHERE ( 'wup_property' )->EQUAL_TO( 'firstContributionTimestamp' )
+					->AND_ ( 'wup_user' )->EQUAL_TO( $user->getID() )
+					->AND_ ( 'wup_value > DATE_SUB(now(), INTERVAL 2 YEAR)' )
+					->ORDER_BY( 'wup_value DESC' )
 					->run( $db, function ( ResultWrapper $result ) {
 						$out = [];
 						while ( $row = $result->fetchRow() ) {
 							$out[] = [
-								'rev_timestamp' => $row['rev_timestamp']
+								'wup_value' => $row['wup_value']
 							];
 						}
 
@@ -59,7 +59,7 @@ class CommunityPageSpecialUsersModel {
 		);
 
 		if (count( $data ) > 0) {
-			return $data[0]['rev_timestamp'];
+			return $data[0]['wup_value'];
 		} else {
 			return null;
 		}
@@ -151,52 +151,6 @@ class CommunityPageSpecialUsersModel {
 		} );
 	}
 
-	/** Get all members for the community, with the date of their oldest edit in the last 2 years and the number
-	 * of contributions
-	 * Membership is defined as the user having made an edit within the last 2 years
-	 * @return Mixed|null
-	 */
-	public function getAllMembers() {
-		$data = WikiaDataAccess::cache(
-			wfMemcKey( self::ALL_MEMBERS_MCACHE_KEY ),
-			WikiaResponse::CACHE_STANDARD,
-			function () {
-				$db = wfGetDB( DB_SLAVE );
-
-				$sqlData = ( new WikiaSQL() )
-					->SELECT( 'DISTINCT rev_user, rev_timestamp, count(rev_user) AS contributions' )
-					->FROM ( 'revision' )
-					->WHERE( 'rev_timestamp > DATE_SUB(now(), INTERVAL 2 YEAR)' )
-					->GROUP_BY( 'rev_user' )
-					->ORDER_BY( 'rev_timestamp' )
-					->run( $db, function ( ResultWrapper $result ) {
-						$out = [];
-						while ( $row = $result->fetchRow() ) {
-							$user = User::newFromId( $row['rev_user'] );
-							$userName = $user->getName();
-							$avatar = AvatarService::renderAvatar( $userName, AvatarService::AVATAR_SIZE_SMALL_PLUS );
-
-							$out[] = [
-								'userId' => $row['rev_user'],
-								'oldestRevision' => $row['rev_timestamp'],
-								'contributions' => $row['contributions'],
-								'userName' => $userName,
-								'avatar' => $avatar,
-								'profilePage' => $user->getUserPage()->getLocalURL(),
-							];
-						}
-
-						return $out;
-					} );
-
-				return $sqlData;
-			}
-		);
-
-		return $data;
-	}
-
-
 	/**
 	 * @param User $user
 	 * @param int|null $days Get ranking by number of edits made in the last n days or all time if null
@@ -265,15 +219,43 @@ class CommunityPageSpecialUsersModel {
 	 * @return array
 	 */
 	public function getRecentlyJoinedUsers( $days = 14 ) {
-		$out = [];
-		$allMembers = $this->getAllMembers();
+		$data = WikiaDataAccess::cache(
+			wfMemcKey( self::RECENTLY_JOINED_MCACHE_KEY ),
+			WikiaResponse::CACHE_STANDARD,
+			function () use ($days) {
+				$db = wfGetDB( DB_SLAVE );
 
-		foreach ($allMembers as $member) {
-			if (strtotime($member['oldestRevision']) > strtotime("-$days days")) {
-				$out[] = $member;
+				$sqlData = ( new WikiaSQL() )
+					->SELECT( '*' )
+					->FROM ( 'wikia_user_properties' )
+					->WHERE ( 'wup_property' )->EQUAL_TO( 'firstContributionTimestamp' )
+					->AND_ ( "wup_value > DATE_SUB(now(), INTERVAL $days DAY)" )
+					->ORDER_BY( 'wup_value DESC' )
+					->run( $db, function ( ResultWrapper $result ) {
+						$out = [];
+
+						while ( $row = $result->fetchRow() ) {
+							$user = User::newFromId( $row['wup_user'] );
+							$userName = $user->getName();
+							$avatar = AvatarService::renderAvatar( $userName, AvatarService::AVATAR_SIZE_SMALL_PLUS );
+
+							$out[] = [
+								'userId' => $row['wup_user'],
+								'oldestRevision' => $row['wup_value'],
+								'contributions' => 0, // $row['contributions'],
+								'userName' => $userName,
+								'avatar' => $avatar,
+								'profilePage' => $user->getUserPage()->getLocalURL(),
+							];
+						}
+
+						return $out;
+					} );
+
+				return $sqlData;
 			}
-		}
+		);
 
-		return $out;
+		return $data;
 	}
 }
