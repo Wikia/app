@@ -23,10 +23,9 @@ OO.inheritClass( ve.ui.WikiaInfoboxBuilderDialog, OO.ui.Dialog );
 /* Static Properties */
 
 ve.ui.WikiaInfoboxBuilderDialog.static.name = 'wikiaInfoboxBuilder';
-
 ve.ui.WikiaInfoboxBuilderDialog.static.title = 'Infobox Builder';
-
-ve.ui.WikiaInfoboxBuilderDialog.static.size = 'full';
+ve.ui.WikiaInfoboxBuilderDialog.static.size = 'page';
+ve.ui.WikiaInfoboxBuilderDialog.static.overlay = false;
 
 /**
  * @inheritdoc

@@ -249,7 +249,7 @@ ve.ui.WikiaInfoboxInsertDialog.prototype.setDialogContent = function ( $content 
 };
 
 ve.ui.WikiaInfoboxInsertDialog.prototype.addNewTemplateWidget = function () {
-    var container = $( '<div>', { class: 've-ui-wikiaInfoboxInsertDialog-add-container' } ),
+    var $container = $( '<div>', { class: 've-ui-wikiaInfoboxInsertDialog-add-container' } ),
         button = new OO.ui.ButtonWidget( {
             classes: [ 've-ui-wikiaInfoboxInsertDialog-add-button' ],
             framed: false,
@@ -262,7 +262,7 @@ ve.ui.WikiaInfoboxInsertDialog.prototype.addNewTemplateWidget = function () {
         click: 'onAddNewTemplateClick'
     } );
 
-    return container.html( button.$element );
+    return $container.html( button.$element );
 };
 
 ve.ui.WikiaInfoboxInsertDialog.prototype.onAddNewTemplateClick = function () {
