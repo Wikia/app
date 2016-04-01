@@ -2,7 +2,7 @@
 	> header {
 		background-color: $community-page-background-color;
 		height: auto;
-		padding: 18px $modal-horizontal-padding
+		padding: 18px $modal-horizontal-padding;
 	}
 
 	> footer {
@@ -10,15 +10,24 @@
 	}
 
 	.modal-nav {
-		padding: 18px $modal-horizontal-padding
+		padding: 0 $modal-horizontal-padding 8px;
 
 		li {
 			display: inline-block;
-			padding-right: 31px;
+			font-size: 14px;
+			padding: 0 31px 18px 0;
 		}
 
 		a {
 			color: $color-nav-inactive-text;
+			padding-bottom: 10px;
+
+			&.active {
+				color: $color-link-text;
+				border-bottom: 2px solid $color-link-text;
+				font-weight: bold;
+				text-decoration: none;
+			}
 		}
 	}
 }

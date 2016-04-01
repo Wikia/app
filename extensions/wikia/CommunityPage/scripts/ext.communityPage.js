@@ -63,6 +63,8 @@ require([
 			uiModal.createComponent(createPageModalConfig, function (modal) {
 				console.log(modal);
 
+				// TODO: this is an oversimplified method for populating content
+				// assumes we're opening the modal on the leaderboard section
 				nirvana.sendRequest({
 					controller: 'CommunityPageSpecial',
 					method: 'getTopContributorsData',
@@ -73,7 +75,8 @@ require([
 
 					modal.$content
 						.addClass('ContributorsModule ContributorsModuleModal')
-						.html(html);
+						.html(html)
+						.find('.modal-nav-leaderboard').addClass('active');
 
 					modal.show();
 				});
