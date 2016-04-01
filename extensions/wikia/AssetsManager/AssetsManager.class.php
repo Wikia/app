@@ -603,16 +603,6 @@ class AssetsManager {
 	}
 
 	/**
-	 * Return request details containing HTTP referer and user agent
-	 * @return string request details for debug logging
-	 */
-	public static function getRequestDetails() {
-		$referer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '-';
-		$userAgent = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '-';
-		return "UA:{$userAgent}, referer:{$referer}";
-	}
-
-	/**
 	 * Checks if an URL produced by any of the AssetsManager::getGroup*Url() methods is associated to a package registered for a specific skin
 	 * This method is used to filter our unwanted assets when outputting references in skin logic (e.g. in the WikiaMobile skin)
 	 *

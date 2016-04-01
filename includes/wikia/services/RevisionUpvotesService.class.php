@@ -87,16 +87,16 @@ class RevisionUpvotesService {
 			->runLoop( $db, function( &$upvote, $row ) {
 				if ( empty( $upvote['revision'] ) ) {
 					$upvote['revision'] = [
-						'wikiId' => $row->wiki_id,
-						'pageId' => $row->page_id,
-						'revisionId' => $row->revision_id,
-						'userId' => $row->user_id,
-						'upvoteId' => $row->upvote_id
+						'wikiId' => (int) $row->wiki_id,
+						'pageId' => (int) $row->page_id,
+						'revisionId' => (int) $row->revision_id,
+						'userId' => (int) $row->user_id,
+						'upvoteId' => (int) $row->upvote_id
 					];
 				}
 
 				$upvote['upvotes'][] = [
-					'id' => $row->id,
+					'id' => (int) $row->id,
 					'from_user' => (int) $row->from_user
 				];
 			} );
@@ -126,16 +126,16 @@ class RevisionUpvotesService {
 			->runLoop( $db, function( &$upvotes, $row ) {
 				if ( empty( $upvotes[$row->revision_id]['revision'] ) ) {
 					$upvotes[$row->revision_id]['revision'] = [
-						'wikiId' => $row->wiki_id,
-						'pageId' => $row->page_id,
-						'revisionId' => $row->revision_id,
-						'userId' => $row->user_id,
-						'upvoteId' => $row->upvote_id
+						'wikiId' => (int) $row->wiki_id,
+						'pageId' => (int) $row->page_id,
+						'revisionId' => (int) $row->revision_id,
+						'userId' => (int) $row->user_id,
+						'upvoteId' => (int) $row->upvote_id
 					];
 				}
 
 				$upvotes[$row->revision_id]['upvotes'][] = [
-					'id' => $row->id,
+					'id' => (int) $row->id,
 					'from_user' => (int) $row->from_user
 				];
 			} );
@@ -165,11 +165,11 @@ class RevisionUpvotesService {
 			->runLoop( $db, function( &$upvotes, $row ) {
 				if ( empty( $upvotes[$row->upvote_id]['revision'] ) ) {
 					$upvotes[$row->upvote_id]['revision'] = [
-						'wikiId' => $row->wiki_id,
-						'pageId' => $row->page_id,
-						'revisionId' => $row->revision_id,
-						'userId' => $row->user_id,
-						'upvoteId' => $row->upvote_id
+						'wikiId' => (int) $row->wiki_id,
+						'pageId' => (int) $row->page_id,
+						'revisionId' => (int) $row->revision_id,
+						'userId' => (int) $row->user_id,
+						'upvoteId' => (int) $row->upvote_id
 					];
 				}
 
@@ -218,7 +218,7 @@ class RevisionUpvotesService {
 			->AND_( 'revision_id' )->EQUAL_TO( $revisionId )
 			->run( $db, function( $result ) {
 				$row = $result->fetchObject();
-				return $row->upvote_id;
+				return (int) $row->upvote_id;
 			} );
 
 		return $upvoteId;

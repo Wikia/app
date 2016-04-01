@@ -57,8 +57,6 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverOpenXBidderCountriesMobile';
 		$vars[] = 'wgAdDriverOverridePrefootersCountries';
 		$vars[] = 'wgAdDriverRubiconFastlaneCountries';
-		$vars[] = 'wgAdDriverRubiconFastlaneCountriesMobile'; // @TODO: ADEN-2833
-		$vars[] = 'wgAdDriverRubiconFastlaneOnAllVerticals'; // @TODO: ADEN-2833
 		$vars[] = 'wgAdDriverSourcePointDetectionCountries';
 		$vars[] = 'wgAdDriverSourcePointDetectionMobileCountries';
 		$vars[] = 'wgAdDriverSourcePointRecoveryCountries';
