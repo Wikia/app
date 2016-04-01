@@ -57,6 +57,7 @@ if ( !$allowRobots ) {
 	$robots->disallowParam( 'feed' );
 	$robots->disallowParam( 'oldid' );
 	$robots->disallowParam( 'printable' );
+	$robots->disallowParam( 'redirect' );
 	$robots->disallowParam( 'useskin' );
 	$robots->disallowParam( 'uselang' );
 
@@ -102,11 +103,17 @@ if ( !$allowRobots ) {
 	$robots->blockRobot( 'NPBot' );
 	$robots->blockRobot( 'WebReaper' );
 
+	// path
+	$robots->disallowPath( '/d/u/' );
+
 	// Deprecated items, probably we should delete them
 	$robots->disallowPath( '/w/' );
 	$robots->disallowPath( '/trap/' );
 	$robots->disallowPath( '/dbdumps/' );
 	$robots->disallowPath( '/wikistats/' );
+
+	// custom rules
+	$robots->setCustomRules();
 }
 
 foreach ( $robots->getHeaders() as $header ) {

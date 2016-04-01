@@ -25,8 +25,9 @@ class PortableInfoboxBuilderService extends WikiaService {
 	}
 
 	/**
-	 * @param $builderData
-	 * @return array json_encoded array representing the infobox markup
+	 * @param $infoboxMarkup
+	 * @return array representing the infobox markup
+	 * @throws \Wikia\PortableInfobox\Parser\Nodes\UnimplementedNodeException
 	 * @see PortableInfoboxBuilderServiceTest::translationsDataProvider
 	 */
 	public function translateMarkupToData( $infoboxMarkup ) {
@@ -38,11 +39,12 @@ class PortableInfoboxBuilderService extends WikiaService {
 			$jsonObject = $builderNode->asJsonObject( $xmlNode );
 		}
 
-		return json_encode( $jsonObject );
+		return $jsonObject;
 	}
 
 	/**
 	 * @param $infoboxMarkup string with infobox markup
+	 * @return bool
 	 */
 	public function isSupportedMarkup( $infoboxMarkup ) {
 		$xmlNode = simplexml_load_string( $infoboxMarkup );

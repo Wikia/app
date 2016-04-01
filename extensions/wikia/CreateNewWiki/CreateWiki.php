@@ -943,17 +943,18 @@ class CreateWiki {
 		// WF Variables containter
 		$this->mWFSettingVars = array();
 
-		$this->mWFSettingVars['wgSitename']               = $this->mNewWiki->sitename;
-		$this->mWFSettingVars['wgLogo']                   = self::DEFAULT_WIKI_LOGO;
-		$this->mWFSettingVars['wgUploadPath']             = $this->mNewWiki->images_url;
-		$this->mWFSettingVars['wgUploadDirectory']        = $this->mNewWiki->images_dir;
-		$this->mWFSettingVars['wgDBname']                 = $this->mNewWiki->dbname;
-		$this->mWFSettingVars['wgLocalInterwiki']         = $this->mNewWiki->sitename;
-		$this->mWFSettingVars['wgLanguageCode']           = $this->mNewWiki->language;
-		$this->mWFSettingVars['wgServer']                 = rtrim( $this->mNewWiki->url, "/" );
-		$this->mWFSettingVars['wgEnableSectionEdit']      = true;
+		$this->mWFSettingVars['wgSitename'] = $this->mNewWiki->sitename;
+		$this->mWFSettingVars['wgLogo'] = self::DEFAULT_WIKI_LOGO;
+		$this->mWFSettingVars['wgUploadPath'] = $this->mNewWiki->images_url;
+		$this->mWFSettingVars['wgUploadDirectory'] = $this->mNewWiki->images_dir;
+		$this->mWFSettingVars['wgDBname'] = $this->mNewWiki->dbname;
+		$this->mWFSettingVars['wgLocalInterwiki'] = $this->mNewWiki->sitename;
+		$this->mWFSettingVars['wgLanguageCode'] = $this->mNewWiki->language;
+		$this->mWFSettingVars['wgServer'] = rtrim( $this->mNewWiki->url, "/" );
+		$this->mWFSettingVars['wgEnableSectionEdit'] = true;
 		$this->mWFSettingVars['wgEnableSwiftFileBackend'] = true;
-		$this->mWFSettingVars['wgOasisLoadCommonCSS']     = true;
+		$this->mWFSettingVars['wgOasisLoadCommonCSS'] = true;
+		$this->mWFSettingVars['wgEnablePortableInfoboxEuropaTheme'] = true;
 
 		if ( $this->getInitialNjordExtValue() ) {
 			$this->mWFSettingVars['wgEnableNjordExt'] = true;

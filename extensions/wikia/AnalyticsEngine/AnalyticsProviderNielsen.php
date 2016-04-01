@@ -3,34 +3,50 @@
 class AnalyticsProviderNielsen implements iAnalyticsProvider {
 
 	private static $apid = 'T26086A07-C7FB-4124-A679-8AC404198BA7';
+	private static $bodyTemplate = 'extensions/wikia/AnalyticsEngine/templates/nielsen.body.mustache';
+	private static $headTemplate = 'extensions/wikia/AnalyticsEngine/templates/nielsen.head.mustache';
 	private static $libraryUrl = 'http://secure-dcr-cert.imrworldwide.com/novms/js/2/ggcmb500.js';
-	private static $template = 'extensions/wikia/AnalyticsEngine/templates/nielsen.mustache';
 
 	function getSetupHtml( $params=array() ) {
 		return null;
 	}
 
-	function trackEvent( $event, $eventDetails=array() ) {
-		global $wgCityId;
+	function trackEvent( $event, $eventDetails = array() ) {
+		global $wgCityId, $wgDBname;
 
-		if (!$this->isEnabled()) {
-			return '<!-- Nielsen is disabled -->';
+		if ( !self::isEnabled() ) {
+			return;
 		}
 
-		switch ($event) {
+		switch ( $event ) {
 			case AnalyticsEngine::EVENT_PAGEVIEW:
 				return \MustacheService::getInstance()->render(
-					self::$template,
+					self::$bodyTemplate,
 					[
-						'url' => self::$libraryUrl,
 						'appId' => self::$apid,
 						'section' => HubService::getVerticalNameForComscore( $wgCityId ),
-						'dbName' => F::app()->wg->DBname
+						'dbName' => $wgDBname
 					]
 				);
 			default:
 				return '<!-- Unsupported event for Nielsen -->';
 		}
+	}
+
+	static function onWikiaSkinTopScripts( &$vars, &$scripts, $skin ) {
+		if ( !self::isEnabled() ) {
+			$scripts .= '<!-- Nielsen is disabled -->';
+			return true;
+		}
+
+		$scripts .= \MustacheService::getInstance()->render(
+			self::$headTemplate,
+			[
+				'url' => self::$libraryUrl
+			]
+		);
+
+		return true;
 	}
 
 	static public function isEnabled() {

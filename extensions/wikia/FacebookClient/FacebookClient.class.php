@@ -345,9 +345,8 @@ class FacebookClient {
 
 			$token = $userProfile->getProperty( 'token_for_business' );
 		} catch(Facebook\FacebookRequestException $e) {
-			WikiaLogger::instance()->warning( 'Failed to retrieve business token', [
-				'errorCode' => $e->getCode(),
-				'errorMessage' => $e->getMessage(),
+			WikiaLogger::instance()->error( 'Failed to retrieve business token', [
+				'exception' => $e,
 			] );
 			return null;
 		}

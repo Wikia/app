@@ -111,4 +111,60 @@ class PortableInfoboxHooks {
 
 		return true;
 	}
+
+	/**
+	 * Insert a newly created infobox into querycache, and purge the list of
+	 * infoboxes.
+	 *
+	 * @param  Page     $page          The created page object
+	 * @param  User     $user          The user who created the page
+	 * @param  string   $text          Text of the new article
+	 * @param  string   $summary       Edit summary
+	 * @param  int      $minoredit     Minor edit flag
+	 * @param  boolean  $watchThis     Whether or not the user should watch the page
+	 * @param  null     $sectionAnchor Not used, set to null
+	 * @param  int      $flags         Flags for this page
+	 * @param  Revision $revision      The newly inserted revision object
+	 * @return boolean
+	 */
+	public static function onArticleInsertComplete( Page $page, User $user, $text, $summary, $minoredit,
+	                                                $watchThis, $sectionAnchor, &$flags, Revision $revision ) {
+		$title = $page->getTitle();
+		if ( self::hasInfobox( $title ) ) {
+			$dbw = wfGetDB( DB_MASTER );
+			( new WikiaSQL() )
+				->INSERT()->INTO( 'querycache', [
+					'qc_type',
+					'qc_value',
+					'qc_namespace',
+					'qc_title'
+				] )
+				->VALUES( [ [
+					AllinfoboxesQueryPage::ALL_INFOBOXES_TYPE,
+					$page->getId(),
+					$title->getNamespace(),
+					$title->getDBkey(),
+				] ] )
+				->run( $dbw );
+
+			wfRunHooks( 'AllInfoboxesQueryRecached' );
+		}
+
+		return true;
+	}
+
+	/**
+	 * Check whether or not a page has an infobox.
+	 *
+	 * @param  Title   $title Title to check
+	 * @return boolean
+	 */
+	private static function hasInfobox( Title $title ) {
+		return $title->inNamespace( NS_TEMPLATE ) &&
+			!(
+				$title->isSubpage() &&
+				in_array( mb_strtolower( $title->getSubpageText() ), AllinfoboxesQueryPage::$subpagesBlacklist )
+			) &&
+			!empty( PortableInfoboxDataService::newFromTitle( $title )->getData() );
+	}
 }

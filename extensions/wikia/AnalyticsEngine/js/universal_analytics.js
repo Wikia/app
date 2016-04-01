@@ -214,6 +214,16 @@
 		}
 	}
 
+	function getEsrbRating() {
+		var rating = 'not set';
+
+		if (window.ads && window.ads.context.targeting.esrbRating) {
+			rating = window.ads.context.targeting.esrbRating;
+		}
+
+		return rating;
+	}
+
 	function getKruxSegment() {
 		var kruxSegment = 'not set',
 			uniqueKruxSegments = {
@@ -292,6 +302,7 @@
 	_gaWikiaPush(
 		['set', 'dimension8', window.wikiaPageType],                            // PageType
 		['set', 'dimension9', window.wgCityId],                                 // CityId
+		['set', 'dimension13', getEsrbRating()],                                // ESRB rating
 		['set', 'dimension14', window.wgGaHasAds ? 'Yes' : 'No'],               // HasAds
 		['set', 'dimension15', window.wikiaPageIsCorporate ? 'Yes' : 'No'],     // IsCorporatePage
 		['set', 'dimension16', getKruxSegment()],                               // Krux Segment
@@ -453,6 +464,7 @@
 	/**** Medium-Priority Custom Dimensions ****/
 	window.ga('ads.set', 'dimension8', window.wikiaPageType);                            // PageType
 	window.ga('ads.set', 'dimension9', window.wgCityId);                                 // CityId
+	window.ga('ads.set', 'dimension13', getEsrbRating());                                // ESRB rating
 	window.ga('ads.set', 'dimension14', window.wgGaHasAds ? 'Yes' : 'No');               // HasAds
 	window.ga('ads.set', 'dimension15', window.wikiaPageIsCorporate ? 'Yes' : 'No');     // IsCorporatePage
 	window.ga('ads.set', 'dimension16', getKruxSegment());                               // Krux Segment

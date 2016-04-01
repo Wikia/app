@@ -65,6 +65,52 @@ class PortableInfoboxBuilderHelper {
 	}
 
 	/**
+	 * For given title string create urls to template page and source editor
+	 * @param $titleString string
+	 * @return array with key value url pairs or empty array
+	 * if invalid string passed
+	 */
+	public static function createRedirectUrls( $titleString ) {
+		$status = new Status();
+		$title = self::getTitle( $titleString, $status );
+
+		if ( $status->isGood() ) {
+			return [
+				'templatePageUrl' => $title->getFullUrl(),
+				'sourceEditorUrl' => $title->getFullUrl( [
+					'action' => 'edit',
+					'useeditor' => 'source'
+				] )
+			];
+		}
+
+		return [];
+	}
+
+
+	/**
+	 * creates Title object from provided title string.
+	 * If Title object can not be created then status is updated
+	 * @param $titleParam
+	 * @param $status
+	 * @return Title or false if invalid data passed
+	 * @throws MWException
+	 */
+	public static function getTitle( $titleParam, &$status ) {
+		if ( !$titleParam ) {
+			$status->fatal( 'no-title-provided' );
+		}
+
+		$title = $status->isGood() ? Title::newFromText( $titleParam, NS_TEMPLATE ) : false;
+		// check if title object created
+		if ( $status->isGood() && !$title ) {
+			$status->fatal( 'bad-title' );
+		}
+
+		return $title;
+	}
+
+	/**
 	 * @param $title
 	 * @return bool
 	 */
