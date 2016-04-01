@@ -94,6 +94,7 @@ class CommunityPageSpecialUsersModel {
 					->WHERE( 'user_id' )->IS_NOT_NULL()
 					->AND_( 'rev_timestamp > DATE_SUB(now(), INTERVAL '. $interval . ')' )
 					->AND_( '(ug_group IS NULL or (ug_group <> "bot"))' . $adminFilter)
+					// TOOD: also filter by glboal bot user ids?
 					->GROUP_BY( 'user_name' )
 					->ORDER_BY( 'revision_count' )->DESC()
 					->LIMIT( $limit )
@@ -140,6 +141,7 @@ class CommunityPageSpecialUsersModel {
 		return $botIds;
 	}
 
+	// todo: I think we can do this in the initial query
 	public static function filterGlobalBots( array $users ) {
 		$botIds = self::getGlobalBotIds();
 

@@ -2837,6 +2837,7 @@ $config['special_community_page_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
 		'//extensions/wikia/CommunityPage/scripts/ext.communityPage.js',
+		'//extensions/wikia/CommunityPage/scripts/templates.mustache.js',
 	],
 
 ];

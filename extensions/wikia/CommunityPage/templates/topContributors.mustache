@@ -1,30 +1,28 @@
-{{#topContributors}}
-	<h2>{{topContribsHeaderText}}</h2>
-	<div class="user-details">
-		<div class="avatar-container">
-			{{{userAvatar}}}
-		</div>
-		<div class="rank">
-			<span>{{userRank}} <small>/ {{memberCount}}</small></span>
-			<span class="subtle">{{yourRankText}}</span>
-		</div>
-		<div class="user-contrib-count">
-			<span>{{userContribCount}}</span>
-			<span class="subtle">{{userContributionsText}}</span>
-		</div>
+<h2>{{topContribsHeaderText}}</h2>
+<div class="user-details">
+	<div class="avatar-container">
+		{{{userAvatar}}}
 	</div>
-	<ul class="reset top-contributors">
-		{{#contributors}}
-			<li>
-				<div class="avatar-container">
-					<a href="{{profilePage}}">{{{avatar}}}</a>
-				</div>
-				<div class="contributor-details">
-					{{count}}. <a href="{{profilePage}}">{{userName}}</a>
-					<span class="subtle">{{contributionsText}}</span>
-				</div>
+	<div class="rank">
+		<span>{{userRank}} <small>/ {{memberCount}}</small></span>
+		<span class="subtle">{{yourRankText}}</span>
+	</div>
+	<div class="user-contrib-count">
+		<span>{{userContribCount}}</span>
+		<span class="subtle">{{userContributionsText}}</span>
+	</div>
+</div>
+<ul class="reset top-contributors">
+	{{#contributors}}
+		<li>
+			<div class="avatar-container">
+				<a href="{{profilePage}}">{{{avatar}}}</a>
+			</div>
+			<div class="contributor-details">
+				{{count}}. <a href="{{profilePage}}">{{userName}}</a>
+				<span class="subtle">{{contributionsText}}</span>
+			</div>
 
-			</li>
-		{{/contributors}}
-	</ul>
-{{/topContributors}}
+		</li>
+	{{/contributors}}
+</ul>
