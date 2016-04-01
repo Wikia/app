@@ -31,7 +31,14 @@ class Node {
 	}
 
 	public function getSourceLabel() {
-		return \Sanitizer::stripAllTags( $this->getInnerValue( $this->xmlNode->{self::LABEL_TAG_NAME} ) );
+		$source = $this->extractSourceFromNode( $this->xmlNode )[0];
+		$label = \Sanitizer::stripAllTags( $this->getInnerValue( $this->xmlNode->{self::LABEL_TAG_NAME} ) );
+
+		if ( !empty( $source ) ) {
+			return [ $source => $label ];
+		}
+
+		return [];
 	}
 
 	/**
@@ -151,15 +158,7 @@ class Node {
 		/** @var Node $item */
 		$result = [ ];
 		foreach ( $this->getChildNodes() as $item ) {
-			$label = $item->getSourceLabel();
-			if ( is_array( $label ) ) {
-				$result = array_merge( $result, $label );
-			} else {
-				$source = $item->getSource()[0];
-				if ( !empty( $source ) && !empty( $source ) ) {
-					$result[$source] = $label;
-				}
-			}
+			$result = array_merge( $result, $item->getSourceLabel() );
 		}
 
 		return $result;

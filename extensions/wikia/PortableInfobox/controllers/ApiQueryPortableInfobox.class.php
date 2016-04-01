@@ -29,13 +29,12 @@ class ApiQueryPortableInfobox extends ApiQueryBase {
 				$pageSet->getResult()->setIndexedTagName( $inf, 'infobox' );
 				$pageSet->getResult()->addValue( [ 'query', 'pages', $id ], 'infoboxes', $inf );
 				foreach ( $parsedInfoboxes as $count => $infobox ) {
-					$s = isset( $infobox[ 'sources' ] ) ? $infobox[ 'sources' ] : [ ];
-					$l = isset( $infobox[ 'labels' ] ) ? $infobox[ 'labels' ] : [ ];
+					$sl = isset( $infobox[ 'sourcelabels' ] ) ? $infobox[ 'sourcelabels' ] : [ ];
 					$pageSet->getResult()->addValue( [ 'query', 'pages', $id, 'infoboxes', $count ], 'id', $count );
-					$pageSet->getResult()->setIndexedTagName( $s, "source" );
-					$pageSet->getResult()->addValue( [ 'query', 'pages', $id, 'infoboxes', $count ], 'sources', $s );
-					$pageSet->getResult()->setIndexedTagName( $l, "labels" );
-					$pageSet->getResult()->addValue( [ 'query', 'pages', $id, 'infoboxes', $count ], 'labels', $l );
+					$pageSet->getResult()->setIndexedTagName( $l, "sourcelabels" );
+					$pageSet->getResult()->addValue(
+						[ 'query', 'pages', $id, 'infoboxes', $count ], 'sourcelabels', $sl
+					);
 				}
 			}
 		}

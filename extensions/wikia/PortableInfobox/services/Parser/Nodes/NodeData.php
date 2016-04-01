@@ -13,8 +13,4 @@ class NodeData extends Node {
 
 		return $this->data;
 	}
-
-	public function getSourceLabel() {
-		return \Sanitizer::stripAllTags( $this->getInnerValue( $this->xmlNode->{self::LABEL_TAG_NAME} ) );
-	}
 }

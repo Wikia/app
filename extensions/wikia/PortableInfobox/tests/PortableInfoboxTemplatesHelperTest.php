@@ -24,9 +24,9 @@ class PortableInfoboxTemplatesHelperTest extends WikiaBaseTest {
 		return [
 			[ 'test', false ],
 			[ '<includeonly><infobox><data source="test"><label>1</label></data></infobox></includeonly>',
-			  [ [ 'data' => [ ], 'sources' => [ 'test' ], 'labels' => [ 'test' => 1 ] ] ] ],
+			  [ [ 'data' => [ ], 'sourcelabels' => [ 'test' => 1 ] ] ] ],
 			[ '<includeonly></includeonly><infobox></infobox>', false ],
-			[ '<includeonly><infobox></infobox></includeonly> ', [ [ 'data' => [ ], 'sources' => [ ], 'labels' => [ ] ] ] ],
+			[ '<includeonly><infobox></infobox></includeonly> ', [ [ 'data' => [ ], 'sourcelabels' => [ ] ] ] ],
 			[ '<nowiki><includeonly><infobox></infobox></includeonly></nowiki>', false ],
 			[ '<includeonly><nowiki><infobox></infobox></nowiki></includeonly>', false ],
 		];

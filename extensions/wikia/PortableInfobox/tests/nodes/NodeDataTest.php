@@ -54,13 +54,28 @@ class NodeDataTest extends WikiaBaseTest {
 
 	public function sourceLabelDataProvider() {
 		return [
-			[ '<data source="test"></data>', [ ], '' ],
+			[ '<data source="test"></data>', [ ], ['test' => ''] ],
+			[ '<image source="test"/>', [ ], ['test' => ''] ],
+			[ '<title source="test"/>', [ ], ['test' => ''] ],
 			[ '<data source="test"><default>{{{test}}}</default></data>',
-				[ ], '' ],
+				[ ], ['test' => ''] ],
 			[ '<data source="test"><label source="test">{{{test}}}</label><default>{{{test}}}</default></data>',
-				[ ], '{{{test}}}' ],
-			[ '<data source="test"><label>testLabel</label></data>', [ ], 'testLabel' ],
-			[ '<data></data>', [ ], '' ],
+				[ ], ['test' => '{{{test}}}'] ],
+			[ '<data source="test"><label>testLabel</label></data>', [ ], ['test' => 'testLabel'] ],
+			[ '<data></data>', [ ], [ ] ],
+			[ '<group><data source="test"><label>labelInsideGroup</label></data></group>', [], ['test' =>'labelInsideGroup'] ],
+			[ '<group>' .
+				'<data source="test"><label>labelInsideGroup</label></data>' .
+				'<data source="test2"><label>labelInsideGroup2</label></data>' .
+				'</group>',
+				[], ['test' =>'labelInsideGroup', 'test2' =>'labelInsideGroup2'] ],
+			[ '<group>' .
+				'<title source="title"/>' .
+				'<image source="image"/>' .
+				'<data source="test"><label>labelInsideGroup</label></data>' .
+				'<data source="test2"><label>labelInsideGroup2</label></data>' .
+				'</group>',
+				[], ['test' =>'labelInsideGroup', 'test2' =>'labelInsideGroup2', 'title' => '', 'image' => ''] ]
 		];
 	}
 

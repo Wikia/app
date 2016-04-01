@@ -92,11 +92,13 @@ ve.dm.WikiaTransclusionModel.prototype.fetchInfoboxParamsRequestDone = function 
 			}
 
 			for ( i = 0; i < page.infoboxes.length; i++ ) {
+				page.infoboxes[i].sources = Object.keys( page.infoboxes[i].sourcelabels );
+
 				for ( j = 0; j < page.infoboxes[i].sources.length; j++ ) {
 					source = page.infoboxes[i].sources[j];
 
-					specs[page.title].params[ source ] = { label: page.infoboxes[i].labels[source] };
-					specs[page.title].paramOrder.push( source );
+					specs[page.title].params[ source ] = { label: page.infoboxes[i].sourcelabels[source] };
+					specs[page.title].paramOrder.push( page.infoboxes[i].sources[j] );
 				}
 			}
 		}
