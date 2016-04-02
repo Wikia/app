@@ -39,17 +39,43 @@ class PortableInfoboxBuilderController extends WikiaController {
 	}
 
 	public function publish() {
-		$response = $this->getResponse();
-		$response->setFormat( WikiaResponse::FORMAT_JSON );
-
-		$status = $this->attemptSave( $this->getRequest()->getParams() );
-
 		$requestParams = $this->getRequest()->getParams();
+		$status = $this->attemptSave( $requestParams );
+
 		$urls = PortableInfoboxBuilderHelper::createRedirectUrls( $requestParams['title'] );
 
+		$response = $this->getResponse();
+		$response->setFormat( WikiaResponse::FORMAT_JSON );
 		$response->setVal( 'urls', $urls );
 		$response->setVal( 'success', $status->isOK() );
 		$response->setVal( 'errors', $status->getErrorsArray() );
+		$response->setVal( 'warnings', $status->getWarningsArray() );
+	}
+
+	public function publishAndRename() {
+		$requestParams = $this->getRequest()->getParams();
+		$status = $this->attemptSave( $requestParams );
+
+		$newTitleString = $requestParams['newTitle'];
+		$urls = PortableInfoboxBuilderHelper::createRedirectUrls( $newTitleString );
+		$oldTitle = PortableInfoboxBuilderHelper::getTitle( $requestParams['title'], $status );
+		$newTitle = PortableInfoboxBuilderHelper::getTitle( $newTitleString, $status );
+		$moveToResult = $oldTitle->moveTo($newTitle, false, "Infobox Builder: rename infobox template");
+
+		$errors = $status->getErrorsArray();
+		$success = $status->isOK();
+
+		// if result of moveTo operation is not true, extend array with errors
+		if ( $moveToResult !== true ) {
+			$errors = array_merge( $errors, $moveToResult );
+			$success = false;
+		}
+
+		$response = $this->getResponse();
+		$response->setFormat( WikiaResponse::FORMAT_JSON );
+		$response->setVal( 'urls', $urls );
+		$response->setVal( 'success',$success );
+		$response->setVal( 'errors', $errors );
 		$response->setVal( 'warnings', $status->getWarningsArray() );
 	}
 
