@@ -40,7 +40,7 @@ ve.ui.WikiaInfoboxBuilderDialog.prototype.getSetupProcess = function (data) {
  * @inheritdoc
  */
 ve.ui.WikiaInfoboxBuilderDialog.prototype.getBodyHeight = function () {
-	return 1000;
+	return '100%';
 };
 
 /* Methods */
