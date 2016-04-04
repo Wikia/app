@@ -36,8 +36,8 @@ define('ext.wikia.adEngine.provider.directGpt', [
 			INCONTENT_PLAYER:           {size: '1x1', loc: 'middle'},
 			INCONTENT_LEADERBOARD:      {size: '1x1,728x90,300x250,468x60', loc: 'hivi'},
 			INVISIBLE_SKIN:             {size: '1000x1000,1x1', loc: 'top'},
-			LEFT_SKYSCRAPER_2:          {size: '160x600,300x600,300x1050', loc: 'middle'},
-			LEFT_SKYSCRAPER_3:          {size: '160x600,300x600', loc: 'footer'},
+			LEFT_SKYSCRAPER_2:          {size: '160x600,300x250,300x600,300x1050', loc: 'middle'},
+			LEFT_SKYSCRAPER_3:          {size: '160x600,300x250,300x600', loc: 'footer'},
 			MODAL_INTERSTITIAL_1:       {size: '300x250,600x400,800x450,550x480', loc: 'modal'},
 			MODAL_INTERSTITIAL_2:       {size: '300x250,600x400,800x450,550x480', loc: 'modal'},
 			MODAL_INTERSTITIAL_3:       {size: '300x250,600x400,800x450,550x480', loc: 'modal'},
@@ -140,6 +140,7 @@ define('ext.wikia.adEngine.provider.directGpt', [
 				slotTweaker.removeDefaultHeight(slotName);
 				slotTweaker.removeTopButtonIfNeeded(slotName);
 				slotTweaker.adjustLeaderboardSize(slotName);
+				slotTweaker.adjustSkyscraperSize(slotName);
 				onSlotResponse(slotName);
 			},
 			beforeHop: function (slotName) {
