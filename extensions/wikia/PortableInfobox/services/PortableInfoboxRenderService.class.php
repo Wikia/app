@@ -61,7 +61,7 @@ class PortableInfoboxRenderService extends WikiaService {
 		$heroData = [ ];
 
 		// decide on image width
-		$this->imagesWidth = $helper->isWikiaMobile() ?
+		$this->imagesWidth = $helper->isMobile() ?
 			PortableInfoboxRenderServiceHelper::MOBILE_THUMBNAIL_WIDTH :
 			// if europa go with bigger images! else default size
 			$helper->isEuropaTheme() ? PortableInfoboxRenderServiceHelper::EUROPA_THUMBNAIL_WIDTH :
@@ -79,7 +79,7 @@ class PortableInfoboxRenderService extends WikiaService {
 					$infoboxHtmlContent .= $this->renderItem( 'navigation', $data );
 					break;
 				default:
-					if ( $helper->isWikiaMobile() && $helper->isValidHeroDataItem( $item, $heroData ) ) {
+					if ( $helper->isMobile() && $helper->isValidHeroDataItem( $item, $heroData ) ) {
 						$heroData[ $type ] = $data;
 						continue;
 					}
@@ -159,7 +159,7 @@ class PortableInfoboxRenderService extends WikiaService {
 	 * @return string
 	 */
 	private function renderInfoboxHero( $data ) {
-		global $wgArticleAsJson, $wgEnableSeoFriendlyImagesForMobile;
+		global $wgEnableSeoFriendlyImagesForMobile;
 
 		$helper = new PortableInfoboxRenderServiceHelper();
 
@@ -169,7 +169,7 @@ class PortableInfoboxRenderService extends WikiaService {
 			$image = $helper->extendImageData( $image, PortableInfoboxRenderServiceHelper::MOBILE_THUMBNAIL_WIDTH );
 			$data[ 'image' ] = $image;
 
-			if ( empty( $wgArticleAsJson ) ) {
+			if ( !$helper->isMercury() ) {
 				$markup = $this->renderItem( 'hero-mobile-wikiamobile', $data );
 			} else if ( !empty( $wgEnableSeoFriendlyImagesForMobile ) ) {
 				// @todo XW-1225 this should be the only template used for Mercury
@@ -194,7 +194,7 @@ class PortableInfoboxRenderService extends WikiaService {
 	 * @return bool|string - HTML
 	 */
 	private function renderItem( $type, array $data ) {
-		global $wgArticleAsJson, $wgEnableSeoFriendlyImagesForMobile;
+		global $wgEnableSeoFriendlyImagesForMobile;
 
 		$helper = new PortableInfoboxRenderServiceHelper();
 
@@ -216,7 +216,7 @@ class PortableInfoboxRenderService extends WikiaService {
 				$data = $images[ 0 ];
 				$templateName = $type;
 			} else {
-				if ( $helper->isWikiaMobile() && empty( $wgArticleAsJson ) ) {
+				if ( $helper->isMobile() && !$helper->isMercury() ) {
 					// Display only the first image on WikiaMobile
 					$data = $images[ 0 ];
 				} else {
@@ -227,8 +227,8 @@ class PortableInfoboxRenderService extends WikiaService {
 				$templateName = 'image-collection';
 			}
 
-			if ( $helper->isWikiaMobile() ) {
-				if ( empty( $wgArticleAsJson ) ) {
+			if ( $helper->isMobile() ) {
+				if ( !$helper->isMercury() ) {
 					$templateName = $templateName . self::MOBILE_TEMPLATE_POSTFIX . '-wikiamobile';
 				} else if ( !empty( $wgEnableSeoFriendlyImagesForMobile ) ) {
 					// @todo XW-1225 this should be the only template used for Mercury
@@ -244,7 +244,7 @@ class PortableInfoboxRenderService extends WikiaService {
 		/**
 		 * Currently, based on business decision, sanitization happens ONLY on Mercury
 		 */
-		if ( $helper->isWikiaMobile() ) {
+		if ( $helper->isMobile() ) {
 			$data = SanitizerBuilder::createFromType( $type )->sanitize( $data );
 		}
 
