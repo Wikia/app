@@ -34,6 +34,7 @@ define('ext.wikia.adEngine.provider.remnantGpt', [
 			beforeSuccess: function (slotName) {
 				slotTweaker.removeDefaultHeight(slotName);
 				slotTweaker.removeTopButtonIfNeeded(slotName);
+				slotTweaker.adjustSkyscraperSize(slotName);
 				slotTweaker.adjustLeaderboardSize(slotName);
 			}
 		}
