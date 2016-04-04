@@ -26,8 +26,8 @@ OO.inheritClass(ve.ui.WikiaInfoboxBuilderDialog, OO.ui.ProcessDialog);
 
 ve.ui.WikiaInfoboxBuilderDialog.static.name = 'wikiaInfoboxBuilder';
 ve.ui.WikiaInfoboxBuilderDialog.static.title = 'Infobox Builder';
-ve.ui.WikiaInfoboxBuilderDialog.static.size = 'page';
-ve.ui.WikiaInfoboxBuilderDialog.static.overlay = false;
+ve.ui.WikiaInfoboxBuilderDialog.static.size = 'dynamic';
+ve.ui.WikiaInfoboxBuilderDialog.static.sizeSourceElement = $('#WikiaPage');
 
 /**
  * @inheritdoc
@@ -43,7 +43,9 @@ ve.ui.WikiaInfoboxBuilderDialog.prototype.getSetupProcess = function (data) {
  * @inheritdoc
  */
 ve.ui.WikiaInfoboxBuilderDialog.prototype.getBodyHeight = function () {
-	return 1000;
+	// 100% refers to the OO UI window object which is a container for the dialog.
+	// It is an absolutely positioned div which overlays the whole viewport.
+	return '100%';
 };
 
 /* Methods */
@@ -74,6 +76,13 @@ ve.ui.WikiaInfoboxBuilderDialog.prototype.initialize = function () {
 			self.$body.append(self.content.$element);
 		});
 	});
+};
+
+/**
+ * @returns {string}
+ */
+ve.ui.WikiaInfoboxBuilderDialog.prototype.getDynamicSize = function () {
+	return ve.ui.WikiaInfoboxBuilderDialog.static.sizeSourceElement.outerWidth();
 };
 
 /**
