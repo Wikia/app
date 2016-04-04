@@ -4029,9 +4029,14 @@ class Parser {
 
 		$text = Http::get( $url );
 		if ( !$text ) {
-			# wikia start
-			Wikia::log(__METHOD__, false, "Scary transclusion failed for <{$url}>");
-			# wikia end
+			// Wikia change - begin
+			if ( $text === '' ) {
+				Wikia\Logger\WikiaLogger::instance()->error( __METHOD__ . ' - empty response', [
+					'url' => $url,
+				] );
+			}
+			// Wikia change - end
+
 			return wfMsgForContent( 'scarytranscludefailed', $url );
 		}
 

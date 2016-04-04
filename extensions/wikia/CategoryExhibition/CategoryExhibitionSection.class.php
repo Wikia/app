@@ -449,16 +449,13 @@ class CategoryExhibitionSection {
 		$wgMemc->set($this->getTouchedKey($title), time() . rand(0,9999), 60*60*24 );
 	}
 
-	protected function getTouchedKey($title) {
-		//fb#24914
-		if( $title instanceof Title ) {
-			$key = wfMemcKey( 'category_touched', md5($title->getDBKey()), self::CACHE_VERSION );
-			return $key;
-		} else {
-			Wikia::log(__METHOD__, '', '$title not an instance of Title');
-			Wikia::logBacktrace(__METHOD__);
-			return null;
-		}
+	/**
+	 * @param Title $title
+	 * @return string
+	 */
+	protected function getTouchedKey( Title $title ) {
+		$key = wfMemcKey( 'category_touched', md5($title->getDBKey()), self::CACHE_VERSION );
+		return $key;
 	}
 
 	protected function saveToCache( $content ) {
