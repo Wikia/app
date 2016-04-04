@@ -80,7 +80,7 @@ ve.ui.WikiaInfoboxBuilderDialog.prototype.initialize = function () {
  */
 ve.ui.WikiaInfoboxBuilderDialog.prototype.getDynamicSize = function () {
 	return $( '#WikiaPage' ).outerWidth();
-}
+};
 
 /**
  * @inheritdoc
