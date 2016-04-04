@@ -132,6 +132,8 @@ class PortableInfoboxRenderServiceHelper {
 	 * @return bool
 	 */
 	public function isMercury() {
+		global $wgArticleAsJson;
+		
 		return !empty( $wgArticleAsJson );
 	}
 
