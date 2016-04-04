@@ -718,38 +718,6 @@ Til að klára að skrá þig inn, verður þú að endurstilla lykilorðið hé
 Þú gætir þegar verið búin/n að breyta lykilorðinu eða sótt um nýtt tímabundið lykilorð',
 'resetpass-temp-password' => 'Tímabundið lykilorð:',
 
-# Special:PasswordReset
-'passwordreset' => 'Endurstilla lykilorð',
-'passwordreset-text' => 'Fylltu út þennan reit til að fá tölvupóst um áminningu um notendauplýsingarnar þínar.',
-'passwordreset-legend' => 'Endurstilla lykilorð',
-'passwordreset-disabled' => 'Lokað hefur verið fyrir að endurstilla lykilorð á þessum wiki.',
-'passwordreset-pretext' => '{{PLURAL:$1||Sláðu inn einn hluta gagnanna hér fyrir neðan}}',
-'passwordreset-username' => 'Notandanafn:',
-'passwordreset-domain' => 'Lén:',
-'passwordreset-capture' => 'Sjá áminninguna sem var send í tölvupósti?',
-'passwordreset-capture-help' => 'Ef þú hakar við þennan reit verður tölvupósturinn (með tímabundna lykilorðinu) sýndur þér og einnig sendur notandanum.',
-'passwordreset-email' => 'Netfang:',
-'passwordreset-emailtitle' => 'Notendaupplýsingar á {{SITENAME}}',
-'passwordreset-emailtext-ip' => 'Einhver (líklegast þú, á vistfanginu $1) hefur beðið um notendaupplýsingar þínar fyrir {{SITENAME}} ($4). Aðgangur eftirfarandi {{PLURAL:$3|notanda er|notendum eru}} tengd þessu netfangi:
-
-$2
-
-Ef þetta er það sem þú vildir, þarftu að skrá þig inn og velja nýtt lykilorð. {{PLURAL:$3|Tímabundna lykilorð|Tímabundnu lykilorðin}} renna út eftir {{PLURAL:$5|einn dag|$5 daga}}.
-
-Ef það varst ekki þú sem fórst fram á þetta, eða ef þú mannst lykilorðið þitt, og villt ekki lengur breyta því, skaltu hunsa þessi skilaboð og halda áfram að nota gamla lykilorðið.',
-'passwordreset-emailtext-user' => 'Notandinn $1 á {{SITENAME}} hefur beðið um notendaupplýsingar þínar fyrir {{SITENAME}} ($4). Aðgangur eftirfarandi {{PLURAL:$3|notanda er|notendum eru}} tengd þessu netfangi:
-
-$2
-
-Ef þetta er það sem þú vildir, þarftu að skrá þig inn og velja nýtt lykilorð. {{PLURAL:$3|Tímabundna lykilorð|Tímabundnu lykilorðin}} renna út eftir {{PLURAL:$5|einn dag|$5 daga}}.
-
-Ef það varst ekki þú sem fórst fram á þetta, eða ef þú mannst lykilorðið þitt, og villt ekki lengur breyta því, skaltu hunsa þessi skilaboð og halda áfram að nota gamla lykilorðið.',
-'passwordreset-emailelement' => 'Notendanafn: $1
-Tímabundið lykilorð: $2',
-'passwordreset-emailsent' => 'Áminning hefur verið send í tölvupósti.',
-'passwordreset-emailsent-capture' => 'Áminning hefur verið send í tölvupósti, sem er sýnd hér fyrir neðan.',
-'passwordreset-emailerror-capture' => 'Áminning var búin til, sem er sýnd hér fyrir neðan, en ekki tókst að senda hana til notandans: $1',
-
 # Special:ChangeEmail
 'changeemail' => 'Breyting netfangs',
 'changeemail-header' => 'Breyta skráðu netfangi',

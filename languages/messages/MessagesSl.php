@@ -677,45 +677,6 @@ Za zaključitev prijave, morate tukaj nastaviti novo geslo:',
 Morda ste že uspešno spremenili geslo ali pa ste zahtevali novo začasno geslo.',
 'resetpass-temp-password'   => 'Začasno geslo:',
 
-# Special:PasswordReset
-'passwordreset'                    => 'Ponastavitev gesla',
-'passwordreset-text'               => 'Izpolnite obrazec, da prejmete e-poštni opomnik s podrobnostmi vašega računa.',
-'passwordreset-legend'             => 'Ponastavitev gesla',
-'passwordreset-disabled'           => 'Ponastavljanje gesla je na tem wikiju onemogočeno.',
-'passwordreset-pretext'            => '{{PLURAL:$1||Vnesite enega od dela podatkov spodaj}}',
-'passwordreset-username'           => 'Uporabniško ime:',
-'passwordreset-domain'             => 'Domena:',
-'passwordreset-capture'            => 'Ogled nastale e-pošte?',
-'passwordreset-capture-help'       => 'Če potrdite to polje, vam bodo e-pošte (z začasnim geslom) pokazane in poslane uporabniku.',
-'passwordreset-email'              => 'E-poštni naslov:',
-'passwordreset-emailtitle'         => 'Podrobnosti računa na {{SITENAME}}',
-'passwordreset-emailtext-ip'       => 'Nekdo (verjetno vi, z IP-naslova $1) je zahteval opomnik vaših
-podatkov o računu na {{SITENAME}} ($4). S tem e-poštnim naslovom
-{{PLURAL:$3|je povezan naslednji uporabniški račun|sta povezana naslednja uporabniška računa|so povezani naslednji uporabniški računi}}:
-
-$2
-
-{{PLURAL:$3|Začasno geslo bo poteklo|Začasni gesli bosta potekli|Začasna gesla bodo potekla}} v {{PLURAL:$5|enem dnevu|$5 dneh}}.
-Prijavite se in izberite novo geslo sedaj. Če je zahtevo podal
-nekdo drug ali pa ste se spomnili svojega prvotnega gesla in ga več
-ne želite spremeniti, lahko to sporočilo prezrete in nadaljujete z uporabo
-svojega starega gesla.',
-'passwordreset-emailtext-user'     => 'Uporabnik $1 na {{SITENAME}} je zahteval opomnik vaših podatkov o računu na {{SITENAME}}
-($4). S tem e-poštnim naslovom {{PLURAL:$3|je povezan naslednji uporabniški račun|sta povezana naslednja uporabniška računa|so povezani naslednji uporabniški računi}}:
-
-$2
-
-{{PLURAL:$3|Začasno geslo bo poteklo|Začasni gesli bosta potekli|Začasna gesla bodo potekla}} v {{PLURAL:$5|enem dnevu|$5 dneh}}.
-Prijavite se in izberite novo geslo sedaj. Če je zahtevo podal
-nekdo drug ali pa ste se spomnili svojega prvotnega gesla in ga več
-ne želite spremeniti, lahko to sporočilo prezrete in nadaljujete z uporabo
-svojega starega gesla.',
-'passwordreset-emailelement'       => 'Uporabniško ime: $1
-Začasno geslo: $2',
-'passwordreset-emailsent'          => 'Opomnilna e-pošta je bila poslana.',
-'passwordreset-emailsent-capture'  => 'E-poštni opomnik je bil poslan in je prikazan spodaj.',
-'passwordreset-emailerror-capture' => 'E-poštni opomnik je bil poslan in je prikazan spodaj, vendar pa pošiljanje uporabniku ni uspelo: $1',
-
 # Special:ChangeEmail
 'changeemail'          => 'Sprememba e-poštnega naslova',
 'changeemail-header'   => 'Sprememba e-poštnega naslova računa',

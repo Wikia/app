@@ -600,6 +600,17 @@ class NegativeResponseException extends Exception {
 		}
 
 		$this->message = $message;
+
+		Wikia\Logger\WikiaLogger::instance()->error(
+			__CLASS__,
+			[ 'ooyala_response' => [
+				'status' => $this->status,
+				'content' => $this->content,
+				'apiUrl' => $this->apiUrl,
+				'errors' => $this->errors
+			] ]
+		);
+
 	}
 
 	/**
@@ -631,7 +642,7 @@ class VideoNotFound extends Exception {}
  */
 abstract class PseudoApiWrapper extends ApiWrapper {
 
-	protected function getInterfaceObjectFromType( $type ) {
+	protected function getInterfaceObjectFromType() {
 		// override me!
 	}
 

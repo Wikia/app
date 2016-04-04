@@ -33,11 +33,6 @@ define('ext.wikia.adEngine.adLogicPageDimensions', [
 		 * @see skins/oasis/css/core/responsive-background.scss
 		 */
 		slotsToHideOnMediaQuery = {
-			VIRTUAL_INCONTENT:       'twoColumns', // "virtual" slot to launch INCONTENT_* slots
-			INCONTENT_1A:            'twoColumns',
-			INCONTENT_1B:            'twoColumns',
-			INCONTENT_1C:            'twoColumns',
-			INCONTENT_LEADERBOARD_1: 'twoColumns',
 			TOP_BUTTON_WIDE:         'noTopButton',
 			'TOP_BUTTON_WIDE.force': 'noTopButton',
 			TOP_RIGHT_BOXAD:         'oneColumn',
@@ -248,7 +243,7 @@ define('ext.wikia.adEngine.adLogicPageDimensions', [
 	}
 
 	return {
-		isApplicable: isApplicable,
-		addSlot: add
+		addSlot: add,
+		isApplicable: isApplicable
 	};
 });

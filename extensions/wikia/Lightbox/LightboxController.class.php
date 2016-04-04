@@ -26,7 +26,6 @@ class LightboxController extends WikiaController {
 		// TODO: refactor this to AdEngine2Controller.php
 		$showAds = $this->wg->ShowAds;
 		$this->showAdModalInterstitial = $showAds && $this->wg->ShowAdModalInterstitial;
-		$this->showAdModalRectangle = $showAds && $this->wg->ShowAdModalRectangle;
 
 		// set cache control to 1 day
 		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
@@ -202,8 +201,6 @@ class LightboxController extends WikiaController {
 		list( $smallerArticleList, $articleListIsSmaller ) = WikiaFileHelper::truncateArticleList( $articles, self::POSTED_IN_ARTICLES );
 
 		// file details
-		// FIXME: view count isn't shown to users b/c it's buggy (CONSF-51)
-		$this->views = wfMessage( 'lightbox-video-views', $this->wg->Lang->formatNum( $data['videoViews'] ) )->parse();
 		$this->title = $title->getDBKey();
 		$this->fileTitle = $title->getText();
 		$this->mediaType = $data['mediaType'];

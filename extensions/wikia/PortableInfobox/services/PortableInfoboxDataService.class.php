@@ -67,6 +67,14 @@ class PortableInfoboxDataService {
 	}
 
 	/**
+	* @param $title
+	* @return array of strings (infobox markups)
+	*/
+	public function getInfoboxes() {
+		return $this->templateHelper->getMarkup($this->title);
+	}
+
+	/**
 	 * Get image list from multiple infoboxes data
 	 *
 	 * @return array

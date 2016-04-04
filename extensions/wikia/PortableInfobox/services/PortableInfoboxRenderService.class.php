@@ -13,19 +13,24 @@ class PortableInfoboxRenderService extends WikiaService {
 		'header' => 'PortableInfoboxItemHeader.mustache',
 		'image' => 'PortableInfoboxItemImage.mustache',
 		'image-mobile' => 'PortableInfoboxItemImageMobile.mustache',
+		'image-mobile-experimental' => 'PortableInfoboxItemImageMobileExperimental.mustache',
 		'data' => 'PortableInfoboxItemData.mustache',
 		'group' => 'PortableInfoboxItemGroup.mustache',
 		'horizontal-group-content' => 'PortableInfoboxHorizontalGroupContent.mustache',
 		'navigation' => 'PortableInfoboxItemNavigation.mustache',
 		'hero-mobile' => 'PortableInfoboxItemHeroMobile.mustache',
+		'hero-mobile-experimental' => 'PortableInfoboxItemHeroMobileExperimental.mustache',
 		'image-collection' => 'PortableInfoboxItemImageCollection.mustache',
-		'image-collection-mobile' => 'PortableInfoboxItemImageCollectionMobile.mustache'
+		'image-collection-mobile' => 'PortableInfoboxItemImageCollectionMobile.mustache',
+		'image-collection-mobile-experimental' => 'PortableInfoboxItemImageCollectionMobile.mustache'
 	];
 	private $templateEngine;
+	private $imagesWidth;
 
 	function __construct() {
 		$this->templateEngine = ( new Wikia\Template\MustacheEngine )
 			->setPrefix( self::getTemplatesDir() );
+		$this->imagesWidth = PortableInfoboxRenderServiceHelper::DEFAULT_DESKTOP_THUMBNAIL_WIDTH;
 	}
 
 	public static function getTemplatesDir() {
@@ -51,6 +56,13 @@ class PortableInfoboxRenderService extends WikiaService {
 		$helper = new PortableInfoboxRenderServiceHelper();
 		$infoboxHtmlContent = '';
 		$heroData = [ ];
+
+		// decide on image width
+		$this->imagesWidth = $helper->isWikiaMobile() ?
+			PortableInfoboxRenderServiceHelper::MOBILE_THUMBNAIL_WIDTH :
+			// if europa go with bigger images! else default size
+			$helper->isEuropaTheme() ? PortableInfoboxRenderServiceHelper::EUROPA_THUMBNAIL_WIDTH :
+				PortableInfoboxRenderServiceHelper::DEFAULT_DESKTOP_THUMBNAIL_WIDTH;
 
 		foreach ( $infoboxdata as $item ) {
 			$data = $item[ 'data' ];
@@ -80,8 +92,12 @@ class PortableInfoboxRenderService extends WikiaService {
 		}
 
 		if ( !empty( $infoboxHtmlContent ) ) {
-			$output = $this->renderItem( 'wrapper',
-				[ 'content' => $infoboxHtmlContent, 'theme' => $theme, 'layout' => $layout ] );
+			$output = $this->renderItem( 'wrapper', [
+				'content' => $infoboxHtmlContent,
+				'theme' => $theme,
+				'layout' => $layout,
+				'isEuropaEnabled' => $helper->isEuropaTheme()
+			] );
 		} else {
 			$output = '';
 		}
@@ -99,7 +115,7 @@ class PortableInfoboxRenderService extends WikiaService {
 	 * @return string - group HTML markup
 	 */
 	private function renderGroup( $groupData ) {
-		$cssClasses = [];
+		$cssClasses = [ ];
 		$helper = new PortableInfoboxRenderServiceHelper();
 		$groupHTMLContent = '';
 		$dataItems = $groupData[ 'value' ];
@@ -128,7 +144,7 @@ class PortableInfoboxRenderService extends WikiaService {
 
 		return $this->renderItem( 'group', [
 			'content' => $groupHTMLContent,
-			'cssClasses' => implode(' ', $cssClasses)
+			'cssClasses' => implode( ' ', $cssClasses )
 		] );
 	}
 
@@ -140,14 +156,21 @@ class PortableInfoboxRenderService extends WikiaService {
 	 * @return string
 	 */
 	private function renderInfoboxHero( $data ) {
+		global $wgEnableSeoFriendlyImagesForMobile;
+
 		$helper = new PortableInfoboxRenderServiceHelper();
 
 		if ( array_key_exists( 'image', $data ) ) {
 			$image = $data[ 'image' ][ 0 ];
 			$image[ 'context' ] = self::MEDIA_CONTEXT_INFOBOX_HERO_IMAGE;
-			$image = $helper->extendImageData( $image );
-			$data['image'] = $image;
-			$markup = $this->renderItem( 'hero-mobile', $data );
+			$image = $helper->extendImageData( $image, PortableInfoboxRenderServiceHelper::MOBILE_THUMBNAIL_WIDTH );
+			$data[ 'image' ] = $image;
+
+			if ( !empty( $wgEnableSeoFriendlyImagesForMobile ) ) {
+				$markup = $this->renderItem( 'hero-mobile-experimental', $data );
+			} else {
+				$markup = $this->renderItem( 'hero-mobile', $data );
+			}
 		} else {
 			$markup = $this->renderItem( 'title', $data[ 'title' ] );
 		}
@@ -165,33 +188,41 @@ class PortableInfoboxRenderService extends WikiaService {
 	 * @return bool|string - HTML
 	 */
 	private function renderItem( $type, array $data ) {
+		global $wgEnableSeoFriendlyImagesForMobile;
+
 		$helper = new PortableInfoboxRenderServiceHelper();
 
 		if ( $type === 'image' ) {
 			$images = array();
 
-			for ( $i = 0; $i < count($data); $i++ ) {
-				$data[$i][ 'context' ] = self::MEDIA_CONTEXT_INFOBOX;
-				$data[$i] = $helper->extendImageData( $data[$i] );
+			for ( $i = 0; $i < count( $data ); $i++ ) {
+				$data[ $i ][ 'context' ] = self::MEDIA_CONTEXT_INFOBOX;
+				$data[ $i ] = $helper->extendImageData( $data[ $i ], $this->imagesWidth );
 
-				if ( !!$data[$i] ) {
-					$images[] = $data[$i];
+				if ( !!$data[ $i ] ) {
+					$images[] = $data[ $i ];
 				}
 			}
 
-			if ( count ( $images ) === 0 ) {
+			if ( count( $images ) === 0 ) {
 				return false;
-			} else if ( count ( $images ) === 1 ) {
-				$data = $images[0];
-				$templateName = $type;
 			} else {
-				$images[0]['isFirst'] = true;
-				$data = array( 'images' => $images );
-				$templateName = 'image-collection';
+				if ( count( $images ) === 1 ) {
+					$data = $images[ 0 ];
+					$templateName = $type;
+				} else {
+					$images[ 0 ][ 'isFirst' ] = true;
+					$data = array( 'images' => $images );
+					$templateName = 'image-collection';
+				}
 			}
 
 			if ( $helper->isWikiaMobile() ) {
-				$templateName = $templateName . self::MOBILE_TEMPLATE_POSTFIX;
+				if ( !empty( $wgEnableSeoFriendlyImagesForMobile ) ) {
+					$templateName = $templateName . self::MOBILE_TEMPLATE_POSTFIX . '-experimental';
+				} else {
+					$templateName = $templateName . self::MOBILE_TEMPLATE_POSTFIX;
+				}
 			}
 		} else {
 			$templateName = $type;

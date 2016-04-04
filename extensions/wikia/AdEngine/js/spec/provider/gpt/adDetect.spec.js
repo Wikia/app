@@ -5,11 +5,42 @@ describe('Method ext.wikia.adEngine.provider.gpt.adDetect.onAdLoad', function ()
 	var noop = function () {},
 		returnObj = function () { return {}; };
 
-	function desktop(name, slotName, gptEvent, windowMock, successOrHop, forceAdType) {
-		it('calls ' + successOrHop + ' for ' + name + ' ' + slotName + ' on desktop', function () {
+	function createSlot(slotName, success, collapse, hop) {
+		return {
+			name: slotName,
+			success: success,
+			collapse: collapse,
+			hop: hop,
+			pre: noop
+		};
+	}
+
+	function assertResult(result, mocks) {
+		switch (result) {
+			case 'success':
+				expect(mocks.success.calls.count()).toBe(1, 'Success callback should be called once');
+				expect(mocks.collapse.calls.count()).toBe(0, 'Collapse callback should not be called once');
+				expect(mocks.hop.calls.count()).toBe(0, 'Hop callback should not be called');
+				break;
+			case 'collapse':
+				expect(mocks.success.calls.count()).toBe(0, 'Success callback should not be called once');
+				expect(mocks.collapse.calls.count()).toBe(1, 'Collapse callback should be called once');
+				expect(mocks.hop.calls.count()).toBe(0, 'Hop callback should not be called');
+				break;
+			case 'hop':
+				expect(mocks.success.calls.count()).toBe(0, 'Success callback should not be called');
+				expect(mocks.collapse.calls.count()).toBe(0, 'Collapse callback should not be called once');
+				expect(mocks.hop.calls.count()).toBe(1, 'Hop callback should be called');
+				break;
+		}
+	}
+
+	function desktop(name, slotName, gptEvent, windowMock, result, forceAdType) {
+		it('calls ' + result + ' for ' + name + ' ' + slotName + ' on desktop', function () {
 			var gptHop, mocks = {
 				log: noop,
 				success: noop,
+				collapse: noop,
 				hop: noop,
 				iframe: {},
 				window: windowMock,
@@ -20,12 +51,7 @@ describe('Method ext.wikia.adEngine.provider.gpt.adDetect.onAdLoad', function ()
 						};
 					}
 				},
-				messageListener: {},
-				adSlot: {
-					getShortSlotName: function (slotName) {
-						return slotName;
-					}
-				}
+				messageListener: {}
 			};
 
 			mocks.iframe.contentWindow = {
@@ -39,30 +65,25 @@ describe('Method ext.wikia.adEngine.provider.gpt.adDetect.onAdLoad', function ()
 				mocks.log,
 				mocks.window,
 				mocks.adContext,
-				mocks.messageListener,
-				mocks.adSlot
+				mocks.messageListener
 			);
 
 			spyOn(mocks, 'success');
+			spyOn(mocks, 'collapse');
 			spyOn(mocks, 'hop');
 
-			gptHop.onAdLoad(slotName, gptEvent, mocks.iframe, mocks.success, mocks.hop);
+			gptHop.onAdLoad(createSlot(slotName, mocks.success, mocks.collapse, mocks.hop), gptEvent, mocks.iframe);
 
-			if (successOrHop === 'success') {
-				expect(mocks.success.calls.count()).toBe(1, 'Success callback should be called once');
-				expect(mocks.hop.calls.count()).toBe(0, 'Hop callback should not be called');
-			} else {
-				expect(mocks.success.calls.count()).toBe(0, 'Success callback should not be called');
-				expect(mocks.hop.calls.count()).toBe(1, 'Hop callback should be called');
-			}
+			assertResult(result, mocks);
 		});
 	}
 
-	function mobile(name, slotName, gptEvent, iframeContentHeight, specialAd, successOrHop) {
-		it('calls ' + successOrHop + ' for ' + name + ' ' + slotName + ' on mobile', function () {
+	function mobile(name, slotName, gptEvent, iframeContentHeight, specialAd, result, forceAdType) {
+		it('calls ' + result + ' for ' + name + ' ' + slotName + ' on mobile', function () {
 			var gptHop, mocks = {
 				log: noop,
 				success: noop,
+				collapse: noop,
 				hop: noop,
 				window: {},
 				iframe: {},
@@ -76,15 +97,12 @@ describe('Method ext.wikia.adEngine.provider.gpt.adDetect.onAdLoad', function ()
 						};
 					}
 				},
-				messageListener: {},
-				adSlot: {
-					getShortSlotName: function (slotName) {
-						return slotName;
-					}
-				}
+				messageListener: {}
 			};
 
-			mocks.iframe.contentWindow = {};
+			mocks.iframe.contentWindow = {
+				'AdEngine_adType': forceAdType
+			};
 			mocks.iframe.contentWindow.document = mocks.iframeDoc;
 
 			// Just call the 'load' callback straight away for the test
@@ -103,22 +121,16 @@ describe('Method ext.wikia.adEngine.provider.gpt.adDetect.onAdLoad', function ()
 				mocks.log,
 				mocks.window,
 				mocks.adContext,
-				mocks.messageListener,
-				mocks.adSlot
+				mocks.messageListener
 			);
 
 			spyOn(mocks, 'success');
+			spyOn(mocks, 'collapse');
 			spyOn(mocks, 'hop');
 
-			gptHop.onAdLoad(slotName, gptEvent, mocks.iframe, mocks.success, mocks.hop);
+			gptHop.onAdLoad(createSlot(slotName, mocks.success, mocks.collapse, mocks.hop), gptEvent, mocks.iframe);
 
-			if (successOrHop === 'success') {
-				expect(mocks.success.calls.count()).toBe(1, 'Success callback should be called once');
-				expect(mocks.hop.calls.count()).toBe(0, 'Hop callback should not be called');
-			} else {
-				expect(mocks.success.calls.count()).toBe(0, 'Success callback should not be called');
-				expect(mocks.hop.calls.count()).toBe(1, 'Hop callback should be called');
-			}
+			assertResult(result, mocks);
 		});
 	}
 
@@ -137,7 +149,7 @@ describe('Method ext.wikia.adEngine.provider.gpt.adDetect.onAdLoad', function ()
 	desktop('1x1 ad', 'SLOT_NAME', { isEmpty: false, size: [1, 1] }, {}, 'hop');
 	desktop('1x1 ad', 'INVISIBLE_SKIN', { isEmpty: false, size: [1, 1] }, {}, 'hop');
 
-	desktop('collapsed ad', 'INCONTENT_PLAYER', { isEmpty: false, size: [640, 400] }, {}, 'success', 'collapse');
+	desktop('collapsed ad', 'INCONTENT_PLAYER', { isEmpty: false, size: [640, 400] }, {}, 'collapse', 'collapse');
 
 	// adDriver2ForcedStatus:
 	desktop('proper collapse slot ad', 'FORCED_SLOT_NAME', { isEmpty: false, size: [1, 1] }, {
@@ -181,6 +193,8 @@ describe('Method ext.wikia.adEngine.provider.gpt.adDetect.onAdLoad', function ()
 	// If isEmpty, then shouldn't really check the size:
 	mobile('1x1 ad', 'SLOT_NAME', { isEmpty: false, size: [1, 1] }, 1, false, 'hop');
 	mobile('1x1 ad', 'SLOT_NAME', { isEmpty: false, size: [1, 1] }, 100, false, 'hop');
+
+	mobile('collapsed mobile ad', 'SLOT_NAME', { isEmpty: false, size: [320, 50] }, 50, false, 'collapse', 'collapse');
 
 	// Special ads
 	mobile('Special ad (Celtra, etc)', 'SLOT_NAME', { isEmpty: false, size: [300, 250] }, 0, true, 'success');

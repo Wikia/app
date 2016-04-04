@@ -308,7 +308,6 @@ class LightboxControllerTest extends WikiaBaseTest {
 		$format = \WikiaResponse::FORMAT_JSON;
 
 		global $wgLang;
-		$views = wfMessage( 'lightbox-video-views', $wgLang->formatNum( $data['videoViews'] ) )->parse();
 
 		$mediaDetail = [
 			'mediaType'         => $mediaType,
@@ -322,7 +321,6 @@ class LightboxControllerTest extends WikiaBaseTest {
 			'userPageUrl'       => $userPageUrl,
 			'articles'          => $articles,
 			'providerName'      => $providerName,
-			'views'             => $views,
 			'exists'            => $exists,
 			'isAdded'           => $isAdded,
 			'extraHeight'       => $extraHeight,

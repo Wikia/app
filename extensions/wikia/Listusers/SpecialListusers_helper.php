@@ -7,7 +7,12 @@
  * @version: $Id$
  */
 
+use Wikia\DependencyInjection\Injector;
+use Wikia\Service\User\Permissions\PermissionsService;
+use Wikia\Service\User\Permissions\PermissionsServiceAccessor;
+
 class ListusersData {
+	use PermissionsServiceAccessor;
 	var $mCityId;
 	var $mGroups;
 	var $mFilterGroup;
@@ -181,7 +186,7 @@ class ListusersData {
 			}
 
 			if ( $data['cnt'] > 0 ) {
-				$userIsBlocked = $wgUser->isBlocked();
+				$userIsBlocked = $wgUser->isBlocked( true, false );
 				$sk = RequestContext::getMain()->getSkin();
 				/* select records */
 				$oRes = $dbs->select(
@@ -481,10 +486,9 @@ class ListusersData {
 		}
 
 		$central_groups = array();
-		if ( class_exists('UserRights') ) {
-			if ( !UserRights::isCentralWiki() ) {
-				$central_groups = UserRights::getGlobalGroups($user);
-			}
+		global $wgWikiaIsCentralWiki;
+		if ( $wgWikiaIsCentralWiki === false  ) {
+			$central_groups = $this->permissionsService()->getExplicitGlobalGroups( $user );
 		}
 
 		# add groups

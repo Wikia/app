@@ -485,34 +485,6 @@ Coby powstřimać nadužyća, možliwość wysyuańa připůmńeń naštalowano 
 Możliwe co właśńy zmjyńiłżeś swoje hasło abo poprosiłżeś uo nowe tymczasowe hasło.',
 'resetpass-temp-password'   => 'Tymczasowe hasło:',
 
-# Special:PasswordReset
-'passwordreset'                    => 'Wyczyść hasło',
-'passwordreset-text'               => 'Wypełnij formularz, aby otrzymać e‐mail z przypomnieniem danych Twojego konta.',
-'passwordreset-legend'             => 'Wyczyść hasło',
-'passwordreset-disabled'           => 'No tyj wiki zamkńynto resytowańy hasył.',
-'passwordreset-pretext'            => '{{PLURAL:$1||Wćep jydną z danych}}',
-'passwordreset-username'           => 'Mjano używacza:',
-'passwordreset-domain'             => 'Domyna:',
-'passwordreset-capture'            => 'Czy pokazywać treść wiadomości e‐mail?',
-'passwordreset-capture-help'       => 'Eli zaznaczysz to pole, łoboczysz wjadomość e-mail z hasłem.',
-'passwordreset-email'              => 'E-brif:',
-'passwordreset-emailtitle'         => 'Kůnto na {{GRAMMAR:MS.lp|{{SITENAME}}}}',
-'passwordreset-emailtext-ip'       => 'Ftůś (cheba Ty, s IP $1)
-pado, aże chce informacyji lo konta do {{GRAMMAR:MS.lp{{SITENAME}}}} ($4).
-Z tem ausdrukiem sum powjonzyne konta:
-$2
-
-{{PLURAL:$3|Tymczasowygo hasła|Tymczasowych haseł}} możno użyć w ciągu {{PLURAL:$5|jednego dnia|$5 dni}}.
-
-Jak chćołżeś gynał to zrobjyć, to zalůgůj śe terozki a podej swoje hasło.
-
-Jak ktůś inkszy chćoł nowe hasło abo jak Ci śe przipůmńouo stare a ńy chcesz nowygo, to zignoruj to a używej starygo hasła.',
-'passwordreset-emailelement'       => 'Nazwa sprowjorza: $1
-Tymczasowe hasło: $2',
-'passwordreset-emailsent'          => 'E-brif posłany.',
-'passwordreset-emailsent-capture'  => 'E-brif posłony, kerego widać niżej.',
-'passwordreset-emailerror-capture' => 'Ńy udało sie wysłać wjadomości lo sprowjorza: $1',
-
 # Special:ChangeEmail
 'changeemail'          => 'Pomjyno ausdruka e-mail',
 'changeemail-header'   => 'Pomjyno ausduku e-mail',

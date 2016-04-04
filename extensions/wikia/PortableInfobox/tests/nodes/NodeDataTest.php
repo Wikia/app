@@ -7,7 +7,7 @@ class NodeDataTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @covers       Node::getSource
+	 * @covers       \Wikia\PortableInfobox\Parser\Nodes\Node::getSource
 	 * @dataProvider sourceDataProvider
 	 *
 	 * @param $markup
@@ -39,8 +39,8 @@ class NodeDataTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @covers       Node::getExternalParser
-	 * @covers       Node::setExternalParser
+	 * @covers       \Wikia\PortableInfobox\Parser\Nodes\Node::getExternalParser
+	 * @covers       \Wikia\PortableInfobox\Parser\Nodes\Node::setExternalParser
 	 * @dataProvider parserTestDataProvider
 	 *
 	 * @param $parser
@@ -60,7 +60,7 @@ class NodeDataTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @covers       NodeData::getData
+	 * @covers       \Wikia\PortableInfobox\Parser\Nodes\NodeData::getData
 	 * @dataProvider dataProvider
 	 *
 	 * @param $markup
@@ -98,7 +98,7 @@ class NodeDataTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @covers       Node::getRenderData
+	 * @covers       \Wikia\PortableInfobox\Parser\Nodes\Node::getRenderData
 	 * @dataProvider dataRenderProvider
 	 *
 	 * @param $markup
@@ -121,7 +121,7 @@ class NodeDataTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @covers       Node::isType
+	 * @covers       \Wikia\PortableInfobox\Parser\Nodes\Node::isType
 	 * @dataProvider isTypeDataProvider
 	 *
 	 * @param $markup
@@ -143,7 +143,7 @@ class NodeDataTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @covers       Node::getType
+	 * @covers       \Wikia\PortableInfobox\Parser\Nodes\Node::getType
 	 * @dataProvider typeDataProvider
 	 *
 	 * @param $markup

@@ -102,6 +102,10 @@ class CreateNewWikiTask extends BaseTask {
 		$output = wfShellExec( $cmd, $exitStatus );
 		$this->info( 'run refreshLinks.php', ['exitStatus' => $exitStatus, 'output' => $output] );
 
+		$cmd = sprintf( "SERVER_ID={$wgCityId} php {$IP}/maintenance/updateSpecialPages.php --server={$server}" );
+		$output = wfShellExec( $cmd, $exitStatus );
+		$this->info( 'run updateSpecialPages.php', ['exitStatus' => $exitStatus, 'output' => $output] );
+
 		$this->info( "Remove edit lock" );
 		$variable = \WikiFactory::getVarByName( 'wgReadOnly', $wgCityId );
 		if ( isset( $variable->cv_variable_id ) ) {

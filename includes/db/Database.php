@@ -946,13 +946,13 @@ abstract class DatabaseBase implements DatabaseType {
 		}
 
 		# @author: wladek
-		$requestIdComment = '';
-		if ( class_exists("\\Wikia\\Util\\RequestId") ) {
-			$requestIdComment = sprintf(" - %s",\Wikia\Util\RequestId::instance()->getRequestId());
+		$traceIdComment = '';
+		if ( class_exists("\\Wikia\\Tracer\\WikiaTracer") ) {
+			$traceIdComment = sprintf(" - %s",\Wikia\Tracer\WikiaTracer::instance()->getTraceId());
 		}
 		# Wikia change - end
 
-		$commentedSql = preg_replace( '/\s/', " /* $fname $userName$requestIdComment */ ", $sql, 1 );
+		$commentedSql = preg_replace( '/\s/', " /* $fname $userName$traceIdComment */ ", $sql, 1 );
 
 		# Wikia change - begin
 		# @author macbre
@@ -960,18 +960,6 @@ abstract class DatabaseBase implements DatabaseType {
 		if ( strpos( $sql, ' ' ) === false ) {
 			$commentedSql = "{$sql} /* {$fname} {$userName} */";
 		}
-
-		// PLATFORM-1311: log deletes on `revision` table
-		if ( startsWith( $sql, 'DELETE ' ) && strpos( $sql, '`revision`' ) !== false ) {
-			WikiaLogger::instance()->warning( 'PLATFORM-1311', [
-				'reason' => 'SQL DELETE',
-				'fname' => $fname,
-				'sql' => $sql,
-				'exception' => new Exception(),
-			] );
-		}
-		// Wikia change- end
-
 		# Wikia change - end
 
 		# If DBO_TRX is set, start a transaction
@@ -993,7 +981,8 @@ abstract class DatabaseBase implements DatabaseType {
 			$sqlx = strtr( $sqlx, "\t\n", '  ' );
 
 			$master = $isMaster ? 'master' : 'slave';
-			wfDebug( "Query {$this->mDBname} ($cnt) ($master): $sqlx\n" );
+			$DBuser = $this->getLBInfo( 'user' );
+			wfDebug( "Query {$this->mDBname} (DB user: {$DBuser}) ($cnt) ($master): $sqlx\n" );
 		}
 
 		if ( istainted( $sql ) & TC_MYSQL ) {
@@ -3741,6 +3730,16 @@ abstract class DatabaseBase implements DatabaseType {
 			$num_rows = false;
 		}
 
+		if ( startsWith( $sql, 'DELETE ' ) && strpos( $sql, '`revision`' ) !== false ) {
+
+			WikiaLogger::instance()->warning( 'PLATFORM-1311', [
+				'reason' => 'SQL DELETE',
+				'fname' => $fname,
+				'sql' => $sql,
+				'exception' => new Exception(),
+			] );
+		}
+
 		$context = [
 			'method'      => $fname,
 			'elapsed'     => $elapsedTime,
@@ -3749,11 +3748,25 @@ abstract class DatabaseBase implements DatabaseType {
 			'server'      => $this->mServer,
 			'server_role' => $isMaster ? 'master' : 'slave',
 			'db_name'     => $this->mDBname,
+			'db_user'     => $this->getLBInfo( 'user' ),
 			'exception'   => new Exception(), // log the backtrace
 		];
 
 		if ( $this->getSampler()->shouldSample() ) {
 			$this->getWikiaLogger()->info( "SQL {$sql}", $context );
+		}
+
+		if ( $this->isWriteQuery($sql) &&
+			(
+				strpos( $sql, '`revision`' ) !== false
+				|| strpos( $sql, '`page`' ) !== false
+				|| strpos( $sql, '`archive`' ) !== false
+				|| strpos( $sql, '`text`' ) !== false
+				|| strpos( $sql, '`filearchive`' ) !== false
+				|| strpos( $sql, '`oldimage`' ) !== false
+			)
+		) {
+			$this->getWikiaLogger()->info( "Important table write - SQL {$sql}", $context );
 		}
 
 		# PLATFORM-1648: 1% sampling does not really catch spikes of slow DB queries

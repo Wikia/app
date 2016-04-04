@@ -37,7 +37,7 @@ class VoteHelper {
 			[ 'ipblocks'  => [ 'LEFT JOIN', 'user_id = ipb_user' ] ]
 		);
 
-		$out = array();
+		$out = [ ];
 
 		while ( $row = $res->fetchObject() ) {
 			$out[] = $row->user_id;

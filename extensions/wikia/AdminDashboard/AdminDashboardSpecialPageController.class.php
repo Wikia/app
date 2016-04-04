@@ -17,7 +17,7 @@ class AdminDashboardSpecialPageController extends WikiaSpecialPageController {
 	 *
 	 */
 	public function index() {
-		$this->wg->Out->setPageTitle(wfMsg('admindashboard-title'));
+		$this->wg->Out->setPageTitle( wfMsg( 'admindashboard-header' ) );
 		if (!$this->wg->User->isAllowed( 'admindashboard' )) {
 			$this->displayRestrictionError();
 			return false;  // skip rendering
@@ -40,7 +40,7 @@ class AdminDashboardSpecialPageController extends WikiaSpecialPageController {
 		if( !empty( $this->wg->EnableSpecialVideosExt ) ) {
 			$this->showVideoLink = true;
 			$this->urlAddVideo = Title::newFromText('WikiaVideoAdd', NS_SPECIAL)->getFullURL();
-			$this->urlAddVideoReturnUrl = SpecialPage::getTitleFor("Videos")->escapeLocalUrl( "sort=recent" );
+			$this->urlAddVideoReturnUrl = SpecialPage::getTitleFor("Videos")->escapeLocalUrl();
 		} else {
 			$this->showVideoLink = false;
 		}

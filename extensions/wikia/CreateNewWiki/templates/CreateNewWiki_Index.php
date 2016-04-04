@@ -87,24 +87,6 @@
 				</nav>
 			</form>
 		</li>
-
-		<? if ( !$isUserLoggedIn ): ?>
-		<li id="UserAuth" class="step">
-			<h2 class="headline"><?= wfMessage( 'cnw-userauth-headline' )->escaped() ?></h2>
-			<p class="creative"><?= wfMessage( 'cnw-userauth-creative' )->escaped() ?></p>
-			<div class="signup-loginmodal"><?= F::app()->sendRequest( 'UserLoginSpecial', 'modal' ) ?></div>
-			<div class="signup-marketing">
-				<h3><?= wfMessage( 'cnw-userauth-marketing-heading' )->escaped() ?></h3>
-				<p><?= wfMessage( 'cnw-userauth-marketing-body' )->parse() ?></p>
-				<form method="post" action="<?= $signupUrl ?>" id="SignupRedirect">
-					<input type="hidden" name="returnto" value="">
-					<input type="hidden" name="redirected" value="true">
-					<input type="hidden" name="uselang" value="<?= Sanitizer::encodeAttribute( $params['wikiLanguage'] ) ?>">
-					<input type="submit" value="<?= wfMessage( 'cnw-userauth-signup-button' )->escaped() ?>">
-				</form>
-			</div>
-		</li>
-		<? endif; // if isLoggedIn ?>
 		<li id="DescWiki" class="step">
 			<h2><?= wfMessage( 'cnw-desc-headline' ) ?></h2>
 			<p class="creative"><?= wfMessage( 'cnw-desc-creative' )->escaped() ?></p>
@@ -203,13 +185,13 @@
 	</ol>
 	<ul id="StepsIndicator">
 		<?php
-			$steps = $isUserLoggedIn ? 4 : 5;
-			$active = empty( $currentStep ) ? 1 : 3;
-			for( $i = 0; $i < $steps; $i++ ) {
+			$createNewWikiSteps = 4;
+			$currentStep = empty( $currentStep ) ? 1 : 3;
+			for( $i = 0; $i < $createNewWikiSteps; $i++ ) {
 		?>
-			<li class="step<?= $active > 0 ? ' active' : '' ?>"></li>
+			<li class="step<?= $currentStep > 0 ? ' active' : '' ?>"></li>
 		<?php
-				$active--;
+				$currentStep--;
 			}
 		?>
 	</ul>

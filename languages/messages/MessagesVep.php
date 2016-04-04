@@ -541,16 +541,6 @@ Miše tulda sistemha lopuližikš, teile pidab säta uz' peitsana naku:",
 Voib olda, tö olet jo toižetanuded peitsanan vai pakinuded uden peitsanan.',
 'resetpass-temp-password'   => 'Pordaigaline peitsana:',
 
-# Special:PasswordReset
-'passwordreset'              => 'Peitsanan alustuz',
-'passwordreset-username'     => 'Kävutajan nimi:',
-'passwordreset-domain'       => 'Domen',
-'passwordreset-capture'      => 'Ozutada-k loptud kirjeine?',
-'passwordreset-email'        => 'E-počtan adres:',
-'passwordreset-emailelement' => 'Kävutajannimi: $1
-Aigaline peitsana: $2',
-'passwordreset-emailsent'    => 'Muštatai kirjeine oigetihe e-počtadme',
-
 # Special:ChangeEmail
 'changeemail-newemail' => "Uz' e-počtan adres",
 'changeemail-submit'   => 'Toižetada e-počtan adres',

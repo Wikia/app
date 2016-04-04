@@ -167,24 +167,29 @@ class CloseWikiMaintenance {
 			if( $row->city_flags & WikiFactory::FLAG_CREATE_IMAGE_ARCHIVE ) {
 				if( $dbname && $folder ) {
 					$this->log( "Dumping images on remote host" );
-					$source = $this->tarFiles( $folder, $dbname, $cityid );
-					if( $source ) {
-                        $retval = DumpsOnDemand::putToAmazonS3( $source, !$hide,  MimeMagic::singleton()->guessMimeType( $source ) );
-						if( $retval > 0 ) {
-							$this->log( "putToAmazonS3 command failed." );
-							echo "Can't copy images to remote host. Please, fix that and rerun";
-							die( 1 );
-						} else {
-							$this->log( "{$source} copied to S3 Amazon" );
-							unlink( $source );
-							$newFlags = $newFlags | WikiFactory::FLAG_CREATE_IMAGE_ARCHIVE | WikiFactory::FLAG_HIDE_DB_IMAGES;
+					try {
+						$source = $this->tarFiles( $folder, $dbname, $cityid );
+
+						if( is_string( $source ) ) {
+							$retval = DumpsOnDemand::putToAmazonS3( $source, !$hide,  MimeMagic::singleton()->guessMimeType( $source ) );
+							if( $retval > 0 ) {
+								$this->log( "putToAmazonS3 command failed." );
+								echo "Can't copy images to remote host. Please, fix that and rerun";
+								die( 1 );
+							} else {
+								$this->log( "{$source} copied to S3 Amazon" );
+								unlink( $source );
+							}
 						}
+
+						$newFlags = $newFlags | WikiFactory::FLAG_CREATE_IMAGE_ARCHIVE | WikiFactory::FLAG_HIDE_DB_IMAGES;
 					}
-					else {
+					catch( WikiaException $e ) {
 						/**
 						 * actually it's better to die than remove
 						 * images later without backup
 						 */
+						$this->log( $e->getMessage() );
 						echo "Can't copy images to remote host. Source {$source} is not defined";
 					}
 				}
@@ -212,27 +217,7 @@ class CloseWikiMaintenance {
 				);
 				$this->log( "{$row->city_id} removed from WikiFactory tables" );
 
-				/**
-				 * remove records from dataware
-				 */
-				global $wgExternalDatawareDB;
-				$datawareDB = wfGetDB( DB_MASTER, array(), $wgExternalDatawareDB );
-				$datawareDB->delete( "pages", array( "page_wikia_id" => $row->city_id ), __METHOD__ );
-				$this->log( "{$row->city_id} removed from pages table" );
-
-				/**
-				 * remove images from D.I.R.T.
-				 */
-				$datawareDB->delete( "image_review", array( "wiki_id" => $row->city_id ), __METHOD__  );
-				$this->log( "{$row->city_id} removed from image_review table" );
-
-				$datawareDB->delete( "image_review_stats", array( "wiki_id" => $row->city_id ), __METHOD__  );
-				$this->log( "{$row->city_id} removed from image_review_stats table" );
-
-				$datawareDB->delete( "image_review_wikis", array( "wiki_id" => $row->city_id ), __METHOD__  );
-				$this->log( "{$row->city_id} removed from image_review_wikis table" );
-
-				$datawareDB->commit();
+				$this->cleanupSharedData( intval( $row->city_id ) );
 
 				/**
 				 * drop database, get db handler for proper cluster
@@ -318,13 +303,23 @@ class CloseWikiMaintenance {
 	 * @param string $dbname database name
 	 * @param int $cityid city ID
 	 *
-	 * @return string path to created archive or false if not created
+	 * @return string path to created archive or false if there are no files to backup (S3 bucket does not exist / is empty)
+	 * @throws WikiaException thrown on failed backups
 	 */
-	public function tarFiles( $directory, $dbname, $cityid ) {
+	private function tarFiles( $directory, $dbname, $cityid ) {
 		$swiftEnabled = WikiFactory::getVarValueByName( 'wgEnableSwiftFileBackend', $cityid );
 		$wgUploadPath = WikiFactory::getVarValueByName( 'wgUploadPath', $cityid );
 
 		if ( $swiftEnabled ) {
+			// check that S3 bucket for this wiki exists (PLATFORM-1199)
+			$swiftStorage = \Wikia\SwiftStorage::newFromWiki( $cityid );
+			$isEmpty = intval( $swiftStorage->getContainer()->object_count ) === 0;
+
+			if ( $isEmpty ) {
+				$this->log( sprintf( "'%s' S3 bucket is empty, leave early\n", $swiftStorage->getContainerName() ) );
+				return false;
+			}
+
 			// sync Swift container to the local directory
 			$directory = sprintf( "/tmp/images/{$dbname}/" );
 
@@ -373,7 +368,7 @@ class CloseWikiMaintenance {
 		}
 		else {
 			$this->log( "List of files in {$directory} is empty" );
-			$result = false;
+			throw new WikiaException( "List of files in {$directory} is empty" );
 		}
 		return $result;
 	}
@@ -441,6 +436,62 @@ class CloseWikiMaintenance {
 				'exception' => $ex,
 				'city_id' => $cityid
 			] );
+		}
+	}
+
+	/**
+	 * Clean up the shared data for a given wiki ID
+	 *
+	 * @see PLATFORM-1173
+	 * @see PLATFORM-1204
+	 * @see PLATFORM-1849
+	 *
+	 * @author Macbre
+	 *
+	 * @param int $city_id
+	 */
+	private function cleanupSharedData( $city_id ) {
+		global $wgExternalDatawareDB, $wgSpecialsDB, $wgStatsDB;
+		$dataware = wfGetDB( DB_MASTER, [], $wgExternalDatawareDB );
+		$specials = wfGetDB( DB_MASTER, [], $wgSpecialsDB );
+		$stats    = wfGetDB( DB_MASTER, [], $wgStatsDB );
+
+		/**
+		 * remove records from image_review
+		 */
+		$this->doTableCleanup( $dataware, 'image_review',       $city_id );
+		$this->doTableCleanup( $dataware, 'image_review_stats', $city_id );
+		$this->doTableCleanup( $dataware, 'image_review_wikis', $city_id );
+
+		/**
+		 * remove records from stats-related tables
+		 */
+		$this->doTableCleanup( $dataware, 'pages',              $city_id, 'page_wikia_id' );
+		$this->doTableCleanup( $specials, 'events_local_users', $city_id );
+		$this->doTableCleanup( $stats,    'events',             $city_id );
+	}
+
+	/**
+	 * Perform a database cleanup for a given wiki
+	 *
+	 * This method waits for slaves to catch up after every DELETE query that affected at least one row
+	 *
+	 * @param DatabaseBase $db database handler
+	 * @param string $table name of table to clean up
+	 * @param int $city_id ID of wiki to remove from the table
+	 * @param string $wiki_id_column table column name to use when querying for wiki ID (defaults to "wiki_id")
+	 *
+	 * @throws DBUnexpectedError
+	 * @throws MWException
+	 */
+	private function doTableCleanup( DatabaseBase $db, $table, $city_id, $wiki_id_column = 'wiki_id' ) {
+		$db->delete( $table, [ $wiki_id_column => $city_id ], __METHOD__ );
+
+		$this->log( sprintf( "#%d: removed %d rows from %s.%s table", $city_id, $db->affectedRows(), $db->getDBname(), $table ) );
+
+		// throttle delete queries
+		if ( $db->affectedRows() > 0 ) {
+			wfWaitForSlaves( $db->getDBname() );
 		}
 	}
 

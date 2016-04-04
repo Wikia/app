@@ -56,6 +56,8 @@ describe('AdContext', function () {
 			callback: noop
 		},
 		queryParams = [
+			'evolve2',
+			'hitMedia',
 			'liftium',
 			'turtle'
 		];
@@ -283,6 +285,19 @@ describe('AdContext', function () {
 		expect(adContext.getContext().providers.turtle).toBeFalsy();
 	});
 
+	it('makes providers.hitMedia true when country in instantGlobals.wgAdDriverHitMediaCountries', function () {
+		var adContext;
+
+		mocks.win = {};
+		mocks.instantGlobals = {wgAdDriverHitMediaCountries: ['CURRENT_COUNTRY', 'ZZ']};
+		adContext = getModule();
+		expect(adContext.getContext().providers.hitMedia).toBeTruthy();
+
+		mocks.instantGlobals = {wgAdDriverHitMediaCountries: ['YY']};
+		adContext = getModule();
+		expect(adContext.getContext().providers.hitMedia).toBeFalsy();
+	});
+
 	it('calls whoever registered with addCallback each time setContext is called', function () {
 		var adContext;
 
@@ -370,12 +385,12 @@ describe('AdContext', function () {
 	it('disables krux when wiki is directed at children', function () {
 		var adContext;
 
-		mocks.win = {ads: {context: {targeting: {wikiDirectedAtChildren: false, enableKruxTargeting: true}}}};
+		mocks.win = {ads: {context: {targeting: {esrbRating: 'teen', enableKruxTargeting: true}}}};
 		mocks.instantGlobals = {wgAdDriverKruxCountries: ['CURRENT_COUNTRY']};
 		adContext = getModule();
 		expect(adContext.getContext().targeting.enableKruxTargeting).toBeTruthy();
 
-		mocks.win = {ads: {context: {targeting: {wikiDirectedAtChildren: true, enableKruxTargeting: true}}}};
+		mocks.win = {ads: {context: {targeting: {esrbRating: 'ec', enableKruxTargeting: true}}}};
 		mocks.instantGlobals = {wgAdDriverKruxCountries: ['CURRENT_COUNTRY']};
 		adContext = getModule();
 		expect(adContext.getContext().targeting.enableKruxTargeting).toBeFalsy();
@@ -547,6 +562,19 @@ describe('AdContext', function () {
 		mocks.instantGlobals = {wgAdDriverIncontentPlayerSlotCountries: ['YY']};
 		adContext = getModule();
 		expect(adContext.getContext().slots.incontentPlayer).toBeFalsy();
+	});
+
+	it('enables incontent_leaderboard slot when ' +
+	'country in instatnGlobals.wgAdDriverIncontentLeaderboardSlotCountries', function () {
+		var adContext;
+
+		mocks.instantGlobals = {wgAdDriverIncontentLeaderboardSlotCountries: ['HH', 'CURRENT_COUNTRY', 'ZZ']};
+		adContext = getModule();
+		expect(adContext.getContext().slots.incontentLeaderboard).toBeTruthy();
+
+		mocks.instantGlobals = {wgAdDriverIncontentLeaderboardSlotCountries: ['YY']};
+		adContext = getModule();
+		expect(adContext.getContext().slots.incontentLeaderboard).toBeFalsy();
 	});
 
 	it('enables incontent_player slot when url param incontentplayer is set', function () {
@@ -891,5 +919,114 @@ describe('AdContext', function () {
 		mocks.instantGlobals = {wgAdDriverEvolve2Countries: ['HH', 'CURRENT_COUNTRY', 'ZZ']};
 		adContext = getModule();
 		expect(adContext.getContext().providers.evolve2).toBeFalsy();
+	});
+
+	it('disable overriding prefooters sizes for mercury', function () {
+		mocks.instantGlobals = {wgAdDriverOverridePrefootersCountries: ['CURRENT_COUNTRY']};
+		mocks.win = {
+			ads: {
+				context: {
+					targeting: {
+						skin: 'mercury',
+						pageType: 'article'
+					}
+				}
+			}
+		};
+
+		expect(getModule().getContext().opts.overridePrefootersSizes).toBeFalsy();
+	});
+
+	it('disable overriding prefooters sizes for home page', function () {
+		mocks.instantGlobals = {wgAdDriverOverridePrefootersCountries: ['CURRENT_COUNTRY']};
+		mocks.win = {
+			ads: {
+				context: {
+					targeting: {
+						skin: 'oasis',
+						pageType: 'home'
+					}
+				}
+			}
+		};
+
+		expect(getModule().getContext().opts.overridePrefootersSizes).toBeFalsy();
+	});
+
+	it('disable overriding prefooters sizes by country', function () {
+		mocks.instantGlobals = {wgAdDriverOverridePrefootersCountries: ['ZZ']};
+		mocks.win = {
+			ads: {
+				context: {
+					targeting: {
+						skin: 'oasis',
+						pageType: 'article'
+					}
+				}
+			}
+		};
+
+		expect(getModule().getContext().opts.overridePrefootersSizes).toBeFalsy();
+	});
+
+	it('enable overriding prefooters sizes', function () {
+		mocks.instantGlobals = {wgAdDriverOverridePrefootersCountries: ['CURRENT_COUNTRY']};
+		mocks.win = {
+			ads: {
+				context: {
+					targeting: {
+						skin: 'oasis',
+						pageType: 'article'
+					}
+				}
+			}
+		};
+
+		expect(getModule().getContext().opts.overridePrefootersSizes).toBeTruthy();
+	});
+
+	it('disable overriding leaderboard sizes for mercury', function () {
+		mocks.instantGlobals = {wgAdDriverOverridePrefootersCountries: ['JP']};
+		mocks.win = {
+			ads: {
+				context: {
+					targeting: {
+						skin: 'mercury'
+					}
+				}
+			}
+		};
+
+		expect(getModule().getContext().opts.overridyLeaderboardSizes).toBeFalsy();
+	});
+
+	it('disable overriding leaderboard sizes by country', function () {
+		mocks.instantGlobals = {wgAdDriverOverridePrefootersCountries: ['ZZ']};
+		mocks.win = {
+			ads: {
+				context: {
+					targeting: {
+						skin: 'oasis'
+					}
+				}
+			}
+		};
+
+		expect(getModule().getContext().opts.overridyLeaderboardSizes).toBeFalsy();
+	});
+
+	it('enable overriding leaderboard sizes', function () {
+		mocks.instantGlobals = {wgAdDriverOverridePrefootersCountries: ['JP']};
+		mocks.win = {
+			ads: {
+				context: {
+					targeting: {
+						skin: 'oasis'
+					}
+				}
+			}
+		};
+
+		expect(getModule().getContext().opts.overridyLeaderboardSizes).toBeFalsy();
 	});
 });

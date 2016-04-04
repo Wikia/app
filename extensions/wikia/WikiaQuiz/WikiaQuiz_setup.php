@@ -79,10 +79,6 @@ function WikiaQuizAjax() {
 }
 
 //Edit page
-
-// permissions
-$wgGroupPermissions['*']['wikiaquiz'] = false;
-$wgGroupPermissions['staff']['wikiaquiz'] = true;
 $wgNamespaceProtection[NS_WIKIA_QUIZ]      = array( 'wikiaquiz' );
 $wgNamespaceProtection[NS_WIKIA_QUIZARTICLE] = array( 'wikiaquiz' );
 $wgNamespaceProtection[NS_WIKIA_PLAYQUIZ] = array( 'wikiaquiz' );

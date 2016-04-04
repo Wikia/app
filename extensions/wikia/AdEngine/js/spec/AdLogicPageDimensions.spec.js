@@ -34,7 +34,13 @@ describe('AdLogicPageDimensions', function () {
 			logMock = noop,
 			documentMock = {documentElement: {scrollHeight: pageLength, scrollWidth: 1280}},
 			slotTweakerMock = {hide: noop, show: noop, hackChromeRefresh: noop},
-			adLogicPageDimensions = modules['ext.wikia.adEngine.adLogicPageDimensions'](windowMock, documentMock, logMock, slotTweakerMock, adHelperMock),
+			adLogicPageDimensions = modules['ext.wikia.adEngine.adLogicPageDimensions'](
+				windowMock,
+				documentMock,
+				logMock,
+				slotTweakerMock,
+				adHelperMock
+			),
 			fillInSlotCalled = false,
 			fillInSlotMock = function () { fillInSlotCalled = true; };
 
@@ -187,7 +193,13 @@ describe('AdLogicPageDimensions', function () {
 				show: function () { adWasShown = true; },
 				hackChromeRefresh: noop
 			},
-			adLogicPageDimensions = modules['ext.wikia.adEngine.adLogicPageDimensions'](windowMock, documentMock, logMock, slotTweakerMock, adHelperMock),
+			adLogicPageDimensions = modules['ext.wikia.adEngine.adLogicPageDimensions'](
+				windowMock,
+				documentMock,
+				logMock,
+				slotTweakerMock,
+				adHelperMock
+			),
 			fillInSlotMock = function () { adLoadCounter += 1; };
 
 		documentMock.documentElement.scrollHeight = 1000;

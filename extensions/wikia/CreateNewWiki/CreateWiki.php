@@ -21,7 +21,7 @@ class CreateWiki {
 	/* @var $mDBw DatabaseMysql */
 	/* @var $mClusterDB string */
 	private $mName, $mDomain, $mLanguage, $mVertical, $mCategories, $mIP,
-		$mPHPbin, $mMYSQLbin, $mMYSQLdump, $mNewWiki, $mFounder,
+		$mPHPbin, $mNewWiki, $mFounder,
 		$mLangSubdomain, $mDBw, $mWFSettingVars, $mWFVars,
 		$mDefaultTables, $mAdditionalTables,
 		$sDbStarter, $mFounderIp,
@@ -226,6 +226,13 @@ class CreateWiki {
 		//
 		$this->mClusterDB = ( self::ACTIVE_CLUSTER ) ? "wikicities_" . self::ACTIVE_CLUSTER : "wikicities";
 		$this->mNewWiki->dbw = wfGetDB( DB_MASTER, array(), $this->mClusterDB ); // database handler, old $dbwTarget
+
+		// SUS-108: check read-only state of ACTIVE_CLUSTER before performing any DB-related actions
+		$readOnlyReason = $this->mNewWiki->dbw->getLBInfo( 'readOnlyReason' );
+		if ( $readOnlyReason !== false ) {
+			wfProfileOut( __METHOD__ );
+			throw new CreateWikiException( sprintf( '%s is in read-only mode: %s', self::ACTIVE_CLUSTER, $readOnlyReason ), self::ERROR_READONLY );
+		}
 
 		// check if database is creatable
 		// @todo move all database creation checkers to canCreateDatabase
@@ -442,24 +449,10 @@ class CreateWiki {
 	 * @return integer status of check, 0 for success, non 0 otherwise
 	 */
 	private function checkExecutables( ) {
-		/**
-		 * set paths for external tools
-		 */
+		// php-cli is required for spawning PHP maintenance scripts
 		$this->mPHPbin = "/usr/bin/php";
 		if( !file_exists( $this->mPHPbin ) && !is_executable( $this->mPHPbin ) ) {
 			wfDebugLog( "createwiki", __METHOD__ . ": {$this->mPHPbin} doesn't exists or is not executable\n", true );
-			return self::ERROR_BAD_EXECUTABLE_PATH;
-		}
-
-		$this->mMYSQLdump = "/usr/bin/mysqldump";
-		if( !file_exists( $this->mMYSQLdump ) && !is_executable( $this->mMYSQLdump ) ) {
-			wfDebugLog( "createwiki", __METHOD__ . ": {$this->mMYSQLdump} doesn't exists or is not executable\n", true );
-			return self::ERROR_BAD_EXECUTABLE_PATH;
-		}
-
-		$this->mMYSQLbin = "/usr/bin/mysql";
-		if( !file_exists( $this->mMYSQLbin ) && !is_executable( $this->mMYSQLbin ) ) {
-			wfDebug( __METHOD__ . ": {$this->mMYSQLbin} doesn't exists or is not executable\n" );
 			return self::ERROR_BAD_EXECUTABLE_PATH;
 		}
 		return 0;
@@ -950,17 +943,18 @@ class CreateWiki {
 		// WF Variables containter
 		$this->mWFSettingVars = array();
 
-		$this->mWFSettingVars['wgSitename']               = $this->mNewWiki->sitename;
-		$this->mWFSettingVars['wgLogo']                   = self::DEFAULT_WIKI_LOGO;
-		$this->mWFSettingVars['wgUploadPath']             = $this->mNewWiki->images_url;
-		$this->mWFSettingVars['wgUploadDirectory']        = $this->mNewWiki->images_dir;
-		$this->mWFSettingVars['wgDBname']                 = $this->mNewWiki->dbname;
-		$this->mWFSettingVars['wgLocalInterwiki']         = $this->mNewWiki->sitename;
-		$this->mWFSettingVars['wgLanguageCode']           = $this->mNewWiki->language;
-		$this->mWFSettingVars['wgServer']                 = rtrim( $this->mNewWiki->url, "/" );
-		$this->mWFSettingVars['wgEnableSectionEdit']      = true;
+		$this->mWFSettingVars['wgSitename'] = $this->mNewWiki->sitename;
+		$this->mWFSettingVars['wgLogo'] = self::DEFAULT_WIKI_LOGO;
+		$this->mWFSettingVars['wgUploadPath'] = $this->mNewWiki->images_url;
+		$this->mWFSettingVars['wgUploadDirectory'] = $this->mNewWiki->images_dir;
+		$this->mWFSettingVars['wgDBname'] = $this->mNewWiki->dbname;
+		$this->mWFSettingVars['wgLocalInterwiki'] = $this->mNewWiki->sitename;
+		$this->mWFSettingVars['wgLanguageCode'] = $this->mNewWiki->language;
+		$this->mWFSettingVars['wgServer'] = rtrim( $this->mNewWiki->url, "/" );
+		$this->mWFSettingVars['wgEnableSectionEdit'] = true;
 		$this->mWFSettingVars['wgEnableSwiftFileBackend'] = true;
-		$this->mWFSettingVars['wgOasisLoadCommonCSS']     = true;
+		$this->mWFSettingVars['wgOasisLoadCommonCSS'] = true;
+		$this->mWFSettingVars['wgEnablePortableInfoboxEuropaTheme'] = true;
 
 		if ( $this->getInitialNjordExtValue() ) {
 			$this->mWFSettingVars['wgEnableNjordExt'] = true;

@@ -13,29 +13,19 @@ use Wikia\Service\Constants;
 class HeliosClientImpl implements HeliosClient
 {
 	const BASE_URI = "helios_base_uri";
-	const CLIENT_ID = "client_id";
-	const CLIENT_SECRET = "client_secret";
 
 	protected $baseUri;
-	protected $clientId;
-	protected $clientSecret;
 	protected $status;
 
 	/**
 	 * @Inject({
-	 *   Wikia\Service\Helios\HeliosClientImpl::BASE_URI,
-	 *   Wikia\Service\Helios\HeliosClientImpl::CLIENT_ID,
-	 *   Wikia\Service\Helios\HeliosClientImpl::CLIENT_SECRET})
+	 *   Wikia\Service\Helios\HeliosClientImpl::BASE_URI})
 	 * The constructor.
 	 * @param string $baseUri
-	 * @param string $clientId
-	 * @param string $clientSecret
 	 */
-	public function __construct( $baseUri, $clientId, $clientSecret )
+	public function __construct( $baseUri )
 	{
 		$this->baseUri = $baseUri;
-		$this->clientId = $clientId;
-		$this->clientSecret = $clientSecret;
 	}
 
 	/**
@@ -53,10 +43,6 @@ class HeliosClientImpl implements HeliosClient
 	{
 		// Crash if we cannot make HTTP requests.
 		\Wikia\Util\Assert::true( \MWHttpRequest::canMakeRequests() );
-
-		// Add client_id and client_secret to the GET data.
-		$getParams['client_id'] = $this->clientId;
-		$getParams['client_secret'] = $this->clientSecret;
 
 		// Request URI pre-processing.
 		$uri = "{$this->baseUri}{$resourceName}?" . http_build_query($getParams);
@@ -145,7 +131,7 @@ class HeliosClientImpl implements HeliosClient
 
 		$response = $this->request(
 			'token',
-			[ 'grant_type'	=> 'password' ],
+			[],
 			$postData,
 			[ 'method'	=> 'POST' ]
 		);

@@ -1,7 +1,6 @@
 <?php
 use Wikia\Logger\WikiaLogger;
 
-class VideoUploadFailedException extends Exception {}
 /**
  * Class VideoFileUploader
  */
@@ -113,6 +112,10 @@ class VideoFileUploader {
 		}
 		$oTitle = Title::newFromText( $this->getNormalizedDestinationTitle(), NS_FILE );
 
+		if ( $oTitle === null ) {
+			throw new Exception ( wfMessage ('videohandler-unknown-title')->inContentLanguage()->text() );
+		}
+
 		// Check if the user has the proper permissions
 		// Mimicks Special:Upload's behavior
 		$user = F::app()->wg->User;
@@ -132,23 +135,7 @@ class VideoFileUploader {
 		}
 
 		if ( $oTitle->exists() ) {
-			// @TODO
-			// if video already exists make sure that we are in fact changing something
-			// before generating upload (for now this only works for edits)
-			$articleId = $oTitle->getArticleID();
-			$article = Article::newFromID( $articleId );
-			// In case Article is null log more info and throw an exception
-			if ( is_null( $article ) ) {
-				$exception = new VideoUploadFailedException( 'Video upload failed');
-				WikiaLogger::instance()->error('Video upload: title exists but article is null', [
-					'Title object' => $oTitle,
-					'Video title' => $this->getNormalizedDestinationTitle(),
-					'Article ID' => $articleId,
-					'Title from ID' => Title::newFromID($articleId),
-					'exception' => $exception
-				] );
-				throw $exception;
-			}
+			$article = new Article( $oTitle );
 			$content = $article->getContent();
 			$newcontent = $this->getDescription();
 			if ( $content != $newcontent ) {
@@ -537,24 +524,25 @@ class VideoFileUploader {
 	 * @return null|Title
 	 */
 	public static function URLtoTitle( $url, $sTitle = '', $sDescription = '' ) {
-
 		wfProfileIn( __METHOD__ );
 		$oTitle = null;
 		$oUploader = new self();
 		$oUploader->setExternalUrl( $url );
 		$oUploader->setTargetTitle( $sTitle );
-		if ( !empty($sDescription) ) {
-			$categoryVideosTxt = self::getCategoryVideosWikitext();
-			if ( strpos( $sDescription, $categoryVideosTxt ) === false ) {
-				$sDescription .= $categoryVideosTxt;
+		if ( !empty( $oUploader->getApiWrapper() ) ) {
+			if ( !empty($sDescription) ) {
+				$categoryVideosTxt = self::getCategoryVideosWikitext();
+				if ( strpos( $sDescription, $categoryVideosTxt ) === false ) {
+					$sDescription .= $categoryVideosTxt;
+				}
+				$oUploader->setDescription( $sDescription );
 			}
-			$oUploader->setDescription( $sDescription );
-		}
 
-		$status = $oUploader->upload( $oTitle );
-		if ( $status->isOK() ) {
-			wfProfileOut( __METHOD__ );
-			return $oTitle;
+			$status = $oUploader->upload( $oTitle );
+			if ( $status->isOK() ) {
+				wfProfileOut( __METHOD__ );
+				return $oTitle;
+			}
 		}
 		wfProfileOut( __METHOD__ );
 		return null;

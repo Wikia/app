@@ -501,16 +501,6 @@ Eger account\'a bikarhêneran şaşî hate çêkirin, guhdare vê peyamê meke.'
 'resetpass-submit-cancel'   => 'Betalkirin',
 'resetpass-temp-password'   => 'Şîfreya niha:',
 
-# Special:PasswordReset
-'passwordreset'              => 'Şîfreyê nû bike',
-'passwordreset-legend'       => 'Şîfreyê nû bike',
-'passwordreset-username'     => 'Navê bikarhêner:',
-'passwordreset-email'        => 'Navnîşana E-nameyê:',
-'passwordreset-emailtitle'   => 'Hûragahiyên hesab li ser {{SITENAME}}',
-'passwordreset-emailelement' => 'Navê bikarhêner:$1
-Şîfreya niha:$2',
-'passwordreset-emailsent'    => 'E-nameyeke bibîrxistinê hate şandin.',
-
 # Special:ChangeEmail
 'changeemail'          => 'E-nameyê biguherîne',
 'changeemail-oldemail' => 'Navnîşana E-nameya niha:',

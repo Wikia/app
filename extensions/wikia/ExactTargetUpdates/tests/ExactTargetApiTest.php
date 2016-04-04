@@ -1,15 +1,8 @@
 <?php
 
-require_once __DIR__ . '/../lib/exacttarget_soap_client.php';
-use Wikia\Logger\WikiaLogger;
+require_once __DIR__ . '/helpers/ExactTargetApiTestBase.php';
 
-class ExactTargetApiTest extends WikiaBaseTest {
-
-	public function setUp() {
-		$this->setupFile = __DIR__ . '/../ExactTargetUpdates.setup.php';
-		parent::setUp();
-		require_once __DIR__ . '/helpers/ExactTargetApiWrapper.php';
-	}
+class ExactTargetApiTest extends ExactTargetApiTestBase {
 
 	function testPrepareSoapVarsShouldReturnSoapVarsArray() {
 		/* Params to compare */
@@ -93,7 +86,7 @@ class ExactTargetApiTest extends WikiaBaseTest {
 		$mockSoapClient
 			->expects( $this->once() )
 			->method( 'Update' )
-			->with( array() )
+			->with( $this->anything() )
 			->willReturn( $responseValue );
 
 		$mockSoapClient
@@ -110,20 +103,6 @@ class ExactTargetApiTest extends WikiaBaseTest {
 		$api->setClient( $mockSoapClient );
 		$api->setLogger( $mockLogger );
 		$this->assertEquals( $responseValue, $api->sendRequest( 'Update', array() ) );
-	}
-
-	protected function getExactTargetSoapClientMock() {
-		return $this->getMockBuilder( '\ExactTargetSoapClient' )
-			->disableOriginalConstructor()
-			->setMethods( [ 'Update', '__getLastResponse' ] )
-			->getMock();
-	}
-
-	protected function getWikiaLoggerMock() {
-		return $this->getMockBuilder( 'Wikia\Logger\WikiaLogger' )
-			->disableOriginalConstructor()
-			->setMethods( [ 'info', 'error' ] )
-			->getMock();
 	}
 
 }

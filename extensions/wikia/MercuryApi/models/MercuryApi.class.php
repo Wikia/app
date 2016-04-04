@@ -104,24 +104,28 @@ class MercuryApi {
 	 * @return mixed
 	 */
 	public function getWikiVariables() {
-		global $wgSitename, $wgCacheBuster, $wgDBname, $wgDefaultSkin, $wgDisableAnonymousEditing,
-			   $wgLanguageCode, $wgContLang, $wgCityId, $wgEnableNewAuth, $wgDisableAnonymousUploadForMercury,
-			   $wgWikiDirectedAtChildrenByFounder, $wgWikiDirectedAtChildrenByStaff, $wgDisableMobileSectionEditor,
-			   $wgEnableDiscussions, $wgAnalyticsDriverIVW3Countries, $wgEnableCommunityData;
+		global $wgAnalyticsDriverIVW3Countries, $wgCacheBuster, $wgCityId, $wgContLang, $wgContentNamespaces, $wgDBname,
+			$wgDefaultSkin, $wgDisableAnonymousEditing, $wgDisableAnonymousUploadForMercury,
+			$wgDisableMobileSectionEditor, $wgEnableCommunityData, $wgEnableDiscussions, $wgEnableNewAuth,
+			$wgLanguageCode, $wgSitename, $wgWikiDirectedAtChildrenByFounder, $wgWikiDirectedAtChildrenByStaff;
 
 		return [
 			'cacheBuster' => (int)$wgCacheBuster,
+			'contentNamespaces' => $wgContentNamespaces,
 			'dbName' => $wgDBname,
 			'defaultSkin' => $wgDefaultSkin,
 			'disableAnonymousEditing' => $wgDisableAnonymousEditing,
 			'disableAnonymousUploadForMercury' => $wgDisableAnonymousUploadForMercury,
+			'disableMobileSectionEditor' => $wgDisableMobileSectionEditor,
+			'enableCommunityData' => $wgEnableCommunityData,
 			'enableDiscussions' => $wgEnableDiscussions,
+			'enableGlobalNav2016' => true,
 			'enableNewAuth' => $wgEnableNewAuth,
+			'favicon' => Wikia::getFaviconFullUrl(),
 			'homepage' => $this->getHomepageUrl(),
 			'id' => (int)$wgCityId,
 			'isCoppaWiki' => ( $wgWikiDirectedAtChildrenByFounder || $wgWikiDirectedAtChildrenByStaff ),
 			'isDarkTheme' => SassUtil::isThemeDark(),
-			'disableMobileSectionEditor' => $wgDisableMobileSectionEditor,
 			'language' => [
 				'content' => $wgLanguageCode,
 				'contentDir' => $wgContLang->getDir()
@@ -131,18 +135,17 @@ class MercuryApi {
 			'siteMessage' => $this->getSiteMessage(),
 			'siteName' => $wgSitename,
 			'theme' => SassUtil::getOasisSettings(),
-			'enableGlobalNav2016' => true,
 			'tracking' => [
 				'vertical' => HubService::getVerticalNameForComscore( $wgCityId ),
 				'ivw3' => [
 					'countries' => $wgAnalyticsDriverIVW3Countries,
+					'cmKey' => AnalyticsProviderIVW3::getCMKey()
 				],
 				'nielsen' => [
 					'enabled' => AnalyticsProviderNielsen::isEnabled(),
 				]
 			],
 			'wikiCategories' => WikiFactoryHub::getInstance()->getWikiCategoryNames( $wgCityId ),
-			'enableCommunityData' => $wgEnableCommunityData,
 		];
 	}
 

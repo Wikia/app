@@ -111,6 +111,10 @@ define('ext.wikia.adEngine.adContext', [
 			context.providers.turtle = true;
 		}
 
+		if (geo.isProperGeo(instantGlobals.wgAdDriverHitMediaCountries)) {
+			context.providers.hitMedia = true;
+		}
+
 		// INVISIBLE_HIGH_IMPACT slot
 		context.slots.invisibleHighImpact = (
 			context.slots.invisibleHighImpact &&
@@ -121,6 +125,10 @@ define('ext.wikia.adEngine.adContext', [
 		context.slots.incontentPlayer = geo.isProperGeo(instantGlobals.wgAdDriverIncontentPlayerSlotCountries) ||
 			isUrlParamSet('incontentplayer');
 
+		// INCONTENT_LEADERBOARD slot
+		context.slots.incontentLeaderboard =
+			geo.isProperGeo(instantGlobals.wgAdDriverIncontentLeaderboardSlotCountries);
+
 		context.opts.scrollHandlerConfig = instantGlobals.wgAdDriverScrollHandlerConfig;
 		context.opts.enableScrollHandler = geo.isProperGeo(instantGlobals.wgAdDriverScrollHandlerCountries) ||
 			isUrlParamSet('scrollhandler');
@@ -130,8 +138,8 @@ define('ext.wikia.adEngine.adContext', [
 			context.targeting.enableKruxTargeting &&
 			geo.isProperGeo(instantGlobals.wgAdDriverKruxCountries) &&
 			!instantGlobals.wgSitewideDisableKrux &&
-			!context.targeting.wikiDirectedAtChildren &&
-			!noExternals
+			context.targeting.esrbRating !== 'ec' && // FIXME ADEN-3147
+			!noExternals // FIXME ADEN-3147
 		);
 
 		// Floating medrec
@@ -139,6 +147,19 @@ define('ext.wikia.adEngine.adContext', [
 			context.opts.showAds && context.opts.adsInContent &&
 			(isPageType('article') || isPageType('search')) &&
 			!context.targeting.wikiIsCorporate
+		);
+
+		// Override prefooters sizes
+		context.opts.overridePrefootersSizes =  !!(
+			context.targeting.skin === 'oasis' &&
+			geo.isProperGeo(instantGlobals.wgAdDriverOverridePrefootersCountries) &&
+			!isPageType('home')
+		);
+
+		// Override leaderboard sizes
+		context.opts.overrideLeaderboardSizes = !!(
+			context.targeting.skin === 'oasis' &&
+			geo.isProperGeo(['JP'])
 		);
 
 		// Export the context back to ads.context

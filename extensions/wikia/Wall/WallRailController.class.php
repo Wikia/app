@@ -1,8 +1,8 @@
 <?php
 
 class WallRailController extends WikiaController {
-	static $usersData = array();
-	static $anonsData = array();
+	static $usersData = [ ];
+	static $anonsData = [ ];
 
 	public function executeIndex() {
 		$app = F::App();
@@ -24,9 +24,10 @@ class WallRailController extends WikiaController {
 	private function getUsersData( $usersObjects ) {
 		$key = 0;
 
-		$usersInvolved = array();
-		$sorting = array();
+		$usersInvolved = [ ];
+		$sorting = [ ];
 
+		/** @var User $user */
 		foreach ( $usersObjects as $user ) {
 			if ( $user->isAnon() ) {
 				$name = wfMsg( 'oasis-anon-user' );

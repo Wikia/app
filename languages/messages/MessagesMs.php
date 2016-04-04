@@ -676,34 +676,6 @@ Sila tunggu sebentar dan cuba lagi.',
 Anda mungkin telah pun berjaya menukar kata laluan anda atau meminta kata laluan sementara yang baru.',
 'resetpass-temp-password'   => 'Kata laluan sementara:',
 
-# Special:PasswordReset
-'passwordreset'                    => 'Set semula kata laluan',
-'passwordreset-text'               => 'Isikan borang ini untuk menerima peringatan butiran akaun anda melalui e-mel.',
-'passwordreset-legend'             => 'Set semula kata laluan',
-'passwordreset-disabled'           => 'Ciri set semula kata laluan telah dimatikan di wiki ini.',
-'passwordreset-pretext'            => '{{PLURAL:$1||Isikan data di bawah}}',
-'passwordreset-username'           => 'Nama pengguna:',
-'passwordreset-domain'             => 'Domain:',
-'passwordreset-capture'            => 'Lihat e-mel yang terhasil?',
-'passwordreset-capture-help'       => 'Jika anda menandai ruang ini, e-mel (yang membawa kata laluan sementara) akan ditunjukkan kepada anda dan juga dihantar kepada pengguna itu.',
-'passwordreset-email'              => 'Alamat e-mel:',
-'passwordreset-emailtitle'         => 'Butiran akaun di {{SITENAME}}',
-'passwordreset-emailtext-ip'       => 'Ada orang (mungkin anda, dari alamat IP $1) yang memohon peringatan butiran akaun anda untuk {{SITENAME}} ($4).  {{PLURAL:$3|Akaun|Akaun-akaun}} pengguna yang berikut dikaitkan dengan alamat e-mel ini:
-
-$2
-
-{{PLURAL:$3|Kata|Kata-kata}} laluan sementara ini akan luput dalam masa {{PLURAL:$5|sehari|$5 hari}}. Anda mesti log masuk dan buat kata laluan baru sekarang juga. Jika permohonan ini dibuat oleh orang lain, ataupun jika anda teringat balik kata laluan lama anda, dan tidak ingin lagi untuk menukarnya, anda boleh mengabaikan pesanan ini dan terus menggunakan kata laluan lama anda.',
-'passwordreset-emailtext-user'     => 'Pengguna $1 di {{SITENAME}} memohon peringatan butiran akaun anda untuk {{SITENAME}} ($4). {{PLURAL:$3|Akaun|Akaun-akaun}} pengguna yang berikut dikaitkan dengan alamat e-mel ini:
-
-$2
-
-{{PLURAL:$3|Kata|Kata-kata}} laluan sementara ini akan luput dalam masa {{PLURAL:$5|sehari|$5 hari}}. Anda mesti log masuk dan buat kata laluan baru sekarang juga. Jika permohonan ini dibuat oleh orang lain, ataupun jika anda teringat balik kata laluan lama anda, dan tidak ingin lagi untuk menukarnya, anda boleh mengabaikan pesanan ini dan terus menggunakan kata laluan lama anda.',
-'passwordreset-emailelement'       => 'Nama pengguna: $1
-Kata laluan sementara: $2',
-'passwordreset-emailsent'          => 'E-mel peringatan telah dihantar.',
-'passwordreset-emailsent-capture'  => 'E-mel peringatan (seperti di bawah) telah dihantar.',
-'passwordreset-emailerror-capture' => 'E-mel peringatan (seperti di bawah) telah dihasilkan tetapi tidak dapat dihantar kepada pengguna: $1',
-
 # Special:ChangeEmail
 'changeemail'          => 'Tukar alamat e-mel',
 'changeemail-header'   => 'Tukar alamat e-mel akaun',

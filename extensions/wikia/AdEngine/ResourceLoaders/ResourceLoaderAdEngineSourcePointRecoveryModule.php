@@ -41,17 +41,16 @@ class ResourceLoaderAdEngineSourcePointRecoveryModule extends ResourceLoaderAdEn
 	protected function fetchRemoteScript( $url ) {
 		global $wgSourcePointApiKey;
 
-		$content = Http::get( $url,
+		$content = ExternalHttp::get( $url,
 			null,
 			[
 				'headers' => ['Authorization' =>  'Token '.$wgSourcePointApiKey],
-				'noProxy' => true,
 				'timeout' => self::REQUEST_TIMEOUT
 			]
 		);
 
 		if (!$content) {
-			\Wikia\Logger\WikiaLogger::instance()->warning( 'Failed to fetch SourcePoint script', ['url' => $url] );
+			\Wikia\Logger\WikiaLogger::instance()->error( 'Failed to fetch SourcePoint script', ['url' => $url] );
 		}
 
 		return $content;

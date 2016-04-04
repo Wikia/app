@@ -48,6 +48,15 @@ class PortableInfoboxTemplatesHelper {
 	}
 
 	/**
+	 * @param $title
+	 * @return array of strings (infobox markups)
+	 */
+	public function getMarkup( $title ) {
+		$content = $this->fetchContent( $title );
+		return $this->getInfoboxes( $content );
+	}
+
+	/**
 	 * @param $title \Title
 	 *
 	 * @return string
@@ -105,8 +114,9 @@ class PortableInfoboxTemplatesHelper {
 	 * @return array of striped infoboxes ready to parse
 	 */
 	protected function getInfoboxes( $text ) {
+		preg_match_all( "/<infobox[^>]*\\/>/sU", $text, $empty );
 		preg_match_all( "/<infobox.+<\/infobox>/sU", $text, $result );
 
-		return $result[ 0 ];
+		return array_merge( $empty[ 0 ], $result[ 0 ] );
 	}
 }

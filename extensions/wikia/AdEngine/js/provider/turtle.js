@@ -25,31 +25,25 @@ define('ext.wikia.adEngine.provider.turtle', [
 		return ret;
 	}
 
-	function fillInSlot(slotName, slotElement, success, hop) {
-		log(['fillInSlot', slotName, slotElement, success, hop], 'debug', logGroup);
+	function fillInSlot(slot) {
+		log(['fillInSlot', slot.name], 'debug', logGroup);
 
+		slot.pre('success', function () {
+			slotTweaker.removeDefaultHeight(slot.name);
+			slotTweaker.removeTopButtonIfNeeded(slot.name);
+			slotTweaker.adjustLeaderboardSize(slot.name);
+		});
 		gptHelper.pushAd(
-			slotName,
-			slotElement,
-			'/98544404/Wikia/Nordics_RoN/' + slotName,
-			slotMap[slotName],
+			slot,
+			'/98544404/Wikia/Nordics_RoN/' + slot.name,
+			slotMap[slot.name],
 			{
-				success: function (adInfo) {
-					// Success
-					// TODO: find a better place for operation below
-					slotTweaker.removeDefaultHeight(slotName);
-					slotTweaker.removeTopButtonIfNeeded(slotName);
-					slotTweaker.adjustLeaderboardSize(slotName);
-
-					success(adInfo);
-				},
-				error: hop,
 				forcedAdType: 'turtle',
 				sraEnabled: true
 			}
 		);
 
-		log(['fillInSlot', slotName, slotElement, success, hop, 'done'], 'debug', logGroup);
+		log(['fillInSlot', slot, 'done'], 'debug', logGroup);
 	}
 
 	return {

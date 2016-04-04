@@ -735,40 +735,6 @@ Riprovare più tardi.',
 La password potrebbe essere stata già cambiata, oppure potrebbe essere stata richiesta una nuova password temporanea.',
 'resetpass-temp-password'   => 'Password temporanea:',
 
-# Special:PasswordReset
-'passwordreset'                    => 'Reimposta password',
-'passwordreset-text'               => 'Completa questo modulo per ricevere i dettagli del tuo account via e-mail.',
-'passwordreset-legend'             => 'Reimposta password',
-'passwordreset-disabled'           => 'La reimpostazione delle password è stata disabilitata su questa wiki',
-'passwordreset-pretext'            => '{{PLURAL:$1||Immetti una delle porzioni di dati qui sotto}}',
-'passwordreset-username'           => 'Nome utente:',
-'passwordreset-domain'             => 'Dominio:',
-'passwordreset-capture'            => 'Visualizzare il contenuto del messaggio e-mail?',
-'passwordreset-capture-help'       => "Se si seleziona questa casella, l'indirizzo e-mail (con la password temporanea), verrà mostrato a voi, oltre ad essere inviato all'utente.",
-'passwordreset-email'              => 'Indirizzo e-mail:',
-'passwordreset-emailtitle'         => 'Dettagli account su {{SITENAME}}',
-'passwordreset-emailtext-ip'       => "Qualcuno (probabilmente tu, con indirizzo IP $1) ha richiesto l'invio di una nuova password per l'accesso a {{SITENAME}} ($4). {{PLURAL:$3|L'utente associato|Gli utenti associati}} a questo indirizzo e-mail sono:
-
-$2
-
-{{PLURAL:$3|Questa password temporanea scadrà|Queste password temporanee scadranno}} dopo {{PLURAL:$5|un giorno|$5 giorni}}.
-Dovresti accedere e scegliere una nuova password ora.
-
-Se non sei stato tu a fare la richiesta, o se ti sei ricordato la password originale e non vuoi più cambiarla, puoi ignorare questo messaggio e continuare al utilizzare la tua vecchia password.",
-'passwordreset-emailtext-user'     => "L'utente $1 di {{SITENAME}} ha richiesto l'invio di una nuova password per l'accesso a {{SITENAME}} ($4). {{PLURAL:$3|L'utente associato|Gli utenti associati}} a questo indirizzo e-mail sono:
-
-$2
-
-{{PLURAL:$3|Questa password temporanea scadrà|Queste password temporanee scadranno}} dopo {{PLURAL:$5|un giorno|$5 giorni}}.
-Dovresti accedere e scegliere una nuova password ora.
-
-Se non sei stato tu a fare la richiesta, o se ti sei ricordato la password originale e non vuoi più cambiarla, puoi ignorare questo messaggio e continuare al utilizzare la tua vecchia password.",
-'passwordreset-emailelement'       => 'Nome utente: $1
-Password temporanea: $2',
-'passwordreset-emailsent'          => 'È stata inviata una e-mail di promemoria.',
-'passwordreset-emailsent-capture'  => "E' stato inviato un e-mail promemoria, il contenuto è riportato di seguito.",
-'passwordreset-emailerror-capture' => "E' stata generata l'e-mail promemoria riportata di seguito. L'invio all'utente non è riuscito: $1",
-
 # Special:ChangeEmail
 'changeemail'          => "Modifica l'indirizzo e-mail",
 'changeemail-header'   => "Modifica l'indirizzo e-mail dell'account",

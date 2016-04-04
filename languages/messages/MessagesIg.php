@@ -474,11 +474,6 @@ I na á banye...',
 'resetpass-submit-cancel'   => 'Kàchá',
 'resetpass-temp-password'   => 'mkpurụ okwu ejị a gafẹ I gi kushi ngwa ngwa:',
 
-# Special:PasswordReset
-'passwordreset'              => 'Nkuwaria okwúngáfè',
-'passwordreset-emailelement' => "Áhà Ọ'banife: $1
-Passwod nke gi gbanwe: $2",
-
 # Edit page toolbar
 'bold_sample'     => 'Mkpúrù èdè íke',
 'bold_tip'        => 'Mkpúrù èdè íke',

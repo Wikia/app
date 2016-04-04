@@ -57,10 +57,10 @@ if ( !$isDryrun && !$insertDataOnly ) {
 $cmdOptions = '';
 
 // set where clauses
-$sqlWhereBase = array(
+$sqlWhereBase = [
 	'page.page_title ' . $db->buildLike( $db->anyString(), sprintf( "/%s", ARTICLECOMMENT_PREFIX ), $db->anyString() ),
 	'page_latest > 0'	// BugId:22821
-);
+];
 
 if ( $wallOnly ) {
 	$sqlWhereBase['page_namespace'] = NS_USER_WALL_MESSAGE;
@@ -77,8 +77,8 @@ if ( $forumOnly ) {
 // get min/max comments
 if ( is_null( $fromId ) || is_null( $toId ) ) {
 	$row = $db->selectRow(
-	array( 'page' ),
-	array( 'min(page_id) min_id, max(page_id) max_id' ),
+	[ 'page' ],
+	[ 'min(page_id) min_id, max(page_id) max_id' ],
 	$sqlWhereBase,
 	__METHOD__
 	);
@@ -93,7 +93,7 @@ if ( is_null( $fromId ) || is_null( $toId ) ) {
 
 	echo "LOOP: From ID $fromId to ID $toId (To ID = $toId).\n";
 
-	$processes = array();
+	$processes = [ ];
 
 	$jump = 200;
 
@@ -131,28 +131,28 @@ $cnt = 0;
 $failed = 0;
 $range = 1000;
 
-$sqlWhere = array(
+$sqlWhere = [
 	'page_id > ' . $fromId,
 	'page_id <= ' . $toId
-);
+];
 $sqlWhere = array_merge( $sqlWhereBase, $sqlWhere );
 
 // get comment list
 $result = $db->select(
-	array( 'page' ),
-	array( 'page_id',
+	[ 'page' ],
+	[ 'page_id',
 		'page_title',
 		'page_namespace',
 		'page_len',
 		'page_is_redirect',
 		'page_latest'
-	),
+	],
 	$sqlWhere,
 	__METHOD__,
-	array( 'ORDER BY' => 'page_id ASC' )
+	[ 'ORDER BY' => 'page_id ASC' ]
 );
 
-$commentList = array();
+$commentList = [ ];
 while ( $row = $db->fetchObject( $result ) ) {
 	$commentList[$row->page_id] = $row;
 }

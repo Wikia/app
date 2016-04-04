@@ -250,7 +250,15 @@ class WikiaDispatcher {
 				}
 
 				$response->setException($e);
-				Wikia::log(__METHOD__, $e->getMessage() );
+
+				Wikia\Logger\WikiaLogger::instance()->error(
+					__METHOD__ . " - {$controllerClassName} controller dispatch exception",
+					[
+						'exception' => $e,
+						'controller_name' => $controllerClassName,
+						'method_name' => $method
+					]
+				);
 
 				// if we catch an exception, forward to the WikiaError controller unless we are already dispatching Error
 				if ( empty($controllerClassName) || $controllerClassName != 'WikiaErrorController' ) {
@@ -262,14 +270,24 @@ class WikiaDispatcher {
 
 		} while ( $controller && $controller->hasNext() );
 
-		if ( $request->isInternal() && $response->hasException() && $request->getExceptionMode() !== WikiaRequest::EXCEPTION_MODE_RETURN ) {
-			Wikia::logBacktrace(__METHOD__ . '::exception');
-			wfProfileOut(__METHOD__);
-			switch ( $request->getExceptionMode() ) {
+		if ( $response->hasException() ) {
+			$exception = $response->getException();
+			\Wikia\Logger\WikiaLogger::instance()->error(
+				sprintf( "%s - %s - %s - %s", __METHOD__, 'Exception', get_class( $exception ), $exception->getMessage() ),
+				[
+					'exception' => $exception
+				] );
+
+			switch ( $request->getEffectiveExceptionMode() ) {
+				case WikiaRequest::EXCEPTION_MODE_RETURN:
+					// noop here
+					break;
 				case WikiaRequest::EXCEPTION_MODE_THROW:
+					wfProfileOut(__METHOD__);
 					throw $response->getException();
-				// case WikiaRequest::EXCEPTION_MODE_WRAP_AND_THROW:
+				case WikiaRequest::EXCEPTION_MODE_WRAP_AND_THROW:
 				default:
+					wfProfileOut(__METHOD__);
 					throw new WikiaDispatchedException( "Internal Throw ({$response->getException()->getMessage()})", $response->getException() );
 			}
 		}

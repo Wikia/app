@@ -15,12 +15,12 @@
 					</div>
 				<? endif; ?>
 				<? if ( $wg->EnableMiniEditorExtForWall ): ?>
-					<?= $app->getView( 'MiniEditorController', 'Header', array(
-						'attributes' => array(
+					<?= $app->getView( 'MiniEditorController', 'Header', [
+						'attributes' => [
 							'data-min-height' => 200,
 							'data-max-height' => 400
-						)
-					) )->render() ?>
+						]
+					] )->render() ?>
 				<? endif ?>
 				<div class="title-container">
 					<textarea class="title" data-space-type="title" placeholder="<?= wfMessage( 'forum-discussion-placeholder-title' )->escaped() ?>"></textarea>
@@ -48,7 +48,7 @@
 				<? if ( $wg->EnableMiniEditorExtForWall ): ?>
 					<?= $app->getView( 'MiniEditorController', 'Footer' )->render() ?>
 				<? endif ?>
-				<?= F::app()->renderPartialCached( 'Wall', 'messageTopic', array() ) ?>
+				<?= F::app()->renderPartialCached( 'Wall', 'messageTopic', [ ] ) ?>
 			</div>
 			<div class="throbber"></div>
 		</div>

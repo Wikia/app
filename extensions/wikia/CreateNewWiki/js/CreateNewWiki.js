@@ -42,16 +42,7 @@
 			this.descWikiNext = this.$descWikiWrapper.find('nav .next');
 
 			var self = this,
-				$signupRedirect = $('#SignupRedirect'),
 				pane;
-
-			$signupRedirect.submit(function () {
-				var queryString = 'wikiName=' + self.wikiName.val() +
-					'&wikiDomain=' + self.wikiDomain.val() +
-					'&uselang=' + self.wikiLanguage.find('option:selected').val();
-				$().log(queryString);
-				$signupRedirect.find('input[name=returnto]').val(queryString);
-			});
 
 			// Name Wiki event handlers
 			this.checkNextButtonStep1();
@@ -69,32 +60,25 @@
 						wikiDomain: self.wikiDomain.val(),
 						wikiLang: self.wikiLanguage.find('option:selected').val()
 					});
-					if (self.$authWrapper.length) {
-						// Init user auth
-						self.userAuth = {
-							el: self.$authWrapper,
-							loginAjaxForm: new UserLoginAjaxForm(
-								'#UserAuth .UserLoginModal',
-								{
-									ajaxLogin: true,
-									callback: function () {
-										self.transition('UserAuth', true, '+');
-									}
-								}
-							)
-						};
-						if (typeof FacebookLogin !== 'undefined') {
-							FacebookLogin.callbacks['login-success'] = function () {
-								self.transition('UserAuth', true, '+');
-								FacebookLogin.closeSignupModal();
-							};
-						}
+					if (window.wgUserName) {
+						self.onAuthSuccess();
+					} else {
+						require(['AuthModal', 'wikia.querystring'], function (authModal, querystring) {
+							var redirectUrl = new querystring();
+
+							redirectUrl.setVal({
+								wikiName: self.wikiName.val(),
+								wikiDomain: self.wikiDomain.val(),
+								wikiLanguage: self.wikiLanguage.find('option:selected').val()
+							});
+
+							authModal.load({
+								url: '/signin?redirect=' + encodeURIComponent(redirectUrl.toString()),
+								origin: 'create-new-wikia',
+								onAuthSuccess: $.proxy(self.onAuthSuccess, self)
+							});
+						});
 					}
-
-					self.transition('NameWiki', true, '+');
-
-					// Load facebook assets before going to the login form
-					$.loadFacebookSDK();
 				}
 			});
 			this.wikiDomain.keyup(function () {
@@ -273,6 +257,10 @@
 				v += this.keys[i];
 			}
 			this.answer = v;
+		},
+
+		onAuthSuccess: function () {
+			this.transition('NameWiki', true, '+');
 		},
 
 		checkWikiName: function () {
@@ -547,7 +535,7 @@
 	$(function () {
 		window.wgAjaxPath = window.wgScriptPath + window.wgScript;
 
-		mw.loader.use('wikia.stringhelper')
+		mw.loader.using('wikia.stringhelper')
 			.done(function () {
 				require(['wikia.stringhelper'], function (stringHelper) {
 					WikiBuilder.init(stringHelper);

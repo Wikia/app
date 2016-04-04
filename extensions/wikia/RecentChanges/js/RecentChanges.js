@@ -12,7 +12,6 @@ jQuery(function($) {
 
 			this.dropdown = new Wikia.MultiSelectDropdown(this.$dropdown);
 			this.dropdown.on('change', $.proxy(this.onChange, this));
-
 		},
 
 		saveFilters: function(event) {

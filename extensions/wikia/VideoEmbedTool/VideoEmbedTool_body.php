@@ -23,21 +23,6 @@ class VideoEmbedTool {
 		return $tmpl->render( "main" );
 	}
 
-	function recentlyUploaded() {
-		global $IP, $wmu;
-
-		require_once( $IP . '/includes/SpecialPage.php' );
-		require_once( $IP . '/includes/specials/SpecialNewimages.php' );
-		// this needs to be revritten, since we will not display recently uploaded, but embedded
-
-		$isp = new IncludableSpecialPage( 'Newimages', '', 1, 'wfSpecialNewimages', $IP . '/includes/specials/SpecialNewimages.php' );
-		wfSpecialNewimages( 8, $isp );
-		$tmpl = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
-		$tmpl->set_vars( array( 'data' => $wmu ) );
-
-		return $tmpl->render( "results_recently" );
-	}
-
 	function editVideo() {
 		global $wgRequest;
 
@@ -264,6 +249,9 @@ class VideoEmbedTool {
 		$vHelper = new VideoHandlerHelper();
 		$vHelper->setVideoDescription( $oTitle, $description );
 
+		// SUS-66: let's wait for all slaves to catch up after the above
+		wfWaitForSlaves();
+
 		$message = wfMessage( 'vet-single-success' )->plain();
 		$ns_file = $wgContLang->getFormattedNsText( $title->getNamespace() );
 		$caption = $wgRequest->getVal( 'caption' );
@@ -368,6 +356,9 @@ class VideoEmbedTool {
 		$oUploader->setProvider( $provider );
 		$oUploader->setVideoId( $videoId );
 		$oUploader->setTargetTitle( $videoName );
+
+		// SUS-66: let's wait for all slaves to catch up before uploading a video
+		wfWaitForSlaves();
 
 		return $oUploader->upload( $oTitle );
 	}

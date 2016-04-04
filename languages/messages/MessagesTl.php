@@ -627,32 +627,6 @@ Para tapusin ang paglagda, dapat kang magtakda ng isang bagong hudyat dito:',
 Maaaring matagumpay mo nang nabago ang iyong hudyat o nakahiling na ng isang bagong pansamantalang hudyat.',
 'resetpass-temp-password'   => 'Pansamantalang hudyat:',
 
-# Special:PasswordReset
-'passwordreset'                => 'Muling pagtatakda ng hudyat',
-'passwordreset-text'           => 'Punuin ang pormularyong ito upang makatanggap ng isang pampaalalang e-liham ng iyong mga detalye ng akawnt.',
-'passwordreset-legend'         => 'Itakdang muli ang hudyat',
-'passwordreset-disabled'       => 'Hindi pinagagana sa wiking ito ang muling mga pagtatakda ng hudyat.',
-'passwordreset-pretext'        => '{{PLURAL:$1| | Ipasok ang isa sa mga piraso ng dato sa ibaba}}',
-'passwordreset-username'       => 'Pangalan ng tagagamit:',
-'passwordreset-email'          => 'Tirahan ng e-liham:',
-'passwordreset-emailtitle'     => 'Mga detalye ng akawnt sa {{SITENAME}}',
-'passwordreset-emailtext-ip'   => 'Isang tao (marahil ay ikaw, mula sa tirahan ng IP na $1) ang humiling ng isang paalala sa iyong mga detalye ng akawnt para sa {{SITENAME}} ($4). Ang sumusunod na pangtagagamit na {{PLURAL:$3|akawnt ay|mga akawnt ay}} may kaugnayan sa tirahang ito ng e-liham:
-
-$2
-
-{{PLURAL:$3|Ang pansamantalang hudyat na ito|Ang pansamantalang mga hudyat na ito}} ay mawawalan ng bisa sa loob ng {{PLURAL:$5|isang araw|$5 mga araw}}.
-Dapat kang lumagda at pumili ng isang bagong hudyat ngayon. Kung ibang tao ang gumawa ng kahilingang ito, o kung naalala mo na ang orihinal mong hudyat, at hindi mo na nais palitan ito, maaari mong huwag nang pansinin ang mensaheng ito at magpatuloy sa paggamit ng luma mong hudyat.',
-'passwordreset-emailtext-user' => 'Ang tagagamit na si $1 sa {{SITENAME}} ay humiling ng isang paalala ng iyong mga akawnt ng detalye para sa {{SITENAME}}
-($4). Ang sumusunod na pangtagagamit na {{PLURAL:$3|akawnt ay|mga akawnt ay}} may kaugnayan sa tirahang ito ng e-liham:
-
-$2
-
-{{PLURAL:$3|Ang pansamantalang hudyat na ito|Ang pansamantalang mga hudyat na ito}} mawawalan ng bias sa loob ng {{PLURAL:$5|isang araw|$5 mga araw}}.
-Dapat kang lumagda at pumili ng isang hudyat ngayon. Kung ibang tao ang gumawa ng kahilingang ito, o kung naalala mo na ang iyong orihinal na hudyat, at hindi mo na nais palitan pa ito, maaari mong huwag nang pansinin ang mensaheng ito at magpatuloy sa paggamit ng iyong lumang hudyat.',
-'passwordreset-emailelement'   => 'Pangalan ng tagagamit: $1
-Pansamantalang hudyat: $2',
-'passwordreset-emailsent'      => 'Naipadala na ang isang e-liham na pampaalala.',
-
 # Special:ChangeEmail
 'changeemail'          => 'Baguhin ang direksiyong e-liham',
 'changeemail-header'   => 'Baguhin ang direksiyong e-liham ng kuwenta',

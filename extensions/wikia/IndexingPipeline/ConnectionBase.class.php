@@ -3,7 +3,9 @@
 namespace Wikia\IndexingPipeline;
 
 use PhpAmqpLib\Connection\AMQPConnection;
+use PhpAmqpLib\Exception\AMQPExceptionInterface;
 use PhpAmqpLib\Message\AMQPMessage;
+use Wikia\Tracer\WikiaTracer;
 
 class ConnectionBase {
 	const DURABLE_MESSAGE = 2;
@@ -37,18 +39,24 @@ class ConnectionBase {
 	 * @param $body
 	 */
 	public function publish( $routingKey, $body ) {
-		$channel = $this->getChannel();
 		try {
+			$channel = $this->getChannel();
+
 			$channel->basic_publish(
 				new AMQPMessage( json_encode( $body ), [
 					'delivery_mode' => self::DURABLE_MESSAGE,
-					'expiration' => self::MESSAGE_TTL
+					'expiration' => self::MESSAGE_TTL,
+					'app_id' => 'mediawiki',
+					'correlation_id' => WikiaTracer::instance()->getTraceId(),
 				] ),
 				$this->exchange,
 				$routingKey
 			);
-		} catch ( \Exception $e ) {
-			\Wikia\Logger\WikiaLogger::instance()->error( $e->getMessage() );
+		} catch ( AMQPExceptionInterface $e ) {
+			\Wikia\Logger\WikiaLogger::instance()->error( __METHOD__, [
+				'exception' => $e,
+				'routing_key' => $routingKey,
+			] );
 		}
 	}
 
