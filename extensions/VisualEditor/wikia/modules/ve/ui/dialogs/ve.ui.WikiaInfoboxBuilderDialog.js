@@ -1,3 +1,5 @@
+/* globals require */
+
 /*
  * VisualEditor user interface WikiaInfobooxBuilderDialog class.
  */
