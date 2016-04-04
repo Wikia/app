@@ -3189,7 +3189,7 @@ OO.ui.WindowManager.prototype.updateWindowSize = function ( win ) {
 		size = win.getSize();
 
 	if ( size === 'dynamic' && typeof win.getDynamicSize === 'function' ) {
-		sizes.dynamic = { width: function () { return win.getDynamicSize() } };
+		sizes.dynamic = { width: win.getDynamicSize };
 	}
 	if ( !sizes[size] ) {
 		size = this.constructor.static.defaultSize;

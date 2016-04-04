@@ -41,6 +41,8 @@ ve.ui.WikiaInfoboxBuilderDialog.prototype.getSetupProcess = function (data) {
  * @inheritdoc
  */
 ve.ui.WikiaInfoboxBuilderDialog.prototype.getBodyHeight = function () {
+	// 100% refers to the OO UI window object which is a container for the dialog.
+	// It is an absolutely positioned div which overlays the whole viewport.
 	return '100%';
 };
 
