@@ -101,7 +101,7 @@ class PortableInfoboxBuilderController extends WikiaController {
 			$status = $this->checkMoveEligibility( $oldTitle, $title, $status );
 		}
 
-		$infoboxDataService = PortableInfoboxDataService::newFromTitle( $title );
+		$infoboxDataService = PortableInfoboxDataService::newFromTitle( $oldTitle );
 		$infoboxes = $infoboxDataService->getInfoboxes();
 		$status = $this->checkSaveEligibility( $infoboxes, $status );
 
