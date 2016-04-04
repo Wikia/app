@@ -62,20 +62,12 @@ class PortableInfoboxBuilderController extends WikiaController {
 		$newTitle = PortableInfoboxBuilderHelper::getTitle( $newTitleString, $status );
 		$moveToResult = $oldTitle->moveTo($newTitle, false, "Infobox Builder: rename infobox template");
 
-		$errors = $status->getErrorsArray();
-		$success = $status->isOK();
-
-		// if result of moveTo operation is not true, extend array with errors
-		if ( $moveToResult !== true ) {
-			$errors = array_merge( $errors, $moveToResult );
-			$success = false;
-		}
-
 		$response = $this->getResponse();
 		$response->setFormat( WikiaResponse::FORMAT_JSON );
 		$response->setVal( 'urls', $urls );
-		$response->setVal( 'success',$success );
-		$response->setVal( 'errors', $errors );
+		$response->setVal( 'templateMoved', $moveToResult === true ? $moveToResult : false );
+		$response->setVal( 'success', $status->isOK() );
+		$response->setVal( 'errors', $status->getErrorsArray() );
 		$response->setVal( 'warnings', $status->getWarningsArray() );
 	}
 
