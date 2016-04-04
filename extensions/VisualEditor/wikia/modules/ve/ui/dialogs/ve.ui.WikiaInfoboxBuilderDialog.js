@@ -69,7 +69,7 @@ ve.ui.WikiaInfoboxBuilderDialog.prototype.initialize = function () {
 			loader.processScript(assets.scripts);
 
 			// Content
-			self.content = new OO.ui.PanelLayout({padded: false, expanded: true});
+			self.content = new OO.ui.PanelLayout({ padded: false, expanded: true });
 			self.content.$element.append(html);
 			self.$body.append(self.content.$element);
 		});
