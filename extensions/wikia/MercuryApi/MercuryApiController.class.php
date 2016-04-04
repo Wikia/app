@@ -331,8 +331,13 @@ class MercuryApiController extends WikiaController {
 	public function getPage() {
 		try {
 			$title = $this->getTitleFromRequest();
-			$documentTitle = '';
 			$data = [ ];
+
+			/**
+			 * On article Main Pages and on Curated Main Pages, page title and Wiki name are equal
+			 * and to avoid duplicates we don't use page title
+			 */
+			$documentTitle = '';
 
 			// getPage is cached (see the bottom of the method body) so there is no need for additional caching here
 			$article = Article::newFromID( $title->getArticleId() );
@@ -354,9 +359,6 @@ class MercuryApiController extends WikiaController {
 				} else {
 					$data['details'] = MercuryApiMainPageHandler::getMainPageMockedDetails( $title );
 				}
-
-				// On Curated Main Pages page title and Wiki name are equal and to avoid duplicates we don't use page title
-				$documentTitle = '';
 			} else {
 				switch ( $data['ns'] ) {
 					// Handling namespaces other than content ones
