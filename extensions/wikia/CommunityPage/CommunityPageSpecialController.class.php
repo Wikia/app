@@ -37,7 +37,8 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 				->getData(),
 			'topAdmins' => $this->sendRequest( 'CommunityPageSpecialController', 'getTopAdminsData' )
 				->getData(),
-			'recentlyJoined' => $this->getRecentlyJoinedData(),
+			'recentlyJoined' => $this->sendRequest( 'CommunityPageSpecialController', 'getRecentlyJoinedData' )
+				->getData(),
 			'recentActivityModule' => $this->getRecentActivityData(),
 		] );
 	}
@@ -94,7 +95,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	}
 
 	/**
-	 * Set context for adminsModule template. Needs to be passed through the index method in order to work.
+	 * Set context for topAdmins template. Needs to be passed through the index method in order to work.
 	 * @return array
 	 */
 	public function getTopAdminsData() {
@@ -116,17 +117,32 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	}
 
 	/**
-	 * Set context for recentlyJoinedModule template. Needs to be passed through the index method in order to work.
+	 * Set context for recentlyJoined template. Needs to be passed through the index method in order to work.
 	 * @return array
 	 */
-	protected function getRecentlyJoinedData() {
+	public function getRecentlyJoinedData() {
 		$recentlyJoined = $this->usersModel->getRecentlyJoinedUsers();
 
-		return [
-			'recentlyJoined' => $recentlyJoined,
+		$this->response->setData( [
+			'allMembers' => $this->msg( 'communitypage-view-all-members' )->plain(),
 			'recentlyJoinedHeaderText' => $this->msg( 'communitypage-recently-joined' )->plain(),
 			'members' => $recentlyJoined,
-		];
+		] );
+	}
+
+	/**
+	 * Set context for allMembers template. Needs to be passed through the index method in order to work.
+	 * @return array
+	 */
+	public function getAllMembersData() {
+		$allMembers = $this->usersModel->getAllMembers();
+
+		$this->response->setData( [
+			'allMembersHeaderText' => $this->msg( 'communitypage-all-members' )->plain(),
+			'admin' => $this->msg( 'communitypage-admin' )->plain(),
+			'joinedText' => $this->msg( 'communitypage-joined' )->plain(),
+			'members' => $allMembers,
+		] );
 	}
 
 	/**
@@ -170,9 +186,12 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 			];
 		}
 
+		$title = SpecialPage::getTitleFor( 'WikiActivity' );
+
 		return [
 			'activityHeading' => $data['moduleHeader'],
-			'moreActivityLink' => Wikia::specialPageLink( 'WikiActivity', 'oasis-more', 'more-activity' ),
+			'moreActivityText' => $this->msg( 'communitypage-recent-activity' )->plain(),
+			'moreActivityLink' => $title->getCanonicalURL(),
 			'activity' => $recentActivity,
 		];
 	}

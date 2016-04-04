@@ -30,4 +30,18 @@
 			}
 		}
 	}
+
+	.subtle {
+		color: $color-module-subtle-text;
+		display: block;
+		font-size: 12px;
+	}
+
+	.details {
+		color: $color-module-subtle-text;
+		font-size: 15px;
+		position: absolute;
+		right: 0;
+		top: 0;
+	}
 }

@@ -8,6 +8,45 @@
 		margin-right: 10px;
 	}
 
+	.recently-joined {
+		clear: both;
+		display: block;
+		font-size: 14px;
+		line-height: 18px;
+		padding-top: 5px;
+	}
+
+
+	.top-contributors, .top-admins {
+		font-size: 14px;
+		line-height: 20px;
+
+		li {
+			@include clearfix;
+			padding-bottom: 10px;
+		}
+	}
+
+	.top-contributors {
+		font-size: 14px;
+		line-height: 20px;
+
+		.avatar-container {
+			@include transform-translate(0, 3px);
+		}
+
+		.contributor-details {
+			position: relative;
+		}
+	}
+
+	.top-admins {
+		.contributor-details {
+			@include transform-translate(0, 5px);
+			position: relative;
+		}
+	}
+
 	.user-details {
 		@include clearfix;
 		border-bottom: 2px solid $color-community-page-light-gray;
@@ -41,43 +80,11 @@
 		}
 	}
 
-	.top-contributors, .top-admins {
-		font-size: 14px;
-		line-height: 20px;
-
-		li {
-			@include clearfix;
-			padding-bottom: 10px;
-		}
-	}
-
-	.top-contributors {
-		font-size: 14px;
-		line-height: 20px;
-
-		.avatar-container {
-			@include transform-translate(0, 3px);
-		}
-	}
-
-	.top-admins {
-		.contributor-details {
-			@include transform-translate(0, 5px);
-		}
-	}
-
 	&.ContributorsModuleModal {
 		padding: 0;
 
 		> h2 {
 			display: none;
-		}
-
-		.user-details {
-			background: $color-activity-background;
-			border: 0;
-			margin: 0;
-			padding: 15px $modal-horizontal-padding;
 		}
 
 		.top-contributors {
@@ -87,6 +94,13 @@
 				border-bottom: 2px solid $color-activity-background;
 				padding: 15px 0;
 			}
+		}
+
+		.user-details {
+			background: $color-activity-background;
+			border: 0;
+			margin: 0;
+			padding: 15px $modal-horizontal-padding;
 		}
 	}
 }

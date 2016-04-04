@@ -10,6 +10,24 @@ require([
 	// "private" vars - don't access directly. Use getUiModalInstance().
 	var uiModalInstance, modalNavHtml;
 
+	var tabs = {
+		TAB_ALL: {
+			className: '.modal-nav-all',
+			template: 'allMembers',
+			request: 'getAllMembersData',
+		},
+		TAB_ADMINS: {
+			className: '.modal-nav-admins',
+			template: 'topAdmins',
+			request: 'getTopAdminsData',
+		},
+		TAB_LEADERBOARD: {
+			className: '.modal-nav-leaderboard',
+			template: 'topContributors',
+			request: 'getTopContributorsData',
+		},
+	};
+
 	function getUiModalInstance() {
 		var $deferred = $.Deferred();
 
@@ -46,7 +64,9 @@ require([
 		return $deferred;
 	}
 
-	function openCommunityModal() {
+	function openCommunityModal(activeTab) {
+		activeTab = activeTab || tabs.TAB_LEADERBOARD;
+
 		$.when(
 			getUiModalInstance(),
 			getModalNavHtml()
@@ -61,28 +81,32 @@ require([
 				}
 			};
 			uiModal.createComponent(createPageModalConfig, function (modal) {
-				console.log(modal);
-
-				// TODO: this is an oversimplified method for populating content
-				// assumes we're opening the modal on the leaderboard section
 				nirvana.sendRequest({
 					controller: 'CommunityPageSpecial',
-					method: 'getTopContributorsData',
+					method: activeTab.request,
 					format: 'json',
 					type: 'get'
 				}).then(function (response) {
-					var html = navHtml + mustache.render(templates.topContributors, response);
+					var html = navHtml + mustache.render(templates[activeTab.template], response);
 
 					modal.$content
 						.addClass('ContributorsModule ContributorsModuleModal')
 						.html(html)
-						.find('.modal-nav-leaderboard').addClass('active');
+						.find(activeTab.className).children().addClass('active');
 
 					modal.show();
+
+					window.activeModal = modal;
 				});
 			});
 		});
 	}
+
+	$('#viewAllMembers').click(function (event) {
+		openCommunityModal(tabs.TAB_ALL);
+		event.preventDefault();
+	});
+
 
 	$(function () {
 		// prefetch UI modal on DOM ready

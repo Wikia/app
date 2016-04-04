@@ -220,18 +220,18 @@ class CommunityPageSpecialUsersModel {
 	 * @param int $days
 	 * @return array
 	 */
-	public function getRecentlyJoinedUsers( $days = 14 ) {
+	public function getRecentlyJoinedUsers() {
 		$data = WikiaDataAccess::cache(
-			wfMemcKey( self::RECENTLY_JOINED_MCACHE_KEY ),
+			wfMemcKey( key ),
 			WikiaResponse::CACHE_STANDARD,
-			function () use ($days) {
+			function () {
 				$db = wfGetDB( DB_SLAVE );
 
 				$sqlData = ( new WikiaSQL() )
 					->SELECT( '*' )
 					->FROM ( 'wikia_user_properties' )
 					->WHERE ( 'wup_property' )->EQUAL_TO( 'firstContributionTimestamp' )
-					->AND_ ( "wup_value > DATE_SUB(now(), INTERVAL $days DAY)" )
+					->AND_ ( "wup_value > DATE_SUB(now(), INTERVAL 14 DAY)" )
 					->ORDER_BY( 'wup_value DESC' )
 					->run( $db, function ( ResultWrapper $result ) {
 						$out = [];
@@ -259,5 +259,55 @@ class CommunityPageSpecialUsersModel {
 		);
 
 		return $data;
+	}
+
+	/**
+	 * Gets a list of all members of the community.
+	 * Any user who has made an edit in the last 2 years is a member
+	 *
+	 * @return array
+	 */
+	public function getAllMembers() {
+		$data = WikiaDataAccess::cache(
+			wfMemcKey( self::ALL_MEMBERS_MCACHE_KEY ),
+			WikiaResponse::CACHE_DISABLED,
+			function ()  {
+				$db = wfGetDB( DB_SLAVE );
+
+				$sqlData = ( new WikiaSQL() )
+					->SELECT( '*' )
+					->FROM ( 'wikia_user_properties' )
+					->WHERE ( 'wup_property' )->EQUAL_TO( 'firstContributionTimestamp' )
+					->AND_ ( "wup_value > DATE_SUB(now(), INTERVAL 2 YEAR)" )
+					->ORDER_BY( 'wup_value DESC' )
+					->run( $db, function ( ResultWrapper $result ) {
+						$out = [];
+
+						while ( $row = $result->fetchRow() ) {
+							$user = User::newFromId( $row['wup_user'] );
+							$userName = $user->getName();
+							$avatar = AvatarService::renderAvatar( $userName, AvatarService::AVATAR_SIZE_SMALL_PLUS );
+							$datestr = strftime( '%b %e, %Y', strtotime( $row['wup_value'] ) );
+
+							$out[] = [
+								'userId' => $row['wup_user'],
+								'oldestRevision' => $row['wup_value'],
+								'joinDate' => $datestr,
+								'userName' => $userName,
+								'isAdmin' => true, // FIXME: need to check if the user is admin of this
+								'avatar' => $avatar,
+								'profilePage' => $user->getUserPage()->getLocalURL(),
+							];
+						}
+
+						return $out;
+					} );
+
+				return $sqlData;
+			}
+		);
+
+		return $data;
+
 	}
 }
