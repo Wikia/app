@@ -128,7 +128,7 @@ ve.ui.WikiaInfoboxInsertDialog.prototype.insertInfoboxTemplate = function () {
 			paction: 'parsefragment',
 			page: mw.config.get('wgRelevantPageName'),
 			wikitext: this.transclusionModel.getWikitext()
-		}, {type: 'POST'})
+		}, { type: 'POST' })
 		.done(this.onParseSuccess.bind(this))
 		.fail(function () {
 			// TODO: Add better error handling.
@@ -249,7 +249,7 @@ ve.ui.WikiaInfoboxInsertDialog.prototype.setDialogContent = function ($content) 
 };
 
 ve.ui.WikiaInfoboxInsertDialog.prototype.addNewTemplateWidget = function () {
-	var $container = $('<div>', {class: 've-ui-wikiaInfoboxInsertDialog-add-container'}),
+	var $container = $('<div>', { class: 've-ui-wikiaInfoboxInsertDialog-add-container' }),
 		button = new OO.ui.ButtonWidget({
 			classes: ['ve-ui-wikiaInfoboxInsertDialog-add-button'],
 			framed: false,
@@ -308,7 +308,7 @@ ve.ui.WikiaInfoboxInsertDialog.prototype.onParseSuccess = function () {
 					mw: this.transclusionModel.getPlainObject()
 				}
 			},
-			{type: '/' + type}
+			{ type: '/' + type }
 		];
 
 	this.surface.getModel().getDocument().once('transact', this.onTransact.bind(this));
