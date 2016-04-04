@@ -136,6 +136,15 @@ class PortableInfoboxRenderServiceHelper {
 	}
 
 	/**
+	 * @return bool
+	 */
+	public function isMercuryExperimentalMarkupEnabled() {
+		global $wgEnableSeoFriendlyImagesForMobile;
+
+		return !empty( $wgEnableSeoFriendlyImagesForMobile );
+	}
+
+	/**
 	 * check if item type is supported and logs unsupported types
 	 *
 	 * @param string $type - template type

@@ -159,8 +159,6 @@ class PortableInfoboxRenderService extends WikiaService {
 	 * @return string
 	 */
 	private function renderInfoboxHero( $data ) {
-		global $wgEnableSeoFriendlyImagesForMobile;
-
 		$helper = new PortableInfoboxRenderServiceHelper();
 
 		if ( array_key_exists( 'image', $data ) ) {
@@ -171,7 +169,7 @@ class PortableInfoboxRenderService extends WikiaService {
 
 			if ( !$helper->isMercury() ) {
 				$markup = $this->renderItem( 'hero-mobile-wikiamobile', $data );
-			} else if ( !empty( $wgEnableSeoFriendlyImagesForMobile ) ) {
+			} else if ( $helper->isMercuryExperimentalMarkupEnabled() ) {
 				// @todo XW-1225 this should be the only template used for Mercury
 				$markup = $this->renderItem( 'hero-mobile-experimental', $data );
 			} else {
@@ -194,8 +192,6 @@ class PortableInfoboxRenderService extends WikiaService {
 	 * @return bool|string - HTML
 	 */
 	private function renderItem( $type, array $data ) {
-		global $wgEnableSeoFriendlyImagesForMobile;
-
 		$helper = new PortableInfoboxRenderServiceHelper();
 
 		if ( $type === 'image' ) {
@@ -230,7 +226,7 @@ class PortableInfoboxRenderService extends WikiaService {
 			if ( $helper->isMobile() ) {
 				if ( !$helper->isMercury() ) {
 					$templateName = $templateName . self::MOBILE_TEMPLATE_POSTFIX . '-wikiamobile';
-				} else if ( !empty( $wgEnableSeoFriendlyImagesForMobile ) ) {
+				} else if ( $helper->isMercuryExperimentalMarkupEnabled() ) {
 					// @todo XW-1225 this should be the only template used for Mercury
 					$templateName = $templateName . self::MOBILE_TEMPLATE_POSTFIX . '-experimental';
 				} else {
