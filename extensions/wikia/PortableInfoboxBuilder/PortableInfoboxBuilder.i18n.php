@@ -12,7 +12,7 @@ $messages['en'] = array(
 	'portable-infobox-builder-entry-point-modal-cancel-button' => 'Cancel',
 	'portable-infobox-builder-documentation-example-usage' => 'Example usage:',
 	'portable-infobox-builder-documentation-example-param' => 'Example',
-	'portable-infobox-builder-move-message' => 'Infobox Builder: infobox template renamed',
+	'portable-infobox-builder-move-message' => 'Infobox Builder: template renamed',
 );
 
 $messages['qqq'] = array(
