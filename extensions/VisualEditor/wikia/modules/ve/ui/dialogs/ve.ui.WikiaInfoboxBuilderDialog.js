@@ -74,8 +74,6 @@ ve.ui.WikiaInfoboxBuilderDialog.prototype.initialize = function () {
 			self.$body.append(self.content.$element);
 		});
 	});
-
-
 };
 
 /**
