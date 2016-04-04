@@ -32,6 +32,10 @@ define('wikia.infoboxBuilder.ponto', ['wikia.window', 'ponto'], function (w, pon
 			w.history.back();
 			return true;
 		};
+
+		this.returnToVE = function () {
+			$(window).trigger('infoboxBuilderReturnToVE');
+		}
 	}
 
 	// PontoBaseHandler extension pattern - check Ponto documentation for details
