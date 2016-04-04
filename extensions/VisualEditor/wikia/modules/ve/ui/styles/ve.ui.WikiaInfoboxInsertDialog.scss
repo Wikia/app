@@ -29,6 +29,14 @@
 
 		&:hover {
 			background-color: $color-ve-hover;
+
+			.oo-ui-labelElement-label {
+				color: $color-text;
+			}
 		}
+	}
+
+	.oo-ui-buttonElement-button > .oo-ui-labelElement-label {
+		color: $color-text;
 	}
 }

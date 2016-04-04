@@ -2728,6 +2728,10 @@ OO.ui.WindowManager.static.sizes = {
 	},
 	'800px': {
 		width: 800
+	},
+	dynamic: {
+		// Overwrite it by defining a getDynamicSize method in your Window object
+		width: '100%'
 	}
 };
 
@@ -3184,6 +3188,9 @@ OO.ui.WindowManager.prototype.updateWindowSize = function ( win ) {
 		sizes = this.constructor.static.sizes,
 		size = win.getSize();
 
+	if ( size === 'dynamic' && typeof win.getDynamicSize === 'function' ) {
+		sizes.dynamic = { width: function () { return win.getDynamicSize() } };
+	}
 	if ( !sizes[size] ) {
 		size = this.constructor.static.defaultSize;
 	}
