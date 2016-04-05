@@ -192,7 +192,7 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 		var targeting,
 			parameters = {};
 
-		if (!win.rubicontag || !win.rubicontag.getSlot(slotName)) {
+		if (!win.rubicontag || typeof win.rubicontag.getSlot !== 'function' || !win.rubicontag.getSlot(slotName)) {
 			return {};
 		}
 
@@ -224,7 +224,7 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 
 	function calculatePrices() {
 		var allSlots;
-		if (!win.rubicontag || !win.rubicontag.getAllSlots) {
+		if (!win.rubicontag || typeof win.rubicontag.getAllSlots !== 'function') {
 			return;
 		}
 		allSlots = win.rubicontag.getAllSlots();
