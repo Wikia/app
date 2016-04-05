@@ -41,7 +41,7 @@ class WikiaSpecialPageController extends WikiaController {
 		unset($params['controller']);
 		unset($params['method']);
 
-		$response = $this->sendExternalRequest( get_class( $this ), null, $params );
+		$response = $this->sendExternalRequest( get_class( $this ), null, $params, WikiaRequest::EXCEPTION_MODE_THROW );
 		$this->response = $response;
 
 		if( $response->getFormat() == WikiaResponse::FORMAT_HTML ) {

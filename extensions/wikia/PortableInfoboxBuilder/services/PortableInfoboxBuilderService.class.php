@@ -25,8 +25,9 @@ class PortableInfoboxBuilderService extends WikiaService {
 	}
 
 	/**
-	 * @param $builderData
-	 * @return array json_encoded array representing the infobox markup
+	 * @param $infoboxMarkup
+	 * @return array representing the infobox markup
+	 * @throws \Wikia\PortableInfobox\Parser\Nodes\UnimplementedNodeException
 	 * @see PortableInfoboxBuilderServiceTest::translationsDataProvider
 	 */
 	public function translateMarkupToData( $infoboxMarkup ) {
@@ -38,15 +39,16 @@ class PortableInfoboxBuilderService extends WikiaService {
 			$jsonObject = $builderNode->asJsonObject( $xmlNode );
 		}
 
-		return json_encode( $jsonObject );
+		return $jsonObject;
 	}
 
 	/**
 	 * @param $infoboxMarkup string with infobox markup
+	 * @return bool
 	 */
 	public function isSupportedMarkup( $infoboxMarkup ) {
 		$xmlNode = simplexml_load_string( $infoboxMarkup );
-		if ( $xmlNode ) {
+		if ( $xmlNode !== false ) {
 			$builderNode = \Wikia\PortableInfoboxBuilder\Nodes\NodeBuilder::createFromNode( $xmlNode );
 			return $builderNode->isValid();
 		}
@@ -61,7 +63,7 @@ class PortableInfoboxBuilderService extends WikiaService {
 	 * @return bool
 	 */
 	public function isValidInfoboxArray( $infoboxes ) {
-		return empty( $infoboxes ) || ( count( $infoboxes ) === 1 && $this->isSupportedMarkup( $infoboxes[0] ) );
+		return empty( $infoboxes ) || ( count( $infoboxes ) === 1 && $this->isSupportedMarkup( $infoboxes[ 0 ] ) );
 	}
 
 	/**
@@ -160,7 +162,7 @@ class PortableInfoboxBuilderService extends WikiaService {
 	 */
 	protected function getCanonicalType( $type ) {
 		mb_convert_case( $type, MB_CASE_LOWER, 'UTF-8' );
-		$type = !empty($this->typesToCanonicals[$type]) ? $this->typesToCanonicals[$type] : $type;
+		$type = !empty( $this->typesToCanonicals[ $type ] ) ? $this->typesToCanonicals[ $type ] : $type;
 		return $type;
 	}
 
@@ -260,7 +262,7 @@ class PortableInfoboxBuilderService extends WikiaService {
 
 	/**
 	 * @param $childNodeDom
-	 * @param $collapsible: bool
+	 * @param $collapsible : bool
 	 * @return DOMElement
 	 */
 	protected function createGroupDom( $childNodeDom, $collapsible ) {

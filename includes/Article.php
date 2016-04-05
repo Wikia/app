@@ -324,7 +324,7 @@ class Article extends Page {
 				$this->mRevision = Revision::newFromId( $oldid );
 				if ( !$this->mRevision ) {
 					wfDebug( __METHOD__ . " failed to retrieve specified revision, id $oldid\n" );
-					Wikia::log(__METHOD__, 1, "failed to retrieve specified revision, title '$t', id $oldid", true); # Wikia change - @author macbre
+					Wikia\Logger\WikiaLogger::instance()->error( __METHOD__ . " - failed to retrieve specified revision", [ 'title' => $t, 'rev_id' => (string) $oldid ] ); # Wikia change - @author macbre
 					wfProfileOut( __METHOD__ );
 					return false;
 				}
@@ -339,7 +339,7 @@ class Article extends Page {
 			$this->mRevision = $this->mPage->getRevision();
 			if ( !$this->mRevision ) {
 				wfDebug( __METHOD__ . " failed to retrieve current page, rev_id " . $this->mPage->getLatest() . "\n" );
-				Wikia::log(__METHOD__, 3, "failed to retrieve current page, title '$t', rev_id " . $this->mPage->getLatest(), true); # Wikia change - @author macbre
+				Wikia\Logger\WikiaLogger::instance()->error( __METHOD__ . " - failed to retrieve current page", [ 'title' => $t, 'rev_id' => (string) $this->mPage->getLatest() ] ); # Wikia change - @author macbre
 				wfProfileOut( __METHOD__ );
 				return false;
 			}

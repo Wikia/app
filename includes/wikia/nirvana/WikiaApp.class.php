@@ -603,7 +603,6 @@ class WikiaApp {
 	 * @param string $controllerName The name of the controller, without the 'Controller' or 'Model' suffix
 	 * @param string $methodName The name of the Controller method to call
 	 * @param array $params An array with the parameters to pass to the specified method
-	 * @param boolean $internal whether it's an internal (PHP to PHP) or external request
 	 * @param int $exceptionMode exception mode
 	 *
 	 * @return WikiaResponse a response object with the data produced by the method call
@@ -651,13 +650,12 @@ class WikiaApp {
 	 * @param string $controllerName The name of the controller, without the 'Controller' or 'Model' suffix
 	 * @param string $methodName The name of the Controller method to call
 	 * @param array $params An array with the parameters to pass to the specified method
-	 * @param boolean $internal whether it's an internal (PHP to PHP) or external request
 	 * @param int $exceptionMode exception mode
 	 *
 	 * @return WikiaResponse a response object with the data produced by the method call
 	 */
-	public function sendExternalRequest( $controllerName, $methodName, $params = array() ) {
-		return $this->sendRequest( $controllerName, $methodName, $params, /* internal */ false );
+	public function sendExternalRequest( $controllerName, $methodName, $params = array(), $exceptionMode = null ) {
+		return $this->sendRequest( $controllerName, $methodName, $params, /* internal */ false, $exceptionMode );
 	}
 
 	/**

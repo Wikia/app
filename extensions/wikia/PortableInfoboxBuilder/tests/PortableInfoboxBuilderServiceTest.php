@@ -24,7 +24,11 @@ class PortableInfoboxBuilderServiceTest extends WikiaBaseTest {
 	 * @dataProvider markupTranslationsDataProvider
 	 */
 	public function testTranslationFromMarkup( $markup, $expected ) {
-		$generated_json = json_decode( $this->builderService->translateMarkupToData( $markup ) );
+		// we are encoding and decoding here to be able to easly compare two structures. json_encode works
+		// differently according to context where object/array is placed and thus, A' != json_decode(json_encode(A))
+		// Other solution would be to build proper stdClass structure in $expected field but that would require
+		// much more work and would decrease readability.
+		$generated_json = json_decode( json_encode( $this->builderService->translateMarkupToData( $markup ) ) );
 		$expected_json = json_decode( $expected );
 		$this->assertEquals( $expected_json, $generated_json );
 	}
@@ -148,6 +152,8 @@ class PortableInfoboxBuilderServiceTest extends WikiaBaseTest {
 	public function markupSupportDataProvider() {
 		return [
 			[ "", false ],
+			[ '<infobox/>', true, "empty infobox should be supported" ],
+			[ '<infobox></infobox>', true, "empty infobox should be supported" ],
 			[ '<infobox><data source="asdf"/></infobox>', true, "data tag should be supported" ],
 			[ '<infobox><data source="asdf"><label>asdfsda</label></data></infobox>', true, "data tag with label should be supported" ],
 			[ '<infobox><data source="asdf"><label>[[some link]]</label></data></infobox>', true, "links within labels should be supported" ],
