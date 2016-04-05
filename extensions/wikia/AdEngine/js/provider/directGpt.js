@@ -140,7 +140,6 @@ define('ext.wikia.adEngine.provider.directGpt', [
 				slotTweaker.removeDefaultHeight(slotName);
 				slotTweaker.removeTopButtonIfNeeded(slotName);
 				slotTweaker.adjustLeaderboardSize(slotName);
-				slotTweaker.adjustSkyscraperSize(slotName);
 				onSlotResponse(slotName);
 			},
 			beforeHop: function (slotName) {

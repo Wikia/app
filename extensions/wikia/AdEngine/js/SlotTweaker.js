@@ -90,14 +90,6 @@ define('ext.wikia.adEngine.slotTweaker', [
 		}
 	}
 
-	function adjustSkyscraperSize(slotName) {
-		var slot;
-		if (slotName === 'LEFT_SKYSCRAPER_3') {
-			slot  = document.getElementById(slotName);
-			slot.style.top = (-1 * slot.offsetHeight) + 'px';
-		}
-	}
-
 	// TODO: fix it, it's a hack!
 	function adjustLeaderboardSize(slotname) {
 		var slot = document.getElementById(slotname);
@@ -142,7 +134,6 @@ define('ext.wikia.adEngine.slotTweaker', [
 		addDefaultHeight: addDefaultHeight,
 		removeDefaultHeight: removeDefaultHeight,
 		removeTopButtonIfNeeded: removeTopButtonIfNeeded,
-		adjustSkyscraperSize: adjustSkyscraperSize,
 		adjustLeaderboardSize: adjustLeaderboardSize,
 		hide: hide,
 		show: show,
