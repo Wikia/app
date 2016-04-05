@@ -47,6 +47,9 @@ $messages['en'] = array(
 	'communitypage-modal-tab-all' => 'All',
 	'communitypage-modal-tab-admins' => 'Admins',
 	'communitypage-modal-tab-leaderboard' => 'This Week\'s Leaderboard',
+	'communitypage-no-contributors' => 'There are no contributions yet this week! Be the first to contribute!',
+	'communitypage-no-admins' => 'There are no Admins on this wiki yet.',
+	'communitypage-no-admins-contact' => 'Contact us to be the first!',
 );
 
 $messages['qqq'] = array(

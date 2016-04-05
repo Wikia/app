@@ -141,7 +141,6 @@ class CommunityPageSpecialUsersModel {
 		return $botIds;
 	}
 
-	// todo: I think we can do this in the initial query
 	public static function filterGlobalBots( array $users ) {
 		$botIds = self::getGlobalBotIds();
 
@@ -215,14 +214,31 @@ class CommunityPageSpecialUsersModel {
 	}
 
 	/**
+	 * Utility function used to filter out users that should not show up on the member's list
+	 * @param $user
+	 * @return bool
+	 */
+	protected function showMember( $user ) {
+		if ($user->isAnon()) {
+			return false;
+		} elseif ($user->isBlocked()) {
+			return false;
+		} elseif (in_array( $user->getId(), self::getGlobalBotIds() ) ) {
+			return false;
+		}
+
+		return true;
+	}
+
+	/**
 	 * Get a list of users who have made their first edits in the last n days
 	 *
-	 * @param int $days
+	 * @param int $limit
 	 * @return array
 	 */
 	public function getRecentlyJoinedUsers( $limit = 14 ) {
 		$data = WikiaDataAccess::cache(
-			wfMemcKey( key ),
+			wfMemcKey( self::RECENTLY_JOINED_MCACHE_KEY ),
 			WikiaResponse::CACHE_STANDARD,
 			function () use ( $limit ) {
 				$db = wfGetDB( DB_SLAVE );
@@ -240,16 +256,19 @@ class CommunityPageSpecialUsersModel {
 						while ( $row = $result->fetchRow() ) {
 							$user = User::newFromId( $row['wup_user'] );
 							$userName = $user->getName();
-							$avatar = AvatarService::renderAvatar( $userName, AvatarService::AVATAR_SIZE_SMALL_PLUS );
 
-							$out[] = [
-								'userId' => $row['wup_user'],
-								'oldestRevision' => $row['wup_value'],
-								'contributions' => 0, // $row['contributions'],
-								'userName' => $userName,
-								'avatar' => $avatar,
-								'profilePage' => $user->getUserPage()->getLocalURL(),
-							];
+							if ( $this->showMember( $user ) ) {
+								$avatar = AvatarService::renderAvatar($userName, AvatarService::AVATAR_SIZE_SMALL_PLUS);
+
+								$out[] = [
+									'userId' => $row['wup_user'],
+									'oldestRevision' => $row['wup_value'],
+									'contributions' => 0, // $row['contributions'],
+									'userName' => $userName,
+									'avatar' => $avatar,
+									'profilePage' => $user->getUserPage()->getLocalURL(),
+								];
+							}
 						}
 
 						return $out;
@@ -271,13 +290,14 @@ class CommunityPageSpecialUsersModel {
 	public function getAllMembers() {
 		$data = WikiaDataAccess::cache(
 			wfMemcKey( self::ALL_MEMBERS_MCACHE_KEY ),
-			WikiaResponse::CACHE_DISABLED,
+			WikiaResponse::CACHE_STANDARD,
 			function () {
 				$db = wfGetDB( DB_SLAVE );
 
 				$sqlData = ( new WikiaSQL() )
 					->SELECT( '*' )
 					->FROM ( 'wikia_user_properties' )
+					->LEFT_JOIN( 'user_groups')->ON( 'wup_user = ug_user' )
 					->WHERE ( 'wup_property' )->EQUAL_TO( 'firstContributionTimestamp' )
 					->AND_ ( "wup_value > DATE_SUB(now(), INTERVAL 2 YEAR)" )
 					->ORDER_BY( 'wup_value DESC' )
@@ -287,18 +307,23 @@ class CommunityPageSpecialUsersModel {
 						while ( $row = $result->fetchRow() ) {
 							$user = User::newFromId( $row['wup_user'] );
 							$userName = $user->getName();
-							$avatar = AvatarService::renderAvatar( $userName, AvatarService::AVATAR_SIZE_SMALL_PLUS );
-							$datestr = strftime( '%b %e, %Y', strtotime( $row['wup_value'] ) );
 
-							$out[] = [
-								'userId' => $row['wup_user'],
-								'oldestRevision' => $row['wup_value'],
-								'joinDate' => $datestr,
-								'userName' => $userName,
-								'isAdmin' => true, // FIXME: need to check if the user is admin of this
-								'avatar' => $avatar,
-								'profilePage' => $user->getUserPage()->getLocalURL(),
-							];
+							if ( $this->showMember( $user ) ) {
+								$avatar = AvatarService::renderAvatar( $userName, AvatarService::AVATAR_SIZE_SMALL_PLUS );
+								$dateString = strftime( '%b %e, %Y', strtotime( $row['wup_value'] ) );
+								$isAdmin = ( strcmp( $row['ug_group'], 'sysop') == 0 );
+
+								$out[] = [
+									'userId' => $row['wup_user'],
+									'oldestRevision' => $row['wup_value'],
+									'group' => $row['ug_group'],
+									'joinDate' => $dateString,
+									'userName' => $userName,
+									'isAdmin' => $isAdmin,
+									'avatar' => $avatar,
+									'profilePage' => $user->getUserPage()->getLocalURL(),
+								];
+							}
 						}
 
 						return $out;

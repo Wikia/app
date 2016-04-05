@@ -77,7 +77,6 @@ require([
 					size: 'medium',
 					content: '',
 					title: $.msg('communitypage-modal-title'),
-					data: { mcache: 'writeonly' }, // fixme: temporary debug variable
 					classes: ['CommunityPageModalDialog']
 				}
 			};
@@ -85,6 +84,7 @@ require([
 				nirvana.sendRequest({
 					controller: 'CommunityPageSpecial',
 					method: activeTab.request,
+					data: { mcache: 'writeonly' }, // fixme: temporary debug variable
 					format: 'json',
 					type: 'get'
 				}).then(function (response) {

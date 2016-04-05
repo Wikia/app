@@ -113,6 +113,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 			'admins' => array_slice( $topAdminsDetails, 0, 2 ),
 			'otherAdminCount' => $remainingAdminCount,
 			'haveOtherAdmins' => $remainingAdminCount > 0,
+			'adminCount' => count ( $topAdmins ),
 		] );
 	}
 
@@ -197,11 +198,13 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	}
 
 	public function getModalHeaderData() {
+		$adminData =  $this->sendRequest( 'CommunityPageSpecialController', 'getTopAdminsData' )->getData();
+
 		$this->response->setData([
 			'allText' => $this->msg( 'communitypage-modal-tab-all' )->plain(),
 			'allCount' => 'N', // TODO: fill this in
 			'adminsText' => $this->msg( 'communitypage-modal-tab-admins' )->plain(),
-			'adminsCount' => 'N', // TODO: fill this in
+			'adminsCount' => $adminData['adminCount'],
 			'leaderboardText' => $this->msg( 'communitypage-modal-tab-leaderboard' )->plain(),
 		]);
 	}
