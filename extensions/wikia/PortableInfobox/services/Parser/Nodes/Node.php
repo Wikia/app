@@ -38,14 +38,12 @@ class Node {
 		if ( count( $sources ) > 1 ) {
 			foreach ( $sources as $source ) {
 				if ( !empty( $source ) ) {
-					$sourceLabel = !empty( $label ) ? "{$label} ({$source})" : $label;
-					$sourceLabels = array_merge( $sourceLabels, [ $source => $sourceLabel ] );
+					$sourceLabel = !empty( $label ) ? "{$label} ({$source})" : '';
+					$sourceLabels[$source] = $sourceLabel;
 				}
 			}
-		} else {
-			if ( !empty( $sources[0] ) ) {
-				return [ $sources[0] => $label ];
-			}
+		} elseif ( !empty( $sources[0] ) ) {
+			$sourceLabels[$sources[0]] = $label;
 		}
 
 		return $sourceLabels;
