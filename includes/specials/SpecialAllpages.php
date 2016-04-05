@@ -69,7 +69,10 @@ class SpecialAllpages extends IncludableSpecialPage {
 		// SEO-256: Use Special:Allpages as local sitemaps
 		global $wgEnableLocalSitemap;
 		if ( !empty( $wgEnableLocalSitemap ) ) {
-			$out->setRobotPolicy( 'noindex,follow' );
+			if ( $this->getUser() && !$this->getUser()->isLoggedIn() ) {
+				$out->setRobotPolicy( 'noindex,follow' );
+				$out->mSquidMaxage = WikiaResponse::CACHE_VERY_SHORT;
+			}
 		}
 		/* Wikia change end */
 
