@@ -38,8 +38,7 @@ class Node {
 		if ( count( $sources ) > 1 ) {
 			foreach ( $sources as $source ) {
 				if ( !empty( $source ) ) {
-					$sourceLabel = !empty( $label ) ? "{$label} ({$source})" : '';
-					$sourceLabels[$source] = $sourceLabel;
+					$sourceLabels[$source] = !empty( $label ) ? "{$label} ({$source})" : '';
 				}
 			}
 		} elseif ( !empty( $sources[0] ) ) {
