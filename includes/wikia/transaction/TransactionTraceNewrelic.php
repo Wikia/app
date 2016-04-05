@@ -39,6 +39,7 @@ class TransactionTraceNewrelic {
 		// report trace ID and (optionally) parent span ID as a custom request parameter for easier debugging of slow transactions in SOA world
 		if ( function_exists( 'newrelic_add_custom_parameter' ) ) {
 			newrelic_add_custom_parameter( 'traceId', WikiaTracer::instance()->getTraceId() );
+			newrelic_add_custom_parameter( 'spanId', WikiaTracer::instance()->getSpanId() );
 			newrelic_add_custom_parameter( 'parentSpanId', WikiaTracer::instance()->getParentSpanId() );
 		}
 	}

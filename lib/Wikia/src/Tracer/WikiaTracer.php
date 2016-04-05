@@ -215,6 +215,13 @@ class WikiaTracer {
 	}
 
 	/**
+	 * @return string
+	 */
+	public function getSpanId() {
+		return $this->spanId;
+	}
+
+	/**
 	 * @return null|string
 	 */
 	public function getParentSpanId() {
