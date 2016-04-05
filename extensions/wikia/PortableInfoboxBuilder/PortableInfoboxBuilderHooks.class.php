@@ -56,6 +56,20 @@ class PortableInfoboxBuilderHooks {
 	}
 
 	/**
+	 * Decide to display Infobox builder in VE
+	 * @param array $aVars
+	 * @return bool
+	 */
+	public function onMakeGlobalVariablesScript( array &$aVars ) {
+		global $wgEnablePortableInfoboxBuilderExt, $wgEnablePortbaleInfoboxBuilderInVE;
+
+		$aVars['wgEnablePortbaleInfoboxBuilderInVE'] = $wgEnablePortableInfoboxBuilderExt &&
+			$wgEnablePortbaleInfoboxBuilderInVE;
+
+		return true;
+	}
+
+	/**
 	 *
 	 * @param $page \Article|\Page
 	 * @param $user \User
