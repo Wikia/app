@@ -1520,7 +1520,7 @@ function wfGetNamespaces() {
 
 /**
  * Repair malformed HTML without making semantic changes (ie, changing tags to more closely follow the HTML spec.)
- * Refs DAR-985 and VID-1011
+ * Refs DAR-985, VID-1011, SUS-327
  *
  * @param string $html - HTML to repair
  * @return string - repaired HTML
@@ -1532,18 +1532,24 @@ function wfFixMalformedHTML( $html ) {
 	// what we're using it to fix) see: http://www.php.net/manual/en/domdocument.loadhtml.php#95463
 	libxml_use_internal_errors( true );
 
-	// Make sure loadHTML knows that text is utf-8 (it assumes ISO-88591)
 	// CONN-130 - Added <!DOCTYPE html> to allow HTML5 tags in the article comment
-	$htmlHeader = '<!DOCTYPE html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"></head>';
+	$htmlHeader = '<!DOCTYPE html><html>';
+
+	// Make sure loadHTML knows that text is utf-8 (it assumes ISO-88591)
+	$htmlHeader .= '<head><meta http-equiv="content-type" content="text/html; charset=utf-8"></head>';
+
+	// SUS-237 - Wrap in <body> tag to prevent wrapping simple text with <p> tags and stripping HTML comments and script tags
+	// This also simplifies the return value extraction
+	$htmlHeader .= '<body>';
+
 	$domDocument->loadHTML( $htmlHeader . $html );
 
 	// Strip doctype declaration, <html>, <body> tags created by saveHTML, as well as <meta> tag added to
 	// to html above to declare the charset as UTF-8
 	$html = preg_replace(
 		array(
-			'/^.*?<body>/si', '/^.*?charset=utf-8">/si',
-			'/<\/body><\/html>$/si',
-			'/<\/head><\/html>$/si',
+			'/^.*<body>/s',
+			'/<\/body>\s*<\/html>$/s',
 		),
 		'',
 		$domDocument->saveHTML()
