@@ -220,11 +220,11 @@ class CommunityPageSpecialUsersModel {
 	 * @param int $days
 	 * @return array
 	 */
-	public function getRecentlyJoinedUsers() {
+	public function getRecentlyJoinedUsers( $limit = 14 ) {
 		$data = WikiaDataAccess::cache(
 			wfMemcKey( key ),
 			WikiaResponse::CACHE_STANDARD,
-			function () {
+			function () use ( $limit ) {
 				$db = wfGetDB( DB_SLAVE );
 
 				$sqlData = ( new WikiaSQL() )
@@ -233,6 +233,7 @@ class CommunityPageSpecialUsersModel {
 					->WHERE ( 'wup_property' )->EQUAL_TO( 'firstContributionTimestamp' )
 					->AND_ ( "wup_value > DATE_SUB(now(), INTERVAL 14 DAY)" )
 					->ORDER_BY( 'wup_value DESC' )
+					->LIMIT( $limit )
 					->run( $db, function ( ResultWrapper $result ) {
 						$out = [];
 
@@ -271,7 +272,7 @@ class CommunityPageSpecialUsersModel {
 		$data = WikiaDataAccess::cache(
 			wfMemcKey( self::ALL_MEMBERS_MCACHE_KEY ),
 			WikiaResponse::CACHE_DISABLED,
-			function ()  {
+			function () {
 				$db = wfGetDB( DB_SLAVE );
 
 				$sqlData = ( new WikiaSQL() )

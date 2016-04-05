@@ -1,4 +1,5 @@
 @import 'skins/shared/color';
+@import 'skins/shared/mixins/transform';
 
 @import 'components/variables';
 @import 'components/base';
@@ -101,11 +102,15 @@
 			border: 1px solid rgb(199, 209, 216);
 			border-radius: 50%;
 			display: inline-block;
-			height: 30px;
+			height: 26px;
 			margin: 0;
 			overflow: hidden;
 			vertical-align: middle;
-			width: 30px;
+			width: 26px;
+		}
+
+		.avatar {
+			@include transform-translate(-2px, -2px);
 		}
 
 		a {

@@ -77,6 +77,7 @@ require([
 					size: 'medium',
 					content: '',
 					title: $.msg('communitypage-modal-title'),
+					data: { mcache: 'writeonly' }, // fixme: temporary debug variable
 					classes: ['CommunityPageModalDialog']
 				}
 			};
