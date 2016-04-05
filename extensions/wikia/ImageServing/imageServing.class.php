@@ -47,7 +47,8 @@ class ImageServing {
 	function __construct( $articles = null, $width = 100, $proportionOrHeight = array( "w" => 1, "h" => 1 ), $db = null ){
 		if($width == 0 || (!is_array( $proportionOrHeight )  && $proportionOrHeight == 0)) {
 			$wg = F::app()->wg;
-			WikiaLogger::instance()->error( __METHOD__, $wg->Request->getHeader( 'USER-AGENT' ) . 'agent requested zero width or height' );
+			WikiaLogger::instance()->error( __METHOD__ . ' agent requested zero width or height',
+				["user_agent" => $wg->Request->getHeader( 'USER-AGENT' )] );
 		}
 
 		if( !is_array( $proportionOrHeight ) ) {
