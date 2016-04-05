@@ -106,11 +106,13 @@ class WikiaTracer {
 	}
 
 	private function getApplicationContext() {
-		global $wgDBname, $wgCityId, $maintClass;
+		global $wgDBname, $wgCityId, $wgWikiaDatacenter, $wgWikiaEnvironment, $maintClass;
 
 		$context = [
 			'app_name' => self::APPLICATION_NAME,
 			'app_version' => $this->getAppVersion(), // please note that this field won't always be filled (if logging is called pretty early)
+			'datacenter' => $wgWikiaDatacenter, # sjc / res / poz
+			'environment' => $wgWikiaEnvironment, # dev / prod
 		];
 
 		if ( !empty( $wgDBname ) ) {
