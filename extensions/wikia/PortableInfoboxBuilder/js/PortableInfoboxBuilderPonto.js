@@ -1,6 +1,6 @@
 'use strict';
 
-define('wikia.infoboxBuilder.ponto', ['wikia.window', 'ponto'], function (w, ponto) {
+define('wikia.infoboxBuilder.ponto', ['wikia.window', 'ponto', 'jquery'], function (w, ponto, $) {
 	function InfoboxBuilderPonto() {
 		/**
 		 * sends wiki context to infobox builder in mercury
@@ -35,7 +35,7 @@ define('wikia.infoboxBuilder.ponto', ['wikia.window', 'ponto'], function (w, pon
 
 		this.returnToVE = function () {
 			$(window).trigger('infoboxBuilderReturnToVE');
-		}
+		};
 	}
 
 	// PontoBaseHandler extension pattern - check Ponto documentation for details
