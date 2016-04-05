@@ -67,7 +67,9 @@ class GlobalWatchlistTask extends BaseTask {
 					}
 				}
 
-				$this->addWatchersToDb( $watchersToAdd );
+				if ( count( $watchersToAdd ) ) {
+					$this->addWatchersToDb( $watchersToAdd );
+				}
 			}
 		}
 	}

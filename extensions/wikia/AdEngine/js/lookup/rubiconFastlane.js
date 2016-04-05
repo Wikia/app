@@ -21,15 +21,15 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 					targeting: {loc: 'top'}
 				},
 				LEFT_SKYSCRAPER_2: {
-					sizes: [[160, 600], [120, 600], [300, 250], [300, 600], [300, 1050]],
+					sizes: [[120, 600], [160, 600], [300, 250], [300, 600], [300, 1050]],
 					targeting: {loc: 'middle'}
 				},
 				LEFT_SKYSCRAPER_3: {
-					sizes: [[160, 600], [300, 250], [300, 600]],
+					sizes: [[120, 600], [160, 600], [300, 250], [300, 600]],
 					targeting: {loc: 'footer'}
 				},
 				INCONTENT_BOXAD_1: {
-					sizes: [[300, 250], [120, 600], [160, 600], [300, 600]],
+					sizes: [[120, 600], [160, 600], [300, 250], [300, 600]],
 					targeting: {loc: 'hivi'}
 				},
 				PREFOOTER_LEFT_BOXAD: {
@@ -43,13 +43,13 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 			},
 			mercury: {
 				MOBILE_IN_CONTENT: {
-					sizes: [[300, 250], [320, 480]]
+					sizes: [[300, 50], [300, 250], [320, 50], [320, 480]]
 				},
 				MOBILE_PREFOOTER: {
-					sizes: [[300, 250]]
+					sizes: [[300, 50], [300, 250], [320, 50]]
 				},
 				MOBILE_TOP_LEADERBOARD: {
-					sizes: [[300, 50], [320, 50], [300, 250]]
+					sizes: [[300, 50], [300, 250], [320, 50]]
 				}
 			}
 		},
