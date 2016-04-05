@@ -131,7 +131,7 @@ $taboola-small-breakpoint: "#{$screen} and (max-width: 420px)";
 }
 
 #INCONTENT_LEADERBOARD:before {
-  color: #656d77;
+  color: $color-text;
   content: attr(data-label);
   display: block;
   font-size: 0.625rem;
