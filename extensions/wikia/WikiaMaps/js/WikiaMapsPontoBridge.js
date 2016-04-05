@@ -96,7 +96,9 @@ define(
 				cityId: parseInt(w.wgCityId, 10),
 				mobile: w.skin === 'wikiamobile',
 				skin: w.skin,
-				// temporary change required for ad purpose https://wikia-inc.atlassian.net/browse/DAT-4051
+				// Temporary change required for ad purpose - https://wikia-inc.atlassian.net/browse/DAT-4051.
+				// We need to limit contribution options on protected maps related to the ad campaign only to stuff
+				// users.
 				// TODO: remove this as a part of https://wikia-inc.atlassian.net/browse/DAT-4055
 				isUserStuff: w.wgUserGroups.indexOf('stuff') !== -1
 			};
