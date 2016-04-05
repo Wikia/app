@@ -15,6 +15,10 @@ ve.ui.WikiaInfoboxInsertDialog = function VeUiWikiaInfoboxInsertDialog(config) {
 	// Parent constructor
 	ve.ui.WikiaInfoboxInsertDialog.super.call(this, config);
 
+	$(window).on('infoboxListChanged', function () {
+		this.refreshInfoboxesList();
+	}.bind(this));
+	
 	// Properties
 	this.surface = null;
 };
@@ -96,27 +100,25 @@ ve.ui.WikiaInfoboxInsertDialog.prototype.onInfoboxTemplateSelect = function (ite
  * Fetch infobox template names from API
  */
 ve.ui.WikiaInfoboxInsertDialog.prototype.getInfoboxTemplates = function () {
-	var deferred;
-	if (!this.gettingTemplateNames) {
-		deferred = $.Deferred();
-		ve.init.target.constructor.static.apiRequest({
-				action: 'query',
-				list: 'allinfoboxes'
-			})
-			.done(function (data) {
-				deferred.resolve(data);
-			})
-			.fail(function () {
-				// TODO: Add better error handling.
-				ve.track('wikia', {
-					action: ve.track.actions.ERROR,
-					label: 'infobox-templates-api'
-				});
-				deferred.resolve({});
+	var deferred = $.Deferred();
+
+	ve.init.target.constructor.static.apiRequest({
+			action: 'query',
+			list: 'allinfoboxes'
+		})
+		.done(function (data) {
+			deferred.resolve(data);
+		})
+		.fail(function () {
+			// TODO: Add better error handling.
+			ve.track('wikia', {
+				action: ve.track.actions.ERROR,
+				label: 'infobox-templates-api'
 			});
-		this.gettingTemplateNames = deferred.promise();
-	}
-	return this.gettingTemplateNames;
+			deferred.resolve({});
+		});
+
+	return deferred.promise();
 };
 
 /**
@@ -246,6 +248,12 @@ ve.ui.WikiaInfoboxInsertDialog.prototype.createEmptyStateContent = function (unc
  */
 ve.ui.WikiaInfoboxInsertDialog.prototype.setDialogContent = function ($content) {
 	this.$body.html($content).append(this.addNewTemplateWidget());
+};
+
+ve.ui.WikiaInfoboxInsertDialog.prototype.refreshInfoboxesList = function () {
+	this.getInfoboxTemplates()
+		.then(this.createDialogContent.bind(this))
+		.then(this.setDialogContent.bind(this));
 };
 
 ve.ui.WikiaInfoboxInsertDialog.prototype.addNewTemplateWidget = function () {
