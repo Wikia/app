@@ -143,7 +143,7 @@ class ThumbnailVideo extends ThumbnailImage {
 			array_merge( $options, [
 				'url'       => $this->url,
 				'method'    => __METHOD__,
-				'page'      => $this->page,
+				'page_int'  => (int) $this->page, # int|false $page Page number, for multi-page files
 				'mediaType' => $this->mediaType(),
 				'fileType'  => get_class( $this->file )
 			] ) );
