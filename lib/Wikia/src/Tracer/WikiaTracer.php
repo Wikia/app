@@ -207,8 +207,18 @@ class WikiaTracer {
 		return $instance;
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getTraceId() {
 		return $this->traceId;
+	}
+
+	/**
+	 * @return null|string
+	 */
+	public function getParentSpanId() {
+		return $this->parentSpanId;
 	}
 
 	public function getInternalHeaders() {
