@@ -22,8 +22,10 @@ class CategoryAddControllerTest extends WikiaBaseTest {
 	}
 
 	private function mockUser() {
-		// wtf... http://stackoverflow.com/questions/12748607/phpunits-returnvaluemap-not-yielding-expected-results
-
+		// In order have a mocked method return different values based on different inputs, you use
+		// a return value map. If that mocked method has default arguments, you have to add values for
+		// those args as well. That's what the 2nd and 3rd arguments here are doing (null and false).
+		// See: http://stackoverflow.com/questions/12748607/phpunits-returnvaluemap-not-yielding-expected-results#answer-15300642
 		$returnValueMap = [
 			[ 'unsubscribed', null, false, false ],
 			[ 'language', null, false, 'en' ]
