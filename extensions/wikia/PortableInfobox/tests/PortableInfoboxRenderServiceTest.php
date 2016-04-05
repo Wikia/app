@@ -753,7 +753,7 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 						'thumbnail' => 'http://image.jpg',
 						'media-type' => 'image',
 						'isVideo' => false,
-						'mercury-component-attrs' => json_encode( [
+						'mercuryComponentAttrs' => json_encode( [
 							'itemContext' => 'portable-infobox',
 							'ref' => 1
 						] )
@@ -810,7 +810,7 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 						'thumbnail' => 'thumbnail.jpg',
 						'isVideo' => false,
 						'media-type' => 'image',
-						'mercury-component-attrs' => json_encode( [
+						'mercuryComponentAttrs' => json_encode( [
 							'itemContext' => 'portable-infobox',
 							'ref' => 44
 						] )

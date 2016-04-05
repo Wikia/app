@@ -86,11 +86,31 @@ class PortableInfoboxRenderServiceHelper {
 			'thumbnail' => $thumbnail->getUrl(),
 			'key' => urlencode( $data[ 'key' ] ),
 			'media-type' => $data[ 'isVideo' ] ? 'video' : 'image',
-			'mercury-component-attrs' => json_encode( [
+			'mercuryComponentAttrs' => json_encode( [
 				'itemContext' => 'portable-infobox',
 				'ref' => $ref
 			] )
 		] );
+	}
+
+	/**
+	 * @param array $images
+	 * @return array
+	 */
+	public function extendImageCollectionData( $images ) {
+		$mercuryComponentAttrs = [
+			'refs' => array_map( function ( $image ) {
+				return $image['ref'];
+			}, $images )
+		];
+		$images[0]['isFirst'] = true;
+		$data = [
+			'images' => $images,
+			'firstImage' => $images[0],
+			'mercuryComponentAttrs' => json_encode( $mercuryComponentAttrs )
+		];
+		
+		return $data;
 	}
 
 	/**

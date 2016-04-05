@@ -195,7 +195,7 @@ class PortableInfoboxRenderService extends WikiaService {
 		$helper = new PortableInfoboxRenderServiceHelper();
 
 		if ( $type === 'image' ) {
-			$images = array();
+			$images = [ ];
 
 			for ( $i = 0; $i < count( $data ); $i++ ) {
 				$data[ $i ][ 'context' ] = self::MEDIA_CONTEXT_INFOBOX;
@@ -212,12 +212,12 @@ class PortableInfoboxRenderService extends WikiaService {
 				$data = $images[ 0 ];
 				$templateName = $type;
 			} else {
+				// More than one image means image collection
 				if ( $helper->isMobile() && !$helper->isMercury() ) {
 					// Display only the first image on WikiaMobile
 					$data = $images[ 0 ];
 				} else {
-					$images[ 0 ][ 'isFirst' ] = true;
-					$data = array( 'images' => $images );
+					$data = $helper->extendImageCollectionData( $images );
 				}
 				
 				$templateName = 'image-collection';
