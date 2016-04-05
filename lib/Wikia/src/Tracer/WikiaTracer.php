@@ -9,6 +9,7 @@ class WikiaTracer {
 	const APPLICATION_NAME = 'mediawiki';
 
 	const TRACE_ID_HEADER_NAME = 'X-Trace-Id';
+	const PARENT_SPAN_ID_HEADER_NAME = 'X-Parent-Span-Id';
 	const CLIENT_IP_HEADER_NAME = 'X-Client-Ip';
 	const CLIENT_BEACON_ID_HEADER_NAME = 'X-Client-Beacon-Id';
 	const CLIENT_DEVICE_ID_HEADER_NAME = 'X-Client-Device-Id';
@@ -25,6 +26,7 @@ class WikiaTracer {
 	const ENV_VARIABLES_PREFIX = 'WIKIA_TRACER_';
 
 	private $traceId;
+	private $parentSpanId;
 	private $clientIp;
 	private $clientBeaconId;
 	private $clientDeviceId;
@@ -40,6 +42,7 @@ class WikiaTracer {
 		$this->spanId = RequestId::generateId();
 		$this->traceId = RequestId::instance()->getRequestId();
 
+		$this->parentSpanId = $this->getTraceEntry( self::PARENT_SPAN_ID_HEADER_NAME );
 		$this->clientIp = $this->getTraceEntry( self::CLIENT_IP_HEADER_NAME );
 		$this->clientBeaconId = $this->getTraceEntry( self::CLIENT_BEACON_ID_HEADER_NAME );
 		$this->clientDeviceId = $this->getTraceEntry( self::CLIENT_DEVICE_ID_HEADER_NAME );
@@ -82,6 +85,7 @@ class WikiaTracer {
 				'client_device_id' => $this->clientDeviceId,
 				'user_id' => $this->userId,
 				'span_id' => $this->spanId,
+				'parent_span_id' => $this->parentSpanId,
 				'trace_id' => $this->traceId,
 			] )
 		);
@@ -203,8 +207,25 @@ class WikiaTracer {
 		return $instance;
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getTraceId() {
 		return $this->traceId;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getSpanId() {
+		return $this->spanId;
+	}
+
+	/**
+	 * @return null|string
+	 */
+	public function getParentSpanId() {
+		return $this->parentSpanId;
 	}
 
 	public function getInternalHeaders() {
@@ -225,6 +246,7 @@ class WikiaTracer {
 		return $this->removeNullEntries( [
 			self::TRACE_ID_HEADER_NAME => $this->traceId,
 			self::LEGACY_TRACE_ID_HEADER_NAME => $this->traceId, // duplicated until we move to X-Trace-Id everywhere
+			self::PARENT_SPAN_ID_HEADER_NAME => $this->spanId, // pass the current span ID to the subrequest, it will be logged as parent_span_id there
 		] );
 	}
 
