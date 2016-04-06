@@ -61,10 +61,9 @@ class PortableInfoboxBuilderHooks {
 	 * @return bool
 	 */
 	public function onMakeGlobalVariablesScript( array &$aVars ) {
-		global $wgEnablePortableInfoboxBuilderExt, $wgEnablePortableInfoboxBuilderInVE;
+		global $wgEnablePortableInfoboxBuilderInVE;
 
-		$aVars['wgEnablePortableInfoboxBuilderInVE'] = $wgEnablePortableInfoboxBuilderExt &&
-			$wgEnablePortableInfoboxBuilderInVE;
+		$aVars['wgEnablePortableInfoboxBuilderInVE'] = $wgEnablePortableInfoboxBuilderInVE;
 
 		return true;
 	}
