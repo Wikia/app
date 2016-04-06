@@ -23,6 +23,8 @@ class WikiaTracer {
 	const LEGACY_TRACE_ID_HEADER_NAME = 'X-Request-Id';
 	const LEGACY_BEACON_HEADER_NAME = 'X-Beacon';
 
+	const REQUEST_PATH_HEADER_NAME = 'X-Request-Path';
+
 	const ENV_VARIABLES_PREFIX = 'WIKIA_TRACER_';
 
 	private $traceId;
@@ -32,6 +34,8 @@ class WikiaTracer {
 	private $clientDeviceId;
 	private $userId;
 	private $appVersion = '';
+
+	private $requestPath = [];
 
 	/**
 	 * @var ContextSource
@@ -308,5 +312,85 @@ class WikiaTracer {
 		);
 
 		return true;
+	}
+
+	/**
+	 * Record HTTP sub-requests to form X-Request-Path response header
+	 *
+	 * @see PLATFORM-2079
+	 *
+	 * @param string $method HTTP method
+	 * @param string $url
+	 * @param string $caller
+	 * @param float $requestTime UNIX timestamp (with microseconds precision when the request was sent
+	 * @param \MWHttpRequest|null $req request object to take HTTP response headers from
+	 * @return bool
+	 */
+	public static function onAfterHttpRequest( $method, $url, $caller, $requestTime, $req ) {
+		// check if we received X-Request-Path header in a response and simply use it
+		$headerValue = null;
+		if ( $req instanceof \MWHttpRequest ) {
+			$headerValue = $req->getResponseHeader(self::REQUEST_PATH_HEADER_NAME);
+		}
+
+		if ( $headerValue !== null ) {
+			self::instance()->requestPath[] = $headerValue;
+			return true;
+		}
+
+		$took = microtime( true ) - $requestTime;
+
+		$appName = self::getAppNameFromCaller( $caller );
+		$hostName = parse_url( $url, PHP_URL_HOST );
+		$timestamp = (int) $requestTime;
+
+		self::instance()->pushRequestPath( $appName, $hostName, $timestamp, $took );
+
+		return true;
+	}
+
+	/**
+	 * Get the app / service name using the name of the PHP method that performed the HTTP request
+	 *
+	 * For instance: "Wikia\Service\Helios\HeliosClientImpl:Wikia\Service\Helios\{closure}" will give "Helios"
+	 * For instance: "Wikia\Service\Gateway\ConsulUrlProvider:getUrl" will give "ConsulUrlProvider:getUrl"
+	 *
+	 * @param string $caller
+	 * @return string
+	 */
+	public static function getAppNameFromCaller( $caller ) {
+		$caller = str_replace( '{closure}', '', $caller );
+		$caller = trim( $caller, '\\:' );
+
+		return end( explode('\\', $caller ) );
+	}
+
+	/**
+	 * Add an entry to X-Request-Path response header
+	 *
+	 * E.g. (mediawiki ap-s52 1459866775 0.012345)
+	 *
+	 * @param string $appName e.g. mediawiki
+	 * @param string $hostName e.g. ap-s52
+	 * @param int $timestamp UNIX timestamp of when the sub-requests started
+	 * @param float $took how long it took to perform the sub-request (in seconds)
+	 */
+	private function pushRequestPath( $appName, $hostName, $timestamp, $took ) {
+		$this->requestPath[] = sprintf( "(%s %s %d %.6f)", $appName, $hostName, $timestamp, $took );
+	}
+
+	/**
+	 * Get properly formatted X-Request-Path header
+	 *
+	 * @see PLATFORM-2079
+	 * @return string
+	 */
+	public function getRequestPath() {
+		global $wgRequestTime;
+
+		$path = $this->requestPath;
+		array_unshift( $path, sprintf( "%s %s %d %.6f", 'mediawiki', wfHostname(), (int) $wgRequestTime, microtime( true ) - $wgRequestTime ) );
+
+		return sprintf( "(%s)", join( ' ', $path ) );
 	}
 }

@@ -35,6 +35,8 @@ class ApiClient extends \Swagger\Client\ApiClient {
 			$code = $e->getCode();
 		}
 
+		wfRunHooks( 'AfterHttpRequest', [ $method, $this->config->getHost(), $this->serviceName, $start, null ] ); # PLATFORM-2079
+
 		if ($this->logSampler->shouldSample()) {
 			$this->info("Http request", [
 				'statusCode' => $code,
