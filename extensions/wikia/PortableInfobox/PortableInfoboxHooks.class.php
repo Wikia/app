@@ -131,8 +131,7 @@ class PortableInfoboxHooks {
 	                                                $watchThis, $sectionAnchor, &$flags, Revision $revision ) {
 		$title = $page->getTitle();
 		if ( $title->inNamespace( NS_TEMPLATE ) ) {
-			$queryPage = new AllinfoboxesQueryPage();
-			$queryPage->addTitleToCache( $title );
+			( new AllinfoboxesQueryPage() )->addTitleToCache( $title );
 		}
 
 		return true;

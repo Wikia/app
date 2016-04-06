@@ -113,7 +113,7 @@ class AllinfoboxesQueryPage extends PageQueryPage {
 				'qc_title'
 			] )
 			->VALUES( [ [
-				AllinfoboxesQueryPage::ALL_INFOBOXES_TYPE,
+				$this->getName(),
 				$title->getArticleID(),
 				$title->getNamespace(),
 				$title->getDBkey(),
@@ -123,16 +123,16 @@ class AllinfoboxesQueryPage extends PageQueryPage {
 		wfRunHooks( 'AllInfoboxesQueryRecached' );
 	}
 
-	protected function hasInfobox( Title $title ) {
+	private function hasInfobox( Title $title ) {
 		// omit subages from blacklist
 		return !(
 				$title->isSubpage() &&
 				in_array( mb_strtolower( $title->getSubpageText() ), self::$subpagesBlacklist )
 			) &&
-			!empty( PortableInfoboxDataService::newFromTitle( $title )->getData() );;
+			!empty( PortableInfoboxDataService::newFromTitle( $title )->getData() );
 	}
 
-	protected function filterInfoboxes( $tmpl ) {
+	private function filterInfoboxes( $tmpl ) {
 		$title = Title::newFromID( $tmpl[ 'pageid' ] );
 
 		return $title &&
