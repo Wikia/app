@@ -15,7 +15,8 @@ define('AuthModal', ['jquery', 'wikia.window'], function ($, window) {
 		});
 
 		$(window).on('message.authPopUpWindow', function (event) {
-			var e = event.originalEvent;
+			var e = event.originalEvent,
+				timerId;
 
 			if (typeof e.data !== 'undefined' && e.data.isUserAuthorized) {
 				close();
@@ -23,6 +24,20 @@ define('AuthModal', ['jquery', 'wikia.window'], function ($, window) {
 					onAuthSuccess();
 				}
 			}
+
+			if (typeof e.data !== 'undefined' && e.data.beforeunload) {
+				// to avoid tracking 'close' action whenever the window is reloaded;
+				timerId = setInterval(function () {
+					clearInterval(timerId);
+					if (authPopUpWindow.closed) {
+						track({
+							action: Wikia.Tracker.ACTIONS.CLOSE,
+							label: 'username-login-modal'
+						});
+					}
+				}, 1000);
+			}
+
 		});
 	}
 
@@ -62,14 +77,7 @@ define('AuthModal', ['jquery', 'wikia.window'], function ($, window) {
 
 		authPopUpWindow = window.open(src, '_blank', getPopUpWindowSpecs());
 
-		if (authPopUpWindow && !authPopUpWindow.closed) {
-			authPopUpWindow.onbeforeunload = function () {
-				track({
-					action: Wikia.Tracker.ACTIONS.CLOSE,
-					label: 'username-login-modal'
-				});
-			};
-		} else {
+		if (!authPopUpWindow || authPopUpWindow.closed) {
 			window.location = url;
 		}
 	}
