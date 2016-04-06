@@ -4,6 +4,9 @@ class PortableInfoboxBuilderController extends WikiaController {
 
 	const INFOBOX_BUILDER_PARAM = 'portableInfoboxBuilder';
 
+	const USER_EDIT_ACTION = 'edit';
+	const USER_MOVE_ACTION = 'move';
+
 	public function getAssets() {
 		global $wgEnablePortableInfoboxEuropaTheme;
 
@@ -39,14 +42,14 @@ class PortableInfoboxBuilderController extends WikiaController {
 	}
 
 	public function publish() {
+		$requestParams = $this->getRequest()->getParams();
+		$status = $this->attemptSave( $requestParams );
+
+		$urls = PortableInfoboxBuilderHelper::createRedirectUrls( $requestParams[ 'title' ] );
+
 		$response = $this->getResponse();
 		$response->setFormat( WikiaResponse::FORMAT_JSON );
-
-		$status = $this->attemptSave( $this->getRequest()->getParams() );
-
-		$requestParams = $this->getRequest()->getParams();
-		$urls = PortableInfoboxBuilderHelper::createRedirectUrls( $requestParams['title'] );
-
+		$response->setVal( 'conflict', $status->hasMessage( 'articleexists' ) );
 		$response->setVal( 'urls', $urls );
 		$response->setVal( 'success', $status->isOK() );
 		$response->setVal( 'errors', $status->getErrorsArray() );
@@ -58,9 +61,9 @@ class PortableInfoboxBuilderController extends WikiaController {
 		$response->setFormat( WikiaResponse::FORMAT_JSON );
 
 		$requestParams = $this->getRequest()->getParams();
-		$urls = PortableInfoboxBuilderHelper::createRedirectUrls( $requestParams['title'] );
+		$urls = PortableInfoboxBuilderHelper::createRedirectUrls( $requestParams[ 'title' ] );
 
-		if  ( !empty( $urls ) ) {
+		if ( !empty( $urls ) ) {
 			$response->setVal( 'urls', $urls );
 			$response->setVal( 'success', true );
 		} else {
@@ -70,12 +73,12 @@ class PortableInfoboxBuilderController extends WikiaController {
 	}
 
 	public function getTemplateExists() {
-		$title = PortableInfoboxBuilderHelper::getTitle( $this->getRequest()->getVal('title'), new Status() );
+		$title = PortableInfoboxBuilderHelper::getTitle( $this->getRequest()->getVal( 'title' ), new Status() );
 
 		$response = $this->getResponse();
 		$response->setFormat( WikiaResponse::FORMAT_JSON );
 
-		if  ( $title ) {
+		if ( $title ) {
 			$response->setVal( 'exists', $title->isKnown() );
 			$response->setVal( 'success', true );
 		} else {
@@ -88,14 +91,21 @@ class PortableInfoboxBuilderController extends WikiaController {
 		$status = new Status();
 
 		$title = PortableInfoboxBuilderHelper::getTitle( $params[ 'title' ], $status );
+		$oldTitle = PortableInfoboxBuilderHelper::getTitle( $params[ 'oldTitle' ], $status );
+		$renamed = $status->isGood() ? Title::compare( $oldTitle, $title ) !== 0 : false;
 
 		$status = $this->checkRequestValidity( $status );
-		$status = $this->checkUserPermissions( $title, $status );
+		$status = $this->checkUserPermissions( $title, $status, self::USER_EDIT_ACTION );
+		if ( $renamed ) {
+			$status = $this->checkUserPermissions( $oldTitle, $status, self::USER_MOVE_ACTION );
+			$status = $this->checkMoveEligibility( $oldTitle, $title, $status );
+		}
 
-		$infoboxDataService = PortableInfoboxDataService::newFromTitle( $title );
+		$infoboxDataService = PortableInfoboxDataService::newFromTitle( $oldTitle );
 		$infoboxes = $infoboxDataService->getInfoboxes();
 		$status = $this->checkSaveEligibility( $infoboxes, $status );
 
+		$status = $status->isGood() && $renamed ? $this->move( $oldTitle, $title ) : $status;
 		return $status->isGood() ? $this->save( $title, $params[ 'data' ], $infoboxes[ 0 ] ) : $status;
 	}
 
@@ -114,14 +124,30 @@ class PortableInfoboxBuilderController extends WikiaController {
 	}
 
 	/**
-	 * checks if user can edit
-	 * @param $title
+	 * checks if user can make an action
+	 * @param Title $title
 	 * @param $status
+	 * @param string $action
 	 * @return mixed
 	 */
-	private function checkUserPermissions( $title, $status ) {
-		if ( $status->isGood() && !$title->userCan( 'edit' ) ) {
-			$status->fatal( 'user-cant-edit' );
+	private function checkUserPermissions( $title, $status, $action ) {
+		if ( $status->isGood() && !$title->userCan( $action ) ) {
+			$status->fatal( "user-cant-{$action}" );
+		}
+		return $status;
+	}
+
+	/**
+	 * checks if article is movable
+	 *
+	 * @param Title $oldTitle
+	 * @param Title $title
+	 * @param Status $status
+	 * @return Status
+	 */
+	private function checkMoveEligibility( $oldTitle, $title, $status ) {
+		if ( $status->isGood() && ( !$oldTitle->isMovable() || $title->isKnown() ) ) {
+			$status->fatal( !$oldTitle->isMovable() ? 'not-movable' : 'articleexists' );
 		}
 		return $status;
 	}
@@ -135,7 +161,19 @@ class PortableInfoboxBuilderController extends WikiaController {
 	private function checkSaveEligibility( $infoboxes, $status ) {
 		//if there are more than one infobox in template it means that someone else added it manually.
 		if ( $status->isGood() && count( $infoboxes ) > 1 ) {
-			$status->fatal( 'article-usupported' );
+			$status->fatal( 'article-unsupported' );
+		}
+		return $status;
+	}
+
+	private function move( Title $old, Title $new ) {
+		$status = new Status();
+		$moved = $old->moveTo( $new, false,
+			wfMessage( 'portable-infobox-builder-move-message' )->inContentLanguage()->text() );
+		if ( $moved !== true ) {
+			foreach ( $moved as $error ) {
+				$status->fatal( $error );
+			}
 		}
 		return $status;
 	}
@@ -161,7 +199,7 @@ class PortableInfoboxBuilderController extends WikiaController {
 
 		$status = $editPage->internalAttemptSave( $result );
 
-		if ($status->isGood()) {
+		if ( $status->isGood() ) {
 			$this->classifyAsInfobox( $title );
 		}
 

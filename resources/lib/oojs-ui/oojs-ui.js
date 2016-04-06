@@ -2729,9 +2729,16 @@ OO.ui.WindowManager.static.sizes = {
 	'800px': {
 		width: 800
 	},
-	page: {
-		width: function () { return $( '#WikiaPage' ).outerWidth(); }
+	/**
+	 * Wikia change begins
+	 */
+	dynamic: {
+		// Overwrite it by defining a getDynamicSize method in your Window object
+		width: '100%'
 	}
+	/**
+	 * Wikia change ends
+	 */
 };
 
 /**
@@ -3187,6 +3194,15 @@ OO.ui.WindowManager.prototype.updateWindowSize = function ( win ) {
 		sizes = this.constructor.static.sizes,
 		size = win.getSize();
 
+	/**
+	 * Wikia change begins
+	 */
+	if ( size === 'dynamic' && typeof win.getDynamicSize === 'function' ) {
+		sizes.dynamic = { width: win.getDynamicSize };
+	}
+	/**
+	 * Wikia change ends
+	 */
 	if ( !sizes[size] ) {
 		size = this.constructor.static.defaultSize;
 	}
