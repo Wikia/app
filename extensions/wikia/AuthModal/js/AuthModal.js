@@ -1,11 +1,12 @@
 define('AuthModal', ['jquery', 'wikia.window'], function ($, window) {
 	'use strict';
 
-	var closeTrackTimeoutId,
+	var authPopUpWindow,
+		closeTrackTimeoutId,
 		popUpWindowHeight = 670,
 		popUpWindowMaxWidth = 768,
 		popUpWindowParam = 'modal=1',
-		authPopUpWindow,
+		popUpName = 'WikiaAuthWindow',
 		track;
 
 	function open (onAuthSuccess) {
@@ -80,7 +81,7 @@ define('AuthModal', ['jquery', 'wikia.window'], function ($, window) {
 	function loadPage (url) {
 		var src = url + (url.indexOf('?') === -1 ? '?' : '&') + popUpWindowParam;
 
-		authPopUpWindow = window.open(src, '_blank', getPopUpWindowSpecs());
+		authPopUpWindow = window.open(src, popUpName, getPopUpWindowSpecs());
 
 		if (!authPopUpWindow || authPopUpWindow.closed) {
 			window.location = url;
