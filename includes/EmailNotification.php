@@ -440,6 +440,8 @@ class EmailNotification {
 				'summary' => $this->summary,
 				'action' => $this->action,
 				'subject' => $this->subject,
+				'user' => $user->getName(),
+				'exception' => new Exception()
 			] );
 			$this->sendUsingUserMailer( $user );
 		}
