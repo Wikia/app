@@ -26,7 +26,8 @@ class CleanEventsLocalUsersMaintenance extends Maintenance {
 			self::TABLE_NAME,
 			'user_id, user_name',
 			[
-				'wiki_id' => $wgCityId
+				'wiki_id' => $wgCityId,
+				'user_id > 0'
 			],
 			__METHOD__
 		);
