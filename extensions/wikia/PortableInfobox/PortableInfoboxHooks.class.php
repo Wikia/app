@@ -130,41 +130,11 @@ class PortableInfoboxHooks {
 	public static function onArticleInsertComplete( Page $page, User $user, $text, $summary, $minoredit,
 	                                                $watchThis, $sectionAnchor, &$flags, Revision $revision ) {
 		$title = $page->getTitle();
-		if ( self::hasInfobox( $title ) ) {
-			$dbw = wfGetDB( DB_MASTER );
-			( new WikiaSQL() )
-				->INSERT()->INTO( 'querycache', [
-					'qc_type',
-					'qc_value',
-					'qc_namespace',
-					'qc_title'
-				] )
-				->VALUES( [ [
-					AllinfoboxesQueryPage::ALL_INFOBOXES_TYPE,
-					$page->getId(),
-					$title->getNamespace(),
-					$title->getDBkey(),
-				] ] )
-				->run( $dbw );
-
-			wfRunHooks( 'AllInfoboxesQueryRecached' );
+		if ( $title->inNamespace( NS_TEMPLATE ) ) {
+			$queryPage = new AllinfoboxesQueryPage();
+			$queryPage->addTitleToCache( $title );
 		}
 
 		return true;
-	}
-
-	/**
-	 * Check whether or not a page has an infobox.
-	 *
-	 * @param  Title   $title Title to check
-	 * @return boolean
-	 */
-	private static function hasInfobox( Title $title ) {
-		return $title->inNamespace( NS_TEMPLATE ) &&
-			!(
-				$title->isSubpage() &&
-				in_array( mb_strtolower( $title->getSubpageText() ), AllinfoboxesQueryPage::$subpagesBlacklist )
-			) &&
-			!empty( PortableInfoboxDataService::newFromTitle( $title )->getData() );
 	}
 }
