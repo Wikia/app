@@ -1,7 +1,9 @@
+@import 'skins/shared/mixins/flexbox';
+
 .community-page-header {
+	@include flexbox();
 	align-items: center;
 	background-image: url('/extensions/wikia/WAMPage/images/hero.jpg'); /* inline */
-	display: flex;
 	height: 250px;
 	justify-content: center;
 	text-align: center;

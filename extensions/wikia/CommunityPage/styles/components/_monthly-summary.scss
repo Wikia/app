@@ -1,8 +1,10 @@
+@import 'skins/shared/mixins/flexbox';
+
 .community-page-monthly-summary {
+	@include flexbox();
+	@include flex-direction(column);
 	align-items: center;
 	background-color: $color-activity-background;
-	display: flex; // todo: use mixins for this
-	flex-direction: column;
 	font-family: $community-page-font-family;
 	height: 129px;
 	justify-content: center;
@@ -21,16 +23,16 @@
 	}
 
 	.stats {
-		display: flex;
-		flex-direction: row;
+		@include flexbox();
+		@include flex-direction(row);
 		justify-content: space-between;
 		padding-top: 10px;
 		width: 420px;
 	}
 
 	.stat-container {
-		display: flex;
-		flex-direction: column;
+		@include flexbox();
+		@include flex-direction(column);
 		height: 40px;
 		padding: 5px;
 		text-align: center;

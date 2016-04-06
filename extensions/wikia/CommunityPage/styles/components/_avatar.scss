@@ -1,8 +1,7 @@
 @import 'skins/shared/mixins/transform';
 
-
 .avatar-container {
-	border: 2px solid #CCC;
+	border: 2px solid $color-avatar-border;
 	border-radius: 50%;
 	height: 26px;
 	overflow: hidden;
