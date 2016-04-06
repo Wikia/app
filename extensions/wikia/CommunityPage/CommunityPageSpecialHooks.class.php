@@ -9,7 +9,7 @@ class CommunityPageSpecialHooks {
 	 * @return bool
 	 */
 	public static function getHTMLBeforeWikiaPage( &$html ) {
-		if ( F::app()->wg->Title->isSpecial( 'Community' ) ) {
+		if ( F::app()->wg->EnableCommunityPageExt && F::app()->wg->Title->isSpecial( 'Community' ) ) {
 			$html .= F::app()->renderView( 'CommunityPageSpecialController', 'header' );
 		}
 		return true;
