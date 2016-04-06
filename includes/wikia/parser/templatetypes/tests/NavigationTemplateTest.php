@@ -14,8 +14,8 @@ class NavigationTemplateTest extends WikiaBaseTest {
 	public function markedTemplateContentProvider() {
 		return [
 			[ '', '', 'Empty content was marked' ],
-			[ '1', "\x7f" . '26880747126880747' . "\x7f", 'Numbers should be marked' ],
-			[ '{{#invoke: Eras|main}}', "\x7f" . '26880747{{#invoke: Eras|main}}26880747' . "\x7f",
+			[ '1', "\x7f" . 'NAVUNIQ1NAVUNIQ' . "\x7f", 'Numbers should be marked' ],
+			[ '{{#invoke: Eras|main}}', "\x7f" . 'NAVUNIQ{{#invoke: Eras|main}}NAVUNIQ' . "\x7f",
 			  'Wikitext should be marked' ],
 		];
 	}
@@ -91,19 +91,19 @@ class NavigationTemplateTest extends WikiaBaseTest {
 		return [
 			[ "", "", "Empty html should be correctly processed" ],
 			[
-				"\x7f26880747akjsdlkjflk <div>asdf</div>kasjdlfkjdks ksdjlafkj26880747\x7f26880747 aksdjlfkj alksjdldf\nlkjsdl \x7f26880747d26880747\x7f",
-				"26880747 aksdjlfkj alksjdldf\nlkjsdl d",
+				"\x7fNAVUNIQakjsdlkjflk <div>asdf</div>kasjdlfkjdks ksdjlafkjNAVUNIQ\x7fNAVUNIQ aksdjlfkj alksjdldf\nlkjsdl \x7fNAVUNIQdNAVUNIQ\x7f",
+				"NAVUNIQ aksdjlfkj alksjdldf\nlkjsdl d",
 				"If block element in navigation template it should be removed"
 			],
 			[
-				"\x7f26880747akjsdlkjflk <div>asdf</div>kasjdlfkjdks ksdjlafkj26880747\x7f test",
+				"\x7fNAVUNIQakjsdlkjflk <div>asdf</div>kasjdlfkjdks ksdjlafkjNAVUNIQ\x7f test",
 				" test",
 				"Single nav template with block should be removed"
 			],
 			[
-				"\x7f26880747akjsdlkjflk <div>asdf</div>kasjdlfkjdks ksdjlafkj26880747\x7f test",
-				" test",
-				"Single nav template with block should be removed"
+				"\x7fNAVUNIQasdfNAVUNIQ\x7f test",
+				"asdf test",
+				"Single inline element should be left"
 			]
 		];
 	}

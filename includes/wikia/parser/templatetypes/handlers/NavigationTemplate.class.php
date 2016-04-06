@@ -8,7 +8,7 @@ class NavigationTemplate {
 		'p',
 	];
 
-	private static $mark = 'NavigationTemplate';
+	private static $mark = 'NAVUNIQ';
 
 	/**
 	 * @desc If a block element div, table or p is found in a template's text, return an empty
@@ -49,7 +49,6 @@ class NavigationTemplate {
 	 * @return int
 	 */
 	private static function mark( $text ) {
-		$m = crc32( self::$mark );
-		return sprintf( "\x7f%d%s%d\x7f", $m, $text, $m );
+		return sprintf( "\x7f%s%s%s\x7f", self::$mark, $text, self::$mark );
 	}
 }
