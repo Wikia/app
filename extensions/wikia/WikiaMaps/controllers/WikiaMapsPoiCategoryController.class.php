@@ -29,6 +29,14 @@ class WikiaMapsPoiCategoryController extends WikiaMapsBaseController {
 	 * @throws BadRequestApiException
 	 */
 	public function editPoiCategories() {
+		// Temporary change required for ad purpose - https://wikia-inc.atlassian.net/browse/DAT-4051.
+		// We need to limit contribution options on protected maps related to the ad campaign only to stuff
+		// users.
+		// TODO: remove this as a part of https://wikia-inc.atlassian.net/browse/DAT-4055
+		if ( $this->shouldDisableProtectedMapEdit( $this->request->getInt( 'mapId' ) ) ) {
+			return;
+		}
+
 		$this->setData( 'userName', $this->wg->User->getName() );
 
 		$this->organizePoiCategoriesData();
