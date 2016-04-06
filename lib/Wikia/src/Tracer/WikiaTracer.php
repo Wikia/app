@@ -342,7 +342,7 @@ class WikiaTracer {
 		$hostName = parse_url( $url, PHP_URL_HOST );
 		$timestamp = (int) $requestTime;
 
-		self::instance()->requestPathPush( $appName, $hostName, $timestamp, $took );
+		self::instance()->pushRequestPath( $appName, $hostName, $timestamp, $took );
 
 		return true;
 	}
@@ -357,7 +357,7 @@ class WikiaTracer {
 	 * @param int $timestamp UNIX timestamp of when the sub-requests started
 	 * @param float $took how long it took to perform the sub-request (in seconds)
 	 */
-	private function requestPathPush( $appName, $hostName, $timestamp, $took ) {
+	private function pushRequestPath( $appName, $hostName, $timestamp, $took ) {
 		$this->requestPath[] = sprintf( "(%s %s %d %.6f)", $appName, $hostName, $timestamp, $took );
 	}
 
