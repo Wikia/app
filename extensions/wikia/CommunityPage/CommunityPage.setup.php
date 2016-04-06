@@ -11,7 +11,7 @@ $wgAutoloadClasses['CommunityPageSpecialHooks'] =  __DIR__ . '/CommunityPageSpec
 $wgHooks['GetHTMLBeforeWikiaPage'][] = 'CommunityPageSpecialHooks::getHTMLBeforeWikiaPage';
 
 /* i18n */
-$wgExtensionMessagesFiles['Community'] = __DIR__ . '/CommunityPage.i18n.php';
+$wgExtensionMessagesFiles['CommunityPage'] = __DIR__ . '/CommunityPage.i18n.php';
 
 /* messages exported to JS */
 JSMessages::registerPackage( 'CommunityPageSpecial', [
