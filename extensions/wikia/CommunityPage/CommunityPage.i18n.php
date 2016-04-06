@@ -25,8 +25,6 @@ $messages['en'] = array(
 	'communitypage-pageviews' => 'Pageviews',
 	'communitypage-edits' => 'Edits',
 	'communitypage-editors' => 'Editors',
-
-	// new - needs qqq
 	'communitypage-top-contributors-week' => 'Top Contributors This Week',
 	'communitypage-user-rank' => 'Your Rank',
 	'communitypage-user-contributions' => '{{PLURAL:$1|contribution|contributions}}',
@@ -76,6 +74,29 @@ $messages['qqq'] = array(
 	'communitypage-pageviews' => 'Heading for pageviews this month\'s activity box',
 	'communitypage-edits' => 'Heading for edits this month\'s activity box',
 	'communitypage-editors' => 'Heading for editors this month\'s activity box',
+	'communitypage-top-contributors-week' => 'Title of weekly top contributors header',
+	'communitypage-user-rank' => 'User\'s rank heading',
+	'communitypage-user-contributions' => 'User contribution count',
+	'communitypage-contributions' => 'Global contribution count',
+	'communitypage-admins' => 'Admins heading',
+	'communitypage-other-admins' => 'Other Admins heading',
+	'communitypage-recently-joined' => 'Recently Joined heading',
+	'communitypage-recent-activity' => 'View All Recent Activity link',
+	'communitypage-all-members' => 'All Members heading',
+	'communitypage-view-all-members' => 'View All Members link',
+	'communitypage-activity' => 'Description of user\s activity',
+	'communitypage-created' => 'created text for wiki activity stream',
+	'communitypage-edited' => 'edited text for wiki activity stream',
+	'communitypage-deleted' => 'deleted text for wiki activity stream',
+	'communitypage-admin' => 'User is an admin text',
+	'communitypage-joined' => 'User has joined community text',
+	'communitypage-modal-title' => 'All Members modal title',
+	'communitypage-modal-tab-all' => 'All members modal tab',
+	'communitypage-modal-tab-admins' => 'Admins modal tab',
+	'communitypage-modal-tab-leaderboard' => 'This Week\'s Leaderboard modal tab',
+	'communitypage-no-contributors' => 'Text indicating that there are no contributions yet this week',
+	'communitypage-no-admins' => 'Text indicating that the wiki has no admins.',
+	'communitypage-no-admins-contact' => 'Contact us to become the first admin text',
 );
 
 $messages['ja'] = array(
