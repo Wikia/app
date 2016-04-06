@@ -2241,11 +2241,11 @@ class Wikia {
 		global $wgRequestTime;
 		$elapsed = microtime( true ) - $wgRequestTime;
 
-		$response->header( sprintf( 'X-Served-By:%s', wfHostname() ) );
-		$response->header( sprintf( 'X-Backend-Response-Time:%01.3f', $elapsed ) );
+		$response->header( sprintf( 'X-Served-By: %s', wfHostname() ) );
+		$response->header( sprintf( 'X-Backend-Response-Time: %01.3f', $elapsed ) );
 
-		$response->header( sprintf( 'X-Trace-Id:%s', WikiaTracer::instance()->getTraceId() ) );
-		$response->header( sprintf( 'X-Span-Id:%s', WikiaTracer::instance()->getSpanId() ) );
+		$response->header( sprintf( 'X-Trace-Id: %s', WikiaTracer::instance()->getTraceId() ) );
+		$response->header( sprintf( 'X-Span-Id: %s', WikiaTracer::instance()->getSpanId() ) );
 
 		$response->header( sprintf( 'X-Request-Path: %s', WikiaTracer::instance()->getRequestPath() ) );
 
