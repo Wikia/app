@@ -100,7 +100,7 @@ define(
 				// We need to limit contribution options on protected maps related to the ad campaign only to stuff
 				// users.
 				// TODO: remove this as a part of https://wikia-inc.atlassian.net/browse/DAT-4055
-				isUserStuff: w.wgUserGroups.indexOf('stuff') !== -1
+				isUserStaff: w.wgUserGroups.indexOf('staff') !== -1
 			};
 
 			if (adContext && adContext.getContext().opts.enableAdsInMaps && adParams) {
