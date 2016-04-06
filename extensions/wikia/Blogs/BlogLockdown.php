@@ -165,8 +165,20 @@ class BlogLockdown {
 	 */
 	public static function onBeforeDeletePermissionErrors( &$article, &$title, &$user, &$permission_errors ) {
 		// Only users with delete permission can delete a blog article
+
+		$accessErrorKey = 'badaccess-group0';
 		if ( $title->getNamespace() == NS_BLOG_ARTICLE && !$user->isAllowed( 'delete' ) ) {
-			$permission_errors[] = [ 'badaccess-group0' ];
+			$errorExists = false;
+			foreach ( $permission_errors as $errors ) {
+				if ( in_array( $accessErrorKey, $errors ) ) {
+					$errorExists = true;
+					break;
+				}
+			}
+
+			if ( !$errorExists ) {
+				$permission_errors[] = [ $accessErrorKey ];
+			}
 		}
 
 		return true;
