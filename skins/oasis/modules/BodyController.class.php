@@ -383,7 +383,6 @@ class BodyController extends WikiaController {
 		// Display Control Center Header on certain special pages
 		if (!empty($wgEnableAdminDashboardExt) && AdminDashboardLogic::displayAdminDashboard($this->app, $wgTitle)) {
 			$this->headerModuleName = null;
-			$this->wgSuppressAds = true;
 			$this->displayAdminDashboard = true;
 			$this->displayAdminDashboardChromedArticle = ($wgTitle->getText() != SpecialPage::getTitleFor( 'AdminDashboard' )->getText());
 		} else {

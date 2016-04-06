@@ -15,7 +15,7 @@ class LyricFindTrackingService extends WikiaService {
 
 	// Not documented. The response body says "SUCCESS: NO LYRICS" which I assume means that they
 	// have licensing in place, they just don't have lyrics for the song.
-	const CODE_SUCCESS_NO_LYRICS = 106;
+	const CODE_SUCCESS_NO_LYRICS = 104; // used to be 106, now they've changed it in late-March/early-April 2016
 
 	const DEFAULT_USER_AGENT = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/535.19 (KHTML, like Gecko) Chrome/18.0.1025.142 Safari/535.19';
 
@@ -113,6 +113,8 @@ class LyricFindTrackingService extends WikiaService {
 		$url = $this->wg->LyricFindApiUrl . '/lyric.do';
 		$data = [
 			'apikey' => $this->wg->LyricFindApiKeys['display'],
+			//'ipaddress' => $this->wg->Request->getIP(), // territory is better. If we used IP and someone hit from a place where a song is banned, it would ban accross the site.
+			'territory' => 'US',
 			'reqtype' => 'offlineviews',
 			'count' => 1,
 			'trackid' => $trackId,
@@ -198,6 +200,8 @@ class LyricFindTrackingService extends WikiaService {
 		$url = $app->wg->LyricFindApiUrl . '/lyric.do';
 		$data = [
 			'apikey' => $app->wg->LyricFindApiKeys['display'],
+			//'ipaddress' => $this->wg->Request->getIP(), // territory is better. If we used IP and someone hit from a place where a song is banned, it would ban accross the site.
+			'territory' => 'US',
 			'reqtype' => 'offlineviews',
 			'count' => 1, // This is overcounting since we know it's not a view (page doesn't exist yet), but their API won't accept "0"
 			'trackid' => $trackId,

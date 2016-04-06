@@ -485,9 +485,7 @@ class Masthead {
 
 		$result = $this->doRemoveFile();
 
-		if ( $result === false ) {
-			Wikia::log( __METHOD__, false, 'cannot remove avatar - ' . $this->getLocalPath() );
-		} else {
+		if ( $result !== false ) {
 			// removing default avatars is hanlded by MW even when the service is enabled (PLATFORM-1617)
 			if ( $this->isDefault() ) {
 				$this->mUser->setGlobalAttribute( AVATAR_USER_OPTION_NAME, "" );
