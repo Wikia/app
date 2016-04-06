@@ -97,14 +97,6 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 		return params;
 	}
 
-	function overrideEsrbRating(params) {
-		params.esrb = context.targeting.esrbRating || params.esrb;
-
-		if (!params.esrb) { // FIXME ADEN-3147
-			params.esrb = context.targeting.wikiDirectedAtChildren ? 'ec' : 'teen';
-		}
-	}
-
 	function getRefParam() {
 		var hostnameMatch,
 			ref = doc.referrer,
@@ -189,7 +181,8 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 			skin: targeting.skin,
 			lang: zoneParams.getLanguage(),
 			wpage: targeting.pageName && targeting.pageName.toLowerCase(),
-			ref: getRefParam()
+			ref: getRefParam(),
+			esrb: targeting.esrbRating
 		};
 
 		if (pvs) {
@@ -210,7 +203,6 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 		}
 
 		extend(params, decodeLegacyDartParams(targeting.wikiCustomKeyValues));
-		overrideEsrbRating(params);
 
 		log(params, 9, logGroup);
 		return params;
