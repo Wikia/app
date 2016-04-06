@@ -321,11 +321,10 @@ class WikiaTracer {
 	 * @param string $url
 	 * @param string $caller
 	 * @param float $requestTime UNIX timestamp (with microseconds precision when the request was sent
-	 * @param \Status $status
 	 * @param array $respHeaders
 	 * @return bool
 	 */
-	public static function onHttpRequestAfter( $method, $url, $caller, $requestTime, \Status $status, Array $respHeaders ) {
+	public static function onHttpRequestAfter( $method, $url, $caller, $requestTime, Array $respHeaders ) {
 		# print_pre(__METHOD__); print_pre(func_get_args());
 
 		// check if we received X-Request-Path header in a response and simply use it
