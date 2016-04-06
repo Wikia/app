@@ -2247,6 +2247,8 @@ class Wikia {
 		$response->header( sprintf( 'X-Trace-Id:%s', WikiaTracer::instance()->getTraceId() ) );
 		$response->header( sprintf( 'X-Span-Id:%s', WikiaTracer::instance()->getSpanId() ) );
 
+		$response->header( sprintf( 'X-Request-Path: %s', WikiaTracer::instance()->getRequestPath() ) );
+
 		$response->header( 'X-Cache: ORIGIN' );
 		$response->header( 'X-Cache-Hits: ORIGIN' );
 	}

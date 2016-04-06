@@ -23,6 +23,8 @@ class WikiaTracer {
 	const LEGACY_TRACE_ID_HEADER_NAME = 'X-Request-Id';
 	const LEGACY_BEACON_HEADER_NAME = 'X-Beacon';
 
+	const REQUEST_PATH_HEADER_NAME = 'X-Request-Path';
+
 	const ENV_VARIABLES_PREFIX = 'WIKIA_TRACER_';
 
 	private $traceId;
@@ -32,6 +34,8 @@ class WikiaTracer {
 	private $clientDeviceId;
 	private $userId;
 	private $appVersion = '';
+
+	private $requestPath = [];
 
 	/**
 	 * @var ContextSource
@@ -306,5 +310,72 @@ class WikiaTracer {
 		);
 
 		return true;
+	}
+
+	/**
+	 * Record HTTP sub-requests to form X-Request-Path response header
+	 *
+	 * @see PLATFORM-2079
+	 *
+	 * @param string $method HTTP method
+	 * @param string $url
+	 * @param string $caller
+	 * @param float $requestTime UNIX timestamp (with microseconds precision when the request was sent
+	 * @param \Status $status
+	 * @param array $respHeaders
+	 * @return bool
+	 */
+	public static function onHttpRequestAfter( $method, $url, $caller, $requestTime, \Status $status, Array $respHeaders ) {
+		# print_pre(__METHOD__); print_pre(func_get_args());
+
+		// check if we received X-Request-Path header in a response and simply use it
+		$headerName = strtolower( self::REQUEST_PATH_HEADER_NAME );
+		if ( !empty( $respHeaders[ $headerName ] ) ) {
+			self::instance()->requestPath[] = $respHeaders[ $headerName ][ 0 ];
+			return true;
+		}
+
+		$took = microtime( true ) - $requestTime;
+
+		// take appName from the name of the method that made the HTTP request
+		$caller = str_replace( '{closure}', '', $caller );
+		$caller = trim( $caller, '\\:' );
+		$appName = end( explode('\\', $caller ) );
+
+		$hostName = parse_url( $url, PHP_URL_HOST );
+		$timestamp = (int) $requestTime;
+
+		self::instance()->requestPathPush( $appName, $hostName, $timestamp, $took );
+
+		return true;
+	}
+
+	/**
+	 * Add an entry to X-Request-Path response header
+	 *
+	 * E.g. (mediawiki ap-s52 1459866775 0.012345)
+	 *
+	 * @param string $appName e.g. mediawiki
+	 * @param string $hostName e.g. ap-s52
+	 * @param int $timestamp UNIX timestamp of when the sub-requests started
+	 * @param float $took how long it took to perform the sub-request (in seconds)
+	 */
+	private function requestPathPush( $appName, $hostName, $timestamp, $took ) {
+		$this->requestPath[] = sprintf( "(%s %s %d %.6f)", $appName, $hostName, $timestamp, $took );
+	}
+
+	/**
+	 * Get properly formatted X-Request-Path header
+	 *
+	 * @see PLATFORM-2079
+	 * @return string
+	 */
+	public function getRequestPath() {
+		global $wgRequestTime;
+
+		$path = $this->requestPath;
+		array_unshift( $path, sprintf( "%s %s %d %.6f", 'mediawiki', wfHostname(), (int) $wgRequestTime, microtime( true ) - $wgRequestTime ) );
+
+		return sprintf( "(%s)", join( ' ', $path ) );
 	}
 }
