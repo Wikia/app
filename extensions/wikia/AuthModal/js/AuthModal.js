@@ -1,7 +1,8 @@
 define('AuthModal', ['jquery', 'wikia.window'], function ($, window) {
 	'use strict';
 
-	var popUpWindowHeight = 670,
+	var closeTrackTimeoutId,
+		popUpWindowHeight = 670,
 		popUpWindowMaxWidth = 768,
 		popUpWindowParam = 'modal=1',
 		authPopUpWindow,
@@ -15,20 +16,24 @@ define('AuthModal', ['jquery', 'wikia.window'], function ($, window) {
 		});
 
 		$(window).on('message.authPopUpWindow', function (event) {
-			var e = event.originalEvent,
-				timerId;
+			var e = event.originalEvent;
 
-			if (typeof e.data !== 'undefined' && e.data.isUserAuthorized) {
+			if (typeof e.data === 'undefined') {
+				return;
+			}
+
+			if (e.data.isUserAuthorized) {
 				close();
 				if (typeof onAuthSuccess === 'function') {
 					onAuthSuccess();
 				}
 			}
 
-			if (typeof e.data !== 'undefined' && e.data.beforeunload) {
+			if (e.data.beforeunload && !closeTrackTimeoutId) {
 				// to avoid tracking 'close' action whenever the window is reloaded;
-				timerId = setInterval(function () {
-					clearInterval(timerId);
+				closeTrackTimeoutId = setTimeout(function () {
+					clearTimeout(closeTrackTimeoutId);
+					closeTrackTimeoutId = null;
 					if (authPopUpWindow.closed) {
 						track({
 							action: Wikia.Tracker.ACTIONS.CLOSE,
