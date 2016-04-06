@@ -5,6 +5,7 @@ class CommunityPageSpecialUsersModel {
 	const FIRST_REV_MCACHE_KEY = 'community_page_first_revision';
 	const GLOBAL_BOTS_MCACHE_KEY = 'community_page_global_bots';
 	const ALL_MEMBERS_MCACHE_KEY = 'community_page_all_members';
+	const MEMBER_COUNT_MCACHE_KEY = 'community_member_count';
 	const RECENTLY_JOINED_MCACHE_KEY = 'community_page_recently_joined';
 	const CURR_USER_CONTRIBUTIONS_MCACHE_KEY = 'community_page_current_user_contributions';
 
@@ -334,6 +335,37 @@ class CommunityPageSpecialUsersModel {
 		);
 
 		return $data;
+	}
 
+	/**
+	 * Gets a count of all members of the community.
+	 * Any user who has made an edit in the last 2 years is a member
+	 *
+	 * @return integer
+	 */
+	public function getMemberCount() {
+		$data = WikiaDataAccess::cache(
+			wfMemcKey( self::MEMBER_COUNT_MCACHE_KEY ),
+			WikiaResponse::CACHE_STANDARD,
+			function () {
+				$db = wfGetDB( DB_SLAVE );
+
+				$sqlData = ( new WikiaSQL() )
+					->SELECT( 'COUNT(*) AS user_count' )
+					->FROM ( 'wikia_user_properties' )
+					->LEFT_JOIN( 'user_groups')->ON( 'wup_user = ug_user' )
+					->WHERE ( 'wup_property' )->EQUAL_TO( 'firstContributionTimestamp' )
+					->AND_ ( "wup_value > DATE_SUB(now(), INTERVAL 2 YEAR)" )
+					->ORDER_BY( 'wup_value DESC' )
+					->run( $db, function ( ResultWrapper $result ) {
+						$row = $result->fetchRow();
+						return $row['user_count'];
+					} );
+
+				return $sqlData;
+			}
+		);
+
+		return $data;
 	}
 }

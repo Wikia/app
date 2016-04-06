@@ -1,5 +1,6 @@
 @import 'skins/shared/mixins/transform';
 
+
 .avatar-container {
 	border: 2px solid #CCC;
 	border-radius: 50%;
@@ -18,6 +19,8 @@
 	}
 }
 
-.avatar {
-	@include transform-translate(-2px, -2px);
+.ContributorsModule {
+	.avatar {
+		@include transform-translate(-2px, -2px);
+	}
 }

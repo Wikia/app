@@ -199,10 +199,11 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 
 	public function getModalHeaderData() {
 		$adminData =  $this->sendRequest( 'CommunityPageSpecialController', 'getTopAdminsData' )->getData();
+		$memberCount = $this->usersModel->getMemberCount();
 
 		$this->response->setData([
 			'allText' => $this->msg( 'communitypage-modal-tab-all' )->plain(),
-			'allCount' => 'N', // TODO: fill this in
+			'allCount' => $memberCount,
 			'adminsText' => $this->msg( 'communitypage-modal-tab-admins' )->plain(),
 			'adminsCount' => $adminData['adminCount'],
 			'leaderboardText' => $this->msg( 'communitypage-modal-tab-leaderboard' )->plain(),

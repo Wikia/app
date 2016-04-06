@@ -98,25 +98,6 @@
 		padding: 6px 3px 6px 15px;
 		position: relative;
 
-		.avatar-container {
-			border: 1px solid rgb(199, 209, 216);
-			border-radius: 50%;
-			display: inline-block;
-			height: 26px;
-			margin: 0;
-			overflow: hidden;
-			vertical-align: middle;
-			width: 26px;
-		}
-
-		.avatar {
-			@include transform-translate(-2px, -2px);
-		}
-
-		a {
-			font-size: 14px;
-			line-height: 17px;
-		}
 	}
 }
 
