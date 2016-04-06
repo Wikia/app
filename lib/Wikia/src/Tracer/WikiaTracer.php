@@ -321,14 +321,18 @@ class WikiaTracer {
 	 * @param string $url
 	 * @param string $caller
 	 * @param float $requestTime UNIX timestamp (with microseconds precision when the request was sent
-	 * @param array $respHeaders
+	 * @param \MWHttpRequest|null $req request object to take HTTP response headers from
 	 * @return bool
 	 */
-	public static function onAfterHttpRequest( $method, $url, $caller, $requestTime, Array $respHeaders ) {
+	public static function onAfterHttpRequest( $method, $url, $caller, $requestTime, $req ) {
 		// check if we received X-Request-Path header in a response and simply use it
-		$headerName = strtolower( self::REQUEST_PATH_HEADER_NAME );
-		if ( !empty( $respHeaders[ $headerName ] ) ) {
-			self::instance()->requestPath[] = $respHeaders[ $headerName ][ 0 ];
+		$headerValue = null;
+		if ( $req instanceof \MWHttpRequest ) {
+			$headerValue = $req->getResponseHeader(self::REQUEST_PATH_HEADER_NAME);
+		}
+
+		if ( $headerValue !== null ) {
+			self::instance()->requestPath[] = $headerValue;
 			return true;
 		}
 
