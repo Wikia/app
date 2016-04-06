@@ -11,6 +11,10 @@ define('ext.wikia.adEngine.slot.skyScraper3', [
 
 	log('load', 'debug', logGroup);
 
+	function adjustSize($slot) {
+		$slot.css('top', (-1 * $slot.height()) + 'px');
+	}
+
 	function init() {
 		var $footer = $('#WikiaFooter'),
 			$rail = $('#WikiaRail'),
@@ -46,6 +50,7 @@ define('ext.wikia.adEngine.slot.skyScraper3', [
 		win.adslots2.push({
 			slotName: slotName,
 			onSuccess: function () {
+				adjustSize($slot);
 				$rail.addClass('left-skyscraper-3-present');
 			}
 		});

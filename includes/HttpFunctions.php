@@ -77,6 +77,9 @@ class Http {
 		// log all the requests we make
 		$caller =  wfGetCallerClassMethod( [ __CLASS__, 'Hooks', 'ApiService', 'Solarium_Client', 'Solarium_Client_Adapter_Curl', 'ExternalHttp' ] );
 		$isOk = $status->isOK();
+
+		wfRunHooks( 'AfterHttpRequest', [ $method, $url, $caller, $requestTime, $req ] ); # Wikia change
+
 		if ( class_exists( 'Wikia\\Logger\\WikiaLogger' ) ) {
 
 			$requestTime = (int)( ( microtime( true ) - $requestTime ) * 1000.0 );

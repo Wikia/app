@@ -51,6 +51,27 @@ class TemplateTypesParser {
 		return true;
 	}
 
+
+	/**
+	 * @desc run resolve methods after whole article was parsed
+	 *
+	 * @param $parser
+	 * @param $html
+	 * @return bool
+	 */
+	public static function onParserAfterTidy( $parser, &$html ) {
+		global $wgEnableNavigationTemplateParsing;
+		wfProfileIn( __METHOD__ );
+
+		if ( self::shouldTemplateBeParsed() && $wgEnableNavigationTemplateParsing ) {
+			NavigationTemplate::resolve( $html );
+		}
+
+		wfProfileOut( __METHOD__ );
+
+		return true;
+	}
+
 	/**
 	 * @desc alters template parser output based on its arguments and template type
 	 *
@@ -103,7 +124,7 @@ class TemplateTypesParser {
 				$type = self::getTemplateType( $title );
 				if ( $wgEnableContextLinkTemplateParsing && $type == TemplateClassificationService::TEMPLATE_CONTEXT_LINK ) {
 					$templateWikitext = ContextLinkTemplate::handle( $templateWikitext );
-				} else if ( $wgEnableInfoIconTemplateParsing && $type == TemplateClassificationService::TEMPLATE_INFOICON ) {
+				} elseif ( $wgEnableInfoIconTemplateParsing && $type == TemplateClassificationService::TEMPLATE_INFOICON ) {
 					$templateWikitext = InfoIconTemplate::handle( $templateWikitext, $parser );
 				}
 			}
@@ -150,9 +171,9 @@ class TemplateTypesParser {
 	 */
 	private static function isSuitableForProcessing( $wikitext ) {
 		return self::shouldTemplateBeParsed()
-			&& !empty( $wikitext )
-			&& !TemplateArgsHelper::containsUnexpandedArgs( $wikitext );
-		}
+			   && !empty( $wikitext )
+			   && !TemplateArgsHelper::containsUnexpandedArgs( $wikitext );
+	}
 
 	/**
 	 * @desc return a valid cached Title object for a given template title string

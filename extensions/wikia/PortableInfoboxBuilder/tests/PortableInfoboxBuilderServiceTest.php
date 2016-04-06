@@ -162,6 +162,7 @@ class PortableInfoboxBuilderServiceTest extends WikiaBaseTest {
 			[ "", false ],
 			[ '<infobox/>', true, "empty infobox should be supported" ],
 			[ '<infobox></infobox>', true, "empty infobox should be supported" ],
+			[ 'Invalid text detected <^', false, "non-xml should not be supported" ],
 			[ '<infobox><data source="asdf"/></infobox>', true, "data tag should be supported" ],
 			[ '<infobox><data source="asdf"><label>asdfsda</label></data></infobox>', true, "data tag with label should be supported" ],
 			[ '<infobox><data source="asdf"><label>[[some link]]</label></data></infobox>', true, "links within labels should be supported" ],
