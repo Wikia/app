@@ -338,17 +338,29 @@ class WikiaTracer {
 
 		$took = microtime( true ) - $requestTime;
 
-		// take appName from the name of the method that made the HTTP request
-		$caller = str_replace( '{closure}', '', $caller );
-		$caller = trim( $caller, '\\:' );
-		$appName = end( explode('\\', $caller ) );
-
+		$appName = self::getAppNameFromCaller( $caller );
 		$hostName = parse_url( $url, PHP_URL_HOST );
 		$timestamp = (int) $requestTime;
 
 		self::instance()->pushRequestPath( $appName, $hostName, $timestamp, $took );
 
 		return true;
+	}
+
+	/**
+	 * Get the app / service name using the name of the PHP method that performed the HTTP request
+	 *
+	 * For instance: "Wikia\Service\Helios\HeliosClientImpl:Wikia\Service\Helios\{closure}" will give "Helios"
+	 * For instance: "Wikia\Service\Gateway\ConsulUrlProvider:getUrl" will give "ConsulUrlProvider:getUrl"
+	 *
+	 * @param string $caller
+	 * @return string
+	 */
+	public static function getAppNameFromCaller( $caller ) {
+		$caller = str_replace( '{closure}', '', $caller );
+		$caller = trim( $caller, '\\:' );
+
+		return end( explode('\\', $caller ) );
 	}
 
 	/**
