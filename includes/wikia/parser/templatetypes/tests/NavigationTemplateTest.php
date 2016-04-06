@@ -3,14 +3,33 @@
 class NavigationTemplateTest extends WikiaBaseTest {
 
 	/**
+	 * @dataProvider markedTemplateContentProvider
+	 */
+	public function testMarkNavigationElements( $content, $expected, $message ) {
+		$marked = NavigationTemplate::handle( $content );
+
+		$this->assertEquals( $expected, $marked, $message );
+	}
+
+	public function markedTemplateContentProvider() {
+		return [
+			[ '', '', 'Empty content was marked' ],
+			[ '1', "\x7f" . 'NAVUNIQ1NAVUNIQ' . "\x7f", 'Numbers should be marked' ],
+			[ '{{#invoke: Eras|main}}', "\x7f" . 'NAVUNIQ{{#invoke: Eras|main}}NAVUNIQ' . "\x7f",
+			  'Wikitext should be marked' ],
+		];
+	}
+
+	/**
 	 * @param $expectedOutput
 	 * @param $templateText
 	 * @dataProvider getNavigationTemplates
 	 */
 	public function testHideNavigationWithBlockElements( $templateText, $expectedOutput, $message ) {
-		$sanitizedOutput = NavigationTemplate::handle( $templateText );
+		$output = NavigationTemplate::handle( $templateText );
+		NavigationTemplate::resolve( $output );
 
-		$this->assertSame( $expectedOutput, $sanitizedOutput, $message );
+		$this->assertSame( $expectedOutput, $output, $message );
 	}
 
 	public function getNavigationTemplates() {
@@ -56,6 +75,36 @@ class NavigationTemplateTest extends WikiaBaseTest {
 				'<poem>This is a template with a poem tag. This is one is tricky and should not be matched as a p tag.</poem>.',
 				'A template with a poem tag should be visible.',
 			],
+		];
+	}
+
+	/**
+	 * @dataProvider articleHtmlProvided
+	 */
+	public function testMultiTemplates( $marked, $expected, $message ) {
+		NavigationTemplate::resolve( $marked );
+
+		$this->assertEquals( $expected, $marked, $message );
+	}
+
+	public function articleHtmlProvided() {
+		return [
+			[ "", "", "Empty html should be correctly processed" ],
+			[
+				"\x7fNAVUNIQakjsdlkjflk <div>asdf</div>kasjdlfkjdks ksdjlafkjNAVUNIQ\x7fNAVUNIQ aksdjlfkj alksjdldf\nlkjsdl \x7fNAVUNIQdNAVUNIQ\x7f",
+				"NAVUNIQ aksdjlfkj alksjdldf\nlkjsdl d",
+				"If block element in navigation template it should be removed"
+			],
+			[
+				"\x7fNAVUNIQakjsdlkjflk <div>asdf</div>kasjdlfkjdks ksdjlafkjNAVUNIQ\x7f test",
+				" test",
+				"Single nav template with block should be removed"
+			],
+			[
+				"\x7fNAVUNIQasdfNAVUNIQ\x7f test",
+				"asdf test",
+				"Single inline element should be left"
+			]
 		];
 	}
 }
