@@ -1,7 +1,7 @@
 <?php
 
 class ResourceLoaderAdEngineSevenOneMediaModule extends ResourceLoaderAdEngineBase {
-	const CACHE_BUSTER = 15;    // increase this any time the local files change
+	const CACHE_BUSTER = 16;    // increase this any time the local files change
 
 	/**
 	 * Configure scripts that should be loaded into one package
@@ -35,7 +35,7 @@ class ResourceLoaderAdEngineSevenOneMediaModule extends ResourceLoaderAdEngineBa
 
 		$scripts[] = (new ResourceLoaderScript())
 						->setTypeRemote()
-						->setValue( 'http://ad.71i.de/global_js/globalV6.js' );
+						->setValue( 'http://ad.71i.de/global_js/globalV6_WIKIA.js' );
 
 		return $scripts;
 	}

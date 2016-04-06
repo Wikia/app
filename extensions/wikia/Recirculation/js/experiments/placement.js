@@ -10,6 +10,7 @@ require([
 	'ext.wikia.recirculation.views.footer',
 	'ext.wikia.recirculation.helpers.contentLinks',
 	'ext.wikia.recirculation.helpers.fandom',
+	'ext.wikia.recirculation.helpers.lateral',
 	'ext.wikia.recirculation.helpers.googleMatch',
 	'ext.wikia.adEngine.taboolaHelper',
 	require.optional('videosmodule.controllers.rail')
@@ -24,6 +25,7 @@ require([
 	footerView,
 	contentLinksHelper,
 	fandomHelper,
+	lateralHelper,
 	googleMatchHelper,
 	taboolaHelper,
 	videosModule
@@ -33,6 +35,7 @@ require([
 		railSelector = '#' + railContainerId,
 		group = abTest.getGroup(experimentName),
 		isRail = false,
+		errorHandled = false,
 		footerView,
 		view,
 		helper;
@@ -45,56 +48,81 @@ require([
 	}
 
 	switch (group) {
+		case 'LATERAL_FANDOM':
+			helper = lateralHelper();
+			view = railView();
+			isRail = true;
+			break;
+		case 'LATERAL_COMMUNITY':
+			helper = lateralHelper({
+				type: 'community',
+				count: 3
+			});
+			view = incontentView();
+			break;
+		case 'DESIGN_ONE':
+		case 'DESIGN_TWO':
+		case 'DESIGN_THREE':
+		case 'DESIGN_FIVE':
+			helper = fandomHelper({
+				limit: 5
+			});
+			view = railView({
+				formatTitle: true
+			});
+			isRail = true;
+			break;
+		case 'DESIGN_FOUR':
+			helper = fandomHelper({
+				limit: 5
+			});
+			view = railView({
+				formatTitle: true,
+				before: injectSubtitle
+			});
+			isRail = true;
+			break;
 		case 'FANDOM_RAIL':
-			helper = fandomHelper;
-			view = railView;
+			helper = fandomHelper();
+			view = railView();
 			isRail = true;
 			break;
 		case 'FANDOM_INCONTENT':
-			helper = fandomHelper;
-			view = incontentView;
+			helper = fandomHelper();
+			view = incontentView();
 			break;
 		case 'FANDOM_FOOTER':
-			helper = fandomHelper;
-			view = footerView;
+			helper = fandomHelper();
+			view = footerView();
 			break;
 		case 'LINKS_RAIL':
-			helper = contentLinksHelper;
-			view = railView;
+			helper = contentLinksHelper();
+			view = railView();
 			isRail = true;
 			break;
 		case 'LINKS_INCONTENT':
-			helper = contentLinksHelper;
-			view = incontentView;
+			helper = contentLinksHelper();
+			view = incontentView();
 			break;
 		case 'LINKS_FOOTER':
-			helper = contentLinksHelper;
-			view = footerView;
+			helper = contentLinksHelper();
+			view = footerView();
+			break;
+		case 'CONTROL':
+			helper = fandomHelper({
+				limit: 5
+			});
+			view = railView();
+			isRail = true;
 			break;
 		case 'GOOGLE_INCONTENT':
-			var section = incontentView.findSuitableSection();
-
-			if (section.exists()) {
-				googleMatchHelper.injectGoogleMatchedContent(section);
-				tracker.trackVerboseImpression(experimentName, 'in-content');
-			}
-			return;
-		case 'CONTROL':
-			afterRailLoads(function() {
-				fandomHelper.injectLegacyHtml('recent_popular', railSelector);
-				setupLegacyTracking();
-			});
+			renderGoogleIncontent();
 			return;
 		case 'TABOOLA':
-			afterRailLoads(function() {
-				taboolaHelper.initializeWidget({
-					mode: 'thumbnails-rr2',
-					container: railContainerId,
-					placement: 'Right Rail Thumbnails 3rd',
-					target_type: 'mix'
-				});
-				setupLegacyTracking();
-			});
+			renderTaboola();
+			return;
+		case 'LATERAL_BOTH':
+			renderBothLateralExperiments();
 			return;
 		default:
 			return;
@@ -120,13 +148,85 @@ require([
 		helper.loadData()
 			.then(view.render)
 			.then(view.setupTracking(experimentName))
-			.fail(function() {});
+			.fail(handleError);
 	}
 
-	function setupLegacyTracking() {
-		tracker.trackVerboseImpression(experimentName, 'rail');
-		$(railSelector).on('mousedown', 'a', function() {
-			tracker.trackVerboseClick(experimentName, utils.buildLabel(this, 'rail'));
+	function handleError() {
+		// If there is an error somewhere we render the control group with no tracking
+		if (errorHandled) {
+			return;
+		}
+
+		errorHandled = true;
+		afterRailLoads(function() {
+			var rail = railView();
+
+			fandomHelper({
+				limit: 5
+			}).loadData()
+				.then(rail.render)
+				.fail(function() {
+					// No-op if this doesn't work. We tried our best.
+				});
+		});
+	}
+
+	function injectSubtitle($html) {
+		var subtitle = $('<h2>').text($.msg('recirculation-fandom-subtitle'));
+
+		$html.find('.trending').after(subtitle);
+		return $html;
+	}
+
+	function renderBothLateralExperiments() {
+		var incontent = incontentView();
+
+		lateralHelper({
+			type: 'community',
+			count: 3
+		}).loadData()
+			.then(incontent.render)
+			.then(incontent.setupTracking(experimentName))
+			.fail(handleError);
+
+		afterRailLoads(function() {
+			var rail = railView();
+
+			lateralHelper({
+				type: 'fandom',
+				count: 5
+			}).loadData()
+				.then(rail.render)
+				.then(rail.setupTracking(experimentName))
+				.fail(handleError);
+		});
+	}
+
+	function renderGoogleIncontent() {
+		var section = incontentView().findSuitableSection();
+
+		if (section.exists()) {
+			googleMatchHelper.injectGoogleMatchedContent(section);
+			tracker.trackVerboseImpression(experimentName, 'in-content');
+		}
+	}
+
+	function renderTaboola() {
+		afterRailLoads(function() {
+			taboolaHelper.initializeWidget({
+				mode: 'thumbnails-rr2',
+				container: railContainerId,
+				placement: 'Right Rail Thumbnails 3rd',
+				target_type: 'mix'
+			});
+
+			tracker.trackVerboseImpression(experimentName, 'rail');
+			$(railSelector).on('mousedown', 'a', function() {
+				var slot = $(element).parent().index() + 1,
+					label = 'rail=slot-' + slot;
+
+				tracker.trackVerboseClick(experimentName, label);
+			});
 		});
 	}
 });

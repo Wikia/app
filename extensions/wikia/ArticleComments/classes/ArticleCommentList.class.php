@@ -754,8 +754,6 @@ class ArticleCommentList {
 						$task = new \Wikia\Tasks\Tasks\MultiTask();
 						$task->call( 'delete', $data );
 						$submit_id = $task->queue();
-
-						Wikia::log( __METHOD__, 'deletecomment', "Added task ($submit_id) for {$data['page']} page" );
 					}
 				}
 			}
@@ -793,7 +791,14 @@ class ArticleCommentList {
 						$ok = $archive->undelete( '', wfMessage( 'article-comments-undeleted-comment', $new_page_id )->escaped() );
 
 						if ( !is_array( $ok ) ) {
-							Wikia::log( __METHOD__, 'error', "cannot restore comment {$page_value['title']} (id: {$page_id})" );
+							Wikia\Logger\WikiaLogger::instance()->error(
+								__METHOD__ . ' - cannot restore comment',
+								[
+									'exception' => new Exception(),
+									'page_id' => (string) $page_id,
+									'page_title' => $page_value['title']
+								]
+							);
 						}
 					}
 				}
@@ -1105,7 +1110,14 @@ class ArticleCommentList {
 				// and WallArticleComment/classes/ArticleComments.class.php have
 				// the same definition of explode() method)
 				// and static constructor newFromText() should create a Title instance for $parts['title']
-				Wikia::log( __METHOD__, false, 'WALL_ARTICLE_COMMENT_ERROR: no main article title: ' . print_r( $parts, true ) . ' namespace: ' . $rcNamespace );
+				Wikia\Logger\WikiaLogger::instance()->error(
+					__METHOD__ . ' - WALL_ARTICLE_COMMENT_ERROR: no main article title',
+					[
+						'exception' => new Exception(),
+						'namespace' => $rcNamespace,
+						'parts' => print_r( $parts, true )
+					]
+				);
 			}
 		}
 

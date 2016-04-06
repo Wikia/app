@@ -28,7 +28,6 @@ $wgSpecialPages[ 'InfoboxBuilder' ] = 'PortableInfoboxBuilderSpecialController';
 $wgSpecialPageGroups[ 'InfoboxBuilder' ] = 'wikia';
 
 // passing of top variables
-$wgHooks['WikiaSkinTopScripts'][] = 'PortableInfoboxBuilderHooks::onWikiaSkinTopScripts';
 $wgHooks['EditPageMakeGlobalVariablesScript'][] = 'PortableInfoboxBuilderHooks::onEditPageMakeGlobalVariablesScript';
 
 // iframe loading script

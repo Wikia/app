@@ -257,4 +257,130 @@ class RobotsTxtTest extends WikiaBaseTest {
 		], $robots->getContents() );
 		$this->assertEquals( self::EXPERIMENTAL_HEADERS, $robots->getHeaders() );
 	}
+
+	/**
+	 * Test setCustomRules
+	 * @dataProvider setCustomRulesDataProvider
+	 * @covers RobotsTxt::setCustomRules
+	 *
+	 * @param $mockWgRobotsTxtCustomRules
+	 * @param $expResult
+	 */
+	public function testSetCustomRules( $mockWgRobotsTxtCustomRules, $lang, $expResult ) {
+		$this->mockGlobalVariable( 'wgRobotsTxtCustomRules', $mockWgRobotsTxtCustomRules );
+		$this->mockGlobalVariable( 'wgContLang', Language::factory( $lang ) );
+
+		$robots = new RobotsTxt();
+		$robots->setCustomRules();
+		$result = $robots->getContents();
+		$this->assertEquals( $expResult, $result );
+	}
+
+	public function setCustomRulesDataProvider()
+	{
+		$expResult1 = [];
+		$mockWgRobotsTxtCustomRules11 = [];
+		$mockWgRobotsTxtCustomRules12 = '';
+
+		$expResult2En = [
+			'User-agent: *',
+			'Disallow: /wiki/Help:',
+			'Disallow: /*?*title=Help:',
+			'Disallow: /index.php/Help:',
+			'Noindex: /wiki/Help:',
+			'Noindex: /*?*title=Help:',
+			'Noindex: /index.php/Help:',
+			'',
+		];
+		$expResult2De = [
+			'User-agent: *',
+			'Disallow: /wiki/Hilfe:',
+			'Disallow: /*?*title=Hilfe:',
+			'Disallow: /index.php/Hilfe:',
+			'Disallow: /wiki/Help:',
+			'Disallow: /*?*title=Help:',
+			'Disallow: /index.php/Help:',
+			'Noindex: /wiki/Hilfe:',
+			'Noindex: /*?*title=Hilfe:',
+			'Noindex: /index.php/Hilfe:',
+			'Noindex: /wiki/Help:',
+			'Noindex: /*?*title=Help:',
+			'Noindex: /index.php/Help:',
+			'',
+		];
+		$mockWgRobotsTxtCustomRules21 = [ 'disallowNamespace' => NS_HELP ];
+		$mockWgRobotsTxtCustomRules22 = [ 'disallowNamespace' => [ NS_HELP ] ];
+
+		$expResult3 = [
+			'User-agent: *',
+			'Disallow: /wiki/Help:',
+			'Disallow: /*?*title=Help:',
+			'Disallow: /index.php/Help:',
+			'Disallow: /wiki/User:',
+			'Disallow: /*?*title=User:',
+			'Disallow: /index.php/User:',
+			'Noindex: /wiki/Help:',
+			'Noindex: /*?*title=Help:',
+			'Noindex: /index.php/Help:',
+			'Noindex: /wiki/User:',
+			'Noindex: /*?*title=User:',
+			'Noindex: /index.php/User:',
+			'',
+		];
+		$mockWgRobotsTxtCustomRules3 = [ 'disallowNamespace' => [ NS_HELP, NS_USER ] ];
+
+		$expResult4En = [
+			'User-agent: *',
+			'Allow: /wiki/Special:Videos',
+			'Allow: /wiki/Special:Video',
+			'',
+		];
+		$expResult4De = [
+			'User-agent: *',
+			'Allow: /wiki/Spezial:Videos',
+			'Allow: /wiki/Spezial:Video',
+			'Allow: /wiki/Special:Videos',
+			'Allow: /wiki/Special:Video',
+			'',
+		];
+		$mockWgRobotsTxtCustomRules41 = [ 'allowSpecialPage' => 'Videos' ];
+		$mockWgRobotsTxtCustomRules42 = [ 'allowSpecialPage' => [ 'Videos' ] ];
+
+		$expResult5 = [
+			'User-agent: *',
+			'Allow: /wiki/Special:Forum',
+			'Allow: /wiki/Special:Forums',
+			'Allow: /wiki/Special:Videos',
+			'Allow: /wiki/Special:Video',
+			'Disallow: /wiki/Help:',
+			'Disallow: /*?*title=Help:',
+			'Disallow: /index.php/Help:',
+			'Noindex: /wiki/Help:',
+			'Noindex: /*?*title=Help:',
+			'Noindex: /index.php/Help:',
+			'',
+		];
+		$mockWgRobotsTxtCustomRules5 = [
+			'allowSpecialPage' => [ 'Forum', 'Videos' ],
+			'disallowNamespace' => [ NS_HELP ],
+		];
+
+		return [
+			// No custom rules
+			[ $mockWgRobotsTxtCustomRules11, 'en', $expResult1 ],
+			[ $mockWgRobotsTxtCustomRules12, 'en', $expResult1 ],
+			// disallow namespace
+			[ $mockWgRobotsTxtCustomRules21, 'en', $expResult2En ],
+			[ $mockWgRobotsTxtCustomRules22, 'en', $expResult2En ],
+			[ $mockWgRobotsTxtCustomRules22, 'de', $expResult2De ],
+			[ $mockWgRobotsTxtCustomRules3, 'en', $expResult3 ],
+			// allow special pages
+			[ $mockWgRobotsTxtCustomRules41, 'en', $expResult4En ],
+			[ $mockWgRobotsTxtCustomRules42, 'en', $expResult4En ],
+			[ $mockWgRobotsTxtCustomRules42, 'de', $expResult4De ],
+			// disallow namespace + allow special pages
+			[ $mockWgRobotsTxtCustomRules5, 'en', $expResult5 ],
+		];
+	}
+
 }

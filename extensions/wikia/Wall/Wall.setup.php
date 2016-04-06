@@ -180,6 +180,8 @@ JSMessages::registerPackage( 'Wall', [
 	'wall-action-*',
 	'wall-message-source',
 	'wall-confirm-monobook-*',
+	'wall-posting-message-failed-title',
+	'wall-posting-message-failed-body',
 	'preview',
 	'savearticle',
 	'back',

@@ -197,7 +197,7 @@ class ArticleComment {
 
 		// Get revision IDs
 		if ( !$this->loadFirstRevId( $master ) || !$this->loadLastRevId( $master ) ) {
-			WikiaLogger::instance()->warning( 'Unable to load revision IDs', [
+			WikiaLogger::instance()->error( 'Unable to load revision IDs', [
 				'issue' => 'SOC-1540',
 				'firstRevId' => $this->mFirstRevId,
 				'lastRevId' => $this->mLastRevId,
@@ -208,7 +208,7 @@ class ArticleComment {
 
 		// Get revision objects
 		if ( !$this->loadFirstRevision() || !$this->loadLastRevision() ) {
-			WikiaLogger::instance()->warning( 'Unable to load revision objects', [
+			WikiaLogger::instance()->error( 'Unable to load revision objects', [
 				'issue' => 'SOC-1540',
 				'firstRevId' => $this->mFirstRevId,
 				'lastRevId' => $this->mLastRevId,
@@ -854,7 +854,7 @@ class ArticleComment {
 			// FB#2875 (log data for further debugging)
 			if ( is_null( $parentArticle ) ) {
 				$debugTitle = empty( $title ) ? '--EMPTY--' : $title->getText(); // BugId:2646
-				WikiaLogger::instance()->warning( 'Failed to create Article object', [
+				WikiaLogger::instance()->error( 'Failed to create Article object', [
 					'method' => __METHOD__,
 					'parentId' => $parentId,
 					'title' => $debugTitle,
@@ -872,7 +872,7 @@ class ArticleComment {
 
 		if ( !( $commentTitle instanceof Title ) ) {
 			if ( !empty( $parentId ) ) {
-				WikiaLogger::instance()->warning( 'Failed to create commentTitle', [
+				WikiaLogger::instance()->error( 'Failed to create commentTitle', [
 					'method' => __METHOD__,
 					'parentId' => $parentId,
 					'commentTitleText' => $commentTitleText
@@ -893,7 +893,7 @@ class ArticleComment {
 		if ( $retVal->value == EditPage::AS_SUCCESS_NEW_ARTICLE ) {
 			$commentsIndex = CommentsIndex::newFromId( $article->getID() );
 			if ( empty( $commentsIndex ) ) {
-				WikiaLogger::instance()->warning( 'Empty commentsIndex', [
+				WikiaLogger::instance()->error( 'Empty commentsIndex', [
 					'method' => __METHOD__,
 					'parentId' => $parentId,
 					'commentTitleText' => $commentTitleText,
@@ -1267,7 +1267,7 @@ class ArticleComment {
 				# move comment level #1
 				$error = self::moveComment( $oCommentTitle, $oNewTitle, $form->reason );
 				if ( $error !== true ) {
-					WikiaLogger::instance()->warning( 'Cannot move level 1 blog comments', [
+					WikiaLogger::instance()->error( 'Cannot move level 1 blog comments', [
 						'method' => __METHOD__,
 						'oldCommentTitle' => $oCommentTitle->getPrefixedText(),
 						'newCommentTitle' => $oNewTitle->getPrefixedText(),
@@ -1288,7 +1288,7 @@ class ArticleComment {
 						# move comment level #2
 						$error = self::moveComment( $oCommentTitle, $oNewTitle, $form->reason );
 						if ( $error !== true ) {
-							WikiaLogger::instance()->warning( 'Cannot move level 2 blog comments', [
+							WikiaLogger::instance()->error( 'Cannot move level 2 blog comments', [
 								'method' => __METHOD__,
 								'oldCommentTitle' => $oCommentTitle->getPrefixedText(),
 								'newCommentTitle' => $oNewTitle->getPrefixedText(),
@@ -1334,7 +1334,7 @@ class ArticleComment {
 			$listing = ArticleCommentList::newFromTitle( $oNewTitle );
 			$listing->purge();
 		} else {
-			WikiaLogger::instance()->warning( 'Cannot move article comments; no comments found', [
+			WikiaLogger::instance()->error( 'Cannot move article comments; no comments found', [
 				'method' => __METHOD__,
 				'oldTitle' => $oOldTitle->getPrefixedText(),
 			] );

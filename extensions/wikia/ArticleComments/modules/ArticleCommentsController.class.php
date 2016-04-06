@@ -188,9 +188,12 @@ class ArticleCommentsController extends WikiaController {
 
 		if ( empty( $data ) ) {
 			// Seems like we should always have data, let's leave a log somewhere if this happens
-			$this->debug( 'No data, this should not happen.', [
-				'method' => __METHOD__
-			] );
+			Wikia\Logger\WikiaLogger::instance()->error(
+				__METHOD__ . ' - no data, this should not happen',
+				[
+					'exception' => new Exception()
+				]
+			);
 		}
 
 		$this->ajaxicon = $this->wg->StylePath.'/common/images/ajax.gif';

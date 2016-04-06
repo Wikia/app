@@ -49,22 +49,21 @@
 
 	.WikiaMainContent,
 	.WikiaRail,
-    .WikiaFooter {
+	.WikiaFooter {
+		height: 0;
 		overflow: hidden;
 		visibility: hidden;
 	}
 
-    .WikiaRail {
-      .wikia-ad {
-        display:none;
-      }
-    }
-
+	.WikiaRail {
+		.wikia-ad {
+			display: none;
+		}
+	}
 
 	.ContentWarning {
-        display: block;
-        position: fixed;
-    }
+		display: block;
+	}
 
 	.adm-dash-search,
 	.WikiaWideTablesWrapper {

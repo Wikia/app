@@ -1,43 +1,48 @@
 define('AuthModal', ['jquery', 'wikia.window'], function ($, window) {
 	'use strict';
 
-	var modal,
-		$blackout,
-		isOpen,
+	var popUpWindowHeight = 670,
+		popUpWindowMaxWidth = 768,
+		popUpWindowParam = 'modal=1',
+		authPopUpWindow,
 		track;
 
 	function open (onAuthSuccess) {
-		if (isOpen) {
-			close();
-		}
-		$('.WikiaSiteWrapper').append(
-			'<div class="auth-blackout visible"><div class="auth-modal loading">' +
-				'<a class="close" href="#"></div></div>'
-		);
-		isOpen = true;
-		$blackout = $('.auth-blackout');
-		modal = $blackout.find('.auth-modal')[0];
-		$('.auth-blackout, .auth-modal .close').click(close);
-
 		track = getTrackingFunction();
 		track({
 			action: Wikia.Tracker.ACTIONS.OPEN,
 			label: 'username-login-modal'
 		});
 
-		$(window).on({
-			'keyup.authModal' : onKeyUp,
-			'message.authModal': function (event) {
-				var e = event.originalEvent;
+		$(window).on('message.authPopUpWindow', function (event) {
+			var e = event.originalEvent;
 
-				if (typeof e.data !== 'undefined' && e.data.isUserAuthorized) {
-					close();
-					if (typeof onAuthSuccess === 'function') {
-						onAuthSuccess();
-					}
+			if (typeof e.data !== 'undefined' && e.data.isUserAuthorized) {
+				close();
+				if (typeof onAuthSuccess === 'function') {
+					onAuthSuccess();
 				}
 			}
 		});
+	}
+
+	function close (event) {
+		if (event) {
+			event.preventDefault();
+		}
+		if (authPopUpWindow) {
+			authPopUpWindow.close();
+		}
+		$(window).off('.authPopUpWindow');
+	}
+
+	function getPopUpWindowSpecs() {
+		var pageWidth = window.innerWidth,
+			popUpWindowWidth = pageWidth < popUpWindowMaxWidth ? pageWidth : popUpWindowMaxWidth,
+			popUpWindowLeft = window.screenX + (pageWidth / 2) - (popUpWindowWidth / 2),
+			popUpWindowTop = window.screenY + (window.innerHeight / 2) - (popUpWindowHeight / 2);
+
+		return 'width=' + popUpWindowWidth + ',height=' + popUpWindowHeight + ',top=' + popUpWindowTop + ',left=' + popUpWindowLeft;
 	}
 
 	function getTrackingFunction () {
@@ -52,49 +57,21 @@ define('AuthModal', ['jquery', 'wikia.window'], function ($, window) {
 		return track;
 	}
 
-	function onKeyUp (event) {
-		if (event.keyCode === 27) {
-			close();
+	function loadPage (url) {
+		var src = url + (url.indexOf('?') === -1 ? '?' : '&') + popUpWindowParam;
+
+		authPopUpWindow = window.open(src, '_blank', getPopUpWindowSpecs());
+
+		if (authPopUpWindow && !authPopUpWindow.closed) {
+			authPopUpWindow.onbeforeunload = function () {
+				track({
+					action: Wikia.Tracker.ACTIONS.CLOSE,
+					label: 'username-login-modal'
+				});
+			};
+		} else {
+			window.location = url;
 		}
-	}
-
-	function close (event) {
-		if (event) {
-			event.preventDefault();
-		}
-
-		if (modal) {
-			track({
-				action: Wikia.Tracker.ACTIONS.CLOSE,
-				label: 'username-login-modal'
-			});
-			$blackout.remove();
-			isOpen = false;
-		}
-
-		$(window).off('.authModal');
-	}
-
-	function onPageLoaded () {
-		if (modal) {
-			$(modal).removeClass('loading');
-		}
-	}
-
-	function loadPage (url, onPageLoaded) {
-		var authIframe = window.document.createElement('iframe'),
-			modalParam = 'modal=1';
-
-		authIframe.src = url + (url.indexOf('?') === -1 ? '?' : '&')  + modalParam;
-		//for the selenium tests:
-		authIframe.id = 'auth-modal-iframe';
-		authIframe.onload = function () {
-			if (typeof onPageLoaded === 'function') {
-				onPageLoaded();
-			}
-		};
-		modal.appendChild(authIframe);
-
 	}
 
 	return {
@@ -125,7 +102,7 @@ define('AuthModal', ['jquery', 'wikia.window'], function ($, window) {
 					label: 'from-' + params.origin
 				});
 
-				loadPage(params.url, onPageLoaded);
+				loadPage(params.url);
 
 			} else {
 				window.UserLoginModal.show({

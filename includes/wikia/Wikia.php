@@ -453,7 +453,10 @@ class Wikia {
 		$method = $sub ? $method . "-" . $sub : $method;
 		if( $wgDevelEnvironment || $wgErrorLog || $always ) {
 			$method = preg_match('/-WIKIA$/', $method) ? str_replace('-WIKIA', '', $method) : $method;
-			\Wikia\Logger\WikiaLogger::instance()->debug($message, ['method' => $method]);
+			\Wikia\Logger\WikiaLogger::instance()->debug( $message, [
+				'exception' => new Exception(),
+				'method' => $method
+			] );
 		}
 
 		/**
@@ -2014,7 +2017,9 @@ class Wikia {
 		$isValid = ($retVal === 0);
 
 		if (!$isValid) {
-			Wikia::log(__METHOD__, 'failed',  rtrim($output), true);
+			Wikia\Logger\WikiaLogger::instance()->warning( __METHOD__ . ' failed', [
+				'output' => rtrim($output),
+			] );
 
 			// pass an error to UploadBase class
 			$error = array('verification-error');

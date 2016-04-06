@@ -13,8 +13,8 @@
 	width: $infobox-width;
 }
 
-	// **********  Overwrite styles from article  ********** //
-	// (placing it within portable-infobox class makes it strong enough) //
+// **********  Overwrite styles from article  ********** //
+// (placing it within portable-infobox class makes it strong enough) //
 
 .portable-infobox {
 
@@ -81,10 +81,8 @@
 
 // **********  Collapsible groups  ********** //
 
-.pi-collapse {
-	.pi-header {
-		@include collapsibleChevron;
-	}
+.pi-collapse .pi-header {
+	@include collapsibleChevron;
 }
 
 .pi-collapse-closed {
