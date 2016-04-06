@@ -247,7 +247,7 @@ ve.ui.WikiaInfoboxInsertDialog.prototype.createEmptyStateContent = function (unc
 ve.ui.WikiaInfoboxInsertDialog.prototype.setDialogContent = function ($content) {
 	this.$body.html($content);
 
-	if (window.wgEnablePortbaleInfoboxBuilderInVE) {
+	if (window.wgEnablePortableInfoboxBuilderInVE) {
 		this.$body.append(this.addNewTemplateWidget());
 	}
 };
