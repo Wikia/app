@@ -324,7 +324,7 @@ class WikiaTracer {
 	 * @param array $respHeaders
 	 * @return bool
 	 */
-	public static function onHttpRequestAfter( $method, $url, $caller, $requestTime, Array $respHeaders ) {
+	public static function onAfterHttpRequest( $method, $url, $caller, $requestTime, Array $respHeaders ) {
 		// check if we received X-Request-Path header in a response and simply use it
 		$headerName = strtolower( self::REQUEST_PATH_HEADER_NAME );
 		if ( !empty( $respHeaders[ $headerName ] ) ) {

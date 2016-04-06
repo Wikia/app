@@ -462,7 +462,7 @@ $wgHooks['WebRequestInitialized'][] = 'Wikia\\Tracer\\WikiaTracer::updateInstanc
 $wgHooks['AfterSetupUser'][] = 'Wikia\\Tracer\\WikiaTracer::updateInstanceFromMediawiki';
 $wgHooks['AfterUserLogin'][] = 'Wikia\\Tracer\\WikiaTracer::updateInstanceFromMediawiki';
 $wgHooks['BeforeWfShellExec'][] = 'Wikia\\Tracer\\WikiaTracer::onBeforeWfShellExec';
-$wgHooks['HttpRequestAfter'][] = 'Wikia\\Tracer\\WikiaTracer::onHttpRequestAfter';
+$wgHooks['AfterHttpRequest'][] = 'Wikia\\Tracer\\WikiaTracer::onAfterHttpRequest';
 
 // memcache stats (PLATFORM-292)
 $wgAutoloadClasses['Wikia\\Memcached\\MemcachedStats'] = "$IP/includes/wikia/memcached/MemcachedStats.class.php";
