@@ -2,8 +2,11 @@
 
 class CommunityDataService extends WikiaService {
 	const CURATED_CONTENT_VAR_NAME = 'wgWikiaCuratedContent';
-	private $curatedContentData = [ ];
+	const FEATURED_SECTION = 'featured';
+	const CURATED_SECTION = 'curated';
+	const OPTIONAL_SECTION = 'optional';
 
+	private $curatedContentData = [ ];
 	private $cityId;
 
 	function __construct( $cityId ) {
@@ -11,7 +14,7 @@ class CommunityDataService extends WikiaService {
 		$this->cityId = $cityId;
 	}
 
-	public function setCuratedContent( $data, $reason=null ) {
+	public function setCuratedContent( $data, $reason = null ) {
 		$ready = $this->isLegacyFormat( $data ) ? $this->toNew( $data ) : $data;
 		$status = WikiFactory::setVarByName( self::CURATED_CONTENT_VAR_NAME, $this->cityId, $ready, $reason );
 		if ( $status ) {
@@ -22,7 +25,13 @@ class CommunityDataService extends WikiaService {
 	}
 
 	public function hasData() {
-		return !empty( $this->curatedContentData() );
+		$data = $this->curatedContentData();
+
+		return !empty( $data ) &&
+			   ( !$this->isCommunityDataEmpty( $data ) ||
+				 !$this->isSectionEmpty( $data, self::FEATURED_SECTION ) ||
+				 !$this->isSectionEmpty( $data, self::CURATED_SECTION ) ||
+				 !$this->isSectionEmpty( $data, self::OPTIONAL_SECTION ) );
 	}
 
 	/**
@@ -51,8 +60,7 @@ class CommunityDataService extends WikiaService {
 	}
 
 	public function getOptional() {
-		$data = $this->curatedContentData();
-		return isset( $data[ 'optional' ] ) ? $data[ 'optional' ] : [ ];
+		return $this->getSection( self::OPTIONAL_SECTION );
 	}
 
 	public function getOptionalItems() {
@@ -61,13 +69,11 @@ class CommunityDataService extends WikiaService {
 	}
 
 	public function getCurated() {
-		$data = $this->curatedContentData();
-		return isset( $data[ 'curated' ] ) ? $data[ 'curated' ] : [ ];
+		return $this->getSection( self::CURATED_SECTION );
 	}
 
 	public function getFeatured() {
-		$data = $this->curatedContentData();
-		return isset( $data[ 'featured' ] ) ? $data[ 'featured' ] : [ ];
+		return $this->getSection( self::FEATURED_SECTION );
 	}
 
 	public function getFeaturedItems() {
@@ -78,7 +84,7 @@ class CommunityDataService extends WikiaService {
 	public function getCommunityData() {
 		$data = $this->curatedContentData();
 
-		return isset( $data[ 'community_data' ] ) ? $data[ 'community_data' ] : [ ];
+		return !$this->isCommunityDataEmpty( $data ) ? $data[ 'community_data' ] : [ ];
 	}
 
 	public function getCommunityDescription() {
@@ -181,17 +187,17 @@ class CommunityDataService extends WikiaService {
 			}
 
 			//figure out what type of section it is
-			if ( $section[ 'featured' ] ) {
-				$result[ 'featured' ] = $extended;
+			if ( $section[ self::FEATURED_SECTION ] ) {
+				$result[ self::FEATURED_SECTION ] = $extended;
 			} elseif ( $section[ 'community_data' ] == 'true' ) {
 				$result[ 'community_data' ] = [
 					'description' => $section[ 'description' ],
 					'image_id' => isset( $section[ 'image_id' ] ) ? $section[ 'image_id' ] : 0
 				];
 			} elseif ( empty( $extended[ 'label' ] ) ) {
-				$result[ 'optional' ] = $extended;
+				$result[ self::OPTIONAL_SECTION ] = $extended;
 			} else {
-				$result[ 'curated' ][] = $extended;
+				$result[ self::CURATED_SECTION ][] = $extended;
 			}
 		}
 
@@ -207,5 +213,25 @@ class CommunityDataService extends WikiaService {
 	 */
 	private function isLegacyFormat( $curatedContent ) {
 		return ( array_values( $curatedContent ) === $curatedContent );
+	}
+
+	/**
+	 * @param $data
+	 * @return bool
+	 */
+	private function isCommunityDataEmpty( $data ) {
+		return !isset( $data[ 'community_data' ] ) ||
+			   ( empty( $data[ 'community_data' ][ 'description' ] ) &&
+				 $data[ 'community_data' ][ 'image_id' ] == 0 );
+	}
+
+	private function isSectionEmpty( $data, $section ) {
+		return !isset( $data[ $section ] ) ||
+			   empty( $data[ $section ] );
+	}
+
+	private function getSection( $section ) {
+		$data = $this->curatedContentData();
+		return $this->isSectionEmpty( $data, $section ) ? $data[ $section ] : [ ];
 	}
 }
