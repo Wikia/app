@@ -16,6 +16,9 @@
 ve.ui.WikiaInfoboxBuilderDialog = function VeUiWikiaInfoboxBuilderDialog(config) {
 	// Parent constructor
 	ve.ui.WikiaInfoboxBuilderDialog.super.call(this, config);
+	$(window).on('infoboxBuilderReturnToVE', function () {
+		this.close();
+	}.bind(this));
 };
 
 /* Inheritance */
