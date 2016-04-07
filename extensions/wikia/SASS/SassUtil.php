@@ -461,9 +461,9 @@ class SassUtil {
 	 * @param $themeSettings
 	 * @return mixed
 	 */
-	public static function normalizeThemeColors($themeSettings) {
-		foreach (self::THEME_DESIGNER_COLOR_KEYS as $key) {
-			if( !preg_match(self::HEX_REG_EXP, $themeSettings[$key])) {
+	public static function normalizeThemeColors( $themeSettings ) {
+		foreach ( self::THEME_DESIGNER_COLOR_KEYS as $key ) {
+			if ( !preg_match(self::HEX_REG_EXP, $themeSettings[$key]) ) {
 				$themeSettings[$key] = self::colorNameToHex($themeSettings[$key]);
 			}
 		}
