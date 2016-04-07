@@ -18,7 +18,7 @@ ve.ui.WikiaInfoboxInsertDialog = function VeUiWikiaInfoboxInsertDialog(config) {
 	$(window).on('infoboxListChanged', function () {
 		this.refreshInfoboxesList();
 	}.bind(this));
-	
+
 	// Properties
 	this.surface = null;
 };
