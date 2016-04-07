@@ -1,3 +1,10 @@
+$dialog-add-container-border-width: 1px;
+$dialog-add-container-space-horizontal: 3em;
+$dialog-add-container-space-vertical: 1em;
+$dialog-full-width: 100%;
+$dialog-select-widget-space: 5em;
+$dialog-zero-position: 0;
+
 .ve-ui-wikiaInfoboxInsertDialog {
 
 	.oo-ui-window-body {
@@ -6,26 +13,26 @@
 }
 
 .oo-ui-selectWidget {
-	margin-bottom: 5em;
+	margin-bottom: $dialog-select-widget-space;
 }
 
 .ve-ui-wikiaInfoboxInsertDialog-add-container {
 	background-color: $color-page;
-	border-top: 1px solid $color-page-border;
-	bottom: 0;
+	border-top: $dialog-add-container-border-width solid $color-page-border;
+	bottom: $dialog-zero-position;
 	box-sizing: border-box;
-	margin-top: 1em;
-	padding: 1em 3em;
+	margin-top: $dialog-add-container-space-vertical;
+	padding: $dialog-add-container-space-vertical $dialog-add-container-space-horizontal;
 	position: fixed;
-	width: 100%;
+	width: $dialog-full-width;
 }
 
 .ve-ui-wikiaInfoboxInsertDialog-add-button {
-	border: 1px dashed $color-page-border;
-	width: 100%;
+	border: $dialog-add-container-border-width dashed $color-page-border;
+	width: $dialog-full-width;
 
 	.oo-ui-buttonElement-button {
-		width: 100%;
+		width: $dialog-full-width;
 
 		&:hover {
 			background-color: $color-ve-hover;
