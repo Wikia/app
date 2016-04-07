@@ -99,24 +99,6 @@ class MercuryApi {
 	}
 
 	/**
-	 * @desc Ensures that colors from theme designer are send in hex notation instead of name
-	 *
-	 * @return mixed
-	 */
-	private function validateThemeColors() {
-		$keysToValidate = ['color-body', 'color-body-middle', 'color-page', 'color-buttons', 'color-links', 'color-header'];
-		$themeSettings = SassUtil::getOasisSettings();
-
-		foreach ($keysToValidate as $key) {
-			if( !preg_match('/#([a-f0-9]{3,6})/i', $themeSettings[$key])){
-				$themeSettings[$key] = SassUtil::colorNameToHex($themeSettings[$key]);
-			}
-		}
-
-		return $themeSettings;
-	}
-
-	/**
 	 * @desc Get Current wiki settings
 	 *
 	 * @return mixed
@@ -152,7 +134,7 @@ class MercuryApi {
 			'namespaces' => $wgContLang->getNamespaces(),
 			'siteMessage' => $this->getSiteMessage(),
 			'siteName' => $wgSitename,
-			'theme' => $this->validateThemeColors(),
+			'theme' => SassUtil::normalizeThemeColors(SassUtil::getOasisSettings()),
 			'tracking' => [
 				'vertical' => HubService::getVerticalNameForComscore( $wgCityId ),
 				'ivw3' => [
