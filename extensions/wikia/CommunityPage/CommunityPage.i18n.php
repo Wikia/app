@@ -48,6 +48,7 @@ $messages['en'] = array(
 	'communitypage-no-contributors' => 'There are no contributions yet this week! Be the first to contribute!',
 	'communitypage-no-admins' => 'There are no Admins on this wiki yet.',
 	'communitypage-no-admins-contact' => 'Contact us to be the first!',
+	'communitypage-modal-loading' => 'Loading...',
 );
 
 $messages['qqq'] = array(
@@ -97,6 +98,7 @@ $messages['qqq'] = array(
 	'communitypage-no-contributors' => 'Text indicating that there are no contributions yet this week',
 	'communitypage-no-admins' => 'Text indicating that the wiki has no admins.',
 	'communitypage-no-admins-contact' => 'Contact us to become the first admin text',
+	'communitypage-modal-loading' => 'Text shown when loading a tab in modal',
 );
 
 $messages['ja'] = array(

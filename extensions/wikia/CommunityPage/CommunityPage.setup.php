@@ -16,6 +16,7 @@ $wgExtensionMessagesFiles['CommunityPage'] = __DIR__ . '/CommunityPage.i18n.php'
 /* messages exported to JS */
 JSMessages::registerPackage( 'CommunityPageSpecial', [
 	'communitypage-modal-title',
+	'communitypage-modal-loading',
 ] );
 
 /* register special page */
