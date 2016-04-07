@@ -15,16 +15,19 @@ require([
 			className: '.modal-nav-all',
 			template: 'allMembers',
 			request: 'getAllMembersData',
+			cachedData: null,
 		},
 		TAB_ADMINS: {
 			className: '.modal-nav-admins',
 			template: 'topAdmins',
 			request: 'getTopAdminsData',
+			cachedData: null,
 		},
 		TAB_LEADERBOARD: {
 			className: '.modal-nav-leaderboard',
 			template: 'topContributors',
 			request: 'getTopContributorsData',
+			cachedData: null,
 		},
 	};
 
@@ -64,6 +67,27 @@ require([
 		return $deferred;
 	}
 
+	function getModalTabContentsHtml(tab) {
+		var $deferred = $.Deferred();
+
+		if (tab.cachedData) {
+			$deferred.resolve(tab.cachedData);
+		} else {
+			nirvana.sendRequest({
+				controller: 'CommunityPageSpecial',
+				method: tab.request,
+				data: {mcache: 'writeonly'}, // fixme: temporary debug variable
+				format: 'json',
+				type: 'get'
+			}).then(function (response) {
+				tab.cachedData = mustache.render(templates[tab.template], response);
+				$deferred.resolve(tab.cachedData);
+			});
+		}
+
+		return $deferred;
+	}
+
 	function openCommunityModal(tabToActivate) {
 		tabToActivate = tabToActivate || tabs.TAB_LEADERBOARD;
 
@@ -81,14 +105,8 @@ require([
 				}
 			};
 			uiModal.createComponent(createPageModalConfig, function (modal) {
-				nirvana.sendRequest({
-					controller: 'CommunityPageSpecial',
-					method: tabToActivate.request,
-					data: { mcache: 'writeonly' }, // fixme: temporary debug variable
-					format: 'json',
-					type: 'get'
-				}).then(function (response) {
-					var html = navHtml + mustache.render(templates[tabToActivate.template], response);
+				getModalTabContentsHtml(tabToActivate).then(function (tabContentHtml) {
+					var html = navHtml + tabContentHtml;
 
 					modal.$content
 						.addClass('ContributorsModule ContributorsModuleModal')
@@ -109,37 +127,26 @@ require([
 			return;
 		}
 
-		$.when(
-			getModalNavHtml()
-		).then(function (navHtml) {
-				var html;
+		getModalNavHtml().then(function (navHtml) {
+			var html;
 
-				// Switch highlight to new tab
-				// fixme: Loading indicator should be via a template.
-				html = navHtml + $.msg('communitypage-modal-loading');
+			// Switch highlight to new tab
+			// fixme: Loading indicator should be via a template.
+			html = navHtml + $.msg('communitypage-modal-loading');
+			window.activeModal.$content
+				.html(html)
+				.find(tabToActivate.className).children().addClass('active');
+
+			getModalTabContentsHtml(tabToActivate).then(function (tabContentHtml) {
+				html = navHtml + tabContentHtml;
+
 				window.activeModal.$content
 					.html(html)
 					.find(tabToActivate.className).children().addClass('active');
 
-				// Request data
-				// fixme: Make a wrapper for this to avoid querying data more than once
-				nirvana.sendRequest({
-					controller: 'CommunityPageSpecial',
-					method: tabToActivate.request,
-					data: { mcache: 'writeonly' }, // fixme: temporary debug variable
-					format: 'json',
-					type: 'get'
-				}).then(function (response) {
-					html = navHtml + mustache.render(templates[tabToActivate.template], response);
-
-					window.activeModal.$content
-						.html(html)
-						.find(tabToActivate.className).children().addClass('active');
-
-					activeTab = tabToActivate;
-				});
-
+				activeTab = tabToActivate;
 			});
+		});
 	}
 
 	$('#viewAllMembers').click(function (event) {
@@ -166,5 +173,10 @@ require([
 	$(function () {
 		// prefetch UI modal on DOM ready
 		getUiModalInstance();
+
+		// prefetch modal contents
+		getModalTabContentsHtml(tabs.TAB_ALL);
+		getModalTabContentsHtml(tabs.TAB_ADMINS);
+		getModalTabContentsHtml(tabs.TAB_LEADERBOARD);
 	});
 });
