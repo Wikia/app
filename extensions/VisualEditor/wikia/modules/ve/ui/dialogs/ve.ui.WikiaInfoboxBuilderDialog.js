@@ -16,8 +16,15 @@
 ve.ui.WikiaInfoboxBuilderDialog = function VeUiWikiaInfoboxBuilderDialog(config) {
 	// Parent constructor
 	ve.ui.WikiaInfoboxBuilderDialog.super.call(this, config);
-	$(window).on('infoboxBuilderReturnToVE', function () {
+
+	$(window).on('infoboxBuilderReturnToVE', function (event, isOnPublish) {
+		if (isOnPublish) {
+			$(window).trigger('infoboxListChanged');
+		}
 		this.close();
+		setTimeout(function () {
+			ve.ui.commandRegistry.getCommandByName('wikiaInfoboxInsert').execute(this.surface);
+		}.bind(this), 0);
 	}.bind(this));
 };
 
