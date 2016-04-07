@@ -30,6 +30,7 @@ require([
 
 		require(['AuthModal'], function (authModal) {
 			authModal.load({
+				forceLogin: true,
 				url: event.currentTarget.href,
 				origin: 'community-page',
 				onAuthSuccess: function () {

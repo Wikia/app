@@ -96,8 +96,14 @@ define('AuthModal', ['jquery', 'wikia.window'], function ($, window) {
 		 * @param {string} url - url for the page we want to load in the modal
 		 * @param {string} origin - used for tracking the source of force login modal
 		 * @param {function} onAuthSuccess - callback function to be called after login
+		 * @param {function} forceLogin - the window is opened from regular login button - not force login
 		 */
 		load: function (params) {
+			var trackParams = {
+				action: Wikia.Tracker.ACTIONS.OPEN,
+				label: 'from-' + params.origin
+			};
+
 			if (typeof params.onAuthSuccess !== 'function') {
 				params.onAuthSuccess = function () {
 					window.location.reload();
@@ -109,13 +115,17 @@ define('AuthModal', ['jquery', 'wikia.window'], function ($, window) {
 			}
 
 			if (window.wgEnableNewAuthModal) {
-				popUpWindowParam += '&forceLogin=1';
+				if (params.forceLogin) {
+					popUpWindowParam += '&forceLogin=1';
+					trackParams.category = 'force-login-modal';
+
+					// for now we have only signin-page loaded in auth pop-up window
+					trackParams.label = 'signin-page-from-' + params.origin;
+				}
+
 				open(params.onAuthSuccess);
 
-				track({
-					action: Wikia.Tracker.ACTIONS.OPEN,
-					label: 'from-' + params.origin
-				});
+				track(trackParams);
 
 				loadPage(params.url);
 
