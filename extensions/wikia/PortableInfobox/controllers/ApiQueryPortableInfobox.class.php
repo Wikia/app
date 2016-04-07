@@ -34,7 +34,7 @@ class ApiQueryPortableInfobox extends ApiQueryBase {
 						$this->sourceLabelsFallback( $infobox, $articleTitle );
 
 					$pageSet->getResult()->addValue( [ 'query', 'pages', $id, 'infoboxes', $count ], 'id', $count );
-					$pageSet->getResult()->setIndexedTagName( $l, "sourcelabels" );
+					$pageSet->getResult()->setIndexedTagName( $sl, "sourcelabels" );
 					$pageSet->getResult()->addValue(
 						[ 'query', 'pages', $id, 'infoboxes', $count ], 'sourcelabels', $sl
 					);
