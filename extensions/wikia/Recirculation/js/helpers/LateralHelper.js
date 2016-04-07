@@ -4,29 +4,35 @@ define('ext.wikia.recirculation.helpers.lateral', [
 	'wikia.window',
 	'wikia.abTest',
 ], function ($, w, abTest) {
-	var libraryLoaded = false;
+	var libraryLoaded = false,
+		queue = [];
 
 	function loadLateral(callback) {
-		if (libraryLoaded) {
-			if (callback) {
-				callback(w.lateral);
-			}
-			return;
+		queue.push(callback);
+
+		if (w.lateral) {
+			processQueue(w.lateral);
 		}
-
-		var lateralScript = document.createElement('script');
-
-		lateralScript.src = 'https://assets.lateral.io/recommendations.js';
-		document.getElementsByTagName('body')[0].appendChild(lateralScript);
-
-		// This function is called when the Lateral script has loaded
-		w.onLoadLateral = function(lateral) {
-			w.lateral = lateral;
+		if (!libraryLoaded) {
+			var lateralScript = document.createElement('script');
 			libraryLoaded = true;
 
-			if (callback) {
-				callback(lateral);
+			lateralScript.src = 'https://assets.lateral.io/recommendations.js';
+			document.getElementsByTagName('body')[0].appendChild(lateralScript);
+
+			// This function is called when the Lateral script has loaded
+			w.onLoadLateral = function(lateral) {
+				w.lateral = lateral;
+				processQueue(lateral);
 			}
+		}
+	}
+
+	function processQueue(lateral) {
+		while(queue.length > 0) {
+			var callback = queue.pop();
+
+			callback(lateral);
 		}
 	}
 
@@ -75,7 +81,7 @@ define('ext.wikia.recirculation.helpers.lateral', [
 				}
 
 				if (!foundData) {
-					deferred.reject('No data found');
+					deferred.reject('No Lateral data found for ' + type);
 				}
 			});
 
