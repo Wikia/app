@@ -33,7 +33,8 @@ class PortableInfoboxBuilderService extends WikiaService {
 	public function translateMarkupToData( $infoboxMarkup ) {
 		$jsonObject = new stdClass();
 
-		$xmlNode = simplexml_load_string( $infoboxMarkup );
+		$xmlNode = $this->getSimpleXml( $infoboxMarkup );
+
 		if ( $xmlNode ) {
 			$builderNode = \Wikia\PortableInfoboxBuilder\Nodes\NodeBuilder::createFromNode( $xmlNode );
 			$jsonObject = $builderNode->asJsonObject( $xmlNode );
@@ -47,7 +48,8 @@ class PortableInfoboxBuilderService extends WikiaService {
 	 * @return bool
 	 */
 	public function isSupportedMarkup( $infoboxMarkup ) {
-		$xmlNode = simplexml_load_string( $infoboxMarkup );
+		$xmlNode = $this->getSimpleXml( $infoboxMarkup );
+
 		if ( $xmlNode !== false ) {
 			$builderNode = \Wikia\PortableInfoboxBuilder\Nodes\NodeBuilder::createFromNode( $xmlNode );
 			return $builderNode->isValid();
@@ -109,39 +111,36 @@ class PortableInfoboxBuilderService extends WikiaService {
 		return str_replace( $oldDocumentation, $newDocumentation, $oldContent );
 	}
 
-	protected function addGroupNode( $data, SimpleXMLElement $xml ) {
+	private function addGroupNode( $data, SimpleXMLElement $xml ) {
 		foreach ( $data as $item ) {
 			$type = $this->getCanonicalType( $item->type );
 
 			$child = $xml->addChild( $type, is_string( $item->data ) ? (string)$item->data : null );
-			if ( is_array( $item->data ) ) {
-				$this->addGroupNode( $item->data, $child );
-			} else {
-				$this->addNode( $item, $child );
-			}
+			$this->addNode( $item, $child );
 		}
 	}
 
-	protected function addNode( $node, SimpleXMLElement $xml ) {
-		if ( $node->source ) {
+	private function addNode( $node, SimpleXMLElement $xml ) {
+		if ( property_exists( $node, 'source' ) ) {
 			$xml->addAttribute( 'source', $node->source );
 		}
 
-		if ( $node->collapsible ) {
+		if ( $this->containsEnabledCollapsibleAttribute( $node ) ) {
 			$xml->addAttribute( 'section_collapsible', true );
 		}
 
-		foreach ( $node->data as $key => $value ) {
-			if ( !$this->isEmptyNodeValue( $value ) ) {
-				// map defaultValue to default, as its js reserved key word
-				$key = strcasecmp( $key, 'defaultValue' ) == 0 ? 'default' : $key;
+		if ( $this->containsValidDataAttribute( $node ) ) {
+			foreach ( $node->data as $key => $value ) {
+				if ( !$this->isEmptyNodeValue( $value ) ) {
+					// map defaultValue to default, as its js reserved key word
+					$key = strcasecmp( $key, 'defaultValue' ) == 0 ? 'default' : $key;
 
-				if ( is_object( $value ) ) {
-					$this->addNode( $value, $xml->addChild( $key ) );
-				} else {
-					$xml->addChild( $key, $value );
+					if ( is_object( $value ) ) {
+						$this->addNode( $value, $xml->addChild( $key ) );
+					} else {
+						$xml->addChild( $key, $value );
+					}
 				}
-
 			}
 		}
 	}
@@ -160,7 +159,7 @@ class PortableInfoboxBuilderService extends WikiaService {
 	 * @param $type string
 	 * @return string
 	 */
-	protected function getCanonicalType( $type ) {
+	private function getCanonicalType( $type ) {
 		mb_convert_case( $type, MB_CASE_LOWER, 'UTF-8' );
 		$type = !empty( $this->typesToCanonicals[ $type ] ) ? $this->typesToCanonicals[ $type ] : $type;
 		return $type;
@@ -170,7 +169,7 @@ class PortableInfoboxBuilderService extends WikiaService {
 	 * @param $infobox
 	 * @return SimpleXMLElement
 	 */
-	protected function createInfoboxXml( $infobox ) {
+	private function createInfoboxXml( $infobox ) {
 		$xml = new SimpleXMLElement( '<' . PortableInfoboxParserTagController::PARSER_TAG_NAME . '/>' );
 
 		foreach ( $infobox as $key => $value ) {
@@ -187,7 +186,7 @@ class PortableInfoboxBuilderService extends WikiaService {
 	 * @param $formatted make the output document human-readable (true) or condensed (false)
 	 * @return string
 	 */
-	protected function getFormattedMarkup( $xml, $formatted ) {
+	private function getFormattedMarkup( $xml, $formatted ) {
 		$infoboxDom = $this->createInfoboxDom( $xml, $formatted );
 
 		$inGroup = false;
@@ -256,7 +255,7 @@ class PortableInfoboxBuilderService extends WikiaService {
 	 * @param $childNodeDom
 	 * @return mixed
 	 */
-	protected function importNodeToDom( $domDocument, $childNodeDom ) {
+	private function importNodeToDom( $domDocument, $childNodeDom ) {
 		return $domDocument->ownerDocument->importNode( $childNodeDom, true );
 	}
 
@@ -265,7 +264,7 @@ class PortableInfoboxBuilderService extends WikiaService {
 	 * @param $collapsible : bool
 	 * @return DOMElement
 	 */
-	protected function createGroupDom( $childNodeDom, $collapsible ) {
+	private function createGroupDom( $childNodeDom, $collapsible ) {
 		$groupElem = new SimpleXMLElement( '<' . \Wikia\PortableInfoboxBuilder\Nodes\NodeGroup::XML_TAG_NAME . '/>' );
 
 		if ( $collapsible ) {
@@ -277,7 +276,7 @@ class PortableInfoboxBuilderService extends WikiaService {
 		return dom_import_simplexml( $groupElem );
 	}
 
-	protected function isCollapsible( $node ) {
+	private function isCollapsible( $node ) {
 		return ( bool )$node[ 'section_collapsible' ];
 	}
 
@@ -286,7 +285,7 @@ class PortableInfoboxBuilderService extends WikiaService {
 	 * @param $formatted make the document human-readable (true) or condensed (false)
 	 * @return DOMElement
 	 */
-	protected function createInfoboxDom( $xml, $formatted ) {
+	private function createInfoboxDom( $xml, $formatted ) {
 		// make the output document human-readable (formatted) or condensed (no additional whitespace)
 		$newXml = new SimpleXMLElement( '<' . PortableInfoboxParserTagController::PARSER_TAG_NAME . '/>' );
 		$infoboxDom = dom_import_simplexml( $newXml );
@@ -298,5 +297,33 @@ class PortableInfoboxBuilderService extends WikiaService {
 		}
 
 		return $infoboxDom;
+	}
+
+	/**
+	 * @param $node
+	 * @return bool
+	 */
+	private function containsValidDataAttribute( $node ) {
+		return property_exists( $node, 'data' ) && ( is_array( $node->data ) || is_object( $node->data ) );
+	}
+
+	/**
+	 * @param $node
+	 * @return bool
+	 */
+	private function containsEnabledCollapsibleAttribute( $node ) {
+		return property_exists( $node, 'collapsible' ) && $node->collapsible;
+	}
+
+	/**
+	 * @param $infoboxMarkup
+	 * @return SimpleXMLElement
+	 */
+	private function getSimpleXml( $infoboxMarkup ) {
+		$global_libxml_setting = libxml_use_internal_errors();
+		libxml_use_internal_errors( true );
+		$xmlNode = simplexml_load_string( $infoboxMarkup );
+		libxml_use_internal_errors( $global_libxml_setting );
+		return $xmlNode;
 	}
 }

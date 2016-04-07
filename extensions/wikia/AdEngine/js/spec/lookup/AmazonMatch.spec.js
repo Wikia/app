@@ -141,7 +141,7 @@ describe('Method ext.wikia.adEngine.lookup.amazonMatch', function () {
 			expected: {
 				medrec: ['a3x2p12', 'a3x6p5'],
 				leaderboard: ['a7x9p5'],
-				skyscraper: ['a3x6p5'],
+				skyscraper: ['a3x2p12', 'a3x6p5'],
 				incontentBoxad: ['a3x2p12', 'a3x6p5']
 			}
 		},
@@ -166,7 +166,7 @@ describe('Method ext.wikia.adEngine.lookup.amazonMatch', function () {
 			],
 			expected: {
 				leaderboard: ['a7x9p4'],
-				skyscraper: ['a1x6p3', 'a3x6p8'],
+				skyscraper: ['a1x6p3', 'a3x2p5', 'a3x6p8'],
 				medrec: ['a3x2p5', 'a3x6p8'],
 				incontentBoxad: ['a3x2p5', 'a1x6p3', 'a3x6p8']
 			}
