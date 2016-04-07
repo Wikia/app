@@ -424,6 +424,8 @@ class PermissionsConfigurationImpl implements PermissionsConfiguration {
 		$this->groupsSelfRemovableByGroup['chatmoderator'] = [ 'chatmoderator' ];
 		$this->groupsSelfRemovableByGroup['threadmoderator'] = [ 'threadmoderator' ];
 		$this->groupsSelfRemovableByGroup['content-moderator'] = [ 'content-moderator' ];
+		$this->groupsSelfRemovableByGroup['bot'] = [ 'bot' ];
+		$this->groupsSelfRemovableByGroup['rollback'] = [ 'rollback' ];
 
 		// the $wgXXXLocal variables are loaded from wiki factory - we should use it as is
 		if ( !empty( $wgAddGroupsLocal ) )

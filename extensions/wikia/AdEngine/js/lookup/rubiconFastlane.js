@@ -21,11 +21,11 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 					targeting: {loc: 'top'}
 				},
 				LEFT_SKYSCRAPER_2: {
-					sizes: [[120, 600], [160, 600], [300, 600], [300, 1050]],
+					sizes: [[120, 600], [160, 600], [300, 250], [300, 600], [300, 1050]],
 					targeting: {loc: 'middle'}
 				},
 				LEFT_SKYSCRAPER_3: {
-					sizes: [[120, 600], [160, 600], [300, 600]],
+					sizes: [[120, 600], [160, 600], [300, 250], [300, 600]],
 					targeting: {loc: 'footer'}
 				},
 				INCONTENT_BOXAD_1: {
@@ -192,7 +192,7 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 		var targeting,
 			parameters = {};
 
-		if (!win.rubicontag || !win.rubicontag.getSlot(slotName)) {
+		if (!win.rubicontag || typeof win.rubicontag.getSlot !== 'function' || !win.rubicontag.getSlot(slotName)) {
 			return {};
 		}
 
@@ -224,7 +224,7 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 
 	function calculatePrices() {
 		var allSlots;
-		if (!win.rubicontag || !win.rubicontag.getAllSlots) {
+		if (!win.rubicontag || typeof win.rubicontag.getAllSlots !== 'function') {
 			return;
 		}
 		allSlots = win.rubicontag.getAllSlots();

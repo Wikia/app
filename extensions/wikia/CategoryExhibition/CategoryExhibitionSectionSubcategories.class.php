@@ -4,7 +4,7 @@
  * Category Exhibition sub-categories section class
  */
 class CategoryExhibitionSectionSubcategories extends CategoryExhibitionSection {
-	
+
 	public $urlParameter = 'subcategories'; // contains section url variable that stores pagination
 	public $templateName = 'subcategories';
 
@@ -25,7 +25,7 @@ class CategoryExhibitionSectionSubcategories extends CategoryExhibitionSection {
 	/**
 	 * Returns section HTML.
 	 * Used in ajax requests
-	 * 
+	 *
 	 * @return string
 	 */
 
@@ -40,17 +40,15 @@ class CategoryExhibitionSectionSubcategories extends CategoryExhibitionSection {
 	}
 
 	protected function getArticleData( $pageId ){
-		global $wgVideoHandlersVideosMigrated;
-		
+
 		$oTitle = Title::newFromID( $pageId );
-				
+
 		$oMemCache = F::App()->wg->memc;
 		$sKey = wfSharedMemcKey(
 			'category_exhibition_article_cache_0',
 			$pageId,
 			F::App()->wg->cityId,
 			$this->isVerify(),
-			$wgVideoHandlersVideosMigrated ? 1 : 0,
 			$this->getTouched($oTitle)
 		);
 
@@ -99,7 +97,7 @@ class CategoryExhibitionSectionSubcategories extends CategoryExhibitionSection {
 	 * @param $iCategoryId int category pageId
 	 * @return array
 	 */
-	
+
 	protected function getCategoryImageOrSnippet( $iCategoryId ){
 
 		$title = Title::newFromID( $iCategoryId );
