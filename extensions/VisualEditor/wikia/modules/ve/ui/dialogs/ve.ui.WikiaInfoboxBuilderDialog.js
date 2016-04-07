@@ -73,7 +73,8 @@ ve.ui.WikiaInfoboxBuilderDialog.prototype.initialize = function () {
 			}
 		}).done(function (assets) {
 			var html = mustache.render(assets.mustache[0], {
-				iframeUrl: location.origin + '/infobox-builder/'
+				iframeUrl: location.origin + '/infobox-builder/',
+				classes: 've-ui-infobox-builder'
 			});
 
 			loader.processScript(assets.scripts);
