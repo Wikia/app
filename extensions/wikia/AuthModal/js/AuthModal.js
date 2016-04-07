@@ -109,6 +109,7 @@ define('AuthModal', ['jquery', 'wikia.window'], function ($, window) {
 			}
 
 			if (window.wgEnableNewAuthModal) {
+				popUpWindowParam += '&forceLogin=1';
 				open(params.onAuthSuccess);
 
 				track({
