@@ -43,6 +43,14 @@ class ApiQueryPortableInfobox extends ApiQueryBase {
 		}
 	}
 
+	/**
+	 * We still have old infobox sources in page properties, so we need this fallback.
+	 * Monitor kibana and remove it after logs stop appear
+	 *
+	 * @param $infobox
+	 * @param $title
+	 * @return array
+	 */
 	private function sourceLabelsFallback( $infobox, $title ) {
 		global $wgCityId;
 
