@@ -29,7 +29,10 @@ class ApiQueryPortableInfobox extends ApiQueryBase {
 				$pageSet->getResult()->setIndexedTagName( $inf, 'infobox' );
 				$pageSet->getResult()->addValue( [ 'query', 'pages', $id ], 'infoboxes', $inf );
 				foreach ( $parsedInfoboxes as $count => $infobox ) {
-					$sl = isset( $infobox[ 'sourcelabels' ] ) ? $infobox[ 'sourcelabels' ] : [ ];
+					$sl = isset( $infobox[ 'sourcelabels' ] ) ?
+						$infobox[ 'sourcelabels' ] :
+						$this->sourceLabelsFallback( $infobox, $articleTitle );
+
 					$pageSet->getResult()->addValue( [ 'query', 'pages', $id, 'infoboxes', $count ], 'id', $count );
 					$pageSet->getResult()->setIndexedTagName( $l, "sourcelabels" );
 					$pageSet->getResult()->addValue(
@@ -38,5 +41,19 @@ class ApiQueryPortableInfobox extends ApiQueryBase {
 				}
 			}
 		}
+	}
+
+	private function sourceLabelsFallback( $infobox, $title ) {
+		global $wgCityId;
+
+		Wikia\Logger\WikiaLogger::instance()->info( 'Portable Infobox ApiQuery sourcelabels fallback' );
+
+		$task = new Wikia\Tasks\Tasks\RefreshLinksForTitleTask();
+		$task->title( $title );
+		$task->call( 'refresh' );
+		$task->wikiId( $wgCityId );
+		$task->queue();
+
+		return $infobox[ 'sources' ] ? array_fill_keys( $infobox[ 'sources' ], '' ) : [ ];
 	}
 }
