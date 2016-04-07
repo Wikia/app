@@ -22,6 +22,9 @@ ve.ui.WikiaInfoboxBuilderDialog = function VeUiWikiaInfoboxBuilderDialog(config)
 			$(window).trigger('infoboxListChanged');
 		}
 		this.close();
+		setTimeout(function () {
+			ve.ui.commandRegistry.getCommandByName('wikiaInfoboxInsert').execute(this.surface);
+		}.bind(this), 0);
 	}.bind(this));
 };
 
