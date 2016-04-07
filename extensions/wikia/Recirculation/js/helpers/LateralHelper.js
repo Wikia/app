@@ -30,7 +30,7 @@ define('ext.wikia.recirculation.helpers.lateral', [
 
 	function processQueue(lateral) {
 		while(queue.length > 0) {
-			var callback = queue.pop();
+			var callback = queue.shift();
 
 			callback(lateral);
 		}
