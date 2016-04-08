@@ -245,17 +245,6 @@ describe('AdLogicPageParams', function () {
 			wikiDirectedAtChildren: true
 		});
 		expect(params.esrb.toString()).toBe('rating', 'esrb=yes, COPPA=yes');
-
-		params = getParams({
-			wikiCustomKeyValues: 'key1=value1;key2=value2'
-		});
-		expect(params.esrb.toString()).toBe('teen', 'esrb=null, COPPA=no');
-
-		params = getParams({
-			wikiCustomKeyValues: 'key1=value1;key2=value2',
-			wikiDirectedAtChildren: true
-		});
-		expect(params.esrb.toString()).toBe('ec', 'esrb=null, COPPA=yes');
 	});
 
 	it('getPageLevelParams pv param - oasis', function () {

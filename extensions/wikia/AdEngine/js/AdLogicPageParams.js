@@ -181,8 +181,7 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 			skin: targeting.skin,
 			lang: zoneParams.getLanguage(),
 			wpage: targeting.pageName && targeting.pageName.toLowerCase(),
-			ref: getRefParam(),
-			esrb: targeting.esrbRating
+			ref: getRefParam()
 		};
 
 		if (pvs) {
@@ -203,6 +202,7 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 		}
 
 		extend(params, decodeLegacyDartParams(targeting.wikiCustomKeyValues));
+		params.esrb = targeting.esrbRating || params.esrb;
 
 		log(params, 9, logGroup);
 		return params;
