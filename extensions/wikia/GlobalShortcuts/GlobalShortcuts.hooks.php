@@ -7,8 +7,8 @@ class Hooks {
 	 * Register hooks for the extension
 	 */
 	public static function register() {
-		$hooks = new self();
 		if ( Helper::shouldDisplayGlobalShortcuts() ) {
+			$hooks = new self();
 			\Hooks::register( 'BeforePageDisplay', [ $hooks, 'onBeforePageDisplay' ] );
 			\Hooks::register( 'MakeGlobalVariablesScript', [ $hooks, 'onMakeGlobalVariablesScript' ] );
 			\Hooks::register( 'BeforeToolbarMenu', [ $hooks, 'onBeforeToolbarMenu' ] );
