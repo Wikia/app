@@ -30,13 +30,21 @@ define('AuthModal', ['jquery', 'wikia.window'], function ($, window) {
 			if (e.data.beforeunload && !closeTrackTimeoutId) {
 				// to avoid tracking 'close' action whenever the window is reloaded;
 				closeTrackTimeoutId = setTimeout(function () {
-					closeTrackTimeoutId = null;
-					if (authPopUpWindow.closed) {
-						track({
-							action: Wikia.Tracker.ACTIONS.CLOSE,
-							label: 'username-login-modal'
-						});
+					var trackParams;
+
+					if (!authPopUpWindow.closed) {
+						return;
 					}
+
+					closeTrackTimeoutId = null;
+					trackParams = {
+						action: Wikia.Tracker.ACTIONS.CLOSE,
+						label: 'username-login-modal'
+					};
+					if (e.data.forceLogin) {
+						trackParams.category = 'force-login-modal';
+					}
+					track(trackParams);
 				}, 1000);
 			}
 
