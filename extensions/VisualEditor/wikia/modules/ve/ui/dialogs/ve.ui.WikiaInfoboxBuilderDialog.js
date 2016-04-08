@@ -19,7 +19,7 @@ ve.ui.WikiaInfoboxBuilderDialog = function VeUiWikiaInfoboxBuilderDialog(config)
 
 	$(window).on('infoboxBuilderReturnToVE', function (event, isOnPublish) {
 		if (isOnPublish) {
-			$(window).trigger('infoboxListChanged');
+			ve.ui.commandRegistry.emit('infoboxListChanged');
 		}
 		this.close();
 		ve.ui.commandRegistry.getCommandByName('wikiaInfoboxInsert').execute(this.surface);

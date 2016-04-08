@@ -15,7 +15,7 @@ ve.ui.WikiaInfoboxInsertDialog = function VeUiWikiaInfoboxInsertDialog(config) {
 	// Parent constructor
 	ve.ui.WikiaInfoboxInsertDialog.super.call(this, config);
 
-	$(window).on('infoboxListChanged', function () {
+	ve.ui.commandRegistry.on('infoboxListChanged', function () {
 		this.refreshInfoboxesList();
 	}.bind(this));
 
