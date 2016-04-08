@@ -13,10 +13,46 @@ class CleanEventsLocalUsersMaintenance extends Maintenance {
 	const TABLE_NAME = 'events_local_users';
 
 	public function execute() {
+		$this->removePowerUsers();
 		$this->removeIncorrectUsers();
 		#$this->removeBogusRows();
 	}
 
+	/**
+	 * Remove entries for users that are in "poweruser" group only and performed no edits on a given wiki
+	 *
+	 * @throws DBUnexpectedError
+	 */
+	public function removePowerUsers() {
+		global $wgCityId, $wgSpecialsDB;
+		$dbw = $this->getDB( DB_MASTER, [], $wgSpecialsDB );
+
+		// delete from events_local_users where wiki_id = 831 and cnt_groups = 1 and all_groups = 'poweruser' and edits = 0;
+		$dbw->delete(
+			self::TABLE_NAME,
+			[
+				'wiki_id' => $wgCityId,
+				'cnt_groups' => 1,
+				'all_groups' => 'poweruser',
+				'edits' => 0
+			],
+			__METHOD__
+		);
+
+		Wikia\Logger\WikiaLogger::instance()->info( __METHOD__ . ' - rows removed', [
+			'rows_removed_int' => $dbw->affectedRows(),
+		] );
+
+		$this->output( sprintf ("Removed %d entries for powerusers\n", $dbw->affectedRows() ) );
+
+		wfWaitForSlaves( $wgSpecialsDB );
+	}
+
+	/**
+	 * Remove entries that do not have matching user_id and user_name values
+	 *
+	 * @throws DBUnexpectedError
+	 */
 	public function removeIncorrectUsers() {
 		global $wgCityId, $wgSpecialsDB;
 		$dbw = $this->getDB( DB_MASTER, [], $wgSpecialsDB );

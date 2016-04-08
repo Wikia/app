@@ -76,6 +76,9 @@ class ContactForm extends SpecialPage {
 		$user = $this->getUser();
 		$request = $this->getRequest();
 
+		// Disable user JS
+		$out->disallowUserJs();
+
 		if ( $par === 'close-account' && $this->isCloseMyAccountSupported() ) {
 			$closeAccountTitle = SpecialPage::getTitleFor( 'CloseMyAccount' );
 			$out->redirect( $closeAccountTitle->getFullURL() );

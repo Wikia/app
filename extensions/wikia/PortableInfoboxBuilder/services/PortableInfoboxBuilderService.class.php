@@ -32,7 +32,6 @@ class PortableInfoboxBuilderService extends WikiaService {
 	 */
 	public function translateMarkupToData( $infoboxMarkup ) {
 		$jsonObject = new stdClass();
-
 		$xmlNode = $this->getSimpleXml( $infoboxMarkup );
 
 		if ( $xmlNode ) {
@@ -183,12 +182,11 @@ class PortableInfoboxBuilderService extends WikiaService {
 
 	/**
 	 * @param $xml \SimpleXMLElement SimpleXML object representing the entire infobox in linear structure
-	 * @param $formatted make the output document human-readable (true) or condensed (false)
+	 * @param $formatted boolean make the output document human-readable (true) or condensed (false)
 	 * @return string
 	 */
 	private function getFormattedMarkup( $xml, $formatted ) {
 		$infoboxDom = $this->createInfoboxDom( $xml, $formatted );
-
 		$inGroup = false;
 		$currentGroupDom = null;
 
@@ -261,7 +259,7 @@ class PortableInfoboxBuilderService extends WikiaService {
 
 	/**
 	 * @param $childNodeDom
-	 * @param $collapsible : bool
+	 * @param $collapsible boolean
 	 * @return DOMElement
 	 */
 	private function createGroupDom( $childNodeDom, $collapsible ) {
@@ -282,12 +280,12 @@ class PortableInfoboxBuilderService extends WikiaService {
 
 	/**
 	 * @param $xml \SimpleXMLElement SimpleXML object representing the entire infobox in linear structure
-	 * @param $formatted make the document human-readable (true) or condensed (false)
+	 * @param $formatted boolean make the document human-readable (true) or condensed (false)
 	 * @return DOMElement
 	 */
 	private function createInfoboxDom( $xml, $formatted ) {
 		// make the output document human-readable (formatted) or condensed (no additional whitespace)
-		$newXml = new SimpleXMLElement( '<' . PortableInfoboxParserTagController::PARSER_TAG_NAME . '/>' );
+		$newXml = new SimpleXMLElement( '<?xml version="1.0" encoding="utf-8"?><' . PortableInfoboxParserTagController::PARSER_TAG_NAME . '/>' );
 		$infoboxDom = dom_import_simplexml( $newXml );
 		$infoboxDom->ownerDocument->formatOutput = $formatted;
 
