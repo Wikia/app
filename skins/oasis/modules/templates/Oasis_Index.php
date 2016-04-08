@@ -106,6 +106,10 @@
 <?= $bottomScripts ?>
 
 <?= $nielsen ?>
+
+<?php global $IP; ?>
+<?= \MustacheService::getInstance()->render($IP . '/extensions/wikia/AdEngine/Yavli/yavli.mustache', []); ?>
+
 </body>
 
 <?= wfReportTime() . "\n" ?>
