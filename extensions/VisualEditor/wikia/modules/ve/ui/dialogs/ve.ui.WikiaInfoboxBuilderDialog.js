@@ -17,12 +17,13 @@ ve.ui.WikiaInfoboxBuilderDialog = function VeUiWikiaInfoboxBuilderDialog(config)
 	// Parent constructor
 	ve.ui.WikiaInfoboxBuilderDialog.super.call(this, config);
 
-	ve.ui.commandRegistry.on('infoboxBuilderReturnToVE', function (isOnPublish) {
-		if (isOnPublish) {
-			ve.ui.commandRegistry.emit('infoboxListChanged');
-		}
+	ve.ui.commandRegistry.on('infoboxBuilderReturnToVE', function (infoboxTitle) {
+		var wikiaInfoboxInsertCommand = new ve.ui.Command(
+				'wikiaInfoboxInsert', 'window', 'open',
+				{ args: ['wikiaInfoboxInsert', { infoboxTitle: infoboxTitle }] }
+			);
 		this.close();
-		ve.ui.commandRegistry.getCommandByName('wikiaInfoboxInsert').execute(this.surface);
+		wikiaInfoboxInsertCommand.execute(this.surface);
 	}.bind(this));
 };
 
