@@ -69,7 +69,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	 * @return array
 	 */
 	public function getTopContributorsData() {
-		$userContribCount = $this->usersModel->getUserContributions( $this->getUser() );
+		$userContributionCount = $this->usersModel->getUserContributions( $this->getUser() );
 		$contributors = CommunityPageSpecialUsersModel::filterGlobalBots(
 				// get extra contributors so if there's global bots they can be filtered out
 				CommunityPageSpecialUsersModel::getTopContributors( 50 )
@@ -77,20 +77,35 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		// get details for only 5 of the remaining contributors
 		$contributorDetails = $this->getContributorsDetails( array_slice( $contributors, 0, 5 ) );
 
+		$userRank = 'X'; // fixme: Need design for what to show when user has no contribs this week
+
+		if ($userContributionCount > 0) {
+			$rank = 1;
+
+			foreach ($contributors as $contributor) {
+				if ($contributor['userId'] == $this->wg->user->getId()) {
+					$userRank = $rank;
+					break;
+				}
+				$rank++;
+			}
+		}
+
 		$this->response->setData( [
 			'topContribsHeaderText' => $this->msg( 'communitypage-top-contributors-week' )->plain(),
 			'yourRankText' => $this->msg( 'communitypage-user-rank' )->plain(),
 			'userContributionsText' => $this->msg( 'communitypage-user-contributions' )
-				->numParams( $userContribCount )
+				->numParams( $userContributionCount )
 				->text(),
+			'noContribsText' => $this->msg( 'communitypage-no-contributions' )->plain(),
 			'contributors' => $contributorDetails,
 			'userAvatar' => AvatarService::renderAvatar(
 				$this->getUser()->getName(),
 				AvatarService::AVATAR_SIZE_SMALL_PLUS
 			),
-			'userRank' => 'N',
-			'memberCount' => 'N',
-			'userContribCount' => $userContribCount,
+			'userRank' => $userRank,
+			'memberCount' => count($contributors),
+			'userContribCount' => $userContributionCount
 		] );
 	}
 
