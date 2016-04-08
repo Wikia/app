@@ -109,4 +109,8 @@ class Helper {
 
 		return true;
 	}
+
+	public static function shouldDisplayGlobalShortcuts() {
+		return \RequestContext::getMain()->getUser()->isLoggedIn();
+	}
  }
