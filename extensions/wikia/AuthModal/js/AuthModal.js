@@ -5,21 +5,18 @@ define('AuthModal', ['jquery', 'wikia.window'], function ($, window) {
 		closeTrackTimeoutId,
 		popUpWindowHeight = 670,
 		popUpWindowMaxWidth = 768,
-		popUpWindowParam = 'modal=1',
+		popUpWindowParams = {
+			modal: 1,
+			forceLogin: 0
+		},
 		popUpName = 'WikiaAuthWindow',
-		track;
-
-	function open (onAuthSuccess) {
 		track = getTrackingFunction();
-		track({
-			action: Wikia.Tracker.ACTIONS.OPEN,
-			label: 'username-login-modal'
-		});
 
+	function initPostMessageListener (onAuthSuccess) {
 		$(window).on('message.authPopUpWindow', function (event) {
 			var e = event.originalEvent;
 
-			if (typeof e.data === 'undefined') {
+			if (!e.data) {
 				return;
 			}
 
@@ -77,8 +74,11 @@ define('AuthModal', ['jquery', 'wikia.window'], function ($, window) {
 		return track;
 	}
 
-	function loadPage (url) {
-		var src = url + (url.indexOf('?') === -1 ? '?' : '&') + popUpWindowParam;
+	function loadPopUpPage (url, forceLogin) {
+		var src;
+
+		popUpWindowParams.forceLogin = (forceLogin ? 1 : 0);
+		src = url + (url.indexOf('?') === -1 ? '?' : '&') + $.param(popUpWindowParams);
 
 		authPopUpWindow = window.open(src, popUpName, getPopUpWindowSpecs());
 
@@ -115,18 +115,17 @@ define('AuthModal', ['jquery', 'wikia.window'], function ($, window) {
 
 			if (window.wgEnableNewAuthModal) {
 				if (params.forceLogin) {
-					popUpWindowParam += '&forceLogin=1';
 					trackParams.category = 'force-login-modal';
 
 					// for now we have only signin-page loaded in auth pop-up window
 					trackParams.label = 'signin-page-from-' + params.origin;
 				}
 
-				open(params.onAuthSuccess);
+				initPostMessageListener(params.onAuthSuccess);
 
 				track(trackParams);
 
-				loadPage(params.url);
+				loadPopUpPage(params.url, params.forceLogin);
 
 			} else {
 				window.UserLoginModal.show({
