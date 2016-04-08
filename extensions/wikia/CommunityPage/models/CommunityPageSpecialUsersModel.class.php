@@ -71,20 +71,29 @@ class CommunityPageSpecialUsersModel {
 	 * optionally filtered by admins only
 	 *
 	 * @param int $limit Number of rows to fetch
-	 * @param string $interval Time interval for DATE_SUB()
+	 * @param string $weekly True for weekly top contributors, false for all members (2 years)
 	 * @param bool $onlyAdmins Whether to filter by admins
 	 * @return Mixed|null
 	 */
-	public static function getTopContributors( $limit = 10, $interval = '1 WEEK', $onlyAdmins = false ) {
+	public static function getTopContributors( $limit = 10, $weekly = true, $onlyAdmins = false ) {
+		myprintf("getTopContributors LIMIT = $limit, WEEKLY = '$weekly', ONLY ADMINS = '$onlyAdmins'");
+
 		$data = WikiaDataAccess::cache(
-			wfMemcKey( self::TOP_CONTRIB_MCACHE_KEY, $limit, $interval, $onlyAdmins ),
+			wfMemcKey( self::TOP_CONTRIB_MCACHE_KEY, $limit, $weekly, $onlyAdmins ),
 			WikiaResponse::CACHE_STANDARD,
-			function () use ( $limit, $interval, $onlyAdmins ) {
+			function () use ( $limit, $weekly, $onlyAdmins ) {
 				global $wgExternalSharedDB;
 				$db = wfGetDB( DB_SLAVE );
 				$adminFilter = '';
 				if ( $onlyAdmins ) {
 					$adminFilter = ' AND (ug_group = "sysop")';
+				}
+
+				if ($weekly) {
+					// From last Sunday (matches wikia_user_properties)
+					$dateFilter = 'rev_timestamp >= FROM_DAYS(TO_DAYS(CURDATE()) - MOD(TO_DAYS(CURDATE()) - 1, 7))';
+				} else {
+					$dateFilter = 'rev_timestamp > DATE_SUB(now(), INTERVAL 2 YEAR)';
 				}
 
 				$sqlData = ( new WikiaSQL() )
@@ -93,9 +102,9 @@ class CommunityPageSpecialUsersModel {
 					->LEFT_JOIN( $wgExternalSharedDB . '.user')->ON( '(rev_user <> 0) AND (user_id = rev_user)' )
 					->LEFT_JOIN( 'user_groups ON (user_id = ug_user)' )
 					->WHERE( 'user_id' )->IS_NOT_NULL()
-					->AND_( 'rev_timestamp > DATE_SUB(now(), INTERVAL '. $interval . ')' )
+					->AND_( $dateFilter )
 					->AND_( '(ug_group IS NULL or (ug_group <> "bot"))' . $adminFilter)
-					// TOOD: also filter by glboal bot user ids?
+					// TODO: also filter by global bot user ids?
 					->GROUP_BY( 'user_name' )
 					->ORDER_BY( 'revision_count' )->DESC()
 					->LIMIT( $limit )
@@ -170,24 +179,31 @@ class CommunityPageSpecialUsersModel {
 	 * Get all contributions for a user, limited by most recent n days if $days is not null
 	 *
 	 * @param User $user
-	 * @param string $interval Time interval for DATE_SUB()
+	 * @param weekly If true get user's contributions current week. Otherwise for entire membership period (2 years)
 	 * @return int Number of contributions
 	 */
-	public function getUserContributions( User $user, $interval = '2 WEEK' ) {
+	public function getUserContributions( User $user, $weekly = true ) {
 		$userId = $user->getId();
 
 		$revisionCount = WikiaDataAccess::cache(
 			// TODO: Should purge this when user edits
-			wfMemcKey( self::CURR_USER_CONTRIBUTIONS_MCACHE_KEY, $userId, $interval ),
+			wfMemcKey( self::CURR_USER_CONTRIBUTIONS_MCACHE_KEY, $userId, $weekly ),
 			WikiaResponse::CACHE_VERY_SHORT, // short cache b/c it's for the current user's info
-			function () use ( $userId, $interval ) {
+			function () use ( $userId, $weekly ) {
 				$db = wfGetDB( DB_SLAVE );
+
+				if ($weekly) {
+					// From last Sunday (matches wikia_user_properties)
+					$dateFilter = 'rev_timestamp >= FROM_DAYS(TO_DAYS(CURDATE()) - MOD(TO_DAYS(CURDATE()) - 1, 7))';
+				} else {
+					$dateFilter = 'rev_timestamp > DATE_SUB(now(), INTERVAL 2 YEAR)';
+				}
 
 				$sqlData = ( new WikiaSQL() )
 					->SELECT( 'count(rev_id) AS revision_count' )
 					->FROM( 'revision' )
 					->WHERE('rev_user')->EQUAL_TO( $userId )
-					->AND_( 'rev_timestamp > DATE_SUB(now(), INTERVAL ' . $interval . ')' )
+					->AND_( $dateFilter )
 					->run( $db, function ( ResultWrapper $result ) {
 						$out = 0;
 						while ( $row = $result->fetchRow() ) {
