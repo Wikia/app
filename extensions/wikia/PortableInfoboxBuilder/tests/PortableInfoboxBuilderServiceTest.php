@@ -110,6 +110,14 @@ class PortableInfoboxBuilderServiceTest extends WikiaBaseTest {
 			[
 				'{"data":[{"type":"row", "source":"asdf"}],"theme":"europa"}',
 				'<infobox theme="europa"><data source="asdf"/></infobox>'
+			],
+			[
+				'{"data":[{"type":"row", "source":"行を使用するとイン"}]}',
+				'<infobox><data source="行を使用するとイン"/></infobox>'
+			],
+			[
+				'{"data":[{"type":"row", "source":"!żźć∂śśĻó^"}]}',
+				'<infobox><data source="!żźć∂śśĻó^"/></infobox>'
 			]
 		];
 	}
@@ -154,6 +162,7 @@ class PortableInfoboxBuilderServiceTest extends WikiaBaseTest {
 			[ "", false ],
 			[ '<infobox/>', true, "empty infobox should be supported" ],
 			[ '<infobox></infobox>', true, "empty infobox should be supported" ],
+			[ 'Invalid text detected <^', false, "non-xml should not be supported" ],
 			[ '<infobox><data source="asdf"/></infobox>', true, "data tag should be supported" ],
 			[ '<infobox><data source="asdf"><label>asdfsda</label></data></infobox>', true, "data tag with label should be supported" ],
 			[ '<infobox><data source="asdf"><label>[[some link]]</label></data></infobox>', true, "links within labels should be supported" ],

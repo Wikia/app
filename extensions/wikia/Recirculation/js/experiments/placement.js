@@ -187,7 +187,9 @@ require([
 		}).loadData()
 			.then(incontent.render)
 			.then(incontent.setupTracking(experimentName))
-			.fail(handleError);
+			.fail(function(err) {
+				// We fail silently for the in-content widget
+			});
 
 		afterRailLoads(function() {
 			var rail = railView();

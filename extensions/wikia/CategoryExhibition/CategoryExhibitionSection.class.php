@@ -332,7 +332,6 @@ class CategoryExhibitionSection {
 	}
 
 	protected function getArticleData( $pageId ){
-		global $wgVideoHandlersVideosMigrated;
 
 		$oTitle = Title::newFromID( $pageId );
 		if(!($oTitle instanceof Title)) {
@@ -345,7 +344,6 @@ class CategoryExhibitionSection {
 			$pageId,
 			F::App()->wg->cityId,
 			$this->isVerify(),
-			$wgVideoHandlersVideosMigrated ? 1 : 0,
 			$this->getTouched($oTitle)
 		);
 
@@ -421,7 +419,6 @@ class CategoryExhibitionSection {
 	 * Caching functions.
 	 */
 	protected function getKey() {
-		global $wgVideoHandlersVideosMigrated;
 		return wfMemcKey(
 			'category_exhibition_section_0',
 			md5($this->categoryTitle->getDBKey()),
@@ -430,7 +427,6 @@ class CategoryExhibitionSection {
 			$this->getDisplayType(),
 			$this->getSortType(),
 			$this->isVerify(),
-			($wgVideoHandlersVideosMigrated ? 1 : 0),
 			$this->getTouched($this->categoryTitle),
 			self::CACHE_VERSION
 		);
