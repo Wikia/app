@@ -110,6 +110,14 @@ class PortableInfoboxBuilderServiceTest extends WikiaBaseTest {
 			[
 				'{"data":[{"type":"row", "source":"asdf"}],"theme":"europa"}',
 				'<infobox theme="europa"><data source="asdf"/></infobox>'
+			],
+			[
+				'{"data":[{"type":"row", "source":"行を使用するとイン"}]}',
+				'<infobox><data source="行を使用するとイン"/></infobox>'
+			],
+			[
+				'{"data":[{"type":"row", "source":"!żźć∂śśĻó^"}]}',
+				'<infobox><data source="!żźć∂śśĻó^"/></infobox>'
 			]
 		];
 	}
