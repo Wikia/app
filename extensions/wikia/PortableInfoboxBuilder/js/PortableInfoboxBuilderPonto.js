@@ -34,7 +34,7 @@ define('wikia.infoboxBuilder.ponto', ['wikia.window', 'ponto', 'jquery'], functi
 		};
 
 		this.returnToVE = function (isOnPublish) {
-			$(window).trigger('infoboxBuilderReturnToVE', isOnPublish);
+			w.ve.ui.commandRegistry.emit('infoboxBuilderReturnToVE', isOnPublish);
 		};
 	}
 

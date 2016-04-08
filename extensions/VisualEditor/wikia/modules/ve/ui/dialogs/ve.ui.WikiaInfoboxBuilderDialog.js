@@ -17,7 +17,7 @@ ve.ui.WikiaInfoboxBuilderDialog = function VeUiWikiaInfoboxBuilderDialog(config)
 	// Parent constructor
 	ve.ui.WikiaInfoboxBuilderDialog.super.call(this, config);
 
-	$(window).on('infoboxBuilderReturnToVE', function (event, isOnPublish) {
+	ve.ui.commandRegistry.on('infoboxBuilderReturnToVE', function (isOnPublish) {
 		if (isOnPublish) {
 			ve.ui.commandRegistry.emit('infoboxListChanged');
 		}
