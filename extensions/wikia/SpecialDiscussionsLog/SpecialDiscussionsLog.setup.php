@@ -17,6 +17,9 @@ $wgExtensionCredits['specialpage'][] = [
 $wgAutoloadClasses['SpecialDiscussionsLogController'] = $dir . 'SpecialDiscussionsLogController.class.php';
 $wgAutoloadClasses['SpecialDiscussionsLogHooks'] = $dir . 'SpecialDiscussionsLogHooks.class.php';
 $wgAutoloadClasses['UserLogRecord'] = $dir . 'UserLogRecord.class.php';
+$wgAutoloadClasses['Wikia\SpecialDiscussionsLog\Search\SearchQuery'] = $dir . 'search/SearchQuery.php';
+$wgAutoloadClasses['Wikia\SpecialDiscussionsLog\Search\UserQuery'] = $dir . 'search/UserQuery.php';
+$wgAutoloadClasses['Wikia\SpecialDiscussionsLog\Search\IpAddressQuery'] = $dir . 'search/IpAddressQuery.php';
 
 // hooks
 $wgHooks['ContributionsToolLinks'][] = 'SpecialDiscussionsLogHooks::onContributionsToolLinks';
