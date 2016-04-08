@@ -176,18 +176,6 @@ require( ['wikia.tracker'], function ( tracker ) {
 			return;
 		}
 
-		if ( ve.init.wikia.getToolbarABTestVariantNumber() === 1 && data.label === 'edit-page-ready' ) {
-			// Extra impression event when toolbar A/B test is active
-			abTestData = {
-				action: data.action,
-				label: 'edit-page-ready-toolbartest',
-				value: data.value
-			};
-
-			handleFunnel( abTestData );
-			tracker.track( ve.extendObject( params, abTestData ) );
-		}
-
 		// Funnel tracking
 		handleFunnel( data );
 
