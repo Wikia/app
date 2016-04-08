@@ -72,7 +72,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		$userContribCount = $this->usersModel->getUserContributions( $this->getUser() );
 		$contributors = CommunityPageSpecialUsersModel::filterGlobalBots(
 				// get extra contributors so if there's global bots they can be filtered out
-				CommunityPageSpecialUsersModel::getTopContributors( 50, '1 MONTH' )
+				CommunityPageSpecialUsersModel::getTopContributors( 50 )
 			);
 		// get details for only 5 of the remaining contributors
 		$contributorDetails = $this->getContributorsDetails( array_slice( $contributors, 0, 5 ) );
@@ -89,8 +89,8 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 				AvatarService::AVATAR_SIZE_SMALL_PLUS
 			),
 			'userRank' => 'N',
-			'memberCount' => $this->usersModel->getMemberCount(),
-			'userContribCount' => $userContribCount
+			'memberCount' => 'N',
+			'userContribCount' => $userContribCount,
 		] );
 	}
 
@@ -101,7 +101,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	public function getTopAdminsData() {
 		$topAdmins = CommunityPageSpecialUsersModel::filterGlobalBots(
 			// get all admins who have contributed in the last two years ordered by contributions
-			CommunityPageSpecialUsersModel::getTopContributors( 10, '2 YEAR', true )
+			CommunityPageSpecialUsersModel::getTopContributors( 10, false, true )
 		);
 		$topAdminsDetails = $this->getContributorsDetails( $topAdmins );
 
