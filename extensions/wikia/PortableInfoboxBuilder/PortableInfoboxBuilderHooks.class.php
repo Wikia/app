@@ -63,7 +63,8 @@ class PortableInfoboxBuilderHooks {
 	public function onMakeGlobalVariablesScript( array &$aVars ) {
 		global $wgEnablePortableInfoboxBuilderInVE;
 
-		$aVars['wgEnablePortableInfoboxBuilderInVE'] = $wgEnablePortableInfoboxBuilderInVE;
+		$aVars['wgEnablePortableInfoboxBuilderInVE'] = $wgEnablePortableInfoboxBuilderInVE &&
+			\RequestContext::getMain()->getUser()->isAllowed( 'create' );
 
 		return true;
 	}
