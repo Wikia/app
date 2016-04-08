@@ -5,6 +5,7 @@ class CommunityDataService extends WikiaService {
 	const FEATURED_SECTION = 'featured';
 	const CURATED_SECTION = 'curated';
 	const OPTIONAL_SECTION = 'optional';
+	const COMMUNITY_DATA_SECTION = 'community_data';
 
 	private $curatedContentData = [ ];
 	private $cityId;
@@ -84,7 +85,7 @@ class CommunityDataService extends WikiaService {
 	public function getCommunityData() {
 		$data = $this->curatedContentData();
 
-		return !$this->isCommunityDataEmpty( $data ) ? $data[ 'community_data' ] : [ ];
+		return !$this->isCommunityDataEmpty( $data ) ? $data[ self::COMMUNITY_DATA_SECTION ] : [ ];
 	}
 
 	public function getCommunityDescription() {
@@ -189,8 +190,8 @@ class CommunityDataService extends WikiaService {
 			//figure out what type of section it is
 			if ( $section[ self::FEATURED_SECTION ] ) {
 				$result[ self::FEATURED_SECTION ] = $extended;
-			} elseif ( $section[ 'community_data' ] == 'true' ) {
-				$result[ 'community_data' ] = [
+			} elseif ( $section[ self::COMMUNITY_DATA_SECTION ] == 'true' ) {
+				$result[ self::COMMUNITY_DATA_SECTION ] = [
 					'description' => $section[ 'description' ],
 					'image_id' => isset( $section[ 'image_id' ] ) ? $section[ 'image_id' ] : 0
 				];
@@ -220,9 +221,9 @@ class CommunityDataService extends WikiaService {
 	 * @return bool
 	 */
 	private function isCommunityDataEmpty( $data ) {
-		return !isset( $data[ 'community_data' ] ) ||
-			   ( empty( $data[ 'community_data' ][ 'description' ] ) &&
-				 $data[ 'community_data' ][ 'image_id' ] == 0 );
+		return !isset( $data[ self::COMMUNITY_DATA_SECTION ] ) ||
+			   ( empty( $data[ self::COMMUNITY_DATA_SECTION ][ 'description' ] ) &&
+				 $data[ self::COMMUNITY_DATA_SECTION ][ 'image_id' ] == 0 );
 	}
 
 	private function isSectionEmpty( $data, $section ) {

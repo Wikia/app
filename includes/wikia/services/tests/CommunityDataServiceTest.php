@@ -1,10 +1,6 @@
 <?php
 
 class CommunityDataServiceTest extends WikiaBaseTest {
-	const FEATURED_SECTION = 'featured';
-	const CURATED_SECTION = 'curated';
-	const OPTIONAL_SECTION = 'optional';
-	const COMMUNITY_DATA = 'community_data';
 
 	/**
 	 * @dataProvider hasDataTestsProvider
@@ -19,7 +15,7 @@ class CommunityDataServiceTest extends WikiaBaseTest {
 	 */
 	public function testGetCommunityData( $data, $expected ) {
 		$this->mockStaticMethod( 'WikiFactory', 'getVarValueByName', $data );
-		$this->assertEquals( $expected[self::COMMUNITY_DATA], ( new CommunityDataService( 1 ) )->getCommunityData(),
+		$this->assertEquals( $expected[CommunityDataService::COMMUNITY_DATA_SECTION], ( new CommunityDataService( 1 ) )->getCommunityData(),
 			'can not get community data correctly' );
 	}
 
@@ -28,7 +24,7 @@ class CommunityDataServiceTest extends WikiaBaseTest {
 	 */
 	public function testGetCommunityImageId( $data, $expected ) {
 		$this->mockStaticMethod( 'WikiFactory', 'getVarValueByName', $data );
-		$this->assertEquals( $expected[self::COMMUNITY_DATA]['image_id'], ( new CommunityDataService( 1 ) )->getCommunityImageId(),
+		$this->assertEquals( $expected[CommunityDataService::COMMUNITY_DATA_SECTION]['image_id'], ( new CommunityDataService( 1 ) )->getCommunityImageId(),
 			'can not get community image id correctly' );
 	}
 
@@ -37,7 +33,7 @@ class CommunityDataServiceTest extends WikiaBaseTest {
 	 */
 	public function testGetCommunityDescription( $data, $expected ) {
 		$this->mockStaticMethod( 'WikiFactory', 'getVarValueByName', $data );
-		$this->assertEquals( $expected[self::COMMUNITY_DATA]['description'], ( new CommunityDataService( 1 ) )->getCommunityDescription(),
+		$this->assertEquals( $expected[CommunityDataService::COMMUNITY_DATA_SECTION]['description'], ( new CommunityDataService( 1 ) )->getCommunityDescription(),
 			'can not get community description correctly' );
 	}
 
@@ -46,7 +42,7 @@ class CommunityDataServiceTest extends WikiaBaseTest {
 	 */
 	public function testGetCurated( $data, $expected ) {
 		$this->mockStaticMethod( 'WikiFactory', 'getVarValueByName', $data );
-		$this->assertEquals( $expected[self::CURATED_SECTION], ( new CommunityDataService( 1 ) )->getCurated(),
+		$this->assertEquals( $expected[CommunityDataService::CURATED_SECTION], ( new CommunityDataService( 1 ) )->getCurated(),
 			'can not get curated correctly' );
 	}
 
@@ -55,7 +51,7 @@ class CommunityDataServiceTest extends WikiaBaseTest {
 	 */
 	public function testGetFeatured( $data, $expected ) {
 		$this->mockStaticMethod( 'WikiFactory', 'getVarValueByName', $data );
-		$this->assertEquals( $expected[self::FEATURED_SECTION], ( new CommunityDataService( 1 ) )->getFeatured(),
+		$this->assertEquals( $expected[CommunityDataService::FEATURED_SECTION], ( new CommunityDataService( 1 ) )->getFeatured(),
 			'can not get featured correctly' );
 	}
 
@@ -64,7 +60,7 @@ class CommunityDataServiceTest extends WikiaBaseTest {
 	 */
 	public function testGetOptional( $data, $expected ) {
 		$this->mockStaticMethod( 'WikiFactory', 'getVarValueByName', $data );
-		$this->assertEquals( $expected[self::OPTIONAL_SECTION], ( new CommunityDataService( 1 ) )->getOptional(),
+		$this->assertEquals( $expected[CommunityDataService::OPTIONAL_SECTION], ( new CommunityDataService( 1 ) )->getOptional(),
 			'can not get optional correctly' );
 	}
 
@@ -83,30 +79,71 @@ class CommunityDataServiceTest extends WikiaBaseTest {
 		return [
 			[
 				[ 'community_data' => [ 'description' => 'Test', 'image_id' => 10 ],
-					'curated' => ['label' => 'string', 'article_id' => 2, 'image_id'=> 2],
-					'featured' => ['items' => ['article_id' => 1, 'image_id' => 1, 'label' => 'label', 'title' => 'title']],
-					'optional' => ['label' => 'label', 'items' => []]],
-				[ 'community_data' => [ 'description' => 'Test', 'image_id' => 10 ],
-					'curated' => ['label' => 'string', 'article_id' => 2, 'image_id'=> 2],
-					'featured' => ['items' => ['article_id' => 1, 'image_id' => 1, 'label' => 'label', 'title' => 'title']],
-					'optional' => ['label' => 'label', 'items' => []]]
+					'curated' => [
+						'label' => 'string',
+						'article_id' => 2,
+						'image_id'=> 2
+					],
+					'featured' => [
+						'items' => [
+							'article_id' => 1,
+							'image_id' => 1,
+							'label' => 'label',
+							'title' => 'title'
+						]
+					],
+					'optional' => [
+						'label' => 'label',
+						'items' => []
+					]
+				],
+				//expected
+				[
+					'community_data' => [
+						'description' => 'Test',
+						'image_id' => 10
+					],
+					'curated' => [
+						'label' => 'string',
+						'article_id' => 2,
+						'image_id'=> 2
+					],
+					'featured' => [
+						'items' => [
+							'article_id' => 1,
+							'image_id' => 1,
+							'label' => 'label',
+							'title' => 'title'
+						]
+					],
+					'optional' => [
+						'label' => 'label',
+						'items' => []
+					]
+				]
 			],
 
 			[
-				[ 'community_data' => [],
+				[
+					'community_data' => [],
 					'curated' => [],
 					'featured' => [],
 					'optional' => []],
-				[ 'community_data' => [],
+				[
+					'community_data' => [],
 					'curated' => [],
 					'featured' => [],
 					'optional' => []]
 			],
 
-			[[ ],  ['community_data' => [],
+			[
+				[ ],
+				[
+					'community_data' => [],
 					'curated' => [],
 					'featured' => [],
-					'optional' => []]]
+					'optional' => []]
+			]
 		];
 	}
 }
