@@ -43,6 +43,8 @@ class CleanEventsLocalUsersMaintenance extends Maintenance {
 			'rows_removed_int' => $dbw->affectedRows(),
 		] );
 
+		$this->output( sprintf ("Removed %d entries for powerusers\n", $dbw->affectedRows() ) );
+
 		wfWaitForSlaves( $wgSpecialsDB );
 	}
 
