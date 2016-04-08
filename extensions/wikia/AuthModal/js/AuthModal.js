@@ -33,7 +33,6 @@ define('AuthModal', ['jquery', 'wikia.window'], function ($, window) {
 			if (e.data.beforeunload && !closeTrackTimeoutId) {
 				// to avoid tracking 'close' action whenever the window is reloaded;
 				closeTrackTimeoutId = setTimeout(function () {
-					clearTimeout(closeTrackTimeoutId);
 					closeTrackTimeoutId = null;
 					if (authPopUpWindow.closed) {
 						track({
