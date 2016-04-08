@@ -6,10 +6,13 @@
 		<p>{{noUserLogRecordsMessage}}</p>
 	{{/hasNoUserLogRecords}}
 	{{^hasNoUserLogRecords}}
-		<p>{{logTableCaption}}</p>
+		<div class="log-table-caption">
+            <p>{{logTableCaption}}</p>
+        </div>
 		<table class="article-table">
 			<thead>
 			<tr>
+				<th>{{userNameHeader}}</th>
 				<th>{{ipAddressHeader}}</th>
 				<th>{{locationHeader}}</th>
 				<th>{{languageHeader}}</th>
@@ -20,6 +23,7 @@
 			</thead>
 			{{#userLogRecords}}
 				<tr>
+					<td>{{userName}}</td>
 					<td>{{ip}}</td>
 					<td>{{location}}</td>
 					<td>{{language}}</td>
