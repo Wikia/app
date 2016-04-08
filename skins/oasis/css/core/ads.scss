@@ -122,6 +122,26 @@ $taboola-small-breakpoint: "#{$screen} and (max-width: 420px)";
 	}
 }
 
+#INCONTENT_WRAPPER {
+  text-align: center;
+}
+
+#INCONTENT_LEADERBOARD {
+  display: inline-block;
+}
+
+#INCONTENT_LEADERBOARD:before {
+  color: $color-text;
+  content: attr(data-label);
+  display: block;
+  font-size: 0.625rem;
+  line-height: 0.75rem;
+  padding-bottom: 6px;
+  padding-top: 6px;
+  text-align: left;
+  text-transform: uppercase;
+}
+
 #LEFT_SKYSCRAPER_2 {
 	margin-bottom: 10px;
 	font-size: 0;
