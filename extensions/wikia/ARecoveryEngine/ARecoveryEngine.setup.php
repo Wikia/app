@@ -1,5 +1,4 @@
 <?php
-
 /**
  * 	SP ads recovery
  * proof of concept / experiment
@@ -12,6 +11,3 @@ $wgAutoloadClasses['ARecoveryEngineApiController'] = __DIR__ . '/ARecoveryEngine
 
 
 $wgHooks['WikiaSkinTopScripts'][] = 'ARecoveryEngineHooks::onWikiaSkinTopScripts';
-
-
-
