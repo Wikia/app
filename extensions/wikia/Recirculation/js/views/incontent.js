@@ -37,7 +37,7 @@ define('ext.wikia.recirculation.views.incontent', [
 			section = findSuitableSection();
 
 		if (!section) {
-			return deferred.reject();
+			return deferred.reject('Recirculation in-content widget not shown - Not enough sections in article');
 		}
 
 		utils.renderTemplate('incontent.mustache', data).then(function($html) {
