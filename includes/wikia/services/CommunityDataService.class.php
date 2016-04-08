@@ -232,6 +232,6 @@ class CommunityDataService extends WikiaService {
 
 	private function getSection( $section ) {
 		$data = $this->curatedContentData();
-		return $this->isSectionEmpty( $data, $section ) ? $data[ $section ] : [ ];
+		return $this->isSectionEmpty( $data, $section ) ? [ ] : $data[ $section ];
 	}
 }
