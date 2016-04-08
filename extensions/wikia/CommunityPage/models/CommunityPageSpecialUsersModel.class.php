@@ -70,8 +70,6 @@ class CommunityPageSpecialUsersModel {
 	 * @return Mixed|null
 	 */
 	public static function getTopContributors( $limit = 10, $weekly = true, $onlyAdmins = false ) {
-		myprintf("getTopContributors LIMIT = $limit, WEEKLY = '$weekly', ONLY ADMINS = '$onlyAdmins'");
-
 		$data = WikiaDataAccess::cache(
 			wfMemcKey( self::TOP_CONTRIB_MCACHE_KEY, $limit, $weekly, $onlyAdmins ),
 			WikiaResponse::CACHE_STANDARD,
@@ -100,7 +98,7 @@ class CommunityPageSpecialUsersModel {
 					->AND_( '(ug_group IS NULL or (ug_group <> "bot"))' . $adminFilter)
 					// TODO: also filter by global bot user ids?
 					->GROUP_BY( 'user_name' )
-					->ORDER_BY( 'revision_count' )->DESC()
+					->ORDER_BY( 'revision_count DESC, user_name' )
 					->LIMIT( $limit )
 					->runLoop( $db, function ( &$sqlData, $row ) {
 						$sqlData[] = [
