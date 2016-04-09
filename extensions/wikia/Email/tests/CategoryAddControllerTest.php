@@ -80,9 +80,7 @@ class CategoryAddControllerTest extends WikiaBaseTest {
 		$mock_cache = $this->getMock( 'stdClass', [ 'get', 'set', 'delete' ] );
 		$mock_cache->expects( $this->any() )
 			->method('get')
-			->will( $this->returnValue(
-				[ 'sent' => $emailsSent, 'ttl' => time() ]
-			) );
+			->will( $this->returnValue( $emailsSent ) );
 
 		$this->mockGlobalVariable( 'wgMemc', $mock_cache );
 	}
