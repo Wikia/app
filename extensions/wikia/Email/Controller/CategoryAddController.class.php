@@ -73,7 +73,7 @@ class CategoryAddController extends EmailController {
 	private function assertEmailsNotThrottled() {
 		global $wgMemc;
 		$emailsSent = $wgMemc->get( $this->getTargetUserCacheKey() );
-		if ( $emailsSent != false && $emailsSent['sent'] >=  self::EMAILS_PER_THROTTLE_PERIOD ) {
+		if ( !empty( $emailsSent['sent'] ) && $emailsSent['sent'] >=  self::EMAILS_PER_THROTTLE_PERIOD ) {
 			throw new Check( 'Attempt to send too many emails' );
 		}
 	}
