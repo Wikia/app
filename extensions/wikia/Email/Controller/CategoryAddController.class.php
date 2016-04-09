@@ -72,8 +72,8 @@ class CategoryAddController extends EmailController {
 
 	private function assertEmailsNotThrottled() {
 		global $wgMemc;
-		$emailsSent = $wgMemc->get( $this->getTargetUserCacheKey() );
-		if ( !empty( $emailsSent['sent'] ) && $emailsSent['sent'] >=  self::EMAILS_PER_THROTTLE_PERIOD ) {
+		$emailsSent = (int) $wgMemc->get( $this->getTargetUserCacheKey() );
+		if ( $emailsSent >=  self::EMAILS_PER_THROTTLE_PERIOD ) {
 			throw new Check( 'Attempt to send too many emails' );
 		}
 	}
@@ -85,15 +85,11 @@ class CategoryAddController extends EmailController {
 	private function incrementEmailsSentCount() {
 		global $wgMemc;
 		$emailsSent = $wgMemc->get( $this->getTargetUserCacheKey() );
-		if ( $emailsSent == false ) {
-			$emailsSent = [
-				'sent' => 0,
-				'ttl' => time() + self::THROTTLE_PERIOD
-			];
+		if ( !is_int( $emailsSent ) ) {
+			$wgMemc->set( $this->getTargetUserCacheKey(), 0, time() + self::THROTTLE_PERIOD );
 		}
-		$emailsSent['sent']++;
 
-		$wgMemc->set( $this->getTargetUserCacheKey(), $emailsSent, $emailsSent['ttl'] );
+		$wgMemc->incr( $this->getTargetUserCacheKey() );
 	}
 
 	private function getTargetUserCacheKey() {
