@@ -13,11 +13,26 @@ class CategoryAddControllerTest extends WikiaBaseTest {
 		$this->mockUser();
 		$this->mockTitle();
 		$this->mockInternalRequest();
-		$this->mockMemcache();
+		$this->mockMemcache( CategoryAddController::EMAILS_PER_THROTTLE_PERIOD );
 
 		$controller = new CategoryAddController();
 		$controller->setRequest( $this->wikiaRequestMock );
 		$controller->init();
+		$controller->assertCanEmail();
+	}
+
+	public function testAssertCanEmailSucceedsBeforeThrottleAmountReached() {
+		$this->mockUser();
+		$this->mockTitle();
+		$this->mockInternalRequest();
+		$this->mockMemcache( CategoryAddController::EMAILS_PER_THROTTLE_PERIOD - 1 );
+
+		$controller = new CategoryAddController();
+		$controller->setRequest( $this->wikiaRequestMock );
+		$controller->init();
+
+		// If an exception is thrown from this call, this test fails. No exception indicates
+		// all checks that an email can be sent passed, and therefore this test passes.
 		$controller->assertCanEmail();
 	}
 
@@ -61,12 +76,12 @@ class CategoryAddControllerTest extends WikiaBaseTest {
 			->willReturn( true );
 	}
 
-	private function mockMemcache() {
+	private function mockMemcache( $emailsSent ) {
 		$mock_cache = $this->getMock( 'stdClass', [ 'get', 'set', 'delete' ] );
 		$mock_cache->expects( $this->any() )
 			->method('get')
 			->will( $this->returnValue(
-				[ 'sent' => CategoryAddController::EMAILS_PER_THROTTLE_PERIOD + 1, 'ttl' => time() ]
+				[ 'sent' => $emailsSent, 'ttl' => time() ]
 			) );
 
 		$this->mockGlobalVariable( 'wgMemc', $mock_cache );
