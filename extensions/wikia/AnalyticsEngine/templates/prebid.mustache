@@ -1,0 +1,15 @@
+<script type="text/javascript" src="{{url}}" async></script>
+<script>
+	window.pbjs = window.pbjs || {};
+	window.pbjs.que = window.pbjs.que || [];
+
+	window.pbjs.que.push(function() {
+		window.pbjs.enableAnalytics({
+			provider: 'ga',
+			options: {
+				enableDistribution: false,
+				trackerName: 'ads'
+			}
+		});
+	});
+</script>
