@@ -38,11 +38,13 @@ class OasisController extends WikiaController {
 		$this->skinNameClass = $skinVars['skinnameclass'];
 		$this->bottomScripts = $skinVars['bottomscripts'];
 		// initialize variables
+		$this->appnexus = null;
 		$this->comScore = null;
 		$this->quantServe = null;
 		$this->amazonMatch = null;
 		$this->nielsen = null;
 		$this->openXBidder = null;
+		$this->prebid = null;
 		$this->rubiconFastlane = null;
 		$this->dynamicYield = null;
 		$this->ivw2 = null;
@@ -231,11 +233,13 @@ class OasisController extends WikiaController {
 
 		// macbre: RT #25697 - hide Comscore & QuantServe tags on edit pages
 		if(!in_array($wgRequest->getVal('action'), array('edit', 'submit'))) {
+			$this->appnexus = AnalyticsEngine::track('AppNexus', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->comScore = AnalyticsEngine::track('Comscore', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->quantServe = AnalyticsEngine::track('QuantServe', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->amazonMatch = AnalyticsEngine::track('AmazonMatch', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->nielsen = AnalyticsEngine::track('Nielsen', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->openXBidder = AnalyticsEngine::track('OpenXBidder', AnalyticsEngine::EVENT_PAGEVIEW);
+			$this->prebid = AnalyticsEngine::track('Prebid', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->rubiconFastlane = AnalyticsEngine::track('RubiconFastlane', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->dynamicYield = AnalyticsEngine::track('DynamicYield', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->ivw2 = AnalyticsEngine::track('IVW2', AnalyticsEngine::EVENT_PAGEVIEW);

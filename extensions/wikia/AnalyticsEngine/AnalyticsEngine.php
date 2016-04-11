@@ -33,6 +33,8 @@ class AnalyticsEngine {
 
 	private static function getProvider($provider) {
 		switch ($provider) {
+			case 'AppNexus':
+				return new AnalyticsProviderAppNexus();
 			case 'QuantServe':
 				return new AnalyticsProviderQuantServe();
 			case 'Comscore':
@@ -49,6 +51,8 @@ class AnalyticsEngine {
 				return new AnalyticsProviderNielsen();
 			case 'OpenXBidder':
 				return new AnalyticsProviderOpenXBidder();
+			case 'Prebid':
+				return new AnalyticsProviderPrebid();
 			case 'RubiconFastlane':
 				return new AnalyticsProviderRubiconFastlane();
 			case 'DynamicYield':
