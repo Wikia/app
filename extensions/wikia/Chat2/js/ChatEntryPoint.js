@@ -120,7 +120,7 @@ var ChatEntryPoint = {
 		$el.find('.carousel-container').carousel({
 			nextClass: 'arrow-right',
 			prevClass: 'arrow-left',
-			itemsShown: (window.wgOasisResponsive) ? 5 : 6
+			itemsShown: ((window.wgOasisResponsive || window.wgOasisBreakpoints)) ? 5 : 6
 		});
 
 		// TODO: abstract this because we use this pattern in a few places: i.e. hovering over popover will not close it
