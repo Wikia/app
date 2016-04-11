@@ -1,6 +1,6 @@
 <?php
 
-class RobotsTxtBuilder {
+class RobotsTxt {
 
 	private $allowed = [];
 	private $blockedRobots = [];

@@ -4,7 +4,7 @@
  * Class WikiaRobots
  *
  * This class reads the variables and decides which pages should be blocked and which be allowed
- * for robots. It can configure a RobotsTxtBuilder instance to produce a robots.txt class. It can
+ * for robots. It can configure a RobotsTxt instance to produce a robots.txt class. It can
  * also be used to produce the <meta robots> tags.
  */
 class WikiaRobots {
@@ -150,7 +150,7 @@ class WikiaRobots {
 		}
 	}
 
-	public function configureRobotsBuilder( RobotsTxtBuilder $robots ) {
+	public function configureRobotsBuilder( RobotsTxt $robots ) {
 		global $wgEnableSpecialSitemapExt,
 			   $wgServer;
 

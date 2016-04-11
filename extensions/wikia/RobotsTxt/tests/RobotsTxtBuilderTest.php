@@ -9,7 +9,7 @@ class RobotsTxtBuilderTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * Test RobotsTxtBuilder API
+	 * Test RobotsTxt API
 	 *
 	 * @covers       addAllowedPaths::addAllowPaths
 	 * @covers       RobotsTxtBuilder::allowDisallowPaths
@@ -23,7 +23,7 @@ class RobotsTxtBuilderTest extends WikiaBaseTest {
 	 * @param string[] $expectedContents expected $robots->getContents()
 	 */
 	public function testApi( $allowPaths, $disallowPaths, $blockRobots, $expectedContents ) {
-		$robots = new RobotsTxtBuilder();
+		$robots = new RobotsTxt();
 		if ( !is_null( $allowPaths ) ) {
 			$robots->addAllowedPaths( $allowPaths );
 		}
@@ -37,7 +37,7 @@ class RobotsTxtBuilderTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * Test RobotsTxtBuilder API, other method call order
+	 * Test RobotsTxt API, other method call order
 	 *
 	 * @covers       addAllowedPaths::addAllowPaths
 	 * @covers       RobotsTxtBuilder::allowDisallowPaths
@@ -51,7 +51,7 @@ class RobotsTxtBuilderTest extends WikiaBaseTest {
 	 * @param string[] $expectedContents expected $robots->getContents()
 	 */
 	public function testClassApiTwistedOrder( $allowPaths, $disallowPaths, $blockRobots, $expectedContents ) {
-		$robots = new RobotsTxtBuilder();
+		$robots = new RobotsTxt();
 		if ( !is_null( $disallowPaths ) ) {
 			$robots->addDisallowedPaths( $disallowPaths );
 		}
@@ -139,7 +139,7 @@ class RobotsTxtBuilderTest extends WikiaBaseTest {
 	 * @dataProvider dataProviderClassApi
 	 */
 	public function testAllowPathsCalledTwice() {
-		$robots = new RobotsTxtBuilder();
+		$robots = new RobotsTxt();
 
 		$robots->addAllowedPaths( [ '/abc', '/def' ] );
 		$robots->addBlockedRobots( [ 'Robot1', 'Robot2' ] );
@@ -198,7 +198,7 @@ class RobotsTxtBuilderTest extends WikiaBaseTest {
 	 * @covers RobotsTxt::setSitemap
 	 */
 	public function testSetSitemap() {
-		$robots = new RobotsTxtBuilder();
+		$robots = new RobotsTxt();
 		$robots->setSitemap( 'http://www.my-site.com/sitemap.xml' );
 
 		$this->assertEquals(
@@ -213,7 +213,7 @@ class RobotsTxtBuilderTest extends WikiaBaseTest {
 	 * @covers RobotsTxt::setSitemap
 	 */
 	public function testSitemapWithOtherMethods() {
-		$robots = new RobotsTxtBuilder();
+		$robots = new RobotsTxt();
 		$robots->addAllowedPaths( [ '/abc' ] );
 		$robots->setSitemap( 'http://www.my-site.com/sitemap.xml' );
 		$robots->addDisallowedPaths( [ '/def' ] );

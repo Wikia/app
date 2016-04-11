@@ -3,7 +3,7 @@
 require_once( __DIR__ . '/includes/WebStart.php' );
 
 $wikiaRobots = new WikiaRobots( new PathBuilder() );
-$robots = $wikiaRobots->configureRobotsBuilder( new RobotsTxtBuilder() );
+$robots = $wikiaRobots->configureRobotsBuilder( new RobotsTxt() );
 
 header( 'Content-Type: text/plain' );
 header( 'Cache-Control: s-maxage=' . $wikiaRobots->getRobotsTxtCachePeriod() );

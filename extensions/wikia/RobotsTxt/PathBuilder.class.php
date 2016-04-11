@@ -3,7 +3,7 @@
 /**
  * Class PathBuilder
  *
- * Path builder allows you to build paths you pass to RobotsTxtBuilder.
+ * Path builder allows you to build paths you pass to RobotsTxt.
  *
  * It takes care of finding all of the aliases of the special pages and namespaces.
  */

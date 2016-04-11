@@ -41,7 +41,7 @@ class WikiaRobotsTest extends WikiaBaseTest {
 	public function testDevEnvironment() {
 		$this->mockGlobalVariable( 'wgWikiaEnvironment', WIKIA_ENV_DEV );
 
-		$robotsMock = $this->getMockBuilder( 'RobotsTxtBuilder' )->getMock();
+		$robotsMock = $this->getMockBuilder( 'RobotsTxt' )->getMock();
 		$robotsMock->expects( $this->once() )->method( 'addDisallowedPaths' )->with( [ '/' ] );
 		$robotsMock->expects( $this->never() )->method( 'addAllowedPaths' );
 		$robotsMock->expects( $this->never() )->method( 'addBlockedRobots' );
@@ -59,7 +59,7 @@ class WikiaRobotsTest extends WikiaBaseTest {
 		$this->mockGlobalVariable( 'wgServer', 'http://server' );
 		$this->mockGlobalVariable( 'wgEnableSpecialSitemapExt', true );
 
-		$robotsMock = $this->getMockBuilder( 'RobotsTxtBuilder' )->getMock();
+		$robotsMock = $this->getMockBuilder( 'RobotsTxt' )->getMock();
 		$robotsMock->expects( $this->once() )->method( 'setSitemap' )->with( 'http://server/sitemap-index.xml' );
 
 		$wikiaRobots = new WikiaRobots( $this->getPathBuilderMock() );
@@ -74,7 +74,7 @@ class WikiaRobotsTest extends WikiaBaseTest {
 		$this->mockGlobalVariable( 'wgServer', 'http://server' );
 		$this->mockGlobalVariable( 'wgEnableSpecialSitemapExt', false );
 
-		$robotsMock = $this->getMockBuilder( 'RobotsTxtBuilder' )->getMock();
+		$robotsMock = $this->getMockBuilder( 'RobotsTxt' )->getMock();
 		$robotsMock->expects( $this->never() )->method( 'setSitemap' );
 
 		$wikiaRobots = new WikiaRobots( $this->getPathBuilderMock() );
@@ -89,7 +89,7 @@ class WikiaRobotsTest extends WikiaBaseTest {
 	 * @return bool
 	 */
 	private function isNamespaceDisallowed( WikiaRobots $wikiaRobots, $ns ) {
-		$robotsMock = $this->getMockBuilder( 'RobotsTxtBuilder' )->getMock();
+		$robotsMock = $this->getMockBuilder( 'RobotsTxt' )->getMock();
 
 		$nsDisallowed = false;
 		$robotsMock->expects( $this->any() )
@@ -121,7 +121,7 @@ class WikiaRobotsTest extends WikiaBaseTest {
 	 * @return bool
 	 */
 	private function isSpecialPageAllowed( WikiaRobots $wikiaRobots, $page ) {
-		$robotsMock = $this->getMockBuilder( 'RobotsTxtBuilder' )->getMock();
+		$robotsMock = $this->getMockBuilder( 'RobotsTxt' )->getMock();
 
 		$pageAllowed = false;
 		$robotsMock->expects( $this->any() )
