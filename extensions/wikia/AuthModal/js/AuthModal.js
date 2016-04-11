@@ -5,10 +5,6 @@ define('AuthModal', ['jquery', 'wikia.window'], function ($, window) {
 		closeTrackTimeoutId,
 		popUpWindowHeight = 670,
 		popUpWindowMaxWidth = 768,
-		popUpWindowParams = {
-			modal: 1,
-			forceLogin: 0
-		},
 		popUpName = 'WikiaAuthWindow',
 		track = getTrackingFunction();
 
@@ -61,6 +57,16 @@ define('AuthModal', ['jquery', 'wikia.window'], function ($, window) {
 		$(window).off('.authPopUpWindow');
 	}
 
+	function buildPopUpUrl(url, additionalParams) {
+		var defaultQueryParams = {
+				modal: 1,
+				forceLogin: 0
+			};
+
+		return url + (url.indexOf('?') === -1 ? '?' : '&') +
+			$.param($.extend({}, defaultQueryParams, additionalParams));
+	}
+
 	function getPopUpWindowSpecs() {
 		var pageWidth = window.innerWidth,
 			popUpWindowWidth = pageWidth < popUpWindowMaxWidth ? pageWidth : popUpWindowMaxWidth,
@@ -83,10 +89,7 @@ define('AuthModal', ['jquery', 'wikia.window'], function ($, window) {
 	}
 
 	function loadPopUpPage (url, forceLogin) {
-		var src;
-
-		popUpWindowParams.forceLogin = (forceLogin ? 1 : 0);
-		src = url + (url.indexOf('?') === -1 ? '?' : '&') + $.param(popUpWindowParams);
+		var src = buildPopUpUrl(url, {'forceLogin': (forceLogin ? 1 : 0)});
 
 		authPopUpWindow = window.open(src, popUpName, getPopUpWindowSpecs());
 
