@@ -81,6 +81,12 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 			shouldPush = !recoveryHelper.isBlocking() ||
 				(recoveryHelper.isBlocking() && recoveryHelper.isRecoverable(slot.name, recoverableSlots));
 
+		log(['shouldPush',
+			slot.name,
+			recoveryHelper.isBlocking(),
+			recoverableSlots,
+			recoveryHelper.isRecoverable(slot.name, recoverableSlots)], 'debug', logGroup);
+
 		slotTargeting = JSON.parse(JSON.stringify(slotTargeting)); // copy value
 
 		if (isHiddenOnStart(slot.name)) {
