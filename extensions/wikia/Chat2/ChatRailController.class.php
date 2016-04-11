@@ -1,7 +1,6 @@
 <?php
 
 class ChatRailController extends WikiaController {
-	const MAX_CHATTERS = 6;
 	const AVATAR_SIZE = 50;
 	const CHAT_WINDOW_FEATURES = 'width=600,height=600,menubar=no,status=no,location=no,toolbar=no,scrollbars=no,resizable=yes';
 	const CACHE_DURATION = 60; // ttl time for the list of chat users, this is only used for anonymous requests
