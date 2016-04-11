@@ -8,7 +8,6 @@ class RobotsTxt {
 	private $blockedRobots = [ ];
 	private $disallowed = [ ];
 	private $sitemap;
-	private $experimentalAllowDisallowSection = null;
 
 	/**
 	 * Allow specific paths
@@ -47,14 +46,6 @@ class RobotsTxt {
 	 * @return array
 	 */
 	public function getContents() {
-		if ( $this->experimentalAllowDisallowSection ) {
-			return array_merge(
-				explode( PHP_EOL, trim( $this->experimentalAllowDisallowSection ) ),
-				[ '' ],
-				$this->getSitemapSection()
-			);
-		}
-
 		return array_merge(
 			$this->getBlockedRobotsSection(),
 			$this->getAllowDisallowSection(),
