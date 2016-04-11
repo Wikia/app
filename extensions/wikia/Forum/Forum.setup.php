@@ -79,6 +79,7 @@ $wgHooks['WallBeforeStoreRelatedTopicsInDB'][] = 'ForumHooksHelper::onWallStoreR
 $wgHooks['WallAfterStoreRelatedTopicsInDB'][] = 'ForumHooksHelper::onWallStoreRelatedTopicsInDB';
 
 $wgHooks['ArticleFromTitle'][] = 'ForumHooksHelper::onArticleFromTitle';
+$wgHooks['ArticleRobotPolicy'][] = 'ForumHooksHelper::onArticleRobotPolicy';
 
 // For activity module tag
 $wgHooks['ParserFirstCallInit'][] = 'ForumHooksHelper::onParserFirstCallInit';
