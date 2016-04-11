@@ -48,6 +48,7 @@ $messages['en'] = array(
 	'communitypage-no-contributions' => 'There are no contributions yet this week! Be the first to contribute!',
 	'communitypage-no-admins' => 'There are no Admins on this wiki yet.',
 	'communitypage-no-admins-contact' => 'Contact us to be the first!',
+	'communitypage-communitycentral-link' => 'http://community.wikia.com',
 );
 
 $messages['qqq'] = array(
@@ -97,6 +98,7 @@ $messages['qqq'] = array(
 	'communitypage-no-contributions' => 'Text indicating that there are no contributions yet this week',
 	'communitypage-no-admins' => 'Text indicating that the wiki has no admins.',
 	'communitypage-no-admins-contact' => 'Contact us to become the first admin text',
+	'communitypage-communitycentral-link' => 'Link to the community page for this language',
 );
 
 $messages['ja'] = array(
@@ -117,4 +119,5 @@ $messages['ja'] = array(
 	'communitypage-tasks-title' => 'タスク',
 	'communitypage-entry-tasks' => 'このコミュニティの編集を助けてください',
 	'communitypage-tasks-admin-welcome' => '{{SITENAME}} へようこそ。このコミュニティはあなたの投稿を必要としています。編集が必要なページの一部をこちらに紹介しています。よろしくお願いします！',
+	'communitypage-communitycentral-link' => 'http://ja.community.wikia.com',
 );
