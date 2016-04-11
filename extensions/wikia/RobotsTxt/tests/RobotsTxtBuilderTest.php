@@ -1,5 +1,7 @@
 <?php
 
+use Wikia\RobotsTxt\RobotsTxt;
+
 class RobotsTxtBuilderTest extends WikiaBaseTest {
 
 	public function setUp() {
@@ -9,7 +11,7 @@ class RobotsTxtBuilderTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * Test RobotsTxt API
+	 * Test Wikia\RobotsTxt\RobotsTxt API
 	 *
 	 * @covers       addAllowedPaths::addAllowPaths
 	 * @covers       RobotsTxtBuilder::allowDisallowPaths
@@ -37,7 +39,7 @@ class RobotsTxtBuilderTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * Test RobotsTxt API, other method call order
+	 * Test Wikia\RobotsTxt\RobotsTxt API, other method call order
 	 *
 	 * @covers       addAllowedPaths::addAllowPaths
 	 * @covers       RobotsTxtBuilder::allowDisallowPaths

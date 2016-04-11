@@ -1,10 +1,12 @@
 <?php
 
+namespace Wikia\RobotsTxt;
+
 class RobotsTxt {
 
-	private $allowed = [];
-	private $blockedRobots = [];
-	private $disallowed = [];
+	private $allowed = [ ];
+	private $blockedRobots = [ ];
+	private $disallowed = [ ];
 	private $sitemap;
 	private $experimentalAllowDisallowSection = null;
 
@@ -104,11 +106,11 @@ class RobotsTxt {
 			);
 		}
 
-		return [];
+		return [ ];
 	}
 
 	private function getBlockedRobotsSection() {
-		$r = [];
+		$r = [ ];
 		foreach ( $this->blockedRobots as $robot ) {
 			$r[] = 'User-agent: ' . $robot;
 			$r[] = 'Disallow: /';
@@ -121,6 +123,6 @@ class RobotsTxt {
 		if ( $this->sitemap ) {
 			return [ 'Sitemap: ' . $this->sitemap ];
 		}
-		return [];
+		return [ ];
 	}
 }

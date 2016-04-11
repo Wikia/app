@@ -1,10 +1,18 @@
 <?php
 
+use Wikia\RobotsTxt\WikiaRobots;
+
 class WikiaRobotsTest extends WikiaBaseTest {
+	public function setUp() {
+		global $IP;
+		$this->setupFile = "$IP/extensions/wikia/RobotsTxt/RobotsTxt.setup.php";
+		parent::setUp();
+	}
+
 	/**
-	 * Get mock for PathBuilder
+	 * Get mock for Wikia\RobotsTxt\PathBuilder
 	 *
-	 * PathBuilder has a separate set of tests, so here we're injecting a mock here instead
+	 * Wikia\RobotsTxt\PathBuilder has a separate set of tests, so here we're injecting a mock here instead
 	 *
 	 * The way it works it returns one-item array for each of the mocked methods contructing
 	 * the path like that:
@@ -16,7 +24,7 @@ class WikiaRobotsTest extends WikiaBaseTest {
 	 * @return PHPUnit_Framework_MockObject_MockObject
 	 */
 	private function getPathBuilderMock() {
-		$pathBuilderMock = $this->getMockBuilder( 'PathBuilder' )->getMock();
+		$pathBuilderMock = $this->getMockBuilder( 'Wikia\RobotsTxt\PathBuilder' )->getMock();
 		$pathBuilderMock->expects( $this->any() )
 			->method( 'buildPathsForNamespace' )
 			->willReturnCallback( function ( $in ) {
@@ -36,12 +44,12 @@ class WikiaRobotsTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * Test WikiaRobots builds a "Disallow: /" robots.txt on dev environment
+	 * Test Wikia\RobotsTxt\WikiaRobots builds a "Disallow: /" robots.txt on dev environment
 	 */
 	public function testDevEnvironment() {
 		$this->mockGlobalVariable( 'wgWikiaEnvironment', WIKIA_ENV_DEV );
 
-		$robotsMock = $this->getMockBuilder( 'RobotsTxt' )->getMock();
+		$robotsMock = $this->getMockBuilder( 'Wikia\RobotsTxt\RobotsTxt' )->getMock();
 		$robotsMock->expects( $this->once() )->method( 'addDisallowedPaths' )->with( [ '/' ] );
 		$robotsMock->expects( $this->never() )->method( 'addAllowedPaths' );
 		$robotsMock->expects( $this->never() )->method( 'addBlockedRobots' );
@@ -52,14 +60,14 @@ class WikiaRobotsTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * Test WikiaRobots sets the proper sitemap based on wgServer
+	 * Test Wikia\RobotsTxt\WikiaRobots sets the proper sitemap based on wgServer
 	 */
 	public function testSitemapEnabled() {
 		$this->mockGlobalVariable( 'wgWikiaEnvironment', WIKIA_ENV_PROD );
 		$this->mockGlobalVariable( 'wgServer', 'http://server' );
 		$this->mockGlobalVariable( 'wgEnableSpecialSitemapExt', true );
 
-		$robotsMock = $this->getMockBuilder( 'RobotsTxt' )->getMock();
+		$robotsMock = $this->getMockBuilder( 'Wikia\RobotsTxt\RobotsTxt' )->getMock();
 		$robotsMock->expects( $this->once() )->method( 'setSitemap' )->with( 'http://server/sitemap-index.xml' );
 
 		$wikiaRobots = new WikiaRobots( $this->getPathBuilderMock() );
@@ -67,14 +75,14 @@ class WikiaRobotsTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * Test WikiaRobots doesn't set the sitemap if wgEnableSpecialSitemapExt is false
+	 * Test Wikia\RobotsTxt\WikiaRobots doesn't set the sitemap if wgEnableSpecialSitemapExt is false
 	 */
 	public function testSitemapDisabled() {
 		$this->mockGlobalVariable( 'wgWikiaEnvironment', WIKIA_ENV_PROD );
 		$this->mockGlobalVariable( 'wgServer', 'http://server' );
 		$this->mockGlobalVariable( 'wgEnableSpecialSitemapExt', false );
 
-		$robotsMock = $this->getMockBuilder( 'RobotsTxt' )->getMock();
+		$robotsMock = $this->getMockBuilder( 'Wikia\RobotsTxt\RobotsTxt' )->getMock();
 		$robotsMock->expects( $this->never() )->method( 'setSitemap' );
 
 		$wikiaRobots = new WikiaRobots( $this->getPathBuilderMock() );
@@ -89,7 +97,7 @@ class WikiaRobotsTest extends WikiaBaseTest {
 	 * @return bool
 	 */
 	private function isNamespaceDisallowed( WikiaRobots $wikiaRobots, $ns ) {
-		$robotsMock = $this->getMockBuilder( 'RobotsTxt' )->getMock();
+		$robotsMock = $this->getMockBuilder( 'Wikia\RobotsTxt\RobotsTxt' )->getMock();
 
 		$nsDisallowed = false;
 		$robotsMock->expects( $this->any() )
@@ -121,7 +129,7 @@ class WikiaRobotsTest extends WikiaBaseTest {
 	 * @return bool
 	 */
 	private function isSpecialPageAllowed( WikiaRobots $wikiaRobots, $page ) {
-		$robotsMock = $this->getMockBuilder( 'RobotsTxt' )->getMock();
+		$robotsMock = $this->getMockBuilder( 'Wikia\RobotsTxt\RobotsTxt' )->getMock();
 
 		$pageAllowed = false;
 		$robotsMock->expects( $this->any() )

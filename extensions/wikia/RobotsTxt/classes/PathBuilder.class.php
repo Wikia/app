@@ -1,7 +1,9 @@
 <?php
 
+namespace Wikia\RobotsTxt;
+
 /**
- * Class PathBuilder
+ * Class Wikia\RobotsTxt\PathBuilder
  *
  * Path builder allows you to build paths you pass to RobotsTxt.
  *
@@ -10,7 +12,7 @@
 class PathBuilder {
 
 	/**
-	 * @var Language[]: the languages to use to build namespaces and special pages names
+	 * @var \Language[]: the languages to use to build namespaces and special pages names
 	 */
 	private $languages;
 
@@ -29,7 +31,7 @@ class PathBuilder {
 
 		$languages = [ $wgContLang ];
 		if ( $wgContLang->getCode() !== 'en' ) {
-			$languages[] = Language::factory( 'en' );
+			$languages[] = \Language::factory( 'en' );
 		}
 
 		$this->languages = $languages;
@@ -74,7 +76,7 @@ class PathBuilder {
 	 * @return array of paths
 	 */
 	public function buildPathsForSpecialPage( $pageName, $canonicalOnly = false ) {
-		$paths = [];
+		$paths = [ ];
 		foreach ( $this->specialNamespaces as $specialNamespaceAlias ) {
 			foreach ( $this->getSpecialPageNames( $pageName ) as $localPageName ) {
 				$paths = array_merge(
@@ -94,7 +96,7 @@ class PathBuilder {
 	 * @return array of paths
 	 */
 	public function buildPathsForNamespace( $namespaceId, $canonicalOnly = false ) {
-		$paths = [];
+		$paths = [ ];
 
 		foreach ( $this->getNamespaces( $namespaceId ) as $namespace ) {
 			$paths = array_merge(
@@ -145,7 +147,7 @@ class PathBuilder {
 	 * @return array
 	 */
 	private function getSpecialPageNames( $pageName ) {
-		$aliases = [];
+		$aliases = [ ];
 		foreach ( $this->languages as $lang ) {
 			$specialAliases = $lang->getSpecialPageAliases();
 			if ( isset( $specialAliases[$pageName] ) ) {
@@ -163,7 +165,7 @@ class PathBuilder {
 	 * @return array
 	 */
 	private function getNamespaces( $namespaceId ) {
-		$namespaces = [];
+		$namespaces = [ ];
 		foreach ( $this->languages as $lang ) {
 			$namespaces[] = $lang->getNamespaces()[$namespaceId];
 		}

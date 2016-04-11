@@ -1,10 +1,11 @@
 <?php
+namespace Wikia\RobotsTxt;
 
 /**
- * Class WikiaRobots
+ * Class Wikia\RobotsTxt\WikiaRobots
  *
  * This class reads the variables and decides which pages should be blocked and which be allowed
- * for robots. It can configure a RobotsTxt instance to produce a robots.txt class. It can
+ * for robots. It can configure a Wikia\RobotsTxt\RobotsTxt instance to produce a robots.txt class. It can
  * also be used to produce the <meta robots> tags.
  */
 class WikiaRobots {
@@ -114,7 +115,7 @@ class WikiaRobots {
 	private $pathBuilder;
 
 	/**
-	 * WikiaRobots constructor.
+	 * Wikia\RobotsTxt\WikiaRobots constructor.
 	 *
 	 * @param PathBuilder $pathBuilder
 	 */
@@ -223,11 +224,11 @@ class WikiaRobots {
 	 *
 	 * Also if we're in non-production environment, the function is gonna return noindex,nofollow.
 	 *
-	 * @param Title $title - the title to generate the tag for (normally pass $wgTitle)
-	 * @param WebRequest $request - the request to generate the tag for (normally pas $wgRequest)
+	 * @param \Title $title - the title to generate the tag for (normally pass $wg\Title)
+	 * @param \WebRequest $request - the request to generate the tag for (normally pas $wgRequest)
 	 * @return string
 	 */
-	public function getMetaRobotsPolicy( Title $title, WebRequest $request ) {
+	public function getMetaRobotsPolicy( \Title $title, \WebRequest $request ) {
 		if ( !$this->allowRobots ) {
 			return 'noindex,nofollow';
 		}

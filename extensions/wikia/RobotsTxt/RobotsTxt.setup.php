@@ -1,6 +1,6 @@
 <?php
 
 // Autoload
-$wgAutoloadClasses['RobotsTxt'] =  __DIR__ . '/RobotsTxt.class.php';
-$wgAutoloadClasses['PathBuilder'] =  __DIR__ . '/PathBuilder.class.php';
-$wgAutoloadClasses['WikiaRobots'] =  __DIR__ . '/WikiaRobots.class.php';
+$wgAutoloadClasses['Wikia\RobotsTxt\RobotsTxt'] =  __DIR__ . '/classes/RobotsTxt.class.php';
+$wgAutoloadClasses['Wikia\RobotsTxt\PathBuilder'] =  __DIR__ . '/classes/PathBuilder.class.php';
+$wgAutoloadClasses['Wikia\RobotsTxt\WikiaRobots'] =  __DIR__ . '/classes/WikiaRobots.class.php';

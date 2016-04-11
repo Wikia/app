@@ -1,5 +1,7 @@
 <?php
 
+use Wikia\RobotsTxt\PathBuilder;
+
 class PathBuilderTest extends WikiaBaseTest {
 
 	public function setUp() {

@@ -1,5 +1,9 @@
 <?php
 
+use Wikia\RobotsTxt\PathBuilder;
+use Wikia\RobotsTxt\RobotsTxt;
+use Wikia\RobotsTxt\WikiaRobots;
+
 require_once( __DIR__ . '/includes/WebStart.php' );
 
 $wikiaRobots = new WikiaRobots( new PathBuilder() );
