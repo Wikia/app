@@ -47,6 +47,8 @@ $wgExtensionFunctions[] = function() {
 	] );
 };
 
+JSMessages::enqueuePackage('AdEngine', JSMessages::EXTERNAL);
+
 $wgExtensionFunctions[] = function() {
 	JSMessages::registerPackage( 'AdEngineRecoveryMessage', [
 		'adengine-recovery-message-*'

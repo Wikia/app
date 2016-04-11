@@ -3,6 +3,7 @@ require([
 	'jquery',
 	'wikia.window',
 	'wikia.abTest',
+	'wikia.log',
 	'ext.wikia.recirculation.tracker',
 	'ext.wikia.recirculation.utils',
 	'ext.wikia.recirculation.views.incontent',
@@ -18,6 +19,7 @@ require([
 	$,
 	w,
 	abTest,
+	log,
 	tracker,
 	utils,
 	incontentView,
@@ -31,6 +33,7 @@ require([
 	videosModule
 ) {
 	var experimentName = 'RECIRCULATION_PLACEMENT',
+		logGroup = 'ext.wikia.recirculation.experiments.placement',
 		railContainerId = 'RECIRCULATION_RAIL',
 		railSelector = '#' + railContainerId,
 		group = abTest.getGroup(experimentName),
@@ -151,7 +154,11 @@ require([
 			.fail(handleError);
 	}
 
-	function handleError() {
+	function handleError(err) {
+		if (err) {
+			log(err, 'info', logGroup);
+		}
+
 		// If there is an error somewhere we render the control group with no tracking
 		if (errorHandled) {
 			return;
@@ -165,8 +172,11 @@ require([
 				limit: 5
 			}).loadData()
 				.then(rail.render)
-				.fail(function() {
-					// No-op if this doesn't work. We tried our best.
+				.fail(function(err) {
+					// If this doesn't work, log out why. We tried our best.
+					if (err) {
+						log(err, 'info', logGroup);
+					}
 				});
 		});
 	}
@@ -189,6 +199,9 @@ require([
 			.then(incontent.setupTracking(experimentName))
 			.fail(function(err) {
 				// We fail silently for the in-content widget
+				if (err) {
+					log(err, 'info', logGroup);
+				}
 			});
 
 		afterRailLoads(function() {
