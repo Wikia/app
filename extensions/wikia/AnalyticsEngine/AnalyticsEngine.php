@@ -49,6 +49,8 @@ class AnalyticsEngine {
 				return new AnalyticsProviderNielsen();
 			case 'OpenXBidder':
 				return new AnalyticsProviderOpenXBidder();
+			case 'SpeedBidder':
+				return new AnalyticsProviderSpeedBidder();
 			case 'RubiconFastlane':
 				return new AnalyticsProviderRubiconFastlane();
 			case 'DynamicYield':

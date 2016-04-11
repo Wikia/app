@@ -70,6 +70,7 @@
 <?= $quantServe ?>
 <?= $amazonMatch ?>
 <?= $openXBidder ?>
+<?= $speedBidder ?>
 <?= $rubiconFastlane ?>
 <?= $krux ?>
 <?= $dynamicYield ?>

@@ -1243,11 +1243,24 @@ $wgAmazonMatchCountriesMobile = null;
 $wgAdDriverEnableOpenXBidder = true;
 
 /**
+ * @name $wgAdDriverEnableOpenXSpeedBidder
+ * Enables OpenX Speed bidder
+ */
+$wgAdDriverEnableOpenXSpeedBidder = true;
+
+/**
  * @name $wgAdDriverOpenXBidderCountries
  * Enables OpenX bidder in these countries (given wgAdDriverEnableOpenXBidder is also true).
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverOpenXBidderCountries = null;
+
+/**
+ * @name $wgAdDriverOpenXSpeedBidderCountries
+ * Enables OpenX Speed bidder in these countries (given wgAdDriverEnableOpenXSpeedBidder is also true).
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverOpenXSpeedBidderCountries = null;
 
 /**
  * @name $wgAdDriverOpenXBidderCountriesMobile

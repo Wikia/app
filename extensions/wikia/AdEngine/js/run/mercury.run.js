@@ -2,6 +2,7 @@
 require([
 	'ext.wikia.adEngine.lookup.amazonMatch',
 	'ext.wikia.adEngine.lookup.openXBidder',
+	'ext.wikia.adEngine.lookup.speedBidder',
 	'ext.wikia.adEngine.lookup.rubiconFastlane',
 	'ext.wikia.adEngine.customAdsLoader',
 	'ext.wikia.adEngine.messageListener',
@@ -13,6 +14,7 @@ require([
 ], function (
 	amazon,
 	oxBidder,
+	speedBidder,
 	rubiconFastlane,
 	customAdsLoader,
 	messageListener,
@@ -32,6 +34,10 @@ require([
 
 	if (geo.isProperGeo(instantGlobals.wgAmazonMatchCountriesMobile)) {
 		amazon.call();
+	}
+
+	if (geo.isProperGeo(instantGlobals.wgAdDriverOpenXSpeedBidderCountries)) {
+		speedBidder.call();
 	}
 
 	mercuryListener.onLoad(function () {
