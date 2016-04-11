@@ -244,19 +244,20 @@ class UserrightsPage extends SpecialPage {
 	 * @return Array: Tuple of added, then removed groups
 	 */
 	function doSaveUserGroups( $user, $groupsToAdd, $groupsToRemove, $reason = '' ) {
+		$groups = $user->getGroups();
 		$globalGroups = $this->permissionsService()->getConfiguration()->getGlobalGroups();
 		$changeable = $this->getUser()->changeableGroups();
 		$validGroupsToAdd = [];
 		$validGroupsToRemove = [];
 
 		foreach ( $groupsToAdd as $group ) {
-			if( self::canAdd( $globalGroups, $changeable, $group, $this->isself ) ) {
+			if( self::canAdd( $globalGroups, $changeable, $group, $this->isself ) && !in_array( $group, $groups ) ) {
 				$validGroupsToAdd[] = $group;
 			}
 		}
 
 		foreach ( $groupsToRemove as $group ) {
-			if( self::canRemove( $globalGroups, $changeable, $group, $this->isself ) ) {
+			if( self::canRemove( $globalGroups, $changeable, $group, $this->isself ) && in_array( $group, $groups ) ) {
 				$validGroupsToRemove[] = $group;
 			}
 		}
