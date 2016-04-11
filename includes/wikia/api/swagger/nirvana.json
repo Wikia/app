@@ -4184,7 +4184,7 @@
         "id",
         "name",
         "hub",
-        "language",
+        "lang",
         "topic",
         "domain",
         "title",
@@ -4249,7 +4249,7 @@
           "format": "int32",
           "description": "An internal identification number for Wikia"
         },
-        "language": {
+        "lang": {
           "type": "string",
           "description": "Wikia language"
         },
