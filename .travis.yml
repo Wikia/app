@@ -1,12 +1,24 @@
-language: node_js
-node_js:
-  - 0.10
+language: php
+
+php:
+  - 7
+  - 5.6
+  - 5.5
+  - 5.4
+  - 5.3
+  - hhvm
+  - nightly
+
+sudo: false
+
 before_install: 
   - cd $TRAVIS_BUILD_DIR/extensions/VisualEditor/
   - npm install grunt-cli
   - cd $TRAVIS_BUILD_DIR/extensions/VisualEditor/lib/ve/
   - npm install grunt-cli
 install:
+  - cd $TRAVIS_BUILD_DIR/
+  - travis_retry composer update --no-progress --prefer-dist --profile -v -n --verbose
   - cd $TRAVIS_BUILD_DIR/
   - npm install
   - cd $TRAVIS_BUILD_DIR/extensions/VisualEditor/
@@ -22,6 +34,8 @@ before_script:
   - cd $TRAVIS_BUILD_DIR/extensions/VisualEditor/lib/ve/
   - grunt build
 script:
+  - cd $TRAVIS_BUILD_DIR/
+  - composer test
   - cd $TRAVIS_BUILD_DIR/
   - npm test
   - cd $TRAVIS_BUILD_DIR/extensions/VisualEditor/

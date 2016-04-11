@@ -22,5 +22,13 @@
     "doctrine/cache": "~1.0",
     "ocramius/proxy-manager": "~1.0",
     "sensiolabs/consul-php-sdk": "^1.0"
-  }
+  },
+	"require-dev": {
+		"jakub-onderka/php-parallel-lint": "0.9"
+	},
+	"scripts": {
+		"test": [
+			"parallel-lint . --exclude vendor"
+		]
+	}
 }
