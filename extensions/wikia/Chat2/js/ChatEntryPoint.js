@@ -60,6 +60,7 @@ var ChatEntryPoint = {
 	processModuleTemplate: function ($t) {
 		// @todo - right now it's a custom html-based template, all the logic for inserting variables is here
 		// once the mustache is loaded on every page, rewrite the template and remove most of the code below
+		// see: https://wikia-inc.atlassian.net/browse/SUS-416
 		var items = [],
 			i, cnt = window.wgWikiaChatUsers.length,
 			img = window.wgWikiaChatProfileAvatarUrl;
@@ -104,6 +105,7 @@ var ChatEntryPoint = {
 			var months = window.wgWikiaChatMonts || window.wgMonthNamesShort;
 			user.since = months[user.since_month] + ' ' + user.since_year;
 		}
+
 		$t.find('[data-user-prop]').each(function () {
 			var $e = $(this),
 				attr = $e.data('user-attr'),
@@ -145,7 +147,6 @@ var ChatEntryPoint = {
 
 				return userStatsMenu.clone().wrap('<div>').parent().html();
 			}
-
 		}).on('mouseenter', function () {
 			clearTimeout(popoverTimeout);
 			$('.popover').remove();
