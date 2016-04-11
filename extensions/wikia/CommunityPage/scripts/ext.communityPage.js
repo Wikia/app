@@ -1,9 +1,9 @@
 require([
 	'jquery',
 	'wikia.ui.factory',
-    'wikia.mustache',
-    'communitypage.templates.mustache',
-    'wikia.nirvana'
+	'wikia.mustache',
+	'communitypage.templates.mustache',
+	'wikia.nirvana'
 ], function ($, uiFactory, mustache, templates, nirvana) {
 	'use strict';
 
