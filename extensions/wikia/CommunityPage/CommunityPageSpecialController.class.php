@@ -129,6 +129,9 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 			'otherAdminCount' => $remainingAdminCount,
 			'haveOtherAdmins' => $remainingAdminCount > 0,
 			'adminCount' => count ( $topAdmins ),
+			'noAdminText' => $this->msg( 'communitypage-no-admins' )->plain(),
+			'noAdminContactText' => $this->msg( 'communitypage-no-admins-contact' )->plain(),
+			'noAdminHref' => $this->msg( 'communitypage-communitycentral-link' )->inContentLanguage()->text(),
 		] );
 	}
 
