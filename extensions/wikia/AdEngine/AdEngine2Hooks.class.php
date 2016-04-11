@@ -7,6 +7,7 @@ class AdEngine2Hooks {
 	const ASSET_GROUP_ADENGINE_DESKTOP = 'adengine2_desktop_js';
 	const ASSET_GROUP_ADENGINE_GCS = 'adengine2_gcs_js';
 	const ASSET_GROUP_ADENGINE_MOBILE = 'wikiamobile_ads_js';
+	const ASSET_GROUP_ADENGINE_APPNEXUS = 'adengine2_appnexus_js';
 	const ASSET_GROUP_ADENGINE_OPENX_BIDDER = 'adengine2_ox_bidder_js';
 	const ASSET_GROUP_ADENGINE_REVCONTENT = 'adengine2_revcontent_js';
 	const ASSET_GROUP_ADENGINE_RUBICON_FASTLANE = 'adengine2_rubicon_fastlane_js';
@@ -163,6 +164,10 @@ class AdEngine2Hooks {
 
 		if ( AnalyticsProviderAmazonMatch::isEnabled() ) {
 			$jsAssets[] = self::ASSET_GROUP_ADENGINE_AMAZON_MATCH;
+		}
+
+		if ( AnalyticsProviderAppNexus::isEnabled() ) {
+			$jsAssets[] = self::ASSET_GROUP_ADENGINE_APPNEXUS;
 		}
 
 		if ( AnalyticsProviderOpenXBidder::isEnabled() ) {
