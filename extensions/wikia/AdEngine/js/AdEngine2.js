@@ -147,7 +147,7 @@ define('ext.wikia.adEngine.adEngine', [
 
 			slotTweaker.show(slotName);
 
-			log(['fillInSlot', slot, 'provider list', JSON.stringify(providerList)], 'debug', logGroup);
+			log(['fillInSlot', slot, 'provider list', JSON.stringify(providerList.slice())], 'debug', logGroup);
 
 			function handleNoAd() {
 				log(['handleNoAd', slot], 'debug', logGroup);

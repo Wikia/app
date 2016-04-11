@@ -59,6 +59,7 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 			node = doc.getElementsByTagName('script')[0];
 
 		window.googletag = window.googletag || {};
+		window.googletag.cmd = window.googletag.cmd || [];
 
 		if (!window.googletag.apiReady) {
 			gads.async = true;
@@ -70,9 +71,10 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 			if (typeof onLoadCallback === 'function') {
 				onLoadCallback();
 			}
+		} else {
+			log('GPT script already appended', 'debug', logGroup);
+			onLoadCallback();
 		}
-
-		window.googletag.cmd = window.googletag.cmd || [];
 
 		this.initialized = true;
 		this.enableServices();
