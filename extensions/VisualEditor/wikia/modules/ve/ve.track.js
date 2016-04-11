@@ -138,7 +138,7 @@ require( ['wikia.tracker'], function ( tracker ) {
 	 */
 	function track( topic, data ) {
 
-		var i, mwEvent, topics, abTestData,
+		var i, mwEvent, topics,
 			params = {
 				category: 'editor-ve',
 				trackingMethod: 'analytics'
