@@ -76,7 +76,7 @@ class PathBuilder {
 	 * @return array of paths
 	 */
 	public function buildPathsForSpecialPage( $pageName, $canonicalOnly = false ) {
-		$paths = [ ];
+		$paths = [];
 		foreach ( $this->specialNamespaces as $specialNamespaceAlias ) {
 			foreach ( $this->getSpecialPageNames( $pageName ) as $localPageName ) {
 				$paths = array_merge(
@@ -96,7 +96,7 @@ class PathBuilder {
 	 * @return array of paths
 	 */
 	public function buildPathsForNamespace( $namespaceId, $canonicalOnly = false ) {
-		$paths = [ ];
+		$paths = [];
 
 		foreach ( $this->getNamespaces( $namespaceId ) as $namespace ) {
 			$paths = array_merge(
@@ -147,7 +147,7 @@ class PathBuilder {
 	 * @return array
 	 */
 	private function getSpecialPageNames( $pageName ) {
-		$aliases = [ ];
+		$aliases = [];
 		foreach ( $this->languages as $lang ) {
 			$specialAliases = $lang->getSpecialPageAliases();
 			if ( isset( $specialAliases[$pageName] ) && is_array( $specialAliases[$pageName] ) ) {
@@ -165,7 +165,7 @@ class PathBuilder {
 	 * @return array
 	 */
 	private function getNamespaces( $namespaceId ) {
-		$namespaces = [ ];
+		$namespaces = [];
 		foreach ( $this->languages as $lang ) {
 			$namespaces[] = $lang->getNamespaces()[$namespaceId];
 		}

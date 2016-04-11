@@ -69,8 +69,8 @@ class RobotsTxtTest extends WikiaBaseTest {
 	public function dataProviderClassApi() {
 		return [
 			// Empty
-			[ null, null, null, [ ] ],
-			[ [ ], [ ], [ ], [ ] ],
+			[ null, null, null, [] ],
+			[ [], [], [], [] ],
 
 			// Non-empty:
 			[
