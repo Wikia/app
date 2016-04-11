@@ -54,13 +54,13 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 			'showMonthlySummary' => $isMember,
 			'showAdminsSummary' => !$isMember,
 			'statPagesTitle' => $this->msg( 'communitypage-pages' )->plain(),
-			'statPagesNumber' => 45,
+			'statPagesNumber' => 'N',
 			'statPageViewsTitle' => $this->msg( 'communitypage-pageviews' )->plain(),
-			'statPageViewsNumber' => '1,049',
+			'statPageViewsNumber' => 'N',
 			'statEditsTitle' => $this->msg( 'communitypage-edits' )->plain(),
-			'statEditsNumber' => 621,
+			'statEditsNumber' => 'N',
 			'statEditorsTitle' => $this->msg( 'communitypage-editors' )->plain(),
-			'statEditorsNumber' => 23,
+			'statEditorsNumber' => 'N',
 		] );
 	}
 
@@ -88,8 +88,8 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 				$this->wg->user->getName(),
 				AvatarService::AVATAR_SIZE_SMALL_PLUS
 			),
-			'userRank' => 302,
-			'memberCount' => 309,
+			'userRank' => 'N',
+			'memberCount' => 'N',
 			'userContribCount' => $userContribCount
 		] );
 	}
