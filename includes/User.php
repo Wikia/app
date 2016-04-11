@@ -4725,19 +4725,21 @@ class User {
 	/**
 	 * Add the user to the given group.
 	 * This takes immediate effect.
-	 * @param $group String Name of the group to add
+	 * @param $groups string Name of group or array with list of groups
+	 * @return true if operation was successful, false otherwise
 	 */
-	public function addGroup( $group ) {
-		return self::permissionsService()->addToGroup( RequestContext::getMain()->getUser(), $this, $group );
+	public function addGroup( $groups ) {
+		return self::permissionsService()->addToGroup( RequestContext::getMain()->getUser(), $this, $groups );
 	}
 
 	/**
 	 * Remove the user from the given group.
 	 * This takes immediate effect.
-	 * @param $group String Name of the group to remove
+	 * @param $groups string Name of group or array with list of groups
+	 * @return true if operation was successful, false otherwise
 	 */
-	public function removeGroup( $group ) {
-		return self::permissionsService()->removeFromGroup( RequestContext::getMain()->getUser(), $this, $group );
+	public function removeGroup( $groups ) {
+		return self::permissionsService()->removeFromGroup( RequestContext::getMain()->getUser(), $this, $groups );
 	}
 
 	/**

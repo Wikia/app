@@ -256,39 +256,41 @@ class UserrightsPage extends SpecialPage {
 		);
 
 		$oldGroups = $user->getGroups();
+		sort( $oldGroups );
 		$newGroups = $oldGroups;
 
-		// remove then add groups
-		if( $remove ) {
-			$newGroups = array_diff( $newGroups, $remove );
-			foreach( $remove as $group ) {
-				if ( !$user->removeGroup( $group ) ) {
-					$newGroups[] = $group;
-				}
-			}
-		}
+		$success = true;
 
 		if( $add ) {
 			$newGroups = array_merge( $newGroups, $add );
-			foreach( $add as $group ) {
-				if ( !$user->addGroup( $group ) ) {
-					if ( ( $key = array_search( $group, $newGroups ) ) !== false ) {
-						unset($newGroups[$key]);
-					}
-				}
-			}
+			$success = $user->addGroup( $add ) && $success;
+		}
+
+		if( $remove ) {
+			$newGroups = array_diff( $newGroups, $remove );
+			$success = $user->removeGroup( $remove );
 		}
 
 		$newGroups = array_unique( $newGroups );
+		sort( $newGroups );
 
 		// Ensure that caches are cleared
 		$user->invalidateCache();
 
-		wfDebug( 'oldGroups: ' . print_r( $oldGroups, true ) );
-		wfDebug( 'newGroups: ' . print_r( $newGroups, true ) );
+		if ( !$success ) {
+			$newGroups = $user->getGroups();
+			sort( $newGroups );
+			\Wikia\Logger\WikiaLogger::instance()->error(
+				'Error occurred while changing groups. Groups requested to add: $add ' . json_encode( $add )
+				. ", groups request to remove: " . json_encode( $remove ) );
+		}
+
+		\Wikia\Logger\WikiaLogger::instance()->debug( 'Changing groups. oldGroups: ' . json_encode( $oldGroups )
+			. ', newGroups: ' . json_encode( $newGroups ) );
+
 		wfRunHooks( 'UserRights', array( &$user, $add, $remove ) );
 
-		if( $newGroups != $oldGroups ) {
+		if ( $newGroups != $oldGroups ) {
 			$this->addLogEntry( $user, $oldGroups, $newGroups, $reason );
 		}
 		return array( $add, $remove );

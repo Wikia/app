@@ -77,19 +77,19 @@ interface PermissionsService
      * Adds the given user to the given group
      * @param \User $performer User that is currently logged in and is performing the operation
      * @param \User $userToChange User whose groups we're changing
-     * @param $group string Name of group
+     * @param $groups string Name of group or array with list of groups
      * @return bool True if operation was successful
      */
-    public function addToGroup( \User $performer, \User $userToChange, $group );
+    public function addToGroup( \User $performer, \User $userToChange, $groups );
 
     /**
      * Removes the given user from the given group
      * @param \User $performer User that is currently logged in and is performing the operation
      * @param \User $userToChange User whose groups we're changing
-     * @param $group string Name of group
+     * @param $groups string Name of group or array with list of groups
      * @return bool True if operation was successful
      */
-    public function removeFromGroup( \User $performer, \User $userToChange, $group );
+    public function removeFromGroup( \User $performer, \User $userToChange, $groups );
 
     /**
      * Checks whether the given user has the requested permission
