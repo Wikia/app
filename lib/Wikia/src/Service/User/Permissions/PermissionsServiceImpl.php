@@ -234,12 +234,12 @@ class PermissionsServiceImpl implements PermissionsService {
 	}
 
 	public function addToGroup( \User $performer, \User $userToChange, $groups ) {
-		$groupsList = $groups;
+		$groupList = $groups;
 		if ( !is_array( $groups ) ) {
-			$groupsList = [ $groups ];
+			$groupList = [ $groups ];
 		}
 		//First check if we can add all groups (if we add in parallel to checking, then the check may not be valid)
-		foreach ( $groupsList as $group ) {
+		foreach ( $groupList as $group ) {
 			if ( !$this->canGroupBeAdded( $performer, $userToChange, $group ) ) {
 				return false;
 			}
@@ -247,7 +247,7 @@ class PermissionsServiceImpl implements PermissionsService {
 
 		$result = true;
 		try {
-			foreach ( $groupsList as $group ) {
+			foreach ( $groupList as $group ) {
 				if ( in_array( $group, $this->permissionsConfiguration->getGlobalGroups() ) ) {
 					$result = $this->addToGlobalGroup( $userToChange, $group ) && $result;
 				} else {
@@ -295,20 +295,20 @@ class PermissionsServiceImpl implements PermissionsService {
 
 	public function removeFromGroup( \User $performer, \User $userToChange, $groups )
 	{
-		$groupsList = $groups;
+		$groupList = $groups;
 		if ( !is_array( $groups ) ) {
-			$groupsList = [ $groups ];
+			$groupList = [ $groups ];
 		}
 
 		//First check if we can remove all groups (if we remove in parallel to checking, then the check may not be valid)
-		foreach ( $groupsList as $group ) {
+		foreach ( $groupList as $group ) {
 			if ( !$this->canGroupBeRemoved( $performer, $userToChange, $group ) ) {
 				return false;
 			}
 		}
 		$result = true;
 		try {
-			foreach ( $groupsList as $group ) {
+			foreach ( $groupList as $group ) {
 				if ( in_array( $group, $this->permissionsConfiguration->getGlobalGroups() ) ) {
 					$result = $this->removeFromGlobalGroup( $userToChange, $group ) && $result;
 				} else {

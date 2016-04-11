@@ -261,6 +261,7 @@ class UserrightsPage extends SpecialPage {
 
 		$success = true;
 
+		//First add, then remove, otherwise addition may not be possible due to lack of permissions
 		if( $add ) {
 			$newGroups = array_merge( $newGroups, $add );
 			$success = $user->addGroup( $add ) && $success;
@@ -268,20 +269,17 @@ class UserrightsPage extends SpecialPage {
 
 		if( $remove ) {
 			$newGroups = array_diff( $newGroups, $remove );
-			$success = $user->removeGroup( $remove );
+			$success = $user->removeGroup( $remove ) && $success;
 		}
 
 		$newGroups = array_unique( $newGroups );
 		sort( $newGroups );
 
-		// Ensure that caches are cleared
-		$user->invalidateCache();
-
-		if ( !$success ) {
+		if( !$success ) {
 			$newGroups = $user->getGroups();
 			sort( $newGroups );
 			\Wikia\Logger\WikiaLogger::instance()->error(
-				'Error occurred while changing groups. Groups requested to add: $add ' . json_encode( $add )
+				'Error occurred while changing groups. Groups requested to add: ' . json_encode( $add )
 				. ", groups request to remove: " . json_encode( $remove ) );
 		}
 
@@ -290,7 +288,7 @@ class UserrightsPage extends SpecialPage {
 
 		wfRunHooks( 'UserRights', array( &$user, $add, $remove ) );
 
-		if ( $newGroups != $oldGroups ) {
+		if( $newGroups != $oldGroups ) {
 			$this->addLogEntry( $user, $oldGroups, $newGroups, $reason );
 		}
 		return array( $add, $remove );

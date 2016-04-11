@@ -74,7 +74,7 @@ interface PermissionsService
     public function getChangeableGroups( \User $performer );
 
     /**
-     * Adds the given user to the given group
+     * Adds the given user to the given group(s)
      * @param \User $performer User that is currently logged in and is performing the operation
      * @param \User $userToChange User whose groups we're changing
      * @param $groups string Name of group or array with list of groups
@@ -83,7 +83,7 @@ interface PermissionsService
     public function addToGroup( \User $performer, \User $userToChange, $groups );
 
     /**
-     * Removes the given user from the given group
+     * Removes the given user from the given group(s)
      * @param \User $performer User that is currently logged in and is performing the operation
      * @param \User $userToChange User whose groups we're changing
      * @param $groups string Name of group or array with list of groups
