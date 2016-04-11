@@ -10,8 +10,11 @@
 			</div>
 		</li>
 	{{/admins}}
+	{{^admins}}
+		{{noAdminText}}
+		<a href="{{{noAdminHref}}}">{{noAdminContactText}}</a>
+	{{/admins}}
 </ul>
 {{#haveOtherAdmins}}
 	{{otherAdminCount}} {{otherAdmins}}
 {{/haveOtherAdmins}}
-
