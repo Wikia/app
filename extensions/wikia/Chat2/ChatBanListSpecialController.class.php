@@ -9,6 +9,8 @@
 
 class ChatBanListSpecialController extends WikiaSpecialPageController {
 
+	private $target;
+
 	public function __construct() {
 		parent::__construct( 'ChatBanList' );
 	}
@@ -17,21 +19,67 @@ class ChatBanListSpecialController extends WikiaSpecialPageController {
 		$this->specialPage->setHeaders();
 		$this->getOutput()->addModuleStyles( 'mediawiki.special' );
 
-		$pager = new ChatBanPager( $this );
+		$this->target = trim( $this->getRequest()->getVal( 'wpTarget', $this->getPar() ) );
+
+		$conds = [];
+		$targetUser = User::newFromName($this->target);
+		if ( $targetUser && $targetUser->getId() > 0 ) {
+			$conds['cbu_user_id'] = $targetUser->getId();
+		}
+
+		$form = $this->getForm();
+
+		$pager = new ChatBanPager( $this, $conds );
 
 		$html = $pager->getNavigationBar() .
 			$pager->getBody() .
 			$pager->getNavigationBar();
 
+		$this->response->setVal( 'form', $form );
 		$this->response->setVal( 'html', $html );
+	}
+
+	private function getForm() {
+		$lang = $this->getLanguage();
+
+		$fields = array(
+			'Target' => array(
+				'type' => 'text',
+				'label-message' => 'username',
+				'tabindex' => '1',
+				'size' => '45',
+				'default' => $this->target,
+			),
+			'Limit' => array(
+				'class' => 'HTMLBlockedUsersItemSelect',
+				'label-message' => 'table_pager_limit_label',
+				'options' => array(
+					$lang->formatNum( 20 ) => 20,
+					$lang->formatNum( 50 ) => 50,
+					$lang->formatNum( 100 ) => 100,
+					$lang->formatNum( 250 ) => 250,
+					$lang->formatNum( 500 ) => 500,
+				),
+				'name' => 'limit',
+				'default' => 50,
+			),
+		);
+		$form = new HTMLForm( $fields, $this->getContext() );
+		$form->setMethod( 'get' );
+		$form->setWrapperLegendMsg( 'ipblocklist-legend' );
+		$form->setSubmitTextMsg( 'ipblocklist-submit' );
+		$form->prepareForm();
+
+		return $form->getHTML('');
 	}
 
 }
 
 class ChatBanPager extends TablePager {
-	function __construct( $page ) {
+	function __construct( $page, $conds ) {
 		global $wgExternalDatawareDB;
 		$this->mPage = $page;
+		$this->mConds = $conds;
 		parent::__construct( $this->mPage->getContext() );
 
 		$this->mDb = wfGetDB( DB_SLAVE, [], $wgExternalDatawareDB );
@@ -47,6 +95,7 @@ class ChatBanPager extends TablePager {
 				'end_date',
 				'reason',
 			],
+			'conds' => $this->mConds,
 		];
 	}
 
