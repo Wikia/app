@@ -2,7 +2,7 @@
 
 use Wikia\RobotsTxt\RobotsTxt;
 
-class RobotsTxtBuilderTest extends WikiaBaseTest {
+class RobotsTxtTest extends WikiaBaseTest {
 
 	public function setUp() {
 		global $IP;
@@ -24,7 +24,7 @@ class RobotsTxtBuilderTest extends WikiaBaseTest {
 	 * @param string[]|null $blockRobots argument passed to $robots->blockRobots (null for don't call it)
 	 * @param string[] $expectedContents expected $robots->getContents()
 	 */
-	public function testApi( $allowPaths, $disallowPaths, $blockRobots, $expectedContents ) {
+	public function testClassApi( $allowPaths, $disallowPaths, $blockRobots, $expectedContents ) {
 		$robots = new RobotsTxt();
 		if ( !is_null( $allowPaths ) ) {
 			$robots->addAllowedPaths( $allowPaths );
@@ -138,7 +138,6 @@ class RobotsTxtBuilderTest extends WikiaBaseTest {
 	 * Test the methods called more times
 	 *
 	 * @covers       addAllowedPaths::addAllowPaths
-	 * @dataProvider dataProviderClassApi
 	 */
 	public function testAllowPathsCalledTwice() {
 		$robots = new RobotsTxt();
