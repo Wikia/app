@@ -45,9 +45,11 @@ class WikiaRobotsTest extends WikiaBaseTest {
 
 	/**
 	 * Test Wikia\RobotsTxt\WikiaRobots builds a "Disallow: /" robots.txt on dev environment
+	 *
+	 * @dataProvider dataProviderNonProductionEnvironment
 	 */
-	public function testDevEnvironment() {
-		$this->mockGlobalVariable( 'wgWikiaEnvironment', WIKIA_ENV_DEV );
+	public function testNonProductionEnvironment( $env ) {
+		$this->mockGlobalVariable( 'wgWikiaEnvironment', $env );
 
 		$robotsMock = $this->getMockBuilder( 'Wikia\RobotsTxt\RobotsTxt' )->getMock();
 		$robotsMock->expects( $this->once() )->method( 'addDisallowedPaths' )->with( [ '/' ] );
@@ -57,6 +59,15 @@ class WikiaRobotsTest extends WikiaBaseTest {
 
 		$wikiaRobots = new WikiaRobots( $this->getPathBuilderMock() );
 		$wikiaRobots->configureRobotsBuilder( $robotsMock );
+	}
+
+	public function dataProviderNonProductionEnvironment() {
+		return [
+			[ WIKIA_ENV_PREVIEW ],
+			[ WIKIA_ENV_SANDBOX ],
+			[ WIKIA_ENV_VERIFY ],
+			[ WIKIA_ENV_STABLE ],
+		];
 	}
 
 	/**

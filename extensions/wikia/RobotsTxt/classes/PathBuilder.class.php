@@ -150,7 +150,7 @@ class PathBuilder {
 		$aliases = [ ];
 		foreach ( $this->languages as $lang ) {
 			$specialAliases = $lang->getSpecialPageAliases();
-			if ( isset( $specialAliases[$pageName] ) ) {
+			if ( isset( $specialAliases[$pageName] ) && is_array( $specialAliases[$pageName] ) ) {
 				$aliases = array_merge( $aliases, $specialAliases[$pageName] );
 			}
 		}

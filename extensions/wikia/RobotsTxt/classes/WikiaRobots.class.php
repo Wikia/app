@@ -18,7 +18,26 @@ class WikiaRobots {
 	 *
 	 * @var bool
 	 */
-	private $allowRobots;
+	private $accessAllowed;
+
+	/**
+	 * List of additional paths to allow (in addition to white-listed special pages below)
+	 *
+	 * @var array
+	 */
+	private $allowedPaths = [
+		// SEO-302: Allow Googlebot to crawl Android app contents
+		// @see http://developer.android.com/training/app-indexing/enabling-app-indexing.html)
+		// The order of precedence between those two is undefined:
+		// "Disallow: /*?*action=" and "Allow: /api.php"
+		// @see https://developers.google.com/webmasters/control-crawl-index/docs/robots_txt#order-of-precedence-for-group-member-records
+		// That's why we're adding quite explicit "Allow: /api.php?*action=" (even though it's redundant)
+		// robots.txt Tester in Google Search Console shows this will do:
+		// @see https://www.google.com/webmasters/tools/robots-testing-tool?hl=en&siteUrl=http://muppet.wikia.com/
+		'/api.php?',
+		'/api.php?action=',
+		'/api.php?*&action='
+	];
 
 	/**
 	 * Special pages to allow (normally all special pages are blocked)
@@ -45,6 +64,15 @@ class WikiaRobots {
 		NS_SPECIAL,
 		NS_TEMPLATE,
 		NS_TEMPLATE_TALK,
+	];
+
+	/**
+	 * List of additional paths to block
+	 *
+	 * @var array
+	 */
+	private $blockedPaths = [
+		'/d/u/', // User pages for discussions
 	];
 
 	/**
@@ -123,7 +151,7 @@ class WikiaRobots {
 		global $wgRequest, $wgRobotsTxtCustomRules, $wgWikiaEnvironment;
 
 		$this->pathBuilder = $pathBuilder;
-		$this->allowRobots = ( $wgWikiaEnvironment === WIKIA_ENV_PROD || $wgRequest->getBool( 'forcerobots' ) );
+		$this->accessAllowed = ( $wgWikiaEnvironment === WIKIA_ENV_PROD || $wgRequest->getBool( 'forcerobots' ) );
 		$this->experiment = false;
 
 		if ( isset( $wgRobotsTxtCustomRules['allowSpecialPage'] ) ) {
@@ -152,11 +180,10 @@ class WikiaRobots {
 	}
 
 	public function configureRobotsBuilder( RobotsTxt $robots ) {
-		global $wgEnableSpecialSitemapExt,
-			   $wgServer;
+		global $wgEnableSpecialSitemapExt, $wgServer;
 
 
-		if ( !$this->allowRobots ) {
+		if ( !$this->accessAllowed ) {
 			// No crawling preview, verify, sandboxes, showcase, etc
 			$robots->addDisallowedPaths( [ '/' ] );
 			return $robots;
@@ -174,24 +201,15 @@ class WikiaRobots {
 			);
 		}
 
-		// Block user pages
-		$robots->addDisallowedPaths( [ '/d/u/' ] );
+		// Block additional paths
+		$robots->addDisallowedPaths( $this->blockedPaths );
 
 		// Block params
 		foreach ( $this->blockedParams as $param ) {
 			$robots->addDisallowedPaths( $this->pathBuilder->buildPathsForParam( $param ) );
 		}
 
-
-		// SEO-302: Allow Googlebot to crawl Android app contents
-		// @see http://developer.android.com/training/app-indexing/enabling-app-indexing.html)
-		// The order of precedence between those two is undefined:
-		// "Disallow: /*?*action=" and "Allow: /api.php"
-		// @see https://developers.google.com/webmasters/control-crawl-index/docs/robots_txt#order-of-precedence-for-group-member-records
-		// That's why we're adding quite explicit "Allow: /api.php?*action=" (even though it's redundant)
-		// robots.txt Tester in Google Search Console shows this will do:
-		// @see https://www.google.com/webmasters/tools/robots-testing-tool?hl=en&siteUrl=http://muppet.wikia.com/
-		$robots->addAllowedPaths( [ '/api.php?', '/api.php?action=', '/api.php?*&action=' ] );
+		$robots->addAllowedPaths( $this->allowedPaths );
 
 		// Block robots
 		$robots->addBlockedRobots( $this->blockedRobots );
@@ -229,7 +247,7 @@ class WikiaRobots {
 	 * @return string
 	 */
 	public function getMetaRobotsPolicy( \Title $title, \WebRequest $request ) {
-		if ( !$this->allowRobots ) {
+		if ( !$this->accessAllowed ) {
 			return 'noindex,nofollow';
 		}
 
