@@ -15,10 +15,6 @@ ve.ui.WikiaInfoboxInsertDialog = function VeUiWikiaInfoboxInsertDialog(config) {
 	// Parent constructor
 	ve.ui.WikiaInfoboxInsertDialog.super.call(this, config);
 
-	ve.ui.commandRegistry.on('infoboxListChanged', function () {
-		this.refreshInfoboxesList();
-	}.bind(this));
-
 	// Properties
 	this.surface = null;
 };
@@ -44,6 +40,10 @@ ve.ui.WikiaInfoboxInsertDialog.prototype.getSetupProcess = function (data) {
 	return ve.ui.WikiaInfoboxInsertDialog.super.prototype.getSetupProcess.call(this, data)
 		.next(function () {
 			this.surface = data.surface;
+			if (data.infoboxTitle) {
+				this.refreshInfoboxesList();
+				this.onInfoboxTemplateSelect({ data: data.infoboxTitle });
+			}
 		}, this);
 };
 
