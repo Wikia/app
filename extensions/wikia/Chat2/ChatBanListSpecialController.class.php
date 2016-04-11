@@ -169,6 +169,7 @@ class ChatBanPager extends TablePager {
 		$user = User::newFromId( $userId );
 		if ( $user ) {
 			$formatted = Linker::userLink( $userId, $user );
+			$formatted .= Linker::userToolLinks( $userId, $user );
 		} else {
 			$formatted = sprintf( "%s %d", $this->msg( 'uid' )->escaped(), $userId );
 		}
