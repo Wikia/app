@@ -4723,7 +4723,7 @@ class User {
 	}
 
 	/**
-	 * Add the user to the given group.
+	 * Add the user to the given group(s).
 	 * This takes immediate effect.
 	 * @param $groups string Name of group or array with list of groups
 	 * @return true if operation was successful, false otherwise
@@ -4733,7 +4733,7 @@ class User {
 	}
 
 	/**
-	 * Remove the user from the given group.
+	 * Remove the user from the given group(s).
 	 * This takes immediate effect.
 	 * @param $groups string Name of group or array with list of groups
 	 * @return true if operation was successful, false otherwise
