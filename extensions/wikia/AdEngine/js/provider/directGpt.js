@@ -142,6 +142,9 @@ define('ext.wikia.adEngine.provider.directGpt', [
 				slotTweaker.adjustLeaderboardSize(slotName);
 				onSlotResponse(slotName);
 			},
+			beforeCollapse: function (slotName) {
+				onSlotResponse(slotName);
+			},
 			beforeHop: function (slotName) {
 				log(['beforeHop', slotName], 'debug', logGroup);
 				onSlotResponse(slotName);
