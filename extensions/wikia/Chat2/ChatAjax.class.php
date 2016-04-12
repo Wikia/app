@@ -76,7 +76,7 @@ class ChatAjax {
 		// Users may be banned on the wiki of the room, but not on this wiki for example, so this prevents cross-wiki chat hacks.
 		if ( $retVal['canChat'] ) {
 			$roomId = $wgRequest->getVal( 'roomId' );
-			$cityIdOfRoom = NodeApiClient::getCityIdForRoom( $roomId );
+			$cityIdOfRoom = ChatServerApiClient::getCityIdForRoom( $roomId );
 			if ( $wgCityId !== $cityIdOfRoom ) {
 				$retVal['canChat'] = false; // don't let the user chat in the room they requested.
 				$retVal['errorMsg'] = wfMsg( 'chat-room-is-not-on-this-wiki' );
@@ -125,7 +125,7 @@ class ChatAjax {
 			return array( 'status' => false );
 		}
 
-		NodeApiClient::setChatters( $wgRequest->getArray( 'users' ) );
+		ChatServerApiClient::setChatters( $wgRequest->getArray( 'users' ) );
 
 		wfProfileOut( __METHOD__ );
 		return array( 'status' => $wgRequest->getArray( 'users' ) );
@@ -141,7 +141,7 @@ class ChatAjax {
 		wfProfileIn( __METHOD__ );
 
 		$users = json_decode( $wgRequest->getVal( 'users' ) );
-		$roomId = NodeApiClient::getDefaultRoomId( 'private', $users );
+		$roomId = ChatServerApiClient::getDefaultRoomId( 'private', $users );
 
 		wfProfileOut( __METHOD__ );
 		return array( "id" => $roomId );

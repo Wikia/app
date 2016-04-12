@@ -24,7 +24,7 @@ class ChatController extends WikiaController {
 		$this->avatarUrl = AvatarService::getAvatarUrl( $this->username, ChatController::CHAT_AVATAR_DIMENSION );
 
 		// Find the chat for this wiki (or create it, if it isn't there yet).
-		$this->roomId = (int) NodeApiClient::getDefaultRoomId();
+		$this->roomId = (int) ChatServerApiClient::getDefaultRoomId();
 
 		// we overwrite here data from redis since it causes a bug DAR-1532
 		$pageTitle = new WikiaHtmlTitle();

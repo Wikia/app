@@ -8,7 +8,7 @@
  *
  * @author Sean Colombo
  */
-class NodeApiClient {
+class ChatServerApiClient {
 	/**
 	 * Given a roomId, fetches the wgCityId from redis. This will
 	 * allow the auth class to verify that the room is in the same
@@ -19,7 +19,7 @@ class NodeApiClient {
 		wfProfileIn( __METHOD__ );
 
 		$cityId = "";
-		$cityJson = NodeApiClient::makeRequest( array(
+		$cityJson = ChatServerApiClient::makeRequest( array(
 			"func" => "getCityIdForRoom",
 			"roomId" => $roomId
 		) );
@@ -67,7 +67,7 @@ class NodeApiClient {
 			$extraDataString = json_encode( $extraData );
 
 			$roomId = "";
-			$roomJson = NodeApiClient::makeRequest( array(
+			$roomJson = ChatServerApiClient::makeRequest( array(
 				"func" => "getDefaultRoomId",
 				"wgCityId" => $wgCityId,
 				"roomType" => $roomType,
@@ -97,7 +97,7 @@ class NodeApiClient {
 		global $wgMemc;
 		wfProfileIn( __METHOD__ );
 
-		$memKey = wfMemcKey( "NodeApiClient::getChatters" );
+		$memKey = wfMemcKey( "ChatServerApiClient::getChatters" );
 
 		// data are store in memcache and set by node.js
 		$chatters = $wgMemc->get( $memKey, false );
@@ -113,7 +113,7 @@ class NodeApiClient {
 		global $wgMemc;
 		wfProfileIn( __METHOD__ );
 
-		$memKey = wfMemcKey( "NodeApiClient::getChatters" );
+		$memKey = wfMemcKey( "ChatServerApiClient::getChatters" );
 		$wgMemc->set( $memKey, $chatters, 60 * 60 * 24 );
 
 		wfProfileOut( __METHOD__ );
@@ -135,7 +135,7 @@ class NodeApiClient {
 		// operation, abort trying to contact the node server since it could be unavailable (in the event of complete
 		// network unavailability in the primary datacenter). - BugzId 11047
 		if ( empty( $wgReadOnly ) ) {
-			$requestUrl = "http://" . NodeApiClient::getHostAndPort() . "/api?" . http_build_query( $params );
+			$requestUrl = "http://" . ChatServerApiClient::getHostAndPort() . "/api?" . http_build_query( $params );
 			$response = Http::get( $requestUrl, 'default', array( 'noProxy' => true ) );
 			if ( $response === false ) {
 				$response = "";

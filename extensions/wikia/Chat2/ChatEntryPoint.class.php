@@ -103,7 +103,7 @@ class ChatEntryPoint {
 				function () {
 					return array_map(
 						[ __CLASS__, 'getUserInfo' ],
-						NodeApiClient::getChatters() );
+						ChatServerApiClient::getChatters() );
 				} );
 		}
 		wfProfileOut( __METHOD__ );

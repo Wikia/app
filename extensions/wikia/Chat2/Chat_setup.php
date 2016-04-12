@@ -30,7 +30,7 @@ $wgAutoloadClasses['ChatEntryPoint'] = "$dir/ChatEntryPoint.class.php";
 $wgAutoloadClasses['ChatController'] = "$dir/ChatController.class.php";
 $wgAutoloadClasses['ChatRailController'] = "$dir/ChatRailController.class.php";
 $wgAutoloadClasses['SpecialChat'] = "$dir/SpecialChat.class.php";
-$wgAutoloadClasses['NodeApiClient'] = "$dir/NodeApiClient.class.php";
+$wgAutoloadClasses['ChatServerApiClient'] = "$dir/ChatServerApiClient.class.phpss.php";
 $wgAutoloadClasses['ChatfailoverSpecialController'] = "$dir/ChatfailoverSpecialController.class.php";
 
 $wgSpecialPages[ 'Chatfailover'] = 'ChatfailoverSpecialController';
