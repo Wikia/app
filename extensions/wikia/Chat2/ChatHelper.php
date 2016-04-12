@@ -8,6 +8,8 @@ class ChatHelper {
 	private static $CentralCityId = 177;
 	private static $configFile = array();
 
+	const CHAT_FAILOVER_EVENT_TYPE = 'chatfo';
+
 	// constants with config file sections
 	const CHAT_DEVBOX_ENV = 'dev';
 	const CHAT_PREVIEW_ENV = 'preview';
@@ -126,7 +128,7 @@ class ChatHelper {
 	}
 
 	static public function onStaffLogFormatRow( $slogType, $result, $time, $linker, &$out ) {
-		if ( $slogType == 'chatfo' ) {
+		if ( $slogType == self::CHAT_FAILOVER_EVENT_TYPE ) {
 			$out = wfMsgExt( 'chat-failover-log-entry', array( 'parseinline' ), array( $time, $result->slog_user_name, $result->slog_user_namedst, $result->slog_comment ) );
 			return true;
 		}
@@ -171,7 +173,7 @@ class ChatHelper {
 	 * we really need them everywhere
 	 */
 	public static function onBeforePageDisplay( OutputPage &$out, Skin &$skin ) {
-		global $wgExtensionsPath, $wgTitle, $wgResourceBasePath;
+		global $wgTitle;
 
 		wfProfileIn( __METHOD__ );
 
@@ -201,14 +203,14 @@ class ChatHelper {
 	}
 
 	public static function onContributionsToolLinks(  $id, $nt, &$tools ) {
-		global $wgOut, $wgCityId, $wgUser, $wgCityId;
+		global $wgOut, $wgUser;
 		wfProfileIn( __METHOD__ );
 
 		$user = User::newFromId( $id );
 		if ( !empty( $user ) ) {
 			$tools[] = Linker::link( SpecialPage::getSafeTitleFor( 'Log', 'chatban' ), wfMessage( 'chat-chatban-log' )->escaped(), array( 'class' => 'chat-ban-log' ), array( 'page' => $user->getUserPage()->getPrefixedText() ) ); # Add chat ban log link (@author: Sactage)
-			if ( Chat::getBanInformation( $wgCityId, $user ) !== false ) {
-				$dir = "change";
+			$chatUser = new ChatUser($user);
+			if ( $chatUser->isBanned() ) {
 				LogEventsList::showLogExtract(
 					$wgOut,
 					'chatban',
@@ -225,7 +227,7 @@ class ChatHelper {
 					)
 				);
 			} else {
-				if ( $wgUser->isAllowed( 'chatmoderator' ) && !$user->isAllowed( 'chatmoderator' )  ) {
+				if ( $wgUser->isAllowed( Chat::CHAT_MODERATOR ) && !$user->isAllowed( Chat::CHAT_MODERATOR )  ) {
 					$tools[] =  "<a class='chat-change-ban' data-user-id='{$id}' href='#'>" . wfMsg( 'chat-ban-contributions-heading' ) . "</a>" ;
 				}
 			}
@@ -235,12 +237,15 @@ class ChatHelper {
 	}
 
 	public static function onLogLine( $logType, $logaction, $title, $paramArray, &$comment, &$revert, $logTimestamp ) {
-		global $wgUser, $wgCityId;
+		global $wgUser;
 
 		if ( strpos( $logaction, 'chatban' ) === 0 ) {
 			$user = User::newFromId( $paramArray[1] );
-			if ( !empty( $user ) && Chat::getBanInformation( $wgCityId, $user ) !== false && $wgUser->isAllowed( 'chatmoderator' ) ) {
-				$revert = "(" . "<a class='chat-change-ban' data-user-id='{$paramArray[1]}' href='#'>" . wfMsg( 'chat-ban-log-change-ban-link' ) . "</a>" . ")";
+			if ( !empty( $user ) ) {
+				$chatUser = new ChatUser($user);
+				if ( $chatUser->isBanned() && $wgUser->isAllowed( Chat::CHAT_MODERATOR ) ) {
+					$revert = "(" . "<a class='chat-change-ban' data-user-id='{$paramArray[1]}' href='#'>" . wfMsg( 'chat-ban-log-change-ban-link' ) . "</a>" . ")";
+				}
 			}
 		} elseif ( $logaction === 'chatconnect'  && !empty( $paramArray ) ) {
 			$ipLinks = array();
@@ -281,7 +286,6 @@ class ChatHelper {
 
 		$skin = RequestContext::getMain()->getSkin();
 		$id =  $params[1];
-		$revert = "(" . "<a class='chat-change-ban' data-user-id='{$params[1]}' href='#'>" . wfMsg( 'chat-ban-log-change-ban-link' ) . "</a>" . ")";
 		if ( !$filterWikilinks ) { // Plaintext? Used for IRC messages (BugID: 44249)
 			$targetUser = User::newFromId( $id );
 			$link = "[[User:{$targetUser->getName()}]]";
@@ -313,7 +317,7 @@ class ChatHelper {
 		$memKey = wfMemcKey( "ChatServerApiClient::getChatters" );
 
 		// data are store in memcache and set by node.js
-		$chatters = $wgMemc->get( $memKey, false );
+		$chatters = $wgMemc->get( $memKey );
 		if ( !$chatters ) {
 			$chatters = array();
 		}

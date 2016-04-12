@@ -42,13 +42,13 @@ class ChatAjax {
 			return array( 'errorMsg' => "User not found" );
 		}
 
-		$isCanGiveChatMod = in_array( 'chatmoderator', $user->changeableGroups()['add'] );
+		$isCanGiveChatMod = in_array( Chat::CHAT_MODERATOR, $user->changeableGroups()['add'] );
 
 		// First, check if they can chat on this wiki.
 		$res = array(
 			'canChat' => Chat::canChat( $user ),
 			'isLoggedIn' => $user->isLoggedIn(),
-			'isChatMod' => $user->isAllowed( 'chatmoderator' ),
+			'isChatMod' => $user->isAllowed( Chat::CHAT_MODERATOR ),
 			'isCanGiveChatMod' => $isCanGiveChatMod,
 			'isStaff' => $user->isAllowed( 'chatstaff' ),
 			'username' => $user->getName(),
@@ -235,7 +235,7 @@ class ChatAjax {
 
 
 	function BanModal() {
-		global $wgRequest, $wgCityId, $wgLang;
+		global $wgRequest, $wgLang;
 
 		wfProfileIn( __METHOD__ );
 		ChatHelper::info( __METHOD__ . ': Method called' );
@@ -247,9 +247,10 @@ class ChatAjax {
 		$fmtTime = "";
 
 		if ( !empty( $userId ) && $user = User::newFromID( $userId ) ) {
-			$ban = Chat::getBanInformation( $wgCityId, $user );
-			if ( $ban !== false ) {
+			$chatUser = new ChatUser($user);
+			if ( $chatUser->isBanned() ) {
 				$isChangeBan = true;
+				$ban = $chatUser->getBanInfo();
 				$isoTime = wfTimestamp( TS_ISO_8601, $ban->end_date );
 				$fmtTime = $wgLang->timeanddate( wfTimestamp( TS_MW, $ban->end_date ), true );
 			}

@@ -137,14 +137,17 @@ function chatAjaxonUserGetRights( $user, &$aRights ) {
 // ajax
 $wgAjaxExportList[] = 'ChatAjax';
 function ChatAjax() {
-	global $wgChatDebugEnabled;
+	global $wgChatDebugEnabled, $wgRequest, $wgUser, $wgMemc;
 
 	if ( !empty( $wgChatDebugEnabled ) ) {
 		Wikia::log( __METHOD__, "", "Chat debug:" . json_encode( $_REQUEST ) );
 	}
 
-	global $wgRequest, $wgUser, $wgMemc;
 	$method = $wgRequest->getVal( 'method', false );
+
+	$json = json_encode([
+		'error' => 'Invalid method',
+	]);
 
 	if ( method_exists( 'ChatAjax', $method ) ) {
 		wfProfileIn( __METHOD__ );
@@ -153,7 +156,7 @@ function ChatAjax() {
 
 		// macbre: check to protect against BugId:27916
 		if ( !is_null( $key ) ) {
-			$data = $wgMemc->get( $key, false );
+			$data = $wgMemc->get( $key );
 			if ( !empty( $data ) ) {
 				$wgUser = User::newFromId( $data['user_id'] );
 			}
@@ -163,11 +166,11 @@ function ChatAjax() {
 
 		// send array as JSON
 		$json = json_encode( $data );
-		$response = new AjaxResponse( $json );
-		$response->setCacheDuration( 0 ); // don't cache any of these requests
-		$response->setContentType( 'application/json; charset=utf-8' );
-
-		wfProfileOut( __METHOD__ );
-		return $response;
 	}
+	$response = new AjaxResponse( $json );
+	$response->setCacheDuration( 0 ); // don't cache any of these requests
+	$response->setContentType( 'application/json; charset=utf-8' );
+
+	wfProfileOut( __METHOD__ );
+	return $response;
 }
