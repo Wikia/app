@@ -58,7 +58,7 @@ class ChatAjax {
 			'since' => '',
 
 			// Extra wg variables that we need.
-			'activeBasket' => ChatHelper::getServerBasket(),
+			'activeBasket' => ChatConfig::getServerBasket(),
 			'wgCityId' => $wgCityId,
 			'wgServer' => $wgServer,
 			'wgArticlePath' => $wgArticlePath
@@ -114,7 +114,7 @@ class ChatAjax {
 		wfProfileIn( __METHOD__ );
 		ChatHelper::info( __METHOD__ . ': Method called' );
 
-		if ( \Wikia\Security\Utils::matchToken( ChatHelper::getChatCommunicationToken(), $wgRequest->getVal( 'token' ) ) ) {
+		if ( \Wikia\Security\Utils::matchToken( ChatConfig::getSecretToken(), $wgRequest->getVal( 'token' ) ) ) {
 			wfProfileOut( __METHOD__ );
 
 			return array( 'status' => false );

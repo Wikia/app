@@ -35,13 +35,13 @@ class ChatController extends WikiaController {
 		$this->chatkey = Chat::echoCookies();
 		// Set the hostname of the node server that the page will connect to.
 
-		$chathost = ChatHelper::getChatConfig( 'ChatHost' );
+		$chathost = ChatConfig::getPublicHost();
 
 		$server = explode( ":", $chathost );
 		$this->nodeHostname = $server[0];
 		$this->nodePort = $server[1];
 
-		$chatmain = ChatHelper::getServer( 'Main' );
+		$chatmain = ChatConfig::getMainServer();
 		$this->nodeInstance = $chatmain['serverId'];
 
 		// Some building block for URLs that the UI needs.

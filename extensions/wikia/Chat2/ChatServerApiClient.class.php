@@ -154,7 +154,7 @@ class ChatServerApiClient {
 	 * This is based on whether this is dev or prod, but can be overridden
 	 */
 	static protected function getHostAndPort() {
-		$server = ChatHelper::getServer( 'Api' );
+		$server = ChatConfig::getApiServer();
 		$hostAndPort = $server['host'] . ':' . $server['port'];
 
 		return $hostAndPort;

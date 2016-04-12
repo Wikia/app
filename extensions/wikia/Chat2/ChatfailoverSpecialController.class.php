@@ -33,19 +33,19 @@ class ChatfailoverSpecialController extends WikiaSpecialPageController {
 			throw new PermissionsError( 'chatfailover' );
 		}
 
-		$mode = (bool) ChatHelper::getMode();
+		$mode = (bool)ChatConfig::getMode();
 		$this->wg->Out->setPageTitle( wfMsg( 'Chatfailover' ) );
 
 		if ( $this->request->wasPosted() ) {
 			$reason = $this->request->getVal( 'reason' );
-			if ( !empty( $reason ) && $mode == ChatHelper::getMode() ) { // the mode didn't change
+			if ( !empty( $reason ) && $mode == ChatConfig::getMode() ) { // the mode didn't change
 				$mode = !$mode;
 				StaffLogger::log( ChatHelper::CHAT_FAILOVER_EVENT_TYPE, "switch", $this->wg->User->getID(), $this->wg->User->getName(), $mode, $mode ? 'regular': 'failover', $reason );
-				ChatHelper::changeMode( $mode );
+				ChatConfig::changeMode( $mode );
 			}
 		}
 
-		$this->response->setVal( "serversList", ChatHelper::getServersList() );
+		$this->response->setVal( "serversList", ChatConfig::getMainServersList() );
 
 		$this->response->setVal( "mode", $mode ? 'regular': 'failover' );
 		$this->response->setVal( "modeBool", $mode );
