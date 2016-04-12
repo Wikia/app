@@ -44,15 +44,10 @@ class CommunityPageSpecialUsersModel {
 					->AND_ ( 'wup_user' )->EQUAL_TO( $user->getID() )
 					->AND_ ( 'wup_value > DATE_SUB(now(), INTERVAL 2 YEAR)' )
 					->ORDER_BY( 'wup_value DESC' )
-					->run( $db, function ( ResultWrapper $result ) {
-						$out = [];
-						while ( $row = $result->fetchRow() ) {
-							$out[] = [
-								'wup_value' => $row['wup_value']
-							];
-						}
-
-						return $out;
+					->runLoop( $db, function ( &$sqlData, $row ) {
+						$sqlData[] = [
+							'wup_value' => $row->wup_value,
+						];
 					} );
 
 				return $sqlData;
@@ -98,17 +93,14 @@ class CommunityPageSpecialUsersModel {
 					->GROUP_BY( 'user_name' )
 					->ORDER_BY( 'revision_count' )->DESC()
 					->LIMIT( $limit )
-					->run( $db, function ( ResultWrapper $result ) {
-						$out = [];
-						while ( $row = $result->fetchRow() ) {
-							$out[] = [
-								'userId' => $row['user_id'],
-								'userName' => $row['user_name'],
-								'contributions' => $row['revision_count']
-							];
-						}
-						return $out;
+					->runLoop( $db, function ( &$sqlData, $row ) {
+						$sqlData[] = [
+							'userId' => $row->user_id,
+							'userName' => $row->user_name,
+							'contributions' => $row->revision_count,
+						];
 					} );
+
 				return $sqlData;
 			}
 		);
@@ -128,16 +120,14 @@ class CommunityPageSpecialUsersModel {
 					->FROM ( 'user' )
 					->LEFT_JOIN( 'user_groups ON (user_id = ug_user)' )
 					->WHERE( 'ug_group' )->EQUAL_TO( 'bot-global' )
-					->run( $db, function ( ResultWrapper $result ) {
-						$out = [];
-						while ( $row = $result->fetchRow() ) {
-							$out[] = $row['user_id'];
-						}
-						return $out;
+					->runLoop( $db, function ( &$sqlData, $row ) {
+						$sqlData[] = $row->user_id;
 					} );
+
 				return $sqlData;
 			}
 		);
+
 		return $botIds;
 	}
 
@@ -187,13 +177,8 @@ class CommunityPageSpecialUsersModel {
 					->FROM( 'revision' )
 					->WHERE( 'rev_user' )->EQUAL_TO( $userId )
 					->AND_( 'rev_timestamp > DATE_SUB(now(), INTERVAL ' . $interval . ')' )
-					->run( $db, function ( ResultWrapper $result ) {
-						$out = 0;
-						while ( $row = $result->fetchRow() ) {
-							$out = $row['revision_count'];
-						}
-
-						return $out;
+					->runLoop( $db, function ( &$sqlData, $row ) {
+						$sqlData = $row->revision_count;
 					} );
 
 				return $sqlData;
@@ -250,28 +235,22 @@ class CommunityPageSpecialUsersModel {
 					->AND_ ( 'wup_value > DATE_SUB(now(), INTERVAL 14 DAY)' )
 					->ORDER_BY( 'wup_value DESC' )
 					->LIMIT( $limit )
-					->run( $db, function ( ResultWrapper $result ) {
-						$out = [];
+					->runLoop( $db, function ( &$sqlData, $row ) {
+						$user = User::newFromId( $row->wup_user );
+						$userName = $user->getName();
 
-						while ( $row = $result->fetchRow() ) {
-							$user = User::newFromId( $row['wup_user'] );
-							$userName = $user->getName();
+						if ( $this->showMember( $user ) ) {
+							$avatar = AvatarService::renderAvatar($userName, AvatarService::AVATAR_SIZE_SMALL_PLUS);
 
-							if ( $this->showMember( $user ) ) {
-								$avatar = AvatarService::renderAvatar($userName, AvatarService::AVATAR_SIZE_SMALL_PLUS);
-
-								$out[] = [
-									'userId' => $row['wup_user'],
-									'oldestRevision' => $row['wup_value'],
-									'contributions' => 0, // $row['contributions'],
-									'userName' => $userName,
-									'avatar' => $avatar,
-									'profilePage' => $user->getUserPage()->getLocalURL(),
-								];
-							}
+							$sqlData[] = [
+								'userId' => $row->wup_user,
+								'oldestRevision' => $row->wup_value,
+								'contributions' => 0, // $row->contributions,
+								'userName' => $userName,
+								'avatar' => $avatar,
+								'profilePage' => $user->getUserPage()->getLocalURL(),
+							];
 						}
-
-						return $out;
 					} );
 
 				return $sqlData;
@@ -301,32 +280,26 @@ class CommunityPageSpecialUsersModel {
 					->WHERE ( 'wup_property' )->EQUAL_TO( 'firstContributionTimestamp' )
 					->AND_ ( 'wup_value > DATE_SUB(now(), INTERVAL 2 YEAR)' )
 					->ORDER_BY( 'wup_value DESC' )
-					->run( $db, function ( ResultWrapper $result ) {
-						$out = [];
+					->runLoop( $db, function ( &$sqlData, $row ) {
+						$user = User::newFromId( $row->wup_user );
+						$userName = $user->getName();
 
-						while ( $row = $result->fetchRow() ) {
-							$user = User::newFromId( $row['wup_user'] );
-							$userName = $user->getName();
+						if ( $this->showMember( $user ) ) {
+							$avatar = AvatarService::renderAvatar( $userName, AvatarService::AVATAR_SIZE_SMALL_PLUS );
+							$dateString = strftime( '%b %e, %Y', strtotime( $row->wup_value ) );
+							$isAdmin = ( strcmp( $row->ug_group, 'sysop' ) == 0 );
 
-							if ( $this->showMember( $user ) ) {
-								$avatar = AvatarService::renderAvatar( $userName, AvatarService::AVATAR_SIZE_SMALL_PLUS );
-								$dateString = strftime( '%b %e, %Y', strtotime( $row['wup_value'] ) );
-								$isAdmin = ( strcmp( $row['ug_group'], 'sysop' ) == 0 );
-
-								$out[] = [
-									'userId' => $row['wup_user'],
-									'oldestRevision' => $row['wup_value'],
-									'group' => $row['ug_group'],
-									'joinDate' => $dateString,
-									'userName' => $userName,
-									'isAdmin' => $isAdmin,
-									'avatar' => $avatar,
-									'profilePage' => $user->getUserPage()->getLocalURL(),
-								];
-							}
+							$sqlData[] = [
+								'userId' => $row->wup_user,
+								'oldestRevision' => $row->wup_value,
+								'group' => $row->ug_group,
+								'joinDate' => $dateString,
+								'userName' => $userName,
+								'isAdmin' => $isAdmin,
+								'avatar' => $avatar,
+								'profilePage' => $user->getUserPage()->getLocalURL(),
+							];
 						}
-
-						return $out;
 					} );
 
 				return $sqlData;
@@ -356,9 +329,8 @@ class CommunityPageSpecialUsersModel {
 					->WHERE ( 'wup_property' )->EQUAL_TO( 'firstContributionTimestamp' )
 					->AND_ ( 'wup_value > DATE_SUB(now(), INTERVAL 2 YEAR)' )
 					->ORDER_BY( 'wup_value DESC' )
-					->run( $db, function ( ResultWrapper $result ) {
-						$row = $result->fetchRow();
-						return $row['user_count'];
+					->runLoop( $db, function ( &$sqlData, $row ) {
+						$sqlData = $row->user_count;
 					} );
 
 				return $sqlData;
