@@ -1,7 +1,6 @@
 <?php
 /**
- * 	SP ads recovery
- * proof of concept / experiment
+ * 	Recovery Engine - AdBlock Detection and AD recovery
  */
 
 $wgAutoloadClasses['ResourceLoaderAdEngineSourcePointCSBootstrap'] = __DIR__ . '/ResourceLoaders/ResourceLoaderAdEngineSourcePointCSBootstrap.php';

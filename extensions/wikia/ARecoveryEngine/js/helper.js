@@ -1,11 +1,11 @@
 /*global define, require*/
-define('ext.wikia.adEngine.recovery.helper', [
+define('ext.wikia.aRecoveryEngine.recovery.helper', [
 	'ext.wikia.adEngine.adContext',
 	'wikia.document',
 	'wikia.lazyqueue',
 	'wikia.log',
 	'wikia.window',
-	require.optional('ext.wikia.adEngine.provider.gpt.sourcePointTag')
+	require.optional('ext.wikia.aRecoveryEngine.provider.gpt.sourcePointTag')
 ], function (
 	adContext,
 	doc,
@@ -16,7 +16,7 @@ define('ext.wikia.adEngine.recovery.helper', [
 ) {
 	'use strict';
 
-	var logGroup = 'ext.wikia.adEngine.recovery.helper',
+	var logGroup = 'ext.wikia.aRecoveryEngine.recovery.helper',
 		context = adContext.getContext(),
 		slotsToRecover = [],
 		onBlockingEventsQueue = [];

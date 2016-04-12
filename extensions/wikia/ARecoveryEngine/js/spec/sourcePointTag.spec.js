@@ -1,5 +1,5 @@
 /*global describe, it, expect, modules, spyOn, document, beforeEach*/
-describe('ext.wikia.adEngine.provider.gpt.sourcePointTag', function () {
+describe('ext.wikia.aRecoveryEngine.provider.gpt.sourcePointTag', function () {
 	'use strict';
 
 	function noop() { return undefined; }
@@ -71,7 +71,7 @@ describe('ext.wikia.adEngine.provider.gpt.sourcePointTag', function () {
 		GoogleTag;
 
 	function getApi() {
-		var SourcePointTag = modules['ext.wikia.adEngine.provider.gpt.sourcePointTag'](
+		var SourcePointTag = modules['ext.wikia.aRecoveryEngine.provider.gpt.sourcePointTag'](
 			mocks.adContext,
 			GoogleTag,
 			mocks.adSlot,
