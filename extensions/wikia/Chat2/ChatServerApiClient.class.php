@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Even though the Predis 5.2 backport works swimmingly, given the layout of our network (chat server and its local redis instance running in the public network)
  * and the fact that redis is essentially unsecured, it is not safe for our MediaWiki server to make requests to redis.
@@ -9,23 +10,26 @@
  * @author Sean Colombo
  */
 class ChatServerApiClient {
+	const ROOM_TYPE_PUBLIC = 'open';
+	const ROOM_TYPE_PRIVATE = 'private';
+
 	/**
 	 * Given a roomId, fetches the wgCityId from redis. This will
 	 * allow the auth class to verify that the room is in the same
 	 * that the connection is attempting to be made from (prevents
 	 * circumventing bans by connecting to Wiki A's chat via Wiki B).
 	 */
-	static public function getCityIdForRoom( $roomId ) {
+	static public function getCityIdFromRoomId( $roomId ) {
 		wfProfileIn( __METHOD__ );
 
 		$cityId = "";
-		$cityJson = ChatServerApiClient::makeRequest( array(
+		$cityData = ChatServerApiClient::makeRequest( array(
 			"func" => "getCityIdForRoom",
 			"roomId" => $roomId
 		) );
-		$cityData = json_decode( $cityJson );
-		if ( isset( $cityData-> { 'cityId' } ) ) {
-			$cityId = $cityData-> { 'cityId' } ;
+
+		if ( isset( $cityData->cityId ) ) {
+			$cityId = $cityData->cityId;
 		} else {
 			// FIXME: How should we handle it if there is no cityId?
 			ChatHelper::info( __METHOD__ . ': Method called - no cityId', [
@@ -41,45 +45,59 @@ class ChatServerApiClient {
 		] );
 
 		return $cityId;
-	} // end getCityIdForRoom()
+	}
 
 	/**
-	 * Returns the id of the default chat for the current wiki.
+	 * Return public room id for the current wiki. It is created if does not exist.
+	 *
+	 * @return int|null
+	 */
+	static public function getPublicRoomId() {
+		return self::getRoomId(self::ROOM_TYPE_PUBLIC);
+	}
+
+	/**
+	 * Return private room id for the specified users for the current wiki. It is created if does not exist.
+	 *
+	 * @param string[] $userNames List of user names
+	 * @return int|null
+	 */
+	static public function getPrivateRoomId( $userNames ) {
+		return self::getRoomId(self::ROOM_TYPE_PRIVATE, $userNames);
+	}
+
+	/**
+	 * Returns the id of the chat room of the given type for the current wiki.
 	 *
 	 * If the chat doesn't exist, creates it.
 	 *
-	 * @param roomUsers - for private chats: an array of users who are in the room.
-	 *
-	 * TODO: Document what format these users are in (user ids? db_keys?)
-	 *
-	 * @return string
+	 * @param string $roomType One of ChatServerApiClient::ROOM_TYPE_*
+	 * @param array $roomUsers List of usernames for private rooms
+	 * @return int|null
 	 */
-	static public function getDefaultRoomId( $roomType = "open", $roomUsers = [] ) {
+	static private function getRoomId( $roomType, $roomUsers = [ ] ) {
 		global $wgCityId, $wgServer, $wgArticlePath;
 		wfProfileIn( __METHOD__ );
 
-		if ( empty( $roomData ) ) { // TODO: FIXME: What is this testing? Isn't it ALWAYS empty? - SWC 20110905
-			// Add some extra data that the server will want in order to store it in the room's hash.
-			$extraData = array(
-				'wgServer' => $wgServer,
-				'wgArticlePath' => $wgArticlePath
-			);
-			$extraDataString = json_encode( $extraData );
+		$roomId = null;
 
-			$roomId = "";
-			$roomJson = ChatServerApiClient::makeRequest( array(
-				"func" => "getDefaultRoomId",
-				"wgCityId" => $wgCityId,
-				"roomType" => $roomType,
-				"roomUsers" => json_encode( $roomUsers ),
-				"extraDataString" => $extraDataString
-			) );
+		// Add some extra data that the server will want in order to store it in the room's hash.
+		$extraData = array(
+			'wgServer' => $wgServer,
+			'wgArticlePath' => $wgArticlePath
+		);
+		$extraDataString = json_encode( $extraData );
 
-			$roomData = json_decode( $roomJson );
-		}
+		$roomData = ChatServerApiClient::makeRequest( array(
+			"func" => "getDefaultRoomId",
+			"wgCityId" => $wgCityId,
+			"roomType" => $roomType,
+			"roomUsers" => json_encode( $roomUsers ),
+			"extraDataString" => $extraDataString
+		) );
 
-		if ( isset( $roomData-> { 'roomId' } ) ) {
-			$roomId = $roomData-> { 'roomId' } ;
+		if ( isset( $roomData->roomId ) ) {
+			$roomId = $roomData->roomId;
 			ChatHelper::info( __METHOD__ . ': Method called', [
 				'roomId' => $roomId,
 			] );
@@ -89,9 +107,9 @@ class ChatServerApiClient {
 		}
 
 		wfProfileOut( __METHOD__ );
-		return $roomId;
-	} // end getDefaultRoomId()
 
+		return $roomId;
+	}
 
 	static public function getChatters() {
 		global $wgMemc;
@@ -106,6 +124,7 @@ class ChatServerApiClient {
 		}
 
 		wfProfileOut( __METHOD__ );
+
 		return $chatters;
 	}
 
@@ -119,14 +138,14 @@ class ChatServerApiClient {
 		wfProfileOut( __METHOD__ );
 	}
 
-
 	/**
-	 * Does the request to the Node server and returns the responseText (empty string on failure).
+	 * Performs HTTP request do Chat server and returns decoded JSON or null
 	 */
 	static private function makeRequest( $params ) {
 		global $wgReadOnly;
 		wfProfileIn( __METHOD__ );
-		$response = "";
+
+		$response = null;
 
 		ChatHelper::debug( __METHOD__ . ': Method called ', $params );
 
@@ -138,11 +157,16 @@ class ChatServerApiClient {
 			$requestUrl = "http://" . ChatServerApiClient::getHostAndPort() . "/api?" . http_build_query( $params );
 			$response = Http::get( $requestUrl, 'default', array( 'noProxy' => true ) );
 			if ( $response === false ) {
-				$response = "";
+				$response = null;
 			}
 		}
 
+		if ( $response !== null ) {
+			$response = json_decode( $response );
+		}
+
 		wfProfileOut( __METHOD__ );
+
 		return $response;
 	}
 
@@ -151,12 +175,10 @@ class ChatServerApiClient {
 	 * This is based on whether this is dev or prod, but can be overridden
 	 */
 	static protected function getHostAndPort() {
-		global $wgDevelEnvironment;
-
 		$server = ChatHelper::getServer( 'Api' );
 		$hostAndPort = $server['host'] . ':' . $server['port'];
 
 		return $hostAndPort;
-	} // end getHostAndPort()
+	}
 
 }

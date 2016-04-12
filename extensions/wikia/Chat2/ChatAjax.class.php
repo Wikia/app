@@ -76,7 +76,7 @@ class ChatAjax {
 		// Users may be banned on the wiki of the room, but not on this wiki for example, so this prevents cross-wiki chat hacks.
 		if ( $retVal['canChat'] ) {
 			$roomId = $wgRequest->getVal( 'roomId' );
-			$cityIdOfRoom = ChatServerApiClient::getCityIdForRoom( $roomId );
+			$cityIdOfRoom = ChatServerApiClient::getCityIdFromRoomId( $roomId );
 			if ( $wgCityId !== $cityIdOfRoom ) {
 				$retVal['canChat'] = false; // don't let the user chat in the room they requested.
 				$retVal['errorMsg'] = wfMsg( 'chat-room-is-not-on-this-wiki' );
@@ -132,7 +132,7 @@ class ChatAjax {
 	}
 
 	/**
-	 * Ajax endpoint for createing / accessing  private rooms
+	 * Ajax endpoint for creating / accessing  private rooms
 	 */
 
 	static public function getPrivateRoomID() {
@@ -141,7 +141,7 @@ class ChatAjax {
 		wfProfileIn( __METHOD__ );
 
 		$users = json_decode( $wgRequest->getVal( 'users' ) );
-		$roomId = ChatServerApiClient::getDefaultRoomId( 'private', $users );
+		$roomId = ChatServerApiClient::getPrivateRoomId( $users );
 
 		wfProfileOut( __METHOD__ );
 		return array( "id" => $roomId );
