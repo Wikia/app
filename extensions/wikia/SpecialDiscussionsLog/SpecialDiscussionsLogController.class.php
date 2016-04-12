@@ -16,6 +16,7 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 	const DAYS_RANGE = 15;
 	const HTTP_STATUS_OK = 200;
 	const NO_USER_MATCH_ERROR = 'discussionslog-no-user-match-error';
+	const DISCUSSIONS_LOG_ACTION = 'specialdiscussionslog';
 
 	const DEFAULT_TEMPLATE_ENGINE = \WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
 
@@ -24,7 +25,7 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 
 	public function __construct() {
 		parent::__construct( 'DiscussionsLog', '', false );
-		$this->users = [ ];
+		$this->users = [];
 		$this->logger = Wikia\Logger\WikiaLogger::instance();
 	}
 
@@ -33,11 +34,16 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 		$this->checkAccess();
 
 		$this->setHeaders();
-		$this->response->addAsset( '/extensions/wikia/SpecialDiscussionsLog/css/DiscussionsLog_Forms.scss' );
+		$this->response->addAsset( 'special_discussions_log_scss' );
 
 		$this->wg->Out->setPageTitle( wfMessage( 'discussionslog-pagetitle' )->escaped() );
 
-		list( $userName, $ipAddress ) = $this->readAndValidateInput();
+		$userName = $this->getVal( UserQuery::getKeyName() );
+		$ipAddress = $this->getVal( IpAddressQuery::getKeyName() );
+
+		if ( !empty( $userName ) && !empty( $ipAddress ) ) {
+			throw new \InvalidArgumentException( 'discussionslog-multiple-input-error' );
+		}
 
 		if ( $userName ) {
 			$searchQuery = new UserQuery( $userName );
@@ -47,40 +53,28 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 			$searchQuery = null;
 		}
 
-		$queryStringParams = [ ];
+		$queryStringParams = [];
 		if ( $searchQuery ) {
-			$queryStringParams[ $searchQuery->getKeyName() ] = $searchQuery->getKey();
+			$queryStringParams[$searchQuery->getKeyName()] = $searchQuery->getKey();
 		}
-		$this->setVal( 'inputForm', $this->sendSelfRequest( 'inputForm', $queryStringParams ) );
+		$this->response->setVal( 'inputForm', $this->sendSelfRequest( 'inputForm', $queryStringParams ) );
 
 		if ( $searchQuery ) {
 			$this->requestUserLog( $searchQuery );
 		}
 	}
 
-	/**
-	 * Returns an array containing userName and ipAddress
-	 * @return array
-	 */
-	private function readAndValidateInput() {
-		$userName = $this->getVal( UserQuery::getKeyName(), null );
-		$ipAddress = $this->getVal( IpAddressQuery::getKeyName(), null );
-
-		if ( !empty( $userName ) && !empty( $ipAddress ) ) {
-			throw new \InvalidArgumentException( wfMessage( 'discussionslog-multiple-input-error' )->escaped() );
-		}
-
-		return [ $userName, $ipAddress ];
-	}
-
 	private function requestUserLog( SearchQuery $searchQuery ) {
-		$this->setVal(
+		$this->response->setVal(
 			'userLog',
-			$this->sendSelfRequest( 'userLog', [ $searchQuery->getKeyName() => $searchQuery->getKey() ] ) );
+			$this->sendSelfRequest(
+				'userLog',
+				[ $searchQuery->getKeyName() => $searchQuery->getKey() ] ) );
 	}
 
 	public function inputForm() {
-		list( $userName, $ipAddress ) = $this->readAndValidateInput();
+		$userName = $this->getVal( UserQuery::getKeyName() );
+		$ipAddress = $this->getVal( IpAddressQuery::getKeyName() );
 
 		$this->response->setValues( [
 			'userName' => $userName,
@@ -103,12 +97,12 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 
 	private function getUserByUsername( $userName ) {
 		if ( empty( $userName ) ) {
-			throw new \InvalidArgumentException( wfMessage( self::NO_USER_MATCH_ERROR )->escaped() );
+			throw new \InvalidArgumentException( self::NO_USER_MATCH_ERROR );
 		}
 
 		$user = User::newFromName( $userName );
 		if ( !$user ) {
-			throw new \InvalidArgumentException( wfMessage( self::NO_USER_MATCH_ERROR )->escaped() );
+			throw new \InvalidArgumentException( self::NO_USER_MATCH_ERROR );
 		}
 
 		return $user;
@@ -116,7 +110,7 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 
 	private function getUserById( $userId ) {
 		if ( !$userId ) {
-			throw new \InvalidArgumentException( wfMessage( self::NO_USER_MATCH_ERROR )->escaped() );
+			throw new \InvalidArgumentException( self::NO_USER_MATCH_ERROR );
 		}
 
 		// Look at cache first
@@ -126,7 +120,7 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 
 		$user = User::newFromId( $userId );
 		if ( !$user ) {
-			throw new \InvalidArgumentException( wfMessage( self::NO_USER_MATCH_ERROR )->escaped() );
+			throw new \InvalidArgumentException( self::NO_USER_MATCH_ERROR );
 		}
 
 		$this->users[ $user->getId() ] = $user;
@@ -135,50 +129,60 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 	}
 
 	public function userLog() {
-		list( $userName, $ipAddress ) = $this->readAndValidateInput();
+		$this->checkAccess();
+
+		$userName = $this->getVal( UserQuery::getKeyName() );
+		$ipAddress = $this->getVal( IpAddressQuery::getKeyName() );
 
 		$userLogRecords = [];
-		$hasUserError = false;
 		$userId = null;
-		$userErrorMessage = null;
 
 		if ( !empty( $userName ) ) {
 			try {
 				$userId = $this->getUserByUsername( $userName )->getId();
 			} catch ( \Exception $e ) {
-				$hasUserError = true;
+				$userId = null;
 			}
 
-			if ( !$hasUserError ) {
+			if ( $userId ) {
 				$userLogRecords = $this->aggregateLogByUserId( $userId );
+				$this->response->setValues( [
+						'logTableCaption' => wfMessage( 'discussionslog-table-caption' )
+							->params( [ $userName, $userId ] )
+							->escaped(),
+
+						'noUserLogRecordsMessage' => wfMessage( 'discussionslog-no-mobile-activity-error' )
+							->params( $userName )
+							->escaped(),
+				] );
+			} else {
+				$this->response->setVal(
+					'userErrorMessage',
+					wfMessage( self::NO_USER_MATCH_ERROR )->escaped() );
 			}
-
-			$this->logTableCaption = wfMessage( 'discussionslog-table-caption' )
-				->params( [ $userName, $userId ] )
-				->escaped();
-
-			$this->noUserLogRecordsMessage = wfMessage( 'discussionslog-no-mobile-activity-error' )
-				->params( $userName )
-				->escaped();
-
-			$this->userErrorMessage = wfMessage( self::NO_USER_MATCH_ERROR )->escaped();
 
 		} else if ( !empty( $ipAddress ) ) {
-			$userLogRecords = $this->aggregateLogByIpAddress( $ipAddress );
+			if ( IP::isValid( $ipAddress ) ) {
+				$userLogRecords = $this->aggregateLogByIpAddress( $ipAddress );
 
-			$this->logTableCaption = wfMessage( 'discussionslog-table-ip-caption' )
-				->params( [ $ipAddress ] )
-				->escaped();
+				$this->response->setValues( [
+						'logTableCaption' => wfMessage( 'discussionslog-table-ip-caption' )
+							->params( [ $ipAddress ] )
+							->escaped(),
 
-			$this->noUserLogRecordsMessage = wfMessage( 'discussionslog-no-ip-activity-error' )
-				->params( $ipAddress )
-				->escaped();
+						'noUserLogRecordsMessage' => wfMessage( 'discussionslog-no-ip-activity-error' )
+							->params( $ipAddress )
+							->escaped(),
+				] );
+			} else {
+				$this->response->setVal(
+					'userErrorMessage',
+					wfMessage( 'discussionslog-ip-invalid-error' )->escaped() );
+			}
 
-			$this->userErrorMessage = wfMessage( 'discussionslog-no-ip-match-error' )->escaped();
 		}
 
 		$this->response->setValues( [
-			'hasUserError' => $hasUserError,
 			'hasNoUserLogRecords' => empty( $userLogRecords ),
 			'userLogRecords' => $this->buildDisplayedUserLogRecords( $userLogRecords ),
 			'appHeader' => wfMessage( 'discussionslog-app-header' )->escaped(),
@@ -226,7 +230,7 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 
 		while ( count( $records ) < self::PAGINATION_SIZE && $dayOffset < self::DAYS_RANGE ) {
 			$url = $this->constructKibanaUrl( $dayOffset++ );
-			$response = $this->performSearchRequest( $url, $query );
+			$response = $this->getSearchResults( $url, $query );
 			if ( !$response ) {
 				break;
 			}
@@ -238,7 +242,7 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 		return $records;
 	}
 
-	private function performSearchRequest( $url, $query ) {
+	private function getSearchResults( $url, $query ) {
 		$client = new \GuzzleHttp\Client();
 
 		try {
@@ -309,9 +313,8 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 	}
 
 	private function checkAccess() {
-		$action = 'specialdiscussionslog';
-		if ( !$this->wg->User->isAllowed( $action ) ) {
-			throw new \PermissionsError( $action );
+		if ( !$this->wg->User->isAllowed( self::DISCUSSIONS_LOG_ACTION ) ) {
+			throw new \PermissionsError( self::DISCUSSIONS_LOG_ACTION );
 		}
 	}
 }

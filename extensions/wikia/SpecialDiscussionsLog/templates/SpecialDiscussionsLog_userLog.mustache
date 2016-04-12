@@ -1,9 +1,9 @@
-{{#hasUserError}}
-	<p>{{userErrorMessage}}</p>
-{{/hasUserError}}
-{{^hasUserError}}
+{{#userErrorMessage}}
+	<div class="log-error-message">{{userErrorMessage}}</div>
+{{/userErrorMessage}}
+{{^userErrorMessage}}
 	{{#hasNoUserLogRecords}}
-		<p>{{noUserLogRecordsMessage}}</p>
+		<div class="log-error-message">{{noUserLogRecordsMessage}}</div>
 	{{/hasNoUserLogRecords}}
 	{{^hasNoUserLogRecords}}
 		<div class="log-table-caption">
@@ -34,4 +34,4 @@
 			{{/userLogRecords}}
 		</table>
 	{{/hasNoUserLogRecords}}
-{{/hasUserError}}
+{{/userErrorMessage}}
