@@ -103,9 +103,9 @@ class ChatController extends WikiaController {
 	/**
 	 * adding js variable
 	 */
-
-	function onMakeGlobalVariablesScript( Array &$vars ) {
+	public function onMakeGlobalVariablesScript( array &$vars ) {
 		global $wgLang;
+
 		$vars['roomId'] = $this->roomId;
 		$vars['wgChatMod'] = $this->isChatMod;
 		$vars['WIKIA_NODE_HOST'] = $this->nodeHostname;

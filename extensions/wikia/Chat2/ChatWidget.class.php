@@ -36,7 +36,7 @@ class ChatWidget {
 		wfProfileIn( __METHOD__ );
 
 		$template = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
-		$template->set_vars( self::getEntryPointTemplateVars( true ) );
+		$template->set_vars( self::getTemplateVars( true ) );
 
 		if ( F::app()->checkSkin( 'oasis' ) ) {
 			$html = $template->render( 'entryPointTag' );
@@ -58,7 +58,7 @@ class ChatWidget {
 	 *
 	 * @return array
 	 */
-	static public function getEntryPointTemplateVars( $isEntryPoint ) {
+	static public function getTemplateVars( $isEntryPoint ) {
 		global $wgEnableWallExt, $wgBlankImgUrl;
 
 		return [

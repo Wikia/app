@@ -4,13 +4,12 @@ class ChatRailController extends WikiaController {
 	const MAX_CHATTERS = 6;
 	const AVATAR_SIZE = 50;
 	const CHAT_WINDOW_FEATURES = 'width=600,height=600,menubar=no,status=no,location=no,toolbar=no,scrollbars=no,resizable=yes';
-	const CACHE_DURATION = 60; // ttl time for the list of chat users, this is only used for anonymous requests
 
 	/**
 	 * Render chat rail module placeholder. Content will be ajax-loaded for freshness.
 	 */
 	public function placeholder() {
-		foreach ( ChatWidget::getEntryPointTemplateVars( false ) as $name => $value ) {
+		foreach ( ChatWidget::getTemplateVars( false ) as $name => $value ) {
 			$this->setVal( $name, $value );
 		}
 
@@ -70,7 +69,7 @@ class ChatRailController extends WikiaController {
 		}
 
 		// Cache the entire call in varnish (and browser).
-		$this->response->setCacheValidity( self::CACHE_DURATION );
+		$this->response->setCacheValidity( ChatWidget::CHAT_USER_LIST_CACHE_TTL );
 
 		wfProfileOut( __METHOD__ );
 	}
@@ -83,13 +82,13 @@ class ChatRailController extends WikiaController {
 			// CONN-436: If there are no users in the chat, cache the response in varnish for CACHE_STANDARD and on the
 			// browser for the default CACHE_DURATION time;
 			// Note: Varnish cache will be purged when user opens the chat page
-			$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD, self::CACHE_DURATION );
+			$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD, ChatWidget::CHAT_USER_LIST_CACHE_TTL );
 		} else {
 			ChatHelper::info( __METHOD__ . ': Method called - found users', [
 				'chatters' => count( $this->users ),
 			] );
 			// If there are users in the chat, cache both in varnish and browser for default CACHE_DURATION;
-			$this->response->setCacheValidity( self::CACHE_DURATION );
+			$this->response->setCacheValidity( ChatWidget::CHAT_USER_LIST_CACHE_TTL );
 		}
 		wfProfileOut( __METHOD__ );
 	}
