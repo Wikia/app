@@ -1,7 +1,7 @@
 /*global define, setTimeout*/
 define('ext.wikia.adEngine.recovery.message', [
 	'ext.wikia.adEngine.adTracker',
-	'ext.wikia.adEngine.recovery.helper',
+	'ext.wikia.aRecoveryEngine.recovery.helper',
 	'jquery',
 	'mw',
 	'wikia.abTest',
