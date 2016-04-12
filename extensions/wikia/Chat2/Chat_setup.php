@@ -144,7 +144,7 @@ function ChatAjax() {
 		// macbre: check to protect against BugId:27916
 		if ( !is_null( $key ) ) {
 			$data = $wgMemc->get( $key );
-			if ( !empty( $data ) ) {
+			if ( !empty( $data ) && !empty( $data['user_id'] ) ) {
 				$wgUser = User::newFromId( $data['user_id'] );
 			}
 		}
