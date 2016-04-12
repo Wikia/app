@@ -1,6 +1,6 @@
 /*global define*/
 /*jshint maxlen:125, camelcase:false, maxdepth:7*/
-define('ext.wikia.adEngine.provider.gpt.sourcePointTag', [
+define('ext.wikia.aRecoveryEngine.provider.gpt.sourcePointTag', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.provider.gpt.googleTag',
 	'ext.wikia.adEngine.slot.adSlot',
@@ -12,7 +12,7 @@ define('ext.wikia.adEngine.provider.gpt.sourcePointTag', [
 	'use strict';
 
 	var context = adContext.getContext(),
-		logGroup = 'ext.wikia.adEngine.provider.gpt.sourcePointTag';
+		logGroup = 'ext.wikia.aRecoveryEngine.provider.gpt.sourcePointTag';
 
 	function SourcePointTag() {
 		GoogleTag.call(this);
