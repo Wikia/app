@@ -97,6 +97,8 @@ module.exports = function (config) {
 			'extensions/wikia/AdEngine/js/spec/**/*.spec.js',
 
 			//ARecoveryEngine
+			'extensions/wikia/ARecoveryEngine/js/*.js',
+			'extensions/wikia/ARecoveryEngine/js/**/*.js',
 			'extensions/wikia/ARecoveryEngine/js/spec/**/*.spec.js',
 			'extensions/wikia/ARecoveryEngine/js/spec/*.spec.js',
 

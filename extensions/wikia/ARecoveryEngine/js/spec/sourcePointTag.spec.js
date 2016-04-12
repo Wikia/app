@@ -99,7 +99,6 @@ describe('ext.wikia.aRecoveryEngine.provider.gpt.sourcePointTag', function () {
 		api.init();
 
 		expect(api.isInitialized()).toBe(true);
-		expect(mocks.sourcePoint.getClientId).toHaveBeenCalled();
 	});
 
 	it('Call GoogleTag.onAdLoad if SP is not blocking (and by default)', function () {
