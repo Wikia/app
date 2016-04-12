@@ -22,13 +22,15 @@ class ChatAjax {
 	 * If the user is not allowed to chat, an error message is returned (which can be shown to the user).
 	 */
 	static public function getUserInfo() {
-		ChatHelper::info( __METHOD__ . ': Method called' );
 		global $wgMemc, $wgServer, $wgArticlePath, $wgRequest, $wgCityId, $wgContLang;
+
 		wfProfileIn( __METHOD__ );
+		ChatHelper::info( __METHOD__ . ': Method called' );
 
 		$data = $wgMemc->get( $wgRequest->getVal( 'key' ), false );
 		if ( empty( $data ) ) {
 			wfProfileOut( __METHOD__ );
+
 			return array( 'errorMsg' => "Key not found" );
 		}
 
@@ -36,17 +38,14 @@ class ChatAjax {
 
 		if ( empty( $user ) || !$user->isLoggedIn() || $user->getName() != urldecode( $wgRequest->getVal( 'name', '' ) ) ) {
 			wfProfileOut( __METHOD__ );
+
 			return array( 'errorMsg' => "User not found" );
 		}
 
-		$isCanGiveChatMod = false;
-		$userChangeableGroups = $user->changeableGroups();
-		if ( in_array( 'chatmoderator', $userChangeableGroups['add'] ) ) {
-			$isCanGiveChatMod = true;
-		}
+		$isCanGiveChatMod = in_array( 'chatmoderator', $user->changeableGroups()['add'] );
 
 		// First, check if they can chat on this wiki.
-		$retVal = array(
+		$res = array(
 			'canChat' => Chat::canChat( $user ),
 			'isLoggedIn' => $user->isLoggedIn(),
 			'isChatMod' => $user->isAllowed( 'chatmoderator' ),
@@ -66,84 +65,82 @@ class ChatAjax {
 		);
 
 		// Figure out the error message to return (i18n is done on this side).
-		if ( $retVal['isLoggedIn'] === false ) {
-			$retVal['errorMsg'] = wfMsg( 'chat-no-login' );
-		} else if ( $retVal['canChat'] === false ) {
-			$retVal['errorMsg'] = wfMsg( 'chat-you-are-banned-text' );
+		if ( $res['isLoggedIn'] === false ) {
+			$res['errorMsg'] = wfMsg( 'chat-no-login' );
+		} else if ( $res['canChat'] === false ) {
+			$res['errorMsg'] = wfMsg( 'chat-you-are-banned-text' );
 		}
 
 		// If the user is approved to chat, make sure the roomId provided is for this wiki.
 		// Users may be banned on the wiki of the room, but not on this wiki for example, so this prevents cross-wiki chat hacks.
-		if ( $retVal['canChat'] ) {
+		if ( $res['canChat'] ) {
 			$roomId = $wgRequest->getVal( 'roomId' );
-			$cityIdOfRoom = ChatServerApiClient::getCityIdFromRoomId( $roomId );
-			if ( $wgCityId !== $cityIdOfRoom ) {
-				$retVal['canChat'] = false; // don't let the user chat in the room they requested.
-				$retVal['errorMsg'] = wfMsg( 'chat-room-is-not-on-this-wiki' );
+			$cityIdFromRoom = ChatServerApiClient::getCityIdFromRoomId( $roomId );
+			if ( $wgCityId !== $cityIdFromRoom ) {
+				$res['canChat'] = false; // don't let the user chat in the room they requested.
+				$res['errorMsg'] = wfMsg( 'chat-room-is-not-on-this-wiki' );
 			}
 		}
 
 		// If the user can chat, dig up some other stats which are a little more expensive to compute.
-		if ( $retVal['canChat'] ) {
+		if ( $res['canChat'] ) {
 			// new user joins the chat, purge the cache
 			ChatWidget::purgeChatUsersCache();
 
-			$userStatsService = new UserStatsService( $user->getId() );
-			$stats = $userStatsService->getStats();
+			$stats = ( new UserStatsService( $user->getId() ) )->getStats();
+
+			// this results goes to chat server, which obiously has no user lang
+			// so we just return a short month name key - it has to be translated on client side
+			$res['since'] = !empty( $stats['date'] )
+				? getdate( wfTimestamp( TS_UNIX, $stats['date'] ) )
+				: '';
 
 			// NOTE: This is attached to the user so it will be in the wiki's content language instead of wgLang (which it normally will).
-			$stats['edits'] = $wgContLang->formatNum( $stats['edits'] );
-			if ( empty( $stats['date'] ) ) {
-				// If the user has not edited on this wiki, don't show anything
-				$retVal['since'] = "";
-			} else {
-				// this results goes to chat server, which obiously has no user lang
-				// so we just return a short month name key - it has to be translated on client side
-				$date = getdate( wfTimestamp( TS_UNIX, $stats['date'] ) );
-				$retVal['since'] =  $date;
-			}
-
-			$retVal['editCount'] = $stats['edits'];
+			$res['editCount'] = $wgContLang->formatNum( $stats['edits'] );
 		}
 
 		wfProfileOut( __METHOD__ );
-		return $retVal;
+
+		return $res;
 	} // end getUserInfo()
 
 	/**
 	 *  injecting data from chat to memcache
 	 *  and purging cache for ChatWidget used by Anons
 	 */
-
 	static public function setUsersList() {
-		ChatHelper::info( __METHOD__ . ': Method called' );
 		global $wgRequest;
-		wfProfileIn( __METHOD__ );
 
-		if ( ChatHelper::getChatCommunicationToken() != $wgRequest->getVal( 'token' ) ) {
+		wfProfileIn( __METHOD__ );
+		ChatHelper::info( __METHOD__ . ': Method called' );
+
+		if ( \Wikia\Security\Utils::matchToken( ChatHelper::getChatCommunicationToken(), $wgRequest->getVal( 'token' ) ) ) {
 			wfProfileOut( __METHOD__ );
+
 			return array( 'status' => false );
 		}
 
 		ChatServerApiClient::setChatters( $wgRequest->getArray( 'users' ) );
 
 		wfProfileOut( __METHOD__ );
+
 		return array( 'status' => $wgRequest->getArray( 'users' ) );
 	}
 
 	/**
 	 * Ajax endpoint for creating / accessing  private rooms
 	 */
-
 	static public function getPrivateRoomID() {
-		ChatHelper::info( __METHOD__ . ': Method called' );
 		global $wgRequest;
+
 		wfProfileIn( __METHOD__ );
+		ChatHelper::info( __METHOD__ . ': Method called' );
 
 		$users = json_decode( $wgRequest->getVal( 'users' ) );
 		$roomId = ChatServerApiClient::getPrivateRoomId( $users );
 
 		wfProfileOut( __METHOD__ );
+
 		return array( "id" => $roomId );
 	}
 
@@ -153,47 +150,48 @@ class ChatAjax {
 	 * @throws BadRequestException
 	 */
 	static public function blockOrBanChat() {
-		ChatHelper::info( __METHOD__ . ': Method called' );
 		global $wgRequest, $wgUser;
+
 		wfProfileIn( __METHOD__ );
+		ChatHelper::info( __METHOD__ . ': Method called' );
 
 		// MAIN-6290  server.js needs to pass edit token for this to work
 		// $wgRequest->isValidWriteRequest( $wgUser );
 
 		$kickingUser = $wgUser;
 
-		$retVal = array();
+		$res = array();
 		$userToBan = $wgRequest->getVal( 'userToBan' );
 		$userToBanId = $wgRequest->getVal( 'userToBanId', 0 );
 
 		if ( !empty( $userToBanId ) ) {
 			$userToBan = User::newFromId( $userToBanId );
-			if ( !empty( $userToBanId ) ) {
-				$userToBan = $userToBan->getName();
-			}
+			$userToBan = $userToBan->getName();
 		}
 
 		$mode = $wgRequest->getVal( 'mode', 'private' );
 
 		if ( empty( $userToBan ) ) {
-			$retVal["error"] = wfMsg( 'chat-missing-required-parameter', 'usertoBan' );
+			$res["error"] = wfMsg( 'chat-missing-required-parameter', 'usertoBan' );
 		} else {
 			$dir = $wgRequest->getVal( 'dir', 'add' );
+			$result = null;
 			if ( $mode == 'private' ) {
 				$result = Chat::blockPrivate( $userToBan, $dir, $kickingUser );
 			} else if ( $mode == 'global' ) {
-				$time = (int)  $wgRequest->getVal( 'time', 0 );
+				$time = (int)$wgRequest->getVal( 'time', 0 );
 				$result = Chat::banUser( $userToBan, $kickingUser, $time, $wgRequest->getVal( 'reason' ) );
 			}
 			if ( $result === true ) {
-				$retVal["success"] = true;
+				$res["success"] = true;
 			} else {
-				$retVal["error"] = $result;
+				$res["error"] = $result;
 			}
 		}
 
 		wfProfileOut( __METHOD__ );
-		return $retVal;
+
+		return $res;
 	} // end kickBan()
 
 
@@ -208,63 +206,70 @@ class ChatAjax {
 	 * returns "error" => [error message].
 	 */
 	static public function giveChatMod() {
-		ChatHelper::info( __METHOD__ . ': Method called' );
 		global $wgRequest, $wgUser;
+
 		wfProfileIn( __METHOD__ );
+		ChatHelper::info( __METHOD__ . ': Method called' );
 
-		$promottingUser = $wgUser;
+		$promotingUser = $wgUser;
 
-		$retVal = array();
+		$res = array();
 		$PARAM_NAME = "userToPromote";
 		$userToPromote = $wgRequest->getVal( $PARAM_NAME );
+
 		if ( empty( $userToPromote ) ) {
-			$retVal["error"] = wfMsg( 'chat-missing-required-parameter', $PARAM_NAME );
+			$res["error"] = wfMsg( 'chat-missing-required-parameter', $PARAM_NAME );
 		} else {
-			$result = Chat::promoteChatModerator( $userToPromote, $promottingUser );
+			$result = Chat::promoteChatModerator( $userToPromote, $promotingUser );
 			if ( $result === true ) {
-				$retVal["success"] = true;
+				$res["success"] = true;
 			} else {
-				$retVal["error"] = $result;
+				$res["error"] = $result;
 			}
 		}
 
 		wfProfileOut( __METHOD__ );
-		return $retVal;
+
+		return $res;
 	} // end addChatMod()
 
 
-	function BanModal( ) {
-		ChatHelper::info( __METHOD__ . ': Method called' );
+	function BanModal() {
 		global $wgRequest, $wgCityId, $wgLang;
+
 		wfProfileIn( __METHOD__ );
-		$tmpl = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
+		ChatHelper::info( __METHOD__ . ': Method called' );
 
 		$userId = $wgRequest->getVal( 'userId', 0 );
 
-		$isChangeBan = false;
+		$isChangeBan = false; // false = creating a ban, true = editing ban details
 		$isoTime = "";
 		$fmtTime = "";
 
 		if ( !empty( $userId ) && $user = User::newFromID( $userId ) ) {
-			 $ban = Chat::getBanInformation( $wgCityId, $user );
-			 if ( $ban !== false )  {
-			 	$isChangeBan = true;
-			 	$isoTime = wfTimestamp( TS_ISO_8601, $ban->end_date );
+			$ban = Chat::getBanInformation( $wgCityId, $user );
+			if ( $ban !== false ) {
+				$isChangeBan = true;
+				$isoTime = wfTimestamp( TS_ISO_8601, $ban->end_date );
 				$fmtTime = $wgLang->timeanddate( wfTimestamp( TS_MW, $ban->end_date ), true );
-			 }
+			}
 		}
 
-		$tmpl->set_vars( array(
-				'options' => Chat::GetBanOptions(),
-				'isChangeBan' => $isChangeBan,
-				'isoTime' => $isoTime,
-				'fmtTime' => $fmtTime
-			)
-		);
-		$retVal = array();
-		$retVal['template'] = $tmpl->render( "banModal" );
-		$retVal['isChangeBan'] = $isChangeBan;
+		$tmpl = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
+		$tmpl->set_vars( [
+			'options' => Chat::GetBanOptions(),
+			'isChangeBan' => $isChangeBan,
+			'isoTime' => $isoTime,
+			'fmtTime' => $fmtTime
+		] );
+
+		$res = [
+			'template' => $tmpl->render( "banModal" ),
+			'isChangeBan' => $isChangeBan,
+		];
+
 		wfProfileOut( __METHOD__ );
-		return $retVal;
+
+		return $res;
 	}
 } // end class ChatAjax
