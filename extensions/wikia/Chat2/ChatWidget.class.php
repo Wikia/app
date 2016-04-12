@@ -23,7 +23,7 @@ class ChatWidget {
 	 */
 	static public function onParserFirstCallInit( Parser &$parser ) {
 		wfProfileIn( __METHOD__ );
-		$parser->setHook( CHAT_TAG, array( __CLASS__, "parseTag" ) );
+		$parser->setHook( CHAT_TAG, [ __CLASS__, "parseTag" ] );
 		wfProfileOut( __METHOD__ );
 
 		return true;

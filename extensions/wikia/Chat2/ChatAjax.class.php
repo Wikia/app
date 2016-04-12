@@ -31,7 +31,7 @@ class ChatAjax {
 		if ( empty( $data ) ) {
 			wfProfileOut( __METHOD__ );
 
-			return array( 'errorMsg' => "Key not found" );
+			return [ 'errorMsg' => "Key not found" ];
 		}
 
 		$user = User::newFromId( $data['user_id'] );
@@ -39,13 +39,13 @@ class ChatAjax {
 		if ( empty( $user ) || !$user->isLoggedIn() || $user->getName() != urldecode( $wgRequest->getVal( 'name', '' ) ) ) {
 			wfProfileOut( __METHOD__ );
 
-			return array( 'errorMsg' => "User not found" );
+			return [ 'errorMsg' => "User not found" ];
 		}
 
 		$isCanGiveChatMod = in_array( Chat::CHAT_MODERATOR, $user->changeableGroups()['add'] );
 
 		// First, check if they can chat on this wiki.
-		$res = array(
+		$res = [
 			'canChat' => Chat::canChat( $user ),
 			'isLoggedIn' => $user->isLoggedIn(),
 			'isChatMod' => $user->isAllowed( Chat::CHAT_MODERATOR ),
@@ -62,7 +62,7 @@ class ChatAjax {
 			'wgCityId' => $wgCityId,
 			'wgServer' => $wgServer,
 			'wgArticlePath' => $wgArticlePath
-		);
+		];
 
 		// Figure out the error message to return (i18n is done on this side).
 		if ( $res['isLoggedIn'] === false ) {
@@ -117,14 +117,14 @@ class ChatAjax {
 		if ( \Wikia\Security\Utils::matchToken( ChatConfig::getSecretToken(), $wgRequest->getVal( 'token' ) ) ) {
 			wfProfileOut( __METHOD__ );
 
-			return array( 'status' => false );
+			return [ 'status' => false ];
 		}
 
 		Chat::setChatters( $wgRequest->getArray( 'users' ) );
 
 		wfProfileOut( __METHOD__ );
 
-		return array( 'status' => $wgRequest->getArray( 'users' ) );
+		return [ 'status' => $wgRequest->getArray( 'users' ) ];
 	}
 
 	/**
@@ -141,7 +141,7 @@ class ChatAjax {
 
 		wfProfileOut( __METHOD__ );
 
-		return array( "id" => $roomId );
+		return [ "id" => $roomId ];
 	}
 
 	/**
@@ -160,7 +160,7 @@ class ChatAjax {
 
 		$kickingUser = $wgUser;
 
-		$res = array();
+		$res = [ ];
 		$userToBan = $wgRequest->getVal( 'userToBan' );
 		$userToBanId = $wgRequest->getVal( 'userToBanId', 0 );
 
@@ -213,7 +213,7 @@ class ChatAjax {
 
 		$promotingUser = $wgUser;
 
-		$res = array();
+		$res = [ ];
 		$PARAM_NAME = "userToPromote";
 		$userToPromote = $wgRequest->getVal( $PARAM_NAME );
 

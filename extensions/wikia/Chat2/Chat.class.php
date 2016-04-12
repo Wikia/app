@@ -615,7 +615,7 @@ class Chat {
 		// data are store in memcache and set by node.js
 		$chatters = $wgMemc->get( $memKey );
 		if ( !$chatters ) {
-			$chatters = array();
+			$chatters = [ ];
 		}
 
 		wfProfileOut( __METHOD__ );

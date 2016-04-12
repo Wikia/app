@@ -10,12 +10,12 @@
  *
  */
 
-$wgExtensionCredits['specialpage'][] = array(
+$wgExtensionCredits['specialpage'][] = [
 	'name' => 'Chat',
-	'author' => array( 'Christian Williams', 'Sean Colombo' ),
+	'author' => [ 'Christian Williams', 'Sean Colombo' ],
 	'url' => 'http://community.wikia.com/wiki/Chat',
 	'descriptionmsg' => 'chat-desc',
-);
+];
 
 $dir = dirname( __FILE__ );
 
@@ -69,19 +69,19 @@ $wgLogActionsHandlers['chatban/chatbanremove'] = "ChatHooks::formatLogEntry";
 $wgLogActionsHandlers['chatban/chatbanadd'] = "ChatHooks::formatLogEntry";
 
 // register messages package for JS
-JSMessages::registerPackage( 'Chat', array(
+JSMessages::registerPackage( 'Chat', [
 	'chat-*',
-) );
+] );
 
-JSMessages::registerPackage( 'ChatBanModal', array(
+JSMessages::registerPackage( 'ChatBanModal', [
 	'chat-log-reason-banadd',
 	'chat-ban-modal-change-ban-heading',
 	'chat-ban-modal-button-cancel',
 	'chat-ban-modal-button-ok',
 	'chat-ban-modal-button-change-ban',
-) );
+] );
 
-JSMessages::registerPackage( 'ChatWidget', array(
+JSMessages::registerPackage( 'ChatWidget', [
 	'chat-join-the-chat',
 	'chat-start-a-chat',
 	'chat-user-menu-message-wall',
@@ -90,7 +90,7 @@ JSMessages::registerPackage( 'ChatWidget', array(
 	'chat-live2',
 	'chat-edit-count',
 	'chat-member-since'
-) );
+] );
 
 /**
  * ResourceLoader module

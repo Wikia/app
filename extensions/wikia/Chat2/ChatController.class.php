@@ -64,16 +64,16 @@ class ChatController extends WikiaController {
 		}
 
 		// set up global js variables just for the chat page
-		$wgHooks['MakeGlobalVariablesScript'][] = array( $this, 'onMakeGlobalVariablesScript' );
+		$wgHooks['MakeGlobalVariablesScript'][] = [ $this, 'onMakeGlobalVariablesScript' ];
 
 		$wgOut->getResourceLoader()->getModule( 'mediawiki' );
 
-		$ret = implode( "\n", array(
+		$ret = implode( "\n", [
 			$wgOut->getHeadLinks( null, true ),
 			$wgOut->buildCssLinks(),
 			$wgOut->getHeadScripts(),
 			$wgOut->getHeadItems()
-		) );
+		] );
 
 		$this->globalVariablesScript = $ret;
 
@@ -121,7 +121,7 @@ class ChatController extends WikiaController {
 
 		$vars['wgChatKey'] = $this->chatkey;
 
-		$months = array();
+		$months = [ ];
 		for ( $i = 1; $i < 13; $i++ ) {
 			$months[$i] = $wgLang->getMonthAbbreviation( $i );
 		}

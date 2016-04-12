@@ -26,10 +26,10 @@ class ChatServerApiClient {
 		wfProfileIn( __METHOD__ );
 
 		$cityId = "";
-		$cityData = ChatServerApiClient::makeRequest( array(
+		$cityData = ChatServerApiClient::makeRequest( [
 			"func" => "getCityIdForRoom",
 			"roomId" => $roomId
-		) );
+		] );
 
 		if ( isset( $cityData->cityId ) ) {
 			$cityId = $cityData->cityId;
@@ -85,19 +85,19 @@ class ChatServerApiClient {
 		$roomId = null;
 
 		// Add some extra data that the server will want in order to store it in the room's hash.
-		$extraData = array(
+		$extraData = [
 			'wgServer' => $wgServer,
 			'wgArticlePath' => $wgArticlePath
-		);
+		];
 		$extraDataString = json_encode( $extraData );
 
-		$roomData = ChatServerApiClient::makeRequest( array(
+		$roomData = ChatServerApiClient::makeRequest( [
 			"func" => "getDefaultRoomId",
 			"wgCityId" => $wgCityId,
 			"roomType" => $roomType,
 			"roomUsers" => json_encode( $roomUsers ),
 			"extraDataString" => $extraDataString
-		) );
+		] );
 
 		if ( isset( $roomData->roomId ) ) {
 			$roomId = $roomData->roomId;
@@ -134,7 +134,7 @@ class ChatServerApiClient {
 		// network unavailability in the primary datacenter). - BugzId 11047
 		if ( empty( $wgReadOnly ) ) {
 			$requestUrl = "http://" . ChatServerApiClient::getHostAndPort() . "/api?" . http_build_query( $params );
-			$response = Http::get( $requestUrl, 'default', array( 'noProxy' => true ) );
+			$response = Http::get( $requestUrl, 'default', [ 'noProxy' => true ] );
 			if ( $response === false ) {
 				$response = null;
 			}

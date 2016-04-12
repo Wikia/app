@@ -13,7 +13,7 @@ class ChatHooks {
 		$pos = F::app()->wg->User->isAnon() ? 1175 : 1286;
 
 		// Above spotlights, below everything else. BugzId: 4597.
-		$modules[$pos] = array( 'ChatRail', 'placeholder', null );
+		$modules[$pos] = [ 'ChatRail', 'placeholder', null ];
 
 		wfProfileOut( __METHOD__ );
 
@@ -22,7 +22,7 @@ class ChatHooks {
 
 	public static function onStaffLogFormatRow( $slogType, $result, $time, $linker, &$out ) {
 		if ( $slogType == self::CHAT_FAILOVER_EVENT_TYPE ) {
-			$out = wfMsgExt( 'chat-failover-log-entry', array( 'parseinline' ), array( $time, $result->slog_user_name, $result->slog_user_namedst, $result->slog_comment ) );
+			$out = wfMsgExt( 'chat-failover-log-entry', [ 'parseinline' ], [ $time, $result->slog_user_name, $result->slog_user_namedst, $result->slog_comment ] );
 
 			return true;
 		}
@@ -72,16 +72,16 @@ class ChatHooks {
 
 		wfProfileIn( __METHOD__ );
 
-		$sp = array(
+		$sp = [
 			'Contributions',
 			'Log',
 			'Recentchanges'
-		);
+		];
 
 		foreach ( $sp as $value ) {
 			if ( $wgTitle->isSpecial( $value ) ) {
 				// For Chat2 (doesn't exist in Chat(1))
-				$srcs = AssetsManager::getInstance()->getGroupCommonURL( 'chat_ban_js', array() );
+				$srcs = AssetsManager::getInstance()->getGroupCommonURL( 'chat_ban_js', [ ] );
 
 				foreach ( $srcs as $val ) {
 					$out->addScript( '<script src="' . $val . '"></script>' );
@@ -104,7 +104,7 @@ class ChatHooks {
 
 		$user = User::newFromId( $id );
 		if ( !empty( $user ) ) {
-			$tools[] = Linker::link( SpecialPage::getSafeTitleFor( 'Log', 'chatban' ), wfMessage( 'chat-chatban-log' )->escaped(), array( 'class' => 'chat-ban-log' ), array( 'page' => $user->getUserPage()->getPrefixedText() ) ); # Add chat ban log link (@author: Sactage)
+			$tools[] = Linker::link( SpecialPage::getSafeTitleFor( 'Log', 'chatban' ), wfMessage( 'chat-chatban-log' )->escaped(), [ 'class' => 'chat-ban-log' ], [ 'page' => $user->getUserPage()->getPrefixedText() ] ); # Add chat ban log link (@author: Sactage)
 			$chatUser = new ChatUser( $user );
 			if ( $chatUser->isBanned() ) {
 				LogEventsList::showLogExtract(
@@ -112,15 +112,15 @@ class ChatHooks {
 					'chatban',
 					$nt->getPrefixedText(),
 					'',
-					array(
+					[
 						'lim' => 1,
 						'showIfEmpty' => false,
-						'msgKey' => array(
+						'msgKey' => [
 							'chat-contributions-ban-notice',
 							$nt->getText() # Support GENDER in 'sp-contributions-blocked-notice'
-						),
+						],
 						'offset' => '' # don't use $wgRequest parameter offset
-					)
+					]
 				);
 			} else {
 				if ( $wgUser->isAllowed( Chat::CHAT_MODERATOR ) && !$user->isAllowed( Chat::CHAT_MODERATOR ) ) {
@@ -145,7 +145,7 @@ class ChatHooks {
 				}
 			}
 		} elseif ( $logaction === 'chatconnect' && !empty( $paramArray ) ) {
-			$ipLinks = array();
+			$ipLinks = [ ];
 			if ( $wgUser->isAllowed( 'multilookup' ) ) {
 				$mlTitle = GlobalTitle::newFromText( 'MultiLookup', NS_SPECIAL, 177 );
 				// Need to make the link manually for this as Linker's normaliseSpecialPage
@@ -153,13 +153,13 @@ class ChatHooks {
 				// keeping the global title
 				$ipLinks[] = Xml::tags(
 					'a',
-					array( 'href' => $mlTitle->getFullURL( 'target=' . urlencode( $paramArray[0] ) ) ),
+					[ 'href' => $mlTitle->getFullURL( 'target=' . urlencode( $paramArray[0] ) ) ],
 					wfMessage( 'multilookup' )->escaped()
 				);
 				$ipLinks[] = Linker::makeKnownLinkObj(
 					GlobalTitle::newFromText( 'Phalanx', NS_SPECIAL, 177 ),
 					wfMessage( 'phalanx' )->escaped(),
-					wfArrayToCGI( array( 'type' => '8', 'target' => $paramArray[0], 'wpPhalanxCheckBlocker' => $paramArray[0] ) )
+					wfArrayToCGI( [ 'type' => '8', 'target' => $paramArray[0], 'wpPhalanxCheckBlocker' => $paramArray[0] ] )
 				);
 				$ipLinks[] = Linker::blockLink( 0, $paramArray[0] );
 				$revert = '(' . implode( wfMessage( 'pipe-separator' )->plain(), $ipLinks ) . ')';

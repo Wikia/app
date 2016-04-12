@@ -15,7 +15,7 @@ class ChatConfig {
 	const VAR_OPERATION_MODE = 'wgChatOperationMode';
 	const CENTRAL_WIKI_ID = 177;
 
-	private static $configData = array();
+	private static $configData = [ ];
 
 	public static function getMainServer() {
 		return self::getServer( self::SERVER_TYPE_MAIN );
