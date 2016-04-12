@@ -1,6 +1,5 @@
 <?php
 use Wikia\SpecialDiscussionsLog\Search\IpAddressQuery;
-use Wikia\SpecialDiscussionsLog\Search\SearchQuery;
 use Wikia\SpecialDiscussionsLog\Search\UserQuery;
 
 /**
@@ -45,31 +44,9 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 			throw new \InvalidArgumentException( 'discussionslog-multiple-input-error' );
 		}
 
-		if ( $userName ) {
-			$searchQuery = new UserQuery( $userName );
-		} else if ( $ipAddress ) {
-			$searchQuery = new IpAddressQuery( $ipAddress );
-		} else {
-			$searchQuery = null;
-		}
-
-		$queryStringParams = [];
-		if ( $searchQuery ) {
-			$queryStringParams[$searchQuery->getKeyName()] = $searchQuery->getKey();
-		}
-		$this->response->setVal( 'inputForm', $this->sendSelfRequest( 'inputForm', $queryStringParams ) );
-
-		if ( $searchQuery ) {
-			$this->requestUserLog( $searchQuery );
-		}
-	}
-
-	private function requestUserLog( SearchQuery $searchQuery ) {
-		$this->response->setVal(
-			'userLog',
-			$this->sendSelfRequest(
-				'userLog',
-				[ $searchQuery->getKeyName() => $searchQuery->getKey() ] ) );
+		$requestParams = $this->request->getParams();
+		$this->response->setVal( 'inputForm', $this->sendSelfRequest( 'inputForm', $requestParams ) );
+		$this->response->setVal( 'userLog', $this->sendSelfRequest( 'userLog', $requestParams ) );
 	}
 
 	public function inputForm() {
