@@ -11,8 +11,10 @@
 		</li>
 	{{/admins}}
 	{{^admins}}
-		{{noAdminText}}
-		<a href="{{{noAdminHref}}}">{{noAdminContactText}}</a>
+		<div class="zero">
+			{{noAdminText}}
+			<a href="{{{noAdminHref}}}">{{noAdminContactText}}</a>
+		</div>
 	{{/admins}}
 </ul>
 {{#haveOtherAdmins}}
