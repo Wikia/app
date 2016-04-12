@@ -145,6 +145,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		$this->response->setData( [
 			'allMembers' => $this->msg( 'communitypage-view-all-members' )->plain(),
 			'recentlyJoinedHeaderText' => $this->msg( 'communitypage-recently-joined' )->plain(),
+			'noRecentMembersText' => $this->msg( 'communitypage-no-recent-members' )->plain(),
 			'members' => $recentlyJoined,
 		] );
 	}
@@ -160,6 +161,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 			'allMembersHeaderText' => $this->msg( 'communitypage-all-members' )->plain(),
 			'admin' => $this->msg( 'communitypage-admin' )->plain(),
 			'joinedText' => $this->msg( 'communitypage-joined' )->plain(),
+			'noMembersText' => $this->msg( 'communitypage-no-members' )->plain(),
 			'members' => $allMembers,
 		] );
 	}
