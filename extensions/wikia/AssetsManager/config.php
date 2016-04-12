@@ -2825,3 +2825,10 @@ $config['special_user_activity_scss'] = [
 		'//extensions/wikia/UserActivity/css/UserActivity.scss',
 	],
 ];
+
+$config['special_discussions_log_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'assets' => [
+		'//extensions/wikia/SpecialDiscussionsLog/css/DiscussionsLog_Forms.scss',
+	],
+];
