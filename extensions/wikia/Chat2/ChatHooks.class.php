@@ -208,6 +208,7 @@ class ChatHooks {
 		if ( $wgRequest->getVal( 'action' ) === 'ajax' && $wgRequest->getVal( 'rs' ) === 'ChatAjax' ) {
 			$aRights[] = 'read';
 		}
+
 		return true;
 	}
 }

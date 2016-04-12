@@ -56,7 +56,7 @@ class ChatServerApiClient {
 	 * @return int|null
 	 */
 	static public function getPublicRoomId() {
-		return self::getRoomId(self::ROOM_TYPE_PUBLIC);
+		return self::getRoomId( self::ROOM_TYPE_PUBLIC );
 	}
 
 	/**
@@ -66,7 +66,7 @@ class ChatServerApiClient {
 	 * @return int|null
 	 */
 	static public function getPrivateRoomId( $userNames ) {
-		return self::getRoomId(self::ROOM_TYPE_PRIVATE, $userNames);
+		return self::getRoomId( self::ROOM_TYPE_PRIVATE, $userNames );
 	}
 
 	/**

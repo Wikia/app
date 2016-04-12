@@ -245,7 +245,7 @@ class ChatUser extends WikiaObject {
 	public static function newCurrent() {
 		global $wgUser;
 
-		return self::newFromId($wgUser->getId());
+		return self::newFromId( $wgUser->getId() );
 	}
 
 }

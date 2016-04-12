@@ -5,11 +5,11 @@ use Wikia\Logger\WikiaLogger;
 class ChatHelper {
 
 
-	static public function info( $message, Array $params = [] ) {
+	static public function info( $message, Array $params = [ ] ) {
 		WikiaLogger::instance()->info( 'CHAT: ' . $message, $params );
 	}
 
-	static public function debug( $message, Array $params = [] ) {
+	static public function debug( $message, Array $params = [ ] ) {
 		WikiaLogger::instance()->debug( 'CHAT: ' . $message, $params );
 	}
 

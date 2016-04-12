@@ -247,7 +247,7 @@ class ChatAjax {
 		$fmtTime = "";
 
 		if ( !empty( $userId ) && $user = User::newFromID( $userId ) ) {
-			$chatUser = new ChatUser($user);
+			$chatUser = new ChatUser( $user );
 			if ( $chatUser->isBanned() ) {
 				$isChangeBan = true;
 				$ban = $chatUser->getBanInfo();

@@ -19,9 +19,6 @@ $wgExtensionCredits['specialpage'][] = array(
 
 $dir = dirname( __FILE__ );
 
-// Allow admins to control banning/unbanning and chatmod-status
-
-
 // autoloaded classes
 $wgAutoloadClasses['Chat'] = "$dir/Chat.class.php";
 $wgAutoloadClasses['ChatAjax'] = "$dir/ChatAjax.class.php";
@@ -38,7 +35,7 @@ $wgAutoloadClasses['ChatfailoverSpecialController'] = "$dir/ChatfailoverSpecialC
 
 // special pages
 $wgSpecialPages['Chat'] = 'SpecialChat';
-$wgSpecialPages[ 'Chatfailover'] = 'ChatfailoverSpecialController';
+$wgSpecialPages['Chatfailover'] = 'ChatfailoverSpecialController';
 
 // i18n
 $wgExtensionMessagesFiles['Chat'] = $dir . '/Chat.i18n.php';
@@ -47,15 +44,15 @@ $wgExtensionMessagesFiles['Chatfailover'] = $dir . '/Chatfailover.i18n.php';
 $wgExtensionMessagesFiles['ChatDefaultEmoticons'] = $dir . '/ChatDefaultEmoticons.i18n.php';
 
 // hooks
-$wgHooks[ 'GetRailModuleList' ][] = 'ChatHooks::onGetRailModuleList';
-$wgHooks[ 'StaffLog::formatRow' ][] = 'ChatHooks::onStaffLogFormatRow';
-$wgHooks[ 'MakeGlobalVariablesScript' ][] = 'ChatHooks::onMakeGlobalVariablesScript';
-$wgHooks[ 'ParserFirstCallInit' ][] = 'ChatHooks::onParserFirstCallInit';
-$wgHooks[ 'LinkEnd' ][] = 'ChatHooks::onLinkEnd';
-$wgHooks[ 'BeforePageDisplay' ][] = 'ChatHooks::onBeforePageDisplay';
-$wgHooks[ 'ContributionsToolLinks' ][] = 'ChatHooks::onContributionsToolLinks';
-$wgHooks[ 'LogLine' ][] = 'ChatHooks::onLogLine';
-$wgHooks[ 'UserGetRights' ][] = 'ChatHooks::onUserGetRights';
+$wgHooks['GetRailModuleList'][] = 'ChatHooks::onGetRailModuleList';
+$wgHooks['StaffLog::formatRow'][] = 'ChatHooks::onStaffLogFormatRow';
+$wgHooks['MakeGlobalVariablesScript'][] = 'ChatHooks::onMakeGlobalVariablesScript';
+$wgHooks['ParserFirstCallInit'][] = 'ChatHooks::onParserFirstCallInit';
+$wgHooks['LinkEnd'][] = 'ChatHooks::onLinkEnd';
+$wgHooks['BeforePageDisplay'][] = 'ChatHooks::onBeforePageDisplay';
+$wgHooks['ContributionsToolLinks'][] = 'ChatHooks::onContributionsToolLinks';
+$wgHooks['LogLine'][] = 'ChatHooks::onLogLine';
+$wgHooks['UserGetRights'][] = 'ChatHooks::onUserGetRights';
 
 // logs
 $wgLogTypes[] = 'chatban';
@@ -122,7 +119,7 @@ $wgResourceModules['ext.Chat2'] = [
 
 
 define( 'CHAT_TAG', 'chat' );
-define( 'CUC_TYPE_CHAT', 128 );	// for CheckUser operation type
+define( 'CUC_TYPE_CHAT', 128 );    // for CheckUser operation type
 
 // ajax
 $wgAjaxExportList[] = 'ChatAjax';
@@ -135,9 +132,9 @@ function ChatAjax() {
 
 	$method = $wgRequest->getVal( 'method', false );
 
-	$json = json_encode([
+	$json = json_encode( [
 		'error' => 'Invalid method',
-	]);
+	] );
 
 	if ( method_exists( 'ChatAjax', $method ) ) {
 		wfProfileIn( __METHOD__ );
@@ -162,5 +159,6 @@ function ChatAjax() {
 	$response->setContentType( 'application/json; charset=utf-8' );
 
 	wfProfileOut( __METHOD__ );
+
 	return $response;
 }

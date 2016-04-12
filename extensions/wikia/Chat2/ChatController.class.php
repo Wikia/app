@@ -1,4 +1,5 @@
 <?php
+
 class ChatController extends WikiaController {
 
 	const CHAT_WORDMARK_WIDTH = 115;
@@ -122,7 +123,7 @@ class ChatController extends WikiaController {
 
 		$months = array();
 		for ( $i = 1; $i < 13; $i++ ) {
-			$months[$i] =  $wgLang->getMonthAbbreviation( $i );
+			$months[$i] = $wgLang->getMonthAbbreviation( $i );
 		}
 
 		$vars['wgLangtMonthAbbreviation'] = $months;
