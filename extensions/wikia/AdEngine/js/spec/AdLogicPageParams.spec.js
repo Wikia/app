@@ -232,6 +232,16 @@ describe('AdLogicPageParams', function () {
 		expect(params.ksgmnt).toBeUndefined('No Krux on COPPA wiki');
 	});
 
+	it('decodeLegacyDartParams should skip esrb', function () {
+		var params = getParams({
+			wikiCustomKeyValues: 'key1=value1;esrb=rating;key2=value2'
+		});
+
+		expect(params.esrb).not.toBeDefined();
+		expect(params.key1.toString()).toBe('value1');
+		expect(params.key2.toString()).toBe('value2');
+	});
+
 	it('getPageLevelParams pv param - oasis', function () {
 		var params = getParams({skin: 'oasis'}, {pvCount: 13});
 

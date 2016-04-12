@@ -87,7 +87,7 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 				kv = kvs[i].split('=');
 				key = kv[0];
 				value = kv[1];
-				if (key && value) {
+				if (key && value && key !== 'esrb') {
 					params[key] = params[key] || [];
 					params[key].push(value);
 				}
