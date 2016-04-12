@@ -61,9 +61,8 @@ class CommunityPageSpecialUsersModel {
 
 		if (count( $data ) > 0) {
 			return $data[0]['wup_value'];
-		} else {
-			return null;
 		}
+		return null;
 	}
 
 	/**
@@ -186,7 +185,7 @@ class CommunityPageSpecialUsersModel {
 				$sqlData = ( new WikiaSQL() )
 					->SELECT( 'count(rev_id) AS revision_count' )
 					->FROM( 'revision' )
-					->WHERE('rev_user')->EQUAL_TO( $userId )
+					->WHERE( 'rev_user' )->EQUAL_TO( $userId )
 					->AND_( 'rev_timestamp > DATE_SUB(now(), INTERVAL ' . $interval . ')' )
 					->run( $db, function ( ResultWrapper $result ) {
 						$out = 0;
@@ -219,12 +218,12 @@ class CommunityPageSpecialUsersModel {
 	 * @param $user
 	 * @return bool
 	 */
-	protected function showMember( $user ) {
-		if ($user->isAnon()) {
+	private function showMember( $user ) {
+		if ( $user->isAnon() ) {
 			return false;
-		} elseif ($user->isBlocked()) {
+		} elseif ( $user->isBlocked() ) {
 			return false;
-		} elseif (in_array( $user->getId(), self::getGlobalBotIds() ) ) {
+		} elseif ( in_array( $user->getId(), self::getGlobalBotIds() ) ) {
 			return false;
 		}
 
@@ -248,7 +247,7 @@ class CommunityPageSpecialUsersModel {
 					->SELECT( '*' )
 					->FROM ( 'wikia_user_properties' )
 					->WHERE ( 'wup_property' )->EQUAL_TO( 'firstContributionTimestamp' )
-					->AND_ ( "wup_value > DATE_SUB(now(), INTERVAL 14 DAY)" )
+					->AND_ ( 'wup_value > DATE_SUB(now(), INTERVAL 14 DAY)' )
 					->ORDER_BY( 'wup_value DESC' )
 					->LIMIT( $limit )
 					->run( $db, function ( ResultWrapper $result ) {
@@ -300,7 +299,7 @@ class CommunityPageSpecialUsersModel {
 					->FROM ( 'wikia_user_properties' )
 					->LEFT_JOIN( 'user_groups')->ON( 'wup_user = ug_user' )
 					->WHERE ( 'wup_property' )->EQUAL_TO( 'firstContributionTimestamp' )
-					->AND_ ( "wup_value > DATE_SUB(now(), INTERVAL 2 YEAR)" )
+					->AND_ ( 'wup_value > DATE_SUB(now(), INTERVAL 2 YEAR)' )
 					->ORDER_BY( 'wup_value DESC' )
 					->run( $db, function ( ResultWrapper $result ) {
 						$out = [];
@@ -312,7 +311,7 @@ class CommunityPageSpecialUsersModel {
 							if ( $this->showMember( $user ) ) {
 								$avatar = AvatarService::renderAvatar( $userName, AvatarService::AVATAR_SIZE_SMALL_PLUS );
 								$dateString = strftime( '%b %e, %Y', strtotime( $row['wup_value'] ) );
-								$isAdmin = ( strcmp( $row['ug_group'], 'sysop') == 0 );
+								$isAdmin = ( strcmp( $row['ug_group'], 'sysop' ) == 0 );
 
 								$out[] = [
 									'userId' => $row['wup_user'],
@@ -355,7 +354,7 @@ class CommunityPageSpecialUsersModel {
 					->FROM ( 'wikia_user_properties' )
 					->LEFT_JOIN( 'user_groups')->ON( 'wup_user = ug_user' )
 					->WHERE ( 'wup_property' )->EQUAL_TO( 'firstContributionTimestamp' )
-					->AND_ ( "wup_value > DATE_SUB(now(), INTERVAL 2 YEAR)" )
+					->AND_ ( 'wup_value > DATE_SUB(now(), INTERVAL 2 YEAR)' )
 					->ORDER_BY( 'wup_value DESC' )
 					->run( $db, function ( ResultWrapper $result ) {
 						$row = $result->fetchRow();

@@ -2,8 +2,8 @@
 
 class CommunityPageSpecialController extends WikiaSpecialPageController {
 	const DEFAULT_TEMPLATE_ENGINE = \WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
-	protected $usersModel;
-	protected $wikiModel;
+	private $usersModel;
+	private $wikiModel;
 
 	public function __construct() {
 		parent::__construct( 'Community' );
@@ -31,7 +31,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 			'pageListEmptyText' => $this->msg( 'communitypage-page-list-empty' )->plain(),
 			'showPopupMessage' => true,
 			'popupMessageText' => 'This is just a test message for the popup message box',
-			'userIsMember' => CommunityPageSpecialHelper::userHasEdited( $this->wg->User ),
+			'userIsMember' => CommunityPageSpecialHelper::userHasEdited( $this->getUser() ),
 			'pageTitle' => $this->msg( 'communitypage-title' )->plain(),
 			'topContributors' => $this->sendRequest( 'CommunityPageSpecialController', 'getTopContributorsData' )
 				->getData(),
@@ -44,7 +44,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	}
 
 	public function header() {
-		$isMember = CommunityPageSpecialHelper::userHasEdited( $this->wg->User );
+		$isMember = CommunityPageSpecialHelper::userHasEdited( $this->getUser() );
 
 		$this->response->setValues( [
 			'inviteFriendsText' => $this->msg( 'communitypage-invite-friends' )->plain(),
@@ -69,7 +69,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	 * @return array
 	 */
 	public function getTopContributorsData() {
-		$userContribCount = $this->usersModel->getUserContributions( $this->wg->user );
+		$userContribCount = $this->usersModel->getUserContributions( $this->getUser() );
 		$contributors = CommunityPageSpecialUsersModel::filterGlobalBots(
 				// get extra contributors so if there's global bots they can be filtered out
 				CommunityPageSpecialUsersModel::getTopContributors( 50, '1 MONTH' )
@@ -85,7 +85,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 				->text(),
 			'contributors' => $contributorDetails,
 			'userAvatar' => AvatarService::renderAvatar(
-				$this->wg->user->getName(),
+				$this->getUser()->getName(),
 				AvatarService::AVATAR_SIZE_SMALL_PLUS
 			),
 			'userRank' => 'N',
@@ -105,7 +105,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		);
 		$topAdminsDetails = $this->getContributorsDetails( $topAdmins );
 
-		$remainingAdminCount = count ( $topAdmins ) - 2;
+		$remainingAdminCount = count( $topAdmins ) - 2;
 
 		$this->response->setData( [
 			'topAdminsHeaderText' => $this->msg( 'communitypage-admins' )->plain(),
@@ -113,7 +113,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 			'admins' => array_slice( $topAdminsDetails, 0, 2 ),
 			'otherAdminCount' => $remainingAdminCount,
 			'haveOtherAdmins' => $remainingAdminCount > 0,
-			'adminCount' => count ( $topAdmins ),
+			'adminCount' => count( $topAdmins ),
 		] );
 	}
 
@@ -150,8 +150,8 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	 * Set context for recentActivityModule template. Needs to be passed through the index method in order to work.
 	 * @return array
 	 */
-	protected function getRecentActivityData() {
-		$data = $this->sendRequest('LatestActivityController', 'executeIndex')->getData();
+	private function getRecentActivityData() {
+		$data = $this->sendRequest( 'LatestActivityController', 'executeIndex' )->getData();
 		$recentActivity = [];
 
 		foreach ($data['changeList'] as $activity) {
@@ -210,7 +210,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		]);
 	}
 
-	protected function addAssets() {
+	private function addAssets() {
 		$this->response->addAsset( 'special_community_page_js' );
 		$this->response->addAsset( 'special_community_page_scss' );
 	}
@@ -221,7 +221,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	 * @param array $contributors List of contributors containing userId and contributions for each user
 	 * @return array
 	 */
-	protected function getContributorsDetails( $contributors ) {
+	private function getContributorsDetails( $contributors ) {
 		$count = 0;
 
 		return array_map( function ( $contributor ) use ( &$count ) {
