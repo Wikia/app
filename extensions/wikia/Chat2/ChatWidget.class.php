@@ -90,9 +90,10 @@ class ChatWidget {
 	 * @return array array containing chatters info
 	 */
 	static public function getChatUsersInfo() {
-		ChatHelper::info( __METHOD__ . ': Method called' );
 		global $wgReadOnly;
 		wfProfileIn( __METHOD__ );
+
+		ChatHelper::info( __METHOD__ . ': Method called' );
 		$chatters = [ ];
 		if ( empty( $wgReadOnly ) ) {
 			// cache the whole response
