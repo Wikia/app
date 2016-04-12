@@ -64,6 +64,7 @@ var ChatEntryPoint = {
 		var items = [],
 			i, cnt = window.wgWikiaChatUsers.length,
 			img = window.wgWikiaChatProfileAvatarUrl;
+
 		$t.find('.chat-contents').
 		addClass((cnt) ? 'chat-room-active' : 'chat-room-empty').
 		addClass((window.wgUserName) ? 'chat-user-logged-in' : 'chat-user-anonymous');
@@ -125,12 +126,15 @@ var ChatEntryPoint = {
 
 	// change the user list into the carousel
 	initCarousel: function ($el) {
-		var popoverTimeout = 0;
+		var popoverTimeout = 0,
+			// differ number of users on chat according to it's width
+			isWideChat = $el.width() > 260;
+
 
 		$el.find('.carousel-container').carousel({
 			nextClass: 'arrow-right',
 			prevClass: 'arrow-left',
-			itemsShown: ((window.wgOasisResponsive || window.wgOasisBreakpoints)) ? 5 : 6
+			itemsShown: isWideChat ? 6 : 5
 		});
 
 		function setPopoverTimeout(elem) {
