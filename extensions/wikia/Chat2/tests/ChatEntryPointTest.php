@@ -8,18 +8,17 @@ class ChatEntryPointTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @param array $params
-	 * @dataProvider testInfoboxParamsPassValidationDataProvider
+	 * @dataProvider testGetChatTemplateNameDataProvider
 	 */
-	public function testInfoboxParamsPassValidation ( $isOasis, $expected ) {
+	public function testGetChatTemplateName ( $isOasis, $expected ) {
 		$this->mockStaticMethod( 'WikiaApp', 'checkSkin', $isOasis );
 
-		$templateName = ChatEntryPoint::getTemplateName();
+		$templateName = ChatEntryPoint::getChatTemplateName();
 
 		$this->assertEquals( $templateName, $expected );
 	}
 
-	public function testInfoboxParamsPassValidationDataProvider() {
+	public function testGetChatTemplateNameDataProvider() {
 		return [
 			[
 				'isOasis' => true,
