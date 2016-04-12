@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Chat Ban List special page.
  *
@@ -6,7 +7,6 @@
  *
  * @author wladek
  */
-
 class ChatBanListSpecialController extends WikiaSpecialPageController {
 
 	private $target;
@@ -21,23 +21,24 @@ class ChatBanListSpecialController extends WikiaSpecialPageController {
 
 		$this->target = trim( $this->getRequest()->getVal( 'wpTarget', $this->getPar() ) );
 
-		$conds = [];
+		$conds = [ ];
 		$conds['cbu_wiki_id'] = $this->wg->CityId;
-		$targetUser = User::newFromName($this->target);
+		$targetUser = User::newFromName( $this->target );
 		if ( $targetUser && $targetUser->getId() > 0 ) {
 			$conds['cbu_user_id'] = $targetUser->getId();
 		}
 
-		$form = $this->getForm();
+		$formHtml = $this->getForm();
 
 		$pager = new ChatBanPager( $this, $conds );
 
-		$html = $pager->getNavigationBar() .
+		$resultsHtml =
+			$pager->getNavigationBar() .
 			$pager->getBody() .
 			$pager->getNavigationBar();
 
-		$this->response->setVal( 'form', $form );
-		$this->response->setVal( 'html', $html );
+		$this->response->setVal( 'formHtml', $formHtml );
+		$this->response->setVal( 'resultsHtml', $resultsHtml );
 	}
 
 	private function getForm() {
@@ -71,7 +72,7 @@ class ChatBanListSpecialController extends WikiaSpecialPageController {
 		$form->setSubmitTextMsg( 'ipblocklist-submit' );
 		$form->prepareForm();
 
-		return $form->getHTML('');
+		return $form->getHTML( '' );
 	}
 
 }
@@ -83,7 +84,7 @@ class ChatBanPager extends TablePager {
 		$this->mConds = $conds;
 		parent::__construct( $this->mPage->getContext() );
 
-		$this->mDb = wfGetDB( DB_SLAVE, [], $wgExternalDatawareDB );
+		$this->mDb = wfGetDB( DB_SLAVE, [ ], $wgExternalDatawareDB );
 	}
 
 	public function getQueryInfo() {
@@ -113,7 +114,7 @@ class ChatBanPager extends TablePager {
 	}
 
 	public function formatValue( $name, $value ) {
-		switch( $name ) {
+		switch ( $name ) {
 			case 'start_date':
 				$formatted = $this->getLanguage()->userTimeAndDate( $value, $this->getUser() );
 				break;
@@ -123,7 +124,8 @@ class ChatBanPager extends TablePager {
 				break;
 
 			case 'end_date':
-				$formatted = $this->getLanguage()->formatExpiry( $value, /* User preference timezone */ true );
+				$formatted = $this->getLanguage()->formatExpiry( $value, /* User preference timezone */
+					true );
 				break;
 
 			case 'cbu_admin_user_id':
@@ -142,8 +144,21 @@ class ChatBanPager extends TablePager {
 		return $formatted;
 	}
 
-	public function getIndexField() {
-		return 'start_date';
+	/**
+	 * @param int $userId
+	 * @return string
+	 */
+	protected function formatUser( $userId ) {
+		$user = User::newFromId( $userId );
+		if ( $user ) {
+			$formatted =
+				Linker::userLink( $userId, $user ) .
+				Linker::userToolLinks( $userId, $user );
+		} else {
+			$formatted = sprintf( "%s %d", $this->msg( 'uid' )->escaped(), $userId );
+		}
+
+		return $formatted;
 	}
 
 	public function getDefaultSort() {
@@ -160,21 +175,5 @@ class ChatBanPager extends TablePager {
 
 	public function getTableClass() {
 		return 'TablePager mw-blocklist';
-	}
-
-	/**
-	 * @param int $userId
-	 * @return string
-	 */
-	protected function formatUser( $userId ) {
-		$user = User::newFromId( $userId );
-		if ( $user ) {
-			$formatted = Linker::userLink( $userId, $user );
-			$formatted .= Linker::userToolLinks( $userId, $user );
-		} else {
-			$formatted = sprintf( "%s %d", $this->msg( 'uid' )->escaped(), $userId );
-		}
-
-		return $formatted;
 	}
 }

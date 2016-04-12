@@ -1,2 +1,2 @@
-<?= $form; ?>
-<?= $html; ?>
+<?= $formHtml; ?>
+<?= $resultsHtml; ?>

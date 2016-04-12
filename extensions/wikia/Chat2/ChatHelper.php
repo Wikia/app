@@ -299,7 +299,8 @@ class ChatHelper {
 	}
 
 	public static function onOtherBlockLogLink( &$otherBlockLinks, $target ) {
-		$otherBlockLinks[] = Linker::specialLink('ChatBanList');
+		$otherBlockLinks[] = Linker::specialLink( 'ChatBanList' );
+
 		return true;
 	}
 
