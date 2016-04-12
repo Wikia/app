@@ -3,9 +3,9 @@
 /**
  * @author Jacek "mech" Wozniak <mech@wikia-inc.com>
  *
- * ChatEntryPoint object implementation
+ * ChatWidget object implementation
  */
-class ChatEntryPoint {
+class ChatWidget {
 
 	/**
 	 * TTL for chat users list. This cache is purged when a new user joins the chat, but we don't purge it when
@@ -99,7 +99,7 @@ class ChatEntryPoint {
 			// individual users are cached anyway, but still we gain performance making just one memcache request instead of several
 			$chatters = WikiaDataAccess::cache(
 				self::getChatUsersMemcKey(),
-				ChatEntryPoint::CHAT_USER_LIST_CACHE_TTL,
+				ChatWidget::CHAT_USER_LIST_CACHE_TTL,
 				function () {
 					return array_map(
 						[ __CLASS__, 'getUserInfo' ],

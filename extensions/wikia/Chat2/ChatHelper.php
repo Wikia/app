@@ -140,7 +140,7 @@ class ChatHelper {
 	public static function onMakeGlobalVariablesScript( &$vars ) {
 		global $wgUser, $wgLang;
 		if ( $wgUser->isLoggedIn() ) {
-			$vars[ 'wgWikiaChatUsers' ] = ChatEntryPoint::getChatUsersInfo();
+			$vars[ 'wgWikiaChatUsers' ] = ChatWidget::getChatUsersInfo();
 			if ( empty( $vars[ 'wgWikiaChatUsers' ] ) ) {
 				// we will need it to attract user to join chat
 				$vars[ 'wgWikiaChatProfileAvatarUrl' ] = AvatarService::getAvatarUrl( $wgUser->getName(), ChatRailController::AVATAR_SIZE );
@@ -194,7 +194,7 @@ class ChatHelper {
 				break;
 			}
 		}
-		JSMessages::enqueuePackage( 'ChatEntryPoint', JSMessages::INLINE );
+		JSMessages::enqueuePackage( 'ChatWidget', JSMessages::INLINE );
 
 		wfProfileOut( __METHOD__ );
 		return true;

@@ -86,7 +86,7 @@ class ChatAjax {
 		// If the user can chat, dig up some other stats which are a little more expensive to compute.
 		if ( $retVal['canChat'] ) {
 			// new user joins the chat, purge the cache
-			ChatEntryPoint::purgeChatUsersCache();
+			ChatWidget::purgeChatUsersCache();
 
 			$userStatsService = new UserStatsService( $user->getId() );
 			$stats = $userStatsService->getStats();
@@ -112,7 +112,7 @@ class ChatAjax {
 
 	/**
 	 *  injecting data from chat to memcache
-	 *  and purging cache for ChatEntryPoint used by Anons
+	 *  and purging cache for ChatWidget used by Anons
 	 */
 
 	static public function setUsersList() {

@@ -10,7 +10,7 @@ class ChatRailController extends WikiaController {
 	 * Render chat rail module placeholder. Content will be ajax-loaded for freshness.
 	 */
 	public function placeholder() {
-		foreach ( ChatEntryPoint::getEntryPointTemplateVars( false ) as $name => $value ) {
+		foreach ( ChatWidget::getEntryPointTemplateVars( false ) as $name => $value ) {
 			$this->setVal( $name, $value );
 		}
 
@@ -53,7 +53,7 @@ class ChatRailController extends WikiaController {
 			$this->totalInRoom = 0;
 
 			// Gets array of users currently in chat to populate rail module and user stats menus
-			$this->chatters = ChatEntryPoint::getChatUsersInfo();
+			$this->chatters = ChatWidget::getChatUsersInfo();
 			$this->totalInRoom = count( $this->chatters );
 			for ( $i = 0 ; $i < $this->totalInRoom ; $i++ ) {
 				global $wgLang;
@@ -77,7 +77,7 @@ class ChatRailController extends WikiaController {
 
 	public function executeGetUsers() {
 		wfProfileIn( __METHOD__ );
-		$this->users = ChatEntryPoint::getChatUsersInfo();
+		$this->users = ChatWidget::getChatUsersInfo();
 		if ( count( $this->users ) === 0 ) {
 			ChatHelper::info( __METHOD__ . ': Method called - no users' );
 			// CONN-436: If there are no users in the chat, cache the response in varnish for CACHE_STANDARD and on the

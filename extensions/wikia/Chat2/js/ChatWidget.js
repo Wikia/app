@@ -1,26 +1,26 @@
 /*global UserLoginModal*/
 
-var ChatEntryPoint = {
+var ChatWidget = {
 	loading: false,
 	chatLaunchModal: null,
 	bindComplete: false,
 
 	init: function() {
-		if ( !ChatEntryPoint.bindComplete ) {
+		if ( !ChatWidget.bindComplete ) {
 			$('body').on('click', '.WikiaChatLink', function(event) {
 				event.preventDefault();
 				event.stopPropagation();
-				ChatEntryPoint.onClickChatButton(this.href);
+				ChatWidget.onClickChatButton(this.href);
 			});
-			ChatEntryPoint.bindComplete = true;
+			ChatWidget.bindComplete = true;
 		}
 		// check if content was pre-rendered to JS variable
 		if (window.wgWikiaChatUsers) {
-			ChatEntryPoint.initEntryPoint();
-		} else if ( ! ChatEntryPoint.loading ) {
+			ChatWidget.initEntryPoint();
+		} else if ( ! ChatWidget.loading ) {
 			// if we're not loading yet - start it
-			ChatEntryPoint.loading = true;
-			ChatEntryPoint.loadChatUsers();
+			ChatWidget.loading = true;
+			ChatWidget.loadChatUsers();
 		}
 	},
 
@@ -39,7 +39,7 @@ var ChatEntryPoint = {
 			callback: function(content) {
 				// cache the result
 				window.wgWikiaChatUsers = content.users;
-				ChatEntryPoint.initEntryPoint();
+				ChatWidget.initEntryPoint();
 			}
 		});
 	},
@@ -51,7 +51,7 @@ var ChatEntryPoint = {
 		}
 		// in case the module is embedded in the article, we can have several modules on the page. work on them one by one
 		$('.ChatModuleUninitialized').each(function() {
-			ChatEntryPoint.processModuleTemplate($(this));
+			ChatWidget.processModuleTemplate($(this));
 			$(this).removeClass('ChatModuleUninitialized');
 		});
 	},
@@ -76,10 +76,10 @@ var ChatEntryPoint = {
 			var $carousel = $t.find('ul.carousel');
 			var $u = $carousel.find('>li');
 			for( i=0 ; i < cnt ; i++ ) {
-				items.push(ChatEntryPoint.fillUserTemplate($u.clone(),window.wgWikiaChatUsers[i]));
+				items.push(ChatWidget.fillUserTemplate($u.clone(),window.wgWikiaChatUsers[i]));
 			}
 			$carousel.html(items);
-			ChatEntryPoint.initCarousel($t.find('.chat-whos-here'));
+			ChatWidget.initCarousel($t.find('.chat-whos-here'));
 		} else {
 			$t.find('ul.carousel').remove();
 		}
@@ -169,7 +169,7 @@ var ChatEntryPoint = {
 				authModal.load({
 					url: '/signin?redirect=' + encodeURIComponent(window.location.href),
 					origin: 'chat',
-					onAuthSuccess: ChatEntryPoint.onSuccessfulLogin
+					onAuthSuccess: ChatWidget.onSuccessfulLogin
 				});
 			});
 		}
@@ -181,7 +181,7 @@ var ChatEntryPoint = {
 			method: 'AnonLoginSuccess',
 			type: 'GET',
 			format: 'html',
-			callback: ChatEntryPoint.onJoinChatFormLoaded
+			callback: ChatWidget.onJoinChatFormLoaded
 		});
 	},
 
@@ -199,10 +199,10 @@ var ChatEntryPoint = {
 					};
 				uiModal.createComponent( joinModalConfig, function ( joinModal ) {
 					joinModal.bind( 'chat', function ( event ) {
-						ChatEntryPoint.launchChatWindow( event, joinModal);
+						ChatWidget.launchChatWindow( event, joinModal);
 					});
 					joinModal.bind( 'close', function() {
-						ChatEntryPoint.reloadPage();
+						ChatWidget.reloadPage();
 					});
 					joinModal.show();
 
@@ -221,12 +221,12 @@ var ChatEntryPoint = {
 		if( chatLaunchModal ) {
 			chatLaunchModal.trigger( 'close' );
 		}
-		ChatEntryPoint.reloadPage();
+		ChatWidget.reloadPage();
 	}
 };
 
 if ( typeof wgWikiaChatUsers !== "undefined" ) {
 	$(function() {
-		ChatEntryPoint.init();
+		ChatWidget.init();
 	});
 }

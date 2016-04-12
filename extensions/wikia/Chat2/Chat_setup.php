@@ -26,7 +26,7 @@ $dir = dirname( __FILE__ );
 $wgAutoloadClasses['Chat'] = "$dir/Chat.class.php";
 $wgAutoloadClasses['ChatAjax'] = "$dir/ChatAjax.class.php";
 $wgAutoloadClasses['ChatHelper'] = "$dir/ChatHelper.php";
-$wgAutoloadClasses['ChatEntryPoint'] = "$dir/ChatEntryPoint.class.php";
+$wgAutoloadClasses['ChatWidget'] = "$dir/ChatWidgetss.php";
 $wgAutoloadClasses['ChatController'] = "$dir/ChatController.class.php";
 $wgAutoloadClasses['ChatRailController'] = "$dir/ChatRailController.class.php";
 $wgAutoloadClasses['SpecialChat'] = "$dir/SpecialChat.class.php";
@@ -48,7 +48,7 @@ $wgExtensionMessagesFiles['ChatDefaultEmoticons'] = $dir . '/ChatDefaultEmoticon
 $wgHooks[ 'GetRailModuleList' ][] = 'ChatHelper::onGetRailModuleList';
 $wgHooks[ 'StaffLog::formatRow' ][] = 'ChatHelper::onStaffLogFormatRow';
 $wgHooks[ 'MakeGlobalVariablesScript' ][] = 'ChatHelper::onMakeGlobalVariablesScript';
-$wgHooks[ 'ParserFirstCallInit' ][] = 'ChatEntryPoint::onParserFirstCallInit';
+$wgHooks[ 'ParserFirstCallInit' ][] = 'ChatWidget::onParserFirstCallInit';
 $wgHooks[ 'LinkEnd' ][] = 'ChatHelper::onLinkEnd';
 $wgHooks[ 'BeforePageDisplay' ][] = 'ChatHelper::onBeforePageDisplay';
 $wgHooks[ 'ContributionsToolLinks' ][] = 'ChatHelper::onContributionsToolLinks';
@@ -83,7 +83,7 @@ JSMessages::registerPackage( 'ChatBanModal', array(
 	'chat-ban-modal-button-change-ban',
 ) );
 
-JSMessages::registerPackage( 'ChatEntryPoint', array(
+JSMessages::registerPackage( 'ChatWidget', array(
 	'chat-join-the-chat',
 	'chat-start-a-chat',
 	'chat-user-menu-message-wall',
