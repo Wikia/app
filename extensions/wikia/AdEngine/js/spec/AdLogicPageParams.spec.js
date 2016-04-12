@@ -232,21 +232,6 @@ describe('AdLogicPageParams', function () {
 		expect(params.ksgmnt).toBeUndefined('No Krux on COPPA wiki');
 	});
 
-	it('getPageLevelParams esrb + COPPA', function () {
-		var params;
-
-		params = getParams({
-			wikiCustomKeyValues: 'key1=value1;esrb=rating;key2=value2'
-		});
-		expect(params.esrb.toString()).toBe('rating', 'esrb=yes, COPPA=no');
-
-		params = getParams({
-			wikiCustomKeyValues: 'key1=value1;esrb=rating;key2=value2',
-			wikiDirectedAtChildren: true
-		});
-		expect(params.esrb.toString()).toBe('rating', 'esrb=yes, COPPA=yes');
-	});
-
 	it('getPageLevelParams pv param - oasis', function () {
 		var params = getParams({skin: 'oasis'}, {pvCount: 13});
 
