@@ -35,19 +35,10 @@ class ChatRailController extends WikiaController {
 	public function executeGetUsers() {
 		wfProfileIn( __METHOD__ );
 		$this->users = ChatWidget::getChatUsersInfo();
-		if ( count( $this->users ) === 0 ) {
-			ChatHelper::info( __METHOD__ . ': Method called - no users' );
-			// CONN-436: If there are no users in the chat, cache the response in varnish for CACHE_STANDARD and on the
-			// browser for the default CACHE_DURATION time;
-			// Note: Varnish cache will be purged when user opens the chat page
-			$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD, ChatWidget::CHAT_USER_LIST_CACHE_TTL );
-		} else {
-			ChatHelper::info( __METHOD__ . ': Method called - found users', [
-				'chatters' => count( $this->users ),
-			] );
-			// If there are users in the chat, cache both in varnish and browser for default CACHE_DURATION;
-			$this->response->setCacheValidity( ChatWidget::CHAT_USER_LIST_CACHE_TTL );
-		}
+		ChatHelper::info( __METHOD__ . ': Method called - ' . ( count( $this->users ) ) . ' user(s)', [
+			'chatters' => count( $this->users ),
+		] );
+		$this->response->setCacheValidity( ChatWidget::CHAT_USER_LIST_CACHE_TTL );
 		wfProfileOut( __METHOD__ );
 	}
 
