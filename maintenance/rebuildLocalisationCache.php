@@ -31,6 +31,11 @@
 require_once( dirname( __FILE__ ) . '/Maintenance.php' );
 
 class RebuildLocalisationCache extends Maintenance {
+
+	const I18N_FILE_EXTENSION = ".i18n.php";
+	const PHP_FILE_EXTENSION = ".php";
+	const LOCALISATION_FILE_REGEX = "/^.+\.(i18n|aliases|alias).php$/i";
+
 	public function __construct() {
 		parent::__construct();
 		$this->mDescription = "Rebuild the localisation cache";
@@ -157,15 +162,15 @@ class RebuildLocalisationCache extends Maintenance {
 
 		$directory = new RecursiveDirectoryIterator('/usr/wikia/source/app/');
 		$iterator = new RecursiveIteratorIterator($directory);
-		$files = new RegexIterator($iterator, '/^.+\.(i18n|aliases|alias).php$/i', RecursiveRegexIterator::GET_MATCH);
+		$files = new RegexIterator($iterator, self::LOCALISATION_FILE_REGEX, RecursiveRegexIterator::GET_MATCH);
 
 		foreach ($files as $filepath) {
 			if (!isset($filepath[0])) continue;
 
-			if (strpos($filepath[0], '.i18n.php') !== false ) {
-				$wgExtensionMessagesFiles[basename($filepath[0], ".i18n.php")] = $filepath[0];
+			if (strpos($filepath[0], self::I18N_FILE_EXTENSION) !== false ) {
+				$wgExtensionMessagesFiles[basename($filepath[0], self::I18N_FILE_EXTENSION)] = $filepath[0];
 			} else {
-				$wgExtensionMessagesFiles[basename($filepath[0], ".php")] = $filepath[0];
+				$wgExtensionMessagesFiles[basename($filepath[0], self::PHP_FILE_EXTENSION)] = $filepath[0];
 			}
 		}
 	}
