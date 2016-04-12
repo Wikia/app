@@ -5,16 +5,6 @@ namespace Wikia\SpecialDiscussionsLog\Search;
 
 class UserQuery implements SearchQuery {
 
-	private $searchKey;
-
-	public function __construct( $searchKey ) {
-		$this->searchKey = $searchKey;
-	}
-
-	function getKey() {
-		return $this->searchKey;
-	}
-
 	static function getKeyName() {
 		return 'username';
 	}

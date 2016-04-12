@@ -5,18 +5,8 @@ namespace Wikia\SpecialDiscussionsLog\Search;
 
 class IpAddressQuery implements SearchQuery {
 
-	private $searchKey;
-
-	public function __construct( $searchKey ) {
-		$this->searchKey = $searchKey;
-	}
-
-	function getKey() {
-		return $this->searchKey;
-	}
-
 	static function getKeyName() {
-		return 'ipaddress';
+		return 'ipAddress';
 	}
 
 	static function getQuery( $ipAddress, $paginationSize ) {

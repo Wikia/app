@@ -6,11 +6,9 @@
 		<div class="log-error-message">{{noUserLogRecordsMessage}}</div>
 	{{/hasNoUserLogRecords}}
 	{{^hasNoUserLogRecords}}
-		<div class="log-table-caption">
-            <p>{{logTableCaption}}</p>
-        </div>
 		<table class="article-table">
-			<thead>
+            <caption class="log-table-caption">{{logTableCaption}}</caption>
+            <thead>
 			<tr>
 				<th>{{userNameHeader}}</th>
 				<th>{{ipAddressHeader}}</th>
