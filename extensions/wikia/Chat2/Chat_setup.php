@@ -22,7 +22,6 @@ $dir = dirname( __FILE__ );
 // autoloaded classes
 $wgAutoloadClasses['Chat'] = "$dir/Chat.class.php";
 $wgAutoloadClasses['ChatAjax'] = "$dir/ChatAjax.class.php";
-$wgAutoloadClasses['ChatHelper'] = "$dir/ChatHelper.class.php";
 $wgAutoloadClasses['ChatWidget'] = "$dir/ChatWidget.class.php";
 $wgAutoloadClasses['ChatUser'] = "$dir/ChatUser.class.php";
 $wgAutoloadClasses['ChatConfig'] = "$dir/ChatConfig.class.php";

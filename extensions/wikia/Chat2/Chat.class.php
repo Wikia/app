@@ -48,7 +48,7 @@ class Chat {
 	 * on lyrics.wikia.com, but interestingly, isn't in document.cookie in the javascript on lyrics.wikia.com).
 	 */
 	public static function echoCookies() {
-		ChatHelper::info( __METHOD__ . ': Method called' );
+		self::info( __METHOD__ . ': Method called' );
 		$wg = F::app()->wg;
 
 		if ( !$wg->User->isLoggedIn() ) {
@@ -77,7 +77,7 @@ class Chat {
 	 * @return bool|string Returns true on success, returns an error message as a string on failure.
 	 */
 	public static function banUser( $userNameToKickBan, $kickingUser, $time, $reason ) {
-		ChatHelper::info( __METHOD__ . ': Method called', [
+		self::info( __METHOD__ . ': Method called', [
 			'userNameToKickBan' => $userNameToKickBan,
 			'kickingUser' => $kickingUser,
 			'time' => $time,
@@ -122,7 +122,7 @@ class Chat {
 	 * @throws DBUnexpectedError
 	 */
 	public static function blockPrivate( $username, $dir = 'add', $kickingUser ) {
-		ChatHelper::info( __METHOD__ . ': Method called', [
+		self::info( __METHOD__ . ': Method called', [
 			'username' => $username,
 			'dir' => $dir,
 			'kickingUser' => $kickingUser,
@@ -184,7 +184,7 @@ class Chat {
 			$chatUser->ban( $adminID, $endOn, $reason );
 		}
 
-		ChatHelper::info( __METHOD__ . ': Method called', [
+		self::info( __METHOD__ . ': Method called', [
 			'cityId' => $cityId,
 			'banUser' => $userID,
 			'adminUser' => $adminID,
@@ -242,7 +242,7 @@ class Chat {
 	 * @return array
 	 */
 	public static function getListOfBlockedPrivate() {
-		ChatHelper::info( __METHOD__ . ': Method called' );
+		self::info( __METHOD__ . ': Method called' );
 
 		$chatUser = ChatUser::newCurrent();
 
@@ -267,7 +267,7 @@ class Chat {
 	 * @return bool true on success, returns an error message as a string on failure.
 	 */
 	public static function promoteChatModerator( $userNameToPromote, $promotingUser ) {
-		ChatHelper::info( __METHOD__ . ': Method called', [
+		self::info( __METHOD__ . ': Method called', [
 			'userNameToPromote' => $userNameToPromote,
 			'promotingUser' => $promotingUser
 		] );
@@ -596,5 +596,40 @@ class Chat {
 			'months' => 60 * 60 * 24 * 30,
 			'years' => 60 * 60 * 24 * 365
 		];
+	}
+
+	public static function info( $message, Array $params = [ ] ) {
+		\Wikia\Logger\WikiaLogger::instance()->info( 'CHAT: ' . $message, $params );
+	}
+
+	public static function debug( $message, Array $params = [ ] ) {
+		\Wikia\Logger\WikiaLogger::instance()->debug( 'CHAT: ' . $message, $params );
+	}
+
+	public static function getChatters() {
+		global $wgMemc;
+		wfProfileIn( __METHOD__ );
+
+		$memKey = wfMemcKey( "ChatServerApiClient::getChatters" );
+
+		// data are store in memcache and set by node.js
+		$chatters = $wgMemc->get( $memKey );
+		if ( !$chatters ) {
+			$chatters = array();
+		}
+
+		wfProfileOut( __METHOD__ );
+
+		return $chatters;
+	}
+
+	public static function setChatters( $chatters ) {
+		global $wgMemc;
+		wfProfileIn( __METHOD__ );
+
+		$memKey = wfMemcKey( "ChatServerApiClient::getChatters" );
+		$wgMemc->set( $memKey, $chatters, 60 * 60 * 24 );
+
+		wfProfileOut( __METHOD__ );
 	}
 }

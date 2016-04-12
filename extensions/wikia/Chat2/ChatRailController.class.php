@@ -22,10 +22,10 @@ class ChatRailController extends WikiaController {
 
 		if ( !empty( $this->totalInRoom ) ) {
 			$this->buttonText = wfMsg( 'chat-join-the-chat' );
-			ChatHelper::info( __METHOD__ . ': Method called - existing room' );
+			Chat::info( __METHOD__ . ': Method called - existing room' );
 		} else {
 			$this->buttonText = wfMsg( 'chat-start-a-chat' );
-			ChatHelper::info( __METHOD__ . ': Method called - new room' );
+			Chat::info( __METHOD__ . ': Method called - new room' );
 		}
 		$this->linkToSpecialChat = SpecialPage::getTitleFor( "Chat" )->escapeLocalUrl();
 
@@ -35,7 +35,7 @@ class ChatRailController extends WikiaController {
 	public function executeGetUsers() {
 		wfProfileIn( __METHOD__ );
 		$this->users = ChatWidget::getChatUsersInfo();
-		ChatHelper::info( __METHOD__ . ': Method called - ' . ( count( $this->users ) ) . ' user(s)', [
+		Chat::info( __METHOD__ . ': Method called - ' . ( count( $this->users ) ) . ' user(s)', [
 			'chatters' => count( $this->users ),
 		] );
 		$this->response->setCacheValidity( ChatWidget::CHAT_USER_LIST_CACHE_TTL );

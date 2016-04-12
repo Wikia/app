@@ -93,7 +93,7 @@ class ChatWidget {
 		global $wgReadOnly;
 		wfProfileIn( __METHOD__ );
 
-		ChatHelper::info( __METHOD__ . ': Method called' );
+		Chat::info( __METHOD__ . ': Method called' );
 		$chatters = [ ];
 		if ( empty( $wgReadOnly ) ) {
 			// cache the whole response
@@ -104,7 +104,7 @@ class ChatWidget {
 				function () {
 					return array_map(
 						[ __CLASS__, 'getUserInfo' ],
-						ChatHelper::getChatters() );
+						Chat::getChatters() );
 				} );
 		}
 		wfProfileOut( __METHOD__ );

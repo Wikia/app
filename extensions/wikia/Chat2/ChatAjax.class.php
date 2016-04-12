@@ -25,7 +25,7 @@ class ChatAjax {
 		global $wgMemc, $wgServer, $wgArticlePath, $wgRequest, $wgCityId, $wgContLang;
 
 		wfProfileIn( __METHOD__ );
-		ChatHelper::info( __METHOD__ . ': Method called' );
+		Chat::info( __METHOD__ . ': Method called' );
 
 		$data = $wgMemc->get( $wgRequest->getVal( 'key' ) );
 		if ( empty( $data ) ) {
@@ -112,7 +112,7 @@ class ChatAjax {
 		global $wgRequest;
 
 		wfProfileIn( __METHOD__ );
-		ChatHelper::info( __METHOD__ . ': Method called' );
+		Chat::info( __METHOD__ . ': Method called' );
 
 		if ( \Wikia\Security\Utils::matchToken( ChatConfig::getSecretToken(), $wgRequest->getVal( 'token' ) ) ) {
 			wfProfileOut( __METHOD__ );
@@ -120,7 +120,7 @@ class ChatAjax {
 			return array( 'status' => false );
 		}
 
-		ChatHelper::setChatters( $wgRequest->getArray( 'users' ) );
+		Chat::setChatters( $wgRequest->getArray( 'users' ) );
 
 		wfProfileOut( __METHOD__ );
 
@@ -134,7 +134,7 @@ class ChatAjax {
 		global $wgRequest;
 
 		wfProfileIn( __METHOD__ );
-		ChatHelper::info( __METHOD__ . ': Method called' );
+		Chat::info( __METHOD__ . ': Method called' );
 
 		$users = json_decode( $wgRequest->getVal( 'users' ) );
 		$roomId = ChatServerApiClient::getPrivateRoomId( $users );
@@ -153,7 +153,7 @@ class ChatAjax {
 		global $wgRequest, $wgUser;
 
 		wfProfileIn( __METHOD__ );
-		ChatHelper::info( __METHOD__ . ': Method called' );
+		Chat::info( __METHOD__ . ': Method called' );
 
 		// MAIN-6290  server.js needs to pass edit token for this to work
 		// $wgRequest->isValidWriteRequest( $wgUser );
@@ -209,7 +209,7 @@ class ChatAjax {
 		global $wgRequest, $wgUser;
 
 		wfProfileIn( __METHOD__ );
-		ChatHelper::info( __METHOD__ . ': Method called' );
+		Chat::info( __METHOD__ . ': Method called' );
 
 		$promotingUser = $wgUser;
 
@@ -238,7 +238,7 @@ class ChatAjax {
 		global $wgRequest, $wgLang;
 
 		wfProfileIn( __METHOD__ );
-		ChatHelper::info( __METHOD__ . ': Method called' );
+		Chat::info( __METHOD__ . ': Method called' );
 
 		$userId = $wgRequest->getVal( 'userId', 0 );
 
