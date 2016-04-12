@@ -157,7 +157,11 @@ class RebuildLocalisationCache extends Maintenance {
 		exit( $exitcode );
 	}
 
-	public function includeAllMessagesFiles() {
+	/**
+	 * Helper function to include all localisation files to localisation cache rebuild process.
+	 * It looks for i18n and alias files from whole code directory and registers them in global array.
+	 */
+	private function includeAllMessagesFiles() {
 		global $wgExtensionMessagesFiles;
 
 		$directory = new RecursiveDirectoryIterator('/usr/wikia/source/app/');
