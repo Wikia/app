@@ -117,7 +117,7 @@ class ChatWidget {
 	 * @param string $userName
 	 * @return array
 	 */
-	static public function getUserInfo( Title $userName ) {
+	static public function getUserInfo( $userName ) {
 		return WikiaDataAccess::cache(
 			wfMemcKey( 'chatavatars', $userName, 'v2' ),
 			self::CHAT_USER_INFO_CACHE_TTL,

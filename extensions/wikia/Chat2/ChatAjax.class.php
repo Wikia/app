@@ -27,7 +27,7 @@ class ChatAjax {
 		wfProfileIn( __METHOD__ );
 		ChatHelper::info( __METHOD__ . ': Method called' );
 
-		$data = $wgMemc->get( $wgRequest->getVal( 'key' ), false );
+		$data = $wgMemc->get( $wgRequest->getVal( 'key' ) );
 		if ( empty( $data ) ) {
 			wfProfileOut( __METHOD__ );
 

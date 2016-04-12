@@ -18,6 +18,9 @@ class ChatServerApiClient {
 	 * allow the auth class to verify that the room is in the same
 	 * that the connection is attempting to be made from (prevents
 	 * circumventing bans by connecting to Wiki A's chat via Wiki B).
+	 *
+	 * @param int $roomId
+	 * @return string
 	 */
 	static public function getCityIdFromRoomId( $roomId ) {
 		wfProfileIn( __METHOD__ );
@@ -113,6 +116,9 @@ class ChatServerApiClient {
 
 	/**
 	 * Performs HTTP request do Chat server and returns decoded JSON or null
+	 *
+	 * @param array $params
+	 * @return mixed|null
 	 */
 	static private function makeRequest( $params ) {
 		global $wgReadOnly;
