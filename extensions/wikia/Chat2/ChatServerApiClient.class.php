@@ -111,33 +111,6 @@ class ChatServerApiClient {
 		return $roomId;
 	}
 
-	static public function getChatters() {
-		global $wgMemc;
-		wfProfileIn( __METHOD__ );
-
-		$memKey = wfMemcKey( "ChatServerApiClient::getChatters" );
-
-		// data are store in memcache and set by node.js
-		$chatters = $wgMemc->get( $memKey, false );
-		if ( !$chatters ) {
-			$chatters = array();
-		}
-
-		wfProfileOut( __METHOD__ );
-
-		return $chatters;
-	}
-
-	static public function setChatters( $chatters ) {
-		global $wgMemc;
-		wfProfileIn( __METHOD__ );
-
-		$memKey = wfMemcKey( "ChatServerApiClient::getChatters" );
-		$wgMemc->set( $memKey, $chatters, 60 * 60 * 24 );
-
-		wfProfileOut( __METHOD__ );
-	}
-
 	/**
 	 * Performs HTTP request do Chat server and returns decoded JSON or null
 	 */

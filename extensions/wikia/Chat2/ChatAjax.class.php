@@ -120,7 +120,7 @@ class ChatAjax {
 			return array( 'status' => false );
 		}
 
-		ChatServerApiClient::setChatters( $wgRequest->getArray( 'users' ) );
+		ChatHelper::setChatters( $wgRequest->getArray( 'users' ) );
 
 		wfProfileOut( __METHOD__ );
 

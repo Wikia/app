@@ -103,7 +103,7 @@ class ChatWidget {
 				function () {
 					return array_map(
 						[ __CLASS__, 'getUserInfo' ],
-						ChatServerApiClient::getChatters() );
+						ChatHelper::getChatters() );
 				} );
 		}
 		wfProfileOut( __METHOD__ );
