@@ -22,6 +22,7 @@ class ChatBanListSpecialController extends WikiaSpecialPageController {
 		$this->target = trim( $this->getRequest()->getVal( 'wpTarget', $this->getPar() ) );
 
 		$conds = [];
+		$conds['cbu_wiki_id'] = $this->wg->CityId;
 		$targetUser = User::newFromName($this->target);
 		if ( $targetUser && $targetUser->getId() > 0 ) {
 			$conds['cbu_user_id'] = $targetUser->getId();
