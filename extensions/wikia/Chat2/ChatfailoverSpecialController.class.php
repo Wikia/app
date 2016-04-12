@@ -40,7 +40,7 @@ class ChatfailoverSpecialController extends WikiaSpecialPageController {
 			$reason = $this->request->getVal( 'reason' );
 			if ( !empty( $reason ) && $mode == ChatConfig::getMode() ) { // the mode didn't change
 				$mode = !$mode;
-				StaffLogger::log( ChatHelper::CHAT_FAILOVER_EVENT_TYPE, "switch", $this->wg->User->getID(), $this->wg->User->getName(), $mode, $mode ? 'regular': 'failover', $reason );
+				StaffLogger::log( ChatHooks::CHAT_FAILOVER_EVENT_TYPE, "switch", $this->wg->User->getID(), $this->wg->User->getName(), $mode, $mode ? 'regular': 'failover', $reason );
 				ChatConfig::changeMode( $mode );
 			}
 		}

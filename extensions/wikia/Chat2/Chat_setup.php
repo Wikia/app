@@ -25,18 +25,20 @@ $dir = dirname( __FILE__ );
 // autoloaded classes
 $wgAutoloadClasses['Chat'] = "$dir/Chat.class.php";
 $wgAutoloadClasses['ChatAjax'] = "$dir/ChatAjax.class.php";
-$wgAutoloadClasses['ChatHelper'] = "$dir/ChatHelper.php";
-$wgAutoloadClasses['ChatWidget'] = "$dir/ChatWidget.php";
+$wgAutoloadClasses['ChatHelper'] = "$dir/ChatHelper.class.php";
+$wgAutoloadClasses['ChatWidget'] = "$dir/ChatWidget.class.php";
+$wgAutoloadClasses['ChatUser'] = "$dir/ChatUser.class.php";
+$wgAutoloadClasses['ChatConfig'] = "$dir/ChatConfig.class.php";
+$wgAutoloadClasses['ChatHooks'] = "$dir/ChatHooks.class.php";
 $wgAutoloadClasses['ChatController'] = "$dir/ChatController.class.php";
 $wgAutoloadClasses['ChatRailController'] = "$dir/ChatRailController.class.php";
 $wgAutoloadClasses['SpecialChat'] = "$dir/SpecialChat.class.php";
 $wgAutoloadClasses['ChatServerApiClient'] = "$dir/ChatServerApiClient.class.phpss.php";
 $wgAutoloadClasses['ChatfailoverSpecialController'] = "$dir/ChatfailoverSpecialController.class.php";
 
-$wgSpecialPages[ 'Chatfailover'] = 'ChatfailoverSpecialController';
-
 // special pages
 $wgSpecialPages['Chat'] = 'SpecialChat';
+$wgSpecialPages[ 'Chatfailover'] = 'ChatfailoverSpecialController';
 
 // i18n
 $wgExtensionMessagesFiles['Chat'] = $dir . '/Chat.i18n.php';
@@ -45,15 +47,15 @@ $wgExtensionMessagesFiles['Chatfailover'] = $dir . '/Chatfailover.i18n.php';
 $wgExtensionMessagesFiles['ChatDefaultEmoticons'] = $dir . '/ChatDefaultEmoticons.i18n.php';
 
 // hooks
-$wgHooks[ 'GetRailModuleList' ][] = 'ChatHelper::onGetRailModuleList';
-$wgHooks[ 'StaffLog::formatRow' ][] = 'ChatHelper::onStaffLogFormatRow';
-$wgHooks[ 'MakeGlobalVariablesScript' ][] = 'ChatHelper::onMakeGlobalVariablesScript';
-$wgHooks[ 'ParserFirstCallInit' ][] = 'ChatWidget::onParserFirstCallInit';
-$wgHooks[ 'LinkEnd' ][] = 'ChatHelper::onLinkEnd';
-$wgHooks[ 'BeforePageDisplay' ][] = 'ChatHelper::onBeforePageDisplay';
-$wgHooks[ 'ContributionsToolLinks' ][] = 'ChatHelper::onContributionsToolLinks';
-$wgHooks[ 'LogLine' ][] = 'ChatHelper::onLogLine';
-$wgHooks[ 'UserGetRights' ][] = 'chatAjaxonUserGetRights';
+$wgHooks[ 'GetRailModuleList' ][] = 'ChatHooks::onGetRailModuleList';
+$wgHooks[ 'StaffLog::formatRow' ][] = 'ChatHooks::onStaffLogFormatRow';
+$wgHooks[ 'MakeGlobalVariablesScript' ][] = 'ChatHooks::onMakeGlobalVariablesScript';
+$wgHooks[ 'ParserFirstCallInit' ][] = 'ChatHooks::onParserFirstCallInit';
+$wgHooks[ 'LinkEnd' ][] = 'ChatHooks::onLinkEnd';
+$wgHooks[ 'BeforePageDisplay' ][] = 'ChatHooks::onBeforePageDisplay';
+$wgHooks[ 'ContributionsToolLinks' ][] = 'ChatHooks::onContributionsToolLinks';
+$wgHooks[ 'LogLine' ][] = 'ChatHooks::onLogLine';
+$wgHooks[ 'UserGetRights' ][] = 'ChatHooks::onUserGetRights';
 
 // logs
 $wgLogTypes[] = 'chatban';
@@ -66,9 +68,9 @@ $wgLogNames['chatconnect'] = 'chat-chatconnect-log';
 $wgLogActions['chatconnect/chatconnect'] = 'chat-chatconnect-log-entry';
 $wgLogRestrictions["chatconnect"] = 'checkuser';
 
-$wgLogActionsHandlers['chatban/chatbanchange'] = "ChatHelper::formatLogEntry";
-$wgLogActionsHandlers['chatban/chatbanremove'] = "ChatHelper::formatLogEntry";
-$wgLogActionsHandlers['chatban/chatbanadd'] = "ChatHelper::formatLogEntry";
+$wgLogActionsHandlers['chatban/chatbanchange'] = "ChatHooks::formatLogEntry";
+$wgLogActionsHandlers['chatban/chatbanremove'] = "ChatHooks::formatLogEntry";
+$wgLogActionsHandlers['chatban/chatbanadd'] = "ChatHooks::formatLogEntry";
 
 // register messages package for JS
 JSMessages::registerPackage( 'Chat', array(
@@ -121,18 +123,6 @@ $wgResourceModules['ext.Chat2'] = [
 
 define( 'CHAT_TAG', 'chat' );
 define( 'CUC_TYPE_CHAT', 128 );	// for CheckUser operation type
-
-/**
- * Add read right to ChatAjax am reqest.
- * That is solving problems with private wikis and chat (communitycouncil.wikia.com)
- */
-function chatAjaxonUserGetRights( $user, &$aRights ) {
-	global $wgRequest;
-	if ( $wgRequest->getVal( 'action' ) === 'ajax' && $wgRequest->getVal( 'rs' ) === 'ChatAjax' ) {
-		$aRights[] = 'read';
-	}
-	return true;
-}
 
 // ajax
 $wgAjaxExportList[] = 'ChatAjax';

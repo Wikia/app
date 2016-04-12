@@ -1,15 +1,12 @@
 <?php
 
-use Wikia\Logger\WikiaLogger;
-
-class ChatHelper {
-
+class ChatHooks {
 	const CHAT_FAILOVER_EVENT_TYPE = 'chatfo';
 
 	/**
 	 * Hooks into GetRailModuleList and adds the chat module to the side-bar when appropriate.
 	 */
-	static public function onGetRailModuleList( &$modules ) {
+	public static function onGetRailModuleList( &$modules ) {
 		wfProfileIn( __METHOD__ );
 
 		// Make sure this module is positioned above the VideosModule (1285) when the user is logged in.  VID-1780
@@ -19,13 +16,14 @@ class ChatHelper {
 		$modules[$pos] = array( 'ChatRail', 'placeholder', null );
 
 		wfProfileOut( __METHOD__ );
+
 		return true;
 	}
 
-
-	static public function onStaffLogFormatRow( $slogType, $result, $time, $linker, &$out ) {
+	public static function onStaffLogFormatRow( $slogType, $result, $time, $linker, &$out ) {
 		if ( $slogType == self::CHAT_FAILOVER_EVENT_TYPE ) {
 			$out = wfMsgExt( 'chat-failover-log-entry', array( 'parseinline' ), array( $time, $result->slog_user_name, $result->slog_user_namedst, $result->slog_comment ) );
+
 			return true;
 		}
 
@@ -38,16 +36,16 @@ class ChatHelper {
 	public static function onMakeGlobalVariablesScript( &$vars ) {
 		global $wgUser, $wgLang;
 		if ( $wgUser->isLoggedIn() ) {
-			$vars[ 'wgWikiaChatUsers' ] = ChatWidget::getChatUsersInfo();
-			if ( empty( $vars[ 'wgWikiaChatUsers' ] ) ) {
+			$vars['wgWikiaChatUsers'] = ChatWidget::getChatUsersInfo();
+			if ( empty( $vars['wgWikiaChatUsers'] ) ) {
 				// we will need it to attract user to join chat
-				$vars[ 'wgWikiaChatProfileAvatarUrl' ] = AvatarService::getAvatarUrl( $wgUser->getName(), ChatRailController::AVATAR_SIZE );
+				$vars['wgWikiaChatProfileAvatarUrl'] = AvatarService::getAvatarUrl( $wgUser->getName(), ChatRailController::AVATAR_SIZE );
 			}
 			$vars['wgWikiaChatMonts'] = $wgLang->getMonthAbbreviationsArray();
 		} else {
-			$vars[ 'wgWikiaChatUsers' ] = '';
+			$vars['wgWikiaChatUsers'] = '';
 		}
-		$vars[ 'wgWikiaChatWindowFeatures' ] = ChatRailController::CHAT_WINDOW_FEATURES;
+		$vars['wgWikiaChatWindowFeatures'] = ChatRailController::CHAT_WINDOW_FEATURES;
 
 		return true;
 	}
@@ -60,6 +58,7 @@ class ChatHelper {
 			if ( !array_key_exists( 'class', $attribs ) ) $attribs['class'] = 'WikiaChatLink';
 			else $attribs['class'] .= ' WikiaChatLink';
 		}
+
 		return true;
 	}
 
@@ -95,17 +94,18 @@ class ChatHelper {
 		JSMessages::enqueuePackage( 'ChatWidget', JSMessages::INLINE );
 
 		wfProfileOut( __METHOD__ );
+
 		return true;
 	}
 
-	public static function onContributionsToolLinks(  $id, $nt, &$tools ) {
+	public static function onContributionsToolLinks( $id, $nt, &$tools ) {
 		global $wgOut, $wgUser;
 		wfProfileIn( __METHOD__ );
 
 		$user = User::newFromId( $id );
 		if ( !empty( $user ) ) {
 			$tools[] = Linker::link( SpecialPage::getSafeTitleFor( 'Log', 'chatban' ), wfMessage( 'chat-chatban-log' )->escaped(), array( 'class' => 'chat-ban-log' ), array( 'page' => $user->getUserPage()->getPrefixedText() ) ); # Add chat ban log link (@author: Sactage)
-			$chatUser = new ChatUser($user);
+			$chatUser = new ChatUser( $user );
 			if ( $chatUser->isBanned() ) {
 				LogEventsList::showLogExtract(
 					$wgOut,
@@ -123,12 +123,13 @@ class ChatHelper {
 					)
 				);
 			} else {
-				if ( $wgUser->isAllowed( Chat::CHAT_MODERATOR ) && !$user->isAllowed( Chat::CHAT_MODERATOR )  ) {
-					$tools[] =  "<a class='chat-change-ban' data-user-id='{$id}' href='#'>" . wfMsg( 'chat-ban-contributions-heading' ) . "</a>" ;
+				if ( $wgUser->isAllowed( Chat::CHAT_MODERATOR ) && !$user->isAllowed( Chat::CHAT_MODERATOR ) ) {
+					$tools[] = "<a class='chat-change-ban' data-user-id='{$id}' href='#'>" . wfMsg( 'chat-ban-contributions-heading' ) . "</a>";
 				}
 			}
 		}
 		wfProfileOut( __METHOD__ );
+
 		return true;
 	}
 
@@ -138,12 +139,12 @@ class ChatHelper {
 		if ( strpos( $logaction, 'chatban' ) === 0 ) {
 			$user = User::newFromId( $paramArray[1] );
 			if ( !empty( $user ) ) {
-				$chatUser = new ChatUser($user);
+				$chatUser = new ChatUser( $user );
 				if ( $chatUser->isBanned() && $wgUser->isAllowed( Chat::CHAT_MODERATOR ) ) {
 					$revert = "(" . "<a class='chat-change-ban' data-user-id='{$paramArray[1]}' href='#'>" . wfMsg( 'chat-ban-log-change-ban-link' ) . "</a>" . ")";
 				}
 			}
-		} elseif ( $logaction === 'chatconnect'  && !empty( $paramArray ) ) {
+		} elseif ( $logaction === 'chatconnect' && !empty( $paramArray ) ) {
 			$ipLinks = array();
 			if ( $wgUser->isAllowed( 'multilookup' ) ) {
 				$mlTitle = GlobalTitle::newFromText( 'MultiLookup', NS_SPECIAL, 177 );
@@ -181,7 +182,7 @@ class ChatHelper {
 		}
 
 		$skin = RequestContext::getMain()->getSkin();
-		$id =  $params[1];
+		$id = $params[1];
 		if ( !$filterWikilinks ) { // Plaintext? Used for IRC messages (BugID: 44249)
 			$targetUser = User::newFromId( $id );
 			$link = "[[User:{$targetUser->getName()}]]";
@@ -198,40 +199,15 @@ class ChatHelper {
 		return wfMsg( 'chat-' . $action . '-log-entry', $link, $time, $endon );
 	}
 
-	static public function info( $message, Array $params = [] ) {
-		WikiaLogger::instance()->info( 'CHAT: ' . $message, $params );
-	}
-
-	static public function debug( $message, Array $params = [] ) {
-		WikiaLogger::instance()->debug( 'CHAT: ' . $message, $params );
-	}
-
-	public static function getChatters() {
-		global $wgMemc;
-		wfProfileIn( __METHOD__ );
-
-		$memKey = wfMemcKey( "ChatServerApiClient::getChatters" );
-
-		// data are store in memcache and set by node.js
-		$chatters = $wgMemc->get( $memKey );
-		if ( !$chatters ) {
-			$chatters = array();
+	/**
+	 * Add read right to ChatAjax am reqest.
+	 * That is solving problems with private wikis and chat (communitycouncil.wikia.com)
+	 */
+	public static function onUserGetRights( $user, &$aRights ) {
+		global $wgRequest;
+		if ( $wgRequest->getVal( 'action' ) === 'ajax' && $wgRequest->getVal( 'rs' ) === 'ChatAjax' ) {
+			$aRights[] = 'read';
 		}
-
-		wfProfileOut( __METHOD__ );
-
-		return $chatters;
+		return true;
 	}
-
-	public static function setChatters( $chatters ) {
-		global $wgMemc;
-		wfProfileIn( __METHOD__ );
-
-		$memKey = wfMemcKey( "ChatServerApiClient::getChatters" );
-		$wgMemc->set( $memKey, $chatters, 60 * 60 * 24 );
-
-		wfProfileOut( __METHOD__ );
-	}
-
-
 }
