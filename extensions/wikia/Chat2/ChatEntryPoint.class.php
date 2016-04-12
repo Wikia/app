@@ -30,34 +30,50 @@ class ChatEntryPoint {
 	 */
 	static public function getEntryPointTemplateVars( $isEntryPoint ) {
 		global $wgEnableWallExt, $wgBlankImgUrl;
+		$entryPointGuidelinesMessage = wfMessage( 'chat-entry-point-guidelines' );
+
 		return [
 			'linkToSpecialChat' => SpecialPage::getTitleFor( "Chat" )->escapeLocalUrl(),
+			'joinTheChatMessage' => wfMsg( 'chat-join-the-chat' ),
 			'isEntryPoint' => $isEntryPoint,
+			'entryPointGuidelinesMessage' => $entryPointGuidelinesMessage->exists() ?
+				$entryPointGuidelinesMessage->parse() : null,
 			'blankImgUrl' => $wgBlankImgUrl,
 			'profileType' => !empty( $wgEnableWallExt ) ? 'message-wall' : 'talk-page'
 		];
 	}
 
 	/**
-	 * Chat tag parser implementation
+	 * Chat tag parser implementation.
+	 * Return html of a chat wrapped in nowiki tags.
 	 */
 	static public function parseTag( $input, $args, $parser ) {
 		wfProfileIn( __METHOD__ );
 
-		$template = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
-		$template->set_vars( self::getEntryPointTemplateVars( true ) );
+		$templateEngine = ( new Wikia\Template\MustacheEngine )
+			->setPrefix(dirname( __FILE__ ) . '/templates');
 
-		if ( F::app()->checkSkin( 'oasis' ) ) {
-			$html = $template->render( 'entryPointTag' );
-		} else {
-			$html = $template->render( 'entryPointTagMonobook' );
-		}
+		$html = $templateEngine->clearData()
+			->setData(  self::getEntryPointTemplateVars( true ) )
+			->render( self::getChatTemplateName() );
 
 		// remove newlines so parser does not try to wrap lines into paragraphs
 		$html = str_replace( "\n", "", $html );
 
 		wfProfileOut( __METHOD__ );
 		return '<nowiki>' . $html . '</nowiki>';
+	}
+
+	/**
+	 * Return proper template name according to current skin
+	 *
+	 * @return string template name to render
+	 */
+	static public function getChatTemplateName() {
+
+		return F::app()->checkSkin( 'oasis' ) ?
+			'entryPointTag.mustache' :
+			'entryPointTagMonobook.mustache';
 	}
 
 	static private function getChatUsersMemcKey() {
@@ -92,7 +108,9 @@ class ChatEntryPoint {
 				global $wgEnableWallExt;
 				$chatters = [];
 				// Gets array of users currently in chat to populate rail module and user stats menus
-				$chattersIn = NodeApiClient::getChatters();
+
+				$chatter1 = NodeApiClient::getChatters()[0];
+				$chattersIn = [$chatter1, $chatter1, $chatter1, $chatter1, $chatter1, $chatter1, $chatter1, $chatter1, $chatter1, $chatter1, $chatter1 ,$chatter1];
 				foreach ( $chattersIn as $i => $val ) {
 					$chatters[ $i ] = WikiaDataAccess::cache( wfMemcKey( 'chatavatars', $val, 'v2' ), 60 * 60, function() use ( $wgEnableWallExt, $val ) {
 						$chatter = [ 'username' => $val,
