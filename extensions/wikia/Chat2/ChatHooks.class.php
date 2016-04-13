@@ -36,7 +36,7 @@ class ChatHooks {
 	public static function onMakeGlobalVariablesScript( &$vars ) {
 		global $wgUser, $wgLang;
 		if ( $wgUser->isLoggedIn() ) {
-			$vars['wgWikiaChatUsers'] = ChatWidget::getChatUsersInfo();
+			$vars['wgWikiaChatUsers'] = ChatWidget::getUsersInfo();
 			if ( empty( $vars['wgWikiaChatUsers'] ) ) {
 				// we will need it to attract user to join chat
 				$vars['wgWikiaChatProfileAvatarUrl'] = AvatarService::getAvatarUrl( $wgUser->getName(), ChatRailController::AVATAR_SIZE );

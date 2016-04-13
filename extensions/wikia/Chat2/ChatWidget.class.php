@@ -89,7 +89,7 @@ class ChatWidget {
 	 * * contribsUrl - link to chatter contribution page
 	 * @return array array containing chatters info
 	 */
-	static public function getChatUsersInfo() {
+	static public function getUsersInfo() {
 		global $wgReadOnly;
 
 		wfProfileIn( __METHOD__ );
@@ -103,9 +103,9 @@ class ChatWidget {
 				self::getChatUsersMemcKey(),
 				ChatWidget::CHAT_USER_LIST_CACHE_TTL,
 				function () {
-					return array_map(
-						[ __CLASS__, 'getUserInfo' ],
-						Chat::getChatters() );
+					return array_map(function($userName) {
+						return self::getUserInfo($userName);
+					}, Chat::getChatters() );
 				} );
 		}
 		wfProfileOut( __METHOD__ );

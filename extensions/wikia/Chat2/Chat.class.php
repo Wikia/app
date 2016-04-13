@@ -226,16 +226,12 @@ class Chat {
 
 	private static function getUserNamesFromIds( $userIds ) {
 		if ( !is_array( $userIds ) ) {
-			$userIds = [ ];
+			return [ ];
 		}
 
-		$userNames = [ ];
-		foreach ( $userIds as $value ) {
-			$user = User::newFromID( $value );
-			$userNames[] = $user->getName();
-		}
-
-		return $userNames;
+		return array_map(function($userId) {
+			return User::newFromId($userId)->getName();
+		}, $userIds);
 	}
 
 	/**
