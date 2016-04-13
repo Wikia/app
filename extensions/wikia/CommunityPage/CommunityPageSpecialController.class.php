@@ -81,11 +81,11 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 
 		$userRank = 'X'; // fixme: Need design for what to show when user has no contribs this week
 
-		if ($userContributionCount > 0) {
+		if ( $userContributionCount > 0 ) {
 			$rank = 1;
 
-			foreach ($contributors as $contributor) {
-				if ($contributor['userId'] == $this->wg->user->getId()) {
+			foreach ( $contributors as $contributor ) {
+				if ( $contributor['userId'] == $this->wg->user->getId() ) {
 					$userRank = $rank;
 					break;
 				}
@@ -106,7 +106,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 				AvatarService::AVATAR_SIZE_SMALL_PLUS
 			),
 			'userRank' => $userRank,
-			'memberCount' => count($contributors),
+			'memberCount' => count( $contributors ),
 			'userContribCount' => $userContributionCount
 		] );
 	}

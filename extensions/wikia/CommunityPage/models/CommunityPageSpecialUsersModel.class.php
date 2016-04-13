@@ -40,7 +40,7 @@ class CommunityPageSpecialUsersModel {
 					$adminFilter = ' AND (ug_group = "sysop")';
 				}
 
-				if ($weekly) {
+				if ( $weekly ) {
 					// From last Sunday (matches wikia_user_properties)
 					$dateFilter = 'rev_timestamp >= FROM_DAYS(TO_DAYS(CURDATE()) - MOD(TO_DAYS(CURDATE()) - 1, 7))';
 				} else {
@@ -54,7 +54,7 @@ class CommunityPageSpecialUsersModel {
 					->LEFT_JOIN( 'user_groups ON (user_id = ug_user)' )
 					->WHERE( 'user_id' )->IS_NOT_NULL()
 					->AND_( $dateFilter )
-					->AND_( '(ug_group IS NULL or (ug_group <> "bot"))' . $adminFilter)
+					->AND_( '(ug_group IS NULL or (ug_group <> "bot"))' . $adminFilter )
 					// TODO: also filter by global bot user ids?
 					->GROUP_BY( 'user_name' )
 					->ORDER_BY( 'revision_count DESC, user_name' )
@@ -137,7 +137,7 @@ class CommunityPageSpecialUsersModel {
 			function () use ( $userId, $weekly ) {
 				$db = wfGetDB( DB_SLAVE );
 
-				if ($weekly) {
+				if ( $weekly ) {
 					// From last Sunday (matches wikia_user_properties)
 					$dateFilter = 'rev_timestamp >= FROM_DAYS(TO_DAYS(CURDATE()) - MOD(TO_DAYS(CURDATE()) - 1, 7))';
 				} else {
