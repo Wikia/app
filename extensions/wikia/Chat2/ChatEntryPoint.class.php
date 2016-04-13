@@ -23,32 +23,37 @@ class ChatEntryPoint {
 	}
 
 	/**
-	 * @param $isEntryPoint - set to true for chat entry point embeded in the article, false for rail module
-	 * Return an array of variables needed to render chat entry point template
+	 * @param $isEntryPoint - set to true for chat entry point embedded in the article,
+	 * set to false for rail module
+	 *
+	 * Return an array of variables needed to render chat entry point mustache template
 	 *
 	 * @return array
 	 */
 	static public function getEntryPointTemplateVars( $isEntryPoint ) {
 		global $wgEnableWallExt, $wgBlankImgUrl, $wgUser, $wgSitename;
+
 		$entryPointGuidelinesMessage = wfMessage( 'chat-entry-point-guidelines' );
+		$joinTheChatMessage = wfMessage( 'chat-join-the-chat' );
 		$chatUsers = ChatEntryPoint::getChatUsersInfo();
 		$chatProfileAvatarUrl = AvatarService::getAvatarUrl( $wgUser->getName(), ChatRailController::AVATAR_SIZE );
 
 		$vars =  [
-			'linkToSpecialChat' => SpecialPage::getTitleFor( "Chat" )->escapeLocalUrl(),
-			'joinTheChatMessage' => wfMessage( 'chat-join-the-chat' ),
-			'isEntryPoint' => $isEntryPoint,
-			'entryPointGuidelinesMessage' => $entryPointGuidelinesMessage->exists() ?
-				$entryPointGuidelinesMessage->parse() : null,
 			'blankImgUrl' => $wgBlankImgUrl,
-			'profileType' => !empty( $wgEnableWallExt ) ? 'message-wall' : 'talk-page',
-			'userName' => $wgUser->isAnon() ? null : $wgUser->getName(),
 			'chatUsers' => $chatUsers,
 			'chatUsersCount' => count( $chatUsers ),
-			'wgSiteName' => $wgSitename
+			'entryPointGuidelinesMessage' => $entryPointGuidelinesMessage->exists() ?
+				$entryPointGuidelinesMessage->parse() : null,
+			'isEntryPoint' => $isEntryPoint,
+			'joinTheChatMessage' => $joinTheChatMessage->exists() ?
+				$joinTheChatMessage->parse() : null,
+			'linkToSpecialChat' => SpecialPage::getTitleFor( "Chat" )->escapeLocalUrl(),
+			'siteName' => $wgSitename,
+			'profileType' => empty( $wgEnableWallExt ) ? 'talk-page' : 'message-wall',
+			'userName' => $wgUser->isAnon() ? null : $wgUser->getName(),
 		];
 
-		if ( empty($chatUsers) ) {
+		if ( empty( $chatUsers ) ) {
 			$vars[ 'chatProfileAvatarUrl' ] = $chatProfileAvatarUrl;
 		}
 
