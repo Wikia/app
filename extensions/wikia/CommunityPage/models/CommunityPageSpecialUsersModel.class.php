@@ -195,7 +195,7 @@ class CommunityPageSpecialUsersModel {
 	 */
 	public function getRecentlyJoinedUsers( $limit = 14 ) {
 		$data = WikiaDataAccess::cache(
-			wfMemcKey( self::RECENTLY_JOINED_MCACHE_KEY ),
+			wfMemcKey( self::RECENTLY_JOINED_MCACHE_KEY, $limit ),
 			WikiaResponse::CACHE_STANDARD,
 			function () use ( $limit ) {
 				$db = wfGetDB( DB_SLAVE );
