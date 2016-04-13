@@ -250,7 +250,7 @@ class ChatAjax {
 		if ( empty( $userToPromote ) ) {
 			$res["error"] = wfMsg( 'chat-missing-required-parameter', $PARAM_NAME );
 		} else {
-			$result = Chat::promoteChatModerator( $userToPromote, $promotingUser );
+			$result = Chat::promoteModerator( $userToPromote, $promotingUser );
 			if ( $result === true ) {
 				$res["success"] = true;
 			} else {

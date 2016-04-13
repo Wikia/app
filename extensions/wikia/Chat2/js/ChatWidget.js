@@ -98,7 +98,7 @@ var ChatWidget = {
 	// based on the template and user information, return a filled-in element
 	fillUserTemplate: function($t, user) {
 		if (user.showSince) {
-			var months = window.wgWikiaChatMonts || window.wgMonthNamesShort;
+			var months = window.wgWikiaChatMonths || window.wgMonthNamesShort;
 			user.since = months[user.since_month] + ' ' + user.since_year;
 		}
 		$t.find('[data-user-prop]').each(function() {

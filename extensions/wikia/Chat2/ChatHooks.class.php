@@ -41,7 +41,7 @@ class ChatHooks {
 				// we will need it to attract user to join chat
 				$vars['wgWikiaChatProfileAvatarUrl'] = AvatarService::getAvatarUrl( $wgUser->getName(), ChatRailController::AVATAR_SIZE );
 			}
-			$vars['wgWikiaChatMonts'] = $wgLang->getMonthAbbreviationsArray();
+			$vars['wgWikiaChatMonths'] = $wgLang->getMonthAbbreviationsArray();
 		} else {
 			$vars['wgWikiaChatUsers'] = '';
 		}
@@ -54,9 +54,12 @@ class ChatHooks {
 	 * Add WikiaChatLink to all Chat links (we open them in new window in JS)
 	 */
 	public static function onLinkEnd( $skin, Title $target, array $options, &$text, array &$attribs, &$ret ) {
-		if ( ( $target instanceof Title ) && ( $target->getNamespace() == NS_SPECIAL ) && $target->isLocal() && ( $target->getText() == "Chat" ) ) {
-			if ( !array_key_exists( 'class', $attribs ) ) $attribs['class'] = 'WikiaChatLink';
-			else $attribs['class'] .= ' WikiaChatLink';
+		if ( $target->isSpecial('Chat') && $target->isLocal() ) {
+			if ( !array_key_exists( 'class', $attribs ) ) {
+				$attribs['class'] = 'WikiaChatLink';
+			} else {
+				$attribs['class'] .= ' WikiaChatLink';
+			}
 		}
 
 		return true;
@@ -72,19 +75,19 @@ class ChatHooks {
 
 		wfProfileIn( __METHOD__ );
 
-		$sp = [
+		$specialPages = [
 			'Contributions',
 			'Log',
 			'Recentchanges'
 		];
 
-		foreach ( $sp as $value ) {
+		foreach ( $specialPages as $value ) {
 			if ( $wgTitle->isSpecial( $value ) ) {
 				// For Chat2 (doesn't exist in Chat(1))
-				$srcs = AssetsManager::getInstance()->getGroupCommonURL( 'chat_ban_js', [ ] );
+				$scriptUrls = AssetsManager::getInstance()->getGroupCommonURL( 'chat_ban_js', [ ] );
 
-				foreach ( $srcs as $val ) {
-					$out->addScript( '<script src="' . $val . '"></script>' );
+				foreach ( $scriptUrls as $scriptUrl ) {
+					$out->addScript( '<script src="' . $scriptUrl . '"></script>' );
 				}
 				JSMessages::enqueuePackage( 'ChatBanModal', JSMessages::EXTERNAL );
 				$out->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/Chat2/css/ChatModal.scss' ) );
@@ -176,9 +179,9 @@ class ChatHooks {
 			return "";
 		}
 
-		$endon = "";
+		$endOnText = "";
 		if ( !empty( $params[3] ) ) {
-			$endon = $wgLang->timeanddate( wfTimestamp( TS_MW, $params[3] ), true );
+			$endOnText = $wgLang->timeanddate( wfTimestamp( TS_MW, $params[3] ), true );
 		}
 
 		$skin = RequestContext::getMain()->getSkin();
@@ -196,7 +199,7 @@ class ChatHooks {
 			$time = $params[2];
 		}
 
-		return wfMsg( 'chat-' . $action . '-log-entry', $link, $time, $endon );
+		return wfMsg( 'chat-' . $action . '-log-entry', $link, $time, $endOnText );
 	}
 
 	/**

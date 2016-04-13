@@ -33,7 +33,7 @@ class ChatController extends WikiaController {
 		$pageTitle->setParts( [ wfMessage( 'chat' ) ] );
 		$this->pageTitle = $pageTitle->getTitle();
 
-		$this->chatkey = Chat::echoCookies();
+		$this->chatkey = Chat::getSessionKey();
 
 		// Set the hostname of the node server that the page will connect to.
 		$chathost = ChatConfig::getPublicHost();
