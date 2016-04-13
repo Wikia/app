@@ -154,10 +154,10 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		$data = $this->sendRequest( 'LatestActivityController', 'executeIndex' )->getData();
 		$recentActivity = [];
 
-		foreach ($data['changeList'] as $activity) {
+		foreach ( $data['changeList'] as $activity ) {
 			$changeType = $activity['changetype'];
 
-			switch ($changeType) {
+			switch ( $changeType ) {
 				case 'new':
 					$changeTypeString = $this->msg( 'communitypage-created' )->plain();
 					break;
@@ -201,13 +201,13 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		$adminData =  $this->sendRequest( 'CommunityPageSpecialController', 'getTopAdminsData' )->getData();
 		$memberCount = $this->usersModel->getMemberCount();
 
-		$this->response->setData([
+		$this->response->setData( [
 			'allText' => $this->msg( 'communitypage-modal-tab-all' )->plain(),
 			'allCount' => $memberCount,
 			'adminsText' => $this->msg( 'communitypage-modal-tab-admins' )->plain(),
 			'adminsCount' => $adminData['adminCount'],
 			'leaderboardText' => $this->msg( 'communitypage-modal-tab-leaderboard' )->plain(),
-		]);
+		] );
 	}
 
 	private function addAssets() {
@@ -238,6 +238,6 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 				'profilePage' => $user->getUserPage()->getLocalURL(),
 				'count' => $count,
 			];
-		}, $contributors );
+		} , $contributors );
 	}
 }

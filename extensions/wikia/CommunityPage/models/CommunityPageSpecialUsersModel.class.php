@@ -34,7 +34,7 @@ class CommunityPageSpecialUsersModel {
 		$data = WikiaDataAccess::cache(
 			wfMemcKey( self::FIRST_REV_MCACHE_KEY ),
 			WikiaResponse::CACHE_STANDARD,
-			function () use ($user) {
+			function () use ( $user ) {
 				$db = wfGetDB( DB_SLAVE );
 
 				$sqlData = ( new WikiaSQL() )
@@ -54,7 +54,7 @@ class CommunityPageSpecialUsersModel {
 			}
 		);
 
-		if (count( $data ) > 0) {
+		if ( count( $data ) > 0 ) {
 			return $data[0]['wup_value'];
 		}
 		return null;
@@ -84,11 +84,11 @@ class CommunityPageSpecialUsersModel {
 				$sqlData = ( new WikiaSQL() )
 					->SELECT( 'user_name, user_id, count(rev_id) AS revision_count' )
 					->FROM ( 'revision FORCE INDEX (user_timestamp)' )
-					->LEFT_JOIN( $wgExternalSharedDB . '.user')->ON( '(rev_user <> 0) AND (user_id = rev_user)' )
+					->LEFT_JOIN( $wgExternalSharedDB . '.user' )->ON( '(rev_user <> 0) AND (user_id = rev_user)' )
 					->LEFT_JOIN( 'user_groups ON (user_id = ug_user)' )
 					->WHERE( 'user_id' )->IS_NOT_NULL()
-					->AND_( 'rev_timestamp > DATE_SUB(now(), INTERVAL '. $interval . ')' )
-					->AND_( '(ug_group IS NULL or (ug_group <> "bot"))' . $adminFilter)
+					->AND_( 'rev_timestamp > DATE_SUB(now(), INTERVAL ' . $interval . ')' )
+					->AND_( '(ug_group IS NULL or (ug_group <> "bot"))' . $adminFilter )
 					// TOOD: also filter by glboal bot user ids?
 					->GROUP_BY( 'user_name' )
 					->ORDER_BY( 'revision_count' )->DESC()
@@ -240,7 +240,7 @@ class CommunityPageSpecialUsersModel {
 						$userName = $user->getName();
 
 						if ( $this->showMember( $user ) ) {
-							$avatar = AvatarService::renderAvatar($userName, AvatarService::AVATAR_SIZE_SMALL_PLUS);
+							$avatar = AvatarService::renderAvatar( $userName, AvatarService::AVATAR_SIZE_SMALL_PLUS );
 
 							$sqlData[] = [
 								'userId' => $row->wup_user,
@@ -276,7 +276,7 @@ class CommunityPageSpecialUsersModel {
 				$sqlData = ( new WikiaSQL() )
 					->SELECT( '*' )
 					->FROM ( 'wikia_user_properties' )
-					->LEFT_JOIN( 'user_groups')->ON( 'wup_user = ug_user' )
+					->LEFT_JOIN( 'user_groups' )->ON( 'wup_user = ug_user' )
 					->WHERE ( 'wup_property' )->EQUAL_TO( 'firstContributionTimestamp' )
 					->AND_ ( 'wup_value > DATE_SUB(now(), INTERVAL 2 YEAR)' )
 					->ORDER_BY( 'wup_value DESC' )
@@ -325,7 +325,7 @@ class CommunityPageSpecialUsersModel {
 				$sqlData = ( new WikiaSQL() )
 					->SELECT( 'COUNT(*) AS user_count' )
 					->FROM ( 'wikia_user_properties' )
-					->LEFT_JOIN( 'user_groups')->ON( 'wup_user = ug_user' )
+					->LEFT_JOIN( 'user_groups' )->ON( 'wup_user = ug_user' )
 					->WHERE ( 'wup_property' )->EQUAL_TO( 'firstContributionTimestamp' )
 					->AND_ ( 'wup_value > DATE_SUB(now(), INTERVAL 2 YEAR)' )
 					->ORDER_BY( 'wup_value DESC' )
