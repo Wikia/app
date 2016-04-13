@@ -51,13 +51,10 @@ class CommunityPageExperimentHelper {
 		}
 
 		// Filter out blocked and anon admins
-		foreach ( $adminIds as $key => $adminId ) {
+		$adminIds = array_filter( $adminIds, function ( $adminId ) {
 			$admin = User::newFromId( $adminId );
-
-			if ( $admin->isBlocked() || $admin->isAnon() ) {
-				unset( $adminIds[$key] );
-			}
-		}
+			return !$admin->isBlocked() && !$admin->isAnon();
+		} );
 
 		$numAdmins = count( $adminIds );
 		if ( $numAdmins < $num ) {
