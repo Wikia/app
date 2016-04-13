@@ -29,7 +29,7 @@ class ChatEntryPoint {
 	 * @return array
 	 */
 	static public function getEntryPointTemplateVars( $isEntryPoint ) {
-		global $wgEnableWallExt, $wgBlankImgUrl, $wgUser;
+		global $wgEnableWallExt, $wgBlankImgUrl, $wgUser, $wgSitename;
 		$entryPointGuidelinesMessage = wfMessage( 'chat-entry-point-guidelines' );
 		$chatUsers = ChatEntryPoint::getChatUsersInfo();
 		$chatProfileAvatarUrl = AvatarService::getAvatarUrl( $wgUser->getName(), ChatRailController::AVATAR_SIZE );
@@ -43,7 +43,8 @@ class ChatEntryPoint {
 			'blankImgUrl' => $wgBlankImgUrl,
 			'profileType' => !empty( $wgEnableWallExt ) ? 'message-wall' : 'talk-page',
 			'userName' => $wgUser->isAnon() ? null : $wgUser->getName(),
-			'wgWikiaChatUsers' => $chatUsers,
+			'chatUsers' => $chatUsers,
+			'wgSiteName' => $wgSitename
 		];
 
 		if ( empty($chatUsers) ) {
@@ -119,8 +120,8 @@ class ChatEntryPoint {
 				$chatters = [];
 				// Gets array of users currently in chat to populate rail module and user stats menus
 
-				$chatter1 = NodeApiClient::getChatters()[0];
-				$chattersIn = [$chatter1, $chatter1, $chatter1, $chatter1, $chatter1, $chatter1, $chatter1, $chatter1, $chatter1, $chatter1, $chatter1 ,$chatter1];
+				//$chattersIn = NodeApiClient::getChatters();
+				$chattersIn = ['Tomek-dev', 'Dianafa', 'Bve', 'Bognix-dev', 'Warkot', 'Aga User', 'Sasquaczbdg', 'Sqreekdev'];
 				foreach ( $chattersIn as $i => $val ) {
 					$chatters[ $i ] = WikiaDataAccess::cache( wfMemcKey( 'chatavatars', $val, 'v2' ), 60 * 60, function() use ( $wgEnableWallExt, $val ) {
 						$chatter = [ 'username' => $val,
@@ -139,17 +140,17 @@ class ChatEntryPoint {
 							// member since
 							$chatter[ 'showSince' ] = $chatter[ 'editCount' ] != 0;
 							if ( $chatter[ 'showSince' ] ) {
+								global $wgLang;
+								$months = $wgLang->getMonthAbbreviationsArray();
 								$date = getdate( strtotime( $stats[ 'date' ] ) );
+
 								$chatter[ 'since_year' ] = $date[ 'year' ];
 								$chatter[ 'since_month' ] =  $date[ 'mon' ];
+								$chatter[ 'since' ] = sprintf('%s %s', $months[ $chatter[ 'since_month' ] ] , $chatter[ 'since_year' ]);
 							}
 
-							if ( !empty( $wgEnableWallExt ) ) {
-								$chatter[ 'profileUrl' ] = Title::makeTitle( NS_USER_WALL, $chatter[ 'username' ] )->getFullURL();
-							} else {
-								$chatter[ 'profileUrl' ] = Title::makeTitle( NS_USER_TALK, $chatter[ 'username' ] )->getFullURL();
-							}
-
+							$profileUrlNs = !empty( $wgEnableWallExt ) ? NS_USER_WALL : NS_USER_TALK;
+							$chatter[ 'profileUrl' ] = Title::makeTitle( $profileUrlNs, $chatter[ 'username' ] )->getFullURL();
 							$chatter[ 'contribsUrl' ] = SpecialPage::getTitleFor( 'Contributions', $chatter[ 'username' ] )->getFullURL();
 						}
 						return $chatter;

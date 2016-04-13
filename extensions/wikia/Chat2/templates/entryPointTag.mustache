@@ -1,11 +1,10 @@
 <section class="ChatModule {{#isEntryPoint}} ChatEntryPoint {{/isEntryPoint}}{{^isEntryPoint}}module{{/isEntryPoint}} ChatModuleUninitialized">
 	<div class="chat-contents{{#userName}} chat-user-logged-in{{/userName}}{{^userName}} chat-user-anonymous{{/userName}}">
 		<h2 class="chat-headline">
-			<p>{{userName}} </p>
 			<span class="chat-live" data-msg-id="chat-live2"> </span>
 			<span class="chat-total"> </span>
 		</h2>
-		<p class="chat-name"> </p>
+		<p class="chat-name">{{wgSiteName}}</p>
 		<div class="chat-join">
 			<button type="button"{{^userName}} class="loginToChat" {{/userName}}onclick="ChatEntryPoint.onClickChatButton('{{linkToSpecialChat}}')"> </button>
 		</div>
@@ -15,27 +14,28 @@
 			<div class="carousel-container">
 				<div>
 					<ul class="carousel">
+						{{#chatUsers}}
 						<li class="chatter">
-							<img src="{{blankImgUrl}}" data-user-attr="data-src" data-user-prop="avatarUrl" class="avatar" width="32" height="32" />
+							<img src="{{blankImgUrl}}" data-src="{{avatarUrl}}" data-user-attr="data-src" data-user-prop="avatarUrl" class="avatar" width="32" height="32"  />
 							<div class="UserStatsMenu">
 								<div class="info">
-									<img src="{{blankImgUrl}}" data-user-attr="data-src" data-user-prop="avatarUrl" class="avatar" width="24" height="24" />
+									<img data-src="{{avatarUrl}}" src="{{blankImgUrl}}" data-user-attr="data-src" data-user-prop="avatarUrl" class="avatar" width="24" height="24" />
 									<ul>
-										<li class="username" data-user-prop="username"> </li>
-										<li class="edits" data-msg-id="chat-edit-count" data-user-attr="data-msg-param" data-user-prop="editCount"> </li>
-										<li class="since" data-msg-id="chat-member-since" data-user-attr="data-msg-param" data-user-prop="since"> </li>
+										<li class="username" data-user-prop="username">{{username}}</li>
+										<li data-msg-param="{{editCount}}" class="edits" data-msg-id="chat-edit-count" data-user-attr="data-msg-param" data-user-prop="editCount"> </li>
+										<li data-msg-param="{{since}}" class="since" data-msg-id="chat-member-since" data-user-attr="data-msg-param" data-user-prop="since">{{since}}</li>
 									</ul>
 								</div>
 								<div class="actions">
 									<ul class="regular-actions">
 										<li class="profilepage {{profileType}}">
-											<a data-user-attr="href" data-user-prop="profileUrl">
+											<a href="{{profileUrl}}" data-user-attr="href" data-user-prop="profileUrl">
 												<span class="icon">&nbsp;</span>
 												<span class="label" data-msg-id="chat-user-menu-{{profileType}}"></span>
 											</a>
 										</li>
 										<li class="contribs">
-											<a data-user-attr="href" data-user-prop="contribsUrl">
+											<a href="{{contribsUrl}}" data-user-attr="href" data-user-prop="contribsUrl">
 												<span class="icon">&nbsp;</span>
 												<span class="label" data-msg-id="chat-user-menu-contribs"> </span>
 											</a>
@@ -44,6 +44,7 @@
 								</div>
 							</div>
 						</li>
+						{{/chatUsers}}
 					</ul>
 					{{#chatProfileAvatarUrl}}
 						<img src="{{chatProfileAvatarUrl}}" class="avatar currentUser" width="32" height="32" />

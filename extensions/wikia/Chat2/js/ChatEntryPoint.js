@@ -61,9 +61,7 @@ var ChatEntryPoint = {
 		// @todo - right now it's a custom html-based template, all the logic for inserting variables is here
 		// once the mustache is loaded on every page, rewrite the template and remove most of the code below
 		// see: https://wikia-inc.atlassian.net/browse/SUS-416
-		var items = [],
-			i,
-			cnt = window.wgWikiaChatUsers.length;
+		var cnt = window.wgWikiaChatUsers.length;
 
 		$t.find('.chat-contents').
 			addClass((cnt) ? 'chat-room-active' : 'chat-room-empty');
@@ -74,13 +72,6 @@ var ChatEntryPoint = {
 		$t.find('div.chat-join button').attr('data-msg-id', cnt ? 'chat-join-the-chat' : 'chat-start-a-chat');
 
 		if (cnt) {
-			var $carousel = $t.find('ul.carousel'),
-				$u = $carousel.find('>li');
-
-			for (i = 0; i < cnt; i++) {
-				items.push(ChatEntryPoint.fillUserTemplate($u.clone(), window.wgWikiaChatUsers[i]));
-			}
-			$carousel.html(items);
 			ChatEntryPoint.initCarousel($t.find('.chat-whos-here'));
 		} else {
 			$t.find('ul.carousel').remove();
@@ -91,30 +82,6 @@ var ChatEntryPoint = {
 			var $e = $(this);
 			$e.text($.msg($e.data('msg-id'), $e.data('msg-param')));
 		});
-	},
-
-	// based on the template and user information, return a filled-in element
-	fillUserTemplate: function ($t, user) {
-		if (user.showSince) {
-			var months = window.wgWikiaChatMonts || window.wgMonthNamesShort;
-			user.since = months[user.since_month] + ' ' + user.since_year;
-		}
-
-		$t.find('[data-user-prop]').each(function () {
-			var $e = $(this),
-				attr = $e.data('user-attr'),
-				p = $e.data('user-prop'),
-				v = user[p];
-
-			if (typeof v === 'undefined') {
-				$e.remove();
-			} else if (attr) {
-				$e.attr(attr, v);
-			} else {
-				$e.html(v);
-			}
-		});
-		return $t;
 	},
 
 	// change the user list into the carousel
