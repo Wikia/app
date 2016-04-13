@@ -62,23 +62,21 @@ var ChatEntryPoint = {
 		// once the mustache is loaded on every page, rewrite the template and remove most of the code below
 		// see: https://wikia-inc.atlassian.net/browse/SUS-416
 		var items = [],
-			i, cnt = window.wgWikiaChatUsers.length,
-			img = window.wgWikiaChatProfileAvatarUrl;
+			i,
+			cnt = window.wgWikiaChatUsers.length;
 
 		$t.find('.chat-contents').
-		addClass((cnt) ? 'chat-room-active' : 'chat-room-empty').
-		addClass((window.wgUserName) ? 'chat-user-logged-in' : 'chat-user-anonymous');
+			addClass((cnt) ? 'chat-room-active' : 'chat-room-empty');
 		$t.find('.chat-total').html(cnt);
 		$t.find('p.chat-name').html(window.wgSiteName);
-		if (!window.wgUserName) {
-			$t.find('div.chat-join button').addClass('loginToChat');
-		}
+
 		// we use attr instead of data because we want it to be present in dom (needed for css selector)
 		$t.find('div.chat-join button').attr('data-msg-id', cnt ? 'chat-join-the-chat' : 'chat-start-a-chat');
 
 		if (cnt) {
-			var $carousel = $t.find('ul.carousel');
-			var $u = $carousel.find('>li');
+			var $carousel = $t.find('ul.carousel'),
+				$u = $carousel.find('>li');
+
 			for (i = 0; i < cnt; i++) {
 				items.push(ChatEntryPoint.fillUserTemplate($u.clone(), window.wgWikiaChatUsers[i]));
 			}
@@ -88,11 +86,6 @@ var ChatEntryPoint = {
 			$t.find('ul.carousel').remove();
 		}
 
-		if (img) {
-			$t.find('.carousel-container img.avatar.currentUser').attr('src', img);
-		} else {
-			$t.find('.carousel-container img.avatar.currentUser').remove();
-		}
 		// process i18n the messages
 		$t.find('[data-msg-id]').each(function () {
 			var $e = $(this);

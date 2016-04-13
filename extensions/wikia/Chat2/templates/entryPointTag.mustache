@@ -1,12 +1,13 @@
 <section class="ChatModule {{#isEntryPoint}} ChatEntryPoint {{/isEntryPoint}}{{^isEntryPoint}}module{{/isEntryPoint}} ChatModuleUninitialized">
-	<div class="chat-contents">
+	<div class="chat-contents{{#userName}} chat-user-logged-in{{/userName}}{{^userName}} chat-user-anonymous{{/userName}}">
 		<h2 class="chat-headline">
+			<p>{{userName}} </p>
 			<span class="chat-live" data-msg-id="chat-live2"> </span>
 			<span class="chat-total"> </span>
 		</h2>
 		<p class="chat-name"> </p>
 		<div class="chat-join">
-			<button type="button" onclick="ChatEntryPoint.onClickChatButton('{{linkToSpecialChat}}')"> </button>
+			<button type="button"{{^userName}} class="loginToChat" {{/userName}}onclick="ChatEntryPoint.onClickChatButton('{{linkToSpecialChat}}')"> </button>
 		</div>
 		<div class="chat-whos-here">
 			<span class="arrow-left"><img src="{{blankImgUrl}}" /></span>
@@ -44,7 +45,9 @@
 							</div>
 						</li>
 					</ul>
-					<img src="" class="avatar currentUser" width="32" height="32" />
+					{{#chatProfileAvatarUrl}}
+						<img src="{{chatProfileAvatarUrl}}" class="avatar currentUser" width="32" height="32" />
+					{{/chatProfileAvatarUrl}}
 				</div>
 			</div>
 		</div>

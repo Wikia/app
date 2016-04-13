@@ -29,18 +29,28 @@ class ChatEntryPoint {
 	 * @return array
 	 */
 	static public function getEntryPointTemplateVars( $isEntryPoint ) {
-		global $wgEnableWallExt, $wgBlankImgUrl;
+		global $wgEnableWallExt, $wgBlankImgUrl, $wgUser;
 		$entryPointGuidelinesMessage = wfMessage( 'chat-entry-point-guidelines' );
+		$chatUsers = ChatEntryPoint::getChatUsersInfo();
+		$chatProfileAvatarUrl = AvatarService::getAvatarUrl( $wgUser->getName(), ChatRailController::AVATAR_SIZE );
 
-		return [
+		$vars =  [
 			'linkToSpecialChat' => SpecialPage::getTitleFor( "Chat" )->escapeLocalUrl(),
 			'joinTheChatMessage' => wfMsg( 'chat-join-the-chat' ),
 			'isEntryPoint' => $isEntryPoint,
 			'entryPointGuidelinesMessage' => $entryPointGuidelinesMessage->exists() ?
 				$entryPointGuidelinesMessage->parse() : null,
 			'blankImgUrl' => $wgBlankImgUrl,
-			'profileType' => !empty( $wgEnableWallExt ) ? 'message-wall' : 'talk-page'
+			'profileType' => !empty( $wgEnableWallExt ) ? 'message-wall' : 'talk-page',
+			'userName' => $wgUser->isAnon() ? null : $wgUser->getName(),
+			'wgWikiaChatUsers' => $chatUsers,
 		];
+
+		if ( empty($chatUsers) ) {
+			$vars[ 'chatProfileAvatarUrl' ] = $chatProfileAvatarUrl;
+		}
+
+		return $vars;
 	}
 
 	/**
