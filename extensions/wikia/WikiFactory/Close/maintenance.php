@@ -233,9 +233,9 @@ class CloseWikiMaintenance {
 
 				try {
 					$dbw = new DatabaseMysql($server, $wgDBadminuser, $wgDBadminpassword, $centralDB);
-					$dbw->begin();
+					$dbw->begin( __METHOD__ );
 					$dbw->query("DROP DATABASE `{$row->city_dbname}`");
-					$dbw->commit();
+					$dbw->commit( __METHOD__ );
 					$this->log("{$row->city_dbname} dropped from cluster {$cluster}");
 				}
 				catch (Exception $e) {
