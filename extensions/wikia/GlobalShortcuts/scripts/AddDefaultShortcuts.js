@@ -22,7 +22,7 @@ require(['GlobalShortcuts', 'PageActions', 'mw', 'wikia.loader'],
 		function addShortcuts() {
 			var INITIAL_SHORTCUTS = {
 				'general:StartWikia': {
-					shortcuts: ['s'],
+					shortcuts: [],
 					actionParams: {
 						id: 'general:StartWikia',
 						caption: mw.message('global-shortcuts-caption-start-a-new-wikia').plain(),
