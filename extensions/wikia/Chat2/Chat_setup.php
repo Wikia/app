@@ -29,7 +29,7 @@ $wgAutoloadClasses['ChatHooks'] = "$dir/ChatHooks.class.php";
 $wgAutoloadClasses['ChatController'] = "$dir/ChatController.class.php";
 $wgAutoloadClasses['ChatRailController'] = "$dir/ChatRailController.class.php";
 $wgAutoloadClasses['SpecialChat'] = "$dir/SpecialChat.class.php";
-$wgAutoloadClasses['ChatServerApiClient'] = "$dir/ChatServerApiClient.class.phpss.php";
+$wgAutoloadClasses['ChatServerApiClient'] = "$dir/ChatServerApiClient.class.php";
 $wgAutoloadClasses['ChatfailoverSpecialController'] = "$dir/ChatfailoverSpecialController.class.php";
 
 // special pages
@@ -46,12 +46,12 @@ $wgExtensionMessagesFiles['ChatDefaultEmoticons'] = $dir . '/ChatDefaultEmoticon
 $wgHooks['GetRailModuleList'][] = 'ChatHooks::onGetRailModuleList';
 $wgHooks['StaffLog::formatRow'][] = 'ChatHooks::onStaffLogFormatRow';
 $wgHooks['MakeGlobalVariablesScript'][] = 'ChatHooks::onMakeGlobalVariablesScript';
-$wgHooks['ParserFirstCallInit'][] = 'ChatHooks::onParserFirstCallInit';
 $wgHooks['LinkEnd'][] = 'ChatHooks::onLinkEnd';
 $wgHooks['BeforePageDisplay'][] = 'ChatHooks::onBeforePageDisplay';
 $wgHooks['ContributionsToolLinks'][] = 'ChatHooks::onContributionsToolLinks';
 $wgHooks['LogLine'][] = 'ChatHooks::onLogLine';
 $wgHooks['UserGetRights'][] = 'ChatHooks::onUserGetRights';
+$wgHooks['ParserFirstCallInit'][] = 'ChatWidget::onParserFirstCallInit';
 
 // logs
 $wgLogTypes[] = 'chatban';

@@ -25,7 +25,7 @@ class ChatServerApiClient {
 	static public function getCityIdFromRoomId( $roomId ) {
 		wfProfileIn( __METHOD__ );
 
-		$cityId = null;
+		$cityId = '';
 		$cityData = ChatServerApiClient::makeRequest( [
 			"func" => "getCityIdForRoom",
 			"roomId" => $roomId

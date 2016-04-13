@@ -152,7 +152,7 @@ class ChatAjax {
 		}
 
 		$users = json_decode( $wgRequest->getVal( 'users' ) );
-		if ( !$users || !is_array( $users ) || !in_array($wgUser->getName(), $users) ) {
+		if ( !$users || !is_array( $users ) || !in_array( $wgUser->getName(), $users ) ) {
 			wfProfileOut( __METHOD__ );
 
 			return [ 'id' => false ];
@@ -275,8 +275,7 @@ class ChatAjax {
 	private static function authenticateServerOrUser() {
 		global $wgRequest, $wgUser;
 
-		return self::authenticateServer()
-		|| ( $wgRequest->wasPosted() && $wgUser->matchEditToken( $wgRequest->getVal( 'token' ) );
+		return self::authenticateServer() || ( $wgRequest->wasPosted() && $wgUser->matchEditToken( $wgRequest->getVal( 'token' ) ) );
 	}
 
 

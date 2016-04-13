@@ -11,7 +11,7 @@ class ChatUser extends WikiaObject {
 	const BAN_INFO_TTL = 86400;
 
 	// Value to store in memcache when no ban information is found
-	const NO_BAN_MARKER = -1;
+	const NO_BAN_MARKER = 'NO_BAN';
 
 	private $user;
 	private $wikiId;
@@ -20,10 +20,6 @@ class ChatUser extends WikiaObject {
 		global $wgCityId;
 
 		parent::__construct();
-
-		if ( $user->isAnon() ) {
-			throw new Exception( "Chat user must be a registered user" );
-		}
 
 		if ( $wikiId === null ) {
 			$wikiId = $wgCityId;
@@ -45,11 +41,19 @@ class ChatUser extends WikiaObject {
 		return $this->user->getName();
 	}
 
+	public function isAnon() {
+		return $this->user->isAnon();
+	}
+
 	public function getWikiId() {
 		return $this->wikiId;
 	}
 
 	public function ban( $adminId, $endOn, $reason ) {
+		if ( $this->isAnon() ) {
+			throw new InvalidArgumentException('Cannot ban anonymous user');
+		}
+
 		$dbw = wfGetDB( DB_MASTER, [ ], $this->wg->ExternalDatawareDB );
 
 		$dbw->replace(
@@ -70,6 +74,10 @@ class ChatUser extends WikiaObject {
 	}
 
 	public function unban() {
+		if ( $this->isAnon() ) {
+			throw new InvalidArgumentException('Cannot unban anonymous user');
+		}
+
 		$dbw = wfGetDB( DB_MASTER, [ ], $this->wg->ExternalDatawareDB );
 
 		$dbw->delete(
@@ -90,6 +98,10 @@ class ChatUser extends WikiaObject {
 	 * @return bool
 	 */
 	public function isBanned() {
+		if ( $this->isAnon() ) {
+			return false;
+		}
+
 		return $this->getBanInfo() !== false;
 	}
 
@@ -99,6 +111,10 @@ class ChatUser extends WikiaObject {
 	 * @return stdClass|false
 	 */
 	public function getBanInfo() {
+		if ( $this->isAnon() ) {
+			return false;
+		}
+
 		$banInfo = $this->getBanInfoFromCache();
 		if ( empty( $banInfo ) ) {
 			$banInfo = $this->getBanInfoFromDb();
@@ -159,6 +175,10 @@ class ChatUser extends WikiaObject {
 	 * Clear cache for ban status
 	 */
 	public function clearBanInfoCache() {
+		if ( $this->isAnon() ) {
+			return;
+		}
+
 		WikiaDataAccess::cachePurge( $this->getBanInfoCacheKey() );
 	}
 
@@ -170,10 +190,14 @@ class ChatUser extends WikiaObject {
 	private function getBanInfoCacheKey() {
 		// Using shared mem key, but adding in the WikiID ourselves since its possible
 		// to call these functions with an alternate wiki ID.
-		return wfSharedMemcKey( 'chat-baninfo-v2', $this->getWikiId(), $this->getId() );
+		return wfSharedMemcKey( 'chat-baninfo-v3', $this->getWikiId(), $this->getId() );
 	}
 
 	public function blockUser( User $blockedUser, $doCommit = false ) {
+		if ( $this->isAnon() || $blockedUser->isAnon() ) {
+			throw new InvalidArgumentException('Chat blocks work on registered users only');
+		}
+
 		$dbw = wfGetDB( DB_MASTER, [ ], F::app()->wg->ExternalDatawareDB );
 
 		$dbw->replace(
@@ -192,6 +216,10 @@ class ChatUser extends WikiaObject {
 	}
 
 	public function unblockUser( User $blockedUser, $doCommit = false ) {
+		if ( $this->isAnon() || $blockedUser->isAnon() ) {
+			throw new InvalidArgumentException('Chat blocks work on registered users only');
+		}
+
 		$dbw = wfGetDB( DB_MASTER, [ ], F::app()->wg->ExternalDatawareDB );
 
 		$dbw->delete(
@@ -209,6 +237,10 @@ class ChatUser extends WikiaObject {
 	}
 
 	public function getBlockedUsers() {
+		if ( $this->isAnon() ) {
+			throw new InvalidArgumentException('Chat blocks work on registered users only');
+		}
+
 		$dbr = wfGetDB( DB_SLAVE, [ ], $this->wg->ExternalDatawareDB );
 
 		return $dbr->selectFieldValues(
@@ -222,6 +254,10 @@ class ChatUser extends WikiaObject {
 	}
 
 	public function getBlockedByUsers() {
+		if ( $this->isAnon() ) {
+			throw new InvalidArgumentException('Chat blocks work on registered users only');
+		}
+
 		$dbr = wfGetDB( DB_SLAVE, [ ], $this->wg->ExternalDatawareDB );
 
 		return $dbr->selectFieldValues(
