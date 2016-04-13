@@ -61,10 +61,12 @@ class PortableInfoboxBuilderHooks {
 	 * @return bool
 	 */
 	public function onMakeGlobalVariablesScript( array &$aVars ) {
-		global $wgEnablePortableInfoboxBuilderInVE;
+		global $wgEnablePortableInfoboxBuilderInVE, $wgEnableVisualEditorExt;
 
-		$aVars['wgEnablePortableInfoboxBuilderInVE'] = $wgEnablePortableInfoboxBuilderInVE &&
-			\RequestContext::getMain()->getUser()->isAllowed( 'create' );
+		if ( $wgEnableVisualEditorExt && \VisualEditorHooks::isAvailable( \RequestContext::getMain()->getSkin() ) ) {
+			$aVars['wgEnablePortableInfoboxBuilderInVE'] = $wgEnablePortableInfoboxBuilderInVE &&
+				\RequestContext::getMain()->getUser()->isAllowed( 'create' );
+		}
 
 		return true;
 	}
