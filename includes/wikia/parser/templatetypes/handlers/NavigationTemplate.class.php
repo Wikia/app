@@ -8,7 +8,7 @@ class NavigationTemplate {
 		'p',
 	];
 
-	private static $mark = 'NAVUNIQ';
+	public static $mark = 'NAVUNIQ';
 
 	/**
 	 * @desc If a block element div, table or p is found in a template's text, return an empty
@@ -29,16 +29,23 @@ class NavigationTemplate {
 	}
 
 	private static function process( $html ) {
-		$regex = '/<(' . implode( '|', self::$blockLevelElements ) . ')[>\s]+/i';
-		$marked = self::mark( "(.*)" );
+		$blockElemRegex = '/<(' . implode( '|', self::$blockLevelElements ) . ')[>\s]+/i';
+		$markerRegex = "/\x7f".self::$mark.".+?\x7f/s";
 
-		preg_match_all( "/{$marked}/sU", $html, $matches );
-		foreach ( $matches[ 0 ] as $key => $found ) {
-			$replacement = $matches[ 1 ][ $key ];
-			if ( preg_match( $regex, $matches[ 1 ][ $key ] ) ) {
-				$replacement = '';
+		preg_match_all($markerRegex, $html, $markers);
+		foreach ( $markers[ 0 ] as $marker ) {
+			$replacementRegex = '/'.$marker.".*?".$marker.'/s';
+			preg_match_all($replacementRegex, $html, $navTemplates);
+
+			foreach($navTemplates[0] as $navTemplate) {
+				$replacement = str_replace($marker, '', $navTemplate);
+
+				if ( preg_match( $blockElemRegex, $navTemplate ) ) {
+					$replacement = '';
+				}
+				$html = str_replace( $navTemplate, $replacement, $html );
 			}
-			$html = str_replace( $found, $replacement, $html );
+
 		}
 
 		return $html;
@@ -46,9 +53,10 @@ class NavigationTemplate {
 
 	/**
 	 * @param $text
-	 * @return int
+	 * @return string
 	 */
 	private static function mark( $text ) {
-		return sprintf( "\x7f%s%s%s\x7f", self::$mark, $text, self::$mark );
+		$marker = "\x7f".self::$mark."_".uniqid()."\x7f";
+		return sprintf( "%s%s%s", $marker, $text, $marker );
 	}
 }

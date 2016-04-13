@@ -8,15 +8,14 @@ class NavigationTemplateTest extends WikiaBaseTest {
 	public function testMarkNavigationElements( $content, $expected, $message ) {
 		$marked = NavigationTemplate::handle( $content );
 
-		$this->assertEquals( $expected, $marked, $message );
+		$this->assertEquals( preg_match($markerRegex = "/\x7f".NavigationTemplate::$mark.".+?\x7f/s", $marked), $expected, $message );
 	}
 
 	public function markedTemplateContentProvider() {
 		return [
-			[ '', '', 'Empty content was marked' ],
-			[ '1', "\x7f" . 'NAVUNIQ1NAVUNIQ' . "\x7f", 'Numbers should be marked' ],
-			[ '{{#invoke: Eras|main}}', "\x7f" . 'NAVUNIQ{{#invoke: Eras|main}}NAVUNIQ' . "\x7f",
-			  'Wikitext should be marked' ],
+			[ '', 0, 'Empty content was marked' ],
+			[ '1', 1, 'Numbers should be marked' ],
+			[ '{{#invoke: Eras|main}}', 1,  'Wikitext should be marked' ],
 		];
 	}
 
@@ -69,12 +68,11 @@ class NavigationTemplateTest extends WikiaBaseTest {
 				'',
 				'A template with a P (uppercase) tag should be hidden.',
 			],
-
 			[
 				'<poem>This is a template with a poem tag. This is one is tricky and should not be matched as a p tag.</poem>.',
 				'<poem>This is a template with a poem tag. This is one is tricky and should not be matched as a p tag.</poem>.',
 				'A template with a poem tag should be visible.',
-			],
+			]
 		];
 	}
 
@@ -91,19 +89,47 @@ class NavigationTemplateTest extends WikiaBaseTest {
 		return [
 			[ "", "", "Empty html should be correctly processed" ],
 			[
-				"\x7fNAVUNIQakjsdlkjflk <div>asdf</div>kasjdlfkjdks ksdjlafkjNAVUNIQ\x7fNAVUNIQ aksdjlfkj alksjdldf\nlkjsdl \x7fNAVUNIQdNAVUNIQ\x7f",
+				"\x7fNAVUNIQ_342\x7fakjsdlkjflk <div>asdf</div>kasjdlfkjdks ksdjlafkj\x7fNAVUNIQ_342\x7fNAVUNIQ aksdjlfkj alksjdldf\nlkjsdl \x7fNAVUNIQ_343\x7fd\x7fNAVUNIQ_343\x7f",
 				"NAVUNIQ aksdjlfkj alksjdldf\nlkjsdl d",
 				"If block element in navigation template it should be removed"
 			],
 			[
-				"\x7fNAVUNIQakjsdlkjflk <div>asdf</div>kasjdlfkjdks ksdjlafkjNAVUNIQ\x7f test",
+				"\x7fNAVUNIQ_342\x7fakjsdlkjflk <div>asdf</div>kasjdlfkjdks ksdjlafkj\x7fNAVUNIQ_342\x7f test",
 				" test",
 				"Single nav template with block should be removed"
 			],
 			[
-				"\x7fNAVUNIQasdfNAVUNIQ\x7f test",
+				"\x7fNAVUNIQ_342\x7fasdf\x7fNAVUNIQ_342\x7f test",
 				"asdf test",
 				"Single inline element should be left"
+			],
+			[
+				"\x7fNAVUNIQ_342\x7f<div>some content \x7fNAVUNIQ_343\x7f <p>nested template</p> \x7fNAVUNIQ_343\x7f \x7fNAVUNIQ_344\x7f <p>nested template</p> \x7fNAVUNIQ_344\x7f</div>\x7fNAVUNIQ_342\x7f",
+				"",
+				"nested templates with block element and one nested template without block elements, everything should be removed"
+			],
+			[
+				"\x7fNAVUNIQ_342\x7f<div>some content \x7fNAVUNIQ_343\x7f <p>nested template</p> \x7fNAVUNIQ_343\x7f \x7fNAVUNIQ_344\x7f nested template \x7fNAVUNIQ_344\x7f</div>\x7fNAVUNIQ_342\x7f",
+
+				"",
+				"nested templates with block elements, everything should be removed"
+			],
+			[
+				"\x7fNAVUNIQ_342\x7f<a>some content \x7fNAVUNIQ_343\x7f <a>nested template</a> \x7fNAVUNIQ_346\x7f <a>nested nested template</a>\x7fNAVUNIQ_347\x7f <a>nested nested nested template</a>\x7fNAVUNIQ_348\x7f <a>nested nested nested template</a> \x7fNAVUNIQ_348\x7f \x7fNAVUNIQ_347\x7f \x7fNAVUNIQ_346\x7f \x7fNAVUNIQ_343\x7f \x7fNAVUNIQ_344\x7f <a>nested template</a> \x7fNAVUNIQ_344\x7f</a>\x7fNAVUNIQ_342\x7f",
+
+				"<a>some content  <a>nested template</a>  <a>nested nested template</a> <a>nested nested nested template</a> <a>nested nested nested template</a>      <a>nested template</a> </a>",
+				"nested templates without block elements, nothing should be removed if there is no block element"
+			],
+			[
+				"\x7fNAVUNIQ_342\x7f<a>some content \x7fNAVUNIQ_343\x7f <a>nested template</a> \x7fNAVUNIQ_346\x7f <a>nested nested template</a>\x7fNAVUNIQ_347\x7f <p>nested nested nested template</p>\x7fNAVUNIQ_348\x7f <a>nested nested nested template</a> \x7fNAVUNIQ_348\x7f \x7fNAVUNIQ_347\x7f \x7fNAVUNIQ_346\x7f \x7fNAVUNIQ_343\x7f \x7fNAVUNIQ_344\x7f <a>nested template</a> \x7fNAVUNIQ_344\x7f</a>\x7fNAVUNIQ_342\x7f",
+
+				"",
+				"block element within the most inner template, everything should be removed"
+			],
+			[
+				"\x7fNAVUNIQ_342\x7f <a>something</a> \x7fNAVUNIQ_342\x7f\x7fNAVUNIQ_343\x7f<p>something2</p>\x7fNAVUNIQ_343\x7f\x7fNAVUNIQ_342\x7fsomething\x7fNAVUNIQ_342\x7f\x7fNAVUNIQ_343\x7f<div>something2</div>\x7fNAVUNIQ_343\x7f",
+				" <a>something</a> something",
+				"multiple invocations of the same template, those with block elements should be removed"
 			]
 		];
 	}
