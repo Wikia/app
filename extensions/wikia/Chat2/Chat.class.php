@@ -13,8 +13,17 @@ use Wikia\Service\User\Permissions\PermissionsService;
 class Chat {
 	const HTTP_HEADER_XFF = 'X-FORWARDED-FOR';
 	const HTTP_HEADER_USER_AGENT = 'USER-AGENT';
+	const CHAT_SESSION_TTL = 60 * 60 * 48;
 
+	/**
+	 * Stands for both: group name and permission name
+	 */
 	const CHAT_MODERATOR = 'chatmoderator';
+
+	/**
+	 * Permission name to be a chat staff
+	 */
+	const CHAT_STAFF = 'chatstaff';
 
 	/**
 	 * @var PermissionsService
@@ -52,10 +61,13 @@ class Chat {
 		$wg = F::app()->wg;
 
 		if ( !$wg->User->isLoggedIn() ) {
-			return [ "key" => false ];
+			return [ 'key' => false ];
 		}
-		$key = "Chat::cookies::" . sha1( $wg->User->getId() . "_" . microtime() . '_' . mt_rand() );
-		$wg->Memc->set( $key, [ "user_id" => $wg->User->getId(), "cookie" => $_COOKIE ], 60 * 60 * 48 );
+		$key = 'Chat::cookies::' . sha1( $wg->User->getId() . "_" . microtime() . '_' . mt_rand() );
+		$wg->Memc->set( $key, [
+			'user_id' => $wg->User->getId(),
+			'cookie' => $_COOKIE,
+		], self::CHAT_SESSION_TTL );
 
 		return $key;
 	}
@@ -96,7 +108,7 @@ class Chat {
 		}
 
 		// Make sure we aren't trying to kick/ban someone who shouldn't be kick/banned
-		if ( $userToKickBan->isAllowed( self::CHAT_MODERATOR ) && !$kickingUser->isAllowed( 'chatstaff' ) && !$kickingUser->isAllowed( 'chatadmin' ) ) {
+		if ( $userToKickBan->isAllowed( self::CHAT_MODERATOR ) && !$kickingUser->isAllowed( self::CHAT_STAFF ) && !$kickingUser->isAllowed( 'chatadmin' ) ) {
 			return wfMessage( 'chat-ban-cant-ban-moderator' )
 				->inContentLanguage()->text() . "\n";
 		}

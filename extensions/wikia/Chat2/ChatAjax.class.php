@@ -4,6 +4,10 @@ class ChatAjax {
 	const INTERNAL_POLLING_DELAY_MICROSECONDS = 500000;
 	const CHAT_AVATAR_DIMENSION = 28;
 
+	const ERROR_NOT_AUTHENTICATED = 'Not authenticated';
+	const ERROR_KEY_NOT_FOUND = 'Key not found';
+	const ERROR_USER_NOT_FOUND = 'User not found';
+
 	/**
 	 * This is the ajax-endpoint that the node server will connect to in order to get the currently logged-in user's info.
 	 * The node server will pass the same cookies that the client has set, and this will allow this ajax request to be
@@ -27,19 +31,24 @@ class ChatAjax {
 		wfProfileIn( __METHOD__ );
 		Chat::info( __METHOD__ . ': Method called' );
 
+		if ( !self::authenticateServer() ) {
+			wfProfileOut( __METHOD__ );
+
+			return [ 'errorMsg' => self::ERROR_NOT_AUTHENTICATED ];
+		}
+
 		$data = $wgMemc->get( $wgRequest->getVal( 'key' ) );
 		if ( empty( $data ) ) {
 			wfProfileOut( __METHOD__ );
 
-			return [ 'errorMsg' => "Key not found" ];
+			return [ 'errorMsg' => self::ERROR_KEY_NOT_FOUND ];
 		}
 
 		$user = User::newFromId( $data['user_id'] );
-
 		if ( empty( $user ) || !$user->isLoggedIn() || $user->getName() != urldecode( $wgRequest->getVal( 'name', '' ) ) ) {
 			wfProfileOut( __METHOD__ );
 
-			return [ 'errorMsg' => "User not found" ];
+			return [ 'errorMsg' => self::ERROR_USER_NOT_FOUND ];
 		}
 
 		$isCanGiveChatMod = in_array( Chat::CHAT_MODERATOR, $user->changeableGroups()['add'] );
@@ -50,7 +59,7 @@ class ChatAjax {
 			'isLoggedIn' => $user->isLoggedIn(),
 			'isChatMod' => $user->isAllowed( Chat::CHAT_MODERATOR ),
 			'isCanGiveChatMod' => $isCanGiveChatMod,
-			'isStaff' => $user->isAllowed( 'chatstaff' ),
+			'isStaff' => $user->isAllowed( Chat::CHAT_STAFF ),
 			'username' => $user->getName(),
 			'username_encoded' => rawurlencode( $user->getName() ),
 			'avatarSrc' => AvatarService::getAvatarUrl( $user->getName(), self::CHAT_AVATAR_DIMENSION ),
@@ -102,7 +111,7 @@ class ChatAjax {
 		wfProfileOut( __METHOD__ );
 
 		return $res;
-	} // end getUserInfo()
+	}
 
 	/**
 	 *  injecting data from chat to memcache
@@ -114,7 +123,7 @@ class ChatAjax {
 		wfProfileIn( __METHOD__ );
 		Chat::info( __METHOD__ . ': Method called' );
 
-		if ( \Wikia\Security\Utils::matchToken( ChatConfig::getSecretToken(), $wgRequest->getVal( 'token' ) ) ) {
+		if ( !self::authenticateServer() ) {
 			wfProfileOut( __METHOD__ );
 
 			return [ 'status' => false ];
@@ -131,12 +140,24 @@ class ChatAjax {
 	 * Ajax endpoint for creating / accessing  private rooms
 	 */
 	static public function getPrivateRoomID() {
-		global $wgRequest;
+		global $wgRequest, $wgUser;
 
 		wfProfileIn( __METHOD__ );
 		Chat::info( __METHOD__ . ': Method called' );
 
+		if ( !self::authenticateServerOrUser() ) {
+			wfProfileOut( __METHOD__ );
+
+			return [ 'id' => false ];
+		}
+
 		$users = json_decode( $wgRequest->getVal( 'users' ) );
+		if ( !$users || !is_array( $users ) || !in_array($wgUser->getName(), $users) ) {
+			wfProfileOut( __METHOD__ );
+
+			return [ 'id' => false ];
+		}
+
 		$roomId = ChatServerApiClient::getPrivateRoomId( $users );
 
 		wfProfileOut( __METHOD__ );
@@ -155,8 +176,11 @@ class ChatAjax {
 		wfProfileIn( __METHOD__ );
 		Chat::info( __METHOD__ . ': Method called' );
 
-		// MAIN-6290  server.js needs to pass edit token for this to work
-		// $wgRequest->isValidWriteRequest( $wgUser );
+		if ( !self::authenticateServerOrUser() ) {
+			wfProfileOut( __METHOD__ );
+
+			return [ 'error' => self::ERROR_NOT_AUTHENTICATED ];
+		}
 
 		$kickingUser = $wgUser;
 
@@ -192,7 +216,7 @@ class ChatAjax {
 		wfProfileOut( __METHOD__ );
 
 		return $res;
-	} // end kickBan()
+	}
 
 
 	static public function getListOfBlockedPrivate() {
@@ -210,6 +234,12 @@ class ChatAjax {
 
 		wfProfileIn( __METHOD__ );
 		Chat::info( __METHOD__ . ': Method called' );
+
+		if ( !self::authenticateServer() ) {
+			wfProfileOut( __METHOD__ );
+
+			return [ 'error' => self::ERROR_NOT_AUTHENTICATED ];
+		}
 
 		$promotingUser = $wgUser;
 
@@ -231,7 +261,23 @@ class ChatAjax {
 		wfProfileOut( __METHOD__ );
 
 		return $res;
-	} // end addChatMod()
+	}
+
+	/**
+	 * @return bool
+	 */
+	private static function authenticateServer() {
+		global $wgRequest;
+
+		return \Wikia\Security\Utils::matchToken( ChatConfig::getSecretToken(), $wgRequest->getVal( 'token' ) );
+	}
+
+	private static function authenticateServerOrUser() {
+		global $wgRequest, $wgUser;
+
+		return self::authenticateServer()
+		|| ( $wgRequest->wasPosted() && $wgUser->matchEditToken( $wgRequest->getVal( 'token' ) );
+	}
 
 
 	function BanModal() {
@@ -273,4 +319,4 @@ class ChatAjax {
 
 		return $res;
 	}
-} // end class ChatAjax
+}
