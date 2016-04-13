@@ -4,11 +4,13 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	const DEFAULT_TEMPLATE_ENGINE = \WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
 	private $usersModel;
 	private $wikiModel;
+	private $userTotalContributionCount;
 
 	public function __construct() {
 		parent::__construct( 'Community' );
 		$this->usersModel = new CommunityPageSpecialUsersModel();
 		$this->wikiModel = new CommunityPageSpecialWikiModel();
+		$this->userTotalContributionCount = $this->usersModel->getUserContributions( $this->getUser(), false );
 	}
 
 	public function index() {
@@ -31,7 +33,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 			'pageListEmptyText' => $this->msg( 'communitypage-page-list-empty' )->plain(),
 			'showPopupMessage' => true,
 			'popupMessageText' => 'This is just a test message for the popup message box',
-			'userIsMember' => CommunityPageSpecialHelper::userHasEdited( $this->getUser() ),
+			'userIsMember' => ( $this->userTotalContributionCount > 0 ),
 			'pageTitle' => $this->msg( 'communitypage-title' )->plain(),
 			'topContributors' => $this->sendRequest( 'CommunityPageSpecialController', 'getTopContributorsData' )
 				->getData(),
@@ -44,7 +46,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	}
 
 	public function header() {
-		$isMember = CommunityPageSpecialHelper::userHasEdited( $this->getUser() );
+		$isMember = ( $this->userTotalContributionCount > 0 );
 
 		$this->response->setValues( [
 			'inviteFriendsText' => $this->msg( 'communitypage-invite-friends' )->plain(),

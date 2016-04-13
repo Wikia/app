@@ -20,47 +20,6 @@ class CommunityPageSpecialUsersModel {
 	}
 
 	/**
-	 * Get the date a member made their first edit to a wiki.
-	 * Membership is defined as having edited in the last two years
-	 *
-	 * @param User $user
-	 * @return Mixed|null
-	 */
-	public function getFirstRevisionDate( User $user ) {
-		if ( $user->isAnon() ) {
-			return null;
-		}
-
-		$data = WikiaDataAccess::cache(
-			wfMemcKey( self::FIRST_REV_MCACHE_KEY ),
-			WikiaResponse::CACHE_STANDARD,
-			function () use ($user) {
-				$db = wfGetDB( DB_SLAVE );
-
-				$sqlData = ( new WikiaSQL() )
-					->SELECT( '*' )
-					->FROM ( 'wikia_user_properties' )
-					->WHERE ( 'wup_property' )->EQUAL_TO( 'firstContributionTimestamp' )
-					->AND_ ( 'wup_user' )->EQUAL_TO( $user->getID() )
-					->AND_ ( 'wup_value > DATE_SUB(now(), INTERVAL 2 YEAR)' )
-					->ORDER_BY( 'wup_value DESC' )
-					->runLoop( $db, function ( &$sqlData, $row ) {
-						$sqlData[] = [
-							'wup_value' => $row->wup_value,
-						];
-					} );
-
-				return $sqlData;
-			}
-		);
-
-		if (count( $data ) > 0) {
-			return $data[0]['wup_value'];
-		}
-		return null;
-	}
-
-	/**
 	 * Get the user id and contribution count of the top n contributors to the current wiki,
 	 * optionally filtered by admins only
 	 *
@@ -155,10 +114,9 @@ class CommunityPageSpecialUsersModel {
 	 * @return array
 	 */
 	public function getUserRanking( User $user, $days = null ) {
-
 		return [
-			'userRank' => 2,
-			'totalUsers' => 100
+			'userRank' => 'N',
+			'totalUsers' => 'N',
 		];
 	}
 
