@@ -44,6 +44,7 @@ class ChatEntryPoint {
 			'profileType' => !empty( $wgEnableWallExt ) ? 'message-wall' : 'talk-page',
 			'userName' => $wgUser->isAnon() ? null : $wgUser->getName(),
 			'chatUsers' => $chatUsers,
+			'chatUsersCount' => count( $chatUsers ),
 			'wgSiteName' => $wgSitename
 		];
 
@@ -121,7 +122,7 @@ class ChatEntryPoint {
 				// Gets array of users currently in chat to populate rail module and user stats menus
 
 				//$chattersIn = NodeApiClient::getChatters();
-				$chattersIn = ['Tomek-dev', 'Dianafa', 'Bve', 'Bognix-dev', 'Warkot', 'Aga User', 'Sasquaczbdg', 'Sqreekdev'];
+				$chattersIn = ['Tomek-dev', 'Dianafa', 'Bve', 'Bognix-dev', 'Warkot', 'Aga User', 'Sasquaczbdg', 'Sqreekdev', 'Tomek-dev', 'Dianafa', 'Bve', 'Bognix-dev', 'Warkot', 'Aga User', 'Sasquaczbdg', 'Sqreekdev'];
 				foreach ( $chattersIn as $i => $val ) {
 					$chatters[ $i ] = WikiaDataAccess::cache( wfMemcKey( 'chatavatars', $val, 'v2' ), 60 * 60, function() use ( $wgEnableWallExt, $val ) {
 						$chatter = [ 'username' => $val,

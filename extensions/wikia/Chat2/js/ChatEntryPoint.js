@@ -56,26 +56,12 @@ var ChatEntryPoint = {
 		});
 	},
 
-	// fill-in the whole module template
+	/**
+	 * Creates carousel of users and fills in some of fields with translated messages
+	 * @param $t chat module element
+	 */
 	processModuleTemplate: function ($t) {
-		// @todo - right now it's a custom html-based template, all the logic for inserting variables is here
-		// once the mustache is loaded on every page, rewrite the template and remove most of the code below
-		// see: https://wikia-inc.atlassian.net/browse/SUS-416
-		var cnt = window.wgWikiaChatUsers.length;
-
-		$t.find('.chat-contents').
-			addClass((cnt) ? 'chat-room-active' : 'chat-room-empty');
-		$t.find('.chat-total').html(cnt);
-		$t.find('p.chat-name').html(window.wgSiteName);
-
-		// we use attr instead of data because we want it to be present in dom (needed for css selector)
-		$t.find('div.chat-join button').attr('data-msg-id', cnt ? 'chat-join-the-chat' : 'chat-start-a-chat');
-
-		if (cnt) {
-			ChatEntryPoint.initCarousel($t.find('.chat-whos-here'));
-		} else {
-			$t.find('ul.carousel').remove();
-		}
+		ChatEntryPoint.initCarousel($t.find('.chat-whos-here'));
 
 		// process i18n the messages
 		$t.find('[data-msg-id]').each(function () {
@@ -89,7 +75,6 @@ var ChatEntryPoint = {
 		var popoverTimeout = 0,
 			// differ number of users on chat according to it's width
 			isWideChat = $el.width() > 260;
-
 
 		$el.find('.carousel-container').carousel({
 			nextClass: 'arrow-right',
@@ -188,6 +173,7 @@ var ChatEntryPoint = {
 
 	launchChatWindow: function (event, chatLaunchModal) {
 		var pageLink = $('#modal-join-chat-button').data('chat-page');
+
 		window.open(pageLink, 'wikiachat', window.wgWikiaChatWindowFeatures);
 		if (chatLaunchModal) {
 			chatLaunchModal.trigger('close');
