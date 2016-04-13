@@ -7,6 +7,7 @@ use Wikia\Logger\Loggable;
 use Wikia\Persistence\User\Attributes\AttributePersistence;
 use Wikia\Util\WikiaProfiler;
 use Wikia\Service\User\Attributes;
+use Wikia\Service\PersistenceException;
 
 class AttributeKeyValueService implements AttributeService {
 
@@ -105,7 +106,7 @@ class AttributeKeyValueService implements AttributeService {
 	 */
 	private function logException( $userId, \Exception $e, $msg ) {
 		$context = [ 'user' => $userId, 'exception' => $e ];
-		if ( is_a( $e, 'Wikia\Service\PersistenceException' ) ) {
+		if ( $e instanceof PersistenceException ) {
 			$this->error( $msg, $context );
 		} else {
 			$this->info( $msg, $context );
