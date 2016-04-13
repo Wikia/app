@@ -32,11 +32,13 @@ class NavigationTemplate {
 		$blockElemRegex = '/<(' . implode( '|', self::$blockLevelElements ) . ')[>\s]+/i';
 		$markerRegex = "/\x7f".self::$mark.".+?\x7f/s";
 
+		//getting markers of each navigation template
 		preg_match_all($markerRegex, $html, $markers);
 		foreach ( $markers[ 0 ] as $marker ) {
 			$replacementRegex = '/'.$marker.".*?".$marker.'/s';
 			preg_match_all($replacementRegex, $html, $navTemplates);
 
+			//multiple invocations of the same template can occur, replacing each of them
 			foreach($navTemplates[0] as $navTemplate) {
 				$replacement = str_replace($marker, '', $navTemplate);
 
@@ -56,6 +58,7 @@ class NavigationTemplate {
 	 * @return string
 	 */
 	private static function mark( $text ) {
+		// marking each template with unique marker to be able to handle nested navigation templates
 		$marker = "\x7f".self::$mark."_".uniqid()."\x7f";
 		return sprintf( "%s%s%s", $marker, $text, $marker );
 	}
