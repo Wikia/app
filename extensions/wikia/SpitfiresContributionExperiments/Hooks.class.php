@@ -4,6 +4,8 @@ namespace Wikia\ContributionExperiments;
 
 class Hooks {
 
+	const NEWLY_REGISTERED_USER = 'newlyregistered';
+
 	/**
 	 * Register hooks for the extension
 	 */
@@ -14,19 +16,19 @@ class Hooks {
 	}
 
 	public function onUserSignupAfterSignupBeforeRedirect( $redirectUrl ) {
-		setcookie( 'newlyregistered', 1, time() + 60 * 60 * 24 * 365, '/', $this->getDomain() );
+		setcookie( self::NEWLY_REGISTERED_USER, 1, time() + 60 * 60 * 24 * 365, '/', $this->getDomain() );
 
 		return true;
 	}
 
 	public function onUserLoginComplete( \User $user, $html ) {
-		$newlyregistered = isset( $_COOKIE['justregistered'] );
+		$newlyregistered = isset( $_COOKIE[ self::NEWLY_REGISTERED_USER ] );
 		$userEditCount = $user->getEditCount();
 
 		if ( $newlyregistered ) {
 			// newly registered user
-			unset( $_COOKIE['justregistered'] );
-			setcookie( 'justregistered', '', time() - 3600, '/', $this->getDomain() );
+			unset( $_COOKIE[ self::NEWLY_REGISTERED_USER ] );
+			setcookie( self::NEWLY_REGISTERED_USER, '', time() - 3600, '/', $this->getDomain() );
 		} elseif ( $userEditCount === 0 ) {
 			// returning user without edit
 		}
