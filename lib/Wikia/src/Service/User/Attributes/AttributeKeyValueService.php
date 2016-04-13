@@ -47,7 +47,7 @@ class AttributeKeyValueService implements AttributeService {
 
 			return $ret;
 		} catch ( \Exception $e ) {
-			$this->logException( $userId, $e, "USER_ATTRIBUTES failure saving to service" );
+			$this->logError( $userId, $e, "USER_ATTRIBUTES error saving to service" );
 			return false;
 		}
 	}
@@ -66,7 +66,7 @@ class AttributeKeyValueService implements AttributeService {
 		try {
 			$attributeArray = $this->persistenceAdapter->getAttributes( $userId );
 		} catch ( \Exception $e ) {
-			$this->logException( $userId, $e, "USER_ATTRIBUTES failure getting from service" );
+			$this->logError( $userId, $e, "USER_ATTRIBUTES error getting from service" );
 		}
 
 		return $attributeArray;
@@ -87,29 +87,16 @@ class AttributeKeyValueService implements AttributeService {
 			$ret = $this->persistenceAdapter->deleteAttribute( $userId, $attribute );
 			return $ret;
 		} catch ( \Exception $e ) {
-			$this->logException( $userId, $e, "USER_ATTRIBUTES failure deleting from service" );
+			$this->logError( $userId, $e, "USER_ATTRIBUTES error deleting from service" );
 			return false;
 		}
 	}
 
-	/**
-	 * Log any exceptions thrown when contacting the attribute service. There are 4 possible exceptions
-	 * which can be thrown, and which this method can expect to receive: PersistenceException, ForbiddenException,
-	 * NotFoundException, and UnauthorizedException. Log PersistenceExceptions at error level, and all others
-	 * at info. PersistenceExceptions indicate a problem was encountered contacting the service, or that we received
-	 * an unexpected HTTP response like a 500. The other exceptions indicate a resources wasn't found, or that the
-	 * request was refused which is not an error.
-	 * @param $userId
-	 * @param \Exception $e
-	 * @param $msg
-	 */
-	private function logException( $userId, \Exception $e, $msg ) {
-		$context = [ 'user' => $userId, 'exception' => $e ];
-		if ( is_a( $e, 'Wikia\Service\PersistenceException' ) ) {
-			$this->error( $msg, $context );
-		} else {
-			$this->info( $msg, $context );
-		}
+	private function logError( $userId, \Exception $e, $msg ) {
+		$this->error( $msg , [
+			'user' => $userId,
+			'exception' => $e
+		] );
 	}
 
 	protected function getLoggerContext() {
