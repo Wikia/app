@@ -66,12 +66,18 @@ $messages['de'] = array(
 	'discussionslog-app-header' => 'App',
 	'discussionslog-timestamp-header' => 'Zeitstempel',
 	'action-specialdiscussionslog' => 'Spezial:Diskussionsprotokoll',
+	'discussionslog-or-label' => 'oder',
+	'discussionslog-ip-invalid-error' => 'Die bereitgestellte IP-Adresse ist ungültig.',
+	'discussionslog-no-ip-activity-error' => 'Es konnte keine aktuelle Aktivität von IP-Adresse $1 gefunden werden.',
+	'discussionslog-multiple-input-error' => 'Es muss nur ein Feld ausgefüllt werden.',
+	'discussionslog-table-ip-caption' => 'Protokolldaten für IP-Adresse $1',
+	'discussionslog-user-name-header' => 'Benutzername',
 );
 
 $messages['es'] = array(
 	'discussionslog' => 'Registro de discusiones de usuarios',
 	'discussionslog-desc' => 'Extensión de registro de discusiones de usuarios en Wikia',
-	'discussionslog-pagetitle' => 'Registros de discusión de usuario en la aplicación móvil',
+	'discussionslog-pagetitle' => 'Registros de discusión de usuarios en la aplicación móvil',
 	'discussionslog-contributions-link-title' => 'Historial de IP en discusiones',
 	'discussionslog-username-label' => 'Nombre de usuario: ',
 	'discussionslog-view-logs' => 'Ver registros',
@@ -85,6 +91,12 @@ $messages['es'] = array(
 	'discussionslog-app-header' => 'Aplicación',
 	'discussionslog-timestamp-header' => 'Fecha y hora',
 	'action-specialdiscussionslog' => 'Special:DiscussionsLog',
+	'discussionslog-or-label' => 'o',
+	'discussionslog-ip-invalid-error' => 'La dirección IP entregada es inválida.',
+	'discussionslog-no-ip-activity-error' => 'No hay actividad reciente encontrada de la dirección IP $1.',
+	'discussionslog-multiple-input-error' => 'Sólo un campo debe rellenarse.',
+	'discussionslog-table-ip-caption' => 'Registro de datos de la dirección IP $1',
+	'discussionslog-user-name-header' => 'Nombre de usuario',
 );
 
 $messages['fr'] = array(
@@ -104,6 +116,12 @@ $messages['fr'] = array(
 	'discussionslog-app-header' => 'Application',
 	'discussionslog-timestamp-header' => 'Date et heure',
 	'action-specialdiscussionslog' => 'Special:DiscussionsLog',
+	'discussionslog-or-label' => 'ou',
+	'discussionslog-ip-invalid-error' => "L'adresse IP fournie n'est pas valide.",
+	'discussionslog-no-ip-activity-error' => "Aucune activité récente trouvée pour l'adresse IP $1.",
+	'discussionslog-multiple-input-error' => 'Seul un champ doit être renseigné.',
+	'discussionslog-table-ip-caption' => "Données de journal de l'adresse IP $1",
+	'discussionslog-user-name-header' => "Nom d'utilisateur",
 );
 
 $messages['it'] = array(
@@ -123,6 +141,12 @@ $messages['it'] = array(
 	'discussionslog-app-header' => 'App',
 	'discussionslog-timestamp-header' => 'Timestamp',
 	'action-specialdiscussionslog' => 'Special:DiscussionsLog',
+	'discussionslog-or-label' => 'o',
+	'discussionslog-ip-invalid-error' => "L'indirizzo IP fornito non è valido.",
+	'discussionslog-no-ip-activity-error' => 'Nessuna attività recente da indirizzo IP $1 trovato.',
+	'discussionslog-multiple-input-error' => 'Solo un campo deve essere popolato.',
+	'discussionslog-table-ip-caption' => 'Dati di registro per indirizzo IP $1',
+	'discussionslog-user-name-header' => 'Nome utente',
 );
 
 $messages['ja'] = array(
@@ -142,6 +166,12 @@ $messages['ja'] = array(
 	'discussionslog-app-header' => 'アプリ',
 	'discussionslog-timestamp-header' => 'タイムスタンプ',
 	'action-specialdiscussionslog' => 'Special:DiscussionsLog',
+	'discussionslog-or-label' => 'または',
+	'discussionslog-ip-invalid-error' => '指定されたIPアドレスは無効です。',
+	'discussionslog-no-ip-activity-error' => 'IPアドレス$1からの最近のアクティビティは見つかりませんでした。',
+	'discussionslog-multiple-input-error' => '入力できるのは1つの欄だけです。',
+	'discussionslog-table-ip-caption' => 'IPアドレス$1のログデータ',
+	'discussionslog-user-name-header' => 'ユーザー名',
 );
 
 $messages['nl'] = array(
@@ -161,6 +191,12 @@ $messages['nl'] = array(
 	'discussionslog-app-header' => 'App',
 	'discussionslog-timestamp-header' => 'Timestamp',
 	'action-specialdiscussionslog' => 'Special:DiscussionsLog',
+	'discussionslog-or-label' => 'or',
+	'discussionslog-ip-invalid-error' => 'Provided IP address is invalid.',
+	'discussionslog-no-ip-activity-error' => 'No recent activity from IP address $1 found.',
+	'discussionslog-multiple-input-error' => 'Only one field should be populated.',
+	'discussionslog-table-ip-caption' => 'Log data for IP address $1',
+	'discussionslog-user-name-header' => 'Username',
 );
 
 $messages['pl'] = array(
@@ -180,6 +216,12 @@ $messages['pl'] = array(
 	'discussionslog-app-header' => 'Aplikacja',
 	'discussionslog-timestamp-header' => 'Sygnatura czasowa',
 	'action-specialdiscussionslog' => 'Special:DiscussionsLog',
+	'discussionslog-or-label' => 'lub',
+	'discussionslog-ip-invalid-error' => 'Podany adres IP jest nieprawidłowy.',
+	'discussionslog-no-ip-activity-error' => 'Nie odnaleziono żadnej niedawnej aktywności z adresu IP $1.',
+	'discussionslog-multiple-input-error' => 'Tylko jedno pole powinno zostać uzupełnione.',
+	'discussionslog-table-ip-caption' => 'Dane rejestru dla adresu IP $1',
+	'discussionslog-user-name-header' => 'Nazwa użytkownika',
 );
 
 $messages['pt'] = array(
@@ -199,6 +241,12 @@ $messages['pt'] = array(
 	'discussionslog-app-header' => 'App',
 	'discussionslog-timestamp-header' => 'Data e Hora',
 	'action-specialdiscussionslog' => 'Special:DiscussionsLog',
+	'discussionslog-or-label' => 'ou',
+	'discussionslog-ip-invalid-error' => 'O endereço IP fornecido é inválido.',
+	'discussionslog-no-ip-activity-error' => 'Nenhuma atividade recente do endereço IP $1 encontrada.',
+	'discussionslog-multiple-input-error' => 'Apenas um campo deve ser preenchido.',
+	'discussionslog-table-ip-caption' => 'Registro de dados para o endereço IP $1',
+	'discussionslog-user-name-header' => 'Nome de usuário',
 );
 
 $messages['ru'] = array(
@@ -218,6 +266,12 @@ $messages['ru'] = array(
 	'discussionslog-app-header' => 'Приложение',
 	'discussionslog-timestamp-header' => 'Время',
 	'action-specialdiscussionslog' => 'Special:DiscussionsLog',
+	'discussionslog-or-label' => 'или',
+	'discussionslog-ip-invalid-error' => 'Данный IP-адрес недействителен.',
+	'discussionslog-no-ip-activity-error' => 'C IP-адреса $1 не велась какая-либо недавняя деятельность.',
+	'discussionslog-multiple-input-error' => 'Только одно поле должно быть заполнено.',
+	'discussionslog-table-ip-caption' => 'Данные журналов для IP $1',
+	'discussionslog-user-name-header' => 'Имя участника',
 );
 
 $messages['zh-hans'] = array(
@@ -237,6 +291,12 @@ $messages['zh-hans'] = array(
 	'discussionslog-app-header' => '应用',
 	'discussionslog-timestamp-header' => '时间',
 	'action-specialdiscussionslog' => 'Special:DiscussionsLog',
+	'discussionslog-or-label' => '或',
+	'discussionslog-ip-invalid-error' => '提供的IP地址无效。',
+	'discussionslog-no-ip-activity-error' => '没有发现来自IP地址$1的最近活动。',
+	'discussionslog-multiple-input-error' => '只允许填充一个栏位。',
+	'discussionslog-table-ip-caption' => 'IP地址为$1的访问日志',
+	'discussionslog-user-name-header' => '用户名',
 );
 
 $messages['zh-hant'] = array(
@@ -256,5 +316,11 @@ $messages['zh-hant'] = array(
 	'discussionslog-app-header' => 'App',
 	'discussionslog-timestamp-header' => '時間',
 	'action-specialdiscussionslog' => 'Special:DiscussionsLog',
+	'discussionslog-or-label' => '或',
+	'discussionslog-ip-invalid-error' => '提供的IP位址不正確。',
+	'discussionslog-no-ip-activity-error' => '沒有發現來自IP位址$1的最近活動。',
+	'discussionslog-multiple-input-error' => '只允許填充一個欄位。',
+	'discussionslog-table-ip-caption' => 'IP位址為$1的日誌資料',
+	'discussionslog-user-name-header' => '用戶名',
 );
 
