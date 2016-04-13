@@ -11,7 +11,7 @@ class ChatUser extends WikiaObject {
 	const BAN_INFO_TTL = 86400;
 
 	// Value to store in memcache when no ban information is found
-	const NO_BAN_INFORMATION = -1;
+	const NO_BAN_MARKER = -1;
 
 	private $user;
 	private $wikiId;
@@ -94,31 +94,44 @@ class ChatUser extends WikiaObject {
 	}
 
 	/**
-	 * Get (possibly cached) ban status
+	 * Get (possibly cached) ban details. Returns false if not banned.
 	 *
 	 * @return stdClass|false
 	 */
 	public function getBanInfo() {
-		$key = $this->getBanInfoCacheKey();
-		$memc = F::app()->wg->Memc;
-
-		$banInfo = $memc->get( $key );
+		$banInfo = $this->getBanInfoFromCache();
 		if ( empty( $banInfo ) ) {
 			$banInfo = $this->getBanInfoFromDb();
 
-			// Only cache for as long as we have left in the ban, or a default if the ban has expired
-			$ttl = !empty( $banInfo )
-				? $banInfo->end_date - time()
-				: self::BAN_INFO_TTL;
-
-			$memc->set( $key, $banInfo, $ttl );
+			$this->storeBanInfoInCache( $banInfo );
 		}
 
-		if ( !$banInfo || $banInfo->end_date < time() ) {
-			$banInfo = self::NO_BAN_INFORMATION;
+		// check if ban has expired
+		if ( $banInfo ) {
+			$endDate = wfTimestamp( TS_UNIX, $banInfo->end_date );
+			if ( $endDate < time() ) {
+				$banInfo = false;
+			}
 		}
 
-		return $banInfo == self::NO_BAN_INFORMATION ? false : $banInfo;
+		return $banInfo;
+	}
+
+	private function getBanInfoFromCache() {
+		$banInfo = $this->wg->Memc->get( $this->getBanInfoCacheKey() );
+		if ( $banInfo === self::NO_BAN_MARKER ) {
+			$banInfo = false;
+		}
+
+		return $banInfo;
+	}
+
+	private function storeBanInfoInCache( $banInfo ) {
+		if ( empty( $banInfo ) ) {
+			$banInfo = self::NO_BAN_MARKER;
+		}
+
+		$this->wg->Memc->set( $this->getBanInfoCacheKey(), $banInfo, self::BAN_INFO_TTL );
 	}
 
 	/**
@@ -129,28 +142,15 @@ class ChatUser extends WikiaObject {
 	private function getBanInfoFromDb() {
 		$db = wfGetDB( DB_SLAVE, [ ], $this->wg->ExternalDatawareDB );
 
-		$info = ( new WikiaSQL() )
-			->SELECT( 'cbu_wiki_id' )
-			->FIELD( 'cbu_user_id' )
-			->FIELD( 'cbu_admin_user_id' )
-			->FIELD( 'end_date' )
-			->FIELD( 'reason' )
-			->FROM( 'chat_ban_users' )
-			->WHERE( 'cbu_wiki_id' )->EQUAL_TO( $this->getWikiId() )
-			->AND_( 'cbu_user_id' )->EQUAL_TO( $this->getId() )
-			->run( $db, function ( ResultWrapper $res ) {
-				$row = $res->fetchObject();
-				if ( empty( $row ) ) {
-					return false;
-				}
-
-				$row->end_date = wfTimestamp( TS_UNIX, $row->end_date );
-				if ( $row->end_date < time() ) {
-					return false;
-				}
-
-				return $row;
-			} );
+		$info = $db->selectRow(
+			'chat_ban_users',
+			[ 'cbu_wiki_id', 'cbu_user_id', 'cbu_admin_user_id', 'end_date', 'reason' ],
+			[
+				'cbu_wiki_id' => $this->getWikiId(),
+				'cbu_user_id' => $this->getId(),
+			],
+			__METHOD__
+		);
 
 		return $info;
 	}
@@ -170,7 +170,7 @@ class ChatUser extends WikiaObject {
 	private function getBanInfoCacheKey() {
 		// Using shared mem key, but adding in the WikiID ourselves since its possible
 		// to call these functions with an alternate wiki ID.
-		return wfSharedMemcKey( 'chat-baninfo', $this->getWikiId(), $this->getId() );
+		return wfSharedMemcKey( 'chat-baninfo-v2', $this->getWikiId(), $this->getId() );
 	}
 
 	public function blockUser( User $blockedUser, $doCommit = false ) {

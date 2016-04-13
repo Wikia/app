@@ -25,7 +25,7 @@ class ChatServerApiClient {
 	static public function getCityIdFromRoomId( $roomId ) {
 		wfProfileIn( __METHOD__ );
 
-		$cityId = "";
+		$cityId = null;
 		$cityData = ChatServerApiClient::makeRequest( [
 			"func" => "getCityIdForRoom",
 			"roomId" => $roomId
@@ -34,18 +34,17 @@ class ChatServerApiClient {
 		if ( isset( $cityData->cityId ) ) {
 			$cityId = $cityData->cityId;
 		} else {
-			// FIXME: How should we handle it if there is no cityId?
 			Chat::info( __METHOD__ . ': Method called - no cityId', [
 				'roomId' => $roomId,
 			] );
 		}
 
-		wfProfileOut( __METHOD__ );
-
 		Chat::info( __METHOD__ . ': Method called', [
 			'roomId' => $roomId,
 			'cityId' => $cityId,
 		] );
+
+		wfProfileOut( __METHOD__ );
 
 		return $cityId;
 	}
@@ -80,6 +79,7 @@ class ChatServerApiClient {
 	 */
 	static private function getRoomId( $roomType, $roomUsers = [ ] ) {
 		global $wgCityId, $wgServer, $wgArticlePath;
+
 		wfProfileIn( __METHOD__ );
 
 		$roomId = null;
@@ -122,6 +122,7 @@ class ChatServerApiClient {
 	 */
 	static private function makeRequest( $params ) {
 		global $wgReadOnly;
+
 		wfProfileIn( __METHOD__ );
 
 		$response = null;

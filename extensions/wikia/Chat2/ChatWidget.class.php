@@ -91,6 +91,7 @@ class ChatWidget {
 	 */
 	static public function getChatUsersInfo() {
 		global $wgReadOnly;
+
 		wfProfileIn( __METHOD__ );
 
 		Chat::info( __METHOD__ . ': Method called' );
