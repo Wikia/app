@@ -36,7 +36,7 @@ class ChatEntryPoint {
 
 		$vars =  [
 			'linkToSpecialChat' => SpecialPage::getTitleFor( "Chat" )->escapeLocalUrl(),
-			'joinTheChatMessage' => wfMsg( 'chat-join-the-chat' ),
+			'joinTheChatMessage' => wfMessage( 'chat-join-the-chat' ),
 			'isEntryPoint' => $isEntryPoint,
 			'entryPointGuidelinesMessage' => $entryPointGuidelinesMessage->exists() ?
 				$entryPointGuidelinesMessage->parse() : null,

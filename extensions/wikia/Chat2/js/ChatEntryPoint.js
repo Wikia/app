@@ -26,16 +26,11 @@ var ChatEntryPoint = {
 
 	loadChatUsers: function () {
 		// load the chat users info using Ajax
-		//var currentTime = new Date();
-		//var minuteTimestamp = currentTime.getFullYear() + currentTime.getMonth() + currentTime.getDate() + currentTime.getHours() + currentTime.getMinutes();
 		$.nirvana.sendRequest({
 			controller: 'ChatRailController',
 			method: 'GetUsers',
 			type: 'GET',
 			format: 'json',
-			/*data: {
-				cb: minuteTimestamp
-			},*/
 			callback: function (content) {
 				// cache the result
 				window.wgWikiaChatUsers = content.users;
@@ -70,7 +65,10 @@ var ChatEntryPoint = {
 		});
 	},
 
-	// change the user list into the carousel
+	/**
+	 * change the user list into the carousel
+	 * @param $el chat who is here element
+	 */
 	initCarousel: function ($el) {
 		var popoverTimeout = 0,
 			// differ number of users on chat according to it's width

@@ -15,7 +15,7 @@ class ChatRailController extends WikiaController {
 
 		// As most the markup for this is the same as for the chat parser tag, we're reusing the tag template
 		$this->response->getView()->setTemplatePath( dirname( __FILE__ ) . '/templates/entryPointTag.mustache' );
-		$this->response->setTemplateEngine(WikiaResponse::TEMPLATE_ENGINE_MUSTACHE);
+		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 	}
 
 	public function executeAnonLoginSuccess() {
