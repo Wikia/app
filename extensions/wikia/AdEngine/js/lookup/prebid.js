@@ -9,7 +9,11 @@ define('ext.wikia.adEngine.lookup.prebid', [
 	var adapters = [
 			appnexus
 		],
-		adUnits = [];
+		adUnits = [],
+		priceMap = {},
+		bidderKey = 'hb_bidder',
+		bidKey = 'hb_pb',
+		sizeKey = 'hb_size';
 
 	function addAdUnits(adapterAdUnits) {
 		adapterAdUnits.forEach(function (adUnit) {
@@ -37,29 +41,45 @@ define('ext.wikia.adEngine.lookup.prebid', [
 		});
 	}
 
-	function calculatePrices() {
-		// TODO
-	}
-
-	function getPrices() {
-		// TODO
-		return {};
-	}
-
 	function encodeParamsForTracking(params) {
-		// TODO
+		if (params[bidderKey] && params[sizeKey] && params[bidKey]) {
+			return [params[bidderKey], params[sizeKey], params[bidKey]].join(';');
+		}
+
 		return '';
 	}
 
+	function calculatePrices() {
+		var slotName,
+			slots = {};
+		if (win.pbjs && typeof win.pbjs.getAdserverTargeting === 'function') {
+			slots = win.pbjs.getAdserverTargeting();
+		}
+
+		for (slotName in slots) {
+			if (slots.hasOwnProperty(slotName)) {
+				priceMap[slotName] = encodeParamsForTracking(slots[slotName]);
+			}
+		}
+	}
+
+	function getPrices() {
+		return priceMap;
+	}
+
 	function isSlotSupported(slotName) {
-		return adapters.some(function (adapter) {
-			return adapter && adapter.isEnabled() && adapters.isSlotSupported(slotName);
+		return adUnits.some(function (adUnit) {
+			return adUnit.code === slotName;
 		});
 	}
 
 	function getSlotParams(slotName) {
-		// TODO
-		return {};
+		var params = {};
+		if (win.pbjs && typeof win.pbjs.getAdserverTargetingForAdUnitCode === 'function') {
+			params = win.pbjs.getAdserverTargetingForAdUnitCode(slotName) || {};
+		}
+
+		return params;
 	}
 
 	return factory.create({
