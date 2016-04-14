@@ -310,3 +310,4 @@ $magicWords = array(
 	'protectionlevel'         => array( '1', 'NIVELDEPROTECAO', 'NÍVELDEPROTEÇÃO', 'PROTECTIONLEVEL' ),
 	'url_path'                => array( '0', 'CAMINHO', 'PATH' ),
 );
+
