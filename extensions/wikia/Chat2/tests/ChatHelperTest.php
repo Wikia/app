@@ -1,6 +1,7 @@
 <?php
 
 class ChatHelperTest extends WikiaBaseTest {
+	/** @var ChatHelper */
 	private $helper;
 
 	protected function setUp() {
@@ -15,7 +16,7 @@ class ChatHelperTest extends WikiaBaseTest {
 	 */
 	public function testGetChatConfig( $type, $wgWikiaEnvironment, $expected ) {
 		$this->mockGlobalVariable( 'wgWikiaEnvironment', $wgWikiaEnvironment );
-		$chatConfig = $this->helper->getChatConfig( $type );
+		$chatConfig = $this->helper->getServerNodes( $type );
 
 		$this->assertEquals( $expected, $chatConfig );
 	}
@@ -24,17 +25,42 @@ class ChatHelperTest extends WikiaBaseTest {
 		return [
 			[
 				'type' => 'private',
+				'wgWikiaEnvironment' => 'prod',
+				'expected' => []
+			],
+			[
+				'type' => 'private',
+				'wgWikiaEnvironment' => 'preview',
+				'expected' => []
+			],
+			[
+				'type' => 'private',
+				'wgWikiaEnvironment' => 'verify',
+				'expected' => []
+			],
+			[
+				'type' => 'private',
 				'wgWikiaEnvironment' => 'dev',
 				'expected' => []
 			],
 			[
-				'type' => 'private',
+				'type' => 'public',
 				'wgWikiaEnvironment' => 'prod',
 				'expected' => []
 			],
 			[
-				'type' => 'private',
-				'wgWikiaEnvironment' => 'prod',
+				'type' => 'public',
+				'wgWikiaEnvironment' => 'preview',
+				'expected' => []
+			],
+			[
+				'type' => 'public',
+				'wgWikiaEnvironment' => 'verify',
+				'expected' => []
+			],
+			[
+				'type' => 'public',
+				'wgWikiaEnvironment' => 'dev',
 				'expected' => []
 			]
 		];

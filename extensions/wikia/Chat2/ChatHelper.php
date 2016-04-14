@@ -58,46 +58,49 @@ class ChatHelper {
 		WikiFactory::setVarByName( self::$operationMode, self::$CentralCityId, $mode );
 	}
 
+	/**
+	 * //TODO test me!
+	 * @param string $type
+	 * @return array
+	 */
 	static public function getServer( $type = 'public' ) {
 		global $wgCityId;
 
-		$server = self::getChatConfig( $type );
-		$serversCount = count( $server[ self::getServerBasket() ] );
+		$serverBasket = self::getServerBasket();
+		$serverNodes = self::getServerNodes( $type );
+		$serverNode = $serverNodes[ $serverBasket ];
+		$serversCount = count( $serverNode );
 		$serverId = ( $wgCityId % $serversCount ) + 1;
-
-		$out = explode( ':', $server[ self::getServerBasket() ][ $wgCityId % $serversCount ] );
+		$serverData = $serverNode[ $wgCityId % $serversCount ];
 
 		return [
-			'host' => $out[0],
-			'port' => $out[1],
+			'host' => $serverData[ 'host' ],
+			'port' => $serverData[ 'port' ],
 			'serverId' => $serverId
 		];
 	}
 
 	static public function getServersList( $type = 'public' ) {
-		$server = self::getChatConfig( $type );
-		return $server[ self::getServerBasket() ];
+		$serverNodes = self::getServerNodes( $type );
+
+		return $serverNodes[ self::getServerBasket() ];
 	}
 
 	/**
 	 * @param string $type
 	 * @return array|bool
 	 */
-	static function getChatConfig( $type = 'public' ) {
+	static function getServerNodes( $type = 'public' ) {
 		global $wgWikiaEnvironment;
 
-		$chatConfigElement = [];
 		$consul = new Wikia\Consul\Client();
+		$serverNodes = [];
 
-		$consul->isConsulAddress('prod.chat-' . $type . '.service.sjc.consul');
-
-		if ( $wgWikiaEnvironment === self::CHAT_DEVBOX_ENV ) {
-			// no dev config in consul so far
-		} else {
-			$chatConfigElement = $consul->getNodes('chat-' . $type, $wgWikiaEnvironment);
+		if ( $wgWikiaEnvironment !== self::CHAT_DEVBOX_ENV ) {
+			$serverNodes = $consul->getNodes( 'chat-' . $type, $wgWikiaEnvironment );
 		}
 
-		return $chatConfigElement;
+		return $serverNodes;
 	}
 
 	static public function getServerBasket() {
@@ -187,7 +190,7 @@ class ChatHelper {
 		return true;
 	}
 
-	public static function onContributionsToolLinks(  $id, $nt, &$tools ) {
+	public static function onContributionsToolLinks( $id, $nt, &$tools ) {
 		global $wgOut, $wgCityId, $wgUser, $wgCityId;
 		wfProfileIn( __METHOD__ );
 

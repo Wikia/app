@@ -30,6 +30,7 @@ class Client {
 	}
 
 	/**
+	 * TODO update me!
 	 * Returns IP addresses of given service healthy nodes
 	 *
 	 * $catalog->getNodes( 'db-a', 'slave' )
@@ -51,8 +52,10 @@ class Client {
 
 		$nodes = array_map(
 			function( $item ) {
-				return $item[ 'Service' ][ 'Address' ] . ':' . $item[ 'Service' ][ 'Port' ];
-				//return $item[ 'Node' ][ 'Address' ];
+				return [
+					'host' => $item[ 'Node' ][ 'Node' ],
+					'port' => $item[ 'Service' ][ 'Port' ]
+					];
 			},
 			$resp
 		);
@@ -83,9 +86,7 @@ class Client {
 	 * @preturn bool true if the given address is a consul one
 	 */
 	static function isConsulAddress( $address ) {
-		// TODO: temporary change for devbox testing
-		//return endsWith( $address, '.service.consul' );
-		return endsWith( $address, '.consul' );
+		return endsWith( $address, '.service.consul' );
 	}
 
 	/**
