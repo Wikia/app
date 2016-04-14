@@ -1,7 +1,6 @@
 <?php
 
 class AnalyticsProviderPrebid implements iAnalyticsProvider {
-	private static $url = '//acdn.adnxs.com/prebid/prebid.js';
 	private static $template = 'extensions/wikia/AnalyticsEngine/templates/prebid.mustache';
 
 	public static function isEnabled() {
@@ -14,12 +13,7 @@ class AnalyticsProviderPrebid implements iAnalyticsProvider {
 
 	public function getSetupHtml( $params = array() ) {
 		if ( self::isEnabled() ) {
-			return \MustacheService::getInstance()->render(
-				self::$template,
-				[
-					'url' => self::$url
-				]
-			);
+			return \MustacheService::getInstance()->render( self::$template, [] );
 		}
 	}
 

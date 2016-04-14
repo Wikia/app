@@ -1,9 +1,10 @@
 /*global define, require*/
 define('ext.wikia.adEngine.lookup.prebid', [
 	'ext.wikia.adEngine.lookup.lookupFactory',
+	'wikia.document',
 	'wikia.window',
 	require.optional('ext.wikia.adEngine.lookup.adapter.appnexus')
-], function (factory, win, appnexus) {
+], function (factory, doc, win, appnexus) {
 	'use strict';
 
 	var adapters = [
@@ -13,7 +14,8 @@ define('ext.wikia.adEngine.lookup.prebid', [
 		priceMap = {},
 		bidderKey = 'hb_bidder',
 		bidKey = 'hb_pb',
-		sizeKey = 'hb_size';
+		sizeKey = 'hb_size',
+		url = '//acdn.adnxs.com/prebid/prebid.js';
 
 	function addAdUnits(adapterAdUnits) {
 		adapterAdUnits.forEach(function (adUnit) {
@@ -30,15 +32,29 @@ define('ext.wikia.adEngine.lookup.prebid', [
 	}
 
 	function call(skin, onResponse) {
+		var prebid = doc.createElement('script'),
+			node = doc.getElementsByTagName('script')[0];
+
 		setupAdUnits(skin);
 
-		win.pbjs.que.push(function () {
-			win.pbjs.addAdUnits(adUnits);
+		if (adUnits.length > 0) {
+			win.pbjs = win.pbjs || {};
+			win.pbjs.que = win.pbjs.que || [];
 
-			win.pbjs.requestBids({
-				bidsBackHandler: onResponse
+			prebid.async = true;
+			prebid.type = 'text/javascript';
+			prebid.src = url;
+
+			node.parentNode.insertBefore(prebid, node);
+
+			win.pbjs.que.push(function () {
+				win.pbjs.addAdUnits(adUnits);
+
+				win.pbjs.requestBids({
+					bidsBackHandler: onResponse
+				});
 			});
-		});
+		}
 	}
 
 	function encodeParamsForTracking(params) {

@@ -2,6 +2,7 @@
 require([
 	'ext.wikia.adEngine.lookup.amazonMatch',
 	'ext.wikia.adEngine.lookup.openXBidder',
+	'ext.wikia.adEngine.lookup.prebid',
 	'ext.wikia.adEngine.lookup.rubiconFastlane',
 	'ext.wikia.adEngine.customAdsLoader',
 	'ext.wikia.adEngine.messageListener',
@@ -13,6 +14,7 @@ require([
 ], function (
 	amazon,
 	oxBidder,
+	prebid,
 	rubiconFastlane,
 	customAdsLoader,
 	messageListener,
@@ -41,5 +43,6 @@ require([
 		if (geo.isProperGeo(instantGlobals.wgAdDriverRubiconFastlaneCountries)) {
 			rubiconFastlane.call();
 		}
+		prebid.call();
 	});
 });
