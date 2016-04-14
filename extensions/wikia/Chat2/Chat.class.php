@@ -13,7 +13,10 @@ use Wikia\Service\User\Permissions\PermissionsService;
 class Chat {
 	const HTTP_HEADER_XFF = 'X-FORWARDED-FOR';
 	const HTTP_HEADER_USER_AGENT = 'USER-AGENT';
-	const CHAT_SESSION_TTL = 60 * 60 * 48;
+
+	const CHATTERS_CACHE_KEY = 'Chat::chatters';
+	const CHATTERS_CACHE_TTL = 60 * 60 * 24; // 1 day
+	const CHAT_SESSION_TTL = 60 * 60 * 48; // 2 days
 
 	const ACTION_ADD = 'add';
 	const ACTION_CHANGE = 'change';
@@ -28,6 +31,7 @@ class Chat {
 	 * Permission name to be a chat staff
 	 */
 	const CHAT_STAFF = 'chatstaff';
+	const CHAT_ADMIN = 'chatadmin';
 
 	/**
 	 * @var PermissionsService
@@ -102,8 +106,8 @@ class Chat {
 		}
 
 		// Make sure we aren't trying to kick/ban someone who shouldn't be kick/banned
-		// Chat moderators can be kicked/banned only by staff mmebers and admins
-		if ( $subjectUser->isAllowed( self::CHAT_MODERATOR ) && !$adminUser->isAllowed( self::CHAT_STAFF ) && !$adminUser->isAllowed( 'chatadmin' ) ) {
+		// Chat moderators can be kicked/banned only by staff members and admins
+		if ( !self::canBan( $subjectUser, $adminUser ) ) {
 			return wfMessage( 'chat-ban-cant-ban-moderator' )->inContentLanguage()->text() . "\n";
 		}
 
@@ -127,7 +131,7 @@ class Chat {
 
 		self::info( __METHOD__ . ': Method called', [
 			'cityId' => $cityId,
-			'banUser' => $subjectUser->getId(),
+			'subjectUser' => $subjectUser->getId(),
 			'adminUser' => $adminUser->getId(),
 			'time' => $time,
 			'reason' => $reason,
@@ -146,30 +150,30 @@ class Chat {
 	}
 
 	/**
-	 * @param string $username
+	 * @param string $blockedUsername
 	 * @param string $dir
-	 * @param User $kickingUser
+	 * @param User $requestingUser
 	 *
 	 * @return bool
 	 * @throws DBUnexpectedError
 	 */
-	public static function blockPrivate( $username, $dir = 'add', $kickingUser ) {
+	public static function blockPrivate( $blockedUsername, $dir = 'add', $requestingUser ) {
 		self::info( __METHOD__ . ': Method called', [
-			'username' => $username,
+			'blockedUsername' => $blockedUsername,
 			'dir' => $dir,
-			'kickingUser' => $kickingUser,
+			'requestingUser' => $requestingUser,
 		] );
 
-		$blockedUser = User::newFromName( $username );
+		$blockedUser = User::newFromName( $blockedUsername );
 
-		if ( !empty( $blockedUser ) && !$kickingUser->isAnon() ) {
-			$chatUser = new ChatUser( $kickingUser );
-			if ( $dir == 'remove' ) {
-				$chatUser->unblockUser( $blockedUser );
-			} else {
-				$chatUser->blockUser( $blockedUser );
+		if ( !empty( $blockedUser ) && !$blockedUser->isAnon() && !$requestingUser->isAnon() ) {
+			$requestingChatUser = new ChatUser( $requestingUser );
+			if ( $dir == 'add' ) {
+				$requestingChatUser->blockUser( $blockedUser );
+			} elseif ( $dir == 'remove' ) {
+				$requestingChatUser->unblockUser( $blockedUser );
 			}
-			wfGetDB( DB_MASTER, [ ], F::app()->wg->ExternalDatawareDB );
+			wfGetLBFactory()->commitMasterChanges();
 		}
 
 		return true;
@@ -177,24 +181,14 @@ class Chat {
 
 	/**
 	 * Takes a time in seconds and returns a human readable string (e.g. "2 hours").
-	 * This bizarre system only works for the time periods defined in the
-	 * chat-ban-option-list i18n message.
 	 *
 	 * @param $time
-	 *
-	 * @return null|string
+	 * @return string|null
 	 */
 	protected static function getTimeLabel( $time ) {
-		$timeLabel = null;
+		global $wgContLang;
 
-		$options = self::getBanOptions();
-		foreach ( $options as $key => $val ) {
-			if ( $val == $time ) {
-				$timeLabel = $key;
-			}
-		}
-
-		return $timeLabel;
+		return $wgContLang->formatTimePeriod( $time . [ 'noabbrevs' => true ] );
 	}
 
 	private static function getUserNamesFromIds( $userIds ) {
@@ -253,34 +247,27 @@ class Chat {
 		$errorMsg = '';
 		if ( in_array( self::CHAT_MODERATOR, $subjectUser->getEffectiveGroups() ) ) {
 			$errorMsg = wfMessage( "chat-err-already-chatmod", $subjectUserName, self::CHAT_MODERATOR )->text();
+		} else if ( self::canPromoteModerator( $subjectUser, $adminUser ) ) {
+			self::doPromoteModerator( $adminUser, $subjectUser );
 		} else {
-			$changeableGroups = $adminUser->changeableGroups();
-			$isSelf = ( $subjectUser->getName() == $adminUser->getName() );
-			$addableGroups = array_merge( $changeableGroups['add'], $isSelf ? $changeableGroups['add-self'] : [ ] );
-
-			if ( in_array( self::CHAT_MODERATOR, $addableGroups ) ) {
-				self::doPromoteModerator( $adminUser, $subjectUser );
-
-			} else {
-				$errorMsg = wfMessage( "chat-err-no-permission-to-add-chatmod", self::CHAT_MODERATOR )->text();
-			}
+			$errorMsg = wfMessage( "chat-err-no-permission-to-add-chatmod", self::CHAT_MODERATOR )->text();
 		}
 
 		return ( $errorMsg == "" ? true : $errorMsg );
 	}
 
 	/**
-	 * Promote given user to moderator. Does not do any permission checks.
+	 * Promote given user to moderator. No permission check is done here.
 	 *
 	 * @param User $adminUser
 	 * @param User $subjectUser
 	 */
 	private static function doPromoteModerator( User $adminUser, User $subjectUser ) {
-		// Adding the group is allowed. Add the group, clear the cache, run necessary hooks, and log the change.
+		// Add group
 		$oldGroups = $subjectUser->getGroups();
-
 		self::permissionsService()->addToGroup( $adminUser, $subjectUser, self::CHAT_MODERATOR );
 
+		// Run UserRights hook
 		$removegroups = [ ];
 		$addgroups = [ self::CHAT_MODERATOR ];
 		wfRunHooks( 'UserRights', [ &$subjectUser, $addgroups, $removegroups ] );
@@ -398,7 +385,7 @@ class Chat {
 			$subtype = $type;
 		} else if ( strpos( $type, 'ban' ) === 0 ) {
 			if ( empty( $reason ) ) {
-				// Possible keys: chat-log-reason-banadd, chat-log-reason-bandelete, chat-log-reason-banreplace
+				// Possible keys: chat-log-reason-banadd, chat-log-reason-banchane, chat-log-reason-banremove
 				$reason = wfMessage( 'chat-log-reason-' . $type, $doerName )->inContentLanguage()->text();
 			}
 			$subtype = 'chat' . $type;
@@ -415,7 +402,7 @@ class Chat {
 	}
 
 	/**
-	 * @desc Add Chat log entry to "Special:Log" and Special:CheckUser;
+	 * Add Chat log entry to "Special:Log" and Special:CheckUser;
 	 * otherwise to giving a chat moderator or banning this method isn't called via AJAX,
 	 * therefore we have to insert all information manually into DB table
 	 */
@@ -496,6 +483,50 @@ class Chat {
 	}
 
 	/**
+	 * Can given admin user kick subject user from chat?
+	 *
+	 * @param User $subjectUser
+	 * @param User $adminUser
+	 * @return bool
+	 */
+	public static function canKick( User $subjectUser, User $adminUser ) {
+		return (
+			// must be a chat moderator
+			$adminUser->isAllowed( self::CHAT_MODERATOR )
+			&& (
+				!$subjectUser->isAllowed( self::CHAT_MODERATOR )
+				// moderators can be kicked only by chat staff/admins
+				|| $adminUser->isAllowedAny( self::CHAT_STAFF, self::CHAT_ADMIN )
+			) );
+	}
+
+	/**
+	 * Can given admin user ban subject user from chat?
+	 *
+	 * @param User $subjectUser
+	 * @param User $adminUser
+	 * @return bool
+	 */
+	public static function canBan( User $subjectUser, User $adminUser ) {
+		return self::canKick( $subjectUser, $adminUser );
+	}
+
+	/**
+	 * Can given admin user promote subject user to become moderator?
+	 *
+	 * @param User $subjectUser
+	 * @param User $adminUser
+	 * @return bool
+	 */
+	public static function canPromoteModerator( User $subjectUser, User $adminUser ) {
+		$changeableGroups = $adminUser->changeableGroups();
+		$isSelf = ( $subjectUser->getName() == $adminUser->getName() );
+		$addableGroups = array_merge( $changeableGroups['add'], $isSelf ? $changeableGroups['add-self'] : [ ] );
+
+		return in_array( self::CHAT_MODERATOR, $addableGroups );
+	}
+
+	/**
 	 * Get a list of ban time length options
 	 *
 	 * @return array
@@ -506,40 +537,42 @@ class Chat {
 		$list = explode( ',', $in );
 		$out = [ ];
 
-		$factors = self::getBanTimeFactors();
+		$FACTORS = self::getBanTimeFactors();
 
 		foreach ( $list as $val ) {
+			// $val is eg. "Label text:54 minutes"
 			$explode1 = explode( ':', $val );
 			if ( count( $explode1 ) != 2 ) {
 				continue;
 			}
-			$label = $explode1[0];
+			$label = trim( $explode1[0] );
+			$timeText = trim( $explode1[1] );
 
-			if ( trim( $explode1[1] ) == 'infinite' ) {
-				$out[$label] = $factors['years'] * 1000;
-				continue;
+			if ( $timeText == 'infinite' ) {
+				$time = 1000 * $FACTORS['years'];
+			} else {
+				$explode2 = explode( ' ', $explode1[1] );
+				if ( count( $explode2 ) != 2 ) {
+					continue;
+				}
+				$number = (int)trim( $explode2[0] );
+				$factorText = trim( $explode2[1] );
+				$factor = 0;
+
+				if ( isset( $FACTORS[$factorText] ) ) {
+					$factor = $FACTORS[$factorText];
+				} elseif ( isset( $FACTORS[$factorText . 's'] ) ) {
+					$factor = $FACTORS[$factorText . 's'];
+				}
+
+				if ( $number < 1 || $factor < 1 ) {
+					continue;
+				}
+
+				$time = $number * $factor;
 			}
 
-			$explode2 = explode( ' ', $explode1[1] );
-
-			if ( count( $explode2 ) != 2 ) {
-				continue;
-			}
-
-			$factor = trim( $explode2[1] );
-			$factor = (int)( empty( $factors[$factor] ) ? ( empty( $factors[$factor . 's'] ) ? 0 : $factors[$factor . 's'] ) : $factors[$factor] );
-
-			if ( $factor < 1 ) {
-				continue;
-			}
-
-			$base = (int)trim( $explode2[0] );
-
-			if ( $base < 1 ) {
-				continue;
-			}
-
-			$out[$label] = $base * $factor;
+			$out[$label] = $time;
 		}
 
 		return $out;
@@ -558,12 +591,13 @@ class Chat {
 
 	public static function getChatters() {
 		global $wgMemc;
+
 		wfProfileIn( __METHOD__ );
 
-		$memKey = wfMemcKey( "ChatServerApiClient::getChatters" );
+		$memcKey = wfMemcKey( self::CHATTERS_CACHE_KEY );
 
-		// data are store in memcache and set by node.js
-		$chatters = $wgMemc->get( $memKey );
+		// data is stored in memcache and set by node.js
+		$chatters = $wgMemc->get( $memcKey );
 		if ( !$chatters ) {
 			$chatters = [ ];
 		}
@@ -577,8 +611,8 @@ class Chat {
 		global $wgMemc;
 		wfProfileIn( __METHOD__ );
 
-		$memKey = wfMemcKey( "ChatServerApiClient::getChatters" );
-		$wgMemc->set( $memKey, $chatters, 60 * 60 * 24 );
+		$memcKey = wfMemcKey( self::CHATTERS_CACHE_KEY );
+		$wgMemc->set( $memcKey, $chatters, self::CHATTERS_CACHE_TTL );
 
 		wfProfileOut( __METHOD__ );
 	}
