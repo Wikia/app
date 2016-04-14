@@ -33250,7 +33250,7 @@ $messages['ru'] = array(
 	'this_article' => 'Эта статья',
 	'this_page' => 'Эта страница',
 	'top_five' => 'Пятерка лучших',
-	'tog-enableuserjs' => 'Включить персональный JavaScript ([[Справка:Персональный СSS и JavaScript|подробнее]])',
+	'tog-enableuserjs' => 'Включить персональный JavaScript ([[Справка:Персональный_CSS_и_JavaScript|подробнее]])',
 );
 
 $messages['rue'] = array(
