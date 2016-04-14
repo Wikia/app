@@ -376,6 +376,7 @@ $imageFiles = array(
 	'button-italic'   => 'de/button_italic.png',
 );
 
+<<<<<<< 6602d17576a8fb14714c0121a737e9c504dd658b
 $messages = array(
 # User preference toggles
 'tog-underline'               => 'Links unterstreichen:',
@@ -3900,3 +3901,5 @@ Anderenfalls kannst du auch das untenstehende einfache Formular nutzen. Dein Kom
 'api-error-verification-error'            => 'Die hochzuladende Datei ist entweder fehlerhaft oder hat keine Dateinamenserweiterung.',
 
 );
+=======
+>>>>>>> [SUS-374] Removed all global messges from old core files

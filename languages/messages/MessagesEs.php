@@ -339,6 +339,7 @@ $dateFormats = array(
 $separatorTransformTable = array( ',' => '.', '.' => ',' );
 $linkTrail = '/^([a-záéíóúñ]+)(.*)$/sDu';
 
+<<<<<<< 6602d17576a8fb14714c0121a737e9c504dd658b
 $messages = array(
 # User preference toggles
 'tog-underline'               => 'Subrayar enlaces:',
@@ -3844,3 +3845,5 @@ En otro caso, puedes usar el siguiente formulario. Tu comentario será añadido 
 'api-error-verification-error'            => 'Este archivo puede estar dañado, o tiene una extensión incorrecta.',
 
 );
+=======
+>>>>>>> [SUS-374] Removed all global messges from old core files

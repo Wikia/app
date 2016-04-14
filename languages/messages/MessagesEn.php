@@ -601,6 +601,7 @@ $preloadedMessages = array(
 # hyphen (-). If you need more characters, you may be able to change
 # the regex in MagicWord::initRegex
 
+<<<<<<< 6602d17576a8fb14714c0121a737e9c504dd658b
 $messages = array(
 /*
 The sidebar for MonoBook is generated from this message, lines that do not
@@ -4703,3 +4704,5 @@ Otherwise, you can use the easy form below. Your comment will be added to the pa
 'api-error-verification-error'            => 'This file might be corrupt, or have the wrong extension.',
 
 );
+=======
+>>>>>>> [SUS-374] Removed all global messges from old core files
