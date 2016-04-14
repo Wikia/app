@@ -173,10 +173,11 @@ class RebuildLocalisationCache extends Maintenance {
 			if (!isset($filepath[0])) continue;
 
 			if (strpos($filepath[0], self::I18N_FILE_EXTENSION) !== false ) {
-				$wgExtensionMessagesFiles[basename($filepath[0], self::I18N_FILE_EXTENSION)] = $filepath[0];
+				$key = basename($filepath[0], self::I18N_FILE_EXTENSION);
 			} else {
-				$wgExtensionMessagesFiles[basename($filepath[0], self::PHP_FILE_EXTENSION)] = $filepath[0];
+				$key = basename($filepath[0], self::PHP_FILE_EXTENSION);
 			}
+			$wgExtensionMessagesFiles[$key] = $filepath[0];
 		}
 	}
 
