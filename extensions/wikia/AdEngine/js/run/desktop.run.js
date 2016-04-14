@@ -8,7 +8,6 @@ require([
 	'ext.wikia.adEngine.customAdsLoader',
 	'ext.wikia.adEngine.dartHelper',
 	'ext.wikia.adEngine.messageListener',
-	'ext.wikia.adEngine.provider.evolve',
 	'ext.wikia.adEngine.recovery.helper',
 	'ext.wikia.adEngine.slot.scrollHandler',
 	'ext.wikia.adEngine.slotTracker',
@@ -25,7 +24,6 @@ require([
 	customAdsLoader,
 	dartHelper,
 	messageListener,
-	providerEvolve,
 	recoveryHelper,
 	scrollHandler,
 	slotTracker,
@@ -58,9 +56,6 @@ require([
 	};
 
 	messageListener.init();
-
-	// Register Evolve hop
-	win.evolve_hop = providerEvolve.hop;
 
 	// Register window.wikiaDartHelper so jwplayer can use it
 	win.wikiaDartHelper = dartHelper;
