@@ -109,7 +109,7 @@ class AttributeKeyValueService implements AttributeService {
 		if ( $e instanceof PersistenceException ) {
 			$this->error( $msg, $context );
 		} else {
-			$this->info( $msg, $context );
+			$this->warning( $msg, $context );
 		}
 	}
 
