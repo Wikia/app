@@ -107,19 +107,7 @@ class CommunityPageSpecialUsersModel {
 			return !$userIdIsBot && !$userIsWikia;
 		} );
 	}
-
-	/**
-	 * @param User $user
-	 * @param int|null $days Get ranking by number of edits made in the last n days or all time if null
-	 * @return array
-	 */
-	public function getUserRanking( User $user, $days = null ) {
-		return [
-			'userRank' => 'N',
-			'totalUsers' => 'N',
-		];
-	}
-
+	
 	/**
 	 * Get all contributions for a user, limited by most recent n days if $days is not null
 	 *
