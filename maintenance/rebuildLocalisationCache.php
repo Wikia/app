@@ -163,8 +163,9 @@ class RebuildLocalisationCache extends Maintenance {
 	 */
 	private function includeAllMessagesFiles() {
 		global $wgExtensionMessagesFiles;
+		global $IP;
 
-		$directory = new RecursiveDirectoryIterator('/usr/wikia/source/app/');
+		$directory = new RecursiveDirectoryIterator($IP);
 		$iterator = new RecursiveIteratorIterator($directory);
 		$files = new RegexIterator($iterator, self::LOCALISATION_FILE_REGEX, RecursiveRegexIterator::GET_MATCH);
 
