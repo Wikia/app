@@ -27,9 +27,14 @@ class Forum extends Walls {
 	const LEN_TOO_SMALL_ERR = -2;
 
 	public function getBoardList( $db = DB_SLAVE ) {
-		$titlesBatch = $this->getTitlesForNamespace( $db, NS_WIKIA_FORUM_BOARD );
-		$orderIndexes = $titlesBatch->getWikiaProperties( WPP_WALL_ORDER_INDEX, $db );
+		$titlesBatch = TitleBatch::newFromConds( [ ],
+			[ 'page.page_namespace' => NS_WIKIA_FORUM_BOARD ],
+			__METHOD__,
+			[ 'ORDER BY' => 'page_title' ],
+			$db
+		);
 
+		$orderIndexes = $titlesBatch->getWikiaProperties( WPP_WALL_ORDER_INDEX, $db );
 		foreach ( $titlesBatch->getArticleIds() as $id ) {
 			if ( !isset( $orderIndexes[ $id ] ) ) {
 				$orderIndexes[ $id ] = $id;

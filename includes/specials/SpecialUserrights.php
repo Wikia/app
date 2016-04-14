@@ -22,6 +22,7 @@
  */
 
 use Wikia\Service\User\Permissions\PermissionsServiceAccessor;
+use Wikia\Logger\WikiaLogger;
 
 /**
  * Special page to allow managing user group membership
@@ -71,25 +72,27 @@ class UserrightsPage extends SpecialPage {
 	}
 
 	/**
+	 * @param $globalGroups string[] List of global groups
 	 * @param $changeableGroups string[] Changeable groups
 	 * @param  $group String: the name of the group to check
 	 * @param $isself bool Are we change the same user that is logged in
 	 * @return bool Can we remove the group?
 	 */
-	public static function canRemove( $changeableGroups, $group, $isself ) {
-		// $this->changeableGroups()['remove'] doesn't work, of course. Thanks,
-		// PHP.
-		return in_array( $group, $changeableGroups['remove'] ) || ( $isself && in_array( $group, $changeableGroups['remove-self'] ) );
+	public static function canRemove( $globalGroups, $changeableGroups, $group, $isself ) {
+		return !self::isGlobalNonEditableGroup( $globalGroups, $group) &&
+			in_array( $group, $changeableGroups['remove'] ) || ( $isself && in_array( $group, $changeableGroups['remove-self'] ) );
 	}
 
 	/**
+	 * @param $globalGroups string[] List of global groups
 	 * @param $changeableGroups string[] Changeable groups
 	 * @param $group string: the name of the group to check
 	 * @param $isself bool Are we change the same user that is logged in
 	 * @return bool Can we add the group?
 	 */
-	public static function canAdd( $changeableGroups, $group, $isself ) {
-		return in_array( $group, $changeableGroups['add'] ) || ( $isself && in_array( $group, $changeableGroups['add-self'] ) );
+	public static function canAdd( $globalGroups, $changeableGroups, $group, $isself ) {
+		return !self::isGlobalNonEditableGroup( $globalGroups, $group) &&
+			in_array( $group, $changeableGroups['add'] ) || ( $isself && in_array( $group, $changeableGroups['add-self'] ) );
 	}
 
 	public function __construct() {
@@ -235,63 +238,67 @@ class UserrightsPage extends SpecialPage {
 	 * Save user groups changes in the database.
 	 *
 	 * @param $user User object
-	 * @param $add Array of groups to add
-	 * @param $remove Array of groups to remove
+	 * @param $groupsToAdd Array of groups to add
+	 * @param $groupsToRemove Array of groups to remove
 	 * @param $reason String: reason for group change
 	 * @return Array: Tuple of added, then removed groups
 	 */
-	function doSaveUserGroups( $user, $add, $remove, $reason = '' ) {
-		// Validate input set...
-		$isself = ( $user->getName() == $this->getUser()->getName() );
+	function doSaveUserGroups( $user, $groupsToAdd, $groupsToRemove, $reason = '' ) {
 		$groups = $user->getGroups();
+		$globalGroups = $this->permissionsService()->getConfiguration()->getGlobalGroups();
 		$changeable = $this->getUser()->changeableGroups();
-		$addable = array_merge( $changeable['add'], $isself ? $changeable['add-self'] : array() );
-		$removable = array_merge( $changeable['remove'], $isself ? $changeable['remove-self'] : array() );
+		$validGroupsToAdd = [];
+		$validGroupsToRemove = [];
 
-		$remove = array_unique(
-			array_intersect( (array)$remove, $removable, $groups ) );
-		$add = array_unique( array_diff(
-			array_intersect( (array)$add, $addable ),
-			$groups )
-		);
-
-		$oldGroups = $user->getGroups();
-		$newGroups = $oldGroups;
-
-		// remove then add groups
-		if( $remove ) {
-			$newGroups = array_diff( $newGroups, $remove );
-			foreach( $remove as $group ) {
-				if ( !$user->removeGroup( $group ) ) {
-					$newGroups[] = $group;
-				}
+		foreach ( $groupsToAdd as $group ) {
+			if( self::canAdd( $globalGroups, $changeable, $group, $this->isself ) && !in_array( $group, $groups ) ) {
+				$validGroupsToAdd[] = $group;
 			}
 		}
 
-		if( $add ) {
-			$newGroups = array_merge( $newGroups, $add );
-			foreach( $add as $group ) {
-				if ( !$user->addGroup( $group ) ) {
-					if ( ( $key = array_search( $group, $newGroups ) ) !== false ) {
-						unset($newGroups[$key]);
-					}
-				}
+		foreach ( $groupsToRemove as $group ) {
+			if( self::canRemove( $globalGroups, $changeable, $group, $this->isself ) && in_array( $group, $groups ) ) {
+				$validGroupsToRemove[] = $group;
 			}
+		}
+
+		$oldGroups = $user->getGroups();
+		sort( $oldGroups );
+		$newGroups = $oldGroups;
+
+		$success = true;
+
+		//First add, then remove, otherwise addition may not be possible due to lack of permissions
+		if( $validGroupsToAdd ) {
+			$newGroups = array_merge( $newGroups, $validGroupsToAdd );
+			$success = $user->addGroup( $validGroupsToAdd ) && $success;
+		}
+
+		if( $validGroupsToRemove ) {
+			$newGroups = array_diff( $newGroups, $validGroupsToRemove );
+			$success = $user->removeGroup( $validGroupsToRemove ) && $success;
 		}
 
 		$newGroups = array_unique( $newGroups );
+		sort( $newGroups );
 
-		// Ensure that caches are cleared
-		$user->invalidateCache();
+		if( !$success ) {
+			$newGroups = $user->getGroups();
+			sort( $newGroups );
+			WikiaLogger::instance()->error(
+				__METHOD__ . ' - Error occurred while changing groups',
+				[ 'groups-to-add ' => $validGroupsToAdd, 'groups-to-remove' => $validGroupsToRemove ] );
+		}
 
-		wfDebug( 'oldGroups: ' . print_r( $oldGroups, true ) );
-		wfDebug( 'newGroups: ' . print_r( $newGroups, true ) );
-		wfRunHooks( 'UserRights', array( &$user, $add, $remove ) );
+		WikiaLogger::instance()->debug( __METHOD__ . ' - Changing user groups',
+			[ 'old-groups' => $oldGroups, 'new-groups' => $newGroups ] );
+
+		wfRunHooks( 'UserRights', array( &$user, $validGroupsToAdd, $validGroupsToRemove ) );
 
 		if( $newGroups != $oldGroups ) {
 			$this->addLogEntry( $user, $oldGroups, $newGroups, $reason );
 		}
-		return array( $add, $remove );
+		return array( $validGroupsToAdd, $validGroupsToRemove );
 	}
 
 	/**
@@ -547,19 +554,16 @@ class UserrightsPage extends SpecialPage {
 		# more easily manage it.
 		$columns = array( 'unchangeable' => array(), 'changeable' => array() );
 		$changeableGroups = $this->getUser()->changeableGroups();
+		$globalGroups = $this->permissionsService()->getConfiguration()->getGlobalGroups();
 
 		foreach( $allgroups as $group ) {
 			$set = in_array( $group, $usergroups );
+			$canAdd = self::canAdd( $globalGroups, $changeableGroups, $group, $this->isself );
+			$canRemove = self::canRemove( $globalGroups, $changeableGroups, $group, $this->isself );
 			# Should the checkbox be disabled?
-			$disabled = !(
-				( $set && self::canRemove( $changeableGroups, $group, $this->isself ) ) ||
-				( !$set && self::canAdd( $changeableGroups, $group, $this->isself ) ) );
-			$disabled = $disabled || $this->isGlobalNonEditableGroup(
-					$this->permissionsService()->getConfiguration()->getGlobalGroups(), $group );
+			$disabled = !( ( $set && $canRemove ) || ( !$set && $canAdd ) );
 			# Do we need to point out that this action is irreversible?
-			$irreversible = !$disabled && (
-				( $set && !self::canAdd( $changeableGroups, $group, $this->isself ) ) ||
-				( !$set && !self::canRemove( $changeableGroups, $group, $this->isself ) ) );
+			$irreversible = !$disabled && ( ( $set && !$canAdd ) || ( !$set && !$canRemove ) );
 
 			$checkbox = array(
 				'set' => $set,

@@ -976,7 +976,6 @@ class ArticlesApiController extends WikiaApiController {
 		$articleId = $this->getRequest()->getInt( self::SIMPLE_JSON_ARTICLE_ID_PARAMETER_NAME, NULL );
 		$articleTitle = $this->getRequest()->getVal( self::SIMPLE_JSON_ARTICLE_TITLE_PARAMETER_NAME, NULL );
 		$redirect = $this->request->getVal( 'redirect' );
-		$sectionsToGet = $this->request->getVal( 'sections' );
 
 		if ( !empty( $articleId ) && !empty( $articleTitle ) ) {
 			throw new BadRequestApiException( 'Can\'t use id and title in the same request' );
@@ -1023,14 +1022,7 @@ class ArticlesApiController extends WikiaApiController {
 
 		if ( $parsedArticle instanceof ParserOutput ) {
 			$articleContent = json_decode( $parsedArticle->getText() );
-
-			if ( !empty( $sectionsToGet ) || $sectionsToGet == '0' ) {
-				$contentArray = $this->splitArticleIntoSections( $articleContent->content );
-				$sectionsArray = $this->getSectionNumbersArray( $sectionsToGet );
-				$content = $this->getArticleSections( $sectionsArray, $contentArray );
-			} else {
-				$content = $articleContent->content;
-			}
+			$content = $articleContent->content;
 			$wgArticleAsJson = false;
 		} else {
 			$wgArticleAsJson = false;
@@ -1059,55 +1051,6 @@ class ArticlesApiController extends WikiaApiController {
 		];
 
 		$this->setResponseData( $result, '', self::SIMPLE_JSON_VARNISH_CACHE_EXPIRATION );
-	}
-
-	/**
-	 * Get all top level sections as an array by splitting on h2 tags
-	 * @param $content
-	 * @return array
-	 */
-	private function splitArticleIntoSections( $content ) {
-		$pattern = '/(\<h2[^\>]*section[^\>]*>)/i';
-
-		$contentArray = preg_split( $pattern, $content, -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY );
-		$index = count( $contentArray );
-
-		// If the section matches the pattern, prepend it to the following section and delete it.
-		// Count backwards to avoid searching after match is prepended.
-		while ( $index-- ) {
-			if ( preg_match( $pattern, $contentArray[$index], $matches ) ) {
-				$contentArray[$index + 1] = $matches[0] . $contentArray[$index + 1];
-				array_splice( $contentArray, $index, 1 );
-			}
-		}
-
-		return $contentArray;
-	}
-
-	/**
-	 * Return a string of the specified sections joined from section array
-	 * @param $sectionsToGet
-	 * @param $contentArray
-	 * @return string
-	 */
-	private function getArticleSections( $sectionsToGet, $contentArray ) {
-		$content = '';
-		foreach ( $sectionsToGet as $section ) {
-			$content .= $contentArray[$section];
-		}
-		return $content;
-	}
-
-	/**
-	 * @param string $sectionsToGet Value of sections param in request
-	 * @param array $parsedSections Array of top-level (TOC) section data
-	 * @return array
-	 * @throws BadRequestApiException
-	 */
-	private function getSectionNumbersArray( $sectionsToGet ) {
-		// decode strings like "1%2C%202%2C%203" or "1,2,3" into an array
-		$sectionsToGet = explode( ',', preg_replace( '/\s*/', '', urldecode( $sectionsToGet ) ) );
-		return $sectionsToGet;
 	}
 
 	public function getPopular() {

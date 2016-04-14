@@ -9,7 +9,9 @@ define('wikia.infoboxBuilder.ponto', ['wikia.window', 'ponto'], function (w, pon
 		this.isWikiaContext = function () {
 			return {
 				isWikiaContext: true,
-				isLoggedIn: w.wqUserName !== null
+				isLoggedIn: w.wqUserName !== null,
+				// checks if infobox builder is opened in VE context
+				isVEContext: isVEContext()
 			};
 		};
 
@@ -30,6 +32,10 @@ define('wikia.infoboxBuilder.ponto', ['wikia.window', 'ponto'], function (w, pon
 			w.history.back();
 			return true;
 		};
+
+		this.returnToVE = function (infoboxTitle) {
+			w.ve.ui.commandRegistry.emit('infoboxBuilderReturnToVE', infoboxTitle);
+		};
 	}
 
 	// PontoBaseHandler extension pattern - check Ponto documentation for details
@@ -37,6 +43,14 @@ define('wikia.infoboxBuilder.ponto', ['wikia.window', 'ponto'], function (w, pon
 	InfoboxBuilderPonto.getInstance = function () {
 		return new InfoboxBuilderPonto();
 	};
+
+	/**
+	 * checks if infobox builder is opened in VE context
+	 * @returns {boolean}
+	 */
+	function isVEContext() {
+		return w.document.querySelector('html.ve-activated') !== null;
+	}
 
 	return InfoboxBuilderPonto;
 });

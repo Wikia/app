@@ -85,8 +85,32 @@ class PortableInfoboxRenderServiceHelper {
 			'width' => $dimensions[ 'width' ],
 			'thumbnail' => $thumbnail->getUrl(),
 			'key' => urlencode( $data[ 'key' ] ),
-			'media-type' => $data[ 'isVideo' ] ? 'video' : 'image'
+			'media-type' => $data[ 'isVideo' ] ? 'video' : 'image',
+			'mercuryComponentAttrs' => json_encode( [
+				'itemContext' => 'portable-infobox',
+				'ref' => $ref
+			] )
 		] );
+	}
+
+	/**
+	 * @param array $images
+	 * @return array
+	 */
+	public function extendImageCollectionData( $images ) {
+		$mercuryComponentAttrs = [
+			'refs' => array_map( function ( $image ) {
+				return $image['ref'];
+			}, $images )
+		];
+		$images[0]['isFirst'] = true;
+		$data = [
+			'images' => $images,
+			'firstImage' => $images[0],
+			'mercuryComponentAttrs' => json_encode( $mercuryComponentAttrs )
+		];
+		
+		return $data;
 	}
 
 	/**
@@ -120,8 +144,26 @@ class PortableInfoboxRenderServiceHelper {
 	 * required for testing mobile template rendering
 	 * @return bool
 	 */
-	public function isWikiaMobile() {
+	public function isMobile() {
 		return \F::app()->checkSkin( 'wikiamobile' );
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function isMercury() {
+		global $wgArticleAsJson;
+		
+		return !empty( $wgArticleAsJson );
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function isMercuryExperimentalMarkupEnabled() {
+		global $wgEnableSeoFriendlyImagesForMobile;
+
+		return !empty( $wgEnableSeoFriendlyImagesForMobile );
 	}
 
 	/**

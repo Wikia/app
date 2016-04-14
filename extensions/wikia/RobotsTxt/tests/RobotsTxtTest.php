@@ -1,17 +1,8 @@
 <?php
 
-class RobotsTxtTest extends WikiaBaseTest {
+use Wikia\RobotsTxt\RobotsTxt;
 
-	const DEFAULT_HEADERS = [
-		'Content-Type: text/plain',
-		'Cache-Control: s-maxage=86400',
-		'X-Pass-Cache-Control: public, max-age=86400',
-	];
-	const EXPERIMENTAL_HEADERS = [
-		'Content-Type: text/plain',
-		'Cache-Control: s-maxage=3600',
-		'X-Pass-Cache-Control: public, max-age=3600',
-	];
+class RobotsTxtTest extends WikiaBaseTest {
 
 	public function setUp() {
 		global $IP;
@@ -20,180 +11,186 @@ class RobotsTxtTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * Test empty robots.txt
+	 * Test Wikia\RobotsTxt\RobotsTxt API
+	 *
+	 * @covers       addAllowedPaths::addAllowPaths
+	 * @covers       RobotsTxtBuilder::allowDisallowPaths
+	 * @covers       RobotsTxtBuilder::addBlockedRobots
+	 * @covers       RobotsTxtBuilder::getContents
+	 * @dataProvider dataProviderClassApi
+	 *
+	 * @param string[]|null $allowPaths argument passed to $robots->allowPaths (null for don't call it)
+	 * @param string[]|null $disallowPaths argument passed to $robots->disallowPaths (null for don't call it)
+	 * @param string[]|null $blockRobots argument passed to $robots->blockRobots (null for don't call it)
+	 * @param string[] $expectedContents expected $robots->getContents()
 	 */
-	public function testEmpty() {
+	public function testClassApi( $allowPaths, $disallowPaths, $blockRobots, $expectedContents ) {
 		$robots = new RobotsTxt();
-
-		$this->assertEquals( [], $robots->getContents() );
-		$this->assertEquals( self::DEFAULT_HEADERS, $robots->getHeaders() );
+		if ( !is_null( $allowPaths ) ) {
+			$robots->addAllowedPaths( $allowPaths );
+		}
+		if ( !is_null( $disallowPaths ) ) {
+			$robots->addDisallowedPaths( $disallowPaths );
+		}
+		if ( !is_null( $blockRobots ) ) {
+			$robots->addBlockedRobots( $blockRobots );
+		}
+		$this->assertEquals( $expectedContents, $robots->getContents() );
 	}
 
 	/**
-	 * Test allowSpecialPage
+	 * Test Wikia\RobotsTxt\RobotsTxt API, other method call order
 	 *
-	 * @covers RobotsTxt::allowSpecialPage
+	 * @covers       addAllowedPaths::addAllowPaths
+	 * @covers       RobotsTxtBuilder::allowDisallowPaths
+	 * @covers       RobotsTxtBuilder::addBlockedRobots
+	 * @covers       RobotsTxtBuilder::getContents
+	 * @dataProvider dataProviderClassApi
+	 *
+	 * @param string[]|null $allowPaths argument passed to $robots->allowPaths (null for don't call it)
+	 * @param string[]|null $disallowPaths argument passed to $robots->disallowPaths (null for don't call it)
+	 * @param string[]|null $blockRobots argument passed to $robots->blockRobots (null for don't call it)
+	 * @param string[] $expectedContents expected $robots->getContents()
 	 */
-	public function testAllowSpecialPage() {
+	public function testClassApiTwistedOrder( $allowPaths, $disallowPaths, $blockRobots, $expectedContents ) {
 		$robots = new RobotsTxt();
-		$robots->allowSpecialPage( 'Randompage' );
+		if ( !is_null( $disallowPaths ) ) {
+			$robots->addDisallowedPaths( $disallowPaths );
+		}
+		if ( !is_null( $blockRobots ) ) {
+			$robots->addBlockedRobots( $blockRobots );
+		}
+		if ( !is_null( $allowPaths ) ) {
+			$robots->addAllowedPaths( $allowPaths );
+		}
+		$this->assertEquals( $expectedContents, $robots->getContents() );
+	}
 
-		$this->assertEquals( [
-			'User-agent: *',
-			'Allow: /wiki/Special:Random',
-			'Allow: /wiki/Special:RandomPage',
-			'',
-		], $robots->getContents() );
-		$this->assertEquals( self::DEFAULT_HEADERS, $robots->getHeaders() );
+	public function dataProviderClassApi() {
+		return [
+			// Empty
+			[ null, null, null, [] ],
+			[ [], [], [], [] ],
+
+			// Non-empty:
+			[
+				[ '/abc', '/def' ],
+				[ '/xyz', '/123' ],
+				[ 'Nasty-bot', 'Another-bot', 'My-bot' ],
+				[
+					'User-agent: Nasty-bot',
+					'Disallow: /',
+					'',
+					'User-agent: Another-bot',
+					'Disallow: /',
+					'',
+					'User-agent: My-bot',
+					'Disallow: /',
+					'',
+					'User-agent: *',
+					'Allow: /abc',
+					'Allow: /def',
+					'Disallow: /xyz',
+					'Disallow: /123',
+					'Noindex: /xyz',
+					'Noindex: /123',
+					'',
+				]
+			],
+
+			// Query params, special characters, utf-8
+			[
+				[
+					'/abc',
+					'/abc?query=def',
+					'noslash',
+				],
+				[
+					'noencoding%aaa$^%!#^',
+					'spaces and utf-8: ąść',
+					'Japanese chars: サイトマップ',
+					'encoded Japanese chars: %E3%82%B5',
+				],
+				[ 'ąśćbot' ],
+				[
+					'User-agent: ąśćbot',
+					'Disallow: /',
+					'',
+					'User-agent: *',
+					'Allow: /abc',
+					'Allow: /abc?query=def',
+					'Allow: noslash',
+					'Disallow: noencoding%aaa$^%!#^',
+					'Disallow: spaces and utf-8: ąść',
+					'Disallow: Japanese chars: サイトマップ',
+					'Disallow: encoded Japanese chars: %E3%82%B5',
+					'Noindex: noencoding%aaa$^%!#^',
+					'Noindex: spaces and utf-8: ąść',
+					'Noindex: Japanese chars: サイトマップ',
+					'Noindex: encoded Japanese chars: %E3%82%B5',
+					'',
+				]
+			],
+		];
 	}
 
 	/**
-	 * Test allowSpecialPage in non-English language
+	 * Test the methods called more times
 	 *
-	 * @covers RobotsTxt::allowSpecialPage
+	 * @covers       addAllowedPaths::addAllowPaths
 	 */
-	public function testAllowSpecialPageInternational() {
-		$this->mockGlobalVariable( 'wgContLang', Language::factory( 'de' ) );
+	public function testAllowPathsCalledTwice() {
 		$robots = new RobotsTxt();
-		$robots->allowSpecialPage( 'Randompage' );
 
-		$this->assertEquals( [
-			'User-agent: *',
-			'Allow: /wiki/Spezial:Zuf%C3%A4llige_Seite',
-			'Allow: /wiki/Spezial:Random',
-			'Allow: /wiki/Spezial:RandomPage',
-			'Allow: /wiki/Special:Zuf%C3%A4llige_Seite',
-			'Allow: /wiki/Special:Random',
-			'Allow: /wiki/Special:RandomPage',
-			'',
-		], $robots->getContents() );
-		$this->assertEquals( self::DEFAULT_HEADERS, $robots->getHeaders() );
-	}
+		$robots->addAllowedPaths( [ '/abc', '/def' ] );
+		$robots->addBlockedRobots( [ 'Robot1', 'Robot2' ] );
+		$robots->addDisallowedPaths( [ '/efg', '/hij' ] );
 
-	/**
-	 * Test blockRobot
-	 *
-	 * @covers RobotsTxt::testBlockRobot
-	 */
-	public function testBlockRobot() {
-		$robots = new RobotsTxt();
-		$robots->blockRobot( 'my-fancy-robot' );
-		$robots->blockRobot( 'your-nasty-robot' );
+		$robots->addAllowedPaths( [ '/pqr' ] );
+		$robots->addDisallowedPaths( [ '/tuv' ] );
+		$robots->addBlockedRobots( [ 'Single Robot' ] );
 
-		$this->assertEquals( [
-			'User-agent: my-fancy-robot',
-			'Disallow: /',
-			'',
-			'User-agent: your-nasty-robot',
-			'Disallow: /',
-			'',
-		], $robots->getContents() );
-		$this->assertEquals( self::DEFAULT_HEADERS, $robots->getHeaders() );
-	}
+		$robots->addBlockedRobots( [ 'Robot3', 'Robot4' ] );
+		$robots->addAllowedPaths( [ '/xyz', '/123' ] );
+		$robots->addDisallowedPaths( [ '/456', '/789' ] );
 
-	/**
-	 * Test disallowParam
-	 *
-	 * @covers RobotsTxt::disallowParam
-	 */
-	public function testDisallowParam() {
-		$robots = new RobotsTxt();
-		$robots->disallowParam( 'someparam' );
-
-		$this->assertEquals( [
-			'User-agent: *',
-			'Disallow: /*?*someparam=',
-			'Noindex: /*?*someparam=',
-			'',
-		], $robots->getContents() );
-		$this->assertEquals( self::DEFAULT_HEADERS, $robots->getHeaders() );
-	}
-
-	/**
-	 * Test disallowPath and allowPath, and limited URI encoding
-	 *
-	 * @covers RobotsTxt::disallowPath
-	 * @covers RobotsTxt::allowPath
-	 */
-	public function testDisallowAndAllowPath() {
-		$robots = new RobotsTxt();
-		$robots->disallowPath( '/some-path' );
-		$robots->disallowPath( '/some-path:ąść' );
-		$robots->disallowPath( '/some-path:サイトマップ' );
-		$robots->disallowPath( '/*/*%$' );
-		$robots->allowPath( '/other-path' );
-		$robots->allowPath( '/other-path:ąść' );
-		$robots->allowPath( '/other-path:サイトマップ' );
-		$robots->allowPath( '/*/*^$' );
-
-		$this->assertEquals( [
-			'User-agent: *',
-			'Allow: /other-path',
-			'Allow: /other-path:%C4%85%C5%9B%C4%87',
-			'Allow: /other-path:%E3%82%B5%E3%82%A4%E3%83%88%E3%83%9E%E3%83%83%E3%83%97',
-			'Allow: /*/*%5E$',
-			'Disallow: /some-path',
-			'Disallow: /some-path:%C4%85%C5%9B%C4%87',
-			'Disallow: /some-path:%E3%82%B5%E3%82%A4%E3%83%88%E3%83%9E%E3%83%83%E3%83%97',
-			'Disallow: /*/*%25$',
-			'Noindex: /some-path',
-			'Noindex: /some-path:%C4%85%C5%9B%C4%87',
-			'Noindex: /some-path:%E3%82%B5%E3%82%A4%E3%83%88%E3%83%9E%E3%83%83%E3%83%97',
-			'Noindex: /*/*%25$',
-			'',
-		], $robots->getContents() );
-		$this->assertEquals( self::DEFAULT_HEADERS, $robots->getHeaders() );
-	}
-
-	/**
-	 * Test disallowNamespace
-	 *
-	 * @covers RobotsTxt::disallowNamespace
-	 */
-	public function testDisallowNamespace() {
-		$robots = new RobotsTxt();
-		$robots->disallowNamespace( NS_FILE );
-
-		$this->assertEquals( [
-			'User-agent: *',
-			'Disallow: /wiki/File:',
-			'Disallow: /*?*title=File:',
-			'Disallow: /index.php/File:',
-			'Noindex: /wiki/File:',
-			'Noindex: /*?*title=File:',
-			'Noindex: /index.php/File:',
-			'',
-		], $robots->getContents() );
-		$this->assertEquals( self::DEFAULT_HEADERS, $robots->getHeaders() );
-	}
-
-	/**
-	 * Test disallowNamespace in non-English language
-	 *
-	 * @covers RobotsTxt::disallowNamespace
-	 */
-	public function testDisallowNamespaceInternational() {
-		$this->mockGlobalVariable( 'wgContLang', Language::factory( 'de' ) );
-		$robots = new RobotsTxt();
-		$robots->disallowNamespace( NS_FILE );
-
-		$this->assertEquals( [
-			'User-agent: *',
-			'Disallow: /wiki/Datei:',
-			'Disallow: /*?*title=Datei:',
-			'Disallow: /index.php/Datei:',
-			'Disallow: /wiki/File:',
-			'Disallow: /*?*title=File:',
-			'Disallow: /index.php/File:',
-			'Noindex: /wiki/Datei:',
-			'Noindex: /*?*title=Datei:',
-			'Noindex: /index.php/Datei:',
-			'Noindex: /wiki/File:',
-			'Noindex: /*?*title=File:',
-			'Noindex: /index.php/File:',
-			'',
-		], $robots->getContents() );
-		$this->assertEquals( self::DEFAULT_HEADERS, $robots->getHeaders() );
+		$this->assertEquals(
+			[
+				'User-agent: Robot1',
+				'Disallow: /',
+				'',
+				'User-agent: Robot2',
+				'Disallow: /',
+				'',
+				'User-agent: Single Robot',
+				'Disallow: /',
+				'',
+				'User-agent: Robot3',
+				'Disallow: /',
+				'',
+				'User-agent: Robot4',
+				'Disallow: /',
+				'',
+				'User-agent: *',
+				'Allow: /abc',
+				'Allow: /def',
+				'Allow: /pqr',
+				'Allow: /xyz',
+				'Allow: /123',
+				'Disallow: /efg',
+				'Disallow: /hij',
+				'Disallow: /tuv',
+				'Disallow: /456',
+				'Disallow: /789',
+				'Noindex: /efg',
+				'Noindex: /hij',
+				'Noindex: /tuv',
+				'Noindex: /456',
+				'Noindex: /789',
+				'',
+			],
+			$robots->getContents()
+		);
 	}
 
 	/**
@@ -205,182 +202,37 @@ class RobotsTxtTest extends WikiaBaseTest {
 		$robots = new RobotsTxt();
 		$robots->setSitemap( 'http://www.my-site.com/sitemap.xml' );
 
-		$this->assertEquals( [
-			'Sitemap: http://www.my-site.com/sitemap.xml',
-		], $robots->getContents() );
-		$this->assertEquals( self::DEFAULT_HEADERS, $robots->getHeaders() );
+		$this->assertEquals(
+			[ 'Sitemap: http://www.my-site.com/sitemap.xml' ],
+			$robots->getContents()
+		);
 	}
 
 	/**
-	 * Test getContents produces the output in the right order
+	 * Test setSitemap with other methods
 	 *
-	 * @covers RobotsTxt::getContents
+	 * @covers RobotsTxt::setSitemap
 	 */
-	public function testGetContentsOrder() {
+	public function testSitemapWithOtherMethods() {
 		$robots = new RobotsTxt();
-		$robots->disallowPath( '/abc' );
-		$robots->blockRobot( 'robot-1' );
-		$robots->allowSpecialPage( 'Randompage' );
+		$robots->addAllowedPaths( [ '/abc' ] );
 		$robots->setSitemap( 'http://www.my-site.com/sitemap.xml' );
+		$robots->addDisallowedPaths( [ '/def' ] );
+		$robots->addBlockedRobots( [ 'my-robot' ] );
 
-		$this->assertEquals( [
-			'User-agent: robot-1',
-			'Disallow: /',
-			'',
-			'User-agent: *',
-			'Allow: /wiki/Special:Random',
-			'Allow: /wiki/Special:RandomPage',
-			'Disallow: /abc',
-			'Noindex: /abc',
-			'',
-			'Sitemap: http://www.my-site.com/sitemap.xml',
-		], $robots->getContents() );
-		$this->assertEquals( self::DEFAULT_HEADERS, $robots->getHeaders() );
+		$this->assertEquals(
+			[
+				'User-agent: my-robot',
+				'Disallow: /',
+				'',
+				'User-agent: *',
+				'Allow: /abc',
+				'Disallow: /def',
+				'Noindex: /def',
+				'',
+				'Sitemap: http://www.my-site.com/sitemap.xml',
+			],
+			$robots->getContents()
+		);
 	}
-
-	/**
-	 * Test getContents produces the output taken from setExperimentalAllowDissalowSection and
-	 * test the cache is set to one hour
-	 *
-	 * @covers RobotsTxt::setExperimentalAllowDisallowSection
-	 */
-	public function testSetExperimentalAllowDisallowSection() {
-		$robots = new RobotsTxt();
-		$robots->setSitemap( 'http://www.my-site.com/sitemap.xml' );
-		$robots->setExperimentalAllowDisallowSection( "Test: Test\nAbba: Abba" );
-
-		$this->assertEquals( [
-			'Test: Test',
-			'Abba: Abba',
-			'',
-			'Sitemap: http://www.my-site.com/sitemap.xml',
-		], $robots->getContents() );
-		$this->assertEquals( self::EXPERIMENTAL_HEADERS, $robots->getHeaders() );
-	}
-
-	/**
-	 * Test setCustomRules
-	 * @dataProvider setCustomRulesDataProvider
-	 * @covers RobotsTxt::setCustomRules
-	 *
-	 * @param $mockWgRobotsTxtCustomRules
-	 * @param $expResult
-	 */
-	public function testSetCustomRules( $mockWgRobotsTxtCustomRules, $lang, $expResult ) {
-		$this->mockGlobalVariable( 'wgRobotsTxtCustomRules', $mockWgRobotsTxtCustomRules );
-		$this->mockGlobalVariable( 'wgContLang', Language::factory( $lang ) );
-
-		$robots = new RobotsTxt();
-		$robots->setCustomRules();
-		$result = $robots->getContents();
-		$this->assertEquals( $expResult, $result );
-	}
-
-	public function setCustomRulesDataProvider()
-	{
-		$expResult1 = [];
-		$mockWgRobotsTxtCustomRules11 = [];
-		$mockWgRobotsTxtCustomRules12 = '';
-
-		$expResult2En = [
-			'User-agent: *',
-			'Disallow: /wiki/Help:',
-			'Disallow: /*?*title=Help:',
-			'Disallow: /index.php/Help:',
-			'Noindex: /wiki/Help:',
-			'Noindex: /*?*title=Help:',
-			'Noindex: /index.php/Help:',
-			'',
-		];
-		$expResult2De = [
-			'User-agent: *',
-			'Disallow: /wiki/Hilfe:',
-			'Disallow: /*?*title=Hilfe:',
-			'Disallow: /index.php/Hilfe:',
-			'Disallow: /wiki/Help:',
-			'Disallow: /*?*title=Help:',
-			'Disallow: /index.php/Help:',
-			'Noindex: /wiki/Hilfe:',
-			'Noindex: /*?*title=Hilfe:',
-			'Noindex: /index.php/Hilfe:',
-			'Noindex: /wiki/Help:',
-			'Noindex: /*?*title=Help:',
-			'Noindex: /index.php/Help:',
-			'',
-		];
-		$mockWgRobotsTxtCustomRules21 = [ 'disallowNamespace' => NS_HELP ];
-		$mockWgRobotsTxtCustomRules22 = [ 'disallowNamespace' => [ NS_HELP ] ];
-
-		$expResult3 = [
-			'User-agent: *',
-			'Disallow: /wiki/Help:',
-			'Disallow: /*?*title=Help:',
-			'Disallow: /index.php/Help:',
-			'Disallow: /wiki/User:',
-			'Disallow: /*?*title=User:',
-			'Disallow: /index.php/User:',
-			'Noindex: /wiki/Help:',
-			'Noindex: /*?*title=Help:',
-			'Noindex: /index.php/Help:',
-			'Noindex: /wiki/User:',
-			'Noindex: /*?*title=User:',
-			'Noindex: /index.php/User:',
-			'',
-		];
-		$mockWgRobotsTxtCustomRules3 = [ 'disallowNamespace' => [ NS_HELP, NS_USER ] ];
-
-		$expResult4En = [
-			'User-agent: *',
-			'Allow: /wiki/Special:Videos',
-			'Allow: /wiki/Special:Video',
-			'',
-		];
-		$expResult4De = [
-			'User-agent: *',
-			'Allow: /wiki/Spezial:Videos',
-			'Allow: /wiki/Spezial:Video',
-			'Allow: /wiki/Special:Videos',
-			'Allow: /wiki/Special:Video',
-			'',
-		];
-		$mockWgRobotsTxtCustomRules41 = [ 'allowSpecialPage' => 'Videos' ];
-		$mockWgRobotsTxtCustomRules42 = [ 'allowSpecialPage' => [ 'Videos' ] ];
-
-		$expResult5 = [
-			'User-agent: *',
-			'Allow: /wiki/Special:Forum',
-			'Allow: /wiki/Special:Forums',
-			'Allow: /wiki/Special:Videos',
-			'Allow: /wiki/Special:Video',
-			'Disallow: /wiki/Help:',
-			'Disallow: /*?*title=Help:',
-			'Disallow: /index.php/Help:',
-			'Noindex: /wiki/Help:',
-			'Noindex: /*?*title=Help:',
-			'Noindex: /index.php/Help:',
-			'',
-		];
-		$mockWgRobotsTxtCustomRules5 = [
-			'allowSpecialPage' => [ 'Forum', 'Videos' ],
-			'disallowNamespace' => [ NS_HELP ],
-		];
-
-		return [
-			// No custom rules
-			[ $mockWgRobotsTxtCustomRules11, 'en', $expResult1 ],
-			[ $mockWgRobotsTxtCustomRules12, 'en', $expResult1 ],
-			// disallow namespace
-			[ $mockWgRobotsTxtCustomRules21, 'en', $expResult2En ],
-			[ $mockWgRobotsTxtCustomRules22, 'en', $expResult2En ],
-			[ $mockWgRobotsTxtCustomRules22, 'de', $expResult2De ],
-			[ $mockWgRobotsTxtCustomRules3, 'en', $expResult3 ],
-			// allow special pages
-			[ $mockWgRobotsTxtCustomRules41, 'en', $expResult4En ],
-			[ $mockWgRobotsTxtCustomRules42, 'en', $expResult4En ],
-			[ $mockWgRobotsTxtCustomRules42, 'de', $expResult4De ],
-			// disallow namespace + allow special pages
-			[ $mockWgRobotsTxtCustomRules5, 'en', $expResult5 ],
-		];
-	}
-
 }

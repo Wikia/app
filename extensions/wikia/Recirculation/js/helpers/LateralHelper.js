@@ -4,29 +4,35 @@ define('ext.wikia.recirculation.helpers.lateral', [
 	'wikia.window',
 	'wikia.abTest',
 ], function ($, w, abTest) {
-	var libraryLoaded = false;
+	var libraryLoaded = false,
+		queue = [];
 
 	function loadLateral(callback) {
-		if (libraryLoaded) {
-			if (callback) {
-				callback(w.lateral);
-			}
-			return;
+		queue.push(callback);
+
+		if (w.lateral) {
+			processQueue(w.lateral);
 		}
-
-		var lateralScript = document.createElement('script');
-
-		lateralScript.src = 'https://assets.lateral.io/recommendations.js';
-		document.getElementsByTagName('body')[0].appendChild(lateralScript);
-
-		// This function is called when the Lateral script has loaded
-		w.onLoadLateral = function(lateral) {
-			w.lateral = lateral;
+		if (!libraryLoaded) {
+			var lateralScript = document.createElement('script');
 			libraryLoaded = true;
 
-			if (callback) {
-				callback(lateral);
+			lateralScript.src = 'https://assets.lateral.io/recommendations.js';
+			document.getElementsByTagName('body')[0].appendChild(lateralScript);
+
+			// This function is called when the Lateral script has loaded
+			w.onLoadLateral = function(lateral) {
+				w.lateral = lateral;
+				processQueue(lateral);
 			}
+		}
+	}
+
+	function processQueue(lateral) {
+		while(queue.length > 0) {
+			var callback = queue.shift();
+
+			callback(lateral);
 		}
 	}
 
@@ -40,14 +46,14 @@ define('ext.wikia.recirculation.helpers.lateral', [
 			options = $.extend(defaults, config);
 
 		function recommendFandom(lateral, callback) {
-			lateral.recommendationsFandom({
+			return lateral.recommendationsFandom({
 				count: options.count,
 				onResults: callback
 			});
 		}
 
 		function recommendCommunity(lateral, callback) {
-			lateral.recommendationsWikia({
+			return lateral.recommendationsWikia({
 				count: options.count * 2, // We load twice as many as we need in case some options do not have images
 				width: options.width,
 				height: options.height,
@@ -61,29 +67,23 @@ define('ext.wikia.recirculation.helpers.lateral', [
 				foundData = false;
 
 			function resolveFormattedData(data) {
-				foundData = true;
 				deferred.resolve(formatData(data));
 			}
 
 			loadLateral(function(lateral) {
 				switch (type) {
 					case 'fandom':
-						recommendFandom(lateral, resolveFormattedData);
+						foundData = recommendFandom(lateral, resolveFormattedData);
 						break;
 					case 'community':
-						recommendCommunity(lateral, resolveFormattedData);
+						foundData = recommendCommunity(lateral, resolveFormattedData);
 						break;
 				}
-			});
 
-			// If we don't recieve anything in 3 seconds we want to reject the promise
-			setTimeout(function() {
-				if (foundData) {
-					return;
-				} else {
-					deferred.reject();
+				if (!foundData) {
+					deferred.reject('No Lateral data found for ' + type);
 				}
-			}, 3000);
+			});
 
 			return deferred.promise();
 		}

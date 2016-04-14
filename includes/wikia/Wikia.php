@@ -74,11 +74,11 @@ $wgHooks['WebRequestInitialized'][] = 'Wikia::onWebRequestInitialized';
 # Log user email changes
 $wgHooks['BeforeUserSetEmail'][] = 'Wikia::logEmailChanges';
 
+use \Wikia\Tracer\WikiaTracer;
+
 /**
  * This class has only static methods so they can be used anywhere
- *
  */
-
 class Wikia {
 
 	const REQUIRED_CHARS = '0123456789abcdefG';
@@ -453,7 +453,10 @@ class Wikia {
 		$method = $sub ? $method . "-" . $sub : $method;
 		if( $wgDevelEnvironment || $wgErrorLog || $always ) {
 			$method = preg_match('/-WIKIA$/', $method) ? str_replace('-WIKIA', '', $method) : $method;
-			\Wikia\Logger\WikiaLogger::instance()->debug($message, ['method' => $method]);
+			\Wikia\Logger\WikiaLogger::instance()->debug( $message, [
+				'exception' => new Exception(),
+				'method' => $method
+			] );
 		}
 
 		/**
@@ -2238,8 +2241,13 @@ class Wikia {
 		global $wgRequestTime;
 		$elapsed = microtime( true ) - $wgRequestTime;
 
-		$response->header( sprintf( 'X-Served-By:%s', wfHostname() ) );
-		$response->header( sprintf( 'X-Backend-Response-Time:%01.3f', $elapsed ) );
+		$response->header( sprintf( 'X-Served-By: %s', wfHostname() ) );
+		$response->header( sprintf( 'X-Backend-Response-Time: %01.3f', $elapsed ) );
+
+		$response->header( sprintf( 'X-Trace-Id: %s', WikiaTracer::instance()->getTraceId() ) );
+		$response->header( sprintf( 'X-Span-Id: %s', WikiaTracer::instance()->getSpanId() ) );
+
+		$response->header( sprintf( 'X-Request-Path: %s', WikiaTracer::instance()->getRequestPath() ) );
 
 		$response->header( 'X-Cache: ORIGIN' );
 		$response->header( 'X-Cache-Hits: ORIGIN' );

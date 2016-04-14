@@ -134,7 +134,7 @@ class MercuryApi {
 			'namespaces' => $wgContLang->getNamespaces(),
 			'siteMessage' => $this->getSiteMessage(),
 			'siteName' => $wgSitename,
-			'theme' => SassUtil::getOasisSettings(),
+			'theme' => SassUtil::normalizeThemeColors( SassUtil::getOasisSettings() ),
 			'tracking' => [
 				'vertical' => HubService::getVerticalNameForComscore( $wgCityId ),
 				'ivw3' => [
