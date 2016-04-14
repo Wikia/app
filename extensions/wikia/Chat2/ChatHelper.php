@@ -6,7 +6,6 @@ class ChatHelper {
 	private static $serversBasket = "wgChatServersBasket";
 	private static $operationMode = "wgChatOperationMode";
 	private static $CentralCityId = 177;
-	private static $configFile = array();
 
 	// constants with config file sections
 	const CHAT_DEVBOX_ENV = 'dev';
@@ -59,58 +58,46 @@ class ChatHelper {
 		WikiFactory::setVarByName( self::$operationMode, self::$CentralCityId, $mode );
 	}
 
-	static public function getServer( $type = 'Main' ) {
+	static public function getServer( $type = 'public' ) {
 		global $wgCityId;
 
-		$server = self::getChatConfig( $type . 'ChatServers' );
-		$serversCount = count( $server[self::getServerBasket()] );
+		$server = self::getChatConfig( $type );
+		$serversCount = count( $server[ self::getServerBasket() ] );
 		$serverId = ( $wgCityId % $serversCount ) + 1;
 
-		$out = explode( ':', $server[self::getServerBasket()][$wgCityId % $serversCount] );
-		return array( 'host' => $out[0], 'port' => $out[1], 'serverId' => $serverId );
+		$out = explode( ':', $server[ self::getServerBasket() ][ $wgCityId % $serversCount ] );
+
+		return [
+			'host' => $out[0],
+			'port' => $out[1],
+			'serverId' => $serverId
+		];
 	}
 
-	static public function getChatCommunicationToken() {
-		return self::getChatConfig( 'ChatCommunicationToken' );
-	}
-
-	static public function getServersList( $type = 'Main' ) {
-		$server = self::getChatConfig( $type . 'ChatServers' );
-		return $server[self::getServerBasket()];
+	static public function getServersList( $type = 'public' ) {
+		$server = self::getChatConfig( $type );
+		return $server[ self::getServerBasket() ];
 	}
 
 	/**
-	 *
-	 * Load Config of chat from json file
-	 *
-	 * @param string $name
-	 *
-	 * @return bool
+	 * @param string $type
+	 * @return array|bool
 	 */
-	static function getChatConfig( $name ) {
+	static function getChatConfig( $type = 'public' ) {
 		global $wgWikiaEnvironment;
 
-		$configDir = getenv( 'WIKIA_CONFIG_ROOT' );
+		$chatConfigElement = [];
+		$consul = new Wikia\Consul\Client();
 
-		if ( empty( self::$configFile ) ) {
-			$configFilePath = $configDir . '/ChatConfig.json';
-			$string = file_get_contents( $configFilePath );
-			self::$configFile = json_decode( $string, true );
+		$consul->isConsulAddress('prod.chat-' . $type . '.service.sjc.consul');
+
+		if ( $wgWikiaEnvironment === self::CHAT_DEVBOX_ENV ) {
+			// no dev config in consul so far
+		} else {
+			$chatConfigElement = $consul->getNodes('chat-' . $type, $wgWikiaEnvironment);
 		}
 
-		if ( empty( self::$configFile ) ) {
-			return false;
-		}
-		$env = $wgWikiaEnvironment;
-		if ( isset( self::$configFile[$env][$name] ) ) {
-			return self::$configFile[$env][$name];
-		}
-
-		if ( isset( self::$configFile[$name] ) ) {
-			return self::$configFile[$name];
-		}
-
-		return false;
+		return $chatConfigElement;
 	}
 
 	static public function getServerBasket() {

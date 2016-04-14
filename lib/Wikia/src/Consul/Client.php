@@ -33,6 +33,7 @@ class Client {
 	 * Returns IP addresses of given service healthy nodes
 	 *
 	 * $catalog->getNodes( 'db-a', 'slave' )
+	 * $catalog->getNodes( 'chat-private', 'prod' )
 	 *
 	 * $ curl "http://127.0.0.1:8500/v1/health/service/db-g?tag=slave&passing"
 	 *
@@ -41,11 +42,17 @@ class Client {
 	 * @return array list of IP addresses
 	 */
 	function getNodes( $service, $tag ) {
-		$resp = $this->api->service( $service, [ 'tag' => $tag, 'passing' => true ] )->json();
+		$resp = $this->api->service( $service, [
+			'tag' => $tag,
+			'passing' => true,
+			// TODO: temporary change for devbox testing
+			'dc' => 'sjc'
+		])->json();
 
 		$nodes = array_map(
 			function( $item ) {
-				return $item[ 'Node' ][ 'Address' ];
+				return $item[ 'Service' ][ 'Address' ] . ':' . $item[ 'Service' ][ 'Port' ];
+				//return $item[ 'Node' ][ 'Address' ];
 			},
 			$resp
 		);
@@ -76,7 +83,9 @@ class Client {
 	 * @preturn bool true if the given address is a consul one
 	 */
 	static function isConsulAddress( $address ) {
-		return endsWith( $address, '.service.consul' );
+		// TODO: temporary change for devbox testing
+		//return endsWith( $address, '.service.consul' );
+		return endsWith( $address, '.consul' );
 	}
 
 	/**

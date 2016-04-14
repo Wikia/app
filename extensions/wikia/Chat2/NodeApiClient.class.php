@@ -151,12 +151,11 @@ class NodeApiClient {
 	 * This is based on whether this is dev or prod, but can be overridden
 	 */
 	static protected function getHostAndPort() {
-		global $wgDevelEnvironment;
 
-		$server = ChatHelper::getServer( 'Api' );
+		$server = ChatHelper::getServer( 'private' );
 		$hostAndPort = $server['host'] . ':' . $server['port'];
 
 		return $hostAndPort;
-	} // end getHostAndPort()
+	}
 
 }

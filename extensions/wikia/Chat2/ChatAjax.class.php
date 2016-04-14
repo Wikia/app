@@ -117,10 +117,10 @@ class ChatAjax {
 
 	static public function setUsersList() {
 		ChatHelper::info( __METHOD__ . ': Method called' );
-		global $wgRequest;
+		global $wgRequest, $wgChatCommunicationToken;
 		wfProfileIn( __METHOD__ );
 
-		if ( ChatHelper::getChatCommunicationToken() != $wgRequest->getVal( 'token' ) ) {
+		if ( $wgChatCommunicationToken != $wgRequest->getVal( 'token' ) ) {
 			wfProfileOut( __METHOD__ );
 			return array( 'status' => false );
 		}
