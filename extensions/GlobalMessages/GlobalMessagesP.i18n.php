@@ -203,7 +203,7 @@ You can change this page's protection level, but it will not affect the cascadin
 	'protect-default' => 'Allow all users',
 	'protect-fallback' => 'Require "$1" permission',
 	'protect-level-autoconfirmed' => 'Block new and unregistered users',
-	'protect-level-sysop' => 'Administrators only',
+	'protect-level-sysop' => 'Administrators and Content Moderators only',
 	'protect-summary-cascade' => 'cascading',
 	'protect-expiring' => 'expires $1 (UTC)',
 	'protect-expiring-local' => 'expires $1',
