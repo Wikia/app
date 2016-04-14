@@ -172,32 +172,3 @@ $specialPageAliases = array(
 	'Whatlinkshere'             => array( '链入页面', '鏈入頁面', '連入頁面', '连入页面' ),
 );
 
-$messages = array(
-# User preference toggles
-'tog-norollbackdiff' => '進行回退後略過差異比較',
-
-'newpage' => '最新页面',
-
-# Edit pages
-'editing' => '正在编辑 $1',
-
-# Miscellaneous special pages
-'newpages' => '最新页面',
-
-/*
-Short names for language variants used for language conversion links.
-To disable showing a particular link, set it to 'disable', e.g.
-'variantname-zh-sg' => 'disable',
-Variants for Chinese language
-*/
-'variantname-zh-hans' => '简体',
-'variantname-zh-hant' => '繁體',
-'variantname-zh-cn'   => '大陆简体',
-'variantname-zh-tw'   => '台灣正體',
-'variantname-zh-hk'   => '香港繁體',
-'variantname-zh-mo'   => '澳門繁體',
-'variantname-zh-sg'   => '新加坡简体',
-'variantname-zh-my'   => '大马简体',
-'variantname-zh'      => '不转换',
-
-);
