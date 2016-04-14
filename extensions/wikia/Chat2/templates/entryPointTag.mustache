@@ -1,4 +1,4 @@
-<section class="ChatModule {{#isEntryPoint}} ChatEntryPoint {{/isEntryPoint}}{{^isEntryPoint}}module{{/isEntryPoint}} ChatModuleUninitialized">
+<section class="ChatModule {{#fromParserTag}} ChatEntryPoint {{/fromParserTag}}{{^fromParserTag}}module{{/fromParserTag}} ChatModuleUninitialized">
 	<div class="chat-contents
 		{{#userName}} chat-user-logged-in{{/userName}}
 		{{^userName}} chat-user-anonymous{{/userName}}
@@ -70,7 +70,7 @@
 {{#entryPointGuidelinesMessage}}
 	<span class="more">{{entryPointGuidelinesMessage}}</span>
 {{/entryPointGuidelinesMessage}}
-{{#isEntryPoint}}
+{{#fromParserTag}}
 	<script language="javascript" type="text/javascript">if ( typeof ChatEntryPoint!=="undefined" ) ChatEntryPoint.init();</script>
 	<a class="ChatMonobookEntryPoint" href="{{linkToSpecialChat}}">{{joinTheChatMessage}}></a>
-{{/isEntryPoint}}
+{{/fromParserTag}}

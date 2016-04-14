@@ -34,7 +34,7 @@ class ChatEntryPointTest extends WikiaBaseTest {
 	/**
 	 * @dataProvider testGetEntryPointTemplateVarsDataProvider
 	 */
-	public function testGetEntryPointTemplateVars( $isEntryPoint, $wgEnableWallExt, $isAnon, $chatUsersInfo, $expected ) {
+	public function testGetEntryPointTemplateVars( $fromParserTag, $wgEnableWallExt, $isAnon, $chatUsersInfo, $expected ) {
 		// User class mock
 		$userMock = $this->getMockBuilder( 'User' )
 			->disableOriginalConstructor()
@@ -53,7 +53,7 @@ class ChatEntryPointTest extends WikiaBaseTest {
 		// Message class mock
 		$messageMock = $this->getMockBuilder( 'Message' )
 			->disableOriginalConstructor()
-			->setMethods( [ 'exists', 'parse' ] )
+			->setMethods( [ 'exists', 'text' ] )
 			->getMock();
 		$messageMock->expects(
 			$this->any() )
@@ -61,7 +61,7 @@ class ChatEntryPointTest extends WikiaBaseTest {
 			->will( $this->returnValue( true ) );
 		$messageMock->expects(
 			$this->any() )
-			->method( 'parse' )
+			->method( 'text' )
 			->will( $this->returnValue( 'message' ) );
 
 		// Title class mock
@@ -92,7 +92,7 @@ class ChatEntryPointTest extends WikiaBaseTest {
 		$this->mockStaticMethod( 'ChatEntryPoint', 'getChatUsersInfo', $chatUsersInfo );
 		$this->mockStaticMethod( 'AvatarService', 'getAvatarUrl', 'www.image.com' );
 
-		$vars = ChatEntryPoint::getEntryPointTemplateVars( $isEntryPoint );
+		$vars = ChatEntryPoint::getEntryPointTemplateVars( $fromParserTag );
 
 		$this->assertEquals( $expected, $vars );
 	}
@@ -100,7 +100,7 @@ class ChatEntryPointTest extends WikiaBaseTest {
 	public function testGetEntryPointTemplateVarsDataProvider() {
 		return [
 			[
-				'isEntryPoint' => true,
+				'fromParserTag' => true,
 				'wgEnableWallExt' => true,
 				'isAnon' => false,
 				'chatUsersInfo' => [ 'User1', 'User2' ],
@@ -109,7 +109,7 @@ class ChatEntryPointTest extends WikiaBaseTest {
 					'chatUsers' => [ 'User1', 'User2' ],
 					'chatUsersCount' => 2,
 					'entryPointGuidelinesMessage' => 'message',
-					'isEntryPoint' => true,
+					'fromParserTag' => true,
 					'joinTheChatMessage' => 'message',
 					'linkToSpecialChat' => 'Chat',
 					'siteName' => 'Test wikia',
@@ -118,7 +118,7 @@ class ChatEntryPointTest extends WikiaBaseTest {
 				]
 			],
 			[
-				'isEntryPoint' => false,
+				'fromParserTag' => false,
 				'wgEnableWallExt' => null,
 				'isAnon' => false,
 				'chatUsersInfo' => [ 'User1', 'User2' ],
@@ -127,7 +127,7 @@ class ChatEntryPointTest extends WikiaBaseTest {
 					'chatUsers' => [ 'User1', 'User2' ],
 					'chatUsersCount' => 2,
 					'entryPointGuidelinesMessage' => 'message',
-					'isEntryPoint' => false,
+					'fromParserTag' => false,
 					'joinTheChatMessage' => 'message',
 					'linkToSpecialChat' => 'Chat',
 					'siteName' => 'Test wikia',
@@ -136,7 +136,7 @@ class ChatEntryPointTest extends WikiaBaseTest {
 				]
 			],
 			[
-				'isEntryPoint' => false,
+				'fromParserTag' => false,
 				'wgEnableWallExt' => false,
 				'isAnon' => false,
 				'chatUsersInfo' => [ 'User1', 'User2' ],
@@ -145,7 +145,7 @@ class ChatEntryPointTest extends WikiaBaseTest {
 					'chatUsers' => [ 'User1', 'User2' ],
 					'chatUsersCount' => 2,
 					'entryPointGuidelinesMessage' => 'message',
-					'isEntryPoint' => false,
+					'fromParserTag' => false,
 					'joinTheChatMessage' => 'message',
 					'linkToSpecialChat' => 'Chat',
 					'siteName' => 'Test wikia',
@@ -154,7 +154,7 @@ class ChatEntryPointTest extends WikiaBaseTest {
 				]
 			],
 			[
-				'isEntryPoint' => true,
+				'fromParserTag' => true,
 				'wgEnableWallExt' => true,
 				'isAnon' => true,
 				'chatUsersInfo' => [ 'User1', 'User2' ],
@@ -163,7 +163,7 @@ class ChatEntryPointTest extends WikiaBaseTest {
 					'chatUsers' => [ 'User1', 'User2' ],
 					'chatUsersCount' => 2,
 					'entryPointGuidelinesMessage' => 'message',
-					'isEntryPoint' => true,
+					'fromParserTag' => true,
 					'joinTheChatMessage' => 'message',
 					'linkToSpecialChat' => 'Chat',
 					'siteName' => 'Test wikia',
@@ -172,7 +172,7 @@ class ChatEntryPointTest extends WikiaBaseTest {
 				]
 			],
 			[
-				'isEntryPoint' => true,
+				'fromParserTag' => true,
 				'wgEnableWallExt' => true,
 				'isAnon' => true,
 				'chatUsersInfo' => [ ],
@@ -181,7 +181,7 @@ class ChatEntryPointTest extends WikiaBaseTest {
 					'chatUsers' => [ ],
 					'chatUsersCount' => 0,
 					'entryPointGuidelinesMessage' => 'message',
-					'isEntryPoint' => true,
+					'fromParserTag' => true,
 					'joinTheChatMessage' => 'message',
 					'linkToSpecialChat' => 'Chat',
 					'siteName' => 'Test wikia',

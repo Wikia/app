@@ -23,37 +23,37 @@ class ChatEntryPoint {
 	}
 
 	/**
-	 * @param $isEntryPoint - set to true for chat entry point embedded in the article,
-	 * set to false for rail module
-	 *
 	 * Return an array of variables needed to render chat entry point mustache template
+	 *
+	 * @param $fromParserTag - set to true for chat entry point embedded in the article,
+	 * set to false for rail module
 	 *
 	 * @return array
 	 */
-	static public function getEntryPointTemplateVars( $isEntryPoint ) {
+	static public function getEntryPointTemplateVars( $fromParserTag ) {
 		global $wgEnableWallExt, $wgBlankImgUrl, $wgUser, $wgSitename;
 
 		$entryPointGuidelinesMessage = wfMessage( 'chat-entry-point-guidelines' );
 		$joinTheChatMessage = wfMessage( 'chat-join-the-chat' );
-		$chatUsers = ChatEntryPoint::getChatUsersInfo();
+		$chatUsersInfo = ChatEntryPoint::getChatUsersInfo();
 		$chatProfileAvatarUrl = AvatarService::getAvatarUrl( $wgUser->getName(), ChatRailController::AVATAR_SIZE );
 
 		$vars =  [
 			'blankImgUrl' => $wgBlankImgUrl,
-			'chatUsers' => $chatUsers,
-			'chatUsersCount' => count( $chatUsers ),
+			'chatUsers' => $chatUsersInfo,
+			'chatUsersCount' => count( $chatUsersInfo ),
 			'entryPointGuidelinesMessage' => $entryPointGuidelinesMessage->exists() ?
-				$entryPointGuidelinesMessage->parse() : null,
-			'isEntryPoint' => $isEntryPoint,
+				$entryPointGuidelinesMessage->text() : null,
+			'fromParserTag' => $fromParserTag,
 			'joinTheChatMessage' => $joinTheChatMessage->exists() ?
-				$joinTheChatMessage->parse() : null,
+				$joinTheChatMessage->text() : null,
 			'linkToSpecialChat' => SpecialPage::getTitleFor( "Chat" )->escapeLocalUrl(),
 			'siteName' => $wgSitename,
 			'profileType' => empty( $wgEnableWallExt ) ? 'talk-page' : 'message-wall',
 			'userName' => $wgUser->isAnon() ? null : $wgUser->getName(),
 		];
 
-		if ( empty( $chatUsers ) ) {
+		if ( empty( $chatUsersInfo ) ) {
 			$vars[ 'chatProfileAvatarUrl' ] = $chatProfileAvatarUrl;
 		}
 
