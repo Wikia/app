@@ -97,9 +97,9 @@ class AttributeKeyValueService implements AttributeService {
 	 * Log any exceptions thrown when contacting the attribute service. There are 4 possible exceptions
 	 * which can be thrown, and which this method can expect to receive: PersistenceException, ForbiddenException,
 	 * NotFoundException, and UnauthorizedException. Log PersistenceExceptions at error level, and all others
-	 * at info. PersistenceExceptions indicate a problem was encountered contacting the service, or that we received
+	 * at warning. PersistenceExceptions indicate a problem was encountered contacting the service, or that we received
 	 * an unexpected HTTP response like a 500. The other exceptions indicate a resources wasn't found, or that the
-	 * request was refused which is not an error.
+	 * request was refused.
 	 * @param $userId
 	 * @param \Exception $e
 	 * @param $msg
