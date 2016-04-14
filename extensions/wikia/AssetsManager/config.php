@@ -274,6 +274,7 @@ $config['adengine2_prebid_js'] = array(
 	'assets' => array(
 		'//extensions/wikia/AdEngine/js/lookup/prebid.js',
 		'//extensions/wikia/AdEngine/js/lookup/adapter/appnexus.js',
+		'//extensions/wikia/AdEngine/js/lookup/adapter/matomy.js',
 	),
 );
 
@@ -835,6 +836,7 @@ $config['mobile_base_ads_js'] = array(
 		'//extensions/wikia/AdEngine/js/WikiaAdHelper.js',
 		'//extensions/wikia/AdEngine/js/config/mobile.js',
 		'//extensions/wikia/AdEngine/js/lookup/adapter/appnexus.js',
+		'//extensions/wikia/AdEngine/js/lookup/adapter/matomy.js',
 		'//extensions/wikia/AdEngine/js/lookup/amazonMatch.js',
 		'//extensions/wikia/AdEngine/js/lookup/lookupFactory.js',
 		'//extensions/wikia/AdEngine/js/lookup/openXBidder.js',

@@ -32,7 +32,7 @@ define('ext.wikia.adEngine.lookup.adapter.appnexus', function () {
 
 	function isEnabled() {
 		// TODO: enable with wgCountries
-		return true;
+		return false;
 	}
 
 	function prepareAdUnit(slotName, config) {
