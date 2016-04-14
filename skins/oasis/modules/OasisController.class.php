@@ -38,7 +38,6 @@ class OasisController extends WikiaController {
 		$this->skinNameClass = $skinVars['skinnameclass'];
 		$this->bottomScripts = $skinVars['bottomscripts'];
 		// initialize variables
-		$this->appnexus = null;
 		$this->comScore = null;
 		$this->quantServe = null;
 		$this->amazonMatch = null;
@@ -233,7 +232,6 @@ class OasisController extends WikiaController {
 
 		// macbre: RT #25697 - hide Comscore & QuantServe tags on edit pages
 		if(!in_array($wgRequest->getVal('action'), array('edit', 'submit'))) {
-			$this->appnexus = AnalyticsEngine::track('AppNexus', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->comScore = AnalyticsEngine::track('Comscore', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->quantServe = AnalyticsEngine::track('QuantServe', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->amazonMatch = AnalyticsEngine::track('AmazonMatch', AnalyticsEngine::EVENT_PAGEVIEW);

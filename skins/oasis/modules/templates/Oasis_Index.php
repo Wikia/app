@@ -72,7 +72,6 @@
 <?= $openXBidder ?>
 <?= $rubiconFastlane ?>
 <?= $prebid ?>
-<?= $appnexus ?>
 <?= $krux ?>
 <?= $dynamicYield ?>
 <?= $ivw3 ?>
