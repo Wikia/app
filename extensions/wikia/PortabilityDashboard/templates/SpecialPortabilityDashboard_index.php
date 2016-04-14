@@ -4,19 +4,17 @@
 		<th>2</th>
 		<th>3</th>
 		<th>4</th>
+		<th>5</th>
 	</thead>
 	<tbody>
+	<? foreach( $list as $item ): ?>
 		<tr>
-			<td>test 1</td>
-			<td>test 2</td>
-			<td>test 3</td>
-			<td>test 4</td>
+			<td><?= $item['wiki_id'] ?></td>
+			<td><?= $item['portability'] ?></td>
+			<td><?= $item['infobox_portability'] ?></td>
+			<td><?= $item['traffic'] ?></td>
+			<td><?= $item['migration_impact'] ?></td>
 		</tr>
-		<tr>
-			<td>test 11</td>
-			<td>test 12</td>
-			<td>test 13</td>
-			<td>test 14</td>
-		</tr>
+	<? endforeach ?>
 	</tbody>
 </table>
