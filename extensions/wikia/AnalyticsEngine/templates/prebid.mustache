@@ -1,13 +1,14 @@
 <script type="text/javascript" src="{{url}}" async></script>
 <script>
+	window.pbjs = window.pbjs || {};
+	window.pbjs.que = window.pbjs.que || [];
+
 	require([
 		'ext.wikia.adEngine.lookup.prebid',
 		'wikia.window'
 	], function (prebid, win) {
-		win.pbjs = win.pbjs || {};
-		win.pbjs.que = win.pbjs.que || [];
 
-//	TODO Enable tracking when trackerName will be supported (it's implemented, but not in stable version yet)
+//	TODO Enable tracking when trackerName will be supported (it's implemented, but not available in stable version yet)
 //		win.pbjs.que.push(function() {
 //			win.pbjs.enableAnalytics({
 //				provider: 'ga',

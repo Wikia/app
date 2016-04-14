@@ -7,9 +7,17 @@ define('ext.wikia.adEngine.lookup.adapter.appnexus', function () {
 			oasis: {
 				TOP_LEADERBOARD: {
 					sizes: [
-						[728, 90]
+						[728, 90],
+						[970, 250]
 					],
 					placementId: '5823300'
+				},
+				TOP_RIGHT_BOXAD: {
+					sizes: [
+						[300, 250],
+						[300, 600]
+					],
+					placementId: '5823309'
 				}
 			},
 			mercury: {
@@ -25,10 +33,6 @@ define('ext.wikia.adEngine.lookup.adapter.appnexus', function () {
 	function isEnabled() {
 		// TODO: enable with wgCountries
 		return true;
-	}
-
-	function isSlotSupported(slotName) {
-		return !!slots[slotName];
 	}
 
 	function prepareAdUnit(slotName, config) {
@@ -65,7 +69,6 @@ define('ext.wikia.adEngine.lookup.adapter.appnexus', function () {
 
 	return {
 		getAdUnits: getAdUnits,
-		isEnabled: isEnabled,
-		isSlotSupported: isSlotSupported
+		isEnabled: isEnabled
 	};
 });
