@@ -1,14 +1,16 @@
-/*global define, require*/
+/*global define*/
 define('ext.wikia.adEngine.lookup.prebid', [
+	'ext.wikia.adEngine.lookup.adapter.appnexus',
+	'ext.wikia.adEngine.lookup.adapter.matomy',
 	'ext.wikia.adEngine.lookup.lookupFactory',
 	'wikia.document',
-	'wikia.window',
-	require.optional('ext.wikia.adEngine.lookup.adapter.appnexus')
-], function (factory, doc, win, appnexus) {
+	'wikia.window'
+], function (appnexus, matomy, factory, doc, win) {
 	'use strict';
 
 	var adapters = [
-			appnexus
+			appnexus,
+			matomy
 		],
 		adUnits = [],
 		priceMap = {},
