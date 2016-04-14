@@ -1,0 +1,15 @@
+<script id="analytics-provider-speed-bidder">
+	require([
+		'wikia.geo',
+		'wikia.querystring',
+		'wikia.instantGlobals',
+		require.optional('ext.wikia.adEngine.lookup.speedBidder')
+	], function (geo, Querystring, globals, speedBidder) {
+		var countries = globals[{{{instantGlobalName}}}],
+			qs = new Querystring();
+
+		if (geo.isProperGeo(countries) || qs.getVal('speedbidder', '0') === '1') {
+			speedBidder.call();
+		};
+	});
+</script>
