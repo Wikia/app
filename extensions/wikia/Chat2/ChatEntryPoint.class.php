@@ -109,6 +109,7 @@ class ChatEntryPoint {
 	 * * editCount - number of chatter's edits
 	 * * showSince - flag indicating if we can display the information when the chatter joined the wiki
 	 * * since_year && since_month - month and year, when chatter joined this wiki
+	 * * since - since year and month in the form of string "MMM YYYY". Months are in wgLang and abbreviated
 	 * * profileUrl - link to chatter talk page (or message wall, if it's enabled)
 	 * * contribsUrl - link to chatter contribution page
 	 * @return array array containing chatters info
@@ -122,20 +123,21 @@ class ChatEntryPoint {
 			// cache the whole response
 			// individual users are cached anyway, but still we gain performance making just one memcache request instead of several
 			$chatters = WikiaDataAccess::cache( self::getChatUsersMemcKey(), ChatEntryPoint::CHAT_USER_LIST_CACHE, function() {
-				global $wgEnableWallExt;
+				global $wgEnableWallExt, $wgLang;
 				$chatters = [];
 				// Gets array of users currently in chat to populate rail module and user stats menus
 
-				//$chattersIn = NodeApiClient::getChatters();
-				$chattersIn = ['Tomek-dev', 'Dianafa', 'Bve', 'Bognix-dev', 'Warkot', 'Aga User', 'Sasquaczbdg', 'Sqreekdev', 'Tomek-dev', 'Dianafa', 'Bve', 'Bognix-dev', 'Warkot', 'Aga User', 'Sasquaczbdg', 'Sqreekdev'];
+				$chattersIn = NodeApiClient::getChatters();
 				foreach ( $chattersIn as $i => $val ) {
-					$chatters[ $i ] = WikiaDataAccess::cache( wfMemcKey( 'chatavatars', $val, 'v2' ), 60 * 60, function() use ( $wgEnableWallExt, $val ) {
-						$chatter = [ 'username' => $val,
+					$chatters[ $i ] = WikiaDataAccess::cache( wfMemcKey( 'chatavatars', $val, 'v2' ), 60 * 60, function() use ( $wgEnableWallExt, $wgLang, $val ) {
+						$chatter = [
+							'username' => $val,
 							'avatarUrl' => AvatarService::getAvatarUrl( $val, ChatRailController::AVATAR_SIZE )
 						];
 
 						// get stats for edit count and member since
 						$user = User::newFromName( $val );
+
 						if ( $user instanceof User ) {
 							$userStatsService = new UserStatsService( $user->getId() );
 							$stats = $userStatsService->getStats();
@@ -146,13 +148,12 @@ class ChatEntryPoint {
 							// member since
 							$chatter[ 'showSince' ] = $chatter[ 'editCount' ] != 0;
 							if ( $chatter[ 'showSince' ] ) {
-								global $wgLang;
 								$months = $wgLang->getMonthAbbreviationsArray();
 								$date = getdate( strtotime( $stats[ 'date' ] ) );
 
 								$chatter[ 'since_year' ] = $date[ 'year' ];
 								$chatter[ 'since_month' ] =  $date[ 'mon' ];
-								$chatter[ 'since' ] = sprintf('%s %s', $months[ $chatter[ 'since_month' ] ] , $chatter[ 'since_year' ]);
+								$chatter[ 'since' ] = sprintf( '%s %s', $months[ $chatter[ 'since_month' ] ] , $chatter[ 'since_year' ] );
 							}
 
 							$profileUrlNs = !empty( $wgEnableWallExt ) ? NS_USER_WALL : NS_USER_TALK;
