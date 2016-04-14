@@ -28,7 +28,9 @@ define('ext.wikia.adEngine.lookup.adapter.matomy', function () {
 	function prepareAdUnit(slotName) {
 		return {
 			code: slotName,
-			sizes: [300, 250],
+			sizes: [
+				[300, 250]
+			],
 			bids: [
 				{
 					bidder: bidderName,
