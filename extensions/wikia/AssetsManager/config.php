@@ -268,11 +268,12 @@ $config['adengine2_rubicon_fastlane_js'] = array(
 	),
 );
 
-$config['adengine2_appnexus_js'] = array(
+$config['adengine2_prebid_js'] = array(
 	'skin' => [ 'oasis' ],
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
-		'//extensions/wikia/AdEngine/js/lookup/appnexus.js',
+		'//extensions/wikia/AdEngine/js/lookup/prebid.js',
+		'//extensions/wikia/AdEngine/js/lookup/adapter/appnexus.js',
 	),
 );
 

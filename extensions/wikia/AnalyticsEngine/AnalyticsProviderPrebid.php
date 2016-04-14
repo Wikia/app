@@ -5,10 +5,9 @@ class AnalyticsProviderPrebid implements iAnalyticsProvider {
 	private static $template = 'extensions/wikia/AnalyticsEngine/templates/prebid.mustache';
 
 	public static function isEnabled() {
-		global $wgEnableAdEngineExt, $wgShowAds, $wgAdDriverUseSevenOneMedia;
+		global $wgShowAds, $wgAdDriverUseSevenOneMedia;
 
-		return $wgEnableAdEngineExt &&
-			$wgShowAds &&
+		return $wgShowAds &&
 			AdEngine2Service::areAdsShowableOnPage() &&
 			!$wgAdDriverUseSevenOneMedia;
 	}
