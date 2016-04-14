@@ -64,7 +64,8 @@ class PortableInfoboxBuilderHooks {
 		global $wgEnablePortableInfoboxBuilderInVE, $wgEnableVisualEditorExt;
 
 		if ( $wgEnableVisualEditorExt && \VisualEditorHooks::isAvailable( \RequestContext::getMain()->getSkin() ) ) {
-			$aVars['wgEnablePortableInfoboxBuilderInVE'] = $wgEnablePortableInfoboxBuilderInVE;
+			$aVars['wgEnablePortableInfoboxBuilderInVE'] = $wgEnablePortableInfoboxBuilderInVE &&
+				\RequestContext::getMain()->getUser()->isAllowed( 'create' );
 		}
 
 		return true;

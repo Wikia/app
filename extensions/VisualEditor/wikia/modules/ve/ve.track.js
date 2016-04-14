@@ -138,7 +138,7 @@ require( ['wikia.tracker'], function ( tracker ) {
 	 */
 	function track( topic, data ) {
 
-		var i, mwEvent, topics, abTestData,
+		var i, mwEvent, topics,
 			params = {
 				category: 'editor-ve',
 				trackingMethod: 'analytics'
@@ -174,18 +174,6 @@ require( ['wikia.tracker'], function ( tracker ) {
 			$.inArray( [ data.label, data.action ].join( '/' ), wikiaTopicBlacklist ) > -1
 		) {
 			return;
-		}
-
-		if ( ve.init.wikia.getToolbarABTestVariantNumber() === 1 && data.label === 'edit-page-ready' ) {
-			// Extra impression event when toolbar A/B test is active
-			abTestData = {
-				action: data.action,
-				label: 'edit-page-ready-toolbartest',
-				value: data.value
-			};
-
-			handleFunnel( abTestData );
-			tracker.track( ve.extendObject( params, abTestData ) );
 		}
 
 		// Funnel tracking

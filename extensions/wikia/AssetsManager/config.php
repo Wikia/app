@@ -2825,3 +2825,20 @@ $config['special_user_activity_scss'] = [
 		'//extensions/wikia/UserActivity/css/UserActivity.scss',
 	],
 ];
+
+$config['special_community_page_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => [
+		'//extensions/wikia/CommunityPage/scripts/ext.communityPage.js',
+		'//extensions/wikia/CommunityPage/scripts/templates.mustache.js',
+	],
+
+];
+
+$config['special_community_page_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'assets' => [
+		'//extensions/wikia/CommunityPage/styles/CommunityPage.scss',
+		'//extensions/wikia/CommunityPage/styles/CommunityPageOverrides.scss',
+	],
+];

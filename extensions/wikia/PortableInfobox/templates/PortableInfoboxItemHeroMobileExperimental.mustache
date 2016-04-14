@@ -8,13 +8,15 @@
 		</hgroup>
 	{{/title}}
 	{{#image}}
-		<figure class="article-media" data-ref="{{ref}}">
+		<figure data-component="portable-infobox-hero-image" data-attrs="{{mercuryComponentAttrs}}">
 			<a href="{{url}}">
-				<!-- remove data-src, class and data-params after wikiaMobile is gone -->
-				<img src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D" alt="{{alt}}"
-					 data-src="{{thumbnail}}" class="lazy media" data-params='[{"full":"{{url}}"}]' />
+				<img class="article-media-placeholder"
+					src="data:image/svg+xml;charset=utf-8,%3Csvg xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg' viewBox%3D'0 0 {{width}} {{height}}'%2F%3E"
+					alt="{{title}}"
+					{{#width}} width="{{width}}"{{/width}}
+					{{#height}} height="{{height}}"{{/height}}/>
 				<noscript>
-					<img src="{{url}}" alt="{{alt}}">
+					<img src="{{url}}" alt="{{alt}}"{{#width}} width="{{width}}"{{/width}}{{#height}} height="{{height}}"{{/height}}/>
 				</noscript>
 			</a>
 		</figure>

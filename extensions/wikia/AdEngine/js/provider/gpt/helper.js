@@ -53,9 +53,8 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	}
 
 	function collapseElement(element) {
-		slotTweaker.removeDefaultHeight(element.getSlotName());
 		slotTweaker.hide(
-			element.getSlotContainerId(),
+			element.getSlotName(),
 			recoveryHelper.isBlocking() && recoveryHelper.isRecoveryEnabled()
 		);
 	}
