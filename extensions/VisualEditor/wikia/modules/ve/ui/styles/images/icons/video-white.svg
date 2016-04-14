@@ -1,5 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns" width="14" height="14" viewBox="0 0 14 14" version="1.1">
-  <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
-    <path d="M9.66 7.49L6.16 9.82C6.06 9.88 5.95 9.92 5.83 9.92 5.74 9.92 5.64 9.89 5.56 9.85 5.37 9.75 5.25 9.55 5.25 9.33L5.25 4.67C5.25 4.45 5.37 4.25 5.56 4.15 5.75 4.05 5.98 4.06 6.16 4.18L9.66 6.51C9.82 6.62 9.92 6.8 9.92 7 9.92 7.19 9.82 7.38 9.66 7.49M7 0C3.14 0 0 3.14 0 7 0 10.86 3.14 14 7 14 10.86 14 14 10.86 14 7 14 3.14 10.86 0 7 0" id="Play-Button" style="opacity:0.75; fill:white;" sketch:type="MSShapeGroup"/>
-  </g>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14"><g style="fill:none;stroke-width:1;stroke:none"><path d="M9.7 7.5L6.2 9.8C6.1 9.9 6 9.9 5.8 9.9 5.7 9.9 5.6 9.9 5.6 9.9 5.4 9.8 5.3 9.6 5.3 9.3L5.3 4.7C5.3 4.5 5.4 4.3 5.6 4.2 5.8 4.1 6 4.1 6.2 4.2L9.7 6.5C9.8 6.6 9.9 6.8 9.9 7 9.9 7.2 9.8 7.4 9.7 7.5M7 0C3.1 0 0 3.1 0 7 0 10.9 3.1 14 7 14 10.9 14 14 10.9 14 7 14 3.1 10.9 0 7 0" style="fill:white;opacity:0.8"/></g></svg>
