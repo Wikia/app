@@ -288,6 +288,7 @@ class CommunityPageSpecialUsersModel {
 	 * @return integer
 	 */
 	public function getMemberCount() {
+		// fixme: Rewrite modal logic so that this function is not needed, and use getAllMembers only
 		$data = WikiaDataAccess::cache(
 			wfMemcKey( self::MEMBER_COUNT_MCACHE_KEY ),
 			WikiaResponse::CACHE_STANDARD,

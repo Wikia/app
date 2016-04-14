@@ -8,6 +8,7 @@ $wgAutoloadClasses['CommunityPageSpecialHooks'] =  __DIR__ . '/CommunityPageSpec
 
 /* hooks */
 $wgHooks['GetHTMLBeforeWikiaPage'][] = 'CommunityPageSpecialHooks::getHTMLBeforeWikiaPage';
+$wgHooks['ArticleSaveComplete'][] = 'CommunityPageSpecialHooks::onArticleSaveComplete';
 
 /* i18n */
 $wgExtensionMessagesFiles['CommunityPage'] = __DIR__ . '/CommunityPage.i18n.php';
