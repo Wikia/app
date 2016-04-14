@@ -28,7 +28,7 @@
  * @ingroup Maintenance
  */
 
-require_once( dirname( __FILE__ ) . '/Maintenance.php' );
+require_once( __DIR__ . '/Maintenance.php' );
 
 class RebuildLocalisationCache extends Maintenance {
 
@@ -162,8 +162,7 @@ class RebuildLocalisationCache extends Maintenance {
 	 * It looks for i18n and alias files from whole code directory and registers them in global array.
 	 */
 	private function includeAllMessagesFiles() {
-		global $wgExtensionMessagesFiles;
-		global $IP;
+		global $wgExtensionMessagesFiles, $IP;
 
 		$directory = new RecursiveDirectoryIterator($IP);
 		$iterator = new RecursiveIteratorIterator($directory);
