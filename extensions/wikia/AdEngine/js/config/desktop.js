@@ -10,6 +10,7 @@ define('ext.wikia.adEngine.config.desktop', [
 
 	// adProviders
 	'ext.wikia.adEngine.provider.directGpt',
+	'ext.wikia.adEngine.provider.evolve',
 	'ext.wikia.adEngine.provider.evolve2',
 	'ext.wikia.adEngine.provider.hitMedia',
 	'ext.wikia.adEngine.provider.liftium',
@@ -29,6 +30,7 @@ define('ext.wikia.adEngine.config.desktop', [
 
 	// AdProviders
 	adProviderDirectGpt,
+	adProviderEvolve,
 	adProviderEvolve2,
 	adProviderHitMedia,
 	adProviderLiftium,
@@ -41,6 +43,8 @@ define('ext.wikia.adEngine.config.desktop', [
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.adConfigLate',
+		country = geo.getCountryCode(),
+		evolveCountry = (country === 'AU' || country === 'CA' || country === 'NZ'),
 		context = adContext.getContext(),
 		liftiumSlotsToShowWithSevenOneMedia = {
 			'WIKIA_BAR_BOXAD_1': true,
@@ -113,6 +117,8 @@ define('ext.wikia.adEngine.config.desktop', [
 			providerList.push(adProviderTurtle);
 		} else if (context.providers.evolve2 && adProviderEvolve2.canHandleSlot(slotName)) {
 			providerList.push(adProviderEvolve2);
+		} else if (evolveCountry && adProviderEvolve.canHandleSlot(slotName)) {
+			providerList.push(adProviderEvolve);
 		} else if (context.providers.hitMedia && adProviderHitMedia.canHandleSlot(slotName)) {
 			providerList.push(adProviderHitMedia);
 		} else if (gptEnabled) {
