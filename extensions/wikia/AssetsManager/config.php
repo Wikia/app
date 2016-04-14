@@ -2842,3 +2842,17 @@ $config['special_community_page_scss'] = [
 		'//extensions/wikia/CommunityPage/styles/CommunityPageOverrides.scss',
 	],
 ];
+
+$config['visual_editor_tour_experiment_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => [
+		'//extensions/wikia/VisualEditorTourExperiment/scripts/VisualEditorTourExperimentInit.js',
+	],
+];
+
+$config['visual_editor_tour_experiment_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'assets' => [
+		'//extensions/wikia/VisualEditorTourExperiment/styles/VisualEditorTourExperimentInit.scss',
+	],
+];
