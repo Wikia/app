@@ -7,8 +7,8 @@ class AdEngine2Hooks {
 	const ASSET_GROUP_ADENGINE_DESKTOP = 'adengine2_desktop_js';
 	const ASSET_GROUP_ADENGINE_GCS = 'adengine2_gcs_js';
 	const ASSET_GROUP_ADENGINE_MOBILE = 'wikiamobile_ads_js';
-	const ASSET_GROUP_ADENGINE_APPNEXUS = 'adengine2_appnexus_js';
 	const ASSET_GROUP_ADENGINE_OPENX_BIDDER = 'adengine2_ox_bidder_js';
+	const ASSET_GROUP_ADENGINE_PREBID = 'adengine2_prebid_js';
 	const ASSET_GROUP_ADENGINE_RUBICON_FASTLANE = 'adengine2_rubicon_fastlane_js';
 	const ASSET_GROUP_ADENGINE_TABOOLA = 'adengine2_taboola_js';
 	const ASSET_GROUP_ADENGINE_TRACKING = 'adengine2_tracking_js';
@@ -166,8 +166,8 @@ class AdEngine2Hooks {
 			$jsAssets[] = self::ASSET_GROUP_ADENGINE_AMAZON_MATCH;
 		}
 
-		if ( AnalyticsProviderAppNexus::isEnabled() ) {
-			$jsAssets[] = self::ASSET_GROUP_ADENGINE_APPNEXUS;
+		if ( AnalyticsProviderPrebid::isEnabled() ) {
+			$jsAssets[] = self::ASSET_GROUP_ADENGINE_PREBID;
 		}
 
 		if ( AnalyticsProviderOpenXBidder::isEnabled() ) {

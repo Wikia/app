@@ -33,8 +33,6 @@ class AnalyticsEngine {
 
 	private static function getProvider($provider) {
 		switch ($provider) {
-			case 'AppNexus':
-				return new AnalyticsProviderAppNexus();
 			case 'QuantServe':
 				return new AnalyticsProviderQuantServe();
 			case 'Comscore':
