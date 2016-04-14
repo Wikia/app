@@ -281,6 +281,12 @@ ve.ui.WikiaInfoboxInsertDialog.prototype.onAddNewTemplateClick = function () {
 	this.$frame.stopThrobbing();
 	this.close();
 
+	ve.track('wikia', {
+		category: 've-ib-integration',
+		action: ve.track.actions.CLICK,
+		label: 'add-new-template-button'
+	});
+
 	setTimeout(function () {
 		ve.ui.commandRegistry.getCommandByName('wikiaInfoboxBuilder').execute(this.surface);
 	}.bind(this), 0);
