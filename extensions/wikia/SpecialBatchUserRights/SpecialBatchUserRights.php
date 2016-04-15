@@ -346,18 +346,16 @@ class SpecialBatchUserRights extends SpecialPage {
 		$settable_col = '';
 		$unsettable_col = '';
 		$changeableGroups = $this->getUser()->changeableGroups();
+		$globalGroups = $this->permissionsService()->getConfiguration()->getGlobalGroups();
 
 		foreach ( $allgroups as $group ) {
 			$set = false;
+			$canAdd = UserrightsPage::canAdd( $globalGroups, $changeableGroups, $group, $this->isself );
+			$canRemove = UserrightsPage::canRemove( $globalGroups, $changeableGroups, $group, $this->isself );
 			# Should the checkbox be disabled?
-			$isGlobalNonEditableGroup = UserrightsPage::isGlobalNonEditableGroup(
-				$this->permissionsService()->getConfiguration()->getGlobalGroups(), $group );
-			$disabled = !( !$set && UserrightsPage::canAdd( $changeableGroups, $group, $this->isself ) && !$isGlobalNonEditableGroup );
+			$disabled = !( !$set && $canAdd );
 			# Do we need to point out that this action is irreversible?
-			$irreversible = !$disabled && (
-				( $set && !UserrightsPage::canAdd( $changeableGroups, $group, $this->isself ) ) ||
-				( !$set && !UserrightsPage::canRemove( $changeableGroups, $group, $this->isself ) ) );
-
+			$irreversible = !$disabled && ( ( $set && !$canAdd ) || ( !$set && !$canRemove ) );
 			$attr = $disabled ? array( 'disabled' => 'disabled' ) : array();
 			$attr['title'] = $group;
 			$text = $irreversible

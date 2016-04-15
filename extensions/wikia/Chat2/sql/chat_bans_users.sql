@@ -5,5 +5,6 @@ CREATE TABLE `chat_ban_users` (
   `start_date` varchar(14),
   `end_date` varchar(14),
   `reason` varchar(255),
-  UNIQUE KEY `cbu_user_id` (`cbu_wiki_id`,`cbu_user_id`)
+  UNIQUE KEY `cbu_user_id` (`cbu_wiki_id`,`cbu_user_id`),
+  KEY `wiki_start_date` (`cbu_wiki_id`,`start_date`)
 ) ENGINE=INNODB DEFAULT CHARSET=BINARY;

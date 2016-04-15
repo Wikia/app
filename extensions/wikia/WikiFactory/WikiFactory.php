@@ -2401,7 +2401,7 @@ class WikiFactory {
 			$dbw = self::db( DB_MASTER );
 			$dba = wfGetDB( DB_MASTER, [], $wgExternalArchiveDB );
 
-			$dba->begin();
+			$dba->begin( __METHOD__ );
 
 			/**
 			 * copy city_list to archive
@@ -2487,7 +2487,7 @@ class WikiFactory {
 				self::clearDomainCache( $row->city_id );
 			}
 			$dbw->freeResult( $sth );
-			$dba->commit();
+			$dba->commit( __METHOD__ );
 		}
 		wfProfileOut( __METHOD__ );
 	}

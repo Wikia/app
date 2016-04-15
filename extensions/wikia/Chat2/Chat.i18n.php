@@ -4,6 +4,7 @@ $messages = array();
 
 $messages['en'] = array(
 	'chat' => 'Chat',
+	'chatbanlist' => 'Chat Ban List',
 	'chat-desc' => '[[Special:Chat|Live chat]]',
 	'chat-no-login' => 'You must be logged in to chat.',
 	'chat-no-login-text' => 'Please login to chat.',
