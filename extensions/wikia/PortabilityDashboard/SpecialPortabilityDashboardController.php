@@ -28,7 +28,6 @@ class SpecialPortabilityDashboardController extends WikiaSpecialPageController {
 
 		// i18n template strings
 		$this->response->setVal( 'dashboardLegend', wfMessage( 'portability-dashboard-hover-info' )->text() );
-
 		$this->response->setVal( 'dashboardLabels', [
 			[
 				'name' => wfMessage( 'portability-dashboard-community-header' )->text(),
