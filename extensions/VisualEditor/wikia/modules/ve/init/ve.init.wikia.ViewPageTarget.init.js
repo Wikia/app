@@ -55,9 +55,12 @@
 
 		// Cleanup spinner when hook is fired
 		mw.hook( 've.activationComplete' ).add( function hide() {
-			require(['VisualEditorTourExperimentInit'], function(veTour) {
-				veTour.start();
-			});
+			require(
+				['VisualEditorTourExperiment', 'VisualEditorTourExperimentConfig'],
+				function(VETour, veTourConfig) {
+					(new VETour(veTourConfig)).start();
+				}
+			);
 			if ( spinnerTimeoutId ) {
 				clearTimeout( spinnerTimeoutId );
 				spinnerTimeoutId = null;
