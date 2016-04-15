@@ -8,6 +8,8 @@ class PortabilityDashboardModel {
 
 	private $connection;
 
+	const WIKIS_LIMIT = 500;
+
 	public function __construct( $db = null ) {
 		$this->connection = $db;
 	}
@@ -31,6 +33,9 @@ class PortabilityDashboardModel {
 		return ( new WikiaSQL() )
 			->SELECT_ALL()
 			->FROM( self::PORTABILITY_DASHBOARD_TABLE )
+			->ORDER_BY( 'migration_impact' )
+			->DESC()
+			->LIMIT( self::WIKIS_LIMIT )
 			->run( $this->readDB(), function ( ResultWrapper $rows ) {
 				$result = [ ];
 				while ( $row = $rows->fetchObject() ) {
