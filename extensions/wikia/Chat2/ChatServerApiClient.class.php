@@ -22,11 +22,11 @@ class ChatServerApiClient {
 	 * @param int $roomId
 	 * @return string
 	 */
-	static public function getCityIdFromRoomId( $roomId ) {
+	public static function getCityIdFromRoomId( $roomId ) {
 		wfProfileIn( __METHOD__ );
 
 		$cityId = '';
-		$cityData = ChatServerApiClient::makeRequest( [
+		$cityData = self::makeRequest( [
 			"func" => "getCityIdForRoom",
 			"roomId" => $roomId
 		] );
@@ -54,7 +54,7 @@ class ChatServerApiClient {
 	 *
 	 * @return int|null
 	 */
-	static public function getPublicRoomId() {
+	public static function getPublicRoomId() {
 		return self::getRoomId( self::ROOM_TYPE_PUBLIC );
 	}
 
@@ -64,7 +64,7 @@ class ChatServerApiClient {
 	 * @param string[] $userNames List of user names
 	 * @return int|null
 	 */
-	static public function getPrivateRoomId( $userNames ) {
+	public static function getPrivateRoomId( $userNames ) {
 		return self::getRoomId( self::ROOM_TYPE_PRIVATE, $userNames );
 	}
 
@@ -77,7 +77,7 @@ class ChatServerApiClient {
 	 * @param array $roomUsers List of usernames for private rooms
 	 * @return int|null
 	 */
-	static private function getRoomId( $roomType, $roomUsers = [ ] ) {
+	private static function getRoomId( $roomType, $roomUsers = [ ] ) {
 		global $wgCityId, $wgServer, $wgArticlePath;
 
 		wfProfileIn( __METHOD__ );
@@ -91,7 +91,7 @@ class ChatServerApiClient {
 		];
 		$extraDataString = json_encode( $extraData );
 
-		$roomData = ChatServerApiClient::makeRequest( [
+		$roomData = self::makeRequest( [
 			"func" => "getDefaultRoomId",
 			"wgCityId" => $wgCityId,
 			"roomType" => $roomType,
@@ -120,7 +120,7 @@ class ChatServerApiClient {
 	 * @param array $params
 	 * @return mixed|null
 	 */
-	static private function makeRequest( $params ) {
+	private static function makeRequest( $params ) {
 		global $wgReadOnly;
 
 		wfProfileIn( __METHOD__ );
@@ -134,7 +134,7 @@ class ChatServerApiClient {
 		// operation, abort trying to contact the node server since it could be unavailable (in the event of complete
 		// network unavailability in the primary datacenter). - BugzId 11047
 		if ( empty( $wgReadOnly ) ) {
-			$requestUrl = "http://" . ChatServerApiClient::getHostAndPort() . "/api?" . http_build_query( $params );
+			$requestUrl = "http://" . self::getHostAndPort() . "/api?" . http_build_query( $params );
 			$response = Http::get( $requestUrl, 'default', [ 'noProxy' => true ] );
 			if ( $response === false ) {
 				$response = null;
@@ -154,7 +154,7 @@ class ChatServerApiClient {
 	 * Return the appropriate host and port for the client to connect to.
 	 * This is based on whether this is dev or prod, but can be overridden
 	 */
-	static protected function getHostAndPort() {
+	private static function getHostAndPort() {
 		$server = ChatConfig::getApiServer();
 		$hostAndPort = $server['host'] . ':' . $server['port'];
 

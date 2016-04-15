@@ -5,7 +5,7 @@
  *
  * No permissions checks are done here so any code using this class is responsible for access control.
  */
-class ChatUser extends WikiaObject {
+class ChatUser extends WikiaModel {
 
 	// Cache ban info for 24h, 24*60*60 = 86400
 	const BAN_INFO_TTL = 86400;
@@ -54,9 +54,7 @@ class ChatUser extends WikiaObject {
 			throw new InvalidArgumentException('Cannot ban anonymous user');
 		}
 
-		$dbw = wfGetDB( DB_MASTER, [ ], $this->wg->ExternalDatawareDB );
-
-		$dbw->replace(
+		$this->getDatawareDB( DB_MASTER )->replace(
 			'chat_ban_users',
 			null,
 			[
@@ -78,9 +76,7 @@ class ChatUser extends WikiaObject {
 			throw new InvalidArgumentException('Cannot unban anonymous user');
 		}
 
-		$dbw = wfGetDB( DB_MASTER, [ ], $this->wg->ExternalDatawareDB );
-
-		$dbw->delete(
+		$this->getDatawareDB( DB_MASTER )->delete(
 			'chat_ban_users',
 			[
 				'cbu_wiki_id' => $this->getWikiId(),
@@ -156,9 +152,7 @@ class ChatUser extends WikiaObject {
 	 * @return stdClass|false
 	 */
 	private function getBanInfoFromDb() {
-		$db = wfGetDB( DB_SLAVE, [ ], $this->wg->ExternalDatawareDB );
-
-		$info = $db->selectRow(
+		return $this->getDatawareDB()->selectRow(
 			'chat_ban_users',
 			[ 'cbu_wiki_id', 'cbu_user_id', 'cbu_admin_user_id', 'end_date', 'reason' ],
 			[
@@ -167,8 +161,6 @@ class ChatUser extends WikiaObject {
 			],
 			__METHOD__
 		);
-
-		return $info;
 	}
 
 	/**
@@ -198,9 +190,7 @@ class ChatUser extends WikiaObject {
 			throw new InvalidArgumentException('Chat blocks work on registered users only');
 		}
 
-		$dbw = wfGetDB( DB_MASTER, [ ], F::app()->wg->ExternalDatawareDB );
-
-		$dbw->replace(
+		$this->getDatawareDB( DB_MASTER )->replace(
 			"chat_blocked_users",
 			null,
 			[
@@ -216,9 +206,7 @@ class ChatUser extends WikiaObject {
 			throw new InvalidArgumentException('Chat blocks work on registered users only');
 		}
 
-		$dbw = wfGetDB( DB_MASTER, [ ], F::app()->wg->ExternalDatawareDB );
-
-		$dbw->delete(
+		$this->getDatawareDB( DB_MASTER )->delete(
 			"chat_blocked_users",
 			[
 				'cbu_user_id' => $this->getId(),
@@ -233,9 +221,7 @@ class ChatUser extends WikiaObject {
 			throw new InvalidArgumentException('Chat blocks work on registered users only');
 		}
 
-		$dbr = wfGetDB( DB_SLAVE, [ ], $this->wg->ExternalDatawareDB );
-
-		return $dbr->selectFieldValues(
+		return $this->getDatawareDB()->selectFieldValues(
 			"chat_blocked_users",
 			'cbu_blocked_user_id',
 			[
@@ -250,9 +236,7 @@ class ChatUser extends WikiaObject {
 			throw new InvalidArgumentException('Chat blocks work on registered users only');
 		}
 
-		$dbr = wfGetDB( DB_SLAVE, [ ], $this->wg->ExternalDatawareDB );
-
-		return $dbr->selectFieldValues(
+		return $this->getDatawareDB()->selectFieldValues(
 			"chat_blocked_users",
 			'cbu_user_id',
 			[

@@ -182,29 +182,28 @@ class ChatAjax {
 			return [ 'error' => self::ERROR_NOT_AUTHENTICATED ];
 		}
 
-		$kickingUser = $wgUser;
+		$adminUser = $wgUser;
 
 		$res = [ ];
-		$userToBan = $wgRequest->getVal( 'userToBan' );
-		$userToBanId = $wgRequest->getVal( 'userToBanId', 0 );
+		$subjectUserName = $wgRequest->getVal( 'userToBan' );
+		$subjectUserId = $wgRequest->getVal( 'userToBanId', 0 );
 
-		if ( !empty( $userToBanId ) ) {
-			$userToBan = User::newFromId( $userToBanId );
-			$userToBan = $userToBan->getName();
+		if ( !empty( $subjectUserId ) ) {
+			$subjectUserName = User::newFromId( $subjectUserId )->getName();
 		}
 
 		$mode = $wgRequest->getVal( 'mode', 'private' );
 
-		if ( empty( $userToBan ) ) {
+		if ( empty( $subjectUserName ) ) {
 			$res["error"] = wfMessage( 'chat-missing-required-parameter', 'usertoBan' )->text;
 		} else {
 			$dir = $wgRequest->getVal( 'dir', 'add' );
 			$result = null;
 			if ( $mode == 'private' ) {
-				$result = Chat::blockPrivate( $userToBan, $dir, $kickingUser );
+				$result = Chat::blockPrivate( $subjectUserName, $dir, $adminUser );
 			} else if ( $mode == 'global' ) {
 				$time = (int)$wgRequest->getVal( 'time', 0 );
-				$result = Chat::banUser( $userToBan, $kickingUser, $time, $wgRequest->getVal( 'reason' ) );
+				$result = Chat::banUser( $subjectUserName, $adminUser, $time, $wgRequest->getVal( 'reason' ) );
 			}
 			if ( $result === true ) {
 				$res["success"] = true;
@@ -244,11 +243,10 @@ class ChatAjax {
 		$promotingUser = $wgUser;
 
 		$res = [ ];
-		$PARAM_NAME = "userToPromote";
-		$userToPromote = $wgRequest->getVal( $PARAM_NAME );
+		$userToPromote = $wgRequest->getVal( 'userToPromote' );
 
 		if ( empty( $userToPromote ) ) {
-			$res["error"] = wfMessage( 'chat-missing-required-parameter', $PARAM_NAME )->text();
+			$res["error"] = wfMessage( 'chat-missing-required-parameter', 'userToPromote' )->text();
 		} else {
 			$result = Chat::promoteModerator( $userToPromote, $promotingUser );
 			if ( $result === true ) {
@@ -301,7 +299,7 @@ class ChatAjax {
 			}
 		}
 
-		$tmpl = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
+		$tmpl = new EasyTemplate( __DIR__ . '/templates/' );
 		$tmpl->set_vars( [
 			'options' => Chat::GetBanOptions(),
 			'isChangeBan' => $isChangeBan,

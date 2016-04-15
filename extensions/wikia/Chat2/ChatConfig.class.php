@@ -13,7 +13,6 @@ class ChatConfig {
 
 	const VAR_SERVER_BASKET = 'wgChatServersBasket';
 	const VAR_OPERATION_MODE = 'wgChatOperationMode';
-	const CENTRAL_WIKI_ID = 177;
 
 	private static $configData = [ ];
 
@@ -68,9 +67,9 @@ class ChatConfig {
 		global $wgWikiaEnvironment;
 
 		if ( empty( self::$configData ) ) {
-			$configDir = getenv( 'WIKIA_CONFIG_ROOT' );
-			$configFile = $configDir . '/ChatConfig.json';
+			$configFile = getenv( 'WIKIA_CONFIG_ROOT' ) . '/ChatConfig.json';
 			$jsonConfig = file_get_contents( $configFile );
+
 			self::$configData = json_decode( $jsonConfig, true );
 		}
 
@@ -90,10 +89,7 @@ class ChatConfig {
 		return false;
 	}
 
-	/**
-	 * $mode - true = operation, false = failover
-	 */
-	public static function changeMode( $mode = true ) {
+	public static function changeMode() {
 		if ( self::getMode() == false ) { // just promote server to operation mode
 			self::setMode( true );
 
@@ -108,7 +104,7 @@ class ChatConfig {
 	}
 
 	public static function getMode() {
-		$mode = WikiFactory::getVarValueByName( self::VAR_OPERATION_MODE, self::CENTRAL_WIKI_ID );
+		$mode = WikiFactory::getVarValueByName( self::VAR_OPERATION_MODE, Wikia::COMMUNITY_WIKI_ID );
 		if ( is_null( $mode ) ) {
 			return true;
 		}
@@ -117,11 +113,11 @@ class ChatConfig {
 	}
 
 	public static function setMode( $mode ) {
-		WikiFactory::setVarByName( self::VAR_OPERATION_MODE, self::CENTRAL_WIKI_ID, $mode );
+		WikiFactory::setVarByName( self::VAR_OPERATION_MODE, Wikia::COMMUNITY_WIKI_ID, $mode );
 	}
 
 	public static function getServerBasket() {
-		$basket = WikiFactory::getVarValueByName( self::VAR_SERVER_BASKET, self::CENTRAL_WIKI_ID );
+		$basket = WikiFactory::getVarValueByName( self::VAR_SERVER_BASKET, Wikia::COMMUNITY_WIKI_ID );
 		if ( empty( $basket ) ) {
 			return 1;
 		}
@@ -130,7 +126,7 @@ class ChatConfig {
 	}
 
 	public static function setServerBasket( $basket ) {
-		WikiFactory::setVarByName( self::VAR_SERVER_BASKET, self::CENTRAL_WIKI_ID, $basket );
+		WikiFactory::setVarByName( self::VAR_SERVER_BASKET, Wikia::COMMUNITY_WIKI_ID, $basket );
 	}
 
 }

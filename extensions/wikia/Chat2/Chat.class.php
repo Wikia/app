@@ -89,7 +89,7 @@ class Chat {
 	 */
 	public static function banUser( $subjectUserName, User $adminUser, $time, $reason ) {
 		self::info( __METHOD__ . ': Method called', [
-			'subjectUser' => $subjectUserName,
+			'subjectUserName' => $subjectUserName,
 			'adminUser' => $adminUser,
 			'time' => $time,
 			'reason' => $reason,
@@ -148,28 +148,28 @@ class Chat {
 	}
 
 	/**
-	 * @param string $blockedUsername
+	 * @param string $subjectUserName
 	 * @param string $dir
 	 * @param User $requestingUser
 	 *
 	 * @return bool
 	 * @throws DBUnexpectedError
 	 */
-	public static function blockPrivate( $blockedUsername, $dir = self::PRIVATE_BLOCK_ADD, $requestingUser ) {
+	public static function blockPrivate( $subjectUserName, $dir = self::PRIVATE_BLOCK_ADD, $requestingUser ) {
 		self::info( __METHOD__ . ': Method called', [
-			'blockedUsername' => $blockedUsername,
+			'subjectUserName' => $subjectUserName,
 			'dir' => $dir,
 			'requestingUser' => $requestingUser,
 		] );
 
-		$blockedUser = User::newFromName( $blockedUsername );
+		$subjectUser = User::newFromName( $subjectUserName );
 
-		if ( !empty( $blockedUser ) && !$blockedUser->isAnon() && !$requestingUser->isAnon() ) {
+		if ( !empty( $subjectUser ) && !$subjectUser->isAnon() && !$requestingUser->isAnon() ) {
 			$requestingChatUser = new ChatUser( $requestingUser );
 			if ( $dir === self::PRIVATE_BLOCK_ADD ) {
-				$requestingChatUser->blockUser( $blockedUser );
+				$requestingChatUser->blockUser( $subjectUser );
 			} elseif ( $dir === self::PRIVATE_BLOCK_REMOVE ) {
-				$requestingChatUser->unblockUser( $blockedUser );
+				$requestingChatUser->unblockUser( $subjectUser );
 			}
 		}
 
@@ -587,27 +587,19 @@ class Chat {
 		global $wgMemc;
 
 		wfProfileIn( __METHOD__ );
-
 		$memcKey = wfMemcKey( self::CHATTERS_CACHE_KEY );
-
-		// data is stored in memcache and set by node.js
 		$chatters = $wgMemc->get( $memcKey );
-		if ( !$chatters ) {
-			$chatters = [ ];
-		}
-
 		wfProfileOut( __METHOD__ );
 
-		return $chatters;
+		return $chatters ?: [];
 	}
 
 	public static function setChatters( $chatters ) {
 		global $wgMemc;
-		wfProfileIn( __METHOD__ );
 
+		wfProfileIn( __METHOD__ );
 		$memcKey = wfMemcKey( self::CHATTERS_CACHE_KEY );
 		$wgMemc->set( $memcKey, $chatters, self::CHATTERS_CACHE_TTL );
-
 		wfProfileOut( __METHOD__ );
 	}
 
