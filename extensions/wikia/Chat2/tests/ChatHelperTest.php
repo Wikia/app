@@ -12,56 +12,58 @@ class ChatHelperTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @dataProvider testGetChatConfigDataProvider
+	 * @dataProvider testGetServerDataProvider
 	 */
-	public function testGetChatConfig( $type, $wgWikiaEnvironment, $expected ) {
-		$this->mockGlobalVariable( 'wgWikiaEnvironment', $wgWikiaEnvironment );
-		$chatConfig = $this->helper->getServerNodes( $type );
+	public function testGetServer( $wgCityId, $expected ) {
+		$this->mockGlobalVariable( 'wgCityId', $wgCityId );
+		$this->mockStaticMethod( 'ChatHelper', 'getServerNodes', [
+			'10.8.64.15:9001',
+			'10.8.64.15:9002',
+			'10.8.64.15:9003',
+			'10.8.64.15:9004'
+		] );
+
+		$chatConfig = $this->helper->getServer( 'private' );
 
 		$this->assertEquals( $expected, $chatConfig );
 	}
 
-	public function testGetChatConfigDataProvider() {
+	public function testGetServerDataProvider() {
 		return [
 			[
-				'type' => 'private',
-				'wgWikiaEnvironment' => 'prod',
-				'expected' => []
+				'wgCityId' => 100,
+				'expected' => [
+					'serverIp' => '10.8.64.15:9001',
+					'serverId' => 1
+				]
 			],
 			[
-				'type' => 'private',
-				'wgWikiaEnvironment' => 'preview',
-				'expected' => []
+				'wgCityId' => 101,
+				'expected' => [
+					'serverIp' => '10.8.64.15:9002',
+					'serverId' => 2
+				]
 			],
 			[
-				'type' => 'private',
-				'wgWikiaEnvironment' => 'verify',
-				'expected' => []
+				'wgCityId' => 1,
+				'expected' => [
+					'serverIp' => '10.8.64.15:9002',
+					'serverId' => 2
+				]
 			],
 			[
-				'type' => 'private',
-				'wgWikiaEnvironment' => 'dev',
-				'expected' => []
+				'wgCityId' => 0,
+				'expected' => [
+					'serverIp' => '10.8.64.15:9001',
+					'serverId' => 1
+				]
 			],
 			[
-				'type' => 'public',
-				'wgWikiaEnvironment' => 'prod',
-				'expected' => []
-			],
-			[
-				'type' => 'public',
-				'wgWikiaEnvironment' => 'preview',
-				'expected' => []
-			],
-			[
-				'type' => 'public',
-				'wgWikiaEnvironment' => 'verify',
-				'expected' => []
-			],
-			[
-				'type' => 'public',
-				'wgWikiaEnvironment' => 'dev',
-				'expected' => []
+				'wgCityId' => '100',
+				'expected' => [
+					'serverIp' => '10.8.64.15:9001',
+					'serverId' => 1
+				]
 			]
 		];
 	}

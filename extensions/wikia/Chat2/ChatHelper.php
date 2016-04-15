@@ -59,19 +59,17 @@ class ChatHelper {
 	}
 
 	/**
-	 * //TODO test me!
 	 * @param string $type
 	 * @return array
 	 */
 	static public function getServer( $type = 'public' ) {
 		global $wgCityId;
 
-		$serverBasket = self::getServerBasket();
 		$serverNodes = self::getServerNodes( $type );
-		$serverNode = $serverNodes[ $serverBasket ];
-		$serversCount = count( $serverNode );
-		$serverId = ( $wgCityId % $serversCount ) + 1;
-		$serverData = $serverNode[ $wgCityId % $serversCount ];
+		$serversCount = count( $serverNodes );
+		$serverIndex = $wgCityId % $serversCount;
+		$serverId = $serverIndex + 1;
+		$serverData = $serverNodes[ $serverIndex ];
 
 		return [
 			'serverIp' => $serverData,
@@ -87,7 +85,7 @@ class ChatHelper {
 
 	/**
 	 * @param string $type
-	 * @return array|bool
+	 * @return array
 	 */
 	static function getServerNodes( $type = 'public' ) {
 		global $wgWikiaEnvironment;
@@ -102,6 +100,9 @@ class ChatHelper {
 		return $serverNodes;
 	}
 
+	/**
+	 * @return int
+	 */
 	static public function getServerBasket() {
 		$basket	= WikiFactory::getVarValueByName( self::$serversBasket, self::$CentralCityId );
 		if ( empty( $basket ) ) {

@@ -25,7 +25,7 @@ class Client {
 	function __construct() {
 		$this->logger = WikiaLogger::instance();
 
-		$consulService = new ServiceFactory( [], $this->logger );
+		$consulService = new ServiceFactory( [ ], $this->logger );
 		$this->api = $consulService->get( 'health' );
 	}
 
@@ -47,16 +47,17 @@ class Client {
 			'passing' => true,
 			// TODO: temporary change for devbox testing
 			'dc' => 'sjc'
-		])->json();
+		] )->json();
 
 		$nodes = array_map(
-			function( $item ) {
+			function ( $item ) {
 				return $item[ 'Node' ][ 'Address' ] . ':' . $item[ 'Service' ][ 'Port' ];
 			},
 			$resp
 		);
 
-		wfDebug( __METHOD__ . sprintf( ": got nodes for '%s' service ('%s' tag): %s\n", $service, $tag, join(', ', $nodes) ) );
+		wfDebug( __METHOD__ . sprintf( ": got nodes for '%s' service ('%s' tag): %s\n", $service, $tag, join( ', ', $nodes ) ) );
+
 		return $nodes;
 	}
 
@@ -72,6 +73,7 @@ class Client {
 		Assert::true( self::isConsulAddress( $hostname ), __METHOD__ . ' should get a Consul address', $this->getLoggerContext() );
 
 		list( $tag, $service ) = explode( '.', $hostname );
+
 		return $this->getNodes( $service, $tag );
 	}
 
