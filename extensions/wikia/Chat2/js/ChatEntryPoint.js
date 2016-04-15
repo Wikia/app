@@ -4,6 +4,9 @@ var ChatEntryPoint = {
 	loading: false,
 	chatLaunchModal: null,
 	bindComplete: false,
+	isWideChat: null,
+	wideChatThreshold: 280,
+	resizeDebounceTime: 1000,
 
 	init: function () {
 		if (!ChatEntryPoint.bindComplete) {
@@ -44,15 +47,50 @@ var ChatEntryPoint = {
 			// for logged-in users the information about chat users is serialized into JS global variable
 			window.wgWikiaChatUsers = window.wgWikiaChatUsers.length ? JSON.parse(window.wgWikiaChatUsers) : [];
 		}
+
 		// in case the module is embedded in the article, we can have several modules on the page. work on them one by one
 		$('.ChatModuleUninitialized').each(function () {
-			ChatEntryPoint.processModuleTemplate($(this));
-			$(this).removeClass('ChatModuleUninitialized');
+			var $module = $(this);
+			ChatEntryPoint.isWideChat = ChatEntryPoint.computeIsWideChat($module.width());
+
+			ChatEntryPoint.processModuleTemplate($module);
+			$module.removeClass('ChatModuleUninitialized');
+
+			// let's keep number of avatars up do date
+			$(window).resize($.debounce(ChatEntryPoint.resizeDebounceTime, function() {
+				ChatEntryPoint.afterResize($module);
+			}));
 		});
 	},
 
 	/**
+	 * Called after window resize.
+	 * By comparing current chat entrypoint width and the previous one, decides if carousel
+	 * with users should be updated.
+	 *
+	 * @param $module chat module element
+	 */
+	afterResize: function($module) {
+		var wideAfterResize = ChatEntryPoint.computeIsWideChat($module.width());
+
+		if (wideAfterResize !== ChatEntryPoint.isWideChat) {
+			ChatEntryPoint.isWideChat = wideAfterResize;
+			ChatEntryPoint.processModuleTemplate($module);
+		}
+	},
+
+	/**
+	 * Determines if chat is in its wide version
+	 *
+	 * @param width int width of chat module
+	 */
+	computeIsWideChat: function(width) {
+		return width > ChatEntryPoint.wideChatThreshold;
+	},
+
+	/**
 	 * Creates carousel of users and fills in some of fields with translated messages
+	 *
 	 * @param $t chat module element
 	 */
 	processModuleTemplate: function ($t) {
@@ -70,14 +108,13 @@ var ChatEntryPoint = {
 	 * @param $el chat who is here element
 	 */
 	initCarousel: function ($el) {
-		var popoverTimeout = 0,
-			// differ number of users on chat according to it's width
-			isWideChat = $el.width() > 260;
+		var popoverTimeout = 0;
 
 		$el.find('.carousel-container').carousel({
 			nextClass: 'arrow-right',
 			prevClass: 'arrow-left',
-			itemsShown: isWideChat ? 6 : 5
+			// differ number of users on chat according to it's width
+			itemsShown: ChatEntryPoint.isWideChat ? 6 : 5
 		});
 
 		function setPopoverTimeout(elem) {
