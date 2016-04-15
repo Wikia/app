@@ -79,7 +79,12 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		// get details for only 5 of the remaining contributors
 		$contributorDetails = $this->getContributorsDetails( array_slice( $contributors, 0, 5 ) );
 
-		$userRank = 'X'; // fixme: Need design for what to show when user has no contribs this week
+		$userRank = '-';
+		$editors = count( $contributors );
+
+		if ($editors == 0) {
+			$editors = '-';
+		}
 
 		if ( $userContributionCount > 0 ) {
 			$rank = 1;
@@ -106,7 +111,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 				AvatarService::AVATAR_SIZE_SMALL_PLUS
 			),
 			'userRank' => $userRank,
-			'memberCount' => count( $contributors ),
+			'weeklyEditorCount' => $editors,
 			'userContribCount' => $userContributionCount
 		] );
 	}
