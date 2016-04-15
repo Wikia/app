@@ -2822,6 +2822,13 @@ $config['special_user_activity_scss'] = [
 	],
 ];
 
+$config['special_discussions_log_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'assets' => [
+		'//extensions/wikia/SpecialDiscussionsLog/css/DiscussionsLog_Forms.scss',
+	],
+];
+
 $config['special_community_page_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
