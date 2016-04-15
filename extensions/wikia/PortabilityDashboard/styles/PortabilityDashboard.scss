@@ -1,9 +1,27 @@
-.portability-dashboard-table {
-	th,
-	td {
-		padding: 5px;
-	}
-	th {
-		cursor: help;
+@import 'skins/shared/color';
+
+$cell-padding: 10px;
+
+.page-Special_PortabilityDashboard {
+	.portability-dashboard-table {
+		overflow: hidden;
+
+		tr:hover {
+			background-color: $color-unified-module-background;
+		}
+
+		th,
+		td {
+			padding: $cell-padding;
+			position: relative;
+		}
+
+		th {
+			cursor: help;
+		}
+
+		a {
+			display: block;
+		}
 	}
 }
