@@ -1,0 +1,23 @@
+{{#recentActivityModule}}
+	<div class="module RecentActivityModule">
+		<h2 class="activity-heading">{{activityHeading}}</h2>
+		<ul class="reset recent-changes">
+			{{#activity}}
+				<li>
+					<div class="avatar-container">
+						{{{userAvatar}}}
+					</div>
+					<div class="change-message">
+						{{{changeMessage}}}
+					</div>
+					{{#timeAgo}}
+						<div class="subtle">
+							{{timeAgo}}
+						</div>
+					{{/timeAgo}}
+				</li>
+			{{/activity}}
+		</ul>
+		<a href="{{moreActivityLink}}">{{moreActivityText}}</a>
+	</div>
+{{/recentActivityModule}}

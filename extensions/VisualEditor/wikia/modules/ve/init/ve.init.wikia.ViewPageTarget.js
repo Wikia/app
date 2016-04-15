@@ -54,13 +54,13 @@ ve.init.wikia.ViewPageTarget.static.toolbarGroups = [
 		title: OO.ui.deferMsg( 'visualeditor-toolbar-style-tooltip' ),
 		include: [ 'subscript', 'superscript', 'strikethrough', 'underline', 'indent', 'outdent', 'clear' ]
 	},
+	{ include: [ 'wikiaVideoInsert', 'wikiaImageInsert', 'wikiaSingleMedia', 'bullet', 'number'] },
 	// Insert
-	{ include: [ 'wikiaImageInsert', 'wikiaVideoInsert'] },
 	{
 		type: 'list',
 		label: OO.ui.deferMsg( 'visualeditor-toolbar-insert' ),
 		indicator: 'down',
-		include: [ 'wikiaMediaInsert', 'wikiaSingleMedia', 'wikiaInfoboxInsert', 'number', 'bullet', 'wikiaMapInsert', 'wikiaTemplateInsert', 'reference', 'referencesList', 'insertTable' ]
+		include: [ 'wikiaInfoboxInsert', 'wikiaMapInsert', 'wikiaTemplateInsert', 'reference', 'referencesList', 'insertTable' ]
 	},
 	// Table
 	{
@@ -72,16 +72,6 @@ ve.init.wikia.ViewPageTarget.static.toolbarGroups = [
 		demote: [ 'deleteTable' ]
 	}
 ];
-
-ve.init.wikia.activateToolbarABTest();
-
-if ( ve.init.wikia.getToolbarABTestVariantNumber() === 1 ) {
-	// INT-322 A/B test: Image / Video upload for toolbar: Remove wikiaMediaInsert in insert list
-	ve.init.wikia.ViewPageTarget.static.toolbarGroups[5].include.splice(0, 1);
-} else {
-	// Original toolbar configuration, remove wikiaImageInsert and wikiaVideoInsert
-	ve.init.wikia.ViewPageTarget.static.toolbarGroups.splice(4, 1);
-}
 
 ve.init.wikia.ViewPageTarget.static.actionsToolbarConfig = [
 	{

@@ -201,8 +201,6 @@ class MercuryApiController extends WikiaController {
 			$wikiVariables[ 'specialRobotPolicy' ] = $robotPolicy;
 		}
 
-		// template for non-main pages (use $1 for article name)
-		$wikiVariables['htmlTitleTemplate'] = ( new WikiaHtmlTitle() )->setParts( ['$1'] )->getTitle();
 		return $wikiVariables;
 	}
 

@@ -68,9 +68,9 @@
 
 <?= $comScore ?>
 <?= $quantServe ?>
+<?= $rubiconFastlane ?>
 <?= $amazonMatch ?>
 <?= $openXBidder ?>
-<?= $rubiconFastlane ?>
 <?= $prebid ?>
 <?= $krux ?>
 <?= $dynamicYield ?>
