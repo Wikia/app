@@ -2846,7 +2846,7 @@ $config['special_community_page_scss'] = [
 $config['visual_editor_tour_experiment_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
-		'//extensions/wikia/VisualEditorTourExperiment/scripts/VisualEditorTourExperimentInit.js',
+		'//extensions/wikia/VisualEditorTourExperiment/scripts/VisualEditorTourExperiment.js',
 		'//extensions/wikia/VisualEditorTourExperiment/scripts/VisualEditorTourExperimentConfig.js',
 	],
 ];
