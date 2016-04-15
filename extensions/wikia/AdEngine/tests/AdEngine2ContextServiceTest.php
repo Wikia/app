@@ -149,7 +149,6 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 				'expectedOpts' => [],
 				'expectedTargeting' => [
 					'newWikiCategories' => [ 'test' ],
-					'wikiDirectedAtChildren' => true,
 					'esrbRating' => 'ec'
 				]
 			],
@@ -159,7 +158,6 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 				'expectedOpts' => [],
 				'expectedTargeting' => [
 					'newWikiCategories' => [ 'test' ],
-					'wikiDirectedAtChildren' => true,
 					'esrbRating' => 'ec'
 				]
 			],
