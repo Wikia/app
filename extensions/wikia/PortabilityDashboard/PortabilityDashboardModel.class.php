@@ -12,7 +12,22 @@ class PortabilityDashboardModel {
 		$this->connection = $db;
 	}
 
+	/**
+	 * gets model data for portability dashboard
+	 * @return array
+	 */
 	public function getList() {
+		$rowList = $this->getRowList();
+		$wikiParamsList = $this->getWikiParamsList( $rowList );
+
+		return $this->extendRowListWithWikiParams( $rowList, $wikiParamsList );
+	}
+
+	/**
+	 * gets row list from DB
+	 * @return bool|mixed
+	 */
+	private function getRowList() {
 		return ( new WikiaSQL() )
 			->SELECT_ALL()
 			->FROM( self::PORTABILITY_DASHBOARD_TABLE )
@@ -20,17 +35,24 @@ class PortabilityDashboardModel {
 				$result = [ ];
 				while ( $row = $rows->fetchObject() ) {
 					$result[] = [
-						'wiki_id' => $row->wiki_id,
+						'wikiId' => $row->wiki_id,
 						'portability' => $row->portability,
-						'infobox_portability' => $row->infobox_portability,
+						'infoboxPortability' => $row->infobox_portability,
 						'traffic' => $row->traffic,
-						'migration_impact' => $row->migration_impact
+						'migrationImpact' => $row->migration_impact,
+						'typelessTemplatesCount' => $row->typeless,
+						'customInfoboxesCount' => $row->custom_infoboxes
 					];
 				}
 				return $result;
 			} );
 	}
 
+	/**
+	 * updates custom infobox count in portability DB table
+	 * @param int $wikiId
+	 * @param int $count
+	 */
 	public function updateInfoboxesCount( $wikiId, $count ) {
 		( new WikiaSQL() )
 			->INSERT()
@@ -40,6 +62,11 @@ class PortabilityDashboardModel {
 			->run( $this->connect( DB_MASTER ) );
 	}
 
+	/**
+	 * updates unclassified templates count in portability DB table
+	 * @param int $wikiId
+	 * @param int $count
+	 */
 	public function updateTemplatesTypeCount( $wikiId, $count ) {
 		( new WikiaSQL() )
 			->INSERT()
@@ -49,6 +76,53 @@ class PortabilityDashboardModel {
 			->run( $this->connect( DB_MASTER ) );
 	}
 
+	/**
+	 * gets wiki params based on row list wiki ids
+	 * @param array $rowList
+	 * @return array - wiki params array with wiki Ids as array keys
+	 */
+	private function getWikiParamsList( $rowList ) {
+		return WikiFactory::getWikisByID(
+			array_map(
+				function( $item ) { return $item[ 'wikiId' ]; },
+				$rowList
+			)
+		);
+	}
+
+	/**
+	 * extends row list with wiki params
+	 * @param array $rowList
+	 * @param array $wikiParamsList
+	 * @return array
+	 */
+	private function extendRowListWithWikiParams( $rowList, $wikiParamsList ) {
+		return array_map(
+			function( $item ) use( $wikiParamsList ) {
+				return $this->extendListItem( $item, $wikiParamsList[ $item[ 'wikiId' ] ] );
+			},
+			$rowList
+		);
+	}
+
+	/**
+	 * extends list item with wiki params data
+	 * @param array $item
+	 * @param stdClass $itemWikiParams
+	 * @return array mixed
+	 */
+	private function extendListItem( $item, $itemWikiParams ) {
+		return array_merge($item, [
+			'wikiUrl' => $itemWikiParams->city_url,
+			'wikiTitle' => $itemWikiParams->city_title,
+			'wikiLang' => $itemWikiParams->city_lang,
+		]);
+	}
+
+	/**
+	 * gets DB slave connection
+	 * @return DatabaseMysqli|null
+	 */
 	private function readDB() {
 		if ( !isset( $this->connection ) ) {
 			$this->connection = $this->connect( DB_SLAVE );
@@ -56,6 +130,10 @@ class PortabilityDashboardModel {
 		return $this->connection;
 	}
 
+	/**
+	 * gets DB connection
+	 * @return DatabaseMysqli|null
+	 */
 	private function connect( $type = DB_SLAVE ) {
 		global $wgExternalDatawareDB;
 		return wfGetDB( $type, array(), $wgExternalDatawareDB );
