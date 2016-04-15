@@ -18,9 +18,12 @@ class Chat {
 	const CHATTERS_CACHE_TTL = 60 * 60 * 24; // 1 day
 	const CHAT_SESSION_TTL = 60 * 60 * 48; // 2 days
 
-	const ACTION_ADD = 'add';
-	const ACTION_CHANGE = 'change';
-	const ACTION_REMOVE = 'remove';
+	const BAN_ADD = 'add';
+	const BAN_CHANGE = 'change';
+	const BAN_REMOVE = 'remove';
+
+	const PRIVATE_BLOCK_ADD = 'add';
+	const PRIVATE_BLOCK_REMOVE = 'remove';
 
 	/**
 	 * Stands for both: group name and permission name
@@ -75,19 +78,14 @@ class Chat {
 
 	/**
 	 * Given a username, if the current user has permission to do so, ban the user
-	 * from chat on the current wiki. This can be reversed by removing them from
-	 * the 'bannedfromchat' group.
-	 *
-	 * Will set doKickAnyway to true if the user should be kicked despite any error
-	 * messages (this is used primarily when the user is already banned from the wiki.
-	 * in that case, there is an error, but if the user is present they should be kicked).
+	 * from chat on the current wiki.
 	 *
 	 * @param string $subjectUserName
 	 * @param User $adminUser
-	 * @param int $time
+	 * @param int $time Ban time (0 = remove ban)
 	 * @param string $reason
 	 *
-	 * @return bool|string Returns true on success, returns an error message as a string on failure.
+	 * @return true|string Returns true on success, returns an error message as a string on failure.
 	 */
 	public static function banUser( $subjectUserName, User $adminUser, $time, $reason ) {
 		self::info( __METHOD__ . ': Method called', [
@@ -112,12 +110,12 @@ class Chat {
 		}
 
 		$cityId = F::app()->wg->CityId;
-		$action = $time != 0 ? self::ACTION_ADD : self::ACTION_REMOVE;
+		$action = $time != 0 ? self::BAN_ADD : self::BAN_REMOVE;
 
 		$subjectChatUser = new ChatUser( $subjectUser );
-		if ( $action == self::ACTION_ADD ) {
+		if ( $action == self::BAN_ADD ) {
 			if ( $subjectChatUser->isBanned() ) {
-				$action = self::ACTION_CHANGE;
+				$action = self::BAN_CHANGE;
 			}
 
 			$timeLabel = self::getTimeLabel( $time );
@@ -157,7 +155,7 @@ class Chat {
 	 * @return bool
 	 * @throws DBUnexpectedError
 	 */
-	public static function blockPrivate( $blockedUsername, $dir = 'add', $requestingUser ) {
+	public static function blockPrivate( $blockedUsername, $dir = self::PRIVATE_BLOCK_ADD, $requestingUser ) {
 		self::info( __METHOD__ . ': Method called', [
 			'blockedUsername' => $blockedUsername,
 			'dir' => $dir,
@@ -168,12 +166,11 @@ class Chat {
 
 		if ( !empty( $blockedUser ) && !$blockedUser->isAnon() && !$requestingUser->isAnon() ) {
 			$requestingChatUser = new ChatUser( $requestingUser );
-			if ( $dir == 'add' ) {
+			if ( $dir === self::PRIVATE_BLOCK_ADD ) {
 				$requestingChatUser->blockUser( $blockedUser );
-			} elseif ( $dir == 'remove' ) {
+			} elseif ( $dir === self::PRIVATE_BLOCK_REMOVE ) {
 				$requestingChatUser->unblockUser( $blockedUser );
 			}
-			wfGetLBFactory()->commitMasterChanges();
 		}
 
 		return true;
@@ -350,7 +347,6 @@ class Chat {
 
 			if ( !wfReadOnly() ) { // Change to wgReadOnlyDbMode if we implement thatwgReadOnly
 				$dbw->insert( 'chatlog', $eventRow, __METHOD__ );
-				$dbw->commit();
 			}
 		} else {
 			wfDebugLog( 'chat', 'User did open a chat room but it was not logged in chatlog' );
@@ -448,7 +444,6 @@ class Chat {
 			];
 
 			$dbw->insert( 'cu_changes', $rcRow, __METHOD__ );
-			$dbw->commit();
 		}
 
 	}

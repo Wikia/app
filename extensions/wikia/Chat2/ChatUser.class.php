@@ -193,7 +193,7 @@ class ChatUser extends WikiaObject {
 		return wfSharedMemcKey( 'chat-baninfo-v3', $this->getWikiId(), $this->getId() );
 	}
 
-	public function blockUser( User $blockedUser, $doCommit = false ) {
+	public function blockUser( User $blockedUser ) {
 		if ( $this->isAnon() || $blockedUser->isAnon() ) {
 			throw new InvalidArgumentException('Chat blocks work on registered users only');
 		}
@@ -209,13 +209,9 @@ class ChatUser extends WikiaObject {
 			],
 			__METHOD__
 		);
-
-		if ( $doCommit ) {
-			$dbw->commit();
-		}
 	}
 
-	public function unblockUser( User $blockedUser, $doCommit = false ) {
+	public function unblockUser( User $blockedUser ) {
 		if ( $this->isAnon() || $blockedUser->isAnon() ) {
 			throw new InvalidArgumentException('Chat blocks work on registered users only');
 		}
@@ -230,10 +226,6 @@ class ChatUser extends WikiaObject {
 			],
 			__METHOD__
 		);
-
-		if ( $doCommit ) {
-			$dbw->commit();
-		}
 	}
 
 	public function getBlockedUsers() {
