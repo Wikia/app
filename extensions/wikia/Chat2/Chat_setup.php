@@ -56,7 +56,6 @@ $wgHooks[ 'BeforePageDisplay' ][] = 'ChatHelper::onBeforePageDisplay';
 $wgHooks[ 'ContributionsToolLinks' ][] = 'ChatHelper::onContributionsToolLinks';
 $wgHooks[ 'LogLine' ][] = 'ChatHelper::onLogLine';
 $wgHooks[ 'UserGetRights' ][] = 'chatAjaxonUserGetRights';
-$wgHooks[ 'OtherBlockLogLink' ][] = 'ChatHelper::onOtherBlockLogLink';
 
 // logs
 $wgLogTypes[] = 'chatban';

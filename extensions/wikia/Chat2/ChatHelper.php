@@ -298,12 +298,6 @@ class ChatHelper {
 		return wfMsg( 'chat-' . $action . '-log-entry', $link, $time, $endon );
 	}
 
-	public static function onOtherBlockLogLink( &$otherBlockLinks, $target ) {
-		$otherBlockLinks[] = Linker::specialLink( 'ChatBanList' );
-
-		return true;
-	}
-
 	static public function info( $message, Array $params = [] ) {
 		WikiaLogger::instance()->info( 'CHAT: ' . $message, $params );
 	}
