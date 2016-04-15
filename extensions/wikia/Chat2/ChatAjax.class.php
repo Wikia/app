@@ -75,9 +75,9 @@ class ChatAjax {
 
 		// Figure out the error message to return (i18n is done on this side).
 		if ( $res['isLoggedIn'] === false ) {
-			$res['errorMsg'] = wfMsg( 'chat-no-login' );
+			$res['errorMsg'] = wfMessage( 'chat-no-login' )->text();
 		} else if ( $res['canChat'] === false ) {
-			$res['errorMsg'] = wfMsg( 'chat-you-are-banned-text' );
+			$res['errorMsg'] = wfMessage( 'chat-you-are-banned-text' )->text();
 		}
 
 		// If the user is approved to chat, make sure the roomId provided is for this wiki.
@@ -87,7 +87,7 @@ class ChatAjax {
 			$cityIdFromRoom = ChatServerApiClient::getCityIdFromRoomId( $roomId );
 			if ( $wgCityId !== $cityIdFromRoom ) {
 				$res['canChat'] = false; // don't let the user chat in the room they requested.
-				$res['errorMsg'] = wfMsg( 'chat-room-is-not-on-this-wiki' );
+				$res['errorMsg'] = wfMessage( 'chat-room-is-not-on-this-wiki' )->text();
 			}
 		}
 
@@ -196,7 +196,7 @@ class ChatAjax {
 		$mode = $wgRequest->getVal( 'mode', 'private' );
 
 		if ( empty( $userToBan ) ) {
-			$res["error"] = wfMsg( 'chat-missing-required-parameter', 'usertoBan' );
+			$res["error"] = wfMessage( 'chat-missing-required-parameter', 'usertoBan' )->text;
 		} else {
 			$dir = $wgRequest->getVal( 'dir', 'add' );
 			$result = null;
@@ -248,7 +248,7 @@ class ChatAjax {
 		$userToPromote = $wgRequest->getVal( $PARAM_NAME );
 
 		if ( empty( $userToPromote ) ) {
-			$res["error"] = wfMsg( 'chat-missing-required-parameter', $PARAM_NAME );
+			$res["error"] = wfMessage( 'chat-missing-required-parameter', $PARAM_NAME )->text();
 		} else {
 			$result = Chat::promoteModerator( $userToPromote, $promotingUser );
 			if ( $result === true ) {

@@ -55,5 +55,5 @@
 </section>
 <?php if ( $isEntryPoint ): ?>
 	<script language="javascript" type="text/javascript">if ( typeof ChatWidget!=="undefined" ) ChatWidget.init();</script>
-	<a class="ChatMonobookEntryPoint" href="<?= $linkToSpecialChat ?>"><?= wfMsg( 'chat-join-the-chat' )?></a>
+	<a class="ChatMonobookEntryPoint" href="<?= $linkToSpecialChat ?>"><?= wfMessage( 'chat-join-the-chat' )->escaped()?></a>
 <?php endif; ?>

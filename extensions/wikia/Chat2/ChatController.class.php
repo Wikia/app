@@ -112,7 +112,7 @@ class ChatController extends WikiaController {
 		$vars['WIKIA_NODE_INSTANCE'] = $this->nodeInstance;
 		$vars['WIKIA_NODE_PORT'] = $this->nodePort;
 		$vars['WEB_SOCKET_SWF_LOCATION'] = $this->wg->ExtensionsPath . '/wikia/Chat/swf/WebSocketMainInsecure.swf?' . $this->wg->StyleVersion;
-		$vars['EMOTICONS'] = wfMsgForContent( 'emoticons' );
+		$vars['EMOTICONS'] = wfMessage( 'emoticons' )->inContentLanguage()->text();
 
 		$vars['pathToProfilePage'] = $this->pathToProfilePage;
 		$vars['pathToContribsPage'] = $this->pathToContribsPage;

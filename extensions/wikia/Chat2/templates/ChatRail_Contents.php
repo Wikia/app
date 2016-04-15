@@ -4,20 +4,20 @@
 ( !empty( $profileAvatarUrl ) ? 'logged-in' : 'anonymous' )
 ?>">
 	<h2 class="chat-headline">
-		<span class="chat-live"><?= wfMsg( 'chat-live2' ) ?></span>
+		<span class="chat-live"><?= wfMessage( 'chat-live2' )->escaped() ?></span>
 		<span class="chat-total"><?= $totalInRoom ?></span>
 	</h2>
 
 	<p class="chat-name"><?= $wg->Sitename ?></p>
 
 	<? if ( !empty( $wg->ReadOnly ) ): ?>
-		<em><?= wfMsg( 'chat-read-only' ) ?></em>
+		<em><?= wfMessage( 'chat-read-only' )->escaped() ?></em>
 	<? else : ?>
 		<div class="chat-join">
 			<button onclick="ChatWidget.onClickChatButton('<?= $linkToSpecialChat ?>')"<?=
 			( $isLoggedIn ? '' : ' class="loginToChat"' )
 			?>>
-				<?= wfMsg( $totalInRoom ? 'chat-join-the-chat' : 'chat-start-a-chat' ); ?>
+				<?= wfMessage( $totalInRoom ? 'chat-join-the-chat' : 'chat-start-a-chat' )->escaped(); ?>
 			</button>
 		</div>
 		<div class="chat-whos-here">
@@ -37,9 +37,9 @@
 											<img src="<?= $wg->BlankImgUrl ?>" data-src="<?= $chatter['avatarUrl'] ?>" class="avatar" width="24" height="24" />
 											<ul>
 												<li class="username"><?= $chatter['username'] ?></li>
-												<li class="edits"><?= wfMsgExt( 'chat-edit-count', array( 'parsemag' ), $chatter['editCount'] ) ?></li>
+												<li class="edits"><?= wfMessage( 'chat-edit-count', $chatter['editCount'] )->escaped() ?></li>
 												<? if ( $chatter['showSince'] ): ?>
-													<li class="since"><?= wfMsg( 'chat-member-since', $chatter['since'] ) ?></li>
+													<li class="since"><?= wfMessage( 'chat-member-since', $chatter['since'] )->escaped() ?></li>
 												<? endif; ?>
 											</ul>
 										</div>
@@ -48,13 +48,13 @@
 												<li class="<?= $profileType ?>">
 													<a href="<?= $chatter['profileUrl'] ?>">
 														<span class="icon">&nbsp;</span>
-														<span class="label"><?= wfMsg( 'chat-user-menu-' . $profileType ) ?></span>
+														<span class="label"><?= wfMessage( 'chat-user-menu-' . $profileType )->escaped() ?></span>
 													</a>
 												</li>
 												<li class="contribs">
 													<a href="<?= $chatter['contribsUrl'] ?>">
 														<span class="icon">&nbsp;</span>
-														<span class="label"><?= wfMsg( 'chat-user-menu-contribs' ) ?></span>
+														<span class="label"><?= wfMessage( 'chat-user-menu-contribs' )->escaped() ?></span>
 													</a>
 												</li>
 											</ul>

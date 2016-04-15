@@ -21,10 +21,10 @@ class ChatRailController extends WikiaController {
 		wfProfileIn( __METHOD__ );
 
 		if ( !empty( $this->totalInRoom ) ) {
-			$this->buttonText = wfMsg( 'chat-join-the-chat' );
+			$this->buttonText = wfMessage( 'chat-join-the-chat' )->text();
 			Chat::info( __METHOD__ . ': Method called - existing room' );
 		} else {
-			$this->buttonText = wfMsg( 'chat-start-a-chat' );
+			$this->buttonText = wfMessage( 'chat-start-a-chat' )->text();
 			Chat::info( __METHOD__ . ': Method called - new room' );
 		}
 		$this->linkToSpecialChat = SpecialPage::getTitleFor( "Chat" )->escapeLocalUrl();

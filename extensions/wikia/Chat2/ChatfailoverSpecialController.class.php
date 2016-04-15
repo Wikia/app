@@ -34,7 +34,7 @@ class ChatfailoverSpecialController extends WikiaSpecialPageController {
 		}
 
 		$mode = (bool)ChatConfig::getMode();
-		$this->wg->Out->setPageTitle( wfMsg( 'Chatfailover' ) );
+		$this->wg->Out->setPageTitle( wfMessage( 'Chatfailover' )->text() );
 
 		if ( $this->request->wasPosted() ) {
 			$reason = $this->request->getVal( 'reason' );

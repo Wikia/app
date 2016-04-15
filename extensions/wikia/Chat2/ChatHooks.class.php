@@ -22,7 +22,7 @@ class ChatHooks {
 
 	public static function onStaffLogFormatRow( $slogType, $result, $time, $linker, &$out ) {
 		if ( $slogType == self::CHAT_FAILOVER_EVENT_TYPE ) {
-			$out = wfMsgExt( 'chat-failover-log-entry', [ 'parseinline' ], [ $time, $result->slog_user_name, $result->slog_user_namedst, $result->slog_comment ] );
+			$out = wfMessage( 'chat-failover-log-entry', $time, $result->slog_user_name, $result->slog_user_namedst, $result->slog_comment )->parse();
 
 			return true;
 		}
@@ -54,7 +54,7 @@ class ChatHooks {
 	 * Add WikiaChatLink to all Chat links (we open them in new window in JS)
 	 */
 	public static function onLinkEnd( $skin, Title $target, array $options, &$text, array &$attribs, &$ret ) {
-		if ( $target->isSpecial('Chat') && $target->isLocal() ) {
+		if ( $target->isSpecial( 'Chat' ) && $target->isLocal() ) {
 			if ( !array_key_exists( 'class', $attribs ) ) {
 				$attribs['class'] = 'WikiaChatLink';
 			} else {
@@ -127,7 +127,7 @@ class ChatHooks {
 				);
 			} else {
 				if ( $wgUser->isAllowed( Chat::CHAT_MODERATOR ) && !$user->isAllowed( Chat::CHAT_MODERATOR ) ) {
-					$tools[] = "<a class='chat-change-ban' data-user-id='{$id}' href='#'>" . wfMsg( 'chat-ban-contributions-heading' ) . "</a>";
+					$tools[] = "<a class='chat-change-ban' data-user-id='{$id}' href='#'>" . wfMessage( 'chat-ban-contributions-heading' )->escaped() . "</a>";
 				}
 			}
 		}
@@ -144,7 +144,7 @@ class ChatHooks {
 			if ( !empty( $user ) ) {
 				$chatUser = new ChatUser( $user );
 				if ( $chatUser->isBanned() && $wgUser->isAllowed( Chat::CHAT_MODERATOR ) ) {
-					$revert = "(" . "<a class='chat-change-ban' data-user-id='{$paramArray[1]}' href='#'>" . wfMsg( 'chat-ban-log-change-ban-link' ) . "</a>" . ")";
+					$revert = "(" . "<a class='chat-change-ban' data-user-id='{$paramArray[1]}' href='#'>" . wfMessage( 'chat-ban-log-change-ban-link' )->escaped() . "</a>" . ")";
 				}
 			}
 		} elseif ( $logaction === 'chatconnect' && !empty( $paramArray ) ) {
@@ -199,7 +199,7 @@ class ChatHooks {
 			$time = $params[2];
 		}
 
-		return wfMsg( 'chat-' . $action . '-log-entry', $link, $time, $endOnText );
+		return wfMessage( 'chat-' . $action . '-log-entry', $link, $time, $endOnText )->text();
 	}
 
 	/**
