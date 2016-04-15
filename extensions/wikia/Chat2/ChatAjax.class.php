@@ -301,7 +301,7 @@ class ChatAjax {
 
 		$tmpl = new EasyTemplate( __DIR__ . '/templates/' );
 		$tmpl->set_vars( [
-			'options' => Chat::GetBanOptions(),
+			'options' => Chat::getBanOptions(),
 			'isChangeBan' => $isChangeBan,
 			'isoTime' => $isoTime,
 			'fmtTime' => $fmtTime

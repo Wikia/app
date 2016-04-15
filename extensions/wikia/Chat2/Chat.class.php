@@ -523,64 +523,12 @@ class Chat {
 	/**
 	 * Get a list of ban time length options
 	 *
+	 * Label are keys, and number of seconds are values
+	 *
 	 * @return array
 	 */
 	public static function getBanOptions() {
-		$in = wfMessage( 'chat-ban-option-list' )->inContentLanguage()->text();
-		$in = preg_replace( '!\s+!', ' ', $in );
-		$list = explode( ',', $in );
-		$out = [ ];
-
-		$FACTORS = self::getBanTimeFactors();
-
-		foreach ( $list as $val ) {
-			// $val is eg. "Label text:54 minutes"
-			$explode1 = explode( ':', $val );
-			if ( count( $explode1 ) != 2 ) {
-				continue;
-			}
-			$label = trim( $explode1[0] );
-			$timeText = trim( $explode1[1] );
-
-			if ( $timeText == 'infinite' ) {
-				$time = 1000 * $FACTORS['years'];
-			} else {
-				$explode2 = explode( ' ', $explode1[1] );
-				if ( count( $explode2 ) != 2 ) {
-					continue;
-				}
-				$number = (int)trim( $explode2[0] );
-				$factorText = trim( $explode2[1] );
-				$factor = 0;
-
-				if ( isset( $FACTORS[$factorText] ) ) {
-					$factor = $FACTORS[$factorText];
-				} elseif ( isset( $FACTORS[$factorText . 's'] ) ) {
-					$factor = $FACTORS[$factorText . 's'];
-				}
-
-				if ( $number < 1 || $factor < 1 ) {
-					continue;
-				}
-
-				$time = $number * $factor;
-			}
-
-			$out[$label] = $time;
-		}
-
-		return $out;
-	}
-
-	private static function getBanTimeFactors() {
-		return [
-			'minutes' => 60,
-			'hours' => 60 * 60,
-			'days' => 60 * 60 * 24,
-			'weeks' => 60 * 60 * 24 * 7,
-			'months' => 60 * 60 * 24 * 30,
-			'years' => 60 * 60 * 24 * 365
-		];
+		return ChatBanTimeOptions::newDefault()->get();
 	}
 
 	public static function getChatters() {
