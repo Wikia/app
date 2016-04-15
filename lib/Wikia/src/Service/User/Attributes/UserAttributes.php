@@ -51,11 +51,11 @@ class UserAttributes {
 	public function getAttribute( $userId, $attributeName, $default = null ) {
 		$attributes = $this->loadAttributes( $userId );
 
-		if ( !is_null( $attributes[$attributeName] ) ) {
+		if ( isset( $attributes[$attributeName] ) ) {
 			return $attributes[$attributeName];
 		}
 
-		if ( !is_null( $this->defaultAttributes[$attributeName] ) ) {
+		if ( isset( $this->defaultAttributes[$attributeName] ) ) {
 			return  $this->defaultAttributes[$attributeName];
 		}
 

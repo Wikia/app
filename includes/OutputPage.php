@@ -309,6 +309,16 @@ class OutputPage extends ContextSource {
 	 * @param $val String tag value
 	 */
 	function addMeta( $name, $val ) {
+		/** Wikia change begin: SEO-361: Investigate <meta name="description" content=" " /> */
+		if ( $name === 'description' && $val === ' ' ) {
+			array_push( $this->mMetatags, array( 'debug-description', 'SPACE' ) );
+			\Wikia\Logger\WikiaLogger::instance()->warning(
+				'Meta description containing just a space', [
+					'ex' => new Exception(),
+				]
+			);
+		}
+		/** Wikia change end */
 		array_push( $this->mMetatags, array( $name, $val ) );
 	}
 

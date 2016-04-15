@@ -1,0 +1,15 @@
+.WikiaRail .module {
+	color: $color-activity-text;
+
+	h2 {
+		clear: both;
+		margin-bottom: 12px;
+		padding: 0;
+	}
+
+	.subtle {
+		color: $color-module-subtle-text;
+		display: block;
+		font-size: 12px;
+	}
+}

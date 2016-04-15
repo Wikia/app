@@ -94,6 +94,8 @@ class WikiaRobots {
 	/**
 	 * Robots we want block on robots.txt level
 	 *
+	 * Only applied if $wgRobotsTxtRemoveDeprecatedDirectives = false
+	 *
 	 * @var string[]
 	 */
 	private $blockedRobots = [
@@ -180,7 +182,7 @@ class WikiaRobots {
 	}
 
 	public function configureRobotsBuilder( RobotsTxt $robots ) {
-		global $wgEnableSpecialSitemapExt, $wgServer;
+		global $wgEnableSpecialSitemapExt, $wgRobotsTxtRemoveDeprecatedDirectives, $wgServer;
 
 
 		if ( !$this->accessAllowed ) {
@@ -209,22 +211,25 @@ class WikiaRobots {
 			$robots->addDisallowedPaths( $this->pathBuilder->buildPathsForParam( $param ) );
 		}
 
+		// Allow specific paths
 		$robots->addAllowedPaths( $this->allowedPaths );
-
-		// Block robots
-		$robots->addBlockedRobots( $this->blockedRobots );
-
-		// Deprecated items, probably we should delete them
-		$robots->addDisallowedPaths( [
-			'/w/',
-			'/trap/',
-			'/dbdumps/',
-			'/wikistats/',
-		] );
 
 		// Allow special pages
 		foreach ( array_keys( $this->allowedSpecialPages ) as $page ) {
 			$robots->addAllowedPaths( $this->pathBuilder->buildPathsForSpecialPage( $page, true ) );
+		}
+
+		if ( empty( $wgRobotsTxtRemoveDeprecatedDirectives ) ) {
+			// Block robots
+			$robots->addBlockedRobots( $this->blockedRobots );
+
+			// Deprecated items, probably we should delete them
+			$robots->addDisallowedPaths( [
+				'/w/',
+				'/trap/',
+				'/dbdumps/',
+				'/wikistats/',
+			] );
 		}
 
 		return $robots;
