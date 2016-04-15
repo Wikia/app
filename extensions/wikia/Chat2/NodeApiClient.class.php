@@ -152,10 +152,7 @@ class NodeApiClient {
 	 */
 	static protected function getHostAndPort() {
 
-		$server = ChatHelper::getServer( 'private' );
-		$hostAndPort = $server['host'] . ':' . $server['port'];
-
-		return $hostAndPort;
+		return ChatHelper::getServer( 'private' )['serverIp'];
 	}
 
 }

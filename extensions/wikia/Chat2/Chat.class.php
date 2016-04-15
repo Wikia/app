@@ -11,6 +11,7 @@ use Wikia\Service\User\Permissions\PermissionsService;
  * @author Sean Colombo
  */
 class Chat {
+	const CHAT = 'Chat';
 	const HTTP_HEADER_XFF = 'X-FORWARDED-FOR';
 	const HTTP_HEADER_USER_AGENT = 'USER-AGENT';
 

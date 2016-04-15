@@ -3818,17 +3818,16 @@ function wfWaitForSlaves( $wiki = false ) {
 			$consul = new Wikia\Consul\Client();
 
 			$slaveInfo = $lb->getServerInfo( 1 ); // e.g. slave.db-g.service.consul
-			// TODO: fixme! test me!
-			$slaves = $consul->getNodesFromHostname( $slaveInfo[ 'hostName' ] );
+			$slaves = $consul->getNodesFromHostname( $slaveInfo['hostName'] );
 
 			// clone the loadbalancer and add all slaves that we've got from Consul
 			$lb = clone $lb;
 
-			for ( $i = 0; $i < count( $slaves ); $i++ ) {
+			for ( $i=0; $i < count( $slaves ); $i++ ) {
 				$entry = $slaveInfo;
-				$entry[ 'host' ] = $slaves[ $i ][ 'host' ];
+				$entry['host'] = $slaves[ $i ];
 
-				$lb->setServerInfo( $i + 1, $entry );
+				$lb->setServerInfo( $i+1, $entry );
 			}
 		}
 		// Wikia change - end

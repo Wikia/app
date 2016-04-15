@@ -74,8 +74,7 @@ class ChatHelper {
 		$serverData = $serverNode[ $wgCityId % $serversCount ];
 
 		return [
-			'host' => $serverData[ 'host' ],
-			'port' => $serverData[ 'port' ],
+			'serverIp' => $serverData,
 			'serverId' => $serverId
 		];
 	}
