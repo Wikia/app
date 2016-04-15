@@ -1,4 +1,4 @@
-<section class="ChatModule <?=( $isEntryPoint ) ? 'ChatEntryPoint':'module'?> ChatModuleUninitialized">
+<section class="ChatModule <?=( $isEntryPoint ) ? 'ChatWidget':'module'?> ChatModuleUninitialized">
 	<div class="chat-contents">
 		<h2 class="chat-headline">
 			<span class="chat-live" data-msg-id="chat-live2"> </span>
@@ -6,7 +6,7 @@
 		</h2>
 		<p class="chat-name"> </p>
 		<div class="chat-join">
-			<button type="button" onclick="ChatEntryPoint.onClickChatButton('<?= $linkToSpecialChat ?>')"> </button>
+			<button type="button" onclick="ChatWidget.onClickChatButton('<?= $linkToSpecialChat ?>')"> </button>
 		</div>
 		<div class="chat-whos-here">
 			<span class="arrow-left"><img src="<?= $blankImgUrl ?>" /></span>
@@ -54,6 +54,6 @@
 	<? endif ?>
 </section>
 <?php if ( $isEntryPoint ): ?>
-	<script language="javascript" type="text/javascript">if ( typeof ChatEntryPoint!=="undefined" ) ChatEntryPoint.init();</script>
-	<a class="ChatMonobookEntryPoint" href="<?= $linkToSpecialChat ?>"><?= wfMsg( 'chat-join-the-chat' )?></a>
+	<script language="javascript" type="text/javascript">if ( typeof ChatWidget!=="undefined" ) ChatWidget.init();</script>
+	<a class="ChatMonobookEntryPoint" href="<?= $linkToSpecialChat ?>"><?= wfMessage( 'chat-join-the-chat' )->escaped()?></a>
 <?php endif; ?>

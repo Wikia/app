@@ -8,7 +8,7 @@
 @import "ChatSprite";
 @import "UserStatsMenu";
 
-body.skin-monobook .ChatEntryPoint,
+body.skin-monobook .ChatWidget,
 body.skin-oasis .ChatMonobookEntryPoint {
 	display: none;
 }
@@ -164,7 +164,7 @@ body.skin-oasis .ChatMonobookEntryPoint {
 }
 
 // Note: a lot of this is borrowed from .WikiaRail .module
-.ChatEntryPoint {
+.ChatWidget {
 	@include clearfix;
 	@include box-shadow(0px, 2px, 5px, darken($color-page,12%));
 	background: $color-page;

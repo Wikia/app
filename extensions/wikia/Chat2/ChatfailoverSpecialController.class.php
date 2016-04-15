@@ -27,25 +27,25 @@ class ChatfailoverSpecialController extends WikiaSpecialPageController {
 	 */
 
 	public function index() {
-		ChatHelper::info( __METHOD__ . ': Method called' );
+		Chat::info( __METHOD__ . ': Method called' );
 		if ( !$this->wg->User->isAllowed( 'chatfailover' ) ) {
 			$this->skipRendering();
 			throw new PermissionsError( 'chatfailover' );
 		}
 
-		$mode = (bool) ChatHelper::getMode();
-		$this->wg->Out->setPageTitle( wfMsg( 'Chatfailover' ) );
+		$mode = (bool)ChatConfig::getMode();
+		$this->wg->Out->setPageTitle( wfMessage( 'Chatfailover' )->text() );
 
 		if ( $this->request->wasPosted() ) {
 			$reason = $this->request->getVal( 'reason' );
-			if ( !empty( $reason ) && $mode == ChatHelper::getMode() ) { // the mode didn't change
+			if ( !empty( $reason ) && $mode == ChatConfig::getMode() ) { // the mode didn't change
 				$mode = !$mode;
-				StaffLogger::log( "chatfo", "switch", $this->wg->User->getID(), $this->wg->User->getName(), $mode, $mode ? 'regular': 'failover', $reason );
-				ChatHelper::changeMode( $mode );
+				StaffLogger::log( ChatHooks::CHAT_FAILOVER_EVENT_TYPE, "switch", $this->wg->User->getID(), $this->wg->User->getName(), $mode, $mode ? 'regular': 'failover', $reason );
+				ChatConfig::changeMode( $mode );
 			}
 		}
 
-		$this->response->setVal( "serversList", ChatHelper::getServersList() );
+		$this->response->setVal( "serversList", ChatConfig::getMainServersList() );
 
 		$this->response->setVal( "mode", $mode ? 'regular': 'failover' );
 		$this->response->setVal( "modeBool", $mode );

@@ -686,7 +686,8 @@ var NodeChatController = $.createClass(NodeRoomController, {
 			type: 'POST',
 			url: wgScript + '?action=ajax&rs=ChatAjax&method=getPrivateRoomID',
 			data: {
-				users: JSON.stringify(users)
+				users: JSON.stringify(users),
+				token: mw.user.tokens.get('editToken')
 			},
 			success: $.proxy(function (data) {
 				$().log("Attempting create private room with users " + users.join(','));
@@ -925,7 +926,7 @@ var NodeChatController = $.createClass(NodeRoomController, {
 		$.getMessages('Chat', $.proxy(function () {
 			$.ajax({
 				type: 'POST',
-				url: wgScript + '?action=ajax&rs=ChatAjax&method=getListOfBlockedPrivate',
+				url: wgScript + '?action=ajax&rs=ChatAjax&method=getPrivateBlocks',
 				success: $.proxy(function (data) {
 					for (var i in data.blockedChatUsers) {
 						var userClear = new models.User({'name': data.blockedChatUsers[i]});
