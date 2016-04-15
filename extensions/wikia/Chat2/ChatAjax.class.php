@@ -219,8 +219,8 @@ class ChatAjax {
 	}
 
 
-	static public function getListOfBlockedPrivate() {
-		return Chat::getListOfBlockedPrivate();
+	static public function getPrivateBlocks() {
+		return Chat::getPrivateBlocks();
 	}
 
 	/**

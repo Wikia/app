@@ -201,7 +201,7 @@ class Chat {
 	/**
 	 * @return array
 	 */
-	public static function getListOfBlockedPrivate() {
+	public static function getPrivateBlocks() {
 		self::info( __METHOD__ . ': Method called' );
 
 		$chatUser = ChatUser::newCurrent();
@@ -218,8 +218,7 @@ class Chat {
 	}
 
 	/**
-	 * Attempts to add the 'chatmoderator' group to the user whose name is provided
-	 * in 'userNameToPromote'.
+	 * Attempts to add the 'chatmoderator' group to the subject user
 	 *
 	 * @param string $subjectUserName
 	 * @param User $adminUser
@@ -228,8 +227,8 @@ class Chat {
 	 */
 	public static function promoteModerator( $subjectUserName, $adminUser ) {
 		self::info( __METHOD__ . ': Method called', [
-			'userNameToPromote' => $subjectUserName,
-			'promotingUser' => $adminUser
+			'subjectUserName' => $subjectUserName,
+			'adminUser' => $adminUser
 		] );
 
 		$subjectUser = User::newFromName( $subjectUserName );
@@ -254,7 +253,7 @@ class Chat {
 	}
 
 	/**
-	 * Promote given user to moderator. No permission check is done here.
+	 * Promote given user to moderator and log that action. No permission checks are done here.
 	 *
 	 * @param User $adminUser
 	 * @param User $subjectUser
@@ -345,7 +344,7 @@ class Chat {
 				'event_type' => 6
 			];
 
-			if ( !wfReadOnly() ) { // Change to wgReadOnlyDbMode if we implement thatwgReadOnly
+			if ( !wfReadOnly() ) { // Change to wgReadOnlyDbMode if we implement that
 				$dbw->insert( 'chatlog', $eventRow, __METHOD__ );
 			}
 		} else {
@@ -406,12 +405,12 @@ class Chat {
 		$wg = F::app()->wg;
 
 		// record the IP of the connecting user.
-		// use memcache so we order only one (user, ip) pair 3 min to avoid flooding the log
+		// throttle adding a log entry using memcached (max. once per 3 minutes)
 		$ip = $wg->Request->getIP();
-		$memcKey = self::getUserIPMemcKey( $wg->User->getID(), $ip );
-		$entry = $wg->Memc->get( $memcKey );
+		$memcKey = self::getConnectionLogThrottleCacheKey( $wg->User->getID(), $ip );
+		$throttleData = $wg->Memc->get( $memcKey );
 
-		if ( empty( $entry ) ) {
+		if ( empty( $throttleData ) ) {
 			$wg->Memc->set( $memcKey, true, 60 * 3 /*3 min*/ );
 
 			$log = new LogPage( 'chatconnect', false, false );
@@ -448,7 +447,7 @@ class Chat {
 
 	}
 
-	protected static function getUserIPMemcKey( $userId, $address ) {
+	protected static function getConnectionLogThrottleCacheKey( $userId, $address ) {
 		return wfSharedMemcKey( 'Chat', 'userIP', $userId, $address, 'v1' );
 	}
 
