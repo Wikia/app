@@ -11,6 +11,8 @@ class ChatEntryPoint {
 	 * user leaves chat. That's why this cache time is pretty short
 	 */
 	const CHAT_USER_LIST_CACHE = 60;
+	const RIGHT_RAIL_MODULE_CLASS = 'module';
+	const PARSER_TAG_CLASS = 'ChatEntryPoint';
 
 	/**
 	 * @brief This function set parseTag hook
@@ -45,6 +47,7 @@ class ChatEntryPoint {
 			'entryPointGuidelinesMessage' => $entryPointGuidelinesMessage->exists() ?
 				$entryPointGuidelinesMessage->text() : null,
 			'fromParserTag' => $fromParserTag,
+			'sectionClassName' => $fromParserTag ? self::PARSER_TAG_CLASS : self::RIGHT_RAIL_MODULE_CLASS,
 			'joinTheChatMessage' => $joinTheChatMessage->exists() ?
 				$joinTheChatMessage->text() : null,
 			'linkToSpecialChat' => SpecialPage::getTitleFor( "Chat" )->escapeLocalUrl(),
@@ -68,7 +71,7 @@ class ChatEntryPoint {
 		wfProfileIn( __METHOD__ );
 
 		$templateEngine = ( new Wikia\Template\MustacheEngine )
-			->setPrefix(dirname( __FILE__ ) . '/templates');
+			->setPrefix(__DIR__ . '/templates');
 
 		$html = $templateEngine->clearData()
 			->setData(  self::getEntryPointTemplateVars( true ) )

@@ -3,7 +3,7 @@
 class ChatEntryPointTest extends WikiaBaseTest {
 
 	protected function setUp() {
-		$this->setupFile = dirname( __FILE__ ) . '/../Chat_setup.php';
+		$this->setupFile = __DIR__ . '/../Chat_setup.php';
 		parent::setUp();
 	}
 
@@ -110,6 +110,7 @@ class ChatEntryPointTest extends WikiaBaseTest {
 					'chatUsersCount' => 2,
 					'entryPointGuidelinesMessage' => 'message',
 					'fromParserTag' => true,
+					'sectionClassName' => 'ChatEntryPoint',
 					'joinTheChatMessage' => 'message',
 					'linkToSpecialChat' => 'Chat',
 					'siteName' => 'Test wikia',
@@ -128,6 +129,7 @@ class ChatEntryPointTest extends WikiaBaseTest {
 					'chatUsersCount' => 2,
 					'entryPointGuidelinesMessage' => 'message',
 					'fromParserTag' => false,
+					'sectionClassName' => 'module',
 					'joinTheChatMessage' => 'message',
 					'linkToSpecialChat' => 'Chat',
 					'siteName' => 'Test wikia',
@@ -146,6 +148,7 @@ class ChatEntryPointTest extends WikiaBaseTest {
 					'chatUsersCount' => 2,
 					'entryPointGuidelinesMessage' => 'message',
 					'fromParserTag' => false,
+					'sectionClassName' => 'module',
 					'joinTheChatMessage' => 'message',
 					'linkToSpecialChat' => 'Chat',
 					'siteName' => 'Test wikia',
@@ -164,6 +167,7 @@ class ChatEntryPointTest extends WikiaBaseTest {
 					'chatUsersCount' => 2,
 					'entryPointGuidelinesMessage' => 'message',
 					'fromParserTag' => true,
+					'sectionClassName' => 'ChatEntryPoint',
 					'joinTheChatMessage' => 'message',
 					'linkToSpecialChat' => 'Chat',
 					'siteName' => 'Test wikia',
@@ -182,6 +186,7 @@ class ChatEntryPointTest extends WikiaBaseTest {
 					'chatUsersCount' => 0,
 					'entryPointGuidelinesMessage' => 'message',
 					'fromParserTag' => true,
+					'sectionClassName' => 'ChatEntryPoint',
 					'joinTheChatMessage' => 'message',
 					'linkToSpecialChat' => 'Chat',
 					'siteName' => 'Test wikia',
