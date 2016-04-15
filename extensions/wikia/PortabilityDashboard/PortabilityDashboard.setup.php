@@ -11,3 +11,5 @@ $wgSpecialPageGroups[ 'PortabilityDashboard' ] = 'wikia';
 
 $wgHooks[ 'UnconvertedInfoboxesQueryRecached' ][] = 'PortabilityDashboardHooks::updateUnconvertedInfoboxes';
 $wgHooks[ 'TemplatesWithoutTypeQueryRecached' ][] = 'PortabilityDashboardHooks::updateNotClassifiedTemplates';
+
+$wgExtensionMessagesFiles['AbTesting'] = $dir . 'PortabilityDashboard.i18n.php';
