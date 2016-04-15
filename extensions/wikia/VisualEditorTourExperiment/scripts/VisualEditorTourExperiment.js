@@ -57,11 +57,14 @@ define('VisualEditorTourExperiment', ['jquery', 'wikia.loader', 'wikia.mustache'
 		}
 
 		Tour.prototype._setupStep = function (item, id) {
+			var buttonLabel = id === this.tourConfig.length - 1 ? 'Start editing' : 'Next';
+
 			this.steps[id] = {
 				$element: $(item.selector),
 				content: mustache.render(this.contentTemplate, {
 					title: item.title,
-					description: item.description
+					description: item.description,
+					buttonLabel: buttonLabel
 				})
 			};
 		}
