@@ -39,7 +39,6 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 		log('SourcePoint recovery enabled', 'debug', logGroup);
 		recoveryInitialized = true;
 		googleApi = recoveryHelper.createSourcePointTag();
-		recoveryHelper.recoverSlots();
 	}
 
 	function loadSourcePoint() {

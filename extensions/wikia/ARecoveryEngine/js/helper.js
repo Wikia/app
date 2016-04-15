@@ -58,17 +58,6 @@ define('ext.wikia.aRecoveryEngine.recovery.helper', [
 		return isRecoveryEnabled() && recoverableSlots.indexOf(slotName) !== -1;
 	}
 
-	function recoverSlots() {
-		if (!isBlocking() || !isRecoveryEnabled()) {
-			return;
-		}
-
-		log(['Starting recovery', slotsToRecover], 'debug', logGroup);
-		while (slotsToRecover.length) {
-			win.ads.runtime.sp.slots.push([slotsToRecover.shift()]);
-		}
-	}
-
 	return {
 		addSlotToRecover: addSlotToRecover,
 		addOnBlockingCallback: addOnBlockingCallback,
@@ -76,7 +65,6 @@ define('ext.wikia.aRecoveryEngine.recovery.helper', [
 		initEventQueue: initEventQueue,
 		isRecoveryEnabled: isRecoveryEnabled,
 		isBlocking: isBlocking,
-		isRecoverable: isRecoverable,
-		recoverSlots: recoverSlots
+		isRecoverable: isRecoverable
 	};
 });

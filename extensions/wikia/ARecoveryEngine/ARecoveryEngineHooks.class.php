@@ -36,4 +36,12 @@ EOT;
 
 		return true;
 	}
+
+	public static function onBeforePageDisplay(&$outputPage, &$skin) {
+		global $wgOasisLastCssScripts;
+		$sp = new ARecoveryUnlockCSS();
+		$wgOasisLastCssScripts[] = $sp->getUnlockCSSUrl();
+
+		return true;
+	}
 }
