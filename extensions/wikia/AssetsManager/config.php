@@ -2842,3 +2842,12 @@ $config['special_community_page_scss'] = [
 		'//extensions/wikia/CommunityPage/styles/CommunityPageOverrides.scss',
 	],
 ];
+
+$config['special_portability_dashboard_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'assets' => [
+		'//extensions/wikia/PortabilityDashboard/styles/PortabilityDashboard.scss',
+	],
+];
+
+
