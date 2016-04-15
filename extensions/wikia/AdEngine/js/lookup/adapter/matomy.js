@@ -1,5 +1,7 @@
 /*global define*/
-define('ext.wikia.adEngine.lookup.adapter.matomy', function () {
+define('ext.wikia.adEngine.lookup.adapter.matomy', [
+	'ext.wikia.adEngine.adContext'
+], function (adContext) {
 	'use strict';
 
 	var bidderName = 'appnexus',
@@ -42,11 +44,34 @@ define('ext.wikia.adEngine.lookup.adapter.matomy', function () {
 		};
 	}
 
+	function configureOasisSlots() {
+		var context = adContext.getContext(),
+			i,
+			slotName;
+
+		if (context.targeting.pageType === 'home') {
+			for (i = 0; i < slots.oasis.length; i++) {
+				slotName = slots.oasis[i];
+				if (slotName.indexOf('TOP') > -1) {
+					slots.oasis.push('HOME_' + slotName);
+					slots.oasis.splice(i, 1);
+				}
+			}
+			slots.oasis.push('PREFOOTER_MIDDLE_BOXAD');
+		}
+		if (context.slots.incontentLeaderboard) {
+			slots.oasis.push('INCONTENT_LEADERBOARD');
+		}
+	}
+
 	function getAdUnits(skin) {
 		var adUnits = [];
 
 		if (!slots[skin]) {
 			return [];
+		}
+		if (skin === 'oasis') {
+			configureOasisSlots();
 		}
 
 		slots[skin].forEach(function (slotName) {
