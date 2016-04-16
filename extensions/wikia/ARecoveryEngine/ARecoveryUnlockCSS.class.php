@@ -24,7 +24,7 @@ class ARecoveryUnlockCSS {
 			return $cachedCriptedUrl;
 		} else {
 			$spQuery = self::postJson(self::API_URL . self::API_ENDPOINT, $jsonData);
-			if ($spQuery['code'] == 200) {
+			if ($spQuery['code'] == 200 && $this->verifyContent($spQuery['response'])) {
 				$memCache->set($wikiaCssUrl, $spQuery['response'], self::CACHE_TTL);
 				return $spQuery['response'];
 			} else {
@@ -36,6 +36,15 @@ class ARecoveryUnlockCSS {
 		return $wikiaCssUrl;
 	}
 
+	private function verifyContent($url) {
+		return true; //TODO: fixme
+
+		$content = Http::get($url, ['noProxy' => true, 'timeout' => self::TIMEOUT, 'followRedirects' => true, 'maxRedirects' => 20]);
+		if (strpos($content, '#WikiaArticle') !== false) {
+			return true;
+		}
+		return false;
+	}
 
 	private function getWikiaUnlockCSSUrl() {
 		$am = AssetsManager::getInstance();
