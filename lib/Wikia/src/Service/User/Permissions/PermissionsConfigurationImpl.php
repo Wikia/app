@@ -146,6 +146,7 @@ class PermissionsConfigurationImpl implements PermissionsConfiguration {
 		'achievements-exempt',
 		'achievements-explicit',
 		'admindashboard',
+		'commentcreate',
 		'commentmove',
 		'commentedit',
 		'commentdelete',
