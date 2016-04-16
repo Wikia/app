@@ -9,7 +9,7 @@
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
-/*global veTrack, Wikia */
+/*global require, veTrack, Wikia */
 
 /**
  * Platform preparation for the MediaWiki view page. This loads (when user needs it) the
@@ -55,12 +55,6 @@
 
 		// Cleanup spinner when hook is fired
 		mw.hook( 've.activationComplete' ).add( function hide() {
-			require(
-				['VisualEditorTourExperiment', 'VisualEditorTourExperimentConfig'],
-				function(VETour, veTourConfig) {
-					(new VETour(veTourConfig)).start();
-				}
-			);
 			if ( spinnerTimeoutId ) {
 				clearTimeout( spinnerTimeoutId );
 				spinnerTimeoutId = null;
@@ -399,6 +393,11 @@
 
 	if ( init.isAvailable ) {
 		$( function () {
+			mw.hook( 've.activationComplete' ).add( function initTour() {
+				require( [ 'VisualEditorTourExperimentInit' ], function ( veTourInit ) {
+					veTourInit.init();
+				} );
+			} );
 			if ( isViewPage && uri.query.veaction === 'edit' ) {
 				var isSection = uri.query.vesection !== undefined;
 				init.showLoading();
