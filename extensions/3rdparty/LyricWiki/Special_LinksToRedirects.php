@@ -131,114 +131,143 @@ class Linkstoredirects extends SpecialPage{
 				// Make a mapping of all source page-id => targets
 				// This is an array of pairs instead of a mapping since both page-ids and targets can occur multiple times in the list.
 				$LIMIT = 1000;
+				$ids = array();
+				$allListings = array();
+
+				$dbr = wfGetDB(DB_SLAVE);
 				$queryString = "SELECT pl.pl_from AS from_id, page_title AS links_to
 								FROM $TABLE_PREFIX"."page
 								LEFT JOIN $TABLE_PREFIX"."pagelinks AS pl ON page_namespace=pl_namespace AND page_title=pl.pl_title
 								LEFT JOIN $TABLE_PREFIX"."templatelinks ON page_namespace=tl_namespace AND page_title=tl_title
 								RIGHT JOIN $TABLE_PREFIX"."pagelinks AS links2 ON page_id=links2.pl_from
 								WHERE page_namespace=0 AND page_is_redirect=1 AND (pl.pl_title IS NOT NULL or tl_title IS NOT NULL) LIMIT $LIMIT";
-				$ids = array();
-				$allListings = array();
-				if($result = mysql_query($queryString,$db)){
-					if(($numRows = mysql_num_rows($result)) && ($numRows > 0)){
-						$totalResults = $numRows; // stored because numRows will get overwritten by the next query.
-						for($cnt=0; $cnt<$numRows; $cnt++){
-							$pageId = mysql_result($result, $cnt, "from_id");
-							$target = mysql_result($result, $cnt, "links_to");
-							$allListings[] = array($pageId, $target);
 
-							// Somehow, a blank from_id can slip into the results (which messes up the query).
-							if($pageId != ""){
-								$ids[] = $pageId; // will uniquify later
-							}
+				// NOTE: Couldn't get JOINs to co-operate in the longer-form, so just submitting the real query.
+				$result = $dbr->query($queryString);
+				// $result = $dbr->select(
+					// array( $TABLE_PREFIX."page" ),
+					// array( 'pl.pl_from AS from_id', 'page_title AS links_to'),
+					// array( "page_namespace" => 0,
+						   // "page_is_redirect" => 1,
+						   // "(pl.pl_title IS NOT NULL or tl_title IS NOT NULL)",
+						////	"LEFT JOIN $TABLE_PREFIX"."pagelinks AS pl ON page_namespace=pl_namespace AND page_title=pl.pl_title",
+						////	"LEFT JOIN $TABLE_PREFIX"."templatelinks ON page_namespace=tl_namespace AND page_title=tl_title",
+						////	"RIGHT JOIN $TABLE_PREFIX"."pagelinks AS links2 ON page_id=links2.pl_from"
+					// ),
+					// __METHOD__,
+					// array(
+						// 'LIMIT' => $LIMIT
+					// ),
+					 // array(
+						// "$TABLE_PREFIX"."pagelinks AS pl" => array("LEFT JOIN", "page_namespace=pl_namespace AND page_title=pl.pl_title"),
+						// "$TABLE_PREFIX"."templatelinks" => array("LEFT JOIN", "page_namespace=tl_namespace AND page_title=tl_title"),
+						// "$TABLE_PREFIX"."pagelinks AS links2" => array("RIGHT JOIN", "page_id=links2.pl_from")
+					// )
+				// );
+				
+				if($dbr->numRows($result) > 0){
+					$totalResults  = $dbr->numRows($result);
+					for($cnt=0; $cnt < $dbr->numRows($result); $cnt++){
+						$row = $dbr->fetchRow( $result );
+						$pageId = $row["from_id"];
+						$target = $row["links_to"];
+						$allListings[] = array($pageId, $target);
+
+						// Somehow, a blank from_id can slip into the results (which messes up the query).
+						if($pageId != ""){
+							$ids[] = $pageId; // will uniquify later
 						}
-
-						// Find the page titles of all of the source pages by id (uniquify the id array).
-						GLOBAL $wgSitename;
-						$nsMapping = array(
-										1 => "Talk",
-										2 => "User",
-										3 => "User_talk",
-										4 => $wgSitename,
-										5 => $wgSitename."_talk",
-										6 => ":File",
-										7 => "File_talk",
-										8 => "MediaWiki",
-										9 => "MediaWiki_talk",
-										10 => ":Template",
-										11 => "Template_talk",
-										12 => "Help",
-										13 => "Help_talk",
-										14 => ":Category",
-										15 => "Category_talk"
-									);
-						$idToTitle = array();
-						$ids = array_unique($ids);
-						$queryString = "SELECT page_id, page_namespace, page_title FROM $TABLE_PREFIX"."page WHERE page_id IN (".implode(",", $ids).")";
-						if($result = mysql_query($queryString,$db)){
-							if(($numRows = mysql_num_rows($result)) && ($numRows > 0)){
-								for($cnt=0; $cnt<$numRows; $cnt++){
-									$id = mysql_result($result, $cnt, "page_id");
-									$ns = mysql_result($result, $cnt, "page_namespace");
-									$title = mysql_result($result, $cnt, "page_title");
-
-									if(isset($nsMapping[$ns])){
-										$title = $nsMapping[$ns].":$title";
-									}
-
-									$idToTitle[$id] = $title;
-								}
-							}
-						}
-
-						$missing = "";
-						print "The following source pages link to redirects:<br/>\n";
-						print "<table>\n";
-						print "<tr><th nowrap='nowrap'>Source Page</th><th>Redirect Page</th></tr>\n";
-						$index = 0;
-						foreach($allListings as $pair){
-							$fromId = $pair[0];
-							$to = $pair[1];
-
-							if(isset($idToTitle[$fromId])){
-								$from = $idToTitle[$fromId];
-
-								print "<tr".((($index % 2)==0)?"":" class='odd'")."><td>[[$from]]</td><td>[[$to]]</td></tr>\n";
-
-	/*
-		// TODO: IMPLEMENT THIS IF WE WANT TO LET SINGLE ITEMS BE CLEARED
-								$delim = "&amp;";
-								$prefix = "";
-
-								// If the short-url is in the REQUEST_URI, make sure to add the index.php?title= prefix to it.
-								if(strpos($REQUEST_URI, "index.php?title=") === false){
-									$prefix = "/index.php?title=";
-
-									// If we're adding the index.php ourselves, but the request still started with a slash, remove it because that would break the request if it came after the "title="
-									if(substr($REQUEST_URI,0,1) == "/"){
-										$REQUEST_URI = substr($REQUEST_URI, 1);
-									}
-								}
-								print "	- (report as [{{SERVER}}$prefix$REQUEST_URI$delim"."artist=".urlencode($artist)."&amp;song=".urlencode($song)." fixed])";
-								print "</td></tr>";
-	*/
-							} else {
-								$missing .= "Could not find the page_title for id $fromId which linked to <strong>[[$to]]</strong>.  Try [[Special:WhatLinksHere/$to]] instead.<br/>\n";
-							}
-							$index++;
-						}
-						print "</table><br/>\n";
-						print "$missing<br/>\n";
-						if($totalResults < $LIMIT){
-							print "There are <strong>$totalResults </strong> links to redirects left on the site.  They are all listed above.";
-						} else {
-							print "There are <strong>$totalResults </strong> links to redirects on this page but we set a limit of $LIMIT, so there are probably more.<br/>\n";
-						}
-					} else {
-						print "<em>No more links to redirects found. <strong>(Yay!)</strong></em>\n";
 					}
-				}
 
+					// Find the page titles of all of the source pages by id (uniquify the id array).
+					GLOBAL $wgSitename;
+					$nsMapping = array(
+									1 => "Talk",
+									2 => "User",
+									3 => "User_talk",
+									4 => $wgSitename,
+									5 => $wgSitename."_talk",
+									6 => ":File",
+									7 => "File_talk",
+									8 => "MediaWiki",
+									9 => "MediaWiki_talk",
+									10 => ":Template",
+									11 => "Template_talk",
+									12 => "Help",
+									13 => "Help_talk",
+									14 => ":Category",
+									15 => "Category_talk"
+								);
+					$idToTitle = array();
+					$ids = array_unique($ids);
+
+					$result = $dbr->select(
+						array( $TABLE_PREFIX."page" ),
+						array( 'page_id', 'page_namespace', 'page_title'),
+						array( "page_id IN (".implode(",", $ids).")" ),
+						__METHOD__
+					);
+					if($dbr->numRows($result) > 0){
+						for($cnt=0; $cnt < $dbr->numRows($result); $cnt++){
+							$row = $dbr->fetchRow( $result );
+							$id = $row["page_id"];
+							$ns = $row["page_namespace"];
+							$title = $row["page_title"];
+
+							if(isset($nsMapping[$ns])){
+								$title = $nsMapping[$ns].":$title";
+							}
+
+							$idToTitle[$id] = $title;
+						}
+					}
+
+					$missing = "";
+					print "The following source pages link to redirects:<br/>\n";
+					print "<table>\n";
+					print "<tr><th nowrap='nowrap'>Source Page</th><th>Redirect Page</th></tr>\n";
+					$index = 0;
+					foreach($allListings as $pair){
+						$fromId = $pair[0];
+						$to = $pair[1];
+
+						if(isset($idToTitle[$fromId])){
+							$from = $idToTitle[$fromId];
+
+							print "<tr".((($index % 2)==0)?"":" class='odd'")."><td>[[$from]]</td><td>[[$to]]</td></tr>\n";
+
+/*
+	// TODO: IMPLEMENT THIS IF WE WANT TO LET SINGLE ITEMS BE CLEARED
+							$delim = "&amp;";
+							$prefix = "";
+
+							// If the short-url is in the REQUEST_URI, make sure to add the index.php?title= prefix to it.
+							if(strpos($REQUEST_URI, "index.php?title=") === false){
+								$prefix = "/index.php?title=";
+
+								// If we're adding the index.php ourselves, but the request still started with a slash, remove it because that would break the request if it came after the "title="
+								if(substr($REQUEST_URI,0,1) == "/"){
+									$REQUEST_URI = substr($REQUEST_URI, 1);
+								}
+							}
+							print "	- (report as [{{SERVER}}$prefix$REQUEST_URI$delim"."artist=".urlencode($artist)."&amp;song=".urlencode($song)." fixed])";
+							print "</td></tr>";
+*/
+						} else {
+							$missing .= "Could not find the page_title for id $fromId which linked to <strong>[[$to]]</strong>.  Try [[Special:WhatLinksHere/$to]] instead.<br/>\n";
+						}
+						$index++;
+					}
+					print "</table><br/>\n";
+					print "$missing<br/>\n";
+					if($totalResults < $LIMIT){
+						print "There are <strong>$totalResults </strong> links to redirects left on the site.  They are all listed above.";
+					} else {
+						print "There are <strong>$totalResults </strong> links to redirects on this page but we set a limit of $LIMIT, so there are probably more.<br/>\n";
+					}
+				} else {
+					print "<em>No more links to redirects found. <strong>(Yay!)</strong></em>\n";
+				}
 
 				$content = ob_get_clean();
 				$wgMemc->set($CACHE_KEY, $content, strtotime("+2 hour"));

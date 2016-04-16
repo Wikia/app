@@ -125,7 +125,7 @@ class Soapfailures extends SpecialPage{
 				if ( $result ) {
 					print "Deleted.";
 				} else {
-					print "Failed. ".mysql_error();
+					print "Failed. ".$dbw->lastError();
 				}
 				print "<br/>Clearing the cache... ";
 
@@ -182,23 +182,25 @@ class Soapfailures extends SpecialPage{
 			$cachedOn = $wgMemc->get($CACHE_KEY_TIME);
 			$statsHtml = $wgMemc->get($CACHE_KEY_STATS);
 			if(!$data){
-				$db = &wfGetDB(DB_SLAVE)->getProperty('mConn');
-				$queryString = "SELECT * FROM lw_soap_failures ORDER BY numRequests DESC LIMIT $MAX_RESULTS";
-				if($result = mysql_query($queryString,$db)){
+				$dbr = wfGetDB(DB_SLAVE);
+				$result = $dbr->select(
+					array( 'lw_soap_failures' ),
+					array( 'request_artist as artist', 'request_song as song', 'numRequests', 'lookedFor' ),
+					array(),
+					__METHOD__,
+					array(
+						'LIMIT' => $MAX_RESULTS,
+						'ORDER BY' => "numRequests DESC"
+					)
+				);
+
+				if($dbr->numRows($result) > 0){
 					$data = array();
-					if(($numRows = mysql_num_rows($result)) && ($numRows > 0)){
-						for($cnt=0; $cnt<$numRows; $cnt++){
-							$row = array();
-							$row['artist'] = mysql_result($result, $cnt, "request_artist");
-							$row['song'] = mysql_result($result, $cnt, "request_song");
-							$row['numRequests'] = mysql_result($result, $cnt, "numRequests");
-							$row['lookedFor'] = mysql_result($result, $cnt, "lookedFor");
-							$row['lookedFor'] = formatLookedFor($row['lookedFor']);
-							$data[] = $row;
-						}
+					for($cnt=0; $cnt < $dbr->numRows($result); $cnt++){
+						$row = $dbr->fetchRow( $result );
+						$row['lookedFor'] = formatLookedFor($row['lookedFor']);
+						$data[] = $row;
 					}
-				} else {
-					$wgOut->addHTML("<br/><br/><strong>Error: with query</strong><br/><em>$queryString</em><br/><strong>Error message: </strong>".mysql_error($db));
 				}
 
 				$cachedOn = date('m/d/Y \a\t g:ia');
@@ -307,4 +309,3 @@ function formatLookedFor($lookedFor){
 	}
 	return $lookedFor;
 } // end formatLookedFor()
-

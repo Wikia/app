@@ -82,12 +82,11 @@ function sandboxParse($wikiText)
 ////
 function lw_simpleQuery($queryString){
 	$retVal = "";
-	$db = wfGetDB(DB_SLAVE)->getProperty('mConn');
 
-	// TODO: use Database class instead
-	if($result = mysql_query($queryString,$db)){
-		if(($numRows = mysql_num_rows($result)) && ($numRows > 0)){
-			$row = mysql_fetch_row($result);
+	$dbr = wfGetDB(DB_SLAVE);
+	if($result = $dbr->query( $queryString, __METHOD__ )){
+		if(($numRows = $dbr->numRows($result)) && ($numRows > 0)){
+			$row = array_values($dbr->fetchRow( $result ));
 			$retVal = $row[0];
 		}
 	}

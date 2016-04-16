@@ -24,7 +24,7 @@
 // - TODO: Tracklisting format which isn't tied to a master artist or album.  This is needed for parsing list pages, etc. It will require a different structure for song-names since they will have the artist in them.  Should name it differently to avoid confusion (eg: "song" is current, this would be "pageTitle" or "fullTitle" or something - just keep in mind to avoid confusion related to namespaces when naming this return value... eg: 'fullPageTitle' would be wrong since "Gracenote:" wouldn't go in there).
 ////
 
-include_once 'extras.php'; // for lw_simpleQuery to start
+include_once 'extras.php';
 GLOBAL $LW_USE_PERSISTENT_CONNECTIONS;
 $LW_USE_PERSISTENT_CONNECTIONS = true;
 $ENABLE_LOGGING_SLOW_SOAP = false;
@@ -2447,7 +2447,7 @@ function logSoapFailure($origArtistSql, $origSongSql, $lookedForSql){
 				wfDebug("LWSOAP: Stored in the database successfully.\n");
 				$wgMemc->delete($memkey);
 			} else {
-				wfDebug("LWSOAP: Error storing SOAP failure!! - " . mysql_error() . "\n");
+				wfDebug("LWSOAP: Error storing SOAP failure!! - " . $dbw->lastError() . "\n");
 			}
 		} else {
 			wfDebug("LWSOAP: Updating $memkey to " . ($numFails + 1) . "\n");
@@ -2477,12 +2477,13 @@ function requestStarted($funcName, $requestData){
 	 */
 	if( !wfReadOnly() ) {
 		if(defined('TRACK_REQUEST_RUNTIMES') && TRACK_REQUEST_RUNTIMES) {
-			$db = lw_connect();
+			$dbw = wfGetDB( DB_MASTER );
 			$requestData = str_replace("'", "[&apos;]", $requestData);
 			$queryString = "INSERT INTO apiRequests (requestedThrough, requestedFunction, requestData, requestTime)";
-			$queryString.= " VALUES ('$REQUEST_TYPE', '".mysql_real_escape_string($funcName, $db)."', '".mysql_real_escape_string($requestData, $db)."', NOW())";
-			if( mysql_query($queryString, $db ) ){
-				$retVal = mysql_insert_id( $db );
+			$queryString.= " VALUES ('$REQUEST_TYPE', '".$dbw->strencode($funcName)."', '".$dbw->strencode($requestData)."', NOW())";
+			if($dbw->query($queryString)){
+				$dbw->commit();
+				$retVal = $dbw->insertId();
 			}
 		}
 	}
@@ -2498,8 +2499,13 @@ function requestStarted($funcName, $requestData){
 function requestFinished($id){
 	if( !wfReadOnly() ) {
 		if(defined('TRACK_REQUEST_RUNTIMES') && TRACK_REQUEST_RUNTIMES){
-			$db = lw_connect();
-			mysql_query("DELETE FROM apiRequests WHERE id=$id", $db);
+			$dbw = &wfGetDB(DB_MASTER);
+			$dbw->delete( "apiRequests",
+				array(
+					'id' => $id
+				),
+				__METHOD__
+			);
 		}
 	}
 } // end requestFinished()
