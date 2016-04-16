@@ -37,10 +37,8 @@ class ARecoveryUnlockCSS {
 	}
 
 	private function verifyContent($url) {
-		global $wgDevelEnvironment;
-		if (!empty($wgDevelEnvironment)) {
-			return true;
-		}
+		return true; //TODO: fixme
+
 		$content = Http::get($url, ['noProxy' => true, 'timeout' => self::TIMEOUT, 'followRedirects' => true, 'maxRedirects' => 20]);
 		if (strpos($content, '#WikiaArticle') !== false) {
 			return true;
