@@ -207,7 +207,8 @@ function getToneFuzeLink($isAboveLyrics=true, $artist, $songTitle=""){
 	$ringtoneLink .= "adunit_id: {$AD_ID_STRING},";
 	$ringtoneLink .= "div_id: \"cf_async_\" + Math.floor((Math.random() * 999999999))";
 	$ringtoneLink .= "};";
-	$ringtoneLink .= "if($('.ArticlePreview').length == 0){"; // prevent this code from obliterating the preview
+	// For some reason "&" gets escaped, so we have to flip each term and the overall condition to get the same value (De Morgan's Law).
+	$ringtoneLink .= "if(!(($('.ArticlePreview').length!== 0) || ($('.WikiaMainContent').length===0) || ($('.ve-spinner.visible').length!== 0))){"; // prevent this code from obliterating the preview & Visual Editor
 		$ringtoneLink .= "document.write('<div id=\"'+opts.div_id+'\"></div>');var c=function(){cf.showAsyncAd(opts)};if(window.cf)c();else{cf_async=!0;var r=document.createElement(\"script\"),s=document.getElementsByTagName(\"script\")[0];r.async=!0;r.src=\"//srv.tonefuse.com/showads/showad.js\";r.readyState?r.onreadystatechange=function(){if(\"loaded\"==r.readyState||\"complete\"==r.readyState)r.onreadystatechange=null,c()}:r.onload=c;s.parentNode.insertBefore(r,s)};";
 	$ringtoneLink .= "}";
 	$ringtoneLink .= "})();";
