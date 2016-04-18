@@ -15,7 +15,6 @@ var NodeChatSocketWrapper = $.createClass(Observable, {
 		NodeChatSocketWrapper.superclass.constructor.apply(this, arguments);
 		this.sessionData = null;
 		this.roomId = roomId;
-		this.serverId = WIKIA_NODE_INSTANCE;
 	},
 
 	send: function ($msg) {
@@ -27,7 +26,7 @@ var NodeChatSocketWrapper = $.createClass(Observable, {
 
 	connect: function () {
 		// Global vars from env
-		var url = 'http://' + WIKIA_NODE_HOST + ':' + WIKIA_NODE_PORT;
+		var url = 'http://' + window.wgChatHost + ':' + window.wgChatPort;
 		$().log(url, 'Chat server');
 		console.log("connecting to url: " + url);
 
@@ -91,7 +90,7 @@ var NodeChatSocketWrapper = $.createClass(Observable, {
 
 		};
 
-		this.proxy(callback, this)('name=' + encodedWgUserName + '&key=' + wgChatKey + '&roomId=' + this.roomId + '&serverId=' + this.serverId);
+		this.proxy(callback, this)('name=' + encodedWgUserName + '&key=' + wgChatKey + '&roomId=' + this.roomId);
 	},
 
 
@@ -290,7 +289,7 @@ var NodeRoomController = $.createClass(Observable, {
 					if (!this.isInitialized) {
 						this.afterInitQueue.push(chatEntry.xport());
 						//temp chat entry in case of slow connection time
-						chatEntry.set({temp: true, avatarSrc: wgAvatarUrl});
+						chatEntry.set({temp: true, avatarSrc: wgChatMyAvatarUrl});
 						this.model.chats.add(chatEntry);
 					} else {
 						this.socket.send(chatEntry.xport());
@@ -956,8 +955,8 @@ var NodeChatController = $.createClass(NodeRoomController, {
 // Bootstrap the app
 //
 $(function () {
-	if (typeof roomId !== "undefined") {
-		window.mainRoom = new NodeChatController(roomId);
+	if (typeof window.wgChatRoomId !== "undefined") {
+		window.mainRoom = new NodeChatController(window.wgChatRoomId);
 		window.mainRoom.init();
 	}
 });

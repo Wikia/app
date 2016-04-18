@@ -38,11 +38,8 @@ class ChatController extends WikiaController {
 		// Set the hostname of the node server that the page will connect to.
 		$chathost = ChatConfig::getPublicHost();
 		$server = explode( ":", $chathost );
-		$this->nodeHostname = $server[0];
-		$this->nodePort = $server[1];
-
-		$chatmain = ChatConfig::getMainServer();
-		$this->nodeInstance = $chatmain['serverId'];
+		$this->chatServerHost = $server[0];
+		$this->chatServerPort = $server[1];
 
 		// Some building block for URLs that the UI needs.
 		$this->pathToProfilePage = Title::makeTitle( !empty( $this->wg->EnableWallExt ) ? NS_USER_WALL : NS_USER_TALK, '$1' )->getFullURL();
@@ -106,21 +103,18 @@ class ChatController extends WikiaController {
 	public function onMakeGlobalVariablesScript( array &$vars ) {
 		global $wgLang;
 
-		$vars['roomId'] = $this->roomId;
-		$vars['wgChatMod'] = $this->isModerator;
-		$vars['WIKIA_NODE_HOST'] = $this->nodeHostname;
-		$vars['WIKIA_NODE_INSTANCE'] = $this->nodeInstance;
-		$vars['WIKIA_NODE_PORT'] = $this->nodePort;
-		$vars['WEB_SOCKET_SWF_LOCATION'] = $this->wg->ExtensionsPath . '/wikia/Chat/swf/WebSocketMainInsecure.swf?' . $this->wg->StyleVersion;
-		$vars['EMOTICONS'] = wfMessage( 'emoticons' )->inContentLanguage()->text();
-
-		$vars['pathToProfilePage'] = $this->pathToProfilePage;
-		$vars['pathToContribsPage'] = $this->pathToContribsPage;
-		$vars['wgAvatarUrl'] = $this->avatarUrl;
-
 		$vars['wgChatKey'] = $this->chatkey;
+		$vars['wgChatRoomId'] = $this->roomId;
 
-		$vars['wgLangtMonthAbbreviation'] = $wgLang->getMonthAbbreviationsArray();
+		$vars['wgChatHost'] = $this->chatServerHost;
+		$vars['wgChatPort'] = $this->chatServerPort;
+		$vars['wgChatEmoticons'] = wfMessage( 'emoticons' )->inContentLanguage()->text();
+
+		$vars['wgChatPathToProfilePage'] = $this->pathToProfilePage;
+		$vars['wgChatPathToContribsPage'] = $this->pathToContribsPage;
+		$vars['wgChatMyAvatarUrl'] = $this->avatarUrl;
+
+		$vars['wgChatLangMonthAbbreviations'] = $wgLang->getMonthAbbreviationsArray();
 
 		return true;
 	}

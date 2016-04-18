@@ -13,7 +13,7 @@ var ChatView = Backbone.View.extend({
 		_.bindAll(this, 'render');
 		if (this.model) this.model.bind('all', this.render);
 		// Load the mapping of emoticons.  This wiki has priority, then falls back to Messaging.  If both of those fail, uses some hardcoded fallback.
-		this.emoticonMapping.loadFromWikiText( EMOTICONS );
+		this.emoticonMapping.loadFromWikiText( window.wgChatEmoticons );
 	},
 
 	/**
@@ -217,7 +217,7 @@ var UserView = Backbone.View.extend({
 		var model = this.model.toJSON();
 		$().log(model, model.name);
 		if(model['since']) {
-			model['since'] = wgLangtMonthAbbreviation[model['since']['mon']] + ' ' + model['since']['year'];
+			model['since'] = window.wgChatLangMonthAbbreviations[model['since']['mon']] + ' ' + model['since']['year'];
 		}
 
 		$(this.el).html( this.template(model) );
@@ -562,11 +562,11 @@ var NodeChatUsers = Backbone.View.extend({
 			for (var i in actions.regular) {
 				var action = actions.regular[i];
 				if (action == 'profile') {
-					action = /Message_Wall/.test(pathToProfilePage) ? 'message-wall' : 'talk-page';
-					location = pathToProfilePage.replace('$1', username);
+					action = /Message_Wall/.test(window.wgChatPathToProfilePage) ? 'message-wall' : 'talk-page';
+					location = window.wgChatPathToProfilePage.replace('$1', username);
 
 				} else if (action == 'contribs') {
-					location = pathToContribsPage.replace('$1', username);
+					location = window.wgChatPathToContribsPage.replace('$1', username);
 
 				} else {
 					location = null;
@@ -629,9 +629,9 @@ var NodeChatUsers = Backbone.View.extend({
 			var location = '';
 
 			if (target.hasClass('talk-page') || target.hasClass('message-wall')) {
-				location = pathToProfilePage.replace('$1', username);
+				location = window.wgChatPathToProfilePage.replace('$1', username);
 			} else if (target.hasClass('contribs')) {
-				location = pathToContribsPage.replace('$1', username);
+				location = window.wgChatPathToContribsPage.replace('$1', username);
 			}
 
 			window.open(location);
