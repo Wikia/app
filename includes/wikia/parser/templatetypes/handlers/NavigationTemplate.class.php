@@ -34,7 +34,7 @@ class NavigationTemplate {
 
 		//getting markers of each navigation template
 		preg_match_all($markerRegex, $html, $markers);
-		foreach ( $markers[ 0 ] as $marker ) {
+		foreach ( array_unique($markers[ 0 ]) as $marker ) {
 			$replacementRegex = '/'.$marker.".*?".$marker.'/s';
 			preg_match_all($replacementRegex, $html, $navTemplates);
 
