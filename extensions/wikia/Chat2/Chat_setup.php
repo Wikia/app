@@ -28,6 +28,7 @@ $wgAutoloadClasses['ChatConfig'] = "$dir/ChatConfig.class.php";
 $wgAutoloadClasses['ChatHooks'] = "$dir/ChatHooks.class.php";
 $wgAutoloadClasses['ChatController'] = "$dir/ChatController.class.php";
 $wgAutoloadClasses['ChatRailController'] = "$dir/ChatRailController.class.php";
+$wgAutoloadClasses['ChatBanTimeOptions'] = "$dir/ChatBanTimeOptions.class.php";
 $wgAutoloadClasses['SpecialChat'] = "$dir/SpecialChat.class.php";
 $wgAutoloadClasses['ChatServerApiClient'] = "$dir/ChatServerApiClient.class.php";
 $wgAutoloadClasses['ChatfailoverSpecialController'] = "$dir/ChatfailoverSpecialController.class.php";
