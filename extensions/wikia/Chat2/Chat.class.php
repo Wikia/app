@@ -447,33 +447,49 @@ class Chat {
 
 	}
 
-	protected static function getConnectionLogThrottleCacheKey( $userId, $address ) {
-		return wfSharedMemcKey( 'Chat', 'userIP', $userId, $address, 'v1' );
+	protected static function getConnectionLogThrottleCacheKey( $userId, $ip ) {
+		return wfSharedMemcKey( 'Chat', 'userIP', $userId, $ip, 'v1' );
 	}
 
 	/**
 	 * Since the permission essentially has to be implemented as an anti-permission, this function removes the
 	 * need for confusing double-negatives in the code.
 	 *
-	 * @param User $userObject - an object of class User (such as wgUser).
+	 * Note: Request should carry the user's IP address for Tor check to work correctly.
+	 *
+	 * @param User $subjectUser
 	 *
 	 * @return bool
 	 */
-	public static function canChat( User $userObject ) {
-		if ( $userObject->isAnon() ) {
+	public static function canChat( User $subjectUser ) {
+		global $wgUser;
+
+		if ( !$subjectUser->equals($wgUser) ) {
+			self::info( __METHOD__ . ': Method called for arbitrary user', [
+				'wgUserName' => $wgUser->getName(),
+				'subjectUserName' => $subjectUser->getName(),
+			] );
+		}
+
+		if ( $subjectUser->isAnon() ) {
 			return false;
 		}
 
-		if ( $userObject->isBlocked() ) {
+		if ( $subjectUser->isBlocked() ) {
 			return false;
 		}
 
-		$chatUser = new ChatUser( $userObject );
+		$chatUser = new ChatUser( $subjectUser );
 		if ( $chatUser->isBanned() ) {
 			return false;
 		}
 
-		return $userObject->isAllowed( 'chat' );
+		// If the TorBlock extension exists, user is an exitNode, and user does not have the torunblocked right
+		if ( class_exists( 'TorBlock' ) && TorBlock::isExitNode() && !$subjectUser->isAllowed( 'torunblocked' ) ) {
+			return false;
+		}
+
+		return $subjectUser->isAllowed( 'chat' );
 	}
 
 	/**
