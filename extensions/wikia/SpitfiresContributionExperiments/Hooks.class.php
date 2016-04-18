@@ -5,6 +5,9 @@ namespace Wikia\ContributionExperiments;
 class Hooks {
 
 	const NEWLY_REGISTERED_USER = 'newlyregistered';
+	const WITHOUT_EDIT_USER = 'userwithoutedit';
+
+	const COOKIE_EXPERIMENT_TIME = 60 * 60 * 24 * 30;
 
 	/**
 	 * Register hooks for the extension
@@ -13,32 +16,54 @@ class Hooks {
 		$hooks = new self();
 		\Hooks::register( 'UserSignupAfterSignupBeforeRedirect', [ $hooks, 'onUserSignupAfterSignupBeforeRedirect' ] );
 		\Hooks::register( 'UserLoginComplete', [ $hooks, 'onUserLoginComplete' ] );
+		\Hooks::register( 'UserLoadFromHeliosToken', [ $hooks, 'onUserLoadFromHeliosToken' ] );
 	}
 
 	public function onUserSignupAfterSignupBeforeRedirect( $redirectUrl ) {
-		setcookie( self::NEWLY_REGISTERED_USER, 1, time() + 60 * 60 * 24 * 365, '/', $this->getDomain() );
+		$this->setCookie( self::NEWLY_REGISTERED_USER, 1, time() + self::COOKIE_EXPERIMENT_TIME );
 
 		return true;
 	}
 
 	public function onUserLoginComplete( \User $user, $html ) {
-		$newlyregistered = isset( $_COOKIE[ self::NEWLY_REGISTERED_USER ] );
-		$userEditCount = $user->getEditCount();
-
-		if ( $newlyregistered ) {
-			// newly registered user
-			unset( $_COOKIE[ self::NEWLY_REGISTERED_USER ] );
-			setcookie( self::NEWLY_REGISTERED_USER, '', time() - 3600, '/', $this->getDomain() );
-		} elseif ( $userEditCount === 0 ) {
-			// returning user without edit
-		}
+		$this->manageUserActivityGroupCookie( $user );
 
 		return true;
 	}
 
-	private function getDomain() {
-		global $wgDevelEnvironment;
+	public function onUserLoadFromHeliosToken( \User $user ) {
+		$this->manageUserActivityGroupCookie( $user );
 
-		return empty( $wgDevelEnvironment ) ? 'wikia.com' : 'wikia-dev.com';
+		return true;
+	}
+
+	private function manageUserActivityGroupCookie( \User $user ) {
+		$newlyRegistered = isset( $_COOKIE[ self::NEWLY_REGISTERED_USER ] );
+
+		if ( $newlyRegistered ) {
+			// newly registered user
+			unset( $_COOKIE[ self::NEWLY_REGISTERED_USER ] );
+			$this->setCookie( self::NEWLY_REGISTERED_USER, '', time() - 3600 );
+		} else {
+			$userEditCount = $user->getEditCount();
+			$userWithoutEditCookie = isset( $_COOKIE[ self::WITHOUT_EDIT_USER ] );
+
+			if ( $userEditCount === 0 ) {
+				// returning user without edit
+				if ( !$userWithoutEditCookie ) {
+					$this->setCookie( self::WITHOUT_EDIT_USER, 1, time() + self::COOKIE_EXPERIMENT_TIME );
+				}
+			} else {
+				if ( $userWithoutEditCookie ) {
+					// returning user who made an edit
+					unset( $_COOKIE[ self::WITHOUT_EDIT_USER ] );
+					$this->setCookie( self::WITHOUT_EDIT_USER, '', time() - 3600 );
+				}
+			}
+		}
+	}
+
+	private function setCookie( $name, $value, $expires ) {
+		\RequestContext::getMain()->getRequest()->response()->setcookie( $name, $value, $expires );
 	}
 }
