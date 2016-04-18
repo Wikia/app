@@ -2849,5 +2849,3 @@ $config['special_portability_dashboard_scss'] = [
 		'//extensions/wikia/PortabilityDashboard/styles/PortabilityDashboard.scss',
 	],
 ];
-
-
