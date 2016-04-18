@@ -13,20 +13,20 @@ class Paginator {
 
 	// configuration settings
 
-	protected $maxItemsPerPage = 48;
-	protected $defaultItemsPerPage = 12;
-	protected $minItemsPerPage = 4;
+	private $maxItemsPerPage = 48;
+	private $defaultItemsPerPage = 12;
+	private $minItemsPerPage = 4;
 
-	protected $config = [
+	private $config = [
 		'itemsPerPage' => 8,
 		'displayedNeighbours' => 3
 	];
 
-	protected $paginatedData = [];
-	protected $pagesCount = 0;
-	protected $activePage = 0;
-	protected $cacheKey = '';
-	protected $enableCache = false;
+	private $paginatedData = [];
+	private $pagesCount = 0;
+	private $activePage = 0;
+	private $cacheKey = '';
+	private $enableCache = false;
 
 	/**
 	 * Creates a new Pagination object.
