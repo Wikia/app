@@ -1,35 +1,36 @@
 <?php
 
-class ResourceLoaderAdEngineSourcePointRecoveryModule extends ResourceLoaderAdEngineBase {
+abstract class ResourceLoaderAdEngineSourcePointBase extends ResourceLoaderAdEngineBase {
 	const TTL_SCRIPTS = 86400;   // one day for fresh scripts from SourcePoint
 	const TTL_GRACE = 3600; // one hour for old scripts (served if we fail to fetch fresh scripts)
 	const CACHE_BUSTER = 15;     // increase this any time the local files change
 	const REQUEST_TIMEOUT = 30;
-	const SCRIPT_DELIVERY_URL = 'https://api.sourcepoint.com/script/delivery?delivery=bundle';
+	const FALLBACK_SCRIPT_BASE_URL = 'project43.wikia.com';
 
-	/**
-	 * Configure scripts that should be loaded into one package
-	 * @return array of ResourceLoaderScript
-	 */
-	protected function getScripts() {
-		return [
-			(new ResourceLoaderScript())->setTypeRemote()->setValue(self::SCRIPT_DELIVERY_URL)
-		];
-	}
+	protected $fallbackScriptUrl = null;
 
 	/**
 	 * Fallback data when request to external script fails
 	 * @return array ["script" => '', "modTitme" => '', "ttl" => '']
 	 */
 	protected function getFallbackDataWhenRequestFails() {
+		global $wgServer;
+
 		$scripts = [
-			(new ResourceLoaderScript())->setTypeLocal()->setValue(__DIR__ . '/../SourcePoint/delivery.js')
+			( new ResourceLoaderScript() )
+				->setTypeLocal()
+				->setValue($this->fallbackScriptUrl)
 		];
 		$data = [
 			'script' => $this->generateData( $scripts ),
 			'modTime' => $this->getCurrentTimestamp(),
 			'ttl' => self::TTL_GRACE
 		];
+
+		$data['script'] = str_replace( self::FALLBACK_SCRIPT_BASE_URL,
+			str_replace('http://', '', $wgServer),
+			$data['script'] );
+		$data['script'] .= '/*Fallback data*/';
 		return $data;
 	}
 

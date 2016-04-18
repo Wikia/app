@@ -39,7 +39,7 @@ EOT;
 
 	public static function onBeforePageDisplay(&$outputPage, &$skin) {
 		global $wgOasisLastCssScripts;
-		$sp = new ARecoveryUnlockCSS();
+		$sp = new ARecoveryUnlockCSS($outputPage);
 		$wgOasisLastCssScripts[] = $sp->getUnlockCSSUrl();
 
 		return true;

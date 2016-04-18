@@ -100,7 +100,7 @@ class ResourceLoaderAdEngineTest extends WikiaBaseTest {
 			->disableOriginalConstructor()
 			->setMethods( [ 'fetchRemoteScript', 'fetchLocalScript', 'getInlineScript' ] )
 			->getMock();
-		ResourceLoaderAdEngineSourcePointRecoveryModule::$localCache[get_class($mock)] = null;
+		ResourceLoaderAdEngineSourcePointBase::$localCache[get_class($mock)] = null;
 		$mock->method( 'fetchRemoteScript' )->willReturn( self::REMOTE_SCRIPT_MOCK_CONTENT );
 		$mock->method( 'fetchLocalScript' )->willReturn( self::LOCAL_SCRIPT_MOCK_CONTENT );
 		$mock->method( 'getInlineScript' )->willReturn( self::INLINE_SCRIPT_MOCK_CONTENT );
@@ -113,7 +113,7 @@ class ResourceLoaderAdEngineTest extends WikiaBaseTest {
 
 		$this->assertEquals( implode( PHP_EOL, $sourcePointScripts ), $script );
 		$this->assertEquals( $mock->getModifiedTime( $this->resourceLoaderContext )
-			+ ResourceLoaderAdEngineSourcePointRecoveryModule::TTL_SCRIPTS, $mock->getTtl() );
+			+ ResourceLoaderAdEngineSourcePointBase::TTL_SCRIPTS, $mock->getTtl() );
 	}
 
 }
