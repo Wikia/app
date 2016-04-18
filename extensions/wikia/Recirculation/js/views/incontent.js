@@ -29,6 +29,10 @@ define('ext.wikia.recirculation.views.incontent', [
 			return element.offsetWidth === width;
 		}).first();
 
+		if (firstSuitableSection.length === 0) {
+			return false;
+		}
+
 		return firstSuitableSection;
 	}
 
