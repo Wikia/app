@@ -23,7 +23,6 @@ DROP TABLE IF EXISTS `content_review_status`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `content_review_status` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
   `wiki_id` int(10) unsigned NOT NULL,
   `page_id` int(10) unsigned NOT NULL,
   `revision_id` int(10) unsigned NOT NULL,
@@ -33,7 +32,6 @@ CREATE TABLE `content_review_status` (
   `review_user_id` int(10) unsigned DEFAULT NULL,
   `review_start` timestamp NULL DEFAULT NULL,
   `escalated` tinyint(1) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
   UNIQUE KEY `page_id` (`wiki_id`,`page_id`,`revision_id`),
   UNIQUE KEY `content_review_unique_idx` (`wiki_id`,`page_id`,`status`),
   KEY `content_review_status_idx` (`status`)
@@ -64,7 +62,6 @@ DROP TABLE IF EXISTS `reviewed_content_logs`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `reviewed_content_logs` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
   `wiki_id` int(10) unsigned NOT NULL,
   `page_id` int(10) unsigned NOT NULL,
   `revision_id` int(10) unsigned NOT NULL,
@@ -75,7 +72,6 @@ CREATE TABLE `reviewed_content_logs` (
   `review_start` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `review_end` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `escalated` tinyint(1) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
   KEY `wiki_id_review_end_idx` (`wiki_id`,`review_end`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
