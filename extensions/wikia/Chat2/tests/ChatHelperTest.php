@@ -12,59 +12,60 @@ class ChatHelperTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @dataProvider testGetServerDataProvider
+	 * @dataProvider testGetChatHostDataProvider
 	 */
-	public function testGetServer( $wgCityId, $expected ) {
-		$this->mockGlobalVariable( 'wgCityId', $wgCityId );
-		$this->mockStaticMethod( 'ChatHelper', 'getServerNodes', [
-			'10.8.64.15:9001',
-			'10.8.64.15:9002',
-			'10.8.64.15:9003',
-			'10.8.64.15:9004'
-		] );
+	public function testGetChatHost( $environment, $chatServerHostOverride, $expected ) {
+		$this->mockGlobalVariable( 'wgChatServerHost', 'chat.wikia-services.com:80' );
+		$this->mockGlobalVariable( 'wgWikiaEnvironment', $environment );
+		$this->mockGlobalVariable( 'wgChatServerHostOverride', $chatServerHostOverride );
 
-		$chatConfig = $this->helper->getServer( 'private' );
+		$chatConfig = $this->helper->getChatHost();
 
 		$this->assertEquals( $expected, $chatConfig );
 	}
 
-	public function testGetServerDataProvider() {
+	public function testGetChatHostDataProvider() {
 		return [
 			[
-				'wgCityId' => 100,
-				'expected' => [
-					'serverIp' => '10.8.64.15:9001',
-					'serverId' => 1
-				]
+				'environment' => 'dev',
+				'chatServerHostOverride' => '',
+				'expected' => 'dev-chat.wikia-services.com:80'
 			],
 			[
-				'wgCityId' => 101,
-				'expected' => [
-					'serverIp' => '10.8.64.15:9002',
-					'serverId' => 2
-				]
+				'environment' => 'dev',
+				'chatServerHostOverride' => 'dev-test:8080',
+				'expected' => 'dev-test:8080'
 			],
 			[
-				'wgCityId' => 1,
-				'expected' => [
-					'serverIp' => '10.8.64.15:9002',
-					'serverId' => 2
-				]
+				'environment' => 'sandbox',
+				'chatServerHostOverride' => null,
+				'expected' => 'sandbox-chat.wikia-services.com:80'
 			],
 			[
-				'wgCityId' => 0,
-				'expected' => [
-					'serverIp' => '10.8.64.15:9001',
-					'serverId' => 1
-				]
+				'environment' => 'sandbox',
+				'chatServerHostOverride' => 'sandbox-s1:9101',
+				'expected' => 'sandbox-s1:9101'
 			],
 			[
-				'wgCityId' => '100',
-				'expected' => [
-					'serverIp' => '10.8.64.15:9001',
-					'serverId' => 1
-				]
-			]
+				'environment' => 'preview',
+				'chatServerHostOverride' => null,
+				'expected' => 'preview-chat.wikia-services.com:80'
+			],
+			[
+				'environment' => 'preview',
+				'chatServerHostOverride' => 'sandbox-test:9101',
+				'expected' => 'sandbox-test:9101'
+			],
+			[
+				'environment' => 'prod',
+				'chatServerHostOverride' => null,
+				'expected' => 'chat.wikia-services.com:80'
+			],
+			[
+				'environment' => 'prod',
+				'chatServerHostOverride' => 'chat-machine:8000',
+				'expected' => 'chat-machine:8000'
+			],
 		];
 	}
 }
