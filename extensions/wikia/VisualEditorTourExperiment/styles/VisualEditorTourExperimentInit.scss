@@ -18,9 +18,17 @@ $close-image: '/resources/wikia/ui_components/modal/images/close-dark.svg';
 		line-height: 1.5em;
 	}
 
+	.nav-buttons {
+		text-align: right;
+	}
+
 	.ve-tour-next {
-		display: block;
-		margin: 18px 0 0 auto;
+		display: inline-block;
+		margin: 18px 0 0 10px;
+	}
+
+	.ve-tour-prev {
+		cursor: pointer;
 	}
 
 	.close {

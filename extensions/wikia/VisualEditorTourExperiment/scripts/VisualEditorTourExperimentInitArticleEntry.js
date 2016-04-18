@@ -20,7 +20,7 @@ require(['jquery', 'mw', 'VisualEditorTourExperimentInit', 'wikia.tracker'],
 						'<h2>Enter edit mode</h2>' +
 						'<p>Click on the Edit button to go into edit mode - there you will be able to add content ' +
 						'and media to an article page.</p>' +
-						'<button class="ve-tour-next">Next</button>' +
+						'<nav class="nav-buttons"><button class="ve-tour-next">Next</button></nav>' +
 						'</div>',
 					html: true,
 					placement: 'bottom',

@@ -54,8 +54,16 @@ define('VisualEditorTourExperiment', ['jquery', 'wikia.loader', 'wikia.mustache'
 			});
 		}
 
-		Tour.prototype.next = function() {
+		Tour.prototype.nextHandle = function() {
 			this._setDisabled();
+			this.next();
+			track({
+				action: tracker.ACTIONS.CLICK,
+				label: 'next-go-to-' + this.step
+			});
+		}
+
+		Tour.prototype.next = function() {
 			if (this.step === this.steps.length - 1) {
 				this.destroyStep(this.step);
 				track({
@@ -66,7 +74,11 @@ define('VisualEditorTourExperiment', ['jquery', 'wikia.loader', 'wikia.mustache'
 			}
 			this.destroyStep(this.step);
 			this.openStep(++this.step);
+		}
 
+		Tour.prototype.prevHandle = function() {
+			this.destroyStep(this.step);
+			this.openStep(--this.step);
 			track({
 				action: tracker.ACTIONS.CLICK,
 				label: 'next-go-to-' + this.step
@@ -93,7 +105,8 @@ define('VisualEditorTourExperiment', ['jquery', 'wikia.loader', 'wikia.mustache'
 		}
 
 		Tour.prototype._setupTour = function (assets) {
-			$('body').on('click', '.ve-tour-next', this.next.bind(this));
+			$('body').on('click', '.ve-tour-next', this.nextHandle.bind(this));
+			$('body').on('click', '.ve-tour-prev', this.prevHandle.bind(this));
 			$('body').on('click', '.ve-tour-experiment .close', this.close.bind(this));
 			this.contentTemplate = assets.mustache[0];
 			this.tourConfig.forEach(this._setupStep.bind(this));
@@ -101,14 +114,16 @@ define('VisualEditorTourExperiment', ['jquery', 'wikia.loader', 'wikia.mustache'
 		}
 
 		Tour.prototype._setupStep = function (item, id) {
-			var buttonLabel = id === this.tourConfig.length - 1 ? 'Start editing' : 'Next';
+			var buttonLabel = id === this.tourConfig.length - 1 ? 'Start editing' : 'Next',
+				showPrev = id > 0;
 
 			this.steps[id] = {
 				$element: $(item.selector),
 				content: mustache.render(this.contentTemplate, {
 					title: item.title,
 					description: item.description,
-					buttonLabel: buttonLabel
+					buttonLabel: buttonLabel,
+					showPrev: showPrev
 				})
 			};
 		}
