@@ -12,7 +12,8 @@ require(['jquery', 'wikia.loader', 'wikia.mustache'], function($, loader, mustac
 		loader({
 			type: loader.MULTI,
 			resources: {
-				mustache: '/extensions/wikia/SpitfiresContributionExperiments/templates/MyProfileTourExperimentModal.mustache',
+				mustache: '/extensions/wikia/SpitfiresContributionExperiments/templates/MyProfileTourExperimentStep1.mustache,' +
+				'/extensions/wikia/SpitfiresContributionExperiments/templates/MyProfileTourExperimentStep2.mustache',
 				styles: '/extensions/wikia/SpitfiresContributionExperiments/styles/my-profile-tour.scss'
 			}
 		})
