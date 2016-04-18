@@ -68,4 +68,126 @@ class ChatHelperTest extends WikiaBaseTest {
 			],
 		];
 	}
+
+	/**
+	 * @dataProvider testGetServerNodesDataProvider
+	 */
+	public function testGetServerNodes( $type, $chatServersOverride, $expectedType, $expected ) {
+		$this->mockGlobalVariable( 'wgChatServersOverride', $chatServersOverride );
+
+		// Consul client class mock
+		$consulMock = $this->getMockBuilder( 'Wikia\Consul\Client' )
+			->disableOriginalConstructor()
+			->setMethods( [ 'getNodes' ] )
+			->getMock();
+		$consulMock->expects(
+			$this->any() )
+			->method( 'getNodes' )
+			->with( $expectedType )
+			->will( $this->returnValue( [
+				'1.1.1.1:80',
+				'1.1.1.1:81',
+				'1.1.1.1:82',
+				'1.1.1.1:83',
+			] ) );
+		$this->mockClass( 'Wikia\Consul\Client', $consulMock );
+
+		$servers = $this->helper->getServerNodes( $type );
+
+		$this->assertEquals( $expected, $servers );
+	}
+
+	public function testGetServerNodesDataProvider() {
+		return [
+			[
+				'type' => 'public',
+				'chatServersOverride' => '',
+				'expectedType' => 'chat-public',
+				'expected' => [
+					'1.1.1.1:80',
+					'1.1.1.1:81',
+					'1.1.1.1:82',
+					'1.1.1.1:83',
+				]
+			],
+			[
+				'type' => 'public',
+				'chatServersOverride' => [
+					'public' => ''
+				],
+				'expectedType' => 'chat-public',
+				'expected' => [
+					'1.1.1.1:80',
+					'1.1.1.1:81',
+					'1.1.1.1:82',
+					'1.1.1.1:83',
+				]
+			],
+			[
+				'type' => 'public',
+				'chatServersOverride' => [
+					'private' => ''
+				],
+				'expectedType' => 'chat-public',
+				'expected' => [
+					'1.1.1.1:80',
+					'1.1.1.1:81',
+					'1.1.1.1:82',
+					'1.1.1.1:83',
+				]
+			],
+			[
+				'type' => 'private',
+				'chatServersOverride' => [
+					'public' => '',
+					'private' => ''
+				],
+				'expectedType' => 'chat-private',
+				'expected' => [
+					'1.1.1.1:80',
+					'1.1.1.1:81',
+					'1.1.1.1:82',
+					'1.1.1.1:83',
+				]
+			],
+			[
+				'type' => 'public',
+				'chatServersOverride' => [
+					'public' => [],
+					'private' => ['3.3.3.3:80', '3.3.3.3:80'],
+				],
+				'expectedType' => 'chat-public',
+				'expected' => [
+					'1.1.1.1:80',
+					'1.1.1.1:81',
+					'1.1.1.1:82',
+					'1.1.1.1:83',
+				]
+			],
+			[
+				'type' => 'private',
+				'chatServersOverride' => [
+					'public' => ['2.2.2.2:80', '2.2.2.2:80'],
+					'private' => ['3.3.3.3:80', '3.3.3.3:80'],
+				],
+				'expectedType' => 'chat-private',
+				'expected' => [
+					'3.3.3.3:80',
+					'3.3.3.3:80'
+				]
+			],
+			[
+				'type' => 'public',
+				'chatServersOverride' => [
+					'public' => ['2.2.2.2:80', '2.2.2.2:80'],
+					'private' => ['3.3.3.3:80', '3.3.3.3:80'],
+				],
+				'expectedType' => 'chat-public',
+				'expected' => [
+					'2.2.2.2:80',
+					'2.2.2.2:80'
+				]
+			],
+		];
+	}
 }

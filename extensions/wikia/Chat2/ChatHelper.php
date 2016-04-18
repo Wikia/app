@@ -50,10 +50,10 @@ class ChatHelper {
 	 * @param string $type
 	 * @return array of server addresses
 	 */
-	static function getServerNodes( $type = 'public' ) {
+	static function getServerNodes( $type ) {
 		global $wgWikiaEnvironment, $wgChatServersOverride;
 
-		if ( empty( $wgChatServersOverride ) ) {
+		if ( empty( $wgChatServersOverride ) || empty( $wgChatServersOverride[ $type ] ) ) {
 			$consul = new Wikia\Consul\Client();
 			$serverNodes = $consul->getNodes( 'chat-' . $type, $wgWikiaEnvironment );
 		} else {
