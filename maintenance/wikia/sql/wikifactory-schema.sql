@@ -3,8 +3,10 @@
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `city_cat_mapping` (
-  `city_id` int(11) default NULL,
-  `cat_id` int(11) default NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `city_id` int(11) DEFAULT NULL,
+  `cat_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
   KEY `city_id_idx` (`city_id`),
   KEY `cat_id_idx` (`cat_id`),
   CONSTRAINT `city_cat_mapping_ibfk_1` FOREIGN KEY (`city_id`) REFERENCES `city_list` (`city_id`) ON DELETE CASCADE ON UPDATE CASCADE
