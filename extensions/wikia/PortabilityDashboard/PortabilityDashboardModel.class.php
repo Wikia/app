@@ -41,8 +41,8 @@ class PortabilityDashboardModel {
 				while ( $row = $rows->fetchObject() ) {
 					$result[] = [
 						'wikiId' => $row->wiki_id,
-						'portability' => $row->portability,
-						'infoboxPortability' => $row->infobox_portability,
+						'portability' => $this->floatToPercent( $row->portability ),
+						'infoboxPortability' => $this->floatToPercent( $row->infobox_portability ),
 						'traffic' => $row->traffic,
 						'migrationImpact' => $row->migration_impact,
 						'typelessTemplatesCount' => $row->typeless,
@@ -142,5 +142,14 @@ class PortabilityDashboardModel {
 	private function connect( $type = DB_SLAVE ) {
 		global $wgExternalDatawareDB;
 		return wfGetDB( $type, array(), $wgExternalDatawareDB );
+	}
+
+	/**
+	 * converts float number to percent
+	 * @param float $float
+	 * @return int
+	 */
+	private function floatToPercent( $float ) {
+		return round( $float * 100 );
 	}
 }
