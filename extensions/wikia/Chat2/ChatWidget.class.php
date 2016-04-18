@@ -82,7 +82,7 @@ class ChatWidget {
 
 		$html = $templateEngine->clearData()
 			->setData( self::getTemplateVars( true ) )
-			->render( self::getChatTemplateName() );
+			->render( self::getTemplateName() );
 
 		// remove newlines so parser does not try to wrap lines into paragraphs
 		$html = str_replace( "\n", "", $html );
@@ -97,7 +97,7 @@ class ChatWidget {
 	 *
 	 * @return string template name to render
 	 */
-	static public function getChatTemplateName() {
+	static public function getTemplateName() {
 
 		return F::app()->checkSkin( 'oasis' ) ?
 			'widget.mustache' :

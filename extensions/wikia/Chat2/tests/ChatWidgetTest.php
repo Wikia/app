@@ -8,17 +8,17 @@ class ChatWidgetTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @dataProvider testGetChatTemplateNameDataProvider
+	 * @dataProvider testGetTemplateNameDataProvider
 	 */
-	public function testGetChatTemplateName( $isOasis, $expected ) {
+	public function testGetTemplateName( $isOasis, $expected ) {
 		$this->mockStaticMethod( 'WikiaApp', 'checkSkin', $isOasis );
 
-		$templateName = ChatWidget::getChatTemplateName();
+		$templateName = ChatWidget::getTemplateName();
 
 		$this->assertEquals( $expected, $templateName );
 	}
 
-	public function testGetChatTemplateNameDataProvider() {
+	public function testGetTemplateNameDataProvider() {
 		return [
 			[
 				'isOasis' => true,
@@ -89,7 +89,7 @@ class ChatWidgetTest extends WikiaBaseTest {
 		$this->mockGlobalVariable( 'wgUser', $userMock );
 
 		// static method mocks
-		$this->mockStaticMethod( 'ChatWidget', 'getChatUsersInfo', $chatUsersInfo );
+		$this->mockStaticMethod( 'ChatWidget', 'getUsersInfo', $chatUsersInfo );
 		$this->mockStaticMethod( 'AvatarService', 'getAvatarUrl', 'www.image.com' );
 
 		$vars = ChatWidget::getTemplateVars( $fromParserTag );
