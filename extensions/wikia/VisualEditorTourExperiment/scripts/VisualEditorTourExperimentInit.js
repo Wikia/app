@@ -18,7 +18,7 @@ define('VisualEditorTourExperimentInit',
 		function isEnabled() {
 			return isExperimentVariation() &&
 				(isNewlyregistered() || isUserwithoutedit) &&
-				!$.cookie('vetourdismissed');
+				!$.cookie('vetourdisabled');
 		}
 
 		function trackPublish() {

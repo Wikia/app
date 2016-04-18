@@ -55,8 +55,9 @@ define('VisualEditorTourExperiment', ['jquery', 'wikia.loader', 'wikia.mustache'
 		}
 
 		Tour.prototype.next = function() {
+			this._setDisabled();
 			if (this.step === this.steps.length - 1) {
-				this.dismiss();
+				this.destroyStep(this.step);
 				track({
 					action: tracker.ACTIONS.CLICK,
 					label: 'tour-complete'
@@ -73,7 +74,8 @@ define('VisualEditorTourExperiment', ['jquery', 'wikia.loader', 'wikia.mustache'
 		}
 
 		Tour.prototype.close = function() {
-			this._dismiss();
+			this._setDisabled();
+			this.destroyStep(this.step);
 			track({
 				action: tracker.ACTIONS.CLICK,
 				label: 'close'
@@ -84,9 +86,10 @@ define('VisualEditorTourExperiment', ['jquery', 'wikia.loader', 'wikia.mustache'
 			});
 		}
 
-		Tour.prototype._dismiss = function() {
-			this.destroyStep(this.step);
-			$.cookie('vetourdismissed', 1, { expires : 30 });
+		Tour.prototype._setDisabled = function() {
+			if(!$.cookie('vetourdisabled')) {
+				$.cookie('vetourdisabled', 1, {expires: 30});
+			}
 		}
 
 		Tour.prototype._setupTour = function (assets) {

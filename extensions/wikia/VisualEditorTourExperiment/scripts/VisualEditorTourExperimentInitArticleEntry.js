@@ -40,6 +40,7 @@ require(['jquery', 'mw', 'VisualEditorTourExperimentInit', 'wikia.tracker'],
 
 		function startTour($editButton) {
 			$editButton.click();
+			$.cookie('vetourdisabled', 1, {expires: 30});
 			$editButton.popover('destroy');
 			track({
 				action: tracker.ACTIONS.CLICK,
