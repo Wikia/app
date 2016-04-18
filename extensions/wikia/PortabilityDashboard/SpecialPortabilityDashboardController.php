@@ -4,7 +4,7 @@ class SpecialPortabilityDashboardController extends WikiaSpecialPageController {
 	const SPECIAL_INSIGHTS_PATH = '/wiki/Special:Insights/';
 	const SPECIAL_INSIGHTS_TYPELESS_TEMPLATE_PAGE = 'templateswithouttype';
 	const SPECIAL_CUSTOM_INFOBOXES_PAGE = 'nonportableinfoboxes';
-	const LANGUAGE_FILTER_QS_PARAM = 'filterbylang';
+	const LANGUAGE_FILTER_QS_PARAM = 'lang';
 
 
 	public function __construct() {
