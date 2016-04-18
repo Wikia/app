@@ -18,7 +18,7 @@ class NavigationTemplate {
 	 * @return string
 	 */
 	public static function handle( $text ) {
-		return !empty( $text ) ? self::mark( $text ) : $text;
+		return !empty($text) ? self::mark( $text ) : $text;
 	}
 
 	public static function resolve( &$html ) {
@@ -30,16 +30,16 @@ class NavigationTemplate {
 
 	private static function process( $html ) {
 		$blockElemRegex = '/<(' . implode( '|', self::$blockLevelElements ) . ')[>\s]+/i';
-		$markerRegex = "/\x7f".self::MARK.".+?\x7f/s";
+		$markerRegex = "/\x7f" . self::MARK . ".+?\x7f/s";
 
 		//getting markers of each navigation template
 		preg_match_all( $markerRegex, $html, $markers );
 		foreach ( array_unique( $markers[ 0 ] ) as $marker ) {
-			$replacementRegex = '/'.$marker.".*?".$marker.'/s';
+			$replacementRegex = '/' . $marker . ".*?" . $marker . '/s';
 			preg_match_all( $replacementRegex, $html, $navTemplates );
 
 			//multiple invocations of the same template can occur, replacing each of them
-			foreach( $navTemplates[ 0 ] as $navTemplate ) {
+			foreach ( $navTemplates[ 0 ] as $navTemplate ) {
 				$replacement = str_replace( $marker, '', $navTemplate );
 
 				if ( preg_match( $blockElemRegex, $navTemplate ) ) {
@@ -59,7 +59,7 @@ class NavigationTemplate {
 	 */
 	private static function mark( $text ) {
 		// marking each template with unique marker to be able to handle nested navigation templates
-		$marker = "\x7f".self::MARK."_".uniqid()."\x7f";
+		$marker = "\x7f" . self::MARK . "_" . uniqid() . "\x7f";
 		return sprintf( "%s%s%s", $marker, $text, $marker );
 	}
 }
