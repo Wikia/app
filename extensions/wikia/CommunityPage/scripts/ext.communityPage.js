@@ -8,7 +8,7 @@ require([
 	'use strict';
 
 	// "private" vars - don't access directly. Use getUiModalInstance().
-	var uiModalInstance, modalNavHtml, activeTab;
+	var uiModalInstance, modalNavHtml, activeTab, allMembersCount, adminsCount;
 
 	var tabs = {
 		TAB_ALL: {
@@ -52,19 +52,32 @@ require([
 		if (modalNavHtml) {
 			$deferred.resolve(modalNavHtml);
 		} else {
-			nirvana.sendRequest({
-				controller: 'CommunityPageSpecial',
-				method: 'getModalHeaderData',
-				format: 'json',
-				type: 'get'
-			})
-			.then(function (response) {
-				modalNavHtml = mustache.render(templates.modalHeader, response);
-				$deferred.resolve(modalNavHtml);
+			modalNavHtml = mustache.render(templates.modalHeader, {
+				allText: $.msg('communitypage-modal-tab-all'),
+				adminsText: $.msg('communitypage-modal-tab-admins'),
+				leaderboardText: $.msg('communitypage-modal-tab-leaderboard'),
+				allMembersCount: allMembersCount,
+				adminsCount: adminsCount,
 			});
+			$deferred.resolve(modalNavHtml);
 		}
 
 		return $deferred;
+	}
+
+	function updateModalHeader() {
+		if (typeof allMembersCount === 'undefined') {
+			$('#allCoint').html('');
+		} else {
+			$('#allCount').html('(' + allMembersCount + ')');
+		}
+
+		if (typeof adminsCount === 'undefined') {
+			$('#adminsCount').html('');
+		} else {
+			$('#adminsCount').html('(' + adminsCount + ')');
+		}
+
 	}
 
 	function getModalTabContentsHtml(tab) {
@@ -80,8 +93,20 @@ require([
 				format: 'json',
 				type: 'get'
 			}).then(function (response) {
+				if (response.hasOwnProperty('members')) {
+					allMembersCount = response.members.length;
+				}
+
+				if (response.hasOwnProperty('admins')) {
+					adminsCount = response.admins.length;
+				}
+
 				tab.cachedData = mustache.render(templates[tab.template], response);
 				$deferred.resolve(tab.cachedData);
+			}, function (error) {
+				$deferred.resolve(mustache.render(templates.loadingError, {
+					loadingError: $.msg('communitypage-modal-tab-loadingerror'),
+				}));
 			});
 		}
 
@@ -105,19 +130,19 @@ require([
 				}
 			};
 			uiModal.createComponent(createPageModalConfig, function (modal) {
-				getModalTabContentsHtml(tabToActivate).then(function (tabContentHtml) {
-					var html = navHtml + tabContentHtml;
+				var loading = mustache.render(templates.modalLoadingScreen, {
+					loadingText: $.msg('communitypage-modal-tab-loading'),
+				}), html = navHtml + loading;
 
-					modal.$content
-						.addClass('ContributorsModule ContributorsModuleModal')
-						.html(html)
-						.find(tabToActivate.className).children().addClass('active');
+				modal.$content
+					.addClass('ContributorsModule ContributorsModuleModal')
+					.html(html)
+					.find(tabToActivate.className).children().addClass('active');
 
-					modal.show();
-					activeTab = tabToActivate;
+				modal.show();
 
-					window.activeModal = modal;
-				});
+				window.activeModal = modal;
+				switchCommunityModalTab(tabToActivate);
 			});
 		});
 	}
@@ -129,8 +154,10 @@ require([
 
 		getModalNavHtml().then(function (navHtml) {
 			// Switch highlight to new tab
-			// fixme: Loading indicator should be via a template.
-			var html = navHtml + mw.html.escape($.msg('communitypage-modal-loading'));
+			var loading = mustache.render(templates.modalLoadingScreen, {
+				loadingText: mw.html.escape($.msg('communitypage-modal-tab-loading')),
+			}), html = navHtml + loading;
+
 			window.activeModal.$content
 				.html(html)
 				.find(tabToActivate.className).children().addClass('active');
@@ -142,6 +169,7 @@ require([
 					.html(html)
 					.find(tabToActivate.className).children().addClass('active');
 
+				updateModalHeader();
 				activeTab = tabToActivate;
 			});
 		});
