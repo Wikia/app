@@ -1,0 +1,76 @@
+<section class="ChatModule {{sectionClassName}} ChatModuleUninitialized">
+	<div class="chat-contents
+		{{#userName}} chat-user-logged-in{{/userName}}
+		{{^userName}} chat-user-anonymous{{/userName}}
+		{{#chatUsersCount}} chat-room-active{{/chatUsersCount}}
+		{{^chatUsersCount}} chat-room-empty{{/chatUsersCount}}">
+		<h2 class="chat-headline">
+			<span class="chat-live" data-msg-id="chat-live2"> </span>
+			<span class="chat-total">{{chatUsersCount}}</span>
+		</h2>
+		<p class="chat-name">{{siteName}}</p>
+		<div class="chat-join">
+			<button
+				type="button"
+				{{^userName}}class="loginToChat" {{/userName}}
+				onclick="ChatEntryPoint.onClickChatButton('{{linkToSpecialChat}}')"
+				data-msg-id="
+					{{#chatUsersCount}}chat-join-the-chat{{/chatUsersCount}}
+					{{^chatUsersCount}}chat-start-a-chat{{/chatUsersCount}}">
+			</button>
+		</div>
+		<div class="chat-whos-here">
+			<span class="arrow-left"><img src="{{blankImgUrl}}" /></span>
+			<span class="arrow-right"><img src="{{blankImgUrl}}" /></span>
+			<div class="carousel-container">
+				<div>
+					{{#chatUsersCount}}
+						<ul class="carousel">
+							{{#chatUsers}}
+							<li class="chatter">
+								<img src="{{blankImgUrl}}" data-src="{{avatarUrl}}" class="avatar" width="32" height="32"  />
+								<div class="UserStatsMenu">
+									<div class="info">
+										<img data-src="{{avatarUrl}}" src="{{blankImgUrl}}" class="avatar" width="24" height="24" />
+										<ul>
+											<li class="username" data-user-prop="username">{{username}}</li>
+											<li data-msg-param="{{editCount}}" class="edits" data-msg-id="chat-edit-count"> </li>
+											<li data-msg-param="{{since}}" class="since" data-msg-id="chat-member-since"> </li>
+										</ul>
+									</div>
+									<div class="actions">
+										<ul class="regular-actions">
+											<li class="profilepage {{profileType}}">
+												<a href="{{profileUrl}}">
+													<span class="icon">&nbsp;</span>
+													<span class="label" data-msg-id="chat-user-menu-{{profileType}}"></span>
+												</a>
+											</li>
+											<li class="contribs">
+												<a href="{{contribsUrl}}">
+													<span class="icon">&nbsp;</span>
+													<span class="label" data-msg-id="chat-user-menu-contribs"> </span>
+												</a>
+											</li>
+										</ul>
+									</div>
+								</div>
+							</li>
+							{{/chatUsers}}
+						</ul>
+					{{/chatUsersCount}}
+					{{#chatProfileAvatarUrl}}
+						<img src="{{chatProfileAvatarUrl}}" class="avatar currentUser" width="32" height="32" />
+					{{/chatProfileAvatarUrl}}
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+{{#entryPointGuidelinesMessage}}
+	<span class="more">{{entryPointGuidelinesMessage}}</span>
+{{/entryPointGuidelinesMessage}}
+{{#fromParserTag}}
+	<script language="javascript" type="text/javascript">if ( typeof ChatEntryPoint!=="undefined" ) ChatEntryPoint.init();</script>
+	<a class="ChatMonobookEntryPoint" href="{{linkToSpecialChat}}">{{joinTheChatMessage}}></a>
+{{/fromParserTag}}
