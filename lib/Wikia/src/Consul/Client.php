@@ -44,9 +44,7 @@ class Client {
 	function getNodes( $service, $tag ) {
 		$resp = $this->api->service( $service, [
 			'tag' => $tag,
-			'passing' => true,
-			// TODO: temporary change for devbox testing
-			'dc' => 'sjc'
+			'passing' => true
 		] )->json();
 
 		$nodes = array_map(

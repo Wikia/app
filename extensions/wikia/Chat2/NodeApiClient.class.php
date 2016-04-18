@@ -150,7 +150,7 @@ class NodeApiClient {
 	 */
 	static protected function getHostAndPort() {
 
-		return ChatHelper::getServer( 'private' )[ 'serverIp' ];
+		return ChatHelper::getServer( 'private' )[ 'serverAddress' ];
 	}
 
 }

@@ -657,7 +657,7 @@ class Chat {
 			$wg->Memc->set( $memcKey, true, 60 * 3 /*3 min*/ );
 
 			$log = new LogPage( 'chatconnect', false, false );
-			$log->addEntry( 'chatconnect', SpecialPage::getTitleFor( 'Chat' ), '', [ $ip ], $wg->User );
+			$log->addEntry( 'chatconnect', SpecialPage::getTitleFor( self::CHAT ), '', [ $ip ], $wg->User );
 
 			$xff = $wg->Request->getHeader( self::HTTP_HEADER_XFF );
 			list( $xff_ip, $isSquidOnly ) = IP::getClientIPfromXFF( $xff );
@@ -668,7 +668,7 @@ class Chat {
 			$rcRow = [
 					'cuc_id'         => $cuc_id,
 					'cuc_namespace'  => NS_SPECIAL,
-					'cuc_title'      => 'Chat',
+					'cuc_title'      => self::CHAT,
 					'cuc_minor'      => 0,
 					'cuc_user'       => $wg->User->getID(),
 					'cuc_user_text'  => $wg->User->getName(),
@@ -692,7 +692,7 @@ class Chat {
 	}
 
 	protected static function getUserIPMemcKey( $userId, $address ) {
-		return wfSharedMemcKey( 'Chat', 'userIP', $userId, $address, 'v1' );
+		return wfSharedMemcKey( self::CHAT, 'userIP', $userId, $address, 'v1' );
 	}
 
 	/**

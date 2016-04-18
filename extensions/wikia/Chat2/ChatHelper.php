@@ -41,7 +41,7 @@ class ChatHelper {
 		$serverData = $serverNodes[ $serverId - 1 ];
 
 		return [
-			'serverIp' => $serverData,
+			'serverAddress' => $serverData,
 			'serverId' => $serverId
 		];
 	}
@@ -161,10 +161,11 @@ class ChatHelper {
 
 		$user = User::newFromId( $id );
 		if ( !empty( $user ) ) {
+			# Add chat ban log link (@author: Sactage)
 			$tools[] = Linker::link( SpecialPage::getSafeTitleFor( 'Log', 'chatban' ), wfMessage( 'chat-chatban-log' )->escaped(), array( 'class' => 'chat-ban-log' ), array(
 				'page' => $user->getUserPage()
 					->getPrefixedText()
-			) ); # Add chat ban log link (@author: Sactage)
+			) );
 			if ( Chat::getBanInformation( $wgCityId, $user ) !== false ) {
 				LogEventsList::showLogExtract(
 					$wgOut,
@@ -176,8 +177,8 @@ class ChatHelper {
 						'showIfEmpty' => false,
 						'msgKey' => array(
 							'chat-contributions-ban-notice',
-							$nt->getText()
 							# Support GENDER in 'sp-contributions-blocked-notice'
+							$nt->getText()
 						),
 						'offset' => '' # don't use $wgRequest parameter offset
 					)
