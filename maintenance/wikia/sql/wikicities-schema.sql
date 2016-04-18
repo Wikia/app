@@ -125,11 +125,9 @@ DROP TABLE IF EXISTS `ach_ranking_snapshots`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `ach_ranking_snapshots` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
   `wiki_id` int(9) NOT NULL,
   `date` datetime NOT NULL,
   `data` text COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`),
   UNIQUE KEY `wiki_id` (`wiki_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
