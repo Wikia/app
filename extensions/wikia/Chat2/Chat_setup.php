@@ -31,9 +31,6 @@ $wgAutoloadClasses['ChatController'] = "$dir/ChatController.class.php";
 $wgAutoloadClasses['ChatRailController'] = "$dir/ChatRailController.class.php";
 $wgAutoloadClasses['SpecialChat'] = "$dir/SpecialChat.class.php";
 $wgAutoloadClasses['NodeApiClient'] = "$dir/NodeApiClient.class.php";
-$wgAutoloadClasses['ChatfailoverSpecialController'] = "$dir/ChatfailoverSpecialController.class.php";
-
-$wgSpecialPages[ 'Chatfailover'] = 'ChatfailoverSpecialController';
 
 // special pages
 $wgSpecialPages['Chat'] = 'SpecialChat';
@@ -41,12 +38,10 @@ $wgSpecialPages['Chat'] = 'SpecialChat';
 // i18n
 $wgExtensionMessagesFiles['Chat'] = $dir . '/Chat.i18n.php';
 $wgExtensionMessagesFiles['ChatAliases'] = $dir . '/Chat.aliases.php';
-$wgExtensionMessagesFiles['Chatfailover'] = $dir . '/Chatfailover.i18n.php';
 $wgExtensionMessagesFiles['ChatDefaultEmoticons'] = $dir . '/ChatDefaultEmoticons.i18n.php';
 
 // hooks
 $wgHooks[ 'GetRailModuleList' ][] = 'ChatHelper::onGetRailModuleList';
-$wgHooks[ 'StaffLog::formatRow' ][] = 'ChatHelper::onStaffLogFormatRow';
 $wgHooks[ 'MakeGlobalVariablesScript' ][] = 'ChatHelper::onMakeGlobalVariablesScript';
 $wgHooks[ 'ParserFirstCallInit' ][] = 'ChatEntryPoint::onParserFirstCallInit';
 $wgHooks[ 'LinkEnd' ][] = 'ChatHelper::onLinkEnd';

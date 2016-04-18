@@ -7,7 +7,7 @@ class ChatController extends WikiaController {
 
 	public function executeIndex() {
 		ChatHelper::info( __METHOD__ . ': Method called' );
-		global $wgUser, $wgFavicon, $wgOut, $wgHooks, $wgChatHost;
+		global $wgUser, $wgFavicon, $wgOut, $wgHooks;
 		wfProfileIn( __METHOD__ );
 
 		// String replacement logic taken from includes/Skin.php
@@ -34,7 +34,7 @@ class ChatController extends WikiaController {
 		$this->chatkey = Chat::echoCookies();
 		// Set the hostname of the node server that the page will connect to.
 
-		$chathost = $wgChatHost;
+		$chathost = ChatHelper::getChatHost();
 
 		$server = explode( ":", $chathost );
 		$this->nodeHostname = $server[0];

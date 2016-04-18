@@ -3,10 +3,6 @@
 use Wikia\Logger\WikiaLogger;
 
 class ChatHelper {
-	private static $serversBasket = "wgChatServersBasket";
-	private static $operationMode = "wgChatOperationMode";
-	private static $CentralCityId = 177;
-
 	// constants with config file sections
 	const CHAT_DEVBOX_ENV = 'dev';
 	const CHAT_PREVIEW_ENV = 'preview';
@@ -30,41 +26,13 @@ class ChatHelper {
 	}
 
 	/**
-	 * $mode - true = operation, false = failover
-	 */
-
-	static public function changeMode( $mode = true ) {
-		if ( self::getMode() == false ) { // just promote server to operation mode
-			self::setMode( true );
-			return true;
-		}
-
-		$basket = self::getServerBasket();
-		self::setServerBasket( ( $basket ) % 2 + 1 );
-		self::setMode( false );
-		return false;
-	}
-
-	static public function getMode() {
-		$mode = WikiFactory::getVarValueByName( self::$operationMode, self::$CentralCityId );
-		if ( is_null( $mode ) ) {
-			return true;
-		}
-
-		return $mode;
-	}
-
-	static public function setMode( $mode ) {
-		WikiFactory::setVarByName( self::$operationMode, self::$CentralCityId, $mode );
-	}
-
-	/**
 	 * @param string $type
 	 * @return array
 	 */
 	static public function getServer( $type = 'public' ) {
 		global $wgCityId;
 
+		// TODO: make it always random
 		$serverNodes = self::getServerNodes( $type );
 		$serversCount = count( $serverNodes );
 		$serverIndex = $wgCityId % $serversCount;
@@ -77,12 +45,6 @@ class ChatHelper {
 		];
 	}
 
-	static public function getServersList( $type = 'public' ) {
-		$serverNodes = self::getServerNodes( $type );
-
-		return $serverNodes[ self::getServerBasket() ];
-	}
-
 	/**
 	 * @param string $type
 	 * @return array
@@ -91,37 +53,24 @@ class ChatHelper {
 		global $wgWikiaEnvironment;
 
 		$consul = new Wikia\Consul\Client();
-		$serverNodes = [];
 
 		if ( $wgWikiaEnvironment !== self::CHAT_DEVBOX_ENV ) {
 			$serverNodes = $consul->getNodes( 'chat-' . $type, $wgWikiaEnvironment );
+		} else {
+			// TODO: do not hardcode devbox name here!
+			$serverNodes = $type === 'private' ? [ "dev-diana:8081" ] : [ "dev-diana:8080" ];
 		}
 
 		return $serverNodes;
 	}
 
-	/**
-	 * @return int
-	 */
-	static public function getServerBasket() {
-		$basket	= WikiFactory::getVarValueByName( self::$serversBasket, self::$CentralCityId );
-		if ( empty( $basket ) ) {
-			return 1;
-		}
-		return $basket;
-	}
+	static function getChatHost() {
+		global $wgChatHost, $wgWikiaEnvironment;
 
-	static private function setServerBasket( $basket ) {
-		WikiFactory::setVarByName( self::$serversBasket, self::$CentralCityId, $basket );
-	}
+		// TODO: do not hardcode devbox name here!
+		$chatHost = $wgWikiaEnvironment === self::CHAT_DEVBOX_ENV ? "dev-diana:8080" : $wgChatHost;
 
-	static public function onStaffLogFormatRow( $slogType, $result, $time, $linker, &$out ) {
-		if ( $slogType == 'chatfo' ) {
-			$out = wfMsgExt( 'chat-failover-log-entry', array( 'parseinline' ), array( $time, $result->slog_user_name, $result->slog_user_namedst, $result->slog_comment ) );
-			return true;
-		}
-
-		return true;
+		return $chatHost;
 	}
 
 	/**
@@ -191,7 +140,7 @@ class ChatHelper {
 	}
 
 	public static function onContributionsToolLinks( $id, $nt, &$tools ) {
-		global $wgOut, $wgCityId, $wgUser, $wgCityId;
+		global $wgOut, $wgUser, $wgCityId;
 		wfProfileIn( __METHOD__ );
 
 		$user = User::newFromId( $id );
@@ -271,7 +220,7 @@ class ChatHelper {
 
 		$skin = RequestContext::getMain()->getSkin();
 		$id =  $params[1];
-		$revert = "(" . "<a class='chat-change-ban' data-user-id='{$params[1]}' href='#'>" . wfMsg( 'chat-ban-log-change-ban-link' ) . "</a>" . ")";
+
 		if ( !$filterWikilinks ) { // Plaintext? Used for IRC messages (BugID: 44249)
 			$targetUser = User::newFromId( $id );
 			$link = "[[User:{$targetUser->getName()}]]";
