@@ -13,7 +13,7 @@ class ChatWidget {
 	 */
 	const CHAT_USER_LIST_CACHE_TTL = 60;
 	const RIGHT_RAIL_MODULE_CLASS = 'module';
-	const PARSER_TAG_CLASS = 'ChatEntryPoint';
+	const PARSER_TAG_CLASS = 'ChatWidget';
 
 	/**
 	 * TTL for chat user info, this should not change too often so it's one hour
