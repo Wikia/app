@@ -201,6 +201,12 @@ class MercuryApiController extends WikiaController {
 			$wikiVariables[ 'specialRobotPolicy' ] = $robotPolicy;
 		}
 
+		$htmlTitle = new WikiaHtmlTitle();
+		$wikiVariables[ 'htmlTitle' ] = [
+			'separator' => $htmlTitle->getSeparator(),
+			'parts' => $htmlTitle->getAllParts(),
+		];
+
 		return $wikiVariables;
 	}
 
