@@ -345,25 +345,6 @@ CREATE TABLE `summary_monthly_stats` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `tags_stats_filter`
---
-
-DROP TABLE IF EXISTS `tags_stats_filter`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `tags_stats_filter` (
-  `sf_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `sf_city_id` int(10) unsigned DEFAULT NULL,
-  `sf_page_id` int(10) unsigned DEFAULT NULL,
-  `sf_user_id` int(10) unsigned DEFAULT NULL,
-  `sf_tag_id` int(10) unsigned NOT NULL,
-  `sf_type` enum('blog','user','article','city') DEFAULT NULL,
-  PRIMARY KEY (`sf_id`),
-  UNIQUE KEY `sf_city_id` (`sf_city_id`,`sf_page_id`,`sf_user_id`,`sf_tag_id`,`sf_type`)
-) ENGINE=InnoDB AUTO_INCREMENT=645 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Table structure for table `wikia_monthly_stats`
 --
 
