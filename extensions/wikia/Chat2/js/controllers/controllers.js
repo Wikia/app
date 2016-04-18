@@ -608,7 +608,7 @@ var NodeChatController = $.createClass(NodeRoomController, {
 			actions.regular.push('private-allow');
 		}
 
-		if (this.userMain.get('isCanGiveChatMod') === true && user.get('isModerator') === false) {
+		if (this.userMain.get('canPromoteModerator') === true && user.get('isModerator') === false) {
 			actions.admin.push('give-chat-mod');
 		}
 
@@ -617,7 +617,7 @@ var NodeChatController = $.createClass(NodeRoomController, {
 			actions.admin.push('ban');
 		}
 
-		if (this.userMain.get('isCanGiveChatMod') === true && user.get('isStaff') == false && $.inArray('kick', actions.admin) == -1) {
+		if (this.userMain.get('canPromoteModerator') === true && user.get('isStaff') == false && $.inArray('kick', actions.admin) == -1) {
 			actions.admin.push('kick');
 			actions.admin.push('ban');
 		}

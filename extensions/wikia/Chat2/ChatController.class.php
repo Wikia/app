@@ -50,10 +50,10 @@ class ChatController extends WikiaController {
 
 		$this->bodyClasses = "";
 		if ( $wgUser->isAllowed( Chat::CHAT_MODERATOR ) ) {
-			$this->isChatMod = 1;
+			$this->isModerator = 1;
 			$this->bodyClasses .= ' chat-mod ';
 		} else {
-			$this->isChatMod = 0;
+			$this->isModerator = 0;
 		}
 
 		// Adding chatmoderator group for other users. CSS classes added to body tag to hide/show option in menu.
@@ -107,7 +107,7 @@ class ChatController extends WikiaController {
 		global $wgLang;
 
 		$vars['roomId'] = $this->roomId;
-		$vars['wgChatMod'] = $this->isChatMod;
+		$vars['wgChatMod'] = $this->isModerator;
 		$vars['WIKIA_NODE_HOST'] = $this->nodeHostname;
 		$vars['WIKIA_NODE_INSTANCE'] = $this->nodeInstance;
 		$vars['WIKIA_NODE_PORT'] = $this->nodePort;

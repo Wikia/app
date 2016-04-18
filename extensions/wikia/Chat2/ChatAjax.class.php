@@ -21,7 +21,7 @@ class ChatAjax {
 	 * a banned user could copy the entire client code (HTML/JS/etc.) from an unblocked user, then run that code while logged in as
 	 * under a banned account, and they would still be given access.
 	 *
-	 * The returned 'isChatMod' field is boolean based on whether the user is a chat moderator on the current wiki.
+	 * The returned 'isModerator' field is boolean based on whether the user is a chat moderator on the current wiki.
 	 *
 	 * If the user is not allowed to chat, an error message is returned (which can be shown to the user).
 	 */
@@ -51,12 +51,12 @@ class ChatAjax {
 			return [ 'errorMsg' => self::ERROR_USER_NOT_FOUND ];
 		}
 
-		$isCanGiveChatMod = in_array( Chat::CHAT_MODERATOR, $user->changeableGroups()['add'] );
+		$canPromoteModerator = in_array( Chat::CHAT_MODERATOR, $user->changeableGroups()['add'] );
 
 		$res = [
 			'canChat' => Chat::canChat( $user ),
-			'isChatMod' => $user->isAllowed( Chat::CHAT_MODERATOR ),
-			'isCanGiveChatMod' => $isCanGiveChatMod,
+			'isModerator' => $user->isAllowed( Chat::CHAT_MODERATOR ),
+			'canPromoteModerator' => $canPromoteModerator,
 			'isStaff' => $user->isAllowed( Chat::CHAT_STAFF ),
 			'username' => $user->getName(),
 			'username_encoded' => rawurlencode( $user->getName() ),
