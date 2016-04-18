@@ -7,7 +7,7 @@ class ChatController extends WikiaController {
 
 	public function executeIndex() {
 		ChatHelper::info( __METHOD__ . ': Method called' );
-		global $wgUser, $wgFavicon, $wgOut, $wgHooks;
+		global $wgUser, $wgFavicon, $wgOut, $wgHooks, $wgCityId;
 		wfProfileIn( __METHOD__ );
 
 		// String replacement logic taken from includes/Skin.php
@@ -25,6 +25,7 @@ class ChatController extends WikiaController {
 
 		// Find the chat for this wiki (or create it, if it isn't there yet).
 		$this->roomId = (int) NodeApiClient::getDefaultRoomId();
+		$this->wikiId = $wgCityId;
 
 		// we overwrite here data from redis since it causes a bug DAR-1532
 		$pageTitle = new WikiaHtmlTitle();
@@ -39,9 +40,6 @@ class ChatController extends WikiaController {
 		$server = explode( ":", $chathost );
 		$this->nodeHostname = $server[0];
 		$this->nodePort = $server[1];
-
-		$chatmain = ChatHelper::getServer( 'public' );
-		$this->nodeInstance = $chatmain['serverId'];
 
 		// Some building block for URLs that the UI needs.
 		$this->pathToProfilePage = Title::makeTitle( !empty( $this->wg->EnableWallExt ) ? NS_USER_WALL : NS_USER_TALK, '$1' )->getFullURL();
@@ -108,7 +106,7 @@ class ChatController extends WikiaController {
 		$vars['roomId'] = $this->roomId;
 		$vars['wgChatMod'] = $this->isChatMod;
 		$vars['WIKIA_NODE_HOST'] = $this->nodeHostname;
-		$vars['WIKIA_NODE_INSTANCE'] = $this->nodeInstance;
+		$vars['WIKI_ID'] = $this->wikiId;
 		$vars['WIKIA_NODE_PORT'] = $this->nodePort;
 		$vars['WEB_SOCKET_SWF_LOCATION'] = $this->wg->ExtensionsPath . '/wikia/Chat/swf/WebSocketMainInsecure.swf?' . $this->wg->StyleVersion;
 		$vars['EMOTICONS'] = wfMsgForContent( 'emoticons' );

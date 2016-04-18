@@ -15,7 +15,7 @@ var NodeChatSocketWrapper = $.createClass(Observable, {
 		NodeChatSocketWrapper.superclass.constructor.apply(this, arguments);
 		this.sessionData = null;
 		this.roomId = roomId;
-		this.serverId = WIKIA_NODE_INSTANCE;
+		this.wikiId = WIKI_ID;
 	},
 
 	send: function ($msg) {
@@ -86,12 +86,16 @@ var NodeChatSocketWrapper = $.createClass(Observable, {
 		//it seems socket.io decodes it -- that's why I double encoded it
 		//but maybe we should implement here authorization via user id instead of username?
 		var encodedWgUserName = encodeURIComponent(encodeURIComponent(wgUserName));
-		this.checkSession = function (data) {
-			$().log(encodedWgUserName);
 
-		};
-
-		this.proxy(callback, this)('name=' + encodedWgUserName + '&key=' + wgChatKey + '&roomId=' + this.roomId + '&serverId=' + this.serverId);
+		this.proxy(callback, this)(
+			'name=' + encodedWgUserName +
+			'&key=' + wgChatKey +
+			'&roomId=' + this.roomId +
+			// TODO: remove serverId param from here
+			// https://wikia-inc.atlassian.net/browse/SUS-432
+			'&serverId=' + this.wikiId +
+			'&wikiId=' + this.wikiId
+		);
 	},
 
 

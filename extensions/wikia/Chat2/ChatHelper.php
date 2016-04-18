@@ -31,19 +31,14 @@ class ChatHelper {
 	 * of randomly selected one. There is no need for particular wikia to connect to always
 	 * the same server - borders are responsible for load balancing among them.
 	 *
-	 * @param string $type
 	 * @return array
 	 */
-	static public function getServer( $type = 'public' ) {
-		$serverNodes = self::getServerNodes( $type );
+	static public function getServer() {
+		$serverNodes = self::getServerNodes( 'private' );
 		$serversCount = count( $serverNodes );
-		$serverId = mt_rand( 1, $serversCount );
-		$serverData = $serverNodes[ $serverId - 1 ];
+		$serverData = $serverNodes[ mt_rand( 0, $serversCount - 1 ) ];
 
-		return [
-			'serverAddress' => $serverData,
-			'serverId' => $serverId
-		];
+		return $serverData;
 	}
 
 	/**
