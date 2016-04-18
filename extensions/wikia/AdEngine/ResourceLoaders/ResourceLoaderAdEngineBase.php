@@ -3,7 +3,7 @@
 abstract class ResourceLoaderAdEngineBase extends ResourceLoaderModule {
 	const TTL_SCRIPTS = 1800; // time to live for scripts downloaded from external sources
 	const TTL_GRACE = 300;    // five minutes -- cache last response additionally for this time if we can't download the scripts anymore
-	const CACHE_BUSTER = 1;
+	const CACHE_BUSTER = 2;
 	public static $localCache = null;
 	/**
 	 * Configure scripts that should be loaded into one package

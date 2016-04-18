@@ -6,9 +6,15 @@ class ARecoveryUnlockCSS {
 	const CACHE_TTL = 3600 * 10; //10h
 	const TIMEOUT = 10;
 
+	private $outputPage = null;
+
+	public function __construct(OutputPage $outputPage) {
+		$this->outputPage = $outputPage;
+	}
+
 	public function getUnlockCSSUrl() {
 		global $wgServer;
-		$wikiaCssUrl = self::getWikiaUnlockCSSUrl();
+		$wikiaCssUrl = $this->getWikiaUnlockCSSUrl();
 
 		$memCache = F::app()->wg->Memc;
 
@@ -24,22 +30,24 @@ class ARecoveryUnlockCSS {
 			return $cachedCriptedUrl;
 		} else {
 			$spQuery = self::postJson(self::API_URL . self::API_ENDPOINT, $jsonData);
-			if ($spQuery['code'] == 200 && $this->verifyContent($spQuery['response'])) {
+			if ( $spQuery['code'] == 200 && $this->verifyContent($spQuery['response']) ) {
 				$memCache->set($wikiaCssUrl, $spQuery['response'], self::CACHE_TTL);
 				return $spQuery['response'];
 			} else {
 				\Wikia\Logger\WikiaLogger::instance()->warning( 'Failed to fetch crypted CSS', ['url' => self::API_URL . self::API_ENDPOINT, 'data' => $jsonData] );
-				//TODO: set page cache validity to short period
 			}
 		}
-
 		return $wikiaCssUrl;
 	}
 
 	private function verifyContent($url) {
-		return true; //TODO: fixme
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_URL, $url);
+		curl_setopt($ch, CURLOPT_TIMEOUT, self::TIMEOUT);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		$content = curl_exec($ch);
+		curl_close($ch);
 
-		$content = Http::get($url, ['noProxy' => true, 'timeout' => self::TIMEOUT, 'followRedirects' => true, 'maxRedirects' => 20]);
 		if (strpos($content, '#WikiaArticle') !== false) {
 			return true;
 		}
