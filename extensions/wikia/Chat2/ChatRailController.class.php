@@ -20,7 +20,8 @@ class ChatRailController extends WikiaController {
 	public function executeAnonLoginSuccess() {
 		wfProfileIn( __METHOD__ );
 
-		if ( !empty( $this->totalInRoom ) ) {
+		$totalChatters = count( Chat::getChatters() );
+		if ( $totalChatters > 0 ) {
 			$this->buttonText = wfMessage( 'chat-join-the-chat' )->text();
 			Chat::info( __METHOD__ . ': Method called - existing room' );
 		} else {
