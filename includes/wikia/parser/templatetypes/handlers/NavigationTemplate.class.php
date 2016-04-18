@@ -8,7 +8,7 @@ class NavigationTemplate {
 		'p',
 	];
 
-	public static $mark = 'NAVUNIQ';
+	const MARK = 'NAVUNIQ';
 
 	/**
 	 * @desc If a block element div, table or p is found in a template's text, return an empty
@@ -30,7 +30,7 @@ class NavigationTemplate {
 
 	private static function process( $html ) {
 		$blockElemRegex = '/<(' . implode( '|', self::$blockLevelElements ) . ')[>\s]+/i';
-		$markerRegex = "/\x7f".self::$mark.".+?\x7f/s";
+		$markerRegex = "/\x7f".self::MARK.".+?\x7f/s";
 
 		//getting markers of each navigation template
 		preg_match_all($markerRegex, $html, $markers);
@@ -59,7 +59,7 @@ class NavigationTemplate {
 	 */
 	private static function mark( $text ) {
 		// marking each template with unique marker to be able to handle nested navigation templates
-		$marker = "\x7f".self::$mark."_".uniqid()."\x7f";
+		$marker = "\x7f".self::MARK."_".uniqid()."\x7f";
 		return sprintf( "%s%s%s", $marker, $text, $marker );
 	}
 }

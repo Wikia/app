@@ -8,7 +8,7 @@ class NavigationTemplateTest extends WikiaBaseTest {
 	public function testMarkNavigationElements( $content, $expected, $message ) {
 		$marked = NavigationTemplate::handle( $content );
 
-		$this->assertEquals( preg_match($markerRegex = "/\x7f".NavigationTemplate::$mark.".+?\x7f/s", $marked), $expected, $message );
+		$this->assertEquals( preg_match($markerRegex = "/\x7f".NavigationTemplate::MARK.".+?\x7f/s", $marked), $expected, $message );
 	}
 
 	public function markedTemplateContentProvider() {
