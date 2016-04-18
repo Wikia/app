@@ -1,11 +1,11 @@
 CREATE TABLE `user_login_history` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(5) unsigned NOT NULL,
   `city_id` int(9) unsigned DEFAULT '0',
   `ulh_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `ulh_from` tinyint(4) DEFAULT '0',
   `ulh_rememberme` tinyint(4) DEFAULT NULL,
-  KEY `idx_user_login_history_timestamp` (`ulh_timestamp`),
-  KEY `idx_user_id` (`user_id`),
+  PRIMARY KEY (`id`),
   KEY `idx_user_login_history_wikia_timestamp` (`city_id`,`user_id`,`ulh_timestamp`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
