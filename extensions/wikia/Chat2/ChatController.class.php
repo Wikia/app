@@ -120,12 +120,7 @@ class ChatController extends WikiaController {
 
 		$vars['wgChatKey'] = $this->chatkey;
 
-		$months = [ ];
-		for ( $i = 1; $i < 13; $i++ ) {
-			$months[$i] = $wgLang->getMonthAbbreviation( $i );
-		}
-
-		$vars['wgLangtMonthAbbreviation'] = $months;
+		$vars['wgLangtMonthAbbreviation'] = $wgLang->getMonthAbbreviationsArray();
 
 		return true;
 	}

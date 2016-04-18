@@ -51,7 +51,7 @@ class ChatUser extends WikiaModel {
 
 	public function ban( $adminId, $endOn, $reason ) {
 		if ( $this->isAnon() ) {
-			throw new InvalidArgumentException('Cannot ban anonymous user');
+			throw new InvalidArgumentException( 'Cannot ban anonymous user' );
 		}
 
 		$this->getDatawareDB( DB_MASTER )->replace(
@@ -73,7 +73,7 @@ class ChatUser extends WikiaModel {
 
 	public function unban() {
 		if ( $this->isAnon() ) {
-			throw new InvalidArgumentException('Cannot unban anonymous user');
+			throw new InvalidArgumentException( 'Cannot unban anonymous user' );
 		}
 
 		$this->getDatawareDB( DB_MASTER )->delete(
@@ -111,26 +111,24 @@ class ChatUser extends WikiaModel {
 			return false;
 		}
 
-		$banInfo = $this->getBanInfoFromCache();
-		if ( empty( $banInfo ) ) {
+		$existedInCache = null;
+		$banInfo = $this->getBanInfoFromCache( $existedInCache );
+
+		if ( !$existedInCache ) {
 			$banInfo = $this->getBanInfoFromDb();
-
-			$this->storeBanInfoInCache( $banInfo );
 		}
-
-		// check if ban has expired
-		if ( $banInfo ) {
-			$endDate = wfTimestamp( TS_UNIX, $banInfo->end_date );
-			if ( $endDate < time() ) {
-				$banInfo = false;
-			}
+		$this->handleExpiration( $banInfo );
+		if ( !$existedInCache ) {
+			$this->storeBanInfoInCache( $banInfo );
 		}
 
 		return $banInfo;
 	}
 
-	private function getBanInfoFromCache() {
+	private function getBanInfoFromCache( &$existed ) {
 		$banInfo = $this->wg->Memc->get( $this->getBanInfoCacheKey() );
+
+		$existed = !empty( $banInfo );
 		if ( $banInfo === self::NO_BAN_MARKER ) {
 			$banInfo = false;
 		}
@@ -163,14 +161,7 @@ class ChatUser extends WikiaModel {
 		);
 	}
 
-	/**
-	 * Clear cache for ban status
-	 */
-	public function clearBanInfoCache() {
-		if ( $this->isAnon() ) {
-			return;
-		}
-
+	private function clearBanInfoCache() {
 		WikiaDataAccess::cachePurge( $this->getBanInfoCacheKey() );
 	}
 
@@ -187,7 +178,7 @@ class ChatUser extends WikiaModel {
 
 	public function blockUser( User $blockedUser ) {
 		if ( $this->isAnon() || $blockedUser->isAnon() ) {
-			throw new InvalidArgumentException('Chat blocks work on registered users only');
+			throw new InvalidArgumentException( 'Chat blocks work on registered users only' );
 		}
 
 		$this->getDatawareDB( DB_MASTER )->replace(
@@ -203,7 +194,7 @@ class ChatUser extends WikiaModel {
 
 	public function unblockUser( User $blockedUser ) {
 		if ( $this->isAnon() || $blockedUser->isAnon() ) {
-			throw new InvalidArgumentException('Chat blocks work on registered users only');
+			throw new InvalidArgumentException( 'Chat blocks work on registered users only' );
 		}
 
 		$this->getDatawareDB( DB_MASTER )->delete(
@@ -218,7 +209,7 @@ class ChatUser extends WikiaModel {
 
 	public function getBlockedUsers() {
 		if ( $this->isAnon() ) {
-			throw new InvalidArgumentException('Chat blocks work on registered users only');
+			throw new InvalidArgumentException( 'Chat blocks work on registered users only' );
 		}
 
 		return $this->getDatawareDB()->selectFieldValues(
@@ -233,7 +224,7 @@ class ChatUser extends WikiaModel {
 
 	public function getBlockedByUsers() {
 		if ( $this->isAnon() ) {
-			throw new InvalidArgumentException('Chat blocks work on registered users only');
+			throw new InvalidArgumentException( 'Chat blocks work on registered users only' );
 		}
 
 		return $this->getDatawareDB()->selectFieldValues(
@@ -258,6 +249,15 @@ class ChatUser extends WikiaModel {
 		global $wgUser;
 
 		return self::newFromId( $wgUser->getId() );
+	}
+
+	private function handleExpiration( &$banInfo ) {
+		if ( $banInfo ) {
+			$endDate = wfTimestamp( TS_UNIX, $banInfo->end_date );
+			if ( $endDate < time() ) {
+				$banInfo = false;
+			}
+		}
 	}
 
 }

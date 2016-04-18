@@ -12,17 +12,21 @@ class ChatBanTimeOptionsTest extends WikiaBaseTest {
 	 * @dataProvider testGetDataProvider
 	 */
 	public function testGet( $textSource, $expected ) {
-		$messageMock = $this->getMock('Message',[]);
-		$messageMock->expects($this->once())
-			->method('inContentLanguage')
-			->willReturn($messageMock);
-		$messageMock->expects(($this->once()))
-			->method('text')
-			->willReturn($textSource);
+		$messageMock = $this->getMockBuilder( 'Message' )
+			->disableOriginalConstructor()
+			->getMock();
 
-		$this->mockGlobalFunction('wfMessage', $messageMock);
+		$messageMock->expects( $this->once() )
+			->method( 'inContentLanguage' )
+			->willReturn( $messageMock );
 
-		$this->assertEquals($expected, ChatBanTimeOptions::newDefault()->get());
+		$messageMock->expects( ( $this->once() ) )
+			->method( 'text' )
+			->willReturn( $textSource );
+
+		$this->mockGlobalFunction( 'wfMessage', $messageMock );
+
+		$this->assertEquals( $expected, ChatBanTimeOptions::newDefault()->get() );
 	}
 
 	public function testGetDataProvider() {
