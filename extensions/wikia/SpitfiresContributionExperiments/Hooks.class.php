@@ -17,6 +17,7 @@ class Hooks {
 		\Hooks::register( 'UserSignupAfterSignupBeforeRedirect', [ $hooks, 'onUserSignupAfterSignupBeforeRedirect' ] );
 		\Hooks::register( 'UserLoginComplete', [ $hooks, 'onUserLoginComplete' ] );
 		\Hooks::register( 'UserLoadFromHeliosToken', [ $hooks, 'onUserLoadFromHeliosToken' ] );
+		\Hooks::register( 'BeforePageDisplay', [ $hooks, 'onBeforePageDisplay' ] );
 	}
 
 	public function onUserSignupAfterSignupBeforeRedirect( $redirectUrl ) {
@@ -33,6 +34,14 @@ class Hooks {
 
 	public function onUserLoadFromHeliosToken( \User $user ) {
 		$this->manageUserActivityGroupCookie( $user );
+
+		return true;
+	}
+
+	// This hook is temporary, to test modal
+	// TODO: Remove before merge
+	public function onBeforePageDisplay( \OutputPage $out, \Skin $skin ) {
+		\Wikia::addAssetsToOutput( 'extensions/wikia/SpitfiresContributionExperiments/scripts/my-profile-tour.js' );
 
 		return true;
 	}

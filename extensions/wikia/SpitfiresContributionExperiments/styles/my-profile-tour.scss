@@ -1,0 +1,39 @@
+#MyProfileModal {
+	header, footer {
+		display: none;
+	}
+
+	section {
+		padding: 0;
+	}
+
+	&.modal {
+		text-align: center;
+		width: 530px;
+	}
+
+	.my-profile-header {
+		background: url('/extensions/wikia/SpitfiresContributionExperiments/images/mask-faniverse-desktop.png') center center no-repeat;
+		height: 60px;
+		width: 530px;
+	}
+
+	.my-profile-content {
+		padding: 50px 20px 20px;
+	}
+
+	.my-profile-step {
+		background-color: #fff;
+		border-radius: 30px;
+		height: 60px;
+		left: 250px;
+		position: absolute;
+		top: 30px;
+		width: 60px;
+		z-index: 1;
+	}
+
+	.step-1 {
+		background: url('/extensions/wikia/SpitfiresContributionExperiments/images/number1.png') center center no-repeat;
+	}
+}
