@@ -1,6 +1,6 @@
 <?php
 
-class ChatWidgetPointTest extends WikiaBaseTest {
+class ChatWidgetTest extends WikiaBaseTest {
 
 	protected function setUp() {
 		$this->setupFile = __DIR__ . '/../Chat_setup.php';
@@ -97,7 +97,7 @@ class ChatWidgetPointTest extends WikiaBaseTest {
 		$this->assertEquals( $expected, $vars );
 	}
 
-	public function testGetTemplateVarsDataProvider() {
+	public function testGeTemplateVarsDataProvider() {
 		return [
 			[
 				'fromParserTag' => true,
