@@ -76,13 +76,18 @@ CREATE TABLE `city_list` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE `city_list_log` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `cl_city_id` int(9) NOT NULL,
-  `cl_timestamp` timestamp NOT NULL default CURRENT_TIMESTAMP,
-  `cl_user_id` int(5) unsigned default NULL,
+  `cl_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `cl_user_id` int(5) unsigned DEFAULT NULL,
   `cl_type` int(5) NOT NULL,
   `cl_text` mediumtext NOT NULL,
+  `cl_var_id` int(5) unsigned DEFAULT NULL,
+  PRIMARY KEY (`id`),
   KEY `cl_city_id_idx` (`cl_city_id`),
   KEY `cl_type_idx` (`cl_type`),
+  KEY `cl_timestamp_idx` (`cl_timestamp`),
+  KEY `var_city` (`cl_var_id`,`cl_city_id`),
   CONSTRAINT `city_list_log_ibfk_1` FOREIGN KEY (`cl_city_id`) REFERENCES `city_list` (`city_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
