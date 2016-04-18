@@ -1,3 +1,19 @@
+<p>{{langFilterLabel}}</p>
+<ul class="portability-dashboard-language-filter">
+	<li>
+		<a href="?{{langQSParam}}" title="{{langFilterLabel}}
+			{{allLangFilter}}" class="button{{#isLangFilterSet}} secondary{{/isLangFilterSet}}">
+			{{allLangFilter}}
+		</a>
+	</li>
+	{{#langList}}
+		<li>
+			<a href="?{{langQSParam}}={{lang}}" title="{{langFilterLabel}} {{lang}}" class="button{{^active}} secondary{{/active}}">
+				{{lang}}
+			</a>
+		</li>
+	{{/langList}}
+</ul>
 <p>{{dashboardLegend}}</p>
 <table class="wikitable portability-dashboard-table">
 	<thead>

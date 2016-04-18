@@ -4,6 +4,7 @@ class SpecialPortabilityDashboardController extends WikiaSpecialPageController {
 	const SPECIAL_INSIGHTS_PATH = '/wiki/Special:Insights/';
 	const SPECIAL_INSIGHTS_TYPELESS_TEMPLATE_PAGE = 'templateswithouttype';
 	const SPECIAL_CUSTOM_INFOBOXES_PAGE = 'nonportableinfoboxes';
+	const LANGUAGE_FILTER_QS_PARAM = 'lang';
 
 
 	public function __construct() {
@@ -12,11 +13,12 @@ class SpecialPortabilityDashboardController extends WikiaSpecialPageController {
 
 	public function index() {
 		$model = new PortabilityDashboardModel();
-
-		Wikia::addAssetsToOutput( 'special_portability_dashboard_scss' );
+		$list = $model->getList();
+		$langFilter = $this->getVal( self::LANGUAGE_FILTER_QS_PARAM, '' );
+		$isLangFilterSet = !empty( $langFilter );
 
 		// template model 
-		$this->response->setVal( 'list', $model->getList() );
+		$this->response->setVal( 'list', $isLangFilterSet ? $this->filterListByLang( $list, $langFilter ) : $list );
 
 		// template helpers
 		$this->response->setVal(
@@ -25,10 +27,81 @@ class SpecialPortabilityDashboardController extends WikiaSpecialPageController {
 		$this->response->setVal(
 			'customInfoboxesInsightsPath', self::SPECIAL_INSIGHTS_PATH . self::SPECIAL_CUSTOM_INFOBOXES_PAGE
 		);
+		$this->response->setVal(
+			'langList',
+			$this->extendLanguagesListWithActiveLanguage(
+				$this->getUniqueSortedLanguagesList( $list ),
+				$langFilter
+			)
+		);
+		$this->response->setVal( 'isLangFilterSet', $isLangFilterSet );
+		$this->response->setVal( 'langQSParam', self::LANGUAGE_FILTER_QS_PARAM );
 
 		// i18n template strings
+		$this->response->setVal( 'langFilterLabel', wfMessage( 'portability-dashboard-language-filter-label' )->text() );
 		$this->response->setVal( 'dashboardLegend', wfMessage( 'portability-dashboard-hover-info' )->text() );
-		$this->response->setVal( 'dashboardLabels', [
+		$this->response->setVal( 'allLangFilter', wfMessage( 'portability-dashboard-language-filter-all' )->text() );
+		$this->response->setVal( 'dashboardLabels', $this->getDashboardLabels() );
+
+		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
+
+		Wikia::addAssetsToOutput( 'special_portability_dashboard_scss' );
+	}
+
+	/**
+	 * gets array on community languages without duplicates
+	 * @param array $list - model
+	 * @return array - array of languages
+	 */
+	private function getUniqueSortedLanguagesList( $list ) {
+		$languages = [];
+
+		foreach ( $list as $item ) {
+			$lang = $item[ 'wikiLang' ];
+
+			if ( !empty( $lang ) && !in_array( $lang, $languages ) ) {
+				$languages[] = $lang;
+			}
+		}
+
+		asort( $languages );
+
+		return $languages;
+	}
+
+	/**
+	 * extends languages list with active laguage filter
+	 * @param array $list - languages list
+	 * @param string $activeLangFilter - language code for active language filter
+	 * @return array - extended languages list
+	 */
+	private function extendLanguagesListWithActiveLanguage( $list, $activeLangFilter ) {
+		return array_map( function ( $item ) use ( $activeLangFilter ) {
+			return [
+				'lang' => $item,
+				'active' => $item === $activeLangFilter
+			];
+		}, $list );
+	}
+
+	/**
+	 * filters model by language
+	 * @param array $list - model
+	 * @param string $langFilter - language code
+	 * @return array - filtered model
+	 */
+	private function filterListByLang( $list, $langFilter ) {
+		return array_filter( $list, function( $item ) use ( $langFilter ) {
+			return $item[ 'wikiLang' ] === $langFilter;
+		});
+	}
+
+	/**
+	 * gets dashboard labels with descriptions
+	 * @return array - dashboard labels data
+	 */
+	private function getDashboardLabels() {
+		return [
 			[
 				'name' => wfMessage( 'portability-dashboard-community-header' )->text(),
 				'description' => wfMessage( 'portability-dashboard-community-desc' )->text()
@@ -61,8 +134,6 @@ class SpecialPortabilityDashboardController extends WikiaSpecialPageController {
 				'name' => wfMessage( 'portability-dashboard-impact-header' )->text(),
 				'description' => wfMessage( 'portability-dashboard-impact-desc' )->text()
 			],
-		] );
-
-		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
+		];
 	}
 }
