@@ -134,7 +134,7 @@ class ChatServerApiClient {
 		// operation, abort trying to contact the node server since it could be unavailable (in the event of complete
 		// network unavailability in the primary datacenter). - BugzId 11047
 		if ( empty( $wgReadOnly ) ) {
-			$requestUrl = "http://" . self::getHostAndPort() . "/api?" . http_build_query( $params );
+			$requestUrl = "http://" . ChatConfig::getApiServer() . "/api?" . http_build_query( $params );
 			$response = Http::get( $requestUrl, 'default', [ 'noProxy' => true ] );
 			if ( $response === false ) {
 				$response = null;
@@ -148,17 +148,6 @@ class ChatServerApiClient {
 		wfProfileOut( __METHOD__ );
 
 		return $response;
-	}
-
-	/**
-	 * Return the appropriate host and port for the client to connect to.
-	 * This is based on whether this is dev or prod, but can be overridden
-	 */
-	private static function getHostAndPort() {
-		$server = ChatConfig::getApiServer();
-		$hostAndPort = $server['host'] . ':' . $server['port'];
-
-		return $hostAndPort;
 	}
 
 }

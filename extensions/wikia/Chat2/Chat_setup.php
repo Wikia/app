@@ -31,21 +31,17 @@ $wgAutoloadClasses['ChatRailController'] = "$dir/ChatRailController.class.php";
 $wgAutoloadClasses['ChatBanTimeOptions'] = "$dir/ChatBanTimeOptions.class.php";
 $wgAutoloadClasses['SpecialChat'] = "$dir/SpecialChat.class.php";
 $wgAutoloadClasses['ChatServerApiClient'] = "$dir/ChatServerApiClient.class.php";
-$wgAutoloadClasses['ChatfailoverSpecialController'] = "$dir/ChatfailoverSpecialController.class.php";
 
 // special pages
 $wgSpecialPages['Chat'] = 'SpecialChat';
-$wgSpecialPages['Chatfailover'] = 'ChatfailoverSpecialController';
 
 // i18n
 $wgExtensionMessagesFiles['Chat'] = $dir . '/Chat.i18n.php';
 $wgExtensionMessagesFiles['ChatAliases'] = $dir . '/Chat.aliases.php';
-$wgExtensionMessagesFiles['Chatfailover'] = $dir . '/Chatfailover.i18n.php';
 $wgExtensionMessagesFiles['ChatDefaultEmoticons'] = $dir . '/ChatDefaultEmoticons.i18n.php';
 
 // hooks
 $wgHooks['GetRailModuleList'][] = 'ChatHooks::onGetRailModuleList';
-$wgHooks['StaffLog::formatRow'][] = 'ChatHooks::onStaffLogFormatRow';
 $wgHooks['MakeGlobalVariablesScript'][] = 'ChatHooks::onMakeGlobalVariablesScript';
 $wgHooks['LinkEnd'][] = 'ChatHooks::onLinkEnd';
 $wgHooks['BeforePageDisplay'][] = 'ChatHooks::onBeforePageDisplay';

@@ -2,131 +2,35 @@
 
 class ChatConfig {
 
-	// constants with config file sections
-	const CHAT_DEVBOX_ENV = 'dev';
-	const CHAT_PREVIEW_ENV = 'preview';
-	const CHAT_VERIFY_ENV = 'verify';
-	const CHAT_PRODUCTION_ENV = 'prod';
+	public static function getPublicHost() {
+		global $wgWikiaEnvironment, $wgChatPublicHost, $wgChatPublicHostOverride;
 
-	const SERVER_TYPE_MAIN = 'Main';
-	const SERVER_TYPE_API = 'Api';
+		if ( !empty( $wgChatPublicHostOverride ) ) {
+			return $wgChatPublicHostOverride;
+		}
 
-	const VAR_SERVER_BASKET = 'wgChatServersBasket';
-	const VAR_OPERATION_MODE = 'wgChatOperationMode';
-
-	private static $configData = [ ];
-
-	public static function getMainServer() {
-		return self::getServer( self::SERVER_TYPE_MAIN );
+		return ( $wgWikiaEnvironment === WIKIA_ENV_PROD ? '' : $wgWikiaEnvironment . '-' ) . $wgChatPublicHost;
 	}
 
 	public static function getApiServer() {
-		return self::getServer( self::SERVER_TYPE_API );
-	}
+		global $wgWikiaEnvironment, $wgChatPrivateServerOverride;
 
-	public static function getMainServersList() {
-		return self::getServersList( self::SERVER_TYPE_MAIN );
-	}
+		if ( !empty( $wgChatPrivateServerOverride ) ) {
+			return $wgChatPrivateServerOverride;
+		}
 
-	private static function getServer( $type ) {
-		global $wgCityId;
+		$consul = new Wikia\Consul\Client();
+		$serverNodes = $consul->getNodes( 'chat-private', $wgWikiaEnvironment );
 
-		$servers = self::getServersList( $type );
-		$index = $wgCityId % count( $servers );
+		$index = rand( 0, count( $serverNodes ) - 1 );
 
-		list( $host, $port ) = explode( ':', $servers[$index], 2 );
-
-		return [
-			'host' => $host,
-			'port' => $port,
-			'serverId' => $index + 1,
-		];
+		return $serverNodes[$index];
 	}
 
 	public static function getSecretToken() {
-		return ChatConfig::getConfigValue( 'ChatCommunicationToken' );
-	}
+		global $wgChatCommunicationToken;
 
-	private static function getServersList( $type ) {
-		$servers = self::getConfigValue( $type . 'ChatServers' );
-
-		return $servers[self::getServerBasket()];
-	}
-
-	public static function getPublicHost() {
-		return self::getConfigValue( 'ChatHost' );
-	}
-
-	/**
-	 * Get a configuration value. Returns false when not found.
-	 *
-	 * @param string $key Key
-	 * @return mixed|false
-	 */
-	private static function getConfigValue( $key ) {
-		global $wgWikiaEnvironment;
-
-		if ( empty( self::$configData ) ) {
-			$configFile = getenv( 'WIKIA_CONFIG_ROOT' ) . '/ChatConfig.json';
-			$jsonConfig = file_get_contents( $configFile );
-
-			self::$configData = json_decode( $jsonConfig, true );
-		}
-
-		if ( empty( self::$configData ) ) {
-			return false;
-		}
-
-		$env = $wgWikiaEnvironment;
-		if ( isset( self::$configData[$env][$key] ) ) {
-			return self::$configData[$env][$key];
-		}
-
-		if ( isset( self::$configData[$key] ) ) {
-			return self::$configData[$key];
-		}
-
-		return false;
-	}
-
-	public static function changeMode() {
-		if ( self::getMode() == false ) { // just promote server to operation mode
-			self::setMode( true );
-
-			return true;
-		}
-
-		$basket = self::getServerBasket();
-		self::setServerBasket( ( $basket ) % 2 + 1 );
-		self::setMode( false );
-
-		return false;
-	}
-
-	public static function getMode() {
-		$mode = WikiFactory::getVarValueByName( self::VAR_OPERATION_MODE, Wikia::COMMUNITY_WIKI_ID );
-		if ( is_null( $mode ) ) {
-			return true;
-		}
-
-		return $mode;
-	}
-
-	public static function setMode( $mode ) {
-		WikiFactory::setVarByName( self::VAR_OPERATION_MODE, Wikia::COMMUNITY_WIKI_ID, $mode );
-	}
-
-	public static function getServerBasket() {
-		$basket = WikiFactory::getVarValueByName( self::VAR_SERVER_BASKET, Wikia::COMMUNITY_WIKI_ID );
-		if ( empty( $basket ) ) {
-			return 1;
-		}
-
-		return $basket;
-	}
-
-	public static function setServerBasket( $basket ) {
-		WikiFactory::setVarByName( self::VAR_SERVER_BASKET, Wikia::COMMUNITY_WIKI_ID, $basket );
+		return $wgChatCommunicationToken;
 	}
 
 }

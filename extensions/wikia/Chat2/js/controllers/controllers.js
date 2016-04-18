@@ -15,6 +15,7 @@ var NodeChatSocketWrapper = $.createClass(Observable, {
 		NodeChatSocketWrapper.superclass.constructor.apply(this, arguments);
 		this.sessionData = null;
 		this.roomId = roomId;
+		this.wikiId = window.wgCityId;
 	},
 
 	send: function ($msg) {
@@ -90,7 +91,8 @@ var NodeChatSocketWrapper = $.createClass(Observable, {
 
 		};
 
-		this.proxy(callback, this)('name=' + encodedWgUserName + '&key=' + wgChatKey + '&roomId=' + this.roomId);
+		this.proxy(callback, this)('name=' + encodedWgUserName + '&key=' + wgChatKey + '&roomId=' + this.roomId
+			+ '&serverId=' + this.wikiId + '&wikiId=' + this.wikiId);
 	},
 
 

@@ -65,7 +65,6 @@ class ChatAjax {
 			'since' => '',
 
 			// Extra wg variables that we need.
-			'activeBasket' => ChatConfig::getServerBasket(),
 			'wgCityId' => $wgCityId,
 			'wgServer' => $wgServer,
 			'wgArticlePath' => $wgArticlePath
