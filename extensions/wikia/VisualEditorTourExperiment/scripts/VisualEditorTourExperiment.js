@@ -1,6 +1,11 @@
-define('VisualEditorTourExperiment', ['jquery', 'wikia.loader', 'wikia.mustache'],
-	function ($, loader, mustache) {
+define('VisualEditorTourExperiment', ['jquery', 'wikia.loader', 'wikia.mustache', 'wikia.tracker'],
+	function ($, loader, mustache, tracker) {
 		'use strict';
+
+		var track = tracker.buildTrackingFunction({
+				category: 've-editing-tour',
+				trackingMethod: 'analytics'
+			});
 
 		function Tour(tourConfig) {
 			this.tourConfig = tourConfig;
@@ -42,25 +47,51 @@ define('VisualEditorTourExperiment', ['jquery', 'wikia.loader', 'wikia.mustache'
 			});
 
 			$element.popover('show');
+
+			track({
+				action: tracker.ACTIONS.IMPRESSION,
+				label: 'tour-step-' + this.step
+			});
 		}
 
 		Tour.prototype.next = function() {
 			if (this.step === this.steps.length - 1) {
 				this.dismiss();
+				track({
+					action: tracker.ACTIONS.CLICK,
+					label: 'tour-complete'
+				});
 				return;
 			}
 			this.destroyStep(this.step);
 			this.openStep(++this.step);
+
+			track({
+				action: tracker.ACTIONS.CLICK,
+				label: 'next-go-to-' + this.step
+			});
 		}
 
-		Tour.prototype.dismiss = function() {
+		Tour.prototype.close = function() {
+			this._dismiss();
+			track({
+				action: tracker.ACTIONS.CLICK,
+				label: 'close'
+			});
+			track({
+				action: tracker.ACTIONS.CLICK,
+				label: 'close-' + this.step
+			});
+		}
+
+		Tour.prototype._dismiss = function() {
 			this.destroyStep(this.step);
 			$.cookie('vetourdismissed', 1, { expires : 30 });
 		}
 
 		Tour.prototype._setupTour = function (assets) {
 			$('body').on('click', '.ve-tour-next', this.next.bind(this));
-			$('body').on('click', '.ve-tour-experiment .close', this.dismiss.bind(this));
+			$('body').on('click', '.ve-tour-experiment .close', this.close.bind(this));
 			this.contentTemplate = assets.mustache[0];
 			this.tourConfig.forEach(this._setupStep.bind(this));
 			this.next();
