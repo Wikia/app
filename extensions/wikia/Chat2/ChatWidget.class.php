@@ -100,8 +100,8 @@ class ChatWidget {
 	static public function getChatTemplateName() {
 
 		return F::app()->checkSkin( 'oasis' ) ?
-			'entryPointTag.mustache' :
-			'entryPointTagMonobook.mustache';
+			'widget.mustache' :
+			'widgetMonobook.mustache';
 	}
 
 	static private function getChatUsersMemcKey() {

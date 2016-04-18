@@ -22,11 +22,11 @@ class ChatWidgetPointTest extends WikiaBaseTest {
 		return [
 			[
 				'isOasis' => true,
-				'expected' => 'entryPointTag.mustache'
+				'expected' => 'widget.mustache'
 			],
 			[
 				'isOasis' => false,
-				'expected' => 'entryPointTagMonobook.mustache'
+				'expected' => 'widgetMonobook.mustache'
 			]
 		];
 	}
