@@ -104,7 +104,6 @@
 <?= $bottomScripts ?>
 
 <?= $nielsen ?>
-<div id="rcjsload_cd6557"></div>
 <script type="text/javascript">
 	(function() {
 		var referer="";try{if(referer=document.referrer,"undefined"==typeof referer)throw"undefined"}catch(exception){referer=document.location.href,(""==referer||"undefined"==typeof referer)&&(referer=document.URL)}referer=referer.substr(0,700);
