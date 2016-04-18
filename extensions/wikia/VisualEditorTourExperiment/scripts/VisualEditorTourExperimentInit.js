@@ -9,12 +9,16 @@ define('VisualEditorTourExperimentInit',
 		});
 
 		function init() {
-			if (isExperimentVariation() &&
-				(isNewlyregistered() || isUserwithoutedit) &&
-				!$.cookie('vetourdismissed')
-			) {
+			if (isEnabled()) {
+				clearEntrypointPopover();
 				(new VETour(veTourConfig)).start();
 			}
+		}
+
+		function isEnabled() {
+			return isExperimentVariation() &&
+				(isNewlyregistered() || isUserwithoutedit) &&
+				!$.cookie('vetourdismissed');
 		}
 
 		function trackPublish() {
@@ -32,7 +36,11 @@ define('VisualEditorTourExperimentInit',
 				}
 			}
 		}
-		
+
+		function clearEntrypointPopover() {
+			$('#ca-ve-edit').popover('destroy');
+		}
+
 		function isExperimentVariation() {
 			return abTest.inGroup('CONTRIB_EXPERIMENTS', 'VE_TOUR');
 		}
@@ -47,6 +55,7 @@ define('VisualEditorTourExperimentInit',
 
 		return {
 			init: init,
+			isEnabled: isEnabled,
 			trackPublish: trackPublish
 		}
 	}
