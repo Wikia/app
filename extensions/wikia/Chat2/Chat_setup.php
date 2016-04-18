@@ -31,9 +31,11 @@ $wgAutoloadClasses['ChatController'] = "$dir/ChatController.class.php";
 $wgAutoloadClasses['ChatRailController'] = "$dir/ChatRailController.class.php";
 $wgAutoloadClasses['SpecialChat'] = "$dir/SpecialChat.class.php";
 $wgAutoloadClasses['NodeApiClient'] = "$dir/NodeApiClient.class.php";
+$wgAutoloadClasses['ChatBanListSpecialController'] = "$dir/ChatBanListSpecialController.class.php";
 
 // special pages
 $wgSpecialPages['Chat'] = 'SpecialChat';
+$wgSpecialPages['ChatBanList'] = 'ChatBanListSpecialController';
 
 // i18n
 $wgExtensionMessagesFiles['Chat'] = $dir . '/Chat.i18n.php';

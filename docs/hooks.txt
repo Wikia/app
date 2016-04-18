@@ -1989,20 +1989,8 @@ Do not use this hook to break upload processing. This will return the user to
 a blank form with no error message; use UploadVerification and
 UploadVerifyFile instead
 
-'UploadCreateFromRequest': when UploadBase::createFromRequest has been called
-$type: (string) the requested upload type
-&$className: the class name of the Upload instance to be created
-
 'UploadComplete': when Upload completes an upload
 &$upload: an UploadBase child instance
-
-'UploadFormInitDescriptor': after the descriptor for the upload form as been
-	assembled
-$descriptor: (array) the HTMLForm descriptor
-
-'UploadFormSourceDescriptors': after the standard source inputs have been
-added to the descriptor
-$descriptor: (array) the HTMLForm descriptor
 
 'UploadVerification': additional chances to reject an uploaded file. Consider
                       using UploadVerifyFile instead.
