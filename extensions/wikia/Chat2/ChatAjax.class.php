@@ -16,7 +16,7 @@ class ChatAjax {
 	 *
 	 * The returned info is just a custom subset of what the node server needs and does not contain an exhaustive list of rights.
 	 *
-	 * The 'isLoggedIn' field and 'canChat' field of the result should be checked by the calling code before allowing
+	 * The 'canChat' field of the result should be checked by the calling code before allowing
 	 * the user to chat.  This is the last line of security against any users attempting to circumvent our protections.  Otherwise,
 	 * a banned user could copy the entire client code (HTML/JS/etc.) from an unblocked user, then run that code while logged in as
 	 * under a banned account, and they would still be given access.
@@ -53,10 +53,8 @@ class ChatAjax {
 
 		$isCanGiveChatMod = in_array( Chat::CHAT_MODERATOR, $user->changeableGroups()['add'] );
 
-		// First, check if they can chat on this wiki.
 		$res = [
 			'canChat' => Chat::canChat( $user ),
-			'isLoggedIn' => $user->isLoggedIn(),
 			'isChatMod' => $user->isAllowed( Chat::CHAT_MODERATOR ),
 			'isCanGiveChatMod' => $isCanGiveChatMod,
 			'isStaff' => $user->isAllowed( Chat::CHAT_STAFF ),
@@ -74,9 +72,9 @@ class ChatAjax {
 		];
 
 		// Figure out the error message to return (i18n is done on this side).
-		if ( $res['isLoggedIn'] === false ) {
+		if ( !$user->isLoggedIn() ) {
 			$res['errorMsg'] = wfMessage( 'chat-no-login' )->text();
-		} else if ( $res['canChat'] === false ) {
+		} else if ( !$res['canChat'] ) {
 			$res['errorMsg'] = wfMessage( 'chat-you-are-banned-text' )->text();
 		}
 
