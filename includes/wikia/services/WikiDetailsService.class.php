@@ -8,6 +8,7 @@ class WikiDetailsService extends WikiService {
 	const DEFAULT_WIDTH = 250;
 	const DEFAULT_HEIGHT = null;
 	const DEFAULT_SNIPPET_LENGTH = null;
+	const DISCUSSION_ENDPOINT = 'https://services.wikia.com/discussion/';
 	const CACHE_VERSION = 3;
 	const WORDMARK_URL_SETTING = 'wordmark-image-url';
 	private static $flagsBlacklist = array( 'blocked', 'promoted' );
@@ -199,7 +200,8 @@ class WikiDetailsService extends WikiService {
 				'activeUsers' => (int)$wikiStats[ 'activeUsers' ],
 				'images' => (int)$wikiStats[ 'images' ],
 				'videos' => (int)$this->getTotalVideos( $id ),
-				'admins' => count( $this->getWikiAdminIds( $id ) )
+				'admins' => count( $this->getWikiAdminIds( $id ) ),
+				'discussions' => (int)$this->getDiscussionStats( $id )
 			],
 			'topUsers' => array_keys( $topUsers ),
 			'headline' => isset( $modelData[ $id ] ) ? $modelData[ $id ][ 'headline' ] : '',
@@ -259,6 +261,11 @@ class WikiDetailsService extends WikiService {
 		$seed = $method !== null ? $wikiInfo[ 'id' ] . ':' . $method : $wikiInfo[ 'id' ];
 		$key = $this->getMemCacheKey( $seed );
 		$wgMemc->set( $key, $wikiInfo, static::CACHE_1_DAY );
+	}
+
+	private function getDiscussionStats( $id ) {
+		$response = json_decode(file_get_contents(self::DISCUSSION_ENDPOINT."$id/forums/$id"), true);
+		return $response['threadCount'] ? $response['threadCount'] : null;
 	}
 
 	/**
