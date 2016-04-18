@@ -1,12 +1,18 @@
 require(['jquery', 'wikia.loader', 'wikia.mustache'], function($, loader, mustache){
 	var modalConfig = {
-		vars: {
-			id: 'MyProfileModal',
-			classes: ['my-profile-modal'],
-			size: 'medium', // size of the modal
-			content: '' // content
-		}
-	};
+			vars: {
+				id: 'MyProfileModal',
+				classes: ['my-profile-modal'],
+				size: 'medium', // size of the modal
+				content: '' // content
+			}
+		},
+		templates = [],
+		currentStep = 1,
+		templateData = {
+			prefix: 'my-profile',
+			step: currentStep
+		};
 
 	$.when(
 		loader({
@@ -20,13 +26,10 @@ require(['jquery', 'wikia.loader', 'wikia.mustache'], function($, loader, mustac
 	).done(renderModal);
 
 	function renderModal(resources) {
-		var templateData = {
-			prefix: 'my-profile',
-			step: 1
-		};
-
 		loader.processStyle(resources.styles);
 		modalConfig.vars.content = mustache.render(resources.mustache[0], templateData);
+
+		templates = resources.mustache;
 
 		require(['wikia.ui.factory'], function (uiFactory) {
 			/* Initialize the modal component */
@@ -41,6 +44,12 @@ require(['jquery', 'wikia.loader', 'wikia.mustache'], function($, loader, mustac
 
 	function processInstance(modalInstance) {
 		modalInstance.show();
+
+		$('#MyProfileModal').on('click', '.next-step', function() {
+			currentStep++;
+			templateData.step = currentStep;
+			modalInstance.$element.html(mustache.render(templates[currentStep - 1], templateData));
+		});
 	}
 
 });
