@@ -1,1 +1,0 @@
-<a target="_blank" class="ChatMonobookEntryPoint" href="<?= $linkToSpecialChat . '?useskin=oasis' ?>"><?= wfMessage( 'chat-join-the-chat' )->escaped()?></a>

@@ -1,7 +1,6 @@
 <?php
 
 class ChatRailController extends WikiaController {
-	const MAX_CHATTERS = 6;
 	const AVATAR_SIZE = 50;
 	const CHAT_WINDOW_FEATURES = 'width=600,height=600,menubar=no,status=no,location=no,toolbar=no,scrollbars=no,resizable=yes';
 
@@ -14,7 +13,8 @@ class ChatRailController extends WikiaController {
 		}
 
 		// As most the markup for this is the same as for the chat parser tag, we're reusing the tag template
-		$this->response->getView()->setTemplatePath( dirname( __FILE__ ) . '/templates/entryPointTag.tmpl.php' );
+		$this->response->getView()->setTemplatePath( __DIR__ . '/templates/entryPointTag.mustache' );
+		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 	}
 
 	public function executeAnonLoginSuccess() {

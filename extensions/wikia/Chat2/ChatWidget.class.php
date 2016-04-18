@@ -12,6 +12,8 @@ class ChatWidget {
 	 * user leaves chat. That's why this cache time is pretty short
 	 */
 	const CHAT_USER_LIST_CACHE_TTL = 60;
+	const RIGHT_RAIL_MODULE_CLASS = 'module';
+	const PARSER_TAG_CLASS = 'ChatEntryPoint';
 
 	/**
 	 * TTL for chat user info, this should not change too often so it's one hour
@@ -30,19 +32,57 @@ class ChatWidget {
 	}
 
 	/**
-	 * Chat tag parser implementation
+	 * Return an array of variables needed to render chat entry point mustache template
+	 *
+	 * @param $fromParserTag - set to true for chat entry point embedded in the article,
+	 * set to false for rail module
+	 *
+	 * @return array
+	 */
+	static public function getTemplateVars( $fromParserTag ) {
+		global $wgEnableWallExt, $wgBlankImgUrl, $wgUser, $wgSitename;
+
+		$entryPointGuidelinesMessage = wfMessage( 'chat-entry-point-guidelines' );
+		$joinTheChatMessage = wfMessage( 'chat-join-the-chat' );
+		$chatUsersInfo = ChatWidget::getUsersInfo();
+		$chatProfileAvatarUrl = AvatarService::getAvatarUrl( $wgUser->getName(), ChatRailController::AVATAR_SIZE );
+
+		$vars = [
+			'blankImgUrl' => $wgBlankImgUrl,
+			'chatUsers' => $chatUsersInfo,
+			'chatUsersCount' => count( $chatUsersInfo ),
+			'entryPointGuidelinesMessage' => $entryPointGuidelinesMessage->exists() ?
+				$entryPointGuidelinesMessage->text() : null,
+			'fromParserTag' => $fromParserTag,
+			'sectionClassName' => $fromParserTag ? self::PARSER_TAG_CLASS : self::RIGHT_RAIL_MODULE_CLASS,
+			'joinTheChatMessage' => $joinTheChatMessage->exists() ?
+				$joinTheChatMessage->text() : null,
+			'linkToSpecialChat' => SpecialPage::getTitleFor( "Chat" )->escapeLocalUrl(),
+			'siteName' => $wgSitename,
+			'profileType' => empty( $wgEnableWallExt ) ? 'talk-page' : 'message-wall',
+			'userName' => $wgUser->isAnon() ? null : $wgUser->getName(),
+		];
+
+		if ( empty( $chatUsersInfo ) ) {
+			$vars['chatProfileAvatarUrl'] = $chatProfileAvatarUrl;
+		}
+
+		return $vars;
+	}
+
+	/**
+	 * Chat tag parser implementation.
+	 * Return html of a chat wrapped in nowiki tags.
 	 */
 	static public function parseTag( $input, $args, $parser ) {
 		wfProfileIn( __METHOD__ );
 
-		$template = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
-		$template->set_vars( self::getTemplateVars( true ) );
+		$templateEngine = ( new Wikia\Template\MustacheEngine )
+			->setPrefix( __DIR__ . '/templates' );
 
-		if ( F::app()->checkSkin( 'oasis' ) ) {
-			$html = $template->render( 'entryPointTag' );
-		} else {
-			$html = $template->render( 'entryPointTagMonobook' );
-		}
+		$html = $templateEngine->clearData()
+			->setData( self::getTemplateVars( true ) )
+			->render( self::getChatTemplateName() );
 
 		// remove newlines so parser does not try to wrap lines into paragraphs
 		$html = str_replace( "\n", "", $html );
@@ -53,28 +93,23 @@ class ChatWidget {
 	}
 
 	/**
-	 * @param $isEntryPoint - set to true for chat entry point embeded in the article, false for rail module
-	 * Return an array of variables needed to render chat entry point template
+	 * Return proper template name according to current skin
 	 *
-	 * @return array
+	 * @return string template name to render
 	 */
-	static public function getTemplateVars( $isEntryPoint ) {
-		global $wgEnableWallExt, $wgBlankImgUrl;
+	static public function getChatTemplateName() {
 
-		return [
-			'linkToSpecialChat' => SpecialPage::getTitleFor( "Chat" )->escapeLocalUrl(),
-			'isEntryPoint' => $isEntryPoint,
-			'blankImgUrl' => $wgBlankImgUrl,
-			'profileType' => !empty( $wgEnableWallExt ) ? 'message-wall' : 'talk-page'
-		];
-	}
-
-	static public function purgeChatUsersCache() {
-		WikiaDataAccess::cachePurge( self::getChatUsersMemcKey() );
+		return F::app()->checkSkin( 'oasis' ) ?
+			'entryPointTag.mustache' :
+			'entryPointTagMonobook.mustache';
 	}
 
 	static private function getChatUsersMemcKey() {
 		return wfMemcKey( 'chatusersinfo' );
+	}
+
+	static public function purgeChatUsersCache() {
+		WikiaDataAccess::cachePurge( self::getChatUsersMemcKey() );
 	}
 
 	/**
@@ -85,6 +120,7 @@ class ChatWidget {
 	 * * editCount - number of chatter's edits
 	 * * showSince - flag indicating if we can display the information when the chatter joined the wiki
 	 * * since_year && since_month - month and year, when chatter joined this wiki
+	 * * since - since year and month in the form of string "MMM YYYY". Months are in wgLang and abbreviated
 	 * * profileUrl - link to chatter talk page (or message wall, if it's enabled)
 	 * * contribsUrl - link to chatter contribution page
 	 * @return array array containing chatters info
@@ -103,8 +139,8 @@ class ChatWidget {
 				self::getChatUsersMemcKey(),
 				ChatWidget::CHAT_USER_LIST_CACHE_TTL,
 				function () {
-					return array_map(function($userName) {
-						return self::getUserInfo($userName);
+					return array_map( function ( $userName ) {
+						return self::getUserInfo( $userName );
 					}, Chat::getChatters() );
 				} );
 		}
@@ -124,7 +160,8 @@ class ChatWidget {
 			wfMemcKey( 'chatavatars', $userName, 'v2' ),
 			self::CHAT_USER_INFO_CACHE_TTL,
 			function () use ( $userName ) {
-				global $wgEnableWallExt;
+				global $wgEnableWallExt, $wgLang;
+
 				$chatter = [
 					'username' => $userName,
 					'avatarUrl' => AvatarService::getAvatarUrl( $userName, ChatRailController::AVATAR_SIZE )
@@ -132,6 +169,7 @@ class ChatWidget {
 
 				// get stats for edit count and member since
 				$user = User::newFromName( $userName );
+
 				if ( $user instanceof User ) {
 					$userStatsService = new UserStatsService( $user->getId() );
 					$stats = $userStatsService->getStats();
@@ -142,17 +180,16 @@ class ChatWidget {
 					// member since
 					$chatter['showSince'] = $chatter['editCount'] != 0;
 					if ( $chatter['showSince'] ) {
+						$months = $wgLang->getMonthAbbreviationsArray();
 						$date = getdate( strtotime( $stats['date'] ) );
+
 						$chatter['since_year'] = $date['year'];
 						$chatter['since_month'] = $date['mon'];
+						$chatter['since'] = sprintf( '%s %s', $months[$chatter['since_month']], $chatter['since_year'] );
 					}
 
-					if ( !empty( $wgEnableWallExt ) ) {
-						$chatter['profileUrl'] = Title::makeTitle( NS_USER_WALL, $chatter['username'] )->getFullURL();
-					} else {
-						$chatter['profileUrl'] = Title::makeTitle( NS_USER_TALK, $chatter['username'] )->getFullURL();
-					}
-
+					$profileUrlNs = !empty( $wgEnableWallExt ) ? NS_USER_WALL : NS_USER_TALK;
+					$chatter['profileUrl'] = Title::makeTitle( $profileUrlNs, $chatter['username'] )->getFullURL();
 					$chatter['contribsUrl'] = SpecialPage::getTitleFor( 'Contributions', $chatter['username'] )->getFullURL();
 				}
 
