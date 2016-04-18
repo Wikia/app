@@ -25,34 +25,34 @@ class Paginator {
 	private $paginatedData = [];
 	private $pagesCount = 0;
 	private $activePage = 0;
-	private $cacheKey = '';
-	private $enableCache = false;
 
 	/**
 	 * Creates a new Pagination object.
 	 *
 	 * @param   array|integer $aData
-	 * @return  Paginator
+	 * @param int $iItemsPerPage
+	 * @param int $iDisplayedNeighbour
+	 * @param int $maxItemsPerPage
+	 * @return Paginator
 	 */
-	public static function newFromArray( $aData, $iItemsPerPage = 8, $iDisplayedNeighbour = 3, $bCach = false, $sCacheKey = '', $maxItemsPerPage = 48 ) {
+	public static function newFromArray( $aData, $iItemsPerPage = 8, $iDisplayedNeighbour = 3, $maxItemsPerPage = 48 ) {
 		$aConfig = [
 			'itemsPerPage' => $iItemsPerPage,
 			'displayedNeighbours' => $iDisplayedNeighbour,
 			'maxItemsPerPage' => $maxItemsPerPage,
 		];
 
-		return new Paginator( $aData, $aConfig, $bCach, $sCacheKey );
+		return new Paginator( $aData, $aConfig );
 	}
 
 	/**
 	 * Creates a new Pagination object.
 	 *
 	 * @param   array $aData
+	 * @param bool $aConfig
 	 */
-	public function __construct( $aData, $aConfig = false, $bCach = false, $sCacheKey = '' ) {
+	public function __construct( $aData, $aConfig = false ) {
 		$this->maxItemsPerPage = $aConfig['maxItemsPerPage'];
-		$this->enableCache = ( !empty( $bCach ) && !empty( $sCacheKey ) );
-		$this->cacheKey = $sCacheKey;
 		$this->setConfig( $aConfig );
 		$this->paginate( $aData );
 	}
