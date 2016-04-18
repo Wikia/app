@@ -49,9 +49,20 @@ class CommunityPageExperimentHelper {
 		if ( empty( $adminIds ) ) {
 			return [];
 		}
+
+		// Filter out blocked and anon admins
+		$adminIds = array_filter( $adminIds, function ( $adminId ) {
+			$admin = User::newFromId( $adminId );
+			return !$admin->isBlocked() && !$admin->isAnon();
+		} );
+
 		$numAdmins = count( $adminIds );
 		if ( $numAdmins < $num ) {
 			$num = $numAdmins;
+		}
+
+		if ( $num == 0 ) {
+			return [];
 		}
 
 		$randomAdminIds = array_rand( $adminIds, $num );

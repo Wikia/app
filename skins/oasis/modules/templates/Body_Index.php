@@ -1,3 +1,11 @@
+<?php
+/** @var $displayHeader bool */
+/** @var $afterBodyHtml string */
+/** @var $beforeWikiaPageHtml string */
+/** @var $headerModuleName string */
+/** @var $headerModuleAction string */
+?>
+
 <? if ( $displayHeader ): ?>
 	<h2><?= wfMsg( 'oasis-global-page-header' ); ?></h2>
 <? endif; ?>
@@ -15,6 +23,8 @@
 <?= $app->renderView( 'Ad', 'Top' ) ?>
 
 <?= empty( $wg->WikiaSeasonsPencilUnit ) ? '' : $app->renderView( 'WikiaSeasons', 'pencilUnit', array() ); ?>
+
+<?= $beforeWikiaPageHtml ?>
 
 <section id="WikiaPage" class="WikiaPage<?= empty( $wg->OasisNavV2 ) ? '' : ' V2' ?><?= !empty( $isGridLayoutEnabled ) ? ' WikiaGrid' : '' ?>">
 	<div id="WikiaPageBackground" class="WikiaPageBackground"></div>

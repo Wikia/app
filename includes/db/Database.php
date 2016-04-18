@@ -3744,6 +3744,7 @@ abstract class DatabaseBase implements DatabaseType {
 			'method'      => $fname,
 			'elapsed'     => $elapsedTime,
 			'num_rows'    => $num_rows,
+			'transaction_level' => $this->mTrxLevel, # either 0 or 1
 			'cluster'     => $wgDBcluster,
 			'server'      => $this->mServer,
 			'server_role' => $isMaster ? 'master' : 'slave',
