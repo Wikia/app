@@ -5,7 +5,8 @@ define('VisualEditorTourExperimentInit',
 
 		function init() {
 			if (abTest.inGroup('CONTRIB_EXPERIMENTS', 'VE_TOUR') &&
-				($.cookie('newlyregistered') || $.cookie('userwithoutedit'))
+				($.cookie('newlyregistered') || $.cookie('userwithoutedit')) &&
+				!$.cookie('vetourdismissed')
 			) {
 				(new VETour(veTourConfig)).start();
 			}

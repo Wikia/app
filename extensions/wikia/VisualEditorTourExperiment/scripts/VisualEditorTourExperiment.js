@@ -45,12 +45,22 @@ define('VisualEditorTourExperiment', ['jquery', 'wikia.loader', 'wikia.mustache'
 		}
 
 		Tour.prototype.next = function() {
+			if (this.step === this.steps.length - 1) {
+				this.dismiss();
+				return;
+			}
 			this.destroyStep(this.step);
 			this.openStep(++this.step);
 		}
 
+		Tour.prototype.dismiss = function() {
+			this.destroyStep(this.step);
+			$.cookie('vetourdismissed', 1, { expires : 30 });
+		}
+
 		Tour.prototype._setupTour = function (assets) {
 			$('body').on('click', '.ve-tour-next', this.next.bind(this));
+			$('body').on('click', '.ve-tour-experiment .close', this.dismiss.bind(this));
 			this.contentTemplate = assets.mustache[0];
 			this.tourConfig.forEach(this._setupStep.bind(this));
 			this.next();
