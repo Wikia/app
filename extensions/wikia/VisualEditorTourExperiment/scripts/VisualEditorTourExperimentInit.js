@@ -1,10 +1,12 @@
 define('VisualEditorTourExperimentInit',
-	['VisualEditorTourExperiment', 'VisualEditorTourExperimentConfig', 'wikia.abTest'],
-	function (VETour, veTourConfig, abTest) {
+	['jquery', 'VisualEditorTourExperiment', 'VisualEditorTourExperimentConfig', 'wikia.abTest'],
+	function ($, VETour, veTourConfig, abTest) {
 		'use strict';
 
 		function init() {
-			if (abTest.inGroup('CONTRIB_EXPERIMENTS', 'VE_TOUR')) {
+			if (abTest.inGroup('CONTRIB_EXPERIMENTS', 'VE_TOUR') &&
+				($.cookie('newlyregistered') || $.cookie('userwithoutedit'))
+			) {
 				(new VETour(veTourConfig)).start();
 			}
 		}
