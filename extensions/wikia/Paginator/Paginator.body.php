@@ -170,9 +170,9 @@ class Paginator {
 		$aData['paginatorId'] = strip_tags( trim( stripslashes( $paginatorId ) ) );
 		$aData['url'] = $url;
 
-		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
+		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
 		$oTmpl->set_vars( $aData );
-		return $oTmpl->render( "paginator" );
+		return $oTmpl->render( 'paginator' );
 	}
 
 	public function getPagesCount() {
@@ -182,7 +182,7 @@ class Paginator {
 	/**
 	 * Get HTML to put to HTML <head> to allow search engines to identify next and previous pages
 	 *
-	 * @param $url the URL template. We'll replace "%s" with the page number
+	 * @param $url the URL template. We'll replace '%s' with the page number
 	 * @return string
 	 */
 	public function getHeadItem( $url ) {
