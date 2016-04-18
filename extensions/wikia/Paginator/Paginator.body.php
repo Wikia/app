@@ -5,10 +5,11 @@
  * @package MediaWiki
  * @subpackage Pagination
  * @author Jakub Kurcek
+ * @author Piotr Gabryjeluk <rychu@wikia-inc.com>
  *
  * Object that allows auto pagination of array content
  */
-class Paginator extends Service {
+class Paginator {
 
 	// configuration settings
 
@@ -47,7 +48,6 @@ class Paginator extends Service {
 	 * Creates a new Pagination object.
 	 *
 	 * @param   array $aData
-	 * @return  void
 	 */
 	public function __construct( $aData, $aConfig = false, $bCach = false, $sCacheKey = '' ) {
 		$this->maxItemsPerPage = $aConfig['maxItemsPerPage'];
@@ -90,10 +90,6 @@ class Paginator extends Service {
 		}
 	}
 
-	public function hasContent() {
-		return ( $this->pagesCount >= 1 );
-	}
-
 	/**
 	 * Set the currently active page. This is 0-indexed, so you may need to
 	 * set the value to $this->getRequest()->getInt( 'page' ) - 1
@@ -124,19 +120,7 @@ class Paginator extends Service {
 		}
 	}
 
-	public function getCurrentPage() {
-		return $this->getPage( $this->activePage );
-	}
-
-	public function getLastPage() {
-		return $this->getPage( $this->pagesCount );
-	}
-
-	public function getFirstPage() {
-		return $this->getPage( 1 );
-	}
-
-	public function getBarData() {
+	private function getBarData() {
 		$aData = [];
 		$aData[] = 1;
 
