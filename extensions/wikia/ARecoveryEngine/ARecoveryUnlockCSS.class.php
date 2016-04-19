@@ -15,10 +15,9 @@ class ARecoveryUnlockCSS {
 	public function getUnlockCSSUrl() {
 		global $wgServer, $wgSourcePointAccountId, $wgEnableUsingSourcePointProxyForCSS;
 		$wikiaCssUrl = $this->getWikiaUnlockCSSUrl();
-
+		$memcKey = $wikiaCssUrl;
 		$memCache = F::app()->wg->Memc;
 
-		$memcKey = $wikiaCssUrl;
 		if ( $wgEnableUsingSourcePointProxyForCSS ) {
 			$jsonData = [
 				"account_id" => $wgSourcePointAccountId,
