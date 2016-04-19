@@ -68,8 +68,9 @@
 	}
 
 	.my-profile-textarea {
-		width: 100%;
+		border: 3px solid #ccc;
 		height: 100px;
+		width: 100%;
 	}
 
 	.my-profile-step {
@@ -79,6 +80,21 @@
 		position: absolute;
 		top: 30px;
 		width: 60px;
+	}
+
+	.next-step {
+		background: #fff;
+		border-radius: 0;
+		border: 1px solid $color-links;
+		color: $color-links;
+		height: auto;
+		padding: 5px 40px;
+		text-transform: uppercase;
+
+		&:hover {
+			background: $color-links;
+			color: #fff;;
+		}
 	}
 
 	.step-1 {
