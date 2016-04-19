@@ -150,7 +150,11 @@ class WikiaRobots {
 	 * @param PathBuilder $pathBuilder
 	 */
 	public function __construct( PathBuilder $pathBuilder ) {
-		global $wgRequest, $wgRobotsTxtCustomRules, $wgWikiaEnvironment;
+		global $wgAllowSpecialImagesInRobots,
+			   $wgEnableLocalSitemap,
+			   $wgRequest,
+			   $wgRobotsTxtCustomRules,
+			   $wgWikiaEnvironment;
 
 		$this->pathBuilder = $pathBuilder;
 		$this->accessAllowed = ( $wgWikiaEnvironment === WIKIA_ENV_PROD || $wgRequest->getBool( 'forcerobots' ) );
