@@ -37,7 +37,7 @@
 			// then the rest are parameters to a message
 			var key = shift.call(arguments),
 			// default value to be returned
-				ret = key;
+				ret = (key||'').trim();
 
 			if (window.wgMessages) {
 				ret = window.wgMessages[key] || ret;
