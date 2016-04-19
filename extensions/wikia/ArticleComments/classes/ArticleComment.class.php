@@ -1629,9 +1629,9 @@ class ArticleComment {
 		if ( $isBlog ) {
 			$props = BlogArticle::getProps( $title->getArticleID() );
 			$commentingEnabled = isset( $props[ 'commenting' ] ) ? (bool) $props[ 'commenting' ] : true;
-			return ( $user->isAllowed( 'commentcreate' ) && $commentingEnabled );
+			return ( $user->isAllowedAll( 'commentcreate', 'edit' ) && $commentingEnabled );
 		} else {
-			return ( $user->isAllowed( 'commentcreate' ) && ArticleCommentInit::ArticleCommentCheckTitle( $title ) );
+			return ( $user->isAllowedAll( 'commentcreate', 'edit' ) && ArticleCommentInit::ArticleCommentCheckTitle( $title ) );
 		}
 	}
 }

@@ -1,9 +1,9 @@
 <ul class="controls">
-	<li id="article-comments-counter-recent"><?= wfMessage( 'oasis-comments-showing-most-recent', count( $commentListRaw ) )->escaped() ?></li>
+	<li id="article-comments-counter-recent"><?= wfMessage( 'oasis-comments-showing-most-recent' )->numParams( count( $commentListRaw ) )->escaped() ?></li>
 </ul>
-<h1 id="article-comments-counter-header"><?= wfMessage( 'oasis-comments-header', $wg->Lang->FormatNum( $countCommentsNested ) )->parse() ?></h1>
+<h1 id="article-comments-counter-header"><?= wfMessage( 'oasis-comments-header' )->numParams( $countCommentsNested )->parse() ?></h1>
 <div id="article-comments" class="article-comments">
-	<? if ( !$isBlocked && $canEdit && $commentingAllowed ): ?>
+	<? if ( !$isBlocked && $commentingAllowed ): ?>
 		<? if ( $isMiniEditorEnabled ): ?>
 			<?= $app->renderView( 'MiniEditorController', 'Setup' ) ?>
 		<? endif ?>
@@ -47,7 +47,9 @@
 		<p><?= wfMessage( 'article-comments-comment-cannot-add' )->escaped() ?></p>
 		<p><?= $reason ?></p>
 	<? elseif ( !$commentingAllowed ): ?>
-		<p class="no-comments-allowed"><?= wfMessage( 'article-comments-comment-cannot-add' )->escaped() ?> </p>
+		<p class="no-comments-allowed">
+			<?= $isAnon ? wfMessage( 'article-comments-login' )->parse() : wfMessage( 'article-comments-comment-cannot-add' )->escaped() ?>
+		</p>
 	<? endif ?>
 	<? if ( $countComments ): ?>
 		<div class="article-comments-pagination upper-pagination"><?= $pagination ?></div>

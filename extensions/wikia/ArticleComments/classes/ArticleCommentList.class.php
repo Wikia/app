@@ -387,8 +387,7 @@ class ArticleCommentList {
 		$wg = F::app()->wg;
 
 		// $isSysop = in_array('sysop', $groups) || in_array('staff', $groups);
-
-		$canEdit = ArticleComment::userCanCommentOn( $this->mTitle );
+		
 		$isBlocked = $wg->User->isBlocked();
 
 		$isReadOnly = wfReadOnly();
@@ -412,7 +411,6 @@ class ArticleCommentList {
 		return [
 			'avatar' => AvatarService::renderAvatar( $wg->User->getName(), 50 ),
 			'userurl' => AvatarService::getUrl( $wg->User->getName() ),
-			'canEdit' => $canEdit,
 			'commentListRaw' => $comments,
 			'commentingAllowed' => ArticleComment::userCanCommentOn( $this->mTitle ),
 			'commentsPerPage' => $this->mMaxPerPage,
@@ -425,7 +423,7 @@ class ArticleCommentList {
 			'pagination' => $pagination,
 			'reason' => $isBlocked ? $this->blockedPage() : '',
 			'stylePath' => $wg->StylePath,
-			'title' => $this->mTitle
+			'title' => $this->mTitle,
 		];
 	} // end getData();
 
