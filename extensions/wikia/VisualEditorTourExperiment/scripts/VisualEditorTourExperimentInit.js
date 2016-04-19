@@ -30,7 +30,7 @@ define('VisualEditorTourExperimentInit',
 
 		function isEnabled() {
 			return isExperimentVariation() &&
-				(isNewlyregistered() || isUserwithoutedit) &&
+				(isNewlyregistered() || isUserwithoutedit()) &&
 				!$.cookie('vetourdisabled');
 		}
 
