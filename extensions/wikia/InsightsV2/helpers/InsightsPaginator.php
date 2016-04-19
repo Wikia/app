@@ -90,6 +90,7 @@ class InsightsPaginator {
 
 		if ( isset( $this->params['page'] ) ) {
 			$page = intval( $this->params['page'] );
+			// TODO: migrate to 1-indexed pagination
 			$this->page = --$page;
 			$this->offset = $this->page * $this->limit;
 		}

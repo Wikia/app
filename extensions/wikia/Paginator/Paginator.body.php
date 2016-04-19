@@ -8,6 +8,13 @@
  * @author Piotr Gabryjeluk <rychu@wikia-inc.com>
  *
  * Object that allows auto pagination of array content
+ *
+ * TODO:
+ *  * setActivePage should NOT be 0-indexed
+ *  * setActivePage should check for page number outside the correct range and correct it
+ *  * convert uses of getPage(int, true) to setActivePage(int), getCurrentPage()
+ *  * On the second page of paginated content rel="prev" link should point to the page without ?page=1
+ *  * On any page other than the first page there should be no canonical (link rel="prev/next" is enough)
  */
 class Paginator {
 
@@ -51,7 +58,7 @@ class Paginator {
 	 * @param   array $aData
 	 * @param bool $aConfig
 	 */
-	public function __construct( $aData, $aConfig = false ) {
+	private function __construct( $aData, $aConfig = false ) {
 		$this->maxItemsPerPage = $aConfig['maxItemsPerPage'];
 		$this->setConfig( $aConfig );
 		$this->paginate( $aData );
