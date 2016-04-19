@@ -218,30 +218,12 @@ $messages = array(
 'navigation'    => 'Naviqasiya',
 'and'           => '&#32;və',
 
-# Cologne Blue skin
 'qbfind'         => 'Tap',
 'qbbrowse'       => 'Gözdən keçir',
-'qbedit'         => 'Redaktə',
 'qbpageoptions'  => 'Bu səhifə',
 'qbpageinfo'     => 'Məzmun',
-'qbmyoptions'    => 'Mənim səhifələrim',
-'qbspecialpages' => 'Xüsusi səhifələr',
 'faq'            => 'TSS',
-'faqpage'        => 'Project:TSS',
 
-# Vector skin
-'vector-action-addsection'       => 'Mövzu əlavə et',
-'vector-action-delete'           => 'Sil',
-'vector-action-move'             => 'Adını dəyişdir',
-'vector-action-protect'          => 'Mühafizə et',
-'vector-action-undelete'         => 'Bərpa et',
-'vector-action-unprotect'        => 'Mühafizəni kənarlaşdır',
-'vector-simplesearch-preference' => 'İnkişaf etmiş axtarma təkliflərini gətir (yalnız Vector görünüşü üçün)',
-'vector-view-create'             => 'Yarat',
-'vector-view-edit'               => 'Redaktə',
-'vector-view-history'            => 'Tarixçə',
-'vector-view-view'               => 'Oxu',
-'vector-view-viewsource'         => 'Mənbəyə bax',
 'actions'                        => 'Hərəkətlər',
 'namespaces'                     => 'Adlar fəzası',
 'variants'                       => 'Variantlar',
@@ -264,7 +246,6 @@ $messages = array(
 'edit'              => 'Redaktə',
 'create'            => 'Yarat',
 'editthispage'      => 'Bu səhifəni redaktə et',
-'create-this-page'  => 'Bu səhifəni yarat',
 'delete'            => 'Sil',
 'deletethispage'    => 'Bu səhifəni sil',
 'undelete_short'    => '$1 {{PLURAL:$1|dəyişikliyi|dəyişiklikləri}} bərpa et',
@@ -279,19 +260,9 @@ $messages = array(
 'talkpagelinktext'  => 'Müzakirə',
 'specialpage'       => 'Xüsusi səhifə',
 'personaltools'     => 'Şəxsi alətlər',
-'postcomment'       => 'Yeni bölmə',
-'articlepage'       => 'Məqaləni nəzərdən keçir',
 'talk'              => 'Müzakirə',
 'views'             => 'Görünüş',
 'toolbox'           => 'Alətlər qutusu',
-'userpage'          => 'İstifadəçi səhifəsini göstər',
-'projectpage'       => 'Layihə səhifəsini göstər',
-'imagepage'         => 'Fayl səhifəsini göstər',
-'mediawikipage'     => 'Mesaj səhifəsini göstər',
-'templatepage'      => 'Şablon səhifəsini göstər',
-'viewhelppage'      => 'Kömək səhifəsini göstər',
-'categorypage'      => 'Kateqoriya səhifəsini göstər',
-'viewtalkpage'      => 'Müzakirəni göstər',
 'otherlanguages'    => 'Başqa dillərdə',
 'redirectedfrom'    => '($1 səhifəsindən yönləndirilmişdir)',
 'redirectpagesub'   => 'Yönləndirmə səhifəsi',
@@ -401,7 +372,7 @@ Mövcud xüsusi səhifələrin siyahısı: [[Special:SpecialPages|Xüsusi səhif
 'databaseerror'        => 'Verilənlər bazası xətası',
 'dberrortext'          => 'Verilənlər bazası sorğusunda sintaksis xətası yarandı.
 Bu proqram təminatındakı xəta ilə əlaqədar ola bilər.
-Verilənlər bazasına sonuncu sorğu "<tt>$2</tt>" funksiyasından 
+Verilənlər bazasına sonuncu sorğu "<tt>$2</tt>" funksiyasından
 yaranan <blockquote><tt>$1</tt></blockquote>.
 Verilənlər bazasının göstərdiyi xəta "<tt>$3: $4</tt>".',
 'dberrortextcl'        => 'Verilənlər bazası sorğusunda sintaksis xətası yarandı.
@@ -474,7 +445,8 @@ Göstərilən səbəb: "\'\'$2\'\'".',
 # Login and logout pages
 'logouttext'                 => "'''Sistemdən çıxdınız.'''
 
-Siz {{SITENAME}} saytını anonim olaraq istifadə etməyə davam edə bilər və ya eyni, yaxud başqa istifadəçi adı ilə [[Special:UserLogin|yenidən daxil ola]] bilərsiniz. Veb-brauzerin keş yaddaşını təmizləyənədək bəzi səhifələr hələ də sistemdə imişsiniz kimi görünə bilər.",
+Siz {{SITENAME}} saytını anonim olaraq istifadə etməyə davam edə bilər və ya eyni, yaxud başqa istifadəçi adı ilə $1 bilərsiniz. Veb-brauzerin keş yaddaşını təmizləyənədək bəzi səhifələr hələ də sistemdə imişsiniz kimi görünə bilər.",
+'logouttext-link-text'       => 'yenidən daxil ola',
 'welcomecreation'            => '== $1, xoş gəlmişsiniz! ==
 Hesabınız yaradıldı.
 [[Special:Preferences|{{SITENAME}} nizamlamalarınızı]] dəyişdirməyi unutmayın.',
@@ -576,20 +548,6 @@ Sistemə daxil olmanı yekunlaşdırmaq üçün yeni parolu bura yazmalısınız
 'resetpass-wrong-oldpass'   => 'Müvəqqəti və ya daimi parolda yanlışlıq var.
 Ola bilər siz parolu müvəffəqiyyətlə dəyişmisiniz yaxud müvəqqəti parol üçün müraciət etmisiniz.',
 'resetpass-temp-password'   => 'Müvəqqəti parol:',
-
-# Special:PasswordReset
-'passwordreset'              => 'Parolu yenilə',
-'passwordreset-text'         => 'Akkauntunuz haqqında xatırlatmanı elektron poçt vasitəsilə ala bilməniz üçün bu formanı doldurun.',
-'passwordreset-legend'       => 'Parolu yenilə',
-'passwordreset-disabled'     => 'Yenidən qurulma parolu bu vikidə işləmir',
-'passwordreset-pretext'      => '{{PLURAL:$1||Enter one of the pieces of data below}}',
-'passwordreset-username'     => 'İstifadəçi adı:',
-'passwordreset-domain'       => 'Domen:',
-'passwordreset-email'        => 'E-mail ünvanı:',
-'passwordreset-emailtitle'   => '{{SITENAME}} hesabın yaradılması',
-'passwordreset-emailelement' => 'İstifadəçi adı: $1
-Müvəqqəti parol: $2',
-'passwordreset-emailsent'    => 'Xəbərdarlıq məktubu e-maillə göndərildi.',
 
 # Special:ChangeEmail
 'changeemail'          => 'E-məktub ünvanını dəyiş',
@@ -943,13 +901,6 @@ $1",
 'powersearch-togglenone'           => 'Heç biri',
 'search-external'                  => 'Xarici axtarış',
 
-# Quickbar
-'qbsettings'               => 'Naviqasiya paneli',
-'qbsettings-none'          => 'Heç biri',
-'qbsettings-fixedleft'     => 'Sola sabitləndi',
-'qbsettings-fixedright'    => 'Sağa sabitləndi',
-'qbsettings-floatingleft'  => 'Sola əyilir',
-'qbsettings-floatingright' => 'Sağa əyilir',
 
 # Preferences page
 'preferences'                   => 'Nizamlamalar',
@@ -1316,7 +1267,7 @@ Lütfən '''<tt>[[:$1]]</tt>''' keçidini yoxlayın və bu faylı yükləmək is
 'copyuploaddisabled'         => 'URL-dən yükləmə baş tutmadı.',
 'uploadfromurl-queued'       => 'Yükləməniz növbə gözləyir',
 'uploaddisabledtext'         => 'Fayl yüklənməsi baş tutmadı.',
-'uploadvirus'                => 'Faylda virus var! 
+'uploadvirus'                => 'Faylda virus var!
 Detallar: $1',
 'upload-source'              => 'Mənbə faylı',
 'sourcefilename'             => 'Fayl adı mənbələri',
@@ -2248,15 +2199,7 @@ Zəhmət olmasa başqa ad seçin.',
 
 # Stylesheets
 'common.css'              => '/* Burada yerləşən CSS bütün skinlərə tətbiq olunur */',
-'standard.css'            => '/* Burada yerləşən CSS Standard skin istifadəçilərinə tətbiq olunur */',
-'nostalgia.css'           => '/* Burada yerləşən CSS Nostalgia skin istifadəçilərinə tətbiq olunur */',
-'cologneblue.css'         => '/* Burada yerləşən CSS Cologne Blue skin istifadəçilərinə tətbiq olunur */',
 'monobook.css'            => '/* Burada yerləşən CSS Monobook skin istifadəçilərinə tətbiq olunur */',
-'myskin.css'              => '/* Burada yerləşən CSS MySkin skin istifadəçilərinə tətbiq olunur */',
-'chick.css'               => '/* Burada yerləşən CSS Chick skin istifadəçilərinə tətbiq olunur */',
-'simple.css'              => '/* Burada yerləşən CSS Simple skin istifadəçilərinə tətbiq olunur */',
-'modern.css'              => '/* Burada yerləşən CSS Modern skin istifadəçilərinə tətbiq olunur */',
-'vector.css'              => '/* Burada yerləşən CSS Vector istifadəçilərinə tətbiq olunur */',
 'group-autoconfirmed.css' => '/* Burada yerləşən CSS yalnız avtotəsdiqlənmiş istifadəçilərə şamil olunur */',
 'group-bot.css'           => '/* Burada yerləşən CSS yalnız botlara şamil olunur */',
 'group-sysop.css'         => '/* Burada yerləşən CSS yalnız idarəçilərə şamil olunur */',
@@ -2264,15 +2207,7 @@ Zəhmət olmasa başqa ad seçin.',
 
 # Scripts
 'common.js'              => '/* Burada istifadəçilərin hamısı üçün bütün səhifələrdə istənilən JavaScript yüklənəcək */',
-'standard.js'            => '/* Burada Standard skin istifadəçiləri üçün istənilən JavaScript yüklənəcək */',
-'nostalgia.js'           => '/* Burada Nostalgia skin istifadəçiləri üçün istənilən JavaScript yüklənəcək */',
-'cologneblue.js'         => '/* Burada Cologne Blue skin istifadəçiləri üçün istənilən JavaScript yüklənəcək */',
 'monobook.js'            => '/* Burada MonoBook skin istifadəçiləri üçün istənilən JavaScript yüklənəcək */',
-'myskin.js'              => '/* Burada MySkin skin istifadəçiləri üçün istənilən JavaScript yüklənəcək */',
-'chick.js'               => '/* Burada Chick skin istifadəçiləri üçün istənilən JavaScript yüklənəcək */',
-'simple.js'              => '/* Burada Simple skin istifadəçiləri üçün istənilən JavaScript yüklənəcək */',
-'modern.js'              => '/* Burada Modern skin istifadəçiləri üçün istənilən JavaScript yüklənəcək */',
-'vector.js'              => '/* Burada Vector skin istifadəçiləri üçün istənilən JavaScript yüklənəcək */',
 'group-autoconfirmed.js' => '/* Burada istənilən JavaScript yalnız avtotəsdiqlənmiş istifadəçilər üçün yüklənəcək */',
 'group-bot.js'           => '/* Burada istənilən JavaScript yalnız botlar üçün yüklənəcək */',
 'group-sysop.js'         => '/* Burada istənilən JavaScript yalnız idarəçilər üçün yüklənəcək */',
@@ -2308,15 +2243,7 @@ Zəhmət olmasa başqa ad seçin.',
 'pageinfo-viewsperedit'     => 'Redaktə başına göstərmə',
 
 # Skin names
-'skinname-standard'    => 'Classic',
-'skinname-nostalgia'   => 'Nostalgia',
-'skinname-cologneblue' => 'Cologne Blue',
 'skinname-monobook'    => 'MonoBook',
-'skinname-myskin'      => 'MySkin',
-'skinname-chick'       => 'Chick',
-'skinname-simple'      => 'Simple',
-'skinname-modern'      => 'Modern',
-'skinname-vector'      => 'Vector',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Yoxlanıldı',

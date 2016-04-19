@@ -42,16 +42,7 @@
 			this.descWikiNext = this.$descWikiWrapper.find('nav .next');
 
 			var self = this,
-				$signupRedirect = $('#SignupRedirect'),
 				pane;
-
-			$signupRedirect.submit(function () {
-				var queryString = 'wikiName=' + self.wikiName.val() +
-					'&wikiDomain=' + self.wikiDomain.val() +
-					'&uselang=' + self.wikiLanguage.find('option:selected').val();
-				$().log(queryString);
-				$signupRedirect.find('input[name=returnto]').val(queryString);
-			});
 
 			// Name Wiki event handlers
 			this.checkNextButtonStep1();
@@ -69,32 +60,25 @@
 						wikiDomain: self.wikiDomain.val(),
 						wikiLang: self.wikiLanguage.find('option:selected').val()
 					});
-					if (self.$authWrapper.length) {
-						// Init user auth
-						self.userAuth = {
-							el: self.$authWrapper,
-							loginAjaxForm: new UserLoginAjaxForm(
-								'#UserAuth .UserLoginModal',
-								{
-									ajaxLogin: true,
-									callback: function () {
-										self.transition('UserAuth', true, '+');
-									}
-								}
-							)
-						};
-						if (typeof FacebookLogin !== 'undefined') {
-							FacebookLogin.callbacks['login-success'] = function () {
-								self.transition('UserAuth', true, '+');
-								FacebookLogin.closeSignupModal();
-							};
-						}
+					if (window.wgUserName) {
+						self.onAuthSuccess();
+					} else {
+						require(['AuthModal', 'wikia.querystring'], function (authModal, querystring) {
+							var redirectUrl = new querystring();
+
+							redirectUrl.setVal({
+								wikiName: self.wikiName.val(),
+								wikiDomain: self.wikiDomain.val(),
+								wikiLanguage: self.wikiLanguage.find('option:selected').val()
+							});
+
+							authModal.load({
+								url: '/signin?redirect=' + encodeURIComponent(redirectUrl.toString()),
+								origin: 'create-new-wikia',
+								onAuthSuccess: $.proxy(self.onAuthSuccess, self)
+							});
+						});
 					}
-
-					self.transition('NameWiki', true, '+');
-
-					// Load facebook assets before going to the login form
-					$.loadFacebookSDK();
 				}
 			});
 			this.wikiDomain.keyup(function () {
@@ -273,6 +257,10 @@
 				v += this.keys[i];
 			}
 			this.answer = v;
+		},
+
+		onAuthSuccess: function () {
+			this.transition('NameWiki', true, '+');
 		},
 
 		checkWikiName: function () {
@@ -480,43 +468,62 @@
 				categories.push($(this).val());
 			});
 
-			$.nirvana.sendRequest({
-				controller: 'CreateNewWiki',
-				method: 'CreateWiki',
-				data: {
-					data: {
-						wName: self.wikiName.val(),
-						wDomain: self.wikiDomain.val(),
-						wLanguage: self.wikiLanguage.find('option:selected').val(),
-						wVertical: verticalOption.val(),
-						wCategories: categories,
-						wAllAges: self.wikiAllAges.is(':checked') ? self.wikiAllAges.val() : null,
-						wAnswer: Math.floor(self.answer)
-					}
-				},
-				callback: function (res) {
-					self.createStatus = res.status;
-					self.createStatusMessage = res.statusMsg;
+			$.get('/api.php', {
+				action: 'query',
+				uiprop: 'preferencestoken',
+				meta: 'userinfo',
+				format: 'json'
+			}).then(function (response) {
+				var preferencesToken;
 
-					throbberWrapper.stopThrobbing();
-
-					if (self.createStatus && self.createStatus === 'ok') {
-						self.cityId = res.cityId;
-						self.finishCreateUrl = (res.finishCreateUrl.indexOf('.com/wiki/') < 0 ?
-							res.finishCreateUrl.replace('.com/', '.com/wiki/') :
-							res.finishCreateUrl);
-
-						// unblock "Next" button (BugId:51519)
-						self.$themWikiWrapper.find('.next-controls input').
-							attr('disabled', false).
-							addClass('enabled'); // for QA with love
-					} else {
-						$.showModal(res.statusHeader, self.createStatusMessage);
-					}
-				},
-				onErrorCallback: function () {
+				if (!response || !response.query || !response.query.userinfo) {
 					self.generateAjaxErrorMsg();
+					return;
 				}
+
+				preferencesToken = response.query.userinfo.preferencestoken;
+
+				$.nirvana.sendRequest({
+					controller: 'CreateNewWiki',
+					method: 'CreateWiki',
+					data: {
+						data: {
+							wName: self.wikiName.val(),
+							wDomain: self.wikiDomain.val(),
+							wLanguage: self.wikiLanguage.find('option:selected').val(),
+							wVertical: verticalOption.val(),
+							wCategories: categories,
+							wAllAges: self.wikiAllAges.is(':checked') ? self.wikiAllAges.val() : null,
+							wAnswer: Math.floor(self.answer)
+						},
+						token: preferencesToken
+					},
+					callback: function (res) {
+						self.createStatus = res.status;
+						self.createStatusMessage = res.statusMsg;
+
+						throbberWrapper.stopThrobbing();
+
+						if (self.createStatus && self.createStatus === 'ok') {
+							self.cityId = res.cityId;
+							self.finishCreateUrl = (res.finishCreateUrl.indexOf('.com/wiki/') < 0 ?
+								res.finishCreateUrl.replace('.com/', '.com/wiki/') :
+								res.finishCreateUrl);
+
+							// unblock "Next" button (BugId:51519)
+							self.$themWikiWrapper.find('.next-controls input').
+								attr('disabled', false).
+								addClass('enabled'); // for QA with love
+						} else {
+							$.showModal(res.statusHeader, self.createStatusMessage);
+						}
+					},
+					onErrorCallback: function () {
+						self.generateAjaxErrorMsg();
+					}
+				});
+			}).fail(function () {
+				self.generateAjaxErrorMsg();
 			});
 		},
 
@@ -528,14 +535,14 @@
 	$(function () {
 		window.wgAjaxPath = window.wgScriptPath + window.wgScript;
 
-		mw.loader.use('wikia.stringhelper')
+		mw.loader.using('wikia.stringhelper')
 			.done(function () {
 				require(['wikia.stringhelper'], function (stringHelper) {
 					WikiBuilder.init(stringHelper);
 				});
 			});
 
-		if (window.wgOasisResponsive) {
+		if (window.wgOasisResponsive || window.wgOasisBreakpoints) {
 			ThemeDesigner.slideByDefaultWidth = 500;
 			ThemeDesigner.slideByItems = 3;
 

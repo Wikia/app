@@ -55,3 +55,8 @@ $specialPageAliases['pl'] = array(
 $specialPageAliases['vi'] = array(
 	'CreatePage' => array( 'Tạo_trang' ),
 );
+
+/** Japanese (日本語) */
+$specialPageAliases['ja'] = array(
+	'CreatePage' => array( 'ページ作成' ),
+);

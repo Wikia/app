@@ -1,12 +1,14 @@
 /*global define, require*/
 define('ext.wikia.adEngine.template.skin', [
+	'ext.wikia.adEngine.adContext',
 	'wikia.document',
 	'wikia.window',
 	'wikia.log'
-], function (doc, win, log) {
+], function (adContext, doc, win, log) {
 	'use strict';
 
-	var logGroup = 'ext.wikia.adengine.template.skin';
+	var logGroup = 'ext.wikia.adengine.template.skin',
+		sevenOneMedia = adContext.getContext().providers.sevenOneMedia;
 
 	/**
 	 * Show the skin ad
@@ -33,19 +35,21 @@ define('ext.wikia.adEngine.template.skin', [
 				pixelElement,
 				pixelUrl;
 
-			if (win.wgOasisResponsive || win.wgOasisBreakpoints || win.skin === 'venus') {
+			if (win.wgOasisResponsive || win.wgOasisBreakpoints) {
 				require(['wikia.backgroundchanger'], function (backgroundchanger) {
+					if (!params.middleColor) { // TODO: Revisit this hack after CONCF-842 is fixed
+						params.middleColor = params.backgroundColor;
+					}
 					var bcParams = {
 						skinImage: params.skinImage,
 						skinImageWidth: 1700,
 						skinImageHeight: 800,
 						backgroundTiled: false,
 						backgroundFixed: true,
-						backgroundDynamic: true,
-						backgroundColor: 'transparent'
+						backgroundDynamic: true
 					};
 					if (params.backgroundColor) {
-						doc.documentElement.style.backgroundColor = '#' + params.backgroundColor;
+						bcParams.backgroundColor = '#' + params.backgroundColor;
 					}
 					if (params.middleColor) {
 						bcParams.backgroundMiddleColor = '#' + params.middleColor;
@@ -59,14 +63,14 @@ define('ext.wikia.adEngine.template.skin', [
 				adSkinStyle.background = 'url("' + params.skinImage + '") no-repeat top center #' + params.backgroundColor;
 			}
 
-			doc.body.className += ' background-ad';
+			doc.body.classList.add('background-ad');
 
 			adSkinStyle.position = 'fixed';
 			adSkinStyle.height = '100%';
 			adSkinStyle.width = '100%';
 			adSkinStyle.left = 0;
 			adSkinStyle.top = 0;
-			adSkinStyle.zIndex = 0;
+			adSkinStyle.zIndex = 1;
 			adSkinStyle.cursor = 'pointer';
 
 			if (wikiaSkinStyle) {

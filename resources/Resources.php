@@ -19,24 +19,6 @@ return array(
 
 	/* Skins */
 
-	'skins.chick' => array(
-		'styles' => array( 'chick/main.css' => array( 'media' => 'screen, handheld' ) ),
-		'remoteBasePath' => $GLOBALS['wgStylePath'],
-		'localBasePath' => $GLOBALS['wgStyleDirectory'],
-	),
-	'skins.cologneblue' => array(
-		'styles' => array( 'cologneblue/screen.css' => array( 'media' => 'screen' ) ),
-		'remoteBasePath' => $GLOBALS['wgStylePath'],
-		'localBasePath' => $GLOBALS['wgStyleDirectory'],
-	),
-	'skins.modern' => array(
-		'styles' => array(
-			'modern/main.css' => array( 'media' => 'screen' ),
-			'modern/print.css' => array( 'media' => 'print' ),
-		),
-		'remoteBasePath' => $GLOBALS['wgStylePath'],
-		'localBasePath' => $GLOBALS['wgStyleDirectory'],
-	),
 	'skins.monobook' => array(
 		'styles' => array(
 			'common/commonElements.css' => array( 'media' => 'screen' ),
@@ -47,33 +29,6 @@ return array(
 		'remoteBasePath' => $GLOBALS['wgStylePath'],
 		'localBasePath' => $GLOBALS['wgStyleDirectory'],
 	),
-	'skins.nostalgia' => array(
-		'styles' => array( 'nostalgia/screen.css' => array( 'media' => 'screen' ) ),
-		'remoteBasePath' => $GLOBALS['wgStylePath'],
-		'localBasePath' => $GLOBALS['wgStyleDirectory'],
-	),
-	'skins.simple' => array(
-		'styles' => array( 'simple/main.css' => array( 'media' => 'screen' ) ),
-		'remoteBasePath' => $GLOBALS['wgStylePath'],
-		'localBasePath' => $GLOBALS['wgStyleDirectory'],
-	),
-	'skins.standard' => array(
-		'styles' => array( 'common/wikistandard.css' => array( 'media' => 'screen' ) ),
-		'remoteBasePath' => $GLOBALS['wgStylePath'],
-		'localBasePath' => $GLOBALS['wgStyleDirectory'],
-	),
-	'skins.vector' => array(
-		// Keep in sync with WebInstallerOutput::getCSS()
-		'styles' => array(
-			'common/commonElements.css' => array( 'media' => 'screen' ),
-			'common/commonContent.css' => array( 'media' => 'screen' ),
-			'common/commonInterface.css' => array( 'media' => 'screen' ),
-			'vector/screen.css' => array( 'media' => 'screen' ),
-		),
-		'scripts' => 'vector/vector.js',
-		'remoteBasePath' => $GLOBALS['wgStylePath'],
-		'localBasePath' => $GLOBALS['wgStyleDirectory'],
-	),
 
 	/* jQuery */
 
@@ -81,7 +36,6 @@ return array(
 		// Wikia change - begin
 		'skinScripts' => [
 			'default' => 'resources/jquery/jquery-' . AssetsConfig::JQUERY_VERSION . '.js',
-			'venus' => 'resources/jquery/jquery-2.1.1.js',
 		],
 		// Wikia change - end
 		'debugRaw' => false,
@@ -238,19 +192,12 @@ return array(
 				'resources/jquery.ui/themes/default/jquery.ui.core.css',
 				'resources/jquery.ui/themes/default/jquery.ui.theme.css',
 			),
-			'vector' => array(
-				'resources/jquery.ui/themes/vector/jquery.ui.core.css',
-				'resources/jquery.ui/themes/vector/jquery.ui.theme.css',
-			),
 			// wikia change - begin
 			// @author macbre
 			'oasis' => array(
 				'resources/jquery.ui/themes/default/jquery.ui.core.css',
 				// TODO: use /skins/oasis/css/core/jquery.ui.autocomplete.scss SASS file here
 			),
-			'venus' => array(
-				'resources/jquery.ui/themes/default/jquery.ui.core.css',
-			)
 			// wikia change - end
 		),
 		'dependencies' => 'jquery',
@@ -286,7 +233,6 @@ return array(
 		'scripts' => 'resources/jquery.ui/jquery.ui.resizable.js',
 		'skinStyles' => array(
 			'default' => 'resources/jquery.ui/themes/default/jquery.ui.resizable.css',
-			'vector' => 'resources/jquery.ui/themes/vector/jquery.ui.resizable.css',
 		),
 		'dependencies' => array( 'jquery.ui.core', 'jquery.ui.widget', 'jquery.ui.mouse' ),
 		'group' => 'jquery.ui',
@@ -295,7 +241,6 @@ return array(
 		'scripts' => 'resources/jquery.ui/jquery.ui.selectable.js',
 		'skinStyles' => array(
 			'default' => 'resources/jquery.ui/themes/default/jquery.ui.selectable.css',
-			'vector' => 'resources/jquery.ui/themes/vector/jquery.ui.selectable.css',
 		),
 		'dependencies' => array( 'jquery.ui.core', 'jquery.ui.widget', 'jquery.ui.mouse' ),
 		'group' => 'jquery.ui',
@@ -311,7 +256,6 @@ return array(
 		'dependencies' => array( 'jquery.ui.core', 'jquery.ui.widget' ),
 		'skinStyles' => array(
 			'default' => 'resources/jquery.ui/themes/default/jquery.ui.accordion.css',
-			'vector' => 'resources/jquery.ui/themes/vector/jquery.ui.accordion.css',
 		),
 		'group' => 'jquery.ui',
 	),
@@ -320,7 +264,6 @@ return array(
 		'dependencies' => array( 'jquery.ui.core', 'jquery.ui.widget', 'jquery.ui.position' ),
 		'skinStyles' => array(
 			'default' => 'resources/jquery.ui/themes/default/jquery.ui.autocomplete.css',
-			'vector' => 'resources/jquery.ui/themes/vector/jquery.ui.autocomplete.css',
 		),
 		'group' => 'jquery.ui',
 	),
@@ -329,7 +272,6 @@ return array(
 		'dependencies' => array( 'jquery.ui.core', 'jquery.ui.widget' ),
 		'skinStyles' => array(
 			'default' => 'resources/jquery.ui/themes/default/jquery.ui.button.css',
-			'vector' => 'resources/jquery.ui/themes/vector/jquery.ui.button.css',
 		),
 		'group' => 'jquery.ui',
 	),
@@ -338,7 +280,6 @@ return array(
 		'dependencies' => 'jquery.ui.core',
 		'skinStyles' => array(
 			'default' => 'resources/jquery.ui/themes/default/jquery.ui.datepicker.css',
-			'vector' => 'resources/jquery.ui/themes/vector/jquery.ui.datepicker.css',
 		),
 		'languageScripts' => array(
 			'af' => 'resources/jquery.ui/i18n/jquery.ui.datepicker-af.js',
@@ -416,7 +357,6 @@ return array(
 		),
 		'skinStyles' => array(
 			'default' => 'resources/jquery.ui/themes/default/jquery.ui.dialog.css',
-			'vector' => 'resources/jquery.ui/themes/vector/jquery.ui.dialog.css',
 		),
 		'group' => 'jquery.ui',
 	),
@@ -425,7 +365,6 @@ return array(
 		'dependencies' => array( 'jquery.ui.core', 'jquery.ui.widget' ),
 		'skinStyles' => array(
 			'default' => 'resources/jquery.ui/themes/default/jquery.ui.progressbar.css',
-			'vector' => 'resources/jquery.ui/themes/vector/jquery.ui.progressbar.css',
 		),
 		'group' => 'jquery.ui',
 	),
@@ -434,7 +373,6 @@ return array(
 		'dependencies' => array( 'jquery.ui.core', 'jquery.ui.widget', 'jquery.ui.mouse' ),
 		'skinStyles' => array(
 			'default' => 'resources/jquery.ui/themes/default/jquery.ui.slider.css',
-			'vector' => 'resources/jquery.ui/themes/vector/jquery.ui.slider.css',
 		),
 		'group' => 'jquery.ui',
 	),
@@ -443,7 +381,6 @@ return array(
 		'dependencies' => array( 'jquery.ui.core', 'jquery.ui.widget' ),
 		'skinStyles' => array(
 			'default' => 'resources/jquery.ui/themes/default/jquery.ui.tabs.css',
-			'vector' => 'resources/jquery.ui/themes/vector/jquery.ui.tabs.css',
 		),
 		'group' => 'jquery.ui',
 	),
@@ -522,12 +459,7 @@ return array(
 	/* MediaWiki */
 
 	'mediawiki' => array(
-        // Wikia change - begin - @author: wladek
-		'scripts' => array(
-			'resources/mediawiki/mediawiki.js',
-			'resources/wikia/wikia.mediawiki.js',
-        ),
-        // Wikia change - end
+		'scripts' => 'resources/mediawiki/mediawiki.js',
 		'debugScripts' => 'resources/mediawiki/mediawiki.log.js',
 		'debugRaw' => false,
 	),
@@ -936,11 +868,6 @@ return array(
 		'remoteBasePath' => $GLOBALS['wgStylePath'],
 		'localBasePath' => $GLOBALS['wgStyleDirectory'],
 	),
-	'mediawiki.legacy.oldshared' => array(
-		'styles' => array( 'common/oldshared.css' => array( 'media' => 'screen' ) ),
-		'remoteBasePath' => $GLOBALS['wgStylePath'],
-		'localBasePath' => $GLOBALS['wgStyleDirectory'],
-	),
 	'mediawiki.legacy.upload' => array(
 		'scripts' => 'common/upload.js',
 		'remoteBasePath' => $GLOBALS['wgStylePath'],
@@ -956,7 +883,7 @@ return array(
 		),
 	),
 	'mediawiki.legacy.wikibits' => array(
-		// Wikia - change begin - @author: wladek
+		// Wikia - change begin - @author: wladek, kamil
 //		'scripts' => 'common/wikibits.js',
 //		'remoteBasePath' => $GLOBALS['wgStylePath'],
 //		'localBasePath' => $GLOBALS['wgStyleDirectory'],
@@ -964,9 +891,18 @@ return array(
 			'skins/common/wikibits.js',
 			'resources/wikia/wikia.wikibits.js',
 		),
+		'messages' => array(
+			'import-article-missing-single',
+			'import-article-missing-multiple',
+			'import-article-missing-more-single',
+			'import-article-missing-more-multiple',
+			'import-article-not-js-single',
+			'import-article-not-js-multiple',
+		),
 		// Wikia - change end
 		'dependencies' => array(
 			'mediawiki.util',
+			'wikia.importScript'
 		),
 		'position' => 'top',
 	),

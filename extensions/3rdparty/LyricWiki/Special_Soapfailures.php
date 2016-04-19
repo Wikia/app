@@ -31,12 +31,6 @@
 
 if(!defined('MEDIAWIKI')) die();
 
-// Allows anyone to view the page.
-$wgAvailableRights[] = 'soapfailures';
-$wgGroupPermissions['*']['soapfailures'] = true;
-$wgGroupPermissions['user']['soapfailures'] = true;
-$wgGroupPermissions['sysop']['soapfailures'] = true;
-
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'SOAP Failures',
 	'url' => 'http://lyrics.wikia.com/User:Sean_Colombo',
@@ -90,7 +84,11 @@ class Soapfailures extends SpecialPage{
 			require_once($dir . 'nusoap.php');
 			// Create the client instance
 			$wsdlUrl = 'http://'.$_SERVER['SERVER_NAME'].'/server.php?wsdl&1';
-			$PROXY_HOST = "127.0.0.1"; $PROXY_PORT = "6081"; // use local-varnish for the proxy
+
+			// PLATFORM-1743
+			global $wgHTTPProxy;
+			list($PROXY_HOST, $PROXY_PORT) = explode(':', $wgHTTPProxy);
+
 			$client = new nusoapclient($wsdlUrl, true, $PROXY_HOST, $PROXY_PORT);
 			$err = $client->getError();
 			if ($err) {

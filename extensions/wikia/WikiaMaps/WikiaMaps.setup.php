@@ -41,7 +41,7 @@ $wgSpecialPages[ 'Maps' ] = 'WikiaMapsSpecialController';
 $wgSpecialPageGroups[ 'Maps' ] = 'wikia';
 
 // hooks
-$wgHooks[ 'ParserFirstCallInit' ][] = 'WikiaMapsParserTagController::parserTagInit';
+$wgHooks[ 'ParserFirstCallInit' ][] = 'WikiaMapsParserTagController::onParserFirstCallInit';
 $wgHooks[ 'OasisSkinAssetGroups' ][] = 'WikiaMapsHooks::onOasisSkinAssetGroups';
 $wgHooks[ 'SkinAfterBottomScripts' ][] = 'WikiaMapsHooks::onSkinAfterBottomScripts';
 $wgHooks[ 'BeforePageDisplay' ][] = 'WikiaMapsHooks::onBeforePageDisplay';
@@ -94,16 +94,6 @@ JSMessages::registerPackage( 'WikiaMapsDeleteMap', [
 JSMessages::registerPackage( 'WikiaMapsEmbedMapCode', [
 	'wikia-interactive-maps-embed-map-code-*'
 ] );
-
-// Rights
-$wgAvailableRights[] = 'canremovemap';
-
-// Permissions
-// canremove -- give it to users who can remove maps
-$wgGroupPermissions['*']['canremovemap'] = false;
-$wgGroupPermissions['sysop']['canremovemap'] = true;
-$wgGroupPermissions['staff']['canremovemap'] = true;
-$wgGroupPermissions['helper']['canremovemap'] = true;
 
 // Logs
 $wgLogTypes[] = 'maps';

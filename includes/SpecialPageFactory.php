@@ -74,7 +74,6 @@ class SpecialPageFactory {
 		'Unblock'                   => 'SpecialUnblock',
 		'BlockList'                 => 'SpecialBlockList',
 		'ChangePassword'            => 'SpecialChangePassword',
-		'PasswordReset'             => 'SpecialPasswordReset',
 		'DeletedContributions'      => 'DeletedContributionsPage',
 		'Preferences'               => 'SpecialPreferences',
 		'Contributions'             => 'SpecialContributions',

@@ -270,30 +270,12 @@ $messages = array(
 'navigation'    => 'Pituduh',
 'and'           => '&#32;jeung',
 
-# Cologne Blue skin
 'qbfind'         => 'Panggihan',
 'qbbrowse'       => 'Sungsi',
-'qbedit'         => 'Édit',
 'qbpageoptions'  => 'Kaca ieu',
 'qbpageinfo'     => 'Kontéks',
-'qbmyoptions'    => 'Kaca kuring',
-'qbspecialpages' => 'Kaca husus',
 'faq'            => 'NLD',
-'faqpage'        => 'Project:NLD',
 
-# Vector skin
-'vector-action-addsection'       => 'Jieun jejer anyar',
-'vector-action-delete'           => 'Hapus',
-'vector-action-move'             => 'Pindahkeun',
-'vector-action-protect'          => 'Konci',
-'vector-action-undelete'         => 'Bolaykeun ngahapus',
-'vector-action-unprotect'        => 'Robah protéksi',
-'vector-simplesearch-preference' => 'Aktipkeun saran pamaluruhan lengkep (ukur kulit Véktor)',
-'vector-view-create'             => 'Jieun',
-'vector-view-edit'               => 'Édit',
-'vector-view-history'            => 'Témbongkeun jujutan',
-'vector-view-view'               => 'Baca',
-'vector-view-viewsource'         => 'Témbongkeun sumber',
 'actions'                        => 'Peta',
 'namespaces'                     => 'Spasi ngaran',
 'variants'                       => 'Varian',
@@ -316,7 +298,6 @@ $messages = array(
 'edit'              => 'Édit',
 'create'            => 'Jieun',
 'editthispage'      => 'Édit kaca ieu',
-'create-this-page'  => 'Jieun kaca ieu',
 'delete'            => 'Hapus',
 'deletethispage'    => 'Hapus kaca ieu',
 'undelete_short'    => 'Bolaykeun ngahapus {{PLURAL:$1|hiji éditan|$1 éditan}}',
@@ -331,19 +312,9 @@ $messages = array(
 'talkpagelinktext'  => 'Obrolan',
 'specialpage'       => 'Kaca Husus',
 'personaltools'     => 'Parabot pribadi',
-'postcomment'       => 'Bagéan anyar',
-'articlepage'       => 'Témbongkeun kaca eusi',
 'talk'              => 'Sawala',
 'views'             => 'Témbongan',
 'toolbox'           => 'Kotak parabot',
-'userpage'          => 'Témbongkeun kaca pamaké',
-'projectpage'       => 'Témbongkeun kaca proyék',
-'imagepage'         => 'Tempo kaca gambar',
-'mediawikipage'     => 'Témbongkeun kaca talatah',
-'templatepage'      => 'Témbongkeun kaca citakan',
-'viewhelppage'      => 'Témbongkeun kaca pitulung',
-'categorypage'      => 'Tempo kaca kategori',
-'viewtalkpage'      => 'Témbongkeun sawala',
 'otherlanguages'    => 'Dina séjén basa',
 'redirectedfrom'    => '(dipindahkeun ti $1)',
 'redirectpagesub'   => 'Kaca alihan',
@@ -519,8 +490,9 @@ Pikeun alihbasa, mangga sumping ka [//translatewiki.net/wiki/Main_Page?setlang=e
 # Login and logout pages
 'logouttext'                 => "'''Anjeun ayeuna geus kaluar log.'''
 
-Anjeun bisa tetep migunakeun {{SITENAME}} bari anonim, atawa bisa [[Special:UserLogin|asup log deui]] salaku pamaké nu sarua atawa nu séjén deui.
+Anjeun bisa tetep migunakeun {{SITENAME}} bari anonim, atawa bisa $1 salaku pamaké nu sarua atawa nu séjén deui.
 Mangkahadé, sababaraha kaca bakal tetep némbongkeun saolah-olah anjeun asup log kénéh nepi ka anjeun ngosongkeun ''cache'' panyungsi anjeun.",
+'logouttext-link-text'       => 'asup log deui',
 'welcomecreation'            => '==Wilujeng sumping, $1!==
 Rekening anjeun geus dijieun.
 Tong hilap ngarobih [[Special:Preferences|{{SITENAME}} préferénsi]] anjeun.',
@@ -627,36 +599,6 @@ Tungguan heula sakeudeung, laju cobaan deui.',
 'resetpass-wrong-oldpass'   => 'Salah sandi.
 Bisa jadi anjeun geus ngaganti sandina atawa ménta sandi saheulaanan anu anyar.',
 'resetpass-temp-password'   => 'Sandi samentara:',
-
-# Special:PasswordReset
-'passwordreset'                => 'Setél ulang sandi',
-'passwordreset-text'           => 'Lengkepan ieu formulir pikeun nampa surélék pangéling ngeunaan wincikan akun anjeun.',
-'passwordreset-legend'         => 'Setél ulang sandi',
-'passwordreset-disabled'       => 'Dina ieu wiki, sandi teu bisa disetél ulang.',
-'passwordreset-pretext'        => '{{PLURAL:$1||Asupkeun salah sahiji data di handap ieu}}',
-'passwordreset-username'       => 'Sandiasma:',
-'passwordreset-domain'         => 'Domain:',
-'passwordreset-capture'        => 'Témbongkeun surat-é hasilna?',
-'passwordreset-email'          => 'Alamat surélék:',
-'passwordreset-emailtitle'     => 'Wincikan akun di {{SITENAME}}',
-'passwordreset-emailtext-ip'   => 'Aya (bisa jadi Anjeun, ti alamat IP $1) ménta dibéjaan ngeunaan akun di {{SITENAME}} ($4). {{PLURAL:$3|Akun|Akun-akun}} di handap patali jeung alamat ieu surélék:
-
-$2
-
-{{PLURAL:$3|Ieu sandi saheulaanan|Ieu sandi saheulaanan}} anu bakal kadaluwarsa dina témpo {{PLURAL:$5|sapoé|$5 poé}}.
-Anjeun kudu asup sarta milih sandi anyar ayeuna. Lamun nu séjén nyieun ieu paménta, atawa lamun Anjeun geus inget sandi aslina sarta moal dirobah, ieu surat teu kudu diwaro.',
-'passwordreset-emailtext-user' => 'Hiji jalma (bisa jadi Anjeun, ti alamat IP $1) ménta pangéling-ngéling nu wincik tina akun pikeun {{SITENAME}} ($4).
-{{PLURAL:$3|Akun|Akun-akun}} di handap patali jeung alamat surélék ieu:
-
-$2
-
-{{PLURAL:$3|Sandi saheulaanan|Sandi saheulaanan}} ieu bakal kadaluwarsa dina témpo {{PLURAL:$5|sapoé|$5 poé}}.
-Anjeun kudu asup sarta milih sandi anyar ayeuna. Lamun jalma séjén nyieun
-ieu pamundut atawa lamun Anjeun inget sandi asli sarta moal 
-ngarobah deui, Anjeun bisa teu maliré ieu talatah sarta terus ngagunakeun sandi heubeul.',
-'passwordreset-emailelement'   => 'Sandiasma: $1
-Sandi saheulaanan: $2',
-'passwordreset-emailsent'      => 'Surélék pangéling geus dikirim.',
 
 # Special:ChangeEmail
 'changeemail'          => 'Ganti alamat surélék',
@@ -777,7 +719,6 @@ Pikeun rujukan, éntri log panungtung dipidangkeun di handap:',
 '''Can disimpen!'''",
 'sitejspreview'                    => "'''Inget yén ieu kodeu JavaScript ukur pramidang.'''
 '''Can disimpen!'''",
-'userinvalidcssjstitle'            => "'''Awas''': kulit \"\$1\" mah teu aya. Sing émut yén kaca .css jeung .js mah migunakeun aksara leutik dina judulna, contona baé {{ns:user}}:Foo/vector.css lawan {{ns:user}}:Foo/Vector.css.",
 'updated'                          => '(Geus diropéa)',
 'note'                             => "'''Catetan:'''",
 'previewnote'                      => "'''Inget yén ieu ukur pramidang, can disimpen!'''
@@ -1099,13 +1040,6 @@ Coba susud dimimitian ku ''all:'' pikeun nyusud sakabéh kandunganana (kaasup ka
 'search-external'                  => 'Panéangan luar',
 'searchdisabled'                   => 'Punten! Néangan téks lengkep di {{SITENAME}} kanggo samentawis ditumpurkeun pikeun alesan kinerja. Jalaran kitu, saheulaanan anjeun bisa nyungsi di Google di handap ieu. Catet yén indéxna ngeunaan eusi {{SITENAME}} bisa jadi teu mutahir.',
 
-# Quickbar
-'qbsettings'               => 'Bar gancang',
-'qbsettings-none'          => 'Henteu aya',
-'qbsettings-fixedleft'     => 'Angger beulah kenca',
-'qbsettings-fixedright'    => 'Angger beulah katuhu',
-'qbsettings-floatingleft'  => 'Ngambang ka kenca',
-'qbsettings-floatingright' => 'Ngambang ka katuhu',
 
 # Preferences page
 'preferences'                   => 'Préferénsi',
@@ -1586,7 +1520,7 @@ Pariksa heula jujutan hapusanana saméméh neruskeun ngamuat deui éta berkas.',
 'linkstoimage'              => 'Kaca ieu  {{PLURAL:$1|numbu|$1 numbu}} ka gambar ieu :',
 'nolinkstoimage'            => 'Teu aya kaca nu numbu ka gambar ieu.',
 'sharedupload'              => 'Ieu koropak téh ti $1 nu bisa jadi dipaké ku proyék-proyék lianna.',
-'sharedupload-desc-here'    => 'Ieu berkas asalna ti $1 anu bisa jadi dipaké ku proyék séjén. 
+'sharedupload-desc-here'    => 'Ieu berkas asalna ti $1 anu bisa jadi dipaké ku proyék séjén.
 Pedaran ti [$2 kaca pedaranana] dipidangkeun di handap.',
 'uploadnewversion-linktext' => 'ngamuatkeun vérsi anyar koropak ieu',
 'shared-repo-from'          => 'ti $1',
@@ -2543,8 +2477,8 @@ $1',
 # Bad image list
 'bad_image_list' => 'Formatna kieu:
 
-Ngan daptar butiran (baris anu dimimitian ku tanda *) anu diitung. 
-Tutumbu kahiji dina hiji baris dianggap numbu ka berkas anu goréng. 
+Ngan daptar butiran (baris anu dimimitian ku tanda *) anu diitung.
+Tutumbu kahiji dina hiji baris dianggap numbu ka berkas anu goréng.
 Tutumbu sanggeusna dina baris anu sarua dianggap bener, nyaéta artikel anu midangkeun éta berkas.',
 
 # Metadata

@@ -46,7 +46,7 @@
 			],
 			// @see /extensions/wikia/AnalyticsEngine/js/universal_analytics.js
 			guaTrackEvent = window.guaTrackEvent,
-			guaTrackAdEvent = window.guaTrackAdEvent,
+			guaTrackAdEvent = window.guaTrackAdEvent || window.gaTrackAdEvent,
 			logGroup = 'Wikia.Tracker',
 			// These keys will be removed from tracking data before it gets sent to
 			// GA or the internal datawarehouse.

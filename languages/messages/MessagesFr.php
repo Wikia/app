@@ -501,30 +501,12 @@ $messages = array(
 'navigation'    => 'Navigation',
 'and'           => '&#32;et',
 
-# Cologne Blue skin
 'qbfind'         => 'Rechercher',
 'qbbrowse'       => 'Parcourir',
-'qbedit'         => 'Modifier',
 'qbpageoptions'  => 'Cette page',
 'qbpageinfo'     => 'Contexte',
-'qbmyoptions'    => 'Mes pages',
-'qbspecialpages' => 'Pages spéciales',
 'faq'            => 'FAQ',
-'faqpage'        => 'Project:FAQ',
 
-# Vector skin
-'vector-action-addsection'       => 'Ajouter un sujet',
-'vector-action-delete'           => 'Supprimer',
-'vector-action-move'             => 'Renommer',
-'vector-action-protect'          => 'Protéger',
-'vector-action-undelete'         => 'Rétablir',
-'vector-action-unprotect'        => 'Changer la protection',
-'vector-simplesearch-preference' => 'Activer les suggestions de recherche améliorées (seulement pour Vector)',
-'vector-view-create'             => 'Créer',
-'vector-view-edit'               => 'Modifier',
-'vector-view-history'            => 'Afficher l’historique',
-'vector-view-view'               => 'Lire',
-'vector-view-viewsource'         => 'Voir la source',
 'actions'                        => 'Actions',
 'namespaces'                     => 'Espaces de noms',
 'variants'                       => 'Variantes',
@@ -547,7 +529,6 @@ $messages = array(
 'edit'              => 'Modifier',
 'create'            => 'Créer',
 'editthispage'      => 'Modifier cette page',
-'create-this-page'  => 'Créer cette page',
 'delete'            => 'Supprimer',
 'deletethispage'    => 'Supprimer cette page',
 'undelete_short'    => 'Restaurer $1 modification{{PLURAL:$1||s}}',
@@ -562,19 +543,9 @@ $messages = array(
 'talkpagelinktext'  => 'discuter',
 'specialpage'       => 'Page spéciale',
 'personaltools'     => 'Outils personnels',
-'postcomment'       => 'Nouvelle section',
-'articlepage'       => 'Voir la page de contenu',
 'talk'              => 'Discussion',
 'views'             => 'Affichages',
 'toolbox'           => 'Boîte à outils',
-'userpage'          => 'Page utilisateur',
-'projectpage'       => 'Page méta',
-'imagepage'         => 'Voir la page du fichier',
-'mediawikipage'     => 'Voir la page du message',
-'templatepage'      => 'Voir la page du modèle',
-'viewhelppage'      => 'Voir la page d’aide',
-'categorypage'      => 'Voir la page de catégorie',
-'viewtalkpage'      => 'Page de discussion',
 'otherlanguages'    => 'Autres langues',
 'redirectedfrom'    => '(Redirigé depuis $1)',
 'redirectpagesub'   => 'Page de redirection',
@@ -754,8 +725,9 @@ Le motif avancé est « ''$2'' ».",
 # Login and logout pages
 'logouttext'                 => "'''Vous êtes à présent déconnecté(e).'''
 
-Vous pouvez continuer à utiliser {{SITENAME}} de façon anonyme, [[Special:UserLogin|vous reconnecter]] sous le même nom ou un autre.
+Vous pouvez continuer à utiliser {{SITENAME}} de façon anonyme, $1 sous le même nom ou un autre.
 Notez que certaines pages peuvent être encore affichées comme si vous étiez toujours connecté(e), jusqu’à ce que vous effaciez le cache de votre navigateur.",
+'logouttext-link-text'       => 'vous reconnecter',
 'welcomecreation'            => '== Bienvenue, $1 ! ==
 
 Votre compte a été créé.
@@ -869,34 +841,6 @@ Veuillez attendre avant d’essayer à nouveau.',
 'resetpass-wrong-oldpass'   => 'Mot de passe actuel ou temporaire invalide.
 Vous avez peut-être déjà changé votre mot de passe ou demandé un nouveau mot de passe temporaire.',
 'resetpass-temp-password'   => 'Mot de passe temporaire :',
-
-# Special:PasswordReset
-'passwordreset'                    => 'Remise à zéro du mot de passe',
-'passwordreset-text'               => 'Remplissez ce formulaire pour recevoir un courriel de rappel des détails de votre compte.',
-'passwordreset-legend'             => 'Remise à zéro du mot de passe',
-'passwordreset-disabled'           => 'La réinitialisation des mots de passe a été désactivée sur ce wiki.',
-'passwordreset-pretext'            => '{{PLURAL:$1||Entrez un élément de données ci-dessous}}',
-'passwordreset-username'           => 'Nom d’utilisateur :',
-'passwordreset-domain'             => 'Domaine :',
-'passwordreset-capture'            => 'Voir le courriel résultant?',
-'passwordreset-capture-help'       => 'Si vous cochez cette case, le courriel (avec le mot de passe temporaire) vous sera affiché en même temps qu’il sera envoyé à l’utilisateur.',
-'passwordreset-email'              => 'Adresse de courriel :',
-'passwordreset-emailtitle'         => 'Détails du compte sur {{SITENAME}}',
-'passwordreset-emailtext-ip'       => 'Quelqu’un (probablement vous, depuis l’adresse IP $1) a demandé un rappel des informations de votre compte pour {{SITENAME}} ($4). {{PLURAL:$3|Le compte utilisateur suivant est associé|Les comptes utilisateurs suivants sont associés}} à cette adresse de courriel :
-
-$2
-
-{{PLURAL:$3|Ce mot de passe temporaire expirera|Ces mots de passe temporaires expireront}} dans {{PLURAL:$5|un jour|$5 jours}}. Vous devez maintenant vous connecter et choisir un nouveau mot de passe. Si cette demande ne provient pas de vous, ou que vous vous êtes souvenu de votre mot de passe initial, et ne souhaitez plus le modifier, vous pouvez ignorer ce message et continuer à utiliser votre ancien mot de passe.',
-'passwordreset-emailtext-user'     => 'L’utilisateur $1 sur {{SITENAME}} a demandé un rappel des informations de votre compte pour {{SITENAME}} ($4). {{PLURAL:$3|Le compte utilisateur suivant est associé|Les comptes utilisateurs suivants sont associés}} à cette adresse de courriel :
-
-$2
-
-{{PLURAL:$3|Ce mot de passe temporaire expirera|Ces mots de passe temporaires expireront}} dans {{PLURAL:$5|un jour|$5 jours}}. Vous devez maintenant vous connecter et choisir un nouveau mot de passe. Si cette demande ne provient pas de vous, ou que vous vous êtes souvenu de votre mot de passe initial, et ne souhaitez plus le modifier, vous pouvez ignorer ce message et continuer à utiliser votre ancien mot de passe.',
-'passwordreset-emailelement'       => 'Nom d’utilisateur : $1
-Mot de passe temporaire : $2',
-'passwordreset-emailsent'          => 'Un courriel de rappel a été envoyé.',
-'passwordreset-emailsent-capture'  => 'Un courriel de rappel a été envoyé, qui est affiché ci-dessous.',
-'passwordreset-emailerror-capture' => 'Un courriel de rappel a été généré, qui est affiché ci-dessous, mais l’envoi à l’utilisateur a échoué : $1',
 
 # Special:ChangeEmail
 'changeemail'          => 'Changer l’adresse de courriel',
@@ -1021,7 +965,6 @@ La dernière entrée du registre des blocages est indiquée ci-dessous à titre 
 '''Elle n’a pas encore été enregistrée !'''",
 'sitejspreview'                    => "'''Souvenez-vous que vous êtes seulement en train de prévisualiser ce code JavaScript.'''
 '''Il n’a pas encore été enregistré !'''",
-'userinvalidcssjstitle'            => "'''Attention :''' il n’existe pas d’habillage « $1 ». Rappelez-vous que les pages personnelles avec extensions .css et .js utilisent des titres en minuscules, par exemple {{ns:user}}:Foo/vector.css et non {{ns:user}}:Foo/Vector.css.",
 'updated'                          => '(Mis à jour)',
 'note'                             => "'''Note :'''",
 'previewnote'                      => "'''Attention, ce texte n’est qu’une prévisualisation et n’a pas encore été publié !'''",
@@ -1362,14 +1305,6 @@ Essayez en utilisant le préfixe ''all:'' pour rechercher dans tout le contenu (
 'search-external'                  => 'Recherche externe',
 'searchdisabled'                   => 'La recherche sur {{SITENAME}} est désactivée. En attendant la réactivation, vous pouvez effectuer une recherche via Google. Attention, leur indexation du contenu de {{SITENAME}} peut ne pas être à jour.',
 
-# Quickbar
-'qbsettings'                => 'Barre d’outils',
-'qbsettings-none'           => 'Aucune',
-'qbsettings-fixedleft'      => 'Gauche',
-'qbsettings-fixedright'     => 'Droite',
-'qbsettings-floatingleft'   => 'Flottante à gauche',
-'qbsettings-floatingright'  => 'Flottante à droite',
-'qbsettings-directionality' => 'Fixe, en fonction de la directivité d’écriture de votre langue',
 
 # Preferences page
 'preferences'                   => 'Préférences',
@@ -1731,7 +1666,7 @@ Voyez la [[Special:NewFiles|galerie des nouvelles images]] pour une présentatio
 'filetype-bad-ie-mime'        => 'Le fichier ne peut pas être importé parce qu’il serait détecté comme « $1 » par Internet Explorer, ce qui correspond à un type de fichier interdit car potentiellement dangereux.',
 'filetype-unwanted-type'      => "'''« .$1 »''' est un format de fichier non désiré.
 {{PLURAL:$3|Le type de fichier préconisé est|Les types de fichiers préconisés sont}} $2.",
-'filetype-banned-type'        => "''' « .$1 » '''{{PLURAL:$4|n’est pas un type de fichier autorisé|ne sont pas des types de fichiers autorisés}}. 
+'filetype-banned-type'        => "''' « .$1 » '''{{PLURAL:$4|n’est pas un type de fichier autorisé|ne sont pas des types de fichiers autorisés}}.
 {{PLURAL:$3|le type de fichier autorisé est |les types de fichiers autorisés sont}} $2.",
 'filetype-missing'            => 'Le fichier n’a aucune extension (comme « .jpg » par exemple).',
 'empty-file'                  => 'Le fichier que vous avez soumis était vide.',
@@ -1874,7 +1809,7 @@ Si le problème persiste, contactez un [[Special:ListUsers/sysop|administrateur]
 'zip-wrong-format'    => "Le fichier spécifié n'est pas un fichier ZIP.",
 'zip-bad'             => 'Le fichier est un fichier ZIP corrompu ou illisible.
 Il ne peut pas être correctement vérifié pour la sécurité.',
-'zip-unsupported'     => 'Le fichier est un fichier ZIP qui utilise ZIP non supportées par MediaWiki. 
+'zip-unsupported'     => 'Le fichier est un fichier ZIP qui utilise ZIP non supportées par MediaWiki.
 Il ne peut pas être correctement vérifé pour la sécurité.',
 
 # Special:UploadStash
@@ -3021,29 +2956,14 @@ Permet de rétablir la version précédente et d’ajouter un motif dans la boî
 
 # Stylesheets
 'common.css'      => '/* Le CSS placé ici sera appliqué à tous les habillages. */',
-'standard.css'    => '/* Le CSS placé ici affectera les utilisateurs de l’habillage Standard. */',
-'nostalgia.css'   => '/* Le CSS placé ici affectera les utilisateurs de l’habillage Nostalgia. */',
-'cologneblue.css' => '/* Le CSS placé ici affectera les utilisateurs de l’habillage Cologne Blue. */',
 'monobook.css'    => '/* Le CSS placé ici affectera les utilisateurs de l’habillage Monobook. */',
-'myskin.css'      => '/* Le CSS placé ici affectera les utilisateurs de l’habillage MySkin. */',
-'chick.css'       => '/* Le CSS placé ici affectera les utilisateurs de l’habillage Chick. */',
-'simple.css'      => '/* Le CSS placé ici affectera les utilisateurs de l’habillage Simple. */',
-'modern.css'      => '/* Le CSS placé ici affectera les utilisateurs de l’habillage Modern. */',
 'print.css'       => '/* Le CSS placé ici affectera les impressions */',
 'handheld.css'    => '/* Le CSS placé ici affectera les appareils mobiles en fonction de l\'habillage configuré $wgHandheldStyle */',
 'group-sysop.css' => '/* Le CSS inclus ici n’affectera que les administrateurs */',
 
 # Scripts
 'common.js'      => '/* Tout JavaScript ici sera chargé avec chaque page accédée par n’importe quel utilisateur. */',
-'standard.js'    => '/* Tout JavaScript ici sera chargé avec les pages accédées par les utilisateurs de l’habillage Standard uniquement */',
-'nostalgia.js'   => '/* Tout JavaScript ici sera chargé avec les pages accédées par les utilisateurs de l’habillage Nostalgie uniquement */',
-'cologneblue.js' => '/* Tout JavaScript ici sera chargé avec les pages accédées par les utilisateurs de l’habillage Bleu de cologne uniquement */',
 'monobook.js'    => '/* Tout JavaScript ici sera chargé avec les pages accédées par les utilisateurs de l’habillage MonoBook uniquement. */',
-'myskin.js'      => '/* Tout JavaScript ici sera chargé avec les pages accédées par les utilisateurs de l’habillage Mon habillage uniquement */',
-'chick.js'       => '/* Tout JavaScript ici sera chargé avec les pages accédées par les utilisateurs de l’habillage Poussin uniquement */',
-'simple.js'      => '/* Tout JavaScript ici sera chargé avec les pages accédées par les utilisateurs de l’habillage Simple uniquement */',
-'modern.js'      => '/* Tout JavaScript ici sera chargé avec les pages accédées par les utilisateurs de l’habillage Moderne uniquement */',
-'vector.js'      => '/* Tout code JavaScript placé ici sera chargé pour les utilisateurs de l’habillage Vector */',
 'group-sysop.js' => '/* Le JavaScript inclus ici n’affectera que les administrateurs */',
 
 # Metadata
@@ -3083,15 +3003,7 @@ Permet de rétablir la version précédente et d’ajouter un motif dans la boî
 'pageinfo-viewsperedit'     => 'Visites par modification',
 
 # Skin names
-'skinname-standard'    => 'Standard',
-'skinname-nostalgia'   => 'Nostalgie',
-'skinname-cologneblue' => 'Bleu de Cologne',
 'skinname-monobook'    => 'Monobook',
-'skinname-myskin'      => 'Mon Interface',
-'skinname-chick'       => 'Poussin',
-'skinname-simple'      => 'Simple',
-'skinname-modern'      => 'Moderne',
-'skinname-vector'      => 'Vector',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Marquer comme relue',

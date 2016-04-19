@@ -374,24 +374,31 @@ class PermissionsError extends ErrorPageError {
 	public $permission, $errors;
 
 	function __construct( $permission, $errors = array() ) {
-		global $wgLang;
-
 		$this->permission = $permission;
 
 		if ( !count( $errors ) ) {
-			$groups = array_map(
-				array( 'User', 'makeGroupLinkWiki' ),
-				User::getGroupsWithPermission( $this->permission )
-			);
-
-			if ( $groups ) {
-				$errors[] = array( 'badaccess-groups', $wgLang->commaList( $groups ), count( $groups ) );
-			} else {
-				$errors[] = array( 'badaccess-group0' );
-			}
+			$errors[] = self::prepareBadAccessErrorArray( $this->permission );
 		}
 
 		$this->errors = $errors;
+	}
+
+	/**
+	 * @param string $permission Name of action
+	 * @return array error message key and message params (optionally)
+	 */
+	public static function prepareBadAccessErrorArray( $permission ) {
+		global $wgLang;
+		$groups = array_map(
+			[ 'User', 'makeGroupLinkWiki' ],
+			User::getGroupsWithPermission( $permission )
+		);
+
+		if ( $groups ) {
+			return [ 'badaccess-groups', $wgLang->commaList( $groups ), count( $groups ) ];
+		}
+
+		return [ 'badaccess-group0' ];
 	}
 
 	function report() {
@@ -541,8 +548,10 @@ class MWExceptionHandler {
 
 	/**
 	 * Report an exception to the user
+	 *
+	 * @param Exception|Throwable $e
 	 */
-	protected static function report( Exception $e ) {
+	protected static function report( $e ) {
 		global $wgShowExceptionDetails;
 
 		$cmdLine = MWException::isCommandLine();
@@ -587,6 +596,13 @@ class MWExceptionHandler {
 			} else {
 				self::escapeEchoAndDie( $message );
 			}
+
+			# Wikia change - begin
+			# @see PLATFORM-2008 - report non-MediawWiki exceptions to ELK
+			Wikia\Logger\WikiaLogger::instance()->error( __METHOD__ . ' - unexpected non-MediaWiki exception encountered', [
+				'exception' => $e,
+			] );
+			# Wikia change - end
 		}
 	}
 

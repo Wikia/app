@@ -449,30 +449,12 @@ $messages = array(
 'navigation'    => 'Orijentacija',
 'and'           => '&#32;i',
 
-# Cologne Blue skin
 'qbfind'         => 'Nađi',
 'qbbrowse'       => 'Pregledaj',
-'qbedit'         => 'Uredi',
 'qbpageoptions'  => 'Postavke stranice',
 'qbpageinfo'     => 'O stranici',
-'qbmyoptions'    => 'Moje stranice',
-'qbspecialpages' => 'Posebne stranice',
 'faq'            => 'Najčešća pitanja',
-'faqpage'        => 'Project:FAQ',
 
-# Vector skin
-'vector-action-addsection'       => 'Dodaj temu',
-'vector-action-delete'           => 'Izbriši',
-'vector-action-move'             => 'Premjesti',
-'vector-action-protect'          => 'Zaštiti',
-'vector-action-undelete'         => 'Vrati',
-'vector-action-unprotect'        => 'Promijeni zaštitu',
-'vector-simplesearch-preference' => 'Omogući poboljšane prijedloge za pretraživanje (samo izgled Vector)',
-'vector-view-create'             => 'Započni',
-'vector-view-edit'               => 'Uredi',
-'vector-view-history'            => 'Vidi stare izmjene',
-'vector-view-view'               => 'Čitaj',
-'vector-view-viewsource'         => 'Vidi izvor',
 'actions'                        => 'Radnje',
 'namespaces'                     => 'Imenski prostori',
 'variants'                       => 'Inačice',
@@ -495,7 +477,6 @@ $messages = array(
 'edit'              => 'Uredi',
 'create'            => 'Započni',
 'editthispage'      => 'Uredi ovu stranicu',
-'create-this-page'  => 'Započni ovu stranicu',
 'delete'            => 'Izbriši',
 'deletethispage'    => 'Izbriši ovu stranicu',
 'undelete_short'    => 'Vrati {{PLURAL:$1|$1 uređivanje|$1 uređivanja}}',
@@ -510,19 +491,9 @@ $messages = array(
 'talkpagelinktext'  => 'Razgovor',
 'specialpage'       => 'Posebna stranica',
 'personaltools'     => 'Osobni alati',
-'postcomment'       => 'Novi odlomak',
-'articlepage'       => 'Vidi članak',
 'talk'              => 'Razgovor',
 'views'             => 'Pogledi',
 'toolbox'           => 'Traka s alatima',
-'userpage'          => 'Vidi suradnikovu stranicu',
-'projectpage'       => 'Vidi stranicu o projektu',
-'imagepage'         => 'Vidi stranicu datoteke',
-'mediawikipage'     => 'Vidi stranicu za razgovor',
-'templatepage'      => 'Vidi ovaj predložak',
-'viewhelppage'      => 'Vidi stranicu pomoći',
-'categorypage'      => 'Vidi stranicu s kategorijama',
-'viewtalkpage'      => 'Vidi razgovor',
 'otherlanguages'    => 'Drugi jezici',
 'redirectedfrom'    => '(Preusmjereno s $1)',
 'redirectpagesub'   => 'Preusmjeravanje',
@@ -699,8 +670,9 @@ $2',
 # Login and logout pages
 'logouttext'                 => "'''Odjavili ste se.'''
 
-Možete nastaviti s korištenjem {{SITENAME}} neprijavljeni, ili se možete ponovo [[Special:UserLogin|prijaviti]] pod istim ili drugim imenom.
+Možete nastaviti s korištenjem {{SITENAME}} neprijavljeni, ili se možete ponovo $1 pod istim ili drugim imenom.
 Neke se stranice mogu prikazivati kao da ste još uvijek prijavljeni, sve dok ne očistite međuspremnik svog preglednika.",
+'logouttext-link-text'       => 'prijaviti',
 'welcomecreation'            => '== Dobrodošli, $1! ==
 Vaš je suradnički račun otvoren.
 
@@ -813,43 +785,6 @@ Molimo Vas da pričekate prije nego što pokušate ponovo.',
 'resetpass-wrong-oldpass'   => 'Pogrešna privremena ili trenutačna lozinka.
 Možda ste već uspješno promijenili Vašu lozinku ili ste zatražili novu privremenu lozinku.',
 'resetpass-temp-password'   => 'Privremena lozinka:',
-
-# Special:PasswordReset
-'passwordreset'                    => 'Ponovno postavi lozinku',
-'passwordreset-text'               => 'Ispunite ovaj obrazac da biste dobili e-mail podsjetnik o vašim detaljima računa.',
-'passwordreset-legend'             => 'Poništi lozinku',
-'passwordreset-disabled'           => 'Poništavanje lozinke je onemogućeno na ovom wikiju.',
-'passwordreset-pretext'            => '{{PLURAL:$1||Unesite jedan od dijelova podataka u nastavku}}',
-'passwordreset-username'           => 'Suradničko ime:',
-'passwordreset-domain'             => 'Domena:',
-'passwordreset-capture'            => 'Pogledati krajnju poruku?',
-'passwordreset-capture-help'       => 'Ako označite ovu kućicu, e-poruka s privremenom lozinkom će biti prikazana i poslana korisniku.',
-'passwordreset-email'              => 'E-mail adresa:',
-'passwordreset-emailtitle'         => 'Pojedinosti o računu na {{SITENAME}}',
-'passwordreset-emailtext-ip'       => 'Netko (vjerojatno Vi, s IP adrese $1) zatražio je podsjetnik za Vaše detalje računa
-za {{SITENAME}} ($4). Sljedeći {{PLURAL:$3|račun suradnika je|računi suradnika su}}
-povezani s ovom e-mail adresom:
-
-$2
-
-{{PLURAL:$3|Ova privremena lozinka|Ove privremene lozinke}} će isteći u {{PLURAL:$5|jedan dan|$5 dana}}.
-Trebate se prijaviti i odabrati novu lozinku. Ukoliko je netko drugi napravio ovaj
-zahtjev, ili ako ste sjeti Vaše izvorne lozinke, a vi je više ne želite promijeniti, 
-možete zanemariti ovu poruku i nastavite koristiti staru lozinku.',
-'passwordreset-emailtext-user'     => 'Suradnik $1 na {{SITENAME}} zatražio podsjetnik o pojedinostima vašeg računa za {{SITENAME}}
-($4). Sljedeći {{PLURAL:$3|račun suradnika je|računi suradnika su}} povezani s ovom e-mail adresom:
-
-$2
-
-{{PLURAL:$3|Ova privremena lozinka|Ove privremene lozinke}} će isteći u {{PLURAL:$5|jedan dan|$5 dana}}.
-Trebate se prijaviti i odabrati novu lozinku. Ukoliko je netko drugi napravio ovaj
-zahtjev, ili ako ste sjeti Vaše izvorne lozinke, a vi je više ne želite promijeniti, 
-možete zanemariti ovu poruku i nastavite koristiti staru lozinku.',
-'passwordreset-emailelement'       => 'Suradničko ime: $1
-Privremena lozinka: $2',
-'passwordreset-emailsent'          => 'E-mail podsjetnik je poslan.',
-'passwordreset-emailsent-capture'  => 'Poslan Vam je podsjetnik kao e-pošta (tekst je prikazan dolje).',
-'passwordreset-emailerror-capture' => 'Napravljen je podsjetnik za slanje e-pošte (prikazan dolje), ali njegovo slanje nije uspjelo: $1',
 
 # Special:ChangeEmail
 'changeemail'          => 'Promijeni e-mail adresu',
@@ -969,7 +904,6 @@ Posljednja stavka evidencije blokiranja navedena je niže kao napomena:',
 '''Još uvijek nije sačuvan!'''",
 'sitejspreview'                    => "'''Ne zaboravite ovo je samo pregled JavaScript kôda.'''
 '''Još uvijek nije sačuvan!'''",
-'userinvalidcssjstitle'            => "'''Upozorenje:''' Nema sučelja pod imenom \"\$1\". Ne zaboravite da imena stranica s .css and .js kodom počinju malim slovom, npr. {{ns:user}}:Mate/vector.css, a ne {{ns:user}}:Mate/Vector.css.",
 'updated'                          => '(Ažurirano)',
 'note'                             => "'''Napomena:'''",
 'previewnote'                      => "'''Ne zaboravite da je ovo samo pregled kako će stranica izgledati i da stranica još nije snimljena!'''",
@@ -1310,14 +1244,6 @@ Primijetite da uporaba navigacijskih poveznica resetira Vaše izbore u stupcu.',
 'search-external'                  => 'Vanjski pretraživač',
 'searchdisabled'                   => '<p>Oprostite! Pretraga po cjelokupnoj bazi je zbog bržeg rada projekta {{SITENAME}} trenutačno onemogućena. Možete se poslužiti tražilicom Google.</p>',
 
-# Quickbar
-'qbsettings'                => 'Traka',
-'qbsettings-none'           => 'Bez',
-'qbsettings-fixedleft'      => 'Lijevo nepomično',
-'qbsettings-fixedright'     => 'Desno nepomično',
-'qbsettings-floatingleft'   => 'Lijevo leteće',
-'qbsettings-floatingright'  => 'Desno leteće',
-'qbsettings-directionality' => 'Fiksno, ovisno o smjeru pisma Vašeg jezika',
 
 # Preferences page
 'preferences'                   => 'Postavke',
@@ -1725,7 +1651,7 @@ Ako još uvijek želite postaviti svoju datoteku, idite nazad i postavite ju pod
 'php-uploaddisabledtext'      => 'Postavljanja datoteka su onemogućena u PHP-u. Molimo provjerite postavke za postavljanje datoteka.',
 'uploadscripted'              => 'Ova datoteka sadrži HTML ili skriptu, što može dovesti do grešaka u web pregledniku.',
 'uploadvirus'                 => 'Datoteka sadrži virus! Podrobnije: $1',
-'uploadjava'                  => 'Datoteka je ZIP koja sadrži Java .class datotoeku. 
+'uploadjava'                  => 'Datoteka je ZIP koja sadrži Java .class datotoeku.
 Postavljanje Java datoteka nije dopušteno, jer mogu izazvati zaobilazak sigurnosnih ograničenja.',
 'upload-source'               => 'Izvorna datoteka',
 'sourcefilename'              => 'Ime datoteke na Vašem računalu:',
@@ -2627,16 +2553,16 @@ To znači: 1. ako pogriješite, možete opet preimenovati stranicu na stari nasl
 
 '''Upozorenje!'''
 Ovo može biti drastična i neočekivana promjena kad su u pitanju popularne stranice. Molimo dobro razmislite prije nego što preimenujete stranicu.",
-'movepagetext-noredirectfixer' => "Pomoću donjeg obrasca ćete preimenovati stranicu i premjestiti sve stare izmjene na novo ime. 
-Stari će se naslov pretvoriti u stranicu koja automatski preusmjerava na novi naslov. 
-Budite sigurni da ste provjerili [[Special:DoubleRedirects|dvostruka]] ili [[Special:BrokenRedirects|nevaljana preusmjeravanja]]. 
+'movepagetext-noredirectfixer' => "Pomoću donjeg obrasca ćete preimenovati stranicu i premjestiti sve stare izmjene na novo ime.
+Stari će se naslov pretvoriti u stranicu koja automatski preusmjerava na novi naslov.
+Budite sigurni da ste provjerili [[Special:DoubleRedirects|dvostruka]] ili [[Special:BrokenRedirects|nevaljana preusmjeravanja]].
 Vi ste odgovorni za to da poveznice i dalje povezuju tamo gdje treba.
 
-Imajte na umu da stranica '''neće''' biti premještena ako već postoji stranica s novim naslovom, osim u slučaju prazne stranice ili stranice za preusmjeravanje koja nema nikakvih starih izmjena. 
-To znači da stranicu možete preimenovati u prethodno ime ukoliko ste pogriješili te ne možete pisati preko postojeće stranice. 
+Imajte na umu da stranica '''neće''' biti premještena ako već postoji stranica s novim naslovom, osim u slučaju prazne stranice ili stranice za preusmjeravanje koja nema nikakvih starih izmjena.
+To znači da stranicu možete preimenovati u prethodno ime ukoliko ste pogriješili te ne možete pisati preko postojeće stranice.
 
-'''Upozorenje!''' 
-Ovo može biti drastična i neočekivana promjena kad su u pitanju popularne stranice; 
+'''Upozorenje!'''
+Ovo može biti drastična i neočekivana promjena kad su u pitanju popularne stranice;
 budite sigurni da razumijete posljedice ove akcije prije nastavka.",
 'movepagetalktext'             => "Stranica za razgovor, ako postoji, automatski će se premjestiti zajedno sa stranicom koju premještate. '''Stranica za razgovor neće se premjestiti ako:'''
 *premještate stranicu iz jednog prostora u drugi,
@@ -2769,7 +2695,7 @@ Transwiki uvoz stranica je zabilježen u [[Special:Log/import|evidenciji uvoza s
 'import-interwiki-namespace' => 'Odredišni imenski prostor:',
 'import-upload-filename'     => 'Ime datoteke:',
 'import-comment'             => 'Komentar:',
-'importtext'                 => 'Molimo izvezite datoteku iz izvorišnog wikija koristeći [[Special:Export|izvozno pomagalo]]. 
+'importtext'                 => 'Molimo izvezite datoteku iz izvorišnog wikija koristeći [[Special:Export|izvozno pomagalo]].
 Snimite je na svoje računalo i postavite je ovdje.',
 'importstart'                => 'Uvozim stranice...',
 'import-revision-count'      => '$1 {{PLURAL:$1|izmjena|izmjene|izmjena}}',
@@ -2918,12 +2844,7 @@ Razlog je vjerojatno vanjska poveznica koja se nalazi na crnom popisu.',
 'pageinfo-viewsperedit'     => 'Pregleda po uređivanju',
 
 # Skin names
-'skinname-standard'    => 'Standardna',
-'skinname-nostalgia'   => 'Nostalgija',
-'skinname-cologneblue' => 'Kölnska plava',
 'skinname-monobook'    => 'MonoBook',
-'skinname-myskin'      => 'MySkin',
-'skinname-chick'       => 'Chick',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Označi za pregledano',
@@ -3476,12 +3397,12 @@ Valjanost ovog potvrdnog koda istječe $4.',
 'confirmemail_body_set'     => 'Netko, najvjerojatnije vi, s IP adrese $1,
 otvorio je suradnički račun pod imenom "$2" s ovom e-mail adresom na {{SITENAME}}.
 
-Kako biste potvrdili da je ovaj suradnički račun uistinu vaš i uključili 
+Kako biste potvrdili da je ovaj suradnički račun uistinu vaš i uključili
 e-mail naredbe na {{SITENAME}}, otvorite u vašem pregledniku sljedeću poveznicu:
 
 $3
 
-Ako ovaj suradnički račun *ne* pripada vama, slijedite ovaj link 
+Ako ovaj suradnički račun *ne* pripada vama, slijedite ovaj link
 kako biste poništili potvrdu e-mail adrese:
 
 $5

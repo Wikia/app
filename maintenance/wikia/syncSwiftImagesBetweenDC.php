@@ -21,8 +21,6 @@ class SyncSwiftImagesBetweeenDC extends Maintenance {
 	const SOURCE_DC_DEFAULT = WIKIA_DC_SJC;
 	const DESTINATION_DC_DEFAULT = WIKIA_DC_RES;
 
-	const LOG_SYNC_ERRORS = 'swift-dc-sync-errors';
-
 	private $debug;
 	private $dryRun;
 	private $sourceDC;
@@ -288,7 +286,13 @@ class SyncSwiftImagesBetweeenDC extends Maintenance {
 		// check results
 		if ( !$res->isOK() ) {
 			$this->output(sprintf("[FAIL] cityId=%d dbname=%s path=%s\n",$wgCityId,$wgDBname,$path));
-			self::log( __METHOD__, "error storing <{$path}>", self::LOG_SYNC_ERRORS );
+
+			$this->error( __METHOD__, [
+				'exception' => new Exception(),
+				'path' => $path,
+				'status' => $res
+			] );
+
 			$this->migratedImagesFailedCnt++;
 		}
 		else {
@@ -349,17 +353,6 @@ class SyncSwiftImagesBetweeenDC extends Maintenance {
 		}
 		rewind($newStream);
 		return $newStream;
-	}
-
-	/**
-	 * Log to /var/log/private file
-	 *
-	 * @param $method string method
-	 * @param $msg string message to log
-	 * @param $group string file to log to
-	 */
-	private static function log($method, $msg, $group) {
-		\Wikia::log($group . '-WIKIA', false, $method . ': ' . $msg, true /* $force */);
 	}
 
 	private function debug( $msg ) {

@@ -1,7 +1,6 @@
 <?php
 namespace Wikia\PortableInfobox\Parser\Nodes;
 
-use Wikia\PortableInfobox\Helpers\SimpleXmlUtil;
 use Wikia\PortableInfobox\Parser\ExternalParser;
 use Wikia\PortableInfobox\Parser\SimpleParser;
 
@@ -29,6 +28,24 @@ class Node {
 
 	public function getSource() {
 		return $this->extractSourceFromNode( $this->xmlNode );
+	}
+
+	public function getSourceLabel() {
+		$sourceLabels = [];
+		$sources = $this->extractSourceFromNode( $this->xmlNode );
+		$label = \Sanitizer::stripAllTags( $this->getInnerValue( $this->xmlNode->{self::LABEL_TAG_NAME} ) );
+
+		if ( count( $sources ) > 1 ) {
+			foreach ( $sources as $source ) {
+				if ( !empty( $source ) ) {
+					$sourceLabels[$source] = !empty( $label ) ? "{$label} ({$source})" : '';
+				}
+			}
+		} elseif ( !empty( $sources[0] ) ) {
+			$sourceLabels[$sources[0]] = $label;
+		}
+
+		return $sourceLabels;
 	}
 
 	/**
@@ -103,7 +120,7 @@ class Node {
 		if ( !isset( $this->children ) ) {
 			$this->children = [ ];
 			foreach ( $this->xmlNode as $child ) {
-				$this->children[ ] = NodeFactory::newFromSimpleXml( $child, $this->infoboxData )
+				$this->children[] = NodeFactory::newFromSimpleXml( $child, $this->infoboxData )
 					->setExternalParser( $this->externalParser );
 			}
 		}
@@ -139,17 +156,28 @@ class Node {
 		foreach ( $this->getChildNodes() as $item ) {
 			$result = array_merge( $result, $item->getSource() );
 		}
+		$uniqueParams = array_unique( $result );
 
-		return array_unique( $result );
+		return array_values( $uniqueParams );
+	}
+
+	protected function getSourceLabelForChildren() {
+		/** @var Node $item */
+		$result = [ ];
+		foreach ( $this->getChildNodes() as $item ) {
+			$result = array_merge( $result, $item->getSourceLabel() );
+		}
+
+		return $result;
 	}
 
 	protected function getValueWithDefault( \SimpleXMLElement $xmlNode ) {
 		$value = $this->extractDataFromSource( $xmlNode );
 		if ( !$value && $xmlNode->{self::DEFAULT_TAG_NAME} ) {
-			return $this->extractDataFromNode( $xmlNode->{self::DEFAULT_TAG_NAME} );
+			return $this->getInnerValue( $xmlNode->{self::DEFAULT_TAG_NAME} );
 		}
-		if ( $value && $xmlNode->{self::FORMAT_TAG_NAME} ) {
-			return $this->extractDataFromNode( $xmlNode->{self::FORMAT_TAG_NAME} );
+		if ( ( $value || $value == '0' ) && $xmlNode->{self::FORMAT_TAG_NAME} ) {
+			return $this->getInnerValue( $xmlNode->{self::FORMAT_TAG_NAME} );
 		}
 
 		return $value;
@@ -168,13 +196,11 @@ class Node {
 		$value = $this->extractDataFromSource( $xmlNode );
 
 		return $value ? $value
-			: $this->extractDataFromNode( $xmlNode );
+			: $this->getInnerValue( $xmlNode );
 	}
 
 	protected function getInnerValue( \SimpleXMLElement $xmlNode ) {
-		return $this->getExternalParser()->parseRecursive(
-			SimpleXmlUtil::getInstance()->getInnerXML( $xmlNode )
-		);
+		return $this->getExternalParser()->parseRecursive( (string)$xmlNode );
 	}
 
 	protected function getXmlAttribute( \SimpleXMLElement $xmlNode, $attribute ) {
@@ -199,22 +225,8 @@ class Node {
 	protected function extractDataFromSource( \SimpleXMLElement $xmlNode ) {
 		$source = $this->getXmlAttribute( $xmlNode, self::DATA_SRC_ATTR_NAME );
 
-		return ( !empty( $source ) ) ? $this->getInfoboxData( $source )
+		return ( !empty( $source ) || $source == '0' ) ? $this->getInfoboxData( $source )
 			: null;
-	}
-
-	/**
-	 * @param \SimpleXMLElement $xmlNode
-	 *
-	 * @return string
-	 */
-	protected function extractDataFromNode( \SimpleXMLElement $xmlNode ) {
-		/*
-		 * <default> tag can contain <ref> or other WikiText parser hooks
-		 * We should not parse it's contents as XML but return pure text in order to let MediaWiki Parser
-		 * parse it.
-		 */
-		return $this->getExternalParser()->parseRecursive( SimpleXmlUtil::getInstance()->getInnerXML( $xmlNode ) );
 	}
 
 	/**
@@ -224,7 +236,7 @@ class Node {
 	 *
 	 */
 	protected function extractSourceFromNode( \SimpleXMLElement $xmlNode ) {
-		$source = $this->getXmlAttribute( $xmlNode, self::DATA_SRC_ATTR_NAME ) ? [$this->getXmlAttribute( $xmlNode, self::DATA_SRC_ATTR_NAME )] : [];
+		$source = $this->getXmlAttribute( $xmlNode, self::DATA_SRC_ATTR_NAME ) ? [ $this->getXmlAttribute( $xmlNode, self::DATA_SRC_ATTR_NAME ) ] : [ ];
 
 		if ( $xmlNode->{self::FORMAT_TAG_NAME} ) {
 			$source = $this->matchVariables( $xmlNode->{self::FORMAT_TAG_NAME}, $source );
@@ -238,6 +250,7 @@ class Node {
 
 	protected function matchVariables( \SimpleXMLElement $node, array $source ) {
 		preg_match_all( self::EXTRACT_SOURCE_REGEX, (string)$node, $sources );
-		return array_unique( array_merge( $source , $sources[ 1 ] ) );
+
+		return array_unique( array_merge( $source, $sources[ 1 ] ) );
 	}
 }

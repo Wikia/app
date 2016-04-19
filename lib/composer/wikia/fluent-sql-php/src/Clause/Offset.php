@@ -13,7 +13,10 @@ use FluentSql\Breakdown;
 class Offset implements ClauseInterface {
 	protected $offset;
 
-	public function __construct($offset) {
+	public function __construct($offset, $allowNonNumeric = false) {
+		if (!$allowNonNumeric && !is_numeric($offset)) {
+			 throw new \InvalidArgumentException('using non-numeric OFFSET when not allowed');
+		}
 		$this->offset = $offset;
 	}
 

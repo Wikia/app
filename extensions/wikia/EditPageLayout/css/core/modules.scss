@@ -1,6 +1,12 @@
+@import "skins/shared/mixins/clearfix";
+
 $color-icon: mix($color-text, #fff, 90%);
 @if $is-dark-wiki {
 	$color-icon: mix($color-text, #000, 90%);
+}
+
+.editpage-sourcewidemode-off .preview_box {
+	@include clearfix;
 }
 
 .EditPage {
@@ -99,6 +105,11 @@ $color-icon: mix($color-text, #fff, 90%);
 			@include clearfix;
 		}
 
+		.approve-changes-label {
+			display: block;
+			margin: 10px 0;
+		}
+
 		#wpPreview {
 			text-align: center;
 		}
@@ -138,6 +149,7 @@ $color-icon: mix($color-text, #fff, 90%);
 		}
 
 		.preview_box {
+
 			h3 {
 				font-size: 14px;
 				margin: 12px 0 8px;

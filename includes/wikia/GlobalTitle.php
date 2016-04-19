@@ -122,7 +122,7 @@ class GlobalTitle extends Title {
 			throw new \Exception( 'Invalid $city_id.' );
 		}
 
-		$memkey = sprintf( "GlobalTitle:%d:%d", $id, $city_id );
+		$memkey = wfSharedMemcKey( "GlobalTitle", $id, $city_id );
 		$res = $wgMemc->get( $memkey );
 		if ( empty($res) && WikiFactory::isPublic($city_id) ) {
 			$dbname = ( $dbname ) ? $dbname : WikiFactory::IDtoDB($city_id);
@@ -419,6 +419,28 @@ class GlobalTitle extends Title {
 	}
 
 	/**
+	 * Returns text from revision id
+	 *
+	 * @param int $revisionId
+	 * @return false|String
+	 */
+	public function getRevisionText( $revisionId ) {
+		$db = wfGetDB( DB_SLAVE, [], $this->getDatabaseName() );
+		$revision = Revision::loadRawRevision( $revisionId, $db );
+
+		/**
+		 * If no records were found - return an empty string.
+		 */
+		if ( !$revision ) {
+			return '';
+		}
+
+		$text = $this->getContentByTextId( $revision->getTextId() );
+
+		return $text;
+	}
+
+	/**
 	 * Get the most recent content of the given title
 	 * Returns false on any failure (incl. when title doesn't exist)
 	 *
@@ -649,28 +671,16 @@ class GlobalTitle extends Title {
 		/**
 		 * don't do this twice
 		 */
-		if( $this->mServer ) {
-			return $this->mServer;
-		}
-
-		$server = WikiFactory::getVarValueByName( "wgServer", $this->mCityId );
-
-		/**
-		 * special handling for dev boxes
-		 *
-		 * @author macbre
-		 */
-		global $wgDevelEnvironment;
-		if (!empty($wgDevelEnvironment)) {
-			$this->mServer = WikiFactory::getLocalEnvURL($server);
+		if ( $this->mServer ) {
 			return $this->mServer;
 		}
 
 		/**
 		 * get value from city_variables
 		 */
-		if( $server ) {
-			$this->mServer = $server;
+		$server = WikiFactory::getVarValueByName( "wgServer", $this->mCityId );
+		if ( $server ) {
+			$this->mServer = self::normalizeEnvURL( $server );
 			return $server;
 		}
 
@@ -686,13 +696,29 @@ class GlobalTitle extends Title {
 			$city = WikiFactory::getWikiByID( $this->mCityId, true );
 		}
 
-		if( $city ) {
+		if ( $city ) {
 			$server = rtrim( $city->city_url, "/" );
-			$this->mServer = $server;
+			$this->mServer = self::normalizeEnvURL( $server );
 			return $server;
 		}
 
 		return false;
+	}
+
+	/**
+	 *
+	 * Normalizes URL passed to this method to generate environment-specific paths
+	 *
+	 * @param $server
+	 * @return string
+	 */
+	private static function normalizeEnvURL( $server ) {
+		global $wgWikiaEnvironment;
+		if ( $wgWikiaEnvironment != WIKIA_ENV_PROD ) {
+			return WikiFactory::getLocalEnvURL( $server );
+		}
+
+		return $server;
 	}
 
 	/**

@@ -37,7 +37,7 @@ abstract class UserTagsStrategyBase {
 		wfProfileIn(__METHOD__);
 
 		// check if the user is blocked locally, if not, also check if they're blocked globally (via Phalanx)
-		$isBlocked = $this->user->isBlocked() || $this->user->isBlockedGlobally();
+		$isBlocked = $this->user->isBlocked( true, false) || $this->user->isBlockedGlobally();
 
 		if( $isBlocked && !$this->isUserInGroup(self::WIKIA_GROUP_STAFF_NAME) ) {
 			wfProfileOut(__METHOD__);
@@ -134,7 +134,7 @@ abstract class UserTagsStrategyBase {
 		$result = '';
 		$group = $this->getUsersHighestGroup($this->user);
 		if( $group ) {
-			$result = wfMsg('user-identity-box-group-' . $group);
+			$result = wfMessage('user-identity-box-group-' . $group)->escaped();
 		}
 
 		/* See if user is banned from chat */

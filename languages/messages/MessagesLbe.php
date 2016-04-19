@@ -45,8 +45,6 @@ $messages = array(
 'article' => 'Тарих',
 'mytalk'  => 'На цӀухху-бусу байсса интернетрал лажин',
 
-# Cologne Blue skin
-'qbedit' => 'Дакьин дуван',
 
 'history'          => 'Тарих',
 'history_short'    => 'Тарих',

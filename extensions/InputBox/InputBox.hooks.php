@@ -31,45 +31,66 @@ class InputBoxHooks {
 		// Return output
 		return $inputBox->render();
 	}
-	
+
 	/**
-	 * <inputbox type=create...> sends requests with action=edit, and 
-	 * possibly a &prefix=Foo.  So we pick that up here, munge prefix 
+	 * <inputbox type=create...> sends requests with action=edit, and
+	 * possibly a &prefix=Foo.  So we pick that up here, munge prefix
 	 * and title together, and redirect back out to the real page
 	 * @param $output OutputPage
 	 * @param $article Article
 	 * @param $title Title
 	 * @param $user User
-	 * @param $request WebRequest 
+	 * @param $request WebRequest
 	 * @param $wiki MediaWiki
 	 * @return True
 	 */
-	public static function onMediaWikiPerformAction( 
-		$output, 
-		$article, 
-		$title, 
-		$user, 
-		$request, 
+	public static function onMediaWikiPerformAction(
+		$output,
+		$article,
+		$title,
+		$user,
+		$request,
 		$wiki )
 	{
-		if( $wiki->getAction( $request ) !== 'edit' ){
-			# not our problem
+		global $wgScript, $wgVisualEditorNamespaces;
+
+		if ( $wiki->getAction( $request ) !== 'edit' ) {
+			// not our problem
 			return true;
 		}
-		if( $request->getText( 'prefix', '' ) === '' ){
-			# Fine
-			return true;
-		}
-		
+
+		$doRedirect = false;
 		$params = $request->getValues();
-		$title = $params['prefix'];
-		if ( isset( $params['title'] ) ){
-			$title .= $params['title'];
+
+		if ( !empty( $params['prefix'] ) ) {
+			$title = $params['prefix'];
+			if ( isset( $params['title'] ) ) {
+				$title .= $params['title'];
+			}
+			unset( $params['prefix'] );
+			$params['title'] = $title;
+			$doRedirect = true;
 		}
-		unset( $params['prefix'] );
-		$params['title'] = $title;
-		
-		global $wgScript;
+
+		$title = Title::newFromText( $params['title'] );
+
+		if (
+			!empty( $params['preload'] ) &&
+			empty( $params['section'] ) &&
+			EditorPreference::isVisualEditorPrimary() &&
+			$user->isLoggedIn() &&
+			$title instanceof Title &&
+			$title->inNamespaces( $wgVisualEditorNamespaces )
+		) {
+			$params['veaction'] = 'edit';
+			unset( $params['action'] );
+			$doRedirect = true;
+		}
+
+		if ( !$doRedirect ) {
+			return true;
+		}
+
 		$output->redirect( wfAppendQuery( $wgScript, $params ), '301' );
 		return false;
 	}

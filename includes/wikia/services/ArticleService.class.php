@@ -203,7 +203,8 @@ class ArticleService extends WikiaObject {
 	 * Accesses a snippet from MediaWiki.
 	 * @return string
 	 */
-	public function getUncachedSnippetFromArticle() {
+	public function getUncachedSnippetFromArticle()
+	{
 		// get standard parser cache for anons,
 		// 99% of the times it will be available but
 		// generate it in case is not
@@ -216,7 +217,7 @@ class ArticleService extends WikiaObject {
 		} catch ( Exception $e ) {
 			\Wikia\Logger\WikiaLogger::instance()->error(
 				'ArticleService, not parser output object found',
-				['parserOutput' => $parserOutput, 'parserOptions' => $opts, 'page' => $page, 'exception' => $e]
+				['parserOutput' => $parserOutput, 'parserOptions' => $opts, 'wikipage_dump' => $page, 'exception' => $e]
 			);
 		}
 

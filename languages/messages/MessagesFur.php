@@ -234,28 +234,12 @@ $messages = array(
 'navigation'    => 'somari',
 'and'           => '&#32;e',
 
-# Cologne Blue skin
 'qbfind'         => 'Cjate',
 'qbbrowse'       => 'Sgarfe',
-'qbedit'         => 'Cambie',
 'qbpageoptions'  => 'Cheste pagjine',
 'qbpageinfo'     => 'Contest',
-'qbmyoptions'    => 'Mês pagjinis',
-'qbspecialpages' => 'Pagjinis speciâls',
 'faq'            => 'Domandis plui frecuentis',
 
-# Vector skin
-'vector-action-addsection' => 'Gnove sezion',
-'vector-action-delete'     => 'Elimine',
-'vector-action-move'       => 'Môf',
-'vector-action-protect'    => 'Protêç',
-'vector-action-undelete'   => 'Recupere',
-'vector-action-unprotect'  => 'No stâ protezi',
-'vector-view-create'       => 'Cree',
-'vector-view-edit'         => 'Cambie',
-'vector-view-history'      => 'Cjale il storic',
-'vector-view-view'         => 'Lei',
-'vector-view-viewsource'   => 'Cjale risultive',
 'actions'                  => 'Azions',
 'namespaces'               => 'Spazis dai nons',
 'variants'                 => 'Variants',
@@ -278,7 +262,6 @@ $messages = array(
 'edit'              => 'Cambie',
 'create'            => 'Cree',
 'editthispage'      => 'Cambie cheste pagjine',
-'create-this-page'  => 'Cree cheste pagjine',
 'delete'            => 'Elimine',
 'deletethispage'    => 'Elimine cheste pagjine',
 'undelete_short'    => 'Recupere {{PLURAL:$1|modifiche eliminade|$1 modifichis eliminadis}}',
@@ -293,19 +276,9 @@ $messages = array(
 'talkpagelinktext'  => 'discussion',
 'specialpage'       => 'Pagjine speciâl',
 'personaltools'     => 'Imprescj personâi',
-'postcomment'       => 'Gnove sezion',
-'articlepage'       => 'Cjale la vôs',
 'talk'              => 'Discussion',
 'views'             => 'Visitis',
 'toolbox'           => 'imprescj',
-'userpage'          => 'Cjale pagjine dal utent',
-'projectpage'       => 'Cjale pagjine dal progjet',
-'imagepage'         => 'Cjale pagjine dal file',
-'mediawikipage'     => 'Cjale la pagjine dal messaç',
-'templatepage'      => 'Cjale il model',
-'viewhelppage'      => 'Cjale la pagjine di jutori',
-'categorypage'      => 'Cjale la categorie',
-'viewtalkpage'      => 'Cjale la pagjine di discussion',
 'otherlanguages'    => 'Altris lenghis',
 'redirectedfrom'    => '(Inviât ca di $1)',
 'redirectpagesub'   => 'Pagjine di redirezion',
@@ -410,10 +383,11 @@ Al podarès vê dentri caratars che no podin jessi doprâts tai titui.',
 # Login and logout pages
 'logouttext'              => "'''Tu sâs cumò lât fûr.'''
 
-Tu puedis continuâ a doprâ {{SITENAME}} come anonim, o tu puedis [[Special:UserLogin|jentrâ di gnûf]] cul stes o cuntun altri non utent.
+Tu puedis continuâ a doprâ {{SITENAME}} come anonim, o tu puedis $1 cul stes o cuntun altri non utent.
 Considere che cualchi pagjine e pues mostrâti ancjemò come jentrât tal sît fin cuant che no tu netis la memorie cache dal sgarfadôr.",
+'logouttext-link-text'       => 'jentrâ di gnûf',
 'welcomecreation'         => '== Mandi e benvignût $1! ==
-La tô identitât e je stade creade. 
+La tô identitât e je stade creade.
 No stâ dismenteâti di gambiâ lis [[Special:Preferences|preferencis di {{SITENAME}}]].',
 'yourname'                => 'Non utent',
 'yourpassword'            => 'Peraule clâf',
@@ -480,9 +454,6 @@ Prime di ricevi cualsisei altri messaç di pueste, tu scugnis seguî lis istruzi
 'newpassword'             => 'Gnove peraule clâf',
 'retypenew'               => 'Torne a scrivi chê gnove',
 'resetpass-submit-cancel' => 'Scancele',
-
-# Special:PasswordReset
-'passwordreset-username' => 'Non utent:',
 
 # Edit page toolbar
 'bold_sample'     => 'Test in gruessut',
@@ -711,13 +682,6 @@ Leiende: (cur) = difarencis cun la version atuâl, (prec) = difarencis cun la ve
 'search-external'                  => 'Ricercje esterne',
 'searchdisabled'                   => 'La ricercje in {{SITENAME}} no je ative. Tu puedis doprâ Google intant. Sta atent che lis lôr tabelis sul contignût di {{SITENAME}} a puedin jessi pôc inzornadis.',
 
-# Quickbar
-'qbsettings'               => 'Sbare svelte',
-'qbsettings-none'          => 'Nissune',
-'qbsettings-fixedleft'     => 'Fis a Çampe',
-'qbsettings-fixedright'    => 'Fis a Drete',
-'qbsettings-floatingleft'  => 'Flutuant a çampe',
-'qbsettings-floatingright' => 'Flutuant a diestre',
 
 # Preferences page
 'preferences'                 => 'Preferencis',
@@ -1489,9 +1453,6 @@ Par plasê va su [//www.mediawiki.org/wiki/Localisation MediaWiki Localisation] 
 'nocredits'        => 'Nissune informazion sui ricognossiments disponibil par cheste pagjine.',
 
 # Skin names
-'skinname-standard'  => 'Classiche',
-'skinname-nostalgia' => 'Nostalgjie',
-'skinname-modern'    => 'Moderne',
 
 # Browsing diffs
 'previousdiff' => '← Difarence precedente',

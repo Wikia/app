@@ -1,0 +1,25 @@
+{
+	"@metadata": {
+		"authors": [
+			"Dst",
+			"Imre",
+			"Kghbln",
+			"The Evil IP address",
+			"Umherirrender"
+		]
+	},
+	"sf_createproperty_allowedvalsinput": "Um nur bestimmte Werte zuzulassen, geben Sie diese bitte in Form einer kommagetrennten Liste an (falls ein Wert ein Komma enthält, müssen Sie es durch „\\,“ ersetzen):",
+	"sf_createform_allowmultiple": "Erlauben Sie mehrere (oder keine) Instanzen dieser Vorlage auf der erstellten Seite",
+	"sf_createform_additembeforesave": "Hinweis: Sie müssen mindestens eine Vorlage zu diesem Formular hinzufügen, bevor Sie es speichern können.",
+	"sf_createclass_docu": "Geben Sie hier alle Daten ein, um die Attribute, die Vorlage, das Formular und die Kategorie für eine einzelne Klasse zu erstellen.\nBitte nutzen Sie eine der folgenden Seiten für weitere Optionen: $1.",
+	"sf_createclass_listofvalues": "Werte-<br />liste?",
+	"sf_formstart_docu": "Geben Sie in dieses Textfeld den Namen der Seite ein, die mit dem Formular „$1“ bearbeitet werden soll.\nSofern bereits eine Seite dieses Namens vorhanden ist, wird das Formular aufgerufen, mit dem Sie sie bearbeiten können.\nAndernfalls wird das Formular zum Erstellen der Seite aufgerufen.",
+	"sf_formstart_noform_docu": "Geben Sie in dieses Textfeld den Namen der Seite ein und wählen Sie das Formular aus, mit dem sie bearbeitet werden soll.\nSofern bereits eine Seite dieses Namens vorhanden ist, wird das Formular aufgerufen, mit dem Sie sie bearbeiten können.\nAndernfalls wird das Formular zum Erstellen der Seite aufgerufen.",
+	"sf-formedit-selectform": "Wählen Sie ein Formular zum Erstellen dieser Seite aus:",
+	"sf_formedit_createtitlenotarget": "Erstellen Sie: $1",
+	"sf_formedit_badurl": "Dies ist die Spezialseite zum Bearbeiten einer Seite mit einem Formular. Sie müssen den Namen eines Formulars und den Namen der zu bearbeitenden Seite in der URL angeben.\nDie URL sollte wie folgt aussehen: „Spezial:Mit_Formular_bearbeiten?form=<Formularname>&target=<Seitenname>“ oder „Spezial:Mit_Formular_bearbeiten/<Formularname>/<Seitenname>“.",
+	"sf_formerrors_header": "Ihre Eingabe ist fehlerhaft oder unvollständig. Siehe hierzu die Hinweise unten, neben dem jeweiligen Formularfeld.",
+	"sf-pageschemas-otherparams": "Geben Sie die Parameternamen und ihre Werte, durch Kommata getrennt, als „Parametername=Parameterwert“-Paare ein (Sofern ein Wert ein Komma enthält, ersetzen Sie es durch „\\,“). Eingabebeispiel: „$1“.",
+	"sf_template_docufooter": "Klicken Sie auf „Bearbeiten“, um den Quelltext der Vorlage anzusehen.",
+	"sf_form_docu": "Dies ist das Formular „$1“.\nUm eine Seite mit diesem Formular zu erstellen, geben Sie den Seitennamen in das Eingabefeld unten ein.\nSofern bereits eine Seite dieses Namens vorhanden ist, werden Sie automatisch zum Bearbeitungsformular der Seite weitergeleitet."
+}

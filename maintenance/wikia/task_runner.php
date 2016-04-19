@@ -1,5 +1,5 @@
 <?php
-set_time_limit( 0 );
+set_time_limit( 3600 ); // PLATFORM-2039
 $wgCommandLineSilentMode = true; // suppress output from Wikia::log calls
 
 require_once( dirname( __FILE__ ) . '/../Maintenance.php' );
@@ -11,8 +11,23 @@ class TaskRunnerMaintenance extends Maintenance {
 		$this->addOption('task_id', '', true, true);
 		$this->addOption('call_order', '', true, true);
 		$this->addOption('task_list', '', true, true);
+		$this->addOption('created_at', '', true, true);
 		$this->addOption('created_by', '', true, true);
 		$this->addOption('wiki_id', '', false, true);
+	}
+
+	/**
+	 * Use a dedicated mysql user / pass for running tasks
+	 *
+	 * Wikia change
+	 *
+	 * @author macbre
+	 * @see PLATFORM-2025
+	 * @return array consisting of mysql user and pass
+	 */
+	protected function getDatabaseCredentials() {
+		global $wgDBtasksuser, $wgDBtaskspass;
+		return [ $wgDBtasksuser, $wgDBtaskspass ];
 	}
 
 	public function loadParamsAndArgs( $self = null, $opts = null, $args = null ) {
@@ -24,14 +39,16 @@ class TaskRunnerMaintenance extends Maintenance {
 	}
 
 	public function execute() {
-		global $wgDevelEnvironment, $wgFlowerUrl;
-
-		if ( $wgDevelEnvironment ) {
-			\Wikia\Logger\WikiaLogger::instance()->setDevModeWithES();
-		}
+		global $wgFlowerUrl;
 
 		\Wikia\Logger\WikiaLogger::instance()->pushContext( [
 			'task_id' => $this->mOptions['task_id']
+		] );
+
+		// an ugly c&p from Wikia::onWebRequestInitialized
+		// I'm going to burn in hell
+		Wikia\Logger\WikiaLogger::instance()->info( 'Wikia internal request', [
+			'source' => 'celery'
 		] );
 
 		$runner = new TaskRunner(
@@ -59,10 +76,16 @@ class TaskRunnerMaintenance extends Maintenance {
 			] );
 		}
 
+		Wikia\Logger\WikiaLogger::instance()->info( __METHOD__, [
+			'took' => $runner->runTime(),
+			'delay' => microtime( true ) - (float) $this->mOptions['created_at'],
+			'state' => $result->status,
+		] );
+
 		ob_end_clean();
 		echo json_encode( $result );
 	}
 }
 
-$maintClass = 'TaskRunnerMaintenance';
+$maintClass = TaskRunnerMaintenance::class;
 require( RUN_MAINTENANCE_IF_MAIN );

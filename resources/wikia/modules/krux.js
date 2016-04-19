@@ -1,4 +1,4 @@
-/*global Krux,define*/
+/*global Krux, define, window*/
 window.Krux || ((Krux = function () {
 	Krux.q.push(arguments);
 }).q = []);
@@ -7,12 +7,14 @@ define('wikia.krux', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adTracker',
 	'wikia.document',
+	'wikia.tracker',
 	'wikia.window'
-], function (adContext, adTracker, doc, win) {
+], function (adContext, adTracker, doc, wikiaTracker, win) {
 	'use strict';
 
-	var maxNumberOfKruxSegments = 27,
+	var maxNumberOfKruxSegments = 50,
 		kruxScriptId = 'krux-control-tag',
+		kruxLoaded = false,
 		segmentsCountTracked = false;
 
 	function exportPageParams(adLogicPageParams) {
@@ -51,7 +53,6 @@ define('wikia.krux', [
 			adLogicPageParams
 		) {
 			var script;
-
 			if (adContext.getContext().targeting.enableKruxTargeting) {
 				// Export page level params, so Krux can read them
 				exportPageParams(adLogicPageParams);
@@ -63,6 +64,17 @@ define('wikia.krux', [
 
 				// Add Krux pixel
 				addConfigScript(confid);
+				kruxLoaded = true;
+
+				// Add GA tracking
+				adTracker.track('krux/load');
+				wikiaTracker.track({
+					category: 'ads-trackers',
+					action: 'krux',
+					label: 'load',
+					value: 0,
+					trackingMethod: 'analytics'
+				});
 			}
 		});
 	}
@@ -107,6 +119,14 @@ define('wikia.krux', [
 		return getParams('user');
 	}
 
+	function sendEvent(eventId, data) {
+		if (!kruxLoaded) {
+			return false;
+		}
+		Krux('admEvent', eventId, data || {});
+		return true;
+	}
+
 	// Mercury solution to track number of segments on each page view
 	adContext.addCallback(function () {
 		segmentsCountTracked = false;
@@ -115,6 +135,7 @@ define('wikia.krux', [
 	return {
 		load: load,
 		getSegments: getSegments,
-		getUser: getUser
+		getUser: getUser,
+		sendEvent: sendEvent
 	};
 });

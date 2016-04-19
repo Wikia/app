@@ -26,6 +26,8 @@ ve.ui.WikiaMediaInsertDialog.static.name = 'wikiaMediaInsert';
 
 ve.ui.WikiaMediaInsertDialog.static.title = OO.ui.deferMsg( 'visualeditor-dialog-media-insert-title' );
 
+ve.ui.WikiaMediaInsertDialog.static.trackingLabel = 'dialog-media-insert';
+
 // as in OO.ui.WindowManager.static.sizes
 ve.ui.WikiaMediaInsertDialog.static.size = '840px';
 
@@ -603,7 +605,8 @@ ve.ui.WikiaMediaInsertDialog.prototype.insertPermanentMedia = function ( cartIte
 ve.ui.WikiaMediaInsertDialog.prototype.insertPermanentMediaCallback = function ( items, fragment ) {
 	var count, item, title, type, captionType,
 		typeCount = { photo: 0, video: 0 },
-		linmod = [];
+		linmod = [],
+		label = this.constructor.static.trackingLabel;
 
 	for ( title in items ) {
 		item = items[title];
@@ -638,7 +641,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.insertPermanentMediaCallback = function (
 		if ( count ) {
 			ve.track( 'wikia', {
 				action: ve.track.actions.ADD,
-				label: 'dialog-media-insert-' + type,
+				label: label + '-' + type,
 				value: count
 			} );
 		}
@@ -647,7 +650,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.insertPermanentMediaCallback = function (
 	if ( count.image && count.video ) {
 		ve.track( 'wikia', {
 			action: ve.track.actions.ADD,
-			label: 'dialog-media-insert-multiple'
+			label: label + '-multiple'
 		} );
 	}
 
@@ -655,7 +658,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.insertPermanentMediaCallback = function (
 
 	ve.track( 'wikia', {
 		action: ve.track.actions.SUCCESS,
-		label: 'dialog-media-insert',
+		label: label,
 		value: ve.now() - this.timings.insertStart
 	} );
 };
@@ -718,7 +721,8 @@ ve.ui.WikiaMediaInsertDialog.prototype.convertTemporaryToPermanent = function ( 
 		data = {
 			action: 'addmediapermanent',
 			format: 'json',
-			title: cartItem.title
+			title: cartItem.title,
+			token: mw.user.tokens.get( 'editToken' )
 		};
 	if ( cartItem.provider ) {
 		data.provider = cartItem.provider;
@@ -727,13 +731,10 @@ ve.ui.WikiaMediaInsertDialog.prototype.convertTemporaryToPermanent = function ( 
 		data.license = cartItem.license;
 		data.tempName = cartItem.temporaryFileName;
 	}
-	$.ajax( {
-		url: mw.util.wikiScript( 'api' ),
-		data: data,
-		success: function ( data ) {
+	$.post( mw.util.wikiScript( 'api' ), data )
+		.then( function ( data ) {
 			deferred.resolve( data.addmediapermanent.title );
-		}
-	} );
+		} );
 
 	return deferred.promise();
 };

@@ -60,22 +60,29 @@ class WikiImporter {
 		$this->setPageOutCallback( array( $this, 'finishImportPage' ) );
 	}
 
-	private function throwXmlError( $err ) {
+	/**
+	 * @return null|\XMLReader
+	 */
+	public function getReader() {
+		return $this->reader;
+	}
+
+	public function throwXmlError( $err ) {
 		$this->debug( "FAILURE: $err" );
 		wfDebug( "WikiImporter XML error: $err\n" );
 	}
 
-	private function debug( $data ) {
+	public function debug( $data ) {
 		if( $this->mDebug ) {
 			wfDebug( "IMPORT: $data\n" );
 		}
 	}
 
-	private function warn( $data ) {
+	public function warn( $data ) {
 		wfDebug( "IMPORT: $data\n" );
 	}
 
-	private function notice( $msg /*, $param, ...*/ ) {
+	public function notice( $msg /*, $param, ...*/ ) {
 		$params = func_get_args();
 		array_shift( $params );
 
@@ -330,9 +337,8 @@ class WikiImporter {
 	 * Fetches text contents of the current element, assuming
 	 * no sub-elements or such scary things.
 	 * @return string
-	 * @access private
 	 */
-	private function nodeContents() {
+	public function nodeContents() {
 		if( $this->reader->isEmptyElement ) {
 			return "";
 		}
@@ -814,7 +820,11 @@ class WikiImporter {
 			# Do not import if the importing wiki user cannot create this page
 			$this->notice( 'import-error-create', $title->getPrefixedText() );
 			return false;
-		}
+			// Wikia change start
+		} elseif( $title->getNamespace() == NS_MEDIAWIKI  ) {
+			# Do not import if pages in the MediaWikia Namespace
+			return false;
+		}	// Wikia change end
 
 		return array( $title, $origTitle );
 	}

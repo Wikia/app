@@ -1,0 +1,19 @@
+<table class="pi-horizontal-group{{^renderLabels}} pi-horizontal-group-no-labels{{/renderLabels}}">
+	{{#header}}<caption class="pi-header pi-secondary-font pi-secondary-background pi-item-spacing">{{{header}}}</caption>{{/header}}
+	{{#renderLabels}}
+	<thead>
+		<tr>
+		{{#labels}}
+			<th class="pi-horizontal-group-item pi-data-label pi-secondary-font pi-border-color pi-item-spacing">{{{.}}}</th>
+		{{/labels}}
+		</tr>
+	</thead>
+	{{/renderLabels}}
+	<tbody>
+	<tr>
+	{{#values}}
+		<td class="pi-horizontal-group-item pi-data-value pi-font pi-border-color pi-item-spacing">{{{.}}}</td>
+	{{/values}}
+	</tr>
+	</tbody>
+</table>

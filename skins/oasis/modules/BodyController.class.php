@@ -80,13 +80,7 @@ class BodyController extends WikiaController {
 	 * @return Boolean
 	 */
 	public static function isOasisBreakpoints() {
-		global $wgOasisBreakpoints, $wgRequest, $wgLanguageCode, $wgOasisBreakpointsDE;
-
-		//For now we want to disable breakpoints for German wikis if not turn on explicitly.
-		//@TODO remove when 71Media fixes their styles and $wgOasisBreakpointsDE will retire
-		if ( strtolower( $wgLanguageCode ) == 'de' && empty( $wgOasisBreakpointsDE ) ) {
-			$wgOasisBreakpoints = false;
-		}
+		global $wgOasisBreakpoints, $wgRequest;
 
 		$wgOasisBreakpoints = $wgRequest->getBool( 'oasisbreakpoints', $wgOasisBreakpoints ) !== false;
 		return !empty( $wgOasisBreakpoints );
@@ -123,6 +117,7 @@ class BodyController extends WikiaController {
 		$ret = ($isUserPage && !$wgTitle->isSubpage() )
 				|| $wgTitle->isSpecial( 'Following' )
 				|| $wgTitle->isSpecial( 'Contributions' )
+				|| $wgTitle->isSpecial( 'UserActivity' )
 				|| (defined('NS_BLOG_LISTING') && $wgTitle->getNamespace() == NS_BLOG_LISTING)
 				|| (defined('NS_BLOG_ARTICLE') && $wgTitle->getNamespace() == NS_BLOG_ARTICLE);
 
@@ -295,6 +290,7 @@ class BodyController extends WikiaController {
 		}
 
 		$railModuleList[1440] = array('Ad', 'Index', ['slotName' => 'TOP_RIGHT_BOXAD']);
+		$railModuleList[1435] = array('AdEmptyContainer', 'Index', ['slotName' => 'NATIVE_TABOOLA_RAIL']);
 		$railModuleList[1100] = array('Ad', 'Index', ['slotName' => 'LEFT_SKYSCRAPER_2']);
 
 		unset($railModuleList[1450]);
@@ -333,9 +329,15 @@ class BodyController extends WikiaController {
 		// append your content to $html variable instead of echoing
 		// (taken from Monaco skin)
 		$skin = RequestContext::getMain()->getSkin();
+
 		$afterBodyHtml = '';
 		wfRunHooks('GetHTMLAfterBody', array($skin, &$afterBodyHtml));
 		$this->afterBodyHtml = $afterBodyHtml;
+
+		$beforeWikiaPageHtml = '';
+		wfRunHooks('GetHTMLBeforeWikiaPage', array(&$beforeWikiaPageHtml));
+		$this->beforeWikiaPageHtml = $beforeWikiaPageHtml;
+
 
 		// this hook is needed for SMW's factbox
 		$afterContentHookText = '';
@@ -387,7 +389,6 @@ class BodyController extends WikiaController {
 		// Display Control Center Header on certain special pages
 		if (!empty($wgEnableAdminDashboardExt) && AdminDashboardLogic::displayAdminDashboard($this->app, $wgTitle)) {
 			$this->headerModuleName = null;
-			$this->wgSuppressAds = true;
 			$this->displayAdminDashboard = true;
 			$this->displayAdminDashboardChromedArticle = ($wgTitle->getText() != SpecialPage::getTitleFor( 'AdminDashboard' )->getText());
 		} else {

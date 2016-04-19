@@ -21,16 +21,17 @@ describe('AdLogicPageParams', function () {
 		};
 	}
 
-	function mockWindow(document, hostname, amzn_targs, perfab) {
-
-		hostname = hostname || 'example.org';
+	function mockWindow(opts) {
+		opts.hostname = opts.hostname || 'example.org';
 
 		return {
-			document: document || {},
-			location: { origin: 'http://' + hostname, hostname: hostname },
-			amzn_targs: amzn_targs,
-			wgCookieDomain: hostname.substr(hostname.indexOf('.')),
-			wgABPerformanceTest: perfab
+			innerWidth: opts.innerWidth,
+			innerHeight: opts.innerHeight,
+			document: opts.document || {},
+			location: { origin: 'http://' + opts.hostname, hostname: opts.hostname },
+			amzn_targs: opts.amzn_targs,
+			wgCookieDomain: opts.hostname.substr(opts.hostname.indexOf('.')),
+			wgABPerformanceTest: opts.perfab
 		};
 	}
 
@@ -41,27 +42,37 @@ describe('AdLogicPageParams', function () {
 		};
 	}
 
-	function mockAmazonMatch(amazonPageParams) {
+	function mockAdLogicZoneParams() {
 		return {
-			getPageParams: function () {
-				return amazonPageParams;
+			getDomain: function () {
+				return 'zone_domain';
 			},
-			wasCalled: function () {
-				return !!amazonPageParams;
+			getHostnamePrefix: function () {
+				return 'zone_hostname_prefix';
 			},
-			trackState: function () {
-				return;
-			}
-		};
-	}
-
-	function mockAmazonMatchOld(enabled) {
-		return {
-			wasCalled: function () {
-				return !!enabled;
+			getSite: function () {
+				return 'zone_site';
 			},
-			trackState: function () {
-				return;
+			getName: function () {
+				return 'zone_name';
+			},
+			getPageType: function () {
+				return 'zone_page_type';
+			},
+			getVertical: function () {
+				return 'zone_vertical';
+			},
+			getPageCategories: function () {
+				return ['zone_page_category'];
+			},
+			getWikiCategories: function () {
+				return ['zone_wiki_category'];
+			},
+			getLanguage: function () {
+				return 'zl';
+			},
+			getRawDbName: function () {
+				return 'zone_db_name';
 			}
 		};
 	}
@@ -93,64 +104,33 @@ describe('AdLogicPageParams', function () {
 				},
 				getGroup: function () { return; }
 			} : undefined,
-			windowMock = mockWindow(opts.document, opts.hostname, opts.amzn_targs, opts.perfab);
+			windowMock = mockWindow(opts);
 
 		return modules['ext.wikia.adEngine.adLogicPageParams'](
 			mockAdContext(targeting),
 			mockPageViewCounter(opts.pvCount),
+			mockAdLogicZoneParams(),
 			logMock,
 			windowMock.document,
 			windowMock.location,
 			windowMock,
-			undefined,
 			abTestMock,
 			kruxMock
 		).getPageLevelParams(opts.getPageLevelParamsOptions);
 	}
 
 	it('getPageLevelParams simple params correct', function () {
-		var params = getParams({
-			wikiCategory: 'category',
-			wikiDbName: 'dbname',
-			wikiLanguage: 'xx'
-		});
+		var params = getParams();
 
-		expect(params.s0).toBe('category');
-		expect(params.s1).toBe('_dbname');
-		expect(params.s2).toBe('article');
-		expect(params.lang).toBe('xx');
-	});
-
-	it('getPageLevelParams hostprefix and domain params', function () {
-		var params;
-
-		params = getParams({}, {hostname: 'an.example.org'});
-		expect(params.dmn).toBe('exampleorg');
-		expect(params.hostpre).toBe('an');
-
-		params = getParams({}, {hostname: 'fallout.wikia.com'});
-		expect(params.dmn).toBe('wikiacom');
-		expect(params.hostpre).toBe('fallout');
-
-		params = getParams({}, {hostname: 'www.wikia.com'});
-		expect(params.dmn).toBe('wikiacom');
-		expect(params.hostpre).toBe('www');
-
-		params = getParams({}, {hostname: 'www.wowwiki.com'});
-		expect(params.dmn).toBe('wowwikicom');
-		expect(params.hostpre).toBe('www');
-
-		params = getParams({}, {hostname: 'wowwiki.com'});
-		expect(params.dmn).toBe('wowwikicom');
-		expect(params.hostpre).toBe('wowwiki');
-
-		params = getParams({}, {hostname: 'www.bbc.co.uk'});
-		expect(params.dmn).toBe('bbccouk');
-		expect(params.hostpre).toBe('www');
-
-		params = getParams({}, {hostname: 'externaltest.fallout.wikia.com'});
-		expect(params.dmn).toBe('wikiacom');
-		expect(params.hostpre).toBe('externaltest');
+		expect(params.s0).toBe('zone_site');
+		expect(params.s0v).toBe('zone_vertical');
+		expect(params.s0c).toEqual(['zone_wiki_category']);
+		expect(params.s1).toBe('zone_name');
+		expect(params.s2).toBe('zone_page_type');
+		expect(params.cat).toEqual(['zone_page_category']);
+		expect(params.dmn).toBe('zone_domain');
+		expect(params.hostpre).toBe('zone_hostname_prefix');
+		expect(params.lang).toBe('zl');
 	});
 
 	it('getPageLevelParams wpage param', function () {
@@ -167,28 +147,6 @@ describe('AdLogicPageParams', function () {
 
 		params = getParams({pageName: 'Военная_база_Марипоза'});
 		expect(params.wpage).toBe('военная_база_марипоза', 'Военная_база_Марипоза');
-	});
-
-	it('getPageLevelParams default DB name', function () {
-		var params = getParams();
-
-		expect(params.s1).toBe('_wikia', 's1=_wikia');
-	});
-
-	it('getPageLevelParams language', function () {
-		var params;
-
-		params = getParams();
-		expect(params.lang).toBe('unknown', 'lang=unknown');
-
-		params = getParams({wikiLanguage: 'xyz'});
-		expect(params.lang).toBe('xyz', 'lang=xyz');
-	});
-
-	it('getPageLevelParams page type', function () {
-		var params = getParams({pageType: 'pagetype'});
-
-		expect(params.s2).toBe('pagetype', 's2=pagetype');
 	});
 
 	it('getPageLevelParams article id', function () {
@@ -217,19 +175,6 @@ describe('AdLogicPageParams', function () {
 
 		params = getParams({enableKruxTargeting: true}, {kruxSegments: kruxSegmentsFew});
 		expect(params.ksgmnt).toEqual(kruxSegmentsFew, 'A few segments');
-	});
-
-	it('getPageLevelParams Page categories', function () {
-		var params;
-
-		params = getParams({pageCategories: []});
-		expect(params.cat).toBeFalsy('No categories');
-
-		params = getParams({pageCategories: ['Category', 'Another Category']});
-		expect(params.cat).toEqual(['category', 'another_category'], 'Two categories');
-
-		params = getParams({pageCategories: ['A Category', 'Another Category', 'Yet Another Category', 'Aaaand One More']});
-		expect(params.cat).toEqual(['a_category', 'another_category', 'yet_another_category'], '4 categories stripped down to first 3');
 	});
 
 	it('getPageLevelParams abTest info', function () {
@@ -263,80 +208,17 @@ describe('AdLogicPageParams', function () {
 	});
 
 	it('getPageLevelParams includeRawDbName', function () {
-		var params = getParams({
-			wikiDbName: 'xyz'
-		});
+		var params = getParams();
 
 		expect(params.rawDbName).toBeUndefined();
 
-		params = getParams({
-			wikiDbName: 'xyz'
-		}, {
+		params = getParams({}, {
 			getPageLevelParamsOptions: {
 				includeRawDbName: true
 			}
 		});
 
-		expect(params.rawDbName).toBe('_xyz');
-	});
-
-// Very specific tests for hubs:
-
-	it('getPageLevelParams Hub page: video games', function () {
-		var params = getParams({
-			pageIsHub: true,
-			wikiCategory: 'wikia',
-			wikiDbName: 'wikiaglobal',
-			wikiLanguage: 'en',
-			wikiVertical: 'Gaming'
-		}, {
-			hostname: 'www.wikia.com'
-		});
-
-		expect(params.s0).toBe('hub');
-		expect(params.s1).toBe('_gaming_hub');
-		expect(params.s2).toBe('hub');
-		expect(params.dmn).toBe('wikiacom');
-		expect(params.hostpre).toBe('www');
-		expect(params.lang).toBe('en');
-	});
-
-	it('getUrl Hub page: entertainment', function () {
-		var params = getParams({
-			pageIsHub: true,
-			wikiCategory: 'wikia',
-			wikiDbName: 'wikiaglobal',
-			wikiLanguage: 'en',
-			wikiVertical: 'Entertainment'
-		}, {
-			hostname: 'www.wikia.com'
-		});
-
-		expect(params.s0).toBe('hub');
-		expect(params.s1).toBe('_ent_hub');
-		expect(params.s2).toBe('hub');
-		expect(params.dmn).toBe('wikiacom');
-		expect(params.hostpre).toBe('www');
-		expect(params.lang).toBe('en');
-	});
-
-	it('getUrl Hub page: lifestyle', function () {
-		var params = getParams({
-			pageIsHub: true,
-			wikiCategory: 'wikia',
-			wikiDbName: 'wikiaglobal',
-			wikiLanguage: 'en',
-			wikiVertical: 'Lifestyle'
-		}, {
-			hostname: 'www.wikia.com'
-		});
-
-		expect(params.s0).toBe('hub');
-		expect(params.s1).toBe('_life_hub');
-		expect(params.s2).toBe('hub');
-		expect(params.dmn).toBe('wikiacom');
-		expect(params.hostpre).toBe('www');
-		expect(params.lang).toBe('en');
+		expect(params.rawDbName).toBe('zone_db_name');
 	});
 
 	it('getPageLevelParams Krux segments on regular and on COPPA wiki', function () {
@@ -350,30 +232,14 @@ describe('AdLogicPageParams', function () {
 		expect(params.ksgmnt).toBeUndefined('No Krux on COPPA wiki');
 	});
 
-	it('getPageLevelParams esrb + COPPA', function () {
-		var params;
-
-		params = getParams({
+	it('decodeLegacyDartParams should skip esrb', function () {
+		var params = getParams({
 			wikiCustomKeyValues: 'key1=value1;esrb=rating;key2=value2'
 		});
-		expect(params.esrb.toString()).toBe('rating', 'esrb=yes, COPPA=no');
 
-		params = getParams({
-			wikiCustomKeyValues: 'key1=value1;esrb=rating;key2=value2',
-			wikiDirectedAtChildren: true
-		});
-		expect(params.esrb.toString()).toBe('rating', 'esrb=yes, COPPA=yes');
-
-		params = getParams({
-			wikiCustomKeyValues: 'key1=value1;key2=value2'
-		});
-		expect(params.esrb.toString()).toBe('teen', 'esrb=null, COPPA=no');
-
-		params = getParams({
-			wikiCustomKeyValues: 'key1=value1;key2=value2',
-			wikiDirectedAtChildren: true
-		});
-		expect(params.esrb.toString()).toBe('ec', 'esrb=null, COPPA=yes');
+		expect(params.esrb).not.toBeDefined();
+		expect(params.key1.toString()).toBe('value1');
+		expect(params.key2.toString()).toBe('value2');
 	});
 
 	it('getPageLevelParams pv param - oasis', function () {
@@ -452,5 +318,23 @@ describe('AdLogicPageParams', function () {
 		});
 
 		expect(params.ref).toBe('external');
+	});
+
+	it('getPageLevelParams aspect ratio for landscape orientation', function () {
+		var params = getParams({}, {
+			innerWidth: 1024,
+			innerHeight: 600
+		});
+
+		expect(params.ar).toBe('4:3');
+	});
+
+	it('getPageLevelParams aspect ratio for portrait orientation', function () {
+		var params = getParams({}, {
+			innerWidth: 360,
+			innerHeight: 640
+		});
+
+		expect(params.ar).toBe('3:4');
 	});
 });

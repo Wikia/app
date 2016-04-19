@@ -45,13 +45,11 @@ class WikiFactoryTest extends WikiaBaseTest {
 	/**
 	 * @dataProvider testGetLocalEnvURLDataProvider
 	 */
-	public function testGetLocalEnvURL($env, $url, $expected) {
-		$_SERVER['SERVER_NAME'] = $env;
-		$url = WikiFactory::getLocalEnvURL($url);
-		$this->assertEquals($expected, $url);
-		$_SERVER['SERVER_NAME'] = null;
+	public function testGetLocalEnvURL( $environment, $url, $expected ) {
+		$this->mockEnvironment( $environment );
+		$url = WikiFactory::getLocalEnvURL( $url );
+		$this->assertEquals( $expected, $url );
 	}
-
 
 	/**
 	 * @dataProvider testGetCurrentStagingHostDataProvider
@@ -115,35 +113,101 @@ class WikiFactoryTest extends WikiaBaseTest {
 	public function testGetLocalEnvURLDataProvider() {
 		return [
 			[
-				'env' => 'preview.wikia.com',
+				'env' => WIKIA_ENV_PREVIEW,
 				'url' => 'http://muppet.wikia.com',
 				'expected' => 'http://preview.muppet.wikia.com'
 			],
 			[
-				'env' => 'verify.wikia.com',
+				'env' => WIKIA_ENV_VERIFY,
 				'url' => 'http://muppet.wikia.com/wiki/Muppet',
 				'expected' => 'http://verify.muppet.wikia.com/wiki/Muppet'
 			],
 			[
-				'env' => '.test.wikia-dev.com',
+				'env' => WIKIA_ENV_DEV,
 				'url' => 'http://muppet.wikia.com/wiki',
-				'expected' => 'http://muppet.test.wikia-dev.com/wiki'
+				'expected' => 'http://muppet.' . self::MOCK_DEV_NAME . '.wikia-dev.com/wiki'
 			],
 			[
-				'env' => 'sandbox-s1.wikia.com',
+				'env' => WIKIA_ENV_SANDBOX,
 				'url' => 'http://gta.wikia.com/Vehicles_in_GTA_III',
 				'expected' => 'http://sandbox-s1.gta.wikia.com/Vehicles_in_GTA_III'
 			],
 			[
-				'env' => 'verify.wikia.com',
+				'env' => WIKIA_ENV_VERIFY,
 				'url' => 'http://gta.wikia.com/wiki/test/test/test',
 				'expected' => 'http://verify.gta.wikia.com/wiki/test/test/test'
 			],
 			[
-				'env' => '.dev.wikia-dev.com',
+				'env' => WIKIA_ENV_DEV,
 				'url' => 'http://gta.wikia.com/',
-				'expected' => 'http://gta.dev.wikia-dev.com'
+				'expected' => 'http://gta.' . self::MOCK_DEV_NAME . '.wikia-dev.com'
 			]
 		];
+	}
+
+	public function testRenderValueOfVariableWithoutValue() {
+		$variable = new stdClass();
+
+		$this->assertEquals( "", WikiFactory::renderValue( $variable ) );
+	}
+
+	public function testRenderValueOfStringVariable() {
+		$variable = new stdClass();
+		$variable->cv_value = serialize( "foo" );
+		$variable->cv_variable_type = "string";
+
+		$this->assertEquals( "foo", WikiFactory::renderValue( $variable ) );
+	}
+
+	public function testRenderValueOfIntegerVariable() {
+		$variable = new stdClass();
+		$variable->cv_value = serialize( 15 );
+		$variable->cv_variable_type = "integer";
+
+		$this->assertEquals( 15, WikiFactory::renderValue( $variable ) );
+	}
+
+	public function testRenderValueOfFloatVariable() {
+		$variable = new stdClass();
+		$variable->cv_value = serialize( 5.234 );
+		$variable->cv_variable_type = "float";
+
+		$this->assertEquals( 5.234, WikiFactory::renderValue( $variable ) );
+	}
+
+	public function testRenderValueOfArrayVariable() {
+		$variable = new stdClass();
+		$variable->cv_value = serialize( array( "a", "b", "c" ) );
+		$variable->cv_variable_type = "array";
+
+		$this->assertEquals( '[&quot;a&quot;,&quot;b&quot;,&quot;c&quot;]', WikiFactory::renderValue( $variable ) );
+	}
+
+	public function testRenderValueOfAssociativeArrayVariable() {
+		$variable = new stdClass();
+		$variable->cv_value = serialize( array( "foo" => "bar", "0" => "c" ) );
+		$variable->cv_variable_type = "array";
+		$expectedRender = <<<EOT
+array (
+  'foo' =&gt; 'bar',
+  0 =&gt; 'c',
+)
+EOT;
+
+		$this->assertEquals( $expectedRender, WikiFactory::renderValue( $variable ) );
+	}
+
+	public function testRenderValueOfAssociativeArrayVariable2() {
+		$variable = new stdClass();
+		$variable->cv_value = serialize( array( 1 => "foo", 15 => "bar" ) );
+		$variable->cv_variable_type = "array";
+		$expectedRender = <<<EOT
+array (
+  1 =&gt; 'foo',
+  15 =&gt; 'bar',
+)
+EOT;
+
+		$this->assertEquals( $expectedRender, WikiFactory::renderValue( $variable ) );
 	}
 }

@@ -110,11 +110,12 @@ class BlogLockdown {
 				break;
 
 			case "delete":
+			case "undelete":
 				if ( !$isArticle && $user->isAllowed( "blog-comments-delete" ) ) {
-					// this is a blog page and user have right to delete a comment let's move on
+					// this is a blog page and user have right to delete/undelete a comment let's move on
 					$result = true;
 				}
-				if ( $user->isAllowed( 'delete' ) ) {
+				if ( $user->isAllowed( $action ) ) {
 					$result = true;
 					$return = true;
 				}
@@ -150,5 +151,36 @@ class BlogLockdown {
 		}
 
 		return $return;
+	}
+
+	/**
+	 * Checks permission before delete action on blog articles
+	 *
+	 * @param Article $article
+	 * @param Title $title
+	 * @param User $user
+	 * @param array $permission_errors
+	 *
+	 * @return boolean because it's a hook
+	 */
+	public static function onBeforeDeletePermissionErrors( &$article, &$title, &$user, &$permission_errors ) {
+		// Only users with delete permission can delete a blog article
+
+		$accessErrorKey = 'badaccess-group0';
+		if ( $title->getNamespace() == NS_BLOG_ARTICLE && !$user->isAllowed( 'delete' ) ) {
+			$errorExists = false;
+			foreach ( $permission_errors as $errors ) {
+				if ( in_array( $accessErrorKey, $errors ) ) {
+					$errorExists = true;
+					break;
+				}
+			}
+
+			if ( !$errorExists ) {
+				$permission_errors[] = [ $accessErrorKey ];
+			}
+		}
+
+		return true;
 	}
 }

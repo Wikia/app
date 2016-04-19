@@ -1,5 +1,13 @@
+<?php
+/** @var $displayHeader bool */
+/** @var $afterBodyHtml string */
+/** @var $beforeWikiaPageHtml string */
+/** @var $headerModuleName string */
+/** @var $headerModuleAction string */
+?>
+
 <? if ( $displayHeader ): ?>
-<h1><?= wfMsg( 'oasis-global-page-header' ); ?></h1>
+	<h2><?= wfMsg( 'oasis-global-page-header' ); ?></h2>
 <? endif; ?>
 <div class="skiplinkcontainer">
 <a class="skiplink" rel="nofollow" href="#WikiaArticle"><?= wfMsg( 'oasis-skip-to-content' ); ?></a>
@@ -11,9 +19,12 @@
 <div id="ad-skin" class="wikia-ad noprint"></div>
 
 <?= $app->renderView( 'GlobalNavigation', 'index' ) ?>
+<?= empty( $wg->EnableEBS ) ? '' : $app->renderView( 'EmergencyBroadcastSystem', 'index' ); ?>
 <?= $app->renderView( 'Ad', 'Top' ) ?>
 
 <?= empty( $wg->WikiaSeasonsPencilUnit ) ? '' : $app->renderView( 'WikiaSeasons', 'pencilUnit', array() ); ?>
+
+<?= $beforeWikiaPageHtml ?>
 
 <section id="WikiaPage" class="WikiaPage<?= empty( $wg->OasisNavV2 ) ? '' : ' V2' ?><?= !empty( $isGridLayoutEnabled ) ? ' WikiaGrid' : '' ?>">
 	<div id="WikiaPageBackground" class="WikiaPageBackground"></div>
@@ -160,6 +171,11 @@
 				?>
 				<div id="WikiaArticleBottomAd" class="noprint">
 					<?= $app->renderView( 'Ad', 'Index', ['slotName' => 'PREFOOTER_LEFT_BOXAD', 'onLoad' => true] ) ?>
+					<?php
+					if ( WikiaPageType::isMainPage() ) {
+						echo $app->renderView( 'Ad', 'Index', ['slotName' => 'PREFOOTER_MIDDLE_BOXAD', 'onLoad' => true] );
+					}
+					?>
 					<?= $app->renderView( 'Ad', 'Index', ['slotName' => 'PREFOOTER_RIGHT_BOXAD', 'onLoad' => true] ) ?>
 				</div>
 			</div>

@@ -1,0 +1,11 @@
+{
+	"@metadata": {
+		"authors": [
+			"Baloch Afghanistan"
+		]
+	},
+	"sf_templates_definescat": "تهرِ تئین: $1",
+	"createcategory": "تهرِ جوڑ بکنیت",
+	"sf-createcategory-with-name": "تهرِ جوڑ کورتین: $1",
+	"sf_createcategory_name": "تهرِ نام:"
+}

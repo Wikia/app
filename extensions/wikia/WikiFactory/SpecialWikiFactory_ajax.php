@@ -14,6 +14,50 @@ if ( !defined( 'MEDIAWIKI' ) ) {
     exit( 1 ) ;
 }
 
+/**
+ * Exceptions to be thrown by AJAX request handlers
+ *
+ * @see PLATFORM-1476
+ *
+ * - WikiFactoryInvalidRequestException for requests that should be sent as POST
+ * - WikiFactoryInvalidTokenException for requests with invalid token
+ */
+abstract class WikiFactoryRequestException extends WikiaException {}
+
+class WikiFactoryInvalidRequestException extends WikiFactoryRequestException {
+	function __construct( $message ) {
+		parent::__construct( 'POST request should be made to ' . $message );
+	}
+}
+
+class WikiFactoryInvalidTokenException extends WikiFactoryRequestException {
+	function __construct( $message ) {
+		parent::__construct( 'Token check failed for ' . $message );
+	}
+}
+
+/**
+ * Check given request and make sure that:
+ *
+ *  - it's a POST request (throws WikiFactoryInvalidRequestException otherwise)
+ *  - it has a valid token (throws WikiFactoryInvalidTokenException otherwise)
+ *
+ * @see PLATFORM-1476
+ *
+ * @param WebRequest $request
+ * @param User $user
+ * @param string $method
+ * @throws WikiFactoryRequestException
+ */
+function axWFactoryValidateRequest( WebRequest $request, User $user, $method ) {
+	if ( !$request->wasPosted() ) {
+		throw new WikiFactoryInvalidRequestException( $method );
+	}
+
+	if ( !$user->matchEditToken( $request->getVal( 'token' ) ) ) {
+		throw new WikiFactoryInvalidTokenException( $method );
+	}
+}
 
 ############################## Ajax methods ##################################
 
@@ -29,6 +73,9 @@ if ( !defined( 'MEDIAWIKI' ) ) {
  */
 function axWFactoryTagCheck() {
 	global $wgRequest, $wgUser;
+
+	// this request needs to be a POST and has a valid token passed (PLATFORM-1476)
+	axWFactoryValidateRequest( $wgRequest, $wgUser, __METHOD__ );
 
 	if ( !$wgUser->isAllowed( 'wikifactory' ) ) {
 		return;
@@ -183,6 +230,9 @@ function axWFactoryChangeVariable() {
 function axWFactorySubmitChangeVariable() {
 	global $wgRequest, $wgUser, $wgOut;
 
+	// this request needs to be a POST and has a valid token passed (PLATFORM-1476)
+	axWFactoryValidateRequest( $wgRequest, $wgUser, __METHOD__ );
+
 	if ( !$wgUser->isAllowed( 'wikifactory' ) ) {
 		$wgOut->readOnlyPage(); #--- FIXME: later change to something reasonable
 		return;
@@ -275,6 +325,9 @@ function axWFactoryDomainCRUD($type="add") {
     $city_id = $wgRequest->getVal("cityid");
     $reason  = $wgRequest->getVal("reason");
 
+	// this request needs to be a POST and has a valid token passed (PLATFORM-1476)
+	axWFactoryValidateRequest( $wgRequest, $wgUser, __METHOD__ );
+
     if ( !$wgUser->isAllowed( 'wikifactory' ) ) {
         $wgOut->readOnlyPage(); #--- later change to something reasonable
         return;
@@ -344,7 +397,7 @@ function axWFactoryDomainCRUD($type="add") {
 		}
 
 		WikiFactory::log( WikiFactory::LOG_DOMAIN, $sLogMessage,  $city_id );
-	
+
 		$dbw->commit();
                 $sInfo .= "Success: Domain <em>{$sDomain}</em> changed to <em>{$sNewDomain}</em>.";
             }
@@ -418,6 +471,9 @@ function axWFactoryClearCache()
     $iError = 0;
     $sError = "";
 
+	// this request needs to be a POST and has a valid token passed (PLATFORM-1476)
+	axWFactoryValidateRequest( $wgRequest, $wgUser, __METHOD__ );
+
     if ( !$wgUser->isAllowed( 'wikifactory' ) ) {
         #--- no permission, do nothing
         $iError++;
@@ -464,6 +520,9 @@ function axWFactorySaveVariable() {
 
 	$error     = 0;
 	$return    = "";
+
+	// this request needs to be a POST and has a valid token passed (PLATFORM-1476)
+	axWFactoryValidateRequest( $wgRequest, $wgUser, __METHOD__ );
 
 	if ( ! $wgUser->isAllowed('wikifactory') ) {
 		$error++;
@@ -672,29 +731,29 @@ function axWFactoryDomainQuery() {
  *
  * @return string: json string with array of variables
  */
-function axWFactoryFilterVariables( )
-{
-    global $wgRequest;
-    $defined = wfStrToBool( $wgRequest->getVal("defined", "false") );
-    $editable = wfStrToBool( $wgRequest->getVal("editable", "false") );
-    $wiki_id = $wgRequest->getVal("wiki", 0);
-    $group = $wgRequest->getVal("group", 0);
+function axWFactoryFilterVariables() {
+	global $wgRequest, $wgUser;
+
+	if ( !$wgUser->isAllowed('wikifactory') ) {
+		return '';
+	}
+	$defined = wfStrToBool( $wgRequest->getVal("defined", "false") );
+	$editable = wfStrToBool( $wgRequest->getVal("editable", "false") );
+	$wiki_id = $wgRequest->getVal("wiki", 0);
+	$group = $wgRequest->getVal("group", 0);
 	$string = $wgRequest->getVal("string", false );
 
-    #--- cache it?
-    $Variables = WikiFactory::getVariables( "cv_name", $wiki_id, $group, $defined, $editable, $string );
-    $selector = "";
+	#--- cache it?
+	$Variables = WikiFactory::getVariables( "cv_name", $wiki_id, $group, $defined, $editable, $string );
+	$selector = "";
 
-    foreach( $Variables as $Var) {
-        $selector .= sprintf(
-			"<option value=\"%d\">%s</option>\n",
-            $Var->cv_id, $Var->cv_name
-        );
-    }
+	foreach( $Variables as $Var) {
+		$selector .= Xml::element( 'option', [ 'value' => $Var->cv_id ], $Var->cv_name );
+	}
 
-    return json_encode(array(
-        "selector" => $selector,
-    ));
+	$resp = new AjaxResponse( json_encode( [ "selector" => $selector ] ) );
+	$resp->setContentType( 'application/json; charset=utf-8' );
+	return $resp;
 }
 
 /**
@@ -712,6 +771,9 @@ function axWFactoryRemoveVariable( ) {
 
 	$error     = 0;
 	$return    = "";
+
+	// this request needs to be a POST and has a valid token passed (PLATFORM-1476)
+	axWFactoryValidateRequest( $wgRequest, $wgUser, __METHOD__ );
 
 	if ( ! $wgUser->isAllowed('wikifactory') ) {
 		$error++;

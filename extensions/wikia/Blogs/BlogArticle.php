@@ -72,7 +72,7 @@ class BlogArticle extends Article {
 			/**
 			 * blog listing
 			 */
-			$wgOut->setHTMLTitle( $wgOut->getWikiaPageTitle( $this->mTitle->getPrefixedText() ) );
+			$wgOut->setHTMLTitle( $this->mTitle->getPrefixedText() );
 			$this->showBlogListing();
 		}
 	}
@@ -129,11 +129,28 @@ class BlogArticle extends Article {
 				],
 				self::CACHE_TTL );
 		}
+
+		// Link rel=next/prev for SEO
+		$lastPage = ceil( $blogPostCount / $this->mCount ) - 1;
+		if ( $page > 0 && $page <= $lastPage ) {
+			// All pages but the first
+			$prevUrl = sprintf( '?page=%d', $page - 1 );
+			$link = Html::element( 'link', [ 'rel' => 'prev', 'href' => $prevUrl ] );
+			$wg->Out->addHeadItem( 'Pagination - prev', "\t" . $link . PHP_EOL );
+		}
+		if ( $page >= 0 && $page < $lastPage ) {
+			// All pages but the last
+			$nextUrl = sprintf( '?page=%d', $page + 1 );
+			$link = Html::element( 'link', [ 'rel' => 'next', 'href' => $nextUrl ] );
+			$wg->Out->addHeadItem( 'Pagination - next', "\t" . $link . PHP_EOL );
+		}
+
 		if ( isset( $blogPostCount ) && $blogPostCount == 0 ) {
 			// bugid: PLA-844
 			$wg->Out->setRobotPolicy( "noindex,nofollow" );
 		}
 		$wg->Out->addHTML( $listing );
+
 	}
 
 	/**
@@ -177,7 +194,7 @@ class BlogArticle extends Article {
 	 * @return String - memcache key
 	 */
 	public function blogListingMemcacheKey( $userKey, $pageNum ) {
-		return wfMemcKey( 'blog', 'listing', 'v'.self::CACHE_VERSION, $userKey, $pageNum );
+		return wfMemcKey( 'blog', 'listing', 'v' . self::CACHE_VERSION, $userKey, $pageNum );
 	}
 
 	/**
@@ -186,7 +203,7 @@ class BlogArticle extends Article {
 	 * @return String
 	 */
 	public function blogListingOasisMemcacheKey() {
-		return wfMemcKey( "OasisPopularBlogPosts", 'v'.self::CACHE_VERSION, F::app()->wg->Lang->getCode() );
+		return wfMemcKey( "OasisPopularBlogPosts", 'v' . self::CACHE_VERSION, F::app()->wg->Lang->getCode() );
 	}
 
 	/**
@@ -196,7 +213,7 @@ class BlogArticle extends Article {
 	 * @return String
 	 */
 	public function blogFeedMemcacheKey( $userKey, $offset ) {
-		return wfMemcKey( 'blog', 'feed', 'v'.self::CACHE_VERSION, $userKey, $offset);
+		return wfMemcKey( 'blog', 'feed', 'v' . self::CACHE_VERSION, $userKey, $offset );
 	}
 
 	/**
@@ -470,7 +487,8 @@ class BlogArticle extends Article {
 				$catView->blogs = array();
 			}
 
-			if ( F::app()->checkSkin( 'wikiamobile' ) ) {
+			// If request comes from wikiamobile or from MercuryApi return not-parsed output
+			if ( !empty( $catView->isJSON ) ) {
 				$catView->blogs[] = [
 					'name' => $title->getText(),
 					'url' => $title->getLocalUrl(),

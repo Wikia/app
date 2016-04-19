@@ -1,15 +1,15 @@
-<p class="portable-infobox-error-info">{{info}}</p>
-<ul class="portable-infobox-debug">
+<p class="pi-error-info">{{info}}</p>
+<ul class="pi-debug">
 	{{#code}}
 	<li>
-		<div class="portable-infobox-debug-line{{#error}} error{{/error}}">
-			<div class="portable-infobox-debug-line-number">{{line}}</div>
-			<div class="portable-infobox-debug-line-code">{{codeLine}}</div>
+		<div class="pi-debug-line{{#error}} error{{/error}}">
+			<div class="pi-debug-line-number">{{line}}</div>
+			<div class="pi-debug-line-code">{{codeLine}}</div>
 		</div>
 		{{#error}}
-		<div class="portable-infobox-debug-error-massage">
+		<div class="pi-debug-error-message">
 			{{#error_messages}}
-				<p class="portable-infobox-debug-error-massage-item">{{{message}}}</p>
+				<p class="pi-debug-error-message-item">{{{message}}}</p>
 			{{/error_messages}}
 		</div>
 		{{/error}}

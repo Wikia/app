@@ -265,30 +265,12 @@ $messages = array(
 'navigation'    => 'Urambazaji',
 'and'           => '&#32;na',
 
-# Cologne Blue skin
 'qbfind'         => 'Gundua',
 'qbbrowse'       => 'Vinjari',
-'qbedit'         => 'Hariri',
 'qbpageoptions'  => 'Ukurasa huu',
 'qbpageinfo'     => 'Muktadha',
-'qbmyoptions'    => 'Kurasa zangu',
-'qbspecialpages' => 'Kurasa za pekee',
 'faq'            => 'Maswali ya kawaida',
-'faqpage'        => 'Project:Maswali Yaulizwayo Marakwamara',
 
-# Vector skin
-'vector-action-addsection'       => 'Weka mada',
-'vector-action-delete'           => 'Futa',
-'vector-action-move'             => 'Hamisha',
-'vector-action-protect'          => 'Linda',
-'vector-action-undelete'         => 'Rudisha',
-'vector-action-unprotect'        => 'Badilisha ulinzi',
-'vector-simplesearch-preference' => 'Kuwezesha madokezo imara ya tafutaji (umbo la Vector tu)',
-'vector-view-create'             => 'Anzisha',
-'vector-view-edit'               => 'Hariri',
-'vector-view-history'            => 'Fungua historia',
-'vector-view-view'               => 'Soma',
-'vector-view-viewsource'         => 'Kuonyesha kodi',
 'actions'                        => 'Vitendo',
 'namespaces'                     => 'Maeneo ya wiki',
 'variants'                       => 'Vibadala',
@@ -311,7 +293,6 @@ $messages = array(
 'edit'              => 'Hariri',
 'create'            => 'Anzisha kurasa',
 'editthispage'      => 'Hariri ukurasa huu',
-'create-this-page'  => 'Anzisha ukurasa huu',
 'delete'            => 'Futa',
 'deletethispage'    => 'Futa ukurasa huo',
 'undelete_short'    => 'Rudisha {{PLURAL:$1|haririo moja|maharirio $1}}',
@@ -326,19 +307,9 @@ $messages = array(
 'talkpagelinktext'  => 'Majadiliano',
 'specialpage'       => 'Ukurasa maalumu',
 'personaltools'     => 'Vifaa binafsi',
-'postcomment'       => 'Fungu jipya',
-'articlepage'       => 'Onyesha kurasa zilizopo',
 'talk'              => 'Majadiliano',
 'views'             => 'Mitazamo',
 'toolbox'           => 'Vifaa',
-'userpage'          => 'Ukurasa wa mtumiaji',
-'projectpage'       => 'Onyesha ukurasa wa mradi',
-'imagepage'         => 'Tazama ukurasa wa faili',
-'mediawikipage'     => 'Tazama ukurasa wa ujumbe',
-'templatepage'      => 'Onyesha ukurasa wa kigezo',
-'viewhelppage'      => 'Tazama ukurasa wa msaada',
-'categorypage'      => 'Tazama ukurasa wa jamii',
-'viewtalkpage'      => 'Tazama majadiliano',
 'otherlanguages'    => 'Lugha zingine',
 'redirectedfrom'    => '(Elekezwa kutoka $1)',
 'redirectpagesub'   => 'Ukurasa wa kuelekeza',
@@ -522,7 +493,8 @@ Sababu zilizotolewa ni "\'\'$2\'\'".',
 # Login and logout pages
 'logouttext'                 => "'''Umetoka kwenye akaunti yako.'''
 
-Unaweza kuendelea kutumia {{SITENAME}} bila kutaja jina lako, au unaweza [[Special:UserLogin|kuingia tena]] kwenye akaunti yako. Kumbuka kwamba kurasa nyingine zitaendelea kuonekana kana kwamba bado hujatoka kwenye akaunti yako, hadi utakaposafisha kache ya kivinjari.",
+Unaweza kuendelea kutumia {{SITENAME}} bila kutaja jina lako, au unaweza $1 kwenye akaunti yako. Kumbuka kwamba kurasa nyingine zitaendelea kuonekana kana kwamba bado hujatoka kwenye akaunti yako, hadi utakaposafisha kache ya kivinjari.",
+'logouttext-link-text'       => 'kuingia tena',
 'welcomecreation'            => '== Karibu, $1! ==
 Ushafunguliwa akaunti yako tayari.
 Usisahau kubadilisha mapendekezo yako ya [[Special:Preferences|{{SITENAME}}]].',
@@ -641,36 +613,6 @@ Kumalizia kuingia ndani, ni lazima urekebishe neno la siri jipya hapa:',
 'resetpass-wrong-oldpass'   => 'Neno la siri la muda au la sasa ni batili.
 Inawezekana ikawa tayari umefaulu kubadilisha neno lako la siri au neno la siri jipya la muda.',
 'resetpass-temp-password'   => 'Neno la siri la muda:',
-
-# Special:PasswordReset
-'passwordreset'                    => 'Seti upya neno la siri',
-'passwordreset-text'               => 'Jaza fomu hii ili upate barua pepe inayotoa maelezo ya akaunti yako.',
-'passwordreset-legend'             => 'Seti upya neno la siri',
-'passwordreset-disabled'           => 'Kuweka neno la siri jipya kumeshitishwa katika wiki hii.',
-'passwordreset-pretext'            => '{{PLURAL:$1||Ingiza moja kati ya data hizi hapo chini}}',
-'passwordreset-username'           => 'Jina la mtumiaji:',
-'passwordreset-domain'             => 'Miliki',
-'passwordreset-capture'            => 'Ioneshe barua-pepe itakayotumwa?',
-'passwordreset-capture-help'       => 'Iwapo utatia alama kisanduku hiki, barua-pepe (pamoja na nenosiri la muda) litaoneshwa kwako na vilevile litatumwa kwa mtumiaji.',
-'passwordreset-email'              => 'Anwani ya barua pepe:',
-'passwordreset-emailtitle'         => 'Maelezo ya akaunti kwenye {{SITENAME}}',
-'passwordreset-emailtext-ip'       => 'Kuna mtu (huenda ikawa ni wewe, kutoka anwani ya IP $1) aliyeomba kukumbushwa kuhusu maelezo ya akaunti yako katika {{SITENAME}} ($4). {{PLURAL:$3|Akaunti inayofuata imeunganishwa|Akaunti zinazofuata zimeunganishwa}} na anwani ya barua pepe hii:
-
-$2
-
-{{PLURAL:$3|Neno la siri hili litakwisha|Maneno ya siri haya yatakwisha}} baada ya siku {{PLURAL:$5|$5}}.
-Tafadhali ingia sasa na uchague neno jipya la siri. Kama mtu mwingine ameomba hili, au ikiwa umekumbuka neno lako la siri na hutaki kulibadilisha tena, basi usijali ujumbe huu, na uendelee kutumia neno la siri lako la zamani.',
-'passwordreset-emailtext-user'     => 'Mtumiaji $1 kwenye {{SITENAME}} ameomba akumbushwe maelezo ya akaunti yako katika {{SITENAME}} ($4). {{PLURAL:$3|Akaunti inayofuata imeunganishwa|Akaunti zinazofuata zimeunganishwa}} na anwani ya barua pepe hii:
-
-$2
-
-{{PLURAL:$3|Neno la siri hili litakwisha|Maneno ya siri haya yatakwisha}} baada ya siku {{PLURAL:$5|$5}}.
-Tafadhali ingia sasa na uchague neno jipya la siri. Kama mtu mwingine ameomba hili, au ikiwa umekumbuka neno lako la siri na hutaki kulibadilisha tena, basi usijali ujumbe huu, na uendelee kutumia neno la siri lako la zamani.',
-'passwordreset-emailelement'       => 'Jina la mtumiaji: $1
-Neno la siri la muda: $2',
-'passwordreset-emailsent'          => 'Barua pepe ya ukumbusho imetumwa.',
-'passwordreset-emailsent-capture'  => 'Barua pepe ya ukukumbusho imetumwa, ambayo inaonekana hapo chini.',
-'passwordreset-emailerror-capture' => 'Barua pepe ya ukukumbusho imetengenezwa, ambayo inaonekana hapo chini, lakini kuituma kwa mtumiaji imeshindikana: $1',
 
 # Special:ChangeEmail
 'changeemail'          => 'Badilisha anwani ya barua pepe',
@@ -824,7 +766,7 @@ Inabidi uingize mabadiliko yako ndani ya sanduku la juu.
 Ni maandiko yaliyopo ndani ya sanduku la juu '''tu''' ambayo yatahifadhiwa utakapobonyeza \"{{int:savearticle}}\".",
 'yourtext'                         => 'Maandishi yako',
 'storedversion'                    => 'Pitio lililohifadhiwa mwishoni',
-'nonunicodebrowser'                => "'''Ilani: Kivinjari chako hakikubaliani na Unicode.''' 
+'nonunicodebrowser'                => "'''Ilani: Kivinjari chako hakikubaliani na Unicode.'''
 Ili uweze kuhariri kurasa sawasawa, herufi zisizo za ASCII zitaonekana katika sanduku la kuhariri kama kodi za hexadecimali.",
 'editingold'                       => "'''ANGALIA: Unakuwa unahariri toleo la zamani la ukurasa huu.
 Ukiendelea kulihariri, mabadilisho yote yaliyofanywa tangu pale yatapotezwa.'''",
@@ -1104,13 +1046,6 @@ Ukitaka kutafuta kwenye maeneo yote (pamoja na kurasa za majadiliano, vigezo, nk
 Unaweza kutafuta kwa kutumia Google punde si punde.
 Ujue lakini kwamba kumbukumbu za {{SITENAME}} kule Google labda zilipitwa na wakati.',
 
-# Quickbar
-'qbsettings'               => 'Mwambaa pembe',
-'qbsettings-none'          => 'Hakuna',
-'qbsettings-fixedleft'     => 'Kushoto tuli',
-'qbsettings-fixedright'    => 'Kulia tuli',
-'qbsettings-floatingleft'  => 'Kushoto geugeu',
-'qbsettings-floatingright' => 'Kulia geugeu',
 
 # Preferences page
 'preferences'                   => 'Mapendekezo',
@@ -1675,7 +1610,7 @@ Maelezo yaliyopo katika [$2 ukurasa wa maelezo ya faili] linaonyeshwa hapa.',
 
 # MIME search
 'mimesearch'         => 'Utafutaji wa MIME',
-'mimesearch-summary' => 'Ukarasa huu unawezesha kuchuja mafaili kutokana na aina ya MIME. 
+'mimesearch-summary' => 'Ukarasa huu unawezesha kuchuja mafaili kutokana na aina ya MIME.
 Ingiza: aina ya faili/aina mahususi, kwa mfano <tt>image/jpeg</tt>.',
 'mimetype'           => 'Aina ya MIME:',
 'download'           => 'pakua',

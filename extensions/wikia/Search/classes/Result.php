@@ -60,13 +60,9 @@ class Result extends ReadWrite {
 	public function getText( $field = 'text', $wordLimit = null ) {
 		$text = isset( $this->_fields[$field] ) ? $this->_fields[$field] : '';
 		$textAsString = is_array( $text ) ? implode( " ", $text ) : $text;
-		if ( $wordLimit !== null ) {
-			$wordsExploded = explode( ' ', $textAsString );
-			$textAsString = implode( ' ', array_slice( $wordsExploded, 0, $wordLimit ) );
-			if ( count( $wordsExploded ) > $wordLimit ) {
-				$textAsString = $this->fixSnippeting( $textAsString, true );
-			}
-		}
+
+		$textAsString = $this->limitTextLength( $textAsString, $wordLimit );
+
 		// if title and description both start with the same File: prefix, remove the prefix from description
 		$textAsString = $this->removePrefix($this->findFilePrefix($this->getTitle(false)), $textAsString);
 		return $textAsString;
@@ -99,7 +95,7 @@ class Result extends ReadWrite {
 		}
 		return $result;
 	}
-	
+
 	public function removePrefix($prefix, $value) {
 		if ($prefix && (strpos($value, $prefix) === 0)) {
 			return substr($value, strlen($prefix));
@@ -107,7 +103,7 @@ class Result extends ReadWrite {
 			return $value;
 		}
 	}
-	
+
 	/**
 	 * Find the file prefix in title, if result is in File namespace.
 	 * @param  string $value
@@ -119,8 +115,8 @@ class Result extends ReadWrite {
 			 * find 'File:' prefix (in content language) in title
 			 * we could try to use Title class or wgContLang->getNsText here, but none of those actually
 			 * will allow us to get potentially i18n'ed namespace prefix in a simple and working way, while
-			  *a simple explode with limit will work
-			 */			
+			 *a simple explode with limit will work
+			 */
 			list ($prefix, $rest) = explode(":", $title, 2);
 			return $prefix . ':';
 		}
@@ -215,15 +211,15 @@ class Result extends ReadWrite {
 	 */
 	private function fixSnippeting($text, $addEllipses=false) {
 		$text = preg_replace('/^(span class="searchmatch">)/', '<$1',
-							preg_replace("/^[[:punct:]]+ ?/", '',
-							preg_replace("/(<\\/span>)('s)/i", '$2$1',
-							preg_replace('/ +$/', '',
-							preg_replace('/ ?\.{2,3}$/', '',
+			preg_replace("/^[[:punct:]]+ ?/", '',
+				preg_replace("/(<\\/span>)('s)/i", '$2$1',
+					preg_replace('/ +$/', '',
+						preg_replace('/ ?\.{2,3}$/', '',
 							preg_replace('/ ?&hellip;$/', '',
-							str_replace('�', '', $text)))))));
+								str_replace('�', '', $text)))))));
 		$text = strlen($text) > 0 && $addEllipses
-				? preg_replace('/(<\/span)$/', '$1>', preg_replace('/[[:punct:]]+$/', '', $text)).'&hellip;'
-				: $text;
+			? preg_replace('/(<\/span)$/', '$1>', preg_replace('/[[:punct:]]+$/', '', $text)).'&hellip;'
+			: $text;
 		$text = strip_tags( $text, '<span>' );
 		return $text;
 	}
@@ -290,18 +286,18 @@ class Result extends ReadWrite {
 		$keyParts = explode( '_', $key );
 		$nolangKey = reset( $keyParts );
 		switch ( $nolangKey ) {
-		    case 'title':
-		    	$value = $this->getTitle(); break;
-		    case 'text':
-		    	$value = $this->getText(); break;
-		    case 'videoViews':
-		    	$value = $this->getVideoViews(); break;
-		    default:
-		    	$value = parent::offsetGet( Utilities::field( $nolangKey ) );
-		    	// e.g. infoboxes_txt
-		    	if ( empty( $value ) ) {
-		    		$value = parent::offsetGet( $key );
-		    	}
+			case 'title':
+				$value = $this->getTitle(); break;
+			case 'text':
+				$value = $this->getText(); break;
+			case 'videoViews':
+				$value = $this->getVideoViews(); break;
+			default:
+				$value = parent::offsetGet( Utilities::field( $nolangKey ) );
+				// e.g. infoboxes_txt
+				if ( empty( $value ) ) {
+					$value = parent::offsetGet( $key );
+				}
 		}
 		return $value;
 	}
@@ -324,8 +320,8 @@ class Result extends ReadWrite {
 	 *		statistical records, not for actual linking/output.
 	 */
 	static function replaceUnusualEscapes( $url ) {
-	    return preg_replace_callback( '/%[0-9A-Fa-f]{2}/',
-	            array( __CLASS__, 'replaceUnusualEscapesCallback' ), $url );
+		return preg_replace_callback( '/%[0-9A-Fa-f]{2}/',
+			array( __CLASS__, 'replaceUnusualEscapesCallback' ), $url );
 	}
 
 	/**
@@ -337,16 +333,34 @@ class Result extends ReadWrite {
 	 * @return string
 	 */
 	private static function replaceUnusualEscapesCallback( $matches ) {
-	    $char = urldecode( $matches[0] );
-	    $ord = ord( $char );
-	    # Is it an unsafe or HTTP reserved character according to RFC 1738?
-	    # Or, according to bugid 46673, will it create a bad request if left in a URL?
-	    if ( $ord > 32 && $ord < 127 && strpos( '<>"#{}|\^~[]`;%/?', $char ) === false ) {
-	        # No, shouldn't be escaped
-	        return $char;
-	    } else {
-	        # Yes, leave it escaped
-	        return $matches[0];
-	    }
+		$char = urldecode( $matches[0] );
+		$ord = ord( $char );
+		# Is it an unsafe or HTTP reserved character according to RFC 1738?
+		# Or, according to bugid 46673, will it create a bad request if left in a URL?
+		if ( $ord > 32 && $ord < 127 && strpos( '<>"#{}|\^~[]`;%/?', $char ) === false ) {
+			# No, shouldn't be escaped
+			return $char;
+		} else {
+			# Yes, leave it escaped
+			return $matches[0];
+		}
+	}
+
+	/**
+	 * @param $textAsString
+	 * @param $wordLimit
+	 * @return mixed|string
+	 */
+	public function limitTextLength( $textAsString, $wordLimit ) {
+		if ( $wordLimit !== null ) {
+			$wordsExploded = explode( ' ', $textAsString );
+			$textAsString = implode( ' ', array_slice( $wordsExploded, 0, $wordLimit ) );
+			if ( count( $wordsExploded ) > $wordLimit ) {
+				$textAsString = $this->fixSnippeting( $textAsString, true );
+				return $textAsString;
+			}
+			return $textAsString;
+		}
+		return $textAsString;
 	}
 }

@@ -27,6 +27,9 @@ class RefreshLinksForTitleTask extends BaseTask {
 	public function parseRevisionAndUpdateLinks( \Revision $revision ) {
 		$this->info( sprintf( "parsing revision and updating links for revision %d", $revision->getId() ) );
 		$parserOutput = $this->parseRevisionText( $revision );
+
+		wfRunHooks( 'BeforeRefreshLinksForTitleUpdate', [ $parserOutput, $revision ] );
+
 		$this->updateLinks( $parserOutput );
 	}
 

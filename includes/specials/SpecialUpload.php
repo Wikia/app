@@ -427,6 +427,14 @@ class SpecialUpload extends SpecialPage {
 			}
 		}
 
+		// This is as late as we can throttle, after expected issues have been handled
+		if ( UploadBase::isThrottled( $this->getUser() ) ) {
+			$this->showRecoverableUploadError(
+				$this->msg( 'actionthrottledtext' )->escaped()
+			);
+			return;
+		}
+
 		// Get the page text if this is not a reupload
 		if( !$this->mForReUpload ) {
 			$pageText = self::getInitialPageText( $this->mComment, $this->mLicense,
@@ -769,7 +777,6 @@ class UploadForm extends HTMLForm {
 			+ $this->getDescriptionSection()
 			+ $this->getOptionsSection();
 
-		wfRunHooks( 'UploadFormInitDescriptor', array( &$descriptor ) );
 		parent::__construct( $descriptor, $context, 'upload' );
 
 		# Set some form properties
@@ -861,7 +868,6 @@ class UploadForm extends HTMLForm {
 				'checked' => $selectedSourceType == 'url',
 			);
 		}
-		wfRunHooks( 'UploadFormSourceDescriptors', array( &$descriptor, &$radio, $selectedSourceType ) );
 
 		$descriptor['Extensions'] = array(
 			'type' => 'info',

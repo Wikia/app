@@ -19,6 +19,9 @@
 @import "../../WikiaMobile/css/videos";
 @import "../../WikiaMobile/css/image_stack";
 @import "../../WikiaMobile/css/infobox";
+/* @TODO DAT-3079 Remove portable_infoboxes_before_simplification.scss
+ * once all articles will be purged after release; @see DAT-3009 purging ticket */
+@import "../../WikiaMobile/css/portable_infoboxes_before_simplification";
 @import "../../WikiaMobile/css/portable_infoboxes";
 @import '../../WikiaMobile/css/modal';
 @import '../../WikiaMobile/css/media_modal';

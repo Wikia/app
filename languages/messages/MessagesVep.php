@@ -228,30 +228,12 @@ $messages = array(
 'navigation'    => 'Navigacii',
 'and'           => '&#32;da',
 
-# Cologne Blue skin
 'qbfind'         => 'Ectä',
 'qbbrowse'       => 'Kacelta',
-'qbedit'         => 'Redaktiruida',
 'qbpageoptions'  => 'Necen lehtpolen järgendused',
 'qbpageinfo'     => 'Andmused lehtpoles',
-'qbmyoptions'    => 'Minun järgendused',
-'qbspecialpages' => 'Specialižed lehtpoled',
 'faq'            => 'PPK',
-'faqpage'        => 'Project:PPK',
 
-# Vector skin
-'vector-action-addsection'       => 'Ližada tem',
-'vector-action-delete'           => 'Čuta poiš',
-'vector-action-move'             => 'Udesnimitada',
-'vector-action-protect'          => 'Kaita',
-'vector-action-undelete'         => 'Pördutada',
-'vector-action-unprotect'        => 'Toižetada kaičend',
-'vector-simplesearch-preference' => 'Kävutada levitadud ecmižabud (vaiše Vektor-nägun täht)',
-'vector-view-create'             => 'Säta',
-'vector-view-edit'               => 'Redaktiruida',
-'vector-view-history'            => 'Kacta istorii',
-'vector-view-view'               => 'Lugeda',
-'vector-view-viewsource'         => 'Kacta purtkehe',
 'actions'                        => 'Tegendad',
 'namespaces'                     => 'Nimiavaruded',
 'variants'                       => 'Variantad',
@@ -274,7 +256,6 @@ $messages = array(
 'edit'              => 'Redaktiruida',
 'create'            => 'Säta',
 'editthispage'      => "Redaktiruida nece lehtpol'",
-'create-this-page'  => "Säta nece lehtpol'",
 'delete'            => 'Čuta poiš',
 'deletethispage'    => "Čuta nece lehtpol'",
 'undelete_short'    => "Endištada {{PLURAL:$1|üks' redakcii|$1 redakcijad}}",
@@ -288,19 +269,9 @@ $messages = array(
 'talkpagelinktext'  => 'Lodu',
 'specialpage'       => "Specialine lehtpol'",
 'personaltools'     => 'Personaližed azeged',
-'postcomment'       => "Uz' jaguz",
-'articlepage'       => "Kacu südäimišton lehtpol'",
 'talk'              => 'Diskussii',
 'views'             => 'Kacundad',
 'toolbox'           => 'Azegišt',
-'userpage'          => "Kacu kävutajan lehtpol'",
-'projectpage'       => "Kacu projektan lehtpol'",
-'imagepage'         => "Kacu fajlan lehtpol'",
-'mediawikipage'     => "Kacu tedotusen lehtpol'",
-'templatepage'      => "Kacu šablonan lehtpol'",
-'viewhelppage'      => "Kacu abun lehtpol'",
-'categorypage'      => "Kacu kategorijan lehtpol'",
-'viewtalkpage'      => 'Kacu diskussii',
 'otherlanguages'    => 'Toižil kelil',
 'redirectedfrom'    => '(Oigetud lehtpolelpäi $1)',
 'redirectpagesub'   => "Oigendai lehtpol'",
@@ -470,8 +441,9 @@ Sü om "\'\'$2\'\'".',
 # Login and logout pages
 'logouttext'               => "'''Tö olet lähtnuded sistemaspäi.'''
 
-Sab jatkta rad {{SITENAME}}-saital anonimižikš, vai [[Special:UserLogin|kirjutagatoiš udes]] sil-žo vai toižel kävutajan nimel.
+Sab jatkta rad {{SITENAME}}-saital anonimižikš, vai $1 sil-žo vai toižel kävutajan nimel.
 Otkat sil'mnägubale, miše erasid lehtpolid ozutaškatas mugažo, kut i edel teiden lähtendad sistemaspäi. Miše vajehtada niiden nägu, puhtastagat teiden kaclimen keš.",
+'logouttext-link-text'       => 'kirjutagatoiš udes',
 'welcomecreation'          => '== Tulgat tervhen, $1! ==
 Teiden registracii om loptud.
 Algat unohtagoi [[Special:Preferences|järgeta personaližikš]] sait.',
@@ -568,16 +540,6 @@ Miše tulda sistemha lopuližikš, teile pidab säta uz' peitsana naku:",
 'resetpass-wrong-oldpass'   => 'Vär pordaigaine vai nügüdläine peitsana.
 Voib olda, tö olet jo toižetanuded peitsanan vai pakinuded uden peitsanan.',
 'resetpass-temp-password'   => 'Pordaigaline peitsana:',
-
-# Special:PasswordReset
-'passwordreset'              => 'Peitsanan alustuz',
-'passwordreset-username'     => 'Kävutajan nimi:',
-'passwordreset-domain'       => 'Domen',
-'passwordreset-capture'      => 'Ozutada-k loptud kirjeine?',
-'passwordreset-email'        => 'E-počtan adres:',
-'passwordreset-emailelement' => 'Kävutajannimi: $1
-Aigaline peitsana: $2',
-'passwordreset-emailsent'    => 'Muštatai kirjeine oigetihe e-počtadme',
 
 # Special:ChangeEmail
 'changeemail-newemail' => "Uz' e-počtan adres",
@@ -971,13 +933,6 @@ Kävutagat prefiks ''all:'', miše ectä kaikes südäimištospäi (lodulehtpoli
 Tö voit nügüd' ectä Google'n turbiš.
 Otkat sil'mnägubale üks-se, miše {{SITENAME}}-saitan sädäimišt voib olda vanhtunuden.",
 
-# Quickbar
-'qbsettings'               => "Navigacijan panel'",
-'qbsettings-none'          => 'Ala ozuta',
-'qbsettings-fixedleft'     => 'Likumatoi huralpäi',
-'qbsettings-fixedright'    => 'Likumatoi oiktalpäi',
-'qbsettings-floatingleft'  => 'Ujui huralpäi',
-'qbsettings-floatingright' => 'Ujui oiktalpäi',
 
 # Preferences page
 'preferences'                   => 'Järgendused',
@@ -2353,14 +2308,7 @@ Voib olda, necil lehtpolel om kosketuz irdsaitale, kudamb om mustas nimikirjutes
 'pageinfo-views'            => 'Kacundoiden lugu',
 
 # Skin names
-'skinname-standard'    => 'Klassine',
-'skinname-nostalgia'   => "Nostal'gii",
-'skinname-cologneblue' => "Köl'nan sinine",
 'skinname-monobook'    => 'MonoBook',
-'skinname-myskin'      => 'Ičeze',
-'skinname-chick'       => 'Cipuine',
-'skinname-simple'      => 'Koveritoi',
-'skinname-modern'      => "Nügüd'aigaine",
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Znamoita kut patruliruidud',

@@ -36,9 +36,6 @@
 	 			</div>
 			</div>
 		</div>
-		<? if($showAdModalRectangle) { ?>
-			<div id="MODAL_RECTANGLE" class="wikia-ad noprint"></div>
-		<? } ?>
 	</div>
 
 	<div class="more-info">
@@ -62,7 +59,6 @@
 
 		<h1><a href="{{fileUrl}}">{{fileTitle}}</a></h1>
 		<a href="{{rawImageUrl}}" class="see-full-size-link"><?= wfMsg('lightbox-header-see-full-size-image') ?></a>
-		<span class="video-views">{{{views}}}</span>
 		<div class="user-details caption">
 			{{#caption}}<p>{{caption}}</p>{{/caption}}
 			<img class="avatar" src="{{userThumbUrl}}">

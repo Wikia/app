@@ -25,7 +25,7 @@ $content-width-large: 1238px;
 $padding-width-large: 30px;
 $page-width-large: $content-width-large - 2 * $padding-width-large;
 // "special case" for 1024px tablets (think landscape iPad)
-$content-width-small-plus: 1024px;
+$content-width-small-plus: 1024px - $scroll-bar-width;
 $padding-width-small-plus: 10px;
 $page-width-small-plus: $content-width-small-plus - 2 * $padding-width-small-plus;
 

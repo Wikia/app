@@ -551,10 +551,6 @@
 	.RTEWidescreenButton .cke_icon {
 		background-position: 0 -1264px;
 	}
-
-	.RTEPollButton .cke_icon {
-		background-position: 0 -1328px;
-	}
 }
 
 // link suggest - RT #37690
@@ -585,9 +581,7 @@
 
 // CK modal tweaks
 .skin-oasis.rte,
-.skin-oasis.MiniEditor,
-.skin-venus.rte,
-.skin-venus.MiniEditor{
+.skin-oasis.MiniEditor {
 	.cke_dialog {
 		border: 5px solid $color-body;
 		padding: 15px 15px 0 15px;

@@ -1,8 +1,8 @@
 <?php
 
-$messages = array();
+$messages = [ ];
 
-$messages['en'] = array(
+$messages['en'] = [
 	'wall-no-title' => 'No title',
 	'wall-message-loadmore' => 'View <span class="count">{{PLURAL:$1|$1 reply|all $1 replies}}</span>',
 	'wall-message-wall' => 'Message Wall',
@@ -66,6 +66,7 @@ $messages['en'] = array(
 	'wall-message-closed-by' => "[[$2|$1]] closed this thread",
 	'wall-message-closed-by-because' => "$1 closed this thread because:",
 	'wall-message-restore-reply' => "Restore Reply",
+	'wall-message-limit-reached' => "There is a limit of $1 posts per thread.",
 	'wall-delete-reason' => "User/admin action",
 	'wall-user-talk-page-archive-anchor' => 'See archived talk page',
 	'wall-user-talk-archive-page-title' => 'User_talk_archive',
@@ -127,6 +128,9 @@ The original post and your summary will still appear in the wiki's history.",
 	'wall-action-move-thread-ok' => 'Move thread',
 	'wall-action-move-board-label' => 'Select a board to move to',
 
+	'wall-posting-message-failed-title' => 'An error occurred while posting a message',
+	'wall-posting-message-failed-body' => 'Copy your work and try again later',
+
 	'wall-notifications' => 'Notifications',
 	'wall-notifications-all' => 'All Notifications',
 	'wall-notifications-markasread' => 'Mark all as read',
@@ -148,7 +152,7 @@ The original post and your summary will still appear in the wiki's history.",
 	'wn-user3-reply-other-your-wall' => '$1 and others replied to $2\'s message on your wall',
 	'wn-user1-reply-you-other-wall' => '$1 replied to your message on $2\'s wall',
 	'wn-user2-reply-you-other-wall' => '$1 and $2 replied to your message on $3\'s wall',
-	'wn-user3-reply-you-other-wall' => '$1 and others replied to your message on $3\'s wall',
+	'wn-user3-reply-you-other-wall' => '$1 and others replied to your message on $2\'s wall',
 	'wn-user1-reply-self-other-wall' => '$1 replied to a message on $2\'s wall',
 	'wn-user2-reply-self-other-wall' => '$1 and $2 replied to a message on $3\'s wall',
 	'wn-user3-reply-self-other-wall' => '$1 and others replied to a message on $2\'s wall',
@@ -314,10 +318,10 @@ The original post and your summary will still appear in the wiki's history.",
 	'wall-topic-edit-save' => 'Save',
 	'wall-topic-edit-cancel' => 'Cancel',
 
-	'group-threadmoderator' => 'Moderators',
-	'group-threadmoderator-member' => 'Moderator',
+	'group-threadmoderator' => 'Discussions Moderators',
+	'group-threadmoderator-member' => 'Discussions Moderator',
 	'grouppage-threadmoderator' => 'w:c:community:Help:Moderators',
-);
+];
 
 /** Message documentation (Message documentation)
  * @author Liuxinyu970226
@@ -328,7 +332,7 @@ The original post and your summary will still appear in the wiki's history.",
  * @author Siebrand
  * @author Wyz
  */
-$messages['qqq'] = array(
+$messages['qqq'] = [
 	'wall-no-title' => 'fallback wall message title for deleted message which are not accessible in archive',
 	'wall-message-loadmore' => 'See all the messages in the thread. Parameters:
 * $1 is the number of messages.',
@@ -419,6 +423,7 @@ $messages['qqq'] = array(
 	'wall-message-closed-by-because' => 'Summary at the top of a closed thread page. Parameters:
 * $1 is the user who closed the thread (GENDER is supported in this message).',
 	'wall-message-restore-reply' => 'Button to restore a reply on a removed reply page',
+	'wall-message-limit-reached' => 'Error message displayed instead of edit form when thread reaches the maximum number of replies',
 	'wall-delete-reason' => 'default user/admin action',
 	'wall-user-talk-page-archive-anchor' => "Link on a Message Wall page to the user's old talk page archive",
 	'wall-user-talk-archive-page-title' => "Title on a user's talk page archive",
@@ -477,6 +482,8 @@ See also:
 	'wall-action-move-topics-summary' => 'Summery for change in user contribution',
 	'wall-action-move-thread-ok' => 'Confirmation button for moving thread',
 	'wall-action-move-board-label' => 'Label for list of board dropdown',
+	'wall-posting-message-failed-title' => 'Popup title when posting message failed',
+	'wall-posting-message-failed-body' => 'Popup body when posting message failed',
 	'wall-notifications' => 'Title of notification dropdown.
 {{Identical|Notification}}',
 	'wall-notifications-all' => 'Text in notification dropdown menu.
@@ -518,7 +525,7 @@ See also:
 * $3 is wall owner.',
 	'wn-user3-reply-you-other-wall' => 'Notification. GENDER is supported in this message. Parameters:
 * $1 is first user replying to a thread you started
-* $3 is wall owner.',
+* $2 is wall owner.',
 	'wn-user1-reply-self-other-wall' => 'Notification. GENDER is supported in this message. Parameters:
 * $1 is user replying to a thread that user started
 * $2 is wall owner.',
@@ -757,12 +764,12 @@ checkbox on Special:Block',
 	'group-threadmoderator' => '{{doc-group|threadmoderator}}',
 	'group-threadmoderator-member' => '{{doc-group|threadmoderator|member}}',
 	'grouppage-threadmoderator' => '{{doc-group|threadmoderator|page}}',
-);
+];
 
 /** Old English (Ænglisc)
  * @author Espreon
  */
-$messages['ang'] = array(
+$messages['ang'] = [
 	'wall-toolbar-history' => 'Stǣr',
 	'wall-button-to-cancel-preview' => 'Adihtan',
 	'wall-message-edit' => 'Adihtan',
@@ -770,7 +777,7 @@ $messages['ang'] = array(
 	'wall-history' => 'Stǣr',
 	'wall-quote-author' => '$1 wrāt:',
 	'wall-topic-edit-save' => 'Hordian',
-);
+];
 
 /** Arabic (العربية)
  * @author Achraf94
@@ -779,7 +786,7 @@ $messages['ang'] = array(
  * @author Sonic N800
  * @author زكريا
  */
-$messages['ar'] = array(
+$messages['ar'] = [
 	'wall-no-title' => 'لا يوجد عنوان',
 	'wall-message-loadmore' => 'عرض <span class="count">{{PLURAL:$1|الرد|كل الردود ال$1}}</span>',
 	'wall-message-wall' => 'جدار الرسائل',
@@ -900,7 +907,7 @@ $messages['ar'] = array(
 	'wn-user3-reply-other-your-wall' => 'قام  $1 و آخرون بالرد على رسالة $2 على جدارك',
 	'wn-user1-reply-you-other-wall' => 'قام $1 بالرد على رسالتك على جدار $2',
 	'wn-user2-reply-you-other-wall' => 'قام كلا من $1 و $2 بالرد على رسالتك في جدار $3',
-	'wn-user3-reply-you-other-wall' => 'قام  $1 و آخرون بالرد على رسالتك على جدار $3',
+	'wn-user3-reply-you-other-wall' => 'قام  $1 و آخرون بالرد على رسالتك على جدار $2',
 	'wn-user1-reply-self-other-wall' => 'قام $1 بالرد على رسالة على جدار $2',
 	'wn-user2-reply-self-other-wall' => 'قام كلا من $1 و $2 بالرد على رسالة في جدار $3',
 	'wn-user3-reply-self-other-wall' => 'قام  $1 و آخرون بالرد على رسالة على جدار $2',
@@ -1027,13 +1034,13 @@ $messages['ar'] = array(
 	'wall-topic-edit' => 'تعديل المواضيع',
 	'wall-topic-edit-save' => 'حفظ',
 	'wall-topic-edit-cancel' => 'إلغاء',
-);
+];
 
 /** Azerbaijani (azərbaycanca)
  * @author Cekli829
  * @author Erdemaslancan
  */
-$messages['az'] = array(
+$messages['az'] = [
 	'wall-message-remove' => 'Çıxar',
 	'wall-button-to-cancel-preview' => 'Redaktə',
 	'wall-message-delete' => 'Sil',
@@ -1046,12 +1053,12 @@ $messages['az'] = array(
 	'wall-history' => 'Tarix',
 	'wall-history-action-view' => 'görünüş',
 	'wall-topic-edit-save' => 'Saxla',
-);
+];
 
 /** Bulgarian (български)
  * @author DCLXVI
  */
-$messages['bg'] = array(
+$messages['bg'] = [
 	'wall-message-undoremove' => 'Отмяна',
 	'wall-button-to-cancel-preview' => 'Редактиране',
 	'wall-button-save-changes' => 'Съхраняване на промените',
@@ -1080,13 +1087,13 @@ $messages['bg'] = array(
 	'wall-topic-input-placeholder' => 'Добавяне на тема (незадължително)',
 	'wall-topic-edit-save' => 'Съхраняване',
 	'wall-topic-edit-cancel' => 'Отказване',
-);
+];
 
 /** Breton (brezhoneg)
  * @author Fohanno
  * @author Y-M D
  */
-$messages['br'] = array(
+$messages['br'] = [
 	'wall-no-title' => 'Titl ebet',
 	'wall-message-loadmore' => 'Gwelet <span class="count">{{PLURAL:$1|ur|ar/an $1}} respont</span>',
 	'wall-message-wall' => "Moger ar c'homzoù",
@@ -1183,7 +1190,7 @@ $messages['br'] = array(
 	'wn-user3-reply-other-your-wall' => '$1 ha re all o deus respontet da gemennadenn $2 war ho moger',
 	'wn-user1-reply-you-other-wall' => "$1 en deus respontet d'ho kemenandenn war moger $2",
 	'wn-user2-reply-you-other-wall' => "$1 ha $2 o deus respontet d'ho kemennadenn war moger $3",
-	'wn-user3-reply-you-other-wall' => "$1 ha re all o deus respontet d'ho kemennadenn war moger $3",
+	'wn-user3-reply-you-other-wall' => "$1 ha re all o deus respontet d'ho kemennadenn war moger $2",
 	'wn-user1-reply-self-other-wall' => "$1 en deus respontet d'ur gemennadenn war moger $2",
 	'wn-user2-reply-self-other-wall' => "$1 ha $2 o deus respontet d'ur gemennadenn war moger $3",
 	'wn-user3-reply-self-other-wall' => "$1 ha re all o deus respontet d'ur gemennadenn war moger $2",
@@ -1277,18 +1284,18 @@ $messages['br'] = array(
 	'wall-topic-input-heading' => 'Tem',
 	'wall-topic-edit-save' => 'Enrollañ',
 	'wall-topic-edit-cancel' => 'Nullañ',
-);
+];
 
 /** Bosnian (bosanski)
  * @author CERminator
  */
-$messages['bs'] = array(
+$messages['bs'] = [
 	'wall-message-closed-by-because' => '$1 je zatvorio ovaj niz zbog:',
 	'wall-action-close-thread-title' => 'Zatvorite ovaj niz',
 	'wall-action-close-confirm' => 'Molimo objasnite nam zašto želite zatvoriti ovo:',
 	'wall-action-close-thread-confirm-info' => 'Ovaj niz će i dalje biti vidljiv.',
 	'wall-action-close-confirm-ok' => 'Zatvori',
-);
+];
 
 /** Catalan (català)
  * @author BroOk
@@ -1297,7 +1304,7 @@ $messages['bs'] = array(
  * @author Marcmpujol
  * @author Unapersona
  */
-$messages['ca'] = array(
+$messages['ca'] = [
 	'wall-no-title' => 'Sense títol',
 	'wall-message-loadmore' => 'Veure <span class="count">{{PLURAL:$1|$1 resposta|$1 respostes}}</span>',
 	'wall-message-wall' => 'Mur de missatges',
@@ -1418,7 +1425,7 @@ El missatge original i el teu resum apareixeran a l'historial del wiki.",
 	'wn-user3-reply-other-your-wall' => '$1 i altres han respost el missatge de $2 al teu Mur',
 	'wn-user1-reply-you-other-wall' => '$1 ha respost el teu missatge al mur de $2',
 	'wn-user2-reply-you-other-wall' => '$1 i $2 han respost el teu missatge al mur de $3',
-	'wn-user3-reply-you-other-wall' => '$1 i altres han respost el teu missatge al mur de $3',
+	'wn-user3-reply-you-other-wall' => '$1 i altres han respost el teu missatge al mur de $2',
 	'wn-user1-reply-self-other-wall' => '$1 ha respost un missatge al mur de $2',
 	'wn-user2-reply-self-other-wall' => '$1 i $2 han respost un missatge al mur de $3',
 	'wn-user3-reply-self-other-wall' => '$1 i altres han respost un missatge al mur de $2',
@@ -1547,12 +1554,12 @@ El missatge original i el teu resum apareixeran a l'historial del wiki.",
 	'wall-topic-edit-cancel' => 'Cancel·lar',
 	'group-threadmoderator' => 'Moderadors',
 	'group-threadmoderator-member' => 'Moderador',
-);
+];
 
 /** Chechen (нохчийн)
  * @author Умар
  */
-$messages['ce'] = array(
+$messages['ce'] = [
 	'wall-message-wall' => 'Декъашхочун дийцаре',
 	'wall-message-wall-shorten' => 'дийцаре',
 	'wall-message-update-topics-summary' => 'Тема хийцина',
@@ -1565,14 +1572,14 @@ $messages['ce'] = array(
 	'wall-wiki-activity-on' => '[[$1|пен тӀехь $2]]',
 	'wall-thread-history-title' => 'Ган истори',
 	'wall-votes-number' => '$1 {{PLURAL:$1|«суна хаза хетта»}}',
-);
+];
 
 /** Czech (čeština)
  * @author Chmee2
  * @author Darth Daron
  * @author Vks
  */
-$messages['cs'] = array(
+$messages['cs'] = [
 	'wall-no-title' => 'Bez názvu',
 	'wall-message-loadmore' => 'Zobrazit <span class="count">{{PLURAL:$1|$1 odpověď|všechny $1 odpovědi}}</span>',
 	'wall-message-wall' => 'Zeď zpráv',
@@ -1691,7 +1698,7 @@ Původní příspěvek a vaše shrnutí se budou i nadále zobrazovat v historii
 	'wn-user3-reply-other-your-wall' => '$1 a další odpověděli na zprávu uživatele $2 na Vaší zdi',
 	'wn-user1-reply-you-other-wall' => '$1 {{GENDER:$1|odpověděl|odpověděla|odpověděl}} na Vaši zprávu na zdi {{GENDER:$2|uživatele|uživatelky|uživatele}} $2',
 	'wn-user2-reply-you-other-wall' => '$1 a $2 odpověděli na Vaši zprávu na zdi {{GENDER:$3|uživatele|uživatelky|uživatele}} $3',
-	'wn-user3-reply-you-other-wall' => '$1 a další odpověděli na Vaši zprávu na zdi {{GENDER:$3|uživatele|uživatelky|uživatele}} $3',
+	'wn-user3-reply-you-other-wall' => '$1 a další odpověděli na Vaši zprávu na zdi {{GENDER:$2|uživatele|uživatelky|uživatele}} $2',
 	'wn-user1-reply-self-other-wall' => '$1 {{GENDER:$1|odpověděl|odpověděla|odpověděl}} na zprávu na zdi {{GENDER:$2|uživatele|uživatelky|uživatele}} $2',
 	'wn-user2-reply-self-other-wall' => '$1 a $2 odpověděli na zprávu na zdi {{GENDER:$3|uživatele|uživatelky|uživatele}} $3',
 	'wn-user3-reply-self-other-wall' => '$1 a další odpověděli na zprávu na zdi {{GENDER:$2|uživatele|uživatelky|uživatele}} $2',
@@ -1818,13 +1825,13 @@ Původní příspěvek a vaše shrnutí se budou i nadále zobrazovat v historii
 	'wall-topic-edit' => 'Upravit témata',
 	'wall-topic-edit-save' => 'Uložit',
 	'wall-topic-edit-cancel' => 'Zrušit',
-);
+];
 
 /** Welsh (Cymraeg)
  * @author Lloffiwr
  * @author Thefartydoctor
  */
-$messages['cy'] = array(
+$messages['cy'] = [
 	'wall-toolbar-history' => 'Hanes',
 	'wall-message-elseswall' => 'Wal $1',
 	'wall-default-title' => 'Neges oddi wrth $1',
@@ -1839,7 +1846,7 @@ $messages['cy'] = array(
 	'wall-history-title' => 'hanes wal',
 	'wall-history-rail-wall' => 'wal',
 	'wall-topic-edit-cancel' => 'Diddymu',
-);
+];
 
 /** German (Deutsch)
  * @author Arkondi
@@ -1850,7 +1857,7 @@ $messages['cy'] = array(
  * @author MtaÄ
  * @author PtM
  */
-$messages['de'] = array(
+$messages['de'] = [
 	'wall-no-title' => 'Kein Titel',
 	'wall-message-loadmore' => 'Zeige <span class="count">{{PLURAL:$1|eine Antwort|alle $1 Antworten}}</span>',
 	'wall-message-wall' => 'Nachrichtenseite',
@@ -1971,7 +1978,7 @@ Der Original-Post und deine Zusammenfassung bleiben in der Wiki-Historie sichtba
 	'wn-user3-reply-other-your-wall' => '$1 und weitere haben bei dir auf $2s Nachricht geantwortet',
 	'wn-user1-reply-you-other-wall' => '$1 hat bei $2 auf deine Nachricht geantwortet',
 	'wn-user2-reply-you-other-wall' => '$1 und $2 haben bei $3 auf deine Nachricht geantwortet',
-	'wn-user3-reply-you-other-wall' => '$1 und weitere haben bei $3 auf deine Nachricht geantwortet',
+	'wn-user3-reply-you-other-wall' => '$1 und weitere haben bei $2 auf deine Nachricht geantwortet',
 	'wn-user1-reply-self-other-wall' => '$1 hat auf $2s Nachrichtenseite geantwortet',
 	'wn-user2-reply-self-other-wall' => '$1 und $2 haben auf $3s Nachrichtenseite geantwortet',
 	'wn-user3-reply-self-other-wall' => '$1 und weitere haben auf $2s Nachrichtenseite geantwortet',
@@ -2098,10 +2105,10 @@ Der Original-Post und deine Zusammenfassung bleiben in der Wiki-Historie sichtba
 	'wall-topic-edit' => 'Themen bearbeiten',
 	'wall-topic-edit-save' => 'Speichern',
 	'wall-topic-edit-cancel' => 'Abbrechen',
-	'group-threadmoderator' => 'Moderatoren',
-	'group-threadmoderator-member' => 'Moderator',
+	'group-threadmoderator' => 'Diskussions-Moderatoren',
+	'group-threadmoderator-member' => 'Diskussions-Moderator',
 	'grouppage-threadmoderator' => 'w:c:community:Help:Moderatoren',
-);
+];
 
 /** Zazaki (Zazaki)
  * @author Erdemaslancan
@@ -2109,7 +2116,7 @@ Der Original-Post und deine Zusammenfassung bleiben in der Wiki-Historie sichtba
  * @author Marmase
  * @author Mirzali
  */
-$messages['diq'] = array(
+$messages['diq'] = [
 	'wall-no-title' => 'Sername çıno',
 	'wall-message-loadmore' => '<span class="count">{{PLURAL:$1|$1 Cewab|Cewabanê $1 }}</span> bıvinê',
 	'wall-message-wall' => 'Mesacê Dêsi',
@@ -2178,12 +2185,12 @@ $messages['diq'] = array(
 	'wall-quote-reply-to' => 'cewabê #$1',
 	'wall-topic-input-heading' => 'Topik:',
 	'wall-topic-edit' => 'Topiki bıvurne',
-);
+];
 
 /** Greek (Ελληνικά)
  * @author Glavkos
  */
-$messages['el'] = array(
+$messages['el'] = [
 	'wall-no-title' => 'Χωρίς τίτλο',
 	'wall-message-loadmore' => 'Προβολή <span class="count">{{PLURAL:$1|$1 απάντησης|όλων $1 των απαντήσεων}}</span>',
 	'wall-message-wall' => 'Τοίχος μηνυμάτων',
@@ -2247,14 +2254,14 @@ $messages['el'] = array(
 	'tog-enotifmywall-reminder' => 'Με ένα ημερήσιο email υπενθύμισης',
 	'wall-votes-number' => '$1 Kudos', # Fuzzy
 	'wall-votes-number-tooltip' => 'Δείτε ποιος έδωσε Kudos σε αυτό το μήνυμα',
-);
+];
 
 /** British English (British English)
  * @author Captaindogfish
  */
-$messages['en-gb'] = array(
+$messages['en-gb'] = [
 	'wall-recentchanges-thread-group' => "$1 on [[$2|$3's wall]]",
-);
+];
 
 /** Spanish (español)
  * @author AnakngAraw
@@ -2266,7 +2273,7 @@ $messages['en-gb'] = array(
  * @author VegaDark
  * @author Vivaelcelta
  */
-$messages['es'] = array(
+$messages['es'] = [
 	'wall-no-title' => 'Sin título',
 	'wall-message-loadmore' => 'Ver <span class="count">{{PLURAL:$1|$1 respuesta|$1 respuestas}}</span>',
 	'wall-message-wall' => 'Muro de mensajes',
@@ -2387,7 +2394,7 @@ El mensaje original y tu resumen aparecerá en el historial del wiki.',
 	'wn-user3-reply-other-your-wall' => '$1 y otros respondieron al mensaje de $2 en tu Muro',
 	'wn-user1-reply-you-other-wall' => '$1 respondió a tu mensaje en el muro de $2',
 	'wn-user2-reply-you-other-wall' => '$1 y $2 respondieron a tu mensaje en el muro de $3',
-	'wn-user3-reply-you-other-wall' => '$1 y otros respondieron a tu mensaje en el muro de $3',
+	'wn-user3-reply-you-other-wall' => '$1 y otros respondieron a tu mensaje en el muro de $2',
 	'wn-user1-reply-self-other-wall' => '$1 respondió a un mensaje en el muro de $2',
 	'wn-user2-reply-self-other-wall' => '$1 y $2 respondieron a un mensaje en el muro de $3',
 	'wn-user3-reply-self-other-wall' => '$1 y otros respondieron a un mensaje en el muro de $2',
@@ -2514,16 +2521,16 @@ El mensaje original y tu resumen aparecerá en el historial del wiki.',
 	'wall-topic-edit' => 'Editar temas',
 	'wall-topic-edit-save' => 'Guardar',
 	'wall-topic-edit-cancel' => 'Cancelar',
-	'group-threadmoderator' => 'Moderadores',
-	'group-threadmoderator-member' => 'Moderador',
+	'group-threadmoderator' => 'Moderadores de discusiones',
+	'group-threadmoderator-member' => 'Moderador de discusiones',
 	'grouppage-threadmoderator' => 'w:c:comunidad:Ayuda:Moderadores',
-);
+];
 
 /** Basque (euskara)
  * @author Subi
  * @author Xabier Armendaritz
  */
-$messages['eu'] = array(
+$messages['eu'] = [
 	'wall-message-more' => 'Gehiago',
 	'wall-message-delete' => 'Ezabatu',
 	'wall-delete-error-title' => 'Errorea',
@@ -2538,7 +2545,7 @@ $messages['eu'] = array(
 	'wall-topic-edit-cancel' => 'Utzi',
 	'group-threadmoderator' => 'Moderatzaileak',
 	'group-threadmoderator-member' => 'Moderatzailea',
-);
+];
 
 /** Persian (فارسی)
  * @author Alirezaaa
@@ -2546,7 +2553,7 @@ $messages['eu'] = array(
  * @author Reza1615
  * @author ZxxZxxZ
  */
-$messages['fa'] = array(
+$messages['fa'] = [
 	'wall-message-wall' => 'دیوار پیام',
 	'wall-message-unfollow' => 'دنبال نکردن',
 	'wall-message-undoremove' => 'واگردانی',
@@ -2594,7 +2601,7 @@ $messages['fa'] = array(
 	'wall-topic-edit-save' => 'ذخیره',
 	'wall-topic-edit-cancel' => 'لغو',
 	'group-threadmoderator-member' => 'مدیر',
-);
+];
 
 /** Finnish (suomi)
  * @author Elseweyr
@@ -2604,7 +2611,7 @@ $messages['fa'] = array(
  * @author Silvonen
  * @author Ville96
  */
-$messages['fi'] = array(
+$messages['fi'] = [
 	'wall-no-title' => 'Ei otsikkoa',
 	'wall-message-loadmore' => 'Näytä <span class="count">{{PLURAL:$1|$1 vastaus|kaikki $1 vastausta}}</span>',
 	'wall-message-wall' => 'Viestiseinä',
@@ -2725,7 +2732,7 @@ Tätä ei voi peruuttaa.',
 	'wn-user3-reply-other-your-wall' => '$1 ja muut vastasivat $2:n viestiin seinälläsi',
 	'wn-user1-reply-you-other-wall' => '$1 vastasi viestiisi $2:n seinällä',
 	'wn-user2-reply-you-other-wall' => '$1 ja $2 vastasivat viestiisi $3:n seinällä',
-	'wn-user3-reply-you-other-wall' => '$1 ja muut vastasivat viestiisi $3:n seinällä',
+	'wn-user3-reply-you-other-wall' => '$1 ja muut vastasivat viestiisi $2:n seinällä',
 	'wn-user1-reply-self-other-wall' => '$1 vastasi viestiin $2:n seinällä',
 	'wn-user2-reply-self-other-wall' => '$1 ja $2 vastasivat viestiin $3:n seinällä',
 	'wn-user3-reply-self-other-wall' => '$1 ja muut vastasivat viestiin $2:n seinällä',
@@ -2850,12 +2857,12 @@ Tätä ei voi peruuttaa.',
 	'wall-topic-edit' => 'Muokkaa aiheita',
 	'wall-topic-edit-save' => 'Tallenna',
 	'wall-topic-edit-cancel' => 'Peruuta',
-);
+];
 
 /** Faroese (føroyskt)
  * @author EileenSanda
  */
-$messages['fo'] = array(
+$messages['fo'] = [
 	'wall-no-title' => 'Onki heiti',
 	'wall-message-loadmore' => 'Vís <span class="count">{{PLURAL:$1|$1 svar|øll $1 svar}}</span>',
 	'wall-message-wall' => 'Boðsveggur',
@@ -2884,7 +2891,7 @@ $messages['fo'] = array(
 	'wall-action-remove-reply-title' => 'Tak hetta svarið burtur',
 	'wall-action-remove-thread-title' => 'Tak henda tráðin burtur',
 	'wall-delete-error-title' => 'Feilur',
-);
+];
 
 /** French (français)
  * @author Gomoko
@@ -2892,7 +2899,7 @@ $messages['fo'] = array(
  * @author McDutchie
  * @author Wyz
  */
-$messages['fr'] = array(
+$messages['fr'] = [
 	'wall-no-title' => 'Sans titre',
 	'wall-message-loadmore' => 'Voir <span class="count">{{PLURAL:$1|une réponse|les $1 réponses}}</span>',
 	'wall-message-wall' => 'Mur de discussion',
@@ -3013,7 +3020,7 @@ Le message original et votre résumé seront toujours visibles dans l’historiq
 	'wn-user3-reply-other-your-wall' => '$1, entre autres, a répondu au message de $2 sur votre mur',
 	'wn-user1-reply-you-other-wall' => '$1 a répondu à votre message sur le mur de $2',
 	'wn-user2-reply-you-other-wall' => '$1 et $2 ont répondu à votre message sur le mur de $3',
-	'wn-user3-reply-you-other-wall' => '$1, entre autres, a répondu à votre message sur le mur de $3',
+	'wn-user3-reply-you-other-wall' => '$1, entre autres, a répondu à votre message sur le mur de $2',
 	'wn-user1-reply-self-other-wall' => '$1 a répondu à un message sur le mur de $2',
 	'wn-user2-reply-self-other-wall' => '$1 et $2 ont répondu à un message sur le mur de $3',
 	'wn-user3-reply-self-other-wall' => '$1, entre autres, a répondu à un message sur le mur de $2',
@@ -3140,15 +3147,15 @@ Le message original et votre résumé seront toujours visibles dans l’historiq
 	'wall-topic-edit' => 'Modifier les rubriques',
 	'wall-topic-edit-save' => 'Enregistrer',
 	'wall-topic-edit-cancel' => 'Annuler',
-	'group-threadmoderator' => 'Modérateurs',
-	'group-threadmoderator-member' => 'Modérateur',
+	'group-threadmoderator' => 'Modérateurs de discussions',
+	'group-threadmoderator-member' => 'Modérateur de discussions',
 	'grouppage-threadmoderator' => 'w:c:community:Help:Moderators',
-);
+];
 
 /** Western Frisian (Frysk)
  * @author Robin0van0der0vliet
  */
-$messages['fy'] = array(
+$messages['fy'] = [
 	'wall-toolbar-history' => 'Skiednis',
 	'wall-button-to-cancel-preview' => 'Bewurkje',
 	'wall-button-cancel-changes' => 'Annulearje',
@@ -3163,13 +3170,13 @@ $messages['fy'] = array(
 	'wall-history' => 'Skiednis',
 	'wall-topic-edit-save' => 'Bewarje',
 	'wall-topic-edit-cancel' => 'Annulearje',
-);
+];
 
 /** Galician (galego)
  * @author Toliño
  * @author Vivaelcelta
  */
-$messages['gl'] = array(
+$messages['gl'] = [
 	'wall-no-title' => 'Sen título',
 	'wall-message-loadmore' => 'Ollar <span class="count">{{PLURAL:$1|$1 resposta|as $1 respostas}}</span>',
 	'wall-message-wall' => 'Muro de mensaxes',
@@ -3290,7 +3297,7 @@ A mensaxe orixinal e o seu resumo seguirán aparecendo no historial do wiki.',
 	'wn-user3-reply-other-your-wall' => '$1 e outros responderon á mensaxe de $2 no seu muro',
 	'wn-user1-reply-you-other-wall' => '$1 respondeu á súa mensaxe no muro de $2',
 	'wn-user2-reply-you-other-wall' => '$1 e $2 responderon á súa mensaxe no muro de $3',
-	'wn-user3-reply-you-other-wall' => '$1 e outros responderon á súa mensaxe no muro de $3',
+	'wn-user3-reply-you-other-wall' => '$1 e outros responderon á súa mensaxe no muro de $2',
 	'wn-user1-reply-self-other-wall' => '$1 respondeu a unha mensaxe no muro de $2',
 	'wn-user2-reply-self-other-wall' => '$1 e $2 responderon a unha mensaxe no muro de $3',
 	'wn-user3-reply-self-other-wall' => '$1 e outros responderon a unha mensaxe no muro de $2',
@@ -3417,28 +3424,28 @@ A mensaxe orixinal e o seu resumo seguirán aparecendo no historial do wiki.',
 	'wall-topic-edit' => 'Editar os temas',
 	'wall-topic-edit-save' => 'Gardar',
 	'wall-topic-edit-cancel' => 'Cancelar',
-);
+];
 
 /** Hebrew (עברית)
  * @author Guycn2
  */
-$messages['he'] = array(
+$messages['he'] = [
 	'wall-recentchanges-thread-group' => '$1 ב[[$2|קיר של $3]]',
 	'wall-whatlinkshere-wall-line' => '[[$1|$2]] ב[[$3|קיר של $4]]',
-);
+];
 
 /** Hindi (हिन्दी)
  * @author Vivek Rai
  */
-$messages['hi'] = array(
+$messages['hi'] = [
 	'wall-history-who-involved-wall-title' => 'कौन शामिल है?',
-);
+];
 
 /** Hungarian (magyar)
  * @author Csega
  * @author TK-999
  */
-$messages['hu'] = array(
+$messages['hu'] = [
 	'wall-no-title' => 'Nincs cím',
 	'wall-message-loadmore' => 'Mind a(z) <span class="count">$1</span> válasz megtekintése',
 	'wall-message-wall' => 'Üzenőfal',
@@ -3556,7 +3563,7 @@ Az eredeti üzenet és az indoklásod megmarad a wiki történetében.',
 	'wn-user3-reply-other-your-wall' => '$1 és mások válaszoltak $2 üzenetére az üzenőfaladon',
 	'wn-user1-reply-you-other-wall' => '$1 válaszolt az üzenetedre $2 üzenőfalán',
 	'wn-user2-reply-you-other-wall' => '$1 és $2 válaszolt az üzenetedre $3 üzenőfalán',
-	'wn-user3-reply-you-other-wall' => '$1 és mások válaszoltak az üzenetedre $3 üzenőfalán',
+	'wn-user3-reply-you-other-wall' => '$1 és mások válaszoltak az üzenetedre $2 üzenőfalán',
 	'wn-user1-reply-self-other-wall' => '$1 válaszolt egy üzenetre $2 üzenőfalán',
 	'wn-user2-reply-self-other-wall' => '$1 és $2 válaszolt egy üzenetre $3 üzenőfalán',
 	'wn-user3-reply-self-other-wall' => '$1 és mások válaszoltak egy üzenetre $2 üzenőfalán',
@@ -3675,19 +3682,19 @@ Az eredeti üzenet és az indoklásod megmarad a wiki történetében.',
 	'wall-topic-edit' => 'Témák szerkesztése',
 	'wall-topic-edit-save' => 'Mentés',
 	'wall-topic-edit-cancel' => 'Mégse',
-);
+];
 
 /** Armenian (Հայերեն)
  * @author Աշոտ1997
  */
-$messages['hy'] = array(
+$messages['hy'] = [
 	'group-threadmoderator-member' => 'Մոդերատոր',
-);
+];
 
 /** Interlingua (interlingua)
  * @author McDutchie
  */
-$messages['ia'] = array(
+$messages['ia'] = [
 	'wall-no-title' => 'Sin titulo',
 	'wall-message-loadmore' => 'Vider <span class="count">{{PLURAL:$1|un responsa|tote le $1 responsas}}</span>',
 	'wall-message-wall' => 'Muro de messages',
@@ -3791,7 +3798,7 @@ Le message original e tu summario apparera totevia in le historia del wiki.',
 	'wn-user3-reply-other-your-wall' => '$1 e alteres respondeva al message de $2 sur tu muro',
 	'wn-user1-reply-you-other-wall' => '$1 respondeva a tu message sur le muro de $2',
 	'wn-user2-reply-you-other-wall' => '$1 e $2 respondeva a tu message sur le muro de $3',
-	'wn-user3-reply-you-other-wall' => '$1 e alteres respondeva a tu message sur le muro de $3',
+	'wn-user3-reply-you-other-wall' => '$1 e alteres respondeva a tu message sur le muro de $2',
 	'wn-user1-reply-self-other-wall' => '$1 respondeva a un message sur le muro de $2',
 	'wn-user2-reply-self-other-wall' => '$1 e $2 respondeva a un message sur le muro de $3',
 	'wn-user3-reply-self-other-wall' => '$1 e alteres respondeva a un message sur le muro de $2',
@@ -3905,21 +3912,21 @@ Le message original e tu summario apparera totevia in le historia del wiki.',
 	'wall-votes-voted-tooltip' => 'Tu ha date complimentos a iste message!',
 	'wall-quote-author' => '$1 scribeva:',
 	'wall-quote-reply-to' => 'responsa a №$1',
-);
+];
 
 /** Indonesian (Bahasa Indonesia)
  * @author Kenrick95
  */
-$messages['id'] = array(
+$messages['id'] = [
 	'wall-message-undoremove' => 'Balikkan',
-);
+];
 
 /** Italian (italiano)
  * @author Beta16
  * @author Minerva Titani
  * @author Sactage
  */
-$messages['it'] = array(
+$messages['it'] = [
 	'wall-thread-isnotifyeveryone' => 'Evidenziata',
 	'wall-recentchanges-new-message' => 'nella [[$1|bacheca di $2]]',
 	'wall-recentchanges-removed-thread' => 'ha rimosso la discussione "[[$1|$2]]" nella [[$3|Bacheca di $4]]',
@@ -3932,7 +3939,9 @@ $messages['it'] = array(
 	'wall-message-notifyeveryone' => 'Evidenzia questa discussione',
 	'wall-message-unnotifyeveryone' => 'Non evidenziare più questa discussione',
 	'wall-message-notifyeveryone-tooltip' => 'Tutti gli utenti loggati in questa wiki riceveranno le notifiche per questa discussione la prossima volta che visiteranno la wiki',
-);
+	'group-threadmoderator' => 'Moderatori di discussioni',
+	'group-threadmoderator-member' => 'Moderatore di discussioni',
+];
 
 /** Japanese (日本語)
  * @author BryghtShadow
@@ -3941,7 +3950,7 @@ $messages['it'] = array(
  * @author Tommy6
  * @author Whym
  */
-$messages['ja'] = array(
+$messages['ja'] = [
 	'wall-no-title' => 'タイトルなし',
 	'wall-message-loadmore' => '<span class="count">$1件</span>の返信を全てを見る',
 	'wall-message-wall' => 'メッセージウォール',
@@ -4061,7 +4070,7 @@ $messages['ja'] = array(
 	'wn-user3-reply-other-your-wall' => '$1 とその他複数があなたのウォールの $2 からのメッセージに返信しました',
 	'wn-user1-reply-you-other-wall' => '$1 が $2 のウォールのあなたのメッセージに返信しました',
 	'wn-user2-reply-you-other-wall' => '$1 と $2 が $3 のウォールのあなたのメッセージに返信しました',
-	'wn-user3-reply-you-other-wall' => '$1 とその他複数が $3 のウォールのあなたのメッセージに返信しました',
+	'wn-user3-reply-you-other-wall' => '$1 とその他複数が $2 のウォールのあなたのメッセージに返信しました',
 	'wn-user1-reply-self-other-wall' => '$1 が $2 のウォールのメッセージに返信しました',
 	'wn-user2-reply-self-other-wall' => '$1 と $2 が $3 のウォールのメッセージに返信しました',
 	'wn-user3-reply-self-other-wall' => '$1 とその他複数が $2 のウォールのメッセージに返信しました',
@@ -4187,14 +4196,15 @@ $messages['ja'] = array(
 	'wall-topic-edit' => 'タグを編集',
 	'wall-topic-edit-save' => '保存',
 	'wall-topic-edit-cancel' => '中止',
-	'group-threadmoderator' => 'モデレーター',
-);
+	'group-threadmoderator' => 'トーク・モデレーター',
+	'group-threadmoderator-member' => 'トーク・モデレーター',
+];
 
 /** Georgian (ქართული)
  * @author DevaMK
  * @author Otogi
  */
-$messages['ka'] = array(
+$messages['ka'] = [
 	'wall-message-loadmore' => 'იხილე $1-ვე პასუხი',
 	'wall-message-unfollow' => 'კონტროლის გაუქმება',
 	'wall-message-mywall' => 'ჩემი კედელი',
@@ -4217,14 +4227,14 @@ $messages['ka'] = array(
 	'wall-sorting-newest-threads' => 'უახლესი ბმულები',
 	'wall-sorting-oldest-threads' => 'უძველესი ბმულები',
 	'wall-sorting-newest-replies' => 'უახლესი პასუხები',
-);
+];
 
 /** Kabardian (Адыгэбзэ)
  * @author Erdemaslancan
  */
-$messages['kbd'] = array(
+$messages['kbd'] = [
 
-);
+];
 
 /** Korean (한국어)
  * @author Cafeinlove
@@ -4232,7 +4242,7 @@ $messages['kbd'] = array(
  * @author Priviet
  * @author 아라
  */
-$messages['ko'] = array(
+$messages['ko'] = [
 	'wall-no-title' => '제목 없음',
 	'wall-message-loadmore' => '<span class="count">{{PLURAL:$1|덧글 $1개}}</span> 보기',
 	'wall-message-wall' => '메시지 담벼락',
@@ -4274,7 +4284,7 @@ $messages['ko'] = array(
 	'wn-user3-reply-other-your-wall' => '$1 사용자와 및 그 외 사용자가 귀하의 메시지 담벼락에서 $2 사용자의 메시지에 댓글을 남겼습니다',
 	'wn-user1-reply-you-other-wall' => '$2 사용자의 메시지 담벼락에 $1 사용자가 귀하에게 댓글을 남겼습니다',
 	'wn-user2-reply-you-other-wall' => '$1 사용자와 $2 사용자가 $3 사용자의 메시지 담벼락에서 귀하에게 댓글을 남겼습니다',
-	'wn-user3-reply-you-other-wall' => '$3 사용자의 메시지 담벼락에 $1 사용자 및 그 외 사용자가 귀하에게 댓글을 남겼습니다',
+	'wn-user3-reply-you-other-wall' => '$2 사용자의 메시지 담벼락에 $1 사용자 및 그 외 사용자가 귀하에게 댓글을 남겼습니다',
 	'wn-user1-reply-self-other-wall' => '$1 사용자가 $2 사용자의 메시지 담벼락에서 댓글을 남겼습니다',
 	'wn-user2-reply-self-other-wall' => '$1 사용자와 $2 사용자가 $3 사용자의 메시지 담벼락에서 댓글을 남겼습니다',
 	'wn-user3-reply-self-other-wall' => '$1 사용자 및 그 외 사용자가 $2 사용자의 메시지 담벼락에서 댓글을 남겼습니다',
@@ -4338,21 +4348,21 @@ $messages['ko'] = array(
 	'wall-quote-reply-to' => '#$1에 대한 덧글',
 	'wall-topic-edit-save' => '저장',
 	'wall-topic-edit-cancel' => '취소',
-);
+];
 
 /** Karachay-Balkar (къарачай-малкъар)
  * @author Iltever
  */
-$messages['krc'] = array(
+$messages['krc'] = [
 	'wall-message-wall-shorten' => 'сюзюу',
 	'wall-toolbar-history' => 'Тарих',
 	'wall-thread-closed' => 'Джаб',
-);
+];
 
 /** Colognian (Ripoarisch)
  * @author Purodha
  */
-$messages['ksh'] = array(
+$messages['ksh'] = [
 	'wall-no-title' => 'Keine Tittel',
 	'wall-message-loadmore' => 'Zeisch {{PLURAL:$1|ein Antwoot|$1 Antwoote|kei Antwoot}}', # Fuzzy
 	'wall-message-undoremove' => 'Zeröcknämme',
@@ -4402,12 +4412,12 @@ $messages['ksh'] = array(
 	'wall-history-action-restore' => 'wider zerök holle',
 	'wall-history-action-thread-history' => 'dem Jeshprääschßfäddem sing Verjangeheit un Versione',
 	'wall-thread-history-title' => 'dem Jeshprääschßfäddem sing Verjangeheit un Versione', # Fuzzy
-);
+];
 
 /** Kurdish (Latin script) (Kurdî (latînî)‎)
  * @author Bikarhêner
  */
-$messages['ku-latn'] = array(
+$messages['ku-latn'] = [
 	'wall-toolbar-history' => 'Dîrok',
 	'wall-thread-deleted' => 'Hate jêbirin',
 	'wall-thread-closed' => 'Hate girtin',
@@ -4427,12 +4437,12 @@ $messages['ku-latn'] = array(
 	'wall-topic-edit-cancel' => 'Betal bike',
 	'group-threadmoderator' => 'Moderator',
 	'group-threadmoderator-member' => 'Moderator',
-);
+];
 
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
-$messages['lb'] = array(
+$messages['lb'] = [
 	'wall-no-title' => 'Keen Titel',
 	'wall-message-undoremove' => 'Réckgängeg maachen',
 	'wall-toolbar-history' => 'Versiounen',
@@ -4473,30 +4483,30 @@ $messages['lb'] = array(
 	'wall-topic-edit-cancel' => 'Ofbriechen',
 	'group-threadmoderator' => 'Moderateuren',
 	'group-threadmoderator-member' => 'Moderateur',
-);
+];
 
 /** Northern Luri (لوری مینجایی)
  * @author Mogoeilor
  */
-$messages['lrc'] = array(
+$messages['lrc'] = [
 	'wall-button-save-changes' => 'اماییه کردن آلشتیا',
-);
+];
 
 /** Latvian (latviešu)
  * @author Edgars2007
  * @author Sg ghost
  */
-$messages['lv'] = array(
+$messages['lv'] = [
 	'wall-message-wall' => 'Lietotāja diskusija',
 	'wall-desc' => 'Lietotāja diskusija lapas nomaiņa',
 	'wall-recentchanges-namespace-selector-message-wall' => 'Lietotāja diskusija',
 	'prefs-email-wall-v2' => 'Lietotāja diskusija un Forums',
-);
+];
 
 /** Macedonian (македонски)
  * @author Bjankuloski06
  */
-$messages['mk'] = array(
+$messages['mk'] = [
 	'wall-no-title' => 'Без наслов',
 	'wall-message-loadmore' => 'Погл. <span class="count">{{PLURAL:$1|$1 одговор|сите $1 одговори}}</span>',
 	'wall-message-wall' => 'Ѕид за пораки',
@@ -4617,7 +4627,7 @@ $messages['mk'] = array(
 	'wn-user3-reply-other-your-wall' => '$1 и други одговорија на пораката на $2 на вашиот ѕид',
 	'wn-user1-reply-you-other-wall' => '$1 ви одговори на пораката на ѕидот на $2',
 	'wn-user2-reply-you-other-wall' => '$1 и $2 ви одговорија на пораката на ѕидот на $3',
-	'wn-user3-reply-you-other-wall' => '$1 и други ви одговорија на пораката на ѕидот на $3',
+	'wn-user3-reply-you-other-wall' => '$1 и други ви одговорија на пораката на ѕидот на $2',
 	'wn-user1-reply-self-other-wall' => '$1 одговори на порака на ѕидот на $2',
 	'wn-user2-reply-self-other-wall' => '$1 и $2 одговорија на порака на ѕидот на $3',
 	'wn-user3-reply-self-other-wall' => '$1 и други одговорија на порака на ѕидот на $2',
@@ -4747,12 +4757,12 @@ $messages['mk'] = array(
 	'group-threadmoderator' => 'Модератори',
 	'group-threadmoderator-member' => 'Модератор',
 	'grouppage-threadmoderator' => 'w:c:community:Help:Moderators',
-);
+];
 
 /** Malay (Bahasa Melayu)
  * @author Anakmalaysia
  */
-$messages['ms'] = array(
+$messages['ms'] = [
 	'wall-no-title' => 'Tiada tajuk',
 	'wall-message-loadmore' => 'Lihat <span class="count">{{PLURAL:$1|$1 balasan|kesemua $1 balasan}}</span>',
 	'wall-message-wall' => 'Papan Pesanan',
@@ -4873,7 +4883,7 @@ Pos yang asal dan ringkasan anda akan kekal dalam sejarah wiki.',
 	'wn-user3-reply-other-your-wall' => '$1 dan lain-lain membalas pesanan $2 di papan anda',
 	'wn-user1-reply-you-other-wall' => '$1 membalas pesanan anda di papan $2',
 	'wn-user2-reply-you-other-wall' => '$1 dan $2 membalas pesanan anda di papan $3',
-	'wn-user3-reply-you-other-wall' => '$1 dan lain-lain membalas pesanan anda di papan $3',
+	'wn-user3-reply-you-other-wall' => '$1 dan lain-lain membalas pesanan anda di papan $2',
 	'wn-user1-reply-self-other-wall' => '$1 membalas pesanan di papan $2',
 	'wn-user2-reply-self-other-wall' => '$1 dan $2 membalas pesanan di papan $3',
 	'wn-user3-reply-self-other-wall' => '$1 dan lain-lain membalas pesanan di papan $2',
@@ -5003,14 +5013,14 @@ Pos yang asal dan ringkasan anda akan kekal dalam sejarah wiki.',
 	'group-threadmoderator' => 'Pengawal Selia',
 	'group-threadmoderator-member' => 'Pengawal Selia',
 	'grouppage-threadmoderator' => 'w:c:community:Help:Moderators',
-);
+];
 
 /** Neapolitan (Napulitano)
  * @author C.R.
  */
-$messages['nap'] = array(
+$messages['nap'] = [
 	'wall-thread-history-title' => "Storico d' 'o filo",
-);
+];
 
 /** Norwegian Bokmål (norsk bokmål)
  * @author Audun
@@ -5018,7 +5028,7 @@ $messages['nap'] = array(
  * @author EvenT
  * @author Wouterkoch
  */
-$messages['nb'] = array(
+$messages['nb'] = [
 	'wall-no-title' => 'Ingen tittel',
 	'wall-message-loadmore' => 'Vis <span class="count">{{PLURAL:$1|$1 svar|alle $1 svar}}</span>',
 	'wall-message-wall' => 'Beskjedtavle',
@@ -5134,7 +5144,7 @@ Originalinnlegget og sammendraget vil fremdeles vises i wikiens historikk.',
 	'wn-user3-reply-other-your-wall' => '$1 og andre svarte på $2 sin beskjed på beskjedtavlen din',
 	'wn-user1-reply-you-other-wall' => '$1 svarte på beskjeden din på $2 sin beskjedtavle',
 	'wn-user2-reply-you-other-wall' => '$1 og $2 svarte på en beskjed på $3 sin beskjedtavle',
-	'wn-user3-reply-you-other-wall' => '$1 og andre svarte på beskjeden din på $3 sin beskjedtavle',
+	'wn-user3-reply-you-other-wall' => '$1 og andre svarte på beskjeden din på $2 sin beskjedtavle',
 	'wn-user1-reply-self-other-wall' => '$1 svarte på en beskjed på $2 sin beskjedtavle',
 	'wn-user2-reply-self-other-wall' => '$1 og $2 svarte på en beskjed på $3 sin beskjedtavle',
 	'wn-user3-reply-self-other-wall' => '$1 og andre svarte på en beskjed på $2 sin beskjedtavle',
@@ -5257,7 +5267,7 @@ Originalinnlegget og sammendraget vil fremdeles vises i wikiens historikk.',
 	'wall-topic-edit' => 'Rediger emner',
 	'wall-topic-edit-save' => 'Lagre',
 	'wall-topic-edit-cancel' => 'Avbryt',
-);
+];
 
 /** Dutch (Nederlands)
  * @author AvatarTeam
@@ -5269,7 +5279,7 @@ Originalinnlegget og sammendraget vil fremdeles vises i wikiens historikk.',
  * @author Siebrand
  * @author Wiki13
  */
-$messages['nl'] = array(
+$messages['nl'] = [
 	'wall-no-title' => 'Geen koptekst',
 	'wall-message-loadmore' => '<span class="count">{{PLURAL:$1|Reactie|Alle $1 reacties}}</span> bekijken',
 	'wall-message-wall' => 'Prikbord',
@@ -5390,7 +5400,7 @@ Het oorspronkelijke bericht en uw bewerkingssamenvatting blijven nog wel in de g
 	'wn-user3-reply-other-your-wall' => '$1 en anderen hebben geantwoord op een bericht van $2 op uw prikbord',
 	'wn-user1-reply-you-other-wall' => '$1 heeft geantwoord op uw bericht op het prikbord van $2',
 	'wn-user2-reply-you-other-wall' => '$1 en $2 hebben geantwoord op uw bericht op het prikbord van $3',
-	'wn-user3-reply-you-other-wall' => '$1 en anderen hebben geantwoord op uw bericht op het prikbord van $3',
+	'wn-user3-reply-you-other-wall' => '$1 en anderen hebben geantwoord op uw bericht op het prikbord van $2',
 	'wn-user1-reply-self-other-wall' => '$1 heeft geantwoord op een bericht op het prikbord van $2',
 	'wn-user2-reply-self-other-wall' => '$1 en $2 hebben geantwoord op een bericht op het prikbord van $3',
 	'wn-user3-reply-self-other-wall' => '$1 en anderen hebben geantwoord op een bericht op het prikbord van $2',
@@ -5517,21 +5527,21 @@ Het oorspronkelijke bericht en uw bewerkingssamenvatting blijven nog wel in de g
 	'wall-topic-edit' => 'Onderwerpen bewerken',
 	'wall-topic-edit-save' => 'Opslaan',
 	'wall-topic-edit-cancel' => 'Annuleren',
-	'group-threadmoderator' => 'Moderators',
-	'group-threadmoderator-member' => 'Moderator',
-);
+	'group-threadmoderator' => 'Discussiemoderatoren',
+	'group-threadmoderator-member' => 'Discussiemoderator',
+];
 
 /** Norwegian Nynorsk (norsk nynorsk)
  * @author Erdemaslancan
  */
-$messages['nn'] = array(
+$messages['nn'] = [
 
-);
+];
 
 /** Occitan (occitan)
  * @author Cedric31
  */
-$messages['oc'] = array(
+$messages['oc'] = [
 	'wall-message-wall-shorten' => 'mur',
 	'wall-message-unfollow' => 'Seguir pas mai',
 	'wall-message-undoremove' => 'Anullar',
@@ -5581,20 +5591,20 @@ $messages['oc'] = array(
 	'wall-votes-number' => '$1 {{PLURAL:$1|seleccion|seleccions}}',
 	'wall-topic-edit-save' => 'Enregistrar',
 	'wall-topic-edit-cancel' => 'Anullar',
-);
+];
 
 /** Punjabi (ਪੰਜਾਬੀ)
  * @author Babanwalia
  */
-$messages['pa'] = array(
+$messages['pa'] = [
 	'wall-recentchanges-thread-group' => '$1 on [[$2|$3 ਦੀ ਕੰਧ]]',
 	'wall-whatlinkshere-wall-line' => '[[$3|$4 ਦੀ ਕੰਧ]] ਉੱਤੇ [[$1|$2]]',
-);
+];
 
 /** Palatine German (Pälzisch)
  * @author Manuae
  */
-$messages['pfl'] = array(
+$messages['pfl'] = [
 	'wall-no-title' => 'Kän Tidl',
 	'wall-message-undoremove' => "Rigg'gängisch",
 	'wall-toolbar-history' => 'Gschischd',
@@ -5613,7 +5623,7 @@ $messages['pfl'] = array(
 	'wall-action-rev-confirm-ok' => 'Ja, lesche',
 	'wall-notifications-markasread-all-wikis' => 'Alli Wikis',
 	'wall-notifications-markasread-this-wiki' => 'Des Wiki',
-);
+];
 
 /** Polish (polski)
  * @author Ankry
@@ -5624,7 +5634,7 @@ $messages['pfl'] = array(
  * @author Rezonansowy
  * @author Sovq
  */
-$messages['pl'] = array(
+$messages['pl'] = [
 	'wall-no-title' => 'Brak tytułu',
 	'wall-message-loadmore' => 'Zobacz <span class="count">({{PLURAL:$1|odpowiedź|wszystkie $1 odpowiedzi}})</span>',
 	'wall-message-wall' => 'Tablica',
@@ -5725,6 +5735,8 @@ Oryginał wiadomości i twój komentarz wciąż pozostaną w historii wiki.',
 	'wall-action-move-topics-summary' => 'Wątek przeniesiono',
 	'wall-action-move-thread-ok' => 'Przenieś wątek',
 	'wall-action-move-board-label' => 'Wybierz subforum, do którego przenieść wątek',
+	'wall-posting-message-failed-title' => 'Wystąpił błąd podczas wysyłania wiadomości',
+	'wall-posting-message-failed-body' => 'Skopiuj swoją wiadomość i spróbuj jeszcze raz później',
 	'wall-notifications' => 'Powiadomienia',
 	'wall-notifications-all' => 'Wszystkie powiadomienia',
 	'wall-notifications-markasread' => 'Oznacz wszystkie jako przeczytane',
@@ -5745,7 +5757,7 @@ Oryginał wiadomości i twój komentarz wciąż pozostaną w historii wiki.',
 	'wn-user3-reply-other-your-wall' => '$1 i inni odpowiedzieli na wiadomość od $2 na Twojej tablicy',
 	'wn-user1-reply-you-other-wall' => '$1 odpowiedział na Twoją wiadomość na tablicy użytkownika $2',
 	'wn-user2-reply-you-other-wall' => '$1 i $2 odpowiedzieli na Twoją wiadomość na tablicy użytkownika $3',
-	'wn-user3-reply-you-other-wall' => '$1 i inni odpowiedzieli na Twoją wiadomość na tablicy użytkownika $3',
+	'wn-user3-reply-you-other-wall' => '$1 i inni odpowiedzieli na Twoją wiadomość na tablicy użytkownika $2',
 	'wn-user1-reply-self-other-wall' => '$1 odpowiedział na wiadomość na tablicy użytkownika $2',
 	'wn-user2-reply-self-other-wall' => '$1 i $2 odpowiedzieli na wiadomość na tablicy użytkownika $3',
 	'wn-user3-reply-self-other-wall' => '$1 i inni odpowiedzieli na wiadomość na tablicy użytkownika $2',
@@ -5872,14 +5884,14 @@ Oryginał wiadomości i twój komentarz wciąż pozostaną w historii wiki.',
 	'wall-topic-edit' => 'Edytuj tematy',
 	'wall-topic-edit-save' => 'Zapisz zmiany',
 	'wall-topic-edit-cancel' => 'Anuluj',
-	'group-threadmoderator' => 'Moderatorzy',
-	'group-threadmoderator-member' => 'Moderator',
-);
+	'group-threadmoderator' => 'Moderatorzy dyskusji',
+	'group-threadmoderator-member' => 'Moderator dyskusji',
+];
 
 /** Pashto (پښتو)
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
-$messages['ps'] = array(
+$messages['ps'] = [
 	'wall-no-title' => 'بې سرليکه',
 	'wall-message-loadmore' => '<span class="count">{{PLURAL:$1|$1 ځواب|ټول $1 ځوابونه}}</span> کتل',
 	'wall-message-wall' => 'پيغام دېوال',
@@ -5937,7 +5949,7 @@ $messages['ps'] = array(
 	'wall-quote-reply-to' => '#$1 ته ځواب وييل',
 	'wall-topic-edit-save' => 'خوندي کول',
 	'wall-topic-edit-cancel' => 'ناگارل',
-);
+];
 
 /** Portuguese (português)
  * @author Hamilton Abreu
@@ -5949,7 +5961,7 @@ $messages['ps'] = array(
  * @author Vitorvicentevalente
  * @author Waldir
  */
-$messages['pt'] = array(
+$messages['pt'] = [
 	'wall-no-title' => 'Sem título',
 	'wall-message-loadmore' => 'Ver <span class="count">{{PLURAL:$1|a $1 resposta|todas as $1 respostas}}</span>',
 	'wall-message-wall' => 'Mural de Mensagens',
@@ -6064,7 +6076,7 @@ A publicação original e o teu sumário ainda serão visíveis no histórico da
 	'wn-user3-reply-other-your-wall' => '$1 e outros responderam a uma mensagem de $2 no teu mural',
 	'wn-user1-reply-you-other-wall' => '$1 respondeu a uma mensagem tua no mural de $2',
 	'wn-user2-reply-you-other-wall' => '$1 e $2 responderam a uma mensagem tua no mural de $3',
-	'wn-user3-reply-you-other-wall' => '$1 e outros responderam a uma mensagem tua no mural de $3',
+	'wn-user3-reply-you-other-wall' => '$1 e outros responderam a uma mensagem tua no mural de $2',
 	'wn-user1-reply-self-other-wall' => '$1 respondeu a uma mensagem no mural de $2',
 	'wn-user2-reply-self-other-wall' => '$1 e $2 responderam a uma mensagem no mural de $3',
 	'wn-user3-reply-self-other-wall' => '$1 e outros responderam a uma mensagem no mural de $2',
@@ -6190,8 +6202,9 @@ A publicação original e o teu sumário ainda serão visíveis no histórico da
 	'wall-topic-edit' => 'Editar tópicos',
 	'wall-topic-edit-save' => 'Gravar',
 	'wall-topic-edit-cancel' => 'Cancelar',
-	'group-threadmoderator' => 'Moderadores',
-);
+	'group-threadmoderator' => 'Moderadores de discussões',
+	'group-threadmoderator-member' => 'Moderador de discussões',
+];
 
 /** Brazilian Portuguese (português do Brasil)
  * @author Caio1478
@@ -6202,7 +6215,7 @@ A publicação original e o teu sumário ainda serão visíveis no histórico da
  * @author TheGabrielZaum
  * @author Tooguether
  */
-$messages['pt-br'] = array(
+$messages['pt-br'] = [
 	'wall-no-title' => 'Sem título',
 	'wall-message-loadmore' => 'Ver <span class="count">{{PLURAL:$1|a $1 resposta|todas as $1 respostas}}</span>',
 	'wall-message-wall' => 'Mural de Mensagens',
@@ -6323,7 +6336,7 @@ O post original e seu sumário ainda aparecerão no histórico da wikia.',
 	'wn-user3-reply-other-your-wall' => '$1 e outros responderam a uma mensagem de $2 no seu mural',
 	'wn-user1-reply-you-other-wall' => '$1 respondeu a uma mensagem sua no mural de $2',
 	'wn-user2-reply-you-other-wall' => '$1 e $2 responderam a uma mensagem sua no mural de $3',
-	'wn-user3-reply-you-other-wall' => '$1 e outros responderam a uma mensagem sua no mural de $3',
+	'wn-user3-reply-you-other-wall' => '$1 e outros responderam a uma mensagem sua no mural de $2',
 	'wn-user1-reply-self-other-wall' => '$1 respondeu a uma mensagem no mural de $2',
 	'wn-user2-reply-self-other-wall' => '$1 e $2 responderam a uma mensagem no mural de $3',
 	'wn-user3-reply-self-other-wall' => '$1 e outros responderam a uma mensagem no mural de $2',
@@ -6399,19 +6412,19 @@ O post original e seu sumário ainda aparecerão no histórico da wikia.',
 	'wall-topic-edit' => 'Editar tópicos',
 	'wall-topic-edit-save' => 'Salvar',
 	'wall-topic-edit-cancel' => 'Cancelar',
-);
+];
 
 /** Quechua (Runa Simi)
  * @author AlimanRuna
  */
-$messages['qu'] = array(
+$messages['qu'] = [
 	'wall-notifications-markasread' => 'Tukuykunata ñawirisqa nispa unanchay',
-);
+];
 
 /** tarandíne (tarandíne)
  * @author Joetaras
  */
-$messages['roa-tara'] = array(
+$messages['roa-tara'] = [
 	'wall-no-title' => 'Nisciune titole',
 	'wall-message-loadmore' => 'View <span class="count">{{PLURAL:$1|$1 resposte|tutte le $1 resposte}}</span>',
 	'wall-message-wall' => 'Mure de le Messàgge',
@@ -6450,7 +6463,7 @@ $messages['roa-tara'] = array(
 	'wall-notifications-loading' => 'Stoche a careche le notifiche',
 	'wall-topic-edit-save' => 'Reggistre',
 	'wall-topic-edit-cancel' => 'Annulle',
-);
+];
 
 /** Russian (русский)
  * @author DCamer
@@ -6460,7 +6473,7 @@ $messages['roa-tara'] = array(
  * @author Kuzura
  * @author Okras
  */
-$messages['ru'] = array(
+$messages['ru'] = [
 	'wall-no-title' => 'Без названия',
 	'wall-message-loadmore' => 'Просмотреть <span class="count">$1 {{PLURAL:$1|ответ|ответа|ответов}}</span>',
 	'wall-message-wall' => 'Обсуждение участника',
@@ -6581,7 +6594,7 @@ $messages['ru'] = array(
 	'wn-user3-reply-other-your-wall' => '$1 и другие ответили на сообщение $2 на вашей стене',
 	'wn-user1-reply-you-other-wall' => '$1 ответил на ваше сообщение на стене $2',
 	'wn-user2-reply-you-other-wall' => '$1 и $2 ответили на ваше сообщение на стене $3',
-	'wn-user3-reply-you-other-wall' => '$1 и другие ответили на ваше сообщение на стене $3',
+	'wn-user3-reply-you-other-wall' => '$1 и другие ответили на ваше сообщение на стене $2',
 	'wn-user1-reply-self-other-wall' => '$1 ответил на сообщение на стене $2',
 	'wn-user2-reply-self-other-wall' => '$1 и $2 ответили на сообщение на стене $3',
 	'wn-user3-reply-self-other-wall' => '$1 и другие ответили на сообщение на стене $2',
@@ -6708,14 +6721,14 @@ $messages['ru'] = array(
 	'wall-topic-edit' => 'Edit Topics',
 	'wall-topic-edit-save' => 'Сохранить',
 	'wall-topic-edit-cancel' => 'Отмена',
-	'group-threadmoderator' => 'Модераторы',
-	'group-threadmoderator-member' => 'Модератор',
-);
+	'group-threadmoderator' => 'Модераторы обсуждений',
+	'group-threadmoderator-member' => 'Модератор обсуждений',
+];
 
 /** Scots (Scots)
  * @author John Reid
  */
-$messages['sco'] = array(
+$messages['sco'] = [
 	'wall-no-title' => 'Nae title',
 	'wall-message-loadmore' => 'See <span class="count">{{PLURAL:$1|$1 reply|aw $1 replies}}</span>',
 	'wall-message-wall' => 'Message Waw',
@@ -6834,7 +6847,7 @@ The oreeginal post n yer ootline will still kyth in the wiki's histerie.",
 	'wn-user3-reply-other-your-wall' => "$1 n ithers replied tae $2's message oan yer waw",
 	'wn-user1-reply-you-other-wall' => "$1 replied tae yer message oan $2's waw",
 	'wn-user2-reply-you-other-wall' => "$1 n $2 replied tae yer message oan $3's waw",
-	'wn-user3-reply-you-other-wall' => "$1 n ithers replied tae yer message oan $3's waw",
+	'wn-user3-reply-you-other-wall' => "$1 n ithers replied tae yer message oan $2's waw",
 	'wn-user1-reply-self-other-wall' => "$1 replied tae ae message oan $2's waw",
 	'wn-user2-reply-self-other-wall' => "$1 n $2 replied tae ae message oan $3's waw",
 	'wn-user3-reply-self-other-wall' => "$1 n ithers replied til ae message oan $2's waw",
@@ -6957,13 +6970,13 @@ The oreeginal post n yer ootline will still kyth in the wiki's histerie.",
 	'wall-topic-heading' => 'Topics fer this threed:',
 	'wall-topic-edit' => 'Eedit Topics',
 	'wall-topic-edit-save' => 'Hain',
-);
+];
 
 /** Swedish (svenska)
  * @author Cybjit
  * @author WikiPhoenix
  */
-$messages['sv'] = array(
+$messages['sv'] = [
 	'wall-no-title' => 'Ingen titel',
 	'wall-message-loadmore' => 'Visa <span class="count">{{PLURAL:$1|$1 svar|alla $1 svar}}</span>',
 	'wall-message-wall' => 'Meddelandevägg',
@@ -7084,7 +7097,7 @@ Originalinlägget och din sammanfattning kommer fortfarande att visas i wikins h
 	'wn-user3-reply-other-your-wall' => '$1 och andra svarade på $2s meddelande på din vägg',
 	'wn-user1-reply-you-other-wall' => '$1 svarade på ditt meddelande på $2s vägg',
 	'wn-user2-reply-you-other-wall' => '$1 och $2 svarade på ditt meddelande på $3s vägg',
-	'wn-user3-reply-you-other-wall' => '$1 och andra svarade på ditt meddelande på $3s vägg',
+	'wn-user3-reply-you-other-wall' => '$1 och andra svarade på ditt meddelande på $2s vägg',
 	'wn-user1-reply-self-other-wall' => '$1 svarade på ett meddelande på $2s vägg',
 	'wn-user2-reply-self-other-wall' => '$1 och $2 svarade på ett meddelande på $3s vägg',
 	'wn-user3-reply-self-other-wall' => '$1 och andra svarade på ett meddelande på $2s vägg',
@@ -7214,13 +7227,13 @@ Originalinlägget och din sammanfattning kommer fortfarande att visas i wikins h
 	'group-threadmoderator' => 'Moderatorer',
 	'group-threadmoderator-member' => 'Moderator',
 	'grouppage-threadmoderator' => 'w:c:community:Help:Moderators',
-);
+];
 
 /** Tamil (தமிழ்)
  * @author Karthi.dr
  * @author மதனாஹரன்
  */
-$messages['ta'] = array(
+$messages['ta'] = [
 	'wall-no-title' => 'தலைப்பில்லை',
 	'wall-toolbar-history' => 'வரலாறு',
 	'wall-message-remove' => 'நீக்குக',
@@ -7239,19 +7252,19 @@ $messages['ta'] = array(
 	'wall-action-all-confirm-cancel' => 'ரத்து செய்',
 	'wall-delete-error-title' => 'பிழை',
 	'wall-action-remove-confirm-ok' => 'நீக்குக',
-);
+];
 
 /** Telugu (తెలుగు)
  * @author Ravichandra
  */
-$messages['te'] = array(
+$messages['te'] = [
 	'wall-history-who-involved-wall-title' => 'ఎవరు పాల్గొంటున్నారు?',
-);
+];
 
 /** Tagalog (Tagalog)
  * @author AnakngAraw
  */
-$messages['tl'] = array(
+$messages['tl'] = [
 	'wall-no-title' => 'Walang pamagat',
 	'wall-message-loadmore' => 'Tingnan ang <span class="count">{{PLURAL:$1|$1 tugon|lahat ng $1 mga tugon}}</span>',
 	'wall-message-wall' => 'Dingding ng Mensahe',
@@ -7355,7 +7368,7 @@ Ang orihinal na pagpapaskil at ang buod mo ay lilitaw pa rin sa loob ng kasaysay
 	'wn-user3-reply-other-your-wall' => 'Tumugon si $1 at iba pa sa mensahe ni $2 na nasa ibabaw ng dingding mo',
 	'wn-user1-reply-you-other-wall' => 'Tumugon si $1 sa mensahe mo na nasa ibabaw ng dingding ni $2',
 	'wn-user2-reply-you-other-wall' => 'Tumugon sina $1 at $2 sa mensahe mo na nasa ibabaw ng dingding ni $3',
-	'wn-user3-reply-you-other-wall' => 'Tumugon si $1 at iba pa sa iyong mensahe na nasa ibabaw ng dingding ni $3',
+	'wn-user3-reply-you-other-wall' => 'Tumugon si $1 at iba pa sa iyong mensahe na nasa ibabaw ng dingding ni $2',
 	'wn-user1-reply-self-other-wall' => 'Tumugon si $1 sa isang mensaheng nasa ibabaw ng dingding ni $2',
 	'wn-user2-reply-self-other-wall' => 'Tumugon sina $1 at $2 sa isang mensaheng nasa ibabaw ng dingding ni $3',
 	'wn-user3-reply-self-other-wall' => 'Tumugon si $1 at iba pa sa isang mensaheng nasa ibabaw ng dingding ni $2',
@@ -7469,25 +7482,25 @@ Ang orihinal na pagpapaskil at ang buod mo ay lilitaw pa rin sa loob ng kasaysay
 	'wall-votes-voted-tooltip' => 'Binigyan mo ng Kudos ang mensaheng ito!',
 	'wall-quote-author' => 'Isinulat ni $1 ang:',
 	'wall-quote-reply-to' => 'tumugon kay #$1',
-);
+];
 
 /** Talysh (толышә зывон)
  * @author Erdemaslancan
  * @author Гусейн
  */
-$messages['tly'] = array(
+$messages['tly'] = [
 	'wall-no-title' => 'Бе ном',
 	'wall-button-to-cancel-preview' => 'Сәрост кардеј',
 	'wall-delete-error-title' => 'Сәһв',
 	'wall-history-rail-block' => 'бә гырд гәтеј',
 	'wall-history-action-view' => 'тәмшо кардеј',
-);
+];
 
 /** Turkish (Türkçe)
  * @author Erdemaslancan
  * @author Incelemeelemani
  */
-$messages['tr'] = array(
+$messages['tr'] = [
 	'wall-message-wall' => 'Mesaj Duvarı',
 	'wall-message-wall-shorten' => 'duvar',
 	'wall-message-unfollow' => 'Takibi bırak',
@@ -7543,13 +7556,13 @@ $messages['tr'] = array(
 	'wall-notifications-markasread-this-wiki' => 'Bu wiki',
 	'wall-notifications-empty' => 'Herhangi bir bildiriminiz yok',
 	'wall-notifications-loading' => 'Yükleme bildirimleri',
-);
+];
 
 /** Tatar (Cyrillic script) (татарча)
  * @author Ajdar
  * @author Ilnur efende
  */
-$messages['tt-cyrl'] = array(
+$messages['tt-cyrl'] = [
 	'wall-message-undoremove' => 'Кире кайтару',
 	'wall-toolbar-history' => 'Тарих',
 	'wall-message-remove' => 'Бетерү',
@@ -7575,14 +7588,14 @@ $messages['tt-cyrl'] = array(
 	'wall-action-restore-confirm-ok' => 'Торгызу',
 	'wall-notifications-markasread-all-wikis' => 'Барлык викиләр',
 	'wn-newmsg' => 'Сез $1 диварында яңа хат калдырдыгыз',
-);
+];
 
 /** Central Atlas Tamazight (ⵜⴰⵎⴰⵣⵉⵖⵜ)
  * @author Tifinaghes
  */
-$messages['tzm'] = array(
+$messages['tzm'] = [
 	'wall-no-title' => 'ⵡⴰⵔ ⴰⵣⵡⵉⵍ',
-);
+];
 
 /** Ukrainian (українська)
  * @author Andriykopanytsia
@@ -7591,7 +7604,7 @@ $messages['tzm'] = array(
  * @author Wildream
  * @author Капитан Джон Шепард
  */
-$messages['uk'] = array(
+$messages['uk'] = [
 	'wall-no-title' => 'Без назви',
 	'wall-message-loadmore' => 'Подивитись $1 {{PLURAL:$1|відповідь|відповідей|відповіді}}',
 	'wall-message-wall' => 'Обговорення користувача',
@@ -7710,7 +7723,7 @@ $messages['uk'] = array(
 	'wn-user3-reply-other-your-wall' => '$1 та інші на повідомлення $2 на вашій стіні',
 	'wn-user1-reply-you-other-wall' => '$1 відповів на ваше повідомлення на стіні $2',
 	'wn-user2-reply-you-other-wall' => '$1 та $2 відповіли на ваше повідомлення на стіні $3',
-	'wn-user3-reply-you-other-wall' => '$1 та інші відповіли на ваше повідомлення на стіні $3',
+	'wn-user3-reply-you-other-wall' => '$1 та інші відповіли на ваше повідомлення на стіні $2',
 	'wn-user1-reply-self-other-wall' => '$1 відповів на повідомлення на стіні $2',
 	'wn-user2-reply-self-other-wall' => '$1 та $2 відповіли на повідомлення на стіні $3',
 	'wn-user3-reply-self-other-wall' => '$1 та інші відповіли на повідомлення на стіні $2',
@@ -7840,21 +7853,21 @@ $messages['uk'] = array(
 	'group-threadmoderator' => 'Модератори',
 	'group-threadmoderator-member' => 'Модератор',
 	'grouppage-threadmoderator' => 'w:c:спільнота:допомога:Модератори',
-);
+];
 
 /** Uzbek (oʻzbekcha/ўзбекча)
  * @author Sociologist
  */
-$messages['uz'] = array(
+$messages['uz'] = [
 	'wall-history-thread-removed' => '$1 $2 ni oʻchirdi',
-);
+];
 
 /** Vietnamese (Tiếng Việt)
  * @author Baonguyen21022003
  * @author Rémy Lee
  * @author Xiao Qiao
  */
-$messages['vi'] = array(
+$messages['vi'] = [
 	'wall-no-title' => 'Không có tiêu đề',
 	'wall-message-loadmore' => 'Xem <span class="count">{{PLURAL:$1|$1 hồi âm|tất cả $1 hồi âm}}</span>',
 	'wall-message-wall' => 'Tường tin nhắn',
@@ -7975,7 +7988,7 @@ Các bản gốc và tóm tắt của bạn vẫn sẽ xuất hiện trong lịc
 	'wn-user3-reply-other-your-wall' => '$1 và những người khác đã trả lời tin nhắn của $2 trên tường của bạn',
 	'wn-user1-reply-you-other-wall' => '$1 đã trả lời tin nhắn của bạn trên tường của $2',
 	'wn-user2-reply-you-other-wall' => '$1 và $2 đã trả lời tin nhắn của bạn trên tường của $3',
-	'wn-user3-reply-you-other-wall' => '$1 và những người khác đã trả lời tin nhắn của bạn trên tường của $3',
+	'wn-user3-reply-you-other-wall' => '$1 và những người khác đã trả lời tin nhắn của bạn trên tường của $2',
 	'wn-user1-reply-self-other-wall' => '$1 đã trả lời một tin nhắn trên tường của $2',
 	'wn-user2-reply-self-other-wall' => '$1 và $2 đã trả lời một tin nhắn trên tường của $3',
 	'wn-user3-reply-self-other-wall' => '$1 và những người khác đã trả lời một tin nhắn trên tường của $2',
@@ -8102,12 +8115,12 @@ Các bản gốc và tóm tắt của bạn vẫn sẽ xuất hiện trong lịc
 	'wall-topic-edit' => 'Sửa đổi chủ đề',
 	'wall-topic-edit-save' => 'Lưu',
 	'wall-topic-edit-cancel' => 'Hủy bỏ',
-);
+];
 
 /** Walloon (walon)
  * @author Srtxg
  */
-$messages['wa'] = array(
+$messages['wa'] = [
 	'wall-no-title' => "Pont d' tite",
 	'wall-message-loadmore' => 'Vey {{PLURAL:$1|li response|totes les $1 responses}}', # Fuzzy
 	'wall-message-wall' => 'Meur di messaedjes',
@@ -8195,14 +8208,14 @@ Li messaedje d' oridjinne eyet vosse rascourti seront todi veyåves dins l' istw
 	'wall-history-rail-block' => 'bloker',
 	'wall-history-action-view' => 'vey',
 	'wall-history-action-restore' => 'rapexhî',
-);
+];
 
 /** Yiddish (ייִדיש)
  * @author פוילישער
  */
-$messages['yi'] = array(
+$messages['yi'] = [
 	'wall-recentchanges-edit' => 'רעדאקטירטע מעלדונג',
-);
+];
 
 /** Simplified Chinese (中文（简体）‎)
  * @author Dimension
@@ -8214,7 +8227,7 @@ $messages['yi'] = array(
  * @author Yfdyh000
  * @author 乌拉跨氪
  */
-$messages['zh-hans'] = array(
+$messages['zh-hans'] = [
 	'wall-no-title' => '无标题',
 	'wall-message-loadmore' => '查看<span class="count">{{PLURAL:$1|$1条回复|全部$1条回复}}</span>',
 	'wall-message-wall' => '信息墙',
@@ -8335,7 +8348,7 @@ $messages['zh-hans'] = array(
 	'wn-user3-reply-other-your-wall' => '$1和其他人在您的信息墙上回复了$2的信息',
 	'wn-user1-reply-you-other-wall' => '$1在$2的信息墙上回复了您的信息',
 	'wn-user2-reply-you-other-wall' => '$1和$2回复了您在$3的信息墙上的信息',
-	'wn-user3-reply-you-other-wall' => '$1和其他人回复了您在$3的信息墙上的信息',
+	'wn-user3-reply-you-other-wall' => '$1和其他人回复了您在$2的信息墙上的信息',
 	'wn-user1-reply-self-other-wall' => '$1在$2的信息墙上做出了回复',
 	'wn-user2-reply-self-other-wall' => '$1和$2在$3的信息墙上做出了回复',
 	'wn-user3-reply-self-other-wall' => '$1和其他人回复了$2的信息墙上的信息',
@@ -8462,10 +8475,10 @@ $messages['zh-hans'] = array(
 	'wall-topic-edit' => '编辑主题',
 	'wall-topic-edit-save' => '保存',
 	'wall-topic-edit-cancel' => '取消',
-	'group-threadmoderator' => '版主',
-	'group-threadmoderator-member' => '版主',
+	'group-threadmoderator' => '话题版主',
+	'group-threadmoderator-member' => '话题版主',
 	'grouppage-threadmoderator' => 'w:c:community:Help:Moderators',
-);
+];
 
 /** Traditional Chinese (中文（繁體）‎)
  * @author Ffaarr
@@ -8474,7 +8487,7 @@ $messages['zh-hans'] = array(
  * @author Liuxinyu970226
  * @author Macofe
  */
-$messages['zh-hant'] = array(
+$messages['zh-hant'] = [
 	'wall-no-title' => '無標題',
 	'wall-message-loadmore' => '查看<span class="count">{{PLURAL:$1|$1條回覆|全部$1條回覆}}</span>',
 	'wall-message-wall' => '訊息牆',
@@ -8594,7 +8607,7 @@ $messages['zh-hant'] = array(
 	'wn-user3-reply-other-your-wall' => '$1等人在您的訊息牆上回覆了$2的訊息',
 	'wn-user1-reply-you-other-wall' => '$1在$2的訊息牆上回覆了您',
 	'wn-user2-reply-you-other-wall' => '$1和$2在$3的訊息牆上回覆了您',
-	'wn-user3-reply-you-other-wall' => '$1等人在$3的訊息牆上回覆了您',
+	'wn-user3-reply-you-other-wall' => '$1等人在$2的訊息牆上回覆了您',
 	'wn-user1-reply-self-other-wall' => '$1在$2的訊息牆上回覆了一則訊息',
 	'wn-user2-reply-self-other-wall' => '$1和$2在$3的訊息牆上回覆了一則訊息',
 	'wn-user3-reply-self-other-wall' => '$1等人在$2的訊息牆上回覆了一則訊息',
@@ -8720,4 +8733,6 @@ $messages['zh-hant'] = array(
 	'wall-topic-edit' => '編輯主題',
 	'wall-topic-edit-save' => '儲存',
 	'wall-topic-edit-cancel' => '取消',
-);
+	'group-threadmoderator' => '話題版主',
+	'group-threadmoderator-member' => '話題版主',
+];

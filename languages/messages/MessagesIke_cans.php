@@ -69,9 +69,6 @@ $messages = array(
 'navigation'    => 'ᒥᐊᓂᕆᕚ',
 'and'           => '&#32;ᐊᒻᒪ',
 
-# Cologne Blue skin
-'qbedit'         => 'ᓱᖁᓯᖅᐹ',
-'qbspecialpages' => 'ᐱᔨ ᒪᑉᐱᑕᖅ',
 
 'errorpagetitle'    => 'ᑕᒻᒪᓇᖅᑐᖅ',
 'help'              => 'ᖃᔭᓕᑉᐹ',
@@ -89,7 +86,6 @@ $messages = array(
 'newpage'           => 'ᐱᒋᕗᖅ ᒪᑉᐱᑕᖅ',
 'talkpagelinktext'  => 'ᐅᖃᓕᒪᔪᖅ',
 'specialpage'       => 'ᐱᔨ ᒪᑉᐱᑕᖅ',
-'articlepage'       => 'ᐅᕝᕙ ᐃᓗᓕᒃ ᒪᑉᐱᑕᖅ',
 'talk'              => 'ᐅᖃᓕᒪᔪᖅ',
 'toolbox'           => 'ᓴᓇᕐᖁᑎᖃᐅᑎ',
 'otherlanguages'    => 'ᑭᓪᓗᒧᑦ ᐅᐃᑭ',

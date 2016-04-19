@@ -24,10 +24,10 @@ abstract class CommentController extends EmailController {
 		// This revision ID is for the comment that was left
 		$commentRevID = $this->getVal( 'currentRevId', false );
 		if ( $commentRevID ) {
-			$rev = \Revision::newFromId( $commentRevID, \Revision::USE_MASTER_DB );
+			$rev = \Revision::newFromId( $commentRevID, \Revision::READ_LATEST );
 
 			if ( $rev ) {
-				$this->commentTitle = $rev->getTitle( \Revision::USE_MASTER_DB );
+				$this->commentTitle = $rev->getTitle( true /* $useMaster */ );
 			}
 		}
 

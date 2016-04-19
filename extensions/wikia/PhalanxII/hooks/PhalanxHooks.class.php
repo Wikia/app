@@ -113,6 +113,12 @@ class PhalanxHooks extends WikiaObject {
 			}
 		}
 
+		// VSTF should not be allowed to block emails in Phalanx
+		if ( ($typemask & Phalanx::TYPE_EMAIL ) && !F::app()->wg->User->isAllowed( 'phalanxemailblock' ) ) {
+			wfProfileOut( __METHOD__ );
+			return false;
+		}
+
 		$multitext = '';
 		if ( isset( $phalanx['multitext'] ) && !empty( $phalanx['multitext'] ) ) {
 			$multitext = $phalanx['multitext'];
@@ -196,6 +202,12 @@ class PhalanxHooks extends WikiaObject {
 
 		$phalanx = Phalanx::newFromId($id);
 
+		// VSTF should not be allowed to delete email blocks in Phalanx
+		if ( ($phalanx->offsetGet( 'type' ) & Phalanx::TYPE_EMAIL ) && !F::app()->wg->User->isAllowed( 'phalanxemailblock' ) ) {
+			wfProfileOut( __METHOD__ );
+			return false;
+		}
+
 		$id = $phalanx->delete();
 		if ( $id ) {
 			$service = new PhalanxService();
@@ -231,6 +243,7 @@ class PhalanxHooks extends WikiaObject {
 	 * client original IP.
 	 *
 	 * @see PLATFORM-317
+	 * @see PLATFORM-1473
 	 * @author macbre
 	 *
 	 * @param User $user
@@ -242,11 +255,12 @@ class PhalanxHooks extends WikiaObject {
 		// get the client IP using Fastly-generated request header
 		$clientIPFromFastly = $wgRequest->getHeader( $wgClientIPHeader );
 
-		if ( !User::isIP( $clientIPFromFastly ) ) {
+		if ( !User::isIP( $clientIPFromFastly ) && !$wgRequest->isWikiaInternalRequest() ) {
 			WikiaLogger::instance()->error( 'Phalanx user IP incorrect', [
 				'ip_from_fastly' => $clientIPFromFastly,
 				'ip_from_user' => $user->getName(),
 				'ip_from_request' => $wgRequest->getIP(),
+				'user_agent' => $wgRequest->getHeader( 'User-Agent' ),
 			] );
 		}
 

@@ -501,7 +501,7 @@ abstract class Maintenance {
 		}
 
 		# Make sure we can handle script parameters
-		if ( !function_exists( 'hphp_thread_set_warmup_enabled' ) && !ini_get( 'register_argc_argv' ) ) {
+		if ( !defined( 'HHVM_VERSION' ) && !ini_get( 'register_argc_argv' ) ) {
 			$this->error( 'Cannot get command line arguments, register_argc_argv is set to false', true );
 		}
 
@@ -846,6 +846,20 @@ abstract class Maintenance {
 	}
 
 	/**
+	 * Override this method to use a dedicated mysql user / pass for running your maintenance script
+	 *
+	 * Wikia change
+	 *
+	 * @author macbre
+	 * @see PLATFORM-2025
+	 * @return array consisting of mysql user and pass
+	 */
+	protected function getDatabaseCredentials() {
+		global $wgDBmaintuser, $wgDBmaintpass;
+		return [ $wgDBmaintuser, $wgDBmaintpass ];
+	}
+
+	/**
 	 * Handle some last-minute setup here.
 	 */
 	public function finalSetup() {
@@ -860,6 +874,17 @@ abstract class Maintenance {
 		# Same with these
 		$wgCommandLineMode = true;
 
+		/**
+		 * Wikia change - begin
+		 *
+		 * PLATFORM-2025: use a dedicated mysql user when running maintenance scripts
+		 * Force "wikia_maint" user only when we do not need an admin account
+		 */
+		if ( $this->getDbType() < self::DB_ADMIN && is_array( $this->getDatabaseCredentials() ) ) {
+			list( $this->mDbUser, $this->mDbPass ) = $this->getDatabaseCredentials();
+		}
+		// Wikia change - end
+
 		# Override $wgServer
 		if( $this->hasOption( 'server') ) {
 			$wgServer = $this->getOption( 'server', $wgServer );
@@ -873,7 +898,9 @@ abstract class Maintenance {
 			$wgDBadminpassword = $this->mDbPass;
 		}
 
-		if ( $this->getDbType() == self::DB_ADMIN && isset( $wgDBadminuser ) ) {
+		if ( /* $this->getDbType() == self::DB_ADMIN && */ isset( $wgDBadminuser ) ) { # Wikia change: PLATFORM-2025:
+			wfDebug( sprintf( "%s: forcing '%s' DB user\n", __METHOD__, $wgDBadminuser ) );
+
 			$wgDBuser = $wgDBadminuser;
 			$wgDBpassword = $wgDBadminpassword;
 

@@ -170,7 +170,8 @@
 			'UserLoginSpecial',
 			'mailPassword',
 			{
-				username: this.inputs.username.val()
+				username: this.inputs.username.val(),
+				token: this.inputs.loginToken.val()
 			},
 			// error validation will show success and error messages in this case
 			this.errorValidation.bind(this)

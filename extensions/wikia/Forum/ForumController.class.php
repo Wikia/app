@@ -23,15 +23,13 @@ class ForumController extends WallBaseController {
 
 		if ( $ns == NS_WIKIA_FORUM_TOPIC_BOARD ) {
 			$topicTitle = $this->getTopicTitle();
-			if ( empty($topicTitle) || !$topicTitle->exists() ) {
-				if(!$topicTitle->exists()) {
-					$this->redirectToIndex();
-					return false;
-				}
+			if ( empty( $topicTitle ) || !$topicTitle->exists() ) {
+				$this->redirectToIndex();
+				return false;
 			}
 		}
 
-		parent::index(self::BOARD_PER_PAGE);
+		parent::index( self::BOARD_PER_PAGE );
 
 		JSMessages::enqueuePackage( 'Wall', JSMessages::EXTERNAL );
 		$this->response->addAsset( 'forum_js' );
@@ -57,6 +55,7 @@ class ForumController extends WallBaseController {
 			$this->app->wg->Out->setPageTitle( wfMessage( 'forum-board-topic-title', $this->wg->title->getBaseText() )->plain() );
 		} else {
 			$boardId = $this->wall->getId();
+			/** @var ForumBoard $board */
 			$board = ForumBoard::newFromId( $boardId );
 
 			if ( empty( $board ) ) {
@@ -74,7 +73,7 @@ class ForumController extends WallBaseController {
 
 		$this->response->setVal( 'boardNamespace', NS_WIKIA_FORUM_BOARD );
 
-		//TODO: keep the varnish cache and do purging on post
+		// TODO: keep the varnish cache and do purging on post
 		$this->response->setCacheValidity( WikiaResponse::CACHE_DISABLED );
 
 		$this->app->wg->SuppressPageHeader = true;
@@ -91,7 +90,11 @@ class ForumController extends WallBaseController {
 		return $topicTitle;
 	}
 
-	public function getWallForIndexPage($title) {
+	/**
+	 * @param Title $title
+	 * @return null|Wall
+	 */
+	public function getWallForIndexPage( $title ) {
 		if ( $title->getNamespace() == NS_WIKIA_FORUM_TOPIC_BOARD ) {
 			$topicTitle = $this->getTopicTitle();
 			if ( !empty( $topicTitle ) ) {
@@ -110,16 +113,16 @@ class ForumController extends WallBaseController {
 
 	public function boardNewThread() {
 		parent::newMessage();
-		$this->isTopicPage = $this->getVal('isTopicPage', false);
-		if($this->isTopicPage) {
+		$this->isTopicPage = $this->getVal( 'isTopicPage', false );
+		if ( $this->isTopicPage ) {
 			$forum = new Forum();
 
 			$list = $forum->getBoardList();
 
-			$this->destinationBoards = array( array( 'value' => '', 'content' => wfMessage( 'forum-board-destination-empty' )->escaped() ) );
+			$this->destinationBoards = [ [ 'value' => '', 'content' => wfMessage( 'forum-board-destination-empty' )->escaped() ] ];
 
 			foreach ( $list as $value ) {
-				$this->destinationBoards[] = array( 'value' => htmlspecialchars( $value['name'] ), 'content' => htmlspecialchars( $value['name'] ) );
+				$this->destinationBoards[] = [ 'value' => htmlspecialchars( $value['name'] ), 'content' => htmlspecialchars( $value['name'] ) ];
 			}
 		}
 	}
@@ -128,7 +131,7 @@ class ForumController extends WallBaseController {
 		wfProfileIn( __METHOD__ );
 
 		$wallMessage = $this->getWallMessage();
-		if ( !($wallMessage instanceof WallMessage) ) {
+		if ( !( $wallMessage instanceof WallMessage ) ) {
 			wfProfileOut( __METHOD__ );
 			$this->forward( __CLASS__, 'message_error' );
 			return true;
@@ -140,13 +143,13 @@ class ForumController extends WallBaseController {
 		$this->response->setVal( 'fullpageurl', $wallMessage->getMessagePageUrl() );
 		$this->response->setVal( 'kudosNumber', $wallMessage->getVoteCount() );
 
-		$replies = $this->getVal( 'replies', array() );
+		$replies = $this->getVal( 'replies', [ ] );
 		$repliesCount = count( $replies ) + 1;
 		$this->response->setVal( 'repliesNumber', $repliesCount );
 
-		$thread = WallThread::newFromId($wallMessage->getId());
+		$thread = WallThread::newFromId( $wallMessage->getId() );
 
-		$lastReply = $thread->getLastMessage( $replies );
+		$lastReply = $thread->getLastMessage();
 		if ( $lastReply === null ) {
 			$lastReply = $wallMessage;
 		}
@@ -169,7 +172,7 @@ class ForumController extends WallBaseController {
 		} else {
 			$displayname = $name;
 			$displayname2 = '';
-			$url = Title::newFromText($name, $this->wg->EnableWallExt ? NS_USER_WALL : NS_USER_TALK )->getFullUrl();
+			$url = Title::newFromText( $name, $this->wg->EnableWallExt ? NS_USER_WALL : NS_USER_TALK )->getFullUrl();
 		}
 
 		$this->response->setVal( 'username', $name );
@@ -185,15 +188,15 @@ class ForumController extends WallBaseController {
 	public function breadCrumbs() {
 		if ( $this->app->wg->Title->getNamespace() == NS_WIKIA_FORUM_TOPIC_BOARD ) {
 			$indexPage = Title::newFromText( 'Forum', NS_SPECIAL );
-			$path = array();
-			$path[] = array( 'title' => wfMessage( 'forum-forum-title' )->escaped(), 'url' => $indexPage->getFullUrl() );
+			$path = [ ];
+			$path[] = [ 'title' => wfMessage( 'forum-forum-title' )->escaped(), 'url' => $indexPage->getFullUrl() ];
 
-			$path[] = array( 'title' => wfMessage( 'forum-board-topics' )->escaped() );
+			$path[] = [ 'title' => wfMessage( 'forum-board-topics' )->escaped() ];
 
 			$topicTitle = Title::newFromURL( $this->app->wg->Title->getText() );
 
 			if ( !empty( $topicTitle ) ) {
-				$path[] = array( 'title' => $topicTitle->getPrefixedText() );
+				$path[] = [ 'title' => $topicTitle->getPrefixedText() ];
 			}
 
 			$this->response->setVal( 'path', $path );
@@ -250,7 +253,7 @@ class ForumController extends WallBaseController {
 	protected function addMiniEditorAssets() {
 		if ( $this->wg->EnableMiniEditorExtForWall && $this->app->checkSkin( 'oasis' ) ) {
 			$this->sendRequest( 'MiniEditor', 'loadAssets',
-				array( 'additionalAssets' => array( 'forum_mini_editor_js', 'extensions/wikia/MiniEditor/css/Wall/Wall.scss' ) )
+				[ 'additionalAssets' => [ 'forum_mini_editor_js', 'extensions/wikia/MiniEditor/css/Wall/Wall.scss' ] ]
 			);
 		}
 	}
@@ -259,20 +262,23 @@ class ForumController extends WallBaseController {
 	protected function getSortingOptionsText() {
 		switch( $this->sortingType ) {
 			case 'history' :
-				//keys of sorting array are names of DOM elements' classes
-				//which are needed to click tracking
-				//if you change those keys here, do so in Wall.js file, please
-				$options = array( 'nf' => wfMessage( 'wall-history-sorting-newest-first' )->escaped(), 'of' => wfMessage( 'wall-history-sorting-oldest-first' )->escaped(), );
+				// keys of sorting array are names of DOM elements' classes
+				// which are needed to click tracking
+				// if you change those keys here, do so in Wall.js file, please
+				$options = [
+					'nf' => wfMessage( 'wall-history-sorting-newest-first' )->escaped(),
+					'of' => wfMessage( 'wall-history-sorting-oldest-first' )->escaped(),
+				];
 				break;
 			case 'index' :
 			default :
-				$options = array(
+				$options = [
 					'nr' => wfMessage( 'forum-sorting-option-newest-replies' )->escaped(),
 					// 'pt' => wfMessage('forum-sorting-option-popular-threads')->escaped(),
 					'mr' => wfMessage( 'forum-sorting-option-most-replies' )->escaped(),
 					'nt' => wfMessage( 'forum-sorting-option-newest-threads' )->escaped(),
 					'ot' => wfMessage( 'forum-sorting-option-oldest-threads' )->escaped(),
-				);
+				];
 				break;
 		}
 
@@ -294,7 +300,7 @@ class ForumController extends WallBaseController {
 		}
 
 		if ( empty( $selected ) || !array_key_exists( $selected, $this->getSortingOptionsText() ) ) {
-			$selected = ($this->sortingType === 'history') ? 'of' : 'nr';
+			$selected = ( $this->sortingType === 'history' ) ? 'of' : 'nr';
 		}
 
 		return $selected;
@@ -312,8 +318,8 @@ class ForumController extends WallBaseController {
 		if ( !empty( $title ) && $title->getNamespace() == NS_WIKIA_FORUM_BOARD_THREAD ) {
 
 			$rp = new WallRelatedPages();
-			$out = $rp->getMessageRelatetMessageIds( array( $title->getArticleId() ) );
-			$messages = array();
+			$out = $rp->getMessageRelatetMessageIds( [ $title->getArticleId() ] );
+			$messages = [ ];
 			$count = 0;
 			foreach ( $out as $key => $val ) {
 				if ( $title->getArticleId() == $val['comment_id'] ) {
@@ -324,7 +330,7 @@ class ForumController extends WallBaseController {
 				if ( !empty( $msg ) ) {
 					$msg->load();
 
-					$message = array( 'message' => $msg );
+					$message = [ 'message' => $msg ];
 
 					if ( !empty( $val['last_child'] ) ) {
 						$childMsg = WallMessage::newFromId( $val['last_child'] );
@@ -357,7 +363,7 @@ class ForumController extends WallBaseController {
 	 */
 
 	public function oldForumInfo() {
-		//TODO: include some css build some urls
+		// TODO: include some css build some urls
 		$this->response->addAsset( 'extensions/wikia/Forum/css/ForumOld.scss' );
 
 		$forumTitle = SpecialPage::getTitleFor( 'Forum' );

@@ -13,6 +13,13 @@ class CategoryAddController extends EmailController {
 	/** @var \Title */
 	private $pageAddedToCategory;
 
+	/**
+	 * To prevent flooding users with category add emails, we're
+	 * going to throttle how many we send for now. See SOC-1358
+	 */
+	const THROTTLE_PERIOD = 1800; // 30 mins
+	const EMAILS_PER_THROTTLE_PERIOD = 10;
+
 	public function initEmail() {
 		$pageTitle = $this->request->getVal( 'pageTitle' );
 		$titleNamespace = $this->request->getVal( 'namespace', NS_MAIN );
@@ -39,10 +46,6 @@ class CategoryAddController extends EmailController {
 		if ( !$this->categoryPage instanceof \Title ) {
 			throw new Check( "Invalid value passed for categoryPageId (param: childArticleId)" );
 		}
-
-		if ( !$this->categoryPage->exists() ) {
-			throw new Check( "Category Page doesn't exist." );
-		}
 	}
 
 	/**
@@ -62,28 +65,82 @@ class CategoryAddController extends EmailController {
 		}
 	}
 
+	public function assertCanEmail() {
+		parent::assertCanEmail();
+		$this->assertEmailsNotThrottled();
+	}
+
+	private function assertEmailsNotThrottled() {
+		global $wgMemc;
+		$emailsSent = (int) $wgMemc->get( $this->getTargetUserCacheKey() );
+		if ( $emailsSent >=  self::EMAILS_PER_THROTTLE_PERIOD ) {
+			throw new Check( 'Attempt to send too many emails' );
+		}
+	}
+
+	protected function afterSuccess() {
+		$this->incrementEmailsSentCount();
+	}
+
+	private function incrementEmailsSentCount() {
+		global $wgMemc;
+		$emailsSent = $wgMemc->get( $this->getTargetUserCacheKey() );
+		if ( !is_int( $emailsSent ) ) {
+			$wgMemc->set( $this->getTargetUserCacheKey(), 0, time() + self::THROTTLE_PERIOD );
+		}
+
+		$wgMemc->incr( $this->getTargetUserCacheKey() );
+	}
+
+	private function getTargetUserCacheKey() {
+		return $this->targetUser->getId() . ":sentCategoryAddEmailCount";
+	}
+
 	/**
-	 * @template categoryAdd
+	 * @template avatarLayout
 	 */
 	public function body() {
 		$this->response->setData( [
 			'salutation' => $this->getSalutation(),
-			'summary' => $this->getDetails(),
-			'categoryPageName' => $this->categoryPage->getText(),
-			'pageAddedToCategoryName' => $this->pageAddedToCategory->getText(),
-			'pageAddedToCategoryUrl' => $this->pageAddedToCategory->getFullURL(),
+			'summary' => $this->getSummary(),
+			'editorProfilePage' => $this->getCurrentProfilePage(),
+			'editorUserName' => $this->getCurrentUserName(),
+			'editorAvatarURL' => $this->getCurrentAvatarURL(),
+			'detailsHeader' => $this->pageAddedToCategory->getPrefixedText(),
+			'details' => $this->getDetails(),
+			'buttonLink' => $this->pageAddedToCategory->getFullURL(),
+			'buttonText' => $this->getMessage( 'emailext-categoryadd-see-article')->text(),
 			'contentFooterMessages' => [
 				$this->getContentFooterMessages()
-			]
+			],
+			'hasContentFooterMessages' => true,
 		] );
 	}
 
 	protected function getSubject() {
-		return $this->getMessage( 'emailext-categoryadd-subject', $this->categoryPage->getText() )->parse();
+		$pageName = $this->pageAddedToCategory->getPrefixedText();
+		$categoryName = $this->categoryPage->getText();
+		return $this->getMessage( 'emailext-categoryadd-subject', $pageName, $categoryName )->text();
+	}
+
+	protected function getSummary() {
+		$pageName = $this->pageAddedToCategory->getPrefixedText();
+		$pageUrl = $this->pageAddedToCategory->getFullURL();
+		$categoryName = $this->categoryPage->getText();
+		$categoryUrl = $this->categoryPage->getFullURL();
+		return $this->getMessage(
+			'emailext-categoryadd-details',
+			$pageUrl, $pageName,
+			$categoryUrl, $categoryName
+		)->parse();
 	}
 
 	protected function getDetails() {
-		return $this->getMessage( 'emailext-categoryadd-details' )->text();
+		$article = \Article::newFromTitle( $this->pageAddedToCategory, \RequestContext::getMain() );
+		$service = new \ArticleService( $article );
+		$snippet = $service->getTextSnippet();
+
+		return $snippet;
 	}
 
 	protected function getContentFooterMessages() {
@@ -119,7 +176,7 @@ class CategoryAddController extends EmailController {
 				[
 					'type' => 'text',
 					'name' => 'childArticleID',
-					'label' => "Page Added to Category ID",
+					'label' => "ID of the Page Added",
 					'tooltip' => 'The ID of the page added to the category'
 				],
 			]

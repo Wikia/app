@@ -83,8 +83,7 @@ class NavigationModel extends WikiaModel {
 	 */
 	private function getMemcKey( $messageName, $cityId = false ) {
 		if ( $this->useSharedMemcKey ) {
-			$wikiId = substr( wfSharedMemcKey(), 0, -1 );
-
+			$wikiId = wfWikiID();
 		} else {
 			$wikiId = ( is_numeric($cityId)) ? $cityId : intval( $this->wg->CityId );
 
@@ -96,22 +95,13 @@ class NavigationModel extends WikiaModel {
 
 		$messageName = str_replace(' ', '_', $messageName);
 
-		return implode( ':', array( __CLASS__, $wikiId, $this->wg->Lang->getCode(), $messageName, self::version ) );
+		return wfSharedMemcKey( __CLASS__, $wikiId, $this->wg->Lang->getCode(), $messageName, self::version );
 	}
 
 	public function clearMemc( $key = self::WIKIA_GLOBAL_VARIABLE, $city_id = false ){
 		$this->wg->Memc->delete(
 			$this->getMemcKey( $key, $city_id )
 		);
-	}
-
-	/**
-	 * Refresh local navigation cache
-	 *
-	 * Called by LocalNavigationHooks::onMessageCacheReplace
-	 */
-	public function clearNavigationTreeCache() {
-		$this->getLocalNavigationTree( NavigationModel::WIKI_LOCAL_MESSAGE, true /* $refreshCache */ );
 	}
 
 	private function setShouldTranslateContent($shouldTranslateContent) {

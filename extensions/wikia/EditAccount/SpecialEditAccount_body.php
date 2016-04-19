@@ -18,7 +18,11 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 	exit( 1 );
 }
 
+use Wikia\DependencyInjection\Injector;
+use Wikia\Service\Helios\HeliosClient;
+
 class EditAccount extends SpecialPage {
+	/** @var User */
 	var $mUser = null;
 	var $mStatus = null;
 	var $mStatusMsg;
@@ -124,6 +128,12 @@ class EditAccount extends SpecialPage {
 			return;
 		}
 
+		// Displays a log of email changes for the selected user
+		if ($par && $par == "log") {
+			$this->displayLogData();
+			return;
+		}
+
 		$changeReason = $request->getVal( 'wpReason' );
 
 		switch( $action ) {
@@ -209,7 +219,7 @@ class EditAccount extends SpecialPage {
 			$this->mUser->load();
 
 			// get new email (unconfirmed)
-			$optionNewEmail = $this->mUser->getGlobalAttribute( 'new_email' );
+			$optionNewEmail = $this->mUser->getNewEmail();
 			$changeEmailRequested = ( empty($optionNewEmail) ) ? '' : wfMsg( 'editaccount-email-change-requested', $optionNewEmail ) ;
 
 			// emailStatus is the status of the email in the "Set new email address" field
@@ -226,6 +236,11 @@ class EditAccount extends SpecialPage {
 					'userStatus' => $userStatus,
 					'emailStatus' => $emailStatus,
 					'changeEmailRequested' => $changeEmailRequested,
+					'mailLogLink' => Linker::linkKnown(
+						SpecialPage::getTitleFor( 'EditAccount', 'log' ),
+						"Mail change log",	// TODO: i18n this
+						array(),			// attribs
+						array('user_id' => $this->mUser->getID())),
 				) );
 		}
 
@@ -240,13 +255,12 @@ class EditAccount extends SpecialPage {
 	 * @return Boolean: true on success, false on failure (i.e. if we were given an invalid email address)
 	 */
 	function setEmail( $email, $changeReason = '' ) {
-		$oldEmail = $this->mUser->getEmail();
 		if ( Sanitizer::validateEmail( $email ) || $email == '' ) {
 			$this->mUser->setEmail( $email );
 			if ( $email != '' ) {
 				UserLoginHelper::removeNotConfirmedFlag( $this->mUser );
 				$this->mUser->confirmEmail();
-				$this->mUser->setGlobalAttribute( 'new_email', null );
+				$this->mUser->clearNewEmail();
 			} else {
 				if ( $this->mUser->getGlobalFlag( UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME ) ) {
 					// User not confirmed on signup can't has empty email
@@ -410,6 +424,11 @@ class EditAccount extends SpecialPage {
 			$mStatusMsg = wfMessage( 'editaccount-success-close', $user->mName )->plain();
 
 			wfRunHooks( 'EditAccountClosed', array( $user ) );
+
+			/** @var HeliosClient $heliosClient */
+			$heliosClient = Injector::getInjector()->get(HeliosClient::class);
+			$heliosClient->forceLogout($user->getId());
+
 			return true;
 
 		} else {
@@ -517,5 +536,41 @@ class EditAccount extends SpecialPage {
 		// This suffix shouldn't reduce the entropy of the intentionally scrambled password.
 		$REQUIRED_CHARS = "A1a";
 		return (wfGenerateToken() . $REQUIRED_CHARS);
+	}
+
+	public function displayLogData() {
+		global $wgExternalSharedDB, $wgOut, $wgRequest;
+
+		$user_id = $wgRequest->getInt('user_id', 0);
+		$user_name = "Not found";
+		$rows = [];
+
+		if ( $wgExternalSharedDB && $user_id ) {
+			$user_name = User::newFromID($user_id);
+
+			$dbr = wfGetDB ( DB_SLAVE, array(), $wgExternalSharedDB );
+			$res = $dbr->select (
+				'user_email_log',			// from
+				["*"],						// cols
+				['user_id' => $user_id],	// where
+				__METHOD__,
+				["ORDER BY" => "changed_at DESC"]	// options
+				);
+			while ( $row = $dbr->fetchObject( $res ) ) {
+				$row->changed_by_name = User::newFromId($row->changed_by_id);
+				$rows[] = $row;
+			}
+		}
+
+		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
+
+		$oTmpl->set_Vars( [
+			'userName' => $user_name,
+			'returnURL' => $this->getTitle()->getFullURL(),
+			'rows' => $rows
+			]
+		);
+
+		$wgOut->addHTML( $oTmpl->render( "changelog" ) );
 	}
 }

@@ -157,6 +157,7 @@ class MustacheService {
 		} else {
 			$mustache = new MustachePHP();
 		}
+
 		return $mustache->render($template,$data,$partials);
 	}
 

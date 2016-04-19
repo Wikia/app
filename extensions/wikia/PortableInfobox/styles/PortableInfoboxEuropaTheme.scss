@@ -1,0 +1,202 @@
+@import 'skins/shared/color';
+@import 'skins/shared/mixins/flexbox';
+
+$background-color-mix: 10%;
+$black: #000;
+$collapsible-chevron-size: 9px;
+$collapsible-chevron-negative-margin: -7px;
+$infobox-data-spacing: 10px;
+$infobox-header-spacing: 9px;
+$infobox-side-spacing: 14px;
+$infobox-width: 300px;
+$header-font-size: 16px;
+$header-line-height: 20px;
+$horizontal-group-label-spacing: 6px;
+$label-width: 88px;
+$list-item-line-height: 18px;
+$list-item-spacing: 8px;
+$tab-font-size: 14px;
+$title-font-size: 20px;
+$title-line-height: 24px;
+$white: #fff;
+
+// color mixes
+// 5% button color, 5% black/white, 90% background
+$background-color: mix(mix($color-buttons, $black, $background-color-mix * 5), $color-page, $background-color-mix);
+$tabber-background-color: mix($color-buttons, $background-color, $background-color-mix * 4);
+
+@if $is-dark-wiki {
+	$background-color: mix(mix($color-buttons, $white, $background-color-mix * 5), $color-page, $background-color-mix);
+}
+
+$horizontal-group-stripe-background: mix($color-buttons, $background-color, $background-color-mix);
+
+$caption-color-text: mix($color-text, $white, $background-color-mix * 7);
+@if $is-dark-wiki {
+	$caption-color-text: mix($color-text, $black, $background-color-mix * 7);
+}
+
+.pi-europa {
+	&.portable-infobox {
+		color: $color-text;
+		width: $infobox-width;
+	}
+
+	&.pi-background {
+		background-color: $background-color;
+	}
+
+	&.pi-layout-stacked {
+		.pi-data-label {
+			padding-bottom: $horizontal-group-label-spacing;
+			padding-right: 0;
+		}
+	}
+
+	.pi-caption {
+		color: $caption-color-text;
+		font-style: normal;
+		line-height: $list-item-line-height;
+	}
+
+	.pi-collapse .pi-header::after,
+	.pi-header.collapsible::after {
+		border-color: $color-button-text;
+		height: $collapsible-chevron-size;
+		right: $infobox-side-spacing;
+		width: $collapsible-chevron-size;
+	}
+
+	.pi-collapse-closed .pi-header::after {
+		margin-top: $collapsible-chevron-negative-margin;
+	}
+
+	.pi-data-label {
+		@include flex-basis($label-width);
+		color: inherit;
+		padding-right: $infobox-side-spacing;
+	}
+
+	.pi-data-value {
+		padding-left: 0;
+
+		li {
+			line-height: $list-item-line-height;
+			padding-bottom: $list-item-spacing;
+
+			&:last-child {
+				padding-bottom: 0;
+			}
+		}
+
+		ul {
+			list-style-type: disc;
+		}
+
+		ol {
+			margin-left: $infobox-side-spacing;
+		}
+
+		ol, ul {
+			list-style-position: outside;
+			margin-left: $infobox-side-spacing;
+		}
+	}
+
+	.pi-data,
+	.pi-group {
+		border-bottom: 0;
+	}
+
+	.pi-header {
+		font-size: $header-font-size;
+	}
+
+	.pi-header,
+	.pi-image-collection-tabs {
+		line-height: $header-line-height;
+	}
+
+	.pi-header,
+	.pi-tab-link {
+		padding: $infobox-header-spacing $infobox-side-spacing;
+	}
+
+	.pi-header,
+	.pi-title {
+		background-color: $color-buttons;
+		color: $color-button-text;
+		text-align: center;
+
+		a {
+			color: $white;
+			text-decoration: underline;
+		}
+	}
+
+	.pi-horizontal-group {
+		text-align: left;
+
+		.pi-horizontal-group-item {
+			border-left: 0;
+		}
+
+		.pi-data-label {
+			padding: $infobox-data-spacing $infobox-side-spacing $horizontal-group-label-spacing;
+		}
+
+		.pi-data-value {
+			padding-left: $infobox-side-spacing;
+			padding-top: 0;
+		}
+	}
+
+	.pi-horizontal-group-item:nth-child(even) {
+		background-color: $horizontal-group-stripe-background;
+	}
+
+	.pi-horizontal-group-no-labels .pi-data-value {
+		padding-top: $infobox-data-spacing;
+	}
+
+	.pi-image-collection-tabs {
+		background-color: $background-color;
+		margin: 0;
+		text-align: left;
+
+		.current {
+			background-color: $tabber-background-color;
+		}
+	}
+
+	.pi-image-collection-tab-content {
+		background-color: inherit;
+	}
+
+	.pi-item-spacing {
+		padding: $infobox-data-spacing $infobox-side-spacing;
+
+		&.pi-caption {
+			padding-bottom: $infobox-side-spacing;
+		}
+	}
+
+	.pi-navigation {
+		background-color: inherit;
+		color: inherit;
+		font-weight: inherit;
+	}
+
+	.pi-tab-link {
+		border: 0;
+		font-size: $tab-font-size;
+		margin: 0;
+	}
+
+	.pi-title {
+		font-size: $title-font-size;
+		font-weight: bold;
+		line-height: $title-line-height;
+		padding-top: $infobox-side-spacing;
+	}
+}

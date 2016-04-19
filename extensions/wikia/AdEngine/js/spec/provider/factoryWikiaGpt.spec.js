@@ -6,33 +6,54 @@ describe('ext.wikia.adEngine.provider.factory.wikiaGpt', function () {
 
 	var mocks = {
 			log: noop,
+			context: {
+				opts: {}
+			},
+			adContext: {
+				getContext: function () {
+					return mocks.context;
+				}
+			},
 			adLogicPageParams: {
 				getPageLevelParams: function () {
 					return {
 						s0: 'ent',
 						s1: '_muppet',
 						s2: 'home'
-					}
+					};
 				}
 			},
 			gptHelper: {
-				pushAd: function (slotName, slotElement, slotPath, slotTargeting, extra) {
-					extra.success();
-					extra.error();
+				pushAd: function (slot) {
+					slot.success();
+					slot.hop();
 				}
 			},
 			lookups: {
 				extendSlotTargeting: noop
 			},
 			beforeSuccess: noop,
+			beforeCollapse: noop,
 			beforeHop: noop
 		};
 
+	function createSlot(slotName) {
+		return {
+			name: slotName,
+			success: noop,
+			hop: noop,
+			pre: function (name, callback) {
+				callback();
+			}
+		};
+	}
+
 	function getModule() {
 		return modules['ext.wikia.adEngine.provider.factory.wikiaGpt'](
-			mocks.log,
+			mocks.adContext,
 			mocks.adLogicPageParams,
 			mocks.gptHelper,
+			mocks.log,
 			mocks.lookups
 		);
 	}
@@ -67,9 +88,9 @@ describe('ext.wikia.adEngine.provider.factory.wikiaGpt', function () {
 	it('Build slot path based on page params', function () {
 		spyOn(mocks.gptHelper, 'pushAd');
 
-		getProvider().fillInSlot('TOP_LEADERBOARD');
+		getProvider().fillInSlot(createSlot('TOP_LEADERBOARD'));
 
-		expect(mocks.gptHelper.pushAd.calls.mostRecent().args[2]).toEqual(
+		expect(mocks.gptHelper.pushAd.calls.mostRecent().args[1]).toEqual(
 			'/5441/wka.ent/_muppet//home/testSource/TOP_LEADERBOARD'
 		);
 	});
@@ -79,9 +100,19 @@ describe('ext.wikia.adEngine.provider.factory.wikiaGpt', function () {
 
 		getProvider({
 			beforeSuccess: mocks.beforeSuccess
-		}).fillInSlot('TOP_LEADERBOARD', {}, noop, noop);
+		}).fillInSlot(createSlot('TOP_LEADERBOARD'));
 
 		expect(mocks.beforeSuccess).toHaveBeenCalled();
+	});
+
+	it('Call beforeCollapse on pushAd if is defined', function () {
+		spyOn(mocks, 'beforeCollapse');
+
+		getProvider({
+			beforeCollapse: mocks.beforeCollapse
+		}).fillInSlot(createSlot('TOP_LEADERBOARD'));
+
+		expect(mocks.beforeCollapse).toHaveBeenCalled();
 	});
 
 	it('Call beforeHop on pushAd if is defined', function () {
@@ -89,7 +120,7 @@ describe('ext.wikia.adEngine.provider.factory.wikiaGpt', function () {
 
 		getProvider({
 			beforeHop: mocks.beforeHop
-		}).fillInSlot('TOP_LEADERBOARD', {}, noop, noop);
+		}).fillInSlot(createSlot('TOP_LEADERBOARD'));
 
 		expect(mocks.beforeHop).toHaveBeenCalled();
 	});

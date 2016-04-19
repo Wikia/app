@@ -865,14 +865,15 @@ class MWMemcached {
 			wfRestoreWarnings();
 		}
 		if ( !$sock ) {
-			if ( $this->_debug ) {
-				$this->_debugprint( "Error connecting to $host: $errstr\n" );
-			}
+			wfDebug( __METHOD__ . ": Error connecting to $host ($ip:$port): $errstr\n" ); // Wikia change
 
 			// Wikia change - begin
 			$this->error( 'MemcachedClient: socket connection failed', [
 				'host' => $host,
 				'exception' => new Exception( $errstr, $errno ),
+				'ip' => $ip,
+				'port' => $port,
+				'timeout' => $timeout,
 			]);
 			// Wikia change - end
 			return false;
@@ -1200,7 +1201,7 @@ class MWMemcached {
 		if ( $len > self::MEMCACHED_ITEM_MAX_SIZE - 2 ) {
 			// default item_max_size is 1mb, 2 characters are reserved for trailing "\r\n"
 			if ( class_exists( 'Wikia\\Logger\\WikiaLogger' ) ) {
-				\Wikia\Logger\WikiaLogger::instance()->debug( 'MemcachedClient: large value' , [
+				\Wikia\Logger\WikiaLogger::instance()->error( 'MemcachedClient: large value' , [
 					'exception' => new Exception(),
 					'key' => $key,
 					'len' => $len,

@@ -1,35 +1,42 @@
 /*global require*/
 /*jshint camelcase:false*/
 require([
-	'ext.wikia.adEngine.adEngine',
+	'ext.wikia.adEngine.adContext',
+	'ext.wikia.adEngine.adEngineRunner',
 	'ext.wikia.adEngine.adLogicHighValueCountry',
-	'ext.wikia.adEngine.adTracker',
 	'ext.wikia.adEngine.config.desktop',
 	'ext.wikia.adEngine.customAdsLoader',
 	'ext.wikia.adEngine.dartHelper',
 	'ext.wikia.adEngine.messageListener',
-	'ext.wikia.adEngine.provider.evolve',
+	'ext.wikia.adEngine.recovery.helper',
+	'ext.wikia.adEngine.slot.scrollHandler',
 	'ext.wikia.adEngine.slotTracker',
 	'ext.wikia.adEngine.slotTweaker',
-	'wikia.krux',
-	'wikia.window'
+	'ext.wikia.adEngine.sourcePointDetection',
+	'wikia.window',
+	'wikia.loader',
+	require.optional('ext.wikia.adEngine.recovery.gcs')
 ], function (
-	adEngine,
+	adContext,
+	adEngineRunner,
 	adLogicHighValueCountry,
-	adTracker,
 	adConfigDesktop,
 	customAdsLoader,
 	dartHelper,
 	messageListener,
-	providerEvolve,
+	recoveryHelper,
+	scrollHandler,
 	slotTracker,
 	slotTweaker,
-	krux,
-	win
+	sourcePoint,
+	win,
+	loader,
+	gcs
 ) {
 	'use strict';
 
-	var kruxSiteId = 'JU3_GW1b';
+	var context = adContext.getContext(),
+		skin = 'oasis';
 
 	win.AdEngine_getTrackerStats = slotTracker.getStats;
 
@@ -50,9 +57,6 @@ require([
 
 	messageListener.init();
 
-	// Register Evolve hop
-	win.evolve_hop = providerEvolve.hop;
-
 	// Register window.wikiaDartHelper so jwplayer can use it
 	win.wikiaDartHelper = dartHelper;
 
@@ -69,32 +73,60 @@ require([
 	// Everything starts after content and JS
 	win.wgAfterContentAndJS.push(function () {
 		// Ads
-		adTracker.measureTime('adengine.init', 'queue.desktop').track();
+		scrollHandler.init(skin);
 		win.adslots2 = win.adslots2 || [];
-		adEngine.run(adConfigDesktop, win.adslots2, 'queue.desktop');
+		adEngineRunner.run(adConfigDesktop, win.adslots2, 'queue.desktop', !!context.opts.delayEngine);
 
-		// Krux
-		krux.load(kruxSiteId);
+		// Recovery
+		recoveryHelper.initEventQueue();
+		sourcePoint.initDetection();
+
+		if (context.opts.sourcePointRecovery && win.ads) {
+			win.ads.runtime.sp.slots = win.ads.runtime.sp.slots || [];
+			recoveryHelper.addOnBlockingCallback(function () {
+				adEngineRunner.run(adConfigDesktop, win.ads.runtime.sp.slots, 'queue.sp', false);
+			});
+		}
+
+		if (context.opts.googleConsumerSurveys && gcs) {
+			gcs.addRecoveryCallback();
+		}
+
+		if (context.opts.recoveredAdsMessage) {
+			loader({
+				type: loader.AM_GROUPS,
+				resources: ['adengine2_ads_recovery_message_js']
+			}).done(function () {
+				require(['ext.wikia.adEngine.recovery.message'], function (recoveredAdMessage) {
+					recoveredAdMessage.addRecoveryCallback();
+				});
+			});
+		}
 	});
 });
 
 // Inject extra slots
 require([
-	'ext.wikia.adEngine.slot.inContentPlayer',
+	'ext.wikia.adEngine.adContext',
+	'ext.wikia.adEngine.slot.inContent',
 	'ext.wikia.adEngine.slot.skyScraper3',
 	'wikia.document',
 	'wikia.window',
-	require.optional('ext.wikia.adEngine.slot.exitstitial'),
-	require.optional('ext.wikia.adEngine.slot.inContentDesktop')
-], function (inContentPlayer, skyScraper3, doc, win, exitstitial, inContentDesktop) {
+	require.optional('ext.wikia.adEngine.slot.exitstitial')
+], function (adContext, inContent, skyScraper3, doc, win, exitstitial) {
 	'use strict';
 
+	var context = adContext.getContext();
+
 	function initDesktopSlots() {
-		inContentPlayer.init();
 		skyScraper3.init();
 
-		if (inContentDesktop) {
-			inContentDesktop.init();
+		if (context.slots.incontentPlayer) {
+			inContent.init('INCONTENT_PLAYER');
+		}
+
+		if (context.slots.incontentLeaderboard) {
+			inContent.init('INCONTENT_LEADERBOARD');
 		}
 
 		if (exitstitial) {

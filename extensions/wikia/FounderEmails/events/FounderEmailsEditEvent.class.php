@@ -176,7 +176,7 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 		static $counter = null;
 
 		if ( empty( $counter[$admin->getId()] ) ) {
-			$allCounter = unserialize( $admin->getGlobalAttribute( 'founderemails-counter' ) );
+			$allCounter = Wikia\Util\Serialize::safeUnserialize( $admin->getGlobalAttribute( 'founderemails-counter' ) );
 			$allCounter = is_array( $allCounter ) ? $allCounter : [];
 
 			if ( $this->userCounterNeedsReset( $allCounter ) ) {
@@ -230,18 +230,18 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 
 	private function getEmailController( User $admin, array $eventData ) {
 		if ( $this->hasHitNotificationLimit( $admin ) ) {
-			return 'Email\Controller\FounderActive';
+			return Email\Controller\FounderActiveController::class;
 		}
 
 		if ( $eventData['registeredUserFirstEdit'] ) {
-			return 'Email\Controller\FounderEdit';
+			return Email\Controller\FounderEditController::class;
 		}
 
 		if ( $eventData['registeredUser'] ) {
-			return 'Email\Controller\FounderMultiEdit';
+			return Email\Controller\FounderMultiEditController::class;
 		}
 
-		return 'Email\Controller\FounderAnonEdit';
+		return Email\Controller\FounderAnonEditController::class;
 	}
 
 	/**

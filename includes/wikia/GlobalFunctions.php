@@ -11,43 +11,43 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 /**
  * Author: Inez Korczyński
  */
-function GetLinksArrayFromMessage($messagename) { // feel free to suggest better name for this function
+function GetLinksArrayFromMessage( $messagename ) { // feel free to suggest better name for this function
 	global $parserMemc, $wgEnableSidebarCache;
 	global $wgLang, $wgContLang;
 
-	wfProfileIn("GetLinksArrayFromMessage");
-	$key = wfMemcKey($messagename);
+	wfProfileIn( "GetLinksArrayFromMessage" );
+	$key = wfMemcKey( $messagename );
 
 	$cacheSidebar = $wgEnableSidebarCache &&
-		($wgLang->getCode() == $wgContLang->getCode());
+		( $wgLang->getCode() == $wgContLang->getCode() );
 
-	if ($cacheSidebar) {
+	if ( $cacheSidebar ) {
 		$cachedsidebar = $parserMemc->get( $key );
-		if ($cachedsidebar!="") {
-			wfProfileOut("GetLinksArrayFromMessage");
+		if ( $cachedsidebar != "" ) {
+			wfProfileOut( "GetLinksArrayFromMessage" );
 			return $cachedsidebar;
 		}
 	}
 
 	$bar = array();
 	$lines = explode( "\n", wfMsgForContent( $messagename ) );
-	foreach ($lines as $line) {
-		if (strlen($line) == 0) // ignore empty lines
+	foreach ( $lines as $line ) {
+		if ( strlen( $line ) == 0 ) // ignore empty lines
 			continue;
-		if (strpos($line, '*') !== 0)
+		if ( strpos( $line, '*' ) !== 0 )
 			continue;
-		if (strpos($line, '**') !== 0) {
-			$line = trim($line, '* ');
+		if ( strpos( $line, '**' ) !== 0 ) {
+			$line = trim( $line, '* ' );
 			$heading = $line;
 		} else {
-			if (strpos($line, '|') !== false) { // sanity check
-				$line = explode( '|' , trim($line, '* '), 2 );
+			if ( strpos( $line, '|' ) !== false ) { // sanity check
+				$line = explode( '|' , trim( $line, '* ' ), 2 );
 				$link = wfMsgForContent( $line[0] );
-				if ($link == '-')
+				if ( $link == '-' )
 					continue;
-				if (wfEmptyMsg($line[1], $text = wfMsg($line[1])))
+				if ( wfEmptyMsg( $line[1], $text = wfMsg( $line[1] ) ) )
 					$text = $line[1];
-				if (wfEmptyMsg($line[0], $link))
+				if ( wfEmptyMsg( $line[0], $link ) )
 					$link = $line[0];
 					if ( preg_match( '/^(?:' . wfUrlProtocols() . ')/', $link ) ) {
 					$href = $link;
@@ -61,20 +61,20 @@ function GetLinksArrayFromMessage($messagename) { // feel free to suggest better
 					}
 				}
 
-				if(isset($heading)) {
+				if ( isset( $heading ) ) {
 						$bar[$heading][] = array(
 						'text' => $text,
 						'href' => $href,
-						'id' => 'n-' . strtr($line[1], ' ', '-'),
+						'id' => 'n-' . strtr( $line[1], ' ', '-' ),
 						'active' => false
 					);
 				}
 			} else { continue; }
 		}
 	}
-	if ($cacheSidebar)
+	if ( $cacheSidebar )
 		$parserMemc->set( $key, $bar, 86400 );
-	wfProfileOut("GetLinksArrayFromMessage");
+	wfProfileOut( "GetLinksArrayFromMessage" );
 	return $bar;
 }
 
@@ -84,14 +84,14 @@ function GetLinksArrayFromMessage($messagename) { // feel free to suggest better
  * @author: Inez Korczyński
  *
  */
-function print_pre($param, $return = 0)
+function print_pre( $param, $return = 0 )
 {
 	global $wgDisablePrintPre;
 	if ( isset ( $wgDisablePrintPre ) && $wgDisablePrintPre == true ) {
 		return '';
 	}
-	$retval = "<pre>".print_r( $param, 1 )."</pre>";
-	if  (empty( $return )) {
+	$retval = "<pre>" . print_r( $param, 1 ) . "</pre>";
+	if  ( empty( $return ) ) {
 		echo $retval;
 	}
 	else {
@@ -115,48 +115,48 @@ function wfReplaceImageServer( $url, $timestamp = false ) {
 	// Override image server location for Wikia development environment
 	// This setting should be images.developerName.wikia-dev.com or perhaps "localhost"
 	// FIXME: This needs to be removed. It should be encapsulated in the URL generation.
-	$overrideServer = !empty($wg->DevBoxImageServerOverride) && !$wg->EnableVignette;
+	$overrideServer = !empty( $wg->DevBoxImageServerOverride ) && !$wg->EnableVignette;
 	if ( $overrideServer ) {
-		$url = preg_replace("/\/\/(.*?)wikia-dev\.com\/(.*)/", "//{$wg->DevBoxImageServerOverride}/$2", $url);
+		$url = preg_replace( "/\/\/(.*?)wikia-dev\.com\/(.*)/", "//{$wg->DevBoxImageServerOverride}/$2", $url );
 	}
 
 	wfDebug( __METHOD__ . ": requested url $url\n" );
-	if(substr(strtolower($url), -4) != '.ogg' && isset($wg->ImagesServers) && is_int($wg->ImagesServers)) {
-		if(strlen($url) > 7 && substr($url,0,7) == 'http://') {
-			$hash = sha1($url);
-			$inthash = ord ($hash);
+	if ( substr( strtolower( $url ), -4 ) != '.ogg' && isset( $wg->ImagesServers ) && is_int( $wg->ImagesServers ) ) {
+		if ( strlen( $url ) > 7 && substr( $url, 0, 7 ) == 'http://' ) {
+			$hash = sha1( $url );
+			$inthash = ord ( $hash );
 
-			$serverNo = $inthash%($wg->ImagesServers-1);
+			$serverNo = $inthash % ( $wg->ImagesServers -1 );
 			$serverNo++;
 
 			// If there is no timestamp, use the cache-busting number from wgCdnStylePath.
-			if($timestamp == ""){
+			if ( $timestamp == "" ) {
 				$matches = array();
 				// @TODO: consider using wgStyleVersion
-				if(0 < preg_match("/\/__cb([0-9]+)/i", $wg->CdnStylePath, $matches)){
+				if ( 0 < preg_match( "/\/__cb([0-9]+)/i", $wg->CdnStylePath, $matches ) ) {
 					$timestamp = $matches[1];
 				} else {
 					// This results in no caching of the image.  Bad bad bad, but the best way to fail.
-					Wikia::log( __METHOD__, "", "BAD FOR CACHING!: There is a call to ".__METHOD__." without a timestamp and we could not parse a fallback cache-busting number out of wgCdnStylePath.  This means the '{$url}' image won't be cacheable!");
-					$timestamp = rand(0, 1000);
+					Wikia::log( __METHOD__, "", "BAD FOR CACHING!: There is a call to " . __METHOD__ . " without a timestamp and we could not parse a fallback cache-busting number out of wgCdnStylePath.  This means the '{$url}' image won't be cacheable!" );
+					$timestamp = rand( 0, 1000 );
 				}
 			}
 
 			// NOTE: This should be the only use of the cache-buster which does not use $wg->CdnStylePath.
 			// RT#98969 if the url already has a cb value, don't add another one...
-			$cb = ($timestamp!='' && strpos($url, "__cb") === false) ? "__cb{$timestamp}/" : '';
+			$cb = ( $timestamp != '' && strpos( $url, "__cb" ) === false ) ? "__cb{$timestamp}/" : '';
 
 			if ( $overrideServer ) {
 				// Dev boxes
 				// TODO: support domains sharding on devboxes
-				$url = str_replace('http://images.wikia.com/', sprintf("http://{$wg->DevBoxImageServerOverride}/%s", $cb), $url);
+				$url = str_replace( 'http://images.wikia.com/', sprintf( "http://{$wg->DevBoxImageServerOverride}/%s", $cb ), $url );
 			} else {
 				// Production
-				$url = str_replace('http://images.wikia.com/', sprintf("http://{$wg->ImagesDomainSharding}/%s",$serverNo, $cb), $url);
+				$url = str_replace( 'http://images.wikia.com/', sprintf( "http://{$wg->ImagesDomainSharding}/%s", $serverNo, $cb ), $url );
 			}
 		}
 	} else if ( $overrideServer ) {
-		$url = str_replace('http://images.wikia.com/', "http://{$wg->DevBoxImageServerOverride}/", $url);
+		$url = str_replace( 'http://images.wikia.com/', "http://{$wg->DevBoxImageServerOverride}/", $url );
 	}
 
 	return $url;
@@ -175,19 +175,19 @@ function wfReplaceAssetServer( $url ) {
 
 	$matches = array();
 
-	if ( preg_match("#^(?<a>(https?:)?//(slot[0-9]+\\.)?images)(?<b>\\.wikia\\.nocookie\\.net/.*)\$#",$url,$matches) ) {
-		$hash = sha1($url);
-		$inthash = ord($hash);
+	if ( preg_match( "#^(?<a>(https?:)?//(slot[0-9]+\\.)?images)(?<b>\\.wikia\\.nocookie\\.net/.*)\$#", $url, $matches ) ) {
+		$hash = sha1( $url );
+		$inthash = ord( $hash );
 
-		$serverNo = $inthash%($wgImagesServers-1);
+		$serverNo = $inthash % ( $wgImagesServers -1 );
 		$serverNo++;
 
-		$url = $matches['a'] . ($serverNo) . $matches['b'];
-	} elseif (!empty($wgDevelEnvironment) && preg_match('/^((https?:)?\/\/)(([a-z0-9]+)\.wikia-dev\.com\/(.*))$/', $url, $matches)) {
-		$hash = sha1($url);
-		$inthash = ord($hash);
+		$url = $matches['a'] . ( $serverNo ) . $matches['b'];
+	} elseif ( !empty( $wgDevelEnvironment ) && preg_match( '/^((https?:)?\/\/)(([a-z0-9]+)\.wikia-dev\.com\/(.*))$/', $url, $matches ) ) {
+		$hash = sha1( $url );
+		$inthash = ord( $hash );
 
-		$serverNo = $inthash%($wgImagesServers-1);
+		$serverNo = $inthash % ( $wgImagesServers -1 );
 		$serverNo++;
 
 		$url = "{$matches[1]}i{$serverNo}.{$matches[3]}";
@@ -200,20 +200,20 @@ function wfReplaceAssetServer( $url ) {
  * 	@author Krzysztof Zmudziński <kaz3t@wikia.com>
  *	Returns array of review reason id
  */
-function wfGetReviewReason($max = 5) {
+function wfGetReviewReason( $max = 5 ) {
 	global $wgMemc, $wgDBname;
 
 	$key = "$wgDBname:ReviewReasons";
-	$result = $wgMemc->get($key);
+	$result = $wgMemc->get( $key );
 
-	if (!is_array($result)) {
-		for ($i = 1; $i <= $max; $i++) {
-			$msg = htmlspecialchars_decode(wfMsg("review_reason_$i"));
-			if ($msg[0] != "<") {
+	if ( !is_array( $result ) ) {
+		for ( $i = 1; $i <= $max; $i++ ) {
+			$msg = htmlspecialchars_decode( wfMsg( "review_reason_$i" ) );
+			if ( $msg[0] != "<" ) {
 				$result[$i] = $msg;
 			}
 		}
-		$wgMemc->set($key, $result, 60);
+		$wgMemc->set( $key, $result, 60 );
 	}
 	return $result;
 }
@@ -225,17 +225,17 @@ function wfGetReviewReason($max = 5) {
  * word. From: http://www.totallyphp.co.uk/code/shorten_a_text_string.htm
  * Added multibyte string support
  */
-function wfShortenText( $text, $chars = 25, $useContentLanguage = false ){
-	if( mb_strlen( $text ) <= $chars ) {
+function wfShortenText( $text, $chars = 25, $useContentLanguage = false ) {
+	if ( mb_strlen( $text ) <= $chars ) {
 		return $text;
 	}
 
 	static $ellipsis = array();
 	$key = ( !empty( $useContentLanguage ) ) ? 'user' : 'content';
 
-	//memoize the message to avoid overhead,
-	//this might be called many times in the
-	//same process/request
+	// memoize the message to avoid overhead,
+	// this might be called many times in the
+	// same process/request
 	if ( !array_key_exists( $key, $ellipsis ) ) {
 		$msg = ( !empty( $useContentLanguage ) ) ?
 			wfMsgForContent( 'ellipsis' ) :
@@ -259,8 +259,8 @@ function wfShortenText( $text, $chars = 25, $useContentLanguage = false ){
 		$text = mb_substr( $text, 0, max( $spacePos, $backslashPos ) );
 	}
 
-	//remove symbols at the end of the snippet to avoid situations like:
-	//:... or ?... or ,... etc. etc.
+	// remove symbols at the end of the snippet to avoid situations like:
+	// :... or ?... or ,... etc. etc.
 	$text = preg_replace( '/[[:punct:]]+$/', '', $text ) . $ellipsis[$key][0];
 	return $text;
 }
@@ -278,28 +278,28 @@ function wfGetImagesCommon() {
  * to decode an escaped string in unicode
  * from php.net by pedantic@hotmail.co.jp
  */
-function wfDecodeUnicodeUrl($str) {
+function wfDecodeUnicodeUrl( $str ) {
 	$res = '';
 
     $i = 0;
-	$max = strlen($str) - 6;
-	while ($i <= $max)
+	$max = strlen( $str ) - 6;
+	while ( $i <= $max )
 	{
 		$character = $str[$i];
-		if ($character == '%' && $str[$i + 1] == 'u')
+		if ( $character == '%' && $str[$i + 1] == 'u' )
 		{
-		    $value = hexdec(substr($str, $i + 2, 4));
+		    $value = hexdec( substr( $str, $i + 2, 4 ) );
 			$i += 6;
 
-			if ($value < 0x0080) // 1 byte: 0xxxxxxx
-				$character = chr($value);
-			else if ($value < 0x0800) // 2 bytes: 110xxxxx 10xxxxxx
-				$character = chr((($value & 0x07c0) >> 6) | 0xc0)
-					. chr(($value & 0x3f) | 0x80);
+			if ( $value < 0x0080 ) // 1 byte: 0xxxxxxx
+				$character = chr( $value );
+			else if ( $value < 0x0800 ) // 2 bytes: 110xxxxx 10xxxxxx
+				$character = chr( ( ( $value & 0x07c0 ) >> 6 ) | 0xc0 )
+					. chr( ( $value & 0x3f ) | 0x80 );
 			else // 3 bytes: 1110xxxx 10xxxxxx 10xxxxxx
-				$character = chr((($value & 0xf000) >> 12) | 0xe0)
-					. chr((($value & 0x0fc0) >> 6) | 0x80)
-					. chr(($value & 0x3f) | 0x80);
+				$character = chr( ( ( $value & 0xf000 ) >> 12 ) | 0xe0 )
+					. chr( ( ( $value & 0x0fc0 ) >> 6 ) | 0x80 )
+					. chr( ( $value & 0x3f ) | 0x80 );
 		}
 		else
 			$i++;
@@ -307,7 +307,7 @@ function wfDecodeUnicodeUrl($str) {
 		$res .= $character;
 	}
 
-	return $res . substr($str, $i);
+	return $res . substr( $str, $i );
 }
 
 /**
@@ -319,12 +319,12 @@ function wfDecodeUnicodeUrl($str) {
  */
 function wfIsTalkPageForCurrentUserDisplayed() {
 	global $wgUser, $wgTitle, $wgOut, $wgRequest;
-	$action = $wgRequest->getText('action');
+	$action = $wgRequest->getText( 'action' );
 	return (
 		$wgUser->isLoggedIn() &&
 		$wgTitle->GetLocalURL() == $wgUser->GetTalkPage()->GetLocalURL() &&
 		$wgOut->isArticle() &&
-		($action == '' || $action == 'purge')
+		( $action == '' || $action == 'purge' )
 	);
 }
 
@@ -352,13 +352,13 @@ function wfStrToBool( $value ) {
  *
  * @return void or string: depends of $return param
  */
-function wfEchoIfSet($variable, $return = false)
+function wfEchoIfSet( $variable, $return = false )
 {
-    if (empty($return)){
-        echo isset($variable) ? $variable : "";
+    if ( empty( $return ) ) {
+        echo isset( $variable ) ? $variable : "";
     }
     else {
-        return isset($variable) ? $variable : "";
+        return isset( $variable ) ? $variable : "";
     }
 }
 
@@ -386,10 +386,10 @@ function wfStringToArray( $string, $delimiter = ",", $parts = 0 )
     $aParts = explode( $delimiter, $string );
     $aReturn = array();
 
-    #--- "normalize" string
-    foreach( $aParts as $count => $part ) {
-        $aReturn[] = trim($part);
-        if( $count > $parts ) {
+    # --- "normalize" string
+    foreach ( $aParts as $count => $part ) {
+        $aReturn[] = trim( $part );
+        if ( $count > $parts ) {
             break;
         }
     }
@@ -403,48 +403,48 @@ function wfStringToArray( $string, $delimiter = ",", $parts = 0 )
  * @return array
  * @author Inez Korczynski <inez@wikia.com>
  */
-function parseItem($line) {
-	wfProfileIn(__METHOD__);
+function parseItem( $line ) {
+	wfProfileIn( __METHOD__ );
 
 	$href = $specialCanonicalName = false;
 
-	$line_temp = explode('|', trim($line, '* '), 3);
-	$line_temp[0] = trim($line_temp[0], '[]');
-	if(count($line_temp) >= 2 && $line_temp[1] != '') {
-		$line = trim($line_temp[1]);
-		$link = trim(wfMsgForContent($line_temp[0]));
+	$line_temp = explode( '|', trim( $line, '* ' ), 3 );
+	$line_temp[0] = trim( $line_temp[0], '[]' );
+	if ( count( $line_temp ) >= 2 && $line_temp[1] != '' ) {
+		$line = trim( $line_temp[1] );
+		$link = trim( wfMsgForContent( $line_temp[0] ) );
 	} else {
-		$line = trim($line_temp[0]);
-		$link = trim($line_temp[0]);
+		$line = trim( $line_temp[0] );
+		$link = trim( $line_temp[0] );
 	}
 
 	$descText = null;
 
-	if(count($line_temp) > 2 && $line_temp[2] != '') {
+	if ( count( $line_temp ) > 2 && $line_temp[2] != '' ) {
 		$desc = $line_temp[2];
-		if (wfEmptyMsg($desc, $descText = wfMsg($desc))) {
+		if ( wfEmptyMsg( $desc, $descText = wfMsg( $desc ) ) ) {
 			$descText = $desc;
 		}
 	}
 
-	if (wfEmptyMsg($line, $text = wfMsg($line))) {
+	if ( wfEmptyMsg( $line, $text = wfMsg( $line ) ) ) {
 		$text = $line;
 	}
 
-	if($link != null) {
-		if (wfEmptyMsg($line_temp[0], $link)) {
+	if ( $link != null ) {
+		if ( wfEmptyMsg( $line_temp[0], $link ) ) {
 			$link = $line_temp[0];
 		}
-		if (preg_match( '/^(?:' . wfUrlProtocols() . ')/', $link )) {
+		if ( preg_match( '/^(?:' . wfUrlProtocols() . ')/', $link ) ) {
 			$href = $link;
 		} else {
 			$title = Title::newFromText( $link );
-			if($title) {
-				if ($title->getNamespace() == NS_SPECIAL) {
+			if ( $title ) {
+				if ( $title->getNamespace() == NS_SPECIAL ) {
 					$dbkey = $title->getDBkey();
 					$pageData = SpecialPageFactory::resolveAlias( $dbkey );
 					$specialCanonicalName = array_shift( $pageData );
-					if (!$specialCanonicalName) $specialCanonicalName = $dbkey;
+					if ( !$specialCanonicalName ) $specialCanonicalName = $dbkey;
 				}
 				$title = $title->fixSpecialName();
 				$href = $title->getLocalURL();
@@ -454,7 +454,7 @@ function parseItem($line) {
 		}
 	}
 
-	wfProfileOut(__METHOD__);
+	wfProfileOut( __METHOD__ );
 	return array(
 		'text' => $text,
 		'href' => $href,
@@ -466,14 +466,15 @@ function parseItem($line) {
 
 /**
  * @author Inez Korczynski <inez@wikia.com>
- * @return array
+ * @author Adam Karmiński <adamk@wikia-inc.com>
+ * @param string $messageKey
+ * @return array|null
  */
-function getMessageForContentAsArray($messageKey) {
-
-	$message = trim(wfMsgForContent($messageKey));
-	if(!wfEmptyMsg($messageKey, $message)) {
-		$lines = explode("\n", $message);
-		if(count($lines) > 0) {
+function getMessageForContentAsArray( $messageKey ) {
+	$message = wfMessage( $messageKey )->inContentLanguage();
+	if ( !$message->isBlank() ) {
+		$lines = explode( "\n", trim( $message->plain() ) );
+		if ( count( $lines ) > 0 ) {
 			return $lines;
 		}
 	}
@@ -484,11 +485,11 @@ function getMessageForContentAsArray($messageKey) {
  * @author Michał Roszka (Mix) <michal@wikia-inc.com>
  * @return array
  */
-function getMessageAsArray( $messageKey ) {
-	$message = trim( wfMsg( $messageKey ) );
-	if( !wfEmptyMsg( $messageKey, $message ) ) {
-		$lines = explode( "\n", $message );
-		if( count( $lines ) > 0 ) {
+function getMessageAsArray( $messageKey, $params = [] ) {
+	$message = wfMessage( $messageKey )->params( $params );
+	if ( !$message->isBlank() ) {
+		$lines = explode( "\n", trim( $message->plain() ) );
+		if ( count( $lines ) > 0 ) {
 			return $lines;
 		}
 	}
@@ -500,8 +501,8 @@ function getMessageAsArray( $messageKey ) {
  */
 function wfGetDefaultExternalCluster() {
 	global $wgDefaultExternalStore;
-	if( $wgDefaultExternalStore ) {
-		if( is_array( $wgDefaultExternalStore ) ) {
+	if ( $wgDefaultExternalStore ) {
+		if ( is_array( $wgDefaultExternalStore ) ) {
 			$store = $wgDefaultExternalStore[0];
 		} else {
 			$store = $wgDefaultExternalStore;
@@ -509,7 +510,7 @@ function wfGetDefaultExternalCluster() {
 		list( $proto, $cluster ) = explode( '://', $store, 2 );
 		return $cluster;
 	} else {
-		throw new MWException( __METHOD__.'$wgDefaultExternalStore should be defined' );
+		throw new MWException( __METHOD__ . '$wgDefaultExternalStore should be defined' );
 	}
 }
 
@@ -517,8 +518,8 @@ function wfGetDefaultExternalCluster() {
  * @author MoLi <moli@wikia.com>
  * @return db's handle for external storage
  */
-function wfGetDBExt($db = DB_MASTER, $cluster = null) {
-	if( !$cluster ) {
+function wfGetDBExt( $db = DB_MASTER, $cluster = null ) {
+	if ( !$cluster ) {
 		$cluster = wfGetDefaultExternalCluster();
 	}
 	return wfGetLBFactory()->getExternalLB( $cluster )->getConnection( $db );
@@ -541,19 +542,19 @@ function wfGetDBExt($db = DB_MASTER, $cluster = null) {
  * @return null
  */
 function wfWaitForSlavesExt( $maxLag, $cluster = null ) {
-	if( $maxLag ) {
-		if( !$cluster ) {
+	if ( $maxLag ) {
+		if ( !$cluster ) {
 			$cluster = wfGetDefaultExternalCluster();
 		}
 		$lb = wfGetLBFactory()->getExternalLB( $cluster );
 		list( $host, $lag ) = $lb->getMaxLag();
-		while( $lag > $maxLag ) {
+		while ( $lag > $maxLag ) {
 			$name = @gethostbyaddr( $host );
-			if( $name !== false ) {
+			if ( $name !== false ) {
 				$host = $name;
 			}
 			print "Waiting for $host (lagged $lag seconds)...\n";
-			sleep($maxLag);
+			sleep( $maxLag );
 			list( $host, $lag ) = $lb->getMaxLag();
 		}
 	}
@@ -578,7 +579,7 @@ function wfGetCurrentUrl( $as_string = false ) {
 	/**
 	 * sometimes $uri contain whole url, not only last part
 	 */
-	if( !preg_match( '!^https?://!', $uri ) ) {
+	if ( !preg_match( '!^https?://!', $uri ) ) {
 		$uri = isset( $_SERVER[ "SERVER_NAME" ] )
 			? "http://" . $_SERVER[ "SERVER_NAME" ] . $uri
 			: "http://localhost" . $uri;
@@ -606,41 +607,43 @@ function wfGetCurrentUrl( $as_string = false ) {
 }
 
 
-function getMenuHelper($name, $limit = 7) {
+function getMenuHelper( $name, $limit = 7 ) {
 	global $wgMemc;
-	wfProfileIn(__METHOD__);
+	wfProfileIn( __METHOD__ );
 
-	$key = wfMemcKey('popular-art');
-	$data = $wgMemc->get($key);
+	$key = wfMemcKey( 'popular-art' );
+	$data = $wgMemc->get( $key );
 
-	if(!empty($data) && isset($data[$name])) {
-		wfProfileOut(__METHOD__);
+	if ( !empty( $data ) && isset( $data[$name] ) ) {
+		wfProfileOut( __METHOD__ );
 		return $data[$name];
 	}
 
-	$name = str_replace(" ", "_", $name);
+	$name = str_replace( " ", "_", $name );
+	$limit = intval( $limit );
 
-	$dbr =& wfGetDB( DB_SLAVE );
-	$query = "SELECT cl_from FROM categorylinks USE INDEX (cl_from), page_visited USE INDEX (page_visited_cnt_inx) WHERE article_id = cl_from AND cl_to = '".addslashes($name)."' ORDER BY COUNT DESC LIMIT $limit";
-	$res = $dbr->query($query);
+	$dbr = wfGetDB( DB_SLAVE );
+	$query = "SELECT cl_from FROM categorylinks USE INDEX (cl_from), page_visited USE INDEX (page_visited_cnt_inx) WHERE article_id = cl_from AND cl_to = " . $dbr->addQuotes( $name ) . " ORDER BY COUNT DESC LIMIT $limit";
+	$res = $dbr->query( $query, __METHOD__ );
 	$result = array();
-	while($row = $dbr->fetchObject($res)) {
+	while ( $row = $dbr->fetchObject( $res ) ) {
 		$result[] = $row->cl_from;
 	}
-	if(count($result) < $limit) {
-		$query = "SELECT cl_from FROM categorylinks WHERE cl_to = '".addslashes($name)."' ".(count($result) > 0 ? " AND cl_from NOT IN (".implode(',', $result).") " : "")." LIMIT ".($limit - count($result));
-		$res = $dbr->query($query);
-		while($row = $dbr->fetchObject($res)) {
+	if ( count( $result ) < $limit ) {
+		$resultEscaped = $dbr->makeList( $result ); # PLATFORM-1579 - e.g. 'a', 'b', 'c'
+		$query = "SELECT cl_from FROM categorylinks WHERE cl_to = " . $dbr->addQuotes( $name ) . " " . ( count( $result ) > 0 ? " AND cl_from NOT IN (" . $resultEscaped . ") " : "" ) . " LIMIT " . ( $limit - count( $result ) );
+		$res = $dbr->query( $query, __METHOD__ );
+		while ( $row = $dbr->fetchObject( $res ) ) {
 			$result[] = $row->cl_from;
 		}
 	}
-	if(empty($data) || !is_array($data)) {
-		$data = array($data);
+	if ( empty( $data ) || !is_array( $data ) ) {
+		$data = array( $data );
 	}
 	$data[$name] = $result;
-	$wgMemc->set($key, $data, 60 * 60 * 6);
+	$wgMemc->set( $key, $data, 60 * 60 * 6 );
 
-	wfProfileOut(__METHOD__);
+	wfProfileOut( __METHOD__ );
 	return $result;
 }
 
@@ -648,8 +651,8 @@ function getMenuHelper($name, $limit = 7) {
 /**
  * @author Inez Korczynski <inez@wikia.com>
  */
-function isMsgEmpty($key) {
-	return wfEmptyMsg($key, trim(wfMsg($key)));
+function isMsgEmpty( $key ) {
+	return wfEmptyMsg( $key, trim( wfMsg( $key ) ) );
 }
 
 /**
@@ -665,9 +668,9 @@ function isMsgEmpty($key) {
 function wfGetFixedLanguageNames() {
 	$languages = Language::getLanguageNames();
 
-	$filter_languages = explode(',', wfMsgForContent('requestwiki-filter-language'));
-	foreach ($filter_languages as $key) {
-		unset($languages[$key]);
+	$filter_languages = explode( ',', wfMsgForContent( 'requestwiki-filter-language' ) );
+	foreach ( $filter_languages as $key ) {
+		unset( $languages[$key] );
 	}
 	return $languages;
 }
@@ -687,7 +690,7 @@ function wfSharedMemcKey( /*... */ ) {
 	global $wgSharedKeyPrefix;
 
 	$args = func_get_args();
-	if( $wgSharedKeyPrefix === false ) { // non shared wiki, fallback to normal function
+	if ( $wgSharedKeyPrefix === false ) { // non shared wiki, fallback to normal function
 		$key = 	wfWikiID() . ':' . implode( ':', $args );
 	}
 	else {
@@ -706,21 +709,21 @@ function wfSharedMemcKey( /*... */ ) {
  *         - an int which is non-zero if the plaintext message fell back to the fallback language? (not sure this is the intention)
  *         - an int which is non-zero if the rich-text message fell back to the fallback language? (not sure this is the intention)
  */
-function wfMsgHTMLwithLanguage($key, $lang, $options = array(), $params = array(), $wantHTML = true) {
+function wfMsgHTMLwithLanguage( $key, $lang, $options = array(), $params = array(), $wantHTML = true ) {
 	global $wgContLanguageCode;
-	wfProfileIn(__METHOD__);
+	wfProfileIn( __METHOD__ );
 
-	//remove 'content' option and pick proper language
-	if (isset($options['content'])) {
+	// remove 'content' option and pick proper language
+	if ( isset( $options['content'] ) ) {
 		$lang = $wgContLanguageCode;
-		unset($options['content']);
+		unset( $options['content'] );
 	}
-	$options = array_merge($options, array('parsemag', 'language' => $lang));
+	$options = array_merge( $options, array( 'parsemag', 'language' => $lang ) );
 
-	//TODO: check if this ok or do we need to use $msgPlainRaw plus parsing
-	$msgPlain = wfMsgExt($key, $options, $params);
+	// TODO: check if this ok or do we need to use $msgPlainRaw plus parsing
+	$msgPlain = wfMsgExt( $key, $options, $params );
 	$msgPlainFallbacked = $msgRichFallbacked = 0;
-	if ($lang == $wgContLanguageCode) {
+	if ( $lang == $wgContLanguageCode ) {
 		$fullKey = false;
 		$langKey = $key;
 	} else {
@@ -728,28 +731,28 @@ function wfMsgHTMLwithLanguage($key, $lang, $options = array(), $params = array(
 		$langKey = "$key/$lang";
 	}
 
-	$msgPlainRaw = MessageCache::singleton()->get($langKey, true, $lang, $fullKey);
-	$msgPlainRawEmpty = wfEmptyMsg($langKey, $msgPlainRaw);
+	$msgPlainRaw = MessageCache::singleton()->get( $langKey, true, $lang, $fullKey );
+	$msgPlainRawEmpty = wfEmptyMsg( $langKey, $msgPlainRaw );
 
 	$found = false;
 
 	foreach ( Language::getFallbacksFor( $lang ) as $fallbackLang ) {
-		if ($fallbackLang == $wgContLanguageCode) {
+		if ( $fallbackLang == $wgContLanguageCode ) {
 			$fullKey = false;
 			$langKey2 = $key;
 		} else {
 			$fullKey = true;
 			$langKey2 = "$key/$fallbackLang";
 		}
-		$msgPlainRawLang = MessageCache::singleton()->get($langKey2, true, $fallbackLang, $fullKey);
-		$msgPlainRawLangEmpty = wfEmptyMsg($langKey2, $msgPlainRawLang);
-		//if main message is empty and fallbacked is not, get fallbacked one
-		if (wfEmptyMsg($langKey, $msgPlainRaw) && !$msgPlainRawLangEmpty) {
-			//TODO: check if this ok or do we need to use $msgPlainRaw plus parsing
-			$msgPlain = wfMsgExt($key, array_merge($options, array('language' => $fallbackLang)), $params);
+		$msgPlainRawLang = MessageCache::singleton()->get( $langKey2, true, $fallbackLang, $fullKey );
+		$msgPlainRawLangEmpty = wfEmptyMsg( $langKey2, $msgPlainRawLang );
+		// if main message is empty and fallbacked is not, get fallbacked one
+		if ( wfEmptyMsg( $langKey, $msgPlainRaw ) && !$msgPlainRawLangEmpty ) {
+			// TODO: check if this ok or do we need to use $msgPlainRaw plus parsing
+			$msgPlain = wfMsgExt( $key, array_merge( $options, array( 'language' => $fallbackLang ) ), $params );
 			$msgPlainFallbacked++;
 		}
-		if ($msgPlainRaw != $msgPlainRawLang && !$msgPlainRawEmpty && !$msgPlainRawLangEmpty) {
+		if ( $msgPlainRaw != $msgPlainRawLang && !$msgPlainRawEmpty && !$msgPlainRawLangEmpty ) {
 			$found = true;
 			break;
 		}
@@ -758,12 +761,12 @@ function wfMsgHTMLwithLanguage($key, $lang, $options = array(), $params = array(
 	// notify wfMsgHTMLwithLanguageAndAlternative() that we didn't get a match
 	if ( !$found ) $msgPlainFallbacked++;
 
-	if ($wantHTML) {
+	if ( $wantHTML ) {
 		$keyHTML = $key . '-HTML';
-		//TODO: check if this ok or do we need to use $msgRichRaw plus parsing
-		$msgRich = wfMsgExt($keyHTML, $options, $params);
+		// TODO: check if this ok or do we need to use $msgRichRaw plus parsing
+		$msgRich = wfMsgExt( $keyHTML, $options, $params );
 
-		if ($lang == $wgContLanguageCode) {
+		if ( $lang == $wgContLanguageCode ) {
 			$fullKey = false;
 			$langKeyHTML = $keyHTML;
 		} else {
@@ -771,27 +774,27 @@ function wfMsgHTMLwithLanguage($key, $lang, $options = array(), $params = array(
 			$langKeyHTML = "$keyHTML/$lang";
 		}
 
-		$msgRichRaw = MessageCache::singleton()->get($langKeyHTML, true, $lang, $fullKey);
-		$msgRichRawEmpty = wfEmptyMsg($langKeyHTML, $msgRichRaw);
+		$msgRichRaw = MessageCache::singleton()->get( $langKeyHTML, true, $lang, $fullKey );
+		$msgRichRawEmpty = wfEmptyMsg( $langKeyHTML, $msgRichRaw );
 
 		$found = false;
 
 		foreach ( Language::getFallbacksFor( $lang ) as $fallbackLang ) {
-			if ($fallbackLang == $wgContLanguageCode) {
+			if ( $fallbackLang == $wgContLanguageCode ) {
 				$fullKey = false;
 				$langKeyHTML2 = $key;
 			} else {
 				$fullKey = true;
 				$langKeyHTML2 = "$keyHTML/$fallbackLang";
 			}
-			$msgRichRawLang = MessageCache::singleton()->get($langKeyHTML2, true, $fallbackLang, true);
-			$msgRichRawLangEmpty = wfEmptyMsg($langKeyHTML2, $msgRichRawLang);
-			if (wfEmptyMsg($langKeyHTML, $msgRich) && !$msgRichRawLangEmpty) {
-				//TODO: check if this ok or do we need to use $msgRichRaw plus parsing
-				$msgRich = wfMsgExt($keyHTML, array_merge($options, array('language' => $fallbackLang)), $params);
+			$msgRichRawLang = MessageCache::singleton()->get( $langKeyHTML2, true, $fallbackLang, true );
+			$msgRichRawLangEmpty = wfEmptyMsg( $langKeyHTML2, $msgRichRawLang );
+			if ( wfEmptyMsg( $langKeyHTML, $msgRich ) && !$msgRichRawLangEmpty ) {
+				// TODO: check if this ok or do we need to use $msgRichRaw plus parsing
+				$msgRich = wfMsgExt( $keyHTML, array_merge( $options, array( 'language' => $fallbackLang ) ), $params );
 				$msgRichFallbacked++;
 			}
-			if ($msgRichRaw != $msgRichRawLang && !$msgRichRawEmpty && !wfEmptyMsg($keyHTML, $msgRichRawLang)) {
+			if ( $msgRichRaw != $msgRichRawLang && !$msgRichRawEmpty && !wfEmptyMsg( $keyHTML, $msgRichRawLang ) ) {
 				$found = true;
 				break;
 			}
@@ -800,15 +803,15 @@ function wfMsgHTMLwithLanguage($key, $lang, $options = array(), $params = array(
 		// notify wfMsgHTMLwithLanguageAndAlternative() that we didn't get a match
 		if ( !$found ) $msgRichFallbacked++;
 
-		if($msgRichFallbacked > $msgPlainFallbacked || wfEmptyMsg($keyHTML, $msgRich)) {
+		if ( $msgRichFallbacked > $msgPlainFallbacked || wfEmptyMsg( $keyHTML, $msgRich ) ) {
 			$msgRich = null;
 		}
 	} else {
 		$msgRich = null;
 	}
 
-	wfProfileOut(__METHOD__);
-	return array($msgPlain, $msgRich, $msgPlainFallbacked, $msgRichFallbacked);
+	wfProfileOut( __METHOD__ );
+	return array( $msgPlain, $msgRich, $msgPlainFallbacked, $msgRichFallbacked );
 }
 
 /**
@@ -817,16 +820,16 @@ function wfMsgHTMLwithLanguage($key, $lang, $options = array(), $params = array(
  * @author Marooned
  * @return array
  */
-function wfMsgHTMLwithLanguageAndAlternative($key, $keyAlternative, $lang, $options = array(), $params = array(), $wantHTML = true) {
+function wfMsgHTMLwithLanguageAndAlternative( $key, $keyAlternative, $lang, $options = array(), $params = array(), $wantHTML = true ) {
 	// inserted here for external i18n add-on, adjust params if needed
 	wfRunHooks( 'MsgHTMLwithLanguageAndAlternativeBefore' );
 
-	list ($msgPlainMain, $msgRichMain, $msgPlainMainFallback, $msgRichMainFallback) = wfMsgHTMLwithLanguage($key, $lang, $options, $params, $wantHTML);
-	list ($msgPlainAlter, $msgRichAlter, $msgPlainAlterFallback, $msgRichAlterFallback) = wfMsgHTMLwithLanguage($keyAlternative, $lang, $options, $params, $wantHTML);
+	list ( $msgPlainMain, $msgRichMain, $msgPlainMainFallback, $msgRichMainFallback ) = wfMsgHTMLwithLanguage( $key, $lang, $options, $params, $wantHTML );
+	list ( $msgPlainAlter, $msgRichAlter, $msgPlainAlterFallback, $msgRichAlterFallback ) = wfMsgHTMLwithLanguage( $keyAlternative, $lang, $options, $params, $wantHTML );
 
-	$msgPlain = $msgPlainMainFallback > $msgPlainAlterFallback || wfEmptyMsg($key, $msgPlainMain) ? $msgPlainAlter : $msgPlainMain;
-	$msgRich = $msgRichMainFallback > $msgRichAlterFallback || wfEmptyMsg($key . '-HTML', $msgRichMain) ? $msgRichAlter : $msgRichMain;
-	return array($msgPlain, $msgRich);
+	$msgPlain = $msgPlainMainFallback > $msgPlainAlterFallback || wfEmptyMsg( $key, $msgPlainMain ) ? $msgPlainAlter : $msgPlainMain;
+	$msgRich = $msgRichMainFallback > $msgRichAlterFallback || wfEmptyMsg( $key . '-HTML', $msgRichMain ) ? $msgRichAlter : $msgRichMain;
+	return array( $msgPlain, $msgRich );
 }
 
 /**
@@ -838,28 +841,28 @@ function wfMsgHTMLwithLanguageAndAlternative($key, $keyAlternative, $lang, $opti
  * @author Marooned
  * @return string
  */
-function wfGetReturntoParam($customReturnto = null, $extraReturntoquery=null) {
+function wfGetReturntoParam( $customReturnto = null, $extraReturntoquery = null ) {
 	global $wgTitle, $wgRequest;
 
-	if ($customReturnto) {
+	if ( $customReturnto ) {
 		$returnto = "returnto=$customReturnto";
-	} else if ($wgTitle instanceof Title) {
+	} else if ( $wgTitle instanceof Title ) {
 		$thisurl = $wgTitle->getPrefixedURL();
 		$returnto = "returnto=$thisurl";
 	} else {
 		$returnto = "";
 	}
 
-	if (!$wgRequest->wasPosted()) {
+	if ( !$wgRequest->wasPosted() ) {
 		$query = $wgRequest->getValues();
-		unset($query['title']);
-		unset($query['returnto']);
-		unset($query['returntoquery']);
-		$thisquery = wfUrlencode(wfArrayToCGI($query));
-		if($extraReturntoquery){
-			$thisquery .= ($thisquery == "" ? "" : "&amp;") . urlencode( $extraReturntoquery );
+		unset( $query['title'] );
+		unset( $query['returnto'] );
+		unset( $query['returntoquery'] );
+		$thisquery = wfUrlencode( wfArrayToCGI( $query ) );
+		if ( $extraReturntoquery ) {
+			$thisquery .= ( $thisquery == "" ? "" : "&amp;" ) . urlencode( $extraReturntoquery );
 		}
-		if($thisquery != ''){
+		if ( $thisquery != '' ) {
 			$returnto .= "&returntoquery=$thisquery";
 		}
 	}
@@ -871,14 +874,14 @@ function wfGetReturntoParam($customReturnto = null, $extraReturntoquery=null) {
  * @author moli
  * @return string
  */
-function wfUrlencodeExt($s_url) {
-	if ( !empty($s_url) ) {
+function wfUrlencodeExt( $s_url ) {
+	if ( !empty( $s_url ) ) {
 		if ( strpos( $s_url, '/index.php' ) === false ) {
-			$Url = @parse_url($s_url);
+			$Url = @parse_url( $s_url );
 			$s_url = str_replace(
-				$Url['path'], #search
-				implode("/", array_map("rawurlencode", explode("/", @$Url['path']))), #replace
-				$s_url #what
+				$Url['path'], # search
+				implode( "/", array_map( "rawurlencode", explode( "/", @$Url['path'] ) ) ), # replace
+				$s_url # what
 			);
 		}
 	}
@@ -894,49 +897,49 @@ function wfUrlencodeExt($s_url) {
  * @param boolean $hideCurrentYear
  * @return string
  */
-function wfTimeFormatAgo( $stamp, $hideCurrentYear = true ){
-	wfProfileIn(__METHOD__);
+function wfTimeFormatAgo( $stamp, $hideCurrentYear = true ) {
+	wfProfileIn( __METHOD__ );
 	global $wgLang;
 
 	$currenttime = time();
-	$stamptime = strtotime($stamp);
+	$stamptime = strtotime( $stamp );
 	$ago = $currenttime - $stamptime + 1;
-	$sameyear = date('Y',$currenttime) == date('Y',$stamptime);
+	$sameyear = date( 'Y', $currenttime ) == date( 'Y', $stamptime );
 
 	$res = '';
 
-	if ($ago > 365 * 86400 || !$sameyear) {
+	if ( $ago > 365 * 86400 || !$sameyear ) {
 		// Over 365 days
 		// or different year than current:
 		// format is date, with a year (July 26, 2008)
-		$res = $wgLang->date(wfTimestamp(TS_MW, $stamp));
-	} elseif ($ago < 60) {
+		$res = $wgLang->date( wfTimestamp( TS_MW, $stamp ) );
+	} elseif ( $ago < 60 ) {
 		// Under 1 min: to the second (ex: 30 seconds ago)
-		$res = wfMsgExt('wikia-seconds-ago', array('parsemag'), $ago);
+		$res = wfMsgExt( 'wikia-seconds-ago', array( 'parsemag' ), $ago );
 	}
-	else if ($ago < 3600) {
+	else if ( $ago < 3600 ) {
 		// Under 1 hr: to the minute (3 minutes ago)
-		$res = wfMsgExt('wikia-minutes-ago', array('parsemag'), floor($ago / 60));
+		$res = wfMsgExt( 'wikia-minutes-ago', array( 'parsemag' ), floor( $ago / 60 ) );
 	}
-	else if ($ago < 86400) {
+	else if ( $ago < 86400 ) {
 		// Under 24 hrs: to the hour (4 hours ago)
-		$res = wfMsgExt('wikia-hours-ago', array('parsemag'), floor($ago / 3600));
+		$res = wfMsgExt( 'wikia-hours-ago', array( 'parsemag' ), floor( $ago / 3600 ) );
 	}
-	else if ($ago < 30 * 86400) {
+	else if ( $ago < 30 * 86400 ) {
 		// Under 30 days: to the day (5 days ago)
-		$res = wfMsgExt('wikia-days-ago', array('parsemag'), floor($ago / 86400));
+		$res = wfMsgExt( 'wikia-days-ago', array( 'parsemag' ), floor( $ago / 86400 ) );
 	}
-	else if ($ago < 365 * 86400) {
+	else if ( $ago < 365 * 86400 ) {
 		// Under 365 days: date, with no year (July 26)
-		//remove year from user's date format
+		// remove year from user's date format
 		$format = $wgLang->getDateFormatString( 'date', 'default' );
 		if ( $hideCurrentYear ) {
 			$format = trim( $format, ' ,yY' );
 		}
-		$res = $wgLang->sprintfDate($format, wfTimestamp(TS_MW, $stamp));
+		$res = $wgLang->sprintfDate( $format, wfTimestamp( TS_MW, $stamp ) );
 	}
 
-	wfProfileOut(__METHOD__);
+	wfProfileOut( __METHOD__ );
 	return $res;
 } // end wfTimeFormatAgo()
 
@@ -946,19 +949,19 @@ function wfTimeFormatAgo( $stamp, $hideCurrentYear = true ){
  *
  * @author Maciej Brencz <macbre@wikia-inc.com>, Sean Colombo
   */
-function wfTimeFormatAgoOnlyRecent($stamp){
-	wfProfileIn(__METHOD__);
+function wfTimeFormatAgoOnlyRecent( $stamp ) {
+	wfProfileIn( __METHOD__ );
 
-	$ago = time() - strtotime($stamp) + 1;
+	$ago = time() - strtotime( $stamp ) + 1;
 
-	if ($ago < 7 * 86400 ) {
-		$res = wfTimeFormatAgo($stamp);
+	if ( $ago < 7 * 86400 ) {
+		$res = wfTimeFormatAgo( $stamp );
 	}
 	else {
 		$res = '';
 	}
 
-	wfProfileOut(__METHOD__);
+	wfProfileOut( __METHOD__ );
 	return $res;
 } // end wfTimeFormatAgoOnlyRecent()
 
@@ -975,30 +978,6 @@ function wfMsgWithFallback( $key ) {
 
 	return $msg;
 }
-
-/**
- * @deprecated
- *
- * TODO: remove this
- *
- * @param $name module name
- * @param string $action method name
- * @param null $params
- * @return string rendered module's response
- */
-function wfRenderModule($name, $action = 'Index', $params = null) {
-	return F::app()->renderView( $name, $action, $params);
-}
-
-/**
- * Given the email id (from 'mail' table in 'wikia_mailer' db), and the email address
- * of the recipient, generate a token that will be given to SendGrid to send back to
- * us with any bounce/spam/open/etc. reports.
- */
-function wfGetEmailPostbackToken($emailId, $emailAddr){
-	global $wgEmailPostbackTokenKey;
-	return sha1("$emailId|$emailAddr|$wgEmailPostbackTokenKey");
-} // end wfGetEmailPostbackToken()
 
 /**
  * wfAutomaticReadOnly
@@ -1024,7 +1003,7 @@ function wfAutomaticReadOnly() {
  * Convenience-function to make it easier to get the wgBlankImgUrl from inside
  * of template-code (ie: no ugly global $wgBlankImgUrl;print $wgBlankImgUrl;).
  */
-function wfBlankImgUrl(){
+function wfBlankImgUrl() {
 	global $wgBlankImgUrl;
 	return $wgBlankImgUrl;
 } // end wfBlankImgUrl()
@@ -1039,32 +1018,32 @@ function wfBlankImgUrl(){
  * @param array $nsList List of namespaces definition constants to process
  */
 function wfLoadExtensionNamespaces( $extensionName, $nsList ) {
-	wfProfileIn(__METHOD__);
+	wfProfileIn( __METHOD__ );
 
 	global $wgExtensionNamespacesFiles, $wgLanguageCode, $wgNamespaceAliases, $wgExtraNamespaces;
 
-	if(
+	if (
 		!empty( $extensionName ) &&
 		is_string( $extensionName ) &&
 		!empty( $wgExtensionNamespacesFiles[ $extensionName ] ) &&
 		!empty( $nsList ) &&
 		is_array( $nsList )
 	) {
-		//load the i18n file for the extension's namespaces
+		// load the i18n file for the extension's namespaces
 		$namespaces = false;
 		require_once( $wgExtensionNamespacesFiles[ $extensionName ] );
 
-		//english is the required default, skip processing if not defined
-		if( !empty( $namespaces[ 'en' ] ) && is_array( $namespaces[ 'en' ] ) ) {
+		// english is the required default, skip processing if not defined
+		if ( !empty( $namespaces[ 'en' ] ) && is_array( $namespaces[ 'en' ] ) ) {
 			foreach ( $nsList as $ns ) {
-				if( !empty( $namespaces[ 'en' ][ $ns ] ) ) {
+				if ( !empty( $namespaces[ 'en' ][ $ns ] ) ) {
 					$langCode = ( !empty( $namespaces[ $wgLanguageCode ][ $ns ] ) ) ? $wgLanguageCode : 'en';
 
-					//define the namespace name for the current language
+					// define the namespace name for the current language
 					$wgExtraNamespaces[ $ns ] = $namespaces[ $langCode ][ $ns ];
 
-					if( $langCode != 'en' ) {
-						//make en ns alias point to localized ones for current language
+					if ( $langCode != 'en' ) {
+						// make en ns alias point to localized ones for current language
 						$wgNamespaceAliases[ $namespaces[ 'en' ][ $ns ] ] = $ns;
 					}
 				}
@@ -1072,7 +1051,7 @@ function wfLoadExtensionNamespaces( $extensionName, $nsList ) {
 		}
 	}
 
-	wfProfileOut(__METHOD__);
+	wfProfileOut( __METHOD__ );
 }
 
 /**
@@ -1082,7 +1061,7 @@ function wfLoadExtensionNamespaces( $extensionName, $nsList ) {
  */
 function wfGenerateUnsubToken( $email, $timestamp ) {
 	global $wgUnsubscribeSalt;
-	$token = sha1($timestamp . $email . $wgUnsubscribeSalt);
+	$token = sha1( $timestamp . $email . $wgUnsubscribeSalt );
 	return $token;
 }
 
@@ -1095,7 +1074,7 @@ function wfGenerateUnsubToken( $email, $timestamp ) {
 function &wfGetSolidCacheStorage( $bucket = false ) {
 	global $wgSolidCacheType;
 	$cache = wfGetCache( $wgSolidCacheType );
-	if( $bucket && method_exists( $cache, "setBucket" ) ) {
+	if ( $bucket && method_exists( $cache, "setBucket" ) ) {
 		$cache->setBucket( $bucket );
 	}
 	return $cache;
@@ -1104,6 +1083,15 @@ function &wfGetSolidCacheStorage( $bucket = false ) {
 
 /**
  * Set value of wikia article prop list of type is define in
+ *
+ * Note: The query below used to be done using a REPLACE, however
+ * the primary key was removed from the page_wikia_props due to
+ * performance issues (see PLATFORM-1658). Without a primary key
+ * or unique index, a REPLACE becomes just an INSERT so this method
+ * was adding duplicate rows to the table.
+ *
+ * Because of this, we're implementing a manual REPLACE by explicitly
+ * issuing a DELETE query followed by an INSERT.
  */
 function wfSetWikiaPageProp( $type, $pageID, $value, $dbname = '' ) {
 	if ( empty( $dbname ) ) {
@@ -1112,14 +1100,22 @@ function wfSetWikiaPageProp( $type, $pageID, $value, $dbname = '' ) {
 		$db = wfGetDB( DB_MASTER, array(), $dbname );
 	}
 
-	$db->replace(
+	$db->delete(
 		'page_wikia_props',
-		'',
-		array(
+		[
+			'page_id' => $pageID,
+			'propname' => $type
+		],
+		__METHOD__
+	);
+
+	$db->insert(
+		'page_wikia_props',
+		[
 			'page_id'  => $pageID,
 			'propname' => $type,
 			'props'    => wfSerializeProp( $type, $value )
-		),
+		],
 		__METHOD__
 	);
 
@@ -1130,15 +1126,15 @@ function wfSetWikiaPageProp( $type, $pageID, $value, $dbname = '' ) {
 /**
  * Get value of wikia article prop list of type is define in
  */
-function wfGetWikiaPageProp($type, $pageID, $db = DB_SLAVE, $dbname = '') {
-	if ( empty($dbname) ) {
-		$db = wfGetDB($db, array());
+function wfGetWikiaPageProp( $type, $pageID, $db = DB_SLAVE, $dbname = '' ) {
+	if ( empty( $dbname ) ) {
+		$db = wfGetDB( $db, array() );
 	} else {
-		$db = wfGetDB($db, array(), $dbname);
+		$db = wfGetDB( $db, array(), $dbname );
 	}
 
-	$res = $db->select('page_wikia_props',
-		array('props'),
+	$res = $db->select( 'page_wikia_props',
+		array( 'props' ),
 		array(
 			'page_id'  =>  $pageID,
 			'propname' => $type,
@@ -1146,7 +1142,7 @@ function wfGetWikiaPageProp($type, $pageID, $db = DB_SLAVE, $dbname = '') {
 		__METHOD__
 	);
 
-	if ( $out = $db->fetchRow($res) ) {
+	if ( $out = $db->fetchRow( $res ) ) {
 		return wfUnserializeProp( $type, $out['props'] );
 	}
 
@@ -1164,7 +1160,7 @@ function wfSerializeProp( $type, $data ) {
 
 	// Serialize the value unless we're told not to
 	if ( ! in_array( $type, $wgWPPNotSerialized ) ) {
-		$data = serialize($data);
+		$data = serialize( $data );
 	}
 
 	return $data;
@@ -1181,7 +1177,7 @@ function wfUnserializeProp( $type, $data ) {
 
 	// Unserialize the value unless we're told not to
 	if ( ! in_array( $type, $wgWPPNotSerialized ) ) {
-		$data = unserialize($data);
+		$data = unserialize( $data );
 	}
 	return $data;
 }
@@ -1209,18 +1205,18 @@ function wfDeleteWikiaPageProp( $type, $pageID, $dbname = '' ) {
 	$db->commit( __METHOD__ );
 }
 
-if (!function_exists('http_build_url')) {
-	define('HTTP_URL_REPLACE', 1);				// Replace every part of the first URL when there's one of the second URL
-	define('HTTP_URL_JOIN_PATH', 2);			// Join relative paths
-	define('HTTP_URL_JOIN_QUERY', 4);			// Join query strings
-	define('HTTP_URL_STRIP_USER', 8);			// Strip any user authentication information
-	define('HTTP_URL_STRIP_PASS', 16);			// Strip any password authentication information
-	define('HTTP_URL_STRIP_AUTH', 32);			// Strip any authentication information
-	define('HTTP_URL_STRIP_PORT', 64);			// Strip explicit port numbers
-	define('HTTP_URL_STRIP_PATH', 128);			// Strip complete path
-	define('HTTP_URL_STRIP_QUERY', 256);		// Strip query string
-	define('HTTP_URL_STRIP_FRAGMENT', 512);		// Strip any fragments (#identifier)
-	define('HTTP_URL_STRIP_ALL', 1024);			// Strip anything but scheme and host
+if ( !function_exists( 'http_build_url' ) ) {
+	define( 'HTTP_URL_REPLACE', 1 );				// Replace every part of the first URL when there's one of the second URL
+	define( 'HTTP_URL_JOIN_PATH', 2 );			// Join relative paths
+	define( 'HTTP_URL_JOIN_QUERY', 4 );			// Join query strings
+	define( 'HTTP_URL_STRIP_USER', 8 );			// Strip any user authentication information
+	define( 'HTTP_URL_STRIP_PASS', 16 );			// Strip any password authentication information
+	define( 'HTTP_URL_STRIP_AUTH', 32 );			// Strip any authentication information
+	define( 'HTTP_URL_STRIP_PORT', 64 );			// Strip explicit port numbers
+	define( 'HTTP_URL_STRIP_PATH', 128 );			// Strip complete path
+	define( 'HTTP_URL_STRIP_QUERY', 256 );		// Strip query string
+	define( 'HTTP_URL_STRIP_FRAGMENT', 512 );		// Strip any fragments (#identifier)
+	define( 'HTTP_URL_STRIP_ALL', 1024 );			// Strip anything but scheme and host
 
 	// Build an URL
 	// The parts of the second URL will be merged into the first according to the flags argument.
@@ -1229,11 +1225,11 @@ if (!function_exists('http_build_url')) {
 	// @param	mixed			Same as the first argument
 	// @param	int				A bitmask of binary or'ed HTTP_URL constants (Optional)HTTP_URL_REPLACE is the default
 	// @param	array			If set, it will be filled with the parts of the composed url like parse_url() would return
-	function http_build_url($url, $parts=array(), $flags=HTTP_URL_REPLACE, &$new_url=false) {
-		$keys = array('user','pass','port','path','query','fragment');
+	function http_build_url( $url, $parts = array(), $flags = HTTP_URL_REPLACE, &$new_url = false ) {
+		$keys = array( 'user', 'pass', 'port', 'path', 'query', 'fragment' );
 
 		// HTTP_URL_STRIP_ALL becomes all the HTTP_URL_STRIP_Xs
-		if ($flags & HTTP_URL_STRIP_ALL) {
+		if ( $flags & HTTP_URL_STRIP_ALL ) {
 				$flags |= HTTP_URL_STRIP_USER;
 				$flags |= HTTP_URL_STRIP_PASS;
 				$flags |= HTTP_URL_STRIP_PORT;
@@ -1242,39 +1238,39 @@ if (!function_exists('http_build_url')) {
 				$flags |= HTTP_URL_STRIP_FRAGMENT;
 		}
 		// HTTP_URL_STRIP_AUTH becomes HTTP_URL_STRIP_USER and HTTP_URL_STRIP_PASS
-		else if ($flags & HTTP_URL_STRIP_AUTH) {
+		else if ( $flags & HTTP_URL_STRIP_AUTH ) {
 			$flags |= HTTP_URL_STRIP_USER;
 			$flags |= HTTP_URL_STRIP_PASS;
 		}
 
 		// Parse the original URL
-		$parse_url = parse_url($url);
+		$parse_url = parse_url( $url );
 
 		// Scheme and Host are always replaced
-		if (isset($parts['scheme']))
+		if ( isset( $parts['scheme'] ) )
 			$parse_url['scheme'] = $parts['scheme'];
-		if (isset($parts['host']))
+		if ( isset( $parts['host'] ) )
 			$parse_url['host'] = $parts['host'];
 
 		// (If applicable) Replace the original URL with it's new parts
-		if ($flags & HTTP_URL_REPLACE) {
-			foreach ($keys as $key) {
-				if (isset($parts[$key]))
+		if ( $flags & HTTP_URL_REPLACE ) {
+			foreach ( $keys as $key ) {
+				if ( isset( $parts[$key] ) )
 					$parse_url[$key] = $parts[$key];
 			}
 		}
 		else {
 			// Join the original URL path with the new path
-			if ( isset($parts['path']) && ($flags & HTTP_URL_JOIN_PATH) ) {
-				if (isset($parse_url['path']))
-					$parse_url['path'] = rtrim(str_replace(basename($parse_url['path']), '', $parse_url['path']), '/') . '/' . ltrim($parts['path'], '/');
+			if ( isset( $parts['path'] ) && ( $flags & HTTP_URL_JOIN_PATH ) ) {
+				if ( isset( $parse_url['path'] ) )
+					$parse_url['path'] = rtrim( str_replace( basename( $parse_url['path'] ), '', $parse_url['path'] ), '/' ) . '/' . ltrim( $parts['path'], '/' );
 				else
 					$parse_url['path'] = $parts['path'];
 			}
 
 			// Join the original query string with the new query string
-			if (isset($parts['query']) && ($flags & HTTP_URL_JOIN_QUERY)) {
-				if (isset($parse_url['query']))
+			if ( isset( $parts['query'] ) && ( $flags & HTTP_URL_JOIN_QUERY ) ) {
+				if ( isset( $parse_url['query'] ) )
 					$parse_url['query'] .= '&' . $parts['query'];
 				else
 					$parse_url['query'] = $parts['query'];
@@ -1283,22 +1279,22 @@ if (!function_exists('http_build_url')) {
 
 		// Strips all the applicable sections of the URL
 		// Note: Scheme and Host are never stripped
-		foreach ($keys as $key) {
-			if ($flags & (int)constant('HTTP_URL_STRIP_' . strtoupper($key)))
-				unset($parse_url[$key]);
+		foreach ( $keys as $key ) {
+			if ( $flags & (int)constant( 'HTTP_URL_STRIP_' . strtoupper( $key ) ) )
+				unset( $parse_url[$key] );
 		}
 
 
 		$new_url = $parse_url;
 
 		return
-			 ((isset($parse_url['scheme'])) ? $parse_url['scheme'] . '://' : '')
-			.((isset($parse_url['user'])) ? $parse_url['user'] . ((isset($parse_url['pass'])) ? ':' . $parse_url['pass'] : '') .'@' : '')
-			.((isset($parse_url['host'])) ? $parse_url['host'] : '')
-			.((isset($parse_url['port'])) ? ':' . $parse_url['port'] : '')
-			.((isset($parse_url['path'])) ? $parse_url['path'] : '')
-			.((isset($parse_url['query'])) ? '?' . $parse_url['query'] : '')
-			.((isset($parse_url['fragment'])) ? '#' . $parse_url['fragment'] : '')
+			 ( ( isset( $parse_url['scheme'] ) ) ? $parse_url['scheme'] . '://' : '' )
+			. ( ( isset( $parse_url['user'] ) ) ? $parse_url['user'] . ( ( isset( $parse_url['pass'] ) ) ? ':' . $parse_url['pass'] : '' ) . '@' : '' )
+			. ( ( isset( $parse_url['host'] ) ) ? $parse_url['host'] : '' )
+			. ( ( isset( $parse_url['port'] ) ) ? ':' . $parse_url['port'] : '' )
+			. ( ( isset( $parse_url['path'] ) ) ? $parse_url['path'] : '' )
+			. ( ( isset( $parse_url['query'] ) ) ? '?' . $parse_url['query'] : '' )
+			. ( ( isset( $parse_url['fragment'] ) ) ? '#' . $parse_url['fragment'] : '' )
 			;
 	}
 }
@@ -1317,50 +1313,50 @@ function wfDBReadOnlyFailed( ) {
 	exit;
 }
 
-function startsWith($haystack, $needle, $case = true) {
-	if($case){
-		return (strcmp(substr($haystack, 0, strlen($needle)),$needle)===0);
+function startsWith( $haystack, $needle, $case = true ) {
+	if ( $case ) {
+		return ( strcmp( substr( $haystack, 0, strlen( $needle ) ), $needle ) === 0 );
 	}
-	return (strcasecmp(substr($haystack, 0, strlen($needle)),$needle)===0);
+	return ( strcasecmp( substr( $haystack, 0, strlen( $needle ) ), $needle ) === 0 );
 }
 
-function endsWith($haystack, $needle, $case = true) {
-	if($case){
-		return (strcmp(substr($haystack, strlen($haystack) - strlen($needle)),$needle)===0);
+function endsWith( $haystack, $needle, $case = true ) {
+	if ( $case ) {
+		return ( strcmp( substr( $haystack, strlen( $haystack ) - strlen( $needle ) ), $needle ) === 0 );
 	}
-	return (strcasecmp(substr($haystack, strlen($haystack) - strlen($needle)),$needle)===0);
+	return ( strcasecmp( substr( $haystack, strlen( $haystack ) - strlen( $needle ) ), $needle ) === 0 );
 }
 
-function json_encode_jsfunc($input=array(), $funcs=array(), $level=0)
+function json_encode_jsfunc( $input = array(), $funcs = array(), $level = 0 )
  {
-  foreach($input as $key=>$value)
+  foreach ( $input as $key => $value )
          {
-          if (is_array($value))
+          if ( is_array( $value ) )
              {
-              $ret = json_encode_jsfunc($value, $funcs, 1);
-              $input[$key]=$ret[0];
-              $funcs=$ret[1];
+              $ret = json_encode_jsfunc( $value, $funcs, 1 );
+              $input[$key] = $ret[0];
+              $funcs = $ret[1];
              }
           else
              {
-              if (substr($value,0,10)=='function()')
+              if ( substr( $value, 0, 10 ) == 'function()' )
                  {
-                  $func_key="#".uniqid()."#";
-                  $funcs[$func_key]=$value;
-                  $input[$key]=$func_key;
+                  $func_key = "#" . uniqid() . "#";
+                  $funcs[$func_key] = $value;
+                  $input[$key] = $func_key;
                  }
              }
          }
-  if ($level==1)
+  if ( $level == 1 )
      {
-      return array($input, $funcs);
+      return array( $input, $funcs );
      }
   else
      {
-      $input_json = json_encode($input);
-      foreach($funcs as $key=>$value)
+      $input_json = json_encode( $input );
+      foreach ( $funcs as $key => $value )
              {
-              $input_json = str_replace('"'.$key.'"', $value, $input_json);
+              $input_json = str_replace( '"' . $key . '"', $value, $input_json );
              }
       return $input_json;
      }
@@ -1381,7 +1377,7 @@ function json_encode_jsfunc($input=array(), $funcs=array(), $level=0)
  * * batches integer the total number of batches
  * * currentBatch integer the current batch (first is 1)
  * */
-function wfPaginateArray( $data, $limit, $batch = 1 ){
+function wfPaginateArray( $data, $limit, $batch = 1 ) {
 	wfProfileIn( __METHOD__ );
 
 	$data = (array) $data;
@@ -1401,7 +1397,7 @@ function wfPaginateArray( $data, $limit, $batch = 1 ){
 	}
 
 	if ( !empty( $limit ) && $total ) {
-		$batches = ceil($total / $limit);
+		$batches = ceil( $total / $limit );
 
 		if ( $batch > $batches ) {
 			$batch = $batches;
@@ -1447,8 +1443,8 @@ function wfPaginateArray( $data, $limit, $batch = 1 ){
  */
 function wfArrayToString( $array ) {
 	$retval = "";
-	if( is_array( $array ) ) {
-		foreach( $array as $key => $value )
+	if ( is_array( $array ) ) {
+		foreach ( $array as $key => $value )
 			$retval = "{$key} => {$value} ";
 	}
 
@@ -1475,16 +1471,16 @@ function wfGetBeaconId() {
  *
  * @author Tomasz Odrobny <tomek@wikia-inc.com>
  */
-function getHostPrefix(){
+function getHostPrefix() {
 	global $wgStagingList, $wgServer;
 	static $cache;
-	if(!empty($cache)) {
+	if ( !empty( $cache ) ) {
 		return $cache;
 	}
 	$hosts = $wgStagingList;
-	foreach($hosts as $host) {
-		$prefix = 'http://'.$host.'.';
-		if(strpos($wgServer, $prefix)  !== false ) {
+	foreach ( $hosts as $host ) {
+		$prefix = 'http://' . $host . '.';
+		if ( strpos( $wgServer, $prefix )  !== false ) {
 			$cache = $host;
 			return  $host;
 		}
@@ -1497,10 +1493,10 @@ function getHostPrefix(){
  *
  * @author Maciej Brencz <macbre@wikia-inc.com>
  */
-function wfWikiaErrorHandler($errno, $errstr, $errfile, $errline) {
-	switch($errno) {
+function wfWikiaErrorHandler( $errno, $errstr, $errfile, $errline ) {
+	switch( $errno ) {
 		case E_RECOVERABLE_ERROR:
-			Wikia::logBacktrace("PHP fatal error caught ({$errstr})");
+			Wikia::logBacktrace( "PHP fatal error caught ({$errstr})" );
 			break;
 	}
 
@@ -1517,14 +1513,14 @@ function wfGetNamespaces() {
 	global $wgContLang;
 
 	$namespaces = $wgContLang->getFormattedNamespaces();
-	wfRunHooks( 'XmlNamespaceSelectorAfterGetFormattedNamespaces', array(&$namespaces) );
+	wfRunHooks( 'XmlNamespaceSelectorAfterGetFormattedNamespaces', array( &$namespaces ) );
 
 	return $namespaces;
 }
 
 /**
  * Repair malformed HTML without making semantic changes (ie, changing tags to more closely follow the HTML spec.)
- * Refs DAR-985 and VID-1011
+ * Refs DAR-985, VID-1011, SUS-327
  *
  * @param string $html - HTML to repair
  * @return string - repaired HTML
@@ -1536,18 +1532,24 @@ function wfFixMalformedHTML( $html ) {
 	// what we're using it to fix) see: http://www.php.net/manual/en/domdocument.loadhtml.php#95463
 	libxml_use_internal_errors( true );
 
-	// Make sure loadHTML knows that text is utf-8 (it assumes ISO-88591)
 	// CONN-130 - Added <!DOCTYPE html> to allow HTML5 tags in the article comment
-	$htmlHeader = '<!DOCTYPE html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"></head>';
+	$htmlHeader = '<!DOCTYPE html><html>';
+
+	// Make sure loadHTML knows that text is utf-8 (it assumes ISO-88591)
+	$htmlHeader .= '<head><meta http-equiv="content-type" content="text/html; charset=utf-8"></head>';
+
+	// SUS-237 - Wrap in <body> tag to prevent wrapping simple text with <p> tags and stripping HTML comments and script tags
+	// This also simplifies the return value extraction
+	$htmlHeader .= '<body>';
+
 	$domDocument->loadHTML( $htmlHeader . $html );
 
 	// Strip doctype declaration, <html>, <body> tags created by saveHTML, as well as <meta> tag added to
 	// to html above to declare the charset as UTF-8
 	$html = preg_replace(
 		array(
-			'/^.*?<body>/si', '/^.*?charset=utf-8">/si',
-			'/<\/body><\/html>$/si',
-			'/<\/head><\/html>$/si',
+			'/^.*<body>/s',
+			'/<\/body>\s*<\/html>$/s',
 		),
 		'',
 		$domDocument->saveHTML()
@@ -1578,7 +1580,7 @@ function wfGetCallerClassMethod( $ignoreClasses ) {
 
 		// skip closures
 		// e.g. "FilePageController:{closure}"
-		if ($entry['function'] === '{closure}') {
+		if ( $entry['function'] === '{closure}' ) {
 			continue;
 		}
 
@@ -1612,4 +1614,71 @@ function wfGetUniqueArrayCI( array $arr ) {
 	$lower = array_map( 'strtolower', $arr );
 	$unique = array_intersect_key( $arr, array_unique( $lower ) );
 	return array_filter( $unique );
+}
+
+/**
+ * Like pathinfo but with support for multibyte - copied from http://php.net/manual/en/function.pathinfo.php#107461
+ */
+function mb_pathinfo( $filepath ) {
+	preg_match( '%^(.*?)[\\\\/]*(([^/\\\\]*?)(\.([^\.\\\\/]+?)|))[\\\\/\.]*$%im', $filepath, $m );
+	if ( $m[1] ) {
+		$ret['dirname'] = $m[1];
+	}
+	if ( $m[2] ) {
+		$ret['basename'] = $m[2];
+	}
+	if ( $m[5] ) {
+		$ret['extension'] = $m[5];
+	}
+	if ( $m[3] ) {
+		$ret['filename'] = $m[3];
+	}
+	return $ret;
+}
+
+// Selectively allow cross-site AJAX
+
+/**
+ * Helper function to convert wildcard string into a regex
+ * '*' => '.*?'
+ * '?' => '.'
+ *
+ * @param $search string
+ * @return string
+ */
+function convertWildcard( $search ) {
+	$search = preg_quote( $search, '/' );
+	$search = str_replace(
+		array( '\*', '\?' ),
+		array( '.*?', '.' ),
+		$search
+	);
+	return "/$search/";
+}
+
+/**
+ * Moved core code from api.php to be available in wikia.php
+ *
+ * @see PLATFORM-1790
+ * @author macbre
+ */
+function wfHandleCrossSiteAJAXdomain() {
+	global $wgCrossSiteAJAXdomains, $wgCrossSiteAJAXdomainExceptions;
+
+	if ( $wgCrossSiteAJAXdomains && isset( $_SERVER['HTTP_ORIGIN'] ) ) {
+		$exceptions = array_map( 'convertWildcard', $wgCrossSiteAJAXdomainExceptions );
+		$regexes = array_map( 'convertWildcard', $wgCrossSiteAJAXdomains );
+		foreach ( $regexes as $regex ) {
+			if ( preg_match( $regex, $_SERVER['HTTP_ORIGIN'] ) ) {
+				foreach ( $exceptions as $exc ) { // Check against exceptions
+					if ( preg_match( $exc, $_SERVER['HTTP_ORIGIN'] ) ) {
+						break 2;
+					}
+				}
+				header( "Access-Control-Allow-Origin: {$_SERVER['HTTP_ORIGIN']}" );
+				header( 'Access-Control-Allow-Credentials: true' );
+				break;
+			}
+		}
+	}
 }

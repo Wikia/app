@@ -1,3 +1,4 @@
+/*global jQuery, Wikia*/
 (function ($) {
 	'use strict';
 
@@ -65,7 +66,7 @@
 	$.loadFacebookSDK = function (callback) {
 		// create our own deferred object to resolve after FB.init finishes
 		var $deferred = $.Deferred(),
-			url = window.fbScript || '//connect.facebook.net/en_US/sdk.js';
+			url = window.fbScript || window.Wikia.fbLocale.getSdkUrl(window.wgUserLanguage);
 
 		// ShareButton code still uses the callback, but it's deprecated.
 		if (typeof callback === 'function') {
@@ -106,5 +107,11 @@
 	$.loadReCaptcha = function () {
 		var url = 'https://www.google.com/recaptcha/api.js?hl=' + window.wgUserLanguage;
 		return loadExternalLibrary('ReCaptcha', url, typeof window.grecaptcha);
+	};
+
+	$.loadGoogleSearchAPI = function (searchId) {
+		var url = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+				  '//cse.google.com/cse.js?cx=' + searchId;
+		return loadExternalLibrary('googleSearchUrl', url, typeof window.GoogleSearch );
 	};
 })(jQuery);

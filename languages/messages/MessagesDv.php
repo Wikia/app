@@ -116,11 +116,8 @@ $messages = array(
 'navigation' => 'ސަމުގާ',
 'and'        => '&#32;އަދި',
 
-# Cologne Blue skin
 'qbfind'        => 'ހޯއްދަވާ',
-'qbedit'        => 'އުނިއިތުރުގެންނަވާ',
 'qbpageoptions' => 'މި ޞަފްޙާ',
-'qbmyoptions'   => 'މަގޭ ސަފްހާ ތައް',
 
 'errorpagetitle'    => 'ކުށް',
 'returnto'          => 'އަނބުރާ $1 އަށް ވަޑައިގަންނަވާ!',
@@ -143,12 +140,9 @@ $messages = array(
 'unprotectthispage' => 'މި ޞަފްޙާ ދިފާއުކުރުން ހުއްޓަވާލައްވާ',
 'talkpage'          => 'މި ސަފްޙާއާ މެދު ބަހުސްކުރައްވާ',
 'specialpage'       => 'ހާއްސަ ޞަފްޙާ',
-'articlepage'       => 'ފިހުރިސްތު ޞަފްޙާ ބައްލަވާ',
 'talk'              => 'ބަހުސް',
 'views'             => 'ހިޔާލުފުޅުތައް',
 'toolbox'           => 'އަތްމަތީފޮށި',
-'userpage'          => 'މެންބަރުގެ ޞަފްޙާ ބައްލަވާ',
-'viewtalkpage'      => 'ބަހުސް ބައްލަވާ',
 'otherlanguages'    => 'އެހެން ބަސްބަހުން',
 'redirectedfrom'    => '(މިސްރާބުކުރެވުނީ $1 އިން)',
 'redirectpagesub'   => 'ޞަފްޙާގެ މިސްރާބު އައުކުރައްވާ',

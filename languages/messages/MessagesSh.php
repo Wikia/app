@@ -348,30 +348,12 @@ $messages = array(
 'navigation'    => 'Navigacija',
 'and'           => '&#32;i',
 
-# Cologne Blue skin
 'qbfind'         => 'Pronađite',
 'qbbrowse'       => 'Prelistajte',
-'qbedit'         => 'Uredi',
 'qbpageoptions'  => 'Opcije stranice',
 'qbpageinfo'     => 'Informacije o stranici',
-'qbmyoptions'    => 'Moje opcije',
-'qbspecialpages' => 'Posebne stranice',
 'faq'            => 'ČPP',
-'faqpage'        => 'Project:ČPP',
 
-# Vector skin
-'vector-action-addsection'       => 'Dodaj temu',
-'vector-action-delete'           => 'Brisanje',
-'vector-action-move'             => 'Preusmjeri',
-'vector-action-protect'          => 'Zaštiti',
-'vector-action-undelete'         => 'Vrati obrisano',
-'vector-action-unprotect'        => 'Promijeni zaštitu',
-'vector-simplesearch-preference' => 'Omogući napredne sugestije pretrage (samo vector skin)',
-'vector-view-create'             => 'Napravi',
-'vector-view-edit'               => 'Uredi',
-'vector-view-history'            => 'Pregled historije',
-'vector-view-view'               => 'Čitaj',
-'vector-view-viewsource'         => 'Vidi izvor (source)',
 'actions'                        => 'Akcije',
 'namespaces'                     => 'Imenski prostori',
 'variants'                       => 'Varijante',
@@ -394,7 +376,6 @@ $messages = array(
 'edit'              => 'Uredi',
 'create'            => 'Napravi',
 'editthispage'      => 'Uredite ovu stranicu',
-'create-this-page'  => 'Stvori ovu stranicu',
 'delete'            => 'Obriši',
 'deletethispage'    => 'Obriši ovu stranicu',
 'undelete_short'    => 'Vrati obrisanih {{PLURAL:$1|$1 izmjenu|$1 izmjene|$1 izmjena}}',
@@ -409,19 +390,9 @@ $messages = array(
 'talkpagelinktext'  => 'Razgovor',
 'specialpage'       => 'Posebna stranica',
 'personaltools'     => 'Lični alati',
-'postcomment'       => 'Nova sekcija',
-'articlepage'       => 'Pogledaj stranicu sa sadržajem (članak)',
 'talk'              => 'Razgovor',
 'views'             => 'Pregledi',
 'toolbox'           => 'Traka sa alatima',
-'userpage'          => 'Pogledajte korisničku stranicu',
-'projectpage'       => 'Pogledajte stranicu projekta',
-'imagepage'         => 'Vidi stranicu datoteke/fajla',
-'mediawikipage'     => 'Pogledaj stranicu s porukom',
-'templatepage'      => 'Pogledajte stranicu sa šablonom',
-'viewhelppage'      => 'Pogledajte stranicu za pomoć',
-'categorypage'      => 'Pogledajte stranicu kategorije',
-'viewtalkpage'      => 'Pogledajte raspravu',
 'otherlanguages'    => 'Na drugim jezicima',
 'redirectedfrom'    => '(Preusmjereno sa $1)',
 'redirectpagesub'   => 'Preusmjeri stranicu',
@@ -604,8 +575,9 @@ Kao razlog je naveden "\'\'$2\'\'".',
 # Login and logout pages
 'logouttext'                 => "'''Sad ste odjavljeni.'''
 
-Možete nastaviti da koristite {{SITENAME}} anonimno, ili se ponovo [[Special:UserLogin|prijaviti]] kao isti ili kao drugi korisnik.
+Možete nastaviti da koristite {{SITENAME}} anonimno, ili se ponovo $1 kao isti ili kao drugi korisnik.
 Obratite pažnju da neke stranice mogu nastaviti da se prikazuju kao da ste još uvijek prijavljeni, dok ne očistite keš svog preglednika.",
+'logouttext-link-text'       => 'prijaviti',
 'welcomecreation'            => '== Dobro došli, $1! ==
 Vaš korisnički račun je napravljen.
 Ne zaboravite izmijeniti vlastite [[Special:Preferences|{{SITENAME}} postavke]].',
@@ -724,43 +696,6 @@ Da biste završili prijavu, morate unijeti novu šifru ovdje:',
 'resetpass-wrong-oldpass'   => 'Privremena ili trenutna lozinka nije valjana.
 Možda ste već uspješno promijenili Vašu lozinku ili ste tražili novu privremenu lozinku.',
 'resetpass-temp-password'   => 'Privremena lozinka:',
-
-# Special:PasswordReset
-'passwordreset'                    => 'Ponovno postavi lozinku',
-'passwordreset-text'               => 'Ispunite ovaj obrazac da biste dobili e-mail podsjetnik o vašim detaljima računa.',
-'passwordreset-legend'             => 'Ponovno postavi lozinku',
-'passwordreset-disabled'           => 'Ponovno postavljanje lozinke je onemogućeno na ovom wikiju.',
-'passwordreset-pretext'            => '{{PLURAL:$1||Unesite jedan dio podataka ispod}}',
-'passwordreset-username'           => 'Korisničko ime:',
-'passwordreset-domain'             => 'Domena:',
-'passwordreset-capture'            => 'Pogledati krajnji e-mail?',
-'passwordreset-capture-help'       => 'Ako označite ovu kućicu, e-mail s privremenom lozinkom će biti prikazana i poslata korisniku.',
-'passwordreset-email'              => 'E-mail adresa:',
-'passwordreset-emailtitle'         => 'Detalji računa na {{SITENAME}}',
-'passwordreset-emailtext-ip'       => 'Netko (vjerovatno Vi, s IP adrese $1) je zatražio podsjetnik Vaših detalja računa
-za {{SITENAME}} ($4). Sljedeći {{PLURAL:$3|račun korisnika je|računi korisnika su}}
-povezani s ovom e-mail adresom:
-
-$2
-
-{{PLURAL:$3|Ova privremena lozinka|Ove privremene lozinke}} će isteći za {{PLURAL:$5|jedan dan|$5 dana}}.
-Trebate se prijaviti i odabrati novu lozinku. Ako je neko drugi napravio ovaj
-zahtjev, ili ako ste se sjetili Vaše početne lozinke, a ne želite je promijeniti, 
-možete zanemariti ovu poruku i nastaviti koristiti staru lozinku.',
-'passwordreset-emailtext-user'     => 'Korisnik $1 na {{SITENAME}} je zatražio podsjetnik o detaljima Vašeg računa za {{SITENAME}}
-($4). Sljedeći {{PLURAL:$3|korisnički račun je|korisnički računi su}} povezani s ovom e-mail adresom:
-
-$2
-
-{{PLURAL:$3|Ova privremena lozinka|Ove privremene lozinke}} će isteći za {{PLURAL:$5|jedan dan|$5 dana}}.
-Trebate se prijaviti i odabrati novu lozinku. Ako je neko drugi napravio ovaj
-zahtjev, ili ako ste se sjetili Vaše originalne lozinke, a ne želite je više promijeniti, 
-možete zanemariti ovu poruku i nastaviti koristiti staru lozinku.',
-'passwordreset-emailelement'       => 'Korisničko ime: $1
-Privremena šifra: $2',
-'passwordreset-emailsent'          => 'E-mail podsjetnik je poslan.',
-'passwordreset-emailsent-capture'  => 'Poslan je podsjetnik preko e-maila (prikazan dolje).',
-'passwordreset-emailerror-capture' => 'E-mail s podsjetnikom, prikazan dolje, je poslan, ali slanje korisniku nije uspjelo: $1',
 
 # Special:ChangeEmail
 'changeemail'          => 'Promijeni e-mail adresu',
@@ -1244,14 +1179,6 @@ Pokušajte u svoju pretragu staviti ''all:'' da se pretražuje cjelokupan sadrž
 U međuvremenu možete pretraživati preko Googlea.
 Uzmite u obzir da njegovi indeksi za ovu Wiki ne moraju biti ažurirani.',
 
-# Quickbar
-'qbsettings'                => 'Podešavanja brze palete',
-'qbsettings-none'           => 'Nikakva',
-'qbsettings-fixedleft'      => 'Fiksirana lijevo',
-'qbsettings-fixedright'     => 'Fiksirana desno',
-'qbsettings-floatingleft'   => 'Plutajuća lijevo',
-'qbsettings-floatingright'  => 'Plutajuća desno',
-'qbsettings-directionality' => 'Fiksno, ovisno o smjeru pisma Vašeg jezika',
 
 # Preferences page
 'preferences'                   => 'Postavke',
@@ -1635,8 +1562,8 @@ Molimo Vas da promijenite ime datoteke i pokušate da je ponovo postavite.',
 'large-file'                  => 'Preporučeno je da datoteke nisu veće od $1;
 Ova datoteka je velika $2.',
 'largefileserver'             => 'Ova datoteka je veća nego što server dopušta.',
-'emptyfile'                   => 'Datoteka koju ste poslali je prazna. 
-Ovo je moguće zbog greške u imenu datoteke. 
+'emptyfile'                   => 'Datoteka koju ste poslali je prazna.
+Ovo je moguće zbog greške u imenu datoteke.
 Molimo Vas da provjerite da li stvarno želite da pošaljete ovu datoteku.',
 'windows-nonascii-filename'   => 'Ova wiki ne podržava imena datoteka sa posebnim znacima.',
 'fileexists'                  => "Datoteka sa ovim imenom već postoji.
@@ -1670,7 +1597,7 @@ Ako i dalje želite da postavite ovu datoteku, molimo Vas da se vratite i pošal
 'copyuploaddisabled'          => 'Postavljanje putem URL nije omogućeno.',
 'uploadfromurl-queued'        => 'Vaše postavljanje je na čekanju.',
 'uploaddisabledtext'          => 'Postavljanje datoteka je onemogućeno.',
-'php-uploaddisabledtext'      => 'Postavljanje datoteka preko PHP je onemogućeno. 
+'php-uploaddisabledtext'      => 'Postavljanje datoteka preko PHP je onemogućeno.
 Molimo provjerite postavku za postavljanje datoteka.',
 'uploadscripted'              => 'Ova datoteka sadrži HTML ili skriptni kod koji može izazvati grešku kod internet preglednika.',
 'uploadvirus'                 => 'Fajl sadrži virus!  Detalji:  $1',
@@ -2378,8 +2305,8 @@ Da bi izvršili selektivno vraćanje, odaberite kutijice koje odgovaraju revizij
 Ako je nova stranica istog imena napravljena od brisanja, vraćene revizije će se pojaviti u njenoj ranijoj historiji.',
 'undeleterevdel'               => 'Vraćanje obrisanog se neće izvršiti ako bi rezultiralo da zaglavlje stranice ili revizija datoteke bude djelimično obrisano.
 U takvim slučajevima, morate ukloniti označene ili otkriti sakrivene najskorije obrisane revizije.',
-'undeletehistorynoadmin'       => 'Ova stranica je izbrisana.  
-Razlog za brisanje se nalazi ispod u sažetku, zajedno sa detaljima korisnika koji su uređivali ovu stranicu prije brisanja.  
+'undeletehistorynoadmin'       => 'Ova stranica je izbrisana.
+Razlog za brisanje se nalazi ispod u sažetku, zajedno sa detaljima korisnika koji su uređivali ovu stranicu prije brisanja.
 Tekst izbrisane stranice je vidljiv samo administratorima.',
 'undelete-revision'            => 'Obrisana revizija stranice $1 (dana $4, u $5) od strane $3:',
 'undeleterevision-missing'     => 'Nevaljana ili nedostajuća revizija.
@@ -2445,7 +2372,7 @@ $1',
 'sp-contributions-logs'                => 'registri',
 'sp-contributions-talk'                => 'razgovor',
 'sp-contributions-userrights'          => 'postavke korisničkih prava',
-'sp-contributions-blocked-notice'      => 'Ovaj korisnik je trenutno blokiran. 
+'sp-contributions-blocked-notice'      => 'Ovaj korisnik je trenutno blokiran.
 Posljednje stavke evidencije blokiranja možete pogledati ispod:',
 'sp-contributions-blocked-notice-anon' => 'Ova IP adresa je trenutno blokirana.
 Posljednje stavke zapisnika blokiranja možete pogledati ispod:',
@@ -2480,8 +2407,8 @@ Posljednje stavke zapisnika blokiranja možete pogledati ispod:',
 'blockip'                         => 'Blokiraj korisnika',
 'blockip-title'                   => 'Blokiraj korisnika',
 'blockip-legend'                  => 'Blokiranje korisnika',
-'blockiptext'                     => 'Upotrebite donji upitnik da biste uklonili prava pisanja sa određene IP adrese ili korisničkog imena.  
-Ovo bi trebalo da bude urađeno samo da bi se spriječio vandalizam, i u skladu sa [[{{MediaWiki:Policy-url}}|smjernicama]]. 
+'blockiptext'                     => 'Upotrebite donji upitnik da biste uklonili prava pisanja sa određene IP adrese ili korisničkog imena.
+Ovo bi trebalo da bude urađeno samo da bi se spriječio vandalizam, i u skladu sa [[{{MediaWiki:Policy-url}}|smjernicama]].
 Unesite konkretan razlog ispod (na primjer, navodeći koje konkretne stranice su vandalizovane).',
 'ipadressorusername'              => 'IP adresa ili korisničko ime:',
 'ipbexpiry'                       => 'Ističe:',
@@ -2559,9 +2486,9 @@ Unesite konkretan razlog ispod (na primjer, navodeći koje konkretne stranice su
 'autoblocker'                     => 'Automatski ste blokirani jer dijelite IP adresu sa "[[User:$1|$1]]".
 Razlog za blokiranje je korisnika $1 je: \'\'$2\'\'',
 'blocklogpage'                    => 'Registar blokiranja',
-'blocklog-showlog'                => 'Ovaj korisnik je ranije blokiran. 
+'blocklog-showlog'                => 'Ovaj korisnik je ranije blokiran.
 Evidencija blokiranja je prikazana ispod kao referenca:',
-'blocklog-showsuppresslog'        => 'Ovaj korisnik je ranije blokiran i sakriven. 
+'blocklog-showsuppresslog'        => 'Ovaj korisnik je ranije blokiran i sakriven.
 Evidencija sakrivanja je prikazana ispod kao referenca:',
 'blocklogentry'                   => 'blokiran [[$1]] s rokom: $2 $3',
 'reblock-logentry'                => 'promjena postavki blokiranja za [[$1]] sa vremenom isteka u $2 $3',
@@ -2581,7 +2508,7 @@ Pogledajte [[Special:BlockList|blokirane IP adrese]] za spisak trenutnih zabrana
 'ipb_expiry_temp'                 => 'Sakrivene blokade korisničkih imena moraju biti stalne.',
 'ipb_hide_invalid'                => 'Ne može se onemogućiti ovaj račun; možda ima isuviše izmjena.',
 'ipb_already_blocked'             => '"$1" je već blokiran',
-'ipb-needreblock'                 => '$1 je već blokiran. 
+'ipb-needreblock'                 => '$1 je već blokiran.
 Da li želite promijeniti postavke?',
 'ipb-otherblocks-header'          => 'Ostale {{PLURAL:$1|blokada|blokade}}',
 'unblock-hideuser'                => 'Ne možete deblokirati ovog korisnika jer je njegovo korisničko ime sakriveno.',
@@ -2594,14 +2521,14 @@ Međutim, možda je blokirana kao dio bloka $2, koji se može deblokirati.',
 'blockme'                         => 'Blokiraj me',
 'proxyblocker'                    => 'Bloker proksija',
 'proxyblocker-disabled'           => 'Ova funkcija je onemogućena.',
-'proxyblockreason'                => 'Vaša IP adresa je blokirana jer je ona otvoreni proksi.  
+'proxyblockreason'                => 'Vaša IP adresa je blokirana jer je ona otvoreni proksi.
 Molimo vas da kontaktirate vašeg davatelja internetskih usluga (Internet Service Provider-a) ili tehničku podršku i obavijestite ih o ovom ozbiljnom sigurnosnom problemu.',
 'proxyblocksuccess'               => 'Proksi uspješno blokiran.',
 'sorbsreason'                     => 'Vaša IP adresa je prikazana kao otvoreni proxy u DNSBL koji koristi {{SITENAME}}.',
 'sorbs_create_account_reason'     => 'Vaša IP adresa je prikazana kao otvoreni proxy u DNSBL korišten od {{SITENAME}}.
 Ne možete napraviti račun',
 'cant-block-while-blocked'        => 'Ne možete blokirati druge korisnike dok ste blokirani.',
-'cant-see-hidden-user'            => 'Korisnik kojeg pokušavate blokirati je već blokiran i sakriven. 
+'cant-see-hidden-user'            => 'Korisnik kojeg pokušavate blokirati je već blokiran i sakriven.
 Pošto nemate prava hideuser (sakrivanje korisnika), ne možete vidjeti ni urediti korisnikovu blokadu.',
 'ipbblocked'                      => 'Ne možete blokirati ili deblokirati druge korisnike, jer ste i sami blokirani',
 'ipbnounblockself'                => 'Nije Vam dopušteno da deblokirate samog sebe',

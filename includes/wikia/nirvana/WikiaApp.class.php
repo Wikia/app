@@ -603,7 +603,6 @@ class WikiaApp {
 	 * @param string $controllerName The name of the controller, without the 'Controller' or 'Model' suffix
 	 * @param string $methodName The name of the Controller method to call
 	 * @param array $params An array with the parameters to pass to the specified method
-	 * @param boolean $internal whether it's an internal (PHP to PHP) or external request
 	 * @param int $exceptionMode exception mode
 	 *
 	 * @return WikiaResponse a response object with the data produced by the method call
@@ -612,6 +611,10 @@ class WikiaApp {
 								 $exceptionMode = null ) {
 		wfProfileIn(__METHOD__);
 		$values = array();
+
+		if ( !empty( $controllerName ) && empty( $methodName ) ) {
+			$methodName = WikiaDispatcher::DEFAULT_METHOD_NAME;
+		}
 
 		if ( !empty( $controllerName ) ) {
 			$values['controller'] = $controllerName;
@@ -624,7 +627,8 @@ class WikiaApp {
 		$params = array_merge( (array) $params, $values );
 
 		if ( empty( $methodName ) || empty( $controllerName ) ) {
-			$params = array_merge( $params, $_POST, $_GET );
+			$internal = false;
+			$params = array_merge( $_POST, $_GET, $params );
 		}
 
 		$request = new WikiaRequest($params);
@@ -638,6 +642,20 @@ class WikiaApp {
 		$out = $this->getDispatcher()->dispatch( $this, $request );
 		wfProfileOut(__METHOD__);
 		return $out;
+	}
+
+	/**
+	 * Prepares and sends a request to a Controller, mark as external
+	 *
+	 * @param string $controllerName The name of the controller, without the 'Controller' or 'Model' suffix
+	 * @param string $methodName The name of the Controller method to call
+	 * @param array $params An array with the parameters to pass to the specified method
+	 * @param int $exceptionMode exception mode
+	 *
+	 * @return WikiaResponse a response object with the data produced by the method call
+	 */
+	public function sendExternalRequest( $controllerName, $methodName, $params = array(), $exceptionMode = null ) {
+		return $this->sendRequest( $controllerName, $methodName, $params, /* internal */ false, $exceptionMode );
 	}
 
 	/**

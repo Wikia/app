@@ -24,7 +24,6 @@ describe('BuckyResourcesTiming', function () {
 				'http://slot1.images2.wikia.nocookie.net/__am/1418375407/sasses/foo/extensions/wikia/Qualaroo/css/Qualaroo.scss': true,
 				'http://nordycka.wikia.com/__load/-/cb%3D1418375407%26debug%3Dfalse%26lang%3Dpl%26only%3Dstyles%26skin%3Doasis/site': true,
 				'http://nordycka.wikia.com/wikia.php?controller=WallNotificationsExternal&method=getUpdateCounts&format=json': true,
-				'http://nordycka.macbre.wikia-dev.com/__load/-/cb%3D123456%26debug%3Dfalse%26lang%3Dpl%26only%3Dstyles%26skin%3Dvenus/site': true,
 				// 3rd party assets
 				'http://edge.quantserve.com/quant-wikia.js': false,
 				'http://www.google-analytics.com/ga.js': false
@@ -32,6 +31,24 @@ describe('BuckyResourcesTiming', function () {
 
 		Object.keys(urls).forEach(function(url) {
 			expect(resourcesTiming.isWikiaAsset(url)).toEqual(urls[url]);
+		});
+	});
+
+	it('correctly get the domain from URL', function() {
+		var resourcesTiming = getModule(),
+			urls = {
+				// Wikia assets
+				'http://vignette1.wikia.nocookie.net/nordycka/images/d/d7/Mykines_2.jpg/revision/latest/scale-to-width/300?cb=20141031093541&path-prefix=pl': 'nocookie.net',
+				// 3rd party assets
+				'http://edge.quantserve.com/quant-wikia.js': 'quantserve.com',
+				'http://www.google-analytics.com/ga.js': 'google-analytics.com',
+				'http://www.google-analytics.com': 'google-analytics.com',
+				// invalid URL
+				'foo.bar/test.css': false
+			};
+
+		Object.keys(urls).forEach(function(url) {
+			expect(resourcesTiming.getDomain(url)).toEqual(urls[url]);
 		});
 	});
 

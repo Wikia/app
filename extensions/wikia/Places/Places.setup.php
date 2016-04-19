@@ -14,12 +14,12 @@
 
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'Places',
-	'version' => '2.0',
+	'version' => '2.1',
 	'author' => array(
 		'Maciej Brencz',
 		'Jakub Kurcek' ),
 	'descriptionmsg' => 'places-desc',
-	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/Places'
+	'url' => 'https://github.com/Wikia/app/blob/dev/extensions/wikia/Places/README.md'
 );
 
 $dir = dirname( __FILE__ );
@@ -85,10 +85,3 @@ JSMessages::registerPackage('Places', array(
 
 JSMessages::registerPackage('PlacesEditPageButton', array( 'places-toolbar-button-tooltip' ) );
 JSMessages::registerPackage('PlacesGeoLocationModal', array( 'places-geolocation-modal-*' ) );
-
-/*
- * user rights
- */
-$wgAvailableRights[] = 'places-enable-category-geolocation';
-$wgGroupPermissions['*']['places-enable-category-geolocation'] = false;
-$wgGroupPermissions['sysop']['places-enable-category-geolocation'] = true;

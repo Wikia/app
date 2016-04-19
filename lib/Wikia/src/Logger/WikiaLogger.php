@@ -8,8 +8,9 @@
 namespace Wikia\Logger;
 
 use Monolog\Logger;
+use Psr\Log\LoggerInterface;
 
-class WikiaLogger {
+class WikiaLogger implements LoggerInterface {
 	/** @var \Psr\Log\LoggerInterface */
 	private $logger;
 
@@ -18,6 +19,9 @@ class WikiaLogger {
 
 	/** @var WebProcessor */
 	private $webProcessor;
+
+	/** @var StatusProcessor */
+	private $statusProcessor;
 
 	/** private to enforce singleton */
 	private function __construct() {
@@ -59,22 +63,29 @@ class WikiaLogger {
 			case E_ERROR:
 			case E_CORE_ERROR:
 			case E_USER_ERROR:
+			case E_RECOVERABLE_ERROR:
 				$exit = true;
 				$method = 'error';
 				$priorityString = 'Fatal Error';
 				break;
 			case E_STRICT:
+				$method = 'warning';
+				$priorityString = 'Strict Standards';
+				break;
 			case E_PARSE:
 			case E_COMPILE_ERROR:
 			case E_COMPILE_WARNING:
 			case E_DEPRECATED:
+			case E_USER_DEPRECATED:
 				// compile-time errors don't call autoload callbacks, so let the standard php error log handle them - BAC-1225
 				return false;
 			default:
 				return false;
 		}
 
-		$this->getLogger()->$method("PHP {$priorityString}: {$message} in {$file} on line {$line}");
+		$this->getLogger()->$method("PHP {$priorityString}: {$message} in {$file} on line {$line}", [
+			'exception' => new \Exception(),
+		]);
 
 		if ($exit) {
 			exit(1);
@@ -102,37 +113,39 @@ class WikiaLogger {
 		}
 	}
 
-	public function debug($message, $context=[]) {
+	public function debug($message, Array $context=[]) {
 		return $this->getLogger()->debug($message, $context);
 	}
 
-	public function info($message, $context=[]) {
+	public function info($message, Array $context=[]) {
 		return $this->getLogger()->info($message, $context);
 	}
 
-	public function notice($message, $context=[]) {
+	public function notice($message, Array $context=[]) {
 		return $this->getLogger()->notice($message, $context);
 	}
 
-	public function warning($message, $context=[]) {
+	public function warning($message, Array $context=[]) {
 		return $this->getLogger()->warning($message, $context);
 	}
 
-	public function error($message, $context=[]) {
+	public function error($message, Array $context=[]) {
 		return $this->getLogger()->error($message, $context);
 	}
 
-	public function critical($message, $context=[]) {
+	public function critical($message, Array $context=[]) {
 		return $this->getLogger()->critical($message, $context);
 	}
 
-	public function alert($message, $context=[]) {
+	public function alert($message, Array $context=[]) {
 		return $this->getLogger()->alert($message, $context);
 	}
 
-	public function emergency($message, $context=[]) {
+	public function emergency($message, Array $context=[]) {
 		return $this->getLogger()->emergency($message, $context);
 	}
+
+	public function log($level, $message, Array $context=[]) {} // NOOP
 
 	public function setLogger(Logger $logger) {
 		$this->logger = $logger;
@@ -151,7 +164,8 @@ class WikiaLogger {
 	 */
 	public function getSyslogHandler() {
 		if ($this->syslogHandler == null) {
-			$this->syslogHandler = new SyslogHandler($this->detectIdent());
+			// all logs from WikiaLogger will have 'program' set to 'mediawiki'
+			$this->syslogHandler = new SyslogHandler('mediawiki');
 		}
 
 		return $this->syslogHandler;
@@ -183,6 +197,17 @@ class WikiaLogger {
 	}
 
 	/**
+	 * @return StatusProcessor.
+	 */
+	public function getStatusProcessor() {
+		if ($this->statusProcessor == null) {
+			$this->statusProcessor = new StatusProcessor();
+		}
+
+		return $this->statusProcessor;
+	}
+
+	/**
 	 * Sets the WebProcessor. Throws an exception of the logger has already been initialized.
 	 *
 	 * @param WebProcessor $processor
@@ -205,43 +230,8 @@ class WikiaLogger {
 		return new Logger(
 			'default',
 			[$this->getSyslogHandler()],
-			[$this->getWebProcessor()]
+			[$this->getWebProcessor(), $this->getStatusProcessor()]
 		);
-	}
-
-	/**
-		* @return string enum['php', 'apache2']
-	 */
-	public function detectIdent() {
-		return PHP_SAPI == 'cli' ? 'php' : 'apache2';
-	}
-
-	/**
-	 * Set production mode. Sends logs to logstash/es.
-	 * @return WikiaLogger
-	 */
-	public function setProductionMode() {
-		$this->getSyslogHandler()->setModeLogstashFormat();
-		return $this;
-	}
-
-	/**
-	 * Set development mode. Sends logs to syslog.
-	 * @return WikiaLogger
-	 */
-	public function setDevMode() {
-		$this->getSyslogHandler()->setModeLineFormat();
-		return $this;
-	}
-
-	/**
-	 * Set development mode with logstash/es support.
-	 * return WikiaLogger
-	 */
-	public function setDevModeWithES() {
-		$this->getSyslogHandler()->setModeLogstashFormat();
-		$this->getSyslogHandler()->getFormatter()->enableDevMode();
-		return $this;
 	}
 
 	public function getErrorReporting() {
@@ -251,6 +241,11 @@ class WikiaLogger {
 	/** @see \Wikia\Logger\WebProcessor::pushContext */
 	public function pushContext(array $context, $type=WebProcessor::RECORD_TYPE_CONTEXT) {
 		$this->getWebProcessor()->pushContext($context, $type);
+	}
+
+	/** @see \Wikia\Logger\WebProcessor::pushContextSource */
+	public function pushContextSource(ContextSource $contextSource, $type=WebProcessor::RECORD_TYPE_CONTEXT) {
+		$this->getWebProcessor()->pushContextSource($contextSource, $type);
 	}
 
 	/** @see \Wikia\Logger\WebProcessor::popContext */

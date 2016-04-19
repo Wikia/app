@@ -37,12 +37,13 @@
 		 * relatedTopics - nullable or empty array
 		 * boardId - nullable
 		 */
-		postNew: function (page, title, body, convertToFormat, notifyEveryone, relatedTopics, callback) {
+		postNew: function (page, title, body, convertToFormat, notifyEveryone, relatedTopics, successCallback, failCallback) {
 			this.bucky.timer.start('postNew');
 
 			$.nirvana.sendRequest({
 				controller: this.pageController,
 				method: 'postNewMessage',
+				type: 'POST',
 				data: {
 					body: body,
 					messagetitle: title,
@@ -50,27 +51,32 @@
 					pagetitle: page.title,
 					pagenamespace: page.namespace,
 					convertToFormat: convertToFormat,
-					relatedTopics: relatedTopics
-				},
-				callback: this.proxy(function (data) {
-					var newmsg = $(data.message);
+					relatedTopics: relatedTopics,
+					token: window.mw.user.tokens.get('editToken')
+				}
+			}).done(this.proxy(function (data) {
+				var newmsg = $(data.message);
 
-					if ($.isFunction(callback)) {
-						callback(newmsg);
-					}
-
-					this.fire('newPosted', newmsg);
-					this.bucky.timer.stop('postNew');
-				})
-			});
+				if ($.isFunction(successCallback)) {
+					successCallback(newmsg);
+				}
+				this.fire('newPosted', newmsg);
+			})).fail(this.proxy(function (data) {
+				if ($.isFunction(failCallback)) {
+					failCallback(data);
+				}
+			})).always(this.proxy(function(){
+				this.bucky.timer.stop('postNew');
+			}));
 		},
 
-		postReply: function (page, body, convertToFormat, parent, quotedFrom, callback) {
+		postReply: function (page, body, convertToFormat, parent, quotedFrom, successCallback, failCallback) {
 			this.bucky.timer.start('postReply');
 
 			$.nirvana.sendRequest({
 				controller: this.pageController,
 				method: 'replyToMessage',
+				type: 'POST',
 				data: {
 					body: body,
 					parent: parent,
@@ -78,19 +84,24 @@
 					pagetitle: page.title,
 					pagenamespace: page.namespace,
 					convertToFormat: convertToFormat,
-					quotedFrom: quotedFrom || ''
-				},
-				callback: this.proxy(function (data) {
-					var newMessage = $(data.message);
+					quotedFrom: quotedFrom || '',
+					token: window.mw.user.tokens.get('editToken')
+				}
+			}).done(this.proxy(function (data) {
+				var newMessage = $(data.message);
 
-					if ($.isFunction(callback)) {
-						callback(newMessage);
-					}
+				if ($.isFunction(successCallback)) {
+					successCallback(newMessage);
+				}
 
-					this.fire('postReply', newMessage);
-					this.bucky.timer.stop('postReply');
-				})
-			});
+				this.fire('postReply', newMessage);
+			})).fail(this.proxy(function (data) {
+				if ($.isFunction(failCallback)) {
+					failCallback(data);
+				}
+			})).always(this.proxy(function () {
+				this.bucky.timer.stop('postReply');
+			}));
 		},
 
 		loadEditData: function (page, id, mode, convertToFormat, callback) {
@@ -140,13 +151,14 @@
 			});
 		},
 
-		saveEdit: function (page, id, title, body, isreply, convertToFormat, callback) {
+		saveEdit: function (page, id, title, body, isreply, convertToFormat, successCallback, failCallback) {
 			this.bucky.timer.start('saveEdit');
 
 			$.nirvana.sendRequest({
 				controller: this.pageController,
 				method: 'editMessageSave',
 				format: 'json',
+				type: 'POST',
 				data: {
 					msgid: id,
 					newtitle: title,
@@ -154,17 +166,21 @@
 					isreply: isreply,
 					pagetitle: page.title,
 					pagenamespace: page.namespace,
-					convertToFormat: convertToFormat
-				},
-				callback: this.proxy(function (data) {
-					if ($.isFunction(callback)) {
-						callback(data);
-					}
-
-					this.fire('editSaved', data);
-					this.bucky.timer.stop('saveEdit');
-				})
-			});
+					convertToFormat: convertToFormat,
+					token: window.mw.user.tokens.get('editToken')
+				}
+			}).done(this.proxy(function (data) {
+				if ($.isFunction(successCallback)) {
+					successCallback(data);
+				}
+				this.fire('editSaved', data);
+			})).fail(this.proxy(function (data) {
+				if ($.isFunction(failCallback)) {
+					failCallback(data);
+				}
+			})).always(this.proxy(function () {
+				this.bucky.timer.stop('saveEdit');
+			}));
 		},
 
 		switchWatch: function (element, isWatched, commentId, callback) {
@@ -175,6 +191,7 @@
 				controller: this.pageController,
 				method: 'switchWatch',
 				format: 'json',
+				type: 'POST',
 				data: {
 					isWatched: isWatched,
 					commentId: commentId
@@ -197,6 +214,7 @@
 				controller: this.pageController,
 				method: 'notifyEveryoneSave',
 				format: 'json',
+				type: 'POST',
 				data: {
 					msgid: msgid,
 					dir: dir
@@ -219,11 +237,11 @@
 				controller: this.pageController,
 				method: 'updateTopics',
 				format: 'json',
+				type: 'POST',
 				data: {
 					msgid: msgid,
 					relatedTopics: relatedTopics
 				},
-				type: 'post',
 				callback: this.proxy(function (json) {
 					if ($.isFunction(callback)) {
 						callback(json);

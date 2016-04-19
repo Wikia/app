@@ -495,30 +495,12 @@ $messages = array(
 'navigation' => 'Navigace',
 'and' => '&#32;a',
 
-# Cologne Blue skin
 'qbfind' => 'Hledání',
 'qbbrowse' => 'Listování',
-'qbedit' => 'Editování',
 'qbpageoptions' => 'Tato stránka',
 'qbpageinfo' => 'Kontext',
-'qbmyoptions' => 'Moje volby',
-'qbspecialpages' => 'Speciální stránky',
 'faq' => 'Často kladené otázky',
-'faqpage' => 'Project:Často kladené otázky',
 
-# Vector skin
-'vector-action-addsection' => 'Přidat téma',
-'vector-action-delete' => 'Smazat',
-'vector-action-move' => 'Přesunout',
-'vector-action-protect' => 'Zamknout',
-'vector-action-undelete' => 'Obnovit',
-'vector-action-unprotect' => 'Změnit zámek',
-'vector-simplesearch-preference' => 'Zapnout rozšířené návrhy hledání (pouze vzhled Vektor)',
-'vector-view-create' => 'Založit',
-'vector-view-edit' => 'Editovat',
-'vector-view-history' => 'Zobrazit historii',
-'vector-view-view' => 'Číst',
-'vector-view-viewsource' => 'Zobrazit zdrojový kód',
 'actions' => 'Akce',
 'namespaces' => 'Jmenné prostory',
 'variants' => 'Varianty',
@@ -541,7 +523,6 @@ $messages = array(
 'edit' => 'Editovat',
 'create' => 'Vytvořit',
 'editthispage' => 'Editovat stránku',
-'create-this-page' => 'Vytvořit tuto stránku',
 'delete' => 'Smazat',
 'deletethispage' => 'Smazat stránku',
 'undelete_short' => 'Obnovit $1 {{PLURAL:$1|verzi|verze|verzí}}',
@@ -556,19 +537,9 @@ $messages = array(
 'talkpagelinktext' => 'diskuse',
 'specialpage' => 'Speciální stránka',
 'personaltools' => 'Osobní nástroje',
-'postcomment' => 'Nová sekce',
-'articlepage' => 'Prohlédnout si stránku',
 'talk' => 'Diskuse',
 'views' => 'Zobrazení',
 'toolbox' => 'Nástroje',
-'userpage' => 'Prohlédnout si uživatelovu stránku',
-'projectpage' => 'Prohlédnout si stránku projektu',
-'imagepage' => 'Prohlédnout si stránku o souboru',
-'mediawikipage' => 'Prohlédnout si text rozhraní',
-'templatepage' => 'Prohlédnout si šablonu',
-'viewhelppage' => 'Prohlédnout si stránku nápovědy',
-'categorypage' => 'Prohlédnout si stránku kategorie',
-'viewtalkpage' => 'Prohlédnout si diskusi',
 'otherlanguages' => 'V jiných jazycích',
 'redirectedfrom' => '(Přesměrováno z $1)',
 'redirectpagesub' => 'Přesměrování',
@@ -754,8 +725,9 @@ Správce serveru, který úložiště zamkl, poskytl toto zdůvodnění: „''$3
 # Login and logout pages
 'logouttext' => "'''Nyní jste odhlášeni.'''
 
-Můžete pokračovat v anonymním prohlížení a editaci {{grammar:2sg|{{SITENAME}}}}, nebo se můžete [[Special:UserLogin|znovu přihlásit]] jako stejný či jiný uživatel.
+Můžete pokračovat v anonymním prohlížení a editaci {{grammar:2sg|{{SITENAME}}}}, nebo se můžete $1 jako stejný či jiný uživatel.
 Uvědomte si, že některé stránky se mohou i nadále zobrazovat, jako byste byli dosud přihlášeni, pokud nevymažete cache prohlížeče.",
+'logouttext-link-text'       => 'znovu přihlásit',
 'welcomecreation' => '== Vítejte, $1! ==
 Váš účet byl úspěšně vytvořen.
 Nezapomeňte si upravit své [[Special:Preferences|nastavení {{grammar:2sg|{{SITENAME}}}}]].',
@@ -868,42 +840,6 @@ Počkejte chvíli, než to zkusíte znovu.',
 'resetpass-wrong-oldpass' => 'Nesprávné dočasné nebo aktuální heslo.
 Možná jste si již úspěšně heslo změnili, nebo jste si vyžádali nové dočasné heslo.',
 'resetpass-temp-password' => 'Dočasné heslo:',
-
-# Special:PasswordReset
-'passwordreset' => 'Reset hesla',
-'passwordreset-text' => 'Pro obdržení e-mailu s připomenutím detailů vašeho účtu vyplňte tento formulář.',
-'passwordreset-legend' => 'Znovu nastavit heslo',
-'passwordreset-disabled' => 'Znovunastavení hesla je na této wiki zakázáno.',
-'passwordreset-pretext' => '{{PLURAL:$1||Zadejte jeden z údajů níže}}',
-'passwordreset-username' => 'Uživatelské jméno:',
-'passwordreset-domain' => 'Doména:',
-'passwordreset-capture' => 'Prohlédnout si výsledný e-mail?',
-'passwordreset-capture-help' => 'Pokud zaškrtnete toto políčko, bude e-mail (s dočasným heslem) kromě zaslání uživateli zobrazen i vám.',
-'passwordreset-email' => 'E-mailová adresa:',
-'passwordreset-emailtitle' => 'Informace k účtu na {{grammar:6sg|{{SITENAME}}}}',
-'passwordreset-emailtext-ip' => 'Někdo (patrně vy, z IP adresy $1) zažádal o připomenutí informací k vašemu
-účtu na {{grammar:6sg|{{SITENAME}}}} ($4). K této adrese {{PLURAL:$3|je přiřazen následující účet|jsou přiřazeny následující účty}}:
-
-$2
-
-{{PLURAL:$3|Toto dočasné heslo|Tato dočasná hesla}} vyprší {{PLURAL:$5|za jeden den|za $5 dny|za $5 dnů}}.
-Nyní byste se měl(a) přihlásit a zvolit si nové heslo. Pokud tento požadavek
-poslal někdo jiný nebo jste si na své staré heslo vzpomněl(a), a nechcete ho
-tedy změnit, můžete tuto zprávu ignorovat a nadále používat původní heslo.',
-'passwordreset-emailtext-user' => '{{gender:$1|Uživatel|Uživatelka|Uživatel}} $1 {{grammar:2sg|{{SITENAME}}}} {{gender:$1|zažádal|zažádala|zažádal}} o připomenutí informací k vašemu
-účtu na {{grammar:6sg|{{SITENAME}}}} ($4). K této adrese {{PLURAL:$3|je přiřazen následující účet|jsou přiřazeny následující účty}}:
-
-$2
-
-{{PLURAL:$3|Toto dočasné heslo|Tato dočasná hesla}} vyprší {{PLURAL:$5|za jeden den|za $5 dny|za $5 dnů}}.
-Nyní byste se měl(a) přihlásit a zvolit si nové heslo. Pokud tento požadavek
-poslal někdo jiný nebo jste si na své staré heslo vzpomněl(a), a nechcete ho
-tedy změnit, můžete tuto zprávu ignorovat a nadále používat původní heslo.',
-'passwordreset-emailelement' => 'Uživatelské jméno: $1
-Dočasné heslo: $2',
-'passwordreset-emailsent' => 'E-mail s heslem byl odeslán.',
-'passwordreset-emailsent-capture' => 'Byl vygenerován připomínací e-mail, který je zobrazen níže.',
-'passwordreset-emailerror-capture' => 'Byl vygenerován připomínací e-mail, který je zobrazen níže, ale nepodařilo se ho odeslat uživateli: $1',
 
 # Special:ChangeEmail
 'changeemail' => 'Změna e-mailové adresy',
@@ -1023,7 +959,6 @@ Zde je pro přehled zobrazen nejnovější záznam z knihy zablokování:',
 '''Zatím nebylo uloženo!'''",
 'sitejspreview' => "'''Pamatujte, že testujete a prohlížíte pouze náhled tohoto JavaScriptu.'''
 '''Dosud nebyl uložen!'''",
-'userinvalidcssjstitle' => "'''Varování:''' Vzhled „$1“ neexistuje. Nezapomeňte, že uživatelské .css a .js soubory používají malá písmena, např. {{ns:user}}:{{BASEPAGENAME}}/vector.css, nikoli {{ns:user}}:{{BASEPAGENAME}}/Vector.css.",
 'updated' => '(Změna uložena)',
 'note' => "'''Poznámka:'''&nbsp;",
 'previewnote' => "'''Pamatujte, že toto je pouze náhled.'''
@@ -1378,14 +1313,6 @@ Pokud na začátek dotazu přidáte ''all:'', bude se hledat všude (včetně di
 'search-external' => 'Externí hledání',
 'searchdisabled' => '<p>Omlouváme se. Plnotextové vyhledávání je dočasně nedostupné. Zatím můžete zkusit vyhledávání Googlem; je ale možné, že jeho výsledky nemusí být aktuální.</p>',
 
-# Quickbar
-'qbsettings' => 'Nastavení lišty nástrojů',
-'qbsettings-none' => 'Žádný',
-'qbsettings-fixedleft' => 'Leží vlevo',
-'qbsettings-fixedright' => 'Leží vpravo',
-'qbsettings-floatingleft' => 'Plovoucí vlevo',
-'qbsettings-floatingright' => 'Plovoucí vpravo',
-'qbsettings-directionality' => 'Pevný v závislosti na směrovosti vašeho písma',
 
 # Preferences page
 'preferences' => 'Nastavení',
@@ -3019,15 +2946,7 @@ Uložte jej na svůj disk a nahrajte ho sem.',
 
 # Stylesheets
 'common.css' => '/* Zde uvedené CSS bude ovlivňovat všechny styly */',
-'standard.css' => '/* Zde uvedené CSS bude ovlivňovat pouze styl „Klasický“  */',
-'nostalgia.css' => '/* Zde uvedené CSS bude ovlivňovat pouze styl „Nostalgie“  */',
-'cologneblue.css' => '/* Zde uvedené CSS bude ovlivňovat pouze styl „Kolínská modř“  */',
 'monobook.css' => '/* Zde uvedené CSS bude ovlivňovat pouze styl „Monobook“ */',
-'myskin.css' => '/* Zde uvedené CSS bude ovlivňovat pouze styl „Můj vzhled“ */',
-'chick.css' => '/* Zde uvedené CSS bude ovlivňovat pouze styl „Kuře“ */',
-'simple.css' => '/* Zde uvedené CSS bude ovlivňovat pouze styl „Jednoduchý“ */',
-'modern.css' => '/* Zde uvedené CSS bude ovlivňovat pouze styl „Moderní“ */',
-'vector.css' => '/* Zde uvedené CSS bude ovlivňovat pouze styl „Vektor“ */',
 'print.css' => '/* Zde uvedené CSS bude ovlivňovat tiskový výstup */',
 'handheld.css' => '/* Zde uvedené CSS bude ovlivňovat přenosná zařízení vycházející ze stylu nastaveného v proměnné $wgHandheldStyle */',
 'noscript.css' => '/* Zde uvedené CSS bude ovlivňovat uživatele s vypnutým JavaScriptem */',
@@ -3038,15 +2957,7 @@ Uložte jej na svůj disk a nahrajte ho sem.',
 
 # Scripts
 'common.js' => '/* Zde uvedený JavaScript bude použit pro všechny uživatele při načtení každé stránky.  */',
-'standard.js' => '/* JavaScript pro uživatele používající vzhled „Klasický“ */',
-'nostalgia.js' => '/* JavaScript pro uživatele používající vzhled „Nostalgie“  */',
-'cologneblue.js' => '/* JavaScript pro uživatele používající vzhled „Kolínská modř“  */',
 'monobook.js' => '/* JavaScript pro uživatele používající vzhled MonoBook */',
-'myskin.js' => '/* JavaScript pro uživatele používající vzhled „Můj vzhled“ */',
-'chick.js' => '/* JavaScript pro uživatele používající vzhled „Kuře“ */',
-'simple.js' => '/* JavaScript pro uživatele používající vzhled „Jednoduchý“ */',
-'modern.js' => '/* JavaScript pro uživatele používající vzhled „Moderní“ */',
-'vector.js' => '/* JavaScript pro uživatele používající vzhled „Vektor“ */',
 'group-autoconfirmed.js' => '/* Zde uvedený JavaScript bude použit pouze pro automaticky schválené uživatele */',
 'group-bot.js' => '/* Zde uvedený JavaScript bude použit pouze pro boty */',
 'group-sysop.js' => '/* Zde uvedený JavaScript bude použit pouze pro správce */',
@@ -3090,14 +3001,6 @@ Uložte jej na svůj disk a nahrajte ho sem.',
 'pageinfo-viewsperedit' => 'Počet zobrazení na editaci',
 
 # Skin names
-'skinname-standard' => 'Klasický',
-'skinname-nostalgia' => 'Nostalgie',
-'skinname-cologneblue' => 'Kolínská modř',
-'skinname-myskin' => 'Můj vzhled',
-'skinname-chick' => 'Kuře',
-'skinname-simple' => 'Jednoduchý',
-'skinname-modern' => 'Moderní',
-'skinname-vector' => 'Vektor',
 
 # Patrolling
 'markaspatrolleddiff' => 'Označit jako prověřené',
@@ -3169,7 +3072,7 @@ Otevřením souboru můžete ohrozit svůj počítač.",
 'minutes' => '{{PLURAL:$1|$1 minuta|$1 minuty|$1 minut}}',
 'hours' => '{{PLURAL:$1|$1 hodina|$1 hodiny|$1 hodin}}',
 'days' => '{{PLURAL:$1|$1 den|$1 dny|$1 dní}}',
-'ago' => 'před 
+'ago' => 'před
 $1',
 
 # Bad image list

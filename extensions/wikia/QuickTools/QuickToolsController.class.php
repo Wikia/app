@@ -21,26 +21,25 @@ class QuickToolsController extends WikiaController  {
 
 	/**
 	 * Block the target user account
+	 *
+	 * @return boolean
 	 */
 	public function blockUser() {
-		wfProfileIn( __METHOD__ );
-		if ( !$this->wg->User->isAllowed( 'quicktools' ) ) {
-			$this->response->setVal( 'success', false );
-			$this->response->setVal( 'error', wfMessage( 'quicktools-permissionerror' )->plain() );
-			wfProfileOut( __METHOD__ );
+		if ( !$this->checkRequest() ) {
 			return true;
 		}
+
 		$target = $this->request->getVal( 'target' );
 		$blockLength = $this->request->getVal( 'length' );
 		$summary = $this->request->getVal( 'summary' );
 
-		$data = array(
+		$data = [
 			'Target' => $target,
-			'Reason' => array(
+			'Reason' => [
 				is_null( $summary ) ? '' : $summary,
 				'other',
 				is_null( $summary ) ? '' : $summary
-			),
+			],
 			'Expiry' => $blockLength,
 			'HardBlock' => true,
 			'CreateAccount' => true,
@@ -50,31 +49,29 @@ class QuickToolsController extends WikiaController  {
 			'AlreadyBlocked' => true,
 			'Watch' => false,
 			'Confirm' => true,
-		);
+		];
 
 		$retval = SpecialBlock::processForm( $data, $this->getContext() );
+
 		if ( $retval !== true ) {
 			$this->response->setVal( 'success', false );
 			$this->response->setVal( 'error', wfMessage( $retval )->escaped() );
-			wfProfileOut( __METHOD__ );
 			return true;
 		}
+
 		$this->response->setVal( 'success', true );
 		$this->response->setVal( 'message', wfMessage( 'quicktools-success-block', $target )->escaped() );
 
-		wfProfileOut( __METHOD__ );
 		return true;
 	}
 
 	/**
 	 * Revert and/or delete all the target user's edits on a wiki
+	 *
+	 * @return boolean
 	 */
 	public function revertAll() {
-		wfProfileIn( __METHOD__ );
-		if ( !$this->wg->User->isAllowed( 'quicktools' ) ) {
-			$this->response->setVal( 'success', false );
-			$this->response->setVal( 'error', wfMessage( 'quicktools-permissionerror' )->plain() );
-			wfProfileOut( __METHOD__ );
+		if ( !$this->checkRequest() ) {
 			return true;
 		}
 
@@ -92,151 +89,59 @@ class QuickToolsController extends WikiaController  {
 			if ( !$time ) {
 				$this->response->setVal( 'success', false );
 				$this->response->setVal( 'error', wfMessage( 'quicktools-invalidtime' )->plain() );
-				wfProfileOut( __METHOD__ );
 				return true;
 			}
 
 			$time = wfTimestamp( TS_MW, $time );
 		}
 
-		$titles = $this->getRollbackTitles( $target, $time );
+		$helper = new QuickToolsHelper();
 
-		if( empty( $titles ) ) {
+		$titles = $helper->getRollbackTitles( $target, $time );
+
+		if ( empty( $titles ) ) {
 			$this->response->setVal( 'success', false );
 			$this->response->setVal( 'error', wfMessage( 'quicktools-notitles' )->plain() );
-			wfProfileOut( __METHOD__ );
 			return true;
 		}
 
 		foreach ( $titles as $title ) {
-			$status = $this->rollbackTitle( $title, $target, $time, $summary, $rollback, $delete, $markBot );
+			$status = $helper->rollbackTitle( $title, $target, $time, $summary, $rollback, $delete, $markBot );
 		}
 		$this->response->setVal( 'success', true );
+		// Messages that can be used here:
+		// * quicktools-success
+		// * quicktools-success-rollback
+		// * quicktools-success-delete
+		// * quicktools-success-rollback-delete
 		$successMessage = 'quicktools-success' . ( $rollback ? '-rollback' : '' ) . ( $delete ? '-delete' : '' );
 		$this->response->setVal( 'message', wfMessage( $successMessage, $target )->escaped() );
 
-		wfProfileOut( __METHOD__ );
 		return true;
 	}
 
 	/**
-	 * Get all pages that should be rolled back for a given user
+	 * Checks if the request was valid
 	 *
-	 * @param $user String a name to check against rev_user_text
-	 * @param $time String Timestamp to revert since
-	 * @return Array of page titles to revert
+	 * @return boolean
 	 */
-	private function getRollbackTitles( $user, $time ) {
-		wfProfileIn( __METHOD__ );
-		$dbr = wfGetDB( DB_SLAVE );
-		$titles = array();
-		$where = array(
-			'page_latest = rev_id',
-			'rev_user_text' => $user,
-		);
-		if ( $time !== '' ) {
-			$time = $dbr->addQuotes( $time );
-			$where[] = "rev_timestamp >= {$time}";
-		}
-		$results = $dbr->select(
-			array( 'page', 'revision' ),
-			array( 'page_namespace', 'page_title' ),
-			$where,
-			__METHOD__,
-			array(
-				'ORDER BY' => 'page_namespace, page_title',
-				'LIMIT' => 500,
-			)
-		);
-		while ( $row = $dbr->fetchObject( $results ) ) {
-			$titles[] = Title::makeTitle( $row->page_namespace, $row->page_title );
-		}
-
-		wfProfileOut( __METHOD__ );
-		return $titles;
-	}
-
-	/**
-	 * Rollback edits and/or delete page creations by user
-	 *
-	 * @param $title String The page name to perform reverts on
-	 * @param $user String Username of user to revert
-	 * @param $time String Timestamp to revert edits since
-	 * @param $summary String Edit summary to give for reverts and deleted
-	 * @param $rollback Boolean Whether or not to perform rollbacks (default: true)
-	 * @param $delete Boolean Whether or not to perform deletions (default: true)
-	 * @param $markBot Boolean Whether or not to mark rollbacks as bot edits through
-	 *        the bot=1 URL parameter (default: false)
-	 * @return true on success, false on failure
-	 */
-	private function rollbackTitle(
-		$title, $user, $time, $summary, $rollback = true, $delete = true, $markBot = false
-	) {
-		wfProfileIn( __METHOD__ );
-		// build article object and find article id
-		$article = new Article( $title );
-		$pageId = $article->getID();
-
-		// check if article exists
-		if ( $pageId <= 0 ) {
-			wfProfileOut( __METHOD__ );
+	private function checkRequest() {
+		if ( !$this->wg->User->isAllowed( 'quicktools' ) ) {
+			$this->response->setVal( 'success', false );
+			$this->response->setVal( 'error', wfMessage( 'quicktools-permissionerror' )->plain() );
 			return false;
 		}
-
-		// fetch revisions from this article
-		$dbr = wfGetDB( DB_SLAVE );
-		$res = $dbr->select(
-			'revision',
-			array( 'rev_id', 'rev_user_text', 'rev_timestamp' ),
-			array(
-				'rev_page' => $pageId,
-			),
-			__METHOD__,
-			array(
-				'ORDER BY' => 'rev_id DESC',
-			)
-		);
-
-		// find the newest edit done by other user
-		$revertRevId = false;
-		while ( $row = $dbr->fetchObject( $res ) ) {
-			if ( $row->rev_user_text !== $user || ( $time !== '' && $row->rev_timestamp < $time ) ) {
-				$revertRevId = $row->rev_id;
-				break;
-			}
+		if ( !$this->request->wasPosted() ) {
+			$this->response->setVal( 'success', false );
+			$this->response->setVal( 'error', wfMessage( 'quicktools-posterror' )->plain() );
+			return false;
 		}
-		$dbr->freeResult( $res );
-
-		if ( $revertRevId && $rollback ) { // found an edit by other user - reverting
-			$rev = Revision::newFromId( $revertRevId );
-			$text = $rev->getRawText();
-			$flags = EDIT_UPDATE|EDIT_MINOR;
-			if ( $this->wg->User->isAllowed( 'bot' ) || $markBot ) {
-				$flags |= EDIT_FORCE_BOT;
-			}
-			$status = $article->doEdit( $text, $summary, $flags );
-			if ( $status->isOK() ) {
-				wfProfileOut( __METHOD__ );
-				return true;
-			} else {
-				wfProfileOut( __METHOD__ );
-				return false;
-			}
-		} elseif ( !$revertRevId && $delete ) { // no edits by other users - deleting page
-			$title = $article->getTitle();
-			$file = $title->getNamespace() == NS_FILE ? wfLocalFile( $title ) : false;
-			if ( $file ) {
-				$oldimage = null; // Must be passed by reference
-				$status = FileDeleteForm::doDelete( $title, $file, $oldimage, $summary, false )->isOK();
-			} else {
-				$status = $article->doDeleteArticle( $summary );
-			}
-			if ( $status ) {
-				wfProfileOut( __METHOD__ );
-				return true;
-			}
+		$token = $this->getVal( 'token', null );
+		if ( $token === null || !$this->wg->User->matchEditToken( $token ) ) {
+			$this->response->setVal( 'success', false );
+			$this->response->setVal( 'error', wfMessage( 'quicktools-tokenerror' )->plain() );
+			return false;
 		}
-		wfProfileOut( __METHOD__ );
-		return false;
+		return true;
 	}
 }

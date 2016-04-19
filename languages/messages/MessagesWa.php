@@ -190,14 +190,10 @@ $messages = array(
 'navigation'    => 'Naiviaedje',
 'and'           => '&#32;eyet',
 
-# Cologne Blue skin
 'qbfind'         => 'Trover',
 'qbbrowse'       => 'Foyter',
-'qbedit'         => 'Candjî',
 'qbpageoptions'  => 'Cisse pådje ci',
 'qbpageinfo'     => 'Contecse',
-'qbmyoptions'    => 'Mes pådjes',
-'qbspecialpages' => 'Pådjes sipeciåles',
 
 'errorpagetitle'    => 'Aroke',
 'returnto'          => 'Rivni al pådje «$1».',
@@ -216,7 +212,6 @@ $messages = array(
 'edit'              => 'Candjî',
 'create'            => 'Ahiver',
 'editthispage'      => "Candjî l' pådje",
-'create-this-page'  => 'Ahiver cisse pådje la',
 'delete'            => 'Disfacer',
 'deletethispage'    => "Disfacer l' pådje",
 'undelete_short'    => 'Rapexhî {{PLURAL:$1|on candjmint|$1 candjmints}}',
@@ -230,15 +225,9 @@ $messages = array(
 'talkpagelinktext'  => 'Copiner',
 'specialpage'       => 'Pådje sipeciåle',
 'personaltools'     => 'Usteyes da vosse',
-'postcomment'       => 'Sicrire on comintaire',
-'articlepage'       => "Vey l' årtike",
 'talk'              => 'Copene',
 'views'             => 'Vuwes',
 'toolbox'           => 'Boesse ås usteyes',
-'userpage'          => "Vey li pådje di l' uzeu",
-'projectpage'       => 'Vey li pådje do pordjet',
-'imagepage'         => "Vey li pådje di l' imådje",
-'viewtalkpage'      => 'Vey li pådje di copene',
 'otherlanguages'    => 'Ôtes lingaedjes',
 'redirectedfrom'    => '(Redjiblé di $1)',
 'redirectpagesub'   => 'Pådje di redjiblaedje',
@@ -481,7 +470,6 @@ Si vos n' voloz nén scrire cisse pådje chal, clitchîz simplumint sol boton ''
 'userjsyoucanpreview'        => "'''Racsegne:''' eployîz l' boton «Vey divant» po sayî vosse novea JS divant del schaper.",
 'usercsspreview'             => "'''Èn rovyîz nén ki c' est djusse on prévoeyaedje di vosse stîle CSS d' uzeu, i n' a nén co stî schapé!'''",
 'userjspreview'              => "'''Èn rovyîz nén ki c' est djusse on prévoeyaedje/saye di vosse JavaScript d' uzeu, i n' a nén co stî schapé!'''",
-'userinvalidcssjstitle'      => "'''Asteme:''' I n' a pont d' pea lomêye «$1». Tuzez ki les pådjes .css eyet .js des uzeus eployèt des tite e ptitès letes, metans {{ns:user}}:Toto/vector.css et nén {{ns:user}}:Toto/Vector.css.",
 'updated'                    => '(Ramidré)',
 'previewnote'                => "'''Èn rovyîz nén ki c' est djusse on prévoeyaedje, li pådje n' est nén co schapêye!'''",
 'previewconflict'            => 'Ci prévoeyaedje ci mostere kimint kel tecse del boesse di tecse do dzeu sereut håyné si vos decidez di clitchî so «schaper».',
@@ -625,13 +613,6 @@ Les ôtes manaedjeus so ç' wiki ci pôront todi vey li contnou catchî eyet l' 
 'powersearch-redir'        => 'Håyner les rdjiblaedjes',
 'searchdisabled'           => "Mande escuzes! Li cweraedje å dvins des årtikes a stî dismetou pol moumint, cåze ki l' sierveu est fortcherdjî. Tot ratindant, vos ploz eployî Google po fé les rcweraedjes so {{SITENAME}}, mins çoula pout esse ene miete vî.",
 
-# Quickbar
-'qbsettings'               => 'Apontiaedjes pol bår di menu',
-'qbsettings-none'          => 'Nole bår',
-'qbsettings-fixedleft'     => 'Aclawêye a hintche',
-'qbsettings-fixedright'    => 'Aclawêye a droete',
-'qbsettings-floatingleft'  => 'Flotante a hintche',
-'qbsettings-floatingright' => 'Flotante a droete',
 
 # Preferences page
 'preferences'           => 'Preferinces',

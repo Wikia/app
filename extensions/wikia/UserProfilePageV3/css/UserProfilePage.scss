@@ -135,7 +135,7 @@ $color-user-profile-gradient-bottom: desaturate(darken($color-menu-highlight, 5%
 			text-transform: uppercase;
 			top: -4px;
 			+.tag {
-				margin-left: 0;
+				margin-left: 5px;
 			}
 		}
 		h2 {

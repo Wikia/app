@@ -51,6 +51,60 @@ ve.ui.WikiaMediaInsertDialogTool.static.commandName = 'wikiaMediaInsert';
 ve.ui.toolFactory.register( ve.ui.WikiaMediaInsertDialogTool );
 
 /**
+ * UserInterface WikiaImageInsertDialog tool.
+ *
+ * @class
+ * @extends ve.ui.DialogTool
+ *
+ * @constructor
+ * @param {OO.ui.ToolGroup} toolGroup
+ * @param {Object} [config] Config options
+ */
+ve.ui.WikiaImageInsertDialogTool = function VeUiWikiaImageInsertDialogTool( toolGroup, config ) {
+	// Parent constructor
+	ve.ui.WikiaImageInsertDialogTool.super.call( this, toolGroup, config );
+};
+
+OO.inheritClass( ve.ui.WikiaImageInsertDialogTool, ve.ui.DialogTool );
+
+ve.ui.WikiaImageInsertDialogTool.static.name = 'wikiaImageInsert';
+ve.ui.WikiaImageInsertDialogTool.static.group = 'object';
+ve.ui.WikiaImageInsertDialogTool.static.icon = 'image';
+
+ve.ui.WikiaImageInsertDialogTool.static.title =
+	OO.ui.deferMsg( 'wikia-visualeditor-dialogbutton-imageinsert-tooltip' );
+ve.ui.WikiaImageInsertDialogTool.static.commandName = 'wikiaImageInsert';
+
+ve.ui.toolFactory.register( ve.ui.WikiaImageInsertDialogTool );
+
+/**
+ * UserInterface WikiaVideoInsertDialog tool.
+ *
+ * @class
+ * @extends ve.ui.DialogTool
+ *
+ * @constructor
+ * @param {OO.ui.ToolGroup} toolGroup
+ * @param {Object} [config] Config options
+ */
+ve.ui.WikiaVideoInsertDialogTool = function VeUiWikiaVideoInsertDialogTool( toolGroup, config ) {
+	// Parent constructor
+	ve.ui.WikiaVideoInsertDialogTool.super.call( this, toolGroup, config );
+};
+
+OO.inheritClass( ve.ui.WikiaVideoInsertDialogTool, ve.ui.DialogTool );
+
+ve.ui.WikiaVideoInsertDialogTool.static.name = 'wikiaVideoInsert';
+ve.ui.WikiaVideoInsertDialogTool.static.group = 'object';
+ve.ui.WikiaVideoInsertDialogTool.static.icon = 'video';
+
+ve.ui.WikiaVideoInsertDialogTool.static.title =
+	OO.ui.deferMsg( 'wikia-visualeditor-dialogbutton-videoinsert-tooltip' );
+ve.ui.WikiaVideoInsertDialogTool.static.commandName = 'wikiaVideoInsert';
+
+ve.ui.toolFactory.register( ve.ui.WikiaVideoInsertDialogTool );
+
+/**
  * UserInterface WikiaSingleMediaDialog tool.
  *
  * @class
@@ -103,6 +157,27 @@ ve.ui.WikiaMapInsertDialogTool.static.commandName = 'wikiaMapInsert';
 if ( mw.config.get( 'wgEnableWikiaInteractiveMaps' ) === true ) {
 	ve.ui.toolFactory.register( ve.ui.WikiaMapInsertDialogTool );
 }
+
+/**
+ * UserInterface WikiaInfoboxInsertDialog tool.
+ *
+ * @class
+ * @extends ve.ui.InfoboxInsertDialogTool
+ * @constructor
+ * @param {OO.ui.ToolGroup} toolGroup
+ * @param {Object} [config] Configuration options
+ */
+ve.ui.WikiaInfoboxInsertDialogTool = function VEUIWikiaInfoboxInsertDialogTool( toolGroup, config ) {
+	ve.ui.WikiaInfoboxInsertDialogTool.super.call( this, toolGroup, config );
+};
+OO.inheritClass( ve.ui.WikiaInfoboxInsertDialogTool, ve.ui.DialogTool );
+ve.ui.WikiaInfoboxInsertDialogTool.static.name = 'wikiaInfoboxInsert';
+ve.ui.WikiaInfoboxInsertDialogTool.static.group = 'object';
+ve.ui.WikiaInfoboxInsertDialogTool.static.icon = 'infobox';
+ve.ui.WikiaInfoboxInsertDialogTool.static.title =
+	OO.ui.deferMsg( 'wikia-visualeditor-dialogbutton-infobox-tooltip' );
+ve.ui.WikiaInfoboxInsertDialogTool.static.commandName = 'wikiaInfoboxInsert';
+ve.ui.toolFactory.register( ve.ui.WikiaInfoboxInsertDialogTool );
 
 /**
  * UserInterface WikiaTemplateInsertDialog tool.

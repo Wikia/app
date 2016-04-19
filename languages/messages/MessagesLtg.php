@@ -111,22 +111,9 @@ $messages = array(
 'navigation'    => 'Navigaceja',
 'and'           => '&#32;i',
 
-# Cologne Blue skin
 'qbfind'         => 'Mekliešona',
-'qbedit'         => 'Pataiseit',
 'qbpageoptions'  => 'Ita puslopa',
-'qbmyoptions'    => 'Munys puslopys',
-'qbspecialpages' => 'Specialuos puslopys',
 
-# Vector skin
-'vector-action-addsection' => 'Dalikt padaļu',
-'vector-action-delete'     => 'Iztreit',
-'vector-action-move'       => 'Puorceļt',
-'vector-action-protect'    => 'Apsorguot',
-'vector-action-unprotect'  => 'Puormeit apsardzeibu',
-'vector-view-edit'         => 'Pataiseit',
-'vector-view-history'      => 'Viesture',
-'vector-view-view'         => 'Vērtīs',
 'actions'                  => 'Darbeibys',
 'namespaces'               => 'Vuordu pluoti',
 'variants'                 => 'Varianti',
@@ -148,7 +135,6 @@ $messages = array(
 'edit'             => 'Pataiseit',
 'create'           => 'Sataiseit',
 'editthispage'     => 'Pataiseit itū puslopu',
-'create-this-page' => 'Sataiseit itū puslopu',
 'delete'           => 'Iztreit',
 'deletethispage'   => 'Iztreit itū puslopu',
 'protect'          => 'Apsorguot',
@@ -160,8 +146,6 @@ $messages = array(
 'talkpagelinktext' => 'sprīža',
 'specialpage'      => 'Specialuo puslopa',
 'personaltools'    => 'Muni reiki',
-'postcomment'      => 'Dalikt komentaru',
-'articlepage'      => 'Apsavērt rakstīņu',
 'talk'             => 'Sprīža',
 'views'            => 'Vierīņi',
 'toolbox'          => 'Reiki',
@@ -255,10 +239,6 @@ Par to var ziņuot [[Special:ListUsers/sysop|kaidam administratoram]], nūruodū
 'resetpass_text'            => '<!-- Dalikt tekstu ite -->',
 'resetpass-submit-loggedin' => 'Puormeit paroļu',
 'resetpass-submit-cancel'   => 'Atsaukt',
-
-# Special:PasswordReset
-'passwordreset-username' => 'Slāgvuords:',
-'passwordreset-email'    => 'E-posta adress:',
 
 # Special:ChangeEmail
 'changeemail-cancel' => 'Atsaukt',

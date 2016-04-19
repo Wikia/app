@@ -8,8 +8,8 @@ class UserOneTagStrategy extends UserTagsStrategyBase {
 		'sysop' => 9,
 		'staff' => 8,
 		'helper' => 7,
-		'adminmentor' => 6,
-		'vstf' => 5,
+		'vstf' => 6,
+		'vanguard' => 5,
 		'voldev' => 4,
 		'council' => 3,
 		'threadmoderator' => 2,
@@ -24,10 +24,10 @@ class UserOneTagStrategy extends UserTagsStrategyBase {
 	public function getUserTags() {
 		wfProfileIn(__METHOD__);
 
-		if( $this->isBlocked() ) {
-			$tag = wfMsg('user-identity-box-group-blocked');
+		if( $this->isBlocked( true, false ) ) {
+			$tag = wfMessage('user-identity-box-group-blocked')->escaped();
 		} elseif( $this->isFounder() ) {
-			$tag = wfMsg('user-identity-box-group-founder');
+			$tag = wfMessage('user-identity-box-group-founder')->escaped();
 		} else {
 			$tag = $this->getTagFromGroups();
 		}

@@ -115,15 +115,10 @@ $messages = array(
 'anontalk'      => 'Wadahadalka IP:gan',
 'and'           => '&#32;iyo',
 
-# Cologne Blue skin
 'qbfind'         => 'Raadi',
 'qbbrowse'       => 'Fiirfiiri',
-'qbedit'         => 'Wax ka bedel',
 'qbpageoptions'  => 'Boggaan',
-'qbmyoptions'    => 'Boggageyga',
-'qbspecialpages' => 'Bogaga qaaska ah',
 'faq'            => 'SIL',
-'faqpage'        => 'Project:SIL',
 
 'errorpagetitle'    => 'Qalad',
 'returnto'          => 'Ku noqo $1.',
@@ -152,19 +147,9 @@ $messages = array(
 'talkpage'          => 'Wadahadalka boggan',
 'talkpagelinktext'  => 'Wadahadal',
 'specialpage'       => 'Bogaga qaaska ah',
-'postcomment'       => 'Aragti ku qor bogga dhamaadkiisa',
-'articlepage'       => 'Fiiri bogga qoraalka',
 'talk'              => 'Wadahadal',
 'views'             => 'Muuqaalka',
 'toolbox'           => 'Qalabka shaqada',
-'userpage'          => 'Fiiri bogga isticmaalaha',
-'projectpage'       => 'Fiiri bogga mashruuca',
-'imagepage'         => 'Fiiri bogga sawirka',
-'mediawikipage'     => 'Fiiri bogga fariinta',
-'templatepage'      => 'Fiiri bogga tusmada',
-'viewhelppage'      => 'Fiiri bogga caawinaada',
-'categorypage'      => 'Fiiri bogga qaybta',
-'viewtalkpage'      => 'Fiiri bogga wadahadalka',
 'otherlanguages'    => 'Luqadaha kale',
 'lastmodifiedat'    => 'Boggan waxaa markii ugu dambeysay wax laga bedelay $2, $1.',
 'viewcount'         => 'This page has been accessed {{PLURAL:$1|one time|$1 times}}.',
@@ -230,7 +215,8 @@ $messages = array(
 # Login and logout pages
 'logouttext'                 => "'''Hada waad ka baxday.'''
 
-Waad sii isticmaali kartaa {{SITENAME}}-han adoon lagu aqoon, ama gudaha ayaad [[Special:UserLogin|gali kartaa markale]] adiga oo isticmaalaya gudagalkaagii hore ama mid ka duwan. OGEYSIIS waxaa lagayabaa bogagga qaarkood in ay yiraahdaa wali gudaha ayaad ku jirtaa, ilaa aad Internet barowsarkaaaga ka nadiifiso.",
+Waad sii isticmaali kartaa {{SITENAME}}-han adoon lagu aqoon, ama gudaha ayaad $1 adiga oo isticmaalaya gudagalkaagii hore ama mid ka duwan. OGEYSIIS waxaa lagayabaa bogagga qaarkood in ay yiraahdaa wali gudaha ayaad ku jirtaa, ilaa aad Internet barowsarkaaaga ka nadiifiso.",
+'logouttext-link-text'       => 'gali kartaa markale',
 'welcomecreation'            => "== Soo dhawoow, $1! ==
 Gudagalahaaga waa la sameeyey.
 Ha' hilmaamin in aad wax ka bedesho [[Special:Preferences|{{SITENAME}} dooqaaga]].",

@@ -11,7 +11,7 @@
 	width: 50px;
 }
 
-.greeting p:last-child {
+.bold {
 	font-weight: bold;
 }
 

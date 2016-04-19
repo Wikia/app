@@ -621,7 +621,7 @@ Liftium.clone = function (obj){
 
 /* Handler for messages from XDM */
 Liftium.crossDomainMessage = function (message){
-	XDM.allowedMethods = ["Liftium.iframeHop", "LiftiumTest.testPassed"];
+	XDM.allowedMethods = [];
 	XDM.executeMessage(message.data);
 };
 

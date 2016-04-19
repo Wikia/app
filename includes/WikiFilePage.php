@@ -57,12 +57,13 @@ class WikiFilePage extends WikiPage {
 	}
 
 	/**
+	 * @param int $flags a bit field; may be Title::GAID_FOR_UPDATE to use master db
 	 * @return mixed|null|Title
 	 */
-	public function getRedirectTarget() {
+	public function getRedirectTarget( $flags = 0 ) {
 		$this->loadFile();
 		if ( $this->mFile->isLocal() ) {
-			return parent::getRedirectTarget();
+			return parent::getRedirectTarget( $flags );
 		}
 		// Foreign image page
 		$from = $this->mFile->getRedirected();

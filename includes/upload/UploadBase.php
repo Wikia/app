@@ -94,6 +94,16 @@ abstract class UploadBase {
 		return true;
 	}
 
+	/**
+	 * Returns true if the user has surpassed the upload rate limit, false otherwise.
+	 *
+	 * @param User $user
+	 * @return bool
+	 */
+	public static function isThrottled( $user ) {
+		return $user->pingLimiter( 'upload' );
+	}
+
 	// Upload handlers. Should probably just be a global.
 	static $uploadHandlers = array( 'Stash', 'File', 'Url' );
 
@@ -113,15 +123,10 @@ abstract class UploadBase {
 		// Get the upload class
 		$type = ucfirst( $type );
 
-		// Give hooks the chance to handle this request
-		$className = null;
-		wfRunHooks( 'UploadCreateFromRequest', array( $type, &$className ) );
-		if ( is_null( $className ) ) {
-			$className = 'UploadFrom' . $type;
-			wfDebug( __METHOD__ . ": class name: $className\n" );
-			if( !in_array( $type, self::$uploadHandlers ) ) {
-				return null;
-			}
+		$className = 'UploadFrom' . $type;
+		wfDebug( __METHOD__ . ": class name: $className\n" );
+		if( !in_array( $type, self::$uploadHandlers ) ) {
+			return null;
 		}
 
 		// Check whether this upload class is enabled
