@@ -53,7 +53,7 @@ class ChatWidgetTest extends WikiaBaseTest {
 		// Message class mock
 		$messageMock = $this->getMockBuilder( 'Message' )
 			->disableOriginalConstructor()
-			->setMethods( [ 'exists', 'text' ] )
+			->setMethods( [ 'exists', 'text', 'parse' ] )
 			->getMock();
 		$messageMock->expects(
 			$this->any() )
@@ -62,6 +62,10 @@ class ChatWidgetTest extends WikiaBaseTest {
 		$messageMock->expects(
 			$this->any() )
 			->method( 'text' )
+			->will( $this->returnValue( 'message' ) );
+		$messageMock->expects(
+			$this->any() )
+			->method( 'parse' )
 			->will( $this->returnValue( 'message' ) );
 
 		// Title class mock
@@ -108,7 +112,7 @@ class ChatWidgetTest extends WikiaBaseTest {
 					'blankImgUrl' => 'www.url.com',
 					'chatUsers' => [ 'User1', 'User2' ],
 					'chatUsersCount' => 2,
-					'entryPointGuidelinesMessage' => 'message',
+					'guidelinesText' => 'message',
 					'fromParserTag' => true,
 					'sectionClassName' => 'ChatWidget',
 					'joinTheChatMessage' => 'message',
@@ -127,7 +131,7 @@ class ChatWidgetTest extends WikiaBaseTest {
 					'blankImgUrl' => 'www.url.com',
 					'chatUsers' => [ 'User1', 'User2' ],
 					'chatUsersCount' => 2,
-					'entryPointGuidelinesMessage' => 'message',
+					'guidelinesText' => 'message',
 					'fromParserTag' => false,
 					'sectionClassName' => 'module',
 					'joinTheChatMessage' => 'message',
@@ -146,7 +150,7 @@ class ChatWidgetTest extends WikiaBaseTest {
 					'blankImgUrl' => 'www.url.com',
 					'chatUsers' => [ 'User1', 'User2' ],
 					'chatUsersCount' => 2,
-					'entryPointGuidelinesMessage' => 'message',
+					'guidelinesText' => 'message',
 					'fromParserTag' => false,
 					'sectionClassName' => 'module',
 					'joinTheChatMessage' => 'message',
@@ -165,7 +169,7 @@ class ChatWidgetTest extends WikiaBaseTest {
 					'blankImgUrl' => 'www.url.com',
 					'chatUsers' => [ 'User1', 'User2' ],
 					'chatUsersCount' => 2,
-					'entryPointGuidelinesMessage' => 'message',
+					'guidelinesText' => 'message',
 					'fromParserTag' => true,
 					'sectionClassName' => 'ChatWidget',
 					'joinTheChatMessage' => 'message',
@@ -184,7 +188,7 @@ class ChatWidgetTest extends WikiaBaseTest {
 					'blankImgUrl' => 'www.url.com',
 					'chatUsers' => [ ],
 					'chatUsersCount' => 0,
-					'entryPointGuidelinesMessage' => 'message',
+					'guidelinesText' => 'message',
 					'fromParserTag' => true,
 					'sectionClassName' => 'ChatWidget',
 					'joinTheChatMessage' => 'message',

@@ -51,7 +51,7 @@ class ChatWidget {
 			'blankImgUrl' => $wgBlankImgUrl,
 			'chatUsers' => $chatUsersInfo,
 			'chatUsersCount' => count( $chatUsersInfo ),
-			'guidelines' => $guidelinesText->exists() ?
+			'guidelinesText' => $guidelinesText->exists() ?
 				$guidelinesText->parse() : null,
 			'fromParserTag' => $fromParserTag,
 			'sectionClassName' => $fromParserTag ? self::PARSER_TAG_CLASS : self::RIGHT_RAIL_MODULE_CLASS,
