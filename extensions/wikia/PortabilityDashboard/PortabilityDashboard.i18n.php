@@ -10,22 +10,24 @@ $messages = [ ];
 $messages[ 'en' ] = [
 	'portability-dashboard-hover-info' => 'Hover over table column headers to get more context',
 	'portability-dashboard-community-header' => 'Community',
-	'portability-dashboard-community-desc' => 'Link to Community main page',
+	'portability-dashboard-community-desc' => 'Link to this Community main page',
 	'portability-dashboard-lang-header' => 'Language',
 	'portability-dashboard-lang-desc' => 'This Community language',
 	'portability-dashboard-portability-header' => 'Portability',
-	'portability-dashboard-portability-desc' => 'Absolute portability in %',
+	'portability-dashboard-portability-desc' => 'Percentage of this Community traffic coming from portable 
+	pages',
 	'portability-dashboard-infobox-portability-header' => 'Infobox Portability',
-	'portability-dashboard-infobox-portability-desc' => '% of portable infoboxes',
+	'portability-dashboard-infobox-portability-desc' => 'Percentage of this Community traffic coming from pages with 
+	portable infoboxes',
 	'portability-dashboard-traffic-header' => 'Traffic',
-	'portability-dashboard-traffic-desc' => 'Traffic in page views',
+	'portability-dashboard-traffic-desc' => 'Total number of this Community page vies',
 	'portability-dashboard-templates-header' => 'Unorganized Templates',
 	'portability-dashboard-templates-desc' => 'Number of unorganized templates on this Community',
 	'portability-dashboard-infoboxes-header' => 'Non-portable Infoboxes',
-	'portability-dashboard-infoboxes-desc' => 'number of non-portable infoboxes on this Community',
+	'portability-dashboard-infoboxes-desc' => 'Number of not-portable infoboxes on this Community',
 	'portability-dashboard-impact-header' => 'Migration Impact',
-	'portability-dashboard-impact-desc' => 'Migration Impact',
-	'portability-dashboard-language-filter-label' => 'Filter by language',
+	'portability-dashboard-impact-desc' => 'Number od page views on this Community coming from pages with not-portable infoboxes',
+	'portability-dashboard-language-filter-label' => 'Filter table by language',
 	'portability-dashboard-language-filter-all' => 'all'
 ];
 
