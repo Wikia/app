@@ -23,6 +23,7 @@ class SpecialChat extends UnlistedSpecialPage {
 			}
 		} else {
 			// TODO: FIXME: Make a link on this page which lets the user login.
+			// https://wikia-inc.atlassian.net/browse/SUS-448
 
 			Chat::info( __METHOD__ . ': Method called - logged out' );
 			// $wgOut->permissionRequired( 'chat' ); // this is a really useless message, don't use it.

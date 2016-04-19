@@ -13,7 +13,6 @@ var NodeChatSocketWrapper = $.createClass(Observable, {
 	socket: false,
 	constructor: function (roomId) {
 		NodeChatSocketWrapper.superclass.constructor.apply(this, arguments);
-		this.sessionData = null;
 		this.roomId = roomId;
 		this.wikiId = window.wgCityId;
 	},
@@ -86,10 +85,6 @@ var NodeChatSocketWrapper = $.createClass(Observable, {
 		//it seems socket.io decodes it -- that's why I double encoded it
 		//but maybe we should implement here authorization via user id instead of username?
 		var encodedWgUserName = encodeURIComponent(encodeURIComponent(wgUserName));
-		this.checkSession = function (data) {
-			$().log(encodedWgUserName);
-
-		};
 
 		this.proxy(callback, this)('name=' + encodedWgUserName + '&key=' + wgChatKey + '&roomId=' + this.roomId
 			+ '&serverId=' + this.wikiId + '&wikiId=' + this.wikiId);
@@ -97,7 +92,6 @@ var NodeChatSocketWrapper = $.createClass(Observable, {
 
 
 	forceReconnect: function () {
-		NodeChatSocketWrapper.sessionData = null;
 		this.socket.disconnectSync();
 		this.socket = null;
 		this.connect();
@@ -119,10 +113,6 @@ var NodeChatSocketWrapper = $.createClass(Observable, {
 				}
 				break;
 		}
-	},
-
-	getAllowedEvents: function () {
-		return ['updateUser', 'initial', 'chat:add', 'join', 'part', 'kick', 'logout'];
 	}
 });
 
@@ -201,7 +191,7 @@ var NodeRoomController = $.createClass(Observable, {
 		return this.mainController == null;
 	},
 
-	onReConnectFail: function (message) {
+	onReConnectFail: function () {
 		var chatEntry = new models.InlineAlert({text: mw.message('chat-user-permanently-disconnected').escaped()});
 		this.model.chats.add(chatEntry);
 	},
@@ -241,6 +231,7 @@ var NodeRoomController = $.createClass(Observable, {
 
 			// TODO: update the entire userlist (if the server went down or something, you're not going to get "part" messages for the users who are gone).
 			// See BugzId 6107 for more info & partially completed code.
+			// https://wikia-inc.atlassian.net/browse/SUS-450
 		}
 
 		for (var i in this.afterInitQueue) {
