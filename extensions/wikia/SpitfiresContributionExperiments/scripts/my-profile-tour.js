@@ -86,9 +86,9 @@ require(['jquery', 'wikia.loader', 'wikia.mustache', 'mw'], function($, loader, 
 
 		if (answer.length) {
 			switch (currentStep) {
-				case 1: answer = 'My favorite moment in the game:\n' + answer; break;
-				case 2: answer = 'My gaming platforms:\n' + answer; break;
-				case 3: answer = 'About me:\n' + answer; break;
+				case 1: answer = "My favorite moment in the game:\n" + answer; break;
+				case 2: answer = "My gaming platforms:\n" + answer; break;
+				case 3: answer = "About me:\n" + answer; break;
 			}
 			answers.push(answer);
 		}
