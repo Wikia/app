@@ -107,9 +107,14 @@ define('VisualEditorTourExperiment', ['jquery', 'wikia.loader', 'wikia.mustache'
 		Tour.prototype._setupTour = function (assets) {
 			var $body = $('body');
 
-			$body.on('click', '.ve-tour-next', this.nextHandle.bind(this));
-			$body.on('click', '.ve-tour-prev', this.prevHandle.bind(this));
-			$body.on('click', '.ve-tour-experiment .close', this.close.bind(this));
+			mw.hook( 've.cancelButton' ).add(function() {
+				$body.off('.VETour');
+				this.destroyStep(this.step);
+			}.bind(this));
+
+			$body.on('click.VETour', '.ve-tour-next', this.nextHandle.bind(this));
+			$body.on('click.VETour', '.ve-tour-prev', this.prevHandle.bind(this));
+			$body.on('click.VETour', '.ve-tour-experiment .close', this.close.bind(this));
 
 			this.contentTemplate = assets.mustache[0];
 			this.tourConfig.forEach(this._setupStep.bind(this));
