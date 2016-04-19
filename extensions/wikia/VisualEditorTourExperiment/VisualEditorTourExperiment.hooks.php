@@ -9,4 +9,9 @@ class Hooks {
 		return true;
 	}
 
+	public function onMakeGlobalVariablesScript( array &$aVars ) {
+		$aVars['wgEnableVisualEditorTourExperiment'] = true;
+		return true;
+	}
+
 }

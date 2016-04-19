@@ -393,11 +393,13 @@
 
 	if ( init.isAvailable ) {
 		$( function () {
-			mw.hook( 've.activationComplete' ).add( function initTour() {
-				require( [ 'VisualEditorTourExperimentInit' ], function ( veTourInit ) {
-					veTourInit.init();
-				} );
-			} );
+			if (mw.config.get('wgEnableVisualEditorTourExperiment')) {
+				mw.hook('ve.activationComplete').add(function initTour() {
+					require(['VisualEditorTourExperimentInit'], function (veTourInit) {
+						veTourInit.init();
+					});
+				});
+			}
 			if ( isViewPage && uri.query.veaction === 'edit' ) {
 				var isSection = uri.query.vesection !== undefined;
 				init.showLoading();
