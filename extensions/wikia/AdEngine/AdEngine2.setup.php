@@ -58,10 +58,6 @@ $wgResourceModules['wikia.ext.adengine.sevenonemedia'] = array(
 	'class' => 'ResourceLoaderAdEngineSevenOneMediaModule',
 );
 
-$wgResourceModules['wikia.ext.adengine.sp.recovery'] = array(
-	'class' => 'ResourceLoaderAdEngineSourcePointRecoveryModule',
-);
-
 $wgResourceModules['wikia.ext.adengine.sp.detection'] = array(
 	'class' => 'ResourceLoaderAdEngineSourcePointDetectionModule',
 );
