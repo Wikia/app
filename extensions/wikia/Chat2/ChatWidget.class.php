@@ -23,7 +23,7 @@ class ChatWidget {
 	/**
 	 * @brief This function set parseTag hook
 	 */
-	static public function onParserFirstCallInit( Parser &$parser ) {
+	public static function onParserFirstCallInit( Parser &$parser ) {
 		wfProfileIn( __METHOD__ );
 		$parser->setHook( CHAT_TAG, [ __CLASS__, "parseTag" ] );
 		wfProfileOut( __METHOD__ );
@@ -39,31 +39,33 @@ class ChatWidget {
 	 *
 	 * @return array
 	 */
-	static public function getTemplateVars( $fromParserTag ) {
+	public static function getTemplateVars( $fromParserTag ) {
 		global $wgEnableWallExt, $wgBlankImgUrl, $wgUser, $wgSitename;
 
 		$guidelinesText = wfMessage( 'chat-entry-point-guidelines' );
-		$joinTheChatMessage = wfMessage( 'chat-join-the-chat' );
-		$chatUsersInfo = ChatWidget::getUsersInfo();
-		$chatProfileAvatarUrl = AvatarService::getAvatarUrl( $wgUser->getName(), ChatRailController::AVATAR_SIZE );
+		$joinChatMessage = wfMessage( 'chat-join-the-chat' );
+		$usersInfo = ChatWidget::getUsersInfo();
+		$usersCount = count( $usersInfo );
+		$myAvatarUrl = AvatarService::getAvatarUrl( $wgUser->getName(), ChatRailController::AVATAR_SIZE );
+		$buttonMessage = $usersCount ? 'chat-join-the-chat' : 'chat-start-a-chat';
 
 		$vars = [
 			'blankImgUrl' => $wgBlankImgUrl,
-			'chatUsers' => $chatUsersInfo,
-			'chatUsersCount' => count( $chatUsersInfo ),
-			'guidelinesText' => $guidelinesText->exists() ?
-				$guidelinesText->parse() : null,
+			'users' => $usersInfo,
+			'usersCount' => $usersCount,
+			'buttonText' => wfMessage($buttonMessage)->text(),
+			'guidelinesText' => $guidelinesText->exists() ? $guidelinesText->parse() : null,
 			'fromParserTag' => $fromParserTag,
 			'sectionClassName' => $fromParserTag ? self::PARSER_TAG_CLASS : self::RIGHT_RAIL_MODULE_CLASS,
-			'joinTheChatMessage' => $joinTheChatMessage->exists() ? $joinTheChatMessage->text() : null,
+			'joinChatText' => $joinChatMessage->exists() ? $joinChatMessage->text() : null,
 			'linkToSpecialChat' => SpecialPage::getTitleFor( "Chat" )->escapeLocalUrl(),
 			'siteName' => $wgSitename,
 			'profileType' => empty( $wgEnableWallExt ) ? 'talk-page' : 'message-wall',
 			'userName' => $wgUser->isAnon() ? null : $wgUser->getName(),
 		];
 
-		if ( empty( $chatUsersInfo ) ) {
-			$vars['chatProfileAvatarUrl'] = $chatProfileAvatarUrl;
+		if ( $usersCount == 0 ) {
+			$vars['myAvatarUrl'] = $myAvatarUrl;
 		}
 
 		return $vars;
@@ -73,7 +75,7 @@ class ChatWidget {
 	 * Chat tag parser implementation.
 	 * Return html of a chat wrapped in nowiki tags.
 	 */
-	static public function parseTag( $input, $args, $parser ) {
+	public static function parseTag( $input, $args, $parser ) {
 		wfProfileIn( __METHOD__ );
 
 		$templateEngine = ( new Wikia\Template\MustacheEngine )
@@ -96,19 +98,15 @@ class ChatWidget {
 	 *
 	 * @return string template name to render
 	 */
-	static public function getTemplateName() {
+	public static function getTemplateName() {
 
 		return F::app()->checkSkin( 'oasis' ) ?
 			'widget.mustache' :
 			'widgetMonobook.mustache';
 	}
 
-	static private function getChatUsersMemcKey() {
-		return wfMemcKey( 'chatusersinfo' );
-	}
-
-	static public function purgeChatUsersCache() {
-		WikiaDataAccess::cachePurge( self::getChatUsersMemcKey() );
+	public static function purgeChatUsersCache() {
+		WikiaDataAccess::cachePurge( self::getUsersInfoMemcKey() );
 	}
 
 	/**
@@ -124,7 +122,7 @@ class ChatWidget {
 	 * * contribsUrl - link to chatter contribution page
 	 * @return array array containing chatters info
 	 */
-	static public function getUsersInfo() {
+	public static function getUsersInfo() {
 		global $wgReadOnly;
 
 		wfProfileIn( __METHOD__ );
@@ -135,7 +133,7 @@ class ChatWidget {
 			// cache the whole response
 			// individual users are cached anyway, but still we gain performance making just one memcache request instead of several
 			$chatters = WikiaDataAccess::cache(
-				self::getChatUsersMemcKey(),
+				self::getUsersInfoMemcKey(),
 				ChatWidget::CHAT_USER_LIST_CACHE_TTL,
 				function () {
 					return array_map( function ( $userName ) {
@@ -154,9 +152,9 @@ class ChatWidget {
 	 * @param string $userName
 	 * @return array
 	 */
-	static public function getUserInfo( $userName ) {
+	public static function getUserInfo( $userName ) {
 		return WikiaDataAccess::cache(
-			wfMemcKey( 'chatavatars', $userName, 'v2' ),
+			self::getUserInfoMemcKey( $userName ),
 			self::CHAT_USER_INFO_CACHE_TTL,
 			function () use ( $userName ) {
 				global $wgEnableWallExt, $wgLang;
@@ -194,5 +192,13 @@ class ChatWidget {
 
 				return $chatter;
 			} );
+	}
+
+	private static function getUsersInfoMemcKey() {
+		return wfMemcKey( 'chatusersinfo' );
+	}
+
+	private static function getUserInfoMemcKey( $userName ) {
+		return wfMemcKey( 'chatavatars', $userName, 'v2' );
 	}
 }

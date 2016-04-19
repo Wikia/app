@@ -2,21 +2,19 @@
 	<div class="chat-contents
 		{{#userName}} chat-user-logged-in{{/userName}}
 		{{^userName}} chat-user-anonymous{{/userName}}
-		{{#chatUsersCount}} chat-room-active{{/chatUsersCount}}
-		{{^chatUsersCount}} chat-room-empty{{/chatUsersCount}}">
+		{{#usersCount}} chat-room-active{{/usersCount}}
+		{{^usersCount}} chat-room-empty{{/usersCount}}">
 		<h2 class="chat-headline">
 			<span class="chat-live" data-msg-id="chat-live2"> </span>
-			<span class="chat-total">{{chatUsersCount}}</span>
+			<span class="chat-total">{{usersCount}}</span>
 		</h2>
 		<p class="chat-name">{{siteName}}</p>
 		<div class="chat-join">
 			<button
 				type="button"
 				{{^userName}}class="loginToChat" {{/userName}}
-				onclick="ChatWidget.onClickChatButton('{{linkToSpecialChat}}')"
-				data-msg-id="
-					{{#chatUsersCount}}chat-join-the-chat{{/chatUsersCount}}
-					{{^chatUsersCount}}chat-start-a-chat{{/chatUsersCount}}">
+				onclick="ChatWidget.onClickChatButton('{{linkToSpecialChat}}')">
+				{{buttonText}}
 			</button>
 		</div>
 		<div class="chat-whos-here">
@@ -24,9 +22,9 @@
 			<span class="arrow-right"><img src="{{blankImgUrl}}" /></span>
 			<div class="carousel-container">
 				<div>
-					{{#chatUsersCount}}
+					{{#usersCount}}
 						<ul class="carousel">
-							{{#chatUsers}}
+							{{#users}}
 							<li class="chatter">
 								<img src="{{blankImgUrl}}" data-src="{{avatarUrl}}" class="avatar" width="32" height="32"  />
 								<div class="UserStatsMenu">
@@ -56,12 +54,12 @@
 									</div>
 								</div>
 							</li>
-							{{/chatUsers}}
+							{{/users}}
 						</ul>
-					{{/chatUsersCount}}
-					{{#chatProfileAvatarUrl}}
-						<img src="{{chatProfileAvatarUrl}}" class="avatar currentUser" width="32" height="32" />
-					{{/chatProfileAvatarUrl}}
+					{{/usersCount}}
+					{{#myAvatarUrl}}
+						<img src="{{myAvatarUrl}}" class="avatar currentUser" width="32" height="32" />
+					{{/myAvatarUrl}}
 				</div>
 			</div>
 		</div>
@@ -72,5 +70,5 @@
 {{/guidelinesText}}
 {{#fromParserTag}}
 	<script language="javascript" type="text/javascript">if ( typeof ChatWidget!=="undefined" ) ChatWidget.init();</script>
-	<a class="ChatMonobookWidget" href="{{linkToSpecialChat}}">{{joinTheChatMessage}}></a>
+	<a class="ChatMonobookWidget" href="{{linkToSpecialChat}}">{{joinChatText}}></a>
 {{/fromParserTag}}
