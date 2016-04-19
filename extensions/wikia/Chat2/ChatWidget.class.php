@@ -42,7 +42,7 @@ class ChatWidget {
 	static public function getTemplateVars( $fromParserTag ) {
 		global $wgEnableWallExt, $wgBlankImgUrl, $wgUser, $wgSitename;
 
-		$entryPointGuidelinesMessage = wfMessage( 'chat-entry-point-guidelines' );
+		$guidelinesText = wfMessage( 'chat-entry-point-guidelines' );
 		$joinTheChatMessage = wfMessage( 'chat-join-the-chat' );
 		$chatUsersInfo = ChatWidget::getUsersInfo();
 		$chatProfileAvatarUrl = AvatarService::getAvatarUrl( $wgUser->getName(), ChatRailController::AVATAR_SIZE );
@@ -51,12 +51,11 @@ class ChatWidget {
 			'blankImgUrl' => $wgBlankImgUrl,
 			'chatUsers' => $chatUsersInfo,
 			'chatUsersCount' => count( $chatUsersInfo ),
-			'entryPointGuidelinesMessage' => $entryPointGuidelinesMessage->exists() ?
-				$entryPointGuidelinesMessage->text() : null,
+			'guidelines' => $guidelinesText->exists() ?
+				$guidelinesText->parse() : null,
 			'fromParserTag' => $fromParserTag,
 			'sectionClassName' => $fromParserTag ? self::PARSER_TAG_CLASS : self::RIGHT_RAIL_MODULE_CLASS,
-			'joinTheChatMessage' => $joinTheChatMessage->exists() ?
-				$joinTheChatMessage->text() : null,
+			'joinTheChatMessage' => $joinTheChatMessage->exists() ? $joinTheChatMessage->text() : null,
 			'linkToSpecialChat' => SpecialPage::getTitleFor( "Chat" )->escapeLocalUrl(),
 			'siteName' => $wgSitename,
 			'profileType' => empty( $wgEnableWallExt ) ? 'talk-page' : 'message-wall',
