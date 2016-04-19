@@ -13,28 +13,35 @@ class ARecoveryUnlockCSS {
 	}
 
 	public function getUnlockCSSUrl() {
-		global $wgServer;
+		global $wgServer, $wgSourcePointAccountId, $wgEnableUsingSourcePointProxyForCSS;
 		$wikiaCssUrl = $this->getWikiaUnlockCSSUrl();
 
 		$memCache = F::app()->wg->Memc;
 
-		$jsonData = [
-			"account_id" => 123, //TODO: get real account id
-			"is_pub_resource" => false,
-			"pub_base" => $wgServer."/__are",
-			"resource" => $wikiaCssUrl
-		];
+		$memcKey = $wikiaCssUrl;
+		if ( $wgEnableUsingSourcePointProxyForCSS ) {
+			$jsonData = [
+				"account_id" => $wgSourcePointAccountId,
+				"is_pub_resource" => false,
+				"pub_base" => $wgServer."/__are",
+				"resource" => $wikiaCssUrl
+			];
 
-		$cachedCriptedUrl = $memCache->get($wikiaCssUrl);
-		if ($cachedCriptedUrl) {
-			return $cachedCriptedUrl;
-		} else {
-			$spQuery = self::postJson(self::API_URL . self::API_ENDPOINT, $jsonData);
-			if ( $spQuery['code'] == 200 && $this->verifyContent($spQuery['response']) ) {
-				$memCache->set($wikiaCssUrl, $spQuery['response'], self::CACHE_TTL);
-				return $spQuery['response'];
+			$cachedCriptedUrl = $memCache->get( $memcKey );
+			if ( $cachedCriptedUrl ) {
+				return $cachedCriptedUrl;
 			} else {
-				\Wikia\Logger\WikiaLogger::instance()->warning( 'Failed to fetch crypted CSS', ['url' => self::API_URL . self::API_ENDPOINT, 'data' => $jsonData] );
+				$spQuery = self::postJson(self::API_URL . self::API_ENDPOINT, $jsonData);
+				if ( $spQuery['code'] == 200 && $this->verifyContent( $spQuery['response'] ) ) {
+					$memCache->set( $memcKey, $spQuery['response'], self::CACHE_TTL) ;
+					return $spQuery['response'];
+				} else {
+					\Wikia\Logger\WikiaLogger::instance()
+						->warning( 'Failed to fetch crypted CSS',
+							['url' => self::API_URL . self::API_ENDPOINT,
+							 'data' => $jsonData]
+						);
+				}
 			}
 		}
 		return $wikiaCssUrl;
