@@ -4,6 +4,8 @@ $cell-padding: 10px;
 $filter-pill-border-width: 1px;
 $filter-pill-radius: 2px;
 $filter-pill-padding: 5px;
+$tooltip-icon-height: 6px;
+$tooltip-icon-padding: 3px;
 
 .mw-special-PortabilityDashboard {
 	.portability-dashboard-language-filter {
@@ -30,11 +32,6 @@ $filter-pill-padding: 5px;
 		th,
 		td {
 			padding: $cell-padding;
-			position: relative;
-		}
-
-		th {
-			cursor: help;
 		}
 
 		a {
@@ -43,9 +40,9 @@ $filter-pill-padding: 5px;
 	}
 
 	.portability-dashboard-header {
-		height: 6px;
-		line-height: 6px;
-		padding: 3px;
+		height: $tooltip-icon-height;
+		line-height: $tooltip-icon-height;
+		padding: $tooltip-icon-padding;
 		width: inherit;
 	}
 }
