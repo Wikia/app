@@ -45,7 +45,13 @@ define('VisualEditorTourExperiment', ['jquery', 'wikia.loader', 'wikia.mustache'
 				content: tourStepData.content,
 				html: true,
 				placement: this.tourConfig[step].placement,
-				trigger: 'manual'
+				trigger: 'manual',
+				template: '<div class="popover ve-tour">' +
+				'<div class="arrow"></div>' +
+				'<div class="popover-inner">' +
+				'<div class="popover-content"></div>' +
+				'</div>' +
+				'</div>'
 			});
 
 			$element.popover('show');

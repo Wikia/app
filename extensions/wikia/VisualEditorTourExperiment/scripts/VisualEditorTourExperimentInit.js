@@ -8,13 +8,11 @@ define('VisualEditorTourExperimentInit',
 				trackingMethod: 'analytics'
 			}),
 			LABEL_PREFIX_WITHOUTEDIT = 'userwithoutedit-',
-			LABEL_PREFIX_NEW = 'newlyregistered-',
-			popoverZIndexOverriden = false;
+			LABEL_PREFIX_NEW = 'newlyregistered-';
 
 		function init() {
 			if (isEnabled()) {
 				clearEntrypointPopover();
-				overridePopoverZIndex();
 				(new VETour(veTourConfig, getLabelPrefix())).start();
 			}
 		}
@@ -64,13 +62,6 @@ define('VisualEditorTourExperimentInit',
 		
 		function isUserwithoutedit() {
 			return $.cookie('userwithoutedit');
-		}
-
-		function overridePopoverZIndex() {
-			if (!popoverZIndexOverriden) {
-				popoverZIndexOverriden = true;
-				$('body').append('<style type="text/css">.popover {z-index: 5000014;}</style>');
-			}
 		}
 
 		return {
