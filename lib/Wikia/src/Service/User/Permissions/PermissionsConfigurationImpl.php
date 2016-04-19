@@ -210,7 +210,6 @@ class PermissionsConfigurationImpl implements PermissionsConfiguration {
 		'messagetool',
 		'forceview',
 		'apigate_admin',
-		'batchuserrights',
 		'edithub',
 		'InterwikiEdit',
 		'multilookup',

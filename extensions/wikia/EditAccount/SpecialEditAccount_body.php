@@ -18,6 +18,9 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 	exit( 1 );
 }
 
+use Wikia\DependencyInjection\Injector;
+use Wikia\Service\Helios\HeliosClient;
+
 class EditAccount extends SpecialPage {
 	/** @var User */
 	var $mUser = null;
@@ -421,6 +424,11 @@ class EditAccount extends SpecialPage {
 			$mStatusMsg = wfMessage( 'editaccount-success-close', $user->mName )->plain();
 
 			wfRunHooks( 'EditAccountClosed', array( $user ) );
+
+			/** @var HeliosClient $heliosClient */
+			$heliosClient = Injector::getInjector()->get(HeliosClient::class);
+			$heliosClient->forceLogout($user->getId());
+
 			return true;
 
 		} else {

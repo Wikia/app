@@ -24,10 +24,14 @@ define('ext.wikia.recirculation.views.incontent', [
 		}
 
 		// The idea is to show links above the first section under an infobox
-		width = $container.outerWidth();
+		width = $container.outerWidth(false);
 		firstSuitableSection = sections.filter(function(index, element) {
 			return element.offsetWidth === width;
 		}).first();
+
+		if (firstSuitableSection.length === 0) {
+			return false;
+		}
 
 		return firstSuitableSection;
 	}
