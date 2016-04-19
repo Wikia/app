@@ -13,6 +13,13 @@ interface HeliosClient {
 	public function login( $username, $password );
 
 	/**
+	 * A shortcut method to remove all tokens for user in helios
+	 *
+	 * @param $userId int for remove user tokens
+	 */
+	public function forceLogout( $userId );
+
+	/**
 	 * A shortcut method for token invalidation requests.
 	 *
 	 * @param $token string - a token to be invalidated
