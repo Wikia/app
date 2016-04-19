@@ -49,7 +49,7 @@ require(['jquery', 'mw', 'VisualEditorTourExperimentInit', 'wikia.tracker'],
 		}
 
 		function close($element) {
-			$.cookie('vetourdismissed', 1, { expires : 30 });
+			$.cookie('vetourdismissed', 1, { expires: 30 });
 			$element.popover('destroy');
 			track({
 				action: tracker.ACTIONS.CLICK,

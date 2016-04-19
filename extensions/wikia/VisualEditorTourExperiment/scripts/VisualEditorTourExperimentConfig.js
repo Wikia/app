@@ -28,7 +28,8 @@ define('VisualEditorTourExperimentConfig', [], function () {
 			selector: '.oo-ui-icon-image',
 			placement: 'right',
 			title: 'Add Image',
-			description: 'Upload pictures to a specified place in the article. You will be able to change the size of the element later.'
+			description: 'Upload pictures to a specified place in the article. You will be able to change the size ' +
+			'of the element later.'
 		},
 		{
 			selector: '.oo-ui-icon-gallery',

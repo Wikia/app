@@ -55,11 +55,11 @@ define('VisualEditorTourExperimentInit',
 		function isExperimentVariation() {
 			return abTest.inGroup('CONTRIB_EXPERIMENTS', 'VE_TOUR');
 		}
-		
+
 		function isNewlyregistered() {
 			return $.cookie('newlyregistered');
 		}
-		
+
 		function isUserwithoutedit() {
 			return $.cookie('userwithoutedit');
 		}
