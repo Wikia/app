@@ -10,16 +10,19 @@ require(['jquery', 'wikia.loader', 'wikia.mustache', 'mw'], function($, loader, 
 		templates = [],
 		currentStep = 1,
 		templateData = {
-			step: currentStep,
 			userName: mw.user.name()
-		};
+		},
+		answers = [];
 
 	$.when(
 		loader({
 			type: loader.MULTI,
 			resources: {
-				mustache: '/extensions/wikia/SpitfiresContributionExperiments/templates/MyProfileTourExperimentStep1.mustache,' +
-				'/extensions/wikia/SpitfiresContributionExperiments/templates/MyProfileTourExperimentStep2.mustache',
+				mustache: '/extensions/wikia/SpitfiresContributionExperiments/templates/MyProfileTourExperimentModal.mustache,' +
+				'/extensions/wikia/SpitfiresContributionExperiments/templates/MyProfileTourExperimentStep1.mustache,' +
+				'/extensions/wikia/SpitfiresContributionExperiments/templates/MyProfileTourExperimentStep2.mustache,' +
+				'/extensions/wikia/SpitfiresContributionExperiments/templates/MyProfileTourExperimentStep3.mustache,' +
+				'/extensions/wikia/SpitfiresContributionExperiments/templates/MyProfileTourExperimentStep4.mustache',
 				styles: '/extensions/wikia/SpitfiresContributionExperiments/styles/my-profile-tour.scss'
 			}
 		})
@@ -27,7 +30,7 @@ require(['jquery', 'wikia.loader', 'wikia.mustache', 'mw'], function($, loader, 
 
 	function renderModal(resources) {
 		loader.processStyle(resources.styles);
-		modalConfig.vars.content = mustache.render(resources.mustache[0], templateData);
+		modalConfig.vars.content = mustache.render(resources.mustache[0], {});
 
 		templates = resources.mustache;
 
@@ -45,11 +48,25 @@ require(['jquery', 'wikia.loader', 'wikia.mustache', 'mw'], function($, loader, 
 	function processInstance(modalInstance) {
 		modalInstance.show();
 
+		modalInstance.$element.find('.my-profile-content').html(mustache.render(templates[currentStep], {}));
+
 		$('#MyProfileModal').on('click', '.next-step', function() {
 			currentStep++;
-			templateData.step = currentStep;
-			modalInstance.$element.html(mustache.render(templates[currentStep - 1], templateData));
+			saveAnswer();
+			modalInstance.$element.find('.my-profile-content').html(mustache.render(templates[currentStep], {}));
 		});
+
+		modalInstance.bind('close', function(){
+
+		});
+	}
+
+	function saveAnswer() {
+		var answer = $('#MyProfileModal').find('.my-profile-answer').val().trim();
+
+		if (answer.length) {
+			answers.push(answer);
+		}
 	}
 
 });
