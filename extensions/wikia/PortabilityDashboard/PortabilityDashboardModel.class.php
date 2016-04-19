@@ -118,7 +118,7 @@ class PortabilityDashboardModel {
 	 */
 	private function extendListItem( $item, $itemWikiParams ) {
 		return array_merge($item, [
-			'wikiUrl' => $itemWikiParams->city_url,
+			'wikiUrl' => rtrim( $itemWikiParams->city_url, '/' ),
 			'wikiTitle' => $itemWikiParams->city_title,
 			'wikiLang' => $itemWikiParams->city_lang,
 		]);
