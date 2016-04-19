@@ -1,7 +1,6 @@
 <?php
 
 class ChatHooks {
-	const CHAT_FAILOVER_EVENT_TYPE = 'chatfo';
 
 	/**
 	 * Hooks into GetRailModuleList and adds the chat module to the side-bar when appropriate.
@@ -20,31 +19,24 @@ class ChatHooks {
 		return true;
 	}
 
-	public static function onStaffLogFormatRow( $slogType, $result, $time, $linker, &$out ) {
-		if ( $slogType == self::CHAT_FAILOVER_EVENT_TYPE ) {
-			$out = wfMessage( 'chat-failover-log-entry', $time, $result->slog_user_name, $result->slog_user_namedst, $result->slog_comment )->parse();
-
-			return true;
-		}
-
-		return true;
-	}
-
 	/**
 	 * Prepare a pre-rendered chat entry point for logged-in users
 	 */
 	public static function onMakeGlobalVariablesScript( &$vars ) {
-		global $wgUser, $wgLang;
+		global $wgUser;
+
+		$chatUsers = '';
+
 		if ( $wgUser->isLoggedIn() ) {
-			$vars['wgWikiaChatUsers'] = ChatWidget::getUsersInfo();
-			if ( empty( $vars['wgWikiaChatUsers'] ) ) {
+			$chatUsers = ChatWidget::getUsersInfo();
+
+			if ( empty( $chatUsers ) ) {
 				// we will need it to attract user to join chat
 				$vars['wgWikiaChatProfileAvatarUrl'] = AvatarService::getAvatarUrl( $wgUser->getName(), ChatRailController::AVATAR_SIZE );
 			}
-			$vars['wgWikiaChatMonths'] = $wgLang->getMonthAbbreviationsArray();
-		} else {
-			$vars['wgWikiaChatUsers'] = '';
 		}
+
+		$vars['wgWikiaChatUsers'] = $chatUsers;
 		$vars['wgWikiaChatWindowFeatures'] = ChatRailController::CHAT_WINDOW_FEATURES;
 
 		return true;
@@ -120,9 +112,11 @@ class ChatHooks {
 						'showIfEmpty' => false,
 						'msgKey' => [
 							'chat-contributions-ban-notice',
-							$nt->getText() # Support GENDER in 'sp-contributions-blocked-notice'
+							# Support GENDER in 'sp-contributions-blocked-notice'
+							$nt->getText()
 						],
-						'offset' => '' # don't use $wgRequest parameter offset
+						# don't use $wgRequest parameter offset
+						'offset' => ''
 					]
 				);
 			} else {

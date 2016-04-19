@@ -5,11 +5,11 @@ class ChatBanTimeOptions {
 	private static $FACTORS = [
 		'seconds' => 1,
 		'minutes' => 60,
-		'hours' => 60 * 60,
-		'days' => 60 * 60 * 24,
-		'weeks' => 60 * 60 * 24 * 7,
-		'months' => 60 * 60 * 24 * 30,
-		'years' => 60 * 60 * 24 * 365
+		'hours' => 3600,
+		'days' => 86400,
+		'weeks' => 604800,
+		'months' => 2592000,
+		'years' => 31536000
 	];
 
 	private $textSource;

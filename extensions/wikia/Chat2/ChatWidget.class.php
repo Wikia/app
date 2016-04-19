@@ -18,7 +18,7 @@ class ChatWidget {
 	/**
 	 * TTL for chat user info, this should not change too often so it's one hour
 	 */
-	const CHAT_USER_INFO_CACHE_TTL = 60 * 60;
+	const CHAT_USER_INFO_CACHE_TTL = 3600;
 
 	/**
 	 * @brief This function set parseTag hook

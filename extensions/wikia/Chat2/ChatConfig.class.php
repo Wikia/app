@@ -24,7 +24,7 @@ class ChatConfig {
 
 		$index = rand( 0, count( $serverNodes ) - 1 );
 
-		return $serverNodes[$index];
+		return $serverNodes[ $index ];
 	}
 
 	public static function getSecretToken() {

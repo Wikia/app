@@ -117,7 +117,9 @@ class ChatUser extends WikiaModel {
 		if ( !$existedInCache ) {
 			$banInfo = $this->getBanInfoFromDb();
 		}
+
 		$this->handleExpiration( $banInfo );
+
 		if ( !$existedInCache ) {
 			$this->storeBanInfoInCache( $banInfo );
 		}
@@ -127,13 +129,9 @@ class ChatUser extends WikiaModel {
 
 	private function getBanInfoFromCache( &$existed ) {
 		$banInfo = $this->wg->Memc->get( $this->getBanInfoCacheKey() );
-
 		$existed = !empty( $banInfo );
-		if ( $banInfo === self::NO_BAN_MARKER ) {
-			$banInfo = false;
-		}
 
-		return $banInfo;
+		return $banInfo === self::NO_BAN_MARKER ? false : $banInfo ;
 	}
 
 	private function storeBanInfoInCache( $banInfo ) {

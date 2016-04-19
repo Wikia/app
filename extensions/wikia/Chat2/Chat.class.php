@@ -15,8 +15,8 @@ class Chat {
 	const HTTP_HEADER_USER_AGENT = 'USER-AGENT';
 
 	const CHATTERS_CACHE_KEY = 'Chat::chatters';
-	const CHATTERS_CACHE_TTL = 60 * 60 * 24; // 1 day
-	const CHAT_SESSION_TTL = 60 * 60 * 48; // 2 days
+	const CHATTERS_CACHE_TTL = 86400; //60 * 60 * 24 -  1 day
+	const CHAT_SESSION_TTL = 172800; //60 * 60 * 48 - 2 days
 
 	const BAN_ADD = 'add';
 	const BAN_CHANGE = 'change';

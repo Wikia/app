@@ -305,7 +305,7 @@ class ChatAjax {
 		] );
 
 		$res = [
-			'template' => $tmpl->render( "banModal" ),
+			'template' => $tmpl->render( 'banModal' ),
 			'isChangeBan' => $isChangeBan,
 		];
 
