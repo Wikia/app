@@ -20,7 +20,7 @@ require(['jquery', 'wikia.loader', 'wikia.nirvana', 'wikia.mustache', 'mw'], fun
 		},
 		modal = null,
 		templates = [],
-		answers = [],
+		answers = {},
 		saved = false,
 		currentStep = 1,
 		userName = mw.user.name(),
@@ -79,6 +79,7 @@ require(['jquery', 'wikia.loader', 'wikia.nirvana', 'wikia.mustache', 'mw'], fun
 			addAnswer();
 
 			currentStep++;
+			templateData.answer = answers[currentStep];
 			if (currentStep === 4) {
 				sendProfileData().done(function () {
 					modalContent.html(mustache.render(templates[currentStep], lastStepTemplateData));
@@ -87,19 +88,18 @@ require(['jquery', 'wikia.loader', 'wikia.nirvana', 'wikia.mustache', 'mw'], fun
 				modalContent.html(mustache.render(templates[currentStep], templateData));
 			}
 		});
+		$('#MyProfileModal').on('click', '.my-profile-header-go-back', function () {
+			addAnswer();
+			currentStep--;
+			templateData.answer = answers[currentStep];
+			modalContent.html(mustache.render(templates[currentStep], templateData));
+		});
 	}
 
 	function addAnswer() {
 		var answer = $('#MyProfileModal').find('.my-profile-textarea').val().trim();
 
-		if (answer.length) {
-			switch (currentStep) {
-				case 1: answer = "My favorite moment in the game:\n" + answer; break;
-				case 2: answer = "My gaming platforms:\n" + answer; break;
-				case 3: answer = "About me:\n" + answer; break;
-			}
-			answers.push(answer);
-		}
+		answers[currentStep] = answer;
 	}
 
 	function saveProfile() {
@@ -109,9 +109,18 @@ require(['jquery', 'wikia.loader', 'wikia.nirvana', 'wikia.mustache', 'mw'], fun
 	}
 
 	function sendProfileData() {
-		var dfd = $.Deferred();
+		var dfd = $.Deferred(),
+			formattedAnswers;
 
 		modal.$element.find('.my-profile-content').startThrobbing();
+
+		formattedAnswers = Object.keys(answers).map(function (value, index) {
+			switch (index + 1) {
+				case 1: return answer = "My favorite moment in the game:\n" + answers[index + 1]; break;
+				case 2: return answer = "My gaming platforms:\n" + answers[index + 1]; break;
+				case 3: return answer = "About me:\n" + answers[index + 1]; break;
+			}
+		});
 
 		$.ajax({
 			type: 'post',
@@ -119,7 +128,7 @@ require(['jquery', 'wikia.loader', 'wikia.nirvana', 'wikia.mustache', 'mw'], fun
 			data: {
 				action: 'edit',
 				title: userPage,
-				text: answers.join('\n\n'),
+				text: formattedAnswers.join('\n\n'),
 				token: mw.user.tokens.get('editToken')
 			}
 		}).done(function(){

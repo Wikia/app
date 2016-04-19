@@ -24,7 +24,19 @@
 	.my-profile-header {
 		background: url('/extensions/wikia/SpitfiresContributionExperiments/images/mask-faniverse-desktop.png') center center no-repeat;
 		height: 60px;
+		position: relative;
 		width: 530px;
+	}
+
+	.my-profile-header-go-back {
+		color: #fff;
+		cursor: pointer;
+		display: block;
+		font-weight: lighter;
+		left: 0;
+		padding: 10px 20px;
+		position: absolute;
+		top: 25px;
 	}
 
 	.my-profile-content {
