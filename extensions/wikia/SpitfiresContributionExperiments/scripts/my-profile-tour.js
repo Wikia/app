@@ -1,4 +1,4 @@
-require(['jquery', 'wikia.loader', 'wikia.mustache', 'mw'], function($, loader, mustache, mw){
+require(['jquery', 'wikia.loader', 'wikia.nirvana', 'wikia.mustache', 'mw'], function($, loader, nirvana, mustache, mw){
 	var modalConfig = {
 			vars: {
 				id: 'MyProfileModal',
@@ -7,7 +7,7 @@ require(['jquery', 'wikia.loader', 'wikia.mustache', 'mw'], function($, loader, 
 				content: '' // content
 			},
 			confirmCloseModal: function() {
-				if (!saved && /*answers.length*/ true) {
+				if (!saved && answers.length) {
 					saveProfile();
 				} else {
 					if (saved) {
@@ -20,16 +20,23 @@ require(['jquery', 'wikia.loader', 'wikia.mustache', 'mw'], function($, loader, 
 		},
 		modal = null,
 		templates = [],
+		answers = [],
+		saved = false,
 		currentStep = 1,
 		userName = mw.user.name(),
 		userPage = 'User:' + userName.replace(/ /g, '_'),
 		templateData = {
 			userName: userName
 		},
-		answers = [],
-		saved = false;
+		lastStepTemplateData = [];
+
 
 	$.when(
+		nirvana.sendRequest({
+			controller: 'ContributionExperiments',
+			method: 'getNextPages',
+			type: 'get'
+		}),
 		loader({
 			type: loader.MULTI,
 			resources: {
@@ -43,11 +50,12 @@ require(['jquery', 'wikia.loader', 'wikia.mustache', 'mw'], function($, loader, 
 		})
 	).done(renderModal);
 
-	function renderModal(resources) {
+	function renderModal(data, resources) {
+		templates = resources.mustache;
+		lastStepTemplateData = data[0];
+
 		loader.processStyle(resources.styles);
 		modalConfig.vars.content = mustache.render(resources.mustache[0], {});
-
-		templates = resources.mustache;
 
 		require(['wikia.ui.factory'], function (uiFactory) {
 			uiFactory.init(['modal']).then(createModalComponent);
@@ -73,7 +81,7 @@ require(['jquery', 'wikia.loader', 'wikia.mustache', 'mw'], function($, loader, 
 			currentStep++;
 			if (currentStep === 4) {
 				sendProfileData().done(function () {
-					modalContent.html(mustache.render(templates[currentStep], templateData));
+					modalContent.html(mustache.render(templates[currentStep], lastStepTemplateData));
 				});
 			} else {
 				modalContent.html(mustache.render(templates[currentStep], templateData));

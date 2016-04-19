@@ -1,4 +1,13 @@
+@import 'skins/shared/color';
+@import 'extensions/wikia/InsightsV2/styles/insights-icons-mixin';
+
 #MyProfileModal {
+	@if $is-dark-wiki {
+		@include insights-icons-dark();
+	} @else {
+		@include insights-icons-light();
+	}
+
 	header, footer {
 		display: none;
 	}
@@ -74,5 +83,19 @@
 
 	.step-4 {
 		background: url('/extensions/wikia/SpitfiresContributionExperiments/images/number4.png') center center no-repeat;
+	}
+
+	.my-profile-next-pages {
+		margin-left: 80px;
+		text-align: left;
+
+		li {
+			background-repeat: no-repeat;
+			background-position: left;
+			font-size: 16px;
+			height: 50px;
+			margin: 18px 0;
+			padding-left: 75px;
+		}
 	}
 }
