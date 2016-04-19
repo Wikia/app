@@ -99,6 +99,11 @@ class NavigationTemplateTest extends WikiaBaseTest {
 				"Single nav template with block should be removed"
 			],
 			[
+				"&lt;\x7fNAVUNIQ_342\x7f&gt;akjsdlkjflk <div>asdf</div>kasjdlfkjdks ksdjlafkj&lt;/\x7fNAVUNIQ_342\x7f&gt; test",
+				" test",
+				"Single nav template with block should be removed, even when encoded"
+			],
+			[
 				"<\x7fNAVUNIQ_342\x7f>asdf</\x7fNAVUNIQ_342\x7f> test",
 				"asdf test",
 				"Single inline element should be left"

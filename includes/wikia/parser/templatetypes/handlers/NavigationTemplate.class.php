@@ -29,20 +29,20 @@ class NavigationTemplate {
 	}
 
 	private static function process( $html ) {
-		$markerRegex = "/<(\x7f" . self::MARK . ".+\x7f)>/sU";
+		$markerRegex = "/(<|&lt;)(\x7f" . self::MARK . ".+\x7f)(>|&gt;)/sU";
 
 		//getting unique markers of each navigation template
 		preg_match_all( $markerRegex, $html, $markers );
 
-		foreach ( array_unique( $markers[ 1 ] ) as $marker ) {
+		foreach ( array_unique( $markers[ 2 ] ) as $marker ) {
 			// matches block elements in between start and end marker tags
 			// <marker>(not </marker>)...(block element)...</marker>
-			$html = preg_replace( '/<' . $marker . '>' .
-								  '((?!<\\/' . $marker . '>).)*' .
-								  '<(' . implode( '|', self::$blockLevelElements ) . ')[>\s]+.*' .
-								  '<\\/' . $marker . '>/isU', '', $html );
+			$html = preg_replace( '/(<|&lt;)' . $marker . '(>|&gt;)' .
+								  '((?!(<|&lt;)\\/' . $marker . '(>|&gt;)).)*' .
+								  '(<|&lt;)(' . implode( '|', self::$blockLevelElements ) . ')[(>|&gt;)\s]+.*' .
+								  '(<|&lt;)\\/' . $marker . '(>|&gt;)/isU', '', $html );
 			// remove just the marker tags
-			$html = preg_replace( '/<\\/?' . $marker . '>/sU', '', $html );
+			$html = preg_replace( '/(<|&lt;)\\/?' . $marker . '(>|&gt;)/sU', '', $html );
 		}
 
 		return $html;
