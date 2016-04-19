@@ -32,10 +32,11 @@ class CommunityPageSpecialHooks {
 	 * @return bool
 	 */
 	public static function onArticleSaveComplete(
-		&$article, &$user, $text, $summary, $minoredit, $watchthis,
-		$sectionanchor, &$flags, $revision, &$status, $baseRevId ) {
+		$article, $user, $text, $summary, $minoredit, $watchthis,
+		$sectionanchor, &$flags, $revision, &$status, $baseRevId
+	) {
 		// Early exit for edits that do not affect any cached item
-		if ($user->isAnon()) {
+		if ( $user->isAnon() ) {
 			return true;
 		}
 

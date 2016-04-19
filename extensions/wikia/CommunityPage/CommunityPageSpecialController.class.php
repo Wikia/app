@@ -82,7 +82,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		$userRank = '-';
 		$editors = count( $contributors );
 
-		if ($editors == 0) {
+		if ( $editors === 0 ) {
 			$editors = '-';
 		}
 

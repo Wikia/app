@@ -107,7 +107,7 @@ class CommunityPageSpecialUsersModel {
 			return !$userIdIsBot && !$userIsWikia;
 		} );
 	}
-	
+
 	/**
 	 * Get all contributions for a user, limited by most recent n days if $days is not null
 	 *
