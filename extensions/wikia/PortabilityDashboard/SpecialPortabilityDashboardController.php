@@ -162,8 +162,7 @@ class SpecialPortabilityDashboardController extends WikiaSpecialPageController {
 	private function renderTooltip( $text, $tooltip ) {
 		return $this->app->renderView( 'WikiaStyleGuideTooltipIconController', 'index', [
 			'text' => $text,
-			'tooltipIconTitle' => $tooltip,
-			'classes' => 'portability-dashboard-header'
+			'tooltipIconTitle' => $tooltip
 		] );
 	}
 }
