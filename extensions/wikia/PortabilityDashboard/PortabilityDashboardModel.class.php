@@ -150,6 +150,6 @@ class PortabilityDashboardModel {
 	 * @return int
 	 */
 	private function floatToPercent( $float ) {
-		return round( $float * 100 );
+		return round( $float * 100, 2 );
 	}
 }
