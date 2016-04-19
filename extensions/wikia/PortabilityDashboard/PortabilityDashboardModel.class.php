@@ -33,6 +33,7 @@ class PortabilityDashboardModel {
 		return ( new WikiaSQL() )
 			->SELECT_ALL()
 			->FROM( self::PORTABILITY_DASHBOARD_TABLE )
+			->WHERE( 'excluded' )->EQUAL_TO( 0 )
 			->ORDER_BY( 'migration_impact' )
 			->DESC()
 			->LIMIT( self::WIKIS_LIMIT )
@@ -89,7 +90,9 @@ class PortabilityDashboardModel {
 	private function getWikiParamsList( $rowList ) {
 		return WikiFactory::getWikisByID(
 			array_map(
-				function( $item ) { return $item[ 'wikiId' ]; },
+				function ( $item ) {
+					return $item[ 'wikiId' ];
+				},
 				$rowList
 			)
 		);
@@ -103,7 +106,7 @@ class PortabilityDashboardModel {
 	 */
 	private function extendRowListWithWikiParams( $rowList, $wikiParamsList ) {
 		return array_map(
-			function( $item ) use( $wikiParamsList ) {
+			function ( $item ) use ( $wikiParamsList ) {
 				return $this->extendListItem( $item, $wikiParamsList[ $item[ 'wikiId' ] ] );
 			},
 			$rowList
@@ -121,7 +124,7 @@ class PortabilityDashboardModel {
 			'wikiUrl' => rtrim( $itemWikiParams->city_url, '/' ),
 			'wikiTitle' => $itemWikiParams->city_title,
 			'wikiLang' => $itemWikiParams->city_lang,
-		]);
+		] );
 	}
 
 	/**
