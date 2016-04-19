@@ -48,12 +48,12 @@ require(['jquery', 'wikia.loader', 'wikia.mustache', 'mw'], function($, loader, 
 	function processInstance(modalInstance) {
 		modalInstance.show();
 
-		modalInstance.$element.find('.my-profile-content').html(mustache.render(templates[currentStep], {}));
+		modalInstance.$element.find('.my-profile-content').html(mustache.render(templates[currentStep], templateData));
 
 		$('#MyProfileModal').on('click', '.next-step', function() {
 			currentStep++;
 			saveAnswer();
-			modalInstance.$element.find('.my-profile-content').html(mustache.render(templates[currentStep], {}));
+			modalInstance.$element.find('.my-profile-content').html(mustache.render(templates[currentStep], templateData));
 		});
 
 		modalInstance.bind('close', function(){
