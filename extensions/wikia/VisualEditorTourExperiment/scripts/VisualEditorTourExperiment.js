@@ -118,7 +118,8 @@ define('VisualEditorTourExperiment', ['jquery', 'wikia.loader', 'wikia.mustache'
 
 			this.contentTemplate = assets.mustache[0];
 			this.tourConfig.forEach(this._setupStep.bind(this));
-			this.next();
+			// Set delay to let VE show animation finish and position first step properly
+			setTimeout(this.next.bind(this), 200);
 		}
 
 		Tour.prototype._setupStep = function (item, id) {
