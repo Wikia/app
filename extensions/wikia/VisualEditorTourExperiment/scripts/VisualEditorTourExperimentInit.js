@@ -16,24 +16,20 @@ define('VisualEditorTourExperimentInit',
 		}
 
 		function isEnabled() {
-			return isExperimentVariation() &&
-				(isNewlyregistered() || isUserwithoutedit) &&
-				!$.cookie('vetourdisabled');
+			return (isNewlyregistered() || isUserwithoutedit()) && !$.cookie('vetourdisabled');
 		}
 
 		function trackPublish() {
-			if (isExperimentVariation()) {
-				if (isNewlyregistered()) {
-					track({
-						action: tracker.ACTIONS.SUCCESS,
-						label: 'publish-userwithoutedit'
-					});
-				} else if (isUserwithoutedit()) {
-					track({
-						action: tracker.ACTIONS.SUCCESS,
-						label: 'publish-newlyregistered'
-					});
-				}
+			if (isNewlyregistered()) {
+				track({
+					action: tracker.ACTIONS.SUCCESS,
+					label: 'publish-newlyregistered'
+				});
+			} else if (isUserwithoutedit()) {
+				track({
+					action: tracker.ACTIONS.SUCCESS,
+					label: 'publish-userwithoutedit'
+				});
 			}
 		}
 
@@ -41,16 +37,12 @@ define('VisualEditorTourExperimentInit',
 			$('#ca-ve-edit').popover('destroy');
 		}
 
-		function isExperimentVariation() {
-			return abTest.inGroup('CONTRIB_EXPERIMENTS', 'VE_TOUR');
-		}
-		
 		function isNewlyregistered() {
-			return $.cookie('newlyregistered');
+			return abTest.inGroup('CONTRIB_EXPERIMENTS', 'VE_TOUR_NEWLYREGISTERED') && $.cookie('newlyregistered');
 		}
 		
 		function isUserwithoutedit() {
-			return $.cookie('userwithoutedit');
+			return abTest.inGroup('CONTRIB_EXPERIMENTS', 'VE_TOUR_USERWITHOUTEDIT') && $.cookie('userwithoutedit');
 		}
 
 		return {
