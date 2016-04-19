@@ -33,13 +33,13 @@ $close-image: '/resources/wikia/ui_components/modal/images/close-dark.svg';
 
 	.close {
 		@include image-replacement();
-		background: url( $close-image ) center;
 		background-size: 16px 16px;
+		background: url( $close-image ) center;
+		cursor: pointer;
 		display: block;
 		float: right;
 		height: 16px;
 		outline: none;
-		cursor: pointer;
 		width: 16px;
 	}
 }
