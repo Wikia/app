@@ -5,11 +5,11 @@ class NavigationTemplateTest extends WikiaBaseTest {
 	/**
 	 * @dataProvider markedTemplateContentProvider
 	 */
-//	public function testMarkNavigationElements( $content, $expected, $message ) {
-//		$marked = NavigationTemplate::handle( $content );
-//
-//		$this->assertEquals( preg_match($markerRegex = "/\x7f".NavigationTemplate::MARK.".+?\x7f/s", $marked), $expected, $message );
-//	}
+	public function testMarkNavigationElements( $content, $expected, $message ) {
+		$marked = NavigationTemplate::handle( $content );
+
+		$this->assertEquals( preg_match($markerRegex = "/\x7f".NavigationTemplate::MARK.".+?\x7f/s", $marked), $expected, $message );
+	}
 
 	public function markedTemplateContentProvider() {
 		return [
@@ -24,12 +24,12 @@ class NavigationTemplateTest extends WikiaBaseTest {
 	 * @param $templateText
 	 * @dataProvider getNavigationTemplates
 	 */
-//	public function testHideNavigationWithBlockElements( $templateText, $expectedOutput, $message ) {
-//		$output = NavigationTemplate::handle( $templateText );
-//		NavigationTemplate::resolve( $output );
-//
-//		$this->assertSame( $expectedOutput, $output, $message );
-//	}
+	public function testHideNavigationWithBlockElements( $templateText, $expectedOutput, $message ) {
+		$output = NavigationTemplate::handle( $templateText );
+		NavigationTemplate::resolve( $output );
+
+		$this->assertSame( $expectedOutput, $output, $message );
+	}
 
 	public function getNavigationTemplates() {
 		return [
