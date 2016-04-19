@@ -60,7 +60,7 @@ class SpecialPortabilityDashboardController extends WikiaSpecialPageController {
 	 * @return array - array of languages
 	 */
 	private function getUniqueSortedLanguagesList( $list ) {
-		$languages = [];
+		$languages = [ ];
 
 		foreach ( $list as $item ) {
 			$lang = $item[ 'wikiLang' ];
@@ -97,9 +97,9 @@ class SpecialPortabilityDashboardController extends WikiaSpecialPageController {
 	 * @return array - filtered model
 	 */
 	private function filterListByLang( $list, $langFilter ) {
-		return array_filter( $list, function( $item ) use ( $langFilter ) {
+		return array_filter( $list, function ( $item ) use ( $langFilter ) {
 			return $item[ 'wikiLang' ] === $langFilter;
-		});
+		} );
 	}
 
 	/**
@@ -109,37 +109,61 @@ class SpecialPortabilityDashboardController extends WikiaSpecialPageController {
 	private function getDashboardLabels() {
 		return [
 			[
-				'name' => wfMessage( 'portability-dashboard-community-header' )->text(),
-				'description' => wfMessage( 'portability-dashboard-community-desc' )->text()
+				'header' => $this->renderTooltip(
+					wfMessage( 'portability-dashboard-community-header' )->text(),
+					wfMessage( 'portability-dashboard-community-desc' )->text()
+				)
 			],
 			[
-				'name' => wfMessage( 'portability-dashboard-lang-header' )->text(),
-				'description' => wfMessage( 'portability-dashboard-lang-desc' )->text()
+				'header' => $this->renderTooltip(
+					wfMessage( 'portability-dashboard-lang-header' )->text(),
+					wfMessage( 'portability-dashboard-lang-desc' )->text()
+				)
 			],
 			[
-				'name' => wfMessage( 'portability-dashboard-portability-header' )->text(),
-				'description' => wfMessage( 'portability-dashboard-portability-desc' )->text()
+				'header' => $this->renderTooltip(
+					wfMessage( 'portability-dashboard-portability-header' )->text(),
+					wfMessage( 'portability-dashboard-portability-desc' )->text()
+				)
 			],
 			[
-				'name' => wfMessage( 'portability-dashboard-infobox-portability-header' )->text(),
-				'description' => wfMessage( 'portability-dashboard-infobox-portability-desc' )->text()
+				'header' => $this->renderTooltip(
+					wfMessage( 'portability-dashboard-infobox-portability-header' )->text(),
+					wfMessage( 'portability-dashboard-infobox-portability-desc' )->text()
+				)
 			],
 			[
-				'name' => wfMessage( 'portability-dashboard-traffic-header' )->text(),
-				'description' => wfMessage( 'portability-dashboard-traffic-desc' )->text()
+				'header' => $this->renderTooltip(
+					wfMessage( 'portability-dashboard-traffic-header' )->text(),
+					wfMessage( 'portability-dashboard-traffic-desc' )->text()
+				)
 			],
 			[
-				'name' => wfMessage( 'portability-dashboard-templates-header' )->text(),
-				'description' => wfMessage( 'portability-dashboard-templates-desc' )->text()
+				'header' => $this->renderTooltip(
+					wfMessage( 'portability-dashboard-templates-header' )->text(),
+					wfMessage( 'portability-dashboard-templates-desc' )->text()
+				)
 			],
 			[
-				'name' => wfMessage( 'portability-dashboard-infoboxes-header' )->text(),
-				'description' => wfMessage( 'portability-dashboard-infoboxes-desc' )->text()
+				'header' => $this->renderTooltip(
+					wfMessage( 'portability-dashboard-infoboxes-header' )->text(),
+					wfMessage( 'portability-dashboard-infoboxes-desc' )->text()
+				)
 			],
 			[
-				'name' => wfMessage( 'portability-dashboard-impact-header' )->text(),
-				'description' => wfMessage( 'portability-dashboard-impact-desc' )->text()
+				'header' => $this->renderTooltip(
+					wfMessage( 'portability-dashboard-impact-header' )->text(),
+					wfMessage( 'portability-dashboard-impact-desc' )->text()
+				)
 			],
 		];
+	}
+
+	private function renderTooltip( $text, $tooltip ) {
+		return $this->app->renderView( 'WikiaStyleGuideTooltipIconController', 'index', [
+			'text' => $text,
+			'tooltipIconTitle' => $tooltip,
+			'classes' => 'portability-dashboard-header'
+		] );
 	}
 }
