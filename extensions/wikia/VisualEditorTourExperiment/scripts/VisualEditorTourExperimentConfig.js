@@ -58,6 +58,6 @@ define('VisualEditorTourExperimentConfig', [], function () {
 			description: 'After you’ve made your edit, save the changed article by clicking on ‘Save page’. Now you ' +
 			'can add a description of your changes for other users to read, but you don’t have to do that. Click ' +
 			'‘save’ and go ahead, make another page on this Wiki better!'
-		},
+		}
 	];
 });

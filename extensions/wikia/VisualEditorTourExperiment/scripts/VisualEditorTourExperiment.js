@@ -1,5 +1,5 @@
-define('VisualEditorTourExperiment', ['jquery', 'wikia.loader', 'wikia.mustache', 'wikia.tracker'],
-	function ($, loader, mustache, tracker) {
+define('VisualEditorTourExperiment', ['jquery', 'wikia.loader', 'wikia.mustache', 'mw', 'wikia.tracker'],
+	function ($, loader, mustache, mw, tracker) {
 		'use strict';
 
 		var track = tracker.buildTrackingFunction({
@@ -18,10 +18,11 @@ define('VisualEditorTourExperiment', ['jquery', 'wikia.loader', 'wikia.mustache'
 			loader({
 				type: loader.MULTI,
 				resources: {
-					mustache: 'extensions/wikia/VisualEditorTourExperiment/templates/VisualEditorTourExperiment_content.mustache',
+					mustache: 'extensions/wikia/VisualEditorTourExperiment/templates/' +
+					'VisualEditorTourExperiment_content.mustache'
 				}
 			}).done(this._setupTour.bind(this));
-		}
+		};
 
 		Tour.prototype.destroyStep = function(step) {
 			var tourStepData = this.steps[step],
@@ -30,7 +31,7 @@ define('VisualEditorTourExperiment', ['jquery', 'wikia.loader', 'wikia.mustache'
 			if ($element) {
 				$element.popover('destroy');
 			}
-		}
+		};
 
 		Tour.prototype.openStep = function(step) {
 			var tourStepData = this.steps[step],
@@ -53,7 +54,7 @@ define('VisualEditorTourExperiment', ['jquery', 'wikia.loader', 'wikia.mustache'
 				action: tracker.ACTIONS.IMPRESSION,
 				label: this.labelPrefix + 'tour-step-' + this.step
 			});
-		}
+		};
 
 		Tour.prototype.nextHandle = function() {
 			this._setDisabled();
@@ -62,7 +63,7 @@ define('VisualEditorTourExperiment', ['jquery', 'wikia.loader', 'wikia.mustache'
 				action: tracker.ACTIONS.CLICK,
 				label: this.labelPrefix + 'next-go-to-' + this.step
 			});
-		}
+		};
 
 		Tour.prototype.next = function() {
 			if (this.step === this.steps.length - 1) {
@@ -75,7 +76,7 @@ define('VisualEditorTourExperiment', ['jquery', 'wikia.loader', 'wikia.mustache'
 			}
 			this.destroyStep(this.step);
 			this.openStep(++this.step);
-		}
+		};
 
 		Tour.prototype.prevHandle = function() {
 			this.destroyStep(this.step);
@@ -84,7 +85,7 @@ define('VisualEditorTourExperiment', ['jquery', 'wikia.loader', 'wikia.mustache'
 				action: tracker.ACTIONS.CLICK,
 				label: this.labelPrefix + 'next-go-to-' + this.step
 			});
-		}
+		};
 
 		Tour.prototype.close = function() {
 			this._setDisabled();
@@ -97,18 +98,18 @@ define('VisualEditorTourExperiment', ['jquery', 'wikia.loader', 'wikia.mustache'
 				action: tracker.ACTIONS.CLICK,
 				label: this.labelPrefix + 'close-' + this.step
 			});
-		}
+		};
 
 		Tour.prototype._setDisabled = function() {
 			if(!$.cookie('vetourdisabled')) {
 				$.cookie('vetourdisabled', 1, {expires: 30});
 			}
-		}
+		};
 
 		Tour.prototype._setupTour = function (assets) {
 			var $body = $('body');
 
-			mw.hook( 've.cancelButton' ).add(function() {
+			mw.hook('ve.cancelButton').add(function() {
 				$body.off('.VETour');
 				this.destroyStep(this.step);
 			}.bind(this));
@@ -121,7 +122,7 @@ define('VisualEditorTourExperiment', ['jquery', 'wikia.loader', 'wikia.mustache'
 			this.tourConfig.forEach(this._setupStep.bind(this));
 			// Set delay to let VE show animation finish and position first step properly
 			setTimeout(this.next.bind(this), 200);
-		}
+		};
 
 		Tour.prototype._setupStep = function (item, id) {
 			var buttonLabel = id === this.tourConfig.length - 1 ? 'Start editing' : 'Next',
@@ -136,7 +137,7 @@ define('VisualEditorTourExperiment', ['jquery', 'wikia.loader', 'wikia.mustache'
 					showPrev: showPrev
 				})
 			};
-		}
+		};
 
 
 		return Tour;

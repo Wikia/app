@@ -78,6 +78,6 @@ define('VisualEditorTourExperimentInit',
 			init: init,
 			isEnabled: isEnabled,
 			trackPublish: trackPublish
-		}
+		};
 	}
 );
