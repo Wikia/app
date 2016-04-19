@@ -10,6 +10,6 @@ class UserLogRecord {
 	public $userAgent;
 	public $app;
 	public $timestamp;
-	public $userId;
+	public $user;
 	public $userName;
 }
