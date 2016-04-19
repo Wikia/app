@@ -1,4 +1,4 @@
-require(['jquery', 'wikia.loader', 'wikia.mustache'], function($, loader, mustache){
+require(['jquery', 'wikia.loader', 'wikia.mustache', 'mw'], function($, loader, mustache, mw){
 	var modalConfig = {
 			vars: {
 				id: 'MyProfileModal',
@@ -10,8 +10,8 @@ require(['jquery', 'wikia.loader', 'wikia.mustache'], function($, loader, mustac
 		templates = [],
 		currentStep = 1,
 		templateData = {
-			prefix: 'my-profile',
-			step: currentStep
+			step: currentStep,
+			userName: mw.user.name()
 		};
 
 	$.when(
