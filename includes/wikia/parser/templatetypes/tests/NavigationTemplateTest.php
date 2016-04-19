@@ -8,14 +8,14 @@ class NavigationTemplateTest extends WikiaBaseTest {
 	public function testMarkNavigationElements( $content, $expected, $message ) {
 		$marked = NavigationTemplate::handle( $content );
 
-		$this->assertEquals( preg_match($markerRegex = "/<\x7f".NavigationTemplate::MARK.".+?\x7f>/s", $marked), $expected, $message );
+		$this->assertEquals( $expected, preg_match( $markerRegex = "/<\x7f" . NavigationTemplate::MARK . ".+?\x7f>/s", $marked ), $message );
 	}
 
 	public function markedTemplateContentProvider() {
 		return [
 			[ '', 0, 'Empty content was marked' ],
 			[ '1', 1, 'Numbers should be marked' ],
-			[ '{{#invoke: Eras|main}}', 1,  'Wikitext should be marked' ],
+			[ '{{#invoke: Eras|main}}', 1, 'Wikitext should be marked' ],
 		];
 	}
 
