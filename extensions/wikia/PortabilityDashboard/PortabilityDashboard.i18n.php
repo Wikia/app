@@ -14,21 +14,21 @@ $messages[ 'en' ] = [
 	'portability-dashboard-lang-header' => 'Language',
 	'portability-dashboard-lang-desc' => 'This Community language',
 	'portability-dashboard-portability-header' => 'Portability',
-	'portability-dashboard-portability-desc' => 'Percentage of this Community traffic coming from portable 
-	pages',
+	'portability-dashboard-portability-desc' => 'Percentage of this Community traffic coming from portable pages',
 	'portability-dashboard-infobox-portability-header' => 'Infobox Portability',
-	'portability-dashboard-infobox-portability-desc' => 'Percentage of this Community traffic coming from pages with 
-	portable infoboxes',
+	'portability-dashboard-infobox-portability-desc' => 'Percentage of this Community traffic coming from pages with portable infoboxes',
 	'portability-dashboard-traffic-header' => 'Traffic',
-	'portability-dashboard-traffic-desc' => 'Total number of this Community page vies',
+	'portability-dashboard-traffic-desc' => 'Total number of this Community pageviews',
 	'portability-dashboard-templates-header' => 'Unorganized Templates',
-	'portability-dashboard-templates-desc' => 'Number of unorganized templates on this Community',
+	'portability-dashboard-templates-desc' => 'Number of unorganized templates on this Community with link to Special:Insights',
 	'portability-dashboard-infoboxes-header' => 'Non-portable Infoboxes',
-	'portability-dashboard-infoboxes-desc' => 'Number of not-portable infoboxes on this Community',
+	'portability-dashboard-infoboxes-desc' => 'Number of non-portable infoboxes on this Community with link to Special:Insights',
 	'portability-dashboard-impact-header' => 'Migration Impact',
-	'portability-dashboard-impact-desc' => 'Number od page views on this Community coming from pages with not-portable infoboxes',
+	'portability-dashboard-impact-desc' => 'Number od page views on this Community coming from pages with non-portable infoboxes',
 	'portability-dashboard-language-filter-label' => 'Filter table by language',
-	'portability-dashboard-language-filter-all' => 'all'
+	'portability-dashboard-language-filter-all' => 'all',
+	'portability-dashboard-special-insights-template-without-title' => 'Unorganized templates on Special:Insights',
+	'portability-dashboard-special-insights-custom-infobox-title' => 'Non-portable infoboxes on Special:Insights'
 ];
 
 $messages[ 'qqq' ] = [
@@ -50,7 +50,7 @@ $messages[ 'qqq' ] = [
 	'portability-dashboard-impact-header' => 'Migration Impact header',
 	'portability-dashboard-impact-desc' => 'Migration Impact term explanation',
 	'portability-dashboard-language-filter-label' => 'Label for language filter options',
-	'portability-dashboard-language-filter-all' => 'Language filter link - show all languages'
-
-
+	'portability-dashboard-language-filter-all' => 'Language filter link - show all languages',
+	'portability-dashboard-special-insights-template-without-title' => 'Link title for unorganized templates on Special:Insights',
+	'portability-dashboard-special-insights-custom-infobox-title' => 'Link title for non-portable infoboxes on Special: Insights'
 ];

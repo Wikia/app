@@ -42,6 +42,12 @@ class SpecialPortabilityDashboardController extends WikiaSpecialPageController {
 		$this->response->setVal( 'dashboardLegend', wfMessage( 'portability-dashboard-hover-info' )->text() );
 		$this->response->setVal( 'allLangFilter', wfMessage( 'portability-dashboard-language-filter-all' )->text() );
 		$this->response->setVal( 'dashboardLabels', $this->getDashboardLabels() );
+		$this->response->setVal(
+			'templatesWithoutTypeUrlTitle', wfMessage( 'portability-dashboard-special-insights-template-without-title'
+		)->text() );
+		$this->response->setVal(
+			'customInfoboxesInsightsUrlTitle', wfMessage( 'portability-dashboard-special-insights-custom-infobox-title'
+		)->text() );
 
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 
