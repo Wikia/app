@@ -51,17 +51,17 @@ class ChatWidget {
 
 		$vars = [
 			'blankImgUrl' => $wgBlankImgUrl,
-			'users' => $usersInfo,
-			'usersCount' => $usersCount,
 			'buttonText' => wfMessage($buttonMessage)->text(),
 			'guidelinesText' => $guidelinesText->exists() ? $guidelinesText->parse() : null,
 			'fromParserTag' => $fromParserTag,
-			'sectionClassName' => $fromParserTag ? self::PARSER_TAG_CLASS : self::RIGHT_RAIL_MODULE_CLASS,
 			'joinChatText' => $joinChatMessage->exists() ? $joinChatMessage->text() : null,
 			'linkToSpecialChat' => SpecialPage::getTitleFor( "Chat" )->escapeLocalUrl(),
-			'siteName' => $wgSitename,
 			'profileType' => empty( $wgEnableWallExt ) ? 'talk-page' : 'message-wall',
+			'sectionClassName' => $fromParserTag ? self::PARSER_TAG_CLASS : self::RIGHT_RAIL_MODULE_CLASS,
+			'siteName' => $wgSitename,
 			'userName' => $wgUser->isAnon() ? null : $wgUser->getName(),
+			'users' => $usersInfo,
+			'usersCount' => $usersCount,
 		];
 
 		if ( $usersCount == 0 ) {

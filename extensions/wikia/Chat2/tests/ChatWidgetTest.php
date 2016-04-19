@@ -110,16 +110,17 @@ class ChatWidgetTest extends WikiaBaseTest {
 				'chatUsersInfo' => [ 'User1', 'User2' ],
 				'expected' => [
 					'blankImgUrl' => 'www.url.com',
-					'chatUsers' => [ 'User1', 'User2' ],
-					'chatUsersCount' => 2,
+					'buttonText' => 'message',
 					'guidelinesText' => 'message',
 					'fromParserTag' => true,
 					'sectionClassName' => 'ChatWidget',
-					'joinTheChatMessage' => 'message',
+					'joinChatText' => 'message',
 					'linkToSpecialChat' => 'Chat',
 					'siteName' => 'Test wikia',
 					'profileType' => 'message-wall',
 					'userName' => 'testUsername',
+					'users' => [ 'User1', 'User2' ],
+					'usersCount' => 2,
 				]
 			],
 			[
@@ -129,16 +130,17 @@ class ChatWidgetTest extends WikiaBaseTest {
 				'chatUsersInfo' => [ 'User1', 'User2' ],
 				'expected' => [
 					'blankImgUrl' => 'www.url.com',
-					'chatUsers' => [ 'User1', 'User2' ],
-					'chatUsersCount' => 2,
+					'buttonText' => 'message',
 					'guidelinesText' => 'message',
 					'fromParserTag' => false,
 					'sectionClassName' => 'module',
-					'joinTheChatMessage' => 'message',
+					'joinChatText' => 'message',
 					'linkToSpecialChat' => 'Chat',
 					'siteName' => 'Test wikia',
 					'profileType' => 'talk-page',
 					'userName' => 'testUsername',
+					'users' => [ 'User1', 'User2' ],
+					'usersCount' => 2,
 				]
 			],
 			[
@@ -148,16 +150,17 @@ class ChatWidgetTest extends WikiaBaseTest {
 				'chatUsersInfo' => [ 'User1', 'User2' ],
 				'expected' => [
 					'blankImgUrl' => 'www.url.com',
-					'chatUsers' => [ 'User1', 'User2' ],
-					'chatUsersCount' => 2,
+					'buttonText' => 'message',
 					'guidelinesText' => 'message',
 					'fromParserTag' => false,
 					'sectionClassName' => 'module',
-					'joinTheChatMessage' => 'message',
+					'joinChatText' => 'message',
 					'linkToSpecialChat' => 'Chat',
 					'siteName' => 'Test wikia',
 					'profileType' => 'talk-page',
 					'userName' => 'testUsername',
+					'users' => [ 'User1', 'User2' ],
+					'usersCount' => 2,
 				]
 			],
 			[
@@ -167,16 +170,17 @@ class ChatWidgetTest extends WikiaBaseTest {
 				'chatUsersInfo' => [ 'User1', 'User2' ],
 				'expected' => [
 					'blankImgUrl' => 'www.url.com',
-					'chatUsers' => [ 'User1', 'User2' ],
-					'chatUsersCount' => 2,
+					'buttonText' => 'message',
 					'guidelinesText' => 'message',
 					'fromParserTag' => true,
 					'sectionClassName' => 'ChatWidget',
-					'joinTheChatMessage' => 'message',
+					'joinChatText' => 'message',
 					'linkToSpecialChat' => 'Chat',
 					'siteName' => 'Test wikia',
 					'profileType' => 'message-wall',
 					'userName' => null,
+					'users' => [ 'User1', 'User2' ],
+					'usersCount' => 2,
 				]
 			],
 			[
@@ -186,17 +190,18 @@ class ChatWidgetTest extends WikiaBaseTest {
 				'chatUsersInfo' => [ ],
 				'expected' => [
 					'blankImgUrl' => 'www.url.com',
-					'chatUsers' => [ ],
-					'chatUsersCount' => 0,
+					'buttonText' => 'message',
 					'guidelinesText' => 'message',
 					'fromParserTag' => true,
 					'sectionClassName' => 'ChatWidget',
-					'joinTheChatMessage' => 'message',
+					'joinChatText' => 'message',
 					'linkToSpecialChat' => 'Chat',
 					'siteName' => 'Test wikia',
 					'profileType' => 'message-wall',
 					'userName' => null,
-					'chatProfileAvatarUrl' => 'www.image.com'
+					'myAvatarUrl' => 'www.image.com',
+					'users' => [ ],
+					'usersCount' => 0,
 				]
 			]
 		];
