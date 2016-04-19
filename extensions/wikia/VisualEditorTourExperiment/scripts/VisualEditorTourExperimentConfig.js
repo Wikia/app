@@ -19,26 +19,26 @@ define('VisualEditorTourExperimentConfig', [], function () {
 		},
 		{
 			selector: '.oo-ui-icon-video',
-			placement: 'bottom',
+			placement: 'right',
 			title: 'Add Video',
 			description: 'Upload videos to a specified place in the article. Search for a video already present on ' +
 			'this Wiki or provide an URL from such sources as YouTube, Vimeo or Dailymotion.'
 		},
 		{
 			selector: '.oo-ui-icon-image',
-			placement: 'bottom',
+			placement: 'right',
 			title: 'Add Image',
 			description: 'Upload pictures to a specified place in the article. You will be able to change the size of the element later.'
 		},
 		{
 			selector: '.oo-ui-icon-gallery',
-			placement: 'bottom',
+			placement: 'right',
 			title: 'Add Gallery',
 			description: 'Choose from the photos uploaded to this Wiki and create a gallery.'
 		},
 		{
 			selector: '.oo-ui-icon-bullet-list',
-			placement: 'bottom',
+			placement: 'right',
 			title: 'Bullet list and Numbered list',
 			description: 'Organize your text into neat lists. You can highlight a few paragraphs and insert a list ' +
 			'of your choice or simply insert a list and start typing. If you want to turn a list into a regular text' +

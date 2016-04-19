@@ -23,7 +23,7 @@ require(['jquery', 'mw', 'VisualEditorTourExperimentInit', 'wikia.tracker'],
 						'<nav class="nav-buttons"><button class="ve-tour-next">Next</button></nav>' +
 						'</div>',
 					html: true,
-					placement: 'bottom',
+					placement: 'right',
 					trigger: 'manual'
 				});
 
