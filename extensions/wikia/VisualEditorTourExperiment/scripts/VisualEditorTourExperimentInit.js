@@ -4,15 +4,26 @@ define('VisualEditorTourExperimentInit',
 		'use strict';
 
 		var track = tracker.buildTrackingFunction({
-			category: 've-editing-tour',
-			trackingMethod: 'analytics'
-		});
+				category: 've-editing-tour',
+				trackingMethod: 'analytics'
+			}),
+			LABEL_PREFIX_WITHOUTEDIT = 'userwithoutedit-',
+			LABEL_PREFIX_NEW = 'newlyregistered-';
 
 		function init() {
 			if (isEnabled()) {
 				clearEntrypointPopover();
-				(new VETour(veTourConfig)).start();
+				(new VETour(veTourConfig, getLabelPrefix())).start();
 			}
+		}
+
+		function getLabelPrefix() {
+			if (isNewlyregistered()) {
+				return LABEL_PREFIX_NEW;
+			} else if (isUserwithoutedit()) {
+				return LABEL_PREFIX_WITHOUTEDIT;
+			}
+			return '';
 		}
 
 		function isEnabled() {
@@ -26,12 +37,12 @@ define('VisualEditorTourExperimentInit',
 				if (isNewlyregistered()) {
 					track({
 						action: tracker.ACTIONS.SUCCESS,
-						label: 'publish-userwithoutedit'
+						label: LABEL_PREFIX_WITHOUTEDIT + 'publish'
 					});
 				} else if (isUserwithoutedit()) {
 					track({
 						action: tracker.ACTIONS.SUCCESS,
-						label: 'publish-newlyregistered'
+						label: LABEL_PREFIX_NEW + 'publish'
 					});
 				}
 			}
@@ -54,6 +65,7 @@ define('VisualEditorTourExperimentInit',
 		}
 
 		return {
+			getLabelPrefix: getLabelPrefix,
 			init: init,
 			isEnabled: isEnabled,
 			trackPublish: trackPublish

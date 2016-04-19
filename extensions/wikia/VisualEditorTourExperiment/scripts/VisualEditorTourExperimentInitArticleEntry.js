@@ -33,7 +33,7 @@ require(['jquery', 'mw', 'VisualEditorTourExperimentInit', 'wikia.tracker'],
 
 				track({
 					action: tracker.ACTIONS.IMPRESSION,
-					label: 'tour-step-article-entry-point'
+					label: veTourInit.getLabelPrefix() + 'tour-step-article-entry-point'
 				});
 			}
 		}
@@ -44,7 +44,7 @@ require(['jquery', 'mw', 'VisualEditorTourExperimentInit', 'wikia.tracker'],
 			$editButton.popover('destroy');
 			track({
 				action: tracker.ACTIONS.CLICK,
-				label: 'edit-entry-point'
+				label: veTourInit.getLabelPrefix() + 'edit-entry-point'
 			});
 		}
 
@@ -53,7 +53,7 @@ require(['jquery', 'mw', 'VisualEditorTourExperimentInit', 'wikia.tracker'],
 			$element.popover('destroy');
 			track({
 				action: tracker.ACTIONS.CLICK,
-				label: 'close-article-entry-point'
+				label: veTourInit.getLabelPrefix() + 'close-article-entry-point'
 			});
 		}
 		$(initEntry);

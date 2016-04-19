@@ -7,7 +7,8 @@ define('VisualEditorTourExperiment', ['jquery', 'wikia.loader', 'wikia.mustache'
 				trackingMethod: 'analytics'
 			});
 
-		function Tour(tourConfig) {
+		function Tour(tourConfig, labelPrefix) {
+			this.labelPrefix = labelPrefix;
 			this.tourConfig = tourConfig;
 			this.steps = [];
 		}
@@ -50,7 +51,7 @@ define('VisualEditorTourExperiment', ['jquery', 'wikia.loader', 'wikia.mustache'
 
 			track({
 				action: tracker.ACTIONS.IMPRESSION,
-				label: 'tour-step-' + this.step
+				label: this.labelPrefix + 'tour-step-' + this.step
 			});
 		}
 
@@ -59,7 +60,7 @@ define('VisualEditorTourExperiment', ['jquery', 'wikia.loader', 'wikia.mustache'
 			this.next();
 			track({
 				action: tracker.ACTIONS.CLICK,
-				label: 'next-go-to-' + this.step
+				label: this.labelPrefix + 'next-go-to-' + this.step
 			});
 		}
 
@@ -68,7 +69,7 @@ define('VisualEditorTourExperiment', ['jquery', 'wikia.loader', 'wikia.mustache'
 				this.destroyStep(this.step);
 				track({
 					action: tracker.ACTIONS.CLICK,
-					label: 'tour-complete'
+					label: this.labelPrefix + 'tour-complete'
 				});
 				return;
 			}
@@ -81,7 +82,7 @@ define('VisualEditorTourExperiment', ['jquery', 'wikia.loader', 'wikia.mustache'
 			this.openStep(--this.step);
 			track({
 				action: tracker.ACTIONS.CLICK,
-				label: 'next-go-to-' + this.step
+				label: this.labelPrefix + 'next-go-to-' + this.step
 			});
 		}
 
@@ -90,11 +91,11 @@ define('VisualEditorTourExperiment', ['jquery', 'wikia.loader', 'wikia.mustache'
 			this.destroyStep(this.step);
 			track({
 				action: tracker.ACTIONS.CLICK,
-				label: 'close'
+				label: this.labelPrefix + 'close'
 			});
 			track({
 				action: tracker.ACTIONS.CLICK,
-				label: 'close-' + this.step
+				label: this.labelPrefix + 'close-' + this.step
 			});
 		}
 
