@@ -18,7 +18,7 @@ class NavigationTemplate {
 	 * @return string
 	 */
 	public static function handle( $text ) {
-		return !empty($text) ? self::mark( $text ) : $text;
+		return !empty( $text ) ? self::mark( $text ) : $text;
 	}
 
 	public static function resolve( &$html ) {
@@ -29,25 +29,20 @@ class NavigationTemplate {
 	}
 
 	private static function process( $html ) {
-		$blockElemRegex = '/<(' . implode( '|', self::$blockLevelElements ) . ')[>\s]+/i';
-		$markerRegex = "/\x7f" . self::MARK . ".+?\x7f/s";
+		$markerRegex = "/<(\x7f" . self::MARK . ".+\x7f)>/sU";
 
-		//getting markers of each navigation template
+		//getting unique markers of each navigation template
 		preg_match_all( $markerRegex, $html, $markers );
-		foreach ( array_unique( $markers[ 0 ] ) as $marker ) {
-			$replacementRegex = '/' . $marker . ".*?" . $marker . '/s';
-			preg_match_all( $replacementRegex, $html, $navTemplates );
 
-			//multiple invocations of the same template can occur, replacing each of them
-			foreach ( $navTemplates[ 0 ] as $navTemplate ) {
-				$replacement = str_replace( $marker, '', $navTemplate );
-
-				if ( preg_match( $blockElemRegex, $navTemplate ) ) {
-					$replacement = '';
-				}
-				$html = str_replace( $navTemplate, $replacement, $html );
-			}
-
+		foreach ( array_unique( $markers[ 1 ] ) as $marker ) {
+			// matches block elements in between start and end marker tags
+			// <marker>(not </marker>)...(block element)...</marker>
+			$html = preg_replace( '/<' . $marker . '>' .
+								  '((?!<\\/' . $marker . '>).)*' .
+								  '<(' . implode( '|', self::$blockLevelElements ) . ')[>\s]+.*' .
+								  '<\\/' . $marker . '>/isU', '', $html );
+			// remove just the marker tags
+			$html = preg_replace( '/<\\/?' . $marker . '>/sU', '', $html );
 		}
 
 		return $html;
@@ -60,6 +55,6 @@ class NavigationTemplate {
 	private static function mark( $text ) {
 		// marking each template with unique marker to be able to handle nested navigation templates
 		$marker = "\x7f" . self::MARK . "_" . uniqid() . "\x7f";
-		return sprintf( "%s%s%s", $marker, $text, $marker );
+		return sprintf( "<%s>%s</%s>", $marker, $text, $marker );
 	}
 }
