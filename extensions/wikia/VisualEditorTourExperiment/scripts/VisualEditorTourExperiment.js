@@ -92,10 +92,6 @@ define('VisualEditorTourExperiment', ['jquery', 'wikia.loader', 'wikia.mustache'
 			this.destroyStep(this.step);
 			track({
 				action: tracker.ACTIONS.CLICK,
-				label: this.labelPrefix + 'close'
-			});
-			track({
-				action: tracker.ACTIONS.CLICK,
 				label: this.labelPrefix + 'close-' + this.step
 			});
 		};
