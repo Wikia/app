@@ -18,7 +18,7 @@ define('VisualEditorTourExperimentInit',
 
 		function trackPublish() {
 			if (isExperimentVariation() && (isNewlyregistered() || isUserwithoutedit())) {
-					tracker.trackVerboseClick('ve-tour', 'publish');
+					tracker.trackVerboseSuccess('ve-tour', 'publish');
 			}
 		}
 
