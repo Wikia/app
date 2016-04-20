@@ -12,14 +12,14 @@ require(['jquery', 'ext.wikia.spitfires.experiments.tracker', 'wikia.loader', 'w
 					content: '' // content
 				},
 				confirmCloseModal: function () {
-					if (!saved && Object.keys(answers).length) {
-						saveProfile();
-					} else {
+					if (saved || !Object.keys(answers).length) {
 						if (saved) {
 							window.location.href = wgServer + '/wiki/' + userPage;
 						}
 						return true;
 					}
+					saveProfile();
+					return false;
 				}
 			},
 			modal = null,
