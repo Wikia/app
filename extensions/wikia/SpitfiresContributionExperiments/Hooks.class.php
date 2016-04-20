@@ -52,9 +52,9 @@ class Hooks {
 
 		if ( !$newlyRegistered ) {
 			$userEditCount = $user->getEditCount();
-			$userWithoutEditCookie = empty( $_COOKIE[ self::WITHOUT_EDIT_USER ] );
+			$userWithoutEditCookie = $_COOKIE[ self::WITHOUT_EDIT_USER ];
 
-			if ( $userEditCount === 0 && $userWithoutEditCookie ) {
+			if ( $userEditCount === 0 && !$userWithoutEditCookie ) {
 				$this->setCookie( self::WITHOUT_EDIT_USER, 1, time() + self::COOKIE_EXPERIMENT_TIME );
 			}
 		}
