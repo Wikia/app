@@ -89,7 +89,6 @@ require([
 			nirvana.sendRequest({
 				controller: 'CommunityPageSpecial',
 				method: tab.request,
-				data: {mcache: 'writeonly'}, // fixme: temporary debug variable
 				format: 'json',
 				type: 'get'
 			}).then(function (response) {

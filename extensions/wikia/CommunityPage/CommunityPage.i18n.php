@@ -51,7 +51,6 @@ $messages['en'] = array(
 	'communitypage-no-admins' => 'There are no Admins on this wiki yet.',
 	'communitypage-no-admins-contact' => 'Contact us to be the first!',
 	'communitypage-communitycentral-link' => 'http://community.wikia.com/wiki/Special:Contact/adoption',
-	'communitypage-no-recent-members' => 'No recently joined members',
 	'communitypage-no-members' => 'This community has no members',
 );
 
@@ -105,7 +104,6 @@ $messages['qqq'] = array(
 	'communitypage-no-admins' => 'Text indicating that the wiki has no admins.',
 	'communitypage-no-admins-contact' => 'Contact us to become the first admin text',
 	'communitypage-communitycentral-link' => 'Link to the community page for this language',
-	'communitypage-no-recent-members' => 'Text for zero state of no recent members section',
 	'communitypage-no-members' => 'Text for zero state of all members list',
 );
 
