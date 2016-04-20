@@ -19,6 +19,7 @@ class ARecoveryEngineHooks {
 
 		window._sp_ = {
 			config: {
+				enable_rid: true,
 				content_control_callback: function() {
 					var msg = '<h2>Ad blocker interference detected!</h2>';
 					msg += '<h3>If you added a new rule to your ad blocker that interferes with the loading of ads on your pages, ';
