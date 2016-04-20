@@ -1,14 +1,10 @@
-define('VisualEditorTourExperiment', ['jquery', 'wikia.loader', 'wikia.mustache', 'mw', 'wikia.tracker'],
+define('VisualEditorTourExperiment', ['jquery', 'wikia.loader', 'wikia.mustache', 'mw', 'ext.wikia.spitfires.experiments.tracker'],
 	function ($, loader, mustache, mw, tracker) {
 		'use strict';
 
-		var track = tracker.buildTrackingFunction({
-				category: 've-editing-tour',
-				trackingMethod: 'analytics'
-			});
+		var EXPERIMENT_NAME = 've-tour';
 
-		function Tour(tourConfig, labelPrefix) {
-			this.labelPrefix = labelPrefix;
+		function Tour(tourConfig) {
 			this.tourConfig = tourConfig;
 			this.steps = [];
 		}
@@ -56,28 +52,19 @@ define('VisualEditorTourExperiment', ['jquery', 'wikia.loader', 'wikia.mustache'
 
 			$element.popover('show');
 
-			track({
-				action: tracker.ACTIONS.IMPRESSION,
-				label: this.labelPrefix + 'tour-step-' + this.step
-			});
+			tracker.trackVerboseImpression(EXPERIMENT_NAME, 'tour-step-' + this.step);
 		};
 
 		Tour.prototype.nextHandle = function () {
 			this._setDisabled();
 			this.next();
-			track({
-				action: tracker.ACTIONS.CLICK,
-				label: this.labelPrefix + 'next-go-to-' + this.step
-			});
+			tracker.trackVerboseClick(EXPERIMENT_NAME, 'next-go-to-' + this.step);
 		};
 
 		Tour.prototype.next = function () {
 			if (this.step === this.steps.length - 1) {
 				this.destroyStep(this.step);
-				track({
-					action: tracker.ACTIONS.CLICK,
-					label: this.labelPrefix + 'tour-complete'
-				});
+				tracker.trackVerboseClick(EXPERIMENT_NAME, 'tour-complete');
 				return;
 			}
 			this.destroyStep(this.step);
@@ -87,19 +74,13 @@ define('VisualEditorTourExperiment', ['jquery', 'wikia.loader', 'wikia.mustache'
 		Tour.prototype.prevHandle = function () {
 			this.destroyStep(this.step);
 			this.openStep(--this.step);
-			track({
-				action: tracker.ACTIONS.CLICK,
-				label: this.labelPrefix + 'next-go-to-' + this.step
-			});
+			tracker.trackVerboseClick(EXPERIMENT_NAME, 'next-go-to-' + this.step);
 		};
 
 		Tour.prototype.close = function () {
 			this._setDisabled();
 			this.destroyStep(this.step);
-			track({
-				action: tracker.ACTIONS.CLICK,
-				label: this.labelPrefix + 'close-' + this.step
-			});
+			tracker.trackVerboseClick(EXPERIMENT_NAME, 'close-' + this.step);
 		};
 
 		Tour.prototype._setDisabled = function () {

@@ -1,11 +1,8 @@
-require(['jquery', 'mw', 'VisualEditorTourExperimentInit', 'wikia.tracker'],
+require(['jquery', 'mw', 'VisualEditorTourExperimentInit', 'ext.wikia.spitfires.experiments.tracker'],
 	function ($, mw, veTourInit, tracker) {
 		'use strict';
 
-		var track = tracker.buildTrackingFunction({
-			category: 've-editing-tour',
-			trackingMethod: 'analytics'
-		});
+		var EXPERIMENT_NAME = 've-tour';
 
 		function initEntry() {
 			var $editButton = $('#ca-ve-edit');
@@ -31,10 +28,7 @@ require(['jquery', 'mw', 'VisualEditorTourExperimentInit', 'wikia.tracker'],
 				$('.ve-tour-next').click(startTour.bind(this, $editButton));
 				$('.ve-tour-experiment .close').click(startTour.bind(this, $editButton));
 
-				track({
-					action: tracker.ACTIONS.IMPRESSION,
-					label: veTourInit.getLabelPrefix() + 'tour-step-article-entry-point'
-				});
+				tracker.trackVerboseImpression(EXPERIMENT_NAME, 'tour-step-article-entry-point');
 			}
 		}
 
@@ -42,19 +36,13 @@ require(['jquery', 'mw', 'VisualEditorTourExperimentInit', 'wikia.tracker'],
 			$editButton.click();
 			$.cookie('vetourdisabled', 1, {expires: 30});
 			$editButton.popover('destroy');
-			track({
-				action: tracker.ACTIONS.CLICK,
-				label: veTourInit.getLabelPrefix() + 'edit-entry-point'
-			});
+			tracker.trackVerboseClick(EXPERIMENT_NAME, 'edit-entry-point');
 		}
 
 		function close($element) {
 			$.cookie('vetourdismissed', 1, { expires: 30 });
 			$element.popover('destroy');
-			track({
-				action: tracker.ACTIONS.CLICK,
-				label: veTourInit.getLabelPrefix() + 'close-article-entry-point'
-			});
+			tracker.trackVerboseClick(EXPERIMENT_NAME, 'close-article-entry-point');
 		}
 		$(initEntry);
 	}
