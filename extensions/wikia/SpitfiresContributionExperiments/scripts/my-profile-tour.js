@@ -73,7 +73,8 @@ require(['jquery', 'wikia.loader', 'wikia.nirvana', 'wikia.mustache', 'wikia.tra
 		}
 
 		function processInstance(modalInstance) {
-			var modalContent = modalInstance.$element.find('.my-profile-content');
+			var modalContent = modalInstance.$element.find('.my-profile-content'),
+				$profileModal;
 
 			modal = modalInstance;
 
@@ -86,7 +87,8 @@ require(['jquery', 'wikia.loader', 'wikia.nirvana', 'wikia.mustache', 'wikia.tra
 				label: getLabelPrefix() + 'step-1-first-time'
 			});
 
-			$('#MyProfileModal').on('click', '.next-step', function () {
+			$profileModal = $('#MyProfileModal');
+			$profileModal.on('click', '.next-step', function () {
 				addAnswer();
 
 				currentStep++;
@@ -104,7 +106,7 @@ require(['jquery', 'wikia.loader', 'wikia.nirvana', 'wikia.mustache', 'wikia.tra
 				});
 			});
 
-			$('#MyProfileModal').on('click', '.my-profile-header-go-back', function () {
+			$profileModal.on('click', '.my-profile-header-go-back', function () {
 				addAnswer();
 				currentStep--;
 				templateData.answer = answers[currentStep];
@@ -117,9 +119,7 @@ require(['jquery', 'wikia.loader', 'wikia.nirvana', 'wikia.mustache', 'wikia.tra
 		}
 
 		function addAnswer() {
-			var answer = $('#MyProfileModal').find('.my-profile-textarea').val().trim();
-
-			answers[currentStep] = answer;
+			answers[currentStep] = $('#MyProfileModal').find('.my-profile-textarea').val().trim();
 		}
 
 		function saveProfile() {
@@ -137,13 +137,13 @@ require(['jquery', 'wikia.loader', 'wikia.nirvana', 'wikia.mustache', 'wikia.tra
 			formattedAnswers = Object.keys(answers).map(function (value, index) {
 				switch (index + 1) {
 					case 1:
-						return answer = "My favorite moment in the game:\n" + answers[index + 1];
+						return "My favorite moment in the game:\n" + answers[index + 1];
 						break;
 					case 2:
-						return answer = "My gaming platforms:\n" + answers[index + 1];
+						return "My gaming platforms:\n" + answers[index + 1];
 						break;
 					case 3:
-						return answer = "About me:\n" + answers[index + 1];
+						return "About me:\n" + answers[index + 1];
 						break;
 				}
 			});
@@ -173,9 +173,9 @@ require(['jquery', 'wikia.loader', 'wikia.nirvana', 'wikia.mustache', 'wikia.tra
 
 		function getLabelPrefix() {
 			if ($.cookie('newlyregistered')) {
-				return LABEL_PREFIX_NEW;
+				return 'newlyregistered-';
 			} else if ($.cookie('userwithoutedit')) {
-				return LABEL_PREFIX_WITHOUTEDIT;
+				return 'userwithoutedit-';
 			}
 			return '';
 		}
