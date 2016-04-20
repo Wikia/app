@@ -193,6 +193,8 @@
 		}
 		?>
 
+		<div id="rcjsload_wikiarr"></div>
+
 		<?= empty( $wg->SuppressFooter ) ? $app->renderView( 'Footer', 'Index' ) : '' ?>
 		<? if( !empty( $wg->EnableCorporateFooterExt ) ) echo $app->renderView( 'CorporateFooter', 'index' ) ?>
 		<?= $app->renderView( 'GlobalFooter', 'index' ); ?>
