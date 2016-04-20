@@ -2,7 +2,7 @@ define('VisualEditorTourExperiment', ['jquery', 'wikia.loader', 'wikia.mustache'
 	function ($, loader, mustache, mw, tracker) {
 		'use strict';
 
-		var EXPERIMENT_NAME = 've-tour';
+		var EXPERIMENT_NAME = 'CONTRIB_EXPERIMENTS';
 
 		function Tour(tourConfig) {
 			this.tourConfig = tourConfig;

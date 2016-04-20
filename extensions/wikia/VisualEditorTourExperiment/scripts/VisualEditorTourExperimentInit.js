@@ -3,6 +3,8 @@ define('VisualEditorTourExperimentInit',
 	function ($, VETour, veTourConfig, abTest, tracker) {
 		'use strict';
 
+		var EXPERIMENT_NAME = 'CONTRIB_EXPERIMENTS';
+
 		function init() {
 			if (isEnabled()) {
 				clearEntrypointPopover();
@@ -18,7 +20,7 @@ define('VisualEditorTourExperimentInit',
 
 		function trackPublish() {
 			if (isExperimentVariation() && (isNewlyregistered() || isUserwithoutedit())) {
-					tracker.trackVerboseSuccess('ve-tour', 'publish');
+				tracker.trackVerboseSuccess(EXPERIMENT_NAME, 'publish');
 			}
 		}
 
@@ -27,7 +29,7 @@ define('VisualEditorTourExperimentInit',
 		}
 
 		function isExperimentVariation() {
-			return abTest.inGroup('CONTRIB_EXPERIMENTS', 'VE_TOUR');
+			return abTest.inGroup(EXPERIMENT_NAME, 'VE_TOUR');
 		}
 
 		function isNewlyregistered() {
