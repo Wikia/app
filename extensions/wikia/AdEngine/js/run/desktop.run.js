@@ -13,6 +13,7 @@ require([
 	'ext.wikia.adEngine.slotTracker',
 	'ext.wikia.adEngine.slotTweaker',
 	'ext.wikia.adEngine.sourcePointDetection',
+	'ext.wikia.adEngine.provider.yavliTag',
 	'wikia.window',
 	'wikia.loader',
 	require.optional('ext.wikia.adEngine.recovery.gcs')
@@ -29,6 +30,7 @@ require([
 	slotTracker,
 	slotTweaker,
 	sourcePoint,
+	yavliTag,
 	win,
 	loader,
 	gcs
@@ -90,6 +92,10 @@ require([
 
 		if (context.opts.googleConsumerSurveys && gcs) {
 			gcs.addRecoveryCallback();
+		}
+
+		if (context.opts.yavli) {
+			yavliTag.add();
 		}
 
 		if (context.opts.recoveredAdsMessage) {

@@ -22,6 +22,7 @@ $wgAutoloadClasses['ResourceLoaderScript'] = __DIR__ . '/ResourceLoaders/Resourc
 $wgAutoloadClasses['ResourceLoaderAdEngineSevenOneMediaModule'] = __DIR__ . '/ResourceLoaders/ResourceLoaderAdEngineSevenOneMediaModule.php';
 $wgAutoloadClasses['ResourceLoaderAdEngineSourcePointRecoveryModule'] = __DIR__ . '/ResourceLoaders/ResourceLoaderAdEngineSourcePointRecoveryModule.php';
 $wgAutoloadClasses['ResourceLoaderAdEngineSourcePointDetectionModule'] = __DIR__ . '/ResourceLoaders/ResourceLoaderAdEngineSourcePointDetectionModule.php';
+$wgAutoloadClasses['ResourceLoaderAdEngineYavliModule'] = __DIR__ . '/ResourceLoaders/ResourceLoaderAdEngineYavliModule.php';
 
 // Hooks for Exitstitial ads
 $wgHooks['LinkerMakeExternalLink'][] = 'AdEngine2ExitstitialHooks::onLinkerMakeExternalLink';
@@ -66,6 +67,10 @@ $wgResourceModules['wikia.ext.adengine.sp.recovery'] = array(
 
 $wgResourceModules['wikia.ext.adengine.sp.detection'] = array(
 	'class' => 'ResourceLoaderAdEngineSourcePointDetectionModule',
+);
+
+$wgResourceModules['wikia.ext.adengine.yavli'] = array(
+	'class' => 'ResourceLoaderAdEngineYavliModule',
 );
 
 // Special page for importing ad test
