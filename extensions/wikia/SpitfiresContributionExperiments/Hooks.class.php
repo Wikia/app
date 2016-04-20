@@ -38,14 +38,6 @@ class Hooks {
 		return true;
 	}
 
-	// This hook is temporary, to test modal
-	// TODO: Remove before merge
-	public function onBeforePageDisplay( \OutputPage $out, \Skin $skin ) {
-		\Wikia::addAssetsToOutput( 'extensions/wikia/SpitfiresContributionExperiments/scripts/my-profile-tour.js' );
-
-		return true;
-	}
-
 	public function onBeforePageDisplay( \OutputPage $out, \Skin $skin ) {
 		if ( isset( $_COOKIE[ self::NEWLY_REGISTERED_USER ] ) || isset( $_COOKIE[ self::WITHOUT_EDIT_USER ] ) ) {
 			$out->addScriptFile('/extensions/wikia/SpitfiresContributionExperiments/scripts/experiments-tracker.js');
