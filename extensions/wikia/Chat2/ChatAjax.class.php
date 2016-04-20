@@ -126,11 +126,12 @@ class ChatAjax {
 			return [ 'status' => false ];
 		}
 
-		Chat::setChatters( $wgRequest->getArray( 'users' ) );
+		$users = $wgRequest->getArray( 'users', [] );
+		Chat::setChatters( $users );
 
 		wfProfileOut( __METHOD__ );
 
-		return [ 'status' => $wgRequest->getArray( 'users' ) ];
+		return [ 'status' => $users ];
 	}
 
 	/**
