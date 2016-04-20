@@ -1288,12 +1288,6 @@ $wgAdPageLevelCategoryLangs = [ 'en' ];
 $wgEnableJavaScriptErrorLogging = false;
 
 /**
- * @name $wgEnableAdEngineExt
- * Enables ad engine
- */
-$wgEnableAdEngineExt = true;
-
-/**
  * @name $wgAdDriverDelayBelowTheFold
  * Prevents from loading BTF before ATF ad slots
  */

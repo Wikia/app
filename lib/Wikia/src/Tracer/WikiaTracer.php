@@ -362,7 +362,8 @@ class WikiaTracer {
 		$caller = str_replace( '{closure}', '', $caller );
 		$caller = trim( $caller, '\\:' );
 
-		return end( explode('\\', $caller ) );
+		$parts = explode('\\', $caller );
+		return end( $parts );
 	}
 
 	/**

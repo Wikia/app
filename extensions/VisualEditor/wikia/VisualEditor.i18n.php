@@ -38,6 +38,7 @@ $messages['en'] = array(
 	'wikia-visualeditor-dialogbutton-transclusion-tooltip' => 'Template',
 	'wikia-visualeditor-dialogbutton-infobox-tooltip' => 'Infobox',
 	'wikia-visualeditor-dialog-infobox-insert-title' => 'Select infobox to insert',
+	'wikia-visualeditor-dialog-infobox-insert-add-new-template' => 'Add a new template',
 	'wikia-visualeditor-dialog-infobox-insert-empty-state' => 'Sorry. No infoboxes found',
 	'wikia-visualeditor-dialog-infobox-insert-empty-state-has-unconverted-infoboxes' => 'Convert some old infoboxes into new format',
 	'wikia-visualeditor-savedialog-label-save' => 'Publish',
@@ -134,6 +135,7 @@ $messages['qqq'] = array(
 {{Identical|Template}}',
 	'wikia-visualeditor-dialogbutton-infobox-tooltip' => 'Infobox label used in menu.',
 	'wikia-visualeditor-dialog-infobox-insert-title' => 'Call to action to choose infobox from the given list',
+	'wikia-visualeditor-dialog-infobox-insert-add-new-template' => 'Label of a button that opens the Infobox Builder and allows for a new infobox creation.',
 	'wikia-visualeditor-dialog-infobox-insert-empty-state' => 'Information that no indfoboxes were found',
 	'wikia-visualeditor-dialog-infobox-insert-empty-state-has-unconverted-infoboxes' => 'Call to action link to
 	convert old infoboxes to new format so they will appear in this dialog',
@@ -577,6 +579,7 @@ $messages['de'] = array(
 	'wikia-visualeditor-dialog-infobox-insert-title' => 'Infobox zum Einfügen auswählen',
 	'wikia-visualeditor-dialog-infobox-insert-empty-state' => 'Sorry, es wurden keine Infoboxen gefunden',
 	'wikia-visualeditor-dialog-infobox-insert-empty-state-has-unconverted-infoboxes' => 'Einige alte Infoboxen in neues Format konvertieren',
+	'wikia-visualeditor-dialog-infobox-insert-add-new-template' => 'Neue Vorlage hinzufügen',
 );
 
 /** Zazaki (Zazaki)
@@ -728,6 +731,7 @@ $messages['es'] = array(
 	'wikia-visualeditor-dialog-infobox-insert-title' => 'Selecciona la infobox que vas a insertar',
 	'wikia-visualeditor-dialog-infobox-insert-empty-state' => 'Lo sentimos. No se encontraron infoboxes',
 	'wikia-visualeditor-dialog-infobox-insert-empty-state-has-unconverted-infoboxes' => 'Convierte algunas infoboxes antiguas a un nuevo formato',
+	'wikia-visualeditor-dialog-infobox-insert-add-new-template' => 'Añadir una plantilla',
 );
 
 /** Basque (euskara)
@@ -938,6 +942,7 @@ $messages['fr'] = array(
 	'wikia-visualeditor-dialog-infobox-insert-title' => "Sélectionnez l'infobox à insérer",
 	'wikia-visualeditor-dialog-infobox-insert-empty-state' => "Désolés, nous n'avons trouvé aucune infobox.",
 	'wikia-visualeditor-dialog-infobox-insert-empty-state-has-unconverted-infoboxes' => "Convertir d'anciennes infoboxes au nouveau format.",
+	'wikia-visualeditor-dialog-infobox-insert-add-new-template' => 'Ajouter un nouveau modèle',
 );
 
 /** Western Frisian (Frysk)
@@ -1220,6 +1225,7 @@ $messages['it'] = array(
 	'wikia-visualeditor-media-video-policy' => 'Sei pregato di rispettare la politica sui video di questa wikia, quando aggiungi nuovi video.',
 	'wikia-visualeditor-dialog-infobox-insert-empty-state' => 'Nessun infobox trovato',
 	'wikia-visualeditor-dialog-infobox-insert-empty-state-has-unconverted-infoboxes' => 'Convertire vecchi infobox nel nuovo formato',
+	'wikia-visualeditor-dialog-infobox-insert-add-new-template' => 'Aggiungi un nuovo template',
 );
 
 /** Japanese (日本語)
@@ -1306,6 +1312,7 @@ $messages['ja'] = array(
 	'wikia-visualeditor-media-video-policy' => '新しい動画を追加する際は、このウィキアの動画ポリシーを遵守してください。',
 	'wikia-visualeditor-dialog-infobox-insert-empty-state' => '申し訳ありませんが、インフォボックスは見つかりませんでした',
 	'wikia-visualeditor-dialog-infobox-insert-empty-state-has-unconverted-infoboxes' => '古いインフォボックスを新しい形式に変換',
+	'wikia-visualeditor-dialog-infobox-insert-add-new-template' => '新しいテンプレートを追加',
 );
 
 /** Georgian (ქართული)
@@ -1843,6 +1850,7 @@ $messages['nl'] = array(
 	'wikia-visualeditor-dialog-infobox-insert-title' => 'Select infobox to insert',
 	'wikia-visualeditor-dialog-infobox-insert-empty-state' => 'Sorry. No infoboxes found',
 	'wikia-visualeditor-dialog-infobox-insert-empty-state-has-unconverted-infoboxes' => 'Convert some old infoboxes into new format',
+	'wikia-visualeditor-dialog-infobox-insert-add-new-template' => 'Add a new template',
 );
 
 /** Norwegian Nynorsk (norsk nynorsk)
@@ -1989,6 +1997,7 @@ $messages['pl'] = array(
 	'wikia-visualeditor-media-video-policy' => 'Dodając nowe filmy pamiętaj, aby stosować się do polityki filmów określonej dla tej wiki.',
 	'wikia-visualeditor-dialog-infobox-insert-empty-state' => 'Przepraszamy. Nie znaleziono infoboksów',
 	'wikia-visualeditor-dialog-infobox-insert-empty-state-has-unconverted-infoboxes' => 'Przekształć stare infoboksy do nowego formatu',
+	'wikia-visualeditor-dialog-infobox-insert-add-new-template' => 'Dodaj nowy szablon',
 );
 
 /** Pashto (پښتو)
@@ -2112,6 +2121,7 @@ $messages['pt'] = array(
 	'wikia-visualeditor-media-video-policy' => 'Por favor, respeite a política de vídeos desta wikia quando adicionar vídeos novos.',
 	'wikia-visualeditor-dialog-infobox-insert-empty-state' => 'Desculpe. Nenhuma infobox encontrada',
 	'wikia-visualeditor-dialog-infobox-insert-empty-state-has-unconverted-infoboxes' => 'Converta algumas infoboxes antigas para o novo formato',
+	'wikia-visualeditor-dialog-infobox-insert-add-new-template' => 'Adicionar uma nova predefinição',
 );
 
 /** Brazilian Portuguese (português do Brasil)
@@ -2345,6 +2355,7 @@ $messages['ru'] = array(
 	'wikia-visualeditor-media-video-policy' => 'Пожалуйста, добавляйте новые видео в соответствии с политикой добавления видео на этой вики.',
 	'wikia-visualeditor-dialog-infobox-insert-empty-state' => 'К сожалению, инфобоксы не были найдены',
 	'wikia-visualeditor-dialog-infobox-insert-empty-state-has-unconverted-infoboxes' => 'Конвертировать старые инфобоксы в новый формат',
+	'wikia-visualeditor-dialog-infobox-insert-add-new-template' => 'Добавить новый шаблон',
 );
 
 /** Sardinian (sardu)
@@ -2849,6 +2860,7 @@ $messages['zh-hans'] = array(
 	'wikia-visualeditor-dialog-infobox-insert-title' => '选择要插入的信息框',
 	'wikia-visualeditor-dialog-infobox-insert-empty-state' => '很抱歉，没有发现信息表格。',
 	'wikia-visualeditor-dialog-infobox-insert-empty-state-has-unconverted-infoboxes' => '将旧的信息表格转化为新的版式。',
+	'wikia-visualeditor-dialog-infobox-insert-add-new-template' => '添加新的模板',
 );
 
 /** Traditional Chinese (中文（繁體）‎)
@@ -2936,5 +2948,6 @@ $messages['zh-hant'] = array(
 	'wikia-visualeditor-media-video-policy' => '添加新的視頻時，請遵守此維基視頻政策。',
 	'wikia-visualeditor-dialog-infobox-insert-empty-state' => '很抱歉，沒有發現訊息表格',
 	'wikia-visualeditor-dialog-infobox-insert-empty-state-has-unconverted-infoboxes' => '將舊的訊息表格轉換為新的版式',
+	'wikia-visualeditor-dialog-infobox-insert-add-new-template' => '添加新的模版',
 );
 

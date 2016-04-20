@@ -137,9 +137,7 @@ define('ext.wikia.adEngine.adContext', [
 		context.targeting.enableKruxTargeting = !!(
 			context.targeting.enableKruxTargeting &&
 			geo.isProperGeo(instantGlobals.wgAdDriverKruxCountries) &&
-			!instantGlobals.wgSitewideDisableKrux &&
-			context.targeting.esrbRating !== 'ec' && // FIXME ADEN-3147
-			!noExternals // FIXME ADEN-3147
+			!instantGlobals.wgSitewideDisableKrux
 		);
 
 		// Floating medrec

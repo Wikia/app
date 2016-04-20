@@ -4456,7 +4456,7 @@ class User {
 				->run($dbw);
 		}
 
-		$dbw->upsert('user_properties', $insertRows, [], self::$PROPERTY_UPSERT_SET_BLOCK);
+		$dbw->upsert('user_properties', $insertRows, [], self::$PROPERTY_UPSERT_SET_BLOCK, __METHOD__);
 
 		if ( $extuser ) {
 			$extuser->updateUser();
