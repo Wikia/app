@@ -130,7 +130,7 @@ require([
 		getModalNavHtml().then(function (navHtml) {
 			// Switch highlight to new tab
 			// fixme: Loading indicator should be via a template.
-			var html = navHtml + encodeURIComponent($.msg('communitypage-modal-loading'));
+			var html = navHtml + mw.html.escape($.msg('communitypage-modal-loading'));
 			window.activeModal.$content
 				.html(html)
 				.find(tabToActivate.className).children().addClass('active');
