@@ -100,6 +100,7 @@ require(['jquery', 'wikia.loader', 'wikia.nirvana', 'wikia.mustache', 'wikia.tra
 				} else {
 					modalContent.html(mustache.render(templates[currentStep], templateData));
 				}
+
 				track({
 					action: tracker.ACTIONS.IMPRESSION,
 					label: getLabelPrefix() + 'go-next-to-step' + currentStep
@@ -114,6 +115,13 @@ require(['jquery', 'wikia.loader', 'wikia.nirvana', 'wikia.mustache', 'wikia.tra
 				track({
 					action: tracker.ACTIONS.CLICK,
 					label: getLabelPrefix() + 'go-back-to-step' + currentStep
+				});
+			});
+
+			$profileModal.on('click', '.my-profile-next-pages a', function () {
+				track({
+					action: tracker.ACTIONS.CLICK,
+					label: getLabelPrefix() + 'last-step-go-to-article'
 				});
 			});
 		}
