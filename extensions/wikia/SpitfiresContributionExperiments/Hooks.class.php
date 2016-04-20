@@ -37,28 +37,24 @@ class Hooks {
 		return true;
 	}
 
+	public function onBeforePageDisplay( \OutputPage $out, \Skin $skin ) {
+		if ( isset( $_COOKIE[ self::NEWLY_REGISTERED_USER ] ) || isset( $_COOKIE[ self::WITHOUT_EDIT_USER ] ) ) {
+			$out->addScriptFile('/extensions/wikia/SpitfiresContributionExperiments/scripts/experiments-tracker.js');
+			$out->addScriptFile('/extensions/wikia/SpitfiresContributionExperiments/scripts/my-profile-tour.js');
+		}
+
+		return true;
+	}
+
 	private function manageUserActivityGroupCookie( \User $user ) {
 		$newlyRegistered = isset( $_COOKIE[ self::NEWLY_REGISTERED_USER ] );
 
-		if ( $newlyRegistered ) {
-			// newly registered user
-			unset( $_COOKIE[ self::NEWLY_REGISTERED_USER ] );
-			$this->setCookie( self::NEWLY_REGISTERED_USER, '', time() - 3600 );
-		} else {
+		if ( !$newlyRegistered ) {
 			$userEditCount = $user->getEditCount();
-			$userWithoutEditCookie = isset( $_COOKIE[ self::WITHOUT_EDIT_USER ] );
+			$userWithoutEditCookie = empty( $_COOKIE[ self::WITHOUT_EDIT_USER ] );
 
-			if ( $userEditCount === 0 ) {
-				// returning user without edit
-				if ( !$userWithoutEditCookie ) {
-					$this->setCookie( self::WITHOUT_EDIT_USER, 1, time() + self::COOKIE_EXPERIMENT_TIME );
-				}
-			} else {
-				if ( $userWithoutEditCookie ) {
-					// returning user who made an edit
-					unset( $_COOKIE[ self::WITHOUT_EDIT_USER ] );
-					$this->setCookie( self::WITHOUT_EDIT_USER, '', time() - 3600 );
-				}
+			if ( $userEditCount === 0 && $userWithoutEditCookie ) {
+				$this->setCookie( self::WITHOUT_EDIT_USER, 1, time() + self::COOKIE_EXPERIMENT_TIME );
 			}
 		}
 	}
