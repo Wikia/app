@@ -817,19 +817,29 @@ class WikiService extends WikiaModel {
 			$rows = $db->select(
 				array(
 					'city_visualization',
-					'city_list'
+					'city_list',
+					'city_verticals',
+					'city_domains',
+					'city_cat_mapping',
+					'city_cats'
 				),
 				array(
 					'city_list.city_id',
 					'city_list.city_title',
 					'city_list.city_dbname',
+					'city_list.city_description',
 					'city_list.city_url',
 					'city_list.city_lang',
-					'city_visualization.city_vertical',
+					'city_list.city_vertical',
 					'city_visualization.city_headline',
 					'city_visualization.city_description',
 					'city_visualization.city_main_image',
 					'city_visualization.city_flags',
+					'city_verticals.vertical_name',
+					'city_domains.city_domain',
+					'city_cat_mapping.cat_id',
+					'city_cat_mapping.city_id',
+					'city_cats.cat_name'
 				),
 				array(
 					'city_list.city_public' => 1,
@@ -842,6 +852,22 @@ class WikiService extends WikiaModel {
 					'city_visualization' => array(
 						'LEFT JOIN',
 						'city_list.city_id = city_visualization.city_id'
+					),
+					'city_verticals' => array(
+						'LEFT JOIN',
+						'city_list.city_vertical = city_verticals.vertical_id'
+					),
+					'city_domains' => array(
+						'LEFT JOIN',
+						'city_list.city_id = city_domains.city_id'
+					),
+					'city_cat_mapping' => array (
+						'LEFT JOIN',
+						'city_list.city_id = city_cat_mapping.city_id',
+					),
+					'city_cats' => array(
+						'LEFT JOIN',
+						'city_cat_mapping.cat_id = city_cats.cat_id'
 					)
 				)
 			);
@@ -850,10 +876,11 @@ class WikiService extends WikiaModel {
 				$item = array(
 					'name' => $row->city_title,
 					'url' => $row->city_url,
-					'domain' => $row->city_title,
-					'title' => $row->city_dbname,
+					'domain' => $row->city_domain,
+					'title' => $row->city_title,
+					'topic' => $row->cat_name,
 					'lang' => $row->city_lang,
-					'hubId' => $row->city_vertical,
+					'hub' => $row->vertical_name,
 					'headline' => $row->city_headline,
 					'desc' => $row->city_description,
 					//this is stored in a pretty peculiar format,

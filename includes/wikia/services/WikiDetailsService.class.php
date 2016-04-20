@@ -208,6 +208,7 @@ class WikiDetailsService extends WikiService {
 			'domain' => isset( $modelData [ $id ] ) ? $modelData[ $id ][ 'domain' ] : '',
 			'hub' => isset( $modelData [ $id ] ) ? $modelData[ $id ][ 'hub' ] : '',
 			'lang' => isset( $modelData[ $id ] ) ? $modelData[ $id ][ 'lang' ] : '',
+			'topic' => isset( $modelData[ $id ] ) ? $modelData[ $id ][ 'topic' ] : '',
 			'flags' => $flags,
 			'desc' => isset( $modelData[ $id ] ) ? $modelData[ $id ][ 'desc' ] : '',
 			'image' => isset( $modelData[ $id ] ) ? $modelData[ $id ][ 'image' ] : '',
