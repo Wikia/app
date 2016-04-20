@@ -1,5 +1,4 @@
 var STATUS_STATE_PRESENT = 'here'; // strings instead of ints just for easier debugging. always use the vars, don't hardcode strings w/these states elsewhere.
-var STATUS_STATE_AWAY = 'away';
 
 (function () {
 	var server = false, models;
@@ -183,19 +182,19 @@ var STATUS_STATE_AWAY = 'away';
 		this.blockedByUsers = new models.UserCollection();
 
 		this.chats.bind('add', function(current) {
-			var last = this.at(this.length - 2);
+			var last = this.at(this.length - 2),
+				// assume that each message is a separate one, if not, override this prop below.
+				continued = false;
 
-			if(typeof(last) == 'object' ) {
-				if(last.get('name') == current.get('name') && current.get('msgType') == 'chat' && current.get('msgType') == 'chat') {
-					current.set({'continued': true});
-				}
+			if (typeof(last) == 'object' &&
+				last.get('name') == current.get('name') &&
+				last.get('temp') == current.get('temp') &&
+				current.get('msgType') == 'chat')
+					{
+						continued = true;
+					}
 
-				if(last.get('temp') != current.get('temp')) {
-					current.set({'continued': false});
-				}
-			} else {
-				current.set({'continued': false});
-			}
+			current.set({'continued': continued});
 
 			this.trigger('afteradd', current);
 		});
@@ -203,7 +202,7 @@ var STATUS_STATE_AWAY = 'away';
 		this.chats.bind('remove', function(current) {
 			current.set({'continued': false });
 		});
-	}
+	};
 
 	models.NodeChatModel = Backbone.Model.extend({
 		defaults: {
@@ -240,10 +239,6 @@ var STATUS_STATE_AWAY = 'away';
 
 		initialize: function(options){
 
-		},
-
-		isAway: function(){
-			return (this.get('statusState') == STATUS_STATE_AWAY);
 		}
 	});
 
@@ -276,11 +271,10 @@ var STATUS_STATE_AWAY = 'away';
 	});
 
 	var findByName = function(name) {
-		var userObject = this.find(function(user){
+		return this.find(function(user){
 			return (user.get('name') == name);
 		});
-		return userObject;
-	}
+	};
 
 	models.UserCollection = Backbone.Collection.extend({
 		model: models.User,
@@ -335,8 +329,6 @@ var STATUS_STATE_AWAY = 'away';
 
 
 	Backbone.Model.prototype.mport = function (data, silent) {
-		//console.log("DATA FROM mport:\n" + data);
-
 		function process(targetObj, data) {
 
 			targetObj.id = data.id || null;
