@@ -3,7 +3,7 @@ define('VisualEditorTourExperimentInit',
 	function ($, VETour, veTourConfig, abTest, tracker) {
 		'use strict';
 
-		var EXPERIMENT_NAME = 'CONTRIB_EXPERIMENTS';
+		var EXPERIMENT_NAME = 'contribution-experiments';
 
 		function init() {
 			if (isEnabled()) {
@@ -29,7 +29,7 @@ define('VisualEditorTourExperimentInit',
 		}
 
 		function isExperimentVariation() {
-			return abTest.inGroup(EXPERIMENT_NAME, 'VE_TOUR');
+			return window.optimizely.variationNamesMap[experimentId] === 'VE-TOUR';
 		}
 
 		function isNewlyregistered() {
