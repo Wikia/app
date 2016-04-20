@@ -11,7 +11,12 @@ class ARecoveryEngineHooks {
 	 * @return bool
 	 */
 	public static function onWikiaSkinTopScripts( &$vars, &$scripts ) {
-		global $wgServer;
+		global $wgServer, $wgEnableUsingSourcePointProxyForCSS;
+
+		if ( empty( $wgEnableUsingSourcePointProxyForCSS ) ) {
+			return true;
+		}
+
 		$resourceLoader = new ResourceLoaderAdEngineSourcePointCSBootstrap();
 		$resourceLoaderContext = new ResourceLoaderContext( new ResourceLoader(), new FauxRequest() );
 		$source = $resourceLoader->getScript($resourceLoaderContext);
