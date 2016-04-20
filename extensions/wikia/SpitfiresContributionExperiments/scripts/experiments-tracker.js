@@ -45,9 +45,9 @@ define('ext.wikia.spitfires.experiments.tracker', [
 	}
 
 	function getUserStatus() {
-		if (cookies.get('newlyregistered') === 1) {
+		if (cookies.get('newlyregistered')) {
 			return 'newlyregistered';
-		} else if (cookies.get('userwithoutedit') === 1) {
+		} else if (cookies.get('userwithoutedit')) {
 			return 'userwithoutedit';
 		} else {
 			return 'userStatusNaN';
