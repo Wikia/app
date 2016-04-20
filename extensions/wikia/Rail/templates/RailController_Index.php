@@ -20,6 +20,8 @@
 			<div class="loading"></div>
 		<? endif ?>
 
+		<div id="rcjsload_wikiarr"></div>
+
 	</div>
 <? if ( $isAside ): ?>
 	</aside>
