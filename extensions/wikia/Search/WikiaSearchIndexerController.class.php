@@ -3,8 +3,9 @@
  * Class definition for WikiaSearchIndexerController
  */
 use Wikia\Search\MediaWikiService;
+
 /**
- * This class is responsible for providing responses for atomic updates of documents. 
+ * This class is responsible for providing responses for atomic updates of documents.
  * @author relwell
  * @package Search
  * @subpackage Controller
@@ -17,7 +18,7 @@ class WikiaSearchIndexerController extends WikiaController
 	 * @var Wikia\Search\MediaWikiService
 	 */
 	protected $service;
-	
+
 	/**
 	 * Constructor method.
 	 * Sets defaults -- no writing to memache, and a default search indexer instance
@@ -37,9 +38,9 @@ class WikiaSearchIndexerController extends WikiaController
 		}
 
 	}
-	
+
 	/**
-	 * Produces a JSON response based on calls to the provided pages' WikiaSearchIndexer::getPageDefaultValues method. 
+	 * Produces a JSON response based on calls to the provided pages' WikiaSearchIndexer::getPageDefaultValues method.
 	 */
 	public function get()
 	{
@@ -51,27 +52,46 @@ class WikiaSearchIndexerController extends WikiaController
 			$service = new $serviceName( $ids );
 			$ids = $this->getVal( 'ids' );
 			if ( !empty( $ids ) ) {
-				$this->response->setData( $service->getResponseForPageIds() );
+				$data = $service->getResponseForPageIds();
+				$this->response->setData( $data );
+				/* extra logging - remove later */
+				if ( isset( $data['contents'] ) ) {
+					foreach ( $data['contents'] as $content ) {
+						if ( isset( $content['html_en']['set'] ) && $content['html_en']['set'] === ' ' ) {
+							\Wikia\Logger\WikiaLogger::instance()->warning(
+								'Meta description containing just a space',
+								[
+									'variant' => 'WikiaSearchIndexerController::get',
+									'serviceName' => $serviceName,
+									'id' => isset( $content['id'] ) ? $content['id'] : 'none',
+									'snippet_s' => isset( $content['snippet_s'] ) ? $content['snippet_s'] : 'none',
+									'ex' => new Exception(),
+								]
+							);
+						}
+					}
+				}
+				/* end of extra logging */
 			}
 		} else {
 			\Wikia\Logger\WikiaLogger::instance()->error( 'WikiaSearchIndexer invoked with bad service param.',
 				[ 'serviceName' => $serviceName ] );
 		}
 	}
-	
+
 	/**
 	 * Provides a JSON response for services that work on a wiki-wide level
 	 * The response includes the wiki ID, the URL of the wiki, and the stubbed-out XML
-	 * It is the responsibility of the back-end script to access all page IDs using the appropriate API 
+	 * It is the responsibility of the back-end script to access all page IDs using the appropriate API
 	 * and replace placeholder values with
 	 */
 	public function getForWiki()
 	{
 		$this->getResponse()->setFormat('json');
-		
+
 		$serviceName = 'Wikia\Search\IndexService\\' . $this->getVal( 'service' );
 		$service = new $serviceName();
-		
+
 		$this->response->setData( $service->getStubbedWikiResponse() );
 	}
 
