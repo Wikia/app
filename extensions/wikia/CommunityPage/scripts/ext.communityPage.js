@@ -8,23 +8,26 @@ require([
 	'use strict';
 
 	// "private" vars - don't access directly. Use getUiModalInstance().
-	var uiModalInstance, modalNavHtml;
+	var uiModalInstance, modalNavHtml, activeTab;
 
 	var tabs = {
 		TAB_ALL: {
 			className: '.modal-nav-all',
 			template: 'allMembers',
 			request: 'getAllMembersData',
+			cachedData: null,
 		},
 		TAB_ADMINS: {
 			className: '.modal-nav-admins',
 			template: 'topAdmins',
 			request: 'getTopAdminsData',
+			cachedData: null,
 		},
 		TAB_LEADERBOARD: {
 			className: '.modal-nav-leaderboard',
 			template: 'topContributors',
 			request: 'getTopContributorsData',
+			cachedData: null,
 		},
 	};
 
@@ -64,8 +67,29 @@ require([
 		return $deferred;
 	}
 
-	function openCommunityModal(activeTab) {
-		activeTab = activeTab || tabs.TAB_LEADERBOARD;
+	function getModalTabContentsHtml(tab) {
+		var $deferred = $.Deferred();
+
+		if (tab.cachedData) {
+			$deferred.resolve(tab.cachedData);
+		} else {
+			nirvana.sendRequest({
+				controller: 'CommunityPageSpecial',
+				method: tab.request,
+				data: {mcache: 'writeonly'}, // fixme: temporary debug variable
+				format: 'json',
+				type: 'get'
+			}).then(function (response) {
+				tab.cachedData = mustache.render(templates[tab.template], response);
+				$deferred.resolve(tab.cachedData);
+			});
+		}
+
+		return $deferred;
+	}
+
+	function openCommunityModal(tabToActivate) {
+		tabToActivate = tabToActivate || tabs.TAB_LEADERBOARD;
 
 		$.when(
 			getUiModalInstance(),
@@ -81,24 +105,44 @@ require([
 				}
 			};
 			uiModal.createComponent(createPageModalConfig, function (modal) {
-				nirvana.sendRequest({
-					controller: 'CommunityPageSpecial',
-					method: activeTab.request,
-					data: { mcache: 'writeonly' }, // fixme: temporary debug variable
-					format: 'json',
-					type: 'get'
-				}).then(function (response) {
-					var html = navHtml + mustache.render(templates[activeTab.template], response);
+				getModalTabContentsHtml(tabToActivate).then(function (tabContentHtml) {
+					var html = navHtml + tabContentHtml;
 
 					modal.$content
 						.addClass('ContributorsModule ContributorsModuleModal')
 						.html(html)
-						.find(activeTab.className).children().addClass('active');
+						.find(tabToActivate.className).children().addClass('active');
 
 					modal.show();
+					activeTab = tabToActivate;
 
 					window.activeModal = modal;
 				});
+			});
+		});
+	}
+
+	function switchCommunityModalTab(tabToActivate) {
+		if (tabToActivate === activeTab) {
+			return;
+		}
+
+		getModalNavHtml().then(function (navHtml) {
+			// Switch highlight to new tab
+			// fixme: Loading indicator should be via a template.
+			var html = navHtml + mw.html.escape($.msg('communitypage-modal-loading'));
+			window.activeModal.$content
+				.html(html)
+				.find(tabToActivate.className).children().addClass('active');
+
+			getModalTabContentsHtml(tabToActivate).then(function (tabContentHtml) {
+				html = navHtml + tabContentHtml;
+
+				window.activeModal.$content
+					.html(html)
+					.find(tabToActivate.className).children().addClass('active');
+
+				activeTab = tabToActivate;
 			});
 		});
 	}
@@ -108,13 +152,29 @@ require([
 		event.preventDefault();
 	});
 
+	$(document).on( 'click', '#modalTabAll', function (event) {
+		switchCommunityModalTab(tabs.TAB_ALL);
+		event.preventDefault();
+	});
+
+	$(document).on( 'click', '#modalTabAdmins', function () {
+		switchCommunityModalTab(tabs.TAB_ADMINS);
+		event.preventDefault();
+	});
+
+	$(document).on( 'click', '#modalTabLeaderboard', function () {
+		switchCommunityModalTab(tabs.TAB_LEADERBOARD);
+		event.preventDefault();
+	});
+
 
 	$(function () {
 		// prefetch UI modal on DOM ready
 		getUiModalInstance();
 
-		// test code to open modal on demand
-		window.openCommModal = openCommunityModal;
-		//openCommunityModal();
+		// prefetch modal contents
+		getModalTabContentsHtml(tabs.TAB_ALL);
+		getModalTabContentsHtml(tabs.TAB_ADMINS);
+		getModalTabContentsHtml(tabs.TAB_LEADERBOARD);
 	});
 });
