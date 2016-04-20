@@ -118,9 +118,13 @@
 		text-align: left;
 
 		li {
+			a {
+				font-size: 16px;
+			}
+
 			background-repeat: no-repeat;
 			background-position: left;
-			font-size: 16px;
+			font-size: 14px;
 			height: 50px;
 			margin: 18px 0;
 			padding-left: 75px;

@@ -8,12 +8,14 @@
 
 class ContributionExperimentsController extends \WikiaController {
 	public function getNextPages() {
-		$order = [
-			'deadendpages',
-			'withoutimages',
-			'uncategorizedpages',
-			'wantedpages'
+		$pages = [
+			'deadendpages' => 'Links are missing on this page.',
+			'withoutimages' => 'Photos are missing on this page.',
+			'uncategorizedpages' => 'There are no categories on this page.',
+			'wantedpages' => 'Create this page.'
 		];
+
+		$order = array_keys( $pages );
 
 		$counter = 0;
 		$added = 0;
@@ -30,7 +32,8 @@ class ContributionExperimentsController extends \WikiaController {
 					$items[] = [
 						'title' => $titleText,
 						'url' => \Title::newFromText( $titleText )->getFullURL(),
-						'category' => $insight
+						'category' => $insight,
+						'category-desc' => $pages[$insight]
 					];
 					$added++;
 				}

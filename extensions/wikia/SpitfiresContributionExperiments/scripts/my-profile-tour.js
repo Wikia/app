@@ -133,38 +133,42 @@ require(['jquery', 'ext.wikia.spitfires.experiments.tracker', 'wikia.loader', 'w
 			var dfd = $.Deferred(),
 				formattedAnswers;
 
-			modal.$element.find('.my-profile-content').startThrobbing();
+			if (answers.length) {
+				modal.$element.find('.my-profile-content').startThrobbing();
 
-			formattedAnswers = Object.keys(answers).map(function (value, index) {
-				switch (index + 1) {
-					case 1:
-						return "My favorite moment in the game:\n" + answers[index + 1];
-						break;
-					case 2:
-						return "My gaming platforms:\n" + answers[index + 1];
-						break;
-					case 3:
-						return "About me:\n" + answers[index + 1];
-						break;
-				}
-			});
+				formattedAnswers = Object.keys(answers).map(function (value, index) {
+					switch (index + 1) {
+						case 1:
+							return "===My favorite moment in the game===\n" + answers[index + 1];
+							break;
+						case 2:
+							return "===My gaming platforms===\n" + answers[index + 1];
+							break;
+						case 3:
+							return "===About me===\n" + answers[index + 1];
+							break;
+					}
+				});
 
-			$.ajax({
-				type: 'post',
-				url: '/api.php',
-				data: {
-					action: 'edit',
-					title: userPage,
-					text: formattedAnswers.join('\n\n'),
-					token: mw.user.tokens.get('editToken')
-				}
-			}).done(function () {
-				saved = true;
-				tracker.trackVerboseSuccess(experimentName, 'user-data-saved');
-			}).always(function () {
-				modal.$element.find('.my-profile-content').stopThrobbing();
+				$.ajax({
+					type: 'post',
+					url: '/api.php',
+					data: {
+						action: 'edit',
+						title: userPage,
+						text: formattedAnswers.join('\n\n'),
+						token: mw.user.tokens.get('editToken')
+					}
+				}).done(function () {
+					saved = true;
+					tracker.trackVerboseSuccess(experimentName, 'user-data-saved');
+				}).always(function () {
+					modal.$element.find('.my-profile-content').stopThrobbing();
+					dfd.resolve(true);
+				});
+			} else {
 				dfd.resolve(true);
-			});
+			}
 
 			return dfd.promise();
 		}
