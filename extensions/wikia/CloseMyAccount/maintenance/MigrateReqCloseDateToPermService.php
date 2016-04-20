@@ -12,18 +12,18 @@ require_once __DIR__ . '/../../../../maintenance/Maintenance.php';
 
 class MigrateReqCloseDateToPermService extends Maintenance {
 
-	private $isDryRun = true;
+	private $force;
 	private $totalUsersMigrated = 0;
 
 	public function __construct() {
 		parent::__construct();
-		$this->addOption( 'dry-run', "Don't perform any operations [default]" );
+		$this->addOption( 'force', "Actually perform migration, script defaults to test mode" );
 	}
 
 	public function execute() {
-		$this->isDryRun = $this->getOption( 'dry-run', true );
+		$this->force = $this->hasOption( 'force' );
 
-		if ( $this->isDryRun ) {
+		if ( !$this->force ) {
 			$this->output( "Running in dry-run mode!" );
 		}
 
@@ -53,7 +53,7 @@ class MigrateReqCloseDateToPermService extends Maintenance {
 		$this->logUserMigration( $userArray );
 		$user = User::newFromId( $userArray['userId'] );
 		$user->setGlobalPreference( 'requested-closure-date', $userArray['requestedClosureDate'] );
-		if ( !$this->isDryRun ) {
+		if ( $this->force ) {
 			$user->saveSettings();
 		}
 
