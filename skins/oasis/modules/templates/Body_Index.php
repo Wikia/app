@@ -67,6 +67,8 @@
 			}
 		?>
 
+		<div id="rcjsload_wikiaaa"></div>
+
 		<article id="WikiaMainContent" class="WikiaMainContent<?= !empty( $isGridLayoutEnabled ) ? $railModulesExist ? ' grid-4' : ' grid-6' : '' ?>">
 			<?php
 			if ( !empty( $wg->EnableMomModulesExt ) && WikiaPageType::isMainPage() ) {
