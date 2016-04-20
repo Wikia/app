@@ -154,7 +154,7 @@
 				}
 				?>
 
-				<div id="rcjsload_cd6557"></div>
+				<div id="rcjsload_wikiaba"></div>
 
 				<?php if ( !empty( $afterContentHookText ) ) { ?>
 					<div id="WikiaArticleFooter" class="WikiaArticleFooter">
