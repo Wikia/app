@@ -39,7 +39,7 @@ class PortableInfoboxBuilderHooks {
 	 * @param array $aVars
 	 * @return bool
 	 */
-	public function onEditPageMakeGlobalVariablesScript( array &$aVars ) {
+	public static function onEditPageMakeGlobalVariablesScript( array &$aVars ) {
 		$context = \RequestContext::getMain();
 		$title = $context->getTitle();
 		if ( self::shouldPassInfoboxBuilderVars( $context ) ) {
@@ -60,12 +60,12 @@ class PortableInfoboxBuilderHooks {
 	 * @param array $aVars
 	 * @return bool
 	 */
-	public function onMakeGlobalVariablesScript( array &$aVars ) {
+	public static function onMakeGlobalVariablesScript( array &$aVars ) {
 		global $wgEnablePortableInfoboxBuilderInVE, $wgEnableVisualEditorExt;
 
 		if ( $wgEnableVisualEditorExt && \VisualEditorHooks::isAvailable( \RequestContext::getMain()->getSkin() ) ) {
 			$aVars['wgEnablePortableInfoboxBuilderInVE'] = $wgEnablePortableInfoboxBuilderInVE &&
-				\RequestContext::getMain()->getUser()->isAllowed( 'create' );
+				\RequestContext::getMain()->getUser()->isAllowed( 'createpage' );
 		}
 
 		return true;

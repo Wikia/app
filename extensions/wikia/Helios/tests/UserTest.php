@@ -26,7 +26,7 @@ class UserTest extends \WikiaBaseTest {
 			->bind( HeliosClient::class )->to( function () {
 				return
 					$this->getMock( 'Wikia\Service\Helios\HeliosClient',
-						[ 'info', 'login', 'invalidateToken', 'generateToken', 'register' ],
+						[ ],
 						[ ],
 						'',
 						false );

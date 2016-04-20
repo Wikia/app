@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.1.32, for unknown-linux-gnu (x86_64)
+-- MySQL dump 10.13  Distrib 5.6.24-72.2, for debian-linux-gnu (x86_64)
 --
--- Host: 10.8.32.21    Database: stats
+-- Host: slave.db-statsdb.service.consul    Database: stats
 -- ------------------------------------------------------
--- Server version	5.1.37-1ubuntu5-log
+-- Server version	5.6.24-72.2-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -16,76 +16,92 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `city_ip_activity`
+-- Table structure for table `cat_lang_monthly_stats`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
-CREATE TABLE `city_ip_activity` (
-  `ca_id` int(8) NOT NULL AUTO_INCREMENT,
-  `ca_ip_text` varchar(255) CHARACTER SET latin1 COLLATE latin1_bin NOT NULL DEFAULT '',
-  `ca_wikis_activity` text,
-  `ca_latest_activity` text,
-  PRIMARY KEY (`ca_id`),
-  KEY `ca_ip_text` (`ca_ip_text`)
-) ENGINE=InnoDB AUTO_INCREMENT=529443 DEFAULT CHARSET=latin1;
-SET character_set_client = @saved_cs_client;
-
---
--- Table structure for table `city_page_views`
---
-
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
-CREATE TABLE `city_page_views` (
-  `pv_city_id` int(8) unsigned NOT NULL,
-  `pv_use_date` varchar(14) NOT NULL DEFAULT '',
-  `pv_namespace` int(8) unsigned NOT NULL,
-  `pv_views` int(10) unsigned NOT NULL,
-  `pv_timestamp` datetime NOT NULL,
-  `pv_city_lang` varchar(10) NOT NULL DEFAULT '',
-  PRIMARY KEY (`pv_city_id`,`pv_use_date`,`pv_namespace`),
-  KEY `pv_use_date` (`pv_use_date`),
-  KEY `pv_namespace` (`pv_namespace`),
-  KEY `pv_views_timestamp` (`pv_views`,`pv_timestamp`),
-  KEY `pv_wiki_views_timestamp` (`pv_city_id`,`pv_views`,`pv_timestamp`),
-  KEY `pv_city` (`pv_city_id`,`pv_namespace`,`pv_use_date`,`pv_views`),
-  KEY `pv_city_lang` (`pv_city_lang`,`pv_city_id`,`pv_use_date`,`pv_views`)
+DROP TABLE IF EXISTS `cat_lang_monthly_stats`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `cat_lang_monthly_stats` (
+  `wiki_cat_id` int(8) unsigned NOT NULL,
+  `wiki_lang_id` int(8) unsigned NOT NULL,
+  `stats_date` mediumint(6) unsigned NOT NULL DEFAULT '0',
+  `users_all` int(8) unsigned NOT NULL DEFAULT '0',
+  `users_content_ns` int(8) unsigned NOT NULL DEFAULT '0',
+  `users_user_ns` int(8) unsigned NOT NULL DEFAULT '0',
+  `users_5times` int(8) unsigned NOT NULL DEFAULT '0',
+  `users_100times` int(8) unsigned NOT NULL DEFAULT '0',
+  `articles` int(8) unsigned NOT NULL DEFAULT '0',
+  `articles_daily` int(8) unsigned NOT NULL DEFAULT '0',
+  `articles_edits` int(8) unsigned NOT NULL DEFAULT '0',
+  `images_links` int(8) unsigned NOT NULL DEFAULT '0',
+  `images_uploaded` int(8) unsigned NOT NULL DEFAULT '0',
+  `video_links` int(8) unsigned NOT NULL DEFAULT '0',
+  `video_uploaded` int(8) unsigned NOT NULL DEFAULT '0',
+  `ts` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`wiki_cat_id`,`wiki_lang_id`,`stats_date`),
+  KEY `stats_date` (`stats_date`),
+  KEY `ts` (`wiki_cat_id`,`wiki_lang_id`,`ts`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-SET character_set_client = @saved_cs_client;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `city_page_vote`
+-- Table structure for table `cat_monthly_stats`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
-CREATE TABLE `city_page_vote` (
-  `city_id` int(8) unsigned NOT NULL,
-  `page_id` int(8) unsigned NOT NULL,
-  `page_title` varchar(255) DEFAULT NULL,
-  `page_namespace` int(5) NOT NULL,
-  `user_id` int(5) unsigned NOT NULL,
-  `user_name` varchar(255) DEFAULT NULL,
-  `vote` int(2) NOT NULL,
-  `ip` varchar(32) NOT NULL,
-  `time` datetime NOT NULL,
-  `unique_id` varchar(32) NOT NULL DEFAULT '',
-  PRIMARY KEY (`city_id`,`page_id`,`user_id`,`unique_id`,`ip`),
-  KEY `user_id` (`user_id`),
-  KEY `user_name` (`user_name`),
-  KEY `page` (`page_id`,`page_namespace`),
-  KEY `page_title` (`page_title`),
-  KEY `time` (`time`)
+DROP TABLE IF EXISTS `cat_monthly_stats`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `cat_monthly_stats` (
+  `wiki_cat_id` int(8) unsigned NOT NULL,
+  `stats_date` mediumint(6) unsigned NOT NULL DEFAULT '0',
+  `users_all` int(8) unsigned NOT NULL DEFAULT '0',
+  `users_content_ns` int(8) unsigned NOT NULL DEFAULT '0',
+  `users_user_ns` int(8) unsigned NOT NULL DEFAULT '0',
+  `users_5times` int(8) unsigned NOT NULL DEFAULT '0',
+  `users_100times` int(8) unsigned NOT NULL DEFAULT '0',
+  `articles` int(8) unsigned NOT NULL DEFAULT '0',
+  `articles_daily` int(8) unsigned NOT NULL DEFAULT '0',
+  `articles_edits` int(8) unsigned NOT NULL DEFAULT '0',
+  `images_links` int(8) unsigned NOT NULL DEFAULT '0',
+  `images_uploaded` int(8) unsigned NOT NULL DEFAULT '0',
+  `video_links` int(8) unsigned NOT NULL DEFAULT '0',
+  `video_uploaded` int(8) unsigned NOT NULL DEFAULT '0',
+  `ts` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`wiki_cat_id`,`stats_date`),
+  KEY `stats_date` (`stats_date`),
+  KEY `ts` (`wiki_cat_id`,`ts`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-SET character_set_client = @saved_cs_client;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `chatlog`
+--
+
+DROP TABLE IF EXISTS `chatlog`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `chatlog` (
+  `wiki_id` int(8) unsigned NOT NULL,
+  `user_id` int(8) unsigned NOT NULL,
+  `log_id` int(8) unsigned NOT NULL AUTO_INCREMENT,
+  `event_type` tinyint(2) unsigned NOT NULL DEFAULT '6',
+  `event_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`log_id`),
+  KEY `wikilog` (`wiki_id`,`log_id`),
+  KEY `event_date` (`wiki_id`,`event_date`),
+  KEY `users` (`user_id`,`wiki_id`,`event_type`),
+  KEY `wiki_users` (`wiki_id`,`user_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=59123752 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `city_used_tags`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
+DROP TABLE IF EXISTS `city_used_tags`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `city_used_tags` (
   `ct_wikia_id` int(8) unsigned NOT NULL,
   `ct_page_id` int(8) unsigned NOT NULL,
@@ -97,353 +113,265 @@ CREATE TABLE `city_used_tags` (
   KEY `ct_page_id` (`ct_page_id`,`ct_namespace`),
   KEY `ct_timestamp` (`ct_timestamp`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-SET character_set_client = @saved_cs_client;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `city_user_activity`
+-- Table structure for table `dead_wiki_stats`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
-CREATE TABLE `city_user_activity` (
-  `ca_id` int(8) NOT NULL AUTO_INCREMENT,
-  `ca_user_text` varchar(255) CHARACTER SET latin1 COLLATE latin1_bin NOT NULL DEFAULT '',
-  `ca_wikis_activity` text,
-  `ca_latest_activity` text,
-  PRIMARY KEY (`ca_id`),
-  KEY `ca_user_text` (`ca_user_text`)
-) ENGINE=InnoDB AUTO_INCREMENT=413123 DEFAULT CHARSET=latin1;
-SET character_set_client = @saved_cs_client;
-
---
--- Table structure for table `city_user_edits`
---
-
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
-CREATE TABLE `city_user_edits` (
-  `ue_user_id` int(10) NOT NULL,
-  `ue_user_text` varchar(255) CHARACTER SET latin1 COLLATE latin1_bin NOT NULL DEFAULT '',
-  `ue_edit_namespace` int(11) NOT NULL,
-  `ue_edit_count` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`ue_user_id`,`ue_edit_namespace`),
-  KEY `ue_user_text` (`ue_user_text`),
-  KEY `ue_edit_namespace` (`ue_edit_namespace`)
+DROP TABLE IF EXISTS `dead_wiki_stats`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `dead_wiki_stats` (
+  `id` int(11) NOT NULL DEFAULT '0',
+  `name` varchar(255) DEFAULT NULL,
+  `created` varchar(15) DEFAULT NULL,
+  `last_edited` varchar(15) DEFAULT NULL,
+  `edits` int(11) DEFAULT NULL,
+  `content_pages` int(11) DEFAULT NULL,
+  `pv_last_month` int(11) DEFAULT NULL,
+  `status` varchar(32) DEFAULT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-SET character_set_client = @saved_cs_client;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `city_wikireferer`
+-- Table structure for table `events`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
-CREATE TABLE `city_wikireferer` (
-  `ref_city_id` int(8) NOT NULL,
-  `ref_domain` varchar(255) NOT NULL DEFAULT '',
-  `ref_timestamp` varchar(14) NOT NULL DEFAULT '19700101000000',
-  `ref_count` int(10) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`ref_city_id`,`ref_domain`,`ref_timestamp`),
-  KEY `ref_domain_key` (`ref_domain`),
-  KEY `times` (`ref_timestamp`)
+DROP TABLE IF EXISTS `events`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `events` (
+  `wiki_id` int(8) unsigned NOT NULL,
+  `page_id` int(8) unsigned NOT NULL,
+  `rev_id` int(8) unsigned NOT NULL,
+  `log_id` int(8) unsigned NOT NULL DEFAULT '0',
+  `user_id` int(8) unsigned NOT NULL,
+  `user_is_bot` enum('N','Y') DEFAULT 'N',
+  `page_ns` smallint(5) unsigned NOT NULL,
+  `is_content` enum('N','Y') DEFAULT 'N',
+  `is_redirect` enum('N','Y') DEFAULT 'N',
+  `ip` int(10) unsigned NOT NULL DEFAULT '0',
+  `rev_timestamp` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `image_links` int(5) unsigned NOT NULL DEFAULT '0',
+  `video_links` int(5) unsigned NOT NULL DEFAULT '0',
+  `total_words` int(4) unsigned NOT NULL DEFAULT '0',
+  `rev_size` mediumint(7) unsigned NOT NULL DEFAULT '0',
+  `wiki_lang_id` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `wiki_cat_id` tinyint(2) unsigned NOT NULL DEFAULT '0',
+  `event_type` tinyint(2) unsigned NOT NULL DEFAULT '1',
+  `event_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `media_type` tinyint(2) unsigned NOT NULL DEFAULT '0',
+  `rev_date` date NOT NULL DEFAULT '0000-00-00',
+  `beacon_id` varchar(32) NOT NULL DEFAULT '',
+  PRIMARY KEY (`wiki_id`,`page_id`,`rev_id`,`log_id`,`rev_timestamp`),
+  KEY `event_date_idx` (`event_date`),
+  KEY `page_ns_idx` (`page_ns`),
+  KEY `rev_timestamp_idx` (`rev_timestamp`),
+  KEY `user_id_idx` (`user_id`),
+  KEY `wiki_cat_id_idx` (`wiki_cat_id`),
+  KEY `wiki_id_idx` (`wiki_id`),
+  KEY `wiki_lang_id_idx` (`wiki_lang_id`),
+  KEY `for_editcount_idx` (`user_id`,`page_ns`,`event_type`),
+  KEY `for_admin_dashboard_idx` (`wiki_id`,`event_date`),
+  KEY `for_wikia_api_last_editors_idx` (`wiki_id`,`rev_timestamp`),
+  KEY `for_lookup_contribs_idx` (`wiki_id`,`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1
+/*!50100 PARTITION BY RANGE (YEAR(rev_timestamp))
+(PARTITION ev2002 VALUES LESS THAN (2002) ENGINE = InnoDB,
+PARTITION ev2003 VALUES LESS THAN (2003) ENGINE = InnoDB,
+PARTITION ev2004 VALUES LESS THAN (2004) ENGINE = InnoDB,
+PARTITION ev2005 VALUES LESS THAN (2005) ENGINE = InnoDB,
+PARTITION ev2006 VALUES LESS THAN (2006) ENGINE = InnoDB,
+PARTITION ev2007 VALUES LESS THAN (2007) ENGINE = InnoDB,
+PARTITION ev2008 VALUES LESS THAN (2008) ENGINE = InnoDB,
+PARTITION ev2009 VALUES LESS THAN (2009) ENGINE = InnoDB,
+PARTITION ev2010 VALUES LESS THAN (2010) ENGINE = InnoDB,
+PARTITION ev2011 VALUES LESS THAN (2011) ENGINE = InnoDB,
+PARTITION ev2012 VALUES LESS THAN (2012) ENGINE = InnoDB,
+PARTITION ev2013 VALUES LESS THAN (2013) ENGINE = InnoDB,
+PARTITION ev2014 VALUES LESS THAN (2014) ENGINE = InnoDB,
+PARTITION ev9999 VALUES LESS THAN MAXVALUE ENGINE = InnoDB) */;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `events_log`
+--
+
+DROP TABLE IF EXISTS `events_log`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `events_log` (
+  `el_type` char(32) NOT NULL,
+  `el_wiki` int(5) DEFAULT '0',
+  `el_language` int(5) DEFAULT '0',
+  `el_category` int(5) DEFAULT '0',
+  `el_catlang` int(5) DEFAULT '0',
+  `el_summary` int(5) DEFAULT '0',
+  `el_start` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `el_end` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`el_type`),
+  KEY `el_start_end` (`el_type`,`el_start`,`el_end`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-SET character_set_client = @saved_cs_client;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `city_wikireferer_domain_views`
+-- Table structure for table `ignored_users`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
-CREATE TABLE `city_wikireferer_domain_views` (
-  `ref_city_id` int(8) NOT NULL,
-  `ref_domain` varchar(255) NOT NULL DEFAULT '',
-  `ref_count` int(10) unsigned NOT NULL DEFAULT '0',
-  `ref_type` int(2) NOT NULL,
-  PRIMARY KEY (`ref_city_id`,`ref_domain`,`ref_type`),
-  KEY `ref_domain_key` (`ref_domain`),
-  KEY `ref_type` (`ref_type`,`ref_count`)
+DROP TABLE IF EXISTS `ignored_users`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ignored_users` (
+  `user_id` int(5) unsigned NOT NULL,
+  PRIMARY KEY (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-SET character_set_client = @saved_cs_client;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `city_wikireferer_domains`
+-- Table structure for table `lang_monthly_stats`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
-CREATE TABLE `city_wikireferer_domains` (
-  `ref_city_id` int(8) NOT NULL,
-  `ref_domain` varchar(255) NOT NULL DEFAULT '',
-  `ref_timestamp` varchar(14) NOT NULL DEFAULT '19700101000000',
-  `ref_count` int(10) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`ref_city_id`,`ref_domain`,`ref_timestamp`),
-  KEY `ref_domain_key` (`ref_domain`),
-  KEY `times` (`ref_timestamp`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-SET character_set_client = @saved_cs_client;
-
---
--- Table structure for table `city_wikireferer_views`
---
-
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
-CREATE TABLE `city_wikireferer_views` (
-  `ref_city_id` int(8) NOT NULL,
-  `ref_domain` varchar(255) NOT NULL DEFAULT '',
-  `ref_count` int(10) unsigned NOT NULL DEFAULT '0',
-  `ref_type` int(2) NOT NULL,
-  PRIMARY KEY (`ref_city_id`,`ref_domain`,`ref_type`),
-  KEY `ref_domain_key` (`ref_domain`),
-  KEY `ref_type` (`ref_type`,`ref_count`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-SET character_set_client = @saved_cs_client;
-
---
--- Table structure for table `stats_editors`
---
-
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
-CREATE TABLE `stats_editors` (
-  `wikia_id` int(10) unsigned NOT NULL,
-  `user_id` int(10) unsigned NOT NULL,
-  `page_ns` int(6) unsigned NOT NULL,
-  `is_content` int(1) unsigned NOT NULL,
-  `date` int(6) unsigned NOT NULL,
-  `count` int(10) unsigned NOT NULL,
-  `last_page` int(10) unsigned NOT NULL,
-  `last_edited` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`wikia_id`,`user_id`,`date`,`page_ns`,`is_content`),
-  KEY `users` (`is_content`,`wikia_id`,`user_id`),
-  KEY `count_users` (`is_content`,`wikia_id`,`user_id`,`count`),
-  KEY `wikia_date` (`wikia_id`,`date`,`count`),
-  KEY `users_last` (`user_id`,`count`,`last_page`,`last_edited`),
-  KEY `users_ns` (`page_ns`,`user_id`,`count`),
-  KEY `users_content` (`is_content`,`user_id`,`count`),
-  KEY `wikia_last` (`wikia_id`,`last_page`,`last_edited`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-SET character_set_client = @saved_cs_client;
-
---
--- Table structure for table `stats_hub`
---
-
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
-CREATE TABLE `stats_hub` (
-  `wikia_cat` varchar(10) NOT NULL,
-  `page_ns` int(6) unsigned NOT NULL,
-  `page_is_content` int(6) unsigned NOT NULL,
-  `date` int(6) NOT NULL,
-  `redirects` int(1) unsigned NOT NULL,
-  `pages` int(10) unsigned NOT NULL,
-  `rev_reg_count` int(10) unsigned NOT NULL,
-  `rev_anon_count` int(10) unsigned NOT NULL,
-  `last_edited` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`wikia_cat`,`date`,`page_ns`),
-  KEY `pages` (`wikia_cat`,`page_ns`,`page_is_content`),
-  KEY `count_revisions` (`wikia_cat`,`page_ns`,`page_is_content`,`rev_reg_count`,`rev_anon_count`),
-  KEY `count_pages` (`page_is_content`,`wikia_cat`,`pages`),
-  KEY `stats_date` (`wikia_cat`,`date`,`rev_reg_count`,`rev_anon_count`),
-  KEY `page_last` (`rev_reg_count`,`rev_anon_count`,`last_edited`),
-  KEY `page_ns` (`page_ns`,`rev_reg_count`,`rev_anon_count`),
-  KEY `page_content` (`page_is_content`,`rev_reg_count`,`rev_anon_count`),
-  KEY `wikia_last` (`wikia_cat`,`last_edited`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-SET character_set_client = @saved_cs_client;
-
---
--- Table structure for table `stats_hub_editors`
---
-
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
-CREATE TABLE `stats_hub_editors` (
-  `wikia_cat` varchar(10) NOT NULL,
-  `user_id` int(10) unsigned NOT NULL,
-  `page_ns` int(6) unsigned NOT NULL,
-  `page_is_content` int(1) unsigned NOT NULL,
-  `date` int(6) unsigned NOT NULL,
-  `count` int(10) unsigned NOT NULL,
-  `last_edited` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`wikia_cat`,`user_id`,`date`,`page_ns`),
-  KEY `users` (`page_is_content`,`wikia_cat`),
-  KEY `count_users` (`page_is_content`,`wikia_cat`,`count`),
-  KEY `wikia_date` (`wikia_cat`,`date`,`count`),
-  KEY `wikia_last` (`wikia_cat`,`last_edited`),
-  KEY `users_ns` (`page_ns`,`count`),
-  KEY `user_date` (`user_id`,`date`),
-  KEY `users_content` (`page_is_content`,`count`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-SET character_set_client = @saved_cs_client;
-
---
--- Table structure for table `stats_lang`
---
-
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
-CREATE TABLE `stats_lang` (
-  `wikia_lang` varchar(10) NOT NULL,
-  `page_ns` int(6) unsigned NOT NULL,
-  `page_is_content` int(6) unsigned NOT NULL,
-  `date` int(6) NOT NULL,
-  `redirects` int(1) unsigned NOT NULL,
-  `pages` int(10) unsigned NOT NULL,
-  `rev_reg_count` int(10) unsigned NOT NULL,
-  `rev_anon_count` int(10) unsigned NOT NULL,
-  `last_edited` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`wikia_lang`,`date`,`page_ns`),
-  KEY `pages` (`wikia_lang`,`page_ns`,`page_is_content`),
-  KEY `count_revisions` (`wikia_lang`,`page_ns`,`page_is_content`,`rev_reg_count`,`rev_anon_count`),
-  KEY `count_pages` (`page_is_content`,`wikia_lang`,`pages`),
-  KEY `stats_date` (`wikia_lang`,`date`,`rev_reg_count`,`rev_anon_count`),
-  KEY `page_last` (`rev_reg_count`,`rev_anon_count`,`last_edited`),
-  KEY `page_ns` (`page_ns`,`rev_reg_count`,`rev_anon_count`),
-  KEY `page_content` (`page_is_content`,`rev_reg_count`,`rev_anon_count`),
-  KEY `wikia_last` (`wikia_lang`,`last_edited`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-SET character_set_client = @saved_cs_client;
-
---
--- Table structure for table `stats_lang_editors`
---
-
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
-CREATE TABLE `stats_lang_editors` (
-  `wikia_lang` varchar(10) NOT NULL,
-  `user_id` int(10) unsigned NOT NULL,
-  `page_ns` int(6) unsigned NOT NULL,
-  `page_is_content` int(1) unsigned NOT NULL,
-  `date` int(6) unsigned NOT NULL,
-  `count` int(10) unsigned NOT NULL,
-  `last_edited` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`wikia_lang`,`user_id`,`date`,`page_ns`),
-  KEY `users` (`page_is_content`,`wikia_lang`),
-  KEY `count_users` (`page_is_content`,`wikia_lang`,`count`),
-  KEY `wikia_date` (`wikia_lang`,`date`,`count`),
-  KEY `wikia_last` (`wikia_lang`,`last_edited`),
-  KEY `users_ns` (`page_ns`,`count`),
-  KEY `user_date` (`user_id`,`date`),
-  KEY `users_content` (`page_is_content`,`count`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-SET character_set_client = @saved_cs_client;
-
---
--- Table structure for table `stats_pages`
---
-
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
-CREATE TABLE `stats_pages` (
-  `wikia_id` int(10) unsigned NOT NULL,
-  `page_id` int(10) unsigned NOT NULL,
-  `page_ns` int(6) unsigned NOT NULL,
-  `date` int(6) NOT NULL,
-  `is_content` int(1) unsigned NOT NULL,
-  `is_redirect` int(1) unsigned NOT NULL,
-  `page_size` int(10) unsigned NOT NULL,
-  `rev_reg_count` int(10) unsigned NOT NULL,
-  `rev_anon_count` int(10) unsigned NOT NULL,
-  `last_edited` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `image_links` int(10) NOT NULL,
-  `video_links` int(10) NOT NULL,
-  `total_words` int(10) NOT NULL,
-  PRIMARY KEY (`wikia_id`,`page_id`,`date`,`page_ns`),
-  KEY `pages` (`is_content`,`wikia_id`,`page_id`),
-  KEY `count_pages` (`is_content`,`wikia_id`,`page_id`,`rev_reg_count`,`rev_anon_count`),
-  KEY `stats_date` (`wikia_id`,`date`,`rev_reg_count`,`rev_anon_count`),
-  KEY `page_last` (`page_id`,`rev_reg_count`,`rev_anon_count`,`last_edited`),
-  KEY `page_ns` (`page_ns`,`page_id`,`rev_reg_count`,`rev_anon_count`),
-  KEY `page_content` (`is_content`,`page_id`,`rev_reg_count`,`rev_anon_count`),
-  KEY `wikia_last` (`wikia_id`,`page_id`,`last_edited`),
-  KEY `page_size` (`is_content`,`wikia_id`,`page_size`),
-  KEY `links` (`wikia_id`,`is_content`,`image_links`,`video_links`),
-  KEY `words` (`wikia_id`,`is_content`,`total_words`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-SET character_set_client = @saved_cs_client;
-
---
--- Table structure for table `stats_summary`
---
-
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
-CREATE TABLE `stats_summary` (
-  `wikia_id` int(8) NOT NULL,
-  `stats_date` int(6) NOT NULL DEFAULT '0',
-  `wikia_hub` int(10) unsigned NOT NULL DEFAULT '0',
-  `wikia_lang` varchar(15) NOT NULL DEFAULT '',
-  `editors_allns` int(10) unsigned NOT NULL DEFAULT '0',
-  `editors_contentns` int(10) unsigned NOT NULL DEFAULT '0',
-  `editors_userns` int(10) unsigned NOT NULL DEFAULT '0',
-  `editors_5times` int(10) unsigned NOT NULL DEFAULT '0',
-  `editors_100times` int(10) unsigned NOT NULL DEFAULT '0',
-  `editors_month_allns` int(10) unsigned NOT NULL DEFAULT '0',
-  `editors_month_contentns` int(10) unsigned NOT NULL DEFAULT '0',
-  `editors_month_userns` int(10) unsigned NOT NULL DEFAULT '0',
-  `articles` int(10) unsigned NOT NULL DEFAULT '0',
-  `articles_day` int(10) unsigned NOT NULL DEFAULT '0',
-  `articles_0_5_size` int(10) unsigned NOT NULL DEFAULT '0',
-  `database_edits` int(10) unsigned NOT NULL DEFAULT '0',
-  `database_words` int(10) unsigned NOT NULL DEFAULT '0',
-  `images_links` int(10) unsigned NOT NULL DEFAULT '0',
-  `images_uploaded` int(10) unsigned NOT NULL DEFAULT '0',
-  `video_embeded` int(10) unsigned NOT NULL DEFAULT '0',
-  `video_uploaded` int(10) unsigned NOT NULL DEFAULT '0',
+DROP TABLE IF EXISTS `lang_monthly_stats`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `lang_monthly_stats` (
+  `wiki_lang_id` int(8) unsigned NOT NULL,
+  `stats_date` mediumint(6) unsigned NOT NULL DEFAULT '0',
+  `users_all` int(8) unsigned NOT NULL DEFAULT '0',
+  `users_content_ns` int(8) unsigned NOT NULL DEFAULT '0',
+  `users_user_ns` int(8) unsigned NOT NULL DEFAULT '0',
+  `users_5times` int(8) unsigned NOT NULL DEFAULT '0',
+  `users_100times` int(8) unsigned NOT NULL DEFAULT '0',
+  `articles` int(8) unsigned NOT NULL DEFAULT '0',
+  `articles_daily` int(8) unsigned NOT NULL DEFAULT '0',
+  `articles_edits` int(8) unsigned NOT NULL DEFAULT '0',
+  `images_links` int(8) unsigned NOT NULL DEFAULT '0',
+  `images_uploaded` int(8) unsigned NOT NULL DEFAULT '0',
+  `video_links` int(8) unsigned NOT NULL DEFAULT '0',
+  `video_uploaded` int(8) unsigned NOT NULL DEFAULT '0',
   `ts` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`wikia_id`,`stats_date`),
-  KEY `hub` (`wikia_hub`,`stats_date`),
-  KEY `lang` (`wikia_lang`,`stats_date`),
+  PRIMARY KEY (`wiki_lang_id`,`stats_date`),
   KEY `stats_date` (`stats_date`),
-  KEY `wikia_id` (`wikia_id`),
-  KEY `ts` (`wikia_id`,`ts`)
+  KEY `ts` (`wiki_lang_id`,`ts`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-SET character_set_client = @saved_cs_client;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `tags_pv`
+-- Table structure for table `namespace_monthly_stats`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
-CREATE TABLE `tags_pv` (
-  `city_id` int(8) unsigned NOT NULL,
-  `tag_id` int(8) unsigned NOT NULL,
-  `use_date` varchar(14) NOT NULL DEFAULT '',
-  `city_lang` varchar(10) NOT NULL DEFAULT '',
-  `namespace` int(8) unsigned NOT NULL,
-  `pviews` int(10) unsigned NOT NULL,
-  `ts` datetime NOT NULL,
-  PRIMARY KEY (`city_id`,`tag_id`,`use_date`,`namespace`),
-  KEY `pv_use_date` (`tag_id`,`use_date`),
-  KEY `pv_namespace` (`tag_id`,`namespace`),
-  KEY `tag_city` (`tag_id`,`city_id`,`use_date`),
-  KEY `tag_lang` (`tag_id`,`city_lang`,`use_date`)
+DROP TABLE IF EXISTS `namespace_monthly_stats`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `namespace_monthly_stats` (
+  `wiki_id` int(8) unsigned NOT NULL,
+  `page_ns` int(6) unsigned NOT NULL,
+  `wiki_cat_id` int(8) unsigned NOT NULL,
+  `wiki_lang_id` int(8) unsigned NOT NULL,
+  `stats_date` mediumint(6) unsigned NOT NULL DEFAULT '0',
+  `pages_all` int(8) unsigned NOT NULL DEFAULT '0',
+  `pages_daily` int(8) unsigned NOT NULL DEFAULT '0',
+  `pages_edits` int(8) unsigned NOT NULL DEFAULT '0',
+  `ts` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`wiki_id`,`stats_date`,`page_ns`),
+  KEY `stats_date` (`stats_date`,`page_ns`),
+  KEY `lang_stats` (`stats_date`,`wiki_lang_id`,`page_ns`),
+  KEY `cat_stats` (`stats_date`,`wiki_cat_id`,`page_ns`),
+  KEY `lang_cat_stats` (`stats_date`,`wiki_lang_id`,`wiki_cat_id`,`page_ns`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1
+/*!50100 PARTITION BY RANGE (YEAR(stats_date))
+(PARTITION nms2002 VALUES LESS THAN (2002) ENGINE = InnoDB,
+PARTITION nms2003 VALUES LESS THAN (2003) ENGINE = InnoDB,
+PARTITION nms2004 VALUES LESS THAN (2004) ENGINE = InnoDB,
+PARTITION nms2005 VALUES LESS THAN (2005) ENGINE = InnoDB,
+PARTITION nms2006 VALUES LESS THAN (2006) ENGINE = InnoDB,
+PARTITION nms2007 VALUES LESS THAN (2007) ENGINE = InnoDB,
+PARTITION nms2008 VALUES LESS THAN (2008) ENGINE = InnoDB,
+PARTITION nms2009 VALUES LESS THAN (2009) ENGINE = InnoDB,
+PARTITION nms2010 VALUES LESS THAN (2010) ENGINE = InnoDB,
+PARTITION nms2011 VALUES LESS THAN (2011) ENGINE = InnoDB,
+PARTITION nms2012 VALUES LESS THAN (2012) ENGINE = InnoDB,
+PARTITION nms2013 VALUES LESS THAN (2013) ENGINE = InnoDB,
+PARTITION nms2014 VALUES LESS THAN (2014) ENGINE = InnoDB,
+PARTITION nms2015 VALUES LESS THAN (2015) ENGINE = InnoDB,
+PARTITION nms9999 VALUES LESS THAN MAXVALUE ENGINE = InnoDB) */;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `scribe_log`
+--
+
+DROP TABLE IF EXISTS `scribe_log`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `scribe_log` (
+  `hostname` char(32) NOT NULL,
+  `logdate` int(5) unsigned NOT NULL DEFAULT '0',
+  `logcount` int(8) unsigned NOT NULL DEFAULT '0',
+  `ts` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`hostname`,`logdate`),
+  KEY `hostname_ts` (`hostname`,`ts`,`logdate`),
+  KEY `logdate` (`logdate`,`logcount`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-SET character_set_client = @saved_cs_client;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `tags_stats_filter`
+-- Table structure for table `summary_monthly_stats`
 --
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
-CREATE TABLE `tags_stats_filter` (
-  `sf_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `sf_city_id` int(10) unsigned DEFAULT NULL,
-  `sf_page_id` int(10) unsigned DEFAULT NULL,
-  `sf_user_id` int(10) unsigned DEFAULT NULL,
-  `sf_tag_id` int(10) unsigned NOT NULL,
-  `sf_type` enum('blog','user','article','city') DEFAULT NULL,
-  PRIMARY KEY (`sf_id`),
-  UNIQUE KEY `sf_city_id` (`sf_city_id`,`sf_page_id`,`sf_user_id`,`sf_tag_id`,`sf_type`)
+DROP TABLE IF EXISTS `summary_monthly_stats`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `summary_monthly_stats` (
+  `stats_date` mediumint(6) unsigned NOT NULL DEFAULT '0',
+  `users_all` int(8) unsigned NOT NULL DEFAULT '0',
+  `users_content_ns` int(8) unsigned NOT NULL DEFAULT '0',
+  `users_user_ns` int(8) unsigned NOT NULL DEFAULT '0',
+  `users_5times` int(8) unsigned NOT NULL DEFAULT '0',
+  `users_100times` int(8) unsigned NOT NULL DEFAULT '0',
+  `articles` int(8) unsigned NOT NULL DEFAULT '0',
+  `articles_daily` int(8) unsigned NOT NULL DEFAULT '0',
+  `articles_edits` int(8) unsigned NOT NULL DEFAULT '0',
+  `images_links` int(8) unsigned NOT NULL DEFAULT '0',
+  `images_uploaded` int(8) unsigned NOT NULL DEFAULT '0',
+  `video_links` int(8) unsigned NOT NULL DEFAULT '0',
+  `video_uploaded` int(8) unsigned NOT NULL DEFAULT '0',
+  `ts` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`stats_date`),
+  KEY `ts` (`stats_date`,`ts`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-SET character_set_client = @saved_cs_client;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Table structure for table `wikia_monthly_stats`
+--
+
+DROP TABLE IF EXISTS `wikia_monthly_stats`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `wikia_monthly_stats` (
+  `wiki_id` int(8) unsigned NOT NULL,
+  `stats_date` mediumint(6) unsigned NOT NULL DEFAULT '0',
+  `users_all` int(8) unsigned NOT NULL DEFAULT '0',
+  `users_content_ns` int(8) unsigned NOT NULL DEFAULT '0',
+  `users_user_ns` int(8) unsigned NOT NULL DEFAULT '0',
+  `users_5times` int(8) unsigned NOT NULL DEFAULT '0',
+  `users_100times` int(8) unsigned NOT NULL DEFAULT '0',
+  `articles` int(8) unsigned NOT NULL DEFAULT '0',
+  `articles_daily` int(8) unsigned NOT NULL DEFAULT '0',
+  `articles_edits` int(8) unsigned NOT NULL DEFAULT '0',
+  `images_links` int(8) unsigned NOT NULL DEFAULT '0',
+  `images_uploaded` int(8) unsigned NOT NULL DEFAULT '0',
+  `video_links` int(8) unsigned NOT NULL DEFAULT '0',
+  `video_uploaded` int(8) unsigned NOT NULL DEFAULT '0',
+  `ts` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`wiki_id`,`stats_date`),
+  KEY `stats_date` (`stats_date`),
+  KEY `ts` (`wiki_id`,`ts`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -454,4 +382,4 @@ SET character_set_client = @saved_cs_client;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2010-02-23 15:55:11
+-- Dump completed on 2016-04-18 11:01:15
