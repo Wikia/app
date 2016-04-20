@@ -153,6 +153,18 @@ class ArticleService extends WikiaObject {
 		$length = $this->adjustTextSnippetLength( $text, $length, $breakLimit );
 		$snippet = wfShortenText( $text, $length, $useContentLanguage = true );
 
+		/* extra logging - remove later */
+		if ( $snippet === ' ' ) {
+			\Wikia\Logger\WikiaLogger::instance()->warning( 'Meta description containing just a space', [
+				'variant' => '$articleService->getTextSnippet',
+				'id' => $id,
+				'text' => $text,
+				'length' => $length,
+				'snippet' => $snippet,
+				'ex' => new Exception(),
+			] );
+		}
+		/* end of extra logging */
 		return $snippet;
 	}
 
@@ -171,11 +183,27 @@ class ArticleService extends WikiaObject {
 					$content = '';
 					if ( !$this->wg->DevelEnvironment && !empty( $this->wg->SolrMaster ) ) {
 						$content = $service->getTextFromSolr();
+						/* extra logging - remove later */
+						if ( $content === ' ' ) {
+							\Wikia\Logger\WikiaLogger::instance()->warning( 'Meta description containing just a space', [
+								'variant' => '$articleService->getTextFromSolr',
+								'ex' => new Exception(),
+							] );
+						}
+						/* end of extra logging */
 					}
 
 					if ( $content === '' ) {
 						// back-off is to use mediawiki
 						$content = $service->getUncachedSnippetFromArticle();
+						/* extra logging - remove later */
+						if ( $content === ' ' ) {
+							\Wikia\Logger\WikiaLogger::instance()->warning( 'Meta description containing just a space', [
+								'variant' => '$articleService->getUncachedSnippetFromArticle',
+								'ex' => new Exception(),
+							] );
+						}
+						/* end of extra logging */
 					}
 
 					return $content;
