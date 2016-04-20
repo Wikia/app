@@ -11,14 +11,13 @@ require(['jquery', 'ext.wikia.spitfires.experiments.tracker', 'wikia.loader', 'w
 					content: '' // content
 				},
 				confirmCloseModal: function () {
-					if (!saved && answers.length) {
+					if (!saved && Object.keys(answers).length) {
 						saveProfile();
 					} else {
 						if (saved) {
 							window.location.href = wgServer + '/wiki/' + userPage;
-						} else {
-							return true;
 						}
+						return true;
 					}
 				}
 			},
@@ -133,7 +132,7 @@ require(['jquery', 'ext.wikia.spitfires.experiments.tracker', 'wikia.loader', 'w
 			var dfd = $.Deferred(),
 				formattedAnswers;
 
-			if (answers.length) {
+			if (Object.keys(answers).length) {
 				modal.$element.find('.my-profile-content').startThrobbing();
 
 				formattedAnswers = Object.keys(answers).map(function (value, index) {
