@@ -26,7 +26,7 @@ require(['jquery', 'mw', 'VisualEditorTourExperimentInit', 'ext.wikia.spitfires.
 
 				$editButton.popover('show');
 				$('.ve-tour-next').click(startTour.bind(this, $editButton));
-				$('.ve-tour-experiment .close').click(startTour.bind(this, $editButton));
+				$('.ve-tour-experiment .close').click(close.bind(this, $editButton));
 
 				tracker.trackVerboseImpression(EXPERIMENT_NAME, 'tour-step-article-entry-point');
 			}
