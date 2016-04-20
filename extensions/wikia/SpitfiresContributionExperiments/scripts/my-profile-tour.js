@@ -77,14 +77,14 @@ require(['jquery', 'ext.wikia.spitfires.experiments.tracker', 'wikia.loader', 'w
 		}
 
 		function processInstance(modalInstance) {
-			var modalContent = modalInstance.$element.find('.my-profile-content'),
+			var $modalContent = modalInstance.$element.find('.my-profile-content'),
 				$profileModal;
 
 			modal = modalInstance;
 
 			modalInstance.show();
 
-			modalContent.html(mustache.render(templates[currentStep], templateData));
+			$modalContent.html(mustache.render(templates[currentStep], templateData));
 
 			tracker.trackVerboseImpression(experimentName, 'step-1-first-time');
 
@@ -96,10 +96,10 @@ require(['jquery', 'ext.wikia.spitfires.experiments.tracker', 'wikia.loader', 'w
 				templateData.answer = answers[currentStep];
 				if (currentStep === 4) {
 					sendProfileData().done(function () {
-						modalContent.html(mustache.render(templates[currentStep], lastStepTemplateData));
+						$modalContent.html(mustache.render(templates[currentStep], lastStepTemplateData));
 					});
 				} else {
-					modalContent.html(mustache.render(templates[currentStep], templateData));
+					$modalContent.html(mustache.render(templates[currentStep], templateData));
 				}
 
 				tracker.trackVerboseClick(experimentName, 'go-next-to-step-' + currentStep);
@@ -109,7 +109,7 @@ require(['jquery', 'ext.wikia.spitfires.experiments.tracker', 'wikia.loader', 'w
 				addAnswer();
 				currentStep--;
 				templateData.answer = answers[currentStep];
-				modalContent.html(mustache.render(templates[currentStep], templateData));
+				$modalContent.html(mustache.render(templates[currentStep], templateData));
 
 				tracker.trackVerboseClick(experimentName, 'go-back-to-step-' + currentStep);
 			});
