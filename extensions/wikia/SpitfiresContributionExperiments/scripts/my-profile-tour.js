@@ -114,7 +114,7 @@ require(['jquery', 'ext.wikia.spitfires.experiments.tracker', 'wikia.loader', 'w
 				tracker.trackVerboseClick(experimentName, 'go-back-to-step-' + currentStep);
 			});
 
-			$profileModal.on('click', '.my-profile-next-pages a', function () {
+			$profileModal.on('mousedown touchstart', '.my-profile-next-pages a', function () {
 				tracker.trackVerboseClick(experimentName, 'last-step-go-to-article');
 			});
 		}
