@@ -42,6 +42,7 @@ class Hooks {
 		if ( isset( $_COOKIE[ self::NEWLY_REGISTERED_USER ] ) || isset( $_COOKIE[ self::WITHOUT_EDIT_USER ] ) ) {
 			$out->addScriptFile('/extensions/wikia/SpitfiresContributionExperiments/scripts/experiments-tracker.js');
 			$out->addScriptFile('/extensions/wikia/SpitfiresContributionExperiments/scripts/my-profile-tour.js');
+			$out->addScriptFile('/extensions/wikia/SpitfiresContributionExperiments/scripts/challenge.js');
 		}
 
 		return true;
