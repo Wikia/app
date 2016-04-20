@@ -152,8 +152,8 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		$this->response->setData( [
 			'allMembers' => $this->msg( 'communitypage-view-all-members' )->plain(),
 			'recentlyJoinedHeaderText' => $this->msg( 'communitypage-recently-joined' )->plain(),
-			'noRecentMembersText' => $this->msg( 'communitypage-no-recent-members' )->plain(),
 			'members' => $recentlyJoined,
+			'haveMembers' => count( $recentlyJoined ) > 0,
 		] );
 	}
 
