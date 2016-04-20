@@ -1,8 +1,9 @@
-require(['jquery', 'wikia.loader', 'wikia.nirvana', 'wikia.mustache', 'wikia.tracker', 'mw'],
-	function ($, loader, nirvana, mustache, tracker, mw) {
+require(['jquery', 'ext.wikia.spitfires.experiments.tracker', 'wikia.loader', 'wikia.nirvana', 'wikia.mustache', 'mw'],
+	function ($, tracker, loader, nirvana, mustache, mw) {
 		'use strict';
 
-		var modalConfig = {
+		var experimentName = 'CONTRIB_EXPERIMENTS',
+			modalConfig = {
 				vars: {
 					id: 'MyProfileModal',
 					classes: ['my-profile-modal'],
@@ -31,11 +32,7 @@ require(['jquery', 'wikia.loader', 'wikia.nirvana', 'wikia.mustache', 'wikia.tra
 			templateData = {
 				userName: userName
 			},
-			lastStepTemplateData = [],
-			track = tracker.buildTrackingFunction({
-				category: 'my-profile-tour',
-				trackingMethod: 'analytics'
-			});
+			lastStepTemplateData = [];
 
 		$.when(
 			nirvana.sendRequest({
@@ -82,10 +79,7 @@ require(['jquery', 'wikia.loader', 'wikia.nirvana', 'wikia.mustache', 'wikia.tra
 
 			modalContent.html(mustache.render(templates[currentStep], templateData));
 
-			track({
-				action: tracker.ACTIONS.IMPRESSION,
-				label: getLabelPrefix() + 'step-1-first-time'
-			});
+			tracker.trackVerboseImpression(experimentName, 'step-1-first-time');
 
 			$profileModal = $('#MyProfileModal');
 			$profileModal.on('click', '.next-step', function () {
@@ -101,10 +95,7 @@ require(['jquery', 'wikia.loader', 'wikia.nirvana', 'wikia.mustache', 'wikia.tra
 					modalContent.html(mustache.render(templates[currentStep], templateData));
 				}
 
-				track({
-					action: tracker.ACTIONS.IMPRESSION,
-					label: getLabelPrefix() + 'go-next-to-step' + currentStep
-				});
+				tracker.trackVerboseClick(experimentName, 'go-next-to-step-' + currentStep);
 			});
 
 			$profileModal.on('click', '.my-profile-header-go-back', function () {
@@ -112,17 +103,12 @@ require(['jquery', 'wikia.loader', 'wikia.nirvana', 'wikia.mustache', 'wikia.tra
 				currentStep--;
 				templateData.answer = answers[currentStep];
 				modalContent.html(mustache.render(templates[currentStep], templateData));
-				track({
-					action: tracker.ACTIONS.CLICK,
-					label: getLabelPrefix() + 'go-back-to-step' + currentStep
-				});
+
+				tracker.trackVerboseClick(experimentName, 'go-back-to-step-' + currentStep);
 			});
 
 			$profileModal.on('click', '.my-profile-next-pages a', function () {
-				track({
-					action: tracker.ACTIONS.CLICK,
-					label: getLabelPrefix() + 'last-step-go-to-article'
-				});
+				tracker.trackVerboseClick(experimentName, 'last-step-go-to-article');
 			});
 		}
 
@@ -167,25 +153,13 @@ require(['jquery', 'wikia.loader', 'wikia.nirvana', 'wikia.mustache', 'wikia.tra
 				}
 			}).done(function () {
 				saved = true;
-				track({
-					action: tracker.ACTIONS.SUCCESS,
-					label: getLabelPrefix() + 'user-data-saved'
-				});
+				tracker.trackVerboseSuccess(experimentName, 'user-data-saved');
 			}).always(function () {
 				modal.$element.find('.my-profile-content').stopThrobbing();
 				dfd.resolve(true);
 			});
 
 			return dfd.promise();
-		}
-
-		function getLabelPrefix() {
-			if ($.cookie('newlyregistered')) {
-				return 'newlyregistered-';
-			} else if ($.cookie('userwithoutedit')) {
-				return 'userwithoutedit-';
-			}
-			return '';
 		}
 	}
 );
