@@ -26,6 +26,7 @@ require(['jquery', 'ext.wikia.spitfires.experiments.tracker', 'wikia.loader', 'w
 			templates = [],
 			answers = {},
 			saved = false,
+			seenCookieName = 'myprofiletour-seen',
 			currentStep = 1,
 			userName = mw.user.name(),
 			userPage = 'User:' + userName.replace(/ /g, '_'),
@@ -34,26 +35,32 @@ require(['jquery', 'ext.wikia.spitfires.experiments.tracker', 'wikia.loader', 'w
 			},
 			lastStepTemplateData = [];
 
-		$.when(
-			nirvana.sendRequest({
-				controller: 'ContributionExperiments',
-				method: 'getNextPages',
-				type: 'get'
-			}),
-			loader({
-				type: loader.MULTI,
-				resources: {
-					mustache: '/extensions/wikia/SpitfiresContributionExperiments/templates/MyProfileTourExperimentModal.mustache,' +
-					'/extensions/wikia/SpitfiresContributionExperiments/templates/MyProfileTourExperimentStep1.mustache,' +
-					'/extensions/wikia/SpitfiresContributionExperiments/templates/MyProfileTourExperimentStep2.mustache,' +
-					'/extensions/wikia/SpitfiresContributionExperiments/templates/MyProfileTourExperimentStep3.mustache,' +
-					'/extensions/wikia/SpitfiresContributionExperiments/templates/MyProfileTourExperimentStep4.mustache',
-					styles: '/extensions/wikia/SpitfiresContributionExperiments/styles/my-profile-tour.scss'
-				}
-			})
-		).done(renderModal);
+		function init() {
+			if ($.cookie(seenCookieName)) {
+				return;
+			}
+			$.when(
+				nirvana.sendRequest({
+					controller: 'ContributionExperiments',
+					method: 'getNextPages',
+					type: 'get'
+				}),
+				loader({
+					type: loader.MULTI,
+					resources: {
+						mustache: '/extensions/wikia/SpitfiresContributionExperiments/templates/MyProfileTourExperimentModal.mustache,' +
+						'/extensions/wikia/SpitfiresContributionExperiments/templates/MyProfileTourExperimentStep1.mustache,' +
+						'/extensions/wikia/SpitfiresContributionExperiments/templates/MyProfileTourExperimentStep2.mustache,' +
+						'/extensions/wikia/SpitfiresContributionExperiments/templates/MyProfileTourExperimentStep3.mustache,' +
+						'/extensions/wikia/SpitfiresContributionExperiments/templates/MyProfileTourExperimentStep4.mustache',
+						styles: '/extensions/wikia/SpitfiresContributionExperiments/styles/my-profile-tour.scss'
+					}
+				})
+			).done(renderModal);
+		}
 
 		function renderModal(data, resources) {
+			$.cookie(seenCookieName, 1, {expires: 30});
 			templates = resources.mustache;
 			lastStepTemplateData = data[0];
 
@@ -161,5 +168,7 @@ require(['jquery', 'ext.wikia.spitfires.experiments.tracker', 'wikia.loader', 'w
 
 			return dfd.promise();
 		}
+
+		init();
 	}
 );
