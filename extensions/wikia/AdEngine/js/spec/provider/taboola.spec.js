@@ -24,9 +24,6 @@ describe('Taboola ', function () {
 					mocks.window._taboola = [widget];
 				}
 			},
-			abTest: {
-				getGroup: noop
-			},
 			geo: {
 				isProperGeo: function (countries) {
 					return countries.indexOf('CURRENT') !== -1;
@@ -60,7 +57,6 @@ describe('Taboola ', function () {
 			mocks.recoveryHelper,
 			mocks.slotTweaker,
 			mocks.taboolaHelper,
-			mocks.abTest,
 			mocks.geo,
 			mocks.instantGlobals,
 			mocks.log,
@@ -107,41 +103,20 @@ describe('Taboola ', function () {
 		expect(taboola.canHandleSlot('NATIVE_TABOOLA_ARTICLE')).toBeFalsy();
 	});
 
-	it('Cannot handle slot without AbTest group', function () {
-		spyOn(mocks.abTest, 'getGroup').and.returnValue(undefined);
-		var taboola = getTaboola();
-
-		expect(taboola.canHandleSlot('NATIVE_TABOOLA_ARTICLE')).toBeFalsy();
-	});
-
 	it('Cannot handle slot from not listed country', function () {
-		spyOn(mocks.abTest, 'getGroup').and.returnValue('YES');
 		mocks.instantGlobals.wgAdDriverTaboolaConfig.NATIVE_TABOOLA_ARTICLE.regular = ['ZZ'];
 		var taboola = getTaboola();
 
 		expect(taboola.canHandleSlot('NATIVE_TABOOLA_ARTICLE')).toBeFalsy();
 	});
 
-	it('Handles NATIVE_TABOOLA_ARTICLE for given country and AbTest group', function () {
-		spyOn(mocks.abTest, 'getGroup').and.returnValue('YES');
+	it('Handles NATIVE_TABOOLA_ARTICLE for given country', function () {
 		var taboola = getTaboola();
 
 		expect(taboola.canHandleSlot('NATIVE_TABOOLA_ARTICLE')).toBeTruthy();
 	});
 
-	it('Cannot handle recovery NATIVE_TABOOLA_ARTICLE when AbTest group is wrong', function () {
-		spyOn(mocks.abTest, 'getGroup').and.returnValue('NO');
-		mocks.instantGlobals.wgAdDriverTaboolaConfig.NATIVE_TABOOLA_ARTICLE = {
-			recovery: ['CURRENT'],
-			regular: []
-		};
-		var taboola = getTaboola();
-
-		expect(taboola.canHandleSlot('NATIVE_TABOOLA_ARTICLE')).toBeFalsy();
-	});
-
 	it('Cannot handle recovery NATIVE_TABOOLA_ARTICLE from not listed country', function () {
-		spyOn(mocks.abTest, 'getGroup').and.returnValue('YES');
 		mocks.instantGlobals.wgAdDriverTaboolaConfig.NATIVE_TABOOLA_ARTICLE = {
 			recovery: [],
 			regular: []
@@ -151,8 +126,7 @@ describe('Taboola ', function () {
 		expect(taboola.canHandleSlot('NATIVE_TABOOLA_ARTICLE')).toBeFalsy();
 	});
 
-	it('Handles recovery NATIVE_TABOOLA_RAIL for given country and AbTest group', function () {
-		spyOn(mocks.abTest, 'getGroup').and.returnValue('YES');
+	it('Handles recovery NATIVE_TABOOLA_RAIL for given country', function () {
 		mocks.instantGlobals.wgAdDriverTaboolaConfig.NATIVE_TABOOLA_RAIL = {
 			recovery: ['CURRENT'],
 			regular: []
@@ -162,8 +136,7 @@ describe('Taboola ', function () {
 		expect(taboola.canHandleSlot('NATIVE_TABOOLA_RAIL')).toBeTruthy();
 	});
 
-	it('Handles recovery TOP_LEADERBOARD_AB for given country and AbTest group', function () {
-		spyOn(mocks.abTest, 'getGroup').and.returnValue('YES');
+	it('Handles recovery TOP_LEADERBOARD_AB for given country', function () {
 		mocks.instantGlobals.wgAdDriverTaboolaConfig.TOP_LEADERBOARD_AB = {
 			recovery: ['CURRENT'],
 			regular: []
@@ -176,7 +149,6 @@ describe('Taboola ', function () {
 	it('Fills regular slot without using recovery helper', function () {
 		spyOn(mocks.recoveryHelper, 'addOnBlockingCallback');
 		spyOn(mocks.slotTweaker, 'show');
-		spyOn(mocks.abTest, 'getGroup').and.returnValue('YES');
 		mocks.instantGlobals.wgAdDriverTaboolaConfig.NATIVE_TABOOLA_RAIL = {
 			recovery: ['CURRENT'],
 			regular: []
@@ -195,7 +167,6 @@ describe('Taboola ', function () {
 			recovery: ['CURRENT'],
 			regular: []
 		};
-		spyOn(mocks.abTest, 'getGroup').and.returnValue('YES');
 		spyOn(mocks.recoveryHelper, 'addOnBlockingCallback');
 		var taboola = getTaboola();
 
@@ -210,7 +181,6 @@ describe('Taboola ', function () {
 			recovery: ['CURRENT'],
 			regular: []
 		};
-		spyOn(mocks.abTest, 'getGroup').and.returnValue('YES');
 		spyOn(mocks.recoveryHelper, 'addOnBlockingCallback');
 		var taboola = getTaboola();
 

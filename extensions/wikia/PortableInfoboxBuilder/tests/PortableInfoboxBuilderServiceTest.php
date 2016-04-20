@@ -24,8 +24,12 @@ class PortableInfoboxBuilderServiceTest extends WikiaBaseTest {
 	 * @dataProvider markupTranslationsDataProvider
 	 */
 	public function testTranslationFromMarkup( $markup, $expected ) {
-		$generated_json = json_decode($this->builderService->translateMarkupToData( $markup ));
-		$expected_json = json_decode($expected);
+		// we are encoding and decoding here to be able to easly compare two structures. json_encode works
+		// differently according to context where object/array is placed and thus, A' != json_decode(json_encode(A))
+		// Other solution would be to build proper stdClass structure in $expected field but that would require
+		// much more work and would decrease readability.
+		$generated_json = json_decode( json_encode( $this->builderService->translateMarkupToData( $markup ) ) );
+		$expected_json = json_decode( $expected );
 		$this->assertEquals( $expected_json, $generated_json );
 	}
 
@@ -37,18 +41,40 @@ class PortableInfoboxBuilderServiceTest extends WikiaBaseTest {
 	}
 
 	/**
+	 * @dataProvider infoboxArrayValidityDataProvider
+	 */
+	public function testInfoboxArrayValidity( $array, $isSupportedMarkupReturnValue, $expected, $message ) {
+		$builderServiceMock = $this->getMockBuilder( 'PortableInfoboxBuilderService' )
+			->setMethods( [ 'isSupportedMarkup' ] )
+			->getMock();
+		$builderServiceMock->method( 'isSupportedMarkup' )->willReturn( $isSupportedMarkupReturnValue );
+
+		$this->assertEquals( $expected, $builderServiceMock->isValidInfoboxArray( $array ), $message );
+	}
+
+	/**
 	 * @dataProvider updateInfoboxProvider
 	 */
-	public function testUpdateInfobox($data, $expected) {
-		$this->assertEquals( $expected, $this->builderService->updateInfobox($data['oldInfobox'], $data['newInfobox'], $data['oldContent']));
+	public function testUpdateInfobox( $data, $expected ) {
+		$this->assertEquals( $expected, $this->builderService->updateInfobox( $data[ 'oldInfobox' ], $data[ 'newInfobox' ], $data[ 'oldContent' ] ) );
 	}
 
 	/**
 	 * @dataProvider updateDocumentationProvider
 	 */
-	public function testUpdateDocumentation($data, $expected) {
-		$this->assertEquals( $expected, $this->builderService->updateDocumentation($data['oldDoc'],
-			$data['newDoc'], $data['oldContent']));
+	public function testUpdateDocumentation( $data, $expected ) {
+		$this->assertEquals( $expected, $this->builderService->updateDocumentation( $data[ 'oldDoc' ],
+			$data[ 'newDoc' ], $data[ 'oldContent' ] ) );
+	}
+
+
+	public function infoboxArrayValidityDataProvider() {
+		return [
+			[ [ ], false, true, 'Empty infobox array is valid' ],
+			[ [ 'infobox1' ], true, true, 'Array with single supported infobox is valid' ],
+			[ [ 'infobox1', 'infobox2' ], true, false, 'Array with more than one infobox (even supported) is not valid' ],
+			[ [ 'infobox1' ], false, false, 'Array with single unsupported infobox is not valid' ],
+		];
 	}
 
 	public function dataTranslationsDataProvider() {
@@ -76,13 +102,29 @@ class PortableInfoboxBuilderServiceTest extends WikiaBaseTest {
 			[
 				'{"data": [{"type": "section-header", "data": "some fancy header", "collapsible": false}, {"type":"row", "source":"asdf"}, {"type": "section-header", "data": "some fancy header", "collapsible": true}, {"type":"row", "source":"asdf"}]}',
 				'<infobox><group><header>some fancy header</header><data source="asdf"/></group><group collapse="open"><header>some fancy header</header><data source="asdf"/></group></infobox>'
+			],
+			[
+				'{"data":[{"type":"row", "source":"asdf"}],"theme":""}',
+				'<infobox theme=""><data source="asdf"/></infobox>'
+			],
+			[
+				'{"data":[{"type":"row", "source":"asdf"}],"theme":"europa"}',
+				'<infobox theme="europa"><data source="asdf"/></infobox>'
+			],
+			[
+				'{"data":[{"type":"row", "source":"行を使用するとイン"}]}',
+				'<infobox><data source="行を使用するとイン"/></infobox>'
+			],
+			[
+				'{"data":[{"type":"row", "source":"!żźć∂śśĻó^"}]}',
+				'<infobox><data source="!żźć∂śśĻó^"/></infobox>'
 			]
 		];
 	}
 
 	public function markupTranslationsDataProvider() {
 		return [
-			[ "", "[]" ],
+			[ "", "{}" ],
 			[ '<infobox><data source="asdf"/></infobox>', '{"data":[{"type":"row", "source":"asdf"}]}' ],
 			[ '<infobox><data source="asdf"><label>asdfsda</label></data></infobox>', '{"data":[{"type":"row", "source":"asdf", "data": {"label": "asdfsda"}}]}' ],
 			[ '<infobox><data source="asdf"/></infobox>', '{"data":[{"type":"row", "source":"asdf"}]}' ],
@@ -99,6 +141,18 @@ class PortableInfoboxBuilderServiceTest extends WikiaBaseTest {
 			[
 				'<infobox><title source="title1"/><image source="image1"><caption source="caption1"/></image><data source="row1"><label>Label 1</label></data><data source="row2"><label>Label 2</label></data><group><header>Header 1</header><data source="row3"><label>Label 3</label></data></group><group><header>Header 2</header><image source="image2"><caption source="caption2"/></image></group><group><header>Header 3</header><data source="row4"><label>Label 4</label></data></group><title source="title2"/><group><header>Header 4</header><image source="image3"><caption source="caption3"/></image></group><title source="title3"/></infobox>',
 				'{"data": [{"source": "title1","type": "title"},{"data": {"caption": {"source": "caption1"}},"source": "image1","type": "image"},{"data": {"label": "Label 1"},"source": "row1","type": "row"},{"data": {"label": "Label 2"},"source": "row2","type": "row"},{"data": "Header 1","type": "section-header", "collapsible": false},{"data": {"label": "Label 3"},"source": "row3","type": "row"},{"data": "Header 2","type": "section-header", "collapsible": false},{"data": {"caption": {"source": "caption2"}},"source": "image2","type": "image"},{"data": "Header 3","type": "section-header", "collapsible": false},{"data": {"label": "Label 4"},"source": "row4","type": "row"},{"source": "title2","type": "title"},{"data": "Header 4","type": "section-header", "collapsible": false},{"data": {"caption": {"source": "caption3"}},"source": "image3","type": "image"},{"source": "title3","type": "title"}]}'
+			],
+			[
+				'<infobox theme=""><data source="asdf"/></infobox>',
+				'{"data":[{"type":"row", "source":"asdf"}],"theme":""}'
+			],
+			[
+				'<infobox><data source="asdf"/></infobox>',
+				'{"data":[{"type":"row", "source":"asdf"}]}'
+			],
+			[
+				'<infobox theme="europa"><data source="asdf"/></infobox>',
+				'{"data":[{"type":"row", "source":"asdf"}],"theme":"europa"}'
 			]
 		];
 	}
@@ -106,6 +160,9 @@ class PortableInfoboxBuilderServiceTest extends WikiaBaseTest {
 	public function markupSupportDataProvider() {
 		return [
 			[ "", false ],
+			[ '<infobox/>', true, "empty infobox should be supported" ],
+			[ '<infobox></infobox>', true, "empty infobox should be supported" ],
+			[ 'Invalid text detected <^', false, "non-xml should not be supported" ],
 			[ '<infobox><data source="asdf"/></infobox>', true, "data tag should be supported" ],
 			[ '<infobox><data source="asdf"><label>asdfsda</label></data></infobox>', true, "data tag with label should be supported" ],
 			[ '<infobox><data source="asdf"><label>[[some link]]</label></data></infobox>', true, "links within labels should be supported" ],
@@ -117,7 +174,7 @@ class PortableInfoboxBuilderServiceTest extends WikiaBaseTest {
 			[ '<infobox><title source="title"><default>  {{PAGENAME}}  </default></title></infobox>', true, "{{PAGENAME}} is supported within title" ],
 			[ '<infobox><title source="title"><default>some strange title default</default></title></infobox>', false, "default tag is not supported within title" ],
 			[ '<infobox><title source="title"/></infobox>', true, "title tag is supported" ],
-			[ '<infobox><title source="title"><default>0</default></title></infobox>', false, "default tag is not supported within title"  ],
+			[ '<infobox><title source="title"><default>0</default></title></infobox>', false, "default tag is not supported within title" ],
 			[ '<infobox><group><data source="asdf"/></group></infobox>', false, "group without header is not supported" ],
 			[ '<infobox><group><header>asdf</header></group></infobox>', true, "group with header is supported" ],
 			[ '<infobox><group><header></header></group></infobox>', true, "group with empty header is supported" ],
@@ -125,8 +182,11 @@ class PortableInfoboxBuilderServiceTest extends WikiaBaseTest {
 			[ '<infobox><group collapse="open"><header>hd</header><data source="asdf"/></group></infobox>', true, "collapse=open is supported attrib in group" ],
 			[ '<infobox><group collapse="false"><header>hd</header><data source="asdf"/></group></infobox>', false, "collapse=close is not supported attrib in group" ],
 			[ '<infobox theme="asdf"><image source="image"><alt source="title"><default>asdf</default></alt></image></infobox>', false, "default within image is not supported" ],
-			[ '<infobox theme="adsf"><group><header>asdf</header></group></infobox>', false, "theme is not supported attrib" ],
-			[ '<infobox><title source="title1"/><image source="image1"><caption source="caption1"/></image><data source="row1"><label>Label 1</label></data><data source="row2"><label>Label 2</label></data><group><header>Header 1</header><data source="row3"><label>Label 3</label></data></group><group><header>Header 2</header><image source="image2"><caption source="caption2"/></image></group><group><header>Header 3</header><data source="row4"><label>Label 4</label></data></group><title source="title2"/><group><header>Header 4</header><image source="image3"><caption source="caption3"/></image></group><title source="title3"/></infobox>', true, "" ]
+			[ '<infobox theme="adsf"><group><header>asdf</header></group></infobox>', false, "user theme is not supported attrib" ],
+			[ '<infobox><title source="title1"/><image source="image1"><caption source="caption1"/></image><data source="row1"><label>Label 1</label></data><data source="row2"><label>Label 2</label></data><group><header>Header 1</header><data source="row3"><label>Label 3</label></data></group><group><header>Header 2</header><image source="image2"><caption source="caption2"/></image></group><group><header>Header 3</header><data source="row4"><label>Label 4</label></data></group><title source="title2"/><group><header>Header 4</header><image source="image3"><caption source="caption3"/></image></group><title source="title3"/></infobox>', true, "" ],
+			[ '<infobox theme=""><data source="asdf"/></infobox>', true, "empty theme is supported value" ],
+			[ '<infobox theme="europa"><data source="asdf"/></infobox>', false, "europa theme is not supported value" ],
+			[ '<infobox theme="other"><data source="asdf"/></infobox>', false, "other theme is not supported value" ],
 		];
 	}
 

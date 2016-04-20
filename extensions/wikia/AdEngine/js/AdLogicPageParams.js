@@ -87,7 +87,7 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 				kv = kvs[i].split('=');
 				key = kv[0];
 				value = kv[1];
-				if (key && value) {
+				if (key && value && key !== 'esrb') {
 					params[key] = params[key] || [];
 					params[key].push(value);
 				}
@@ -181,7 +181,8 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 			skin: targeting.skin,
 			lang: zoneParams.getLanguage(),
 			wpage: targeting.pageName && targeting.pageName.toLowerCase(),
-			ref: getRefParam()
+			ref: getRefParam(),
+			esrb: targeting.esrbRating
 		};
 
 		if (pvs) {
@@ -202,10 +203,6 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 		}
 
 		extend(params, decodeLegacyDartParams(targeting.wikiCustomKeyValues));
-
-		if (!params.esrb) {
-			params.esrb = targeting.wikiDirectedAtChildren ? 'ec' : 'teen';
-		}
 
 		log(params, 9, logGroup);
 		return params;

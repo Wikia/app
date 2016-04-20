@@ -44,12 +44,12 @@ describe('ext.wikia.adEngine.config.desktop', function () {
 				directGpt: {
 					name: 'direct'
 				},
-				evolve: {
-					name: 'evolve',
-					canHandleSlot: noop
-				},
 				evolve2: {
 					name: 'evolve2',
+					canHandleSlot: noop
+				},
+				hitMedia: {
+					name: 'hitMedia',
 					canHandleSlot: noop
 				},
 				liftium: {
@@ -76,6 +76,8 @@ describe('ext.wikia.adEngine.config.desktop', function () {
 			}
 		},
 		forcedProvidersMap = {
+			'evolve2': mocks.providers.evolve2.name,
+			'hitmedia': mocks.providers.hitMedia.name,
 			'liftium': mocks.providers.liftium.name,
 			'turtle': mocks.providers.turtle.name
 		};
@@ -89,8 +91,8 @@ describe('ext.wikia.adEngine.config.desktop', function () {
 			mocks.adsContext,
 			mocks.adDecoratorPageDimensions,
 			mocks.providers.directGpt,
-			mocks.providers.evolve,
 			mocks.providers.evolve2,
+			mocks.providers.hitMedia,
 			mocks.providers.liftium,
 			mocks.providers.monetizationService,
 			mocks.providers.remnantGpt,
@@ -117,13 +119,7 @@ describe('ext.wikia.adEngine.config.desktop', function () {
 		expect(getProviders('foo')).toEqual('direct,remnant,liftium');
 	});
 
-	it('NZ, Evolve slot: Evolve, Remnant, Liftium', function () {
-		spyOn(mocks.geo, 'getCountryCode').and.returnValue('NZ');
-		spyOn(mocks.providers.evolve, 'canHandleSlot').and.returnValue(true);
-		expect(getProviders('foo')).toEqual('evolve,remnant,liftium');
-	});
-
-	it('NZ, not Evolve slot: Direct, Remnant, Liftium', function () {
+	it('non-Evolve slot: Direct, Remnant, Liftium', function () {
 		spyOn(mocks.geo, 'getCountryCode').and.returnValue('NZ');
 		expect(getProviders('foo')).toEqual('direct,remnant,liftium');
 	});
@@ -134,9 +130,21 @@ describe('ext.wikia.adEngine.config.desktop', function () {
 		expect(getProviders('foo')).toEqual('turtle,remnant,liftium');
 	});
 
+	it('HitMedia: HitMedia, Remnant, Liftium', function () {
+		spyOn(mocks.providers.hitMedia, 'canHandleSlot').and.returnValue(true);
+		spyOn(mocks, 'getAdContextProviders').and.returnValue({hitMedia: true});
+		expect(getProviders('foo')).toEqual('hitMedia,remnant,liftium');
+	});
+
 	it('Turtle cannot handle slot: Direct, Remnant, Liftium', function () {
 		spyOn(mocks.providers.turtle, 'canHandleSlot').and.returnValue(false);
 		spyOn(mocks, 'getAdContextProviders').and.returnValue({turtle: true});
+		expect(getProviders('foo')).toEqual('direct,remnant,liftium');
+	});
+
+	it('HitMedia cannot handle slot: Direct, Remnant, Liftium', function () {
+		spyOn(mocks.providers.turtle, 'canHandleSlot').and.returnValue(false);
+		spyOn(mocks, 'getAdContextProviders').and.returnValue({hitMedia: true});
 		expect(getProviders('foo')).toEqual('direct,remnant,liftium');
 	});
 
@@ -145,47 +153,35 @@ describe('ext.wikia.adEngine.config.desktop', function () {
 		expect(getProviders('foo')).toEqual('sevenOneMedia');
 	});
 
-	it('non-Evolve country, Evolve-slot, SevenOne Media on: SevenOneMedia', function () {
-		spyOn(mocks.providers.evolve, 'canHandleSlot').and.returnValue(true);
-		spyOn(mocks, 'getAdContextProviders').and.returnValue({sevenOneMedia: true});
+	it('Evolve country, SevenOne Media on: SevenOneMedia', function () {
+		spyOn(mocks, 'getAdContextProviders').and.returnValue({evolve2: true, sevenOneMedia: true});
 		expect(getProviders('foo')).toEqual('sevenOneMedia');
 	});
 
-	it('non-Evolve country, Evolve-slot, SevenOne Media on: SevenOneMedia', function () {
+	it('Evolve country, Evolve-slot', function () {
 		spyOn(mocks.providers.evolve2, 'canHandleSlot').and.returnValue(true);
 		spyOn(mocks, 'getAdContextProviders').and.returnValue({evolve2: true});
 		expect(getProviders('foo')).toEqual('evolve2,remnant,liftium');
 	});
 
-	it('NZ, Evolve-slot, SevenOne Media on: SevenOneMedia', function () {
-		spyOn(mocks.geo, 'getCountryCode').and.returnValue('NZ');
-		spyOn(mocks.providers.evolve, 'canHandleSlot').and.returnValue(true);
-		spyOn(mocks, 'getAdContextProviders').and.returnValue({sevenOneMedia: true});
-		expect(getProviders('foo')).toEqual('sevenOneMedia');
-	});
-
 	it('any country, SevenOne Media on, wgSitewideDisableSevenOneMedia on: None', function () {
-		spyOn(mocks.providers.evolve, 'canHandleSlot').and.returnValue(true);
 		spyOn(mocks, 'getAdContextProviders').and.returnValue({sevenOneMedia: true});
 		spyOn(mocks, 'getInstantGlobals').and.returnValue({wgSitewideDisableSevenOneMedia: true});
 		expect(getProviders('foo')).toEqual('');
 	});
 
 	it('any country, SevenOne Media off, wgSitewideDisableSevenOneMedia on: Direct, Remnant, Liftium', function () {
-		spyOn(mocks.providers.evolve, 'canHandleSlot').and.returnValue(true);
 		spyOn(mocks, 'getInstantGlobals').and.returnValue({wgSitewideDisableSevenOneMedia: true});
 		expect(getProviders('foo')).toEqual('direct,remnant,liftium');
 	});
 
 	it('any country, SevenOne Media on, IE8: None', function () {
-		spyOn(mocks.providers.evolve, 'canHandleSlot').and.returnValue(true);
 		spyOn(mocks, 'getAdContextProviders').and.returnValue({sevenOneMedia: true});
 		spyOn(mocks, 'getUserAgent').and.returnValue(uaIE8);
 		expect(getProviders('foo')).toEqual('');
 	});
 
 	it('any country, SevenOne Media off, IE8: Direct, Remnant, Liftium', function () {
-		spyOn(mocks.providers.evolve, 'canHandleSlot').and.returnValue(true);
 		spyOn(mocks, 'getUserAgent').and.returnValue(uaIE8);
 		expect(getProviders('foo')).toEqual('direct,remnant,liftium');
 	});
@@ -207,10 +203,10 @@ describe('ext.wikia.adEngine.config.desktop', function () {
 	});
 
 	it('Evolve country, wgSitewideDisableGpt on: Evolve, Liftium', function () {
-		spyOn(mocks.geo, 'getCountryCode').and.returnValue('NZ');
-		spyOn(mocks.providers.evolve, 'canHandleSlot').and.returnValue(true);
+		spyOn(mocks.providers.evolve2, 'canHandleSlot').and.returnValue(true);
+		spyOn(mocks, 'getAdContextProviders').and.returnValue({evolve2: true});
 		spyOn(mocks, 'getInstantGlobals').and.returnValue({wgSitewideDisableGpt: true});
-		expect(getProviders('foo')).toEqual('evolve,liftium');
+		expect(getProviders('foo')).toEqual('evolve2,liftium');
 	});
 
 	it('Turtle country, wgSitewideDisableGpt on: Turtle, Liftium', function () {

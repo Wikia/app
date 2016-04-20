@@ -24,7 +24,7 @@ describe('ext.wikia.adEngine.provider.factory.wikiaGpt', function () {
 				}
 			},
 			gptHelper: {
-				pushAd: function (slot, slotPath, slotTargeting, extra) {
+				pushAd: function (slot) {
 					slot.success();
 					slot.hop();
 				}
@@ -33,6 +33,7 @@ describe('ext.wikia.adEngine.provider.factory.wikiaGpt', function () {
 				extendSlotTargeting: noop
 			},
 			beforeSuccess: noop,
+			beforeCollapse: noop,
 			beforeHop: noop
 		};
 
@@ -102,6 +103,16 @@ describe('ext.wikia.adEngine.provider.factory.wikiaGpt', function () {
 		}).fillInSlot(createSlot('TOP_LEADERBOARD'));
 
 		expect(mocks.beforeSuccess).toHaveBeenCalled();
+	});
+
+	it('Call beforeCollapse on pushAd if is defined', function () {
+		spyOn(mocks, 'beforeCollapse');
+
+		getProvider({
+			beforeCollapse: mocks.beforeCollapse
+		}).fillInSlot(createSlot('TOP_LEADERBOARD'));
+
+		expect(mocks.beforeCollapse).toHaveBeenCalled();
 	});
 
 	it('Call beforeHop on pushAd if is defined', function () {

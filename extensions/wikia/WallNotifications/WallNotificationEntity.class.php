@@ -145,7 +145,7 @@ class WallNotificationEntity {
 			'useMasterDB' => $useMasterDB,
 		];
 
-		$response = ApiService::foreignCall( $dbName, $params, ApiService::WIKIA );
+		$response = ApiService::foreignCall( $dbName, $params, ApiService::WIKIA, /* loginAsUser */ true );
 		if ( !empty( $response['status'] ) && $response['status'] == 'ok' ) {
 			$this->parentTitleDbKey = $response['parentTitleDbKey'];
 			$this->msgText = $response['msgText'];

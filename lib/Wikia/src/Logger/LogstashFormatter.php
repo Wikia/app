@@ -11,19 +11,11 @@ namespace Wikia\Logger;
 use Exception;
 
 
-class LogstashFormatter extends \Monolog\Formatter\LogstashFormatter implements DevModeFormatterInterface {
-	private $devMode = false;
-
-	public function enableDevMode() {
-		$this->devMode = true;
-	}
-
-	public function disableDevMode() {
-		$this->devMode = false;
-	}
-
-	public function isInDevMode() {
-		return $this->devMode === true;
+class LogstashFormatter extends \Monolog\Formatter\LogstashFormatter {
+	public function __construct()
+	{
+		// prevent "Undefined variable: applicationName" notice
+		parent::__construct(null);
 	}
 
 	protected function formatV0(array $record) {
@@ -50,14 +42,18 @@ class LogstashFormatter extends \Monolog\Formatter\LogstashFormatter implements 
 			$message['@context'] = $record['context'];
 		}
 
-		if ($this->isInDevMode()) {
-			$message['@message'] = "DEV_ES_MESSAGE {$message['@message']}";
-		}
-
 		return $message;
 	}
 
-	protected function normalizeException(Exception $e) {
+	/**
+	 * @param Exception}Throwable $e
+	 * @return array
+	 */
+	protected function normalizeException($e) {
+		if (!$e instanceof Exception && !$e instanceof \Throwable) {
+			throw new \InvalidArgumentException('Exception/Throwable expected, got '.gettype($e).' / '.get_class($e));
+		}
+
 		$data = array(
 			'class' => get_class($e),
 			'message' => $e->getMessage(),

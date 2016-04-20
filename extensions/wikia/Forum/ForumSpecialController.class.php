@@ -67,6 +67,8 @@ class ForumSpecialController extends WikiaSpecialPageController {
 
 		$forum = new Forum();
 
+		// TODO: once we're sure the forums are properly created when importing starter wiki
+		// don't call createDefaultBoard anymore
 		if ( $forum->createDefaultBoard() ) {
 			$this->boards = $forum->getBoardList( DB_MASTER );
 		} else {

@@ -10,8 +10,8 @@
  * SERVER_ID=177 php runBackups.php  -- generate current backups for all
  *	active wikis
  *
- * SERVER_ID=177 php runBackups.php  --both --id=177 -- generate full & current
- * 	backups for city_id = 177
+ * SERVER_ID=177 php runBackups.php  --both --id=177 --s3 -- generate full & current
+ * 	backups for city_id = 177 and upload it to S3
  *
  * SERVER_ID=177 php runBackups.php  --both --db=wikicities -- generate full & current
  * 	backups for city_dbname = wikicities
@@ -111,65 +111,77 @@ function runBackups( $from, $to, $full, $options ) {
 			array( "ORDER BY" => "city_id" )
 	);
 	while( $row = $dbw->fetchObject( $sth ) ) {
-		/**
-		 * get cluster for this wiki
-		 */
-		$cluster = WikiFactory::getVarValueByName( "wgDBcluster", $row->city_id );
-		$server  = wfGetDB( DB_SLAVE, 'dumps', $row->city_dbname )->getProperty( "mServer" );
-		/**
-		 * build command
-		 */
-		$status  = false;
-
 		$basedir = getDirectory( $row->city_dbname, $hide, $use_temp );
 
 		if( $full || $both ) {
-			$path = sprintf("%s/%s_pages_full.xml.7z", $basedir, $row->city_dbname );
-			$time = wfTime();
-			Wikia::log( __METHOD__, "info", "{$row->city_id} {$row->city_dbname} {$path}", true, true );
-			$cmd = array(
-				"SERVER_ID={$row->city_id}",
-				"php",
-				"{$IP}/maintenance/dumpBackup.php",
-				"--conf {$wgWikiaLocalSettingsPath}",
-				"--aconf {$wgWikiaAdminSettingsPath}",
-				"--full",
-				"--xml",
-				"--quiet",
-				"--server=$server",
-				"--output=".DumpsOnDemand::DEFAULT_COMPRESSION_FORMAT.":{$path}"
-			);
-			wfShellExec( implode( " ", $cmd ), $status );
-			$time = Wikia::timeDuration( wfTime() - $time );
-			Wikia::log( __METHOD__, "info", "{$row->city_id} {$row->city_dbname} status: {$status}, time: {$time}", true, true );
-			if ( $s3 && 0 == DumpsOnDemand::putToAmazonS3( $path, !$hide,  MimeMagic::singleton()->guessMimeType( $path ) ) ) {
-				unlink( $path );
-			}
-
+			doDumpBackup( $row, sprintf("%s/%s_pages_full.xml.7z", $basedir, $row->city_dbname ), [ '--full' ] );
 		}
 		if( !$full || $both ) {
-			$path = sprintf("%s/%s_pages_current.xml.7z", $basedir, $row->city_dbname );
-			$time = wfTime();
-			Wikia::log( __METHOD__, "info", "{$row->city_id} {$row->city_dbname} {$path}", true, true);
-			$cmd = array(
-				"SERVER_ID={$row->city_id}",
-				"php",
-				"{$IP}/maintenance/dumpBackup.php",
-				"--conf {$wgWikiaLocalSettingsPath}",
-				"--aconf {$wgWikiaAdminSettingsPath}",
-				"--current",
-				"--xml",
-				"--quiet",
-				"--server=$server",
-				"--output=".DumpsOnDemand::DEFAULT_COMPRESSION_FORMAT.":{$path}"
-			);
-			wfShellExec( implode( " ", $cmd ), $status );
-			$time = Wikia::timeDuration( wfTime() - $time );
-			Wikia::log( __METHOD__, "info", "{$row->city_id} {$row->city_dbname} status: {$status}, time: {$time}", true, true);
-			if ( $s3 && 0 == DumpsOnDemand::putToAmazonS3( $path, !$hide,  MimeMagic::singleton()->guessMimeType( $path ) ) ) {
-				unlink( $path );
+			doDumpBackup( $row, sprintf("%s/%s_pages_current.xml.7z", $basedir, $row->city_dbname ), [ '--current' ] );
+		}
+	}
+}
+
+/**
+ * Perform backup generation and upload to S3
+ *
+ * @param object $row wiki entry from city_list
+ * @param string $path where to upload the generated dump
+ * @param string $path where to upload the generated dump
+ * @param array $args optional extra arguments for dumpBackup.php
+ */
+function doDumpBackup( $row, $path, array $args = [] ) {
+	global $IP, $wgWikiaLocalSettingsPath, $wgWikiaAdminSettingsPath, $options;
+	$logger = Wikia\Logger\WikiaLogger::instance();
+
+	$time = wfTime();
+	Wikia::log( __METHOD__, "info", "{$row->city_id} {$row->city_dbname} {$path}", true, true);
+
+	$server = wfGetDB( DB_SLAVE, 'dumps', $row->city_dbname )->getProperty( "mServer" );
+	$cmd = implode( ' ', array_merge( [
+		"SERVER_ID={$row->city_id}",
+		"php -d display_errors=1",
+		"{$IP}/maintenance/dumpBackup.php",
+		"--conf {$wgWikiaLocalSettingsPath}",
+		"--aconf {$wgWikiaAdminSettingsPath}",
+		"--xml",
+		"--quiet",
+		"--server=$server",
+		"--output=".DumpsOnDemand::DEFAULT_COMPRESSION_FORMAT.":{$path}"
+	], $args ) );
+
+	// redirect stderr to stdout, so it becames a part of $output
+	$cmd .= ' 2>&1';
+
+	Wikia::log( __METHOD__, "info", "{$row->city_id} {$row->city_dbname} command: {$cmd}", true, true);
+
+	$output = wfShellExec( $cmd, $status );
+	$time = Wikia::timeDuration( wfTime() - $time );
+
+	Wikia::log( __METHOD__, "info", "{$row->city_id} {$row->city_dbname} status: {$status}, time: {$time}", true, true);
+
+	if ( $status === 0 ) {
+		if ( isset( $options['s3'] ) ) {
+			$res = DumpsOnDemand::putToAmazonS3( $path, !isset( $options[ "hide" ] ),  MimeMagic::singleton()->guessMimeType( $path ) );
+			unlink( $path );
+
+			if ( $res !== 0 ) {
+				$logger->error( __METHOD__ . '::putToAmazonS3', [
+					'exception' => new Exception( 'putToAmazonS3 failed', $res ),
+					'row' => (array) $row,
+				] );
+
+				exit( 1 );
 			}
 		}
+	}
+	else {
+		$logger->error( __METHOD__ . '::dumpBackup', [
+			'exception' => new Exception( $cmd, $status ),
+			'row' => (array) $row,
+		]);
+
+		exit( 2 );
 	}
 }
 

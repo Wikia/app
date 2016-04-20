@@ -26,7 +26,7 @@ div.ajax-poll div.row {
 }
 
 div.ajax-poll-bar {
-	background: $color-error /* is this an error? */;
+	background: $color-error; /* is this an error? */
 }
 
 .pollAnswerName {
@@ -37,7 +37,8 @@ div.ajax-poll-bar {
 .pollAnswerVotes {
 	border: 1px solid $color-page-border;
 	font-size: 10px;
-	height: 12px;
+	height: 19px;
+	margin-bottom: 4px;
 	margin-left: 10px;
 	position: relative;
 	width: 100%;
@@ -50,19 +51,18 @@ div.ajax-poll-bar {
 		background: mix($color-page, #000000, 75%);
 	}
 
-
 	border-right: 1px solid $color-page-border;
 	font-size: 1px;
-	height: 12px;
+	height: 19px;
 	left: 0;
-	line-height: 12px;
+	line-height: 19px;
 	position: absolute;
 	top: 0;
 	z-index: 2;
 }
 
 .poll .ourVote div {
-	border: 1px solid #777 /* foo */;
+	border: 1px solid #777;
 	left: -1px;
 	top: -1px;
 }

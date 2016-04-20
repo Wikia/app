@@ -6,14 +6,13 @@
  */
 define('TemplateClassificationModal',
 	['jquery', 'wikia.window', 'mw', 'wikia.loader', 'wikia.nirvana', 'wikia.tracker', 'wikia.throbber',
-		'TemplateClassificationLabeling'],
-function ($, w, mw, loader, nirvana, tracker, throbber, labeling) {
+		'TemplateClassificationLabeling', require.optional('wikia.infoboxBuilder.templateClassificationHelper')],
+function ($, w, mw, loader, nirvana, tracker, throbber, labeling, infoboxBuilderHelper) {
 	'use strict';
 
 	var $classificationForm,
 		$saveBtn,
 		$typeLabel,
-		$typeWrapper,
 		messagesLoaded,
 		modalConfig,
 		modalMode,
@@ -26,7 +25,8 @@ function ($, w, mw, loader, nirvana, tracker, throbber, labeling) {
 			trackingMethod: 'analytics'
 		}),
 		$w = $(w),
-		$throbber = $('#tc-throbber');
+		$throbber = $('#tc-throbber'),
+		forceClassificationModalMode = 'addTypeBeforePublish';
 
 	/**
 	 * @param {function} typeGetterProvided Method that should return type in json format,
@@ -144,6 +144,10 @@ function ($, w, mw, loader, nirvana, tracker, throbber, labeling) {
 				action: tracker.ACTIONS.CLOSE,
 				label: 'close-event'
 			});
+
+			if (infoboxBuilderHelper) {
+				infoboxBuilderHelper.showHiddenEditor();
+			}
 		});
 
 		if (newTypeModes.indexOf(modalMode) >= 0) {
@@ -201,8 +205,14 @@ function ($, w, mw, loader, nirvana, tracker, throbber, labeling) {
 			});
 		}
 
-		if (modalMode === 'addTypeBeforePublish' && newTemplateType) {
+		if (modalMode === forceClassificationModalMode && newTemplateType) {
 			$('#wpSave').click();
+		} else if (
+			infoboxBuilderHelper &&
+			infoboxBuilderHelper.shouldRedirectToInfoboxBuilder(newTemplateType, modalMode)
+		) {
+			throbber.show(modalInstance.$content);
+			infoboxBuilderHelper.redirectToInfoboxBuilder();
 		} else {
 			modalInstance.trigger('close');
 		}

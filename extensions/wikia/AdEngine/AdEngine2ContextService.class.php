@@ -57,8 +57,9 @@ class AdEngine2ContextService {
 					'sourcePointRecoveryUrl' => $sourcePointRecoveryUrl,
 				] ),
 				'targeting' => $this->filterOutEmptyItems( [
-					'enableKruxTargeting' => $wg->EnableKruxTargeting,
+					'enableKruxTargeting' => AnalyticsProviderKrux::isEnabled(),
 					'enablePageCategories' => array_search( $langCode, $wg->AdPageLevelCategoryLangs ) !== false,
+					'esrbRating' => AdTargeting::getEsrbRating(),
 					'mappedVerticalName' => $this->getMappedVerticalName( $oldWikiVertical, $newWikiVertical ), //wikiCategory replacement for AdLogicPageParams.js::getPageLevelParams
 					'pageArticleId' => $title->getArticleId(),
 					'pageIsArticle' => !!$title->getArticleId(),
@@ -70,7 +71,6 @@ class AdEngine2ContextService {
 					'wikiCategory' => $wikiFactoryHub->getCategoryShort( $wg->CityId ),
 					'wikiCustomKeyValues' => $wg->DartCustomKeyValues,
 					'wikiDbName' => $wg->DBname,
-					'wikiDirectedAtChildren' => $wg->WikiDirectedAtChildrenByFounder || $wg->WikiDirectedAtChildrenByStaff,
 					'wikiIsCorporate' => $wikiaPageType->isCorporatePage(),
 					'wikiIsTop1000' => $wg->AdDriverWikiIsTop1000,
 					'wikiLanguage' => $langCode,

@@ -3,10 +3,9 @@
 class AnalyticsProviderAmazonMatch implements iAnalyticsProvider {
 
 	public static function isEnabled() {
-		global $wgEnableAmazonMatch, $wgEnableAdEngineExt, $wgShowAds, $wgAdDriverUseSevenOneMedia;
+		global $wgEnableAmazonMatch, $wgShowAds, $wgAdDriverUseSevenOneMedia;
 
 		return ( $wgEnableAmazonMatch )
-			&& $wgEnableAdEngineExt
 			&& $wgShowAds
 			&& AdEngine2Service::areAdsShowableOnPage()
 			&& !$wgAdDriverUseSevenOneMedia;

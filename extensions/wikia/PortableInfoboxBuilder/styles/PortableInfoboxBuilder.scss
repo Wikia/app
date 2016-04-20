@@ -1,15 +1,23 @@
 @import 'skins/oasis/css/core/breakpoints-variables';
 @import 'extensions/wikia/GlobalNavigation/styles/GlobalNavigationVariables.scss';
 
-.mw-special-PortableInfoboxBuilder {
+$negative-top-margin: 1px;
+
+.mw-special-InfoboxBuilder {
 	padding: 0;
+
+	// remove 1px space between global header and infobox builder UI
+	.WikiaPage {
+		margin-top: -$negative-top-margin;
+
+	}
 }
 
 .WikiaPage {
 	border: none;
 	.InfoboxBuilder {
 		display: block;
-		height: calc(100vh - #{$global-navigation-negative-top-margin});
+		height: calc(100vh - #{$global-navigation-negative-top-margin} + #{$negative-top-margin});
 	}
 	.WikiaPageBackground {
 		height: 99%;

@@ -36,7 +36,7 @@ class RevisionUpvotesService {
 	 * @param int $id
 	 * @param int $fromUser
 	 */
-	public function removeUpvote( $id, $fromUser ) {
+	public function removeUpvote( $id, $fromUser, $userId ) {
 		$db = $this->getDatabaseForWrite();
 
 		$db->begin();
@@ -49,13 +49,14 @@ class RevisionUpvotesService {
 
 		$rowRemoved = $db->affectedRows();
 
-		( new \WikiaSQL() )
-			->UPDATE( self::UPVOTE_USERS_TABLE )
-			->SET_RAW( 'total', 'IF(`total` > 0, `total` - 1, 0)' )
-			->SET_RAW( 'new', 'IF(`new` > 0, `new` - 1, 0)' )
-			->WHERE( 'id' )->EQUAL_TO( $id )
-			->AND_( 'from_user' )->EQUAL_TO( $fromUser )
-			->run( $db );
+		if ( $this->shouldStoreUserData( $userId ) ) {
+			( new \WikiaSQL() )
+				->UPDATE( self::UPVOTE_USERS_TABLE )
+				->SET_RAW( 'total', 'IF(`total` > 0, `total` - 1, 0)' )
+				->SET_RAW( 'new', 'IF(`new` > 0, `new` - 1, 0)' )
+				->WHERE( 'user_id' )->EQUAL_TO( $userId )
+				->run( $db );
+		}
 
 		if ( $rowRemoved ) {
 			$db->commit();
@@ -79,23 +80,24 @@ class RevisionUpvotesService {
 		$upvote = ( new \WikiaSQL() )
 			->SELECT_ALL()
 			->FROM( self::UPVOTE_REVISIONS_TABLE )->AS_( 'revs' )
-			->LEFT_JOIN( self::UPVOTE_TABLE )->AS_( 'uv' )
+			->INNER_JOIN( self::UPVOTE_TABLE )->AS_( 'uv' )
 			->ON( 'revs.upvote_id', 'uv.upvote_id' )
 			->WHERE( 'wiki_id' )->EQUAL_TO( $wikiId )
 			->AND_( 'revision_id' )->EQUAL_TO( $revisionId )
 			->runLoop( $db, function( &$upvote, $row ) {
 				if ( empty( $upvote['revision'] ) ) {
 					$upvote['revision'] = [
-						'wikiId' => $row->wiki_id,
-						'pageId' => $row->page_id,
-						'revisionId' => $row->revision_id,
-						'userId' => $row->user_id,
-						'upvoteId' => $row->upvote_id
+						'wikiId' => (int) $row->wiki_id,
+						'pageId' => (int) $row->page_id,
+						'revisionId' => (int) $row->revision_id,
+						'userId' => (int) $row->user_id,
+						'upvoteId' => (int) $row->upvote_id
 					];
 				}
 
 				$upvote['upvotes'][] = [
-					'from_user' => $row->from_user
+					'id' => (int) $row->id,
+					'from_user' => (int) $row->from_user
 				];
 			} );
 
@@ -117,23 +119,24 @@ class RevisionUpvotesService {
 		$upvotes = ( new \WikiaSQL() )
 			->SELECT_ALL()
 			->FROM( self::UPVOTE_REVISIONS_TABLE )->AS_( 'revs' )
-			->LEFT_JOIN( self::UPVOTE_TABLE )->AS_( 'uv' )
+			->INNER_JOIN( self::UPVOTE_TABLE )->AS_( 'uv' )
 			->ON( 'revs.upvote_id', 'uv.upvote_id' )
 			->WHERE( 'wiki_id' )->EQUAL_TO( $wikiId )
 			->AND_( 'revision_id' )->IN( $revisionsIds )
 			->runLoop( $db, function( &$upvotes, $row ) {
 				if ( empty( $upvotes[$row->revision_id]['revision'] ) ) {
 					$upvotes[$row->revision_id]['revision'] = [
-						'wikiId' => $row->wiki_id,
-						'pageId' => $row->page_id,
-						'revisionId' => $row->revision_id,
-						'userId' => $row->user_id,
-						'upvoteId' => $row->upvote_id
+						'wikiId' => (int) $row->wiki_id,
+						'pageId' => (int) $row->page_id,
+						'revisionId' => (int) $row->revision_id,
+						'userId' => (int) $row->user_id,
+						'upvoteId' => (int) $row->upvote_id
 					];
 				}
 
 				$upvotes[$row->revision_id]['upvotes'][] = [
-					'from_user' => $row->from_user
+					'id' => (int) $row->id,
+					'from_user' => (int) $row->from_user
 				];
 			} );
 
@@ -162,16 +165,16 @@ class RevisionUpvotesService {
 			->runLoop( $db, function( &$upvotes, $row ) {
 				if ( empty( $upvotes[$row->upvote_id]['revision'] ) ) {
 					$upvotes[$row->upvote_id]['revision'] = [
-						'wikiId' => $row->wiki_id,
-						'pageId' => $row->page_id,
-						'revisionId' => $row->revision_id,
-						'userId' => $row->user_id,
-						'upvoteId' => $row->upvote_id
+						'wikiId' => (int) $row->wiki_id,
+						'pageId' => (int) $row->page_id,
+						'revisionId' => (int) $row->revision_id,
+						'userId' => (int) $row->user_id,
+						'upvoteId' => (int) $row->upvote_id
 					];
 				}
 
 				$upvotes[$row->upvote_id]['upvotes'][] = [
-					'from_user' => $row->from_user
+					'from_user' => (int) $row->from_user
 				];
 			} );
 
@@ -215,7 +218,7 @@ class RevisionUpvotesService {
 			->AND_( 'revision_id' )->EQUAL_TO( $revisionId )
 			->run( $db, function( $result ) {
 				$row = $result->fetchObject();
-				return $row->upvote_id;
+				return (int) $row->upvote_id;
 			} );
 
 		return $upvoteId;
@@ -265,20 +268,22 @@ class RevisionUpvotesService {
 
 		$lastId = $db->insertId();
 
-		$db->upsert(
-			self::UPVOTE_USERS_TABLE,
-			[
-				'user_id' => $userId,
-				'total' => 1,
-				'new' => 1
-			],
-			[],
-			[
-				'total = total + 1',
-				'new = new + 1',
-				'notified' => false
-			]
-		);
+		if ( $this->shouldStoreUserData( $userId ) ) {
+			$db->upsert(
+				self::UPVOTE_USERS_TABLE,
+				[
+					'user_id' => $userId,
+					'total' => 1,
+					'new' => 1
+				],
+				[ ],
+				[
+					'total = total + 1',
+					'new = new + 1',
+					'notified' => false
+				]
+			);
+		}
 
 		$db->commit();
 
@@ -301,5 +306,9 @@ class RevisionUpvotesService {
 
 	private function getDatabase( $db = DB_SLAVE ) {
 		return wfGetDB( $db, [], F::app()->wg->RevisionUpvotesDB );
+	}
+
+	private function shouldStoreUserData( $userId ) {
+		return $userId > 0;
 	}
 }

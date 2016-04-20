@@ -1,0 +1,30 @@
+<!-- Begin Nielsen body tag -->
+<script type="text/javascript">
+	(function() {
+		function trackPageView() {
+			var _nolggGlobalParams = {
+				sfcode: 'dcr-cert',
+				apid: '{{appId}}',
+				apn: 'test-static'
+			};
+
+			gg1 = NOLCMB.getInstance(_nolggGlobalParams);
+			staticmeta = {
+				type: 'static',
+				assetid: '{{section}}',
+				section: '{{section}}',
+				segA: '{{dbName}}',
+				segB: '',
+				segC: ''
+			};
+
+			gg1.ggInitialize(_nolggGlobalParams);
+			gg1.ggPM('staticstart', staticmeta);
+		}
+
+		document.addEventListener("DOMContentLoaded", function() {
+			window.nielsenCmd.push(trackPageView);
+		});
+	})();
+</script>
+<!-- End Nielsen body tag -->

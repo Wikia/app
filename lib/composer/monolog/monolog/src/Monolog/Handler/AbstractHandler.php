@@ -32,12 +32,12 @@ abstract class AbstractHandler implements HandlerInterface
     protected $processors = array();
 
     /**
-     * @param integer $level  The minimum logging level at which this handler will be triggered
+     * @param int     $level  The minimum logging level at which this handler will be triggered
      * @param Boolean $bubble Whether the messages that are handled can bubble up the stack or not
      */
     public function __construct($level = Logger::DEBUG, $bubble = true)
     {
-        $this->level = $level;
+        $this->setLevel($level);
         $this->bubble = $bubble;
     }
 
@@ -118,12 +118,12 @@ abstract class AbstractHandler implements HandlerInterface
     /**
      * Sets minimum logging level at which this handler will be triggered.
      *
-     * @param  integer $level
+     * @param  int|string $level Level or level name
      * @return self
      */
     public function setLevel($level)
     {
-        $this->level = $level;
+        $this->level = Logger::toMonologLevel($level);
 
         return $this;
     }
@@ -131,7 +131,7 @@ abstract class AbstractHandler implements HandlerInterface
     /**
      * Gets minimum logging level at which this handler will be triggered.
      *
-     * @return integer
+     * @return int
      */
     public function getLevel()
     {

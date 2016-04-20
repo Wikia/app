@@ -2,6 +2,8 @@
 
 /* smart proxy to article comment */
 
+use Wikia\Logger\WikiaLogger;
+
 class WallMessage {
 	protected $articleComment;
 	protected $title;
@@ -59,6 +61,39 @@ class WallMessage {
 
 		wfProfileOut( __METHOD__ );
 		return null;
+	}
+
+	/**
+	 * @param array $ids
+	 * @return array
+	 */
+	static public function newFromIds( $ids ) {
+		wfProfileIn( __METHOD__ );
+
+		$titles = Title::newFromIDs( $ids );
+		$wallMessages = [ ];
+		$correctIds = [ ];
+
+		//double check if all titles are correct
+		foreach ( $titles as $title ) {
+			if ( $title->exists() ) {
+				$wallMessages[] = WallMessage::newFromTitle( $title );
+				$correctIds[] = $title->getArticleID();
+			}
+		}
+
+		$retryIds = array_diff( $ids, $correctIds );
+		foreach ( $retryIds as $id ) {
+			$title = Title::newFromId( $id, Title::GAID_FOR_UPDATE );
+			if ( $title instanceof Title && $title->exists() ) {
+				$wallMessages[] = WallMessage::newFromTitle( $title );
+			} else {
+				WikiaLogger::instance()->error( 'Failed to load reply for thread', [ 'titleId' => $id ] );
+			}
+		}
+
+		wfProfileOut( __METHOD__ );
+		return $wallMessages;
 	}
 
 	static public function addMessageWall( $userPageTitle ) {

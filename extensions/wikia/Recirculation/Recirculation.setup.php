@@ -12,6 +12,7 @@ $wgAutoloadClasses['FandomDataService'] =  __DIR__ . '/services/FandomDataServic
 $wgAutoloadClasses['DiscussionsDataService'] =  __DIR__ . '/services/DiscussionsDataService.class.php';
 
 $wgAutoloadClasses['RecirculationController'] =  __DIR__ . '/RecirculationController.class.php';
+$wgAutoloadClasses['RecirculationApiController'] =  __DIR__ . '/RecirculationApiController.class.php';
 $wgAutoloadClasses['RecirculationHooks'] =  __DIR__ . '/RecirculationHooks.class.php';
 
 // Hooks
@@ -24,4 +25,6 @@ $wgExtensionMessagesFiles['Recirculation'] = __DIR__ . '/Recirculation.i18n.php'
 
 JSMessages::registerPackage('Recirculation', [
 	'recirculation-incontent-title',
+	'recirculation-fandom-title',
+	'recirculation-fandom-subtitle',
 ]);

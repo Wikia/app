@@ -3,10 +3,9 @@
 class AnalyticsProviderOpenXBidder implements iAnalyticsProvider {
 
 	public static function isEnabled() {
-		global $wgAdDriverEnableOpenXBidder, $wgEnableAdEngineExt, $wgShowAds, $wgAdDriverUseSevenOneMedia;
+		global $wgAdDriverEnableOpenXBidder, $wgShowAds, $wgAdDriverUseSevenOneMedia;
 
 		return ( $wgAdDriverEnableOpenXBidder )
-			&& $wgEnableAdEngineExt
 			&& $wgShowAds
 			&& AdEngine2Service::areAdsShowableOnPage()
 			&& !$wgAdDriverUseSevenOneMedia;

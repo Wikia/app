@@ -17,7 +17,7 @@ class AdminDashboardSpecialPageController extends WikiaSpecialPageController {
 	 *
 	 */
 	public function index() {
-		$this->wg->Out->setPageTitle( wfMessage( 'admindashboard-title' )->escaped() );
+		$this->wg->Out->setPageTitle( wfMessage( 'admindashboard-header' )->escaped() );
 		if (!$this->wg->User->isAllowed( 'admindashboard' )) {
 			$this->displayRestrictionError();
 			return false;  // skip rendering

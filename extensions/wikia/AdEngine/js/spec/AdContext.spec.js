@@ -56,6 +56,8 @@ describe('AdContext', function () {
 			callback: noop
 		},
 		queryParams = [
+			'evolve2',
+			'hitMedia',
 			'liftium',
 			'turtle'
 		];
@@ -283,6 +285,19 @@ describe('AdContext', function () {
 		expect(adContext.getContext().providers.turtle).toBeFalsy();
 	});
 
+	it('makes providers.hitMedia true when country in instantGlobals.wgAdDriverHitMediaCountries', function () {
+		var adContext;
+
+		mocks.win = {};
+		mocks.instantGlobals = {wgAdDriverHitMediaCountries: ['CURRENT_COUNTRY', 'ZZ']};
+		adContext = getModule();
+		expect(adContext.getContext().providers.hitMedia).toBeTruthy();
+
+		mocks.instantGlobals = {wgAdDriverHitMediaCountries: ['YY']};
+		adContext = getModule();
+		expect(adContext.getContext().providers.hitMedia).toBeFalsy();
+	});
+
 	it('calls whoever registered with addCallback each time setContext is called', function () {
 		var adContext;
 
@@ -365,30 +380,6 @@ describe('AdContext', function () {
 		mocks.instantGlobals = {wgAdDriverKruxCountries: ['AA', 'BB', 'CC']};
 		adContext = getModule();
 		expect(adContext.getContext().targeting.enableKruxTargeting).toBeFalsy();
-	});
-
-	it('disables krux when wiki is directed at children', function () {
-		var adContext;
-
-		mocks.win = {ads: {context: {targeting: {wikiDirectedAtChildren: false, enableKruxTargeting: true}}}};
-		mocks.instantGlobals = {wgAdDriverKruxCountries: ['CURRENT_COUNTRY']};
-		adContext = getModule();
-		expect(adContext.getContext().targeting.enableKruxTargeting).toBeTruthy();
-
-		mocks.win = {ads: {context: {targeting: {wikiDirectedAtChildren: true, enableKruxTargeting: true}}}};
-		mocks.instantGlobals = {wgAdDriverKruxCountries: ['CURRENT_COUNTRY']};
-		adContext = getModule();
-		expect(adContext.getContext().targeting.enableKruxTargeting).toBeFalsy();
-	});
-
-	it('disables krux when url param noexternals=1 is set', function () {
-		mocks.win = {ads: {context: {targeting: {enableKruxTargeting: true}}}};
-		mocks.instantGlobals = {wgAdDriverKruxCountries: ['AA', 'CURRENT_COUNTRY', 'BB']};
-		spyOn(mocks.querystring, 'getVal').and.callFake(function (param) {
-			return param === 'noexternals' ?  '1' : '0';
-		});
-
-		expect(getModule().getContext().targeting.enableKruxTargeting).toBeFalsy();
 	});
 
 	it('disables recovery when url is not set (e.g. for mercury skin)', function () {
@@ -547,6 +538,19 @@ describe('AdContext', function () {
 		mocks.instantGlobals = {wgAdDriverIncontentPlayerSlotCountries: ['YY']};
 		adContext = getModule();
 		expect(adContext.getContext().slots.incontentPlayer).toBeFalsy();
+	});
+
+	it('enables incontent_leaderboard slot when ' +
+	'country in instatnGlobals.wgAdDriverIncontentLeaderboardSlotCountries', function () {
+		var adContext;
+
+		mocks.instantGlobals = {wgAdDriverIncontentLeaderboardSlotCountries: ['HH', 'CURRENT_COUNTRY', 'ZZ']};
+		adContext = getModule();
+		expect(adContext.getContext().slots.incontentLeaderboard).toBeTruthy();
+
+		mocks.instantGlobals = {wgAdDriverIncontentLeaderboardSlotCountries: ['YY']};
+		adContext = getModule();
+		expect(adContext.getContext().slots.incontentLeaderboard).toBeFalsy();
 	});
 
 	it('enables incontent_player slot when url param incontentplayer is set', function () {

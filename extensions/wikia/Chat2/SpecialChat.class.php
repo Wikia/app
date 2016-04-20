@@ -6,7 +6,7 @@ class SpecialChat extends UnlistedSpecialPage {
 		parent::__construct( 'Chat', 'chat' );
 	}
 
-	public function execute() {
+	public function execute( $par ) {
 		wfProfileIn( __METHOD__ );
 		global $wgUser, $wgOut;
 

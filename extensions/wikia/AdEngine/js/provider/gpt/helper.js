@@ -27,6 +27,9 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 
 	var logGroup = 'ext.wikia.adEngine.provider.gpt.helper',
 		googleApi = new GoogleTag(),
+		hiddenSlots = [
+			'INCONTENT_LEADERBOARD'
+		],
 		recoveryInitialized = false;
 
 	function loadRecovery() {
@@ -50,12 +53,14 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	}
 
 	function collapseElement(element) {
-		slotTweaker.removeDefaultHeight(element.getSlotName());
-		slotTweaker.removeTopButtonIfNeeded(element.getSlotName());
 		slotTweaker.hide(
-			element.getSlotContainerId(),
+			element.getSlotName(),
 			recoveryHelper.isBlocking() && recoveryHelper.isRecoveryEnabled()
 		);
+	}
+
+	function isHiddenOnStart(slotName) {
+		return hiddenSlots.indexOf(slotName) !== -1;
 	}
 
 	/**
@@ -78,6 +83,12 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 
 		slotTargeting = JSON.parse(JSON.stringify(slotTargeting)); // copy value
 
+		if (isHiddenOnStart(slot.name)) {
+			slotTweaker.hide(slot.name);
+			slot.pre('success', function () {
+				slotTweaker.show(slot.name);
+			});
+		}
 		if (scrollHandler) {
 			count = scrollHandler.getReloadedViewCount(slot.name);
 			if (count !== null) {
@@ -87,11 +98,6 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 
 		element = new AdElement(slot.name, slotPath, slotTargeting);
 
-		slot.pre('success', function (adInfo) {
-			if (adInfo && adInfo.adType === 'collapse') {
-				collapseElement(element);
-			}
-		});
 		slot.pre('collapse', function () {
 			collapseElement(element);
 		});

@@ -149,9 +149,6 @@ class JsonFormatTest extends WikiaBaseTest {
 			//check for empty result
 			if ( !empty( $wikitext ) ) {
 				$this->assertNotEmpty( $htmlOutput->getText(), 'Provided WikiText could not be parsed.' );
-				if( $wgWikiaEnvironment == WIKIA_ENV_DEV ) {
-					\Wikia\Logger\WikiaLogger::instance()->setDevModeWithES();
-				}
 				\Wikia\Logger\WikiaLogger::instance()->info(
 					'JsonFormatTest::getParsedOutput', [
 						'wikitext' => $wikitext,

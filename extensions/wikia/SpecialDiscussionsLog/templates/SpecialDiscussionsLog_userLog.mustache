@@ -1,15 +1,16 @@
-{{#hasUserError}}
-	<p>{{userErrorMessage}}</p>
-{{/hasUserError}}
-{{^hasUserError}}
+{{#userErrorMessage}}
+	<div class="log-error-message">{{userErrorMessage}}</div>
+{{/userErrorMessage}}
+{{^userErrorMessage}}
 	{{#hasNoUserLogRecords}}
-		<p>{{noUserLogRecordsMessage}}</p>
+		<div class="log-error-message">{{noUserLogRecordsMessage}}</div>
 	{{/hasNoUserLogRecords}}
 	{{^hasNoUserLogRecords}}
-		<p>{{logTableCaption}}</p>
 		<table class="article-table">
-			<thead>
+            <caption class="log-table-caption">{{logTableCaption}}</caption>
+            <thead>
 			<tr>
+				<th>{{userNameHeader}}</th>
 				<th>{{ipAddressHeader}}</th>
 				<th>{{locationHeader}}</th>
 				<th>{{languageHeader}}</th>
@@ -20,6 +21,7 @@
 			</thead>
 			{{#userLogRecords}}
 				<tr>
+					<td>{{userName}}</td>
 					<td>{{ip}}</td>
 					<td>{{location}}</td>
 					<td>{{language}}</td>
@@ -30,4 +32,4 @@
 			{{/userLogRecords}}
 		</table>
 	{{/hasNoUserLogRecords}}
-{{/hasUserError}}
+{{/userErrorMessage}}

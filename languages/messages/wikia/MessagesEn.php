@@ -1,6 +1,6 @@
 <?php
 #Related to visitor skins: Slate.php and Smoke.php
-$messages = array_merge( $messages , array(
+$messages = array_merge( $messages , [
 # Default for corporate skin
 'corporatepage-sidebar' => '*http://entertainment.wikia.com/|Entertainment
 ** http://harrypotter.wikia.com/|Harry Potter Wiki
@@ -1056,4 +1056,18 @@ hu',
 
 'wikia-read-only-mode' => 'Uh-oh! Our main datacenter is currently unavailable, so this is our backup. Unfortunately, this means you may not be able to do certain things like edit, upload, or chat.
 We are working to fix the problem, thank you for your patience! If you see this for an extended period of time, feel free to contact Wikia at community@wikia.com.',
-) );
+
+// VOLDEV-144: Update anon purge messages for friendliness
+'confirm-purge-top' => 'Would you like to clear the cache for this page?',
+'confirm_purge_button' => 'Yes, I am not a robot',
+'confirm-purge-bottom' => 'Clearing a page\'s cache helps ensure the latest version will appear.',
+
+// Moved from the Blogs extension since it should be always available.
+'blog-avatar-defaults' => 'Avatar.jpg
+Avatar2.jpg
+Avatar3.jpg
+Avatar4.jpg
+Avatar5.jpg
+Avatar6.jpg'
+] );
+
