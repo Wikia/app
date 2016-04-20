@@ -9,7 +9,7 @@ define('ext.wikia.spitfires.experiments.tracker', [
 	function trackVerboseClick(experiment, label) {
 		var group = abTest.getGroup(experiment),
 			userStatusLabel = getUserStatus(),
-			structuredLabel = [experiment, group, userStatusLabel, label].join('=');
+			structuredLabel = [experiment, group, userStatusLabel, label].join('-');
 
 		trackClick(structuredLabel);
 	}
@@ -17,7 +17,7 @@ define('ext.wikia.spitfires.experiments.tracker', [
 	function trackVerboseImpression(experiment, label) {
 		var group = abTest.getGroup(experiment),
 			userStatusLabel = getUserStatus(),
-			structuredLabel = [experiment, group, userStatusLabel, label].join('=');
+			structuredLabel = [experiment, group, userStatusLabel, label].join('-');
 
 		trackImpression(structuredLabel);
 	}
