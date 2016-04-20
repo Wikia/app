@@ -6,52 +6,63 @@ define('ext.wikia.spitfires.experiments.tracker', [
 ], function (tracker, abTest, cookies) {
 	'use strict';
 
-	function trackVerboseClick(experiment, label) {
-		var group = abTest.getGroup(experiment),
-			userStatusLabel = getUserStatus(),
-			structuredLabel = [experiment, group, userStatusLabel, label].join('-');
+	var track = tracker.buildTrackingFunction({
+			category: 'spitfires-contribution-experiments',
+			trackingMethod: 'analytics'
+		});
 
-		trackClick(structuredLabel);
+	function trackVerboseClick(experiment, label) {
+		trackClick(prepareStructuredLabel(experiment, label));
 	}
 
 	function trackVerboseImpression(experiment, label) {
-		var group = abTest.getGroup(experiment),
-			userStatusLabel = getUserStatus(),
-			structuredLabel = [experiment, group, userStatusLabel, label].join('-');
+		trackImpression(prepareStructuredLabel(experiment, label));
+	}
 
-		trackImpression(structuredLabel);
+	function trackVerboseSuccess(experiment, label) {
+		trackSuccess(prepareStructuredLabel(experiment, label));
 	}
 
 	function trackClick(label) {
-		tracker.track({
+		track({
 			action: tracker.ACTIONS.CLICK,
-			category: 'spitfires-contribution-experiments',
-			label: label,
-			trackingMethod: 'analytics'
+			label: label
 		});
 	}
 
 	function trackImpression(label) {
-		tracker.track({
+		track({
 			action: tracker.ACTIONS.IMPRESSION,
-			category: 'spitfires-contribution-experiments',
-			label: label,
-			trackingMethod: 'analytics'
+			label: label
+		});
+	}
+
+	function trackSuccess(label) {
+		track({
+			action: tracker.ACTIONS.SUCCESS,
+			label: label
 		});
 	}
 
 	function getUserStatus() {
-		if (cookies.get('newlyregistered') === 1) {
+		if (cookies.get('newlyregistered')) {
 			return 'newlyregistered';
-		} else if (cookies.get('userwithoutedit') === 1) {
+		} else if (cookies.get('userwithoutedit')) {
 			return 'userwithoutedit';
 		} else {
 			return 'userStatusNaN';
 		}
 	}
 
+	function prepareStructuredLabel(experiment, label) {
+		var group = abTest.getGroup(experiment),
+			userStatusLabel = getUserStatus();
+		return [experiment, group, userStatusLabel, label].join('-');
+	}
+			
 	return {
 		trackVerboseClick: trackVerboseClick,
-		trackVerboseImpression: trackVerboseImpression
+		trackVerboseImpression: trackVerboseImpression,
+		trackVerboseSuccess: trackVerboseSuccess
 	};
 });
