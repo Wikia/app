@@ -1,4 +1,5 @@
 var STATUS_STATE_PRESENT = 'here'; // strings instead of ints just for easier debugging. always use the vars, don't hardcode strings w/these states elsewhere.
+var STATUS_STATE_AWAY = 'away';
 
 (function () {
 	var server = false, models;
