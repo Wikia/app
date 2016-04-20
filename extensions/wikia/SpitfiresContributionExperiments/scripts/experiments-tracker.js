@@ -26,21 +26,21 @@ define('ext.wikia.spitfires.experiments.tracker', [
 	function trackClick(label) {
 		track({
 			action: tracker.ACTIONS.CLICK,
-			label: label,
+			label: label
 		});
 	}
 
 	function trackImpression(label) {
 		track({
 			action: tracker.ACTIONS.IMPRESSION,
-			label: label,
+			label: label
 		});
 	}
 
 	function trackSuccess(label) {
 		track({
 			action: tracker.ACTIONS.SUCCESS,
-			label: label,
+			label: label
 		});
 	}
 
@@ -56,13 +56,13 @@ define('ext.wikia.spitfires.experiments.tracker', [
 
 	function prepareStructuredLabel(experiment, label) {
 		var group = abTest.getGroup(experiment),
-			userStatusLabel = getUserStatus(),
+			userStatusLabel = getUserStatus();
 		return [experiment, group, userStatusLabel, label].join('-');
 	}
 			
 	return {
 		trackVerboseClick: trackVerboseClick,
-		trackVerboseImpression: trackVerboseImpression.
+		trackVerboseImpression: trackVerboseImpression,
 		trackVerboseSuccess: trackVerboseSuccess
 	};
 });
