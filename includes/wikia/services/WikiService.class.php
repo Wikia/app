@@ -825,7 +825,6 @@ class WikiService extends WikiaModel {
 				array(
 					'city_list.city_id',
 					'city_list.city_title',
-					'city_list.city_dbname',
 					'city_list.city_description',
 					'city_list.city_url',
 					'city_list.city_lang',
@@ -839,7 +838,7 @@ class WikiService extends WikiaModel {
 				),
 				array(
 					'city_list.city_public' => 1,
-					'city_list.city_id IN (' . implode( ',', $wikiIds ) . ')',
+					'city_list.city_id' => $wikiIds,
 					'((city_visualization.city_flags & ' . self::FLAG_BLOCKED . ') != ' . self::FLAG_BLOCKED . ' OR city_visualization.city_flags IS NULL)'
 				),
 				__METHOD__,
