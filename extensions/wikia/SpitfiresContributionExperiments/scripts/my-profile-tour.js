@@ -182,6 +182,6 @@ require(['jquery', 'ext.wikia.spitfires.experiments.tracker', 'wikia.loader', 'w
 			};
 		}
 
-		init();
+		$(init);
 	}
 );
