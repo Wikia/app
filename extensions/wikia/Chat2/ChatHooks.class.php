@@ -25,7 +25,7 @@ class ChatHooks {
 	public static function onMakeGlobalVariablesScript( &$vars ) {
 		global $wgUser;
 
-		$chatUsers = '';
+		$chatUsers = [];
 
 		if ( $wgUser->isLoggedIn() ) {
 			$chatUsers = ChatWidget::getUsersInfo();

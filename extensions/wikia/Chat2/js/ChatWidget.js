@@ -5,6 +5,7 @@ var ChatWidget = {
 	chatLaunchModal: null,
 	bindComplete: false,
 	isWideChat: null,
+	widgetUserElementTemplate: '',
 	wideChatThreshold: 280,
 	resizeDebounceTime: 1000,
 
@@ -18,7 +19,7 @@ var ChatWidget = {
 			ChatWidget.bindComplete = true;
 		}
 		// check if content was pre-rendered to JS variable
-		if (window.wgWikiaChatUsers) {
+		if (window.wgWikiaChatUsers.length) {
 			ChatWidget.initEntryPoint();
 		} else if (!ChatWidget.loading) {
 			// if we're not loading yet - start it
@@ -35,20 +36,34 @@ var ChatWidget = {
 			type: 'GET',
 			format: 'json',
 			callback: function (content) {
-				// cache the result
-				window.wgWikiaChatUsers = content.users;
+				ChatWidget.onChatUsersFetched(content.users);
+			}
+		});
+	},
+
+	/**
+	 * As we get updated list of users on chat, rerender part of the template responsible for
+	 * displaying users avatars list.
+	 *
+	 * @param users array of users
+	 */
+	onChatUsersFetched: function(users) {
+		// cache the result
+		window.wgWikiaChatUsers = users;
+		// replace list of users with actual one - rerender template
+		Wikia.getMultiTypePackage({
+			mustache: 'extensions/wikia/Chat2/templates/widgetUserElement.mustache',
+			callback: function (data) {
+				ChatWidget.widgetUserElementTemplate = data.mustache[0];
+				ChatWidget.updateUsersList();
 				ChatWidget.initEntryPoint();
 			}
 		});
 	},
 
 	initEntryPoint: function () {
-		if (typeof window.wgWikiaChatUsers === 'string') {
-			// for logged-in users the information about chat users is serialized into JS global variable
-			window.wgWikiaChatUsers = window.wgWikiaChatUsers.length ? JSON.parse(window.wgWikiaChatUsers) : [];
-		}
-
-		// in case the module is embedded in the article, we can have several modules on the page. work on them one by one
+		// in case the module is embedded in the article, we can have several modules on the page.
+		// Process them one by one
 		$('.ChatModuleUninitialized').each(function () {
 			var $module = $(this);
 			ChatWidget.isWideChat = ChatWidget.computeIsWideChat($module.width());
@@ -148,6 +163,17 @@ var ChatWidget = {
 					setPopoverTimeout($this);
 				});
 		});
+	},
+
+	updateUsersList: function() {
+		var users = window.wgWikiaChatUsers,
+			output = '';
+
+		users.forEach(function(user) {
+			output += Mustache.render(ChatWidget.widgetUserElementTemplate, user);
+		});
+
+		document.getElementById('chatCarousel').innerHTML = output;
 	},
 
 	onClickChatButton: function (linkToSpecialChat) {

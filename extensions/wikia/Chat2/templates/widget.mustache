@@ -23,7 +23,8 @@
 			<div class="carousel-container">
 				<div>
 					{{#hasUsers}}
-						<ul class="carousel">
+						<ul class="carousel" id="chatCarousel">
+							{{#users}}
 							<li class="chatter">
 								<img src="{{blankImgUrl}}" data-src="{{avatarUrl}}" class="avatar" width="32" height="32"  />
 								<div class="UserStatsMenu">
@@ -53,6 +54,7 @@
 									</div>
 								</div>
 							</li>
+							{{/users}}
 						</ul>
 					{{/hasUsers}}
 					{{#myAvatarUrl}}
