@@ -14,6 +14,7 @@ require([
 
 	function init() {
 		if (
+			mw.config.get('wgAction') !== 'view' ||
 			window.optimizely.variationNamesMap[experimentId] !== 'CHALLENGE-LIST' ||
 			$.cookie(dismissCookieName) ||
 			mw.config.get('wgNamespaceNumber') !== 0
@@ -36,7 +37,7 @@ require([
 	function addEntryPoint(pageTitles, resources) {
 		var pages = getRandomPagesData(pageTitles, 2),
 			templateData = {
-				userName: mw.user.name(),
+				userName: mw.config.get('wgUserName'),
 				blankImgUrl: mw.config.get('wgBlankImgUrl'),
 				pages: pages
 			};
