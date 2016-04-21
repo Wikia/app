@@ -14,20 +14,23 @@ define('ext.wikia.adEngine.template.floorAdhesion', [
 	 * Show the floor ad.
 	 */
 	function show() {
-		var skin = adContext.getContext().targeting.skin;
+		var iframe = wrapper.querySelector('div[id*="_container_"] iframe'),
+			skin = adContext.getContext().targeting.skin;
 
 		wrapper.querySelector('.close').addEventListener('click', function (event) {
 			event.preventDefault();
 			wrapper.classList.add('hidden');
 		});
 
-		if (skin === 'oasis') {
-			win.WikiaBar.hideContainer();
-		}
+		iframe.addEventListener('load', function () {
+			if (skin === 'oasis') {
+				win.WikiaBar.hideContainer();
+			}
 
-		wrapper.classList.add('floor-adhesion');
-		wrapper.classList.remove('hidden');
-		log('Show floor adhesion', 'info', logGroup);
+			wrapper.classList.add('floor-adhesion');
+			wrapper.classList.remove('hidden');
+			log('Show floor adhesion', 'info', logGroup);
+		});
 	}
 
 	return {
