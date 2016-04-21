@@ -245,23 +245,74 @@ class PaginatorTest extends WikiaBaseTest {
 	/**
 	 * Test the basic API of the class, style #2 of using it
 	 *
-	 * Create an object of Paginator using Paginator::newFromArray and then set an active page
-	 * number using Paginator::setActivePage and then generate the HTML for the pagination bar
-	 * by Paginator::getBarHTML + generate the head item with rel="prev/next" links
+	 * Create an object of Paginator using Paginator::newFromArray passing array
+	 * constructed by array_fill( 0, $count, '' ) and then set an active page number
+	 * using Paginator::setActivePage and then generate the HTML for the pagination
+	 * bar by Paginator::getBarHTML + generate the head item with rel="prev/next" links
 	 *
 	 * This style of calling the class is used by:
 	 *
-	 *  * InsightsPaginator
 	 *  * ManageWikiaHomeController
 	 *  * UserActivity\SpecialController
-	 *  * SpecialVideosHelper
+	 *  * WhereIsExtension
+	 *  * TemplatesSpecialController
+	 *  * WAMPageController
+	 *  * WDACReviewSpecialController
+	 *  * blog-pager-ajax.tmpl
 	 *
 	 * @dataProvider dataProviderCallStyle2
 	 */
 	public function testCallStyle2( $itemsPerPage, $allDataString, $pageNo, $pageDataString, $expectedHtml ) {
 		$url = 'http://url/?page=%s';
-		$allData = explode( ',', $allDataString );
+		$count = count( explode( ',', $allDataString ) );
+		$allData = array_fill( 0, $count, '' );
 		$pages = Paginator::newFromArray( $allData, $itemsPerPage );
+		$pages->setActivePage( $pageNo - 1 );
+		$html = $pages->getBarHTML( $url );
+		$this->assertHtmlEquals( $expectedHtml, $html );
+	}
+
+	/**
+	 * Test the basic API of the class, style #2 of using it + using $maxItemsPerPage param
+	 *
+	 * The same as above, just passing additional param $maxItemsPerPage, simulated here by
+	 * passing a big number for $itemsPerPage and then the one from data provider as $maxItemsPerPage
+	 *
+	 * This style of calling the class is used by:
+	 *
+	 *  * InsightsPaginator
+	 *
+	 * @dataProvider dataProviderCallStyle2
+	 */
+	public function testCallStyle2maxItemsPerPage( $itemsPerPage, $allDataString, $pageNo, $pageDataString, $expectedHtml ) {
+		$url = 'http://url/?page=%s';
+		$count = count( explode( ',', $allDataString ) );
+		$allData = array_fill( 0, $count, '' );
+		$pages = Paginator::newFromArray( $allData, 1000, $itemsPerPage );
+		$pages->setActivePage( $pageNo - 1 );
+		$html = $pages->getBarHTML( $url );
+		$this->assertHtmlEquals( $expectedHtml, $html );
+	}
+
+	/**
+	 * Test the basic API of the class, style #3 of using it
+	 *
+	 * Create an object of Paginator using Paginator::newFromArray passing number of elements to
+	 * paginate through constructed by array_fill( 0, $count, '' ) and then set an active page
+	 * number using Paginator::setActivePage and then generate the HTML for the pagination
+	 * bar by Paginator::getBarHTML + generate the head item with rel="prev/next" links
+	 *
+	 * This style of calling the class is used by:
+	 *
+	 *  * SpecialVideosHelper
+	 *  * WikiaNewFilesSpecialController
+	 *
+	 * @dataProvider dataProviderCallStyle2
+	 */
+	public function testCallStyle3( $itemsPerPage, $allDataString, $pageNo, $pageDataString, $expectedHtml ) {
+		$url = 'http://url/?page=%s';
+		$count = count( explode( ',', $allDataString ) );
+		$pages = Paginator::newFromArray( $count, $itemsPerPage );
 		$pages->setActivePage( $pageNo - 1 );
 		$html = $pages->getBarHTML( $url );
 		$this->assertHtmlEquals( $expectedHtml, $html );
