@@ -2,7 +2,7 @@ require(['jquery', 'mw', 'VisualEditorTourExperimentInit', 'ext.wikia.spitfires.
 	function ($, mw, veTourInit, tracker) {
 		'use strict';
 
-		var EXPERIMENT_NAME = 'CONTRIB_EXPERIMENTS';
+		var EXPERIMENT_NAME = 'contribution-experiments';
 
 		function initEntry() {
 			var $editButton = $('#ca-ve-edit');
