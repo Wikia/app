@@ -154,12 +154,6 @@ define('ext.wikia.adEngine.adContext', [
 			!isPageType('home')
 		);
 
-		// Override leaderboard sizes
-		context.opts.overrideLeaderboardSizes = !!(
-			context.targeting.skin === 'oasis' &&
-			geo.isProperGeo(['JP'])
-		);
-
 		// Export the context back to ads.context
 		// Only used by Lightbox.js, WikiaBar.js and AdsInContext.js
 		if (w.ads && w.ads.context) {
