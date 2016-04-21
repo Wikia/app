@@ -68,8 +68,11 @@ class TemplatesWithoutTypePage extends PageQueryPage {
 				->VALUES( $templatesWithoutType )
 				->run( $dbw );
 		}
+		$num = count( $templatesWithoutType );
 
-		return count( $templatesWithoutType );
+		wfRunHooks( 'TemplatesWithoutTypeQueryRecached', [ 'count' => $num ] );
+
+		return $num;
 	}
 
 	/**

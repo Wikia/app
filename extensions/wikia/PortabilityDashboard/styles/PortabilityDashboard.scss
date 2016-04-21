@@ -1,0 +1,43 @@
+@import 'skins/shared/color';
+
+$cell-padding: 10px;
+$filter-pill-border-width: 1px;
+$filter-pill-radius: 2px;
+$filter-pill-padding: 5px;
+
+.mw-special-PortabilityDashboard {
+	.portability-dashboard-language-filter {
+		list-style: none;
+		margin: 0;
+
+		li {
+			display: inline-block;
+		}
+
+		a {
+			margin: 0 $cell-padding $cell-padding 0;
+			padding: $filter-pill-padding $cell-padding;
+		}
+	}
+
+	.portability-dashboard-table {
+		overflow: hidden;
+
+		tr:hover {
+			background-color: $color-unified-module-background;
+		}
+
+		th,
+		td {
+			padding: $cell-padding;
+		}
+
+		a {
+			display: block;
+		}
+	}
+
+	.tooltip-icon-wrapper {
+		display: inline;
+	}
+}

@@ -117,7 +117,6 @@ describe('ext.wikia.adEngine.provider.*', function () {
 	}
 
 	beforeEach(function () {
-		mocks.context.opts.overrideLeaderboardSizes = false;
 		mocks.context.opts.overridePrefootersSizes = false;
 	});
 
@@ -137,29 +136,6 @@ describe('ext.wikia.adEngine.provider.*', function () {
 			PREFOOTER_LEFT_BOXAD: '300x250',
 			PREFOOTER_RIGHT_BOXAD: '300x250',
 			TOP_LEADERBOARD: '728x90,1030x130,1030x65,1030x250,970x365,970x250,970x90,970x66,970x180,980x150',
-			TOP_RIGHT_BOXAD: '300x250,300x600,300x1050'
-		};
-
-		assertProviderSlotMap(getProvider('directGpt'), expectedSizes);
-	});
-
-	it('directGpt: Push ad with overridden leaderboard slot sizes', function () {
-		mocks.context.opts.overrideLeaderboardSizes = true;
-		var expectedSizes = {
-			CORP_TOP_LEADERBOARD: '728x90',
-			CORP_TOP_RIGHT_BOXAD: '300x250,300x600,300x1050',
-			HOME_TOP_LEADERBOARD: '728x90',
-			HOME_TOP_RIGHT_BOXAD: '300x250,300x600,300x1050',
-			HUB_TOP_LEADERBOARD: '728x90',
-			INCONTENT_BOXAD_1: '120x600,160x600,300x250,300x600',
-			INCONTENT_PLAYER: '1x1',
-			INVISIBLE_HIGH_IMPACT_2: 'out-of-page',
-			INVISIBLE_SKIN: '1000x1000,1x1',
-			LEFT_SKYSCRAPER_2: '120x600,160x600,300x250,300x600,300x1050',
-			LEFT_SKYSCRAPER_3: '120x600,160x600,300x250,300x600',
-			PREFOOTER_LEFT_BOXAD: '300x250',
-			PREFOOTER_RIGHT_BOXAD: '300x250',
-			TOP_LEADERBOARD: '728x90',
 			TOP_RIGHT_BOXAD: '300x250,300x600,300x1050'
 		};
 
@@ -204,29 +180,6 @@ describe('ext.wikia.adEngine.provider.*', function () {
 			PREFOOTER_LEFT_BOXAD: '300x250',
 			PREFOOTER_RIGHT_BOXAD: '300x250',
 			TOP_LEADERBOARD: '728x90,1030x130,1030x65,1030x250,970x365,970x250,970x90,970x66,970x180,980x150',
-			TOP_RIGHT_BOXAD: '300x250,300x600,300x1050'
-		};
-
-		assertProviderSlotMap(getProvider('remnantGpt'), expectedSizes);
-	});
-
-	it('remnantGpt: Push ad with overridden leaderboard slot sizes', function () {
-		mocks.context.opts.overrideLeaderboardSizes = true;
-		var expectedSizes = {
-			CORP_TOP_LEADERBOARD: null,
-			CORP_TOP_RIGHT_BOXAD: null,
-			HOME_TOP_LEADERBOARD: '728x90',
-			HOME_TOP_RIGHT_BOXAD: '300x250,300x600,300x1050',
-			HUB_TOP_LEADERBOARD: null,
-			INCONTENT_BOXAD_1: '120x600,160x600,300x250,300x600',
-			INCONTENT_PLAYER: null,
-			INVISIBLE_HIGH_IMPACT_2: 'out-of-page',
-			INVISIBLE_SKIN: '1000x1000,1x1',
-			LEFT_SKYSCRAPER_2: '120x600,160x600,300x250,300x600,300x1050',
-			LEFT_SKYSCRAPER_3: '120x600,160x600,300x250,300x600',
-			PREFOOTER_LEFT_BOXAD: '300x250',
-			PREFOOTER_RIGHT_BOXAD: '300x250',
-			TOP_LEADERBOARD: '728x90',
 			TOP_RIGHT_BOXAD: '300x250,300x600,300x1050'
 		};
 
