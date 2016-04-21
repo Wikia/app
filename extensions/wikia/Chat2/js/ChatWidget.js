@@ -18,8 +18,8 @@ var ChatWidget = {
 			});
 			ChatWidget.bindComplete = true;
 		}
-		// check if content was pre-rendered to JS variable
-		if (window.wgWikiaChatUsers.length) {
+		// check if content was pre-rendered to JS variable or users is logged in
+		if (window.wgWikiaChatUsers.length || window.wgUserName) {
 			ChatWidget.initEntryPoint();
 		} else if (!ChatWidget.loading) {
 			// if we're not loading yet - start it
