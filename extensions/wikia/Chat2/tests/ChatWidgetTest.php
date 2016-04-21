@@ -121,6 +121,7 @@ class ChatWidgetTest extends WikiaBaseTest {
 					'userName' => 'testUsername',
 					'users' => [ 'User1', 'User2' ],
 					'usersCount' => 2,
+					'hasUsers' => true,
 				]
 			],
 			[
@@ -141,6 +142,7 @@ class ChatWidgetTest extends WikiaBaseTest {
 					'userName' => 'testUsername',
 					'users' => [ 'User1', 'User2' ],
 					'usersCount' => 2,
+					'hasUsers' => true,
 				]
 			],
 			[
@@ -161,6 +163,7 @@ class ChatWidgetTest extends WikiaBaseTest {
 					'userName' => 'testUsername',
 					'users' => [ 'User1', 'User2' ],
 					'usersCount' => 2,
+					'hasUsers' => true,
 				]
 			],
 			[
@@ -181,6 +184,7 @@ class ChatWidgetTest extends WikiaBaseTest {
 					'userName' => null,
 					'users' => [ 'User1', 'User2' ],
 					'usersCount' => 2,
+					'hasUsers' => true,
 				]
 			],
 			[
@@ -202,6 +206,7 @@ class ChatWidgetTest extends WikiaBaseTest {
 					'myAvatarUrl' => 'www.image.com',
 					'users' => [ ],
 					'usersCount' => 0,
+					'hasUsers' => false,
 				]
 			]
 		];
