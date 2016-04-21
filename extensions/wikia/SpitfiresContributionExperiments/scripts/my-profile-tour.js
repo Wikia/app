@@ -20,9 +20,9 @@ require(['jquery', 'ext.wikia.spitfires.experiments.tracker', 'wikia.loader', 'w
 							'Do you still wish to leave?');
 
 						if (shouldClose) {
-							tracker.trackVerboseClick(experimentName, 'close-modal-prompt-resume-editing-' + currentStep);
-						} else {
 							tracker.trackVerboseClick(experimentName, 'close-modal-prompt-confirm-' + currentStep);
+						} else {
+							tracker.trackVerboseClick(experimentName, 'close-modal-prompt-resume-editing-' + currentStep);
 						}
 					} else {
 						tracker.trackVerboseClick(experimentName, 'close-modal-last-step');
