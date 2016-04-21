@@ -58,18 +58,12 @@ class InsightsPaginator {
 	 * Prepare pagination
 	 */
 	public function getPagination() {
-		$paginatorBar = '';
-
-		$total = $this->getTotal();
-		$itemsPerPage = $this->getLimit();
 		$params = array_merge( $this->getParams(), [ 'page' => '%s' ] );
+		$url = urldecode( InsightsHelper::getSubpageLocalUrl( $this->subpage, $params ) );
 
-		if( $total > $itemsPerPage ) {
-			$paginator = Paginator::newFromArray( array_fill( 0, $total, '' ), $itemsPerPage, $this->getLimit() );
-			$paginator->setActivePage( $this->getPage() );
-			$url = urldecode( InsightsHelper::getSubpageLocalUrl( $this->subpage, $params ) );
-			$paginatorBar = $paginator->getBarHTML( $url );
-		}
+		$paginator = Paginator::newFromArray( $this->getTotal(), $this->getLimit(), $this->getLimit() );
+		$paginator->setActivePage( $this->getPage() );
+		$paginatorBar = $paginator->getBarHTML( $url );
 
 		return $paginatorBar;
 	}
