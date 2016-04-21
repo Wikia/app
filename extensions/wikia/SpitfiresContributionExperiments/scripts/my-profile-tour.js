@@ -51,7 +51,7 @@ require(['jquery', 'ext.wikia.spitfires.experiments.tracker', 'wikia.loader', 'w
 						styles: '/extensions/wikia/SpitfiresContributionExperiments/styles/my-profile-tour.scss'
 					}
 				}),
-				mw.loader.using('mediawikiuser')
+				mw.loader.using('mediawiki.user')
 			).done(renderModal);
 		}
 

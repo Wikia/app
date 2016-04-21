@@ -39,7 +39,11 @@ class Hooks {
 	}
 
 	public function onBeforePageDisplay( \OutputPage $out, \Skin $skin ) {
-		if ( isset( $_COOKIE[ self::NEWLY_REGISTERED_USER ] ) || isset( $_COOKIE[ self::WITHOUT_EDIT_USER ] ) ) {
+		$user = \RequestContext::getMain()->getUser();
+
+		if ( ( isset( $_COOKIE[ self::NEWLY_REGISTERED_USER ] ) || isset( $_COOKIE[ self::WITHOUT_EDIT_USER ] ) ) &&
+			$user->isLoggedIn()
+		) {
 			$out->addScriptFile('/extensions/wikia/SpitfiresContributionExperiments/scripts/experiments-tracker.js');
 			$out->addScriptFile('/extensions/wikia/SpitfiresContributionExperiments/scripts/my-profile-tour.js');
 			$out->addScriptFile('/extensions/wikia/SpitfiresContributionExperiments/scripts/challenge.js');
@@ -62,6 +66,6 @@ class Hooks {
 	}
 
 	private function setCookie( $name, $value, $expires ) {
-		\RequestContext::getMain()->getRequest()->response()->setcookie( $name, $value, $expires );
+		\RequestContext::getMain()->getRequest()->response()->setcookie( $name, $value, $expires, '' );
 	}
 }
