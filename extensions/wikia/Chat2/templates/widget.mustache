@@ -2,8 +2,8 @@
 	<div class="chat-contents
 		{{#userName}} chat-user-logged-in{{/userName}}
 		{{^userName}} chat-user-anonymous{{/userName}}
-		{{#usersCount}} chat-room-active{{/usersCount}}
-		{{^usersCount}} chat-room-empty{{/usersCount}}">
+		{{#hasUsers}} chat-room-active{{/hasUsers}}
+		{{^hasUsers}} chat-room-empty{{/hasUsers}}">
 		<h2 class="chat-headline">
 			<span class="chat-live" data-msg-id="chat-live2"> </span>
 			<span class="chat-total">{{usersCount}}</span>
@@ -22,9 +22,8 @@
 			<span class="arrow-right"><img src="{{blankImgUrl}}" /></span>
 			<div class="carousel-container">
 				<div>
-					{{#usersCount}}
+					{{#hasUsers}}
 						<ul class="carousel">
-							{{#users}}
 							<li class="chatter">
 								<img src="{{blankImgUrl}}" data-src="{{avatarUrl}}" class="avatar" width="32" height="32"  />
 								<div class="UserStatsMenu">
@@ -54,9 +53,8 @@
 									</div>
 								</div>
 							</li>
-							{{/users}}
 						</ul>
-					{{/usersCount}}
+					{{/hasUsers}}
 					{{#myAvatarUrl}}
 						<img src="{{myAvatarUrl}}" class="avatar currentUser" width="32" height="32" />
 					{{/myAvatarUrl}}

@@ -61,10 +61,11 @@ class ChatWidget {
 			'siteName' => $wgSitename,
 			'userName' => $wgUser->isAnon() ? null : $wgUser->getName(),
 			'users' => $usersInfo,
+			'hasUsers' => $usersCount > 0,
 			'usersCount' => $usersCount,
 		];
 
-		if ( $usersCount == 0 ) {
+		if ( $usersCount == 0 && $wgUser->isLoggedIn() ) {
 			$vars['myAvatarUrl'] = $myAvatarUrl;
 		}
 
