@@ -2,6 +2,50 @@
 
 $close-image: '/resources/wikia/ui_components/modal/images/close-light.svg';
 
+#InvisibleHighImpactWrapper.floor-adhesion {
+	bottom: 0;
+	display: block;
+	position: fixed;
+	width: 100%;
+	text-align: center;
+	z-index: $zTop;
+
+	.background {
+		background: rgba(0, 0, 0, 0.4);
+		bottom: 0;
+		height: 90px;
+		position: absolute;
+		width: 100%;
+	}
+
+	#INVISIBLE_HIGH_IMPACT_2 iframe {
+		display: block;
+		margin: 0 auto;
+		position: relative;
+	}
+
+	.close {
+		background-color: #000;
+		bottom: 0;
+		cursor: pointer;
+		display: block;
+		padding: 35px 5px;
+		position: absolute;
+		right: 0;
+
+		.close-button {
+			@include image-replacement();
+			background: url($close-image);
+			background-size: 20px 20px;
+			display: block;
+			float: right;
+			height: 20px;
+			outline: none;
+			width: 20px;
+		}
+	}
+}
+
 #ext-wikia-adEngine-template-floor {
 	bottom: 0;
 	display: block;

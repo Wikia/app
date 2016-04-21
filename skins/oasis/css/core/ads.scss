@@ -12,7 +12,7 @@ $wikia-top-ads-index: 2;
 $taboola-small-breakpoint: "#{$screen} and (max-width: 420px)";
 
 /** Hide invisible slots and 1x1 iframes **/
-.wikia-ad[id^="INVISIBLE_"],
+#INVISIBLE_SKIN,
 .wikia-ad.hidden,
 .wikia-ad .hidden {
 	display: none !important;
@@ -42,6 +42,12 @@ $taboola-small-breakpoint: "#{$screen} and (max-width: 420px)";
 		>img {
 			float: right;	/* invisible tracking pixel is taking up height for some reason.  taking it out of the flow for now */
 		}
+	}
+}
+
+#InvisibleHighImpactWrapper {
+	&.hidden {
+		display: none;
 	}
 }
 
