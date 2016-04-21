@@ -39,7 +39,11 @@ require(['jquery', 'mw', 'VisualEditorTourExperimentInit', 'ext.wikia.spitfires.
 		}
 
 		function close($element) {
-			$.cookie('vetourdismissed', 1, { expires: 30 });
+			$.cookie('vetourdisabled', 1, {
+				expires: 30,
+				path: mw.config.get('wgCookiePath'),
+				domain: mw.config.get('wgCookieDomain')
+			});
 			$element.popover('destroy');
 			tracker.trackVerboseClick(EXPERIMENT_NAME, 'close-article-entry-point');
 		}

@@ -85,7 +85,11 @@ define('VisualEditorTourExperiment', ['jquery', 'wikia.loader', 'wikia.mustache'
 
 		Tour.prototype._setDisabled = function () {
 			if (!$.cookie('vetourdisabled')) {
-				$.cookie('vetourdisabled', 1, {expires: 30});
+				$.cookie('vetourdisabled', 1, {
+					expires: 30,
+					path: mw.config.get('wgCookiePath'),
+					domain: mw.config.get('wgCookieDomain')
+				});
 			}
 		};
 
