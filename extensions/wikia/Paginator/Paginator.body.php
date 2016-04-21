@@ -38,14 +38,12 @@ class Paginator {
 	 *
 	 * @param   array|integer $aData
 	 * @param int $iItemsPerPage
-	 * @param int $iDisplayedNeighbour
 	 * @param int $maxItemsPerPage
 	 * @return Paginator
 	 */
-	public static function newFromArray( $aData, $iItemsPerPage = 8, $iDisplayedNeighbour = 3, $maxItemsPerPage = 48 ) {
+	public static function newFromArray( $aData, $iItemsPerPage = 8, $maxItemsPerPage = 48 ) {
 		$aConfig = [
 			'itemsPerPage' => $iItemsPerPage,
-			'displayedNeighbours' => $iDisplayedNeighbour,
 			'maxItemsPerPage' => $maxItemsPerPage,
 		];
 

@@ -3,7 +3,7 @@
 if ($iPageCount > 1) {
 ?>
 <?
-	$pages = Paginator::newFromArray( $iTotal, $iCount, 3, 50 );
+	$pages = Paginator::newFromArray( $iTotal, $iCount, 50 );
 	$pages->setActivePage($iPage);
 	echo $pages->getBarHTML( '', 'BlogPaginator' );
 ?>

@@ -104,7 +104,7 @@ class WhereIsExtension extends SpecialPage {
 
                                 // the Paginator, if we need more than one page
                                 if ( self::ITEMS_PER_PAGE < $formData['count'] ) {
-                                    $oPaginator = Paginator::newFromArray( array_fill( 0, $formData['count'], '' ), self::ITEMS_PER_PAGE, 5 );
+                                    $oPaginator = Paginator::newFromArray( array_fill( 0, $formData['count'], '' ), self::ITEMS_PER_PAGE );
                                     $oPaginator->setActivePage( $iPage - 1 );
                                     $sPager = $oPaginator->getBarHTML( sprintf( '%s?var=%s&val=%s&likeValue=%s&searchType=%s&page=%%s', $wgTitle->getFullURL(), $gVar, $gVal, $gLikeVal, $gTypeVal ) );
                                 }
