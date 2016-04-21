@@ -34,7 +34,6 @@ require(['jquery', 'mw', 'VisualEditorTourExperimentInit', 'ext.wikia.spitfires.
 
 		function startTour($editButton) {
 			$editButton.click();
-			$.cookie('vetourdisabled', 1, {expires: 30});
 			$editButton.popover('destroy');
 			tracker.trackVerboseClick(EXPERIMENT_NAME, 'edit-entry-point');
 		}
