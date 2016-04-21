@@ -108,17 +108,19 @@ require([
 // Inject extra slots
 require([
 	'ext.wikia.adEngine.adContext',
+	'ext.wikia.adEngine.slot.highImpact',
 	'ext.wikia.adEngine.slot.inContent',
 	'ext.wikia.adEngine.slot.skyScraper3',
 	'wikia.document',
 	'wikia.window',
 	require.optional('ext.wikia.adEngine.slot.exitstitial')
-], function (adContext, inContent, skyScraper3, doc, win, exitstitial) {
+], function (adContext, highImpact, inContent, skyScraper3, doc, win, exitstitial) {
 	'use strict';
 
 	var context = adContext.getContext();
 
 	function initDesktopSlots() {
+		highImpact.init();
 		skyScraper3.init();
 
 		if (context.slots.incontentPlayer) {
