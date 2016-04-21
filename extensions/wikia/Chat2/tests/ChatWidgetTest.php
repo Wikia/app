@@ -38,7 +38,7 @@ class ChatWidgetTest extends WikiaBaseTest {
 		// User class mock
 		$userMock = $this->getMockBuilder( 'User' )
 			->disableOriginalConstructor()
-			->setMethods( [ 'getName', 'isAnon' ] )
+			->setMethods( [ 'getName', 'isAnon', 'isLoggedIn' ] )
 			->getMock();
 		$userMock->expects(
 			$this->any() )
@@ -48,6 +48,10 @@ class ChatWidgetTest extends WikiaBaseTest {
 			$this->any() )
 			->method( 'isAnon' )
 			->will( $this->returnValue( $isAnon ) );
+		$userMock->expects(
+			$this->any() )
+			->method( 'isLoggedIn' )
+			->will( $this->returnValue( !$isAnon ) );
 		$userMock->mFrom = 'session';
 
 		// Message class mock
@@ -103,7 +107,7 @@ class ChatWidgetTest extends WikiaBaseTest {
 
 	public function testGeTemplateVarsDataProvider() {
 		return [
-			[
+			'user from parser tag with message wall' => [
 				'fromParserTag' => true,
 				'wgEnableWallExt' => true,
 				'isAnon' => false,
@@ -124,7 +128,7 @@ class ChatWidgetTest extends WikiaBaseTest {
 					'hasUsers' => true,
 				]
 			],
-			[
+			'user from rail without message wall (null)' => [
 				'fromParserTag' => false,
 				'wgEnableWallExt' => null,
 				'isAnon' => false,
@@ -145,7 +149,7 @@ class ChatWidgetTest extends WikiaBaseTest {
 					'hasUsers' => true,
 				]
 			],
-			[
+			'user from rail without message wall (false)' => [
 				'fromParserTag' => false,
 				'wgEnableWallExt' => false,
 				'isAnon' => false,
@@ -166,7 +170,7 @@ class ChatWidgetTest extends WikiaBaseTest {
 					'hasUsers' => true,
 				]
 			],
-			[
+			'anon from parser tag with message wall' => [
 				'fromParserTag' => true,
 				'wgEnableWallExt' => true,
 				'isAnon' => true,
@@ -187,7 +191,7 @@ class ChatWidgetTest extends WikiaBaseTest {
 					'hasUsers' => true,
 				]
 			],
-			[
+			'anon from parser tag with no users' => [
 				'fromParserTag' => true,
 				'wgEnableWallExt' => true,
 				'isAnon' => true,
@@ -203,6 +207,27 @@ class ChatWidgetTest extends WikiaBaseTest {
 					'siteName' => 'Test wikia',
 					'profileType' => 'message-wall',
 					'userName' => null,
+					'users' => [ ],
+					'usersCount' => 0,
+					'hasUsers' => false,
+				]
+			],
+			'user from parser tag with no users' => [
+				'fromParserTag' => true,
+				'wgEnableWallExt' => true,
+				'isAnon' => false,
+				'chatUsersInfo' => [ ],
+				'expected' => [
+					'blankImgUrl' => 'www.url.com',
+					'buttonText' => 'message',
+					'guidelinesText' => 'message',
+					'fromParserTag' => true,
+					'sectionClassName' => 'ChatWidget',
+					'joinChatText' => 'message',
+					'linkToSpecialChat' => 'Chat',
+					'siteName' => 'Test wikia',
+					'profileType' => 'message-wall',
+					'userName' => 'testUsername',
 					'myAvatarUrl' => 'www.image.com',
 					'users' => [ ],
 					'usersCount' => 0,
