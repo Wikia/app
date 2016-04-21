@@ -45,9 +45,13 @@ $messages['en'] = array(
 	'communitypage-modal-tab-all' => 'All',
 	'communitypage-modal-tab-admins' => 'Admins',
 	'communitypage-modal-tab-leaderboard' => 'This Week\'s Leaderboard',
-	'communitypage-no-contributors' => 'There are no contributions yet this week! Be the first to contribute!',
+	'communitypage-no-contributions' => 'There are no contributions yet this week! Be the first to contribute!',
 	'communitypage-no-admins' => 'There are no Admins on this wiki yet.',
 	'communitypage-no-admins-contact' => 'Contact us to be the first!',
+	'communitypage-communitycentral-link' => 'http://community.wikia.com/wiki/Special:Contact/adoption',
+	'communitypage-no-recent-members' => 'No recently joined members',
+	'communitypage-no-members' => 'This community has no members',
+	'communitypage-modal-loading' => "Loading...",
 );
 
 $messages['qqq'] = array(
@@ -94,9 +98,13 @@ $messages['qqq'] = array(
 	'communitypage-modal-tab-all' => 'All members modal tab',
 	'communitypage-modal-tab-admins' => 'Admins modal tab',
 	'communitypage-modal-tab-leaderboard' => 'This Week\'s Leaderboard modal tab',
-	'communitypage-no-contributors' => 'Text indicating that there are no contributions yet this week',
+	'communitypage-no-contributions' => 'Text indicating that there are no contributions yet this week',
 	'communitypage-no-admins' => 'Text indicating that the wiki has no admins.',
 	'communitypage-no-admins-contact' => 'Contact us to become the first admin text',
+	'communitypage-communitycentral-link' => 'Link to the community page for this language',
+	'communitypage-no-recent-members' => 'Text for zero state of no recent members section',
+	'communitypage-no-members' => 'Text for zero state of all members list',
+	'communitypage-modal-loading' => "Text for showing loading status",
 );
 
 $messages['ja'] = array(
@@ -117,4 +125,5 @@ $messages['ja'] = array(
 	'communitypage-tasks-title' => 'タスク',
 	'communitypage-entry-tasks' => 'このコミュニティの編集を助けてください',
 	'communitypage-tasks-admin-welcome' => '{{SITENAME}} へようこそ。このコミュニティはあなたの投稿を必要としています。編集が必要なページの一部をこちらに紹介しています。よろしくお願いします！',
+	'communitypage-communitycentral-link' => 'http://ja.community.wikia.com/wiki/Special:Contact/adoption',
 );
