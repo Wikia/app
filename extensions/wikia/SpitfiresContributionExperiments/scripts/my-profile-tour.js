@@ -13,9 +13,11 @@ require(['jquery', 'ext.wikia.spitfires.experiments.tracker', 'wikia.loader', 'w
 				},
 				confirmCloseModal: function () {
 					if (currentStep < 4)  {
-						return confirm("Are you sure to quit this tour?");
+						return confirm('You\'re about to leave and all the data you filled in will be lost. ' +
+							'Remember, once the data is saved in your profile, you can always change it later. ' +
+							'Do you still wish to leave?');
 					} else {
-						window.location.href = wgServer + '/wiki/' + userPage;
+						window.location.href = mw.config.get('wgServer') + '/wiki/' + userPage;
 					}
 				}
 			},
