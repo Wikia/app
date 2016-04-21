@@ -14,7 +14,6 @@ require([
 
 	function init() {
 		if (
-			mw.user.anonymous() ||
 			window.optimizely.variationNamesMap[experimentId] !== 'CHALLENGE-LIST' ||
 			$.cookie(dismissCookieName) ||
 			mw.config.get('wgNamespaceNumber') !== 0
