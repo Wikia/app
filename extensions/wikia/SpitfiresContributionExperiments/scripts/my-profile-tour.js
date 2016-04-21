@@ -26,11 +26,8 @@ require(['jquery', 'ext.wikia.spitfires.experiments.tracker', 'wikia.loader', 'w
 			answers = {},
 			seenCookieName = 'myprofiletour-seen',
 			currentStep = 1,
-			userName = mw.user.name(),
-			userPage = 'User:' + userName.replace(/ /g, '_'),
-			templateData = {
-				userName: userName
-			},
+			userPage,
+			templateData,
 			lastStepTemplateData = [];
 
 		function init() {
@@ -53,7 +50,8 @@ require(['jquery', 'ext.wikia.spitfires.experiments.tracker', 'wikia.loader', 'w
 						'/extensions/wikia/SpitfiresContributionExperiments/templates/MyProfileTourExperimentStep4.mustache',
 						styles: '/extensions/wikia/SpitfiresContributionExperiments/styles/my-profile-tour.scss'
 					}
-				})
+				}),
+				mw.loader.using('mediawikiuser')
 			).done(renderModal);
 		}
 
@@ -61,6 +59,7 @@ require(['jquery', 'ext.wikia.spitfires.experiments.tracker', 'wikia.loader', 'w
 			$.cookie(seenCookieName, 1, {expires: 30});
 			templates = resources.mustache;
 			lastStepTemplateData = data[0];
+			setupUserRelatedData();
 
 			loader.processStyle(resources.styles);
 			modalConfig.vars.content = mustache.render(resources.mustache[0], {});
@@ -162,6 +161,15 @@ require(['jquery', 'ext.wikia.spitfires.experiments.tracker', 'wikia.loader', 'w
 			}
 
 			return dfd.promise();
+		}
+
+		function setupUserRelatedData() {
+			var userName = mw.user.name();
+
+			userPage = 'User:' + userName.replace(/ /g, '_');
+			templateData = {
+				userName: userName
+			};
 		}
 
 		init();
