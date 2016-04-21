@@ -20,7 +20,7 @@ class LogEventsApiController extends WikiaApiController {
 	 * @throws BadRequestException
 	 */
 	public function add() {
-		global $wgTheSchwartzSecretToken, $wgTitle, $wgUser;
+		global $wgTheSchwartzSecretToken, $wgTitle, $wgUser, $wgUseEnotif;
 
 		if ( !$this->request->wasPosted() ) {
 			throw new BadRequestException( 'This request must be POSTed' );
@@ -29,6 +29,9 @@ class LogEventsApiController extends WikiaApiController {
 		if ( !Wikia\Security\Utils::matchToken( $wgTheSchwartzSecretToken, $this->request->getVal( 'token' ) ) ) {
 			throw new BadRequestException( 'This request must provide a valid token' );
 		}
+
+		// Disable email notifications for this request
+		$wgUseEnotif = false;
 
 		$type = $this->request->getVal( 'type' );
 		$action = $this->request->getVal( 'action' );
