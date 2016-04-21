@@ -66,6 +66,8 @@ class Hooks {
 	}
 
 	private function setCookie( $name, $value, $expires ) {
-		\RequestContext::getMain()->getRequest()->response()->setcookie( $name, $value, $expires, '' );
+		global $wgCookiePath, $wgCookieDomain;
+
+		setcookie( $name, $value, $expires, $wgCookiePath, $wgCookieDomain );
 	}
 }
