@@ -91,8 +91,7 @@ class ChatController extends WikiaController {
 			}
 		}
 
-		// CONN-436: Invalidate Varnish cache for ChatRail:GetUsers
-		ChatRailController::purgeMethod( 'GetUsers', [ 'format' => 'json' ] );
+		Chat::purgeChattersCache();
 
 		wfProfileOut( __METHOD__ );
 	}

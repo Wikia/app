@@ -562,9 +562,17 @@ class Chat {
 		global $wgMemc;
 
 		wfProfileIn( __METHOD__ );
+
 		$memcKey = wfMemcKey( self::CHATTERS_CACHE_KEY );
 		$wgMemc->set( $memcKey, $chatters, self::CHATTERS_CACHE_TTL );
+		Chat::purgeChattersCache();
+
 		wfProfileOut( __METHOD__ );
+	}
+
+	public static function purgeChattersCache() {
+		// CONN-436: Invalidate Varnish cache for ChatRail:GetUsers
+		ChatRailController::purgeMethod( 'GetUsers', [ 'format' => 'json' ] );
 	}
 
 	public static function info( $message, Array $params = [ ] ) {
