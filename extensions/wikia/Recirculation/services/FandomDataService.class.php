@@ -113,15 +113,17 @@ class FandomDataService {
 		$posts = [];
 		$postIds = [];
 
-		foreach ( $rawPosts as $post ) {
-			if ( count( $posts ) >= self::PARSELY_POSTS_LIMIT ) {
-				break;
-			}
+		if ( is_array( $rawPosts ) ) {
+			foreach ( $rawPosts as $post ) {
+				if ( count( $posts ) >= self::PARSELY_POSTS_LIMIT ) {
+					break;
+				}
 
-			$metadata = json_decode( $post->metadata );
-			if ( !empty( $metadata->postID ) && !in_array( $metadata->postID, $postIds ) ) {
-				$postIds[] = $metadata->postID;
-				$posts[] = $post;
+				$metadata = json_decode( $post->metadata );
+				if ( !empty( $metadata->postID ) && !in_array( $metadata->postID, $postIds ) ) {
+					$postIds[] = $metadata->postID;
+					$posts[] = $post;
+				}
 			}
 		}
 
