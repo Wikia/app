@@ -66,7 +66,11 @@ require(['jquery', 'ext.wikia.spitfires.experiments.tracker', 'wikia.loader', 'w
 		}
 
 		function renderModal(data, resources) {
-			$.cookie(seenCookieName, 1, {expires: 30});
+			$.cookie(seenCookieName, 1, {
+				expires: 30,
+				path: mw.config.get('wgCookiePath'),
+				domain: mw.config.get('wgCookieDomain')
+			});
 			templates = resources.mustache;
 			lastStepTemplateData = data[0];
 			setupUserRelatedData();
