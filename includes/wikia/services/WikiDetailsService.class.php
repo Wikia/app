@@ -8,7 +8,6 @@ class WikiDetailsService extends WikiService {
 	const DEFAULT_WIDTH = 250;
 	const DEFAULT_HEIGHT = null;
 	const DEFAULT_SNIPPET_LENGTH = null;
-	const DISCUSSION_ENDPOINT = 'https://services.wikia.com/discussion/';
 	const CACHE_VERSION = 3;
 	const WORDMARK_URL_SETTING = 'wordmark-image-url';
 	private static $flagsBlacklist = array( 'blocked', 'promoted' );
@@ -264,8 +263,15 @@ class WikiDetailsService extends WikiService {
 	}
 
 	private function getDiscussionStats( $id ) {
-		$response = json_decode(file_get_contents(self::DISCUSSION_ENDPOINT."$id/forums/$id"), true);
-		return $response['threadCount'] ? $response['threadCount'] : null;
+		global $wgEnableDiscussions, $wgConsulUrl, $wgConsulTag;
+
+		if ( $wgEnableDiscussions ) {
+			$consulUrl = ( new  Wikia\Service\Gateway\ConsulUrlProvider( $wgConsulUrl, $wgConsulTag ))->getUrl( 'discusssion' );
+			$response = json_decode( file_get_contents( "$consulUrl$id/forums/$id" ), true );
+
+			return $response['threadCount'] ? $response['threadCount'] : null;
+		}
+		return null;
 	}
 
 	/**
