@@ -58,10 +58,16 @@ class FandomDataService {
 		}
 
 		$url = $this->buildUrl( $endpoint, $options );
-		$data = ExternalHttp::get( $url );
 
-		$obj = json_decode( $data );
-		$posts = $this->dedupePosts( $obj->data );
+		try {
+			$data = ExternalHttp::get( $url );
+
+			$obj = json_decode( $data );
+			$posts = $this->dedupePosts( $obj->data );
+		} catch ( Exception $e ) {
+			$posts = [];
+		}
+
 		return $posts;
 	}
 
