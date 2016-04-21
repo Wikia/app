@@ -15,7 +15,7 @@ class Hooks {
 	public static function register() {
 		$hooks = new self();
 		\Hooks::register( 'UserSignupAfterSignupBeforeRedirect', [ $hooks, 'onUserSignupAfterSignupBeforeRedirect' ] );
-		\Hooks::register( 'UserLoginComplete', [ $hooks, 'onUserLoginComplete' ] );
+		\Hooks::register( 'AfterUserLogin', [ $hooks, 'onAfterUserLogin' ] );
 		\Hooks::register( 'UserLoadFromHeliosToken', [ $hooks, 'onUserLoadFromHeliosToken' ] );
 		\Hooks::register( 'BeforePageDisplay', [ $hooks, 'onBeforePageDisplay' ] );
 	}
@@ -26,7 +26,7 @@ class Hooks {
 		return true;
 	}
 
-	public function onUserLoginComplete( \User $user, $html ) {
+	public function onAfterUserLogin( \User $user, $html ) {
 		$this->manageUserActivityGroupCookie( $user );
 
 		return true;
@@ -59,7 +59,7 @@ class Hooks {
 			$userEditCount = $user->getEditCount();
 			$userWithoutEditCookie = $_COOKIE[ self::WITHOUT_EDIT_USER ];
 
-			if ( $userEditCount === 0 && !$userWithoutEditCookie ) {
+			if ( (int)$userEditCount === 0 && !$userWithoutEditCookie ) {
 				$this->setCookie( self::WITHOUT_EDIT_USER, 1, time() + self::COOKIE_EXPERIMENT_TIME );
 			}
 		}
