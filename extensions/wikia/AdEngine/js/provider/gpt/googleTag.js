@@ -131,13 +131,18 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 	};
 
 	GoogleTag.prototype.addSlot = function (adElement) {
-		var slot = slots[adElement.getId()];
+		var sizes = adElement.getSizes(),
+			slot = slots[adElement.getId()];
 
 		log(['addSlot', adElement], 'debug', logGroup);
 
 		adElement.setPageLevelParams(pageLevelParams);
 		if (!slot) {
-			slot = window.googletag.defineSlot(adElement.getSlotPath(), adElement.getSizes(), adElement.getId());
+			if (sizes) {
+				slot = window.googletag.defineSlot(adElement.getSlotPath(), sizes, adElement.getId());
+			} else {
+				slot = window.googletag.defineOutOfPageSlot(adElement.getSlotPath(), adElement.getId());
+			}
 			slot.addService(pubAds);
 			window.googletag.display(adElement.getId());
 			slots[adElement.getId()] = slot;
