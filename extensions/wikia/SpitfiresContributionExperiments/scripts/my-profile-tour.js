@@ -12,20 +12,18 @@ require(['jquery', 'ext.wikia.spitfires.experiments.tracker', 'wikia.loader', 'w
 					content: '' // content
 				},
 				confirmCloseModal: function () {
-					if (saved || !Object.keys(answers).length) {
-						if (saved) {
-							window.location.href = wgServer + '/wiki/' + userPage;
-						}
-						return true;
+					if (currentStep < 4)  {
+						return confirm('You\'re about to leave and all the data you filled in will be lost. ' +
+							'Remember, once the data is saved in your profile, you can always change it later. ' +
+							'Do you still wish to leave?');
+					} else {
+						window.location.href = mw.config.get('wgServer') + '/wiki/' + userPage;
 					}
-					saveProfile();
-					return false;
 				}
 			},
 			modal = null,
 			templates = [],
 			answers = {},
-			saved = false,
 			seenCookieName = 'myprofiletour-seen',
 			currentStep = 1,
 			userName = mw.user.name(),
@@ -123,12 +121,6 @@ require(['jquery', 'ext.wikia.spitfires.experiments.tracker', 'wikia.loader', 'w
 			answers[currentStep] = $('#MyProfileModal').find('.my-profile-textarea').val().trim();
 		}
 
-		function saveProfile() {
-			sendProfileData().done(function () {
-				modal.trigger('close');
-			});
-		}
-
 		function sendProfileData() {
 			var dfd = $.Deferred(),
 				formattedAnswers;
@@ -160,7 +152,6 @@ require(['jquery', 'ext.wikia.spitfires.experiments.tracker', 'wikia.loader', 'w
 						token: mw.user.tokens.get('editToken')
 					}
 				}).done(function () {
-					saved = true;
 					tracker.trackVerboseSuccess(experimentName, 'user-data-saved');
 				}).always(function () {
 					modal.$element.find('.my-profile-content').stopThrobbing();
