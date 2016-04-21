@@ -14,7 +14,7 @@ define('ext.wikia.adEngine.slot.highImpact', [
 			win.adslots2.push({
 				slotName: slotName,
 				onSuccess: function () {
-					slotTweaker.adjustIframe(slotName);
+					slotTweaker.adjustIframeByContentSize(slotName);
 				}
 			});
 		}
