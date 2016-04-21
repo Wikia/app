@@ -36,7 +36,13 @@ var ChatWidget = {
 			type: 'GET',
 			format: 'json',
 			callback: function (content) {
-				ChatWidget.onChatUsersFetched(content.users);
+				var users = content.users;
+
+				if (users.length) {
+					ChatWidget.onChatUsersFetched(users);
+				} else {
+					ChatWidget.initEntryPoint();
+				}
 			}
 		});
 	},
@@ -48,14 +54,14 @@ var ChatWidget = {
 	 * @param users array of users
 	 */
 	onChatUsersFetched: function(users) {
-		// cache the result
-		window.wgWikiaChatUsers = users;
 		// replace list of users with actual one - rerender template
 		Wikia.getMultiTypePackage({
 			mustache: 'extensions/wikia/Chat2/templates/widgetUserElement.mustache',
 			callback: function (data) {
 				ChatWidget.widgetUserElementTemplate = data.mustache[0];
-				ChatWidget.updateUsersList();
+				ChatWidget.updateUsersList(users);
+				// cache result
+				window.wgWikiaChatUsers = users;
 				ChatWidget.initEntryPoint();
 			}
 		});
@@ -165,13 +171,11 @@ var ChatWidget = {
 		});
 	},
 
-	updateUsersList: function() {
-		var users = window.wgWikiaChatUsers,
-			output = '';
-
-		users.forEach(function(user) {
-			output += Mustache.render(ChatWidget.widgetUserElementTemplate, user);
-		});
+	updateUsersList: function(users) {
+		var output = Mustache.render(ChatWidget.widgetUserElementTemplate, {
+				users: users,
+				blankImageUrl: window.wgBlankImageUrl
+			});
 
 		document.getElementById('chatCarousel').innerHTML = output;
 	},
