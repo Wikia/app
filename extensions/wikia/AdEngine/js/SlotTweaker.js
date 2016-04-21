@@ -110,6 +110,19 @@ define('ext.wikia.adEngine.slotTweaker', [
 		}
 	}
 
+	function adjustIframe(slotName) {
+		var iframe = document.getElementById(slotName).querySelector('div[id*="_container_"] iframe');
+
+		iframe.addEventListener('load', function () {
+			var height = iframe.contentWindow.document.body.scrollHeight,
+				width = iframe.contentWindow.document.body.scrollWidth;
+
+			iframe.width = width;
+			iframe.height = height;
+			log(['adjustIframe', slotName, width, height], 'debug', logGroup);
+		});
+	}
+
 	function noop() {
 		return;
 	}
@@ -135,6 +148,7 @@ define('ext.wikia.adEngine.slotTweaker', [
 		removeDefaultHeight: removeDefaultHeight,
 		removeTopButtonIfNeeded: removeTopButtonIfNeeded,
 		adjustLeaderboardSize: adjustLeaderboardSize,
+		adjustIframe: adjustIframe,
 		hide: hide,
 		show: show,
 		hackChromeRefresh: hackChromeRefresh
