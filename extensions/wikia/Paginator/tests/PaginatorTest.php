@@ -228,7 +228,6 @@ class PaginatorTest extends WikiaBaseTest {
 	 *  * CategoryExhibitionSection
 	 *  * CrunchyrollVideo
 	 *
-	 *
 	 * @dataProvider dataProviderCallStyle1
 	 */
 	public function testCallStyle1( $itemsPerPage, $allDataString, $pageNo, $pageDataString, $expectedHtml ) {
@@ -255,10 +254,8 @@ class PaginatorTest extends WikiaBaseTest {
 	 *  * ManageWikiaHomeController
 	 *  * UserActivity\SpecialController
 	 *  * WhereIsExtension
-	 *  * TemplatesSpecialController
 	 *  * WAMPageController
 	 *  * WDACReviewSpecialController
-	 *  * blog-pager-ajax.tmpl
 	 *
 	 * @dataProvider dataProviderCallStyle2
 	 */
@@ -281,6 +278,7 @@ class PaginatorTest extends WikiaBaseTest {
 	 * This style of calling the class is used by:
 	 *
 	 *  * InsightsPaginator
+	 *  * blog-pager-ajax.tmpl
 	 *
 	 * @dataProvider dataProviderCallStyle2
 	 */
@@ -306,6 +304,7 @@ class PaginatorTest extends WikiaBaseTest {
 	 *
 	 *  * SpecialVideosHelper
 	 *  * WikiaNewFilesSpecialController
+ 	 *  * TemplatesSpecialController
 	 *
 	 * @dataProvider dataProviderCallStyle2
 	 */
