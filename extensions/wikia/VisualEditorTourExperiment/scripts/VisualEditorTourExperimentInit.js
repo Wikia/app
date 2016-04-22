@@ -4,7 +4,7 @@ define('VisualEditorTourExperimentInit',
 		'use strict';
 
 		var EXPERIMENT_NAME = 'contribution-experiments',
-			EXPERIMENT_ID = 5685550912;
+			EXPERIMENT_ID = 5654433460;
 
 		function init() {
 			if (isEnabled()) {

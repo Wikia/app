@@ -9,7 +9,7 @@ require([
 	'use strict';
 
 	var experimentName = 'contribution-experiments',
-		experimentId = 5685550912,
+		experimentId = 5654433460,
 		dismissCookieName = 'contribchallengedismissed';
 
 	function init() {
