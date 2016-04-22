@@ -15,12 +15,7 @@ require([
 		});
 
 	function init() {
-		if (
-			mw.config.get('wgAction') !== 'view' ||
-			$.cookie(dismissCookieName) ||
-			mw.config.get('wgNamespaceNumber') !== 0 ||
-			mw.config.get('wgIsMainPage')
-		) {
+		if ($.cookie(dismissCookieName)) {
 			return;
 		}
 
