@@ -12,8 +12,10 @@ class Hooks extends \ContextSource {
 	public function onBeforePageDisplay( \OutputPage $out, \Skin $skin ) {
 		$user = $this->getUser();
 
-		if ( ( !$user->isLoggedIn() || $user->getEditCount() === 0 ) ) {
-			$out->addScriptFile( 'extensions/wikia/PotentialMemberPageExperiments/scripts/entry-point-experiment.js' );
+		if ( !$user->isLoggedIn() || $user->getEditCount() === 0 ) {
+			$out->addScriptFile( '/extensions/wikia/PotentialMemberPageExperiments/scripts/entry-point-experiment.js' );
 		}
+
+		return true;
 	}
 }
