@@ -2,11 +2,17 @@ require([
 	'jquery',
 	'mw',
 	'wikia.loader',
-	'wikia.mustache'
-], function ($, mw, loader, mustache) {
+	'wikia.mustache',
+	'wikia.tracker'
+], function ($, mw, loader, mustache, tracker) {
 	'use strict';
 
-	var dismissCookieName = 'pmp-entry-point-dismissed';
+	var $banner,
+		dismissCookieName = 'pmp-entry-point-dismissed',
+		track = tracker.buildTrackingFunction({
+			category: 'potential-member-experiment',
+			trackingMethod: 'analytics'
+		});
 
 	function init() {
 		if (
@@ -26,6 +32,21 @@ require([
 				}
 			})
 		).done(addEntryPoint);
+
+		$('body').on('click', '.pmp-entry-point-close', close);
+	}
+
+	function close() {
+		track({
+			label: 'close',
+			action: tracker.ACTIONS.CLICK
+		});
+		$banner.remove();
+		$.cookie(dismissCookieName, 1, {
+			expires: 1,
+			path: mw.config.get('wgCookiePath'),
+			domain: mw.config.get('wgCookieDomain')
+		});
 	}
 
 	function addEntryPoint(resources) {
@@ -35,7 +56,8 @@ require([
 			bannerType: 'block-top'
 		};
 
-		$(mustache.render(resources.mustache[0], templateData)).insertAfter($('.header-container'));
+		$banner = $(mustache.render(resources.mustache[0], templateData));
+		$banner.insertAfter($('.header-container'));
 	}
 
 	$(init);
