@@ -425,13 +425,15 @@ class CloseWikiMaintenance {
 				$swift->getContainerName(),  # e.g. 'nordycka'
 				$swift->getPathPrefix()      # e.g. '/pl/images'
 			);
-			$out = wfShellExec( $cmd, $iStatus );
 			$this->log( $cmd );
+			$out = wfShellExec( $cmd, $iStatus );
 
 			if ( $iStatus !== 0 ) {
 				throw new Exception( 'Failed to remove a bucket content - ' . $cmd, $iStatus );
 			}
 		} catch ( Exception $ex ) {
+			$this->log( __METHOD__ . ' - ' . $ex->getMessage() );
+
 			Wikia\Logger\WikiaLogger::instance()->error( 'Removing DFS bucket failed', [
 				'exception' => $ex,
 				'city_id' => $cityid
