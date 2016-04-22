@@ -18,13 +18,17 @@ var ChatWidget = {
 			});
 			ChatWidget.bindComplete = true;
 		}
-		// check if user is logged in (content was pre-rendered to JS variable)
-		if (window.wgUserName) {
-			ChatWidget.initEntryPoint();
-		} else if (!ChatWidget.loading) {
-			// if we're not loading yet - start it
-			ChatWidget.loading = true;
-			ChatWidget.initChatEntryPointForAnons();
+
+		// make sure we start processing after ChatModule templates is loaded
+		if ($('.ChatModule').length) {
+			// check if user is logged in (content was pre-rendered to JS variable)
+			if (window.wgUserName) {
+				ChatWidget.initEntryPoint();
+			} else if (!ChatWidget.loading) {
+				// if we're not loading yet - start it
+				ChatWidget.loading = true;
+				ChatWidget.initChatEntryPointForAnons();
+			}
 		}
 	},
 
@@ -84,10 +88,15 @@ var ChatWidget = {
 			blankImageUrl: window.wgBlankImageUrl
 		});
 
-		document.getElementById('chatCarousel').innerHTML = output;
+		console.log("$('.chatCarousel'):", $('.chatCarousel'));
+
+		$('.chatCarousel').each(function () {
+			$(this).innerHTML = output;
+		});
 	},
 
 	initEntryPoint: function () {
+		console.log("initEntryPoint: $('.ChatModuleUninitialized')", $('.ChatModuleUninitialized'))
 		// in case the module is embedded in the article, we can have several modules on the page.
 		// Process them one by one
 		$('.ChatModuleUninitialized').each(function () {
