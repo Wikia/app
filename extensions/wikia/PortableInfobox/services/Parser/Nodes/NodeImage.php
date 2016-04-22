@@ -152,7 +152,8 @@ class NodeImage extends Node {
 			'name' => $titleObj ? $titleObj->getText() : '',
 			'key' => $titleObj ? $titleObj->getDBKey() : '',
 			'alt' => $alt,
-			'caption' => $caption
+			'caption' => $caption,
+			'isVideo' => false
 		];
 
 		if ( $this->isVideo( $fileObj ) ) {

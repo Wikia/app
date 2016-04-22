@@ -44,6 +44,8 @@ define('ext.wikia.recirculation.views.incontent', [
 			return deferred.reject('Recirculation in-content widget not shown - Not enough sections in article');
 		}
 
+		data.items = utils.addUtmTracking(data.items, 'incontent');
+
 		utils.renderTemplate('incontent.mustache', data).then(function($html) {
 			section.before($html);
 			deferred.resolve($html);
