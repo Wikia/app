@@ -10,42 +10,112 @@ class PaginatorTest extends WikiaBaseTest {
 
 	private $alphabet = 'a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z';
 
-	private $htmlPage13of13Selected = '
-				<li><a href="http://url/?page=12" data-back="true" data-page="12" class="paginator-prev button secondary"><span>escaped-msg</span></a></li>
-				<li><a href="http://url/?page=1" data-back="true" data-page="1" class="paginator-page">1</a></li>
+	private $htmlPage1of4Selected = '
+		<li><span class="paginator-prev disabled"><span>escaped-msg</span></span></li>
+		<li><a href="http://url/?page=1" data-page="1" class="paginator-page active">1</a></li>
+		<li><a href="http://url/?page=2" data-page="2" class="paginator-page">2</a></li>
+		<li><a href="http://url/?page=3" data-page="3" class="paginator-page">3</a></li>
+		<li><a href="http://url/?page=4" data-page="4" class="paginator-page">4</a></li>
+		<li><a href="http://url/?page=2" data-page="2" class="paginator-next button secondary"><span>escaped-msg</span></a></li>
+	';
+
+	private $headPage1of4Selected = '
+		<link rel="next" href="http://url/?page=2" />
+	';
+
+	private $htmlPage2of4Selected = '
+		<li><a href="http://url/?page=1" data-back="true" data-page="1" class="paginator-prev button secondary"><span>escaped-msg</span></a></li>
+		<li><a href="http://url/?page=1" data-back="true" data-page="1" class="paginator-page">1</a></li>
+		<li><a href="http://url/?page=2" data-page="2" class="paginator-page active">2</a></li>
+		<li><a href="http://url/?page=3" data-page="3" class="paginator-page">3</a></li>
+		<li><a href="http://url/?page=4" data-page="4" class="paginator-page">4</a></li>
+		<li><a href="http://url/?page=3" data-page="3" class="paginator-next button secondary"><span>escaped-msg</span></a></li>
+	';
+
+	private $headPage2of4Selected = '
+		<link rel="prev" href="http://url/?page=1" />
+		<link rel="next" href="http://url/?page=3" />
+	';
+
+	private $htmlPage3of4Selected = '
+		<li><a href="http://url/?page=2" data-back="true" data-page="2" class="paginator-prev button secondary"><span>escaped-msg</span></a></li>
+		<li><a href="http://url/?page=1" data-back="true" data-page="1" class="paginator-page">1</a></li>
+		<li><a href="http://url/?page=2" data-back="true" data-page="2" class="paginator-page">2</a></li>
+		<li><a href="http://url/?page=3" data-page="3" class="paginator-page active">3</a></li>
+		<li><a href="http://url/?page=4" data-page="4" class="paginator-page">4</a></li>
+		<li><a href="http://url/?page=4" data-page="4" class="paginator-next button secondary"><span>escaped-msg</span></a></li>
+	';
+
+	private $headPage3of4Selected = '
+		<link rel="prev" href="http://url/?page=2" />
+		<link rel="next" href="http://url/?page=4" />
+	';
+
+	private $htmlPage4of4Selected = '
+		<li><a href="http://url/?page=3" data-back="true" data-page="3" class="paginator-prev button secondary"><span>escaped-msg</span></a></li>
+		<li><a href="http://url/?page=1" data-back="true" data-page="1" class="paginator-page">1</a></li>
+		<li><a href="http://url/?page=2" data-back="true" data-page="2" class="paginator-page">2</a></li>
+		<li><a href="http://url/?page=3" data-back="true" data-page="3" class="paginator-page">3</a></li>
+		<li><a href="http://url/?page=4" data-page="4" class="paginator-page active">4</a></li>
+		<li><span class="paginator-next disabled"><span>escaped-msg</span></span></li>
+	';
+
+	private $headPage4of4Selected = '
+		<link rel="prev" href="http://url/?page=3" />
+	';
+
+	private $alphabet2 = 'a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z,A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z';
+
+	private $htmlPage1of13Selected = '
+				<li><span class="paginator-prev disabled"><span>escaped-msg</span></span></li>
+				<li><a href="http://url/?page=1" data-page="1" class="paginator-page active">1</a></li>
+				<li><a href="http://url/?page=2" data-page="2" class="paginator-page">2</a></li>
+				<li><a href="http://url/?page=3" data-page="3" class="paginator-page">3</a></li>
+				<li><a href="http://url/?page=4" data-page="4" class="paginator-page">4</a></li>
 				<li><span class="paginator-spacer">...</span></li>
-				<li><a href="http://url/?page=10" data-back="true" data-page="10" class="paginator-page">10</a></li>
-				<li><a href="http://url/?page=11" data-back="true" data-page="11" class="paginator-page">11</a></li>
-				<li><a href="http://url/?page=12" data-back="true" data-page="12" class="paginator-page">12</a></li>
-				<li><a href="http://url/?page=13" data-page="13" class="paginator-page active">13</a></li>
-				<li><span class="paginator-next disabled"><span>escaped-msg</span></span></li>
+				<li><a href="http://url/?page=13" data-page="13" class="paginator-page">13</a></li>
+				<li><a href="http://url/?page=2" data-page="2" class="paginator-next button secondary"><span>escaped-msg</span></a></li>
 			';
 
-	private $htmlPage12of13Selected = '
-				<li><a href="http://url/?page=11" data-back="true" data-page="11" class="paginator-prev button secondary"><span>escaped-msg</span></a></li>
+	private $headPage1of13Selected = '
+		<link rel="next" href="http://url/?page=2" />
+	';
+
+	private $htmlPage2of13Selected = '
+				<li><a href="http://url/?page=1" data-back="true" data-page="1" class="paginator-prev button secondary"><span>escaped-msg</span></a></li>
 				<li><a href="http://url/?page=1" data-back="true" data-page="1" class="paginator-page">1</a></li>
+				<li><a href="http://url/?page=2" data-page="2" class="paginator-page active">2</a></li>
+				<li><a href="http://url/?page=3" data-page="3" class="paginator-page">3</a></li>
+				<li><a href="http://url/?page=4" data-page="4" class="paginator-page">4</a></li>
+				<li><a href="http://url/?page=5" data-page="5" class="paginator-page">5</a></li>
 				<li><span class="paginator-spacer">...</span></li>
-				<li><a href="http://url/?page=9" data-back="true" data-page="9" class="paginator-page">9</a></li>
-				<li><a href="http://url/?page=10" data-back="true" data-page="10" class="paginator-page">10</a></li>
-				<li><a href="http://url/?page=11" data-back="true" data-page="11" class="paginator-page">11</a></li>
-				<li><a href="http://url/?page=12" data-page="12" class="paginator-page active">12</a></li>
 				<li><a href="http://url/?page=13" data-page="13" class="paginator-page">13</a></li>
-				<li><a href="http://url/?page=13" data-page="13" class="paginator-next button secondary"><span>escaped-msg</span></a></li>
+				<li><a href="http://url/?page=3" data-page="3" class="paginator-next button secondary"><span>escaped-msg</span></a></li>
 			';
 
-	private $htmlPage10of13Selected = '
-				<li><a href="http://url/?page=9" data-back="true" data-page="9" class="paginator-prev button secondary"><span>escaped-msg</span></a></li>
+	private $headPage2of13Selected = '
+		<link rel="prev" href="http://url/?page=1" />
+		<link rel="next" href="http://url/?page=3" />
+	';
+
+	private $htmlPage4of13Selected = '
+				<li><a href="http://url/?page=3" data-back="true" data-page="3" class="paginator-prev button secondary"><span>escaped-msg</span></a></li>
 				<li><a href="http://url/?page=1" data-back="true" data-page="1" class="paginator-page">1</a></li>
+				<li><a href="http://url/?page=2" data-back="true" data-page="2" class="paginator-page">2</a></li>
+				<li><a href="http://url/?page=3" data-back="true" data-page="3" class="paginator-page">3</a></li>
+				<li><a href="http://url/?page=4" data-page="4" class="paginator-page active">4</a></li>
+				<li><a href="http://url/?page=5" data-page="5" class="paginator-page">5</a></li>
+				<li><a href="http://url/?page=6" data-page="6" class="paginator-page">6</a></li>
+				<li><a href="http://url/?page=7" data-page="7" class="paginator-page">7</a></li>
 				<li><span class="paginator-spacer">...</span></li>
-				<li><a href="http://url/?page=7" data-back="true" data-page="7" class="paginator-page">7</a></li>
-				<li><a href="http://url/?page=8" data-back="true" data-page="8" class="paginator-page">8</a></li>
-				<li><a href="http://url/?page=9" data-back="true" data-page="9" class="paginator-page">9</a></li>
-				<li><a href="http://url/?page=10" data-page="10" class="paginator-page active">10</a></li>
-				<li><a href="http://url/?page=11" data-page="11" class="paginator-page">11</a></li>
-				<li><a href="http://url/?page=12" data-page="12" class="paginator-page">12</a></li>
 				<li><a href="http://url/?page=13" data-page="13" class="paginator-page">13</a></li>
-				<li><a href="http://url/?page=11" data-page="11" class="paginator-next button secondary"><span>escaped-msg</span></a></li>
+				<li><a href="http://url/?page=5" data-page="5" class="paginator-next button secondary"><span>escaped-msg</span></a></li>
 			';
+
+	private $headPage4of13Selected = '
+		<link rel="prev" href="http://url/?page=3" />
+		<link rel="next" href="http://url/?page=5" />
+	';
 
 	private $htmlPage7of13Selected = '
 				<li><a href="http://url/?page=6" data-back="true" data-page="6" class="paginator-prev button secondary"><span>escaped-msg</span></a></li>
@@ -63,91 +133,61 @@ class PaginatorTest extends WikiaBaseTest {
 				<li><a href="http://url/?page=8" data-page="8" class="paginator-next button secondary"><span>escaped-msg</span></a></li>
 			';
 
-	private $htmlPage4of13Selected = '
-				<li><a href="http://url/?page=3" data-back="true" data-page="3" class="paginator-prev button secondary"><span>escaped-msg</span></a></li>
+	private $headPage7of13Selected = '
+		<link rel="prev" href="http://url/?page=6" />
+		<link rel="next" href="http://url/?page=8" />
+	';
+
+	private $htmlPage10of13Selected = '
+				<li><a href="http://url/?page=9" data-back="true" data-page="9" class="paginator-prev button secondary"><span>escaped-msg</span></a></li>
 				<li><a href="http://url/?page=1" data-back="true" data-page="1" class="paginator-page">1</a></li>
-				<li><a href="http://url/?page=2" data-back="true" data-page="2" class="paginator-page">2</a></li>
-				<li><a href="http://url/?page=3" data-back="true" data-page="3" class="paginator-page">3</a></li>
-				<li><a href="http://url/?page=4" data-page="4" class="paginator-page active">4</a></li>
-				<li><a href="http://url/?page=5" data-page="5" class="paginator-page">5</a></li>
-				<li><a href="http://url/?page=6" data-page="6" class="paginator-page">6</a></li>
-				<li><a href="http://url/?page=7" data-page="7" class="paginator-page">7</a></li>
 				<li><span class="paginator-spacer">...</span></li>
+				<li><a href="http://url/?page=7" data-back="true" data-page="7" class="paginator-page">7</a></li>
+				<li><a href="http://url/?page=8" data-back="true" data-page="8" class="paginator-page">8</a></li>
+				<li><a href="http://url/?page=9" data-back="true" data-page="9" class="paginator-page">9</a></li>
+				<li><a href="http://url/?page=10" data-page="10" class="paginator-page active">10</a></li>
+				<li><a href="http://url/?page=11" data-page="11" class="paginator-page">11</a></li>
+				<li><a href="http://url/?page=12" data-page="12" class="paginator-page">12</a></li>
 				<li><a href="http://url/?page=13" data-page="13" class="paginator-page">13</a></li>
-				<li><a href="http://url/?page=5" data-page="5" class="paginator-next button secondary"><span>escaped-msg</span></a></li>
+				<li><a href="http://url/?page=11" data-page="11" class="paginator-next button secondary"><span>escaped-msg</span></a></li>
 			';
 
-	private $htmlPage2of13Selected = '
-				<li><a href="http://url/?page=1" data-back="true" data-page="1" class="paginator-prev button secondary"><span>escaped-msg</span></a></li>
+	private $headPage10of13Selected = '
+		<link rel="prev" href="http://url/?page=9" />
+		<link rel="next" href="http://url/?page=11" />
+	';
+
+	private $htmlPage12of13Selected = '
+				<li><a href="http://url/?page=11" data-back="true" data-page="11" class="paginator-prev button secondary"><span>escaped-msg</span></a></li>
 				<li><a href="http://url/?page=1" data-back="true" data-page="1" class="paginator-page">1</a></li>
-				<li><a href="http://url/?page=2" data-page="2" class="paginator-page active">2</a></li>
-				<li><a href="http://url/?page=3" data-page="3" class="paginator-page">3</a></li>
-				<li><a href="http://url/?page=4" data-page="4" class="paginator-page">4</a></li>
-				<li><a href="http://url/?page=5" data-page="5" class="paginator-page">5</a></li>
 				<li><span class="paginator-spacer">...</span></li>
+				<li><a href="http://url/?page=9" data-back="true" data-page="9" class="paginator-page">9</a></li>
+				<li><a href="http://url/?page=10" data-back="true" data-page="10" class="paginator-page">10</a></li>
+				<li><a href="http://url/?page=11" data-back="true" data-page="11" class="paginator-page">11</a></li>
+				<li><a href="http://url/?page=12" data-page="12" class="paginator-page active">12</a></li>
 				<li><a href="http://url/?page=13" data-page="13" class="paginator-page">13</a></li>
-				<li><a href="http://url/?page=3" data-page="3" class="paginator-next button secondary"><span>escaped-msg</span></a></li>
+				<li><a href="http://url/?page=13" data-page="13" class="paginator-next button secondary"><span>escaped-msg</span></a></li>
 			';
 
-	private $htmlPage1of13Selected = '
-				<li><span class="paginator-prev disabled"><span>escaped-msg</span></span></li>
-				<li><a href="http://url/?page=1" data-page="1" class="paginator-page active">1</a></li>
-				<li><a href="http://url/?page=2" data-page="2" class="paginator-page">2</a></li>
-				<li><a href="http://url/?page=3" data-page="3" class="paginator-page">3</a></li>
-				<li><a href="http://url/?page=4" data-page="4" class="paginator-page">4</a></li>
-				<li><span class="paginator-spacer">...</span></li>
-				<li><a href="http://url/?page=13" data-page="13" class="paginator-page">13</a></li>
-				<li><a href="http://url/?page=2" data-page="2" class="paginator-next button secondary"><span>escaped-msg</span></a></li>
-			';
+	private $headPage12of13Selected = '
+		<link rel="prev" href="http://url/?page=11" />
+		<link rel="next" href="http://url/?page=13" />
+	';
 
-	private $htmlPage1of13Selected1 = '
-				<li><span class="paginator-prev disabled"><span>escaped-msg</span></span></li>
-				<li><a href="http://url/?page=1" data-page="1" class="paginator-page active">1</a></li>
-				<li><a href="http://url/?page=2" data-page="2" class="paginator-page">2</a></li>
-				<li><a href="http://url/?page=3" data-page="3" class="paginator-page">3</a></li>
-				<li><a href="http://url/?page=4" data-page="4" class="paginator-page">4</a></li>
-				<li><span class="paginator-spacer">...</span></li>
-				<li><a href="http://url/?page=13" data-page="13" class="paginator-page">13</a></li>
-				<li><a href="http://url/?page=2" data-page="2" class="paginator-next button secondary"><span>escaped-msg</span></a></li>
-			';
-
-	private $alphabet2 = 'a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z,A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z';
-
-	private $htmlPage4of4Selected = '
-				<li><a href="http://url/?page=3" data-back="true" data-page="3" class="paginator-prev button secondary"><span>escaped-msg</span></a></li>
+	private $htmlPage13of13Selected = '
+				<li><a href="http://url/?page=12" data-back="true" data-page="12" class="paginator-prev button secondary"><span>escaped-msg</span></a></li>
 				<li><a href="http://url/?page=1" data-back="true" data-page="1" class="paginator-page">1</a></li>
-				<li><a href="http://url/?page=2" data-back="true" data-page="2" class="paginator-page">2</a></li>
-				<li><a href="http://url/?page=3" data-back="true" data-page="3" class="paginator-page">3</a></li>
-				<li><a href="http://url/?page=4" data-page="4" class="paginator-page active">4</a></li>
+				<li><span class="paginator-spacer">...</span></li>
+				<li><a href="http://url/?page=10" data-back="true" data-page="10" class="paginator-page">10</a></li>
+				<li><a href="http://url/?page=11" data-back="true" data-page="11" class="paginator-page">11</a></li>
+				<li><a href="http://url/?page=12" data-back="true" data-page="12" class="paginator-page">12</a></li>
+				<li><a href="http://url/?page=13" data-page="13" class="paginator-page active">13</a></li>
 				<li><span class="paginator-next disabled"><span>escaped-msg</span></span></li>
 			';
 
-	private $htmlPage3of4Selected = '
-				<li><a href="http://url/?page=2" data-back="true" data-page="2" class="paginator-prev button secondary"><span>escaped-msg</span></a></li>
-				<li><a href="http://url/?page=1" data-back="true" data-page="1" class="paginator-page">1</a></li>
-				<li><a href="http://url/?page=2" data-back="true" data-page="2" class="paginator-page">2</a></li>
-				<li><a href="http://url/?page=3" data-page="3" class="paginator-page active">3</a></li>
-				<li><a href="http://url/?page=4" data-page="4" class="paginator-page">4</a></li>
-				<li><a href="http://url/?page=4" data-page="4" class="paginator-next button secondary"><span>escaped-msg</span></a></li>
-			';
-
-	private $htmlPage2of4Selected = '
-				<li><a href="http://url/?page=1" data-back="true" data-page="1" class="paginator-prev button secondary"><span>escaped-msg</span></a></li>
-				<li><a href="http://url/?page=1" data-back="true" data-page="1" class="paginator-page">1</a></li>
-				<li><a href="http://url/?page=2" data-page="2" class="paginator-page active">2</a></li>
-				<li><a href="http://url/?page=3" data-page="3" class="paginator-page">3</a></li>
-				<li><a href="http://url/?page=4" data-page="4" class="paginator-page">4</a></li>
-				<li><a href="http://url/?page=3" data-page="3" class="paginator-next button secondary"><span>escaped-msg</span></a></li>
-			';
-
-	private $htmlPage1of4Selected = '
-				<li><span class="paginator-prev disabled"><span>escaped-msg</span></span></li>
-				<li><a href="http://url/?page=1" data-page="1" class="paginator-page active">1</a></li>
-				<li><a href="http://url/?page=2" data-page="2" class="paginator-page">2</a></li>
-				<li><a href="http://url/?page=3" data-page="3" class="paginator-page">3</a></li>
-				<li><a href="http://url/?page=4" data-page="4" class="paginator-page">4</a></li>
-				<li><a href="http://url/?page=2" data-page="2" class="paginator-next button secondary"><span>escaped-msg</span></a></li>
-			';
+	private $headPage13of13Selected = '
+		<link rel="prev" href="http://url/?page=12" />
+	';
 
 	public function setUp() {
 		global $IP;
@@ -157,19 +197,14 @@ class PaginatorTest extends WikiaBaseTest {
 		$this->mockGlobalFunction( 'wfMessage', new MessageMock() );
 	}
 
-	private function casesForEdgeBehavior() {
-		return [
-			// Pages beyond the last one will still display the last one
-			[ 8, $this->alphabet, 5, 'y,z', $this->htmlPage4of4Selected ],
-			[ 8, $this->alphabet, 6, 'y,z', $this->htmlPage4of4Selected ],
-			[ 8, $this->alphabet, 100, 'y,z', $this->htmlPage4of4Selected ],
-
-			// Page 0, -1, -2, -100 acts the same as 1
-			[ 8, $this->alphabet, 0, 'a,b,c,d,e,f,g,h', $this->htmlPage1of4Selected ],
-			[ 8, $this->alphabet, -1, 'a,b,c,d,e,f,g,h', $this->htmlPage1of4Selected ],
-			[ 8, $this->alphabet, -2, 'a,b,c,d,e,f,g,h', $this->htmlPage1of4Selected ],
-			[ 8, $this->alphabet, -100, 'a,b,c,d,e,f,g,h', $this->htmlPage1of4Selected ],
-		];
+	private function assertHtmlEquals( $expectedHtml, $actualHtml, $head = false ) {
+		if ( !$head && $expectedHtml ) {
+			$expectedHtml = "<div class=\"wikia-paginator\">\n<ul>$expectedHtml</ul>\n</div>";
+		}
+		$this->assertEquals(
+			array_map( 'trim', explode( "\n", str_replace( '" >', '">', preg_replace( '/ {2,}/', ' ', trim( $expectedHtml ) ) ) ) ),
+			array_map( 'trim', explode( "\n", str_replace( '" >', '">', preg_replace( '/ {2,}/', ' ', trim( $actualHtml ) ) ) ) )
+		);
 	}
 
 	private function casesForStandardUse() {
@@ -202,6 +237,21 @@ class PaginatorTest extends WikiaBaseTest {
 		];
 	}
 
+	private function casesForEdgeBehavior() {
+		return [
+			// Pages beyond the last one will still display the last one
+			[ 8, $this->alphabet, 5, 'y,z', $this->htmlPage4of4Selected ],
+			[ 8, $this->alphabet, 6, 'y,z', $this->htmlPage4of4Selected ],
+			[ 8, $this->alphabet, 100, 'y,z', $this->htmlPage4of4Selected ],
+
+			// Page 0, -1, -2, -100 acts the same as 1
+			[ 8, $this->alphabet, 0, 'a,b,c,d,e,f,g,h', $this->htmlPage1of4Selected ],
+			[ 8, $this->alphabet, -1, 'a,b,c,d,e,f,g,h', $this->htmlPage1of4Selected ],
+			[ 8, $this->alphabet, -2, 'a,b,c,d,e,f,g,h', $this->htmlPage1of4Selected ],
+			[ 8, $this->alphabet, -100, 'a,b,c,d,e,f,g,h', $this->htmlPage1of4Selected ],
+		];
+	}
+
 	public function dataProviderCallStyle1() {
 		return array_merge(
 			$this->casesForStandardUse(),
@@ -215,6 +265,46 @@ class PaginatorTest extends WikiaBaseTest {
 		);
 	}
 
+	public function dataProviderHeadItem() {
+		return [
+			// Pages 1...4
+			[ 26, 8, 1, $this->headPage1of4Selected ],
+			[ 26, 8, 2, $this->headPage2of4Selected ],
+			[ 26, 8, 3, $this->headPage3of4Selected ],
+			[ 26, 8, 4, $this->headPage4of4Selected ],
+
+			// More pages
+			[ 52, 4, 1, $this->headPage1of13Selected ],
+			[ 52, 4, 2, $this->headPage2of13Selected ],
+			[ 52, 4, 4, $this->headPage4of13Selected ],
+			[ 52, 4, 7, $this->headPage7of13Selected ],
+			[ 52, 4, 10, $this->headPage10of13Selected ],
+			[ 52, 4, 12, $this->headPage12of13Selected ],
+			[ 52, 4, 13, $this->headPage13of13Selected ],
+
+			// One page only -> no pagination, page number ignored
+			[ 4, 10, 10, '' ],
+			[ 4, 10, 1, '' ],
+			[ 4, 10, -100, '' ],
+			[ 4, 4, 1, '' ],
+			[ 0, 4, 1, '', '' ],
+
+			// Min per-page is 4:
+			[ 4, 3, 1, '' ],
+			[ 4, 2, 1, '' ],
+
+			[ 26, 8, 5, '' ],
+			[ 26, 8, 6, '' ],
+			[ 26, 8, 100, '' ],
+
+			// Page 0, -1, -2, -100 acts the same as 1
+			[ 26, 8, 0, '' ],
+			[ 26, 8, -1, '' ],
+			[ 26, 8, -2, '' ],
+			[ 26, 8, -100, '' ],
+		];
+	}
+
 	/**
 	 * Test the basic API of the class, style #1 of using it
 	 *
@@ -225,7 +315,7 @@ class PaginatorTest extends WikiaBaseTest {
 	 * This style of calling the class is used by:
 	 *
 	 *  * CategoryExhibitionSection
-	 *  * CategoryExhibitionSection
+	 *  * CategoryExhibitionSectionMedia
 	 *  * CrunchyrollVideo
 	 *
 	 * @dataProvider dataProviderCallStyle1
@@ -304,7 +394,7 @@ class PaginatorTest extends WikiaBaseTest {
 	 *
 	 *  * SpecialVideosHelper
 	 *  * WikiaNewFilesSpecialController
- 	 *  * TemplatesSpecialController
+	 *  * TemplatesSpecialController
 	 *
 	 * @dataProvider dataProviderCallStyle2
 	 */
@@ -317,13 +407,22 @@ class PaginatorTest extends WikiaBaseTest {
 		$this->assertHtmlEquals( $expectedHtml, $html );
 	}
 
-	private function assertHtmlEquals( $expectedHtml, $actualHtml ) {
-		if ( $expectedHtml ) {
-			$expectedHtml = "<div class=\"wikia-paginator\">\n<ul>$expectedHtml</ul>\n</div>";
-		}
-		$this->assertEquals(
-			array_map( 'trim', explode( "\n", str_replace( '" >', '">', preg_replace( '/ {2,}/', ' ', trim( $expectedHtml ) ) ) ) ),
-			array_map( 'trim', explode( "\n", str_replace( '" >', '">', preg_replace( '/ {2,}/', ' ', trim( $actualHtml ) ) ) ) )
-		);
+	/**
+	 * Test getHeadItem method
+	 *
+	 * Called by:
+	 *
+	 *  * SpecialVideosHelper
+	 *  * WAMPageController
+	 *  * WikiaNewFilesSpecialController
+	 *
+	 * @dataProvider dataProviderHeadItem
+	 */
+	public function testHeadItem( $count, $perPage, $activePage, $expectedHtml ) {
+		$url = 'http://url/?page=%s';
+		$pages = Paginator::newFromArray( $count, $perPage );
+		$pages->setActivePage( $activePage - 1 );
+		$html = $pages->getHeadItem( $url );
+		$this->assertHtmlEquals( $expectedHtml, $html, true );
 	}
 }

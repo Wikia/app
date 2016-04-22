@@ -15,6 +15,10 @@
  *  * convert uses of getPage(int, true) to setActivePage(int), getCurrentPage()
  *  * On the second page of paginated content rel="prev" link should point to the page without ?page=1
  *  * On any page other than the first page there should be no canonical (link rel="prev/next" is enough)
+ *  * Avoid passing the same URL to getHeadItem and getBarHTML (pass to constructor instead?)
+ *  * Convert the other code to use the constructor instead of newFromArray
+ *  * Convert the other code to use $total instead of array_fill( 0, $total, '' )
+ *  * Support for indefinite pagination? 1 ... 47 48 49 _50_ 51 52 53 ...
  */
 class Paginator {
 
@@ -180,6 +184,11 @@ class Paginator {
 		return $oTmpl->render( 'paginator' );
 	}
 
+	/**
+	 * Used by SpecialVideosHelper
+	 *
+	 * @return int
+	 */
 	public function getPagesCount() {
 		return $this->pagesCount;
 	}
