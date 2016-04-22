@@ -565,6 +565,7 @@ class Chat {
 
 		$memcKey = wfMemcKey( self::CHATTERS_CACHE_KEY );
 		$wgMemc->set( $memcKey, $chatters, self::CHATTERS_CACHE_TTL );
+		ChatWidget::purgeChatUsersCache();
 		Chat::purgeChattersCache();
 
 		wfProfileOut( __METHOD__ );

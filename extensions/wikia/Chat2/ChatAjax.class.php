@@ -90,9 +90,6 @@ class ChatAjax {
 
 		// If the user can chat, dig up some other stats which are a little more expensive to compute.
 		if ( $res['canChat'] ) {
-			// new user joins the chat, purge the cache
-			ChatWidget::purgeChatUsersCache();
-
 			$stats = ( new UserStatsService( $user->getId() ) )->getStats();
 
 			// this results goes to chat server, which obiously has no user lang
