@@ -176,6 +176,8 @@ class CloseMyAccountSpecialController extends WikiaSpecialPageController {
 
 		$helper->reactivateAccount( $user );
 
+		BannerNotificationsController::addConfirmation( $this->msg( 'closemyaccount-reactivate-success' )->escaped() );
+
 		$userPageTitle = $user->getUserPage();
 		$this->getOutput()->redirect( $userPageTitle->getFullURL() );
 	}
