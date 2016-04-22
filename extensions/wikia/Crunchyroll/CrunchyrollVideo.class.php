@@ -70,7 +70,8 @@ class CrunchyrollVideo {
 			$crRSS = $this->getRSSData();
 			$this->title = $crRSS->getTitle();
 			$pages = Paginator::newFromArray(
-				$crRSS->getItems(), ( self::CRUNCHYROLL_COLLUMNS * $this->getRowsNumber() )
+				$crRSS->getItems(),
+				( self::CRUNCHYROLL_COLLUMNS * $this->getRowsNumber() )
 			);
 			$this->getPaginatedData = $pages;
 		}
