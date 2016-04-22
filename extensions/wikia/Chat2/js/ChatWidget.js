@@ -18,53 +18,67 @@ var ChatWidget = {
 			});
 			ChatWidget.bindComplete = true;
 		}
-		// check if content was pre-rendered to JS variable or users is logged in
-		if (window.wgWikiaChatUsers.length || window.wgUserName) {
+		// check if user is logged in (content was pre-rendered to JS variable)
+		if (window.wgUserName) {
 			ChatWidget.initEntryPoint();
 		} else if (!ChatWidget.loading) {
 			// if we're not loading yet - start it
 			ChatWidget.loading = true;
-			ChatWidget.loadChatUsers();
+			ChatWidget.initChatEntryPointForAnons();
 		}
+	},
+
+	initChatEntryPointForAnons: function() {
+		$.when(
+			ChatWidget.loadChatUsers(),
+			ChatWidget.loadWidgetUserElementTemplate()
+		).then(function(usersData, templateData) {
+			if (usersData[1] === 'success' && templateData[1] === 'success') {
+				var users = usersData[0].users,
+					templateString = templateData[0].mustache[0];
+
+				if (users.length) {
+					ChatWidget.widgetUserElementTemplate = templateString;
+					ChatWidget.updateUsersList(users);
+					// cache result
+					ChatWidget.users = users;
+				}
+
+				ChatWidget.initEntryPoint();
+			} else {
+				// TODO: how to handle loadChatUsers failure?
+			}
+		});
 	},
 
 	loadChatUsers: function () {
 		// load the chat users info using Ajax
-		$.nirvana.sendRequest({
+		return $.nirvana.sendRequest({
 			controller: 'ChatRailController',
 			method: 'GetUsers',
 			type: 'GET',
-			format: 'json',
-			callback: function (content) {
-				var users = content.users;
-
-				if (users.length) {
-					ChatWidget.onChatUsersFetched(users);
-				} else {
-					ChatWidget.initEntryPoint();
-				}
-			}
+			format: 'json'
 		});
 	},
 
 	/**
 	 * As we get updated list of users on chat, rerender part of the template responsible for
 	 * displaying users avatars list.
-	 *
-	 * @param users array of users
 	 */
-	onChatUsersFetched: function(users) {
+	loadWidgetUserElementTemplate: function() {
 		// replace list of users with actual one - rerender template
-		Wikia.getMultiTypePackage({
-			mustache: 'extensions/wikia/Chat2/templates/widgetUserElement.mustache',
-			callback: function (data) {
-				ChatWidget.widgetUserElementTemplate = data.mustache[0];
-				ChatWidget.updateUsersList(users);
-				// cache result
-				window.wgWikiaChatUsers = users;
-				ChatWidget.initEntryPoint();
-			}
+		return Wikia.getMultiTypePackage({
+			mustache: 'extensions/wikia/Chat2/templates/widgetUserElement.mustache'
 		});
+	},
+
+	updateUsersList: function(users) {
+		var output = Mustache.render(ChatWidget.widgetUserElementTemplate, {
+			users: users,
+			blankImageUrl: window.wgBlankImageUrl
+		});
+
+		document.getElementById('chatCarousel').innerHTML = output;
 	},
 
 	initEntryPoint: function () {
@@ -169,15 +183,6 @@ var ChatWidget = {
 					setPopoverTimeout($this);
 				});
 		});
-	},
-
-	updateUsersList: function(users) {
-		var output = Mustache.render(ChatWidget.widgetUserElementTemplate, {
-				users: users,
-				blankImageUrl: window.wgBlankImageUrl
-			});
-
-		document.getElementById('chatCarousel').innerHTML = output;
 	},
 
 	onClickChatButton: function (linkToSpecialChat) {
