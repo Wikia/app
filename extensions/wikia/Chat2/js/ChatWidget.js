@@ -43,6 +43,7 @@ var ChatWidget = {
 		).then(function(usersData, templateData) {
 			if (usersData[1] === 'success' && templateData[1] === 'success') {
 				var users = usersData[0].users;
+
 				ChatWidget.widgetUserElementTemplate = templateData[0].mustache[0];
 
 				if (users.length) {
@@ -88,15 +89,12 @@ var ChatWidget = {
 			blankImageUrl: window.wgBlankImageUrl
 		});
 
-		console.log("$('.chatCarousel'):", $('.chatCarousel'));
-
 		$('.chatCarousel').each(function () {
-			$(this).innerHTML = output;
+			$(this).get(0).innerHTML = output;
 		});
 	},
 
 	initEntryPoint: function () {
-		console.log("initEntryPoint: $('.ChatModuleUninitialized')", $('.ChatModuleUninitialized'))
 		// in case the module is embedded in the article, we can have several modules on the page.
 		// Process them one by one
 		$('.ChatModuleUninitialized').each(function () {
