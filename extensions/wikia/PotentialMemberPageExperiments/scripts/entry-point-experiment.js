@@ -28,8 +28,17 @@ require([
 				}
 			})
 		).done(addEntryPoint);
+	}
 
-		$('body').on('click', '.pmp-entry-point-close', close);
+	function addEntryPoint(resources) {
+		loader.processStyle(resources.styles);
+
+		var templateData = {
+			bannerType: 'block-top'
+		};
+
+		$banner = $(mustache.render(resources.mustache[0], templateData));
+		$banner.insertAfter($('.header-container')).on('click', '.pmp-entry-point-close', close);
 	}
 
 	function close() {
@@ -43,17 +52,6 @@ require([
 			path: mw.config.get('wgCookiePath'),
 			domain: mw.config.get('wgCookieDomain')
 		});
-	}
-
-	function addEntryPoint(resources) {
-		loader.processStyle(resources.styles);
-
-		var templateData = {
-			bannerType: 'block-top'
-		};
-
-		$banner = $(mustache.render(resources.mustache[0], templateData));
-		$banner.insertAfter($('.header-container'));
 	}
 
 	$(init);
