@@ -12,18 +12,11 @@ class CloseMyAccountHooks {
 	 * @return boolean            True if login should succeed, false otherwise
 	 */
 	public static function onWikiaUserLoginSuccess( $user, &$result, &$resultMsg ) {
-		global $wgRequest;
 		$closeAccountHelper = new CloseMyAccountHelper();
 		if ( $closeAccountHelper->isScheduledForClosure( $user ) ) {
-			$wgRequest->setSessionData( 'closeAccountSessionId', $user->getId() );
-			// Ensure the user is logged out and access token is cleared
-			$user->logout();
 			$result = 'closurerequested';
 			$resultMsg = 'Account closure requested';
 			return false;
-		} elseif ( $wgRequest->getSessionData( 'closeAccountSessionId' ) !== null ) {
-			// Clear close account session ID on logging in to another account
-			unset( $_SESSION['closeAccountSessionId'] );
 		}
 		return true;
 	}
@@ -37,15 +30,10 @@ class CloseMyAccountHooks {
 	 * @return boolean           True if login should succeed, false otherwise
 	 */
 	public static function onFacebookUserLoginSuccess( User $user, &$errorMsg ) {
-		global $wgRequest;
 		$closeAccountHelper = new CloseMyAccountHelper();
 		if ( $closeAccountHelper->isScheduledForClosure( $user ) ) {
-			$wgRequest->setSessionData( 'closeAccountSessionId', $user->getId() );
 			$errorMsg = wfMessage( 'closemyaccount-reactivate-error-fbconnect', $user->getName() )->parse();
 			return false;
-		} elseif ( $wgRequest->getSessionData( 'closeAccountSessionId' ) !== null ) {
-			// Clear close account session ID on logging in to another account
-			unset( $_SESSION['closeAccountSessionId'] );
 		}
 		return true;
 	}
