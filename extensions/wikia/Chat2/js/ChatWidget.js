@@ -28,26 +28,28 @@ var ChatWidget = {
 		}
 	},
 
+	/**
+	 * Make request for actual users list and fetch mustache template.
+	 * Then init chat entrypoint.
+	 */
 	initChatEntryPointForAnons: function() {
 		$.when(
 			ChatWidget.loadChatUsers(),
 			ChatWidget.loadWidgetUserElementTemplate()
 		).then(function(usersData, templateData) {
 			if (usersData[1] === 'success' && templateData[1] === 'success') {
-				var users = usersData[0].users,
-					templateString = templateData[0].mustache[0];
+				var users = usersData[0].users;
+				ChatWidget.widgetUserElementTemplate = templateData[0].mustache[0];
 
 				if (users.length) {
-					ChatWidget.widgetUserElementTemplate = templateString;
 					ChatWidget.updateUsersList(users);
-					// cache result
-					ChatWidget.users = users;
 				}
 
-				ChatWidget.initEntryPoint();
-			} else {
-				// TODO: how to handle loadChatUsers failure?
+				// cache result
+				ChatWidget.users = users;
 			}
+
+			ChatWidget.initEntryPoint();
 		});
 	},
 
@@ -62,16 +64,20 @@ var ChatWidget = {
 	},
 
 	/**
-	 * As we get updated list of users on chat, rerender part of the template responsible for
-	 * displaying users avatars list.
+	 * Fetch template responsible for displaying users in right rail module.
 	 */
 	loadWidgetUserElementTemplate: function() {
-		// replace list of users with actual one - rerender template
 		return Wikia.getMultiTypePackage({
 			mustache: 'extensions/wikia/Chat2/templates/widgetUserElement.mustache'
 		});
 	},
 
+	/**
+	 * As we have updated list of users on chat, rerender part of the template responsible for
+	 * displaying users avatars list.
+	 *
+	 * @param users array of users on chat
+	 */
 	updateUsersList: function(users) {
 		var output = Mustache.render(ChatWidget.widgetUserElementTemplate, {
 			users: users,

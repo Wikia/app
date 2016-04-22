@@ -59,8 +59,8 @@ class ChatWidget {
 			'profileType' => empty( $wgEnableWallExt ) ? 'talk-page' : 'message-wall',
 			'sectionClassName' => $fromParserTag ? self::PARSER_TAG_CLASS : self::RIGHT_RAIL_MODULE_CLASS,
 			'siteName' => $wgSitename,
-			'userName' => $wgUser->isAnon() ? null : $wgUser->getName(),
-			'users' => $usersInfo,
+			'userName' => $wgUser->isLoggedIn() ? $wgUser->getName() : null,
+			'users' => $wgUser->isLoggedIn() ? $usersInfo : [],
 			'hasUsers' => $usersCount > 0,
 			'usersCount' => $usersCount,
 		];
