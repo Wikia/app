@@ -1,5 +1,6 @@
 @import 'skins/shared/color';
 
+$color-blue-darken: #144b93;
 $color-blue: #1a5eb8;
 $color-message-text: #333;
 $close-button-background: '/resources/wikia/ui_components/modal/images/close-dark.svg';
@@ -57,4 +58,9 @@ $close-button-background: '/resources/wikia/ui_components/modal/images/close-dar
 	padding: 10px 15px;
 	text-transform: uppercase;
 	width: auto;
+
+	&:hover {
+		background: $color-blue-darken;
+		text-decoration: none;
+	}
 }
