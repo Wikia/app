@@ -1,3 +1,36 @@
+@import 'skins/shared/color';
+
+$button-background-color: #1a5eb8;
+$close-button-background: '/resources/wikia/ui_components/modal/images/close-dark.svg';
+
+@if( $is-dark-wiki ) {
+	$close-button-background: '/resources/wikia/ui_components/modal/images/close-light.svg';
+}
+
 .pmp-entry-point {
-	background: url( '../images/858-px-background.png' ) no-repeat center bottom;
+	background: url('/extensions/wikia/PotentialMemberPageExperiments/images/858-px-background.png') no-repeat center bottom;
+	height: 150px;
+	text-align: center;
+	width: 100%;
+}
+
+.pmp-entry-point-close {
+	background: url($close-button-background);
+	background-size: 15px 15px;
+	display: block;
+	float: right;
+	height: 15px;
+	margin: 5px;
+	overflow: hidden;
+	text-indent: 100%;
+	white-space: nowrap;
+	width: 15px;
+}
+
+.pmp-entry-point-button {
+	background: $button-background-color;
+	color: $color-white;
+	padding: 10px 20px;
+	text-transform: uppercase;
+	width: auto;
 }

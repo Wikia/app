@@ -9,6 +9,8 @@ require([
 	var dismissCookieName = 'pmp-entry-point-dismissed';
 
 	function init() {
+		debugger;
+
 		if (
 			mw.config.get('wgAction') !== 'view' ||
 			$.cookie(dismissCookieName) ||
@@ -29,6 +31,8 @@ require([
 	}
 
 	function addEntryPoint(resources) {
+		debugger;
+
 		loader.processStyle(resources.styles);
 
 		var templateData = {
