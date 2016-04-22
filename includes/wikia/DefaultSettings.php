@@ -1799,6 +1799,13 @@ $wgEnableUpdatedGlobalFooter = true;
 $wgPaidAssetDropConfig = false;
 
 /**
+ * @name $wgAdDriverHighImpact2SlotCountries
+ * Enables INVISIBLE_HIGH_IMPACT_2 slot in these countries
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverHighImpact2SlotCountries = null;
+
+/**
  * @name $wgAdDriverIncontentLeaderboardSlotCountries
  * Enables INCONTENT_LEADERBOARD slot in these countries
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
