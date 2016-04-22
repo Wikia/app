@@ -154,12 +154,6 @@ define('ext.wikia.adEngine.adContext', [
 			!isPageType('home')
 		);
 
-		// Override leaderboard sizes
-		context.opts.overrideLeaderboardSizes = !!(
-			context.targeting.skin === 'oasis' &&
-			geo.isProperGeo(['JP'])
-		);
-
 		context.opts.yavli = !noExternals && geo.isProperGeo(instantGlobals.wgAdDriverYavliCountries);
 
 		// Export the context back to ads.context
