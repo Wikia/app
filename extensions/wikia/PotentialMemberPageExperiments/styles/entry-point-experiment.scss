@@ -1,36 +1,60 @@
 @import 'skins/shared/color';
 
-$button-background-color: #1a5eb8;
+$color-blue: #1a5eb8;
+$color-message-text: #333;
 $close-button-background: '/resources/wikia/ui_components/modal/images/close-dark.svg';
 
 @if( $is-dark-wiki ) {
+	$color-message-text: #fff;
 	$close-button-background: '/resources/wikia/ui_components/modal/images/close-light.svg';
 }
 
 .pmp-entry-point {
 	background: url('/extensions/wikia/PotentialMemberPageExperiments/images/858-px-background.png') no-repeat center bottom;
 	height: 150px;
+	position: relative;
 	text-align: center;
 	width: 100%;
+}
+
+.pmp-entry-point-block-top {
+	border-bottom: 2px solid $color-blue;
+	margin-bottom: 18px;
+
+	.pmp-entry-point-message {
+		color: $color-message-text;
+		display: block;
+		font-size: 24px;
+		font-weight: lighter;
+		padding: 33px 0 10px;
+
+		strong {
+			font-weight: normal;
+		}
+	}
 }
 
 .pmp-entry-point-close {
 	background: url($close-button-background);
 	background-size: 15px 15px;
 	display: block;
-	float: right;
 	height: 15px;
-	margin: 5px;
 	overflow: hidden;
+	position: absolute;
+	right: 5px;
 	text-indent: 100%;
+	top: 5px;
 	white-space: nowrap;
 	width: 15px;
 }
 
 .pmp-entry-point-button {
-	background: $button-background-color;
+	background: $color-blue;
 	color: $color-white;
-	padding: 10px 20px;
+	display: inline-block;
+	font-size: 12px;
+	font-weight: bold;
+	padding: 10px 15px;
 	text-transform: uppercase;
 	width: auto;
 }
