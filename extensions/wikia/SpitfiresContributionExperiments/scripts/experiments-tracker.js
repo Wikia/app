@@ -9,7 +9,8 @@ define('ext.wikia.spitfires.experiments.tracker', [
 	var track = tracker.buildTrackingFunction({
 			category: 'spitfires-contribution-experiments',
 			trackingMethod: 'analytics'
-		});
+		}),
+		EXPERIMENT_ID = 5685550912;
 
 	function trackVerboseClick(experiment, label) {
 		trackClick(prepareStructuredLabel(experiment, label));
@@ -55,7 +56,7 @@ define('ext.wikia.spitfires.experiments.tracker', [
 	}
 
 	function prepareStructuredLabel(experiment, label) {
-		var group = abTest.getGroup(experiment),
+		var group = window.optimizely.variationNamesMap[EXPERIMENT_ID].toLowerCase(),
 			userStatusLabel = getUserStatus();
 		return [experiment, group, userStatusLabel, label].join('-');
 	}
