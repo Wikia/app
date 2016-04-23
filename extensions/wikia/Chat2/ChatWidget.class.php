@@ -44,7 +44,7 @@ class ChatWidget {
 
 		$guidelinesText = wfMessage( 'chat-entry-point-guidelines' );
 		$joinChatMessage = wfMessage( 'chat-join-the-chat' );
-		$usersInfo = ChatWidget::getUsersInfo();
+		$usersInfo = $wgUser->isLoggedIn() ? ChatWidget::getUsersInfo() : [];
 		$usersCount = count( $usersInfo );
 		$myAvatarUrl = AvatarService::getAvatarUrl( $wgUser->getName(), ChatRailController::AVATAR_SIZE );
 		$buttonMessage = $usersCount ? 'chat-join-the-chat' : 'chat-start-a-chat';
@@ -60,7 +60,7 @@ class ChatWidget {
 			'sectionClassName' => $fromParserTag ? self::PARSER_TAG_CLASS : self::RIGHT_RAIL_MODULE_CLASS,
 			'siteName' => $wgSitename,
 			'userName' => $wgUser->isLoggedIn() ? $wgUser->getName() : null,
-			'users' => $wgUser->isLoggedIn() ? $usersInfo : [],
+			'users' => $usersInfo,
 			'hasUsers' => $usersCount > 0,
 			'usersCount' => $usersCount,
 		];

@@ -92,6 +92,9 @@ var ChatWidget = {
 		$('.chatCarousel').each(function () {
 			$(this).get(0).innerHTML = output;
 		});
+
+		// update number of users
+		$('.chat-total').innerHTML = users.length;
 	},
 
 	initEntryPoint: function () {

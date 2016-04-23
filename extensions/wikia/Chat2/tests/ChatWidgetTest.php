@@ -183,8 +183,8 @@ class ChatWidgetTest extends WikiaBaseTest {
 					'profileType' => 'message-wall',
 					'userName' => null,
 					'users' => [ ],
-					'usersCount' => 2,
-					'hasUsers' => true,
+					'usersCount' => 0,
+					'hasUsers' => false,
 				]
 			],
 			'anon from parser tag with no users' => [
