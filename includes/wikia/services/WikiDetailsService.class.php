@@ -262,6 +262,10 @@ class WikiDetailsService extends WikiService {
 		$wgMemc->set( $key, $wikiInfo, static::CACHE_1_DAY );
 	}
 
+	/**
+	 * @param int $id
+	 * @return mixed
+	 */
 	private function getDiscussionStats( $id ) {
 		global $wgConsulTag, $wgConsulUrl, $wgEnableDiscussions;
 
