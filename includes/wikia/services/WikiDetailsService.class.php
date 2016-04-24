@@ -263,13 +263,17 @@ class WikiDetailsService extends WikiService {
 	}
 
 	private function getDiscussionStats( $id ) {
-		global $wgEnableDiscussions, $wgConsulUrl, $wgConsulTag;
+		global $wgConsulTag, $wgConsulUrl, $wgEnableDiscussions;
 
 		if ( $wgEnableDiscussions ) {
 			$consulUrl = ( new  Wikia\Service\Gateway\ConsulUrlProvider( $wgConsulUrl, $wgConsulTag ))->getUrl( 'discusssion' );
-			$response = json_decode( file_get_contents( "$consulUrl$id/forums/$id" ), true );
-
-			return $response['threadCount'] ? $response['threadCount'] : null;
+			$response = Http::request( 'GET', "$consulUrl/$id/forums/$id" );
+			if ( $response != false ) {
+				$decodedResponse = json_decode( $response, true );
+				if ( isset( $decodedResponse ) && json_last_error() === JSON_ERROR_NONE ) {
+					return $decodedResponse['threadCount'] ? $decodedResponse['threadCount'] : null;
+				}
+			}
 		}
 		return null;
 	}
