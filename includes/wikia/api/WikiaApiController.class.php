@@ -126,28 +126,6 @@ class WikiaApiController extends WikiaController {
 	}
 
 	/**
-	 * Flags the API method as requiring a valid ApiGate Key
-	 *
-	 * @example
-	 * class MyApiController extends WikiaApiController {
-	 *     public function myApiMethod() {
-	 *         $this->requireKey();
-	 *         ...
-	 *     }
-	 * }
-	 */
-	protected function requireKey() {
-		//defined in /lib/vendor/ApiGate/config.php
-		global $APIGATE_HEADER_REQUIRES_API;
-
-		//@see ApiGate::requiresApiKey in /lib/vendor/ApiGate/ApiGate.class.php
-		//Note: this is kinda silly, since if the requirement for a key
-		//is not cached in Varnish yet, then the API method will run anyways
-		//even if the request doesn't have a valid key... pretty dangerous
-		$this->response->setHeader( $APIGATE_HEADER_REQUIRES_API, 1);
-	}
-	
-	/**
 	 * Returns whether this api request must hide content that is licensed for
 	 * non-commercial use only (some of the wikis with unusual license).
 	 * Currently, direct requests to wikia.php allow all content (this method returns false),

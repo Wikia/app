@@ -46,7 +46,6 @@ class AdminDashboardLogic {
 			static $exclusionList = [
 				'AbTesting',
 				'ApiExplorer',
-				'ApiGate',
 				'Chat',
 				'CloseWiki',
 				'Code',

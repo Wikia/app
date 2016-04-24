@@ -209,7 +209,6 @@ class PermissionsConfigurationImpl implements PermissionsConfiguration {
 		'performancestats',
 		'messagetool',
 		'forceview',
-		'apigate_admin',
 		'edithub',
 		'InterwikiEdit',
 		'multilookup',
