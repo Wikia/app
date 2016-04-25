@@ -249,7 +249,7 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 
 		if( $count > self::WHST_WIKIS_PER_PAGE ) {
 			/** @var $paginator Paginator */
-			$paginator = Paginator::newFromArray( array_fill( 0, $count, '' ), self::WHST_WIKIS_PER_PAGE );
+			$paginator = Paginator::newFromArray( $count, self::WHST_WIKIS_PER_PAGE );
 
 			$paginator->setActivePage($currentPage);
 
