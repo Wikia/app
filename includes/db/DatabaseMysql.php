@@ -279,16 +279,12 @@ class DatabaseMysql extends DatabaseBase {
 		return mysql_num_fields( $res );
 	}
 
-	/**
-	 * @param $res ResultWrapper
-	 * @param $n string
-	 * @return string
-	 */
-	function fieldName( $res, $n ) {
-		if ( $res instanceof ResultWrapper ) {
-			$res = $res->result;
-		}
+	protected function mysqlFieldName( $res, $n ) {
 		return mysql_field_name( $res, $n );
+	}
+
+	protected function mysqlFieldType( $res, $n ) {
+		return mysql_field_type( $res, $n );
 	}
 
 	/**

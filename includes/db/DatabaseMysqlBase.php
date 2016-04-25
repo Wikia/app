@@ -297,6 +297,29 @@ abstract class DatabaseMysqlBase extends DatabaseBase {
 	abstract protected function mysqlFieldName( $res, $n );
 
 	/**
+	 * mysqlFieldType wrapper
+	 * @param $res
+	 * @param $n
+	 * @return string|int
+	 */
+	function fieldType( $res, $n ) {
+		if ( $res instanceof ResultWrapper ) {
+			$res = $res->result;
+		}
+
+		return $this->mysqlFieldType( $res, $n );
+	}
+
+	/**
+	 * Get the type of the specified field in a result
+	 *
+	 * @param ResultWrapper|resource $res
+	 * @param int $n
+	 * @return string
+	 */
+	abstract protected function mysqlFieldType( $res, $n );
+
+	/**
 	 * @param $res ResultWrapper
 	 * @param $row
 	 * @return bool

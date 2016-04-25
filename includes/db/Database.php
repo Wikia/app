@@ -1751,20 +1751,6 @@ abstract class DatabaseBase implements DatabaseType {
 	}
 
 	/**
-	 * mysql_field_type() wrapper
-	 * @param $res
-	 * @param $index
-	 * @return string
-	 */
-	function fieldType( $res, $index ) {
-		if ( $res instanceof ResultWrapper ) {
-			$res = $res->result;
-		}
-
-		return mysql_field_type( $res, $index );
-	}
-
-	/**
 	 * Determines if a given index is unique
 	 *
 	 * @param $table string
@@ -3704,7 +3690,7 @@ abstract class DatabaseBase implements DatabaseType {
 	 * at the rate defined in self::QUERY_SAMPLE_RATE.
 	 *
 	 * @param string $sql the query
-	 * @param ResultWrapper|resource|bool $ret database results
+	 * @param ResultWrapper|mysqli_result|bool $ret database results
 	 * @param string $fname the name of the function that made this query
 	 * @param bool $isMaster is this against the master
 	 * @return void
@@ -3719,9 +3705,6 @@ abstract class DatabaseBase implements DatabaseType {
 			// for SELECT queries report how many rows are sent to the client
 			// for INSERT, UPDATE, DELETE, DROP queries report affected rows
 			$num_rows = $ret->num_rows ?: $this->affectedRows();
-		} elseif ( is_resource( $ret ) ) {
-			// for SELECT queries report how many rows are sent to the client
-			$num_rows = mysql_num_rows( $ret );
 		} elseif ( $ret === true ) {
 			// for INSERT, UPDATE, DELETE, DROP queries report affected rows
 			$num_rows = $this->affectedRows();
