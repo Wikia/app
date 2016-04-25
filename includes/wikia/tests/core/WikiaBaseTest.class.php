@@ -314,7 +314,7 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 	 * @param array $methods
 	 * @return PHPUnit_Framework_MockObject_MockObject
 	 */
-	protected function getkDatabaseMock( $methods = [] ) {
+	protected function getDatabaseMock( $methods = [] ) {
 		return $this->getMock( 'DatabaseMysqli', $methods );
 	}
 
