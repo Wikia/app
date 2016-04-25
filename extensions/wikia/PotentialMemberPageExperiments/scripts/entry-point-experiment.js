@@ -37,30 +37,24 @@ require([
 
 		loader.processStyle(resources.styles);
 
+		$banner = $(mustache.render(template, {}))
+			.on('click', '.pmp-entry-point-button', onEntryPointClick)
+			.on('click', '.pmp-entry-point-close', close);
+
 		switch (group) {
-			case 'TOP': addEntryPointTop(resources.mustache[0]);break;
-			case 'IN_ARTICLE': addEntryPointInArticle(resources.mustache[0]);break;
+			case 'TOP': addEntryPointTop();break;
+			case 'IN_ARTICLE': addEntryPointInArticle();break;
 		}
 	}
 
-	function addEntryPointTop(template) {
-		var templateData = {
-			bannerType: 'block-top'
-		};
-
-		$banner = $(mustache.render(template, templateData));
-		$banner.insertAfter($('#WikiaPageHeader .header-container')).on('click', '.pmp-entry-point-close', close);
+	function addEntryPointTop() {
+		$banner.insertAfter($('#WikiaPageHeader .header-container'));
 	}
 
-	function addEntryPointInArticle(template) {
-		var templateData = {
-				bannerType: 'block-in-article'
-			},
-			$content = $('.mw-content-text'),
+	function addEntryPointInArticle() {
+		var $content = $('.mw-content-text'),
 			headers = $content.children('h2'),
 			$header;
-
-		$banner = $(mustache.render(template, templateData));
 
 		if (headers.length >= 2) {
 			$header = headers.eq(0);
@@ -73,7 +67,14 @@ require([
 		} else {
 			$content.append($banner);
 		}
+	}
 
+	function onEntryPointClick() {
+		track({
+			label: 'entry-point-click',
+			action: tracker.ACTIONS.CLICK
+		});
+		setDismissCookie();
 	}
 
 	function close() {
@@ -82,8 +83,12 @@ require([
 			action: tracker.ACTIONS.CLICK
 		});
 		$banner.remove();
+		setDismissCookie();
+	}
+
+	function setDismissCookie() {
 		$.cookie(dismissCookieName, 1, {
-			expires: 1,
+			expires: 7,
 			path: mw.config.get('wgCookiePath'),
 			domain: mw.config.get('wgCookieDomain')
 		});
