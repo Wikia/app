@@ -109,7 +109,6 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 			log(['flush', 'start'], 'info', logGroup);
 
 			log(['flush', 'refresh', slotQueue], 'debug', logGroup);
-			console.log("PUSHING SLOT: ", JSON.stringify(slotQueue));
 			if (slotQueue.length) {
 				pubAds.refresh(slotQueue, {changeCorrelator: false});
 				slotQueue = [];
@@ -138,7 +137,6 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 		}
 
 		adElement.configureSlot(slot);
-		console.log("PUSHING SLOT: ", JSON.stringify(slot));
 		slotQueue.push(slot);
 
 		return slot;
