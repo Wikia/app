@@ -13,7 +13,6 @@
  *  * On the second page of paginated content rel="prev" link should point to the page without ?page=1
  *  * On any page other than the first page there should be no canonical (link rel="prev/next" is enough)
  *  * Avoid passing the same URL to getHeadItem and getBarHTML (pass to constructor instead?)
- *  * Convert the other code to use the constructor instead of newFromArray
  *  * Support for indefinite pagination? 1 ... 47 48 49 _50_ 51 52 53 ...
  */
 class Paginator {
@@ -36,18 +35,29 @@ class Paginator {
 	/**
 	 * Creates a new Pagination object.
 	 *
-	 * @param   array|integer $aData
+	 * @param int $aData
 	 * @param int $iItemsPerPage
 	 * @param int $maxItemsPerPage
 	 * @return Paginator
 	 */
-	public static function newFromArray( $aData, $iItemsPerPage = 8, $maxItemsPerPage = 48 ) {
+	public static function newFromCount( $aData, $iItemsPerPage = 8, $maxItemsPerPage = 48 ) {
 		$aConfig = [
 			'itemsPerPage' => $iItemsPerPage,
 			'maxItemsPerPage' => $maxItemsPerPage,
 		];
 
 		return new Paginator( $aData, $aConfig );
+	}
+
+	/**
+	 * @deprecated use newFromCount
+	 * @param array $aData
+	 * @param int $iItemsPerPage
+	 * @param int $maxItemsPerPage
+	 * @return Paginator
+	 */
+	public static function newFromArray( array $aData, $iItemsPerPage = 8, $maxItemsPerPage = 48 ) {
+		return self::newFromCount( $aData, $iItemsPerPage, $maxItemsPerPage );
 	}
 
 	/**
@@ -106,7 +116,26 @@ class Paginator {
 		$this->activePage = $pageNumber - 1;
 	}
 
-	public function getCurrentPage() {
+	/**
+	 * Get the current page of the passed data
+	 *
+	 * @param array|null $aData data to be paginated (if null, the data passed from newFromArray is used)
+	 * @return array
+	 */
+	public function getCurrentPage( $aData = null ) {
+		if ( is_array( $aData ) ) {
+			if ( count( $aData ) > 0 ) {
+				$aPaginatedData = array_chunk( $aData, $this->config['itemsPerPage'] );
+			} else {
+				$aPaginatedData = $aData;
+			}
+			$iPagesCount = count( $aPaginatedData );
+
+			if ( $this->activePage < $iPagesCount ) {
+				return $aPaginatedData[$this->activePage];
+			}
+			return [];
+		}
 		return $this->paginatedData[$this->activePage];
 	}
 

@@ -308,7 +308,7 @@ class PaginatorTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * Test the basic API of the class, style #1 of using it -- updated version
+	 * Test the basic API of the class, style #1 of using it -- old version
 	 *
 	 * Create an object of Paginator using Paginator::newFromArray and then set an active page
 	 * number through setActivePage and get the current slice of the input array using
@@ -316,13 +316,11 @@ class PaginatorTest extends WikiaBaseTest {
 	 *
 	 * This style of calling the class is used by:
 	 *
-	 *  * CategoryExhibitionSection
-	 *  * CategoryExhibitionSectionMedia
 	 *  * CrunchyrollVideo
 	 *
 	 * @dataProvider dataProviderCallStyle1
 	 */
-	public function testCallStyle1Updated( $itemsPerPage, $allDataString, $pageNo, $pageDataString, $expectedHtml ) {
+	public function testCallStyle1( $itemsPerPage, $allDataString, $pageNo, $pageDataString, $expectedHtml ) {
 		$url = 'http://url/?page=%s';
 		$allData = explode( ',', $allDataString );
 		$expectedPageData = explode( ',', $pageDataString );
@@ -335,9 +333,36 @@ class PaginatorTest extends WikiaBaseTest {
 	}
 
 	/**
+	 * Test the basic API of the class, style #1 of using it - passing data length to newFromCount
+	 * and passing data to getCurrentPage
+	 *
+	 * Create an object of Paginator using Paginator::newFromCount and then set an active page
+	 * number through setActivePage and get the current slice of the input array using
+	 * getCurrentPage and then generate the HTML for the pagination bar by Paginator::getBarHTML
+	 *
+	 * This style of calling the class is used by:
+	 *
+	 *  * CategoryExhibitionSection
+	 *  * CategoryExhibitionSectionMedia
+	 *
+	 * @dataProvider dataProviderCallStyle1
+	 */
+	public function testCallStyle1Updated( $itemsPerPage, $allDataString, $pageNo, $pageDataString, $expectedHtml ) {
+		$url = 'http://url/?page=%s';
+		$allData = explode( ',', $allDataString );
+		$expectedPageData = explode( ',', $pageDataString );
+		$pages = Paginator::newFromCount( count( $allData ), $itemsPerPage );
+		$pages->setActivePage( $pageNo );
+		$onePageData = $pages->getCurrentPage( $allData );
+		$html = $pages->getBarHTML( $url );
+		$this->assertEquals( $expectedPageData, $onePageData );
+		$this->assertHtmlEquals( $expectedHtml, $html );
+	}
+
+	/**
 	 * Test the basic API of the class, style #2 of using it
 	 *
-	 * Create an object of Paginator using Paginator::newFromArray passing array
+	 * Create an object of Paginator using Paginator::newFromCount passing array
 	 * constructed by array_fill( 0, $count, '' ) and then set an active page number
 	 * using Paginator::setActivePage and then generate the HTML for the pagination
 	 * bar by Paginator::getBarHTML + generate the head item with rel="prev/next" links
@@ -356,7 +381,7 @@ class PaginatorTest extends WikiaBaseTest {
 		$url = 'http://url/?page=%s';
 		$count = count( explode( ',', $allDataString ) );
 		$allData = array_fill( 0, $count, '' );
-		$pages = Paginator::newFromArray( $allData, $itemsPerPage );
+		$pages = Paginator::newFromCount( $allData, $itemsPerPage );
 		$pages->setActivePage( $pageNo );
 		$html = $pages->getBarHTML( $url );
 		$this->assertHtmlEquals( $expectedHtml, $html );
@@ -379,7 +404,7 @@ class PaginatorTest extends WikiaBaseTest {
 		$url = 'http://url/?page=%s';
 		$count = count( explode( ',', $allDataString ) );
 		$allData = array_fill( 0, $count, '' );
-		$pages = Paginator::newFromArray( $allData, 1000, $itemsPerPage );
+		$pages = Paginator::newFromCount( $allData, 1000, $itemsPerPage );
 		$pages->setActivePage( $pageNo );
 		$html = $pages->getBarHTML( $url );
 		$this->assertHtmlEquals( $expectedHtml, $html );
@@ -388,7 +413,7 @@ class PaginatorTest extends WikiaBaseTest {
 	/**
 	 * Test the basic API of the class, style #3 of using it
 	 *
-	 * Create an object of Paginator using Paginator::newFromArray passing number of elements to
+	 * Create an object of Paginator using Paginator::newFromCount passing number of elements to
 	 * paginate through constructed by array_fill( 0, $count, '' ) and then set an active page
 	 * number using Paginator::setActivePage and then generate the HTML for the pagination
 	 * bar by Paginator::getBarHTML + generate the head item with rel="prev/next" links
@@ -404,7 +429,7 @@ class PaginatorTest extends WikiaBaseTest {
 	public function testCallStyle3( $itemsPerPage, $allDataString, $pageNo, $pageDataString, $expectedHtml ) {
 		$url = 'http://url/?page=%s';
 		$count = count( explode( ',', $allDataString ) );
-		$pages = Paginator::newFromArray( $count, $itemsPerPage );
+		$pages = Paginator::newFromCount( $count, $itemsPerPage );
 		$pages->setActivePage( $pageNo );
 		$html = $pages->getBarHTML( $url );
 		$this->assertHtmlEquals( $expectedHtml, $html );
@@ -423,7 +448,7 @@ class PaginatorTest extends WikiaBaseTest {
 	 */
 	public function testHeadItem( $count, $perPage, $activePage, $expectedHtml ) {
 		$url = 'http://url/?page=%s';
-		$pages = Paginator::newFromArray( $count, $perPage );
+		$pages = Paginator::newFromCount( $count, $perPage );
 		$pages->setActivePage( $activePage );
 		$html = $pages->getHeadItem( $url );
 		$this->assertHtmlEquals( $expectedHtml, $html, true );
