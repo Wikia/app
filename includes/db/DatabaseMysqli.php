@@ -315,11 +315,3 @@ class DatabaseMysqli extends DatabaseMysqlBase {
 		}
 	}
 }
-
-
-/**
- * Legacy support: Database == DatabaseMysqli
- *
- * @deprecated in 1.16
- */
-class Database extends DatabaseMysqli {}

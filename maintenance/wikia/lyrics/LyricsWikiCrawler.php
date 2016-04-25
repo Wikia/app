@@ -25,7 +25,7 @@ class LyricsWikiCrawler extends Maintenance {
 	private $logContext = [];
 
 	/**
-	 * @var DataBase
+	 * @var DatabaseBase
 	 */
 	private $db;
 
