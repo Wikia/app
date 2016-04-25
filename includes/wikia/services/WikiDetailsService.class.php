@@ -2,7 +2,7 @@
 
 class WikiDetailsService extends WikiService {
 
-	const CACHE_1_DAY = 1;//1 day
+	const CACHE_1_DAY = 86400;//1 day
 	const MEMC_NAME = 'SharedWikiApiData:';
 	const DEFAULT_TOP_EDITORS_NUMBER = 10;
 	const DEFAULT_WIDTH = 250;
@@ -28,7 +28,7 @@ class WikiDetailsService extends WikiService {
 			$wikiInfo = $cached;
 		} else {
 			//get data providers
-			$factoryData = $this->getFromWikiFactory ($wikiId, $exists );
+			$factoryData = $this->getFromWikiFactory( $wikiId, $exists );
 			if ( $exists ) {
 				$wikiInfo = array_merge(
 					[ 'id' => (int)$wikiId, 'wordmark' => $this->getWikiWordmarkImage( $wikiId ) ],
