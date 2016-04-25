@@ -290,7 +290,7 @@ class PaginatorTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * Test the basic API of the class, style #1 of using it -- deprecated
+	 * Test the deprecated API of the class
 	 *
 	 * 1. Create an object of Paginator using Paginator::newFromArray (passing the array of items)
 	 * 2. Set the active page number through Paginator::setActivePage
@@ -303,7 +303,7 @@ class PaginatorTest extends WikiaBaseTest {
 	 *
 	 * @dataProvider dataProviderPaginator
 	 */
-	public function testCallStyle1( $itemsPerPage, $allDataString, $pageNo, $pageDataString, $expectedHtml ) {
+	public function testDeprecatedApi( $itemsPerPage, $allDataString, $pageNo, $pageDataString, $expectedHtml ) {
 		$url = 'http://url/?page=%s';
 		$allData = explode( ',', $allDataString );
 		$expectedPageData = explode( ',', $pageDataString );
@@ -316,7 +316,7 @@ class PaginatorTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * Test the basic API of the class, style #2 of using it:
+	 * Test the basic API of the class
 	 *
 	 * 1. Create an object of Paginator using Paginator::newFromCount (passing the number of items)
 	 * 2. Set the active page number through Paginator::setActivePage
@@ -328,31 +328,7 @@ class PaginatorTest extends WikiaBaseTest {
 	 *  * CategoryExhibitionSection
 	 *  * CategoryExhibitionSectionMedia
 	 *
-	 * @dataProvider dataProviderPaginator
-	 */
-	public function testCallStyle2( $itemsPerPage, $allDataString, $pageNo, $pageDataString, $expectedHtml ) {
-		$url = 'http://url/?page=%s';
-		$allData = explode( ',', $allDataString );
-		$expectedPageData = explode( ',', $pageDataString );
-		$pages = Paginator::newFromCount( count( $allData ), $itemsPerPage );
-		$pages->setActivePage( $pageNo );
-		$onePageData = $pages->getCurrentPage( $allData );
-		$html = $pages->getBarHTML( $url );
-		$this->assertEquals( $expectedPageData, $onePageData );
-		$this->assertHtmlEquals( $expectedHtml, $html );
-	}
-
-	/**
-	 * Test the basic API of the class, style #3 of using it
-	 *
-	 * 1. Create an object of Paginator using Paginator::newFromCount (passing the number of items)
-	 * 2. Set the active page number through Paginator::setActivePage
-	 * 3. Generate the HTML for the pagination bar by Paginator::getBarHTML
-	 *
-	 * There's no getting current slice from the class. In fact the class doesn't have the paginated
-	 * array at any point.
-	 *
-	 * This style of calling the class is used by:
+	 * The following classes use the class without getting the currentPage slice:
 	 *
 	 *  * ManageWikiaHomeController
 	 *  * UserActivity\SpecialController
@@ -365,12 +341,15 @@ class PaginatorTest extends WikiaBaseTest {
 	 *
 	 * @dataProvider dataProviderPaginator
 	 */
-	public function testCallStyle3( $itemsPerPage, $allDataString, $pageNo, $pageDataString, $expectedHtml ) {
+	public function testPaginator( $itemsPerPage, $allDataString, $pageNo, $pageDataString, $expectedHtml ) {
 		$url = 'http://url/?page=%s';
-		$count = count( explode( ',', $allDataString ) );
-		$pages = Paginator::newFromCount( $count, $itemsPerPage );
+		$allData = explode( ',', $allDataString );
+		$expectedPageData = explode( ',', $pageDataString );
+		$pages = Paginator::newFromCount( count( $allData ), $itemsPerPage );
 		$pages->setActivePage( $pageNo );
+		$onePageData = $pages->getCurrentPage( $allData );
 		$html = $pages->getBarHTML( $url );
+		$this->assertEquals( $expectedPageData, $onePageData );
 		$this->assertHtmlEquals( $expectedHtml, $html );
 	}
 
@@ -389,10 +368,13 @@ class PaginatorTest extends WikiaBaseTest {
 	 */
 	public function testMaxItemsPerPage( $itemsPerPage, $allDataString, $pageNo, $pageDataString, $expectedHtml ) {
 		$url = 'http://url/?page=%s';
-		$count = count( explode( ',', $allDataString ) );
-		$pages = Paginator::newFromCount( $count, 1000, $itemsPerPage );
+		$allData = explode( ',', $allDataString );
+		$expectedPageData = explode( ',', $pageDataString );
+		$pages = Paginator::newFromCount( count( $allData ), 1000, $itemsPerPage );
 		$pages->setActivePage( $pageNo );
+		$onePageData = $pages->getCurrentPage( $allData );
 		$html = $pages->getBarHTML( $url );
+		$this->assertEquals( $expectedPageData, $onePageData );
 		$this->assertHtmlEquals( $expectedHtml, $html );
 	}
 
