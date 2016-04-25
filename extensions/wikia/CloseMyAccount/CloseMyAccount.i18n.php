@@ -43,6 +43,7 @@ Would you like to reactivate your account?',
 	'closemyaccount-reactivate-error-empty-code' => 'A confirmation code needed to reactivate your account has not been provided. If you have requested your account be reactivated, please click the link in the email sent to you. Otherwise, [[Special:UserLogin|login]] to the account you want to reactivate in order to request a confirmation code.',
 	'closemyaccount-reactivate-error-disabled' => 'This account has already been disabled. Please [[Special:Contact|contact Wikia]] if you have any questions.',
 	'closemyaccount-reactivate-error-failed' => 'An error occurred while attempting to reactivate this account. Please try again or [[Special:Contact|contact Wikia]] if the issue persists.',
+	'closemyaccount-reactivate-success' => 'Your account has been reactivated.',
 	'closemyaccount-scheduled' => 'Your account has been successfully scheduled to be closed.
 
 Please note you will have $1 {{PLURAL:$1|day|days}} from now to reactivate your account by [[Special:UserLogin|logging in]] and following the instructions you will see. After this waiting period, your account will be closed permanently and cannot be restored.',
@@ -83,6 +84,7 @@ $messages['qqq'] = array(
 	'closemyaccount-reactivate-error-empty-code' => 'Error message displayed when a user tries to reactivate their account without a confirmation code.',
 	'closemyaccount-reactivate-error-disabled' => 'Error message displayed when the user attempts to reactivate an account that has already been closed.',
 	'closemyaccount-reactivate-error-failed' => 'Error message displayed when reactivation of an account has failed.',
+	'closemyaccount-reactivate-success' => 'Success message after user re-activated his account. From now account isn\'t scheduled to be closed.',
 	'closemyaccount-scheduled' => 'Success message displayed when the user has successfully requested their account is closed. $1 is the number of days the user has left to reactivate their account.',
 	'closemyaccount-scheduled-failed' => 'Error message displayed when a request to close an account has failed.',
 );
