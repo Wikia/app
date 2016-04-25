@@ -28,7 +28,7 @@ class TitleBatchTest extends WikiaBaseTest {
 			$titles[] = $this->getTestTitle( $titleId );
 		}
 
-		$mockDb = $this->getMockBuilder( '\DatabaseMysql' )
+		$mockDb = $this->getMockBuilder( '\DatabaseMysqli' )
 			->disableOriginalConstructor()
 			->setMethods( [ 'select' ] )
 			->getMock();

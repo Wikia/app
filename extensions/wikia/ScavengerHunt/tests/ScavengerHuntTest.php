@@ -97,7 +97,7 @@ class ScavengerHuntTest extends WikiaBaseTest {
 
 		$fakeRow = ( $isEmpty ) ? array() : $this->getFakeRow();
 
-		$db = $this->getMock( 'DatabaseMysql' );
+		$db = $this->getMock( 'DatabaseMysqli' );
 		$db->expects( $this->any() )
 			->method( 'selectRow' )
 			->will( $this->returnValue( $fakeRow ) );
