@@ -38,7 +38,17 @@ require([
 		};
 
 		$banner = $(mustache.render(resources.mustache[0], templateData));
-		$banner.insertAfter($('.header-container')).on('click', '.pmp-entry-point-close', close);
+		$banner.insertAfter($('.header-container'))
+			.on('click', '.pmp-entry-point-button', onEntryPointClick)
+			.on('click', '.pmp-entry-point-close', close);
+	}
+
+	function onEntryPointClick() {
+		track({
+			label: 'entry-point-click',
+			action: tracker.ACTIONS.CLICK
+		});
+		setDismissCookie();
 	}
 
 	function close() {
@@ -47,8 +57,12 @@ require([
 			action: tracker.ACTIONS.CLICK
 		});
 		$banner.remove();
+		setDismissCookie();
+	}
+
+	function setDismissCookie() {
 		$.cookie(dismissCookieName, 1, {
-			expires: 1,
+			expires: 7,
 			path: mw.config.get('wgCookiePath'),
 			domain: mw.config.get('wgCookieDomain')
 		});
