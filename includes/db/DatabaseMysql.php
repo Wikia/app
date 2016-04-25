@@ -386,6 +386,22 @@ class DatabaseMysql extends DatabaseBase {
 	}
 
 	/**
+	 * Get a field name in a result object
+	 * @see http://www.php.net/mysql_field_name
+	 *
+	 * @param $res Mixed: A SQL result
+	 * @param $n Integer
+	 * @return string
+	 */
+	function fieldName( $res, $n ) {
+		if ( $res instanceof ResultWrapper ) {
+			$res = $res->result;
+		}
+
+		return mysql_field_name( $res, $n );
+	}
+
+	/**
 	 * @param $table string
 	 * @param $field string
 	 * @return bool|MySQLField

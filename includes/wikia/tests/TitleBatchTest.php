@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * @group TitleBatch
+ */
 class TitleBatchTest extends WikiaBaseTest {
 
 	public function setUp() {
