@@ -10,24 +10,23 @@ require([
 
 	var $banner,
 		dismissCookieName = 'pmp-entry-point-dismissed',
-		experimentName = 'POTENTIAL_MEMBER_PAGE_ENTRY_POINTS',
 		track = tracker.buildTrackingFunction({
 			category: 'potential-member-experiment',
 			trackingMethod: 'analytics'
 		}),
-		experiment,
+		experimentGroup = abTest.getGroup('POTENTIAL_MEMBER_PAGE_ENTRY_POINTS'),
 		experiments = {
-			TOP: function () {
-				this.type = 'top';
-				this.addEntryPoint = function () {
+			TOP: {
+				type: 'top',
+				addEntryPoint: function () {
 					$banner.insertAfter($('#WikiaPageHeader .header-container'));
 				}
 			},
-			IN_ARTICLE: function () {
-				this.type = 'in-article';
-				this.addEntryPoint = function () {
+			IN_ARTICLE: {
+				type: 'in-article',
+				addEntryPoint: function () {
 					var $content = $('.mw-content-text'),
-						headers = $content.children('h2'),
+						headers = mw.util.$content.children('h2'),
 						$header;
 
 					// Check if there are headers in content
@@ -41,7 +40,7 @@ require([
 							$banner.insertBefore(headers.eq(1));
 						}
 					} else {
-						$content.append($banner);
+						mw.util.$content.append($banner);
 					}
 				}
 			}
@@ -52,7 +51,7 @@ require([
 			return;
 		}
 
-		if (setExperiment()) {
+		if (shouldSetExperiment()) {
 			$.when(
 				loader({
 					type: loader.MULTI,
@@ -61,22 +60,17 @@ require([
 						styles: '/extensions/wikia/PotentialMemberPageExperiments/styles/entry-point-experiment.scss'
 					}
 				})
-			).done(addEntryPoint);
+			).done(setExperiment);
 		}
 	}
 
-	function setExperiment() {
-		var group = abTest.getGroup(experimentName);
-
-		if (experiments.hasOwnProperty(group)) {
-			experiment = new experiments[group]();
-			return true;
-		}
-
-		return false;
+	function shouldSetExperiment() {
+		return experiments.hasOwnProperty(experimentGroup);
 	}
 
-	function addEntryPoint(resources) {
+	function setExperiment(resources) {
+		var experiment = experiments[experimentGroup];
+
 		loader.processStyle(resources.styles);
 
 		$banner = $(mustache.render(resources.mustache[0], { bannerType: experiment.type }))
