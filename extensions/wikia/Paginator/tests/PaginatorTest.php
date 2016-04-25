@@ -207,7 +207,7 @@ class PaginatorTest extends WikiaBaseTest {
 		);
 	}
 
-	private function casesForStandardUse() {
+	public function dataProviderPaginator() {
 		return [
 			// Pages 1...4
 			[ 8, $this->alphabet, 1, 'a,b,c,d,e,f,g,h', $this->htmlPage1of4Selected ],
@@ -234,11 +234,7 @@ class PaginatorTest extends WikiaBaseTest {
 			// Min per-page is 4:
 			[ 3, 'a,b,c,d', 1, 'a,b,c,d', '' ],
 			[ 2, 'a,b,c,d', 1, 'a,b,c,d', '' ],
-		];
-	}
 
-	private function casesForEdgeBehavior() {
-		return [
 			// Pages beyond the last one will still display the last one
 			[ 8, $this->alphabet, 5, 'y,z', $this->htmlPage4of4Selected ],
 			[ 8, $this->alphabet, 6, 'y,z', $this->htmlPage4of4Selected ],
@@ -250,20 +246,6 @@ class PaginatorTest extends WikiaBaseTest {
 			[ 8, $this->alphabet, -2, 'a,b,c,d,e,f,g,h', $this->htmlPage1of4Selected ],
 			[ 8, $this->alphabet, -100, 'a,b,c,d,e,f,g,h', $this->htmlPage1of4Selected ],
 		];
-	}
-
-	public function dataProviderCallStyle1() {
-		return array_merge(
-			$this->casesForStandardUse(),
-			$this->casesForEdgeBehavior()
-		);
-	}
-
-	public function dataProviderCallStyle2() {
-		return array_merge(
-			$this->casesForStandardUse(),
-			$this->casesForEdgeBehavior()
-		);
 	}
 
 	public function dataProviderHeadItem() {
@@ -308,17 +290,18 @@ class PaginatorTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * Test the basic API of the class, style #1 of using it -- old version
+	 * Test the basic API of the class, style #1 of using it -- deprecated
 	 *
-	 * Create an object of Paginator using Paginator::newFromArray and then set an active page
-	 * number through setActivePage and get the current slice of the input array using
-	 * getCurrentPage and then generate the HTML for the pagination bar by Paginator::getBarHTML
+	 * 1. Create an object of Paginator using Paginator::newFromArray (passing the array of items)
+	 * 2. Set the active page number through Paginator::setActivePage
+	 * 3. Get the current slice of the input array using Paginator::getCurrentPage
+	 * 4. Generate the HTML for the pagination bar by Paginator::getBarHTML
 	 *
-	 * This style of calling the class is used by:
+	 * This style of calling the class is only used by:
 	 *
 	 *  * CrunchyrollVideo
 	 *
-	 * @dataProvider dataProviderCallStyle1
+	 * @dataProvider dataProviderPaginator
 	 */
 	public function testCallStyle1( $itemsPerPage, $allDataString, $pageNo, $pageDataString, $expectedHtml ) {
 		$url = 'http://url/?page=%s';
@@ -333,21 +316,21 @@ class PaginatorTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * Test the basic API of the class, style #1 of using it - passing data length to newFromCount
-	 * and passing data to getCurrentPage
+	 * Test the basic API of the class, style #2 of using it:
 	 *
-	 * Create an object of Paginator using Paginator::newFromCount and then set an active page
-	 * number through setActivePage and get the current slice of the input array using
-	 * getCurrentPage and then generate the HTML for the pagination bar by Paginator::getBarHTML
+	 * 1. Create an object of Paginator using Paginator::newFromCount (passing the number of items)
+	 * 2. Set the active page number through Paginator::setActivePage
+	 * 3. Get the current slice of the input array using Paginator::getCurrentPage (passing the array)
+	 * 4. Generate the HTML for the pagination bar by Paginator::getBarHTML
 	 *
 	 * This style of calling the class is used by:
 	 *
 	 *  * CategoryExhibitionSection
 	 *  * CategoryExhibitionSectionMedia
 	 *
-	 * @dataProvider dataProviderCallStyle1
+	 * @dataProvider dataProviderPaginator
 	 */
-	public function testCallStyle1Updated( $itemsPerPage, $allDataString, $pageNo, $pageDataString, $expectedHtml ) {
+	public function testCallStyle2( $itemsPerPage, $allDataString, $pageNo, $pageDataString, $expectedHtml ) {
 		$url = 'http://url/?page=%s';
 		$allData = explode( ',', $allDataString );
 		$expectedPageData = explode( ',', $pageDataString );
@@ -360,12 +343,14 @@ class PaginatorTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * Test the basic API of the class, style #2 of using it
+	 * Test the basic API of the class, style #3 of using it
 	 *
-	 * Create an object of Paginator using Paginator::newFromCount passing array
-	 * constructed by array_fill( 0, $count, '' ) and then set an active page number
-	 * using Paginator::setActivePage and then generate the HTML for the pagination
-	 * bar by Paginator::getBarHTML + generate the head item with rel="prev/next" links
+	 * 1. Create an object of Paginator using Paginator::newFromCount (passing the number of items)
+	 * 2. Set the active page number through Paginator::setActivePage
+	 * 3. Generate the HTML for the pagination bar by Paginator::getBarHTML
+	 *
+	 * There's no getting current slice from the class. In fact the class doesn't have the paginated
+	 * array at any point.
 	 *
 	 * This style of calling the class is used by:
 	 *
@@ -374,21 +359,23 @@ class PaginatorTest extends WikiaBaseTest {
 	 *  * WhereIsExtension
 	 *  * WAMPageController
 	 *  * WDACReviewSpecialController
+	 *  * SpecialVideosHelper
+	 *  * WikiaNewFilesSpecialController
+	 *  * TemplatesSpecialController
 	 *
-	 * @dataProvider dataProviderCallStyle2
+	 * @dataProvider dataProviderPaginator
 	 */
-	public function testCallStyle2( $itemsPerPage, $allDataString, $pageNo, $pageDataString, $expectedHtml ) {
+	public function testCallStyle3( $itemsPerPage, $allDataString, $pageNo, $pageDataString, $expectedHtml ) {
 		$url = 'http://url/?page=%s';
 		$count = count( explode( ',', $allDataString ) );
-		$allData = array_fill( 0, $count, '' );
-		$pages = Paginator::newFromCount( $allData, $itemsPerPage );
+		$pages = Paginator::newFromCount( $count, $itemsPerPage );
 		$pages->setActivePage( $pageNo );
 		$html = $pages->getBarHTML( $url );
 		$this->assertHtmlEquals( $expectedHtml, $html );
 	}
 
 	/**
-	 * Test the basic API of the class, style #2 of using it + using $maxItemsPerPage param
+	 * Test passing maxItemsPerPage param through newFromCount
 	 *
 	 * The same as above, just passing additional param $maxItemsPerPage, simulated here by
 	 * passing a big number for $itemsPerPage and then the one from data provider as $maxItemsPerPage
@@ -398,38 +385,12 @@ class PaginatorTest extends WikiaBaseTest {
 	 *  * InsightsPaginator
 	 *  * blog-pager-ajax.tmpl
 	 *
-	 * @dataProvider dataProviderCallStyle2
+	 * @dataProvider dataProviderPaginator
 	 */
-	public function testCallStyle2maxItemsPerPage( $itemsPerPage, $allDataString, $pageNo, $pageDataString, $expectedHtml ) {
+	public function testMaxItemsPerPage( $itemsPerPage, $allDataString, $pageNo, $pageDataString, $expectedHtml ) {
 		$url = 'http://url/?page=%s';
 		$count = count( explode( ',', $allDataString ) );
-		$allData = array_fill( 0, $count, '' );
-		$pages = Paginator::newFromCount( $allData, 1000, $itemsPerPage );
-		$pages->setActivePage( $pageNo );
-		$html = $pages->getBarHTML( $url );
-		$this->assertHtmlEquals( $expectedHtml, $html );
-	}
-
-	/**
-	 * Test the basic API of the class, style #3 of using it
-	 *
-	 * Create an object of Paginator using Paginator::newFromCount passing number of elements to
-	 * paginate through constructed by array_fill( 0, $count, '' ) and then set an active page
-	 * number using Paginator::setActivePage and then generate the HTML for the pagination
-	 * bar by Paginator::getBarHTML + generate the head item with rel="prev/next" links
-	 *
-	 * This style of calling the class is used by:
-	 *
-	 *  * SpecialVideosHelper
-	 *  * WikiaNewFilesSpecialController
-	 *  * TemplatesSpecialController
-	 *
-	 * @dataProvider dataProviderCallStyle2
-	 */
-	public function testCallStyle3( $itemsPerPage, $allDataString, $pageNo, $pageDataString, $expectedHtml ) {
-		$url = 'http://url/?page=%s';
-		$count = count( explode( ',', $allDataString ) );
-		$pages = Paginator::newFromCount( $count, $itemsPerPage );
+		$pages = Paginator::newFromCount( $count, 1000, $itemsPerPage );
 		$pages->setActivePage( $pageNo );
 		$html = $pages->getBarHTML( $url );
 		$this->assertHtmlEquals( $expectedHtml, $html );
