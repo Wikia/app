@@ -53,7 +53,9 @@ require([
 		if (isEntryPointInViewport()) {
 			trackBannerImpression();
 		} else {
-			$(w).on('scroll', trackEntryPointInViewport);
+			$(w).on('scroll.trackPMPEntryPoint', $.debounce(200, function() {
+				trackEntryPointInViewport();
+			}));
 		}
 	}
 
@@ -85,7 +87,7 @@ require([
 	function trackEntryPointInViewport() {
 		if (isEntryPointInViewport()) {
 			trackBannerImpression();
-			$(w).off('scroll', trackEntryPointInViewport);
+			$(w).off('scroll.trackPMPEntryPoint');
 		}
 	}
 
@@ -102,6 +104,7 @@ require([
 			path: mw.config.get('wgCookiePath'),
 			domain: mw.config.get('wgCookieDomain')
 		});
+		$(w).off('scroll.trackPMPEntryPoint');
 	}
 
 	$(init);
