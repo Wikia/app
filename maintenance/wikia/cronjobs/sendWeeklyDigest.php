@@ -56,6 +56,7 @@ class sendWeeklyDigest extends Maintenance {
 			foreach ( $batches as $batch ) {
 				$this->spawnBatch( $batch );
 			}
+			$this->output( "Finished all batches successfully.\n");
 		} catch ( Exception $e ) {
 			$this->logError( $e );
 		}
@@ -78,7 +79,7 @@ class sendWeeklyDigest extends Maintenance {
 
 		$idsText = implode( ',', $batch );
 
-		$this->output( "spawning batch for $idsText...\n" );
+		$this->output( "Spawning batch for $idsText...\n" );
 
 		$command = "SERVER_ID={$wgCityId} php $IP/maintenance/wikia/cronjobs/sendWeeklyDigest.php ";
 		$command .= "--" . self::PARAM_IDS . "=" . $idsText;
@@ -97,7 +98,7 @@ class sendWeeklyDigest extends Maintenance {
 
 	private function logRunTime( $processName ) {
 		$processName = $processName ? "[$processName] " : '';
-		$message = "sendWeeklyDigest ${processName}script run at " . date( "F j, Y, g:i a" ) . "\n";
+		$message = "Started sendWeeklyDigest.php ${processName} at " . date( "F j, Y, g:i a" ) . "\n";
 		$this->output( $message );
 	}
 
