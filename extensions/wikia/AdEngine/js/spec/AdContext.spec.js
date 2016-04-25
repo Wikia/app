@@ -394,7 +394,25 @@ describe('AdContext', function () {
 		expect(adContext.getContext().targeting.enableKruxTargeting).toBeFalsy();
 	});
 
+	it('disables recovery when wgSourcePointProxyCSS is set to false', function () {
+		mocks.win = {ads: {context: {opts: {sourcePointProxyCSS: false, sourcePointDetection: true}}}};
+		expect(getModule().getContext().opts.sourcePointRecovery).toBeFalsy();
+	});
 
+	it('disables krux when url param noexternals=1 is set', function () {
+		mocks.win = {ads: {context: {targeting: {enableKruxTargeting: true}}}};
+		mocks.instantGlobals = {wgAdDriverKruxCountries: ['AA', 'CURRENT_COUNTRY', 'BB']};
+		spyOn(mocks.querystring, 'getVal').and.callFake(function (param) {
+			return param === 'noexternals' ?  '1' : '0';
+		});
+
+		expect(getModule().getContext().targeting.enableKruxTargeting).toBeFalsy();
+	});
+
+	it('enables recovery when wgSourcePointProxyCSS is set to true', function () {
+		mocks.win = {ads: {context: {opts: {sourcePointProxyCSS: true, sourcePointDetection: true}}}};
+		expect(getModule().getContext().opts.sourcePointRecovery).toBeTruthy();
+	});
 
 	it('disables recovery when wgSourcePointProxyCSS is set to false', function () {
 		mocks.win = {ads: {context: {opts: {sourcePointProxyCSS: false, sourcePointDetection: true}}}};
