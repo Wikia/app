@@ -212,7 +212,7 @@ class WikiDetailsService extends WikiService {
 		];
 
 		if ( $wgEnableDiscussions ) {
-			$stats['stats']['discussions'] = (int)$this->getDiscussionStats( $id );
+			$stats[ 'stats' ][ 'discussions' ] = (int)$this->getDiscussionStats( $id );
 		}
 
 		return $stats;
@@ -280,7 +280,7 @@ class WikiDetailsService extends WikiService {
 		$response = Http::get( "http://$consulUrl/$id/forums/$id", 'default', array( 'noProxy' => true ));
 		if ( $response != false ) {
 			$decodedResponse = json_decode( $response, true );
-			if ( isset($decodedResponse) && json_last_error() === JSON_ERROR_NONE ) {
+			if ( isset( $decodedResponse ) && json_last_error() === JSON_ERROR_NONE ) {
 				return $decodedResponse[ 'threadCount' ] ? $decodedResponse[ 'threadCount' ] : null;
 			}
 		}
