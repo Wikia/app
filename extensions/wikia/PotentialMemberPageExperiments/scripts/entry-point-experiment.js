@@ -1,13 +1,16 @@
 require([
 	'jquery',
 	'mw',
+	'wikia.window',
 	'wikia.loader',
 	'wikia.mustache',
 	'wikia.tracker'
-], function ($, mw, loader, mustache, tracker) {
+], function ($, mw, w, loader, mustache, tracker) {
 	'use strict';
 
 	var $banner,
+		bannerOffset,
+		bannerBottomOffset,
 		dismissCookieName = 'pmp-entry-point-dismissed',
 		track = tracker.buildTrackingFunction({
 			category: 'potential-member-experiment',
@@ -41,6 +44,17 @@ require([
 		$banner.insertAfter($('.header-container'))
 			.on('click', '.pmp-entry-point-button', onEntryPointClick)
 			.on('click', '.pmp-entry-point-close', close);
+
+		bannerOffset = $banner.offset().top;
+		bannerBottomOffset = bannerOffset + $banner.outerHeight();
+
+		if (isEntryPointInViewport()) {
+			trackBannerImpression();
+		} else {
+			$(w).on('scroll.trackPMPEntryPoint', $.debounce(200, function() {
+				trackEntryPointInViewport();
+			}));
+		}
 	}
 
 	function onEntryPointClick() {
@@ -48,7 +62,7 @@ require([
 			label: 'entry-point-click',
 			action: tracker.ACTIONS.CLICK
 		});
-		setDismissCookie();
+		onBannerDismissed();
 	}
 
 	function close() {
@@ -57,15 +71,35 @@ require([
 			action: tracker.ACTIONS.CLICK
 		});
 		$banner.remove();
-		setDismissCookie();
+		onBannerDismissed();
 	}
 
-	function setDismissCookie() {
+	function isEntryPointInViewport() {
+		return bannerOffset > w.scrollY &&
+			bannerBottomOffset < (w.scrollY + w.innerHeight);
+	}
+
+	function trackEntryPointInViewport() {
+		if (isEntryPointInViewport()) {
+			trackBannerImpression();
+			$(w).off('scroll.trackPMPEntryPoint');
+		}
+	}
+
+	function trackBannerImpression() {
+		track({
+			label: '',
+			action: tracker.ACTIONS.VIEW
+		});
+	}
+
+	function onBannerDismissed() {
 		$.cookie(dismissCookieName, 1, {
 			expires: 7,
 			path: mw.config.get('wgCookiePath'),
 			domain: mw.config.get('wgCookieDomain')
 		});
+		$(w).off('scroll.trackPMPEntryPoint');
 	}
 
 	$(init);
