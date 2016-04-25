@@ -191,7 +191,7 @@ class WikiFactoryLoader {
 	public function getDB( $type = DB_SLAVE ) {
 		global $wgDBserver, $wgDBuser, $wgDBpassword;
 
-		if( $this->mDBhandler instanceof Database ) {
+		if( $this->mDBhandler instanceof DatabaseBase ) {
 			return $this->mDBhandler;
 		}
 
