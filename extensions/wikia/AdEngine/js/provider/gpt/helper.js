@@ -29,27 +29,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 		googleApi = new GoogleTag(),
 		hiddenSlots = [
 			'INCONTENT_LEADERBOARD'
-		],
-		recoveryInitialized = false;
-
-	function loadRecovery() {
-		if (recoveryInitialized) {
-			return;
-		}
-		log('SourcePoint recovery enabled', 'debug', logGroup);
-		recoveryInitialized = true;
-		googleApi = recoveryHelper.createSourcePointTag();
-	}
-
-	function loadSourcePoint() {
-		if (recoveryHelper.isBlocking()) {
-			loadRecovery();
-		} else {
-			recoveryHelper.addOnBlockingCallback(function () {
-				loadRecovery();
-			});
-		}
-	}
+		];
 
 	function collapseElement(element) {
 		slotTweaker.hide(
@@ -137,9 +117,6 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 
 		if (!googleApi.isInitialized()) {
 			googleApi.init();
-			if (adContext.getContext().opts.sourcePointRecovery) {
-				loadSourcePoint();
-			}
 			googleApi.setPageLevelParams(adLogicPageParams.getPageLevelParams());
 		}
 
