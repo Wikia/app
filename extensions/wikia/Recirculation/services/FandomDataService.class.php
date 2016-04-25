@@ -76,9 +76,13 @@ class FandomDataService {
 		$url = $this->buildUrl( $endpoint, $options );
 		$data = ExternalHttp::get( $url );
 
-		$obj = json_decode( $data );
-		$posts = $this->dedupePosts( $obj->data );
-		return $posts;
+		$posts = json_decode( $data )->data;
+
+		if ( is_array( $posts ) ) {
+			return $this->dedupePosts( $posts );
+		} else {
+			return [];
+		}
 	}
 
 	/**
@@ -113,17 +117,15 @@ class FandomDataService {
 		$posts = [];
 		$postIds = [];
 
-		if ( is_array( $rawPosts ) ) {
-			foreach ( $rawPosts as $post ) {
-				if ( count( $posts ) >= self::PARSELY_POSTS_LIMIT ) {
-					break;
-				}
+		foreach ( $rawPosts as $post ) {
+			if ( count( $posts ) >= self::PARSELY_POSTS_LIMIT ) {
+				break;
+			}
 
-				$metadata = json_decode( $post->metadata );
-				if ( !empty( $metadata->postID ) && !in_array( $metadata->postID, $postIds ) ) {
-					$postIds[] = $metadata->postID;
-					$posts[] = $post;
-				}
+			$metadata = json_decode( $post->metadata );
+			if ( !empty( $metadata->postID ) && !in_array( $metadata->postID, $postIds ) ) {
+				$postIds[] = $metadata->postID;
+				$posts[] = $post;
 			}
 		}
 
