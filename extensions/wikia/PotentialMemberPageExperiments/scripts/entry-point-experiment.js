@@ -9,10 +9,8 @@ require([
 	'use strict';
 
 	var $banner,
-		viewportScroll,
-		viewportHeight,
 		bannerOffset,
-		bannerHeight,
+		bannerBottomOffset,
 		dismissCookieName = 'pmp-entry-point-dismissed',
 		track = tracker.buildTrackingFunction({
 			category: 'potential-member-experiment',
@@ -48,7 +46,7 @@ require([
 			.on('click', '.pmp-entry-point-close', close);
 
 		bannerOffset = $banner.offset().top;
-		bannerHeight = $banner.outerHeight();
+		bannerBottomOffset = bannerOffset + $banner.outerHeight();
 
 		if (isEntryPointInViewport()) {
 			trackBannerImpression();
@@ -77,11 +75,8 @@ require([
 	}
 
 	function isEntryPointInViewport() {
-		viewportScroll = w.scrollY;
-		viewportHeight = w.innerHeight;
-
-		return bannerOffset > viewportScroll &&
-			(bannerOffset + bannerHeight) < (viewportScroll + viewportHeight);
+		return bannerOffset > w.scrollY &&
+			bannerBottomOffset < (w.scrollY + w.innerHeight);
 	}
 
 	function trackEntryPointInViewport() {
