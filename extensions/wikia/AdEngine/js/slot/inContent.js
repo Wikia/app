@@ -1,10 +1,11 @@
 /*global define*/
 define('ext.wikia.adEngine.slot.inContent', [
 	'ext.wikia.adEngine.adTracker',
+	'ext.wikia.adEngine.slotTweaker',
 	'JSMessages',
 	'wikia.log',
 	'wikia.window'
-], function (adTracker, msg, log, win) {
+], function (adTracker, slotTweaker, msg, log, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.slot.inContent',
@@ -50,7 +51,14 @@ define('ext.wikia.adEngine.slot.inContent', [
 		log('insertSlot()', 'debug', logGroup);
 		$header.before(adHtml);
 		adTracker.track('slot/' + slotNameGA + '/success');
-		win.adslots2.push(slotName);
+		win.adslots2.push({
+			slotName: slotName,
+			onSuccess: function () {
+				if (slotName === 'INCONTENT_LEADERBOARD') {
+					slotTweaker.adjustIframeByContentSize(slotName);
+				}
+			}
+		});
 	}
 
 	return {
