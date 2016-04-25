@@ -13,7 +13,7 @@ class CleanupCommentsIndex {
 	 * which marks those rows with deleted = 1.
 	 *
 	 */
-	public static function run( DatabaseMysql $db, $test = false, $verbose = false, $params ) {
+	public static function run( DatabaseBase $db, $test = false, $verbose = false, $params ) {
 		$dbname = $params['dbname'];
 
 		if ( !self::commentsIndexExists( $db) ) {
@@ -32,10 +32,10 @@ class CleanupCommentsIndex {
 	 * Check the comments_index table for bad records. Emits a line to STDOUT
 	 * indicating the how many were found.
 	 *
-	 * @param DatabaseMysql $db the db handle
+	 * @param DatabaseBase $db the db handle
 	 * @param string $dbname the database name
 	 */
-	public static function checkCommentsIndex( DatabaseMysql $db, $dbname ) {
+	public static function checkCommentsIndex( DatabaseBase $db, $dbname ) {
 		$sql = <<<SQL
 		SELECT COUNT(*) AS count
 		FROM comments_index
@@ -55,10 +55,10 @@ SQL;
 	/**
 	 * Fixes the bad rows in the comments_index table by marking them with deleted=1.
 	 *
-	 * @param DatabaseMysql $db the db handle
+	 * @param DatabaseBase $db the db handle
 	 * @param string $dbname the database name
 	 */
-	public function fixCommentsIndex( DatabaseMysql $db, $dbname ) {
+	public function fixCommentsIndex( DatabaseBase $db, $dbname ) {
 		printf("%s: fixing bad comments_index rows...\n", $dbname);
 
 		$sql = <<<SQL
@@ -90,9 +90,9 @@ SQL;
 	/**
 	 * Check to see if the comments_index table exists.
 	 *
-	 * @param DatabaseMysql $db the db handle
+	 * @param DatabaseBase $db the db handle
 	 */
-	public static function commentsIndexExists( DatabaseMysql $db ) {
+	public static function commentsIndexExists( DatabaseBase $db ) {
 		return $db->query("SHOW TABLES LIKE 'comments_index'")->numRows() > 0;
 	}
 }
