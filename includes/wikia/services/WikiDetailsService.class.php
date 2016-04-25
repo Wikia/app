@@ -2,7 +2,7 @@
 
 class WikiDetailsService extends WikiService {
 
-	const CACHE_1_DAY = 86400;//1 day
+	const CACHE_1_DAY = 1;//1 day
 	const MEMC_NAME = 'SharedWikiApiData:';
 	const DEFAULT_TOP_EDITORS_NUMBER = 10;
 	const DEFAULT_WIDTH = 250;
@@ -28,14 +28,14 @@ class WikiDetailsService extends WikiService {
 			$wikiInfo = $cached;
 		} else {
 			//get data providers
-			$factoryData = $this->getFromWikiFactory( $wikiId, $exists );
-			if ( $exists ) {
+			$factoryData = $this->getFromWikiFactory($wikiId, $exists);
+			if ($exists) {
 				$wikiInfo = array_merge(
-					[ 'id' => (int)$wikiId, 'wordmark' => $this->getWikiWordmarkImage( $wikiId ) ],
+					['id' => (int)$wikiId, 'wordmark' => $this->getWikiWordmarkImage($wikiId)],
 					$factoryData,
-					$this->getFromService( $wikiId ),
-					$this->getFromWAMService( $wikiId ),
-					$this->getFromCommunityData( $wikiId )
+					$this->getFromService($wikiId),
+					$this->getFromWAMService($wikiId),
+					$this->getFromCommunityData($wikiId)
 				);
 			} else {
 				$wikiInfo = [
@@ -43,7 +43,7 @@ class WikiDetailsService extends WikiService {
 					'exists' => false
 				];
 			}
-			$this->cacheWikiData( $wikiInfo );
+			$this->cacheWikiData($wikiInfo);
 		}
 		//return empty result if wiki does not exist
 		if ( isset( $wikiInfo[ 'exists' ] ) ) {
@@ -267,14 +267,14 @@ class WikiDetailsService extends WikiService {
 	 * @return mixed
 	 */
 	private function getDiscussionStats( $id ) {
-		global $wgConsulTag, $wgConsulUrl, $wgEnableDiscussions;
+		global $wgConsulServiceTag, $wgConsulUrl, $wgEnableDiscussions;
 
 		if ( $wgEnableDiscussions ) {
-			$consulUrl = ( new  Wikia\Service\Gateway\ConsulUrlProvider( $wgConsulUrl, $wgConsulTag ))->getUrl( 'discusssion' );
-			$response = Http::request( 'GET', "$consulUrl/$id/forums/$id" );
-			if ( $response != false ) {
-				$decodedResponse = json_decode( $response, true );
-				if ( isset( $decodedResponse ) && json_last_error() === JSON_ERROR_NONE ) {
+			$consulUrl = (new Wikia\Service\Gateway\ConsulUrlProvider($wgConsulUrl, $wgConsulServiceTag))->getUrl('discussion');
+			$response = Http::get("http://$consulUrl/$id/forums/$id", 'default', array('noProxy' => true));
+			if ($response != false) {
+				$decodedResponse = json_decode($response, true);
+				if (isset($decodedResponse) && json_last_error() === JSON_ERROR_NONE) {
 					return $decodedResponse['threadCount'] ? $decodedResponse['threadCount'] : null;
 				}
 			}
