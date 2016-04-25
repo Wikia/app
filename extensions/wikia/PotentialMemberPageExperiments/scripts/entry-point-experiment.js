@@ -56,9 +56,11 @@ require([
 			headers = $content.children('h2'),
 			$header;
 
+		// Check if there are headers in content
 		if (headers.length >= 2) {
 			$header = headers.eq(0);
 
+			// Check if first header is not first node in content
 			if ($header.prevAll('p').length) {
 				$banner.insertBefore($header);
 			} else {
