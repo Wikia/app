@@ -59,9 +59,8 @@ define('ext.wikia.spitfires.experiments.tracker', [
 	function getVariationName() {
 		if (window.optimizely.activeExperiments.indexOf(freshlyRegisteredExperimentId) !== -1) {
 			return window.optimizely.variationNamesMap[freshlyRegisteredExperimentId].toLowerCase();
-		} else {
-			return window.optimizely.variationNamesMap[usersWithoutEditExperimentId].toLowerCase();
 		}
+		return window.optimizely.variationNamesMap[usersWithoutEditExperimentId].toLowerCase();
 	}
 
 	function prepareStructuredLabel(experiment, label) {
