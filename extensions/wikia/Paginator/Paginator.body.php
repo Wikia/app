@@ -106,6 +106,8 @@ class Paginator {
 	 * @param int $pageNumber
 	 */
 	public function setActivePage( $pageNumber ) {
+		$pageNumber = min( $pageNumber, $this->getPagesCount() - 1 );
+		$pageNumber = max( 0, $pageNumber );
 		$this->activePage = $pageNumber;
 	}
 

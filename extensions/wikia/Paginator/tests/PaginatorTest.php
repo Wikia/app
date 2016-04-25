@@ -261,7 +261,8 @@ class PaginatorTest extends WikiaBaseTest {
 
 	public function dataProviderCallStyle2() {
 		return array_merge(
-			$this->casesForStandardUse()
+			$this->casesForStandardUse(),
+			$this->casesForEdgeBehavior()
 		);
 	}
 
@@ -293,15 +294,16 @@ class PaginatorTest extends WikiaBaseTest {
 			[ 4, 3, 1, '' ],
 			[ 4, 2, 1, '' ],
 
-			[ 26, 8, 5, '' ],
-			[ 26, 8, 6, '' ],
-			[ 26, 8, 100, '' ],
+			// Beyond the last page:
+			[ 26, 8, 5, $this->headPage4of4Selected ],
+			[ 26, 8, 6, $this->headPage4of4Selected ],
+			[ 26, 8, 100, $this->headPage4of4Selected ],
 
 			// Page 0, -1, -2, -100 acts the same as 1
-			[ 26, 8, 0, '' ],
-			[ 26, 8, -1, '' ],
-			[ 26, 8, -2, '' ],
-			[ 26, 8, -100, '' ],
+			[ 26, 8, 0, $this->headPage1of4Selected ],
+			[ 26, 8, -1, $this->headPage1of4Selected ],
+			[ 26, 8, -2, $this->headPage1of4Selected ],
+			[ 26, 8, -100, $this->headPage1of4Selected ],
 		];
 	}
 
