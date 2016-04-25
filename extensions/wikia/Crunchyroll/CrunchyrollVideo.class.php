@@ -125,7 +125,7 @@ class CrunchyrollVideo {
 			$toolbar = $cachedData['toolbar'];
 		} else {
 			$crunchyrollRSS = $this->getPaginatedRSSData();
-			$crunchyrollRSS->setActivePage( $this->currentPage - 1 );
+			$crunchyrollRSS->setActivePage( $this->currentPage );
 			$aTmpData = $crunchyrollRSS->getCurrentPage();
 			$toolbar = $this->getBarHTML();
 			$this->saveToCache(

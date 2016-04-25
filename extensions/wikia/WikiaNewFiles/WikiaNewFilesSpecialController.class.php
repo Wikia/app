@@ -50,7 +50,7 @@ class WikiaNewFilesSpecialController extends WikiaSpecialPageController {
 
 		// Pagination
 		$paginator = Paginator::newFromArray( $imageCount, self::DEFAULT_LIMIT );
-		$paginator->setActivePage( $pageNumber - 1 );
+		$paginator->setActivePage( $pageNumber );
 		$output->addHeadItem( 'Paginator', $paginator->getHeadItem( self::PAGINATOR_URL ) );
 
 		// Hook for ContentFeeds::specialNewImagesHook

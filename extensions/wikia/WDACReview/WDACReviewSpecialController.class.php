@@ -60,7 +60,7 @@ class WDACReviewSpecialController extends WikiaSpecialPageController {
 		$this->paginator = '';
 		if ( self::WIKIS_PER_PAGE_LIMIT < $iCount ) {
 			$oPaginator = Paginator::newFromArray( array_fill( 0, $iCount, '' ), self::WIKIS_PER_PAGE_LIMIT );
-			$oPaginator->setActivePage( $iPage - 1 );
+			$oPaginator->setActivePage( $iPage );
 
 			// And here we go! The %s will be replaced with the page number.
 			$this->paginator = $oPaginator->getBarHTML( $this->paginatorUrl );

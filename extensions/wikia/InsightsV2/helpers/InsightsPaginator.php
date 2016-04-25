@@ -62,7 +62,7 @@ class InsightsPaginator {
 		$url = urldecode( InsightsHelper::getSubpageLocalUrl( $this->subpage, $params ) );
 
 		$paginator = Paginator::newFromArray( $this->getTotal(), $this->getLimit(), $this->getLimit() );
-		$paginator->setActivePage( $this->getPage() );
+		$paginator->setActivePage( $this->getPage() + 1 );
 		$paginatorBar = $paginator->getBarHTML( $url );
 
 		return $paginatorBar;

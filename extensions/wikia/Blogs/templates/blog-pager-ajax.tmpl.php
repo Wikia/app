@@ -4,7 +4,7 @@ if ($iPageCount > 1) {
 ?>
 <?
 	$pages = Paginator::newFromArray( $iTotal, $iCount, 50 );
-	$pages->setActivePage($iPage);
+	$pages->setActivePage( $iPage + 1 );
 	echo $pages->getBarHTML( '', 'BlogPaginator' );
 ?>
 <script type="text/javascript" src="<?=$wgExtensionsPath?>/wikia/Blogs/js/BlogsPager.js"></script>

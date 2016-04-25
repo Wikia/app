@@ -256,7 +256,7 @@ class TemplatesSpecialController extends WikiaSpecialPageController {
 		}
 
 		$paginator = Paginator::newFromArray( $total, self::ITEMS_PER_PAGE );
-		$paginator->setActivePage( $page );
+		$paginator->setActivePage( $page + 1 );
 		$url = urldecode( $this->specialPage->getTitle()->getLocalUrl( $params ) );
 		$this->paginatorBar = $paginator->getBarHTML( $url );
 	}

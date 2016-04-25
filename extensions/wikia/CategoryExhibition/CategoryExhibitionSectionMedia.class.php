@@ -18,7 +18,7 @@ class CategoryExhibitionSectionMedia extends CategoryExhibitionSection {
 			$aTmpData = $this->fetchSectionItems( array( NS_FILE ) ); // we wan't old videos
 			if ( is_array( $aTmpData ) && count( $aTmpData ) > 0 ){
 				$pages = Paginator::newFromArray( $aTmpData, $wgCategoryExhibitionMediaSectionRows * 4 );
-				$pages->setActivePage( $this->paginatorPosition - 1 );
+				$pages->setActivePage( $this->paginatorPosition );
 				$pageData = $pages->getCurrentPage();
 				$aData = array();
 				foreach( $pageData as $item ){

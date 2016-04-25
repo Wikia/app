@@ -225,7 +225,7 @@ class CategoryExhibitionSection {
 			$aTmpData = $this->fetchSectionItems( $namespace, $negative );
 			$pages = Paginator::newFromArray( $aTmpData, $itemsPerPage );
 			if ( is_array( $aTmpData ) && count( $aTmpData ) > 0 ){
-				$pages->setActivePage( $this->paginatorPosition - 1 );
+				$pages->setActivePage( $this->paginatorPosition );
 				$aTmpData = $pages->getCurrentPage();
 				$aData = $this->getArticles( $aTmpData );
 				$oTmpl->set_vars(

@@ -10,7 +10,6 @@
  * Object that allows auto pagination of array content
  *
  * TODO:
- *  * setActivePage should NOT be 0-indexed
  *  * On the second page of paginated content rel="prev" link should point to the page without ?page=1
  *  * On any page other than the first page there should be no canonical (link rel="prev/next" is enough)
  *  * Avoid passing the same URL to getHeadItem and getBarHTML (pass to constructor instead?)
@@ -98,34 +97,18 @@ class Paginator {
 	}
 
 	/**
-	 * Set the currently active page. This is 0-indexed, so you may need to
-	 * set the value to $this->getRequest()->getInt( 'page' ) - 1
+	 * Set the currently active page
 	 *
 	 * @param int $pageNumber
 	 */
 	public function setActivePage( $pageNumber ) {
-		$pageNumber = min( $pageNumber, $this->getPagesCount() - 1 );
-		$pageNumber = max( 0, $pageNumber );
-		$this->activePage = $pageNumber;
+		$pageNumber = min( $pageNumber, $this->getPagesCount() );
+		$pageNumber = max( 1, $pageNumber );
+		$this->activePage = $pageNumber - 1;
 	}
 
 	public function getCurrentPage() {
 		return $this->paginatedData[$this->activePage];
-	}
-
-	/**
-	 * @deprecated use setActivePage followed by getCurrentPage
-	 * @param $iPageNumber
-	 * @param bool $bSetToActive
-	 * @return bool|mixed
-	 * @throws InvalidArgumentException
-	 */
-	public function getPage( $iPageNumber, $bSetToActive = false ) {
-		if ( !$bSetToActive ) {
-			throw InvalidArgumentException( '$bSetActiveToActive = true not supported' );
-		}
-		$this->setActivePage( $iPageNumber - 1 );
-		return $this->getCurrentPage();
 	}
 
 	private function getBarData() {

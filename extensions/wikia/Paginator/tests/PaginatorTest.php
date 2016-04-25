@@ -1,6 +1,6 @@
 <?php
 
-class MessageMock {
+class PaginatorTestMessageMock {
 	public function escaped() {
 		return 'escaped-msg';
 	}
@@ -194,7 +194,7 @@ class PaginatorTest extends WikiaBaseTest {
 		$this->setupFile = "$IP/extensions/wikia/Paginator/Paginator.setup.php";
 		parent::setUp();
 
-		$this->mockGlobalFunction( 'wfMessage', new MessageMock() );
+		$this->mockGlobalFunction( 'wfMessage', new PaginatorTestMessageMock() );
 	}
 
 	private function assertHtmlEquals( $expectedHtml, $actualHtml, $head = false ) {
@@ -308,32 +308,6 @@ class PaginatorTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * Test the basic API of the class, style #1 of using it -- deprecated version
-	 *
-	 * Create an object of Paginator using Paginator::newFromArray and then set an active page
-	 * number and get the current slice of the input array using Paginator::getPage and then
-	 * generate the HTML for the pagination bar by Paginator::getBarHTML
-	 *
-	 * This style of calling the class is used by:
-	 *
-	 *  * CategoryExhibitionSection
-	 *  * CategoryExhibitionSectionMedia
-	 *  * CrunchyrollVideo
-	 *
-	 * @dataProvider dataProviderCallStyle1
-	 */
-	public function testCallStyle1( $itemsPerPage, $allDataString, $pageNo, $pageDataString, $expectedHtml ) {
-		$url = 'http://url/?page=%s';
-		$allData = explode( ',', $allDataString );
-		$expectedPageData = explode( ',', $pageDataString );
-		$pages = Paginator::newFromArray( $allData, $itemsPerPage );
-		$onePageData = $pages->getPage( $pageNo, true );
-		$html = $pages->getBarHTML( $url );
-		$this->assertEquals( $expectedPageData, $onePageData );
-		$this->assertHtmlEquals( $expectedHtml, $html );
-	}
-
-	/**
 	 * Test the basic API of the class, style #1 of using it -- updated version
 	 *
 	 * Create an object of Paginator using Paginator::newFromArray and then set an active page
@@ -353,7 +327,7 @@ class PaginatorTest extends WikiaBaseTest {
 		$allData = explode( ',', $allDataString );
 		$expectedPageData = explode( ',', $pageDataString );
 		$pages = Paginator::newFromArray( $allData, $itemsPerPage );
-		$pages->setActivePage( $pageNo - 1 );
+		$pages->setActivePage( $pageNo );
 		$onePageData = $pages->getCurrentPage();
 		$html = $pages->getBarHTML( $url );
 		$this->assertEquals( $expectedPageData, $onePageData );
@@ -383,7 +357,7 @@ class PaginatorTest extends WikiaBaseTest {
 		$count = count( explode( ',', $allDataString ) );
 		$allData = array_fill( 0, $count, '' );
 		$pages = Paginator::newFromArray( $allData, $itemsPerPage );
-		$pages->setActivePage( $pageNo - 1 );
+		$pages->setActivePage( $pageNo );
 		$html = $pages->getBarHTML( $url );
 		$this->assertHtmlEquals( $expectedHtml, $html );
 	}
@@ -406,7 +380,7 @@ class PaginatorTest extends WikiaBaseTest {
 		$count = count( explode( ',', $allDataString ) );
 		$allData = array_fill( 0, $count, '' );
 		$pages = Paginator::newFromArray( $allData, 1000, $itemsPerPage );
-		$pages->setActivePage( $pageNo - 1 );
+		$pages->setActivePage( $pageNo );
 		$html = $pages->getBarHTML( $url );
 		$this->assertHtmlEquals( $expectedHtml, $html );
 	}
@@ -431,7 +405,7 @@ class PaginatorTest extends WikiaBaseTest {
 		$url = 'http://url/?page=%s';
 		$count = count( explode( ',', $allDataString ) );
 		$pages = Paginator::newFromArray( $count, $itemsPerPage );
-		$pages->setActivePage( $pageNo - 1 );
+		$pages->setActivePage( $pageNo );
 		$html = $pages->getBarHTML( $url );
 		$this->assertHtmlEquals( $expectedHtml, $html );
 	}
@@ -450,7 +424,7 @@ class PaginatorTest extends WikiaBaseTest {
 	public function testHeadItem( $count, $perPage, $activePage, $expectedHtml ) {
 		$url = 'http://url/?page=%s';
 		$pages = Paginator::newFromArray( $count, $perPage );
-		$pages->setActivePage( $activePage - 1 );
+		$pages->setActivePage( $activePage );
 		$html = $pages->getHeadItem( $url );
 		$this->assertHtmlEquals( $expectedHtml, $html, true );
 	}

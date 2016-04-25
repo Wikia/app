@@ -83,7 +83,7 @@ class SpecialController extends \WikiaSpecialPageController {
 		$pagination = '';
 		if ( $total > self::ITEMS_PER_PAGE ) {
 			$pages = \Paginator::newFromArray( array_fill( 0, $total, '' ), self::ITEMS_PER_PAGE );
-			$pages->setActivePage( $page - 1 );
+			$pages->setActivePage( $page );
 
 			$linkToSpecialPage = \SpecialPage::getTitleFor( 'UserActivity' )->escapeLocalUrl();
 			$pagination = $pages->getBarHTML( $linkToSpecialPage.'?page=%s&order='.$order );
