@@ -89,6 +89,12 @@ var ChatWidget = {
 			blankImageUrl: window.wgBlankImageUrl
 		});
 
+		$('.chat-contents.chat-room-empty').each(function () {
+			$(this).get(0)
+				.removeClass('chat-room-empty')
+				.addClass('chat-room-active');
+		});
+
 		$('.chatCarousel').each(function () {
 			$(this).get(0).innerHTML = output;
 		});
