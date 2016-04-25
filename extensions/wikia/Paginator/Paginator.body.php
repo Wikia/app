@@ -11,8 +11,6 @@
  *
  * TODO:
  *  * setActivePage should NOT be 0-indexed
- *  * setActivePage should check for page number outside the correct range and correct it
- *  * convert uses of getPage(int, true) to setActivePage(int), getCurrentPage()
  *  * On the second page of paginated content rel="prev" link should point to the page without ?page=1
  *  * On any page other than the first page there should be no canonical (link rel="prev/next" is enough)
  *  * Avoid passing the same URL to getHeadItem and getBarHTML (pass to constructor instead?)
@@ -111,24 +109,23 @@ class Paginator {
 		$this->activePage = $pageNumber;
 	}
 
+	public function getCurrentPage() {
+		return $this->paginatedData[$this->activePage];
+	}
+
+	/**
+	 * @deprecated use setActivePage followed by getCurrentPage
+	 * @param $iPageNumber
+	 * @param bool $bSetToActive
+	 * @return bool|mixed
+	 * @throws InvalidArgumentException
+	 */
 	public function getPage( $iPageNumber, $bSetToActive = false ) {
-		$iPageNumber = (int) $iPageNumber;
-		$iPageNumber--;
-		if ( $iPageNumber < $this->pagesCount && $iPageNumber >= 0 ) {
-			if ( !empty( $bSetToActive ) ) {
-				$this->setActivePage( $iPageNumber );
-			}
-			return $this->paginatedData[$iPageNumber];
-		} elseif ( $iPageNumber < 0 ) {
-			if ( isset( $this->paginatedData[0] ) ) {
-				return $this->paginatedData[0];
-			} else {
-				return false;
-			}
-		} else {
-			$this->setActivePage( $this->pagesCount - 1 );
-			return $this->paginatedData[$this->pagesCount - 1];
+		if ( !$bSetToActive ) {
+			throw InvalidArgumentException( '$bSetActiveToActive = true not supported' );
 		}
+		$this->setActivePage( $iPageNumber - 1 );
+		return $this->getCurrentPage();
 	}
 
 	private function getBarData() {

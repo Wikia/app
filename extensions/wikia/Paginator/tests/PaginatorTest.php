@@ -308,7 +308,7 @@ class PaginatorTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * Test the basic API of the class, style #1 of using it
+	 * Test the basic API of the class, style #1 of using it -- deprecated version
 	 *
 	 * Create an object of Paginator using Paginator::newFromArray and then set an active page
 	 * number and get the current slice of the input array using Paginator::getPage and then
@@ -328,6 +328,33 @@ class PaginatorTest extends WikiaBaseTest {
 		$expectedPageData = explode( ',', $pageDataString );
 		$pages = Paginator::newFromArray( $allData, $itemsPerPage );
 		$onePageData = $pages->getPage( $pageNo, true );
+		$html = $pages->getBarHTML( $url );
+		$this->assertEquals( $expectedPageData, $onePageData );
+		$this->assertHtmlEquals( $expectedHtml, $html );
+	}
+
+	/**
+	 * Test the basic API of the class, style #1 of using it -- updated version
+	 *
+	 * Create an object of Paginator using Paginator::newFromArray and then set an active page
+	 * number through setActivePage and get the current slice of the input array using
+	 * getCurrentPage and then generate the HTML for the pagination bar by Paginator::getBarHTML
+	 *
+	 * This style of calling the class is used by:
+	 *
+	 *  * CategoryExhibitionSection
+	 *  * CategoryExhibitionSectionMedia
+	 *  * CrunchyrollVideo
+	 *
+	 * @dataProvider dataProviderCallStyle1
+	 */
+	public function testCallStyle1Updated( $itemsPerPage, $allDataString, $pageNo, $pageDataString, $expectedHtml ) {
+		$url = 'http://url/?page=%s';
+		$allData = explode( ',', $allDataString );
+		$expectedPageData = explode( ',', $pageDataString );
+		$pages = Paginator::newFromArray( $allData, $itemsPerPage );
+		$pages->setActivePage( $pageNo - 1 );
+		$onePageData = $pages->getCurrentPage();
 		$html = $pages->getBarHTML( $url );
 		$this->assertEquals( $expectedPageData, $onePageData );
 		$this->assertHtmlEquals( $expectedHtml, $html );
