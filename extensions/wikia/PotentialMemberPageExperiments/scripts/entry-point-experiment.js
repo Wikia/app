@@ -37,13 +37,13 @@ require([
 
 		loader.processStyle(resources.styles);
 
-		$banner = $(mustache.render(template, {}))
+		$banner = $(mustache.render(template, { bannerType: group.toLowerCase() }))
 			.on('click', '.pmp-entry-point-button', onEntryPointClick)
 			.on('click', '.pmp-entry-point-close', close);
 
 		switch (group) {
-			case 'TOP': addEntryPointTop();break;
-			case 'IN_ARTICLE': addEntryPointInArticle();break;
+			case 'TOP': addEntryPointTop(); break;
+			case 'IN_ARTICLE': addEntryPointInArticle(); break;
 		}
 	}
 
