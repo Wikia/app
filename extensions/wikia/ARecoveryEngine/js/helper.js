@@ -4,15 +4,13 @@ define('ext.wikia.aRecoveryEngine.recovery.helper', [
 	'wikia.document',
 	'wikia.lazyqueue',
 	'wikia.log',
-	'wikia.window',
-	require.optional('ext.wikia.aRecoveryEngine.provider.gpt.sourcePointTag')
+	'wikia.window'
 ], function (
 	adContext,
 	doc,
 	lazyQueue,
 	log,
-	win,
-	SourcePointTag
+	win
 ) {
 	'use strict';
 
@@ -34,13 +32,9 @@ define('ext.wikia.aRecoveryEngine.recovery.helper', [
 		onBlockingEventsQueue.push(callback);
 	}
 
-	function createSourcePointTag() {
-		return new SourcePointTag();
-	}
-
 	function isRecoveryEnabled() {
-		log(['isRecoveryEnabled', !!(context.opts.sourcePointRecovery && SourcePointTag)], 'debug', logGroup);
-		return !!(context.opts.sourcePointRecovery && SourcePointTag);
+		log(['isRecoveryEnabled', !!context.opts.sourcePointRecovery], 'debug', logGroup);
+		return !!context.opts.sourcePointRecovery;
 	}
 
 	function isBlocking() {
@@ -54,7 +48,6 @@ define('ext.wikia.aRecoveryEngine.recovery.helper', [
 
 	return {
 		addOnBlockingCallback: addOnBlockingCallback,
-		createSourcePointTag: createSourcePointTag,
 		initEventQueue: initEventQueue,
 		isRecoveryEnabled: isRecoveryEnabled,
 		isBlocking: isBlocking,
