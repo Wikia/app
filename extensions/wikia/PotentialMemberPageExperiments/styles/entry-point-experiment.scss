@@ -12,25 +12,21 @@ $close-button-background: '/resources/wikia/ui_components/modal/images/close-dar
 
 .pmp-entry-point {
 	background: url('/extensions/wikia/PotentialMemberPageExperiments/images/858-px-background.png') no-repeat center bottom;
+	border-bottom: 2px solid $color-blue;
 	height: 150px;
+	margin: 18px 0;
+	overflow: hidden;
 	position: relative;
 	text-align: center;
-	width: 100%;
-}
 
-.pmp-entry-point-block-top {
-	border-bottom: 2px solid $color-blue;
-	margin-bottom: 18px;
-
-	.pmp-entry-point-message {
+	p.pmp-entry-point-message {
 		color: $color-message-text;
 		display: block;
 		font-size: 24px;
-		font-weight: lighter;
 		padding: 33px 0 10px;
 
 		strong {
-			font-weight: normal;
+			font-weight: bold;
 		}
 	}
 }

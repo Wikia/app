@@ -3,12 +3,14 @@ require([
 	'mw',
 	'wikia.loader',
 	'wikia.mustache',
-	'wikia.tracker'
-], function ($, mw, loader, mustache, tracker) {
+	'wikia.tracker',
+	'wikia.abTest'
+], function ($, mw, loader, mustache, tracker, abTest) {
 	'use strict';
 
 	var $banner,
 		dismissCookieName = 'pmp-entry-point-dismissed',
+		experimentName = 'POTENTIAL_MEMBER_PAGE_ENTRY_POINTS',
 		track = tracker.buildTrackingFunction({
 			category: 'potential-member-experiment',
 			trackingMethod: 'analytics'
@@ -31,14 +33,47 @@ require([
 	}
 
 	function addEntryPoint(resources) {
+		var group = abTest.getGroup(experimentName);
+
 		loader.processStyle(resources.styles);
 
+		switch (group) {
+			case 'TOP': addEntryPointTop(resources.mustache[0]);break;
+			case 'IN_ARTICLE': addEntryPointInArticle(resources.mustache[0]);break;
+		}
+	}
+
+	function addEntryPointTop(template) {
 		var templateData = {
 			bannerType: 'block-top'
 		};
 
-		$banner = $(mustache.render(resources.mustache[0], templateData));
-		$banner.insertAfter($('.header-container')).on('click', '.pmp-entry-point-close', close);
+		$banner = $(mustache.render(template, templateData));
+		$banner.insertAfter($('#WikiaPageHeader .header-container')).on('click', '.pmp-entry-point-close', close);
+	}
+
+	function addEntryPointInArticle(template) {
+		var templateData = {
+				bannerType: 'block-in-article'
+			},
+			$content = $('.mw-content-text'),
+			headers = $content.children('h2'),
+			$header;
+
+		$banner = $(mustache.render(template, templateData));
+
+		if (headers.length >= 2) {
+			$header = headers.eq(0);
+
+			if ($header.prevAll('p').length) {
+				$banner.insertBefore($header);
+			} else {
+				$banner.insertBefore(headers.eq(1));
+			}
+		} else {
+			$content.append($banner);
+		}
+
 	}
 
 	function close() {
