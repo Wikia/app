@@ -277,8 +277,8 @@ class WikiDetailsService extends WikiService {
 		global $wgConsulServiceTag, $wgConsulUrl;
 
 		$consulUrl = ( new Wikia\Service\Gateway\ConsulUrlProvider( $wgConsulUrl, $wgConsulServiceTag ))->getUrl( 'discussion' );
-		$response = Http::get( "http://$consulUrl/$id/forums/$id", 'default', array( 'noProxy' => true ));
-		if ( $response != false ) {
+		$response = Http::get( "http://$consulUrl/$id/forums/$id?limit=1", 'default', array( 'noProxy' => true ));
+		if ( $response !== false ) {
 			$decodedResponse = json_decode( $response, true );
 			if ( isset( $decodedResponse[ 'threadCount' ] ) && json_last_error() === JSON_ERROR_NONE ) {
 				return $decodedResponse[ 'threadCount' ];
