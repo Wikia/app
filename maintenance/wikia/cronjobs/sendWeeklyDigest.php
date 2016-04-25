@@ -62,7 +62,7 @@ class sendWeeklyDigest extends Maintenance {
 		}
 	}
 
-	private function executeBatch( $ids ) {
+	private function executeBatch( array $ids ) {
 		$this->logRunTime( "batch starting at user id ${ids[0]}" );
 		$watchlistBot = new GlobalWatchlistBot();
 		try {
@@ -74,31 +74,31 @@ class sendWeeklyDigest extends Maintenance {
 		}
 	}
 
-	private function spawnBatch( $batch ) {
-		global $IP, $wgCityId;
+	private function spawnBatch( array $batch ) {
+		global $wgCityId;
 
 		$idsText = implode( ',', $batch );
 
 		$this->output( "Spawning batch for $idsText...\n" );
 
-		$command = "SERVER_ID={$wgCityId} php $IP/maintenance/wikia/cronjobs/sendWeeklyDigest.php ";
+		$command = "SERVER_ID={$wgCityId} php " . __FILE__ . " ";
 		$command .= "--" . self::PARAM_IDS . "=" . $idsText;
 
 		$retval = null;
 		$log = wfShellExec( $command, $retval );
 		if ( $retval ) {
+			$this->output( $log . "\n" );
 			$this->output( "Batch failed, error code returned: $retval\n" );
-			$this->output( $log . PHP_EOL );
 			$this->logError( new Exception( "Batch $idsText failed, error code returned: $retval, Error was: $log \n" ) );
 		} else {
+			$this->output( $log . "\n" );
 			$this->output( "Batch executed successfully.\n");
-			$this->output( $log . PHP_EOL );
 		}
 	}
 
 	private function logRunTime( $processName ) {
 		$processName = $processName ? "[$processName] " : '';
-		$message = "Started sendWeeklyDigest.php ${processName} at " . date( "F j, Y, g:i a" ) . "\n";
+		$message = "Started sendWeeklyDigest.php ${processName}at " . date( "F j, Y, g:i a" ) . "\n";
 		$this->output( $message );
 	}
 
