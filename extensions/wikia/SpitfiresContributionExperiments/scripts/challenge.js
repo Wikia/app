@@ -9,13 +9,15 @@ require([
 	'use strict';
 
 	var experimentName = 'contribution-experiments',
-		experimentId = 5654433460,
+		freshlyRegisteredExperimentId = 5654433460,
+		usersWithoutEditExperimentId = 5735670451,
 		dismissCookieName = 'contribchallengedismissed';
 
 	function init() {
 		if (
 			mw.config.get('wgAction') !== 'view' ||
-			window.optimizely.variationNamesMap[experimentId] !== 'CHALLENGE-LIST' ||
+			window.optimizely.variationNamesMap[freshlyRegisteredExperimentId] !== 'CHALLENGE-LIST' ||
+			window.optimizely.variationNamesMap[usersWithoutEditExperimentId] !== 'CHALLENGE-LIST' ||
 			$.cookie(dismissCookieName) ||
 			mw.config.get('wgNamespaceNumber') !== 0
 		) {
