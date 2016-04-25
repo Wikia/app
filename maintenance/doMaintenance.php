@@ -31,6 +31,8 @@ if ( !defined( 'RUN_MAINTENANCE_IF_MAIN' ) ) {
 	exit( 1 );
 }
 
+$wgMaintenanceStartTime = microtime( true );
+
 // Wasn't included from the file scope, halt execution (probably wanted the class)
 // If a class is using commandLine.inc (old school maintenance), they definitely
 // cannot be included and will proceed with execution
@@ -124,14 +126,23 @@ require_once( MWInit::compiledPath( 'includes/Setup.php' ) );
 // Much much faster startup than creating a title object
 $wgTitle = null;
 
+\Wikia\Logger\WikiaLogger::instance()->info("Maintenance script $maintClass started.");
+
 // Do the work
 try {
 	$maintenance->execute();
 
 	// Potentially debug globals
 	$maintenance->globals();
+
+	\Wikia\Logger\WikiaLogger::instance()->info("Maintenance script $maintClass finished.", [
+		'total_time_float' => microtime(true) - $wgMaintenanceStartTime
+	]);
 } catch ( MWException $mwe ) {
 	echo( $mwe->getText() );
+	\Wikia\Logger\WikiaLogger::instance()->info("Maintenance script $maintClass finished.", [
+		'total_time_float' => microtime(true) - $wgMaintenanceStartTime
+	]);
 	exit( 1 );
 }
 
