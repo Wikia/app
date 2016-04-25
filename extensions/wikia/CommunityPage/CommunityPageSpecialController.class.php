@@ -143,6 +143,27 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	}
 
 	/**
+	 * Set context for allAdmins template. Needs to be passed through the index method in order to work.
+	 * @return array
+	 */
+	public function getAllAdminsData() {
+		$allAdmins = CommunityPageSpecialUsersModel::filterGlobalBots(
+			// get all admins who have contributed in the last two years ordered by contributions
+			CommunityPageSpecialUsersModel::getTopContributors( 10, false, true )
+		);
+		$topAdminsDetails = $this->getContributorsDetails( $allAdmins );
+
+		$this->response->setData( [
+			'topAdminsHeaderText' => $this->msg( 'communitypage-admins' )->plain(),
+			'admins' => $topAdminsDetails,
+			'adminCount' => count( $topAdminsDetails ),
+			'noAdminText' => $this->msg( 'communitypage-no-admins' )->plain(),
+			'noAdminContactText' => $this->msg( 'communitypage-no-admins-contact' )->plain(),
+			'noAdminHref' => $this->msg( 'communitypage-communitycentral-link' )->inContentLanguage()->text(),
+		] );
+	}
+
+	/**
 	 * Set context for recentlyJoined template. Needs to be passed through the index method in order to work.
 	 * @return array
 	 */

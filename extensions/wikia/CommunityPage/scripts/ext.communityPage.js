@@ -19,8 +19,8 @@ require([
 		},
 		TAB_ADMINS: {
 			className: '.modal-nav-admins',
-			template: 'topAdmins',
-			request: 'getTopAdminsData',
+			template: 'allAdmins',
+			request: 'getAllAdminsData',
 			cachedData: null,
 		},
 		TAB_LEADERBOARD: {
@@ -77,7 +77,6 @@ require([
 		} else {
 			$('#adminsCount').html('(' + adminsCount + ')');
 		}
-
 	}
 
 	function getModalTabContentsHtml(tab) {
