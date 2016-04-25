@@ -5,7 +5,7 @@ ThemeDesigner.init = function() {
 
 ThemeDesigner.set = function(setting, newValue) {
 	// The newValue is either the name of a theme or a single setting.
-	// The latter should be hadled as it is in the original method...
+	// The latter should be handled as it is in the original method...
 	//
 	// ... or the theme settings will be overwritten (CE-456)
 	if ( 'undefined' === typeof themes[newValue] ) {
