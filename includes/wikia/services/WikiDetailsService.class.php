@@ -176,6 +176,8 @@ class WikiDetailsService extends WikiService {
 	 * @return array
 	 */
 	protected function getFromService( $id ) {
+		global $wgEnableDiscussions;
+
 		$wikiStats = $this->getSiteStats( $id );
 		$topUsers = $this->getTopEditors( $id, static::DEFAULT_TOP_EDITORS_NUMBER, true );
 		$modelData = $this->getDetails( [ $id ] );
@@ -190,7 +192,7 @@ class WikiDetailsService extends WikiService {
 			}
 		}
 
-		return [
+		$stats = [
 			'stats' => [
 				'edits' => (int)$wikiStats[ 'edits' ],
 				'articles' => (int)$wikiStats[ 'articles' ],
@@ -199,8 +201,7 @@ class WikiDetailsService extends WikiService {
 				'activeUsers' => (int)$wikiStats[ 'activeUsers' ],
 				'images' => (int)$wikiStats[ 'images' ],
 				'videos' => (int)$this->getTotalVideos( $id ),
-				'admins' => count( $this->getWikiAdminIds( $id ) ),
-				'discussions' => (int)$this->getDiscussionStats( $id )
+				'admins' => count( $this->getWikiAdminIds( $id ) )
 			],
 			'topUsers' => array_keys( $topUsers ),
 			'headline' => isset( $modelData[ $id ] ) ? $modelData[ $id ][ 'headline' ] : '',
@@ -209,6 +210,12 @@ class WikiDetailsService extends WikiService {
 			'desc' => isset( $modelData[ $id ] ) ? $modelData[ $id ][ 'desc' ] : '',
 			'image' => isset( $modelData[ $id ] ) ? $modelData[ $id ][ 'image' ] : '',
 		];
+
+		if ( $wgEnableDiscussions ) {
+			$stats['stats']['discussions'] = (int)$this->getDiscussionStats( $id );
+		}
+
+		return $stats;
 	}
 
 	protected function getFromCommunityData( $wikiId ) {
@@ -267,16 +274,14 @@ class WikiDetailsService extends WikiService {
 	 * @return mixed
 	 */
 	private function getDiscussionStats( $id ) {
-		global $wgConsulServiceTag, $wgConsulUrl, $wgEnableDiscussions;
+		global $wgConsulServiceTag, $wgConsulUrl;
 
-		if ( $wgEnableDiscussions ) {
-			$consulUrl = ( new Wikia\Service\Gateway\ConsulUrlProvider( $wgConsulUrl, $wgConsulServiceTag ))->getUrl( 'discussion' );
-			$response = Http::get( "http://$consulUrl/$id/forums/$id", 'default', array( 'noProxy' => true ));
-			if ( $response != false ) {
-				$decodedResponse = json_decode( $response, true );
-				if ( isset($decodedResponse) && json_last_error() === JSON_ERROR_NONE ) {
-					return $decodedResponse[ 'threadCount' ] ? $decodedResponse[ 'threadCount' ] : null;
-				}
+		$consulUrl = ( new Wikia\Service\Gateway\ConsulUrlProvider( $wgConsulUrl, $wgConsulServiceTag ))->getUrl( 'discussion' );
+		$response = Http::get( "http://$consulUrl/$id/forums/$id", 'default', array( 'noProxy' => true ));
+		if ( $response != false ) {
+			$decodedResponse = json_decode( $response, true );
+			if ( isset($decodedResponse) && json_last_error() === JSON_ERROR_NONE ) {
+				return $decodedResponse[ 'threadCount' ] ? $decodedResponse[ 'threadCount' ] : null;
 			}
 		}
 		return null;
