@@ -52,7 +52,7 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 		});
 	};
 
-	GoogleTag.prototype.init = function (onLoadCallback) {
+	GoogleTag.prototype.init = function () {
 		log('init', 'debug', logGroup);
 
 		var gads = doc.createElement('script'),
@@ -60,20 +60,12 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 
 		window.googletag = window.googletag || {};
 		window.googletag.cmd = window.googletag.cmd || [];
-
 		if (!window.googletag.apiReady) {
 			gads.async = true;
 			gads.type = 'text/javascript';
 			gads.src = '//www.googletagservices.com/tag/js/gpt.js';
-
 			log('Appending GPT script to head', 'debug', logGroup);
 			node.parentNode.insertBefore(gads, node);
-			if (typeof onLoadCallback === 'function') {
-				onLoadCallback();
-			}
-		} else {
-			log('GPT script already appended', 'debug', logGroup);
-			onLoadCallback();
 		}
 
 		this.initialized = true;

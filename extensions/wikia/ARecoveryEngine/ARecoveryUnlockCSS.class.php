@@ -47,14 +47,13 @@ class ARecoveryUnlockCSS {
 	}
 
 	private function verifyContent($url) {
-		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_URL, $url);
-		curl_setopt($ch, CURLOPT_TIMEOUT, self::TIMEOUT);
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-		$content = curl_exec($ch);
-		curl_close($ch);
-
-		if (strpos($content, '#WikiaArticle') !== false) {
+		$options = [
+			'returnInstance' => true,
+			'timeout' => self::TIMEOUT,
+			'noProxy' => true
+		];
+		$response = \Http::get($url, self::TIMEOUT, $options);
+		if (strpos($response->getContent(), '#WikiaArticle') !== false) {
 			return true;
 		}
 		return false;
@@ -68,24 +67,22 @@ class ARecoveryUnlockCSS {
 	}
 
 	private function postJson( $url, $jsonString ) {
-
 		if ( is_array( $jsonString ) ) {
 			$jsonString = json_encode( $jsonString );
 		}
-		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_URL, $url);
-		curl_setopt($ch, CURLOPT_TIMEOUT, self::TIMEOUT);
-		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
-		curl_setopt($ch, CURLOPT_POSTFIELDS, $jsonString);
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-		curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-				'Content-Type: application/json',
-				'Content-Length: ' . strlen($jsonString) )
-		);
-		$result = curl_exec($ch);
-		$info = curl_getinfo($ch);
-		curl_close($ch);
-		return array( 'response' => $result, 'code' => $info['http_code'] );
+		$options = [
+			'postData' => $jsonString,
+			'headers' => [
+				'Content-Type' => 'application/json',
+				'Content-Length ' => strlen( $jsonString )
+			],
+			'returnInstance' => true,
+			'timeout' => self::TIMEOUT,
+			'noProxy' => true
+		];
+
+		$response = \Http::post( $url, $options ); /* @var CurlHttpRequest $response */
+		return array( 'response' => $response->getContent(), 'code' => $response->getStatus() );
 	}
 
 }
