@@ -136,12 +136,12 @@ try {
 	$maintenance->globals();
 
 	\Wikia\Logger\WikiaLogger::instance()->info("Maintenance script $maintClass finished.", [
-		'total_time' => microtime(true) - $wgMaintenanceStartTime
+		'total_time_float' => microtime(true) - $wgMaintenanceStartTime
 	]);
 } catch ( MWException $mwe ) {
 	echo( $mwe->getText() );
 	\Wikia\Logger\WikiaLogger::instance()->info("Maintenance script $maintClass finished.", [
-		'total_time' => microtime(true) - $wgMaintenanceStartTime
+		'total_time_float' => microtime(true) - $wgMaintenanceStartTime
 	]);
 	exit( 1 );
 }
