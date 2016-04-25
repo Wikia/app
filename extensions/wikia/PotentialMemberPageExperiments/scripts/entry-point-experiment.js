@@ -25,8 +25,7 @@ require([
 			IN_ARTICLE: {
 				type: 'in-article',
 				addEntryPoint: function () {
-					var $content = $('.mw-content-text'),
-						headers = mw.util.$content.children('h2'),
+					var headers = mw.util.$content.children('h2'),
 						$header;
 
 					// Check if there are headers in content
