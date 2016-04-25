@@ -24,6 +24,13 @@ class AdTargeting {
 	}
 
 	/**
+	 * @return bool
+	 */
+	static public function isDirectedAtChildren() {
+		return self::getEsrbRating() === self::EARLY_CHILDHOOD;
+	}
+
+	/**
 	 * @return null|string
 	 */
 	static private function getEsrbRatingFromDartKeyValues() {
@@ -33,6 +40,9 @@ class AdTargeting {
 		$pairs = explode(';', $wgDartCustomKeyValues);
 
 		foreach ($pairs as $pair) {
+			if (strpos($pair, '=') === false) {
+				continue;
+			}
 			list($key, $value) = explode('=', $pair);
 			if ($key === 'esrb') {
 				$dartRating = $value;

@@ -12,8 +12,12 @@ require([
 	$(function() {
 		// Add markers to the page so we can track whether users see them.
 		// RECIRCULATION_RAIL gets added on the server which is why it's not here
+		var incontentSection = incontent().findSuitableSection();
+
+		if (incontentSection) {
+			incontentSection.before('<div id="RECIRCULATION_INCONTENT">');
+		}
 		$('#WikiaArticle').append('<div id="RECIRCULATION_FOOTER">');
-		incontent().findSuitableSection().before('<div id="RECIRCULATION_INCONTENT">');
 
 		$.scrollDepth({
 			percentage: true,

@@ -25,6 +25,8 @@ use Wikia\Sass\Compiler\LibSassCompiler;
  */
 class SassService {
 
+	use Wikia\Logger\Loggable;
+
 	const CACHE_VERSION = 7; # SASS caching does not depend on $wgStyleVersion, use this constant to bust SASS cache
 
 	const FILTER_IMPORT_CSS = 1;
@@ -189,6 +191,7 @@ class SassService {
 	 *
 	 * @param $useCache bool Use cache?
 	 * @return string CSS stylesheet
+	 * @throws \Wikia\Sass\Exception
 	 */
 	public function getCss( $useCache = true ) {
 		// first try cache
@@ -239,12 +242,17 @@ class SassService {
 			$fileName = $this->source->getHumanName();
 			$errorId = $this->getUniqueId();
 
-			Wikia::log(__METHOD__, false, "SASS error [{$errorId} in {$fileName}]: ". $e->getMessage(), true /* $always */);
-
 			$errorMessage = $this->getDebug()
 				? ("SASS error [{$errorId}]: " . $e->getMessage())
 				: (self::DEFAULT_ERROR_MESSAGE . $errorId);
-			throw new \Wikia\Sass\Exception( $errorMessage, 0, $e );
+			$ex = new \Wikia\Sass\Exception( $errorMessage, 0, $e );
+
+			$this->error( __METHOD__, [
+				'exception' => $ex,
+				'error_id' => $errorId,
+				'file_name' => $fileName,
+			] );
+			throw $ex;
 		}
 
 		$styles .= "\n\n";

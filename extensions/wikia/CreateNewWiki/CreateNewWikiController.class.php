@@ -12,14 +12,13 @@ class CreateNewWikiController extends WikiaController {
 	const LANG_ALL_AGES_OPT = 'en';
 
 	public function index() {
-		global $wgSuppressWikiHeader, $wgSuppressPageHeader, $wgSuppressFooter, $wgSuppressAds, $wgSuppressToolbar, $fbOnLoginJsOverride, $wgRequest, $wgUser;
+		global $wgSuppressWikiHeader, $wgSuppressPageHeader, $wgSuppressFooter, $wgSuppressToolbar, $fbOnLoginJsOverride, $wgRequest, $wgUser;
 		wfProfileIn( __METHOD__ );
 
 		// hide some default oasis UI things
 		$wgSuppressWikiHeader = true;
 		$wgSuppressPageHeader = true;
 		$wgSuppressFooter = false;
-		$wgSuppressAds = true;
 		$wgSuppressToolbar = true;
 
 		// store the fact we're on CNW

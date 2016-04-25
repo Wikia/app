@@ -3,6 +3,7 @@ require([
 	'jquery',
 	'wikia.window',
 	'wikia.abTest',
+	'wikia.log',
 	'ext.wikia.recirculation.tracker',
 	'ext.wikia.recirculation.utils',
 	'ext.wikia.recirculation.views.incontent',
@@ -10,6 +11,7 @@ require([
 	'ext.wikia.recirculation.views.footer',
 	'ext.wikia.recirculation.helpers.contentLinks',
 	'ext.wikia.recirculation.helpers.fandom',
+	'ext.wikia.recirculation.helpers.lateral',
 	'ext.wikia.recirculation.helpers.googleMatch',
 	'ext.wikia.adEngine.taboolaHelper',
 	require.optional('videosmodule.controllers.rail')
@@ -17,6 +19,7 @@ require([
 	$,
 	w,
 	abTest,
+	log,
 	tracker,
 	utils,
 	incontentView,
@@ -24,15 +27,18 @@ require([
 	footerView,
 	contentLinksHelper,
 	fandomHelper,
+	lateralHelper,
 	googleMatchHelper,
 	taboolaHelper,
 	videosModule
 ) {
 	var experimentName = 'RECIRCULATION_PLACEMENT',
+		logGroup = 'ext.wikia.recirculation.experiments.placement',
 		railContainerId = 'RECIRCULATION_RAIL',
 		railSelector = '#' + railContainerId,
 		group = abTest.getGroup(experimentName),
 		isRail = false,
+		errorHandled = false,
 		footerView,
 		view,
 		helper;
@@ -45,6 +51,18 @@ require([
 	}
 
 	switch (group) {
+		case 'LATERAL_FANDOM':
+			helper = lateralHelper();
+			view = railView();
+			isRail = true;
+			break;
+		case 'LATERAL_COMMUNITY':
+			helper = lateralHelper({
+				type: 'community',
+				count: 3
+			});
+			view = incontentView();
+			break;
 		case 'DESIGN_ONE':
 		case 'DESIGN_TWO':
 		case 'DESIGN_THREE':
@@ -106,6 +124,9 @@ require([
 		case 'TABOOLA':
 			renderTaboola();
 			return;
+		case 'LATERAL_BOTH':
+			renderBothLateralExperiments();
+			return;
 		default:
 			return;
 	}
@@ -130,7 +151,34 @@ require([
 		helper.loadData()
 			.then(view.render)
 			.then(view.setupTracking(experimentName))
-			.fail(function() {});
+			.fail(handleError);
+	}
+
+	function handleError(err) {
+		if (err) {
+			log(err, 'info', logGroup);
+		}
+
+		// If there is an error somewhere we render the control group with no tracking
+		if (errorHandled) {
+			return;
+		}
+
+		errorHandled = true;
+		afterRailLoads(function() {
+			var rail = railView();
+
+			fandomHelper({
+				limit: 5
+			}).loadData()
+				.then(rail.render)
+				.fail(function(err) {
+					// If this doesn't work, log out why. We tried our best.
+					if (err) {
+						log(err, 'info', logGroup);
+					}
+				});
+		});
 	}
 
 	function injectSubtitle($html) {
@@ -138,6 +186,35 @@ require([
 
 		$html.find('.trending').after(subtitle);
 		return $html;
+	}
+
+	function renderBothLateralExperiments() {
+		var incontent = incontentView();
+
+		lateralHelper({
+			type: 'community',
+			count: 3
+		}).loadData()
+			.then(incontent.render)
+			.then(incontent.setupTracking(experimentName))
+			.fail(function(err) {
+				// We fail silently for the in-content widget
+				if (err) {
+					log(err, 'info', logGroup);
+				}
+			});
+
+		afterRailLoads(function() {
+			var rail = railView();
+
+			lateralHelper({
+				type: 'fandom',
+				count: 5
+			}).loadData()
+				.then(rail.render)
+				.then(rail.setupTracking(experimentName))
+				.fail(handleError);
+		});
 	}
 
 	function renderGoogleIncontent() {

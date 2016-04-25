@@ -164,7 +164,6 @@ $wgAutoloadClasses['MoviesApiController'] = "{$IP}/includes/wikia/api/MoviesApiC
 $wgAutoloadClasses['InfoboxApiController'] = "{$IP}/includes/wikia/api/InfoboxApiController.class.php";
 $wgAutoloadClasses['LogEventsApiController'] = "{$IP}/includes/wikia/api/LogEventsApiController.class.php";
 $wgAutoloadClasses['TemplateClassificationApiController'] = "{$IP}/includes/wikia/api/TemplateClassificationApiController.class.php";
-$wgAutoloadClasses['UserFeedbackStorageApiController'] = "{$IP}/includes/wikia/api/UserFeedbackStorageApiController.class.php";
 $wgExtensionMessagesFiles['WikiaApi'] = "{$IP}/includes/wikia/api/WikiaApi.i18n.php";
 
 $wgWikiaApiControllers['DiscoverApiController'] = "{$IP}/includes/wikia/api/DiscoverApiController.class.php";
@@ -181,7 +180,6 @@ $wgWikiaApiControllers['InfoboxApiController'] = "{$IP}/includes/wikia/api/Infob
 $wgWikiaApiControllers['LogEventsApiController'] = "{$IP}/includes/wikia/api/LogEventsApiController.class.php";
 $wgWikiaApiControllers['RevisionApiController'] = "{$IP}/includes/wikia/api/RevisionApiController.class.php";
 $wgWikiaApiControllers['RevisionUpvotesApiController'] = "{$IP}/includes/wikia/api/RevisionUpvotesApiController.class.php";
-$wgWikiaApiControllers['UserFeedbackStorageApiController'] = "{$IP}/includes/wikia/api/UserFeedbackStorageApiController.class.php";
 
 //Wikia Api exceptions classes
 $wgAutoloadClasses[ 'ApiAccessService' ] = "{$IP}/includes/wikia/api/services/ApiAccessService.php";
@@ -457,11 +455,12 @@ $wgHooks['Debug'][] = 'Wikia\\Logger\\Hooks::onDebug';
 $wgHooks['WikiFactory::execute'][] = 'Wikia\\Logger\\Hooks::onWikiFactoryExecute';
 $wgHooks['WikiFactory::onExecuteComplete'][] = 'Wikia\\Logger\\Hooks::onWikiFactoryExecuteComplete';
 
-// WikiaRequest
+// WikiaTracer
 $wgHooks['WebRequestInitialized'][] = 'Wikia\\Tracer\\WikiaTracer::updateInstanceFromMediawiki';
 $wgHooks['AfterSetupUser'][] = 'Wikia\\Tracer\\WikiaTracer::updateInstanceFromMediawiki';
 $wgHooks['AfterUserLogin'][] = 'Wikia\\Tracer\\WikiaTracer::updateInstanceFromMediawiki';
 $wgHooks['BeforeWfShellExec'][] = 'Wikia\\Tracer\\WikiaTracer::onBeforeWfShellExec';
+$wgHooks['AfterHttpRequest'][] = 'Wikia\\Tracer\\WikiaTracer::onAfterHttpRequest';
 
 // memcache stats (PLATFORM-292)
 $wgAutoloadClasses['Wikia\\Memcached\\MemcachedStats'] = "$IP/includes/wikia/memcached/MemcachedStats.class.php";
@@ -1289,12 +1288,6 @@ $wgAdPageLevelCategoryLangs = [ 'en' ];
 $wgEnableJavaScriptErrorLogging = false;
 
 /**
- * @name $wgEnableAdEngineExt
- * Enables ad engine
- */
-$wgEnableAdEngineExt = true;
-
-/**
  * @name $wgAdDriverDelayBelowTheFold
  * Prevents from loading BTF before ATF ad slots
  */
@@ -1804,6 +1797,13 @@ $wgEnableUpdatedGlobalFooter = true;
  * https://one.wikia-inc.com/wiki/Ad_Engineering/Paid_Asset_Drop
  */
 $wgPaidAssetDropConfig = false;
+
+/**
+ * @name $wgAdDriverHighImpact2SlotCountries
+ * Enables INVISIBLE_HIGH_IMPACT_2 slot in these countries
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverHighImpact2SlotCountries = null;
 
 /**
  * @name $wgAdDriverIncontentLeaderboardSlotCountries

@@ -73,7 +73,6 @@ $config['adengine2_desktop_js'] = array(
 		'//extensions/wikia/AdEngine/js/CustomAdsLoader.js',
 		'//extensions/wikia/AdEngine/js/DartUrl.js',
 		'//extensions/wikia/AdEngine/js/EventDispatcher.js',
-		'//extensions/wikia/AdEngine/js/EvolveSlotConfig.js',
 		'//extensions/wikia/AdEngine/js/lookup/services.js',
 		'//extensions/wikia/AdEngine/js/MessageListener.js',
 		'//extensions/wikia/AdEngine/js/SlotTracker.js',
@@ -97,10 +96,12 @@ $config['adengine2_desktop_js'] = array(
 		'//extensions/wikia/AdEngine/js/recovery/helper.js',
 		'//extensions/wikia/AdEngine/js/slot/adSlot.js',
 		'//extensions/wikia/AdEngine/js/slot/floatingMedrec.js',
+		'//extensions/wikia/AdEngine/js/slot/highImpact.js',
 		'//extensions/wikia/AdEngine/js/slot/inContent.js',
 		'//extensions/wikia/AdEngine/js/slot/scrollHandler.js',
 		'//extensions/wikia/AdEngine/js/slot/skyScraper3.js',
 		'//extensions/wikia/AdEngine/js/template/floor.js',
+		'//extensions/wikia/AdEngine/js/template/floorAdhesion.js',
 		'//extensions/wikia/AdEngine/js/template/modal.js',
 		'//extensions/wikia/AdEngine/js/template/modalHandlerFactory.js',
 		'//extensions/wikia/AdEngine/js/template/modalOasisHandler.js',
@@ -110,12 +111,10 @@ $config['adengine2_desktop_js'] = array(
 		'//resources/wikia/modules/krux.js',
 
 		// was: late queue
-		'//extensions/wikia/AdEngine/js/EvolveHelper.js',
 		'//extensions/wikia/AdEngine/js/OoyalaTracking.js',
 		'//extensions/wikia/AdEngine/js/SevenOneMediaHelper.js',
 		'//extensions/wikia/AdEngine/js/WikiaDartVideoHelper.js',
 		'//extensions/wikia/AdEngine/js/TaboolaHelper.js',
-		'//extensions/wikia/AdEngine/js/provider/evolve.js',
 		'//extensions/wikia/AdEngine/js/provider/evolve2.js',
 		'//extensions/wikia/AdEngine/js/provider/hitMedia.js',
 		'//extensions/wikia/AdEngine/js/provider/liftium.js',
@@ -135,6 +134,7 @@ $config['recirculation_js'] = array(
 		'//extensions/wikia/Recirculation/js/utils.js',
 		'//extensions/wikia/Recirculation/js/helpers/ContentLinksHelper.js',
 		'//extensions/wikia/Recirculation/js/helpers/FandomHelper.js',
+		'//extensions/wikia/Recirculation/js/helpers/LateralHelper.js',
 		'//extensions/wikia/Recirculation/js/views/incontent.js',
 		'//extensions/wikia/Recirculation/js/views/rail.js',
 		'//extensions/wikia/Recirculation/js/views/footer.js',
@@ -793,7 +793,6 @@ $config['mobile_base_ads_js'] = array(
 		'//extensions/wikia/AdEngine/js/AdTracker.js',
 		'//extensions/wikia/AdEngine/js/DartUrl.js',
 		'//extensions/wikia/AdEngine/js/EventDispatcher.js',
-		'//extensions/wikia/AdEngine/js/EvolveHelper.js',
 		'//extensions/wikia/AdEngine/js/MessageListener.js',
 		'//extensions/wikia/AdEngine/js/SlotTracker.js',
 		'//extensions/wikia/AdEngine/js/SlotTweaker.js',
@@ -2645,14 +2644,6 @@ $config['content_review_special_page_scss'] = [
 	],
 ];
 
-$config['auth_modal_scss'] = array(
-	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => [ 'oasis' ],
-	'assets' => [
-		'//extensions/wikia/AuthModal/css/AuthModal.scss',
-	]
-);
-
 $config['auth_modal_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'oasis' ],
@@ -2830,5 +2821,55 @@ $config['special_user_activity_scss'] = [
 	'type' => AssetsManager::TYPE_SCSS,
 	'assets' => [
 		'//extensions/wikia/UserActivity/css/UserActivity.scss',
+	],
+];
+
+$config['special_discussions_log_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'assets' => [
+		'//extensions/wikia/SpecialDiscussionsLog/css/DiscussionsLog_Forms.scss',
+	],
+];
+
+$config['special_community_page_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => [
+		'//extensions/wikia/CommunityPage/scripts/ext.communityPage.js',
+		'//extensions/wikia/CommunityPage/scripts/templates.mustache.js',
+	],
+
+];
+
+$config['special_community_page_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'assets' => [
+		'//extensions/wikia/CommunityPage/styles/CommunityPage.scss',
+		'//extensions/wikia/CommunityPage/styles/CommunityPageOverrides.scss',
+	],
+];
+
+
+$config['visual_editor_tour_experiment_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => [
+		'//extensions/wikia/SpitfiresContributionExperiments/scripts/experiments-tracker.js',
+		'//extensions/wikia/VisualEditorTourExperiment/scripts/VisualEditorTourExperiment.js',
+		'//extensions/wikia/VisualEditorTourExperiment/scripts/VisualEditorTourExperimentConfig.js',
+		'//extensions/wikia/VisualEditorTourExperiment/scripts/VisualEditorTourExperimentInit.js',
+		'//extensions/wikia/VisualEditorTourExperiment/scripts/VisualEditorTourExperimentInitArticleEntry.js',
+	],
+];
+
+$config['visual_editor_tour_experiment_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'assets' => [
+		'//extensions/wikia/VisualEditorTourExperiment/styles/VisualEditorTourExperimentInit.scss',
+	],
+];
+
+$config['special_portability_dashboard_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'assets' => [
+		'//extensions/wikia/PortabilityDashboard/styles/PortabilityDashboard.scss',
 	],
 ];

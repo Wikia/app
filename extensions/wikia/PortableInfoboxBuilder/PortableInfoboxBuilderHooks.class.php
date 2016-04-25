@@ -35,39 +35,11 @@ class PortableInfoboxBuilderHooks {
 	}
 
 	/**
-	 * Hook that exports url to the current template page
-	 *
-	 * @param Array $vars - (reference) js variables
-	 * @param Array $scripts - (reference) js scripts
-	 * @param Skin $skin - skins
-	 * @return Boolean True - to continue hooks execution
-	 */
-	public static function onWikiaSkinTopScripts( &$vars, &$scripts, $skin ) {
-		$title = $skin->getTitle();
-
-		if ( $title && $title->isSpecial( PortableInfoboxBuilderSpecialController::PAGE_NAME ) ) {
-			$templateTitleText = PortableInfoboxBuilderHelper::getUrlPath( $title->getText() );
-
-			// We need the variable only if Infobox Builder launches (there is a template title provided)
-			if ( $templateTitleText ) {
-				$templateTitle = Title::newFromText( $templateTitleText, NS_TEMPLATE );
-				$vars['templatePageUrl'] = $templateTitle->getFullUrl();
-				$vars['sourceEditorUrl'] = $templateTitle->getFullUrl( [
-					'action' => 'edit',
-					'useeditor' => 'source'
-				] );
-			}
-		}
-
-		return true;
-	}
-
-	/**
 	 * Add global variables for Javascript
 	 * @param array $aVars
 	 * @return bool
 	 */
-	public function onEditPageMakeGlobalVariablesScript( array &$aVars ) {
+	public static function onEditPageMakeGlobalVariablesScript( array &$aVars ) {
 		$context = \RequestContext::getMain();
 		$title = $context->getTitle();
 		if ( self::shouldPassInfoboxBuilderVars( $context ) ) {
@@ -80,6 +52,22 @@ class PortableInfoboxBuilderHooks {
 				->getFullURL();
 
 		}
+		return true;
+	}
+
+	/**
+	 * Decide to display Infobox builder in VE
+	 * @param array $aVars
+	 * @return bool
+	 */
+	public static function onMakeGlobalVariablesScript( array &$aVars ) {
+		global $wgEnablePortableInfoboxBuilderInVE, $wgEnableVisualEditorExt;
+
+		if ( $wgEnableVisualEditorExt && \VisualEditorHooks::isAvailable( \RequestContext::getMain()->getSkin() ) ) {
+			$aVars['wgEnablePortableInfoboxBuilderInVE'] = $wgEnablePortableInfoboxBuilderInVE &&
+				\RequestContext::getMain()->getUser()->isAllowed( 'createpage' );
+		}
+
 		return true;
 	}
 

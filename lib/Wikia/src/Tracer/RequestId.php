@@ -11,8 +11,6 @@
  */
 namespace Wikia\Tracer;
 
-use Ramsey\Uuid\Uuid;
-
 class RequestId {
 
 	private $requestId = false;
@@ -70,12 +68,11 @@ class RequestId {
 	}
 
 	/**
-	 * Return timestamp-based UUID (e.g. 8454441a-f0e1-11e5-9c4a-00163e046284)
-	 *
+	 * Return a version 4 (random) UUID (e.g. 8454441a-f0e1-11e5-9c4a-00163e046284)
 	 * @return string
 	 */
 	public static function generateId() {
-		return Uuid::uuid1()->toString();
+		return Uuid::v4();
 	}
 
 	/**

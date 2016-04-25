@@ -68,7 +68,6 @@ $wgResourceModules += array(
 	'ext.visualEditor.wikia.oasisViewPageTarget' => $wgVisualEditorWikiaResourceTemplate + array(
 		'scripts' => array(
 			've/init/ve.init.wikia.js',
-			've/init/ve.init.wikia.Optimizely.js',
 			've/init/ve.init.wikia.ViewPageTarget.js',
 			've/init/ve.init.wikia.TargetEvents.js',
 		),
@@ -128,6 +127,7 @@ $wgResourceModules += array(
 			've/ui/dialogs/ve.ui.WikiaMapInsertDialog.js',
 			've/ui/dialogs/ve.ui.WikiaInfoboxInsertDialog.js',
 			've/ui/dialogs/ve.ui.WikiaInfoboxDialog.js',
+			've/ui/dialogs/ve.ui.WikiaInfoboxBuilderDialog.js',
 			've/ui/dialogs/ve.ui.WikiaTemplateInsertDialog.js',
 			've/ui/dialogs/ve.ui.WikiaTransclusionDialog.js',
 			've/ui/tools/ve.ui.WikiaDialogTool.js',
@@ -197,6 +197,7 @@ $wgResourceModules += array(
 			'wikia-visualeditor-dialogbutton-infobox-tooltip',
 			'wikia-visualeditor-dialog-transclusion-zerostate',
 			'wikia-visualeditor-dialog-infobox-insert-title',
+			'wikia-visualeditor-dialog-infobox-insert-add-new-template',
 			'wikia-visualeditor-dialog-infobox-insert-empty-state',
 			'wikia-visualeditor-dialog-infobox-insert-empty-state-has-unconverted-infoboxes',
 			'wikia-visualeditor-savedialog-label-save',

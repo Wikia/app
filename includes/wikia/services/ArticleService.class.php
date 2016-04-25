@@ -217,7 +217,7 @@ class ArticleService extends WikiaObject {
 		} catch ( Exception $e ) {
 			\Wikia\Logger\WikiaLogger::instance()->error(
 				'ArticleService, not parser output object found',
-				['parserOutput' => $parserOutput, 'parserOptions' => $opts, 'page' => $page, 'exception' => $e]
+				['parserOutput' => $parserOutput, 'parserOptions' => $opts, 'wikipage_dump' => $page, 'exception' => $e]
 			);
 		}
 

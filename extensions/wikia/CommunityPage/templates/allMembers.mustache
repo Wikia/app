@@ -1,0 +1,23 @@
+<h2>{{allMembersHeaderText}}</h2>
+<ul class="reset top-contributors">
+	{{#members}}
+		<li>
+			<div class="avatar-container">
+				<a href="{{profilePage}}">{{{avatar}}}</a>
+			</div>
+			<div class="contributor-details">
+				<a href="{{profilePage}}">{{userName}}</a>
+				{{#isAdmin}}
+					<span class="subtle">{{admin}}</span>
+				{{/isAdmin}}
+				<span class="details">{{joinedText}} {{joinDate}}</span>
+			</div>
+
+		</li>
+	{{/members}}
+	{{^members}}
+		<div class="zero">
+			{{noMembersText}}
+		</div>
+	{{/members}}
+</ul>

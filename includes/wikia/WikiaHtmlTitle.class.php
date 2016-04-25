@@ -16,9 +16,6 @@ class WikiaHtmlTitle {
 	/** @var array - Configurable parts of the title */
 	private $parts = [];
 
-	/** @var array - Environment like dev-rychu, sandbox-s4, etc */
-	private $environment;
-
 	/** @var Message|null - The site name to include in the title */
 	private $siteName;
 
@@ -26,12 +23,6 @@ class WikiaHtmlTitle {
 	private $brandName;
 
 	public function __construct() {
-		global $wgWikiaEnvironment, $wgEnableHostnameInHtmlTitle;
-
-		if ( $wgWikiaEnvironment !== WIKIA_ENV_PROD && $wgEnableHostnameInHtmlTitle ) {
-			$this->environment = wfHostname();
-		}
-
 		$this->brandName = wfMessage( 'wikia-pagetitle-brand' );
 		$this->siteName = wfMessage( 'wikia-pagetitle-sitename' );
 
@@ -72,7 +63,6 @@ class WikiaHtmlTitle {
 	 */
 	public function getAllParts() {
 		$parts = array_merge(
-			[$this->environment],
 			$this->parts,
 			[$this->siteName, $this->brandName]
 		);

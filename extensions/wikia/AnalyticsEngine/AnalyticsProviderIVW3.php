@@ -71,8 +71,11 @@ class AnalyticsProviderIVW3 implements iAnalyticsProvider {
 		$theme = self::getTheme();
 		$vertical = self::getVertical();
 
-		return $theme !== '' ?
-			implode( '/', [$vertical, self::getMappedLanguage(), self::getPageType(), $theme] ) : $vertical;
+		if ($theme !== '') {
+			return implode( '/', [$vertical, self::getMappedLanguage(), self::getPageType(), $theme] );
+		}
+
+		return implode( '/', [$vertical, self::getMappedLanguage()] );
 	}
 
 	static private function getVertical() {

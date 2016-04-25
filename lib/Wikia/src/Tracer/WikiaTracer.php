@@ -9,6 +9,7 @@ class WikiaTracer {
 	const APPLICATION_NAME = 'mediawiki';
 
 	const TRACE_ID_HEADER_NAME = 'X-Trace-Id';
+	const PARENT_SPAN_ID_HEADER_NAME = 'X-Parent-Span-Id';
 	const CLIENT_IP_HEADER_NAME = 'X-Client-Ip';
 	const CLIENT_BEACON_ID_HEADER_NAME = 'X-Client-Beacon-Id';
 	const CLIENT_DEVICE_ID_HEADER_NAME = 'X-Client-Device-Id';
@@ -22,14 +23,19 @@ class WikiaTracer {
 	const LEGACY_TRACE_ID_HEADER_NAME = 'X-Request-Id';
 	const LEGACY_BEACON_HEADER_NAME = 'X-Beacon';
 
+	const REQUEST_PATH_HEADER_NAME = 'X-Request-Path';
+
 	const ENV_VARIABLES_PREFIX = 'WIKIA_TRACER_';
 
 	private $traceId;
+	private $parentSpanId;
 	private $clientIp;
 	private $clientBeaconId;
 	private $clientDeviceId;
 	private $userId;
 	private $appVersion = '';
+
+	private $requestPath = [];
 
 	/**
 	 * @var ContextSource
@@ -40,6 +46,7 @@ class WikiaTracer {
 		$this->spanId = RequestId::generateId();
 		$this->traceId = RequestId::instance()->getRequestId();
 
+		$this->parentSpanId = $this->getTraceEntry( self::PARENT_SPAN_ID_HEADER_NAME );
 		$this->clientIp = $this->getTraceEntry( self::CLIENT_IP_HEADER_NAME );
 		$this->clientBeaconId = $this->getTraceEntry( self::CLIENT_BEACON_ID_HEADER_NAME );
 		$this->clientDeviceId = $this->getTraceEntry( self::CLIENT_DEVICE_ID_HEADER_NAME );
@@ -82,6 +89,7 @@ class WikiaTracer {
 				'client_device_id' => $this->clientDeviceId,
 				'user_id' => $this->userId,
 				'span_id' => $this->spanId,
+				'parent_span_id' => $this->parentSpanId,
 				'trace_id' => $this->traceId,
 			] )
 		);
@@ -102,11 +110,13 @@ class WikiaTracer {
 	}
 
 	private function getApplicationContext() {
-		global $wgDBname, $wgCityId, $maintClass;
+		global $wgDBname, $wgCityId, $wgWikiaDatacenter, $wgWikiaEnvironment, $maintClass;
 
 		$context = [
 			'app_name' => self::APPLICATION_NAME,
 			'app_version' => $this->getAppVersion(), // please note that this field won't always be filled (if logging is called pretty early)
+			'datacenter' => $wgWikiaDatacenter, # sjc / res / poz
+			'environment' => $wgWikiaEnvironment, # dev / prod
 		];
 
 		if ( !empty( $wgDBname ) ) {
@@ -203,8 +213,25 @@ class WikiaTracer {
 		return $instance;
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getTraceId() {
 		return $this->traceId;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getSpanId() {
+		return $this->spanId;
+	}
+
+	/**
+	 * @return null|string
+	 */
+	public function getParentSpanId() {
+		return $this->parentSpanId;
 	}
 
 	public function getInternalHeaders() {
@@ -225,6 +252,7 @@ class WikiaTracer {
 		return $this->removeNullEntries( [
 			self::TRACE_ID_HEADER_NAME => $this->traceId,
 			self::LEGACY_TRACE_ID_HEADER_NAME => $this->traceId, // duplicated until we move to X-Trace-Id everywhere
+			self::PARENT_SPAN_ID_HEADER_NAME => $this->spanId, // pass the current span ID to the subrequest, it will be logged as parent_span_id there
 		] );
 	}
 
@@ -284,5 +312,86 @@ class WikiaTracer {
 		);
 
 		return true;
+	}
+
+	/**
+	 * Record HTTP sub-requests to form X-Request-Path response header
+	 *
+	 * @see PLATFORM-2079
+	 *
+	 * @param string $method HTTP method
+	 * @param string $url
+	 * @param string $caller
+	 * @param float $requestTime UNIX timestamp (with microseconds precision when the request was sent
+	 * @param \MWHttpRequest|null $req request object to take HTTP response headers from
+	 * @return bool
+	 */
+	public static function onAfterHttpRequest( $method, $url, $caller, $requestTime, $req ) {
+		// check if we received X-Request-Path header in a response and simply use it
+		$headerValue = null;
+		if ( $req instanceof \MWHttpRequest ) {
+			$headerValue = $req->getResponseHeader(self::REQUEST_PATH_HEADER_NAME);
+		}
+
+		if ( $headerValue !== null ) {
+			self::instance()->requestPath[] = $headerValue;
+			return true;
+		}
+
+		$took = microtime( true ) - $requestTime;
+
+		$appName = self::getAppNameFromCaller( $caller );
+		$hostName = parse_url( $url, PHP_URL_HOST );
+		$timestamp = (int) $requestTime;
+
+		self::instance()->pushRequestPath( $appName, $hostName, $timestamp, $took );
+
+		return true;
+	}
+
+	/**
+	 * Get the app / service name using the name of the PHP method that performed the HTTP request
+	 *
+	 * For instance: "Wikia\Service\Helios\HeliosClientImpl:Wikia\Service\Helios\{closure}" will give "Helios"
+	 * For instance: "Wikia\Service\Gateway\ConsulUrlProvider:getUrl" will give "ConsulUrlProvider:getUrl"
+	 *
+	 * @param string $caller
+	 * @return string
+	 */
+	public static function getAppNameFromCaller( $caller ) {
+		$caller = str_replace( '{closure}', '', $caller );
+		$caller = trim( $caller, '\\:' );
+
+		$parts = explode('\\', $caller );
+		return end( $parts );
+	}
+
+	/**
+	 * Add an entry to X-Request-Path response header
+	 *
+	 * E.g. (mediawiki ap-s52 1459866775 0.012345)
+	 *
+	 * @param string $appName e.g. mediawiki
+	 * @param string $hostName e.g. ap-s52
+	 * @param int $timestamp UNIX timestamp of when the sub-requests started
+	 * @param float $took how long it took to perform the sub-request (in seconds)
+	 */
+	private function pushRequestPath( $appName, $hostName, $timestamp, $took ) {
+		$this->requestPath[] = sprintf( "(%s %s %d %.6f)", $appName, $hostName, $timestamp, $took );
+	}
+
+	/**
+	 * Get properly formatted X-Request-Path header
+	 *
+	 * @see PLATFORM-2079
+	 * @return string
+	 */
+	public function getRequestPath() {
+		global $wgRequestTime;
+
+		$path = $this->requestPath;
+		array_unshift( $path, sprintf( "%s %s %d %.6f", 'mediawiki', wfHostname(), (int) $wgRequestTime, microtime( true ) - $wgRequestTime ) );
+
+		return sprintf( "(%s)", join( ' ', $path ) );
 	}
 }
