@@ -23,7 +23,6 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 				}
 			},
 			recoveryHelper: {
-				addSlotToRecover: noop,
 				createSourcePointTag: noop,
 				recoverSlots: noop,
 				isBlocking: noop,

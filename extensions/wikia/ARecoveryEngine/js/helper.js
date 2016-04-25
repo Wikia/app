@@ -18,7 +18,6 @@ define('ext.wikia.aRecoveryEngine.recovery.helper', [
 
 	var logGroup = 'ext.wikia.aRecoveryEngine.recovery.helper',
 		context = adContext.getContext(),
-		slotsToRecover = [],
 		onBlockingEventsQueue = [];
 
 	function initEventQueue() {
@@ -29,11 +28,6 @@ define('ext.wikia.aRecoveryEngine.recovery.helper', [
 		doc.addEventListener('sp.blocking', function () {
 			onBlockingEventsQueue.start();
 		});
-	}
-
-	function addSlotToRecover(slotName) {
-		log(['addSlotToRecover', slotName], 'debug', logGroup);
-		slotsToRecover.push(slotName);
 	}
 
 	function addOnBlockingCallback(callback) {
@@ -59,7 +53,6 @@ define('ext.wikia.aRecoveryEngine.recovery.helper', [
 	}
 
 	return {
-		addSlotToRecover: addSlotToRecover,
 		addOnBlockingCallback: addOnBlockingCallback,
 		createSourcePointTag: createSourcePointTag,
 		initEventQueue: initEventQueue,
