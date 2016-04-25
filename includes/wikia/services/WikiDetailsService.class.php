@@ -281,7 +281,7 @@ class WikiDetailsService extends WikiService {
 		if ( $response != false ) {
 			$decodedResponse = json_decode( $response, true );
 			if ( isset( $decodedResponse ) && json_last_error() === JSON_ERROR_NONE ) {
-				return $decodedResponse[ 'threadCount' ] ? $decodedResponse[ 'threadCount' ] : null;
+				return isset( $decodedResponse[ 'threadCount' ] ) ? $decodedResponse[ 'threadCount' ] : null;
 			}
 		}
 		return null;
