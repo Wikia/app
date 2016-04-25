@@ -50,10 +50,10 @@
 			this.$nameWikiWrapper.find('input.next').click(function () {
 				if (self.isNameWikiSubmitError()) {
 					self.nameWikiSubmitError.
-						show().
-						html(WikiBuilderCfg['name-wiki-submit-error']).
-						delay(3000).
-						fadeOut();
+					show().
+					html(WikiBuilderCfg['name-wiki-submit-error']).
+					delay(3000).
+					fadeOut();
 				} else {
 					self.saveState({
 						wikiName: self.wikiName.val(),
@@ -63,8 +63,8 @@
 					if (window.wgUserName) {
 						self.onAuthSuccess();
 					} else {
-						require(['AuthModal', 'wikia.querystring'], function (authModal, querystring) {
-							var redirectUrl = new querystring();
+						require(['AuthModal', 'wikia.querystring'], function (authModal, Querystring) {
+							var redirectUrl = new Querystring();
 
 							redirectUrl.setVal({
 								wikiName: self.wikiName.val(),
@@ -512,8 +512,8 @@
 
 							// unblock "Next" button (BugId:51519)
 							self.$themWikiWrapper.find('.next-controls input').
-								attr('disabled', false).
-								addClass('enabled'); // for QA with love
+							attr('disabled', false).
+							addClass('enabled'); // for QA with love
 						} else {
 							$.showModal(res.statusHeader, self.createStatusMessage);
 						}
