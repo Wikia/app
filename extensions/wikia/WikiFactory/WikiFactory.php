@@ -601,7 +601,7 @@ class WikiFactory {
 			$valueShortExcerpt = substr($valueExported, 0, 100) . (strlen($valueExported) > 100 ? ' ...' : '');
 			$valueLongExcerpt = substr($valueExported, 0, 4000) . (strlen($valueExported) > 4000 ? ' ...' : '');
 			$variableName = $variable ? $variable->cv_name : "(id: $cv_variable_id)";
-			WikiaLogger::instance()->info( "WikiFactory - variable $variableName changed to: $valueShortExcerpt", [
+			WikiaLogger::instance()->info( __METHOD__ . " - variable $variableName changed to: $valueShortExcerpt", [
 				'exception' => new Exception(),
 				'variable_id' => $cv_variable_id,
 				'variable_name' => $variableName,
@@ -872,7 +872,7 @@ class WikiFactory {
 					$wiki,
 					$variable_id);
 				$variableName = $variable ? $variable->cv_name : "(id: $variable_id)";
-				WikiaLogger::instance()->info( "WikiFactory - variable $variableName removed", [
+				WikiaLogger::instance()->info( __METHOD__ . " - variable $variableName removed", [
 					'exception' => new Exception(),
 					'variable_id' => $variable_id,
 					'variable_name' => $variableName,
@@ -2076,7 +2076,7 @@ class WikiFactory {
 
 					// log typos in calls to WikiFactory::loadVariableFromDB
 					if ( !is_object( $oRow ) ) {
-						WikiaLogger::instance()->error('WikiFactory - variable not found', [
+						WikiaLogger::instance()->error(__METHOD__. ' - variable not found', [
 							'condition' => $condition,
 							'exception' => new Exception()
 						]);
