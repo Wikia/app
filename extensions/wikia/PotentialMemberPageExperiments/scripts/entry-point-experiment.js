@@ -10,13 +10,9 @@ require([
 	'use strict';
 
 	var $banner,
-		bannerOffset,
 		bannerBottomOffset,
+		bannerOffset,
 		dismissCookieName = 'pmp-entry-point-dismissed',
-		track = tracker.buildTrackingFunction({
-			category: 'potential-member-experiment',
-			trackingMethod: 'analytics'
-		}),
 		experimentGroup = abTest.getGroup('POTENTIAL_MEMBER_PAGE_ENTRY_POINTS'),
 		experiments = {
 			TOP: {
@@ -52,8 +48,14 @@ require([
 					$('body').append($banner);
 					$banner.addClass('initialized');
 				}
-			},
-		};
+			}
+		},
+		track = tracker.buildTrackingFunction({
+			category: 'potential-member-experiment',
+			trackingMethod: 'analytics'
+		}),
+		viewabilityCounter = 0,
+		viewabilityInterval;
 
 	function init() {
 		if ($.cookie(dismissCookieName)) {
@@ -88,16 +90,58 @@ require([
 
 		experiment.addEntryPoint();
 
+		/**
+		 * For viewability at least 50% of an element should be visible for at least 1s.
+		 * However, at the top the banner is covered with our nav bar, so it's just waiting
+		 * for 100% of banner in viewport which results in ~50% visibility for a user.
+		 */
 		bannerOffset = $banner.offset().top;
-		bannerBottomOffset = bannerOffset + $banner.outerHeight();
+		bannerBottomOffset = bannerOffset + ($banner.outerHeight() / 2);
 
 		if (isEntryPointInViewport()) {
-			trackBannerImpression();
-		} else {
-			$(w).on('scroll.trackPMPEntryPoint', $.debounce(200, function() {
-				trackEntryPointInViewport();
-			}));
+			checkViewability();
 		}
+
+		$(w).on('scroll.trackPMPEntryPoint', $.debounce(50, function() {
+			checkViewability();
+		}));
+	}
+
+	function isEntryPointInViewport() {
+		return bannerOffset > w.scrollY &&
+			bannerBottomOffset < (w.innerHeight + w.scrollY);
+	}
+
+	function checkViewability() {
+		if (isEntryPointInViewport()) {
+			if (viewabilityCounter === 0) {
+				trackBannerImpression();
+			}
+			viewabilityInterval = setInterval(calculateViewability, 10);
+		} else if (viewabilityInterval !== undefined) {
+			clearInterval(viewabilityInterval);
+		}
+	}
+
+	function calculateViewability() {
+		viewabilityCounter += 10;
+		if (viewabilityCounter === 1000) {
+			clearInterval(viewabilityInterval);
+			$(w).off('scroll.trackPMPEntryPoint');
+			trackBannerViewable();
+		}
+	}
+
+	function trackBannerImpression() {
+		track({
+			action: tracker.ACTIONS.IMPRESSION
+		});
+	}
+
+	function trackBannerViewable() {
+		track({
+			action: tracker.ACTIONS.VIEW
+		});
 	}
 
 	function onEntryPointClick() {
@@ -115,25 +159,6 @@ require([
 		});
 		$banner.remove();
 		onBannerDismissed();
-	}
-
-	function isEntryPointInViewport() {
-		return bannerOffset > w.scrollY &&
-			bannerBottomOffset < (w.scrollY + w.innerHeight);
-	}
-
-	function trackEntryPointInViewport() {
-		if (isEntryPointInViewport()) {
-			trackBannerImpression();
-			$(w).off('scroll.trackPMPEntryPoint');
-		}
-	}
-
-	function trackBannerImpression() {
-		track({
-			label: '',
-			action: tracker.ACTIONS.VIEW
-		});
 	}
 
 	function onBannerDismissed() {
