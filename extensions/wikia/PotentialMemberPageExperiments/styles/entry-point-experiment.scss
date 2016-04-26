@@ -63,9 +63,7 @@ $close-button-background: '/resources/wikia/ui_components/modal/images/close-dar
 }
 
 .pmp-entry-point-glue-bottom {
-	background-color: #fff;
-	background: url('/extensions/wikia/PotentialMemberPageExperiments/images/background-glue.jpg') no-repeat;
-	background-size: 100% 100%;
+	background: #fff url('/extensions/wikia/PotentialMemberPageExperiments/images/background-glue.jpg') 0 0 /100% 100% no-repeat;
 	border-left: 6px solid $color-blue;
 	bottom: 0;
 	height: 320px;
