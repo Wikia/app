@@ -101,7 +101,7 @@ class UpdateDatawarePages extends Maintenance {
 
 		$this->output("Fetching page index from dataware...\n");
 
-		$dbr = wfGetDB( DB_SLAVE, null, $wgExternalDatawareDB );
+		$dbr = wfGetDB( DB_SLAVE, [], $wgExternalDatawareDB );
 		$res = $dbr->select(
 			'pages',
 			[
