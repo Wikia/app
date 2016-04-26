@@ -192,7 +192,7 @@ class WikiDetailsService extends WikiService {
 			}
 		}
 
-		$stats = [
+		$wikiDetails = [
 			'stats' => [
 				'edits' => (int)$wikiStats[ 'edits' ],
 				'articles' => (int)$wikiStats[ 'articles' ],
@@ -212,10 +212,10 @@ class WikiDetailsService extends WikiService {
 		];
 
 		if ( $wgEnableDiscussions ) {
-			$stats[ 'stats' ][ 'discussions' ] = (int)$this->getDiscussionStats( $id );
+			$wikiDetails[ 'stats' ][ 'discussions' ] = (int)$this->getDiscussionStats( $id );
 		}
 
-		return $stats;
+		return $wikiDetails;
 	}
 
 	protected function getFromCommunityData( $wikiId ) {
