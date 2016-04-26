@@ -25,32 +25,37 @@ class Client {
 	function __construct() {
 		$this->logger = WikiaLogger::instance();
 
-		$consulService = new ServiceFactory( [], $this->logger );
+		$consulService = new ServiceFactory( [ ], $this->logger );
 		$this->api = $consulService->get( 'health' );
 	}
 
 	/**
-	 * Returns IP addresses of given service healthy nodes
+	 * Returns IP addresses (with ports) of given service healthy nodes
 	 *
 	 * $catalog->getNodes( 'db-a', 'slave' )
+	 * $catalog->getNodes( 'chat-private', 'prod' )
 	 *
 	 * $ curl "http://127.0.0.1:8500/v1/health/service/db-g?tag=slave&passing"
 	 *
 	 * @param string $service
 	 * @param string $tag
-	 * @return array list of IP addresses
+	 * @return array list of IP addresses with ports ie. 127.0.0.1:1234
 	 */
 	function getNodes( $service, $tag ) {
-		$resp = $this->api->service( $service, [ 'tag' => $tag, 'passing' => true ] )->json();
+		$resp = $this->api->service( $service, [
+			'tag' => $tag,
+			'passing' => true
+		] )->json();
 
 		$nodes = array_map(
-			function( $item ) {
-				return $item[ 'Node' ][ 'Address' ];
+			function ( $item ) {
+				return $item[ 'Node' ][ 'Address' ] . ':' . $item[ 'Service' ][ 'Port' ];
 			},
 			$resp
 		);
 
-		wfDebug( __METHOD__ . sprintf( ": got nodes for '%s' service ('%s' tag): %s\n", $service, $tag, join(', ', $nodes) ) );
+		wfDebug( __METHOD__ . sprintf( ": got nodes for '%s' service ('%s' tag): %s\n", $service, $tag, join( ', ', $nodes ) ) );
+
 		return $nodes;
 	}
 
@@ -66,6 +71,7 @@ class Client {
 		Assert::true( self::isConsulAddress( $hostname ), __METHOD__ . ' should get a Consul address', $this->getLoggerContext() );
 
 		list( $tag, $service ) = explode( '.', $hostname );
+
 		return $this->getNodes( $service, $tag );
 	}
 

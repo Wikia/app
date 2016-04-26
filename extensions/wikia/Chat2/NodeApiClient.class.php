@@ -48,35 +48,33 @@ class NodeApiClient {
 	 *
 	 * If the chat doesn't exist, creates it.
 	 *
-	 * @param roomUsers - for private chats: an array of users who are in the room.
+	 * @param string $roomType
+	 * @param array $roomUsers roomUsers - for private chats: an array of users who are in the room.
 	 *
 	 * TODO: Document what format these users are in (user ids? db_keys?)
-	 *
 	 * @return string
 	 */
 	static public function getDefaultRoomId( $roomType = "open", $roomUsers = [] ) {
 		global $wgCityId, $wgServer, $wgArticlePath;
 		wfProfileIn( __METHOD__ );
 
-		if ( empty( $roomData ) ) { // TODO: FIXME: What is this testing? Isn't it ALWAYS empty? - SWC 20110905
-			// Add some extra data that the server will want in order to store it in the room's hash.
-			$extraData = array(
-				'wgServer' => $wgServer,
-				'wgArticlePath' => $wgArticlePath
-			);
-			$extraDataString = json_encode( $extraData );
+		// Add some extra data that the server will want in order to store it in the room's hash.
+		$extraData = array(
+			'wgServer' => $wgServer,
+			'wgArticlePath' => $wgArticlePath
+		);
+		$extraDataString = json_encode( $extraData );
 
-			$roomId = "";
-			$roomJson = NodeApiClient::makeRequest( array(
-				"func" => "getDefaultRoomId",
-				"wgCityId" => $wgCityId,
-				"roomType" => $roomType,
-				"roomUsers" => json_encode( $roomUsers ),
-				"extraDataString" => $extraDataString
-			) );
+		$roomId = "";
+		$roomJson = NodeApiClient::makeRequest( [
+			"func" => "getDefaultRoomId",
+			"wgCityId" => $wgCityId,
+			"roomType" => $roomType,
+			"roomUsers" => json_encode( $roomUsers ),
+			"extraDataString" => $extraDataString
+		] );
 
 			$roomData = json_decode( $roomJson );
-		}
 
 		if ( isset( $roomData-> { 'roomId' } ) ) {
 			$roomId = $roomData-> { 'roomId' } ;
@@ -135,7 +133,7 @@ class NodeApiClient {
 		// operation, abort trying to contact the node server since it could be unavailable (in the event of complete
 		// network unavailability in the primary datacenter). - BugzId 11047
 		if ( empty( $wgReadOnly ) ) {
-			$requestUrl = "http://" . NodeApiClient::getHostAndPort() . "/api?" . http_build_query( $params );
+			$requestUrl = "http://" . ChatHelper::getServer() . "/api?" . http_build_query( $params );
 			$response = Http::get( $requestUrl, 'default', array( 'noProxy' => true ) );
 			if ( $response === false ) {
 				$response = "";
@@ -145,18 +143,4 @@ class NodeApiClient {
 		wfProfileOut( __METHOD__ );
 		return $response;
 	}
-
-	/**
-	 * Return the appropriate host and port for the client to connect to.
-	 * This is based on whether this is dev or prod, but can be overridden
-	 */
-	static protected function getHostAndPort() {
-		global $wgDevelEnvironment;
-
-		$server = ChatHelper::getServer( 'Api' );
-		$hostAndPort = $server['host'] . ':' . $server['port'];
-
-		return $hostAndPort;
-	} // end getHostAndPort()
-
 }
