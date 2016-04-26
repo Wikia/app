@@ -1,7 +1,5 @@
 <?php
 
-use \Wikia\Logger\WikiaLogger;
-
 ini_set( 'display_errors', 'stderr' );
 ini_set( 'error_reporting', E_ALL );
 
@@ -23,20 +21,23 @@ class UpdateDatawarePages extends Maintenance {
 		$this->dryRun = $this->getOption( 'dry-run' );
 		$this->debug = $this->getOption( 'debug' );
 
-		$this->output("Started updateDatawarePages.php for wiki id = $wgCityId...\n");
-		$this->output('dry run = '. intval($this->dryRun) . "\n");
+		$this->addRuntimeStatistics( [
+			'dry_run_bool' => boolval( $this->dryRun ),
+		] );
+
+		$this->output( "Started updateDatawarePages.php for wiki id = $wgCityId...\n" );
 
 		$localPages = $this->getLocalPages();
 		$datawarePages = $this->getDatawarePages();
 
 		$this->comparePages( $localPages, $datawarePages );
-		$this->output("Finished.\n");
+		$this->output( "Finished.\n" );
 	}
 
 	private function getLocalPages() {
 		global $wgContentNamespaces;
 
-		$this->output("Fetching local list of pages...\n");
+		$this->output( "Fetching local list of pages...\n" );
 
 		$dbr = wfGetDB( DB_SLAVE );
 		$res = $dbr->select(
@@ -69,16 +70,16 @@ class UpdateDatawarePages extends Maintenance {
 			$row->page_edits = intval( $row->page_edits );
 			$row->page_is_redirect = intval( $row->page_is_redirect );
 			$row->page_is_content = intval( in_array( $row->page_namespace, $wgContentNamespaces ) );
-			$row->page_last_edited = $row->page_last_edited ? wfTimestamp(TS_DB, $row->page_last_edited) : null;
-			$this->attachTextualTitle($row);
+			$row->page_last_edited = $row->page_last_edited ? wfTimestamp( TS_DB, $row->page_last_edited ) : null;
+			$this->attachTextualTitle( $row );
 			$pages[$row->page_id] = $row;
 		}
 		$res->free();
 
-		$this->output("Got " . count($pages) . " local pages.\n");
-		$this->addRuntimeStatistics([
-			'local_pages_count_int' => count($pages),
-		]);
+		$this->output( "Got " . count( $pages ) . " local pages.\n" );
+		$this->addRuntimeStatistics( [
+			'local_pages_count_int' => count( $pages ),
+		] );
 
 		return $pages;
 	}
@@ -87,7 +88,7 @@ class UpdateDatawarePages extends Maintenance {
 		$nsText = '';
 		if ( $page->page_namespace ) {
 			$nsText = MWNamespace::getCanonicalName( $page->page_namespace );
-			if ($nsText) {
+			if ( !$nsText ) {
 				$nsText = $page->page_namespace;
 			}
 			$nsText .= ':';
@@ -99,9 +100,9 @@ class UpdateDatawarePages extends Maintenance {
 	private function getDatawarePages() {
 		global $wgCityId, $wgExternalDatawareDB;
 
-		$this->output("Fetching page index from dataware...\n");
+		$this->output( "Fetching page index from dataware...\n" );
 
-		$dbr = wfGetDB( DB_SLAVE, [], $wgExternalDatawareDB );
+		$dbr = wfGetDB( DB_SLAVE, [ ], $wgExternalDatawareDB );
 		$res = $dbr->select(
 			'pages',
 			[
@@ -125,15 +126,15 @@ class UpdateDatawarePages extends Maintenance {
 		$pages = [ ];
 		/** @var stdClass $row */
 		foreach ( $res as $row ) {
-			$this->attachTextualTitle($row);
+			$this->attachTextualTitle( $row );
 			$pages[$row->page_id] = $row;
 		}
 		$res->free();
 
-		$this->output("Got " . count($pages) . " pages from dataware.\n");
-		$this->addRuntimeStatistics([
-			'dataware_pages_count_int' => count($pages),
-		]);
+		$this->output( "Got " . count( $pages ) . " pages from dataware.\n" );
+		$this->addRuntimeStatistics( [
+			'dataware_pages_count_int' => count( $pages ),
+		] );
 
 		return $pages;
 	}
@@ -144,7 +145,7 @@ class UpdateDatawarePages extends Maintenance {
 		$ids = array_merge( array_keys( $localPages ), array_keys( $datawarePages ) );
 		$ids = array_unique( $ids );
 
-		$this->output("Comparing pages between local list and index...\n");
+		$this->output( "Comparing pages between local list and index...\n" );
 		$dbw = wfGetDB( DB_MASTER, null, $wgExternalDatawareDB );
 		$stats = [
 			'added' => 0,
@@ -157,18 +158,20 @@ class UpdateDatawarePages extends Maintenance {
 
 			$this->comparePage( $stats, $dbw, $localPage, $datawarePage );
 		}
-		$this->output("Update statistics: added={$stats['added']} updated={$stats['updated']} removed={$stats['removed']}.\n");
-		$this->addRuntimeStatistics([
+		$this->output( "Update statistics: added={$stats['added']} updated={$stats['updated']} removed={$stats['removed']}.\n" );
+		$this->addRuntimeStatistics( [
 			'pages_added_int' => $stats['added'],
 			'pages_updated_int' => $stats['updated'],
 			'pages_removed_int' => $stats['removed'],
-		]);
+		] );
+
+		wfWaitForSlaves( $wgExternalDatawareDB );
 	}
 
 	private function comparePage( &$stats, $dbw, $localPage, $datawarePage ) {
 		if ( $this->shouldUpdatePage( $localPage, $datawarePage ) ) {
 			$this->updateDatawarePage( $dbw, $localPage, $datawarePage );
-			$stats[$datawarePage?'updated':'added']++;
+			$stats[$datawarePage ? 'updated' : 'added']++;
 		} else if ( $this->shouldRemovePage( $localPage, $datawarePage ) ) {
 			$this->removeDatawarePage( $dbw, $datawarePage );
 			$stats['removed']++;
@@ -183,7 +186,7 @@ class UpdateDatawarePages extends Maintenance {
 		global $wgCityId;
 
 		$action = $datawarePage ? "Updating index:" : "Adding to index:";
-		$this->output("{$action} {$localPage->page_textual_title}...\n");
+		$this->output( "{$action} {$localPage->page_textual_title}...\n" );
 
 		if ( $this->debug ) {
 			$this->output( "  * local page: " . json_encode( $localPage ) . "\n" );
@@ -224,7 +227,7 @@ class UpdateDatawarePages extends Maintenance {
 	private function removeDatawarePage( $dbw, $datawarePage ) {
 		global $wgCityId;
 
-		$this->output("Removing from index: {$datawarePage->page_textual_title}...\n");
+		$this->output( "Removing from index: {$datawarePage->page_textual_title}...\n" );
 		if ( $this->debug ) {
 			$this->output( "  * page index: " . json_encode( $datawarePage ) . "\n" );
 		}
@@ -266,9 +269,10 @@ class UpdateDatawarePages extends Maintenance {
 		foreach ( $FIELDS as $field ) {
 			if ( $localPage->$field != $datawarePage->$field ) {
 				if ( $this->debug ) {
-					$this->output("Difference found: {$localPage->page_textual_title}\n");
-					$this->output("  * field={$field} local={$localPage->$field} index={$datawarePage->$field}\n");
+					$this->output( "Difference found: {$localPage->page_textual_title}\n" );
+					$this->output( "  * field={$field} local={$localPage->$field} index={$datawarePage->$field}\n" );
 				}
+
 				return true;
 			}
 		}

@@ -151,16 +151,17 @@ try {
 	// Potentially debug globals
 	$maintenance->globals();
 
-	\Wikia\Logger\WikiaLogger::instance()->info( "Maintenance script $maintClass finished.",
+	\Wikia\Logger\WikiaLogger::instance()->info( "Maintenance script $maintClass finished successfully.",
 		getMaintenanceRuntimeStatistics() );
 } catch ( MWException $mwe ) {
 	echo( $mwe->getText() );
-	\Wikia\Logger\WikiaLogger::instance()->info( "Maintenance script $maintClass failed..",
+	\Wikia\Logger\WikiaLogger::instance()->info( "Maintenance script $maintClass was interrupted by unhandled exception.",
 		getMaintenanceRuntimeStatistics( $mwe ) );
 	exit( 1 );
 } catch ( Exception $e ) {
-	\Wikia\Logger\WikiaLogger::instance()->info( "Maintenance script $maintClass failed.",
+	\Wikia\Logger\WikiaLogger::instance()->info( "Maintenance script $maintClass was interrupted by unhandled exception.",
 		getMaintenanceRuntimeStatistics( $e ) );
+	throw $e;
 }
 
 wfRunHooks( 'RestInPeace' ); // Wikia change - @author macbre
