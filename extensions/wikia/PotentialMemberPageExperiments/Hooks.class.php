@@ -20,7 +20,7 @@ class Hooks extends \ContextSource {
 	private function shouldAddExperimentScript( \Title $title ) {
 		$user = $this->getUser();
 
-		return ( !$user->isLoggedIn() || $user->getEditCount() === 0 ) &&
+		return !$user->isLoggedIn() &&
 			$title->inNamespace( NS_MAIN ) &&
 			!$title->isMainPage() &&
 			$this->getRequest()->getVal( 'action', 'view' ) === 'view';

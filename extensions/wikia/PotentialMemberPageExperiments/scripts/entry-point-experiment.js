@@ -41,6 +41,13 @@ require([
 						mw.util.$content.append($banner);
 					}
 				}
+			},
+			GLUE_BOTTOM: {
+				type: 'glue-bottom',
+				addEntryPoint: function () {
+					$('body').append($banner);
+					$banner.addClass('initialized');
+				}
 			}
 		},
 		track = tracker.buildTrackingFunction({
@@ -103,7 +110,7 @@ require([
 	function isEntryPointInViewport() {
 		return bannerOffset > w.scrollY &&
 			bannerBottomOffset < (w.innerHeight + w.scrollY);
-	}g
+	}
 
 	function checkViewability() {
 		if (isEntryPointInViewport()) {
