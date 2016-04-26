@@ -117,7 +117,7 @@ require([
 	}
 
 	function calculateViewability() {
-		viewabilityCounter = viewabilityCounter + 10;
+		viewabilityCounter += 10;
 		if (viewabilityCounter === 1000) {
 			clearInterval(viewabilityInterval);
 			$(w).off('scroll.trackPMPEntryPoint');
@@ -127,14 +127,12 @@ require([
 
 	function trackBannerImpression() {
 		track({
-			label: 'first-view',
-			action: tracker.ACTIONS.VIEW
+			action: tracker.ACTIONS.IMPRESSION
 		});
 	}
 
 	function trackBannerViewable() {
 		track({
-			label: 'viewable',
 			action: tracker.ACTIONS.VIEW
 		});
 	}
