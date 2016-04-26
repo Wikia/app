@@ -16,8 +16,11 @@ require([
 	function init() {
 		if (
 			mw.config.get('wgAction') !== 'view' ||
-			window.optimizely.variationNamesMap[freshlyRegisteredExperimentId] !== 'CHALLENGE-LIST' ||
-			window.optimizely.variationNamesMap[usersWithoutEditExperimentId] !== 'CHALLENGE-LIST' ||
+			!window.optimizely ||
+			(
+				window.optimizely.variationNamesMap[freshlyRegisteredExperimentId] !== 'CHALLENGE-LIST' &&
+				window.optimizely.variationNamesMap[usersWithoutEditExperimentId] !== 'CHALLENGE-LIST'
+			) ||
 			$.cookie(dismissCookieName) ||
 			mw.config.get('wgNamespaceNumber') !== 0
 		) {
@@ -55,7 +58,11 @@ require([
 		).on('click', '.spitfires-challenge-experiment .close-button', function (e) {
 			e.preventDefault();
 			tracker.trackVerboseClick(experimentName, 'dismissed');
-			$.cookie(dismissCookieName, 1, { expires: 30 });
+			$.cookie(dismissCookieName, 1, {
+				expires: 30,
+				path: mw.config.get('wgCookiePath'),
+				domain: mw.config.get('wgCookieDomain')
+			});
 			$(this).parent().remove();
 		}).on('mousedown touchstart', '.spitfires-challenge-experiment-content a', function () {
 			tracker.trackVerboseClick(experimentName, $(this).attr('class'));
