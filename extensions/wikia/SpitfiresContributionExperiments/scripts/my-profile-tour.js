@@ -42,9 +42,13 @@ require(['jquery', 'ext.wikia.spitfires.experiments.tracker', 'wikia.loader', 'w
 			lastStepTemplateData = [];
 
 		function init() {
-			if ($.cookie(seenCookieName) ||
-				window.optimizely.variationNamesMap[freshlyRegisteredExperimentId] !== 'USER-PROFILE' ||
-				window.optimizely.variationNamesMap[usersWithoutEditExperimentId] !== 'USER-PROFILE'
+			if (
+				$.cookie(seenCookieName) ||
+				!window.optimizely ||
+				(
+					window.optimizely.variationNamesMap[freshlyRegisteredExperimentId] !== 'USER-PROFILE' &&
+					window.optimizely.variationNamesMap[usersWithoutEditExperimentId] !== 'USER-PROFILE'
+				)
 			) {
 				return;
 			}
