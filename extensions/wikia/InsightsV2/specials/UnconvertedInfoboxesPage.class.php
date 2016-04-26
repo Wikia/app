@@ -80,7 +80,7 @@ class UnconvertedInfoboxesPage extends PageQueryPage {
 			}
 		}
 
-		wfRunHooks( 'UnconvertedInfoboxesQueryRecached' );
+		wfRunHooks( 'UnconvertedInfoboxesQueryRecached', [ 'count' => $num ] );
 
 		return $num;
 	}

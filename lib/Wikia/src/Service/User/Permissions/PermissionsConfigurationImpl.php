@@ -135,7 +135,6 @@ class PermissionsConfigurationImpl implements PermissionsConfiguration {
 		'geocode',
 		'nuke',
 		'refreshspecial',
-		'replacetext',
 		'spamregex',
 		'tboverride', 	// Implies tboverride-account
 		'tboverride-account', 	// For account creation
@@ -146,6 +145,7 @@ class PermissionsConfigurationImpl implements PermissionsConfiguration {
 		'achievements-exempt',
 		'achievements-explicit',
 		'admindashboard',
+		'commentcreate',
 		'commentmove',
 		'commentedit',
 		'commentdelete',
@@ -211,7 +211,6 @@ class PermissionsConfigurationImpl implements PermissionsConfiguration {
 		'messagetool',
 		'forceview',
 		'apigate_admin',
-		'batchuserrights',
 		'edithub',
 		'InterwikiEdit',
 		'multilookup',

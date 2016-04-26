@@ -309,6 +309,16 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 	}
 
 	/**
+	 * Return the database connection handler mock
+	 *
+	 * @param array $methods
+	 * @return PHPUnit_Framework_MockObject_MockObject
+	 */
+	protected function getDatabaseMock( $methods = [] ) {
+		return $this->getMock( 'DatabaseMysqli', $methods );
+	}
+
+	/**
 	 * Get a PHPUnit mock associated with class constructor
 	 *
 	 * Note: Use method name "__construct" when setting up expect rules.

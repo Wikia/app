@@ -324,6 +324,18 @@ describe('AdContext', function () {
 		expect(adContext.getContext().slots.invisibleHighImpact).toBeFalsy();
 	});
 
+	it('enables high impact 2 slot when country in instantGlobals.wgAdDriverHighImpact2SlotCountries', function () {
+		var adContext;
+
+		mocks.instantGlobals = {wgAdDriverHighImpact2SlotCountries: ['HH', 'CURRENT_COUNTRY', 'ZZ']};
+		adContext = getModule();
+		expect(adContext.getContext().slots.invisibleHighImpact2).toBeTruthy();
+
+		mocks.instantGlobals = {wgAdDriverHighImpact2SlotCountries: ['YY']};
+		adContext = getModule();
+		expect(adContext.getContext().slots.invisibleHighImpact2).toBeFalsy();
+	});
+
 	it('enables high impact slot when url param highimpactslot is set', function () {
 		spyOn(mocks.querystring, 'getVal').and.callFake(function (param) {
 			return param === 'highimpactslot' ?  '1' : '0';
@@ -380,30 +392,6 @@ describe('AdContext', function () {
 		mocks.instantGlobals = {wgAdDriverKruxCountries: ['AA', 'BB', 'CC']};
 		adContext = getModule();
 		expect(adContext.getContext().targeting.enableKruxTargeting).toBeFalsy();
-	});
-
-	it('disables krux when wiki is directed at children', function () {
-		var adContext;
-
-		mocks.win = {ads: {context: {targeting: {esrbRating: 'teen', enableKruxTargeting: true}}}};
-		mocks.instantGlobals = {wgAdDriverKruxCountries: ['CURRENT_COUNTRY']};
-		adContext = getModule();
-		expect(adContext.getContext().targeting.enableKruxTargeting).toBeTruthy();
-
-		mocks.win = {ads: {context: {targeting: {esrbRating: 'ec', enableKruxTargeting: true}}}};
-		mocks.instantGlobals = {wgAdDriverKruxCountries: ['CURRENT_COUNTRY']};
-		adContext = getModule();
-		expect(adContext.getContext().targeting.enableKruxTargeting).toBeFalsy();
-	});
-
-	it('disables krux when url param noexternals=1 is set', function () {
-		mocks.win = {ads: {context: {targeting: {enableKruxTargeting: true}}}};
-		mocks.instantGlobals = {wgAdDriverKruxCountries: ['AA', 'CURRENT_COUNTRY', 'BB']};
-		spyOn(mocks.querystring, 'getVal').and.callFake(function (param) {
-			return param === 'noexternals' ?  '1' : '0';
-		});
-
-		expect(getModule().getContext().targeting.enableKruxTargeting).toBeFalsy();
 	});
 
 	it('disables recovery when url is not set (e.g. for mercury skin)', function () {

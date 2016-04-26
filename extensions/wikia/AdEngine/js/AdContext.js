@@ -121,6 +121,9 @@ define('ext.wikia.adEngine.adContext', [
 			geo.isProperGeo(instantGlobals.wgAdDriverHighImpactSlotCountries)
 		) || isUrlParamSet('highimpactslot');
 
+		// INVISIBLE_HIGH_IMPACT_2 slot
+		context.slots.invisibleHighImpact2 = geo.isProperGeo(instantGlobals.wgAdDriverHighImpact2SlotCountries);
+
 		// INCONTENT_PLAYER slot
 		context.slots.incontentPlayer = geo.isProperGeo(instantGlobals.wgAdDriverIncontentPlayerSlotCountries) ||
 			isUrlParamSet('incontentplayer');
@@ -137,9 +140,7 @@ define('ext.wikia.adEngine.adContext', [
 		context.targeting.enableKruxTargeting = !!(
 			context.targeting.enableKruxTargeting &&
 			geo.isProperGeo(instantGlobals.wgAdDriverKruxCountries) &&
-			!instantGlobals.wgSitewideDisableKrux &&
-			context.targeting.esrbRating !== 'ec' && // FIXME ADEN-3147
-			!noExternals // FIXME ADEN-3147
+			!instantGlobals.wgSitewideDisableKrux
 		);
 
 		// Floating medrec
@@ -154,12 +155,6 @@ define('ext.wikia.adEngine.adContext', [
 			context.targeting.skin === 'oasis' &&
 			geo.isProperGeo(instantGlobals.wgAdDriverOverridePrefootersCountries) &&
 			!isPageType('home')
-		);
-
-		// Override leaderboard sizes
-		context.opts.overrideLeaderboardSizes = !!(
-			context.targeting.skin === 'oasis' &&
-			geo.isProperGeo(['JP'])
 		);
 
 		// Export the context back to ads.context

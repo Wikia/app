@@ -364,4 +364,3 @@ $magicWords = array(
 	'url_wiki'                => array( '0', 'ウィキ', 'WIKI' ),
 	'url_query'               => array( '0', 'クエリー', 'QUERY' ),
 );
-

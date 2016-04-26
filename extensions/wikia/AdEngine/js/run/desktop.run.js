@@ -8,7 +8,6 @@ require([
 	'ext.wikia.adEngine.customAdsLoader',
 	'ext.wikia.adEngine.dartHelper',
 	'ext.wikia.adEngine.messageListener',
-	'ext.wikia.adEngine.provider.evolve',
 	'ext.wikia.adEngine.recovery.helper',
 	'ext.wikia.adEngine.slot.scrollHandler',
 	'ext.wikia.adEngine.slotTracker',
@@ -25,7 +24,6 @@ require([
 	customAdsLoader,
 	dartHelper,
 	messageListener,
-	providerEvolve,
 	recoveryHelper,
 	scrollHandler,
 	slotTracker,
@@ -58,9 +56,6 @@ require([
 	};
 
 	messageListener.init();
-
-	// Register Evolve hop
-	win.evolve_hop = providerEvolve.hop;
 
 	// Register window.wikiaDartHelper so jwplayer can use it
 	win.wikiaDartHelper = dartHelper;
@@ -113,17 +108,19 @@ require([
 // Inject extra slots
 require([
 	'ext.wikia.adEngine.adContext',
+	'ext.wikia.adEngine.slot.highImpact',
 	'ext.wikia.adEngine.slot.inContent',
 	'ext.wikia.adEngine.slot.skyScraper3',
 	'wikia.document',
 	'wikia.window',
 	require.optional('ext.wikia.adEngine.slot.exitstitial')
-], function (adContext, inContent, skyScraper3, doc, win, exitstitial) {
+], function (adContext, highImpact, inContent, skyScraper3, doc, win, exitstitial) {
 	'use strict';
 
 	var context = adContext.getContext();
 
 	function initDesktopSlots() {
+		highImpact.init();
 		skyScraper3.init();
 
 		if (context.slots.incontentPlayer) {

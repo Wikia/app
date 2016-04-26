@@ -357,4 +357,3 @@ $specialPageAliases = array(
 );
 
 $separatorTransformTable = array( ',' => "\xc2\xa0", '.' => ',' );
-

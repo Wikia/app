@@ -338,4 +338,3 @@ $dateFormats = array(
 
 $separatorTransformTable = array( ',' => '.', '.' => ',' );
 $linkTrail = '/^([a-záéíóúñ]+)(.*)$/sDu';
-

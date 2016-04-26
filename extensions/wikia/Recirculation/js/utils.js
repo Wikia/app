@@ -50,9 +50,26 @@ define('ext.wikia.recirculation.utils', [
 		return label + '=slot-' + slot;
 	}
 
+	function addUtmTracking(items, placement) {
+		var params = {
+			utm_source: 'wikia',
+			utm_campaign: 'recirc',
+			utm_placement: placement
+		};
+
+		items = $.map(items, function(item, index) {
+			params.utm_content = index + 1;
+			item.url = item.url + '?' + $.param(params);
+			return item;
+		});
+
+		return items;
+	}
+
 	return {
 		buildLabel: buildLabel,
 		loadTemplate: loadTemplate,
-		renderTemplate: renderTemplate
+		renderTemplate: renderTemplate,
+		addUtmTracking: addUtmTracking
 	};
 });

@@ -23,6 +23,8 @@ define('ext.wikia.recirculation.views.rail', [
 		data.items[1].flag = 'Trending';
 		data.items[1].classes = 'trending';
 
+		data.items = utils.addUtmTracking(data.items, 'rail');
+
 		return utils.renderTemplate(options.template, data).then(function($html) {
 			if (options.before) {
 				$html = options.before($html);

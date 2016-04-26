@@ -1,0 +1,12 @@
+<div class="spitfires-challenge-experiment">
+	<a href="#" class="close-button">close</a>
+	<div class="spitfires-challenge-experiment-content">
+		<span class="intro-text">Do you know something about these topics, {{userName}}?</span>
+		{{#pages}}
+		<div class="page-to-edit">
+			<a class="page-link" href="{{pageUrl}}">{{pageTitle}}</a>
+			<a class="edit-link" href="{{editUrl}}"><img class="sprite edit-pencil" src="{{blankImgUrl}}"> Edit</a>
+		</div>
+		{{/pages}}
+	</div>
+</div>
