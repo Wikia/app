@@ -31,8 +31,10 @@ define('VisualEditorTourExperimentInit',
 		}
 
 		function isExperimentVariation() {
-			return window.optimizely.variationNamesMap[freshlyRegisteredExperimentId] === 'VE-TOUR' ||
-				window.optimizely.variationNamesMap[usersWithoutEditExperimentId] === 'VE-TOUR';
+			return window.optimizely && (
+					window.optimizely.variationNamesMap[freshlyRegisteredExperimentId] === 'VE-TOUR' ||
+					window.optimizely.variationNamesMap[usersWithoutEditExperimentId] === 'VE-TOUR'
+				);
 		}
 
 		function isNewlyregistered() {
