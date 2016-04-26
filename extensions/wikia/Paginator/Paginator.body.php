@@ -14,94 +14,83 @@
  *  * On any page other than the first page there should be no canonical (link rel="prev/next" is enough)
  *  * Avoid passing the same URL to getHeadItem and getBarHTML (pass to constructor instead?)
  *  * Support for indefinite pagination? 1 ... 47 48 49 _50_ 51 52 53 ...
+ *  * Move template to mustache
+ *  * No checking for max or min items per page
  */
 class Paginator {
 
-	// configuration settings
+	const MIN_ITEMS_PER_PAGE = 4;
+	const DISPLAYED_NEIGHBOURS = 3;
 
-	private $maxItemsPerPage = 48;
-	private $defaultItemsPerPage = 12;
-	private $minItemsPerPage = 4;
-
-	private $config = [
-		'itemsPerPage' => 8,
-		'displayedNeighbours' => 3
-	];
-
-	private $paginatedData = [];
+	// State
+	private $itemsPerPage = 8;
 	private $pagesCount = 0;
-	private $activePage = 0;
+	private $activePage = 1;
+
+	// Deprecated state
+	private $paginatedData = [];
 
 	/**
 	 * Creates a new Pagination object.
 	 *
-	 * @param int $aData
-	 * @param int $iItemsPerPage
-	 * @param int $maxItemsPerPage
+	 * @param int $count number of items to paginate through
+	 * @param int $itemsPerPage number of items to display per page (capped to between 4 and 48)
+	 * @param int $maxItemsPerPage override the maximum of 48 items per page
 	 * @return Paginator
 	 */
-	public static function newFromCount( $aData, $iItemsPerPage = 8, $maxItemsPerPage = 48 ) {
-		$aConfig = [
-			'itemsPerPage' => $iItemsPerPage,
-			'maxItemsPerPage' => $maxItemsPerPage,
-		];
-
-		return new Paginator( $aData, $aConfig );
+	public static function newFromCount( $count, $itemsPerPage, $maxItemsPerPage = 48 ) {
+		return new Paginator( $count, $itemsPerPage, $maxItemsPerPage );
 	}
 
 	/**
 	 * @deprecated use newFromCount
 	 * @param array $aData
-	 * @param int $iItemsPerPage
+	 * @param int $itemsPerPage
 	 * @param int $maxItemsPerPage
 	 * @return Paginator
 	 */
-	public static function newFromArray( array $aData, $iItemsPerPage = 8, $maxItemsPerPage = 48 ) {
-		return self::newFromCount( $aData, $iItemsPerPage, $maxItemsPerPage );
+	public static function newFromArray( array $aData, $itemsPerPage, $maxItemsPerPage = 48 ) {
+		return self::newFromCount( $aData, $itemsPerPage, $maxItemsPerPage );
 	}
 
 	/**
-	 * Creates a new Pagination object.
-	 *
-	 * @param   array $aData
-	 * @param bool $aConfig
+	 * Paginator constructor.
+	 * @param int|array $data number of data to paginate or the data to paginate
+	 * @param int $itemsPerPage number of items to display per page (capped to between 4 and 48)
+	 * @param int $maxItemsPerPage override the maximum of 48 items per page
 	 */
-	private function __construct( $aData, $aConfig = false ) {
-		$this->maxItemsPerPage = $aConfig['maxItemsPerPage'];
-		$this->setConfig( $aConfig );
-		$this->paginate( $aData );
-	}
-
-	private function setConfig( $aConfig ) {
-		if ( !empty( $aConfig ) ) {
-			if ( isset( $aConfig['itemsPerPage'] ) && is_int( $aConfig['itemsPerPage'] ) ) {
-
-				if ( $aConfig['itemsPerPage'] > $this->maxItemsPerPage ) {
-					$aConfig['itemsPerPage'] = $this->maxItemsPerPage;
-				}
-				if ( $aConfig['itemsPerPage'] < $this->minItemsPerPage ) {
-					$aConfig['itemsPerPage'] = $this->minItemsPerPage;
-				}
-
-				$this->config['itemsPerPage'] = $aConfig['itemsPerPage'];
-
-			} else {
-				$this->config['itemsPerPage'] = $this->defaultItemsPerPage;
-			}
+	private function __construct( $data, $itemsPerPage, $maxItemsPerPage ) {
+		if ( !is_int( $itemsPerPage ) ) {
+			throw new InvalidArgumentException( 'Paginator: need an int for $itemsPerPage' );
 		}
-	}
 
-	private function paginate( $aData ) {
-		if ( is_array( $aData ) ) {
-			if ( count( $aData ) > 0 ) {
-				$aPaginatedData = array_chunk( $aData, $this->config['itemsPerPage'] );
-				$this->paginatedData = $aPaginatedData;
+		if ( !is_int( $maxItemsPerPage ) ) {
+			throw new InvalidArgumentException( 'Paginator: need an int for $maxItemsPerPage' );
+		}
+
+		if ( !is_array( $data ) && !is_int( $data ) ) {
+			throw new InvalidArgumentException( 'Paginator: need an int or array for $data' );
+		}
+
+		$itemsPerPage = min( $itemsPerPage, $maxItemsPerPage );
+		$itemsPerPage = max( $itemsPerPage, self::MIN_ITEMS_PER_PAGE );
+		$this->itemsPerPage = $itemsPerPage;
+
+		if ( is_array( $data ) ) {
+			$dataCount = count( $data );
+		} else {
+			$dataCount = $data;
+		}
+
+		$this->pagesCount = ceil( $dataCount / $this->itemsPerPage );
+
+		if ( is_array( $data ) ) {
+			// deprecated case
+			if ( count( $data ) > 0 ) {
+				$this->paginatedData = array_chunk( $data, $this->itemsPerPage );
 			} else {
-				$this->paginatedData = $aData;
+				$this->paginatedData = [];
 			}
-			$this->pagesCount = count( $this->paginatedData );
-		} else if ( is_int( $aData ) ) {
-			$this->pagesCount = ceil( $aData / $this->config['itemsPerPage'] );
 		}
 	}
 
@@ -111,70 +100,64 @@ class Paginator {
 	 * @param int $pageNumber
 	 */
 	public function setActivePage( $pageNumber ) {
-		$pageNumber = min( $pageNumber, $this->getPagesCount() );
-		$pageNumber = max( 1, $pageNumber );
-		$this->activePage = $pageNumber - 1;
+		$pageNumber = min( $pageNumber, $this->pagesCount );
+		$pageNumber = max( $pageNumber, 1 );
+		$this->activePage = $pageNumber;
 	}
 
 	/**
 	 * Get the current page of the passed data
 	 *
-	 * @param array|null $aData data to be paginated (if null, the data passed from newFromArray is used)
+	 * @param array|null $aData data to be paginated (DEPRECATED: if null, the data passed from newFromArray is used)
 	 * @return array
 	 */
-	public function getCurrentPage( $aData = null ) {
-		if ( is_array( $aData ) ) {
-			if ( count( $aData ) > 0 ) {
-				$aPaginatedData = array_chunk( $aData, $this->config['itemsPerPage'] );
-			} else {
-				$aPaginatedData = $aData;
-			}
-			$iPagesCount = count( $aPaginatedData );
+	public function getCurrentPage( array $aData = null ) {
+		$index = $this->activePage - 1;
 
-			if ( $this->activePage < $iPagesCount ) {
-				return $aPaginatedData[$this->activePage];
-			}
+		// deprecated case:
+		if ( is_null( $aData ) ) {
+			return $this->paginatedData[$index];
+		}
+
+		if ( count( $aData ) > 0 ) {
+			$aPaginatedData = array_chunk( $aData, $this->itemsPerPage );
+		} else {
+			$aPaginatedData = $aData;
+		}
+
+		if ( !isset( $aPaginatedData[$index] ) ) {
 			return [];
 		}
-		return $this->paginatedData[$this->activePage];
+
+		return $aPaginatedData[$index];
 	}
 
 	private function getBarData() {
 		$aData = [];
+
+		$leftEllipsis = ( $this->activePage > self::DISPLAYED_NEIGHBOURS + 2 );
+		$rightEllipsis = ( $this->activePage < $this->pagesCount - self::DISPLAYED_NEIGHBOURS - 1 );
+		$leftRangeStart = max( $this->activePage - self::DISPLAYED_NEIGHBOURS, 2 );
+		$rightRangeStart = min( $this->activePage + self::DISPLAYED_NEIGHBOURS, $this->pagesCount - 1 );
+
 		$aData[] = 1;
 
-		if ( $this->activePage - $this->config['displayedNeighbours'] > 1 ) {
-			$aData[] = '';
-			$beforeIterations = $this->config['displayedNeighbours'];
-		} else {
-			$beforeIterations = $this->activePage - 1;
-		}
-
-		for ( $i = $beforeIterations; $i > 0; $i-- ) {
-			if ( $i == $this->activePage ) break;
-			$aData[] = $this->activePage - $i + 1;
-		}
-
-		if ( $this->activePage != 0 && $this->activePage != $this->pagesCount ) {
-			$aData[] = $this->activePage + 1;
-		};
-
-		for ( $i = 1; $this->pagesCount > ( $this->activePage + $i + 1 ); $i++ ) {
-			if ( $i > $this->config['displayedNeighbours'] ) break;
-			$aData[] = $this->activePage + $i + 1;
-		}
-
-		if ( $this->activePage + 2 + $this->config['displayedNeighbours'] < $this->pagesCount ) {
-			$aData[] = '';
-		}
-
-		if ( $this->pagesCount > $this->activePage + 1 ) {
+		if ( $this->pagesCount > 1 ) {
+			if ( $leftEllipsis ) {
+				$aData[] = '';
+			}
+			for ( $i = $leftRangeStart; $i <= $rightRangeStart; $i++ ) {
+				$aData[] = $i;
+			}
+			if ( $rightEllipsis ) {
+				$aData[] = '';
+			}
 			$aData[] = $this->pagesCount;
 		}
 
 		$aResult = [
 			'pages' => $aData,
-			'currentPage' => $this->activePage + 1
+			'currentPage' => $this->activePage
 		];
 
 		return $aResult;
@@ -212,27 +195,19 @@ class Paginator {
 	public function getHeadItem( $url ) {
 		$links = '';
 
-		// Converting from 0-indexed to 1-indexed
-		$currentPage = $this->activePage + 1;
-
-		// Pages outside the pagination range
-		if ( $currentPage < 1 || $currentPage > $this->pagesCount ) {
-			return '';
-		}
-
 		// Has a previous page?
-		if ( $currentPage > 1 ) {
+		if ( $this->activePage > 1 ) {
 			$links .= "\t" . Html::element( 'link', [
 					'rel' => 'prev',
-					'href' => str_replace( '%s', $currentPage - 1, $url )
+					'href' => str_replace( '%s', $this->activePage - 1, $url )
 				] ) . PHP_EOL;
 		}
 
 		// Has a next page?
-		if ( $currentPage < $this->pagesCount ) {
+		if ( $this->activePage < $this->pagesCount ) {
 			$links .= "\t" . Html::element( 'link', [
 					'rel' => 'next',
-					'href' => str_replace( '%s', $currentPage + 1, $url )
+					'href' => str_replace( '%s', $this->activePage + 1, $url )
 				] ) . PHP_EOL;
 		}
 
