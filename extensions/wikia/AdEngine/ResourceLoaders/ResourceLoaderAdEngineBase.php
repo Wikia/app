@@ -3,7 +3,7 @@
 abstract class ResourceLoaderAdEngineBase extends ResourceLoaderModule {
 	const TTL_SCRIPTS = 1800; // time to live for scripts downloaded from external sources
 	const TTL_GRACE = 300;    // five minutes -- cache last response additionally for this time if we can't download the scripts anymore
-	const CACHE_BUSTER = 1;
+	const CACHE_BUSTER = 3;
 	public static $localCache = null;
 	/**
 	 * Configure scripts that should be loaded into one package
@@ -100,14 +100,12 @@ abstract class ResourceLoaderAdEngineBase extends ResourceLoaderModule {
 		$now = $this->getCurrentTimestamp();
 
 		$memKey = wfSharedMemcKey('adengine', get_class($this) . __FUNCTION__, static::CACHE_BUSTER);
-
 		$cached = $wgMemc->get($memKey);
 		if (is_array($cached) && $cached['ttl'] > $now) {
 			// Cache hit!
 			static::$localCache[get_class($this)] = $cached;
 			return $cached;
 		}
-
 		// Cache miss, need to re-download the scripts
 		$generated = $this->generateData( $this->getScripts() );
 

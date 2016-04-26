@@ -147,7 +147,7 @@ define('ext.wikia.adEngine.adEngine', [
 
 			slotTweaker.show(slotName);
 
-			log(['fillInSlot', slot, 'provider list', JSON.stringify(providerList)], 'debug', logGroup);
+			log(['fillInSlot', slot, 'provider list', providerList.slice()], 'debug', logGroup);
 
 			function handleNoAd() {
 				log(['handleNoAd', slot], 'debug', logGroup);
@@ -189,7 +189,7 @@ define('ext.wikia.adEngine.adEngine', [
 		log(['run', 'initializing lazyQueue on the queue'], 'debug', logGroup);
 		lazyQueue.makeQueue(adslots, decorate(fillInSlot, decorators));
 
-		log(['run', 'launching queue on adslots'], 'debug', logGroup);
+		log(['run', 'launching queue on adslots ('+adslots.length+')'], 'debug', logGroup);
 		adslots.start();
 
 		log(['run', 'initial queue handled'], 'debug', logGroup);
