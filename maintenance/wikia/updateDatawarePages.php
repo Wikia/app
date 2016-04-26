@@ -33,12 +33,6 @@ class UpdateDatawarePages extends Maintenance {
 		$this->output("Finished.\n");
 	}
 
-	private function logError( Exception $exception ) {
-		WikiaLogger::instance()->error( 'Weekly Digest Error', [
-			'exception' => $exception->getMessage(),
-		] );
-	}
-
 	private function getLocalPages() {
 		global $wgContentNamespaces;
 
@@ -82,6 +76,9 @@ class UpdateDatawarePages extends Maintenance {
 		$res->free();
 
 		$this->output("Got " . count($pages) . " local pages.\n");
+		$this->addRuntimeStatistics([
+			'local_pages_count_int' => count($pages),
+		]);
 
 		return $pages;
 	}
@@ -134,6 +131,9 @@ class UpdateDatawarePages extends Maintenance {
 		$res->free();
 
 		$this->output("Got " . count($pages) . " pages from dataware.\n");
+		$this->addRuntimeStatistics([
+			'dataware_pages_count_int' => count($pages),
+		]);
 
 		return $pages;
 	}
@@ -158,6 +158,11 @@ class UpdateDatawarePages extends Maintenance {
 			$this->comparePage( $stats, $dbw, $localPage, $datawarePage );
 		}
 		$this->output("Update statistics: added={$stats['added']} updated={$stats['updated']} removed={$stats['removed']}.\n");
+		$this->addRuntimeStatistics([
+			'pages_added_int' => $stats['added'],
+			'pages_updated_int' => $stats['updated'],
+			'pages_removed_int' => $stats['removed'],
+		]);
 	}
 
 	private function comparePage( &$stats, $dbw, $localPage, $datawarePage ) {
