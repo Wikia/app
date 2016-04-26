@@ -66,16 +66,19 @@ require([
 	}
 
 	function updateModalHeader() {
+		var allCountElement = $('#allCount'),
+			adminsCountElement = $('#adminsCount');
+
 		if (typeof allMembersCount === 'undefined') {
-			$('#allCoint').html('');
+			allCountElement.html('');
 		} else {
-			$('#allCount').html('(' + allMembersCount + ')');
+			allCountElement.html('(' + allMembersCount + ')');
 		}
 
 		if (typeof adminsCount === 'undefined') {
-			$('#adminsCount').html('');
+			adminsCountElement.html('');
 		} else {
-			$('#adminsCount').html('(' + adminsCount + ')');
+			adminsCountElement.html('(' + adminsCount + ')');
 		}
 	}
 
@@ -153,8 +156,9 @@ require([
 		getModalNavHtml().then(function (navHtml) {
 			// Switch highlight to new tab
 			var loading = mustache.render(templates.modalLoadingScreen, {
-				loadingText: mw.html.escape($.msg('communitypage-modal-tab-loading')),
-			}), html = navHtml + loading;
+					loadingText: mw.html.escape($.msg('communitypage-modal-tab-loading')),
+				}),
+				html = navHtml + loading;
 
 			window.activeModal.$content
 				.html(html)
