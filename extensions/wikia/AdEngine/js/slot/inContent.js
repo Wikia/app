@@ -1,11 +1,10 @@
 /*global define*/
 define('ext.wikia.adEngine.slot.inContent', [
 	'ext.wikia.adEngine.adTracker',
-	'ext.wikia.adEngine.slotTweaker',
 	'JSMessages',
 	'wikia.log',
 	'wikia.window'
-], function (adTracker, slotTweaker, msg, log, win) {
+], function (adTracker, msg, log, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.slot.inContent',
@@ -15,7 +14,7 @@ define('ext.wikia.adEngine.slot.inContent', [
 	/**
 	 * Adds dynamically new slot in the right place and sends tracking data
 	 */
-	function init(slotName) {
+	function init(slotName, onSuccessCallback) {
 		var adHtml = '<div id="INCONTENT_WRAPPER"><div id="' + slotName + '" class="wikia-ad default-height" data-label="' + msg('adengine-advertisement') + '"></div></div>',
 			logMessage,
 			logWikiData = '(wikiId: ' + win.wgCityId + ' articleId: ' + win.wgArticleId + ')',
@@ -53,11 +52,7 @@ define('ext.wikia.adEngine.slot.inContent', [
 		adTracker.track('slot/' + slotNameGA + '/success');
 		win.adslots2.push({
 			slotName: slotName,
-			onSuccess: function () {
-				if (slotName === 'INCONTENT_LEADERBOARD') {
-					slotTweaker.adjustIframeByContentSize(slotName);
-				}
-			}
+			onSuccess: onSuccessCallback
 		});
 	}
 
