@@ -10,16 +10,6 @@ $close-button-background: '/resources/wikia/ui_components/modal/images/close-dar
 	$close-button-background: '/resources/wikia/ui_components/modal/images/close-light.svg';
 }
 
-.viewability-tracker {
-	position: absolute;
-	top: 100px;
-	right: 0;
-	background: #000;
-	color: #fff;
-	height: 50px;
-	width: 200px;
-}
-
 .pmp-entry-point {
 	background: url('/extensions/wikia/PotentialMemberPageExperiments/images/858-px-background.png') no-repeat center bottom;
 	border-bottom: 2px solid $color-blue;
