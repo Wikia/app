@@ -364,33 +364,13 @@ class CreateWiki {
 
 		/**
 		 * set tags per language and per hub
-		 * @FIXME the switch is !@#$ creazy, but I didn't find a core function
 		 */
 		$tags = new WikiFactoryTags( $this->mNewWiki->city_id );
-		$langTag = $this->mNewWiki->language;
-		if ( $langTag !== 'en' ) {
-			switch ( $langTag ) {
-				case 'pt-br':
-					$langTag = 'pt';
-					break;
-				case 'zh-tw':
-				case 'zh-hk':
-				case 'zh-clas':
-				case 'zh-class':
-				case 'zh-classical':
-				case 'zh-cn':
-				case 'zh-hans':
-				case 'zh-hant':
-				case 'zh-min-':
-				case 'zh-min-n':
-				case 'zh-mo':
-				case 'zh-sg':
-				case 'zh-yue':
-					$langTag = 'zh';
-					break;
+		if ( $this->mNewWiki->language !== 'en') {
+			$langTag = Locale::getPrimaryLanguage( $this->mNewWiki->language );
+			if ( !empty($langTag) ) {
+				$tags->addTagsByName( $langTag );
 			}
-
-			$tags->addTagsByName( $langTag );
 		}
 
 		/**
