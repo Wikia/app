@@ -26,7 +26,7 @@ class Hooks {
 		return true;
 	}
 
-	public function onAfterUserLogin( \User $user, $html ) {
+	public function onAfterUserLogin( \User $user ) {
 		$this->manageUserActivityGroupCookie( $user );
 
 		return true;
