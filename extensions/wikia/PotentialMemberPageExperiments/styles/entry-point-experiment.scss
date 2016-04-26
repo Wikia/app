@@ -1,4 +1,5 @@
 @import 'skins/shared/color';
+@import 'skins/oasis/css/core/breakpoints-variables';
 
 $color-blue-darken: #144b93;
 $color-blue: #1a5eb8;
@@ -58,5 +59,81 @@ $close-button-background: '/resources/wikia/ui_components/modal/images/close-dar
 	&:hover {
 		background: $color-blue-darken;
 		text-decoration: none;
+	}
+}
+
+.pmp-entry-point-glue-bottom {
+	background-color: #fff;
+	background: url('/extensions/wikia/PotentialMemberPageExperiments/images/background-glue.jpg') no-repeat;
+	background-size: 100% 100%;
+	border-left: 6px solid $color-blue;
+	bottom: 0;
+	height: 320px;
+	padding-left: 232px;
+	position: fixed;
+	right: -1000px;
+	text-align: left;
+	width: 718px;
+	z-index: 2;
+
+	p.pmp-entry-point-message {
+		padding-top: 80px;
+		width: 560px;
+	}
+
+	.pmp-entry-point-button {
+		text-align: center;
+	}
+
+	.pmp-entry-point-close {
+		right: 25px;
+		top: 25px;
+	}
+
+	&.initialized {
+		animation-duration: 2s;
+		animation-name: slidein;
+		animation-timing-function: ease-out;
+		right: 0;
+	}
+}
+
+@keyframes slidein {
+	0% {
+		right: -1000px;
+	}
+
+	100% {
+		right: 0;
+	}
+}
+
+@media #{$breakpoint-medium-up} {
+	.pmp-entry-point-glue-bottom {
+		p.pmp-entry-point-message {
+			font-size: 48px;
+			line-height: 56px;
+		}
+
+		.pmp-entry-point-button {
+			font-size: 14px;
+			height: 24px;
+			margin-top: 12px;
+			padding-top: 16px;
+			width: 122px;
+		}
+	}
+}
+
+@media #{$breakpoint-small-only} {
+	.pmp-entry-point-glue-bottom {
+		height: 200px;
+		padding-left: 142px;
+		width: 452px;
+
+		p.pmp-entry-point-message {
+			padding-top: 50px;
+			width: 270px;
+		}
 	}
 }

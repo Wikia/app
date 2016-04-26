@@ -45,7 +45,14 @@ require([
 						mw.util.$content.append($banner);
 					}
 				}
-			}
+			},
+			GLUE_BOTTOM: {
+				type: 'glue-bottom',
+				addEntryPoint: function () {
+					$('body').append($banner);
+					$banner.addClass('initialized');
+				}
+			},
 		};
 
 	function init() {
