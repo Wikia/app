@@ -10,16 +10,12 @@ require([
 	'use strict';
 
 	var $banner,
-		viewabilityCounter = 0,
-		viewabilityInterval,
 		bannerBottomOffset,
 		bannerHeight50p,
 		bannerOffset,
+		viewabilityCounter = 0,
+		viewabilityInterval,
 		dismissCookieName = 'pmp-entry-point-dismissed',
-		track = tracker.buildTrackingFunction({
-			category: 'potential-member-experiment',
-			trackingMethod: 'analytics'
-		}),
 		experimentGroup = abTest.getGroup('POTENTIAL_MEMBER_PAGE_ENTRY_POINTS'),
 		experiments = {
 			TOP: {
@@ -49,7 +45,11 @@ require([
 					}
 				}
 			}
-		};
+		},
+		track = tracker.buildTrackingFunction({
+			category: 'potential-member-experiment',
+			trackingMethod: 'analytics'
+		});
 
 	function init() {
 		if ($.cookie(dismissCookieName)) {
