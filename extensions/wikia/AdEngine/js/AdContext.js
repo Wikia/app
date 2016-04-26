@@ -157,6 +157,8 @@ define('ext.wikia.adEngine.adContext', [
 			!isPageType('home')
 		);
 
+		context.opts.yavli = !noExternals && geo.isProperGeo(instantGlobals.wgAdDriverYavliCountries);
+
 		// Export the context back to ads.context
 		// Only used by Lightbox.js, WikiaBar.js and AdsInContext.js
 		if (w.ads && w.ads.context) {
