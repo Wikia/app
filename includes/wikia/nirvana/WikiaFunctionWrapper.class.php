@@ -77,7 +77,7 @@ class WikiaFunctionWrapper {
 	/**
 	 * wfGetDB wrapper
 	 * @see wfGetDB
-	 * @return DatabaseMysql
+	 * @return DatabaseMysqli
 	 * @deprecated
 	 */
 	public function &getDB( $db, $groups = array(), $wiki = false ) {

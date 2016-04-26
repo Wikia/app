@@ -11,7 +11,7 @@ class UnusedTemplatesHandlerTest extends WikiaBaseTest {
 	 * @dataProvider isUsedDataProvider
 	 */
 	public function testIsUsed( $selectResult, $expected, $message ) {
-		$dbMock = $this->getMock( 'DatabaseMysqli', [ 'selectRow' ] );
+		$dbMock = $this->getDatabaseMock([ 'selectRow' ] );
 		$dbMock->expects( $this->once() )
 			->method( 'selectRow' )
 			->willReturn( $selectResult );
@@ -33,7 +33,7 @@ class UnusedTemplatesHandlerTest extends WikiaBaseTest {
 	public function testMarkAsUnusedFromResultsInvalidData() {
 		$resultsMock = $this->getMock( 'ResultWrapper' );
 
-		$dbMock = $this->getMock( 'DatabaseMysqli', [ 'begin' ] );
+		$dbMock = $this->getDatabaseMock([ 'begin' ] );
 		$dbMock->expects( $this->never() )
 			->method( 'begin' );
 

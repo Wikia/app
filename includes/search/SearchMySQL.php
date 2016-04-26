@@ -34,7 +34,7 @@ class SearchMySQL extends SearchEngine {
 
 	/**
 	 * Creates an instance of this class
-	 * @param $db DatabaseMysql: database object
+	 * @param $db DatabaseMysqli: database object
 	 */
 	function __construct( $db ) {
 		parent::__construct( $db );

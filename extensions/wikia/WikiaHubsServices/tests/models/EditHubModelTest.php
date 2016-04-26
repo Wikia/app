@@ -98,7 +98,7 @@ class EditHubModelTest extends WikiaBaseTest {
 		);
 
 		// Mock database
-		$dbMock = $this->getMock('DatabaseMysql', array('makeList'));
+		$dbMock = $this->getDatabaseMock(array('makeList'));
 		$dbMock->expects($this->any())
 			->method('makeList')
 			->will($this->returnValue(''));
@@ -192,7 +192,7 @@ class EditHubModelTest extends WikiaBaseTest {
 		);
 
 		// Mock database
-		$dbMock = $this->getMock('DatabaseMysql', array('makeList'));
+		$dbMock = $this->getDatabaseMock(array('makeList'));
 		$dbMock->expects($this->any())
 			->method('makeList')
 			->will($this->returnValue(''));
@@ -340,7 +340,7 @@ class EditHubModelTest extends WikiaBaseTest {
 			'editorId' => 666
 		);
 
-		$dbMock = $this->getMock('DatabaseMysql', array('selectField', 'insert'));
+		$dbMock = $this->getDatabaseMock(array('selectField', 'insert'));
 		$dbMock->expects($this->once())
 			->method('selectField')
 			->will($this->returnValue(0));
@@ -402,7 +402,7 @@ class EditHubModelTest extends WikiaBaseTest {
 			'editorId' => 666
 		);
 
-		$dbMock = $this->getMock('DatabaseMysql', array('selectField', 'update'));
+		$dbMock = $this->getDatabaseMock(array('selectField', 'update'));
 		$dbMock->expects($this->once())
 			->method('selectField')
 			->will($this->returnValue(1));
@@ -495,7 +495,7 @@ class EditHubModelTest extends WikiaBaseTest {
 			)
 		);
 
-		$dbMock = $this->getMock('DatabaseMysql', array('makeList', 'select', 'fetchRow'));
+		$dbMock = $this->getDatabaseMock(array('makeList', 'select', 'fetchRow'));
 
 		$dbMock->expects($this->any())
 			->method('makeList')
@@ -540,7 +540,7 @@ class EditHubModelTest extends WikiaBaseTest {
 			)
 		);
 
-		$dbMock = $this->getMock('DatabaseMysql', array('makeList', 'select', 'fetchRow'));
+		$dbMock = $this->getDatabaseMock(array('makeList', 'select', 'fetchRow'));
 
 		$dbMock->expects($this->any())
 			->method('makeList')
@@ -576,7 +576,7 @@ class EditHubModelTest extends WikiaBaseTest {
 	 */
 	public function testGetCalendarDataEmptyData() {
 
-		$dbMock = $this->getMock('DatabaseMysql', array('makeList', 'select', 'fetchRow'));
+		$dbMock = $this->getDatabaseMock(array('makeList', 'select', 'fetchRow'));
 
 		$dbMock->expects($this->any())
 			->method('makeList')
@@ -622,7 +622,7 @@ class EditHubModelTest extends WikiaBaseTest {
 			)
 		);
 
-		$dbMock = $this->getMock('DatabaseMysql', array('makeList', 'select', 'fetchRow'));
+		$dbMock = $this->getDatabaseMock(array('makeList', 'select', 'fetchRow'));
 
 		$dbMock->expects($this->any())
 			->method('makeList')
@@ -670,7 +670,7 @@ class EditHubModelTest extends WikiaBaseTest {
 	 * @dataProvider getDataModulesSavedDataProvider
 	 */
 	public function testCheckModulesSaved($savedModules, $expectedVal) {
-		$dbMock = $this->getMock('DatabaseMysql', array( 'select', 'fetchRow'));
+		$dbMock = $this->getDatabaseMock(array( 'select', 'fetchRow'));
 
 		$dbMock->expects($this->any())
 			->method('fetchRow')
