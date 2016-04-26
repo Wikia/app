@@ -12,8 +12,6 @@ require([
 	var $banner,
 		bannerBottomOffset,
 		bannerOffset,
-		viewabilityCounter = 0,
-		viewabilityInterval,
 		dismissCookieName = 'pmp-entry-point-dismissed',
 		experimentGroup = abTest.getGroup('POTENTIAL_MEMBER_PAGE_ENTRY_POINTS'),
 		experiments = {
@@ -48,7 +46,9 @@ require([
 		track = tracker.buildTrackingFunction({
 			category: 'potential-member-experiment',
 			trackingMethod: 'analytics'
-		});
+		}),
+		viewabilityCounter = 0,
+		viewabilityInterval;
 
 	function init() {
 		if ($.cookie(dismissCookieName)) {
@@ -100,6 +100,11 @@ require([
 		}));
 	}
 
+	function isEntryPointInViewport() {
+		return bannerOffset > w.scrollY &&
+			bannerBottomOffset < (w.innerHeight + w.scrollY);
+	}g
+
 	function checkViewability() {
 		if (isEntryPointInViewport()) {
 			if (viewabilityCounter === 0) {
@@ -118,11 +123,6 @@ require([
 			$(w).off('scroll.trackPMPEntryPoint');
 			trackBannerViewable();
 		}
-	}
-
-	function isEntryPointInViewport() {
-		return bannerOffset > w.scrollY &&
-			bannerBottomOffset < (w.innerHeight + w.scrollY);
 	}
 
 	function trackBannerImpression() {
