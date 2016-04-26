@@ -11,7 +11,6 @@ require([
 
 	var $banner,
 		bannerBottomOffset,
-		bannerHeight50p,
 		bannerOffset,
 		viewabilityCounter = 0,
 		viewabilityInterval,
@@ -84,9 +83,13 @@ require([
 
 		experiment.addEntryPoint();
 
+		/**
+		 * For viewability at least 50% of an element should be visible for at least 1s.
+		 * However, at the top the banner is covered with our nav bar, so it's just waiting
+		 * for 100% of banner in viewport which results in ~50% visibility for a user.
+		 */
 		bannerOffset = $banner.offset().top;
-		bannerBottomOffset = bannerOffset + $banner.outerHeight();
-		bannerHeight50p = $banner.height() / 2;
+		bannerBottomOffset = bannerOffset + ($banner.outerHeight() / 2);
 
 		if (isEntryPointInViewport()) {
 			checkViewability();
@@ -119,7 +122,7 @@ require([
 
 	function isEntryPointInViewport() {
 		return bannerOffset > w.scrollY &&
-			(bannerBottomOffset - bannerHeight50p) < (w.scrollY + w.innerHeight);
+			bannerBottomOffset < (w.innerHeight + w.scrollY);
 	}
 
 	function trackBannerImpression() {
