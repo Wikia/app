@@ -13,6 +13,7 @@ $close-button-background: '/resources/wikia/ui_components/modal/images/close-dar
 
 .pmp-entry-point {
 	background: url('/extensions/wikia/PotentialMemberPageExperiments/images/858-px-background.png') no-repeat center bottom;
+	background-size: cover;
 	border-bottom: 2px solid $color-blue;
 	height: 150px;
 	margin: 18px 0;
