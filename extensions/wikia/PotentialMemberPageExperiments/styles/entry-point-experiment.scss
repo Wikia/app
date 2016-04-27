@@ -15,9 +15,9 @@ $close-button-background: '/resources/wikia/ui_components/modal/images/close-dar
 	background: url('/extensions/wikia/PotentialMemberPageExperiments/images/858-px-background.png') no-repeat center bottom;
 	background-size: cover;
 	border-bottom: 2px solid $color-blue;
-	height: 150px;
 	margin: 18px 0;
 	overflow: hidden;
+	padding-bottom: 34px;
 	position: relative;
 	text-align: center;
 
@@ -25,15 +25,12 @@ $close-button-background: '/resources/wikia/ui_components/modal/images/close-dar
 		color: $color-message-text;
 		display: block;
 		font-size: 24px;
+		margin: 0;
 		padding: 33px 0 15px;
 
 		strong {
 			font-weight: bold;
 		}
-	}
-
-	p, p + p {
-		margin: 0;
 	}
 }
 
