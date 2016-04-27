@@ -39,9 +39,10 @@ define('CreateNewWiki',[], function () {
 		hiddenDuplicate,
 		answer,
 		keys,
-		userAuth;
+		userAuth,
+		stringHelper;
 
-	function init(stringHelper) {
+	function init(strHelper) {
 		// pre-cache
 		wb = $('#CreateNewWiki');
 		$nameWikiWrapper = $('#NameWiki');
@@ -66,197 +67,33 @@ define('CreateNewWiki',[], function () {
 		nextButtons = wb.find('nav .next');
 		finishSpinner = wb.find('.finish-status');
 		descWikiNext = $descWikiWrapper.find('nav .next');
+		stringHelper = strHelper;
 
 		var pane;
 
 		// Name Wiki event handlers
 		checkNextButtonStep1();
 
-		$nameWikiWrapper.find('input.next').click(function () {
-			if (isNameWikiSubmitError()) {
-				nameWikiSubmitError
-					.show()
-					.html(WikiBuilderCfg['name-wiki-submit-error'])
-					.delay(3000)
-					.fadeOut();
-			} else {
-				saveState({
-					wikiName: wikiName.val(),
-					wikiDomain: wikiDomain.val(),
-					wikiLang: wikiLanguage.find('option:selected').val()
-				});
-				if (window.wgUserName) {
-					onAuthSuccess();
-				} else {
-					require(['AuthModal', 'wikia.querystring'], function (authModal, Querystring) {
-						var redirectUrl = new Querystring();
+		$nameWikiWrapper.find('input.next').click(onNameWikiWrapperClick);
 
-						redirectUrl.setVal({
-							wikiName: wikiName.val(),
-							wikiDomain: wikiDomain.val(),
-							wikiLanguage: wikiLanguage.find('option:selected').val()
-						});
+		wikiDomain.keyup(onWikiDomainKeyUp);
 
-						authModal.load({
-							url: '/signin?redirect=' + encodeURIComponent(redirectUrl.toString()),
-							origin: 'create-new-wikia',
-							onAuthSuccess: onAuthSuccess
-						});
-					});
-				}
-			}
-		});
+		wikiName.keyup(onWikiNameKeyUp);
 
-		wikiDomain.keyup(function () {
-			domainAjax = true;
-			checkNextButtonStep1();
-			if (wdtimer) {
-				clearTimeout(wdtimer);
-			}
-			wdtimer = setTimeout(checkDomain, 500);
-		});
+		wikiLanguage.bind('change', onWikiLanguageChange);
 
-		wikiName.keyup(function () {
-			nameAjax = true;
-			checkNextButtonStep1();
-			var name = $(this).val();
+		$('#ChangeLang').click(onChangeLangClick);
 
-			name = $.trim(stringHelper.latinise(name).replace(/[^a-zA-Z0-9 ]+/g, '')).replace(/ +/g, '-');
-			wikiDomain.val(name.toLowerCase()).trigger('keyup');
-			if (wntimer) {
-				clearTimeout(wntimer);
-			}
-			wntimer = setTimeout(checkWikiName, 500);
-		});
-
-		wikiLanguage.bind('change', function () {
-			checkWikiName();
-			checkDomain();
-			var selected = wikiLanguage.find('option:selected').val();
-
-			if (selected && selected !== window.wgLangAllAgesOpt) {
-				wikiDomainCountry.html(selected + '.');
-				allAgesDiv.hide();
-			} else {
-				wikiDomainCountry.html('');
-				allAgesDiv.show();
-			}
-
-		});
-		$('#ChangeLang').click(function (e) {
-			e.preventDefault();
-			$nameWikiWrapper.find('.language-default').hide();
-			$nameWikiWrapper.find('.language-choice').show();
-		});
-		wb.find('nav .back').bind('click', function () {
-			var id = $(this).closest('.step').attr('id');
-			if (id === 'DescWiki') {
-				transition('DescWiki', false, '-');
-				if ($authWrapper.length) {
-					userAuth.loginAjaxForm.retrieveLoginToken({
-						clearCache: true
-					});
-					userAuth.loginAjaxForm.submitButton.removeAttr('disabled');
-				}
-			} else {
-				transition(id, false, '-');
-			}
-		});
+		wb.find('nav .back').bind('click', onNavBackClick);
 
 		// Description event handlers
-		descWikiNext.click(function () {
-			var val,
-				descriptionVal;
-
-			descWikiNext.attr('disabled', true);
-			val = wikiVertical.find('option:selected').val();
-
-			if (val !== '-1' /* yes, it is a string */ ) {
-				descriptionVal = $('#Description').val();
-				$.nirvana.sendRequest({
-					controller: 'CreateNewWiki',
-					method: 'Phalanx',
-					data: {
-						text: descriptionVal
-					},
-					callback: function (res) {
-						// check phalanx result
-						if (res.msgHeader) {
-							$.showModal(res.msgHeader, res.msgBody);
-							descWikiNext.attr('disabled', false);
-						} else {
-							// call create wiki ajax
-							saveState({
-								wikiDescription: (descriptionVal === WikiBuilderCfg.descriptionplaceholder ?
-									'' : descriptionVal)
-							}, function () {
-								createWiki();
-								transition('DescWiki', true, '+');
-							});
-						}
-					}
-				});
-			} else {
-				descWikiSubmitError
-					.show()
-					.html(WikiBuilderCfg['desc-wiki-submit-error'])
-					.delay(3000)
-					.fadeOut();
-
-				descWikiNext.attr('disabled', false);
-			}
-		});
+		descWikiNext.click(onDescWikiNextClick);
 		$('#Description').placeholder();
 
 		// Theme event handlers
-		$themWikiWrapper.find('nav .next').click(function () {
-			saveState(ThemeDesigner.settings, function () {
-				if (WikiBuilderCfg.skipwikiaplus) {
-					gotoMainPage();
-				} else {
-					transition('ThemeWiki', true, '+');
-				}
-			});
-		});
+		$themWikiWrapper.find('nav .next').click(onThemeNavNextClick);
 
-		wikiVertical.on('change', function () {
-			var $this = $(this),
-				selectedValue = $this.val(),
-				selectedOption,
-				selectedShort,
-				categoriesSets = $('.categories-sets'),
-				newCategoriesSetId,
-				duplicate;
-
-			if (selectedValue === '-1' /* yes, it is a string */ ) {
-				categoriesSets.hide();
-			} else {
-				categoriesSets.show();
-
-				selectedOption = $this.find('option:selected');
-				selectedShort = selectedOption.data('short');
-				newCategoriesSetId = selectedOption.data('categoriesset');
-
-				if (newCategoriesSetId !== categoriesSetId) {
-					$('#categories-set-' + categoriesSetId).hide();
-					$('#categories-set-' + newCategoriesSetId).show();
-					categoriesSetId = newCategoriesSetId;
-				}
-
-				// unhide 'duplicates'
-				if (hiddenDuplicate) {
-					hiddenDuplicate.show();
-				}
-
-				// hide 'duplicates'
-				duplicate = $('#categories-set-' + categoriesSetId)
-					.find('[data-short="' + selectedShort + '"]');
-				if (duplicate) {
-					duplicate.attr('checked', false);
-					hiddenDuplicate = duplicate.parent().hide();
-				}
-			}
-		});
+		wikiVertical.on('change', onWikiVerticalChange);
 
 		// Set current step on page load
 		if (WikiBuilderCfg.currentstep) {
@@ -274,6 +111,197 @@ define('CreateNewWiki',[], function () {
 			checkDomain();
 			checkWikiName();
 		}
+	}
+
+	function onThemeNavNextClick() {
+		saveState(ThemeDesigner.settings, function () {
+			if (WikiBuilderCfg.skipwikiaplus) {
+				gotoMainPage();
+			} else {
+				transition('ThemeWiki', true, '+');
+			}
+		});
+	}
+
+	function onDescWikiNextClick() {
+		var val,
+			descriptionVal;
+
+		descWikiNext.attr('disabled', true);
+		val = wikiVertical.find('option:selected').val();
+
+		if (val !== '-1' /* yes, it is a string */ ) {
+			descriptionVal = $('#Description').val();
+			$.nirvana.sendRequest({
+				controller: 'CreateNewWiki',
+				method: 'Phalanx',
+				data: {
+					text: descriptionVal
+				},
+				callback: function (res) {
+					// check phalanx result
+					if (res.msgHeader) {
+						$.showModal(res.msgHeader, res.msgBody);
+						descWikiNext.attr('disabled', false);
+					} else {
+						// call create wiki ajax
+						saveState({
+							wikiDescription: (descriptionVal === WikiBuilderCfg.descriptionplaceholder ?
+								'' : descriptionVal)
+						}, function () {
+							createWiki();
+							transition('DescWiki', true, '+');
+						});
+					}
+				}
+			});
+		} else {
+			descWikiSubmitError
+				.show()
+				.html(WikiBuilderCfg['desc-wiki-submit-error'])
+				.delay(3000)
+				.fadeOut();
+
+			descWikiNext.attr('disabled', false);
+		}
+	}
+
+	function onWikiVerticalChange () {
+		var $this = $(this),
+			selectedValue = $this.val(),
+			selectedOption,
+			selectedShort,
+			categoriesSets = $('.categories-sets'),
+			newCategoriesSetId,
+			duplicate;
+
+		if (selectedValue === '-1' /* yes, it is a string */ ) {
+			categoriesSets.hide();
+		} else {
+			categoriesSets.show();
+
+			selectedOption = $this.find('option:selected');
+			selectedShort = selectedOption.data('short');
+			newCategoriesSetId = selectedOption.data('categoriesset');
+
+			if (newCategoriesSetId !== categoriesSetId) {
+				$('#categories-set-' + categoriesSetId).hide();
+				$('#categories-set-' + newCategoriesSetId).show();
+				categoriesSetId = newCategoriesSetId;
+			}
+
+			// unhide 'duplicates'
+			if (hiddenDuplicate) {
+				hiddenDuplicate.show();
+			}
+
+			// hide 'duplicates'
+			duplicate = $('#categories-set-' + categoriesSetId)
+				.find('[data-short="' + selectedShort + '"]');
+			if (duplicate) {
+				duplicate.attr('checked', false);
+				hiddenDuplicate = duplicate.parent().hide();
+			}
+		}
+	}
+
+	function onNavBackClick() {
+		var id = $(this).closest('.step').attr('id');
+
+		if (id === 'DescWiki') {
+			transition('DescWiki', false, '-');
+			if ($authWrapper.length) {
+				userAuth.loginAjaxForm.retrieveLoginToken({
+					clearCache: true
+				});
+				userAuth.loginAjaxForm.submitButton.removeAttr('disabled');
+			}
+		} else {
+			transition(id, false, '-');
+		}
+	}
+
+	function onChangeLangClick(e) {
+		e.preventDefault();
+		$nameWikiWrapper.find('.language-default').hide();
+		$nameWikiWrapper.find('.language-choice').show();
+	}
+
+	function onWikiLanguageChange() {
+		checkWikiName();
+		checkDomain();
+		var selected = wikiLanguage.find('option:selected').val();
+
+		if (selected && selected !== window.wgLangAllAgesOpt) {
+			wikiDomainCountry.html(selected + '.');
+			allAgesDiv.hide();
+		} else {
+			wikiDomainCountry.html('');
+			allAgesDiv.show();
+		}
+
+	}
+
+	function onWikiNameKeyUp() {
+		nameAjax = true;
+		checkNextButtonStep1();
+		var name = $(this).val();
+
+		name = $.trim(stringHelper.latinise(name).replace(/[^a-zA-Z0-9 ]+/g, '')).replace(/ +/g, '-');
+		wikiDomain.val(name.toLowerCase()).trigger('keyup');
+		if (wntimer) {
+			clearTimeout(wntimer);
+		}
+		wntimer = setTimeout(checkWikiName, 500);
+	}
+
+	function onWikiDomainKeyUp() {
+		domainAjax = true;
+		checkNextButtonStep1();
+		if (wdtimer) {
+			clearTimeout(wdtimer);
+		}
+		wdtimer = setTimeout(checkDomain, 500);
+	}
+
+	function onNameWikiWrapperClick () {
+		if (isNameWikiSubmitError()) {
+			nameWikiSubmitError
+				.show()
+				.html(WikiBuilderCfg['name-wiki-submit-error'])
+				.delay(3000)
+				.fadeOut();
+		} else {
+			saveState({
+				wikiName: wikiName.val(),
+				wikiDomain: wikiDomain.val(),
+				wikiLang: wikiLanguage.find('option:selected').val()
+			});
+
+			if (window.wgUserName) {
+				onAuthSuccess();
+			} else {
+				login(onAuthSuccess);
+			}
+		}
+	}
+
+	function login(onSuccess) {
+		require(['AuthModal', 'wikia.querystring'], function (authModal, Querystring) {
+			var redirectUrl = new Querystring();
+
+			redirectUrl.setVal({
+				wikiName: wikiName.val(),
+				wikiDomain: wikiDomain.val(),
+				wikiLanguage: wikiLanguage.find('option:selected').val()
+			});
+
+			authModal.load({
+				url: '/signin?redirect=' + encodeURIComponent(redirectUrl.toString()),
+				origin: 'create-new-wikia',
+				onAuthSuccess: onSuccess
+			});
+		});
 	}
 
 	function requestKeys() {
