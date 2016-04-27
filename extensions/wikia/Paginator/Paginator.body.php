@@ -110,27 +110,33 @@ class Paginator {
 	}
 
 	private function getBarData() {
-		$data = [];
+		if ( $this->pagesCount <= 1 ) {
+			// Just one page
+			return [ 1 ];
+		}
 
+		// Compute whether there's the ellipsis to the left/right of the current page
 		$leftEllipsis = ( $this->activePage > self::DISPLAYED_NEIGHBOURS + 2 );
 		$rightEllipsis = ( $this->activePage < $this->pagesCount - self::DISPLAYED_NEIGHBOURS - 1 );
+
+		// Compute the range of pages between the left and right ellipsis
+		// Or between the first and last page
 		$leftRangeStart = max( $this->activePage - self::DISPLAYED_NEIGHBOURS, 2 );
 		$rightRangeStart = min( $this->activePage + self::DISPLAYED_NEIGHBOURS, $this->pagesCount - 1 );
 
-		$data[] = 1;
+		$data = [ 1 ];
 
-		if ( $this->pagesCount > 1 ) {
-			if ( $leftEllipsis ) {
-				$data[] = '';
-			}
-			for ( $i = $leftRangeStart; $i <= $rightRangeStart; $i++ ) {
-				$data[] = $i;
-			}
-			if ( $rightEllipsis ) {
-				$data[] = '';
-			}
-			$data[] = $this->pagesCount;
+		if ( $leftEllipsis ) {
+			$data[] = '';
 		}
+		for ( $i = $leftRangeStart; $i <= $rightRangeStart; $i++ ) {
+			$data[] = $i;
+		}
+		if ( $rightEllipsis ) {
+			$data[] = '';
+		}
+
+		$data[] = $this->pagesCount;
 
 		return [
 			'pages' => $data,
