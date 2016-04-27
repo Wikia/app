@@ -50,7 +50,6 @@ class AdEngine2ContextService {
 					'trackSlotState' => $wg->AdDriverTrackState,
 					'usePostScribe' => $wg->Request->getBool( 'usepostscribe', false ),
 					'sourcePointDetectionUrl' => $sourcePointDetectionUrl,
-					'sourcePointProxyCSS' => $wg->EnableUsingSourcePointProxyForCSS,
 					'sourcePointRecovery' => $wg->EnableUsingSourcePointProxyForCSS
 				] ),
 				'targeting' => $this->filterOutEmptyItems( [

@@ -8,7 +8,7 @@ class ARecoveryEngineApiController extends WikiaController {
 		$resourceLoaderContext = new ResourceLoaderContext( new ResourceLoader(), new FauxRequest() );
 		$source = $resourceLoader->getScript( $resourceLoaderContext );
 		$this->response->setContentType( 'text/javascript; charset=utf-8' );
-		$this->response->setVal( 'code', $source );
+		$this->response->setBody( $source );
 		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
 	}
 
