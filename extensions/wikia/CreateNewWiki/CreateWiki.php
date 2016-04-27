@@ -82,7 +82,7 @@ class CreateWiki {
 		$this->mFounder = $wgUser;
 		$this->mFounderIp = $wgRequest->getIP();
 
-		wfDebugLog( "createwiki", "founder: " . print_r($this->mFounder, true) . "\n", true );
+		wfDebugLog( "createwiki", __METHOD__ . ": founder: " . print_r($this->mFounder, true) . "\n", true );
 
 		/* default tables */
 		$this->mDefaultTables = array(
@@ -243,7 +243,7 @@ class CreateWiki {
 		}
 		else {
 			$this->mNewWiki->dbw->query( sprintf( "CREATE DATABASE `%s`", $this->mNewWiki->dbname ) );
-			wfDebugLog( "createwiki", "Database {$this->mNewWiki->dbname} created\n", true );
+			wfDebugLog( "createwiki", __METHOD__ . ": Database {$this->mNewWiki->dbname} created\n", true );
 		}
 
 		/**
@@ -714,7 +714,7 @@ class CreateWiki {
 		$dbwf = WikiFactory::db( DB_SLAVE );
 		$dbr  = wfGetDB( DB_MASTER );
 
-		wfDebugLog( "createwiki", __METHOD__, ": checking database name for dbname=$dbname, language={$lang}\n", true );
+		wfDebugLog( "createwiki", __METHOD__ . ":  checking database name for dbname=$dbname, language={$lang}\n", true );
 
 		if( $lang !== "en" ) {
 			$dbname = $lang . $dbname;
@@ -729,7 +729,7 @@ class CreateWiki {
 		$suffix = "";
 		while( $exists == 1 ) {
 			$dbname = sprintf("%s%s", $dbname, $suffix);
-			wfDebugLog( "createwiki", __METHOD__, ": Checking if database {$dbname} already exists in city_list\n", true );
+			wfDebugLog( "createwiki", __METHOD__ . ": Checking if database {$dbname} already exists in city_list\n", true );
 			$row = $dbwf->selectRow(
 				array( "city_list" ),
 				array( "count(*) as count" ),
@@ -738,14 +738,14 @@ class CreateWiki {
 			);
 			$exists = 0;
 			if( $row->count > 0 ) {
-				wfDebugLog( "createwiki", __METHOD__, ": Database {$dbname} exists in city_list!\n", true );
+				wfDebugLog( "createwiki", __METHOD__ . ": Database {$dbname} exists in city_list!\n", true );
 				$exists = 1;
 			}
 			else {
-				wfDebugLog( "createwiki", __METHOD__, ": Checking if database {$dbname} already exists in database", true );
+				wfDebugLog( "createwiki", __METHOD__ . ": Checking if database {$dbname} already exists in database", true );
 				$sth = $dbr->query( sprintf( "show databases like '%s'", $dbname) );
 				if ( $dbr->numRows( $sth ) > 0 ) {
-					wfDebugLog( "createwiki", __METHOD__, ": Database {$dbname} exists on cluster!", true );
+					wfDebugLog( "createwiki", __METHOD__ . ": Database {$dbname} exists on cluster!", true );
 					$exists = 1;
 				}
 			}
