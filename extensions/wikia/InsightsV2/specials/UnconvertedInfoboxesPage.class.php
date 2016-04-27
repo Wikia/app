@@ -98,7 +98,7 @@ class UnconvertedInfoboxesPage extends PageQueryPage {
 			if ( $tcs->isInfoboxType( $type ) ) {
 				$title = Title::newFromID( $templateId );
 				if ( $title instanceof Title
-					&& $title->getNamespace() === NS_TEMPLATE
+					&& $title->inNamespace( NS_TEMPLATE )
 					&& !$title->isRedirect()
 					&& empty( PortableInfoboxDataService::newFromTitle( $title )->getData() )
 				) {
