@@ -79,4 +79,4 @@ function CrunchyrollAjax() {
 	return $response;
 }
 
-\Wikia\Logger\WikiaLogger::instance()->warning( 'Crunchyroll extension in use' );
+\Wikia\Logger\WikiaLogger::instance()->warning( 'Crunchyroll extension in use', [ 'file' => __FILE__ ] );
