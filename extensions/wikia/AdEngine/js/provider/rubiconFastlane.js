@@ -132,6 +132,9 @@ define('ext.wikia.adEngine.provider.rubiconFastlane', [
 			size = getSizeFromTier(bestTier);
 
 		log(['fillInSlot', slot.name, bestTier], 'debug', logGroup);
+		slot.post('collapse', function () {
+			slotTweaker.hide(slot.name);
+		});
 
 		if (!size || typeof win.rubicontag.renderCreative !== 'function') {
 			return slot.collapse({
