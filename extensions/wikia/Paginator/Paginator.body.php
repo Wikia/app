@@ -64,7 +64,7 @@ class Paginator {
 		}
 
 		if ( !is_int( $dataCount ) ) {
-			throw new InvalidArgumentException( 'Paginator: need an int or array for $data' );
+			throw new InvalidArgumentException( 'Paginator: need an int for $data' );
 		}
 
 		$this->itemsPerPage = max( $itemsPerPage, self::MIN_ITEMS_PER_PAGE );
