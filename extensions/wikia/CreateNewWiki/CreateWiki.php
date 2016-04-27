@@ -18,15 +18,22 @@ class CreateWiki {
 
 	use \Wikia\Logger\Loggable;
 
-	/* @var $mDBw DatabaseMysql */
-	/* @var $mClusterDB string */
-	private $mName, $mDomain, $mLanguage, $mVertical, $mCategories, $mIP,
-		$mPHPbin, $mNewWiki, $mFounder,
-		$mLangSubdomain, $mDBw, $mWFSettingVars, $mWFVars,
+	private $mName, $mDefSitename, $mSitenames, $mDomain, $mDomains, $mDefSubdomain,
+		$mLanguage, $mVertical, $mCategories, $mIP,
+		$mPHPbin, $mFounder,
+		$mLangSubdomain, $mWFSettingVars, $mWFVars,
 		$mDefaultTables, $mAdditionalTables,
 		$sDbStarter, $mFounderIp,
-		$mCurrTime,
-		$mClusterDB; // eg. "wikicities_c7"
+		$mCurrTime;
+
+	/* @var $mNewWiki stdClass */
+	private $mNewWiki;
+
+	/* @var $mDBw DatabaseMysql */
+	private $mDBw;
+
+	/* @var $mClusterDB string */
+	private	$mClusterDB; // eg. "wikicities_c7"
 
 	const ERROR_BAD_EXECUTABLE_PATH                    = 1;
 	const ERROR_DOMAIN_NAME_TAKEN                      = 2;
@@ -64,6 +71,8 @@ class CreateWiki {
 	 * @param string $name - name of wiki (set later as $wgSiteinfo)
 	 * @param string $domain - domain part without '.wikia.com'
 	 * @param string $language - language code
+	 * @param integer $vertical - vertical of the wiki
+	 * @param array $categories - list of categories for the wiki
 	 */
 	public function __construct( $name, $domain, $language, $vertical, $categories ) {
 		global $wgUser, $IP, $wgAutoloadClasses, $wgRequest;
@@ -494,6 +503,8 @@ class CreateWiki {
 	 * @author Krzysztof Krzyżaniak (eloy)
 	 *
 	 * @param
+	 *
+	 * @return StdClass
 	 */
 	private function prepareValues() {
 		global $wgContLang;
@@ -507,7 +518,8 @@ class CreateWiki {
 		$fixedTitle = preg_replace("/\s+/", " ", $fixedTitle );
 		$fixedTitle = preg_replace("/ (w|W)iki$/", "", $fixedTitle );
 		$fixedTitle = $wgContLang->ucfirst( $fixedTitle );
-		$this->mNewWiki->sitename = wfMsgExt( 'autocreatewiki-title-template', array( 'language' => $this->mLanguage ), $fixedTitle );
+		$siteTitle = wfMessage('autocreatewiki-title-template', $fixedTitle);
+		$this->mNewWiki->sitename = $siteTitle->inLanguage($this->mLanguage)->text();
 
 		// domain part
 		$this->mDomain = preg_replace( "/(\-)+$/", "", $this->mDomain );
@@ -572,8 +584,6 @@ class CreateWiki {
 	 * @access private
 	 * @author Piotr Molski (moli)
 	 * @author Krzysztof Krzyżaniak (eloy)
-	 *
-	 * @return
 	 */
 	private function fixSubdomains() {
 		$this->mDefSubdomain = self::DEFAULT_DOMAIN;
@@ -589,7 +599,9 @@ class CreateWiki {
 	 * @access public
 	 * @author Michał Roszka <michal@wikia-inc.com>
 	 *
-	 * @param $sDirectoryName the path to check
+	 * @param $sDirectoryName string the path to check
+	 *
+	 * @return boolean
 	 */
 	public static function wgUploadDirectoryExists( $sDirectoryName ) {
 		wfProfileIn( __METHOD__ );
@@ -609,7 +621,10 @@ class CreateWiki {
 	 * @access private
 	 * @author Piotr Molski (Moli)
 	 *
-	 * @param
+	 * @param $name string base name of the directory
+	 * @param $language string language in which wiki will be created
+	 *
+	 * @return string
 	 */
 	private function prepareDirValue( $name, $language ) {
 		wfProfileIn( __METHOD__ );
@@ -1053,6 +1068,8 @@ class CreateWiki {
 	 * @param  string $match
 	 * @param  array  $settings
 	 * @param  string $type
+	 *
+	 * @return integer
 	 */
 	public function addCustomSettings( $match, $settings, $type = 'unknown' ) {
 		global $wgUser;
