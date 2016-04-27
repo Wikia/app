@@ -1,0 +1,39 @@
+<?php
+
+class NotAValidWikiaArticle extends Article {
+	/**
+	 * @param Title $title
+	 * @param Article $article
+	 * @return boolean
+	 */
+	public static function onArticleFromTitle( &$title, &$article ) {
+		if ( $title->getDBkey() == 'Not_a_valid_Wikia' ) {
+			$article = new self( $title );
+		}
+
+		return true;
+	}
+
+	public function view() {
+		global $wgRequest, $wgOut;
+
+		$wgOut->setPageTitle( $this->getTitle()->getText() );
+
+		// Construct the search query from the from param
+		// (which is the domain we're redirected from)
+		$fromDomain = $wgRequest->getVal( 'from' );
+
+		// Extract the interesting part from the domain
+		$interestingPart = preg_replace(
+			'/^(www\.)?(.*)(\.org|\.com|\.gov|\.net|\.edu|\.co|\.or)?(\.[a-z]+)$/',
+			'\2',
+			$fromDomain
+		);
+
+		// Replace any non-alpha part with space
+		$searchQuery = trim( preg_replace( '/[\W ]+/', ' ', $interestingPart ) );
+
+		// Pass to the message
+		$wgOut->addWikiMsg( 'not-a-valid-wikia', $searchQuery );
+	}
+}
