@@ -163,7 +163,7 @@ require([
 
 	function onBannerDismissed() {
 		$.cookie(dismissCookieName, 1, {
-			expires: 7,
+			expires: 30,
 			path: mw.config.get('wgCookiePath'),
 			domain: mw.config.get('wgCookieDomain')
 		});

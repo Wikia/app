@@ -22,6 +22,7 @@ class Hooks extends \ContextSource {
 
 		return !$user->isLoggedIn() &&
 			$title->inNamespace( NS_MAIN ) &&
+			$title->getPageLanguage()->getCode() === 'en' && // getPageLanguage returns wgContLang for NS_MAIN pages
 			!$title->isMainPage() &&
 			$this->getRequest()->getVal( 'action', 'view' ) === 'view';
 	}
