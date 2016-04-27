@@ -75,6 +75,7 @@ $close-button-background: '/resources/wikia/ui_components/modal/images/close-dar
 	z-index: 2;
 
 	p.pmp-entry-point-message {
+		color: #333;
 		padding-top: 80px;
 		width: 560px;
 	}
@@ -84,6 +85,8 @@ $close-button-background: '/resources/wikia/ui_components/modal/images/close-dar
 	}
 
 	.pmp-entry-point-close {
+		background: url('/resources/wikia/ui_components/modal/images/close-dark.svg');
+		background-size: 15px 15px;
 		right: 25px;
 		top: 25px;
 	}
