@@ -62,8 +62,10 @@ class CreateNewWikiController extends WikiaController {
 		$this->isUserLoggedIn = $wgUser->isLoggedIn();
 
 		// remove wikia plus for now for all languages
+		// Harnash: Not needed?
 		$skipWikiaPlus = true;
 
+		// Harnash: Not needed?
 		$keys = CreateNewWikiObfuscate::generateValidSeeds();
 		$_SESSION['cnw-answer'] = CreateNewWikiObfuscate::generateAnswer($this->keys);
 
@@ -187,7 +189,7 @@ class CreateNewWikiController extends WikiaController {
 		$name = $wgRequest->getVal('name');
 		$lang = $wgRequest->getVal('lang');
 
-		$this->res = AutoCreateWiki::checkDomainIsCorrect($name, $lang);
+		$this->res = CreateWikiChecks::checkDomainIsCorrect($name, $lang);
 
 		wfProfileOut(__METHOD__);
 	}
@@ -203,7 +205,7 @@ class CreateNewWikiController extends WikiaController {
 		$name = $wgRequest->getVal('name');
 		$lang = $wgRequest->getVal('lang');
 
-		$this->res = AutoCreateWiki::checkWikiNameIsCorrect($name, $lang);
+		$this->res = CreateWikiChecks::checkWikiNameIsCorrect($name, $lang);
 
 		wfProfileOut(__METHOD__);
 	}

@@ -17,7 +17,7 @@ $dir = __DIR__ . '/';
 $wgAutoloadClasses['CreateNewWikiObfuscate'] = $dir . 'CreateNewWikiObfuscate.class.php';
 $wgAutoloadClasses['CreateWikiLocalJob'] = $dir."CreateWikiLocalJob.php";
 $wgAutoloadClasses['CreateWiki'] = $dir."/CreateWiki.php";
-$wgAutoloadClasses['AutoCreateWiki'] = $dir."/AutoCreateWiki.php";
+$wgAutoloadClasses['CreateWikiChecks'] = $dir."/CreateWikiChecks.php";
 $wgAutoloadClasses['SpecialCreateNewWiki'] = $dir . 'SpecialCreateNewWiki.class.php';
 
 // Nirvana controllers
@@ -27,7 +27,7 @@ $wgAutoloadClasses['CreateNewWikiController'] = $dir . 'CreateNewWikiController.
 $wgSpecialPages['CreateNewWiki'] = 'SpecialCreateNewWiki';
 
 // i18n mapping
-$wgExtensionMessagesFiles['AutoCreateWiki'] = $dir . 'AutoCreateWiki.i18n.php';
+$wgExtensionMessagesFiles['CreateWikiChecks'] = $dir . 'CreateWikiChecks.i18n.php';
 $wgExtensionMessagesFiles['CreateNewWiki'] = $dir . 'CreateNewWiki.i18n.php';
 $wgExtensionMessagesFiles['CreateNewWikiAlias'] = $dir . 'CreateNewWiki.alias.php';
 

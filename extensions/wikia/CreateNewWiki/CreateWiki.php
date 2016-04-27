@@ -54,6 +54,7 @@ class CreateWiki {
 	const DEFAULT_NAME         = "Wiki";
 	const DEFAULT_WIKI_TYPE    = "";
 	const DEFAULT_WIKI_LOGO    = '$wgUploadPath/b/bc/Wiki.png';
+	const LOCK_DOMAIN_TIMEOUT  = 30;
 
 	const SANITIZED_BUCKET_NAME_MAXIMUM_LENGTH = 55;
 
@@ -203,7 +204,7 @@ class CreateWiki {
 		$this->prepareValues();
 
 		// prevent domain to be registered more than once
-		if ( !AutoCreateWiki::lockDomain($this->mDomain) ) {
+		if ( !self::lockDomain($this->mDomain) ) {
 			wfProfileOut( __METHOD__ );
 			throw new CreateWikiException('Domain name taken', self::ERROR_DOMAIN_NAME_TAKEN);
 		}
@@ -469,12 +470,12 @@ class CreateWiki {
 			// invalid name (name is used language)
 			$status = self::ERROR_DOMAIN_POLICY_VIOLATIONS;
 		}
-		elseif ( !$wgUser->isAllowed( "staff" ) && ( AutoCreateWiki::checkBadWords( $this->mDomain, "domain" ) === false ) ) {
+		elseif ( !$wgUser->isAllowed( "staff" ) && ( CreateWikiChecks::checkBadWords( $this->mDomain, "domain" ) === false ) ) {
 			// invalid name (bad words)
 			$status = self::ERROR_DOMAIN_POLICY_VIOLATIONS;
 		}
 		else {
-			if( AutoCreateWiki::domainExists( $this->mDomain, $this->mLanguage ) ) {
+			if( CreateWikiChecks::domainExists( $this->mDomain, $this->mLanguage ) ) {
 				$status = self::ERROR_DOMAIN_NAME_TAKEN;
 			}
 		}
@@ -1099,5 +1100,31 @@ class CreateWiki {
 	 */
 	private function getInitialNjordExtValue() {
 		return false;
+	}
+
+	/**
+	 * Returns memcache key for locking given domain
+	 * @param string $domain
+	 * @return string
+	 */
+	static protected function getLockDomainKey( $domain ) {
+		return wfSharedMemcKey( 'createwiki', 'domain', 'lock', urlencode( $domain ) );
+	}
+
+	/**
+	 * Locks domain if possible for predefined amount of time
+	 * Returns true if successful
+	 *
+	 * @param string $domain
+	 * @return bool
+	 */
+	static private function lockDomain( $domain ) {
+		global $wgMemc;
+
+		$key = self::getLockDomainKey( $domain );
+		$status = $wgMemc->add( $key, 1, self::LOCK_DOMAIN_TIMEOUT );
+		wfDebug( "createwiki", __METHOD__ . ": (\"$domain\") = " . ( $status ? "OK" : "failed" ) . "\n" );
+
+		return $status;
 	}
 }

@@ -4,7 +4,7 @@
  * This filter blocks a wiki from being created,
  * if it's name contains unwanted phrases.
  *
- * @see extensions/wikia/AutoCreateWiki/
+ * @see extensions/wikia/CreateWikiChecks/
  */
 
 class WikiCreationBlock {

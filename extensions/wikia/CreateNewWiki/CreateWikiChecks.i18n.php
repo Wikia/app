@@ -1,6 +1,6 @@
 <?php
 /**
- * Internationalization file for AutoCreateWiki extension.
+ * Internationalization file for CreateWikiChecks extension.
  *
  * @file
  * @ingroup Extensions

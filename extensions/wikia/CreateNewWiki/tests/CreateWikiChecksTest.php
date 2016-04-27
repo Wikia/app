@@ -1,6 +1,6 @@
 <?php
 
-class AutoCreateWikiTest extends WikiaBaseTest {
+class CreateWikiTestChecks extends WikiaBaseTest {
 
 	public function setUp() {
 		$this->setupFile = dirname(__FILE__) . '/../CreateNewWiki_setup.php';
@@ -28,16 +28,16 @@ class AutoCreateWikiTest extends WikiaBaseTest {
 				->will( $this->returnValue( 'mocked-string' ) );
 		}
 
-		$this->mockStaticMethod('AutoCreateWiki', 'checkBadWords', true);
-		$this->mockStaticMethod('AutoCreateWiki', 'checkDomainExists', false);
-		$this->mockStaticMethod('AutoCreateWiki', 'getLanguageNames', array(
+		$this->mockStaticMethod('CreateWikiChecks', 'checkBadWords', true);
+		$this->mockStaticMethod('CreateWikiChecks', 'checkDomainExists', false);
+		$this->mockStaticMethod('CreateWikiChecks', 'getLanguageNames', array(
 			'pl' => 'pl',
 			'en' => 'en',
 			'def' => 'def',
 			'zzz' => 'zzz',
 		));
 
-		$result = AutoCreateWiki::checkDomainIsCorrect($domainName, $lang);
+		$result = CreateWikiChecks::checkDomainIsCorrect($domainName, $lang);
 
 		if ($isCorrect) {
 			$this->assertEquals('', $result);
@@ -78,12 +78,12 @@ class AutoCreateWikiTest extends WikiaBaseTest {
 			->with( $this->equalTo( 'autocreatewiki-violate-policy' ) )
 			->will( $this->returnValue( 'mocked-string' ) );
 
-		$this->mockStaticMethod('AutoCreateWiki', 'checkBadWords', false);
-		$this->mockStaticMethod('AutoCreateWiki', 'getLanguageNames', array(
+		$this->mockStaticMethod('CreateWikiChecks', 'checkBadWords', false);
+		$this->mockStaticMethod('CreateWikiChecks', 'getLanguageNames', array(
 			'pl' => 'pl',
 		));
 
-		$result = AutoCreateWiki::checkDomainIsCorrect('woohooo', 'pl');
+		$result = CreateWikiChecks::checkDomainIsCorrect('woohooo', 'pl');
 
 		$this->assertEquals('mocked-string', $result);
 	}
@@ -99,13 +99,13 @@ class AutoCreateWikiTest extends WikiaBaseTest {
 			->with( $this->equalTo( 'autocreatewiki-name-taken' ) )
 			->will( $this->returnValue( 'mocked-string' ) );
 
-		$this->mockStaticMethod('AutoCreateWiki', 'checkBadWords', true);
-		$this->mockStaticMethod('AutoCreateWiki', 'checkDomainExists', true);
-		$this->mockStaticMethod('AutoCreateWiki', 'getLanguageNames', array(
+		$this->mockStaticMethod('CreateWikiChecks', 'checkBadWords', true);
+		$this->mockStaticMethod('CreateWikiChecks', 'checkDomainExists', true);
+		$this->mockStaticMethod('CreateWikiChecks', 'getLanguageNames', array(
 			'pl' => 'pl',
 		));
 
-		$result = AutoCreateWiki::checkDomainIsCorrect('woohooo', 'pl');
+		$result = CreateWikiChecks::checkDomainIsCorrect('woohooo', 'pl');
 
 		$this->assertEquals('mocked-string', $result);
 	}
