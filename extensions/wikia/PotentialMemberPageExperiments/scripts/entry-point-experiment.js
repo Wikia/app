@@ -58,28 +58,26 @@ require([
 		viewabilityInterval;
 
 	function init() {
-		if ($.cookie(dismissCookieName)) {
+		if ($.cookie(dismissCookieName) || !experimentEnabled()) {
 			return;
 		}
 
-		if (shouldSetExperiment()) {
-			$.when(
-				loader({
-					type: loader.MULTI,
-					resources: {
-						mustache: '/extensions/wikia/PotentialMemberPageExperiments/templates/PMPEntryPoint.mustache',
-						styles: '/extensions/wikia/PotentialMemberPageExperiments/styles/entry-point-experiment.scss'
-					}
-				})
-			).done(setExperiment);
-		}
+		$.when(
+			loader({
+				type: loader.MULTI,
+				resources: {
+					mustache: '/extensions/wikia/PotentialMemberPageExperiments/templates/PMPEntryPoint.mustache',
+					styles: '/extensions/wikia/PotentialMemberPageExperiments/styles/entry-point-experiment.scss'
+				}
+			})
+		).done(setupExperiment);
 	}
 
-	function shouldSetExperiment() {
+	function experimentEnabled() {
 		return experiments.hasOwnProperty(experimentGroup);
 	}
 
-	function setExperiment(resources) {
+	function setupExperiment(resources) {
 		var experiment = experiments[experimentGroup];
 
 		loader.processStyle(resources.styles);
