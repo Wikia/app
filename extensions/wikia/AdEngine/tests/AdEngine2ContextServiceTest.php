@@ -371,7 +371,8 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 				'mappedVerticalName' => $verticals['expectedMappedVertical']
 			],
 			'providers' => [
-				'evolve2' => true
+				'evolve2' => true,
+				'rubiconFastlane' => true
 			],
 			'slots' => [
 			],

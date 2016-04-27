@@ -301,7 +301,15 @@ describe('AdContext', function () {
 	it('makes providers.rubiconFastlane true when country in wgCountries', function () {
 		var adContext;
 
-		mocks.win = {};
+		mocks.win = {
+			ads: {
+				context: {
+					providers: {
+						rubiconFastlane: true
+					}
+				}
+			}
+		};
 		mocks.instantGlobals = {
 			wgAdDriverRubiconFastlaneCountries: ['CURRENT_COUNTRY', 'ZZ'],
 			wgAdDriverRubiconFastlaneProviderCountries: ['CURRENT_COUNTRY', 'ZZ']
