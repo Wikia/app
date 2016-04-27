@@ -84,7 +84,7 @@ class AdEngine2ContextService {
 					'evolve2' => $wg->AdDriverUseEvolve2,
 					'monetizationService' => $wg->AdDriverUseMonetizationService,
 					'monetizationServiceAds' => $monetizationServiceAds,
-					'rubiconFastlane' => $wg->AdDriverEnableRubiconFastlane,
+					'rubiconFastlane' => AnalyticsProviderRubiconFastlane::isEnabled(),
 					'sevenOneMedia' => $wg->AdDriverUseSevenOneMedia,
 					'sevenOneMediaCombinedUrl' => $sevenOneMediaCombinedUrl,
 					'taboola' => $wg->AdDriverUseTaboola && $pageType === 'article',

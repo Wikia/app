@@ -371,8 +371,7 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 				'mappedVerticalName' => $verticals['expectedMappedVertical']
 			],
 			'providers' => [
-				'evolve2' => true,
-				'rubiconFastlane' => true
+				'evolve2' => true
 			],
 			'slots' => [
 			],
@@ -411,6 +410,8 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 		if ( isset( $expectedProviders['sevenOneMedia'] ) ) {
 			$this->assertStringMatchesFormat( $expectedSevenOneMediaUrlFormat, $result['providers']['sevenOneMediaCombinedUrl'] );
 			unset( $result['providers']['sevenOneMediaCombinedUrl'] );
+		} else {
+			$expected['providers']['rubiconFastlane'] = true;
 		}
 
 		// Extra check for Monetization Service
