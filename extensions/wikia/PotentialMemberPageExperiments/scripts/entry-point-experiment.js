@@ -85,7 +85,7 @@ require([
 		loader.processStyle(resources.styles);
 
 		$banner = $(mustache.render(resources.mustache[0], { bannerType: experiment.type }))
-			.on('click', '.pmp-entry-point-button', onEntryPointClick)
+			.on('mousedown touchstart', '.pmp-entry-point-button', onEntryPointClick)
 			.on('click', '.pmp-entry-point-close', close);
 
 		experiment.addEntryPoint();
