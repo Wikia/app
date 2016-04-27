@@ -25,11 +25,15 @@ $close-button-background: '/resources/wikia/ui_components/modal/images/close-dar
 		color: $color-message-text;
 		display: block;
 		font-size: 24px;
-		padding: 33px 0 10px;
+		padding: 33px 0 15px;
 
 		strong {
 			font-weight: bold;
 		}
+	}
+
+	p, p + p {
+		margin: 0;
 	}
 }
 
@@ -53,6 +57,7 @@ $close-button-background: '/resources/wikia/ui_components/modal/images/close-dar
 	display: inline-block;
 	font-size: 12px;
 	font-weight: bold;
+	line-height: 16px;
 	padding: 10px 15px;
 	text-transform: uppercase;
 	width: auto;
