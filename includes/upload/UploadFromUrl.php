@@ -160,7 +160,7 @@ class UploadFromUrl extends UploadBase {
 		$this->mFileSize = 0;
 
 		/* Wikia change - begin */
-		$options = array( 'followRedirects' => true );
+		$options = array( 'followRedirects' => true, 'noProxy' => true );
 		wfRunHooks( 'UploadFromUrlReallyFetchFile', array( &$options ) );
 		if ( UploadFromUrl::isValidBase64( $this->mUrl ) ) {
 			$status = $this->saveTempBase64();
