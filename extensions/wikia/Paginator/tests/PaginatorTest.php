@@ -354,31 +354,6 @@ class PaginatorTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * Test passing maxItemsPerPage param through newFromCount
-	 *
-	 * The same as above, just passing additional param $maxItemsPerPage, simulated here by
-	 * passing a big number for $itemsPerPage and then the one from data provider as $maxItemsPerPage
-	 *
-	 * This style of calling the class is used by:
-	 *
-	 *  * InsightsPaginator
-	 *  * blog-pager-ajax.tmpl
-	 *
-	 * @dataProvider dataProviderPaginator
-	 */
-	public function testMaxItemsPerPage( $itemsPerPage, $allDataString, $pageNo, $pageDataString, $expectedHtml ) {
-		$url = 'http://url/?page=%s';
-		$allData = explode( ',', $allDataString );
-		$expectedPageData = explode( ',', $pageDataString );
-		$pages = Paginator::newFromCount( count( $allData ), 1000, $itemsPerPage );
-		$pages->setActivePage( $pageNo );
-		$onePageData = $pages->getCurrentPage( $allData );
-		$html = $pages->getBarHTML( $url );
-		$this->assertEquals( $expectedPageData, $onePageData );
-		$this->assertHtmlEquals( $expectedHtml, $html );
-	}
-
-	/**
 	 * Test getHeadItem method
 	 *
 	 * Called by:

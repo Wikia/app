@@ -15,7 +15,7 @@
  *  * Avoid passing the same URL to getHeadItem and getBarHTML (pass to constructor instead?)
  *  * Support for indefinite pagination? 1 ... 47 48 49 _50_ 51 52 53 ...
  *  * Move template to mustache
- *  * No checking for max or min items per page
+ *  * No checking for min items per page
  */
 class Paginator {
 
@@ -28,70 +28,47 @@ class Paginator {
 	private $activePage = 1;
 
 	// Deprecated state
-	private $paginatedData = [];
+	private $data = [];
 
 	/**
 	 * Creates a new Pagination object.
 	 *
 	 * @param int $count number of items to paginate through
 	 * @param int $itemsPerPage number of items to display per page (capped to between 4 and 48)
-	 * @param int $maxItemsPerPage override the maximum of 48 items per page
 	 * @return Paginator
 	 */
-	public static function newFromCount( $count, $itemsPerPage, $maxItemsPerPage = 48 ) {
-		return new Paginator( $count, $itemsPerPage, $maxItemsPerPage );
+	public static function newFromCount( $count, $itemsPerPage ) {
+		return new Paginator( $count, $itemsPerPage );
 	}
 
 	/**
-	 * @deprecated use newFromCount
-	 * @param array $aData
+	 * @deprecated use newFromCount (only used by CrunchyRoll)
+	 * @param array $data
 	 * @param int $itemsPerPage
-	 * @param int $maxItemsPerPage
 	 * @return Paginator
 	 */
-	public static function newFromArray( array $aData, $itemsPerPage, $maxItemsPerPage = 48 ) {
-		return self::newFromCount( $aData, $itemsPerPage, $maxItemsPerPage );
+	public static function newFromArray( array $data, $itemsPerPage ) {
+		$self = self::newFromCount( count( $data ), $itemsPerPage );
+		$self->data = $data;
+		return $self;
 	}
 
 	/**
 	 * Paginator constructor.
-	 * @param int|array $data number of data to paginate or the data to paginate
+	 * @param int $dataCount number of data to paginate or the data to paginate
 	 * @param int $itemsPerPage number of items to display per page (capped to between 4 and 48)
-	 * @param int $maxItemsPerPage override the maximum of 48 items per page
 	 */
-	private function __construct( $data, $itemsPerPage, $maxItemsPerPage ) {
+	private function __construct( $dataCount, $itemsPerPage ) {
 		if ( !is_int( $itemsPerPage ) ) {
 			throw new InvalidArgumentException( 'Paginator: need an int for $itemsPerPage' );
 		}
 
-		if ( !is_int( $maxItemsPerPage ) ) {
-			throw new InvalidArgumentException( 'Paginator: need an int for $maxItemsPerPage' );
-		}
-
-		if ( !is_array( $data ) && !is_int( $data ) ) {
+		if ( !is_int( $dataCount ) ) {
 			throw new InvalidArgumentException( 'Paginator: need an int or array for $data' );
 		}
 
-		$itemsPerPage = min( $itemsPerPage, $maxItemsPerPage );
-		$itemsPerPage = max( $itemsPerPage, self::MIN_ITEMS_PER_PAGE );
-		$this->itemsPerPage = $itemsPerPage;
-
-		if ( is_array( $data ) ) {
-			$dataCount = count( $data );
-		} else {
-			$dataCount = $data;
-		}
-
+		$this->itemsPerPage = max( $itemsPerPage, self::MIN_ITEMS_PER_PAGE );
 		$this->pagesCount = ceil( $dataCount / $this->itemsPerPage );
-
-		if ( is_array( $data ) ) {
-			// deprecated case
-			if ( count( $data ) > 0 ) {
-				$this->paginatedData = array_chunk( $data, $this->itemsPerPage );
-			} else {
-				$this->paginatedData = [];
-			}
-		}
 	}
 
 	/**
@@ -108,59 +85,57 @@ class Paginator {
 	/**
 	 * Get the current page of the passed data
 	 *
-	 * @param array|null $aData data to be paginated (DEPRECATED: if null, the data passed from newFromArray is used)
+	 * @param array|null $data data to be paginated (DEPRECATED: if null, the data passed from newFromArray is used)
 	 * @return array
 	 */
-	public function getCurrentPage( array $aData = null ) {
+	public function getCurrentPage( array $data = null ) {
 		$index = $this->activePage - 1;
 
 		// deprecated case:
-		if ( is_null( $aData ) ) {
-			return $this->paginatedData[$index];
+		if ( is_null( $data ) ) {
+			$data = $this->data;
 		}
 
-		if ( count( $aData ) > 0 ) {
-			$aPaginatedData = array_chunk( $aData, $this->itemsPerPage );
+		if ( count( $data ) > 0 ) {
+			$paginatedData = array_chunk( $data, $this->itemsPerPage );
 		} else {
-			$aPaginatedData = $aData;
+			$paginatedData = $data;
 		}
 
-		if ( !isset( $aPaginatedData[$index] ) ) {
+		if ( !isset( $paginatedData[$index] ) ) {
 			return [];
 		}
 
-		return $aPaginatedData[$index];
+		return $paginatedData[$index];
 	}
 
 	private function getBarData() {
-		$aData = [];
+		$data = [];
 
 		$leftEllipsis = ( $this->activePage > self::DISPLAYED_NEIGHBOURS + 2 );
 		$rightEllipsis = ( $this->activePage < $this->pagesCount - self::DISPLAYED_NEIGHBOURS - 1 );
 		$leftRangeStart = max( $this->activePage - self::DISPLAYED_NEIGHBOURS, 2 );
 		$rightRangeStart = min( $this->activePage + self::DISPLAYED_NEIGHBOURS, $this->pagesCount - 1 );
 
-		$aData[] = 1;
+		$data[] = 1;
 
 		if ( $this->pagesCount > 1 ) {
 			if ( $leftEllipsis ) {
-				$aData[] = '';
+				$data[] = '';
 			}
 			for ( $i = $leftRangeStart; $i <= $rightRangeStart; $i++ ) {
-				$aData[] = $i;
+				$data[] = $i;
 			}
 			if ( $rightEllipsis ) {
-				$aData[] = '';
+				$data[] = '';
 			}
-			$aData[] = $this->pagesCount;
+			$data[] = $this->pagesCount;
 		}
 
-		$aResult = [
-			'pages' => $aData,
+		return [
+			'pages' => $data,
 			'currentPage' => $this->activePage
 		];
-
-		return $aResult;
 	}
 
 	public function getBarHTML( $url, $paginatorId = false ) {
@@ -168,13 +143,13 @@ class Paginator {
 			return '';
 		}
 
-		$aData = $this->getBarData();
-		$aData['paginatorId'] = strip_tags( trim( stripslashes( $paginatorId ) ) );
-		$aData['url'] = $url;
+		$data = $this->getBarData();
+		$data['paginatorId'] = strip_tags( trim( stripslashes( $paginatorId ) ) );
+		$data['url'] = $url;
 
-		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
-		$oTmpl->set_vars( $aData );
-		return $oTmpl->render( 'paginator' );
+		$template = new EasyTemplate( __DIR__ . '/templates/' );
+		$template->set_vars( $data );
+		return $template->render( 'paginator' );
 	}
 
 	/**
@@ -213,5 +188,4 @@ class Paginator {
 
 		return $links;
 	}
-
 }
