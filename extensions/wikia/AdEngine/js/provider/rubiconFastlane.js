@@ -107,6 +107,7 @@ define('ext.wikia.adEngine.provider.rubiconFastlane', [
 			slotTweaker.removeDefaultHeight(slot.name);
 			slotTweaker.removeTopButtonIfNeeded(slot.name);
 			slotTweaker.adjustLeaderboardSize(slot.name);
+			log(['success', slot.name], 'info', logGroup);
 		});
 
 		slot.container.setAttribute('data-creative-tier', JSON.stringify(tiers));
@@ -134,6 +135,7 @@ define('ext.wikia.adEngine.provider.rubiconFastlane', [
 		log(['fillInSlot', slot.name, bestTier], 'debug', logGroup);
 		slot.post('collapse', function () {
 			slotTweaker.hide(slot.name);
+			log(['collapse', slot.name], 'info', logGroup);
 		});
 
 		if (!size || typeof win.rubicontag.renderCreative !== 'function') {
