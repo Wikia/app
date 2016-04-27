@@ -4,7 +4,8 @@
 $color-blue-darken: #144b93;
 $color-blue: #1a5eb8;
 $color-message-text: #333;
-$close-button-background: '/resources/wikia/ui_components/modal/images/close-dark.svg';
+$close-dark-icon: '/resources/wikia/ui_components/modal/images/close-dark.svg';
+$close-button-background: $close-dark-icon;
 
 @if( $is-dark-wiki ) {
 	$color-message-text: #fff;
@@ -85,8 +86,7 @@ $close-button-background: '/resources/wikia/ui_components/modal/images/close-dar
 	}
 
 	.pmp-entry-point-close {
-		background-image: url('/resources/wikia/ui_components/modal/images/close-dark.svg');
-		background-size: 15px 15px;
+		background-image: url($close-dark-icon);
 		right: 25px;
 		top: 25px;
 	}
