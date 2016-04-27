@@ -46,14 +46,14 @@ class ARecoveryUnlockCSS {
 		return $wikiaCssUrl;
 	}
 
-	private function verifyContent($url) {
+	private function verifyContent( $url ) {
 		$options = [
 			'returnInstance' => true,
 			'timeout' => self::TIMEOUT,
 			'noProxy' => true
 		];
-		$response = \Http::get($url, self::TIMEOUT, $options);
-		if (strpos($response->getContent(), '#WikiaArticle') !== false) {
+		$response = \Http::get( $url, self::TIMEOUT, $options );
+		if ( strpos( $response->getContent(), '#WikiaArticle' ) !== false ) {
 			return true;
 		}
 		return false;
@@ -61,8 +61,8 @@ class ARecoveryUnlockCSS {
 
 	private function getWikiaUnlockCSSUrl() {
 		$am = AssetsManager::getInstance();
-		$files = [self::CSS_FILE_PATH];
-		$cssLink = $am->getSassesUrl($files);
+		$files = [ self::CSS_FILE_PATH ];
+		$cssLink = $am->getSassesUrl( $files );
 		return $cssLink;
 	}
 
@@ -82,7 +82,7 @@ class ARecoveryUnlockCSS {
 		];
 
 		$response = \Http::post( $url, $options ); /* @var CurlHttpRequest $response */
-		return array( 'response' => $response->getContent(), 'code' => $response->getStatus() );
+		return [ 'response' => $response->getContent(), 'code' => $response->getStatus() ];
 	}
 
 }

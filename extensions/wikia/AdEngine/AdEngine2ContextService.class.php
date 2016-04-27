@@ -52,7 +52,7 @@ class AdEngine2ContextService {
 					'trackSlotState' => $wg->AdDriverTrackState,
 					'usePostScribe' => $wg->Request->getBool( 'usepostscribe', false ),
 					'sourcePointDetectionUrl' => $sourcePointDetectionUrl,
-					'sourcePointRecovery' => $wg->EnableUsingSourcePointProxyForCSS || $wg->Request->getBool( 'proxycss', false ),
+					'sourcePointRecovery' => $wg->EnableUsingSourcePointProxyForCSS,
 					'yavliUrl' => $yavliUrl,
 				] ),
 				'targeting' => $this->filterOutEmptyItems( [
