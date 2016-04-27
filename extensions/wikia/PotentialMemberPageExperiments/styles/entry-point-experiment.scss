@@ -5,6 +5,7 @@ $color-blue-darken: #144b93;
 $color-blue: #1a5eb8;
 $color-message-text: #333;
 $close-button-background: '/resources/wikia/ui_components/modal/images/close-dark.svg';
+$banner-bottom-space: 34px;
 
 @if( $is-dark-wiki ) {
 	$color-message-text: #fff;
@@ -17,7 +18,7 @@ $close-button-background: '/resources/wikia/ui_components/modal/images/close-dar
 	border-bottom: 2px solid $color-blue;
 	margin: 18px 0;
 	overflow: hidden;
-	padding-bottom: 34px;
+	padding-bottom: $banner-bottom-space;
 	position: relative;
 	text-align: center;
 
@@ -66,10 +67,11 @@ $close-button-background: '/resources/wikia/ui_components/modal/images/close-dar
 }
 
 .pmp-entry-point-glue-bottom {
-	background: #fff url('/extensions/wikia/PotentialMemberPageExperiments/images/background-glue.jpg') 0 0 /100% 100% no-repeat;
+	background: #fff url('/extensions/wikia/PotentialMemberPageExperiments/images/background-glue.jpg') no-repeat;
+	background-size: cover;
 	border-left: 6px solid $color-blue;
 	bottom: 0;
-	height: 320px;
+	height: calc(320px - #{$banner-bottom-space});
 	padding-left: 232px;
 	position: fixed;
 	right: -1000px;
