@@ -75,3 +75,4 @@ class Crunchyroll extends SpecialPage {
 	}
 }
 
+\Wikia\Logger\WikiaLogger::instance()->warning( 'Crunchyroll extension in use' );

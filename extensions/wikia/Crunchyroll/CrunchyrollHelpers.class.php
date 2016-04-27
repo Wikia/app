@@ -40,3 +40,5 @@ class CrunchyrollHelpers {
 		return true;
 	}
 }
+
+\Wikia\Logger\WikiaLogger::instance()->warning( 'Crunchyroll extension in use' );

@@ -26,13 +26,15 @@ class CrunchyrollAjax {
 
 		$pageId = (int)$wgRequest->getVal( 'page' );
 		$serieId = (int)$wgRequest->getVal( 'serie' );
-		
+
 		$crunchyroll = new CrunchyrollVideo();
 		$crunchyroll->setSerieId( $serieId );
-		
+
 		return array(
 			'page' => $crunchyroll->getPaginatedGallery( $pageId, true ),
 			'paginator' => $crunchyroll->getBarHTML()
 		);
 	}
 }
+
+\Wikia\Logger\WikiaLogger::instance()->warning( 'Crunchyroll extension in use' );
