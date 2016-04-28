@@ -33,9 +33,7 @@ class ChatUserText extends WikiaBaseTest {
 	}
 
 	private function mockDatabaseRow( $result ) {
-		$databaseMock = $this->getMockBuilder( 'Database' )
-			->disableOriginalConstructor()
-			->getMock();
+		$databaseMock = $this->getDatabaseMock(['selectRow']);
 
 		$databaseMock
 			->expects( $result !== null ? $this->once() : $this->never() )
