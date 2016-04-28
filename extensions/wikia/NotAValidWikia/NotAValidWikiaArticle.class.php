@@ -35,5 +35,8 @@ class NotAValidWikiaArticle extends Article {
 
 		// Pass to the message
 		$wgOut->addWikiMsg( 'not-a-valid-wikia', $searchQuery );
+
+		// Don't index this page
+		$wgOut->setRobotPolicy( 'noindex,nofollow' );
 	}
 }
