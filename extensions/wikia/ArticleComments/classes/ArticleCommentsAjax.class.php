@@ -196,8 +196,6 @@ class ArticleCommentsAjax {
 			'parentId' => $parentId,
 		] );
 
-		$response = ArticleComment::doPost( self::getConvertedContent( $wgRequest->getVal( 'wpArticleComment' ) ), $wgUser, $title, $parentId );
-
 		if ( $response === false ) {
 			return $result;
 		}
