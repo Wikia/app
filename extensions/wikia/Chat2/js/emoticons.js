@@ -113,6 +113,7 @@ if (typeof EmoticonMapping === 'undefined') {
 		// Since the values in here are processed and then cached, don't modify this directly.  Use mutators
 		// (which can invalidate the cached data such as self._regexes).
 		// TODO: fetch emoticons from nocookie domain
+		// https://wikia-inc.atlassian.net/browse/SUS-449
 		this._settings = {
 			'http://images.wikia.com/lyricwiki/images/6/67/Smile001.gif': [':)', ':-)', '(smile)'],
 			'http://images3.wikia.nocookie.net/__cb20100822133322/lyricwiki/images/d/d8/Sad.png': [':(', ':-(', ':|']
@@ -136,7 +137,6 @@ if (typeof EmoticonMapping === 'undefined') {
 			// TODO: FIXME: Rewrite this to use regexes so that we don't require the space after the asterisks
 			// (because that's not needed in normal wikitext).
 			// Loop through array, construct object
-			//$().log("Loading emoticon mapping...");
 			for (i = 0; i < emoticonArray.length; i++) {
 				// line starting with 1 "*" then optional spaces, then some non-empty content.
 				urlMatch = emoticonArray[i].match(/^\*[ ]*([^*].*)/);
@@ -144,14 +144,12 @@ if (typeof EmoticonMapping === 'undefined') {
 					url = urlMatch[1];
 					self._settings[url] = [];
 					currentKey = url;
-					//$().log("  " + url + "...");
 				} else if (self._settings[currentKey]) {
 					// line starting with 2 "**"'s then optional spaces, then some non-empty content.
 					glyphMatch = emoticonArray[i].match(/^\*\* *([^*"][^"]*)/);
 					if (glyphMatch && glyphMatch[1]) {
 						glyph = glyphMatch[1];
 						self._settings[currentKey].push(glyph);
-						//$().log("       " + glyph);
 					}
 				}
 			}
@@ -178,7 +176,6 @@ if (typeof EmoticonMapping === 'undefined') {
 				index;
 
 			// Object.keys() doesn't exist in IE 8, so do this the oldschool way.
-			//if(Object.keys(self._settings).length != Object.keys(self._regexes).length){
 			for (keyName in self._settings){
 				numSettings++;
 			}
@@ -190,12 +187,10 @@ if (typeof EmoticonMapping === 'undefined') {
 				return self._regexes;
 			}
 
-			//$().log("..Processing settings");
 			for (imgSrc in self._settings){
 				codes = self._settings[imgSrc];
 				regexString = '';
 				for (index = 0; codes.length > index; index++){
-
 					code = codes[index];
 					// Escape the string for use in the regex. See: http://simonwillison.net/2006/Jan/20/escape/#p-6
 					code = code.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&');
@@ -204,7 +199,6 @@ if (typeof EmoticonMapping === 'undefined') {
 						regexString += code;
 					}
 				}
-				//$().log("...Regexstr: " + regexString);
 
 				// Stores the regex to img mapping.
 				self._regexes[regexString] = imgSrc;
