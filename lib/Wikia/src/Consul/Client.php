@@ -30,22 +30,23 @@ class Client {
 	}
 
 	/**
-	 * Returns IP addresses of given service healthy nodes
+	 * Returns IP addresses (with ports) of given service healthy nodes
 	 *
 	 * $catalog->getNodes( 'db-a', 'slave' )
+	 * $catalog->getNodes( 'chat-private', 'prod' )
 	 *
 	 * $ curl "http://127.0.0.1:8500/v1/health/service/db-g?tag=slave&passing"
 	 *
 	 * @param string $service
 	 * @param string $tag
-	 * @return array list of IP addresses
+	 * @return array list of IP addresses with ports ie. 127.0.0.1:1234
 	 */
 	function getNodes( $service, $tag ) {
 		$resp = $this->api->service( $service, [ 'tag' => $tag, 'passing' => true ] )->json();
 
 		$nodes = array_map(
 			function( $item ) {
-				return $item[ 'Node' ][ 'Address' ];
+				return $item[ 'Node' ][ 'Address' ] . ':' . $item[ 'Service' ][ 'Port' ];
 			},
 			$resp
 		);

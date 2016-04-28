@@ -1,4 +1,5 @@
 <?php
+
 class ChatController extends WikiaController {
 
 	const CHAT_WORDMARK_WIDTH = 115;
@@ -6,8 +7,9 @@ class ChatController extends WikiaController {
 	const CHAT_AVATAR_DIMENSION = 41;
 
 	public function executeIndex() {
-		ChatHelper::info( __METHOD__ . ': Method called' );
-		global $wgUser, $wgFavicon, $wgOut, $wgHooks, $wgSitename;
+		global $wgUser, $wgFavicon, $wgOut, $wgHooks;
+
+		Chat::info( __METHOD__ . ': Method called' );
 		wfProfileIn( __METHOD__ );
 
 		// String replacement logic taken from includes/Skin.php
@@ -24,54 +26,50 @@ class ChatController extends WikiaController {
 		$this->avatarUrl = AvatarService::getAvatarUrl( $this->username, ChatController::CHAT_AVATAR_DIMENSION );
 
 		// Find the chat for this wiki (or create it, if it isn't there yet).
-		$this->roomId = (int) NodeApiClient::getDefaultRoomId();
+		$this->roomId = ChatServerApiClient::getPublicRoomId();
 
 		// we overwrite here data from redis since it causes a bug DAR-1532
 		$pageTitle = new WikiaHtmlTitle();
 		$pageTitle->setParts( [ wfMessage( 'chat' ) ] );
 		$this->pageTitle = $pageTitle->getTitle();
 
-		$this->chatkey = Chat::echoCookies();
+		$this->chatkey = Chat::getSessionKey();
+
 		// Set the hostname of the node server that the page will connect to.
-
-		$chathost = ChatHelper::getChatConfig( 'ChatHost' );
-
+		$chathost = ChatConfig::getPublicHost();
 		$server = explode( ":", $chathost );
-		$this->nodeHostname = $server[0];
-		$this->nodePort = $server[1];
-
-		$chatmain = ChatHelper::getServer( 'Main' );
-		$this->nodeInstance = $chatmain['serverId'];
+		$this->chatServerHost = $server[0];
+		$this->chatServerPort = $server[1];
 
 		// Some building block for URLs that the UI needs.
 		$this->pathToProfilePage = Title::makeTitle( !empty( $this->wg->EnableWallExt ) ? NS_USER_WALL : NS_USER_TALK, '$1' )->getFullURL();
 		$this->pathToContribsPage = SpecialPage::getTitleFor( 'Contributions', '$1' )->getFullURL();
 
 		$this->bodyClasses = "";
-		if ( $wgUser->isAllowed( 'chatmoderator' ) ) {
-			$this->isChatMod = 1;
+		if ( $wgUser->isAllowed( Chat::CHAT_MODERATOR ) ) {
+			$this->isModerator = 1;
 			$this->bodyClasses .= ' chat-mod ';
 		} else {
-			$this->isChatMod = 0;
+			$this->isModerator = 0;
 		}
 
 		// Adding chatmoderator group for other users. CSS classes added to body tag to hide/show option in menu.
 		$userChangeableGroups = $wgUser->changeableGroups();
-		if ( in_array( 'chatmoderator', $userChangeableGroups['add'] ) ) {
+		if ( in_array( Chat::CHAT_MODERATOR, $userChangeableGroups['add'] ) ) {
 			$this->bodyClasses .= ' can-give-chat-mod ';
 		}
 
 		// set up global js variables just for the chat page
-		$wgHooks['MakeGlobalVariablesScript'][] = array( $this, 'onMakeGlobalVariablesScript' );
+		$wgHooks['MakeGlobalVariablesScript'][] = [ $this, 'onMakeGlobalVariablesScript' ];
 
 		$wgOut->getResourceLoader()->getModule( 'mediawiki' );
 
-		$ret = implode( "\n", array(
+		$ret = implode( "\n", [
 			$wgOut->getHeadLinks( null, true ),
 			$wgOut->buildCssLinks(),
 			$wgOut->getHeadScripts(),
 			$wgOut->getHeadItems()
-		) );
+		] );
 
 		$this->globalVariablesScript = $ret;
 
@@ -93,8 +91,7 @@ class ChatController extends WikiaController {
 			}
 		}
 
-		// CONN-436: Invalidate Varnish cache for ChatRail:GetUsers
-		ChatRailController::purgeMethod( 'GetUsers', [ 'format' => 'json' ] );
+		Chat::purgeChattersCache();
 
 		wfProfileOut( __METHOD__ );
 	}
@@ -102,29 +99,21 @@ class ChatController extends WikiaController {
 	/**
 	 * adding js variable
 	 */
-
-	function onMakeGlobalVariablesScript( Array &$vars ) {
+	public function onMakeGlobalVariablesScript( array &$vars ) {
 		global $wgLang;
-		$vars['roomId'] = $this->roomId;
-		$vars['wgChatMod'] = $this->isChatMod;
-		$vars['WIKIA_NODE_HOST'] = $this->nodeHostname;
-		$vars['WIKIA_NODE_INSTANCE'] = $this->nodeInstance;
-		$vars['WIKIA_NODE_PORT'] = $this->nodePort;
-		$vars['WEB_SOCKET_SWF_LOCATION'] = $this->wg->ExtensionsPath . '/wikia/Chat/swf/WebSocketMainInsecure.swf?' . $this->wg->StyleVersion;
-		$vars['EMOTICONS'] = wfMsgForContent( 'emoticons' );
-
-		$vars['pathToProfilePage'] = $this->pathToProfilePage;
-		$vars['pathToContribsPage'] = $this->pathToContribsPage;
-		$vars['wgAvatarUrl'] = $this->avatarUrl;
 
 		$vars['wgChatKey'] = $this->chatkey;
+		$vars['wgChatRoomId'] = $this->roomId;
 
-		$months = array();
-		for ( $i = 1; $i < 13; $i++ ) {
-			$months[$i] =  $wgLang->getMonthAbbreviation( $i );
-		}
+		$vars['wgChatHost'] = $this->chatServerHost;
+		$vars['wgChatPort'] = $this->chatServerPort;
+		$vars['wgChatEmoticons'] = wfMessage( 'emoticons' )->inContentLanguage()->text();
 
-		$vars['wgLangtMonthAbbreviation'] = $months;
+		$vars['wgChatPathToProfilePage'] = $this->pathToProfilePage;
+		$vars['wgChatPathToContribsPage'] = $this->pathToContribsPage;
+		$vars['wgChatMyAvatarUrl'] = $this->avatarUrl;
+
+		$vars['wgChatLangMonthAbbreviations'] = $wgLang->getMonthAbbreviationsArray();
 
 		return true;
 	}
