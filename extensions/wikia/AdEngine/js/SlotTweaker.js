@@ -111,7 +111,7 @@ define('ext.wikia.adEngine.slotTweaker', [
 	}
 
 	function onReady(slotName, callback) {
-		var iframe = document.getElementById(slotName).querySelector('div[id*="_container_"] iframe');
+		var iframe = document.getElementById(slotName).querySelector('div:not(.hidden) > div[id*="_container_"] iframe');
 
 		if (!iframe) {
 			log('onIframeReady - iframe does not exist', 'debug', logGroup);

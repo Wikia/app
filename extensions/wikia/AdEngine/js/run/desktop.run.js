@@ -117,15 +117,18 @@ require([
 	'ext.wikia.adEngine.slot.highImpact',
 	'ext.wikia.adEngine.slot.inContent',
 	'ext.wikia.adEngine.slot.skyScraper3',
+	'ext.wikia.adEngine.slotTweaker',
 	'wikia.document',
 	'wikia.window',
 	require.optional('ext.wikia.adEngine.slot.exitstitial')
-], function (adContext, highImpact, inContent, skyScraper3, doc, win, exitstitial) {
+], function (adContext, highImpact, inContent, skyScraper3, slotTweaker, doc, win, exitstitial) {
 	'use strict';
 
 	var context = adContext.getContext();
 
 	function initDesktopSlots() {
+		var incontentLeaderboard = 'INCONTENT_LEADERBOARD';
+
 		highImpact.init();
 		skyScraper3.init();
 
@@ -134,7 +137,9 @@ require([
 		}
 
 		if (context.slots.incontentLeaderboard) {
-			inContent.init('INCONTENT_LEADERBOARD');
+			inContent.init(incontentLeaderboard, function () {
+				slotTweaker.adjustIframeByContentSize(incontentLeaderboard);
+			});
 		}
 
 		if (exitstitial) {
