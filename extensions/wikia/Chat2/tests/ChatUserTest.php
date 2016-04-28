@@ -1,6 +1,6 @@
 <?php
 
-class ChatUserText extends WikiaBaseTest {
+class ChatUserTest extends WikiaBaseTest {
 
 	const MOCK_USER_ID = 142;
 	const MOCK_WIKI_ID = 189;
@@ -33,9 +33,7 @@ class ChatUserText extends WikiaBaseTest {
 	}
 
 	private function mockDatabaseRow( $result ) {
-		$databaseMock = $this->getMockBuilder( 'Database' )
-			->disableOriginalConstructor()
-			->getMock();
+		$databaseMock = $this->getDatabaseMock(['selectRow']);
 
 		$databaseMock
 			->expects( $result !== null ? $this->once() : $this->never() )
