@@ -43,7 +43,32 @@ define('WikiBuilder', function () {
 		stringHelper;
 
 	function init(strHelper) {
-		// pre-cache
+		var pane;
+
+		stringHelper = strHelper;
+		cacheSelectors();
+		checkNextButtonStep1();
+		bindEventHandlers();
+
+		// Set current step on page load
+		if (WikiBuilderCfg.currentstep) {
+			pane = $('#' + WikiBuilderCfg.currentstep);
+			wb.width(pane.width());
+			steps.hide();
+			pane.show();
+		}
+
+		$('.tooltip-icon').tooltip();
+
+		// onload stuff
+		wikiName.focus();
+		if (wikiName.val() || wikiDomain.val()) {
+			checkDomain();
+			checkWikiName();
+		}
+	}
+
+	function cacheSelectors() {
 		wb = $('#CreateNewWiki');
 		$nameWikiWrapper = $('#NameWiki');
 		$descWikiWrapper = $('#DescWiki');
@@ -67,30 +92,6 @@ define('WikiBuilder', function () {
 		nextButtons = wb.find('nav .next');
 		finishSpinner = wb.find('.finish-status');
 		descWikiNext = $descWikiWrapper.find('nav .next');
-		stringHelper = strHelper;
-
-		var pane;
-
-		checkNextButtonStep1();
-
-		bindEventHandlers();
-
-		// Set current step on page load
-		if (WikiBuilderCfg.currentstep) {
-			pane = $('#' + WikiBuilderCfg.currentstep);
-			wb.width(pane.width());
-			steps.hide();
-			pane.show();
-		}
-
-		$('.tooltip-icon').tooltip();
-
-		// onload stuff
-		wikiName.focus();
-		if (wikiName.val() || wikiDomain.val()) {
-			checkDomain();
-			checkWikiName();
-		}
 	}
 
 	function bindEventHandlers() {
