@@ -71,7 +71,7 @@ $banner-bottom-space: 34px;
 	background-size: cover;
 	border-left: 6px solid $color-blue;
 	bottom: 0;
-	height: calc(320px - #{$banner-bottom-space});
+	height: 320px - $banner-bottom-space;
 	padding-left: 232px;
 	position: fixed;
 	right: -1000px;
@@ -130,7 +130,7 @@ $banner-bottom-space: 34px;
 
 @media #{$breakpoint-small-only} {
 	.pmp-entry-point-glue-bottom {
-		height: calc(200px - #{$banner-bottom-space});
+		height: 200px - $banner-bottom-space;
 		padding-left: 142px;
 		width: 452px;
 
