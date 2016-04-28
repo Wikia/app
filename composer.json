@@ -12,7 +12,7 @@
   "require": {
     "wikia/fluent-sql-php": "1.0.*",
     "videlalvaro/php-amqplib": "2.2.*",
-    "monolog/monolog": "1.9.1",
+    "monolog/monolog": "^1.18",
     "phpunit/phpunit": "4.1.*",
     "facebook/php-sdk-v4": "4.0.*",
     "cssjanus/cssjanus": "1.1.*",
@@ -21,6 +21,7 @@
     "doctrine/annotations": "~1.2",
     "doctrine/cache": "~1.0",
     "ocramius/proxy-manager": "~1.0",
-    "sensiolabs/consul-php-sdk": "^1.0"
+    "sensiolabs/consul-php-sdk": "^1.0",
+    "wikia/phpflickr": "^3.1"
   }
 }

@@ -36,9 +36,6 @@ Version 0.1.1  ????-??-??
 
 if(!defined('MEDIAWIKI')) die();
 
-// this is so that only sysops can do batch moves
-$wgAvailableRights[] = 'batchmove';
-$wgGroupPermissions['sysop']['batchmove'] = true;
 
 require_once "extras.php";
 

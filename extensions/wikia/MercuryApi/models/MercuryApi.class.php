@@ -104,19 +104,19 @@ class MercuryApi {
 	 * @return mixed
 	 */
 	public function getWikiVariables() {
-		global $wgAnalyticsDriverIVW3Countries, $wgCacheBuster, $wgCityId, $wgContLang, $wgDBname, $wgDefaultSkin,
-			$wgDisableAnonymousEditing, $wgDisableAnonymousUploadForMercury, $wgDisableMobileSectionEditor,
-			$wgEnableCategoryPagesInMercury, $wgEnableCommunityData, $wgEnableDiscussions, $wgEnableNewAuth,
+		global $wgAnalyticsDriverIVW3Countries, $wgCacheBuster, $wgCityId, $wgContLang, $wgContentNamespaces, $wgDBname,
+			$wgDefaultSkin, $wgDisableAnonymousEditing, $wgDisableAnonymousUploadForMercury,
+			$wgDisableMobileSectionEditor, $wgEnableCommunityData, $wgEnableDiscussions, $wgEnableNewAuth,
 			$wgLanguageCode, $wgSitename, $wgWikiDirectedAtChildrenByFounder, $wgWikiDirectedAtChildrenByStaff;
 
 		return [
 			'cacheBuster' => (int)$wgCacheBuster,
+			'contentNamespaces' => $wgContentNamespaces,
 			'dbName' => $wgDBname,
 			'defaultSkin' => $wgDefaultSkin,
 			'disableAnonymousEditing' => $wgDisableAnonymousEditing,
 			'disableAnonymousUploadForMercury' => $wgDisableAnonymousUploadForMercury,
 			'disableMobileSectionEditor' => $wgDisableMobileSectionEditor,
-			'enableCategoryPagesInMercury' => $wgEnableCategoryPagesInMercury,
 			'enableCommunityData' => $wgEnableCommunityData,
 			'enableDiscussions' => $wgEnableDiscussions,
 			'enableGlobalNav2016' => true,
@@ -134,11 +134,12 @@ class MercuryApi {
 			'namespaces' => $wgContLang->getNamespaces(),
 			'siteMessage' => $this->getSiteMessage(),
 			'siteName' => $wgSitename,
-			'theme' => SassUtil::getOasisSettings(),
+			'theme' => SassUtil::normalizeThemeColors( SassUtil::getOasisSettings() ),
 			'tracking' => [
 				'vertical' => HubService::getVerticalNameForComscore( $wgCityId ),
 				'ivw3' => [
 					'countries' => $wgAnalyticsDriverIVW3Countries,
+					'cmKey' => AnalyticsProviderIVW3::getCMKey()
 				],
 				'nielsen' => [
 					'enabled' => AnalyticsProviderNielsen::isEnabled(),
@@ -280,12 +281,8 @@ class MercuryApi {
 	 * @return array|null Article Ad context
 	 */
 	public function getAdsContext( Title $title ) {
-		global $wgEnableAdEngineExt;
-		if ( !empty( $wgEnableAdEngineExt ) ) {
-			$adContext = new AdEngine2ContextService();
-			return $adContext->getContext( $title, self::MERCURY_SKIN_NAME );
-		}
-		return null;
+		$adContext = new AdEngine2ContextService();
+		return $adContext->getContext( $title, self::MERCURY_SKIN_NAME );
 	}
 
 	/**

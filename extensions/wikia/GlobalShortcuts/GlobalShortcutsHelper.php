@@ -109,4 +109,13 @@ class Helper {
 
 		return true;
 	}
+
+	/**
+	 * Checks if Global Shortcuts should be loaded and displayed
+	 *
+	 * @return Bool
+	 */
+	public static function shouldDisplayGlobalShortcuts() {
+		return \RequestContext::getMain()->getUser()->isLoggedIn();
+	}
  }

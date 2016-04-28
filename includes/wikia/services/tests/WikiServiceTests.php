@@ -139,7 +139,7 @@ class WikiServiceTests extends WikiaBaseTest {
 		$row2->page_title = "Abc Page 2";
 		$row2->backlink_cnt = 6;
 
-		$mockDb = $this->getMock('DatabaseMysql', array('select','fetchObject'));
+		$mockDb = $this->getDatabaseMock(array('select','fetchObject'));
 		$mockDb->expects($this->any())->method('select')->will($this->returnValue(false));
 
 		$mockDb->expects($this->at(1))

@@ -7,7 +7,7 @@ class NodeDataTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @covers       Node::getSource
+	 * @covers       \Wikia\PortableInfobox\Parser\Nodes\Node::getSource
 	 * @dataProvider sourceDataProvider
 	 *
 	 * @param $markup
@@ -39,8 +39,101 @@ class NodeDataTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @covers       Node::getExternalParser
-	 * @covers       Node::setExternalParser
+	 * @covers       \Wikia\PortableInfobox\Parser\Nodes\Node::getSourceLabel
+	 * @dataProvider sourceLabelDataProvider
+	 *
+	 * @param $markup
+	 * @param $params
+	 * @param $expected
+	 */
+	public function testSourceLabel( $markup, $params, $expected ) {
+		$node = \Wikia\PortableInfobox\Parser\Nodes\NodeFactory::newFromXML( $markup, $params );
+
+		$this->assertEquals( $expected, $node->getSourceLabel() );
+	}
+
+	public function sourceLabelDataProvider() {
+		return [
+			[ '<data source="test"></data>', [ ], ['test' => ''] ],
+			[ '<image source="test"/>', [ ], ['test' => ''] ],
+			[ '<title source="test"/>', [ ], ['test' => ''] ],
+			[ '<data source="test"><default>{{{test}}}</default></data>',
+				[ ], ['test' => ''] ],
+			[ '<data source="test"><label source="test">{{{test}}}</label><default>{{{test}}}</default></data>',
+				[ ], ['test' => '{{{test}}}'] ],
+			[ '<data source="test"><label>testLabel</label></data>', [ ], ['test' => 'testLabel'] ],
+			[ '<data></data>', [ ], [ ] ],
+			[ '<group><data source="test"><label>labelInsideGroup</label></data></group>', [], ['test' =>'labelInsideGroup'] ],
+			[ '<group>' .
+				'<data source="test"><label>labelInsideGroup</label></data>' .
+				'<data source="test2"><label>labelInsideGroup2</label></data>' .
+				'</group>',
+				[], ['test' =>'labelInsideGroup', 'test2' =>'labelInsideGroup2'] ],
+			[ '<group>' .
+				'<title source="title"/>' .
+				'<image source="image"/>' .
+				'<data source="test"><label>labelInsideGroup</label></data>' .
+				'<data source="test2"><label>labelInsideGroup2</label></data>' .
+				'</group>',
+				[], ['test' =>'labelInsideGroup', 'test2' =>'labelInsideGroup2', 'title' => '', 'image' => ''] ],
+			[ '<data source="test"><default>{{{test 2}}}</default></data>', [ ], [ 'test' => '', 'test 2' => '' ] ],
+			[ '<data source="test1"><default>{{#if: {{{test2|}}}| [[{{{test2}}} with some text]] }}</default></data>',
+				[ ], [ 'test1' => '', 'test2' => '' ] ],
+			[ '<data><default>{{#switch: {{{test2|}}}|{{{test3}}}|{{{test4|kdjk|sajdkfj|}}}]] }}</default></data>',
+				[ ], [ 'test2' => '', 'test3' => '', 'test4' => '' ] ],
+			[ '<data source="test1">' .
+				'<format>my {{{test2}}}$$$</format>' .
+				'<default>{{#switch: {{{test3|}}}|{{{test4}}}|{{{test5|kdjk|sajdkfj|}}}]] }}</default>' .
+				'</data>',
+				[ 'test1' => 'blabla' ], [ 'test1' => '', 'test2' => '', 'test3' => '', 'test4' => '', 'test5' => '' ] ],
+			[ '<data>' .
+				'<format>my {{{test2}}}$$$</format>' .
+				'<default>{{#switch: {{{test3|}}}|{{{test4}}}|{{{test5|kdjk|sajdkfj|}}}]] }}</default>' .
+				'</data>',
+				[ ], [ 'test2' => '', 'test3' => '', 'test4' => '', 'test5' => '' ] ],
+			[ '<data source="test1">' .
+				'<label>label</label>' .
+				'<default>{{#if: {{{test2|}}}| [[{{{test2}}} with some text]] }}</default>' .
+				'</data>',
+				[ ], [ 'test1' => 'label (test1)', 'test2' => 'label (test2)' ] ],
+			[ '<data>' .
+				'<label>other label</label>' .
+				'<default>{{#switch: {{{test2|}}}|{{{test3}}}|{{{test4|kdjk|sajdkfj|}}}]] }}</default>' .
+				'</data>',
+				[ ], [ 'test2' => 'other label (test2)', 'test3' => 'other label (test3)', 'test4' => 'other label (test4)' ] ],
+			[ '<data source="test1">' .
+				'<label>next label</label>' .
+				'<format>my {{{test2}}}$$$</format>' .
+				'<default>{{#switch: {{{test3|}}}|{{{test4}}}|{{{test5|kdjk|sajdkfj|}}}]] }}</default>' .
+				'</data>',
+				[ 'test1' => 'blabla' ],
+				[
+					'test1' => 'next label (test1)',
+					'test2' => 'next label (test2)',
+					'test3' => 'next label (test3)',
+					'test4' => 'next label (test4)',
+					'test5' => 'next label (test5)'
+				]
+			],
+			[ '<data>' .
+				'<label>last label</label>' .
+				'<format>my {{{test2}}}$$$</format>' .
+				'<default>{{#switch: {{{test3|}}}|{{{test4}}}|{{{test5|kdjk|sajdkfj|}}}]] }}</default>' .
+				'</data>',
+				[ ],
+				[
+					'test2' => 'last label (test2)',
+					'test3' => 'last label (test3)',
+					'test4' => 'last label (test4)',
+					'test5' => 'last label (test5)'
+				]
+			]
+		];
+	}
+
+	/**
+	 * @covers       \Wikia\PortableInfobox\Parser\Nodes\Node::getExternalParser
+	 * @covers       \Wikia\PortableInfobox\Parser\Nodes\Node::setExternalParser
 	 * @dataProvider parserTestDataProvider
 	 *
 	 * @param $parser
@@ -60,7 +153,7 @@ class NodeDataTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @covers       NodeData::getData
+	 * @covers       \Wikia\PortableInfobox\Parser\Nodes\NodeData::getData
 	 * @dataProvider dataProvider
 	 *
 	 * @param $markup
@@ -98,7 +191,7 @@ class NodeDataTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @covers       Node::getRenderData
+	 * @covers       \Wikia\PortableInfobox\Parser\Nodes\Node::getRenderData
 	 * @dataProvider dataRenderProvider
 	 *
 	 * @param $markup
@@ -121,7 +214,7 @@ class NodeDataTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @covers       Node::isType
+	 * @covers       \Wikia\PortableInfobox\Parser\Nodes\Node::isType
 	 * @dataProvider isTypeDataProvider
 	 *
 	 * @param $markup
@@ -143,7 +236,7 @@ class NodeDataTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @covers       Node::getType
+	 * @covers       \Wikia\PortableInfobox\Parser\Nodes\Node::getType
 	 * @dataProvider typeDataProvider
 	 *
 	 * @param $markup

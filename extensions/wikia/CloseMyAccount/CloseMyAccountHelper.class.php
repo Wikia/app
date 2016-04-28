@@ -25,7 +25,12 @@ class CloseMyAccountHelper {
 		}
 
 		$user->setGlobalFlag( 'requested-closure', true );
+
+		// Temporarily save requested-closure-date as both an attribute and a preference. This
+		// will be changed to just a preference once we complete the migration. See SOC-2185
 		$user->setGlobalAttribute( 'requested-closure-date', wfTimestamp( TS_DB ) );
+		$user->setGlobalPreference( 'requested-closure-date', wfTimestamp( TS_DB ) );
+
 		$user->saveSettings();
 
 		$this->track( $user, 'request-closure' );
@@ -82,7 +87,13 @@ class CloseMyAccountHelper {
 		}
 
 		$user->setGlobalFlag( 'requested-closure', null );
+
+		// requested-closure-date is temporarily being stored as both an attribute and a preference.
+		// Make sure to delete from both places. This will be changed to just a preference once the
+		// migration is complete. See SOC-2185
 		$user->setGlobalAttribute( 'requested-closure-date', null );
+		$user->setGlobalPreference( 'requested-closure-date', null );
+
 		$user->saveSettings();
 
 		$this->track( $user, 'account-reactivated' );

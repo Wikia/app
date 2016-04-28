@@ -647,7 +647,7 @@ class WikiaApiQueryError extends MWException {
 
 	/**
 	 * Construct a database error
-	 * @param Database $db The database object which threw the error
+	 * @param DatabaseBase $db The database object which threw the error
 	 * @param string $error A simple error message to be used for debugging
 	 */
 	function __construct( $faultcode, $error = '') {

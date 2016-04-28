@@ -1,0 +1,47 @@
+.CommunityPageModalDialog.modal {
+	> header {
+		background-color: $community-page-background-color;
+		height: auto;
+		padding: 18px $modal-horizontal-padding;
+	}
+
+	> footer {
+		display: none;
+	}
+
+	.modal-nav {
+		padding: 0 $modal-horizontal-padding 8px;
+
+		li {
+			display: inline-block;
+			font-size: 14px;
+			padding: 0 31px 18px 0;
+		}
+
+		a {
+			color: $color-nav-inactive-text;
+			padding-bottom: 10px;
+
+			&.active {
+				color: $color-link-text;
+				border-bottom: 2px solid $color-link-text;
+				font-weight: bold;
+				text-decoration: none;
+			}
+		}
+	}
+
+	.subtle {
+		color: $color-module-subtle-text;
+		display: block;
+		font-size: 12px;
+	}
+
+	.details {
+		color: $color-module-subtle-text;
+		font-size: 15px;
+		position: absolute;
+		right: 0;
+		top: 0;
+	}
+}

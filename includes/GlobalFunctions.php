@@ -2416,9 +2416,9 @@ function wfTimestamp( $outputtype = TS_UNIX, $ts = 0 ) {
 		# TS_EXIF
 	} elseif ( preg_match( '/^(\d{4})(\d\d)(\d\d)(\d\d)(\d\d)(\d\d)$/D', $ts, $da ) ) {
 		# TS_MW
-	} elseif ( preg_match( '/^-?\d{1,13}$/D', $ts ) ) {
+	} elseif ( preg_match( '/^-?\d{1,13}(\.\d+)?$/D', $ts ) ) {
 		# TS_UNIX
-		$uts = $ts;
+		$uts = (int) $ts;
 		$strtime = "@$ts"; // http://php.net/manual/en/datetime.formats.compound.php
 	} elseif ( preg_match( '/^\d{2}-\d{2}-\d{4} \d{2}:\d{2}:\d{2}.\d{6}$/', $ts ) ) {
 		# TS_ORACLE // session altered to DD-MM-YYYY HH24:MI:SS.FF6
@@ -2912,6 +2912,8 @@ function wfShellExec( $cmd, &$retval = null, $environ = array() ) {
 	}
 
 	wfInitShellLocale();
+
+	wfRunHooks( 'BeforeWfShellExec', [ &$cmd, &$environ ] ); // Wikia change
 
 	$envcmd = '';
 	foreach( $environ as $k => $v ) {
@@ -3822,8 +3824,9 @@ function wfWaitForSlaves( $wiki = false ) {
 			$lb = clone $lb;
 
 			for ( $i=0; $i < count( $slaves ); $i++ ) {
+				list( $slaveHost, $slavePort ) = explode( ':', $slaves[$i] );
 				$entry = $slaveInfo;
-				$entry['host'] = $slaves[ $i ];
+				$entry['host'] = $slaveHost;
 
 				$lb->setServerInfo( $i+1, $entry );
 			}

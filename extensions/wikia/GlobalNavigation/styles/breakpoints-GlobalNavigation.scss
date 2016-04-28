@@ -13,22 +13,21 @@
 		.global-navigation .global-navigation-container {
 			width: $content-width-small - $scroll-bar-width;
 
+			.wikia-logo-container {
+				padding-right: 10px;
+			}
+
 			.start-wikia-container {
-				padding-left: 21px;
+				padding-right: 10px;
+			}
 
-				.start-wikia {
-					line-height: $start-a-wikia-logo-size - 2 * $content-border-width;
-					width: $start-a-wikia-logo-size;
+			.search-container {
+				padding-left: 6px;
+				padding-right: 6px;
+			}
 
-					&:after {
-						content: '+';
-						display: block;
-					}
-
-					span {
-						display: none;
-					}
-				}
+			.AccountNavigation {
+				padding: 0 10px 0 7px;
 			}
 		}
 	}

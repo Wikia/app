@@ -32,14 +32,12 @@ $wgExtensionCredits[ 'specialpage' ][ ] = array(
 $wgExtensionMessagesFiles['SpecialInterwikiEdit'] = dirname(__FILE__) . '/SpecialInterwikiEdit.i18n.php';
 $wgSpecialPageGroups['InterwikiEdit'] = 'wiki';
 
-$wgAvailableRights [] = 'InterwikiEdit';
-$wgGroupPermissions ['staff']['InterwikiEdit'] = true;
 require_once($IP . '/includes/SpecialPage.php');
 $wgSpecialPages['InterwikiEdit'] = 'InterwikiEdit';
 
 class InterwikiEdit extends SpecialPage {
 
-	public function InterwikiEdit(){
+	public function __construct(){
 		parent::__construct('InterwikiEdit');
 	}
 

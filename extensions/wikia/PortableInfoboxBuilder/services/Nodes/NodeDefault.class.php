@@ -3,8 +3,10 @@
 namespace Wikia\PortableInfoboxBuilder\Nodes;
 
 class NodeDefault extends Node {
-	public function asJson() {
-		return [ 'defaultValue' => (string)$this->xmlNode ];
+	public function asJsonObject() {
+		$object = new \StdClass();
+		$object->defaultValue = (string)$this->xmlNode;
+		return $object;
 	}
 
 	public function hasValidContent() {

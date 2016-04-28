@@ -1,5 +1,7 @@
 <?php
 
+use Wikia\GlobalShortcuts\Helper;
+
 class InsightsHooks {
 
 	public static function init() {
@@ -16,7 +18,7 @@ class InsightsHooks {
 	public static function onBeforePageDisplay( OutputPage $out, Skin $skin ) {
 		global $wgEnableGlobalShortcutsExt;
 
-		if ( !empty( $wgEnableGlobalShortcutsExt ) ) {
+		if ( !empty( $wgEnableGlobalShortcutsExt ) && Helper::shouldDisplayGlobalShortcuts() ) {
 			\Wikia::addAssetsToOutput( 'insights_globalshortcuts_js' );
 		}
 

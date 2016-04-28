@@ -21,9 +21,3 @@ $wgAutoloadClasses['TasksSpecialController'] = "$dir/TasksSpecialController.clas
 $wgSpecialPages['Tasks'] = 'TasksSpecialController';
 
 $wgExtensionMessagesFiles['Tasks'] = "$dir/Tasks.i18n.php";
-
-$wgAvailableRights []= 'tasks-user';
-$wgGroupPermissions['vstf']['tasks-user'] = true;
-$wgGroupPermissions['helper']['tasks-user'] = true;
-$wgGroupPermissions['staff']['tasks-user'] = true;
-$wgGroupPermissions['util']['tasks-user'] = true;

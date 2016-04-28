@@ -38,7 +38,7 @@ $messages = array_merge( $messages, array(
 'copyrightpage' => 'w:Wikia:Licensing|Wikia:Licensing',
 'addnewtalksection-link' => 'Создать новый раздел',
 
-'tog-enableuserjs' => 'Включить персональный JavaScript ([[Справка:Персональный СSS и JavaScript|подробнее]])',
+'tog-enableuserjs' => 'Включить персональный JavaScript ([[Справка:Персональный_CSS_и_JavaScript|подробнее]])',
 'wikia-pagetitle' => '$1 — Wikia',
 
 'group-content-moderator' => 'Модераторы контента',

@@ -8,12 +8,12 @@ require([
 	'ext.wikia.adEngine.customAdsLoader',
 	'ext.wikia.adEngine.dartHelper',
 	'ext.wikia.adEngine.messageListener',
-	'ext.wikia.adEngine.provider.evolve',
 	'ext.wikia.adEngine.recovery.helper',
 	'ext.wikia.adEngine.slot.scrollHandler',
 	'ext.wikia.adEngine.slotTracker',
 	'ext.wikia.adEngine.slotTweaker',
 	'ext.wikia.adEngine.sourcePointDetection',
+	'ext.wikia.adEngine.provider.yavliTag',
 	'wikia.window',
 	'wikia.loader',
 	require.optional('ext.wikia.adEngine.recovery.gcs')
@@ -25,12 +25,12 @@ require([
 	customAdsLoader,
 	dartHelper,
 	messageListener,
-	providerEvolve,
 	recoveryHelper,
 	scrollHandler,
 	slotTracker,
 	slotTweaker,
 	sourcePoint,
+	yavliTag,
 	win,
 	loader,
 	gcs
@@ -58,9 +58,6 @@ require([
 	};
 
 	messageListener.init();
-
-	// Register Evolve hop
-	win.evolve_hop = providerEvolve.hop;
 
 	// Register window.wikiaDartHelper so jwplayer can use it
 	win.wikiaDartHelper = dartHelper;
@@ -97,6 +94,10 @@ require([
 			gcs.addRecoveryCallback();
 		}
 
+		if (context.opts.yavli) {
+			yavliTag.add();
+		}
+
 		if (context.opts.recoveredAdsMessage) {
 			loader({
 				type: loader.AM_GROUPS,
@@ -112,17 +113,29 @@ require([
 
 // Inject extra slots
 require([
-	'ext.wikia.adEngine.slot.inContentPlayer',
+	'ext.wikia.adEngine.adContext',
+	'ext.wikia.adEngine.slot.highImpact',
+	'ext.wikia.adEngine.slot.inContent',
 	'ext.wikia.adEngine.slot.skyScraper3',
 	'wikia.document',
 	'wikia.window',
 	require.optional('ext.wikia.adEngine.slot.exitstitial')
-], function (inContentPlayer, skyScraper3, doc, win, exitstitial) {
+], function (adContext, highImpact, inContent, skyScraper3, doc, win, exitstitial) {
 	'use strict';
 
+	var context = adContext.getContext();
+
 	function initDesktopSlots() {
-		inContentPlayer.init();
+		highImpact.init();
 		skyScraper3.init();
+
+		if (context.slots.incontentPlayer) {
+			inContent.init('INCONTENT_PLAYER');
+		}
+
+		if (context.slots.incontentLeaderboard) {
+			inContent.init('INCONTENT_LEADERBOARD');
+		}
 
 		if (exitstitial) {
 			exitstitial.init();

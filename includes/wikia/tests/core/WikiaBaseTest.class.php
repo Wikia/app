@@ -225,6 +225,34 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 	}
 
 	/**
+	 * Mock a static method using callback
+	 *
+	 * Example:
+	 *
+	 * $this->mockStaticMethodWithCallBack( 'Title', 'newFromID',
+	 *   function ( $titleId ) {
+	 *     $titleMock = $this->getMock( 'Title', [ 'getArticleID' ] );
+	 *     $titleMock->expects( $this->any() )
+	 *       ->method( 'getArticleID' )
+	 *       ->willReturn( $titleId );
+	 *     return $titleMock;
+	 *   }
+	 * );
+	 * $this->assertEquals( 7, Title::newFromID( 7 )->getArticleID() );
+	 * $this->assertEquals( 12, Title::newFromID( 12 )->getArticleID() );
+	 * $this->assertEquals( 123, Title::newFromID( 123 )->getArticleID() );
+	 *
+	 * @param $className string
+	 * @param $methodName string
+	 * @param $callBack callable
+	 */
+	protected function mockStaticMethodWithCallBack( $className, $methodName, callable $callBack) {
+		$this->getMockProxy()
+			->getStaticMethod($className, $methodName)
+			->willCall($callBack);
+	}
+
+	/**
 	 * Mock global ($wg...) variable.
 	 *
 	 * @param $globalName string name of global variable (e.g. wgCity - WITH wg prefix)
@@ -278,6 +306,16 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 			->method( 'get' )
 			->will( $this->returnValue( $messageContent ) );
 		return $mock;
+	}
+
+	/**
+	 * Return the database connection handler mock
+	 *
+	 * @param array $methods
+	 * @return PHPUnit_Framework_MockObject_MockObject
+	 */
+	protected function getDatabaseMock( $methods = [] ) {
+		return $this->getMock( 'DatabaseMysqli', $methods );
 	}
 
 	/**

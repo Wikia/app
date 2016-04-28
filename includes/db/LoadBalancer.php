@@ -766,9 +766,10 @@ class LoadBalancer {
 		// Wikia change - begin
 		if ( $db->getSampler()->shouldSample() ) {
 			$db->getWikiaLogger()->info( "LoadBalancer::reallyOpenConnection", [
-				'caller' => wfGetCallerClassMethod( __CLASS__ ),
-				'host'   => $server['hostName'], // eg. db-archive-s7
-				'dbname' => $dbname
+				'caller'  => wfGetCallerClassMethod( __CLASS__ ),
+				'host'    => $server['hostName'], // eg. db-archive-s7
+				'db_name' => $dbname,
+				'db_user' => $server['user'],
 			] );
 		}
 		// Wikia change - end
@@ -786,7 +787,7 @@ class LoadBalancer {
 		if ( !is_object( $conn ) ) {
 			// No last connection, probably due to all servers being too busy
 			wfLogDBError( "LB failure with no last connection. Connection error: {$this->mLastError}\n" );
-			$conn = new Database;
+			$conn = new DatabaseMysqli;
 			// If all servers were busy, mLastError will contain something sensible
 			throw new DBConnectionError( $conn, $this->mLastError );
 		} else {

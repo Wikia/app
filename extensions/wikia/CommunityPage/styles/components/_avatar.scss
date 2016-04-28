@@ -1,0 +1,25 @@
+@import 'skins/shared/mixins/transform';
+
+.avatar-container {
+	border: 2px solid $color-avatar-border;
+	border-radius: 50%;
+	height: 26px;
+	overflow: hidden;
+	width: 26px;
+
+	img {
+		border: 0;
+	}
+
+	&.logged-avatar-placeholder {
+		background-image: url('/extensions/wikia/GlobalNavigation/images/signin_icon.svg'); /* inline */
+		background-position: center;
+		background-repeat: no-repeat;
+	}
+}
+
+.ContributorsModule {
+	.avatar {
+		@include transform-translate(-2px, -2px);
+	}
+}

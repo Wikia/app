@@ -710,7 +710,6 @@ class SFUploadForm extends HTMLForm {
 			+ $this->getDescriptionSection()
 			+ $this->getOptionsSection();
 
-		wfRunHooks( 'UploadFormInitDescriptor', array( $descriptor ) );
 		parent::__construct( $descriptor, 'upload' );
 
 		# Set some form properties
@@ -796,7 +795,6 @@ class SFUploadForm extends HTMLForm {
 				'checked' => $selectedSourceType == 'url',
 			);
 		}
-		wfRunHooks( 'UploadFormSourceDescriptors', array( &$descriptor, &$radio, $selectedSourceType ) );
 
 		$descriptor['Extensions'] = array(
 			'type' => 'info',

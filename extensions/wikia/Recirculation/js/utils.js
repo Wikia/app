@@ -1,8 +1,9 @@
 /*global define*/
 define('ext.wikia.recirculation.utils', [
 	'wikia.loader',
-	'wikia.cache'
-], function (loader, cache) {
+	'wikia.cache',
+	'wikia.mustache'
+], function (loader, cache, Mustache) {
 	'use strict';
 
 	/**
@@ -34,7 +35,41 @@ define('ext.wikia.recirculation.utils', [
 		return dfd.promise();
 	}
 
+	function renderTemplate(templateName, data) {
+		var templateName = 'extensions/wikia/Recirculation/templates/client/' + templateName;
+
+		return loadTemplate(templateName)
+			.then(function(template) {
+				return $(Mustache.render(template, data));
+			});
+	}
+
+	function buildLabel(element, label) {
+		var slot = $(element).parent().data('index') + 1;
+
+		return label + '=slot-' + slot;
+	}
+
+	function addUtmTracking(items, placement) {
+		var params = {
+			utm_source: 'wikia',
+			utm_campaign: 'recirc',
+			utm_placement: placement
+		};
+
+		items = $.map(items, function(item, index) {
+			params.utm_content = index + 1;
+			item.url = item.url + '?' + $.param(params);
+			return item;
+		});
+
+		return items;
+	}
+
 	return {
-		loadTemplate: loadTemplate
+		buildLabel: buildLabel,
+		loadTemplate: loadTemplate,
+		renderTemplate: renderTemplate,
+		addUtmTracking: addUtmTracking
 	};
 });

@@ -138,7 +138,7 @@ abstract class UserTagsStrategyBase {
 		}
 
 		/* See if user is banned from chat */
-		if (!empty($this->app->wg->EnableChat) && Chat::getBanInformation($this->app->wg->CityId, $this->user) !== false) {
+		if (!empty($this->app->wg->EnableChat) && (new ChatUser($this->user))->isBanned() ) {
 			$result = wfMsg('user-identity-box-banned-from-chat');
 		}
 

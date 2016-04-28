@@ -353,7 +353,8 @@ class VideoHandlerController extends WikiaController {
 			$params['limit'],
 			$params['page'],
 			$params['providers'],
-			$params['category']
+			$params['category'],
+			$params['sort']
 		);
 
 		// get video detail
@@ -389,6 +390,9 @@ class VideoHandlerController extends WikiaController {
 
 		$this->response->setVal( 'videos', $videoList );
 
+		// SUS-291: This method is only called via ajax/internal requests expecting json data
+		$this->response->setFormat( \WikiaResponse::FORMAT_JSON );
+
 		/**
 		 * SUS-81: let's rely on CDN cache only
 		 *
@@ -407,7 +411,7 @@ class VideoHandlerController extends WikiaController {
 	 */
 	public static function getVideoListSurrogateKey() {
 		global $wgCachePrefix;
-		return implode( '-', [ $wgCachePrefix, __CLASS__, 'getVideoList' ] );
+		return implode( '-', [ $wgCachePrefix ?: wfWikiID(), __CLASS__, 'getVideoList' ] );
 	}
 
 	protected function getVideoListParams() {
@@ -420,6 +424,7 @@ class VideoHandlerController extends WikiaController {
 			'height' => $this->getVal( 'height', self::DEFAULT_THUMBNAIL_HEIGHT ),
 			'detail' => $this->getVal( 'detail', 0 ),
 			'filter' => 'all',
+			'sort' => $this->getVal( 'sort', MediaQueryService::SORT_RECENT_FIRST )
 		];
 	}
 

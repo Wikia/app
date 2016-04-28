@@ -4,16 +4,19 @@ namespace Wikia\PortableInfoboxBuilder\Nodes;
 
 abstract class Node {
 	/**
-	 * allowed node attributes
-	 * @var array of string
+	 * @var array of attribute => array of accepted values, empty array = all values
 	 */
 	protected $allowedAttributes = [ ];
 
 	/**
-	 * allowed child nodes
 	 * @var array string
 	 */
 	protected $allowedChildNodes = [ ];
+
+	/**
+	 * @var array string
+	 */
+	protected $requiredChildNodes = [ ];
 
 	/**
 	 * @var Node
@@ -33,7 +36,7 @@ abstract class Node {
 	 * @return bool
 	 */
 	public function isValid() {
-		if ( !( $this->hasValidContent() && $this->hasValidAttributes() && $this->hasValidChildren() ) ) {
+		if ( !( $this->hasValidContent() && $this->hasValidAttributes() && $this->hasValidChildren() && $this->hasRequiredChildren() ) ) {
 			return false;
 		}
 
@@ -44,21 +47,31 @@ abstract class Node {
 		return true;
 	}
 
-	public function asJson() {
+	public function hasRequiredChildren() {
+		$requiredChildren = array_flip( $this->requiredChildNodes );
+		foreach ( $this->xmlNode->children() as $childNode ) {
+			if ( in_array( $childNode->getName(), $this->requiredChildNodes ) ) {
+				unset( $requiredChildren[ $childNode->getName() ] );
+			}
+		}
+		return empty( $requiredChildren );
+	}
+
+	public function asJsonObject() {
 		$result = new \StdClass();
 
 		foreach ( $this->xmlNode->attributes() as $attribute => $value ) {
 			$result->$attribute = (string)$value;
 		}
 
-		$data = $this->getChildrenAsJson();
+		$data = $this->getChildrenAsJsonObjects();
 
-		if(!empty($data)) {
+		if ( !empty( $data ) ) {
 			$result->data = $data;
 		}
 		$type = $this->getType();
-		if(!empty($type)) {
-			$result->type= $type;
+		if ( !empty( $type ) ) {
+			$result->type = $type;
 		}
 
 		return $result;
@@ -70,16 +83,23 @@ abstract class Node {
 
 	protected function hasValidAttributes() {
 		foreach ( $this->xmlNode->attributes() as $attribute => $value ) {
-			if ( !in_array( $attribute, $this->allowedAttributes ) ) {
+			if ( !isset( $this->allowedAttributes[ $attribute ] )
+				 || !$this->hasValidAttributeValues( $attribute, $value )
+			) {
 				return false;
 			}
 		}
 		return true;
 	}
 
+	protected function hasValidAttributeValues( $attribute, $value ) {
+		return empty( $this->allowedAttributes[ $attribute ] )
+			   || in_array( $value, $this->allowedAttributes[ $attribute ] );
+	}
+
 	protected function hasValidChildren() {
 		foreach ( $this->xmlNode->children() as $childNode ) {
-			if ( !in_array( $childNode->getName(), $this->allowedChildNodes) ) {
+			if ( !in_array( $childNode->getName(), $this->allowedChildNodes ) ) {
 				return false;
 			}
 
@@ -95,12 +115,18 @@ abstract class Node {
 	 * @return array
 	 * @throws \Wikia\PortableInfobox\Parser\Nodes\UnimplementedNodeException
 	 */
-	public function getChildrenAsJson() {
-		$data = [];
+	protected function getChildrenAsJsonObjects() {
+		$data = [ ];
 
 		foreach ( $this->xmlNode->children() as $childNode ) {
 			$builderNode = NodeBuilder::createFromNode( $childNode );
-			$data[] = $builderNode->asJson();
+			$nodeasJsonObject = $builderNode->asJsonObject();
+
+			if ( is_object( $nodeasJsonObject ) ) {
+				$data[] = $nodeasJsonObject;
+			} elseif ( is_array( $nodeasJsonObject ) ) {
+				$data = array_merge( $data, $nodeasJsonObject );
+			}
 		}
 		return $data;
 	}

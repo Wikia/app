@@ -37,6 +37,12 @@ class ResourceLoaderUserModule extends ResourceLoaderGlobalWikiModule {
 			// Get the normalized title of the user's user page
 			$username = $context->getUser();
 			$userpageTitle = Title::makeTitleSafe( NS_USER, $username );
+
+			// PLATFORM-1980
+			Wikia\Util\Assert::true( $userpageTitle instanceof Title, __METHOD__, [
+				'username' => $username
+			] );
+
 			$userpage = $userpageTitle->getPrefixedDBkey(); // Needed so $excludepages works
 
 			$pages = array(

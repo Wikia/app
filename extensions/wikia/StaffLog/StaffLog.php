@@ -32,8 +32,4 @@ $wgLogRestrictions['StaffLog'] = 'StaffLog';
 $wgStaffLogType = array(1 => "Block");
 $wgSpecialPageGroups['stafflog'] = 'changes';
 
-$wgAvailableRights[] = 'stafflog';
-$wgGroupPermissions['staff']['stafflog'] = true;
-$wgGroupPermissions['helper']['stafflog'] = true;
-
 require_once $dir."StaffLog.events.php";

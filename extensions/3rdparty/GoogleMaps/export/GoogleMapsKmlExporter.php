@@ -5,7 +5,7 @@ class GoogleMapsKmlExporter extends GoogleMapsExporter {
 	var $mIcon;
 	var $mMarkerCount;
 
-	function GoogleMapsKmlExporter(&$pLanguage, $pIcon) {
+	function __construct(&$pLanguage, $pIcon) {
 		$this->mOutput = '';
 		$this->mIcons = array();
 		$this->mIcon = $pIcon;
