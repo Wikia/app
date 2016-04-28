@@ -70,15 +70,15 @@ require([
 			adminsCountElement = $('#adminsCount');
 
 		if (typeof allMembersCount === 'undefined') {
-			allCountElement.html('');
+			allCountElement.text('');
 		} else {
-			allCountElement.html('(' + allMembersCount + ')');
+			allCountElement.text('(' + allMembersCount + ')');
 		}
 
 		if (typeof adminsCount === 'undefined') {
-			adminsCountElement.html('');
+			adminsCountElement.text('');
 		} else {
-			adminsCountElement.html('(' + adminsCount + ')');
+			adminsCountElement.text('(' + adminsCount + ')');
 		}
 	}
 
@@ -132,8 +132,9 @@ require([
 			};
 			uiModal.createComponent(createPageModalConfig, function (modal) {
 				var loading = mustache.render(templates.modalLoadingScreen, {
-					loadingText: $.msg('communitypage-modal-tab-loading'),
-				}), html = navHtml + loading;
+						loadingText: $.msg('communitypage-modal-tab-loading'),
+					}),
+					html = navHtml + loading;
 
 				modal.$content
 					.addClass('ContributorsModule ContributorsModuleModal')
