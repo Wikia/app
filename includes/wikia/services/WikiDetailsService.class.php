@@ -281,8 +281,10 @@ class WikiDetailsService extends WikiService {
 	private function getDiscussionStats( $id ) {
 		global $wgConsulServiceTag, $wgConsulUrl;
 
+		$discussionsRequestTimeout = 3;
+
 		$consulUrl = ( new Wikia\Service\Gateway\ConsulUrlProvider( $wgConsulUrl, $wgConsulServiceTag ))->getUrl( 'discussion' );
-		$response = Http::get( "http://$consulUrl/$id/forums/$id?limit=1", 3, array( 'noProxy' => true ));
+		$response = Http::get( "http://$consulUrl/$id/forums/$id?limit=1", $discussionsRequestTimeout, array( 'noProxy' => true ));
 		if ( $response !== false ) {
 			$decodedResponse = json_decode( $response, true );
 			if ( isset( $decodedResponse[ 'threadCount' ] ) && json_last_error() === JSON_ERROR_NONE ) {
