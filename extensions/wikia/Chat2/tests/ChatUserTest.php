@@ -1,6 +1,6 @@
 <?php
 
-class ChatUserText extends WikiaBaseTest {
+class ChatUserTest extends WikiaBaseTest {
 
 	const MOCK_USER_ID = 142;
 	const MOCK_WIKI_ID = 189;
