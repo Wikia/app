@@ -57,13 +57,14 @@ $timeEnd = microtime( true );
 
 // Only log times for "top" "1k" wikis (doesn't need to be very precise top or 1k)
 if ( !empty( $wgAdDriverWikiIsTop1000 ) ) {
-	$pageCount = 0;
+	$sitemapPagesPerNs = [];
 	foreach ( $indexes as $namespace => $index ) {
-		$pageCount += count( $index );
+		$sitemapPagesPerNs['NS_' . $namespace] = count( $index );
 	}
 	\Wikia\Logger\WikiaLogger::instance()->info( 'Sitemap generation', [
 		'generationTimeMS' => ( $timeEnd - $timeStart ) * 1000,
 		'dbName' => $wgDBname,
-		'pages' => $pageCount,
+		'sitemapPagesPerNs' => $sitemapPagesPerNs,
+		'sitemapPagesTotal' => array_sum( $sitemapPagesPerNs ),
 	] );
 }
