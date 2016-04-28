@@ -333,15 +333,11 @@ class MercuryApiController extends WikiaController {
 	 * @return void
 	 */
 	public function getPage() {
+		global $wgContLang;
+
 		try {
 			$title = $this->getTitleFromRequest();
 			$data = [ ];
-
-			/**
-			 * On article Main Pages and on Curated Main Pages, page title and Wiki name are equal
-			 * and to avoid duplicates we don't use page title
-			 */
-			$documentTitle = '';
 
 			// getPage is cached (see the bottom of the method body) so there is no need for additional caching here
 			$article = Article::newFromID( $title->getArticleId() );
@@ -370,15 +366,20 @@ class MercuryApiController extends WikiaController {
 						$data['nsSpecificContent'] = MercuryApiCategoryHandler::getCategoryContent( $title );
 
 						if ( MercuryApiCategoryHandler::hasArticle( $this->request, $article ) ) {
-							$data['article'] = MercuryApiArticleHandler::getArticleJson( $this->request, $article );
 							$data['details'] = MercuryApiArticleHandler::getArticleDetails( $article );
+							$data['article'] = MercuryApiArticleHandler::getArticleJson( $this->request, $article );
+
+							// Remove namespace prefix from displayTitle, so it can be consistent with title
+							$namespacePrefix = $wgContLang->getNamespaces()[$data['ns']];
+
+							if ( strpos( $data['article']['displayTitle'], $namespacePrefix ) === 0 ) {
+								$data['article']['displayTitle'] = substr( $data['article']['displayTitle'], strlen( $namespacePrefix ) + 1 );
+							}
 						} elseif ( !empty( $data['nsSpecificContent']['members']['sections'] ) ) {
 							$data['details'] = MercuryApiCategoryHandler::getCategoryMockedDetails( $title );
 						} else {
 							throw new NotFoundApiException( 'Article is empty and category has no members' );
 						}
-
-						$documentTitle = $title->getPrefixedText();
 
 						break;
 					default:
@@ -388,8 +389,6 @@ class MercuryApiController extends WikiaController {
 									$data,
 									MercuryApiArticleHandler::getArticleData( $this->request, $this->mercuryApi, $article )
 								);
-
-								$documentTitle = $isMainPage ? '' : $data['article']['displayTitle'];
 							} else {
 								\Wikia\Logger\WikiaLogger::instance()->error(
 									'$article should be an instance of an Article',
@@ -401,8 +400,6 @@ class MercuryApiController extends WikiaController {
 						}
 				}
 			}
-
-			$data['details']['documentTitle'] = ( new WikiaHtmlTitle() )->setParts( [$documentTitle] )->getTitle();
 		} catch ( WikiaHttpException $exception ) {
 			$this->response->setCode( $exception->getCode() );
 
