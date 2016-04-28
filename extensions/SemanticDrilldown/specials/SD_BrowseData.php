@@ -1283,7 +1283,7 @@ END;
 	 *
 	 * @param OutputPage $out OutputPage to print to
 	 * @param Skin $skin User skin to use
-	 * @param Database $dbr Database (read) connection to use
+	 * @param DatabaseBase $dbr Database (read) connection to use
 	 * @param int $res Result pointer
 	 * @param int $num Number of available result rows
 	 * @param int $offset Paging offset

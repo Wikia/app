@@ -6,20 +6,20 @@ describe("ChatView Test", function(){
 	beforeEach(function(){
 		origwgServer = window.wgServer;
 		origwgArticlePath = window.wgArticlePath;
-		origEMOTICONS = window.EMOTICONS;
+		origEMOTICONS = window.wgChatEmoticons;
 
 		/*
 		 * some mockup so we can create NodeRoomController
 		 */
 		window.wgServer = "http://poznan.mech.wikia-dev.com";
 		window.wgArticlePath = "/wiki/$1";
-		window.EMOTICONS = '';
+		window.wgChatEmoticons = '';
 	});
 
 	afterEach(function(){
 		window.wgServer = origwgServer;
 		window.wgArticlePath = origwgArticlePath;
-		window.EMOTICONS = origEMOTICONS;
+		window.wgChatEmoticons = origEMOTICONS;
 	});
 
 	it("processText links", function() {

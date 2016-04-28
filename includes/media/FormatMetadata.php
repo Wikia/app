@@ -1355,21 +1355,3 @@ class FormatMetadata {
 		}
 	}
 }
-
-/** For compatability with old FormatExif class
- * which some extensions use.
- *
- * @deprecated since 1.18
- *
-**/
-class FormatExif {
-	var $meta;
-	function FormatExif ( $meta ) {
-		wfDeprecated(__METHOD__);
-		$this->meta = $meta;
-	}
-
-	function getFormattedData ( ) {
-		return FormatMetadata::getFormattedData( $this->meta );
-	}
-}

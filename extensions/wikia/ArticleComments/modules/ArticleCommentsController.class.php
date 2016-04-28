@@ -1,12 +1,12 @@
 <?php
 class ArticleCommentsController extends WikiaController {
+	use Wikia\Logger\Loggable;
+
 	private $dataLoaded = false;
 	private static $content = null;
 
 	public function executeIndex() {
-		wfProfileIn(__METHOD__);
-
-		if (class_exists('ArticleCommentInit') && ArticleCommentInit::ArticleCommentCheck()) {
+		if ( class_exists( 'ArticleCommentInit' ) && ArticleCommentInit::ArticleCommentCheck() ) {
 			$isMobile = $this->app->checkSkin( 'wikiamobile' );
 
 			// for non-JS version !!! (used also for Monobook and WikiaMobile)
@@ -19,7 +19,7 @@ class ArticleCommentsController extends WikiaController {
 					$oTitle = Title::newFromID( $iArticleId );
 
 					if ( $oTitle instanceof Title ) {
-						$response = ArticleComment::doPost( $this->wg->Request->getVal('wpArticleComment') , $this->wg->User, $oTitle );
+						$response = ArticleComment::doPost( $this->wg->Request->getVal( 'wpArticleComment' ), $this->wg->User, $oTitle );
 
 						if ( !$isMobile ) {
 							$this->wg->Out->redirect( $oTitle->getLocalURL() );
@@ -30,15 +30,15 @@ class ArticleCommentsController extends WikiaController {
 							//this check should be done for all the skins and before calling ArticleComment::doPost but that requires a good bit of refactoring
 							//and some design review as the OAsis/Monobook template doesn't handle error feedback from this code
 							if ( $canComment == true ) {
-								if ( empty( $response[2]['error'] ) ) {
+								if ( empty( $response[ 2 ][ 'error' ] ) ) {
 									//wgOut redirect doesn't work when running fully under the
 									//Nirvana stack (WikiaMobile skin), also send back to the first page of comments
 									$this->response->redirect( $oTitle->getLocalURL( [ 'page' => 1 ] ) . '#article-comments' );
 								} else {
-									$this->response->setVal( 'error', $response[2]['msg'] );
+									$this->response->setVal( 'error', $response[ 2 ][ 'msg' ] );
 								}
 							} else {
-								$this->response->setVal( 'error', $result['msg'] );
+								$this->response->setVal( 'error', $result[ 'msg' ] );
 							}
 						}
 					}
@@ -63,8 +63,6 @@ class ArticleCommentsController extends WikiaController {
 				}
 			}
 		}
-
-		wfProfileOut(__METHOD__);
 	}
 
 	/**
@@ -74,8 +72,6 @@ class ArticleCommentsController extends WikiaController {
 	public function content() {
 		//this is coming via ajax we need to set correct wgTitle ourselves
 		global $wgTitle;
-
-		wfProfileIn( __METHOD__ );
 
 		$articleId = $this->request->getVal( 'articleId', null );
 		$page = $this->request->getVal( 'page', 1 );
@@ -93,7 +89,6 @@ class ArticleCommentsController extends WikiaController {
 		if ( $title === null ) {
 			$this->response->setCode( 404 );
 			$this->skipRendering();
-			wfProfileOut( __METHOD__ );
 			return;
 		}
 
@@ -108,8 +103,6 @@ class ArticleCommentsController extends WikiaController {
 			$this->response->setCachePolicy( WikiaResponse::CACHE_PRIVATE );
 			$this->response->setCacheValidity( WikiaResponse::CACHE_DISABLED );
 		}
-
-		wfProfileOut( __METHOD__ );
 	}
 
 	/**
@@ -142,7 +135,6 @@ class ArticleCommentsController extends WikiaController {
 	 * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
 	 **/
 	public function executeWikiaMobileCommentsPage() {
-		wfProfileIn( __METHOD__ );
 		$articleID = $this->request->getInt( 'articleID' );
 		$title = null;
 
@@ -168,13 +160,9 @@ class ArticleCommentsController extends WikiaController {
 		if ( $this->page <  $this->pagesCount ) {
 			$this->response->setVal( 'nextPage', $this->page + 1 );
 		}
-
-		wfProfileOut( __METHOD__ );
 	}
 
 	private function getCommentsData(Title $title, $page, $perPage = null, $filterid = null) {
-		wfProfileIn(__METHOD__);
-
 		$key = implode( '_', [ $title->getArticleID(), $page, $perPage, $filterid ] );
 		$data = null;
 
@@ -211,8 +199,6 @@ class ArticleCommentsController extends WikiaController {
 		$this->ajaxicon = $this->wg->StylePath.'/common/images/ajax.gif';
 		$this->pagesCount = ( $data['commentsPerPage'] > 0 ) ? ceil( $data['countComments'] / $data['commentsPerPage'] ) : 0;
 		$this->response->setValues( $data );
-
-		wfProfileOut(__METHOD__);
 
 		return $data;
 	}

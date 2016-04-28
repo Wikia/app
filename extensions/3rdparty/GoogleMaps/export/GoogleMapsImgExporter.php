@@ -5,7 +5,7 @@ class GoogleMapsImgExporter extends GoogleMapsExporter {
     var $mPathCount;
     var $mLanguageCode;
 
-    function GoogleMapsImgExporter($pApiKey, $pLanguageCode) {
+    function __construct($pApiKey, $pLanguageCode) {
         $this->mApiKey = $pApiKey;
         $this->mPathCount = 0;
         $this->mLanguageCode = $pLanguageCode;

@@ -255,7 +255,7 @@ class IndexerTest extends BaseTest
 		                   ->disableOriginalConstructor()
 		                   ->setMethods( [ 'getDB' ] )
 		                   ->getMock();
-		$dbHandler = $this->getMockBuilder( 'DatabaseMysql' )
+		$dbHandler = $this->getMockBuilder( 'DatabaseMysqli' )
 		                  ->disableOriginalConstructor()
 		                  ->setMethods( [ 'query', 'fetchObject'] )
 		                  ->getMock();
