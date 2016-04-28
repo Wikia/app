@@ -8,6 +8,7 @@ class WikiDetailsService extends WikiService {
 	const DEFAULT_WIDTH = 250;
 	const DEFAULT_HEIGHT = null;
 	const DEFAULT_SNIPPET_LENGTH = null;
+	const DISCUSSIONS_REQUEST_TIMEOUT = 3;
 	const CACHE_VERSION = 3;
 	const WORDMARK_URL_SETTING = 'wordmark-image-url';
 	private static $flagsBlacklist = array( 'blocked', 'promoted' );
@@ -281,10 +282,8 @@ class WikiDetailsService extends WikiService {
 	private function getDiscussionStats( $id ) {
 		global $wgConsulServiceTag, $wgConsulUrl;
 
-		$discussionsRequestTimeout = 3;
-
 		$consulUrl = ( new Wikia\Service\Gateway\ConsulUrlProvider( $wgConsulUrl, $wgConsulServiceTag ))->getUrl( 'discussion' );
-		$response = Http::get( "http://$consulUrl/$id/forums/$id?limit=1", $discussionsRequestTimeout, array( 'noProxy' => true ));
+		$response = Http::get( "http://$consulUrl/$id/forums/$id?limit=1", self::DISCUSSIONS_REQUEST_TIMEOUT, array( 'noProxy' => true ));
 		if ( $response !== false ) {
 			$decodedResponse = json_decode( $response, true );
 			if ( isset( $decodedResponse[ 'threadCount' ] ) && json_last_error() === JSON_ERROR_NONE ) {
