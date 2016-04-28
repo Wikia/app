@@ -431,7 +431,9 @@
 					}
 
 					//update counter
-					$('#article-comments-counter-header').html($.msg('oasis-comments-header', json.counter));
+					// Counter update disabled for MAIN-7023.  Until we can find a way to have wikitext
+					// as part of this message AND have this JS update the counter, this should stay commented out
+					//$('#article-comments-counter-header').html($.msg('oasis-comments-header', json.counter));
 
 					if (window.skin === 'oasis') {
 						$('#WikiaPageHeader, #WikiaUserPagesHeader').find('.commentsbubble').html(json.counter);
