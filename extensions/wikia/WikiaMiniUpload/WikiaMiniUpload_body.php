@@ -231,7 +231,7 @@ class WikiaMiniUpload {
 			$tempid = $this->tempFileStoreInfo( $tempname );
 			$props = array();
 			$props['file'] = $file;
-			$props['name'] = preg_replace("/[^".Title::legalChars()."]|:/", '-', trim($flickrResult['title']).'.jpg');
+			$props['name'] = preg_replace("/[^".Title::legalChars()."]|:/", '-', trim($flickrResult['title']['_content']).'.jpg');
 			$props['mwname'] = $tempname;
 			$props['extraId'] = $itemId;
 			$props['tempid'] = $tempid;

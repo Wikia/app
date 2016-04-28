@@ -38,7 +38,7 @@ class CommunityQuiz {
     /**
      * The constructor
      */
-    public function __construct( DatabaseMysql $dbObj, $date ) {
+    public function __construct( DatabaseBase $dbObj, $date ) {
         $this->dbObj = $dbObj;
         $this->date = $date;
         return null;

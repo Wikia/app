@@ -18,7 +18,12 @@ class CloseWikiMaintenance {
 
 	const CLOSE_WIKI_DELAY = 30;
 
-	const S3_CONFIG = '/etc/s3cmd/sjc_prod.cfg'; # s3cmd config for Swift storage
+	/**
+	 * s3cmd + config for DFS storage
+	 *
+	 * This maintenance script needs to be run as root due to permissions set for /etc/s3cmd
+	 */
+	const S3_COMMAND = '/usr/bin/s3cmd -c /etc/s3cmd/sjc_prod.cfg';
 
 	private $mOptions;
 
@@ -232,7 +237,7 @@ class CloseWikiMaintenance {
 				$server = $local->getLBInfo( 'host' );
 
 				try {
-					$dbw = new DatabaseMysql($server, $wgDBadminuser, $wgDBadminpassword, $centralDB);
+					$dbw = new DatabaseMysqli($server, $wgDBadminuser, $wgDBadminpassword, $centralDB);
 					$dbw->begin( __METHOD__ );
 					$dbw->query("DROP DATABASE `{$row->city_dbname}`");
 					$dbw->commit( __METHOD__ );
@@ -333,8 +338,8 @@ class CloseWikiMaintenance {
 
 			// s3cmd sync --dry-run s3://dilbert ~/images/dilbert/ --exclude "/thumb/*" --exclude "/temp/*"
 			$cmd = sprintf(
-				'sudo /usr/bin/s3cmd -c %s sync s3://%s/images "%s" --exclude "/thumb/*" --exclude "/temp/*"',
-				self::S3_CONFIG,
+				'%s sync s3://%s/images "%s" --exclude "/thumb/*" --exclude "/temp/*"',
+				self::S3_COMMAND,
 				$container,
 				$directory
 			);
@@ -420,18 +425,20 @@ class CloseWikiMaintenance {
 
 			// s3cmd --recursive del s3://BUCKET/OBJECT / Recursively delete files from bucket
 			$cmd = sprintf(
-				'sudo /usr/bin/s3cmd -c %s --recursive del s3://%s%s/',
-				self::S3_CONFIG,
+				'%s --recursive del s3://%s%s/',
+				self::S3_COMMAND,
 				$swift->getContainerName(),  # e.g. 'nordycka'
 				$swift->getPathPrefix()      # e.g. '/pl/images'
 			);
-			$out = wfShellExec( $cmd, $iStatus );
 			$this->log( $cmd );
+			$out = wfShellExec( $cmd, $iStatus );
 
 			if ( $iStatus !== 0 ) {
 				throw new Exception( 'Failed to remove a bucket content - ' . $cmd, $iStatus );
 			}
 		} catch ( Exception $ex ) {
+			$this->log( __METHOD__ . ' - ' . $ex->getMessage() );
+
 			Wikia\Logger\WikiaLogger::instance()->error( 'Removing DFS bucket failed', [
 				'exception' => $ex,
 				'city_id' => $cityid

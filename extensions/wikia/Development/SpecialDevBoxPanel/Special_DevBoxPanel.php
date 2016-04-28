@@ -280,7 +280,7 @@ function getForcedWikiValue(){
 
 
 /**
- * @param DatabaseMysql $db
+ * @param DatabaseBase $db
  * @return array - databases which are available on this cluster
  *					  use the writable devbox server instead of the production slaves.
  */

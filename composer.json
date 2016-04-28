@@ -21,6 +21,7 @@
     "doctrine/annotations": "~1.2",
     "doctrine/cache": "~1.0",
     "ocramius/proxy-manager": "~1.0",
-    "sensiolabs/consul-php-sdk": "^1.0"
+    "sensiolabs/consul-php-sdk": "^1.0",
+    "wikia/phpflickr": "^3.1"
   }
 }

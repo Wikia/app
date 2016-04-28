@@ -9,7 +9,9 @@ define('ext.wikia.spitfires.experiments.tracker', [
 	var track = tracker.buildTrackingFunction({
 			category: 'spitfires-contribution-experiments',
 			trackingMethod: 'analytics'
-		});
+		}),
+		freshlyRegisteredExperimentId = 5654433460,
+		usersWithoutEditExperimentId = 5735670451;
 
 	function trackVerboseClick(experiment, label) {
 		trackClick(prepareStructuredLabel(experiment, label));
@@ -54,8 +56,15 @@ define('ext.wikia.spitfires.experiments.tracker', [
 		}
 	}
 
+	function getVariationName() {
+		if (window.optimizely.activeExperiments.indexOf(freshlyRegisteredExperimentId) !== -1) {
+			return window.optimizely.variationNamesMap[freshlyRegisteredExperimentId].toLowerCase();
+		}
+		return window.optimizely.variationNamesMap[usersWithoutEditExperimentId].toLowerCase();
+	}
+
 	function prepareStructuredLabel(experiment, label) {
-		var group = abTest.getGroup(experiment),
+		var group = getVariationName(),
 			userStatusLabel = getUserStatus();
 		return [experiment, group, userStatusLabel, label].join('-');
 	}

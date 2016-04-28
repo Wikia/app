@@ -56,7 +56,7 @@
 				<span id="MsgCount_<?php echo $roomId ?>" class="splotch">0</span>
 			</h1>
 			<ul id="WikiChatList" class="WikiChatList"></ul>
-			<h1 class="private"><?= wfMsg( 'chat-private-messages' ) ?></h1>
+			<h1 class="private"><?= wfMessage( 'chat-private-messages' )->escaped() ?></h1>
 			<ul id="PrivateChatList" class="PrivateChatList"></ul>
 		</div>
 
@@ -93,7 +93,7 @@
 		<img src="<%= avatarSrc %>"/>
 		<span class="username"><%= name %></span>
 		<div class="details">
-			<span class="status"><?= wfMsg( 'chat-status-away' ); ?></span>
+			<span class="status"><?= wfMessage( 'chat-status-away' )->escaped(); ?></span>
 		</div>
 		<% if(isPrivate) { %>
 			<span id="MsgCount_<%= roomId %>" class="splotch">0</span>
@@ -103,9 +103,9 @@
 				<img src="<%= avatarSrc %>"/>
 				<ul>
 					<li class="username"><%= name %></li>
-					<li class="edits"><?= wfMsg( 'chat-edit-count', "<%= editCount %>" ) ?></li>
+					<li class="edits"><?= wfMessage( 'chat-edit-count' )->rawParams("<%= editCount %>")->escaped() ?></li>
 					<% if (since) { %>
-						<li class="since"><?= wfMsg( 'chat-member-since', "<%= since %>" ) ?></li>
+						<li class="since"><?= wfMessage( 'chat-member-since' )->rawParams("<%= since %>")->escaped() ?></li>
 					<% } %>
 				</ul>
 			</div>

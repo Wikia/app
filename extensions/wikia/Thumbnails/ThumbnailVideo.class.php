@@ -9,25 +9,6 @@ use \Wikia\Logger\WikiaLogger;
 
 class ThumbnailVideo extends ThumbnailImage {
 
-//	function ThumbnailVideo( $file, $url, $width, $height, $path = false, $page = false ) {
-//
-//		$this->file = $file;
-//
-//		/*
-//		 * Get thumbnail url
-//		 */
-//		$oImageServing = new ImageServing( null, $width, $height );
-//		$this->url = $oImageServing->getUrl( $file, $file->getWidth(), $file->getHeight() );
-//
-//		# These should be integers when they get here.
-//		# If not, there's a bug somewhere.  But let's at
-//		# least produce valid HTML code regardless.
-//		$this->width = round( $width );
-//		$this->height = round( $height );
-//		$this->path = $path;
-//		$this->page = $page;
-//	}
-
 	// temporary hack - start
 	// rewrite URLs to point to a proper video thumbnails storage during images migration
 	// @author macbre

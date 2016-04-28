@@ -117,6 +117,11 @@ define('ext.wikia.adEngine.provider.gpt.adDetect', [
 		height = gptEvent.size && gptEvent.size[1];
 		gptEmpty = gptEvent.isEmpty;
 
+		if (gptEvent.slot && gptEvent.slot.getOutOfPage && gptEvent.slot.getOutOfPage()) {
+			log(['getAdType', slotName, 'out of page ad', 'always_success'], 'info', logGroup);
+			return 'always_success';
+		}
+
 		if (gptEmpty || height <= 1) {
 			log(['getAdType', slotName, 'ad is empty (GPT event)', 'empty'], 'info', logGroup);
 			return 'empty';

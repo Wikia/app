@@ -34,7 +34,7 @@
 				->method('fetchObject')
 				->will($this->onConsecutiveCalls($fetch_obj[0], $fetch_obj[1], $fetch_obj[2], $fetch_obj[3], $fetch_obj[4], $fetch_obj[5], $fetch_obj[6], $fetch_obj[7], $fetch_obj[8], $fetch_obj[9], $fetch_obj[10], $fetch_obj[11], $fetch_obj[12], $fetch_obj[13], $fetch_obj[14]));
 
-			$mock_db = $this->getMock('DatabaseMysql', ['query']);
+			$mock_db = $this->getDatabaseMock(['query', 'mysqlRealEscapeString']);
 			$mock_db->expects($this->any())
 					->method('query')
 					->will($this->returnValue($mock_result));

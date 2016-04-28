@@ -72,7 +72,7 @@ class PageHeaderController extends WikiaController {
 		}
 
 		// "Add topic"
-		else if ( isset( $this->content_actions['addsection'] ) ) {
+		if ( isset( $this->content_actions['addsection'] ) ) {
 			$action = $this->content_actions['addsection'];
 			$action['text'] = wfMsg( 'oasis-page-header-add-topic' );
 			$this->action = $action;
