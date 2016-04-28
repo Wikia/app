@@ -4,6 +4,7 @@
 $color-blue-darken: #144b93;
 $color-blue: #1a5eb8;
 $color-message-text: #333;
+$banner-bottom-space: 34px;
 $close-dark-icon: '/resources/wikia/ui_components/modal/images/close-dark.svg';
 $close-button-background: $close-dark-icon;
 
@@ -16,9 +17,13 @@ $close-button-background: $close-dark-icon;
 	background: url('/extensions/wikia/PotentialMemberPageExperiments/images/858-px-background.png') no-repeat center bottom;
 	background-size: cover;
 	border-bottom: 2px solid $color-blue;
-	height: 150px;
+	display: flex;
+	flex-flow: column wrap;
+	justify-content: center;
 	margin: 18px 0;
+	min-height: 150px;
 	overflow: hidden;
+	padding-bottom: $banner-bottom-space;
 	position: relative;
 	text-align: center;
 
@@ -26,7 +31,8 @@ $close-button-background: $close-dark-icon;
 		color: $color-message-text;
 		display: block;
 		font-size: 24px;
-		padding: 33px 0 10px;
+		margin: 0;
+		padding: 33px 0 15px;
 
 		strong {
 			font-weight: bold;
@@ -54,6 +60,7 @@ $close-button-background: $close-dark-icon;
 	display: inline-block;
 	font-size: 12px;
 	font-weight: bold;
+	line-height: 16px;
 	padding: 10px 15px;
 	text-transform: uppercase;
 	width: auto;
@@ -65,10 +72,11 @@ $close-button-background: $close-dark-icon;
 }
 
 .pmp-entry-point-glue-bottom {
-	background: #fff url('/extensions/wikia/PotentialMemberPageExperiments/images/background-glue.jpg') 0 0 /100% 100% no-repeat;
+	background: #fff url('/extensions/wikia/PotentialMemberPageExperiments/images/background-glue.jpg') no-repeat;
+	background-size: cover;
 	border-left: 6px solid $color-blue;
 	bottom: 0;
-	height: 320px;
+	height: 320px - $banner-bottom-space;
 	padding-left: 232px;
 	position: fixed;
 	right: -1000px;
@@ -129,7 +137,7 @@ $close-button-background: $close-dark-icon;
 
 @media #{$breakpoint-small-only} {
 	.pmp-entry-point-glue-bottom {
-		height: 200px;
+		height: 200px - $banner-bottom-space;
 		padding-left: 142px;
 		width: 452px;
 
