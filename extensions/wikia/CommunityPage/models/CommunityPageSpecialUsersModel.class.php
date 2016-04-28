@@ -28,7 +28,7 @@ class CommunityPageSpecialUsersModel {
 	 * @param bool $onlyAdmins Whether to filter by admins
 	 * @return Mixed|null
 	 */
-	public static function getTopContributors( $limit = 10, $weekly = true, $onlyAdmins = false ) {
+	public function getTopContributors( $limit = 10, $weekly = true, $onlyAdmins = false ) {
 		$data = WikiaDataAccess::cache(
 			wfMemcKey( self::TOP_CONTRIB_MCACHE_KEY, $limit, $weekly, $onlyAdmins ),
 			WikiaResponse::CACHE_STANDARD,
@@ -73,7 +73,7 @@ class CommunityPageSpecialUsersModel {
 		return $data;
 	}
 
-	public static function getGlobalBotIds() {
+	public function getGlobalBotIds() {
 		$botIds = WikiaDataAccess::cache(
 			wfMemcKey( self::GLOBAL_BOTS_MCACHE_KEY ),
 			WikiaResponse::CACHE_STANDARD,
@@ -97,8 +97,8 @@ class CommunityPageSpecialUsersModel {
 		return $botIds;
 	}
 
-	public static function filterGlobalBots( array $users ) {
-		$botIds = self::getGlobalBotIds();
+	public function filterGlobalBots( array $users ) {
+		$botIds = $this->getGlobalBotIds();
 
 		return array_filter( $users, function ( $user ) use ( $botIds ) {
 			$userIdIsBot = in_array( $user['userId'], $botIds );
