@@ -3673,17 +3673,6 @@ class Language {
 	}
 
 	/**
-	 * @todo move function to hook Language::getMessagesFileName
-	 * @author wikia
-	 * @param $code string
-	 * @return string
-	 */
-	public static function getAdditionalMessagesFileName( $code ) {
-		global $IP;
-		return self::getFileName( "$IP/languages/messages/wikia/Messages", $code, '.php' );
-	}
-
-	/**
 	 * Get the first fallback for a given language.
 	 *
 	 * @param $code string
