@@ -394,13 +394,6 @@ describe('AdContext', function () {
 		expect(adContext.getContext().targeting.enableKruxTargeting).toBeFalsy();
 	});
 
-
-
-	it('disables recovery when wgSourcePointProxyCSS is set to false', function () {
-		mocks.win = {ads: {context: {opts: {sourcePointProxyCSS: false, sourcePointDetection: true}}}};
-		expect(getModule().getContext().opts.sourcePointRecovery).toBeFalsy();
-	});
-
 	it('disables detection when url is not set', function () {
 		mocks.instantGlobals = {wgAdDriverSourcePointDetectionCountries: ['CURRENT_COUNTRY', 'ZZ']};
 
