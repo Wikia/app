@@ -2,14 +2,15 @@
 /**
  * Simple wrapper for json_econde and json_decode that falls back on Services_JSON class
  *
+ * Was used before https://bugs.php.net/bug.php?id=46944 was fixed
+ *
+ * @deprecated
  * @file
  */
 
 if ( !defined( 'MEDIAWIKI' ) ) {
 	die( 1 );
 }
-
-require_once dirname( __FILE__ ) . '/Services_JSON.php';
 
 /**
  * JSON formatter wrapper class
@@ -27,18 +28,11 @@ class FormatJson {
 	 *        newlines" in Services_JSON::encode(), which has no string relation
 	 *        to HTML output.
 	 *
+	 * @deprecated Use json_encode instead
 	 * @return string
 	 */
 	public static function encode( $value, $isHtml = false ) {
-		// Some versions of PHP have a broken json_encode, see PHP bug
-		// 46944. Test encoding an affected character (U+20000) to
-		// avoid this.
-		if ( !function_exists( 'json_encode' ) || $isHtml || strtolower( json_encode( "\xf0\xa0\x80\x80" ) ) != '"\ud840\udc00"' ) {
-			$json = new Services_JSON();
-			return $json->encode( $value, $isHtml );
-		} else {
-			return json_encode( $value );
-		}
+		return json_encode( $value );
 	}
 
 	/**
@@ -51,16 +45,10 @@ class FormatJson {
 	 * Values true, false and null (case-insensitive) are returned as true, false
 	 * and &null; respectively. &null; is returned if the json cannot be
 	 * decoded or if the encoded data is deeper than the recursion limit.
+	 *
+	 * @deprecated Use json_decode instead
 	 */
 	public static function decode( $value, $assoc = false ) {
-		if ( !function_exists( 'json_decode' ) ) {
-			$json = $assoc ? new Services_JSON( SERVICES_JSON_LOOSE_TYPE ) :
-				new Services_JSON();
-			$jsonDec = $json->decode( $value );
-			return $jsonDec;
-		} else {
-			return json_decode( $value, $assoc );
-		}
+		return json_decode( $value, $assoc );
 	}
-
 }
