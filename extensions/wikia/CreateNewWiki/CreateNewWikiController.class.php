@@ -5,22 +5,22 @@ use Wikia\Logger\Loggable;
 class CreateNewWikiController extends WikiaController {
 	use Loggable;
 
-	const STATUS_MSG_FIELD = 'statusMsg';
-	const STATUS_HEADER_FIELD = 'statusHeader';
-	const STATUS_FIELD = 'status';
-	const STATUS_ERROR = 'error';
-	const STATUS_CREATION_LIMIT = 'wikilimit';
-	const STATUS_BACKEND_ERROR = 'backenderror';
-	const ERROR_CLASS_FIELD = 'errClass';
-	const ERROR_CODE_FIELD = 'errCode';
-	const ERROR_MESSAGE_FIELD = 'errMessage';
-	const STATUS_OK = 'ok';
-	const SITE_NAME_FIELD = 'siteName';
-	const CITY_ID_FIELD = 'cityId';
-	const CHECK_RESULT_FIELD = 'res';
-	const DAILY_USER_LIMIT = 2;
+	const STATUS_MSG_FIELD         = 'statusMsg';
+	const STATUS_HEADER_FIELD      = 'statusHeader';
+	const STATUS_FIELD             = 'status';
+	const STATUS_ERROR             = 'error';
+	const STATUS_CREATION_LIMIT    = 'wikilimit';
+	const STATUS_BACKEND_ERROR     = 'backenderror';
+	const ERROR_CLASS_FIELD        = 'errClass';
+	const ERROR_CODE_FIELD         = 'errCode';
+	const ERROR_MESSAGE_FIELD      = 'errMessage';
+	const STATUS_OK                = 'ok';
+	const SITE_NAME_FIELD          = 'siteName';
+	const CITY_ID_FIELD            = 'cityId';
+	const CHECK_RESULT_FIELD       = 'res';
+	const DAILY_USER_LIMIT         = 2;
 	const WF_WDAC_REVIEW_FLAG_NAME = 'wgWikiDirectedAtChildrenByFounder';
-	const LANG_ALL_AGES_OPT = 'en';
+	const LANG_ALL_AGES_OPT        = 'en';
 
 	public function index() {
 		global $wgSuppressWikiHeader, $wgSuppressPageHeader, $wgSuppressFooter, $wgSuppressToolbar, $fbOnLoginJsOverride, $wgRequest, $wgUser;
