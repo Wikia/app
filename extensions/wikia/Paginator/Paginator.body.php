@@ -23,8 +23,8 @@ class Paginator {
 	const DISPLAYED_NEIGHBOURS = 3;
 
 	// State
-	private $itemsPerPage = 8;
-	private $pagesCount = 0;
+	private $itemsPerPage;
+	private $pagesCount;
 	private $activePage = 1;
 
 	// Deprecated state
@@ -89,31 +89,42 @@ class Paginator {
 	 * @return array
 	 */
 	public function getCurrentPage( array $data = null ) {
-		$index = $this->activePage - 1;
-
 		// deprecated case:
 		if ( is_null( $data ) ) {
 			$data = $this->data;
 		}
 
-		if ( count( $data ) > 0 ) {
-			$paginatedData = array_chunk( $data, $this->itemsPerPage );
-		} else {
-			$paginatedData = $data;
-		}
+		$paginatedData = array_chunk( $data, $this->itemsPerPage );
 
-		if ( !isset( $paginatedData[$index] ) ) {
-			return [];
+		$index = $this->activePage - 1;
+		if ( isset( $paginatedData[$index] ) ) {
+			return $paginatedData[$index];
 		}
-
-		return $paginatedData[$index];
+		return [];
 	}
 
+	/**
+	 * Get data needed to generate the paginator bar: an array specifying pages to link.
+	 *
+	 * Example:
+	 *
+	 * For page 1 of 1000, return: [1, 2, 3, 4, '', 1000]
+	 * For page 100 of 1000, return [1, '', 97, 98, 99, 100, 101, 102, 103, '', 1000]
+	 * For page 1000 of 1000, return [1, '', 997, 998, 999, 1000]
+	 *
+	 * Empty string represents the ellipsis, the first item is always 1, the last one is always
+	 * the total number of pages.
+	 *
+	 * The current page is always included and up to self::DISPLAYED_NEIGHBOURS items are returned
+	 * to the left and to the right of the current page.
+	 *
+	 * This method doesn't work very well for activePage 0 or 1, returns [1, 0] and [1, 1]
+	 * respectively.
+	 *
+	 * @return array as described above
+	 */
 	private function getBarData() {
-		if ( $this->pagesCount <= 1 ) {
-			// Just one page
-			return [ 1 ];
-		}
+		// NOTE: For $this->pagesCount <= 1 will return [ 1, 1 ]
 
 		// Compute whether there's the ellipsis to the left/right of the current page
 		$leftEllipsis = ( $this->activePage > self::DISPLAYED_NEIGHBOURS + 2 );
