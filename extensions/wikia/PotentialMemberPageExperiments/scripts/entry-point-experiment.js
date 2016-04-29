@@ -87,7 +87,6 @@ require([
 	}
 
 	function experimentEnabled() {
-		experimentGroup = abTest.getGroup(experimentNames[contentLanguage]);
 		return experiments.hasOwnProperty(experimentGroup);
 	}
 
@@ -102,7 +101,7 @@ require([
 			bannerType: experiment.type,
 			language: contentLanguage,
 			messageText: mw.message('pmp-entry-point-message').plain(),
-			buttonText: mw.message('pmp-entry-point-button').escaped(),
+			buttonText: mw.message('pmp-entry-point-button').plain(),
 			buttonUrl: mw.message('pmp-entry-point-button-url').plain()
 		};
 
