@@ -333,8 +333,6 @@ class MercuryApiController extends WikiaController {
 	 * @return void
 	 */
 	public function getPage() {
-		global $wgContLang;
-
 		try {
 			$title = $this->getTitleFromRequest();
 			$data = [ ];
