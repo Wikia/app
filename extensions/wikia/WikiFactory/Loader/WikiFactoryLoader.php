@@ -450,14 +450,15 @@ class WikiFactoryLoader {
 		if( empty( $this->mWikiID ) || $this->mIsWikiaActive == -1 ) {
 			if( ! $this->mCommandLine ) {
 				global $wgNotAValidWikia;
-				$this->debug( "redirected to {$wgNotAValidWikia}, {$this->mWikiID} {$this->mIsWikiaActive}" );
+				$redirect = $wgNotAValidWikia . '?from=' . rawurlencode( $this->mServerName );
+				$this->debug( "redirected to {$redirect}, {$this->mWikiID} {$this->mIsWikiaActive}" );
 				if( $this->mIsWikiaActive < 0 ) {
 					header( "X-Redirected-By-WF: MarkedForClosing" );
 				}
 				else {
 					header( "X-Redirected-By-WF: NotAValidWikia" );
 				}
-				header("Location: $wgNotAValidWikia");
+				header( "Location: $redirect" );
 				wfProfileOut( __METHOD__ );
 				exit(0);
 			}
@@ -479,7 +480,7 @@ class WikiFactoryLoader {
 					);
 				}
 				else {
-					$redirect = $wgNotAValidWikia;
+					$redirect = $wgNotAValidWikia . '?from=' . rawurlencode( $this->mServerName );
 				}
 				$this->debug( "disabled and not commandline, redirected to {$redirect}, {$this->mWikiID} {$this->mIsWikiaActive}" );
 				header( "X-Redirected-By-WF: Dump" );

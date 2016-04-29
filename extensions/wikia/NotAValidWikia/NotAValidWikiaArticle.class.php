@@ -12,13 +12,13 @@ class NotAValidWikiaArticle extends Article {
 
 		// Extract the interesting part from the domain
 		$interestingPart = preg_replace(
-			'/^(www\.)?(.*?)(\.org|\.com|\.gov|\.net|\.edu|\.co|\.or)?(\.[a-z]+)$/',
+			'/^(www\.)?(.*?)(\.co|\.com|\.me|\.net|\.org)?(\.[a-z]+)$/',
 			'\2',
 			$fromDomain
 		);
 
 		// Replace any non-alpha part with space
-		$searchQuery = trim( preg_replace( '/[\W ]+/', ' ', $interestingPart ) );
+		$searchQuery = trim( preg_replace( '/\W+/', ' ', $interestingPart ) );
 
 		// Pass to the message
 		$wgOut->addWikiMsg( 'not-a-valid-wikia', $searchQuery );
