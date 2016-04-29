@@ -185,7 +185,7 @@ class Chat {
 	protected static function getTimeLabel( $time ) {
 		global $wgContLang;
 
-		return $wgContLang->formatTimePeriod( $time . [ 'noabbrevs' => true ] );
+		return $wgContLang->formatTimePeriod( $time , [ 'noabbrevs' => true ] );
 	}
 
 	private static function getUserNamesFromIds( $userIds ) {
