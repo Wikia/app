@@ -32,8 +32,13 @@ if( !empty( $_GET['forceprofile'] ) ) {
 	$wgProfiler = new ProfilerSimpleDataCollector(array());
 } elseif ($wgProfilerRequestSample <= $wgProfilerSamplePercent + $wgXhprofSamplePercent ) {
 	if ( function_exists('xhprof_enable') ) {
+		# TODO: remove when we fully migrate to PHP7
 		require_once( dirname(__FILE__).'/includes/profiler/ProfilerXhprof.php' );
 		$wgProfiler = new ProfilerXhprof(array());
+	}
+	else if ( function_exists('tideways_enable') ) {
+		require_once( dirname(__FILE__).'/includes/profiler/ProfilerTideways.php' );
+		$wgProfiler = new ProfilerTideways(array());
 	}
 } else {
 	require_once( dirname(__FILE__).'/includes/profiler/ProfilerStub.php' );
