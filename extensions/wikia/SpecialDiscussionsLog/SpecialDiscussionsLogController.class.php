@@ -29,7 +29,6 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 	}
 
 	public function index() {
-
 		$this->checkAccess();
 
 		$this->setHeaders();
@@ -177,14 +176,18 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 		foreach ( $userLogRecords as $userLogRecord ) {
 			array_push(
 				$displayedUserLogRecords, [
-				'userName' => $userLogRecord->user->getName(),
-				'app' => $userLogRecord->app,
-				'ip' => $userLogRecord->ip,
-				'language' => $userLogRecord->language,
-				'location' => $userLogRecord->location,
-				'timestamp' => $userLogRecord->timestamp,
-				'userAgent' => $userLogRecord->userAgent,
-			]
+					'userName' => $userLogRecord->user->getName(),
+					'userUrl' => $this->getTitle()->getLocalURL(
+						[ UserQuery::getKeyName() => $userLogRecord->user->getName() ]
+					),
+					'app' => $userLogRecord->app,
+					'ip' => $userLogRecord->ip,
+					'ipUrl' => $this->getTitle()->getLocalURL( [ IpAddressQuery::getKeyName() => $userLogRecord->ip ] ),
+					'language' => $userLogRecord->language,
+					'location' => $userLogRecord->location,
+					'timestamp' => $userLogRecord->timestamp,
+					'userAgent' => $userLogRecord->userAgent,
+				]
 			);
 		}
 		return $displayedUserLogRecords;

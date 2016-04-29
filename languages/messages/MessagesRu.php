@@ -2329,7 +2329,7 @@ $UNWATCHURL
 'protect-default'             => 'Без защиты',
 'protect-fallback'            => 'Требуется разрешение «$1»',
 'protect-level-autoconfirmed' => 'Защитить от новых и незарегистрированных участников',
-'protect-level-sysop'         => 'Только администраторы',
+'protect-level-sysop'         => 'Только администраторы и модераторы контента',
 'protect-summary-cascade'     => 'каскадная',
 'protect-expiring'            => 'истекает $1 (UTC)',
 'protect-expiring-local'      => 'истекает $1',

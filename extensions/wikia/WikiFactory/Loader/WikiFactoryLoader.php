@@ -191,7 +191,7 @@ class WikiFactoryLoader {
 	public function getDB( $type = DB_SLAVE ) {
 		global $wgDBserver, $wgDBuser, $wgDBpassword;
 
-		if( $this->mDBhandler instanceof Database ) {
+		if( $this->mDBhandler instanceof DatabaseBase ) {
 			return $this->mDBhandler;
 		}
 
@@ -207,7 +207,7 @@ class WikiFactoryLoader {
 		 */
 		if( !$this->mDBhandler || !$this->mDBhandler->isOpen() ) {
 			error_log( "WikiFactoryLoader[{$this->mCityID}]: fallback to {$wgDBserver}" );
-			$this->mDBhandler = new DatabaseMysql( $wgDBserver, $wgDBuser, $wgDBpassword, $this->mDBname );
+			$this->mDBhandler = new DatabaseMysqli( $wgDBserver, $wgDBuser, $wgDBpassword, $this->mDBname );
 			$this->debug( "fallback to wgDBserver {$wgDBserver}" );
 		}
 

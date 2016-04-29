@@ -1,64 +1,74 @@
 <?php
+
 /**
  *
  * @package MediaWiki
  * @subpackage Pagination
  * @author Jakub Kurcek
+ * @author Piotr Gabryjeluk <rychu@wikia-inc.com>
  *
  * Object that allows auto pagination of array content
+ *
+ * TODO:
+ *  * setActivePage should NOT be 0-indexed
+ *  * setActivePage should check for page number outside the correct range and correct it
+ *  * convert uses of getPage(int, true) to setActivePage(int), getCurrentPage()
+ *  * On the second page of paginated content rel="prev" link should point to the page without ?page=1
+ *  * On any page other than the first page there should be no canonical (link rel="prev/next" is enough)
+ *  * Avoid passing the same URL to getHeadItem and getBarHTML (pass to constructor instead?)
+ *  * Convert the other code to use the constructor instead of newFromArray
+ *  * Convert the other code to use $total instead of array_fill( 0, $total, '' )
+ *  * Support for indefinite pagination? 1 ... 47 48 49 _50_ 51 52 53 ...
  */
-class Paginator extends Service{
+class Paginator {
 
 	// configuration settings
 
-	protected $maxItemsPerPage	= 48;
-	protected $defaultItemsPerPage	= 12;
-	protected $minItemsPerPage	= 4;
+	private $maxItemsPerPage = 48;
+	private $defaultItemsPerPage = 12;
+	private $minItemsPerPage = 4;
 
-	protected $config = array(
-		'itemsPerPage'		=> 8,
-		'displayedNeighbours'	=> 3
-	);
+	private $config = [
+		'itemsPerPage' => 8,
+		'displayedNeighbours' => 3
+	];
 
-	protected $paginatedData	= array();
-	protected $pagesCount		= 0;
-	protected $activePage		= 0;
-	protected $cacheKey		= '';
-	protected $enableCache		= false;
+	private $paginatedData = [];
+	private $pagesCount = 0;
+	private $activePage = 0;
 
 	/**
 	 * Creates a new Pagination object.
 	 *
-	 * @param   array|integer  $aData
-	 * @return  Paginator
+	 * @param   array|integer $aData
+	 * @param int $iItemsPerPage
+	 * @param int $maxItemsPerPage
+	 * @return Paginator
 	 */
-	public static function newFromArray( $aData, $iItemsPerPage = 8, $iDisplayedNeighbour = 3, $bCach = false, $sCacheKey = '', $maxItemsPerPage = 48 ){
-		$aConfig = array(
+	public static function newFromArray( $aData, $iItemsPerPage = 8, $maxItemsPerPage = 48 ) {
+		$aConfig = [
 			'itemsPerPage' => $iItemsPerPage,
-			'displayedNeighbours' => $iDisplayedNeighbour,
 			'maxItemsPerPage' => $maxItemsPerPage,
-		);
+		];
 
-		return new Paginator( $aData, $aConfig, $bCach, $sCacheKey );
+		return new Paginator( $aData, $aConfig );
 	}
 
 	/**
 	 * Creates a new Pagination object.
 	 *
-	 * @param   array  $aData
-	 * @return  void
+	 * @param   array $aData
+	 * @param bool $aConfig
 	 */
-	public function __construct( $aData, $aConfig = false, $bCach = false, $sCacheKey = '' ){
+	private function __construct( $aData, $aConfig = false ) {
 		$this->maxItemsPerPage = $aConfig['maxItemsPerPage'];
-		$this->enableCache = ( !empty( $bCach ) && !empty( $sCacheKey ) );
-		$this->cacheKey = $sCacheKey;
 		$this->setConfig( $aConfig );
 		$this->paginate( $aData );
 	}
 
-	private function setConfig ( $aConfig ){
-		if (!empty($aConfig)){
-			if ( isset( $aConfig['itemsPerPage'] ) && is_int( $aConfig['itemsPerPage'] ) ){
+	private function setConfig( $aConfig ) {
+		if ( !empty( $aConfig ) ) {
+			if ( isset( $aConfig['itemsPerPage'] ) && is_int( $aConfig['itemsPerPage'] ) ) {
 
 				if ( $aConfig['itemsPerPage'] > $this->maxItemsPerPage ) {
 					$aConfig['itemsPerPage'] = $this->maxItemsPerPage;
@@ -75,22 +85,18 @@ class Paginator extends Service{
 		}
 	}
 
-	private function paginate( $aData ){
-		if ( is_array($aData) ) {
-			if ( count($aData) > 0 ) {
+	private function paginate( $aData ) {
+		if ( is_array( $aData ) ) {
+			if ( count( $aData ) > 0 ) {
 				$aPaginatedData = array_chunk( $aData, $this->config['itemsPerPage'] );
 				$this->paginatedData = $aPaginatedData;
-			}else{
+			} else {
 				$this->paginatedData = $aData;
 			}
 			$this->pagesCount = count( $this->paginatedData );
-		} else if ( is_int($aData) ) {
-			$this->pagesCount = ceil($aData / $this->config['itemsPerPage']);
+		} else if ( is_int( $aData ) ) {
+			$this->pagesCount = ceil( $aData / $this->config['itemsPerPage'] );
 		}
-	}
-
-	public function hasContent(){
-		return ( $this->pagesCount >= 1 );
 	}
 
 	/**
@@ -99,84 +105,72 @@ class Paginator extends Service{
 	 *
 	 * @param int $pageNumber
 	 */
-	public function setActivePage( $pageNumber ){
+	public function setActivePage( $pageNumber ) {
 		$this->activePage = $pageNumber;
 	}
 
-	public function getPage( $iPageNumber, $bSetToActive = false ){
+	public function getPage( $iPageNumber, $bSetToActive = false ) {
 		$iPageNumber = (int) $iPageNumber;
-		$iPageNumber --;
-		if ( $iPageNumber < $this->pagesCount && $iPageNumber >= 0 ){
-			if ( !empty($bSetToActive) ){
+		$iPageNumber--;
+		if ( $iPageNumber < $this->pagesCount && $iPageNumber >= 0 ) {
+			if ( !empty( $bSetToActive ) ) {
 				$this->setActivePage( $iPageNumber );
 			}
 			return $this->paginatedData[$iPageNumber];
-		} elseif( $iPageNumber < 0 ) {
-			if ( isset( $this->paginatedData[0] ) ){
+		} elseif ( $iPageNumber < 0 ) {
+			if ( isset( $this->paginatedData[0] ) ) {
 				return $this->paginatedData[0];
 			} else {
 				return false;
 			}
 		} else {
-			$this->setActivePage( $this->pagesCount-1 );
-			return $this->paginatedData[ $this->pagesCount-1 ];
+			$this->setActivePage( $this->pagesCount - 1 );
+			return $this->paginatedData[$this->pagesCount - 1];
 		}
 	}
 
-	public function getCurrentPage( ){
-		return $this->getPage( $this->activePage );
-	}
-
-	public function getLastPage( ){
-		return $this->getPage( $this->pagesCount );
-	}
-
-	public function getFirstPage( ){
-		return $this->getPage( 1 );
-	}
-
-	public function getBarData( ){
-		$aData = array();
+	private function getBarData() {
+		$aData = [];
 		$aData[] = 1;
 
-		if ( $this->activePage - $this->config['displayedNeighbours'] > 1 ){
+		if ( $this->activePage - $this->config['displayedNeighbours'] > 1 ) {
 			$aData[] = '';
 			$beforeIterations = $this->config['displayedNeighbours'];
 		} else {
 			$beforeIterations = $this->activePage - 1;
 		}
 
-		for( $i = $beforeIterations; $i > 0 ; $i-- ){
+		for ( $i = $beforeIterations; $i > 0; $i-- ) {
 			if ( $i == $this->activePage ) break;
 			$aData[] = $this->activePage - $i + 1;
 		}
 
-		if ( $this->activePage != 0 &&  $this->activePage != $this->pagesCount ){
+		if ( $this->activePage != 0 && $this->activePage != $this->pagesCount ) {
 			$aData[] = $this->activePage + 1;
 		};
 
-		for( $i = 1; $this->pagesCount > ( $this->activePage + $i + 1 ) ; $i++ ){
+		for ( $i = 1; $this->pagesCount > ( $this->activePage + $i + 1 ); $i++ ) {
 			if ( $i > $this->config['displayedNeighbours'] ) break;
 			$aData[] = $this->activePage + $i + 1;
 		}
 
-		if ( $this->activePage + 2 + $this->config['displayedNeighbours'] < $this->pagesCount ){
+		if ( $this->activePage + 2 + $this->config['displayedNeighbours'] < $this->pagesCount ) {
 			$aData[] = '';
 		}
 
-		if ( $this->pagesCount > $this->activePage + 1 ){
+		if ( $this->pagesCount > $this->activePage + 1 ) {
 			$aData[] = $this->pagesCount;
 		}
 
-		$aResult = array(
+		$aResult = [
 			'pages' => $aData,
 			'currentPage' => $this->activePage + 1
-		);
+		];
 
 		return $aResult;
 	}
 
-	public function getBarHTML($url, $paginatorId = false) {
+	public function getBarHTML( $url, $paginatorId = false ) {
 		if ( $this->pagesCount <= 1 ) {
 			return '';
 		}
@@ -185,11 +179,16 @@ class Paginator extends Service{
 		$aData['paginatorId'] = strip_tags( trim( stripslashes( $paginatorId ) ) );
 		$aData['url'] = $url;
 
-		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
+		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
 		$oTmpl->set_vars( $aData );
-		return $oTmpl->render( "paginator" );
+		return $oTmpl->render( 'paginator' );
 	}
 
+	/**
+	 * Used by SpecialVideosHelper
+	 *
+	 * @return int
+	 */
 	public function getPagesCount() {
 		return $this->pagesCount;
 	}
@@ -197,7 +196,7 @@ class Paginator extends Service{
 	/**
 	 * Get HTML to put to HTML <head> to allow search engines to identify next and previous pages
 	 *
-	 * @param $url the URL template. We'll replace "%s" with the page number
+	 * @param $url the URL template. We'll replace '%s' with the page number
 	 * @return string
 	 */
 	public function getHeadItem( $url ) {

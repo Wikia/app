@@ -435,13 +435,21 @@ class EmailNotification {
 		if ( $this->getEmailExtensionController() !== false ) {
 			$this->sendUsingEmailExtension( $user );
 		} else {
-			\Wikia\Logger\WikiaLogger::instance()->notice( 'Sending via UserMailer', [
+			$logger = \Wikia\Logger\WikiaLogger::instance();
+			$emailContext = [
 				'page' => $this->title->getDBkey(),
 				'summary' => $this->summary,
 				'action' => $this->action,
 				'subject' => $this->subject,
-			] );
-			$this->sendUsingUserMailer( $user );
+			];
+
+			if ( \F::app()->wg->DisableOldStyleEmail ) {
+				$emailContext['issue'] = 'SOC-2290';
+				$logger->info( 'Skipped sending old style email', $emailContext );
+			} else {
+				$logger->notice( 'Sending via UserMailer', $emailContext );
+				$this->sendUsingUserMailer( $user );
+			}
 		}
 
 		wfRunHooks( 'NotifyOnPageChangeComplete', [ $this->title, $this->timestamp, &$user ] );

@@ -37,7 +37,7 @@ $wgSpecialPages['InterwikiEdit'] = 'InterwikiEdit';
 
 class InterwikiEdit extends SpecialPage {
 
-	public function InterwikiEdit(){
+	public function __construct(){
 		parent::__construct('InterwikiEdit');
 	}
 

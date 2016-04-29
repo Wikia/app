@@ -2,8 +2,6 @@
 
 use Wikia\RobotsTxt\WikiaRobots;
 
-require_once( __DIR__ . '/RobotsTxtMock.php' );
-
 class WikiaRobotsTest extends WikiaBaseTest {
 	public function setUp() {
 		global $IP;
@@ -258,5 +256,35 @@ class WikiaRobotsTest extends WikiaBaseTest {
 		$this->assertTrue( $this->isSpecialPageAllowed( $robotsTxtMock, 'Videos' ) );
 		$this->assertTrue( $this->isSpecialPageAllowed( $robotsTxtMock, 'MyPage1' ) );
 		$this->assertTrue( $this->isSpecialPageAllowed( $robotsTxtMock, 'MyPage2' ) );
+	}
+
+	public function testLocalSitemapAllowed() {
+		$this->mockGlobalVariable( 'wgWikiaEnvironment', WIKIA_ENV_PROD );
+		$this->mockGlobalVariable( 'wgEnableLocalSitemap', true );
+		$this->mockGlobalVariable( 'wgAllowSpecialImagesInRobots', false );
+
+		$robotsTxtMock = $this->getRobotsTxtMock();
+		$pathBuilderMock = $this->getPathBuilderMock();
+
+		$wikiaRobots = new WikiaRobots( $pathBuilderMock );
+		$wikiaRobots->configureRobotsBuilder( $robotsTxtMock );
+
+		$this->assertTrue( $this->isSpecialPageAllowed( $robotsTxtMock, 'Allpages' ) );
+		$this->assertFalse( $this->isSpecialPageAllowed( $robotsTxtMock, 'Images' ) );
+	}
+
+	public function testSpecialImagesAllowed() {
+		$this->mockGlobalVariable( 'wgWikiaEnvironment', WIKIA_ENV_PROD );
+		$this->mockGlobalVariable( 'wgEnableLocalSitemap', false );
+		$this->mockGlobalVariable( 'wgAllowSpecialImagesInRobots', true );
+
+		$robotsTxtMock = $this->getRobotsTxtMock();
+		$pathBuilderMock = $this->getPathBuilderMock();
+
+		$wikiaRobots = new WikiaRobots( $pathBuilderMock );
+		$wikiaRobots->configureRobotsBuilder( $robotsTxtMock );
+
+		$this->assertFalse( $this->isSpecialPageAllowed( $robotsTxtMock, 'Allpages' ) );
+		$this->assertTrue( $this->isSpecialPageAllowed( $robotsTxtMock, 'Images' ) );
 	}
 }

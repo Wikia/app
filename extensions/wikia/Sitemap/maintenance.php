@@ -7,6 +7,9 @@
  * @author Krzysztof Krzyżaniak <eloy@wikia-inc.com>
  */
 
+// Log time of Sitemap generation for SEO-382
+$timeStart = microtime( true );
+
 ini_set( "include_path", dirname(__FILE__)."/../../../maintenance/" );
 
 require_once( "commandLine.inc" );
@@ -48,3 +51,20 @@ foreach( $namespaces as $namespace ) {
  * cache for week
  */
 $wgMemc->set( wfMemcKey( "sitemap-index"), $indexes, $sitemap->mCacheTime );
+
+// Log time of Sitemap generation for SEO-382:
+$timeEnd = microtime( true );
+
+// Only log times for "top" "1k" wikis (doesn't need to be very precise top or 1k)
+if ( !empty( $wgAdDriverWikiIsTop1000 ) ) {
+	$sitemapPagesPerNs = [];
+	foreach ( $indexes as $namespace => $index ) {
+		$sitemapPagesPerNs['NS_' . $namespace] = count( $index );
+	}
+	\Wikia\Logger\WikiaLogger::instance()->info( 'Sitemap generation', [
+		'generationTimeMS' => ( $timeEnd - $timeStart ) * 1000,
+		'dbName' => $wgDBname,
+		'sitemapPagesPerNs' => $sitemapPagesPerNs,
+		'sitemapPagesTotal' => array_sum( $sitemapPagesPerNs ),
+	] );
+}

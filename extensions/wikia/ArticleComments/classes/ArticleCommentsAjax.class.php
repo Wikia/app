@@ -28,7 +28,7 @@ class ArticleCommentsAjax {
 	 * @return String -- json-ized array
 	 */
 	static public function axSave() {
-		global $wgRequest, $wgUser;
+		global $wgRequest, $wgUser, $wgTitle;
 
 		$articleId = $wgRequest->getVal( 'article', false );
 		$commentId = $wgRequest->getVal( 'id', false );
@@ -43,7 +43,7 @@ class ArticleCommentsAjax {
 		}
 
 		// Return with error if we can't comment on the current title (wgTitle)
-		if ( !ArticleComment::canComment() ) {
+		if ( !ArticleComment::userCanCommentOn( $wgTitle ) ) {
 			return $errorResult;
 		}
 
@@ -59,7 +59,7 @@ class ArticleCommentsAjax {
 		}
 
 		// Return with error if we can't edit this comment
-		if ( !$comment->canEdit() ) {
+		if ( !$comment->getTitle()->userCan( 'edit' ) ) {
 			return $errorResult;
 		}
 
@@ -110,7 +110,7 @@ class ArticleCommentsAjax {
 			return $result;
 		}
 
-		if ( !$comment->canEdit() ) {
+		if ( !$comment->getTitle()->userCan( 'edit' ) ) {
 			return $result;
 		}
 
@@ -148,7 +148,7 @@ class ArticleCommentsAjax {
 			return $result;
 		}
 
-		$canComment = ArticleCommentInit::userCanComment( $result, $title );
+		$canComment = ArticleComment::userCanCommentOn( $title );
 
 		if ( $canComment == true ) {
 			$vars = [
@@ -182,23 +182,19 @@ class ArticleCommentsAjax {
 
 		$articleId = $wgRequest->getVal( 'article', false );
 		$parentId = $wgRequest->getVal( 'parentId' );
+
 		$title = Title::newFromID( $articleId );
 
-		if ( !$title ) {
+		if ( !$title || !ArticleComment::userCanCommentOn( $title, $wgUser ) ) {
 			return $result;
 		}
 
-		if ( !ArticleComment::canComment( $title ) ) {
-			return $result;
-		}
-
+		$response = ArticleComment::doPost( self::getConvertedContent( $wgRequest->getVal( 'wpArticleComment' ) ), $wgUser, $title, $parentId );
 		WikiaLogger::instance()->info( __METHOD__ . ' : Comment posted', [
 			'skin' => $wgRequest->getVal( 'useskin' ),
 			'articleId' => $articleId,
 			'parentId' => $parentId,
 		] );
-
-		$response = ArticleComment::doPost( self::getConvertedContent( $wgRequest->getVal( 'wpArticleComment' ) ), $wgUser, $title, $parentId );
 
 		if ( $response === false ) {
 			return $result;
@@ -255,7 +251,8 @@ class ArticleCommentsAjax {
 		$error = 0;
 		$text = $pagination = '';
 		$method = 'CommentList';
-		$isMobile = F::app()->checkSkin( 'wikiamobile' );
+		$app = F::app();
+		$isMobile = $app->checkSkin( 'wikiamobile' );
 
 		if ( $isMobile ) {
 			$method = 'WikiaMobile' . $method;
@@ -267,7 +264,7 @@ class ArticleCommentsAjax {
 		} else {
 			$listing = ArticleCommentList::newFromTitle( $title );
 			$comments = $listing->getCommentPages( false, $page );
-			$text = F::app()->getView( 'ArticleComments', $method, [ 'commentListRaw' => $comments, 'page' => $page, 'useMaster' => false ] )->render();
+			$text = $app->getView( 'ArticleComments', $method, [ 'commentListRaw' => $comments, 'page' => $page, 'useMaster' => false ] )->render();
 			$pagination = ( !$isMobile ) ? $listing->doPagination( $listing->getCountAll(), count( $comments ), $page === false ? 1 : $page, $title ) : '';
 		}
 
