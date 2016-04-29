@@ -45,7 +45,6 @@ class UnconvertedInfoboxesPage extends PageQueryPage {
 		 * 1. Get the new data first
 		 */
 		$nonportableTemplates = $this->reallyDoQuery();
-		$dbw->begin();
 
 		/**
 		 * 2. Delete the existing records
@@ -72,12 +71,6 @@ class UnconvertedInfoboxesPage extends PageQueryPage {
 				->run( $dbw );
 
 			$num = $dbw->affectedRows();
-			if ( $num === 0 ) {
-				$dbw->rollback();
-				$num = false;
-			} else {
-				$dbw->commit();
-			}
 		}
 
 		wfRunHooks( 'UnconvertedInfoboxesQueryRecached', [ 'count' => $num ] );
@@ -105,6 +98,7 @@ class UnconvertedInfoboxesPage extends PageQueryPage {
 			if ( $tcs->isInfoboxType( $type ) ) {
 				$title = Title::newFromID( $templateId );
 				if ( $title instanceof Title
+					&& $title->inNamespace( NS_TEMPLATE )
 					&& !$title->isRedirect()
 					&& empty( PortableInfoboxDataService::newFromTitle( $title )->getData() )
 				) {

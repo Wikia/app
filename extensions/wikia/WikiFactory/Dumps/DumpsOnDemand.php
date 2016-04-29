@@ -19,6 +19,8 @@ class DumpsOnDemand {
      */
 	const S3_MIGRATION = '20131002154415';
 
+	const S3_COMMAND = '/usr/bin/s3cmd -c /etc/s3cmd/amazon_prod.cfg';
+
 	/**
 	 * @access public
 	 * @static
@@ -193,7 +195,7 @@ class DumpsOnDemand {
 		$size = filesize( $sPath );
 		$sPath = wfEscapeShellArg( $sPath );
 
-		$sCmd = 'sudo /usr/bin/s3cmd -c /root/.s3cfg --add-header=Content-Disposition:attachment';
+		$sCmd = self::S3_COMMAND . ' --add-header=Content-Disposition:attachment';
 		if ( !is_null( $sMimeType ) ) {
 			$sMimeType = wfEscapeShellArg( $sMimeType );
 			$sCmd .= " --mime-type={$sMimeType}";
