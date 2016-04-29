@@ -168,12 +168,9 @@ class RebuildLocalisationCache extends Maintenance {
 		$iterator = new RecursiveIteratorIterator($directory);
 		$files = new RegexIterator($iterator, self::LOCALISATION_FILE_REGEX, RecursiveRegexIterator::GET_MATCH);
 
-		foreach ($files as $file) {
-			if (strpos($file[0], self::I18N_FILE_EXTENSION) !== false ) {
-				$key = basename($file[0], self::I18N_FILE_EXTENSION);
-			} else {
-				$key = basename($file[0], self::PHP_FILE_EXTENSION);
-			}
+		$fileCount = 0;
+		foreach ( $files as $file ) {
+			$key = sprintf( 'AutomaticInclusion%06d', $fileCount++ );
 			$wgExtensionMessagesFiles[$key] = $file[0];
 		}
 	}
