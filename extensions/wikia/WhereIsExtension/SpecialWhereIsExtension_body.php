@@ -102,7 +102,6 @@ class WhereIsExtension extends SpecialPage {
 					// the list
 					$formData['wikis'] = WikiFactory::getListOfWikisWithVar( $gVar, $gTypeVal, $this->values[$gVal][2], $this->values[$gVal][1], $gLikeVal, $iOffset, self::ITEMS_PER_PAGE );
 
-					// the Paginator, if we need more than one page
 					$oPaginator = Paginator::newFromCount( $formData['count'], self::ITEMS_PER_PAGE );
 					$oPaginator->setActivePage( $iPage );
 					$sPager = $oPaginator->getBarHTML( sprintf( '%s?var=%s&val=%s&likeValue=%s&searchType=%s&page=%%s', $wgTitle->getFullURL(), $gVar, $gVal, $gLikeVal, $gTypeVal ) );
