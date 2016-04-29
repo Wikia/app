@@ -48,7 +48,20 @@ require([
 					$('body').append($banner);
 					$banner.addClass('initialized');
 				}
-			}
+			},
+			RIGHT_RAIL: {
+				type: 'right-rail',
+				addEntryPoint: function () {
+					afterRailLoads(function() {
+						var wikiaRecentActivityContainer = $('#WikiaRecentActivity');
+
+						if( wikiaRecentActivityContainer.exists() ) {
+							$banner.insertBefore(wikiaRecentActivityContainer);
+							$banner.addClass('initialized');
+						}
+					}.bind(this));
+				}
+			},
 		},
 		track = tracker.buildTrackingFunction({
 			category: 'potential-member-experiment',
@@ -166,6 +179,16 @@ require([
 			domain: mw.config.get('wgCookieDomain')
 		});
 		$(w).off('scroll.trackPMPEntryPoint');
+	}
+
+	function afterRailLoads(callback) {
+		var $rail = $('#WikiaRail');
+
+		if ($rail.find('.loading').exists()) {
+			$rail.one('afterLoad.rail', callback);
+		} else {
+			callback();
+		}
 	}
 
 	$(init);
