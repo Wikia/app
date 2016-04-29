@@ -457,8 +457,8 @@ class LocalisationCache {
 		// wikia changes begin
 		//* default empty for wikia i18n files */
 		$messages = array();
-		include_once( $_fileName );
 		// wikia changes end
+		include( $_fileName );
 		ini_set( 'apc.cache_by_default', $_apcEnabled );
 
 		if ( $_fileType == 'core' || $_fileType == 'extension' ) {
