@@ -25,7 +25,7 @@ class NotAValidWikiaArticle extends Article {
 
 		// Extract the interesting part from the domain
 		$interestingPart = preg_replace(
-			'/^(www\.)?(.*)(\.org|\.com|\.gov|\.net|\.edu|\.co|\.or)?(\.[a-z]+)$/',
+			'/^(www\.)?(.*?)(\.org|\.com|\.gov|\.net|\.edu|\.co|\.or)?(\.[a-z]+)$/',
 			'\2',
 			$fromDomain
 		);
