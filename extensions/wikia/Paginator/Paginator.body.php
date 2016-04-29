@@ -124,8 +124,6 @@ class Paginator {
 	 * @return array as described above
 	 */
 	private function getBarData() {
-		// NOTE: For $this->pagesCount <= 1 will return [ 1, 1 ]
-
 		// Compute whether there's the ellipsis to the left/right of the current page
 		$leftEllipsis = ( $this->activePage > self::DISPLAYED_NEIGHBOURS + 2 );
 		$rightEllipsis = ( $this->activePage < $this->pagesCount - self::DISPLAYED_NEIGHBOURS - 1 );
