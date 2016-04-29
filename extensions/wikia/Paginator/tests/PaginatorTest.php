@@ -1,11 +1,5 @@
 <?php
 
-class PaginatorTestMessageMock {
-	public function escaped() {
-		return 'escaped-msg';
-	}
-}
-
 class PaginatorTest extends WikiaBaseTest {
 
 	private $alphabet = 'a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z';
@@ -190,11 +184,12 @@ class PaginatorTest extends WikiaBaseTest {
 	';
 
 	public function setUp() {
-		global $IP;
-		$this->setupFile = "$IP/extensions/wikia/Paginator/Paginator.setup.php";
+		$this->setupFile = __DIR__ . '/../Paginator.setup.php';
 		parent::setUp();
 
-		$this->mockGlobalFunction( 'wfMessage', new PaginatorTestMessageMock() );
+		$messageMock = $this->getMockBuilder( 'Message' )->disableOriginalConstructor()->getMock();
+		$messageMock->expects( $this->any() )->method( 'escaped' )->willReturn( 'escaped-msg' );
+		$this->mockGlobalFunction( 'wfMessage', $messageMock );
 	}
 
 	private function assertHtmlEquals( $expectedHtml, $actualHtml, $head = false ) {
