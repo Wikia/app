@@ -284,7 +284,6 @@ define(
 				authModal.load({
 					forceLogin: true,
 					origin: origin,
-					url: '/signin?redirect=' + encodeURIComponent(w.location.href),
 					onAuthSuccess: function () {
 						w.UserLogin.forceLoggedIn = true;
 						onLoggedIn();
