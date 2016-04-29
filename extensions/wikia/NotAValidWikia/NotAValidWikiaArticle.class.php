@@ -1,19 +1,6 @@
 <?php
 
 class NotAValidWikiaArticle extends Article {
-	/**
-	 * @param Title $title
-	 * @param Article $article
-	 * @return boolean
-	 */
-	public static function onArticleFromTitle( &$title, &$article ) {
-		if ( $title->getDBkey() == 'Not_a_valid_Wikia' ) {
-			$article = new self( $title );
-		}
-
-		return true;
-	}
-
 	public function view() {
 		global $wgRequest, $wgOut;
 
