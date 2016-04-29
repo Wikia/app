@@ -86,6 +86,7 @@
 			// handle login on article page
 			require(['AuthModal'], function (authModal) {
 				authModal.load({
+					forceLogin: true,
 					url: '/signin?redirect=' + encodeURIComponent(window.location.href),
 					origin: 'vet',
 					onAuthSuccess: function () {
