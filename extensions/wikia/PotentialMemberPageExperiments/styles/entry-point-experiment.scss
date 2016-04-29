@@ -67,7 +67,9 @@ $close-button-background: $close-dark-icon;
 
 	&:hover {
 		background: $color-blue-darken;
+		color: $color-white;
 		text-decoration: none;
+		text-shadow: none;
 	}
 }
 
@@ -133,6 +135,19 @@ $close-button-background: $close-dark-icon;
 			padding-top: 16px;
 			width: 122px;
 		}
+
+		&.pmp-entry-point-ja {
+			p.pmp-entry-point-message {
+				font-size: 36px;
+				line-height: 48px;
+				padding-top: 65px;
+				width: 575px;
+			}
+
+			.pmp-entry-point-button {
+				width: 140px;
+			}
+		}
 	}
 }
 
@@ -145,6 +160,13 @@ $close-button-background: $close-dark-icon;
 		p.pmp-entry-point-message {
 			padding-top: 50px;
 			width: 270px;
+		}
+
+		&.pmp-entry-point-ja {
+			p.pmp-entry-point-message {
+				font-size: 20px;
+				width: 320px;
+			}
 		}
 	}
 }
