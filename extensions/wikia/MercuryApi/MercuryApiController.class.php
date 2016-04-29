@@ -370,11 +370,8 @@ class MercuryApiController extends WikiaController {
 							$data['article'] = MercuryApiArticleHandler::getArticleJson( $this->request, $article );
 
 							// Remove namespace prefix from displayTitle, so it can be consistent with title
-							$namespacePrefix = $wgContLang->getNamespaces()[$data['ns']];
-
-							if ( strpos( $data['article']['displayTitle'], $namespacePrefix ) === 0 ) {
-								$data['article']['displayTitle'] = substr( $data['article']['displayTitle'], strlen( $namespacePrefix ) + 1 );
-							}
+							// Prefix shows only if page doesn't have {{DISPLAYTITLE:title} in it's markup
+							$data['article']['displayTitle'] = Title::newFromText($data['article']['displayTitle'])->getText();
 						} elseif ( !empty( $data['nsSpecificContent']['members']['sections'] ) ) {
 							$data['details'] = MercuryApiCategoryHandler::getCategoryMockedDetails( $title );
 						} else {
