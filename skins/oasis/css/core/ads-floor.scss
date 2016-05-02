@@ -1,48 +1,27 @@
 @import 'skins/shared/mixins/image-replacement';
 
-$close-image: '/resources/wikia/ui_components/modal/images/close-light.svg';
+$old-close-image: '/resources/wikia/ui_components/modal/images/close-light.svg';
 
 #InvisibleHighImpactWrapper.floor-adhesion {
 	bottom: 0;
 	display: block;
 	position: fixed;
-	width: 100%;
 	text-align: center;
+	width: 100%;
 	z-index: $zTop;
 
 	.background {
-		background: rgba(0, 0, 0, 0.4);
-		bottom: 0;
 		height: 90px;
-		position: absolute;
-		width: 100%;
-	}
-
-	#INVISIBLE_HIGH_IMPACT_2 iframe {
-		display: block;
-		margin: 0 auto;
-		position: relative;
 	}
 
 	.close {
-		background-color: #000;
 		bottom: 0;
-		cursor: pointer;
-		display: block;
-		padding: 35px 5px;
-		position: absolute;
-		right: 0;
+		padding: 37px 7px;
+		top: auto;
+	}
 
-		.close-button {
-			@include image-replacement();
-			background: url($close-image);
-			background-size: 20px 20px;
-			display: block;
-			float: right;
-			height: 20px;
-			outline: none;
-			width: 20px;
-		}
+	.label {
+		display: none;
 	}
 }
 
@@ -67,8 +46,8 @@ $close-image: '/resources/wikia/ui_components/modal/images/close-light.svg';
 
 		.ads-floor-close-button {
 			@include image-replacement();
-			background: url($close-image);
 			background-size: 20px 20px;
+			background: url($old-close-image);
 			display: block;
 			float: right;
 			height: 20px;
