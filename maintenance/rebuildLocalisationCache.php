@@ -53,8 +53,8 @@ class RebuildLocalisationCache extends Maintenance {
 
 		$wgExtensionMessagesFiles = array_unique(
 			array_merge(
-				GlobalMessagesService::getInstance()->getExtensionMessageFiles(),
-				GlobalMessagesService::getInstance()->getCoreMessageFiles()
+				GlobalMessagesService::getInstance()->getCoreMessageFiles(),
+				GlobalMessagesService::getInstance()->getExtensionMessageFiles()
 			)
 		);
 
