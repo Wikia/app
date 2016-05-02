@@ -9,9 +9,15 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 	'use strict';
 
 	function overrideSizes(slotMap) {
-		if (adContext.getContext().opts.overridePrefootersSizes) {
+		var context = adContext.getContext();
+
+		if (context.opts.overridePrefootersSizes) {
 			slotMap.PREFOOTER_LEFT_BOXAD.size = '300x250,468x60,728x90';
 			delete slotMap.PREFOOTER_RIGHT_BOXAD;
+		}
+
+		if (!!slotMap.INCONTENT_LEADERBOARD && context.slots.incontentLeaderboardAsOutOfPage) {
+			delete slotMap.INCONTENT_LEADERBOARD.size;
 		}
 	}
 

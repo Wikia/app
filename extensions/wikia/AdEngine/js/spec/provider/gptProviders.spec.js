@@ -76,7 +76,6 @@ describe('ext.wikia.adEngine.provider.*', function () {
 				);
 			case 'remnantGpt':
 				return modules['ext.wikia.adEngine.provider.remnantGpt'](
-					mocks.adContext,
 					getFactory(),
 					mocks.slotTweaker
 				);

@@ -130,10 +130,6 @@ define('ext.wikia.adEngine.provider.directGpt', [
 		}
 	}
 
-	if (context.slots.incontentLeaderboardAsOutOfPage) {
-		delete slotMap.INCONTENT_LEADERBOARD.size;
-	}
-
 	provider = factory.createProvider(
 		logGroup,
 		'DirectGpt',
