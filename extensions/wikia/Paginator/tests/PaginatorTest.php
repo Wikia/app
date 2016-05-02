@@ -349,6 +349,23 @@ class PaginatorTest extends WikiaBaseTest {
 	}
 
 	/**
+	 * Same as above, just passing strings instead of ints
+	 *
+	 * @dataProvider dataProviderPaginator
+	 */
+	public function testPaginatorStrings( $itemsPerPage, $allDataString, $pageNo, $pageDataString, $expectedHtml ) {
+		$url = 'http://url/?page=%s';
+		$allData = explode( ',', $allDataString );
+		$expectedPageData = explode( ',', $pageDataString );
+		$pages = Paginator::newFromCount( (string) count( $allData ), (string) $itemsPerPage );
+		$pages->setActivePage( $pageNo );
+		$onePageData = $pages->getCurrentPage( $allData );
+		$html = $pages->getBarHTML( $url );
+		$this->assertEquals( $expectedPageData, $onePageData );
+		$this->assertHtmlEquals( $expectedHtml, $html );
+	}
+
+	/**
 	 * Test getHeadItem method
 	 *
 	 * Called by:
