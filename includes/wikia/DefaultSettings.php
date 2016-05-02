@@ -1880,3 +1880,9 @@ $wgEnableReviveSpotlights = true;
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgReviveSpotlightsCountries = null;
+
+/**
+ * Enable SourcePoint recovery
+ */
+
+include_once("$IP/extensions/wikia/ARecoveryEngine/ARecoveryEngine.setup.php");
