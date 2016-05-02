@@ -52,6 +52,7 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverHighImpact2SlotCountries';
 		$vars[] = 'wgAdDriverHitMediaCountries';
 		$vars[] = 'wgAdDriverIncontentLeaderboardSlotCountries';
+		$vars[] = 'wgAdDriverIncontentLeaderboardOutOfPageSlotCountries';
 		$vars[] = 'wgAdDriverIncontentPlayerSlotCountries';
 		$vars[] = 'wgAdDriverKruxCountries';
 		$vars[] = 'wgAdDriverOpenXBidderCountries';

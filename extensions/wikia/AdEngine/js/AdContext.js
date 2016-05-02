@@ -132,6 +132,9 @@ define('ext.wikia.adEngine.adContext', [
 		context.slots.incontentLeaderboard =
 			geo.isProperGeo(instantGlobals.wgAdDriverIncontentLeaderboardSlotCountries);
 
+		context.slots.incontentLeaderboardAsOutOfPage =
+			geo.isProperGeo(instantGlobals.wgAdDriverIncontentLeaderboardOutOfPageSlotCountries);
+
 		context.opts.scrollHandlerConfig = instantGlobals.wgAdDriverScrollHandlerConfig;
 		context.opts.enableScrollHandler = geo.isProperGeo(instantGlobals.wgAdDriverScrollHandlerCountries) ||
 			isUrlParamSet('scrollhandler');
