@@ -138,7 +138,9 @@ require([
 
 		if (context.slots.incontentLeaderboard) {
 			inContent.init(incontentLeaderboard, function () {
-				slotTweaker.adjustIframeByContentSize(incontentLeaderboard);
+				if (context.slots.incontentLeaderboardAsOutOfPage) {
+					slotTweaker.adjustIframeByContentSize(incontentLeaderboard);
+				}
 			});
 		}
 
