@@ -15,7 +15,7 @@ $close-image: '/resources/wikia/ui_components/modal/images/ads-close-light.svg';
 	}
 
 	.background {
-		background: rgba(0, 0, 0, .8);
+		background: rgba(0, 0, 0, .9);
 		bottom: 0;
 		height: 100%;
 		left: 0;
@@ -31,6 +31,10 @@ $close-image: '/resources/wikia/ui_components/modal/images/ads-close-light.svg';
 		position: absolute;
 		right: 0;
 		top: 0;
+
+		&:hover {
+			background-color: #333;
+		}
 
 		.close-button {
 			@include image-replacement();
