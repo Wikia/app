@@ -8,6 +8,7 @@ describe('ext.wikia.adEngine.provider.*', function () {
 	var mocks = {
 		log: noop,
 		context: {
+			slots: {},
 			opts: {}
 		},
 		adContext: {
@@ -75,6 +76,7 @@ describe('ext.wikia.adEngine.provider.*', function () {
 				);
 			case 'remnantGpt':
 				return modules['ext.wikia.adEngine.provider.remnantGpt'](
+					mocks.adContext,
 					getFactory(),
 					mocks.slotTweaker
 				);
