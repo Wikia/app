@@ -32,10 +32,6 @@ require_once( __DIR__ . '/Maintenance.php' );
 
 class RebuildLocalisationCache extends Maintenance {
 
-	const I18N_FILE_EXTENSION = ".i18n.php";
-	const PHP_FILE_EXTENSION = ".php";
-	const LOCALISATION_FILE_REGEX = "/^.+\.(i18n|aliases|alias).php$/i";
-
 	public function __construct() {
 		parent::__construct();
 		$this->mDescription = "Rebuild the localisation cache";
@@ -52,12 +48,16 @@ class RebuildLocalisationCache extends Maintenance {
 	}
 
 	public function execute() {
-		global $wgLocalisationCacheConf;
-
-		$this->includeAllMessagesFiles();
-
 		// Wikia change begin
-		global $wgCacheDirectory;
+		global $wgCacheDirectory, $wgExtensionMessagesFiles, $wgLocalisationCacheConf;
+
+		$wgExtensionMessagesFiles = array_unique(
+			array_merge(
+				GlobalMessagesService::getInstance()->getExtensionMessageFiles(),
+				GlobalMessagesService::getInstance()->getCoreMessageFiles()
+			)
+		);
+
 		$wgCacheDirectory = $this->getOption( 'cache-dir', $wgCacheDirectory );
 		$primaryOnly = $this->hasOption( 'primary' );
 		// Wikia change end
@@ -157,26 +157,7 @@ class RebuildLocalisationCache extends Maintenance {
 		exit( $exitcode );
 	}
 
-	/**
-	 * Helper function to include all localisation files to localisation cache rebuild process.
-	 * It looks for i18n and alias files from whole code directory and registers them in global array.
-	 */
-	private function includeAllMessagesFiles() {
-		global $wgExtensionMessagesFiles, $IP;
 
-		$directory = new RecursiveDirectoryIterator($IP);
-		$iterator = new RecursiveIteratorIterator($directory);
-		$files = new RegexIterator($iterator, self::LOCALISATION_FILE_REGEX, RecursiveRegexIterator::GET_MATCH);
-
-		foreach ($files as $file) {
-			if (strpos($file[0], self::I18N_FILE_EXTENSION) !== false ) {
-				$key = basename($file[0], self::I18N_FILE_EXTENSION);
-			} else {
-				$key = basename($file[0], self::PHP_FILE_EXTENSION);
-			}
-			$wgExtensionMessagesFiles[$key] = $file[0];
-		}
-	}
 
 	/**
 	 * Helper function to rebuild list of languages codes. Prints the code
