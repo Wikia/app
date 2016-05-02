@@ -12,9 +12,6 @@ define('ext.wikia.adEngine.template.floorAdhesion', [
 		slotName = 'INVISIBLE_HIGH_IMPACT_2',
 		wrapper = doc.getElementById('InvisibleHighImpactWrapper');
 
-	/**
-	 * Show the floor ad.
-	 */
 	function show() {
 		var skin = adContext.getContext().targeting.skin;
 

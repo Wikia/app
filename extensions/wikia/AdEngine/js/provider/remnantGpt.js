@@ -17,7 +17,7 @@ define('ext.wikia.adEngine.provider.remnantGpt', [
 			},
 			HOME_TOP_RIGHT_BOXAD: {size: '300x250,300x600,300x1050', loc: 'top'},
 			INCONTENT_BOXAD_1: {size: '120x600,160x600,300x250,300x600', loc: 'hivi'},
-			INCONTENT_LEADERBOARD: {loc: 'hivi'},
+			INCONTENT_LEADERBOARD: {size: '1x1,728x90,300x250,468x60', loc: 'hivi'},
 			INVISIBLE_HIGH_IMPACT_2: {loc: 'hivi'},
 			INVISIBLE_SKIN: {size: '1000x1000,1x1', loc: 'top'},
 			LEFT_SKYSCRAPER_2: {size: '120x600,160x600,300x250,300x600,300x1050', loc: 'middle'},
