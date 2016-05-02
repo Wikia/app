@@ -18,12 +18,6 @@ class AdEngine2ContextService {
 			$wikiaPageType = new WikiaPageType();
 			$pageType = $wikiaPageType->getPageType();
 
-			$sevenOneMediaCombinedUrl = null;
-			if ( !empty( $wg->AdDriverUseSevenOneMedia ) ) {
-				// TODO: implicitly gets the skin from the context!
-				$sevenOneMediaCombinedUrl = ResourceLoader::makeCustomURL( $wg->Out, ['wikia.ext.adengine.sevenonemedia'], 'scripts' );
-			}
-
 			$monetizationServiceAds = null;
 			if ( !empty( $wg->AdDriverUseMonetizationService ) && !empty( $wg->EnableMonetizationModuleExt ) ) {
 				$monetizationServiceAds = F::app()->sendRequest( 'MonetizationModule', 'index' )->getData()['data'];
@@ -80,8 +74,6 @@ class AdEngine2ContextService {
 					'evolve2' => $wg->AdDriverUseEvolve2,
 					'monetizationService' => $wg->AdDriverUseMonetizationService,
 					'monetizationServiceAds' => $monetizationServiceAds,
-					'sevenOneMedia' => $wg->AdDriverUseSevenOneMedia,
-					'sevenOneMediaCombinedUrl' => $sevenOneMediaCombinedUrl,
 					'taboola' => $wg->AdDriverUseTaboola && $pageType === 'article',
 				] ),
 				'slots' => $this->filterOutEmptyItems( [
