@@ -59,13 +59,16 @@ class Paginator {
 	 * @param int $itemsPerPage number of items to display per page (capped to between 4 and 48)
 	 */
 	private function __construct( $dataCount, $itemsPerPage ) {
-		if ( !is_int( $itemsPerPage ) ) {
+		if ( !is_numeric( $itemsPerPage ) ) {
 			throw new InvalidArgumentException( 'Paginator: need an int for $itemsPerPage' );
 		}
 
-		if ( !is_int( $dataCount ) ) {
+		if ( !is_numeric( $dataCount ) ) {
 			throw new InvalidArgumentException( 'Paginator: need an int for $data' );
 		}
+
+		$itemsPerPage = intval( $itemsPerPage );
+		$dataCount = intval( $dataCount );
 
 		$this->itemsPerPage = max( $itemsPerPage, self::MIN_ITEMS_PER_PAGE );
 		$this->pagesCount = ceil( $dataCount / $this->itemsPerPage );
