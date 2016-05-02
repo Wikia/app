@@ -549,36 +549,37 @@ define('WikiBuilder', function () {
 					token: preferencesToken
 				},
 				callback: function (res) {
-					createStatus = res.status;
-					createStatusMessage = res.statusMsg;
-
 					throbberWrapper.stopThrobbing();
+					cityId = res.cityId;
+					finishCreateUrl = (res.finishCreateUrl.indexOf('.com/wiki/') < 0 ?
+						res.finishCreateUrl.replace('.com/', '.com/wiki/') :
+						res.finishCreateUrl);
 
-					if (createStatus && createStatus === 'ok') {
-						cityId = res.cityId;
-						finishCreateUrl = (res.finishCreateUrl.indexOf('.com/wiki/') < 0 ?
-							res.finishCreateUrl.replace('.com/', '.com/wiki/') :
-							res.finishCreateUrl);
-
-						// unblock "Next" button (BugId:51519)
-						$themWikiWrapper.find('.next-controls input').
-						attr('disabled', false).
-						addClass('enabled'); // for QA with love
-					} else {
-						$.showModal(res.statusHeader, createStatusMessage);
-					}
+					// unblock "Next" button (BugId:51519)
+					$themWikiWrapper.find('.next-controls input').
+					attr('disabled', false).
+					addClass('enabled'); // for QA with love
 				},
-				onErrorCallback: function () {
-					generateAjaxErrorMsg();
-				}
+				onErrorCallback: generateAjaxErrorMsg
 			});
-		}).fail(function () {
-			generateAjaxErrorMsg();
-		});
+		}).fail(generateAjaxErrorMsg);
 	}
 
-	function generateAjaxErrorMsg() {
-		$.showModal(WikiBuilderCfg['cnw-error-general-heading'], WikiBuilderCfg['cnw-error-general']);
+	function generateAjaxErrorMsg(error) {
+		var responseTextObject,
+			errorModalHeader,
+			errorModalMessage;
+
+		if (error && error.responseText) {
+			responseTextObject = JSON.parse(error.responseText);
+			errorModalHeader = responseTextObject.statusHeader;
+			errorModalMessage = responseTextObject.statusMsg;
+		} else {
+			errorModalHeader = WikiBuilderCfg['cnw-error-general-heading'];
+			errorModalMessage = WikiBuilderCfg['cnw-error-general'];
+		}
+
+		$.showModal(errorModalHeader, errorModalMessage);
 	}
 
 	return {
