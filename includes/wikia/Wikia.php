@@ -90,6 +90,7 @@ class Wikia {
 
 	const CUSTOM_INTERFACE_PREFIX = 'custom-';
 	const EDITNOTICE_INTERFACE_PREFIX = 'editnotice-';
+	const TAG_INTERFACE_PREFIX = 'tag-';
 
 	private static $vars = array();
 	private static $cachedLinker;
@@ -2385,6 +2386,7 @@ class Wikia {
 			|| ( Wikia::isUsingSafeJs() && $title->isJsPage() )
 			|| startsWith( lcfirst( $title->getDBKey() ), self::CUSTOM_INTERFACE_PREFIX )
 			|| startsWith( lcfirst( $title->getDBKey() ), self::EDITNOTICE_INTERFACE_PREFIX )
+			|| startsWith( lcfirst( $title->getDBKey() ), self::TAG_INTERFACE_PREFIX )
 		) {
 			return $wgUser->isAllowed( 'editinterface' );
 		}
