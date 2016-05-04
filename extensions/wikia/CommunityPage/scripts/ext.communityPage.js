@@ -66,19 +66,12 @@ require([
 	}
 
 	function updateModalHeader() {
-		var allCountElement = $('#allCount'),
-			adminsCountElement = $('#adminsCount');
-
-		if (typeof allMembersCount === 'undefined') {
-			allCountElement.text('');
-		} else {
-			allCountElement.text('(' + allMembersCount + ')');
+		if (typeof allMembersCount !== 'undefined') {
+			$('#allCount').text('(' + allMembersCount + ')');
 		}
 
-		if (typeof adminsCount === 'undefined') {
-			adminsCountElement.text('');
-		} else {
-			adminsCountElement.text('(' + adminsCount + ')');
+		if (typeof adminsCount !== 'undefined') {
+			$('#adminsCount').text('(' + adminsCount + ')');
 		}
 	}
 
