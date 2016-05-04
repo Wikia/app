@@ -72,9 +72,9 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	 */
 	public function getTopContributorsData() {
 		$userContributionCount = $this->usersModel->getUserContributions( $this->getUser() );
-		$contributors = CommunityPageSpecialUsersModel::filterGlobalBots(
+		$contributors = $this->usersModel->filterGlobalBots(
 				// get extra contributors so if there's global bots they can be filtered out
-				CommunityPageSpecialUsersModel::getTopContributors( 50 )
+				$this->usersModel->getTopContributors( 50 )
 			);
 		// get details for only 5 of the remaining contributors
 		$contributorDetails = $this->getContributorsDetails( array_slice( $contributors, 0, 5 ) );
@@ -121,9 +121,9 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	 * @return array
 	 */
 	public function getTopAdminsData() {
-		$topAdmins = CommunityPageSpecialUsersModel::filterGlobalBots(
+		$topAdmins = $this->usersModel->filterGlobalBots(
 			// get all admins who have contributed in the last two years ordered by contributions
-			CommunityPageSpecialUsersModel::getTopContributors( 10, false, true )
+			$this->usersModel->getTopContributors( 10, false, true )
 		);
 		$topAdminsDetails = $this->getContributorsDetails( $topAdmins );
 
@@ -143,6 +143,27 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	}
 
 	/**
+	 * Set context for allAdmins template. Needs to be passed through the index method in order to work.
+	 * @return array
+	 */
+	public function getAllAdminsData() {
+		$allAdmins = $this->usersModel->filterGlobalBots(
+			// get all admins who have contributed in the last two years ordered by contributions
+			$this->usersModel->getTopContributors( 10, false, true )
+		);
+		$topAdminsDetails = $this->getContributorsDetails( $allAdmins );
+
+		$this->response->setData( [
+			'topAdminsHeaderText' => $this->msg( 'communitypage-admins' )->plain(),
+			'admins' => $topAdminsDetails,
+			'adminCount' => count( $topAdminsDetails ),
+			'noAdminText' => $this->msg( 'communitypage-no-admins' )->plain(),
+			'noAdminContactText' => $this->msg( 'communitypage-no-admins-contact' )->plain(),
+			'noAdminHref' => $this->msg( 'communitypage-communitycentral-link' )->inContentLanguage()->text(),
+		] );
+	}
+
+	/**
 	 * Set context for recentlyJoined template. Needs to be passed through the index method in order to work.
 	 * @return array
 	 */
@@ -152,8 +173,8 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		$this->response->setData( [
 			'allMembers' => $this->msg( 'communitypage-view-all-members' )->plain(),
 			'recentlyJoinedHeaderText' => $this->msg( 'communitypage-recently-joined' )->plain(),
-			'noRecentMembersText' => $this->msg( 'communitypage-no-recent-members' )->plain(),
 			'members' => $recentlyJoined,
+			'haveMembers' => count( $recentlyJoined ) > 0,
 		] );
 	}
 
@@ -169,7 +190,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 			'admin' => $this->msg( 'communitypage-admin' )->plain(),
 			'joinedText' => $this->msg( 'communitypage-joined' )->plain(),
 			'noMembersText' => $this->msg( 'communitypage-no-members' )->plain(),
-			'members' => $allMembers,
+			'members' => array_slice( $allMembers, 0, 20 ),
 		] );
 	}
 
