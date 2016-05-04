@@ -23,7 +23,7 @@ class CreateNewWikiController extends WikiaController {
 	const LANG_ALL_AGES_OPT        = 'en';
 
 	public function index() {
-		global $wgSuppressWikiHeader, $wgSuppressPageHeader, $wgSuppressFooter, $wgSuppressToolbar, $fbOnLoginJsOverride, $wgRequest, $wgUser;
+		global $wgSuppressWikiHeader, $wgSuppressPageHeader, $wgSuppressFooter, $wgSuppressToolbar, $wgRequest, $wgUser;
 		wfProfileIn( __METHOD__ );
 
 		// hide some default oasis UI things
@@ -241,19 +241,6 @@ class CreateNewWikiController extends WikiaController {
             $params['wAllAges'] = null;
         }
 
-		if ( !empty($params) &&
-			(!empty($params['wikiName']) && !empty($params['wikiDomain']) ) )
-		{
-			// log if called with old params
-			trigger_error("CreateWiki called with old params." . $params['wikiName'] . " " . $params['wikiDomain'] . " " . $wgRequest->getIP() . " " . $wgUser->getName() . " " . $wgUser->getId(), E_USER_WARNING);
-		}
-
-		if ( !empty($params) &&
-			(!empty($params['wikiaName']) && !empty($params['wikiaDomain']) ) )
-		{
-			// log if called with old params
-			trigger_error("CreateWiki called with 2nd old params." . $params['wikiaName'] . " " . $params['wikiaDomain'] . " " . $wgRequest->getIP() . " " . $wgUser->getName() . " " . $wgUser->getId(), E_USER_WARNING);
-		}
 		if ( empty($params) ||
 			empty($params['wName']) ||
 			empty($params['wDomain']) ||
