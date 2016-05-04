@@ -291,6 +291,7 @@ define('WikiBuilder', function () {
 			});
 
 			authModal.load({
+				forceLogin: true,
 				url: '/signin?redirect=' + encodeURIComponent(redirectUrl.toString()),
 				origin: 'create-new-wikia',
 				onAuthSuccess: onSuccess
