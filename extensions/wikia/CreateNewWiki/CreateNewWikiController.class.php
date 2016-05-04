@@ -296,7 +296,7 @@ class CreateNewWikiController extends WikiaController {
 				$this->warning(__METHOD__ . ": user is blocked" );
 				$this->response->setCode( 403 );
 				$this->response->setVal( self::STATUS_FIELD, self::STATUS_ERROR );
-				$this->response->setVal( self::STATUS_MSG_FIELD, wfMessage( 'cnw-error-blocked', $wgUser->blockedBy(), $wgUser->blockedFor(), $wgUser->getBlockId() )->text() );
+				$this->response->setVal( self::STATUS_MSG_FIELD, wfMessage( 'cnw-error-blocked', $wgUser->blockedBy(), $wgUser->blockedFor(), $wgUser->getBlockId() )->parse() );
 				$this->response->setVal( self::STATUS_HEADER_FIELD, wfMessage( 'cnw-error-blocked-header' )->text() );
 				wfProfileOut(__METHOD__);
 				return;
