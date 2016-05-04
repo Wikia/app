@@ -272,8 +272,6 @@ $config['oasis_noads_extensions_js'] = array(
 		'//extensions/wikia/EditorSurvey/js/EditorSurvey.js',
 		// Image and video thumbnail mustache templates
 		'//extensions/wikia/Thumbnails/scripts/templates.mustache.js',
-		// handlebars - uncomment this when introducing first client-side rendered handlebars template
-		// '//resources/wikia/libraries/handlebars/handlebars.js',
 		'//extensions/wikia/JSSnippets/js/JSSnippets.js',
 	)
 );
