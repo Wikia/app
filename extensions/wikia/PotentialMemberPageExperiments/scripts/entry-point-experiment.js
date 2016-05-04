@@ -52,12 +52,11 @@ require([
 			RIGHT_RAIL: {
 				type: 'right-rail',
 				addEntryPoint: function () {
-					afterRailLoads(function() {
-						var wikiaRecentActivityContainer = $('#WikiaRecentActivity');
+					afterRailLoads(function () {
+						var $wikiaRecentActivityContainer = $('#WikiaRecentActivity');
 
-						if( wikiaRecentActivityContainer.exists() ) {
-							$banner.insertBefore(wikiaRecentActivityContainer);
-							$banner.addClass('initialized');
+						if ($wikiaRecentActivityContainer.length) {
+							$banner.insertBefore($wikiaRecentActivityContainer);
 						}
 					}.bind(this));
 				}
@@ -113,7 +112,7 @@ require([
 			checkViewability();
 		}
 
-		$(w).on('scroll.trackPMPEntryPoint', $.debounce(50, function() {
+		$(w).on('scroll.trackPMPEntryPoint', $.debounce(50, function () {
 			checkViewability();
 		}));
 	}
