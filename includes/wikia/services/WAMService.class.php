@@ -149,7 +149,6 @@ class WAMService extends Service {
 			$join_conds
 		);
 
-		/* @var $db DatabaseMysql */
 		while ( $row = $db->fetchObject( $result ) ) {
 			$row = ( array )$row;
 			$row['vertical_name'] = $this->getVerticalName( $row['vertical_id'] );

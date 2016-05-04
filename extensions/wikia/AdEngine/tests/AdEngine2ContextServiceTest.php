@@ -272,6 +272,7 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 		$expectedSevenOneMediaUrlFormat = 'http://%s/__load/-/cb%3D%d%26debug%3Dfalse%26lang%3D%s%26only%3Dscripts%26skin%3Doasis/wikia.ext.adengine.sevenonemedia';
 		$expectedSourcePointDetectionUrlFormat = 'http://%s/__load/-/cb%3D%d%26debug%3Dfalse%26lang%3D%s%26only%3Dscripts%26skin%3Doasis/wikia.ext.adengine.sp.detection';
 		$expectedSourcePointRecoveryUrlFormat = 'http://%s/__load/-/cb%3D%d%26debug%3Dfalse%26lang%3D%s%26only%3Dscripts%26skin%3Doasis/wikia.ext.adengine.sp.recovery';
+		$expectedYavliUrlFormat = 'http://%s/__load/-/cb%3D%d%26debug%3Dfalse%26lang%3D%s%26only%3Dscripts%26skin%3Doasis/wikia.ext.adengine.yavli';
 
 		if ( $titleMockType === 'article' || $titleMockType === 'mainpage' ) {
 			$expectedTargeting['pageArticleId'] = $artId;
@@ -417,6 +418,10 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 			$this->assertNotEmpty( $result['providers']['monetizationServiceAds'] );
 			unset( $result['providers']['monetizationServiceAds'] );
 		}
+
+		// Check Yavli URL format
+		$this->assertStringMatchesFormat( $expectedYavliUrlFormat, $result['opts']['yavliUrl'] );
+		unset( $result['opts']['yavliUrl'] );
 
 		$this->assertEquals( $expected, $result );
 	}

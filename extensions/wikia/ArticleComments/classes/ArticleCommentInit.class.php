@@ -1,14 +1,10 @@
 <?php
 class ArticleCommentInit {
-	const ERROR_READONLY = 1;
-	const ERROR_USER_CANNOT_EDIT = 2;
-
 	public static $enable = null;
 	public static $commentByAnonMsg = null;
 
 	static public function ArticleCommentCheck( $title = null ) {
 		global $wgRequest, $wgUser;
-		wfProfileIn( __METHOD__ );
 
 		if ( $title === null ) {
 			global $wgTitle;
@@ -31,11 +27,11 @@ class ArticleCommentInit {
 				self::$enable = false;
 			}
 
-			if ( self::$enable && !wfRunHooks( 'ArticleCommentCheck', [ $title ] ) ) {
+			if ( self::$enable && !Hooks::run( 'ArticleCommentCheck', [ $title ] ) ) {
 				self::$enable = false;
 			}
 		}
-		wfProfileOut( __METHOD__ );
+
 		return self::$enable;
 	}
 
@@ -44,40 +40,31 @@ class ArticleCommentInit {
 	 * @param Title $title
 	 * @return bool
 	 */
-	static public function ArticleCommentCheckTitle( $title ) {
-		wfProfileIn( __METHOD__ );
-
+	static public function ArticleCommentCheckTitle( Title $title ) {
 		// enable comments only on content namespaces (use $wgArticleCommentsNamespaces if defined)
 		if ( !self::ArticleCommentCheckNamespace( $title ) ) {
-			wfProfileOut( __METHOD__ );
 			return false;
 		}
 
 		// non-existing articles
 		if ( !$title->exists() ) {
-			wfProfileOut( __METHOD__ );
 			return false;
 		}
 
 		// disable on main page (RT#33703)
 		if ( Title::newMainPage()->getText() == $title->getText() ) {
-			wfProfileOut( __METHOD__ );
 			return false;
 		}
 
 		// disable on pages that cant be read (RT#49525)
 		if ( !$title->userCan( 'read' ) ) {
-			wfProfileOut( __METHOD__ );
 			return false;
 		}
 
 		// blog listing? (eg: User:Name instead of User:Name/Blog_name) - do not show comments
 		if ( ArticleComment::isBlog() && strpos( $title->getText(), '/' ) === false ) {
-			wfProfileOut( __METHOD__ );
 			return false;
 		}
-
-		wfProfileOut( __METHOD__ );
 		return true;
 	}
 
@@ -86,7 +73,6 @@ class ArticleCommentInit {
 	 */
 	static public function ArticleCommentCheckNamespace( $title ) {
 		global $wgContentNamespaces, $wgArticleCommentsNamespaces;
-		wfProfileIn( __METHOD__ );
 
 		// enable comments only on content namespaces (use $wgArticleCommentsNamespaces if defined)
 
@@ -97,21 +83,7 @@ class ArticleCommentInit {
 						empty( $wgArticleCommentsNamespaces ) ? $wgContentNamespaces : $wgArticleCommentsNamespaces
 				)
 		);
-
-		wfProfileOut( __METHOD__ );
 		return $enable;
-	}
-
-	// hook used only in Monaco - we want to put comment box in slightly different position, just between article area and the footer
-	static public function ArticleCommentEnableMonaco( &$this, &$tpl, &$custom_article_footer ) {
-		// don't touch $custom_article_footer! we don't want to replace the footer - we just want to echo something just before it
-		if ( self::ArticleCommentCheck() ) {
-			global $wgTitle;
-
-			$page = ArticleCommentList::newFromTitle( $wgTitle );
-			echo $page->render();
-		}
-		return true;
 	}
 
 	static public function ArticleCommentEnable( &$data ) {
@@ -123,15 +95,10 @@ class ArticleCommentInit {
 		// update: it's actually only MonoBook since Oasis and WikiaMobile use their own
 		// logic and the other mobile skins do not show comments-related stuff
 		if ( $skin instanceof SkinMonoBook ) {
-			wfProfileIn( __METHOD__ );
-
 			if ( self::ArticleCommentCheck() ) {
-
 				$page = ArticleCommentList::newFromTitle( $wgTitle );
 				$data = $page->render();
 			}
-
-			wfProfileOut( __METHOD__ );
 		}
 
 		return true;
@@ -143,9 +110,8 @@ class ArticleCommentInit {
 	 * @param Skin $sk
 	 * @return bool
 	 */
-	static public function ArticleCommentAddJS( &$out, &$sk ) {
+	static public function ArticleCommentAddJS( OutputPage &$out, Skin &$sk ) {
 		global $wgExtensionsPath;
-		wfProfileIn( __METHOD__ );
 
 		if ( self::ArticleCommentCheck() ) {
 			// FB#21244 this should run only for MonoBook, Oasis and WikiaMobile have their own SASS-based styling
@@ -154,20 +120,17 @@ class ArticleCommentInit {
 			}
 		}
 
-		wfProfileOut( __METHOD__ );
 		return true;
 	}
 
 	// TODO: not used in oasis - remove
 	static public function ArticleCommentHideTab( $skin, &$content_actions ) {
 		global $wgArticleCommentsHideDiscussionTab;
-		wfProfileIn( __METHOD__ );
 
 		if ( !empty( $wgArticleCommentsHideDiscussionTab ) && self::ArticleCommentCheck() ) {
 			unset( $content_actions['talk'] );
 		}
 
-		wfProfileOut( __METHOD__ );
 		return true;
 	}
 
@@ -219,55 +182,6 @@ class ArticleCommentInit {
 	}
 
 	/**
-	 * Hook handler
-	 *
-	 * @static
-	 * @param Title $title
-	 * @param User $user
-	 * @param $action
-	 * @param $result
-	 * @return bool
-	 */
-	public static function userCan( $title, $user, $action, &$result ) {
-		$namespace = $title->getNamespace();
-
-		// we only care if this is a talk namespace
-		if ( MWNamespace::getSubject( $namespace ) == $namespace ) {
-			return true;
-		}
-
-		// for blog comments BlogLockdown is checking rights
-		if ( ArticleComment::isBlog() ) {
-			return true;
-		}
-
-		$parts = ArticleComment::explode( $title->getText() );
-		// not article comment
-		if ( count( $parts['partsStripped'] ) == 0 ) {
-			return true;
-		}
-
-		$firstRev = $title->getFirstRevision();
-		if ( $firstRev && $user->getName() == $firstRev->getUserText() ) {
-			return true;
-		}
-
-		switch ( $action ) {
-			case 'move':
-			case 'move-target':
-				return $user->isAllowed( 'commentmove' );
-				break;
-			case 'edit':
-				return $user->isAllowed( 'commentedit' );
-				break;
-			case 'delete':
-				return $user->isAllowed( 'commentdelete' );
-				break;
-		}
-		return true;
-	}
-
-	/**
 	 * HAWelcome
 	 *
 	 * @param Title $title
@@ -278,7 +192,7 @@ class ArticleCommentInit {
 	 *
 	 * @return boolean
 	 */
-	static public function HAWelcomeGetPrefixText( &$prefixedText, $title ) {
+	static public function HAWelcomeGetPrefixText( &$prefixedText, Title $title ) {
 
 		if ( ArticleComment::isTitleComment( $title ) ) {
 			$title = $title->getSubjectPage();
@@ -290,38 +204,6 @@ class ArticleCommentInit {
 			}
 		}
 		return true;
-	}
-
-	/**
-	 * Checks if a user can comment, producing an error code and a related message
-	 *
-	 * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
-	 *
-	 * @param array $info [Optional] If passed this will be filled in with an error code and related message in case of negative result
-	 * @param Title $title [Optional] Title to use to create login counter redirect
-	 * @param User $user [Optional] The user to check, if not passed it will use the global user
-	 *
-	 * @return bool
-	 */
-	static public function userCanComment( Array &$info = [ ], Title $title = null, User $user = null ) {
-		$ret = true;
-
-		if ( !( $user instanceof User ) ) {
-			global $wgUser;
-			$user = $wgUser;
-		}
-
-		if ( wfReadOnly() ) {
-			$info['error'] = self::ERROR_READONLY;
-			$info['msg'] = wfMsg( 'readonlytext' );
-			$ret = false;
-		} elseif ( !$user->isAllowed( 'edit' ) ) {
-			$info['error'] = self::ERROR_USER_CANNOT_EDIT;
-			$info['msg'] = wfMsg( 'article-comments-login', SpecialPage::getTitleFor( 'UserLogin' )->getLocalUrl( ( $title instanceof Title ) ? 'returnto=' . $title->getPrefixedUrl() : null ) );
-			$ret = false;
-		}
-
-		return $ret;
 	}
 
 	// when comments are enabled on the current namespace make the WikiaMobile skin enriched assets
@@ -339,7 +221,6 @@ class ArticleCommentInit {
 	 * @author Jakub Olek
 	 */
 	public static function onFilePageImageUsageSingleLink( &$link, &$element ) {
-		$app = F::app();
 		$ns = $element->page_namespace;
 
 		$title = Title::newFromText( $element->page_title, $ns );
@@ -353,14 +234,12 @@ class ArticleCommentInit {
 		if ( $ns == NS_TALK && ArticleComment::isTitleComment( $title ) ) {
 			$parentTitle = reset( explode( '/', $element->page_title ) ); // getBaseText returns me parent comment for subcomment
 
-			$link = wfMsgExt(
+			$link = wfMessage(
 				'article-comments-file-page',
-				[ 'parsemag' ],
-				$title->getLocalURL(),
+				$title->getPrefixedText(),
 				self::getUserNameFromRevision( $title ),
-				Title::newFromText( $parentTitle )->getLocalURL(),
 				$parentTitle
-			);
+			)->parse();
 
 		// format links to blog posts
 		} else if ( defined( 'NS_BLOG_ARTICLE_TALK' ) && $ns == NS_BLOG_ARTICLE_TALK ) {
@@ -368,16 +247,15 @@ class ArticleCommentInit {
 			$titleNames = explode( '/', $baseText );
 			$userBlog = Title::newFromText( $titleNames[0], NS_BLOG_ARTICLE );
 
-			$link = wfMsgExt(
+			$link = wfMessage(
 				'article-blog-comments-file-page',
-				[ 'parsemag' ],
-				$title->getLocalURL(),
+				$title->getPrefixedText(),
 				self::getUserNameFromRevision( $title ),
-				Title::newFromText( $baseText, NS_BLOG_ARTICLE )->getLocalURL(),
+				Title::newFromText( $baseText, NS_BLOG_ARTICLE )->getPrefixedText(),
 				$titleNames[1],
-				$userBlog->getLocalURL(),
+				$userBlog->getPrefixedText(),
 				$userBlog->getBaseText()
-			);
+			)->parse();
 		}
 
 		return true;
@@ -386,6 +264,7 @@ class ArticleCommentInit {
 	public static function getUserNameFromRevision( Title $title ) {
 		$rev = Revision::newFromId( $title->getLatestRevID() );
 
+		$userName = null;
 		if ( !empty( $rev ) ) {
 			$user = User::newFromId( $rev->getUser() );
 

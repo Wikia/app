@@ -26,7 +26,7 @@ class FounderProgressBarTest extends WikiaBaseTest {
 			
 			$mock_result = $this->getMock('ResultWrapper', array(), array(), '', false);
 			
-			$this->mock_db = $this->getMock('DatabaseMysql', array('select', 'query', 'update', 'commit', 'fetchObject', 'fetchRow'));
+			$this->mock_db = $this->getDatabaseMock(array('select', 'query', 'update', 'commit', 'fetchObject', 'fetchRow'));
 			$this->mock_db->expects($this->any())
 							->method('select')
 							->will($this->returnValue($mock_result));

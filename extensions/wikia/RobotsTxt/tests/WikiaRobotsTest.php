@@ -2,8 +2,6 @@
 
 use Wikia\RobotsTxt\WikiaRobots;
 
-require_once( __DIR__ . '/RobotsTxtMock.php' );
-
 class WikiaRobotsTest extends WikiaBaseTest {
 	public function setUp() {
 		global $IP;

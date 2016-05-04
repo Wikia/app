@@ -58,18 +58,12 @@ class InsightsPaginator {
 	 * Prepare pagination
 	 */
 	public function getPagination() {
-		$paginatorBar = '';
-
-		$total = $this->getTotal();
-		$itemsPerPage = $this->getLimit();
 		$params = array_merge( $this->getParams(), [ 'page' => '%s' ] );
+		$url = urldecode( InsightsHelper::getSubpageLocalUrl( $this->subpage, $params ) );
 
-		if( $total > $itemsPerPage ) {
-			$paginator = Paginator::newFromArray( array_fill( 0, $total, '' ), $itemsPerPage, 3, false, '',  $this->getLimit() );
-			$paginator->setActivePage( $this->getPage() );
-			$url = urldecode( InsightsHelper::getSubpageLocalUrl( $this->subpage, $params ) );
-			$paginatorBar = $paginator->getBarHTML( $url );
-		}
+		$paginator = Paginator::newFromCount( $this->getTotal(), $this->getLimit() );
+		$paginator->setActivePage( $this->getPage() + 1 );
+		$paginatorBar = $paginator->getBarHTML( $url );
 
 		return $paginatorBar;
 	}
@@ -90,6 +84,7 @@ class InsightsPaginator {
 
 		if ( isset( $this->params['page'] ) ) {
 			$page = intval( $this->params['page'] );
+			// TODO: migrate to 1-indexed pagination
 			$this->page = --$page;
 			$this->offset = $this->page * $this->limit;
 		}

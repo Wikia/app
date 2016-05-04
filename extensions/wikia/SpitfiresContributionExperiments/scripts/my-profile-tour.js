@@ -3,7 +3,8 @@ require(['jquery', 'ext.wikia.spitfires.experiments.tracker', 'wikia.loader', 'w
 		'use strict';
 
 		var experimentName = 'contribution-experiments',
-			experimentId = 5654433460,
+			freshlyRegisteredExperimentId = 5654433460,
+			usersWithoutEditExperimentId = 5735670451,
 			modalConfig = {
 				vars: {
 					id: 'MyProfileModal',
@@ -41,7 +42,14 @@ require(['jquery', 'ext.wikia.spitfires.experiments.tracker', 'wikia.loader', 'w
 			lastStepTemplateData = [];
 
 		function init() {
-			if ($.cookie(seenCookieName) || window.optimizely.variationNamesMap[experimentId] !== 'USER-PROFILE') {
+			if (
+				$.cookie(seenCookieName) ||
+				!window.optimizely ||
+				(
+					window.optimizely.variationNamesMap[freshlyRegisteredExperimentId] !== 'USER-PROFILE' &&
+					window.optimizely.variationNamesMap[usersWithoutEditExperimentId] !== 'USER-PROFILE'
+				)
+			) {
 				return;
 			}
 			$.when(

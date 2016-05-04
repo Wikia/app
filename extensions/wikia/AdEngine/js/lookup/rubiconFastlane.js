@@ -153,7 +153,7 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 
 		if (context.slots.invisibleHighImpact2) {
 			slots.INVISIBLE_HIGH_IMPACT_2 = {
-				sizes: [[728, 90]],
+				sizes: [[728, 90], [970, 250], [300, 250], [300, 600], [320, 480]],
 				targeting: {loc: 'hivi'}
 			};
 		}

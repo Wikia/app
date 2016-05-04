@@ -74,12 +74,10 @@ define('ext.wikia.adEngine.adContext', [
 				geo.isProperGeo(instantGlobals.wgAdDriverSourcePointDetectionMobileCountries));
 		}
 
-		// SourcePoint recovery integration
-		if (!context.opts.delayEngine && context.opts.sourcePointDetection && context.opts.sourcePointRecoveryUrl) {
-			context.opts.sourcePointRecovery = isUrlParamSet('sourcepointrecovery') ||
-				geo.isProperGeo(instantGlobals.wgAdDriverSourcePointRecoveryCountries);
+		// SourcePoint recovery integration (set in AdEngine2ContextService based on wgEnableUsingSourcePointProxyForCSS)
+		if (isUrlParamSet('sourcepointrecovery')) {
+			context.opts.sourcePointRecovery = true;
 		}
-
 		// Recoverable ads message
 		if (context.opts.sourcePointDetection && !context.opts.sourcePointRecovery && context.opts.showAds) {
 			context.opts.recoveredAdsMessage = isPageType('article') &&
@@ -132,6 +130,9 @@ define('ext.wikia.adEngine.adContext', [
 		context.slots.incontentLeaderboard =
 			geo.isProperGeo(instantGlobals.wgAdDriverIncontentLeaderboardSlotCountries);
 
+		context.slots.incontentLeaderboardAsOutOfPage =
+			geo.isProperGeo(instantGlobals.wgAdDriverIncontentLeaderboardOutOfPageSlotCountries);
+
 		context.opts.scrollHandlerConfig = instantGlobals.wgAdDriverScrollHandlerConfig;
 		context.opts.enableScrollHandler = geo.isProperGeo(instantGlobals.wgAdDriverScrollHandlerCountries) ||
 			isUrlParamSet('scrollhandler');
@@ -156,6 +157,8 @@ define('ext.wikia.adEngine.adContext', [
 			geo.isProperGeo(instantGlobals.wgAdDriverOverridePrefootersCountries) &&
 			!isPageType('home')
 		);
+
+		context.opts.yavli = !noExternals && geo.isProperGeo(instantGlobals.wgAdDriverYavliCountries);
 
 		// Export the context back to ads.context
 		// Only used by Lightbox.js, WikiaBar.js and AdsInContext.js

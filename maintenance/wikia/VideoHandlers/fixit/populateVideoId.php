@@ -6,7 +6,7 @@
  * This script is no longer necessary after we've added all
  */
 class PopulateVideoId {
-	public static function run( DatabaseMysql $db, $dbname, $test = false, $verbose = false ) {
+	public static function run( DatabaseBase $db, $dbname, $test = false, $verbose = false ) {
 
 		// Don't process the video wiki
 		if ( $dbname == 'video151' ) {

@@ -394,57 +394,6 @@ describe('AdContext', function () {
 		expect(adContext.getContext().targeting.enableKruxTargeting).toBeFalsy();
 	});
 
-	it('disables recovery when url is not set (e.g. for mercury skin)', function () {
-		mocks.win = {ads: {context: {opts: {sourcePointDetection: true}}}};
-		mocks.instantGlobals = {wgAdDriverSourcePointRecoveryCountries: ['CURRENT_COUNTRY', 'ZZ']};
-
-		expect(getModule().getContext().opts.sourcePointRecovery).toBe(undefined);
-	});
-
-	it('enables recovery when country in instant var', function () {
-		mocks.win = {ads: {context: {opts: {sourcePointRecoveryUrl: '//foo.bar', sourcePointDetection: true}}}};
-		mocks.instantGlobals = {wgAdDriverSourcePointRecoveryCountries: ['CURRENT_COUNTRY', 'ZZ']};
-
-		expect(getModule().getContext().opts.sourcePointRecovery).toBeTruthy();
-	});
-
-	it('enables recovery when region in instant var', function () {
-		mocks.win = {ads: {context: {opts: {sourcePointRecoveryUrl: '//foo.bar', sourcePointDetection: true}}}};
-		mocks.instantGlobals = {wgAdDriverSourcePointRecoveryCountries: ['CURRENT_COUNTRY-CURRENT_REGION']};
-
-		expect(getModule().getContext().opts.sourcePointRecovery).toBeTruthy();
-	});
-
-	it('enables recovery when country and region in instant var (country overwrites region)', function () {
-		mocks.win = {ads: {context: {opts: {sourcePointRecoveryUrl: '//foo.bar', sourcePointDetection: true}}}};
-		mocks.instantGlobals = {wgAdDriverSourcePointRecoveryCountries: ['CURRENT_COUNTRY-EE', 'CURRENT_COUNTRY']};
-
-		expect(getModule().getContext().opts.sourcePointRecovery).toBeTruthy();
-	});
-
-	it('disables recovery when country and region in instant var and both are invalid', function () {
-		mocks.win = {ads: {context: {opts: {sourcePointRecoveryUrl: '//foo.bar', sourcePointDetection: true}}}};
-		mocks.instantGlobals = {wgAdDriverSourcePointRecoveryCountries: ['CURRENT_COUNTRY-EE', 'YY']};
-
-		expect(getModule().getContext().opts.sourcePointRecovery).toBeFalsy();
-	});
-
-	it('disables recovery when detection is disabled', function () {
-		mocks.win = {ads: {context: {opts: {sourcePointRecoveryUrl: '//foo.bar'}}}};
-		mocks.instantGlobals = {wgAdDriverSourcePointRecoveryCountries: ['CURRENT_COUNTRY', 'ZZ']};
-
-		expect(getModule().getContext().opts.sourcePointRecovery).toBeFalsy();
-	});
-
-	it('enables recovery when url param sourcepointrecovery is set', function () {
-		mocks.win = {ads: {context: {opts: {sourcePointRecoveryUrl: '//foo.bar', sourcePointDetection: true}}}};
-		spyOn(mocks.querystring, 'getVal').and.callFake(function (param) {
-			return param === 'sourcepointrecovery' ?  '1' : '0';
-		});
-
-		expect(getModule().getContext().opts.sourcePointRecovery).toBeTruthy();
-	});
-
 	it('disables detection when url is not set', function () {
 		mocks.instantGlobals = {wgAdDriverSourcePointDetectionCountries: ['CURRENT_COUNTRY', 'ZZ']};
 
@@ -563,6 +512,18 @@ describe('AdContext', function () {
 		mocks.instantGlobals = {wgAdDriverIncontentLeaderboardSlotCountries: ['YY']};
 		adContext = getModule();
 		expect(adContext.getContext().slots.incontentLeaderboard).toBeFalsy();
+	});
+
+	it('enables incontent_leaderboard as out-of-page', function () {
+		var adContext;
+
+		mocks.instantGlobals = {wgAdDriverIncontentLeaderboardOutOfPageSlotCountries: ['HH', 'CURRENT_COUNTRY', 'ZZ']};
+		adContext = getModule();
+		expect(adContext.getContext().slots.incontentLeaderboardAsOutOfPage).toBeTruthy();
+
+		mocks.instantGlobals = {wgAdDriverIncontentLeaderboardOutOfPageSlotCountries: ['YY']};
+		adContext = getModule();
+		expect(adContext.getContext().slots.incontentLeaderboardAsOutOfPage).toBeFalsy();
 	});
 
 	it('enables incontent_player slot when url param incontentplayer is set', function () {

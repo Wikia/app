@@ -172,7 +172,7 @@ class Mail_mime
      * @return void
      * @access public
      */
-    function Mail_mime($params = array())
+    function __construct($params = array())
     {
         // Backward-compatible EOL setting
         if (is_string($params)) {
@@ -474,14 +474,7 @@ class Mail_mime
             return $this->_raiseError('File is not readable: ' . $file_name);
         }
 
-        // Temporarily reset magic_quotes_runtime and read file contents
-        if ($magic_quote_setting = get_magic_quotes_runtime()) {
-            @ini_set('magic_quotes_runtime', 0);
-        }
         $cont = file_get_contents($file_name);
-        if ($magic_quote_setting) {
-            @ini_set('magic_quotes_runtime', $magic_quote_setting);
-        }
 
         return $cont;
     }
@@ -761,11 +754,6 @@ class Mail_mime
             return $this->_raiseError('File is not writable: ' . $filename);
         }
 
-        // Temporarily reset magic_quotes_runtime and read file contents
-        if ($magic_quote_setting = get_magic_quotes_runtime()) {
-            @ini_set('magic_quotes_runtime', 0);
-        }
-
         if (!($fh = fopen($filename, 'ab'))) {
             return $this->_raiseError('Unable to open file: ' . $filename);
         }
@@ -777,10 +765,6 @@ class Mail_mime
         }
 
         fclose($fh);
-
-        if ($magic_quote_setting) {
-            @ini_set('magic_quotes_runtime', $magic_quote_setting);
-        }
 
         // Write the rest of the message into file
         $res = $this->get($params, $filename);
@@ -804,11 +788,6 @@ class Mail_mime
         // Check state of file and raise an error properly
         if (file_exists($filename) && !is_writable($filename)) {
             return $this->_raiseError('File is not writable: ' . $filename);
-        }
-
-        // Temporarily reset magic_quotes_runtime and read file contents
-        if ($magic_quote_setting = get_magic_quotes_runtime()) {
-            @ini_set('magic_quotes_runtime', 0);
         }
 
         if (!($fh = fopen($filename, 'ab'))) {

@@ -8,11 +8,12 @@ require([
 	'ext.wikia.adEngine.customAdsLoader',
 	'ext.wikia.adEngine.dartHelper',
 	'ext.wikia.adEngine.messageListener',
-	'ext.wikia.adEngine.recovery.helper',
+	'ext.wikia.aRecoveryEngine.recovery.helper',
 	'ext.wikia.adEngine.slot.scrollHandler',
 	'ext.wikia.adEngine.slotTracker',
 	'ext.wikia.adEngine.slotTweaker',
 	'ext.wikia.adEngine.sourcePointDetection',
+	'ext.wikia.adEngine.provider.yavliTag',
 	'wikia.window',
 	'wikia.loader',
 	require.optional('ext.wikia.adEngine.recovery.gcs')
@@ -29,6 +30,7 @@ require([
 	slotTracker,
 	slotTweaker,
 	sourcePoint,
+	yavliTag,
 	win,
 	loader,
 	gcs
@@ -79,17 +81,17 @@ require([
 
 		// Recovery
 		recoveryHelper.initEventQueue();
-		sourcePoint.initDetection();
 
-		if (context.opts.sourcePointRecovery && win.ads) {
-			win.ads.runtime.sp.slots = win.ads.runtime.sp.slots || [];
-			recoveryHelper.addOnBlockingCallback(function () {
-				adEngineRunner.run(adConfigDesktop, win.ads.runtime.sp.slots, 'queue.sp', false);
-			});
+		if (!context.opts.sourcePointRecovery) {
+			sourcePoint.initDetection();
 		}
 
 		if (context.opts.googleConsumerSurveys && gcs) {
 			gcs.addRecoveryCallback();
+		}
+
+		if (context.opts.yavli) {
+			yavliTag.add();
 		}
 
 		if (context.opts.recoveredAdsMessage) {
@@ -111,15 +113,18 @@ require([
 	'ext.wikia.adEngine.slot.highImpact',
 	'ext.wikia.adEngine.slot.inContent',
 	'ext.wikia.adEngine.slot.skyScraper3',
+	'ext.wikia.adEngine.slotTweaker',
 	'wikia.document',
 	'wikia.window',
 	require.optional('ext.wikia.adEngine.slot.exitstitial')
-], function (adContext, highImpact, inContent, skyScraper3, doc, win, exitstitial) {
+], function (adContext, highImpact, inContent, skyScraper3, slotTweaker, doc, win, exitstitial) {
 	'use strict';
 
 	var context = adContext.getContext();
 
 	function initDesktopSlots() {
+		var incontentLeaderboard = 'INCONTENT_LEADERBOARD';
+
 		highImpact.init();
 		skyScraper3.init();
 
@@ -128,7 +133,11 @@ require([
 		}
 
 		if (context.slots.incontentLeaderboard) {
-			inContent.init('INCONTENT_LEADERBOARD');
+			inContent.init(incontentLeaderboard, function () {
+				if (context.slots.incontentLeaderboardAsOutOfPage) {
+					slotTweaker.adjustIframeByContentSize(incontentLeaderboard);
+				}
+			});
 		}
 
 		if (exitstitial) {

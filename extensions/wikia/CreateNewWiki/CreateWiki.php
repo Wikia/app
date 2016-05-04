@@ -33,7 +33,7 @@ class CreateWiki {
 	private $mDBw;
 
 	/* @var $mClusterDB string */
-	private	$mClusterDB; // eg. "wikicities_c7"
+	private	$mClusterDB;
 
 	const ERROR_BAD_EXECUTABLE_PATH                    = 1;
 	const ERROR_DOMAIN_NAME_TAKEN                      = 2;

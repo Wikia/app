@@ -20,7 +20,7 @@ echo "done\n";
  * This script is no longer necessary after we've added all
  */
 class PopulatePremiumVideoId {
-	public static function run( DatabaseMysql $db, $dbname, $test = false, $verbose = false ) {
+	public static function run( DatabaseBase $db, $dbname, $test = false, $verbose = false ) {
 		global $titleInfo;
 
 		// Don't process the video wiki

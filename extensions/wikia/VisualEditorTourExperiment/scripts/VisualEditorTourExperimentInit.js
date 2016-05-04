@@ -3,8 +3,9 @@ define('VisualEditorTourExperimentInit',
 	function ($, VETour, veTourConfig, abTest, tracker) {
 		'use strict';
 
-		var EXPERIMENT_NAME = 'contribution-experiments',
-			EXPERIMENT_ID = 5654433460;
+		var experimentName = 'contribution-experiments',
+			freshlyRegisteredExperimentId = 5654433460,
+			usersWithoutEditExperimentId = 5735670451;
 
 		function init() {
 			if (isEnabled()) {
@@ -21,7 +22,7 @@ define('VisualEditorTourExperimentInit',
 
 		function trackPublish() {
 			if (isExperimentVariation() && (isNewlyregistered() || isUserwithoutedit())) {
-				tracker.trackVerboseSuccess(EXPERIMENT_NAME, 'publish');
+				tracker.trackVerboseSuccess(experimentName, 'publish');
 			}
 		}
 
@@ -30,7 +31,10 @@ define('VisualEditorTourExperimentInit',
 		}
 
 		function isExperimentVariation() {
-			return window.optimizely.variationNamesMap[EXPERIMENT_ID] === 'VE-TOUR';
+			return window.optimizely && (
+					window.optimizely.variationNamesMap[freshlyRegisteredExperimentId] === 'VE-TOUR' ||
+					window.optimizely.variationNamesMap[usersWithoutEditExperimentId] === 'VE-TOUR'
+				);
 		}
 
 		function isNewlyregistered() {

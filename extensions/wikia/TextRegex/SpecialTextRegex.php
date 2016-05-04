@@ -349,8 +349,7 @@ class TextRegexForm {
 	var $action;
 	var $oTRList;
 
-	/* constructor */
-	function TextRegexForm( $oTRList, $subpage, $mBlockedRegex ) {
+	function __construct( $oTRList, $subpage, $mBlockedRegex ) {
 		global $wgRequest, $wgUser;
 		$this->mBlockedRegex = $mBlockedRegex;
 		if ( !empty($subpage) ) {
@@ -464,8 +463,8 @@ class TextRegexForm {
 class TextRegexCore {
 	var $subPage;
 	var $id;
-	/* constructor */
-	function TextRegexCore( $subpage, $id ) {
+
+	function __construct( $subpage, $id ) {
 		$this->subPage = $subpage;
 		$this->id = $id;
 	}

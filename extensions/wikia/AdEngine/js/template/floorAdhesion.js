@@ -1,28 +1,26 @@
 /*global define*/
 define('ext.wikia.adEngine.template.floorAdhesion', [
 	'ext.wikia.adEngine.adContext',
+	'ext.wikia.adEngine.slotTweaker',
 	'wikia.log',
 	'wikia.document',
 	'wikia.window'
-], function (adContext, log, doc, win) {
+], function (adContext, slotTweaker, log, doc, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.template.floorAdhesion',
+		slotName = 'INVISIBLE_HIGH_IMPACT_2',
 		wrapper = doc.getElementById('InvisibleHighImpactWrapper');
 
-	/**
-	 * Show the floor ad.
-	 */
 	function show() {
-		var iframe = wrapper.querySelector('div[id*="_container_"] iframe'),
-			skin = adContext.getContext().targeting.skin;
+		var skin = adContext.getContext().targeting.skin;
 
 		wrapper.querySelector('.close').addEventListener('click', function (event) {
 			event.preventDefault();
 			wrapper.classList.add('hidden');
 		});
 
-		iframe.addEventListener('load', function () {
+		slotTweaker.onReady(slotName, function () {
 			if (skin === 'oasis') {
 				win.WikiaBar.hideContainer();
 			}

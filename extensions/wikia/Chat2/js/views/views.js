@@ -13,11 +13,11 @@ var ChatView = Backbone.View.extend({
 		_.bindAll(this, 'render');
 		if (this.model) this.model.bind('all', this.render);
 		// Load the mapping of emoticons.  This wiki has priority, then falls back to Messaging.  If both of those fail, uses some hardcoded fallback.
-		this.emoticonMapping.loadFromWikiText( EMOTICONS );
+		this.emoticonMapping.loadFromWikiText( window.wgChatEmoticons );
 	},
 
 	/**
-	 * All messages that are recieved are processed here before being displayed. This
+	 * All messages that are received are processed here before being displayed. This
 	 * will escape html/js, build links, and process emoticons.
 	 */
 	processText: function( text, allowHtml ){
@@ -28,7 +28,8 @@ var ChatView = Backbone.View.extend({
 			text = text.replace(/>/g, "&gt;");
 		}
 
-		// TODO: Use the wgServer and wgArticlePath from the chat room. Maybe the room should be passed into this function? (it seems like it could be called a bunch of times in rapid succession).
+		// TODO: Use the wgServer and wgArticlePath from the chat room. Maybe the room should be passed into this function?
+		// (it seems like it could be called a bunch of times in rapid succession).
 
 		// Prepare a regexp we use to match local wiki links
 		var localWikiLinkReg = '^' + wgServer + wgArticlePath;
@@ -217,7 +218,7 @@ var UserView = Backbone.View.extend({
 		var model = this.model.toJSON();
 		$().log(model, model.name);
 		if(model['since']) {
-			model['since'] = wgLangtMonthAbbreviation[model['since']['mon']] + ' ' + model['since']['year'];
+			model['since'] = window.wgChatLangMonthAbbreviations[model['since']['mon']] + ' ' + model['since']['year'];
 		}
 
 		$(this.el).html( this.template(model) );
@@ -466,10 +467,6 @@ var NodeChatUsers = Backbone.View.extend({
 			"click #PrivateChatList li": "privateListClick"
 	},
 
- 	clearPrivateChatActive: function() {
- 		$("#PrivateChatList li").removeClass('selected');
- 	},
-
 	addUser: function(user) {
 		var view = new UserView({model: user}),
 			list = (user.attributes.isPrivate) ? $('#PrivateChatList') : $('#WikiChatList'),
@@ -488,11 +485,11 @@ var NodeChatUsers = Backbone.View.extend({
 		if (list.children().length) {
 			// The list is not empty. Arrange alphabetically.
 			var compareA = el.data('user');
-			if ( typeof(compareA)=='string' )  compareA = compareA.toUpperCase();
+			if ( typeof(compareA) == 'string' ) compareA = compareA.toUpperCase();
 			var wasAdded = false;
 			list.children().each(function(idx, itm) {
-				compareB = $(itm).data('user');
-				if ( typeof(compareB)=='string' )  compareB = compareB.toUpperCase();
+				var compareB = $(itm).data('user');
+				if ( typeof(compareB) == 'string' ) compareB = compareB.toUpperCase();
 				//TODO: check it
 				if (compareA == compareB) {
 					return false;
@@ -545,7 +542,7 @@ var NodeChatUsers = Backbone.View.extend({
 	},
 
 	showMenu: function(element, actions) {
-		var i, l, action, actionsUl, location,
+		var location,
 			$element = $(element),
 			offset = $element.offset(),
 			menu = $('#UserStatsMenu').html($(element).find('.UserStatsMenu').html()),
@@ -562,11 +559,11 @@ var NodeChatUsers = Backbone.View.extend({
 			for (var i in actions.regular) {
 				var action = actions.regular[i];
 				if (action == 'profile') {
-					action = /Message_Wall/.test(pathToProfilePage) ? 'message-wall' : 'talk-page';
-					location = pathToProfilePage.replace('$1', username);
+					action = /Message_Wall/.test(window.wgChatPathToProfilePage) ? 'message-wall' : 'talk-page';
+					location = window.wgChatPathToProfilePage.replace('$1', username);
 
 				} else if (action == 'contribs') {
-					location = pathToContribsPage.replace('$1', username);
+					location = window.wgChatPathToContribsPage.replace('$1', username);
 
 				} else {
 					location = null;
@@ -623,15 +620,15 @@ var NodeChatUsers = Backbone.View.extend({
 
 		menu.find('.talk-page').add('.contribs').add('.message-wall').click(function(event) {
 			event.preventDefault();
-			var target = $(event.currentTarget);
-			var menu = target.closest('.UserStatsMenu');
-			var username = menu.find('.username').text();
-			var location = '';
+			var target = $(event.currentTarget),
+				menu = target.closest('.UserStatsMenu'),
+				username = menu.find('.username').text(),
+				location = '';
 
 			if (target.hasClass('talk-page') || target.hasClass('message-wall')) {
-				location = pathToProfilePage.replace('$1', username);
+				location = window.wgChatPathToProfilePage.replace('$1', username);
 			} else if (target.hasClass('contribs')) {
-				location = pathToContribsPage.replace('$1', username);
+				location = window.wgChatPathToContribsPage.replace('$1', username);
 			}
 
 			window.open(location);
