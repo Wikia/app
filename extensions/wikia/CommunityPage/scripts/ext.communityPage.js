@@ -25,7 +25,7 @@ require([
 		},
 		TAB_LEADERBOARD: {
 			className: '.modal-nav-leaderboard',
-			template: 'topContributors',
+			template: 'topContributorsModal',
 			request: 'getTopContributorsData',
 			cachedData: null,
 		},
