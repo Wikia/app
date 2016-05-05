@@ -134,7 +134,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 			'topAdminsHeaderText' => $this->msg( 'communitypage-admins' )->plain(),
 			'otherAdmins' => $this->msg( 'communitypage-other-admins' )->plain(),
 			'admins' => array_slice( $topAdminsDetails, 0, 2 ),
-			'otherAdminCount' => $remainingAdminCount,
+			'otherAdminCount' => $remainingAdminCount <= 999 ? $remainingAdminCount : 999,
 			'haveOtherAdmins' => $remainingAdminCount > 0,
 			'adminCount' => count( $topAdmins ),
 			'noAdminText' => $this->msg( 'communitypage-no-admins' )->plain(),

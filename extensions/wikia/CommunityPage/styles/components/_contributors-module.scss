@@ -13,6 +13,7 @@
 		display: block;
 		font-size: 14px;
 		line-height: 18px;
+		margin-top: 13px;
 		padding-top: 5px;
 	}
 
@@ -21,7 +22,7 @@
 		font-size: 14px;
 		line-height: 20px;
 
-		li {
+		.contributor {
 			@include clearfix;
 			padding-bottom: 10px;
 		}
@@ -94,7 +95,7 @@
 		.top-contributors {
 			padding: 0 $modal-horizontal-padding;
 
-			li {
+			.contributor {
 				border-bottom: 2px solid $color-activity-background;
 				padding: 15px 0;
 			}
