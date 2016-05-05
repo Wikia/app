@@ -37,8 +37,7 @@ class WikiFeaturesHelper extends WikiaModel {
 		'wgEnableWallExt' => 258,
 		'wgEnableForumExt' => 259,
 		'wgEnableWikiaInteractiveMaps' => 260,
-		'wgEnableMediaGalleryExt' => 1,
-		'wgEnableNjordExt' => 2,
+		'wgEnableMediaGalleryExt' => 1
 	);
 
 	// no need to add feature to $release_date if not require "new" flag

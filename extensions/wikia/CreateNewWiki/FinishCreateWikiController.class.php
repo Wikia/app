@@ -59,7 +59,7 @@ class FinishCreateWikiController extends WikiaController {
 	 * The values are read from the session and only accessible by the admin.
 	 */
 	public function FinishCreate() {
-		global $wgUser, $wgOut, $wgEnableNjordExt;
+		global $wgUser, $wgOut;
 
 		if ( !$wgUser->isAllowed( 'finishcreate' ) ) {
 			return false;
@@ -82,14 +82,9 @@ class FinishCreateWikiController extends WikiaController {
 			$mainArticle = Article::newFromID( $mainId );
 
 			if ( !empty( $mainArticle ) ) {
-				if ( !empty( $wgEnableNjordExt ) ) {
-					$newMainPageText = $this->getMoMMainPage( $mainArticle );
-				} else {
-					$newMainPageText = $this->getClassicMainPage( $mainArticle );
-				}
+				$newMainPageText = $this->getClassicMainPage( $mainArticle );
 
 				$mainArticle->doEdit( $newMainPageText, '' );
-				$this->initHeroModule( $mainPage );
 			}
 		}
 
@@ -98,29 +93,6 @@ class FinishCreateWikiController extends WikiaController {
 		$this->clearState();
 
 		$wgOut->redirect($mainPage.'?wiki-welcome=1');
-	}
-
-	/**
-	 * initialize hero module on modular main page
-	 * @param $mainPageTitle string
-	 */
-	private function initHeroModule( $mainPageTitle ) {
-		global $wgSitename;
-
-		$wikiDataModel = new WikiDataModel( $mainPageTitle );
-		$wikiDataModel->title = $wgSitename;
-		$wikiDataModel->description = $this->params['wikiDescription'];
-		$wikiDataModel->storeInProps();
-		$wikiDataModel->storeInPage();
-	}
-
-	/**
-	 * Gets markup for empty Modular Main Page
-	 * @returns string - main page article wiki text
-	 */
-	private function getMoMMainPage( $mainPageTitle ) {
-		return 	'<mainpage-leftcolumn-start /><mainpage-endcolumn />
-				<mainpage-rightcolumn-start /><mainpage-endcolumn />';
 	}
 
 	/**

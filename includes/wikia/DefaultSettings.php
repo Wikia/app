@@ -194,11 +194,6 @@ $wgAutoloadClasses[ 'NotFoundApiException'] = "{$IP}/includes/wikia/api/ApiExcep
  */
 
 /**
- * Modular main pages hooks
- */
-$wgAutoloadClasses['NjordHooks'] =  "{$IP}/extensions/wikia/NjordPrototype/NjordHooks.class.php";
-
-/**
  * Wikia Skins
  *
  * this need to be autoloaded to avoid PHPUnit replacing the classes definition with mocks

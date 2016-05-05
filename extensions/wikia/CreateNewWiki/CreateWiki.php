@@ -956,10 +956,6 @@ class CreateWiki {
 		$this->mWFSettingVars['wgOasisLoadCommonCSS'] = true;
 		$this->mWFSettingVars['wgEnablePortableInfoboxEuropaTheme'] = true;
 
-		if ( $this->getInitialNjordExtValue() ) {
-			$this->mWFSettingVars['wgEnableNjordExt'] = true;
-		}
-
 		// rt#60223: colon allowed in sitename, breaks project namespace
 		if( mb_strpos( $this->mWFSettingVars['wgSitename'], ':' ) !== false ) {
 			$this->mWFSettingVars['wgMetaNamespace'] = str_replace( array( ':', ' ' ), array( '', '_' ), $this->mWFSettingVars['wgSitename'] );
@@ -1108,16 +1104,5 @@ class CreateWiki {
 	public function getWikiInfo($key) {
 		$ret = $this->mNewWiki->$key;
 		return $ret;
-	}
-
-	/**
-	 * gets initial value for wgEnableNjordExt for new created wiki
-	 * Set to false to stop beta version progression.
-	 * @see DAT-2752
-	 *
-	 * @return bool
-	 */
-	private function getInitialNjordExtValue() {
-		return false;
 	}
 }
