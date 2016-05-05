@@ -1,5 +1,0 @@
-RewriteEngine on 
-RewriteRule ^index.php - [L,QSA]
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.*)$ ./index.php?title=$1 [L,QSA]

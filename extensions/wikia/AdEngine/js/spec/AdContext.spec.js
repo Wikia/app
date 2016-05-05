@@ -514,6 +514,18 @@ describe('AdContext', function () {
 		expect(adContext.getContext().slots.incontentLeaderboard).toBeFalsy();
 	});
 
+	it('enables incontent_leaderboard as out-of-page', function () {
+		var adContext;
+
+		mocks.instantGlobals = {wgAdDriverIncontentLeaderboardOutOfPageSlotCountries: ['HH', 'CURRENT_COUNTRY', 'ZZ']};
+		adContext = getModule();
+		expect(adContext.getContext().slots.incontentLeaderboardAsOutOfPage).toBeTruthy();
+
+		mocks.instantGlobals = {wgAdDriverIncontentLeaderboardOutOfPageSlotCountries: ['YY']};
+		adContext = getModule();
+		expect(adContext.getContext().slots.incontentLeaderboardAsOutOfPage).toBeFalsy();
+	});
+
 	it('enables incontent_player slot when url param incontentplayer is set', function () {
 		spyOn(mocks.querystring, 'getVal').and.callFake(function (param) {
 			return param === 'incontentplayer' ?  '1' : '0';

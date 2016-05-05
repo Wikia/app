@@ -20,6 +20,7 @@ $wgAutoloadClasses['AdTargeting'] =  __DIR__ . '/AdTargeting.class.php';
 $wgAutoloadClasses['ResourceLoaderAdEngineBase'] = __DIR__ . '/ResourceLoaders/ResourceLoaderAdEngineBase.php';
 $wgAutoloadClasses['ResourceLoaderScript'] = __DIR__ . '/ResourceLoaders/ResourceLoaderScript.php';
 $wgAutoloadClasses['ResourceLoaderAdEngineYavliModule'] = __DIR__ . '/ResourceLoaders/ResourceLoaderAdEngineYavliModule.php';
+$wgAutoloadClasses['AdEngine2ApiController'] = __DIR__ . '/AdEngine2ApiController.class.php';
 
 // Hooks for Exitstitial ads
 $wgHooks['LinkerMakeExternalLink'][] = 'AdEngine2ExitstitialHooks::onLinkerMakeExternalLink';

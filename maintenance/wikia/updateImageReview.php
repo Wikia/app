@@ -117,7 +117,6 @@ class UpdateImageReview extends Maintenance {
 		$pages = [ ];
 		/** @var stdClass $row */
 		foreach ( $res as $row ) {
-			$this->attachTextualTitle( $row );
 			$pages[$row->page_id] = $row;
 		}
 		$res->free();

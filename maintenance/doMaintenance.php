@@ -155,11 +155,11 @@ try {
 		getMaintenanceRuntimeStatistics() );
 } catch ( MWException $mwe ) {
 	echo( $mwe->getText() );
-	\Wikia\Logger\WikiaLogger::instance()->info( "Maintenance script $maintClass was interrupted by unhandled exception.",
+	\Wikia\Logger\WikiaLogger::instance()->error( "Maintenance script $maintClass was interrupted by unhandled exception.",
 		getMaintenanceRuntimeStatistics( $mwe ) );
 	exit( 1 );
 } catch ( Exception $e ) {
-	\Wikia\Logger\WikiaLogger::instance()->info( "Maintenance script $maintClass was interrupted by unhandled exception.",
+	\Wikia\Logger\WikiaLogger::instance()->error( "Maintenance script $maintClass was interrupted by unhandled exception.",
 		getMaintenanceRuntimeStatistics( $e ) );
 	throw $e;
 }
