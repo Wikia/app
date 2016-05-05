@@ -110,17 +110,17 @@ class MercuryApiHooks {
 		WikiaDataAccess::cachePurge( MercuryApiMainPageHandler::curatedContentDataMemcKey() );
 
 		foreach ( $sections as $section ) {
-			if ( !empty( $section['featured'] ) ) {
+			$sectionLabel = $section['label'];
+
+			if ( empty( $sectionLabel ) || !empty( $section['featured'] ) ) {
 				continue;
 			}
 
-			$sectionTitle = $section['title'];
-
-			WikiaDataAccess::cachePurge( MercuryApiMainPageHandler::curatedContentDataMemcKey( $sectionTitle ) );
+			WikiaDataAccess::cachePurge( MercuryApiMainPageHandler::curatedContentDataMemcKey( $sectionLabel ) );
 
 			// Request from browser to MediaWiki
-			$encodedTitle = self::encodeURIQueryParam( $sectionTitle );
-			$urls[] = MercuryApiController::getUrl( 'getCuratedContentSection', [ 'section' => $encodedTitle ] );
+			$encodedTitle = self::encodeURIQueryParam( $sectionLabel );
+			$urls[] = MercuryApiController::getUrl( 'getCuratedContentSection' ) . '&section=' . $encodedTitle;
 		}
 
 		( new SquidUpdate( array_unique( $urls ) ) )->doUpdate();
