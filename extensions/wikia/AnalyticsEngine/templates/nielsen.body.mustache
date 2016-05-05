@@ -9,6 +9,10 @@
 				},
 				assetidRnd = Math.round(1000000 * Math.random());
 
+			if( typeof(_nolggGlobalParams.apid) !== "string" || _nolggGlobalParams.apid === "" ) {
+				throw "Invalid Nielsen apid";
+			}
+
 			gg1 = NOLCMB.getInstance(_nolggGlobalParams);
 			staticmeta = {
 				type: 'static',
