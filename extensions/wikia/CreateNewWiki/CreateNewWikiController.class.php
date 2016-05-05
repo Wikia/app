@@ -258,119 +258,119 @@ class CreateNewWikiController extends WikiaController {
 
 			wfProfileOut(__METHOD__);
 			return;
-		} else {
-			/*
-			$stored_answer = $this->getStoredAnswer();
-			if(empty($stored_answer) || $params['wAnswer'].'' !== $stored_answer.'') {
-				$this->status = 'error';
-				$this->statusMsg = wfMsgExt( 'cnw-error-bot', array('parseinline') );
-				$this->statusHeader = wfMsg( 'cnw-error-bot-header');
-				return;
-			}
-			*/
-
-			// check if user is logged in
-			if ( !$wgUser->isLoggedIn() ) {
-				$this->warning(__METHOD__ . ": user not logged in" );
-				$this->response->setCode( 401 );
-				$this->response->setVal( self::STATUS_FIELD, self::STATUS_ERROR );
-				$this->response->setVal( self::STATUS_MSG_FIELD, wfMessage( 'cnw-error-anon-user' )->parse() );
-				$this->response->setVal( self::STATUS_HEADER_FIELD, wfMessage( 'cnw-error-anon-user-header' )->text() );
-				wfProfileOut(__METHOD__);
-				return;
-			}
-
-			// check if user has confirmed e-mail
-			if ( !$wgUser->isEmailConfirmed() ) {
-				$this->warning(__METHOD__ . ": user's email not confirmed" );
-				$this->response->setCode( 403 );
-				$this->response->setVal( self::STATUS_FIELD, self::STATUS_ERROR );
-				$this->response->setVal( self::STATUS_MSG_FIELD, wfMessage( 'cnw-error-unconfirmed-email' )->parse() );
-				$this->response->setVal( self::STATUS_HEADER_FIELD, wfMessage( 'cnw-error-unconfirmed-email-header' )->text() );
-				wfProfileOut(__METHOD__);
-				return;
-			}
-
-			// check if user is blocked
-			if ( $wgUser->isBlocked() ) {
-				$this->warning(__METHOD__ . ": user is blocked" );
-				$this->response->setCode( 403 );
-				$this->response->setVal( self::STATUS_FIELD, self::STATUS_ERROR );
-				$this->response->setVal( self::STATUS_MSG_FIELD, wfMessage( 'cnw-error-blocked', $wgUser->blockedBy(), $wgUser->blockedFor(), $wgUser->getBlockId() )->parse() );
-				$this->response->setVal( self::STATUS_HEADER_FIELD, wfMessage( 'cnw-error-blocked-header' )->text() );
-				wfProfileOut(__METHOD__);
-				return;
-			}
-
-			// check if user is a tor node
-			if ( class_exists( 'TorBlock' ) && TorBlock::isExitNode() ) {
-				$this->warning(__METHOD__ . ": user is blocked (TOR detected)" );
-				$this->response->setCode( 403 );
-				$this->response->setVal( self::STATUS_FIELD, self::STATUS_ERROR );
-				$this->response->setVal( self::STATUS_MSG_FIELD, wfMessage( 'cnw-error-torblock' )->text() );
-				$this->response->setVal( self::STATUS_HEADER_FIELD, wfMessage( 'cnw-error-blocked-header' )->text() );
-				wfProfileOut(__METHOD__);
-				return;
-			}
-
-			// check if user created more wikis than we allow per day
-			$numWikis = $this->countCreatedWikis($wgUser->getId());
-			if($numWikis >= self::DAILY_USER_LIMIT && $wgUser->isPingLimitable() && !$wgUser->isAllowed( 'createwikilimitsexempt' ) ) {
-				$this->warning(__METHOD__ . ": user reached daily creation count limit" );
-				$this->response->setCode( 429 );
-				$this->response->setVal( self::STATUS_FIELD, self::STATUS_CREATION_LIMIT );
-				$this->response->setVal( self::STATUS_MSG_FIELD, wfMessage( 'cnw-error-wiki-limit', self::DAILY_USER_LIMIT )->parse() );
-				$this->response->setVal( self::STATUS_HEADER_FIELD, wfMessage( 'cnw-error-wiki-limit-header' )->text());
-				wfProfileOut(__METHOD__);
-				return;
-			}
-
-			$categories = isset($params['wCategories']) ? $params['wCategories'] : array();
-
-			$createWiki = new CreateWiki($params['wName'], $params['wDomain'], $params['wLanguage'], $params['wVertical'], $categories);
-
-			try {
-				$createWiki->create();
-			}
-			catch(Exception $ex) {
-				$error_code = $ex->getCode();
-				$this->error(
-					__METHOD__ . ": backend failed to process the request: " . $ex->getMessage(),
-					[
-						'code' => $error_code,
-						'params' => $params,
-						'exception' => $ex
-					]
-				);
-				$this->response->setCode( 500 );
-				$this->response->setVal( self::STATUS_FIELD, self::STATUS_BACKEND_ERROR );
-				$this->response->setVal( self::STATUS_MSG_FIELD, wfMessage( 'cnw-error-general' )->parse() );
-				$this->response->setVal( self::STATUS_HEADER_FIELD, wfMessage( 'cnw-error-general-heading' )->escaped() );
-				$this->response->setVal( self::ERROR_CLASS_FIELD, get_class( $ex ) );
-				$this->response->setVal( self::ERROR_CODE_FIELD, $ex->getCode() );
-				$this->response->setVal( self::ERROR_MESSAGE_FIELD, $ex->getMessage() );
-				wfProfileOut( __METHOD__);
-				return;
-			}
-
-			$cityId = $createWiki->getWikiInfo('city_id');
-
-			if ( isset($params['wAllAges']) && !empty( $params['wAllAges'] ) ) {
-				WikiFactory::setVarByName( self::WF_WDAC_REVIEW_FLAG_NAME, $cityId, true, __METHOD__ );
-			}
-
-			$this->response->setVal( self::STATUS_FIELD, self::STATUS_OK );
-			$this->response->setVal( self::SITE_NAME_FIELD, $createWiki->getWikiInfo('sitename') );
-			$this->response->setVal( self::CITY_ID_FIELD, $cityId );
-			$finishCreateTitle = GlobalTitle::newFromText("FinishCreate", NS_SPECIAL, $cityId);
-			$finishCreateUrl = empty( $wgDevelDomains ) ? $finishCreateTitle->getFullURL() : str_replace( '.wikia.com', '.'.$wgDevelDomains[0], $finishCreateTitle->getFullURL() );
-			$this->response->setVal( 'finishCreateUrl',  $finishCreateUrl );
-
-			$this->info(__METHOD__ . ': completeed', [
-				'city_id' => $cityId,
-				'params' => $params,
-			]);
 		}
+
+		/*
+		$stored_answer = $this->getStoredAnswer();
+		if(empty($stored_answer) || $params['wAnswer'].'' !== $stored_answer.'') {
+			$this->status = 'error';
+			$this->statusMsg = wfMsgExt( 'cnw-error-bot', array('parseinline') );
+			$this->statusHeader = wfMsg( 'cnw-error-bot-header');
+			return;
+		}
+		*/
+
+		// check if user is logged in
+		if ( !$wgUser->isLoggedIn() ) {
+			$this->warning(__METHOD__ . ": user not logged in" );
+			$this->response->setCode( 401 );
+			$this->response->setVal( self::STATUS_FIELD, self::STATUS_ERROR );
+			$this->response->setVal( self::STATUS_MSG_FIELD, wfMessage( 'cnw-error-anon-user' )->parse() );
+			$this->response->setVal( self::STATUS_HEADER_FIELD, wfMessage( 'cnw-error-anon-user-header' )->text() );
+			wfProfileOut(__METHOD__);
+			return;
+		}
+
+		// check if user has confirmed e-mail
+		if ( !$wgUser->isEmailConfirmed() ) {
+			$this->warning(__METHOD__ . ": user's email not confirmed" );
+			$this->response->setCode( 403 );
+			$this->response->setVal( self::STATUS_FIELD, self::STATUS_ERROR );
+			$this->response->setVal( self::STATUS_MSG_FIELD, wfMessage( 'cnw-error-unconfirmed-email' )->parse() );
+			$this->response->setVal( self::STATUS_HEADER_FIELD, wfMessage( 'cnw-error-unconfirmed-email-header' )->text() );
+			wfProfileOut(__METHOD__);
+			return;
+		}
+
+		// check if user is blocked
+		if ( $wgUser->isBlocked() ) {
+			$this->warning(__METHOD__ . ": user is blocked" );
+			$this->response->setCode( 403 );
+			$this->response->setVal( self::STATUS_FIELD, self::STATUS_ERROR );
+			$this->response->setVal( self::STATUS_MSG_FIELD, wfMessage( 'cnw-error-blocked', $wgUser->blockedBy(), $wgUser->blockedFor(), $wgUser->getBlockId() )->parse() );
+			$this->response->setVal( self::STATUS_HEADER_FIELD, wfMessage( 'cnw-error-blocked-header' )->text() );
+			wfProfileOut(__METHOD__);
+			return;
+		}
+
+		// check if user is a tor node
+		if ( class_exists( 'TorBlock' ) && TorBlock::isExitNode() ) {
+			$this->warning(__METHOD__ . ": user is blocked (TOR detected)" );
+			$this->response->setCode( 403 );
+			$this->response->setVal( self::STATUS_FIELD, self::STATUS_ERROR );
+			$this->response->setVal( self::STATUS_MSG_FIELD, wfMessage( 'cnw-error-torblock' )->text() );
+			$this->response->setVal( self::STATUS_HEADER_FIELD, wfMessage( 'cnw-error-blocked-header' )->text() );
+			wfProfileOut(__METHOD__);
+			return;
+		}
+
+		// check if user created more wikis than we allow per day
+		$numWikis = $this->countCreatedWikis($wgUser->getId());
+		if($numWikis >= self::DAILY_USER_LIMIT && $wgUser->isPingLimitable() && !$wgUser->isAllowed( 'createwikilimitsexempt' ) ) {
+			$this->warning(__METHOD__ . ": user reached daily creation count limit" );
+			$this->response->setCode( 429 );
+			$this->response->setVal( self::STATUS_FIELD, self::STATUS_CREATION_LIMIT );
+			$this->response->setVal( self::STATUS_MSG_FIELD, wfMessage( 'cnw-error-wiki-limit', self::DAILY_USER_LIMIT )->parse() );
+			$this->response->setVal( self::STATUS_HEADER_FIELD, wfMessage( 'cnw-error-wiki-limit-header' )->text());
+			wfProfileOut(__METHOD__);
+			return;
+		}
+
+		$categories = isset($params['wCategories']) ? $params['wCategories'] : array();
+
+		$createWiki = new CreateWiki($params['wName'], $params['wDomain'], $params['wLanguage'], $params['wVertical'], $categories);
+
+		try {
+			$createWiki->create();
+		}
+		catch(Exception $ex) {
+			$error_code = $ex->getCode();
+			$this->error(
+				__METHOD__ . ": backend failed to process the request: " . $ex->getMessage(),
+				[
+					'code' => $error_code,
+					'params' => $params,
+					'exception' => $ex
+				]
+			);
+			$this->response->setCode( 500 );
+			$this->response->setVal( self::STATUS_FIELD, self::STATUS_BACKEND_ERROR );
+			$this->response->setVal( self::STATUS_MSG_FIELD, wfMessage( 'cnw-error-general' )->parse() );
+			$this->response->setVal( self::STATUS_HEADER_FIELD, wfMessage( 'cnw-error-general-heading' )->escaped() );
+			$this->response->setVal( self::ERROR_CLASS_FIELD, get_class( $ex ) );
+			$this->response->setVal( self::ERROR_CODE_FIELD, $ex->getCode() );
+			$this->response->setVal( self::ERROR_MESSAGE_FIELD, $ex->getMessage() );
+			wfProfileOut( __METHOD__);
+			return;
+		}
+
+		$cityId = $createWiki->getWikiInfo('city_id');
+
+		if ( isset($params['wAllAges']) && !empty( $params['wAllAges'] ) ) {
+			WikiFactory::setVarByName( self::WF_WDAC_REVIEW_FLAG_NAME, $cityId, true, __METHOD__ );
+		}
+
+		$this->response->setVal( self::STATUS_FIELD, self::STATUS_OK );
+		$this->response->setVal( self::SITE_NAME_FIELD, $createWiki->getWikiInfo('sitename') );
+		$this->response->setVal( self::CITY_ID_FIELD, $cityId );
+		$finishCreateTitle = GlobalTitle::newFromText("FinishCreate", NS_SPECIAL, $cityId);
+		$finishCreateUrl = empty( $wgDevelDomains ) ? $finishCreateTitle->getFullURL() : str_replace( '.wikia.com', '.'.$wgDevelDomains[0], $finishCreateTitle->getFullURL() );
+		$this->response->setVal( 'finishCreateUrl',  $finishCreateUrl );
+
+		$this->info(__METHOD__ . ': completeed', [
+			'city_id' => $cityId,
+			'params' => $params,
+		]);
 
 		wfProfileOut(__METHOD__);
 	}
