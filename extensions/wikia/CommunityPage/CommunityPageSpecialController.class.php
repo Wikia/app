@@ -43,6 +43,9 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 				->getData(),
 			'recentActivityModule' => $this->getRecentActivityData(),
 		] );
+
+		$insights =  new InsightsService();
+		var_dump($insights->getInsights('popularpages',5)); die;
 	}
 
 	public function header() {
