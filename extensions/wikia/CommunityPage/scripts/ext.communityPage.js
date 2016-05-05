@@ -143,10 +143,6 @@ require([
 	}
 
 	function switchCommunityModalTab(tabToActivate) {
-		if (tabToActivate === activeTab) {
-			return;
-		}
-
 		getModalNavHtml().then(function (navHtml) {
 			// Switch highlight to new tab
 			var loading = mustache.render(templates.modalLoadingScreen, {
