@@ -1209,9 +1209,9 @@ $wgEnableNielsen = false;
 
 /**
  * @name $wgNielsenApid
- * Nielsen Digital Content Ratings apid
+ * Nielsen Digital Content Ratings apid. Should be changed via WikiFactory when $wgEnableNielsen is set to true
  */
-$wgNielsenApid = '';
+$wgNielsenApid = 'FIXME';
 
 /**
  * @name $wgEnableAmazonMatch
