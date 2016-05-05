@@ -237,23 +237,17 @@ class CreateWiki {
 		$this->mClusterDB = ( self::ACTIVE_CLUSTER ) ? "wikicities_" . self::ACTIVE_CLUSTER : "wikicities";
 		$this->mNewWiki->dbw = wfGetDB( DB_MASTER, array(), $this->mClusterDB ); // database handler, old $dbwTarget
 
-		// SUS-108: check read-only state of ACTIVE_CLUSTER before performing any DB-related actions
-		$readOnlyReason = $this->mNewWiki->dbw->getLBInfo( 'readOnlyReason' );
-		if ( $readOnlyReason !== false ) {
-			wfProfileOut( __METHOD__ );
-			throw new CreateWikiException( sprintf( '%s is in read-only mode: %s', self::ACTIVE_CLUSTER, $readOnlyReason ), self::ERROR_READONLY );
-		}
-
 		// check if database is creatable
 		// @todo move all database creation checkers to canCreateDatabase
-		if( !$this->canCreateDatabase() ) {
+		try {
+			$this->canCreateDatabase();
+		} catch ( CreateWikiException $e ) {
 			wfProfileOut( __METHOD__ );
-			throw new CreateWikiException('DB exists - ' . $this->mNewWiki->dbname, self::ERROR_DATABASE_ALREADY_EXISTS);
+			throw $e;
 		}
-		else {
-			$this->mNewWiki->dbw->query( sprintf( "CREATE DATABASE `%s`", $this->mNewWiki->dbname ) );
-			wfDebugLog( "createwiki", __METHOD__ . ": Database {$this->mNewWiki->dbname} created\n", true );
-		}
+
+		$this->mNewWiki->dbw->query( sprintf( "CREATE DATABASE `%s`", $this->mNewWiki->dbname ) );
+		wfDebugLog( "createwiki", __METHOD__ . ": Database {$this->mNewWiki->dbname} created\n", true );
 
 		/**
 		 * create position in wiki.factory
@@ -779,9 +773,11 @@ class CreateWiki {
 	 * @todo this code is probably duplication of other checkers
 	 */
 	private function canCreateDatabase() {
-
-		// default response
-		$can = true;
+		// SUS-108: check read-only state of ACTIVE_CLUSTER before performing any DB-related actions
+		$readOnlyReason = $this->mNewWiki->dbw->getLBInfo( 'readOnlyReason' );
+		if ( $readOnlyReason !== false ) {
+			throw new CreateWikiException( sprintf( '%s is in read-only mode: %s', self::ACTIVE_CLUSTER, $readOnlyReason ), self::ERROR_READONLY );
+		}
 
 		// check local cluster
 		$row = $this->mNewWiki->dbw->selectRow(
@@ -793,36 +789,35 @@ class CreateWiki {
 
 		if( isset( $row->name ) && $row->name === $this->mNewWiki->dbname ) {
 			wfDebugLog( "createwiki", __METHOD__ . ": database {$this->mNewWiki->dbname} already exists on active cluster\n" );
-			$can = false;
+			throw new CreateWikiException('DB exists - ' . $this->mNewWiki->dbname, self::ERROR_DATABASE_ALREADY_EXISTS);
 		}
-		else {
-			// check city_list
-			$dbw = WikiFactory::db( DB_MASTER );
-			$row = $dbw->selectRow(
-				"city_list",
-				array( "count(*) as count" ),
-				array( "city_dbname" => $this->mNewWiki->dbname ),
-				__METHOD__
-			);
 
-			if( $row->count > 0 ) {
-				wfDebugLog( "createwiki", __METHOD__ . ": database {$this->mNewWiki->dbname} already used in city_list\n" );
-				$can = false;
-			} else {
-				// check domain
-				$row = $dbw->selectRow(
-					"city_list",
-					array( "count(*) as count" ),
-					array( "city_url" => $this->mNewWiki->url ),
-					__METHOD__
-				);
-				if( $row->count > 0 ) {
-					wfDebugLog( "createwiki", __METHOD__ . ": domain {$this->mNewWiki->url} already used in city_list\n" );
-					$can = false;
-				}
-			}
+		// check city_list
+		$dbw = WikiFactory::db( DB_MASTER );
+		$row = $dbw->selectRow(
+			"city_list",
+			array( "count(*) as count" ),
+			array( "city_dbname" => $this->mNewWiki->dbname ),
+			__METHOD__
+		);
+
+		if( $row->count > 0 ) {
+			wfDebugLog( "createwiki", __METHOD__ . ": database {$this->mNewWiki->dbname} already used in city_list\n" );
+			throw new CreateWikiException( 'DB exists in city list (dbname)- ' . $this->mNewWiki->dbname, self::ERROR_DATABASE_ALREADY_EXISTS );
 		}
-		return $can;
+
+		// check domain
+		$row = $dbw->selectRow(
+			"city_list",
+			array("count(*) as count"),
+			array("city_url" => $this->mNewWiki->url),
+			__METHOD__
+		);
+
+		if ( $row->count > 0 ) {
+			wfDebugLog( "createwiki", __METHOD__ . ": domain {$this->mNewWiki->url} already used in city_list\n" );
+			throw new CreateWikiException( 'DB exists in city list (url) - ' . $this->mNewWiki->dbname, self::ERROR_DATABASE_ALREADY_EXISTS );
+		}
 	}
 
 	/**
