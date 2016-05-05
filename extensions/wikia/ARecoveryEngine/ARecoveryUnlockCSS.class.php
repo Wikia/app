@@ -5,8 +5,8 @@ class ARecoveryUnlockCSS {
 	const API_ENDPOINT = 'sp_create_csurl';
 	const CACHE_TTL = 3600 * 10; //10h
 	const TIMEOUT = 10;
-	const WIKIA_PROXY_ENDPOINT = '/__are';	
-	
+	const WIKIA_PROXY_ENDPOINT = '/__are';
+
 	public static function getUnlockCSSUrl() {
 		global $wgServer, $wgSourcePointAccountId;
 		$wikiaCssUrl = self::getWikiaUnlockCSSUrl();
