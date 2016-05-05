@@ -1208,6 +1208,12 @@ $wgWikiaHubsFileRepoDirectory = '/images/c/corp/images';
 $wgEnableNielsen = false;
 
 /**
+ * @name $wgNielsenApid
+ * Nielsen Digital Content Ratings apid
+ */
+$wgNielsenApid = '';
+
+/**
  * @name $wgEnableAmazonMatch
  * Enables AmazonMatch new integration (id=3115)
  */
