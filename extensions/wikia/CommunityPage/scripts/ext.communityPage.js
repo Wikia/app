@@ -3,8 +3,9 @@ require([
 	'wikia.ui.factory',
 	'wikia.mustache',
 	'communitypage.templates.mustache',
-	'wikia.nirvana'
-], function ($, uiFactory, mustache, templates, nirvana) {
+	'wikia.nirvana',
+	'wikia.throbber'
+], function ($, uiFactory, mustache, templates, nirvana, throbber) {
 	'use strict';
 
 	// "private" vars - don't access directly. Use getUiModalInstance().
@@ -124,15 +125,15 @@ require([
 				}
 			};
 			uiModal.createComponent(createPageModalConfig, function (modal) {
-				var loading = mustache.render(templates.modalLoadingScreen, {
-						loadingText: $.msg('communitypage-modal-tab-loading'),
-					}),
+				var loading = mustache.render(templates.modalLoadingScreen),
 					html = navHtml + loading;
 
 				modal.$content
 					.addClass('ContributorsModule ContributorsModuleModal')
 					.html(html)
 					.find(tabToActivate.className).children().addClass('active');
+
+				throbber.show($('.throbber'));
 
 				modal.show();
 
@@ -145,14 +146,14 @@ require([
 	function switchCommunityModalTab(tabToActivate) {
 		getModalNavHtml().then(function (navHtml) {
 			// Switch highlight to new tab
-			var loading = mustache.render(templates.modalLoadingScreen, {
-					loadingText: mw.html.escape($.msg('communitypage-modal-tab-loading')),
-				}),
+			var loading = mustache.render(templates.modalLoadingScreen),
 				html = navHtml + loading;
 
 			window.activeModal.$content
 				.html(html)
 				.find(tabToActivate.className).children().addClass('active');
+
+			throbber.show($('.throbber'));
 
 			getModalTabContentsHtml(tabToActivate).then(function (tabContentHtml) {
 				html = navHtml + tabContentHtml;
