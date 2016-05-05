@@ -11,7 +11,7 @@ class AnalyticsProviderNielsen implements iAnalyticsProvider {
 	}
 
 	function trackEvent( $event, $eventDetails = array() ) {
-		global $wgCityId, $wgDBname, $wgNielsenApid;
+		global $wgCityId, $wgDBname;
 
 		if ( !self::isEnabled() ) {
 			return;
@@ -22,7 +22,7 @@ class AnalyticsProviderNielsen implements iAnalyticsProvider {
 				return \MustacheService::getInstance()->render(
 					self::$bodyTemplate,
 					[
-						'appId' => $wgNielsenApid,
+						'appId' => self::getApid(),
 						'section' => HubService::getVerticalNameForComscore( $wgCityId ),
 						'dbName' => $wgDBname
 					]
@@ -52,5 +52,11 @@ class AnalyticsProviderNielsen implements iAnalyticsProvider {
 		global $wgEnableNielsen, $wgNoExternals;
 
 		return $wgEnableNielsen && !$wgNoExternals;
+	}
+
+	static public function getApid() {
+		global $wgNielsenApid;
+
+		return $wgNielsenApid;
 	}
 }
