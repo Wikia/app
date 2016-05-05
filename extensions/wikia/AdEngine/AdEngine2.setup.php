@@ -19,7 +19,6 @@ $wgAutoloadClasses['AdEngine2Service'] =  __DIR__ . '/AdEngine2Service.class.php
 $wgAutoloadClasses['AdTargeting'] =  __DIR__ . '/AdTargeting.class.php';
 $wgAutoloadClasses['ResourceLoaderAdEngineBase'] = __DIR__ . '/ResourceLoaders/ResourceLoaderAdEngineBase.php';
 $wgAutoloadClasses['ResourceLoaderScript'] = __DIR__ . '/ResourceLoaders/ResourceLoaderScript.php';
-$wgAutoloadClasses['ResourceLoaderAdEngineSevenOneMediaModule'] = __DIR__ . '/ResourceLoaders/ResourceLoaderAdEngineSevenOneMediaModule.php';
 $wgAutoloadClasses['ResourceLoaderAdEngineYavliModule'] = __DIR__ . '/ResourceLoaders/ResourceLoaderAdEngineYavliModule.php';
 
 // Hooks for Exitstitial ads
@@ -53,11 +52,6 @@ $wgExtensionFunctions[] = function() {
 		'adengine-recovery-message-*'
 	] );
 };
-
-// Register Resource Loader module for SevenOne Media files
-$wgResourceModules['wikia.ext.adengine.sevenonemedia'] = array(
-	'class' => 'ResourceLoaderAdEngineSevenOneMediaModule',
-);
 
 $wgResourceModules['wikia.ext.adengine.sp.detection'] = array(
 	'class' => 'ResourceLoaderAdEngineSourcePointDetectionModule',
