@@ -2,11 +2,6 @@
 
 class MercuryApiHooks {
 
-	const SERVICE_API_ROOT = '/';
-	const SERVICE_API_BASE = 'api/mercury/';
-	const SERVICE_API_ARTICLE = 'article/';
-	const SERVICE_API_CURATED_CONTENT = 'main/section/';
-
 	/**
 	 * @desc Get number of user's contribution from DB
 	 *
@@ -87,20 +82,8 @@ class MercuryApiHooks {
 	 * @return bool
 	 */
 	static public function onTitleGetSquidURLs( Title $title, Array &$urls ) {
-		global $wgServer;
-
 		if ( $title->inNamespaces( NS_MAIN ) ) {
-			// Mercury API call from Ember.js to Hapi.js e.g.
-			// http://elderscrolls.wikia.com/api/mercury/article/Morrowind
-			$urls[] =
-				$wgServer .
-				self::SERVICE_API_ROOT .
-				self::SERVICE_API_BASE .
-				self::SERVICE_API_ARTICLE .
-				$title->getPartialURL();
-
-			// Mercury API call from Hapi.js to MediaWiki e.g.
-			// http://elderscrolls.wikia.com/wikia.php?controller=MercuryApi&method=getArticle&title=Morrowind
+			// Request from browser to MediaWiki
 			// TODO: Remove one of these two below when it is decided if we do the switch to getPage() or drop it.
 			$urls[] = MercuryApiController::getUrl( 'getArticle', [ 'title' => $title->getPartialURL() ] );
 			$urls[] = MercuryApiController::getUrl( 'getPage', [ 'title' => $title->getPartialURL() ] );
@@ -120,8 +103,6 @@ class MercuryApiHooks {
 	}
 
 	static public function onCuratedContentSave( $sections ) {
-		global $wgServer;
-
 		// Purge main page cache, so Mercury gets fresh data.
 		Title::newMainPage()->purgeSquid();
 
@@ -137,25 +118,7 @@ class MercuryApiHooks {
 
 			WikiaDataAccess::cachePurge( MercuryApiMainPageHandler::curatedContentDataMemcKey( $sectionTitle ) );
 
-			// We have to double encode because Ember's RouteRecognizer does decodeURI while processing path.
-			$doubleEncodedTitle = self::encodeURI( self::encodeURIQueryParam( $sectionTitle ) );
-
-			// Mercury opened directly with URL
-			$urls[] =
-				$wgServer .
-				self::SERVICE_API_ROOT .
-				self::SERVICE_API_CURATED_CONTENT .
-				$doubleEncodedTitle;
-
-			// API request from Ember to Hapi
-			$urls[] =
-				$wgServer .
-				self::SERVICE_API_ROOT .
-				self::SERVICE_API_BASE .
-				self::SERVICE_API_CURATED_CONTENT .
-				$doubleEncodedTitle;
-
-			// Request from Hapi to MediaWiki
+			// Request from browser to MediaWiki
 			$encodedTitle = self::encodeURIQueryParam( $sectionTitle );
 			$urls[] = MercuryApiController::getUrl( 'getCuratedContentSection', [ 'section' => $encodedTitle ] );
 		}
@@ -163,46 +126,6 @@ class MercuryApiHooks {
 		( new SquidUpdate( array_unique( $urls ) ) )->doUpdate();
 
 		return true;
-	}
-
-	/**
-	 * @desc Analogue to JavaScript encodeURI
-	 *
-	 * @param string $str
-	 *
-	 * @return string
-	 */
-	private static function encodeURI( $str ) {
-		// http://php.net/manual/en/function.rawurlencode.php
-		// https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/encodeURI
-		$unescaped = [
-			'%2D' => '-',
-			'%5F' => '_',
-			'%2E' => '.',
-			'%21' => '!',
-			'%7E' => '~',
-			'%2A' => '*',
-			'%27' => "'",
-			'%28' => '(',
-			'%29' => ')'
-		];
-		$reserved = [
-			'%3B' => ';',
-			'%2C' => ',',
-			'%2F' => '/',
-			'%3F' => '?',
-			'%3A' => ':',
-			'%40' => '@',
-			'%26' => '&',
-			'%3D' => '=',
-			'%2B' => '+',
-			'%24' => '$'
-		];
-		$score = [
-			'%23' => '#'
-		];
-
-		return strtr( rawurlencode( $str ), array_merge( $reserved, $unescaped, $score ) );
 	}
 
 	/**
