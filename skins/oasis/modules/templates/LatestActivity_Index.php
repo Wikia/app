@@ -1,27 +1,13 @@
-<section class="WikiaActivityModule module" id="<?= !empty( $userName ) ? 'WikiaRecentActivityUser' : 'WikiaRecentActivity'; ?>">
-	<h2 class="activity-heading"><?= $moduleHeader ?></h2>
+<section class="WikiaActivityModule module" id="WikiaRecentActivity">
+	<h2 class="activity-heading"><?= wfMessage( 'oasis-activity-header' )->escaped() ?></h2>
 	<ul>
-<?php
-	if(!empty($changeList)){
-		foreach ($changeList as $item) {
-?>
+	<? foreach ( $changeList as $item ) { ?>
 		<li>
-			<img src="<?= $wg->BlankImgUrl ?>" class="sprite <?= $item['changeicon'] ?>" height="20" width="20">
-			<em><?= $item['page_href'] ?></em>
-			<div class="edited-by"><?= $item['changemessage'] ?></div>
+			<img src="<?= $wg->BlankImgUrl ?>" class="sprite <?= $item['type'] ?>" height="20" width="20">
+			<em><a href="<?= $item['url'] ?>"><?= $item['title'] ?></a></em>
+			<div class="edited-by"><?= $item['change'] ?></div>
 		</li>
-<?php
-		}
-	}
-	elseif(!empty($userName)) {
-		echo wfMsg( 'userprofilepage-recent-activity-default', $userName );
-	}
-?>
+	<? } ?>
 	</ul>
-
-	<? if ( $userName && count($changeList) ) :?>
-		<?= Wikia::specialPageLink('Contributions/' . $userName, 'userprofilepage-top-recent-activity-see-more', 'more') ;?>
-	<? elseif(empty($userName)): ?>
-		<?= Wikia::specialPageLink('WikiActivity', 'oasis-more', 'more') ?>
-	<? endif ;?>
+	<?= Wikia::specialPageLink( 'WikiActivity', 'oasis-more', 'more' ) ?>
 </section>
