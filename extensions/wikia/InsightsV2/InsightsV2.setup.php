@@ -66,7 +66,7 @@ $wgAutoloadClasses['InsightsWantedpagesModel'] = $dir . 'models/InsightsWantedpa
 $wgAutoloadClasses['InsightsWithoutimagesModel'] = $dir . 'models/InsightsWithoutimagesModel.php';
 
 /**
- * Service
+ * Services
  */
 $wgAutoloadClasses['InsightsCountService'] = $dir . 'services/InsightsCountService.class.php';
 $wgAutoloadClasses['InsightsCountApiController'] = $dir . 'controllers/InsightsCountApiController.class.php';

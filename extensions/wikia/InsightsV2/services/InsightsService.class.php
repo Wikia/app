@@ -1,11 +1,6 @@
 <?php
 
-/**
- * Created by IntelliJ IDEA.
- * User: gautambajaj
- * Date: 5/5/16
- * Time: 7:32 PM
- */
+
 class InsightsService extends WikiaService
 {
 
@@ -15,18 +10,19 @@ class InsightsService extends WikiaService
 	 * @param string $type type of model
 	 * @return array
 	 */
-	public function getInsights($type,$size){
+	public function getInsightPages($type,$size){
 		if(InsightsHelper::isInsightPage($type)){
 			$model = InsightsHelper::getInsightModel($type);
-			$insightContext = (new InsightsContext($model))->fetchData();
-			$insightSorter = new InsightsSorting($model->getConfig());
-			$aritcles_ids = $this->truncateTo($insightSorter->getSortedData($insightContext,['sort'=>'pvDiff']),$size);
+			$insightData = (new InsightsContext($model))->fetchData();
+			$sortedInsightData = (new InsightsSorting($model->getConfig()))->getSortedData($insightContext,['sort'=>'pvDiff']);
+			$aritcles_ids = $this->truncateTo($sortedInsightData,$size);
 			return $this->getArticleData($insightContext,$aritcles_ids);
 		}
 		return [];
 	}
 
 	public function getArticleData($articles,$ids){
+		$content = [];
 		foreach($ids as $id){
 			$content[] = $articles[$id];
 		}
