@@ -86,7 +86,7 @@ require([
 				controller: 'CommunityPageSpecial',
 				method: tab.request,
 				format: 'json',
-				type: 'get'
+				type: 'get',
 			}).then(function (response) {
 				if (response.hasOwnProperty('members')) {
 					allMembersCount = response.members.length;
@@ -125,15 +125,12 @@ require([
 				}
 			};
 			uiModal.createComponent(createPageModalConfig, function (modal) {
-				var loading = mustache.render(templates.modalLoadingScreen),
-					html = navHtml + loading;
-
 				modal.$content
 					.addClass('ContributorsModule ContributorsModuleModal')
-					.html(html)
+					.html(navHtml + mustache.render(templates.modalLoadingScreen))
 					.find(tabToActivate.className).children().addClass('active');
 
-				throbber.show($('.throbber'));
+				throbber.show($('.throbber-placeholder'));
 
 				modal.show();
 
@@ -146,20 +143,15 @@ require([
 	function switchCommunityModalTab(tabToActivate) {
 		getModalNavHtml().then(function (navHtml) {
 			// Switch highlight to new tab
-			var loading = mustache.render(templates.modalLoadingScreen),
-				html = navHtml + loading;
-
 			window.activeModal.$content
-				.html(html)
+				.html(navHtml + mustache.render(templates.modalLoadingScreen))
 				.find(tabToActivate.className).children().addClass('active');
 
-			throbber.show($('.throbber'));
+			throbber.show($('.throbber-placeholder'));
 
 			getModalTabContentsHtml(tabToActivate).then(function (tabContentHtml) {
-				html = navHtml + tabContentHtml;
-
 				window.activeModal.$content
-					.html(html)
+					.html(navHtml + tabContentHtml)
 					.find(tabToActivate.className).children().addClass('active');
 
 				updateModalHeader();
