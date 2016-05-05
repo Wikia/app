@@ -167,24 +167,29 @@ require([
 		});
 	}
 
-	$('#viewAllMembers').click(function (event) {
-		openCommunityModal(tabs.TAB_ALL);
+	$('#openModalTopAdmins').click(function (event) {
 		event.preventDefault();
+		openCommunityModal(tabs.TAB_ADMINS);
+	});
+
+	$('#viewAllMembers').click(function (event) {
+		event.preventDefault();
+		openCommunityModal(tabs.TAB_ALL);
 	});
 
 	$(document).on( 'click', '#modalTabAll', function (event) {
+		event.preventDefault();
 		switchCommunityModalTab(tabs.TAB_ALL);
-		event.preventDefault();
 	});
 
-	$(document).on( 'click', '#modalTabAdmins', function () {
+	$(document).on( 'click', '#modalTabAdmins', function (event) {
+		event.preventDefault();
 		switchCommunityModalTab(tabs.TAB_ADMINS);
-		event.preventDefault();
 	});
 
-	$(document).on( 'click', '#modalTabLeaderboard', function () {
-		switchCommunityModalTab(tabs.TAB_LEADERBOARD);
+	$(document).on( 'click', '#modalTabLeaderboard', function (event) {
 		event.preventDefault();
+		switchCommunityModalTab(tabs.TAB_LEADERBOARD);
 	});
 
 
