@@ -93,7 +93,7 @@ define('ext.wikia.adEngine.provider.rubiconFastlane', [
 		}
 	}
 
-	function renderCreative(slot, size, tiers) {
+	function renderCreative(slot, size) {
 		var dimensions = sizeMap[size],
 			iframe = iframeWriter.getIframe({
 				code: '',
@@ -110,7 +110,6 @@ define('ext.wikia.adEngine.provider.rubiconFastlane', [
 			log(['success', slot.name], 'info', logGroup);
 		});
 
-		slot.container.setAttribute('data-creative-tier', JSON.stringify(tiers));
 		slot.container.setAttribute('data-creative-size', JSON.stringify(dimensions));
 		slot.container.appendChild(iframe);
 
@@ -138,13 +137,14 @@ define('ext.wikia.adEngine.provider.rubiconFastlane', [
 			log(['collapse', slot.name], 'info', logGroup);
 		});
 
+		slot.container.setAttribute('data-creative-tier', JSON.stringify(tiers));
 		if (!size || typeof win.rubicontag.renderCreative !== 'function') {
 			return slot.collapse({
 				adType: 'collapse'
 			});
 		}
 
-		renderCreative(slot, size, tiers);
+		renderCreative(slot, size);
 	}
 
 	return {
