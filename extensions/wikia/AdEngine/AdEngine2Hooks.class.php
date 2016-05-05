@@ -71,7 +71,7 @@ class AdEngine2Hooks {
 		$vars[] = 'wgSitewideDisableKrux';
 		$vars[] = 'wgSitewideDisableLiftium';
 		$vars[] = 'wgSitewideDisableMonetizationService';
-		$vars[] = 'wgSitewideDisableSevenOneMedia'; // TODO: ADEN-
+		$vars[] = 'wgSitewideDisableSevenOneMedia'; // TODO: ADEN-3314
 
 		return true;
 	}
