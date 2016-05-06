@@ -74,10 +74,12 @@ define('ext.wikia.adEngine.adContext', [
 				geo.isProperGeo(instantGlobals.wgAdDriverSourcePointDetectionMobileCountries));
 		}
 
-		// SourcePoint recovery integration (set in AdEngine2ContextService based on wgEnableUsingSourcePointProxyForCSS)
-		if (isUrlParamSet('sourcepointrecovery')) {
-			context.opts.sourcePointRecovery = true;
+		// SourcePoint recovery integration
+		if (!context.opts.delayEngine && context.opts.sourcePointDetection && context.opts.sourcePointRecoveryUrl) {
+			context.opts.sourcePointRecovery = isUrlParamSet('sourcepointrecovery') ||
+				geo.isProperGeo(instantGlobals.wgAdDriverSourcePointRecoveryCountries);
 		}
+
 		// Recoverable ads message
 		if (context.opts.sourcePointDetection && !context.opts.sourcePointRecovery && context.opts.showAds) {
 			context.opts.recoveredAdsMessage = isPageType('article') &&

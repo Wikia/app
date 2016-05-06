@@ -7,7 +7,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	'ext.wikia.adEngine.provider.gpt.adDetect',
 	'ext.wikia.adEngine.provider.gpt.adElement',
 	'ext.wikia.adEngine.provider.gpt.googleTag',
-	'ext.wikia.aRecoveryEngine.recovery.helper',
+	'ext.wikia.adEngine.recovery.helper',
 	'ext.wikia.adEngine.slotTweaker',
 	require.optional('ext.wikia.adEngine.provider.gpt.sraHelper'),
 	require.optional('ext.wikia.adEngine.slot.scrollHandler')
@@ -29,7 +29,28 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 		googleApi = new GoogleTag(),
 		hiddenSlots = [
 			'INCONTENT_LEADERBOARD'
-		];
+		],
+		recoveryInitialized = false;
+
+	function loadRecovery() {
+		if (recoveryInitialized) {
+			return;
+		}
+		log('SourcePoint recovery enabled', 'debug', logGroup);
+		recoveryInitialized = true;
+		googleApi = recoveryHelper.createSourcePointTag();
+		recoveryHelper.recoverSlots();
+	}
+
+	function loadSourcePoint() {
+		if (recoveryHelper.isBlocking()) {
+			loadRecovery();
+		} else {
+			recoveryHelper.addOnBlockingCallback(function () {
+				loadRecovery();
+			});
+		}
+	}
 
 	function collapseElement(element) {
 		slotTweaker.hide(
@@ -59,12 +80,6 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 			recoverableSlots = extra.recoverableSlots || [],
 			shouldPush = !recoveryHelper.isBlocking() ||
 				(recoveryHelper.isBlocking() && recoveryHelper.isRecoverable(slot.name, recoverableSlots));
-
-		log(['shouldPush',
-			slot.name,
-			recoveryHelper.isBlocking(),
-			recoverableSlots,
-			recoveryHelper.isRecoverable(slot.name, recoverableSlots)], 'debug', logGroup);
 
 		slotTargeting = JSON.parse(JSON.stringify(slotTargeting)); // copy value
 
@@ -116,7 +131,11 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 		}
 
 		if (!googleApi.isInitialized()) {
-			googleApi.init();
+			if (recoveryHelper.isRecoveryEnabled()) {
+				googleApi.init(loadSourcePoint);
+			} else {
+				googleApi.init();
+			}
 			googleApi.setPageLevelParams(adLogicPageParams.getPageLevelParams());
 		}
 
@@ -124,6 +143,10 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 			log(['Push blocked', slot.name], 'debug', logGroup);
 			slotTweaker.removeDefaultHeight(slot.name);
 			return;
+		}
+
+		if (!recoveryHelper.isBlocking() && recoveryHelper.isRecoveryEnabled()) {
+			recoveryHelper.addSlotToRecover(slot.name);
 		}
 
 		log(['pushAd', slot.name], 'info', logGroup);
