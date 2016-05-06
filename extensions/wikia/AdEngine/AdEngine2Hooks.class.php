@@ -20,17 +20,10 @@ class AdEngine2Hooks {
 	 * @author Sergey Naumov
 	 */
 	public static function onAfterInitialize( $title, $article, $output, $user, WebRequest $request, $wiki ) {
-		global $wgAdDriverUseSevenOneMedia,
-			$wgNoExternals,
-			$wgUsePostScribe;
+		global $wgNoExternals;
 
 		// TODO: we shouldn't have it in AdEngine - ticket for Platform: PLATFORM-1296
 		$wgNoExternals = $request->getBool( 'noexternals', $wgNoExternals );
-
-		// use PostScribe with 71Media - check scriptwriter.js:35
-		if ( $wgAdDriverUseSevenOneMedia ) {
-			$wgUsePostScribe = true;
-		}
 
 		return true;
 	}
@@ -79,7 +72,7 @@ class AdEngine2Hooks {
 		$vars[] = 'wgSitewideDisableKrux';
 		$vars[] = 'wgSitewideDisableLiftium';
 		$vars[] = 'wgSitewideDisableMonetizationService';
-		$vars[] = 'wgSitewideDisableSevenOneMedia';
+		$vars[] = 'wgSitewideDisableSevenOneMedia'; // TODO: ADEN-3314
 
 		return true;
 	}
@@ -93,7 +86,7 @@ class AdEngine2Hooks {
 	 * @return bool
 	 */
 	public static function onWikiaSkinTopScripts( &$vars, &$scripts ) {
-		global $wgTitle, $wgUsePostScribe;
+		global $wgTitle;
 		$skin = RequestContext::getMain()->getSkin();
 		$skinName = $skin->getSkinName();
 
@@ -113,9 +106,6 @@ class AdEngine2Hooks {
 
 		// GA vars
 		$vars['wgGaHasAds'] = isset( $adContext['opts']['showAds'] );
-
-		// 71Media
-		$vars['wgUsePostScribe'] = $wgUsePostScribe;
 
 		return true;
 	}
