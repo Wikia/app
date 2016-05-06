@@ -1,7 +1,7 @@
 <?php
 
 class RecirculationApiController extends WikiaApiController {
-	const ALLOWED_TYPES = ['popular', 'shares', 'recent_popular'];
+	const ALLOWED_TYPES = ['popular', 'shares', 'recent_popular', 'vertical', 'community'];
 
 	public function getFandomPosts() {
 		$type = $this->request->getVal( 'type' );
