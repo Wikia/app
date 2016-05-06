@@ -6,15 +6,9 @@ class ARecoveryUnlockCSS {
 	const CACHE_TTL = 3600 * 10; //10h
 	const TIMEOUT = 10;
 
-	private $outputPage = null;
-
-	public function __construct(OutputPage $outputPage) {
-		$this->outputPage = $outputPage;
-	}
-
-	public function getUnlockCSSUrl() {
+	public static function getUnlockCSSUrl() {
 		global $wgServer, $wgSourcePointAccountId;
-		$wikiaCssUrl = $this->getWikiaUnlockCSSUrl();
+		$wikiaCssUrl = self::getWikiaUnlockCSSUrl();
 		$memcKey = $wikiaCssUrl;
 		$memCache = F::app()->wg->Memc;
 
@@ -31,7 +25,7 @@ class ARecoveryUnlockCSS {
 				return $cachedCriptedUrl;
 			} else {
 				$spQuery = self::postJson(self::API_URL . self::API_ENDPOINT, $jsonData);
-				if ( $spQuery['code'] == 200 && $this->verifyContent( $spQuery['response'] ) ) {
+				if ( $spQuery['code'] == 200 && self::verifyContent( $spQuery['response'] ) ) {
 					$memCache->set( $memcKey, $spQuery['response'], self::CACHE_TTL) ;
 					return $spQuery['response'];
 				} else {
@@ -46,7 +40,7 @@ class ARecoveryUnlockCSS {
 		return $wikiaCssUrl;
 	}
 
-	private function verifyContent( $url ) {
+	private static function verifyContent( $url ) {
 		$options = [
 			'returnInstance' => true,
 			'timeout' => self::TIMEOUT,
@@ -59,14 +53,14 @@ class ARecoveryUnlockCSS {
 		return false;
 	}
 
-	private function getWikiaUnlockCSSUrl() {
+	private static function getWikiaUnlockCSSUrl() {
 		$am = AssetsManager::getInstance();
 		$files = [ self::CSS_FILE_PATH ];
 		$cssLink = $am->getSassesUrl( $files );
 		return $cssLink;
 	}
 
-	private function postJson( $url, $jsonString ) {
+	private static function postJson( $url, $jsonString ) {
 		if ( is_array( $jsonString ) ) {
 			$jsonString = json_encode( $jsonString );
 		}

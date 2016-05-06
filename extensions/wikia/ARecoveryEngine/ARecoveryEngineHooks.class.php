@@ -21,12 +21,7 @@ class ARecoveryEngineHooks {
 		return true;
 	}
 
-	public static function onBeforePageDisplay(&$outputPage, &$skin) {
-		global $wgOasisLastCssScripts;
-
-		$sp = new ARecoveryUnlockCSS($outputPage);
-		$wgOasisLastCssScripts[] = $sp->getUnlockCSSUrl();
-
+	public static function onBeforePageDisplay( &$outputPage, &$skin ) {
 		if ( ARecoveryModule::isEnabled() ) {
 			Wikia::addAssetsToOutput( self::ASSET_GROUP_ARECOVERY_LOCK );
 		}
