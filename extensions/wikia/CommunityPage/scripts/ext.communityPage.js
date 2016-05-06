@@ -4,8 +4,9 @@ require([
 	'wikia.mustache',
 	'communitypage.templates.mustache',
 	'wikia.nirvana',
-	'wikia.throbber'
-], function ($, uiFactory, mustache, templates, nirvana, throbber) {
+	'wikia.throbber',
+	'wikia.window'
+], function ($, uiFactory, mustache, templates, nirvana, throbber, window) {
 	'use strict';
 
 	// "private" vars - don't access directly. Use getUiModalInstance().
@@ -165,20 +166,19 @@ require([
 		event.preventDefault();
 	});
 
-	$(document).on( 'click', '#modalTabAll', function (event) {
-		switchCommunityModalTab(tabs.TAB_ALL);
-		event.preventDefault();
-	});
-
-	$(document).on( 'click', '#modalTabAdmins', function () {
-		switchCommunityModalTab(tabs.TAB_ADMINS);
-		event.preventDefault();
-	});
-
-	$(document).on( 'click', '#modalTabLeaderboard', function () {
-		switchCommunityModalTab(tabs.TAB_LEADERBOARD);
-		event.preventDefault();
-	});
+	$(document)
+		.on( 'click', '#modalTabAll', function (event) {
+			switchCommunityModalTab(tabs.TAB_ALL);
+			event.preventDefault();
+		})
+		.on( 'click', '#modalTabAdmins', function (event) {
+			switchCommunityModalTab(tabs.TAB_ADMINS);
+			event.preventDefault();
+		})
+		.on( 'click', '#modalTabLeaderboard', function (event) {
+			switchCommunityModalTab(tabs.TAB_LEADERBOARD);
+			event.preventDefault();
+		});
 
 
 	$(function () {
