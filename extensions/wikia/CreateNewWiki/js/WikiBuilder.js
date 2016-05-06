@@ -40,7 +40,9 @@ define('WikiBuilder', function () {
 		answer,
 		keys,
 		userAuth,
-		stringHelper;
+		stringHelper,
+		errorModalHeader,
+		errorModalMessage;
 
 	function init(strHelper) {
 		var pane;
@@ -493,8 +495,8 @@ define('WikiBuilder', function () {
 		nextButtons.attr('disabled', true);
 		if (createStatus && createStatus === 'ok' && finishCreateUrl) {
 			location.href = finishCreateUrl;
-		} else if (createStatus && createStatus === 'backenderror') {
-			$.showModal(createStatusMessage, createStatusMessage);
+		} else if (!createStatus || (createStatus && createStatus === 'backenderror')) {
+			$.showModal(errorModalHeader, errorModalMessage);
 		} else if (retryGoto < 300) {
 			if (!finishSpinner.data('spinning')) {
 				finishSpinner.data('spinning', 'true');
@@ -552,6 +554,8 @@ define('WikiBuilder', function () {
 				callback: function (res) {
 					throbberWrapper.stopThrobbing();
 					cityId = res.cityId;
+					createStatus = res.status;
+					createStatusMessage = res.statusMsg;
 					finishCreateUrl = (res.finishCreateUrl.indexOf('.com/wiki/') < 0 ?
 						res.finishCreateUrl.replace('.com/', '.com/wiki/') :
 						res.finishCreateUrl);
@@ -567,14 +571,13 @@ define('WikiBuilder', function () {
 	}
 
 	function generateAjaxErrorMsg(error) {
-		var responseTextObject,
-			errorModalHeader,
-			errorModalMessage;
+		var responseTextObject;
 
 		if (error && error.responseText) {
 			responseTextObject = JSON.parse(error.responseText);
 			errorModalHeader = responseTextObject.statusHeader;
 			errorModalMessage = responseTextObject.statusMsg;
+			createStatus = responseTextObject.status;
 		} else {
 			errorModalHeader = WikiBuilderCfg['cnw-error-general-heading'];
 			errorModalMessage = WikiBuilderCfg['cnw-error-general'];
