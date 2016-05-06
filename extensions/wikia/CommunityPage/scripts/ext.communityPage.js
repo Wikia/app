@@ -188,33 +188,27 @@ require([
 		event.preventDefault();
 	});
 
+	function handleClick (event) {
+		var data = $(event.currentTarget).data('tracking');
+
+		if (typeof(data) !== 'undefined') {
+			track({
+				label: data,
+			});
+		}
+	}
+
 	function initTracking() {
 		// Track clicks in contribution module
-		$('.ContributorsModule').on('mousedown touchstart', 'a',  function (event) {
-			var data = $(event.currentTarget).data('tracking');
-
-			if (typeof(data) !== 'undefined') {
-				track({
-					label: data,
-				});
-			}
-		});
+		$('.ContributorsModule').on('mousedown touchstart', 'a', handleClick);
 	}
 
 	function initModalTracking() {
 		// Track clicks in contribution modal
-		$('#CommunityPageModalDialog').on('mousedown touchstart', 'a', function (event) {
-			var data = $(event.currentTarget).data('tracking');
-
-			if (typeof(data) !== 'undefined') {
-				track({
-					label: data,
-				});
-			}
-		});
+		$('#CommunityPageModalDialog').on('mousedown touchstart', 'a', handleClick);
 
 		// Track clicks on modal close button
-		$('.close[title=\'close\']').on('mousedown touchstart', function (event) {
+		$('.close[title=\'close\']').on('mousedown touchstart', function () {
 			track({
 				label: 'modal-close',
 			});
