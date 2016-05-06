@@ -4,9 +4,16 @@ require([
 	'wikia.mustache',
 	'communitypage.templates.mustache',
 	'wikia.nirvana',
-	'wikia.throbber'
-], function ($, uiFactory, mustache, templates, nirvana, throbber) {
+	'wikia.throbber',
+	'wikia.tracker'
+], function ($, uiFactory, mustache, templates, nirvana, throbber, tracker) {
 	'use strict';
+
+	var track = tracker.buildTrackingFunction({
+		action: tracker.ACTIONS.CLICK,
+		category: 'community-page',
+		trackingMethod: 'analytics'
+	});
 
 	// "private" vars - don't access directly. Use getUiModalInstance().
 	var uiModalInstance, modalNavHtml, activeTab, allMembersCount, adminsCount;
@@ -133,6 +140,7 @@ require([
 				throbber.show($('.throbber-placeholder'));
 
 				modal.show();
+				initModalTracking();
 
 				window.activeModal = modal;
 				switchCommunityModalTab(tabToActivate);
@@ -170,18 +178,52 @@ require([
 		event.preventDefault();
 	});
 
-	$(document).on( 'click', '#modalTabAdmins', function () {
+	$(document).on( 'click', '#modalTabAdmins', function (event) {
 		switchCommunityModalTab(tabs.TAB_ADMINS);
 		event.preventDefault();
 	});
 
-	$(document).on( 'click', '#modalTabLeaderboard', function () {
+	$(document).on( 'click', '#modalTabLeaderboard', function (event) {
 		switchCommunityModalTab(tabs.TAB_LEADERBOARD);
 		event.preventDefault();
 	});
 
+	function initTracking() {
+		// Track clicks in contribution module
+		$('.ContributorsModule').on('mousedown touchstart', 'a',  function (event) {
+			var data = $(event.currentTarget).data('tracking');
+
+			if (typeof(data) !== 'undefined') {
+				track({
+					label: data,
+				});
+			}
+		});
+	}
+
+	function initModalTracking() {
+		// Track clicks in contribution modal
+		$('#CommunityPageModalDialog').on('mousedown touchstart', 'a', function (event) {
+			var data = $(event.currentTarget).data('tracking');
+
+			if (typeof(data) !== 'undefined') {
+				track({
+					label: data,
+				});
+			}
+		});
+
+		// Track clicks on modal close button
+		$('.close[title=\'close\']').on('mousedown touchstart', function (event) {
+			track({
+				label: 'modal-close',
+			});
+		});
+	}
 
 	$(function () {
+		initTracking();
+
 		// prefetch UI modal on DOM ready
 		getUiModalInstance();
 

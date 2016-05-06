@@ -3,10 +3,10 @@
 	{{#admins}}
 		<li>
 			<div class="avatar-container">
-				<a href="{{profilePage}}">{{{avatar}}}</a>
+				<a data-tracking="all-admins-avatar" href="{{profilePage}}">{{{avatar}}}</a>
 			</div>
 			<div class="contributor-details">
-				<a href="{{profilePage}}">{{userName}}</a>
+				<a data-tracking="all-admins" href="{{profilePage}}">{{userName}}</a>
 				{{#isAdmin}}
 					<span class="subtle">{{admin}}</span>
 				{{/isAdmin}}
