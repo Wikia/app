@@ -19,7 +19,7 @@
 		logCache = {},
 		beacon = window.beacon_id || getCookie('wikia_beacon_id'),
 		serverTimeString = window.varnishTime,
-		serverDate = serverTimeString ? new Date( serverTimeString ) : new Date();
+		serverDate = serverTimeString ? new Date( serverTimeString ) : new Date(),
 		serverTime = serverDate.getTime() / 1000;
 
 	// Function to log different things (could not use Wikia.Log because it may not be available yet)
@@ -207,6 +207,9 @@
 	// Returns true if value falls into provided ranges
 	function isInRanges( value, ranges ) {
 		var i, range;
+		if ( !ranges || !ranges.length ) {
+			return false;
+		}
 		for ( i = 0; i < ranges.length; i++ ) {
 			range = ranges[ i ];
 
