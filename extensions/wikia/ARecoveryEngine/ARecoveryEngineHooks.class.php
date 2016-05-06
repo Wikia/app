@@ -1,6 +1,7 @@
 <?php
 
 class ARecoveryEngineHooks {
+	const ASSET_GROUP_ARECOVERY_LOCK = 'arecovery_lock_scss';
 
 	/**
 	 * Register recovery related scripts on the top
@@ -14,14 +15,22 @@ class ARecoveryEngineHooks {
 		if ( !ARecoveryModule::isEnabled() ) {
 			return true;
 		}
+
 		$scripts .= F::app()->sendRequest( 'ARecoveryEngineApiController', 'getBootstrap' );
+
 		return true;
 	}
 
 	public static function onBeforePageDisplay(&$outputPage, &$skin) {
 		global $wgOasisLastCssScripts;
+
 		$sp = new ARecoveryUnlockCSS($outputPage);
 		$wgOasisLastCssScripts[] = $sp->getUnlockCSSUrl();
+
+		if ( ARecoveryModule::isEnabled() ) {
+			Wikia::addAssetsToOutput( self::ASSET_GROUP_ARECOVERY_LOCK );
+		}
+
 		return true;
 	}
 }
