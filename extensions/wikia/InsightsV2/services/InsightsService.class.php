@@ -9,32 +9,32 @@ class InsightsService extends WikiaService
 	 * @param int $size number of pages we need
 	 * @return array
 	 */
-	public function getInsightPages($type,$size){
-		if(InsightsHelper::isInsightPage($type)){
-			$model = InsightsHelper::getInsightModel($type);
-			$insightData = (new InsightsContext($model))->fetchData();
-			$sortedInsightArticleIds = (new InsightsSorting($model->getConfig()))->getSortedData($insightData,['sort'=>'pvDiff']);
-			$aritclesIds = $this->truncateTo($sortedInsightArticleIds,$size);
-			return $this->getArticlesData($insightData,$aritclesIds);
+	public function getInsightPages( $type, $size, $sortingType ) {
+		if ( InsightsHelper::isInsightPage( $type ) ) {
+			$model = InsightsHelper::getInsightModel( $type );
+			$insightData = ( new InsightsContext( $model ) )->fetchData();
+			$sortedInsightArticleIds = ( new InsightsSorting( $model->getConfig() ) )->getSortedData( $insightData, ['sort' => $sortingType] );
+			$aritclesIds = $this->truncateTo( $sortedInsightArticleIds, $size );
+			return $this->getArticlesData( $insightData, $aritclesIds );
 		}
 		return [];
 	}
 
 	/**
 	 * @param array $articles all articles data
-	 * @param array $ids list of article ids we need data for 
+	 * @param array $ids list of article ids we need data for
 	 * @return array
 	 */
 
-	public function getArticlesData($articles,$ids){
+	public function getArticlesData( $articles, $ids ) {
 		$content = [];
-		foreach($ids as $id){
+		foreach ( $ids as $id ) {
 			$content[] = $articles[$id];
 		}
 		return $content;
 	}
 
-	public function truncateTo($array,$size){
-		return array_slice($array,0,$size);
+	public function truncateTo( $array, $size ) {
+		return array_slice( $array, 0, $size );
 	}
 }
