@@ -11,9 +11,7 @@ class ARecoveryEngineHooks {
 	 * @return bool
 	 */
 	public static function onWikiaSkinTopScripts( &$vars, &$scripts ) {
-		global $wgEnableUsingSourcePointProxyForCSS;
-
-		if ( empty( $wgEnableUsingSourcePointProxyForCSS ) ) {
+		if ( !ARecoveryModule::isEnabled() ) {
 			return true;
 		}
 		$scripts .= F::app()->sendRequest( 'ARecoveryEngineApiController', 'getBootstrap' );
