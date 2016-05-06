@@ -1,11 +1,10 @@
-body {
-  	font-family: Helvetica, Arial, sans-serif;
-}
+body #WikiaPage {
+	#WikiaPageHeader:after {
+		content: none;
+		display: none;
+	}
 
-#WikiaPageHeader:after {
-	content: none !important;
-}
-
-#WikiaArticle {
-	display: block !important;
+	#WikiaArticle {
+		display: block;
+	}
 }
