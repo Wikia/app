@@ -25,6 +25,7 @@ class NavigationTemplateTest extends WikiaBaseTest {
 	 * @dataProvider getNavigationTemplates
 	 */
 	public function testHideNavigationWithBlockElements( $templateText, $expectedOutput, $message ) {
+		$this->markTestSkipped("Revert after navigation experiment is over. Contact West-Wing team. [https://wikia-inc.atlassian.net/browse/DAT-4186]");
 		$output = NavigationTemplate::handle( $templateText );
 		NavigationTemplate::resolve( $output );
 
@@ -80,6 +81,7 @@ class NavigationTemplateTest extends WikiaBaseTest {
 	 * @dataProvider articleHtmlProvided
 	 */
 	public function testMultiTemplates( $marked, $expected, $message ) {
+		$this->markTestSkipped("Revert after navigation experiment is over. Contact West-Wing team. [https://wikia-inc.atlassian.net/browse/DAT-4186]");
 		NavigationTemplate::resolve( $marked );
 
 		$this->assertEquals( $expected, $marked, $message );
