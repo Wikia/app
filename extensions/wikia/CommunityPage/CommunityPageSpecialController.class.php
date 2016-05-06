@@ -1,7 +1,8 @@
 <?php
 
 class CommunityPageSpecialController extends WikiaSpecialPageController {
-	const DEFAULT_TEMPLATE_ENGINE = \WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
+	const DEFAULT_TEMPLATE_ENGINE = \WikiaResponse::TEMPLATE_ENGINE_MUSTACHE,
+		DISPLAY_COUNT_LIMIT = 999;
 	private $usersModel;
 	private $wikiModel;
 	private $userTotalContributionCount;
@@ -134,7 +135,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 			'topAdminsHeaderText' => $this->msg( 'communitypage-admins' )->plain(),
 			'otherAdmins' => $this->msg( 'communitypage-other-admins' )->plain(),
 			'admins' => array_slice( $topAdminsDetails, 0, 2 ),
-			'otherAdminCount' => $remainingAdminCount <= 999 ? $remainingAdminCount : 999,
+			'otherAdminCount' => $remainingAdminCount <= self::DISPLAY_COUNT_LIMIT ? $remainingAdminCount : self::DISPLAY_COUNT_LIMIT,
 			'haveOtherAdmins' => $remainingAdminCount > 0,
 			'adminCount' => count( $topAdmins ),
 			'noAdminText' => $this->msg( 'communitypage-no-admins' )->plain(),
