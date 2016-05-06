@@ -144,6 +144,14 @@ $config['recirculation_js'] = array(
 	),
 );
 
+$config['recirculation_lateral_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => [ 'oasis' ],
+	'assets' => array(
+		'//extensions/wikia/Recirculation/js/lateralTracker.js',
+	),
+);
+
 $config['recirculation_discussions_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'oasis' ],
