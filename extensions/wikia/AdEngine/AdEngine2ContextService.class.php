@@ -73,6 +73,7 @@ class AdEngine2ContextService {
 					'monetizationService' => $wg->AdDriverUseMonetizationService,
 					'monetizationServiceAds' => $monetizationServiceAds,
 					'taboola' => $wg->AdDriverUseTaboola && $pageType === 'article',
+					'revcontent' => $wg->AdDriverUseRevcontent,
 				] ),
 				'slots' => $this->filterOutEmptyItems( [
 					'exitstitial' => $wg->EnableOutboundScreenExt,

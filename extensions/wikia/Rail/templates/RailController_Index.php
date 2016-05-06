@@ -20,6 +20,8 @@
 			<div class="loading"></div>
 		<? endif ?>
 
+		<?= !empty( $wg->AdDriverUseRevcontent ) ? $app->renderView( 'Ad', 'Index', ['slotName' => 'REVCONTENT_RIGHT_RAIL'] ) : '' ?>
+
 	</div>
 <? if ( $isAside ): ?>
 	</aside>
