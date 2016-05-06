@@ -2,14 +2,19 @@
 
 class CommunityPageSpecialController extends WikiaSpecialPageController {
 	const DEFAULT_TEMPLATE_ENGINE = \WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
+	const INSIGHT_MODULE_ITEMS = 5;
+	const INSIGHT_MODULE_SORT_TYPE = 'pvDiff';
+
 	private $usersModel;
 	private $wikiModel;
+	private $insightsService;
 	private $userTotalContributionCount;
 
 	public function __construct() {
 		parent::__construct( 'Community' );
 		$this->usersModel = new CommunityPageSpecialUsersModel();
 		$this->wikiModel = new CommunityPageSpecialWikiModel();
+		$this->insightsService = new InsightsService();
 		$this->userTotalContributionCount = $this->usersModel->getUserContributions( $this->getUser(), false );
 	}
 
@@ -42,10 +47,26 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 			'recentlyJoined' => $this->sendRequest( 'CommunityPageSpecialController', 'getRecentlyJoinedData' )
 				->getData(),
 			'recentActivityModule' => $this->getRecentActivityData(),
+			'popularPages' => $this->getInsightModule( 'popularpages' )
 		] );
+	}
 
-		$insights =  new InsightsService();
-		var_dump($insights->getInsightPages('popularpages',5,'pvDiff')); die;
+	private function getInsightModule( $type ) {
+		$insightPages = $this->insightsService->getInsightPages(
+			$type,
+			self::INSIGHT_MODULE_ITEMS,
+			self::INSIGHT_MODULE_SORT_TYPE
+		);
+
+		return $this->prepareInsightModule( $insightPages );
+	}
+
+	private function prepareInsightModule( $insightsPages ) {
+		foreach ( $insightsPages as $key => $insight ) {
+			//Prepare message about who and when last edited given article
+		}
+
+		return $insightsPages;
 	}
 
 	public function header() {

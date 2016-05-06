@@ -1,0 +1,12 @@
+<section class="insights-module">
+	<h3>Title</h3>
+	<p>Description</p>
+	<ul>
+		{{#popularPages}}
+			<li>
+				<a href="{{link.url}}">{{link.text}}</a><br>
+				<span>{{editMessage}}</span>
+			</li>
+		{{/popularPages}}
+	</ul>
+</section>
