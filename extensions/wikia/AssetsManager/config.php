@@ -829,6 +829,14 @@ $config['mobile_base_ads_js'] = array(
 	)
 );
 
+$config['arecovery_lock_scss'] = array(
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => [ 'oasis' ],
+	'assets' => array(
+		'//extensions/wikia/ARecoveryEngine/css/recoveryLock.scss',
+	),
+);
+
 $config['mercury_ads_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
