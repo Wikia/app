@@ -45,7 +45,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		] );
 
 		$insights =  new InsightsService();
-		var_dump($insights->getInsights('popularpages',5)); die;
+		var_dump($insights->getInsightPages('popularpages',5)); die;
 	}
 
 	public function header() {

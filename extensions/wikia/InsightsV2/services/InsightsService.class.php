@@ -4,24 +4,29 @@
 class InsightsService extends WikiaService
 {
 
-	/*
-	 * Returns Insights about a given Model.
-	 *
+	/**
 	 * @param string $type type of model
+	 * @param int $size number of pages we need
 	 * @return array
 	 */
 	public function getInsightPages($type,$size){
 		if(InsightsHelper::isInsightPage($type)){
 			$model = InsightsHelper::getInsightModel($type);
 			$insightData = (new InsightsContext($model))->fetchData();
-			$sortedInsightData = (new InsightsSorting($model->getConfig()))->getSortedData($insightContext,['sort'=>'pvDiff']);
-			$aritcles_ids = $this->truncateTo($sortedInsightData,$size);
-			return $this->getArticleData($insightContext,$aritcles_ids);
+			$sortedInsightArticleIds = (new InsightsSorting($model->getConfig()))->getSortedData($insightData,['sort'=>'pvDiff']);
+			$aritclesIds = $this->truncateTo($sortedInsightArticleIds,$size);
+			return $this->getArticlesData($insightData,$aritclesIds);
 		}
 		return [];
 	}
 
-	public function getArticleData($articles,$ids){
+	/**
+	 * @param array $articles all articles data
+	 * @param array $ids list of article ids we need data for 
+	 * @return array
+	 */
+
+	public function getArticlesData($articles,$ids){
 		$content = [];
 		foreach($ids as $id){
 			$content[] = $articles[$id];
