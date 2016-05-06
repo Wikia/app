@@ -7,7 +7,7 @@ class NotAValidWikiaHooks {
 	 * @return boolean
 	 */
 	public static function onArticleFromTitle( &$title, &$article ) {
-		if ( $title instanceof Title && $title->getDBkey() === 'Not_a_valid_Wikia' ) {
+		if ( $title instanceof Title && $title->getDBkey() === 'Not_a_valid_Wikia' && !$title->isTalkPage() ) {
 			$article = new NotAValidWikiaArticle( $title );
 		}
 

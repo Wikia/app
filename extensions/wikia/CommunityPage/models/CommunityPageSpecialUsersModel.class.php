@@ -48,7 +48,7 @@ class CommunityPageSpecialUsersModel {
 				}
 
 				$sqlData = ( new WikiaSQL() )
-					->SELECT( 'user_name, user_id, count(rev_id) AS revision_count' )
+					->SELECT( 'user_name, user_id, ug_group, count(rev_id) AS revision_count' )
 					->FROM ( 'revision FORCE INDEX (user_timestamp)' )
 					->LEFT_JOIN( $wgExternalSharedDB . '.user' )->ON( '(rev_user <> 0) AND (user_id = rev_user)' )
 					->LEFT_JOIN( 'user_groups ON (user_id = ug_user)' )
@@ -60,10 +60,13 @@ class CommunityPageSpecialUsersModel {
 					->ORDER_BY( 'revision_count DESC, user_name' )
 					->LIMIT( $limit )
 					->runLoop( $db, function ( &$sqlData, $row ) {
+						$isAdmin = ( strcmp( $row->ug_group, 'sysop' ) == 0 );
+
 						$sqlData[] = [
 							'userId' => $row->user_id,
 							'userName' => $row->user_name,
 							'contributions' => $row->revision_count,
+							'isAdmin' => $isAdmin,
 						];
 					} );
 

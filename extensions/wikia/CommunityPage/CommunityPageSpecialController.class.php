@@ -99,6 +99,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		}
 
 		$this->response->setData( [
+			'admin' => $this->msg( 'communitypage-admin' )->plain(),
 			'topContribsHeaderText' => $this->msg( 'communitypage-top-contributors-week' )->plain(),
 			'yourRankText' => $this->msg( 'communitypage-user-rank' )->plain(),
 			'userContributionsText' => $this->msg( 'communitypage-user-contributions' )
@@ -285,6 +286,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 					->numParams( $contributor['contributions'] )->text(),
 				'profilePage' => $user->getUserPage()->getLocalURL(),
 				'count' => $count,
+				'isAdmin' => $contributor['isAdmin'],
 			];
 		} , $contributors );
 	}

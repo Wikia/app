@@ -203,15 +203,15 @@ class Queue {
 		}
 		
 		$dbw = self::getDB( true );
-		$dbw->begin();
-		$query = "INSERT INTO %s (id, city_id, img_action, img_src, img_dest, img_added, img_sync, img_error) ";
-		$query .= "SELECT id, city_id, img_action, img_src, img_dest, img_added, img_sync, %s FROM %s WHERE id = %d ";
-		$dbw->query( 
+		$dbw->begin( __METHOD__ );
+		$query = "INSERT INTO %s (city_id, img_action, img_src, img_dest, img_added, img_sync, img_error) ";
+		$query .= "SELECT city_id, img_action, img_src, img_dest, img_added, img_sync, %s FROM %s WHERE id = %d ";
+		$dbw->query(
 			sprintf( $query, self::getArchTable(), $this->error, self::getTable(), $this->id ),
 			__METHOD__ 
 		);
 		$dbw->delete( self::getTable(), [ 'id' => $this->id ], __METHOD__ );
-		$dbw->commit();
+		$dbw->commit( __METHOD__ );
 		
 		wfProfileOut( __METHOD__ );
 		return true;

@@ -1,21 +1,24 @@
 /*global define, require*/
-define('ext.wikia.aRecoveryEngine.recovery.helper', [
+define('ext.wikia.adEngine.recovery.helper', [
 	'ext.wikia.adEngine.adContext',
 	'wikia.document',
 	'wikia.lazyqueue',
 	'wikia.log',
-	'wikia.window'
+	'wikia.window',
+	require.optional('ext.wikia.adEngine.provider.gpt.sourcePointTag')
 ], function (
 	adContext,
 	doc,
 	lazyQueue,
 	log,
-	win
+	win,
+	SourcePointTag
 ) {
 	'use strict';
 
-	var logGroup = 'ext.wikia.aRecoveryEngine.recovery.helper',
+	var logGroup = 'ext.wikia.adEngine.recovery.helper',
 		context = adContext.getContext(),
+		slotsToRecover = [],
 		onBlockingEventsQueue = [];
 
 	function initEventQueue() {
@@ -28,17 +31,23 @@ define('ext.wikia.aRecoveryEngine.recovery.helper', [
 		});
 	}
 
+	function addSlotToRecover(slotName) {
+		slotsToRecover.push(slotName);
+	}
+
 	function addOnBlockingCallback(callback) {
 		onBlockingEventsQueue.push(callback);
 	}
 
+	function createSourcePointTag() {
+		return new SourcePointTag();
+	}
+
 	function isRecoveryEnabled() {
-		log(['isRecoveryEnabled', !!context.opts.sourcePointRecovery], 'debug', logGroup);
-		return !!context.opts.sourcePointRecovery;
+		return !!(context.opts.sourcePointRecovery && SourcePointTag);
 	}
 
 	function isBlocking() {
-		log(['isBlocking', !!(win.ads && win.ads.runtime.sp.blocking)], 'debug', logGroup);
 		return !!(win.ads && win.ads.runtime.sp.blocking);
 	}
 
@@ -46,11 +55,25 @@ define('ext.wikia.aRecoveryEngine.recovery.helper', [
 		return isRecoveryEnabled() && recoverableSlots.indexOf(slotName) !== -1;
 	}
 
+	function recoverSlots() {
+		if (!isBlocking() || !isRecoveryEnabled()) {
+			return;
+		}
+
+		log(['Starting recovery', slotsToRecover], 'debug', logGroup);
+		while (slotsToRecover.length) {
+			win.ads.runtime.sp.slots.push([slotsToRecover.shift()]);
+		}
+	}
+
 	return {
+		addSlotToRecover: addSlotToRecover,
 		addOnBlockingCallback: addOnBlockingCallback,
+		createSourcePointTag: createSourcePointTag,
 		initEventQueue: initEventQueue,
 		isRecoveryEnabled: isRecoveryEnabled,
 		isBlocking: isBlocking,
-		isRecoverable: isRecoverable
+		isRecoverable: isRecoverable,
+		recoverSlots: recoverSlots
 	};
 });
