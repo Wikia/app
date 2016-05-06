@@ -14,8 +14,15 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 		pageLevelParams,
 		pubAds;
 
+	function resetForRecovery() {
+		registeredCallbacks = {};
+		slots = {};
+		slotQueue = [];
+	}
+
 	function GoogleTag() {
 		this.initialized = false;
+		resetForRecovery();
 	}
 
 	function dispatchEvent(event) {
@@ -52,28 +59,33 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 		});
 	};
 
-	GoogleTag.prototype.init = function () {
+	GoogleTag.prototype.init = function (onLoadCallback) {
 		log('init', 'debug', logGroup);
 
 		var gads = doc.createElement('script'),
 			node = doc.getElementsByTagName('script')[0];
 
+		gads.async = true;
+		gads.type = 'text/javascript';
+		gads.src = '//www.googletagservices.com/tag/js/gpt.js';
+		gads.addEventListener('load', function () {
+			log('GPT loaded', 'debug', logGroup);
+			if (typeof onLoadCallback === 'function') {
+				onLoadCallback();
+			}
+		});
+
+		log('Appending GPT script to head', 'debug', logGroup);
+		node.parentNode.insertBefore(gads, node);
+
 		window.googletag = window.googletag || {};
 		window.googletag.cmd = window.googletag.cmd || [];
-		if (!window.googletag.apiReady) {
-			gads.async = true;
-			gads.type = 'text/javascript';
-			gads.src = '//www.googletagservices.com/tag/js/gpt.js';
-			log('Appending GPT script to head', 'debug', logGroup);
-			node.parentNode.insertBefore(gads, node);
-		}
 
 		this.initialized = true;
 		this.enableServices();
 	};
 
 	GoogleTag.prototype.isInitialized = function () {
-		log(['isInitialized', this.initialized], 'debug', logGroup);
 		return this.initialized;
 	};
 
