@@ -1,11 +1,9 @@
 @import 'skins/shared/mixins/transform';
-@import 'skins/shared/color';
 
-$avatar-number-background: #666;
 $avatar-size: 26px;
 
 .avatar-container {
-	border: 2px solid $color-avatar-border;
+	border: 2px solid $color-secondary-button-border;
 	border-radius: 50%;
 	height: $avatar-size;
 	overflow: hidden;
@@ -22,8 +20,8 @@ $avatar-size: 26px;
 	}
 
 	&.more {
-		background: $avatar-number-background;
-		color: $color-white;
+		background: $color-secondary-button;
+		color: $color-alternate-text;
 		font-size: 10px;
 		line-height: $avatar-size;
 		text-align: center;

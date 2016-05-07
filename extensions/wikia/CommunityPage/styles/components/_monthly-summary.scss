@@ -11,7 +11,6 @@
 	text-align: center;
 
 	.heading {
-		color: $color-activity-text;
 		font-size: 14px;
 		font-weight: bold;
 		text-transform: uppercase;
@@ -39,13 +38,11 @@
 	}
 
 	.stat-number {
-		color: $color-activity-text;
 		font-size: 24px;
 		line-height: .8;
 	}
 
 	.stat-name {
-		color: $color-activity-text;
 		font-size: 14px;
 		line-height: 2;
 		text-transform: uppercase;

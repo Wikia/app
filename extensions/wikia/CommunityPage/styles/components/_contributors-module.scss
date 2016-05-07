@@ -40,7 +40,7 @@
 
 	.user-details {
 		@include clearfix;
-		border-bottom: 2px solid $color-community-page-light-gray;
+		border-bottom: 2px solid $color-page-border-subtle;
 		margin-bottom: 13px;
 		padding-bottom: 10px;
 
@@ -60,7 +60,7 @@
 		}
 
 		.subtle {
-			color: $color-rank-subtle-text;
+			color: $color-alternate-text;
 			font-size: 10px;
 			line-height: 12px;
 			text-transform: uppercase;
@@ -86,13 +86,13 @@
 			padding: 0 $modal-horizontal-padding;
 
 			.contributor {
-				border-bottom: 2px solid $color-activity-background;
+				border-bottom: 2px solid $color-page-border-subtle;
 				padding: 15px 0;
 			}
 		}
 
 		.user-details {
-			background: $color-activity-background;
+			background: $color-page-border-subtle;
 			border: 0;
 			margin: 0;
 			padding: 15px $modal-horizontal-padding;

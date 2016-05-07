@@ -4,7 +4,8 @@
 $comm-page-body-color: #FFF;
 
 body.page-Special_Community.skin-oasis {
-	background: $comm-page-body-color;
+	// Override wiki custom image background
+	background: $color-page;
 
 	&::before, &::after, .background-image-gradient {
 		display: none;

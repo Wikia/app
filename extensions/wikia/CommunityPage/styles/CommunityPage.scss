@@ -2,7 +2,6 @@
 @import 'skins/shared/mixins/transform';
 
 @import 'components/variables';
-@import 'components/base';
 @import 'components/module';
 @import 'components/textborder';
 @import 'components/header';
@@ -21,8 +20,6 @@
 
 .community-page-admin-message {
 	align-items: center;
-	background-color: $color-community-page-gray;
-	color: $color-text-dark;
 	display: flex;
 	height: 250px;
 	justify-content: center;
@@ -69,17 +66,12 @@
 }
 
 .community-page-top-contributors {
-	background: $color-community-page-white;
-	border: 1px solid $color-community-page-dark-gray;
+	border: 1px solid $color-page-border;
 	float: left;
 	padding: 20px 15px 15px;
 	position: relative;
 	width: 270px;
 	word-wrap: break-word;
-
-	.more-contributors {
-		color: $color-community-page-admin-text;
-	}
 
 	h2 {
 		border: 0;
@@ -166,32 +158,3 @@
 .WikiaArticle .community-page-top-contributors h2 {
 	margin-top: 0;
 }
-
-/* Temp Hacks for dark wikias until design is ready */
-@if ($is-dark-wiki) {
-	body {
-		color: $color-text-dark;
-	}
-
-	.WikiaPage .WikiaPageBackground {
-		background-color: $color-page-opposite;
-	}
-
-	.community-page-admin-message a,
-	.community-page-content a,
-	.task-page-content a {
-		color: $color-links-default;
-	}
-
-	.global-footer ul li {
-		a {
-			color: $color-links-default;
-		}
-	}
-
-	.community-page-admin-message .avatar,
-	.community-page-content .avatar {
-		border: 1px solid $color-page-opposite;
-	}
-}
-
