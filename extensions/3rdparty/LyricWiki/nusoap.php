@@ -666,7 +666,7 @@ class soap_fault extends nusoap_base {
     * @param string $faultstring human readable error message
     * @param string $faultdetail
 	*/
-	function soap_fault($faultcode,$faultactor='',$faultstring='',$faultdetail=''){
+	function __construct($faultcode,$faultactor='',$faultstring='',$faultdetail=''){
 		$this->faultcode = $faultcode;
 		$this->faultactor = $faultactor;
 		$this->faultstring = $faultstring;
