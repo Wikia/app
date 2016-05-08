@@ -65,9 +65,10 @@ if(!$SHUT_DOWN_API){
 	}
 
 	if(!$funcsOnly){
-		if(!defined('MEDIAWIKI')){
-			define( 'MEDIAWIKI', true );
-		}
+		// This causes devbox to crash because WebStart will then re-define it. Not sure what changed in core MediaWiki.
+		// if(!defined('MEDIAWIKI')){
+		//	 define( 'MEDIAWIKI', true );
+		// }
 
 		require_once $LW_PATH."includes/Defines.php";
 
