@@ -176,8 +176,15 @@ class Linkstoredirects extends SpecialPage{
 					);
 					$idToTitle = array();
 					$ids = array_unique($ids);
-					$queryString = "SELECT page_id, page_namespace, page_title FROM $TABLE_PREFIX"."page WHERE page_id IN (".implode(",", $ids).")";
-					$res2 = $dbr->query($queryString);
+
+					$res2 = $dbr->select(
+						"page",
+						array( "page_id",
+							   "page_namespace",
+							   "page_title"),
+						"page_id IN (".implode(",", $ids).")",
+						__METHOD__
+					);
 					while ($innerRow = $dbr->fetchObject($res2)) {
 						$id = $innerRow->page_id;
 						$ns = $innerRow->page_namespace;

@@ -2483,9 +2483,9 @@ function requestStarted($funcName, $requestData){
 				'apiRequests',
 				[
 					"requestedThrough" => $REQUEST_TYPE,
-					"requestedFunction" => $dbr->addQuotes(funcName),
-					"requestData" => $dbr->addQuotes(requestData),
-					"requestTime" => "NOW()",
+					"requestedFunction" => $funcName,
+					"requestData" => $requestData,
+					"requestTime" => $dbw->timestamp( wfTimestampNow() ),
 				],
 				__METHOD__
 			);

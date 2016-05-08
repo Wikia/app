@@ -119,7 +119,7 @@ class SearchFailuresPage extends SpecialPage{
 
 				print "<html><head><title>Success</title></head><body>\n"; // TODO: i18n
 				print "Deleting record... ";
-				$dbw = &wfGetDB(DB_MASTER);
+				$dbw = wfGetDB(DB_MASTER);
 				$result = $dbw->delete(
 					$this->TABLE_NAME,
 					[
