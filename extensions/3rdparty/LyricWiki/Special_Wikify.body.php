@@ -6,7 +6,7 @@ class Wikify extends SpecialPage
 {
 	function __construct()
 	{
-		SpecialPage::SpecialPage("Wikify");
+		parent::__construct("Wikify");
 	}
 
 	function displayError( $error )
