@@ -44,8 +44,8 @@ function wfSpiderableBadArtists_outputPage(&$out, &$text){
 	if(isset($_GET['virtPage'])){
 		$subTitle = $out->getSubtitle();
 		$matches = array();
-		if(0 < preg_match("/Redirected from <a href=\"[^\"]+&amp;redirect=no\" title=\"([^\"]+)\"/i", $subTitle, $matches)){
-			$redirFrom = $matches[1];
+		if(0 < preg_match("/Redirected from <a href=\"[^\"]+(&amp;|\?)redirect=no\" title=\"([^\"]+)\"/i", $subTitle, $matches)){
+			$redirFrom = $matches[2];
 			if(false === strpos($redirFrom, ":")){
 				$redirFrom = str_replace(" ", "_", $redirFrom);
 				$redirFrom = urlencode($redirFrom);
