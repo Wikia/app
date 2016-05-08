@@ -49,13 +49,13 @@ class ArtistRedirects extends SpecialPage
 				ob_start();
 
 				$dbr = wfGetDB( DB_SLAVE );
-				$numRedirs = $dbr->selectField("page",
-					'COUNT(*) as numRedirs',
+				$numRedirs = $dbr->selectField(
+					"page",
+					"COUNT(*) as numRedirs",
 					[
 						"page_is_redirect" => 1,
-						"page-title NOT LIKE '%:%'"
-					]
-				),__METHOD__);
+						"page_title NOT LIKE '%:%'"
+					], __METHOD__);
 
 				print "View results by pages:\n";
 				print "<ul>\n";
