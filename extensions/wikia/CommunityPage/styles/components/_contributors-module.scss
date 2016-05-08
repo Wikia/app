@@ -11,11 +11,6 @@
 	.top-contributors, .top-admins {
 		font-size: 14px;
 		line-height: 20px;
-
-		.contributor {
-			@include clearfix;
-			padding-bottom: 10px;
-		}
 	}
 
 	.top-contributors {
@@ -26,16 +21,21 @@
 			@include transform-translate(0, 3px);
 		}
 
-		.contributor-details {
+		.community-page-contributor-details {
 			position: relative;
 		}
 	}
 
 	.top-admins {
-		.contributor-details {
+		.community-page-contributor-details {
 			@include transform-translate(0, 5px);
 			position: relative;
 		}
+	}
+
+	.community-page-contributor {
+		@include clearfix;
+		padding-bottom: 10px;
 	}
 
 	.user-details {
@@ -59,19 +59,19 @@
 			text-align: center;
 		}
 
-		.subtle {
+		.community-page-rank {
+			margin-right: 28px;
+		}
+
+		.community-page-subtle {
 			color: $color-rank-subtle-text;
 			font-size: 10px;
 			line-height: 12px;
 			text-transform: uppercase;
 		}
-
-		.rank {
-			margin-right: 28px;
-		}
 	}
 
-	.zero {
+	.community-page-zero {
 		margin-bottom: 13px;
 	}
 
@@ -85,7 +85,7 @@
 		.top-contributors {
 			padding: 0 $modal-horizontal-padding;
 
-			.contributor {
+			.community-page-contributor {
 				border-bottom: 2px solid $color-activity-background;
 				padding: 15px 0;
 			}

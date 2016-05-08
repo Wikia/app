@@ -3,33 +3,33 @@
 	<div class="avatar-container">
 		{{{userAvatar}}}
 	</div>
-	<div class="rank">
+	<div class="community-page-rank">
 		<span>{{userRank}} <small>/ {{weeklyEditorCount}}</small></span>
-		<span class="subtle">{{yourRankText}}</span>
+		<span class="community-page-subtle">{{yourRankText}}</span>
 	</div>
 	<div class="user-contrib-count">
 		<span>{{userContribCount}}</span>
-		<span class="subtle">{{userContributionsText}}</span>
+		<span class="community-page-subtle">{{userContributionsText}}</span>
 	</div>
 </div>
 <ul class="reset top-contributors">
 	{{#contributors}}
-		<li class="contributor">
+		<li class="community-page-contributor">
 			<div class="avatar-container">
 				<a href="{{profilePage}}">{{{avatar}}}</a>
 			</div>
-			<div class="contributor-details">
+			<div class="community-page-contributor-details">
 				{{count}}. <a href="{{profilePage}}">{{userName}}</a>
 				{{#isAdmin}}
-					<span class="subtle">{{admin}}</span>
+					<span class="community-page-subtle">{{admin}}</span>
 				{{/isAdmin}}
-				<span class="details">{{contributionsText}}</span>
+				<span class="community-page-details">{{contributionsText}}</span>
 			</div>
 
 		</li>
 	{{/contributors}}
 	{{^contributors}}
-		<div class="zero">
+		<div class="community-page-zero">
 			{{noContribsText}}
 		</div>
 	{{/contributors}}

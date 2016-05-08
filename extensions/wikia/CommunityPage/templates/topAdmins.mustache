@@ -2,26 +2,26 @@
 	<h2>{{topAdminsHeaderText}}</h2>
 	<ul class="reset">
 		{{#admins}}
-			<li class="contributor">
+			<li class="community-page-contributor">
 				<div class="avatar-container">
 					<a href="{{profilePage}}">{{{avatar}}}</a>
 				</div>
-				<div class="contributor-details">
+				<div class="community-page-contributor-details">
 					<a href="{{profilePage}}">{{userName}}</a>
 				</div>
 			</li>
 		{{/admins}}
 		{{^admins}}
-			<div class="zero">
+			<div class="community-page-zero">
 				{{noAdminText}}
 				<a href="{{noAdminHref}}">{{noAdminContactText}}</a>
 			</div>
 		{{/admins}}
 	</ul>
 	{{#haveOtherAdmins}}
-		<div class="contributor" id="openModalTopAdmins">
+		<div class="community-page-contributor" id="openModalTopAdmins">
 			<div class="avatar-container more">+{{otherAdminCount}}</div>
-			<div class="contributor-details">
+			<div class="community-page-contributor-details">
 				<a href="">{{otherAdmins}}</a>
 			</div>
 		</div>
