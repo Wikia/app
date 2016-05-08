@@ -218,7 +218,7 @@ class SearchFailuresPage extends SpecialPage{
 						$data[] = $row;
 					}
 				} catch(MWException $ex){
-					$wgOut->addHTML("<br/><br/><strong>Error: with query</strong><br/><em>$queryString</em><br/><strong>Error message: </strong>".$ex->getHtml();
+					$wgOut->addHTML("<br/><br/><strong>Error: with query</strong><br/><em>$queryString</em><br/><strong>Error message: </strong>".$ex->getHtml());
 				}
 
 				$cachedOn = date('m/d/Y \a\t g:ia');
