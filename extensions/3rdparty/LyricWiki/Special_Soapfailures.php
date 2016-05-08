@@ -44,27 +44,12 @@ $wgExtensionMessagesFiles['SpecialSoapFailures'] = dirname(__FILE__).'/Special_S
 require_once($IP . '/includes/SpecialPage.php');
 $wgSpecialPages['Soapfailures'] = 'Soapfailures';
 
-class Soapfailures extends SearchFailuresPage{
-
-	public function __construct(){
-		parent::__construct('Soapfailures');
-
-		global $wgScriptPath;
-		$this->PAGE_URL = "$wgScriptPath/Special:Soapfailures";
-		$this->CACHE_KEY_PREFIX = "LW_SOAP_FAILURES";
-		$this->TABLE_NAME = "lw_soap_failures";
-		$this->I18N_PREFIX = "soapfailures";
-		$this->API_TYPE = LW_API_TYPE_WEB;
-	}
-}
-
-
 class SearchFailuresPage extends SpecialPage{
 
-	private $CACHE_KEY_PREFIX;
-	private $TABLE_NAME;
-	private $I18N_PREFIX;
-	private $API_TYPE;
+	protected $CACHE_KEY_PREFIX;
+	protected $TABLE_NAME;
+	protected $I18N_PREFIX;
+	protected $API_TYPE;
 
 	public function __construct($specialPageName){
 		parent::__construct($specialPageName);
@@ -136,7 +121,7 @@ class SearchFailuresPage extends SpecialPage{
 				print "Deleting record... ";
 				$dbw = &wfGetDB(DB_MASTER);
 				$result = $dbw->delete(
-					$TABLE_NAME,
+					$this->TABLE_NAME,
 					[
 						'request_artist' => $artist,
 						'request_song' => $song,
@@ -150,9 +135,9 @@ class SearchFailuresPage extends SpecialPage{
 				}
 				print "<br/>Clearing the cache... ";
 
-				$wgMemc->delete($CACHE_KEY_DATA); // purge the entry from memcached
-				$wgMemc->delete($CACHE_KEY_TIME);
-				$wgMemc->delete($CACHE_KEY_STATS);
+				$wgMemc->delete($this->CACHE_KEY_DATA); // purge the entry from memcached
+				$wgMemc->delete($this->CACHE_KEY_TIME);
+				$wgMemc->delete($this->CACHE_KEY_STATS);
 
 				print "<div style='background-color:#cfc'>The song was retrieved successfully and ";
 				print "was removed from the failed requests list.";
@@ -180,9 +165,9 @@ class SearchFailuresPage extends SpecialPage{
 			$msg = "";
 			if(isset($_GET['cache']) && $_GET['cache']=="clear"){
 				$msg.= "Forced clearing of the cache...\n";
-				$wgMemc->delete($CACHE_KEY_DATA); // purge the entry from memcached
-				$wgMemc->delete($CACHE_KEY_TIME);
-				$wgMemc->delete($CACHE_KEY_STATS);
+				$wgMemc->delete($this->CACHE_KEY_DATA); // purge the entry from memcached
+				$wgMemc->delete($this->CACHE_KEY_TIME);
+				$wgMemc->delete($this->CACHE_KEY_STATS);
 				unset($_GET['cache']);
 				$_SERVER['REQUEST_URI'] = str_replace("?cache=clear", "", $_SERVER['REQUEST_URI']);
 				$_SERVER['REQUEST_URI'] = str_replace("&cache=clear", "", $_SERVER['REQUEST_URI']);
@@ -199,11 +184,11 @@ class SearchFailuresPage extends SpecialPage{
 								<input type='submit' name='fixed' value='".wfMsg($this->I18N_PREFIX.'-fixed')."'/>
 							</form><br/>");
 
-			$data = $wgMemc->get($CACHE_KEY_DATA);
-			$cachedOn = $wgMemc->get($CACHE_KEY_TIME);
-			$statsHtml = $wgMemc->get($CACHE_KEY_STATS);
+			$data = $wgMemc->get($this->CACHE_KEY_DATA);
+			$cachedOn = $wgMemc->get($this->CACHE_KEY_TIME);
+			$statsHtml = $wgMemc->get($this->CACHE_KEY_STATS);
 			if(!$data){
-				$queryString = "SELECT * FROM $TABLE_NAME ORDER BY numRequests DESC LIMIT $MAX_RESULTS";
+				$queryString = "SELECT * FROM {$this->TABLE_NAME} ORDER BY numRequests DESC LIMIT $MAX_RESULTS";
 				$data = array();
 				$dbr = wfGetDB( DB_SLAVE );
 				try{
@@ -329,3 +314,17 @@ class SearchFailuresPage extends SpecialPage{
 } // end class SearchFailuresPage
 
 
+
+class Soapfailures extends SearchFailuresPage{
+
+	public function __construct(){
+		parent::__construct('Soapfailures');
+
+		global $wgScriptPath;
+		$this->PAGE_URL = "$wgScriptPath/Special:Soapfailures";
+		$this->CACHE_KEY_PREFIX = "LW_SOAP_FAILURES";
+		$this->TABLE_NAME = "lw_soap_failures";
+		$this->I18N_PREFIX = "soapfailures";
+		$this->API_TYPE = LW_API_TYPE_WEB;
+	}
+}
