@@ -7,8 +7,7 @@ define('ext.wikia.adEngine.template.skin', [
 ], function (adContext, doc, win, log) {
 	'use strict';
 
-	var logGroup = 'ext.wikia.adengine.template.skin',
-		sevenOneMedia = adContext.getContext().providers.sevenOneMedia;
+	var logGroup = 'ext.wikia.adengine.template.skin';
 
 	/**
 	 * Show the skin ad
