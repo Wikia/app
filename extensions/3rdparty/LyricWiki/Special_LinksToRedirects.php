@@ -143,7 +143,7 @@ class Linkstoredirects extends SpecialPage{
 				while ($row = $dbr->fetchObject($res)) {
 					$totalResults++;
 					$pageId = $row->from_id;
-					$target = $row->links_to;3
+					$target = $row->links_to;
 					$allListings[] = array($pageId, $target);
 
 					// Somehow, a blank from_id can slip into the results (which messes up the query).
