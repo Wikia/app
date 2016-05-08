@@ -2478,8 +2478,8 @@ function requestStarted($funcName, $requestData){
 		if(defined('TRACK_REQUEST_RUNTIMES') && TRACK_REQUEST_RUNTIMES) {
 			$requestData = str_replace("'", "[&apos;]", $requestData);
 			
-			$dbr = wfGetDB( DB_MASTER );
-			$dbr->insert(
+			$dbw = wfGetDB( DB_MASTER );
+			$dbw->insert(
 				'apiRequests',
 				[
 					"requestedThrough" => $REQUEST_TYPE,
@@ -2489,6 +2489,7 @@ function requestStarted($funcName, $requestData){
 				],
 				__METHOD__
 			);
+			$retVal = $dbw->insertId();
 		}
 	}
 	return $retVal;

@@ -179,9 +179,11 @@ class Linkstoredirects extends SpecialPage{
 
 					$res2 = $dbr->select(
 						"page",
-						array( "page_id",
-							   "page_namespace",
-							   "page_title"),
+						[
+							"page_id",
+							"page_namespace",
+							"page_title"
+						],
 						"page_id IN (".implode(",", $ids).")",
 						__METHOD__
 					);

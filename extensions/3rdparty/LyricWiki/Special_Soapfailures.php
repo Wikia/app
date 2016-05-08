@@ -188,11 +188,16 @@ class SearchFailuresPage extends SpecialPage{
 			$cachedOn = $wgMemc->get($this->CACHE_KEY_TIME);
 			$statsHtml = $wgMemc->get($this->CACHE_KEY_STATS);
 			if(!$data){
-				$queryString = "SELECT * FROM {$this->TABLE_NAME} ORDER BY numRequests DESC LIMIT $MAX_RESULTS";
 				$data = array();
 				$dbr = wfGetDB( DB_SLAVE );
 				try{
-					$res = $dbr->query($queryString);
+					$res = $dbr->select(
+						$this->TABLE_NAME,
+						[ "request_artist", "request_song", "numRequests", "lookedFor" ],
+						"",
+						__METHOD__,
+						[ 'ORDER BY' => 'numRequests DESC', 'LIMIT' => $MAX_RESULTS ]
+					);
 					while ($resRow = $dbr->fetchObject($res)) {
 						$row = array();
 						$row['artist'] = $resRow->request_artist;
@@ -203,7 +208,7 @@ class SearchFailuresPage extends SpecialPage{
 						$data[] = $row;
 					}
 				} catch(MWException $ex){
-					$wgOut->addHTML("<br/><br/><strong>Error: with query</strong><br/><em>$queryString</em><br/><strong>Error message: </strong>".$ex->getHtml());
+					$wgOut->addHTML("<br/><br/><strong>Error getting requests in Soapfailures. Error message: </strong>".$ex->getHtml());
 				}
 
 				$cachedOn = date('m/d/Y \a\t g:ia');
