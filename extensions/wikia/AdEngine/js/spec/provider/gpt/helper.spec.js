@@ -23,6 +23,8 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 				}
 			},
 			recoveryHelper: {
+				addSlotToRecover: noop,
+				createSourcePointTag: noop,
 				recoverSlots: noop,
 				isBlocking: noop,
 				isRecoverable: noop,
@@ -55,6 +57,7 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 	mocks.googleTag.prototype.addSlot = noop;
 	mocks.googleTag.prototype.flush = noop;
 	mocks.googleTag.prototype.setPageLevelParams = noop;
+	mocks.sourcePointTag = mocks.googleTag;
 
 	function getModule() {
 		return modules['ext.wikia.adEngine.provider.gpt.helper'](

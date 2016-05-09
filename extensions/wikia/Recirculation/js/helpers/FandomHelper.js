@@ -6,7 +6,8 @@ define('ext.wikia.recirculation.helpers.fandom', [
 	'wikia.mustache'
 ], function ($, abTest, nirvana, Mustache) {
 	var options = {
-		limit: 3
+		limit: 3,
+		type: 'recent_popular'
 	};
 
 	function loadData() {
@@ -18,10 +19,15 @@ define('ext.wikia.recirculation.helpers.fandom', [
 			format: 'json',
 			type: 'get',
 			data: {
-				type: 'recent_popular'
+				type: options.type
 			},
 			callback: function(data) {
-				deferred.resolve(formatData(data));
+				data = formatData(data);
+				if (data.items && data.items.length >= options.limit ) {
+					deferred.resolve(data);
+				} else {
+					deferred.reject('Recirculation widget not shown - Not enough items returned from Fandom API');
+				}
 			}
 		});
 

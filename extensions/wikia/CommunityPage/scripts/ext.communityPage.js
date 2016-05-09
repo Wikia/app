@@ -6,7 +6,8 @@ require([
 	'wikia.nirvana',
 	'wikia.throbber',
 	'wikia.tracker'
-], function ($, uiFactory, mustache, templates, nirvana, throbber, tracker) {
+	'wikia.window'
+], function ($, uiFactory, mustache, templates, nirvana, throbber, tracker, window) {
 	'use strict';
 
 	var track = tracker.buildTrackingFunction({
@@ -173,20 +174,19 @@ require([
 		event.preventDefault();
 	});
 
-	$(document).on( 'click', '#modalTabAll', function (event) {
-		switchCommunityModalTab(tabs.TAB_ALL);
-		event.preventDefault();
-	});
-
-	$(document).on( 'click', '#modalTabAdmins', function (event) {
-		switchCommunityModalTab(tabs.TAB_ADMINS);
-		event.preventDefault();
-	});
-
-	$(document).on( 'click', '#modalTabLeaderboard', function (event) {
-		switchCommunityModalTab(tabs.TAB_LEADERBOARD);
-		event.preventDefault();
-	});
+	$(document)
+		.on( 'click', '#modalTabAll', function (event) {
+			switchCommunityModalTab(tabs.TAB_ALL);
+			event.preventDefault();
+		})
+		.on( 'click', '#modalTabAdmins', function (event) {
+			switchCommunityModalTab(tabs.TAB_ADMINS);
+			event.preventDefault();
+		})
+		.on( 'click', '#modalTabLeaderboard', function (event) {
+			switchCommunityModalTab(tabs.TAB_LEADERBOARD);
+			event.preventDefault();
+		});
 
 	function handleClick (event) {
 		var data = $(event.currentTarget).data('tracking');
