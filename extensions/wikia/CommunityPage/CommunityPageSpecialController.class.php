@@ -2,14 +2,19 @@
 
 class CommunityPageSpecialController extends WikiaSpecialPageController {
 	const DEFAULT_TEMPLATE_ENGINE = \WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
+	const INSIGHT_MODULE_ITEMS = 5;
+	const INSIGHT_MODULE_SORT_TYPE = 'pvDiff';
+
 	private $usersModel;
 	private $wikiModel;
+	private $insightsService;
 	private $userTotalContributionCount;
 
 	public function __construct() {
 		parent::__construct( 'Community' );
 		$this->usersModel = new CommunityPageSpecialUsersModel();
 		$this->wikiModel = new CommunityPageSpecialWikiModel();
+		$this->insightsService = new InsightsService();
 		$this->userTotalContributionCount = $this->usersModel->getUserContributions( $this->getUser(), false );
 	}
 
@@ -42,10 +47,47 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 			'recentlyJoined' => $this->sendRequest( 'CommunityPageSpecialController', 'getRecentlyJoinedData' )
 				->getData(),
 			'recentActivityModule' => $this->getRecentActivityData(),
+			'popularPages' => $this->getInsightModule( 'popularpages' )
 		] );
+	}
 
-		$insights =  new InsightsService();
-		var_dump($insights->getInsightPages('popularpages',5,'pvDiff')); die;
+	/**
+	 * @param string $type type of module we want to build.
+	 * @return array Insight Module
+	 */
+
+	private function getInsightModule( $type ) {
+		$insightPages['pages'] = $this->insightsService->getInsightPages(
+			$type,
+			self::INSIGHT_MODULE_ITEMS,
+			self::INSIGHT_MODULE_SORT_TYPE
+		);
+
+		$insightPages['title'] = $this->msg( 'communitypage-popularpages-title' )->text();
+		$insightPages['description'] =  $this->msg( 'communitypage-popularpages-description' )->text();
+
+		return $this->addingLastRevision( $insightPages );
+	}
+
+	/**
+	 * @param array $insightsPages
+	 * @return array Prepare message about who and when last edited given article
+	 * @throws MWException
+	 */
+
+	private function addingLastRevision( $insightsPages ) {
+		foreach ( $insightsPages['pages'] as $key => $insight ) {
+			$timestamp = wfTimestamp( TS_UNIX, $insight['metadata']['lastRevision']['timestamp'] );
+			$insightsPages['pages'][$key]['lastRevision'] = $this->msg( 'communitypage-lastrevision' )->rawParams(
+				Html::element(
+					'a',
+					['href' => $insight['metadata']['lastRevision']['userpage']],
+					$insight['metadata']['lastRevision']['username']
+				),
+				$this->getLang()->userDate( $timestamp, $this->getUser() )
+			)->escaped();
+		}
+		return $insightsPages;
 	}
 
 	public function header() {

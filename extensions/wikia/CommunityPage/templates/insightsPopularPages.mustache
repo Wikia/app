@@ -1,0 +1,12 @@
+<section class="insights-module">
+	<h3>{{popularPages.title}}</h3>
+	<p>{{popularPages.description}}</p>
+	<ul>
+		{{#popularPages.pages}}
+			<li>
+				<a href="{{link.url}}">{{link.text}}</a><br>
+				<span>{{{lastRevision}}}</span>
+			</li>
+		{{/popularPages}}
+	</ul>
+</section>

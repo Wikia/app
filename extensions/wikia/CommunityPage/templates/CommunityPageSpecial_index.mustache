@@ -14,6 +14,7 @@
 	<div class="WikiaMainContentContainer" id="WikiaMainContentContainer">
 		{{#userIsMember}}<p>Current User is a Member of this Wiki</p>{{/userIsMember}}
 		{{^userIsMember}}<p>Current User is not a member or is Anon</p>{{/userIsMember}}
+		{{>insightsPopularPages}}
 	</div>
 	<div id="WikiaRail" class="WikiaRail">
 		{{>contributorsModule}}
