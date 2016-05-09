@@ -53,5 +53,6 @@ $messages[ 'qqq' ] = [
 	'portability-dashboard-language-filter-label' => 'Label for language filter options',
 	'portability-dashboard-language-filter-all' => 'Language filter link - show all languages',
 	'portability-dashboard-special-insights-template-without-title' => 'Link title for unorganized templates on Special:Insights',
-	'portability-dashboard-special-insights-custom-infobox-title' => 'Link title for non-portable infoboxes on Special: Insights'
+	'portability-dashboard-special-insights-custom-infobox-title' => 'Link title for non-portable infoboxes on Special: Insights',
+	'portability-dashboard-refresh-frequency-info' => 'Portability data, traffic and migration impact are recalculated every wednesday at 9:00 GMT.'
 ];
