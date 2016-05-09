@@ -29,9 +29,6 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		// remove user styles and js
 		$this->getOutput()->disallowUserJs();
 
-
-
-
 		$this->response->setValues( [
 			'heroImageUrl' => $this->getHeroImageUrl(),
 			'inviteFriendsText' => $this->msg( 'communitypage-invite-friends' )->plain(),
