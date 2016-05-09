@@ -100,7 +100,6 @@ class PortableInfoboxParserTagController extends WikiaController {
 	 * @returns String $html
 	 */
 	public function renderInfobox( $text, $params, $parser, $frame ) {
-		global $wgArticleAsJson;
 		$this->markerNumber++;
 		$markup = '<' . self::PARSER_TAG_NAME . '>' . $text . '</' . self::PARSER_TAG_NAME . '>';
 
@@ -114,11 +113,6 @@ class PortableInfoboxParserTagController extends WikiaController {
 			return $this->handleError( wfMessage( 'portable-infobox-xml-parse-error-infobox-tag-attribute-unsupported', [ $e->getMessage() ] )->escaped() );
 		}
 
-		if ( $wgArticleAsJson ) {
-			// (wgArticleAsJson == true) it means that we need to encode output for use inside JSON
-			$renderedValue = trim( json_encode( $renderedValue ), '"' );
-		}
-
 		$marker = $parser->uniqPrefix() . "-" . self::PARSER_TAG_NAME . "-{$this->markerNumber}\x7f-QINU";
 		$this->markers[ $marker ] = $renderedValue;
 
@@ -126,7 +120,19 @@ class PortableInfoboxParserTagController extends WikiaController {
 	}
 
 	public function replaceMarkers( $text ) {
-		return strtr( $text, $this->markers );
+		wfProfileIn( __METHOD__ );
+
+		global $wgArticleAsJson;
+
+		if ( !empty( $wgArticleAsJson ) && !empty( $this->markers ) ) {
+			$text = $this->moveFirstInfoboxToTop( $text );
+		}
+
+		$articleWithMarkersReplaced = strtr( $text, $this->markers );
+
+		wfProfileOut( __METHOD__ );
+
+		return $articleWithMarkersReplaced;
 	}
 
 	protected function saveToParserOutput( \ParserOutput $parserOutput, Nodes\NodeInfobox $raw ) {
@@ -178,5 +184,22 @@ class PortableInfoboxParserTagController extends WikiaController {
 		}
 
 		return self::INFOBOX_LAYOUT_PREFIX . self::DEFAULT_LAYOUT_NAME;
+	}
+
+	private function moveFirstInfoboxToTop( $article ) {
+		$articleDecoded = json_decode( $article );
+
+		if ( !empty( $articleDecoded->content ) ) {
+			$firstMarker = array_keys( $this->markers )[0];
+			$firstInfobox = $this->markers[$firstMarker];
+
+			// Remove the first marker
+			$this->markers[$firstMarker] = '';
+
+			// Put the first infobox in the beginning of article content
+			$articleDecoded->content = $firstInfobox . $articleDecoded->content;
+		}
+
+		return json_encode( $articleDecoded );
 	}
 }
