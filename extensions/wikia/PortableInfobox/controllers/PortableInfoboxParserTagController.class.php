@@ -10,12 +10,12 @@ class PortableInfoboxParserTagController extends WikiaController {
 	const INFOBOX_LAYOUT_PREFIX = 'pi-layout-';
 
 	private $markerNumber = 0;
-	private $markers = [ ];
 	private $supportedLayouts = [
 		'default',
 		'stacked'
 	];
 
+	protected $markers = [ ];
 	protected static $instance;
 
 	/**
