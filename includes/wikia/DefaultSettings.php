@@ -1860,5 +1860,10 @@ $wgReviveSpotlightsCountries = null;
 /**
  * Enable SourcePoint recovery
  */
-
 include_once("$IP/extensions/wikia/ARecoveryEngine/ARecoveryEngine.setup.php");
+
+/**
+ * @name $wgMemcachedMoxiProtocol
+ * Set it to either 'ascii' or 'binary' (default: 'binary')
+ */
+$wgMemcachedMoxiProtocol = 'binary';

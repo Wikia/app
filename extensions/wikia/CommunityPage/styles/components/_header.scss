@@ -9,7 +9,7 @@
 	text-align: center;
 
 	.community-page-header-content {
-		width: 50%;
+		width: 75%;
 	}
 
 	h1 {
@@ -35,5 +35,19 @@
 			background-color: $color-button-highlight;
 			text-decoration: none;
 		}
+	}
+}
+
+.community-page-admin-welcome-message {
+	align-items: center;
+	background-color: $color-community-page-gray;
+	color: $color-text-dark;
+	display: flex;
+	justify-content: center;
+	text-align: center;
+
+	.community-page-admin-welcome-message-text {
+		margin: 30px 0;
+		max-width: 478px;
 	}
 }
