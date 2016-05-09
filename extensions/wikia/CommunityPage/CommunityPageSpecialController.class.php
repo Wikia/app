@@ -2,7 +2,10 @@
 
 class CommunityPageSpecialController extends WikiaSpecialPageController {
 	const DEFAULT_TEMPLATE_ENGINE = \WikiaResponse::TEMPLATE_ENGINE_MUSTACHE,
-		DISPLAY_COUNT_LIMIT = 999;
+		TOP_ADMINS_LIMIT = 10,
+		TOP_ADMINS_MODULE_LIMIT = 3,
+		TOP_CONTRIBUTORS_LIMIT = 5,
+		ALL_MEMBERS_LIMIT = 20;
 	private $usersModel;
 	private $wikiModel;
 	private $userTotalContributionCount;
@@ -78,7 +81,9 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 				$this->usersModel->getTopContributors( 50 )
 			);
 		// get details for only 5 of the remaining contributors
-		$contributorDetails = $this->getContributorsDetails( array_slice( $contributors, 0, 5 ) );
+		$contributorDetails = $this->getContributorsDetails(
+			array_slice( $contributors, 0, self::TOP_CONTRIBUTORS_LIMIT )
+		);
 
 		$userRank = '-';
 		$editors = count( $contributors );
@@ -125,17 +130,20 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	public function getTopAdminsData() {
 		$topAdmins = $this->usersModel->filterGlobalBots(
 			// get all admins who have contributed in the last two years ordered by contributions
-			$this->usersModel->getTopContributors( 10, false, true )
+			$this->usersModel->getTopContributors( self::TOP_ADMINS_LIMIT, false, true )
 		);
+		$topAdminsCount = count( $topAdmins );
 		$topAdminsDetails = $this->getContributorsDetails( $topAdmins );
 
-		$remainingAdminCount = count( $topAdmins ) - 2;
+		$remainingAdminCount = $topAdminsCount > self::TOP_ADMINS_MODULE_LIMIT
+			? $topAdminsCount - self::TOP_ADMINS_MODULE_LIMIT + 1
+			: 0;
 
 		$this->response->setData( [
 			'topAdminsHeaderText' => $this->msg( 'communitypage-admins' )->plain(),
 			'otherAdmins' => $this->msg( 'communitypage-other-admins' )->plain(),
-			'admins' => array_slice( $topAdminsDetails, 0, 2 ),
-			'otherAdminCount' => $remainingAdminCount <= self::DISPLAY_COUNT_LIMIT ? $remainingAdminCount : self::DISPLAY_COUNT_LIMIT,
+			'admins' => array_slice( $topAdminsDetails, 0, $topAdminsCount - $remainingAdminCount ),
+			'otherAdminCount' => $remainingAdminCount,
 			'haveOtherAdmins' => $remainingAdminCount > 0,
 			'adminCount' => count( $topAdmins ),
 			'noAdminText' => $this->msg( 'communitypage-no-admins' )->plain(),
@@ -151,7 +159,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	public function getAllAdminsData() {
 		$allAdmins = $this->usersModel->filterGlobalBots(
 			// get all admins who have contributed in the last two years ordered by contributions
-			$this->usersModel->getTopContributors( 10, false, true )
+			$this->usersModel->getTopContributors( self::TOP_ADMINS_LIMIT, false, true )
 		);
 		$topAdminsDetails = $this->getContributorsDetails( $allAdmins );
 
@@ -192,7 +200,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 			'admin' => $this->msg( 'communitypage-admin' )->plain(),
 			'joinedText' => $this->msg( 'communitypage-joined' )->plain(),
 			'noMembersText' => $this->msg( 'communitypage-no-members' )->plain(),
-			'members' => array_slice( $allMembers, 0, 20 ),
+			'members' => array_slice( $allMembers, 0, self::ALL_MEMBERS_LIMIT ),
 		] );
 	}
 
