@@ -241,4 +241,63 @@ class PortableInfoboxParserTagControllerTest extends WikiaBaseTest {
 			  [ 'abc' => 'minus one', '0' => 'zero', '1' => 'one', '2' => 'two', '3' => 'three' ] ],
 		];
 	}
+
+	/**
+	 * @dataProvider moveFirstMarkerToTopDataProvider
+	 */
+	public function testMoveFirstMarkerToTop( $markers, $text, $expected ) {
+		$this->controller->markers = $markers;
+		$this->controller->moveFirstMarkerToTop( $text );
+		$this->assertEquals( $expected, $text );
+	}
+
+	public function moveFirstMarkerToTopDataProvider() {
+		return [
+			[
+				'markers' => [
+					'infobox-1' => '1',
+					'infobox-2' => '2',
+				],
+				'text' => 'infobox-1 some text infobox-2',
+				'expected' => 'infobox-1 some text infobox-2',
+				'message' => 'first infobox already at the top'
+			],
+			[
+				'markers' => [
+					'infobox-1' => '1',
+					'infobox-2' => '2',
+				],
+				'text' => 'some text infobox-1 infobox-2',
+				'expected' => 'infobox-1 some text infobox-2',
+				'message' => 'first infobox below text'
+			],
+			[
+				'markers' => [
+					'infobox-1' => '1'
+				],
+				'text' => 'nospaceinfobox-1',
+				'expected' => 'infobox-1nospace',
+				'message' => 'no space between elements'
+			],
+			[
+				'markers' => [
+					'infobox-1' => '1',
+					'infobox-2' => '2',
+				],
+				'text' => 'some text
+						   some more
+						   infobox-1
+						   more text
+						   infobox-2
+						   and some more',
+				'expected' => 'infobox-1
+						   some text
+						   some more
+						   more text
+						   infobox-2
+						   and some more',
+				'message' => 'multiple lines'
+			],
+		];
+	}
 }
