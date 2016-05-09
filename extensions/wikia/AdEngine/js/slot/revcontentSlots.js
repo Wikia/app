@@ -11,9 +11,11 @@ define('ext.wikia.adEngine.slot.revcontentSlots', [
 		log('init', 'Init Revcontent slots', logGroup);
 
 		recoveryHelper.addOnBlockingCallback(function () {
-			win.adslots2.push(['REVCONTENT_ABOVE_ARTICLE']);
-			win.adslots2.push(['REVCONTENT_RIGHT_RAIL']);
-			win.adslots2.push(['REVCONTENT_BELOW_ARTICLE']);
+			[
+				'REVCONTENT_ABOVE_ARTICLE',
+				'REVCONTENT_RIGHT_RAIL',
+				'REVCONTENT_BELOW_ARTICLE'
+			].forEach(win.adslots2.push);
 		});
 	}
 
