@@ -20,6 +20,16 @@ class CommunityPageSpecialUsersModel {
 	}
 
 	/**
+	 * Check if a user is an admin
+	 *
+	 * @param string $group The user's group from ug_group
+	 * @return bool
+	 */
+	public function isAdmin( $group ) {
+		return strpos( $group, 'sysop' ) !== false;
+	}
+
+	/**
 	 * Get the user id and contribution count of the top n contributors to the current wiki,
 	 * optionally filtered by admins only
 	 *
@@ -60,13 +70,11 @@ class CommunityPageSpecialUsersModel {
 					->ORDER_BY( 'revision_count DESC, user_name' )
 					->LIMIT( $limit )
 					->runLoop( $db, function ( &$sqlData, $row ) {
-						$isAdmin = ( strcmp( $row->ug_group, 'sysop' ) == 0 );
-
 						$sqlData[] = [
 							'userId' => $row->user_id,
 							'userName' => $row->user_name,
 							'contributions' => $row->revision_count,
-							'isAdmin' => $isAdmin,
+							'isAdmin' => $this->isAdmin( $row->ug_group ),
 						];
 					} );
 
@@ -250,7 +258,6 @@ class CommunityPageSpecialUsersModel {
 						if ( $this->showMember( $user ) ) {
 							$avatar = AvatarService::renderAvatar( $userName, AvatarService::AVATAR_SIZE_SMALL_PLUS );
 							$dateString = strftime( '%b %e, %Y', strtotime( $row->wup_value ) );
-							$isAdmin = ( strcmp( $row->ug_group, 'sysop' ) == 0 );
 
 							$sqlData[] = [
 								'userId' => $row->wup_user,
@@ -258,7 +265,7 @@ class CommunityPageSpecialUsersModel {
 								'group' => $row->ug_group,
 								'joinDate' => $dateString,
 								'userName' => $userName,
-								'isAdmin' => $isAdmin,
+								'isAdmin' => $this->isAdmin( $row->ug_group ),
 								'avatar' => $avatar,
 								'profilePage' => $user->getUserPage()->getLocalURL(),
 							];
