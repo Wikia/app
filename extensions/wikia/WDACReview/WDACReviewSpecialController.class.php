@@ -1,5 +1,7 @@
 <?php
 
+use Wikia\Paginator\Paginator;
+
 class WDACReviewSpecialController extends WikiaSpecialPageController {
 
 	const FLAG_APPROVE = 1;
@@ -38,9 +40,10 @@ class WDACReviewSpecialController extends WikiaSpecialPageController {
 		$helper = $this->getHelper();
 
 		$this->baseUrl = $this->specialPage->getTitle()->getFullUrl();
-		$this->paginatorUrl = urldecode( $this->specialPage->getTitle()->getFullUrl( array('page'=>"%s") ) );
 		$this->toolName = $this->getToolName();
 		$this->submitUrl = $this->baseUrl;
+
+		$paginatorUrl = urldecode( $this->specialPage->getTitle()->getFullUrl() );
 
 		if( $this->wg->request->wasPosted() ) {
 			$data = $this->wg->request->getValues();
@@ -57,14 +60,10 @@ class WDACReviewSpecialController extends WikiaSpecialPageController {
 		$iPage = $this->wg->request->getVal( 'page', 1 );
 		$iCount = $helper->getCountWikisForReview();
 		$this->aCities = $helper->getCitiesForReviewList( self::WIKIS_PER_PAGE_LIMIT, $iPage-1 );
-		$this->paginator = '';
-		if ( self::WIKIS_PER_PAGE_LIMIT < $iCount ) {
-			$oPaginator = Paginator::newFromCount( $iCount, self::WIKIS_PER_PAGE_LIMIT );
-			$oPaginator->setActivePage( $iPage );
 
-			// And here we go! The %s will be replaced with the page number.
-			$this->paginator = $oPaginator->getBarHTML( $this->paginatorUrl );
-		}
+		$oPaginator = new Paginator( $iCount, self::WIKIS_PER_PAGE_LIMIT, $paginatorUrl );
+		$oPaginator->setActivePage( $iPage );
+		$this->paginator = $oPaginator->getBarHTML();
 	}
 
 

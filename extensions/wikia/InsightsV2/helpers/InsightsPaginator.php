@@ -1,5 +1,7 @@
 <?php
 
+use Wikia\Paginator\Paginator;
+
 class InsightsPaginator {
 	const INSIGHTS_LIST_MAX_LIMIT = 100;
 
@@ -58,12 +60,12 @@ class InsightsPaginator {
 	 * Prepare pagination
 	 */
 	public function getPagination() {
-		$params = array_merge( $this->getParams(), [ 'page' => '%s' ] );
+		$params = array_merge( $this->getParams() );
 		$url = urldecode( InsightsHelper::getSubpageLocalUrl( $this->subpage, $params ) );
 
-		$paginator = Paginator::newFromCount( $this->getTotal(), $this->getLimit() );
+		$paginator = new Paginator( $this->getTotal(), $this->getLimit(), $url );
 		$paginator->setActivePage( $this->getPage() + 1 );
-		$paginatorBar = $paginator->getBarHTML( $url );
+		$paginatorBar = $paginator->getBarHTML();
 
 		return $paginatorBar;
 	}
