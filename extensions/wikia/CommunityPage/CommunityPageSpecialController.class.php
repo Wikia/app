@@ -66,7 +66,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		$insightPages['title'] = $this->msg('communitypage-popularpages-title')->text();
 		$insightPages['description'] =  $this->msg('communitypage-popularpages-description')->text();
 
-		return $this->addLastRevisionInformation( $insightPages );
+		return $this->addingLastRevision( $insightPages );
 	}
 
 	/**
@@ -75,7 +75,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	 * @throws MWException
 	 */
 
-	private function addLastRevisionInformation( $insightsPages ) {
+	private function addingLastRevision( $insightsPages ) {
 		foreach ( $insightsPages['pages'] as $key => $insight ) {
 			//Prepare message about who and when last edited given article
 			$username = $insight['metadata']['lastRevision']['username'];
