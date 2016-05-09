@@ -71,18 +71,21 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 
 	/**
 	 * @param array $insightsPages
-	 * @return array
+	 * @return array Prepare message about who and when last edited given article
 	 * @throws MWException
 	 */
 
 	private function addingLastRevision( $insightsPages ) {
 		foreach ( $insightsPages['pages'] as $key => $insight ) {
-			// Prepare message about who and when last edited given article
-			$username = $insight['metadata']['lastRevision']['username'];
-			$timestamp = $this->getLang()->userDate( wfTimestamp( TS_UNIX, $insight['metadata']['lastRevision']['timestamp'] ), $this->getUser() );
-			$userPage = $insight['metadata']['lastRevision']['userpage'];
-			$userLink = Html::element( "a", ["href" => $userPage], $username );
-			$insightsPages['pages'][$key]['lastRevision'] = $this->msg( 'communitypage-lastrevision' )->rawParams( $userLink, $timestamp )->escaped();
+			$timestamp = wfTimestamp( TS_UNIX, $insight['metadata']['lastRevision']['timestamp'] );
+			$insightsPages['pages'][$key]['lastRevision'] = $this->msg( 'communitypage-lastrevision' )->rawParams(
+				Html::element(
+					'a',
+					['href' => $insight['metadata']['lastRevision']['userpage']],
+					$insight['metadata']['lastRevision']['username']
+				),
+				$this->getLang()->userDate( $timestamp, $this->getUser() )
+			)->escaped();
 		}
 		return $insightsPages;
 	}
