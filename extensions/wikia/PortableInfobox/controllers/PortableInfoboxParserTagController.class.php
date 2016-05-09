@@ -136,19 +136,9 @@ class PortableInfoboxParserTagController extends WikiaController {
 
 			// Skip if the first marker is already at the top
 			if ( strpos( $text, $firstMarker ) !== 0 ) {
-				$firstMarkerWithFollowingWhitespace = '';
-
-				$text = preg_replace_callback(
-					'/(' . $firstMarker . ')\s*/',
-					function ( $matches ) use ( &$firstMarkerWithFollowingWhitespace ) {
-						$firstMarkerWithFollowingWhitespace = $matches[0];
-						return '';
-					},
-					$text,
-					1
-				);
-
-				$text = $firstMarkerWithFollowingWhitespace . $text;
+				// Remove first marker and the following whitespace
+				$text = preg_replace( '/' . $firstMarker . '\s*/', '', $text, 1 );
+				$text = $firstMarker . ' ' . $text;
 			}
 		}
 	}
