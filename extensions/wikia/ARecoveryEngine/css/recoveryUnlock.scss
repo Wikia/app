@@ -1,4 +1,8 @@
 body #WikiaPage {
+	#NotExistingRule {
+		font-family: serif;
+	}
+
 	#WikiaPageHeader:after {
 		content: none;
 		display: none;
