@@ -1,0 +1,79 @@
+@import 'skins/shared/color';
+@import 'skins/shared/mixins/chevron';
+
+.ps-container > .ps-scrollbar-x-rail {
+	opacity: 1 !important;
+	bottom: -4px;
+
+	.ps-scrollbar-x {
+		background-color: #ccc;
+	}
+}
+
+.scroller-arrow {
+	display: block;
+	position: absolute;
+	z-index: 1;
+	background: $color-page;
+	top: 55px;
+	bottom: 35px;
+	border-radius: 2px;
+	cursor: pointer;
+
+	opacity: 0;
+
+	transition: opacity .3s ease-in-out;
+
+	.icon {
+		height: 22px;
+		position: absolute;
+		top: 50%;
+		margin-top: -11px;
+	}
+
+	&::after {
+		display: block;
+		content: ' ';
+		position: absolute;
+		background-color: $color-page;
+		top: 0;
+		bottom: 0;
+		z-index: -1;
+	}
+
+	&.scroller-disabled {
+		opacity: 0 !important;
+	}
+}
+
+.scroller-next {
+	padding-right: 35px;
+	padding-left: 15px;
+	right: -10px;
+	box-shadow: -2px 0px 4px rgba(0,0,0,0.5);
+
+	.icon {
+		@include right-chevron(30px, 2px, right, $color-links);
+	}
+
+	&::after {
+		left: 5px;
+		right: -5px;
+	}
+}
+
+.scroller-prev {
+	padding-left: 20px;
+	padding-right: 30px;
+	left: -10px;
+	box-shadow: 2px 0px 4px rgba(0,0,0,0.5);
+
+	.icon {
+		@include left-chevron(30px, 2px, left, $color-links);
+	}
+
+	&::after {
+		left: -5px;
+		right: 5px;
+	}
+}

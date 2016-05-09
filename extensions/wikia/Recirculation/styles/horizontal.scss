@@ -84,6 +84,21 @@ $recirculation-incontent-thumbnail-height: 90px;
 	}
 }
 
+.recirculation-horizontal.recirculation-scroller {
+	padding: 40px 0 25px;
+
+	.item {
+		margin-right: 20px;
+		min-width: 160px;
+	}
+
+	&:hover {
+		.scroller-arrow {
+			opacity: .95;
+		}
+	}
+}
+
 $recirculation-footer-thumbnail-width: 200px;
 $recirculation-footer-thumbnail-height: 110px;
 .recirculation-horizontal.recirculation-footer {
