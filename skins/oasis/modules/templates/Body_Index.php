@@ -67,7 +67,9 @@
 			}
 		?>
 
-		<?= !empty( $wg->AdDriverUseRevcontent ) ? $app->renderView( 'Ad', 'Index', ['slotName' => 'REVCONTENT_ABOVE_ARTICLE'] ) : '' ?>
+		<? if ( !empty( $wg->AdDriverUseRevcontent ) ): ?>
+			<div id="REVCONTENT_ABOVE_ARTICLE"></div>
+		<? endif ?>
 
 		<article id="WikiaMainContent" class="WikiaMainContent<?= !empty( $isGridLayoutEnabled ) ? $railModulesExist ? ' grid-4' : ' grid-6' : '' ?>">
 			<?php
@@ -156,7 +158,9 @@
 				}
 				?>
 
-				<?= !empty( $wg->AdDriverUseRevcontent ) ? $app->renderView( 'Ad', 'Index', ['slotName' => 'REVCONTENT_BELOW_ARTICLE', 'onLoad' => true] ) : '' ?>
+				<? if ( !empty( $wg->AdDriverUseRevcontent ) ): ?>
+					<div id="REVCONTENT_BELOW_ARTICLE"></div>
+				<? endif ?>
 
 				<?php if ( !empty( $afterContentHookText ) ) { ?>
 					<div id="WikiaArticleFooter" class="WikiaArticleFooter">

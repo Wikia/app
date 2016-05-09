@@ -1,10 +1,9 @@
 /*global define*/
 define('ext.wikia.adEngine.provider.revcontent', [
-	'ext.wikia.aRecoveryEngine.recovery.helper',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window'
-], function (recoveryHelper, doc, log, win) {
+], function (doc, log, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.revcontent',
@@ -15,7 +14,7 @@ define('ext.wikia.adEngine.provider.revcontent', [
 		};
 
 	function canHandleSlot(slotName) {
-		var res = !!slotMap[slotName] && recoveryHelper.isBlocking();
+		var res = !!slotMap[slotName];
 		log(['canHandleSlot', slotName, res], 'debug', logGroup);
 		return res;
 	}
