@@ -827,7 +827,7 @@ $config['mobile_base_ads_js'] = array(
 	)
 );
 
-$config['arecovery_lock_scss'] = array(
+$config[ARecoveryModule::ASSET_GROUP_ARECOVERY_LOCK] = array(
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => [ 'oasis' ],
 	'assets' => array(

@@ -1,8 +1,6 @@
 <?php
 
 class ARecoveryEngineHooks {
-	const ASSET_GROUP_ARECOVERY_LOCK = 'arecovery_lock_scss';
-
 	/**
 	 * Register recovery related scripts on the top
 	 *
@@ -23,7 +21,7 @@ class ARecoveryEngineHooks {
 
 	public static function onBeforePageDisplay( &$outputPage, &$skin ) {
 		if ( ARecoveryModule::isEnabled() ) {
-			Wikia::addAssetsToOutput( self::ASSET_GROUP_ARECOVERY_LOCK );
+			Wikia::addAssetsToOutput( ARecoveryModule::ASSET_GROUP_ARECOVERY_LOCK );
 		}
 
 		return true;
