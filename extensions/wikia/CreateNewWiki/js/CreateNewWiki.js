@@ -1,27 +1,17 @@
-/* global mw, ThemeDesigner */
-
-$(function () {
+require(['wikia.window', 'wikia.stringhelper', 'WikiBuilder'], function (win, stringHelper, wikiBuilder) {
 	'use strict';
-	window.wgAjaxPath = window.wgScriptPath + window.wgScript;
-	mw.loader.using('wikia.stringhelper')
-		.done(function () {
-			require(
-				[
-					'wikia.stringhelper',
-					'WikiBuilder'
-				], function (stringHelper, wikiBuilder) {
-					wikiBuilder.init(stringHelper);
-				}
-			);
-		});
+	$(function() {
+		win.wgAjaxPath = win.wgScriptPath + win.wgScript;
+		wikiBuilder.init(stringHelper);
 
-	if (window.wgOasisResponsive || window.wgOasisBreakpoints) {
-		ThemeDesigner.slideByDefaultWidth = 500;
-		ThemeDesigner.slideByItems = 3;
+		if (win.wgOasisResponsive || win.wgOasisBreakpoints) {
+			win.ThemeDesigner.slideByDefaultWidth = 500;
+			win.ThemeDesigner.slideByItems = 3;
+		} else {
+			win.ThemeDesigner.slideByDefaultWidth = 608;
+			win.ThemeDesigner.slideByItems = 4;
+		}
 
-	} else {
-		ThemeDesigner.slideByDefaultWidth = 608;
-		ThemeDesigner.slideByItems = 4;
-	}
-	ThemeDesigner.themeTabInit();
+		win.ThemeDesigner.themeTabInit();
+	})
 });
