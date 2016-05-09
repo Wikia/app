@@ -19,13 +19,17 @@ define('ext.wikia.adEngine.provider.revcontent', [
 		return res;
 	}
 
-	function fillInSlot(slot) {
-		log(['fillInSlot', slot.name], 'debug', logGroup);
+	function genSrc(slotId, widgetId) {
+		var referer = doc.referrer || doc.location.href || doc.URL;
+		referer = referer.substr(0,700);
 
-		var slotInfo = slotMap[slot.name];
-		addWidget(slotInfo.widgetId, slotInfo.rslotId, slot.name);
-
-		log(['fillInSlot', slot.name, 'done'], 'debug', logGroup);
+		return 'http://trends.revcontent.com/serve.js.php' +
+			'?w=' + widgetId +
+			'&t=' + slotId +
+			'&c=' + (new Date()).getTime() +
+			'&width=' + (win.outerWidth || doc.documentElement.clientWidth) +
+			'&referer=' + referer +
+			'&is_blocked=true';
 	}
 
 	function addWidget(widgetId, rslotId, slotName) {
@@ -47,19 +51,13 @@ define('ext.wikia.adEngine.provider.revcontent', [
 		rparent.appendChild(rslot);
 	}
 
-	function genSrc(slotId, widgetId) {
-		var referer = doc.referrer
-				|| doc.location.href
-				|| doc.URL;
-		referer = referer.substr(0,700);
+	function fillInSlot(slot) {
+		log(['fillInSlot', slot.name], 'debug', logGroup);
 
-		return 'http://trends.revcontent.com/serve.js.php' +
-			'?w=' + widgetId +
-			'&t=' + slotId +
-			'&c=' + (new Date()).getTime() +
-			'&width=' + (win.outerWidth || doc.documentElement.clientWidth) +
-			'&referer=' + referer +
-			'&is_blocked=true';
+		var slotInfo = slotMap[slot.name];
+		addWidget(slotInfo.widgetId, slotInfo.rslotId, slot.name);
+
+		log(['fillInSlot', slot.name, 'done'], 'debug', logGroup);
 	}
 
 	return {

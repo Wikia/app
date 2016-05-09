@@ -4,6 +4,7 @@ define('ext.wikia.adEngine.slot.revcontentSlots', [
 	'wikia.log',
 	'wikia.window'
 ], function (recoveryHelper, log, win) {
+	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.slot.revcontentSlots';
 
