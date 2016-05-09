@@ -28,12 +28,12 @@ class CommunityPageSpecialUsersModel {
 	 * @param bool $onlyAdmins Whether to filter by admins
 	 * @return Mixed|null
 	 */
-	public static function getTopContributors( $limit = 10, $weekly = true, $onlyAdmins = false ) {
+	public function getTopContributors( $limit = 10, $weekly = true, $onlyAdmins = false ) {
 		$data = WikiaDataAccess::cache(
 			wfMemcKey( self::TOP_CONTRIB_MCACHE_KEY, $limit, $weekly, $onlyAdmins ),
 			WikiaResponse::CACHE_STANDARD,
 			function () use ( $limit, $weekly, $onlyAdmins ) {
-				global $wgExternalSharedDB;
+				global $wgExternalSharedDB, $wgDBcluster;
 				$db = wfGetDB( DB_SLAVE );
 				$adminFilter = '';
 				if ( $onlyAdmins ) {
@@ -48,9 +48,9 @@ class CommunityPageSpecialUsersModel {
 				}
 
 				$sqlData = ( new WikiaSQL() )
-					->SELECT( 'user_name, user_id, count(rev_id) AS revision_count' )
+					->SELECT( 'user_name, user_id, ug_group, count(rev_id) AS revision_count' )
 					->FROM ( 'revision FORCE INDEX (user_timestamp)' )
-					->LEFT_JOIN( $wgExternalSharedDB . '.user' )->ON( '(rev_user <> 0) AND (user_id = rev_user)' )
+					->LEFT_JOIN( $wgExternalSharedDB . '_' . $wgDBcluster . '.user' )->ON( '(rev_user <> 0) AND (user_id = rev_user)' )
 					->LEFT_JOIN( 'user_groups ON (user_id = ug_user)' )
 					->WHERE( 'user_id' )->IS_NOT_NULL()
 					->AND_( $dateFilter )
@@ -60,10 +60,13 @@ class CommunityPageSpecialUsersModel {
 					->ORDER_BY( 'revision_count DESC, user_name' )
 					->LIMIT( $limit )
 					->runLoop( $db, function ( &$sqlData, $row ) {
+						$isAdmin = ( strcmp( $row->ug_group, 'sysop' ) == 0 );
+
 						$sqlData[] = [
 							'userId' => $row->user_id,
 							'userName' => $row->user_name,
 							'contributions' => $row->revision_count,
+							'isAdmin' => $isAdmin,
 						];
 					} );
 
@@ -73,7 +76,7 @@ class CommunityPageSpecialUsersModel {
 		return $data;
 	}
 
-	public static function getGlobalBotIds() {
+	public function getGlobalBotIds() {
 		$botIds = WikiaDataAccess::cache(
 			wfMemcKey( self::GLOBAL_BOTS_MCACHE_KEY ),
 			WikiaResponse::CACHE_STANDARD,
@@ -97,8 +100,8 @@ class CommunityPageSpecialUsersModel {
 		return $botIds;
 	}
 
-	public static function filterGlobalBots( array $users ) {
-		$botIds = self::getGlobalBotIds();
+	public function filterGlobalBots( array $users ) {
+		$botIds = $this->getGlobalBotIds();
 
 		return array_filter( $users, function ( $user ) use ( $botIds ) {
 			$userIdIsBot = in_array( $user['userId'], $botIds );

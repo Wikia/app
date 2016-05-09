@@ -103,6 +103,7 @@ $config['adengine2_desktop_js'] = array(
 		'//extensions/wikia/AdEngine/js/slot/skyScraper3.js',
 		'//extensions/wikia/AdEngine/js/template/floor.js',
 		'//extensions/wikia/AdEngine/js/template/floorAdhesion.js',
+		'//extensions/wikia/AdEngine/js/template/interstitial.js',
 		'//extensions/wikia/AdEngine/js/template/modal.js',
 		'//extensions/wikia/AdEngine/js/template/modalHandlerFactory.js',
 		'//extensions/wikia/AdEngine/js/template/modalOasisHandler.js',
@@ -113,14 +114,12 @@ $config['adengine2_desktop_js'] = array(
 
 		// was: late queue
 		'//extensions/wikia/AdEngine/js/OoyalaTracking.js',
-		'//extensions/wikia/AdEngine/js/SevenOneMediaHelper.js',
 		'//extensions/wikia/AdEngine/js/WikiaDartVideoHelper.js',
 		'//extensions/wikia/AdEngine/js/TaboolaHelper.js',
 		'//extensions/wikia/AdEngine/js/provider/evolve2.js',
 		'//extensions/wikia/AdEngine/js/provider/hitMedia.js',
 		'//extensions/wikia/AdEngine/js/provider/liftium.js',
 		'//extensions/wikia/AdEngine/js/provider/monetizationService.js',
-		'//extensions/wikia/AdEngine/js/provider/sevenOneMedia.js',
 
 		'//extensions/wikia/AdEngine/js/run/desktop.run.js',
 	),
@@ -272,8 +271,6 @@ $config['oasis_noads_extensions_js'] = array(
 		'//extensions/wikia/EditorSurvey/js/EditorSurvey.js',
 		// Image and video thumbnail mustache templates
 		'//extensions/wikia/Thumbnails/scripts/templates.mustache.js',
-		// handlebars - uncomment this when introducing first client-side rendered handlebars template
-		// '//resources/wikia/libraries/handlebars/handlebars.js',
 		'//extensions/wikia/JSSnippets/js/JSSnippets.js',
 	)
 );

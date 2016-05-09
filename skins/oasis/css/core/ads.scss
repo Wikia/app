@@ -7,13 +7,14 @@
 @import 'skins/shared/mixins/transform';
 @import 'ads-floor';
 @import 'ads-in-content';
+@import 'ads-interstitial';
+@import 'ads-invisible-high-impact';
 
 $wikia-top-ads-index: 2;
 $taboola-small-breakpoint: "#{$screen} and (max-width: 420px)";
 
 /** Hide invisible slots and 1x1 iframes **/
 #INVISIBLE_SKIN,
-#InvisibleHighImpactWrapper.hidden,
 .wikia-ad.hidden,
 .wikia-ad .hidden {
 	display: none !important;

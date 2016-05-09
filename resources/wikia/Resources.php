@@ -219,11 +219,6 @@ return [
 		]
 	],
 
-	'wikia.handlebars' => [
-		'scripts' => 'resources/wikia/libraries/handlebars/handlebars.js',
-		'dependencies' => 'amd',
-	],
-
 	'wikia.stringhelper' => [
 		'scripts' => 'resources/wikia/modules/stringhelper.js',
 		'dependencies' => 'amd',
@@ -253,11 +248,6 @@ return [
 	'jquery.mustache' => [
 		'scripts' => 'resources/wikia/libraries/mustache/jquery.mustache.js',
 		'dependencies' => 'wikia.mustache',
-	],
-
-	'jquery.handlebars' => [
-		'scripts' => 'resources/wikia/libraries/handlebars/jquery.handlebars.js',
-		'dependencies' => 'wikia.handlebars',
 	],
 
 	'jquery.autocomplete' => [

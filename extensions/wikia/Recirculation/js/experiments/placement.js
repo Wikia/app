@@ -98,6 +98,20 @@ require([
 			helper = fandomHelper();
 			view = footerView();
 			break;
+		case 'FANDOM_GENRE':
+			helper = fandomHelper({
+				type: 'vertical'
+			});
+			view = railView();
+			isRail = true;
+			break;
+		case 'FANDOM_TOPIC':
+			helper = fandomHelper({
+				type: 'community'
+			});
+			view = railView();
+			isRail = true;
+			break;
 		case 'LINKS_RAIL':
 			helper = contentLinksHelper();
 			view = railView();

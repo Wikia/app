@@ -173,7 +173,7 @@ class OasisController extends WikiaController {
 		wfProfileIn(__METHOD__ . ' - skin Operations');
 		// add skin theme name
 		if(!empty($skin->themename)) {
-			$bodyClasses[] = "oasis-{$skin->themename}";
+			$bodyClasses[] = Sanitizer::escapeClass( "oasis-{$skin->themename}" );
 		}
 
 		// mark dark themes
