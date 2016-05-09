@@ -29,7 +29,7 @@ $messages[ 'en' ] = [
 	'portability-dashboard-language-filter-all' => 'all',
 	'portability-dashboard-special-insights-template-without-title' => 'Unorganized templates on Special:Insights',
 	'portability-dashboard-special-insights-custom-infobox-title' => 'Non-portable infoboxes on Special:Insights',
-    'portability-dashboard-refresh-frequency-info' => 'Portability data, traffic and migration impact are recalculated every wednesday at 9:00 GMT.'
+    'portability-dashboard-refresh-frequency-info' => 'Portability data, traffic and migration impact are recalculated every Wednesday at 9:00 GMT.'
 ];
 
 $messages[ 'qqq' ] = [
@@ -54,5 +54,5 @@ $messages[ 'qqq' ] = [
 	'portability-dashboard-language-filter-all' => 'Language filter link - show all languages',
 	'portability-dashboard-special-insights-template-without-title' => 'Link title for unorganized templates on Special:Insights',
 	'portability-dashboard-special-insights-custom-infobox-title' => 'Link title for non-portable infoboxes on Special: Insights',
-	'portability-dashboard-refresh-frequency-info' => 'Portability data, traffic and migration impact are recalculated every wednesday at 9:00 GMT.'
+	'portability-dashboard-refresh-frequency-info' => 'Portability data, traffic and migration impact are recalculated every Wednesday at 9:00 GMT.'
 ];
