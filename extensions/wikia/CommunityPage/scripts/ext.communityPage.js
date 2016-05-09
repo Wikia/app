@@ -188,11 +188,12 @@ require([
 			event.preventDefault();
 		});
 
-	function handleClick (event) {
+	function handleClick (event, category) {
 		var data = $(event.currentTarget).data('tracking');
 
 		if (typeof(data) !== 'undefined') {
 			track({
+				category: category,
 				label: data,
 			});
 		}
@@ -200,12 +201,16 @@ require([
 
 	function initTracking() {
 		// Track clicks in contribution module
-		$('.ContributorsModule').on('mousedown touchstart', 'a', handleClick);
+		$('.ContributorsModule').on('mousedown touchstart', 'a', function (event) {
+			handleClick(event, 'community-page-contribution-module');
+		});
 	}
 
 	function initModalTracking() {
 		// Track clicks in contribution modal
-		$('#CommunityPageModalDialog').on('mousedown touchstart', 'a', handleClick);
+		$('#CommunityPageModalDialog').on('mousedown touchstart', 'a', function (event) {
+			handleClick(event, 'community-page-contribution-modal');
+		});
 
 		// Track clicks on modal close button
 		$('.close[title=\'close\']').on('mousedown touchstart', function () {
