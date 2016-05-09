@@ -51,21 +51,39 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		] );
 	}
 
+	/**
+	 * @param string $type type of module we want to build.
+	 * @return array Insight Module
+	 */
+
 	private function getInsightModule( $type ) {
-		$insightPages = $this->insightsService->getInsightPages(
+		$insightPages['pages'] = $this->insightsService->getInsightPages(
 			$type,
 			self::INSIGHT_MODULE_ITEMS,
 			self::INSIGHT_MODULE_SORT_TYPE
 		);
 
-		return $this->prepareInsightModule( $insightPages );
+		$insightPages['title'] = $this->msg('communitypage-popularpages-title')->text();
+		$insightPages['description'] =  $this->msg('communitypage-popularpages-description')->text();
+
+		return $this->addLastRevisionInformation( $insightPages );
 	}
 
-	private function prepareInsightModule( $insightsPages ) {
-		foreach ( $insightsPages as $key => $insight ) {
-			//Prepare message about who and when last edited given article
-		}
+	/**
+	 * @param array $insightsPages
+	 * @return array
+	 * @throws MWException
+	 */
 
+	private function addLastRevisionInformation( $insightsPages ) {
+		foreach ( $insightsPages['pages'] as $key => $insight ) {
+			//Prepare message about who and when last edited given article
+			$username = $insight['metadata']['lastRevision']['username'];
+			$timestamp = $this->getLang()->userDate(wfTimestamp(TS_UNIX,$insight['metadata']['lastRevision']['timestamp']),$this->getUser());
+			$userPage = $insight['metadata']['lastRevision']['userpage'];
+			$userLink = Html::element("a",["href"=>$userPage],$username);
+			$insightsPages['pages'][$key]['lastRevision'] = $this->msg('communitypage-lastrevision')->rawParams($userLink,$timestamp)->escaped();
+		}
 		return $insightsPages;
 	}
 
