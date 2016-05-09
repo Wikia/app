@@ -63,8 +63,8 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 			self::INSIGHT_MODULE_SORT_TYPE
 		);
 
-		$insightPages['title'] = $this->msg('communitypage-popularpages-title')->text();
-		$insightPages['description'] =  $this->msg('communitypage-popularpages-description')->text();
+		$insightPages['title'] = $this->msg( 'communitypage-popularpages-title' )->text();
+		$insightPages['description'] =  $this->msg( 'communitypage-popularpages-description' )->text();
 
 		return $this->addingLastRevision( $insightPages );
 	}
@@ -77,12 +77,12 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 
 	private function addingLastRevision( $insightsPages ) {
 		foreach ( $insightsPages['pages'] as $key => $insight ) {
-			//Prepare message about who and when last edited given article
+			// Prepare message about who and when last edited given article
 			$username = $insight['metadata']['lastRevision']['username'];
-			$timestamp = $this->getLang()->userDate(wfTimestamp(TS_UNIX,$insight['metadata']['lastRevision']['timestamp']),$this->getUser());
+			$timestamp = $this->getLang()->userDate( wfTimestamp( TS_UNIX, $insight['metadata']['lastRevision']['timestamp'] ), $this->getUser() );
 			$userPage = $insight['metadata']['lastRevision']['userpage'];
-			$userLink = Html::element("a",["href"=>$userPage],$username);
-			$insightsPages['pages'][$key]['lastRevision'] = $this->msg('communitypage-lastrevision')->rawParams($userLink,$timestamp)->escaped();
+			$userLink = Html::element( "a", ["href" => $userPage], $username );
+			$insightsPages['pages'][$key]['lastRevision'] = $this->msg( 'communitypage-lastrevision' )->rawParams( $userLink, $timestamp )->escaped();
 		}
 		return $insightsPages;
 	}
