@@ -56,7 +56,6 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	 * @param string $type type of module we want to build.
 	 * @return array Insight Module
 	 */
-
 	private function getInsightModule( $type ) {
 		$insightPages['pages'] = $this->insightsService->getInsightPages(
 			$type,
@@ -67,7 +66,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		$insightPages['title'] = $this->msg( 'communitypage-popularpages-title' )->text();
 		$insightPages['description'] =  $this->msg( 'communitypage-popularpages-description' )->text();
 
-		return $this->addingLastRevision( $insightPages );
+		return $this->addLastRevision( $insightPages );
 	}
 
 	/**
@@ -75,8 +74,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	 * @return array Prepare message about who and when last edited given article
 	 * @throws MWException
 	 */
-
-	private function addingLastRevision( $insightsPages ) {
+	private function addLastRevision( $insightsPages ) {
 		foreach ( $insightsPages['pages'] as $key => $insight ) {
 			$timestamp = wfTimestamp( TS_UNIX, $insight['metadata']['lastRevision']['timestamp'] );
 			$insightsPages['pages'][$key]['lastRevision'] = $this->msg( 'communitypage-lastrevision' )->rawParams(
@@ -87,13 +85,14 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 				),
 				$this->getLang()->userDate( $timestamp, $this->getUser() )
 			)->escaped();
+			$noOfView = $insight['metadata']['pv7'];
+			$insightsPages['pages'][$key]['pv7'] = $this->msg('communitypage-noofviews',$noOfView)->text();
 		}
 		return $insightsPages;
 	}
 
 	public function header() {
 		$isMember = ( $this->userTotalContributionCount > 0 );
-
 		$this->response->setValues( [
 			'inviteFriendsText' => $this->msg( 'communitypage-invite-friends' )->plain(),
 			'headerWelcomeMsg' => $this->msg( 'communitypage-tasks-header-welcome' )->plain(),
@@ -111,7 +110,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 			'statEditorsNumber' => $this->wikiModel->getWikiEditorCount(),
 		] );
 	}
-	
+
 	/**
 	 * Set context for contributorsModule template. Needs to be passed through the index method in order to work.
 	 * @return array
