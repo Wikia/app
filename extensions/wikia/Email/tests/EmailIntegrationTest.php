@@ -12,6 +12,7 @@ class EmailIntegrationTest extends WikiaBaseTest {
 	function setUp() {
 		$this->setupFile = __DIR__ . '/../Email.setup.php';
 		parent::setUp();
+		require_once( __DIR__ . '/../../../../includes/HttpFunctions.php' );
 	}
 
 	/**
