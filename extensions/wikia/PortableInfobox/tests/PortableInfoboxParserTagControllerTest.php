@@ -276,8 +276,8 @@ class PortableInfoboxParserTagControllerTest extends WikiaBaseTest {
 					'infobox-1' => '1'
 				],
 				'text' => 'nospaceinfobox-1',
-				'expected' => 'infobox-1nospace',
-				'message' => 'no space between elements'
+				'expected' => 'infobox-1 nospace',
+				'message' => 'no space between input elements'
 			],
 			[
 				'markers' => [
@@ -290,8 +290,7 @@ class PortableInfoboxParserTagControllerTest extends WikiaBaseTest {
 						   more text
 						   infobox-2
 						   and some more',
-				'expected' => 'infobox-1
-						   some text
+				'expected' => 'infobox-1 some text
 						   some more
 						   more text
 						   infobox-2
