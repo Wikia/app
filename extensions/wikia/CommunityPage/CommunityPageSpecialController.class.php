@@ -24,7 +24,6 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		$this->addAssets();
 
 		$this->wg->SuppressPageHeader = true;
-		$this->wg->SuppressWikiHeader = true;
 		$this->wg->SuppressFooter = true;
 
 		// queue i18n messages for export to JS
@@ -34,7 +33,9 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		$this->getOutput()->disallowUserJs();
 
 		$this->response->setValues( [
-			'adminWelcomeMsg' => $this->msg( 'communitypage-tasks-admin-welcome' )->text(),
+			'inviteFriendsText' => $this->msg( 'communitypage-invite-friends' )->plain(),
+			'headerWelcomeMsg' => $this->msg( 'communitypage-tasks-header-welcome' )->plain(),
+			'adminWelcomeMsg' => $this->msg( 'communitypage-admin-welcome-message' )->text(),
 			'pageListEmptyText' => $this->msg( 'communitypage-page-list-empty' )->plain(),
 			'showPopupMessage' => true,
 			'popupMessageText' => 'This is just a test message for the popup message box',
@@ -110,7 +111,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 			'statEditorsNumber' => $this->wikiModel->getWikiEditorCount(),
 		] );
 	}
-
+	
 	/**
 	 * Set context for contributorsModule template. Needs to be passed through the index method in order to work.
 	 * @return array
@@ -144,6 +145,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		}
 
 		$this->response->setData( [
+			'admin' => $this->msg( 'communitypage-admin' )->plain(),
 			'topContribsHeaderText' => $this->msg( 'communitypage-top-contributors-week' )->plain(),
 			'yourRankText' => $this->msg( 'communitypage-user-rank' )->plain(),
 			'userContributionsText' => $this->msg( 'communitypage-user-contributions' )
@@ -330,6 +332,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 					->numParams( $contributor['contributions'] )->text(),
 				'profilePage' => $user->getUserPage()->getLocalURL(),
 				'count' => $count,
+				'isAdmin' => $contributor['isAdmin'],
 			];
 		} , $contributors );
 	}

@@ -3,8 +3,10 @@ require([
 	'wikia.ui.factory',
 	'wikia.mustache',
 	'communitypage.templates.mustache',
-	'wikia.nirvana'
-], function ($, uiFactory, mustache, templates, nirvana) {
+	'wikia.nirvana',
+	'wikia.throbber',
+	'wikia.window'
+], function ($, uiFactory, mustache, templates, nirvana, throbber, window) {
 	'use strict';
 
 	// "private" vars - don't access directly. Use getUiModalInstance().
@@ -25,7 +27,7 @@ require([
 		},
 		TAB_LEADERBOARD: {
 			className: '.modal-nav-leaderboard',
-			template: 'topContributors',
+			template: 'topContributorsModal',
 			request: 'getTopContributorsData',
 			cachedData: null,
 		},
@@ -85,7 +87,7 @@ require([
 				controller: 'CommunityPageSpecial',
 				method: tab.request,
 				format: 'json',
-				type: 'get'
+				type: 'get',
 			}).then(function (response) {
 				if (response.hasOwnProperty('members')) {
 					allMembersCount = response.members.length;
@@ -124,15 +126,12 @@ require([
 				}
 			};
 			uiModal.createComponent(createPageModalConfig, function (modal) {
-				var loading = mustache.render(templates.modalLoadingScreen, {
-						loadingText: $.msg('communitypage-modal-tab-loading'),
-					}),
-					html = navHtml + loading;
-
 				modal.$content
 					.addClass('ContributorsModule ContributorsModuleModal')
-					.html(html)
+					.html(navHtml + mustache.render(templates.modalLoadingScreen))
 					.find(tabToActivate.className).children().addClass('active');
+
+				throbber.show($('.throbber-placeholder'));
 
 				modal.show();
 
@@ -143,26 +142,17 @@ require([
 	}
 
 	function switchCommunityModalTab(tabToActivate) {
-		if (tabToActivate === activeTab) {
-			return;
-		}
-
 		getModalNavHtml().then(function (navHtml) {
 			// Switch highlight to new tab
-			var loading = mustache.render(templates.modalLoadingScreen, {
-					loadingText: mw.html.escape($.msg('communitypage-modal-tab-loading')),
-				}),
-				html = navHtml + loading;
-
 			window.activeModal.$content
-				.html(html)
+				.html(navHtml + mustache.render(templates.modalLoadingScreen))
 				.find(tabToActivate.className).children().addClass('active');
 
-			getModalTabContentsHtml(tabToActivate).then(function (tabContentHtml) {
-				html = navHtml + tabContentHtml;
+			throbber.show($('.throbber-placeholder'));
 
+			getModalTabContentsHtml(tabToActivate).then(function (tabContentHtml) {
 				window.activeModal.$content
-					.html(html)
+					.html(navHtml + tabContentHtml)
 					.find(tabToActivate.className).children().addClass('active');
 
 				updateModalHeader();
@@ -176,20 +166,19 @@ require([
 		event.preventDefault();
 	});
 
-	$(document).on( 'click', '#modalTabAll', function (event) {
-		switchCommunityModalTab(tabs.TAB_ALL);
-		event.preventDefault();
-	});
-
-	$(document).on( 'click', '#modalTabAdmins', function () {
-		switchCommunityModalTab(tabs.TAB_ADMINS);
-		event.preventDefault();
-	});
-
-	$(document).on( 'click', '#modalTabLeaderboard', function () {
-		switchCommunityModalTab(tabs.TAB_LEADERBOARD);
-		event.preventDefault();
-	});
+	$(document)
+		.on( 'click', '#modalTabAll', function (event) {
+			switchCommunityModalTab(tabs.TAB_ALL);
+			event.preventDefault();
+		})
+		.on( 'click', '#modalTabAdmins', function (event) {
+			switchCommunityModalTab(tabs.TAB_ADMINS);
+			event.preventDefault();
+		})
+		.on( 'click', '#modalTabLeaderboard', function (event) {
+			switchCommunityModalTab(tabs.TAB_LEADERBOARD);
+			event.preventDefault();
+		});
 
 
 	$(function () {
