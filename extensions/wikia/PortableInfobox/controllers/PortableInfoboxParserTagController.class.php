@@ -133,7 +133,23 @@ class PortableInfoboxParserTagController extends WikiaController {
 	public function moveFirstMarkerToTop( &$text ) {
 		if ( !empty( $this->markers ) ) {
 			$firstMarker = array_keys( $this->markers )[0];
-			$text = $firstMarker . str_replace( $firstMarker, '', $text );
+
+			// Skip if the first marker is already at the top
+			if ( strpos( $text, $firstMarker ) !== 0 ) {
+				$firstMarkerWithFollowingWhitespace = '';
+
+				$text = preg_replace_callback(
+					'/(' . $firstMarker . ')\s*/',
+					function ( $matches ) use ( &$firstMarkerWithFollowingWhitespace ) {
+						$firstMarkerWithFollowingWhitespace = $matches[0];
+						return '';
+					},
+					$text,
+					1
+				);
+
+				$text = $firstMarkerWithFollowingWhitespace . $text;
+			}
 		}
 	}
 
