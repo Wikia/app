@@ -8,7 +8,7 @@
 $messages = [ ];
 
 $messages[ 'en' ] = [
-	'portability-dashboard-hover-info' => 'Hover over table column headers to get more context',
+	'portability-dashboard-hover-info' => 'Hover over table column headers to get more context.',
 	'portability-dashboard-community-header' => 'Community',
 	'portability-dashboard-community-desc' => 'Link to this Community main page',
 	'portability-dashboard-lang-header' => 'Language',
@@ -28,7 +28,8 @@ $messages[ 'en' ] = [
 	'portability-dashboard-language-filter-label' => 'Filter table by language',
 	'portability-dashboard-language-filter-all' => 'all',
 	'portability-dashboard-special-insights-template-without-title' => 'Unorganized templates on Special:Insights',
-	'portability-dashboard-special-insights-custom-infobox-title' => 'Non-portable infoboxes on Special:Insights'
+	'portability-dashboard-special-insights-custom-infobox-title' => 'Non-portable infoboxes on Special:Insights',
+    'portability-dashboard-refresh-frequency-info' => 'Portability data, traffic and migration impact are recalculated every wednesday at 9:00 GMT.'
 ];
 
 $messages[ 'qqq' ] = [
