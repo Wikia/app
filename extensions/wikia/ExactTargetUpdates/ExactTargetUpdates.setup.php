@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Sends push updates to ExactTarget.com on various hooks.
  * The goal is to keep the data in ExactTarget mailing tool fresh.
