@@ -18,12 +18,6 @@ class AdEngine2ContextService {
 			$wikiaPageType = new WikiaPageType();
 			$pageType = $wikiaPageType->getPageType();
 
-			$sevenOneMediaCombinedUrl = null;
-			if ( !empty( $wg->AdDriverUseSevenOneMedia ) ) {
-				// TODO: implicitly gets the skin from the context!
-				$sevenOneMediaCombinedUrl = ResourceLoader::makeCustomURL( $wg->Out, ['wikia.ext.adengine.sevenonemedia'], 'scripts' );
-			}
-
 			$monetizationServiceAds = null;
 			if ( !empty( $wg->AdDriverUseMonetizationService ) && !empty( $wg->EnableMonetizationModuleExt ) ) {
 				$monetizationServiceAds = F::app()->sendRequest( 'MonetizationModule', 'index' )->getData()['data'];
@@ -54,7 +48,6 @@ class AdEngine2ContextService {
 					'paidAssetDropConfig' => $wg->PaidAssetDropConfig, // @see extensions/wikia/PaidAssetDrop
 					'showAds' => $adPageTypeService->areAdsShowableOnPage(),
 					'trackSlotState' => $wg->AdDriverTrackState,
-					'usePostScribe' => $wg->Request->getBool( 'usepostscribe', false ),
 					'sourcePointDetectionUrl' => $sourcePointDetectionUrl,
 					'sourcePointRecoveryUrl' => $sourcePointRecoveryUrl,
 					'yavliUrl' => $yavliUrl,
@@ -69,7 +62,6 @@ class AdEngine2ContextService {
 					'pageIsHub' => $wikiaPageType->isWikiaHub(),
 					'pageName' => $title->getPrefixedDBKey(),
 					'pageType' => $pageType,
-					'sevenOneMediaSub2Site' => $wg->AdDriverSevenOneMediaOverrideSub2Site,
 					'skin' => $skinName,
 					'wikiCategory' => $wikiFactoryHub->getCategoryShort( $wg->CityId ),
 					'wikiCustomKeyValues' => $wg->DartCustomKeyValues,
@@ -84,8 +76,6 @@ class AdEngine2ContextService {
 					'evolve2' => $wg->AdDriverUseEvolve2,
 					'monetizationService' => $wg->AdDriverUseMonetizationService,
 					'monetizationServiceAds' => $monetizationServiceAds,
-					'sevenOneMedia' => $wg->AdDriverUseSevenOneMedia,
-					'sevenOneMediaCombinedUrl' => $sevenOneMediaCombinedUrl,
 					'taboola' => $wg->AdDriverUseTaboola && $pageType === 'article',
 				] ),
 				'slots' => $this->filterOutEmptyItems( [

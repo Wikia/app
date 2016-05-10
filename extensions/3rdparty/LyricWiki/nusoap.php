@@ -666,7 +666,7 @@ class soap_fault extends nusoap_base {
     * @param string $faultstring human readable error message
     * @param string $faultdetail
 	*/
-	function soap_fault($faultcode,$faultactor='',$faultstring='',$faultdetail=''){
+	function __construct($faultcode,$faultactor='',$faultstring='',$faultdetail=''){
 		$this->faultcode = $faultcode;
 		$this->faultactor = $faultactor;
 		$this->faultstring = $faultstring;
@@ -746,7 +746,7 @@ class XMLSchema extends nusoap_base  {
 	* @param	string $namespaces namespaces defined in enclosing XML
 	* @access   public
 	*/
-	function XMLSchema($schema='',$xml='',$namespaces=array()){
+	function __construct($schema='',$xml='',$namespaces=array()){
 
 		$this->debug('xmlschema class instantiated, inside constructor');
 		// files
@@ -1478,7 +1478,7 @@ class soapval extends nusoap_base {
 	* @param	array $attributes associative array of attributes to add to element serialization
 	* @access   public
 	*/
-  	function soapval($name='soapval',$type=false,$value=-1,$element_ns=false,$type_ns=false,$attributes=false) {
+  	function __construct($name='soapval',$type=false,$value=-1,$element_ns=false,$type_ns=false,$attributes=false) {
 		$this->name = $name;
 		$this->value = $value;
 		$this->type = $type;
@@ -1543,7 +1543,7 @@ class soap_transport_http extends nusoap_base {
 	/**
 	* constructor
 	*/
-	function soap_transport_http($url){
+	function __construct($url){
 		$this->url = $url;
 
 		$u = parse_url($url);
@@ -2229,7 +2229,7 @@ class soap_server extends nusoap_base {
     * @param mixed $wsdl file path or URL (string), or wsdl instance (object)
 	* @access   public
 	*/
-	function soap_server($wsdl=false){
+	function __construct($wsdl=false){
 
 		// turn on debugging?
 		global $debug;
@@ -3053,7 +3053,7 @@ class wsdl extends nusoap_base {
 	 * @param integer $response_timeout set the response timeout
      * @access public
      */
-    function wsdl($wsdl = '',$proxyhost=false,$proxyport=false,$proxyusername=false,$proxypassword=false,$timeout=0,$response_timeout=30){
+    function __construct($wsdl = '',$proxyhost=false,$proxyport=false,$proxyusername=false,$proxypassword=false,$timeout=0,$response_timeout=30){
         $this->wsdl = $wsdl;
         $this->proxyhost = $proxyhost;
         $this->proxyport = $proxyport;
@@ -4339,7 +4339,7 @@ class soap_parser extends nusoap_base {
 	* @param    string $decode_utf8 whether to decode UTF-8 to ISO-8859-1
 	* @access   public
 	*/
-	function soap_parser($xml,$encoding='UTF-8',$method='',$decode_utf8=true){
+	function __construct($xml,$encoding='UTF-8',$method='',$decode_utf8=true){
 		$this->xml = $xml;
 		$this->xml_encoding = $encoding;
 		$this->method = $method;
@@ -4873,7 +4873,7 @@ class nusoapclient extends nusoap_base  {
 	* @param	integer $response_timeout set the response timeout
 	* @access   public
 	*/
-	function nusoapclient($endpoint,$wsdl = false,$proxyhost = false,$proxyport = false,$proxyusername = false, $proxypassword = false, $timeout = 0, $response_timeout = 30){
+	function __construct($endpoint,$wsdl = false,$proxyhost = false,$proxyport = false,$proxyusername = false, $proxypassword = false, $timeout = 0, $response_timeout = 30){
 		$this->endpoint = $endpoint;
 		$this->proxyhost = $proxyhost;
 		$this->proxyport = $proxyport;
