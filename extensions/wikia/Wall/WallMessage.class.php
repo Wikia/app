@@ -69,7 +69,7 @@ class WallMessage {
 	 */
 	static public function newFromIds( $ids ) {
 		wfProfileIn( __METHOD__ );
-
+		$test = "";
 		$titles = Title::newFromIDs( $ids );
 		$wallMessages = [ ];
 		$correctIds = [ ];
@@ -135,6 +135,8 @@ class WallMessage {
 			$userPageTitle = self::addMessageWall( $userPageTitle );
 			$useMasterDB = true;
 		}
+		
+		$someTest = "";
 
 		if ( empty( $userPageTitle ) ) {
 			Wikia::log( __METHOD__, '', '$userPageTitle not an instance of Title' );
