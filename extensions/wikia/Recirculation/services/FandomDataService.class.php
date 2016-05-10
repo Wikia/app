@@ -26,13 +26,13 @@ class FandomDataService {
 			return [];
 		}
 
-		$memcKey = wfSharedMemcKey( __METHOD__, $type, $meta['key'], self::MCACHE_VER );
+		$memcKey = wfSharedMemcKey( __METHOD__, $type, $metadata['key'], self::MCACHE_VER );
 
 		$data = WikiaDataAccess::cache(
 			$memcKey,
 			self::MCACHE_TIME,
-			function() use ( $type, $meta ) {
-				return $this->apiRequest( $type, $meta );
+			function() use ( $type, $metadata ) {
+				return $this->apiRequest( $type, $metadata );
 			}
 		);
 
@@ -76,9 +76,13 @@ class FandomDataService {
 		$url = $this->buildUrl( $endpoint, $options );
 		$data = ExternalHttp::get( $url );
 
-		$obj = json_decode( $data );
-		$posts = $this->dedupePosts( $obj->data );
-		return $posts;
+		$posts = json_decode( $data, true );
+
+		if ( isset( $posts['data'] ) && is_array( $posts['data'] ) ) {
+			return $this->dedupePosts( $posts['data'] );
+		} else {
+			return [];
+		}
 	}
 
 	/**
@@ -118,7 +122,7 @@ class FandomDataService {
 				break;
 			}
 
-			$metadata = json_decode( $post->metadata );
+			$metadata = json_decode( $post['metadata'] );
 			if ( !empty( $metadata->postID ) && !in_array( $metadata->postID, $postIds ) ) {
 				$postIds[] = $metadata->postID;
 				$posts[] = $post;
