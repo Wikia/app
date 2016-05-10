@@ -46,10 +46,17 @@ class DiscussionsDataService {
 		$endpoint = $wgCityId . '/forums/' . $wgCityId;
 
 		$url = $this->buildUrl( $endpoint, $options );
-		$data = Http::get( $url );
 
-		$obj = json_decode( $data, true );
-		return $obj['_embedded']['doc:threads'];
+		try {
+			$data = Http::get( $url );
+
+			$obj = json_decode( $data, true );
+			$posts = $obj['_embedded']['doc:threads'];
+		} catch (Exception $e) {
+			$posts = [];
+		}
+
+		return $posts;
 	}
 
 	/**
