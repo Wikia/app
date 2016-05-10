@@ -128,7 +128,7 @@ class Phalanx implements arrayaccess {
 		if ( ( $this->data['type'] & self::TYPE_USER ) && User::isIP( $this->data['text'] ) ) {
 			if ( wfIsTrustedProxy( $this->data['text'] ) ) {
 				// Don't allow to set blocks for trusted proxies or Wikia network hosts
-				return false;
+				#return false;
 			}
 
 			$this->data['ip_hex'] = IP::toHex( $this->data['text'] );
