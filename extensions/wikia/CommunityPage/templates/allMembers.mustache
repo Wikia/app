@@ -1,7 +1,7 @@
 <h2>{{allMembersHeaderText}}</h2>
 <ul class="reset top-contributors">
 	{{#members}}
-		<li>
+		<li class ="community-page-all-contributors-item {{#isCurrent}}community-page-current-contributor{{/isCurrent}}">
 			<div class="avatar-container">
 				<a href="{{profilePage}}">{{{avatar}}}</a>
 			</div>
@@ -11,7 +11,6 @@
 					<span class="subtle">{{admin}}</span>
 				{{/isAdmin}}
 			</div>
-
 		</li>
 	{{/members}}
 	{{^members}}

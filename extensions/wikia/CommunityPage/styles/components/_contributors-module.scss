@@ -94,9 +94,14 @@
 		.top-contributors {
 			padding: 0 $modal-horizontal-padding;
 
-			li {
+			.community-page-all-contributors-item {
 				border-bottom: 2px solid $color-activity-background;
 				padding: 15px 0;
+			}
+
+			.community-page-all-contributors-item.community-page-current-contributor {
+				border-color: $color-community-page-light-gray;
+				font-weight: bold;
 			}
 		}
 

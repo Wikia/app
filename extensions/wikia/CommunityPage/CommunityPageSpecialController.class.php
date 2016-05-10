@@ -164,7 +164,9 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	 * @return array
 	 */
 	public function getAllMembersData() {
-		$allMembers = $this->usersModel->getAllContributors();
+		$currentUser = $this->getUser();
+
+		$allMembers = $this->usersModel->getAllContributors( $currentUser->getId() );
 
 		$this->response->setData( [
 			'allMembersHeaderText' => $this->msg( 'communitypage-all-members' )->plain(),

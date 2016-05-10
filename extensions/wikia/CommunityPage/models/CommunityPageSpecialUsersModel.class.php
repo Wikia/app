@@ -246,11 +246,11 @@ class CommunityPageSpecialUsersModel {
 	 *
 	 * @return array
 	 */
-	public function getAllContributors() {
+	public function getAllContributors( $currentUserId = null ) {
 		$allContributorsData = WikiaDataAccess::cache(
 			wfMemcKey( self::ALL_MEMBERS_MCACHE_KEY, rand() ),
 			WikiaResponse::CACHE_SHORT,
-			function () {
+			function () use ( $currentUserId ) {
 				$db = wfGetDB( DB_SLAVE );
 
 				$userSqlData = ( new WikiaSQL() )
@@ -261,22 +261,29 @@ class CommunityPageSpecialUsersModel {
 					->GROUP_BY( 'rev_user' )
 					->ORDER_BY( 'rev_timestamp DESC' )
 					->LIMIT( 50 )
-					->runLoop( $db, function ( &$userSqlData, $row ) {
-						$userId = $row->rev_user;
+					->runLoop( $db, function ( &$userSqlData, $row ) use ( $currentUserId ) {
+						$userId = (int) $row->rev_user;
 						$user = User::newFromId( $userId );
 
 						if ( $this->showMember( $user ) ) {
 							$userName = $user->getName();
 							$avatar = AvatarService::renderAvatar( $userName, AvatarService::AVATAR_SIZE_SMALL_PLUS );
 
-							$userSqlData[] = [
+							$data = [
 								'userId' => $userId,
 								'latestRevision' => $row->rev_timestamp,
 								'userName' => $userName,
 								'isAdmin' => $this->isAdmin( $userId, $this->getAdmins() ),
+								'isCurrent' => $userId === $currentUserId,
 								'avatar' => $avatar,
 								'profilePage' => $user->getUserPage()->getLocalURL(),
 							];
+
+							if ( $data['isCurrent'] ) {
+								array_unshift( $userSqlData, $data );
+							} else {
+								$userSqlData[] = $data;
+							}
 						}
 					} );
 
