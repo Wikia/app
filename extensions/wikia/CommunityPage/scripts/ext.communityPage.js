@@ -17,20 +17,20 @@ require([
 			className: '.modal-nav-all',
 			template: 'allMembers',
 			request: 'getAllMembersData',
-			cachedData: null,
+			cachedData: null
 		},
 		TAB_ADMINS: {
 			className: '.modal-nav-admins',
 			template: 'allAdmins',
 			request: 'getAllAdminsData',
-			cachedData: null,
+			cachedData: null
 		},
 		TAB_LEADERBOARD: {
 			className: '.modal-nav-leaderboard',
 			template: 'topContributorsModal',
 			request: 'getTopContributorsData',
-			cachedData: null,
-		},
+			cachedData: null
+		}
 	};
 
 	function getUiModalInstance() {
@@ -59,7 +59,7 @@ require([
 				adminsText: $.msg('communitypage-modal-tab-admins'),
 				leaderboardText: $.msg('communitypage-modal-tab-leaderboard'),
 				allMembersCount: allMembersCount,
-				adminsCount: adminsCount,
+				adminsCount: adminsCount
 			});
 			$deferred.resolve(modalNavHtml);
 		}

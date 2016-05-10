@@ -18,8 +18,10 @@ class CommunityPageSpecialUsersModel {
 	}
 
 	public function getAdmins() {
+		global $wgCityId;
+
 		if ( $this->admins === null ) {
-			$this->admins = $this->wikiService->getWikiAdmins();
+			$this->admins = $this->wikiService->getWikiAdminIds( $wgCityId, false, true );
 		}
 
 		return $this->admins;
@@ -244,46 +246,44 @@ class CommunityPageSpecialUsersModel {
 	 *
 	 * @return array
 	 */
-	public function getAllMembers() {
-		$data = WikiaDataAccess::cache(
-			wfMemcKey( self::ALL_MEMBERS_MCACHE_KEY ),
-			WikiaResponse::CACHE_STANDARD,
+	public function getAllContributors() {
+		$allContributorsData = WikiaDataAccess::cache(
+			wfMemcKey( self::ALL_MEMBERS_MCACHE_KEY, rand() ),
+			WikiaResponse::CACHE_SHORT,
 			function () {
 				$db = wfGetDB( DB_SLAVE );
 
-				$sqlData = ( new WikiaSQL() )
-					->SELECT( '*' )
-					->FROM ( 'wikia_user_properties' )
-					->LEFT_JOIN( 'user_groups' )->ON( 'wup_user = ug_user' )
-					->WHERE ( 'wup_property' )->EQUAL_TO( 'firstContributionTimestamp' )
-					->AND_ ( 'wup_value > DATE_SUB(now(), INTERVAL 2 YEAR)' )
-					->ORDER_BY( 'wup_value DESC' )
-					->runLoop( $db, function ( &$sqlData, $row ) {
-						$user = User::newFromId( $row->wup_user );
-						$userName = $user->getName();
+				$userSqlData = ( new WikiaSQL() )
+					->SELECT( 'rev_user, rev_timestamp' )
+					->FROM( 'revision' )
+					->WHERE( 'rev_timestamp > DATE_SUB(now(), INTERVAL 2 YEAR)' )
+					->GROUP_BY( 'rev_user' )
+					->ORDER_BY( 'rev_timestamp DESC' )
+					->LIMIT( 50 )
+					->runLoop( $db, function ( &$userSqlData, $row ) {
+						$userId = $row->rev_user;
+						$user = User::newFromId( $userId );
 
 						if ( $this->showMember( $user ) ) {
+							$userName = $user->getName();
 							$avatar = AvatarService::renderAvatar( $userName, AvatarService::AVATAR_SIZE_SMALL_PLUS );
-							$dateString = strftime( '%b %e, %Y', strtotime( $row->wup_value ) );
 
-							$sqlData[] = [
-								'userId' => $row->wup_user,
-								'oldestRevision' => $row->wup_value,
-								'group' => $row->ug_group,
-								'joinDate' => $dateString,
+							$userSqlData[] = [
+								'userId' => $userId,
+								'latestRevision' => $row->rev_timestamp,
 								'userName' => $userName,
-								'isAdmin' => $this->isAdmin( $row->wup_user, $this->getAdmins() ),
+								'isAdmin' => $this->isAdmin( $userId, $this->getAdmins() ),
 								'avatar' => $avatar,
 								'profilePage' => $user->getUserPage()->getLocalURL(),
 							];
 						}
 					} );
 
-				return $sqlData;
+				return $userSqlData;
 			}
 		);
 
-		return $data;
+		return $allContributorsData;
 	}
 
 	/**
@@ -293,28 +293,25 @@ class CommunityPageSpecialUsersModel {
 	 * @return integer
 	 */
 	public function getMemberCount() {
-		// fixme: Rewrite modal logic so that this function is not needed, and use getAllMembers only
-		$data = WikiaDataAccess::cache(
+		$allContributorsCount = WikiaDataAccess::cache(
 			wfMemcKey( self::MEMBER_COUNT_MCACHE_KEY ),
 			WikiaResponse::CACHE_STANDARD,
 			function () {
 				$db = wfGetDB( DB_SLAVE );
 
-				$sqlData = ( new WikiaSQL() )
-					->SELECT( 'COUNT(*) AS user_count' )
-					->FROM ( 'wikia_user_properties' )
-					->LEFT_JOIN( 'user_groups' )->ON( 'wup_user = ug_user' )
-					->WHERE ( 'wup_property' )->EQUAL_TO( 'firstContributionTimestamp' )
-					->AND_ ( 'wup_value > DATE_SUB(now(), INTERVAL 2 YEAR)' )
-					->ORDER_BY( 'wup_value DESC' )
-					->runLoop( $db, function ( &$sqlData, $row ) {
-						$sqlData = $row->user_count;
+				$sqlCount = ( new WikiaSQL() )
+					->SELECT( 'COUNT( DISTINCT rev_user )' )
+					->AS_( 'all_contributors_count' )
+					->FROM( 'revision' )
+					->WHERE( 'rev_timestamp > DATE_SUB(now(), INTERVAL 2 YEAR)' )
+					->runLoop( $db, function ( &$sqlCount, $row ) {
+						$sqlCount = $row->all_contributors_count;
 					} );
 
-				return $sqlData;
+				return $sqlCount;
 			}
 		);
 
-		return $data;
+		return $allContributorsCount;
 	}
 }
