@@ -1,5 +1,7 @@
 <?php
 
+namespace Wikia\CreateNewWiki\Tasks;
+
 /**
  * Class TaskRunner
  *
@@ -12,57 +14,69 @@ class TaskRunner {
 	/** @var array Task[] */
 	private $tasks = [];
 
-	public function __construct() {
+	/** @var  TaskContext */
+	private $taskContext;
+
+	public function __construct($taskContext) {
+		$this->taskContext = $taskContext;
+
 		//Todo pass all required params
-		$this->tasks[] = new CreateDatabase();
+		$this->tasks[] = new CreateDatabase( $taskContext );
 		$this->tasks[] = new ConfigureWikiFactory();
 		$this->tasks[] = new CreateTables();
-		$this->tasks[] = new ImportStarterData();
+		$this->tasks[] = new ImportStarterData( $taskContext );
 		$this->tasks[] = new ConfigureUsers();
 		$this->tasks[] = new ConfigureStats();
 		$this->tasks[] = new ConfigureCategories();
 	}
 
 	/**
-	 * Checks if all criteria are met
+	 * Add more context to messages sent to LogStash
 	 *
-	 * @return TaskPreValidationResult[]
+	 * @return array
 	 */
-	public function preValidate() {
-		$resultArray = [];
+	protected function getLoggerContext() {
+		//TODO
+		return [
+			'domain'   => $this->mDomain,
+			'dbname'   => $this->mNewWiki->dbname,
+			'logGroup' => 'createwiki',
+		];
+	}
 
+	public function preValidate() {
 		/** @var Task $task */
 		foreach ( $this->tasks as $task) {
 
-			Wikia\Logger\WikiaLogger::instance()->debug(
-				__METHOD__ . ' starting pre validation of task ' . get_class( $task ) );
+			$this->debug(__METHOD__ . ' starting pre validation of task ' . get_class( $task ) );
 
-			$resultArray[] = $result = $task->preValidate();
+			$result = $task->preValidate();
 
-			Wikia\Logger\WikiaLogger::instance()->info(
-				__METHOD__ . ' pre validation of task ' . get_class( $task ) . ' finished with result ' . $result->isValid(),
-				$result ); //TODO provide proper context. Need to ask how to do that properly
+			if ( $result->isValid()) {
+				$this->info(__METHOD__ . ' pre validation of task ' . get_class( $task ) . ' finished successfully');
+			} else {
+				//TODO provide proper context. Need to ask how to do that properly
+				$this->warning(__METHOD__ . ' pre validation of task ' . get_class( $task ) . ' failed', $result );
+				throw new \CreateWikiException( $result->getMessage(), $result->getStatusCode() );
+			}
 		}
-
-		return $resultArray;
 	}
 
 	public function run() {
-		$resultArray = [];
-
 		/** @var Task $task */
 		foreach ( $this->tasks as $task) {
 
-			Wikia\Logger\WikiaLogger::instance()->debug(
-				__METHOD__ . ' starting task ' . get_class( $task ) );
+			$this->debug(__METHOD__ . ' starting task ' . get_class( $task ) );
 
-			$resultArray[] = $result = $task->run();
+			$result = $task->run();
 
-			Wikia\Logger\WikiaLogger::instance()->info(
-				__METHOD__ . ' task ' . get_class( $task ) . ' finished with result ' . $result->isOk(),
-				$result ); //TODO provide proper context. Need to ask how to do that properly
+			if ( $result->isOk()) {
+				$this->info(__METHOD__ . ' task ' . get_class( $task ) . ' finished successfully' );
+			} else {
+				//TODO provide proper context. Need to ask how to do that properly
+				$this->error(__METHOD__ . ' task ' . get_class( $task ) . ' failed ', $result );
+				throw new \CreateWikiException( $result->getMessage(), $result->getStatusCode() );
+			}
 		}
-
-		return $resultArray;
 	}
 }

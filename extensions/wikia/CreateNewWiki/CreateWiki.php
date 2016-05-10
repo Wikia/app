@@ -13,6 +13,7 @@
  */
 
 use Wikia\CreateNewWiki\Starters;
+use Wikia\CreateNewWiki\Tasks;
 
 class CreateWiki {
 
@@ -177,17 +178,17 @@ class CreateWiki {
 
 		$then = microtime( true );
 
+		$taskContext = new Tasks\TaskContext();
+		$taskRunner = new Wikia\CreateNewWiki\Tasks\TaskRunner($taskContext);
+
+		$taskRunner->preValidate();
+
 		// Set this flag to ensure that all select operations go against master
 		// Slave lag can cause random errors during wiki creation process
 		global $wgForceMasterDatabase;
 		$wgForceMasterDatabase = true;
 
 		wfProfileIn( __METHOD__ );
-
-		if ( wfReadOnly() ) {
-			wfProfileOut( __METHOD__ );
-			throw new CreateWikiException('DB is read only', self::ERROR_READONLY);
-		}
 
 		// check founder
 		if ( $this->mFounder->isAnon() ) {
@@ -246,8 +247,7 @@ class CreateWiki {
 			throw $e;
 		}
 
-		$this->mNewWiki->dbw->query( sprintf( "CREATE DATABASE `%s`", $this->mNewWiki->dbname ) );
-		wfDebugLog( "createwiki", __METHOD__ . ": Database {$this->mNewWiki->dbname} created\n", true );
+		$taskRunner->run();
 
 		/**
 		 * create position in wiki.factory
@@ -306,14 +306,6 @@ class CreateWiki {
 		if ( !$this->createTables() ) {
 			wfProfileOut( __METHOD__ );
 			throw new CreateWikiException('Creating tables not finished', self::ERROR_SQL_FILE_BROKEN);
-		}
-
-		/**
-		 * import language starter
-		 */
-		if ( !$this->importStarter() ) {
-			wfProfileOut( __METHOD__ );
-			throw new CreateWikiException('Starter import failed', self::ERROR_SQL_FILE_BROKEN);
 		}
 
 		/**
@@ -997,52 +989,6 @@ class CreateWiki {
 				);
 			}
 		}
-	}
-
-	/**
-	 * importStarter
-	 *
-	 * get starter data for current parameters
-	 *
-	 * @author Krzysztof Krzyzaniak <eloy@wikia-inc.com>
-	 * @author Piotr Molski <moli@wikia-inc.com>
-	 * @author macbre
-	 */
-	private function importStarter() {
-		global $IP;
-
-		// BugId:15644 - I need to pass $this->sDbStarter to CreateWikiLocalJob::changeStarterContributions
-		$starterDatabase = $this->sDbStarter = Starters::getStarterByLanguage( $this->mNewWiki->language );
-
-		// import a starter database XML dump from DFS
-		$then = microtime( true );
-
-		$cmd = sprintf(
-			"SERVER_ID=%d %s %s/maintenance/importStarter.php",
-			$this->mNewWiki->city_id,
-			$this->mPHPbin,
-			"{$IP}/extensions/wikia/CreateNewWiki"
-		);
-		wfShellExec( $cmd, $retVal );
-
-		if ($retVal > 0) {
-			$this->error( 'starter dump import failed', [
-				'starter' => $starterDatabase,
-				'retval'  => $retVal
-			] );
-			return false;
-		}
-
-		$this->info( 'importStarter: from XML dump', [
-			'retval'  => $retVal,
-			'starter' => $starterDatabase,
-			'took'    => microtime( true ) - $then,
-		] );
-
-		$this->waitForSlaves( __METHOD__ );
-
-		wfDebugLog( "createwiki", __METHOD__ . ": Starter database imported \n", true );
-		return true;
 	}
 
 	private function addUserToGroups() {

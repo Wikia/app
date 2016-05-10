@@ -1,17 +1,18 @@
 <?php
 
+namespace Wikia\CreateNewWiki\Tasks;
 
 interface Task {
 
 	/**
 	 *
-	 * @return TaskPreValidationResult
+	 * @return PreValidationResult
 	 */
 	public function preValidate();
 
 	/**
 	 *
-	 * @return TaskRunResult - if operation was unsuccessful it is rollbacked.
+	 * @return RunResult - if operation was unsuccessful it is rollbacked.
 	 */
 	public function run();
 
