@@ -19,13 +19,12 @@
 				<a data-tracking="top-contributors-user-avatar" href="{{profilePage}}">{{{avatar}}}</a>
 			</div>
 			<div class="contributor-details">
+				<span class="details">{{contributionsText}}</span>
 				{{count}}. <a data-tracking="top-contributors-user" href="{{profilePage}}">{{userName}}</a>
 				{{#isAdmin}}
 					<span class="subtle">{{admin}}</span>
 				{{/isAdmin}}
-				<span class="details">{{contributionsText}}</span>
 			</div>
-
 		</li>
 	{{/contributors}}
 	{{^contributors}}
