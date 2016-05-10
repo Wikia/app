@@ -2,7 +2,7 @@
 
 class CommunityPageSpecialController extends WikiaSpecialPageController {
 	const DEFAULT_TEMPLATE_ENGINE = \WikiaResponse::TEMPLATE_ENGINE_MUSTACHE,
-		TOP_ADMINS_LIMIT = 10,
+		TOP_ADMINS_LIMIT = null,
 		TOP_ADMINS_MODULE_LIMIT = 3,
 		TOP_CONTRIBUTORS_LIMIT = 5,
 		ALL_MEMBERS_LIMIT = 20;
