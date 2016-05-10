@@ -6,17 +6,17 @@ class CommunityPageSpecialTopAdminsFormatter {
 	/**
 	 * Returns array with fields to supply topAdmins.mustache template
 	 * If there are more than three admins provided returns first two and the count of remaining ones
-	 * @param array $topAdminsDetails
+	 * @param array $allAdminsList
 	 * @return array
 	 */
-	public static function prepareData( array $topAdminsDetails ) {
-		$topAdminsCount = count( $topAdminsDetails );
-		$otherAdminsCount = self::prepareRemainingCount( $topAdminsCount );
+	public static function prepareData( array $allAdminsList ) {
+		$allAdminsCount = count( $allAdminsList );
+		$otherAdminsCount = self::prepareRemainingCount( $allAdminsCount );
 		return [
-			'topAdminsList' => self::prepareAdminsToShow( $topAdminsCount, $otherAdminsCount, $topAdminsDetails ),
+			'topAdminsList' => self::prepareAdminsToShow( $allAdminsCount, $otherAdminsCount, $allAdminsList ),
 			'otherAdminsCount' => $otherAdminsCount,
 			'haveOtherAdmins' => $otherAdminsCount > 0,
-			'allAdminsCount' => $topAdminsCount,
+			'allAdminsCount' => $allAdminsCount,
 		];
 	}
 
@@ -26,7 +26,7 @@ class CommunityPageSpecialTopAdminsFormatter {
 			: 0;
 	}
 
-	private function prepareAdminsToShow( $topAdminsCount, $otherAdminsCount, $topAdminsDetails ) {
-		return array_slice( $topAdminsDetails, 0, $topAdminsCount - $otherAdminsCount );
+	private function prepareAdminsToShow( $allCount, $otherCount, array $list ) {
+		return array_slice( $list, 0, $allCount - $otherCount );
 	}
 }

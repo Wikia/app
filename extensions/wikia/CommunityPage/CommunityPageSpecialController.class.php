@@ -107,13 +107,10 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	 * @return array
 	 */
 	public function getTopAdminsData() {
-		$topAdmins = $this->usersModel->filterGlobalBots(
-			// get all admins who have contributed in the last two years ordered by contributions
-			$this->usersModel->getTopContributors( null, false, true )
-		);
-		$topAdminsDetails = $this->getContributorsDetails( $topAdmins );
+		$allAdmins = $this->getAllAdmins();
+		$allAdminsDetails = $this->getContributorsDetails( $allAdmins );
 
-		$topAdminsTemplateData = CommunityPageSpecialTopAdminsFormatter::prepareData( $topAdminsDetails );
+		$topAdminsTemplateData = CommunityPageSpecialTopAdminsFormatter::prepareData( $allAdminsDetails );
 		$templateMessages = [
 			'topAdminsHeaderText' => $this->msg( 'communitypage-admins' )->plain(),
 			'otherAdmins' => $this->msg( 'communitypage-other-admins' )->plain(),
@@ -129,10 +126,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	 * @return array
 	 */
 	public function getAllAdminsData() {
-		$allAdmins = $this->usersModel->filterGlobalBots(
-			// get all admins who have contributed in the last two years ordered by contributions
-			$this->usersModel->getTopContributors( null, false, true )
-		);
+		$allAdmins = $this->getAllAdmins();
 		$allAdminsDetails = $this->getContributorsDetails( $allAdmins );
 
 		$this->response->setData( [
@@ -228,14 +222,14 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	}
 
 	public function getModalHeaderData() {
-		$adminData =  $this->sendRequest( 'CommunityPageSpecialController', 'getTopAdminsData' )->getData();
+		$allAdmins =  $this->getAllAdmins();
 		$memberCount = $this->usersModel->getMemberCount();
 
 		$this->response->setData( [
 			'allText' => $this->msg( 'communitypage-modal-tab-all' )->plain(),
 			'allCount' => $memberCount,
 			'adminsText' => $this->msg( 'communitypage-modal-tab-admins' )->plain(),
-			'allAdminsCount' => $adminData['allAdminsCount'],
+			'allAdminsCount' => count( $allAdmins ),
 			'leaderboardText' => $this->msg( 'communitypage-modal-tab-leaderboard' )->plain(),
 		] );
 	}
@@ -245,6 +239,13 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		$this->response->addAsset( 'special_community_page_scss' );
 	}
 
+	/**
+	 * Get all admins who have contributed in the last two years ordered by contributions
+	 * filter out bots
+	 */
+	private function getAllAdmins() {
+		return $this->usersModel->filterGlobalBots( $this->usersModel->getTopContributors( null, false, true ) );
+	}
 	/**
 	 * Get details for display of top contributors
 	 *
