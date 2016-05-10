@@ -16,11 +16,11 @@
 	{{#contributors}}
 		<li>
 			<div class="avatar-container">
-				<a href="{{profilePage}}">{{{avatar}}}</a>
+				<a data-tracking="top-contributors-user-avatar" href="{{profilePage}}">{{{avatar}}}</a>
 			</div>
 			<div class="contributor-details">
 				<span class="details">{{contributionsText}}</span>
-				{{count}}. <a href="{{profilePage}}">{{userName}}</a>
+				{{count}}. <a data-tracking="top-contributors-user" href="{{profilePage}}">{{userName}}</a>
 				{{#isAdmin}}
 					<span class="subtle">{{admin}}</span>
 				{{/isAdmin}}
