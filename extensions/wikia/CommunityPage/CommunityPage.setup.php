@@ -7,7 +7,6 @@ $wgAutoloadClasses['CommunityPageSpecialController'] =  __DIR__ . '/CommunityPag
 $wgAutoloadClasses['CommunityPageSpecialHooks'] =  __DIR__ . '/CommunityPageSpecialHooks.class.php';
 
 /* hooks */
-$wgHooks['GetHTMLBeforeWikiaPage'][] = 'CommunityPageSpecialHooks::getHTMLBeforeWikiaPage';
 $wgHooks['ArticleSaveComplete'][] = 'CommunityPageSpecialHooks::onArticleSaveComplete';
 
 /* i18n */
@@ -17,10 +16,10 @@ $wgExtensionMessagesFiles['CommunityPage'] = __DIR__ . '/CommunityPage.i18n.php'
 JSMessages::registerPackage( 'CommunityPageSpecial', [
 	'communitypage-modal-tab-all',
 	'communitypage-modal-tab-admins',
-	'communitypage-modal-tab-leaderboard',
 	'communitypage-modal-title',
 	'communitypage-modal-tab-loading',
 	'communitypage-modal-tab-loadingerror',
+	'communitypage-top-contributors-week',
 ] );
 
 /* register special page */

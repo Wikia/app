@@ -3,19 +3,6 @@
 class CommunityPageSpecialHooks {
 
 	/**
-	 * Render the community page header outside of the .WikiaPage element
-	 *
-	 * @param $html
-	 * @return bool
-	 */
-	public static function getHTMLBeforeWikiaPage( &$html ) {
-		if ( F::app()->wg->EnableCommunityPageExt && F::app()->wg->Title->isSpecial( 'Community' ) ) {
-			$html .= F::app()->renderView( 'CommunityPageSpecialController', 'header' );
-		}
-		return true;
-	}
-
-	/**
 	 * Cache key invalidation when an article is edited
 	 *
 	 * @param $article
