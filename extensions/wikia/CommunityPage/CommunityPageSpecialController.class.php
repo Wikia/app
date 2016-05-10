@@ -132,24 +132,17 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 			// get all admins who have contributed in the last two years ordered by contributions
 			$this->usersModel->getTopContributors( self::TOP_ADMINS_LIMIT, false, true )
 		);
-		$topAdminsCount = count( $topAdmins );
 		$topAdminsDetails = $this->getContributorsDetails( $topAdmins );
 
-		$remainingAdminCount = $topAdminsCount > self::TOP_ADMINS_MODULE_LIMIT
-			? $topAdminsCount - self::TOP_ADMINS_MODULE_LIMIT + 1
-			: 0;
-
-		$this->response->setData( [
+		$topAdminsTemplateData = CommunityPageSpecialTopAdminsFormatter::prepareData( $topAdminsDetails );
+		$templateMessages = [
 			'topAdminsHeaderText' => $this->msg( 'communitypage-admins' )->plain(),
 			'otherAdmins' => $this->msg( 'communitypage-other-admins' )->plain(),
-			'admins' => array_slice( $topAdminsDetails, 0, $topAdminsCount - $remainingAdminCount ),
-			'otherAdminCount' => $remainingAdminCount,
-			'haveOtherAdmins' => $remainingAdminCount > 0,
-			'adminCount' => count( $topAdmins ),
 			'noAdminText' => $this->msg( 'communitypage-no-admins' )->plain(),
 			'noAdminContactText' => $this->msg( 'communitypage-no-admins-contact' )->plain(),
 			'noAdminHref' => $this->msg( 'communitypage-communitycentral-link' )->inContentLanguage()->text(),
-		] );
+		];
+		$this->response->setData( array_merge($templateMessages, $topAdminsTemplateData) );
 	}
 
 	/**
