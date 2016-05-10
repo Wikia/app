@@ -5,9 +5,16 @@ require([
 	'communitypage.templates.mustache',
 	'wikia.nirvana',
 	'wikia.throbber',
+	'wikia.tracker',
 	'wikia.window'
-], function ($, uiFactory, mustache, templates, nirvana, throbber, window) {
+], function ($, uiFactory, mustache, templates, nirvana, throbber, tracker, window) {
 	'use strict';
+
+	var track = tracker.buildTrackingFunction({
+		action: tracker.ACTIONS.CLICK,
+		category: 'community-page',
+		trackingMethod: 'analytics'
+	});
 
 	// "private" vars - don't access directly. Use getUiModalInstance().
 	var uiModalInstance, modalNavHtml, activeTab, allMembersCount, adminsCount;
@@ -134,6 +141,7 @@ require([
 				throbber.show($('.throbber-placeholder'));
 
 				modal.show();
+				initModalTracking(modal);
 
 				window.activeModal = modal;
 				switchCommunityModalTab(tabToActivate);
@@ -179,4 +187,38 @@ require([
 			switchCommunityModalTab(tabs.TAB_LEADERBOARD);
 			event.preventDefault();
 		});
+
+	function handleClick (event, category) {
+		var data = $(event.currentTarget).data('tracking');
+
+		if (typeof(data) !== 'undefined') {
+			track({
+				category: category,
+				label: data,
+			});
+		}
+	}
+
+	function initTracking() {
+		// Track clicks in contribution module
+		$('.ContributorsModule').on('mousedown touchstart', 'a', function (event) {
+			handleClick(event, 'community-page-contribution-module');
+		});
+	}
+
+	function initModalTracking(modal) {
+		// Track clicks in contribution modal
+		$('#CommunityPageModalDialog').on('mousedown touchstart', 'a', function (event) {
+			handleClick(event, 'community-page-contribution-modal');
+		});
+
+		// Track clicks on modal close button
+		modal.bind('close', function () {
+			track({
+				label: 'modal-close'
+			});
+		});
+	}
+
+	$(initTracking);
 });
