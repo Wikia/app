@@ -1,14 +1,14 @@
 <section class="insights-module">
-	<h3>{{popularPages.title}}</h3>
-	<p>{{popularPages.description}}</p>
+  <h3>{{popularPages.title}}</h3>
+  <p>{{popularPages.description}}</p>
   <a href="{{popularPages.fulllistlink}}">{{popularPages.fulllist}}</a>
-	<ul>
-		{{#popularPages.pages}}
-			<li>
-				<a href="{{link.url}}">{{link.text}}</a><br>
-				<span>{{{lastRevision}}} • {{pageviews}}</span>
+  <ul>
+    {{#popularPages.pages}}
+      <li>
+        <a href="{{link.url}}">{{link.text}}</a><br>
+        <span>{{{lastRevision}}} • {{pageviews}}</span>
         <a href="{{editlink}}">{{popularPages.edittext}}</a>
-			</li>
-		{{/popularPages}}
-	</ul>
+      </li>
+    {{/popularPages}}
+  </ul>
 </section>
