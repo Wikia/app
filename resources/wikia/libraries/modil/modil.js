@@ -116,11 +116,17 @@
 		return mock ? override(module, mock) : module;
 	}
 
+	function getRandomId() {
+		return 'amd' + Math.round(1000000 * Math.random());
+	}
+
 	/**
 	 * Defines a new module
 	 *
 	 * @public
 	 *
+	 * @example define(function () { return {hello: 'World'}; });
+	 * @example define(['dep1', 'dep2'], function (dep1, dep2) { ... });
 	 * @example define('mymod', function () { return {hello: 'World'}; });
 	 * @example define('mymod', ['dep1', 'dep2'], function (dep1, dep2) { ... });
 	 *
@@ -134,6 +140,17 @@
 	 * @throws {Error} If dependenices is not undefined but not an array
 	 */
 	define = function (id, dependencies, definition, defMock) {
+		//no id, it's the definition or dependencies
+		if (id instanceof funcType && !dependencies && !definition) {
+			definition = id;
+			dependencies = nil;
+			id = getRandomId();
+		} else if (id instanceof arrType && dependencies && !definition) {
+			definition = dependencies;
+			dependencies = id;
+			id = getRandomId();
+		}
+
 		if (typeof id !== strType) {
 			throw "Module id missing or not a string. " + (new Error().stack||'').replace(/\n/g, ' / ');
 		}
