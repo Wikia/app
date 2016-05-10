@@ -5,7 +5,7 @@ require([
 	'communitypage.templates.mustache',
 	'wikia.nirvana',
 	'wikia.throbber',
-	'wikia.tracker'
+	'wikia.tracker',
 	'wikia.window'
 ], function ($, uiFactory, mustache, templates, nirvana, throbber, tracker, window) {
 	'use strict';
