@@ -49,7 +49,7 @@ class PopularArticlesModel {
 		$result = $this->getRecentlyEditedPageResult( $wiki_id );
 		$page_ids = [ ];
 		while ( $row = $result->fetchObject() ) {
-			$title = Title::newFromText( $row->page_title, $row->page_namespace );
+			$title = Title::newFromText( $row->page_title );
 
 			if ( $title instanceof Title && !$title->isMainPage() ) {
 				$page_ids [ ] = intval( $row->page_id );
@@ -79,11 +79,11 @@ class PopularArticlesModel {
 	 * @param $page_ids
 	 */
 	private function getPageViewsMap( $wiki_id, $page_ids ) {
-		global $wgDatamartDB;
+		global $wgDWStatsDB;
 
 		$pageviews_map = [ ];
 
-		$ddb = wfGetDB( DB_SLAVE, [ ], $wgDatamartDB );
+		$ddb = wfGetDB( DB_SLAVE, [ ], $wgDWStatsDB );
 
 		$sql = 'select * from rollup_wiki_article_pageviews where '
 			. 'wiki_id = ' . (int)$wiki_id
