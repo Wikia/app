@@ -10,7 +10,7 @@ require([
 	'use strict';
 
 	// "private" vars - don't access directly. Use getUiModalInstance().
-	var uiModalInstance, modalNavHtml, activeTab, allMembersCount, adminsCount;
+	var uiModalInstance, modalNavHtml, activeTab, allMembersCount, allAdminsCount;
 
 	var tabs = {
 		TAB_ALL: {
@@ -59,7 +59,7 @@ require([
 				adminsText: $.msg('communitypage-modal-tab-admins'),
 				leaderboardText: $.msg('communitypage-modal-tab-leaderboard'),
 				allMembersCount: allMembersCount,
-				adminsCount: adminsCount,
+				allAdminsCount: allAdminsCount,
 			});
 			$deferred.resolve(modalNavHtml);
 		}
@@ -72,8 +72,8 @@ require([
 			$('#allCount').text('(' + allMembersCount + ')');
 		}
 
-		if (typeof adminsCount !== 'undefined') {
-			$('#adminsCount').text('(' + adminsCount + ')');
+		if (typeof allAdminsCount !== 'undefined') {
+			$('#allAdminsCount').text('(' + allAdminsCount + ')');
 		}
 	}
 
@@ -93,9 +93,7 @@ require([
 					allMembersCount = response.members.length;
 				}
 
-				if (response.hasOwnProperty('admins')) {
-					adminsCount = response.admins.length;
-				}
+				allAdminsCount = response.allAdminsCount;
 
 				tab.cachedData = mustache.render(templates[tab.template], response);
 				$deferred.resolve(tab.cachedData);

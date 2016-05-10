@@ -19,50 +19,50 @@ class CommunityPageSpecialTopAdminsFormatterTest extends WikiaBaseTest {
 			[
 				[ 'admin1', 'admin2', 'admin3', 'admin4' ],
 				[
-					'admins' => [ 'admin1', 'admin2' ],
-					'otherAdminCount' => 2,
+					'topAdminsList' => [ 'admin1', 'admin2' ],
+					'otherAdminsCount' => 2,
 					'haveOtherAdmins' => true,
-					'adminCount' => 4,
+					'allAdminsCount' => 4,
 				],
 				'For four users provided should return first two and info on remaining number'
 			],
 			[
 				[ 'admin1', 'admin2', 'admin3' ],
 				[
-					'admins' => [ 'admin1', 'admin2', 'admin3' ],
-					'otherAdminCount' => 0,
+					'topAdminsList' => [ 'admin1', 'admin2', 'admin3' ],
+					'otherAdminsCount' => 0,
 					'haveOtherAdmins' => false,
-					'adminCount' => 3,
+					'allAdminsCount' => 3,
 				],
 				'For three users provided should return all three'
 			],
 			[
 				[ 'admin1', 'admin2' ],
 				[
-					'admins' => [ 'admin1', 'admin2' ],
-					'otherAdminCount' => 0,
+					'topAdminsList' => [ 'admin1', 'admin2' ],
+					'otherAdminsCount' => 0,
 					'haveOtherAdmins' => false,
-					'adminCount' => 2,
+					'allAdminsCount' => 2,
 				],
 				'For two users provided should return all two'
 			],
 			[
 				[ 'admin1' ],
 				[
-					'admins' => [ 'admin1' ],
-					'otherAdminCount' => 0,
+					'topAdminsList' => [ 'admin1' ],
+					'otherAdminsCount' => 0,
 					'haveOtherAdmins' => false,
-					'adminCount' => 1,
+					'allAdminsCount' => 1,
 				],
 				'For one user provided should return the one'
 			],
 			[
 				[],
 				[
-					'admins' => [],
-					'otherAdminCount' => 0,
+					'topAdminsList' => [],
+					'otherAdminsCount' => 0,
 					'haveOtherAdmins' => false,
-					'adminCount' => 0,
+					'allAdminsCount' => 0,
 				],
 				'For none users provided should return empty list and zero count'
 			],

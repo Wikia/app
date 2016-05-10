@@ -1,8 +1,7 @@
 <?php
 
 class CommunityPageSpecialTopAdminsFormatter {
-	const TOP_ADMINS_LIMIT = 10,
-		TOP_ADMINS_MODULE_LIMIT = 3;
+	const TOP_ADMINS_MODULE_LIMIT = 3;
 
 	/**
 	 * Returns array with fields to supply topAdmins.mustache template
@@ -12,12 +11,12 @@ class CommunityPageSpecialTopAdminsFormatter {
 	 */
 	public static function prepareData( array $topAdminsDetails ) {
 		$topAdminsCount = count( $topAdminsDetails );
-		$remainingAdminCount = self::prepareRemainingCount( $topAdminsCount );
+		$otherAdminsCount = self::prepareRemainingCount( $topAdminsCount );
 		return [
-			'admins' => self::prepareAdminsToShow( $topAdminsCount, $remainingAdminCount, $topAdminsDetails ),
-			'otherAdminCount' => $remainingAdminCount,
-			'haveOtherAdmins' => $remainingAdminCount > 0,
-			'adminCount' => $topAdminsCount,
+			'topAdminsList' => self::prepareAdminsToShow( $topAdminsCount, $otherAdminsCount, $topAdminsDetails ),
+			'otherAdminsCount' => $otherAdminsCount,
+			'haveOtherAdmins' => $otherAdminsCount > 0,
+			'allAdminsCount' => $topAdminsCount,
 		];
 	}
 
@@ -27,7 +26,7 @@ class CommunityPageSpecialTopAdminsFormatter {
 			: 0;
 	}
 
-	private function prepareAdminsToShow( $topAdminsCount, $remainingAdminCount, $topAdminsDetails ) {
-		return array_slice( $topAdminsDetails, 0, $topAdminsCount - $remainingAdminCount );
+	private function prepareAdminsToShow( $topAdminsCount, $otherAdminsCount, $topAdminsDetails ) {
+		return array_slice( $topAdminsDetails, 0, $topAdminsCount - $otherAdminsCount );
 	}
 }

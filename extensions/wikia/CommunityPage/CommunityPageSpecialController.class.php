@@ -2,7 +2,6 @@
 
 class CommunityPageSpecialController extends WikiaSpecialPageController {
 	const DEFAULT_TEMPLATE_ENGINE = \WikiaResponse::TEMPLATE_ENGINE_MUSTACHE,
-		TOP_ADMINS_LIMIT = null,
 		TOP_ADMINS_MODULE_LIMIT = 3,
 		TOP_CONTRIBUTORS_LIMIT = 5,
 		ALL_MEMBERS_LIMIT = 20;
@@ -42,7 +41,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 			'pageTitle' => $this->msg( 'communitypage-title' )->plain(),
 			'topContributors' => $this->sendRequest( 'CommunityPageSpecialController', 'getTopContributorsData' )
 				->getData(),
-			'topAdmins' => $this->sendRequest( 'CommunityPageSpecialController', 'getTopAdminsData' )
+			'topAdminsData' => $this->sendRequest( 'CommunityPageSpecialController', 'getTopAdminsData' )
 				->getData(),
 			'recentlyJoined' => $this->sendRequest( 'CommunityPageSpecialController', 'getRecentlyJoinedData' )
 				->getData(),
@@ -110,7 +109,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	public function getTopAdminsData() {
 		$topAdmins = $this->usersModel->filterGlobalBots(
 			// get all admins who have contributed in the last two years ordered by contributions
-			$this->usersModel->getTopContributors( self::TOP_ADMINS_LIMIT, false, true )
+			$this->usersModel->getTopContributors( null, false, true )
 		);
 		$topAdminsDetails = $this->getContributorsDetails( $topAdmins );
 
@@ -122,7 +121,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 			'noAdminContactText' => $this->msg( 'communitypage-no-admins-contact' )->plain(),
 			'noAdminHref' => $this->msg( 'communitypage-communitycentral-link' )->inContentLanguage()->text(),
 		];
-		$this->response->setData( array_merge($templateMessages, $topAdminsTemplateData) );
+		$this->response->setData( array_merge( $templateMessages, $topAdminsTemplateData ) );
 	}
 
 	/**
@@ -132,14 +131,14 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	public function getAllAdminsData() {
 		$allAdmins = $this->usersModel->filterGlobalBots(
 			// get all admins who have contributed in the last two years ordered by contributions
-			$this->usersModel->getTopContributors( self::TOP_ADMINS_LIMIT, false, true )
+			$this->usersModel->getTopContributors( null, false, true )
 		);
-		$topAdminsDetails = $this->getContributorsDetails( $allAdmins );
+		$allAdminsDetails = $this->getContributorsDetails( $allAdmins );
 
 		$this->response->setData( [
 			'topAdminsHeaderText' => $this->msg( 'communitypage-admins' )->plain(),
-			'admins' => $topAdminsDetails,
-			'adminCount' => count( $topAdminsDetails ),
+			'allAdminsList' => $allAdminsDetails,
+			'allAdminsCount' => count( $allAdminsDetails ),
 			'noAdminText' => $this->msg( 'communitypage-no-admins' )->plain(),
 			'noAdminContactText' => $this->msg( 'communitypage-no-admins-contact' )->plain(),
 			'noAdminHref' => $this->msg( 'communitypage-communitycentral-link' )->inContentLanguage()->text(),
@@ -236,7 +235,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 			'allText' => $this->msg( 'communitypage-modal-tab-all' )->plain(),
 			'allCount' => $memberCount,
 			'adminsText' => $this->msg( 'communitypage-modal-tab-admins' )->plain(),
-			'adminsCount' => $adminData['adminCount'],
+			'allAdminsCount' => $adminData['allAdminsCount'],
 			'leaderboardText' => $this->msg( 'communitypage-modal-tab-leaderboard' )->plain(),
 		] );
 	}
