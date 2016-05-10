@@ -4,10 +4,10 @@
 		{{#admins}}
 			<li class="community-page-contributor">
 				<div class="avatar-container">
-					<a href="{{profilePage}}">{{{avatar}}}</a>
+					<a data-tracking="top-admins-user-avatar" href="{{profilePage}}">{{{avatar}}}</a>
 				</div>
 				<div class="community-page-contributor-details">
-					<a href="{{profilePage}}">{{userName}}</a>
+					<a data-tracking="top-admins-user" href="{{profilePage}}">{{userName}}</a>
 				</div>
 			</li>
 		{{/admins}}

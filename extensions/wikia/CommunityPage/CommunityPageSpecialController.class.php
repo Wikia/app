@@ -1,8 +1,10 @@
 <?php
 
 class CommunityPageSpecialController extends WikiaSpecialPageController {
-	const DEFAULT_TEMPLATE_ENGINE = \WikiaResponse::TEMPLATE_ENGINE_MUSTACHE,
-		DISPLAY_COUNT_LIMIT = 999;
+	const COMMUNITY_PAGE_HERO_IMAGE = 'Community-Page-Header.jpg';
+	const DEFAULT_TEMPLATE_ENGINE = \WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
+	const DISPLAY_COUNT_LIMIT = 999;
+
 	private $usersModel;
 	private $wikiModel;
 	private $userTotalContributionCount;
@@ -29,6 +31,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		$this->getOutput()->disallowUserJs();
 
 		$this->response->setValues( [
+			'heroImageUrl' => $this->getHeroImageUrl(),
 			'inviteFriendsText' => $this->msg( 'communitypage-invite-friends' )->plain(),
 			'headerWelcomeMsg' => $this->msg( 'communitypage-tasks-header-welcome' )->plain(),
 			'adminWelcomeMsg' => $this->msg( 'communitypage-admin-welcome-message' )->text(),
@@ -236,7 +239,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 			'allCount' => $memberCount,
 			'adminsText' => $this->msg( 'communitypage-modal-tab-admins' )->plain(),
 			'adminsCount' => $adminData['adminCount'],
-			'leaderboardText' => $this->msg( 'communitypage-modal-tab-leaderboard' )->plain(),
+			'leaderboardText' => $this->msg( 'communitypage-top-contributors-week' )->plain(),
 		] );
 	}
 
@@ -270,5 +273,18 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 				'isAdmin' => $contributor['isAdmin'],
 			];
 		} , $contributors );
+	}
+
+	private function getHeroImageUrl() {
+		$heroImageUrl = '';
+		$heroImage = Title::newFromText( self::COMMUNITY_PAGE_HERO_IMAGE, NS_FILE );
+		if ( $heroImage instanceof Title && $heroImage->exists() ) {
+			$heroImageFile = wfFindFile( $heroImage );
+			if ( $heroImageFile instanceof File ) {
+				$heroImageUrl = $heroImageFile->getUrl();
+			}
+		}
+
+		return $heroImageUrl;
 	}
 }

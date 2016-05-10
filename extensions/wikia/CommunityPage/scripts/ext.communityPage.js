@@ -5,9 +5,16 @@ require([
 	'communitypage.templates.mustache',
 	'wikia.nirvana',
 	'wikia.throbber',
+	'wikia.tracker',
 	'wikia.window'
-], function ($, uiFactory, mustache, templates, nirvana, throbber, window) {
+], function ($, uiFactory, mustache, templates, nirvana, throbber, tracker, window) {
 	'use strict';
+
+	var track = tracker.buildTrackingFunction({
+		action: tracker.ACTIONS.CLICK,
+		category: 'community-page',
+		trackingMethod: 'analytics'
+	});
 
 	// "private" vars - don't access directly. Use getUiModalInstance().
 	var uiModalInstance, modalNavHtml, activeTab, allMembersCount, adminsCount;
@@ -57,7 +64,7 @@ require([
 			modalNavHtml = mustache.render(templates.modalHeader, {
 				allText: $.msg('communitypage-modal-tab-all'),
 				adminsText: $.msg('communitypage-modal-tab-admins'),
-				leaderboardText: $.msg('communitypage-modal-tab-leaderboard'),
+				leaderboardText: $.msg('communitypage-top-contributors-week'),
 				allMembersCount: allMembersCount,
 				adminsCount: adminsCount,
 			});
@@ -134,6 +141,7 @@ require([
 				throbber.show($('.throbber-placeholder'));
 
 				modal.show();
+				initModalTracking(modal);
 
 				window.activeModal = modal;
 				switchCommunityModalTab(tabToActivate);
@@ -185,14 +193,37 @@ require([
 			switchCommunityModalTab(tabs.TAB_LEADERBOARD);
 		});
 
+	function handleClick (event, category) {
+		var data = $(event.currentTarget).data('tracking');
 
-	$(function () {
-		// prefetch UI modal on DOM ready
-		getUiModalInstance();
+		if (typeof(data) !== 'undefined') {
+			track({
+				category: category,
+				label: data,
+			});
+		}
+	}
 
-		// prefetch modal contents
-		getModalTabContentsHtml(tabs.TAB_ALL);
-		getModalTabContentsHtml(tabs.TAB_ADMINS);
-		getModalTabContentsHtml(tabs.TAB_LEADERBOARD);
-	});
+	function initTracking() {
+		// Track clicks in contribution module
+		$('.ContributorsModule').on('mousedown touchstart', 'a', function (event) {
+			handleClick(event, 'community-page-contribution-module');
+		});
+	}
+
+	function initModalTracking(modal) {
+		// Track clicks in contribution modal
+		$('#CommunityPageModalDialog').on('mousedown touchstart', 'a', function (event) {
+			handleClick(event, 'community-page-contribution-modal');
+		});
+
+		// Track clicks on modal close button
+		modal.bind('close', function () {
+			track({
+				label: 'modal-close'
+			});
+		});
+	}
+
+	$(initTracking);
 });

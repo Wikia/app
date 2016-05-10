@@ -4,12 +4,12 @@
 			<h2>{{recentlyJoinedHeaderText}}</h2>
 			{{#members}}
 				<div class="avatar-container">
-					<a href="{{profilePage}}">{{{avatar}}}</a>
+					<a data-tracking="recently-joined-user-avatar" href="{{profilePage}}">{{{avatar}}}</a>
 				</div>
 			{{/members}}
 		</div>
 	{{/haveNewMembers}}
 	<span class="more-link">
-		<a href="#" id="viewAllMembers">{{allMembers}}</a>
+		<a data-tracking="show-modal-all" href="#" id="viewAllMembers">{{allMembers}}</a>
 	</span>
 </div>
