@@ -8,7 +8,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 
 	public function __construct() {
 		parent::__construct( 'Community' );
-		$this->usersModel = new CommunityPageSpecialUsersModel();
+		$this->usersModel = new CommunityPageSpecialUsersModel( new WikiService() );
 		$this->wikiModel = new CommunityPageSpecialWikiModel();
 		$this->userTotalContributionCount = $this->usersModel->getUserContributions( $this->getUser(), false );
 	}

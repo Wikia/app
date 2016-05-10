@@ -3,22 +3,23 @@ require_once( $IP . '/extensions/wikia/CommunityPage/models/CommunityPageSpecial
 
 class CommunityPageSpecialUsersModelTest extends WikiaBaseTest {
 	/**
-	 * @param string $userGroups
+	 * @param int $userId
+	 * @param array $admins
 	 * @param boolean $expectedResult
 	 *
 	 * @dataProvider testIsAdminDataProvider
 	 */
-	public function testIsAdmin( $userGroups, $expectedResult ) {
-		$this->assertEquals( $expectedResult, ( new CommunityPageSpecialUsersModel )->isAdmin( $userGroups ) );
+	public function testIsAdmin( $userId, $admins, $expectedResult ) {
+		$model = new CommunityPageSpecialUsersModel( $this->getMock( 'WikiService' ) );
+		$this->assertEquals( $expectedResult, $model->isAdmin( $userId, $admins ) );
 	}
 
 	public function testIsAdminDataProvider() {
 		return [
-			[ 'sysop', true ],
-			[ '', false ],
-			[ 'foo sysop', true ],
-			[ 'sysop foo', true ],
-			[ 'foo sysop bar', true ],
+			[ 1, [ 1, 2, 3 ] , true ],
+			[ 1, [ 2, 3 ] , false ],
+			[ 1, [] , false ],
+			[ 1, [ 1 ] , true ],
 		];
 	}
 }

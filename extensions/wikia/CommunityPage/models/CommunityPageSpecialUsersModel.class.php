@@ -10,23 +10,30 @@ class CommunityPageSpecialUsersModel {
 	const CURR_USER_CONTRIBUTIONS_MCACHE_KEY = 'community_page_current_user_contributions';
 
 	private $wikiService;
+	private $admins;
 
-	private function getWikiService() {
-		return $this->wikiService;
+	// fixme: Remove WikiService hard dependency
+	public function __construct( WikiService $wikiService ) {
+		$this->wikiService = $wikiService;
 	}
 
-	public function __construct() {
-		$this->wikiService = new WikiService();
+	public function getAdmins() {
+		if ( $this->admins === null ) {
+			$this->admins = $this->wikiService->getWikiAdmins();
+		}
+
+		return $this->admins;
 	}
 
 	/**
 	 * Check if a user is an admin
 	 *
-	 * @param string $group The user's group from ug_group
+	 * @param int $userId
+	 * @param array $admins
 	 * @return bool
 	 */
-	public function isAdmin( $group ) {
-		return strpos( $group, 'sysop' ) !== false;
+	public function isAdmin( $userId, $admins ) {
+		return in_array( $userId, $admins );
 	}
 
 	/**
@@ -74,7 +81,7 @@ class CommunityPageSpecialUsersModel {
 							'userId' => $row->user_id,
 							'userName' => $row->user_name,
 							'contributions' => $row->revision_count,
-							'isAdmin' => $this->isAdmin( $row->ug_group ),
+							'isAdmin' => $this->isAdmin( $row->user_id, $this->getAdmins() ),
 						];
 					} );
 
@@ -265,7 +272,7 @@ class CommunityPageSpecialUsersModel {
 								'group' => $row->ug_group,
 								'joinDate' => $dateString,
 								'userName' => $userName,
-								'isAdmin' => $this->isAdmin( $row->ug_group ),
+								'isAdmin' => $this->isAdmin( $row->wup_user, $this->getAdmins() ),
 								'avatar' => $avatar,
 								'profilePage' => $user->getUserPage()->getLocalURL(),
 							];
