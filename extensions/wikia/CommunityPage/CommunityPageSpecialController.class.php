@@ -65,6 +65,9 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 
 		$insightPages['title'] = $this->msg( 'communitypage-popularpages-title' )->text();
 		$insightPages['description'] =  $this->msg( 'communitypage-popularpages-description' )->text();
+		$insightPages['edittext'] = $this->msg( 'communitypage-page-list-edit' )->text();
+		$insightPages['fulllist'] = $this->msg( 'communitypage-full-list' )->text();
+		$insightPages['fulllistlink'] = SpecialPage::getTitleFor( 'Insights', $type )->getLocalURL();
 
 		return $this->addLastRevision( $insightPages );
 	}
@@ -85,30 +88,13 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 				),
 				$this->getLang()->userDate( $timestamp, $this->getUser() )
 			)->escaped();
-			$noOfView = $insight['metadata']['pv7'];
-			$insightsPages['pages'][$key]['pv7'] = $this->msg('communitypage-noofviews',$noOfView)->text();
+			$insightsPages['pages'][$key]['pageviews'] = $this->msg(
+				'communitypage-noofviews', 
+				$insight['metadata']['pv7'] 
+			)->text();
+			$insightsPages['pages'][$key]['editlink'] = $insight['link']['url'] . '?action=edit';
 		}
 		return $insightsPages;
-	}
-
-	public function header() {
-		$isMember = ( $this->userTotalContributionCount > 0 );
-		$this->response->setValues( [
-			'inviteFriendsText' => $this->msg( 'communitypage-invite-friends' )->plain(),
-			'headerWelcomeMsg' => $this->msg( 'communitypage-tasks-header-welcome' )->plain(),
-			'pageListEditText' => $this->msg( 'communitypage-page-list-edit' )->plain(),
-			'thisMonthText' => $this->msg( 'communitypage-this-month' )->plain(),
-			'showMonthlySummary' => $isMember,
-			'showAdminsSummary' => !$isMember,
-			'statPagesTitle' => $this->msg( 'communitypage-pages' )->plain(),
-			'statPagesNumber' => $this->wikiModel->getPageCount(),
-			'statPageViewsTitle' => $this->msg( 'communitypage-pageviews' )->plain(),
-			'statPageViewsNumber' => $this->wikiModel->getWikiPageViews(),
-			'statEditsTitle' => $this->msg( 'communitypage-edits' )->plain(),
-			'statEditsNumber' => $this->wikiModel->getWikiEdits(),
-			'statEditorsTitle' => $this->msg( 'communitypage-editors' )->plain(),
-			'statEditorsNumber' => $this->wikiModel->getWikiEditorCount(),
-		] );
 	}
 
 	/**

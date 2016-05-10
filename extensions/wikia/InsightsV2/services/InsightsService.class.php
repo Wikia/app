@@ -11,17 +11,17 @@ class InsightsService extends WikiaService{
 	public function getInsightPages( $type, $size, $sortingType ) {
 		if ( !InsightsHelper::isInsightPage( $type ) ) {
 			return [];
-		}else{
-			$model = InsightsHelper::getInsightModel( $type );
-			$insightData = ( new InsightsContext( $model ) )->fetchData();
-			$sortedInsightArticleIds = (
-			new InsightsSorting( $model->getConfig() ) )
-				->getSortedData( $insightData,
-					['sort' => $sortingType]
-				);
-			$aritclesIds = $this->truncateTo( $sortedInsightArticleIds, $size );
-			return $this->getArticlesData( $insightData, $aritclesIds );
 		}
+		$model = InsightsHelper::getInsightModel( $type );
+		$insightData = ( new InsightsContext( $model ) )->fetchData();
+		$sortedInsightArticleIds = (
+		new InsightsSorting( $model->getConfig() ) )
+			->getSortedData(
+				$insightData,
+				['sort' => $sortingType]
+			);
+		$aritclesIds = $this->truncateTo( $sortedInsightArticleIds, $size );
+		return $this->getArticlesData( $insightData, $aritclesIds );
 	}
 
 	/**
