@@ -21,9 +21,10 @@ class CommunityPageSpecialTopAdminsFormatter {
 	}
 
 	private function prepareRemainingCount( $topAdminsCount ) {
-		return $topAdminsCount > self::TOP_ADMINS_MODULE_LIMIT
-			? $topAdminsCount - self::TOP_ADMINS_MODULE_LIMIT + 1
-			: 0;
+		if ( $topAdminsCount > self::TOP_ADMINS_MODULE_LIMIT ) {
+			return $topAdminsCount - self::TOP_ADMINS_MODULE_LIMIT + 1;
+		}
+		return 0;
 	}
 
 	private function prepareAdminsToShow( $allCount, $otherCount, array $list ) {
