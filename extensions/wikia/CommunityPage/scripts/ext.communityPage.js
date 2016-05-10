@@ -89,8 +89,8 @@ require([
 				format: 'json',
 				type: 'get',
 			}).then(function (response) {
-				if (response.hasOwnProperty('members')) {
-					allMembersCount = response.members.length;
+				if (response.hasOwnProperty('membersCount')) {
+					allMembersCount = response.membersCount;
 				}
 
 				if (response.hasOwnProperty('admins')) {

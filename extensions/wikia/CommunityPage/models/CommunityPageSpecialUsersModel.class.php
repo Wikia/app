@@ -257,6 +257,7 @@ class CommunityPageSpecialUsersModel {
 					->SELECT( 'rev_user, rev_timestamp' )
 					->FROM( 'revision' )
 					->WHERE( 'rev_timestamp > DATE_SUB(now(), INTERVAL 2 YEAR)' )
+					->AND_( 'rev_user' )->NOT_EQUAL_TO( 0 )
 					->GROUP_BY( 'rev_user' )
 					->ORDER_BY( 'rev_timestamp DESC' )
 					->LIMIT( 50 )
@@ -304,6 +305,7 @@ class CommunityPageSpecialUsersModel {
 					->AS_( 'all_contributors_count' )
 					->FROM( 'revision' )
 					->WHERE( 'rev_timestamp > DATE_SUB(now(), INTERVAL 2 YEAR)' )
+					->AND_( 'rev_user' )->NOT_EQUAL_TO( 0 )
 					->runLoop( $db, function ( &$sqlCount, $row ) {
 						$sqlCount = $row->all_contributors_count;
 					} );

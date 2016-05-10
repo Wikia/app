@@ -172,6 +172,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 			'joinedText' => $this->msg( 'communitypage-joined' )->plain(),
 			'noMembersText' => $this->msg( 'communitypage-no-members' )->plain(),
 			'members' => $allMembers,
+			'membersCount' => $this->usersModel->getMemberCount(),
 		] );
 	}
 
