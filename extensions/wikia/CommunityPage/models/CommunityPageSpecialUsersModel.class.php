@@ -248,7 +248,7 @@ class CommunityPageSpecialUsersModel {
 	 */
 	public function getAllContributors( $currentUserId = null ) {
 		$allContributorsData = WikiaDataAccess::cache(
-			wfMemcKey( self::ALL_MEMBERS_MCACHE_KEY, rand() ),
+			wfMemcKey( self::ALL_MEMBERS_MCACHE_KEY ),
 			WikiaResponse::CACHE_SHORT,
 			function () use ( $currentUserId ) {
 				$db = wfGetDB( DB_SLAVE );
@@ -272,6 +272,7 @@ class CommunityPageSpecialUsersModel {
 							$data = [
 								'userId' => $userId,
 								'latestRevision' => $row->rev_timestamp,
+								'timeAgo' => wfTimeFormatAgo( $row->rev_timestamp ),
 								'userName' => $userName,
 								'isAdmin' => $this->isAdmin( $userId, $this->getAdmins() ),
 								'isCurrent' => $userId === $currentUserId,
