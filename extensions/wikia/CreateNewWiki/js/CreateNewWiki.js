@@ -1,8 +1,8 @@
-require(['wikia.window', 'wikia.stringhelper', 'WikiBuilder'], function (win, stringHelper, wikiBuilder) {
+require(['wikia.window', 'ext.createNewWiki.builder'], function (win, wikiBuilder) {
 	'use strict';
 	$(function() {
 		win.wgAjaxPath = win.wgScriptPath + win.wgScript;
-		wikiBuilder.init(stringHelper);
+		wikiBuilder.init();
 
 		if (win.wgOasisResponsive || win.wgOasisBreakpoints) {
 			win.ThemeDesigner.slideByDefaultWidth = 500;

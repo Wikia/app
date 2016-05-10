@@ -2887,7 +2887,8 @@ $config['create_new_wiki_js'] = [
 		'//extensions/wikia/CreateNewWiki/js/CreateNewWiki.js',
 		'//extensions/wikia/ThemeDesigner/js/ThemeDesigner.js',
 		'//extensions/wikia/CreateNewWiki/js/CreateNewWikiThemeDesignerOverrides.js',
-		'//extensions/wikia/CreateNewWiki/js/WikiBuilder.js'
+		'//extensions/wikia/CreateNewWiki/js/WikiBuilder.js',
+		'//extensions/wikia/CreateNewWiki/js/CreateNewWikiHelper.js'
 	]
 ];
 
