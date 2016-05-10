@@ -46,10 +46,10 @@ class RecirculationHooks {
 	 * @return bool
 	 */
 	public static function onOasisSkinAssetGroups( &$jsAssets ) {
-		global $wgDevelEnvironment, $wgStagingEnvironment, $wgNoExternals;
+		global $wgWikiaEnvironment, $wgNoExternals;
 
 		// We only want to track this on production
-		if ( empty( $wgDevelEnvironment ) && empty( $wgStagingEnvironment ) && empty( $wgNoExternals ) ) {
+		if ( ( $wgWikiaEnvironment === WIKIA_ENV_PROD ) && empty( $wgNoExternals ) ) {
 			$jsAssets[] = 'recirculation_lateral_js';
 		}
 
