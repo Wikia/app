@@ -3,10 +3,10 @@
 	{{#members}}
 		<li class="community-page-contributor">
 			<div class="avatar-container">
-				<a href="{{profilePage}}">{{{avatar}}}</a>
+				<a data-tracking="all-members-user-avatar" href="{{profilePage}}">{{{avatar}}}</a>
 			</div>
 			<div class="community-page-contributor-details">
-				<a href="{{profilePage}}">{{userName}}</a>
+				<a data-tracking="all-members-user" href="{{profilePage}}">{{userName}}</a>
 				{{#isAdmin}}
 					<span class="community-page-subtle">{{admin}}</span>
 				{{/isAdmin}}
