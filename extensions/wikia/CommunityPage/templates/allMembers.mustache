@@ -6,13 +6,12 @@
 				<a href="{{profilePage}}">{{{avatar}}}</a>
 			</div>
 			<div class="contributor-details">
+				<span class="details">{{joinedText}} {{joinDate}}</span>
 				<a href="{{profilePage}}">{{userName}}</a>
 				{{#isAdmin}}
 					<span class="subtle">{{admin}}</span>
 				{{/isAdmin}}
-				<span class="details">{{joinedText}} {{joinDate}}</span>
 			</div>
-
 		</li>
 	{{/members}}
 	{{^members}}
