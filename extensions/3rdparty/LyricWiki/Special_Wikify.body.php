@@ -4,9 +4,9 @@ require_once 'extras.php';
 
 class Wikify extends SpecialPage
 {
-	function Wikify()
+	function __construct()
 	{
-		SpecialPage::SpecialPage("Wikify");
+		parent::__construct("Wikify");
 	}
 
 	function displayError( $error )

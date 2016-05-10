@@ -7,7 +7,6 @@ $wgAutoloadClasses['CommunityPageSpecialController'] =  __DIR__ . '/CommunityPag
 $wgAutoloadClasses['CommunityPageSpecialHooks'] =  __DIR__ . '/CommunityPageSpecialHooks.class.php';
 
 /* hooks */
-$wgHooks['GetHTMLBeforeWikiaPage'][] = 'CommunityPageSpecialHooks::getHTMLBeforeWikiaPage';
 $wgHooks['ArticleSaveComplete'][] = 'CommunityPageSpecialHooks::onArticleSaveComplete';
 
 /* i18n */
