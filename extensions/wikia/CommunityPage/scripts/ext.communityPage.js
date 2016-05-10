@@ -179,10 +179,4 @@ require([
 			switchCommunityModalTab(tabs.TAB_LEADERBOARD);
 			event.preventDefault();
 		});
-
-
-	$(function () {
-		// prefetch UI modal on DOM ready
-		getUiModalInstance();
-	});
 });
