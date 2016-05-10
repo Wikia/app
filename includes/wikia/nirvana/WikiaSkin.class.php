@@ -405,7 +405,7 @@ abstract class WikiaSkin extends SkinTemplate {
 	 * @return string Generated CSS class for this wikia
 	 */
 	public function getBodyClassForCommunity() {
-		return "wiki-{$this->wg->DBname}";
+		return Sanitizer::escapeClass( "wiki-{$this->wg->DBname}" );
 	}
 
 	public function initPage( OutputPage $out ) {
