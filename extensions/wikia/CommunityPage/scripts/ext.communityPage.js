@@ -64,7 +64,7 @@ require([
 			modalNavHtml = mustache.render(templates.modalHeader, {
 				allText: $.msg('communitypage-modal-tab-all'),
 				adminsText: $.msg('communitypage-modal-tab-admins'),
-				leaderboardText: $.msg('communitypage-modal-tab-leaderboard'),
+				leaderboardText: $.msg('communitypage-top-contributors-week'),
 				allMembersCount: allMembersCount,
 				adminsCount: adminsCount,
 			});
@@ -220,15 +220,5 @@ require([
 		});
 	}
 
-	$(function () {
-		initTracking();
-
-		// prefetch UI modal on DOM ready
-		getUiModalInstance();
-
-		// prefetch modal contents
-		getModalTabContentsHtml(tabs.TAB_ALL);
-		getModalTabContentsHtml(tabs.TAB_ADMINS);
-		getModalTabContentsHtml(tabs.TAB_LEADERBOARD);
-	});
+	$(initTracking);
 });

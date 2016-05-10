@@ -33,7 +33,7 @@ class CommunityPageSpecialUsersModel {
 			wfMemcKey( self::TOP_CONTRIB_MCACHE_KEY, $limit, $weekly, $onlyAdmins ),
 			WikiaResponse::CACHE_STANDARD,
 			function () use ( $limit, $weekly, $onlyAdmins ) {
-				global $wgExternalSharedDB;
+				global $wgExternalSharedDB, $wgDBcluster;
 				$db = wfGetDB( DB_SLAVE );
 				$adminFilter = '';
 				if ( $onlyAdmins ) {
@@ -50,7 +50,7 @@ class CommunityPageSpecialUsersModel {
 				$sqlData = ( new WikiaSQL() )
 					->SELECT( 'user_name, user_id, ug_group, count(rev_id) AS revision_count' )
 					->FROM ( 'revision FORCE INDEX (user_timestamp)' )
-					->LEFT_JOIN( $wgExternalSharedDB . '.user' )->ON( '(rev_user <> 0) AND (user_id = rev_user)' )
+					->LEFT_JOIN( $wgExternalSharedDB . '_' . $wgDBcluster . '.user' )->ON( '(rev_user <> 0) AND (user_id = rev_user)' )
 					->LEFT_JOIN( 'user_groups ON (user_id = ug_user)' )
 					->WHERE( 'user_id' )->IS_NOT_NULL()
 					->AND_( $dateFilter )

@@ -3,7 +3,7 @@
 .community-page-header {
 	@include flexbox();
 	align-items: center;
-	background-image: url('/extensions/wikia/WAMPage/images/hero.jpg'); /* inline */
+	background-color: $color-links;
 	height: 250px;
 	justify-content: center;
 	text-align: center;
