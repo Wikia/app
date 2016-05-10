@@ -235,7 +235,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 			'allCount' => $memberCount,
 			'adminsText' => $this->msg( 'communitypage-modal-tab-admins' )->plain(),
 			'adminsCount' => $adminData['adminCount'],
-			'leaderboardText' => $this->msg( 'communitypage-modal-tab-leaderboard' )->plain(),
+			'leaderboardText' => $this->msg( 'communitypage-top-contributors-week' )->plain(),
 		] );
 	}
 
