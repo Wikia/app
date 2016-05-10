@@ -141,7 +141,7 @@ require([
 				throbber.show($('.throbber-placeholder'));
 
 				modal.show();
-				initModalTracking();
+				initModalTracking(modal);
 
 				window.activeModal = modal;
 				switchCommunityModalTab(tabToActivate);
@@ -206,16 +206,16 @@ require([
 		});
 	}
 
-	function initModalTracking() {
+	function initModalTracking(modal) {
 		// Track clicks in contribution modal
 		$('#CommunityPageModalDialog').on('mousedown touchstart', 'a', function (event) {
 			handleClick(event, 'community-page-contribution-modal');
 		});
 
 		// Track clicks on modal close button
-		$('.close[title=\'close\']').on('mousedown touchstart', function () {
+		modal.bind('close', function () {
 			track({
-				label: 'modal-close',
+				label: 'modal-close'
 			});
 		});
 	}
