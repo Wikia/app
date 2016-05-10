@@ -279,7 +279,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		$heroImage = Title::newFromText( self::COMMUNITY_PAGE_HERO_IMAGE, NS_FILE );
 		if ( $heroImage instanceof Title && $heroImage->exists() ) {
 			$heroImageFile = wfFindFile( $heroImage );
-			if ( !empty( $heroImageFile ) ) {
+			if ( $heroImageFile instanceof File ) {
 				$heroImageUrl = $heroImageFile->getUrl();
 			}
 		}
