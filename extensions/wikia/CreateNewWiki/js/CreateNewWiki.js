@@ -73,6 +73,7 @@
 							});
 
 							authModal.load({
+								forceLogin: true,
 								url: '/signin?redirect=' + encodeURIComponent(redirectUrl.toString()),
 								origin: 'create-new-wikia',
 								onAuthSuccess: $.proxy(self.onAuthSuccess, self)

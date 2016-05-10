@@ -190,6 +190,8 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 				$redirectUrl = $this->wg->title->getFullUrl( $params );
 			}
 
+			wfRunHooks( 'UserSignupAfterSignupBeforeRedirect', [ &$redirectUrl ] );
+
 			$this->track( 'signup-successful' );
 			$this->wg->out->redirect( $redirectUrl );
 		} else {

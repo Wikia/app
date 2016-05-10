@@ -68,15 +68,21 @@ describe('ext.wikia.adEngine.provider.gpt.adElement', function () {
 		expect(element.getNode().getAttribute('data-gpt-slot-sizes')).toEqual('[[300,250],[300,600]]');
 	});
 
+	it('Set out-of-page type in attribute', function () {
+		var element = new AdElement('TOP_RIGHT_BOXAD', '/ELEMENT_SLOTPATH', slotTargeting);
+
+		expect(element.getNode().getAttribute('data-gpt-slot-type')).toEqual('out-of-page');
+	});
+
 	it('Set page level params as json on attribute', function () {
 		var element = new AdElement('TOP_RIGHT_BOXAD', '/ELEMENT_SLOTPATH', slotTargeting);
 
 		element.setPageLevelParams({
-			pageParam1: 'value1',
-			pageParam2: 'value2'
+			param1: 'val1',
+			param2: 'val2'
 		});
 
-		expect(element.getNode().getAttribute('data-gpt-page-params')).toEqual('{"pageParam1":"value1","pageParam2":"value2"}');
+		expect(element.getNode().getAttribute('data-gpt-page-params')).toEqual('{"param1":"val1","param2":"val2"}');
 	});
 
 	it('Set slot level params on slot object and add as json to attribute', function () {

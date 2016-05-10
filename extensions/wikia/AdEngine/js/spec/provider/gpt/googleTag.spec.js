@@ -15,11 +15,14 @@ describe('ext.wikia.adEngine.provider.gpt.googleTag', function () {
 					};
 				},
 				setSizes: noop,
-				getSizes: noop,
+				getSizes: function () {
+					return mocks.elementSizes;
+				},
 				getSlotPath: noop,
 				setPageLevelParams: noop,
 				configureSlot: noop
 			},
+			elementSizes: null,
 			log: noop,
 			pubads: {
 				collapseEmptyDivs: noop,
@@ -45,6 +48,11 @@ describe('ext.wikia.adEngine.provider.gpt.googleTag', function () {
 						return {
 							addService: noop
 						};
+					},
+					defineOutOfPageSlot: function () {
+						return {
+							addService: noop
+						};
 					}
 				}
 			}
@@ -57,6 +65,7 @@ describe('ext.wikia.adEngine.provider.gpt.googleTag', function () {
 			mocks.window
 		);
 		googleApi = new GoogleTag();
+		mocks.elementSizes = [[300, 250]];
 	});
 
 	it('Initialization should prepare googletag object and configure pubads', function () {
@@ -120,6 +129,29 @@ describe('ext.wikia.adEngine.provider.gpt.googleTag', function () {
 		googleApi.addSlot(mocks.element);
 
 		expect(mocks.window.googletag.display.calls.count()).toEqual(1);
+	});
+
+	it('Define out of page slot when element sizes are not defined', function () {
+		spyOn(mocks.window.googletag, 'defineSlot').and.callThrough();
+		spyOn(mocks.window.googletag, 'defineOutOfPageSlot').and.callThrough();
+		mocks.elementSizes = null;
+		googleApi.init();
+
+		googleApi.addSlot(mocks.element);
+
+		expect(mocks.window.googletag.defineSlot).not.toHaveBeenCalled();
+		expect(mocks.window.googletag.defineOutOfPageSlot).toHaveBeenCalled();
+	});
+
+	it('Define regular slot when element sizes are defined', function () {
+		spyOn(mocks.window.googletag, 'defineSlot').and.callThrough();
+		spyOn(mocks.window.googletag, 'defineOutOfPageSlot').and.callThrough();
+		googleApi.init();
+
+		googleApi.addSlot(mocks.element);
+
+		expect(mocks.window.googletag.defineSlot).toHaveBeenCalled();
+		expect(mocks.window.googletag.defineOutOfPageSlot).not.toHaveBeenCalled();
 	});
 
 	it('Set page targeting params using pubads', function () {

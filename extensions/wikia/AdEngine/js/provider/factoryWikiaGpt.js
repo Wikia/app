@@ -11,17 +11,13 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 	function overrideSizes(slotMap) {
 		var context = adContext.getContext();
 
-		if (context.opts.overrideLeaderboardSizes) {
-			for (var slotName in slotMap) {
-				if (slotMap.hasOwnProperty(slotName) && slotName.indexOf('TOP_LEADERBOARD') > -1) {
-					slotMap[slotName].size = '728x90';
-				}
-			}
-		}
-
 		if (context.opts.overridePrefootersSizes) {
 			slotMap.PREFOOTER_LEFT_BOXAD.size = '300x250,468x60,728x90';
 			delete slotMap.PREFOOTER_RIGHT_BOXAD;
+		}
+
+		if (!!slotMap.INCONTENT_LEADERBOARD && context.slots.incontentLeaderboardAsOutOfPage) {
+			delete slotMap.INCONTENT_LEADERBOARD.size;
 		}
 	}
 

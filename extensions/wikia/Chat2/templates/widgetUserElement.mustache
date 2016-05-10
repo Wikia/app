@@ -1,0 +1,31 @@
+{{#users}}
+<li class="chatter">
+	<img src="{{blankImgUrl}}" data-src="{{avatarUrl}}" class="avatar" width="32" height="32"  />
+	<div class="UserStatsMenu">
+		<div class="info">
+			<img data-src="{{avatarUrl}}" src="{{blankImgUrl}}" class="avatar" width="24" height="24" />
+			<ul>
+				<li class="username" data-user-prop="username">{{username}}</li>
+				<li data-msg-param="{{editCount}}" class="edits" data-msg-id="chat-edit-count"> </li>
+				<li data-msg-param="{{since}}" class="since" data-msg-id="chat-member-since"> </li>
+			</ul>
+		</div>
+		<div class="actions">
+			<ul class="regular-actions">
+				<li class="profilepage {{profileType}}">
+					<a href="{{profileUrl}}">
+						<span class="icon">&nbsp;</span>
+						<span class="label" data-msg-id="chat-user-menu-{{profileType}}"></span>
+					</a>
+				</li>
+				<li class="contribs">
+					<a href="{{contribsUrl}}">
+						<span class="icon">&nbsp;</span>
+						<span class="label" data-msg-id="chat-user-menu-contribs"> </span>
+					</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+</li>
+{{/users}}

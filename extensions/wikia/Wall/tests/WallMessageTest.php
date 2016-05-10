@@ -43,7 +43,7 @@ class WallMessageTest extends WikiaBaseTest {
 			$notExistingId => null
 		];
 
-		$mockDb = $this->getMock( 'DatabaseMysql', [ 'select', 'selectRow' ] );
+		$mockDb = $this->getDatabaseMock([ 'select', 'selectRow' ] );
 		$mockDb->expects( $this->exactly( 1 ) )
 			->method( 'select' )
 			->will( $this->returnValue( [ $this->getSlaveTitleRow() ] ) );

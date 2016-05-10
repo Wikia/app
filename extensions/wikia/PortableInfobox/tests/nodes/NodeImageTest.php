@@ -37,9 +37,8 @@ class NodeImageTest extends WikiaBaseTest {
 	/**
 	 * @covers       \Wikia\PortableInfobox\Parser\Nodes\NodeImage::getMarkers
 	 * @dataProvider markersProvider
-	 *
-	 * @param $markup
-	 * @param $params
+	 * @param $ext
+	 * @param $value
 	 * @param $expected
 	 */
 	public function testMarkers( $ext, $value, $expected ) {
@@ -62,7 +61,6 @@ class NodeImageTest extends WikiaBaseTest {
 	}
 
 
-
 	/**
 	 * @covers       \Wikia\PortableInfobox\Parser\Nodes\NodeImage::getData
 	 * @dataProvider dataProvider
@@ -80,30 +78,30 @@ class NodeImageTest extends WikiaBaseTest {
 	public function dataProvider() {
 		// markup, params, expected
 		return [
-			[ 
+			[
 				'<image source="img"></image>',
 				[ ],
-				[ [ 'url' => '', 'name' => '', 'key' => '', 'alt' => null, 'caption' => null ] ]
+				[ [ 'url' => '', 'name' => '', 'key' => '', 'alt' => null, 'caption' => null, 'isVideo' => false ] ]
 			],
 			[
 				'<image source="img"></image>',
 				[ 'img' => 'test.jpg' ],
-			  	[ [ 'url' => '', 'name' => 'Test.jpg', 'key' => 'Test.jpg', 'alt' => null, 'caption' => null ] ]
+				[ [ 'url' => '', 'name' => 'Test.jpg', 'key' => 'Test.jpg', 'alt' => null, 'caption' => null, 'isVideo' => false ] ]
 			],
 			[
 				'<image source="img"><alt><default>test alt</default></alt></image>',
 				[ 'img' => 'test.jpg' ],
-				[ [ 'url' => '', 'name' => 'Test.jpg', 'key' => 'Test.jpg', 'alt' => 'test alt', 'caption' => null ] ]
+				[ [ 'url' => '', 'name' => 'Test.jpg', 'key' => 'Test.jpg', 'alt' => 'test alt', 'caption' => null, 'isVideo' => false ] ]
 			],
 			[
 				'<image source="img"><alt source="alt source"><default>test alt</default></alt></image>',
 				[ 'img' => 'test.jpg', 'alt source' => 2 ],
-				[ [ 'url' => '', 'name' => 'Test.jpg', 'key' => 'Test.jpg', 'alt' => 2, 'caption' => null ] ]
+				[ [ 'url' => '', 'name' => 'Test.jpg', 'key' => 'Test.jpg', 'alt' => 2, 'caption' => null, 'isVideo' => false ] ]
 			],
 			[
 				'<image source="img"><alt><default>test alt</default></alt><caption source="img"/></image>',
 				[ 'img' => 'test.jpg' ],
-				[ [ 'url' => '', 'name' => 'Test.jpg', 'key' => 'Test.jpg', 'alt' => 'test alt', 'caption' => 'test.jpg' ] ]
+				[ [ 'url' => '', 'name' => 'Test.jpg', 'key' => 'Test.jpg', 'alt' => 'test alt', 'caption' => 'test.jpg', 'isVideo' => false ] ]
 			],
 		];
 	}
@@ -167,13 +165,17 @@ class NodeImageTest extends WikiaBaseTest {
 
 	/**
 	 * @dataProvider testVideoProvider
+	 * @param $markup
+	 * @param $params
+	 * @param $expected
+	 * @throws \Wikia\PortableInfobox\Parser\XmlMarkupParseErrorException
 	 */
 	public function testVideo( $markup, $params, $expected ) {
 		global $wgHooks;
 
 		// backup the hooks
-		$tmpHooks = $wgHooks['PortableInfoboxNodeImage::getData'];
-		$wgHooks['PortableInfoboxNodeImage::getData'] = [];
+		$tmpHooks = $wgHooks[ 'PortableInfoboxNodeImage::getData' ];
+		$wgHooks[ 'PortableInfoboxNodeImage::getData' ] = [ ];
 
 		$fileMock = new FileMock();
 		$xmlObj = Wikia\PortableInfobox\Parser\XmlParser::parseXmlString( $markup );
@@ -185,7 +187,7 @@ class NodeImageTest extends WikiaBaseTest {
 		$this->assertEquals( $expected, $nodeImage->getData() );
 
 		// restore the hooks
-		$wgHooks['PortableInfoboxNodeImage::getData'] = $tmpHooks;
+		$wgHooks[ 'PortableInfoboxNodeImage::getData' ] = $tmpHooks;
 	}
 
 	public function testVideoProvider() {

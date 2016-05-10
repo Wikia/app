@@ -1,6 +1,29 @@
 @import 'skins/shared/mixins/image-replacement';
 
-$close-image: '/resources/wikia/ui_components/modal/images/close-light.svg';
+$old-close-image: '/resources/wikia/ui_components/modal/images/close-light.svg';
+
+#InvisibleHighImpactWrapper.floor-adhesion {
+	bottom: 0;
+	display: block;
+	position: fixed;
+	text-align: center;
+	width: 100%;
+	z-index: $zTop;
+
+	.background {
+		height: 90px;
+	}
+
+	.close {
+		bottom: 0;
+		padding: 37px 7px;
+		top: auto;
+	}
+
+	.label {
+		display: none;
+	}
+}
 
 #ext-wikia-adEngine-template-floor {
 	bottom: 0;
@@ -23,8 +46,8 @@ $close-image: '/resources/wikia/ui_components/modal/images/close-light.svg';
 
 		.ads-floor-close-button {
 			@include image-replacement();
-			background: url($close-image);
 			background-size: 20px 20px;
+			background: url($old-close-image);
 			display: block;
 			float: right;
 			height: 20px;

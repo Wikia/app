@@ -31,6 +31,8 @@ if ( !defined( 'RUN_MAINTENANCE_IF_MAIN' ) ) {
 	exit( 1 );
 }
 
+$wgMaintenanceStartTime = microtime( true );
+
 // Wasn't included from the file scope, halt execution (probably wanted the class)
 // If a class is using commandLine.inc (old school maintenance), they definitely
 // cannot be included and will proceed with execution
@@ -124,15 +126,42 @@ require_once( MWInit::compiledPath( 'includes/Setup.php' ) );
 // Much much faster startup than creating a title object
 $wgTitle = null;
 
+\Wikia\Logger\WikiaLogger::instance()->info("Maintenance script $maintClass started.");
+
+function getMaintenanceRuntimeStatistics( $exception = null ) {
+	global $wgMaintenanceStartTime, $maintenance;
+
+	$logContext = [ ];
+	if ( is_callable( [ $maintenance, 'getRuntimeStatistics' ] ) ) {
+		$logContext = array_merge( $logContext, $maintenance->getRuntimeStatistics() );
+	}
+	$logContext['status_bool'] = !$exception;
+	$logContext['total_time_float'] = microtime( true ) - $wgMaintenanceStartTime;
+	if ( $exception ) {
+		$logContext['exception'] = $exception;
+	}
+
+	return $logContext;
+}
+
 // Do the work
 try {
 	$maintenance->execute();
 
 	// Potentially debug globals
 	$maintenance->globals();
+
+	\Wikia\Logger\WikiaLogger::instance()->info( "Maintenance script $maintClass finished successfully.",
+		getMaintenanceRuntimeStatistics() );
 } catch ( MWException $mwe ) {
 	echo( $mwe->getText() );
+	\Wikia\Logger\WikiaLogger::instance()->error( "Maintenance script $maintClass was interrupted by unhandled exception.",
+		getMaintenanceRuntimeStatistics( $mwe ) );
 	exit( 1 );
+} catch ( Exception $e ) {
+	\Wikia\Logger\WikiaLogger::instance()->error( "Maintenance script $maintClass was interrupted by unhandled exception.",
+		getMaintenanceRuntimeStatistics( $e ) );
+	throw $e;
 }
 
 wfRunHooks( 'RestInPeace' ); // Wikia change - @author macbre

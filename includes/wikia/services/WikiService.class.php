@@ -817,22 +817,28 @@ class WikiService extends WikiaModel {
 			$rows = $db->select(
 				array(
 					'city_visualization',
-					'city_list'
+					'city_list',
+					'city_verticals',
+					'city_cat_mapping',
+					'city_cats'
 				),
 				array(
 					'city_list.city_id',
 					'city_list.city_title',
+					'city_list.city_description',
 					'city_list.city_url',
 					'city_list.city_lang',
-					'city_visualization.city_vertical',
+					'city_list.city_vertical',
 					'city_visualization.city_headline',
 					'city_visualization.city_description',
 					'city_visualization.city_main_image',
 					'city_visualization.city_flags',
+					'city_verticals.vertical_name',
+					'city_cats.cat_name'
 				),
 				array(
 					'city_list.city_public' => 1,
-					'city_list.city_id IN (' . implode( ',', $wikiIds ) . ')',
+					'city_list.city_id' => $wikiIds,
 					'((city_visualization.city_flags & ' . self::FLAG_BLOCKED . ') != ' . self::FLAG_BLOCKED . ' OR city_visualization.city_flags IS NULL)'
 				),
 				__METHOD__,
@@ -841,6 +847,18 @@ class WikiService extends WikiaModel {
 					'city_visualization' => array(
 						'LEFT JOIN',
 						'city_list.city_id = city_visualization.city_id'
+					),
+					'city_verticals' => array(
+						'LEFT JOIN',
+						'city_list.city_vertical = city_verticals.vertical_id'
+					),
+					'city_cat_mapping' => array (
+						'LEFT JOIN',
+						'city_list.city_id = city_cat_mapping.city_id',
+					),
+					'city_cats' => array(
+						'LEFT JOIN',
+						'city_cat_mapping.cat_id = city_cats.cat_id'
 					)
 				)
 			);
@@ -849,8 +867,11 @@ class WikiService extends WikiaModel {
 				$item = array(
 					'name' => $row->city_title,
 					'url' => $row->city_url,
+					'domain' => $row->city_url,
+					'title' => $row->city_title,
+					'topic' => $row->cat_name,
 					'lang' => $row->city_lang,
-					'hubId' => $row->city_vertical,
+					'hub' => $row->vertical_name,
 					'headline' => $row->city_headline,
 					'desc' => $row->city_description,
 					//this is stored in a pretty peculiar format,

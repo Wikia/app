@@ -406,10 +406,8 @@ $wgAutoloadLocalClasses = array(
 	'Blob' => 'includes/db/DatabaseUtility.php',
 	'ChronologyProtector' => 'includes/db/LBFactory.php',
 	'CloneDatabase' => 'includes/db/CloneDatabase.php',
-	'Database' => 'includes/db/DatabaseMysql.php',
 	'DatabaseBase' => 'includes/db/Database.php',
 	'DatabaseMssql' => 'includes/db/DatabaseMssql.php',
-	'DatabaseMysql' => 'includes/db/DatabaseMysql.php',
 	'DatabaseMysqlBase' => 'includes/db/DatabaseMysqlBase.php',
 	'DatabaseMysqli' => 'includes/db/DatabaseMysqli.php',
 	'DatabaseOracle' => 'includes/db/DatabaseOracle.php',
@@ -437,7 +435,7 @@ $wgAutoloadLocalClasses = array(
 	'LoadMonitor' => 'includes/db/LoadMonitor.php',
 	'LoadMonitor_MySQL' => 'includes/db/LoadMonitor.php',
 	'LoadMonitor_Null' => 'includes/db/LoadMonitor.php',
-	'MySQLField' => 'includes/db/DatabaseMysql.php',
+	'MySQLField' => 'includes/db/DatabaseMysqlBase.php',
 	'MySQLMasterPos' => 'includes/db/DatabaseMysqlBase.php',
 	'ORAField' => 'includes/db/DatabaseOracle.php',
 	'ORAResult' => 'includes/db/DatabaseOracle.php',
@@ -571,8 +569,6 @@ $wgAutoloadLocalClasses = array(
 
 	# includes/json
 	'FormatJson' => 'includes/json/FormatJson.php',
-	'Services_JSON' => 'includes/json/Services_JSON.php',
-	'Services_JSON_Error' => 'includes/json/Services_JSON.php',
 
 	# includes/libs
 	'CSSJanus' => 'lib/composer/cssjanus/cssjanus/src/CSSJanus.php',
@@ -610,7 +606,6 @@ $wgAutoloadLocalClasses = array(
 	'DjVuImage' => 'includes/media/DjVuImage.php',
 	'Exif' => 'includes/media/Exif.php',
 	'ExifBitmapHandler' => 'includes/media/ExifBitmap.php',
-	'FormatExif' => 'includes/media/FormatMetadata.php',
 	'FormatMetadata' => 'includes/media/FormatMetadata.php',
 	'GIFHandler' => 'includes/media/GIF.php',
 	'GIFMetadataExtractor' => 'includes/media/GIFMetadataExtractor.php',

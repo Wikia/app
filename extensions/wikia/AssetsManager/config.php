@@ -93,13 +93,17 @@ $config['adengine2_desktop_js'] = array(
 		'//extensions/wikia/AdEngine/js/provider/gpt/sraHelper.js',
 		'//extensions/wikia/AdEngine/js/provider/remnantGpt.js',
 		'//extensions/wikia/AdEngine/js/provider/turtle.js',
+		'//extensions/wikia/AdEngine/js/provider/yavliTag.js',
 		'//extensions/wikia/AdEngine/js/recovery/helper.js',
 		'//extensions/wikia/AdEngine/js/slot/adSlot.js',
 		'//extensions/wikia/AdEngine/js/slot/floatingMedrec.js',
+		'//extensions/wikia/AdEngine/js/slot/highImpact.js',
 		'//extensions/wikia/AdEngine/js/slot/inContent.js',
 		'//extensions/wikia/AdEngine/js/slot/scrollHandler.js',
 		'//extensions/wikia/AdEngine/js/slot/skyScraper3.js',
 		'//extensions/wikia/AdEngine/js/template/floor.js',
+		'//extensions/wikia/AdEngine/js/template/floorAdhesion.js',
+		'//extensions/wikia/AdEngine/js/template/interstitial.js',
 		'//extensions/wikia/AdEngine/js/template/modal.js',
 		'//extensions/wikia/AdEngine/js/template/modalHandlerFactory.js',
 		'//extensions/wikia/AdEngine/js/template/modalOasisHandler.js',
@@ -110,14 +114,12 @@ $config['adengine2_desktop_js'] = array(
 
 		// was: late queue
 		'//extensions/wikia/AdEngine/js/OoyalaTracking.js',
-		'//extensions/wikia/AdEngine/js/SevenOneMediaHelper.js',
 		'//extensions/wikia/AdEngine/js/WikiaDartVideoHelper.js',
 		'//extensions/wikia/AdEngine/js/TaboolaHelper.js',
 		'//extensions/wikia/AdEngine/js/provider/evolve2.js',
 		'//extensions/wikia/AdEngine/js/provider/hitMedia.js',
 		'//extensions/wikia/AdEngine/js/provider/liftium.js',
 		'//extensions/wikia/AdEngine/js/provider/monetizationService.js',
-		'//extensions/wikia/AdEngine/js/provider/sevenOneMedia.js',
 
 		'//extensions/wikia/AdEngine/js/run/desktop.run.js',
 	),
@@ -263,14 +265,12 @@ $config['oasis_noads_extensions_js'] = array(
 		// WikiaBar is enabled sitewide
 		'//extensions/wikia/WikiaBar/js/WikiaBar.js',
 		// Chat is enabled sitewide
-		'//extensions/wikia/Chat2/js/ChatEntryPoint.js',
+		'//extensions/wikia/Chat2/js/ChatWidget.js',
 		'//extensions/wikia/VideoEmbedTool/js/VET_Loader.js',
 		// Survey for first time editors
 		'//extensions/wikia/EditorSurvey/js/EditorSurvey.js',
 		// Image and video thumbnail mustache templates
 		'//extensions/wikia/Thumbnails/scripts/templates.mustache.js',
-		// handlebars - uncomment this when introducing first client-side rendered handlebars template
-		// '//resources/wikia/libraries/handlebars/handlebars.js',
 		'//extensions/wikia/JSSnippets/js/JSSnippets.js',
 	)
 );
@@ -847,17 +847,18 @@ $config['mercury_ads_js'] = array(
 		'//resources/wikia/modules/localStorage.js',
 
 		// Advertisement libs
-		'//extensions/wikia/AdEngine/js/AdLogicPageViewCounter.js',
 		'//extensions/wikia/AbTesting/js/AbTest.js',
-		'//resources/wikia/modules/abTest.js',
+		'//extensions/wikia/AdEngine/js/AdLogicPageViewCounter.js',
 		'//extensions/wikia/AdEngine/js/CustomAdsLoader.js',
-		'//extensions/wikia/AdEngine/js/mobile/mercuryListener.js',
-		'//extensions/wikia/AdEngine/js/slot/scrollHandler.js',
 		'//extensions/wikia/AdEngine/js/SourcePointDetection.js',
+		'//extensions/wikia/AdEngine/js/mobile/mercuryListener.js',
+		'//extensions/wikia/AdEngine/js/provider/yavliTag.js',
+		'//extensions/wikia/AdEngine/js/slot/scrollHandler.js',
 		'//extensions/wikia/AdEngine/js/template/floor.js',
 		'//extensions/wikia/AdEngine/js/template/modal.js',
 		'//extensions/wikia/AdEngine/js/template/modalHandlerFactory.js',
 		'//extensions/wikia/AdEngine/js/template/modalMercuryHandler.js',
+		'//resources/wikia/modules/abTest.js',
 		'//resources/wikia/modules/krux.js',
 
 		'//extensions/wikia/AdEngine/js/run/mercury.run.js',
@@ -2843,6 +2844,25 @@ $config['special_community_page_scss'] = [
 	'assets' => [
 		'//extensions/wikia/CommunityPage/styles/CommunityPage.scss',
 		'//extensions/wikia/CommunityPage/styles/CommunityPageOverrides.scss',
+	],
+];
+
+
+$config['visual_editor_tour_experiment_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => [
+		'//extensions/wikia/SpitfiresContributionExperiments/scripts/experiments-tracker.js',
+		'//extensions/wikia/VisualEditorTourExperiment/scripts/VisualEditorTourExperiment.js',
+		'//extensions/wikia/VisualEditorTourExperiment/scripts/VisualEditorTourExperimentConfig.js',
+		'//extensions/wikia/VisualEditorTourExperiment/scripts/VisualEditorTourExperimentInit.js',
+		'//extensions/wikia/VisualEditorTourExperiment/scripts/VisualEditorTourExperimentInitArticleEntry.js',
+	],
+];
+
+$config['visual_editor_tour_experiment_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'assets' => [
+		'//extensions/wikia/VisualEditorTourExperiment/styles/VisualEditorTourExperimentInit.scss',
 	],
 ];
 

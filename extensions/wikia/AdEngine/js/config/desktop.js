@@ -15,7 +15,6 @@ define('ext.wikia.adEngine.config.desktop', [
 	'ext.wikia.adEngine.provider.liftium',
 	'ext.wikia.adEngine.provider.monetizationService',
 	'ext.wikia.adEngine.provider.remnantGpt',
-	'ext.wikia.adEngine.provider.sevenOneMedia',
 	'ext.wikia.adEngine.provider.turtle',
 	require.optional('ext.wikia.adEngine.provider.taboola')
 ], function (
@@ -34,7 +33,6 @@ define('ext.wikia.adEngine.config.desktop', [
 	adProviderLiftium,
 	adProviderMonetizationService,
 	adProviderRemnantGpt,
-	adProviderSevenOneMedia,
 	adProviderTurtle,
 	adProviderTaboola
 ) {
@@ -42,12 +40,6 @@ define('ext.wikia.adEngine.config.desktop', [
 
 	var logGroup = 'ext.wikia.adEngine.adConfigLate',
 		context = adContext.getContext(),
-		liftiumSlotsToShowWithSevenOneMedia = {
-			'WIKIA_BAR_BOXAD_1': true,
-			'TOP_BUTTON_WIDE': true,
-			'TOP_BUTTON_WIDE.force': true
-		},
-		ie8 = window.navigator && window.navigator.userAgent && window.navigator.userAgent.match(/MSIE [6-8]\./),
 		gptEnabled = !instantGlobals.wgSitewideDisableGpt,
 		forcedProviders = {
 			evolve2:  [adProviderEvolve2],
@@ -75,23 +67,6 @@ define('ext.wikia.adEngine.config.desktop', [
 		if (context.forcedProvider && !!forcedProviders[context.forcedProvider]) {
 			log(['getProvider', slotName, context.forcedProvider + ' (wgAdDriverForcedProvider)'], 'info', logGroup);
 			return forcedProviders[context.forcedProvider];
-		}
-
-		// SevenOne Media
-		if (context.providers.sevenOneMedia) {
-			if (!liftiumSlotsToShowWithSevenOneMedia[slotName]) {
-				if (ie8) {
-					log('SevenOneMedia not supported on IE8. No ads', 'warn', logGroup);
-					return [];
-				}
-
-				if (instantGlobals.wgSitewideDisableSevenOneMedia) {
-					log('SevenOneMedia disabled by DR. No ads', 'warn', logGroup);
-					return [];
-				}
-
-				return [adProviderSevenOneMedia];
-			}
 		}
 
 		// Taboola

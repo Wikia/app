@@ -18,7 +18,7 @@ class CreateWiki {
 
 	use \Wikia\Logger\Loggable;
 
-	/* @var $mDBw DatabaseMysql */
+	/* @var $mDBw DatabaseBase */
 	/* @var $mClusterDB string */
 	private $mName, $mDomain, $mLanguage, $mVertical, $mCategories, $mIP,
 		$mPHPbin, $mNewWiki, $mFounder,

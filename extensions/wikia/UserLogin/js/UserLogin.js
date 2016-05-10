@@ -16,6 +16,7 @@
 			window.onbeforeunload = function () {};
 			require(['AuthModal'], function (authModal) {
 				authModal.load({
+					forceLogin: true,
 					origin: 'editor',
 					url: '/signin?redirect=' + encodeURIComponent(window.location.href),
 					onAuthSuccess: function () {
@@ -33,6 +34,7 @@
 				window.onbeforeunload = function () {};
 				require(['AuthModal'], function (authModal) {
 					authModal.load({
+						forceLogin: true,
 						origin: 'editor',
 						url: '/signin?redirect=' + encodeURIComponent(window.location.href),
 					});

@@ -38,8 +38,8 @@ class WAMPageController extends WikiaController
 		$total = ( empty( $this->indexWikis['wam_results_total'] ) ) ? 0 : $this->indexWikis['wam_results_total'];
 		$itemsPerPage = $this->model->getItemsPerPage();
 		if( $total > $itemsPerPage ) {
-			$paginator = Paginator::newFromArray( array_fill( 0, $total, '' ), $itemsPerPage );
-			$paginator->setActivePage( $this->page - 1 );
+			$paginator = Paginator::newFromCount( $total, $itemsPerPage );
+			$paginator->setActivePage( $this->page );
 			$this->paginatorBar = $paginator->getBarHTML( $this->getUrlWithAllParams() );
 			$this->wg->Out->addHeadItem( 'Pagination', $paginator->getHeadItem( $this->getUrlWithAllParams() ) );
 		}

@@ -151,6 +151,13 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 			delete slots.PREFOOTER_RIGHT_BOXAD;
 		}
 
+		if (context.slots.invisibleHighImpact2) {
+			slots.INVISIBLE_HIGH_IMPACT_2 = {
+				sizes: [[728, 90], [970, 250], [300, 250], [300, 600], [320, 480]],
+				targeting: {loc: 'hivi'}
+			};
+		}
+
 		if (context.slots.incontentLeaderboard) {
 			slots.INCONTENT_LEADERBOARD = {
 				sizes: [[300, 250], [728, 90], [468, 60]],

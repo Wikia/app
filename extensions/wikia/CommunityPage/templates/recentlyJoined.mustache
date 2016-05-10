@@ -1,9 +1,11 @@
-<h2>{{recentlyJoinedHeaderText}}</h2>
-{{#members}}
-	<div class="avatar-container">
-		<a href="{{profilePage}}">{{{avatar}}}</a>
-	</div>
-{{/members}}
+{{#haveMembers}}
+	<h2>{{recentlyJoinedHeaderText}}</h2>
+	{{#members}}
+		<div class="avatar-container">
+			<a href="{{profilePage}}">{{{avatar}}}</a>
+		</div>
+	{{/members}}
+{{/haveMembers}}
 <span class="recently-joined">
 	<a href="#" id="viewAllMembers">{{allMembers}}</a>
 </span>

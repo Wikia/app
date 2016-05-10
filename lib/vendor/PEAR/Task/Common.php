@@ -95,7 +95,7 @@ class PEAR_Task_Common
      * @param PEAR_Config
      * @param PEAR_Common
      */
-    function PEAR_Task_Common(&$config, &$logger, $phase)
+    function __construct(&$config, &$logger, $phase)
     {
         $this->config = &$config;
         $this->registry = &$config->getRegistry();

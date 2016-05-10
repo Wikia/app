@@ -52,7 +52,7 @@ class WikiaDispatcher {
 			if ( isset( $route['after'] ) ) $callNext = $route['after'];
 		}
 		// global var routing should probably only be for controllers and methods
-		if (isset( $route['global'] ) && isset( $app->wg->$route['global'] ) ) {
+		if (isset( $route['global'] ) && isset( $app->wg->{$route['global']} ) ) {
 			if ( isset( $route['controller'] ) ) $response->setControllerName( $route['controller'] );
 			if ( isset( $route['method'] ) ) $response->setMethodName( $route['method'] );
 			if ( isset( $route['after'] ) ) $callNext = $route['after'];

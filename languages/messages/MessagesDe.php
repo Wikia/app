@@ -2386,7 +2386,7 @@ Siehe die [[Special:ProtectedPages|Liste der geschützten Seiten]] für alle akt
 'protect-default'             => 'Alle Benutzer',
 'protect-fallback'            => 'Es wird die „$1“-Berechtigung benötigt.',
 'protect-level-autoconfirmed' => 'Sperrung für neue und nicht registrierte Benutzer',
-'protect-level-sysop'         => 'Nur Administratoren',
+'protect-level-sysop'         => 'Nur Administratoren und Inhalts-Moderatoren',
 'protect-summary-cascade'     => 'kaskadierend',
 'protect-expiring'            => 'bis $2, $3 Uhr (UTC)',
 'protect-expiring-local'      => 'bis $1',

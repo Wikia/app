@@ -630,7 +630,7 @@ class SEOTweaksTest extends WikiaBaseTest
 		                  ->setMethods( array( 'exists', 'getDBKey', 'isContentPage', 'getNamespace' ) )
 		                  ->getMock();
 
-		$mockDb = $this->getMockBuilder( "DatabaseMysql" )
+		$mockDb = $this->getMockBuilder( "DatabaseMysqli" )
 		               ->disableOriginalConstructor()
 		               ->setMethods( array( 'query', 'fetchObject', 'buildLike', 'anyString' ) )
 		               ->getMock();
@@ -738,7 +738,7 @@ class SEOTweaksTest extends WikiaBaseTest
 		                  ->setMethods( array( 'exists', 'getDBKey', 'getFullUrl', 'isContentPage', 'getNamespace' ) )
 		                  ->getMock();
 
-		$mockDb = $this->getMockBuilder( "DatabaseMysql" )
+		$mockDb = $this->getMockBuilder( "DatabaseMysqli" )
 		               ->disableOriginalConstructor()
 		               ->setMethods( array( 'query', 'fetchObject', 'buildLike', 'anyString' ) )
 		               ->getMock();

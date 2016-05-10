@@ -13,10 +13,12 @@
 class MemcacheMoxiCluster extends MemCachedClientforWiki {
 	const SOCKET = "unix:///var/run/moxi-server/moxi-server.sock";
 
-	const PROTOCOL = "B"; // B=binary, A=ascii
-
 	function _safe_fwrite( $f, $host, $buf, $len = false ) {
-		$buf = self::PROTOCOL . ":{$host} $buf";
+		global $wgMemcachedMoxiProtocol;
+
+		// $protocol can be: A=ascii, B=binary
+		$protocol = $wgMemcachedMoxiProtocol === 'ascii' ? 'A' : 'B';
+		$buf = $protocol . ":{$host} $buf";
 
 		if ( $len !== false ) {
 			$len = strlen( $buf );

@@ -8,6 +8,7 @@ describe('ext.wikia.adEngine.provider.*', function () {
 	var mocks = {
 		log: noop,
 		context: {
+			slots: {},
 			opts: {}
 		},
 		adContext: {
@@ -88,8 +89,12 @@ describe('ext.wikia.adEngine.provider.*', function () {
 
 	function assertSlotSizes(provider, slotName, expectedSizes) {
 		provider.fillInSlot(createSlot(slotName));
-		expect(mocks.gptHelper.pushAd.calls.mostRecent().args[2].size)
-			.toBe(expectedSizes, provider.name + '.' + slotName + ' sizes');
+		if (expectedSizes === 'out-of-page') {
+			expect(mocks.gptHelper.pushAd.calls.mostRecent().args[2].size).toBe(undefined);
+		} else {
+			expect(mocks.gptHelper.pushAd.calls.mostRecent().args[2].size)
+				.toBe(expectedSizes, provider.name + '.' + slotName + ' sizes');
+		}
 	}
 
 	function assertIfSlotIsSupported(provider, slotName) {
@@ -113,8 +118,8 @@ describe('ext.wikia.adEngine.provider.*', function () {
 	}
 
 	beforeEach(function () {
-		mocks.context.opts.overrideLeaderboardSizes = false;
 		mocks.context.opts.overridePrefootersSizes = false;
+		mocks.context.slots.incontentLeaderboardAsOutOfPage = false;
 	});
 
 	it('directGpt: Push ad with specific slot sizes', function () {
@@ -125,35 +130,15 @@ describe('ext.wikia.adEngine.provider.*', function () {
 			HOME_TOP_RIGHT_BOXAD: '300x250,300x600,300x1050',
 			HUB_TOP_LEADERBOARD: '728x90,1030x130,1030x65,1030x250,970x365,970x250,970x90,970x66,970x180,980x150',
 			INCONTENT_BOXAD_1: '120x600,160x600,300x250,300x600',
+			INCONTENT_LEADERBOARD: '1x1,728x90,300x250,468x60',
 			INCONTENT_PLAYER: '1x1',
+			INVISIBLE_HIGH_IMPACT_2: 'out-of-page',
 			INVISIBLE_SKIN: '1000x1000,1x1',
 			LEFT_SKYSCRAPER_2: '120x600,160x600,300x250,300x600,300x1050',
 			LEFT_SKYSCRAPER_3: '120x600,160x600,300x250,300x600',
 			PREFOOTER_LEFT_BOXAD: '300x250',
 			PREFOOTER_RIGHT_BOXAD: '300x250',
 			TOP_LEADERBOARD: '728x90,1030x130,1030x65,1030x250,970x365,970x250,970x90,970x66,970x180,980x150',
-			TOP_RIGHT_BOXAD: '300x250,300x600,300x1050'
-		};
-
-		assertProviderSlotMap(getProvider('directGpt'), expectedSizes);
-	});
-
-	it('directGpt: Push ad with overridden leaderboard slot sizes', function () {
-		mocks.context.opts.overrideLeaderboardSizes = true;
-		var expectedSizes = {
-			CORP_TOP_LEADERBOARD: '728x90',
-			CORP_TOP_RIGHT_BOXAD: '300x250,300x600,300x1050',
-			HOME_TOP_LEADERBOARD: '728x90',
-			HOME_TOP_RIGHT_BOXAD: '300x250,300x600,300x1050',
-			HUB_TOP_LEADERBOARD: '728x90',
-			INCONTENT_BOXAD_1: '120x600,160x600,300x250,300x600',
-			INCONTENT_PLAYER: '1x1',
-			INVISIBLE_SKIN: '1000x1000,1x1',
-			LEFT_SKYSCRAPER_2: '120x600,160x600,300x250,300x600,300x1050',
-			LEFT_SKYSCRAPER_3: '120x600,160x600,300x250,300x600',
-			PREFOOTER_LEFT_BOXAD: '300x250',
-			PREFOOTER_RIGHT_BOXAD: '300x250',
-			TOP_LEADERBOARD: '728x90',
 			TOP_RIGHT_BOXAD: '300x250,300x600,300x1050'
 		};
 
@@ -163,19 +148,17 @@ describe('ext.wikia.adEngine.provider.*', function () {
 	it('directGpt: Push ad with overridden prefooters slot sizes', function () {
 		mocks.context.opts.overridePrefootersSizes = true;
 		var expectedSizes = {
-			CORP_TOP_LEADERBOARD: '728x90,1030x130,1030x65,1030x250,970x365,970x250,970x90,970x66,970x180,980x150',
-			CORP_TOP_RIGHT_BOXAD: '300x250,300x600,300x1050',
-			HOME_TOP_LEADERBOARD: '728x90,1030x130,1030x65,1030x250,970x365,970x250,970x90,970x66,970x180,980x150',
-			HOME_TOP_RIGHT_BOXAD: '300x250,300x600,300x1050',
-			HUB_TOP_LEADERBOARD: '728x90,1030x130,1030x65,1030x250,970x365,970x250,970x90,970x66,970x180,980x150',
-			INCONTENT_BOXAD_1: '120x600,160x600,300x250,300x600',
-			INCONTENT_PLAYER: '1x1',
-			INVISIBLE_SKIN: '1000x1000,1x1',
-			LEFT_SKYSCRAPER_2: '120x600,160x600,300x250,300x600,300x1050',
-			LEFT_SKYSCRAPER_3: '120x600,160x600,300x250,300x600',
 			PREFOOTER_LEFT_BOXAD: '300x250,468x60,728x90',
-			TOP_LEADERBOARD: '728x90,1030x130,1030x65,1030x250,970x365,970x250,970x90,970x66,970x180,980x150',
-			TOP_RIGHT_BOXAD: '300x250,300x600,300x1050'
+			PREFOOTER_RIGHT_BOXAD: null
+		};
+
+		assertProviderSlotMap(getProvider('directGpt'), expectedSizes);
+	});
+
+	it('directGpt: Push ad with overridden incontent leaderboard', function () {
+		mocks.context.slots.incontentLeaderboardAsOutOfPage = true;
+		var expectedSizes = {
+			INCONTENT_LEADERBOARD: 'out-of-page'
 		};
 
 		assertProviderSlotMap(getProvider('directGpt'), expectedSizes);
@@ -189,35 +172,15 @@ describe('ext.wikia.adEngine.provider.*', function () {
 			HOME_TOP_RIGHT_BOXAD: '300x250,300x600,300x1050',
 			HUB_TOP_LEADERBOARD: null,
 			INCONTENT_BOXAD_1: '120x600,160x600,300x250,300x600',
+			INCONTENT_LEADERBOARD: '1x1,728x90,300x250,468x60',
 			INCONTENT_PLAYER: null,
+			INVISIBLE_HIGH_IMPACT_2: 'out-of-page',
 			INVISIBLE_SKIN: '1000x1000,1x1',
 			LEFT_SKYSCRAPER_2: '120x600,160x600,300x250,300x600,300x1050',
 			LEFT_SKYSCRAPER_3: '120x600,160x600,300x250,300x600',
 			PREFOOTER_LEFT_BOXAD: '300x250',
 			PREFOOTER_RIGHT_BOXAD: '300x250',
 			TOP_LEADERBOARD: '728x90,1030x130,1030x65,1030x250,970x365,970x250,970x90,970x66,970x180,980x150',
-			TOP_RIGHT_BOXAD: '300x250,300x600,300x1050'
-		};
-
-		assertProviderSlotMap(getProvider('remnantGpt'), expectedSizes);
-	});
-
-	it('remnantGpt: Push ad with overridden leaderboard slot sizes', function () {
-		mocks.context.opts.overrideLeaderboardSizes = true;
-		var expectedSizes = {
-			CORP_TOP_LEADERBOARD: null,
-			CORP_TOP_RIGHT_BOXAD: null,
-			HOME_TOP_LEADERBOARD: '728x90',
-			HOME_TOP_RIGHT_BOXAD: '300x250,300x600,300x1050',
-			HUB_TOP_LEADERBOARD: null,
-			INCONTENT_BOXAD_1: '120x600,160x600,300x250,300x600',
-			INCONTENT_PLAYER: null,
-			INVISIBLE_SKIN: '1000x1000,1x1',
-			LEFT_SKYSCRAPER_2: '120x600,160x600,300x250,300x600,300x1050',
-			LEFT_SKYSCRAPER_3: '120x600,160x600,300x250,300x600',
-			PREFOOTER_LEFT_BOXAD: '300x250',
-			PREFOOTER_RIGHT_BOXAD: '300x250',
-			TOP_LEADERBOARD: '728x90',
 			TOP_RIGHT_BOXAD: '300x250,300x600,300x1050'
 		};
 
@@ -227,19 +190,17 @@ describe('ext.wikia.adEngine.provider.*', function () {
 	it('remnantGpt: Push ad with overridden prefooters slot sizes', function () {
 		mocks.context.opts.overridePrefootersSizes = true;
 		var expectedSizes = {
-			CORP_TOP_LEADERBOARD: null,
-			CORP_TOP_RIGHT_BOXAD: null,
-			HOME_TOP_LEADERBOARD: '728x90,1030x130,1030x65,1030x250,970x365,970x250,970x90,970x66,970x180,980x150',
-			HOME_TOP_RIGHT_BOXAD: '300x250,300x600,300x1050',
-			HUB_TOP_LEADERBOARD: null,
-			INCONTENT_BOXAD_1: '120x600,160x600,300x250,300x600',
-			INCONTENT_PLAYER: null,
-			INVISIBLE_SKIN: '1000x1000,1x1',
-			LEFT_SKYSCRAPER_2: '120x600,160x600,300x250,300x600,300x1050',
-			LEFT_SKYSCRAPER_3: '120x600,160x600,300x250,300x600',
 			PREFOOTER_LEFT_BOXAD: '300x250,468x60,728x90',
-			TOP_LEADERBOARD: '728x90,1030x130,1030x65,1030x250,970x365,970x250,970x90,970x66,970x180,980x150',
-			TOP_RIGHT_BOXAD: '300x250,300x600,300x1050'
+			PREFOOTER_RIGHT_BOXAD: null
+		};
+
+		assertProviderSlotMap(getProvider('remnantGpt'), expectedSizes);
+	});
+
+	it('remnantGpt: Push ad with overridden incontent leaderboard', function () {
+		mocks.context.slots.incontentLeaderboardAsOutOfPage = true;
+		var expectedSizes = {
+			INCONTENT_LEADERBOARD: 'out-of-page'
 		};
 
 		assertProviderSlotMap(getProvider('remnantGpt'), expectedSizes);
@@ -248,6 +209,7 @@ describe('ext.wikia.adEngine.provider.*', function () {
 	it('directGptMobile: Push ad with specific slot sizes', function () {
 		var expectedSizes = {
 			INVISIBLE_HIGH_IMPACT: '1x1',
+			INVISIBLE_HIGH_IMPACT_2: null,
 			MOBILE_TOP_LEADERBOARD: '320x50,320x100,300x250,300x50,1x1',
 			MOBILE_IN_CONTENT: '320x50,300x250,300x50,1x1',
 			MOBILE_PREFOOTER: '320x50,300x250,300x50,1x1'
@@ -259,6 +221,7 @@ describe('ext.wikia.adEngine.provider.*', function () {
 	it('remnantGptMobile: Push ad with specific slot sizes', function () {
 		var expectedSizes = {
 			INVISIBLE_HIGH_IMPACT: null,
+			INVISIBLE_HIGH_IMPACT_2: null,
 			MOBILE_TOP_LEADERBOARD: '320x50,320x100,300x250,300x50,1x1',
 			MOBILE_IN_CONTENT: '320x50,300x250,300x50,1x1',
 			MOBILE_PREFOOTER: '320x50,300x250,300x50,1x1'

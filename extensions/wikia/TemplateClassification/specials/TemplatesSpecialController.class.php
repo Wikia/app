@@ -245,7 +245,6 @@ class TemplatesSpecialController extends WikiaSpecialPageController {
 	 * @param int $page
 	 */
 	private function preparePagination( $total, $page ) {
-		$itemsPerPage = self::ITEMS_PER_PAGE;
 		$params = [ 'page' => '%s' ];
 
 		if ( $this->type ) {
@@ -256,12 +255,10 @@ class TemplatesSpecialController extends WikiaSpecialPageController {
 			$params['template'] = $this->templateName;
 		}
 
-		if ( $total > $itemsPerPage ) {
-			$paginator = Paginator::newFromArray( array_fill( 0, $total, '' ), $itemsPerPage, 3, false, '',  self::ITEMS_PER_PAGE );
-			$paginator->setActivePage( $page );
-			$url = urldecode( $this->specialPage->getTitle()->getLocalUrl( $params ) );
-			$this->paginatorBar = $paginator->getBarHTML( $url );
-		}
+		$paginator = Paginator::newFromCount( $total, self::ITEMS_PER_PAGE );
+		$paginator->setActivePage( $page + 1 );
+		$url = urldecode( $this->specialPage->getTitle()->getLocalUrl( $params ) );
+		$this->paginatorBar = $paginator->getBarHTML( $url );
 	}
 
 	/**

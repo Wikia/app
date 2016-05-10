@@ -73,7 +73,12 @@ class CloseMyAccountMaintenance extends Maintenance {
 
 				// Cleanup
 				$userObj->setGlobalFlag( 'requested-closure', null );
+
+				// requested-closure-date is temporarily being stored as both an attribute and a preference.
+				// Make sure to delete from both places. This will be changed to just a preference once the
+				// migration is complete. See SOC-2185
 				$userObj->setGlobalAttribute( 'requested-closure-date', null );
+				$userObj->setGlobalPreference( 'requested-closure-date', null );
 
 				$userObj->saveSettings();
 

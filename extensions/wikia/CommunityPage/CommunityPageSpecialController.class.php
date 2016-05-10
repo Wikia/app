@@ -4,11 +4,13 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	const DEFAULT_TEMPLATE_ENGINE = \WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
 	private $usersModel;
 	private $wikiModel;
+	private $userTotalContributionCount;
 
 	public function __construct() {
 		parent::__construct( 'Community' );
 		$this->usersModel = new CommunityPageSpecialUsersModel();
 		$this->wikiModel = new CommunityPageSpecialWikiModel();
+		$this->userTotalContributionCount = $this->usersModel->getUserContributions( $this->getUser(), false );
 	}
 
 	public function index() {
@@ -17,7 +19,6 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		$this->addAssets();
 
 		$this->wg->SuppressPageHeader = true;
-		$this->wg->SuppressWikiHeader = true;
 		$this->wg->SuppressFooter = true;
 
 		// queue i18n messages for export to JS
@@ -27,11 +28,13 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		$this->getOutput()->disallowUserJs();
 
 		$this->response->setValues( [
-			'adminWelcomeMsg' => $this->msg( 'communitypage-tasks-admin-welcome' )->text(),
+			'inviteFriendsText' => $this->msg( 'communitypage-invite-friends' )->plain(),
+			'headerWelcomeMsg' => $this->msg( 'communitypage-tasks-header-welcome' )->plain(),
+			'adminWelcomeMsg' => $this->msg( 'communitypage-admin-welcome-message' )->text(),
 			'pageListEmptyText' => $this->msg( 'communitypage-page-list-empty' )->plain(),
 			'showPopupMessage' => true,
 			'popupMessageText' => 'This is just a test message for the popup message box',
-			'userIsMember' => CommunityPageSpecialHelper::userHasEdited( $this->getUser() ),
+			'userIsMember' => ( $this->userTotalContributionCount > 0 ),
 			'pageTitle' => $this->msg( 'communitypage-title' )->plain(),
 			'topContributors' => $this->sendRequest( 'CommunityPageSpecialController', 'getTopContributorsData' )
 				->getData(),
@@ -43,54 +46,54 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		] );
 	}
 
-	public function header() {
-		$isMember = CommunityPageSpecialHelper::userHasEdited( $this->getUser() );
-
-		$this->response->setValues( [
-			'inviteFriendsText' => $this->msg( 'communitypage-invite-friends' )->plain(),
-			'headerWelcomeMsg' => $this->msg( 'communitypage-tasks-header-welcome' )->plain(),
-			'pageListEditText' => $this->msg( 'communitypage-page-list-edit' )->plain(),
-			'thisMonthText' => $this->msg( 'communitypage-this-month' )->plain(),
-			'showMonthlySummary' => $isMember,
-			'showAdminsSummary' => !$isMember,
-			'statPagesTitle' => $this->msg( 'communitypage-pages' )->plain(),
-			'statPagesNumber' => 'N',
-			'statPageViewsTitle' => $this->msg( 'communitypage-pageviews' )->plain(),
-			'statPageViewsNumber' => 'N',
-			'statEditsTitle' => $this->msg( 'communitypage-edits' )->plain(),
-			'statEditsNumber' => 'N',
-			'statEditorsTitle' => $this->msg( 'communitypage-editors' )->plain(),
-			'statEditorsNumber' => 'N',
-		] );
-	}
-
 	/**
 	 * Set context for contributorsModule template. Needs to be passed through the index method in order to work.
 	 * @return array
 	 */
 	public function getTopContributorsData() {
-		$userContribCount = $this->usersModel->getUserContributions( $this->getUser() );
-		$contributors = CommunityPageSpecialUsersModel::filterGlobalBots(
+		$userContributionCount = $this->usersModel->getUserContributions( $this->getUser() );
+		$contributors = $this->usersModel->filterGlobalBots(
 				// get extra contributors so if there's global bots they can be filtered out
-				CommunityPageSpecialUsersModel::getTopContributors( 50, '1 MONTH' )
+				$this->usersModel->getTopContributors( 50 )
 			);
 		// get details for only 5 of the remaining contributors
 		$contributorDetails = $this->getContributorsDetails( array_slice( $contributors, 0, 5 ) );
 
+		$userRank = '-';
+		$editors = count( $contributors );
+
+		if ( $editors === 0 ) {
+			$editors = '-';
+		}
+
+		if ( $userContributionCount > 0 ) {
+			$rank = 1;
+
+			foreach ( $contributors as $contributor ) {
+				if ( $contributor['userId'] == $this->wg->user->getId() ) {
+					$userRank = $rank;
+					break;
+				}
+				$rank++;
+			}
+		}
+
 		$this->response->setData( [
+			'admin' => $this->msg( 'communitypage-admin' )->plain(),
 			'topContribsHeaderText' => $this->msg( 'communitypage-top-contributors-week' )->plain(),
 			'yourRankText' => $this->msg( 'communitypage-user-rank' )->plain(),
 			'userContributionsText' => $this->msg( 'communitypage-user-contributions' )
-				->numParams( $userContribCount )
+				->numParams( $userContributionCount )
 				->text(),
+			'noContribsText' => $this->msg( 'communitypage-no-contributions' )->plain(),
 			'contributors' => $contributorDetails,
 			'userAvatar' => AvatarService::renderAvatar(
 				$this->getUser()->getName(),
 				AvatarService::AVATAR_SIZE_SMALL_PLUS
 			),
-			'userRank' => 'N',
-			'memberCount' => 'N',
-			'userContribCount' => $userContribCount
+			'userRank' => $userRank,
+			'weeklyEditorCount' => $editors,
+			'userContribCount' => $userContributionCount
 		] );
 	}
 
@@ -99,9 +102,9 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	 * @return array
 	 */
 	public function getTopAdminsData() {
-		$topAdmins = CommunityPageSpecialUsersModel::filterGlobalBots(
+		$topAdmins = $this->usersModel->filterGlobalBots(
 			// get all admins who have contributed in the last two years ordered by contributions
-			CommunityPageSpecialUsersModel::getTopContributors( 10, '2 YEAR', true )
+			$this->usersModel->getTopContributors( 10, false, true )
 		);
 		$topAdminsDetails = $this->getContributorsDetails( $topAdmins );
 
@@ -114,6 +117,30 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 			'otherAdminCount' => $remainingAdminCount,
 			'haveOtherAdmins' => $remainingAdminCount > 0,
 			'adminCount' => count( $topAdmins ),
+			'noAdminText' => $this->msg( 'communitypage-no-admins' )->plain(),
+			'noAdminContactText' => $this->msg( 'communitypage-no-admins-contact' )->plain(),
+			'noAdminHref' => $this->msg( 'communitypage-communitycentral-link' )->inContentLanguage()->text(),
+		] );
+	}
+
+	/**
+	 * Set context for allAdmins template. Needs to be passed through the index method in order to work.
+	 * @return array
+	 */
+	public function getAllAdminsData() {
+		$allAdmins = $this->usersModel->filterGlobalBots(
+			// get all admins who have contributed in the last two years ordered by contributions
+			$this->usersModel->getTopContributors( 10, false, true )
+		);
+		$topAdminsDetails = $this->getContributorsDetails( $allAdmins );
+
+		$this->response->setData( [
+			'topAdminsHeaderText' => $this->msg( 'communitypage-admins' )->plain(),
+			'admins' => $topAdminsDetails,
+			'adminCount' => count( $topAdminsDetails ),
+			'noAdminText' => $this->msg( 'communitypage-no-admins' )->plain(),
+			'noAdminContactText' => $this->msg( 'communitypage-no-admins-contact' )->plain(),
+			'noAdminHref' => $this->msg( 'communitypage-communitycentral-link' )->inContentLanguage()->text(),
 		] );
 	}
 
@@ -128,6 +155,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 			'allMembers' => $this->msg( 'communitypage-view-all-members' )->plain(),
 			'recentlyJoinedHeaderText' => $this->msg( 'communitypage-recently-joined' )->plain(),
 			'members' => $recentlyJoined,
+			'haveMembers' => count( $recentlyJoined ) > 0,
 		] );
 	}
 
@@ -142,7 +170,8 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 			'allMembersHeaderText' => $this->msg( 'communitypage-all-members' )->plain(),
 			'admin' => $this->msg( 'communitypage-admin' )->plain(),
 			'joinedText' => $this->msg( 'communitypage-joined' )->plain(),
-			'members' => $allMembers,
+			'noMembersText' => $this->msg( 'communitypage-no-members' )->plain(),
+			'members' => array_slice( $allMembers, 0, 20 ),
 		] );
 	}
 
@@ -206,7 +235,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 			'allCount' => $memberCount,
 			'adminsText' => $this->msg( 'communitypage-modal-tab-admins' )->plain(),
 			'adminsCount' => $adminData['adminCount'],
-			'leaderboardText' => $this->msg( 'communitypage-modal-tab-leaderboard' )->plain(),
+			'leaderboardText' => $this->msg( 'communitypage-top-contributors-week' )->plain(),
 		] );
 	}
 
@@ -237,6 +266,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 					->numParams( $contributor['contributions'] )->text(),
 				'profilePage' => $user->getUserPage()->getLocalURL(),
 				'count' => $count,
+				'isAdmin' => $contributor['isAdmin'],
 			];
 		} , $contributors );
 	}

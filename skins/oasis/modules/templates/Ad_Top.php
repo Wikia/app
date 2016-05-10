@@ -15,4 +15,13 @@
 
 </div>
 
+<div id="InvisibleHighImpactWrapper" class="hidden">
+	<div class="background"></div>
+	<a class="close">
+		<div class="close-button"></div>
+	</a>
+	<div class="label"><?= ucfirst(wfMessage( 'adengine-advertisement' )->escaped()) ?></div>
+	<div id="INVISIBLE_HIGH_IMPACT_2" class="wikia-ad noprint"></div>
+</div>
+
 <?= $app->renderView('AdEmptyContainer', 'Index', ['slotName' => 'TOP_LEADERBOARD_AB']); ?>

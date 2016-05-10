@@ -18,12 +18,6 @@ class AdEngine2ContextService {
 			$wikiaPageType = new WikiaPageType();
 			$pageType = $wikiaPageType->getPageType();
 
-			$sevenOneMediaCombinedUrl = null;
-			if ( !empty( $wg->AdDriverUseSevenOneMedia ) ) {
-				// TODO: implicitly gets the skin from the context!
-				$sevenOneMediaCombinedUrl = ResourceLoader::makeCustomURL( $wg->Out, ['wikia.ext.adengine.sevenonemedia'], 'scripts' );
-			}
-
 			$monetizationServiceAds = null;
 			if ( !empty( $wg->AdDriverUseMonetizationService ) && !empty( $wg->EnableMonetizationModuleExt ) ) {
 				$monetizationServiceAds = F::app()->sendRequest( 'MonetizationModule', 'index' )->getData()['data'];
@@ -43,6 +37,8 @@ class AdEngine2ContextService {
 			// 1 of 7 verticals
 			$newWikiVertical = $wikiFactoryHub->getWikiVertical( $wg->CityId );
 			$newWikiVertical = !empty($newWikiVertical['short']) ? $newWikiVertical['short'] : 'error';
+
+			$yavliUrl = ResourceLoader::makeCustomURL( $wg->Out, ['wikia.ext.adengine.yavli'], 'scripts' );
 			return [
 				'opts' => $this->filterOutEmptyItems( [
 					'adsInContent' => $wg->EnableAdsInContent,
@@ -52,9 +48,9 @@ class AdEngine2ContextService {
 					'paidAssetDropConfig' => $wg->PaidAssetDropConfig, // @see extensions/wikia/PaidAssetDrop
 					'showAds' => $adPageTypeService->areAdsShowableOnPage(),
 					'trackSlotState' => $wg->AdDriverTrackState,
-					'usePostScribe' => $wg->Request->getBool( 'usepostscribe', false ),
 					'sourcePointDetectionUrl' => $sourcePointDetectionUrl,
 					'sourcePointRecoveryUrl' => $sourcePointRecoveryUrl,
+					'yavliUrl' => $yavliUrl,
 				] ),
 				'targeting' => $this->filterOutEmptyItems( [
 					'enableKruxTargeting' => AnalyticsProviderKrux::isEnabled(),
@@ -66,7 +62,6 @@ class AdEngine2ContextService {
 					'pageIsHub' => $wikiaPageType->isWikiaHub(),
 					'pageName' => $title->getPrefixedDBKey(),
 					'pageType' => $pageType,
-					'sevenOneMediaSub2Site' => $wg->AdDriverSevenOneMediaOverrideSub2Site,
 					'skin' => $skinName,
 					'wikiCategory' => $wikiFactoryHub->getCategoryShort( $wg->CityId ),
 					'wikiCustomKeyValues' => $wg->DartCustomKeyValues,
@@ -78,12 +73,10 @@ class AdEngine2ContextService {
 					'newWikiCategories' => $this->getNewWikiCategories($wikiFactoryHub, $wg->CityId),
 				] ),
 				'providers' => $this->filterOutEmptyItems( [
+					'evolve2' => $wg->AdDriverUseEvolve2,
 					'monetizationService' => $wg->AdDriverUseMonetizationService,
 					'monetizationServiceAds' => $monetizationServiceAds,
-					'sevenOneMedia' => $wg->AdDriverUseSevenOneMedia,
-					'sevenOneMediaCombinedUrl' => $sevenOneMediaCombinedUrl,
 					'taboola' => $wg->AdDriverUseTaboola && $pageType === 'article',
-					'evolve2' => $wg->AdDriverUseEvolve2,
 				] ),
 				'slots' => $this->filterOutEmptyItems( [
 					'exitstitial' => $wg->EnableOutboundScreenExt,

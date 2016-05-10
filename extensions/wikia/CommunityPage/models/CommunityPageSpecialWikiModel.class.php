@@ -1,5 +1,7 @@
 <?php
 
+// fixme: use number_format to format large numbers with commas
+// fixme: 'N' is a placeholder, replace with actual number as int
 class CommunityPageSpecialWikiModel {
 	private $wikiService;
 
@@ -12,13 +14,20 @@ class CommunityPageSpecialWikiModel {
 	}
 
 	/**
+	 * Get the page count of the current wiki
+	 */
+	public function getPageCount( $days = 30 ) {
+		return 'N';
+	}
+
+	/**
 	 * Get page views of the current wiki in the last n days
 	 *
 	 * @param int $days
 	 * @return int
 	 */
-	public function getWikiPageViews( $days = 14 ) {
-		return 100;
+	public function getWikiPageViews( $days = 30 ) {
+		return 'N';
 	}
 
 	/**
@@ -27,8 +36,8 @@ class CommunityPageSpecialWikiModel {
 	 * @param int|null $days
 	 * @return int
 	 */
-	public function getWikiEdits( $days = null ) {
-		return 100;
+	public function getWikiEdits( $days = 30 ) {
+		return 'N';
 	}
 
 	/**
@@ -37,7 +46,7 @@ class CommunityPageSpecialWikiModel {
 	 * @param int|null $days
 	 * @return int
 	 */
-	public function getWikiEditorCount( $days = null ) {
-		return 100;
+	public function getWikiEditorCount( $days = 30 ) {
+		return 'N';
 	}
 }
