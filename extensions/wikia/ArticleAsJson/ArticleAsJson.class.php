@@ -394,6 +394,8 @@ class ArticleAsJson extends WikiaService {
 				self::linkifyMediaCaption( $parser, $media );
 			}
 
+			wfRunHooks( 'ArticleAsJsonBeforeEncode', [ &$text ] );
+
 			$text = json_encode(
 				[
 					'content' => $text,

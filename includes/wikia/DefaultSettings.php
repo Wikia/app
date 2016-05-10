@@ -1856,3 +1856,9 @@ $wgEnableReviveSpotlights = true;
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgReviveSpotlightsCountries = null;
+
+/**
+ * @name $wgMemcachedMoxiProtocol
+ * Set it to either 'ascii' or 'binary' (default: 'binary')
+ */
+$wgMemcachedMoxiProtocol = 'binary';
