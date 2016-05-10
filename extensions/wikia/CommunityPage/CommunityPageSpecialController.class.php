@@ -89,8 +89,8 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 				$this->getLang()->userDate( $timestamp, $this->getUser() )
 			)->escaped();
 			$insightsPages['pages'][$key]['pageviews'] = $this->msg(
-				'communitypage-noofviews', 
-				$insight['metadata']['pv7'] 
+				'communitypage-noofviews',
+				$insight['metadata']['pv7']
 			)->text();
 			$insightsPages['pages'][$key]['editlink'] = $insight['link']['url'] . '?action=edit';
 		}

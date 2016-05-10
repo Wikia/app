@@ -1,7 +1,7 @@
 <?php
 
 
-class InsightsService extends WikiaService{
+class InsightsService extends WikiaService {
 
 	/**
 	 * @param string $type type of model
@@ -14,11 +14,10 @@ class InsightsService extends WikiaService{
 		}
 		$model = InsightsHelper::getInsightModel( $type );
 		$insightData = ( new InsightsContext( $model ) )->fetchData();
-		$sortedInsightArticleIds = (
-		new InsightsSorting( $model->getConfig() ) )
+		$sortedInsightArticleIds = ( new InsightsSorting( $model->getConfig() ) )
 			->getSortedData(
 				$insightData,
-				['sort' => $sortingType]
+				[ 'sort' => $sortingType ]
 			);
 		$aritclesIds = $this->truncateTo( $sortedInsightArticleIds, $size );
 		return $this->getArticlesData( $insightData, $aritclesIds );
@@ -29,7 +28,7 @@ class InsightsService extends WikiaService{
 	 * @param array $ids list of article ids we need data for
 	 * @return array
 	 */
-	public function getArticlesData( $articles, $ids ) {
+	private function getArticlesData( $articles, $ids ) {
 		$content = [];
 		foreach ( $ids as $id ) {
 			$content[] = $articles[$id];
