@@ -16,10 +16,10 @@
 	{{#contributors}}
 		<li class="community-page-contributor">
 			<div class="avatar-container">
-				<a href="{{profilePage}}">{{{avatar}}}</a>
+				<a data-tracking="top-contributors-user-avatar" href="{{profilePage}}">{{{avatar}}}</a>
 			</div>
 			<div class="community-page-contributor-details">
-				{{count}}. <a href="{{profilePage}}">{{userName}}</a>
+				{{count}}. <a data-tracking="top-contributors-user" href="{{profilePage}}">{{userName}}</a>
 				<span class="community-page-subtle">{{contributionsText}}</span>
 			</div>
 
