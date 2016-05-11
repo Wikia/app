@@ -278,10 +278,13 @@ abstract class WikiaSkin extends SkinTemplate {
 		// get a single URL to fetch all the required SASS files
 		$sassFilesUrl = $this->assetsManager->getSassesUrl($sassFiles);
 
+		// recovery unlock css
+		$unlockUrl = ARecoveryUnlockCSS::getUnlockCSSUrl();
+
 		wfDebug( sprintf( "%s: combined %d SASS files\n", __METHOD__, count($sassFiles) ) );
 
 		wfProfileOut(__METHOD__);
-		return Html::linkedStyle($sassFilesUrl ) . implode('', $cssLinks);
+		return Html::linkedStyle($sassFilesUrl) . Html::linkedStyle($unlockUrl) . implode('', $cssLinks);
 	}
 
 	/*

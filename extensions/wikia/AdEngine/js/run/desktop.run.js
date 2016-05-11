@@ -8,7 +8,7 @@ require([
 	'ext.wikia.adEngine.customAdsLoader',
 	'ext.wikia.adEngine.dartHelper',
 	'ext.wikia.adEngine.messageListener',
-	'ext.wikia.adEngine.recovery.helper',
+	'ext.wikia.aRecoveryEngine.recovery.helper',
 	'ext.wikia.adEngine.slot.scrollHandler',
 	'ext.wikia.adEngine.slotTracker',
 	'ext.wikia.adEngine.slotTweaker',
@@ -81,13 +81,9 @@ require([
 
 		// Recovery
 		recoveryHelper.initEventQueue();
-		sourcePoint.initDetection();
 
-		if (context.opts.sourcePointRecovery && win.ads) {
-			win.ads.runtime.sp.slots = win.ads.runtime.sp.slots || [];
-			recoveryHelper.addOnBlockingCallback(function () {
-				adEngineRunner.run(adConfigDesktop, win.ads.runtime.sp.slots, 'queue.sp', false);
-			});
+		if (!context.opts.sourcePointRecovery) {
+			sourcePoint.initDetection();
 		}
 
 		if (context.opts.googleConsumerSurveys && gcs) {
