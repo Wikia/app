@@ -777,7 +777,7 @@ class SMWSQLStore3Writers {
 			if ( $smwgEnableUpdateJobs && ( $smwgQEqualitySupport != SMW_EQ_NONE ) ) {
 				// entries that refer to old target may in fact refer to subject,
 				// but we don't know which: schedule affected pages for update
-				$jobs = array();
+				$titles = array();
 
 				foreach ( SMWSQLStore3::getPropertyTables() as $proptable ) {
 					if ( $proptable->getName() == 'smw_fpt_redi' ) {
@@ -800,10 +800,7 @@ class SMWSQLStore3Writers {
 							$title = Title::makeTitleSafe( $row->ns, $row->t );
 							if ( !is_null( $title ) ) {
 								// wikia change start - jobqueue migration
-								$task = new \Wikia\Tasks\Tasks\JobWrapperTask();
-								$task->call( 'SMWUpdateJob', $title );
-								$task->dupCheck();
-								$jobs[] = $task;
+								$titles[ $row->ns . ':'  . $row->t ] = $title;
 								// wikia change end
 							}
 						}
@@ -818,10 +815,7 @@ class SMWSQLStore3Writers {
 								$title = Title::makeTitleSafe( $row->ns, $row->t );
 								if ( !is_null( $title ) ) {
 									// wikia change start - jobqueue migration
-									$task = new \Wikia\Tasks\Tasks\JobWrapperTask();
-									$task->call( 'SMWUpdateJob', $title );
-									$task->dupCheck();
-									$jobs[] = $task;
+									$titles[ $row->ns . ':' . $row->t ] = $title;
 									// wikia change end
 								}
 							}
@@ -829,6 +823,15 @@ class SMWSQLStore3Writers {
 						}
 					}
 				}
+
+				// wikia change start - jobqueue migration
+				$jobs = [];
+				foreach ( $titles as $title) {
+					$task = new \Wikia\Tasks\Tasks\JobWrapperTask();
+					$task->call( 'SMWUpdateJob', $title );
+					$jobs[] = $task;
+				}
+				// wikia change end
 
 				/// NOTE: we do not update the concept cache here; this remains an offline task
 
