@@ -37,6 +37,9 @@ class TaskContext {
 	/** @var  string */
 	private $url;
 
+	/** @var  string */
+	private $name;
+
 	/**
 	 * TaskContext constructor.
 	 * @param string $language - language code
@@ -116,5 +119,15 @@ class TaskContext {
 
 	public function setURL($url) {
 		$this->url = $url;
+	}
+
+	public function getName()
+	{
+		return $this->name;
+	}
+
+	public function setName($name)
+	{
+		$this->name = $name;
 	}
 }

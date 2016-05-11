@@ -22,7 +22,7 @@ class CreateWiki {
 	private $mName, $mDefSitename, $mSitenames, $mDomain, $mDomains, $mDefSubdomain,
 		$mLanguage, $mVertical, $mCategories, $mIP,
 		$mPHPbin, $mFounder,
-		$mLangSubdomain, $mWFSettingVars, $mWFVars,
+		$mLangSubdomain,
 		$mDefaultTables, $mAdditionalTables,
 		$sDbStarter, $mFounderIp,
 		$mCurrTime;
@@ -51,8 +51,11 @@ class CreateWiki {
 	const ERROR_READONLY                               = 13;
 	const ERROR_DATABASE_WRITE_TO_CITY_LIST_BROKEN     = 15;
 
+	//DUPLICATED IN CreateWikiFactory task
 	const IMGROOT              = "/images/";
+	//DUPLICATED IN CreateWikiFactory task
 	const IMAGEURL             = "http://images.wikia.com/";
+
 	const CREATEWIKI_LOGO      = "http://images.wikia.com/central/images/2/22/Wiki_Logo_Template.png";
 	const DEFAULT_STAFF        = "Wikia";
 	const DEFAULT_USER         = 'Default';
@@ -62,8 +65,6 @@ class CreateWiki {
 	const DEFAULT_NAME         = "Wiki";
 	const DEFAULT_WIKI_TYPE    = "";
 	const LOCK_DOMAIN_TIMEOUT  = 30;
-
-	const SANITIZED_BUCKET_NAME_MAXIMUM_LENGTH = 55;
 
 	/**
 	 * constructor
@@ -573,20 +574,23 @@ class CreateWiki {
 
 		$this->mNewWiki->path = self::DEFAULT_SLOT;
 
-		$this->mNewWiki->images_url = $this->prepareDirValue( $this->mNewWiki->name, $this->mNewWiki->language );
-		$this->mNewWiki->images_dir = sprintf("%s/%s", strtolower( substr( $this->mNewWiki->name, 0, 1 ) ), $this->mNewWiki->images_url );
+// MOVED TO CreateWikiFactory task
+//		$this->mNewWiki->images_url = $this->prepareDirValue( $this->mNewWiki->name, $this->mNewWiki->language );
+//		$this->mNewWiki->images_dir = sprintf("%s/%s", strtolower( substr( $this->mNewWiki->name, 0, 1 ) ), $this->mNewWiki->images_url );
 
 		if ( isset( $this->mNewWiki->language ) && $this->mNewWiki->language !== "en" ) {
 			if ( $this->mLangSubdomain ) {
 				$this->mNewWiki->subdomain  = strtolower( $this->mNewWiki->language ) . "." . $this->mNewWiki->name;
 				$this->mNewWiki->redirect  = strtolower( $this->mNewWiki->language ) . "." . ucfirst( $this->mNewWiki->name );
 			}
-			$this->mNewWiki->images_url .= "/" . strtolower( $this->mNewWiki->language );
-			$this->mNewWiki->images_dir .= "/" . strtolower( $this->mNewWiki->language );
+// MOVED TO CreateWikiFactory task
+//			$this->mNewWiki->images_url .= "/" . strtolower( $this->mNewWiki->language );
+//			$this->mNewWiki->images_dir .= "/" . strtolower( $this->mNewWiki->language );
 		}
 
-		$this->mNewWiki->images_dir = self::IMGROOT  . $this->mNewWiki->images_dir . "/images";
-		$this->mNewWiki->images_url = self::IMAGEURL . $this->mNewWiki->images_url . "/images";
+// MOVED TO CreateWikiFactory task
+//		$this->mNewWiki->images_dir = self::IMGROOT  . $this->mNewWiki->images_dir . "/images";
+//		$this->mNewWiki->images_url = self::IMAGEURL . $this->mNewWiki->images_url . "/images";
 		$this->mNewWiki->domain = sprintf("%s.%s", $this->mNewWiki->subdomain, $this->mDefSubdomain);
 		$this->mNewWiki->url = sprintf( "http://%s.%s/", $this->mNewWiki->subdomain, $this->mDefSubdomain );
 		$this->mNewWiki->dbname = $this->prepareDatabaseName( $this->mNewWiki->name, $this->mLanguage );
@@ -625,110 +629,113 @@ class CreateWiki {
 	 *
 	 * @return boolean
 	 */
-	public static function wgUploadDirectoryExists( $sDirectoryName ) {
-		wfProfileIn( __METHOD__ );
-		$iVarId = WikiFactory::getVarIdByName( 'wgUploadDirectory' );
+// MOVED TO CreateWikiFactory task
+//	public static function wgUploadDirectoryExists( $sDirectoryName ) {
+//		wfProfileIn( __METHOD__ );
+//		$iVarId = WikiFactory::getVarIdByName( 'wgUploadDirectory' );
+//
+//		// Crash immediately if $iVarId is not a positive integer!
+//		\Wikia\Util\Assert::true( $iVarId );
+//
+//		$aCityIds = WikiFactory::getCityIDsFromVarValue( $iVarId, $sDirectoryName, '=' );
+//		wfProfileOut( __METHOD__ );
+//		return !empty( $aCityIds );
+//	}
 
-		// Crash immediately if $iVarId is not a positive integer!
-		\Wikia\Util\Assert::true( $iVarId );
+// MOVED TO CreateWikiFactory task
+//	/**
+//	 * "calculates" the value for wgUploadDirectory
+//	 *
+//	 * @access private
+//	 * @author Piotr Molski (Moli)
+//	 *
+//	 * @param $name string base name of the directory
+//	 * @param $language string language in which wiki will be created
+//	 *
+//	 * @return string
+//	 */
+//	private function prepareDirValue( $name, $language ) {
+//		wfProfileIn( __METHOD__ );
+//
+//		wfDebug( __METHOD__ . ": Checking {$name} folder" );
+//
+//		$isExist = false; $suffix = "";
+//		$dir_base = self::sanitizeS3BucketName($name);
+//		$prefix = strtolower( substr( $dir_base, 0, 1 ) );
+//		$dir_lang = ( isset( $language ) && $language !== "en" )
+//				? "/" . strtolower( $language )
+//				: "";
+//
+//		while ( $isExist == false ) {
+//			$dirName = self::IMGROOT . $prefix . "/" . $dir_base . $suffix . $dir_lang . "/images";
+//
+//			if ( self::wgUploadDirectoryExists($dirName) ) {
+//				$suffix = rand(1, 9999);
+//			}
+//			else {
+//				$dir_base = $dir_base . $suffix;
+//				$isExist = true;
+//			}
+//		}
+//
+//		wfDebug( __METHOD__ . ": Returning '{$dir_base}'\n" );
+//		wfProfileOut( __METHOD__ );
+//		return $dir_base;
+//	}
 
-		$aCityIds = WikiFactory::getCityIDsFromVarValue( $iVarId, $sDirectoryName, '=' );
-		wfProfileOut( __METHOD__ );
-		return !empty( $aCityIds );
-	}
-
-	/**
-	 * "calculates" the value for wgUploadDirectory
-	 *
-	 * @access private
-	 * @author Piotr Molski (Moli)
-	 *
-	 * @param $name string base name of the directory
-	 * @param $language string language in which wiki will be created
-	 *
-	 * @return string
-	 */
-	private function prepareDirValue( $name, $language ) {
-		wfProfileIn( __METHOD__ );
-
-		wfDebug( __METHOD__ . ": Checking {$name} folder" );
-
-		$isExist = false; $suffix = "";
-		$dir_base = self::sanitizeS3BucketName($name);
-		$prefix = strtolower( substr( $dir_base, 0, 1 ) );
-		$dir_lang = ( isset( $language ) && $language !== "en" )
-				? "/" . strtolower( $language )
-				: "";
-
-		while ( $isExist == false ) {
-			$dirName = self::IMGROOT . $prefix . "/" . $dir_base . $suffix . $dir_lang . "/images";
-
-			if ( self::wgUploadDirectoryExists($dirName) ) {
-				$suffix = rand(1, 9999);
-			}
-			else {
-				$dir_base = $dir_base . $suffix;
-				$isExist = true;
-			}
-		}
-
-		wfDebug( __METHOD__ . ": Returning '{$dir_base}'\n" );
-		wfProfileOut( __METHOD__ );
-		return $dir_base;
-	}
-
-	/**
-	 * Sanitizes a name to be a valid S3 bucket name. It means it can contain only letters and numbers
-	 * and optionally hyphens in the middle. Maximum length is 63 characters, we're trimming it to 55
-	 * characters here as some random suffix may be added to solve duplicates.
-	 *
-	 * Note that different arguments may lead to the same results so the conflicts need to be solved
-	 * at a later stage of processing.
-	 *
-	 * @see http://docs.aws.amazon.com/AmazonS3/latest/dev/BucketRestrictions.html
-	 *      Wikia change: We accept underscores wherever hyphens are allowed.
-	 *
-	 * @param $name string Directory name
-	 * @return string Sanitized name
-	 */
-	private static function sanitizeS3BucketName( $name ) {
-		if ( $name == 'admin' ) {
-			$name .= 'x';
-		}
-
-		$RE_VALID = "/^[a-z0-9](?:[-_a-z0-9]{0,53}[a-z0-9])?(?:[a-z0-9](?:\\.[-_a-z0-9]{0,53}[a-z0-9])?)*\$/";
-		# check if it's already valid
-		$name = mb_strtolower($name);
-		if ( preg_match( $RE_VALID, $name ) && strlen($name) <= self::SANITIZED_BUCKET_NAME_MAXIMUM_LENGTH ) {
-			return $name;
-		}
-
-		# try fixing the simplest and most popular cases
-		$check_name = str_replace(['.',' ','(',')'],'_',$name);
-		if ( in_array( substr($check_name,-1), [ '-', '_' ] ) ) {
-			$check_name .= '0';
-		}
-		if ( preg_match( $RE_VALID, $check_name ) && strlen($check_name) <= self::SANITIZED_BUCKET_NAME_MAXIMUM_LENGTH ) {
-			return $check_name;
-		}
-
-		# replace invalid ASCII characters with their hex values
-		$s = '';
-		for ($i=0;$i<strlen($name);$i++) {
-			$c = $name[$i];
-			if ( $c >= 'a' && $c <= 'z' || $c >= '0' && $c <= '9' ) {
-				$s .= $c;
-			} else {
-				$s .= bin2hex($c);
-			}
-			if ( strlen($s) >= self::SANITIZED_BUCKET_NAME_MAXIMUM_LENGTH ) {
-				break;
-			}
-		}
-		$name = substr($s, 0, self::SANITIZED_BUCKET_NAME_MAXIMUM_LENGTH);
-
-		return $name;
-	}
+// MOVED TO CreateWikiFactory task
+//	/**
+//	 * Sanitizes a name to be a valid S3 bucket name. It means it can contain only letters and numbers
+//	 * and optionally hyphens in the middle. Maximum length is 63 characters, we're trimming it to 55
+//	 * characters here as some random suffix may be added to solve duplicates.
+//	 *
+//	 * Note that different arguments may lead to the same results so the conflicts need to be solved
+//	 * at a later stage of processing.
+//	 *
+//	 * @see http://docs.aws.amazon.com/AmazonS3/latest/dev/BucketRestrictions.html
+//	 *      Wikia change: We accept underscores wherever hyphens are allowed.
+//	 *
+//	 * @param $name string Directory name
+//	 * @return string Sanitized name
+//	 */
+//	private static function sanitizeS3BucketName( $name ) {
+//		if ( $name == 'admin' ) {
+//			$name .= 'x';
+//		}
+//
+//		$RE_VALID = "/^[a-z0-9](?:[-_a-z0-9]{0,53}[a-z0-9])?(?:[a-z0-9](?:\\.[-_a-z0-9]{0,53}[a-z0-9])?)*\$/";
+//		# check if it's already valid
+//		$name = mb_strtolower($name);
+//		if ( preg_match( $RE_VALID, $name ) && strlen($name) <= self::SANITIZED_BUCKET_NAME_MAXIMUM_LENGTH ) {
+//			return $name;
+//		}
+//
+//		# try fixing the simplest and most popular cases
+//		$check_name = str_replace(['.',' ','(',')'],'_',$name);
+//		if ( in_array( substr($check_name,-1), [ '-', '_' ] ) ) {
+//			$check_name .= '0';
+//		}
+//		if ( preg_match( $RE_VALID, $check_name ) && strlen($check_name) <= self::SANITIZED_BUCKET_NAME_MAXIMUM_LENGTH ) {
+//			return $check_name;
+//		}
+//
+//		# replace invalid ASCII characters with their hex values
+//		$s = '';
+//		for ($i=0;$i<strlen($name);$i++) {
+//			$c = $name[$i];
+//			if ( $c >= 'a' && $c <= 'z' || $c >= '0' && $c <= '9' ) {
+//				$s .= $c;
+//			} else {
+//				$s .= bin2hex($c);
+//			}
+//			if ( strlen($s) >= self::SANITIZED_BUCKET_NAME_MAXIMUM_LENGTH ) {
+//				break;
+//			}
+//		}
+//		$name = substr($s, 0, self::SANITIZED_BUCKET_NAME_MAXIMUM_LENGTH);
+//
+//		return $name;
+//	}
 
 	/**
 	 * prepareDatabaseName
@@ -948,84 +955,85 @@ class CreateWiki {
 		return true;
 	}
 
-	/**
-	 * setWFVariables
-	 *
-	 * add all default variables into city_variables table
-	 *
-	 * @author Krzysztof Krzyzaniak <eloy@wikia-inc.com>
-	 * @author Piotr Molski <moli@wikia-inc.com>
-	 * @access private
-	 *
-	 */
-	private function setWFVariables() {
-		// WF Variables containter
-		$this->mWFSettingVars = array();
-
-		$this->mWFSettingVars['wgSitename'] = $this->mNewWiki->sitename;
-		$this->mWFSettingVars['wgLogo'] = self::DEFAULT_WIKI_LOGO;
-		$this->mWFSettingVars['wgUploadPath'] = $this->mNewWiki->images_url;
-		$this->mWFSettingVars['wgUploadDirectory'] = $this->mNewWiki->images_dir;
-		$this->mWFSettingVars['wgDBname'] = $this->mNewWiki->dbname;
-		$this->mWFSettingVars['wgLocalInterwiki'] = $this->mNewWiki->sitename;
-		$this->mWFSettingVars['wgLanguageCode'] = $this->mNewWiki->language;
-		$this->mWFSettingVars['wgServer'] = rtrim( $this->mNewWiki->url, "/" );
-		$this->mWFSettingVars['wgEnableSectionEdit'] = true;
-		$this->mWFSettingVars['wgEnableSwiftFileBackend'] = true;
-		$this->mWFSettingVars['wgOasisLoadCommonCSS'] = true;
-		$this->mWFSettingVars['wgEnablePortableInfoboxEuropaTheme'] = true;
-
-		if ( $this->getInitialNjordExtValue() ) {
-			$this->mWFSettingVars['wgEnableNjordExt'] = true;
-		}
-
-		// rt#60223: colon allowed in sitename, breaks project namespace
-		if( mb_strpos( $this->mWFSettingVars['wgSitename'], ':' ) !== false ) {
-			$this->mWFSettingVars['wgMetaNamespace'] = str_replace( array( ':', ' ' ), array( '', '_' ), $this->mWFSettingVars['wgSitename'] );
-		}
-
-		if ( self::ACTIVE_CLUSTER ) {
-			wfGetLBFactory()->sectionsByDB[ $this->mNewWiki->dbname ] = $this->mWFSettingVars['wgDBcluster'] = self::ACTIVE_CLUSTER;
-		}
-
-		$oRes = $this->mDBw->select(
-			"city_variables_pool",
-			array( "cv_id, cv_name" ),
-			array( "cv_name in ('" . implode( "', '", array_keys( $this->mWFSettingVars ) ) . "')"),
-			__METHOD__
-		);
-
-		$this->mWFVars = array();
-		while ( $oRow = $this->mDBw->fetchObject( $oRes ) ) {
-			$this->mWFVars[ $oRow->cv_name ] = $oRow->cv_id;
-		}
-		$this->mDBw->freeResult( $oRes );
-
-		foreach( $this->mWFSettingVars as $variable => $value ) {
-			/**
-			 * first, get id of variable
-			 */
-			$cv_id = 0;
-			if ( isset( $this->mWFVars[$variable] ) ) {
-				$cv_id = $this->mWFVars[$variable];
-			}
-
-			/**
-			 * then, insert value for wikia
-			 */
-			if( !empty($cv_id) ) {
-				$this->mDBw->insert(
-					"city_variables",
-					array(
-						"cv_value"       => serialize( $value ),
-						"cv_city_id"     => $this->mNewWiki->city_id,
-						"cv_variable_id" => $cv_id
-					),
-					__METHOD__
-				);
-			}
-		}
-	}
+//	/**
+//	 * setWFVariables
+//	 *
+//	 * add all default variables into city_variables table
+//	 *
+//	 * @author Krzysztof Krzyzaniak <eloy@wikia-inc.com>
+//	 * @author Piotr Molski <moli@wikia-inc.com>
+//	 * @access private
+//	 *
+//	 */
+// MOVED TO CreateWikiFactory task
+//	private function setWFVariables() {
+//		// WF Variables containter
+//		$this->mWFSettingVars = array();
+//
+//		$this->mWFSettingVars['wgSitename'] = $this->mNewWiki->sitename;
+//		$this->mWFSettingVars['wgLogo'] = self::DEFAULT_WIKI_LOGO;
+//		$this->mWFSettingVars['wgUploadPath'] = $this->mNewWiki->images_url;
+//		$this->mWFSettingVars['wgUploadDirectory'] = $this->mNewWiki->images_dir;
+//		$this->mWFSettingVars['wgDBname'] = $this->mNewWiki->dbname;
+//		$this->mWFSettingVars['wgLocalInterwiki'] = $this->mNewWiki->sitename;
+//		$this->mWFSettingVars['wgLanguageCode'] = $this->mNewWiki->language;
+//		$this->mWFSettingVars['wgServer'] = rtrim( $this->mNewWiki->url, "/" );
+//		$this->mWFSettingVars['wgEnableSectionEdit'] = true;
+//		$this->mWFSettingVars['wgEnableSwiftFileBackend'] = true;
+//		$this->mWFSettingVars['wgOasisLoadCommonCSS'] = true;
+//		$this->mWFSettingVars['wgEnablePortableInfoboxEuropaTheme'] = true;
+//
+//		if ( $this->getInitialNjordExtValue() ) {
+//			$this->mWFSettingVars['wgEnableNjordExt'] = true;
+//		}
+//
+//		// rt#60223: colon allowed in sitename, breaks project namespace
+//		if( mb_strpos( $this->mWFSettingVars['wgSitename'], ':' ) !== false ) {
+//			$this->mWFSettingVars['wgMetaNamespace'] = str_replace( array( ':', ' ' ), array( '', '_' ), $this->mWFSettingVars['wgSitename'] );
+//		}
+//
+//		if ( self::ACTIVE_CLUSTER ) {
+//			wfGetLBFactory()->sectionsByDB[ $this->mNewWiki->dbname ] = $this->mWFSettingVars['wgDBcluster'] = self::ACTIVE_CLUSTER;
+//		}
+//
+//		$oRes = $this->mDBw->select(
+//			"city_variables_pool",
+//			array( "cv_id, cv_name" ),
+//			array( "cv_name in ('" . implode( "', '", array_keys( $this->mWFSettingVars ) ) . "')"),
+//			__METHOD__
+//		);
+//
+//		$this->mWFVars = array();
+//		while ( $oRow = $this->mDBw->fetchObject( $oRes ) ) {
+//			$this->mWFVars[ $oRow->cv_name ] = $oRow->cv_id;
+//		}
+//		$this->mDBw->freeResult( $oRes );
+//
+//		foreach( $this->mWFSettingVars as $variable => $value ) {
+//			/**
+//			 * first, get id of variable
+//			 */
+//			$cv_id = 0;
+//			if ( isset( $this->mWFVars[$variable] ) ) {
+//				$cv_id = $this->mWFVars[$variable];
+//			}
+//
+//			/**
+//			 * then, insert value for wikia
+//			 */
+//			if( !empty($cv_id) ) {
+//				$this->mDBw->insert(
+//					"city_variables",
+//					array(
+//						"cv_value"       => serialize( $value ),
+//						"cv_city_id"     => $this->mNewWiki->city_id,
+//						"cv_variable_id" => $cv_id
+//					),
+//					__METHOD__
+//				);
+//			}
+//		}
+//	}
 
 	/**
 	 * importStarter
@@ -1130,17 +1138,6 @@ class CreateWiki {
 	public function getWikiInfo($key) {
 		$ret = $this->mNewWiki->$key;
 		return $ret;
-	}
-
-	/**
-	 * gets initial value for wgEnableNjordExt for new created wiki
-	 * Set to false to stop beta version progression.
-	 * @see DAT-2752
-	 *
-	 * @return bool
-	 */
-	private function getInitialNjordExtValue() {
-		return false;
 	}
 
 	/**
