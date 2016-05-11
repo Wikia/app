@@ -45,6 +45,7 @@ class UserStatsService extends WikiaModel {
 	 * @author Kamil Koterba
 	 *
 	 * @param int $wikiId Integer Id of wiki - specifies wiki from which to get editcount, 0 for current wiki
+	 * @param int $flags bit flags with options (ie. to force DB_MASTER)
 	 * @return Int Number of edits
 	 */
 	public function resetEditCountWiki( $wikiId = 0, $flags = 0 ) {
@@ -85,9 +86,9 @@ class UserStatsService extends WikiaModel {
 	 * @since Feb 2013
 	 * @author Kamil Koterba
 	 *
-	 * @param Int $userId  Id of user
 	 * @param Int $wikiId  Id of wiki - specifies wiki from which to get editcount, 0 for current wiki
 	 * @param Boolean $skipCache  On true ignores cache
+	 * @param int $flags bit flags with options
 	 * @return Int Number of edits
 	 */
 	public function getEditCountWiki( $wikiId = 0, $skipCache = false, $flags = 0 ) {
