@@ -17,7 +17,7 @@ require([
 	});
 
 	// "private" vars - don't access directly. Use getUiModalInstance().
-	var uiModalInstance, modalNavHtml, activeTab, allMembersCount, adminsCount;
+	var uiModalInstance, modalNavHtml, activeTab, allMembersCount, allAdminsCount;
 
 	var tabs = {
 		TAB_ALL: {
@@ -66,7 +66,7 @@ require([
 				adminsText: $.msg('communitypage-modal-tab-admins'),
 				leaderboardText: $.msg('communitypage-top-contributors-week'),
 				allMembersCount: allMembersCount,
-				adminsCount: adminsCount,
+				allAdminsCount: allAdminsCount,
 			});
 			$deferred.resolve(modalNavHtml);
 		}
@@ -79,8 +79,8 @@ require([
 			$('#allCount').text('(' + allMembersCount + ')');
 		}
 
-		if (typeof adminsCount !== 'undefined') {
-			$('#adminsCount').text('(' + adminsCount + ')');
+		if (typeof allAdminsCount !== 'undefined') {
+			$('#allAdminsCount').text('(' + allAdminsCount + ')');
 		}
 	}
 
@@ -100,9 +100,7 @@ require([
 					allMembersCount = response.members.length;
 				}
 
-				if (response.hasOwnProperty('admins')) {
-					adminsCount = response.admins.length;
-				}
+				allAdminsCount = response.allAdminsCount;
 
 				tab.cachedData = mustache.render(templates[tab.template], response);
 				$deferred.resolve(tab.cachedData);
@@ -169,23 +167,28 @@ require([
 		});
 	}
 
-	$('#viewAllMembers').click(function (event) {
-		openCommunityModal(tabs.TAB_ALL);
+	$('#openModalTopAdmins').click(function (event) {
 		event.preventDefault();
+		openCommunityModal(tabs.TAB_ADMINS);
+	});
+
+	$('#viewAllMembers').click(function (event) {
+		event.preventDefault();
+		openCommunityModal(tabs.TAB_ALL);
 	});
 
 	$(document)
 		.on( 'click', '#modalTabAll', function (event) {
-			switchCommunityModalTab(tabs.TAB_ALL);
 			event.preventDefault();
+			switchCommunityModalTab(tabs.TAB_ALL);
 		})
 		.on( 'click', '#modalTabAdmins', function (event) {
-			switchCommunityModalTab(tabs.TAB_ADMINS);
 			event.preventDefault();
+			switchCommunityModalTab(tabs.TAB_ADMINS);
 		})
 		.on( 'click', '#modalTabLeaderboard', function (event) {
-			switchCommunityModalTab(tabs.TAB_LEADERBOARD);
 			event.preventDefault();
+			switchCommunityModalTab(tabs.TAB_LEADERBOARD);
 		});
 
 	function handleClick (event, category) {

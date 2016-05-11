@@ -40,7 +40,7 @@ class CommunityPageSpecialUsersModel {
 	 * Get the user id and contribution count of the top n contributors to the current wiki,
 	 * optionally filtered by admins only
 	 *
-	 * @param int $limit Number of rows to fetch
+	 * @param int|NULL $limit Number of rows to fetch
 	 * @param string $weekly True for weekly top contributors, false for all members (2 years)
 	 * @param bool $onlyAdmins Whether to filter by admins
 	 * @return Mixed|null
@@ -74,18 +74,22 @@ class CommunityPageSpecialUsersModel {
 					->AND_( '(ug_group IS NULL or (ug_group <> "bot"))' . $adminFilter )
 					// TODO: also filter by global bot user ids?
 					->GROUP_BY( 'user_name' )
-					->ORDER_BY( 'revision_count DESC, user_name' )
-					->LIMIT( $limit )
-					->runLoop( $db, function ( &$sqlData, $row ) {
-						$sqlData[] = [
-							'userId' => $row->user_id,
-							'userName' => $row->user_name,
-							'contributions' => $row->revision_count,
-							'isAdmin' => $this->isAdmin( $row->user_id, $this->getAdmins() ),
-						];
-					} );
+					->ORDER_BY( 'revision_count DESC, user_name' );
 
-				return $sqlData;
+				if ( $limit ) {
+					$sqlData->LIMIT( $limit );
+				}
+
+				$result = $sqlData->runLoop( $db, function ( &$result, $row ) {
+					$result[] = [
+						'userId' => $row->user_id,
+						'userName' => $row->user_name,
+						'contributions' => $row->revision_count,
+						'isAdmin' => $this->isAdmin( $row->user_id, $this->getAdmins() ),
+					];
+				} );
+
+				return $result;
 			}
 		);
 		return $data;

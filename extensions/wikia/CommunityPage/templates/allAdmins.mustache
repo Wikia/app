@@ -1,23 +1,23 @@
 <h2>{{allMembersHeaderText}}</h2>
 <ul class="reset top-contributors">
-	{{#admins}}
-		<li>
+	{{#allAdminsList}}
+		<li class="community-page-contributor">
 			<div class="avatar-container">
 				<a data-tracking="all-admins-user-avatar" href="{{profilePage}}">{{{avatar}}}</a>
 			</div>
-			<div class="contributor-details">
-				<span class="details">{{contributionsText}}</span>
+			<div class="community-page-contributor-details">
+				<span class="community-page-details">{{contributionsText}}</span>
 				<a data-tracking="all-admins-user" href="{{profilePage}}">{{userName}}</a>
 				{{#isAdmin}}
-					<span class="subtle">{{admin}}</span>
+					<span class="community-page-subtle">{{admin}}</span>
 				{{/isAdmin}}
 			</div>
 		</li>
-	{{/admins}}
-	{{^admins}}
-		<div class="zero">
+	{{/allAdminsList}}
+	{{^allAdminsList}}
+		<div class="community-page-zero">
 			{{noAdminText}}
 			<a href="{{noAdminHref}}">{{noAdminContactText}}</a>
 		</div>
-	{{/admins}}
+	{{/allAdminsList}}
 </ul>

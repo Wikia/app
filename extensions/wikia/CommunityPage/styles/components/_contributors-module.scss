@@ -5,39 +5,30 @@
 .ContributorsModule {
 	.avatar-container {
 		display: inline-block;
-		margin-right: 10px;
+		margin: 0 10px 0 0;
 		vertical-align: middle;
 	}
 
-	.contributor-details {
+	.community-page-contributor-details {
 		display: inline-block;
 		line-height: 21px;
 		vertical-align: middle;
 		width: calc(100% - 50px);
 	}
 
-	.recently-joined {
-		clear: both;
-		display: block;
-		font-size: 14px;
-		line-height: 18px;
-		padding-top: 5px;
-	}
-
-
 	.top-contributors, .top-admins {
 		font-size: 14px;
 		line-height: 20px;
-
-		li {
-			@include clearfix;
-			padding-bottom: 10px;
-		}
 	}
 
 	.top-contributors {
 		font-size: 14px;
 		line-height: 20px;
+	}
+
+	.community-page-contributor {
+		@include clearfix;
+		padding-bottom: 10px;
 	}
 
 	.user-details {
@@ -61,19 +52,19 @@
 			text-align: center;
 		}
 
-		.subtle {
+		.community-page-rank {
+			margin-right: 28px;
+		}
+
+		.community-page-subtle {
 			color: $color-rank-subtle-text;
 			font-size: 10px;
 			line-height: 12px;
 			text-transform: uppercase;
 		}
-
-		.rank {
-			margin-right: 28px;
-		}
 	}
 
-	.zero {
+	.community-page-zero {
 		margin-bottom: 13px;
 	}
 
@@ -87,7 +78,7 @@
 		.top-contributors {
 			padding: 0 $modal-horizontal-padding;
 
-			li {
+			.community-page-contributor {
 				border-bottom: 2px solid $color-activity-background;
 				padding: 15px 0;
 			}
