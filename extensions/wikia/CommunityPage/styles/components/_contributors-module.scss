@@ -1,11 +1,18 @@
 @import 'skins/shared/mixins/clearfix';
-@import 'skins/shared/mixins/transform';
 
 // Styles for the contributors module in-page and modal version
 .ContributorsModule {
 	.avatar-container {
-		float: left;
+		display: inline-block;
 		margin-right: 10px;
+		vertical-align: middle;
+	}
+
+	.contributor-details {
+		display: inline-block;
+		line-height: 21px;
+		vertical-align: middle;
+		width: calc(100% - 50px);
 	}
 
 	.recently-joined {
@@ -30,21 +37,6 @@
 	.top-contributors {
 		font-size: 14px;
 		line-height: 20px;
-
-		.avatar-container {
-			@include transform-translate(0, 3px);
-		}
-
-		.contributor-details {
-			position: relative;
-		}
-	}
-
-	.top-admins {
-		.contributor-details {
-			@include transform-translate(0, 5px);
-			position: relative;
-		}
 	}
 
 	.user-details {

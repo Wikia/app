@@ -1,0 +1,17 @@
+<section class="insights-module">
+	<h3 class="insights-module-header">{{title}}</h3>
+	<a class="insights-module-full-list-link" href="{{fulllistlink}}">{{insightsModules.messages.fulllist}} &rarr;</a>
+	<p class="insights-module-description">{{description}}</p>
+	<ul class="insights-module-list">
+		{{#pages}}
+			<li class="insights-module-list-item">
+				<a class="insights-module-edit-icon insights-module-inline-data" href="{{editlink}}"></a>
+				<span class="insights-module-inline-data">
+					<a href="{{link.url}}">{{link.text}}</a>
+					<div class="insights-module-article-data">{{{metadataDetails}}} &middot; {{pageviews}}</div>
+				</span>
+				<a class="insights-module-edit-link insights-module-inline-data" href="{{editlink}}">{{insightsModules.messages.edittext}}</a>
+			</li>
+		{{/pages}}
+	</ul>
+</section>

@@ -48,28 +48,54 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 			'recentlyJoined' => $this->sendRequest( 'CommunityPageSpecialController', 'getRecentlyJoinedData' )
 				->getData(),
 			'recentActivityModule' => $this->getRecentActivityData(),
-			'popularPages' => $this->getInsightModule( 'popularpages' )
+			'insightsModules' => $this->getInsightsModules()
 		] );
 	}
 
 	/**
+	 * Get insights modules
+	 *
+	 * @return array
+	 */
+	private function getInsightsModules() {
+		$modules['messages'] = [
+			'edittext' => $this->msg( 'communitypage-page-list-edit' )->text(),
+			'fulllist' => $this->msg( 'communitypage-full-list' )->text()
+		];
+
+		$modules['modules'] = [
+			$this->getInsightModule( 'popularpages' )
+		];
+
+		return $modules;
+	}
+
+	/**
 	 * @param string $type type of module we want to build.
+	 * @param string $sortingType define how data should be sorted (@see InsightsSorting::$sorting)
 	 * @return array Insight Module
 	 */
-	private function getInsightModule( $type ) {
+	private function getInsightModule( $type, $sortingType = self::INSIGHT_MODULE_SORT_TYPE ) {
 		$insightPages['pages'] = $this->insightsService->getInsightPages(
 			$type,
 			self::INSIGHT_MODULE_ITEMS,
-			self::INSIGHT_MODULE_SORT_TYPE
+			$sortingType
 		);
 
-		$insightPages['title'] = $this->msg( 'communitypage-popularpages-title' )->text();
-		$insightPages['description'] =  $this->msg( 'communitypage-popularpages-description' )->text();
-		$insightPages['edittext'] = $this->msg( 'communitypage-page-list-edit' )->text();
-		$insightPages['fulllist'] = $this->msg( 'communitypage-full-list' )->text();
+		/**
+		 * Covers messages:
+		 *
+		 * communitypage-popularpages-title'
+		 * communitypage-popularpages-description'
+		 */
+		$insightPages['title'] = $this->msg( 'communitypage-' . $type. '-title' )->text();
+		$insightPages['description'] =  $this->msg( 'communitypage-' . $type. '-description' )->text();
+
 		$insightPages['fulllistlink'] = SpecialPage::getTitleFor( 'Insights', $type )->getLocalURL();
 
-		return $this->addLastRevision( $insightPages );
+		$insightPages = $this->addLastRevision( $insightPages );
+
+		return $insightPages;
 	}
 
 	/**
@@ -79,15 +105,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	 */
 	private function addLastRevision( $insightsPages ) {
 		foreach ( $insightsPages['pages'] as $key => $insight ) {
-			$timestamp = wfTimestamp( TS_UNIX, $insight['metadata']['lastRevision']['timestamp'] );
-			$insightsPages['pages'][$key]['lastRevision'] = $this->msg( 'communitypage-lastrevision' )->rawParams(
-				Html::element(
-					'a',
-					['href' => $insight['metadata']['lastRevision']['userpage']],
-					$insight['metadata']['lastRevision']['username']
-				),
-				$this->getLang()->userDate( $timestamp, $this->getUser() )
-			)->escaped();
+			$insightsPages['pages'][$key]['metadataDetails'] = $this->getArticleMetadataDetails( $insight['metadata'] );
 			$insightsPages['pages'][$key]['pageviews'] = $this->msg(
 				'communitypage-noofviews',
 				$insight['metadata']['pv7']
@@ -95,6 +113,35 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 			$insightsPages['pages'][$key]['editlink'] = $insight['link']['url'] . '?action=edit';
 		}
 		return $insightsPages;
+	}
+
+	/**
+	 * Get message with article metadata details
+	 *
+	 * @param array $metadata
+	 * @return string
+	 */
+	private function getArticleMetadataDetails( $metadata ) {
+		if ( !empty( $metadata['wantedBy'] ) ) {
+			return $this->msg( $metadata['wantedBy']['message'] )->rawParams(
+				Html::element(
+					'a',
+					['href' => $metadata['wantedBy']['url']],
+					$metadata['wantedBy']['value']
+				)
+			)->escaped();
+		}
+
+		$timestamp = wfTimestamp( TS_UNIX, $metadata['lastRevision']['timestamp'] );
+
+		return $this->msg( 'communitypage-lastrevision' )->rawParams(
+			Html::element(
+				'a',
+				['href' => $metadata['lastRevision']['userpage']],
+				$metadata['lastRevision']['username']
+			),
+			$this->getLang()->userDate( $timestamp, $this->getUser() )
+		)->escaped();
 	}
 
 	/**
