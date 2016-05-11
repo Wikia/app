@@ -4,6 +4,9 @@ namespace Wikia\CreateNewWiki\Tasks;
 
 class TaskContext {
 
+	//TODO would be awesome to read it from some config
+	const ACTIVE_CLUSTER = "c7";
+
 	/** @var  \DatabaseMysqli */
 	private $wikiDBW;
 
@@ -28,6 +31,16 @@ class TaskContext {
 	/** @var  string */
 	private $wikiName;
 
+	/** @var  string */
+	private $siteName;
+
+	/** @var  string */
+	private $url;
+
+	/**
+	 * TaskContext constructor.
+	 * @param string $language - language code
+	 */
 	public function __construct( $language, $wikiName ) {
 		$this->language = $language;
 		$this->wikiName = $wikiName;
@@ -87,5 +100,21 @@ class TaskContext {
 
 	public function setClusterDB( $clusterDB ) {
 		$this->clusterDB = $clusterDB;
+	}
+
+	public function getSiteName() {
+		return $this->siteName;
+	}
+
+	public function setSiteName($siteName) {
+		$this->siteName = $siteName;
+	}
+
+	public function getURL() {
+		return $this->url;
+	}
+
+	public function setURL($url) {
+		$this->url = $url;
 	}
 }

@@ -7,6 +7,7 @@ class TaskHelper {
 	/**
 	 * Wait for shared DB and the current DB cluster slaves
 	 *
+	 * @param TaskContext $taskContext
 	 * @param string $functionName
 	 * @see PLATFORM-1219
 	 */

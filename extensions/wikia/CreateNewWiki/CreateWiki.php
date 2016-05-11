@@ -61,7 +61,6 @@ class CreateWiki {
 	const DEFAULT_SLOT         = "slot1";
 	const DEFAULT_NAME         = "Wiki";
 	const DEFAULT_WIKI_TYPE    = "";
-	const DEFAULT_WIKI_LOGO    = '$wgUploadPath/b/bc/Wiki.png';
 	const LOCK_DOMAIN_TIMEOUT  = 30;
 
 	const SANITIZED_BUCKET_NAME_MAXIMUM_LENGTH = 55;
@@ -342,6 +341,7 @@ class CreateWiki {
 
 		/**
 		 * init site_stats table (add empty row)
+		 * THIS SHOULD BE MOVED TO ConfigureStats
 		 */
 		$this->mNewWiki->dbw->insert( "site_stats", array( "ss_row_id" => "1"), __METHOD__ );
 
@@ -538,9 +538,12 @@ class CreateWiki {
 		$fixedTitle = preg_replace("/ (w|W)iki$/", "", $fixedTitle );
 		$fixedTitle = $wgContLang->ucfirst( $fixedTitle );
 		$siteTitle = wfMessage('autocreatewiki-title-template', $fixedTitle);
+
+		//@TODO this should be set in TaskContext
 		$this->mNewWiki->sitename = $siteTitle->inLanguage($this->mLanguage)->text();
 
 		// domain part
+		//@TODO domain should be set only once
 		$this->mDomain = preg_replace( "/(\-)+$/", "", $this->mDomain );
 		$this->mDomain = preg_replace( "/^(\-)+/", "", $this->mDomain );
 		$this->mNewWiki->domain = strtolower( trim( $this->mDomain ) );

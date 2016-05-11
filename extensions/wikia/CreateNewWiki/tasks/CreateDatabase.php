@@ -6,9 +6,6 @@ class CreateDatabase implements Task {
 
 	use \Wikia\Logger\Loggable;
 
-	//TODO would be awesome to read it from some config
-	const ACTIVE_CLUSTER       = "c7";
-
 	/** @var  TaskContext */
 	private $taskContext;
 
@@ -17,7 +14,7 @@ class CreateDatabase implements Task {
 	}
 
 	public function prepare() {
-		$clusterDB = "wikicities_" . self::ACTIVE_CLUSTER;
+		$clusterDB = "wikicities_" . TaskContext::ACTIVE_CLUSTER;
 		$dbw = wfGetDB( DB_MASTER, array(), $clusterDB );
 		$this->taskContext->setClusterDB( $clusterDB );
 		$this->taskContext->setWikiDBW( $dbw );
@@ -106,3 +103,4 @@ class CreateDatabase implements Task {
 		return $dbName;
 	}
 }
+
