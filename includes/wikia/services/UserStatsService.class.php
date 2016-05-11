@@ -196,7 +196,7 @@ class UserStatsService extends WikiaModel {
 	public function getOptionsWiki( $wikiId = 0, $skipCache = false ) {
 		wfProfileIn(__METHOD__);
 
-		if ( !empty( $this->optionsAllWikis[ $wikiId ] ) ) {
+		if ( !$skipCache && !empty( $this->optionsAllWikis[ $wikiId ] ) ) {
 			wfProfileOut( __METHOD__ );
 			return $this->optionsAllWikis[ $wikiId ];
 		}
@@ -281,28 +281,32 @@ class UserStatsService extends WikiaModel {
 			wfDebug(__METHOD__ . ": user #{$this->userId}\n");
 		}
 
-		//update edit counts in options
-		$dbw = wfGetDB( DB_MASTER );
-		$dbw->update( 'wikia_user_properties',
-			array( 'wup_value=wup_value+1' ),
-			array( 'wup_user' => $this->userId,
-				'wup_property' => 'editcount' ),
-			__METHOD__ );
+		$editCount = $this->getOptionWiki( 'editcount', 0 , true );
+		if ( !is_null( $editCount ) ) {
+			//update edit counts in options
+			$dbw = wfGetDB( DB_MASTER );
+			$dbw->update( 'wikia_user_properties',
+				array( 'wup_value=wup_value+1' ),
+				array( 'wup_user' => $this->userId,
+					'wup_property' => 'editcount' ),
+				__METHOD__ );
 
-		if ($dbw->affectedRows() == 1) {
-			//increment memcache also
-			$key = wfSharedMemcKey( 'optionsWiki', $this->wg->CityId, $this->userId );
-			$optionsWiki = $this->wg->Memc->get( $key );
+			if ($dbw->affectedRows() == 1) {
+				//increment memcache also
+				$key = wfSharedMemcKey( 'optionsWiki', $this->wg->CityId, $this->userId );
+				$optionsWiki = $this->wg->Memc->get( $key );
 
-			$optionsWiki[ 'editcount' ]++;
-			$this->wg->Memc->set( $key, $optionsWiki, self::CACHE_TTL );
+				$optionsWiki[ 'editcount' ]++;
+				$editCount++;
+				$this->wg->Memc->set( $key, $optionsWiki, self::CACHE_TTL );
+			}
 		} else {
 			//initialize editcount skipping memcache
-			$this->getEditCountWiki( 0, true );
+			$editCount = $this->getEditCountWiki( 0, true );
 		}
 
 		wfProfileOut(__METHOD__);
-		return true;
+		return $editCount;
 	}
 
 
@@ -469,7 +473,7 @@ class UserStatsService extends WikiaModel {
 	 * @param $wikiId Integer Id of wiki - specifies wiki from which to get editcount, 0 for current wiki
 	 * @return String Timestamp in format YmdHis e.g. 20131107192200 or null
 	 */
-	private function getFirstContributionTimestamp( $wikiId = 0 ) {
+	public function getFirstContributionTimestamp( $wikiId = 0 ) {
 		wfProfileIn( __METHOD__ );
 
 		$firstContributionTimestamp = $this->getOptionWiki( 'firstContributionTimestamp', $wikiId );

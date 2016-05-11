@@ -4136,7 +4136,7 @@ class User {
 	 * Will have no effect for anonymous users.
 	 */
 	public function incEditCount() {
-		global $wgMemc, $wgCityId, $wgEnableEditCountLocal;
+		global $wgEnableEditCountLocal;
 		if( !$this->isAnon() ) {
 			// wikia change, load always from first cluster when we use
 			// shared users database
@@ -4163,7 +4163,10 @@ class User {
 			 */
 			if ( !empty($wgEnableEditCountLocal) ) {
 				$userStatsService = new UserStatsService( $this->getId() );
-				$userStatsService->increaseEditsCount();
+				$editCount = $userStatsService->increaseEditsCount();
+				if ( $editCount == 1 ) {
+					$userStatsService->getFirstContributionTimestamp();
+				}
 			}
 			/* end of change */
 
