@@ -106,11 +106,14 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	private function addLastRevision( $insightsPages ) {
 		foreach ( $insightsPages['pages'] as $key => $insight ) {
 			$insightsPages['pages'][$key]['metadataDetails'] = $this->getArticleMetadataDetails( $insight['metadata'] );
-			$insightsPages['pages'][$key]['pageviews'] = $this->msg(
-				'communitypage-noofviews',
-				$insight['metadata']['pv7']
-			)->text();
 			$insightsPages['pages'][$key]['editlink'] = $this->getEditUrl( $insight['link']['url'] );
+
+			if ( !empty( $insightsPages['pages'][$key]['pageviews'] ) ) {
+				$insightsPages['pages'][$key]['pageviews'] = $this->msg(
+					'communitypage-noofviews',
+					$insight['metadata']['pv7']
+				)->text();
+			}
 		}
 		return $insightsPages;
 	}
