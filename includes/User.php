@@ -2055,6 +2055,13 @@ class User {
 	 * for reload on the next hit.
 	 */
 	public function invalidateCache() {
+		#<Wikia>
+		global $wgLogUserInvalidateCache;
+		if ( !empty( $wgLogUserInvalidateCache ) ) {
+			$e = new Exception;
+			$this->error( 'SUS-546', [ 'traceBack' => $e->getTraceAsString() ] );
+		}
+		#</Wikia>
 		if( wfReadOnly() ) {
 			return;
 		}
