@@ -98,7 +98,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	}
 
 	private function getEditUrl( $articleUrl ) {
-		if( EditorPreference::isVisualEditorPrimary() && $this->getUser()->isLoggedIn() ) {
+		if ( EditorPreference::isVisualEditorPrimary() ) {
 			return $articleUrl . '?veaction=edit';
 		}
 		return $articleUrl . '?action=edit';
