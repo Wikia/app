@@ -13,7 +13,7 @@ require([
 	var track = tracker.buildTrackingFunction({
 		action: tracker.ACTIONS.CLICK,
 		category: 'community-page',
-		trackingMethod: 'analytics'
+		trackingMethod: 'analytics',
 	});
 
 	// "private" vars - don't access directly. Use getUiModalInstance().
@@ -24,19 +24,19 @@ require([
 			className: '.modal-nav-all',
 			template: 'allMembers',
 			request: 'getAllMembersData',
-			cachedData: null
+			cachedData: null,
 		},
 		TAB_ADMINS: {
 			className: '.modal-nav-admins',
 			template: 'allAdmins',
 			request: 'getAllAdminsData',
-			cachedData: null
+			cachedData: null,
 		},
 		TAB_LEADERBOARD: {
 			className: '.modal-nav-leaderboard',
 			template: 'topContributorsModal',
 			request: 'getTopContributorsData',
-			cachedData: null
+			cachedData: null,
 		}
 	};
 
@@ -127,7 +127,7 @@ require([
 					size: 'medium',
 					content: '',
 					title: $.msg('communitypage-modal-title'),
-					classes: ['CommunityPageModalDialog']
+					classes: ['CommunityPageModalDialog'],
 				}
 			};
 			uiModal.createComponent(createPageModalConfig, function (modal) {
@@ -218,7 +218,7 @@ require([
 		// Track clicks on modal close button
 		modal.bind('close', function () {
 			track({
-				label: 'modal-close'
+				label: 'modal-close',
 			});
 		});
 	}
