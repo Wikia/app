@@ -9,6 +9,8 @@ class CommunityPageSpecialUsersModel {
 	const RECENTLY_JOINED_MCACHE_KEY = 'community_page_recently_joined';
 	const CURR_USER_CONTRIBUTIONS_MCACHE_KEY = 'community_page_current_user_contributions';
 
+	const ALL_CONTRIBUTORS_MODAL_LIMIT = 50;
+
 	private $wikiService;
 	private $admins;
 
@@ -260,7 +262,7 @@ class CommunityPageSpecialUsersModel {
 					->AND_( 'rev_user' )->NOT_EQUAL_TO( 0 )
 					->GROUP_BY( 'rev_user' )
 					->ORDER_BY( 'rev_timestamp DESC' )
-					->LIMIT( 50 )
+					->LIMIT( self::ALL_CONTRIBUTORS_MODAL_LIMIT )
 					->runLoop( $db, function ( &$userSqlData, $row ) use ( $currentUserId ) {
 						$userId = (int) $row->rev_user;
 						$user = User::newFromId( $userId );

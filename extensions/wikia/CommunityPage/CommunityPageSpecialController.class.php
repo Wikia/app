@@ -2,6 +2,8 @@
 
 class CommunityPageSpecialController extends WikiaSpecialPageController {
 	const DEFAULT_TEMPLATE_ENGINE = \WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
+	const ALL_USERS_LINK = '/wiki/Special:ListUsers';
+
 	private $usersModel;
 	private $wikiModel;
 	private $userTotalContributionCount;
@@ -165,7 +167,6 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	 */
 	public function getAllMembersData() {
 		$currentUser = $this->getUser();
-
 		$allMembers = $this->usersModel->getAllContributors( $currentUser->getId() );
 
 		$this->response->setData( [
@@ -175,6 +176,9 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 			'noMembersText' => $this->msg( 'communitypage-no-members' )->plain(),
 			'members' => $allMembers,
 			'membersCount' => $this->usersModel->getMemberCount(),
+			'haveMoreMembers' => count( $allMembers ) >= CommunityPageSpecialUsersModel::ALL_CONTRIBUTORS_MODAL_LIMIT,
+			'moreMembersLink' => self::ALL_USERS_LINK,
+			'moreMembersText' => $this->msg( 'communitypage-view-more' )->plain(),
 		] );
 	}
 
