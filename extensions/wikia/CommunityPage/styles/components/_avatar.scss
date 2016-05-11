@@ -3,9 +3,9 @@
 .avatar-container {
 	border: 2px solid $color-avatar-border;
 	border-radius: 50%;
-	height: 26px;
+	height: 30px;
 	overflow: hidden;
-	width: 26px;
+	width: 30px;
 
 	img {
 		border: 0;
@@ -15,11 +15,5 @@
 		background-image: url('/extensions/wikia/GlobalNavigation/images/signin_icon.svg'); /* inline */
 		background-position: center;
 		background-repeat: no-repeat;
-	}
-}
-
-.ContributorsModule {
-	.avatar {
-		@include transform-translate(-2px, -2px);
 	}
 }
