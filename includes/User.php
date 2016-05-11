@@ -4164,7 +4164,7 @@ class User {
 			if ( !empty($wgEnableEditCountLocal) ) {
 				$userStatsService = new UserStatsService( $this->getId() );
 				$editCount = $userStatsService->increaseEditsCount();
-				if ( $editCount == 1 ) {
+				if ( $editCount === 1 ) {
 					$userStatsService->getFirstContributionTimestamp();
 				}
 			}
