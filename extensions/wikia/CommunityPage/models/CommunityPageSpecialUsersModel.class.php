@@ -112,7 +112,7 @@ class CommunityPageSpecialUsersModel {
 					->SELECT( 'user_id' )
 					->FROM ( 'user' )
 					->LEFT_JOIN( 'user_groups ON (user_id = ug_user)' )
-					->WHERE( 'ug_group' )->EQUAL_TO( 'bot-global' )
+					->WHERE( 'ug_group' )->IN( [ 'bot', 'bot-global' ] )
 					->runLoop( $db, function ( &$sqlData, $row ) {
 						$sqlData[] = $row->user_id;
 					} );
