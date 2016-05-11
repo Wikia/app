@@ -36,28 +36,40 @@ class TaskRunner {
 	 * @return array
 	 */
 	protected function getLoggerContext() {
-		//TODO
-		return [
-			'domain'   => $this->mDomain,
-			'dbname'   => $this->mNewWiki->dbname,
-			'logGroup' => 'createwiki',
-		];
+		return TaskHelper::getLoggerContext( $this->taskContext );
 	}
 
-	public function preValidate() {
+	public function prepare() {
 		/** @var Task $task */
 		foreach ( $this->tasks as $task) {
 
-			$this->debug(__METHOD__ . ' starting pre validation of task ' . get_class( $task ) );
+			$this->debug(__METHOD__ . ' starting preparation of task ' . get_class( $task ) );
 
-			$result = $task->preValidate();
+			$result = $task->prepare();
 
-			if ( $result->isValid()) {
-				$this->info(__METHOD__ . ' pre validation of task ' . get_class( $task ) . ' finished successfully');
+			if ( $result->isOk()) {
+				$this->info(__METHOD__ . ' preparation of task ' . get_class( $task ) . ' finished successfully');
+			} else {
+				$this->warning(__METHOD__ . ' preparation of task ' . get_class( $task ) . ' failed', $result->createLoggingContext() );
+				throw new \CreateWikiException( $result->getMessage() );
+			}
+		}
+	}
+
+	public function check() {
+		/** @var Task $task */
+		foreach ( $this->tasks as $task) {
+
+			$this->debug(__METHOD__ . ' starting check of task ' . get_class( $task ) );
+
+			$result = $task->check();
+
+			if ( $result->isOk()) {
+				$this->info(__METHOD__ . ' check of task ' . get_class( $task ) . ' finished successfully');
 			} else {
 				//TODO provide proper context. Need to ask how to do that properly
-				$this->warning(__METHOD__ . ' pre validation of task ' . get_class( $task ) . ' failed', $result );
-				throw new \CreateWikiException( $result->getMessage(), $result->getStatusCode() );
+				$this->warning(__METHOD__ . ' check of task ' . get_class( $task ) . ' failed', $result->createLoggingContext() );
+				throw new \CreateWikiException( $result->getMessage() );
 			}
 		}
 	}
@@ -74,8 +86,8 @@ class TaskRunner {
 				$this->info(__METHOD__ . ' task ' . get_class( $task ) . ' finished successfully' );
 			} else {
 				//TODO provide proper context. Need to ask how to do that properly
-				$this->error(__METHOD__ . ' task ' . get_class( $task ) . ' failed ', $result );
-				throw new \CreateWikiException( $result->getMessage(), $result->getStatusCode() );
+				$this->error(__METHOD__ . ' task ' . get_class( $task ) . ' failed ', $result->createLoggingContext() );
+				throw new \CreateWikiException( $result->getMessage() );
 			}
 		}
 	}

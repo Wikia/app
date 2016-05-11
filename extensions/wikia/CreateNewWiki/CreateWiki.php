@@ -181,7 +181,9 @@ class CreateWiki {
 		$taskContext = new Tasks\TaskContext();
 		$taskRunner = new Wikia\CreateNewWiki\Tasks\TaskRunner($taskContext);
 
-		$taskRunner->preValidate();
+		$taskRunner->prepare();
+
+		$taskRunner->check();
 
 		// Set this flag to ensure that all select operations go against master
 		// Slave lag can cause random errors during wiki creation process
@@ -235,8 +237,11 @@ class CreateWiki {
 		// set $activeCluster to false if you want to create wikis on first
 		// cluster
 		//
+
+		/* Moved to CreateDatabase
 		$this->mClusterDB = ( self::ACTIVE_CLUSTER ) ? "wikicities_" . self::ACTIVE_CLUSTER : "wikicities";
 		$this->mNewWiki->dbw = wfGetDB( DB_MASTER, array(), $this->mClusterDB ); // database handler, old $dbwTarget
+		*/
 
 		// check if database is creatable
 		// @todo move all database creation checkers to canCreateDatabase

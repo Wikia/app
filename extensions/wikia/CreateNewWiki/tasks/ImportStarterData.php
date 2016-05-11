@@ -15,13 +15,16 @@ class ImportStarterData implements Task {
 		$this->taskContext = $taskContext;
 	}
 
-	public function preValidate() {
+	public function prepare() {
+	}
+
+	public function check() {
 		// php-cli is required for spawning PHP maintenance scripts
 		if( !file_exists( $this->phpBin ) && !is_executable( $this->phpBin ) ) {
-			return PreValidationResult::createForError( $this->phpBin . " doesn't exist or is not an executable",
-				PreValidationResult::ERROR_BAD_EXECUTABLE_PATH);
+			return TaskResult::createForError( $this->phpBin . " doesn't exist or is not an executable",
+				TaskResult::ERROR_BAD_EXECUTABLE_PATH);
 		} else {
-			return PreValidationResult::createForSuccess();
+			return TaskResult::createForSuccess();
 		}
 	}
 
@@ -44,7 +47,7 @@ class ImportStarterData implements Task {
 		wfShellExec( $cmd, $retVal );
 
 		if ( $retVal > 0 ) {
-			return RunResult::createForError( 'starter dump import failed', RunResult::ERROR_SQL_FILE_BROKEN, [
+			return TaskResult::createForError( 'starter dump import failed', RunResult::ERROR_SQL_FILE_BROKEN, [
 				'starter' => $starterDatabase,
 				'retval'  => $retVal
 			] );
@@ -53,7 +56,7 @@ class ImportStarterData implements Task {
 		$took = microtime( true ) - $then;
 		TaskHelper::waitForSlaves( $this->taskContext, __METHOD__ );
 
-		return RunResult::createForSuccess( [
+		return TaskResult::createForSuccess( [
 			'retval'  => $retVal,
 			'starter' => $starterDatabase,
 			'took'    => $took

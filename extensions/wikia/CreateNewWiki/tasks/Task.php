@@ -6,17 +6,19 @@ interface Task {
 
 	/**
 	 *
-	 * @return PreValidationResult
+	 * @return TaskResult
 	 */
-	public function preValidate();
+	public function prepare();
 
 	/**
 	 *
-	 * @return RunResult - if operation was unsuccessful it is rollbacked.
+	 * @return TaskResult
+	 */
+	public function check();
+
+	/**
+	 *
+	 * @return TaskResult
 	 */
 	public function run();
-
-
-	//TODO Do we need it? possibly should be part of run.
-	//public function prepare();
 }

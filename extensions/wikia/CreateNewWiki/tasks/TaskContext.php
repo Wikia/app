@@ -11,6 +11,9 @@ class TaskContext {
 	private $sharedDBW;
 
 	/** @var  string */
+	private $dbName;
+
+	/** @var  string */
 	private $starterDb;
 
 	/** @var  string */
@@ -19,12 +22,16 @@ class TaskContext {
 	/** @var  int */
 	private $cityId;
 
+	/** @var  string */
+	private $clusterDB;
+
 	/**
 	 * TaskContext constructor.
 	 * @param string $language - language code
 	 */
-	public function __construct( $language ) {
+	public function __construct( $language, $dbName ) {
 		$this->language = $language;
+		$this->dbName = $dbName;
 	}
 
 	public function getLanguage() {
@@ -61,5 +68,17 @@ class TaskContext {
 
 	public function getStarterDb() {
 		return $this->starterDb;
+	}
+
+	public function getDbName() {
+		return $this->dbName;
+	}
+
+	public function getClusterDB() {
+		return $this->clusterDB;
+	}
+
+	public function setClusterDB( $clusterDB ) {
+		$this->clusterDB = $clusterDB;
 	}
 }
