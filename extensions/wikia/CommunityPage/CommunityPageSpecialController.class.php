@@ -3,7 +3,6 @@
 class CommunityPageSpecialController extends WikiaSpecialPageController {
 	const COMMUNITY_PAGE_HERO_IMAGE = 'Community-Page-Header.jpg';
 	const DEFAULT_TEMPLATE_ENGINE = \WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
-	const ALL_USERS_LINK = '/wiki/Special:ListUsers';
 
 	const ALL_MEMBERS_LIMIT = 20;
 	const TOP_ADMINS_MODULE_LIMIT = 3;
@@ -166,6 +165,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	public function getAllMembersData() {
 		$currentUser = $this->getUser();
 		$allMembers = $this->usersModel->getAllContributors( $currentUser->getId() );
+		$moreMembers = SpecialPage::getTitleFor( 'ListUsers' );
 
 		$this->response->setData( [
 			'allMembersHeaderText' => $this->msg( 'communitypage-all-members' )->plain(),
@@ -175,7 +175,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 			'members' => $allMembers,
 			'membersCount' => $this->usersModel->getMemberCount(),
 			'haveMoreMembers' => count( $allMembers ) >= CommunityPageSpecialUsersModel::ALL_CONTRIBUTORS_MODAL_LIMIT,
-			'moreMembersLink' => self::ALL_USERS_LINK,
+			'moreMembersLink' => $moreMembers->getCanonicalURL(),
 			'moreMembersText' => $this->msg( 'communitypage-view-more' )->plain(),
 		] );
 	}
