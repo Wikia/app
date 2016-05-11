@@ -25,17 +25,28 @@ class TaskContext {
 	/** @var  string */
 	private $clusterDB;
 
-	/**
-	 * TaskContext constructor.
-	 * @param string $language - language code
-	 */
-	public function __construct( $language, $dbName ) {
+	/** @var  string */
+	private $wikiName;
+
+	public function __construct( $language, $wikiName ) {
 		$this->language = $language;
-		$this->dbName = $dbName;
+		$this->wikiName = $wikiName;
 	}
 
 	public function getLanguage() {
 		return $this->language;
+	}
+
+	public function getWikiName() {
+		return $this->wikiName;
+	}
+
+	public function setDbName( $dbName ) {
+		$this->dbName = $dbName;
+	}
+
+	public function getDbName() {
+		return $this->dbName;
 	}
 
 	public function setWikiDBW( $dbw ) {
@@ -68,10 +79,6 @@ class TaskContext {
 
 	public function getStarterDb() {
 		return $this->starterDb;
-	}
-
-	public function getDbName() {
-		return $this->dbName;
 	}
 
 	public function getClusterDB() {
