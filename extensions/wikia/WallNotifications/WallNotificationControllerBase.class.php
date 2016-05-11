@@ -48,10 +48,11 @@ abstract class WallNotificationControllerBase extends WikiaController {
 		wfProfileIn( __METHOD__ );
 
 		$this->response->setVal( 'alwaysGrouped', empty( $wgEnableWallExt ) && empty( $wgEnableForumExt ) );
-		$this->response->setVal( 'notificationKey', $this->request->getVal( 'notificationKey' ) );
+		$this->response->setVal( 'notificationKey', htmlentities( $this->request->getVal( 'notificationKey' ), ENT_QUOTES ) );
 
 		$notificationCounts = $this->request->getVal( 'notificationCounts' );
 		$this->response->setVal( 'notificationCounts', $notificationCounts );
+
 		$this->updateExt( $notificationCounts );
 
 		$unreadCount = $this->request->getVal( 'count' );
