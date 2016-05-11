@@ -281,7 +281,7 @@ class UserStatsService extends WikiaModel {
 			wfDebug(__METHOD__ . ": user #{$this->userId}\n");
 		}
 
-		$editCount = $this->getOptionWiki( 'editcount', 0 , true );
+		$editCount = $this->getOptionWiki( 'editcount' );
 		if ( !is_null( $editCount ) ) {
 			//update edit counts in options
 			$dbw = wfGetDB( DB_MASTER );
