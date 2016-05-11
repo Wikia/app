@@ -56,6 +56,7 @@ require([
 			}
 		},
 		track,
+		trackingPrefix = '',
 		viewabilityCounter = 0,
 		viewabilityInterval;
 
@@ -97,6 +98,8 @@ require([
 		loader.processStyle(resources.styles);
 		mw.messages.set(resources.messages);
 
+		trackingPrefix = experiment.type + '-';
+
 		templateData = {
 			bannerType: experiment.type,
 			language: contentLanguage,
@@ -123,7 +126,7 @@ require([
 			checkViewability();
 		}
 
-		$(w).on('scroll.trackPMPEntryPoint', $.debounce(50, function() {
+		$(w).on('scroll.trackPMPEntryPoint', $.debounce(50, function () {
 			checkViewability();
 		}));
 	}
@@ -155,19 +158,21 @@ require([
 
 	function trackBannerImpression() {
 		track({
+			label: trackingPrefix + 'banner-impression',
 			action: tracker.ACTIONS.IMPRESSION
 		});
 	}
 
 	function trackBannerViewable() {
 		track({
+			label: trackingPrefix + 'banner-view',
 			action: tracker.ACTIONS.VIEW
 		});
 	}
 
 	function onEntryPointClick() {
 		track({
-			label: 'entry-point-click',
+			label: trackingPrefix + 'entry-point-click',
 			action: tracker.ACTIONS.CLICK
 		});
 		onBannerDismissed();
@@ -175,7 +180,7 @@ require([
 
 	function close() {
 		track({
-			label: 'close',
+			label: trackingPrefix + 'close',
 			action: tracker.ACTIONS.CLICK
 		});
 		$banner.remove();
