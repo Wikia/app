@@ -12,6 +12,7 @@
 @import 'components/list';
 @import 'components/contributors-module';
 @import 'components/modal';
+@import 'components/recently-joined';
 
 // TODO: handle dark themes
 // TODO: copy/pasted code from here down
@@ -58,7 +59,7 @@
 		margin: 10px 0;
 	}
 
-	li {
+	.community-page-contributor {
 		font-size: 12px;
 		padding: 6px 3px 6px 15px;
 		position: relative;

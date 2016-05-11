@@ -5,12 +5,19 @@ require([
 	'communitypage.templates.mustache',
 	'wikia.nirvana',
 	'wikia.throbber',
+	'wikia.tracker',
 	'wikia.window'
-], function ($, uiFactory, mustache, templates, nirvana, throbber, window) {
+], function ($, uiFactory, mustache, templates, nirvana, throbber, tracker, window) {
 	'use strict';
 
+	var track = tracker.buildTrackingFunction({
+		action: tracker.ACTIONS.CLICK,
+		category: 'community-page',
+		trackingMethod: 'analytics'
+	});
+
 	// "private" vars - don't access directly. Use getUiModalInstance().
-	var uiModalInstance, modalNavHtml, activeTab, allMembersCount, adminsCount;
+	var uiModalInstance, modalNavHtml, activeTab, allMembersCount, allAdminsCount;
 
 	var tabs = {
 		TAB_ALL: {
@@ -59,7 +66,7 @@ require([
 				adminsText: $.msg('communitypage-modal-tab-admins'),
 				leaderboardText: $.msg('communitypage-top-contributors-week'),
 				allMembersCount: allMembersCount,
-				adminsCount: adminsCount
+				allAdminsCount: allAdminsCount,
 			});
 			$deferred.resolve(modalNavHtml);
 		}
@@ -72,8 +79,8 @@ require([
 			$('#allCount').text('(' + allMembersCount + ')');
 		}
 
-		if (typeof adminsCount !== 'undefined') {
-			$('#adminsCount').text('(' + adminsCount + ')');
+		if (typeof allAdminsCount !== 'undefined') {
+			$('#allAdminsCount').text('(' + allAdminsCount + ')');
 		}
 	}
 
@@ -93,9 +100,7 @@ require([
 					allMembersCount = response.membersCount;
 				}
 
-				if (response.hasOwnProperty('admins')) {
-					adminsCount = response.admins.length;
-				}
+				allAdminsCount = response.allAdminsCount;
 
 				tab.cachedData = mustache.render(templates[tab.template], response);
 				$deferred.resolve(tab.cachedData);
@@ -134,6 +139,7 @@ require([
 				throbber.show($('.throbber-placeholder'));
 
 				modal.show();
+				initModalTracking(modal);
 
 				window.activeModal = modal;
 				switchCommunityModalTab(tabToActivate);
@@ -161,33 +167,61 @@ require([
 		});
 	}
 
-	$('#viewAllMembers').click(function (event) {
-		openCommunityModal(tabs.TAB_ALL);
+	$('#openModalTopAdmins').click(function (event) {
 		event.preventDefault();
+		openCommunityModal(tabs.TAB_ADMINS);
+	});
+
+	$('#viewAllMembers').click(function (event) {
+		event.preventDefault();
+		openCommunityModal(tabs.TAB_ALL);
 	});
 
 	$(document)
 		.on( 'click', '#modalTabAll', function (event) {
-			switchCommunityModalTab(tabs.TAB_ALL);
 			event.preventDefault();
+			switchCommunityModalTab(tabs.TAB_ALL);
 		})
 		.on( 'click', '#modalTabAdmins', function (event) {
-			switchCommunityModalTab(tabs.TAB_ADMINS);
 			event.preventDefault();
+			switchCommunityModalTab(tabs.TAB_ADMINS);
 		})
 		.on( 'click', '#modalTabLeaderboard', function (event) {
-			switchCommunityModalTab(tabs.TAB_LEADERBOARD);
 			event.preventDefault();
+			switchCommunityModalTab(tabs.TAB_LEADERBOARD);
 		});
 
+	function handleClick (event, category) {
+		var data = $(event.currentTarget).data('tracking');
 
-	$(function () {
-		// prefetch UI modal on DOM ready
-		getUiModalInstance();
+		if (typeof(data) !== 'undefined') {
+			track({
+				category: category,
+				label: data,
+			});
+		}
+	}
 
-		// prefetch modal contents
-		getModalTabContentsHtml(tabs.TAB_ALL);
-		getModalTabContentsHtml(tabs.TAB_ADMINS);
-		getModalTabContentsHtml(tabs.TAB_LEADERBOARD);
-	});
+	function initTracking() {
+		// Track clicks in contribution module
+		$('.ContributorsModule').on('mousedown touchstart', 'a', function (event) {
+			handleClick(event, 'community-page-contribution-module');
+		});
+	}
+
+	function initModalTracking(modal) {
+		// Track clicks in contribution modal
+		$('#CommunityPageModalDialog').on('mousedown touchstart', 'a', function (event) {
+			handleClick(event, 'community-page-contribution-modal');
+		});
+
+		// Track clicks on modal close button
+		modal.bind('close', function () {
+			track({
+				label: 'modal-close'
+			});
+		});
+	}
+
+	$(initTracking);
 });
