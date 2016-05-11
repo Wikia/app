@@ -246,6 +246,48 @@ class CommunityPageSpecialUsersModel {
 		return $data;
 	}
 
+	private function getAllContributorsWithCurrentUser( $allContributorsData, $currentUserId ) {
+		global $wgCityId;
+
+		// Get current user's stats
+		$checkUserCallback = function( $user ) { return true; };
+		$userInfo = $this->wikiService->getUserInfo(
+			$currentUserId,
+			$wgCityId,
+			AvatarService::AVATAR_SIZE_SMALL_PLUS,
+			$checkUserCallback
+		);
+
+		if ($userInfo['lastRevision'] !== null) {
+			// Remove from all users list if present
+			// Done manually to make sure current user data is never out of sync due to cache
+			foreach ($allContributorsData as $key => $item) {
+				if ( $item['userId'] === $currentUserId) {
+					unset( $allContributorsData[$key] );
+					break;
+				}
+			}
+
+			// Add current user on top of list
+			$avatar = AvatarService::renderAvatar( $userInfo['name'], AvatarService::AVATAR_SIZE_SMALL_PLUS );
+
+			$data = [
+				'userId' => $currentUserId,
+				'latestRevision' => $userInfo['lastRevision'],
+				'timeAgo' => wfTimeFormatAgo( $userInfo['lastRevision'] ),
+				'userName' => $userInfo['name'],
+				'isAdmin' => $this->isAdmin( $currentUserId, $this->getAdmins() ),
+				'isCurrent' => true,
+				'avatar' => $avatar,
+				'profilePage' => $userInfo['userPageUrl'],
+			];
+
+			array_unshift( $allContributorsData, $data );
+		}
+
+		return $allContributorsData;
+	}
+
 	/**
 	 * Gets a list of all members of the community.
 	 * Any user who has made an edit in the last 2 years is a member
@@ -254,8 +296,6 @@ class CommunityPageSpecialUsersModel {
 	 * @return Mixed|null
 	 */
 	public function getAllContributors( $currentUserId = null ) {
-		global $wgCityId;
-
 		$allContributorsData = WikiaDataAccess::cache(
 			wfMemcKey( self::ALL_MEMBERS_MCACHE_KEY ),
 			WikiaResponse::CACHE_SHORT,
@@ -297,43 +337,7 @@ class CommunityPageSpecialUsersModel {
 			}
 		);
 
-		// Get current user's stats
-		$checkUserCallback = function( $user ) { return true; };
-		$userInfo = $this->wikiService->getUserInfo(
-			$currentUserId,
-			$wgCityId,
-			AvatarService::AVATAR_SIZE_SMALL_PLUS,
-			$checkUserCallback
-		);
-
-		if ($userInfo['lastRevision'] !== null) {
-			// Remove from all users list if present
-			// Done manually to make sure current user data is never out of sync due to cache
-			foreach ($allContributorsData as $key => $item) {
-				if ( $item['userId'] === $currentUserId) {
-					unset( $allContributorsData[$key] );
-					break;
-				}
-			}
-
-			// Add current user on top of list
-			$avatar = AvatarService::renderAvatar( $userInfo['name'], AvatarService::AVATAR_SIZE_SMALL_PLUS );
-
-			$data = [
-				'userId' => $currentUserId,
-				'latestRevision' => $userInfo['lastRevision'],
-				'timeAgo' => wfTimeFormatAgo( $userInfo['lastRevision'] ),
-				'userName' => $userInfo['name'],
-				'isAdmin' => $this->isAdmin( $currentUserId, $this->getAdmins() ),
-				'isCurrent' => true,
-				'avatar' => $avatar,
-				'profilePage' => $userInfo['userPageUrl'],
-			];
-
-			array_unshift( $allContributorsData, $data );
-		}
-
-		return $allContributorsData;
+		return $this->getAllContributorsWithCurrentUser( $allContributorsData, $currentUserId );
 	}
 
 	/**
