@@ -20,10 +20,6 @@
 			<div class="loading"></div>
 		<? endif ?>
 
-		<? if ( !empty( $wg->AdDriverUseRevcontent ) ): ?>
-			<div id="REVCONTENT_RIGHT_RAIL"></div>
-		<? endif ?>
-
 	</div>
 <? if ( $isAside ): ?>
 	</aside>

@@ -333,6 +333,20 @@ body >a >img[src$="noad.gif"] {
 	}
 }
 
+#REVCONTENT_ABOVE_ARTICLE, #REVCONTENT_RIGHT_RAIL, #REVCONTENT_BELOW_ARTICLE {
+	.row-item h3 {
+		color: $color-page-opposite;
+	}
+
+	.rc-headline {
+		color: $color-text;
+	}
+
+	.rc-provider, .rc-branding-label {
+		color: $color-alternate-text;
+	}
+}
+
 .wikia-ad-interactive-map {
 	height: 50px;
 	position: absolute;

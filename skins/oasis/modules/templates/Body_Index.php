@@ -67,10 +67,6 @@
 			}
 		?>
 
-		<? if ( !empty( $wg->AdDriverUseRevcontent ) ): ?>
-			<div id="REVCONTENT_ABOVE_ARTICLE"></div>
-		<? endif ?>
-
 		<article id="WikiaMainContent" class="WikiaMainContent<?= !empty( $isGridLayoutEnabled ) ? $railModulesExist ? ' grid-4' : ' grid-6' : '' ?>">
 			<?php
 			if ( !empty( $wg->EnableMomModulesExt ) && WikiaPageType::isMainPage() ) {
@@ -157,10 +153,6 @@
 					echo $monetizationModules[MonetizationModuleHelper::SLOT_TYPE_BELOW_CATEGORY];
 				}
 				?>
-
-				<? if ( !empty( $wg->AdDriverUseRevcontent ) ): ?>
-					<div id="REVCONTENT_BELOW_ARTICLE"></div>
-				<? endif ?>
 
 				<?php if ( !empty( $afterContentHookText ) ) { ?>
 					<div id="WikiaArticleFooter" class="WikiaArticleFooter">
