@@ -2,7 +2,7 @@
 @import 'skins/shared/color';
 
 $avatar-number-background: #666;
-$avatar-size: 26px;
+$avatar-size: 30px;
 
 .avatar-container {
 	border: 2px solid $color-avatar-border;
@@ -27,11 +27,5 @@ $avatar-size: 26px;
 		font-size: 10px;
 		line-height: $avatar-size;
 		text-align: center;
-	}
-}
-
-.ContributorsModule {
-	.avatar {
-		@include transform-translate(-2px, -2px);
 	}
 }
