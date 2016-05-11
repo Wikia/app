@@ -115,7 +115,8 @@ require([
 			break;
 		case 'LINKS_SCROLLER':
 			helper = contentLinksHelper({
-			    count: 12
+			    count: 6,
+			    extra: 6
 			});
 			view = scrollerView();
 			break;

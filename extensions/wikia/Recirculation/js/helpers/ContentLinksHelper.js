@@ -51,7 +51,8 @@ define('ext.wikia.recirculation.helpers.contentLinks', [
 
 	return function(config) {
 		var defaults = {
-				count: 3
+				count: 3,
+				extra: 0
 			},
 			options = $.extend(defaults, config);
 
@@ -109,7 +110,7 @@ define('ext.wikia.recirculation.helpers.contentLinks', [
 				return links[title2] - links[title1];
 			});
 
-			return sortedTitles.slice(0, options.count);
+			return sortedTitles.slice(0, options.count + options.extra);
 		}
 
 		return {

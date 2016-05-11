@@ -2,13 +2,10 @@
 define('ext.wikia.recirculation.views.scroller', [
 	'jquery',
 	'wikia.window',
-	'wikia.log',
 	'ext.wikia.recirculation.tracker',
 	'ext.wikia.recirculation.utils',
 	'ext.wikia.recirculation.views.incontent'
-], function ($, w, log, tracker, utils, incontent) {
-
-	var logGroup = 'ext.wikia.recirculation.views.scroller';
+], function ($, w, tracker, utils, incontent) {
 
 	function render(data) {
 		var deferred = $.Deferred(),

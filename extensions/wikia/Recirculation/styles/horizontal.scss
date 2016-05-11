@@ -76,26 +76,12 @@ $recirculation-incontent-thumbnail-height: 90px;
 
 	.item {
 		width: $recirculation-incontent-thumbnail-width;
+		min-width: $recirculation-incontent-thumbnail-width;
 	}
 
 	.thumbnail {
 		height: $recirculation-incontent-thumbnail-height;
 		width: $recirculation-incontent-thumbnail-width;
-	}
-}
-
-.recirculation-horizontal.recirculation-scroller {
-	padding: 40px 0 25px;
-
-	.item {
-		margin-right: 20px;
-		min-width: 160px;
-	}
-
-	&:hover {
-		.scroller-arrow {
-			opacity: .95;
-		}
 	}
 }
 
