@@ -92,9 +92,16 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 				'communitypage-noofviews',
 				$insight['metadata']['pv7']
 			)->text();
-			$insightsPages['pages'][$key]['editlink'] = $insight['link']['url'] . '?action=edit';
+			$insightsPages['pages'][$key]['editlink'] = $this->getEditUrl( $insight['link']['url'] );
 		}
 		return $insightsPages;
+	}
+
+	private function getEditUrl( $articleUrl ) {
+		if( EditorPreference::isVisualEditorPrimary() && $this->getUser()->isLoggedIn() ) {
+			return $articleUrl . '?veaction=edit';
+		}
+		return $articleUrl . '?action=edit';
 	}
 
 	/**
