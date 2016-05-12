@@ -9,8 +9,15 @@ class CreateDatabase implements Task {
 	/** @var  TaskContext */
 	private $taskContext;
 
+	/** @var  string */
+	private $clusterDB;
+
 	public function __construct($taskContext) {
 		$this->taskContext = $taskContext;
+	}
+
+	protected function getLoggerContext() {
+		return TaskHelper::getLoggerContext( $this->taskContext );
 	}
 
 	public function prepare() {
@@ -21,12 +28,9 @@ class CreateDatabase implements Task {
 		global $wgForceMasterDatabase;
 		$wgForceMasterDatabase = true;
 
-		$clusterDB = "wikicities_" . TaskContext::ACTIVE_CLUSTER;
-		$dbw = wfGetDB( DB_MASTER, array(), $clusterDB );
-		$this->taskContext->setClusterDB( $clusterDB );
-		$this->taskContext->setWikiDBW( $dbw );
+		$this->clusterDB = "wikicities_" . TaskContext::ACTIVE_CLUSTER;
 		$this->taskContext->setDbName( $this->prepareDatabaseName(
-			$clusterDB, $this->taskContext->getWikiName(), $this->taskContext->getLanguage() ) );
+			$this->clusterDB, $this->taskContext->getWikiName(), $this->taskContext->getLanguage() ) );
 
 		return TaskResult::createForSuccess();
 	}
@@ -45,7 +49,11 @@ class CreateDatabase implements Task {
 	}
 
 	public function run() {
-		$this->taskContext->getWikiDBW()->query( sprintf( "CREATE DATABASE `%s`", $this->taskContext->getDBname() ) );
+		$dbw = wfGetDB( DB_MASTER, array(), $this->clusterDB );
+		$dbw->query( sprintf( "CREATE DATABASE `%s`", $this->taskContext->getDBname() ) );
+
+		$dbw = wfGetDB( DB_MASTER, array(), $this->taskContext->getDBname() );
+		$this->taskContext->setWikiDBW( $dbw );
 
 		return TaskResult::createForSuccess();
 	}

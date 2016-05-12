@@ -20,8 +20,6 @@ class TaskHelper {
 
 		# PLATFORM-1219 - wait for slaves to catch up (shared DB, cluster's shared DB and the new wiki DB)
 		wfWaitForSlaves( $wgExternalSharedDB );     // wikicities (shared DB)
-
-		wfWaitForSlaves( $taskContext->getClusterDB() );       // wikicities_c7
 		wfWaitForSlaves( $taskContext->getDbName() ); // new_wiki_db
 
 		\Wikia\Logger\WikiaLogger::instance()->info( __METHOD__ . ' Waiting for slaves ',

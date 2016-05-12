@@ -28,9 +28,6 @@ class TaskContext {
 	private $cityId;
 
 	/** @var  string */
-	private $clusterDB;
-
-	/** @var  string */
 	private $wikiName;
 
 	/** @var  string */
@@ -133,14 +130,6 @@ class TaskContext {
 
 	public function getStarterDb() {
 		return $this->starterDb;
-	}
-
-	public function getClusterDB() {
-		return $this->clusterDB;
-	}
-
-	public function setClusterDB( $clusterDB ) {
-		$this->clusterDB = $clusterDB;
 	}
 
 	public function getSiteName() {

@@ -79,13 +79,13 @@ class CreateWiki {
 		// wiki containter
 		$this->mNewWiki = new stdClass();
 
-		$taskContext = new TaskContext( $name, $domain, $language, $vertical, $categories );
+		$this->taskContext = new TaskContext( $name, $domain, $language, $vertical, $categories );
 		/*$this->mDomain = $domain;
 		$this->mName = $name;
 		$this->mLanguage = $language;
 		$this->mVertical = $vertical;
 		$this->mCategories = $categories;*/
-		$this->mIP = $IP;
+		//$this->mIP = $IP;
 
 		// founder of wiki
 // CreateUser task sets TaskContext::Founder in prepare method
@@ -93,9 +93,10 @@ class CreateWiki {
 // MOVED TO SetupWikiCities Task
 //		$this->mFounderIp = $wgRequest->getIP();
 
-		wfDebugLog( "createwiki", __METHOD__ . ": founder: " . print_r($wgUser, true) . "\n", true );
+		//wfDebugLog( "createwiki", __METHOD__ . ": founder: " . print_r($wgUser, true) . "\n", true );
 
 		/* default tables */
+		/* Moved to CreateTables
 		$this->mDefaultTables = array(
 			"{$this->mIP}/maintenance/tables.sql",
 			"{$this->mIP}/maintenance/interwiki.sql",
@@ -112,16 +113,17 @@ class CreateWiki {
 			"{$this->mIP}/extensions/wikia/Wall/sql/wall_history_local.sql",
 			"{$this->mIP}/extensions/wikia/VideoHandlers/sql/video_info.sql",
 			"{$this->mIP}/maintenance/wikia/wikia_user_properties.sql",
-		);
+		);*/
 
 		/**
 		 * tables which maybe exists or maybe not, better safe than sorry
 		 */
+		/* Moved to CreateTables
 		$this->mAdditionalTables = array(
 			"{$this->mIP}/extensions/wikia/AjaxPoll/patch-create-poll_info.sql",
 			"{$this->mIP}/extensions/wikia/AjaxPoll/patch-create-poll_vote.sql",
 			"{$this->mIP}/extensions/wikia/ImageServing/sql/table.sql",
-		);
+		);*/
 
 		/**
 		 * local job
@@ -149,6 +151,7 @@ class CreateWiki {
 	 * @param string $fname
 	 * @see PLATFORM-1219
 	 */
+	/* Moved to TaskHelper
 	private function waitForSlaves( $fname ){
 		global $wgExternalSharedDB;
 		$then = microtime( true );
@@ -159,7 +162,8 @@ class CreateWiki {
 		# PLATFORM-1219 - wait for slaves to catch up (shared DB, cluster's shared DB and the new wiki DB)
 		wfWaitForSlaves( $wgExternalSharedDB );     // wikicities (shared DB)
 		wfWaitForSlaves( $this->mClusterDB );       // wikicities_c7
-		wfWaitForSlaves( $this->mNewWiki->dbname ); // new_wiki_db
+		//Redundant with the above
+		//wfWaitForSlaves( $this->mNewWiki->dbname ); // new_wiki_db
 
 		$this->info( __METHOD__, [
 			'commit_res' => $res,
@@ -167,7 +171,7 @@ class CreateWiki {
 			'fname'      => $fname,
 			'took'       => microtime( true ) - $then,
 		] );
-	}
+	}*/
 
 	/**
 	 * main entry point, create wiki with given parameters
@@ -325,14 +329,15 @@ class CreateWiki {
 		 * we got empty database created, now we have to create tables and
 		 * populate it with some default values
 		 */
-		wfDebugLog( "createwiki", __METHOD__ . ": Creating tables in database\n", true );
+		//wfDebugLog( "createwiki", __METHOD__ . ": Creating tables in database\n", true );
 
-		$this->mNewWiki->dbw = wfGetDB( DB_MASTER, array(), $this->mNewWiki->dbname );
+		//$this->mNewWiki->dbw = wfGetDB( DB_MASTER, array(), $this->mNewWiki->dbname );
 
+		/* Moved to CreateTables
 		if ( !$this->createTables() ) {
 			wfProfileOut( __METHOD__ );
 			throw new CreateWikiException('Creating tables not finished', self::ERROR_SQL_FILE_BROKEN);
-		}
+		}*/
 
 		/**
 		 * import language starter
@@ -352,11 +357,8 @@ class CreateWiki {
 //			wfDebugLog( "createwiki", __METHOD__ . ": Create user sysop/bureaucrat for user: {$this->mNewWiki->founderId} failed \n", true );
 //		}
 
-		/**
-		 * init site_stats table (add empty row)
-		 * THIS SHOULD BE MOVED TO ConfigureStats
-		 */
-		$this->mNewWiki->dbw->insert( "site_stats", array( "ss_row_id" => "1"), __METHOD__ );
+		//Moved to Create Tables
+		//$this->mNewWiki->dbw->insert( "site_stats", array( "ss_row_id" => "1"), __METHOD__ );
 
 		/**
 		 * destroy connection to newly created database
@@ -413,7 +415,7 @@ class CreateWiki {
 		/**
 		 * Unset database from mNewWiki, because database objects cannot be serialized from MW1.19
 		 */
-		unset($this->mNewWiki->dbw);
+		//unset($this->mNewWiki->dbw);
 
 // HANDLED BY ConfigureUser task
 // Restore wgUser
@@ -944,6 +946,7 @@ class CreateWiki {
 	 * @access private
 	 *
 	 */
+	/* Moved to CreateTables
 	private function createTables() {
 
 		$mSqlFiles = $this->mDefaultTables;
@@ -970,7 +973,7 @@ class CreateWiki {
 		$this->waitForSlaves( __METHOD__ );
 
 		return true;
-	}
+	}*/
 
 //	/**
 //	 * setWFVariables
