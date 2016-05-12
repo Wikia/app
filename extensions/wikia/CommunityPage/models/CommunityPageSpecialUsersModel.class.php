@@ -72,7 +72,7 @@ class CommunityPageSpecialUsersModel {
 					->AND_( $dateFilter );
 
 				if ( $onlyAdmins ) {
-					$sqlData->AND_( 'ug_groups' )->EQUAL_TO( 'sysop' );
+					$sqlData->AND_( 'ug_group' )->EQUAL_TO( 'sysop' );
 				}
 
 				$sqlData->GROUP_BY( 'user_name' )
@@ -109,10 +109,10 @@ class CommunityPageSpecialUsersModel {
 				$db = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
 
 				$sqlData = ( new WikiaSQL() )
-					->SELECT( 'user_id' )
-					->FROM ( 'user' )
-					->LEFT_JOIN( 'user_groups ON (user_id = ug_user)' )
+					->SELECT( 'ug_user' )
+					->FROM ( 'user_groups' )
 					->WHERE( 'ug_group' )->IN( [ 'bot', 'bot-global' ] )
+					->GROUP_BY( 'ug_user' )
 					->runLoop( $db, function ( &$sqlData, $row ) {
 						$sqlData[] = $row->user_id;
 					} );
