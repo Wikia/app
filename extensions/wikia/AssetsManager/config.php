@@ -2891,7 +2891,6 @@ $config['special_portability_dashboard_scss'] = [
 	],
 ];
 
-
 $config['create_new_wiki_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
