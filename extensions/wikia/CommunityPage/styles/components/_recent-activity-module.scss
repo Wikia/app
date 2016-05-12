@@ -1,5 +1,4 @@
 @import 'skins/shared/mixins/clearfix';
-@import 'skins/shared/mixins/transform';
 
 .RecentActivityModule {
 	.avatar-container {
@@ -23,11 +22,5 @@
 			@include clearfix;
 			padding-bottom: 10px;
 		}
-	}
-
-	.more-activity {
-		font-family: $community-page-font-family;
-		font-size: 14px;
-		color: $color-message-background;
 	}
 }
