@@ -339,7 +339,7 @@ body >a >img[src$="noad.gif"] {
 	}
 
 	.rc-headline {
-		color: $color-text;
+		color: darken($color-page-opposite, 20%) !important;
 	}
 
 	.rc-provider, .rc-branding-label {
