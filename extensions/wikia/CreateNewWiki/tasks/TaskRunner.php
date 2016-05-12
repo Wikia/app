@@ -30,6 +30,7 @@ class TaskRunner {
 		$this->tasks[] = new ConfigureUsers( $taskContext );
 		$this->tasks[] = new ConfigureStats();
 		$this->tasks[] = new ConfigureCategories();
+		$this->tasks[] = new SetCustomSettings( $taskContext );
 	}
 
 	/**

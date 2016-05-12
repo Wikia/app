@@ -373,27 +373,28 @@ class CreateWiki {
 			wfDebugLog( "createwiki", __METHOD__ . ": Wiki added to the category: {$this->mNewWiki->categories[$i]} \n", true );
 		}
 
-		/**
-		 * define wiki type
-		 */
-		$wiki_type = 'default';
-
-		/**
-		 * modify variables
-		 */
-		global $wgUniversalCreationVariables;
-		if ( !empty($wgUniversalCreationVariables) && !empty($wiki_type) && isset( $wgUniversalCreationVariables[$wiki_type] ) ) {
-			$this->addCustomSettings( 0, $wgUniversalCreationVariables[$wiki_type], "universal" );
-			wfDebugLog( "createwiki", __METHOD__ . ": Custom settings added for wiki_type: {$wiki_type} \n", true );
-		}
-
-		/**
-		 * set variables per language
-		 */
-		global $wgLangCreationVariables;
-		$langCreationVar = isset($wgLangCreationVariables[$wiki_type]) ? $wgLangCreationVariables[$wiki_type] : $wgLangCreationVariables;
-		$this->addCustomSettings( $this->mNewWiki->language, $langCreationVar, "language" );
-		wfDebugLog( "createwiki", __METHOD__ . ": Custom settings added for wiki_type: {$wiki_type} and language: {$this->mNewWiki->language} \n", true );
+// MOVED TO SetCustomSettings
+//		/**
+//		 * define wiki type
+//		 */
+//		$wiki_type = 'default';
+//
+//		/**
+//		 * modify variables
+//		 */
+//		global $wgUniversalCreationVariables;
+//		if ( !empty($wgUniversalCreationVariables) && !empty($wiki_type) && isset( $wgUniversalCreationVariables[$wiki_type] ) ) {
+//			$this->addCustomSettings( 0, $wgUniversalCreationVariables[$wiki_type], "universal" );
+//			wfDebugLog( "createwiki", __METHOD__ . ": Custom settings added for wiki_type: {$wiki_type} \n", true );
+//		}
+//
+//		/**
+//		 * set variables per language
+//		 */
+//		global $wgLangCreationVariables;
+//		$langCreationVar = isset($wgLangCreationVariables[$wiki_type]) ? $wgLangCreationVariables[$wiki_type] : $wgLangCreationVariables;
+//		$this->addCustomSettings( $this->mNewWiki->language, $langCreationVar, "language" );
+//		wfDebugLog( "createwiki", __METHOD__ . ": Custom settings added for wiki_type: {$wiki_type} and language: {$this->mNewWiki->language} \n", true );
 
 		/**
 		 * set tags per language and per hub
@@ -1052,15 +1053,15 @@ class CreateWiki {
 //		}
 //	}
 
-	/**
-	 * importStarter
-	 *
-	 * get starter data for current parameters
- 	 *
-	 * @author Krzysztof Krzyzaniak <eloy@wikia-inc.com>
-	 * @author Piotr Molski <moli@wikia-inc.com>
-	 * @author macbre
-	 */
+//	/**
+//	 * importStarter
+//	 *
+//	 * get starter data for current parameters
+// 	 *
+//	 * @author Krzysztof Krzyzaniak <eloy@wikia-inc.com>
+//	 * @author Piotr Molski <moli@wikia-inc.com>
+//	 * @author macbre
+//	 */
 	/* Moved to ImportStarterData
 	private function importStarter() {
 			global $IP;
@@ -1111,47 +1112,48 @@ class CreateWiki {
 //		return true;
 //	}
 
-	/**
-	 * addCustomSettings
-	 *
-	 * @author tor@wikia-inc.com
-	 * @param  string $match
-	 * @param  array  $settings
-	 * @param  string $type
-	 *
-	 * @return integer
-	 */
-	public function addCustomSettings( $match, $settings, $type = 'unknown' ) {
-		global $wgUser;
-		wfProfileIn( __METHOD__ );
-
-		if( ( !empty( $match ) || $type == 'universal' ) && isset( $settings[ $match ] ) && is_array( $settings[ $match ] ) ) {
-			wfDebugLog( "createwiki", __METHOD__ . ": Found '$match' in {$type} settings array \n", true );
-
-			/**
-			 * switching user for correct logging
-			 */
-			$oldUser = $wgUser;
-			$wgUser = User::newFromName( 'CreateWiki script' );
-
-			foreach( $settings[$match] as $key => $value ) {
-				$success = WikiFactory::setVarById( $key, $this->mNewWiki->city_id, $value );
-				if( $success ) {
-					wfDebugLog( "createwiki", __METHOD__ . ": Successfully added setting for {$this->mNewWiki->city_id}: {$key} = {$value}\n", true );
-				} else {
-					wfDebugLog( "createwiki", __METHOD__ . ": Failed to add setting for {$this->mNewWiki->city_id}: {$key} = {$value}\n", true );
-				}
-			}
-			$wgUser = $oldUser;
-
-			wfDebugLog( "createwiki", __METHOD__ . ": Finished adding {$type} settings\n", true );
-		} else {
-			wfDebugLog( "createwiki", __METHOD__ . ": '{$match}' not found in {$type} settings array. Skipping this step.\n", true );
-		}
-
-		wfProfileOut( __METHOD__ );
-		return 1;
-	}
+// MOVED TO SetCustomSettings task
+//	/**
+//	 * addCustomSettings
+//	 *
+//	 * @author tor@wikia-inc.com
+//	 * @param  string $match
+//	 * @param  array  $settings
+//	 * @param  string $type
+//	 *
+//	 * @return integer
+//	 */
+//	public function addCustomSettings( $match, $settings, $type = 'unknown' ) {
+//		global $wgUser;
+//		wfProfileIn( __METHOD__ );
+//
+//		if( ( !empty( $match ) || $type == 'universal' ) && isset( $settings[ $match ] ) && is_array( $settings[ $match ] ) ) {
+//			wfDebugLog( "createwiki", __METHOD__ . ": Found '$match' in {$type} settings array \n", true );
+//
+//			/**
+//			 * switching user for correct logging
+//			 */
+//			$oldUser = $wgUser;
+//			$wgUser = User::newFromName( 'CreateWiki script' );
+//
+//			foreach( $settings[$match] as $key => $value ) {
+//				$success = WikiFactory::setVarById( $key, $this->mNewWiki->city_id, $value );
+//				if( $success ) {
+//					wfDebugLog( "createwiki", __METHOD__ . ": Successfully added setting for {$this->mNewWiki->city_id}: {$key} = {$value}\n", true );
+//				} else {
+//					wfDebugLog( "createwiki", __METHOD__ . ": Failed to add setting for {$this->mNewWiki->city_id}: {$key} = {$value}\n", true );
+//				}
+//			}
+//			$wgUser = $oldUser;
+//
+//			wfDebugLog( "createwiki", __METHOD__ . ": Finished adding {$type} settings\n", true );
+//		} else {
+//			wfDebugLog( "createwiki", __METHOD__ . ": '{$match}' not found in {$type} settings array. Skipping this step.\n", true );
+//		}
+//
+//		wfProfileOut( __METHOD__ );
+//		return 1;
+//	}
 
 	public function getWikiInfo($key) {
 		$ret = $this->mNewWiki->$key;
