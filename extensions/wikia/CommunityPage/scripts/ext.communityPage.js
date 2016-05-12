@@ -3,12 +3,21 @@ require([
 	'wikia.ui.factory',
 	'wikia.mustache',
 	'communitypage.templates.mustache',
-	'wikia.nirvana'
-], function ($, uiFactory, mustache, templates, nirvana) {
+	'wikia.nirvana',
+	'wikia.throbber',
+	'wikia.tracker',
+	'wikia.window'
+], function ($, uiFactory, mustache, templates, nirvana, throbber, tracker, window) {
 	'use strict';
 
+	var track = tracker.buildTrackingFunction({
+		action: tracker.ACTIONS.CLICK,
+		category: 'community-page',
+		trackingMethod: 'analytics'
+	});
+
 	// "private" vars - don't access directly. Use getUiModalInstance().
-	var uiModalInstance, modalNavHtml, activeTab;
+	var uiModalInstance, modalNavHtml, activeTab, allMembersCount, allAdminsCount;
 
 	var tabs = {
 		TAB_ALL: {
@@ -19,13 +28,13 @@ require([
 		},
 		TAB_ADMINS: {
 			className: '.modal-nav-admins',
-			template: 'topAdmins',
-			request: 'getTopAdminsData',
+			template: 'allAdmins',
+			request: 'getAllAdminsData',
 			cachedData: null,
 		},
 		TAB_LEADERBOARD: {
 			className: '.modal-nav-leaderboard',
-			template: 'topContributors',
+			template: 'topContributorsModal',
 			request: 'getTopContributorsData',
 			cachedData: null,
 		},
@@ -52,19 +61,27 @@ require([
 		if (modalNavHtml) {
 			$deferred.resolve(modalNavHtml);
 		} else {
-			nirvana.sendRequest({
-				controller: 'CommunityPageSpecial',
-				method: 'getModalHeaderData',
-				format: 'json',
-				type: 'get'
-			})
-			.then(function (response) {
-				modalNavHtml = mustache.render(templates.modalHeader, response);
-				$deferred.resolve(modalNavHtml);
+			modalNavHtml = mustache.render(templates.modalHeader, {
+				allText: $.msg('communitypage-modal-tab-all'),
+				adminsText: $.msg('communitypage-modal-tab-admins'),
+				leaderboardText: $.msg('communitypage-top-contributors-week'),
+				allMembersCount: allMembersCount,
+				allAdminsCount: allAdminsCount,
 			});
+			$deferred.resolve(modalNavHtml);
 		}
 
 		return $deferred;
+	}
+
+	function updateModalHeader() {
+		if (typeof allMembersCount !== 'undefined') {
+			$('#allCount').text('(' + allMembersCount + ')');
+		}
+
+		if (typeof allAdminsCount !== 'undefined') {
+			$('#allAdminsCount').text('(' + allAdminsCount + ')');
+		}
 	}
 
 	function getModalTabContentsHtml(tab) {
@@ -76,12 +93,21 @@ require([
 			nirvana.sendRequest({
 				controller: 'CommunityPageSpecial',
 				method: tab.request,
-				data: {mcache: 'writeonly'}, // fixme: temporary debug variable
 				format: 'json',
-				type: 'get'
+				type: 'get',
 			}).then(function (response) {
+				if (response.hasOwnProperty('members')) {
+					allMembersCount = response.members.length;
+				}
+
+				allAdminsCount = response.allAdminsCount;
+
 				tab.cachedData = mustache.render(templates[tab.template], response);
 				$deferred.resolve(tab.cachedData);
+			}, function (error) {
+				$deferred.resolve(mustache.render(templates.loadingError, {
+					loadingError: $.msg('communitypage-modal-tab-loadingerror'),
+				}));
 			});
 		}
 
@@ -105,76 +131,97 @@ require([
 				}
 			};
 			uiModal.createComponent(createPageModalConfig, function (modal) {
-				getModalTabContentsHtml(tabToActivate).then(function (tabContentHtml) {
-					var html = navHtml + tabContentHtml;
+				modal.$content
+					.addClass('ContributorsModule ContributorsModuleModal')
+					.html(navHtml + mustache.render(templates.modalLoadingScreen))
+					.find(tabToActivate.className).children().addClass('active');
 
-					modal.$content
-						.addClass('ContributorsModule ContributorsModuleModal')
-						.html(html)
-						.find(tabToActivate.className).children().addClass('active');
+				throbber.show($('.throbber-placeholder'));
 
-					modal.show();
-					activeTab = tabToActivate;
+				modal.show();
+				initModalTracking(modal);
 
-					window.activeModal = modal;
-				});
+				window.activeModal = modal;
+				switchCommunityModalTab(tabToActivate);
 			});
 		});
 	}
 
 	function switchCommunityModalTab(tabToActivate) {
-		if (tabToActivate === activeTab) {
-			return;
-		}
-
 		getModalNavHtml().then(function (navHtml) {
 			// Switch highlight to new tab
-			// fixme: Loading indicator should be via a template.
-			var html = navHtml + mw.html.escape($.msg('communitypage-modal-loading'));
 			window.activeModal.$content
-				.html(html)
+				.html(navHtml + mustache.render(templates.modalLoadingScreen))
 				.find(tabToActivate.className).children().addClass('active');
 
-			getModalTabContentsHtml(tabToActivate).then(function (tabContentHtml) {
-				html = navHtml + tabContentHtml;
+			throbber.show($('.throbber-placeholder'));
 
+			getModalTabContentsHtml(tabToActivate).then(function (tabContentHtml) {
 				window.activeModal.$content
-					.html(html)
+					.html(navHtml + tabContentHtml)
 					.find(tabToActivate.className).children().addClass('active');
 
+				updateModalHeader();
 				activeTab = tabToActivate;
 			});
 		});
 	}
 
+	$('#openModalTopAdmins').click(function (event) {
+		event.preventDefault();
+		openCommunityModal(tabs.TAB_ADMINS);
+	});
+
 	$('#viewAllMembers').click(function (event) {
+		event.preventDefault();
 		openCommunityModal(tabs.TAB_ALL);
-		event.preventDefault();
 	});
 
-	$(document).on( 'click', '#modalTabAll', function (event) {
-		switchCommunityModalTab(tabs.TAB_ALL);
-		event.preventDefault();
-	});
+	$(document)
+		.on( 'click', '#modalTabAll', function (event) {
+			event.preventDefault();
+			switchCommunityModalTab(tabs.TAB_ALL);
+		})
+		.on( 'click', '#modalTabAdmins', function (event) {
+			event.preventDefault();
+			switchCommunityModalTab(tabs.TAB_ADMINS);
+		})
+		.on( 'click', '#modalTabLeaderboard', function (event) {
+			event.preventDefault();
+			switchCommunityModalTab(tabs.TAB_LEADERBOARD);
+		});
 
-	$(document).on( 'click', '#modalTabAdmins', function () {
-		switchCommunityModalTab(tabs.TAB_ADMINS);
-		event.preventDefault();
-	});
+	function handleClick (event, category) {
+		var data = $(event.currentTarget).data('tracking');
 
-	$(document).on( 'click', '#modalTabLeaderboard', function () {
-		switchCommunityModalTab(tabs.TAB_LEADERBOARD);
-		event.preventDefault();
-	});
+		if (typeof(data) !== 'undefined') {
+			track({
+				category: category,
+				label: data,
+			});
+		}
+	}
 
+	function initTracking() {
+		// Track clicks in contribution module
+		$('.ContributorsModule').on('mousedown touchstart', 'a', function (event) {
+			handleClick(event, 'community-page-contribution-module');
+		});
+	}
 
-	$(function () {
-		// prefetch UI modal on DOM ready
-		getUiModalInstance();
+	function initModalTracking(modal) {
+		// Track clicks in contribution modal
+		$('#CommunityPageModalDialog').on('mousedown touchstart', 'a', function (event) {
+			handleClick(event, 'community-page-contribution-modal');
+		});
 
-		// prefetch modal contents
-		getModalTabContentsHtml(tabs.TAB_ALL);
-		getModalTabContentsHtml(tabs.TAB_ADMINS);
-		getModalTabContentsHtml(tabs.TAB_LEADERBOARD);
-	});
+		// Track clicks on modal close button
+		modal.bind('close', function () {
+			track({
+				label: 'modal-close'
+			});
+		});
+	}
+
+	$(initTracking);
 });

@@ -24,7 +24,7 @@ $messages['qqq'] = [
  * Japanese - ja
  */
 $messages['ja'] = [
-	'pmp-entry-point-message' => 'このコミュニティは<strong>あなたのようなファンによって創られています</strong>。',
+	'pmp-entry-point-message' => 'このコミュニティは<strong>あなたのような<br>ファンによって創られています</strong>',
 	'pmp-entry-point-button' => 'コミュニティを助ける',
 	'pmp-entry-point-button-url' => 'http://ja.community.wikia.com/wiki/%E5%88%9D%E3%82%81%E3%81%A6%E3%81%AE%E6%8A%95%E7%A8%BF%E3%82%92%E3%81%99%E3%82%8B',
 ];

@@ -17,7 +17,7 @@
 		},
 
 		initElements: function () {
-			this.buttons = $('#WallMessageBodyButtons');
+			this.buttons = $('#WallMessageBodyButtons button');
 			this.comments = $('#Wall').find('.comments');
 			this.message = $('.new-message');
 			this.loading = this.message.find('.loadingAjax');

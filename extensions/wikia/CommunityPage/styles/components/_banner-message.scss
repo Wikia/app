@@ -1,5 +1,10 @@
+@import 'skins/shared/color';
+
+$color-popup-background: #1a5eb8;
+$color-popup-text: #fff;
+
 .community-page-message {
-	background-color: $color-message-background;
+	background-color: $color-popup-background;
 	height: 60px;
 	position: relative;
 	width: 100%;

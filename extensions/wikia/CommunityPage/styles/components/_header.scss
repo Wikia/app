@@ -1,19 +1,20 @@
+@import 'skins/shared/color';
 @import 'skins/shared/mixins/flexbox';
 
 .community-page-header {
 	@include flexbox();
 	align-items: center;
-	background-image: url('/extensions/wikia/WAMPage/images/hero.jpg'); /* inline */
+	background-color: $color-links;
 	height: 250px;
 	justify-content: center;
 	text-align: center;
 
 	.community-page-header-content {
-		width: 50%;
+		width: 75%;
 	}
 
 	h1 {
-		color: $color-community-page-white;
+		color: $color-white;
 		font-weight: bold;
 	}
 
@@ -35,5 +36,18 @@
 			background-color: $color-button-highlight;
 			text-decoration: none;
 		}
+	}
+}
+
+.community-page-admin-welcome-message {
+	align-items: center;
+	background-color: $color-unified-module-background;
+	display: flex;
+	justify-content: center;
+	text-align: center;
+
+	.community-page-admin-welcome-message-text {
+		margin: 30px 0;
+		max-width: 478px;
 	}
 }
