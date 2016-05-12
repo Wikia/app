@@ -16,10 +16,6 @@ class InsightsService extends WikiaService {
 		$model = InsightsHelper::getInsightModel( $type );
 		$insightData = ( new InsightsContext( $model ) )->fetchData();
 
-		if ( empty( $insightData ) ) {
-			return [];
-		}
-
 		if ( empty( $sortingType ) ) {
 			return $this->truncateTo( $insightData, $size );
 		}
