@@ -1,6 +1,6 @@
 .CommunityPageModalDialog.modal {
 	> header {
-		background-color: $community-page-background-color;
+		background-color: transparent;
 		height: auto;
 		padding: 18px $modal-horizontal-padding;
 	}
@@ -19,12 +19,12 @@
 		}
 
 		a {
-			color: $color-nav-inactive-text;
+			color: $color-alternate-text;
 			padding-bottom: 10px;
 
 			&.active {
-				color: $color-link-text;
-				border-bottom: 2px solid $color-link-text;
+				color: $color-links;
+				border-bottom: 2px solid $color-links;
 				font-weight: bold;
 				text-decoration: none;
 			}
@@ -32,15 +32,15 @@
 	}
 
 	.community-page-subtle {
-		color: $color-module-subtle-text;
+		color: $color-alternate-text;
 		display: block;
 		font-size: 12px;
 	}
 
 	.community-page-details {
 		color: $color-module-subtle-text;
+		font-size: 12px;
 		float: right;
-		font-size: 15px;
 	}
 
 	.throbber-placeholder {
