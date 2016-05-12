@@ -50,7 +50,7 @@ $messages['en'] = array(
 	'communitypage-no-admins-contact' => 'Contact us to be the first!',
 	'communitypage-communitycentral-link' => 'http://community.wikia.com/wiki/Special:Contact/adoption',
 	'communitypage-no-members' => 'This community has no members',
-	'communitypage-help-us-grow' => 'Help us grow {{SITENAME}}',
+	'communitypage-help-us-grow' => "Help us grow '''{{SITENAME}}'''!",
 	'communitypage-new' => 'New',
 );
 
