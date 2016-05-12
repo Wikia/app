@@ -1,4 +1,4 @@
-@import 'components/variables';
+// Components
 @import 'components/module';
 @import 'components/textborder';
 @import 'components/header';
@@ -10,8 +10,11 @@
 @import 'components/modal';
 @import 'components/recently-joined';
 
-// TODO: copy/pasted code from here down
+// Variables for general Community Page styles
+@import 'skins/shared/color';
 
+// General Community Page styles
+// TODO: copy/pasted code from here down
 .community-page-content {
 	margin: 20px auto;
 	width: 850px;

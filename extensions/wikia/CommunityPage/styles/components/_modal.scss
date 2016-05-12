@@ -1,3 +1,6 @@
+@import 'skins/shared/color';
+@import 'variables';
+
 .CommunityPageModalDialog.modal {
 	> header {
 		background-color: transparent;
@@ -38,7 +41,7 @@
 	}
 
 	.community-page-details {
-		color: $color-module-subtle-text;
+		color: $color-alternate-text;
 		font-size: 12px;
 		float: right;
 	}
