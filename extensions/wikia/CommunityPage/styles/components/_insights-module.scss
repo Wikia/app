@@ -1,0 +1,58 @@
+@import 'skins/shared/mixins/clearfix';
+
+.community-page-insights-module {
+	margin: 0 42px 34px 114px;
+
+	.community-page-insights-module-header {
+		float: left;
+		font-size: 24px;
+		font-weight: bold;
+		line-height: 28px;
+		margin: 12px 0;
+	}
+
+	.community-page-insights-module-full-list-link {
+		float: right;
+	}
+
+	.community-page-insights-module-description {
+		clear: both;
+	}
+
+	.community-page-insights-module-list {
+		list-style: none;
+		margin: 0;
+	}
+
+	.community-page-insights-module-list-item {
+		border-bottom: 1px solid $color-community-page-light-gray;
+		font-size: 14px;
+		padding: 20px;
+	}
+
+	.community-page-insights-module-list-item:first-child {
+		border-top: 1px solid $color-community-page-light-gray;
+	}
+
+	.community-page-insights-module-inline-data {
+		display: inline-block;
+		vertical-align: middle;
+	}
+
+	.community-page-insights-module-edit-icon {
+		background: $color-text url('/extensions/wikia/CommunityPage/images/edit-pen.svg') 50% 45%/45% 45% no-repeat;
+		border-radius: 50%;
+		height: 34px;
+		margin-right: 10px;
+		width: 34px;
+	}
+
+	.community-page-insights-module-article-data {
+		color: $color-module-subtle-text;
+		font-size: 12px;
+	}
+
+	.community-page-insights-module-edit-link {
+		float: right;
+	}
+}

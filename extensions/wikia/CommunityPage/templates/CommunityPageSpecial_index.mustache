@@ -13,13 +13,13 @@
 
 <div class="WikiaMainContent CommunityPageMainContent" id="WikiaMainContent">
 	<div class="WikiaMainContentContainer" id="WikiaMainContentContainer">
-		{{#userIsMember}}<p>Current User is a Member of this Wiki</p>{{/userIsMember}}
-		{{^userIsMember}}<p>Current User is not a member or is Anon</p>{{/userIsMember}}
-		{{>insightsPopularPages}}
+		{{#insightsModules.modules}}
+			{{>insightsModule}}
+		{{/insightsModules.modules}}
 	</div>
-	<div id="WikiaRail" class="WikiaRail">
-		{{>contributorsModule}}
-		{{>recentActivityModule}}
-	</div>
+</div>
+<div id="WikiaRail" class="WikiaRail">
+	{{>contributorsModule}}
+	{{>recentActivityModule}}
 </div>
 
