@@ -69,9 +69,24 @@ function wfArticleMetaDescription( &$out, &$text ) {
 		$article = new Article( $wg->Title );
 		$articleService = new ArticleService( $article );
 		$description = $articleService->getTextSnippet( $DESC_LENGTH );
+		/* extra logging - remove later */
+		if ( $description === ' ' ) {
+			$out->addMeta( 'debug-description', 'SPACE-SNIPPET' );
+		}
+		/* end of extra logging */
 	} else {
 		// MediaWiki:Description message found, use it
 		$description = $sMessage;
+		/* extra logging - remove later */
+		if ( $description === ' ' ) {
+			$out->addMeta( 'debug-description', 'SPACE-MESSAGE' );
+			\Wikia\Logger\WikiaLogger::instance()->warning( 'Meta description containing just a space', [
+				'variant' => 'wfMessage( \'Description\' )->text()',
+				'title' => $wg->Title,
+				'ex' => new Exception(),
+			] );
+		}
+		/* end of extra logging */
 	}
 
 	if ( !empty( $description ) ) {
