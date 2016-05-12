@@ -77,7 +77,7 @@ define('ext.wikia.adEngine.config.desktop', [
 		}
 
 		// Revcontent
-		if (context.providers.revcontent && adProviderRevcontent && adProviderRevcontent.canHandleSlot(slotName)) {
+		if (adProviderRevcontent && adProviderRevcontent.canHandleSlot(slotName)) {
 			return [adProviderRevcontent];
 		}
 
