@@ -290,7 +290,7 @@ class CreateNewWikiController extends WikiaController {
 		// check if user created more wikis than we allow per day
 		$numWikis = $this->countCreatedWikis($wgUser->getId());
 		if($numWikis >= self::DAILY_USER_LIMIT && $wgUser->isPingLimitable() && !$wgUser->isAllowed( 'createwikilimitsexempt' ) ) {
-			$this->setTooManyWikiCreatedByUserErrorREsponse();
+			$this->setTooManyWikiCreatedByUserErrorResponse();
 			wfProfileOut(__METHOD__);
 			return;
 		}
@@ -464,7 +464,7 @@ class CreateNewWikiController extends WikiaController {
 		$this->response->setVal( self::STATUS_HEADER_FIELD, wfMessage( 'cnw-error-blocked-header' )->text() );
 	}
 
-	private function setTooManyWikiCreatedByUserErrorREsponse() {
+	private function setTooManyWikiCreatedByUserErrorResponse() {
 		$this->warning("CreateWiki: user reached daily creation count limit" );
 		$this->response->setCode( 429 );
 		$this->response->setVal( self::STATUS_FIELD, self::STATUS_CREATION_LIMIT );
