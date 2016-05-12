@@ -1,16 +1,5 @@
 {{>pageHeader}}
 
-{{#showPopupMessage}}
-	<div class="community-page-message">
-		<div class="info-icon"></div>
-		<div class="text">
-			{{popupMessageText}}
-		</div>
-		<div class="close-icon"></div>
-	</div>
-{{/showPopupMessage}}
-
-
 <div class="WikiaMainContent CommunityPageMainContent" id="WikiaMainContent">
 	<div class="WikiaMainContentContainer" id="WikiaMainContentContainer">
 		{{#userIsMember}}<p>Current User is a Member of this Wiki</p>{{/userIsMember}}
@@ -21,4 +10,3 @@
 		{{>recentActivityModule}}
 	</div>
 </div>
-
