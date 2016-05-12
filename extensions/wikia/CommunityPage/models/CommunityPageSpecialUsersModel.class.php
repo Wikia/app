@@ -239,21 +239,22 @@ class CommunityPageSpecialUsersModel {
 	private function addCurrentUserIfContributor( $allContributorsData, $currentUserId ) {
 		global $wgCityId;
 
-		// Get current user's stats
-		$userInfo = $this->wikiService->getUserInfo(
-			$currentUserId,
-			$wgCityId,
-			AvatarService::AVATAR_SIZE_SMALL_PLUS
-		);
+		$key = array_search( $currentUserId, array_column( $allContributorsData, 'userId' ) );
 
-		if ( $userInfo['lastRevision'] !== null ) {
-			$key = array_search( $currentUserId, array_column( $allContributorsData, 'userId' ) );
+		if ( $key !== false ) {
+			$data = $allContributorsData[$key];
+			$data['isCurrent'] = true;
+			unset( $allContributorsData[$key] );
+			array_unshift( $allContributorsData, $data );
+		} else {
+			// Get current user's stats
+			$userInfo = $this->wikiService->getUserInfo(
+				$currentUserId,
+				$wgCityId,
+				AvatarService::AVATAR_SIZE_SMALL_PLUS
+			);
 
-			if ( $key !== false ) {
-				$data = $allContributorsData[$key];
-				$data['isCurrent'] = true;
-				unset( $allContributorsData[$key] );
-			} else {
+			if ( $userInfo['lastRevision'] !== null ) {
 				// Add current user on top of list
 				$avatar = AvatarService::renderAvatar( $userInfo['name'], AvatarService::AVATAR_SIZE_SMALL_PLUS );
 
@@ -267,9 +268,9 @@ class CommunityPageSpecialUsersModel {
 					'avatar' => $avatar,
 					'profilePage' => $userInfo['userPageUrl'],
 				];
-			}
 
-			array_unshift( $allContributorsData, $data );
+				array_unshift( $allContributorsData, $data );
+			}
 		}
 
 		return $allContributorsData;
