@@ -2891,3 +2891,19 @@ $config['special_portability_dashboard_scss'] = [
 		'//extensions/wikia/PortabilityDashboard/styles/PortabilityDashboard.scss',
 	],
 ];
+
+$config['community_page_entry_point_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => 'oasis',
+	'assets' => array(
+		'//extensions/wikia/CommunityPage/scripts/entryPoint.js',
+	)
+);
+
+$config['community_page_entry_point_scss'] = array(
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => 'oasis',
+	'assets' => array(
+		'//extensions/wikia/CommunityPage/styles/entrypoint/EntryPoint.scss',
+	)
+);
