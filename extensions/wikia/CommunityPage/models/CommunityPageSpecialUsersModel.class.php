@@ -10,20 +10,37 @@ class CommunityPageSpecialUsersModel {
 	const CURR_USER_CONTRIBUTIONS_MCACHE_KEY = 'community_page_current_user_contributions';
 
 	private $wikiService;
+	private $admins;
 
-	private function getWikiService() {
-		return $this->wikiService;
+	// fixme: Remove WikiService hard dependency
+	public function __construct( WikiService $wikiService ) {
+		$this->wikiService = $wikiService;
 	}
 
-	public function __construct() {
-		$this->wikiService = new WikiService();
+	public function getAdmins() {
+		if ( $this->admins === null ) {
+			$this->admins = $this->wikiService->getWikiAdmins();
+		}
+
+		return $this->admins;
+	}
+
+	/**
+	 * Check if a user is an admin
+	 *
+	 * @param int $userId
+	 * @param array $admins
+	 * @return bool
+	 */
+	public function isAdmin( $userId, $admins ) {
+		return in_array( $userId, $admins );
 	}
 
 	/**
 	 * Get the user id and contribution count of the top n contributors to the current wiki,
 	 * optionally filtered by admins only
 	 *
-	 * @param int $limit Number of rows to fetch
+	 * @param int|NULL $limit Number of rows to fetch
 	 * @param string $weekly True for weekly top contributors, false for all members (2 years)
 	 * @param bool $onlyAdmins Whether to filter by admins
 	 * @return Mixed|null
@@ -33,7 +50,7 @@ class CommunityPageSpecialUsersModel {
 			wfMemcKey( self::TOP_CONTRIB_MCACHE_KEY, $limit, $weekly, $onlyAdmins ),
 			WikiaResponse::CACHE_STANDARD,
 			function () use ( $limit, $weekly, $onlyAdmins ) {
-				global $wgExternalSharedDB;
+				global $wgExternalSharedDB, $wgDBcluster;
 				$db = wfGetDB( DB_SLAVE );
 				$adminFilter = '';
 				if ( $onlyAdmins ) {
@@ -50,27 +67,29 @@ class CommunityPageSpecialUsersModel {
 				$sqlData = ( new WikiaSQL() )
 					->SELECT( 'user_name, user_id, ug_group, count(rev_id) AS revision_count' )
 					->FROM ( 'revision FORCE INDEX (user_timestamp)' )
-					->LEFT_JOIN( $wgExternalSharedDB . '.user' )->ON( '(rev_user <> 0) AND (user_id = rev_user)' )
+					->LEFT_JOIN( $wgExternalSharedDB . '_' . $wgDBcluster . '.user' )->ON( '(rev_user <> 0) AND (user_id = rev_user)' )
 					->LEFT_JOIN( 'user_groups ON (user_id = ug_user)' )
 					->WHERE( 'user_id' )->IS_NOT_NULL()
 					->AND_( $dateFilter )
 					->AND_( '(ug_group IS NULL or (ug_group <> "bot"))' . $adminFilter )
 					// TODO: also filter by global bot user ids?
 					->GROUP_BY( 'user_name' )
-					->ORDER_BY( 'revision_count DESC, user_name' )
-					->LIMIT( $limit )
-					->runLoop( $db, function ( &$sqlData, $row ) {
-						$isAdmin = ( strcmp( $row->ug_group, 'sysop' ) == 0 );
+					->ORDER_BY( 'revision_count DESC, user_name' );
 
-						$sqlData[] = [
-							'userId' => $row->user_id,
-							'userName' => $row->user_name,
-							'contributions' => $row->revision_count,
-							'isAdmin' => $isAdmin,
-						];
-					} );
+				if ( $limit ) {
+					$sqlData->LIMIT( $limit );
+				}
 
-				return $sqlData;
+				$result = $sqlData->runLoop( $db, function ( &$result, $row ) {
+					$result[] = [
+						'userId' => $row->user_id,
+						'userName' => $row->user_name,
+						'contributions' => $row->revision_count,
+						'isAdmin' => $this->isAdmin( $row->user_id, $this->getAdmins() ),
+					];
+				} );
+
+				return $result;
 			}
 		);
 		return $data;
@@ -250,7 +269,6 @@ class CommunityPageSpecialUsersModel {
 						if ( $this->showMember( $user ) ) {
 							$avatar = AvatarService::renderAvatar( $userName, AvatarService::AVATAR_SIZE_SMALL_PLUS );
 							$dateString = strftime( '%b %e, %Y', strtotime( $row->wup_value ) );
-							$isAdmin = ( strcmp( $row->ug_group, 'sysop' ) == 0 );
 
 							$sqlData[] = [
 								'userId' => $row->wup_user,
@@ -258,7 +276,7 @@ class CommunityPageSpecialUsersModel {
 								'group' => $row->ug_group,
 								'joinDate' => $dateString,
 								'userName' => $userName,
-								'isAdmin' => $isAdmin,
+								'isAdmin' => $this->isAdmin( $row->wup_user, $this->getAdmins() ),
 								'avatar' => $avatar,
 								'profilePage' => $user->getUserPage()->getLocalURL(),
 							];

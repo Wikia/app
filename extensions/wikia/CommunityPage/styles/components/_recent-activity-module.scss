@@ -3,24 +3,26 @@
 
 .RecentActivityModule {
 	.avatar-container {
-		float: left;
+		display: inline-block;
 		margin-right: 10px;
+		vertical-align: middle;
 	}
 
-	.recent-changes {
-		li {
-			@include clearfix;
-			padding-bottom: 10px;
-		}
-
-		.avatar-container {
-			@include transform-translate(0, 3px);
-		}
+	.change-message {
+		display: inline-block;
+		line-height: 21px;
+		vertical-align: middle;
+		width: calc(100% - 50px);
 	}
 
 	.recent-changes {
 		font-size: 14px;
 		line-height: 20px;
+
+		li {
+			@include clearfix;
+			padding-bottom: 10px;
+		}
 	}
 
 	.more-activity {

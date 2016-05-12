@@ -1,5 +1,4 @@
 @import 'skins/shared/color';
-@import 'skins/shared/mixins/transform';
 
 @import 'components/variables';
 @import 'components/base';
@@ -13,8 +12,8 @@
 @import 'components/contributors-module';
 @import 'components/modal';
 @import 'components/insights-module';
+@import 'components/recently-joined';
 
-// TODO: handle dark themes
 
 .CommunityPageMainContent, .WikiaRail {
 	padding: 34px 0;

@@ -31,18 +31,16 @@
 		}
 	}
 
-	.subtle {
+	.community-page-subtle {
 		color: $color-module-subtle-text;
 		display: block;
 		font-size: 12px;
 	}
 
-	.details {
+	.community-page-details {
 		color: $color-module-subtle-text;
+		float: right;
 		font-size: 15px;
-		position: absolute;
-		right: 0;
-		top: 0;
 	}
 
 	.throbber-placeholder {

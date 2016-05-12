@@ -19,9 +19,6 @@ $wgAutoloadClasses['AdEngine2Service'] =  __DIR__ . '/AdEngine2Service.class.php
 $wgAutoloadClasses['AdTargeting'] =  __DIR__ . '/AdTargeting.class.php';
 $wgAutoloadClasses['ResourceLoaderAdEngineBase'] = __DIR__ . '/ResourceLoaders/ResourceLoaderAdEngineBase.php';
 $wgAutoloadClasses['ResourceLoaderScript'] = __DIR__ . '/ResourceLoaders/ResourceLoaderScript.php';
-
-$wgAutoloadClasses['ResourceLoaderAdEngineSourcePointRecoveryModule'] = __DIR__ . '/ResourceLoaders/ResourceLoaderAdEngineSourcePointRecoveryModule.php';
-$wgAutoloadClasses['ResourceLoaderAdEngineSourcePointDetectionModule'] = __DIR__ . '/ResourceLoaders/ResourceLoaderAdEngineSourcePointDetectionModule.php';
 $wgAutoloadClasses['ResourceLoaderAdEngineYavliModule'] = __DIR__ . '/ResourceLoaders/ResourceLoaderAdEngineYavliModule.php';
 $wgAutoloadClasses['AdEngine2ApiController'] = __DIR__ . '/AdEngine2ApiController.class.php';
 
@@ -56,10 +53,6 @@ $wgExtensionFunctions[] = function() {
 		'adengine-recovery-message-*'
 	] );
 };
-
-$wgResourceModules['wikia.ext.adengine.sp.recovery'] = array(
-	'class' => 'ResourceLoaderAdEngineSourcePointRecoveryModule',
-);
 
 $wgResourceModules['wikia.ext.adengine.sp.detection'] = array(
 	'class' => 'ResourceLoaderAdEngineSourcePointDetectionModule',
