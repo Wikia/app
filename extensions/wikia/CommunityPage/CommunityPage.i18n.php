@@ -50,6 +50,8 @@ $messages['en'] = array(
 	'communitypage-no-admins-contact' => 'Contact us to be the first!',
 	'communitypage-communitycentral-link' => 'http://community.wikia.com/wiki/Special:Contact/adoption',
 	'communitypage-no-members' => 'This community has no members',
+	'communitypage-help-us-grow' => 'Help us grow {{SITENAME}}',
+	'communitypage-new' => 'New',
 );
 
 $messages['qqq'] = array(
@@ -101,6 +103,8 @@ $messages['qqq'] = array(
 	'communitypage-no-admins-contact' => 'Contact us to become the first admin text',
 	'communitypage-communitycentral-link' => 'Link to the community page for this language',
 	'communitypage-no-members' => 'Text for zero state of all members list',
+	'communitypage-help-us-grow' => 'Entry point for logged in users. Invitation to help this community',
+	'communitypage-new' => 'Label used to indicate that the community page is a new feature',
 );
 
 $messages['ja'] = array(
