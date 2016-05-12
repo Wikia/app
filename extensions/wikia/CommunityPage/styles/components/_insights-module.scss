@@ -1,14 +1,14 @@
-@import 'skins/shared/mixins/clearfix';
+@import 'skins/oasis/css/core/breakpoints-variables';
 
 .community-page-insights-module {
-	margin: 0 42px 34px 114px;
+	margin: 0 42px 34px 0;
 
 	.community-page-insights-module-header {
 		float: left;
 		font-size: 24px;
 		font-weight: bold;
 		line-height: 28px;
-		margin: 12px 0;
+		margin: 0 0 12px;
 	}
 
 	.community-page-insights-module-full-list-link {
@@ -48,11 +48,26 @@
 	}
 
 	.community-page-insights-module-article-data {
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		width: calc(90% - 50px);
+	}
+
+	.community-page-insights-module-metadata {
 		color: $color-module-subtle-text;
 		font-size: 12px;
 	}
 
 	.community-page-insights-module-edit-link {
 		float: right;
+		text-align: right;
+		width: 10%;
+	}
+}
+
+@media #{$breakpoint-below-small-plus} {
+	.community-page-insights-module {
+		margin: 0 34px;
 	}
 }

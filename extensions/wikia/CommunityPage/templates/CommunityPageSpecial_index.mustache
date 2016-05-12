@@ -10,16 +10,14 @@
 	</div>
 {{/showPopupMessage}}
 
-
-<div class="WikiaMainContent CommunityPageMainContent" id="WikiaMainContent">
-	<div class="WikiaMainContentContainer" id="WikiaMainContentContainer">
+<div class="CommunityPageContainer">
+	<div class="CommunityPageMainContent">
 		{{#insightsModules.modules}}
 			{{>insightsModule}}
 		{{/insightsModules.modules}}
 	</div>
+	<div class="WikiaRail">
+		{{>contributorsModule}}
+		{{>recentActivityModule}}
+    </div>
 </div>
-<div id="WikiaRail" class="WikiaRail">
-	{{>contributorsModule}}
-	{{>recentActivityModule}}
-</div>
-
