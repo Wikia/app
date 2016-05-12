@@ -45,18 +45,14 @@ class CreateWiki {
 	const ERROR_DOMAIN_POLICY_VIOLATIONS               = 7;
 	const ERROR_SQL_FILE_BROKEN                        = 8;
 	const ERROR_DATABASE_ALREADY_EXISTS                = 9;
-	const ERROR_DATABASE_WIKI_FACTORY_TABLES_BROKEN    = 10;
-	const ERROR_DATABASE_WRITE_TO_CITY_DOMAINS_BROKEN  = 11;
 	const ERROR_USER_IN_ANON                           = 12;
 	const ERROR_READONLY                               = 13;
-	const ERROR_DATABASE_WRITE_TO_CITY_LIST_BROKEN     = 15;
 
 	//DUPLICATED IN CreateWikiFactory task
 	const IMGROOT              = "/images/";
 	//DUPLICATED IN CreateWikiFactory task
 	const IMAGEURL             = "http://images.wikia.com/";
 
-	const CREATEWIKI_LOGO      = "http://images.wikia.com/central/images/2/22/Wiki_Logo_Template.png";
 	const DEFAULT_STAFF        = "Wikia";
 	const DEFAULT_USER         = 'Default';
 	const DEFAULT_DOMAIN       = "wikia.com";
@@ -64,7 +60,6 @@ class CreateWiki {
 // MOVED TO SetupWikiCities task
 //	const DEFAULT_SLOT         = "slot1";
 	const DEFAULT_NAME         = "Wiki";
-	const DEFAULT_WIKI_TYPE    = "";
 	const LOCK_DOMAIN_TIMEOUT  = 30;
 
 	/**
@@ -266,6 +261,7 @@ class CreateWiki {
 
 		$taskRunner->run();
 
+// MOVED TO SetupWikiCities task
 //		/**
 //		 * create position in wiki.factory
 //		 * (I like sprintf construction, so sue me)
@@ -908,25 +904,26 @@ class CreateWiki {
 	 * @access private
 	 *
 	 */
-	private function addToCityDomains() {
-		$res = $this->mDBw->insert(
-			"city_domains",
-			array(
-				array(
-					'city_id'     => $this->mNewWiki->city_id,
-					'city_domain' => $this->mNewWiki->domain
-				),
-				array(
-					'city_id'     => $this->mNewWiki->city_id,
-					'city_domain' => sprintf( "www.%s", $this->mNewWiki->domain )
-				)
-			),
-			__METHOD__
-		);
-
-		return $res;
-	}
-
+// MOVED TO SetupWikiCities task
+//	private function addToCityDomains() {
+//		$res = $this->mDBw->insert(
+//			"city_domains",
+//			array(
+//				array(
+//					'city_id'     => $this->mNewWiki->city_id,
+//					'city_domain' => $this->mNewWiki->domain
+//				),
+//				array(
+//					'city_id'     => $this->mNewWiki->city_id,
+//					'city_domain' => sprintf( "www.%s", $this->mNewWiki->domain )
+//				)
+//			),
+//			__METHOD__
+//		);
+//
+//		return $res;
+//	}
+//
 	/**
 	 * createTables
 	 *
