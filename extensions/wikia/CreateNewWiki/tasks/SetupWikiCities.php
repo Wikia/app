@@ -7,10 +7,9 @@ use CreateWikiException;
 class SetupWikiCities implements Task {
 
 	const DEFAULT_SLOT = "slot1";
-	const ERROR_DATABASE_WRITE_TO_CITY_LIST_BROKEN = 15;
 	const ERROR_DATABASE_WIKI_FACTORY_TABLES_BROKEN = 10;
 	const ERROR_DATABASE_WRITE_TO_CITY_DOMAINS_BROKEN = 11;
-
+	const ERROR_DATABASE_WRITE_TO_CITY_LIST_BROKEN = 15;
 
 	private $taskContext;
 

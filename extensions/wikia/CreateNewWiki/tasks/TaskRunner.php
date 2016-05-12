@@ -26,7 +26,7 @@ class TaskRunner {
 		$this->tasks[] = new ConfigureWikiFactory( $taskContext );
 		$this->tasks[] = new CreateTables();
 		$this->tasks[] = new ImportStarterData( $taskContext );
-		$this->tasks[] = new ConfigureUsers();
+		$this->tasks[] = new ConfigureUsers( $taskContext );
 		$this->tasks[] = new ConfigureStats();
 		$this->tasks[] = new ConfigureCategories();
 	}
