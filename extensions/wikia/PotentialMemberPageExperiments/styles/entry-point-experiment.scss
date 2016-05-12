@@ -1,0 +1,172 @@
+@import 'skins/shared/color';
+@import 'skins/oasis/css/core/breakpoints-variables';
+
+$color-blue-darken: #144b93;
+$color-blue: #1a5eb8;
+$color-message-text: #333;
+$banner-bottom-space: 34px;
+$close-dark-icon: '/resources/wikia/ui_components/modal/images/close-dark.svg';
+$close-button-background: $close-dark-icon;
+
+@if( $is-dark-wiki ) {
+	$color-message-text: #fff;
+	$close-button-background: '/resources/wikia/ui_components/modal/images/close-light.svg';
+}
+
+.pmp-entry-point {
+	background: url('/extensions/wikia/PotentialMemberPageExperiments/images/858-px-background.png') no-repeat center bottom;
+	background-size: cover;
+	border-bottom: 2px solid $color-blue;
+	display: flex;
+	flex-flow: column wrap;
+	justify-content: center;
+	margin: 18px 0;
+	min-height: 150px;
+	overflow: hidden;
+	padding-bottom: $banner-bottom-space;
+	position: relative;
+	text-align: center;
+
+	p.pmp-entry-point-message {
+		color: $color-message-text;
+		display: block;
+		font-size: 24px;
+		margin: 0;
+		padding: 33px 0 15px;
+
+		strong {
+			font-weight: bold;
+		}
+	}
+}
+
+.pmp-entry-point-close {
+	background: url($close-button-background);
+	background-size: 15px 15px;
+	display: block;
+	height: 15px;
+	overflow: hidden;
+	position: absolute;
+	right: 5px;
+	text-indent: 100%;
+	top: 5px;
+	white-space: nowrap;
+	width: 15px;
+}
+
+.pmp-entry-point-button {
+	background: $color-blue;
+	color: $color-white;
+	display: inline-block;
+	font-size: 12px;
+	font-weight: bold;
+	line-height: 16px;
+	padding: 10px 15px;
+	text-transform: uppercase;
+	width: auto;
+
+	&:hover {
+		background: $color-blue-darken;
+		color: $color-white;
+		text-decoration: none;
+		text-shadow: none;
+	}
+}
+
+.pmp-entry-point-glue-bottom {
+	background: #fff url('/extensions/wikia/PotentialMemberPageExperiments/images/background-glue.jpg') no-repeat;
+	background-size: cover;
+	border-left: 6px solid $color-blue;
+	bottom: 0;
+	height: 320px - $banner-bottom-space;
+	margin: 0;
+	padding-left: 232px;
+	position: fixed;
+	right: -1000px;
+	text-align: left;
+	width: 718px;
+	z-index: 5000200;
+
+	p.pmp-entry-point-message {
+		color: #333;
+		padding-top: 80px;
+		width: 560px;
+	}
+
+	.pmp-entry-point-button {
+		text-align: center;
+	}
+
+	.pmp-entry-point-close {
+		background-image: url($close-dark-icon);
+		right: 25px;
+		top: 25px;
+	}
+
+	&.initialized {
+		animation-duration: 2s;
+		animation-name: slidein;
+		animation-timing-function: ease-out;
+		right: 0;
+	}
+}
+
+@keyframes slidein {
+	0% {
+		right: -1000px;
+	}
+
+	100% {
+		right: 0;
+	}
+}
+
+@media #{$breakpoint-medium-up} {
+	.pmp-entry-point-glue-bottom {
+		p.pmp-entry-point-message {
+			font-size: 48px;
+			line-height: 56px;
+		}
+
+		.pmp-entry-point-button {
+			font-size: 14px;
+			height: 24px;
+			margin-top: 12px;
+			padding-top: 16px;
+			width: 122px;
+		}
+
+		&.pmp-entry-point-ja {
+			p.pmp-entry-point-message {
+				font-size: 36px;
+				line-height: 48px;
+				padding-top: 65px;
+				width: 575px;
+			}
+
+			.pmp-entry-point-button {
+				width: 140px;
+			}
+		}
+	}
+}
+
+@media #{$breakpoint-small-only} {
+	.pmp-entry-point-glue-bottom {
+		height: 200px - $banner-bottom-space;
+		padding-left: 142px;
+		width: 452px;
+
+		p.pmp-entry-point-message {
+			padding-top: 50px;
+			width: 270px;
+		}
+
+		&.pmp-entry-point-ja {
+			p.pmp-entry-point-message {
+				font-size: 20px;
+				width: 320px;
+			}
+		}
+	}
+}

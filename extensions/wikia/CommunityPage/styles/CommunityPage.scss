@@ -6,50 +6,16 @@
 @import 'components/module';
 @import 'components/textborder';
 @import 'components/header';
-@import 'components/monthly-summary';
 @import 'components/recent-activity-module';
 @import 'components/banner-message';
 @import 'components/avatar';
 @import 'components/list';
 @import 'components/contributors-module';
 @import 'components/modal';
+@import 'components/recently-joined';
 
 // TODO: handle dark themes
 // TODO: copy/pasted code from here down
-
-.community-page-admin-message {
-	align-items: center;
-	background-color: $color-community-page-gray;
-	color: $color-text-dark;
-	display: flex;
-	height: 250px;
-	justify-content: center;
-	text-align: center;
-
-	.admin-profile {
-		display: inline-block;
-		margin: 0 20px;
-	}
-
-	.profile-links {
-		.user-page {
-			display: block;
-			font-weight: bold;
-		}
-
-		.group-name {
-			color: $color-community-page-admin-text;
-			display: block;
-			text-transform: uppercase;
-		}
-	}
-
-	.admin-message {
-		font-weight: bold;
-		margin: 10px auto;
-		width: 70%;
-	}
-}
 
 .community-page-content {
 	margin: 20px auto;
@@ -93,7 +59,7 @@
 		margin: 10px 0;
 	}
 
-	li {
+	.community-page-contributor {
 		font-size: 12px;
 		padding: 6px 3px 6px 15px;
 		position: relative;
@@ -153,14 +119,6 @@
 	}
 }
 
-.WikiaPage {
-	padding: 0;
-}
-
-.WikiaMainContent {
-	float: none;
-}
-
 .WikiaArticle .community-page-top-contributors h2 {
 	margin-top: 0;
 }
@@ -192,4 +150,3 @@
 		border: 1px solid $color-page-opposite;
 	}
 }
-

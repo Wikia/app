@@ -3358,7 +3358,6 @@ class WikiFactory {
 	 * @return string
 	 */
 	static public function renderValueOnCommunity( $name, $type ) {
-		global $$name;
 		global $preWFValues;
 
 		$value = "";
@@ -3366,9 +3365,9 @@ class WikiFactory {
 		if( isset( $preWFValues[$name] ) ) {
 			// was modified, spit out saved default
 			$value = self::parseValue( $preWFValues[$name], $type );
-		} elseif( isset( $$name ) ) {
+		} elseif( isset( $GLOBALS[$name] ) ) {
 			// was not modified, spit out actual value
-			$value = self::parseValue( $$name, $type );
+			$value = self::parseValue( $GLOBALS[$name], $type );
 		}
 		return htmlspecialchars( $value );
 	}

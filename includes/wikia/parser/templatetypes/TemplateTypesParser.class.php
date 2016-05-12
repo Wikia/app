@@ -25,7 +25,7 @@ class TemplateTypesParser {
 			switch ( $type ) {
 				case TemplateClassificationService::TEMPLATE_NAVBOX:
 					if ( $wgEnableNavboxTemplateParsing ) {
-						$text = NavboxTemplate::handle();
+						$text = NavboxTemplate::handle( $text );
 					}
 					break;
 				case TemplateClassificationService::TEMPLATE_FLAG:
@@ -60,11 +60,16 @@ class TemplateTypesParser {
 	 * @return bool
 	 */
 	public static function onParserAfterTidy( $parser, &$html ) {
-		global $wgEnableNavigationTemplateParsing;
+		global $wgEnableNavigationTemplateParsing, $wgEnableNavboxTemplateParsing;
 		wfProfileIn( __METHOD__ );
 
-		if ( self::shouldTemplateBeParsed() && $wgEnableNavigationTemplateParsing ) {
-			NavigationTemplate::resolve( $html );
+		if ( self::shouldTemplateBeParsed() ) {
+			if ( $wgEnableNavigationTemplateParsing ) {
+				NavigationTemplate::resolve( $html );
+			}
+			if ( $wgEnableNavboxTemplateParsing ) {
+				NavboxTemplate::resolve( $html );
+			}
 		}
 
 		wfProfileOut( __METHOD__ );

@@ -10,7 +10,7 @@ $optionsHtml = '';
 foreach ( $options as $label => $value ) {
 	$optionsHtml .= "<option value='" . $value . "'>" . $label . "</option>";
 }
-$expiresLabel = '<label>' . wfMsg( 'chat-ban-modal-label-expires' ) . '</label>';
+$expiresLabel = '<label>' . wfMessage( 'chat-ban-modal-label-expires' )->escaped() . '</label>';
 
 // Changing a ban
 if ( $isChangeBan ) {
@@ -20,7 +20,7 @@ if ( $isChangeBan ) {
 	);
 	$changeToRow = array(
 		'type' => 'custom',
-		'output' => '<label>' . wfMsg( 'chat-ban-modal-change-ban-label' ) . '</label><select name="expires"><option value="0">' . wfMsg( 'chat-ban-modal-end-ban' ) . '</option>' . $optionsHtml . '</select>',
+		'output' => '<label>' . wfMessage( 'chat-ban-modal-change-ban-label' )->escaped() . '</label><select name="expires"><option value="0">' . wfMessage( 'chat-ban-modal-end-ban' )->escaped() . '</option>' . $optionsHtml . '</select>',
 	);
 	array_push( $form['inputs'], $expiresRow, $changeToRow );
 
@@ -35,12 +35,12 @@ if ( $isChangeBan ) {
 
 // Reason for creating / changing a ban
 $reasonRow = array(
-	'label' => wfMsg( 'chat-ban-modal-label-reason' ),
+	'label' => wfMessage( 'chat-ban-modal-label-reason' )->escaped(),
 	'type' => 'text',
 	'name' => 'reason',
 	'attributes' => array(
 		'maxlength' => 160,
-		'placeholder' => $isChangeBan ? '' : wfMsg( 'chat-log-reason-banadd' ),
+		'placeholder' => $isChangeBan ? '' : wfMessage( 'chat-log-reason-banadd' )->escaped(),
 	),
 );
 array_push( $form['inputs'], $reasonRow );

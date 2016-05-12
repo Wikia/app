@@ -20,13 +20,19 @@ class FandomDataService {
 	 * @return an array of posts
 	 */
 	public function getPosts( $type ) {
-		$memcKey = wfSharedMemcKey( __METHOD__, $type, self::MCACHE_VER );
+		$metadata = $this->buildMetaData( $type );
+
+		if ( ( $type === 'community' || $type === 'vertical' ) && count( $metadata ) === 0 ) {
+			return [];
+		}
+
+		$memcKey = wfSharedMemcKey( __METHOD__, $type, $metadata['key'], self::MCACHE_VER );
 
 		$data = WikiaDataAccess::cache(
 			$memcKey,
 			self::MCACHE_TIME,
-			function() use ( $type ) {
-				return $this->apiRequest( $type );
+			function() use ( $type, $metadata ) {
+				return $this->apiRequest( $type, $metadata );
 			}
 		);
 
@@ -38,9 +44,19 @@ class FandomDataService {
 	 * @param string $type
 	 * @return an array of posts
 	 */
-	private function apiRequest( $type ) {
+	private function apiRequest( $type, $meta ) {
 		$options = [];
 		switch ( $type ) {
+			case 'vertical':
+				$options['sort'] = self::PARSELY_API_SORT;
+				$options['pub_days'] = 30;
+				$endpoint = 'analytics/tag/' . rawurlencode( $meta['tag'] ) . '/detail';
+				break;
+			case 'community':
+				$options['sort'] = self::PARSELY_API_SORT;
+				$options['pub_days'] = 30;
+				$endpoint = 'analytics/tag/' . rawurlencode( $meta['tag'] ) . '/detail';
+				break;
 			case 'shares':
 				$options['days'] = 5;
 				$endpoint = 'shares/posts';
@@ -60,9 +76,13 @@ class FandomDataService {
 		$url = $this->buildUrl( $endpoint, $options );
 		$data = ExternalHttp::get( $url );
 
-		$obj = json_decode( $data );
-		$posts = $this->dedupePosts( $obj->data );
-		return $posts;
+		$posts = json_decode( $data, true );
+
+		if ( isset( $posts['data'] ) && is_array( $posts['data'] ) ) {
+			return $this->dedupePosts( $posts['data'] );
+		} else {
+			return [];
+		}
 	}
 
 	/**
@@ -102,7 +122,7 @@ class FandomDataService {
 				break;
 			}
 
-			$metadata = json_decode( $post->metadata );
+			$metadata = json_decode( $post['metadata'] );
 			if ( !empty( $metadata->postID ) && !in_array( $metadata->postID, $postIds ) ) {
 				$postIds[] = $metadata->postID;
 				$posts[] = $post;
@@ -110,5 +130,66 @@ class FandomDataService {
 		}
 
 		return $posts;
+	}
+
+	private function buildMetaData( $type ) {
+		if ( $type === 'vertical' ) {
+			$metadata = $this->buildVerticalData();
+		} elseif ( $type === 'community' ) {
+			$metadata = $this->buildCommunityData();
+		} else {
+			$metadata = [
+				'key' => '',
+				'tag' => ''
+			];
+		}
+
+		return $metadata;
+	}
+
+	private function buildVerticalData() {
+		global $wgCityId;
+		$wikiFactoryHub = WikiFactoryHub::getInstance();
+		$wgWikiVertical = $wikiFactoryHub->getWikiVertical( $wgCityId )['short'];
+
+		$verticalMap = [
+			'tv' => 'TV',
+			'movies' => 'Movies',
+			'games' => 'Games',
+			'books' => 'Books',
+			'comics' => 'Comics',
+			'lifestyle' => 'Lifestyle',
+			'music' => 'Music'
+		];
+
+		if ( array_key_exists( $wgWikiVertical, $verticalMap ) ) {
+			return [
+				'key' => $wgWikiVertical,
+				'tag' => $verticalMap[$wgWikiVertical]
+			];
+		} else {
+			return [];
+		}
+	}
+
+	private function buildCommunityData() {
+		global $wgCityId;
+
+		$communityMap = [
+			'147' => 'Star Wars',
+			'3035' => 'Fallout',
+			'2233' => 'Marvel',
+			'130814' => 'Game of Thrones',
+			'1706' => 'Elder Scrolls'
+		];
+
+		if ( array_key_exists( $wgCityId, $communityMap ) ) {
+			return [
+				'key' => $wgCityId,
+				'tag' => $communityMap[$wgCityId]
+			];
+		} else {
+			return [];
+		}
 	}
 }

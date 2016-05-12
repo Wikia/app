@@ -144,9 +144,9 @@ and uninstall).
      *
      * @access public
      */
-    function PEAR_Command_Config(&$ui, &$config)
+    function __construct(&$ui, &$config)
     {
-        parent::PEAR_Command_Common($ui, $config);
+        parent::__construct($ui, $config);
     }
 
     // }}}
@@ -343,7 +343,7 @@ and uninstall).
             }
         }
         $params[1] = realpath($params[1]);
-        $config = &new PEAR_Config($params[1], '#no#system#config#', false, false);
+        $config = new PEAR_Config($params[1], '#no#system#config#', false, false);
         if ($root{strlen($root) - 1} == '/') {
             $root = substr($root, 0, strlen($root) - 1);
         }

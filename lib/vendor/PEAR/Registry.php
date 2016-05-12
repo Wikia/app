@@ -137,10 +137,10 @@ class PEAR_Registry extends PEAR
      *
      * @access public
      */
-    function PEAR_Registry($pear_install_dir = PEAR_INSTALL_DIR, $pear_channel = false,
+    function __construct($pear_install_dir = PEAR_INSTALL_DIR, $pear_channel = false,
                            $pecl_channel = false)
     {
-        parent::PEAR();
+        parent::__construct();
         $ds = DIRECTORY_SEPARATOR;
         $this->install_dir = $pear_install_dir;
         $this->channelsdir = $pear_install_dir.$ds.'.channels';
@@ -278,7 +278,7 @@ class PEAR_Registry extends PEAR
                     } else {
                         $file = '.pearrc';
                     }
-                    $this->_config = &new PEAR_Config($this->statedir . DIRECTORY_SEPARATOR .
+                    $this->_config = new PEAR_Config($this->statedir . DIRECTORY_SEPARATOR .
                         $file);
                     $this->_config->setRegistry($this);
                     $this->_config->set('php_dir', $this->install_dir);
@@ -995,8 +995,7 @@ class PEAR_Registry extends PEAR
         if ($fp === null) {
             return null;
         }
-        $rt = get_magic_quotes_runtime();
-        set_magic_quotes_runtime(0);
+
         clearstatcache();
         if (function_exists('file_get_contents')) {
             $this->_closePackageFile($fp);
@@ -1005,7 +1004,6 @@ class PEAR_Registry extends PEAR
             $data = fread($fp, filesize($this->_packageFileName($package, $channel)));
             $this->_closePackageFile($fp);
         }
-        set_magic_quotes_runtime($rt);
         $data = unserialize($data);
         if ($key === null) {
             return $data;
@@ -1037,8 +1035,6 @@ class PEAR_Registry extends PEAR
         if ($fp === null) {
             return null;
         }
-        $rt = get_magic_quotes_runtime();
-        set_magic_quotes_runtime(0);
         clearstatcache();
         if (function_exists('file_get_contents')) {
             $this->_closeChannelFile($fp);
@@ -1047,7 +1043,6 @@ class PEAR_Registry extends PEAR
             $data = fread($fp, filesize($this->_channelFileName($channel)));
             $this->_closeChannelFile($fp);
         }
-        set_magic_quotes_runtime($rt);
         $data = unserialize($data);
         return $data;
     }
@@ -1277,13 +1272,13 @@ class PEAR_Registry extends PEAR
         }
         $a = $this->_config;
         if (!$a) {
-            $this->_config = &new PEAR_Config;
+            $this->_config = new PEAR_Config;
             $this->_config->set('php_dir', $this->statedir);
         }
         if (!class_exists('PEAR_PackageFile')) {
             require_once 'PEAR/PackageFile.php';
         }
-        $pkg = &new PEAR_PackageFile($this->_config);
+        $pkg = new PEAR_PackageFile($this->_config);
         $pf = &$pkg->fromArray($info);
         return $pf;
     }

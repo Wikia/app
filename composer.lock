@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "d214902f1ef4f7a2a049cfbba07295f5",
-    "content-hash": "d5200d1e16a9b1241866ef003409ec9b",
+    "hash": "8ec42b148e865fa2064d93657981d1f0",
+    "content-hash": "206ba099723b3741859c97206dcee258",
     "packages": [
         {
             "name": "container-interop/container-interop",
@@ -1745,6 +1745,29 @@
             ],
             "description": "Fluent SQL wrapper for PHP",
             "time": "2014-12-02 19:19:03"
+        },
+        {
+            "name": "wikia/phpflickr",
+            "version": "3.1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Wikia/phpflickr.git",
+                "reference": "438ea82b6f6336757e9cf4ec684979352b65ad95"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Wikia/phpflickr/zipball/438ea82b6f6336757e9cf4ec684979352b65ad95",
+                "reference": "438ea82b6f6336757e9cf4ec684979352b65ad95",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "phpFlickr.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "time": "2016-04-27 13:12:26"
         },
         {
             "name": "zendframework/zend-code",

@@ -392,4 +392,6 @@ return array(
     'SebastianBergmann\\Exporter\\Exporter' => $vendorDir . '/sebastian/exporter/src/Exporter.php',
     'SebastianBergmann\\Version' => $vendorDir . '/sebastian/version/src/Version.php',
     'Text_Template' => $vendorDir . '/phpunit/php-text-template/Text/Template.php',
+    'phpFlickr' => $vendorDir . '/wikia/phpflickr/phpFlickr.php',
+    'phpFlickr_pager' => $vendorDir . '/wikia/phpflickr/phpFlickr.php',
 );

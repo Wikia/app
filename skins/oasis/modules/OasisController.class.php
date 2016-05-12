@@ -173,7 +173,7 @@ class OasisController extends WikiaController {
 		wfProfileIn(__METHOD__ . ' - skin Operations');
 		// add skin theme name
 		if(!empty($skin->themename)) {
-			$bodyClasses[] = "oasis-{$skin->themename}";
+			$bodyClasses[] = Sanitizer::escapeClass( "oasis-{$skin->themename}" );
 		}
 
 		// mark dark themes
@@ -188,6 +188,9 @@ class OasisController extends WikiaController {
 
 		// sets background settings by adding classes to <body>
 		$bodyClasses = array_merge($bodyClasses, $this->getOasisBackgroundClasses($wgOasisThemeSettings));
+
+		// VOLDEV-168: Add a community-specific class to the body tag
+		$bodyClasses[] = $skin->getBodyClassForCommunity();
 
 		$this->bodyClasses = $bodyClasses;
 

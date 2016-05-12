@@ -3824,8 +3824,9 @@ function wfWaitForSlaves( $wiki = false ) {
 			$lb = clone $lb;
 
 			for ( $i=0; $i < count( $slaves ); $i++ ) {
+				list( $slaveHost, $slavePort ) = explode( ':', $slaves[$i] );
 				$entry = $slaveInfo;
-				$entry['host'] = $slaves[ $i ];
+				$entry['host'] = $slaveHost;
 
 				$lb->setServerInfo( $i+1, $entry );
 			}

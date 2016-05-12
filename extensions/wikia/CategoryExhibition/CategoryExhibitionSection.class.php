@@ -223,9 +223,10 @@ class CategoryExhibitionSection {
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 		if( empty( $cachedContent ) ){
 			$aTmpData = $this->fetchSectionItems( $namespace, $negative );
-			$pages = Paginator::newFromArray( $aTmpData, $itemsPerPage );
+			$pages = Paginator::newFromCount( count( $aTmpData ), $itemsPerPage );
 			if ( is_array( $aTmpData ) && count( $aTmpData ) > 0 ){
-				$aTmpData = $pages->getPage( $this->paginatorPosition, true );
+				$pages->setActivePage( $this->paginatorPosition );
+				$aTmpData = $pages->getCurrentPage( $aTmpData );
 				$aData = $this->getArticles( $aTmpData );
 				$oTmpl->set_vars(
 					array (

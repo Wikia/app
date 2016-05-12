@@ -5,7 +5,7 @@ class GoogleMapsJsExporter extends GoogleMapsExporter {
     var $mLanguage;
     var $mProxyKey;
 
-    function GoogleMapsJsExporter(&$pLanguage, &$pProxyKey, $pEnablePaths = true) {
+    function __construct(&$pLanguage, &$pProxyKey, $pEnablePaths = true) {
         $this->mOutput = '';
         $this->mLanguage =& $pLanguage;
         $this->mProxyKey =& $pProxyKey;

@@ -1965,5 +1965,30 @@
             "logging",
             "psr-3"
         ]
+    },
+    {
+        "name": "wikia/phpflickr",
+        "version": "3.1.2",
+        "version_normalized": "3.1.2.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/Wikia/phpflickr.git",
+            "reference": "438ea82b6f6336757e9cf4ec684979352b65ad95"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/Wikia/phpflickr/zipball/438ea82b6f6336757e9cf4ec684979352b65ad95",
+            "reference": "438ea82b6f6336757e9cf4ec684979352b65ad95",
+            "shasum": ""
+        },
+        "time": "2016-04-27 13:12:26",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "classmap": [
+                "phpFlickr.php"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/"
     }
 ]

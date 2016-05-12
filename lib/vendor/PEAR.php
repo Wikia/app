@@ -83,9 +83,6 @@ $GLOBALS['_PEAR_error_handler_stack']    = array();
  * discarded.  If you need to get any debug information from your
  * destructor, use error_log(), syslog() or something similar.
  *
- * IMPORTANT! To use the emulated destructors you need to create the
- * objects by reference: $obj =& new PEAR_child;
- *
  * @category   pear
  * @package    PEAR
  * @author     Stig Bakken <ssb@php.net>
@@ -167,7 +164,7 @@ class PEAR
      * @access public
      * @return void
      */
-    function PEAR($error_class = null)
+    function __construct($error_class = null)
     {
         $classname = strtolower(get_class($this));
         if ($this->_debug) {
@@ -853,7 +850,7 @@ class PEAR_Error
      * @access public
      *
      */
-    function PEAR_Error($message = 'unknown error', $code = null,
+    function __construct($message = 'unknown error', $code = null,
                         $mode = null, $options = null, $userinfo = null)
     {
         if ($mode === null) {

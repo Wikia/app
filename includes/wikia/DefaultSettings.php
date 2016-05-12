@@ -130,9 +130,6 @@ $wgAutoloadClasses['FlashMessages'] = "{$IP}/includes/wikia/FlashMessages.class.
 //@see WikiaApp::registerApiController
 $wgWikiaAPIControllers = array();
 
-//ApiGate dependencies
-include_once( "$IP/lib/vendor/ApiGate/config.php" );
-
 //Wikia API Hooks
 $wgAutoloadClasses[ 'ApiHooks'] =  "{$IP}/includes/wikia/api/ApiHooks.class.php" ;
 
@@ -221,7 +218,6 @@ $wgAutoloadClasses['WikiaSpamRegexBatch'] = $IP . '/extensions/wikia/WikiaSpamRe
 $wgAutoloadClasses[ 'Wikia\Template\Engine' ] = "{$IP}/includes/wikia/template/Engine.class.php";
 $wgAutoloadClasses[ 'Wikia\Template\PHPEngine' ] = "{$IP}/includes/wikia/template/PHPEngine.class.php";
 $wgAutoloadClasses[ 'Wikia\Template\MustacheEngine' ] = "{$IP}/includes/wikia/template/MustacheEngine.class.php";
-$wgAutoloadClasses[ 'Wikia\Template\HandlebarsEngine' ] = "{$IP}/includes/wikia/template/HandlebarsEngine.class.php";
 //deprecated, will be removed
 $wgAutoloadClasses[ 'EasyTemplate' ] = "{$IP}/includes/wikia/EasyTemplate.php";
 
@@ -236,7 +232,6 @@ $wgAutoloadClasses[ "WikiFactoryHub"                  ] = "$IP/extensions/wikia/
 $wgAutoloadClasses[ "WikiFactoryHubHooks"             ] = "$IP/extensions/wikia/WikiFactory/Hubs/WikiFactoryHubHooks.class.php";
 $wgAutoloadClasses[ 'SimplePie'                       ] = "$IP/lib/vendor/SimplePie/simplepie.inc";
 $wgAutoloadClasses[ 'MustachePHP'                     ] = "$IP/lib/vendor/mustache.php/Mustache.php";
-$wgAutoloadClasses[ 'Handlebars\\Autoloader'          ] = "$IP/lib/vendor/Handlebars/Autoloader.php";
 $wgAutoloadClasses[ 'GMetricClient'                   ] = "$IP/lib/vendor/GMetricClient.class.php";
 $wgAutoloadClasses[ 'FakeLocalFile'                   ] = "$IP/includes/wikia/FakeLocalFile.class.php";
 $wgAutoloadClasses[ 'WikiaUploadStash'                ] = "$IP/includes/wikia/upload/WikiaUploadStash.class.php";
@@ -252,7 +247,6 @@ $wgAutoloadClasses[ 'AutomaticWikiAdoptionGatherData' ] = "$IP/extensions/wikia/
 $wgAutoloadClasses[ 'FakeSkin'                        ] = "$IP/includes/wikia/FakeSkin.class.php";
 $wgAutoloadClasses[ 'WikiaUpdater'                    ] = "$IP/includes/wikia/WikiaUpdater.php";
 $wgHooks          [ 'LoadExtensionSchemaUpdates'      ][] = 'WikiaUpdater::update';
-$wgAutoloadClasses[ 'phpFlickr'                       ] = "$IP/lib/vendor/phpFlickr/phpFlickr.php";
 $wgAutoloadClasses[ 'WikiaDataAccess'                 ] = "$IP/includes/wikia/WikiaDataAccess.class.php";
 $wgAutoloadClasses[ 'ImageReviewStatuses'             ] = "$IP/extensions/wikia/ImageReview/ImageReviewStatuses.class.php";
 $wgAutoloadClasses[ 'WikiaUserPropertiesController'   ] = "$IP/includes/wikia/WikiaUserPropertiesController.class.php";
@@ -353,7 +347,6 @@ $wgAutoloadClasses['WAMService'] = $IP . '/includes/wikia/services/WAMService.cl
 $wgAutoloadClasses['VideoService'] = $IP . '/includes/wikia/services/VideoService.class.php';
 $wgAutoloadClasses['UserService']  =  $IP.'/includes/wikia/services/UserService.class.php';
 $wgAutoloadClasses['MustacheService'] = $IP . '/includes/wikia/services/MustacheService.class.php';
-$wgAutoloadClasses['HandlebarsService'] = $IP . '/includes/wikia/services/HandlebarsService.class.php';
 $wgAutoloadClasses['RevisionService'] = $IP . '/includes/wikia/services/RevisionService.class.php';
 $wgAutoloadClasses['InfoboxesService'] = $IP . '/includes/wikia/services/InfoboxesService.class.php';
 $wgAutoloadClasses['RenderContentOnlyHelper'] = $IP . '/includes/wikia/RenderContentOnlyHelper.class.php';
@@ -1215,6 +1208,12 @@ $wgWikiaHubsFileRepoDirectory = '/images/c/corp/images';
 $wgEnableNielsen = false;
 
 /**
+ * @name $wgNielsenApid
+ * Nielsen Digital Content Ratings apid. Should be changed via WikiFactory when $wgEnableNielsen is set to true
+ */
+$wgNielsenApid = 'FIXME';
+
+/**
  * @name $wgEnableAmazonMatch
  * Enables AmazonMatch new integration (id=3115)
  */
@@ -1434,17 +1433,6 @@ $wgSitewideDisableLiftium = false;
 $wgSitewideDisablePaidAssetDrop = false;
 
 /**
- * @name $wgSitewideDisableSevenOneMedia
- * @link https://one.wikia-inc.com/wiki/Ads/Disaster_recovery
- * @link http://community.wikia.com/wiki/Special:WikiFactory/community/variables/wgSitewideDisableSevenOneMedia
- *
- * Disable SevenOneMedia sitewide in case a disaster happens.
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- * For more details consult https://one.wikia-inc.com/wiki/Ads/Disaster_recovery
- */
-$wgSitewideDisableSevenOneMedia = false;
-
-/**
  * @name $wgEnableKruxTargeting
  *
  * Enables Krux Targeting
@@ -1472,20 +1460,6 @@ $wgSitewideDisableKrux = false;
  * For more details consult https://one.wikia-inc.com/wiki/Ads/Disaster_recovery
  */
 $wgSitewideDisableMonetizationService = false;
-
-/**
- * @name $wgAdDriverUseSevenOneMedia
- * Whether to use SevenOne Media ads (true) or the other ads (false)
- * Null means true for languages within $wgAdDriverUseSevenOneMediaInLanguages
- */
-$wgAdDriverUseSevenOneMedia = null;
-$wgAdDriverUseSevenOneMediaInLanguages = ['de'];
-
-/**
- * @name $wgAdDriverSevenOneMediaOverrideSub2Site
- * Enable override SOI_SUB2SITE with string defined in value for SevenOne Media ads
- */
-$wgAdDriverSevenOneMediaOverrideSub2Site = null;
 
 /**
  * @name $wgAdDriverTrackState
@@ -1834,6 +1808,13 @@ $wgAdDriverHighImpact2SlotCountries = null;
 $wgAdDriverIncontentLeaderboardSlotCountries = null;
 
 /**
+ * @name $wgAdDriverIncontentLeaderboardOutOfPageSlotCountries
+ * Enables INCONTENT_LEADERBOARD as out-of-page slot in these countries
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverIncontentLeaderboardOutOfPageSlotCountries = null;
+
+/**
  * @name $wgAdDriverIncontentPlayerSlotCountries
  * Enables INCONTENT_PLAYER slot in these countries
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
@@ -1895,3 +1876,14 @@ $wgEnableReviveSpotlights = true;
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgReviveSpotlightsCountries = null;
+
+/**
+ * Enable SourcePoint recovery
+ */
+include_once("$IP/extensions/wikia/ARecoveryEngine/ARecoveryEngine.setup.php");
+
+/**
+ * @name $wgMemcachedMoxiProtocol
+ * Set it to either 'ascii' or 'binary' (default: 'binary')
+ */
+$wgMemcachedMoxiProtocol = 'binary';
