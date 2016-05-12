@@ -2890,3 +2890,22 @@ $config['special_portability_dashboard_scss'] = [
 		'//extensions/wikia/PortabilityDashboard/styles/PortabilityDashboard.scss',
 	],
 ];
+
+$config['create_new_wiki_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => [
+		'//resources/wikia/modules/stringhelper.js',
+		'//extensions/wikia/CreateNewWiki/js/CreateNewWiki.js',
+		'//extensions/wikia/ThemeDesigner/js/ThemeDesigner.js',
+		'//extensions/wikia/CreateNewWiki/js/CreateNewWikiThemeDesignerOverrides.js',
+		'//extensions/wikia/CreateNewWiki/js/WikiBuilder.js',
+		'//extensions/wikia/CreateNewWiki/js/CreateNewWikiHelper.js'
+	]
+];
+
+$config['create_new_wiki_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'assets' => [
+		'//extensions/wikia/CreateNewWiki/css/CreateNewWiki.scss'
+	]
+];
