@@ -14,6 +14,7 @@
 
 use Wikia\CreateNewWiki\Starters;
 use Wikia\CreateNewWiki\Tasks;
+use Wikia\CreateNewWiki\Tasks\TaskContext;
 
 class CreateWiki {
 
@@ -21,7 +22,7 @@ class CreateWiki {
 
 	private $taskContext, $mName, $mDefSitename, $mSitenames, $mDomain, $mDomains, $mDefSubdomain,
 		$mLanguage, $mVertical, $mCategories, $mIP,
-		$mPHPbin, $mFounder,
+		$mPHPbin,
 		$mLangSubdomain,
 		$mDefaultTables, $mAdditionalTables,
 		$sDbStarter,
@@ -45,24 +46,18 @@ class CreateWiki {
 	const ERROR_DOMAIN_POLICY_VIOLATIONS               = 7;
 	const ERROR_SQL_FILE_BROKEN                        = 8;
 	const ERROR_DATABASE_ALREADY_EXISTS                = 9;
-	const ERROR_DATABASE_WIKI_FACTORY_TABLES_BROKEN    = 10;
-	const ERROR_DATABASE_WRITE_TO_CITY_DOMAINS_BROKEN  = 11;
-	const ERROR_USER_IN_ANON                           = 12;
 	const ERROR_READONLY                               = 13;
-	const ERROR_DATABASE_WRITE_TO_CITY_LIST_BROKEN     = 15;
 
 	//DUPLICATED IN CreateWikiFactory task
 	const IMGROOT              = "/images/";
 	//DUPLICATED IN CreateWikiFactory task
 	const IMAGEURL             = "http://images.wikia.com/";
 
-	const CREATEWIKI_LOGO      = "http://images.wikia.com/central/images/2/22/Wiki_Logo_Template.png";
 	const DEFAULT_STAFF        = "Wikia";
 	const DEFAULT_USER         = 'Default';
 	//const DEFAULT_DOMAIN       = "wikia.com";
 	const ACTIVE_CLUSTER       = "c7";
 
-	const DEFAULT_SLOT         = "slot1";
 // MOVED TO SetupWikiCities task
 //	const DEFAULT_SLOT         = "slot1";
 
@@ -94,11 +89,12 @@ class CreateWiki {
 		$this->mIP = $IP;
 
 		// founder of wiki
-		$this->mFounder = $wgUser;
+// CreateUser task sets TaskContext::Founder in prepare method
+//		$this->mFounder = $wgUser;
 // MOVED TO SetupWikiCities Task
 //		$this->mFounderIp = $wgRequest->getIP();
 
-		wfDebugLog( "createwiki", __METHOD__ . ": founder: " . print_r($this->mFounder, true) . "\n", true );
+		wfDebugLog( "createwiki", __METHOD__ . ": founder: " . print_r($wgUser, true) . "\n", true );
 
 		/* default tables */
 		$this->mDefaultTables = array(
@@ -180,7 +176,7 @@ class CreateWiki {
 	 * @throw CreateWikiException an exception with status of operation set
 	 */
 	public function create() {
-		global $wgExternalSharedDB, $wgSharedDB, $wgUser;
+		global $wgExternalSharedDB, $wgSharedDB;
 
 		$then = microtime( true );
 
@@ -204,10 +200,11 @@ class CreateWiki {
 		}*/
 
 		// check founder
-		if ( $this->mFounder->isAnon() ) {
-			wfProfileOut( __METHOD__ );
-			throw new CreateWikiException('Founder is anon', self::ERROR_USER_IN_ANON);
-		}
+// MOVED TO ConfigureUser::check method
+//		if ( $this->mFounder->isAnon() ) {
+//			wfProfileOut( __METHOD__ );
+//			throw new CreateWikiException('Founder is anon', self::ERROR_USER_IN_ANON);
+//		}
 
 		// check executables
 		//Moved to ImportStarterData
@@ -273,6 +270,7 @@ class CreateWiki {
 
 		$taskRunner->run();
 
+// MOVED TO SetupWikiCities task
 //		/**
 //		 * create position in wiki.factory
 //		 * (I like sprintf construction, so sue me)
@@ -303,10 +301,11 @@ class CreateWiki {
 //		wfDebugLog( "createwiki", __METHOD__ . ": Row added into city_domains table, city_id = {$this->mNewWiki->city_id}\n", true );
 
 		// Force initialize uploader user from correct shared db
-		$uploader = User::newFromName( 'CreateWiki script' );
-		$uploader->getId();
-		$oldUser = $wgUser;
-		$wgUser = $uploader;
+// Created TaskContext::Uploader and TaskContext::Founder fields
+//		$uploader = User::newFromName( 'CreateWiki script' );
+//		$uploader->getId();
+//		$oldUser = $wgUser;
+//		$wgUser = $uploader;
 
 		/**
 		 * wikifactory variables
@@ -347,10 +346,11 @@ class CreateWiki {
 		/**
 		 * making the wiki founder a sysop/bureaucrat
 		 */
-		wfDebugLog( "createwiki", __METHOD__ . ": Create user sysop/bureaucrat for user: {$this->mNewWiki->founderId} \n", true );
-		if ( !$this->addUserToGroups() ) {
-			wfDebugLog( "createwiki", __METHOD__ . ": Create user sysop/bureaucrat for user: {$this->mNewWiki->founderId} failed \n", true );
-		}
+// MOVED TO ConfigureUser task
+//		wfDebugLog( "createwiki", __METHOD__ . ": Create user sysop/bureaucrat for user: {$this->mNewWiki->founderId} \n", true );
+//		if ( !$this->addUserToGroups() ) {
+//			wfDebugLog( "createwiki", __METHOD__ . ": Create user sysop/bureaucrat for user: {$this->mNewWiki->founderId} failed \n", true );
+//		}
 
 		/**
 		 * init site_stats table (add empty row)
@@ -415,9 +415,10 @@ class CreateWiki {
 		 */
 		unset($this->mNewWiki->dbw);
 
-		// Restore wgUser
-		$wgUser = $oldUser;
-		unset($oldUser);
+// HANDLED BY ConfigureUser task
+// Restore wgUser
+//		$wgUser = $oldUser;
+//		unset($oldUser);
 
 		/**
 		 * Schedule an async task
@@ -910,25 +911,26 @@ class CreateWiki {
 	 * @access private
 	 *
 	 */
-	private function addToCityDomains() {
-		$res = $this->mDBw->insert(
-			"city_domains",
-			array(
-				array(
-					'city_id'     => $this->mNewWiki->city_id,
-					'city_domain' => $this->mNewWiki->domain
-				),
-				array(
-					'city_id'     => $this->mNewWiki->city_id,
-					'city_domain' => sprintf( "www.%s", $this->mNewWiki->domain )
-				)
-			),
-			__METHOD__
-		);
-
-		return $res;
-	}
-
+// MOVED TO SetupWikiCities task
+//	private function addToCityDomains() {
+//		$res = $this->mDBw->insert(
+//			"city_domains",
+//			array(
+//				array(
+//					'city_id'     => $this->mNewWiki->city_id,
+//					'city_domain' => $this->mNewWiki->domain
+//				),
+//				array(
+//					'city_id'     => $this->mNewWiki->city_id,
+//					'city_domain' => sprintf( "www.%s", $this->mNewWiki->domain )
+//				)
+//			),
+//			__METHOD__
+//		);
+//
+//		return $res;
+//	}
+//
 	/**
 	 * createTables
 	 *
@@ -1094,16 +1096,17 @@ class CreateWiki {
 		return true;
 	}*/
 
-	private function addUserToGroups() {
-		if ( !$this->mNewWiki->founderId ) {
-			return false;
-		}
-
-		$this->mNewWiki->dbw->replace( "user_groups", array( ), array( "ug_user" => $this->mNewWiki->founderId, "ug_group" => "sysop" ) );
-		$this->mNewWiki->dbw->replace( "user_groups", array( ), array( "ug_user" => $this->mNewWiki->founderId, "ug_group" => "bureaucrat" ) );
-
-		return true;
-	}
+// MOVED TO ConfigureUser task
+//	private function addUserToGroups() {
+//		if ( !$this->mNewWiki->founderId ) {
+//			return false;
+//		}
+//
+//		$this->mNewWiki->dbw->replace( "user_groups", array( ), array( "ug_user" => $this->mNewWiki->founderId, "ug_group" => "sysop" ) );
+//		$this->mNewWiki->dbw->replace( "user_groups", array( ), array( "ug_user" => $this->mNewWiki->founderId, "ug_group" => "bureaucrat" ) );
+//
+//		return true;
+//	}
 
 	/**
 	 * addCustomSettings
