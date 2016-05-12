@@ -81,42 +81,48 @@ class CreateWikiChecks {
 		return $sResponse;
 	}
 
-	public static function checkDomainIsCorrect($sName, $sLang, $type = false ) {
+	public static function checkDomainIsCorrect($sName, $sLang, $type = false, $useUserLang = true ) {
 		wfProfileIn(__METHOD__);
-		$sResponse = "";
+		$message = null;
 
 		$sNameLength = strlen($sName);
 		$app = F::app();
 
 		if ( $sNameLength === 0 ) {
 			#-- empty field
-			$sResponse = wfMsg('autocreatewiki-empty-field');
+			$message = wfMessage('autocreatewiki-empty-field');
 		} elseif ( $sNameLength < 3 ) {
 			#-- too short
-			$sResponse = wfMsg('autocreatewiki-name-too-short');
+			$message = wfMessage('autocreatewiki-name-too-short');
 		} elseif ( $sNameLength > 50 ) {
 			#-- too short
-			$sResponse = wfMsg('autocreatewiki-name-too-long');
+			$message = wfMessage('autocreatewiki-name-too-long');
 		} elseif (preg_match('/[^a-z0-9-]/i', $sName) ||
 			$sName[0] == '-' || $sName[$sNameLength - 1] == '-') {
 			#-- invalid name
-			$sResponse = wfMsg('autocreatewiki-bad-name');
+			$message = wfMessage('autocreatewiki-bad-name');
 		} elseif ( in_array( $sName, array_keys(static::getLanguageNames())) ) {
 			#-- invalid name
-			$sResponse = wfMsg('autocreatewiki-violate-policy');
+			$message = wfMessage('autocreatewiki-violate-policy');
 		} elseif ( !in_array('staff', $app->wg->user->getGroups()) && (static::checkBadWords($sName, "domain") === false) ) {
 			#-- invalid name (bad words)
-			$sResponse = wfMsg('autocreatewiki-violate-policy');
+			$message = wfMessage('autocreatewiki-violate-policy');
 		} else {
 			$iExists = static::checkDomainExists($sName, $sLang, $type);
 			if (!empty($iExists)) {
 				#--- domain exists
-				$sResponse = wfMsg('autocreatewiki-name-taken', ( !is_null($sLang) && ($sLang != 'en') ) ? sprintf("%s.%s", $sLang, $sName) : $sName );
+				$message = wfMessage('autocreatewiki-name-taken', ( !is_null($sLang) && ($sLang != 'en') ) ? sprintf("%s.%s", $sLang, $sName) : $sName );
 			}
 		}
 
 		wfProfileOut(__METHOD__);
-		return $sResponse;
+		if ( empty( $message ) ) {
+			return "";
+		} else if ( $useUserLang ) {
+			return $message->text();
+		} else {
+			return $message->inLanguage( 'en' );
+		}
 	}
 
 	public static function getLanguageNames() {
