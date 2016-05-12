@@ -44,7 +44,7 @@ class CommunityPageSpecialRecentActivityModel {
 	 * @param string $changeType
 	 * @return mixed
 	 */
-	public function getChangeTypeMessage( $changeType ) {
+	private function getChangeTypeMessage( $changeType ) {
 		switch ( $changeType ) {
 			case 'new':
 				return $changeTypeString = wfMessage( 'communitypage-created' )->plain();
@@ -60,7 +60,7 @@ class CommunityPageSpecialRecentActivityModel {
 	 * @param string $userProfileUrl
 	 * @return string
 	 */
-	public function getUserProfileLink( $userName, $userProfileUrl ) {
+	private function getUserProfileLink( $userName, $userProfileUrl ) {
 		return Html::element(
 			'a',
 			[
@@ -76,7 +76,7 @@ class CommunityPageSpecialRecentActivityModel {
 	 * @param $pageUrl
 	 * @return string
 	 */
-	public function getPageLink( $pageTitle, $pageUrl ) {
+	private function getPageLink( $pageTitle, $pageUrl ) {
 		return Html::element(
 			'a',
 			[
