@@ -47,7 +47,7 @@ class CommunityPageSpecialRecentActivityModel {
 	private function getChangeTypeMessage( $changeType ) {
 		switch ( $changeType ) {
 			case 'new':
-				return $changeTypeString = wfMessage( 'communitypage-created' )->plain();
+				return wfMessage( 'communitypage-created' )->plain();
 			case 'delete':
 				return wfMessage( 'communitypage-deleted' )->plain();
 			default:
