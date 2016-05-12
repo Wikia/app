@@ -1,32 +1,5 @@
-@import 'skins/shared/color';
-
-// colors
-$color-community-page-white: #fff;
-$color-community-page-gray: #eee;
-$color-community-page-light-gray: #e6e6e6;
-$color-community-page-dark-gray: #ccc;
-$color-community-page-admin-text: #808080;
-
-$color-activity-background: #f6f6f6;
-$color-message-background: #1a5eb8;
-
-$color-popup-text: #fff;
-$color-activity-text: #383838;
-$color-rank-subtle-text: #999;
-$color-nav-inactive-text: #9da4a9;
-$color-module-subtle-text: #9da4a9;
-$color-link-text: #1a5eb8;
-
-$color-avatar-border: #CCC;
-
 // fonts
 $community-page-font-family: "HelveticaNeue", Helvetica, Arial, sans-serif;
-
-// theme
-$community-page-background-color: #fff;
-@if ($is-dark-wiki) {
-	$community-page-background-color: #000;
-}
 
 // other
 $modal-horizontal-padding: 25px;
