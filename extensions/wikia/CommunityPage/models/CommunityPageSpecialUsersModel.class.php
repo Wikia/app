@@ -52,7 +52,6 @@ class CommunityPageSpecialUsersModel {
 			wfMemcKey( self::TOP_CONTRIB_MCACHE_KEY, $limit, $weekly, $onlyAdmins ),
 			WikiaResponse::CACHE_STANDARD,
 			function () use ( $limit, $weekly, $onlyAdmins, $botIds ) {
-				global $wgExternalSharedDB, $wgDBcluster;
 				$db = wfGetDB( DB_SLAVE );
 
 				if ( $weekly ) {
@@ -63,20 +62,19 @@ class CommunityPageSpecialUsersModel {
 				}
 
 				$sqlData = ( new WikiaSQL() )
-					->SELECT( 'user_name, user_id, ug_group, count(rev_id) AS revision_count' )
+					->SELECT( 'rev_user_text, rev_user, count(rev_id) AS revision_count' )
 					->FROM ( 'revision FORCE INDEX (user_timestamp)' )
-					->LEFT_JOIN( $wgExternalSharedDB . '_' . $wgDBcluster . '.user' )->ON( '(rev_user <> 0) AND (user_id = rev_user)' )
 					->LEFT_JOIN( 'user_groups ON (user_id = ug_user)' )
-					->WHERE( 'user_id' )->IS_NOT_NULL()
-					->AND_( 'user_id' )->NOT_IN( $botIds )
+					->WHERE( 'rev_user' )->NOT_EQUAL_TO( 0 )
+					->AND_( 'rev_user' )->NOT_IN( $botIds )
 					->AND_( $dateFilter );
 
 				if ( $onlyAdmins ) {
 					$sqlData->AND_( 'ug_group' )->EQUAL_TO( 'sysop' );
 				}
 
-				$sqlData->GROUP_BY( 'user_name' )
-					->ORDER_BY( 'revision_count DESC, user_name' );
+				$sqlData->GROUP_BY( 'rev_user_text' )
+					->ORDER_BY( 'revision_count DESC, rev_user_text' );
 
 				if ( $limit ) {
 					$sqlData->LIMIT( $limit );
@@ -84,10 +82,10 @@ class CommunityPageSpecialUsersModel {
 
 				$result = $sqlData->runLoop( $db, function ( &$result, $row ) {
 					$result[] = [
-						'userId' => $row->user_id,
-						'userName' => $row->user_name,
+						'userId' => $row->rev_user,
+						'userName' => $row->rev_user_text,
 						'contributions' => $row->revision_count,
-						'isAdmin' => $this->isAdmin( $row->user_id, $this->getAdmins() ),
+						'isAdmin' => $this->isAdmin( $row->rev_user, $this->getAdmins() ),
 					];
 				} );
 
@@ -114,7 +112,7 @@ class CommunityPageSpecialUsersModel {
 					->WHERE( 'ug_group' )->IN( [ 'bot', 'bot-global' ] )
 					->GROUP_BY( 'ug_user' )
 					->runLoop( $db, function ( &$sqlData, $row ) {
-						$sqlData[] = $row->user_id;
+						$sqlData[] = $row->ug_user;
 					} );
 
 				return $sqlData;
