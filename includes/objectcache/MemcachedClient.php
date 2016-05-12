@@ -372,7 +372,7 @@ class MWMemcached {
 		} else {
 			$this->stats['delete'] = 1;
 		}
-		$cmd = "delete $key $time\r\n";
+		$cmd = "delete $key\r\n";
 		if( !$this->_safe_fwrite( $sock, $host, $cmd, strlen( $cmd ) ) ) {
 			$this->_dead_sock( $sock );
 			return false;

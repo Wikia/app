@@ -143,6 +143,7 @@ class MercuryApi {
 				],
 				'nielsen' => [
 					'enabled' => AnalyticsProviderNielsen::isEnabled(),
+					'apid' => AnalyticsProviderNielsen::getApid()
 				]
 			],
 			'wikiCategories' => WikiFactoryHub::getInstance()->getWikiCategoryNames( $wgCityId ),
