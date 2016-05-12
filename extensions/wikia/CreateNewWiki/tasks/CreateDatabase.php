@@ -14,6 +14,13 @@ class CreateDatabase implements Task {
 	}
 
 	public function prepare() {
+
+		// Set this flag to ensure that all select operations go against master
+		// Slave lag can cause random errors during wiki creation process
+		//TODO Do we really need it? Maybe it's enough if we pass appropriate DB_MASTER flags while connecting to DB
+		global $wgForceMasterDatabase;
+		$wgForceMasterDatabase = true;
+
 		$clusterDB = "wikicities_" . TaskContext::ACTIVE_CLUSTER;
 		$dbw = wfGetDB( DB_MASTER, array(), $clusterDB );
 		$this->taskContext->setClusterDB( $clusterDB );
@@ -25,11 +32,16 @@ class CreateDatabase implements Task {
 	}
 
 	public function check() {
-		if ( wfReadOnly() ) {
+		if ( wfReadOnly() || $this->isClusterReadOnly( $this->taskContext->getWikiDBW() ) ) {
 			return TaskResult::createForError( 'DB is read only' );
 		} else {
 			return TaskResult::createForSuccess();
 		}
+	}
+
+	private function isClusterReadOnly( $dbw ) {
+		// SUS-108: check read-only state of ACTIVE_CLUSTER before performing any DB-related actions
+		return $dbw->getLBInfo( 'readOnlyReason' ) !== false;
 	}
 
 	public function run() {
@@ -50,14 +62,12 @@ class CreateDatabase implements Task {
 	 * @param string	$dbname -- name of DB to check
 	 * @param string	$lang   -- language for wiki
 	 *
-	 * @todo when second cluster will come this function has to changed
-	 *
 	 * @return string: fixed name of DB
 	 */
 	private function prepareDatabaseName( $clusterDB, $dbName, $lang ) {
 		wfProfileIn( __METHOD__ );
 
-		$dbwf = WikiFactory::db( DB_SLAVE );
+		$dbwf = \WikiFactory::db( DB_SLAVE );
 		$dbr  = wfGetDB( DB_SLAVE, array(), $clusterDB );
 
 		if( $lang !== "en" ) {
@@ -66,41 +76,40 @@ class CreateDatabase implements Task {
 
 		$dbName = substr( str_replace( "-", "", $dbName ), 0 , 50 );
 
-		/**
-		 * check city_list
-		 */
-		$exists = 1;
-		$suffix = "";
-		while( $exists == 1 ) {
+		while( $this->doesDbExistInCityList( $dbwf, $dbName ) || $this->doesDbExistInCluster( $dbr,$dbName ) ) {
+			$suffix = rand( 1, 999 );
 			$dbName = sprintf("%s%s", $dbName, $suffix);
-			wfDebugLog( "createwiki", __METHOD__ . ": Checking if database {$dbName} already exists in city_list\n", true );
-			$row = $dbwf->selectRow(
-				array( "city_list" ),
-				array( "count(*) as count" ),
-				array( "city_dbname" => $dbName ),
-				__METHOD__
-			);
-			$exists = 0;
-			if( $row->count > 0 ) {
-				wfDebugLog( "createwiki", __METHOD__ . ": Database {$dbName} exists in city_list!\n", true );
-				$exists = 1;
-			}
-			else {
-				wfDebugLog( "createwiki", __METHOD__ . ": Checking if database {$dbName} already exists in database", true );
-				$sth = $dbr->query( sprintf( "show databases like '%s'", $dbName) );
-				if ( $dbr->numRows( $sth ) > 0 ) {
-					wfDebugLog( "createwiki", __METHOD__ . ": Database {$dbName} exists on cluster!", true );
-					$exists = 1;
-				}
-			}
-			# add suffix
-			if( $exists == 1 ) {
-				$suffix = rand( 1, 999 );
-			}
 		}
 		wfProfileOut( __METHOD__ );
 
 		return $dbName;
+	}
+
+	private function doesDbExistInCityList( $dbwf, $dbName ) {
+		$this->debug( __METHOD__ . ": Checking if database " . $dbName . " already exists in city_list" );
+		$row = $dbwf->selectRow(
+			array( "city_list" ),
+			array( "count(*) as count" ),
+			array( "city_dbname" => $dbName ),
+			__METHOD__
+		);
+		if( $row->count > 0 ) {
+			$this->debug( __METHOD__ . ": Database " . $dbName . " exists in city_list!" );
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	private function doesDbExistInCluster( $dbr, $dbName) {
+		$this->debug( __METHOD__ . ": Checking if database " . $dbName . " already exists in cluster" );
+		$sth = $dbr->query( sprintf( "show databases like '%s'", $dbName) );
+		if ( $dbr->numRows( $sth ) > 0 ) {
+			$this->debug( __METHOD__ . ": Database " . $dbName . " exists on cluster!" );
+			return true;
+		} else {
+			return false;
+		}
 	}
 }
 

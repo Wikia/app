@@ -12,7 +12,6 @@
  * @version 1.0
  */
 
-use Wikia\CreateNewWiki\Starters;
 use Wikia\CreateNewWiki\Tasks;
 use Wikia\CreateNewWiki\Tasks\TaskContext;
 
@@ -188,8 +187,9 @@ class CreateWiki {
 
 		// Set this flag to ensure that all select operations go against master
 		// Slave lag can cause random errors during wiki creation process
-		global $wgForceMasterDatabase;
-		$wgForceMasterDatabase = true;
+		//Moved to CreateDatabase
+		//global $wgForceMasterDatabase;
+		//$wgForceMasterDatabase = true;
 
 		wfProfileIn( __METHOD__ );
 
@@ -255,13 +255,13 @@ class CreateWiki {
 		*/
 
 		// check if database is creatable
-		// @todo move all database creation checkers to canCreateDatabase
-		try {
+		// Moved to PrepareDomain and CreateDatabase
+		/*try {
 			$this->canCreateDatabase();
 		} catch ( CreateWikiException $e ) {
 			wfProfileOut( __METHOD__ );
 			throw $e;
-		}
+		}*/
 
 		/* Moved to CreateDatabase
 		$this->mNewWiki->dbw->query( sprintf( "CREATE DATABASE `%s`", $this->mNewWiki->dbname ) );
@@ -819,14 +819,16 @@ class CreateWiki {
 	 * can create database?
 	 * @todo this code is probably duplication of other checkers
 	 */
-	private function canCreateDatabase() {
+	//private function canCreateDatabase() {
 		// SUS-108: check read-only state of ACTIVE_CLUSTER before performing any DB-related actions
-		$readOnlyReason = $this->mNewWiki->dbw->getLBInfo( 'readOnlyReason' );
-		if ( $readOnlyReason !== false ) {
-			throw new CreateWikiException( sprintf( '%s is in read-only mode: %s', self::ACTIVE_CLUSTER, $readOnlyReason ), self::ERROR_READONLY );
-		}
+		//Moved to CreateDatabase
+		//$readOnlyReason = $this->mNewWiki->dbw->getLBInfo( 'readOnlyReason' );
+		//if ( $readOnlyReason !== false ) {
+		//	throw new CreateWikiException( sprintf( '%s is in read-only mode: %s', self::ACTIVE_CLUSTER, $readOnlyReason ), self::ERROR_READONLY );
+		//}
 
 		// check local cluster
+		/* Duplicated check is part of CreateDatabase
 		$row = $this->mNewWiki->dbw->selectRow(
 			"INFORMATION_SCHEMA.SCHEMATA",
 			array( "SCHEMA_NAME as name" ),
@@ -851,9 +853,10 @@ class CreateWiki {
 		if( $row->count > 0 ) {
 			wfDebugLog( "createwiki", __METHOD__ . ": database {$this->mNewWiki->dbname} already used in city_list\n" );
 			throw new CreateWikiException( 'DB exists in city list (dbname)- ' . $this->mNewWiki->dbname, self::ERROR_DATABASE_ALREADY_EXISTS );
-		}
+		}*/
 
 		// check domain
+		/* PrepareDomain already checks if a domain exists
 		$row = $dbw->selectRow(
 			"city_list",
 			array("count(*) as count"),
@@ -864,8 +867,8 @@ class CreateWiki {
 		if ( $row->count > 0 ) {
 			wfDebugLog( "createwiki", __METHOD__ . ": domain {$this->mNewWiki->url} already used in city_list\n" );
 			throw new CreateWikiException( 'DB exists in city list (url) - ' . $this->mNewWiki->dbname, self::ERROR_DATABASE_ALREADY_EXISTS );
-		}
-	}
+		}*/
+	//}
 
 	/**
 	 * addToCityList
