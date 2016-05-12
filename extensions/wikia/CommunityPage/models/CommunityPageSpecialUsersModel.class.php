@@ -175,16 +175,6 @@ class CommunityPageSpecialUsersModel {
 	}
 
 	/**
-	 * Get a list of users in order of their edit count in the last n days or all time if null
-	 *
-	 * @param int|null $limit Total number of Admins to get or get all if null
-	 * @param int|null $days Count only contributions in the last n days or all if null
-	 */
-	public function getTopUsers( $limit = null, $days = null ) {
-
-	}
-
-	/**
 	 * Utility function used to filter out users that should not show up on the member's list
 	 * @param $user
 	 * @return bool
@@ -246,23 +236,21 @@ class CommunityPageSpecialUsersModel {
 		return $data;
 	}
 
-	private function getAllContributorsWithCurrentUser( $allContributorsData, $currentUserId ) {
+	private function addCurrentUserIfContributor( $allContributorsData, $currentUserId ) {
 		global $wgCityId;
 
 		// Get current user's stats
-		$checkUserCallback = function( $user ) { return true; };
 		$userInfo = $this->wikiService->getUserInfo(
 			$currentUserId,
 			$wgCityId,
-			AvatarService::AVATAR_SIZE_SMALL_PLUS,
-			$checkUserCallback
+			AvatarService::AVATAR_SIZE_SMALL_PLUS
 		);
 
-		if ($userInfo['lastRevision'] !== null) {
+		if ( $userInfo['lastRevision'] !== null ) {
 			// Remove from all users list if present
 			// Done manually to make sure current user data is never out of sync due to cache
-			foreach ($allContributorsData as $key => $item) {
-				if ( $item['userId'] === $currentUserId) {
+			foreach ( $allContributorsData as $key => $item ) {
+				if ( $item['userId'] === $currentUserId ) {
 					unset( $allContributorsData[$key] );
 					break;
 				}
@@ -292,14 +280,14 @@ class CommunityPageSpecialUsersModel {
 	 * Gets a list of all members of the community.
 	 * Any user who has made an edit in the last 2 years is a member
 	 *
-	 * @param null $currentUserId
+	 * @param int $currentUserId
 	 * @return Mixed|null
 	 */
-	public function getAllContributors( $currentUserId = null ) {
+	public function getAllContributors( $currentUserId = 0 ) {
 		$allContributorsData = WikiaDataAccess::cache(
 			wfMemcKey( self::ALL_MEMBERS_MCACHE_KEY ),
 			WikiaResponse::CACHE_SHORT,
-			function () use ( $currentUserId ) {
+			function () {
 				$db = wfGetDB( DB_SLAVE );
 
 				$userSqlData = ( new WikiaSQL() )
@@ -310,7 +298,7 @@ class CommunityPageSpecialUsersModel {
 					->GROUP_BY( 'rev_user' )
 					->ORDER_BY( 'rev_timestamp DESC' )
 					->LIMIT( self::ALL_CONTRIBUTORS_MODAL_LIMIT )
-					->runLoop( $db, function ( &$userSqlData, $row ) use ( $currentUserId ) {
+					->runLoop( $db, function ( &$userSqlData, $row ) {
 						$userId = (int) $row->rev_user;
 						$user = User::newFromId( $userId );
 
@@ -337,7 +325,7 @@ class CommunityPageSpecialUsersModel {
 			}
 		);
 
-		return $this->getAllContributorsWithCurrentUser( $allContributorsData, $currentUserId );
+		return $this->addCurrentUserIfContributor( $allContributorsData, $currentUserId );
 	}
 
 	/**
