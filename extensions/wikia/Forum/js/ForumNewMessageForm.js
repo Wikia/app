@@ -14,7 +14,7 @@
 		initElements: function () {
 			bucky.timer.start('initElement');
 			this.wrapper = $('#ForumNewMessage');
-			this.buttons = this.wrapper.find('.buttons');
+			this.buttons = $('#ForumNewMessage button');
 			this.message = this.wrapper.find('.message');
 			this.messageNoTitle = this.message.find('.no-title-warning');
 			this.messageTitle = this.message.find('.title');
@@ -50,7 +50,8 @@
 			}
 		},
 		doPostNewMessage: function (title) {
-			bucky.timer.start('doPostNewMessage');
+			//disable buttons for user to not send multiply posts
+			this.buttons.attr('disabled', true);
 			var boardTitle = this.boardList.find('option:selected').val();
 			if (!this.boardList.exists()) {
 				Forum.NewMessageForm.superclass.doPostNewMessage.call(this, title);
@@ -61,7 +62,8 @@
 				bucky.timer.stop('doPostNewMessage');
 			} else {
 				this.boardListError.fadeIn('slow');
-			}
+				this.buttons.removeAttr('disabled');
+			}	
 		}
 	});
 

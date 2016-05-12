@@ -37,10 +37,10 @@ if (array_key_exists('p', $opts)) {
 }
 switch($wgWikiaDatacenter) {
 	case WIKIA_DC_POZ:
-		$wgDBdevboxServer = 'dev-db-p1';
+		$wgDBdevboxServer = 'master.db-dev-db.service.poz-dev.consul';
 		break;
 	case WIKIA_DC_SJC:
-		$wgDBdevboxServer = 'dev-db-s1';
+		$wgDBdevboxServer = 'master.db-dev-db.service.sjc-dev.consul';
 		break;
 	default:
 		die("unknown data center: {$opts['p']}\n$USAGE");
@@ -208,12 +208,18 @@ if ( array_key_exists('h', $opts) || array_key_exists ('f', $opts) ) {
 	$prod->csv("SELECT * from city_domains where city_id = $city_id", $file);
 	$dev->import($file);
 
-	# commented out due to PLATFORM-1672 - the REPLACE was removing city_variables entries on other wikis
-	/**
+	$fileprod = "/tmp/city_variables_pool-prod.csv";
+	$prod->csv("SELECT * from city_variables_pool where cv_id in (select cv_variable_id from city_variables where cv_city_id = $city_id)", $fileprod);
+
+	$filedev = "/tmp/city_variables_pool-dev.csv";
+	$dev->csv("SELECT * from city_variables_pool", $filedev);
+
 	$file = "/tmp/city_variables_pool.csv";
-	$prod->csv("SELECT * from city_variables_pool where cv_id in (select cv_variable_id from city_variables where cv_city_id = $city_id)", $file);
+	(new variablediff())->diff($fileprod, $filedev, $file);
 	$dev->import($file);
-	**/
+	unlink($fileprod);
+	unlink($filedev);
+	unlink($file);
 
 	$file = "/tmp/city_variables.csv";
 	$prod->csv("SELECT * from city_variables where cv_city_id = $city_id", $file);
@@ -258,6 +264,7 @@ if ( array_key_exists('h', $opts) || array_key_exists ('i', $opts) ) {
 
 // Simple mysql commandline wrapper helper
 class mysqlwrapper {
+	public $response;
 	function __construct($dbuser, $dbpass, $dbserver) {
 		$this->creds = "-u {$dbuser} -p{$dbpass} -h {$dbserver}";
 	}
@@ -283,5 +290,44 @@ class mysqlwrapper {
 		if (is_executable("/usr/bin/bar"))
 			$source = "cat $fullpath | bar | zcat";
 		$this->response = `$source | mysql {$this->creds} $dbname 2>&1`;
+
+		$this->response = trim(str_replace('Warning: Using a password on the command line interface can be insecure.', '', $this->response));
+
 	}
+}
+
+
+class variablediff {
+	function diff( $prod_csv, $dev_csv, $out_csv ) {
+		$prodvars = $this->loadcsv($prod_csv);
+		$devvars = $this->loadcsv($dev_csv);
+
+		$diff = [];
+		foreach ($prodvars as $k => $prodvar){
+			// ...[1] = var name
+			if ( !isset($devvars[$k]) || $devvars[$k][1] != $prodvar[1] ) {
+				$diff[] = $prodvar;
+			}
+		}
+
+		$this->savecsv($out_csv, $diff);
+	}
+	private function loadcsv( $filename ) {
+		$fp = fopen($filename,'rb');
+		$out = [];
+		while ($row = fgetcsv($fp,0,',','"')) {
+			$out[$row[0]] = $row;
+		}
+		fclose($fp);
+		return $out;
+	}
+
+	private function savecsv( $filename, $data ) {
+		$fp = fopen($filename,'wb');
+		foreach ($data as $row) {
+			fputcsv($fp, $row, ',', '"');
+		}
+		fclose($fp);
+	}
+
 }

@@ -1,11 +1,15 @@
 @import 'skins/shared/mixins/transform';
+@import 'skins/shared/color';
+
+$avatar-number-background: #666;
+$avatar-size: 30px;
 
 .avatar-container {
 	border: 2px solid $color-avatar-border;
 	border-radius: 50%;
-	height: 26px;
+	height: $avatar-size;
 	overflow: hidden;
-	width: 26px;
+	width: $avatar-size;
 
 	img {
 		border: 0;
@@ -16,10 +20,12 @@
 		background-position: center;
 		background-repeat: no-repeat;
 	}
-}
 
-.ContributorsModule {
-	.avatar {
-		@include transform-translate(-2px, -2px);
+	&.avatar-more {
+		background: $avatar-number-background;
+		color: $color-white;
+		font-size: 10px;
+		line-height: $avatar-size;
+		text-align: center;
 	}
 }

@@ -20,7 +20,7 @@ class XmlDocument
 	var $items = Array();
 	var $error = "";
 
-	function XmlDocument( $items = Array() )
+	function __construct( $items = Array() )
 	{
 			$this->items = $items;
 	}

@@ -542,6 +542,7 @@ abstract class EmailController extends \WikiaController {
 	public function assertCanEmail() {
 		$this->assertUserHasEmail();
 		$this->assertUserWantsEmail();
+		$this->assertEmailIsConfirmed();
 		$this->assertUserNotBlocked();
 	}
 
@@ -592,6 +593,17 @@ abstract class EmailController extends \WikiaController {
 	public function assertUserWantsEmail() {
 		if ( (bool)$this->targetUser->getGlobalPreference( 'unsubscribed' ) ) {
 			throw new Check( 'User does not wish to receive email' );
+		}
+	}
+
+	/**
+	 * This checks if the user has confirmed their email address
+	 *
+	 * @throws \Email\Check
+	 */
+	public function assertEmailIsConfirmed() {
+		if ( !$this->targetUser->isEmailConfirmed() ) {
+			throw new Check( 'User does not have a confirmed email address' );
 		}
 	}
 
