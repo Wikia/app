@@ -327,15 +327,15 @@ class WikiService extends WikiaModel {
 	 * @param integer $userId
 	 * @param integer $wikiId
 	 * @param integer $avatarSize
-	 * @param callable $checkUserCallback
+	 * @param callable $checkUserCallback (optional)
 	 * @return array userInfo
 	 *
 	 */
-	public function getUserInfo($userId, $wikiId, $avatarSize, $checkUserCallback) {
+	public function getUserInfo($userId, $wikiId, $avatarSize, $checkUserCallback = null) {
 		$userInfo = array();
 		$user = User::newFromId($userId);
 
-		if ($user instanceof User && $checkUserCallback($user)) {
+		if ( $user instanceof User && ( !is_callable( $checkUserCallback ) || $checkUserCallback( $user ) ) ) {
 			$username = $user->getName();
 
 			$userInfo['avatarUrl'] = AvatarService::getAvatarUrl($user, $avatarSize);
@@ -427,9 +427,8 @@ class WikiService extends WikiaModel {
 				$admins = array();
 				try {
 					$admins = $this->getWikiAdminIds($wikiId, false, true, $limit, false);
-					$checkUserCallback = function ($user) { return true; };
 					foreach ($admins as &$admin) {
-						$userInfo = $this->getUserInfo($admin, $wikiId, $avatarSize, $checkUserCallback);
+						$userInfo = $this->getUserInfo($admin, $wikiId, $avatarSize);
 						$admin = $userInfo;
 					}
 				} catch (Exception $e) {
