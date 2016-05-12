@@ -1,9 +1,9 @@
 @import 'skins/shared/mixins/clearfix';
 
-.insights-module {
+.community-page-insights-module {
 	margin: 0 42px 34px 114px;
 
-	.insights-module-header {
+	.community-page-insights-module-header {
 		float: left;
 		font-size: 24px;
 		font-weight: bold;
@@ -11,35 +11,35 @@
 		margin: 12px 0;
 	}
 
-	.insights-module-full-list-link {
+	.community-page-insights-module-full-list-link {
 		float: right;
 	}
 
-	.insights-module-description {
+	.community-page-insights-module-description {
 		clear: both;
 	}
 
-	.insights-module-list {
+	.community-page-insights-module-list {
 		list-style: none;
 		margin: 0;
 	}
 
-	.insights-module-list-item {
+	.community-page-insights-module-list-item {
 		border-bottom: 1px solid $color-community-page-light-gray;
 		font-size: 14px;
 		padding: 20px;
 	}
 
-	.insights-module-list-item:first-child {
+	.community-page-insights-module-list-item:first-child {
 		border-top: 1px solid $color-community-page-light-gray;
 	}
 
-	.insights-module-inline-data {
+	.community-page-insights-module-inline-data {
 		display: inline-block;
 		vertical-align: middle;
 	}
 
-	.insights-module-edit-icon {
+	.community-page-insights-module-edit-icon {
 		background: $color-text url('/extensions/wikia/CommunityPage/images/edit-pen.svg') 50% 45%/45% 45% no-repeat;
 		border-radius: 50%;
 		height: 34px;
@@ -47,12 +47,12 @@
 		width: 34px;
 	}
 
-	.insights-module-article-data {
+	.community-page-insights-module-article-data {
 		color: $color-module-subtle-text;
 		font-size: 12px;
 	}
 
-	.insights-module-edit-link {
+	.community-page-insights-module-edit-link {
 		float: right;
 	}
 }

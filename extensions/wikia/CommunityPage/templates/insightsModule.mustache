@@ -1,16 +1,16 @@
-<section class="insights-module">
-	<h3 class="insights-module-header">{{title}}</h3>
-	<a class="insights-module-full-list-link" href="{{fulllistlink}}">{{insightsModules.messages.fulllist}} &rarr;</a>
-	<p class="insights-module-description">{{description}}</p>
-	<ul class="insights-module-list">
+<section class="community-page-insights-module">
+	<h3 class="community-page-insights-module-header">{{title}}</h3>
+	<a class="community-page-insights-module-full-list-link" href="{{fulllistlink}}">{{insightsModules.messages.fulllist}} &rarr;</a>
+	<p class="community-page-insights-module-description">{{description}}</p>
+	<ul class="community-page-insights-module-list">
 		{{#pages}}
-			<li class="insights-module-list-item">
-				<a class="insights-module-edit-icon insights-module-inline-data" href="{{editlink}}"></a>
-				<span class="insights-module-inline-data">
+			<li class="community-page-insights-module-list-item">
+				<a class="community-page-insights-module-edit-icon community-page-insights-module-inline-data" href="{{editlink}}"></a>
+				<span class="community-page-insights-module-inline-data">
 					<a href="{{link.url}}">{{link.text}}</a>
-					<div class="insights-module-article-data">{{{metadataDetails}}} {{#pageviews}}&middot; {{pageviews}}{{/pageviews}}</div>
+					<div class="community-page-insights-module-article-data">{{{metadataDetails}}} {{#pageviews}}&middot; {{pageviews}}{{/pageviews}}</div>
 				</span>
-				<a class="insights-module-edit-link insights-module-inline-data" href="{{editlink}}">{{insightsModules.messages.edittext}}</a>
+				<a class="community-page-insights-module-edit-link community-page-insights-module-inline-data" href="{{editlink}}">{{insightsModules.messages.edittext}}</a>
 			</li>
 		{{/pages}}
 	</ul>
