@@ -1,0 +1,63 @@
+<div id="CommunityPageHeader" class="community-page-header">
+	<div class="community-page-header-content">
+		<h1>
+			{{headerWelcomeMsg}}
+		</h1>
+		<p>
+			<a id="CommunityPageInviteFriends" href="#" class="signup-button">{{inviteFriendsText}}</a>
+		</p>
+	</div>
+</div>
+
+{{#showMonthlySummary}}
+	<div id="CommunityPageMonthlySummary" class="community-page-monthly-summary">
+		<div class="heading text-border">
+			<span>
+				{{thisMonthText}}
+			</span>
+		</div>
+		<div class="padding"></div>
+		<div class="stats">
+			<div class="stat-container">
+				<div class="stat-number">
+					{{statPagesNumber}}
+				</div>
+				<div class="stat-name">
+					{{statPagesTitle}}
+				</div>
+			</div>
+			<div class="stat-container">
+				<div class="stat-number">
+					{{statPageViewsNumber}}
+				</div>
+				<div class="stat-name">
+					{{statPageViewsTitle}}
+				</div>
+			</div>
+			<div class="stat-container">
+				<div class="stat-number">
+					{{statEditsNumber}}
+				</div>
+				<div class="stat-name">
+					{{statEditsTitle}}
+				</div>
+			</div>
+			<div class="stat-container">
+				<div class="stat-number">
+					{{statEditorsNumber}}
+				</div>
+				<div class="stat-name">
+					{{statEditorsTitle}}
+				</div>
+			</div>
+		</div>
+	</div>
+{{/showMonthlySummary}}
+
+{{#showAdminsSummary}}
+	<div id="CommunityPageMonthlySummary" class="community-page-monthly-summary">
+		<div>
+			Placeholder for admins callout
+		</div>
+	</div>
+{{/showAdminsSummary}}
