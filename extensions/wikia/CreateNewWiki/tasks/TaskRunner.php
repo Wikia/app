@@ -28,6 +28,8 @@ class TaskRunner {
 		$this->tasks[] = new ImportStarterData( $taskContext );
 		$this->tasks[] = new ConfigureUsers( $taskContext );
 		$this->tasks[] = new ConfigureCategories();
+		$this->tasks[] = new SetCustomSettings( $taskContext );
+		$this->tasks[] = new SetTags( $taskContext );
 	}
 
 	protected function getLoggerContext() {
