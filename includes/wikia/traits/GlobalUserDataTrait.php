@@ -16,7 +16,7 @@ trait GlobalUserDataTrait {
 	 * @return array An array of IDs
 	 */
 	public function getWikiasWithUserContributions() {
-		$db = wfGetDB( DB_SLAVE, [], F::app()->wg->DatamartDB );
+		$db = wfGetDB( DB_SLAVE, [], F::app()->wg->wgDWStatsDB );
 
 		$wikis = ( new WikiaSQL() )->skipIf( empty( F::app()->wg->StatsDBEnabled ) )
 			->SELECT( 'wiki_id' )

@@ -1,11 +1,13 @@
-#WikiaArticle {
-  display:none;
-}
+#WikiaPage {
+	#WikiaArticle {
+		display: none;
+	}
 
-#WikiaPageHeader:after {
-  content: 'Ad blocker interference detected!';
-  display: block;
-  font-size: 60px;
-  padding: 50px;
-  text-align: center;
+	#WikiaPageHeader:after {
+		content: 'Ad blocker interference detected!';
+		display: block;
+		font-size: 60px;
+		padding: 50px;
+		text-align: center;
+	}
 }

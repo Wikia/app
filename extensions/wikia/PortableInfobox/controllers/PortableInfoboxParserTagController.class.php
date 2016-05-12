@@ -10,12 +10,12 @@ class PortableInfoboxParserTagController extends WikiaController {
 	const INFOBOX_LAYOUT_PREFIX = 'pi-layout-';
 
 	private $markerNumber = 0;
-	private $markers = [ ];
 	private $supportedLayouts = [
 		'default',
 		'stacked'
 	];
 
+	protected $markers = [ ];
 	protected static $instance;
 
 	/**
@@ -123,6 +123,24 @@ class PortableInfoboxParserTagController extends WikiaController {
 		$this->markers[ $marker ] = $renderedValue;
 
 		return [ $marker, 'markerType' => 'nowiki' ];
+	}
+
+	/**
+	 * @desc Moves the first marker to the top of article content
+	 *
+	 * @param String $text
+	 */
+	public function moveFirstMarkerToTop( &$text ) {
+		if ( !empty( $this->markers ) ) {
+			$firstMarker = array_keys( $this->markers )[0];
+
+			// Skip if the first marker is already at the top
+			if ( strpos( $text, $firstMarker ) !== 0 ) {
+				// Remove first marker and the following whitespace
+				$text = preg_replace( '/' . $firstMarker . '\s*/', '', $text, 1 );
+				$text = $firstMarker . ' ' . $text;
+			}
+		}
 	}
 
 	public function replaceMarkers( $text ) {

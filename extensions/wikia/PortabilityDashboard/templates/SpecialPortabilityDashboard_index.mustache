@@ -14,7 +14,8 @@
 		</li>
 	{{/langList}}
 </ul>
-<p>{{dashboardLegend}}</p>
+<p>{{dashboardLegend}}<br/>
+    {{refreshFreqInfo}}</p>
 <table class="wikitable portability-dashboard-table sortable">
 	<thead>
 		{{#dashboardLabels}}
@@ -30,8 +31,8 @@
 					</a>
 				</td>
 				<td>{{wikiLang}}</td>
-				<td>{{portability}}</td>
-				<td>{{infoboxPortability}}</td>
+				<td>{{portability}} %</td>
+				<td>{{infoboxPortability}} %</td>
 				<td>{{traffic}}</td>
 				<td>
 					<a href="{{wikiUrl}}{{typelessTemplatesInsightsPath}}" title="{{templatesWithoutTypeUrlTitle}}">

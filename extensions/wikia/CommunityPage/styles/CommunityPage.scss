@@ -1,56 +1,20 @@
-@import 'skins/shared/color';
-@import 'skins/shared/mixins/transform';
-
-@import 'components/variables';
-@import 'components/base';
+// Components
 @import 'components/module';
 @import 'components/textborder';
 @import 'components/header';
-@import 'components/monthly-summary';
 @import 'components/recent-activity-module';
 @import 'components/banner-message';
 @import 'components/avatar';
 @import 'components/list';
 @import 'components/contributors-module';
 @import 'components/modal';
+@import 'components/recently-joined';
 
-// TODO: handle dark themes
+// Variables for general Community Page styles
+@import 'skins/shared/color';
+
+// General Community Page styles
 // TODO: copy/pasted code from here down
-
-.community-page-admin-message {
-	align-items: center;
-	background-color: $color-community-page-gray;
-	color: $color-text-dark;
-	display: flex;
-	height: 250px;
-	justify-content: center;
-	text-align: center;
-
-	.admin-profile {
-		display: inline-block;
-		margin: 0 20px;
-	}
-
-	.profile-links {
-		.user-page {
-			display: block;
-			font-weight: bold;
-		}
-
-		.group-name {
-			color: $color-community-page-admin-text;
-			display: block;
-			text-transform: uppercase;
-		}
-	}
-
-	.admin-message {
-		font-weight: bold;
-		margin: 10px auto;
-		width: 70%;
-	}
-}
-
 .community-page-content {
 	margin: 20px auto;
 	width: 850px;
@@ -67,17 +31,12 @@
 }
 
 .community-page-top-contributors {
-	background: $color-community-page-white;
-	border: 1px solid $color-community-page-dark-gray;
+	border: 1px solid $color-page-border;
 	float: left;
 	padding: 20px 15px 15px;
 	position: relative;
 	width: 270px;
 	word-wrap: break-word;
-
-	.more-contributors {
-		color: $color-community-page-admin-text;
-	}
 
 	h2 {
 		border: 0;
@@ -93,7 +52,7 @@
 		margin: 10px 0;
 	}
 
-	li {
+	.community-page-contributor {
 		font-size: 12px;
 		padding: 6px 3px 6px 15px;
 		position: relative;
@@ -153,43 +112,6 @@
 	}
 }
 
-.WikiaPage {
-	padding: 0;
-}
-
-.WikiaMainContent {
-	float: none;
-}
-
 .WikiaArticle .community-page-top-contributors h2 {
 	margin-top: 0;
 }
-
-/* Temp Hacks for dark wikias until design is ready */
-@if ($is-dark-wiki) {
-	body {
-		color: $color-text-dark;
-	}
-
-	.WikiaPage .WikiaPageBackground {
-		background-color: $color-page-opposite;
-	}
-
-	.community-page-admin-message a,
-	.community-page-content a,
-	.task-page-content a {
-		color: $color-links-default;
-	}
-
-	.global-footer ul li {
-		a {
-			color: $color-links-default;
-		}
-	}
-
-	.community-page-admin-message .avatar,
-	.community-page-content .avatar {
-		border: 1px solid $color-page-opposite;
-	}
-}
-
