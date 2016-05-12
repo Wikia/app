@@ -26,16 +26,20 @@ define('ext.wikia.adEngine.slot.revcontentSlots', [
 		log('init', 'Init Revcontent slots', logGroup);
 
 		recoveryHelper.addOnBlockingCallback(function () {
-			var wikiaRail = doc.getElementById('WikiaRail'),
-				wikiaMainContent = doc.getElementById('WikiaMainContent');
+			var wikiaArticleFooter = doc.getElementById('WikiaArticleFooter'),
+				wikiaMainContent = doc.getElementById('WikiaMainContent'),
+				wikiaRail = doc.getElementById('WikiaRail');
 
 			if (wikiaMainContent) {
 				wikiaMainContent.parentNode.insertBefore(createElem('REVCONTENT_ABOVE_ARTICLE'), wikiaMainContent);
-				wikiaMainContent.appendChild(createElem('REVCONTENT_BELOW_ARTICLE'));
 			}
 
 			if (wikiaRail) {
 				wikiaRail.insertBefore(createElem('REVCONTENT_RIGHT_RAIL'), wikiaRail.firstChild);
+			}
+
+			if (wikiaArticleFooter) {
+				wikiaArticleFooter.insertBefore(createElem('REVCONTENT_BELOW_ARTICLE'), wikiaArticleFooter.firstChild);
 			}
 
 			slots.forEach(win.adslots2.push);
