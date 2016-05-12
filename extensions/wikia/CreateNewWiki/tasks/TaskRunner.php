@@ -31,6 +31,7 @@ class TaskRunner {
 		$this->tasks[] = new ConfigureStats();
 		$this->tasks[] = new ConfigureCategories();
 		$this->tasks[] = new SetCustomSettings( $taskContext );
+		$this->tasks[] = new SetTags( $taskContext );
 	}
 
 	/**

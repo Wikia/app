@@ -314,11 +314,11 @@ class CreateWiki {
 		//wfDebugLog( "createwiki", __METHOD__ . ": Populating city_variables\n", true );
 		//$this->setWFVariables();
 
-		// @TODO We commit here both WikiFactory and WikiCities setup. Where we should execute commit?
-		// Maybe we should commit twice?
 		$tmpSharedDB = $wgSharedDB;
 		$wgSharedDB = $this->mNewWiki->dbname;
 
+		// @TODO We commit here both WikiFactory and WikiCities setup. Where we should execute commit?
+		// Maybe we should commit twice?
 		$this->mDBw->commit( __METHOD__ ); // commit shared DB changes
 
 		/**
@@ -396,16 +396,17 @@ class CreateWiki {
 //		$this->addCustomSettings( $this->mNewWiki->language, $langCreationVar, "language" );
 //		wfDebugLog( "createwiki", __METHOD__ . ": Custom settings added for wiki_type: {$wiki_type} and language: {$this->mNewWiki->language} \n", true );
 
-		/**
-		 * set tags per language and per hub
-		 */
-		$tags = new WikiFactoryTags( $this->mNewWiki->city_id );
-		if ( $this->mNewWiki->language !== 'en') {
-			$langTag = Locale::getPrimaryLanguage( $this->mNewWiki->language );
-			if ( !empty($langTag) ) {
-				$tags->addTagsByName( $langTag );
-			}
-		}
+// MOVED TO SetTags Task
+//		/**
+//		 * set tags per language and per hub
+//		 */
+//		$tags = new WikiFactoryTags( $this->mNewWiki->city_id );
+//		if ( $this->mNewWiki->language !== 'en') {
+//			$langTag = Locale::getPrimaryLanguage( $this->mNewWiki->language );
+//			if ( !empty($langTag) ) {
+//				$tags->addTagsByName( $langTag );
+//			}
+//		}
 
 		/**
 		 * move main page -> this code exists in CreateWikiLocalJob - so it is not needed anymore
