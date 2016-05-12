@@ -54,7 +54,7 @@ define('ext.wikia.recirculation.helpers.contentLinks', [
 				count: 3,
 				extra: 0
 			},
-			options = $.extend(defaults, config);
+			options = $.extend({}, defaults, config);
 
 		function loadData() {
 			var deferred = $.Deferred(),
