@@ -19,7 +19,7 @@ class CreateWiki {
 
 	use \Wikia\Logger\Loggable;
 
-	private $mName, $mDefSitename, $mSitenames, $mDomain, $mDomains, $mDefSubdomain,
+	private $taskContext, $mName, $mDefSitename, $mSitenames, $mDomain, $mDomains, $mDefSubdomain,
 		$mLanguage, $mVertical, $mCategories, $mIP,
 		$mPHPbin, $mFounder,
 		$mLangSubdomain,
@@ -59,12 +59,12 @@ class CreateWiki {
 	const CREATEWIKI_LOGO      = "http://images.wikia.com/central/images/2/22/Wiki_Logo_Template.png";
 	const DEFAULT_STAFF        = "Wikia";
 	const DEFAULT_USER         = 'Default';
-	const DEFAULT_DOMAIN       = "wikia.com";
+	//const DEFAULT_DOMAIN       = "wikia.com";
 	const ACTIVE_CLUSTER       = "c7";
 	const DEFAULT_SLOT         = "slot1";
-	const DEFAULT_NAME         = "Wiki";
+	//const DEFAULT_NAME         = "Wiki";
 	const DEFAULT_WIKI_TYPE    = "";
-	const LOCK_DOMAIN_TIMEOUT  = 30;
+	//const LOCK_DOMAIN_TIMEOUT  = 30;
 
 	/**
 	 * constructor
@@ -81,11 +81,12 @@ class CreateWiki {
 		// wiki containter
 		$this->mNewWiki = new stdClass();
 
-		$this->mDomain = $domain;
+		$taskContext = new TaskContext( $name, $domain, $language, $vertical, $categories );
+		/*$this->mDomain = $domain;
 		$this->mName = $name;
 		$this->mLanguage = $language;
 		$this->mVertical = $vertical;
-		$this->mCategories = $categories;
+		$this->mCategories = $categories;*/
 		$this->mIP = $IP;
 
 		// founder of wiki
@@ -178,7 +179,7 @@ class CreateWiki {
 
 		$then = microtime( true );
 
-		$taskRunner = new Wikia\CreateNewWiki\Tasks\TaskRunner( $this->createTaskContext() );
+		$taskRunner = new Wikia\CreateNewWiki\Tasks\TaskRunner( $this->taskContext );
 
 		$taskRunner->prepare();
 
@@ -204,27 +205,30 @@ class CreateWiki {
 		}
 
 		// check executables
-		$status = $this->checkExecutables();
+		//Moved to ImportStarterData
+		/*$status = $this->checkExecutables();
 		if( $status != 0 ) {
 			wfProfileOut( __METHOD__ );
 			throw new CreateWikiException('checkExecutables() failed', $status);
-		}
+		}*/
 
 		// check domains
+		/* Moved to PrepareDomain
 		$status = $this->checkDomain();
 		if( $status != 0 ) {
 			wfProfileOut( __METHOD__ );
 			throw new CreateWikiException('Check domain failed', $status);
-		}
+		}*/
 
 		// prepare all values needed for creating wiki
 		$this->prepareValues();
 
 		// prevent domain to be registered more than once
+		/*Moved to PrepareDomain
 		if ( !self::lockDomain($this->mDomain) ) {
 			wfProfileOut( __METHOD__ );
 			throw new CreateWikiException('Domain name taken', self::ERROR_DOMAIN_NAME_TAKEN);
-		}
+		}*/
 
 		// start counting time
 		$this->mCurrTime = wfTime();
@@ -449,7 +453,8 @@ class CreateWiki {
 	 *
 	 * @return integer status of check, 0 for success, non 0 otherwise
 	 */
-	private function checkExecutables( ) {
+	//Moved to ImportStarterData
+	/*private function checkExecutables( ) {
 		// php-cli is required for spawning PHP maintenance scripts
 		$this->mPHPbin = "/usr/bin/php";
 		if( !file_exists( $this->mPHPbin ) && !is_executable( $this->mPHPbin ) ) {
@@ -457,11 +462,12 @@ class CreateWiki {
 			return self::ERROR_BAD_EXECUTABLE_PATH;
 		}
 		return 0;
-	}
+	}*/
 
 	/**
 	 * check if domain is not taken or is creatable
 	 */
+	/* duplicate of CreateWikiChecks::checkDomainIsCorrect
 	private function checkDomain() {
 
 		global $wgUser;
@@ -503,16 +509,7 @@ class CreateWiki {
 		wfProfileOut(__METHOD__);
 
 		return $status;
-	}
-
-	private function createTaskContext() {
-		$wikiName = preg_replace( "/(\-)+$/", "", $this->mDomain );
-		$wikiName = preg_replace( "/^(\-)+/", "", $wikiName );
-		$wikiName = strtolower( trim( $wikiName ) );
-
-
-		return new TaskContext( $this->mLanguage, $wikiName );
-	}
+	}*/
 
 	/**
 	 * prepare default values
@@ -527,27 +524,26 @@ class CreateWiki {
 	 * @return StdClass
 	 */
 	private function prepareValues() {
-		global $wgContLang;
+		//global $wgContLang;
 
 		wfProfileIn( __METHOD__ );
 
-		$this->fixSubdomains();
+		//$this->fixSubdomains();
 
 		// sitename
-		$fixedTitle = trim( $this->mName );
-		$fixedTitle = preg_replace("/\s+/", " ", $fixedTitle );
-		$fixedTitle = preg_replace("/ (w|W)iki$/", "", $fixedTitle );
-		$fixedTitle = $wgContLang->ucfirst( $fixedTitle );
-		$siteTitle = wfMessage('autocreatewiki-title-template', $fixedTitle);
+		//$fixedTitle = trim( $this->mName );
+		//$fixedTitle = preg_replace("/\s+/", " ", $fixedTitle );
+		//$fixedTitle = preg_replace("/ (w|W)iki$/", "", $fixedTitle );
+		//$fixedTitle = $wgContLang->ucfirst( $fixedTitle );
+		//$siteTitle = wfMessage('autocreatewiki-title-template', $fixedTitle);
 
-		//@TODO this should be set in TaskContext
-		$this->mNewWiki->sitename = $siteTitle->inLanguage($this->mLanguage)->text();
+		//$this->mNewWiki->sitename = $siteTitle->inLanguage($this->mLanguage)->text();
 
 		// domain part
 		//@TODO domain should be set only once
-		$this->mDomain = preg_replace( "/(\-)+$/", "", $this->mDomain );
-		$this->mDomain = preg_replace( "/^(\-)+/", "", $this->mDomain );
-		$this->mNewWiki->domain = strtolower( trim( $this->mDomain ) );
+		//$this->mDomain = preg_replace( "/(\-)+$/", "", $this->mDomain );
+		//$this->mDomain = preg_replace( "/^(\-)+/", "", $this->mDomain );
+		//$this->mNewWiki->domain = strtolower( trim( $this->mDomain ) );
 
 		$this->mNewWiki->vertical = $this->mVertical;
 
@@ -563,14 +559,14 @@ class CreateWiki {
 		$this->mNewWiki->categories = $this->mCategories;
 
 		// name
-		$this->mNewWiki->name = strtolower( trim( $this->mDomain ) );
+		//$this->mNewWiki->name = strtolower( trim( $this->mDomain ) );
 
 		// umbrella
-		$this->mNewWiki->umbrella = $this->mNewWiki->name;
+		//$this->mNewWiki->umbrella = $this->mNewWiki->name;
 
-		$this->mNewWiki->language  = $this->mLanguage;
-		$this->mNewWiki->subdomain = $this->mNewWiki->name;
-		$this->mNewWiki->redirect  = $this->mNewWiki->name;
+		//$this->mNewWiki->language  = $this->mLanguage;
+		//$this->mNewWiki->subdomain = $this->mNewWiki->name;
+		//$this->mNewWiki->redirect  = $this->mNewWiki->name;
 
 		$this->mNewWiki->path = self::DEFAULT_SLOT;
 
@@ -578,22 +574,22 @@ class CreateWiki {
 //		$this->mNewWiki->images_url = $this->prepareDirValue( $this->mNewWiki->name, $this->mNewWiki->language );
 //		$this->mNewWiki->images_dir = sprintf("%s/%s", strtolower( substr( $this->mNewWiki->name, 0, 1 ) ), $this->mNewWiki->images_url );
 
-		if ( isset( $this->mNewWiki->language ) && $this->mNewWiki->language !== "en" ) {
-			if ( $this->mLangSubdomain ) {
-				$this->mNewWiki->subdomain  = strtolower( $this->mNewWiki->language ) . "." . $this->mNewWiki->name;
-				$this->mNewWiki->redirect  = strtolower( $this->mNewWiki->language ) . "." . ucfirst( $this->mNewWiki->name );
-			}
+		//if ( isset( $this->mNewWiki->language ) && $this->mNewWiki->language !== "en" ) {
+		//	if ( $this->mLangSubdomain ) {
+				//$this->mNewWiki->subdomain  = strtolower( $this->mNewWiki->language ) . "." . $this->mNewWiki->name;
+				//$this->mNewWiki->redirect  = strtolower( $this->mNewWiki->language ) . "." . ucfirst( $this->mNewWiki->name );
+		//	}
 // MOVED TO CreateWikiFactory task
 //			$this->mNewWiki->images_url .= "/" . strtolower( $this->mNewWiki->language );
 //			$this->mNewWiki->images_dir .= "/" . strtolower( $this->mNewWiki->language );
-		}
+		//}
 
 // MOVED TO CreateWikiFactory task
 //		$this->mNewWiki->images_dir = self::IMGROOT  . $this->mNewWiki->images_dir . "/images";
 //		$this->mNewWiki->images_url = self::IMAGEURL . $this->mNewWiki->images_url . "/images";
-		$this->mNewWiki->domain = sprintf("%s.%s", $this->mNewWiki->subdomain, $this->mDefSubdomain);
-		$this->mNewWiki->url = sprintf( "http://%s.%s/", $this->mNewWiki->subdomain, $this->mDefSubdomain );
-		$this->mNewWiki->dbname = $this->prepareDatabaseName( $this->mNewWiki->name, $this->mLanguage );
+		//$this->mNewWiki->domain = sprintf("%s.%s", $this->mNewWiki->subdomain, $this->mDefSubdomain);
+		//$this->mNewWiki->url = sprintf( "http://%s.%s/", $this->mNewWiki->subdomain, $this->mDefSubdomain );
+		//$this->mNewWiki->dbname = $this->prepareDatabaseName( $this->mNewWiki->name, $this->mLanguage );
 		$this->mNewWiki->founderName = $this->mFounder->getName();
 		$this->mNewWiki->founderEmail = $this->mFounder->getEmail();
 		$this->mNewWiki->founderId = $this->mFounder->getId();
@@ -611,13 +607,14 @@ class CreateWiki {
 	 * @author Piotr Molski (moli)
 	 * @author Krzysztof Krzyżaniak (eloy)
 	 */
+	/* Moved to PrepareDomain
 	private function fixSubdomains() {
 		$this->mDefSubdomain = self::DEFAULT_DOMAIN;
 		$this->mDefSitename = self::DEFAULT_NAME;
 		$this->mDomains = array('default' => '');
 		$this->mSitenames = array();
 		$this->mLangSubdomain = true;
-	}
+	}*/
 
 	/**
 	 * Check if the given upload directory name is available for use.
@@ -752,6 +749,7 @@ class CreateWiki {
 	 *
 	 * @return string: fixed name of DB
 	 */
+	/* moved to CreateDatabase
 	private function prepareDatabaseName( $dbname, $lang ) {
 		wfProfileIn( __METHOD__ );
 
@@ -766,9 +764,8 @@ class CreateWiki {
 
 		$dbname = substr( str_replace( "-", "", $dbname ), 0 , 50 );
 
-		/**
-		 * check city_list
-		 */
+
+		//check city_list
 		$exists = 1;
 		$suffix = "";
 		while( $exists == 1 ) {
@@ -801,7 +798,7 @@ class CreateWiki {
 		wfProfileOut( __METHOD__ );
 
 		return $dbname;
-	}
+	}*/
 
 	/**
 	 * can create database?
@@ -1145,9 +1142,10 @@ class CreateWiki {
 	 * @param string $domain
 	 * @return string
 	 */
+	/* Moved to PrepareDomain
 	static protected function getLockDomainKey( $domain ) {
 		return wfSharedMemcKey( 'createwiki', 'domain', 'lock', urlencode( $domain ) );
-	}
+	}*/
 
 	/**
 	 * Locks domain if possible for predefined amount of time
@@ -1156,6 +1154,7 @@ class CreateWiki {
 	 * @param string $domain
 	 * @return bool
 	 */
+	/* Moved to PrepareDomain
 	static private function lockDomain( $domain ) {
 		global $wgMemc;
 
@@ -1164,5 +1163,5 @@ class CreateWiki {
 		wfDebug( "createwiki", __METHOD__ . ": (\"$domain\") = " . ( $status ? "OK" : "failed" ) . "\n" );
 
 		return $status;
-	}
+	}*/
 }

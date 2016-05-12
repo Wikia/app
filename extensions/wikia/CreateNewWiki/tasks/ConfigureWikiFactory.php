@@ -25,8 +25,8 @@ class ConfigureWikiFactory implements Task
 	{
 		$language = $this->taskContext->getLanguage();
 
-		$this->imagesURL = $this->prepareDirValue($this->taskContext->getName(), $language);
-		$this->imagesDir = sprintf("%s/%s", strtolower(substr($this->taskContext->getName(), 0, 1)), $this->imagesURL);
+		$this->imagesURL = $this->prepareDirValue($this->taskContext->getWikiName(), $language);
+		$this->imagesDir = sprintf("%s/%s", strtolower(substr($this->taskContext->getWikiName(), 0, 1)), $this->imagesURL);
 
 		if (isset($language) && $language !== "en") {
 			$this->imagesURL .= "/" . strtolower($language);

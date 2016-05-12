@@ -19,7 +19,7 @@ class CreateDatabase implements Task {
 		$this->taskContext->setClusterDB( $clusterDB );
 		$this->taskContext->setWikiDBW( $dbw );
 		$this->taskContext->setDbName( $this->prepareDatabaseName(
-			$dbw, $this->taskContext->getWikiName(), $this->taskContext->getLanguage() ) );
+			$clusterDB, $this->taskContext->getWikiName(), $this->taskContext->getLanguage() ) );
 
 		return TaskResult::createForSuccess();
 	}
@@ -46,7 +46,7 @@ class CreateDatabase implements Task {
 	 * @author Piotr Molski <moli@wikia-inc.com>
 	 * @access private
 	 *
-	 * @param \DatabaseMysqli $dbw
+	 * @param string $clusterDB
 	 * @param string	$dbname -- name of DB to check
 	 * @param string	$lang   -- language for wiki
 	 *
@@ -54,11 +54,11 @@ class CreateDatabase implements Task {
 	 *
 	 * @return string: fixed name of DB
 	 */
-	private function prepareDatabaseName( $dbw, $dbName, $lang ) {
+	private function prepareDatabaseName( $clusterDB, $dbName, $lang ) {
 		wfProfileIn( __METHOD__ );
 
 		$dbwf = WikiFactory::db( DB_SLAVE );
-		$wikiDbw  = $this->taskContext->getWikiDBW();
+		$dbr  = wfGetDB( DB_SLAVE, array(), $clusterDB );
 
 		if( $lang !== "en" ) {
 			$dbName = $lang . $dbName;
@@ -87,8 +87,8 @@ class CreateDatabase implements Task {
 			}
 			else {
 				wfDebugLog( "createwiki", __METHOD__ . ": Checking if database {$dbName} already exists in database", true );
-				$sth = $wikiDbw->query( sprintf( "show databases like '%s'", $dbName) );
-				if ( $wikiDbw->numRows( $sth ) > 0 ) {
+				$sth = $dbr->query( sprintf( "show databases like '%s'", $dbName) );
+				if ( $dbr->numRows( $sth ) > 0 ) {
 					wfDebugLog( "createwiki", __METHOD__ . ": Database {$dbName} exists on cluster!", true );
 					$exists = 1;
 				}

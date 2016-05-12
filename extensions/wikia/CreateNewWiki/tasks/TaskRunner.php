@@ -21,6 +21,7 @@ class TaskRunner {
 		$this->taskContext = $taskContext;
 
 		//Todo pass all required params
+		$this->tasks[] = new PrepareDomain( $taskContext );
 		$this->tasks[] = new CreateDatabase( $taskContext );
 		$this->tasks[] = new ConfigureWikiFactory( $taskContext );
 		$this->tasks[] = new CreateTables();

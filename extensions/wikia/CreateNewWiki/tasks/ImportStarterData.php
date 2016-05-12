@@ -21,8 +21,7 @@ class ImportStarterData implements Task {
 	public function check() {
 		// php-cli is required for spawning PHP maintenance scripts
 		if( !file_exists( $this->phpBin ) && !is_executable( $this->phpBin ) ) {
-			return TaskResult::createForError( $this->phpBin . " doesn't exist or is not an executable",
-				TaskResult::ERROR_BAD_EXECUTABLE_PATH);
+			return TaskResult::createForError( $this->phpBin . " doesn't exist or is not an executable");
 		} else {
 			return TaskResult::createForSuccess();
 		}
@@ -47,7 +46,7 @@ class ImportStarterData implements Task {
 		wfShellExec( $cmd, $retVal );
 
 		if ( $retVal > 0 ) {
-			return TaskResult::createForError( 'starter dump import failed', RunResult::ERROR_SQL_FILE_BROKEN, [
+			return TaskResult::createForError( 'starter dump import failed', [
 				'starter' => $starterDatabase,
 				'retval'  => $retVal
 			] );

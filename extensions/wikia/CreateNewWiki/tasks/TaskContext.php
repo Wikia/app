@@ -40,17 +40,51 @@ class TaskContext {
 	/** @var  string */
 	private $name;
 
-	/**
-	 * TaskContext constructor.
-	 * @param string $language - language code
-	 */
-	public function __construct( $language, $wikiName ) {
+	/** @var  string */
+	private $domain;
+
+	/** @var  string */
+	private $inputDomain;
+
+	/** @var  string */
+	private $inputWikiName;
+
+	/** @var  string */
+	private $vertical;
+
+	/** @var  string */
+	private $categories;
+
+	public function __construct( $inputWikiName, $inputDomain, $language, $vertical, $categories ) {
+		$this->inputWikiName = $inputWikiName;
+		$this->inputDomain = $inputDomain;
 		$this->language = $language;
-		$this->wikiName = $wikiName;
+		$this->vertical = $vertical;
+		$this->categories = $categories;
+	}
+
+	public function getInputWikiName() {
+		return $this->inputWikiName;
+	}
+
+	public function getInputDomain() {
+		return $this->inputDomain;
 	}
 
 	public function getLanguage() {
 		return $this->language;
+	}
+
+	public function getVertical() {
+		return $this->vertical;
+	}
+
+	public function getCategories() {
+		return $this->categories;
+	}
+
+	public function setWikiName( $wikiName ) {
+		$this->wikiName = $wikiName;
 	}
 
 	public function getWikiName() {
@@ -121,13 +155,11 @@ class TaskContext {
 		$this->url = $url;
 	}
 
-	public function getName()
-	{
-		return $this->name;
+	public function getDomain() {
+		return $this->domain;
 	}
 
-	public function setName($name)
-	{
-		$this->name = $name;
+	public function setDomain( $domain ) {
+		$this->domain = $domain;
 	}
 }
