@@ -7,7 +7,7 @@ class CommunityPageSpecialRecentActivityModel {
 	 * @throws MWException
 	 */
 	public function getData() {
-		$recentActivityData = $this->getRecentActivity();
+		$recentActivityData = F::app()->sendRequest( 'LatestActivityController', 'executeIndex' )->getData();
 
 		$recentActivity = [];
 		foreach ( $recentActivityData['changeList'] as $activity ) {
@@ -36,13 +36,6 @@ class CommunityPageSpecialRecentActivityModel {
 			'moreActivityLink' => $title->getCanonicalURL(),
 			'activity' => $recentActivity,
 		];
-	}
-
-	/**
-	 * @return array
-	 */
-	public function getRecentActivity() {
-		return F::app()->sendRequest( 'LatestActivityController', 'executeIndex' )->getData();
 	}
 
 	/**
