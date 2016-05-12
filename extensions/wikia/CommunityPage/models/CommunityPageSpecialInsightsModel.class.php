@@ -61,7 +61,7 @@ class CommunityPageSpecialInsightsModel {
 		$insightPages['title'] = wfMessage( 'communitypage-' . $type. '-title' )->text();
 		$insightPages['description'] =  wfMessage( 'communitypage-' . $type. '-description' )->text();
 
-		$insightPages['fulllistlink'] = SpecialPage::getTitleFor( 'Insights', $type )->getLocalURL();
+		$insightPages['fulllistlink'] = SpecialPage::getTitleFor( 'Insights', $type )->getLocalURL() . "?sort=" . self::INSIGHTS_MODULE_SORT_TYPE;
 
 		$insightPages = $this->addLastRevision( $insightPages );
 
