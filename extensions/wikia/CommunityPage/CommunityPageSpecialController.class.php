@@ -2,19 +2,15 @@
 
 class CommunityPageSpecialController extends WikiaSpecialPageController {
 	const DEFAULT_TEMPLATE_ENGINE = \WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
-	const INSIGHT_MODULE_ITEMS = 5;
-	const INSIGHT_MODULE_SORT_TYPE = 'pvDiff';
 
 	private $usersModel;
 	private $wikiModel;
-	private $insightsService;
 	private $userTotalContributionCount;
 
 	public function __construct() {
 		parent::__construct( 'Community' );
 		$this->usersModel = new CommunityPageSpecialUsersModel();
 		$this->wikiModel = new CommunityPageSpecialWikiModel();
-		$this->insightsService = new InsightsService();
 		$this->userTotalContributionCount = $this->usersModel->getUserContributions( $this->getUser(), false );
 	}
 
@@ -48,110 +44,8 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 			'recentlyJoined' => $this->sendRequest( 'CommunityPageSpecialController', 'getRecentlyJoinedData' )
 				->getData(),
 			'recentActivityModule' => $this->getRecentActivityData(),
-			'insightsModules' => $this->getInsightsModules()
+			'insightsModules' => ( new CommunityPageSpecialInsightsModel() )->getInsightsModules()
 		] );
-	}
-
-	/**
-	 * Get insights modules
-	 *
-	 * @return array
-	 */
-	private function getInsightsModules() {
-		$modules['messages'] = [
-			'edittext' => $this->msg( 'communitypage-page-list-edit' )->text(),
-			'fulllist' => $this->msg( 'communitypage-full-list' )->text()
-		];
-
-		$modules['modules'] = [
-			$this->getInsightModule( 'popularpages' )
-		];
-
-		return $modules;
-	}
-
-	/**
-	 * @param string $type type of module we want to build.
-	 * @param string $sortingType define how data should be sorted (@see InsightsSorting::$sorting)
-	 * @return array Insight Module
-	 */
-	private function getInsightModule( $type, $sortingType = self::INSIGHT_MODULE_SORT_TYPE ) {
-		$insightPages['pages'] = $this->insightsService->getInsightPages(
-			$type,
-			self::INSIGHT_MODULE_ITEMS,
-			$sortingType
-		);
-
-		/**
-		 * Covers messages:
-		 *
-		 * communitypage-popularpages-title'
-		 * communitypage-popularpages-description'
-		 */
-		$insightPages['title'] = $this->msg( 'communitypage-' . $type. '-title' )->text();
-		$insightPages['description'] =  $this->msg( 'communitypage-' . $type. '-description' )->text();
-
-		$insightPages['fulllistlink'] = SpecialPage::getTitleFor( 'Insights', $type )->getLocalURL();
-
-		$insightPages = $this->addLastRevision( $insightPages );
-
-		return $insightPages;
-	}
-
-	/**
-	 * @param array $insightsPages
-	 * @return array Prepare message about who and when last edited given article
-	 * @throws MWException
-	 */
-	private function addLastRevision( $insightsPages ) {
-		foreach ( $insightsPages['pages'] as $key => $insight ) {
-			$insightsPages['pages'][$key]['metadataDetails'] = $this->getArticleMetadataDetails( $insight['metadata'] );
-			$insightsPages['pages'][$key]['editlink'] = $this->getEditUrl( $insight['link']['url'] );
-
-			if ( !empty( $insightsPages['pages'][$key]['pageviews'] ) ) {
-				$insightsPages['pages'][$key]['pageviews'] = $this->msg(
-					'communitypage-noofviews',
-					$insight['metadata']['pv7']
-				)->text();
-			}
-		}
-		return $insightsPages;
-	}
-
-	private function getEditUrl( $articleUrl ) {
-		if ( EditorPreference::isVisualEditorPrimary() ) {
-			return $articleUrl . '?veaction=edit';
-		}
-		return $articleUrl . '?action=edit';
-	}
-
-	/**
-	 * Get message with article metadata details
-	 *
-	 * @param array $metadata
-	 * @return string
-	 */
-	private function getArticleMetadataDetails( $metadata ) {
-		if ( !empty( $metadata['wantedBy'] ) ) {
-			return $this->msg( $metadata['wantedBy']['message'] )->rawParams(
-				Html::element(
-					'a',
-					['href' => $metadata['wantedBy']['url']],
-					$metadata['wantedBy']['value']
-				)
-			)->escaped();
-		}
-
-		$timestamp = wfTimestamp( TS_UNIX, $metadata['lastRevision']['timestamp'] );
-
-		return $this->msg( 'communitypage-lastrevision' )->rawParams(
-			Html::element(
-				'a',
-				['href' => $metadata['lastRevision']['userpage']],
-				$metadata['lastRevision']['username']
-			),
-			$this->getLang()->userDate( $timestamp, $this->getUser() )
-		)->escaped();
 	}
 
 	/**
