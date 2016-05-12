@@ -2,6 +2,8 @@
 
 namespace Wikia\CreateNewWiki\Tasks;
 
+use User;
+
 class TaskContext {
 
 	//TODO would be awesome to read it from some config
@@ -40,6 +42,12 @@ class TaskContext {
 	/** @var  string */
 	private $name;
 
+	/** @var  User */
+	private $founder;
+
+	/** @var  string */
+	private $domain;
+
 	/**
 	 * TaskContext constructor.
 	 * @param string $language - language code
@@ -65,6 +73,7 @@ class TaskContext {
 		return $this->dbName;
 	}
 
+	// wikiDBW represents CreateWiki::newWiki->dbw
 	public function setWikiDBW( $dbw ) {
 		$this->wikiDBW = $dbw;
 	}
@@ -73,6 +82,7 @@ class TaskContext {
 		return $this->wikiDBW;
 	}
 
+	// sharedDBW represents CreateWiki::mDBW
 	public function setSharedDBW( $dbw ) {
 		$this->sharedDBW = $dbw;
 	}
@@ -129,5 +139,21 @@ class TaskContext {
 	public function setName($name)
 	{
 		$this->name = $name;
+	}
+
+	public function getFounder() {
+		return $this->founder;
+	}
+
+	public function setFounder($founder) {
+		$this->founder = $founder;
+	}
+
+	public function getDomain() {
+		return $this->domain;
+	}
+
+	public function setDomain($domain) {
+		$this->domain = $domain;
 	}
 }

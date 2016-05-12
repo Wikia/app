@@ -24,7 +24,7 @@ class CreateWiki {
 		$mPHPbin, $mFounder,
 		$mLangSubdomain,
 		$mDefaultTables, $mAdditionalTables,
-		$sDbStarter, $mFounderIp,
+		$sDbStarter,
 		$mCurrTime;
 
 	/* @var $mNewWiki stdClass */
@@ -61,7 +61,8 @@ class CreateWiki {
 	const DEFAULT_USER         = 'Default';
 	const DEFAULT_DOMAIN       = "wikia.com";
 	const ACTIVE_CLUSTER       = "c7";
-	const DEFAULT_SLOT         = "slot1";
+// MOVED TO SetupWikiCities task
+//	const DEFAULT_SLOT         = "slot1";
 	const DEFAULT_NAME         = "Wiki";
 	const DEFAULT_WIKI_TYPE    = "";
 	const LOCK_DOMAIN_TIMEOUT  = 30;
@@ -76,7 +77,7 @@ class CreateWiki {
 	 * @param array $categories - list of categories for the wiki
 	 */
 	public function __construct( $name, $domain, $language, $vertical, $categories ) {
-		global $wgUser, $IP, $wgAutoloadClasses, $wgRequest;
+		global $wgUser, $IP, $wgAutoloadClasses;
 
 		// wiki containter
 		$this->mNewWiki = new stdClass();
@@ -90,7 +91,8 @@ class CreateWiki {
 
 		// founder of wiki
 		$this->mFounder = $wgUser;
-		$this->mFounderIp = $wgRequest->getIP();
+// MOVED TO SetupWikiCities Task
+//		$this->mFounderIp = $wgRequest->getIP();
 
 		wfDebugLog( "createwiki", __METHOD__ . ": founder: " . print_r($this->mFounder, true) . "\n", true );
 
@@ -264,34 +266,34 @@ class CreateWiki {
 
 		$taskRunner->run();
 
-		/**
-		 * create position in wiki.factory
-		 * (I like sprintf construction, so sue me)
-		 */
-		if ( ! $this->addToCityList() ) {
-			wfDebugLog( "createwiki", __METHOD__ .": Cannot set data in city_list table\n", true );
-			wfProfileOut( __METHOD__ );
-			throw new CreateWikiException('Cannot add wiki to city_list', self::ERROR_DATABASE_WRITE_TO_CITY_LIST_BROKEN);
-		}
-
-		// set new city_id
-		$this->mNewWiki->city_id = $this->mDBw->insertId();
-		if ( empty( $this->mNewWiki->city_id ) ) {
-			wfProfileOut( __METHOD__ );
-			throw new CreateWikiException('Cannot set data in city_list table. city_id is empty after insert', self::ERROR_DATABASE_WIKI_FACTORY_TABLES_BROKEN);
-		}
-
-		wfDebugLog( "createwiki", __METHOD__ . ": Row added added into city_list table, city_id = {$this->mNewWiki->city_id}\n", true );
-
-		/**
-		 * add domain and www.domain to the city_domains table
-		 */
-		if ( ! $this->addToCityDomains() ) {
-			wfProfileOut( __METHOD__ );
-			throw new CreateWikiException('Cannot set data in city_domains table', self::ERROR_DATABASE_WRITE_TO_CITY_DOMAINS_BROKEN);
-		}
-
-		wfDebugLog( "createwiki", __METHOD__ . ": Row added into city_domains table, city_id = {$this->mNewWiki->city_id}\n", true );
+//		/**
+//		 * create position in wiki.factory
+//		 * (I like sprintf construction, so sue me)
+//		 */
+//		if ( !$this->addToCityList() ) {
+//			wfDebugLog( "createwiki", __METHOD__ .": Cannot set data in city_list table\n", true );
+//			wfProfileOut( __METHOD__ );
+//			throw new CreateWikiException('Cannot add wiki to city_list', self::ERROR_DATABASE_WRITE_TO_CITY_LIST_BROKEN);
+//		}
+//
+//		// set new city_id
+//		$this->mNewWiki->city_id = $this->mDBw->insertId();
+//		if ( empty( $this->mNewWiki->city_id ) ) {
+//			wfProfileOut( __METHOD__ );
+//			throw new CreateWikiException('Cannot set data in city_list table. city_id is empty after insert', self::ERROR_DATABASE_WIKI_FACTORY_TABLES_BROKEN);
+//		}
+//
+//		wfDebugLog( "createwiki", __METHOD__ . ": Row added added into city_list table, city_id = {$this->mNewWiki->city_id}\n", true );
+//
+//		/**
+//		 * add domain and www.domain to the city_domains table
+//		 */
+//		if ( ! $this->addToCityDomains() ) {
+//			wfProfileOut( __METHOD__ );
+//			throw new CreateWikiException('Cannot set data in city_domains table', self::ERROR_DATABASE_WRITE_TO_CITY_DOMAINS_BROKEN);
+//		}
+//
+//		wfDebugLog( "createwiki", __METHOD__ . ": Row added into city_domains table, city_id = {$this->mNewWiki->city_id}\n", true );
 
 		// Force initialize uploader user from correct shared db
 		$uploader = User::newFromName( 'CreateWiki script' );
@@ -302,9 +304,12 @@ class CreateWiki {
 		/**
 		 * wikifactory variables
 		 */
-		wfDebugLog( "createwiki", __METHOD__ . ": Populating city_variables\n", true );
-		$this->setWFVariables();
+		//Moved to CreateWikiFactory task
+		//wfDebugLog( "createwiki", __METHOD__ . ": Populating city_variables\n", true );
+		//$this->setWFVariables();
 
+		// @TODO We commit here both WikiFactory and WikiCities setup. Where we should execute commit?
+		// Maybe we should commit twice?
 		$tmpSharedDB = $wgSharedDB;
 		$wgSharedDB = $this->mNewWiki->dbname;
 
@@ -566,13 +571,15 @@ class CreateWiki {
 		$this->mNewWiki->name = strtolower( trim( $this->mDomain ) );
 
 		// umbrella
-		$this->mNewWiki->umbrella = $this->mNewWiki->name;
+// MOVED TO SetupWikiCities task
+//		$this->mNewWiki->umbrella = $this->mNewWiki->name;
 
 		$this->mNewWiki->language  = $this->mLanguage;
 		$this->mNewWiki->subdomain = $this->mNewWiki->name;
 		$this->mNewWiki->redirect  = $this->mNewWiki->name;
 
-		$this->mNewWiki->path = self::DEFAULT_SLOT;
+// MOVED TO SetupWikiCities task
+//		$this->mNewWiki->path = self::DEFAULT_SLOT;
 
 // MOVED TO CreateWikiFactory task
 //		$this->mNewWiki->images_url = $this->prepareDirValue( $this->mNewWiki->name, $this->mNewWiki->language );
@@ -594,10 +601,12 @@ class CreateWiki {
 		$this->mNewWiki->domain = sprintf("%s.%s", $this->mNewWiki->subdomain, $this->mDefSubdomain);
 		$this->mNewWiki->url = sprintf( "http://%s.%s/", $this->mNewWiki->subdomain, $this->mDefSubdomain );
 		$this->mNewWiki->dbname = $this->prepareDatabaseName( $this->mNewWiki->name, $this->mLanguage );
-		$this->mNewWiki->founderName = $this->mFounder->getName();
-		$this->mNewWiki->founderEmail = $this->mFounder->getEmail();
-		$this->mNewWiki->founderId = $this->mFounder->getId();
-		$this->mNewWiki->founderIp = $this->mFounderIp;
+// mFounder accessible via TaskContext::getFounder
+//		$this->mNewWiki->founderName = $this->mFounder->getName();
+//		$this->mNewWiki->founderEmail = $this->mFounder->getEmail();
+//		$this->mNewWiki->founderId = $this->mFounder->getId();
+// MOVED TO SetupWikiCities task
+//		$this->mNewWiki->founderIp = $this->mFounderIp;
 
 		wfProfileOut( __METHOD__ );
 
@@ -865,28 +874,29 @@ class CreateWiki {
 	 * @access private
 	 *
 	 */
-	private function addToCityList() {
-		$insertFields = array(
-			'city_title'          => $this->mNewWiki->sitename,
-			'city_dbname'         => $this->mNewWiki->dbname,
-			'city_url'            => $this->mNewWiki->url,
-			'city_founding_user'  => $this->mNewWiki->founderId,
-			'city_founding_email' => $this->mNewWiki->founderEmail,
-			'city_founding_ip'    => ip2long($this->mNewWiki->founderIp),
-			'city_path'           => $this->mNewWiki->path,
-			'city_description'    => $this->mNewWiki->sitename,
-			'city_lang'           => $this->mNewWiki->language,
-			'city_created'        => wfTimestamp( TS_DB, time() ),
-			'city_umbrella'       => $this->mNewWiki->umbrella,
-		);
-		if ( self::ACTIVE_CLUSTER ) {
-			$insertFields[ "city_cluster" ] = self::ACTIVE_CLUSTER;
-		}
-
-		$res = $this->mDBw->insert( "city_list", $insertFields, __METHOD__ );
-
-		return $res;
-	}
+// MOVED TO SetupWikiCities task
+//	private function addToCityList() {
+//		$insertFields = array(
+//			'city_title'          => $this->mNewWiki->sitename,
+//			'city_dbname'         => $this->mNewWiki->dbname,
+//			'city_url'            => $this->mNewWiki->url,
+//			'city_founding_user'  => $this->mNewWiki->founderId,
+//			'city_founding_email' => $this->mNewWiki->founderEmail,
+//			'city_founding_ip'    => ip2long($this->mNewWiki->founderIp),
+//			'city_path'           => $this->mNewWiki->path,
+//			'city_description'    => $this->mNewWiki->sitename,
+//			'city_lang'           => $this->mNewWiki->language,
+//			'city_created'        => wfTimestamp( TS_DB, time() ),
+//			'city_umbrella'       => $this->mNewWiki->umbrella,
+//		);
+//		if ( self::ACTIVE_CLUSTER ) {
+//			$insertFields[ "city_cluster" ] = self::ACTIVE_CLUSTER;
+//		}
+//
+//		$res = $this->mDBw->insert( "city_list", $insertFields, __METHOD__ );
+//
+//		return $res;
+//	}
 
 	/**
 	 * addToCityDomains

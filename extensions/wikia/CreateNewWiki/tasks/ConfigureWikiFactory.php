@@ -44,8 +44,8 @@ class ConfigureWikiFactory implements Task
 		$this->setVariables();
 	}
 
-	private function setVariables()
-	{
+	private function setVariables() {
+		wfDebugLog( "createwiki", "Tasks/ConfigureWikiFactory: Populating city_variables\n", true );
 		$siteName = $this->taskContext->getSiteName();
 
 		$wikiFactoryVariables = [
@@ -74,9 +74,9 @@ class ConfigureWikiFactory implements Task
 			wfGetLBFactory()->sectionsByDB[$this->taskContext->getDbName()] = $wikiFactoryVariables['wgDBcluster'] = TaskContext::ACTIVE_CLUSTER;
 		}
 
-		$wikiDBW = $this->taskContext->getWikiDBW();
+		$sharedDBW = $this->taskContext->getSharedDBW();
 
-		$oRes = $wikiDBW->select(
+		$oRes = $sharedDBW->select(
 			"city_variables_pool",
 			["cv_id, cv_name"],
 			["cv_name in ('" . implode("', '", array_keys($wikiFactoryVariables)) . "')"],
@@ -85,10 +85,10 @@ class ConfigureWikiFactory implements Task
 
 		$wikiFactoryVarsFromDB = [];
 
-		while ($oRow = $wikiDBW->fetchObject($oRes)) {
+		while ($oRow = $sharedDBW->fetchObject($oRes)) {
 			$wikiFactoryVarsFromDB[$oRow->cv_name] = $oRow->cv_id;
 		}
-		$wikiDBW->freeResult($oRes);
+		$sharedDBW->freeResult($oRes);
 
 		foreach ($wikiFactoryVariables as $variable => $value) {
 			/**
@@ -103,7 +103,7 @@ class ConfigureWikiFactory implements Task
 			 * then, insert value for wikia
 			 */
 			if (!empty($cv_id)) {
-				$wikiDBW->insert(
+				$sharedDBW->insert(
 					"city_variables",
 					array(
 						"cv_value" => serialize($value),
