@@ -247,28 +247,27 @@ class CommunityPageSpecialUsersModel {
 		);
 
 		if ( $userInfo['lastRevision'] !== null ) {
-			// Remove from all users list if present
-			// Done manually to make sure current user data is never out of sync due to cache
-			foreach ( $allContributorsData as $key => $item ) {
-				if ( $item['userId'] === $currentUserId ) {
-					unset( $allContributorsData[$key] );
-					break;
-				}
+			$key = array_search( $currentUserId, array_column( $allContributorsData, 'userId' ) );
+
+			if ( $key !== false ) {
+				$data = $allContributorsData[$key];
+				$data['isCurrent'] = true;
+				unset( $allContributorsData[$key] );
+			} else {
+				// Add current user on top of list
+				$avatar = AvatarService::renderAvatar( $userInfo['name'], AvatarService::AVATAR_SIZE_SMALL_PLUS );
+
+				$data = [
+					'userId' => $currentUserId,
+					'latestRevision' => $userInfo['lastRevision'],
+					'timeAgo' => wfTimeFormatAgo( $userInfo['lastRevision'] ),
+					'userName' => $userInfo['name'],
+					'isAdmin' => $this->isAdmin( $currentUserId, $this->getAdmins() ),
+					'isCurrent' => true,
+					'avatar' => $avatar,
+					'profilePage' => $userInfo['userPageUrl'],
+				];
 			}
-
-			// Add current user on top of list
-			$avatar = AvatarService::renderAvatar( $userInfo['name'], AvatarService::AVATAR_SIZE_SMALL_PLUS );
-
-			$data = [
-				'userId' => $currentUserId,
-				'latestRevision' => $userInfo['lastRevision'],
-				'timeAgo' => wfTimeFormatAgo( $userInfo['lastRevision'] ),
-				'userName' => $userInfo['name'],
-				'isAdmin' => $this->isAdmin( $currentUserId, $this->getAdmins() ),
-				'isCurrent' => true,
-				'avatar' => $avatar,
-				'profilePage' => $userInfo['userPageUrl'],
-			];
 
 			array_unshift( $allContributorsData, $data );
 		}
