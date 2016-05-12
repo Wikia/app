@@ -1,11 +1,5 @@
 <?php
 
-/**
- * Refactor or revert this class after the experiment is complete
- * @link https://wikia-inc.atlassian.net/browse/DAT-4186
- * @contact West-Wing team
- * Class NavigationTemplate
- */
 class NavigationTemplate {
 
 	private static $blockLevelElements = [
@@ -43,15 +37,10 @@ class NavigationTemplate {
 		foreach ( array_unique( $markers[ 2 ] ) as $marker ) {
 			// matches block elements in between start and end marker tags
 			// <marker>(not </marker>)...(block element)...</marker>
-			$html = preg_replace(
-				'/(<|&lt;)' . $marker . '(>|&gt;)' .
-				'((?!(<|&lt;)\\/' . $marker . '(>|&gt;)).)*' .
-				'(<|&lt;)(' . implode( '|', self::$blockLevelElements ) . ')[(>|&gt;)\s]+.*' .
-				'(<|&lt;)\\/' . $marker . '(>|&gt;)/isU',
-				// replacement
-				'<div data-type="navigation">$0</div>',
-				$html
-			);
+			$html = preg_replace( '/(<|&lt;)' . $marker . '(>|&gt;)' .
+								  '((?!(<|&lt;)\\/' . $marker . '(>|&gt;)).)*' .
+								  '(<|&lt;)(' . implode( '|', self::$blockLevelElements ) . ')[(>|&gt;)\s]+.*' .
+								  '(<|&lt;)\\/' . $marker . '(>|&gt;)/isU', '', $html );
 			// remove just the marker tags
 			$html = preg_replace( '/(<|&lt;)\\/?' . $marker . '(>|&gt;)/sU', '', $html );
 		}
