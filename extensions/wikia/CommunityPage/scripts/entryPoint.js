@@ -4,5 +4,20 @@ require([
 ], function ($, tracker) {
 	'use strict';
 
-	// fixme: add tracking
+	var track = tracker.buildTrackingFunction({
+		action: tracker.ACTIONS.CLICK,
+		category: 'community-page-entry-point',
+		trackingMethod: 'analytics'
+	});
+
+	function initTracking() {
+		// Track clicks in contribution module
+		$('.community-page-entry-point-module').on('mousedown touchstart', 'a', function () {
+			track({
+				label: 'enter-button-click',
+			});
+		});
+	}
+
+	$(initTracking);
 });
