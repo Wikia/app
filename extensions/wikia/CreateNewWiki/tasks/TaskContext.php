@@ -45,10 +45,10 @@ class TaskContext {
 	/** @var  string */
 	private $inputWikiName;
 
-	/** @var  string */
+	/** @var  int */
 	private $vertical;
 
-	/** @var  string */
+	/** @var  array */
 	private $categories;
 
 	/** @var  User */
@@ -162,5 +162,9 @@ class TaskContext {
 
 	public function setFounder($founder) {
 		$this->founder = $founder;
+	}
+
+	public function setCategories($categories) {
+		$this->categories = $categories;
 	}
 }

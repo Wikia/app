@@ -48,14 +48,14 @@ class CreateWiki {
 	const ERROR_READONLY                               = 13;
 
 	//DUPLICATED IN CreateWikiFactory task
-	const IMGROOT              = "/images/";
+//	const IMGROOT              = "/images/";
 	//DUPLICATED IN CreateWikiFactory task
-	const IMAGEURL             = "http://images.wikia.com/";
+//	const IMAGEURL             = "http://images.wikia.com/";
 
 	const DEFAULT_STAFF        = "Wikia";
-	const DEFAULT_USER         = 'Default';
+//	const DEFAULT_USER         = 'Default';
 	//const DEFAULT_DOMAIN       = "wikia.com";
-	const ACTIVE_CLUSTER       = "c7";
+//	const ACTIVE_CLUSTER       = "c7";
 
 // MOVED TO SetupWikiCities task
 //	const DEFAULT_SLOT         = "slot1";
@@ -83,7 +83,7 @@ class CreateWiki {
 		/*$this->mDomain = $domain;
 		$this->mName = $name;
 		$this->mLanguage = $language;
-		$this->mVertical = $vertical;
+//		$this->mVertical = $vertical;
 		$this->mCategories = $categories;*/
 		//$this->mIP = $IP;
 
@@ -367,13 +367,13 @@ class CreateWiki {
 		$wgSharedDB = $tmpSharedDB;
 
 
-		$oHub = WikiFactoryHub::getInstance();
-		$oHub->setVertical( $this->mNewWiki->city_id, $this->mNewWiki->vertical, "CW Setup" );
-		wfDebugLog( "createwiki", __METHOD__ . ": Wiki added to the vertical: {$this->mNewWiki->vertical} \n", true );
-		for($i = 0; $i < count($this->mNewWiki->categories); $i++) {
-			$oHub->addCategory( $this->mNewWiki->city_id, $this->mNewWiki->categories[$i] );
-			wfDebugLog( "createwiki", __METHOD__ . ": Wiki added to the category: {$this->mNewWiki->categories[$i]} \n", true );
-		}
+//		$oHub = WikiFactoryHub::getInstance();
+//		$oHub->setVertical( $this->mNewWiki->city_id, $this->mNewWiki->vertical, "CW Setup" );
+//		wfDebugLog( "createwiki", __METHOD__ . ": Wiki added to the vertical: {$this->mNewWiki->vertical} \n", true );
+//		for($i = 0; $i < count($this->mNewWiki->categories); $i++) {
+//			$oHub->addCategory( $this->mNewWiki->city_id, $this->mNewWiki->categories[$i] );
+//			wfDebugLog( "createwiki", __METHOD__ . ": Wiki added to the category: {$this->mNewWiki->categories[$i]} \n", true );
+//		}
 
 // MOVED TO SetCustomSettings
 //		/**
@@ -558,18 +558,18 @@ class CreateWiki {
 		//$this->mDomain = preg_replace( "/^(\-)+/", "", $this->mDomain );
 		//$this->mNewWiki->domain = strtolower( trim( $this->mDomain ) );
 
-		$this->mNewWiki->vertical = $this->mVertical;
+//		$this->mNewWiki->vertical = $this->mVertical;
 
 		// Map new verticals to old categories while in transition so that "hub" code still works
 		// If a user selects a vertical we will also add the old category that matches best with it
 		// This code can be removed after we are fully using the new verticals (PLATFORM-403)
 
 		// uses array_unshift to make sure hub category is first, because we take the first cat from SQL
-		if ( $this->mVertical == 2 ) array_unshift($this->mCategories, 2);	// Video games
-		if ( in_array( $this->mVertical, [1,3,4,6,7] ) ) array_unshift($this->mCategories, 3); // Entertainment
-		if ( $this->mVertical == 5 ) array_unshift($this->mCategories, 9);	// Lifestyle
-
-		$this->mNewWiki->categories = $this->mCategories;
+//		if ( $this->mVertical == 2 ) array_unshift($this->mCategories, 2);	// Video games
+//		if ( in_array( $this->mVertical, [1,3,4,6,7] ) ) array_unshift($this->mCategories, 3); // Entertainment
+//		if ( $this->mVertical == 5 ) array_unshift($this->mCategories, 9);	// Lifestyle
+//
+//		$this->mNewWiki->categories = $this->mCategories;
 
 		// name
 		//$this->mNewWiki->name = strtolower( trim( $this->mDomain ) );
