@@ -10,11 +10,10 @@ require([
 		trackingMethod: 'analytics'
 	});
 
-	$('.community-page-entry-point-module').on('mousedown touchstart', 'a', function () {
-		track({
-			label: 'enter-button-click',
-		});
-	});
+	$('.community-page-entry-point-module .entry-point-button').on(
+		'mousedown touchstart',
+		track.bind(this, {label: 'entry-button'})
+	);
 
 	// Track impression
 	track({
