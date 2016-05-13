@@ -5,8 +5,10 @@ use Wikia\Service\User\Permissions\PermissionsService;
 
 /**
  * Class for managing a Chat (aka: chat-room)
- * This is for a demo & if the prototype works out, this will probably need to be thrown away and
- * replaced with Jabberd or something similar which could scale to our level of potential usage.
+ *
+ * The chat shows up to the user as Special:Chat in a separate window. Javascript connects
+ * that page to our node.js chat server (which piggybacks on Wikia's authentication session
+ * for handling permissions).
  *
  * @author Sean Colombo
  */
