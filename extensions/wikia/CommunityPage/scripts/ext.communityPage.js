@@ -184,15 +184,15 @@ require([
 
 	function initModalEventBindings(modal) {
 		modal.$content
-			.on( 'click', '#modalTabAll', function (event) {
+			.on('click', '#modalTabAll', function (event) {
 				event.preventDefault();
 				switchCommunityModalTab(tabs.TAB_ALL);
 			})
-			.on( 'click', '#modalTabAdmins', function (event) {
+			.on('click', '#modalTabAdmins', function (event) {
 				event.preventDefault();
 				switchCommunityModalTab(tabs.TAB_ADMINS);
 			})
-			.on( 'click', '#modalTabLeaderboard', function (event) {
+			.on('click', '#modalTabLeaderboard', function (event) {
 				event.preventDefault();
 				switchCommunityModalTab(tabs.TAB_LEADERBOARD);
 			});
