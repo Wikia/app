@@ -20,9 +20,14 @@
 			<div class="avatar-container">
 				<a data-tracking="top-contributors-user-avatar" href="{{profilePage}}">{{{avatar}}}</a>
 			</div>
-			<div class="community-page-contributor-details">
-				{{count}}. <a data-tracking="top-contributors-user" href="{{profilePage}}">{{userName}}</a>
-				<span class="community-page-subtle">{{contributionsText}}</span>
+			<div class="community-page-top-contributor-details">
+				<div class="community-page-count">
+					{{count}}.
+				</div>
+				<div class="community-page-contributor-container">
+					<a data-tracking="top-contributors-user" href="{{profilePage}}">{{userName}}</a>
+					<div class="community-page-subtle">{{contributionsText}}</div>
+				</div>
 			</div>
 		</li>
 	{{/contributors}}

@@ -18,12 +18,17 @@
 			<div class="avatar-container">
 				<a data-tracking="top-contributors-user-avatar" href="{{profilePage}}">{{{avatar}}}</a>
 			</div>
-			<div class="community-page-contributor-details">
+			<div class="community-page-top-contributor-details">
+				<div class="community-page-count">
+					{{count}}.
+				</div>
+				<div class="community-page-contributor-container">
+					<a data-tracking="top-contributors-user" href="{{profilePage}}">{{userName}}</a>
+					{{#isAdmin}}
+						<span class="community-page-subtle">{{admin}}</span>
+					{{/isAdmin}}
+				</div>
 				<span class="community-page-details">{{contributionsText}}</span>
-				{{count}}. <a data-tracking="top-contributors-user" href="{{profilePage}}">{{userName}}</a>
-				{{#isAdmin}}
-					<span class="community-page-subtle">{{admin}}</span>
-				{{/isAdmin}}
 			</div>
 		</li>
 	{{/contributors}}

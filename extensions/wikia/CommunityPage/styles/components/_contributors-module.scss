@@ -1,5 +1,6 @@
 @import 'skins/shared/color';
 @import 'skins/shared/mixins/clearfix';
+@import 'skins/shared/mixins/flexbox';
 @import 'variables';
 
 // Styles for the contributors module in-page and modal version
@@ -10,8 +11,23 @@
 		vertical-align: middle;
 	}
 
+	.community-page-count {
+		padding-right: 5px;
+	}
+
+	.community-page-details {
+		margin-left: auto;
+	}
+
 	.community-page-contributor-details {
 		display: inline-block;
+		line-height: 21px;
+		vertical-align: middle;
+		width: calc(100% - 50px);
+	}
+
+	.community-page-top-contributor-details {
+		@include display-inline-flex();
 		line-height: 21px;
 		vertical-align: middle;
 		width: calc(100% - 50px);
@@ -57,21 +73,20 @@
 			margin-right: 28px;
 		}
 
-		.community-page-user-rank {
-			min-height: 20px;
-		}
-
 		.community-page-subtle {
 			color: $color-alternate-text;
 			font-size: 10px;
 			line-height: 12px;
 			text-transform: uppercase;
 		}
+
+		.community-page-user-rank {
+			min-height: 20px;
+		}
 	}
 
 	.community-page-zero {
-		margin-top: 13px;
-		margin-bottom: 13px;
+		margin: 13px 0;
 	}
 
 	&.ContributorsModuleModal {
