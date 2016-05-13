@@ -23,7 +23,9 @@
 }
 
 .CommunityPageMainContent {
+	box-sizing: inherit;
 	float: left;
+	padding-right: 34px;
 	width: calc(100% - 320px);
 }
 
