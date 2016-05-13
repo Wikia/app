@@ -18,11 +18,11 @@ class TaskResult {
 		$this->context = $context;
 	}
 
-	public static function createForSuccess( $context = false ) {
+	public static function createForSuccess( $context = [] ) {
 		return new TaskResult( true, '', $context );
 	}
 
-	public static function createForError( $message, $context = false ) {
+	public static function createForError( $message, $context = [] ) {
 		return new TaskResult( false, $message, $context );
 	}
 
@@ -35,9 +35,10 @@ class TaskResult {
 	}
 
 	public function createLoggingContext( ) {
+		$resultContext = (array) $this;
 
-		//TODO combine most important data from TaskContext with local message, status code and context data
+		$resultContext = array_merge( $resultContext, $this->context );
 
-		return $this->context;
+		return $resultContext;
 	}
 }

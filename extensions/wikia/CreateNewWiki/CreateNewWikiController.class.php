@@ -323,14 +323,14 @@ class CreateNewWikiController extends WikiaController {
 			return;
 		}
 
-		$cityId = $createWiki->getWikiInfo('city_id');
+		$cityId = $createWiki->getCityId();
 
 		if ( isset($params['wAllAges']) && !empty( $params['wAllAges'] ) ) {
 			WikiFactory::setVarByName( self::WF_WDAC_REVIEW_FLAG_NAME, $cityId, true, __METHOD__ );
 		}
 
 		$this->response->setVal( self::STATUS_FIELD, self::STATUS_OK );
-		$this->response->setVal( self::SITE_NAME_FIELD, $createWiki->getWikiInfo('sitename') );
+		$this->response->setVal( self::SITE_NAME_FIELD, $createWiki->getSiteName() );
 		$this->response->setVal( self::CITY_ID_FIELD, $cityId );
 		$finishCreateTitle = GlobalTitle::newFromText( "FinishCreate", NS_SPECIAL, $cityId );
 		$finishCreateUrl = empty( $wgDevelDomains ) ? $finishCreateTitle->getFullURL() : str_replace( '.wikia.com', '.'.$wgDevelDomains[0], $finishCreateTitle->getFullURL() );

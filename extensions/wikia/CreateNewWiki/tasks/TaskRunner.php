@@ -41,13 +41,15 @@ class TaskRunner {
 		foreach ( $this->tasks as $task) {
 
 			$this->debug(__METHOD__ . ' starting preparation of task ' . get_class( $task ) );
+			$timeCounter = new TimeCounter();
 
 			$result = $task->prepare();
+			$logContext = $timeCounter->getContext( $result->createLoggingContext() );
 
 			if ( $result->isOk()) {
-				$this->info(__METHOD__ . ' preparation of task ' . get_class( $task ) . ' finished successfully');
+				$this->info(__METHOD__ . ' preparation of task ' . get_class( $task ) . ' finished successfully', $logContext);
 			} else {
-				$this->warning(__METHOD__ . ' preparation of task ' . get_class( $task ) . ' failed', $result->createLoggingContext() );
+				$this->warning(__METHOD__ . ' preparation of task ' . get_class( $task ) . ' failed', $logContext );
 				throw new \CreateWikiException( $result->getMessage() );
 			}
 		}
@@ -58,13 +60,15 @@ class TaskRunner {
 		foreach ( $this->tasks as $task) {
 
 			$this->debug(__METHOD__ . ' starting check of task ' . get_class( $task ) );
+			$timeCounter = new TimeCounter();
 
 			$result = $task->check();
+			$logContext = $timeCounter->getContext( $result->createLoggingContext() );
 
 			if ( $result->isOk()) {
-				$this->info(__METHOD__ . ' check of task ' . get_class( $task ) . ' finished successfully');
+				$this->info(__METHOD__ . ' check of task ' . get_class( $task ) . ' finished successfully' ,$logContext);
 			} else {
-				$this->warning(__METHOD__ . ' check of task ' . get_class( $task ) . ' failed', $result->createLoggingContext() );
+				$this->warning(__METHOD__ . ' check of task ' . get_class( $task ) . ' failed', $logContext );
 				throw new \CreateWikiException( $result->getMessage() );
 			}
 		}
@@ -75,13 +79,15 @@ class TaskRunner {
 		foreach ( $this->tasks as $task) {
 
 			$this->debug(__METHOD__ . ' starting task ' . get_class( $task ) );
+			$timeCounter = new TimeCounter();
 
 			$result = $task->run();
+			$logContext = $timeCounter->getContext( $result->createLoggingContext() );
 
 			if ( $result->isOk()) {
-				$this->info(__METHOD__ . ' task ' . get_class( $task ) . ' finished successfully' );
+				$this->info(__METHOD__ . ' task ' . get_class( $task ) . ' finished successfully', $logContext );
 			} else {
-				$this->error(__METHOD__ . ' task ' . get_class( $task ) . ' failed ', $result->createLoggingContext() );
+				$this->error(__METHOD__ . ' task ' . get_class( $task ) . ' failed ', $logContext );
 				throw new \CreateWikiException( $result->getMessage() );
 			}
 		}

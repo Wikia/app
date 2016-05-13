@@ -2,6 +2,28 @@
 
 namespace Wikia\CreateNewWiki\Tasks;
 
+class TimeCounter {
+
+	private $startTime;
+
+	public function __construct() {
+		$this->startTime = microtime( true );
+	}
+
+	public function getTimePassed() {
+		return microtime( true ) - $this->startTime;
+	}
+
+	public function getContext( $context = null ) {
+		$timeContext = ['took' => $this->getTimePassed() ];
+		if ( !empty( $context ) ) {
+			return array_merge( $context, $timeContext );
+		}  else {
+			return $timeContext;
+		}
+	}
+}
+
 class TaskHelper {
 
 	/**
@@ -13,7 +35,7 @@ class TaskHelper {
 	 */
 	public static function waitForSlaves( TaskContext $taskContext, $functionName ){
 		global $wgExternalSharedDB;
-		$then = microtime( true );
+		$timeCounter = new TimeCounter();
 
 		// commit the changes
 		$res = $taskContext->getWikiDBW()->commit( $functionName );
@@ -26,7 +48,7 @@ class TaskHelper {
 			self::getLoggerContext( $taskContext , [
 				'commit_res' => $res,
 				'fname'      => $functionName,
-				'took'       => microtime( true ) - $then,
+				'took'       => $timeCounter->getTimePassed(),
 			] ) );
 	}
 
@@ -35,14 +57,11 @@ class TaskHelper {
 	 * @param string[][] $additionalValues
 	 * @return string[][]
 	 */
-	public static function getLoggerContext( TaskContext $taskContext, $additionalValues = null ) {
-		//TODO expand
-		return [
-			'domain'   => $taskContext->getDomain(),
-			'dbname'   => $taskContext->getDbName(),
-			'logGroup' => 'createwiki',
-		];
-		//TODO merge the two parameters and extract logging context from task context
-		//return $taskContext;
+	public static function getLoggerContext( TaskContext $taskContext, $additionalValues = [] ) {
+		$context = (array) $taskContext;
+
+		$context = array_merge( $context, $additionalValues );
+
+		return $context;
 	}
 }

@@ -77,7 +77,7 @@ class CreateWiki {
 		global $wgUser, $IP, $wgAutoloadClasses;
 
 		// wiki containter
-		$this->mNewWiki = new stdClass();
+		//$this->mNewWiki = new stdClass();
 
 		$this->taskContext = new TaskContext( $name, $domain, $language, $vertical, $categories );
 		/*$this->mDomain = $domain;
@@ -137,12 +137,15 @@ class CreateWiki {
 	 * @return array
 	 */
 	protected function getLoggerContext() {
-		return [
-			'cityid'   => $this->mNewWiki->city_id,
-			'domain'   => $this->mDomain,
-			'dbname'   => $this->mNewWiki->dbname,
-			'logGroup' => 'createwiki',
-		];
+		return Tasks\TaskHelper::getLoggerContext( $this->taskContext );
+	}
+
+	public function getSiteName() {
+		return $this->taskContext->getSiteName();
+	}
+
+	public function getCityId() {
+		return $this->taskContext->getCityId();
 	}
 
 	/**
@@ -181,7 +184,9 @@ class CreateWiki {
 	public function create() {
 		global $wgExternalSharedDB, $wgSharedDB;
 
-		$then = microtime( true );
+		//$then = microtime( true );
+
+		wfProfileIn( __METHOD__ );
 
 		$taskRunner = new Wikia\CreateNewWiki\Tasks\TaskRunner( $this->taskContext );
 
@@ -189,13 +194,13 @@ class CreateWiki {
 
 		$taskRunner->check();
 
+		$taskRunner->run();
+
 		// Set this flag to ensure that all select operations go against master
 		// Slave lag can cause random errors during wiki creation process
 		//Moved to CreateDatabase
 		//global $wgForceMasterDatabase;
 		//$wgForceMasterDatabase = true;
-
-		wfProfileIn( __METHOD__ );
 
 		/* Moved to CreateDatabase
 		if ( wfReadOnly() ) {
@@ -227,7 +232,7 @@ class CreateWiki {
 		}*/
 
 		// prepare all values needed for creating wiki
-		$this->prepareValues();
+		//$this->prepareValues();
 
 		// prevent domain to be registered more than once
 		/*Moved to PrepareDomain
@@ -237,10 +242,10 @@ class CreateWiki {
 		}*/
 
 		// start counting time
-		$this->mCurrTime = wfTime();
+		//$this->mCurrTime = wfTime();
 
 		// check and create database
-		$this->mDBw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB ); # central
+		//$this->mDBw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB ); # central
 
 		///
 		// local database handled is handler to cluster we create new wiki.
@@ -271,8 +276,6 @@ class CreateWiki {
 		$this->mNewWiki->dbw->query( sprintf( "CREATE DATABASE `%s`", $this->mNewWiki->dbname ) );
 		wfDebugLog( "createwiki", __METHOD__ . ": Database {$this->mNewWiki->dbname} created\n", true );
 		*/
-
-		$taskRunner->run();
 
 // MOVED TO SetupWikiCities task
 //		/**
@@ -318,8 +321,8 @@ class CreateWiki {
 		//wfDebugLog( "createwiki", __METHOD__ . ": Populating city_variables\n", true );
 		//$this->setWFVariables();
 
-		$tmpSharedDB = $wgSharedDB;
-		$wgSharedDB = $this->mNewWiki->dbname;
+		//$tmpSharedDB = $wgSharedDB;
+		//$wgSharedDB = $this->mNewWiki->dbname;
 
 		// @TODO We commit here both WikiFactory and WikiCities setup. Where we should execute commit?
 		// Maybe we should commit twice?
@@ -363,8 +366,8 @@ class CreateWiki {
 		/**
 		 * destroy connection to newly created database
 		 */
-		$this->waitForSlaves( __METHOD__ );
-		$wgSharedDB = $tmpSharedDB;
+		//$this->waitForSlaves( __METHOD__ );
+		//$wgSharedDB = $tmpSharedDB;
 
 
 //		$oHub = WikiFactoryHub::getInstance();
@@ -449,10 +452,10 @@ class CreateWiki {
 
 		wfRunHooks( "AfterWikiCreated", [ $this->mNewWiki->city_id, $this->sDbStarter ] );
 
-		$this->info( __METHOD__ . ': done', [
+		/*$this->info( __METHOD__ . ': done', [
 			'task_id' => $task_id,
 			'took' => microtime( true ) - $then,
-		] );
+		] );*/
 
 		wfProfileOut( __METHOD__ );
 	}
@@ -536,10 +539,10 @@ class CreateWiki {
 	 *
 	 * @return StdClass
 	 */
-	private function prepareValues() {
+	//private function prepareValues() {
 		//global $wgContLang;
 
-		wfProfileIn( __METHOD__ );
+		//wfProfileIn( __METHOD__ );
 
 		//$this->fixSubdomains();
 
@@ -614,10 +617,10 @@ class CreateWiki {
 // MOVED TO SetupWikiCities task
 //		$this->mNewWiki->founderIp = $this->mFounderIp;
 
-		wfProfileOut( __METHOD__ );
+		//wfProfileOut( __METHOD__ );
 
-		return $this->mNewWiki;
-	}
+		//return $this->mNewWiki;
+	//}
 
 	/**
 	 * set subdomain name
@@ -1159,10 +1162,11 @@ class CreateWiki {
 //		return 1;
 //	}
 
+	/*
 	public function getWikiInfo($key) {
 		$ret = $this->mNewWiki->$key;
 		return $ret;
-	}
+	}*/
 
 	/**
 	 * Returns memcache key for locking given domain
