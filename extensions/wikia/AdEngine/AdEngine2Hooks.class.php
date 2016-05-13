@@ -52,6 +52,8 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverOpenXBidderCountriesMobile';
 		$vars[] = 'wgAdDriverOverridePrefootersCountries';
 		$vars[] = 'wgAdDriverRubiconFastlaneCountries';
+		$vars[] = 'wgAdDriverRubiconFastlaneProviderCountries';
+		$vars[] = 'wgAdDriverRubiconFastlaneProviderSkipTier';
 		$vars[] = 'wgAdDriverScrollHandlerConfig';
 		$vars[] = 'wgAdDriverScrollHandlerCountries';
 		$vars[] = 'wgAdDriverSourcePointDetectionCountries';

@@ -4,7 +4,8 @@ class CommunityPageSpecialInsightsModel {
 	const INSIGHTS_MODULE_ITEMS = 5;
 	const INSIGHTS_MODULE_SORT_TYPE = 'pvDiff';
 	const INSIGHTS_MODULES = [
-		'popularpages' => 'pvDiff'
+		'popularpages' => 'pvDiff',
+		'wantedpages' => false
 	];
 
 	private $insightsService;
@@ -22,7 +23,6 @@ class CommunityPageSpecialInsightsModel {
 		$modules['modules'] = [];
 
 		$modules['messages'] = [
-			'edittext' => wfMessage( 'communitypage-page-list-edit' )->text(),
 			'fulllist' => wfMessage( 'communitypage-full-list' )->text()
 		];
 
@@ -56,12 +56,15 @@ class CommunityPageSpecialInsightsModel {
 		 * Covers messages:
 		 *
 		 * communitypage-popularpages-title'
+		 * communitypage-wantedpages-title'
 		 * communitypage-popularpages-description'
+		 * communitypage-wantedpages-description'
 		 */
 		$insightPages['title'] = wfMessage( 'communitypage-' . $type . '-title' )->text();
 		$insightPages['description'] =  wfMessage( 'communitypage-' . $type . '-description' )->text();
 
-		$insightPages['fulllistlink'] = SpecialPage::getTitleFor( 'Insights', $type )->getLocalURL( [ 'sort' => self::INSIGHTS_MODULE_SORT_TYPE ] );
+		$insightPages['fulllistlink'] = SpecialPage::getTitleFor( 'Insights', $type )
+			->getLocalURL( $this->getSortingParam( $sortingType ) );
 
 		$insightPages = $this->addLastRevision( $insightPages );
 
@@ -77,6 +80,7 @@ class CommunityPageSpecialInsightsModel {
 		foreach ( $insightsPages['pages'] as $key => $insight ) {
 			$insightsPages['pages'][$key]['metadataDetails'] = $this->getArticleMetadataDetails( $insight['metadata'] );
 			$insightsPages['pages'][$key]['editlink'] = $this->getEditUrl( $insight['link']['url'] );
+			$insightsPages['pages'][$key]['edittext'] = $this->getArticleContributeText( $insight['metadata'] );
 
 			if ( !empty( $insightsPages['pages'][$key]['pageviews'] ) ) {
 				$insightsPages['pages'][$key]['pageviews'] = wfMessage(
@@ -93,6 +97,22 @@ class CommunityPageSpecialInsightsModel {
 			return $articleUrl . '?veaction=edit';
 		}
 		return $articleUrl . '?action=edit';
+	}
+
+	private function getSortingParam( $sortingType ) {
+		if ( !empty( $sortingType ) ) {
+			return [ 'sort' => $sortingType ];
+		}
+
+		return [];
+	}
+
+	private function getArticleContributeText( $metadata ) {
+		if ( !empty( $metadata['wantedBy'] ) ) {
+			return wfMessage( 'communitypage-page-list-create' )->text();
+		}
+
+		return wfMessage( 'communitypage-page-list-edit' )->text();
 	}
 
 	/**

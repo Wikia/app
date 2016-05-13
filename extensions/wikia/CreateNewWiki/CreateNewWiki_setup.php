@@ -18,6 +18,7 @@ $wgAutoloadClasses['CreateNewWikiObfuscate'] = $dir . 'CreateNewWikiObfuscate.cl
 $wgAutoloadClasses['CreateWiki'] = $dir."/CreateWiki.php";
 $wgAutoloadClasses['CreateWikiChecks'] = $dir."/CreateWikiChecks.php";
 $wgAutoloadClasses['SpecialCreateNewWiki'] = $dir . 'SpecialCreateNewWiki.class.php';
+$wgAutoloadClasses['CreateNewWikiHooks'] = __DIR__ . '/CreateNewWikiHooks.class.php';
 
 // Nirvana controllers
 $wgAutoloadClasses['CreateNewWikiController'] = $dir . 'CreateNewWikiController.class.php';
@@ -32,3 +33,5 @@ $wgExtensionMessagesFiles['CreateNewWikiAlias'] = $dir . 'CreateNewWiki.alias.ph
 
 // setup functions
 $wgExtensionFunctions[] = 'CreateNewWikiController::setupCreateNewWiki';
+
+$wgHooks['OasisSkinAssetGroups'][] = 'CreateNewWikiHooks::onOasisSkinAssetGroups';

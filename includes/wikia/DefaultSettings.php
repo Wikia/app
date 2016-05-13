@@ -1261,6 +1261,20 @@ $wgAdDriverEnableRubiconFastlane = true;
 $wgAdDriverRubiconFastlaneCountries = null;
 
 /**
+ * @name $wgAdDriverRubiconFastlaneProviderCountries
+ * Enables RubiconFastlane provider in these countries.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverRubiconFastlaneProviderCountries = null;
+
+/**
+ * @name $wgAdDriverRubiconFastlaneProviderSkipTier
+ * Sets minimum value of tier needed to render an ad.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverRubiconFastlaneProviderSkipTier = 0;
+
+/**
  * @name $wgAdDriverOverridePrefootersCountries
  * Enables overriding prefooters sizes on Oasis in these countries.
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.

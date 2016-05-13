@@ -113,6 +113,11 @@ define('ext.wikia.adEngine.adContext', [
 			context.providers.hitMedia = true;
 		}
 
+		if (context.providers.rubiconFastlane) {
+			context.providers.rubiconFastlane = geo.isProperGeo(instantGlobals.wgAdDriverRubiconFastlaneCountries) &&
+				geo.isProperGeo(instantGlobals.wgAdDriverRubiconFastlaneProviderCountries);
+		}
+
 		// INVISIBLE_HIGH_IMPACT slot
 		context.slots.invisibleHighImpact = (
 			context.slots.invisibleHighImpact &&
