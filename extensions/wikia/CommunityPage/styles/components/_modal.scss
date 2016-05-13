@@ -5,7 +5,7 @@
 	> header {
 		background-color: transparent;
 		height: auto;
-		padding: 18px $modal-horizontal-padding;
+		padding: $modal-vertical-padding $modal-horizontal-padding;
 	}
 
 	> footer {
@@ -13,7 +13,7 @@
 	}
 
 	.modal-nav {
-		padding: 0 $modal-horizontal-padding 8px;
+		padding: $modal-vertical-padding $modal-horizontal-padding 0 0;
 
 		li {
 			display: inline-block;
