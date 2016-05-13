@@ -39,8 +39,6 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 			'headerWelcomeMsg' => $this->msg( 'communitypage-tasks-header-welcome' )->plain(),
 			'adminWelcomeMsg' => $this->msg( 'communitypage-admin-welcome-message' )->text(),
 			'pageListEmptyText' => $this->msg( 'communitypage-page-list-empty' )->plain(),
-			'showPopupMessage' => true,
-			'popupMessageText' => 'This is just a test message for the popup message box',
 			'userIsMember' => ( $this->userTotalContributionCount > 0 ),
 			'pageTitle' => $this->msg( 'communitypage-title' )->plain(),
 			'topContributors' => $this->sendRequest( 'CommunityPageSpecialController', 'getTopContributorsData' )
