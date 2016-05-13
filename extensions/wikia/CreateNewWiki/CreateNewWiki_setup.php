@@ -18,7 +18,24 @@ $wgAutoloadClasses['CreateNewWikiObfuscate'] = $dir . 'CreateNewWikiObfuscate.cl
 $wgAutoloadClasses['CreateWikiLocalJob'] = $dir."CreateWikiLocalJob.php";
 $wgAutoloadClasses['CreateWiki'] = $dir."/CreateWiki.php";
 $wgAutoloadClasses['CreateWikiChecks'] = $dir."/CreateWikiChecks.php";
-$wgAutoloadClasses['SpecialCreateNewWiki'] = $dir . 'SpecialCreateNewWiki.class.php';
+
+
+// Tasks related with new wiki creation
+$wgAutoloadClasses['ConfigureCategories'] = __DIR__ . '/tasks/ConfigureCategories.php';
+$wgAutoloadClasses['ConfigureUsers'] = __DIR__ . '/tasks/ConfigureUsers.php';
+$wgAutoloadClasses['ConfigureWikiFactory'] = __DIR__ . '/tasks/ConfigureWikiFactory.php';
+$wgAutoloadClasses['CreateDatabase'] = __DIR__ . '/tasks/CreateDatabase.php';
+$wgAutoloadClasses['CreateTables'] = __DIR__ . '/tasks/CreateTables.php';
+$wgAutoloadClasses['ImportStarterData'] = __DIR__ . '/tasks/ImportStarterData.php';
+$wgAutoloadClasses['PrepareDomain'] = __DIR__ . '/tasks/PrepareDomain.php';
+$wgAutoloadClasses['SetCustomSettings'] = __DIR__ . '/tasks/SetCustomSettings.php';
+$wgAutoloadClasses['SetTags'] = __DIR__ . '/tasks/SetTags.php';
+$wgAutoloadClasses['SetupWikiCities'] = __DIR__ . '/tasks/SetupWikiCities.php';
+$wgAutoloadClasses['Task'] = __DIR__ . '/tasks/Task.php';
+$wgAutoloadClasses['TaskContext'] = __DIR__ . '/tasks/TaskContext.php';
+$wgAutoloadClasses['TaskHelper'] = __DIR__ . '/tasks/TaskHelper.php';
+$wgAutoloadClasses['TaskResult'] = __DIR__ . '/tasks/TaskResult.php';
+$wgAutoloadClasses['TaskRunner'] = __DIR__ . '/tasks/TaskRunner.php';
 
 // Nirvana controllers
 $wgAutoloadClasses['CreateNewWikiController'] = $dir . 'CreateNewWikiController.class.php';
