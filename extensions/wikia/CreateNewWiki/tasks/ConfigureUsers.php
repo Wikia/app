@@ -2,49 +2,48 @@
 
 namespace Wikia\CreateNewWiki\Tasks;
 
-use CreateWikiException;
-use User;
-
 class ConfigureUsers implements Task {
-
-	const ERROR_USER_IN_ANON = 12;
+	use \Wikia\Logger\Loggable;
 
 	private $taskContext;
-	private $uploader;
 
-	public function __construct(TaskContext $taskContext ) {
+	public function __construct( TaskContext $taskContext ) {
 		$this->taskContext = $taskContext;
 	}
 
 	public function prepare() {
 		global $wgUser;
 
-		$this->taskContext->setFounder($wgUser);
+		$this->taskContext->setFounder( $wgUser );
 
-		$this->uploader  = User::newFromName( 'CreateWiki script' );
-		$this->uploader->getId();
+		return TaskResult::createForSuccess();
 	}
 
 	public function check() {
 		if ( $this->taskContext->getFounder()->isAnon() ) {
-			wfProfileOut( __METHOD__ );
-			throw new CreateWikiException('Founder is anon', self::ERROR_USER_IN_ANON);
+			return TaskResult::createForError( "Founder is anon" );
 		}
+
+		return TaskResult::createForSuccess();
 	}
 
 	public function run() {
 		$founderId = $this->taskContext->getFounder()->getId();
-		wfDebugLog( "createwiki", __METHOD__ . ": Create user sysop/bureaucrat for user: {$founderId} \n", true );
+		$this->debug( implode( ":", ["CreateWiki", __CLASS__, "Create user sysop/bureaucrat for user: {$founderId}"] ) );
 		if ( !$this->addUserToGroups() ) {
-			wfDebugLog( "createwiki", __METHOD__ . ": Create user sysop/bureaucrat for user: {$founderId} failed \n", true );
+			// @TODO should this be an error? - it wasn't before the changes but looks like an error to me
+			$this->warning( implode( ":", ["CreateWiki", __CLASS__, "Create user sysop/bureaucrat for user: {$founderId} FAILED"] ) );
 		}
+
+		TaskResult::createForSuccess();
 	}
 
-	private function addUserToGroups() {
+	public function addUserToGroups() {
 		$founderId = $this->taskContext->getFounder()->getId();
 		$wikiDBW = $this->taskContext->getWikiDBW();
 
-		if ( $founderId ) {
+		if ( !empty( $founderId ) ) {
+			$this->warning( implode( ":", ["CreateWiki", __CLASS__, "FounderId is empty"] ) );
 			return false;
 		}
 
