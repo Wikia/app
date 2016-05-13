@@ -4,7 +4,8 @@ class CommunityPageSpecialInsightsModel {
 	const INSIGHTS_MODULE_ITEMS = 5;
 	const INSIGHTS_MODULE_SORT_TYPE = 'pvDiff';
 	const INSIGHTS_MODULES = [
-		'popularpages' => 'pvDiff'
+		'popularpages' => 'pvDiff',
+		'uncategorizedpages' => 'pvDiff'
 	];
 
 	private $insightsService;
@@ -56,7 +57,9 @@ class CommunityPageSpecialInsightsModel {
 		 * Covers messages:
 		 *
 		 * communitypage-popularpages-title'
+		 * communitypage-uncategorizedpages-title'
 		 * communitypage-popularpages-description'
+		 * communitypage-uncategorizedpages-description'
 		 */
 		$insightPages['title'] = wfMessage( 'communitypage-' . $type . '-title' )->text();
 		$insightPages['description'] =  wfMessage( 'communitypage-' . $type . '-description' )->text();
@@ -76,7 +79,7 @@ class CommunityPageSpecialInsightsModel {
 	private function addLastRevision( $insightsPages ) {
 		foreach ( $insightsPages['pages'] as $key => $insight ) {
 			$insightsPages['pages'][$key]['metadataDetails'] = $this->getArticleMetadataDetails( $insight['metadata'] );
-			$insightsPages['pages'][$key]['editlink'] = $this->getEditUrl( $insight['link']['url'] );
+			$insightsPages['pages'][$key]['editlink'] = $this->getEditUrl( $insight['link']['articleurl'] );
 
 			if ( !empty( $insightsPages['pages'][$key]['pageviews'] ) ) {
 				$insightsPages['pages'][$key]['pageviews'] = wfMessage(
