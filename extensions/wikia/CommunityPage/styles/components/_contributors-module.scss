@@ -70,10 +70,17 @@
 	}
 
 	&.ContributorsModuleModal {
-		padding: 0;
+		padding: 10px 0 0;
 
 		> h2 {
 			display: none;
+		}
+
+		.community-page-all-contributors-legend {
+			color: $color-alternate-text;
+			font-size: 13px;
+			padding-right: 30px;
+			text-align: right;
 		}
 
 		.top-contributors {

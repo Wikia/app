@@ -167,6 +167,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 
 		$this->response->setData( [
 			'allMembersHeaderText' => $this->msg( 'communitypage-all-members' )->plain(),
+			'allContributorsLegend' => $this->msg( 'communitypage-modal-tab-all-contribution-header' )->plain(),
 			'admin' => $this->msg( 'communitypage-admin' )->plain(),
 			'joinedText' => $this->msg( 'communitypage-joined' )->plain(),
 			'noMembersText' => $this->msg( 'communitypage-no-members' )->plain(),
