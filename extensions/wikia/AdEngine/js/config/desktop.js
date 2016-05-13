@@ -15,8 +15,10 @@ define('ext.wikia.adEngine.config.desktop', [
 	'ext.wikia.adEngine.provider.liftium',
 	'ext.wikia.adEngine.provider.monetizationService',
 	'ext.wikia.adEngine.provider.remnantGpt',
+	'ext.wikia.adEngine.provider.rubiconFastlane',
 	'ext.wikia.adEngine.provider.turtle',
-	require.optional('ext.wikia.adEngine.provider.taboola')
+	require.optional('ext.wikia.adEngine.provider.taboola'),
+	require.optional('ext.wikia.adEngine.provider.revcontent')
 ], function (
 	// regular dependencies
 	log,
@@ -33,8 +35,10 @@ define('ext.wikia.adEngine.config.desktop', [
 	adProviderLiftium,
 	adProviderMonetizationService,
 	adProviderRemnantGpt,
+	adProviderRubiconFastlane,
 	adProviderTurtle,
-	adProviderTaboola
+	adProviderTaboola,
+	adProviderRevcontent
 ) {
 	'use strict';
 
@@ -45,6 +49,7 @@ define('ext.wikia.adEngine.config.desktop', [
 			evolve2:  [adProviderEvolve2],
 			hitmedia: [adProviderHitMedia],
 			liftium:  [adProviderLiftium],
+			rpfl:     [adProviderRubiconFastlane],
 			turtle:   [adProviderTurtle]
 		};
 
@@ -74,6 +79,11 @@ define('ext.wikia.adEngine.config.desktop', [
 			return [adProviderTaboola];
 		}
 
+		// Revcontent
+		if (adProviderRevcontent && adProviderRevcontent.canHandleSlot(slotName)) {
+			return [adProviderRevcontent];
+		}
+
 		// MonetizationService
 		if (context.providers.monetizationService && adProviderMonetizationService.canHandleSlot(slotName)) {
 			if (instantGlobals.wgSitewideDisableMonetizationService) {
@@ -99,8 +109,12 @@ define('ext.wikia.adEngine.config.desktop', [
 			providerList.push(adProviderRemnantGpt);
 		}
 
-		// Last resort provider: Liftium
-		providerList.push(adProviderLiftium);
+		// Last resort provider: RubiconFastlane or Liftium
+		if (context.providers.rubiconFastlane && adProviderRubiconFastlane.canHandleSlot(slotName)) {
+			providerList.push(adProviderRubiconFastlane);
+		} else {
+			providerList.push(adProviderLiftium);
+		}
 
 		return providerList;
 	}
