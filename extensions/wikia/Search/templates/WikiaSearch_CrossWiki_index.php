@@ -10,7 +10,7 @@
 						<?= wfMsg('wikiasearch2-results-for', '<strong>' . $query . '</strong>'); ?>
 					<?php endif; ?>
 					<?php if (isset($hub) && $hub) : ?>
-						<?= wfMessage( 'wikiasearch2-onhub', Sanitizer::stripAllTags( $hub ) )->text() ?>
+						<?= wfMessage( 'wikiasearch2-onhub', Sanitizer::stripAllTags( $hub ) )->escaped() ?>
 						|
 						<a
 							href="<?= preg_replace('/&hub=[^&]+/', '', $_SERVER['REQUEST_URI']) ?>"><?= wfMsg('wikiasearch2-search-all-wikia') ?></a>
