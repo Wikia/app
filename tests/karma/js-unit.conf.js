@@ -130,6 +130,10 @@ module.exports = function (config) {
 			// Views
 			'extensions/wikia/VideoPageTool/scripts/admin/views/autocomplete.js',
 
+			//CreateNewWiki
+			'extensions/wikia/CreateNewWiki/js/CreateNewWikiHelper.js',
+			'extensions/wikia/CreateNewWiki/js/spec/*.spec.js',
+
 			/*
 			 * VideoPageTool: Homepage Module
 			 */
