@@ -1,11 +1,13 @@
 <?php
 
-class CreateDatabaseTest extends WikiaBaseTest
+namespace Wikia\CreateNewWiki\Tasks;
+
+class CreateDatabaseTest extends \WikiaBaseTest
 {
 
 	public function setUp()
 	{
-		$this->setupFile = dirname(__FILE__) . '/../CreateNewWiki_setup.php';
+		$this->setupFile = dirname(__FILE__) . '/../../CreateNewWiki_setup.php';
 		parent::setUp();
 	}
 
