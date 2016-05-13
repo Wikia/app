@@ -40,6 +40,20 @@ require([
 		},
 	};
 
+	function init() {
+		initTracking();
+
+		$('#openModalTopAdmins').click(function (event) {
+			event.preventDefault();
+			openCommunityModal(tabs.TAB_ADMINS);
+		});
+
+		$('#viewAllMembers').click(function (event) {
+			event.preventDefault();
+			openCommunityModal(tabs.TAB_ALL);
+		});
+	}
+
 	function getUiModalInstance() {
 		var $deferred = $.Deferred();
 
@@ -140,6 +154,7 @@ require([
 
 				modal.show();
 				initModalTracking(modal);
+				initModalEventBindings(modal);
 
 				window.activeModal = modal;
 				switchCommunityModalTab(tabToActivate);
@@ -167,29 +182,21 @@ require([
 		});
 	}
 
-	$('#openModalTopAdmins').click(function (event) {
-		event.preventDefault();
-		openCommunityModal(tabs.TAB_ADMINS);
-	});
-
-	$('#viewAllMembers').click(function (event) {
-		event.preventDefault();
-		openCommunityModal(tabs.TAB_ALL);
-	});
-
-	$(document)
-		.on( 'click', '#modalTabAll', function (event) {
-			event.preventDefault();
-			switchCommunityModalTab(tabs.TAB_ALL);
-		})
-		.on( 'click', '#modalTabAdmins', function (event) {
-			event.preventDefault();
-			switchCommunityModalTab(tabs.TAB_ADMINS);
-		})
-		.on( 'click', '#modalTabLeaderboard', function (event) {
-			event.preventDefault();
-			switchCommunityModalTab(tabs.TAB_LEADERBOARD);
-		});
+	function initModalEventBindings(modal) {
+		modal.$content
+			.on('click', '#modalTabAll', function (event) {
+				event.preventDefault();
+				switchCommunityModalTab(tabs.TAB_ALL);
+			})
+			.on('click', '#modalTabAdmins', function (event) {
+				event.preventDefault();
+				switchCommunityModalTab(tabs.TAB_ADMINS);
+			})
+			.on('click', '#modalTabLeaderboard', function (event) {
+				event.preventDefault();
+				switchCommunityModalTab(tabs.TAB_LEADERBOARD);
+			});
+	}
 
 	function handleClick (event, category) {
 		var data = $(event.currentTarget).data('tracking');
@@ -228,5 +235,5 @@ require([
 		});
 	}
 
-	$(initTracking);
+	$(init);
 });
