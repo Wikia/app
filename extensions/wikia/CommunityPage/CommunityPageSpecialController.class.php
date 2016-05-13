@@ -3,7 +3,6 @@
 class CommunityPageSpecialController extends WikiaSpecialPageController {
 	const COMMUNITY_PAGE_HERO_IMAGE = 'Community-Page-Header.jpg';
 	const DEFAULT_TEMPLATE_ENGINE = \WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
-
 	const ALL_MEMBERS_LIMIT = 20;
 	const TOP_ADMINS_MODULE_LIMIT = 3;
 	const TOP_CONTRIBUTORS_LIMIT = 5;
@@ -39,8 +38,6 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 			'headerWelcomeMsg' => $this->msg( 'communitypage-tasks-header-welcome' )->plain(),
 			'adminWelcomeMsg' => $this->msg( 'communitypage-admin-welcome-message' )->text(),
 			'pageListEmptyText' => $this->msg( 'communitypage-page-list-empty' )->plain(),
-			'showPopupMessage' => true,
-			'popupMessageText' => 'This is just a test message for the popup message box',
 			'userIsMember' => ( $this->userTotalContributionCount > 0 ),
 			'pageTitle' => $this->msg( 'communitypage-title' )->plain(),
 			'topContributors' => $this->sendRequest( 'CommunityPageSpecialController', 'getTopContributorsData' )
@@ -50,6 +47,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 			'recentlyJoined' => $this->sendRequest( 'CommunityPageSpecialController', 'getRecentlyJoinedData' )
 				->getData(),
 			'recentActivityModule' => $this->getRecentActivityData(),
+			'insightsModules' => ( new CommunityPageSpecialInsightsModel() )->getInsightsModules()
 		] );
 	}
 
@@ -179,50 +177,8 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	 * @return array
 	 */
 	private function getRecentActivityData() {
-		$data = $this->sendRequest( 'LatestActivityController', 'executeIndex' )->getData();
-		$recentActivity = [];
-
-		foreach ( $data['changeList'] as $activity ) {
-			$changeType = $activity['changetype'];
-
-			switch ( $changeType ) {
-				case 'new':
-					$changeTypeString = $this->msg( 'communitypage-created' )->plain();
-					break;
-				case 'delete':
-					$changeTypeString = $this->msg( 'communitypage-deleted' )->plain();
-					break;
-				case 'edit':
-					// fall through
-				default:
-					$changeTypeString = $this->msg( 'communitypage-edited' )->plain();
-					break;
-			}
-
-			$changeMessage = $this->msg( 'communitypage-activity',
-				$activity['user_href'], $changeTypeString, $activity['page_href'] )->plain();
-
-			$recentActivity[] = [
-				'timeAgo' => $activity['time_ago'],
-				'userAvatar' => AvatarService::renderAvatar(
-					$activity['user_name'],
-					AvatarService::AVATAR_SIZE_SMALL_PLUS ),
-				'userName' => $activity['user_name'],
-				'userHref' => $activity['user_href'],
-				'changeTypeString' => $changeTypeString,
-				'editedPageTitle' => $activity['page_title'],
-				'changeMessage' => $changeMessage,
-			];
-		}
-
-		$title = SpecialPage::getTitleFor( 'WikiActivity' );
-
-		return [
-			'activityHeading' => $data['moduleHeader'],
-			'moreActivityText' => $this->msg( 'communitypage-recent-activity' )->plain(),
-			'moreActivityLink' => $title->getCanonicalURL(),
-			'activity' => $recentActivity,
-		];
+		$model = new CommunityPageSpecialRecentActivityModel();
+		return $model->getData();
 	}
 
 	public function getModalHeaderData() {

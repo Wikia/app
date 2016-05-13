@@ -1,5 +1,6 @@
+@import 'skins/shared/color';
+
 .WikiaRail .module {
-	color: $color-activity-text;
 
 	h2 {
 		clear: both;
@@ -8,7 +9,7 @@
 	}
 
 	.community-page-subtle {
-		color: $color-module-subtle-text;
+		color: $color-alternate-text;
 		display: block;
 		font-size: 12px;
 	}

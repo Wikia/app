@@ -137,8 +137,10 @@ $config['recirculation_js'] = array(
 		'//extensions/wikia/Recirculation/js/views/incontent.js',
 		'//extensions/wikia/Recirculation/js/views/rail.js',
 		'//extensions/wikia/Recirculation/js/views/footer.js',
+		'//extensions/wikia/Recirculation/js/views/scroller.js',
 		'//extensions/wikia/Recirculation/js/experiments/placement.js',
 		'//extensions/wikia/Recirculation/js/scrolldepth.js',
+		'//extensions/wikia/Recirculation/js/libs/perfect-scrollbar.js',
 	),
 );
 
@@ -2865,7 +2867,6 @@ $config['special_community_page_scss'] = [
 		'//extensions/wikia/CommunityPage/styles/CommunityPageOverrides.scss',
 	],
 ];
-
 
 $config['visual_editor_tour_experiment_js'] = [
 	'type' => AssetsManager::TYPE_JS,
