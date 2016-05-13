@@ -49,8 +49,9 @@ class LatestActivityController extends WikiaController {
 				$item = array();
 				$item['time_ago'] = wfTimeFormatAgoOnlyRecent($change['timestamp']); // TODO: format the timestamp on front-end to allow longer caching in memcache?
 				$item['user_name'] = $change['username'];
-				$item['avatar_url'] = AvatarService::getAvatarUrl($item['user_name'], 20);
-				$item['user_href'] = AvatarService::renderLink($item['user_name']);
+				$item['avatar_url'] = AvatarService::getAvatarUrl( $item['user_name'], 20 );
+				$item['user_profile_url'] = AvatarService::getUrl( $item['user_name'] );
+				$item['user_href'] = AvatarService::renderLink( $item['user_name'] );
 				$item['page_title'] = $change['title'];
 				$item['changetype'] = $change['type'];
 				$title = Title::newFromText( $change['title'], $change['ns'] );
@@ -59,7 +60,8 @@ class LatestActivityController extends WikiaController {
 					$item['page_href'] = Xml::element('a', array('href' => $change['url']), $item['page_title']);
 				} else {
 					if( is_object($title) ) {
-						$item['page_href'] = Xml::element('a', array('href' => $title->getLocalUrl()), $item['page_title']);
+						$item['page_url'] = $title->getLocalURL();
+						$item['page_href'] = Xml::element('a', array('href' => $item['page_url']), $item['page_title']);
 					}
 				}
 				

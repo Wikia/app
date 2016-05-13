@@ -177,50 +177,8 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	 * @return array
 	 */
 	private function getRecentActivityData() {
-		$data = $this->sendRequest( 'LatestActivityController', 'executeIndex' )->getData();
-		$recentActivity = [];
-
-		foreach ( $data['changeList'] as $activity ) {
-			$changeType = $activity['changetype'];
-
-			switch ( $changeType ) {
-				case 'new':
-					$changeTypeString = $this->msg( 'communitypage-created' )->plain();
-					break;
-				case 'delete':
-					$changeTypeString = $this->msg( 'communitypage-deleted' )->plain();
-					break;
-				case 'edit':
-					// fall through
-				default:
-					$changeTypeString = $this->msg( 'communitypage-edited' )->plain();
-					break;
-			}
-
-			$changeMessage = $this->msg( 'communitypage-activity',
-				$activity['user_href'], $changeTypeString, $activity['page_href'] )->plain();
-
-			$recentActivity[] = [
-				'timeAgo' => $activity['time_ago'],
-				'userAvatar' => AvatarService::renderAvatar(
-					$activity['user_name'],
-					AvatarService::AVATAR_SIZE_SMALL_PLUS ),
-				'userName' => $activity['user_name'],
-				'userHref' => $activity['user_href'],
-				'changeTypeString' => $changeTypeString,
-				'editedPageTitle' => $activity['page_title'],
-				'changeMessage' => $changeMessage,
-			];
-		}
-
-		$title = SpecialPage::getTitleFor( 'WikiActivity' );
-
-		return [
-			'activityHeading' => $data['moduleHeader'],
-			'moreActivityText' => $this->msg( 'communitypage-recent-activity' )->plain(),
-			'moreActivityLink' => $title->getCanonicalURL(),
-			'activity' => $recentActivity,
-		];
+		$model = new CommunityPageSpecialRecentActivityModel();
+		return $model->getData();
 	}
 
 	public function getModalHeaderData() {
