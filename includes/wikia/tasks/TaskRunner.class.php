@@ -114,16 +114,4 @@ class TaskRunner {
 
 		return $json;
 	}
-
-	// TODO: remove once we are completely off old job/task systems
-	static function isLegacy( $taskName ) {
-		return !self::isModern( $taskName );
-	}
-
-	static function isModern( $taskName ) {
-		return in_array( $taskName, [
-			'CreateWikiLocalJob',
-//			'PromoteImageReviewTask', NOTE - this is removed in https://github.com/Wikia/app/pull/4086
-		] );
-	}
 }
