@@ -23,7 +23,6 @@ class CommunityPageSpecialInsightsModel {
 		$modules['modules'] = [];
 
 		$modules['messages'] = [
-			'edittext' => wfMessage( 'communitypage-page-list-edit' )->text(),
 			'fulllist' => wfMessage( 'communitypage-full-list' )->text()
 		];
 
@@ -81,6 +80,7 @@ class CommunityPageSpecialInsightsModel {
 		foreach ( $insightsPages['pages'] as $key => $insight ) {
 			$insightsPages['pages'][$key]['metadataDetails'] = $this->getArticleMetadataDetails( $insight['metadata'] );
 			$insightsPages['pages'][$key]['editlink'] = $this->getEditUrl( $insight['link']['url'] );
+			$insightsPages['pages'][$key]['edittext'] = $this->getArticleContributeText( $insight['metadata'] );
 
 			if ( !empty( $insightsPages['pages'][$key]['pageviews'] ) ) {
 				$insightsPages['pages'][$key]['pageviews'] = wfMessage(
@@ -105,6 +105,14 @@ class CommunityPageSpecialInsightsModel {
 		}
 
 		return [];
+	}
+
+	private function getArticleContributeText( $metadata ) {
+		if ( !empty( $metadata['wantedBy'] ) ) {
+			return wfMessage( 'communitypage-page-list-create' )->text();
+		}
+
+		return wfMessage( 'communitypage-page-list-edit' )->text();
 	}
 
 	/**
