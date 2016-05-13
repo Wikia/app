@@ -12,9 +12,9 @@ class ARecoveryUnlockCSS {
 		$wikiaCssUrl = self::getWikiaUnlockCSSUrl();
 		$memcKey = $wikiaCssUrl;
 		$memCache = F::app()->wg->Memc;
-		$user = F::app()->wg->User;
 
-		if ( ARecoveryModule::isEnabled() && !$user->isLoggedIn() ) {
+
+		if ( ARecoveryModule::isEnabled() ) {
 			$jsonData = [
 				"account_id" => $wgSourcePointAccountId,
 				"is_pub_resource" => false,
