@@ -15,7 +15,7 @@ class TimeCounter {
 	}
 
 	public function getContext( $context = null ) {
-		$timeContext = ['took' => $this->getTimePassed() ];
+		$timeContext = [ 'took' => $this->getTimePassed() ];
 		if ( !empty( $context ) ) {
 			return array_merge( $context, $timeContext );
 		}  else {

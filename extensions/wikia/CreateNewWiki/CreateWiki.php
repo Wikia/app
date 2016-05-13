@@ -430,6 +430,7 @@ class CreateWiki {
 		/**
 		 * Schedule an async task
 		 */
+		/* Moved to StartPostCreationTasks
 		$creationTask = new \Wikia\Tasks\Tasks\CreateNewWikiTask();
 
 		$job_params = new stdClass();
@@ -450,7 +451,7 @@ class CreateWiki {
 
 		wfDebugLog( "createwiki", __METHOD__ . ": Local maintenance task added as {$task_id}\n", true );
 
-		wfRunHooks( "AfterWikiCreated", [ $this->mNewWiki->city_id, $this->sDbStarter ] );
+		wfRunHooks( "AfterWikiCreated", [ $this->mNewWiki->city_id, $this->sDbStarter ] );*/
 
 		/*$this->info( __METHOD__ . ': done', [
 			'task_id' => $task_id,

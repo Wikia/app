@@ -30,6 +30,7 @@ class TaskRunner {
 		$this->tasks[] = new ConfigureCategories( $taskContext );
 		$this->tasks[] = new SetCustomSettings( $taskContext );
 		$this->tasks[] = new SetTags( $taskContext );
+		$this->tasks[] = new StartPostCreationTasks( $taskContext );
 	}
 
 	protected function getLoggerContext() {
