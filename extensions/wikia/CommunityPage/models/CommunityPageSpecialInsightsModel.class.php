@@ -4,7 +4,8 @@ class CommunityPageSpecialInsightsModel {
 	const INSIGHTS_MODULE_ITEMS = 5;
 	const INSIGHTS_MODULE_SORT_TYPE = 'pvDiff';
 	const INSIGHTS_MODULES = [
-		'popularpages' => 'pvDiff'
+		'popularpages' => 'pvDiff',
+		'wantedpages' => false
 	];
 
 	private $insightsService;
@@ -56,7 +57,9 @@ class CommunityPageSpecialInsightsModel {
 		 * Covers messages:
 		 *
 		 * communitypage-popularpages-title'
+		 * communitypage-wantedpages-title'
 		 * communitypage-popularpages-description'
+		 * communitypage-wantedpages-description'
 		 */
 		$insightPages['title'] = wfMessage( 'communitypage-' . $type . '-title' )->text();
 		$insightPages['description'] =  wfMessage( 'communitypage-' . $type . '-description' )->text();
