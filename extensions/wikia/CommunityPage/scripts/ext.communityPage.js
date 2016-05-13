@@ -194,7 +194,7 @@ require([
 	}
 
 	function initModalEventBindings(modal) {
-		modal.$content
+		modal.$element
 			.on('click', '#modalTabAll', function (event) {
 				event.preventDefault();
 				switchCommunityModalTab(tabs.TAB_ALL);
