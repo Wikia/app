@@ -19,6 +19,8 @@ class ConfigureCategories implements Task {
 		$vertical = $this->taskContext->getVertical();
 
 		$this->taskContext->setCategories( $this->prepareCategories( $vertical, $categories) );
+
+		return TaskResult::createForSuccess();
 	}
 
 	public function check() {
