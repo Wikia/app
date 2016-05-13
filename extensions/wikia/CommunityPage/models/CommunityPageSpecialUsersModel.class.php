@@ -258,7 +258,6 @@ class CommunityPageSpecialUsersModel {
 				$sqlData = ( new WikiaSQL() )
 					->SELECT( '*' )
 					->FROM ( 'wikia_user_properties' )
-					->LEFT_JOIN( 'user_groups' )->ON( 'wup_user = ug_user' )
 					->WHERE ( 'wup_property' )->EQUAL_TO( 'firstContributionTimestamp' )
 					->AND_ ( 'wup_value > DATE_SUB(now(), INTERVAL 2 YEAR)' )
 					->ORDER_BY( 'wup_value DESC' )
@@ -273,7 +272,6 @@ class CommunityPageSpecialUsersModel {
 							$sqlData[] = [
 								'userId' => $row->wup_user,
 								'oldestRevision' => $row->wup_value,
-								'group' => $row->ug_group,
 								'joinDate' => $dateString,
 								'userName' => $userName,
 								'isAdmin' => $this->isAdmin( $row->wup_user, $this->getAdmins() ),
@@ -307,7 +305,6 @@ class CommunityPageSpecialUsersModel {
 				$sqlData = ( new WikiaSQL() )
 					->SELECT( 'COUNT(*) AS user_count' )
 					->FROM ( 'wikia_user_properties' )
-					->LEFT_JOIN( 'user_groups' )->ON( 'wup_user = ug_user' )
 					->WHERE ( 'wup_property' )->EQUAL_TO( 'firstContributionTimestamp' )
 					->AND_ ( 'wup_value > DATE_SUB(now(), INTERVAL 2 YEAR)' )
 					->ORDER_BY( 'wup_value DESC' )
