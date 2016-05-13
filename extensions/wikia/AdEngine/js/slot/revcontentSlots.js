@@ -42,7 +42,9 @@ define('ext.wikia.adEngine.slot.revcontentSlots', [
 				wikiaArticleFooter.insertBefore(createElem('REVCONTENT_BELOW_ARTICLE'), wikiaArticleFooter.firstChild);
 			}
 
-			slots.forEach(win.adslots2.push);
+			slots.forEach(function (slotName) {
+				win.adslots2.push(slotName);
+			});
 		});
 	}
 
