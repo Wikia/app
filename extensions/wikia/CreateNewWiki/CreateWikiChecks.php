@@ -15,11 +15,10 @@ if ( !defined( 'MEDIAWIKI' ) ) {
     exit( 1 ) ;
 }
 
-class AutoCreateWiki {
+class CreateWikiChecks {
 
 	const STAFF_LIST = "staffsigs";
     const BAD_WORDS_MSG = 'creation_blacklist';
-    const LOCK_DOMAIN_TIMEOUT = 30;
 
 	/**
 	 * isDomainExists
@@ -125,7 +124,7 @@ class AutoCreateWiki {
 	}
 
 	public static function checkDomainExists($sName, $sLang, $type) {
-		return AutoCreateWiki::domainExists($sName, $sLang, $type);
+		return CreateWikiChecks::domainExists($sName, $sLang, $type);
 	}
 
 	/**
@@ -181,7 +180,7 @@ class AutoCreateWiki {
 	public static function checkBadWords($sText, $where, $split = false) {
 		wfProfileIn(__METHOD__);
 
-		if( !wfRunHooks( 'AutoCreateWiki::checkBadWords', array( $sText, $where, $split ) ) ) {
+		if( !wfRunHooks( 'CreateWikiChecks::checkBadWords', array( $sText, $where, $split ) ) ) {
 			wfProfileOut(__METHOD__);
 			return false;
 		}
@@ -246,32 +245,4 @@ class AutoCreateWiki {
 
 		return $res;
 	}
-
-
-
-
-	/**
-	 * Returns memcache key for locking given domain
-	 * @param string $domain
-	 * @return string
-	 */
-	static protected function getLockDomainKey( $domain ) {
-		return wfSharedMemcKey('createwiki','domain','lock',urlencode($domain));
-	}
-
-	/**
-	 * Locks domain if possible for predefined amount of time
-	 * Returns true if successful
-	 *
-	 * @param string $domain
-	 * @return bool
-	 */
-	static public function lockDomain( $domain ) {
-		global $wgMemc;
-		$key = self::getLockDomainKey($domain);
-		$status = $wgMemc->add($key,1,self::LOCK_DOMAIN_TIMEOUT);
-		wfDebug("AutoCreateWiki::lockDomain(\"$domain\") = ".($status?"OK":"failed")."\n");
-		return $status;
-	}
-
 }

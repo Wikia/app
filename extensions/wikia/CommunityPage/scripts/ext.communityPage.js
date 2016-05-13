@@ -207,6 +207,11 @@ require([
 		$('.ContributorsModule').on('mousedown touchstart', 'a', function (event) {
 			handleClick(event, 'community-page-contribution-module');
 		});
+
+		// Track clicks in the Recent Activity module
+		$('.RecentActivityModule').on('mousedown touchstart', 'a', function (event) {
+			handleClick(event, 'community-page-recent-activity-module');
+		});
 	}
 
 	function initModalTracking(modal) {

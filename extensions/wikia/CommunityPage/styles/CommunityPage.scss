@@ -1,20 +1,19 @@
+// Variables for general Community Page styles
 @import 'skins/shared/color';
 @import 'skins/oasis/css/core/breakpoints-variables';
 
+// Components
 @import 'components/variables';
-@import 'components/base';
 @import 'components/module';
 @import 'components/textborder';
 @import 'components/header';
 @import 'components/recent-activity-module';
-@import 'components/banner-message';
 @import 'components/avatar';
 @import 'components/list';
 @import 'components/contributors-module';
 @import 'components/modal';
 @import 'components/insights-module';
 @import 'components/recently-joined';
-
 
 .CommunityPageContainer {
 	box-sizing: border-box;
@@ -29,6 +28,10 @@
 	width: calc(100% - 320px);
 }
 
+.WikiaArticle .community-page-top-contributors h2 {
+	margin-top: 0;
+}
+
 @media #{$breakpoint-below-small-plus} {
 	.CommunityPageContainer {
 		padding: 34px 0;
@@ -36,22 +39,5 @@
 
 	.CommunityPageMainContent {
 		width: 100%;
-	}
-}
-
-/* Temp Hacks for dark wikias until design is ready */
-@if ($is-dark-wiki) {
-	body {
-		color: $color-text-dark;
-	}
-
-	.WikiaPage .WikiaPageBackground {
-		background-color: $color-page-opposite;
-	}
-
-	.global-footer ul li {
-		a {
-			color: $color-links-default;
-		}
 	}
 }
