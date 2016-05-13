@@ -13,7 +13,6 @@ class ARecoveryUnlockCSS {
 		$memcKey = $wikiaCssUrl;
 		$memCache = F::app()->wg->Memc;
 
-
 		if ( ARecoveryModule::isEnabled() ) {
 			$jsonData = [
 				"account_id" => $wgSourcePointAccountId,
