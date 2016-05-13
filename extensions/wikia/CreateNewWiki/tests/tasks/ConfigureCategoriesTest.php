@@ -38,6 +38,36 @@ class ConfigureCategoriesTest extends \WikiaBaseTest {
 				\WikiFactoryHub::VERTICAL_ID_VIDEO_GAMES,
 				[\WikiFactoryHub::CATEGORY_ID_BOOKS, \WikiFactoryHub::CATEGORY_ID_COMICS],
 				[\WikiFactoryHub::CATEGORY_ID_GAMING, \WikiFactoryHub::CATEGORY_ID_BOOKS, \WikiFactoryHub::CATEGORY_ID_COMICS]
+			], [
+				// Add Entertainment category if vertical is TV
+				\WikiFactoryHub::VERTICAL_ID_TV,
+				[\WikiFactoryHub::CATEGORY_ID_BOOKS, \WikiFactoryHub::CATEGORY_ID_COMICS],
+				[\WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT, \WikiFactoryHub::CATEGORY_ID_BOOKS, \WikiFactoryHub::CATEGORY_ID_COMICS]
+			], [
+				// Add Entertainment category if vertical is Books
+				\WikiFactoryHub::VERTICAL_ID_BOOKS,
+				[\WikiFactoryHub::CATEGORY_ID_BOOKS, \WikiFactoryHub::CATEGORY_ID_COMICS],
+				[\WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT, \WikiFactoryHub::CATEGORY_ID_BOOKS, \WikiFactoryHub::CATEGORY_ID_COMICS]
+			], [
+				// Add Entertainment category if vertical is Comics
+				\WikiFactoryHub::VERTICAL_ID_COMICS,
+				[\WikiFactoryHub::CATEGORY_ID_BOOKS, \WikiFactoryHub::CATEGORY_ID_COMICS],
+				[\WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT, \WikiFactoryHub::CATEGORY_ID_BOOKS, \WikiFactoryHub::CATEGORY_ID_COMICS]
+			], [
+				// Add Entertainment category if vertical is Music
+				\WikiFactoryHub::VERTICAL_ID_MUSIC,
+				[\WikiFactoryHub::CATEGORY_ID_BOOKS, \WikiFactoryHub::CATEGORY_ID_COMICS],
+				[\WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT, \WikiFactoryHub::CATEGORY_ID_BOOKS, \WikiFactoryHub::CATEGORY_ID_COMICS]
+			], [
+				// Add Gaming category if vertical is Movies
+				\WikiFactoryHub::VERTICAL_ID_MOVIES,
+				[\WikiFactoryHub::CATEGORY_ID_BOOKS, \WikiFactoryHub::CATEGORY_ID_COMICS],
+				[\WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT, \WikiFactoryHub::CATEGORY_ID_BOOKS, \WikiFactoryHub::CATEGORY_ID_COMICS]
+			], [
+				// Add Lifestyle category if vertical is Lifestyle
+				\WikiFactoryHub::VERTICAL_ID_LIFESTYLE,
+				[\WikiFactoryHub::CATEGORY_ID_BOOKS, \WikiFactoryHub::CATEGORY_ID_COMICS],
+				[\WikiFactoryHub::CATEGORY_ID_LIFESTYLE, \WikiFactoryHub::CATEGORY_ID_BOOKS, \WikiFactoryHub::CATEGORY_ID_COMICS]
 			]
 		];
 	}

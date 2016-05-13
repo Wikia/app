@@ -26,17 +26,11 @@ class ConfigureCategories implements Task {
 	}
 
 	public function run() {
-		$categories = $this->taskContext->getCategories();
-		$vertical = $this->taskContext->getVertical();
-		$oHub = WikiFactoryHub::getInstance();
+		$cityId = $this->taskContext->getCityId();
+		$wikiFactoryInstance = WikiFactoryHub::getInstance();
 
-		$oHub->setVertical( $this->taskContext->getCityId(), $vertical, "CW Setup" );
-		$this->debug( ":", implode( ["CreateWiki", __CLASS__, "Wiki added to the vertical: {$vertical}"] ) );
-
-		foreach ( $categories as $category ) {
-			$oHub->addCategory( $this->taskContext->getCityId(), $category );
-			$this->debug( ":", implode( ["CreateWiki", __CLASS__, "Wiki added to the category: {$category}"] ) );
-		}
+		$this->setVertical($this->taskContext->getVertical(), $cityId, $wikiFactoryInstance);
+		$this->setCategories($this->taskContext->getCategories(), $cityId, $wikiFactoryInstance);
 
 		return TaskResult::createForSuccess();
 	}
@@ -51,8 +45,8 @@ class ConfigureCategories implements Task {
 				WikiFactoryHub::VERTICAL_ID_TV,
 				WikiFactoryHub::VERTICAL_ID_BOOKS,
 				WikiFactoryHub::VERTICAL_ID_COMICS,
-				WikiFactoryHub::CATEGORY_ID_MUSIC,
-				WikiFactoryHub::CATEGORY_ID_MOVIES
+				WikiFactoryHub::VERTICAL_ID_MUSIC,
+				WikiFactoryHub::VERTICAL_ID_MOVIES
 			]
 		) ) {
 			array_unshift( $categories, WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT );
@@ -63,5 +57,17 @@ class ConfigureCategories implements Task {
 		}
 
 		return $categories;
+	}
+
+	public function setVertical($vertical, $cityId, WikiFactoryHub $wikiFactoryHubInstance) {
+		$wikiFactoryHubInstance->setVertical( $cityId, $vertical, "CW Setup" );
+		$this->debug( ":", implode( ["CreateWiki", __CLASS__, "Wiki added to the vertical: {$vertical}"] ) );
+	}
+
+	public function setCategories($categories, $cityId, WikiFactoryHub $wikiFactoryHubInstance) {
+		foreach ( $categories as $category ) {
+			$wikiFactoryHubInstance->addCategory( $cityId, $category );
+			$this->debug( ":", implode( ["CreateWiki", __CLASS__, "Wiki added to the category: {$category}"] ) );
+		}
 	}
 }
