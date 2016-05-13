@@ -6,13 +6,16 @@ class CreateDatabase implements Task {
 
 	use \Wikia\Logger\Loggable;
 
+	//TODO would be awesome to read it from some config
+	const ACTIVE_CLUSTER = "c7";
+
 	/** @var  TaskContext */
 	private $taskContext;
 
 	/** @var  string */
 	private $clusterDB;
 
-	public function __construct($taskContext) {
+	public function __construct( $taskContext ) {
 		$this->taskContext = $taskContext;
 	}
 
@@ -28,7 +31,7 @@ class CreateDatabase implements Task {
 		global $wgForceMasterDatabase;
 		$wgForceMasterDatabase = true;
 
-		$this->clusterDB = "wikicities_" . TaskContext::ACTIVE_CLUSTER;
+		$this->clusterDB = "wikicities_" . self::ACTIVE_CLUSTER;
 		$this->taskContext->setDbName( $this->prepareDatabaseName(
 			$this->clusterDB, $this->taskContext->getWikiName(), $this->taskContext->getLanguage() ) );
 
@@ -109,7 +112,7 @@ class CreateDatabase implements Task {
 		}
 	}
 
-	private function doesDbExistInCluster( $dbr, $dbName) {
+	private function doesDbExistInCluster( $dbr, $dbName ) {
 		$this->debug( __METHOD__ . ": Checking if database " . $dbName . " already exists in cluster" );
 		$sth = $dbr->query( sprintf( "show databases like '%s'", $dbName) );
 		if ( $dbr->numRows( $sth ) > 0 ) {

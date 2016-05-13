@@ -6,9 +6,6 @@ use User;
 
 class TaskContext {
 
-	//TODO would be awesome to read it from some config
-	const ACTIVE_CLUSTER = "c7";
-
 	/** @var  \DatabaseMysqli */
 	private $wikiDBW;
 
@@ -54,12 +51,24 @@ class TaskContext {
 	/** @var  User */
 	private $founder;
 
-	public function __construct( $inputWikiName, $inputDomain, $language, $vertical, $categories ) {
-		$this->inputWikiName = $inputWikiName;
-		$this->inputDomain = $inputDomain;
-		$this->language = $language;
-		$this->vertical = $vertical;
-		$this->categories = $categories;
+	public function __construct( $params ) {
+		foreach ($params as $key => $value) {
+			if ( property_exists($this, $key) ) {
+				$this->$key = $value;
+			} else {
+				throw new \InvalidArgumentException(__CLASS__ . ' does not have property ' . $key);
+			}
+		}
+	}
+
+	public static function newFromUserInput( $inputWikiName, $inputDomain, $language, $vertical, $categories ) {
+		return new self( [
+			'inputWikiName' => $inputWikiName,
+			'inputDomain' => $inputDomain,
+			'language' => $language,
+			'vertical' => $vertical,
+			'categories' => $categories
+		] );
 	}
 
 	public function getInputWikiName() {

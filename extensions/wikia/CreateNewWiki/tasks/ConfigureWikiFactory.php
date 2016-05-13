@@ -70,8 +70,8 @@ class ConfigureWikiFactory implements Task
 		}
 
 		// Set wgDBcluster
-		if (TaskContext::ACTIVE_CLUSTER) {
-			wfGetLBFactory()->sectionsByDB[$this->taskContext->getDbName()] = $wikiFactoryVariables['wgDBcluster'] = TaskContext::ACTIVE_CLUSTER;
+		if (CreateDatabase::ACTIVE_CLUSTER) {
+			wfGetLBFactory()->sectionsByDB[$this->taskContext->getDbName()] = $wikiFactoryVariables['wgDBcluster'] = CreateDatabase::ACTIVE_CLUSTER;
 		}
 
 		$sharedDBW = $this->taskContext->getSharedDBW();

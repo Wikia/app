@@ -36,23 +36,23 @@ class CreateWiki {
 	/* @var $mClusterDB string */
 	private	$mClusterDB;
 
-	const ERROR_BAD_EXECUTABLE_PATH                    = 1;
-	const ERROR_DOMAIN_NAME_TAKEN                      = 2;
-	const ERROR_DOMAIN_BAD_NAME                        = 3;
-	const ERROR_DOMAIN_IS_EMPTY                        = 4;
-	const ERROR_DOMAIN_TOO_LONG                        = 5;
-	const ERROR_DOMAIN_TOO_SHORT	                   = 6;
-	const ERROR_DOMAIN_POLICY_VIOLATIONS               = 7;
-	const ERROR_SQL_FILE_BROKEN                        = 8;
-	const ERROR_DATABASE_ALREADY_EXISTS                = 9;
-	const ERROR_READONLY                               = 13;
+	//const ERROR_BAD_EXECUTABLE_PATH                    = 1;
+	//const ERROR_DOMAIN_NAME_TAKEN                      = 2;
+	//const ERROR_DOMAIN_BAD_NAME                        = 3;
+	//const ERROR_DOMAIN_IS_EMPTY                        = 4;
+	//const ERROR_DOMAIN_TOO_LONG                        = 5;
+	//const ERROR_DOMAIN_TOO_SHORT	                   = 6;
+	//const ERROR_DOMAIN_POLICY_VIOLATIONS               = 7;
+	//const ERROR_SQL_FILE_BROKEN                        = 8;
+	//const ERROR_DATABASE_ALREADY_EXISTS                = 9;
+	//const ERROR_READONLY                               = 13;
 
 	//DUPLICATED IN CreateWikiFactory task
 //	const IMGROOT              = "/images/";
 	//DUPLICATED IN CreateWikiFactory task
 //	const IMAGEURL             = "http://images.wikia.com/";
 
-	const DEFAULT_STAFF        = "Wikia";
+	//const DEFAULT_STAFF        = "Wikia";
 //	const DEFAULT_USER         = 'Default';
 	//const DEFAULT_DOMAIN       = "wikia.com";
 //	const ACTIVE_CLUSTER       = "c7";
@@ -79,7 +79,7 @@ class CreateWiki {
 		// wiki containter
 		//$this->mNewWiki = new stdClass();
 
-		$this->taskContext = new TaskContext( $name, $domain, $language, $vertical, $categories );
+		$this->taskContext = TaskContext::newFromUserInput( $name, $domain, $language, $vertical, $categories );
 		/*$this->mDomain = $domain;
 		$this->mName = $name;
 		$this->mLanguage = $language;

@@ -85,8 +85,8 @@ class SetupWikiCities implements Task {
 			'city_created'        => wfTimestamp( TS_DB, time() ),
 			'city_umbrella'       => $this->taskContext->getWikiName()
 		);
-		if ( TaskContext::ACTIVE_CLUSTER ) {
-			$insertFields[ "city_cluster" ] = TaskContext::ACTIVE_CLUSTER;
+		if ( CreateDatabase::ACTIVE_CLUSTER ) {
+			$insertFields[ "city_cluster" ] = CreateDatabase::ACTIVE_CLUSTER;
 		}
 
 		return $this->taskContext->getSharedDBW()->insert( "city_list", $insertFields, __METHOD__ );
