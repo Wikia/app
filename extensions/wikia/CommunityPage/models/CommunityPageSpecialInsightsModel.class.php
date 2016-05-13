@@ -64,7 +64,8 @@ class CommunityPageSpecialInsightsModel {
 		$insightPages['title'] = wfMessage( 'communitypage-' . $type . '-title' )->text();
 		$insightPages['description'] =  wfMessage( 'communitypage-' . $type . '-description' )->text();
 
-		$insightPages['fulllistlink'] = SpecialPage::getTitleFor( 'Insights', $type )->getLocalURL( [ 'sort' => self::INSIGHTS_MODULE_SORT_TYPE ] );
+		$insightPages['fulllistlink'] = SpecialPage::getTitleFor( 'Insights', $type )
+			->getLocalURL( $this->getSortingParam( $sortingType ) );
 
 		$insightPages = $this->addLastRevision( $insightPages );
 
@@ -96,6 +97,14 @@ class CommunityPageSpecialInsightsModel {
 			return $articleUrl . '?veaction=edit';
 		}
 		return $articleUrl . '?action=edit';
+	}
+
+	private function getSortingParam( $sortingType ) {
+		if ( !empty( $sortingType ) ) {
+			return [ 'sort' => $sortingType ];
+		}
+
+		return [];
 	}
 
 	/**
