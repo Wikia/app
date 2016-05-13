@@ -15,6 +15,11 @@ $hero-image-pattern: '/extensions/wikia/CommunityPage/images/hero_image_pattern.
 	justify-content: center;
 	text-align: center;
 
+	&.community-page-header-cover {
+		background-position: center;
+		background-size: cover;
+	}
+
 	.community-page-header-content {
 		width: 75%;
 	}
