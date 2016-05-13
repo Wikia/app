@@ -50,6 +50,11 @@ $messages['en'] = array(
 	'communitypage-no-admins-contact' => 'Contact us to be the first!',
 	'communitypage-communitycentral-link' => 'http://community.wikia.com/wiki/Special:Contact/adoption',
 	'communitypage-no-members' => 'This community has no members',
+	'communitypage-popularpages-title' => 'Top Rising Pages',
+	'communitypage-popularpages-description' => 'These pages are gaining traction with your readers! Make sure they are up to your standards and have all the latest images and information.',
+	'communitypage-lastrevision' => '$1 edited on $2',
+	'communitypage-noofviews' => '$1 views',
+	'communitypage-full-list' => 'View full list'
 );
 
 $messages['qqq'] = array(
@@ -101,6 +106,11 @@ $messages['qqq'] = array(
 	'communitypage-no-admins-contact' => 'Contact us to become the first admin text',
 	'communitypage-communitycentral-link' => 'Link to the community page for this language',
 	'communitypage-no-members' => 'Text for zero state of all members list',
+	'communitypage-popularpages-title' => 'Title for the Top Rising pages module',
+	'communitypage-popularpages-description' => 'Description for the Top Rising pages module',
+	'communitypage-lastrevision' => 'Details about user that last edited and time of editing. $1 is the username. $2 is the time of editing.',
+	'communitypage-noofviews' => 'number of weekly views on the page. $1 is the number of views.',
+	'communitypage-full-list' => 'Text to a link to go to see complete list of insights'
 );
 
 $messages['ja'] = array(

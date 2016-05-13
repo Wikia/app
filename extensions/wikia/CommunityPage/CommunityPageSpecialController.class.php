@@ -3,7 +3,6 @@
 class CommunityPageSpecialController extends WikiaSpecialPageController {
 	const COMMUNITY_PAGE_HERO_IMAGE = 'Community-Page-Header.jpg';
 	const DEFAULT_TEMPLATE_ENGINE = \WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
-
 	const ALL_MEMBERS_LIMIT = 20;
 	const TOP_ADMINS_MODULE_LIMIT = 3;
 	const TOP_CONTRIBUTORS_LIMIT = 5;
@@ -48,6 +47,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 			'recentlyJoined' => $this->sendRequest( 'CommunityPageSpecialController', 'getRecentlyJoinedData' )
 				->getData(),
 			'recentActivityModule' => $this->getRecentActivityData(),
+			'insightsModules' => ( new CommunityPageSpecialInsightsModel() )->getInsightsModules()
 		] );
 	}
 
