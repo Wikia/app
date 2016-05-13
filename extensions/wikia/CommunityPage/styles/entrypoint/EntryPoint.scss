@@ -28,12 +28,10 @@ $logo-url: $logo-url-light;
 }
 
 .community-page-entry-point-module {
-	background: $background-color;
 	position: relative;
 
 	.entry-point-logo {
 		background-image: url($logo-url); /* inline */
-		color: red;
 		height: 30px;
 		left: 50%;
 		position: absolute;
@@ -63,7 +61,6 @@ $logo-url: $logo-url-light;
 		padding: 0 30px;
 		text-decoration: none;
 		text-transform: uppercase;
-		white-space: normal;
 
 		&:hover, &:active {
 			background-color: $color-button-highlight;
@@ -77,18 +74,15 @@ $logo-url: $logo-url-light;
 		color: $color-button-text;
 		font-size: 10px;
 		height: 18px;
-		letter-spacing: 0;
 		line-height: 18px;
 		padding: 0 10px;
 		text-align: center;
 		text-transform: uppercase;
 	}
 
-	.entry-point-grow {
+	.entry-point-description {
 		font-size: 18px;
-		letter-spacing: 0;
 		padding: 15px 0 10px;
 		text-align: center;
-		width: 280px;
 	}
 }

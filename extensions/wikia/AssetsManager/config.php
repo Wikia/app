@@ -2892,18 +2892,18 @@ $config['special_portability_dashboard_scss'] = [
 	],
 ];
 
-$config['community_page_entry_point_js'] = array(
+$config['community_page_entry_point_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => 'oasis',
-	'assets' => array(
+	'assets' => [
 		'//extensions/wikia/CommunityPage/scripts/entryPoint.js',
-	)
-);
+	]
+];
 
-$config['community_page_entry_point_scss'] = array(
+$config['community_page_entry_point_scss'] = [
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => 'oasis',
-	'assets' => array(
+	'assets' => [
 		'//extensions/wikia/CommunityPage/styles/entrypoint/EntryPoint.scss',
-	)
-);
+	]
+];

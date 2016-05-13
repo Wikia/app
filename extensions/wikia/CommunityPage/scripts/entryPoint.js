@@ -10,14 +10,15 @@ require([
 		trackingMethod: 'analytics'
 	});
 
-	function initTracking() {
-		// Track clicks in contribution module
-		$('.community-page-entry-point-module').on('mousedown touchstart', 'a', function () {
-			track({
-				label: 'enter-button-click',
-			});
+	$('.community-page-entry-point-module').on('mousedown touchstart', 'a', function () {
+		track({
+			label: 'enter-button-click',
 		});
-	}
+	});
 
-	$(initTracking);
+	// Track impression
+	track({
+		action: tracker.ACTIONS.IMPRESSION,
+		label: 'entry-point-loaded',
+	});
 });
