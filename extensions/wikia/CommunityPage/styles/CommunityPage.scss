@@ -1,4 +1,5 @@
 @import 'skins/shared/color';
+@import 'skins/oasis/css/core/breakpoints-variables';
 
 @import 'components/variables';
 @import 'components/base';
@@ -15,8 +16,27 @@
 @import 'components/recently-joined';
 
 
-.CommunityPageMainContent, .WikiaRail {
-	padding: 34px 0;
+.CommunityPageContainer {
+	box-sizing: border-box;
+	padding: 34px 50px;
+	width: 100%;
+}
+
+.CommunityPageMainContent {
+	box-sizing: inherit;
+	float: left;
+	padding-right: 34px;
+	width: calc(100% - 320px);
+}
+
+@media #{$breakpoint-below-small-plus} {
+	.CommunityPageContainer {
+		padding: 34px 0;
+	}
+
+	.CommunityPageMainContent {
+		width: 100%;
+	}
 }
 
 /* Temp Hacks for dark wikias until design is ready */
