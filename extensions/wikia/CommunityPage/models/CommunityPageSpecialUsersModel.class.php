@@ -4,6 +4,7 @@ class CommunityPageSpecialUsersModel {
 	const TOP_CONTRIB_MCACHE_KEY = 'community_page_top_contrib';
 	const FIRST_REV_MCACHE_KEY = 'community_page_first_revision';
 	const GLOBAL_BOTS_MCACHE_KEY = 'community_page_global_bots';
+	const ALL_BOTS_MCACHE_KEY = 'community_page_all_bots';
 	const ALL_MEMBERS_MCACHE_KEY = 'community_page_all_members';
 	const MEMBER_COUNT_MCACHE_KEY = 'community_member_count';
 	const RECENTLY_JOINED_MCACHE_KEY = 'community_page_recently_joined';
@@ -12,14 +13,13 @@ class CommunityPageSpecialUsersModel {
 	private $wikiService;
 	private $admins;
 
-	// fixme: Remove WikiService hard dependency
-	public function __construct( WikiService $wikiService ) {
-		$this->wikiService = $wikiService;
+	public function __construct() {
+		$this->wikiService = new WikiService();
 	}
 
 	public function getAdmins() {
 		if ( $this->admins === null ) {
-			$this->admins = $this->wikiService->getWikiAdmins();
+			$this->admins = $this->wikiService->getWikiAdminIds( 0, false, false, null, false );
 		}
 
 		return $this->admins;
@@ -46,13 +46,13 @@ class CommunityPageSpecialUsersModel {
 	 * @return array|null
 	 */
 	public function getTopContributors( $limit = 10, $weekly = true, $onlyAdmins = false ) {
-		$botIds = $this->getGlobalBotIds();
-
 		$data = WikiaDataAccess::cache(
 			wfMemcKey( self::TOP_CONTRIB_MCACHE_KEY, $limit, $weekly, $onlyAdmins ),
 			WikiaResponse::CACHE_STANDARD,
-			function () use ( $limit, $weekly, $onlyAdmins, $botIds ) {
+			function () use ( $limit, $weekly, $onlyAdmins ) {
 				$db = wfGetDB( DB_SLAVE );
+
+				$botIds = $this->getBotIds();
 
 				if ( $weekly ) {
 					// From last Sunday (matches wikia_user_properties)
@@ -64,16 +64,18 @@ class CommunityPageSpecialUsersModel {
 				$sqlData = ( new WikiaSQL() )
 					->SELECT( 'rev_user_text, rev_user, count(rev_id) AS revision_count' )
 					->FROM ( 'revision FORCE INDEX (user_timestamp)' )
-					->LEFT_JOIN( 'user_groups ON (user_id = ug_user)' )
-					->WHERE( 'rev_user' )->NOT_EQUAL_TO( 0 )
-					->AND_( 'rev_user' )->NOT_IN( $botIds )
-					->AND_( $dateFilter );
+					->WHERE( 'rev_user' )->NOT_EQUAL_TO( 0 );
 
 				if ( $onlyAdmins ) {
-					$sqlData->AND_( 'ug_group' )->EQUAL_TO( 'sysop' );
+					$adminIds = $this->getAdmins();
+					$sqlData
+						->AND_( 'rev_user' )->IN( $adminIds );
 				}
 
-				$sqlData->GROUP_BY( 'rev_user_text' )
+				$sqlData
+					->AND_( 'rev_user' )->NOT_IN( $botIds )
+					->AND_( $dateFilter )
+					->GROUP_BY( 'rev_user_text' )
 					->ORDER_BY( 'revision_count DESC, rev_user_text' );
 
 				if ( $limit ) {
@@ -98,10 +100,10 @@ class CommunityPageSpecialUsersModel {
 	/**
 	 * @return array|null
 	 */
-	public function getGlobalBotIds() {
+	private function getGlobalBotIds() {
 		$botIds = WikiaDataAccess::cache(
 			wfMemcKey( self::GLOBAL_BOTS_MCACHE_KEY ),
-			WikiaResponse::CACHE_STANDARD,
+			WikiaResponse::CACHE_LONG,
 			function () {
 				global $wgExternalSharedDB;
 				$db = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
@@ -122,15 +124,29 @@ class CommunityPageSpecialUsersModel {
 		return $botIds;
 	}
 
-	public function filterGlobalBots( array $users ) {
-		$botIds = $this->getGlobalBotIds();
+	private function getBotIds() {
+		$botIds = WikiaDataAccess::cache(
+			wfMemcKey( self::ALL_BOTS_MCACHE_KEY ),
+			WikiaResponse::CACHE_STANDARD,
+			function () {
+				$db = wfGetDB( DB_SLAVE );
 
-		return array_filter( $users, function ( $user ) use ( $botIds ) {
-			$userIdIsBot = in_array( $user['userId'], $botIds );
-			$userIsWikia = strtolower( $user['userName'] ) === 'wikia';
+				$localBots = ( new WikiaSQL() )
+					->SELECT( 'ug_user' )
+					->FROM ( 'user_groups' )
+					->WHERE( 'ug_group' )->IN( [ 'bot', 'bot-global' ] )
+					->GROUP_BY( 'ug_user' )
+					->runLoop( $db, function ( &$localBots, $row ) {
+						$localBots[] = $row->ug_user;
+					} );
 
-			return !$userIdIsBot && !$userIsWikia;
-		} );
+				$allBots = array_merge( $localBots, $this->getGlobalBotIds() );
+
+				return $allBots;
+			}
+		);
+
+		return $botIds;
 	}
 
 	/**
@@ -174,22 +190,12 @@ class CommunityPageSpecialUsersModel {
 	}
 
 	/**
-	 * Get a list of users in order of their edit count in the last n days or all time if null
-	 *
-	 * @param int|null $limit Total number of Admins to get or get all if null
-	 * @param int|null $days Count only contributions in the last n days or all if null
-	 */
-	public function getTopUsers( $limit = null, $days = null ) {
-
-	}
-
-	/**
 	 * Utility function used to filter out users that should not show up on the member's list
 	 * @param User $user
 	 * @return bool
 	 */
 	private function showMember( User $user ) {
-		return !( $user->isAnon() || $user->isBlocked() || in_array( $user->getId(), $this->getGlobalBotIds() ) );
+		return !( $user->isAnon() || $user->isBlocked() || in_array( $user->getId(), $this->getBotIds() ) );
 	}
 
 	/**
