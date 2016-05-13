@@ -28,20 +28,30 @@ class NavboxTemplate {
 		preg_match_all( $markerRegex, $html, $markers );
 
 		foreach ( array_unique( $markers[ 2 ] ) as $marker ) {
-			// matches elements in between start and end marker tags
-			// <marker>(not </marker>)...</marker>
-			$html = preg_replace(
-				'/(<|&lt;)' . $marker . '(>|&gt;)' .
-				'((?!(<|&lt;)\\/' . $marker . '(>|&gt;)).)*' .
-				'(.*)' .
-				'(<|&lt;)\\/' . $marker . '(>|&gt;)/isU',
-				// replacement
-				'<div data-type="navbox">$0</div>',
-				$html
-			);
-			// remove just the marker tags
-			$html = preg_replace( '/(<|&lt;)\\/?' . $marker . '(>|&gt;)/sU', '', $html );
+			$html = static::replaceMarker( $marker, $html );
 		}
+
+		return $html;
+	}
+
+	private static function replaceMarker( $marker, $html ) {
+		// matches elements in between start and end marker tags
+		$replaced = preg_replace(
+			'/(<|&lt;)' . $marker . '(>|&gt;).*(<|&lt;)\\/' . $marker . '(>|&gt;)/isU',
+			// replacement
+			'<div data-type="navbox">$0</div>',
+			$html
+		);
+		if ( $replaced !== null ) {
+			// remove just the marker tags
+			$result = preg_replace( '/(<|&lt;)\\/?' . $marker . '(>|&gt;)/sU', '', $replaced );
+			if ( $result !== null ) {
+
+				return $result;
+			}
+			\Wikia\Logger\WikiaLogger::instance()->error( 'Navbox marker removal failed.' );
+		}
+		\Wikia\Logger\WikiaLogger::instance()->error( 'Navbox marker replacement failed.' );
 
 		return $html;
 	}
