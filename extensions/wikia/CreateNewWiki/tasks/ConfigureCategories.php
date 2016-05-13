@@ -2,13 +2,15 @@
 
 namespace Wikia\CreateNewWiki\Tasks;
 
+use Wikia\Logger\Loggable;
 use WikiFactoryHub;
 
 class ConfigureCategories implements Task {
+	use Loggable;
 
 	private $taskContext;
 
-	public function __construct(TaskContext $taskContext) {
+	public function __construct( TaskContext $taskContext ) {
 		$this->taskContext = $taskContext;
 	}
 
@@ -16,8 +18,8 @@ class ConfigureCategories implements Task {
 		$categories = $this->taskContext->getCategories();
 		$vertical = $this->taskContext->getVertical();
 
-		if ( $vertical === WikiFactoryHub::VERTICAL_ID_VIDEO_GAMES) {
-			array_unshift($categories, WikiFactoryHub::CATEGORY_ID_GAMING);
+		if ( $vertical === WikiFactoryHub::VERTICAL_ID_VIDEO_GAMES ) {
+			array_unshift( $categories, WikiFactoryHub::CATEGORY_ID_GAMING );
 		}
 
 		if ( in_array( $vertical,
@@ -29,17 +31,18 @@ class ConfigureCategories implements Task {
 				WikiFactoryHub::CATEGORY_ID_MOVIES
 			]
 		) ) {
-			array_unshift($categories, WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT);
+			array_unshift( $categories, WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT );
 		}
 
 		if ( $vertical === WikiFactoryHub::VERTICAL_ID_LIFESTYLE ) {
-			array_unshift($categories, WikiFactoryHub::CATEGORY_ID_LIFESTYLE);
+			array_unshift( $categories, WikiFactoryHub::CATEGORY_ID_LIFESTYLE );
 		}
 
 		$this->taskContext->setCategories( $categories );
 	}
 
 	public function check() {
+		return TaskResult::createForSuccess();
 	}
 
 	public function run() {
@@ -48,11 +51,13 @@ class ConfigureCategories implements Task {
 		$oHub = WikiFactoryHub::getInstance();
 
 		$oHub->setVertical( $this->taskContext->getCityId(), $vertical, "CW Setup" );
-		wfDebugLog( "createwiki", __METHOD__ . ": Wiki added to the vertical: {$vertical} \n", true );
+		$this->debug( ":", implode( ["CreateWiki", __CLASS__, "Wiki added to the vertical: {$vertical}"] ) );
 
-		foreach($categories as $category) {
+		foreach ( $categories as $category ) {
 			$oHub->addCategory( $this->taskContext->getCityId(), $category );
-			wfDebugLog( "createwiki", __METHOD__ . ": Wiki added to the category: {$category} \n", true );
+			$this->debug( ":", implode( ["CreateWiki", __CLASS__, "Wiki added to the category: {$category}"] ) );
 		}
+
+		return TaskResult::createForSuccess();
 	}
 }
