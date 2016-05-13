@@ -323,7 +323,7 @@ class CreateWiki {
 
 		// @TODO We commit here both WikiFactory and WikiCities setup. Where we should execute commit?
 		// Maybe we should commit twice?
-		$this->mDBw->commit( __METHOD__ ); // commit shared DB changes
+		//$this->mDBw->commit( __METHOD__ ); // commit shared DB changes
 
 		/**
 		 * we got empty database created, now we have to create tables and

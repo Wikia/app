@@ -114,6 +114,8 @@ class ConfigureWikiFactory implements Task
 				);
 			}
 		}
+
+		$sharedDBW->commit( __METHOD__ ); // commit shared DB changes
 	}
 
 	/**

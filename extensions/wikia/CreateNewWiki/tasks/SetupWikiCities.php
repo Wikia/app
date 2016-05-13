@@ -64,6 +64,8 @@ class SetupWikiCities implements Task {
 			"createwiki", __METHOD__ . ": Row added into city_domains table, city_id = {$this->taskContext->getCityId()}\n",
 			true
 		);
+
+		$this->taskContext->getSharedDBW()->commit( __METHOD__ ); // commit shared DB changes
 	}
 
 	private function addToCityList() {
