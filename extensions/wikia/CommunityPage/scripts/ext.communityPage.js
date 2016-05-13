@@ -164,11 +164,12 @@ require([
 	}
 
 	function switchCommunityModalTab(tabToActivate) {
-		var $content = window.activeModal.$content;
+		var $content = window.activeModal.$content,
+			$modalLoadingScreen = $(mustache.render(templates.modalLoadingScreen));
 
-		$content.html(mustache.render(templates.modalLoadingScreen));
 		markActiveTab(tabToActivate);
-		throbber.show($('.throbber-placeholder'));
+		$content.html($modalLoadingScreen);
+		throbber.show($modalLoadingScreen);
 
 		getModalTabContentsHtml(tabToActivate).then(function (tabContentHtml) {
 			$content.html(tabContentHtml);
