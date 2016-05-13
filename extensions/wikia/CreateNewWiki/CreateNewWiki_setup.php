@@ -21,21 +21,22 @@ $wgAutoloadClasses['CreateWikiChecks'] = $dir."/CreateWikiChecks.php";
 
 
 // Tasks related with new wiki creation
-$wgAutoloadClasses['ConfigureCategories'] = __DIR__ . '/tasks/ConfigureCategories.php';
-$wgAutoloadClasses['ConfigureUsers'] = __DIR__ . '/tasks/ConfigureUsers.php';
-$wgAutoloadClasses['ConfigureWikiFactory'] = __DIR__ . '/tasks/ConfigureWikiFactory.php';
-$wgAutoloadClasses['CreateDatabase'] = __DIR__ . '/tasks/CreateDatabase.php';
-$wgAutoloadClasses['CreateTables'] = __DIR__ . '/tasks/CreateTables.php';
-$wgAutoloadClasses['ImportStarterData'] = __DIR__ . '/tasks/ImportStarterData.php';
-$wgAutoloadClasses['PrepareDomain'] = __DIR__ . '/tasks/PrepareDomain.php';
-$wgAutoloadClasses['SetCustomSettings'] = __DIR__ . '/tasks/SetCustomSettings.php';
-$wgAutoloadClasses['SetTags'] = __DIR__ . '/tasks/SetTags.php';
-$wgAutoloadClasses['SetupWikiCities'] = __DIR__ . '/tasks/SetupWikiCities.php';
-$wgAutoloadClasses['Task'] = __DIR__ . '/tasks/Task.php';
-$wgAutoloadClasses['TaskContext'] = __DIR__ . '/tasks/TaskContext.php';
-$wgAutoloadClasses['TaskHelper'] = __DIR__ . '/tasks/TaskHelper.php';
-$wgAutoloadClasses['TaskResult'] = __DIR__ . '/tasks/TaskResult.php';
-$wgAutoloadClasses['TaskRunner'] = __DIR__ . '/tasks/TaskRunner.php';
+$wgAutoloadClasses['Wikia\\CreateNewWiki\\Tasks\\Task'] = __DIR__ . '/tasks/Task.php';
+$wgAutoloadClasses['Wikia\\CreateNewWiki\\Tasks\\TaskContext'] = __DIR__ . '/tasks/TaskContext.php';
+
+$wgAutoloadClasses['Wikia\\CreateNewWiki\\Tasks\\ConfigureCategories'] = __DIR__ . '/tasks/ConfigureCategories.php';
+$wgAutoloadClasses['Wikia\\CreateNewWiki\\Tasks\\ConfigureUsers'] = __DIR__ . '/tasks/ConfigureUsers.php';
+$wgAutoloadClasses['Wikia\\CreateNewWiki\\Tasks\\ConfigureWikiFactory'] = __DIR__ . '/tasks/ConfigureWikiFactory.php';
+$wgAutoloadClasses['Wikia\\CreateNewWiki\\Tasks\\CreateDatabase'] = __DIR__ . '/tasks/CreateDatabase.php';
+$wgAutoloadClasses['Wikia\\CreateNewWiki\\Tasks\\CreateTables'] = __DIR__ . '/tasks/CreateTables.php';
+$wgAutoloadClasses['Wikia\\CreateNewWiki\\Tasks\\ImportStarterData'] = __DIR__ . '/tasks/ImportStarterData.php';
+$wgAutoloadClasses['Wikia\\CreateNewWiki\\Tasks\\PrepareDomain'] = __DIR__ . '/tasks/PrepareDomain.php';
+$wgAutoloadClasses['Wikia\\CreateNewWiki\\Tasks\\SetCustomSettings'] = __DIR__ . '/tasks/SetCustomSettings.php';
+$wgAutoloadClasses['Wikia\\CreateNewWiki\\Tasks\\SetTags'] = __DIR__ . '/tasks/SetTags.php';
+$wgAutoloadClasses['Wikia\\CreateNewWiki\\Tasks\\SetupWikiCities'] = __DIR__ . '/tasks/SetupWikiCities.php';
+$wgAutoloadClasses['Wikia\\CreateNewWiki\\Tasks\\TaskHelper'] = __DIR__ . '/tasks/TaskHelper.php';
+$wgAutoloadClasses['Wikia\\CreateNewWiki\\Tasks\\TaskResult'] = __DIR__ . '/tasks/TaskResult.php';
+$wgAutoloadClasses['Wikia\\CreateNewWiki\\Tasks\\TaskRunner'] = __DIR__ . '/tasks/TaskRunner.php';
 
 // Nirvana controllers
 $wgAutoloadClasses['CreateNewWikiController'] = $dir . 'CreateNewWikiController.class.php';
