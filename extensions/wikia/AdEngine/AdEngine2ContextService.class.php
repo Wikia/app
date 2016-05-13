@@ -72,6 +72,7 @@ class AdEngine2ContextService {
 					'evolve2' => $wg->AdDriverUseEvolve2,
 					'monetizationService' => $wg->AdDriverUseMonetizationService,
 					'monetizationServiceAds' => $monetizationServiceAds,
+					'rubiconFastlane' => AnalyticsProviderRubiconFastlane::isEnabled(),
 					'taboola' => $wg->AdDriverUseTaboola && $pageType === 'article',
 				] ),
 				'slots' => $this->filterOutEmptyItems( [
