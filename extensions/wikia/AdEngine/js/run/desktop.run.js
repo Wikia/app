@@ -116,8 +116,19 @@ require([
 	'ext.wikia.adEngine.slotTweaker',
 	'wikia.document',
 	'wikia.window',
-	require.optional('ext.wikia.adEngine.slot.exitstitial')
-], function (adContext, highImpact, inContent, skyScraper3, slotTweaker, doc, win, exitstitial) {
+	require.optional('ext.wikia.adEngine.slot.exitstitial'),
+	require.optional('ext.wikia.adEngine.slot.revcontentSlots')
+], function (
+	adContext,
+	highImpact,
+	inContent,
+	skyScraper3,
+	slotTweaker,
+	doc,
+	win,
+	exitstitial,
+	revcontentSlots
+) {
 	'use strict';
 
 	var context = adContext.getContext();
@@ -127,6 +138,10 @@ require([
 
 		highImpact.init();
 		skyScraper3.init();
+
+		if (revcontentSlots) {
+			revcontentSlots.init();
+		}
 
 		if (context.slots.incontentPlayer) {
 			inContent.init('INCONTENT_PLAYER');

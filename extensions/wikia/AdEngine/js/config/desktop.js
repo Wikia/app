@@ -17,7 +17,8 @@ define('ext.wikia.adEngine.config.desktop', [
 	'ext.wikia.adEngine.provider.remnantGpt',
 	'ext.wikia.adEngine.provider.rubiconFastlane',
 	'ext.wikia.adEngine.provider.turtle',
-	require.optional('ext.wikia.adEngine.provider.taboola')
+	require.optional('ext.wikia.adEngine.provider.taboola'),
+	require.optional('ext.wikia.adEngine.provider.revcontent')
 ], function (
 	// regular dependencies
 	log,
@@ -36,7 +37,8 @@ define('ext.wikia.adEngine.config.desktop', [
 	adProviderRemnantGpt,
 	adProviderRubiconFastlane,
 	adProviderTurtle,
-	adProviderTaboola
+	adProviderTaboola,
+	adProviderRevcontent
 ) {
 	'use strict';
 
@@ -75,6 +77,11 @@ define('ext.wikia.adEngine.config.desktop', [
 		// Taboola
 		if (context.providers.taboola && adProviderTaboola && adProviderTaboola.canHandleSlot(slotName)) {
 			return [adProviderTaboola];
+		}
+
+		// Revcontent
+		if (adProviderRevcontent && adProviderRevcontent.canHandleSlot(slotName)) {
+			return [adProviderRevcontent];
 		}
 
 		// MonetizationService

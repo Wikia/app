@@ -186,6 +186,15 @@ $config['adengine2_taboola_js'] = array(
 	),
 );
 
+$config['adengine2_revcontent_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => [ 'oasis' ],
+	'assets' => array(
+		'//extensions/wikia/AdEngine/js/provider/revcontent.js',
+		'//extensions/wikia/AdEngine/js/slot/revcontentSlots.js',
+	),
+);
+
 $config['adengine2_gcs_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'oasis' ],
