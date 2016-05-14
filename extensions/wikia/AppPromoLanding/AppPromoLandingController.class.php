@@ -12,7 +12,12 @@ class AppPromoLandingController extends WikiaController {
 
 	const RESPONSE_OK = 200;
 	const APP_CONFIG_SERVICE_URL = "http://prod.deploypanel.service.sjc.consul/api/app-configuration/";
-	
+
+	// Settings for the background image-grid.
+	const MAX_TRENDING_ARTICLES = 30; // we need about 22 images, and not all articles have images.
+	const IMG_HEIGHT = 184; // sizes directly from Zeplin.io mockup.
+	const IMG_WIDTH = 184;
+
 	protected static $CACHE_KEY = "mobileAppConfigs";
 	protected static $CACHE_KEY_VERSION = 0.1;
 	protected static $CACHE_EXPIRY = 86400;
@@ -67,7 +72,8 @@ class AppPromoLandingController extends WikiaController {
 		// render the custom App Promo Landing body (this includes the nav bar and the custom content).
 		$body = F::app()->renderView('AppPromoLanding', 'Content', [
 			"androidUrl" => $this->androidUrl,
-			"iosUrl" => $this->iosUrl
+			"iosUrl" => $this->iosUrl,
+			"config" => $config
 		]);
 
 		// page has one column
@@ -97,6 +103,46 @@ class AppPromoLandingController extends WikiaController {
 
 		$this->androidUrl = $params["androidUrl"];
 		$this->iosUrl = $params["iosUrl"];
+
+		//Fetch Trending Articles images to use as the image-grid background.
+		try {
+			$trendingArticlesData = F::app()->sendRequest( 'ArticlesApi', 'getTop' )->getVal( 'items' );
+		}
+		catch ( Exception $e ) {
+			$trendingArticlesData = false;
+		}
+		$trendingArticles = [];
+		if ( !empty( $trendingArticlesData ) ) {
+			$items = array_slice( $trendingArticlesData, 0, self::MAX_TRENDING_ARTICLES );
+			//load data from response to template
+			foreach( $items as $item ) {
+				$img = $this->app->sendRequest( 'ImageServing', 'getImages', [
+					'ids' => [ $item['id'] ],
+					'height' => self::IMG_HEIGHT,
+					'width' => self::IMG_WIDTH,
+					'count' => 1
+				] )->getVal( 'result' );
+
+				$thumbnail = $img[$item['id']][0]['url'];
+
+				if ( empty( $thumbnail ) ) {
+					// If there is no thumbnail, then it's not useful for our grid.
+					$thumbnail = false;
+				} else {
+					$trendingArticles[] = [
+						//'url' => $item['url'],
+						'title' => $item['title'],
+						'imgUrl' => $thumbnail,
+						'width' => self::IMG_WIDTH,
+						'height' => self::IMG_HEIGHT
+					];
+				}
+			}
+		}
+$this->debug = ""; // TODO: REMOVE FROM HERE AND FROM TEMPLATE WHEN COMPLETE.
+		$this->trendingArticles = $trendingArticles;
+		
+		$this->config = $params["config"];
 
 		wfProfileOut( __METHOD__ );
 	}
