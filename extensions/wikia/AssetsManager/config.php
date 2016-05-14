@@ -1824,6 +1824,14 @@ $config['achievements_js'] = array(
 	)
 );
 
+/* AppPromo Landing Screen */
+$config['app_promo_landing_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => [
+		'//extensions/wikia/AppPromoLanding/js/appPromoLanding.js'
+	]
+];
+
 /* Special:Videos */
 $config['special_videos_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
@@ -2922,3 +2930,4 @@ $config['create_new_wiki_scss'] = [
 		'//extensions/wikia/CreateNewWiki/css/CreateNewWiki.scss'
 	]
 ];
+
