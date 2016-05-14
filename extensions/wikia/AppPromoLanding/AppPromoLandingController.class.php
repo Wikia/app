@@ -35,6 +35,44 @@ class AppPromoLandingController extends WikiaController {
 
 		// Since this "Community_App" article won't be found, we need to manually say it's okay so that it's not a 404.
 		$this->response->setCode(self::RESPONSE_OK);
+		
+		// Pull in the app-configuration (has data for all apps)
+		$appConfig = [];
+		$memcKey = wfMemcKey( static::$CACHE_KEY, static::$CACHE_KEY_VERSION );
+		$response = F::app()->wg->memc->get( $memcKey );
+		if ( empty( $response ) ){
+			$req = MWHttpRequest::factory( self::APP_CONFIG_SERVICE_URL, array( 'noProxy' => true ) );
+			$status = $req->execute();
+			if( $status->isOK() ) {
+				$response = $req->getContent();
+				if ( empty( $response ) ) {
+					wfProfileOut( __METHOD__ );
+					throw new EmptyResponseException( self::APP_CONFIG_SERVICE_URL );
+				} else {
+					// Request was successful. Cache it in memcached (faster than going over network-card even on our internal network).
+					F::app()->wg->memc->set( $memcKey, $response, static::$CACHE_EXPIRY );
+				}
+			}
+		}
+
+		$appConfig = json_decode( $response );
+		if(empty($appConfig)){
+
+			// TODO: How should we handle the error of not having an appConfig? We won't be able to link the user to the apps.
+
+		}
+
+		$config = $this->getConfigForWiki($appConfig, $this->wg->CityId);
+
+		// Create the direct-link URLs for the apps on each store.
+		$this->androidUrl = $this->getAndroidUrl($config);
+		$this->iosUrl = $this->getIosUrl($config);
+
+		// Inject the JS
+		$srcs = AssetsManager::getInstance()->getGroupCommonURL( 'app_promo_landing_js' );
+		foreach( $srcs as $src ) {
+			$this->wg->Out->addScript( "<script type=\"{$wgJsMimeType}\" src=\"{$src}\"></script>" );
+		}
 
 		// Inject the JS
 		$srcs = AssetsManager::getInstance()->getGroupCommonURL( 'app_promo_landing_js' );
