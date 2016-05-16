@@ -43,10 +43,10 @@ class NavboxTemplate {
 			$html, -1, $count
 		);
 		if ( $count === 0 ) {
-			\Wikia\Logger\WikiaLogger::instance()->warning( 'Navbox broken marker', [ 'marker' => $marker ] );
+			\Wikia\Logger\WikiaLogger::instance()->warning( 'Navbox marker broken', [ 'marker' => $marker ] );
 		}
 		if ( $replaced === null ) {
-			\Wikia\Logger\WikiaLogger::instance()->error( 'Navbox marker removal failed.' );
+			\Wikia\Logger\WikiaLogger::instance()->error( 'Navbox marker removal failed.', [ 'code' => preg_last_error() ] );
 			$result = $html;
 		} else {
 			$result = $replaced;
@@ -55,7 +55,7 @@ class NavboxTemplate {
 		$output = preg_replace( '/(<|&lt;)\\/?' . $marker . '(>|&gt;)/sU', '', $result );
 
 		if ( $output === null ) {
-			\Wikia\Logger\WikiaLogger::instance()->error( 'Navbox replacement failed' );
+			\Wikia\Logger\WikiaLogger::instance()->error( 'Navbox replacement failed', [ 'code' => preg_last_error() ] );
 			return $html;
 		}
 		return $output;
