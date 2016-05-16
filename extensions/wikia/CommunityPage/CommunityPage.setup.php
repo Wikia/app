@@ -9,10 +9,13 @@ $wgAutoloadClasses['CommunityPageSpecialRecentActivityModel'] =  __DIR__ . '/mod
 
 /* controller */
 $wgAutoloadClasses['CommunityPageSpecialController'] =  __DIR__ . '/CommunityPageSpecialController.class.php';
+$wgAutoloadClasses['CommunityPageSpecialHooks'] =  __DIR__ . '/CommunityPageSpecialHooks.class.php';
+$wgAutoloadClasses['CommunityPageEntryPointController'] = $IP . '/skins/oasis/modules/CommunityPageEntryPointController.class.php';
 
 /* hooks */
 $wgAutoloadClasses['CommunityPageSpecialHooks'] =  __DIR__ . '/CommunityPageSpecialHooks.class.php';
 $wgHooks['ArticleSaveComplete'][] = 'CommunityPageSpecialHooks::onArticleSaveComplete';
+$wgHooks['GetRailModuleList'][] = 'CommunityPageSpecialHooks::onGetRailModuleList';
 
 /* i18n */
 $wgExtensionMessagesFiles['CommunityPage'] = __DIR__ . '/CommunityPage.i18n.php';
