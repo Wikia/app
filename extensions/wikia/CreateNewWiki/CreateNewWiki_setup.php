@@ -17,7 +17,8 @@ $dir = __DIR__ . '/';
 $wgAutoloadClasses['CreateNewWikiObfuscate'] = $dir . 'CreateNewWikiObfuscate.class.php';
 $wgAutoloadClasses['CreateWiki'] = $dir."/CreateWiki.php";
 $wgAutoloadClasses['CreateWikiChecks'] = $dir."/CreateWikiChecks.php";
-
+$wgAutoloadClasses['SpecialCreateNewWiki'] = $dir . 'SpecialCreateNewWiki.class.php';
+$wgAutoloadClasses['CreateNewWikiHooks'] = __DIR__ . '/CreateNewWikiHooks.class.php';
 
 // Tasks related with new wiki creation
 $wgAutoloadClasses['Wikia\\CreateNewWiki\\Tasks\\Task'] = __DIR__ . '/tasks/Task.php';
@@ -36,8 +37,6 @@ $wgAutoloadClasses['Wikia\\CreateNewWiki\\Tasks\\SetupWikiCities'] = __DIR__ . '
 $wgAutoloadClasses['Wikia\\CreateNewWiki\\Tasks\\TaskHelper'] = __DIR__ . '/tasks/TaskHelper.php';
 $wgAutoloadClasses['Wikia\\CreateNewWiki\\Tasks\\TaskResult'] = __DIR__ . '/tasks/TaskResult.php';
 $wgAutoloadClasses['Wikia\\CreateNewWiki\\Tasks\\TaskRunner'] = __DIR__ . '/tasks/TaskRunner.php';
-$wgAutoloadClasses['SpecialCreateNewWiki'] = $dir . 'SpecialCreateNewWiki.class.php';
-$wgAutoloadClasses['CreateNewWikiHooks'] = __DIR__ . '/CreateNewWikiHooks.class.php';
 
 // Nirvana controllers
 $wgAutoloadClasses['CreateNewWikiController'] = $dir . 'CreateNewWikiController.class.php';
