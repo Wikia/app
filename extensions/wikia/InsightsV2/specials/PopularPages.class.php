@@ -56,9 +56,8 @@ class PopularPages extends PageQueryPage {
 				->VALUES( $popularPages )
 				->run( $dbw );
 
-			wfWaitForSlaves();
 			$num = $dbw->affectedRows();
-
+			wfWaitForSlaves();
 		}
 
 		wfRunHooks( 'PopularPagesQueryRecached' );
