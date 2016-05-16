@@ -4,6 +4,7 @@ class CommunityPageSpecialUsersModel {
 	const TOP_CONTRIB_MCACHE_KEY = 'community_page_top_contrib';
 	const FIRST_REV_MCACHE_KEY = 'community_page_first_revision';
 	const GLOBAL_BOTS_MCACHE_KEY = 'community_page_global_bots';
+	const ALL_BOTS_MCACHE_KEY = 'community_page_all_bots';
 	const ALL_MEMBERS_MCACHE_KEY = 'community_page_all_members';
 	const MEMBER_COUNT_MCACHE_KEY = 'community_member_count';
 	const RECENTLY_JOINED_MCACHE_KEY = 'community_page_recently_joined';
@@ -14,16 +15,13 @@ class CommunityPageSpecialUsersModel {
 	private $wikiService;
 	private $admins;
 
-	// fixme: Remove WikiService hard dependency
-	public function __construct( WikiService $wikiService ) {
-		$this->wikiService = $wikiService;
+	public function __construct() {
+		$this->wikiService = new WikiService();
 	}
 
 	public function getAdmins() {
-		global $wgCityId;
-
 		if ( $this->admins === null ) {
-			$this->admins = $this->wikiService->getWikiAdminIds( $wgCityId, false, true );
+			$this->admins = $this->wikiService->getWikiAdminIds( 0, false, false, null, false );
 		}
 
 		return $this->admins;
@@ -45,21 +43,18 @@ class CommunityPageSpecialUsersModel {
 	 * optionally filtered by admins only
 	 *
 	 * @param int|NULL $limit Number of rows to fetch
-	 * @param string $weekly True for weekly top contributors, false for all members (2 years)
+	 * @param boolean $weekly True for weekly top contributors, false for all members (2 years)
 	 * @param bool $onlyAdmins Whether to filter by admins
-	 * @return Mixed|null
+	 * @return array|null
 	 */
 	public function getTopContributors( $limit = 10, $weekly = true, $onlyAdmins = false ) {
 		$data = WikiaDataAccess::cache(
 			wfMemcKey( self::TOP_CONTRIB_MCACHE_KEY, $limit, $weekly, $onlyAdmins ),
 			WikiaResponse::CACHE_STANDARD,
 			function () use ( $limit, $weekly, $onlyAdmins ) {
-				global $wgExternalSharedDB, $wgDBcluster;
 				$db = wfGetDB( DB_SLAVE );
-				$adminFilter = '';
-				if ( $onlyAdmins ) {
-					$adminFilter = ' AND (ug_group = "sysop")';
-				}
+
+				$botIds = $this->getBotIds();
 
 				if ( $weekly ) {
 					// From last Sunday (matches wikia_user_properties)
@@ -69,16 +64,21 @@ class CommunityPageSpecialUsersModel {
 				}
 
 				$sqlData = ( new WikiaSQL() )
-					->SELECT( 'user_name, user_id, ug_group, count(rev_id) AS revision_count' )
+					->SELECT( 'rev_user_text, rev_user, count(rev_id) AS revision_count' )
 					->FROM ( 'revision FORCE INDEX (user_timestamp)' )
-					->LEFT_JOIN( $wgExternalSharedDB . '_' . $wgDBcluster . '.user' )->ON( '(rev_user <> 0) AND (user_id = rev_user)' )
-					->LEFT_JOIN( 'user_groups ON (user_id = ug_user)' )
-					->WHERE( 'user_id' )->IS_NOT_NULL()
+					->WHERE( 'rev_user' )->NOT_EQUAL_TO( 0 );
+
+				if ( $onlyAdmins ) {
+					$adminIds = $this->getAdmins();
+					$sqlData
+						->AND_( 'rev_user' )->IN( $adminIds );
+				}
+
+				$sqlData
+					->AND_( 'rev_user' )->NOT_IN( $botIds )
 					->AND_( $dateFilter )
-					->AND_( '(ug_group IS NULL or (ug_group <> "bot"))' . $adminFilter )
-					// TODO: also filter by global bot user ids?
-					->GROUP_BY( 'user_name' )
-					->ORDER_BY( 'revision_count DESC, user_name' );
+					->GROUP_BY( 'rev_user_text' )
+					->ORDER_BY( 'revision_count DESC, rev_user_text' );
 
 				if ( $limit ) {
 					$sqlData->LIMIT( $limit );
@@ -86,10 +86,10 @@ class CommunityPageSpecialUsersModel {
 
 				$result = $sqlData->runLoop( $db, function ( &$result, $row ) {
 					$result[] = [
-						'userId' => $row->user_id,
-						'userName' => $row->user_name,
+						'userId' => $row->rev_user,
+						'userName' => $row->rev_user_text,
 						'contributions' => $row->revision_count,
-						'isAdmin' => $this->isAdmin( $row->user_id, $this->getAdmins() ),
+						'isAdmin' => $this->isAdmin( $row->rev_user, $this->getAdmins() ),
 					];
 				} );
 
@@ -99,21 +99,24 @@ class CommunityPageSpecialUsersModel {
 		return $data;
 	}
 
-	public function getGlobalBotIds() {
+	/**
+	 * @return array|null
+	 */
+	private function getGlobalBotIds() {
 		$botIds = WikiaDataAccess::cache(
 			wfMemcKey( self::GLOBAL_BOTS_MCACHE_KEY ),
-			WikiaResponse::CACHE_STANDARD,
+			WikiaResponse::CACHE_LONG,
 			function () {
 				global $wgExternalSharedDB;
 				$db = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
 
 				$sqlData = ( new WikiaSQL() )
-					->SELECT( 'user_id' )
-					->FROM ( 'user' )
-					->LEFT_JOIN( 'user_groups ON (user_id = ug_user)' )
-					->WHERE( 'ug_group' )->EQUAL_TO( 'bot-global' )
+					->SELECT( 'ug_user' )
+					->FROM ( 'user_groups' )
+					->WHERE( 'ug_group' )->IN( [ 'bot', 'bot-global' ] )
+					->GROUP_BY( 'ug_user' )
 					->runLoop( $db, function ( &$sqlData, $row ) {
-						$sqlData[] = $row->user_id;
+						$sqlData[] = $row->ug_user;
 					} );
 
 				return $sqlData;
@@ -123,15 +126,29 @@ class CommunityPageSpecialUsersModel {
 		return $botIds;
 	}
 
-	public function filterGlobalBots( array $users ) {
-		$botIds = $this->getGlobalBotIds();
+	private function getBotIds() {
+		$botIds = WikiaDataAccess::cache(
+			wfMemcKey( self::ALL_BOTS_MCACHE_KEY ),
+			WikiaResponse::CACHE_STANDARD,
+			function () {
+				$db = wfGetDB( DB_SLAVE );
 
-		return array_filter( $users, function ( $user ) use ( $botIds ) {
-			$userIdIsBot = in_array( $user['userId'], $botIds );
-			$userIsWikia = strtolower( $user['userName'] ) === 'wikia';
+				$localBots = ( new WikiaSQL() )
+					->SELECT( 'ug_user' )
+					->FROM ( 'user_groups' )
+					->WHERE( 'ug_group' )->IN( [ 'bot', 'bot-global' ] )
+					->GROUP_BY( 'ug_user' )
+					->runLoop( $db, function ( &$localBots, $row ) {
+						$localBots[] = $row->ug_user;
+					} );
 
-			return !$userIdIsBot && !$userIsWikia;
-		} );
+				$allBots = array_merge( $localBots, $this->getGlobalBotIds() );
+
+				return $allBots;
+			}
+		);
+
+		return $botIds;
 	}
 
 	/**
@@ -176,19 +193,11 @@ class CommunityPageSpecialUsersModel {
 
 	/**
 	 * Utility function used to filter out users that should not show up on the member's list
-	 * @param $user
+	 * @param User $user
 	 * @return bool
 	 */
-	private function showMember( $user ) {
-		if ( $user->isAnon() ) {
-			return false;
-		} elseif ( $user->isBlocked() ) {
-			return false;
-		} elseif ( in_array( $user->getId(), self::getGlobalBotIds() ) ) {
-			return false;
-		}
-
-		return true;
+	private function showMember( User $user ) {
+		return !( $user->isAnon() || $user->isBlocked() || in_array( $user->getId(), $this->getBotIds() ) );
 	}
 
 	/**
