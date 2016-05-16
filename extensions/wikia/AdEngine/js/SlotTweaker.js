@@ -164,7 +164,6 @@ define('ext.wikia.adEngine.slotTweaker', [
 		adjustLeaderboardSize: adjustLeaderboardSize,
 		hackChromeRefresh: hackChromeRefresh,
 		hide: hide,
-		onReady: onReady,
 		removeDefaultHeight: removeDefaultHeight,
 		removeTopButtonIfNeeded: removeTopButtonIfNeeded,
 		show: show
