@@ -60,7 +60,7 @@ class SetupWikiCities implements Task {
 		return TaskResult::createForSuccess();
 	}
 
-	private function addToCityList() {
+	public function addToCityList() {
 		global $wgRequest;
 		$founder = $this->taskContext->getFounder();
 
@@ -84,7 +84,7 @@ class SetupWikiCities implements Task {
 		return $this->taskContext->getSharedDBW()->insert( "city_list", $insertFields, __METHOD__ );
 	}
 
-	private function addToCityDomains() {
+	public function addToCityDomains() {
 		return $this->taskContext->getSharedDBW()->insert(
 			"city_domains",
 			[
