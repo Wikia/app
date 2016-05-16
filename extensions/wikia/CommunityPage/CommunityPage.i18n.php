@@ -377,7 +377,6 @@ $messages['it'] = array(
 	'communitypage-lastrevision' => '$1 modificato il $2',
 	'communitypage-noofviews' => '$1 viste',
 	'communitypage-full-list' => 'Visualizza elenco completo',
->>>>>>> dev
 );
 
 $messages['ja'] = array(
