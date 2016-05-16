@@ -43,7 +43,7 @@ class CommunityPageSpecialInsightsModel {
 	 * @return array Insight Module
 	 */
 	private function getInsightModule( $type, $sortingType = self::INSIGHTS_MODULE_SORT_TYPE ) {
-		$insightPages['pages'] = $this->insightsService->getInsightPages(
+		$insightPages = $this->insightsService->getInsightPages(
 			$type,
 			self::INSIGHTS_MODULE_ITEMS,
 			$sortingType
@@ -66,8 +66,10 @@ class CommunityPageSpecialInsightsModel {
 		$insightPages['title'] = wfMessage( 'communitypage-' . $type . '-title' )->text();
 		$insightPages['description'] =  wfMessage( 'communitypage-' . $type . '-description' )->text();
 
-		$insightPages['fulllistlink'] = SpecialPage::getTitleFor( 'Insights', $type )
-			->getLocalURL( $this->getSortingParam( $sortingType ) );
+		if ( $insightPages['count'] > self::INSIGHTS_MODULE_ITEMS ) {
+			$insightPages['fulllistlink'] = SpecialPage::getTitleFor( 'Insights', $type )
+				->getLocalURL( $this->getSortingParam( $sortingType ) );
+		}
 
 		$insightPages = $this->addLastRevision( $insightPages );
 
