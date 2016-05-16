@@ -10,7 +10,9 @@ class ConfigureUsersTest extends \WikiaBaseTest {
 		$this->setupFile = dirname( __FILE__ ) . '/../../CreateNewWiki_setup.php';
 		parent::setUp();
 
-		$this->taskContextMock = $this->getMock( '\Wikia\CreateNewWiki\Tasks\TaskContext', [ 'setFounder', 'getFounder' ] );
+		$this->taskContextMock = $this->getMock(
+			'\Wikia\CreateNewWiki\Tasks\TaskContext', [ 'setFounder', 'getFounder', 'getWikiDBW' ]
+		);
 		$this->mockClass( 'TaskContext', $this->taskContextMock );
 	}
 
@@ -60,6 +62,52 @@ class ConfigureUsersTest extends \WikiaBaseTest {
 		return [
 			[ true, 'error' ],
 			[ false, 'ok' ]
+		];
+	}
+
+	/**
+	 * @param int $userId
+	 * @param int $replaceCalledCount
+	 * @param bool $expected
+	 * @dataProvider addUserToGroupDataProvider
+	 */
+	public function testAddUserToGroup( $userId, $replaceCalledCount, $expected ) {
+		$userMock = $this->getMock( 'User', [ 'getId' ] );
+		$userMock
+			->expects( $this->any() )
+			->method( 'getId' )
+			->will( $this->returnValue( $userId ) );
+
+		$this->taskContextMock
+			->expects( $this->any() )
+			->method( 'getFounder' )
+			->willReturn( $userMock );
+
+		$wikiDBWMock = $this->getMock( 'DatabaseMysqli', [ 'replace' ] );
+		$wikiDBWMock
+			->expects( $this->exactly( $replaceCalledCount ) )
+			->method( 'replace' );
+
+		$this->taskContextMock
+			->expects( $this->any() )
+			->method( 'getWikiDBW' )
+			->willReturn( $wikiDBWMock );
+
+		$configureUsersTask = $this->getMockBuilder( '\Wikia\CreateNewWiki\Tasks\ConfigureUsers' )
+			->enableOriginalConstructor()
+			->setConstructorArgs( [ $this->taskContextMock ] )
+			->setMethods( [ 'warning', 'debug' ] )
+			->getMock();
+
+		$result = $configureUsersTask->addUserToGroups();
+
+		$this->assertEquals( $expected, $result );
+	}
+
+	public function addUserToGroupDataProvider() {
+		return [
+			[ 99, 2, true ],
+			[ 0, 0, false ]
 		];
 	}
 }

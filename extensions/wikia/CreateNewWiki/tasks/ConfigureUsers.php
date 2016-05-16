@@ -35,14 +35,14 @@ class ConfigureUsers implements Task {
 			$this->warning( implode( ":", ["CreateWiki", __CLASS__, "Create user sysop/bureaucrat for user: {$founderId} FAILED"] ) );
 		}
 
-		TaskResult::createForSuccess();
+		return TaskResult::createForSuccess();
 	}
 
 	public function addUserToGroups() {
 		$founderId = $this->taskContext->getFounder()->getId();
 		$wikiDBW = $this->taskContext->getWikiDBW();
 
-		if ( !empty( $founderId ) ) {
+		if ( empty( $founderId ) ) {
 			$this->warning( implode( ":", ["CreateWiki", __CLASS__, "FounderId is empty"] ) );
 			return false;
 		}
