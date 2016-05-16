@@ -158,14 +158,21 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	 * @return array
 	 */
 	public function getAllMembersData() {
-		$allMembers = $this->usersModel->getAllMembers();
+		$currentUser = $this->getUser();
+		$allMembers = $this->usersModel->getAllContributors( $currentUser->getId() );
+		$moreMembers = SpecialPage::getTitleFor( 'ListUsers' );
 
 		$this->response->setData( [
 			'allMembersHeaderText' => $this->msg( 'communitypage-all-members' )->plain(),
+			'allContributorsLegend' => $this->msg( 'communitypage-modal-tab-all-contribution-header' )->plain(),
 			'admin' => $this->msg( 'communitypage-admin' )->plain(),
 			'joinedText' => $this->msg( 'communitypage-joined' )->plain(),
 			'noMembersText' => $this->msg( 'communitypage-no-members' )->plain(),
-			'members' => array_slice( $allMembers, 0, self::ALL_MEMBERS_LIMIT ),
+			'members' => $allMembers,
+			'membersCount' => $this->usersModel->getMemberCount(),
+			'haveMoreMembers' => count( $allMembers ) >= CommunityPageSpecialUsersModel::ALL_CONTRIBUTORS_MODAL_LIMIT,
+			'moreMembersLink' => $moreMembers->getCanonicalURL(),
+			'moreMembersText' => $this->msg( 'communitypage-view-more' )->plain(),
 		] );
 	}
 

@@ -4,8 +4,9 @@
 .CommunityPageModalDialog.modal {
 	> header {
 		background-color: transparent;
+		border-bottom: 1px solid $color-page-border-subtle;
 		height: auto;
-		padding: 18px $modal-horizontal-padding;
+		padding: $modal-top-padding $modal-horizontal-padding $modal-bottom-padding;
 	}
 
 	> footer {
@@ -13,7 +14,7 @@
 	}
 
 	.modal-nav {
-		padding: 0 $modal-horizontal-padding 8px;
+		padding: $modal-top-padding $modal-horizontal-padding 0 0;
 
 		li {
 			display: inline-block;
