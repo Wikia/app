@@ -5,7 +5,7 @@ class CommunityPageSpecialInsightsModel {
 	const INSIGHTS_MODULE_SORT_TYPE = 'pvDiff';
 	const INSIGHTS_MODULES = [
 		'popularpages' => 'pvDiff',
-		'uncategorizedpages' => 'pvDiff',
+		'uncategorizedpages' => false,
 		'wantedpages' => false
 	];
 
