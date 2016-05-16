@@ -9,6 +9,7 @@ require([
 	'ext.wikia.recirculation.views.incontent',
 	'ext.wikia.recirculation.views.rail',
 	'ext.wikia.recirculation.views.footer',
+	'ext.wikia.recirculation.views.scroller',
 	'ext.wikia.recirculation.helpers.contentLinks',
 	'ext.wikia.recirculation.helpers.fandom',
 	'ext.wikia.recirculation.helpers.lateral',
@@ -25,6 +26,7 @@ require([
 	incontentView,
 	railView,
 	footerView,
+	scrollerView,
 	contentLinksHelper,
 	fandomHelper,
 	lateralHelper,
@@ -124,6 +126,20 @@ require([
 		case 'LINKS_FOOTER':
 			helper = contentLinksHelper();
 			view = footerView();
+			break;
+		case 'LINKS_SCROLLER':
+			helper = contentLinksHelper({
+			    count: 6,
+			    extra: 6
+			});
+			view = scrollerView();
+			break;
+		case 'LATERAL_SCROLLER':
+			helper = lateralHelper({
+				type: 'community',
+				count: 12
+			});
+			view = scrollerView();
 			break;
 		case 'CONTROL':
 			helper = fandomHelper({

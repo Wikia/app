@@ -18,15 +18,22 @@ class CreateWiki {
 
 	use \Wikia\Logger\Loggable;
 
-	/* @var $mDBw DatabaseBase */
-	/* @var $mClusterDB string */
-	private $mName, $mDomain, $mLanguage, $mVertical, $mCategories, $mIP,
-		$mPHPbin, $mNewWiki, $mFounder,
-		$mLangSubdomain, $mDBw, $mWFSettingVars, $mWFVars,
+	private $mName, $mDefSitename, $mSitenames, $mDomain, $mDomains, $mDefSubdomain,
+		$mLanguage, $mVertical, $mCategories, $mIP,
+		$mPHPbin, $mFounder,
+		$mLangSubdomain, $mWFSettingVars, $mWFVars,
 		$mDefaultTables, $mAdditionalTables,
 		$sDbStarter, $mFounderIp,
-		$mCurrTime,
-		$mClusterDB; // eg. "wikicities_c7"
+		$mCurrTime;
+
+	/* @var $mNewWiki stdClass */
+	private $mNewWiki;
+
+	/* @var $mDBw DatabaseMysql */
+	private $mDBw;
+
+	/* @var $mClusterDB string */
+	private	$mClusterDB;
 
 	const ERROR_BAD_EXECUTABLE_PATH                    = 1;
 	const ERROR_DOMAIN_NAME_TAKEN                      = 2;
@@ -54,6 +61,7 @@ class CreateWiki {
 	const DEFAULT_NAME         = "Wiki";
 	const DEFAULT_WIKI_TYPE    = "";
 	const DEFAULT_WIKI_LOGO    = '$wgUploadPath/b/bc/Wiki.png';
+	const LOCK_DOMAIN_TIMEOUT  = 30;
 
 	const SANITIZED_BUCKET_NAME_MAXIMUM_LENGTH = 55;
 
@@ -63,6 +71,8 @@ class CreateWiki {
 	 * @param string $name - name of wiki (set later as $wgSiteinfo)
 	 * @param string $domain - domain part without '.wikia.com'
 	 * @param string $language - language code
+	 * @param integer $vertical - vertical of the wiki
+	 * @param array $categories - list of categories for the wiki
 	 */
 	public function __construct( $name, $domain, $language, $vertical, $categories ) {
 		global $wgUser, $IP, $wgAutoloadClasses, $wgRequest;
@@ -81,7 +91,7 @@ class CreateWiki {
 		$this->mFounder = $wgUser;
 		$this->mFounderIp = $wgRequest->getIP();
 
-		wfDebugLog( "createwiki", "founder: " . print_r($this->mFounder, true) . "\n", true );
+		wfDebugLog( "createwiki", __METHOD__ . ": founder: " . print_r($this->mFounder, true) . "\n", true );
 
 		/* default tables */
 		$this->mDefaultTables = array(
@@ -110,11 +120,6 @@ class CreateWiki {
 			"{$this->mIP}/extensions/wikia/AjaxPoll/patch-create-poll_vote.sql",
 			"{$this->mIP}/extensions/wikia/ImageServing/sql/table.sql",
 		);
-
-		/**
-		 * local job
-		 */
-		$wgAutoloadClasses[ "CreateWikiLocalJob" ] = __DIR__ . "/CreateWikiLocalJob.php";
 	}
 
 	/**
@@ -203,7 +208,7 @@ class CreateWiki {
 		$this->prepareValues();
 
 		// prevent domain to be registered more than once
-		if ( !AutoCreateWiki::lockDomain($this->mDomain) ) {
+		if ( !self::lockDomain($this->mDomain) ) {
 			wfProfileOut( __METHOD__ );
 			throw new CreateWikiException('Domain name taken', self::ERROR_DOMAIN_NAME_TAKEN);
 		}
@@ -227,23 +232,17 @@ class CreateWiki {
 		$this->mClusterDB = ( self::ACTIVE_CLUSTER ) ? "wikicities_" . self::ACTIVE_CLUSTER : "wikicities";
 		$this->mNewWiki->dbw = wfGetDB( DB_MASTER, array(), $this->mClusterDB ); // database handler, old $dbwTarget
 
-		// SUS-108: check read-only state of ACTIVE_CLUSTER before performing any DB-related actions
-		$readOnlyReason = $this->mNewWiki->dbw->getLBInfo( 'readOnlyReason' );
-		if ( $readOnlyReason !== false ) {
-			wfProfileOut( __METHOD__ );
-			throw new CreateWikiException( sprintf( '%s is in read-only mode: %s', self::ACTIVE_CLUSTER, $readOnlyReason ), self::ERROR_READONLY );
-		}
-
 		// check if database is creatable
 		// @todo move all database creation checkers to canCreateDatabase
-		if( !$this->canCreateDatabase() ) {
+		try {
+			$this->canCreateDatabase();
+		} catch ( CreateWikiException $e ) {
 			wfProfileOut( __METHOD__ );
-			throw new CreateWikiException('DB exists - ' . $this->mNewWiki->dbname, self::ERROR_DATABASE_ALREADY_EXISTS);
+			throw $e;
 		}
-		else {
-			$this->mNewWiki->dbw->query( sprintf( "CREATE DATABASE `%s`", $this->mNewWiki->dbname ) );
-			wfDebugLog( "createwiki", "Database {$this->mNewWiki->dbname} created\n", true );
-		}
+
+		$this->mNewWiki->dbw->query( sprintf( "CREATE DATABASE `%s`", $this->mNewWiki->dbname ) );
+		wfDebugLog( "createwiki", __METHOD__ . ": Database {$this->mNewWiki->dbname} created\n", true );
 
 		/**
 		 * create position in wiki.factory
@@ -364,33 +363,13 @@ class CreateWiki {
 
 		/**
 		 * set tags per language and per hub
-		 * @FIXME the switch is !@#$ creazy, but I didn't find a core function
 		 */
 		$tags = new WikiFactoryTags( $this->mNewWiki->city_id );
-		$langTag = $this->mNewWiki->language;
-		if ( $langTag !== 'en' ) {
-			switch ( $langTag ) {
-				case 'pt-br':
-					$langTag = 'pt';
-					break;
-				case 'zh-tw':
-				case 'zh-hk':
-				case 'zh-clas':
-				case 'zh-class':
-				case 'zh-classical':
-				case 'zh-cn':
-				case 'zh-hans':
-				case 'zh-hant':
-				case 'zh-min-':
-				case 'zh-min-n':
-				case 'zh-mo':
-				case 'zh-sg':
-				case 'zh-yue':
-					$langTag = 'zh';
-					break;
+		if ( $this->mNewWiki->language !== 'en') {
+			$langTag = Locale::getPrimaryLanguage( $this->mNewWiki->language );
+			if ( !empty($langTag) ) {
+				$tags->addTagsByName( $langTag );
 			}
-
-			$tags->addTagsByName( $langTag );
 		}
 
 		/**
@@ -489,12 +468,12 @@ class CreateWiki {
 			// invalid name (name is used language)
 			$status = self::ERROR_DOMAIN_POLICY_VIOLATIONS;
 		}
-		elseif ( !$wgUser->isAllowed( "staff" ) && ( AutoCreateWiki::checkBadWords( $this->mDomain, "domain" ) === false ) ) {
+		elseif ( !$wgUser->isAllowed( "staff" ) && ( CreateWikiChecks::checkBadWords( $this->mDomain, "domain" ) === false ) ) {
 			// invalid name (bad words)
 			$status = self::ERROR_DOMAIN_POLICY_VIOLATIONS;
 		}
 		else {
-			if( AutoCreateWiki::domainExists( $this->mDomain, $this->mLanguage ) ) {
+			if( CreateWikiChecks::domainExists( $this->mDomain, $this->mLanguage ) ) {
 				$status = self::ERROR_DOMAIN_NAME_TAKEN;
 			}
 		}
@@ -513,6 +492,8 @@ class CreateWiki {
 	 * @author Krzysztof Krzyżaniak (eloy)
 	 *
 	 * @param
+	 *
+	 * @return StdClass
 	 */
 	private function prepareValues() {
 		global $wgContLang;
@@ -526,7 +507,8 @@ class CreateWiki {
 		$fixedTitle = preg_replace("/\s+/", " ", $fixedTitle );
 		$fixedTitle = preg_replace("/ (w|W)iki$/", "", $fixedTitle );
 		$fixedTitle = $wgContLang->ucfirst( $fixedTitle );
-		$this->mNewWiki->sitename = wfMsgExt( 'autocreatewiki-title-template', array( 'language' => $this->mLanguage ), $fixedTitle );
+		$siteTitle = wfMessage('autocreatewiki-title-template', $fixedTitle);
+		$this->mNewWiki->sitename = $siteTitle->inLanguage($this->mLanguage)->text();
 
 		// domain part
 		$this->mDomain = preg_replace( "/(\-)+$/", "", $this->mDomain );
@@ -591,8 +573,6 @@ class CreateWiki {
 	 * @access private
 	 * @author Piotr Molski (moli)
 	 * @author Krzysztof Krzyżaniak (eloy)
-	 *
-	 * @return
 	 */
 	private function fixSubdomains() {
 		$this->mDefSubdomain = self::DEFAULT_DOMAIN;
@@ -608,7 +588,9 @@ class CreateWiki {
 	 * @access public
 	 * @author Michał Roszka <michal@wikia-inc.com>
 	 *
-	 * @param $sDirectoryName the path to check
+	 * @param $sDirectoryName string the path to check
+	 *
+	 * @return boolean
 	 */
 	public static function wgUploadDirectoryExists( $sDirectoryName ) {
 		wfProfileIn( __METHOD__ );
@@ -628,7 +610,10 @@ class CreateWiki {
 	 * @access private
 	 * @author Piotr Molski (Moli)
 	 *
-	 * @param
+	 * @param $name string base name of the directory
+	 * @param $language string language in which wiki will be created
+	 *
+	 * @return string
 	 */
 	private function prepareDirValue( $name, $language ) {
 		wfProfileIn( __METHOD__ );
@@ -733,7 +718,7 @@ class CreateWiki {
 		$dbwf = WikiFactory::db( DB_SLAVE );
 		$dbr  = wfGetDB( DB_MASTER );
 
-		wfDebugLog( "createwiki", __METHOD__, ": checking database name for dbname=$dbname, language={$lang}\n", true );
+		wfDebugLog( "createwiki", __METHOD__ . ":  checking database name for dbname=$dbname, language={$lang}\n", true );
 
 		if( $lang !== "en" ) {
 			$dbname = $lang . $dbname;
@@ -748,7 +733,7 @@ class CreateWiki {
 		$suffix = "";
 		while( $exists == 1 ) {
 			$dbname = sprintf("%s%s", $dbname, $suffix);
-			wfDebugLog( "createwiki", __METHOD__, ": Checking if database {$dbname} already exists in city_list\n", true );
+			wfDebugLog( "createwiki", __METHOD__ . ": Checking if database {$dbname} already exists in city_list\n", true );
 			$row = $dbwf->selectRow(
 				array( "city_list" ),
 				array( "count(*) as count" ),
@@ -757,14 +742,14 @@ class CreateWiki {
 			);
 			$exists = 0;
 			if( $row->count > 0 ) {
-				wfDebugLog( "createwiki", __METHOD__, ": Database {$dbname} exists in city_list!\n", true );
+				wfDebugLog( "createwiki", __METHOD__ . ": Database {$dbname} exists in city_list!\n", true );
 				$exists = 1;
 			}
 			else {
-				wfDebugLog( "createwiki", __METHOD__, ": Checking if database {$dbname} already exists in database", true );
+				wfDebugLog( "createwiki", __METHOD__ . ": Checking if database {$dbname} already exists in database", true );
 				$sth = $dbr->query( sprintf( "show databases like '%s'", $dbname) );
 				if ( $dbr->numRows( $sth ) > 0 ) {
-					wfDebugLog( "createwiki", __METHOD__, ": Database {$dbname} exists on cluster!", true );
+					wfDebugLog( "createwiki", __METHOD__ . ": Database {$dbname} exists on cluster!", true );
 					$exists = 1;
 				}
 			}
@@ -783,9 +768,11 @@ class CreateWiki {
 	 * @todo this code is probably duplication of other checkers
 	 */
 	private function canCreateDatabase() {
-
-		// default response
-		$can = true;
+		// SUS-108: check read-only state of ACTIVE_CLUSTER before performing any DB-related actions
+		$readOnlyReason = $this->mNewWiki->dbw->getLBInfo( 'readOnlyReason' );
+		if ( $readOnlyReason !== false ) {
+			throw new CreateWikiException( sprintf( '%s is in read-only mode: %s', self::ACTIVE_CLUSTER, $readOnlyReason ), self::ERROR_READONLY );
+		}
 
 		// check local cluster
 		$row = $this->mNewWiki->dbw->selectRow(
@@ -797,36 +784,35 @@ class CreateWiki {
 
 		if( isset( $row->name ) && $row->name === $this->mNewWiki->dbname ) {
 			wfDebugLog( "createwiki", __METHOD__ . ": database {$this->mNewWiki->dbname} already exists on active cluster\n" );
-			$can = false;
+			throw new CreateWikiException('DB exists - ' . $this->mNewWiki->dbname, self::ERROR_DATABASE_ALREADY_EXISTS);
 		}
-		else {
-			// check city_list
-			$dbw = WikiFactory::db( DB_MASTER );
-			$row = $dbw->selectRow(
-				"city_list",
-				array( "count(*) as count" ),
-				array( "city_dbname" => $this->mNewWiki->dbname ),
-				__METHOD__
-			);
 
-			if( $row->count > 0 ) {
-				wfDebugLog( "createwiki", __METHOD__ . ": database {$this->mNewWiki->dbname} already used in city_list\n" );
-				$can = false;
-			} else {
-				// check domain
-				$row = $dbw->selectRow(
-					"city_list",
-					array( "count(*) as count" ),
-					array( "city_url" => $this->mNewWiki->url ),
-					__METHOD__
-				);
-				if( $row->count > 0 ) {
-					wfDebugLog( "createwiki", __METHOD__ . ": domain {$this->mNewWiki->url} already used in city_list\n" );
-					$can = false;
-				}
-			}
+		// check city_list
+		$dbw = WikiFactory::db( DB_MASTER );
+		$row = $dbw->selectRow(
+			"city_list",
+			array( "count(*) as count" ),
+			array( "city_dbname" => $this->mNewWiki->dbname ),
+			__METHOD__
+		);
+
+		if( $row->count > 0 ) {
+			wfDebugLog( "createwiki", __METHOD__ . ": database {$this->mNewWiki->dbname} already used in city_list\n" );
+			throw new CreateWikiException( 'DB exists in city list (dbname)- ' . $this->mNewWiki->dbname, self::ERROR_DATABASE_ALREADY_EXISTS );
 		}
-		return $can;
+
+		// check domain
+		$row = $dbw->selectRow(
+			"city_list",
+			array("count(*) as count"),
+			array("city_url" => $this->mNewWiki->url),
+			__METHOD__
+		);
+
+		if ( $row->count > 0 ) {
+			wfDebugLog( "createwiki", __METHOD__ . ": domain {$this->mNewWiki->url} already used in city_list\n" );
+			throw new CreateWikiException( 'DB exists in city list (url) - ' . $this->mNewWiki->dbname, self::ERROR_DATABASE_ALREADY_EXISTS );
+		}
 	}
 
 	/**
@@ -1072,6 +1058,8 @@ class CreateWiki {
 	 * @param  string $match
 	 * @param  array  $settings
 	 * @param  string $type
+	 *
+	 * @return integer
 	 */
 	public function addCustomSettings( $match, $settings, $type = 'unknown' ) {
 		global $wgUser;
@@ -1119,5 +1107,31 @@ class CreateWiki {
 	 */
 	private function getInitialNjordExtValue() {
 		return false;
+	}
+
+	/**
+	 * Returns memcache key for locking given domain
+	 * @param string $domain
+	 * @return string
+	 */
+	static protected function getLockDomainKey( $domain ) {
+		return wfSharedMemcKey( 'createwiki', 'domain', 'lock', urlencode( $domain ) );
+	}
+
+	/**
+	 * Locks domain if possible for predefined amount of time
+	 * Returns true if successful
+	 *
+	 * @param string $domain
+	 * @return bool
+	 */
+	static private function lockDomain( $domain ) {
+		global $wgMemc;
+
+		$key = self::getLockDomainKey( $domain );
+		$status = $wgMemc->add( $key, 1, self::LOCK_DOMAIN_TIMEOUT );
+		wfDebug( "createwiki", __METHOD__ . ": (\"$domain\") = " . ( $status ? "OK" : "failed" ) . "\n" );
+
+		return $status;
 	}
 }

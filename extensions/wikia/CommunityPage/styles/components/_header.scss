@@ -1,19 +1,30 @@
+@import 'skins/shared/color';
 @import 'skins/shared/mixins/flexbox';
+
+$hero-image-pattern: '/extensions/wikia/CommunityPage/images/hero_image_pattern.png';
+
+@if $is-dark-wiki {
+	$hero-image-pattern: '/extensions/wikia/CommunityPage/images/hero_image_pattern_dark.png';
+}
 
 .community-page-header {
 	@include flexbox();
 	align-items: center;
-	background-color: $color-links;
+	background: url($hero-image-pattern);
 	height: 250px;
 	justify-content: center;
 	text-align: center;
+
+	&.community-page-header-cover {
+		background-position: center;
+		background-size: cover;
+	}
 
 	.community-page-header-content {
 		width: 75%;
 	}
 
 	h1 {
-		color: $color-community-page-white;
 		font-weight: bold;
 	}
 
@@ -40,8 +51,7 @@
 
 .community-page-admin-welcome-message {
 	align-items: center;
-	background-color: $color-community-page-gray;
-	color: $color-text-dark;
+	background-color: $color-unified-module-background;
 	display: flex;
 	justify-content: center;
 	text-align: center;

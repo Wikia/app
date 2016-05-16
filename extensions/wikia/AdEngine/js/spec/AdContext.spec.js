@@ -298,6 +298,40 @@ describe('AdContext', function () {
 		expect(adContext.getContext().providers.hitMedia).toBeFalsy();
 	});
 
+	it('makes providers.rubiconFastlane true when country in wgCountries', function () {
+		var adContext;
+
+		mocks.win = {
+			ads: {
+				context: {
+					providers: {
+						rubiconFastlane: true
+					}
+				}
+			}
+		};
+		mocks.instantGlobals = {
+			wgAdDriverRubiconFastlaneCountries: ['CURRENT_COUNTRY', 'ZZ'],
+			wgAdDriverRubiconFastlaneProviderCountries: ['CURRENT_COUNTRY', 'ZZ']
+		};
+		adContext = getModule();
+		expect(adContext.getContext().providers.rubiconFastlane).toBeTruthy();
+
+		mocks.instantGlobals = {
+			wgAdDriverRubiconFastlaneCountries: ['YY'],
+			wgAdDriverRubiconFastlaneProviderCountries: ['CURRENT_COUNTRY', 'ZZ']
+		};
+		adContext = getModule();
+		expect(adContext.getContext().providers.rubiconFastlane).toBeFalsy();
+
+		mocks.instantGlobals = {
+			wgAdDriverRubiconFastlaneCountries: ['CURRENT_COUNTRY', 'ZZ'],
+			wgAdDriverRubiconFastlaneProviderCountries: ['YY']
+		};
+		adContext = getModule();
+		expect(adContext.getContext().providers.rubiconFastlane).toBeFalsy();
+	});
+
 	it('calls whoever registered with addCallback each time setContext is called', function () {
 		var adContext;
 
