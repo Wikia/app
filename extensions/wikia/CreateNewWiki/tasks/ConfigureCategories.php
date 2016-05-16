@@ -63,13 +63,13 @@ class ConfigureCategories implements Task {
 
 	public function setVertical($vertical, $cityId, WikiFactoryHub $wikiFactoryHubInstance) {
 		$wikiFactoryHubInstance->setVertical( $cityId, $vertical, "CW Setup" );
-		$this->debug( ":", implode( ["CreateWiki", __CLASS__, "Wiki added to the vertical: {$vertical}"] ) );
+		$this->debug( ":", implode( ["CreateWiki", __METHOD__, "Wiki added to the vertical: {$vertical}"] ) );
 	}
 
 	public function setCategories($categories, $cityId, WikiFactoryHub $wikiFactoryHubInstance) {
 		foreach ( $categories as $category ) {
 			$wikiFactoryHubInstance->addCategory( $cityId, $category );
-			$this->debug( ":", implode( ["CreateWiki", __CLASS__, "Wiki added to the category: {$category}"] ) );
+			$this->debug( ":", implode( ["CreateWiki", __METHOD__, "Wiki added to the category: {$category}"] ) );
 		}
 	}
 }

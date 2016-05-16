@@ -29,10 +29,10 @@ class ConfigureUsers implements Task {
 
 	public function run() {
 		$founderId = $this->taskContext->getFounder()->getId();
-		$this->debug( implode( ":", ["CreateWiki", __CLASS__, "Create user sysop/bureaucrat for user: {$founderId}"] ) );
+		$this->debug( implode( ":", ["CreateWiki", __METHOD__, "Create user sysop/bureaucrat for user: {$founderId}"] ) );
 		if ( !$this->addUserToGroups() ) {
 			// @TODO should this be an error? - it wasn't before the changes but looks like an error to me
-			$this->warning( implode( ":", ["CreateWiki", __CLASS__, "Create user sysop/bureaucrat for user: {$founderId} FAILED"] ) );
+			$this->warning( implode( ":", ["CreateWiki", __METHOD__, "Create user sysop/bureaucrat for user: {$founderId} FAILED"] ) );
 		}
 
 		return TaskResult::createForSuccess();
@@ -43,7 +43,7 @@ class ConfigureUsers implements Task {
 		$wikiDBW = $this->taskContext->getWikiDBW();
 
 		if ( empty( $founderId ) ) {
-			$this->warning( implode( ":", ["CreateWiki", __CLASS__, "FounderId is empty"] ) );
+			$this->warning( implode( ":", ["CreateWiki", __METHOD__, "FounderId is empty"] ) );
 			return false;
 		}
 
