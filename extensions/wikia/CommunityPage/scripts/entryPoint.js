@@ -10,14 +10,16 @@ require([
 		trackingMethod: 'analytics'
 	});
 
-	$('.community-page-entry-point-module .entry-point-button').on(
-		'mousedown touchstart',
-		track.bind(this, {label: 'entry-button'})
-	);
+	$(function() {
+		$('.community-page-entry-point-module .entry-point-button').on(
+			'mousedown touchstart',
+			track.bind(this, {label: 'entry-button'})
+		);
 
-	// Track impression
-	track({
-		action: tracker.ACTIONS.IMPRESSION,
-		label: 'entry-point-loaded',
+		// Track impression
+		track({
+			action: tracker.ACTIONS.IMPRESSION,
+			label: 'entry-point-loaded',
+		});
 	});
 });
