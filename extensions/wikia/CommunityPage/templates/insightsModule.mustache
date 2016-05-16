@@ -1,7 +1,7 @@
 <section class="community-page-insights-module">
 	<h3 class="community-page-insights-module-header">{{title}}</h3>
 	<p class="community-page-insights-module-description">{{description}}</p>
-	<a class="community-page-insights-module-full-list-link" href="{{fulllistlink}}">{{insightsModules.messages.fulllist}} &rarr;</a>
+	{{#fulllistlink}}<a class="community-page-insights-module-full-list-link" href="{{fulllistlink}}">{{insightsModules.messages.fulllist}} &rarr;</a>{{/fulllistlink}}
 	<ul class="community-page-insights-module-list">
 		{{#pages}}
 			<li class="community-page-insights-module-list-item">

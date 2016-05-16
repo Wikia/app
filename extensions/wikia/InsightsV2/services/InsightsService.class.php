@@ -20,8 +20,13 @@ class InsightsService extends WikiaService {
 			return [];
 		}
 
+		$insightCount = count( $insightData );
+
 		if ( empty( $sortingType ) ) {
-			return $this->truncateTo( $insightData, $size );
+			return [
+				'count' => $insightCount,
+				'pages' => $this->truncateTo( $insightData, $size )
+			];
 		}
 
 		$sortedInsightArticleIds = ( new InsightsSorting( $model->getConfig() ) )
@@ -29,9 +34,12 @@ class InsightsService extends WikiaService {
 				$insightData,
 				[ 'sort' => $sortingType ]
 			);
-
 		$aritclesIds = $this->truncateTo( $sortedInsightArticleIds, $size );
-		return $this->getArticlesData( $insightData, $aritclesIds );
+
+		return [
+			'count' => $insightCount,
+			'pages' => $this->getArticlesData( $insightData, $aritclesIds )
+		];
 	}
 
 	/**
