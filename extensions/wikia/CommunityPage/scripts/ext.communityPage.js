@@ -13,32 +13,33 @@ require([
 	var track = tracker.buildTrackingFunction({
 		action: tracker.ACTIONS.CLICK,
 		category: 'community-page',
-		trackingMethod: 'analytics'
+		trackingMethod: 'analytics',
 	});
 
 	// "private" vars - don't access directly. Use getUiModalInstance().
 	var uiModalInstance, modalNavHtml, activeTab, allMembersCount, allAdminsCount;
 
 	var tabs = {
-		TAB_ALL: {
-			className: '.modal-nav-all',
-			template: 'allMembers',
-			request: 'getAllMembersData',
-			cachedData: null,
+			TAB_ALL: {
+				className: '.modal-nav-all',
+				template: 'allMembers',
+				request: 'getAllMembersData',
+				cachedData: null,
+			},
+			TAB_ADMINS: {
+				className: '.modal-nav-admins',
+				template: 'allAdmins',
+				request: 'getAllAdminsData',
+				cachedData: null,
+			},
+			TAB_LEADERBOARD: {
+				className: '.modal-nav-leaderboard',
+				template: 'topContributorsModal',
+				request: 'getTopContributorsData',
+				cachedData: null,
+			}
 		},
-		TAB_ADMINS: {
-			className: '.modal-nav-admins',
-			template: 'allAdmins',
-			request: 'getAllAdminsData',
-			cachedData: null,
-		},
-		TAB_LEADERBOARD: {
-			className: '.modal-nav-leaderboard',
-			template: 'topContributorsModal',
-			request: 'getTopContributorsData',
-			cachedData: null,
-		},
-	};
+		tabLinkClass = '.modal-tab-link';
 
 	function init() {
 		initTracking();
@@ -110,8 +111,8 @@ require([
 				format: 'json',
 				type: 'get',
 			}).then(function (response) {
-				if (response.hasOwnProperty('members')) {
-					allMembersCount = response.members.length;
+				if (response.hasOwnProperty('membersCount')) {
+					allMembersCount = response.membersCount;
 				}
 
 				allAdminsCount = response.allAdminsCount;
@@ -135,20 +136,22 @@ require([
 			getUiModalInstance(),
 			getModalNavHtml()
 		).then(function (uiModal, navHtml) {
-			var createPageModalConfig = {
-				vars: {
-					id: 'CommunityPageModalDialog',
-					size: 'medium',
-					content: '',
-					title: $.msg('communitypage-modal-title'),
-					classes: ['CommunityPageModalDialog']
-				}
-			};
+			var $header = getHeader(navHtml),
+				createPageModalConfig = {
+					vars: {
+						classes: ['CommunityPageModalDialog'],
+						content: '',
+						htmlTitle: $header.html(),
+						id: 'CommunityPageModalDialog',
+						size: 'medium',
+					}
+				};
+
 			uiModal.createComponent(createPageModalConfig, function (modal) {
 				modal.$content
 					.addClass('ContributorsModule ContributorsModuleModal')
-					.html(navHtml + mustache.render(templates.modalLoadingScreen))
-					.find(tabToActivate.className).children().addClass('active');
+					.html(mustache.render(templates.modalLoadingScreen))
+					.find(tabToActivate.className).children(tabLinkClass).addClass('active');
 
 				throbber.show($('.throbber-placeholder'));
 
@@ -162,28 +165,36 @@ require([
 		});
 	}
 
+	function getHeader(navHtml) {
+		return $('<div>')
+			.append($('<h3>').html($.msg('communitypage-modal-title')))
+			.append(navHtml);
+	}
+
+	function markActiveTab(tabToActivate) {
+		var $modal = window.activeModal.$element;
+
+		$modal.find(tabLinkClass).removeClass('active');
+		$modal.find(tabToActivate.className).children(tabLinkClass).addClass('active');
+	}
+
 	function switchCommunityModalTab(tabToActivate) {
-		getModalNavHtml().then(function (navHtml) {
-			// Switch highlight to new tab
-			window.activeModal.$content
-				.html(navHtml + mustache.render(templates.modalLoadingScreen))
-				.find(tabToActivate.className).children().addClass('active');
+		var $content = window.activeModal.$content,
+			$modalLoadingScreen = $(mustache.render(templates.modalLoadingScreen));
 
-			throbber.show($('.throbber-placeholder'));
+		markActiveTab(tabToActivate);
+		$content.html($modalLoadingScreen);
+		throbber.show($modalLoadingScreen);
 
-			getModalTabContentsHtml(tabToActivate).then(function (tabContentHtml) {
-				window.activeModal.$content
-					.html(navHtml + tabContentHtml)
-					.find(tabToActivate.className).children().addClass('active');
-
-				updateModalHeader();
-				activeTab = tabToActivate;
-			});
+		getModalTabContentsHtml(tabToActivate).then(function (tabContentHtml) {
+			$content.html(tabContentHtml);
+			updateModalHeader();
+			activeTab = tabToActivate;
 		});
 	}
 
 	function initModalEventBindings(modal) {
-		modal.$content
+		modal.$element
 			.on('click', '#modalTabAll', function (event) {
 				event.preventDefault();
 				switchCommunityModalTab(tabs.TAB_ALL);
@@ -239,7 +250,7 @@ require([
 		// Track clicks on modal close button
 		modal.bind('close', function () {
 			track({
-				label: 'modal-close'
+				label: 'modal-close',
 			});
 		});
 	}

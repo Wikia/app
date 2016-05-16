@@ -61,4 +61,20 @@ class CommunityPageSpecialHooks {
 
 		return true;
 	}
+
+	/**
+	 * Add community page entry point to article page right rail module
+	 *
+	 * @param array $railModuleList
+	 * @return bool
+	 */
+	public static function onGetRailModuleList( Array &$railModuleList ) {
+		global $wgTitle, $wgUser;
+
+		if ( ( $wgUser->isLoggedIn() && $wgTitle->inNamespace( NS_MAIN ) ) || $wgTitle->isSpecial( 'WikiActivity' ) ) {
+			$railModuleList[1342] = [ 'CommunityPageEntryPoint', 'Index', null ];
+		}
+
+		return true;
+	}
 }

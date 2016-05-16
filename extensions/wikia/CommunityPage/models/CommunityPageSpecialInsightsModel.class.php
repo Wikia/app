@@ -5,6 +5,7 @@ class CommunityPageSpecialInsightsModel {
 	const INSIGHTS_MODULE_SORT_TYPE = 'pvDiff';
 	const INSIGHTS_MODULES = [
 		'popularpages' => 'pvDiff',
+		'deadendpages' => false,
 		'uncategorizedpages' => false,
 		'wantedpages' => false
 	];
@@ -59,9 +60,11 @@ class CommunityPageSpecialInsightsModel {
 		 * communitypage-popularpages-title'
 		 * communitypage-uncategorizedpages-title'
 		 * communitypage-wantedpages-title'
+		 * communitypage-deadendpages-title'
 		 * communitypage-popularpages-description'
 		 * communitypage-uncategorizedpages-description'
 		 * communitypage-wantedpages-description'
+		 * communitypage-deadendpages-description'
 		 */
 		$insightPages['type'] = $type;
 		$insightPages['title'] = wfMessage( 'communitypage-' . $type . '-title' )->text();
