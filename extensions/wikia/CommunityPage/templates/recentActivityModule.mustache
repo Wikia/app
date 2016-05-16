@@ -5,7 +5,7 @@
 			{{#activity}}
 				<li>
 					<div class="avatar-container">
-						<a href="{{profilePage}}">{{{userAvatar}}}</a>
+						<a data-tracking="user-avatar-link" href="{{profilePage}}">{{{userAvatar}}}</a>
 					</div>
 					<div class="change-message">
 						{{{changeMessage}}}
@@ -18,6 +18,6 @@
 				</li>
 			{{/activity}}
 		</ul>
-		<a href="{{moreActivityLink}}">{{moreActivityText}}</a>
+		<a data-tracking="view-all-activity-link" href="{{moreActivityLink}}">{{moreActivityText}}</a>
 	</div>
 {{/recentActivityModule}}

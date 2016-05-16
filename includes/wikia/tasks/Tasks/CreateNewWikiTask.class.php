@@ -80,9 +80,7 @@ class CreateNewWikiTask extends BaseTask {
 
 		$hookParams = [ 'title' => $params['sitename'], 'url' => $params['url'], 'city_id' => $params['city_id'] ];
 
-		if ( empty( $params['disableCompleteHook'] ) ) {
-			wfRunHooks( 'CreateWikiLocalJob-complete', array( $hookParams ) );
-		}
+		wfRunHooks( 'CreateWikiLocalJob-complete', array( $hookParams ) );
 
 		return true;
 	}

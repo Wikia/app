@@ -1,117 +1,44 @@
+// Variables for general Community Page styles
+@import 'skins/shared/color';
+@import 'skins/oasis/css/core/breakpoints-variables';
+
 // Components
+@import 'components/variables';
 @import 'components/module';
 @import 'components/textborder';
 @import 'components/header';
 @import 'components/recent-activity-module';
-@import 'components/banner-message';
 @import 'components/avatar';
 @import 'components/list';
 @import 'components/contributors-module';
 @import 'components/modal';
+@import 'components/insights-module';
 @import 'components/recently-joined';
 
-// Variables for general Community Page styles
-@import 'skins/shared/color';
-
-// General Community Page styles
-// TODO: copy/pasted code from here down
-.community-page-content {
-	margin: 20px auto;
-	width: 850px;
+.CommunityPageContainer {
+	box-sizing: border-box;
+	padding: 34px 50px;
+	width: 100%;
 }
 
-.task-page-content {
-	margin: 20px auto;
-	width: 478px;
-
-	.admin-message {
-		margin-bottom: 20px;
-		text-align: center;
-	}
-}
-
-.community-page-top-contributors {
-	border: 1px solid $color-page-border;
+.CommunityPageMainContent {
+	box-sizing: inherit;
 	float: left;
-	padding: 20px 15px 15px;
-	position: relative;
-	width: 270px;
-	word-wrap: break-word;
-
-	h2 {
-		border: 0;
-		font-size: 18px;
-		font-weight: bold;
-		margin-bottom: 25px;
-		margin-top: 0;
-		padding-left: 2px;
-	}
-
-	ul {
-		list-style: none;
-		margin: 10px 0;
-	}
-
-	.community-page-contributor {
-		font-size: 12px;
-		padding: 6px 3px 6px 15px;
-		position: relative;
-
-	}
-}
-
-.community-page-page-list {
-	float: right;
-	width: 500px;
-}
-
-.community-page-page-list,
-.task-page-page-list {
-	ul {
-		line-height: 50px;
-		list-style: none;
-		margin: 10px 0;
-	}
-
-	li {
-		border-top: 1px solid rgb(199, 209, 216);
-		height: 50px;
-		margin: 0;
-		padding: 6px 3px 6px 15px;
-		position: relative;
-
-		&:last-child {
-			border-bottom: 1px solid rgb(199, 209, 216);
-		}
-
-		.page-list-edit {
-			float: right;
-			padding-right: 10px;
-		}
-
-		.page-title {
-			display: inline-block;
-			margin-left: 5px;
-			overflow: hidden;
-			text-overflow: ellipsis;
-			white-space: nowrap;
-			width: 75%;
-		}
-
-		.page-list-edit-link {
-			float: left;
-		}
-
-		.edit-icon {
-			background-image: url('/extensions/wikia/CommunityPageExperiment/images/pencil.svg'); /* inline */
-			background-position: center;
-			background-repeat: no-repeat;
-			height: 30px;
-			padding-left: 15px;
-		}
-	}
+	padding-right: 34px;
+	width: calc(100% - 320px);
 }
 
 .WikiaArticle .community-page-top-contributors h2 {
 	margin-top: 0;
+}
+
+@media #{$breakpoint-below-small-plus} {
+	.CommunityPageContainer {
+		padding: 34px 0;
+	}
+
+	.CommunityPageMainContent {
+		padding-right: 0;
+		width: 100%;
+	}
 }

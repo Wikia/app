@@ -58,6 +58,10 @@ describe('ext.wikia.adEngine.config.desktop', function () {
 				remnantGpt: {
 					name: 'remnant'
 				},
+				rubiconFastlane: {
+					name: 'rpfl',
+					canHandleSlot: noop
+				},
 				taboola: {
 					name: 'taboola',
 					canHandleSlot: noop
@@ -89,6 +93,7 @@ describe('ext.wikia.adEngine.config.desktop', function () {
 			mocks.providers.liftium,
 			mocks.providers.monetizationService,
 			mocks.providers.remnantGpt,
+			mocks.providers.rubiconFastlane,
 			mocks.providers.turtle,
 			mocks.providers.taboola
 		);
@@ -194,5 +199,24 @@ describe('ext.wikia.adEngine.config.desktop', function () {
 			mocks.getAdContextForcedProvider.and.returnValue(k);
 			expect(getProviders('foo')).toEqual(forcedProvidersMap[k]);
 		});
+	});
+
+	it('RubiconFastlane country but cannot handle slot: Direct, Remnant, Liftium', function () {
+		spyOn(mocks.providers.rubiconFastlane, 'canHandleSlot').and.returnValue(false);
+		spyOn(mocks, 'getAdContextProviders').and.returnValue({rubiconFastlane: true});
+		expect(getProviders('foo')).toEqual('direct,remnant,liftium');
+	});
+
+	it('RubiconFastlane country and can handle slot: Direct, Remnant, RubiconFastlane', function () {
+		spyOn(mocks.providers.rubiconFastlane, 'canHandleSlot').and.returnValue(true);
+		spyOn(mocks, 'getAdContextProviders').and.returnValue({rubiconFastlane: true});
+		expect(getProviders('foo')).toEqual('direct,remnant,rpfl');
+	});
+
+	it('RubiconFastlane country and wgSitewideDisableGpt on: just RubiconFastlane', function () {
+		spyOn(mocks.providers.rubiconFastlane, 'canHandleSlot').and.returnValue(true);
+		spyOn(mocks, 'getInstantGlobals').and.returnValue({wgSitewideDisableGpt: true});
+		spyOn(mocks, 'getAdContextProviders').and.returnValue({rubiconFastlane: true});
+		expect(getProviders('foo')).toEqual('rpfl');
 	});
 });

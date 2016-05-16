@@ -1,6 +1,6 @@
 /*global WikiBuilderCfg, ThemeDesigner */
 
-define('WikiBuilder', function () {
+define('ext.createNewWiki.builder', ['ext.createNewWiki.helper'], function (helper) {
 	'use strict';
 
 	var wntimer = false,
@@ -37,17 +37,13 @@ define('WikiBuilder', function () {
 		descWikiNext,
 		categoriesSetId,
 		hiddenDuplicate,
-		answer,
-		keys,
 		userAuth,
-		stringHelper,
 		errorModalHeader,
 		errorModalMessage;
 
-	function init(strHelper) {
+	function init() {
 		var pane;
 
-		stringHelper = strHelper;
 		cacheSelectors();
 		checkNextButtonStep1();
 		bindEventHandlers();
@@ -239,11 +235,12 @@ define('WikiBuilder', function () {
 	}
 
 	function onWikiNameKeyUp() {
+		var name;
+
 		nameAjax = true;
 		checkNextButtonStep1();
-		var name = $(this).val();
+		name = helper.sanitizeWikiName($(this).val());
 
-		name = $.trim(stringHelper.latinise(name).replace(/[^a-zA-Z0-9 ]+/g, '')).replace(/ +/g, '-');
 		wikiDomain.val(name.toLowerCase()).trigger('keyup');
 		if (wntimer) {
 			clearTimeout(wntimer);
@@ -261,6 +258,8 @@ define('WikiBuilder', function () {
 	}
 
 	function onNameWikiWrapperClick () {
+		var wikiNameVal, wikiDomainVal, wikiLanguageVal;
+
 		if (isNameWikiSubmitError()) {
 			nameWikiSubmitError
 				.show()
@@ -268,51 +267,22 @@ define('WikiBuilder', function () {
 				.delay(3000)
 				.fadeOut();
 		} else {
+			wikiNameVal = wikiName.val();
+			wikiDomainVal = wikiDomain.val();
+			wikiLanguageVal = wikiLanguage.find('option:selected').val();
+
 			saveState({
-				wikiName: wikiName.val(),
-				wikiDomain: wikiDomain.val(),
-				wikiLang: wikiLanguage.find('option:selected').val()
+				wikiName: wikiNameVal,
+				wikiDomain: wikiDomainVal,
+				wikiLang: wikiLanguageVal
 			});
 
 			if (window.wgUserName) {
 				onAuthSuccess();
 			} else {
-				login(onAuthSuccess);
+				helper.login(onAuthSuccess, helper.getLoginRedirectURL(wikiNameVal, wikiDomainVal, wikiLanguageVal));
 			}
 		}
-	}
-
-	function login(onSuccess) {
-		require(['AuthModal', 'wikia.querystring'], function (authModal, Querystring) {
-			var redirectUrl = new Querystring();
-
-			redirectUrl.setVal({
-				wikiName: wikiName.val(),
-				wikiDomain: wikiDomain.val(),
-				wikiLanguage: wikiLanguage.find('option:selected').val()
-			});
-
-			authModal.load({
-				forceLogin: true,
-				url: '/signin?redirect=' + encodeURIComponent(redirectUrl.toString()),
-				origin: 'create-new-wikia',
-				onAuthSuccess: onSuccess
-			});
-		});
-	}
-
-	function requestKeys() {
-		keys = WikiBuilderCfg['cnw-keys'];
-	}
-
-	function solveKeys() {
-		var v = 0,
-			i;
-		for (i = 0; i < keys.length; i++) {
-			v *= (i % 5) + 1;
-			v += keys[i];
-		}
-		answer = v;
 	}
 
 	function onAuthSuccess() {
@@ -411,11 +381,7 @@ define('WikiBuilder', function () {
 	function checkNextButtonStep1() {
 		var nextButton = nextButtons.eq(0);
 
-		if (isNameWikiSubmitError()) {
-			nextButton.removeClass('enabled');
-		} else {
-			nextButton.addClass('enabled');
-		}
+		isNameWikiSubmitError() ? nextButton.removeClass('enabled') : nextButton.addClass('enabled');
 	}
 
 	function showIcon(el, art) {
@@ -512,9 +478,6 @@ define('WikiBuilder', function () {
 			verticalOption = wikiVertical.find('option:selected'),
 			categories = [];
 
-		requestKeys();
-		solveKeys();
-
 		throbberWrapper.startThrobbing();
 
 		$('#categories-set-' + verticalOption.data('categoriesset') + ' :checked').each(function () {
@@ -547,7 +510,7 @@ define('WikiBuilder', function () {
 						wVertical: verticalOption.val(),
 						wCategories: categories,
 						wAllAges: wikiAllAges.is(':checked') ? wikiAllAges.val() : null,
-						wAnswer: Math.floor(answer)
+						wAnswer: Math.floor(helper.getAnswer())
 					},
 					token: preferencesToken
 				},
