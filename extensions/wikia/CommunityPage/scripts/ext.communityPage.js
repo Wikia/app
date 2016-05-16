@@ -199,12 +199,12 @@ require([
 	}
 
 	function handleClick (event, category) {
-		var data = $(event.currentTarget).data('tracking');
+		var label = event.currentTarget.getAttribute('data-tracking');
 
-		if (typeof(data) !== 'undefined') {
+		if (label !== null && label.length > 0) {
 			track({
 				category: category,
-				label: data,
+				label: label,
 			});
 		}
 	}
@@ -218,6 +218,15 @@ require([
 		// Track clicks in the Recent Activity module
 		$('.RecentActivityModule').on('mousedown touchstart', 'a', function (event) {
 			handleClick(event, 'community-page-recent-activity-module');
+		});
+
+		// Track clicks in the Insights modules
+		$('.community-page-insights-module').on('mousedown touchstart', 'a', function (event) {
+			var category = event.delegateTarget.getAttribute('data-tracking');
+
+			if (category !== null && category.length > 0) {
+				handleClick(event, category);
+			}
 		});
 	}
 

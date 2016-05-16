@@ -63,6 +63,7 @@ class CommunityPageSpecialInsightsModel {
 		 * communitypage-uncategorizedpages-description'
 		 * communitypage-wantedpages-description'
 		 */
+		$insightPages['type'] = $type;
 		$insightPages['title'] = wfMessage( 'communitypage-' . $type . '-title' )->text();
 		$insightPages['description'] =  wfMessage( 'communitypage-' . $type . '-description' )->text();
 
@@ -133,7 +134,10 @@ class CommunityPageSpecialInsightsModel {
 			return wfMessage( $metadata['wantedBy']['message'] )->rawParams(
 				Html::element(
 					'a',
-					['href' => $metadata['wantedBy']['url']],
+					[
+						'href' => $metadata['wantedBy']['url'],
+						'data-tracking' => 'wanted-by-link',
+					],
 					$metadata['wantedBy']['value']
 				)
 			)->escaped();
@@ -144,7 +148,10 @@ class CommunityPageSpecialInsightsModel {
 		return wfMessage( 'communitypage-lastrevision' )->rawParams(
 			Html::element(
 				'a',
-				['href' => $metadata['lastRevision']['userpage']],
+				[
+					'href' => $metadata['lastRevision']['userpage'],
+					'data-tracking' => 'user-profile-link',
+				],
 				$metadata['lastRevision']['username']
 			),
 			$wgLang->userDate( $timestamp, $wgUser )
