@@ -40,20 +40,25 @@ class NavboxTemplate {
 			'/(<|&lt;)' . $marker . '(>|&gt;).*(<|&lt;)\\/' . $marker . '(>|&gt;)/isU',
 			// replacement
 			'<div data-type="navbox">$0</div>',
-			$html
+			$html, -1, $count
 		);
-		if ( $replaced !== null ) {
-			// remove just the marker tags
-			$result = preg_replace( '/(<|&lt;)\\/?' . $marker . '(>|&gt;)/sU', '', $replaced );
-			if ( $result !== null ) {
-
-				return $result;
-			}
-			\Wikia\Logger\WikiaLogger::instance()->error( 'Navbox marker removal failed.' );
+		if ( $count === 0 ) {
+			\Wikia\Logger\WikiaLogger::instance()->warning( 'Navbox broken marker', [ 'marker' => $marker ] );
 		}
-		\Wikia\Logger\WikiaLogger::instance()->error( 'Navbox marker replacement failed.' );
+		if ( $replaced === null ) {
+			\Wikia\Logger\WikiaLogger::instance()->error( 'Navbox marker removal failed.' );
+			$result = $html;
+		} else {
+			$result = $replaced;
+		}
+		// remove markers from output
+		$output = preg_replace( '/(<|&lt;)\\/?' . $marker . '(>|&gt;)/sU', '', $result );
 
-		return $html;
+		if ( $output === null ) {
+			\Wikia\Logger\WikiaLogger::instance()->error( 'Navbox replacement failed' );
+			return $html;
+		}
+		return $output;
 	}
 
 	/**
