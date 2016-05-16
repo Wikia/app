@@ -13,7 +13,7 @@ class SetupWikiCities implements Task {
 
 	private $taskContext;
 
-	public function __construct(TaskContext $taskContext ) {
+	public function __construct( TaskContext $taskContext ) {
 		$this->taskContext = $taskContext;
 	}
 
@@ -25,7 +25,7 @@ class SetupWikiCities implements Task {
 
 	public function run() {
 		if ( !$this->addToCityList() ) {
-			wfDebugLog( "createwiki", __METHOD__ .": Cannot set data in city_list table\n", true );
+			wfDebugLog( "createwiki", __METHOD__ . ": Cannot set data in city_list table\n", true );
 			wfProfileOut( __METHOD__ );
 			throw new CreateWikiException(
 				'Cannot add wiki to city_list',
@@ -37,8 +37,8 @@ class SetupWikiCities implements Task {
 		// check the insert ID of insert to city_list executed inside addToCityList method
 		$insertId = $this->taskContext->getSharedDBW()->insertId();
 
-		$this->taskContext->setCityId($insertId);
-		if ( empty( $insertId ) ) {
+		$this->taskContext->setCityId( $insertId );
+		if ( empty($insertId) ) {
 			wfProfileOut( __METHOD__ );
 			throw new CreateWikiException(
 				'Cannot set data in city_list table. city_id is empty after insert',
@@ -51,7 +51,7 @@ class SetupWikiCities implements Task {
 			true
 		);
 
-		 // add domain and www.domain to the city_domains table
+		// add domain and www.domain to the city_domains table
 		if ( !$this->addToCityDomains() ) {
 			wfProfileOut( __METHOD__ );
 			throw new CreateWikiException(
@@ -73,20 +73,20 @@ class SetupWikiCities implements Task {
 		$founder = $this->taskContext->getFounder();
 
 		$insertFields = array(
-			'city_title'          => $this->taskContext->getSiteName(),
-			'city_dbname'         => $this->taskContext->getDbName(),
-			'city_url'            => $this->taskContext->getURL(),
-			'city_founding_user'  => $founder->getId(),
+			'city_title' => $this->taskContext->getSiteName(),
+			'city_dbname' => $this->taskContext->getDbName(),
+			'city_url' => $this->taskContext->getURL(),
+			'city_founding_user' => $founder->getId(),
 			'city_founding_email' => $founder->getEmail(),
-			'city_founding_ip'    => ip2long($wgRequest->getIP()),
-			'city_path'           => self::DEFAULT_SLOT,
-			'city_description'    => $this->taskContext->getSiteName(),
-			'city_lang'           => $this->taskContext->getLanguage(),
-			'city_created'        => wfTimestamp( TS_DB, time() ),
-			'city_umbrella'       => $this->taskContext->getWikiName()
+			'city_founding_ip' => ip2long( $wgRequest->getIP() ),
+			'city_path' => self::DEFAULT_SLOT,
+			'city_description' => $this->taskContext->getSiteName(),
+			'city_lang' => $this->taskContext->getLanguage(),
+			'city_created' => wfTimestamp( TS_DB, time() ),
+			'city_umbrella' => $this->taskContext->getWikiName()
 		);
 		if ( CreateDatabase::ACTIVE_CLUSTER ) {
-			$insertFields[ "city_cluster" ] = CreateDatabase::ACTIVE_CLUSTER;
+			$insertFields["city_cluster"] = CreateDatabase::ACTIVE_CLUSTER;
 		}
 
 		return $this->taskContext->getSharedDBW()->insert( "city_list", $insertFields, __METHOD__ );
@@ -97,12 +97,12 @@ class SetupWikiCities implements Task {
 			"city_domains",
 			[
 				[
-					'city_id'     => $this->taskContext->getCityId(),
+					'city_id' => $this->taskContext->getCityId(),
 					'city_domain' => $this->taskContext->getDomain()
 				], [
-					'city_id'     => $this->taskContext->getCityId(),
-					'city_domain' => sprintf( "www.%s", $this->taskContext->getDomain() )
-				]
+				'city_id' => $this->taskContext->getCityId(),
+				'city_domain' => sprintf( "www.%s", $this->taskContext->getDomain() )
+			]
 			],
 			__METHOD__
 		);
