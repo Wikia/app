@@ -13,8 +13,8 @@ class ConfigureWikiFactory implements Task {
 	const IMAGEURL = "http://images.wikia.com/";
 
 	private $taskContext;
-	private $imagesURL;
-	private $imagesDir;
+	public $imagesURL;
+	public $imagesDir;
 
 	public function __construct( TaskContext $taskContext ) {
 		$this->taskContext = $taskContext;
@@ -22,9 +22,10 @@ class ConfigureWikiFactory implements Task {
 
 	public function prepare() {
 		$language = $this->taskContext->getLanguage();
+		$wikiName = $this->taskContext->getWikiName();
 
-		$this->imagesURL = $this->prepareDirValue( $this->taskContext->getWikiName(), $language );
-		$this->imagesDir = sprintf( "%s/%s", strtolower( substr( $this->taskContext->getWikiName(), 0, 1 ) ), $this->imagesURL );
+		$this->imagesURL = $this->prepareDirValue( $wikiName, $language );
+		$this->imagesDir = sprintf( "%s/%s", strtolower( substr( $wikiName, 0, 1 ) ), $this->imagesURL );
 
 		if ( isset($language) && $language !== "en" ) {
 			$this->imagesURL .= "/" . strtolower( $language );
@@ -38,26 +39,36 @@ class ConfigureWikiFactory implements Task {
 	}
 
 	public function check() {
+		return TaskResult::createForSuccess();
 	}
 
 	public function run() {
-		$this->setVariables();
+		$siteName = $this->taskContext->getSiteName();
+		$dbName = $this->taskContext->getDbName();
+		$language = $this->taskContext->getLanguage();
+		$sharedDBW = $this->taskContext->getSharedDBW();
+		$cityId = $this->taskContext->getCityId();
+
+		$staticWikiFactoryVariables = $this->getStaticVariables(
+			$siteName, $this->imagesURL, $this->imagesDir, $dbName, $language, $siteName
+		);
+		$wikiFactoryVariablesFromDB = $this->getVariablesFromDB( $sharedDBW, $staticWikiFactoryVariables );
+
+		$this->setVariables( $sharedDBW, $cityId, $wikiFactoryVariablesFromDB, $staticWikiFactoryVariables );
+
+		return TaskResult::createForSuccess();
 	}
 
-	private function setVariables() {
-		wfProfileIn( __METHOD__ );
-		$this->debug( implode( [ ":", "CreateWiki", __METHOD__, "Populating city_variables" ] ) );
-		$siteName = $this->taskContext->getSiteName();
-
+	public function getStaticVariables( $siteName, $imagesURL, $imagesDir, $dbName, $language, $url ) {
 		$wikiFactoryVariables = [
 			'wgSitename' => $siteName,
 			'wgLogo' => self::DEFAULT_WIKI_LOGO,
-			'wgUploadPath' => $this->imagesURL,
-			'wgUploadDirectory' => $this->imagesDir,
-			'wgDBname' => $this->taskContext->getDbName(),
-			'wgLocalInterwiki' => $this->taskContext->getSiteName(),
-			'wgLanguageCode' => $this->taskContext->getLanguage(),
-			'wgServer' => rtrim( $this->taskContext->getURL(), "/" ),
+			'wgUploadPath' => $imagesURL,
+			'wgUploadDirectory' => $imagesDir,
+			'wgDBname' => $dbName,
+			'wgLocalInterwiki' => $siteName,
+			'wgLanguageCode' => $language,
+			'wgServer' => rtrim( $url, "/" ),
 			'wgEnableSectionEdit' => true,
 			'wgEnableSwiftFileBackend' => true,
 			'wgOasisLoadCommonCSS' => true,
@@ -70,12 +81,15 @@ class ConfigureWikiFactory implements Task {
 			$wikiFactoryVariables['wgMetaNamespace'] = str_replace( [ ':', ' ' ], [ '', '_' ], $siteName );
 		}
 
-		// Set wgDBcluster
 		if ( CreateDatabase::ACTIVE_CLUSTER ) {
-			wfGetLBFactory()->sectionsByDB[$this->taskContext->getDbName()] = $wikiFactoryVariables['wgDBcluster'] = CreateDatabase::ACTIVE_CLUSTER;
+			wfGetLBFactory()->sectionsByDB[$dbName] = $wikiFactoryVariables['wgDBcluster'] = CreateDatabase::ACTIVE_CLUSTER;
 		}
 
-		$sharedDBW = $this->taskContext->getSharedDBW();
+		return $wikiFactoryVariables;
+	}
+
+	public function getVariablesFromDB( $sharedDBW, $wikiFactoryVariables ) {
+		wfProfileIn( __METHOD__ );
 
 		$oRes = $sharedDBW->select(
 			"city_variables_pool",
@@ -91,13 +105,20 @@ class ConfigureWikiFactory implements Task {
 		}
 		$sharedDBW->freeResult( $oRes );
 
+		wfProfileOut( __METHOD__ );
+
+		return $wikiFactoryVarsFromDB;
+	}
+
+	private function setVariables( $sharedDBW, $cityId, $wikiFactoryVariablesFromDB, $wikiFactoryVariables ) {
+		wfProfileOut( __METHOD__ );
 		foreach ( $wikiFactoryVariables as $variable => $value ) {
 			/**
 			 * first, get id of variable
 			 */
 			$cv_id = 0;
-			if ( isset($wikiFactoryVarsFromDB[$variable]) ) {
-				$cv_id = $wikiFactoryVarsFromDB[$variable];
+			if ( isset($wikiFactoryVariablesFromDB[$variable]) ) {
+				$cv_id = $wikiFactoryVariablesFromDB[$variable];
 			}
 
 			/**
@@ -108,7 +129,7 @@ class ConfigureWikiFactory implements Task {
 					"city_variables",
 					array(
 						"cv_value" => serialize( $value ),
-						"cv_city_id" => $this->taskContext->getCityId(),
+						"cv_city_id" => $cityId,
 						"cv_variable_id" => $cv_id
 					),
 					__METHOD__
@@ -223,5 +244,18 @@ class ConfigureWikiFactory implements Task {
 		$name = substr( $s, 0, self::SANITIZED_BUCKET_NAME_MAXIMUM_LENGTH );
 
 		return $name;
+	}
+
+	public function getImagesURL( $language ) {
+
+		$imagesURL = $this->prepareDirValue( $this->taskContext->getWikiName(), $language );
+
+		if ( isset($language) && $language !== "en" ) {
+			$this->imagesURL .= "/" . strtolower( $language );
+		}
+
+		$this->imagesURL = self::IMAGEURL . $this->imagesURL . "/images";
+
+		return $imagesURL;
 	}
 }
