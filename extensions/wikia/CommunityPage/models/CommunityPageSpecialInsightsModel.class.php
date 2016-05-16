@@ -87,7 +87,7 @@ class CommunityPageSpecialInsightsModel {
 			$insightsPages['pages'][$key]['editlink'] = $this->getEditUrl( $insight['link']['articleurl'] );
 			$insightsPages['pages'][$key]['edittext'] = $this->getArticleContributeText( $insight['metadata'] );
 
-			if ( !empty( $insightsPages['pages'][$key]['pageviews'] ) ) {
+			if ( !empty( $insight['metadata']['pv7'] ) ) {
 				$insightsPages['pages'][$key]['pageviews'] = wfMessage(
 					'communitypage-noofviews',
 					$insight['metadata']['pv7']
