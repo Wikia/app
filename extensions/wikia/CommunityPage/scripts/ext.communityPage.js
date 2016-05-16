@@ -219,6 +219,11 @@ require([
 		$('.RecentActivityModule').on('mousedown touchstart', 'a', function (event) {
 			handleClick(event, 'community-page-recent-activity-module');
 		});
+
+		// Track clicks in the Insights modules
+		$('.community-page-insights-module').on('mousedown touchstart', 'a', function (event) {
+			handleClick(event, event.delegateTarget.getAttribute('data-tracking'));
+		});
 	}
 
 	function initModalTracking(modal) {
