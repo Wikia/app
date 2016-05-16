@@ -7,9 +7,16 @@ namespace Wikia\CreateNewWiki\Tasks;
  */
 class ConfigureWikiFactoryTest extends \WikiaBaseTest {
 
+	private $taskContextMock;
+
 	public function setUp() {
 		$this->setupFile = dirname( __FILE__ ) . '/../../CreateNewWiki_setup.php';
 		parent::setUp();
+
+		$this->taskContextMock = $this->getMock(
+			'\Wikia\CreateNewWiki\Tasks\TaskContext', [ 'getLanguage', 'getWikiName' ]
+		);
+		$this->mockClass( 'TaskContext', $this->taskContextMock );
 	}
 
 	public function tearDown() {
@@ -57,6 +64,147 @@ class ConfigureWikiFactoryTest extends \WikiaBaseTest {
 			'long-polish' => [ '012345678901234567890123456789012345678901234567890123ą', '012345678901234567890123456789012345678901234567890123c' ],
 			'chinese' => [ '不論支持與否', 'e4b88de8ab96e694afe68c81e88887e590a6' ],
 			'admin' => [ 'admin', 'adminx' ],
+		];
+	}
+
+	/**
+	 * @param $wikiName
+	 * @param $language
+	 * @param $taskResult
+	 * @param $expectedImagesURL
+	 * @param $expectedImagesDir
+	 * @internal param $expected
+	 * @dataProvider prepareDataProvider
+	 */
+	public function testPrepare( $wikiName, $language, $taskResult, $expectedImagesURL, $expectedImagesDir ) {
+		$this->taskContextMock
+			->expects( $this->any() )
+			->method( 'getWikiName' )
+			->willReturn( $wikiName );
+
+		$this->taskContextMock
+			->expects( $this->any() )
+			->method( 'getLanguage' )
+			->willReturn( $language );
+
+		$configureWFTask = $this->getMockBuilder( '\Wikia\CreateNewWiki\Tasks\ConfigureWikiFactory' )
+			->enableOriginalConstructor()
+			->setConstructorArgs( [ $this->taskContextMock ] )
+			->setMethods( [ 'prepareDirValues' ] )
+			->getMock();
+
+		$configureWFTask->expects( $this->any() )
+			->method( 'prepareDirValues' )
+			->willReturn( 'foo' );
+
+		$this->mockStaticMethod( '\Wikia\CreateNewWiki\Tasks\TaskResult', 'createForSuccess', $taskResult );
+
+		$result = $configureWFTask->prepare();
+		$this->assertEquals( $configureWFTask->imagesURL, $expectedImagesURL );
+		$this->assertEquals( $configureWFTask->imagesDir, $expectedImagesDir );
+		$this->assertEquals( $result, $taskResult );
+	}
+
+	public function prepareDataProvider() {
+		return [
+			[ 'glee', 'en', 'ok', 'http://images.wikia.com/glee/images', '/images/g/glee/images' ],
+			[ 'glee', 'pl', 'ok', 'http://images.wikia.com/glee/pl/images', '/images/g/glee/pl/images' ],
+			[ 'łódź', 'ja', 'ok', 'http://images.wikia.com/c582c3b3dc5ba/ja/images', '/images/' . substr( 'łódź', 0, 1 ) . '/c582c3b3dc5ba/ja/images' ],
+		];
+	}
+
+	/**
+	 * @param $siteName
+	 * @param $imagesURL
+	 * @param $imagesDir
+	 * @param $dbName
+	 * @param $language
+	 * @param $url
+	 * @param $expected
+	 * @dataProvider getStaticWikiFactoryVariablesDataProvider
+	 */
+	public function testGetStaticWikiFactoryVariables( $siteName, $imagesURL, $imagesDir, $dbName, $language, $url, $expected ) {
+		$configureWFTask = new ConfigureWikiFactory( $this->taskContextMock );
+
+		$result = $configureWFTask->getStaticVariables( $siteName, $imagesURL, $imagesDir, $dbName, $language, $url );
+		$this->assertEquals( $result, $expected );
+	}
+
+	public function getStaticWikiFactoryVariablesDataProvider() {
+		return [
+			[ 'foo', 'http://images.wikia.com/foo/images', '/images/f/foo/images', 'foo', 'en', 'http://foo.wikia.com',
+				[
+					'wgSitename' => 'foo',
+					'wgLogo' => '$wgUploadPath/b/bc/Wiki.png',
+					'wgUploadPath' => 'http://images.wikia.com/foo/images',
+					'wgUploadDirectory' => '/images/f/foo/images',
+					'wgDBname' => 'foo',
+					'wgLocalInterwiki' => 'foo',
+					'wgLanguageCode' => 'en',
+					'wgServer' => 'http://foo.wikia.com',
+					'wgEnableSectionEdit' => true,
+					'wgEnableSwiftFileBackend' => true,
+					'wgOasisLoadCommonCSS' => true,
+					'wgEnablePortableInfoboxEuropaTheme' => true,
+					'wgDBcluster' => 'c7'
+				]
+			],
+			[ 'foo:', 'http://images.wikia.com/foo/images', '/images/f/foo/images', 'foo', 'en', 'http://foo.wikia.com/',
+				[
+					'wgSitename' => 'foo:',
+					'wgLogo' => '$wgUploadPath/b/bc/Wiki.png',
+					'wgUploadPath' => 'http://images.wikia.com/foo/images',
+					'wgUploadDirectory' => '/images/f/foo/images',
+					'wgDBname' => 'foo',
+					'wgLocalInterwiki' => 'foo:',
+					'wgLanguageCode' => 'en',
+					'wgServer' => 'http://foo.wikia.com',
+					'wgEnableSectionEdit' => true,
+					'wgEnableSwiftFileBackend' => true,
+					'wgOasisLoadCommonCSS' => true,
+					'wgEnablePortableInfoboxEuropaTheme' => true,
+					'wgMetaNamespace' => 'foo',
+					'wgDBcluster' => 'c7'
+				]
+			],
+			[ 'foo_bar:fizz', 'http://images.wikia.com/foo/images', '/images/f/foo/images', 'foo', 'en', 'http://foo.wikia.com/',
+				[
+					'wgSitename' => 'foo_bar:fizz',
+					'wgLogo' => '$wgUploadPath/b/bc/Wiki.png',
+					'wgUploadPath' => 'http://images.wikia.com/foo/images',
+					'wgUploadDirectory' => '/images/f/foo/images',
+					'wgDBname' => 'foo',
+					'wgLocalInterwiki' => 'foo_bar:fizz',
+					'wgLanguageCode' => 'en',
+					'wgServer' => 'http://foo.wikia.com',
+					'wgEnableSectionEdit' => true,
+					'wgEnableSwiftFileBackend' => true,
+					'wgOasisLoadCommonCSS' => true,
+					'wgEnablePortableInfoboxEuropaTheme' => true,
+					'wgMetaNamespace' => 'foo_barfizz',
+					'wgDBcluster' => 'c7'
+				]
+			]
+		];
+	}
+
+	/**
+	 * @param $staticVariables
+	 * @param $expected
+	 * @dataProvider getVariablesFromDBDataProvider
+	 */
+	public function testGetVariablesFromDB( $staticVariables, $expected ) {
+		$configureWFTask = new ConfigureWikiFactory( $this->taskContextMock );
+
+		$sharedDBWMock = $this->getMock( '\DatabaseMysqli', [ 'select', 'fetchObject', 'freeResult' ] );
+
+		$result = $configureWFTask->getVariablesFromDB( $sharedDBWMock, $staticVariables );
+		$this->assertEquals( $result, $expected );
+	}
+
+	public function getVariablesFromDBDataProvider() {
+		return [
+			[ [ ], [ ] ]
 		];
 	}
 }
