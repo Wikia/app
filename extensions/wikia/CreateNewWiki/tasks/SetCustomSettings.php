@@ -70,6 +70,7 @@ class SetCustomSettings implements Task {
 					$this->debug( implode( ":", [ "CreateWiki", __METHOD__, "Failed to add setting for {$cityId}: {$key} = {$value}" ] ) );
 				}
 			}
+
 			$wgUser = $oldUser;
 
 			$this->debug( implode( ":", [ "CreateWiki", __METHOD__, "Finished adding {$type} settings" ] ) );
