@@ -7,7 +7,7 @@
 .ContributorsModule {
 	.avatar-container {
 		display: inline-block;
-		margin: 0 10px 0 0;
+		margin: 0 $avatar-padding 0 0;
 		vertical-align: middle;
 	}
 
@@ -21,16 +21,16 @@
 
 	.community-page-contributor-details {
 		display: inline-block;
-		line-height: 21px;
+		line-height: $contributor-line-height;
 		vertical-align: middle;
-		width: calc(100% - 50px);
+		width: calc(100% - #{$contributor-details-width});
 	}
 
 	.community-page-top-contributor-details {
 		@include display-inline-flex();
-		line-height: 21px;
+		line-height: $contributor-line-height;
 		vertical-align: middle;
-		width: calc(100% - 50px);
+		width: calc(100% - #{$contributor-details-width});
 	}
 
 	.top-contributors, .top-admins {
