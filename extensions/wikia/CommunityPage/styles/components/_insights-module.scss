@@ -1,5 +1,6 @@
 @import 'skins/shared/color';
 @import 'skins/oasis/css/core/breakpoints-variables';
+@import 'skins/shared/mixins/flexbox';
 
 .community-page-insights-module {
 	margin-bottom: 34px;
@@ -22,8 +23,9 @@
 	}
 
 	.community-page-insights-module-list-item {
+		@include flexbox();
+
 		border-bottom: 1px solid $color-page-border-subtle;
-		display: flex;
 		align-items: center;
 		font-size: 14px;
 		padding: 20px;
