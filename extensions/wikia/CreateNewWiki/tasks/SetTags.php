@@ -2,7 +2,6 @@
 
 namespace Wikia\CreateNewWiki\Tasks;
 
-
 use Locale;
 use WikiFactoryTags;
 
