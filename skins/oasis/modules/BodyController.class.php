@@ -203,7 +203,8 @@ class BodyController extends WikiaController {
 				$railModuleList = array (
 					1102 => array('HotSpots', 'Index', null),
 					1101 => array('CommunityCorner', 'Index', null),
-				);
+					1342 => array('CommunityPageEntryPoint', 'Index', null),
+			);
 				$railModuleList[1450] = array('PagesOnWiki', 'Index', null);
 			} else if ($wgTitle->isSpecial('Following') || $wgTitle->isSpecial('Contributions') ) {
 				// intentional nothing here
