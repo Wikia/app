@@ -24,28 +24,8 @@ $hero-image-pattern: '/extensions/wikia/CommunityPage/images/hero_image_pattern.
 		width: 75%;
 	}
 
-	h1 {
+	.community-page-heading {
 		font-weight: bold;
-	}
-
-	.signup-button {
-		background: $color-buttons;
-		color: $color-button-text;
-		display: inline-block;
-		font-size: 14px;
-		font-weight: bold;
-		height: 46px;
-		line-height: 46px;
-		margin: 12px 16px 16px;
-		padding: 0 30px;
-		text-decoration: none;
-		text-transform: uppercase;
-		white-space: normal;
-
-		&:hover, &:active {
-			background-color: $color-button-highlight;
-			text-decoration: none;
-		}
 	}
 }
 
