@@ -24,8 +24,10 @@ $hero-image-pattern: '/extensions/wikia/CommunityPage/images/hero_image_pattern.
 		width: 75%;
 	}
 
-	.community-page-heading {
+	h1.community-page-heading {
+		font-size: 36px;
 		font-weight: bold;
+		line-height: 48px;
 	}
 }
 
