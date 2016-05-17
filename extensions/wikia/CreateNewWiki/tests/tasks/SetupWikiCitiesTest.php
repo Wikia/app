@@ -74,5 +74,4 @@ class SetupWikiCitiesTest extends \WikiaBaseTest {
 			[ true, 'once', 99, true, 'ok' ]
 		];
 	}
-
 }
