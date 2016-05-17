@@ -11,7 +11,7 @@ $hero-image-pattern: '/extensions/wikia/CommunityPage/images/hero_image_pattern.
 	@include flexbox();
 	align-items: center;
 	background: url($hero-image-pattern);
-	height: 250px;
+	height: 200px;
 	justify-content: center;
 	text-align: center;
 
