@@ -6,9 +6,8 @@ class PrepareDomain implements Task {
 
 	use \Wikia\Logger\Loggable;
 
-	const DEFAULT_DOMAIN       = "wikia.com";
-
-	const LOCK_DOMAIN_TIMEOUT  = 30;
+	const DEFAULT_DOMAIN = "wikia.com";
+	const LOCK_DOMAIN_TIMEOUT = 30;
 
 	/** @var  TaskContext */
 	private $taskContext;
@@ -18,39 +17,34 @@ class PrepareDomain implements Task {
 	}
 
 	public function prepare() {
-
 		global $wgContLang;
 
-		// sitename
-		$fixedTitle = trim( $this->taskContext->getInputWikiName() );
-		$fixedTitle = preg_replace("/\s+/", " ", $fixedTitle );
-		$fixedTitle = preg_replace("/ (w|W)iki$/", "", $fixedTitle );
-		$fixedTitle = $wgContLang->ucfirst( $fixedTitle );
-		$siteTitle = wfMessage('autocreatewiki-title-template', $fixedTitle);
-		$this->taskContext->setSiteName( $siteTitle->inLanguage( $this->taskContext->getLanguage() )->text() );
+		$wikiLanguage = $this->taskContext->getLanguage();
 
-		$domain = $this->taskContext->getInputDomain();
-		$domain = preg_replace( "/(\-)+$/", "", $domain );
-		$domain = preg_replace( "/^(\-)+/", "", $domain );
-		$domain = strtolower( trim( $domain ) );
+		$this->taskContext->setSiteName(
+			$this->getSiteName( $wgContLang, $wikiLanguage, $this->taskContext->getInputWikiName() )
+		);
 
+		$domain = $this->getDomain( $this->taskContext->getInputDomain() );
 		$this->taskContext->setWikiName( $domain );
 
 		$subdomain = $domain;
 
-		if ( !empty( $this->taskContext->getLanguage() ) && $this->taskContext->getLanguage() !== "en" ) {
-			$subdomain = strtolower( $this->taskContext->getLanguage() ) . "." . $domain;
+		if ( !empty($wikiLanguage) && $wikiLanguage !== "en" ) {
+			$subdomain = strtolower( $wikiLanguage ) . "." . $domain;
 		}
 
-		$this->taskContext->setDomain( sprintf("%s.%s", $subdomain, self::DEFAULT_DOMAIN ) );
+		$this->taskContext->setDomain( sprintf( "%s.%s", $subdomain, self::DEFAULT_DOMAIN ) );
 		$this->taskContext->setUrl( sprintf( "http://%s.%s/", $subdomain, self::DEFAULT_DOMAIN ) );
 
 		return TaskResult::createForSuccess();
 	}
 
 	public function check() {
-		$errorMsg = \CreateWikiChecks::checkDomainIsCorrect( $this->taskContext->getDomain(), $this->taskContext->getLanguage(), false, false );
-		if ( !empty( $errorMsg ) ) {
+		$errorMsg = \CreateWikiChecks::checkDomainIsCorrect(
+			$this->taskContext->getDomain(), $this->taskContext->getLanguage(), false, false
+		);
+		if ( !empty($errorMsg) ) {
 			return TaskResult::createForError( 'DB is read only' );
 		} else {
 			return TaskResult::createForSuccess();
@@ -58,7 +52,6 @@ class PrepareDomain implements Task {
 	}
 
 	public function run() {
-
 		if ( self::lockDomain( $this->taskContext->getDomain() ) ) {
 			return TaskResult::createForSuccess();
 		} else {
@@ -89,6 +82,25 @@ class PrepareDomain implements Task {
 		$status = $wgMemc->add( $key, 1, self::LOCK_DOMAIN_TIMEOUT );
 
 		return $status;
+	}
+
+	public function getSiteName( $contentLanguage, $wikiLanguage, $inputWikiName ) {
+		$fixedTitle = trim( $inputWikiName );
+		$fixedTitle = preg_replace( "/\s+/", " ", $fixedTitle );
+		$fixedTitle = preg_replace( "/ (w|W)iki$/", "", $fixedTitle );
+		$fixedTitle = $contentLanguage->ucfirst( $fixedTitle );
+		$siteTitle = wfMessage( 'autocreatewiki-title-template', $fixedTitle );
+
+		return $siteTitle->inLanguage( $wikiLanguage )->text();
+	}
+
+	public function getDomain( $inputDomain ) {
+		$domain = preg_replace( "/(\-)+$/", "", $inputDomain );
+		$domain = preg_replace( "/^(\-)+/", "", $domain );
+		$domain = strtolower( trim( $domain ) );
+
+		return $domain;
+
 	}
 }
 
