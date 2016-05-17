@@ -36,7 +36,7 @@ $logo-url: $logo-url-light;
 		left: 50%;
 		position: absolute;
 		top: 0;
-		transform: translate(-50%, -50%);
+		transform: translate(-50%, -40%);
 		width: 30px;
 	}
 
@@ -54,10 +54,11 @@ $logo-url: $logo-url-light;
 		background: $color-buttons;
 		color: $color-button-text;
 		display: inline-block;
-		font-size: 10px;
+		font-size: 12px;
 		font-weight: bold;
-		height: 31px;
-		line-height: 31px;
+		height: 46px;
+		line-height: 46px;
+		margin: 14px 0;
 		padding: 0 30px;
 		text-decoration: none;
 		text-transform: uppercase;
@@ -70,19 +71,26 @@ $logo-url: $logo-url-light;
 
 	.entry-point-new {
 		background: $color-buttons;
-		border-radius: 8px;
 		color: $color-button-text;
 		font-size: 10px;
-		height: 18px;
-		line-height: 18px;
-		padding: 0 10px;
+		height: 17px;
+		left: 0;
+		line-height: 17px;
+		position: absolute;
 		text-align: center;
 		text-transform: uppercase;
+		top: 0;
+		width: 41px;
 	}
 
-	.entry-point-description {
-		font-size: 18px;
-		padding: 15px 0 10px;
+	.entry-point-description-top {
+		font-size: 14px;
+		padding-top: 15px;
+		text-align: center;
+	}
+
+	.entry-point-description-bottom {
+		font-size: 16px;
 		text-align: center;
 		word-break: break-all;
 	}
