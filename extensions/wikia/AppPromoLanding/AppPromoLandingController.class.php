@@ -12,14 +12,19 @@ class AppPromoLandingController extends WikiaController {
 
 	const RESPONSE_OK = 200;
 	const APP_CONFIG_SERVICE_URL = "http://prod.deploypanel.service.sjc.consul/api/app-configuration/";
+	const BRANCH_API_URL = "https://api.branch.io/v1/app/";
 
 	// Settings for the background image-grid.
-	const MAX_TRENDING_ARTICLES = 30; // we need about 22 images, and not all articles have images.
+	const MAX_TRENDING_ARTICLES = 40; // we need about 33 images, and not all articles have images.
+	const THUMBS_PER_ROW = 11;
+	const THUMBS_NUM_ROWS = 3;
 	const IMG_HEIGHT = 184; // sizes directly from Zeplin.io mockup.
 	const IMG_WIDTH = 184;
 
 	protected static $CACHE_KEY = "mobileAppConfigs";
+	protected static $CACHE_KEY_BRANCH = "branchioBranchKey";
 	protected static $CACHE_KEY_VERSION = 0.1;
+	protected static $CACHE_KEY_VERSION_BRANCH = 0.1;
 	protected static $CACHE_EXPIRY = 86400;
 
 	/**
@@ -101,6 +106,7 @@ class AppPromoLandingController extends WikiaController {
 		// render global and user navigation
 		$this->header = F::app()->renderView( 'GlobalNavigation', 'index' );
 
+		$this->config = $params["config"];
 		$this->androidUrl = $params["androidUrl"];
 		$this->iosUrl = $params["iosUrl"];
 
@@ -139,14 +145,61 @@ class AppPromoLandingController extends WikiaController {
 				}
 			}
 		}
-$this->debug = ""; // TODO: REMOVE FROM HERE AND FROM TEMPLATE WHEN COMPLETE.
-		$this->trendingArticles = $trendingArticles;
 		
-		$this->config = $params["config"];
+		// Not all articles will have images, so we may have more or less than we need. Here,
+		// we will right-size the array.
+		$numThumbsNeeded = (self::THUMBS_NUM_ROWS * self::THUMBS_PER_ROW);
+		if(count($trendingArticles) > $numThumbsNeeded){
+			$trendingArticles = array_slice($trendingArticles, 0, $numThumbsNeeded);
+		} else if(count($trendingArticles) < $numThumbsNeeded){
+			// There weren't enough thumbs, so fill the remainder of the array with duplicates
+			// that are selected in a random order.
+			while(count($trendingArticles) < $numThumbsNeeded){
+				$trendingArticles[] = $trendingArticles[ rand(0, count($trendingArticles)-1) ];
+			}
+		}
+		
+		// The app configs store the branch_app_id but not the branch_key. We need to hit the Branch API to grab that.
+		$branchKeyMemcKey = wfMemcKey( static::$CACHE_KEY_BRANCH, static::$CACHE_KEY_VERSION_BRANCH );
+		$this->branchKey = F::app()->wg->memc->get( $branchKeyMemcKey );
+		if ( empty( $this->branchKey ) ){
+			$branchUrl = self::BRANCH_API_URL."{$this->config->branch_app_id}?user_id=".F::app()->wg->BranchUserId;
+			$req = MWHttpRequest::factory( $branchUrl, array( 'noProxy' => true ) );
+			$status = $req->execute();
+			if( $status->isOK() ) {
+				$response = $req->getContent();
+				if ( empty( $response ) ) {
+					wfProfileOut( __METHOD__ );
+					throw new EmptyResponseException( $branchUrl );
+				} else {
+					$branchData = json_decode( $response );
+					$this->branchKey = $branchData->branch_key;
+
+					if(!empty($this->branchKey)){
+						// Request was successful. Cache the branch_key in memcached (faster than going over network).
+						F::app()->wg->memc->set( $branchKeyMemcKey, $this->branchKey, static::$CACHE_EXPIRY );
+					}
+				}
+			}
+		}
+
+		$this->thumbWidth = self::IMG_WIDTH;
+		$this->thumbHeight = self::IMG_HEIGHT;
+		$this->thumbRows = self::THUMBS_NUM_ROWS;
+		$this->numThumbsPerRow = self::THUMBS_PER_ROW;
+		$this->trendingArticles = $trendingArticles;
+		$this->mainPageUrl = Title::newMainPage()->getFullUrl();
+		$this->androidPhoneSrc = F::app()->wg->ExtensionsPath."/wikia/AppPromoLanding/images/nexus6.png";
+		$this->androidScreenShot = "http://s3.amazonaws.com/wikia-mobile/android-screenshots/{$this->config->app_tag}/1.png";
+		$this->iosPhoneSrc = F::app()->wg->ExtensionsPath."/wikia/AppPromoLanding/images/silverIphone.png";
+		$this->iosScreenShot = "http://s3.amazonaws.com/wikia-mobile/ios-screenshots/{$this->config->app_tag}/en/3.5/4.png.PNGCRUSH.png";
+		$this->androidStoreSrc = F::app()->wg->ExtensionsPath."/wikia/AppPromoLanding/images/playStoreButton.png";
+		$this->iosStoreSrc = F::app()->wg->ExtensionsPath."/wikia/AppPromoLanding/images/appleAppStoreButton.png";
+		$this->imgSpacing = 3; // how much spacing the site puts between imgs. This doesn't appear to be padding, margin, letter-spacing or anything else I can find in CSS (it must be there somewhere though)... not sure what's doing it.
 
 		wfProfileOut( __METHOD__ );
 	}
-	
+
 	/**
 	 * Given the huge JSON object containing the config for all apps,
 	 * find and return just the config for the given cityId.
