@@ -3,6 +3,7 @@
 
 .RecentActivityModule {
 	.avatar-container {
+		@include flex(0 0 30px);
 		margin-right: 10px;
 	}
 
@@ -18,10 +19,6 @@
 		@include align-items(flex-start);
 
 		padding-bottom: 12px;
-
-		.avatar-container {
-			@include flex(0 0 30px);
-		}
 	}
 
 	.community-page-recent-activity-item-info {
