@@ -1,6 +1,6 @@
 <?php
 
-$wgExtensionCredits[ 'other' ][ ] = array(
+$wgExtensionCredits[ 'other' ][] = array(
 	'name' => 'Paginator',
 	'author' => 'Jakub Kurcek',
 	'descriptionmsg' => 'paginator-desc',
