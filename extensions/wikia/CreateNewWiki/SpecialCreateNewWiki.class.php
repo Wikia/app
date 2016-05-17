@@ -25,6 +25,7 @@ class SpecialCreateNewWiki extends UnlistedSpecialPage {
 		$wgOut->setPageTitle(wfMsg('cnw-title'));
 		$wgOut->addHtml(F::app()->renderView('CreateNewWiki', 'Index'));
 		Wikia::addAssetsToOutput( 'create_new_wiki_scss' );
+		Wikia::addAssetsToOutput( 'create_new_wiki_js' );
 
 		wfProfileOut( __METHOD__ );
 	}
