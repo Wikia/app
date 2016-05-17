@@ -1,6 +1,5 @@
 @import 'skins/shared/color';
-
-$avatar-size: 30px;
+@import 'variables';
 
 .avatar-container {
 	border: 2px solid $color-secondary-button-border;

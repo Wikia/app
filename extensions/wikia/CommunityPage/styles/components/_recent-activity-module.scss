@@ -1,17 +1,18 @@
 @import 'skins/shared/mixins/clearfix';
+@import 'variables';
 
 .RecentActivityModule {
 	.avatar-container {
 		display: inline-block;
-		margin-right: 10px;
+		margin-right: $avatar-padding;
 		vertical-align: middle;
 	}
 
 	.change-message {
 		display: inline-block;
-		line-height: 21px;
+		line-height: $contributor-line-height;
 		vertical-align: middle;
-		width: calc(100% - 50px);
+		width: calc(100% - #{$contributor-details-width});
 	}
 
 	.recent-changes {
