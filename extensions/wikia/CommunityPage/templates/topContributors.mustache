@@ -1,32 +1,34 @@
-<h2>{{topContribsHeaderText}}</h2>
-<div class="user-details">
-	<div class="avatar-container">
-		{{{userAvatar}}}
-	</div>
-	<div class="community-page-rank">
-		<span>{{userRank}} <small>/ {{weeklyEditorCount}}</small></span>
-		<span class="community-page-subtle">{{yourRankText}}</span>
-	</div>
-	<div class="user-contrib-count">
-		<span>{{userContribCount}}</span>
-		<span class="community-page-subtle">{{userContributionsText}}</span>
-	</div>
-</div>
-<ul class="reset top-contributors">
-	{{#contributors}}
-		<li class="community-page-contributor">
-			<div class="avatar-container">
-				<a data-tracking="top-contributors-user-avatar" href="{{profilePage}}">{{{avatar}}}</a>
-			</div>
-			<div class="community-page-contributor-details">
-				{{count}}. <a data-tracking="top-contributors-user" href="{{profilePage}}">{{userName}}</a>
-				<span class="community-page-subtle">{{contributionsText}}</span>
-			</div>
-		</li>
-	{{/contributors}}
-	{{^contributors}}
-		<div class="community-page-zero">
-			{{noContribsText}}
+<section class="community-page-contributors-module-section">
+	<h2>{{topContribsHeaderText}}</h2>
+	<div class="user-details">
+		<div class="avatar-container">
+			{{{userAvatar}}}
 		</div>
-	{{/contributors}}
-</ul>
+		<div class="community-page-rank">
+			<span>{{userRank}} <small>/ {{weeklyEditorCount}}</small></span>
+			<span class="community-page-subtle">{{yourRankText}}</span>
+		</div>
+		<div class="user-contrib-count">
+			<span>{{userContribCount}}</span>
+			<span class="community-page-subtle">{{userContributionsText}}</span>
+		</div>
+	</div>
+	<ul class="reset top-contributors">
+		{{#contributors}}
+			<li class="community-page-contributor">
+				<div class="avatar-container">
+					<a data-tracking="top-contributors-user-avatar" href="{{profilePage}}">{{{avatar}}}</a>
+				</div>
+				<div class="community-page-contributor-details">
+					{{count}}. <a data-tracking="top-contributors-user" href="{{profilePage}}">{{userName}}</a>
+					<span class="community-page-subtle">{{contributionsText}}</span>
+				</div>
+			</li>
+		{{/contributors}}
+		{{^contributors}}
+			<div class="community-page-zero">
+				{{noContribsText}}
+			</div>
+		{{/contributors}}
+	</ul>
+</section>

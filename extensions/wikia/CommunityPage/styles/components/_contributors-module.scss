@@ -10,6 +10,14 @@
 		vertical-align: middle;
 	}
 
+	.community-page-contributors-module-section {
+		margin-top: 12px;
+
+		&:first-of-type {
+			margin-top: 0;
+		}
+	}
+
 	.community-page-contributor-details {
 		display: inline-block;
 		line-height: 21px;
@@ -49,7 +57,8 @@
 		span {
 			display: block;
 			font-size: 16px;
-			line-height: 18px;
+			height: 20px;
+			line-height: 20px;
 			text-align: center;
 		}
 
