@@ -20,7 +20,7 @@ class ARecoveryEngineHooks {
 	}
 
 	public static function onBeforePageDisplay( &$outputPage, &$skin ) {
-		if ( ARecoveryModule::isEnabled() ) {
+		if ( ARecoveryModule::isLockEnabled() ) {
 			Wikia::addAssetsToOutput( ARecoveryModule::ASSET_GROUP_ARECOVERY_LOCK );
 		}
 

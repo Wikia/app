@@ -11,7 +11,7 @@ $hero-image-pattern: '/extensions/wikia/CommunityPage/images/hero_image_pattern.
 	@include flexbox();
 	align-items: center;
 	background: url($hero-image-pattern);
-	height: 250px;
+	height: 200px;
 	justify-content: center;
 	text-align: center;
 
@@ -24,28 +24,10 @@ $hero-image-pattern: '/extensions/wikia/CommunityPage/images/hero_image_pattern.
 		width: 75%;
 	}
 
-	h1 {
+	h1.community-page-heading {
+		font-size: 36px;
 		font-weight: bold;
-	}
-
-	.signup-button {
-		background: $color-buttons;
-		color: $color-button-text;
-		display: inline-block;
-		font-size: 14px;
-		font-weight: bold;
-		height: 46px;
-		line-height: 46px;
-		margin: 12px 16px 16px;
-		padding: 0 30px;
-		text-decoration: none;
-		text-transform: uppercase;
-		white-space: normal;
-
-		&:hover, &:active {
-			background-color: $color-button-highlight;
-			text-decoration: none;
-		}
+		line-height: 48px;
 	}
 }
 

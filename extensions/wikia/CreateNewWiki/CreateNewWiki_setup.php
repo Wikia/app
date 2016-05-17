@@ -51,5 +51,3 @@ $wgExtensionMessagesFiles['CreateNewWikiAlias'] = $dir . 'CreateNewWiki.alias.ph
 
 // setup functions
 $wgExtensionFunctions[] = 'CreateNewWikiController::setupCreateNewWiki';
-
-$wgHooks['OasisSkinAssetGroups'][] = 'CreateNewWikiHooks::onOasisSkinAssetGroups';
