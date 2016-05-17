@@ -7,7 +7,7 @@
 .ContributorsModule {
 	.avatar-container {
 		display: inline-block;
-		margin: 0 10px 0 0;
+		margin: $avatar-margin;
 		vertical-align: middle;
 	}
 
@@ -20,20 +20,18 @@
 	}
 
 	.community-page-contributor-details {
-		display: inline-block;
-		line-height: 21px;
+		line-height: $contributor-module-default-line-height;
 		vertical-align: middle;
-		width: calc(100% - 50px);
 	}
 
 	.top-contributors, .top-admins {
 		font-size: 14px;
-		line-height: 20px;
+		line-height: $contributor-module-default-line-height;
 	}
 
 	.top-contributors {
 		font-size: 14px;
-		line-height: 20px;
+		line-height: $contributor-module-default-line-height;
 	}
 
 	.community-page-contributor {
@@ -58,8 +56,8 @@
 		span {
 			display: block;
 			font-size: 16px;
-			height: 20px;
-			line-height: 20px;
+			height: $contributor-module-default-line-height;
+			line-height: $contributor-module-default-line-height;
 			text-align: center;
 		}
 
@@ -110,7 +108,7 @@
 			}
 
 			.avatar-container {
-				@include flex(0 0 30px);
+				@include flex($avatar-flex);
 			}
 
 			&.community-page-current-contributor {
