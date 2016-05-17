@@ -1,13 +1,13 @@
 <?php
 
-use Wikia\Paginator\UrlGenerator;
+namespace Wikia\Paginator;
 
-class UrlGeneratorTest extends WikiaBaseTest {
+class UrlGeneratorTest extends \WikiaBaseTest {
 	public function dataProviderGetUrlForPage() {
 		return [
 			// Invalid pageUrlParam number
 			[ '', 'pageUrlParam', 1, 'a', null, 'InvalidArgumentException' ],
-			[ '', 'pageUrlParam', 1, [], null,  'InvalidArgumentException' ],
+			[ '', 'pageUrlParam', 1, [], null, 'InvalidArgumentException' ],
 			[ '', 'pageUrlParam', 1, 2, null, 'InvalidArgumentException' ],
 
 			// Empty URL

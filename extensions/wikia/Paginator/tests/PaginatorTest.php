@@ -1,8 +1,8 @@
 <?php
 
-use Wikia\Paginator\Paginator;
+namespace Wikia\Paginator;
 
-class PaginatorTest extends WikiaBaseTest {
+class PaginatorTest extends \WikiaBaseTest {
 
 	private $alphabet = 'a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z';
 
@@ -194,16 +194,6 @@ class PaginatorTest extends WikiaBaseTest {
 		$this->mockGlobalFunction( 'wfMessage', $messageMock );
 	}
 
-	private function assertHtmlEquals( $expectedHtml, $actualHtml, $head = false ) {
-		if ( !$head && $expectedHtml ) {
-			$expectedHtml = "<div class=\"wikia-paginator\">\n<ul>$expectedHtml</ul>\n</div>";
-		}
-		$this->assertEquals(
-			array_map( 'trim', explode( "\n", str_replace( '" >', '">', preg_replace( '/ {2,}/', ' ', trim( $expectedHtml ) ) ) ) ),
-			array_map( 'trim', explode( "\n", str_replace( '" >', '">', preg_replace( '/ {2,}/', ' ', trim( $actualHtml ) ) ) ) )
-		);
-	}
-
 	public function dataProviderPaginator() {
 		return [
 			// Pages 1...4
@@ -322,6 +312,16 @@ class PaginatorTest extends WikiaBaseTest {
 		$html = $pages->getBarHTML();
 		$this->assertEquals( $expectedPageData, $onePageData );
 		$this->assertHtmlEquals( $expectedHtml, $html );
+	}
+
+	private function assertHtmlEquals( $expectedHtml, $actualHtml, $head = false ) {
+		if ( !$head && $expectedHtml ) {
+			$expectedHtml = "<div class=\"wikia-paginator\">\n<ul>$expectedHtml</ul>\n</div>";
+		}
+		$this->assertEquals(
+			array_map( 'trim', explode( "\n", str_replace( '" >', '">', preg_replace( '/ {2,}/', ' ', trim( $expectedHtml ) ) ) ) ),
+			array_map( 'trim', explode( "\n", str_replace( '" >', '">', preg_replace( '/ {2,}/', ' ', trim( $actualHtml ) ) ) ) )
+		);
 	}
 
 	/**
