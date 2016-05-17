@@ -52,7 +52,7 @@ class PrepareDomain implements Task {
 	}
 
 	public function run() {
-		if ( self::lockDomain( $this->taskContext->getDomain() ) ) {
+		if ( $this->lockDomain( $this->taskContext->getDomain() ) ) {
 			return TaskResult::createForSuccess();
 		} else {
 			return TaskResult::createForError( 'Failed to create a lock on domain name - domain taken' );
@@ -64,7 +64,7 @@ class PrepareDomain implements Task {
 	 * @param string $domain
 	 * @return string
 	 */
-	private function getLockDomainKey( $domain ) {
+	public function getLockDomainKey( $domain ) {
 		return wfSharedMemcKey( 'createwiki', 'domain', 'lock', urlencode( $domain ) );
 	}
 
@@ -75,10 +75,10 @@ class PrepareDomain implements Task {
 	 * @param string $domain
 	 * @return bool
 	 */
-	private function lockDomain( $domain ) {
+	public function lockDomain( $domain ) {
 		global $wgMemc;
 
-		$key = self::getLockDomainKey( $domain );
+		$key = $this->getLockDomainKey( $domain );
 		$status = $wgMemc->add( $key, 1, self::LOCK_DOMAIN_TIMEOUT );
 
 		return $status;
@@ -100,7 +100,6 @@ class PrepareDomain implements Task {
 		$domain = strtolower( trim( $domain ) );
 
 		return $domain;
-
 	}
 }
 
