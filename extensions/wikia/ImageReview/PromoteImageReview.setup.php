@@ -30,6 +30,7 @@ $wgAutoloadClasses['PromoteImageReviewTask'] =  $dir . 'PromoteImageReviewTask.p
 if( function_exists('extAddBatchTask') ) {
 	extAddBatchTask($dir . "PromoteImageReviewTask.php", "promoteimagereview", "PromoteImageReviewTask");
 }
+//Possibly this line can be removed (as the usage new Wikia\\Tasks\\Tasks\\PromoteImageReviewTask was removed)
 $wgAutoloadClasses['Wikia\\Tasks\\Tasks\\PromoteImageReviewTask'] = "{$dir}/PromoteImageReviewTask.class.php";
 
 $wgAutoloadClasses['PromoteImageReviewSpecialController'] =  $dir . 'PromoteImageReviewSpecialController.class.php';

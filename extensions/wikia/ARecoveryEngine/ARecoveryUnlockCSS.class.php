@@ -5,6 +5,7 @@ class ARecoveryUnlockCSS {
 	const API_ENDPOINT = 'sp_create_csurl';
 	const CACHE_TTL = 3600 * 10; //10h
 	const TIMEOUT = 10;
+	const WIKIA_PROXY_ENDPOINT = '/__are';
 
 	public static function getUnlockCSSUrl() {
 		global $wgServer, $wgSourcePointAccountId;
@@ -12,11 +13,11 @@ class ARecoveryUnlockCSS {
 		$memcKey = $wikiaCssUrl;
 		$memCache = F::app()->wg->Memc;
 
-		if ( ARecoveryModule::isEnabled() ) {
+		if ( ARecoveryModule::isLockEnabled() ) {
 			$jsonData = [
 				"account_id" => $wgSourcePointAccountId,
 				"is_pub_resource" => false,
-				"pub_base" => $wgServer."/__are",
+				"pub_base" => $wgServer . self::WIKIA_PROXY_ENDPOINT,
 				"resource" => $wikiaCssUrl
 			];
 

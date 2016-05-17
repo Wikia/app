@@ -120,11 +120,6 @@ class CreateWiki {
 			"{$this->mIP}/extensions/wikia/AjaxPoll/patch-create-poll_vote.sql",
 			"{$this->mIP}/extensions/wikia/ImageServing/sql/table.sql",
 		);
-
-		/**
-		 * local job
-		 */
-		$wgAutoloadClasses[ "CreateWikiLocalJob" ] = __DIR__ . "/CreateWikiLocalJob.php";
 	}
 
 	/**

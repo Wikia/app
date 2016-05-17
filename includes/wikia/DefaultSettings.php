@@ -715,12 +715,6 @@ $wgLangCreationVariables = array();
  define('NS_LEGACY_VIDEO', '400');
 
 /**
- * register job class
- */
-$wgJobClasses[ "CWLocal" ] = "CreateWikiLocalJob";
-include_once( "$IP/extensions/wikia/CreateNewWiki/CreateWikiLocalJob.php" );
-
-/**
  * Tasks
  */
 require_once( "{$IP}/extensions/wikia/Tasks/Tasks.setup.php");
@@ -1356,6 +1350,12 @@ $wgAdDriverEvolve2Countries = null;
  * Whether to enable AdProviderTaboola (true) or not (false)
  */
 $wgAdDriverUseTaboola = true;
+
+/**
+ * @name $wgAdDriverUseRevcontent
+ * Whether to enable Revcontent or not
+ */
+$wgAdDriverUseRevcontent = false;
 
 /**
  * @name $wgAdDriverTaboolaConfig

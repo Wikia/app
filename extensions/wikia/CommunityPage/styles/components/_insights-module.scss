@@ -1,5 +1,6 @@
 @import 'skins/shared/color';
 @import 'skins/oasis/css/core/breakpoints-variables';
+@import 'skins/shared/mixins/flexbox';
 
 .community-page-insights-module {
 	margin-bottom: 34px;
@@ -12,10 +13,6 @@
 		margin: 0 0 12px;
 	}
 
-	.community-page-insights-module-full-list-link {
-		float: right;
-	}
-
 	.community-page-insights-module-description {
 		clear: both;
 	}
@@ -26,18 +23,12 @@
 	}
 
 	.community-page-insights-module-list-item {
+		@include flexbox();
+
 		border-bottom: 1px solid $color-page-border-subtle;
+		align-items: center;
 		font-size: 14px;
 		padding: 20px;
-	}
-
-	.community-page-insights-module-list-item:first-child {
-		border-top: 1px solid $color-page-border-subtle;
-	}
-
-	.community-page-insights-module-inline-data {
-		display: inline-block;
-		vertical-align: middle;
 	}
 
 	.community-page-insights-module-edit-icon {
@@ -61,7 +52,6 @@
 	}
 
 	.community-page-insights-module-edit-link {
-		float: right;
 		text-align: right;
 		width: 10%;
 	}

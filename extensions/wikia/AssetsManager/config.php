@@ -186,6 +186,15 @@ $config['adengine2_taboola_js'] = array(
 	),
 );
 
+$config['adengine2_revcontent_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => [ 'oasis' ],
+	'assets' => array(
+		'//extensions/wikia/AdEngine/js/provider/revcontent.js',
+		'//extensions/wikia/AdEngine/js/slot/revcontentSlots.js',
+	),
+);
+
 $config['adengine2_gcs_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'oasis' ],
@@ -2893,4 +2902,39 @@ $config['special_portability_dashboard_scss'] = [
 	'assets' => [
 		'//extensions/wikia/PortabilityDashboard/styles/PortabilityDashboard.scss',
 	],
+];
+
+$config['community_page_entry_point_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => 'oasis',
+	'assets' => [
+		'//extensions/wikia/CommunityPage/scripts/entryPoint.js',
+	]
+];
+
+$config['community_page_entry_point_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => 'oasis',
+	'assets' => [
+		'//extensions/wikia/CommunityPage/styles/entrypoint/EntryPoint.scss',
+	]
+];
+
+$config['create_new_wiki_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => [
+		'//resources/wikia/modules/stringhelper.js',
+		'//extensions/wikia/CreateNewWiki/js/CreateNewWiki.js',
+		'//extensions/wikia/ThemeDesigner/js/ThemeDesigner.js',
+		'//extensions/wikia/CreateNewWiki/js/CreateNewWikiThemeDesignerOverrides.js',
+		'//extensions/wikia/CreateNewWiki/js/WikiBuilder.js',
+		'//extensions/wikia/CreateNewWiki/js/CreateNewWikiHelper.js'
+	]
+];
+
+$config['create_new_wiki_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'assets' => [
+		'//extensions/wikia/CreateNewWiki/css/CreateNewWiki.scss'
+	]
 ];
