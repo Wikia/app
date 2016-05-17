@@ -71,6 +71,10 @@ class TaskContext {
 		] );
 	}
 
+	public function getAllProperties() {
+		return get_object_vars( $this );
+	}
+
 	public function getInputWikiName() {
 		return $this->inputWikiName;
 	}

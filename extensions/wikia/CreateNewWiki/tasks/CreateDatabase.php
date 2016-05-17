@@ -24,13 +24,6 @@ class CreateDatabase implements Task {
 	}
 
 	public function prepare() {
-
-		// Set this flag to ensure that all select operations go against master
-		// Slave lag can cause random errors during wiki creation process
-		//TODO Do we really need it? Maybe it's enough if we pass appropriate DB_MASTER flags while connecting to DB
-		global $wgForceMasterDatabase;
-		$wgForceMasterDatabase = true;
-
 		$this->clusterDB = "wikicities_" . self::ACTIVE_CLUSTER;
 		$this->taskContext->setDbName( $this->prepareDatabaseName(
 			$this->clusterDB, $this->taskContext->getWikiName(), $this->taskContext->getLanguage() ) );
@@ -87,7 +80,7 @@ class CreateDatabase implements Task {
 
 		$dbName = substr( str_replace( "-", "", $dbName ), 0 , 50 );
 
-		while( $this->doesDbExistInCityList( $dbwf, $dbName ) || $this->doesDbExistInCluster( $dbr,$dbName ) ) {
+		while( $this->doesDbExistInCityList( $dbwf, $dbName ) || $this->doesDbExistInCluster( $dbr, $dbName ) ) {
 			$suffix = rand( 1, 999 );
 			$dbName = sprintf("%s%s", $dbName, $suffix);
 		}
