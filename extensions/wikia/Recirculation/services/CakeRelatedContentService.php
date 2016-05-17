@@ -3,9 +3,12 @@
 use Swagger\Client\ApiException;
 use Swagger\Client\ContentEntity\Api\RelatedContentApi;
 use Wikia\DependencyInjection\Injector;
+use Wikia\Logger\Loggable;
 use Wikia\Service\Swagger\ApiProvider;
 
 class CakeRelatedContentService {
+
+	use Loggable;
 	
 	const SERVICE_NAME = "content-entity";
 
@@ -42,7 +45,11 @@ class CakeRelatedContentService {
 
 			return $items;
 		} catch (ApiException $e) {
-			return null;
+			$this->error("error while getting content", [
+				'code' => $e->getCode(),
+				'message' => $e->getMessage(),
+			]);
+			return [];
 		}
 	}
 
