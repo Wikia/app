@@ -21,7 +21,7 @@ class UrlGenerator {
 	 */
 	private $pagesCount;
 
-	public function __construct( $url, $pageParam, $pagesCount, $usePage1 = false ) {
+	public function __construct( $url, $pageParam, $pagesCount ) {
 		if ( !is_string( $url ) ) {
 			throw new InvalidArgumentException( 'Expected a string for url' );
 		}
@@ -35,7 +35,6 @@ class UrlGenerator {
 		$this->url = $url;
 		$this->pageParam = $pageParam;
 		$this->pagesCount = intval( $pagesCount );
-		$this->usePage1 = $usePage1;
 	}
 
 	public function getUrlForPage( $pageNumber ) {
@@ -44,7 +43,7 @@ class UrlGenerator {
 		}
 
 		// Page #1 is always OK no matter how many pages there are
-		if ( !$this->usePage1 && ( $pageNumber == 1 ) ) {
+		if ( $pageNumber == 1 ) {
 			return $this->url;
 		}
 
@@ -52,7 +51,7 @@ class UrlGenerator {
 			throw new InvalidArgumentException( 'No such page available' );
 		}
 
-		if ( strchr( $this->url, '?' ) > -1 ) {
+		if ( strpos( $this->url, '?' ) !== false ) {
 			return sprintf( '%s&%s=%d', $this->url, $this->pageParam, $pageNumber );
 		}
 

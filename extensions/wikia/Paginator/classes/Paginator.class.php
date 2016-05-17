@@ -31,6 +31,11 @@ class Paginator {
 	private $paramName = 'page';
 
 	/**
+	 * @var UrlGenerator
+	 */
+	private $urlGenerator;
+
+	/**
 	 * Paginator constructor
 	 *
 	 * @param int $dataCount number of data to paginate or the data to paginate
@@ -40,7 +45,7 @@ class Paginator {
 	 * @type string $paramName the name of the URL param to store the page number (defaults to "page")
 	 * }
 	 */
-	public function __construct( $dataCount, $itemsPerPage, $url = '', array $options = [] ) {
+	public function __construct( $dataCount, $itemsPerPage, $url, array $options = [] ) {
 		if ( !Validator::isNonNegativeInteger( $dataCount ) ) {
 			throw new InvalidArgumentException( 'Paginator: Expected a non-negative integer for dataCount' );
 		}
@@ -64,6 +69,8 @@ class Paginator {
 			}
 			$this->paramName = $options['paramName'];
 		}
+
+		$this->urlGenerator = new UrlGenerator( $this->url, $this->paramName, $this->pagesCount );
 	}
 
 	/**
@@ -122,9 +129,7 @@ class Paginator {
 	 *
 	 * @return array as described above
 	 */
-	private function getBarData( $url, $pageParam ) {
-		$urlGenerator = new UrlGenerator( $url, $pageParam, $this->pagesCount );
-
+	private function getBarData() {
 		// Compute whether there's the ellipsis to the left/right of the current page
 		$leftEllipsis = ( $this->activePage > self::DISPLAYED_NEIGHBOURS + 2 );
 		$rightEllipsis = ( $this->activePage < $this->pagesCount - self::DISPLAYED_NEIGHBOURS - 1 );
@@ -135,21 +140,21 @@ class Paginator {
 		$rightRangeStart = min( $this->activePage + self::DISPLAYED_NEIGHBOURS, $this->pagesCount - 1 );
 
 		$data = [ 1 ];
-		$urls = [ 1 => $urlGenerator->getUrlForPage( 1 ) ];
+		$urls = [ 1 => $this->urlGenerator->getUrlForPage( 1 ) ];
 
 		if ( $leftEllipsis ) {
 			$data[] = '';
 		}
 		for ( $i = $leftRangeStart; $i <= $rightRangeStart; $i++ ) {
 			$data[] = $i;
-			$urls[$i] = $urlGenerator->getUrlForPage( $i );
+			$urls[$i] = $this->urlGenerator->getUrlForPage( $i );
 		}
 		if ( $rightEllipsis ) {
 			$data[] = '';
 		}
 
 		$data[] = $this->pagesCount;
-		$urls[$this->pagesCount] = $urlGenerator->getUrlForPage( $this->pagesCount );
+		$urls[$this->pagesCount] = $this->urlGenerator->getUrlForPage( $this->pagesCount );
 
 		return [
 			'pages' => $data,
@@ -169,7 +174,7 @@ class Paginator {
 			return '';
 		}
 
-		$data = $this->getBarData( $this->url, $this->paramName );
+		$data = $this->getBarData();
 		$data['paginatorId'] = strip_tags( trim( stripslashes( $paginatorId ) ) );
 
 		$template = new EasyTemplate( __DIR__ . '/../templates/' );
@@ -185,13 +190,11 @@ class Paginator {
 	public function getHeadItem() {
 		$links = '';
 
-		$urlGenerator = new UrlGenerator( $this->url, $this->paramName, $this->pagesCount );
-
 		// Has a previous page?
 		if ( $this->activePage > 1 ) {
 			$links .= "\t" . Html::element( 'link', [
 					'rel' => 'prev',
-					'href' => $urlGenerator->getUrlForPage( $this->activePage - 1 ),
+					'href' => $this->urlGenerator->getUrlForPage( $this->activePage - 1 ),
 				] ) . PHP_EOL;
 		}
 
@@ -199,7 +202,7 @@ class Paginator {
 		if ( $this->activePage < $this->pagesCount ) {
 			$links .= "\t" . Html::element( 'link', [
 					'rel' => 'next',
-					'href' => $urlGenerator->getUrlForPage( $this->activePage + 1 ),
+					'href' => $this->urlGenerator->getUrlForPage( $this->activePage + 1 ),
 				] ) . PHP_EOL;
 		}
 

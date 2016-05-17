@@ -2,7 +2,7 @@
 
 use Wikia\Paginator\UrlGenerator;
 
-class PaginatorUrlGeneratorTest extends WikiaBaseTest {
+class UrlGeneratorTest extends WikiaBaseTest {
 	public function dataProviderGetUrlForPage() {
 		return [
 			// Invalid pageUrlParam number
