@@ -11,7 +11,7 @@ require([
 	});
 
 	$(function() {
-		$('.community-page-entry-point-module .entry-point-button').on(
+		$('.community-page-entry-point-button').on(
 			'mousedown touchstart',
 			track.bind(this, {label: 'entry-button'})
 		);
