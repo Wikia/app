@@ -4,10 +4,7 @@
 		<?= wfMessage( 'communitypage-new' )->escaped() ?>
 	</div>
 	<div class="entry-point-container">
-		<div class="entry-point-description-top">
-			<?= wfMessage( 'communitypage-help-us-grow-prefix' )->parse() ?>
-		</div>
-		<div class="entry-point-description-bottom">
+		<div class="entry-point-description">
 			<?= wfMessage( 'communitypage-help-us-grow' )->parse() ?>
 		</div>
 		<div>
