@@ -16,8 +16,7 @@ use InvalidArgumentException;
  * Object that allows auto pagination of array content
  *
  * TODO:
- *  * On any page other than the first page there should be no canonical (link rel="prev/next" is enough)
- *  * Support for indefinite pagination? 1 ... 47 48 49 _50_ 51 52 53 ...
+ *  * Support for indefinite pagination? 1 ... 47 48 49 _50_ 51 52 53 ... (for search)
  */
 class Paginator {
 
