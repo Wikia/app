@@ -7,7 +7,12 @@ define('ext.wikia.recirculation.helpers.cakeRelatedContent', [
     };
 
     function loadData() {
-        var deferred = $.Deferred();
+        var deferred = $.Deferred(),
+            currentArticle = window.location.pathname;
+
+        if (currentArticle.startsWith('/wiki/')) {
+            currentArticle =  currentArticle.split('/wiki/')[1];
+        }
 
         nirvana.sendRequest({
             controller: 'RecirculationApi',
@@ -15,10 +20,10 @@ define('ext.wikia.recirculation.helpers.cakeRelatedContent', [
             format: 'json',
             type: 'get',
             data: {
-                relatedTo: ""
+                relatedTo: currentArticle,
+                ignore: window.location.pathname
             },
             callback: function(data) {
-                data = formatData(data);
                 if (data.items && data.items.length >= options.limit) {
                     deferred.resolve(data)
                 } else {
@@ -31,10 +36,6 @@ define('ext.wikia.recirculation.helpers.cakeRelatedContent', [
         });
 
         return deferred.promise();
-    }
-
-    function formatData(data) {
-        return data;
     }
 
     return function(config) {

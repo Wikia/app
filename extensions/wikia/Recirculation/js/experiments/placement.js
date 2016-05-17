@@ -31,6 +31,7 @@ require([
 	contentLinksHelper,
 	fandomHelper,
 	lateralHelper,
+	cakeHelper,
 	googleMatchHelper,
 	taboolaHelper,
 	videosModule
@@ -158,6 +159,11 @@ require([
 		case 'LATERAL_BOTH':
 			renderBothLateralExperiments();
 			return;
+		case 'CAKE_RELATED_CONTENT':
+			helper = cakeHelper();
+			view = railView();
+			isRail = true;
+			break;
 		default:
 			return;
 	}
