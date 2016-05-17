@@ -4,37 +4,46 @@ namespace Wikia\CreateNewWiki\Tasks;
 
 use User;
 use WikiFactory;
+use Wikia\Logger\Loggable;
 
 class SetCustomSettings implements Task {
+	use Loggable;
 
 	private $taskContext;
 
-	public function __construct(TaskContext $taskContext ) {
+	public function __construct( TaskContext $taskContext ) {
 		$this->taskContext = $taskContext;
 	}
 
 	public function prepare() {
+		return TaskResult::createForSuccess();
 	}
 
 	public function check() {
+		return TaskResult::createForSuccess();
 	}
 
 	public function run() {
 		global $wgUniversalCreationVariables, $wgLangCreationVariables;
 
 		$wikiType = "default";
+		$language = $this->taskContext->getLanguage();
 
-		if ( !empty($wgUniversalCreationVariables) && isset( $wgUniversalCreationVariables[$wikiType] ) ) {
+		if ( !empty($wgUniversalCreationVariables) && isset($wgUniversalCreationVariables[$wikiType]) ) {
 			$this->addCustomSettings( 0, $wgUniversalCreationVariables[$wikiType], "universal" );
-			wfDebugLog( "createwiki", __METHOD__ . ": Custom settings added for wiki_type: {self::WIKI_TYPE} \n", true );
+			$this->debug( implode( ":", [ "CreateWiki", __METHOD__, "Custom settings added for wiki_type: {$wikiType}" ] ) );
 		}
 
 		/**
 		 * set variables per language
 		 */
 		$langCreationVar = isset($wgLangCreationVariables[$wikiType]) ? $wgLangCreationVariables[$wikiType] : $wgLangCreationVariables;
-		$this->addCustomSettings( $this->taskContext->getLanguage(), $langCreationVar, "language" );
-		wfDebugLog( "createwiki", __METHOD__ . ": Custom settings added for wiki_type: {$wikiType} and language: {$this->taskContext->getLanguage()} \n", true );
+		$this->addCustomSettings( $language, $langCreationVar, "language" );
+		$this->debug( implode( ":",
+			[ "CreateWiki", __METHOD__, "Custom settings added for wiki_type: {$wikiType} and language: {$language}" ]
+		) );
+
+		return TaskResult::createForSuccess();
 	}
 
 	public function addCustomSettings( $match, $settings, $type = 'unknown' ) {
@@ -42,8 +51,8 @@ class SetCustomSettings implements Task {
 
 		wfProfileIn( __METHOD__ );
 
-		if( ( !empty( $match ) || $type == 'universal' ) && isset( $settings[ $match ] ) && is_array( $settings[ $match ] ) ) {
-			wfDebugLog( "createwiki", __METHOD__ . ": Found '$match' in {$type} settings array \n", true );
+		if ( (!empty($match) || $type == 'universal') && isset($settings[$match]) && is_array( $settings[$match] ) ) {
+			$this->debug( implode( ":", [ "CreateWiki", __METHOD__, "Found '$match' in {$type} settings array" ] ) );
 
 			/**
 			 * switching user for correct logging
@@ -53,22 +62,22 @@ class SetCustomSettings implements Task {
 
 			$cityId = $this->taskContext->getCityId();
 
-			foreach( $settings[$match] as $key => $value ) {
+			foreach ( $settings[$match] as $key => $value ) {
 				$success = WikiFactory::setVarById( $key, $cityId, $value );
-				if( $success ) {
-					wfDebugLog( "createwiki", __METHOD__ . ": Successfully added setting for {$cityId}: {$key} = {$value}\n", true );
+				if ( $success ) {
+					$this->debug( implode( ":", [ "CreateWiki", __METHOD__, "Successfully added setting for {$cityId}: {$key} = {$value}" ] ) );
 				} else {
-					wfDebugLog( "createwiki", __METHOD__ . ": Failed to add setting for {$cityId}: {$key} = {$value}\n", true );
+					$this->debug( implode( ":", [ "CreateWiki", __METHOD__, "Failed to add setting for {$cityId}: {$key} = {$value}" ] ) );
 				}
 			}
+
 			$wgUser = $oldUser;
 
-			wfDebugLog( "createwiki", __METHOD__ . ": Finished adding {$type} settings\n", true );
+			$this->debug( implode( ":", [ "CreateWiki", __METHOD__, "Finished adding {$type} settings" ] ) );
 		} else {
-			wfDebugLog( "createwiki", __METHOD__ . ": '{$match}' not found in {$type} settings array. Skipping this step.\n", true );
+			$this->debug( implode( ":", [ "CreateWiki", __METHOD__, "'{$match}' not found in {$type} settings array. Skipping this step." ] ) );
 		}
 
 		wfProfileOut( __METHOD__ );
-		return 1;
 	}
 }
