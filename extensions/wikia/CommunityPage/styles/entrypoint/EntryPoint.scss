@@ -85,8 +85,18 @@ $logo-url: $logo-url-light;
 
 	.community-page-entry-point-description {
 		font-size: 16px;
+		line-height: 22px;
 		padding-top: 15px;
 		text-align: center;
+	}
+
+	.community-page-entry-point-nowrap {
+		display: inline-block;
+	}
+
+	.community-page-entry-point-wiki-name {
+		font-weight: bold;
 		word-break: break-all;
+		font-size: 18px;
 	}
 }
