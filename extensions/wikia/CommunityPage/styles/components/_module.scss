@@ -16,11 +16,8 @@
 	}
 
 	@media #{$breakpoint-below-small-plus} {
+		margin: 12px 8px;
 		max-width: 330px;
 		vertical-align: top;
-
-		&:nth-child(odd) {
-			margin-right: 30px;
-		}
 	}
 }
