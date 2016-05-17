@@ -51,7 +51,9 @@ class CommunityPageSpecialInsightsModel {
 
 	/**
 	 * @param string $type type of module we want to build.
-	 * @param string $sortingType define how data should be sorted (@see InsightsSorting::$sorting)
+	 * @param array $config array with variables that determine
+	 *  - should display page views on list
+	 * 	- how data should be sorted (@see InsightsSorting::$sorting)
 	 * @return array Insight Module
 	 */
 	private function getInsightModule( $type, $config ) {
