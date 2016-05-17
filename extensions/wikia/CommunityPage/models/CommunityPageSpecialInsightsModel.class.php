@@ -2,12 +2,23 @@
 
 class CommunityPageSpecialInsightsModel {
 	const INSIGHTS_MODULE_ITEMS = 5;
-	const INSIGHTS_MODULE_SORT_TYPE = 'pvDiff';
 	const INSIGHTS_MODULES = [
-		'popularpages' => 'pvDiff',
-		'deadendpages' => false,
-		'uncategorizedpages' => false,
-		'wantedpages' => false
+		'popularpages' => [
+			'sortingType' => 'pvDiff',
+			'displayPageviews' => true
+		],
+		'deadendpages' => [
+			'sortingType' => 'pv7',
+			'displayPageviews' => false
+		],
+		'uncategorizedpages' => [
+			'sortingType' => 'pv7',
+			'displayPageviews' => false
+		],
+		'wantedpages' => [
+			'sortingType' => false,
+			'displayPageviews' => false
+		],
 	];
 
 	private $insightsService;
@@ -28,8 +39,8 @@ class CommunityPageSpecialInsightsModel {
 			'fulllist' => wfMessage( 'communitypage-full-list' )->text()
 		];
 
-		foreach ( self::INSIGHTS_MODULES as $insight => $sortingType ) {
-			$module = $this->getInsightModule( $insight, $sortingType );
+		foreach ( self::INSIGHTS_MODULES as $insight => $config ) {
+			$module = $this->getInsightModule( $insight, $config );
 			if ( !empty( $module ) ) {
 				$modules['modules'][] = $module;
 			}
@@ -43,11 +54,11 @@ class CommunityPageSpecialInsightsModel {
 	 * @param string $sortingType define how data should be sorted (@see InsightsSorting::$sorting)
 	 * @return array Insight Module
 	 */
-	private function getInsightModule( $type, $sortingType = self::INSIGHTS_MODULE_SORT_TYPE ) {
+	private function getInsightModule( $type, $config ) {
 		$insightPages = $this->insightsService->getInsightPages(
 			$type,
 			self::INSIGHTS_MODULE_ITEMS,
-			$sortingType
+			$config['sortingType']
 		);
 
 		if ( empty( $insightPages['pages'] ) ) {
@@ -72,29 +83,32 @@ class CommunityPageSpecialInsightsModel {
 
 		if ( $insightPages['count'] > self::INSIGHTS_MODULE_ITEMS ) {
 			$insightPages['fulllistlink'] = SpecialPage::getTitleFor( 'Insights', $type )
-				->getLocalURL( $this->getSortingParam( $sortingType ) );
+				->getLocalURL( $this->getSortingParam( $config['sortingType'] ) );
 		}
 
-		$insightPages = $this->addLastRevision( $insightPages );
+		$insightPages = $this->addLastRevision( $insightPages, $config['displayPageviews'] );
 
 		return $insightPages;
 	}
 
 	/**
 	 * @param array $insightsPages
+	 * @param boolean $displayPageviews should display information about pageviews
 	 * @return array Prepare message about who and when last edited given article
 	 * @throws MWException
 	 */
-	private function addLastRevision( $insightsPages ) {
+	private function addLastRevision( $insightsPages, $displayPageviews ) {
+		global $wgLang;
+
 		foreach ( $insightsPages['pages'] as $key => $insight ) {
 			$insightsPages['pages'][$key]['metadataDetails'] = $this->getArticleMetadataDetails( $insight['metadata'] );
 			$insightsPages['pages'][$key]['editlink'] = $this->getEditUrl( $insight['link']['articleurl'] );
 			$insightsPages['pages'][$key]['edittext'] = $this->getArticleContributeText( $insight['metadata'] );
 
-			if ( !empty( $insight['metadata']['pv7'] ) ) {
+			if ( $displayPageviews ) {
 				$insightsPages['pages'][$key]['pageviews'] = wfMessage(
 					'communitypage-noofviews',
-					$insight['metadata']['pv7']
+					$wgLang->formatNum( $insight['metadata']['pv7'] )
 				)->text();
 			}
 		}
