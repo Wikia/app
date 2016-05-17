@@ -1,13 +1,57 @@
 <?php
 
+use Swagger\Client\ApiException;
+use Swagger\Client\ContentEntity\Api\RelatedContentApi;
+use Wikia\DependencyInjection\Injector;
+use Wikia\Service\Swagger\ApiProvider;
+
 class CakeRelatedContentService {
+	
+	const SERVICE_NAME = "content-entity";
 
 	/**
 	 * @param $title
 	 * @param $ignore
 	 * @return RecirculationContent[]
 	 */
-	public function getContentRelatedTo($title, $ignore=null) {
-		return [new RecirculationContent("", "", "", $title, "", "")];
+	public function getContentRelatedTo($title, $limit=3, $ignore=null) {
+		$api = $this->relatedContentApi();
+		
+		try {
+			$items = [];
+
+			foreach ($api->getRelatedContentFromEntityName($title) as $i => $relatedContent) {
+				$content = $relatedContent->getContent();
+				$parsed = parse_url($content->getUrl());
+				if ($parsed['path'] == $ignore) {
+					continue;
+				}
+				$items[] = new RecirculationContent(
+						$i,
+						$content->getUrl(),
+						$content->getImage(),
+						$content->getTitle(),
+						"",
+						""
+				);
+
+				if (count($items) >= $limit) {
+					break;
+				}
+			}
+
+			return $items;
+		} catch (ApiException $e) {
+			return null;
+		}
+	}
+
+	/**
+	 * @return RelatedContentApi
+	 */
+	private function relatedContentApi() {
+		/** @var ApiProvider $apiProvider */
+		$apiProvider = Injector::getInjector()->get(ApiProvider::class);
+		return $apiProvider->getApi(self::SERVICE_NAME, RelatedContentApi::class);
 	}
 }

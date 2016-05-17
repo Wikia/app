@@ -8,7 +8,7 @@ define('ext.wikia.recirculation.helpers.cakeRelatedContent', [
 
     function loadData() {
         var deferred = $.Deferred(),
-            currentArticle = window.location.pathname;
+            currentArticle = window.location.pathname.replace('_', ' ');
 
         if (currentArticle.startsWith('/wiki/')) {
             currentArticle =  currentArticle.split('/wiki/')[1];
@@ -21,7 +21,8 @@ define('ext.wikia.recirculation.helpers.cakeRelatedContent', [
             type: 'get',
             data: {
                 relatedTo: currentArticle,
-                ignore: window.location.pathname
+                ignore: window.location.pathname,
+                limit: options.limit
             },
             callback: function(data) {
                 if (data.items && data.items.length >= options.limit) {

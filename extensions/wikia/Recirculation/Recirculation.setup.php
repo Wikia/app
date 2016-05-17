@@ -16,7 +16,7 @@ $wgAutoloadClasses['RecirculationController'] =  __DIR__ . '/RecirculationContro
 $wgAutoloadClasses['RecirculationApiController'] =  __DIR__ . '/RecirculationApiController.class.php';
 $wgAutoloadClasses['RecirculationHooks'] =  __DIR__ . '/RecirculationHooks.class.php';
 
-$wgAutoloadClasses['RecirculationContent'] =  __DIR__ . '/services/RecirculationContent.php';
+$wgAutoloadClasses['RecirculationContent'] =  __DIR__ . '/RecirculationContent.php';
 
 // Hooks
 $wgHooks['GetRailModuleList'][] = 'RecirculationHooks::onGetRailModuleList';
