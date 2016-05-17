@@ -2,22 +2,24 @@
 
 class CommunityPageSpecialInsightsModel {
 	const INSIGHTS_MODULE_ITEMS = 5;
+	const INSIGHTS_CONFIG_SORT_TYPE_KEY = 'sortingType';
+	const INSIGHTS_CONFIG_PAGEVIEWS_KEY = 'displayPageviews';
 	const INSIGHTS_MODULES = [
 		'popularpages' => [
-			'sortingType' => 'pvDiff',
-			'displayPageviews' => true
+			self::INSIGHTS_CONFIG_SORT_TYPE_KEY => 'pvDiff',
+			self::INSIGHTS_CONFIG_PAGEVIEWS_KEY => true
 		],
 		'deadendpages' => [
-			'sortingType' => 'pv7',
-			'displayPageviews' => false
+			self::INSIGHTS_CONFIG_SORT_TYPE_KEY => 'pv7',
+			self::INSIGHTS_CONFIG_PAGEVIEWS_KEY => false
 		],
 		'uncategorizedpages' => [
-			'sortingType' => 'pv7',
-			'displayPageviews' => false
+			self::INSIGHTS_CONFIG_SORT_TYPE_KEY => 'pv7',
+			self::INSIGHTS_CONFIG_PAGEVIEWS_KEY => false
 		],
 		'wantedpages' => [
-			'sortingType' => false,
-			'displayPageviews' => false
+			self::INSIGHTS_CONFIG_SORT_TYPE_KEY => false,
+			self::INSIGHTS_CONFIG_PAGEVIEWS_KEY => false
 		],
 	];
 
@@ -60,7 +62,7 @@ class CommunityPageSpecialInsightsModel {
 		$insightPages = $this->insightsService->getInsightPages(
 			$type,
 			self::INSIGHTS_MODULE_ITEMS,
-			$config['sortingType']
+			$config[self::INSIGHTS_CONFIG_SORT_TYPE_KEY]
 		);
 
 		if ( empty( $insightPages['pages'] ) ) {
@@ -85,10 +87,10 @@ class CommunityPageSpecialInsightsModel {
 
 		if ( $insightPages['count'] > self::INSIGHTS_MODULE_ITEMS ) {
 			$insightPages['fulllistlink'] = SpecialPage::getTitleFor( 'Insights', $type )
-				->getLocalURL( $this->getSortingParam( $config['sortingType'] ) );
+				->getLocalURL( $this->getSortingParam( $config[self::INSIGHTS_CONFIG_SORT_TYPE_KEY] ) );
 		}
 
-		$insightPages = $this->addLastRevision( $insightPages, $config['displayPageviews'] );
+		$insightPages = $this->addLastRevision( $insightPages, $config[self::INSIGHTS_CONFIG_PAGEVIEWS_KEY] );
 
 		return $insightPages;
 	}
@@ -107,7 +109,7 @@ class CommunityPageSpecialInsightsModel {
 			$insightsPages['pages'][$key]['editlink'] = $this->getEditUrl( $insight['link']['articleurl'] );
 			$insightsPages['pages'][$key]['edittext'] = $this->getArticleContributeText( $insight['metadata'] );
 
-			if ( $displayPageviews ) {
+			if ( $displayPageviews && !empty( $insight['metadata']['pv7'] ) ) {
 				$insightsPages['pages'][$key]['pageviews'] = wfMessage(
 					'communitypage-noofviews',
 					$wgLang->formatNum( $insight['metadata']['pv7'] )
