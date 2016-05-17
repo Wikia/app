@@ -41,22 +41,41 @@ class NavigationTemplate {
 		preg_match_all( $markerRegex, $html, $markers );
 
 		foreach ( array_unique( $markers[ 2 ] ) as $marker ) {
-			// matches block elements in between start and end marker tags
-			// <marker>(not </marker>)...(block element)...</marker>
-			$html = preg_replace(
-				'/(<|&lt;)' . $marker . '(>|&gt;)' .
-				'((?!(<|&lt;)\\/' . $marker . '(>|&gt;)).)*' .
-				'(<|&lt;)(' . implode( '|', self::$blockLevelElements ) . ')[(>|&gt;)\s]+.*' .
-				'(<|&lt;)\\/' . $marker . '(>|&gt;)/isU',
-				// replacement
-				'<div data-type="navigation">$0</div>',
-				$html
-			);
-			// remove just the marker tags
-			$html = preg_replace( '/(<|&lt;)\\/?' . $marker . '(>|&gt;)/sU', '', $html );
+			$html = static::replaceMarker( $marker, $html );
 		}
 
 		return $html;
+	}
+
+	private static function replaceMarker( $marker, $html ) {
+		// matches block elements in between start and end marker tags
+		// <marker>(not </marker>)...(block element)...</marker>
+		$replaced = preg_replace(
+			'/(<|&lt;)' . $marker . '(>|&gt;)' .
+			'((?!(<|&lt;)\\/' . $marker . '(>|&gt;)).)*' .
+			'(<|&lt;)(' . implode( '|', self::$blockLevelElements ) . ')[(>|&gt;)\s]+.*' .
+			'(<|&lt;)\\/' . $marker . '(>|&gt;)\n/isU',
+			// replacement
+			'<div data-type="navigation">$0</div>',
+			$html, -1, $count
+		);
+		if ( $count === 0 ) {
+			\Wikia\Logger\WikiaLogger::instance()->warning( 'Navigation marker broken', [ 'marker' => $marker ] );
+		}
+		if ( $replaced === null ) {
+			\Wikia\Logger\WikiaLogger::instance()->error( 'Navigation marker removal failed.', [ 'code' => preg_last_error() ] );
+			$result = $html;
+		} else {
+			$result = $replaced;
+		}
+		// remove markers from output
+		$output = preg_replace( '/(<|&lt;)\\/?' . $marker . '(>|&gt;)/sU', '', $result );
+
+		if ( $output === null ) {
+			\Wikia\Logger\WikiaLogger::instance()->error( 'Navigation replacement failed', [ 'code' => preg_last_error() ] );
+			return $html;
+		}
+		return $output;
 	}
 
 	/**
