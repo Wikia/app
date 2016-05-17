@@ -30,7 +30,7 @@ $logo-url: $logo-url-light;
 .community-page-entry-point-module {
 	position: relative;
 
-	.entry-point-logo {
+	.community-page-entry-point-logo {
 		background-image: url($logo-url); /* inline */
 		height: 30px;
 		left: 50%;
@@ -40,7 +40,7 @@ $logo-url: $logo-url-light;
 		width: 30px;
 	}
 
-	.entry-point-container {
+	.community-page-entry-point-container {
 		@include align-items(center);
 		@include flexbox();
 		@include flex-direction(column);
@@ -50,7 +50,7 @@ $logo-url: $logo-url-light;
 		padding-top: 5px;
 	}
 
-	.entry-point-button {
+	.community-page-entry-point-button {
 		background: $color-buttons;
 		color: $color-button-text;
 		display: inline-block;
@@ -68,7 +68,7 @@ $logo-url: $logo-url-light;
 		}
 	}
 
-	.entry-point-new {
+	.community-page-entry-point-new {
 		background: $color-buttons;
 		border-radius: 8px;
 		color: $color-button-text;
@@ -80,7 +80,7 @@ $logo-url: $logo-url-light;
 		text-transform: uppercase;
 	}
 
-	.entry-point-description {
+	.community-page-entry-point-description {
 		font-size: 18px;
 		padding: 15px 0 10px;
 		text-align: center;
