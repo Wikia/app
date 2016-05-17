@@ -18,8 +18,11 @@
 			<div class="avatar-container">
 				<a data-tracking="top-contributors-user-avatar" href="{{profilePage}}">{{{avatar}}}</a>
 			</div>
+			<div class="community-page-contributor-rank">
+				{{count}}.
+			</div>
 			<div class="community-page-contributor-details">
-				{{count}}. <a data-tracking="top-contributors-user" href="{{profilePage}}">{{userName}}</a>
+				<a data-tracking="top-contributors-user" href="{{profilePage}}">{{userName}}</a>
 				{{#isAdmin}}
 					<span class="community-page-subtle">{{admin}}</span>
 				{{/isAdmin}}
