@@ -1,26 +1,30 @@
 @import 'skins/shared/mixins/clearfix';
+@import 'skins/shared/mixins/flexbox';
 
 .RecentActivityModule {
 	.avatar-container {
-		display: inline-block;
 		margin-right: 10px;
-		vertical-align: middle;
-	}
-
-	.change-message {
-		display: inline-block;
-		line-height: 21px;
-		vertical-align: middle;
-		width: calc(100% - 50px);
 	}
 
 	.recent-changes {
 		font-size: 14px;
 		line-height: 20px;
+		margin: 6px 0 0;
+	}
 
-		li {
-			@include clearfix;
-			padding-bottom: 10px;
+	.community-page-recent-activity-item {
+		@include clearfix;
+		@include flexbox();
+		@include align-items(flex-start);
+
+		padding-bottom: 12px;
+
+		.avatar-container {
+			@include flex(0 0 30px);
 		}
+	}
+
+	.community-page-recent-activity-item-info {
+		padding-top: 6px;
 	}
 }
