@@ -1,5 +1,6 @@
 @import 'skins/shared/color';
 @import 'skins/shared/mixins/clearfix';
+@import 'skins/shared/mixins/flexbox';
 @import 'variables';
 
 // Styles for the contributors module in-page and modal version
@@ -75,11 +76,11 @@
 	}
 
 	.community-page-zero {
-		margin-bottom: 13px;
+		margin: 12px 0;
 	}
 
 	&.ContributorsModuleModal {
-		padding: 10px 0 0;
+		padding: 0 0 24px;
 
 		> h2 {
 			display: none;
@@ -88,21 +89,38 @@
 		.community-page-all-contributors-legend {
 			color: $color-alternate-text;
 			font-size: 13px;
+			margin-top: 12px;
 			padding-right: 30px;
 			text-align: right;
 		}
 
 		.top-contributors {
 			padding: 0 $modal-horizontal-padding;
+		}
 
-			.community-page-all-contributors-item {
-				border-bottom: 2px solid $color-page-border-subtle;
-				padding: 15px 0;
+		.community-page-contributors-list-item {
+			@include flexbox();
+			@include align-items(center);
+
+			border-bottom: 2px solid $color-page-border-subtle;
+			padding: 15px 0;
+
+			&:last-of-type {
+				border: 0;
 			}
 
-			.community-page-all-contributors-item.community-page-current-contributor {
+			.avatar-container {
+				@include flex(0 0 30px);
+			}
+
+			&.community-page-current-contributor {
 				border-color: $color-page-border;
 				font-weight: bold;
+			}
+
+			.community-page-details {
+				text-align: right;
+				white-space: nowrap;
 			}
 		}
 

@@ -2,17 +2,17 @@
 <div class="community-page-all-contributors-legend">{{allContributorsLegend}}</div>
 <ul class="reset top-contributors">
 	{{#members}}
-		<li class ="community-page-all-contributors-item {{#isCurrent}}community-page-current-contributor{{/isCurrent}}">
+		<li class ="community-page-contributors-list-item {{#isCurrent}}community-page-current-contributor{{/isCurrent}}">
 			<div class="avatar-container">
 				<a data-tracking="all-members-user-avatar" href="{{profilePage}}">{{{avatar}}}</a>
 			</div>
 			<div class="community-page-contributor-details">
-				<span class="community-page-details">{{timeAgo}}</span>
 				<a data-tracking="all-members-user" href="{{profilePage}}">{{userName}}</a>
 				{{#isAdmin}}
 					<span class="community-page-subtle">{{admin}}</span>
 				{{/isAdmin}}
 			</div>
+			<div class="community-page-details">{{timeAgo}}</div>
 		</li>
 	{{/members}}
 	{{^members}}
@@ -21,7 +21,7 @@
 		</div>
 	{{/members}}
 	{{#haveMoreMembers}}
-		<li class="community-page-all-contributors-item">
+		<li class="community-page-contributors-list-item">
 			<div class="contributor-details">
 				<a href="{{moreMembersLink}}">{{moreMembersText}}</a>
 			</div>
