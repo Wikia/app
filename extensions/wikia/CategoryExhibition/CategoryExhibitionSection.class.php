@@ -231,13 +231,12 @@ class CategoryExhibitionSection {
 				$pages->setActivePage( $this->paginatorPosition );
 				$aTmpData = $pages->getCurrentPage( $aTmpData );
 				$aData = $this->getArticles( $aTmpData );
-				$oTmpl->set_vars(
-					array (
-						'data'		=> $aData,
-						'category'	=> $this->categoryTitle->getText(),
-						'paginator'	=> $pages->getBarHTML()
-					)
-				);
+				$oTmpl->set_vars( [
+					'data' => $aData,
+					'category' => $this->categoryTitle->getText(),
+					'paginator' => $pages->getBarHTML(),
+					'paginatorHead' => $pages->getHeadItem(),
+				] );
 				$this->saveToCache( $oTmpl->mVars );
 				return $oTmpl;
 			} else {

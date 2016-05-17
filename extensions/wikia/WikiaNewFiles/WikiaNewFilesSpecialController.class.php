@@ -49,7 +49,8 @@ class WikiaNewFilesSpecialController extends WikiaSpecialPageController {
 		$imageCount = $newFilesModel->getImageCount();
 
 		// Pagination
-		$paginator = new Paginator( $imageCount, self::DEFAULT_LIMIT, '' );
+		$url = $this->specialPage->getFullTitle()->getFullURL();
+		$paginator = new Paginator( $imageCount, self::DEFAULT_LIMIT, $url );
 		$paginator->setActivePage( $pageNumber );
 		$output->addHeadItem( 'Paginator', $paginator->getHeadItem() );
 

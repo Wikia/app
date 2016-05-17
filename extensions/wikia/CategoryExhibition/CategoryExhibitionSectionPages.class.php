@@ -9,14 +9,15 @@ class CategoryExhibitionSectionPages extends CategoryExhibitionSection {
 	public $templateName = 'page';
 
 	public function getSectionHTML(){
-		global $wgCategoryExhibitionPagesSectionRows, $wgContentNamespaces;
+		global $wgCategoryExhibitionPagesSectionRows, $wgOut;
 		$this->loadPaginationVars();
 		$oTmpl = $this->getTemplateForNameSpace( $this->getExcludes(), $wgCategoryExhibitionPagesSectionRows * 4, true );
+		$wgOut->addHeadItem( 'Paginator', $oTmpl->mVars['paginatorHead'] );
 		return $this->executeTemplate( $oTmpl );
 	}
 
 	public function getSectionAxHTML( $paginatorPosition, $sUrl ){
-		global $wgCategoryExhibitionPagesSectionRows, $wgContentNamespaces;
+		global $wgCategoryExhibitionPagesSectionRows;
 		$this->loadPaginationVars();
 		$this->isFromAjax = true;
 		$this->paginatorPosition = $paginatorPosition;
