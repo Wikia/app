@@ -16,6 +16,7 @@ class ImportStarterData implements Task {
 	}
 
 	public function prepare() {
+		return TaskResult::createForSuccess();
 	}
 
 	public function check() {

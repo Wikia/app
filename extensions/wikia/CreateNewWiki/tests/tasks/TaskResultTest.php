@@ -2,7 +2,7 @@
 
 namespace Wikia\CreateNewWiki\Tasks;
 
-class TaskResultTest extends WikiaBaseTest
+class TaskResultTest extends \WikiaBaseTest
 {
 
 	public function setUp()
