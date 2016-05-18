@@ -82,6 +82,7 @@ $wgHooks[ 'ArticlePurge' ][] = 'PortableInfoboxHooks::onArticlePurge';
 $wgHooks[ 'ArticleSave' ][] = 'PortableInfoboxHooks::onArticleSave';
 $wgHooks[ 'BacklinksPurge' ][] = 'PortableInfoboxHooks::onBacklinksPurge';
 $wgHooks[ 'ArticleInsertComplete' ][] = 'PortableInfoboxHooks::onArticleInsertComplete';
+$wgHooks[ 'ArticleAsJsonBeforeEncode' ][] = 'PortableInfoboxHooks::onArticleAsJsonBeforeEncode';
 
 // special pages
 $wgSpecialPages[ 'AllInfoboxes' ] = 'AllinfoboxesQueryPage';

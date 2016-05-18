@@ -1,9 +1,8 @@
 /*global define*/
 define('ext.wikia.adEngine.template.interstitial', [
-	'ext.wikia.adEngine.slotTweaker',
 	'wikia.document',
 	'wikia.log',
-], function (slotTweaker, doc, log) {
+], function (doc, log) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.template.interstitial',
@@ -20,13 +19,11 @@ define('ext.wikia.adEngine.template.interstitial', [
 			log('Hide interstitial', 'info', logGroup);
 		});
 
-		slotTweaker.onReady(slotName, function () {
-			wrapper.classList.add('interstitial');
-			wrapper.classList.remove('hidden');
-			doc.documentElement.classList.add('stop-scrolling');
+		wrapper.classList.add('interstitial');
+		wrapper.classList.remove('hidden');
+		doc.documentElement.classList.add('stop-scrolling');
 
-			log('Show interstitial', 'info', logGroup);
-		});
+		log('Show interstitial', 'info', logGroup);
 	}
 
 	return {

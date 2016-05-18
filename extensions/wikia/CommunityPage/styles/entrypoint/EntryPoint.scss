@@ -1,0 +1,92 @@
+@import 'skins/shared/color';
+@import 'skins/shared/mixins/flexbox';
+
+@import '../components/_variables';
+
+$background-color-dark: #1a1a1a;
+$background-color-light: #f6f6f6;
+
+$background-color: $background-color-light;
+@if $is-dark-wiki {
+	$background-color: $background-color-dark;
+}
+
+$logo-url-dark: '/extensions/wikia/CommunityPage/images/wikia-logo-dark.svg';
+$logo-url-light: '/extensions/wikia/CommunityPage/images/wikia-logo.svg';
+
+$logo-url: $logo-url-light;
+@if $is-dark-wiki {
+	$logo-url: $logo-url-dark;
+}
+
+.WikiaRail {
+	padding-top: 20px;
+
+	.module {
+		position: relative;
+	}
+}
+
+.community-page-entry-point-module {
+	position: relative;
+
+	.community-page-entry-point-logo {
+		background-image: url($logo-url); /* inline */
+		height: 30px;
+		left: 50%;
+		position: absolute;
+		top: 0;
+		transform: translate(-50%, -40%);
+		width: 30px;
+	}
+
+	.community-page-entry-point-container {
+		@include align-items(center);
+		@include flexbox();
+		@include flex-direction(column);
+
+		font-size: 14px;
+		font-family: $community-page-font-family;
+		padding-top: 5px;
+	}
+
+	.community-page-entry-point-button {
+		background: $color-buttons;
+		color: $color-button-text;
+		display: inline-block;
+		font-size: 12px;
+		font-weight: bold;
+		height: 46px;
+		line-height: 46px;
+		margin: 14px 0;
+		padding: 0 30px;
+		text-decoration: none;
+		text-transform: uppercase;
+
+		&:hover, &:active {
+			background-color: $color-button-highlight;
+			text-decoration: none;
+		}
+	}
+
+	.community-page-entry-point-new {
+		background: $color-buttons;
+		color: $color-button-text;
+		font-size: 10px;
+		height: 17px;
+		left: 0;
+		line-height: 17px;
+		position: absolute;
+		text-align: center;
+		text-transform: uppercase;
+		top: 0;
+		width: 41px;
+	}
+
+	.community-page-entry-point-description {
+		font-size: 16px;
+		padding-top: 15px;
+		text-align: center;
+		word-break: break-all;
+	}
+}

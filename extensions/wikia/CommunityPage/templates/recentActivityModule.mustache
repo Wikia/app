@@ -3,21 +3,23 @@
 		<h2 class="activity-heading">{{activityHeading}}</h2>
 		<ul class="reset recent-changes">
 			{{#activity}}
-				<li>
+				<li class="community-page-recent-activity-item">
 					<div class="avatar-container">
-						{{{userAvatar}}}
+						<a data-tracking="user-avatar-link" href="{{profilePage}}">{{{userAvatar}}}</a>
 					</div>
-					<div class="change-message">
-						{{{changeMessage}}}
-					</div>
-					{{#timeAgo}}
-						<div class="subtle">
-							{{timeAgo}}
+					<div class="community-page-recent-activity-item-info">
+						<div class="change-message">
+							{{{changeMessage}}}
 						</div>
-					{{/timeAgo}}
+						{{#timeAgo}}
+							<div class="community-page-subtle">
+								{{timeAgo}}
+							</div>
+						{{/timeAgo}}
+					</div>
 				</li>
 			{{/activity}}
 		</ul>
-		<a href="{{moreActivityLink}}">{{moreActivityText}}</a>
+		<a data-tracking="view-all-activity-link" href="{{moreActivityLink}}">{{moreActivityText}}</a>
 	</div>
 {{/recentActivityModule}}

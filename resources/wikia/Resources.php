@@ -219,16 +219,6 @@ return [
 		]
 	],
 
-	'wikia.handlebars' => [
-		'scripts' => 'resources/wikia/libraries/handlebars/handlebars.js',
-		'dependencies' => 'amd',
-	],
-
-	'wikia.stringhelper' => [
-		'scripts' => 'resources/wikia/modules/stringhelper.js',
-		'dependencies' => 'amd',
-	],
-
 	// module loaded via $.loadjQuery UI and is a wrapper for MediaWiki jQuery UI modules
 	// this used to be static file located in /skins/common/jquery/jquery-ui-1.8.14.custom.js
 	'wikia.jquery.ui' => [
@@ -253,11 +243,6 @@ return [
 	'jquery.mustache' => [
 		'scripts' => 'resources/wikia/libraries/mustache/jquery.mustache.js',
 		'dependencies' => 'wikia.mustache',
-	],
-
-	'jquery.handlebars' => [
-		'scripts' => 'resources/wikia/libraries/handlebars/jquery.handlebars.js',
-		'dependencies' => 'wikia.handlebars',
 	],
 
 	'jquery.autocomplete' => [

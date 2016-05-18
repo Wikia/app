@@ -3,19 +3,6 @@
 class CommunityPageSpecialHooks {
 
 	/**
-	 * Render the community page header outside of the .WikiaPage element
-	 *
-	 * @param $html
-	 * @return bool
-	 */
-	public static function getHTMLBeforeWikiaPage( &$html ) {
-		if ( F::app()->wg->EnableCommunityPageExt && F::app()->wg->Title->isSpecial( 'Community' ) ) {
-			$html .= F::app()->renderView( 'CommunityPageSpecialController', 'header' );
-		}
-		return true;
-	}
-
-	/**
 	 * Cache key invalidation when an article is edited
 	 *
 	 * @param $article
@@ -71,6 +58,22 @@ class CommunityPageSpecialHooks {
 		// fixme: Remove this once getMemberCount has been removed
 		$key = wfMemcKey( CommunityPageSpecialUsersModel::MEMBER_COUNT_MCACHE_KEY );
 		WikiaDataAccess::cachePurge( $key );
+
+		return true;
+	}
+
+	/**
+	 * Add community page entry point to article page right rail module
+	 *
+	 * @param array $railModuleList
+	 * @return bool
+	 */
+	public static function onGetRailModuleList( Array &$railModuleList ) {
+		global $wgTitle, $wgUser;
+
+		if ( ( $wgUser->isLoggedIn() && $wgTitle->inNamespace( NS_MAIN ) ) || $wgTitle->isSpecial( 'WikiActivity' ) ) {
+			$railModuleList[1342] = [ 'CommunityPageEntryPoint', 'Index', null ];
+		}
 
 		return true;
 	}

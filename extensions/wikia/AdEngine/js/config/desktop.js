@@ -15,9 +15,10 @@ define('ext.wikia.adEngine.config.desktop', [
 	'ext.wikia.adEngine.provider.liftium',
 	'ext.wikia.adEngine.provider.monetizationService',
 	'ext.wikia.adEngine.provider.remnantGpt',
-	'ext.wikia.adEngine.provider.sevenOneMedia',
+	'ext.wikia.adEngine.provider.rubiconFastlane',
 	'ext.wikia.adEngine.provider.turtle',
-	require.optional('ext.wikia.adEngine.provider.taboola')
+	require.optional('ext.wikia.adEngine.provider.taboola'),
+	require.optional('ext.wikia.adEngine.provider.revcontent')
 ], function (
 	// regular dependencies
 	log,
@@ -34,25 +35,21 @@ define('ext.wikia.adEngine.config.desktop', [
 	adProviderLiftium,
 	adProviderMonetizationService,
 	adProviderRemnantGpt,
-	adProviderSevenOneMedia,
+	adProviderRubiconFastlane,
 	adProviderTurtle,
-	adProviderTaboola
+	adProviderTaboola,
+	adProviderRevcontent
 ) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.adConfigLate',
 		context = adContext.getContext(),
-		liftiumSlotsToShowWithSevenOneMedia = {
-			'WIKIA_BAR_BOXAD_1': true,
-			'TOP_BUTTON_WIDE': true,
-			'TOP_BUTTON_WIDE.force': true
-		},
-		ie8 = window.navigator && window.navigator.userAgent && window.navigator.userAgent.match(/MSIE [6-8]\./),
 		gptEnabled = !instantGlobals.wgSitewideDisableGpt,
 		forcedProviders = {
 			evolve2:  [adProviderEvolve2],
 			hitmedia: [adProviderHitMedia],
 			liftium:  [adProviderLiftium],
+			rpfl:     [adProviderRubiconFastlane],
 			turtle:   [adProviderTurtle]
 		};
 
@@ -77,26 +74,14 @@ define('ext.wikia.adEngine.config.desktop', [
 			return forcedProviders[context.forcedProvider];
 		}
 
-		// SevenOne Media
-		if (context.providers.sevenOneMedia) {
-			if (!liftiumSlotsToShowWithSevenOneMedia[slotName]) {
-				if (ie8) {
-					log('SevenOneMedia not supported on IE8. No ads', 'warn', logGroup);
-					return [];
-				}
-
-				if (instantGlobals.wgSitewideDisableSevenOneMedia) {
-					log('SevenOneMedia disabled by DR. No ads', 'warn', logGroup);
-					return [];
-				}
-
-				return [adProviderSevenOneMedia];
-			}
-		}
-
 		// Taboola
 		if (context.providers.taboola && adProviderTaboola && adProviderTaboola.canHandleSlot(slotName)) {
 			return [adProviderTaboola];
+		}
+
+		// Revcontent
+		if (adProviderRevcontent && adProviderRevcontent.canHandleSlot(slotName)) {
+			return [adProviderRevcontent];
 		}
 
 		// MonetizationService
@@ -124,8 +109,12 @@ define('ext.wikia.adEngine.config.desktop', [
 			providerList.push(adProviderRemnantGpt);
 		}
 
-		// Last resort provider: Liftium
-		providerList.push(adProviderLiftium);
+		// Last resort provider: RubiconFastlane or Liftium
+		if (context.providers.rubiconFastlane && adProviderRubiconFastlane.canHandleSlot(slotName)) {
+			providerList.push(adProviderRubiconFastlane);
+		} else {
+			providerList.push(adProviderLiftium);
+		}
 
 		return providerList;
 	}

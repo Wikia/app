@@ -8,6 +8,7 @@ class AdEngine2Hooks {
 	const ASSET_GROUP_ADENGINE_GCS = 'adengine2_gcs_js';
 	const ASSET_GROUP_ADENGINE_MOBILE = 'wikiamobile_ads_js';
 	const ASSET_GROUP_ADENGINE_OPENX_BIDDER = 'adengine2_ox_bidder_js';
+	const ASSET_GROUP_ADENGINE_REVCONTENT = 'adengine2_revcontent_js';
 	const ASSET_GROUP_ADENGINE_RUBICON_FASTLANE = 'adengine2_rubicon_fastlane_js';
 	const ASSET_GROUP_ADENGINE_TABOOLA = 'adengine2_taboola_js';
 	const ASSET_GROUP_ADENGINE_TRACKING = 'adengine2_tracking_js';
@@ -20,17 +21,10 @@ class AdEngine2Hooks {
 	 * @author Sergey Naumov
 	 */
 	public static function onAfterInitialize( $title, $article, $output, $user, WebRequest $request, $wiki ) {
-		global $wgAdDriverUseSevenOneMedia,
-			$wgNoExternals,
-			$wgUsePostScribe;
+		global $wgNoExternals;
 
 		// TODO: we shouldn't have it in AdEngine - ticket for Platform: PLATFORM-1296
 		$wgNoExternals = $request->getBool( 'noexternals', $wgNoExternals );
-
-		// use PostScribe with 71Media - check scriptwriter.js:35
-		if ( $wgAdDriverUseSevenOneMedia ) {
-			$wgUsePostScribe = true;
-		}
 
 		return true;
 	}
@@ -59,6 +53,8 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverOpenXBidderCountriesMobile';
 		$vars[] = 'wgAdDriverOverridePrefootersCountries';
 		$vars[] = 'wgAdDriverRubiconFastlaneCountries';
+		$vars[] = 'wgAdDriverRubiconFastlaneProviderCountries';
+		$vars[] = 'wgAdDriverRubiconFastlaneProviderSkipTier';
 		$vars[] = 'wgAdDriverScrollHandlerConfig';
 		$vars[] = 'wgAdDriverScrollHandlerCountries';
 		$vars[] = 'wgAdDriverSourcePointDetectionCountries';
@@ -79,7 +75,7 @@ class AdEngine2Hooks {
 		$vars[] = 'wgSitewideDisableKrux';
 		$vars[] = 'wgSitewideDisableLiftium';
 		$vars[] = 'wgSitewideDisableMonetizationService';
-		$vars[] = 'wgSitewideDisableSevenOneMedia';
+		$vars[] = 'wgSitewideDisableSevenOneMedia'; // TODO: ADEN-3314
 
 		return true;
 	}
@@ -93,7 +89,7 @@ class AdEngine2Hooks {
 	 * @return bool
 	 */
 	public static function onWikiaSkinTopScripts( &$vars, &$scripts ) {
-		global $wgTitle, $wgUsePostScribe;
+		global $wgTitle;
 		$skin = RequestContext::getMain()->getSkin();
 		$skinName = $skin->getSkinName();
 
@@ -114,9 +110,6 @@ class AdEngine2Hooks {
 		// GA vars
 		$vars['wgGaHasAds'] = isset( $adContext['opts']['showAds'] );
 
-		// 71Media
-		$vars['wgUsePostScribe'] = $wgUsePostScribe;
-
 		return true;
 	}
 
@@ -129,7 +122,7 @@ class AdEngine2Hooks {
 	 */
 	public static function onOasisSkinAssetGroups( &$jsAssets ) {
 
-		global $wgAdDriverUseGoogleConsumerSurveys, $wgAdDriverUseTaboola;
+		global $wgAdDriverUseGoogleConsumerSurveys, $wgAdDriverUseTaboola, $wgAdDriverUseRevcontent;
 		$isArticle = WikiaPageType::getPageType() === 'article';
 
 		$jsAssets[] = self::ASSET_GROUP_ADENGINE_DESKTOP;
@@ -145,6 +138,10 @@ class AdEngine2Hooks {
 
 		if ( $wgAdDriverUseTaboola && $isArticle ) {
 			$jsAssets[] = self::ASSET_GROUP_ADENGINE_TABOOLA;
+		}
+
+		if ( $wgAdDriverUseRevcontent && $isArticle ) {
+			$jsAssets[] = self::ASSET_GROUP_ADENGINE_REVCONTENT;
 		}
 
 		$jsAssets[] = 'adengine2_interactive_maps_js';

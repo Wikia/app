@@ -11,7 +11,7 @@ CREATE TABLE `image_sync` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE `image_sync_done` (
-	  `id` int(8) unsigned NOT NULL,
+	  `id` int(8) NOT NULL AUTO_INCREMENT
 	  `city_id` int(8) unsigned NOT NULL,
 	  `img_action` varchar(32) NOT NULL,
 	  `img_src` blob,

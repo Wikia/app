@@ -1,14 +1,15 @@
-<h2>{{recentlyJoinedHeaderText}}</h2>
-{{#members}}
-	<div class="avatar-container">
-		<a href="{{profilePage}}">{{{avatar}}}</a>
-	</div>
-{{/members}}
-{{^members}}
-	<div class="zero">
-		{{noRecentMembersText}}
-	</div>
-{{/members}}
-<span class="recently-joined">
-	<a href="#" id="viewAllMembers">{{allMembers}}</a>
-</span>
+<div class="community-page-recently-joined">
+	{{#haveNewMembers}}
+		<div class="members">
+			<h2>{{recentlyJoinedHeaderText}}</h2>
+			{{#members}}
+				<div class="avatar-container">
+					<a data-tracking="recently-joined-user-avatar" href="{{profilePage}}">{{{avatar}}}</a>
+				</div>
+			{{/members}}
+		</div>
+	{{/haveNewMembers}}
+	<span class="more-link">
+		<a data-tracking="show-modal-all" href="#" id="viewAllMembers">{{allMembers}}</a>
+	</span>
+</div>

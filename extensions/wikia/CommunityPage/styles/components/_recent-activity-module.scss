@@ -1,31 +1,27 @@
 @import 'skins/shared/mixins/clearfix';
-@import 'skins/shared/mixins/transform';
+@import 'skins/shared/mixins/flexbox';
 
 .RecentActivityModule {
 	.avatar-container {
-		float: left;
+		@include flex(0 0 30px);
 		margin-right: 10px;
-	}
-
-	.recent-changes {
-		li {
-			@include clearfix;
-			padding-bottom: 10px;
-		}
-
-		.avatar-container {
-			@include transform-translate(0, 3px);
-		}
 	}
 
 	.recent-changes {
 		font-size: 14px;
 		line-height: 20px;
+		margin: 6px 0 0;
 	}
 
-	.more-activity {
-		font-family: $community-page-font-family;
-		font-size: 14px;
-		color: $color-message-background;
+	.community-page-recent-activity-item {
+		@include clearfix;
+		@include flexbox();
+		@include align-items(flex-start);
+
+		padding-bottom: 12px;
+	}
+
+	.community-page-recent-activity-item-info {
+		padding-top: 6px;
 	}
 }

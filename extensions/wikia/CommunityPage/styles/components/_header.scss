@@ -1,39 +1,45 @@
+@import 'skins/shared/color';
 @import 'skins/shared/mixins/flexbox';
+
+$hero-image-pattern: '/extensions/wikia/CommunityPage/images/hero_image_pattern.png';
+
+@if $is-dark-wiki {
+	$hero-image-pattern: '/extensions/wikia/CommunityPage/images/hero_image_pattern_dark.png';
+}
 
 .community-page-header {
 	@include flexbox();
 	align-items: center;
-	background-image: url('/extensions/wikia/WAMPage/images/hero.jpg'); /* inline */
-	height: 250px;
+	background: url($hero-image-pattern);
+	height: 200px;
 	justify-content: center;
 	text-align: center;
 
+	&.community-page-header-cover {
+		background-position: center;
+		background-size: cover;
+	}
+
 	.community-page-header-content {
-		width: 50%;
+		width: 75%;
 	}
 
-	h1 {
-		color: $color-community-page-white;
+	h1.community-page-heading {
+		font-size: 36px;
 		font-weight: bold;
+		line-height: 48px;
 	}
+}
 
-	.signup-button {
-		background: $color-buttons;
-		color: $color-button-text;
-		display: inline-block;
-		font-size: 14px;
-		font-weight: bold;
-		height: 46px;
-		line-height: 46px;
-		margin: 12px 16px 16px;
-		padding: 0 30px;
-		text-decoration: none;
-		text-transform: uppercase;
-		white-space: normal;
+.community-page-admin-welcome-message {
+	align-items: center;
+	background-color: $color-unified-module-background;
+	display: flex;
+	justify-content: center;
+	text-align: center;
 
-		&:hover, &:active {
-			background-color: $color-button-highlight;
-			text-decoration: none;
-		}
+	.community-page-admin-welcome-message-text {
+		margin: 30px 0;
+		max-width: 478px;
 	}
 }

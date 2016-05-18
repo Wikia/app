@@ -175,26 +175,33 @@ class WAMService extends Service {
 
 		wfProfileIn(__METHOD__);
 
-		$db = $this->getDB();
+		$getData = function() {
+			$db = $this->getDB();
 
-		$fields = array(
-			'MAX(time_id) AS max_date',
-			'MIN(time_id) AS min_date'
-		);
+			$fields = array(
+				'MAX(time_id) AS max_date',
+				'MIN(time_id) AS min_date'
+			);
 
-		$result = $db->select(
-			'fact_wam_scores',
-			$fields,
-			'',
-			__METHOD__
-		);
+			$result = $db->select(
+				'fact_wam_scores',
+				$fields,
+				'',
+				__METHOD__
+			);
 
-		$row = $db->fetchRow($result);
+			$row = $db->fetchRow($result);
 
-		$dates['max_date'] = strtotime('+1 day', strtotime($row['max_date']));
-		$dates['min_date'] = strtotime('+1 day', strtotime($row['min_date']));
+			$dates = array();
+			$dates['max_date'] = strtotime('+1 day', strtotime($row['max_date']));
+			$dates['min_date'] = strtotime('+1 day', strtotime($row['min_date']));
 
-		wfProfileOut(__METHOD__);
+			return $dates;
+		};
+
+		$memKey = wfSharedMemcKey( 'wam-index-dates', self::MEMCACHE_VER );
+		$dates = WikiaDataAccess::cache( $memKey, self::CACHE_DURATION, $getData );
+		wfProfileOut( __METHOD__ );
 
 		return $dates;
 	}
@@ -421,8 +428,8 @@ class WAMService extends Service {
 
 	protected function getDB() {
 		$app = F::app();
-		wfGetLB( $app->wg->DatamartDB )->allowLagged(true);
-		$db = wfGetDB( DB_SLAVE, array(), $app->wg->DatamartDB );
+		wfGetLB( $app->wg->DWStatsDB )->allowLagged(true);
+		$db = wfGetDB( DB_SLAVE, array(), $app->wg->DWStatsDB );
 		$db->clearFlag( DBO_TRX );
 		return $db;
 	}

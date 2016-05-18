@@ -76,6 +76,7 @@ $recirculation-incontent-thumbnail-height: 90px;
 
 	.item {
 		width: $recirculation-incontent-thumbnail-width;
+		min-width: $recirculation-incontent-thumbnail-width;
 	}
 
 	.thumbnail {

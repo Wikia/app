@@ -3,12 +3,11 @@
 class AnalyticsProviderRubiconFastlane implements iAnalyticsProvider {
 
 	public static function isEnabled() {
-		global $wgAdDriverEnableRubiconFastlane, $wgShowAds, $wgAdDriverUseSevenOneMedia;
+		global $wgAdDriverEnableRubiconFastlane, $wgShowAds;
 
 		return $wgAdDriverEnableRubiconFastlane
 			&& $wgShowAds
-			&& AdEngine2Service::areAdsShowableOnPage()
-			&& !$wgAdDriverUseSevenOneMedia;
+			&& AdEngine2Service::areAdsShowableOnPage();
 	}
 
 	private function getIntegrationScript( $moduleName, $instantGlobalName ) {
