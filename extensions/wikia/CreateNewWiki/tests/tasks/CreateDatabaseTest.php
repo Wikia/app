@@ -51,7 +51,7 @@ class CreateDatabaseTest extends \WikiaBaseTest {
 			->willReturn( 0 );
 	}
 
-	private function mockLocalClusterConnectionDBNameTaken() {
+	private function mockLocalClusterConnectionDBNameOneTaken() {
 		$wikiDBWMock = $this->getMock( 'DatabaseMysqli', [ 'query', 'numRows' ] );
 		$this->mockGlobalFunction( 'wfGetDB', $wikiDBWMock);
 		$wikiDBWMock
@@ -65,6 +65,18 @@ class CreateDatabaseTest extends \WikiaBaseTest {
 			->expects( $this->at( 3 ) )
 			->method( 'numRows' )
 			->willReturn( 0 );
+	}
+
+	private function mockLocalClusterConnectionDBNameAllTaken() {
+		$wikiDBWMock = $this->getMock( 'DatabaseMysqli', [ 'query', 'numRows' ] );
+		$this->mockGlobalFunction( 'wfGetDB', $wikiDBWMock);
+		$wikiDBWMock
+			->expects( $this->any() )
+			->method( 'query' );
+		$wikiDBWMock
+			->expects(  $this->any() )
+			->method( 'numRows' )
+			->willReturn( 1 );
 	}
 
 	/**
@@ -126,7 +138,7 @@ class CreateDatabaseTest extends \WikiaBaseTest {
 		$task = new CreateDatabase( $taskContext );
 
 		$this->mockSharedDBConnectionDBNameFree();
-		$this->mockLocalClusterConnectionDBNameTaken();
+		$this->mockLocalClusterConnectionDBNameOneTaken();
 
 		//when
 		$result = $task->prepare();
@@ -137,6 +149,22 @@ class CreateDatabaseTest extends \WikiaBaseTest {
 		//We expect that the db name will have the original name + some suffix i.e. textWiki123
 		$this->assertNotEquals( $taskContextExpected[ 'dbName' ], $taskContextData[ 'dbName' ] );
 		$this->assertContains( $taskContextExpected[ 'dbName' ], $taskContextData[ 'dbName' ] );
+	}
+
+	public function testPrepareShouldReturnErrorAllDbNamesTaken(  ) {
+		//given
+		$taskContext = new TaskContext( [ 'wikiName' => 'testWiki', 'language' => 'en' ] );
+		$task = new CreateDatabase( $taskContext );
+
+		$this->mockSharedDBConnectionDBNameFree();
+		$this->mockLocalClusterConnectionDBNameAllTaken();
+
+		//when
+		$result = $task->prepare();
+
+		//then
+		$this->assertEquals( false, $result->isOk());
+		$this->assertEquals( null, $taskContext->getDbName() );
 	}
 
 	public function dataProviderPrepare() {

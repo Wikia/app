@@ -26,10 +26,15 @@ class CreateDatabase implements Task {
 	public function prepare() {
 		$this->taskContext->setSharedDBW( \WikiFactory::db( DB_MASTER ) );
 		$this->clusterDB = "wikicities_" . self::ACTIVE_CLUSTER;
-		$this->taskContext->setDbName( $this->prepareDatabaseName(
-			$this->clusterDB, $this->taskContext->getWikiName(), $this->taskContext->getLanguage() ) );
+		$dbName = $this->prepareDatabaseName(
+			$this->clusterDB, $this->taskContext->getWikiName(), $this->taskContext->getLanguage() );
 
-		return TaskResult::createForSuccess();
+		if ( !empty( $dbName ) ) {
+			$this->taskContext->setDbName( $dbName );
+			return TaskResult::createForSuccess();
+		} else {
+			return TaskResult::createForError( "Could not find a valid db name - all were taken" );
+		}
 	}
 
 	public function check() {
@@ -80,10 +85,15 @@ class CreateDatabase implements Task {
 		}
 
 		$dbName = substr( str_replace( "-", "", $dbName ), 0 , 50 );
+		$attemptNo = 0;
 
 		while( $this->doesDbExistInCityList( $dbwf, $dbName ) || $this->doesDbExistInCluster( $dbr, $dbName ) ) {
 			$suffix = rand( 1, 999 );
-			$dbName = sprintf("%s%s", $dbName, $suffix);
+			$dbName = sprintf( "%s%s", $dbName, $suffix );
+			if ( ++$attemptNo > 100 ) {
+				$dbName = null;
+				break;
+			}
 		}
 		wfProfileOut( __METHOD__ );
 
