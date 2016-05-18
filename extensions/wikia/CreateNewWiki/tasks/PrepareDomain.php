@@ -41,11 +41,12 @@ class PrepareDomain implements Task {
 	}
 
 	public function check() {
+		$this->debug(implode(":", ["CreateNewWiki", $this->taskContext->getDomain(), $this->taskContext->getLanguage()]));
 		$errorMsg = \CreateWikiChecks::checkDomainIsCorrect(
 			$this->taskContext->getDomain(), $this->taskContext->getLanguage(), false, false
 		);
 		if ( !empty($errorMsg) ) {
-			return TaskResult::createForError( 'DB is read only' );
+			return TaskResult::createForError( $errorMsg );
 		} else {
 			return TaskResult::createForSuccess();
 		}
