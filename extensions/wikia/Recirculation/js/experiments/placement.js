@@ -102,14 +102,16 @@ require([
 			break;
 		case 'FANDOM_GENRE':
 			helper = fandomHelper({
-				type: 'vertical'
+				type: 'vertical',
+				limit: 5
 			});
 			view = railView();
 			isRail = true;
 			break;
 		case 'FANDOM_TOPIC':
 			helper = fandomHelper({
-				type: 'community'
+				type: 'community',
+				limit: 5
 			});
 			view = railView();
 			isRail = true;
