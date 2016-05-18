@@ -73,6 +73,39 @@
 		}
 	}
 
+	.community-page-contributors-list-item {
+		@include flexbox();
+		@include align-items(flex-start);
+
+		padding: 12px 0 0;
+
+		&:last-of-type {
+			border: 0;
+		}
+
+		.avatar-container {
+			@include flex($avatar-flex);
+		}
+
+		.community-page-contributor-rank {
+			padding: 6px 6px 0 0;
+		}
+
+		.community-page-contributor-details {
+			padding-top: 6px;
+		}
+
+		&.community-page-current-contributor {
+			border-color: $color-page-border;
+			font-weight: bold;
+		}
+
+		.community-page-details {
+			text-align: right;
+			white-space: nowrap;
+		}
+	}
+
 	.community-page-zero {
 		margin: 12px 0;
 	}
@@ -97,29 +130,20 @@
 		}
 
 		.community-page-contributors-list-item {
-			@include flexbox();
-			@include align-items(center);
-
+			padding: 12px 0;
 			border-bottom: 2px solid $color-page-border-subtle;
-			padding: 15px 0;
 
 			&:last-of-type {
 				border: 0;
 			}
+		}
 
-			.avatar-container {
-				@include flex($avatar-flex);
-			}
+		.community-page-contributor-details {
+			@include flex(10 1 100%);
+		}
 
-			&.community-page-current-contributor {
-				border-color: $color-page-border;
-				font-weight: bold;
-			}
-
-			.community-page-details {
-				text-align: right;
-				white-space: nowrap;
-			}
+		.community-page-details {
+			padding-top: 6px;
 		}
 
 		.user-details {
