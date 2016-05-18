@@ -87,7 +87,7 @@ class ImagePage extends Article {
 	}
 
 	public function view() {
-		global $wgOut, $wgShowEXIF, $wgRequest, $wgUser, $wgAddNoIndexToFilePages;
+		global $wgOut, $wgShowEXIF, $wgRequest, $wgUser;
 
 		/**
 		 * Wikia change start
