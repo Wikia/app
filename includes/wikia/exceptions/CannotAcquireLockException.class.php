@@ -1,5 +1,5 @@
 <?php
 
-class CannotAcquireLockException extends Exception{
+class CannotAcquireLockException extends Exception {
 
 }
