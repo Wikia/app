@@ -7,7 +7,7 @@ class ArticleAsJson extends WikiaService {
 		'imageMaxWidth' => false
 	];
 
-	const CACHE_VERSION = '0.0.3';
+	const CACHE_VERSION = 1;
 
 	const ICON_MAX_SIZE = 48;
 	// Line height in Mercury
