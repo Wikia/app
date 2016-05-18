@@ -13,18 +13,15 @@ class PortableInfoboxRenderService extends WikiaService {
 		'header' => 'PortableInfoboxItemHeader.mustache',
 		'image' => 'PortableInfoboxItemImage.mustache',
 		'image-mobile' => 'PortableInfoboxItemImageMobile.mustache',
-		'image-mobile-experimental' => 'PortableInfoboxItemImageMobileExperimental.mustache',
 		'image-mobile-wikiamobile' => 'PortableInfoboxItemImageMobileWikiaMobile.mustache',
 		'data' => 'PortableInfoboxItemData.mustache',
 		'group' => 'PortableInfoboxItemGroup.mustache',
 		'horizontal-group-content' => 'PortableInfoboxHorizontalGroupContent.mustache',
 		'navigation' => 'PortableInfoboxItemNavigation.mustache',
 		'hero-mobile' => 'PortableInfoboxItemHeroMobile.mustache',
-		'hero-mobile-experimental' => 'PortableInfoboxItemHeroMobileExperimental.mustache',
 		'hero-mobile-wikiamobile' => 'PortableInfoboxItemHeroMobileWikiaMobile.mustache',
 		'image-collection' => 'PortableInfoboxItemImageCollection.mustache',
 		'image-collection-mobile' => 'PortableInfoboxItemImageCollectionMobile.mustache',
-		'image-collection-mobile-experimental' => 'PortableInfoboxItemImageCollectionMobileExperimental.mustache',
 		'image-collection-mobile-wikiamobile' => 'PortableInfoboxItemImageCollectionMobileWikiaMobile.mustache'
 	];
 	private $templateEngine;
@@ -169,9 +166,6 @@ class PortableInfoboxRenderService extends WikiaService {
 
 			if ( !$helper->isMercury() ) {
 				$markup = $this->renderItem( 'hero-mobile-wikiamobile', $data );
-			} else if ( $helper->isMercuryExperimentalMarkupEnabled() ) {
-				// @todo XW-1225 this should be the only template used for Mercury
-				$markup = $this->renderItem( 'hero-mobile-experimental', $data );
 			} else {
 				$markup = $this->renderItem( 'hero-mobile', $data );
 			}
@@ -226,9 +220,6 @@ class PortableInfoboxRenderService extends WikiaService {
 			if ( $helper->isMobile() ) {
 				if ( !$helper->isMercury() ) {
 					$templateName = $templateName . self::MOBILE_TEMPLATE_POSTFIX . '-wikiamobile';
-				} else if ( $helper->isMercuryExperimentalMarkupEnabled() ) {
-					// @todo XW-1225 this should be the only template used for Mercury
-					$templateName = $templateName . self::MOBILE_TEMPLATE_POSTFIX . '-experimental';
 				} else {
 					$templateName = $templateName . self::MOBILE_TEMPLATE_POSTFIX;
 				}
