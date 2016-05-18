@@ -10,7 +10,7 @@ class ARecoveryUnlockCSS {
 	public static function getUnlockCSSUrl() {
 		global $wgServer, $wgSourcePointAccountId;
 		$wikiaCssUrl = self::getWikiaUnlockCSSUrl();
-		$memcKey = $wikiaCssUrl;
+		$memcKey = sha1( $wikiaCssUrl );
 		$memCache = F::app()->wg->Memc;
 
 		if ( ARecoveryModule::isLockEnabled() ) {
