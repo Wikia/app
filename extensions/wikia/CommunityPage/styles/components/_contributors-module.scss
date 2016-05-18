@@ -17,6 +17,10 @@
 		&:first-of-type {
 			margin-top: 0;
 		}
+
+		&.top-admins {
+			margin: 12px 0 18px;
+		}
 	}
 
 	.community-page-contributor-details {
@@ -42,8 +46,7 @@
 	.user-details {
 		@include clearfix;
 		border-bottom: 2px solid $color-page-border-subtle;
-		margin-bottom: 13px;
-		padding-bottom: 10px;
+		margin-bottom: 12px;
 
 		> div {
 			float: left;
@@ -79,8 +82,8 @@
 
 		padding: 12px 0 0;
 
-		&:last-of-type {
-			border: 0;
+		&:first-of-type {
+			padding: 0;
 		}
 
 		.avatar-container {
@@ -112,10 +115,6 @@
 
 	&.ContributorsModuleModal {
 		padding: 0 0 24px;
-
-		> h2 {
-			display: none;
-		}
 
 		.community-page-all-contributors-legend {
 			color: $color-alternate-text;
