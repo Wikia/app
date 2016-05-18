@@ -83,6 +83,10 @@ class TaskContext {
 		return $this->inputDomain;
 	}
 
+	public function setInputDomain( $inputDomain ) {
+		$this->inputDomain = $inputDomain;
+	}
+
 	public function getLanguage() {
 		return $this->language;
 	}
@@ -95,54 +99,60 @@ class TaskContext {
 		return $this->categories;
 	}
 
-	public function setWikiName( $wikiName ) {
-		$this->wikiName = $wikiName;
+	public function setCategories($categories) {
+		$this->categories = $categories;
 	}
 
 	public function getWikiName() {
 		return $this->wikiName;
 	}
 
-	public function setDbName( $dbName ) {
-		$this->dbName = $dbName;
+	public function setWikiName( $wikiName ) {
+		$this->wikiName = $wikiName;
 	}
+
+	// wikiDBW represents CreateWiki::newWiki->dbw
 
 	public function getDbName() {
 		return $this->dbName;
 	}
 
-	// wikiDBW represents CreateWiki::newWiki->dbw
-	public function setWikiDBW( $dbw ) {
-		$this->wikiDBW = $dbw;
+	public function setDbName( $dbName ) {
+		$this->dbName = $dbName;
 	}
+
+	// sharedDBW represents CreateWiki::mDBW
 
 	public function getWikiDBW() {
 		return $this->wikiDBW;
 	}
 
-	// sharedDBW represents CreateWiki::mDBW
-	public function setSharedDBW( $dbw ) {
-		$this->sharedDBW = $dbw;
+	public function setWikiDBW( $dbw ) {
+		$this->wikiDBW = $dbw;
 	}
 
 	public function getSharedDBW() {
 		return $this->sharedDBW;
 	}
 
-	public function setCityId( $cityId ) {
-		$this->cityId = $cityId;
+	public function setSharedDBW( $dbw ) {
+		$this->sharedDBW = $dbw;
 	}
 
 	public function getCityId() {
 		return $this->cityId;
 	}
 
-	public function setStarterDb( $db ) {
-		$this->starterDb = $db;
+	public function setCityId( $cityId ) {
+		$this->cityId = $cityId;
 	}
 
 	public function getStarterDb() {
 		return $this->starterDb;
+	}
+
+	public function setStarterDb( $db ) {
+		$this->starterDb = $db;
 	}
 
 	public function getSiteName() {
@@ -175,9 +185,5 @@ class TaskContext {
 
 	public function setFounder($founder) {
 		$this->founder = $founder;
-	}
-
-	public function setCategories($categories) {
-		$this->categories = $categories;
 	}
 }

@@ -12,7 +12,7 @@ class PrepareDomainTest extends \WikiaBaseTest {
 
 		$this->taskContextMock = $this->getMock(
 			'\Wikia\CreateNewWiki\Tasks\TaskContext',
-			[ 'setSiteName', 'setWikiName', 'setDomain', 'setUrl', 'getInputWikiName', 'getInputDomain', 'getLanguage' ]
+			[ 'setSiteName', 'setWikiName', 'setDomain', 'setUrl', 'getInputWikiName', 'getInputDomain', 'getLanguage', 'setInputDomain' ]
 		);
 		$this->mockClass( 'TaskContext', $this->taskContextMock );
 
@@ -27,24 +27,42 @@ class PrepareDomainTest extends \WikiaBaseTest {
 	/**
 	 * @param $inputDomain
 	 * @param $expected
-	 * @dataProvider getDomainDataProvider
+	 * @dataProvider sanitizeInputDomainDataProvider
 	 */
-	public function testGetDomain( $inputDomain, $expected ) {
+	public function testSanitizeInputDomain( $inputDomain, $expected ) {
 		$prepareDomainTask = new PrepareDomain( $this->taskContextMock );
 
-		$result = $prepareDomainTask->getDomain( $inputDomain );
+		$result = $prepareDomainTask->sanitizeInputDomain( $inputDomain );
 
 		$this->assertEquals( $expected, $result );
 	}
 
-	public function getDomainDataProvider() {
+	public function sanitizeInputDomainDataProvider() {
 		return [
 			[ 'foo', 'foo' ],
-			[ 'FOO', 'foo' ],
 			[ 'foo-bar', 'foo-bar' ],
-			[ ' foo ', 'foo' ],
 			[ '--foo', 'foo' ],
 			[ '--foo--', 'foo' ]
+		];
+	}
+
+	/**
+	 * @param $inputDomain
+	 * @param $expected
+	 * @dataProvider sanitizeDomainDataProvider
+	 */
+	public function testSanitizeDomain( $inputDomain, $expected ) {
+		$prepareDomainTask = new PrepareDomain( $this->taskContextMock );
+
+		$result = $prepareDomainTask->sanitizeDomain( $inputDomain );
+
+		$this->assertEquals( $expected, $result );
+	}
+
+	public function sanitizeDomainDataProvider() {
+		return [
+			[ 'FOO', 'foo' ],
+			[ ' foo ', 'foo' ],
 		];
 	}
 
@@ -60,6 +78,10 @@ class PrepareDomainTest extends \WikiaBaseTest {
 		$this->taskContextMock
 			->expects( $this->once() )
 			->method( 'setDomain' );
+
+		$this->taskContextMock
+			->expects( $this->once() )
+			->method( 'setInputDomain' );
 
 		$this->taskContextMock
 			->expects( $this->once() )

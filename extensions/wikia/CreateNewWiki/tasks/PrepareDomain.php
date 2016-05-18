@@ -20,12 +20,16 @@ class PrepareDomain implements Task {
 		global $wgContLang;
 
 		$wikiLanguage = $this->taskContext->getLanguage();
+		$inputDomain = $this->taskContext->getInputDomain();
 
 		$this->taskContext->setSiteName(
 			$this->getSiteName( $wgContLang, $wikiLanguage, $this->taskContext->getInputWikiName() )
 		);
 
-		$domain = $this->getDomain( $this->taskContext->getInputDomain() );
+		$inputDomain = $this->sanitizeInputDomain( $inputDomain );
+		$this->taskContext->setInputDomain($inputDomain);
+
+		$domain = $this->sanitizeDomain( $inputDomain );
 		$this->taskContext->setWikiName( $domain );
 
 		$subdomain = $domain;
@@ -41,9 +45,9 @@ class PrepareDomain implements Task {
 	}
 
 	public function check() {
-		$this->debug(implode(":", ["CreateNewWiki", $this->taskContext->getDomain(), $this->taskContext->getLanguage()]));
+		$this->debug( implode( ":", [ "CreateNewWiki", $this->taskContext->getInputDomain(), $this->taskContext->getLanguage() ] ) );
 		$errorMsg = \CreateWikiChecks::checkDomainIsCorrect(
-			$this->taskContext->getDomain(), $this->taskContext->getLanguage(), false, false
+			$this->taskContext->getInputDomain(), $this->taskContext->getLanguage(), false, false
 		);
 		if ( !empty($errorMsg) ) {
 			return TaskResult::createForError( $errorMsg );
@@ -53,7 +57,7 @@ class PrepareDomain implements Task {
 	}
 
 	public function run() {
-		if ( $this->lockDomain( $this->taskContext->getDomain() ) ) {
+		if ( $this->lockDomain( $this->taskContext->getInputDomain() ) ) {
 			return TaskResult::createForSuccess();
 		} else {
 			return TaskResult::createForError( 'Failed to create a lock on domain name - domain taken' );
@@ -95,12 +99,15 @@ class PrepareDomain implements Task {
 		return $siteTitle->inLanguage( $wikiLanguage )->text();
 	}
 
-	public function getDomain( $inputDomain ) {
-		$domain = preg_replace( "/(\-)+$/", "", $inputDomain );
-		$domain = preg_replace( "/^(\-)+/", "", $domain );
-		$domain = strtolower( trim( $domain ) );
+	public function sanitizeInputDomain( $inputDomain ) {
+		$inputDomain = preg_replace( "/(\-)+$/", "", $inputDomain );
+		$inputDomain = preg_replace( "/^(\-)+/", "", $inputDomain );
 
-		return $domain;
+		return $inputDomain;
+	}
+
+	public function sanitizeDomain( $inputDomain ) {
+		return strtolower( trim( $inputDomain ) );
 	}
 }
 
