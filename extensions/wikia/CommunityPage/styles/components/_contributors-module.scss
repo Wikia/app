@@ -1,55 +1,40 @@
+@import 'skins/shared/color';
 @import 'skins/shared/mixins/clearfix';
-@import 'skins/shared/mixins/transform';
+@import 'variables';
 
 // Styles for the contributors module in-page and modal version
 .ContributorsModule {
 	.avatar-container {
-		float: left;
-		margin-right: 10px;
+		display: inline-block;
+		margin: 0 10px 0 0;
+		vertical-align: middle;
 	}
 
-	.recently-joined {
-		clear: both;
-		display: block;
-		font-size: 14px;
-		line-height: 18px;
-		padding-top: 5px;
+	.community-page-contributor-details {
+		display: inline-block;
+		line-height: 21px;
+		vertical-align: middle;
+		width: calc(100% - 50px);
 	}
-
 
 	.top-contributors, .top-admins {
 		font-size: 14px;
 		line-height: 20px;
-
-		li {
-			@include clearfix;
-			padding-bottom: 10px;
-		}
 	}
 
 	.top-contributors {
 		font-size: 14px;
 		line-height: 20px;
-
-		.avatar-container {
-			@include transform-translate(0, 3px);
-		}
-
-		.contributor-details {
-			position: relative;
-		}
 	}
 
-	.top-admins {
-		.contributor-details {
-			@include transform-translate(0, 5px);
-			position: relative;
-		}
+	.community-page-contributor {
+		@include clearfix;
+		padding-bottom: 10px;
 	}
 
 	.user-details {
 		@include clearfix;
-		border-bottom: 2px solid $color-community-page-light-gray;
+		border-bottom: 2px solid $color-page-border-subtle;
 		margin-bottom: 13px;
 		padding-bottom: 10px;
 
@@ -68,19 +53,19 @@
 			text-align: center;
 		}
 
-		.subtle {
-			color: $color-rank-subtle-text;
+		.community-page-rank {
+			margin-right: 28px;
+		}
+
+		.community-page-subtle {
+			color: $color-alternate-text;
 			font-size: 10px;
 			line-height: 12px;
 			text-transform: uppercase;
 		}
-
-		.rank {
-			margin-right: 28px;
-		}
 	}
 
-	.zero {
+	.community-page-zero {
 		margin-bottom: 13px;
 	}
 
@@ -94,14 +79,14 @@
 		.top-contributors {
 			padding: 0 $modal-horizontal-padding;
 
-			li {
-				border-bottom: 2px solid $color-activity-background;
+			.community-page-contributor {
+				border-bottom: 2px solid $color-page-border-subtle;
 				padding: 15px 0;
 			}
 		}
 
 		.user-details {
-			background: $color-activity-background;
+			background: $color-page-border-subtle;
 			border: 0;
 			margin: 0;
 			padding: 15px $modal-horizontal-padding;
