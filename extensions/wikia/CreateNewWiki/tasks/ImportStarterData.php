@@ -63,7 +63,7 @@ class ImportStarterData implements Task {
 	}
 
 	public function canExecute() {
-		return !file_exists( $this->phpBin ) && !is_executable( $this->phpBin );
+		return file_exists( $this->phpBin ) && is_executable( $this->phpBin );
 	}
 
 	public function executeShell() {

@@ -27,10 +27,12 @@ class CreateDatabase implements Task {
 		$this->taskContext->setSharedDBW( \WikiFactory::db( DB_MASTER ) );
 		$this->clusterDB = "wikicities_" . self::ACTIVE_CLUSTER;
 		$dbName = $this->prepareDatabaseName(
-			$this->clusterDB, $this->taskContext->getWikiName(), $this->taskContext->getLanguage() );
+			$this->clusterDB, $this->taskContext->getWikiName(), $this->taskContext->getLanguage()
+		);
 
 		if ( !empty( $dbName ) ) {
 			$this->taskContext->setDbName( $dbName );
+
 			return TaskResult::createForSuccess();
 		} else {
 			return TaskResult::createForError( "Could not find a valid db name - all were taken" );
@@ -38,7 +40,9 @@ class CreateDatabase implements Task {
 	}
 
 	public function check() {
-		if ( wfReadOnly() || $this->isClusterReadOnly( $this->taskContext->getWikiDBW() ) ) {
+		$dbw = wfGetDB( DB_MASTER, array(), $this->clusterDB );
+
+		if ( wfReadOnly() || $this->isClusterReadOnly( $dbw ) ) {
 			return TaskResult::createForError( 'DB is read only' );
 		} else {
 			return TaskResult::createForSuccess();
@@ -69,10 +73,10 @@ class CreateDatabase implements Task {
 	 * @access private
 	 *
 	 * @param string $clusterDB
-	 * @param string	$dbname -- name of DB to check
-	 * @param string	$lang   -- language for wiki
-	 *
-	 * @return string: fixed name of DB
+	 * @param $dbName
+	 * @param string $lang -- language for wiki
+	 * @return string : fixed name of DB
+	 * @internal param string $dbname -- name of DB to check
 	 */
 	private function prepareDatabaseName( $clusterDB, $dbName, $lang ) {
 		wfProfileIn( __METHOD__ );
