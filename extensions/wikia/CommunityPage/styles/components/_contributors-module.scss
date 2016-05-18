@@ -1,30 +1,41 @@
 @import 'skins/shared/color';
 @import 'skins/shared/mixins/clearfix';
+@import 'skins/shared/mixins/flexbox';
 @import 'variables';
 
 // Styles for the contributors module in-page and modal version
 .ContributorsModule {
 	.avatar-container {
 		display: inline-block;
-		margin: 0 10px 0 0;
+		margin: $avatar-margin;
 		vertical-align: middle;
 	}
 
+	.community-page-contributors-module-section {
+		margin-top: 12px;
+
+		&:first-of-type {
+			margin-top: 0;
+		}
+
+		&.top-admins {
+			margin: 12px 0 18px;
+		}
+	}
+
 	.community-page-contributor-details {
-		display: inline-block;
-		line-height: 21px;
+		line-height: $contributor-module-default-line-height;
 		vertical-align: middle;
-		width: calc(100% - 50px);
 	}
 
 	.top-contributors, .top-admins {
 		font-size: 14px;
-		line-height: 20px;
+		line-height: $contributor-module-default-line-height;
 	}
 
 	.top-contributors {
 		font-size: 14px;
-		line-height: 20px;
+		line-height: $contributor-module-default-line-height;
 	}
 
 	.community-page-contributor {
@@ -35,8 +46,7 @@
 	.user-details {
 		@include clearfix;
 		border-bottom: 2px solid $color-page-border-subtle;
-		margin-bottom: 13px;
-		padding-bottom: 10px;
+		margin-bottom: 12px;
 
 		> div {
 			float: left;
@@ -49,7 +59,8 @@
 		span {
 			display: block;
 			font-size: 16px;
-			line-height: 18px;
+			height: $contributor-module-default-line-height;
+			line-height: $contributor-module-default-line-height;
 			text-align: center;
 		}
 
@@ -65,36 +76,73 @@
 		}
 	}
 
+	.community-page-contributors-list-item {
+		@include flexbox();
+		@include align-items(flex-start);
+
+		padding: 12px 0 0;
+
+		&:first-of-type {
+			padding: 0;
+		}
+
+		.avatar-container {
+			@include flex($avatar-flex);
+		}
+
+		.community-page-contributor-rank {
+			padding: 6px 6px 0 0;
+		}
+
+		.community-page-contributor-details {
+			padding-top: 6px;
+		}
+
+		&.community-page-current-contributor {
+			border-color: $color-page-border;
+			font-weight: bold;
+		}
+
+		.community-page-details {
+			text-align: right;
+			white-space: nowrap;
+		}
+	}
+
 	.community-page-zero {
-		margin-bottom: 13px;
+		margin: 12px 0;
 	}
 
 	&.ContributorsModuleModal {
-		padding: 10px 0 0;
-
-		> h2 {
-			display: none;
-		}
+		padding: 0 0 24px;
 
 		.community-page-all-contributors-legend {
 			color: $color-alternate-text;
 			font-size: 13px;
+			margin-top: 12px;
 			padding-right: 30px;
 			text-align: right;
 		}
 
 		.top-contributors {
 			padding: 0 $modal-horizontal-padding;
+		}
 
-			.community-page-all-contributors-item {
-				border-bottom: 2px solid $color-page-border-subtle;
-				padding: 15px 0;
-			}
+		.community-page-contributors-list-item {
+			border-bottom: 2px solid $color-page-border-subtle;
+			padding: 12px 0;
 
-			.community-page-all-contributors-item.community-page-current-contributor {
-				border-color: $color-page-border;
-				font-weight: bold;
+			&:last-of-type {
+				border: 0;
 			}
+		}
+
+		.community-page-contributor-details {
+			@include flex(10 1 100%);
+		}
+
+		.community-page-details {
+			padding-top: 6px;
 		}
 
 		.user-details {

@@ -17,11 +17,15 @@ define('ext.wikia.recirculation.views.rail', [
 		data.titleHtml = options.formatTitle ? formatTitle(data.title) : data.title;
 		data.group = abTest.getGroup('RECIRCULATION_PLACEMENT');
 
-		data.items[0].flag = 'Featured';
-		data.items[0].classes = 'featured';
+		if (data.items && data.items[0]) {
+			data.items[0].flag = 'Featured';
+			data.items[0].classes = 'featured';
+		}
 
-		data.items[1].flag = 'Trending';
-		data.items[1].classes = 'trending';
+		if (data.items && data.items[1]) {
+			data.items[1].flag = 'Trending';
+			data.items[1].classes = 'trending';
+		}
 
 		data.items = utils.addUtmTracking(data.items, 'rail');
 
