@@ -3523,7 +3523,8 @@
         "title",
         "url",
         "ns",
-        "quality"
+        "quality",
+        "snippet"
       ],
       "properties": {
         "quality": {
@@ -3548,6 +3549,10 @@
         "title": {
           "type": "string",
           "description": "Article title"
+        },
+        "snippet": {
+          "type": "string",
+          "description": "HTML snippet with highlighted match"
         }
       }
     },
