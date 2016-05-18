@@ -12,8 +12,8 @@
 	box-sizing: border-box;
 	color: $nav-foreground-dark-color;
 	height: $global-navigation-height;
-	margin-top: -$global-navigation-negative-top-margin;
 	position: fixed;
+	top: 0;
 	transition-duration: .5s;
 	transition-property: background-color;
 	width: 100%;
@@ -24,6 +24,7 @@
 	}
 
 	&.static {
+		margin-top: -$global-navigation-negative-top-margin;
 		position: absolute;
 	}
 

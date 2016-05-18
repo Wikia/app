@@ -45,6 +45,22 @@ $taboola-small-breakpoint: "#{$screen} and (max-width: 420px)";
 			float: right;	/* invisible tracking pixel is taking up height for some reason.  taking it out of the flow for now */
 		}
 	}
+
+	&.bfaa-template {
+		width: 100%;
+		padding: 0;
+		position: absolute;
+		top: 0;
+		left: 0;
+
+		.WikiaTopAdsInner {
+			width: 100%;
+
+			#TOP_LEADERBOARD {
+				width: 100%;
+			}
+		}
+	}
 }
 
 #TOP_BUTTON_WIDE {

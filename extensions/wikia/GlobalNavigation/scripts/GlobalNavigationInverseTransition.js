@@ -1,16 +1,23 @@
-require(['jquery', 'wikia.window'], function($, win) {
+/*global require*/
+require([
+	'jquery',
+	'wikia.window',
+	require.optional('ext.wikia.adEngine.template.bfaa')
+], function($, win, bfaa) {
 	'use strict';
 	var $globalNav = $('#globalNavigation');
 
 	function changeStateOnScroll() {
-		var scrollTop = win.pageYOffset,
+		var adSize = (bfaa && bfaa.getSize()) || 0,
+			scrollTop = win.pageYOffset,
 			inversedStateClass = 'inverse';
 
-		if (scrollTop <= 0 && $globalNav.hasClass(inversedStateClass)) {
+		if (scrollTop <= adSize && $globalNav.hasClass(inversedStateClass)) {
 			$globalNav.removeClass(inversedStateClass);
-		} else if (scrollTop > 200) {
+		} else if (scrollTop > 200 + adSize) {
 			$globalNav.addClass(inversedStateClass);
 		}
+		console.log(adSize, $globalNav.hasClass(inversedStateClass));
 	}
 
 	$(win).on('scroll', $.throttle(250, changeStateOnScroll));
