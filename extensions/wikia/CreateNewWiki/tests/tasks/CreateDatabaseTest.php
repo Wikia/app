@@ -151,4 +151,56 @@ class CreateDatabaseTest extends \WikiaBaseTest {
 			]
 		];
 	}
+
+	public function testCheckReadOnlyModeOn(  ) {
+		//given
+		$taskContext = new TaskContext( [] );
+		$task = new CreateDatabase( $taskContext );
+
+		$this->mockGlobalVariable( 'wgReadOnly', true );
+
+		//when
+		$result = $task->check();
+
+		//then
+		$this->assertEquals( false, $result->isOk());
+	}
+
+	public function testCheckLocalClusterReadOnly(  ) {
+		//given
+		$wikiDBWMock = $this->getMock( 'DatabaseMysqli', [ 'getLBInfo' ] );
+		$wikiDBWMock
+			->expects( $this->once() )
+			->method( 'getLBInfo' )
+			->willReturn( 'Test Reason' );
+
+		$this->mockGlobalVariable( 'wgReadOnly', false );
+		$taskContext = new TaskContext( [ 'wikiDBW' => $wikiDBWMock ] );
+		$task = new CreateDatabase( $taskContext );
+
+		//when
+		$result = $task->check();
+
+		//then
+		$this->assertEquals( false, $result->isOk());
+	}
+
+	public function testCheckOk(  ) {
+		//given
+		$wikiDBWMock = $this->getMock( 'DatabaseMysqli', [ 'getLBInfo' ] );
+		$wikiDBWMock
+			->expects( $this->once() )
+			->method( 'getLBInfo' )
+			->willReturn( false );
+
+		$this->mockGlobalVariable( 'wgReadOnly', false );
+		$taskContext = new TaskContext( [ 'wikiDBW' => $wikiDBWMock ] );
+		$task = new CreateDatabase( $taskContext );
+
+		//when
+		$result = $task->check();
+
+		//then
+		$this->assertEquals( true, $result->isOk());
+	}
 }

@@ -24,6 +24,7 @@ class CreateDatabase implements Task {
 	}
 
 	public function prepare() {
+		$this->taskContext->setSharedDBW( \WikiFactory::db( DB_MASTER ) );
 		$this->clusterDB = "wikicities_" . self::ACTIVE_CLUSTER;
 		$this->taskContext->setDbName( $this->prepareDatabaseName(
 			$this->clusterDB, $this->taskContext->getWikiName(), $this->taskContext->getLanguage() ) );
