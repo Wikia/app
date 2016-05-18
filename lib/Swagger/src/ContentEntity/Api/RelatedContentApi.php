@@ -175,10 +175,11 @@ class RelatedContentApi
      *
      * @param string $entity_id  (required)
      * @param int $limit  (optional)
+     * @param bool $include_root_relations  (optional)
      * @return \Swagger\Client\ContentEntity\Models\RelatedContent[]
      * @throws \Swagger\Client\ApiException on non-2xx response
      */
-    public function getRelatedContentFromEntityId($entity_id, $limit=null)
+    public function getRelatedContentFromEntityId($entity_id, $limit=null, $include_root_relations=null)
     {
         
         // verify the required parameter 'entity_id' is set
@@ -203,6 +204,9 @@ class RelatedContentApi
         // query params
         if ($limit !== null) {
             $queryParams['limit'] = $this->apiClient->getSerializer()->toQueryValue($limit);
+        }// query params
+        if ($include_root_relations !== null) {
+            $queryParams['includeRootRelations'] = $this->apiClient->getSerializer()->toQueryValue($include_root_relations);
         }
         
         // path params
@@ -264,10 +268,11 @@ class RelatedContentApi
      *
      * @param string $name  (required)
      * @param int $limit  (optional)
+     * @param bool $include_root_relations  (optional)
      * @return \Swagger\Client\ContentEntity\Models\RelatedContent[]
      * @throws \Swagger\Client\ApiException on non-2xx response
      */
-    public function getRelatedContentFromEntityName($name, $limit=null)
+    public function getRelatedContentFromEntityName($name, $limit=null, $include_root_relations=null)
     {
         
         // verify the required parameter 'name' is set
@@ -292,6 +297,9 @@ class RelatedContentApi
         // query params
         if ($limit !== null) {
             $queryParams['limit'] = $this->apiClient->getSerializer()->toQueryValue($limit);
+        }// query params
+        if ($include_root_relations !== null) {
+            $queryParams['includeRootRelations'] = $this->apiClient->getSerializer()->toQueryValue($include_root_relations);
         }
         
         // path params
