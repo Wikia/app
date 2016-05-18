@@ -14,7 +14,7 @@ foreach ( $langs as $languageCode => $languageName ) {
     $lang = Language::factory( $languageCode );
     $mc = $lang->getLocalisationCache();
 
-    echo $i++ . '/' . $langs_count. ': ' . $languageCode;
+    echo $i++ . '/' . $langs_count. ': ' . $languageCode . PHP_EOL;
 
     /** @var $reader CdbReader_DBA */
     // production/sandbox
