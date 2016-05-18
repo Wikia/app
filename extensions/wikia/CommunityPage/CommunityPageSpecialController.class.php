@@ -82,6 +82,8 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 			}
 		}
 
+		$userContributionCount = $this->wg->Lang->formatNum( $userContributionCount );
+
 		$this->response->setData( [
 			'admin' => $this->msg( 'communitypage-admin' )->plain(),
 			'topContribsHeaderText' => $this->msg( 'communitypage-top-contributors-week' )->plain(),
@@ -131,7 +133,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		$this->response->setData( [
 			'topAdminsHeaderText' => $this->msg( 'communitypage-admins' )->plain(),
 			'allAdminsList' => $allAdminsDetails,
-			'allAdminsCount' => count( $allAdminsDetails ),
+			'allAdminsCount' => $this->wg->Lang->formatNum( count( $allAdminsDetails ) ),
 			'noAdminText' => $this->msg( 'communitypage-no-admins' )->plain(),
 			'noAdminContactText' => $this->msg( 'communitypage-no-admins-contact' )->plain(),
 			'noAdminHref' => $this->msg( 'communitypage-communitycentral-link' )->inContentLanguage()->text(),
@@ -169,7 +171,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 			'joinedText' => $this->msg( 'communitypage-joined' )->plain(),
 			'noMembersText' => $this->msg( 'communitypage-no-members' )->plain(),
 			'members' => $allMembers,
-			'membersCount' => $this->usersModel->getMemberCount(),
+			'membersCount' => $this->wg->Lang->formatNum( $this->usersModel->getMemberCount() ),
 			'haveMoreMembers' => count( $allMembers ) >= CommunityPageSpecialUsersModel::ALL_CONTRIBUTORS_MODAL_LIMIT,
 			'moreMembersLink' => $moreMembers->getCanonicalURL(),
 			'moreMembersText' => $this->msg( 'communitypage-view-more' )->plain(),
@@ -191,9 +193,9 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 
 		$this->response->setData( [
 			'allText' => $this->msg( 'communitypage-modal-tab-all' )->plain(),
-			'allCount' => $memberCount,
+			'allCount' => $this->wg->Lang->formatNum( $memberCount ),
 			'adminsText' => $this->msg( 'communitypage-modal-tab-admins' )->plain(),
-			'allAdminsCount' => count( $allAdmins ),
+			'allAdminsCount' => $this->wg->Lang->formatNum( count( $allAdmins ) ),
 			'leaderboardText' => $this->msg( 'communitypage-top-contributors-week' )->plain(),
 		] );
 	}
@@ -229,7 +231,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 				'userName' => $userName,
 				'avatar' => $avatar,
 				'contributionsText' => $this->msg( 'communitypage-contributions' )
-					->numParams( $contributor['contributions'] )->text(),
+					->numParams( $this->wg->Lang->formatNum( $contributor['contributions'] ) )->text(),
 				'profilePage' => $user->getUserPage()->getLocalURL(),
 				'count' => $count,
 				'isAdmin' => $contributor['isAdmin'],

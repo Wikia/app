@@ -159,7 +159,7 @@ class CommunityPageSpecialInsightsModel {
 						'href' => $metadata['wantedBy']['url'],
 						'data-tracking' => 'wanted-by-link',
 					],
-					$metadata['wantedBy']['value']
+					$wgLang->formatNum( $metadata['wantedBy']['value'] )
 				)
 			)->escaped();
 		}
