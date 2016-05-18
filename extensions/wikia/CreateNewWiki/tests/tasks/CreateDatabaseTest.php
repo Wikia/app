@@ -231,4 +231,23 @@ class CreateDatabaseTest extends \WikiaBaseTest {
 		//then
 		$this->assertEquals( true, $result->isOk());
 	}
+
+	public function testRunOk(  ) {
+		//given
+		$dbWMock = $this->getMock( 'DatabaseMysqli', [ 'query' ] );
+		$this->mockGlobalFunction( 'wfGetDB', $dbWMock);
+		$dbWMock
+			->expects( $this->once() )
+			->method( 'query' );
+
+		$taskContext = new TaskContext( [ 'dbName' => 'testDB' ] );
+		$task = new CreateDatabase( $taskContext );
+
+		//when
+		$result = $task->run();
+
+		//then
+		$this->assertEquals( true, $result->isOk() );
+		$this->assertEquals( $dbWMock, $taskContext->getWikiDBW() );
+	}
 }
