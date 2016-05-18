@@ -5,9 +5,9 @@ use \Wikia\Logger\WikiaLogger;
  * Abstraction classes for SQL data access (or any other external resource)
  * Intended to simplify code that retrieves data from SQL and caches results
  * Supports few methods of caching
+ *
  * @author Piotr Bablok <pbablok@wikia-inc.com>
  */
-
 class WikiaDataAccess {
 
 	/***********************************
@@ -58,7 +58,6 @@ class WikiaDataAccess {
 
 	/**
 	 * @param string $key The key to use for storing/retrieving this data.
-	 * @param int The time (in seconds) to cache this data
 	 * @param callable $getData A function to call that will return the data to cache.
 	 * @param Array $options An array of other options to control cache behavior.  Keys are:
 	 * 	[
@@ -252,7 +251,7 @@ class WikiaDataAccess {
 	/**
 	 * @param string $key
 	 * @param bool $waitForLock
-	 * @param int $lockTimeout
+	 * @param int $lockTimeout Lock timeout (in seconds)
 	 *
 	 * @return array
 	 */
@@ -299,6 +298,39 @@ class WikiaDataAccess {
 		if( !is_array($result) || !array_key_exists('data',$result) || !array_key_exists('time',$result)) {
 			$result = null;
 		}
+		return $result;
+	}
+
+	/**
+	 * Execute given function in pseudo critical section.
+	 *
+	 * Two processes can enter pseudo critical section when:
+	 * - memcached servers are misbehaving (locks are acquired on different memcached instances)
+	 * - critical section execution time exceeds $timeout (seconds)
+	 *
+	 * Note: Fatal errors in the callback will prevent lock from being released.
+	 *
+	 * @param string $key Lock key (must be a memcached key-compatible string)
+	 * @param int $timeout Lock timeout (in seconds)
+	 * @param callable $fn Function to be executed in pseudo critical section
+	 *
+	 * @return mixed
+	 * @throws CannotAcquireLockException
+	 */
+	static public function pseudoCriticalSection( $key, $timeout, callable $fn ) {
+		$key .= ':CRITICAL_SECTION';
+		list( $gotLock, $wasLocked ) = self::lock( $key, true, $timeout );
+
+		if ( !$gotLock ) {
+			throw new CannotAcquireLockException('Could not acquire critical section lock for: ' . $key);
+		}
+
+		try {
+			$result = $fn();
+		} finally {
+			self::unlock( $key );
+		}
+
 		return $result;
 	}
 
