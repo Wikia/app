@@ -10,11 +10,12 @@ define('ext.wikia.adEngine.template.bfaa', [
 
 	var logGroup = 'ext.wikia.adEngine.template.bfaa',
 		height = 0,
+		scrollListener = null,
 		nav = doc.getElementById('globalNavigation') || doc.querySelector('.site-head'),
 		page = doc.getElementById('WikiaPage') || doc.querySelector('.wiki-container'),
 		wrapper = doc.getElementById('WikiaTopAds') || doc.querySelector('.mobile-top-leaderboard');
 
-	function updateNavBar(height) {
+	function updateNavBar() {
 		var position = doc.body.scrollTop,
 			style = win.getComputedStyle(nav);
 
@@ -42,10 +43,9 @@ define('ext.wikia.adEngine.template.bfaa', [
 		wrapper.classList.add('bfaa-template');
 		wrapper.style.background = backgroundColor;
 
-		updateNavBar(height);
-		doc.addEventListener('scroll', adHelper.throttle(function () {
-			updateNavBar(height);
-		}));
+		updateNavBar();
+		scrollListener = adHelper.throttle(updateNavBar);
+		doc.addEventListener('scroll', scrollListener);
 
 		if (win.WikiaBar) {
 			win.WikiaBar.hideContainer();
@@ -54,14 +54,19 @@ define('ext.wikia.adEngine.template.bfaa', [
 		log('show', 'info', logGroup);
 	}
 
-	adContext.addCallback(function () {
-		delete nav.style.top;
-		delete nav.style.position;
-	});
-
 	function getSize() {
 		return height;
 	}
+
+	adContext.addCallback(function () {
+		doc.removeEventListener('scroll', scrollListener);
+		height = 0;
+		wrapper.classList.remove('bfaa-template');
+		wrapper.style.background = '';
+		nav.style.top = '';
+		nav.style.position = '';
+		page.style.marginTop = '';
+	});
 
 	return {
 		getSize: getSize,
