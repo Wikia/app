@@ -1,17 +1,18 @@
 /*global define*/
 define('ext.wikia.adEngine.template.bfaa', [
+	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adHelper',
 	'wikia.log',
 	'wikia.document',
 	'wikia.window'
-], function (adHelper, log, doc, win) {
+], function (adContext, adHelper, log, doc, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.template.bfaa',
 		height = 0,
-		nav = doc.getElementById('globalNavigation'),
-		page = doc.getElementById('WikiaPage'),
-		wrapper = doc.getElementById('WikiaTopAds');
+		nav = doc.getElementById('globalNavigation') || doc.querySelector('.site-head'),
+		page = doc.getElementById('WikiaPage') || doc.querySelector('.wiki-container'),
+		wrapper = doc.getElementById('WikiaTopAds') || doc.querySelector('.mobile-top-leaderboard');
 
 	function updateNavBar(height) {
 		var position = doc.body.scrollTop,
@@ -52,6 +53,11 @@ define('ext.wikia.adEngine.template.bfaa', [
 
 		log('show', 'info', logGroup);
 	}
+
+	adContext.addCallback(function () {
+		delete nav.style.top;
+		delete nav.style.position;
+	});
 
 	function getSize() {
 		return height;
