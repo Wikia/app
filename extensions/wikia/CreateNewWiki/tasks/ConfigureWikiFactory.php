@@ -152,7 +152,7 @@ class ConfigureWikiFactory implements Task {
 	 *
 	 * @return string
 	 */
-	private function prepareDirValue( $name, $language ) {
+	public function prepareDirValue( $name, $language ) {
 		wfProfileIn( __METHOD__ );
 
 		$this->debug( implode( ":", [ "CreateWiki", __METHOD__ . "Checking {$name} folder" ] ) );

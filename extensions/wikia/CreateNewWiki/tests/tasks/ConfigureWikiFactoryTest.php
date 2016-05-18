@@ -90,12 +90,12 @@ class ConfigureWikiFactoryTest extends \WikiaBaseTest {
 		$configureWFTask = $this->getMockBuilder( '\Wikia\CreateNewWiki\Tasks\ConfigureWikiFactory' )
 			->enableOriginalConstructor()
 			->setConstructorArgs( [ $this->taskContextMock ] )
-			->setMethods( [ 'prepareDirValues' ] )
+			->setMethods( [ 'prepareDirValue' ] )
 			->getMock();
 
 		$configureWFTask->expects( $this->any() )
-			->method( 'prepareDirValues' )
-			->willReturn( 'foo' );
+			->method( 'prepareDirValue' )
+			->willReturn( $wikiName );
 
 		$this->mockStaticMethod( '\Wikia\CreateNewWiki\Tasks\TaskResult', 'createForSuccess', $taskResult );
 
@@ -108,8 +108,7 @@ class ConfigureWikiFactoryTest extends \WikiaBaseTest {
 	public function prepareDataProvider() {
 		return [
 			[ 'glee', 'en', 'ok', 'http://images.wikia.com/glee/images', '/images/g/glee/images' ],
-			[ 'glee', 'pl', 'ok', 'http://images.wikia.com/glee/pl/images', '/images/g/glee/pl/images' ],
-			[ 'łódź', 'ja', 'ok', 'http://images.wikia.com/c582c3b3dc5ba/ja/images', '/images/' . substr( 'łódź', 0, 1 ) . '/c582c3b3dc5ba/ja/images' ],
+			[ 'glee', 'pl', 'ok', 'http://images.wikia.com/glee/pl/images', '/images/g/glee/pl/images' ]
 		];
 	}
 

@@ -57,6 +57,7 @@ class CreateTables implements Task {
 	}
 
 	public function check() {
+		return TaskResult::createForSuccess();
 	}
 
 	public function run() {
