@@ -23,7 +23,7 @@ class CakeRelatedContentService {
 		try {
 			$items = [];
 
-			foreach ($api->getRelatedContentFromEntityName($title) as $i => $relatedContent) {
+			foreach ($api->getRelatedContentFromEntityName($title, 20, false) as $i => $relatedContent) {
 				$content = $relatedContent->getContent();
 				$parsed = parse_url($content->getUrl());
 				if ($parsed['path'] == $ignore) {
