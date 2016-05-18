@@ -31,7 +31,7 @@ class CommunityPageSpecialRecentActivityModel {
 		$title = SpecialPage::getTitleFor( 'WikiActivity' );
 
 		return [
-			'activityHeading' => $recentActivityData['moduleHeader'],
+			'activityHeading' => wfMessage( 'communitypage-recent-activity-header' )->plain(),
 			'moreActivityText' => wfMessage( 'communitypage-recent-activity' )->plain(),
 			'moreActivityLink' => $title->getCanonicalURL(),
 			'activity' => $recentActivity,
