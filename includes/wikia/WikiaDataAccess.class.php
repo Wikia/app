@@ -302,6 +302,18 @@ class WikiaDataAccess {
 		return $result;
 	}
 
+	static public function criticalSection( $key, $lockTimeout, callable $fn, &$result = null ) {
+		$key .= ':CRITICAL_SECTION';
+		list( $gotLock, $wasLocked ) = self::lock( $key, true, $lockTimeout );
+		if ( !$gotLock ) {
+			return false;
+		}
+		$result = $fn();
+		self::unlock( $key );
+
+		return true;
+	}
+
 }
 
 /*
