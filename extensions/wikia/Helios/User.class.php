@@ -111,12 +111,16 @@ class User {
 						wfSetupSession( $sessionId );
 						WikiaLogger::instance()->debug( __METHOD__ . '::startSession' );
 
-						$lockKey = wfSharedMemcKey( 'login-from-helios', 'user-invalidate-cache', 'user', $user->getId() );
-						\WikiaDataAccess::criticalSection( $lockKey, 1000/*ms*/, function () use ( $user ) {
-							// Update mTouched on user when he starts new MW session
-							// @see SOC-1326
-							$user->invalidateCache();
-						});
+						try {
+							$lockKey = wfSharedMemcKey( 'login-from-helios', 'user-invalidate-cache', 'user', $user->getId() );
+							\WikiaDataAccess::pseudoCriticalSection( $lockKey, 3/*s*/, function () use ( $user ) {
+								// Update mTouched on user when he starts new MW session
+								// @see SOC-1326
+								$user->invalidateCache();
+							} );
+						} catch (\CannotAcquireLockException $e) {
+							// ignore errors when another process is doing the same
+						}
 					}
 
 					// return a MediaWiki's User object
