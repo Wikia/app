@@ -1,10 +1,12 @@
+@import 'variables';
 @import 'skins/shared/mixins/clearfix';
 @import 'skins/shared/mixins/flexbox';
 
 .RecentActivityModule {
 	.avatar-container {
-		@include flex(0 0 30px);
-		margin-right: 10px;
+		@include flex($avatar-flex);
+
+		margin: $avatar-margin;
 	}
 
 	.recent-changes {

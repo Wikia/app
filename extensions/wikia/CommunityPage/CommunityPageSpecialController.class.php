@@ -161,6 +161,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		$currentUser = $this->getUser();
 		$allMembers = $this->usersModel->getAllContributors( $currentUser->getId() );
 		$moreMembers = SpecialPage::getTitleFor( 'ListUsers' );
+		$membersCount = $this->usersModel->getMemberCount();
 
 		$this->response->setData( [
 			'allMembersHeaderText' => $this->msg( 'communitypage-all-members' )->plain(),
@@ -169,8 +170,8 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 			'joinedText' => $this->msg( 'communitypage-joined' )->plain(),
 			'noMembersText' => $this->msg( 'communitypage-no-members' )->plain(),
 			'members' => $allMembers,
-			'membersCount' => $this->usersModel->getMemberCount(),
-			'haveMoreMembers' => count( $allMembers ) >= CommunityPageSpecialUsersModel::ALL_CONTRIBUTORS_MODAL_LIMIT,
+			'membersCount' => $membersCount,
+			'haveMoreMembers' => $membersCount >= CommunityPageSpecialUsersModel::ALL_CONTRIBUTORS_MODAL_LIMIT,
 			'moreMembersLink' => $moreMembers->getCanonicalURL(),
 			'moreMembersText' => $this->msg( 'communitypage-view-more' )->plain(),
 		] );
