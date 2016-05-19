@@ -67,6 +67,9 @@ $messages['en'] = array(
 	'communitypage-noofviews' => '$1 views',
 	'communitypage-full-list' => 'View full list',
 	'communitypage-view-more' => 'View more',
+	'communitypage-help-module-title' => 'Help',
+	'communitypage-help-module-link-page-name' => 'Contents',
+	'communitypage-help-module-link-text' => 'Need help getting started?',
 );
 
 $messages['qqq'] = array(
@@ -135,6 +138,9 @@ $messages['qqq'] = array(
 	'communitypage-noofviews' => 'number of weekly views on the page. $1 is the number of views.',
 	'communitypage-full-list' => 'Text to a link to go to see complete list of insights',
 	'communitypage-view-more' => 'Text for link shown at bottom of all members modal tab. Links to list of all users',
+	'communitypage-help-module-title' => 'Title of Help module',
+	'communitypage-help-module-link-page-name' => 'Name of article with help contents',
+	'communitypage-help-module-link-text' => 'Text in link to help contents page asking user does he need help to getting started',
 );
 
 $messages['de'] = array(
