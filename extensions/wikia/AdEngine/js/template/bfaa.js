@@ -22,8 +22,10 @@ define('ext.wikia.adEngine.template.bfaa', [
 		}
 
 		if (position > height) {
+			wrapper.classList.remove('bfaa-pinned-nav');
 			nav.classList.remove('bfaa-pinned');
 		} else {
+			wrapper.classList.add('bfaa-pinned-nav');
 			nav.classList.add('bfaa-pinned');
 		}
 	}
