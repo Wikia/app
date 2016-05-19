@@ -296,7 +296,7 @@ class FancyCaptcha extends BaseCaptcha {
 		$text = wfMessage( $name )->escaped();
 		# Obtain a more tailored message, if possible, otherwise, fall back to
 		# the default for edits
-		return wfEmptyMsg( $name, $text ) ? wfMessage( 'recaptcha-edit' )->escaped() : $text;
+		return wfEmptyMsg( $name, $text ) ? wfMessage( 'captcha-recaptcha-edit' )->escaped() : $text;
 	}
 
 	/**

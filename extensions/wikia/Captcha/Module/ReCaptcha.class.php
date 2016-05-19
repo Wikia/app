@@ -87,7 +87,7 @@ class ReCaptcha extends BaseCaptcha {
 		$text = wfMessage( $name )->escaped();
 
 		// Obtain a more tailored message, if possible, otherwise, fall back to the default for edits
-		$msg = wfMessage( $name )->isBlank() ? wfMessage( 'recaptcha-edit' )->escaped() : $text;
+		$msg = wfMessage( $name )->isBlank() ? wfMessage( 'captcha-recaptcha-edit' )->escaped() : $text;
 
 		return $msg;
 	}
