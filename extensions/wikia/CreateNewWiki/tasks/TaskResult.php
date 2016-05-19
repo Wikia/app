@@ -35,9 +35,7 @@ class TaskResult {
 	}
 
 	public function createLoggingContext( ) {
-		$resultContext = (array) $this;
-
-		$resultContext = array_merge( $resultContext, $this->context );
+		$resultContext = array_merge( get_object_vars( $this ), $this->context );
 
 		return $resultContext;
 	}

@@ -58,7 +58,7 @@ class TaskHelper {
 	 * @return string[][]
 	 */
 	public static function getLoggerContext( TaskContext $taskContext, $additionalValues = [] ) {
-		$context = (array) $taskContext;
+		$context = $taskContext->getAllProperties();
 
 		$context = array_merge( $context, $additionalValues );
 

@@ -201,9 +201,10 @@ class CreateDatabaseTest extends \WikiaBaseTest {
 			->expects( $this->once() )
 			->method( 'getLBInfo' )
 			->willReturn( 'Test Reason' );
+		$this->mockGlobalFunction( 'wfGetDB', $wikiDBWMock);
 
 		$this->mockGlobalVariable( 'wgReadOnly', false );
-		$taskContext = new TaskContext( [ 'wikiDBW' => $wikiDBWMock ] );
+		$taskContext = new TaskContext( [] );
 		$task = new CreateDatabase( $taskContext );
 
 		//when
@@ -220,9 +221,10 @@ class CreateDatabaseTest extends \WikiaBaseTest {
 			->expects( $this->once() )
 			->method( 'getLBInfo' )
 			->willReturn( false );
+		$this->mockGlobalFunction( 'wfGetDB', $wikiDBWMock);
 
 		$this->mockGlobalVariable( 'wgReadOnly', false );
-		$taskContext = new TaskContext( [ 'wikiDBW' => $wikiDBWMock ] );
+		$taskContext = new TaskContext( [] );
 		$task = new CreateDatabase( $taskContext );
 
 		//when
