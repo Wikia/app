@@ -61,6 +61,11 @@ class CreateTables implements Task {
 	}
 
 	public function run() {
+		global $wgSharedDB;
+		$tmpSharedDB = $wgSharedDB;
+		//This is needed because otherwise the underlying tableName() function treats the "user" table as a shared table
+		//and adds a DB prefix which causes the table to be created in a wikicities_x DB instead of the newly created one
+		$wgSharedDB = $this->taskContext->getDBname();
 
 		foreach( $this->sqlFiles as $file ) {
 			$this->debug( __METHOD__ . ": Populating database with {$file}" );
@@ -70,6 +75,7 @@ class CreateTables implements Task {
 				return TaskResult::createForError( "Failed to run sql script " . $file );
 			}
 		}
+		$wgSharedDB = $tmpSharedDB;
 
 		//Add stats entry
 		$this->taskContext->getWikiDBW()->insert( "site_stats", array( "ss_row_id" => "1"), __METHOD__ );
