@@ -86,11 +86,12 @@ $taboola-small-breakpoint: "#{$screen} and (max-width: 420px)";
 #TOP_LEADERBOARD_AB {
 	background: rgba($color-page, $page-opacity);
 	max-width: $page-width-medium;
+	margin: 0 auto;
 	padding: 0 $padding-width-medium;
 	position: relative;
 	z-index: $wikia-top-ads-index;
 
-	div {
+	div div {
 		margin: 10px auto;
 	}
 
