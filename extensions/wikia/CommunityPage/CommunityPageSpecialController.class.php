@@ -3,7 +3,6 @@
 class CommunityPageSpecialController extends WikiaSpecialPageController {
 	const COMMUNITY_PAGE_HERO_IMAGE = 'Community-Page-Header.jpg';
 	const DEFAULT_TEMPLATE_ENGINE = \WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
-
 	const ALL_MEMBERS_LIMIT = 20;
 	const TOP_ADMINS_MODULE_LIMIT = 3;
 	const TOP_CONTRIBUTORS_LIMIT = 5;
@@ -14,7 +13,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 
 	public function __construct() {
 		parent::__construct( 'Community' );
-		$this->usersModel = new CommunityPageSpecialUsersModel( new WikiService() );
+		$this->usersModel = new CommunityPageSpecialUsersModel();
 		$this->wikiModel = new CommunityPageSpecialWikiModel();
 		$this->userTotalContributionCount = $this->usersModel->getUserContributions( $this->getUser(), false );
 	}
@@ -36,7 +35,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		$this->response->setValues( [
 			'heroImageUrl' => $this->getHeroImageUrl(),
 			'inviteFriendsText' => $this->msg( 'communitypage-invite-friends' )->plain(),
-			'headerWelcomeMsg' => $this->msg( 'communitypage-tasks-header-welcome' )->plain(),
+			'headerWelcomeMsg' => $this->msg( 'communitypage-tasks-header-welcome' )->text(),
 			'adminWelcomeMsg' => $this->msg( 'communitypage-admin-welcome-message' )->text(),
 			'pageListEmptyText' => $this->msg( 'communitypage-page-list-empty' )->plain(),
 			'userIsMember' => ( $this->userTotalContributionCount > 0 ),
@@ -48,6 +47,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 			'recentlyJoined' => $this->sendRequest( 'CommunityPageSpecialController', 'getRecentlyJoinedData' )
 				->getData(),
 			'recentActivityModule' => $this->getRecentActivityData(),
+			'insightsModules' => ( new CommunityPageSpecialInsightsModel() )->getInsightsModules()
 		] );
 	}
 
@@ -57,10 +57,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	 */
 	public function getTopContributorsData() {
 		$userContributionCount = $this->usersModel->getUserContributions( $this->getUser() );
-		$contributors = $this->usersModel->filterGlobalBots(
-				// get extra contributors so if there's global bots they can be filtered out
-				$this->usersModel->getTopContributors( 50 )
-			);
+		$contributors = $this->usersModel->getTopContributors( 50 );
 		// get details for only 5 of the remaining contributors
 		$contributorDetails = $this->getContributorsDetails(
 			array_slice( $contributors, 0, self::TOP_CONTRIBUTORS_LIMIT )
@@ -84,6 +81,8 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 				$rank++;
 			}
 		}
+
+		$userContributionCount = $this->wg->Lang->formatNum( $userContributionCount );
 
 		$this->response->setData( [
 			'admin' => $this->msg( 'communitypage-admin' )->plain(),
@@ -134,7 +133,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		$this->response->setData( [
 			'topAdminsHeaderText' => $this->msg( 'communitypage-admins' )->plain(),
 			'allAdminsList' => $allAdminsDetails,
-			'allAdminsCount' => count( $allAdminsDetails ),
+			'allAdminsCount' => $this->wg->Lang->formatNum( count( $allAdminsDetails ) ),
 			'noAdminText' => $this->msg( 'communitypage-no-admins' )->plain(),
 			'noAdminContactText' => $this->msg( 'communitypage-no-admins-contact' )->plain(),
 			'noAdminHref' => $this->msg( 'communitypage-communitycentral-link' )->inContentLanguage()->text(),
@@ -161,14 +160,22 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	 * @return array
 	 */
 	public function getAllMembersData() {
-		$allMembers = $this->usersModel->getAllMembers();
+		$currentUser = $this->getUser();
+		$allMembers = $this->usersModel->getAllContributors( $currentUser->getId() );
+		$moreMembers = SpecialPage::getTitleFor( 'ListUsers' );
+		$membersCount = $this->usersModel->getMemberCount();
 
 		$this->response->setData( [
 			'allMembersHeaderText' => $this->msg( 'communitypage-all-members' )->plain(),
+			'allContributorsLegend' => $this->msg( 'communitypage-modal-tab-all-contribution-header' )->plain(),
 			'admin' => $this->msg( 'communitypage-admin' )->plain(),
 			'joinedText' => $this->msg( 'communitypage-joined' )->plain(),
 			'noMembersText' => $this->msg( 'communitypage-no-members' )->plain(),
-			'members' => array_slice( $allMembers, 0, self::ALL_MEMBERS_LIMIT ),
+			'members' => $allMembers,
+			'membersCount' => $this->wg->Lang->formatNum( $membersCount ),
+			'haveMoreMembers' => $membersCount >= CommunityPageSpecialUsersModel::ALL_CONTRIBUTORS_MODAL_LIMIT,
+			'moreMembersLink' => $moreMembers->getCanonicalURL(),
+			'moreMembersText' => $this->msg( 'communitypage-view-more' )->plain(),
 		] );
 	}
 
@@ -187,9 +194,9 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 
 		$this->response->setData( [
 			'allText' => $this->msg( 'communitypage-modal-tab-all' )->plain(),
-			'allCount' => $memberCount,
+			'allCount' => $this->wg->Lang->formatNum( $memberCount ),
 			'adminsText' => $this->msg( 'communitypage-modal-tab-admins' )->plain(),
-			'allAdminsCount' => count( $allAdmins ),
+			'allAdminsCount' => $this->wg->Lang->formatNum( count( $allAdmins ) ),
 			'leaderboardText' => $this->msg( 'communitypage-top-contributors-week' )->plain(),
 		] );
 	}
@@ -204,7 +211,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	 * filter out bots
 	 */
 	private function getAllAdmins() {
-		return $this->usersModel->filterGlobalBots( $this->usersModel->getTopContributors( null, false, true ) );
+		return $this->usersModel->getTopContributors( null, false, true );
 	}
 	/**
 	 * Get details for display of top contributors
@@ -225,7 +232,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 				'userName' => $userName,
 				'avatar' => $avatar,
 				'contributionsText' => $this->msg( 'communitypage-contributions' )
-					->numParams( $contributor['contributions'] )->text(),
+					->numParams( $this->wg->Lang->formatNum( $contributor['contributions'] ) )->text(),
 				'profilePage' => $user->getUserPage()->getLocalURL(),
 				'count' => $count,
 				'isAdmin' => $contributor['isAdmin'],

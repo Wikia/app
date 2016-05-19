@@ -13,6 +13,7 @@ require([
 	'ext.wikia.recirculation.helpers.contentLinks',
 	'ext.wikia.recirculation.helpers.fandom',
 	'ext.wikia.recirculation.helpers.lateral',
+	'ext.wikia.recirculation.helpers.cakeRelatedContent',
 	'ext.wikia.recirculation.helpers.googleMatch',
 	'ext.wikia.adEngine.taboolaHelper',
 	require.optional('videosmodule.controllers.rail')
@@ -30,6 +31,7 @@ require([
 	contentLinksHelper,
 	fandomHelper,
 	lateralHelper,
+	cakeHelper,
 	googleMatchHelper,
 	taboolaHelper,
 	videosModule
@@ -102,14 +104,16 @@ require([
 			break;
 		case 'FANDOM_GENRE':
 			helper = fandomHelper({
-				type: 'vertical'
+				type: 'vertical',
+				limit: 5
 			});
 			view = railView();
 			isRail = true;
 			break;
 		case 'FANDOM_TOPIC':
 			helper = fandomHelper({
-				type: 'community'
+				type: 'community',
+				limit: 5
 			});
 			view = railView();
 			isRail = true;
@@ -157,6 +161,11 @@ require([
 		case 'LATERAL_BOTH':
 			renderBothLateralExperiments();
 			return;
+		case 'CAKE_RELATED_CONTENT':
+			helper = cakeHelper();
+			view = railView();
+			isRail = true;
+			break;
 		default:
 			return;
 	}

@@ -67,7 +67,12 @@ define('ext.wikia.recirculation.helpers.lateral', [
 				foundData = false;
 
 			function resolveFormattedData(data) {
-				deferred.resolve(formatData(data));
+				if (data && data.length > 0) {
+					deferred.resolve(formatData(data));
+				} else {
+					deferred.reject('No Lateral results returned for this content');
+				}
+
 			}
 
 			loadLateral(function(lateral) {

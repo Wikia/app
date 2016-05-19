@@ -19,4 +19,20 @@ class RecirculationApiController extends WikiaApiController {
 			'posts' => $posts,
 		] );
 	}
+
+	public function getCakeRelatedContent() {
+		$target = trim($this->request->getVal('relatedTo'));
+		if (empty($target)) {
+			throw new InvalidParameterApiException('relatedTo');
+		}
+
+		$limit = trim($this->request->getVal('limit'));
+		$ignore = trim($this->request->getVal('ignore'));
+
+		$this->response->setCacheValidity(WikiaResponse::CACHE_VERY_SHORT);
+		$this->response->setData([
+				'title' => wfMessage( 'recirculation-fandom-subtitle' )->plain(),
+				'items' => (new CakeRelatedContentService())->getContentRelatedTo($target, $limit, $ignore),
+		]);
+	}
 }

@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<definitions name="StockQuote"
+
+             targetNamespace="http://example.com/stockquote.wsdl"
+             xmlns:tns="http://example.com/stockquote.wsdl"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns="http://schemas.xmlsoap.org/wsdl/">
+
+    <portType name="MockPortType">
+        <operation name="fake">
+            <element name="test" type="string"/>
+        </operation>
+    </portType>
+
+    <binding name="MockBinding" type="tns:MockPortType"/>
+
+    <service name="FakeService">
+        <port name="FakePort" binding="tns:MockBinding">
+            <soap:address location="http://example.com/test"/>
+        </port>
+    </service>
+
+</definitions>

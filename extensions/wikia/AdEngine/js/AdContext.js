@@ -113,6 +113,11 @@ define('ext.wikia.adEngine.adContext', [
 			context.providers.hitMedia = true;
 		}
 
+		if (context.providers.rubiconFastlane) {
+			context.providers.rubiconFastlane = geo.isProperGeo(instantGlobals.wgAdDriverRubiconFastlaneCountries) &&
+				geo.isProperGeo(instantGlobals.wgAdDriverRubiconFastlaneProviderCountries);
+		}
+
 		// INVISIBLE_HIGH_IMPACT slot
 		context.slots.invisibleHighImpact = (
 			context.slots.invisibleHighImpact &&
@@ -158,7 +163,11 @@ define('ext.wikia.adEngine.adContext', [
 			!isPageType('home')
 		);
 
-		context.opts.yavli = !noExternals && geo.isProperGeo(instantGlobals.wgAdDriverYavliCountries);
+		context.opts.yavli = !!(
+			!noExternals &&
+			geo.isProperGeo(instantGlobals.wgAdDriverYavliCountries) &&
+			isPageType('article')
+		);
 
 		// Export the context back to ads.context
 		// Only used by Lightbox.js, WikiaBar.js and AdsInContext.js

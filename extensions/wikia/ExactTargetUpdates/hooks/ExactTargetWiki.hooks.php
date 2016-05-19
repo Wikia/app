@@ -6,11 +6,15 @@ class ExactTargetWikiHooks {
 	/**
 	 * Runs a method adding an AddWikiTask to job queue.
 	 * Executed on CreateWikiLocalJob-complete hook.
-	 * @param  array $aParams  Must contain a city_id key
+	 * @param  array $wikiData  Must contain a city_id key
 	 * @return true
 	 */
-	public function onCreateWikiLocalJobComplete( Array $aParams ) {
-		$this->addTheAddWikiTask( $aParams );
+	public function onCreateWikiLocalJobComplete( Array $wikiData ) {
+		$wikiId = $wikiData['city_id'];
+		/* Get and run the tasks */
+		$this->queueUpdateWikiTask( $wikiId );
+		$this->queueUpdateWikiCategoriesMapping( $wikiId );
+
 		return true;
 	}
 
@@ -23,7 +27,7 @@ class ExactTargetWikiHooks {
 	public function onWikiFactoryChangeCommitted( Array $aParams ) {
 		$aWfVariablesTriggeringUpdate = $this->getWfVarsTriggeringUpdate();
 		if ( isset( $aWfVariablesTriggeringUpdate[ $aParams['cv_name'] ] ) ) {
-			$this->addTheUpdateWikiTask( $aParams['city_id'] );
+			$this->queueUpdateWikiTask( $aParams['city_id'] );
 		}
 		return true;
 	}
@@ -36,19 +40,19 @@ class ExactTargetWikiHooks {
 	 * @return true
 	 */
 	public function onWikiFactoryVerticalSet( Array $aParams ) {
-		$this->addTheUpdateWikiTask( $aParams['city_id'] );
+		$this->queueUpdateWikiTask( $aParams['city_id'] );
 		return true;
 	}
 
 	/**
-	 * Runs a method adding an UpdateCityCatMappingTask to job queue
+	 * Runs a method adding an UpdateWikiCategoriesMapping to job queue
 	 * on change in Hubs tab in WikiFactory.
 	 * Executed on CityCatMappingUpdated hook.
-	 * @param  array  $aParams  Must contain a city_id key
+	 * @param  array  $wikiData  Must contain a city_id key
 	 * @return true
 	 */
-	public function onCityCatMappingUpdated( Array $aParams ) {
-		$this->addTheUpdateCityCatMappingTask( $aParams );
+	public function onCityCatMappingUpdated( Array $wikiData ) {
+		$this->queueUpdateWikiCategoriesMapping( $wikiData['city_id'] );
 		return true;
 	}
 
@@ -61,60 +65,50 @@ class ExactTargetWikiHooks {
 	 */
 	public function onWikiFactoryPublicStatusChanged( &$city_public, &$city_id, $reason ) {
 		if ( $city_public <= 0 ) {
-			$this->addTheDeleteWikiTask( [ 'city_id' => $city_id ] );
+			$this->queueDeleteWikiTask( $city_id );
 		}
 		return true;
 	}
 
 	/**
-	 * Adds a task to job queue that sends
-	 * a Create request to ExactTarget with data of a new wiki.
-	 * @param  Array $aParams  Must contain a city_id key
+	 * Adds update wiki task to queue
+	 *
+	 * @param int $wikiId
 	 */
-	private function addTheAddWikiTask( Array $aParams ) {
-		$iCityId = $aParams['city_id'];
-		$oTask = $this->getExactTargetCreateWikiTask();
-		$oTask->call( 'sendNewWikiData', $iCityId );
-		$oTask->queue();
+	private function queueUpdateWikiTask( $wikiId ) {
+		$helper = $this->getWikiHelper();
+
+		$task = new ExactTargetWikiTask();
+		$task->call( 'updateWiki', $wikiId, $helper->prepareWikiData( $wikiId ) );
+		$task->queue();
 	}
 
 	/**
-	 * Adds a task to job queue that sends
-	 * an Update request to ExactTarget with a changed variable.
-	 * @param  int $iCityId  A wiki's id
+	 * Deletes wiki
+	 *
+	 * @param int $wikiId
 	 */
-	private function addTheUpdateWikiTask( $iCityId ) {
-		$oTask = $this->getExactTargetUpdateWikiTask();
-		$oTask->call( 'updateFallbackCreateWikiData', $iCityId );
-		$oTask->queue();
+	private function queueDeleteWikiTask( $wikiId ) {
+		$task = new ExactTargetWikiTask();
+		$task->call( 'deleteWiki', $wikiId );
+		$task->queue();
 	}
 
 	/**
-	 * Adds a task to job queue that sends a request
-	 * updating city_cat_mapping table.
-	 * @param  Array $aParams  Must contain a city_id key
+	 * Updates wiki categories mapping
+	 *
+	 * @param $wikiId
 	 */
-	private function addTheUpdateCityCatMappingTask( Array $aParams ) {
-		$oTask = $this->getExactTargetUpdateCityCatMappingTask();
-		$oTask->call( 'updateCityCatMappingData', $aParams );
-		$oTask->queue();
-	}
-
-	/**
-	 * Adds a task to job queue that sends a request
-	 * deleting records from city_list and city_cat_mapping.
-	 * @param  Array $aParams  Must contain a city_id key
-	 */
-	private function addTheDeleteWikiTask( Array $aParams ) {
-		$oTask = $this->getExactTargetDeleteWikiTask();
-		$oTask->call( 'deleteWikiData', $aParams );
-		$oTask->queue();
+	private function queueUpdateWikiCategoriesMapping( $wikiId ) {
+		$task = new ExactTargetWikiTask();
+		$task->call( 'updateWikiCategoriesMapping', $wikiId );
+		$task->queue();
 	}
 
 	/**
 	 * Returns an array where WF vars names are keys.
 	 * Change of these vars should trigger an ET's city_list table update.
-	 * @return  Array  An array with vars names as keys
+	 * @return  array  An array with vars names as keys
 	 */
 	private function getWfVarsTriggeringUpdate() {
 		$aWfVarsTriggeringUpdate = [
@@ -127,34 +121,11 @@ class ExactTargetWikiHooks {
 	}
 
 	/**
-	 * A simple getter for an object of an ExactTargetCreateWikiTask class
-	 * @return  object ExactTargetCreateWikiTask
+	 * A simple getter for an object of ExactTargetWikiHooksHelper class
+	 * @return ExactTargetWikiHooksHelper
 	 */
-	private function getExactTargetCreateWikiTask() {
-		return new ExactTargetCreateWikiTask();
+	private function getWikiHelper() {
+		return new ExactTargetWikiHooksHelper();
 	}
 
-	/**
-	 * A simple getter for an object of an ExactTargetUpdateWikiTask class
-	 * @return  object ExactTargetUpdateWikiTask
-	 */
-	private function getExactTargetUpdateWikiTask() {
-		return new ExactTargetUpdateWikiTask();
-	}
-
-	/**
-	 * A simple getter for an object of an ExactTargetUpdateCityCatMappingTask class
-	 * @return  object ExactTargetUpdateCityCatMappingTask
-	 */
-	private function getExactTargetUpdateCityCatMappingTask() {
-		return new ExactTargetUpdateCityCatMappingTask();
-	}
-
-	/**
-	 * A simple getter for an object of an ExactTargetDeleteWikiTask class
-	 * @return  object ExactTargetDeleteWikiTask
-	 */
-	private function getExactTargetDeleteWikiTask() {
-		return new ExactTargetDeleteWikiTask();
-	}
 }
