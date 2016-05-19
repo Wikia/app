@@ -58,6 +58,9 @@ class RebuildLocalisationCache extends Maintenance {
 			)
 		);
 
+		foreach ($wgExtensionMessagesFiles as $file) echo $file . PHP_EOL;
+//		die;
+
 		$wgCacheDirectory = $this->getOption( 'cache-dir', $wgCacheDirectory );
 		$primaryOnly = $this->hasOption( 'primary' );
 		// Wikia change end
@@ -107,7 +110,7 @@ class RebuildLocalisationCache extends Maintenance {
 		$pids = array();
 		foreach ( $chunks as $codes ) {
 			// Do not fork for only one thread
-			$pid = ( $threads > 1 ) ? pcntl_fork() : -1;
+			$pid = -1;//( $threads > 1 ) ? pcntl_fork() : -1;
 
 			if ( $pid === 0 ) {
 				// Child, reseed because there is no bug in PHP:

@@ -18,10 +18,10 @@ foreach ( $langs as $languageCode => $languageName ) {
 
     /** @var $reader CdbReader_DBA */
     // production/sandbox
-    // $reader = dba_open( '/usr/wikia/slot1/current/cache/messages/l10n_cache-' . $languageCode . '.cdb', 'r', 'cdb' );
+     $reader = dba_open( '/usr/wikia/slot1/current/cache/messages/l10n_cache-' . $languageCode . '.cdb', 'r', 'cdb' );
 
     // devbox
-    $reader = dba_open( '/var/cache/mediawiki/l10n_cache-' . $languageCode . '.cdb', 'r', 'cdb' );
+//    $reader = dba_open( '/var/cache/mediawiki/l10n_cache-' . $languageCode . '.cdb', 'r', 'cdb' );
 
     $firstKey = dba_firstkey( $reader );
     if ( startsWith( $firstKey, 'messages:' ) ) {
@@ -35,6 +35,8 @@ foreach ( $langs as $languageCode => $languageName ) {
         }
     }
     ksort($messages);
+
+    //foreach ($messages as $k => $m) echo "\t" . $k . PHP_EOL;
 
     file_put_contents( './messageCache.dump.' . $languageCode . '.php', serialize( $messages ) );
 }

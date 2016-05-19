@@ -28,12 +28,32 @@ function checkLang($lang) {
         echo $lang . ' has ' . $diffs . ' differing values' . PHP_EOL;
     } else {
         echo $lang . ' has ' . count(array_diff($k1,$k2)) . ' missing keys' . PHP_EOL;
+        if ( count($k2) > count($k1) ) {
+            echo 'DUMP_374 is larger' . PHP_EOL;
+        }
+        if ( count($k1) > count($k2) ) {
+            echo 'DEV is larger' . PHP_EOL;
+
+            $a = [];
+
+            foreach(array_diff($k1,$k2) as $k => $v) {
+                $a[] = $v;
+            }
+
+            file_put_contents('diff.'.$lang.'.txt', implode(PHP_EOL, $a));
+        }
     }
 
     if(count(array_diff($k2,$k1)) == 0) {
         echo $lang . ' has no excess keys' . PHP_EOL;
     } else {
         echo $lang . ' has ' . count(array_diff($k2,$k1)) . ' excess keys' . PHP_EOL;
+        if ( count($k2) > count($k1) ) {
+            echo 'DUMP_374 is larger' . PHP_EOL;
+        }
+        if ( count($k1) > count($k2) ) {
+            echo 'DEV is larger' . PHP_EOL;
+        }
     }
 }
 
