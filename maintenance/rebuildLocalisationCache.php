@@ -110,7 +110,7 @@ class RebuildLocalisationCache extends Maintenance {
 		$pids = array();
 		foreach ( $chunks as $codes ) {
 			// Do not fork for only one thread
-			$pid = -1;//( $threads > 1 ) ? pcntl_fork() : -1;
+			$pid = ( $threads > 1 ) ? pcntl_fork() : -1;
 
 			if ( $pid === 0 ) {
 				// Child, reseed because there is no bug in PHP:
