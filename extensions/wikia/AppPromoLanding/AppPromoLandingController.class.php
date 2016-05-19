@@ -35,38 +35,6 @@ class AppPromoLandingController extends WikiaController {
 
 		// Since this "Community_App" article won't be found, we need to manually say it's okay so that it's not a 404.
 		$this->response->setCode(self::RESPONSE_OK);
-		
-		// Pull in the app-configuration (has data for all apps)
-		$appConfig = [];
-		$memcKey = wfMemcKey( static::$CACHE_KEY, static::$CACHE_KEY_VERSION );
-		$response = F::app()->wg->memc->get( $memcKey );
-		if ( empty( $response ) ){
-			$req = MWHttpRequest::factory( self::APP_CONFIG_SERVICE_URL, array( 'noProxy' => true ) );
-			$status = $req->execute();
-			if( $status->isOK() ) {
-				$response = $req->getContent();
-				if ( empty( $response ) ) {
-					wfProfileOut( __METHOD__ );
-					throw new EmptyResponseException( self::APP_CONFIG_SERVICE_URL );
-				} else {
-					// Request was successful. Cache it in memcached (faster than going over network-card even on our internal network).
-					F::app()->wg->memc->set( $memcKey, $response, static::$CACHE_EXPIRY );
-				}
-			}
-		}
-
-		$appConfig = json_decode( $response );
-		if(empty($appConfig)){
-
-			// TODO: How should we handle the error of not having an appConfig? We won't be able to link the user to the apps.
-
-		}
-
-		$config = $this->getConfigForWiki($appConfig, $this->wg->CityId);
-
-		// Create the direct-link URLs for the apps on each store.
-		$this->androidUrl = $this->getAndroidUrl($config);
-		$this->iosUrl = $this->getIosUrl($config);
 
 		// Inject the JS
 		$srcs = AssetsManager::getInstance()->getGroupCommonURL( 'app_promo_landing_js' );
@@ -75,11 +43,7 @@ class AppPromoLandingController extends WikiaController {
 		}
 
 		// render the custom App Promo Landing body (this includes the nav bar and the custom content).
-		$body = F::app()->renderView('AppPromoLanding', 'Content', [
-			"androidUrl" => $this->androidUrl,
-			"iosUrl" => $this->iosUrl,
-			"config" => $config
-		]);
+		$body = F::app()->renderView('AppPromoLanding', 'Content', [ ]);
 
 		// page has one column
 		OasisController::addBodyClass('oasis-one-column');
@@ -106,9 +70,12 @@ class AppPromoLandingController extends WikiaController {
 		// render global and user navigation
 		$this->header = F::app()->renderView( 'GlobalNavigation', 'index' );
 
-		$this->config = $params["config"];
-		$this->androidUrl = $params["androidUrl"];
-		$this->iosUrl = $params["iosUrl"];
+		// Get the config for this app, from the service.
+		$this->config = AppPromoLandingController::getConfigForWiki($this->wg->CityId);
+
+		// Create the direct-link URLs for the apps on each store.
+		$this->androidUrl = $this->getAndroidUrl($this->config);
+		$this->iosUrl = $this->getIosUrl($this->config);
 
 		//Fetch Trending Articles images to use as the image-grid background.
 		try {
@@ -174,7 +141,6 @@ class AppPromoLandingController extends WikiaController {
 				} else {
 					$branchData = json_decode( $response );
 					$this->branchKey = $branchData->branch_key;
-
 					if(!empty($this->branchKey)){
 						// Request was successful. Cache the branch_key in memcached (faster than going over network).
 						F::app()->wg->memc->set( $branchKeyMemcKey, $this->branchKey, static::$CACHE_EXPIRY );
@@ -204,13 +170,16 @@ class AppPromoLandingController extends WikiaController {
 	 * Given the huge JSON object containing the config for all apps,
 	 * find and return just the config for the given cityId.
 	 *
-	 * @param $appConfig - assoc array returned by parsing the JSON of all app configurations
 	 * @param $cityId - the wiki-cityId to get the config for.
-	 * @return associative array containing the config for the given wiki.
+	 * @return stdClass object containing the config for the given wiki. If
+	 *         there is no app configured for the given wiki, then null is returned.
 	 */
-	private function getConfigForWiki($appConfig, $cityId){
+	static private function getConfigForWiki($cityId){
 		wfProfileIn( __METHOD__ );
-		$desiredConfig = [];
+		$desiredConfig = null;
+
+		// Gets the configs for ALL apps.
+		$appConfig = AppPromoLandingController::getAllAppConfigs();
 		
 		// The wiki_ids are in the "languages" section of each app's config. Compare against those.
 		foreach($appConfig as $currentApp){
@@ -228,6 +197,42 @@ class AppPromoLandingController extends WikiaController {
 
 		wfProfileOut( __METHOD__ );
 		return $desiredConfig;
+	}
+	
+	/**
+	 * Gets the app configs from the service URL (or memcached, if it's available there) and returns
+	 * it as a parsed object.
+	 */
+	static private function getAllAppConfigs(){
+		wfProfileIn(__METHOD__);
+		// Pull in the app-configuration (has data for all apps)
+		$appConfig = [];
+		$memcKey = wfMemcKey( static::$CACHE_KEY, static::$CACHE_KEY_VERSION );
+		$response = F::app()->wg->memc->get( $memcKey );
+		if ( empty( $response ) ){
+			$req = MWHttpRequest::factory( self::APP_CONFIG_SERVICE_URL, array( 'noProxy' => true ) );
+			$status = $req->execute();
+			if( $status->isOK() ) {
+				$response = $req->getContent();
+				if ( empty( $response ) ) {
+					wfProfileOut( __METHOD__ );
+					throw new EmptyResponseException( self::APP_CONFIG_SERVICE_URL );
+				} else {
+					// Request was successful. Cache it in memcached (faster than going over network-card even on our internal network).
+					F::app()->wg->memc->set( $memcKey, $response, static::$CACHE_EXPIRY );
+				}
+			}
+		}
+
+		$appConfig = json_decode( $response );
+		if(empty($appConfig)){
+
+			// TODO: How should we handle the error of not having an appConfig? We won't be able to link the user to the apps.
+
+		}
+
+		wfProfileOut( __METHOD__ );
+		return $appConfig;
 	}
 
 	/**
@@ -254,13 +259,15 @@ class AppPromoLandingController extends WikiaController {
 	 * a special page, we are doing this by stealing the "Community_App" article title.
 	 */
 	public static function onOutputPageBeforeHTML( OutputPage &$out, &$text ){
-		$title = $out->getTitle();
-		$origTitle = $title->getDBkey();
-		if($origTitle == "Community_App"){
-			Wikia::setVar( 'OasisEntryControllerName', 'AppPromoLanding' );
-
-			// TODO: CREATE AppPromoLanding MODULE IN ResourceLoader IF WE NEED JS i18n (probably won't).
-			//$out->addModules( 'ext.AppPromoLanding' );
+		// Only steal this page if the wiki has an app configured.
+		$config = AppPromoLandingController::getConfigForWiki(F::app()->wg->CityId);
+		if($config !== null){
+			$title = $out->getTitle();
+			$origTitle = $title->getDBkey();
+			
+			if($origTitle == "Community_App"){
+				Wikia::setVar( 'OasisEntryControllerName', 'AppPromoLanding' );
+			}
 		}
 		return $out;
 	}

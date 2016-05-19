@@ -272,6 +272,8 @@ Sub-tasks:
 	</li>
 	<li class='done'>Integrate the screenshots from S3</li>
 	<li class='done'>Ensure that this works on a bunch of wikis & looks correct on all of them</li>
-	<li>Put the screenshots behind a Fastly bucket.</li>
+	<li class='done'>Make sure the interaction is correct on wikis without an app http://trueblood.sean.wikia-dev.com/wiki/Community_App</li>
+	<li class='done'>Change the app-store links to be branch.io link so that we get metrics in there</li>
+	<li>Update the image URL when the images are changed to internal domain.</li>
 	<li>Translation config files & translation requests</li>
 </ul>
