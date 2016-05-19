@@ -18,7 +18,7 @@ class ConfigureCategories implements Task {
 		$categories = $this->taskContext->getCategories();
 		$vertical = $this->taskContext->getVertical();
 
-		$this->taskContext->setCategories( $this->prepareCategories( $vertical, $categories) );
+		$this->taskContext->setCategories( $this->prepareCategories( $vertical, $categories ) );
 
 		return TaskResult::createForSuccess();
 	}
@@ -31,13 +31,13 @@ class ConfigureCategories implements Task {
 		$cityId = $this->taskContext->getCityId();
 		$wikiFactoryInstance = WikiFactoryHub::getInstance();
 
-		$this->setVertical($this->taskContext->getVertical(), $cityId, $wikiFactoryInstance);
-		$this->setCategories($this->taskContext->getCategories(), $cityId, $wikiFactoryInstance);
+		$this->setVertical( $this->taskContext->getVertical(), $cityId, $wikiFactoryInstance );
+		$this->setCategories( $this->taskContext->getCategories(), $cityId, $wikiFactoryInstance );
 
 		return TaskResult::createForSuccess();
 	}
 
-	public function prepareCategories($vertical, $categories) {
+	public function prepareCategories( $vertical, $categories ) {
 		if ( $vertical === WikiFactoryHub::VERTICAL_ID_VIDEO_GAMES ) {
 			array_unshift( $categories, WikiFactoryHub::CATEGORY_ID_GAMING );
 		}
@@ -61,15 +61,15 @@ class ConfigureCategories implements Task {
 		return $categories;
 	}
 
-	public function setVertical($vertical, $cityId, WikiFactoryHub $wikiFactoryHubInstance) {
+	public function setVertical( $vertical, $cityId, WikiFactoryHub $wikiFactoryHubInstance ) {
 		$wikiFactoryHubInstance->setVertical( $cityId, $vertical, "CW Setup" );
-		$this->debug( ":", implode( ["CreateWiki", __METHOD__, "Wiki added to the vertical: {$vertical}"] ) );
+		$this->debug( implode( ":", [ "CreateWiki", __METHOD__, "Wiki added to the vertical: {$vertical}" ] ) );
 	}
 
-	public function setCategories($categories, $cityId, WikiFactoryHub $wikiFactoryHubInstance) {
+	public function setCategories( $categories, $cityId, WikiFactoryHub $wikiFactoryHubInstance ) {
 		foreach ( $categories as $category ) {
 			$wikiFactoryHubInstance->addCategory( $cityId, $category );
-			$this->debug( ":", implode( ["CreateWiki", __METHOD__, "Wiki added to the category: {$category}"] ) );
+			$this->debug( implode( ":", [ "CreateWiki", __METHOD__, "Wiki added to the category: {$category}" ] ) );
 		}
 	}
 }
