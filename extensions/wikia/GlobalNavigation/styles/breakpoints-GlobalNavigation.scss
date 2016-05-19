@@ -4,8 +4,8 @@
 @if $widthType == 0 {
 	@media #{$breakpoint-not-supported} {
 		.global-navigation {
-			margin-top: -$global-navigation-negative-top-margin;
-			position: relative;
+			position: absolute;
+			top: 0;
 			width: $content-width-small;
 		}
 	}

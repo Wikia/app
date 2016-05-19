@@ -45,13 +45,13 @@ $taboola-small-breakpoint: "#{$screen} and (max-width: 420px)";
 			float: right;	/* invisible tracking pixel is taking up height for some reason.  taking it out of the flow for now */
 		}
 	}
+}
 
-	&.bfaa-template {
-		width: 100%;
+.bfaa-template {
+	.WikiaTopAds {
+		margin-top: 0;
 		padding: 0;
-		position: absolute;
-		top: 0;
-		left: 0;
+		width: 100%;
 
 		.WikiaTopAdsInner {
 			width: 100%;
@@ -86,10 +86,13 @@ $taboola-small-breakpoint: "#{$screen} and (max-width: 420px)";
 #TOP_LEADERBOARD_AB {
 	background: rgba($color-page, $page-opacity);
 	max-width: $page-width-medium;
-	margin: 10px auto;
 	padding: 0 $padding-width-medium;
 	position: relative;
 	z-index: $wikia-top-ads-index;
+
+	div {
+		margin: 10px auto;
+	}
 
 	.thumbnails-h-abp {
 		border: none;

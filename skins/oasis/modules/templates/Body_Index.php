@@ -18,9 +18,9 @@
 
 <div id="ad-skin" class="wikia-ad noprint"></div>
 
+<?= $app->renderView( 'Ad', 'Top' ) ?>
 <?= $app->renderView( 'GlobalNavigation', 'index' ) ?>
 <?= empty( $wg->EnableEBS ) ? '' : $app->renderView( 'EmergencyBroadcastSystem', 'index' ); ?>
-<?= $app->renderView( 'Ad', 'Top' ) ?>
 
 <?= empty( $wg->WikiaSeasonsPencilUnit ) ? '' : $app->renderView( 'WikiaSeasons', 'pencilUnit', array() ); ?>
 
