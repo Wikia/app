@@ -1,0 +1,21 @@
+@import 'variables';
+@import 'skins/shared/mixins/clearfix';
+@import 'skins/shared/mixins/flexbox';
+
+.CommunityPolicyModule {
+	&.module h2 {
+		clear: none;
+	}
+
+	.community-page-policy-heading {
+	}
+
+	.community-page-policy-edit {
+		float: right;
+		color: yellow;
+	}
+
+	.community-page-policy-view {
+		padding: 11px 0;
+	}
+}
