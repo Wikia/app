@@ -98,7 +98,7 @@ class RelatedContentApi
      *
      * @param string $content_url  (optional)
      * @param int $limit  (optional)
-     * @return \Swagger\Client\ContentEntity\Models\RelatedContent[]
+     * @return \Swagger\Client\ContentEntity\Models\FilteredRelatedContent[]
      * @throws \Swagger\Client\ApiException on non-2xx response
      */
     public function getRelatedContentFromContentUrl($content_url=null, $limit=null)
@@ -144,19 +144,19 @@ class RelatedContentApi
             list($response, $httpHeader) = $this->apiClient->callApi(
                 $resourcePath, $method,
                 $queryParams, $httpBody,
-                $headerParams, '\Swagger\Client\ContentEntity\Models\RelatedContent[]'
+                $headerParams, '\Swagger\Client\ContentEntity\Models\FilteredRelatedContent[]'
             );
             
             if (!$response) {
                 return null;
             }
 
-            return $this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\ContentEntity\Models\RelatedContent[]', $httpHeader);
+            return $this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\ContentEntity\Models\FilteredRelatedContent[]', $httpHeader);
             
         } catch (ApiException $e) {
             switch ($e->getCode()) { 
             case 200:
-                $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\ContentEntity\Models\RelatedContent[]', $e->getResponseHeaders());
+                $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\ContentEntity\Models\FilteredRelatedContent[]', $e->getResponseHeaders());
                 $e->setResponseObject($data);
                 break;
             }
@@ -176,7 +176,7 @@ class RelatedContentApi
      * @param string $entity_id  (required)
      * @param int $limit  (optional)
      * @param bool $include_root_relations  (optional)
-     * @return \Swagger\Client\ContentEntity\Models\RelatedContent[]
+     * @return \Swagger\Client\ContentEntity\Models\FilteredRelatedContent[]
      * @throws \Swagger\Client\ApiException on non-2xx response
      */
     public function getRelatedContentFromEntityId($entity_id, $limit=null, $include_root_relations=null)
@@ -233,19 +233,19 @@ class RelatedContentApi
             list($response, $httpHeader) = $this->apiClient->callApi(
                 $resourcePath, $method,
                 $queryParams, $httpBody,
-                $headerParams, '\Swagger\Client\ContentEntity\Models\RelatedContent[]'
+                $headerParams, '\Swagger\Client\ContentEntity\Models\FilteredRelatedContent[]'
             );
             
             if (!$response) {
                 return null;
             }
 
-            return $this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\ContentEntity\Models\RelatedContent[]', $httpHeader);
+            return $this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\ContentEntity\Models\FilteredRelatedContent[]', $httpHeader);
             
         } catch (ApiException $e) {
             switch ($e->getCode()) { 
             case 200:
-                $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\ContentEntity\Models\RelatedContent[]', $e->getResponseHeaders());
+                $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\ContentEntity\Models\FilteredRelatedContent[]', $e->getResponseHeaders());
                 $e->setResponseObject($data);
                 break;
             case 400:
@@ -269,7 +269,7 @@ class RelatedContentApi
      * @param string $name  (required)
      * @param int $limit  (optional)
      * @param bool $include_root_relations  (optional)
-     * @return \Swagger\Client\ContentEntity\Models\RelatedContent[]
+     * @return \Swagger\Client\ContentEntity\Models\FilteredRelatedContent[]
      * @throws \Swagger\Client\ApiException on non-2xx response
      */
     public function getRelatedContentFromEntityName($name, $limit=null, $include_root_relations=null)
@@ -326,19 +326,19 @@ class RelatedContentApi
             list($response, $httpHeader) = $this->apiClient->callApi(
                 $resourcePath, $method,
                 $queryParams, $httpBody,
-                $headerParams, '\Swagger\Client\ContentEntity\Models\RelatedContent[]'
+                $headerParams, '\Swagger\Client\ContentEntity\Models\FilteredRelatedContent[]'
             );
             
             if (!$response) {
                 return null;
             }
 
-            return $this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\ContentEntity\Models\RelatedContent[]', $httpHeader);
+            return $this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\ContentEntity\Models\FilteredRelatedContent[]', $httpHeader);
             
         } catch (ApiException $e) {
             switch ($e->getCode()) { 
             case 200:
-                $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\ContentEntity\Models\RelatedContent[]', $e->getResponseHeaders());
+                $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\ContentEntity\Models\FilteredRelatedContent[]', $e->getResponseHeaders());
                 $e->setResponseObject($data);
                 break;
             }
