@@ -2,11 +2,25 @@
 
 class CommunityPageSpecialInsightsModel {
 	const INSIGHTS_MODULE_ITEMS = 5;
-	const INSIGHTS_MODULE_SORT_TYPE = 'pvDiff';
+	const INSIGHTS_CONFIG_SORT_TYPE_KEY = 'sortingType';
+	const INSIGHTS_CONFIG_PAGEVIEWS_KEY = 'displayPageviews';
 	const INSIGHTS_MODULES = [
-		'popularpages' => 'pvDiff',
-		'uncategorizedpages' => 'pvDiff',
-		'wantedpages' => false
+		'popularpages' => [
+			self::INSIGHTS_CONFIG_SORT_TYPE_KEY => 'pvDiff',
+			self::INSIGHTS_CONFIG_PAGEVIEWS_KEY => true
+		],
+		'deadendpages' => [
+			self::INSIGHTS_CONFIG_SORT_TYPE_KEY => 'pv7',
+			self::INSIGHTS_CONFIG_PAGEVIEWS_KEY => false
+		],
+		'uncategorizedpages' => [
+			self::INSIGHTS_CONFIG_SORT_TYPE_KEY => 'pv7',
+			self::INSIGHTS_CONFIG_PAGEVIEWS_KEY => false
+		],
+		'wantedpages' => [
+			self::INSIGHTS_CONFIG_SORT_TYPE_KEY => false,
+			self::INSIGHTS_CONFIG_PAGEVIEWS_KEY => false
+		],
 	];
 
 	private $insightsService;
@@ -27,8 +41,8 @@ class CommunityPageSpecialInsightsModel {
 			'fulllist' => wfMessage( 'communitypage-full-list' )->text()
 		];
 
-		foreach ( self::INSIGHTS_MODULES as $insight => $sortingType ) {
-			$module = $this->getInsightModule( $insight, $sortingType );
+		foreach ( self::INSIGHTS_MODULES as $insight => $config ) {
+			$module = $this->getInsightModule( $insight, $config );
 			if ( !empty( $module ) ) {
 				$modules['modules'][] = $module;
 			}
@@ -39,14 +53,16 @@ class CommunityPageSpecialInsightsModel {
 
 	/**
 	 * @param string $type type of module we want to build.
-	 * @param string $sortingType define how data should be sorted (@see InsightsSorting::$sorting)
+	 * @param array $config array with variables that determine
+	 *  - should display page views on list
+	 * 	- how data should be sorted (@see InsightsSorting::$sorting)
 	 * @return array Insight Module
 	 */
-	private function getInsightModule( $type, $sortingType = self::INSIGHTS_MODULE_SORT_TYPE ) {
-		$insightPages['pages'] = $this->insightsService->getInsightPages(
+	private function getInsightModule( $type, $config ) {
+		$insightPages = $this->insightsService->getInsightPages(
 			$type,
 			self::INSIGHTS_MODULE_ITEMS,
-			$sortingType
+			$config[self::INSIGHTS_CONFIG_SORT_TYPE_KEY]
 		);
 
 		if ( empty( $insightPages['pages'] ) ) {
@@ -59,36 +75,44 @@ class CommunityPageSpecialInsightsModel {
 		 * communitypage-popularpages-title'
 		 * communitypage-uncategorizedpages-title'
 		 * communitypage-wantedpages-title'
+		 * communitypage-deadendpages-title'
 		 * communitypage-popularpages-description'
 		 * communitypage-uncategorizedpages-description'
 		 * communitypage-wantedpages-description'
+		 * communitypage-deadendpages-description'
 		 */
+		$insightPages['type'] = $type;
 		$insightPages['title'] = wfMessage( 'communitypage-' . $type . '-title' )->text();
 		$insightPages['description'] =  wfMessage( 'communitypage-' . $type . '-description' )->text();
 
-		$insightPages['fulllistlink'] = SpecialPage::getTitleFor( 'Insights', $type )
-			->getLocalURL( $this->getSortingParam( $sortingType ) );
+		if ( $insightPages['count'] > self::INSIGHTS_MODULE_ITEMS ) {
+			$insightPages['fulllistlink'] = SpecialPage::getTitleFor( 'Insights', $type )
+				->getLocalURL( $this->getSortingParam( $config[self::INSIGHTS_CONFIG_SORT_TYPE_KEY] ) );
+		}
 
-		$insightPages = $this->addLastRevision( $insightPages );
+		$insightPages = $this->addLastRevision( $insightPages, $config[self::INSIGHTS_CONFIG_PAGEVIEWS_KEY] );
 
 		return $insightPages;
 	}
 
 	/**
 	 * @param array $insightsPages
+	 * @param boolean $displayPageviews should display information about pageviews
 	 * @return array Prepare message about who and when last edited given article
 	 * @throws MWException
 	 */
-	private function addLastRevision( $insightsPages ) {
+	private function addLastRevision( $insightsPages, $displayPageviews ) {
+		global $wgLang;
+
 		foreach ( $insightsPages['pages'] as $key => $insight ) {
 			$insightsPages['pages'][$key]['metadataDetails'] = $this->getArticleMetadataDetails( $insight['metadata'] );
 			$insightsPages['pages'][$key]['editlink'] = $this->getEditUrl( $insight['link']['articleurl'] );
 			$insightsPages['pages'][$key]['edittext'] = $this->getArticleContributeText( $insight['metadata'] );
 
-			if ( !empty( $insightsPages['pages'][$key]['pageviews'] ) ) {
+			if ( $displayPageviews && !empty( $insight['metadata']['pv7'] ) ) {
 				$insightsPages['pages'][$key]['pageviews'] = wfMessage(
 					'communitypage-noofviews',
-					$insight['metadata']['pv7']
+					$wgLang->formatNum( $insight['metadata']['pv7'] )
 				)->text();
 			}
 		}
@@ -131,8 +155,11 @@ class CommunityPageSpecialInsightsModel {
 			return wfMessage( $metadata['wantedBy']['message'] )->rawParams(
 				Html::element(
 					'a',
-					['href' => $metadata['wantedBy']['url']],
-					$metadata['wantedBy']['value']
+					[
+						'href' => $metadata['wantedBy']['url'],
+						'data-tracking' => 'wanted-by-link',
+					],
+					$wgLang->formatNum( $metadata['wantedBy']['value'] )
 				)
 			)->escaped();
 		}
@@ -142,7 +169,10 @@ class CommunityPageSpecialInsightsModel {
 		return wfMessage( 'communitypage-lastrevision' )->rawParams(
 			Html::element(
 				'a',
-				['href' => $metadata['lastRevision']['userpage']],
+				[
+					'href' => $metadata['lastRevision']['userpage'],
+					'data-tracking' => 'user-profile-link',
+				],
 				$metadata['lastRevision']['username']
 			),
 			$wgLang->userDate( $timestamp, $wgUser )

@@ -13,4 +13,9 @@ class ARecoveryModule {
 
 		return !empty( $wgEnableUsingSourcePointProxyForCSS );
 	}
+
+	public static function isLockEnabled() {
+		$user = F::app()->wg->User;
+		return self::isEnabled() && ( $user && !$user->isLoggedIn() );
+	}
 }

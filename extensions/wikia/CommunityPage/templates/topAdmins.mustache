@@ -1,8 +1,8 @@
-<div class="top-admins">
+<section class="community-page-contributors-module-section top-admins">
 	<h2>{{topAdminsHeaderText}}</h2>
 	<ul class="reset">
 		{{#topAdminsList}}
-			<li class="community-page-contributor">
+			<li class="community-page-contributors-list-item">
 				<div class="avatar-container">
 					<a data-tracking="top-admins-user-avatar" href="{{profilePage}}">{{{avatar}}}</a>
 				</div>
@@ -17,13 +17,13 @@
 				<a href="{{noAdminHref}}">{{noAdminContactText}}</a>
 			</div>
 		{{/topAdminsList}}
+		{{#haveOtherAdmins}}
+			<li class="community-page-contributors-list-item" id="openModalTopAdmins">
+				<div class="avatar-container avatar-more">+{{otherAdminsCount}}</div>
+				<div class="community-page-contributor-details">
+					<a href="">{{otherAdmins}}</a>
+				</div>
+			</li>
+		{{/haveOtherAdmins}}
 	</ul>
-	{{#haveOtherAdmins}}
-		<div class="community-page-contributor" id="openModalTopAdmins">
-			<div class="avatar-container avatar-more">+{{otherAdminsCount}}</div>
-			<div class="community-page-contributor-details">
-				<a href="">{{otherAdmins}}</a>
-			</div>
-		</div>
-	{{/haveOtherAdmins}}
-</div>
+</section>

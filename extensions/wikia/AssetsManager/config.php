@@ -135,6 +135,7 @@ $config['recirculation_js'] = array(
 		'//extensions/wikia/Recirculation/js/helpers/ContentLinksHelper.js',
 		'//extensions/wikia/Recirculation/js/helpers/FandomHelper.js',
 		'//extensions/wikia/Recirculation/js/helpers/LateralHelper.js',
+		'//extensions/wikia/Recirculation/js/helpers/CakeRelatedContentHelper.js',
 		'//extensions/wikia/Recirculation/js/views/incontent.js',
 		'//extensions/wikia/Recirculation/js/views/rail.js',
 		'//extensions/wikia/Recirculation/js/views/footer.js',
@@ -2910,6 +2911,22 @@ $config['special_portability_dashboard_scss'] = [
 	'assets' => [
 		'//extensions/wikia/PortabilityDashboard/styles/PortabilityDashboard.scss',
 	],
+];
+
+$config['community_page_entry_point_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => 'oasis',
+	'assets' => [
+		'//extensions/wikia/CommunityPage/scripts/entryPoint.js',
+	]
+];
+
+$config['community_page_entry_point_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => 'oasis',
+	'assets' => [
+		'//extensions/wikia/CommunityPage/styles/entrypoint/EntryPoint.scss',
+	]
 ];
 
 $config['create_new_wiki_js'] = [

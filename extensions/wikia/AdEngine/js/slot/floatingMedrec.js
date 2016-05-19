@@ -2,11 +2,12 @@
 define('ext.wikia.adEngine.slot.floatingMedrec', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adHelper',
+	'ext.wikia.adEngine.adLogicPageDimensions',
 	'ext.wikia.adEngine.adTracker',
 	'jquery',
 	'wikia.log',
 	'wikia.window'
-], function (adContext, adHelper, adTracker, $, log, win) {
+], function (adContext, adHelper, adLogicPageDimensions, adTracker, $, log, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.slot.floatingMedrec';
@@ -77,7 +78,9 @@ define('ext.wikia.adEngine.slot.floatingMedrec', [
 			if (enabled && !isEnoughSpace) {
 				log(['handleFloatingMedrec',
 					 'Disabling floating medrec: not enough space in right rail'], 'debug', logGroup);
-				adTracker.track('floating_medrec/disabling');
+				if (adLogicPageDimensions.shouldBeShown(slotName)) {
+					adTracker.track('floating_medrec/disabling');
+				}
 
 				win.removeEventListener('scroll', update);
 				win.removeEventListener('resize', update);
