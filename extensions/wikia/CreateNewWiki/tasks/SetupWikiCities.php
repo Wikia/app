@@ -92,9 +92,9 @@ class SetupWikiCities implements Task {
 					'city_id' => $this->taskContext->getCityId(),
 					'city_domain' => $this->taskContext->getDomain()
 				], [
-				'city_id' => $this->taskContext->getCityId(),
-				'city_domain' => sprintf( "www.%s", $this->taskContext->getDomain() )
-			]
+					'city_id' => $this->taskContext->getCityId(),
+					'city_domain' => sprintf( "www.%s", $this->taskContext->getDomain() )
+				]
 			],
 			__METHOD__
 		);

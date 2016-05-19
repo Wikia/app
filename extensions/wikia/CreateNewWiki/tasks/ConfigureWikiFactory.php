@@ -48,9 +48,10 @@ class ConfigureWikiFactory implements Task {
 		$language = $this->taskContext->getLanguage();
 		$sharedDBW = $this->taskContext->getSharedDBW();
 		$cityId = $this->taskContext->getCityId();
+		$url = $this->taskContext->getURL();
 
 		$staticWikiFactoryVariables = $this->getStaticVariables(
-			$siteName, $this->imagesURL, $this->imagesDir, $dbName, $language, $siteName
+			$siteName, $this->imagesURL, $this->imagesDir, $dbName, $language, $url
 		);
 		$wikiFactoryVariablesFromDB = $this->getVariablesFromDB( $sharedDBW, $staticWikiFactoryVariables );
 
