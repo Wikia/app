@@ -1,10 +1,10 @@
 /*global define*/
 define('ext.wikia.adEngine.template.bfaa', [
 	'ext.wikia.adEngine.adHelper',
-	'wikia.log',
 	'wikia.document',
+	'wikia.log',
 	'wikia.window'
-], function (adHelper, log, doc, win) {
+], function (adHelper, doc, log, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.template.bfaa',
@@ -15,7 +15,7 @@ define('ext.wikia.adEngine.template.bfaa', [
 		wrapper = doc.getElementById('WikiaTopAds');
 
 	function updateNavBar(height) {
-		var position = doc.body.scrollTop;
+		var position = win.pageYOffset;
 
 		if (doc.body.offsetWidth <= breakPointWidthNotSupported) {
 			return;
