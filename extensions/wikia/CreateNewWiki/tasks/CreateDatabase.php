@@ -47,9 +47,6 @@ class CreateDatabase extends Task {
 		$dbw = wfGetDB( DB_MASTER, [ ], $this->clusterDB );
 		$dbw->query( sprintf( "CREATE DATABASE `%s`", $this->taskContext->getDBname() ) );
 
-		$dbw = wfGetDB( DB_MASTER, [ ], $this->taskContext->getDBname() );
-		$this->taskContext->setWikiDBW( $dbw );
-
 		return TaskResult::createForSuccess();
 	}
 

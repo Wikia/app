@@ -54,6 +54,9 @@ class CreateTables extends Task {
 		//and adds a DB prefix which causes the table to be created in a wikicities_x DB instead of the newly created one
 		$wgSharedDB = $this->taskContext->getDBname();
 
+		$dbw = wfGetDB( DB_MASTER, [ ], $this->taskContext->getDBname() );
+		$this->taskContext->setWikiDBW( $dbw );
+
 		foreach ( $this->sqlFiles as $file ) {
 			$this->debug( __METHOD__ . ": Populating database with {$file}" );
 
