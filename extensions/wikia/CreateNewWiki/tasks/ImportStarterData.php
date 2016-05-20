@@ -3,8 +3,11 @@
 namespace Wikia\CreateNewWiki\Tasks;
 
 use Wikia\CreateNewWiki\Starters;
+use Wikia\Logger\Loggable;
 
 class ImportStarterData extends Task {
+
+	use Loggable;
 
 	private $phpBin = "/usr/bin/php";
 
@@ -18,7 +21,7 @@ class ImportStarterData extends Task {
 	}
 
 	public function run() {
-		// BugId:15644 - I need to pass $this->sDbStarter to CreateWikiLocalJob::changeStarterContributions
+		// I need to pass $this->sDbStarter to CreateWikiLocalJob::changeStarterContributions
 		$starterDatabase = Starters::getStarterByLanguage( $this->taskContext->getLanguage() );
 		$this->taskContext->setStarterDb( $starterDatabase );
 
@@ -64,6 +67,8 @@ class ImportStarterData extends Task {
 			$this->phpBin,
 			"{$IP}/extensions/wikia/CreateNewWiki"
 		);
+
+		$this->debug( implode( ":", [ __METHOD__, "Executing script: {$cmd}" ] ) );
 		wfShellExec( $cmd, $retVal );
 
 		return $retVal;
