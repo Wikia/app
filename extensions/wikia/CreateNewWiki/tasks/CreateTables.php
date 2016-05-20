@@ -14,7 +14,7 @@ class CreateTables extends Task {
 		global $IP;
 
 		/* default tables */
-		$this->sqlFiles = array(
+		$this->sqlFiles = [
 			"{$IP}/maintenance/tables.sql",
 			"{$IP}/maintenance/interwiki.sql",
 			"{$IP}/maintenance/wikia/city_interwiki_links.sql",
@@ -30,17 +30,17 @@ class CreateTables extends Task {
 			"{$IP}/extensions/wikia/Wall/sql/wall_history_local.sql",
 			"{$IP}/extensions/wikia/VideoHandlers/sql/video_info.sql",
 			"{$IP}/maintenance/wikia/wikia_user_properties.sql",
-		);
+		];
 
-		$additionalTables = array(
+		$additionalTables = [
 			"{$IP}/extensions/wikia/AjaxPoll/patch-create-poll_info.sql",
 			"{$IP}/extensions/wikia/AjaxPoll/patch-create-poll_vote.sql",
 			"{$IP}/extensions/wikia/ImageServing/sql/table.sql",
-		);
+		];
 
 		foreach ( $additionalTables as $file ) {
-			if( is_readable( $file ) ) {
-				$this->sqlFiles[] = $file ;
+			if ( is_readable( $file ) ) {
+				$this->sqlFiles[] = $file;
 			}
 		}
 
@@ -54,7 +54,7 @@ class CreateTables extends Task {
 		//and adds a DB prefix which causes the table to be created in a wikicities_x DB instead of the newly created one
 		$wgSharedDB = $this->taskContext->getDBname();
 
-		foreach( $this->sqlFiles as $file ) {
+		foreach ( $this->sqlFiles as $file ) {
 			$this->debug( __METHOD__ . ": Populating database with {$file}" );
 
 			$success = $this->taskContext->getWikiDBW()->sourceFile( $file );
@@ -65,7 +65,7 @@ class CreateTables extends Task {
 		$wgSharedDB = $tmpSharedDB;
 
 		//Add stats entry
-		$this->taskContext->getWikiDBW()->insert( "site_stats", array( "ss_row_id" => "1"), __METHOD__ );
+		$this->taskContext->getWikiDBW()->insert( "site_stats", [ "ss_row_id" => "1" ], __METHOD__ );
 
 		// we need to wait for slaves to catch up
 		TaskHelper::waitForSlaves( $this->taskContext, __METHOD__ );

@@ -121,8 +121,6 @@ class TaskContext {
 		$this->dbName = $dbName;
 	}
 
-	// sharedDBW represents CreateWiki::mDBW
-
 	public function getWikiDBW() {
 		return $this->wikiDBW;
 	}

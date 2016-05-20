@@ -21,7 +21,7 @@ class StartPostCreationTasks extends Task {
 		$jobParams['language'] = $this->taskContext->getLanguage();
 		$jobParams['city_id'] = $this->taskContext->getCityId();
 
-		// BugId:15644 - I need to pass this to CreateWikiLocalJob::changeStarterContributions
+		// Used by CreateNewWikiTask:changeStarterContributions
 		$jobParams->sDbStarter = $this->taskContext->getStarterDb();
 
 		$taskId = (new AsyncTaskList())

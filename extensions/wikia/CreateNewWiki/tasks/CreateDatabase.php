@@ -21,7 +21,7 @@ class CreateDatabase extends Task {
 			$this->clusterDB, $this->taskContext->getWikiName(), $this->taskContext->getLanguage()
 		);
 
-		if ( !empty( $dbName ) ) {
+		if ( !empty($dbName) ) {
 			$this->taskContext->setDbName( $dbName );
 
 			return TaskResult::createForSuccess();
@@ -31,7 +31,7 @@ class CreateDatabase extends Task {
 	}
 
 	public function check() {
-		$dbw = wfGetDB( DB_MASTER, array(), $this->clusterDB );
+		$dbw = wfGetDB( DB_MASTER, [ ], $this->clusterDB );
 
 		if ( wfReadOnly() || $this->isClusterReadOnly( $dbw ) ) {
 			return TaskResult::createForError( 'DB is read only' );
@@ -46,10 +46,10 @@ class CreateDatabase extends Task {
 	}
 
 	public function run() {
-		$dbw = wfGetDB( DB_MASTER, array(), $this->clusterDB );
+		$dbw = wfGetDB( DB_MASTER, [ ], $this->clusterDB );
 		$dbw->query( sprintf( "CREATE DATABASE `%s`", $this->taskContext->getDBname() ) );
 
-		$dbw = wfGetDB( DB_MASTER, array(), $this->taskContext->getDBname() );
+		$dbw = wfGetDB( DB_MASTER, [ ], $this->taskContext->getDBname() );
 		$this->taskContext->setWikiDBW( $dbw );
 
 		return TaskResult::createForSuccess();
@@ -73,16 +73,16 @@ class CreateDatabase extends Task {
 		wfProfileIn( __METHOD__ );
 
 		$dbwf = \WikiFactory::db( DB_SLAVE );
-		$dbr  = wfGetDB( DB_SLAVE, array(), $clusterDB );
+		$dbr = wfGetDB( DB_SLAVE, [ ], $clusterDB );
 
-		if( $lang !== "en" ) {
+		if ( $lang !== "en" ) {
 			$dbName = $lang . $dbName;
 		}
 
-		$dbName = substr( str_replace( "-", "", $dbName ), 0 , 50 );
+		$dbName = substr( str_replace( "-", "", $dbName ), 0, 50 );
 		$attemptNo = 0;
 
-		while( $this->doesDbExistInCityList( $dbwf, $dbName ) || $this->doesDbExistInCluster( $dbr, $dbName ) ) {
+		while ( $this->doesDbExistInCityList( $dbwf, $dbName ) || $this->doesDbExistInCluster( $dbr, $dbName ) ) {
 			$suffix = rand( 1, 999 );
 			$dbName = sprintf( "%s%s", $dbName, $suffix );
 			if ( ++$attemptNo > 100 ) {
@@ -98,12 +98,14 @@ class CreateDatabase extends Task {
 	private function doesDbExistInCityList( $dbwf, $dbName ) {
 		$this->debug( __METHOD__ . ": Checking if database " . $dbName . " already exists in city_list" );
 		$row = $dbwf->selectRow(
-			array( "city_list" ),
-			array( "count(*) as count" ),
-			array( "city_dbname" => $dbName ),
+			[
+				"city_list",
+				"count(*) as count",
+				"city_dbname" => $dbName
+			],
 			__METHOD__
 		);
-		if( $row->count > 0 ) {
+		if ( $row->count > 0 ) {
 			$this->debug( __METHOD__ . ": Database " . $dbName . " exists in city_list!" );
 			return true;
 		} else {
@@ -113,7 +115,7 @@ class CreateDatabase extends Task {
 
 	private function doesDbExistInCluster( $dbr, $dbName ) {
 		$this->debug( __METHOD__ . ": Checking if database " . $dbName . " already exists in cluster" );
-		$sth = $dbr->query( sprintf( "show databases like '%s'", $dbName) );
+		$sth = $dbr->query( sprintf( "show databases like '%s'", $dbName ) );
 		if ( $dbr->numRows( $sth ) > 0 ) {
 			$this->debug( __METHOD__ . ": Database " . $dbName . " exists on cluster!" );
 			return true;

@@ -11,7 +11,7 @@ class SetupWikiCities extends Task {
 
 	public function run() {
 		if ( !$this->addToCityList() ) {
-			$this->debug( implode( ":", [ 'CreateWiki', __METHOD__, "Cannot set data in city_list table" ] ) );
+			$this->debug( implode( ":", [ __METHOD__, "Cannot set data in city_list table" ] ) );
 			wfProfileOut( __METHOD__ );
 			return TaskResult::createForError( 'Cannot add wiki to city_list' );
 		}
@@ -27,7 +27,7 @@ class SetupWikiCities extends Task {
 			return TaskResult::createForError( 'Cannot set data in city_list table. city_id is empty after insert' );
 		}
 
-		$this->debug( implode( ":", [ "CreateWiki", __METHOD__, "Row added added into city_list table, city_id = {$cityId}" ] ) );
+		$this->debug( implode( ":", [ __METHOD__, "Row added added into city_list table, city_id = {$cityId}" ] ) );
 
 		// add domain and www.domain to the city_domains table
 		if ( !$this->addToCityDomains() ) {
@@ -37,7 +37,7 @@ class SetupWikiCities extends Task {
 
 		$this->debug(
 			implode( ":",
-				[ "CreateWiki", __METHOD__, "Row added into city_domains table, city_id = {$cityId}" ]
+				[ __METHOD__, "Row added into city_domains table, city_id = {$cityId}" ]
 			)
 		);
 
@@ -63,9 +63,8 @@ class SetupWikiCities extends Task {
 			'city_created' => wfTimestamp( TS_DB, time() ),
 			'city_umbrella' => $this->taskContext->getWikiName()
 		];
-		if ( CreateDatabase::ACTIVE_CLUSTER ) {
-			$insertFields["city_cluster"] = CreateDatabase::ACTIVE_CLUSTER;
-		}
+
+		$insertFields["city_cluster"] = CreateDatabase::ACTIVE_CLUSTER;
 
 		return $this->taskContext->getSharedDBW()->insert( "city_list", $insertFields, __METHOD__ );
 	}
@@ -78,9 +77,9 @@ class SetupWikiCities extends Task {
 					'city_id' => $this->taskContext->getCityId(),
 					'city_domain' => $this->taskContext->getDomain()
 				], [
-					'city_id' => $this->taskContext->getCityId(),
-					'city_domain' => sprintf( "www.%s", $this->taskContext->getDomain() )
-				]
+				'city_id' => $this->taskContext->getCityId(),
+				'city_domain' => sprintf( "www.%s", $this->taskContext->getDomain() )
+			]
 			],
 			__METHOD__
 		);

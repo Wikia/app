@@ -26,7 +26,7 @@ class SetCustomSettings extends Task {
 		$langCreationVar = isset($wgLangCreationVariables[$wikiType]) ? $wgLangCreationVariables[$wikiType] : $wgLangCreationVariables;
 		$this->addCustomSettings( $language, $langCreationVar, "language" );
 		$this->debug( implode( ":",
-			[ "CreateWiki", __METHOD__, "Custom settings added for wiki_type: {$wikiType} and language: {$language}" ]
+			[ __METHOD__, "Custom settings added for wiki_type: {$wikiType} and language: {$language}" ]
 		) );
 
 		return TaskResult::createForSuccess();
@@ -38,7 +38,7 @@ class SetCustomSettings extends Task {
 		wfProfileIn( __METHOD__ );
 
 		if ( (!empty($match) || $type == 'universal') && isset($settings[$match]) && is_array( $settings[$match] ) ) {
-			$this->debug( implode( ":", [ "CreateWiki", __METHOD__, "Found '$match' in {$type} settings array" ] ) );
+			$this->debug( implode( ":", [ __METHOD__, "Found '$match' in {$type} settings array" ] ) );
 
 			/**
 			 * switching user for correct logging
@@ -51,17 +51,17 @@ class SetCustomSettings extends Task {
 			foreach ( $settings[$match] as $key => $value ) {
 				$success = WikiFactory::setVarById( $key, $cityId, $value );
 				if ( $success ) {
-					$this->debug( implode( ":", [ "CreateWiki", __METHOD__, "Successfully added setting for {$cityId}: {$key} = {$value}" ] ) );
+					$this->debug( implode( ":", [ __METHOD__, "Successfully added setting for {$cityId}: {$key} = {$value}" ] ) );
 				} else {
-					$this->debug( implode( ":", [ "CreateWiki", __METHOD__, "Failed to add setting for {$cityId}: {$key} = {$value}" ] ) );
+					$this->debug( implode( ":", [ __METHOD__, "Failed to add setting for {$cityId}: {$key} = {$value}" ] ) );
 				}
 			}
 
 			$wgUser = $oldUser;
 
-			$this->debug( implode( ":", [ "CreateWiki", __METHOD__, "Finished adding {$type} settings" ] ) );
+			$this->debug( implode( ":", [ __METHOD__, "Finished adding {$type} settings" ] ) );
 		} else {
-			$this->debug( implode( ":", [ "CreateWiki", __METHOD__, "'{$match}' not found in {$type} settings array. Skipping this step." ] ) );
+			$this->debug( implode( ":", [ __METHOD__, "'{$match}' not found in {$type} settings array. Skipping this step." ] ) );
 		}
 
 		wfProfileOut( __METHOD__ );

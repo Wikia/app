@@ -116,22 +116,22 @@ class ConfigureWikiFactory extends Task {
 			/**
 			 * first, get id of variable
 			 */
-			$cv_id = 0;
+			$cvId = 0;
 			if ( isset($wikiFactoryVariablesFromDB[$variable]) ) {
-				$cv_id = $wikiFactoryVariablesFromDB[$variable];
+				$cvId = $wikiFactoryVariablesFromDB[$variable];
 			}
 
 			/**
 			 * then, insert value for wikia
 			 */
-			if ( !empty($cv_id) ) {
+			if ( !empty($cvId) ) {
 				$sharedDBW->insert(
 					"city_variables",
-					array(
+					[
 						"cv_value" => serialize( $value ),
 						"cv_city_id" => $cityId,
-						"cv_variable_id" => $cv_id
-					),
+						"cv_variable_id" => $cvId
+					],
 					__METHOD__
 				);
 			}
@@ -160,26 +160,27 @@ class ConfigureWikiFactory extends Task {
 
 		$isExist = false;
 		$suffix = "";
-		$dir_base = self::sanitizeS3BucketName( $name );
-		$prefix = strtolower( substr( $dir_base, 0, 1 ) );
-		$dir_lang = (isset($language) && $language !== "en")
+		$dirBase = self::sanitizeS3BucketName( $name );
+		$prefix = strtolower( substr( $dirBase, 0, 1 ) );
+		$dirLang = (isset($language) && $language !== "en")
 			? "/" . strtolower( $language )
 			: "";
 
 		while ( $isExist == false ) {
-			$dirName = self::IMGROOT . $prefix . "/" . $dir_base . $suffix . $dir_lang . "/images";
+			$dirName = self::IMGROOT . $prefix . "/" . $dirBase . $suffix . $dirLang . "/images";
 
 			if ( $this->wgUploadDirectoryExists( $dirName, $wgUploadDirectoryVarId ) ) {
 				$suffix = rand( 1, 9999 );
 			} else {
-				$dir_base = $dir_base . $suffix;
+				$dirBase = $dirBase . $suffix;
 				$isExist = true;
 			}
 		}
 
-		$this->debug( implode( ":", [ __METHOD__, "Returning '{$dir_base}'" ] ) );
+		$this->debug( implode( ":", [ __METHOD__, "Returning '{$dirBase}'" ] ) );
+
 		wfProfileOut( __METHOD__ );
-		return $dir_base;
+		return $dirBase;
 	}
 
 	public function wgUploadDirectoryExists( $sDirectoryName, $varId ) {
@@ -218,12 +219,12 @@ class ConfigureWikiFactory extends Task {
 		}
 
 		# try fixing the simplest and most popular cases
-		$check_name = str_replace( [ '.', ' ', '(', ')' ], '_', $name );
-		if ( in_array( substr( $check_name, -1 ), [ '-', '_' ] ) ) {
-			$check_name .= '0';
+		$checkName = str_replace( [ '.', ' ', '(', ')' ], '_', $name );
+		if ( in_array( substr( $checkName, -1 ), [ '-', '_' ] ) ) {
+			$checkName .= '0';
 		}
-		if ( preg_match( $RE_VALID, $check_name ) && strlen( $check_name ) <= self::SANITIZED_BUCKET_NAME_MAXIMUM_LENGTH ) {
-			return $check_name;
+		if ( preg_match( $RE_VALID, $checkName ) && strlen( $checkName ) <= self::SANITIZED_BUCKET_NAME_MAXIMUM_LENGTH ) {
+			return $checkName;
 		}
 
 		# replace invalid ASCII characters with their hex values
