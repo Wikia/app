@@ -38,9 +38,9 @@ define('ext.wikia.adEngine.template.bfaa', [
 		wrapper.style.background = backgroundColor;
 
 		updateNavBar(height);
-		doc.addEventListener('scroll', adHelper.throttle(function () {
+		doc.addEventListener('scroll', function () {
 			updateNavBar(height);
-		}));
+		});
 
 		if (win.WikiaBar) {
 			win.WikiaBar.hideContainer();
