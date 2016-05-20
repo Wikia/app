@@ -20,8 +20,9 @@ class InsightsPaginator {
 		$this->subpage = $subpage;
 		if ( isset( $params['page'] ) ) {
 			$this->page = $params['page'];
+			unset( $params['page'] );
 		}
-		$this->params = $this->filterParams( $params );
+		$this->params = $params;
 		$this->total = ( new InsightsCountService() )->getCount( $this->subpage );
 
 		$this->preparePaginationParams();
@@ -83,11 +84,5 @@ class InsightsPaginator {
 		}
 
 		$this->offset = ( $this->page - 1 ) * $this->limit;
-	}
-
-	private function filterParams( $params ) {
-		unset( $params['page'] );
-
-		return $params;
 	}
 }
