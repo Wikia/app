@@ -96,11 +96,9 @@ class CreateDatabase extends Task {
 	private function doesDbExistInCityList( $dbwf, $dbName ) {
 		$this->debug( __METHOD__ . ": Checking if database " . $dbName . " already exists in city_list" );
 		$row = $dbwf->selectRow(
-			[
-				"city_list",
-				"count(*) as count",
-				"city_dbname" => $dbName
-			],
+			[ "city_list" ],
+			[ "count(*) as count" ],
+			[ "city_dbname" => $dbName ],
 			__METHOD__
 		);
 		if ( $row->count > 0 ) {
