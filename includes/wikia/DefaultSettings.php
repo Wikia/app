@@ -1842,6 +1842,13 @@ $wgEnableFliteTagExt = false;
 $wgAdDriverAdsRecoveryMessageCountries = null;
 
 /**
+ * @name $wgARecoveryEngineCustomLog
+ * Enables Kibana logging of ad recovery interruptions
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgARecoveryEngineCustomLog = null;
+
+/**
  * Protect Piggyback logs even if the extension is disabled
  */
 $wgLogRestrictions['piggyback'] = 'piggyback';
