@@ -54,7 +54,6 @@ class CreateWikiTestChecks extends WikiaBaseTest {
 	function getDomainCheckData() {
 		return array(
 			array( 'asd', 'pl', true, null ),
-			array( 'asd', 'pl', true, null ),
 			array( 'as-d', 'en', true, null ),
 			array( 'asd', 'en', true, null ),
 			array( 'asd', 'pl', true, null ),
@@ -64,6 +63,8 @@ class CreateWikiTestChecks extends WikiaBaseTest {
 			array( 'as<d', 'pl', false, 'autocreatewiki-bad-name' ),
 			array( 'as$d', 'pl', false, 'autocreatewiki-bad-name' ),
 			array( 'as@d', 'pl', false, 'autocreatewiki-bad-name' ),
+			array( 'as    d', 'pl', false, 'autocreatewiki-bad-name' ),
+			array( 'as	d', 'pl', false, 'autocreatewiki-bad-name' ),
 			array( '', 'pl', false, 'autocreatewiki-empty-field' ),
 			array( 'a', 'pl', false, 'autocreatewiki-name-too-short' ),
 			array( '012345678901234567890123456789012345678901234567890', 'pl', false, 'autocreatewiki-name-too-long' ),

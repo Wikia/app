@@ -84,6 +84,7 @@ class ConfigureWikiFactory extends Task {
 
 		wfGetLBFactory()->sectionsByDB[$dbName] = $wikiFactoryVariables['wgDBcluster'] = $wgCreateDatabaseActiveCluster;
 
+
 		return $wikiFactoryVariables;
 	}
 
