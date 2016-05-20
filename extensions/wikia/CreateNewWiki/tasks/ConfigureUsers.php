@@ -27,7 +27,6 @@ class ConfigureUsers extends Task {
 		$founderId = $this->taskContext->getFounder()->getId();
 		$this->debug( implode( ":", [ __METHOD__, "Create user sysop/bureaucrat for user: {$founderId}" ] ) );
 		if ( !$this->addUserToGroups() ) {
-			// @TODO should this be an error? - it wasn't before the changes but looks like an error to me
 			$this->warning( implode( ":", [ __METHOD__, "Create user sysop/bureaucrat for user: {$founderId} FAILED" ] ) );
 		}
 
