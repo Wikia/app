@@ -89,12 +89,12 @@ class UserStatsService extends WikiaModel {
 		$wikiId = $this->getWikiId( $wikiId );
 		$editCount = $this->getOptionWiki( 'editcount', $wikiId, $skipCache );
 
-		if( $editCount === null or $editCount === false ) { // editcount has not been initialized. do so.
+		if( $editCount === null || $editCount === false ) { // editcount has not been initialized. do so.
 			$editCount = $this->resetEditCountWiki( $wikiId, $flags );
 		}
 
 		wfProfileOut( __METHOD__ );
-		return $editCount;
+		return (int)$editCount;
 	}
 
 
@@ -166,14 +166,35 @@ class UserStatsService extends WikiaModel {
 		$this->wg->Memc->set( $key, $editCount, 86400 );
 
 		wfProfileOut( __METHOD__ );
-		return $editCount;
+		return (int)$editCount;
 	}
 
 	/**
-	 * Update localized value of editcount in wikia_user_properties
+	 * Get the user's edit count from last week for specified wiki.
+	 *
+	 * @param Int $wikiId  Id of wiki - specifies wiki from which to get editcount, 0 for current wiki
+	 * @param Boolean $skipCache  On true ignores cache
+	 * @return Int Number of edits
+	 */
+	public function getEditCountFromWeek( $wikiId = 0, $skipCache = false ) {
+		wfProfileIn( __METHOD__ );
+
+		$wikiId = $this->getWikiId( $wikiId );
+		$editCount = $this->getOptionWiki( 'editcountThisWeek', $wikiId, $skipCache );
+
+		if( $editCount === null || $editCount === false ) { // editcount has not been initialized. do so.
+			$editCount = $this->calculateEditCountFromWeek( $wikiId );
+		}
+
+		wfProfileOut( __METHOD__ );
+		return (int)$editCount;
+	}
+
+	/**
+	 * Update localized value of editcount and editcountThisWeek in wikia_user_properties
 	 * and bump mcached values for stats and localized user options
 	 */
-	function increaseEditsCount() {
+	public function increaseEditsCount() {
 		wfProfileIn( __METHOD__ );
 
 		// update edit counts in stats
@@ -181,31 +202,19 @@ class UserStatsService extends WikiaModel {
 
 		$editCount = $this->getOptionWiki( 'editcount' );
 		if ( !is_null( $editCount ) ) {
-			//update edit counts in options
-			$dbw = wfGetDB( DB_MASTER );
-			$dbw->update(
-				'wikia_user_properties',
-				[ 'wup_value=wup_value+1' ],
-				[ 'wup_user' => $this->userId, 'wup_property' => 'editcount' ],
-				__METHOD__
-			);
-
-			if ( $dbw->affectedRows() === 1 ) {
-				//increment memcache also
-				$key = wfMemcKey( 'optionsWiki', $this->userId );
-				$optionsWiki = $this->wg->Memc->get( $key );
-
-				$optionsWiki['editcount']++;
-				$editCount++;
-				$this->wg->Memc->set( $key, $optionsWiki, self::CACHE_TTL );
-			}
+			$this->updateEditCount( 'editcount' );
 		} else {
-			//initialize editcount skipping memcache
-			$editCount = $this->getEditCountWiki( 0, true, Title::GAID_FOR_UPDATE );
+			$this->resetEditCountWiki( 0, Title::GAID_FOR_UPDATE );
+		}
+
+		$editCount = $this->getOptionWiki( 'editcountThisWeek' );
+		if ( !is_null( $editCount ) ) {
+			$this->updateEditCount( 'editcountThisWeek' );
+		} else {
+			$this->calculateEditCountFromWeek( 0, Title::GAID_FOR_UPDATE );
 		}
 
 		wfProfileOut( __METHOD__ );
-		return (int)$editCount;
 	}
 
 
@@ -262,15 +271,74 @@ class UserStatsService extends WikiaModel {
 		return $stats;
 	}
 
+	private function updateEditCount( $propertyName ) {
+		//update edit counts in options
+		$dbw = wfGetDB( DB_MASTER );
+		$dbw->update(
+			'wikia_user_properties',
+			[ 'wup_value=wup_value+1' ],
+			[ 'wup_user' => $this->userId, 'wup_property' => $propertyName ],
+			__METHOD__
+		);
+
+		if ( $dbw->affectedRows() === 1 ) {
+			//increment memcache also
+			$key = wfMemcKey( 'optionsWiki', $this->userId );
+			$optionsWiki = $this->wg->Memc->get( $key );
+
+			$optionsWiki[ $propertyName ]++;
+			$this->wg->Memc->set( $key, $optionsWiki, self::CACHE_TTL );
+		}
+	}
+
+	/**
+	 * Counts contributions in last week from revision and archive
+	 * and resets value in wikia_user_properties table
+	 * for specified wiki.
+	 *
+	 * @param int $wikiId Integer Id of wiki - specifies wiki from which to get editcount, 0 for current wiki
+	 * @param int $flags bit flags with options (ie. to force DB_MASTER)
+	 * @return Int Number of edits
+	 */
+	private function calculateEditCountFromWeek( $wikiId = 0, $flags = 0 ) {
+		wfProfileIn( __METHOD__ );
+
+		$dbr = $this->getDatabase( $wikiId, $flags );
+		$userName = $this->getUser()->getName();
+
+		$editCount = $dbr->selectField(
+			'revision', 'count(*)',
+			[
+				'rev_user' => $this->userId,
+				'rev_timestamp >= FROM_DAYS(TO_DAYS(CURDATE()) - MOD(TO_DAYS(CURDATE()) - 1, 7))'
+			],
+			__METHOD__
+		);
+
+		$editCount += $dbr->selectField(
+			'archive', 'count(*)',
+			[
+				'ar_user_text' => $userName,
+				'ar_timestamp >= FROM_DAYS(TO_DAYS(CURDATE()) - MOD(TO_DAYS(CURDATE()) - 1, 7))'
+			],
+			__METHOD__
+		);
+
+		// Store editcount value
+		$this->setOptionWiki( 'editcountThisWeek', $editCount, $wikiId );
+
+		wfProfileOut( __METHOD__ );
+		return $editCount;
+	}
+
 	private function getStatsData( $wikiId ) {
 		$stats[ 'lastRevision' ] = $this->getLastContributionTimestamp( $wikiId );
 		$stats[ 'date' ] = $this->getFirstContributionTimestamp( $wikiId );
 		$stats[ 'edits' ] = $this->getEditCountWiki( $wikiId );
+		$stats[ 'editsThisWeek'] = $this->getEditCountFromWeek( $wikiId );
 
 		return $stats;
 	}
-
-	/** OPTIONS **/
 
 	/**
 	 * Get user options localized per wiki, load if necessary
