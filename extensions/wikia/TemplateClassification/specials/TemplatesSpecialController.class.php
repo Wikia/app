@@ -256,7 +256,7 @@ class TemplatesSpecialController extends WikiaSpecialPageController {
 		if ( $this->templateName ) {
 			$params['template'] = $this->templateName;
 		}
-		$url = urldecode( $this->specialPage->getTitle()->getLocalUrl( $params ) );
+		$url = $this->specialPage->getTitle()->getLocalUrl( $params );
 
 		$paginator = new Paginator( $total, self::ITEMS_PER_PAGE, $url );
 		$paginator->setActivePage( $page + 1 );

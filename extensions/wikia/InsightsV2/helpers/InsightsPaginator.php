@@ -64,7 +64,7 @@ class InsightsPaginator {
 	 * Prepare pagination
 	 */
 	public function getPagination() {
-		$url = urldecode( InsightsHelper::getSubpageLocalUrl( $this->subpage, $this->getParams() ) );
+		$url = InsightsHelper::getSubpageLocalUrl( $this->subpage, $this->getParams() );
 
 		$paginator = new Paginator( $this->getTotal(), $this->getLimit(), $url );
 		$paginator->setActivePage( $this->getPage() );

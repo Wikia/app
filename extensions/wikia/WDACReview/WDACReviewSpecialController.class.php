@@ -43,7 +43,7 @@ class WDACReviewSpecialController extends WikiaSpecialPageController {
 		$this->toolName = $this->getToolName();
 		$this->submitUrl = $this->baseUrl;
 
-		$paginatorUrl = urldecode( $this->specialPage->getTitle()->getFullUrl() );
+		$paginatorUrl = $this->specialPage->getTitle()->getFullUrl();
 
 		if( $this->wg->request->wasPosted() ) {
 			$data = $this->wg->request->getValues();
