@@ -2,29 +2,32 @@
 
 namespace Wikia\CreateNewWiki\Tasks;
 
+use Wikia\Logger\Loggable;
 use WikiFactory;
 
-class ConfigureWikiFactory implements Task {
-	use \Wikia\Logger\Loggable;
+class ConfigureWikiFactory extends Task {
+	use Loggable;
 
 	const DEFAULT_WIKI_LOGO = '$wgUploadPath/b/bc/Wiki.png';
 	const SANITIZED_BUCKET_NAME_MAXIMUM_LENGTH = 55;
 	const IMGROOT = "/images/";
 	const IMAGEURL = "http://images.wikia.com/";
 
-	private $taskContext;
 	public $imagesURL;
 	public $imagesDir;
-
-	public function __construct( TaskContext $taskContext ) {
-		$this->taskContext = $taskContext;
-	}
 
 	public function prepare() {
 		$language = $this->taskContext->getLanguage();
 		$wikiName = $this->taskContext->getWikiName();
+		$wgUploadDirectoryVarId = $this->getWgUploadDirectoryVarId();
 
-		$this->imagesURL = $this->prepareDirValue( $wikiName, $language );
+		if ( empty($wgUploadDirectoryVarId) ) {
+			return TaskResult::createForError(
+				"wgUploadDirectory variable is not a positive integer, wgUploadDirectory: {$wgUploadDirectoryVarId}"
+			);
+		}
+
+		$this->imagesURL = $this->prepareDirValue( $wikiName, $language, $wgUploadDirectoryVarId );
 		$this->imagesDir = sprintf( "%s/%s", strtolower( substr( $wikiName, 0, 1 ) ), $this->imagesURL );
 
 		if ( isset($language) && $language !== "en" ) {
@@ -35,10 +38,6 @@ class ConfigureWikiFactory implements Task {
 		$this->imagesDir = self::IMGROOT . $this->imagesDir . "/images";
 		$this->imagesURL = self::IMAGEURL . $this->imagesURL . "/images";
 
-		return TaskResult::createForSuccess();
-	}
-
-	public function check() {
 		return TaskResult::createForSuccess();
 	}
 
@@ -112,7 +111,7 @@ class ConfigureWikiFactory implements Task {
 	}
 
 	private function setVariables( $sharedDBW, $cityId, $wikiFactoryVariablesFromDB, $wikiFactoryVariables ) {
-		wfProfileOut( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 		foreach ( $wikiFactoryVariables as $variable => $value ) {
 			/**
 			 * first, get id of variable
@@ -151,12 +150,13 @@ class ConfigureWikiFactory implements Task {
 	 * @param $name string base name of the directory
 	 * @param $language string language in which wiki will be created
 	 *
+	 * @param $wgUploadDirectoryVarId
 	 * @return string
 	 */
-	public function prepareDirValue( $name, $language ) {
+	public function prepareDirValue( $name, $language, $wgUploadDirectoryVarId ) {
 		wfProfileIn( __METHOD__ );
 
-		$this->debug( implode( ":", [ "CreateWiki", __METHOD__ . "Checking {$name} folder" ] ) );
+		$this->debug( implode( ":", [ __METHOD__ . "Checking {$name} folder" ] ) );
 
 		$isExist = false;
 		$suffix = "";
@@ -169,7 +169,7 @@ class ConfigureWikiFactory implements Task {
 		while ( $isExist == false ) {
 			$dirName = self::IMGROOT . $prefix . "/" . $dir_base . $suffix . $dir_lang . "/images";
 
-			if ( self::wgUploadDirectoryExists( $dirName ) ) {
+			if ( $this->wgUploadDirectoryExists( $dirName, $wgUploadDirectoryVarId ) ) {
 				$suffix = rand( 1, 9999 );
 			} else {
 				$dir_base = $dir_base . $suffix;
@@ -177,19 +177,16 @@ class ConfigureWikiFactory implements Task {
 			}
 		}
 
-		$this->debug( implode( ":", [ "CreateWiki", __METHOD__, "Returning '{$dir_base}'" ] ) );
+		$this->debug( implode( ":", [ __METHOD__, "Returning '{$dir_base}'" ] ) );
 		wfProfileOut( __METHOD__ );
 		return $dir_base;
 	}
 
-	public static function wgUploadDirectoryExists( $sDirectoryName ) {
+	public function wgUploadDirectoryExists( $sDirectoryName, $varId ) {
 		wfProfileIn( __METHOD__ );
-		$iVarId = WikiFactory::getVarIdByName( 'wgUploadDirectory' );
 
-		// Crash immediately if $iVarId is not a positive integer!
-		\Wikia\Util\Assert::true( $iVarId );
+		$aCityIds = WikiFactory::getCityIDsFromVarValue( $varId, $sDirectoryName, '=' );
 
-		$aCityIds = WikiFactory::getCityIDsFromVarValue( $iVarId, $sDirectoryName, '=' );
 		wfProfileOut( __METHOD__ );
 		return !empty($aCityIds);
 	}
@@ -247,16 +244,7 @@ class ConfigureWikiFactory implements Task {
 		return $name;
 	}
 
-	public function getImagesURL( $language ) {
-
-		$imagesURL = $this->prepareDirValue( $this->taskContext->getWikiName(), $language );
-
-		if ( isset($language) && $language !== "en" ) {
-			$this->imagesURL .= "/" . strtolower( $language );
-		}
-
-		$this->imagesURL = self::IMAGEURL . $this->imagesURL . "/images";
-
-		return $imagesURL;
+	public function getWgUploadDirectoryVarId() {
+		return WikiFactory::getVarIdByName( 'wgUploadDirectory' );
 	}
 }

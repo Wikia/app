@@ -2,19 +2,14 @@
 
 namespace Wikia\CreateNewWiki\Tasks;
 
-class PrepareDomain implements Task {
+use Wikia\Logger\Loggable;
 
-	use \Wikia\Logger\Loggable;
+class PrepareDomain extends Task {
+
+	use Loggable;
 
 	const DEFAULT_DOMAIN = "wikia.com";
 	const LOCK_DOMAIN_TIMEOUT = 30;
-
-	/** @var  TaskContext */
-	private $taskContext;
-
-	public function __construct( $taskContext ) {
-		$this->taskContext = $taskContext;
-	}
 
 	public function prepare() {
 		global $wgContLang;

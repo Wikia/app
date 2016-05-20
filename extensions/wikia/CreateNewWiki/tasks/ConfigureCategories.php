@@ -5,14 +5,8 @@ namespace Wikia\CreateNewWiki\Tasks;
 use Wikia\Logger\Loggable;
 use WikiFactoryHub;
 
-class ConfigureCategories implements Task {
+class ConfigureCategories extends Task {
 	use Loggable;
-
-	private $taskContext;
-
-	public function __construct( TaskContext $taskContext ) {
-		$this->taskContext = $taskContext;
-	}
 
 	public function prepare() {
 		$categories = $this->taskContext->getCategories();
@@ -20,10 +14,6 @@ class ConfigureCategories implements Task {
 
 		$this->taskContext->setCategories( $this->prepareCategories( $vertical, $categories ) );
 
-		return TaskResult::createForSuccess();
-	}
-
-	public function check() {
 		return TaskResult::createForSuccess();
 	}
 
@@ -63,13 +53,13 @@ class ConfigureCategories implements Task {
 
 	public function setVertical( $vertical, $cityId, WikiFactoryHub $wikiFactoryHubInstance ) {
 		$wikiFactoryHubInstance->setVertical( $cityId, $vertical, "CW Setup" );
-		$this->debug( implode( ":", [ "CreateWiki", __METHOD__, "Wiki added to the vertical: {$vertical}" ] ) );
+		$this->debug( implode( ":", [ __METHOD__, "Wiki added to the vertical: {$vertical}" ] ) );
 	}
 
 	public function setCategories( $categories, $cityId, WikiFactoryHub $wikiFactoryHubInstance ) {
 		foreach ( $categories as $category ) {
 			$wikiFactoryHubInstance->addCategory( $cityId, $category );
-			$this->debug( implode( ":", [ "CreateWiki", __METHOD__, "Wiki added to the category: {$category}" ] ) );
+			$this->debug( implode( ":", [ __METHOD__, "Wiki added to the category: {$category}" ] ) );
 		}
 	}
 }

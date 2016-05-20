@@ -6,22 +6,8 @@ use User;
 use WikiFactory;
 use Wikia\Logger\Loggable;
 
-class SetCustomSettings implements Task {
+class SetCustomSettings extends Task {
 	use Loggable;
-
-	private $taskContext;
-
-	public function __construct( TaskContext $taskContext ) {
-		$this->taskContext = $taskContext;
-	}
-
-	public function prepare() {
-		return TaskResult::createForSuccess();
-	}
-
-	public function check() {
-		return TaskResult::createForSuccess();
-	}
 
 	public function run() {
 		global $wgUniversalCreationVariables, $wgLangCreationVariables;

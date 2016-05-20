@@ -23,22 +23,6 @@ class ConfigureWikiFactoryTest extends \WikiaBaseTest {
 		parent::tearDown();
 	}
 
-	public function testWgUploadDirectoryExistsAssertion() {
-		$this->setExpectedException( '\Wikia\Util\AssertionException' );
-		$this->mockStaticMethod( 'WikiFactory', 'getVarIdByName', false );
-		ConfigureWikiFactory::wgUploadDirectoryExists( 'whatever-input' );
-	}
-
-	public function testWgUploadDirectoryExists() {
-		$this->mockStaticMethod( 'WikiFactory', 'getVarIdByName', 17 );
-
-		$this->mockStaticMethod( 'WikiFactory', 'getCityIDsFromVarValue', [ ] );
-		$this->assertFalse( ConfigureWikiFactory::wgUploadDirectoryExists( 'a-directory-that-does-not-exist' ) );
-
-		$this->mockStaticMethod( 'WikiFactory', 'getCityIDsFromVarValue', [ 1, 2, 3, 5, 8, 12 ] );
-		$this->assertTrue( ConfigureWikiFactory::wgUploadDirectoryExists( 'a-directory-that-does-exist' ) );
-	}
-
 	/**
 	 * @dataProvider provideSanitizeS3BucketName
 	 */
@@ -69,6 +53,7 @@ class ConfigureWikiFactoryTest extends \WikiaBaseTest {
 
 	/**
 	 * @param $wikiName
+	 * @param $varId
 	 * @param $language
 	 * @param $taskResult
 	 * @param $expectedImagesURL
@@ -76,7 +61,7 @@ class ConfigureWikiFactoryTest extends \WikiaBaseTest {
 	 * @internal param $expected
 	 * @dataProvider prepareDataProvider
 	 */
-	public function testPrepare( $wikiName, $language, $taskResult, $expectedImagesURL, $expectedImagesDir ) {
+	public function testPrepare( $wikiName, $varId, $language, $taskResult, $expectedImagesURL, $expectedImagesDir ) {
 		$this->taskContextMock
 			->expects( $this->any() )
 			->method( 'getWikiName' )
@@ -90,14 +75,19 @@ class ConfigureWikiFactoryTest extends \WikiaBaseTest {
 		$configureWFTask = $this->getMockBuilder( '\Wikia\CreateNewWiki\Tasks\ConfigureWikiFactory' )
 			->enableOriginalConstructor()
 			->setConstructorArgs( [ $this->taskContextMock ] )
-			->setMethods( [ 'prepareDirValue' ] )
+			->setMethods( [ 'prepareDirValue', 'getWgUploadDirectoryVarId' ] )
 			->getMock();
 
 		$configureWFTask->expects( $this->any() )
 			->method( 'prepareDirValue' )
 			->willReturn( $wikiName );
 
-		$this->mockStaticMethod( '\Wikia\CreateNewWiki\Tasks\TaskResult', 'createForSuccess', $taskResult );
+		$configureWFTask->expects( $this->any() )
+			->method( 'getWgUploadDirectoryVarId' )
+			->willReturn( $varId );
+
+		$this->mockStaticMethod( '\Wikia\CreateNewWiki\Tasks\TaskResult', 'createForSuccess', 'ok' );
+		$this->mockStaticMethod( '\Wikia\CreateNewWiki\Tasks\TaskResult', 'createForError', 'error' );
 
 		$result = $configureWFTask->prepare();
 		$this->assertEquals( $configureWFTask->imagesURL, $expectedImagesURL );
@@ -107,8 +97,9 @@ class ConfigureWikiFactoryTest extends \WikiaBaseTest {
 
 	public function prepareDataProvider() {
 		return [
-			[ 'glee', 'en', 'ok', 'http://images.wikia.com/glee/images', '/images/g/glee/images' ],
-			[ 'glee', 'pl', 'ok', 'http://images.wikia.com/glee/pl/images', '/images/g/glee/pl/images' ]
+			[ 'glee', 99, 'en', 'ok', 'http://images.wikia.com/glee/images', '/images/g/glee/images' ],
+			[ 'glee', 99, 'pl', 'ok', 'http://images.wikia.com/glee/pl/images', '/images/g/glee/pl/images' ],
+			[ 'glee', 0, 'pl', 'error', null, null ]
 		];
 	}
 

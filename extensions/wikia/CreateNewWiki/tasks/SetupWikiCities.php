@@ -4,24 +4,10 @@ namespace Wikia\CreateNewWiki\Tasks;
 
 use Wikia\Logger\Loggable;
 
-class SetupWikiCities implements Task {
+class SetupWikiCities extends Task {
 	use Loggable;
 
 	const DEFAULT_SLOT = "slot1";
-
-	private $taskContext;
-
-	public function __construct( TaskContext $taskContext ) {
-		$this->taskContext = $taskContext;
-	}
-
-	public function prepare() {
-		return TaskResult::createForSuccess();
-	}
-
-	public function check() {
-		return TaskResult::createForSuccess();
-	}
 
 	public function run() {
 		if ( !$this->addToCityList() ) {

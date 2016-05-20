@@ -2,14 +2,10 @@
 
 namespace Wikia\CreateNewWiki\Tasks;
 
-class ConfigureUsers implements Task {
-	use \Wikia\Logger\Loggable;
+use Wikia\Logger\Loggable;
 
-	private $taskContext;
-
-	public function __construct( TaskContext $taskContext ) {
-		$this->taskContext = $taskContext;
-	}
+class ConfigureUsers extends Task {
+	use Loggable;
 
 	public function prepare() {
 		global $wgUser;
@@ -29,10 +25,10 @@ class ConfigureUsers implements Task {
 
 	public function run() {
 		$founderId = $this->taskContext->getFounder()->getId();
-		$this->debug( implode( ":", ["CreateWiki", __METHOD__, "Create user sysop/bureaucrat for user: {$founderId}"] ) );
+		$this->debug( implode( ":", [ __METHOD__, "Create user sysop/bureaucrat for user: {$founderId}" ] ) );
 		if ( !$this->addUserToGroups() ) {
 			// @TODO should this be an error? - it wasn't before the changes but looks like an error to me
-			$this->warning( implode( ":", ["CreateWiki", __METHOD__, "Create user sysop/bureaucrat for user: {$founderId} FAILED"] ) );
+			$this->warning( implode( ":", [ __METHOD__, "Create user sysop/bureaucrat for user: {$founderId} FAILED" ] ) );
 		}
 
 		return TaskResult::createForSuccess();
@@ -42,8 +38,8 @@ class ConfigureUsers implements Task {
 		$founderId = $this->taskContext->getFounder()->getId();
 		$wikiDBW = $this->taskContext->getWikiDBW();
 
-		if ( empty( $founderId ) ) {
-			$this->warning( implode( ":", ["CreateWiki", __METHOD__, "FounderId is empty"] ) );
+		if ( empty($founderId) ) {
+			$this->warning( implode( ":", [ __METHOD__, "FounderId is empty" ] ) );
 			return false;
 		}
 

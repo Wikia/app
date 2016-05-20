@@ -5,21 +5,7 @@ namespace Wikia\CreateNewWiki\Tasks;
 use Locale;
 use WikiFactoryTags;
 
-class SetTags implements Task {
-
-	private $taskContext;
-
-	public function __construct( TaskContext $taskContext ) {
-		$this->taskContext = $taskContext;
-	}
-
-	public function prepare() {
-		return TaskResult::createForSuccess();
-	}
-
-	public function check() {
-		return TaskResult::createForSuccess();
-	}
+class SetTags extends Task {
 
 	public function run() {
 		$tags = new WikiFactoryTags( $this->taskContext->getCityId() );

@@ -1,6 +1,7 @@
 <?php
 
 namespace Wikia\CreateNewWiki\Tasks;
+use Wikia\Logger\Loggable;
 
 /**
  * Class TaskRunner
@@ -9,7 +10,7 @@ namespace Wikia\CreateNewWiki\Tasks;
  */
 class TaskRunner {
 
-	use \Wikia\Logger\Loggable;
+	use Loggable;
 
 	/** @var array Task[] */
 	private $tasks = [];

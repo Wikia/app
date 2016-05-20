@@ -2,22 +2,13 @@
 
 namespace Wikia\CreateNewWiki\Tasks;
 
-class CreateTables implements Task {
+use Wikia\Logger\Loggable;
 
-	use \Wikia\Logger\Loggable;
+class CreateTables extends Task {
 
-	/** @var  TaskContext */
-	private $taskContext;
+	use Loggable;
 
 	private $sqlFiles;
-
-	public function __construct($taskContext) {
-		$this->taskContext = $taskContext;
-	}
-
-	protected function getLoggerContext() {
-		return TaskHelper::getLoggerContext( $this->taskContext );
-	}
 
 	public function prepare() {
 		global $IP;
@@ -53,10 +44,6 @@ class CreateTables implements Task {
 			}
 		}
 
-		return TaskResult::createForSuccess();
-	}
-
-	public function check() {
 		return TaskResult::createForSuccess();
 	}
 

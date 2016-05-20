@@ -2,26 +2,17 @@
 
 namespace Wikia\CreateNewWiki\Tasks;
 
-class CreateDatabase implements Task {
+use Wikia\Logger\Loggable;
 
-	use \Wikia\Logger\Loggable;
+class CreateDatabase extends Task {
+
+	use Loggable;
 
 	//TODO would be awesome to read it from some config
 	const ACTIVE_CLUSTER = "c7";
 
-	/** @var  TaskContext */
-	private $taskContext;
-
 	/** @var  string */
 	private $clusterDB;
-
-	public function __construct( $taskContext ) {
-		$this->taskContext = $taskContext;
-	}
-
-	protected function getLoggerContext() {
-		return TaskHelper::getLoggerContext( $this->taskContext );
-	}
 
 	public function prepare() {
 		$this->taskContext->setSharedDBW( \WikiFactory::db( DB_MASTER ) );

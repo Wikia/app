@@ -4,20 +4,9 @@ namespace Wikia\CreateNewWiki\Tasks;
 
 use Wikia\CreateNewWiki\Starters;
 
-class ImportStarterData implements Task {
+class ImportStarterData extends Task {
 
 	private $phpBin = "/usr/bin/php";
-
-	/** @var  TaskContext */
-	private $taskContext;
-
-	public function __construct( $taskContext ) {
-		$this->taskContext = $taskContext;
-	}
-
-	public function prepare() {
-		return TaskResult::createForSuccess();
-	}
 
 	public function check() {
 		// php-cli is required for spawning PHP maintenance scripts
