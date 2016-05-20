@@ -60,6 +60,7 @@ class ConfigureWikiFactory extends Task {
 	}
 
 	public function getStaticVariables( $siteName, $imagesURL, $imagesDir, $dbName, $language, $url ) {
+		global $wgCreateDatabaseActiveCluster;
 		$wikiFactoryVariables = [
 			'wgSitename' => $siteName,
 			'wgLogo' => self::DEFAULT_WIKI_LOGO,
@@ -81,9 +82,7 @@ class ConfigureWikiFactory extends Task {
 			$wikiFactoryVariables['wgMetaNamespace'] = str_replace( [ ':', ' ' ], [ '', '_' ], $siteName );
 		}
 
-		if ( CreateDatabase::ACTIVE_CLUSTER ) {
-			wfGetLBFactory()->sectionsByDB[$dbName] = $wikiFactoryVariables['wgDBcluster'] = CreateDatabase::ACTIVE_CLUSTER;
-		}
+		wfGetLBFactory()->sectionsByDB[$dbName] = $wikiFactoryVariables['wgDBcluster'] = $wgCreateDatabaseActiveCluster;
 
 		return $wikiFactoryVariables;
 	}

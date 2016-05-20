@@ -8,15 +8,13 @@ class CreateDatabase extends Task {
 
 	use Loggable;
 
-	//TODO would be awesome to read it from some config
-	const ACTIVE_CLUSTER = "c7";
-
 	/** @var  string */
 	private $clusterDB;
 
 	public function prepare() {
+		global $wgCreateDatabaseActiveCluster;
 		$this->taskContext->setSharedDBW( \WikiFactory::db( DB_MASTER ) );
-		$this->clusterDB = "wikicities_" . self::ACTIVE_CLUSTER;
+		$this->clusterDB = "wikicities_" . $wgCreateDatabaseActiveCluster;
 		$dbName = $this->prepareDatabaseName(
 			$this->clusterDB, $this->taskContext->getWikiName(), $this->taskContext->getLanguage()
 		);

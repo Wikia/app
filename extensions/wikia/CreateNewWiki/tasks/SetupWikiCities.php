@@ -47,7 +47,7 @@ class SetupWikiCities extends Task {
 	}
 
 	public function addToCityList() {
-		global $wgRequest;
+		global $wgRequest, $wgCreateDatabaseActiveCluster;
 		$founder = $this->taskContext->getFounder();
 
 		$insertFields = [
@@ -64,7 +64,7 @@ class SetupWikiCities extends Task {
 			'city_umbrella' => $this->taskContext->getWikiName()
 		];
 
-		$insertFields["city_cluster"] = CreateDatabase::ACTIVE_CLUSTER;
+		$insertFields["city_cluster"] = $wgCreateDatabaseActiveCluster;
 
 		return $this->taskContext->getSharedDBW()->insert( "city_list", $insertFields, __METHOD__ );
 	}
