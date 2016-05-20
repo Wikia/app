@@ -71,7 +71,7 @@ $messages['en'] = array(
 	'communitypage-policy-text' => 'This community has a set of policies that should be followed by all contributors.',
 	'communitypage-policy-edit' => 'Edit',
 	'communitypage-policy-view' => 'View policy »',
-	'communitypage-policy-pagetitle' => 'Community_guidelines',
+	'communitypage-policy-pagetitle' => 'Community guidelines',
 );
 
 $messages['qqq'] = array(
@@ -280,7 +280,7 @@ $messages['es'] = array(
 	'communitypage-deadendpages-title' => 'Páginas sin enlaces',
 	'communitypage-deadendpages-description' => 'Estas páginas se deben enlazar con otros artículos en tu wikia. Los artículos bien enlazados ayudan a los lectores a descubrir más información acerca de tu tema y a mejorar la clasificación en los motores de búsqueda.',
 	'communitypage-view-more' => 'Ver más',
-	'communitypage-policy-pagetitle' => 'Pautas_para_la_comunidad',
+	'communitypage-policy-pagetitle' => 'Pautas para la comunidad',
 );
 
 $messages['fr'] = array(
@@ -348,7 +348,7 @@ $messages['fr'] = array(
 	'communitypage-deadendpages-title' => 'Pages sans liens',
 	'communitypage-deadendpages-description' => "Ces pages devraient contenir des liens vers d'autres articles de votre wikia. Les articles contenant beaucoup de liens permettent aux lecteurs de découvrir des informations sur votre thème et d'améliorer les résultats de recherche.",
 	'communitypage-view-more' => 'Voir plus',
-	'communitypage-policy-pagetitle' => 'Règlement_de_la_communauté',
+	'communitypage-policy-pagetitle' => 'Règlement de la communauté',
 );
 
 $messages['it'] = array(
@@ -416,7 +416,7 @@ $messages['it'] = array(
 	'communitypage-deadendpages-title' => 'Pagine senza link',
 	'communitypage-deadendpages-description' => 'Queste pagine dovrebbero contenere dei link ad altri articoli sulla tua wiki. Articoli ben collegati tra di loro tramite link aiutano i lettori a scoprire più informazioni sul tuo argomento e a migliorare la loro classificazione nei motori di ricerca.',
 	'communitypage-view-more' => 'Mostra di più',
-	'communitypage-policy-pagetitle' => 'Linee_guida_per_la_community',
+	'communitypage-policy-pagetitle' => 'Linee guida per la community',
 );
 
 $messages['ja'] = array(
@@ -619,7 +619,7 @@ $messages['pl'] = array(
 	'communitypage-deadendpages-title' => 'Strony bez odnośników',
 	'communitypage-deadendpages-description' => 'Te strony powinny zawierać odnośniki do innych artykułów na twojej wikii. Dobrze powiązane artykuły pomagają czytelnikom odnaleźć więcej informacji i poprawiają pozycje w wyszukiwarkach.',
 	'communitypage-view-more' => 'Zobacz więcej',
-	'communitypage-policy-pagetitle' => 'Wytyczne_społeczności',
+	'communitypage-policy-pagetitle' => 'Wytyczne społeczności',
 );
 
 $messages['pt'] = array(
@@ -687,7 +687,7 @@ $messages['pt'] = array(
 	'communitypage-deadendpages-title' => 'Páginas sem links',
 	'communitypage-deadendpages-description' => 'Estas páginas devem conter links para outros artigos em sua wikia. Artigos bem conectados ajudam os leitores a descobrir mais informações sobre o seu tema e a melhorar os resultados da busca.',
 	'communitypage-view-more' => 'Ver mais',
-	'communitypage-policy-pagetitle' => 'Orientações_da_comunidade',
+	'communitypage-policy-pagetitle' => 'Orientações da comunidade',
 );
 
 $messages['ru'] = array(
@@ -755,7 +755,7 @@ $messages['ru'] = array(
 	'communitypage-deadendpages-title' => 'Pages without links',
 	'communitypage-deadendpages-description' => 'These pages should link to other articles on your wiki. Well-linked articles help readers discover more information about your topic and improve search engine rankings.',
 	'communitypage-view-more' => 'View more',
-	'communitypage-policy-pagetitle' => 'Сообщество_(правила_работы)',
+	'communitypage-policy-pagetitle' => 'Сообщество (правила_работы)',
 );
 
 $messages['zh-hans'] = array(

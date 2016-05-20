@@ -32,8 +32,6 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		// remove user styles and js
 		$this->getOutput()->disallowUserJs();
 
-		$userId = $this->getUser()->getId();
-
 		$this->response->setValues( [
 			'heroImageUrl' => $this->getHeroImageUrl(),
 			'inviteFriendsText' => $this->msg( 'communitypage-invite-friends' )->plain(),
@@ -48,7 +46,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 				->getData(),
 			'recentlyJoined' => $this->sendRequest( 'CommunityPageSpecialController', 'getRecentlyJoinedData' )
 				->getData(),
-			'communityPolicyModule' => ( new CommunityPageSpecialCommunityPolicyModel() )->getData( $userId ),
+			'communityPolicyModule' => ( new CommunityPageSpecialCommunityPolicyModel() )->getData(),
 			'recentActivityModule' => $this->getRecentActivityData(),
 			'insightsModules' => ( new CommunityPageSpecialInsightsModel() )->getInsightsModules()
 		] );

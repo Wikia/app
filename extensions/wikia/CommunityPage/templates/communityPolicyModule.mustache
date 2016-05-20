@@ -1,20 +1,12 @@
 {{#communityPolicyModule}}
 	<div class="module CommunityPolicyModule">
 		{{#showEditLink}}
-			<div class="community-page-policy-edit">
-				<a href="{{editPolicyUrl}}">{{policyEdit}}</a>
-			</div>
+				<a class="community-page-policy-edit" href="{{editPolicyUrl}}">{{policyEdit}}</a>
 		{{/showEditLink}}
-		<h2 class="community-page-policy-heading">
+		<h2>
 			{{policyHeading}}
 		</h2>
-		<div>
-			<div class="community-page-policy-text">
-				{{policyText}}
-			</div>
-			<div class="community-page-policy-view">
-				<a data-tracking="view-community-page-policy" href="{{policyUrl}}">{{policyView}}</a>
-			</div>
-		</div>
+		<p class="community-page-policy-text">{{policyText}}</p>
+		<a data-tracking="view-community-page-policy" href="{{policyUrl}}">{{policyView}}</a>
 	</div>
 {{/communityPolicyModule}}

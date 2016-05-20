@@ -1,24 +1,43 @@
 <?php
 
 class CommunityPageSpecialCommunityPolicyModel {
-	public function getData( $userId ) {
-		$admins = ( new WikiService() )->getWikiAdminIds( 0, false, false, null, false );
-		$isAdmin = in_array( $userId, $admins );
-
-		$title = Title::newFromText(
-			wfMessage( 'communitypage-policy-pagetitle', [ 'content' ] )->inContentLanguage()->plain(),
-			NS_HELP
-		);
-		$policyText = Title::newFromText( 'communitypage-policy-text', NS_MEDIAWIKI );
+	public function getData() {
+		global $wgUser;
 
 		return [
-			'policyUrl' => $title->getFullURL(),
-			'editPolicyUrl' => $policyText->getFullURL( [ 'action' => 'edit' ] ),
+			'policyUrl' => $this->getPolicyLink(),
+			'editPolicyUrl' => $this->getPolicyTextEditLink(),
 			'policyHeading' => wfMessage( 'communitypage-policy-heading' )->plain(),
 			'policyText' => wfMessage( 'communitypage-policy-text' )->plain(),
 			'policyEdit' => wfMessage( 'communitypage-policy-edit' )->plain(),
 			'policyView' => wfMessage( 'communitypage-policy-view' )->plain(),
-			'showEditLink' => $isAdmin,
+			'showEditLink' => true,//in_array( 'sysop', $wgUser->getEffectiveGroups() ),
 		];
+	}
+
+	private function getPolicyLink() {
+		$title = Title::newFromText(
+			wfMessage( 'communitypage-policy-pagetitle' )->inContentLanguage()->plain(),
+			NS_HELP
+		);
+
+		if ( $title instanceof Title ) {
+			return $title->getFullURL();
+		}
+
+		return '';
+	}
+
+	private function getPolicyTextEditLink() {
+		$title = Title::newFromText(
+			'communitypage-policy-text',
+			NS_MEDIAWIKI
+		);
+
+		if ( $title instanceof Title ) {
+			return $title->getFullURL( ['action' => 'edit'] );
+		}
+
+		return '';
 	}
 }
