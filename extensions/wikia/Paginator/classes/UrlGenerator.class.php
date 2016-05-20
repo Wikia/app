@@ -28,7 +28,7 @@ class UrlGenerator {
 		if ( !is_string( $pageParam ) ) {
 			throw new InvalidArgumentException( 'Expected a string for pageParam' );
 		}
-		if ( !is_null( $pagesCount ) && !Validator::isNonNegativeInteger( $pagesCount ) ) {
+		if ( !Validator::isNonNegativeInteger( $pagesCount ) ) {
 			throw new InvalidArgumentException( 'Expected a non-negative integer for pagesCount' );
 		}
 

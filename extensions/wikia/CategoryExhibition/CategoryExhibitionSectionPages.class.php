@@ -12,7 +12,7 @@ class CategoryExhibitionSectionPages extends CategoryExhibitionSection {
 		global $wgCategoryExhibitionPagesSectionRows, $wgOut;
 		$this->loadPaginationVars();
 		$oTmpl = $this->getTemplateForNameSpace( $this->getExcludes(), $wgCategoryExhibitionPagesSectionRows * 4, true );
-		$wgOut->addHeadItem( 'Paginator', $oTmpl->mVars['paginatorHead'] );
+		$wgOut->addHeadItem( 'Paginator', $oTmpl->mVars['headLinks'] );
 		return $this->executeTemplate( $oTmpl );
 	}
 

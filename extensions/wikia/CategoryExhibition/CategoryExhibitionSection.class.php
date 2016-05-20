@@ -235,7 +235,7 @@ class CategoryExhibitionSection {
 					'data' => $aData,
 					'category' => $this->categoryTitle->getText(),
 					'paginator' => $pages->getBarHTML(),
-					'paginatorHead' => $pages->getHeadItem(),
+					'headLinks' => $pages->getHeadItem(),
 				] );
 				$this->saveToCache( $oTmpl->mVars );
 				return $oTmpl;

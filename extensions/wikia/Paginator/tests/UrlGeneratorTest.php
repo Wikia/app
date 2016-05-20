@@ -5,10 +5,11 @@ namespace Wikia\Paginator;
 class UrlGeneratorTest extends \WikiaBaseTest {
 	public function dataProviderGetUrlForPage() {
 		return [
-			// Invalid pageUrlParam number
+			// Invalid page number
 			[ '', 'pageUrlParam', 1, 'a', null, 'InvalidArgumentException' ],
 			[ '', 'pageUrlParam', 1, [], null, 'InvalidArgumentException' ],
 			[ '', 'pageUrlParam', 1, 2, null, 'InvalidArgumentException' ],
+			[ '', 'pageUrlParam', 1, null, null, 'InvalidArgumentException' ],
 
 			// Empty URL
 			[ '', 'pageUrlParam', 0, 1, '' ],
