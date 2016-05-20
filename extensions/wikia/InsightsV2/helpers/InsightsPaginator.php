@@ -12,13 +12,16 @@ class InsightsPaginator {
 	/** @var int Number of all items in model - used for pagination */
 	private $total;
 	/** @var int Number of current pagination page */
-	private $page = 0;
+	private $page = 1;
 	private $subpage;
 	private $params = [];
 
 	public function __construct( $subpage, $params ) {
 		$this->subpage = $subpage;
-		$this->params = $params;
+		if ( isset( $params['page'] ) ) {
+			$this->page = $params['page'];
+		}
+		$this->params = $this->filterParams( $params );
 		$this->total = ( new InsightsCountService() )->getCount( $this->subpage );
 
 		$this->preparePaginationParams();
@@ -60,11 +63,10 @@ class InsightsPaginator {
 	 * Prepare pagination
 	 */
 	public function getPagination() {
-		$params = array_merge( $this->getParams() );
-		$url = urldecode( InsightsHelper::getSubpageLocalUrl( $this->subpage, $params ) );
+		$url = urldecode( InsightsHelper::getSubpageLocalUrl( $this->subpage, $this->getParams() ) );
 
 		$paginator = new Paginator( $this->getTotal(), $this->getLimit(), $url );
-		$paginator->setActivePage( $this->getPage() + 1 );
+		$paginator->setActivePage( $this->getPage() );
 		$paginatorBar = $paginator->getBarHTML();
 
 		return $paginatorBar;
@@ -76,19 +78,16 @@ class InsightsPaginator {
 	 * @param array $params An array of URL parameters
 	 */
 	private function preparePaginationParams() {
-		if ( isset( $this->params['limit'] ) ) {
-			if ( $this->params['limit'] <= self::INSIGHTS_LIST_MAX_LIMIT ) {
-				$this->limit = intval( $this->params['limit'] );
-			} else {
-				$this->limit = self::INSIGHTS_LIST_MAX_LIMIT;
-			}
+		if ( isset( $this->params['limit'] ) && $this->params['limit'] <= self::INSIGHTS_LIST_MAX_LIMIT ) {
+			$this->limit = intval( $this->params['limit'] );
 		}
 
-		if ( isset( $this->params['page'] ) ) {
-			$page = intval( $this->params['page'] );
-			// TODO: migrate to 1-indexed pagination
-			$this->page = --$page;
-			$this->offset = $this->page * $this->limit;
-		}
+		$this->offset = ( $this->page - 1 ) * $this->limit;
+	}
+
+	private function filterParams( $params ) {
+		unset( $params['page'] );
+
+		return $params;
 	}
 }
