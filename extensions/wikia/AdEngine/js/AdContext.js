@@ -169,6 +169,8 @@ define('ext.wikia.adEngine.adContext', [
 			isPageType('article')
 		);
 
+		context.providers.revcontent = !noExternals && geo.isProperGeo(instantGlobals.wgAdDriverRevcontentCountries);
+
 		// Export the context back to ads.context
 		// Only used by Lightbox.js, WikiaBar.js and AdsInContext.js
 		if (w.ads && w.ads.context) {
