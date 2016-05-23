@@ -108,6 +108,7 @@ $config['adengine2_desktop_js'] = array(
 		'//extensions/wikia/AdEngine/js/template/modalOasisHandler.js',
 		'//extensions/wikia/AdEngine/js/template/skin.js',
 		'//extensions/wikia/AdEngine/js/utils/AdLogicZoneParams.js',
+		'//extensions/wikia/AdEngine/js/utils/btfBlocker.js',
 		'//extensions/wikia/AdEngine/js/utils/hooks.js',
 		'//extensions/wikia/ARecoveryEngine/js/helper.js',
 		'//resources/wikia/modules/krux.js',
@@ -836,6 +837,7 @@ $config['mobile_base_ads_js'] = array(
 		'//extensions/wikia/AdEngine/js/provider/remnantGptMobile.js',
 		'//extensions/wikia/AdEngine/js/slot/adSlot.js',
 		'//extensions/wikia/AdEngine/js/utils/AdLogicZoneParams.js',
+		'//extensions/wikia/AdEngine/js/utils/btfBlocker.js',
 		'//extensions/wikia/AdEngine/js/utils/hooks.js',
 
 		// Recovery

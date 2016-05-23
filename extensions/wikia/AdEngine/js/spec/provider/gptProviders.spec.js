@@ -63,6 +63,16 @@ describe('ext.wikia.adEngine.provider.*', function () {
 		);
 	}
 
+	function getBtfBlocker() {
+		return modules['ext.wikia.adEngine.utils.btfBlocker'](
+			mocks.adContext,
+			mocks.slotTweaker,
+			mocks.lazyQueue,
+			mocks.log,
+			mocks.window
+		);
+	}
+
 	function getProvider(providerName) {
 		switch (providerName) {
 			case 'directGpt':
@@ -70,7 +80,7 @@ describe('ext.wikia.adEngine.provider.*', function () {
 					mocks.adContext,
 					getFactory(),
 					mocks.slotTweaker,
-					mocks.lazyQueue,
+					getBtfBlocker(),
 					mocks.log,
 					mocks.window
 				);
@@ -80,6 +90,10 @@ describe('ext.wikia.adEngine.provider.*', function () {
 					mocks.slotTweaker
 				);
 			case 'directGptMobile':
+				return modules['ext.wikia.adEngine.provider.' + providerName](
+					getFactory(),
+					getBtfBlocker()
+				);
 			case 'remnantGptMobile':
 				return modules['ext.wikia.adEngine.provider.' + providerName](
 					getFactory()
