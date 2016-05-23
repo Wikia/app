@@ -11,7 +11,7 @@ define('ext.wikia.adEngine.template.bfaa', [
 		// SCSS property: $breakpoint-width-not-supported
 		breakPointWidthNotSupported = 767,
 		nav = doc.getElementById('globalNavigation'),
-		page = doc.querySelector('.WikiaSiteWrapper'),
+		page = doc.getElementsByClassName('WikiaSiteWrapper')[0],
 		wrapper = doc.getElementById('WikiaTopAds');
 
 	function updateNavBar(height) {
@@ -38,9 +38,9 @@ define('ext.wikia.adEngine.template.bfaa', [
 		wrapper.style.background = backgroundColor;
 
 		updateNavBar(height);
-		doc.addEventListener('scroll', function () {
+		doc.addEventListener('scroll', adHelper.throttle(function () {
 			updateNavBar(height);
-		});
+		}, 50));
 
 		if (win.WikiaBar) {
 			win.WikiaBar.hideContainer();

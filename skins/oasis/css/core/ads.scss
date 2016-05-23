@@ -57,14 +57,14 @@ $taboola-small-breakpoint: "#{$screen} and (max-width: 420px)";
 		&.bfaa-pinned-nav {
 			padding: 0;
 		}
+	}
 
-		.WikiaTopAdsInner {
-			width: 100%;
+	.WikiaTopAdsInner {
+		width: 100%;
+	}
 
-			#TOP_LEADERBOARD {
-				width: 100%;
-			}
-		}
+	#TOP_LEADERBOARD {
+		width: 100%;
 	}
 }
 
