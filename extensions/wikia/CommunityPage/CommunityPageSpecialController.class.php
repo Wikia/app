@@ -15,7 +15,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		parent::__construct( 'Community' );
 		$this->usersModel = new CommunityPageSpecialUsersModel();
 		$this->wikiModel = new CommunityPageSpecialWikiModel();
-		$this->userTotalContributionCount = $this->usersModel->getUserContributions( $this->getUser(), false );
+		$this->userTotalContributionCount = $this->usersModel->getUserContributionsCount( $this->getUser() );
 	}
 
 	public function index() {
@@ -56,7 +56,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	 * @return array
 	 */
 	public function getTopContributorsData() {
-		$userContributionCount = $this->usersModel->getUserContributions( $this->getUser() );
+		$userContributionCount = $this->usersModel->getUserContributionsCount( $this->getUser() );
 		$contributors = $this->usersModel->getTopContributors( 50 );
 		// get details for only 5 of the remaining contributors
 		$contributorDetails = $this->getContributorsDetails(
