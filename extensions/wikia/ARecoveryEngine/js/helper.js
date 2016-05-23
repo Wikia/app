@@ -60,11 +60,12 @@ define('ext.wikia.aRecoveryEngine.recovery.helper', [
 			});
 		}
 
-		if (instantGlobals.wgARecoveryEngineCustomLog) {
+		if (instantGlobals.wgARecoveryEngineCustomLog && window._sp_ && !window._sp_.trackingSent) {
 			try {
 				var xmlHttp = new XMLHttpRequest();
 				xmlHttp.open('GET', customLogEndpoint+action, true);
 				xmlHttp.send();
+				window._sp_.trackingSent = true;
 			} catch (e) {}
 		}
 	}
