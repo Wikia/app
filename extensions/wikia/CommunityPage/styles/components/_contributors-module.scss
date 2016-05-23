@@ -4,7 +4,7 @@
 @import 'variables';
 
 // Styles for the contributors module in-page and modal version
-.contributorsModule {
+.contributors-module {
 	.avatar-container {
 		display: inline-block;
 		margin: $avatar-margin;
@@ -113,7 +113,7 @@
 		margin: 12px 0;
 	}
 
-	&.contributorsModuleModal {
+	&.contributors-module-modal {
 		padding: 0 0 24px;
 
 		.community-page-all-contributors-legend {

@@ -149,7 +149,7 @@ require([
 
 			uiModal.createComponent(createPageModalConfig, function (modal) {
 				modal.$content
-					.addClass('contributorsModule contributorsModuleModal')
+					.addClass('contributors-module contributors-module-modal')
 					.html(mustache.render(templates.modalLoadingScreen))
 					.find(tabToActivate.className).children(tabLinkClass).addClass('active');
 
@@ -222,16 +222,16 @@ require([
 
 	function initTracking() {
 		// Track clicks in contribution module
-		$('.contributorsModule').on('mousedown touchstart', 'a', function (event) {
+		$('.contributors-module').on('mousedown touchstart', 'a', function (event) {
 			handleClick(event, 'community-page-contribution-module');
 		});
 
 		// Track clicks in the Recent Activity module
-		$('.recentActivityModule').on('mousedown touchstart', 'a', function (event) {
+		$('.recent-activity-module').on('mousedown touchstart', 'a', function (event) {
 			handleClick(event, 'community-page-recent-activity-module');
 		});
 
-		$('.communityPolicyModule').on('mousedown touchstart', 'a', function (event) {
+		$('.community-policy-module').on('mousedown touchstart', 'a', function (event) {
 			handleClick(event, 'community-page-community-policy-module');
 		});
 
