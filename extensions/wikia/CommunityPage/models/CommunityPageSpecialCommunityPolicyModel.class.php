@@ -30,7 +30,7 @@ class CommunityPageSpecialCommunityPolicyModel {
 
 	private function getPolicyTextEditLink() {
 		$title = Title::newFromText(
-			'communitypage-policy-text',
+			'communitypage-policy-module-text',
 			NS_MEDIAWIKI
 		);
 
