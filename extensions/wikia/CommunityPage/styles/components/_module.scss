@@ -1,8 +1,12 @@
 @import 'skins/shared/color';
 @import 'skins/oasis/css/core/breakpoints-variables';
+@import 'variables';
 
 .WikiaRail .module {
+	line-height: $module-default-line-height;
+
 	h2 {
+		line-height: $module-default-line-height;
 		margin-bottom: 12px;
 		padding: 0;
 	}

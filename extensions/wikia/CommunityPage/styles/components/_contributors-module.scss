@@ -24,18 +24,15 @@
 	}
 
 	.community-page-contributor-details {
-		line-height: $contributor-module-default-line-height;
 		vertical-align: middle;
 	}
 
 	.top-contributors, .top-admins {
 		font-size: 14px;
-		line-height: $contributor-module-default-line-height;
 	}
 
 	.top-contributors {
 		font-size: 14px;
-		line-height: $contributor-module-default-line-height;
 	}
 
 	.community-page-contributor {
@@ -59,8 +56,7 @@
 		span {
 			display: block;
 			font-size: 16px;
-			height: $contributor-module-default-line-height;
-			line-height: $contributor-module-default-line-height;
+			height: $module-default-line-height;
 			text-align: center;
 		}
 

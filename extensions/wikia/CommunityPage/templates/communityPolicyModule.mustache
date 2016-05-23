@@ -1,10 +1,12 @@
 {{#communityPolicyModule}}
 	<div class="module community-policy-module">
-		{{#showEditLink}}
-			<a data-tracking="edit-community-page-policy" class="community-page-policy-edit" href="{{editLink}}">{{editText}}</a>
-		{{/showEditLink}}
 		<h2>{{title}}</h2>
-		<p class="community-page-policy-text">{{text}}</p>
-		<a data-tracking="view-community-page-policy" href="{{link}}">{{linkText}} &rarr;</a>
+		<p class="community-page-policy-text">
+			{{text}}
+			{{#showEditLink}}
+				<a data-tracking="edit-community-page-policy" class="community-page-policy-edit" href="{{editLink}}">{{editText}}</a>
+            {{/showEditLink}}
+		</p>
+		<a data-tracking="view-community-page-policy" href="{{link}}">{{linkText}} &nbsp;&rarr;</a>
 	</div>
 {{/communityPolicyModule}}
