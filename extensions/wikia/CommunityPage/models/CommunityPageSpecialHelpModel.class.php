@@ -1,8 +1,6 @@
 <?php
 
 class CommunityPageSpecialHelpModel {
-	const HELP_PAGE = 'Help:Contents';
-
 	public function getData() {
 		return [
 			'title' => wfMessage( 'communitypage-help-module-title' )->plain(),
@@ -12,6 +10,6 @@ class CommunityPageSpecialHelpModel {
 	}
 
 	private function getHelpPageLink() {
-		return Title::newFromText( wfMessage( 'communitypage-help-module-link-text' )->plain() )->getFullURL();
+		return Title::newFromText( wfMessage( 'communitypage-help-module-link-page-name' )->plain() )->getFullURL();
 	}
 }

@@ -139,7 +139,7 @@ $messages['qqq'] = array(
 	'communitypage-full-list' => 'Text to a link to go to see complete list of insights',
 	'communitypage-view-more' => 'Text for link shown at bottom of all members modal tab. Links to list of all users',
 	'communitypage-help-module-title' => 'Title of Help module',
-	'communitypage-help-module-link-page-name' => 'Name of article with help contents',
+	'communitypage-help-module-link-page-name' => 'Name of article with help contents without Help namespace prefix',
 	'communitypage-help-module-link-text' => 'Text in link to help contents page asking user does he need help to getting started',
 );
 
