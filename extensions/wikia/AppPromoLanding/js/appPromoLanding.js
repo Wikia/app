@@ -28,8 +28,10 @@ $(function() {
 		}
 	});
 });
-
+/* // TODO: DELETE THIS VERSION IF THE VERSION IN TEH CODE WORKS (jquery isn't available when we get here, I think).
 function sendSMS() {
+	$('#branchIoForm button').hide();
+	$('#branchIoForm button.sending').show();
 	branch.sendSMS(
 		$('form#branchIoForm input').val(),
 		{
@@ -37,11 +39,18 @@ function sendSMS() {
 			feature: 'Text-Me-The-App',
 			campaign: 'apppromolanding'
 		}, { make_new_link: false }, // Default: false. If set to true, sendSMS will generate a new link even if one already exists.
-		function(err) { console.log(err); }
+		function(err) {
+			if(err){
+				console.log(err);
+			} else {
+				$('#branchIoForm button.sending').hide();
+				$('#branchIoForm button.sent').show();
+			}
+		}
 	);
 	return false;
 }
-
+*/
 // When this is called, the user will be redirect to the branch.io link for the app
 // which will send the user directly to the store corresponding to their platform.
 function redirectToBranchLink(){

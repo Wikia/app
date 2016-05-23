@@ -112,7 +112,7 @@ class AppPromoLandingController extends WikiaController {
 				}
 			}
 		}
-		
+
 		// Not all articles will have images, so we may have more or less than we need. Here,
 		// we will right-size the array.
 		$numThumbsNeeded = (self::THUMBS_NUM_ROWS * self::THUMBS_PER_ROW);
@@ -156,12 +156,14 @@ class AppPromoLandingController extends WikiaController {
 		$this->trendingArticles = $trendingArticles;
 		$this->mainPageUrl = Title::newMainPage()->getFullUrl();
 		$this->androidPhoneSrc = F::app()->wg->ExtensionsPath."/wikia/AppPromoLanding/images/nexus6.png";
-		$this->androidScreenShot = "http://s3.amazonaws.com/wikia-mobile/android-screenshots/{$this->config->app_tag}/1.png";
+		//$this->androidScreenShot = "http://s3.amazonaws.com/wikia-mobile/android-screenshots/{$this->config->app_tag}/1.png"; // using our own domain is faster & cheaper than s3.
+		$this->androidScreenShot = "http://wikia-mobile.nocookie.net/wikia-mobile/android-screenshots/{$this->config->app_tag}/1.png";
 		$this->iosPhoneSrc = F::app()->wg->ExtensionsPath."/wikia/AppPromoLanding/images/silverIphone.png";
-		$this->iosScreenShot = "http://s3.amazonaws.com/wikia-mobile/ios-screenshots/{$this->config->app_tag}/en/3.5/4.png.PNGCRUSH.png";
+		//$this->iosScreenShot = "http://s3.amazonaws.com/wikia-mobile/ios-screenshots/{$this->config->app_tag}/en/4.7/4.png.PNGCRUSH.png"; // using our own domain is faster & cheaper than s3.
+		$this->iosScreenShot = "http://wikia-mobile.nocookie.net/wikia-mobile/ios-screenshots/{$this->config->app_tag}/en/4.7/4.png.PNGCRUSH.png";
 		$this->androidStoreSrc = F::app()->wg->ExtensionsPath."/wikia/AppPromoLanding/images/playStoreButton.png";
 		$this->iosStoreSrc = F::app()->wg->ExtensionsPath."/wikia/AppPromoLanding/images/appleAppStoreButton.png";
-		$this->imgSpacing = 3; // how much spacing the site puts between imgs. This doesn't appear to be padding, margin, letter-spacing or anything else I can find in CSS (it must be there somewhere though)... not sure what's doing it.
+		$this->imgSpacing = 1; // spacing between the image-grid cells.
 
 		wfProfileOut( __METHOD__ );
 	}

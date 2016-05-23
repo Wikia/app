@@ -13,20 +13,48 @@
 body.appPromo, body.appPromo::before, body.appPromo::after{
 	background-image:none !important;
 }
+.entireAppPromo{/* Gets the whole page to center-align even when it is wider than the browser */
+	position: absolute;
+    left: 50%;
+    margin-left: -<?php
+	// Half the width (971.5px to start)
+	//print ((($numThumbsPerRow * ($thumbWidth+$imgSpacing)) - ($thumbWidth/2))/2);
+	
+	// Peter Galletta wanted 925px instead (because the content is at a specific width of 2 blocks in, which doesn't leave the good bits centered in the 11 thumbs per row)
+	print "925";
+	?>px;
+}
 .thumbsWrapper{
 	position:relative;
 }
 .thumbRow{
-	margin-left:-<?= round($thumbWidth / 2) ?>px;
-	overflow-x:hidden;
+	overflow:hidden;
 	white-space:nowrap;
-}<?php
+	height: <?= $thumbHeight ?>px;
+	margin-left:-<?= round($thumbWidth / 2) ?>px;
+	margin-bottom:1px;
+}
+.thumbRow .imageWrapper{
+	display:inline-block;
+	position:relative;
+	margin-right:1px;
+	height: <?= $thumbHeight ?>px;
+	background-color:#404040;
+}
+.thumbRow .imageWrapper img{
+	position:absolute;
+	top:0;
+	left:0;
+}
+<?php
 // This is the overlay which makes the image grid slightly faded out ?>
-.thumbOverlay {
+.thumbRow .imageWrapper::before{
+  content:'';
   z-index: 2;
-  display: block;
-  position: absolute;
-  height: 100%;
+  display: inline-block;
+  position: relative;
+  height: <?= $thumbHeight ?>px;
+  width: <?= $thumbHeight ?>px;
   top: 0;
   left: 0;
   right: 0;
@@ -51,7 +79,7 @@ body.appPromo, body.appPromo::before, body.appPromo::after{
 	height: 140.6px;
 	margin:24px 0 0 12px;
 	text-align:right;
-	font-family: "Helvetica Neue","HelveticaNeue-Thin", Arial,sans-serif;
+	font-family: "HelveticaNeue-Thin", "Helvetica Neue", Arial,sans-serif;
 	font-size: 30px;
 	line-height: 1.5;
 	color: #ffffff;
@@ -69,6 +97,12 @@ body.appPromo, body.appPromo::before, body.appPromo::after{
 	margin: 25px 26px 0 65px;
 	line-height:1.4em;
 	font-size: 22px;
+}
+.branchIoInner p{
+	font-family: "HelveticaNeue-Light",helvetica, Arial,sans-serif;
+}
+.branchIoInner p span{
+	white-space:nowrap;
 }
 .callToAction{
 	margin-top:29px;
@@ -112,6 +146,9 @@ body.appPromo, body.appPromo::before, body.appPromo::after{
 	width:269px;
 	height:480px;
 }
+#branchIoForm{
+	display:inline-block;
+}
 #branchIoForm input[type=text]{
 	display:inline-block;
 	padding: 0 65px 0 18px;
@@ -126,6 +163,10 @@ body.appPromo, body.appPromo::before, body.appPromo::after{
 	margin-left: -80px;
 	vertical-align:middle;
 	visibility:hidden;
+	
+	background-image:none;
+	background-color:#5ca300;
+	border:0px;
 }
 .belowThumbs{
 	position:relative;
@@ -140,79 +181,85 @@ body.appPromo, body.appPromo::before, body.appPromo::after{
 </style>
 <?= $debug ?>
 
+<div class='entireAppPromo'>
+	<div class='thumbsWrapper'>
+		<div class='thumbRow'>
+		<?php
+			$numThumbs = 0;
+			foreach($trendingArticles as $topArticle){
+				print "<div class='imageWrapper'>";
+					print "<img src='{$topArticle["imgUrl"]}' title='{$topArticle["title"]}' width='{$topArticle["width"]}' height='{$topArticle["height"]}'/>";
+				print "</div>";
 
-<div class='thumbsWrapper'>
-	<div class='thumbRow'>
-	<?php
-		$numThumbs = 0;
-		foreach($trendingArticles as $topArticle){
-			print "<img src='{$topArticle["imgUrl"]}' title='{$topArticle["title"]}' width='{$topArticle["width"]}' height='{$topArticle["height"]}'/>\n";
-
-			$numThumbs++;
-			if(($numThumbsPerRow * $thumbRows) == $numThumbs){
-				break; // both rows are filled now... stop printing thumbnails
-			} else if(($numThumbs % $numThumbsPerRow) == 0){
-				print "</div><div class='thumbRow'>\n";
+				$numThumbs++;
+				if(($numThumbsPerRow * $thumbRows) == $numThumbs){
+					break; // both rows are filled now... stop printing thumbnails
+				} else if(($numThumbs % $numThumbsPerRow) == 0){
+					print "</div><div class='thumbRow'>";
+				}
 			}
-		}
-	?>
+		?>
+		</div>
+		<div class='topContent'>
+			<div class='pitchOuter'>
+				<div class='pitchInner'>
+					<?= wfMsg( 'apppromolanding-pitch' ) ?>
+				</div>
+			</div>
+			<div class='branchIoOuter'>
+				<div class='branchIoInner'>
+					<p><?= wfMsg('apppromolanding-custompitch', "<wbr><span>{$config->name}</span>") ?></p>
+					<div class='branchIo'>
+						<div class='callToAction'><?= wfMsg( 'apppromolanding-call-to-action' ) ?></div>
+						<form id='branchIoForm' method='post' onsubmit='return sendSMS();'>
+							<input type='text' name='phoneNumber' placeholder='<?= wfMsg('apppromolanding-phone-num-placeholder') ?>'/><button
+								data-send="<?= htmlspecialchars(wfMsg( 'apppromolanding-button-get' )) ?>"
+								data-sending="<?= htmlspecialchars(wfMsg( 'apppromolanding-button-sending' )) ?>"
+								data-sent="<?= htmlspecialchars(wfMsg( 'apppromolanding-button-sent' )) ?>"
+								type='submit'><?= wfMsg( 'apppromolanding-button-get' ) ?></button>
+						</form>
+					</div>
+					<div class='storeButtons'>
+						<a href='<?= $iosUrl ?>'>
+							<img src='<?= $iosStoreSrc ?>'/>
+						</a>
+						<a href='<?= $androidUrl ?>'>
+							<img src='<?= $androidStoreSrc ?>'/>
+						</a>
+					</div>
+				</div>
+			</div>
+			<div class='phoneWrapper androidPhone'>
+				<div class='phoneFrame'>
+					<img src='<?= $androidPhoneSrc ?>'/>
+					<div class='screenshot'>
+						<img src='<?= $androidScreenShot ?>' width='266' height='473'/>
+					</div>
+				</div>
+			</div>
+			<div class='phoneWrapper iosPhone'>
+				<div class='phoneFrame'>
+					<img src='<?= $iosPhoneSrc ?>'/>
+					<div class='screenshot'>
+						<img src='<?= $iosScreenShot ?>' width='269' height='480'/>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
-	<div class='thumbOverlay'></div>
-	<div class='topContent'>
-		<div class='pitchOuter'>
-			<div class='pitchInner'>
-				<?= wfMsg( 'apppromolanding-pitch' ) ?>
-			</div>
-		</div>
-		<div class='branchIoOuter'>
-			<div class='branchIoInner'>
-				<p><?= wfMsg('apppromolanding-custompitch', $config->name) ?></p>
-				<div class='branchIo'>
-					<div class='callToAction'><?= wfMsg( 'apppromolanding-call-to-action' ) ?></div>
-					<form id='branchIoForm' method='post' onsubmit='sendSMS()'>
-						<input type='text' name='phoneNumber' placeholder='<?= wfMsg('apppromolanding-phone-num-placeholder') ?>'/><button type='submit'>
-							<?= wfMsg( 'apppromolanding-button-get' ) ?>
-						</button>
-					</form>
-				</div>
-				<div class='storeButtons'>
-					<a href='<?= $iosUrl ?>'>
-						<img src='<?= $iosStoreSrc ?>'/>
-					</a>
-					<a href='<?= $androidUrl ?>'>
-						<img src='<?= $androidStoreSrc ?>'/>
-					</a>
-				</div>
-			</div>
-		</div>
-		<div class='phoneWrapper androidPhone'>
-			<div class='phoneFrame'>
-				<img src='<?= $androidPhoneSrc ?>'/>
-				<div class='screenshot'>
-					<img src='<?= $androidScreenShot ?>' width='266' height='473'/>
-				</div>
-			</div>
-		</div>
-		<div class='phoneWrapper iosPhone'>
-			<div class='phoneFrame'>
-				<img src='<?= $iosPhoneSrc ?>'/>
-				<div class='screenshot'>
-					<img src='<?= $iosScreenShot ?>' width='269' height='480'/>
-				</div>
-			</div>
-		</div>
+	<div class='belowThumbs'>
+		<a class='backLink' href='<?= $mainPageUrl ?>'>
+			<?= wfMsg( 'apppromolanding-back' ) ?>
+		</a>
 	</div>
-</div>
-<div class='belowThumbs'>
-	<a class='backLink' href='<?= $mainPageUrl ?>'>
-		<?= wfMsg( 'apppromolanding-back' ) ?>
-	</a>
 </div>
 <script>
-	(function(b,r,a,n,c,h,_,s,d,k){if(!b[n]||!b[n]._q){for(;s<_.length;)c(h,_[s++]);d=r.createElement(a);d.async=1;d.src="https://cdn.branch.io/branch-latest.min.js";k=r.getElementsByTagName(a)[0];k.parentNode.insertBefore(d,k);b[n]=h}})(window,document,"script","branch",function(b,r){b[r]=function(){b._q.push([r,arguments])}},{_q:[],_v:1},"addListener applyCode banner closeBanner creditHistory credits data deepview deepviewCta first getCode init link logout redeem referrals removeListener sendSMS setIdentity track validateCode".split(" "), 0);
-	branch.init('<?= $branchKey ?>');
+//	(function(b,r,a,n,c,h,_,s,d,k){if(!b[n]||!b[n]._q){for(;s<_.length;)c(h,_[s++]);d=r.createElement(a);d.async=1;d.src="https://cdn.branch.io/branch-latest.min.js";k=r.getElementsByTagName(a)[0];k.parentNode.insertBefore(d,k);b[n]=h}})(window,document,"script","branch",function(b,r){b[r]=function(){b._q.push([r,arguments])}},{_q:[],_v:1},"addListener applyCode banner closeBanner creditHistory credits data deepview deepviewCta first getCode init link logout redeem referrals removeListener sendSMS setIdentity track validateCode".split(" "), 0);
+//	branch.init('<?= $branchKey ?>');
 
 	function sendSMS() {
+		$('#branchIoForm button').text( $('#branchIoForm button').data('sending') );
+		$('#branchIoForm button').attr('disabled', 'disabled');
 		branch.sendSMS(
 			$('form#branchIoForm input').val(),
 			{
@@ -220,7 +267,18 @@ body.appPromo, body.appPromo::before, body.appPromo::after{
 				feature: 'Text-Me-The-App',
 				campaign: 'apppromolanding'
 			}, { make_new_link: false }, // Default: false. If set to true, sendSMS will generate a new link even if one already exists.
-			function(err) { console.log(err); }
+			function(err) {
+				if(err){
+					// Usually, this is an invalid phone number.
+					$('#branchIoForm button').text( $('#branchIoForm button').data('send') );
+					$('#branchIoForm button').attr('disabled', ''); // re-enable
+					alert("<?= wfMsg('apppromolanding-invalid-phone-num') ?>");
+					console.log(err);
+				} else {
+					$('#branchIoForm button').text( $('#branchIoForm button').data('sent') );
+					$('#branchIoForm button').attr('disabled', ''); // re-enable
+				}
+			}
 		);
 		return false;
 	}
@@ -242,7 +300,7 @@ ul.tempList{
 	color:#333;
 }
 </style>
-<div style='clear:both;margin-top:250px;'></div>
+<div style='clear:both;margin-top:800px;'></div>
 Sub-tasks:
 <ul class='tempList'>
 	<li class='done'>Get the Community_App URL to not be an article, instead to be commandeered by our extension</li>
@@ -274,6 +332,22 @@ Sub-tasks:
 	<li class='done'>Ensure that this works on a bunch of wikis & looks correct on all of them</li>
 	<li class='done'>Make sure the interaction is correct on wikis without an app http://trueblood.sean.wikia-dev.com/wiki/Community_App</li>
 	<li class='done'>Change the app-store links to be branch.io link so that we get metrics in there</li>
-	<li>Update the image URL when the images are changed to internal domain.</li>
+	<li class='done'>Get VCL to send even mobile users to the Oasis version of the page. Done here: https://github.com/Wikia/wikia-vcl/blob/master/wikia.com/control-skin.vcl#L37</li>
+	<li class='done'>Update the image URL when the images are changed to internal domain.</li>
+	<li>Design review:
+		<ul>
+			<li class='done'>tagline font (in blue box) - change the order of the font stack so "thin" is first, - font-family: "HelveticaNeue-Thin", "Helvetica Neue", Arial,sans-serif;</li>
+			<li class='done'>Add Helvetica Neue Light to the font stack for the subtitle above branch ("the destination...") and the input field copy, font-family: "HelveticaNeue-Light",helvetica, Arial,sans-serif</li>
+			<li class='done'>It looks like you are using iphone4 screenshots and its distorting the aspect ratio, we need to use the iphone 6/6s screens</li>
+			<li class='done'>the "get app" btn look to be inheriting some default wikia styling, take out the gradient and border and use the green (#5ca300).</li>
+			<li class='done'>ideally we provide a status update from Branch that the SMS has been sent (similar to the default implementation). I think the simpliest would be to mirror the default behavior and change the submit button to "sent" after submission. Let me know if thats doable or if we need to work on another solution.<br/>
+				Text that they use is -> "Sending SMS" -> "SMS Sent". We should be able to do this.</li>
+			<li class='done'>Sometimes there are placeholder images from the ImageServing. Is there any way we can check instead of outputting those? :( I don't think so. It gives us a URL and that URL just 404s. I'd consider it a bug in ImageServing</li>
+			<li class='done'>The grid line should be white with a thickness of 1px</li>
+			<li class='done'>nice-to-have: If it's easy, a bg-color on the images grid of #404040 so that there is good contrast during the load.</li>
+			<li class='done'>in terms of responsive layout, the screenshots, cta etc should be centered regardless of the size of the browser window (for that breakpoint). Keep content fixed to bg grid.</li>
+			<li class='done'>Make sure the title of the Wiki stays as one word</li>
+		</ul>
+	</li>
 	<li>Translation config files & translation requests</li>
 </ul>
