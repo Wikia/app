@@ -11,4 +11,4 @@ $wgAutoloadClasses['Wikia\Paginator\Paginator'] = __DIR__ . '/classes/Paginator.
 $wgAutoloadClasses['Wikia\Paginator\UrlGenerator'] = __DIR__ . '/classes/UrlGenerator.class.php';
 $wgAutoloadClasses['Wikia\Paginator\Validator'] = __DIR__ . '/classes/Validator.class.php';
 
-$wgExtensionMessagesFiles['Paginator'] = $dir . 'i18n/Paginator.i18n.php';
+$wgExtensionMessagesFiles['Paginator'] = __DIR__ . '/i18n/Paginator.i18n.php';
