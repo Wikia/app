@@ -184,7 +184,9 @@ class Linkstoredirects extends SpecialPage{
 							"page_namespace",
 							"page_title"
 						],
-						"page_id" => $ids,
+						[
+							"page_id" => $ids,
+						]
 						__METHOD__
 					);
 					while ($innerRow = $dbr->fetchObject($res2)) {
