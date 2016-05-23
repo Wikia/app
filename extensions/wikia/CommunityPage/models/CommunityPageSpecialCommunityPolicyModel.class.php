@@ -5,19 +5,19 @@ class CommunityPageSpecialCommunityPolicyModel {
 		global $wgUser;
 
 		return [
-			'policyUrl' => $this->getPolicyLink(),
-			'editPolicyUrl' => $this->getPolicyTextEditLink(),
-			'policyHeading' => wfMessage( 'communitypage-policy-heading' )->plain(),
-			'policyText' => wfMessage( 'communitypage-policy-text' )->plain(),
-			'policyEdit' => wfMessage( 'communitypage-policy-edit' )->plain(),
-			'policyView' => wfMessage( 'communitypage-policy-view' )->plain(),
-			'showEditLink' => in_array( 'sysop', $wgUser->getEffectiveGroups() ),
+			'link' => $this->getPolicyLink(),
+			'editLink' => $this->getPolicyTextEditLink(),
+			'title' => wfMessage( 'communitypage-policy-module-title' )->plain(),
+			'text' => wfMessage( 'communitypage-policy-module-text' )->plain(),
+			'editText' => wfMessage( 'communitypage-policy-module-edit-link-text' )->plain(),
+			'linkText' => wfMessage( 'communitypage-policy-module-link-text' )->plain(),
+			'showEditLink' => true, //in_array( 'sysop', $wgUser->getEffectiveGroups() ),
 		];
 	}
 
 	private function getPolicyLink() {
 		$title = Title::newFromText(
-			wfMessage( 'communitypage-policy-pagetitle' )->inContentLanguage()->plain(),
+			wfMessage( 'communitypage-policy-module-link-page-name' )->inContentLanguage()->plain(),
 			NS_HELP
 		);
 

@@ -2,7 +2,7 @@
 @import 'skins/shared/mixins/clearfix';
 @import 'skins/shared/mixins/flexbox';
 
-.RecentActivityModule {
+.recentActivityModule {
 	.avatar-container {
 		@include flex($avatar-flex);
 
