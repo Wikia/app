@@ -85,6 +85,6 @@ class NavigationTemplate {
 	private static function mark( $text ) {
 		// marking each template with unique marker to be able to handle nested navigation templates
 		$marker = "\x7f" . self::MARK . "_" . uniqid() . "\x7f";
-		return sprintf( "<%s>%s</%s>", $marker, $text, $marker );
+		return sprintf( "<%s>\n%s\n</%s>", $marker, $text, $marker );
 	}
 }
