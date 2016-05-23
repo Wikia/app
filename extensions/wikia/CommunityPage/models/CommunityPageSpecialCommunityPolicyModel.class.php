@@ -11,7 +11,7 @@ class CommunityPageSpecialCommunityPolicyModel {
 			'text' => wfMessage( 'communitypage-policy-module-text' )->plain(),
 			'editText' => wfMessage( 'communitypage-policy-module-edit-link-text' )->plain(),
 			'linkText' => wfMessage( 'communitypage-policy-module-link-text' )->plain(),
-			'showEditLink' => true, //in_array( 'sysop', $wgUser->getEffectiveGroups() ),
+			'showEditLink' => in_array( 'sysop', $wgUser->getEffectiveGroups() ),
 		];
 	}
 
