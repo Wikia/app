@@ -232,7 +232,7 @@ require([
 		});
 
 		// Track clicks in the Help module
-		$('.helpModule').on('mousedown touchstart', 'a', function (event) {
+		$('.help-module').on('mousedown touchstart', 'a', function (event) {
 			handleClick(event, 'community-page-help-module');
 		});
 
