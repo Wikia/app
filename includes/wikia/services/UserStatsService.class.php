@@ -200,6 +200,7 @@ class UserStatsService extends WikiaModel {
 		// update edit counts in stats
 		$this->wg->Memc->delete( $this->getKey( 'stats4' ) );
 
+		// update edit counts on wiki
 		$editCount = $this->getOptionWiki( 'editcount' );
 		if ( !is_null( $editCount ) ) {
 			$this->updateEditCount( 'editcount' );
@@ -207,12 +208,16 @@ class UserStatsService extends WikiaModel {
 			$this->resetEditCountWiki( 0, Title::GAID_FOR_UPDATE );
 		}
 
+		// update weekly edit counts on wiki
 		$editCount = $this->getOptionWiki( 'editcountThisWeek' );
 		if ( !is_null( $editCount ) ) {
 			$this->updateEditCount( 'editcountThisWeek' );
 		} else {
 			$this->calculateEditCountFromWeek( 0, Title::GAID_FOR_UPDATE );
 		}
+
+		// update last revision timestamp
+		$this->initLastContributionTimestamp();
 
 		wfProfileOut( __METHOD__ );
 	}
@@ -538,7 +543,7 @@ class UserStatsService extends WikiaModel {
 		return $firstContributionTimestamp;
 	}
 
-	private function initLastContributionTimestamp( $wikiId ) {
+	private function initLastContributionTimestamp( $wikiId = 0 ) {
 		/* Get lastContributionTimestamp from database */
 		$dbr = $this->getDatabase( $wikiId );
 		$res = $dbr->selectRow(
