@@ -112,9 +112,8 @@ class CommunityPageSpecialUsersModel {
 				$result = $sqlData->runLoop( $db, function ( &$result, $row ) {
 					$result[] = [
 						'userId' => $row->rev_user,
-						'userName' => $row->rev_user_text,
 						'contributions' => $row->revision_count,
-						'isAdmin' => $this->isAdmin( $row->rev_user, $this->getAdmins() ),
+						'isAdmin' => true,
 					];
 				} );
 
