@@ -114,7 +114,14 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 
 		/* SUS-541 / Mix <mix@wikia.com> / scope: the following if block */
 		if ( count( $this->imageList ) < ImageReviewHelper::LIMIT_IMAGES ) {
-			WikiaLogger::instance()->warning( 'SUS-541', [ 'imageList' => $this->imageList, 'exception' => new Exception ] );
+			WikiaLogger::instance()->debug(
+				'SUS-541',
+				[
+					'severity' => 'warning',
+					'imageList' => $this->imageList,
+					'exception' => new Exception
+				]
+			);
 		}
 
 		if ( count( $this->imageList ) == 0 ) {
@@ -137,10 +144,18 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 
 		/* SUS-541 / Mix <mix@wikia.com> / scope: the following if block */
 		if ( count( $this->imageList ) < ImageReviewHelper::LIMIT_IMAGES ) {
-			WikiaLogger::instance()->error( 'SUS-541', [ 'imageList' => $this->imageList, 'exception' => new Exception ] );
+			$severity = 'error';
 		} else {
-			WikiaLogger::instance()->info( 'SUS-541', [ 'imageList' => $this->imageList ] );
+			$severity = 'success';
 		}
+		WikiaLogger::instance()->debug(
+			'SUS-541',
+			[
+				'severity' => $severity,
+				'imageList' => $this->imageList,
+				'exception' => new Exception
+			]
+		);
 	}
 
 	protected function getOrderingMethod() {
