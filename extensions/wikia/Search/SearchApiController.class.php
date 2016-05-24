@@ -167,7 +167,7 @@ class SearchApiController extends WikiaApiController {
 
 		//Standard Wikia API response with pagination values
 		$responseValues = (new Factory)->getFromConfig( $searchConfig )
-			->searchAsApi( ['pageid' => 'id', 'title', 'url', 'ns', 'article_quality_i' => 'quality' ], true );
+			->searchAsApi( ['pageid' => 'id', 'title', 'url', 'ns', 'article_quality_i' => 'quality', 'text' => 'snippet' ], true );
 
 		if ( empty( $responseValues['items'] ) ) {
 			throw new NotFoundApiException();
