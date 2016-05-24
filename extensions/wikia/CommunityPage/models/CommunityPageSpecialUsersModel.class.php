@@ -2,6 +2,7 @@
 
 class CommunityPageSpecialUsersModel {
 	const TOP_CONTRIB_MCACHE_KEY = 'community_page_top_contrib';
+	const ALL_ADMINS_MCACHE_KEY = 'community_page_all_admins';
 	const FIRST_REV_MCACHE_KEY = 'community_page_first_revision';
 	const GLOBAL_BOTS_MCACHE_KEY = 'community_page_global_bots';
 	const ALL_BOTS_MCACHE_KEY = 'community_page_all_bots';
@@ -47,42 +48,72 @@ class CommunityPageSpecialUsersModel {
 	 * @param bool $onlyAdmins Whether to filter by admins
 	 * @return array|null
 	 */
-	public function getTopContributors( $limit = 10, $weekly = true, $onlyAdmins = false ) {
+	public function getTopContributors() {
 		$data = WikiaDataAccess::cache(
-			wfMemcKey( self::TOP_CONTRIB_MCACHE_KEY, $limit, $weekly, $onlyAdmins ),
+			wfMemcKey( self::TOP_CONTRIB_MCACHE_KEY ),
 			WikiaResponse::CACHE_STANDARD,
-			function () use ( $limit, $weekly, $onlyAdmins ) {
+			function () {
 				$db = wfGetDB( DB_SLAVE );
 
 				$botIds = $this->getBotIds();
 
-				if ( $weekly ) {
-					// From last Sunday (matches wikia_user_properties)
-					$dateFilter = 'rev_timestamp >= FROM_DAYS(TO_DAYS(CURDATE()) - MOD(TO_DAYS(CURDATE()) - 1, 7))';
-				} else {
-					$dateFilter = 'rev_timestamp > DATE_SUB(now(), INTERVAL 2 YEAR)';
-				}
+				// From last Sunday (matches wikia_user_properties)
+				$dateFilter = 'rev_timestamp >= FROM_DAYS(TO_DAYS(CURDATE()) - MOD(TO_DAYS(CURDATE()) - 1, 7))';
 
 				$sqlData = ( new WikiaSQL() )
 					->SELECT( 'rev_user_text, rev_user, count(rev_id) AS revision_count' )
 					->FROM ( 'revision FORCE INDEX (user_timestamp)' )
-					->WHERE( 'rev_user' )->NOT_EQUAL_TO( 0 );
+					->WHERE( 'rev_user' )->NOT_EQUAL_TO( 0 )
+					->AND_( 'rev_user' )->NOT_IN( $botIds )
+					->AND_( $dateFilter )
+					->GROUP_BY( 'rev_user_text' )
+					->ORDER_BY( 'revision_count DESC, rev_user_text' )
+					->LIMIT( 50 );
 
-				if ( $onlyAdmins ) {
-					$adminIds = $this->getAdmins();
-					$sqlData
-						->AND_( 'rev_user' )->IN( $adminIds );
-				}
+				$result = $sqlData->runLoop( $db, function ( &$result, $row ) {
+					$result[] = [
+						'userId' => $row->rev_user,
+						'userName' => $row->rev_user_text,
+						'contributions' => $row->revision_count,
+						'isAdmin' => $this->isAdmin( $row->rev_user, $this->getAdmins() ),
+					];
+				} );
 
-				$sqlData
+				return $result;
+			}
+		);
+		return $data;
+	}
+	/**
+	 * Get the user id and contribution count of the top n contributors to the current wiki,
+	 * optionally filtered by admins only
+	 *
+	 * @param int|NULL $limit Number of rows to fetch
+	 * @param boolean $weekly True for weekly top contributors, false for all members (2 years)
+	 * @param bool $onlyAdmins Whether to filter by admins
+	 * @return array|null
+	 */
+	public function getAllAdmins() {
+		$data = WikiaDataAccess::cache(
+			wfMemcKey( self::ALL_ADMINS_MCACHE_KEY ),
+			WikiaResponse::CACHE_STANDARD,
+			function () {
+				$db = wfGetDB( DB_SLAVE );
+
+				$adminIds = $this->getAdmins();
+				$botIds = $this->getBotIds();
+
+				$dateFilter = 'rev_timestamp > DATE_SUB(now(), INTERVAL 2 YEAR)';
+
+				$sqlData = ( new WikiaSQL() )
+					->SELECT( 'rev_user_text, rev_user, count(rev_id) AS revision_count' )
+					->FROM ( 'revision FORCE INDEX (user_timestamp)' )
+					->WHERE( 'rev_user' )->NOT_EQUAL_TO( 0 )
+					->AND_( 'rev_user' )->IN( $adminIds )
 					->AND_( 'rev_user' )->NOT_IN( $botIds )
 					->AND_( $dateFilter )
 					->GROUP_BY( 'rev_user_text' )
 					->ORDER_BY( 'revision_count DESC, rev_user_text' );
-
-				if ( $limit ) {
-					$sqlData->LIMIT( $limit );
-				}
 
 				$result = $sqlData->runLoop( $db, function ( &$result, $row ) {
 					$result[] = [

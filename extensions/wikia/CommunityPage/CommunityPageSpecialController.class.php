@@ -58,7 +58,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	 */
 	public function getTopContributorsData() {
 		$userContributionCount = $this->usersModel->getUserContributions( $this->getUser() );
-		$contributors = $this->usersModel->getTopContributors( 50 );
+		$contributors = $this->usersModel->getTopContributors();
 		// get details for only 5 of the remaining contributors
 		$contributorDetails = $this->getContributorsDetails(
 			array_slice( $contributors, 0, self::TOP_CONTRIBUTORS_LIMIT )
@@ -219,7 +219,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	 * filter out bots
 	 */
 	private function getAllAdmins() {
-		return $this->usersModel->getTopContributors( null, false, true );
+		return $this->usersModel->getAllAdmins();
 	}
 	/**
 	 * Get details for display of top contributors
