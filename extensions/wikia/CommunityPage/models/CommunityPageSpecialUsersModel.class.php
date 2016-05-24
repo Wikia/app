@@ -91,15 +91,13 @@ class CommunityPageSpecialUsersModel {
 				$adminIds = $this->getAdmins();
 				$botIds = $this->getBotIds();
 
-				$dateFilter = 'rev_timestamp > DATE_SUB(now(), INTERVAL 2 YEAR)';
-
 				$sqlData = ( new WikiaSQL() )
 					->SELECT( 'rev_user_text, rev_user, count(rev_id) AS revision_count' )
 					->FROM ( 'revision FORCE INDEX (user_timestamp)' )
 					->WHERE( 'rev_user' )->NOT_EQUAL_TO( 0 )
 					->AND_( 'rev_user' )->IN( $adminIds )
 					->AND_( 'rev_user' )->NOT_IN( $botIds )
-					->AND_( $dateFilter )
+					->AND_( 'rev_timestamp > DATE_SUB(now(), INTERVAL 2 YEAR)' )
 					->GROUP_BY( 'rev_user_text' )
 					->ORDER_BY( 'revision_count DESC, rev_user_text' );
 
