@@ -57,25 +57,19 @@ class CommunityPageSpecialUsersModel {
 
 				$botIds = $this->getBotIds();
 
-				// From last Sunday (matches wikia_user_properties)
-				$dateFilter = 'rev_timestamp >= FROM_DAYS(TO_DAYS(CURDATE()) - MOD(TO_DAYS(CURDATE()) - 1, 7))';
-
 				$sqlData = ( new WikiaSQL() )
-					->SELECT( 'rev_user_text, rev_user, count(rev_id) AS revision_count' )
-					->FROM ( 'revision FORCE INDEX (user_timestamp)' )
-					->WHERE( 'rev_user' )->NOT_EQUAL_TO( 0 )
-					->AND_( 'rev_user' )->NOT_IN( $botIds )
-					->AND_( $dateFilter )
-					->GROUP_BY( 'rev_user_text' )
-					->ORDER_BY( 'revision_count DESC, rev_user_text' )
+					->SELECT( 'wup_user, wup_value' )
+					->FROM ( 'wikia_user_properties' )
+					->WHERE( 'wup_property' )->EQUAL_TO( 'editcountThisWeek' )
+					->AND_( 'wup_user' )->NOT_IN( $botIds )
+					->ORDER_BY( 'wup_value DESC, wup_user' )
 					->LIMIT( 50 );
 
 				$result = $sqlData->runLoop( $db, function ( &$result, $row ) {
 					$result[] = [
-						'userId' => $row->rev_user,
-						'userName' => $row->rev_user_text,
-						'contributions' => $row->revision_count,
-						'isAdmin' => $this->isAdmin( $row->rev_user, $this->getAdmins() ),
+						'userId' => $row->wup_user,
+						'contributions' => $row->wup_value,
+						'isAdmin' => $this->isAdmin( $row->wup_user, $this->getAdmins() ),
 					];
 				} );
 
