@@ -231,6 +231,11 @@ require([
 			handleClick(event, 'community-page-recent-activity-module');
 		});
 
+		// Track clicks in the Help module
+		$('.help-module').on('mousedown touchstart', 'a', function (event) {
+			handleClick(event, 'community-page-help-module');
+		});
+
 		// Track clicks in the Insights modules
 		$('.community-page-insights-module').on('mousedown touchstart', 'a', function (event) {
 			var category = event.delegateTarget.getAttribute('data-tracking');
