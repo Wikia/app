@@ -53,10 +53,10 @@ class NavigationTemplate {
 		$replaced = preg_replace(
 			'/(<|&lt;)' . $marker . '(>|&gt;)' .
 			'((?!(<|&lt;)\\/' . $marker . '(>|&gt;)).)*' .
-			'(<|&lt;)(' . implode( '|', self::$blockLevelElements ) . ')[(>|&gt;)\s]+.*' .
-			'(<|&lt;)\\/' . $marker . '(>|&gt;)\n/isU',
+			'<(' . implode( '|', self::$blockLevelElements ) . ')(\s.*)?>.*' .
+			'(<|&lt;)\\/' . $marker . '(>|&gt;)/isU',
 			// replacement
-			'<div data-type="navigation">$0</div>',
+			'',
 			$html, -1, $count
 		);
 		if ( $count === 0 ) {
