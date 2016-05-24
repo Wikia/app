@@ -43,13 +43,9 @@ class WikiaMockProxyUopz extends  WikiaMockProxy {
 				$newClass = self::$instance->execute($type,$id,array());
 
 				if ( $state ) { // enable
-					var_dump(__METHOD__ . " - {$className} [mock]");
-
 					uopz_set_mock($className, $newClass);
 				}
 				else { //disable
-					var_dump(__METHOD__ . " - {$className} - $id [remove mock]");
-
 					uopz_unset_mock($className);
 				}
 		}
