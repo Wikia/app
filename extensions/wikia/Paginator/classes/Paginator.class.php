@@ -1,5 +1,11 @@
 <?php
 
+namespace Wikia\Paginator;
+
+use EasyTemplate;
+use Html;
+use InvalidArgumentException;
+
 /**
  *
  * @package MediaWiki
@@ -10,12 +16,7 @@
  * Object that allows auto pagination of array content
  *
  * TODO:
- *  * On the second page of paginated content rel="prev" link should point to the page without ?page=1
- *  * On any page other than the first page there should be no canonical (link rel="prev/next" is enough)
- *  * Avoid passing the same URL to getHeadItem and getBarHTML (pass to constructor instead?)
- *  * Support for indefinite pagination? 1 ... 47 48 49 _50_ 51 52 53 ...
- *  * Move template to mustache
- *  * No checking for min items per page
+ *  * Support for indefinite pagination? 1 ... 47 48 49 _50_ 51 52 53 ... (for search)
  */
 class Paginator {
 
@@ -26,45 +27,33 @@ class Paginator {
 	private $itemsPerPage;
 	private $pagesCount;
 	private $activePage = 1;
-
-	// Deprecated state
-	private $data = [];
+	private $url;
+	private $paramName = 'page';
 
 	/**
-	 * Creates a new Pagination object.
+	 * @var UrlGenerator
+	 */
+	private $urlGenerator;
+
+	/**
+	 * Paginator constructor
 	 *
-	 * @param int $count number of items to paginate through
-	 * @param int $itemsPerPage number of items to display per page (capped to between 4 and 48)
-	 * @return Paginator
-	 */
-	public static function newFromCount( $count, $itemsPerPage ) {
-		return new Paginator( $count, $itemsPerPage );
-	}
-
-	/**
-	 * @deprecated use newFromCount (only used by CrunchyRoll)
-	 * @param array $data
-	 * @param int $itemsPerPage
-	 * @return Paginator
-	 */
-	public static function newFromArray( array $data, $itemsPerPage ) {
-		$self = self::newFromCount( count( $data ), $itemsPerPage );
-		$self->data = $data;
-		return $self;
-	}
-
-	/**
-	 * Paginator constructor.
 	 * @param int $dataCount number of data to paginate or the data to paginate
-	 * @param int $itemsPerPage number of items to display per page (capped to between 4 and 48)
+	 * @param int $itemsPerPage number of items to display per page
+	 * @param string $url URL to be paginated
+	 * @param mixed[] $options {
+	 * @type string $paramName the name of the URL param to store the page number (defaults to "page")
+	 * }
 	 */
-	private function __construct( $dataCount, $itemsPerPage ) {
-		if ( !is_numeric( $itemsPerPage ) ) {
-			throw new InvalidArgumentException( 'Paginator: need an int for $itemsPerPage' );
+	public function __construct( $dataCount, $itemsPerPage, $url, array $options = [] ) {
+		if ( !Validator::isNonNegativeInteger( $dataCount ) ) {
+			throw new InvalidArgumentException( 'Paginator: Expected a non-negative integer for dataCount' );
 		}
-
-		if ( !is_numeric( $dataCount ) ) {
-			throw new InvalidArgumentException( 'Paginator: need an int for $data' );
+		if ( !Validator::isPositiveInteger( $itemsPerPage ) ) {
+			throw new InvalidArgumentException( 'Paginator: Expected a positive integer for itemsPerPage' );
+		}
+		if ( !is_string( $url ) ) {
+			throw new InvalidArgumentException( 'Paginator: Expected a string for url' );
 		}
 
 		$itemsPerPage = intval( $itemsPerPage );
@@ -72,6 +61,16 @@ class Paginator {
 
 		$this->itemsPerPage = max( $itemsPerPage, self::MIN_ITEMS_PER_PAGE );
 		$this->pagesCount = ceil( $dataCount / $this->itemsPerPage );
+		$this->url = $url;
+
+		if ( isset( $options['paramName'] ) ) {
+			if ( !is_string( $options['paramName'] ) ) {
+				throw new InvalidArgumentException( 'Paginator: Expected a string for options.paramName' );
+			}
+			$this->paramName = $options['paramName'];
+		}
+
+		$this->urlGenerator = new UrlGenerator( $this->url, $this->paramName, $this->pagesCount );
 	}
 
 	/**
@@ -88,15 +87,10 @@ class Paginator {
 	/**
 	 * Get the current page of the passed data
 	 *
-	 * @param array|null $data data to be paginated (DEPRECATED: if null, the data passed from newFromArray is used)
+	 * @param array $data data to be paginated
 	 * @return array
 	 */
-	public function getCurrentPage( array $data = null ) {
-		// deprecated case:
-		if ( is_null( $data ) ) {
-			$data = $this->data;
-		}
-
+	public function getCurrentPage( array $data ) {
 		$paginatedData = array_chunk( $data, $this->itemsPerPage );
 
 		$index = $this->activePage - 1;
@@ -104,6 +98,15 @@ class Paginator {
 			return $paginatedData[$index];
 		}
 		return [];
+	}
+
+	/**
+	 * Used by SpecialVideosHelper
+	 *
+	 * @return int
+	 */
+	public function getPagesCount() {
+		return $this->pagesCount;
 	}
 
 	/**
@@ -137,62 +140,61 @@ class Paginator {
 		$rightRangeStart = min( $this->activePage + self::DISPLAYED_NEIGHBOURS, $this->pagesCount - 1 );
 
 		$data = [ 1 ];
+		$urls = [ 1 => $this->urlGenerator->getUrlForPage( 1 ) ];
 
 		if ( $leftEllipsis ) {
 			$data[] = '';
 		}
 		for ( $i = $leftRangeStart; $i <= $rightRangeStart; $i++ ) {
 			$data[] = $i;
+			$urls[$i] = $this->urlGenerator->getUrlForPage( $i );
 		}
 		if ( $rightEllipsis ) {
 			$data[] = '';
 		}
 
 		$data[] = $this->pagesCount;
+		$urls[$this->pagesCount] = $this->urlGenerator->getUrlForPage( $this->pagesCount );
 
 		return [
 			'pages' => $data,
-			'currentPage' => $this->activePage
+			'currentPage' => $this->activePage,
+			'urls' => $urls,
 		];
 	}
 
-	public function getBarHTML( $url, $paginatorId = false ) {
+	/**
+	 * Get the Paginator HTML
+	 *
+	 * @param string $paginatorId
+	 * @return string
+	 */
+	public function getBarHTML( $paginatorId = null ) {
 		if ( $this->pagesCount <= 1 ) {
 			return '';
 		}
 
 		$data = $this->getBarData();
 		$data['paginatorId'] = strip_tags( trim( stripslashes( $paginatorId ) ) );
-		$data['url'] = $url;
 
-		$template = new EasyTemplate( __DIR__ . '/templates/' );
+		$template = new EasyTemplate( __DIR__ . '/../templates/' );
 		$template->set_vars( $data );
 		return $template->render( 'paginator' );
 	}
 
 	/**
-	 * Used by SpecialVideosHelper
-	 *
-	 * @return int
-	 */
-	public function getPagesCount() {
-		return $this->pagesCount;
-	}
-
-	/**
 	 * Get HTML to put to HTML <head> to allow search engines to identify next and previous pages
 	 *
-	 * @param $url the URL template. We'll replace '%s' with the page number
 	 * @return string
 	 */
-	public function getHeadItem( $url ) {
+	public function getHeadItem() {
 		$links = '';
 
 		// Has a previous page?
 		if ( $this->activePage > 1 ) {
 			$links .= "\t" . Html::element( 'link', [
 					'rel' => 'prev',
-					'href' => str_replace( '%s', $this->activePage - 1, $url )
+					'href' => $this->urlGenerator->getUrlForPage( $this->activePage - 1 ),
 				] ) . PHP_EOL;
 		}
 
@@ -200,10 +202,11 @@ class Paginator {
 		if ( $this->activePage < $this->pagesCount ) {
 			$links .= "\t" . Html::element( 'link', [
 					'rel' => 'next',
-					'href' => str_replace( '%s', $this->activePage + 1, $url )
+					'href' => $this->urlGenerator->getUrlForPage( $this->activePage + 1 ),
 				] ) . PHP_EOL;
 		}
 
 		return $links;
 	}
+
 }

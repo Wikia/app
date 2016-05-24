@@ -1,4 +1,5 @@
 <?php
+use Wikia\Paginator\Paginator;
 
 /**
  * Main Category Gallery class
@@ -17,7 +18,12 @@ class CategoryExhibitionSectionMedia extends CategoryExhibitionSection {
 			// grabs data for videos and images
 			$aTmpData = $this->fetchSectionItems( array( NS_FILE ) ); // we wan't old videos
 			if ( is_array( $aTmpData ) && count( $aTmpData ) > 0 ){
-				$pages = Paginator::newFromCount( count( $aTmpData ), $wgCategoryExhibitionMediaSectionRows * 4 );
+				$pages = new Paginator(
+					count( $aTmpData ),
+					$wgCategoryExhibitionMediaSectionRows * 4,
+					$this->sUrl,
+					[ 'paramName' => $this->urlParameter ]
+				);
 				$pages->setActivePage( $this->paginatorPosition );
 				$pageData = $pages->getCurrentPage( $aTmpData );
 				$aData = array();
@@ -83,7 +89,7 @@ class CategoryExhibitionSectionMedia extends CategoryExhibitionSection {
 				$aContent = array (
 						'data'		=> $aData,
 						'category'	=> $this->categoryTitle->getText(),
-						'paginator'	=> $pages->getBarHTML( $this->sUrl )
+						'paginator'	=> $pages->getBarHTML()
 					);
 				$this->saveToCache( $aContent );
 			} else {

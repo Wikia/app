@@ -139,7 +139,7 @@ require([
 		highImpact.init();
 		skyScraper3.init();
 
-		if (revcontentSlots) {
+		if (revcontentSlots && context.providers.revcontent) {
 			revcontentSlots.init();
 		}
 

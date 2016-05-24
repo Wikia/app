@@ -1,6 +1,6 @@
 <?php
 /**
- * Content
+ * FilteredRelatedContent
  *
  * PHP version 5
  *
@@ -35,7 +35,7 @@ namespace Swagger\Client\ContentEntity\Models;
 
 use \ArrayAccess;
 /**
- * Content Class Doc Comment
+ * FilteredRelatedContent Class Doc Comment
  *
  * @category    Class
  * @description 
@@ -44,19 +44,16 @@ use \ArrayAccess;
  * @license     http://www.apache.org/licenses/LICENSE-2.0 Apache Licene v2
  * @link        https://github.com/swagger-api/swagger-codegen
  */
-class Content implements ArrayAccess
+class FilteredRelatedContent implements ArrayAccess
 {
     /**
       * Array of property to type mappings. Used for (de)serialization 
       * @var string[]
       */
     static $swaggerTypes = array(
-        'id' => 'string',
-        'url' => 'string',
-        'title' => 'string',
-        'image' => 'string',
-        'site_name' => 'string',
-        'content_type' => 'string'
+        'fandom_articles' => '\Swagger\Client\ContentEntity\Models\RelatedContent[]',
+        'discussion_threads' => '\Swagger\Client\ContentEntity\Models\RelatedContent[]',
+        'wiki_articles' => '\Swagger\Client\ContentEntity\Models\RelatedContent[]'
     );
   
     /** 
@@ -64,12 +61,9 @@ class Content implements ArrayAccess
       * @var string[] 
       */
     static $attributeMap = array(
-        'id' => 'id',
-        'url' => 'url',
-        'title' => 'title',
-        'image' => 'image',
-        'site_name' => 'siteName',
-        'content_type' => 'contentType'
+        'fandom_articles' => 'fandomArticles',
+        'discussion_threads' => 'discussionThreads',
+        'wiki_articles' => 'wikiArticles'
     );
   
     /**
@@ -77,12 +71,9 @@ class Content implements ArrayAccess
       * @var string[]
       */
     static $setters = array(
-        'id' => 'setId',
-        'url' => 'setUrl',
-        'title' => 'setTitle',
-        'image' => 'setImage',
-        'site_name' => 'setSiteName',
-        'content_type' => 'setContentType'
+        'fandom_articles' => 'setFandomArticles',
+        'discussion_threads' => 'setDiscussionThreads',
+        'wiki_articles' => 'setWikiArticles'
     );
   
     /**
@@ -90,50 +81,29 @@ class Content implements ArrayAccess
       * @var string[]
       */
     static $getters = array(
-        'id' => 'getId',
-        'url' => 'getUrl',
-        'title' => 'getTitle',
-        'image' => 'getImage',
-        'site_name' => 'getSiteName',
-        'content_type' => 'getContentType'
+        'fandom_articles' => 'getFandomArticles',
+        'discussion_threads' => 'getDiscussionThreads',
+        'wiki_articles' => 'getWikiArticles'
     );
   
     
     /**
-      * $id 
-      * @var string
+      * $fandom_articles 
+      * @var \Swagger\Client\ContentEntity\Models\RelatedContent[]
       */
-    protected $id;
+    protected $fandom_articles;
     
     /**
-      * $url 
-      * @var string
+      * $discussion_threads 
+      * @var \Swagger\Client\ContentEntity\Models\RelatedContent[]
       */
-    protected $url;
+    protected $discussion_threads;
     
     /**
-      * $title 
-      * @var string
+      * $wiki_articles 
+      * @var \Swagger\Client\ContentEntity\Models\RelatedContent[]
       */
-    protected $title;
-    
-    /**
-      * $image 
-      * @var string
-      */
-    protected $image;
-    
-    /**
-      * $site_name 
-      * @var string
-      */
-    protected $site_name;
-    
-    /**
-      * $content_type 
-      * @var string
-      */
-    protected $content_type;
+    protected $wiki_articles;
     
 
     /**
@@ -143,138 +113,72 @@ class Content implements ArrayAccess
     public function __construct(array $data = null)
     {
         if ($data != null) {
-            $this->id = $data["id"];
-            $this->url = $data["url"];
-            $this->title = $data["title"];
-            $this->image = $data["image"];
-            $this->site_name = $data["site_name"];
-            $this->content_type = $data["content_type"];
+            $this->fandom_articles = $data["fandom_articles"];
+            $this->discussion_threads = $data["discussion_threads"];
+            $this->wiki_articles = $data["wiki_articles"];
         }
     }
     
     /**
-     * Gets id
-     * @return string
+     * Gets fandom_articles
+     * @return \Swagger\Client\ContentEntity\Models\RelatedContent[]
      */
-    public function getId()
+    public function getFandomArticles()
     {
-        return $this->id;
+        return $this->fandom_articles;
     }
   
     /**
-     * Sets id
-     * @param string $id 
+     * Sets fandom_articles
+     * @param \Swagger\Client\ContentEntity\Models\RelatedContent[] $fandom_articles 
      * @return $this
      */
-    public function setId($id)
+    public function setFandomArticles($fandom_articles)
     {
         
-        $this->id = $id;
+        $this->fandom_articles = $fandom_articles;
         return $this;
     }
     
     /**
-     * Gets url
-     * @return string
+     * Gets discussion_threads
+     * @return \Swagger\Client\ContentEntity\Models\RelatedContent[]
      */
-    public function getUrl()
+    public function getDiscussionThreads()
     {
-        return $this->url;
+        return $this->discussion_threads;
     }
   
     /**
-     * Sets url
-     * @param string $url 
+     * Sets discussion_threads
+     * @param \Swagger\Client\ContentEntity\Models\RelatedContent[] $discussion_threads 
      * @return $this
      */
-    public function setUrl($url)
+    public function setDiscussionThreads($discussion_threads)
     {
         
-        $this->url = $url;
+        $this->discussion_threads = $discussion_threads;
         return $this;
     }
     
     /**
-     * Gets title
-     * @return string
+     * Gets wiki_articles
+     * @return \Swagger\Client\ContentEntity\Models\RelatedContent[]
      */
-    public function getTitle()
+    public function getWikiArticles()
     {
-        return $this->title;
+        return $this->wiki_articles;
     }
   
     /**
-     * Sets title
-     * @param string $title 
+     * Sets wiki_articles
+     * @param \Swagger\Client\ContentEntity\Models\RelatedContent[] $wiki_articles 
      * @return $this
      */
-    public function setTitle($title)
+    public function setWikiArticles($wiki_articles)
     {
         
-        $this->title = $title;
-        return $this;
-    }
-    
-    /**
-     * Gets image
-     * @return string
-     */
-    public function getImage()
-    {
-        return $this->image;
-    }
-  
-    /**
-     * Sets image
-     * @param string $image 
-     * @return $this
-     */
-    public function setImage($image)
-    {
-        
-        $this->image = $image;
-        return $this;
-    }
-    
-    /**
-     * Gets site_name
-     * @return string
-     */
-    public function getSiteName()
-    {
-        return $this->site_name;
-    }
-  
-    /**
-     * Sets site_name
-     * @param string $site_name 
-     * @return $this
-     */
-    public function setSiteName($site_name)
-    {
-        
-        $this->site_name = $site_name;
-        return $this;
-    }
-    
-    /**
-     * Gets content_type
-     * @return string
-     */
-    public function getContentType()
-    {
-        return $this->content_type;
-    }
-  
-    /**
-     * Sets content_type
-     * @param string $content_type 
-     * @return $this
-     */
-    public function setContentType($content_type)
-    {
-        
-        $this->content_type = $content_type;
+        $this->wiki_articles = $wiki_articles;
         return $this;
     }
     

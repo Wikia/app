@@ -2,6 +2,7 @@
 
 use Swagger\Client\ApiException;
 use Swagger\Client\ContentEntity\Api\RelatedContentApi;
+use Swagger\Client\ContentEntity\Models\RelatedContent;
 use Wikia\DependencyInjection\Injector;
 use Wikia\Logger\Loggable;
 use Wikia\Service\Swagger\ApiProvider;
@@ -22,24 +23,48 @@ class CakeRelatedContentService {
 		
 		try {
 			$items = [];
-
-			foreach ($api->getRelatedContentFromEntityName($title, 20, false) as $i => $relatedContent) {
-				$content = $relatedContent->getContent();
-				$parsed = parse_url($content->getUrl());
-				if ($parsed['path'] == $ignore) {
-					continue;
+			$filteredRelatedContent = $api->getRelatedContentFromEntityName($title, 20, "true");
+			$wikiArticles = [];
+			foreach ($filteredRelatedContent->getWikiArticles() as $article) {
+				$parsed = parse_url($article->getContent()->getUrl());
+				if ($parsed['path'] != $ignore) {
+					$wikiArticles[] = $article;
 				}
-				$items[] = new RecirculationContent(
-						$i,
-						$content->getUrl(),
-						$content->getImage(),
-						$content->getTitle(),
-						"",
-						""
-				);
+			}
 
-				if (count($items) >= $limit) {
-					break;
+			/**
+			 * this seems funky, but http://php.net/manual/en/function.array-map.php#refsect1-function.array-map-examples
+			 * so this actually will create an array of arrays where the elements are ordered:
+			 * [
+			 *   // fandom
+			 *   // discussion
+			 *   // article
+			 * ]
+			 * because that's the order they're passed in
+			 */
+			$ordered = array_map(
+					null,
+					$filteredRelatedContent->getFandomArticles(),
+					$filteredRelatedContent->getDiscussionThreads(),
+					$wikiArticles);
+
+			foreach ($ordered as $sublist) {
+				foreach ($sublist as $item) {
+					if (!empty($item)) {
+						/** @var RelatedContent $item */
+						$content = $item->getContent();
+						$items[] = new RecirculationContent(
+								count($items),
+								$content->getUrl(),
+								$content->getImage(),
+								$content->getTitle(),
+								"",
+								"");
+					}
+
+					if (count($items) >= $limit) {
+						break 2;
+					}
 				}
 			}
 
