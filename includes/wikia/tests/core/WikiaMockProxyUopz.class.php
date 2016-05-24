@@ -29,12 +29,15 @@ class WikiaMockProxyUopz extends  WikiaMockProxy {
 				$functionName = $parts[1];
 				list($namespace,$baseName) = self::parseGlobalFunctionName($functionName);
 				$functionName = $namespace . $baseName;
-				$savedName = $namespace . self::SAVED_PREFIX . $baseName;
 				if ( $state ) { // enable
+					var_dump(__METHOD__ . " - {$functionName} [mock]");
+
 					uopz_set_return($functionName, function() use ($type, $id) {
 						return WikiaMockProxy::$instance->execute($type,$id);
 					}, true /* execute closure */);
 				} else { // disable
+					var_dump(__METHOD__ . " - {$functionName} [remove mock]");
+
 					uopz_unset_return($functionName);
 				}
 				break;
