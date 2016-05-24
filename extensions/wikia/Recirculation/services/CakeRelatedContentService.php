@@ -2,6 +2,7 @@
 
 use Swagger\Client\ApiException;
 use Swagger\Client\ContentEntity\Api\RelatedContentApi;
+use Swagger\Client\ContentEntity\Models\Content;
 use Swagger\Client\ContentEntity\Models\RelatedContent;
 use Wikia\DependencyInjection\Injector;
 use Wikia\Logger\Loggable;
@@ -20,8 +21,6 @@ class CakeRelatedContentService {
 	 * @return RecirculationContent[]
 	 */
 	public function getContentRelatedTo($title, $limit=5, $ignore=null) {
-		global $wgContLang;
-
 		$api = $this->relatedContentApi();
 		
 		try {
@@ -56,17 +55,12 @@ class CakeRelatedContentService {
 					if (!empty($item)) {
 						/** @var RelatedContent $item */
 						$content = $item->getContent();
-						$title = $content->getContentType() == "Discussion Thread" ?
-								$wgContLang->truncate(
-										$content->getTitle(),
-										self::DISCUSSION_THREAD_TITLE_MAX_LENGTH) :
-								$content->getTitle();
 
 						$items[] = new RecirculationContent(
 								count($items),
 								$content->getUrl(),
 								$content->getImage(),
-								$title,
+								$this->formatTitle($content),
 								"",
 								"");
 					}
@@ -94,5 +88,17 @@ class CakeRelatedContentService {
 		/** @var ApiProvider $apiProvider */
 		$apiProvider = Injector::getInjector()->get(ApiProvider::class);
 		return $apiProvider->getApi(self::SERVICE_NAME, RelatedContentApi::class);
+	}
+
+	private function formatTitle(Content $content) {
+		global $wgContLang;
+
+		if ($content->getContentType() == "Discussion Thread") {
+			return $wgContLang->truncate(
+					"[Discussions] {$content->getTitle()}",
+					self::DISCUSSION_THREAD_TITLE_MAX_LENGTH);
+		}
+
+		return $content->getTitle();
 	}
 }
