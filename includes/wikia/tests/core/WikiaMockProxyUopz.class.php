@@ -30,14 +30,10 @@ class WikiaMockProxyUopz extends  WikiaMockProxy {
 				list($namespace,$baseName) = self::parseGlobalFunctionName($functionName);
 				$functionName = $namespace . $baseName;
 				if ( $state ) { // enable
-					var_dump(__METHOD__ . " - {$functionName} [mock]");
-
-					uopz_set_return($functionName, function() use ($type, $id) {
-						return WikiaMockProxy::$instance->execute($type,$id);
-					}, true /* execute closure */);
+					uopz_set_return($functionName, function() use ($functionName) {
+						return WikiaMockProxy::$instance->getGlobalFunction($functionName)->execute( func_get_args() );
+					}, true);
 				} else { // disable
-					var_dump(__METHOD__ . " - {$functionName} [remove mock]");
-
 					uopz_unset_return($functionName);
 				}
 				break;
@@ -47,9 +43,13 @@ class WikiaMockProxyUopz extends  WikiaMockProxy {
 
 				if ( $state ) { // enable
 					var_dump(__METHOD__ . " - {$className} [mock]");
+
+					uopz_set_mock($className, $newClass);
 				}
 				else { //disable
 					var_dump(__METHOD__ . " - {$className} - $id [remove mock]");
+
+					uopz_unset_mock($className);
 				}
 		}
 	}
