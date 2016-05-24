@@ -576,7 +576,7 @@ class UserStatsService extends WikiaModel {
 	}
 
 	private function getDatabase( $flags = 0 ) {
-		$dbName = ( $this->getWikiId() !== $this->wg->CityId ) ? false : WikiFactory::IDtoDB( $this->getWikiId() );
+		$dbName = ( $this->getWikiId() === $this->wg->CityId ) ? false : WikiFactory::IDtoDB( $this->getWikiId() );
 		$dbType = ( $flags & Title::GAID_FOR_UPDATE ) ? DB_MASTER : DB_SLAVE;
 
 		return $this->getWikiDB( $dbType, $dbName );
