@@ -10,6 +10,8 @@ class CommunityPageSpecialHelpModel {
 	}
 
 	private function getHelpPageLink() {
-		return Title::newFromText( wfMessage( 'communitypage-help-module-link-page-name' )->plain(), NS_HELP )->getLocalURL();
+		return Title::newFromText(
+			wfMessage( 'communitypage-help-module-link-page-name' )->inContentLanguage()->plain(), NS_HELP
+		)->getLocalURL();
 	}
 }
