@@ -12,6 +12,7 @@ class CakeRelatedContentService {
 	use Loggable;
 	
 	const SERVICE_NAME = "content-entity";
+	const DISCUSSION_THREAD_TITLE_MAX_LENGTH = 105;
 
 	/**
 	 * @param $title
@@ -56,7 +57,10 @@ class CakeRelatedContentService {
 						/** @var RelatedContent $item */
 						$content = $item->getContent();
 						$title = $content->getContentType() == "Discussion Thread" ?
-								$wgContLang->truncate($content->getTitle(), 105) : $content->getTitle();
+								$wgContLang->truncate(
+										$content->getTitle(),
+										self::DISCUSSION_THREAD_TITLE_MAX_LENGTH) :
+								$content->getTitle();
 
 						$items[] = new RecirculationContent(
 								count($items),
