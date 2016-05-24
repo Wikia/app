@@ -5,6 +5,10 @@
  */
 class TitleBatchTest extends WikiaBaseTest {
 
+	public function setUp() {
+		parent::setUp();
+	}
+
 	// This test cover constructor, getArticlesIds and check exact behaviour of getWikiaProperties
 	public function testGetWikiaPropertiesShouldOnlyReturnPropertiesForTitlesThatContains() {
 
@@ -46,8 +50,6 @@ class TitleBatchTest extends WikiaBaseTest {
 			->will( $this->returnValue( $result ) );
 
 		$this->mockGlobalFunction( 'wfGetDB', $mockDb );
-
-		var_dump('mocked wfGetDB', wfGetDB( DB_SLAVE ), 'mocked DB', $mockDb );
 
 		$titleBatch = new TitleBatch( $titles );
 		$props = $titleBatch->getWikiaProperties( $expectedProperty );
