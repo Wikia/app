@@ -18,7 +18,7 @@ class CakeRelatedContentService {
 	 * @param $ignore
 	 * @return RecirculationContent[]
 	 */
-	public function getContentRelatedTo($title, $limit=3, $ignore=null) {
+	public function getContentRelatedTo($title, $limit=5, $ignore=null) {
 		$api = $this->relatedContentApi();
 		
 		try {
