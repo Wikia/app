@@ -6,34 +6,22 @@ class UserStatsService extends WikiaModel {
 
 	private $userId;
 	private $user;
+	private $wikiId;
 	private $optionsAllWikis;
 
 	/**
 	 * Pass user ID of user you want to get data about
 	 */
-	function __construct( $userId ) {
+	function __construct( $userId, $wikiId = 0 ) {
 		$this->userId = intval( $userId );
 		$this->user = null;
 		$this->optionsAllWikis = [];
+		$this->initWikiId( $wikiId );
 		parent::__construct();
 	}
 
-	/**
-	 * Get user object based on $this->userId
-	 * @return User
-	 */
-	function getUser() {
-		if ( empty( $this->user ) ) {
-			$this->user = User::newFromId( $this->userId );
-		}
-		return $this->user;
-	}
-
-	/**
-	 * Get cache key for given entry
-	 */
-	private function getKey( $entry ) {
-		return wfMemcKey( 'services', 'userstats', $entry, $this->userId );
+	public function setWikiId( $wikiId ) {
+		$this->wikiId = $wikiId;
 	}
 
 	/**
@@ -48,10 +36,11 @@ class UserStatsService extends WikiaModel {
 	 * @param int $flags bit flags with options (ie. to force DB_MASTER)
 	 * @return Int Number of edits
 	 */
-	public function resetEditCountWiki( $wikiId = 0, $flags = 0 ) {
+	public function resetEditCountWiki( $flags = 0 ) {
 		wfProfileIn( __METHOD__ );
 
-		$dbr = $this->getDatabase( $wikiId, $flags );
+		$dbr = $this->getDatabase( $flags );
+
 		$userName = $this->getUser()->getName();
 
 		$editCount = $dbr->selectField(
@@ -67,7 +56,7 @@ class UserStatsService extends WikiaModel {
 		);
 
 		// Store editcount value
-		$this->setOptionWiki( 'editcount', $editCount, $wikiId );
+		$this->setOptionWiki( 'editcount', $editCount );
 
 		wfProfileOut( __METHOD__ );
 		return $editCount;
@@ -83,14 +72,13 @@ class UserStatsService extends WikiaModel {
 	 * @param int $flags bit flags with options
 	 * @return Int Number of edits
 	 */
-	public function getEditCountWiki( $wikiId = 0, $skipCache = false, $flags = 0 ) {
+	public function getEditCountWiki( $skipCache = false, $flags = 0 ) {
 		wfProfileIn( __METHOD__ );
 
-		$wikiId = $this->getWikiId( $wikiId );
-		$editCount = $this->getOptionWiki( 'editcount', $wikiId, $skipCache );
+		$editCount = $this->getOptionWiki( 'editcount', $skipCache );
 
 		if( $editCount === null || $editCount === false ) { // editcount has not been initialized. do so.
-			$editCount = $this->resetEditCountWiki( $wikiId, $flags );
+			$editCount = $this->resetEditCountWiki( $flags );
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -113,10 +101,10 @@ class UserStatsService extends WikiaModel {
 	 *
 	 * @return Int
 	 */
-	public function getEditCountGlobal( $wikiId = 0, $skipCache = false ) {
+	public function getEditCountGlobal( $skipCache = false ) {
 		wfProfileIn( __METHOD__ );
 
-		$key = wfSharedMemcKey( 'editcount-global', $this->userId );
+		$key = self::getUserGlobalCountMemcKey( $this->userId );
 
 		if ( !$skipCache ) {
 			$editCount = $this->wg->Memc->get( $key );
@@ -150,7 +138,7 @@ class UserStatsService extends WikiaModel {
 				__METHOD__
 			);
 
-			$dbw = $this->getDatabase( $wikiId, Title::GAID_FOR_UPDATE );
+			$dbw = $this->getDatabase( Title::GAID_FOR_UPDATE );
 			// write to wikicities (acting 'user' will redirect result to wikicities)
 			$dbw->update(
 				'user',
@@ -176,14 +164,13 @@ class UserStatsService extends WikiaModel {
 	 * @param Boolean $skipCache  On true ignores cache
 	 * @return Int Number of edits
 	 */
-	public function getEditCountFromWeek( $wikiId = 0, $skipCache = false ) {
+	public function getEditCountFromWeek( $skipCache = false ) {
 		wfProfileIn( __METHOD__ );
 
-		$wikiId = $this->getWikiId( $wikiId );
-		$editCount = $this->getOptionWiki( 'editcountThisWeek', $wikiId, $skipCache );
+		$editCount = $this->getOptionWiki( 'editcountThisWeek', $skipCache );
 
 		if( $editCount === null || $editCount === false ) { // editcount has not been initialized. do so.
-			$editCount = $this->calculateEditCountFromWeek( $wikiId );
+			$editCount = $this->calculateEditCountFromWeek();
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -198,14 +185,14 @@ class UserStatsService extends WikiaModel {
 		wfProfileIn( __METHOD__ );
 
 		// update edit counts in stats
-		$this->wg->Memc->delete( $this->getKey( 'stats4' ) );
+		self::purgeStatsCache( $this->userId, $this->getWikiId() );
 
 		// update edit counts on wiki
 		$editCount = $this->getOptionWiki( 'editcount' );
 		if ( !is_null( $editCount ) ) {
 			$this->updateEditCount( 'editcount' );
 		} else {
-			$this->resetEditCountWiki( 0, Title::GAID_FOR_UPDATE );
+			$this->resetEditCountWiki( Title::GAID_FOR_UPDATE );
 		}
 
 		// update weekly edit counts on wiki
@@ -213,7 +200,7 @@ class UserStatsService extends WikiaModel {
 		if ( !is_null( $editCount ) ) {
 			$this->updateEditCount( 'editcountThisWeek' );
 		} else {
-			$this->calculateEditCountFromWeek( 0, Title::GAID_FOR_UPDATE );
+			$this->calculateEditCountFromWeek( Title::GAID_FOR_UPDATE );
 		}
 
 		// update last revision timestamp
@@ -226,15 +213,11 @@ class UserStatsService extends WikiaModel {
 	/**
 	 * Get likes count, edit points and date of first edit done by the user
 	 */
-	public function getStats( $wikiId = 0, $keyName = null ) {
+	public function getStats() {
 		wfProfileIn( __METHOD__ );
 
-		if ( is_null( $keyName) ) {
-			$keyName = 'stats4';
-		}
-
 		// try to get cached data
-		$key = $this->getKey( $keyName );
+		$key = self::getStatsMemcKey( $this->userId, $this->getWikiId() );
 
 		$stats = $this->wg->memc->get( $key );
 		if ( empty( $stats ) ) {
@@ -242,7 +225,7 @@ class UserStatsService extends WikiaModel {
 			wfDebug( __METHOD__ . ": cache miss\n" );
 
 			// get edit points / first edit date
-			$stats = $this->getStatsData( $wikiId );
+			$stats = $this->getStatsData();
 
 			if ( !empty( $stats ) ) {
 				$this->wg->memc->set( $key, $stats, self::CACHE_TTL );
@@ -253,7 +236,7 @@ class UserStatsService extends WikiaModel {
 
 		// allow other extensions to update edits points
 		$stats['points'] = isset( $stats['edits'] ) ? $stats['edits'] : 0;
-		wfRunHooks( 'Masthead::editCounter', [ &$stats['points'], User::newFromId($this->userId)] );
+		wfRunHooks( 'Masthead::editCounter', [ &$stats['points'], User::newFromId( $this->userId )] );
 
 		wfProfileOut( __METHOD__ );
 		return $stats;
@@ -267,13 +250,31 @@ class UserStatsService extends WikiaModel {
 	 *
 	 * @author Andrzej 'nAndy' Lukaszewski
 	 */
-	public function getGlobalStats( $wikiId ) {
+	public function getGlobalStats() {
 		wfProfileIn(__METHOD__);
 
-		$stats = $this->getStats( $wikiId, 'stats5' . self::GET_GLOBAL_STATS_CACHE_VER );
+		$stats = $this->getStats();
 
 		wfProfileOut(__METHOD__);
 		return $stats;
+	}
+
+	public static function purgeStatsCache( $userId, $wikiId ) {
+		global $wgMemc;
+
+		$wgMemc->delete( self::getStatsMemcKey( $userId, $wikiId ) );
+	}
+
+	public static function purgeOptionsWikiCache( $userId, $wikiId ) {
+		global $wgMemc;
+
+		$wgMemc->delete( self::getOptionsWikiMemcKey( $userId, $wikiId ) );
+	}
+
+	public static function purgeUserGlobalCountCache( $userId ) {
+		global $wgMemc;
+
+		$wgMemc->delete( self::getUserGlobalCountMemcKey( $userId ) );
 	}
 
 	private function updateEditCount( $propertyName ) {
@@ -288,7 +289,7 @@ class UserStatsService extends WikiaModel {
 
 		if ( $dbw->affectedRows() === 1 ) {
 			//increment memcache also
-			$key = wfMemcKey( 'optionsWiki', $this->userId );
+			$key = self::getOptionsWikiMemcKey( $this->userId, $this->getWikiId() );
 			$optionsWiki = $this->wg->Memc->get( $key );
 
 			$optionsWiki[ $propertyName ]++;
@@ -305,10 +306,10 @@ class UserStatsService extends WikiaModel {
 	 * @param int $flags bit flags with options (ie. to force DB_MASTER)
 	 * @return Int Number of edits
 	 */
-	private function calculateEditCountFromWeek( $wikiId = 0, $flags = 0 ) {
+	private function calculateEditCountFromWeek( $flags = 0 ) {
 		wfProfileIn( __METHOD__ );
 
-		$dbr = $this->getDatabase( $wikiId, $flags );
+		$dbr = $this->getDatabase( $flags );
 		$userName = $this->getUser()->getName();
 
 		$editCount = $dbr->selectField(
@@ -330,17 +331,17 @@ class UserStatsService extends WikiaModel {
 		);
 
 		// Store editcount value
-		$this->setOptionWiki( 'editcountThisWeek', $editCount, $wikiId );
+		$this->setOptionWiki( 'editcountThisWeek', $editCount );
 
 		wfProfileOut( __METHOD__ );
 		return $editCount;
 	}
 
-	private function getStatsData( $wikiId ) {
-		$stats[ 'lastRevision' ] = $this->getLastContributionTimestamp( $wikiId );
-		$stats[ 'date' ] = $this->getFirstContributionTimestamp( $wikiId );
-		$stats[ 'edits' ] = $this->getEditCountWiki( $wikiId );
-		$stats[ 'editsThisWeek'] = $this->getEditCountFromWeek( $wikiId );
+	private function getStatsData() {
+		$stats[ 'lastRevision' ] = $this->getLastContributionTimestamp();
+		$stats[ 'date' ] = $this->getFirstContributionTimestamp();
+		$stats[ 'edits' ] = $this->getEditCountWiki();
+		$stats[ 'editsThisWeek'] = $this->getEditCountFromWeek();
 
 		return $stats;
 	}
@@ -354,8 +355,10 @@ class UserStatsService extends WikiaModel {
 	 * @param bool $skipCache skip cache, reload from DB
 	 * @return array
 	 */
-	private function getOptionsWiki( $wikiId = 0, $skipCache = false ) {
+	private function getOptionsWiki( $skipCache = false ) {
 		wfProfileIn( __METHOD__ );
+
+		$wikiId = $this->getWikiId();
 
 		if ( !$skipCache && !empty( $this->optionsAllWikis[ $wikiId ] ) ) {
 			wfProfileOut( __METHOD__ );
@@ -363,7 +366,7 @@ class UserStatsService extends WikiaModel {
 		}
 
 		wfProfileOut( __METHOD__ );
-		return $this->loadOptionsWiki( $wikiId, $skipCache );
+		return $this->loadOptionsWiki( $skipCache );
 	}
 
 
@@ -377,12 +380,12 @@ class UserStatsService extends WikiaModel {
 	 * @param bool $skipCache, skip cache, reload from DB
 	 * @return array
 	 */
-	private function loadOptionsWiki( $wikiId = 0, $skipCache = false ) {
+	private function loadOptionsWiki( $skipCache = false ) {
 		wfProfileIn(__METHOD__);
-		$wikiId = $this->getWikiId( $wikiId );
+		$wikiId = $this->getWikiId();
 
 		/* Get option value from memcache */
-		$key = wfMemcKey( 'optionsWiki', $this->userId );
+		$key = self::getOptionsWikiMemcKey( $this->userId, $wikiId );
 
 		if ( !$skipCache ) {
 			$this->optionsAllWikis[ $wikiId ] = $this->wg->Memc->get( $key );
@@ -421,11 +424,11 @@ class UserStatsService extends WikiaModel {
 	 * @param boolean $skipCache On true ignores cache
 	 * @return String|null $optionVal
 	 */
-	private function getOptionWiki( $optionName, $wikiId = 0, $skipCache = false ) {
+	private function getOptionWiki( $optionName, $skipCache = false ) {
 		wfProfileIn( __METHOD__ );
 
 		// Get all options for wiki
-		$optionsWiki = $this->getOptionsWiki( $wikiId, $skipCache );
+		$optionsWiki = $this->getOptionsWiki( $skipCache );
 
 		// Return specific option
 		if ( isset( $optionsWiki[ $optionName ] ) ) {
@@ -449,10 +452,12 @@ class UserStatsService extends WikiaModel {
 	 * @param int $wikiId Integer Id of wiki - specifies wiki from which to get editcount, 0 for current wiki
 	 * @return $optionVal string|null
 	 */
-	private function setOptionWiki( $optionName, $optionVal, $wikiId = 0 ) {
+	private function setOptionWiki( $optionName, $optionVal ) {
 		wfProfileIn( __METHOD__ );
 
-		$dbw = $this->getDatabase( $wikiId, Title::GAID_FOR_UPDATE );
+		$wikiId = $this->getWikiId();
+
+		$dbw = $this->getDatabase( Title::GAID_FOR_UPDATE );
 		$dbw->replace(
 			'wikia_user_properties',
 			[],
@@ -463,7 +468,7 @@ class UserStatsService extends WikiaModel {
 		$this->loadOptionsWiki( $wikiId ); // checks if isset and loads if empty (to make sure we don't loose anything
 		$this->optionsAllWikis[ $wikiId ][ $optionName ] = $optionVal;
 
-		$key = wfMemcKey( 'optionsWiki', $this->userId );
+		$key = self::getOptionsWikiMemcKey( $this->userId, $wikiId );
 		$this->wg->Memc->set( $key, $this->optionsAllWikis[ $wikiId ], self::CACHE_TTL );
 
 		wfProfileOut( __METHOD__ );
@@ -478,14 +483,14 @@ class UserStatsService extends WikiaModel {
 	 * @param $wikiId Integer Id of wiki - specifies wiki from which to get editcount, 0 for current wiki
 	 * @return String Timestamp in format YmdHis e.g. 20131107192200 or null
 	 */
-	public function getFirstContributionTimestamp( $wikiId = 0 ) {
+	public function getFirstContributionTimestamp() {
 		wfProfileIn( __METHOD__ );
 
-		$firstContributionTimestamp = $this->getOptionWiki( 'firstContributionTimestamp', $wikiId );
+		$firstContributionTimestamp = $this->getOptionWiki( 'firstContributionTimestamp' );
 
 		if( empty( $firstContributionTimestamp ) ) {
 			// firstContributionTimestamp has not been initialized. do so.
-			$firstContributionTimestamp = $this->initFirstContributionTimestamp( $wikiId );
+			$firstContributionTimestamp = $this->initFirstContributionTimestamp();
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -500,14 +505,14 @@ class UserStatsService extends WikiaModel {
 	 * @param $wikiId Integer Id of wiki - specifies wiki from which to get editcount, 0 for current wiki
 	 * @return String Timestamp in format YmdHis e.g. 20131107192200 or null
 	 */
-	private function getLastContributionTimestamp( $wikiId = 0 ) {
+	private function getLastContributionTimestamp() {
 		wfProfileIn( __METHOD__ );
 
-		$lastContributionTimestamp = $this->getOptionWiki( 'lastContributionTimestamp', $wikiId );
+		$lastContributionTimestamp = $this->getOptionWiki( 'lastContributionTimestamp' );
 
 		if ( empty( $lastContributionTimestamp ) ) {
 			// lastContributionTimestamp has not been initialized. do so.
-			$lastContributionTimestamp = $this->initLastContributionTimestamp( $wikiId );
+			$lastContributionTimestamp = $this->initLastContributionTimestamp();
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -522,10 +527,10 @@ class UserStatsService extends WikiaModel {
 	 * @param int $wikiId Integer Id of wiki - specifies wiki from which to get editcount, 0 for current wiki
 	 * @return String Timestamp in format YmdHis e.g. 20131107192200 or empty string
 	 */
-	private function initFirstContributionTimestamp( $wikiId = 0 ) {
+	private function initFirstContributionTimestamp() {
 		wfProfileIn( __METHOD__ );
 
-		$dbr = $this->getDatabase( $wikiId );
+		$dbr = $this->getDatabase();
 		$res = $dbr->selectRow(
 			'revision',
 			[ 'min(rev_timestamp) AS firstContributionTimestamp' ],
@@ -536,16 +541,16 @@ class UserStatsService extends WikiaModel {
 		$firstContributionTimestamp = null;
 		if( !empty( $res ) ) {
 			$firstContributionTimestamp = $res->firstContributionTimestamp;
-			$this->setOptionWiki( 'firstContributionTimestamp', $firstContributionTimestamp, $wikiId );
+			$this->setOptionWiki( 'firstContributionTimestamp', $firstContributionTimestamp );
 		}
 
 		wfProfileOut( __METHOD__ );
 		return $firstContributionTimestamp;
 	}
 
-	private function initLastContributionTimestamp( $wikiId = 0 ) {
+	private function initLastContributionTimestamp() {
 		/* Get lastContributionTimestamp from database */
-		$dbr = $this->getDatabase( $wikiId );
+		$dbr = $this->getDatabase();
 		$res = $dbr->selectRow(
 			'revision',
 			[ 'max(rev_timestamp) AS lastContributionTimestamp' ],
@@ -555,21 +560,48 @@ class UserStatsService extends WikiaModel {
 		$lastContributionTimestamp = null;
 		if( !empty( $res ) ) {
 			$lastContributionTimestamp = $res->lastContributionTimestamp;
-			$this->setOptionWiki( 'lastContributionTimestamp', $lastContributionTimestamp, $wikiId );
+			$this->setOptionWiki( 'lastContributionTimestamp', $lastContributionTimestamp );
 		}
 
 		wfProfileOut( __METHOD__ );
 		return $lastContributionTimestamp;
 	}
 
-	private function getWikiId( $wikiId ) {
-		return ( $wikiId === 0 ) ? $this->wg->CityId : $wikiId;
+	private function initWikiId( $wikiId ) {
+		$this->wikiId = ( $wikiId === 0 ) ? $this->wg->CityId : $wikiId;
 	}
 
-	private function getDatabase( $wikiId = 0, $flags = 0 ) {
-		$dbName = ( $wikiId === 0 ) ? false : WikiFactory::IDtoDB( $wikiId );
+	private function getWikiId() {
+		return $this->wikiId;
+	}
+
+	private function getDatabase( $flags = 0 ) {
+		$dbName = ( $this->getWikiId() !== $this->wg->CityId ) ? false : WikiFactory::IDtoDB( $this->getWikiId() );
 		$dbType = ( $flags & Title::GAID_FOR_UPDATE ) ? DB_MASTER : DB_SLAVE;
 
 		return $this->getWikiDB( $dbType, $dbName );
+	}
+
+	private static function getStatsMemcKey( $userId, $wikiId ) {
+		return wfSharedMemcKey( 'services', 'userstats', 'stats4', $wikiId, $userId );
+	}
+
+	private static function getOptionsWikiMemcKey( $userId, $wikiId ) {
+		return wfMemcKey( 'optionsWiki', $wikiId, $userId );
+	}
+
+	private static function getUserGlobalCountMemcKey( $userId ) {
+		return wfSharedMemcKey( 'editcount-global', $userId );
+	}
+
+	/**
+	 * Get user object based on $this->userId
+	 * @return User
+	 */
+	private function getUser() {
+		if ( empty( $this->user ) ) {
+			$this->user = User::newFromId( $this->userId );
+		}
+		return $this->user;
 	}
 }

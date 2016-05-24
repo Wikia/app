@@ -348,8 +348,8 @@ class WikiService extends WikiaModel {
 			$userInfo['userContributionsUrl'] = ($userContributionsTitle instanceof Title) ? $userContributionsTitle->getFullURL() : '#';
 			$userInfo['userId'] = $userId;
 
-			$userStatsService = new UserStatsService($userId);
-			$stats = $userStatsService->getGlobalStats($wikiId);
+			$userStatsService = new UserStatsService($userId, $wikiId);
+			$stats = $userStatsService->getGlobalStats();
 
 			if(!empty($stats['date'])) {
 				$date = getdate(strtotime($stats['date']));
