@@ -19,6 +19,8 @@ class CakeRelatedContentService {
 	 * @return RecirculationContent[]
 	 */
 	public function getContentRelatedTo($title, $limit=5, $ignore=null) {
+		global $wgContLang;
+
 		$api = $this->relatedContentApi();
 		
 		try {
@@ -53,11 +55,14 @@ class CakeRelatedContentService {
 					if (!empty($item)) {
 						/** @var RelatedContent $item */
 						$content = $item->getContent();
+						$title = $content->getContentType() == "Discussion Thread" ?
+								$wgContLang->truncate($content->getTitle(), 105) : $content->getTitle();
+
 						$items[] = new RecirculationContent(
 								count($items),
 								$content->getUrl(),
 								$content->getImage(),
-								$content->getTitle(),
+								$title,
 								"",
 								"");
 					}
