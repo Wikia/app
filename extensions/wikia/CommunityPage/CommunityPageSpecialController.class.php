@@ -109,8 +109,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	 * @return array
 	 */
 	public function getTopAdminsData() {
-		$allAdmins = $this->getAllAdmins();
-		$allAdminsDetails = $this->getContributorsDetails( $allAdmins );
+		$allAdminsDetails = $this->getContributorsDetails( $this->usersModel->getAllAdmins() );
 
 		$topAdminsTemplateData = CommunityPageSpecialTopAdminsFormatter::prepareData( $allAdminsDetails );
 		$templateMessages = [
@@ -128,8 +127,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	 * @return array
 	 */
 	public function getAllAdminsData() {
-		$allAdmins = $this->getAllAdmins();
-		$allAdminsDetails = $this->getContributorsDetails( $allAdmins );
+		$allAdminsDetails = $this->getContributorsDetails( $this->usersModel->getAllAdmins() );
 
 		$this->response->setData( [
 			'topAdminsHeaderText' => $this->msg( 'communitypage-admins' )->plain(),
@@ -197,14 +195,13 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	}
 
 	public function getModalHeaderData() {
-		$allAdmins =  $this->getAllAdmins();
 		$memberCount = $this->usersModel->getMemberCount();
 
 		$this->response->setData( [
 			'allText' => $this->msg( 'communitypage-modal-tab-all' )->plain(),
 			'allCount' => $this->wg->Lang->formatNum( $memberCount ),
 			'adminsText' => $this->msg( 'communitypage-modal-tab-admins' )->plain(),
-			'allAdminsCount' => $this->wg->Lang->formatNum( count( $allAdmins ) ),
+			'allAdminsCount' => $this->wg->Lang->formatNum( count( $this->usersModel->getAllAdmins() ) ),
 			'leaderboardText' => $this->msg( 'communitypage-top-contributors-week' )->plain(),
 		] );
 	}
@@ -214,13 +211,6 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		$this->response->addAsset( 'special_community_page_scss' );
 	}
 
-	/**
-	 * Get all admins who have contributed in the last two years ordered by contributions
-	 * filter out bots
-	 */
-	private function getAllAdmins() {
-		return $this->usersModel->getAllAdmins();
-	}
 	/**
 	 * Get details for display of top contributors
 	 *

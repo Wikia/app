@@ -40,12 +40,9 @@ class CommunityPageSpecialUsersModel {
 	}
 
 	/**
-	 * Get the user id and contribution count of the top n contributors to the current wiki,
-	 * optionally filtered by admins only
+	 * Get the user id and this week contribution count of the top 50 contributors to the current wiki;
+	 * bots filtered out
 	 *
-	 * @param int|NULL $limit Number of rows to fetch
-	 * @param boolean $weekly True for weekly top contributors, false for all members (2 years)
-	 * @param bool $onlyAdmins Whether to filter by admins
 	 * @return array|null
 	 */
 	public function getTopContributors() {
@@ -79,12 +76,9 @@ class CommunityPageSpecialUsersModel {
 		return $data;
 	}
 	/**
-	 * Get the user id and contribution count of the top n contributors to the current wiki,
-	 * optionally filtered by admins only
+	 * Get all admins who have contributed in the last two years ordered by number of contributions
+	 * filter out bots
 	 *
-	 * @param int|NULL $limit Number of rows to fetch
-	 * @param boolean $weekly True for weekly top contributors, false for all members (2 years)
-	 * @param bool $onlyAdmins Whether to filter by admins
 	 * @return array|null
 	 */
 	public function getAllAdmins() {
