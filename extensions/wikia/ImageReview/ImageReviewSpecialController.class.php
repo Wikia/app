@@ -112,6 +112,18 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 			$this->imageList = $helper->refetchImageListByTimestamp( $ts );
 		}
 
+		/* SUS-541 / Mix <mix@wikia.com> / scope: the following if block */
+		if ( count( $this->imageList ) < ImageReviewHelper::LIMIT_IMAGES ) {
+			WikiaLogger::instance()->debug(
+				'SUS-541',
+				[
+					'severity' => 'warning',
+					'imageList' => $this->imageList,
+					'exception' => new Exception
+				]
+			);
+		}
+
 		if ( count( $this->imageList ) == 0 ) {
 			$do = array( 
 				self::ACTION_QUESTIONABLE	=> ImageReviewStatuses::STATE_QUESTIONABLE,
@@ -129,6 +141,21 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 		} else {
 			$this->imageCount = $helper->getImageCount();
 		}
+
+		/* SUS-541 / Mix <mix@wikia.com> / scope: the following if block */
+		if ( count( $this->imageList ) < ImageReviewHelper::LIMIT_IMAGES ) {
+			$severity = 'error';
+		} else {
+			$severity = 'success';
+		}
+		WikiaLogger::instance()->debug(
+			'SUS-541',
+			[
+				'severity' => $severity,
+				'imageList' => $this->imageList,
+				'exception' => new Exception
+			]
+		);
 	}
 
 	protected function getOrderingMethod() {
