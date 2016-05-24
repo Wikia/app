@@ -138,6 +138,8 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 		/* SUS-541 / Mix <mix@wikia.com> / scope: the following if block */
 		if ( count( $this->imageList ) < ImageReviewHelper::LIMIT_IMAGES ) {
 			WikiaLogger::instance()->error( 'SUS-541', [ 'imageList' => $this->imageList, 'exception' => new Exception ] );
+		} else {
+			WikiaLogger::instance()->info( 'SUS-541', [ 'imageList' => $this->imageList ] );
 		}
 	}
 
