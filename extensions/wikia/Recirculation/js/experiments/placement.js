@@ -16,6 +16,7 @@ require([
 	'ext.wikia.recirculation.helpers.lateral',
 	'ext.wikia.recirculation.helpers.data',
 	'ext.wikia.recirculation.helpers.cakeRelatedContent',
+	'ext.wikia.recirculation.helpers.curatedContent',
 	'ext.wikia.recirculation.helpers.googleMatch',
 	'ext.wikia.adEngine.taboolaHelper',
 	require.optional('videosmodule.controllers.rail')
@@ -36,6 +37,7 @@ require([
 	lateralHelper,
 	dataHelper,
 	cakeHelper,
+	curatedHelper,
 	googleMatchHelper,
 	taboolaHelper,
 	videosModule
@@ -178,7 +180,7 @@ require([
 	}
 
 	if (isRail) {
-		afterRailLoads(runExperiment);
+		afterRailLoads(runRailExperiment);
 	} else {
 		runExperiment();
 	}
@@ -195,6 +197,14 @@ require([
 
 	function runExperiment() {
 		helper.loadData()
+			.then(view.render)
+			.then(view.setupTracking(experimentName))
+			.fail(handleError);
+	}
+
+	function runRailExperiment() {
+		helper.loadData()
+			.then(curatedHelper().injectContent)
 			.then(view.render)
 			.then(view.setupTracking(experimentName))
 			.fail(handleError);

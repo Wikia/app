@@ -9,7 +9,7 @@
 define('wikia.underscore', ['wikia.window'], function underscoreModule(win) {
 	'use strict';
 
-	var now, debounce, extend, noop, isObject, identity;
+	var now, debounce, extend, noop, isObject, identity, shuffle;
 
 	now = Date.now || function() {
 		return new Date().getTime();
@@ -74,6 +74,25 @@ define('wikia.underscore', ['wikia.window'], function underscoreModule(win) {
 	};
 
 	/**
+	 * Randomize array element order in-place.
+	 * Using Fisher-Yates shuffle algorithm.
+	 * Slightly adapted from http://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
+	 * @param array
+	 * @returns array
+	 */
+	shuffle = function (array) {
+		var i, j, temp;
+
+		for (i = array.length - 1; i > 0; i--) {
+			j = Math.floor(Math.random() * (i + 1));
+			temp = array[i];
+			array[i] = array[j];
+			array[j] = temp;
+		}
+		return array;
+	};
+
+	/**
 	 * return API to spawn new instances of StickyElement
 	 */
 	return {
@@ -82,6 +101,7 @@ define('wikia.underscore', ['wikia.window'], function underscoreModule(win) {
 		extend: extend,
 		noop: noop,
 		identity: identity,
-		isObject: isObject
+		isObject: isObject,
+		shuffle: shuffle
 	}
 });
