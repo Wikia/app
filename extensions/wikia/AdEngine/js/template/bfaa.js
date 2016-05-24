@@ -17,16 +17,12 @@ define('ext.wikia.adEngine.template.bfaa', [
 	function updateNavBar(height) {
 		var position = win.pageYOffset;
 
-		if (doc.body.offsetWidth <= breakPointWidthNotSupported) {
-			return;
-		}
-
-		if (position > height) {
-			wrapper.classList.remove('bfaa-pinned-nav');
-			nav.classList.remove('bfaa-pinned');
-		} else {
+		if (doc.body.offsetWidth <= breakPointWidthNotSupported || position <= height) {
 			wrapper.classList.add('bfaa-pinned-nav');
 			nav.classList.add('bfaa-pinned');
+		} else {
+			wrapper.classList.remove('bfaa-pinned-nav');
+			nav.classList.remove('bfaa-pinned');
 		}
 	}
 
