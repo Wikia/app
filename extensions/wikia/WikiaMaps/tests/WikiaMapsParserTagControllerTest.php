@@ -64,7 +64,7 @@ class WikiaMapsParserTagControllerTest extends WikiaBaseTest {
 			[
 				'Invalid latitude parameter',
 				[ 'map-id' => 1, 'lat' => '0x32' ],
-				true
+				version_compare(PHP_VERSION, '7..0.', '>=') ? false : true # PHP7 does not cast strings to numbers
 			],
 			[
 				'Invalid latitude parameter',
