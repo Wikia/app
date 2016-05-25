@@ -29,11 +29,6 @@ class WikiaMockProxyUopz extends  WikiaMockProxy {
 				list($namespace,$baseName) = self::parseGlobalFunctionName($functionName);
 				$functionName = $namespace . $baseName;
 				if ( $state ) { // enable
-					// create a function before mocking it
-					if ( !function_exists( $functionName ) ) {
-						uopz_add_function( $functionName, function() {} );
-					}
-
 					uopz_set_return($functionName, function() use ($functionName) {
 						return WikiaMockProxy::$instance->getGlobalFunction($functionName)->execute( func_get_args() );
 					}, true);
