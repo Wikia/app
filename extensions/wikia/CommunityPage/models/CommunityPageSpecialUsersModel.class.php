@@ -168,16 +168,16 @@ class CommunityPageSpecialUsersModel {
 			function () use ( $userId ) {
 				$db = wfGetDB( DB_SLAVE );
 
-				$propertyName = 'editcountThisWeek';
-
 				$sqlData = ( new WikiaSQL() )
 					->SELECT( 'wup_value' )
 					->FROM( 'wikia_user_properties' )
 					->WHERE( 'wup_user' )->EQUAL_TO( $userId )
-					->AND_( 'wup_property' )->EQUAL_TO( $propertyName )
-					->run( $db );
+					->AND_( 'wup_property' )->EQUAL_TO( 'editcountThisWeek' )
+					->runLoop( $db, function ( &$sqlData, $row ) {
+						$sqlData = $row->wup_value;
+					} );
 
-				return $sqlData->fetchObject()->wup_value;
+				return $sqlData;
 			}
 		);
 
