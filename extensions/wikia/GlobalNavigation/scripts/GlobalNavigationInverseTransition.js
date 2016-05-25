@@ -10,11 +10,12 @@ require([
 	function changeStateOnScroll() {
 		var adSize = $topAds.height(),
 			scrollTop = win.pageYOffset,
+			inverseOffset = 50,
 			inversedStateClass = 'inverse';
 
 		if (scrollTop <= adSize && $globalNav.hasClass(inversedStateClass)) {
 			$globalNav.removeClass(inversedStateClass);
-		} else if (scrollTop > 50 + adSize) {
+		} else if (scrollTop > inverseOffset + adSize) {
 			$globalNav.addClass(inversedStateClass);
 		}
 	}
