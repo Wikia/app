@@ -158,30 +158,29 @@ class CommunityPageSpecialUsersModel {
 	 * @return int Number of contributions
 	 */
 	public function getUserContributionsCount( User $user ) {
-
 		$userId = $user->getId();
 
-		$revisionCount = WikiaDataAccess::cache(
+		$editCount = WikiaDataAccess::cache(
 			// TODO: Should purge this when user edits
 			wfMemcKey( self::CURR_USER_CONTRIBUTIONS_MCACHE_KEY, $userId ),
 			WikiaResponse::CACHE_VERY_SHORT, // short cache b/c it's for the current user's info
 			function () use ( $userId ) {
 				$db = wfGetDB( DB_SLAVE );
 
-				$sqlData = ( new WikiaSQL() )
+				$editCount = ( new WikiaSQL() )
 					->SELECT( 'wup_value' )
 					->FROM( 'wikia_user_properties' )
 					->WHERE( 'wup_user' )->EQUAL_TO( $userId )
 					->AND_( 'wup_property' )->EQUAL_TO( 'editcountThisWeek' )
-					->runLoop( $db, function ( &$sqlData, $row ) {
-						$sqlData = $row->wup_value;
+					->runLoop( $db, function ( &$editCount, $row ) {
+						$editCount = $row->wup_value;
 					} );
 
-				return $sqlData;
+				return $editCount;
 			}
 		);
 
-		return $revisionCount;
+		return $editCount;
 	}
 
 	/**
