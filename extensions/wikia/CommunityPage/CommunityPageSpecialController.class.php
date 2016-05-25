@@ -87,9 +87,16 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	 * @return array
 	 */
 	public function getTopAdminsData() {
-		$allAdminsDetails = $this->getContributorsDetails( $this->usersModel->getAllAdmins() );
+		$allAdmins = $this->usersModel->getAllAdmins();
 
-		$topAdminsTemplateData = CommunityPageSpecialTopAdminsFormatter::prepareData( $allAdminsDetails );
+		$topAdminsTemplateData = CommunityPageSpecialTopAdminsFormatter::prepareData( $allAdmins );
+
+		// Add details to top admins
+		$topAdminsTemplateData[CommunityPageSpecialTopAdminsFormatter::TOP_ADMINS_LIST] = 
+			$this->getContributorsDetails( 
+				$topAdminsTemplateData[CommunityPageSpecialTopAdminsFormatter::TOP_ADMINS_LIST] 
+			);
+
 		$templateMessages = [
 			'topAdminsHeaderText' => $this->msg( 'communitypage-admins' )->plain(),
 			'otherAdmins' => $this->msg( 'communitypage-other-admins' )->plain(),
