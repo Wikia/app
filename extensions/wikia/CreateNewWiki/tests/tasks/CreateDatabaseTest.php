@@ -214,7 +214,7 @@ class CreateDatabaseTest extends \WikiaBaseTest {
 		$this->assertEquals( false, $result->isOk());
 	}
 
-	public function testCheckOk(  ) {
+	public function testCreatesDatabaseTaskChecksSuccessfully(  ) {
 		//given
 		$wikiDBWMock = $this->getMock( 'DatabaseMysqli', [ 'getLBInfo' ] );
 		$wikiDBWMock
@@ -234,7 +234,7 @@ class CreateDatabaseTest extends \WikiaBaseTest {
 		$this->assertEquals( true, $result->isOk());
 	}
 
-	public function testRunOk(  ) {
+	public function testCreatesDatabaseTaskRunsSuccessfully(  ) {
 		//given
 		$dbWMock = $this->getMock( 'DatabaseMysqli', [ 'query' ] );
 		$this->mockGlobalFunction( 'wfGetDB', $dbWMock);
