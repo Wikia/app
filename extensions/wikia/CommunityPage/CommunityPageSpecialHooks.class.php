@@ -27,15 +27,15 @@ class CommunityPageSpecialHooks {
 			return true;
 		}
 
-		// Purge Top Contributors (users)
-		// Fixme: only purge if this user's save affects the top list
-		$key = wfMemcKey( CommunityPageSpecialUsersModel::TOP_CONTRIB_MCACHE_KEY, 50, true, false );
-		WikiaDataAccess::cachePurge( $key );
+		// Purge Top Contributors list
+		$topContributors = ( new CommunityPageSpecialUsersModel() )->getTopContributors();
 
-		// Purge Top Contributors (admins)
-		// Fixme: only purge if this user's save affects the top list, and if the user is an admin on this community
-		$key = wfMemcKey( CommunityPageSpecialUsersModel::TOP_CONTRIB_MCACHE_KEY, 10, false, true );
-		WikiaDataAccess::cachePurge( $key );
+		if ( count( $topContributors ) < CommunityPageSpecialUsersModel::ALL_CONTRIBUTORS_MODAL_LIMIT
+			|| end( $topContributors )['contributions'] <= ( new UserStatsService( $user->getId() ) )->getOptionWiki( 'editcountThisWeek' )
+		) {
+			$key = wfMemcKey(CommunityPageSpecialUsersModel::TOP_CONTRIB_MCACHE_KEY);
+			WikiaDataAccess::cachePurge($key);
+		}
 
 		// Purge User Contributions
 		$key = wfMemcKey( CommunityPageSpecialUsersModel::CURR_USER_CONTRIBUTIONS_MCACHE_KEY, $user->mId, true );
@@ -59,6 +59,7 @@ class CommunityPageSpecialHooks {
 		$key = wfMemcKey( CommunityPageSpecialUsersModel::MEMBER_COUNT_MCACHE_KEY );
 		WikiaDataAccess::cachePurge( $key );
 
+		// Purge all admins list
 		if ( self::isAdmin( $user->getId() ) ) {
 			WikiaDataAccess::cachePurge(
 				wfMemcKey( CommunityPageSpecialUsersModel::ALL_ADMINS_MCACHE_KEY )
