@@ -31,7 +31,7 @@ class CakeRelatedContentService {
 		$api = $this->relatedContentApi();
 		
 		try {
-			$filteredRelatedContent = $api->getRelatedContentFromEntityName($title, 20, "true");
+			$filteredRelatedContent = $api->getRelatedContentFromEntityName($title, $limit + 1, "true");
 			$wikiArticles = [];
 			foreach ($filteredRelatedContent->getWikiArticles() as $article) {
 				$parsed = parse_url($article->getContent()->getUrl());
