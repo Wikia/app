@@ -15,7 +15,6 @@ class WikiaMockProxyUopz extends  WikiaMockProxy {
 			case self::DYNAMIC_METHOD:
 				$className = $parts[1];
 				$methodName = $parts[2];
-				$savedName = self::SAVED_PREFIX . $methodName;
 				if ( $state ) { // enable
 					is_callable( "{$className}::{$methodName}" ); // make sure the class is loaded (via autoloader)
 					uopz_set_return($className, $methodName, function() use ($type, $id) {
@@ -29,8 +28,12 @@ class WikiaMockProxyUopz extends  WikiaMockProxy {
 				$functionName = $parts[1];
 				list($namespace,$baseName) = self::parseGlobalFunctionName($functionName);
 				$functionName = $namespace . $baseName;
-				$savedName = $namespace . self::SAVED_PREFIX . $baseName;
 				if ( $state ) { // enable
+					// create a function before mocking it
+					if ( !function_exists( $functionName ) ) {
+						uopz_add_function( $functionName, function() {} );
+					}
+
 					uopz_set_return($functionName, function() use ($functionName) {
 						return WikiaMockProxy::$instance->getGlobalFunction($functionName)->execute( func_get_args() );
 					}, true);
