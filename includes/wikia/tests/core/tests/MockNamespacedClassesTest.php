@@ -2,28 +2,21 @@
 
 namespace {
 
+	class FakeMockNamespacedClass {}
+
 	class MockNamespacedClassesTest extends WikiaBaseTest {
 
 		/**
 		 * @group UsingDB
 		 */
 		public function testConstructorMocks() {
-			$fakeObject = new stdClass;
+			$this->mockClass( 'WikiaMockTest', FakeMockNamespacedClass::class );
+			$this->mockClass( 'WikiaConstructorClassTest\WikiaMockTest', FakeMockNamespacedClass::class );
 
-			$this->getConstructorMock('WikiaMockTest')
-				->expects($this->any())
-				->method('__construct')
-				->will($this->returnValue($fakeObject));
-
-			$this->getConstructorMock('WikiaConstructorClassTest\WikiaMockTest')
-				->expects($this->any())
-				->method('__construct')
-				->will($this->returnValue($fakeObject));
-
-			$this->assertSame($fakeObject,new WikiaMockTest(),'class from main namespace');
-			$this->assertSame($fakeObject,new \WikiaMockTest(),'class from main namespace (with \\ at the beginning)');
-			$this->assertSame($fakeObject,new WikiaConstructorClassTest\WikiaMockTest(),'class from other namespace');
-			$this->assertSame($fakeObject,new \WikiaConstructorClassTest\WikiaMockTest(),'class from other namespace (with \\ at the beginning)');
+			$this->assertInstanceOf('FakeMockNamespacedClass', new WikiaMockTest(),'class from main namespace');
+			$this->assertInstanceOf('FakeMockNamespacedClass', new \WikiaMockTest(),'class from main namespace (with \\ at the beginning)');
+			$this->assertInstanceOf('FakeMockNamespacedClass', new WikiaConstructorClassTest\WikiaMockTest(),'class from other namespace');
+			$this->assertInstanceOf('FakeMockNamespacedClass', new \WikiaConstructorClassTest\WikiaMockTest(),'class from other namespace (with \\ at the beginning)');
 		}
 
 		/**
