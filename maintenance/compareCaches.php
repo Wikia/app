@@ -4,10 +4,11 @@
 
 error_reporting(E_ALL);
 ini_set('display_errors','On');
+define(MESSAGE_CACHE_DIR, './messageCache');
 
 function checkLang($lang) {
-    $s1 = unserialize(file_get_contents('./messageCache/messageCache-new.dump.' . $lang . '.php'));
-    $s2 = unserialize(file_get_contents('./messageCache/messageCache-orig.dump.' . $lang . '.php'));
+    $s1 = unserialize(file_get_contents(MESSAGE_CACHE_DIR . '/messageCache-new.dump.' . $lang . '.php'));
+    $s2 = unserialize(file_get_contents(MESSAGE_CACHE_DIR . '/messageCache-orig.dump.' . $lang . '.php'));
 
     $k1 = array_keys($s1);
     $k2 = array_keys($s2);
@@ -40,7 +41,7 @@ function checkLang($lang) {
                 $a[] = $v;
             }
 
-            file_put_contents('./messageCache/diff.'.$lang.'.txt', implode(PHP_EOL, $a));
+            file_put_contents(MESSAGE_CACHE_DIR . '/diff.'.$lang.'.txt', implode(PHP_EOL, $a));
         }
     }
 
