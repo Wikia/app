@@ -49,7 +49,7 @@ function checkLang($lang) {
 
     $diff_content = [ $lang ];
     foreach ($diff_details as $section => $diff ) {
-        $diff_content[] = '----------------------'. $section . '----------------------';
+        $diff_content[] = '----------------------'. $section . ' [ ' . count($diff) . ' differences ]';
         foreach ($diff as $k => $part) {
             $diff_content[] = '<<<<<';
             $diff_content[] = '* ' . $k;
