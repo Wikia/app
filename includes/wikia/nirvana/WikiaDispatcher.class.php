@@ -297,7 +297,9 @@ class WikiaDispatcher {
 				case WikiaRequest::EXCEPTION_MODE_WRAP_AND_THROW:
 				default:
 					wfProfileOut(__METHOD__);
-					throw new WikiaDispatchedException( "Internal Throw ({$response->getException()->getMessage()})", $response->getException() );
+					$ex = $response->getException();
+					$ex_class = get_class( $ex );
+					throw new WikiaDispatchedException( "Internal Throw ({$ex_class}: {$ex->getMessage()})", $ex );
 			}
 		}
 
