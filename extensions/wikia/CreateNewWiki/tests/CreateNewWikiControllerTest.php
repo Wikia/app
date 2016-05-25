@@ -74,7 +74,7 @@ class CreateNewWikiControllerTest extends WikiaBaseTest {
 			->will($this->returnValue($mainPageUrl));
 
 		$this->mockClass('CreateWiki', $createWiki);
-		$this->mockClass('GlobalTitle', $mainPageTitle);
+		$this->mockClass('GlobalTitle', $mainPageTitle, 'newFromText');
 
 		$requestMock = $this->getMock( 'WikiaRequest', [ 'wasPosted' ], [ [ 'token' => $testData['requestToken'] ] ] );
 		$requestMock->expects( $this->once() )
