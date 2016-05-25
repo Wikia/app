@@ -349,15 +349,15 @@ class WikiService extends WikiaModel {
 			$userInfo['userId'] = $userId;
 
 			$userStatsService = new UserStatsService($userId, $wikiId);
-			$stats = $userStatsService->getGlobalStats();
+			$stats = $userStatsService->getStats();
 
-			if(!empty($stats['date'])) {
-				$date = getdate(strtotime($stats['date']));
+			if(!empty($stats['firstRevisionDate'])) {
+				$date = getdate(strtotime($stats['firstRevisionDate']));
 			} else {
 				$date = getdate(strtotime('2005-06-01'));
 			}
 
-			$userInfo['lastRevision'] = $stats['lastRevision'];
+			$userInfo['lastRevision'] = $stats['lastRevisionDate'];
 
 			$userInfo['since'] = F::App()->wg->Lang->getMonthAbbreviation($date['mon']) . ' ' . $date['year'];
 		}

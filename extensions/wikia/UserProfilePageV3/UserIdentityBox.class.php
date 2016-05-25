@@ -103,7 +103,7 @@ class UserIdentityBox {
 			$iEdits = $data['edits'] = is_null( $iEdits ) ? 0 : intval( $iEdits );
 
 			// data depends on which wiki it is displayed
-			$data['registration'] = $this->userStats['date'];
+			$data['registration'] = $this->userStats['firstRevisionDate'];
 			$data['userPage'] = $this->user->getUserPage()->getFullURL();
 
 			$data = call_user_func( array( $this, $dataType ), $data );
