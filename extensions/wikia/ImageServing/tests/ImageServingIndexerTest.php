@@ -33,8 +33,8 @@ class ImageServingIndexerTest extends WikiaBaseTest {
 		$article->mContentLoaded = true;
 
 		// disable access to the database
-		$this->getMethodMock('DatabaseMysqlBase','replace');
-		$this->getMethodMock('Database','delete');
+		$this->mockGlobalFunction( 'wfDeleteWikiaPageProp', false );
+		$this->mockGlobalFunction( 'wfSetWikiaPageProp', false );
 
 		// mock wgTitle needed by RedirectsService
 		$this->mockGlobalVariable( 'wgTitle', $title );
