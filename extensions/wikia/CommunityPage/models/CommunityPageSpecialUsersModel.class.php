@@ -44,8 +44,9 @@ class CommunityPageSpecialUsersModel {
 	}
 
 	/**
-	 * Get the user id and this week contribution count of the top 50 contributors to the current wiki;
-	 * bots filtered out
+	 * Get the user id and this week contribution count of all users contributed to this wiki whis week;
+	 * Bots filtered out;
+	 * Ordered from most to least active;
 	 *
 	 * @return array|null
 	 */
@@ -63,8 +64,7 @@ class CommunityPageSpecialUsersModel {
 					->FROM ( 'wikia_user_properties' )
 					->WHERE( 'wup_property' )->EQUAL_TO( 'editcountThisWeek' )
 					->AND_( 'wup_user' )->NOT_IN( $botIds )
-					->ORDER_BY( 'wup_value DESC, wup_user' )
-					->LIMIT( 50 );
+					->ORDER_BY( 'wup_value DESC, wup_user ASC' );
 
 				$result = $sqlData->runLoop( $db, function ( &$result, $row ) {
 					$result[] = [

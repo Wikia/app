@@ -28,14 +28,9 @@ class CommunityPageSpecialHooks {
 		}
 
 		// Purge Top Contributors list
-		$topContributors = ( new CommunityPageSpecialUsersModel() )->getTopContributors();
-
-		if ( count( $topContributors ) < CommunityPageSpecialUsersModel::ALL_CONTRIBUTORS_MODAL_LIMIT
-			|| end( $topContributors )['contributions'] <= ( new UserStatsService( $user->getId() ) )->getOptionWiki( 'editcountThisWeek' )
-		) {
-			$key = wfMemcKey(CommunityPageSpecialUsersModel::TOP_CONTRIB_MCACHE_KEY);
-			WikiaDataAccess::cachePurge($key);
-		}
+		WikiaDataAccess::cachePurge(
+			wfMemcKey( CommunityPageSpecialUsersModel::TOP_CONTRIB_MCACHE_KEY )
+		);
 
 		// Purge User Contributions
 		$key = wfMemcKey( CommunityPageSpecialUsersModel::CURR_USER_CONTRIBUTIONS_MCACHE_KEY, $user->mId, true );
