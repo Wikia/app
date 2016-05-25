@@ -6,8 +6,8 @@ error_reporting(E_ALL);
 ini_set('display_errors','On');
 
 function checkLang($lang) {
-    $s1 = unserialize(file_get_contents('./dump_dev/messageCache.dump.' . $lang . '.php'));
-    $s2 = unserialize(file_get_contents('./dump_374/messageCache.dump.' . $lang . '.php'));
+    $s1 = unserialize(file_get_contents('./messageCache/messageCache-new.dump.' . $lang . '.php'));
+    $s2 = unserialize(file_get_contents('./messageCache/messageCache-orig.dump.' . $lang . '.php'));
 
     $k1 = array_keys($s1);
     $k2 = array_keys($s2);
@@ -29,10 +29,10 @@ function checkLang($lang) {
     } else {
         echo $lang . ' has ' . count(array_diff($k1,$k2)) . ' missing keys' . PHP_EOL;
         if ( count($k2) > count($k1) ) {
-            echo 'DUMP_374 is larger' . PHP_EOL;
+            echo 'OLD is larger' . PHP_EOL;
         }
         if ( count($k1) > count($k2) ) {
-            echo 'DEV is larger' . PHP_EOL;
+            echo 'NEW is larger' . PHP_EOL;
 
             $a = [];
 
@@ -40,7 +40,7 @@ function checkLang($lang) {
                 $a[] = $v;
             }
 
-            file_put_contents('diff.'.$lang.'.txt', implode(PHP_EOL, $a));
+            file_put_contents('./messageCache/diff.'.$lang.'.txt', implode(PHP_EOL, $a));
         }
     }
 
@@ -49,10 +49,10 @@ function checkLang($lang) {
     } else {
         echo $lang . ' has ' . count(array_diff($k2,$k1)) . ' excess keys' . PHP_EOL;
         if ( count($k2) > count($k1) ) {
-            echo 'DUMP_374 is larger' . PHP_EOL;
+            echo 'OLD is larger' . PHP_EOL;
         }
         if ( count($k1) > count($k2) ) {
-            echo 'DEV is larger' . PHP_EOL;
+            echo 'NEW is larger' . PHP_EOL;
         }
     }
 }
