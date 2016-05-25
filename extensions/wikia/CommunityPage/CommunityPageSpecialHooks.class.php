@@ -2,8 +2,6 @@
 
 class CommunityPageSpecialHooks {
 
-	const SYSOP = 'sysop';
-
 	/**
 	 * Cache key invalidation when an article is edited
 	 *
@@ -61,7 +59,7 @@ class CommunityPageSpecialHooks {
 		$key = wfMemcKey( CommunityPageSpecialUsersModel::MEMBER_COUNT_MCACHE_KEY );
 		WikiaDataAccess::cachePurge( $key );
 
-		if ( in_array( self::SYSOP, $user->getGroups() ) ) {
+		if ( self::isAdmin( $user->getId() ) ) {
 			WikiaDataAccess::cachePurge(
 				wfMemcKey( CommunityPageSpecialUsersModel::ALL_ADMINS_MCACHE_KEY )
 			);
@@ -94,12 +92,20 @@ class CommunityPageSpecialHooks {
 	 * @return bool
 	 */
 	public static function onUserRights( User $user, array $validGroupsToAdd, array $validGroupsToRemove ) {
-		if ( in_array( self::SYSOP, $validGroupsToAdd ) || in_array( self::SYSOP, $validGroupsToRemove ) ) {
+		if ( self::hasAdminGroup( $validGroupsToAdd ) || self::hasAdminGroup( $validGroupsToRemove ) ) {
 			WikiaDataAccess::cachePurge(
 				wfMemcKey( CommunityPageSpecialUsersModel::ALL_ADMINS_MCACHE_KEY )
 			);
 		}
 
 		return true;
+	}
+
+	private static function hasAdminGroup( $userGroups ) {
+		return !empty( array_intersect( WikiService::ADMIN_GROUPS, $userGroups ) );
+	}
+
+	private static function isAdmin( $userId ) {
+		return in_array( $userId, ( new CommunityPageSpecialUsersModel() )->getAdmins() );
 	}
 }

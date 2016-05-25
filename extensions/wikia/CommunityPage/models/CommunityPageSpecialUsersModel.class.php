@@ -20,6 +20,10 @@ class CommunityPageSpecialUsersModel {
 		$this->wikiService = new WikiService();
 	}
 
+	/**
+	 * Returns list of User IDs that are admins
+	 * @return array of User IDs
+	 */
 	public function getAdmins() {
 		if ( $this->admins === null ) {
 			$this->admins = $this->wikiService->getWikiAdminIds( 0, false, false, null, false );
