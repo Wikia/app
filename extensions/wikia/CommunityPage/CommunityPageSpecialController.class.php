@@ -5,7 +5,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	const DEFAULT_TEMPLATE_ENGINE = \WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
 	const ALL_MEMBERS_LIMIT = 20;
 	const TOP_ADMINS_MODULE_LIMIT = 3;
-	const TOP_CONTRIBUTORS_LIMIT = 5;
+	const TOP_CONTRIBUTORS_MODULE_LIMIT = 5;
 
 	private $usersModel;
 	private $wikiModel;
@@ -57,50 +57,28 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	 * @return array
 	 */
 	public function getTopContributorsData() {
-		$userContributionCount = $this->usersModel->getUserContributions( $this->getUser() );
-		$contributors = $this->usersModel->getTopContributors();
-		// get details for only 5 of the remaining contributors
-		$contributorDetails = $this->getContributorsDetails(
-			array_slice( $contributors, 0, self::TOP_CONTRIBUTORS_LIMIT )
+		$currentUserContributionCount = $this->usersModel->getUserContributions( $this->getUser() );
+		$topContributors = $this->usersModel->getTopContributors();
+		$top5ContributorsDetails = $this->getContributorsDetails(
+			array_slice( $topContributors, 0, self::TOP_CONTRIBUTORS_MODULE_LIMIT )
 		);
-
-		$userRank = '-';
-		$editors = count( $contributors );
-
-		if ( $editors === 0 ) {
-			$editors = '-';
-		}
-
-		if ( $userContributionCount > 0 ) {
-			$rank = 1;
-
-			foreach ( $contributors as $contributor ) {
-				if ( $contributor['userId'] == $this->wg->user->getId() ) {
-					$userRank = $rank;
-					break;
-				}
-				$rank++;
-			}
-		}
-
-		$userContributionCount = $this->wg->Lang->formatNum( $userContributionCount );
 
 		$this->response->setData( [
 			'admin' => $this->msg( 'communitypage-admin' )->plain(),
 			'topContribsHeaderText' => $this->msg( 'communitypage-top-contributors-week' )->plain(),
 			'yourRankText' => $this->msg( 'communitypage-user-rank' )->plain(),
 			'userContributionsText' => $this->msg( 'communitypage-user-contributions' )
-				->numParams( $userContributionCount )
+				->numParams( $this->wg->Lang->formatNum( $currentUserContributionCount ) )
 				->text(),
 			'noContribsText' => $this->msg( 'communitypage-no-contributions' )->plain(),
-			'contributors' => $contributorDetails,
+			'contributors' => $top5ContributorsDetails,
 			'userAvatar' => AvatarService::renderAvatar(
 				$this->getUser()->getName(),
 				AvatarService::AVATAR_SIZE_SMALL_PLUS
 			),
-			'userRank' => $userRank,
-			'weeklyEditorCount' => $editors,
-			'userContribCount' => $userContributionCount
+			'userRank' => $this->calculateCurrentUserRank( $currentUserContributionCount , $topContributors ),
+			'weeklyEditorCount' => $this->formatTotalEditorsNumber( count( $topContributors ) ),
+			'userContribCount' => $currentUserContributionCount
 		] );
 	}
 
@@ -249,5 +227,30 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		}
 
 		return $heroImageUrl;
+	}
+
+	private function calculateCurrentUserRank( $userContributionCount , $topContributors ) {
+		$userRank = '-';
+
+		if ( $userContributionCount > 0 ) {
+			$rank = 1;
+
+			foreach ( $topContributors as $contributor ) {
+				if ( $contributor['userId'] == $this->wg->user->getId() ) {
+					$userRank = $rank;
+					break;
+				}
+				$rank++;
+			}
+		}
+		return $userRank;
+	}
+
+	private function formatTotalEditorsNumber( $editors ) {
+		if ( $editors === 0 ) {
+			$editors = '-';
+		}
+
+		return $editors;
 	}
 }
