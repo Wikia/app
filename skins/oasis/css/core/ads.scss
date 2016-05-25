@@ -184,6 +184,18 @@ $taboola-small-breakpoint: "#{$screen} and (max-width: 420px)";
 	width: 300px;
 }
 
+#WikiaFooter.bfab-template {
+	padding-top: 10px;
+
+	#LEFT_SKYSCRAPER_3 {
+		overflow: hidden;
+		position: relative;
+		padding: 13px 0 23px 0;
+		top: 0 !important;
+		width: 100%;
+	}
+}
+
 /** Box ads **/
 .home-top-right-ads {
 	float: right;

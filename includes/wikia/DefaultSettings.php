@@ -1355,7 +1355,14 @@ $wgAdDriverUseTaboola = true;
  * @name $wgAdDriverUseRevcontent
  * Whether to enable Revcontent or not
  */
-$wgAdDriverUseRevcontent = false;
+$wgAdDriverUseRevcontent = true;
+
+/**
+ * @name $wgAdDriverRevcontentCountries
+ * List of countries with enabled Revcontent.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverRevcontentCountries = null;
 
 /**
  * @name $wgAdDriverTaboolaConfig

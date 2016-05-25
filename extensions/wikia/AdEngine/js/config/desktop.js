@@ -80,7 +80,7 @@ define('ext.wikia.adEngine.config.desktop', [
 		}
 
 		// Revcontent
-		if (adProviderRevcontent && adProviderRevcontent.canHandleSlot(slotName)) {
+		if (adProviderRevcontent && context.providers.revcontent && adProviderRevcontent.canHandleSlot(slotName)) {
 			return [adProviderRevcontent];
 		}
 

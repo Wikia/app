@@ -87,7 +87,7 @@ $logo-url: $logo-url-light;
 		font-size: 16px;
 		padding-top: 15px;
 		text-align: center;
-		word-break: break-all;
+		word-wrap: break-word;
 		white-space: pre-line; // Respect linebreaks
 
 		b {

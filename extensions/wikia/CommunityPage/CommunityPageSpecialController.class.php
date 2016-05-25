@@ -46,8 +46,10 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 				->getData(),
 			'recentlyJoined' => $this->sendRequest( 'CommunityPageSpecialController', 'getRecentlyJoinedData' )
 				->getData(),
+			'communityPolicyModule' => $this->getCommunityPolicyData(),
 			'recentActivityModule' => $this->getRecentActivityData(),
-			'insightsModules' => ( new CommunityPageSpecialInsightsModel() )->getInsightsModules()
+			'insightsModules' => $this->getInsightsModulesData(),
+			'helpModule' => $this->getHelpModuleData()
 		] );
 	}
 
@@ -184,8 +186,19 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	 * @return array
 	 */
 	private function getRecentActivityData() {
-		$model = new CommunityPageSpecialRecentActivityModel();
-		return $model->getData();
+		return ( new CommunityPageSpecialRecentActivityModel() )->getData();
+	}
+
+	private function getHelpModuleData() {
+		return ( new CommunityPageSpecialHelpModel() )->getData();
+	}
+
+	private function getInsightsModulesData() {
+		return ( new CommunityPageSpecialInsightsModel() )->getInsightsModules();
+	}
+
+	private function getCommunityPolicyData() {
+		return ( new CommunityPageSpecialCommunityPolicyModel() )->getData();
 	}
 
 	public function getModalHeaderData() {
