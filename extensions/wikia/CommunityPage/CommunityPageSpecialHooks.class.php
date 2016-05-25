@@ -2,11 +2,13 @@
 
 class CommunityPageSpecialHooks {
 
+	const SYSOP = 'sysop';
+
 	/**
 	 * Cache key invalidation when an article is edited
 	 *
 	 * @param $article
-	 * @param $user
+	 * @param User $user
 	 * @param $text
 	 * @param $summary
 	 * @param $minoredit
@@ -19,7 +21,7 @@ class CommunityPageSpecialHooks {
 	 * @return bool
 	 */
 	public static function onArticleSaveComplete(
-		$article, $user, $text, $summary, $minoredit, $watchthis,
+		$article, User $user, $text, $summary, $minoredit, $watchthis,
 		$sectionanchor, $flags, $revision, $status, $baseRevId
 	) {
 		// Early exit for edits that do not affect any cached item
@@ -59,6 +61,12 @@ class CommunityPageSpecialHooks {
 		$key = wfMemcKey( CommunityPageSpecialUsersModel::MEMBER_COUNT_MCACHE_KEY );
 		WikiaDataAccess::cachePurge( $key );
 
+		if ( in_array( self::SYSOP, $user->getGroups() ) ) {
+			WikiaDataAccess::cachePurge(
+				wfMemcKey( CommunityPageSpecialUsersModel::ALL_ADMINS_MCACHE_KEY )
+			);
+		}
+
 		return true;
 	}
 
@@ -68,11 +76,28 @@ class CommunityPageSpecialHooks {
 	 * @param array $railModuleList
 	 * @return bool
 	 */
-	public static function onGetRailModuleList( Array &$railModuleList ) {
+	public static function onGetRailModuleList( array &$railModuleList ) {
 		global $wgTitle, $wgUser;
 
 		if ( ( $wgUser->isLoggedIn() && $wgTitle->inNamespace( NS_MAIN ) ) || $wgTitle->isSpecial( 'WikiActivity' ) ) {
 			$railModuleList[1342] = [ 'CommunityPageEntryPoint', 'Index', null ];
+		}
+
+		return true;
+	}
+
+	/**
+	 * Purge admins list on user rights change
+	 * @param User $user
+	 * @param array $validGroupsToAdd
+	 * @param array $validGroupsToRemove
+	 * @return bool
+	 */
+	public static function onUserRights( User $user, array $validGroupsToAdd, array $validGroupsToRemove ) {
+		if ( in_array( self::SYSOP, $validGroupsToAdd ) || in_array( self::SYSOP, $validGroupsToRemove ) ) {
+			WikiaDataAccess::cachePurge(
+				wfMemcKey( CommunityPageSpecialUsersModel::ALL_ADMINS_MCACHE_KEY )
+			);
 		}
 
 		return true;
