@@ -94,10 +94,10 @@ $messages['en'] = array(
 	'prefs-monobook-layout' => 'MonoBook layout only',
 	'prefs-editarea-size' => 'Size of editing window (MonoBook layout only)',
 
-	'tog-editsection' => 'Show section edit links',
+	'tog-editsection-editpage' => 'Show section edit links',
 	'tog-editwidth' => 'Widen the Source mode edit box to fill the entire screen',
-	'tog-minordefault' => 'Mark all edits as "minor" by default',
-	'tog-forceeditsummary' => 'Prompt me if I leave a blank edit summary',
+	'tog-minordefault-editpage' => 'Mark all edits as "minor" by default',
+	'tog-forceeditsummary-editpage' => 'Prompt me if I leave a blank edit summary',
 	'tog-disablesyntaxhighlighting' => 'Do not show syntax highlighting in Source mode',
 
 	// preview-related messages
@@ -157,10 +157,10 @@ $messages['qqq'] = array(
 	'prefs-editing-experience' => 'This is a heading in Special:Preferences',
 	'wikia-editor-preview-editSummary' => 'A text showed on the bottom of preview window when the edit summary was added, the parameter is the added summary',
 
-	'tog-editsection' => 'A label for checkbox to enable showing section edit links',
+	'tog-editsection-editpage' => 'A label for checkbox to enable showing section edit links',
 	'tog-editwidth' => 'A label for checkbox to widen the Source mode edit box to fill the entire screen',
-	'tog-minordefault' => 'A label for checkbox to mark all edits as "minor" by default',
-	'tog-forceeditsummary' => 'A label for checkbox to prompt user if leave a blank edit summary',
+	'tog-minordefault-editpage' => 'A label for checkbox to mark all edits as "minor" by default',
+	'tog-forceeditsummary-editpage' => 'A label for checkbox to prompt user if leave a blank edit summary',
 	'tog-disablesyntaxhighlighting' => 'A label for checkbox to dont show syntax highlighting in source mode',
 
 	'editpagelayout-preview-label-desktop' => 'A label shown under the desktop icon in the preview section of the edit interface, clicking changes the type of preview (toggle between mobile and desktop). Also displayed as a popup when the user hovers the desktop icon',
@@ -257,10 +257,10 @@ $messages['bar'] = array(
 	'prefs-editing-experience' => 'Beorweitungsoart',
 	'prefs-monobook-layout' => 'Monobook-Eihstöung',
 	'prefs-editarea-size' => 'Gréss vom Beorweitungsfenster (Monobook-Eihstöung)',
-	'tog-editsection' => 'Links zum beorweiten voh oahzelne Obschnit åzoang',
+	'tog-editsection-editpage' => 'Links zum beorweiten voh oahzelne Obschnit åzoang',
 	'tog-editwidth' => "Quötext-Beorweitungsfenster auf d' vóie Breaden",
-	'tog-minordefault' => 'Eigerne Änderrungen standardmässig ois gringfiagig markirn',
-	'tog-forceeditsummary' => "Wornen, wånn beim Speichern d' Zåmmenfossung föd",
+	'tog-minordefault-editpage' => 'Eigerne Änderrungen standardmässig ois gringfiagig markirn',
+	'tog-forceeditsummary-editpage' => "Wornen, wånn beim Speichern d' Zåmmenfossung föd",
 );
 
 /** Bulgarian (български)
@@ -422,10 +422,10 @@ $messages['ca'] = array(
 	'prefs-editing-experience' => "L'experiència d'editar",
 	'prefs-monobook-layout' => 'Només disseny MonoBook',
 	'prefs-editarea-size' => "Mida de la finestra d'edició (només disseny MonoBook)",
-	'tog-editsection' => 'Activa la modificació de seccions mitjançant els enllaços modifica',
+	'tog-editsection-editpage' => 'Activa la modificació de seccions mitjançant els enllaços modifica',
 	'tog-editwidth' => "Ampliar la caixa d'edició del Code Font per omplir tota la pantalla",
-	'tog-minordefault' => 'Marca totes les edicions com a "menors" per defete',
-	'tog-forceeditsummary' => "Pregunta'm si deixo en blanc el resum d'edició",
+	'tog-minordefault-editpage' => 'Marca totes les edicions com a "menors" per defete',
+	'tog-forceeditsummary-editpage' => "Pregunta'm si deixo en blanc el resum d'edició",
 );
 
 /** Czech (česky)
@@ -551,10 +551,10 @@ $messages['de'] = array(
 	'prefs-editing-experience' => 'Bearbeitungsart',
 	'prefs-monobook-layout' => 'MonoBook-Einstellung',
 	'prefs-editarea-size' => 'Größe des Bearbeitungsfensters (MonoBook-Einstellung)',
-	'tog-editsection' => 'Links zum Bearbeiten einzelner Abschnitte anzeigen',
+	'tog-editsection-editpage' => 'Links zum Bearbeiten einzelner Abschnitte anzeigen',
 	'tog-editwidth' => 'Quelltext-Bearbeitungs-Fenster auf volle Breite',
-	'tog-minordefault' => 'Eigene Änderungen standardmäßig als geringfügig markieren',
-	'tog-forceeditsummary' => 'Warnen, sofern beim Speichern die Zusammenfassung fehlt',
+	'tog-minordefault-editpage' => 'Eigene Änderungen standardmäßig als geringfügig markieren',
+	'tog-forceeditsummary-editpage' => 'Warnen, sofern beim Speichern die Zusammenfassung fehlt',
 
 	// preview-related messages
 	'editpagelayout-preview-label-desktop' => 'Desktop',
@@ -693,10 +693,10 @@ $messages['es'] = array(
 	'prefs-editing-experience' => 'Experiencia en la edición',
 	'prefs-monobook-layout' => 'diseño de MonoBook únicamente',
 	'prefs-editarea-size' => 'Tamaño de la ventana de edición (diseño de MonoBook únicamente)',
-	'tog-editsection' => 'Habilitar la edición de secciones usando el enlace [editar]',
+	'tog-editsection-editpage' => 'Habilitar la edición de secciones usando el enlace [editar]',
 	'tog-editwidth' => 'Ampliar el cuadro de edición para llenar toda la pantalla',
-	'tog-minordefault' => 'Marcar todas las ediciones como menores por defecto',
-	'tog-forceeditsummary' => 'Alertar al grabar sin resumen de edición.',
+	'tog-minordefault-editpage' => 'Marcar todas las ediciones como menores por defecto',
+	'tog-forceeditsummary-editpage' => 'Alertar al grabar sin resumen de edición.',
 
 	// preview-related messages
 	'editpagelayout-preview-label-desktop' => 'Escritorio',
@@ -776,8 +776,8 @@ $messages['fi'] = array(
 	'wikia-editor-edittools-caption' => 'lisää',
 	'nonunicodebrowser-notice' => "'''Varoitus: Selaimesi ei ole Unicode-yhteensopiva.'''",
 	'prefs-starting-an-edit' => 'Muokkauksen aloittaminen',
-	'tog-editsection' => 'Näytä osion muokkauslinkit',
-	'tog-minordefault' => 'Muutokset ovat oletuksena pieniä',
+	'tog-editsection-editpage' => 'Näytä osion muokkauslinkit',
+	'tog-minordefault-editpage' => 'Muutokset ovat oletuksena pieniä',
 );
 
 /** French (français)
@@ -859,10 +859,10 @@ $messages['fr'] = array(
 	'prefs-editing-experience' => 'Expérience de modification',
 	'prefs-monobook-layout' => 'Habillage MonoBook seulement',
 	'prefs-editarea-size' => 'Taille de la fenêtre de modification (habillage MonoBook seulement)',
-	'tog-editsection' => 'Activer les modifications de sections grâce aux liens « [modifier] »',
+	'tog-editsection-editpage' => 'Activer les modifications de sections grâce aux liens « [modifier] »',
 	'tog-editwidth' => 'Élargir la zone de modification en mode source afin de remplir la totalité de l’écran',
-	'tog-minordefault' => 'Marquer mes modifications comme « mineures » par défaut',
-	'tog-forceeditsummary' => 'M’avertir si je n’ai laissé aucun résumé de modification',
+	'tog-minordefault-editpage' => 'Marquer mes modifications comme « mineures » par défaut',
+	'tog-forceeditsummary-editpage' => 'M’avertir si je n’ai laissé aucun résumé de modification',
 
 	// preview-related messages
 	'editpagelayout-preview-label-desktop' => 'Bureau',
@@ -946,10 +946,10 @@ $messages['gl'] = array(
 	'prefs-editing-experience' => 'Experiencia de edición',
 	'prefs-monobook-layout' => 'Esquema MonoBook soamente',
 	'prefs-editarea-size' => 'Tamaño da ventá de edición (esquema MonoBook soamente)',
-	'tog-editsection' => 'Permitir a edición de seccións mediante as ligazóns "editar"',
+	'tog-editsection-editpage' => 'Permitir a edición de seccións mediante as ligazóns "editar"',
 	'tog-editwidth' => 'Ampliar o cadro de edición no modo fonte para encher toda a pantalla',
-	'tog-minordefault' => 'Marcar por omisión todas as edicións como pequenas',
-	'tog-forceeditsummary' => 'Avisádeme cando o campo resumo estea baleiro',
+	'tog-minordefault-editpage' => 'Marcar por omisión todas as edicións como pequenas',
+	'tog-forceeditsummary-editpage' => 'Avisádeme cando o campo resumo estea baleiro',
 );
 
 /** Hebrew (עברית)
@@ -1013,10 +1013,10 @@ $messages['he'] = array(
 	'prefs-editing-experience' => 'עריכת ניסיון',
 	'prefs-monobook-layout' => 'פריסת MonoBook בלבד',
 	'prefs-editarea-size' => 'גודל חלון עריכה (פריסת MonoBook בלבד)',
-	'tog-editsection' => 'אפשר עריכת קטע דרך קישורי עריכה',
+	'tog-editsection-editpage' => 'אפשר עריכת קטע דרך קישורי עריכה',
 	'tog-editwidth' => 'הרחבת מצב קוד מקור בתיבת עריכה לכל המסך',
-	'tog-minordefault' => 'הגדרת כל פעולות עריכה כמשניות בברירת מחדל',
-	'tog-forceeditsummary' => 'הצגת אזהרה בהכנסת תקציר עריכה ריק',
+	'tog-minordefault-editpage' => 'הגדרת כל פעולות עריכה כמשניות בברירת מחדל',
+	'tog-forceeditsummary-editpage' => 'הצגת אזהרה בהכנסת תקציר עריכה ריק',
 );
 
 /** Hungarian (magyar)
@@ -1092,10 +1092,10 @@ $messages['hu'] = array(
 	'prefs-editing-experience' => 'Szerkesztési tapasztalat',
 	'prefs-monobook-layout' => 'Csak MonoBook elrendezés',
 	'prefs-editarea-size' => 'Szerkesztési ablak mérete (csak MonoBook elrendezésben)',
-	'tog-editsection' => 'Szakaszok szerkesztési hivatkozásainak megjelenítése',
+	'tog-editsection-editpage' => 'Szakaszok szerkesztési hivatkozásainak megjelenítése',
 	'tog-editwidth' => 'Szerkesztési mező tágítása képernyőszélességre forráskód-nézetben',
-	'tog-minordefault' => 'Alapértelmezetten minden szerkesztésemet jelölje aprónak',
-	'tog-forceeditsummary' => 'Figyelmeztessen, ha nem adok meg szerkesztési összefoglalót',
+	'tog-minordefault-editpage' => 'Alapértelmezetten minden szerkesztésemet jelölje aprónak',
+	'tog-forceeditsummary-editpage' => 'Figyelmeztessen, ha nem adok meg szerkesztési összefoglalót',
 );
 
 /** Interlingua (interlingua)
@@ -1173,10 +1173,10 @@ $messages['ia'] = array(
 	'prefs-editing-experience' => 'Experientia de modification',
 	'prefs-monobook-layout' => 'Designo "MonoBook" solmente',
 	'prefs-editarea-size' => 'Dimension del fenestra de modification (designo "MonoBook" solmente)',
-	'tog-editsection' => 'Permitter le modification de sectiones con ligamines "modificar"',
+	'tog-editsection-editpage' => 'Permitter le modification de sectiones con ligamines "modificar"',
 	'tog-editwidth' => 'Allargar le quadro de modification in modo codice-fonte pro plenar tote le schermo',
-	'tog-minordefault' => 'Pre-marcar tote le modificationes como "minor"',
-	'tog-forceeditsummary' => 'Avisar me si io non entra un summario de modification',
+	'tog-minordefault-editpage' => 'Pre-marcar tote le modificationes como "minor"',
+	'tog-forceeditsummary-editpage' => 'Avisar me si io non entra un summario de modification',
 );
 
 /** Ingush (ГӀалгӀай)
@@ -1241,10 +1241,10 @@ $messages['it'] = array(
 	'prefs-editing-experience' => 'Opzioni di modifica avanzate',
 	'prefs-monobook-layout' => 'Solo skin Monobook',
 	'prefs-editarea-size' => 'Dimensioni della finestra di modifica (solo skin Monobook)',
-	'tog-editsection' => 'Abilita la modifica delle sezioni tramite i link di modifica',
+	'tog-editsection-editpage' => 'Abilita la modifica delle sezioni tramite i link di modifica',
 	'tog-editwidth' => 'Estendi la finestra di modifica in modalità Codice sorgente allo schermo intero',
-	'tog-minordefault' => 'Contrassegna di default tutte le modifiche come "minori"',
-	'tog-forceeditsummary' => 'Avvisami se lascio vuoto il riassunto della modifica',
+	'tog-minordefault-editpage' => 'Contrassegna di default tutte le modifiche come "minori"',
+	'tog-forceeditsummary-editpage' => 'Avvisami se lascio vuoto il riassunto della modifica',
 
 	// preview-related messages
 	'editpagelayout-preview-label-desktop' => 'Desktop',
@@ -1317,10 +1317,10 @@ $messages['ja'] = array(
 	'prefs-editing-experience' => '編集補助',
 	'prefs-monobook-layout' => 'MonoBook のみ',
 	'prefs-editarea-size' => '編集ウィンドウのサイズ（MonoBook のみ）',
-	'tog-editsection' => '[編集]リンクから節を編集できるようにする',
+	'tog-editsection-editpage' => '[編集]リンクから節を編集できるようにする',
 	'tog-editwidth' => 'ソースモード時の編集ボックスを画面いっぱいに広げる',
-	'tog-minordefault' => '細部の編集を既定でチェックする',
-	'tog-forceeditsummary' => '要約欄が空欄の場合に警告する',
+	'tog-minordefault-editpage' => '細部の編集を既定でチェックする',
+	'tog-forceeditsummary-editpage' => '要約欄が空欄の場合に警告する',
 
 	// preview-related messages
 	'editpagelayout-preview-label-desktop' => 'PC',
@@ -1418,10 +1418,10 @@ $messages['ko'] = array(
 	'prefs-editing-experience' => '편집기 설정',
 	'prefs-monobook-layout' => '모노북 스킨 전용',
 	'prefs-editarea-size' => '편집 창 크기 (모노북 스킨 전용)',
-	'tog-editsection' => '[편집] 링크로 부분 편집하기',
+	'tog-editsection-editpage' => '[편집] 링크로 부분 편집하기',
 	'tog-editwidth' => '소스 모드 사용시에 전체 화면으로 편집하기',
-	'tog-minordefault' => '‘사소한 편집’을 기본적으로 선택하기',
-	'tog-forceeditsummary' => '편집 요약을 쓰지 않았을 때 알려주기',
+	'tog-minordefault-editpage' => '‘사소한 편집’을 기본적으로 선택하기',
+	'tog-forceeditsummary-editpage' => '편집 요약을 쓰지 않았을 때 알려주기',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -1441,8 +1441,8 @@ $messages['lb'] = array(
 	'wikia-editor-modules-templates-showUsedList-dialog-title' => 'Lëscht vun de benotzte Schablounen',
 	'wikia-editor-modules-categories-title' => 'Kategorien',
 	'wikia-editor-edittools-caption' => 'méi',
-	'tog-minordefault' => "All Ännerungen automatesch als 'Kleng Ännerungen' markéieren",
-	'tog-forceeditsummary' => 'Mech warnen, wann en beim Späicheren de Resumé eidel loossen',
+	'tog-minordefault-editpage' => "All Ännerungen automatesch als 'Kleng Ännerungen' markéieren",
+	'tog-forceeditsummary-editpage' => 'Mech warnen, wann en beim Späicheren de Resumé eidel loossen',
 );
 
 /** Lithuanian (lietuvių)
@@ -1544,10 +1544,10 @@ $messages['mk'] = array(
 	'prefs-editing-experience' => 'Уредувачко искуство',
 	'prefs-monobook-layout' => 'Само распоредот „Монобук“',
 	'prefs-editarea-size' => 'Големина на прозорецот за уредување (само распоредот „Монобук“)',
-	'tog-editsection' => 'Овозможи уредување на заглавија преку врските „уреди“',
+	'tog-editsection-editpage' => 'Овозможи уредување на заглавија преку врските „уреди“',
 	'tog-editwidth' => 'Прошири го полето во Изворниот режим за да го исполни целиот екран',
-	'tog-minordefault' => 'Обележувај ги сите уредувања како ситни по основно',
-	'tog-forceeditsummary' => 'Извести ме кога нема опис на промените',
+	'tog-minordefault-editpage' => 'Обележувај ги сите уредувања како ситни по основно',
+	'tog-forceeditsummary-editpage' => 'Извести ме кога нема опис на промените',
 );
 
 /** Malay (Bahasa Melayu)
@@ -1627,10 +1627,10 @@ $messages['ms'] = array(
 	'prefs-editing-experience' => 'Pengalaman ketika menyunting',
 	'prefs-monobook-layout' => 'Tataletak Monobook sahaja',
 	'prefs-editarea-size' => 'Saiz tetingkap penyuntingan (tataletak MonoBook sahaja)',
-	'tog-editsection' => 'Bolehkan penyuntingan bahagian melalui pautan sunting',
+	'tog-editsection-editpage' => 'Bolehkan penyuntingan bahagian melalui pautan sunting',
 	'tog-editwidth' => 'Luaskan ruangan penyuntingan mod Sumber supaya mengisi seluruh skrin',
-	'tog-minordefault' => 'Tandakan semua suntingan sebagai "kecil" secara asali',
-	'tog-forceeditsummary' => 'Ingatkan saya jika ringkasan suntingan kosong',
+	'tog-minordefault-editpage' => 'Tandakan semua suntingan sebagai "kecil" secara asali',
+	'tog-forceeditsummary-editpage' => 'Ingatkan saya jika ringkasan suntingan kosong',
 );
 
 /** Norwegian Bokmål (norsk bokmål)
@@ -1711,10 +1711,10 @@ $messages['nb'] = array(
 	'prefs-editing-experience' => 'Redigeringserfaring',
 	'prefs-monobook-layout' => 'Kun MonoBook-oppsett',
 	'prefs-editarea-size' => 'Størrelse på redigeringsvinduet (kun MonoBook-oppsett)',
-	'tog-editsection' => 'Tillat redigering av seksjoner via redigeringslenker',
+	'tog-editsection-editpage' => 'Tillat redigering av seksjoner via redigeringslenker',
 	'tog-editwidth' => 'Utvid redigeringsboksen for kildemodus slik at den fyller hele skjermen',
-	'tog-minordefault' => 'Merk alle redigeringer som «mindre» som standard',
-	'tog-forceeditsummary' => 'Advar meg hvis jeg oppgir en blank redigeringsforklaring.',
+	'tog-minordefault-editpage' => 'Merk alle redigeringer som «mindre» som standard',
+	'tog-forceeditsummary-editpage' => 'Advar meg hvis jeg oppgir en blank redigeringsforklaring.',
 );
 
 /** Dutch (Nederlands)
@@ -1798,10 +1798,10 @@ $messages['nl'] = array(
 	'prefs-editing-experience' => 'Bewerkingservaring',
 	'prefs-monobook-layout' => 'Alleen MonoBook-opmaak',
 	'prefs-editarea-size' => 'Grootte van bewerkingsvenster (alleen Monobook-opmaak)',
-	'tog-editsection' => 'Bewerkingskoppelingen voor paragrafen inschakelen',
+	'tog-editsection-editpage' => 'Bewerkingskoppelingen voor paragrafen inschakelen',
 	'tog-editwidth' => 'Het venster voor broncodebewerkingsmodus verbreden tot het volledige venster',
-	'tog-minordefault' => 'Al mijn bewerkingen als "klein" markeren',
-	'tog-forceeditsummary' => 'Een melding geven bij een lege bewerkingssamenvatting',
+	'tog-minordefault-editpage' => 'Al mijn bewerkingen als "klein" markeren',
+	'tog-forceeditsummary-editpage' => 'Een melding geven bij een lege bewerkingssamenvatting',
 );
 
 /** Nederlands (informeel)‎ (Nederlands (informeel)‎)
@@ -1898,10 +1898,10 @@ $messages['pl'] = array(
 	'prefs-editing-experience' => 'Doświadczenie edytowania',
 	'prefs-monobook-layout' => 'Tylko w skórce Monobook',
 	'prefs-editarea-size' => 'Rozmiar okna edycji (tylko MonoBook)',
-	'tog-editsection' => 'Włącz edycję sekcji poprzez linki edycji',
+	'tog-editsection-editpage' => 'Włącz edycję sekcji poprzez linki edycji',
 	'tog-editwidth' => 'Rozszerz ekran trybu źródłowego na cały ekran',
-	'tog-minordefault' => 'Wszystkie zmiany oznaczaj domyślnie jako drobne',
-	'tog-forceeditsummary' => 'Poinformuj mnie gdy zostawię puste pole opisu zmian',
+	'tog-minordefault-editpage' => 'Wszystkie zmiany oznaczaj domyślnie jako drobne',
+	'tog-forceeditsummary-editpage' => 'Poinformuj mnie gdy zostawię puste pole opisu zmian',
 
 	// preview-related messages
 	'editpagelayout-preview-label-desktop' => 'Komputer',
@@ -1985,10 +1985,10 @@ $messages['pms'] = array(
 	'prefs-editing-experience' => 'Modifiché esperiensa',
 	'prefs-monobook-layout' => 'Mach layout MonoBook',
 	'prefs-editarea-size' => 'Dimension ëd la fnesta ëd modìfica (mach layout MonoBook)',
-	'tog-editsection' => 'Mosta colegament ëd modìfica ëd session',
+	'tog-editsection-editpage' => 'Mosta colegament ëd modìfica ëd session',
 	'tog-editwidth' => 'Estend la casela ëd modìfica an manera Sorziss fin a venpe lë scherm anter',
-	'tog-minordefault' => 'Marca tute le modìfice coma "cite" për definission',
-	'tog-forceeditsummary' => 'Ciam-me se i lasso un somari dla modìfica bianch',
+	'tog-minordefault-editpage' => 'Marca tute le modìfice coma "cite" për definission',
+	'tog-forceeditsummary-editpage' => 'Ciam-me se i lasso un somari dla modìfica bianch',
 );
 
 /** Pashto (پښتو)
@@ -2094,10 +2094,10 @@ $messages['pt'] = array(
 	'prefs-editing-experience' => 'Experiência de edição',
 	'prefs-monobook-layout' => 'Composição só para o tema MonoBook',
 	'prefs-editarea-size' => 'Tamanho da janela de edição (só para o tema MonoBook)',
-	'tog-editsection' => 'Possibilitar a edição de secções com links [editar]',
+	'tog-editsection-editpage' => 'Possibilitar a edição de secções com links [editar]',
 	'tog-editwidth' => 'Aumentar a caixa de edição no modo de código para preenchar todo o ecrã',
-	'tog-minordefault' => 'Por omissão, marcar todas as edições como menores',
-	'tog-forceeditsummary' => 'Avisar-me se deixar o resumo da edição vazio',
+	'tog-minordefault-editpage' => 'Por omissão, marcar todas as edições como menores',
+	'tog-forceeditsummary-editpage' => 'Avisar-me se deixar o resumo da edição vazio',
 );
 
 /** Brazilian Portuguese (português do Brasil)
@@ -2182,10 +2182,10 @@ $messages['pt-br'] = array(
 	'prefs-editing-experience' => 'Experiência de edição',
 	'prefs-monobook-layout' => 'Visual MonoBook apenas',
 	'prefs-editarea-size' => 'Tamanho da janela de edição (Visual MonoBook apenas)',
-	'tog-editsection' => 'Mostrar links para a edição de seções',
+	'tog-editsection-editpage' => 'Mostrar links para a edição de seções',
 	'tog-editwidth' => 'Ampliar o modo de edição "Fonte" para encher toda a tela',
-	'tog-minordefault' => 'Marcar todas as edições como "menor" por padrão',
-	'tog-forceeditsummary' => 'Avisar-me se eu deixar um sumário em branco',
+	'tog-minordefault-editpage' => 'Marcar todas as edições como "menor" por padrão',
+	'tog-forceeditsummary-editpage' => 'Avisar-me se eu deixar um sumário em branco',
 
 	// preview-related messages
 	'editpagelayout-preview-label-desktop' => 'Computador',
@@ -2287,10 +2287,10 @@ $messages['ru'] = array(
 	'prefs-editing-experience' => 'Редактирование для опытных',
 	'prefs-monobook-layout' => 'Только для MonoBook',
 	'prefs-editarea-size' => 'Размер окна редактирования (только для MonoBook)',
-	'tog-editsection' => 'Показывать ссылку «править» для каждого раздела',
+	'tog-editsection-editpage' => 'Показывать ссылку «править» для каждого раздела',
 	'tog-editwidth' => 'В режиме исходного кода расширить поле редактирования на весь экран',
-	'tog-minordefault' => 'Отметить все правки, как малые по умолчанию',
-	'tog-forceeditsummary' => 'Предупреждать, когда не заполнено поле описания правки',
+	'tog-minordefault-editpage' => 'Отметить все правки, как малые по умолчанию',
+	'tog-forceeditsummary-editpage' => 'Предупреждать, когда не заполнено поле описания правки',
 
 	// preview-related messages
 	'editpagelayout-preview-label-desktop' => 'Монитор ПК',
@@ -2374,10 +2374,10 @@ $messages['sv'] = array(
 	'prefs-editing-experience' => 'Redigeringserfarenhet',
 	'prefs-monobook-layout' => 'Endast MonoBook-utseendet',
 	'prefs-editarea-size' => 'Storlek för redigeringsfönstret (endast MonoBook-utseendet)',
-	'tog-editsection' => 'Aktiverar sektionsredigering via redigeringslänkar',
+	'tog-editsection-editpage' => 'Aktiverar sektionsredigering via redigeringslänkar',
 	'tog-editwidth' => 'Utvidgar källägets redigeringsruta för att fylla hela skärmen',
-	'tog-minordefault' => 'Markera alla redigeringar som "mindre" som standard',
-	'tog-forceeditsummary' => 'Påminn mig om jag lämnar en tom redigeringskommentar',
+	'tog-minordefault-editpage' => 'Markera alla redigeringar som "mindre" som standard',
+	'tog-forceeditsummary-editpage' => 'Påminn mig om jag lämnar en tom redigeringskommentar',
 );
 
 /** Telugu (తెలుగు)
@@ -2496,10 +2496,10 @@ $messages['tl'] = array(
 	'prefs-editing-experience' => 'Karanasan sa pamamatnugot',
 	'prefs-monobook-layout' => 'Latag ng MonoBook lamang',
 	'prefs-editarea-size' => 'Sukat ng bintana ng pamamatnugot (latag ng MonoBook lamang)',
-	'tog-editsection' => 'Ipakita ang mga kawing sa pamamatnugot ng seksiyon',
+	'tog-editsection-editpage' => 'Ipakita ang mga kawing sa pamamatnugot ng seksiyon',
 	'tog-editwidth' => 'Palaparin ang kahong pampatnugot ng nasa gawi na Pampinagmulan upang mapuno ang buong panooran',
-	'tog-minordefault' => 'Markahan ang lahat ng mga pagbabago bilang "maliit" ayon sa likas na pagkakatakda',
-	'tog-forceeditsummary' => 'Udyukin ako kapag nakapag-iwan ako ng isang buod sa pamamatnugot na walang laman',
+	'tog-minordefault-editpage' => 'Markahan ang lahat ng mga pagbabago bilang "maliit" ayon sa likas na pagkakatakda',
+	'tog-forceeditsummary-editpage' => 'Udyukin ako kapag nakapag-iwan ako ng isang buod sa pamamatnugot na walang laman',
 );
 
 /** толышә зывон (толышә зывон)
@@ -2638,10 +2638,10 @@ $messages['vi'] = array(
 	'prefs-editing-experience' => 'Kinh nghiệm biên tập',
 	'prefs-monobook-layout' => 'Chỉ dành cho MonoBook',
 	'prefs-editarea-size' => 'Kích thước cửa sổ biên tập (chỉ dành cho MonoBook)',
-	'tog-editsection' => 'Kích hoạt tính năng chỉnh sửa từng mục thông qua các liên kết sửa đổi',
+	'tog-editsection-editpage' => 'Kích hoạt tính năng chỉnh sửa từng mục thông qua các liên kết sửa đổi',
 	'tog-editwidth' => 'Mở rộng hộp soạn thảo chế độ nguồn để lấp đầy toàn bộ màn hình',
-	'tog-minordefault' => 'Đánh dấu tất cả các sửa đổi là "nhỏ" theo mặc định',
-	'tog-forceeditsummary' => 'Nhắc tôi khi tôi quên điền tóm lược sửa đổi',
+	'tog-minordefault-editpage' => 'Đánh dấu tất cả các sửa đổi là "nhỏ" theo mặc định',
+	'tog-forceeditsummary-editpage' => 'Nhắc tôi khi tôi quên điền tóm lược sửa đổi',
 );
 
 /** Simplified Chinese (中文（简体）‎)
@@ -2724,10 +2724,10 @@ $messages['zh-hans'] = array(
 	'prefs-editing-experience' => '编辑经验',
 	'prefs-monobook-layout' => '仅MonoBook布局',
 	'prefs-editarea-size' => '编辑窗口的大小（仅MonoBook布局）',
-	'tog-editsection' => '显示章节编辑链接',
+	'tog-editsection-editpage' => '显示章节编辑链接',
 	'tog-editwidth' => '扩宽源代码模式的编辑框填满整个屏幕',
-	'tog-minordefault' => '默认将所有编辑标为“小编辑”',
-	'tog-forceeditsummary' => '在我未填写编辑概要时提示我',
+	'tog-minordefault-editpage' => '默认将所有编辑标为“小编辑”',
+	'tog-forceeditsummary-editpage' => '在我未填写编辑概要时提示我',
 
 	// preview-related messages
 	'editpagelayout-preview-label-desktop' => '桌面',
