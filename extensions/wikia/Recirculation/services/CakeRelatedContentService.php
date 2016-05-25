@@ -14,6 +14,7 @@ class CakeRelatedContentService {
 	
 	const SERVICE_NAME = "content-entity";
 	const DISCUSSION_THREAD_TITLE_MAX_LENGTH = 105;
+	const TIMEOUT = 5;
 
 	/**
 	 * @param $title
@@ -21,10 +22,15 @@ class CakeRelatedContentService {
 	 * @return RecirculationContent[]
 	 */
 	public function getContentRelatedTo($title, $limit=5, $ignore=null) {
+		$items = [];
+
+		if (!$this->onValidWiki() || !$this->onValidPage($title)) {
+			return $items;
+		}
+
 		$api = $this->relatedContentApi();
 		
 		try {
-			$items = [];
 			$filteredRelatedContent = $api->getRelatedContentFromEntityName($title, 20, "true");
 			$wikiArticles = [];
 			foreach ($filteredRelatedContent->getWikiArticles() as $article) {
@@ -87,7 +93,11 @@ class CakeRelatedContentService {
 	private function relatedContentApi() {
 		/** @var ApiProvider $apiProvider */
 		$apiProvider = Injector::getInjector()->get(ApiProvider::class);
-		return $apiProvider->getApi(self::SERVICE_NAME, RelatedContentApi::class);
+		/** @var RelatedContentApi $api */
+		$api = $apiProvider->getApi(self::SERVICE_NAME, RelatedContentApi::class);
+		$api->getApiClient()->getConfig()->setCurlTimeout(self::TIMEOUT);
+
+		return $api;
 	}
 
 	private function formatTitle(Content $content) {
@@ -100,5 +110,25 @@ class CakeRelatedContentService {
 		}
 
 		return $content->getTitle();
+	}
+
+	private function onValidWiki() {
+		global $wgCityId;
+
+		return in_array(
+				$wgCityId,
+				[
+						147,    // starwars
+						130814, // gameofthrones
+						3035,   // fallout
+						2237,   // dc
+						2233,   // marvel
+						208733, // darksouls
+				]
+		);
+	}
+
+	private function onValidPage($title) {
+		return $title != "Main Page";
 	}
 }
