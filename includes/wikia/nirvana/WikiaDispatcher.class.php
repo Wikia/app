@@ -132,6 +132,15 @@ class WikiaDispatcher {
 				$controller = new $controllerClassName; /* @var $controller WikiaController */
 				$response->setTemplateEngine($controllerClassName::DEFAULT_TEMPLATE_ENGINE);
 
+				// uopz can not override classes returned by new operator when the class name is passed as a string
+				global $wgRunningUnitTests;
+				if ( $wgRunningUnitTests && function_exists( 'uopz_get_mock' ) ) {
+					$instance = uopz_get_mock( $controllerClassName );
+					if ( $instance ) {
+						$controller  = $instance;
+					}
+				}
+
 				if ( $callNext ) {
 					list ($nextController, $nextMethod, $resetData) = explode("::", $callNext);
 					$controller->forward($nextController, $nextMethod, $resetData);
