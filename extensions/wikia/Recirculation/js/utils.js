@@ -54,7 +54,7 @@ define('ext.wikia.recirculation.utils', [
 		var params = {
 			utm_source: 'wikia',
 			utm_campaign: 'recirc',
-			utm_placement: placement
+			utm_medium: placement
 		};
 
 		items = $.map(items, function(item, index) {
