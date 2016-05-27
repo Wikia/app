@@ -17,10 +17,17 @@
 		display: block;
 		font-size: 12px;
 	}
+}
 
-	@media #{$breakpoint-below-small-plus} {
-		margin: 12px 8px;
-		max-width: 330px;
-		vertical-align: top;
+@media #{$breakpoint-below-small-plus} {
+	.WikiaRail {
+		-moz-column-count: 2;
+		column-count: 2;
+
+		.module {
+			margin: 12px 8px;
+			width: 330px;
+			vertical-align: top;
+		}
 	}
 }
