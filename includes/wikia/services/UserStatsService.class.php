@@ -247,20 +247,17 @@ class UserStatsService extends WikiaModel {
 
 		$wikiId = $this->getWikiId();
 
-		if ( !empty( $this->wikiOptions[$wikiId] ) ) {
-			wfProfileOut( __METHOD__ );
-			return $this->wikiOptions[$wikiId];
+		if ( empty( $this->wikiOptions[$wikiId] ) ) {
+			$this->wikiOptions[$wikiId] = $this->getOptionsWikiFromCache();
 		}
 
-		$this->wikiOptions[$wikiId] = $this->getOptionsWikiFromCache();
-
-		if ( !empty( $this->wikiOptions[$wikiId] ) ) {
+		if ( empty( $this->wikiOptions[$wikiId] ) ) {
 			wfProfileOut( __METHOD__ );
-			return $this->wikiOptions[$wikiId];
+			$this->wikiOptions[$wikiId] = $this->loadOptionsWiki();
 		}
 
 		wfProfileOut( __METHOD__ );
-		return $this->loadOptionsWiki();
+		return $this->wikiOptions[$wikiId];
 	}
 
 	/**
