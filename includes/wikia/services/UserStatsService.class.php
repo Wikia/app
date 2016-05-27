@@ -446,9 +446,11 @@ class UserStatsService extends WikiaModel {
 
 	private function debugEditCountIfNotExists( $property ) {
 		$editCount = (int)$this->getOptionWiki( $property );
-		WikiaLogger::instance()->debug(
-			'UserStatsService calculate ' . $property,
-			[ 'editcount' => $editCount, 'is_not_equal_one' => ( $editCount !== 1) ]
-		);
+		if ( $editCount !== 1 ) {
+			WikiaLogger::instance()->warning(
+				'UserStatsService calculate ' . $property,
+				[ $property => $editCount, 'user_id' => $this->userId ]
+			);
+		}
 	}
 }
