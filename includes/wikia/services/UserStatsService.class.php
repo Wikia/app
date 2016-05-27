@@ -159,6 +159,8 @@ class UserStatsService extends WikiaModel {
 	}
 
 	private function updateEditCount( $propertyName ) {
+		wfProfileIn( __METHOD__ );
+
 		//update edit counts in options
 		$dbw = wfGetDB( DB_MASTER );
 		$dbw->update(
@@ -174,6 +176,8 @@ class UserStatsService extends WikiaModel {
 			$optionsWiki[ $propertyName ]++;
 			$this->saveOptionsWikiToCache( $optionsWiki );
 		}
+
+		wfProfileOut( __METHOD__ );
 	}
 
 	/**
@@ -239,9 +243,12 @@ class UserStatsService extends WikiaModel {
 	}
 
 	private function getOptionsWiki() {
+		wfProfileIn( __METHOD__ );
+
 		$wikiId = $this->getWikiId();
 
 		if ( !empty( $this->wikiOptions[$wikiId] ) ) {
+			wfProfileOut( __METHOD__ );
 			return $this->wikiOptions[$wikiId];
 		}
 
@@ -391,6 +398,8 @@ class UserStatsService extends WikiaModel {
 	}
 
 	private function initLastContributionTimestamp() {
+		wfProfileIn( __METHOD__ );
+
 		/* Get lastContributionTimestamp from database */
 		$dbr = $this->getDatabase();
 		$res = $dbr->selectRow(
