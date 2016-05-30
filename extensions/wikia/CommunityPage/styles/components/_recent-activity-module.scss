@@ -2,7 +2,7 @@
 @import 'skins/shared/mixins/clearfix';
 @import 'skins/shared/mixins/flexbox';
 
-.RecentActivityModule {
+.recent-activity-module {
 	.avatar-container {
 		@include flex($avatar-flex);
 
@@ -10,7 +10,6 @@
 	}
 
 	.recent-changes {
-		line-height: 20px;
 		margin: 6px 0 0;
 	}
 

@@ -71,9 +71,9 @@ class CommunityPageSpecialHooks {
 	 * @return bool
 	 */
 	public static function onGetRailModuleList( array &$railModuleList ) {
-		global $wgTitle, $wgUser;
+		global $wgTitle;
 
-		if ( ( $wgUser->isLoggedIn() && $wgTitle->inNamespace( NS_MAIN ) ) || $wgTitle->isSpecial( 'WikiActivity' ) ) {
+		if ( $wgTitle->inNamespace( NS_MAIN ) || $wgTitle->isSpecial( 'WikiActivity' ) ) {
 			$railModuleList[1342] = [ 'CommunityPageEntryPoint', 'Index', null ];
 		}
 

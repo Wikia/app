@@ -3,7 +3,7 @@ define('ext.wikia.recirculation.helpers.cakeRelatedContent', [
     'wikia.nirvana'
 ], function($, nirvana) {
     var options = {
-        limit: 3
+        limit: 5
     };
 
     function loadData() {
