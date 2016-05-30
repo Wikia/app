@@ -1,5 +1,6 @@
 @import 'skins/shared/color';
 @import 'skins/shared/mixins/flexbox';
+@import 'skins/oasis/css/core/breakpoints-variables';
 
 @import '../components/_variables';
 
@@ -20,14 +21,13 @@ $logo-url: $logo-url-light;
 }
 
 .WikiaRail {
-	padding-top: 20px;
-
 	.module {
 		position: relative;
 	}
 }
 
 .community-page-entry-point-module {
+	margin-top: 20px;
 	position: relative;
 
 	.community-page-entry-point-logo {
@@ -87,7 +87,7 @@ $logo-url: $logo-url-light;
 		font-size: 16px;
 		padding-top: 15px;
 		text-align: center;
-		word-break: break-all;
+		word-wrap: break-word;
 		white-space: pre-line; // Respect linebreaks
 
 		b {
@@ -95,5 +95,15 @@ $logo-url: $logo-url-light;
 			&:before { content: '\A'; } // Add a linebreak before bolded text
 		}
 
+	}
+}
+
+@media #{$breakpoint-below-small-plus} {
+	.WikiaRail {
+		padding-top: 20px;
+	}
+
+	.community-page-entry-point-module {
+		margin-top: 0;
 	}
 }

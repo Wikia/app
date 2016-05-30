@@ -2,8 +2,11 @@
 @import 'skins/shared/mixins/image-replacement';
 
 $close-image: '/resources/wikia/ui_components/modal/images/ads-close-light.svg';
+$z-high-impact: $zTop + 2;
 
 #InvisibleHighImpactWrapper {
+	z-index: $z-high-impact;
+
 	&.hidden {
 		display: none !important;
 	}
