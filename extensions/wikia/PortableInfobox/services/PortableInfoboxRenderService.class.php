@@ -102,6 +102,8 @@ class PortableInfoboxRenderService extends WikiaService {
 			$output = '';
 		}
 
+		\Wikia\PortableInfobox\Helpers\PortableInfoboxDataBag::getInstance()->setFirstInfoboxAlredyRendered( true );
+
 		wfProfileOut( __METHOD__ );
 
 		return $output;
@@ -166,7 +168,9 @@ class PortableInfoboxRenderService extends WikiaService {
 
 			if ( !$helper->isMercury() ) {
 				$markup = $this->renderItem( 'hero-mobile-wikiamobile', $data );
-			} else {
+			} elseif (
+				\Wikia\PortableInfobox\Helpers\PortableInfoboxDataBag::getInstance()->isFirstInfoboxAlredyRendered()
+			) {
 				$markup = $this->renderItem( 'hero-mobile', $data );
 			}
 		} else {
@@ -213,7 +217,6 @@ class PortableInfoboxRenderService extends WikiaService {
 				} else {
 					$data = $helper->extendImageCollectionData( $images );
 				}
-				
 				$templateName = 'image-collection';
 			}
 
