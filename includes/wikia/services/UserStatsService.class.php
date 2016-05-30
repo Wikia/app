@@ -107,11 +107,20 @@ class UserStatsService extends WikiaModel {
 		wfProfileIn( __METHOD__ );
 
 		$stats = [
-			'firstRevisionDate' => $this->getFirstContributionTimestamp(),
-			'lastRevisionDate' => $this->getLastContributionTimestamp(),
-			'edits' => $this->getEditCountWiki(),
-			'editsThisWeek' => $this->getEditCountFromWeek()
+			'firstRevisionDate' => null,
+			'lastRevisionDate' => null,
+			'edits' => 0,
+			'editsThisWeek' => 0
 		];
+
+		if ( $this->getEditCountWiki() > 0 ) {
+			$stats = [
+				'firstRevisionDate' => $this->getFirstContributionTimestamp(),
+				'lastRevisionDate' => $this->getLastContributionTimestamp(),
+				'edits' => $this->getEditCountWiki(),
+				'editsThisWeek' => $this->getEditCountFromWeek()
+			];
+		}
 
 		wfProfileOut( __METHOD__ );
 		return $stats;
