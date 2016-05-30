@@ -30,7 +30,13 @@ class WikiaMockProxyUopz extends  WikiaMockProxy {
 				$functionName = $namespace . $baseName;
 				if ( $state ) { // enable
 					uopz_set_return($functionName, function() use ($functionName) {
-						return WikiaMockProxy::$instance->getGlobalFunction($functionName)->execute( func_get_args() );
+						try {
+							return WikiaMockProxy::$instance->getGlobalFunction($functionName)->execute( func_get_args() );
+						}
+						catch (Exception $e) {
+							echo sprintf("\n%s: %s [%s]!!!\n", get_class($e), $e->getMessage(), $functionName);
+							return null;
+						}
 					}, true);
 				} else { // disable
 					uopz_unset_return($functionName);
