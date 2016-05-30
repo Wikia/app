@@ -92,7 +92,7 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 		if ( $this->mockProxy !== null ) {
 			throw new Exception("Previous test did not execute tearDown()");
 		}
-		$this->mockProxy = function_exists('runkit_method_rename') ? new WikiaMockProxy() : new WikiaMockProxyUopz();
+		$this->mockProxy = version_compare( PHP_VERSION, '7.0.0.', '<' ) ? new WikiaMockProxy() : new WikiaMockProxyUopz();
 		$this->mockProxy->enable();
 	}
 
