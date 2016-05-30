@@ -487,15 +487,6 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 		parent::markTestIncomplete($message);
 	}
 
-	private function parseGlobalFunctionName( $functionName ) {
-		$last = strrpos($functionName,'\\');
-		if ( $last === false ) {
-			return [ '', $functionName ];
-		} else {
-			return [ ltrim( substr( $functionName, 0, $last + 1 ), '\\' ), substr( $functionName, $last + 1 ) ];
-		}
-	}
-
 	/**
 	 * @return PHPUnit_Framework_MockObject_MockObject
 	 */
