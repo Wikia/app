@@ -50,23 +50,24 @@ define('ext.wikia.aRecoveryEngine.recovery.helper', [
 	}
 
 	function track(type) {
-		if (Wikia && Wikia.Tracker) {
-			Wikia.Tracker.track({
-				eventName: 'ads.recovery',
-				ga_category: 'ads-recovery-blocked',
-				ga_action: Wikia.Tracker.ACTIONS.IMPRESSION,
-				ga_label: type,
-				trackingMethod: 'analytics'
-			});
-		}
-
-		if (instantGlobals.wgARecoveryEngineCustomLog && window._sp_ && !window._sp_.trackingSent) {
-			try {
-				var xmlHttp = new XMLHttpRequest();
-				xmlHttp.open('GET', customLogEndpoint+type, true);
-				xmlHttp.send();
-				window._sp_.trackingSent = true;
-			} catch (e) {}
+		if (window._sp_ && !window._sp_.trackingSent) {
+			if (Wikia && Wikia.Tracker) {
+				Wikia.Tracker.track({
+					eventName: 'ads.recovery',
+					ga_category: 'ads-recovery-blocked',
+					ga_action: Wikia.Tracker.ACTIONS.IMPRESSION,
+					ga_label: type,
+					trackingMethod: 'analytics'
+				});
+			}
+			if (instantGlobals.wgARecoveryEngineCustomLog) {
+				try {
+					var xmlHttp = new XMLHttpRequest();
+					xmlHttp.open('GET', customLogEndpoint+type, true);
+					xmlHttp.send();
+				} catch (e) {}
+			}
+			window._sp_.trackingSent = true;
 		}
 	}
 
