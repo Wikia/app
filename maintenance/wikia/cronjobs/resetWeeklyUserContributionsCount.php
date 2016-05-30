@@ -20,7 +20,15 @@ class resetWeeklyUserContributionsCount extends Maintenance {
 	}
 
 	public function execute() {
+		global $wgCityId, $wgEnableCommunityPageExt;
+
 		$dbw = wfGetDB( DB_MASTER );
+
+		$userIds = ( new WikiaSQL() )
+			->SELECT( 'wup_user' )
+			->FROM( 'wikia_user_properties' )
+			->WHERE( 'wup_property' )->EQUAL_TO( 'editcountThisWeek' )
+			->run( $dbw );
 
 		$result = ( new WikiaSQL() )
 			->DELETE( 'wikia_user_properties' )
@@ -29,6 +37,16 @@ class resetWeeklyUserContributionsCount extends Maintenance {
 
 		if ( $result === false ) {
 			WikiaLogger::instance()->error( 'Reset Weekly Contributions Count' );
+		} else {
+			foreach ( $userIds as $id ) {
+				UserStatsService::purgeOptionsWikiCache( $id, $wgCityId );
+			}
+
+			if ( $wgEnableCommunityPageExt ) {
+				WikiaDataAccess::cachePurge( wfMemcKey( CommunityPageSpecialUsersModel::TOP_CONTRIB_MCACHE_KEY ) );
+			}
+
+			WikiaLogger::instance()->info( 'Reset Weekly Contributions Count' );
 		}
 	}
 }
