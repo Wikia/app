@@ -20,10 +20,6 @@ class UserStatsService extends WikiaModel {
 		parent::__construct();
 	}
 
-	public function setWikiId( $wikiId ) {
-		$this->wikiId = $wikiId;
-	}
-
 	/**
 	 * Get the user's edit count for specified wiki.
 	 *
@@ -180,7 +176,6 @@ class UserStatsService extends WikiaModel {
 		);
 
 		if ( $dbw->affectedRows() === 1 ) {
-			//increment memcache also
 			$this->wikiOptions[ $propertyName ]++;
 			$this->saveOptionsWikiToCache( $this->wikiOptions );
 		}
