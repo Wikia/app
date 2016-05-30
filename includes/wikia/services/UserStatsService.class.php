@@ -181,9 +181,8 @@ class UserStatsService extends WikiaModel {
 
 		if ( $dbw->affectedRows() === 1 ) {
 			//increment memcache also
-			$optionsWiki = $this->getOptionsWiki();
-			$optionsWiki[ $propertyName ]++;
-			$this->saveOptionsWikiToCache( $optionsWiki );
+			$this->wikiOptions[ $propertyName ]++;
+			$this->saveOptionsWikiToCache( $this->wikiOptions );
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -239,34 +238,32 @@ class UserStatsService extends WikiaModel {
 		wfProfileIn( __METHOD__ );
 
 		// Get all options for wiki
-		$optionsWiki = $this->getOptionsWiki();
+		$this->loadOptionsWiki();
 
 		// Return specific option
-		if ( isset( $optionsWiki[ $optionName ] ) ) {
+		if ( isset( $this->wikiOptions[ $optionName ] ) ) {
 			wfProfileOut( __METHOD__ );
-			return $optionsWiki[ $optionName ];
+			return $this->wikiOptions[ $optionName ];
 		}
 
 		wfProfileOut( __METHOD__ );
 		return null;
 	}
 
-	private function getOptionsWiki() {
+	private function loadOptionsWiki() {
 		wfProfileIn( __METHOD__ );
 
-		$wikiId = $this->getWikiId();
-
-		if ( empty( $this->wikiOptions[$wikiId] ) ) {
-			$this->wikiOptions[$wikiId] = $this->getOptionsWikiFromCache();
+		if ( empty( $this->wikiOptions ) ) {
+			$this->wikiOptions = $this->getOptionsWikiFromCache();
 		}
 
-		if ( empty( $this->wikiOptions[$wikiId] ) ) {
+		if ( empty( $this->wikiOptions ) ) {
 			wfProfileOut( __METHOD__ );
-			$this->wikiOptions[$wikiId] = $this->loadOptionsWiki();
+			$this->wikiOptions = $this->getOptionsWikiFromDB();
 		}
 
 		wfProfileOut( __METHOD__ );
-		return $this->wikiOptions[$wikiId];
+		return $this->wikiOptions;
 	}
 
 	/**
@@ -276,7 +273,7 @@ class UserStatsService extends WikiaModel {
 	 * @author Kamil Koterba
 	 * @return array
 	 */
-	private function loadOptionsWiki() {
+	private function getOptionsWikiFromDB() {
 		wfProfileIn(__METHOD__);
 
 		$wikiId = $this->getWikiId();
@@ -291,13 +288,13 @@ class UserStatsService extends WikiaModel {
 		);
 
 		foreach( $res as $row ) {
-			$this->wikiOptions[$wikiId][ $row->wup_property ] = $row->wup_value;
+			$this->wikiOptions[ $row->wup_property ] = $row->wup_value;
 		}
 
-		$this->saveOptionsWikiToCache(  $this->wikiOptions[$wikiId] );
+		$this->saveOptionsWikiToCache(  $this->wikiOptions );
 
 		wfProfileOut( __METHOD__ );
-		return $this->wikiOptions[$wikiId];
+		return $this->wikiOptions;
 	}
 
 
@@ -322,10 +319,8 @@ class UserStatsService extends WikiaModel {
 			__METHOD__
 		);
 
-		$optionsWiki = $this->getOptionsWiki(); // checks if isset and loads if empty (to make sure we don't loose anything
-		$optionsWiki[ $optionName ] = $optionVal;
-
-		$this->saveOptionsWikiToCache(  $optionsWiki );
+		$this->wikiOptions[ $optionName ] = $optionVal;
+		$this->saveOptionsWikiToCache(  $this->wikiOptions );
 
 		wfProfileOut( __METHOD__ );
 		return $optionVal;
