@@ -54,6 +54,7 @@ class PortableInfoboxRenderService extends WikiaService {
 		wfProfileIn( __METHOD__ );
 
 		$helper = new PortableInfoboxRenderServiceHelper();
+		$dataBag = \Wikia\PortableInfobox\Helpers\PortableInfoboxDataBag::getInstance();
 		$infoboxHtmlContent = '';
 		$heroData = [ ];
 
@@ -87,7 +88,8 @@ class PortableInfoboxRenderService extends WikiaService {
 			}
 		}
 
-		if ( !empty( $heroData ) ) {
+		// In Mercury SPA content of the first infobox's hero module is already rendered in the article header.
+		if ( !empty( $heroData ) && !( $helper->isMercury() && empty( $dataBag->isFirstInfoboxAlredyRendered() ) ) ) {
 			$infoboxHtmlContent = $this->renderInfoboxHero( $heroData ) . $infoboxHtmlContent;
 		}
 
@@ -102,7 +104,7 @@ class PortableInfoboxRenderService extends WikiaService {
 			$output = '';
 		}
 
-		\Wikia\PortableInfobox\Helpers\PortableInfoboxDataBag::getInstance()->setFirstInfoboxAlredyRendered( true );
+		$dataBag->setFirstInfoboxAlredyRendered( true );
 
 		wfProfileOut( __METHOD__ );
 
@@ -168,9 +170,7 @@ class PortableInfoboxRenderService extends WikiaService {
 
 			if ( !$helper->isMercury() ) {
 				$markup = $this->renderItem( 'hero-mobile-wikiamobile', $data );
-			} elseif (
-				\Wikia\PortableInfobox\Helpers\PortableInfoboxDataBag::getInstance()->isFirstInfoboxAlredyRendered()
-			) {
+			} else {
 				$markup = $this->renderItem( 'hero-mobile', $data );
 			}
 		} else {
@@ -217,6 +217,7 @@ class PortableInfoboxRenderService extends WikiaService {
 				} else {
 					$data = $helper->extendImageCollectionData( $images );
 				}
+
 				$templateName = 'image-collection';
 			}
 
