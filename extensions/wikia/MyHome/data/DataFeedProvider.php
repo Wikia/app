@@ -44,9 +44,7 @@ class DataFeedProvider {
 			$callLimit = max(10, round(($proxyLimit - count($this->results)) * 1.2));
 			$res = $this->proxy->get($callLimit, $queryPosition);
 			if (isset($res['results'])) {
-				foreach($res['results'] as $oneres) {
-					$this->filterOne($oneres);
-				}
+				$this->filterMany( $res['results'] );
 			}
 
 			if (isset($res['query-continue'])) {
@@ -66,6 +64,12 @@ class DataFeedProvider {
 
 		wfProfileOut(__METHOD__);
 		return $out;
+	}
+
+	private function filterMany($results) {
+		foreach($results as $item) {
+			$this->filterOne($item);
+		}
 	}
 
 	private function filterOne($res) {
@@ -371,7 +375,7 @@ class DataFeedProvider {
 		wfProfileIn(__METHOD__);
 		global $wgMemc;
 
-		$key = null;
+		$key = '';
 		if( $this->removeDuplicatesType == 0 ) { //default
 			$key = $res['user'].'#'.$res['title'].'#'.$res['comment'];
 
