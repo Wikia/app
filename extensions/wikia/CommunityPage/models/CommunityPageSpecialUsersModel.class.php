@@ -299,34 +299,35 @@ class CommunityPageSpecialUsersModel {
 			function () {
 				$db = wfGetDB( DB_SLAVE );
 
+				$botIds = $this->getBotIds();
+
 				$userSqlData = ( new WikiaSQL() )
-					->SELECT( 'rev_user, rev_timestamp' )
+					->SELECT( 'rev_user, MAX(rev_timestamp) as last_revision' )
 					->FROM( 'revision' )
 					->WHERE( 'rev_timestamp > DATE_SUB(now(), INTERVAL 2 YEAR)' )
 					->AND_( 'rev_user' )->NOT_EQUAL_TO( 0 )
+					->AND_( 'rev_user' )->NOT_IN( $botIds )
 					->GROUP_BY( 'rev_user' )
-					->ORDER_BY( 'rev_timestamp DESC' )
+					->ORDER_BY( 'last_revision DESC' )
 					->LIMIT( self::ALL_CONTRIBUTORS_MODAL_LIMIT )
 					->runLoop( $db, function ( &$userSqlData, $row ) {
 						$userId = (int) $row->rev_user;
 						$user = User::newFromId( $userId );
 
-						if ( $this->showMember( $user ) ) {
+						if ( !$user->isBlocked() ) {
 							$userName = $user->getName();
 							$avatar = AvatarService::renderAvatar( $userName, AvatarService::AVATAR_SIZE_SMALL_PLUS );
 
-							$data = [
+							$userSqlData[] = [
 								'userId' => $userId,
-								'latestRevision' => $row->rev_timestamp,
-								'timeAgo' => wfTimeFormatAgo( $row->rev_timestamp ),
+								'latestRevision' => $row->last_revision,
+								'timeAgo' => wfTimeFormatAgo( $row->last_revision ),
 								'userName' => $userName,
 								'isAdmin' => $this->isAdmin( $userId, $this->getAdmins() ),
 								'isCurrent' => false,
 								'avatar' => $avatar,
 								'profilePage' => $user->getUserPage()->getLocalURL(),
 							];
-
-							$userSqlData[] = $data;
 						}
 					} );
 
