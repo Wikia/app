@@ -37,13 +37,6 @@ class CommunityPageSpecialHooks {
 		$key = wfMemcKey( CommunityPageSpecialUsersModel::TOP_CONTRIB_MCACHE_KEY, 10, false, true );
 		WikiaDataAccess::cachePurge( $key );
 
-		// Purge User Contributions
-		$key = wfMemcKey( CommunityPageSpecialUsersModel::CURR_USER_CONTRIBUTIONS_MCACHE_KEY, $user->mId, true );
-		WikiaDataAccess::cachePurge( $key );
-
-		$key = wfMemcKey( CommunityPageSpecialUsersModel::CURR_USER_CONTRIBUTIONS_MCACHE_KEY, $user->mId, false );
-		WikiaDataAccess::cachePurge( $key );
-
 		// Purge Recently Joined Users
 		// fixme: This should only be purged if this user making this edit is not already a member
 		// i.e. this his first edit to this community

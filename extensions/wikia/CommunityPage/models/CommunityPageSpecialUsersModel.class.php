@@ -8,7 +8,6 @@ class CommunityPageSpecialUsersModel {
 	const ALL_MEMBERS_MCACHE_KEY = 'community_page_all_members';
 	const MEMBER_COUNT_MCACHE_KEY = 'community_member_count';
 	const RECENTLY_JOINED_MCACHE_KEY = 'community_page_recently_joined';
-	const CURR_USER_CONTRIBUTIONS_MCACHE_KEY = 'community_page_current_user_contributions';
 
 	const ALL_CONTRIBUTORS_MODAL_LIMIT = 50;
 
@@ -149,38 +148,6 @@ class CommunityPageSpecialUsersModel {
 		);
 
 		return $botIds;
-	}
-
-	/**
-	 * Get count of contributions for a user in the current week( Starting Sunday midnight )
-	 *
-	 * @param User $user
-	 * @return int Number of contributions
-	 */
-	public function getUserContributionsCount( User $user ) {
-		$userId = $user->getId();
-
-		$editCount = WikiaDataAccess::cache(
-			// TODO: Should purge this when user edits
-			wfMemcKey( self::CURR_USER_CONTRIBUTIONS_MCACHE_KEY, $userId ),
-			WikiaResponse::CACHE_VERY_SHORT, // short cache b/c it's for the current user's info
-			function () use ( $userId ) {
-				$db = wfGetDB( DB_SLAVE );
-
-				$editCount = ( new WikiaSQL() )
-					->SELECT( 'wup_value' )
-					->FROM( 'wikia_user_properties' )
-					->WHERE( 'wup_user' )->EQUAL_TO( $userId )
-					->AND_( 'wup_property' )->EQUAL_TO( 'editcountThisWeek' )
-					->runLoop( $db, function ( &$editCount, $row ) {
-						$editCount = $row->wup_value;
-					} );
-
-				return $editCount;
-			}
-		);
-
-		return $editCount;
 	}
 
 	/**
