@@ -1,18 +1,16 @@
 /*global define*/
 /*jshint maxlen: 150*/
 define('ext.wikia.adEngine.provider.directGpt', [
-	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.provider.factory.wikiaGpt',
-	'ext.wikia.adEngine.slotTweaker',
-	'ext.wikia.adEngine.utils.btfBlocker',
-	'wikia.log',
-	'wikia.window'
-], function (adContext, factory, slotTweaker, btfBlocker, log, win) {
+	'ext.wikia.adEngine.slotTweaker'
+], function (factory, slotTweaker) {
 	'use strict';
 
-	var context = adContext.getContext(),
-		logGroup = 'ext.wikia.adEngine.provider.directGpt',
-		slotMap = {
+	return factory.createProvider(
+		'ext.wikia.adEngine.provider.directGpt',
+		'DirectGpt',
+		'gpt',
+		{
 			CORP_TOP_LEADERBOARD:       {
 				size: '728x90,1030x130,1030x65,1030x250,970x365,970x250,970x90,970x66,970x180,980x150',
 				loc: 'top'
@@ -51,42 +49,28 @@ define('ext.wikia.adEngine.provider.directGpt', [
 			},
 			TOP_RIGHT_BOXAD:            {size: '300x250,300x600,300x1050', loc: 'top'}
 		},
-		recoverableSlots = [
-			'TOP_LEADERBOARD',
-			'TOP_RIGHT_BOXAD'
-		],
-		provider;
-
-	provider = factory.createProvider(
-		logGroup,
-		'DirectGpt',
-		'gpt',
-		slotMap,
 		{
 			beforeSuccess: function (slotName) {
-				log(['beforeSuccess', slotName], 'debug', logGroup);
 				slotTweaker.removeDefaultHeight(slotName);
 				slotTweaker.removeTopButtonIfNeeded(slotName);
 				slotTweaker.adjustLeaderboardSize(slotName);
-				btfBlocker.onSlotResponse(slotName);
-			},
-			beforeCollapse: function (slotName) {
-				btfBlocker.onSlotResponse(slotName);
-			},
-			beforeHop: function (slotName) {
-				log(['beforeHop', slotName], 'debug', logGroup);
-				btfBlocker.onSlotResponse(slotName);
 			},
 			sraEnabled: true,
-			recoverableSlots: recoverableSlots
+			recoverableSlots: [
+				'TOP_LEADERBOARD',
+				'TOP_RIGHT_BOXAD'
+			],
+			atfSlots: [
+				'CORP_TOP_LEADERBOARD',
+				'CORP_TOP_RIGHT_BOXAD',
+				'HOME_TOP_LEADERBOARD',
+				'HOME_TOP_RIGHT_BOXAD',
+				'HUB_TOP_LEADERBOARD',
+				'INVISIBLE_SKIN',
+				'TOP_LEADERBOARD',
+				'TOP_RIGHT_BOXAD',
+				'GPT_FLUSH'
+			]
 		}
 	);
-
-	btfBlocker.init('oasis', provider.fillInSlot);
-
-	return {
-		name: provider.name,
-		canHandleSlot: provider.canHandleSlot,
-		fillInSlot: btfBlocker.fillInSlotWithDelay
-	};
 });

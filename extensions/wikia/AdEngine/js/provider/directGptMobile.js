@@ -1,11 +1,10 @@
 /*global define*/
 define('ext.wikia.adEngine.provider.directGptMobile', [
-	'ext.wikia.adEngine.provider.factory.wikiaGpt',
-	'ext.wikia.adEngine.utils.btfBlocker'
-], function (factory, btfBlocker) {
+	'ext.wikia.adEngine.provider.factory.wikiaGpt'
+], function (factory) {
 	'use strict';
 
-	var provider = factory.createProvider(
+	return factory.createProvider(
 		'ext.wikia.adEngine.provider.directGptMobile',
 		'DirectGptMobile',
 		'mobile',
@@ -19,23 +18,10 @@ define('ext.wikia.adEngine.provider.directGptMobile', [
 			MOBILE_PREFOOTER:           {size: '320x50,300x250,300x50,1x1'}
 		},
 		{
-			beforeSuccess: function (slotName) {
-				btfBlocker.onSlotResponse(slotName);
-			},
-			beforeCollapse: function (slotName) {
-				btfBlocker.onSlotResponse(slotName);
-			},
-			beforeHop: function (slotName) {
-				btfBlocker.onSlotResponse(slotName);
-			}
+			atfSlots: [
+				'MOBILE_TOP_LEADERBOARD',
+				'INVISIBLE_HIGH_IMPACT'
+			]
 		}
 	);
-
-	btfBlocker.init('mercury', provider.fillInSlot);
-
-	return {
-		name: provider.name,
-		canHandleSlot: provider.canHandleSlot,
-		fillInSlot: btfBlocker.fillInSlotWithDelay
-	};
 });

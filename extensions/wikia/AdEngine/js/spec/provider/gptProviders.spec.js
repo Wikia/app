@@ -42,7 +42,12 @@ describe('ext.wikia.adEngine.provider.*', function () {
 		lazyQueue: {},
 		window: {},
 		beforeSuccess: noop,
-		beforeHop: noop
+		beforeHop: noop,
+		btfBlocker: {
+			decorate: function(atfSlots, fillInSlot) {
+				return fillInSlot;
+			}
+		}
 	};
 
 	function createSlot(slotName) {
@@ -57,43 +62,22 @@ describe('ext.wikia.adEngine.provider.*', function () {
 		return modules['ext.wikia.adEngine.provider.factory.wikiaGpt'](
 			mocks.adContext,
 			mocks.adLogicPageParams,
+			mocks.btfBlocker,
 			mocks.gptHelper,
 			mocks.log,
 			mocks.lookups
 		);
 	}
 
-	function getBtfBlocker() {
-		return modules['ext.wikia.adEngine.utils.btfBlocker'](
-			mocks.adContext,
-			mocks.slotTweaker,
-			mocks.lazyQueue,
-			mocks.log,
-			mocks.window
-		);
-	}
-
 	function getProvider(providerName) {
 		switch (providerName) {
 			case 'directGpt':
-				return modules['ext.wikia.adEngine.provider.directGpt'](
-					mocks.adContext,
-					getFactory(),
-					mocks.slotTweaker,
-					getBtfBlocker(),
-					mocks.log,
-					mocks.window
-				);
 			case 'remnantGpt':
-				return modules['ext.wikia.adEngine.provider.remnantGpt'](
+				return modules['ext.wikia.adEngine.provider.' + providerName](
 					getFactory(),
 					mocks.slotTweaker
 				);
 			case 'directGptMobile':
-				return modules['ext.wikia.adEngine.provider.' + providerName](
-					getFactory(),
-					getBtfBlocker()
-				);
 			case 'remnantGptMobile':
 				return modules['ext.wikia.adEngine.provider.' + providerName](
 					getFactory()

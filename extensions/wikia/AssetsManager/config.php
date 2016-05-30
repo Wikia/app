@@ -81,6 +81,7 @@ $config['adengine2_desktop_js'] = array(
 		'//extensions/wikia/AdEngine/js/WikiaAdHelper.js',
 		'//extensions/wikia/AdEngine/js/WikiaDartHelper.js',
 		'//extensions/wikia/AdEngine/js/config/desktop.js',
+		'//extensions/wikia/AdEngine/js/provider/btfBlocker.js',
 		'//extensions/wikia/AdEngine/js/provider/directGpt.js',
 		'//extensions/wikia/AdEngine/js/provider/factoryWikiaGpt.js',
 		'//extensions/wikia/AdEngine/js/provider/gpt/adDetect.js',
@@ -108,7 +109,6 @@ $config['adengine2_desktop_js'] = array(
 		'//extensions/wikia/AdEngine/js/template/modalOasisHandler.js',
 		'//extensions/wikia/AdEngine/js/template/skin.js',
 		'//extensions/wikia/AdEngine/js/utils/AdLogicZoneParams.js',
-		'//extensions/wikia/AdEngine/js/utils/btfBlocker.js',
 		'//extensions/wikia/AdEngine/js/utils/hooks.js',
 		'//extensions/wikia/ARecoveryEngine/js/helper.js',
 		'//resources/wikia/modules/krux.js',
@@ -822,6 +822,7 @@ $config['mobile_base_ads_js'] = array(
 		'//extensions/wikia/AdEngine/js/lookup/openXBidder.js',
 		'//extensions/wikia/AdEngine/js/lookup/rubiconFastlane.js',
 		'//extensions/wikia/AdEngine/js/lookup/services.js',
+		'//extensions/wikia/AdEngine/js/provider/btfBlocker.js',
 		'//extensions/wikia/AdEngine/js/provider/directGptMobile.js',
 		'//extensions/wikia/AdEngine/js/provider/evolve2.js',
 		'//extensions/wikia/AdEngine/js/provider/hitMedia.js',
@@ -837,7 +838,6 @@ $config['mobile_base_ads_js'] = array(
 		'//extensions/wikia/AdEngine/js/provider/remnantGptMobile.js',
 		'//extensions/wikia/AdEngine/js/slot/adSlot.js',
 		'//extensions/wikia/AdEngine/js/utils/AdLogicZoneParams.js',
-		'//extensions/wikia/AdEngine/js/utils/btfBlocker.js',
 		'//extensions/wikia/AdEngine/js/utils/hooks.js',
 
 		// Recovery
