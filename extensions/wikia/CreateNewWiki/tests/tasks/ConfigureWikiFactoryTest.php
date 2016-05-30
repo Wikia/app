@@ -17,6 +17,8 @@ class ConfigureWikiFactoryTest extends \WikiaBaseTest {
 			'\Wikia\CreateNewWiki\Tasks\TaskContext', [ 'getLanguage', 'getWikiName' ]
 		);
 		$this->mockClass( 'TaskContext', $this->taskContextMock );
+
+		$this->mockGlobalVariable( 'wgCreateDatabaseActiveCluster', 'c7' );
 	}
 
 	public function tearDown() {

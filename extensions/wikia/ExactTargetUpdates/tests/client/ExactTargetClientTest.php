@@ -202,6 +202,10 @@ class ExactTargetClientTest extends WikiaBaseTest {
 			return $getExactTargetClient->invoke( $client );
 		} );
 
+		# normalize resources to allow assertEquals to pass in PHP7
+		$expected->sdl = is_resource( $expected->sdl );
+		$soapClient->sdl = is_resource( $soapClient->sdl );
+
 		$this->assertEquals( $expected, $soapClient );
 	}
 

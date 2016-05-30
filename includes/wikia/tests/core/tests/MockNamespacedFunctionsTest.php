@@ -11,7 +11,7 @@ namespace {
 		public function testFunctionNameSpec() {
 			$expValue = 2;
 
-			$this->getGlobalFunctionMock("\\NamespacedFunctions\\named1")
+			$this->getGlobalFunctionMock("NamespacedFunctions\\named1")
 				->expects($this->any())
 				->method("named1")
 				->will($this->returnValue($expValue));
@@ -32,7 +32,7 @@ namespace {
 		public function testNamespacedFunctionsMocks() {
 			$expValue = 2;
 
-			$this->getGlobalFunctionMock("\\NamespacedFunctions\\testFunction")
+			$this->getGlobalFunctionMock("NamespacedFunctions\\testFunction")
 				->expects($this->any())
 				->method("testFunction")
 				->will($this->returnValue($expValue));

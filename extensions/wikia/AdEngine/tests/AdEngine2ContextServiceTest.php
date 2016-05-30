@@ -38,8 +38,8 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 		$mock->method( 'getMonetizationUnits' )->willReturn( ['below_category' => 'testing'] );
 		$mock->method( 'getWikiVertical' )->willReturn( 'other' );
 		$mock->method( 'getCacheVersion' )->willReturn( 'v1' );
+		$mock->method( 'canShowModule' )->willReturn( true );
 		$this->mockClass( $name, $mock );
-		$this->mockStaticMethod( $name, 'canShowModule', true );
 	}
 
 	public function adContextDataProvider() {
