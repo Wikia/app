@@ -1419,7 +1419,11 @@ class MWMemcached {
 			if (isset($rev_keys[$key])) {
 				$out[$rev_keys[$key]] = $value;
 			} else {
-				// @todo - it should not happen - log such cases
+				// it should never happen but if it does log it
+				\Wikia\Logger\WikiaLogger::instance()->error( __METHOD__ . ' - key not found', [
+					'missing_key' => $key,
+					'all_keys' => array_keys($rev_keys)
+				] );
 				$out[$key] = $value;
 			}
 		}
