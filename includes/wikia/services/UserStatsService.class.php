@@ -5,7 +5,7 @@ use Wikia\Logger\WikiaLogger;
 class UserStatsService extends WikiaModel {
 
 	const CACHE_TTL = 86400;
-	const GET_GLOBAL_STATS_CACHE_VER = 'v1.0';
+	const CACHE_VERSION = 'v1.0';
 
 	private $userId;
 	private $wikiId;
@@ -147,7 +147,7 @@ class UserStatsService extends WikiaModel {
 
 		$editCount += $dbr->selectField(
 			'archive', 'count(*)',
-			[ 'ar_user' => $this->userId ],
+			[ 'ar_user' => User::newFromId( $this->userId )->getName() ],
 			__METHOD__
 		);
 
@@ -205,7 +205,7 @@ class UserStatsService extends WikiaModel {
 		$editCount += $dbr->selectField(
 			'archive', 'count(*)',
 			[
-				'ar_user' => $this->userId,
+				'ar_user' => User::newFromId( $this->userId )->getName(),
 				'ar_timestamp >= FROM_DAYS(TO_DAYS(CURDATE()) - MOD(TO_DAYS(CURDATE()) - 1, 7))'
 			],
 			__METHOD__
@@ -441,7 +441,7 @@ class UserStatsService extends WikiaModel {
 	}
 
 	private static function getOptionsWikiMemcKey( $userId, $wikiId ) {
-		return wfSharedMemcKey( 'optionsWiki', $wikiId, $userId );
+		return wfSharedMemcKey( 'optionsWiki', $wikiId, $userId, self::CACHE_VERSION );
 	}
 
 	private function debugEditCountIfNotExists( $property ) {
