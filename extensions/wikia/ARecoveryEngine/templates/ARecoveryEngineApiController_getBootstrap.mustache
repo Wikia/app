@@ -11,6 +11,12 @@ window._sp_ = {
                 msg += 'Removing the rule(s) should load the page as expected.</h3>';
             if (!window.wgUserName) {
                 document.getElementById('WikiaArticle').innerHTML = msg;
+                window.addEventListener('load', function(){
+                    require(['ext.wikia.aRecoveryEngine.recovery.helper'], function (helper) {
+                        'use strict';
+                        helper.track('callback');
+                    });
+                });
             } else {
                 window.Wikia.log(['isContentControlEnabled', false], 'debug', logGroup);
             }
@@ -19,4 +25,13 @@ window._sp_ = {
 };
 
 spBootstrap('{{domain}}/api/v1/ARecoveryEngine/delivery');
+
+window.addEventListener('load', function(){
+    require(['ext.wikia.aRecoveryEngine.recovery.helper'], function (helper) {
+        'use strict';
+        helper.verifyContent();
+    });
+});
+
+
 </script>
