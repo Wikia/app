@@ -9,13 +9,11 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 
 	private $usersModel;
 	private $wikiModel;
-	private $userTotalContributionCount;
 
 	public function __construct() {
 		parent::__construct( 'Community' );
 		$this->usersModel = new CommunityPageSpecialUsersModel();
 		$this->wikiModel = new CommunityPageSpecialWikiModel();
-		$this->userTotalContributionCount = $this->usersModel->getUserContributions( $this->getUser(), false );
 	}
 
 	public function index() {
@@ -38,7 +36,6 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 			'headerWelcomeMsg' => $this->msg( 'communitypage-tasks-header-welcome' )->text(),
 			'adminWelcomeMsg' => $this->msg( 'communitypage-admin-welcome-message' )->text(),
 			'pageListEmptyText' => $this->msg( 'communitypage-page-list-empty' )->plain(),
-			'userIsMember' => ( $this->userTotalContributionCount > 0 ),
 			'pageTitle' => $this->msg( 'communitypage-title' )->plain(),
 			'topContributors' => $this->sendRequest( 'CommunityPageSpecialController', 'getTopContributorsData' )
 				->getData(),
@@ -58,7 +55,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	 * @return array
 	 */
 	public function getTopContributorsData() {
-		$userContributionCount = $this->usersModel->getUserContributions( $this->getUser() );
+		$userContributionCount = ( new UserStatsService( $this->getUser() ) )->getEditCountFromWeek();
 		$contributors = $this->usersModel->getTopContributors( 50 );
 		// get details for only 5 of the remaining contributors
 		$contributorDetails = $this->getContributorsDetails(

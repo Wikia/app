@@ -8,7 +8,6 @@ class CommunityPageSpecialUsersModel {
 	const ALL_MEMBERS_MCACHE_KEY = 'community_page_all_members';
 	const MEMBER_COUNT_MCACHE_KEY = 'community_member_count';
 	const RECENTLY_JOINED_MCACHE_KEY = 'community_page_recently_joined';
-	const CURR_USER_CONTRIBUTIONS_MCACHE_KEY = 'community_page_current_user_contributions';
 
 	const ALL_CONTRIBUTORS_MODAL_LIMIT = 50;
 
@@ -149,46 +148,6 @@ class CommunityPageSpecialUsersModel {
 		);
 
 		return $botIds;
-	}
-
-	/**
-	 * Get all contributions for a user, limited by most recent n days if $days is not null
-	 *
-	 * @param User $user
-	 * @param weekly If true get user's contributions current week. Otherwise for entire membership period (2 years)
-	 * @return int Number of contributions
-	 */
-	public function getUserContributions( User $user, $weekly = true ) {
-		$userId = $user->getId();
-
-		$revisionCount = WikiaDataAccess::cache(
-			// TODO: Should purge this when user edits
-			wfMemcKey( self::CURR_USER_CONTRIBUTIONS_MCACHE_KEY, $userId, $weekly ),
-			WikiaResponse::CACHE_VERY_SHORT, // short cache b/c it's for the current user's info
-			function () use ( $userId, $weekly ) {
-				$db = wfGetDB( DB_SLAVE );
-
-				if ( $weekly ) {
-					// From last Sunday (matches wikia_user_properties)
-					$dateFilter = 'rev_timestamp >= FROM_DAYS(TO_DAYS(CURDATE()) - MOD(TO_DAYS(CURDATE()) - 1, 7))';
-				} else {
-					$dateFilter = 'rev_timestamp > DATE_SUB(now(), INTERVAL 2 YEAR)';
-				}
-
-				$sqlData = ( new WikiaSQL() )
-					->SELECT( 'count(rev_id) AS revision_count' )
-					->FROM( 'revision' )
-					->WHERE( 'rev_user' )->EQUAL_TO( $userId )
-					->AND_( $dateFilter )
-					->runLoop( $db, function ( &$sqlData, $row ) {
-						$sqlData = $row->revision_count;
-					} );
-
-				return $sqlData;
-			}
-		);
-
-		return $revisionCount;
 	}
 
 	/**
