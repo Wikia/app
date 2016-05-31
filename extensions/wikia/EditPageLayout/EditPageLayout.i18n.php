@@ -97,7 +97,7 @@ $messages['en'] = array(
 	'tog-editsection' => 'Show section edit links',
 	'tog-editwidth' => 'Widen the Source mode edit box to fill the entire screen',
 	'tog-minordefault-editpage' => 'Mark all edits as "minor" by default',
-	'tog-forceeditsummary' => 'Prompt me if I leave a blank edit summary',
+	'tog-forceeditsummary-editpage' => 'Prompt me if I leave a blank edit summary',
 	'tog-disablesyntaxhighlighting' => 'Do not show syntax highlighting in Source mode',
 
 	// preview-related messages
@@ -160,7 +160,7 @@ $messages['qqq'] = array(
 	'tog-editsection' => 'A label for checkbox to enable showing section edit links',
 	'tog-editwidth' => 'A label for checkbox to widen the Source mode edit box to fill the entire screen',
 	'tog-minordefault-editpage' => 'A label for checkbox to mark all edits as "minor" by default',
-	'tog-forceeditsummary' => 'A label for checkbox to prompt user if leave a blank edit summary',
+	'tog-forceeditsummary-editpage' => 'A label for checkbox to prompt user if leave a blank edit summary',
 	'tog-disablesyntaxhighlighting' => 'A label for checkbox to dont show syntax highlighting in source mode',
 
 	'editpagelayout-preview-label-desktop' => 'A label shown under the desktop icon in the preview section of the edit interface, clicking changes the type of preview (toggle between mobile and desktop). Also displayed as a popup when the user hovers the desktop icon',
@@ -260,7 +260,7 @@ $messages['bar'] = array(
 	'tog-editsection' => 'Links zum beorweiten voh oahzelne Obschnit åzoang',
 	'tog-editwidth' => "Quötext-Beorweitungsfenster auf d' vóie Breaden",
 	'tog-minordefault-editpage' => 'Eigerne Änderrungen standardmässig ois gringfiagig markirn',
-	'tog-forceeditsummary' => "Wornen, wånn beim Speichern d' Zåmmenfossung föd",
+	'tog-forceeditsummary-editpage' => "Wornen, wånn beim Speichern d' Zåmmenfossung föd",
 );
 
 /** Bulgarian (български)
@@ -425,7 +425,7 @@ $messages['ca'] = array(
 	'tog-editsection' => 'Activa la modificació de seccions mitjançant els enllaços modifica',
 	'tog-editwidth' => "Ampliar la caixa d'edició del Code Font per omplir tota la pantalla",
 	'tog-minordefault-editpage' => 'Marca totes les edicions com a "menors" per defete',
-	'tog-forceeditsummary' => "Pregunta'm si deixo en blanc el resum d'edició",
+	'tog-forceeditsummary-editpage' => "Pregunta'm si deixo en blanc el resum d'edició",
 );
 
 /** Czech (česky)
@@ -554,7 +554,7 @@ $messages['de'] = array(
 	'tog-editsection' => 'Links zum Bearbeiten einzelner Abschnitte anzeigen',
 	'tog-editwidth' => 'Quelltext-Bearbeitungs-Fenster auf volle Breite',
 	'tog-minordefault-editpage' => 'Eigene Änderungen standardmäßig als geringfügig markieren',
-	'tog-forceeditsummary' => 'Warnen, sofern beim Speichern die Zusammenfassung fehlt',
+	'tog-forceeditsummary-editpage' => 'Warnen, sofern beim Speichern die Zusammenfassung fehlt',
 
 	// preview-related messages
 	'editpagelayout-preview-label-desktop' => 'Desktop',
@@ -696,7 +696,7 @@ $messages['es'] = array(
 	'tog-editsection' => 'Habilitar la edición de secciones usando el enlace [editar]',
 	'tog-editwidth' => 'Ampliar el cuadro de edición para llenar toda la pantalla',
 	'tog-minordefault-editpage' => 'Marcar todas las ediciones como menores por defecto',
-	'tog-forceeditsummary' => 'Alertar al grabar sin resumen de edición.',
+	'tog-forceeditsummary-editpage' => 'Alertar al grabar sin resumen de edición.',
 
 	// preview-related messages
 	'editpagelayout-preview-label-desktop' => 'Escritorio',
@@ -862,7 +862,7 @@ $messages['fr'] = array(
 	'tog-editsection' => 'Activer les modifications de sections grâce aux liens « [modifier] »',
 	'tog-editwidth' => 'Élargir la zone de modification en mode source afin de remplir la totalité de l’écran',
 	'tog-minordefault-editpage' => 'Marquer mes modifications comme « mineures » par défaut',
-	'tog-forceeditsummary' => 'M’avertir si je n’ai laissé aucun résumé de modification',
+	'tog-forceeditsummary-editpage' => 'M’avertir si je n’ai laissé aucun résumé de modification',
 
 	// preview-related messages
 	'editpagelayout-preview-label-desktop' => 'Bureau',
@@ -949,7 +949,7 @@ $messages['gl'] = array(
 	'tog-editsection' => 'Permitir a edición de seccións mediante as ligazóns "editar"',
 	'tog-editwidth' => 'Ampliar o cadro de edición no modo fonte para encher toda a pantalla',
 	'tog-minordefault-editpage' => 'Marcar por omisión todas as edicións como pequenas',
-	'tog-forceeditsummary' => 'Avisádeme cando o campo resumo estea baleiro',
+	'tog-forceeditsummary-editpage' => 'Avisádeme cando o campo resumo estea baleiro',
 );
 
 /** Hebrew (עברית)
@@ -1016,7 +1016,7 @@ $messages['he'] = array(
 	'tog-editsection' => 'אפשר עריכת קטע דרך קישורי עריכה',
 	'tog-editwidth' => 'הרחבת מצב קוד מקור בתיבת עריכה לכל המסך',
 	'tog-minordefault-editpage' => 'הגדרת כל פעולות עריכה כמשניות בברירת מחדל',
-	'tog-forceeditsummary' => 'הצגת אזהרה בהכנסת תקציר עריכה ריק',
+	'tog-forceeditsummary-editpage' => 'הצגת אזהרה בהכנסת תקציר עריכה ריק',
 );
 
 /** Hungarian (magyar)
@@ -1095,7 +1095,7 @@ $messages['hu'] = array(
 	'tog-editsection' => 'Szakaszok szerkesztési hivatkozásainak megjelenítése',
 	'tog-editwidth' => 'Szerkesztési mező tágítása képernyőszélességre forráskód-nézetben',
 	'tog-minordefault-editpage' => 'Alapértelmezetten minden szerkesztésemet jelölje aprónak',
-	'tog-forceeditsummary' => 'Figyelmeztessen, ha nem adok meg szerkesztési összefoglalót',
+	'tog-forceeditsummary-editpage' => 'Figyelmeztessen, ha nem adok meg szerkesztési összefoglalót',
 );
 
 /** Interlingua (interlingua)
@@ -1176,7 +1176,7 @@ $messages['ia'] = array(
 	'tog-editsection' => 'Permitter le modification de sectiones con ligamines "modificar"',
 	'tog-editwidth' => 'Allargar le quadro de modification in modo codice-fonte pro plenar tote le schermo',
 	'tog-minordefault-editpage' => 'Pre-marcar tote le modificationes como "minor"',
-	'tog-forceeditsummary' => 'Avisar me si io non entra un summario de modification',
+	'tog-forceeditsummary-editpage' => 'Avisar me si io non entra un summario de modification',
 );
 
 /** Ingush (ГӀалгӀай)
@@ -1244,7 +1244,7 @@ $messages['it'] = array(
 	'tog-editsection' => 'Abilita la modifica delle sezioni tramite i link di modifica',
 	'tog-editwidth' => 'Estendi la finestra di modifica in modalità Codice sorgente allo schermo intero',
 	'tog-minordefault-editpage' => 'Contrassegna di default tutte le modifiche come "minori"',
-	'tog-forceeditsummary' => 'Avvisami se lascio vuoto il riassunto della modifica',
+	'tog-forceeditsummary-editpage' => 'Avvisami se lascio vuoto il riassunto della modifica',
 
 	// preview-related messages
 	'editpagelayout-preview-label-desktop' => 'Desktop',
@@ -1320,7 +1320,7 @@ $messages['ja'] = array(
 	'tog-editsection' => '[編集]リンクから節を編集できるようにする',
 	'tog-editwidth' => 'ソースモード時の編集ボックスを画面いっぱいに広げる',
 	'tog-minordefault-editpage' => '細部の編集を既定でチェックする',
-	'tog-forceeditsummary' => '要約欄が空欄の場合に警告する',
+	'tog-forceeditsummary-editpage' => '要約欄が空欄の場合に警告する',
 
 	// preview-related messages
 	'editpagelayout-preview-label-desktop' => 'PC',
@@ -1421,7 +1421,7 @@ $messages['ko'] = array(
 	'tog-editsection' => '[편집] 링크로 부분 편집하기',
 	'tog-editwidth' => '소스 모드 사용시에 전체 화면으로 편집하기',
 	'tog-minordefault-editpage' => '‘사소한 편집’을 기본적으로 선택하기',
-	'tog-forceeditsummary' => '편집 요약을 쓰지 않았을 때 알려주기',
+	'tog-forceeditsummary-editpage' => '편집 요약을 쓰지 않았을 때 알려주기',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -1442,7 +1442,7 @@ $messages['lb'] = array(
 	'wikia-editor-modules-categories-title' => 'Kategorien',
 	'wikia-editor-edittools-caption' => 'méi',
 	'tog-minordefault-editpage' => "All Ännerungen automatesch als 'Kleng Ännerungen' markéieren",
-	'tog-forceeditsummary' => 'Mech warnen, wann en beim Späicheren de Resumé eidel loossen',
+	'tog-forceeditsummary-editpage' => 'Mech warnen, wann en beim Späicheren de Resumé eidel loossen',
 );
 
 /** Lithuanian (lietuvių)
@@ -1547,7 +1547,7 @@ $messages['mk'] = array(
 	'tog-editsection' => 'Овозможи уредување на заглавија преку врските „уреди“',
 	'tog-editwidth' => 'Прошири го полето во Изворниот режим за да го исполни целиот екран',
 	'tog-minordefault-editpage' => 'Обележувај ги сите уредувања како ситни по основно',
-	'tog-forceeditsummary' => 'Извести ме кога нема опис на промените',
+	'tog-forceeditsummary-editpage' => 'Извести ме кога нема опис на промените',
 );
 
 /** Malay (Bahasa Melayu)
@@ -1630,7 +1630,7 @@ $messages['ms'] = array(
 	'tog-editsection' => 'Bolehkan penyuntingan bahagian melalui pautan sunting',
 	'tog-editwidth' => 'Luaskan ruangan penyuntingan mod Sumber supaya mengisi seluruh skrin',
 	'tog-minordefault-editpage' => 'Tandakan semua suntingan sebagai "kecil" secara asali',
-	'tog-forceeditsummary' => 'Ingatkan saya jika ringkasan suntingan kosong',
+	'tog-forceeditsummary-editpage' => 'Ingatkan saya jika ringkasan suntingan kosong',
 );
 
 /** Norwegian Bokmål (norsk bokmål)
@@ -1714,7 +1714,7 @@ $messages['nb'] = array(
 	'tog-editsection' => 'Tillat redigering av seksjoner via redigeringslenker',
 	'tog-editwidth' => 'Utvid redigeringsboksen for kildemodus slik at den fyller hele skjermen',
 	'tog-minordefault-editpage' => 'Merk alle redigeringer som «mindre» som standard',
-	'tog-forceeditsummary' => 'Advar meg hvis jeg oppgir en blank redigeringsforklaring.',
+	'tog-forceeditsummary-editpage' => 'Advar meg hvis jeg oppgir en blank redigeringsforklaring.',
 );
 
 /** Dutch (Nederlands)
@@ -1801,7 +1801,7 @@ $messages['nl'] = array(
 	'tog-editsection' => 'Bewerkingskoppelingen voor paragrafen inschakelen',
 	'tog-editwidth' => 'Het venster voor broncodebewerkingsmodus verbreden tot het volledige venster',
 	'tog-minordefault-editpage' => 'Al mijn bewerkingen als "klein" markeren',
-	'tog-forceeditsummary' => 'Een melding geven bij een lege bewerkingssamenvatting',
+	'tog-forceeditsummary-editpage' => 'Een melding geven bij een lege bewerkingssamenvatting',
 );
 
 /** Nederlands (informeel)‎ (Nederlands (informeel)‎)
@@ -1901,7 +1901,7 @@ $messages['pl'] = array(
 	'tog-editsection' => 'Włącz edycję sekcji poprzez linki edycji',
 	'tog-editwidth' => 'Rozszerz ekran trybu źródłowego na cały ekran',
 	'tog-minordefault-editpage' => 'Wszystkie zmiany oznaczaj domyślnie jako drobne',
-	'tog-forceeditsummary' => 'Poinformuj mnie gdy zostawię puste pole opisu zmian',
+	'tog-forceeditsummary-editpage' => 'Poinformuj mnie gdy zostawię puste pole opisu zmian',
 
 	// preview-related messages
 	'editpagelayout-preview-label-desktop' => 'Komputer',
@@ -1988,7 +1988,7 @@ $messages['pms'] = array(
 	'tog-editsection' => 'Mosta colegament ëd modìfica ëd session',
 	'tog-editwidth' => 'Estend la casela ëd modìfica an manera Sorziss fin a venpe lë scherm anter',
 	'tog-minordefault-editpage' => 'Marca tute le modìfice coma "cite" për definission',
-	'tog-forceeditsummary' => 'Ciam-me se i lasso un somari dla modìfica bianch',
+	'tog-forceeditsummary-editpage' => 'Ciam-me se i lasso un somari dla modìfica bianch',
 );
 
 /** Pashto (پښتو)
@@ -2097,7 +2097,7 @@ $messages['pt'] = array(
 	'tog-editsection' => 'Possibilitar a edição de secções com links [editar]',
 	'tog-editwidth' => 'Aumentar a caixa de edição no modo de código para preenchar todo o ecrã',
 	'tog-minordefault-editpage' => 'Por omissão, marcar todas as edições como menores',
-	'tog-forceeditsummary' => 'Avisar-me se deixar o resumo da edição vazio',
+	'tog-forceeditsummary-editpage' => 'Avisar-me se deixar o resumo da edição vazio',
 );
 
 /** Brazilian Portuguese (português do Brasil)
@@ -2185,7 +2185,7 @@ $messages['pt-br'] = array(
 	'tog-editsection' => 'Mostrar links para a edição de seções',
 	'tog-editwidth' => 'Ampliar o modo de edição "Fonte" para encher toda a tela',
 	'tog-minordefault-editpage' => 'Marcar todas as edições como "menor" por padrão',
-	'tog-forceeditsummary' => 'Avisar-me se eu deixar um sumário em branco',
+	'tog-forceeditsummary-editpage' => 'Avisar-me se eu deixar um sumário em branco',
 
 	// preview-related messages
 	'editpagelayout-preview-label-desktop' => 'Computador',
@@ -2290,7 +2290,7 @@ $messages['ru'] = array(
 	'tog-editsection' => 'Показывать ссылку «править» для каждого раздела',
 	'tog-editwidth' => 'В режиме исходного кода расширить поле редактирования на весь экран',
 	'tog-minordefault-editpage' => 'Отметить все правки, как малые по умолчанию',
-	'tog-forceeditsummary' => 'Предупреждать, когда не заполнено поле описания правки',
+	'tog-forceeditsummary-editpage' => 'Предупреждать, когда не заполнено поле описания правки',
 
 	// preview-related messages
 	'editpagelayout-preview-label-desktop' => 'Монитор ПК',
@@ -2377,7 +2377,7 @@ $messages['sv'] = array(
 	'tog-editsection' => 'Aktiverar sektionsredigering via redigeringslänkar',
 	'tog-editwidth' => 'Utvidgar källägets redigeringsruta för att fylla hela skärmen',
 	'tog-minordefault-editpage' => 'Markera alla redigeringar som "mindre" som standard',
-	'tog-forceeditsummary' => 'Påminn mig om jag lämnar en tom redigeringskommentar',
+	'tog-forceeditsummary-editpage' => 'Påminn mig om jag lämnar en tom redigeringskommentar',
 );
 
 /** Telugu (తెలుగు)
@@ -2499,7 +2499,7 @@ $messages['tl'] = array(
 	'tog-editsection' => 'Ipakita ang mga kawing sa pamamatnugot ng seksiyon',
 	'tog-editwidth' => 'Palaparin ang kahong pampatnugot ng nasa gawi na Pampinagmulan upang mapuno ang buong panooran',
 	'tog-minordefault-editpage' => 'Markahan ang lahat ng mga pagbabago bilang "maliit" ayon sa likas na pagkakatakda',
-	'tog-forceeditsummary' => 'Udyukin ako kapag nakapag-iwan ako ng isang buod sa pamamatnugot na walang laman',
+	'tog-forceeditsummary-editpage' => 'Udyukin ako kapag nakapag-iwan ako ng isang buod sa pamamatnugot na walang laman',
 );
 
 /** толышә зывон (толышә зывон)
@@ -2641,7 +2641,7 @@ $messages['vi'] = array(
 	'tog-editsection' => 'Kích hoạt tính năng chỉnh sửa từng mục thông qua các liên kết sửa đổi',
 	'tog-editwidth' => 'Mở rộng hộp soạn thảo chế độ nguồn để lấp đầy toàn bộ màn hình',
 	'tog-minordefault-editpage' => 'Đánh dấu tất cả các sửa đổi là "nhỏ" theo mặc định',
-	'tog-forceeditsummary' => 'Nhắc tôi khi tôi quên điền tóm lược sửa đổi',
+	'tog-forceeditsummary-editpage => 'Nhắc tôi khi tôi quên điền tóm lược sửa đổi',
 );
 
 /** Simplified Chinese (中文（简体）‎)
@@ -2727,7 +2727,7 @@ $messages['zh-hans'] = array(
 	'tog-editsection' => '显示章节编辑链接',
 	'tog-editwidth' => '扩宽源代码模式的编辑框填满整个屏幕',
 	'tog-minordefault-editpage' => '默认将所有编辑标为“小编辑”',
-	'tog-forceeditsummary' => '在我未填写编辑概要时提示我',
+	'tog-forceeditsummary-editpage' => '在我未填写编辑概要时提示我',
 
 	// preview-related messages
 	'editpagelayout-preview-label-desktop' => '桌面',
