@@ -179,7 +179,7 @@ class ChatWidget {
 					$chatter['showSince'] = $chatter['editCount'] != 0;
 					if ( $chatter['showSince'] ) {
 						$months = $wgLang->getMonthAbbreviationsArray();
-						$date = getdate( strtotime( $stats['date'] ) );
+						$date = getdate( strtotime( $stats['firstRevisionDate'] ) );
 
 						$chatter['since_year'] = $date['year'];
 						$chatter['since_month'] = $date['mon'];
