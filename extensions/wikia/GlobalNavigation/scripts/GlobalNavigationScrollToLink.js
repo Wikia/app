@@ -33,7 +33,6 @@ require(
 				globalNavigationHeight = $globalNavigation.height();
 
 			//If location contains hash hide global navigation when page loads.
-			//top:0 hides global navigation because it has "margin-top:-47px".
 			if (win.location.hash) {
 				$globalNavigation.css({
 					top: -1 * globalNavigationHeight
