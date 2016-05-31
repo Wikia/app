@@ -52,7 +52,9 @@ class FounderProgressBarTest extends WikiaBaseTest {
 					->will(  $this->returnValue( $mockR ) );
 			$mock->expects($this->any())
 					->method('getDb' )
-					->will($this->returnValue($this->mock_db));
+					->will($this->returnCallback(function() {
+						return $this->mock_db;
+					}));
 			$mock->expects($this->any())
 					->method('getMCache')
 					->will($this->returnValue($cache));

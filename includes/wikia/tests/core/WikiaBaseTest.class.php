@@ -92,7 +92,7 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 		if ( $this->mockProxy !== null ) {
 			throw new Exception("Previous test did not execute tearDown()");
 		}
-		$this->mockProxy = new WikiaMockProxy();
+		$this->mockProxy = version_compare( PHP_VERSION, '7.0.0.', '<' ) ? new WikiaMockProxy() : new WikiaMockProxyUopz();
 		$this->mockProxy->enable();
 	}
 
@@ -485,15 +485,6 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 	public static function markTestIncomplete($message = '') {
 		Wikia::log(__METHOD__, '', $message);
 		parent::markTestIncomplete($message);
-	}
-
-	private function parseGlobalFunctionName( $functionName ) {
-		$last = strrpos($functionName,'\\');
-		if ( $last === false ) {
-			return [ '', $functionName ];
-		} else {
-			return [ ltrim( substr( $functionName, 0, $last + 1 ), '\\' ), substr( $functionName, $last + 1 ) ];
-		}
 	}
 
 	/**

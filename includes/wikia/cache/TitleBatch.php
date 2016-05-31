@@ -7,6 +7,7 @@ use Wikia\Logger\WikiaLogger;
  * doing it in a batch in a single db query
  *
  * @author Władysław Bodzek
+ * @group TitleBatch
  */
 class TitleBatch {
 
