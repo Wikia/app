@@ -1,6 +1,11 @@
 <?php
 
 class WikiService extends WikiaModel {
+	const ADMIN_GROUPS = [
+		'bureaucrat',
+		'sysop'
+	];
+
 	const WAM_DEFAULT_ITEM_LIMIT_PER_PAGE = 20;
 	const IMAGE_HEIGHT_KEEP_ASPECT_RATIO = -1;
 	const TOPUSER_CACHE_VALID = 10800;
@@ -93,7 +98,7 @@ class WikiService extends WikiaModel {
 	}
 
 	private static function getAdminIdsFromDB( DatabaseBase $db, $excludeBots = false, $limit = null ) {
-		$conditions = [ 'ug_group' => [ 'sysop', 'bureaucrat' ] ];
+		$conditions = [ 'ug_group' => self::ADMIN_GROUPS ];
 
 		if ( $excludeBots ) {
 			$groupList = $db->makeList( self::$botGroups );
