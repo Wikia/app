@@ -13,6 +13,8 @@ class UserStatsService extends WikiaModel {
 
 	/**
 	 * Pass user ID of user you want to get data about
+	 * @param int $userId User ID
+	 * @param int $wikiId Wiki ID (skip for current wiki)
 	 */
 	function __construct( $userId, $wikiId = 0 ) {
 		$this->userId = intval( $userId );
@@ -43,7 +45,7 @@ class UserStatsService extends WikiaModel {
 	/**
 	 * Get the user's edit count from last week for specified wiki.
 	 *
-	 * @return Int Number of edits
+	 * @return int Number of edits
 	 */
 	public function getEditCountFromWeek() {
 		wfProfileIn( __METHOD__ );
@@ -98,6 +100,7 @@ class UserStatsService extends WikiaModel {
 	 * - last contribution date
 	 * - number of edits on given wiki
 	 * - number of edits in current week
+	 * @return array
 	 */
 	public function getStats() {
 		wfProfileIn( __METHOD__ );
