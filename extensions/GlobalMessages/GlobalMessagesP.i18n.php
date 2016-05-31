@@ -266,8 +266,6 @@ The latest log entry is provided below for reference:",
 	'prefs-wikiemail' => '{{SITENAME}} Email Options',
 	'prefs-general' => 'General',
 	'prefs-starting-an-edit' => 'Starting an edit',
-	'prefs-editing-experience' => 'The editing experience',
-	'prefs-monobook-layout' => 'Monobook layout only',
 );
 
 $messages['qqq'] = array(
