@@ -9,7 +9,6 @@ class UserStatsService extends WikiaModel {
 
 	private $userId;
 	private $wikiId;
-	private $wikiOptions;
 
 	/**
 	 * Pass user ID of user you want to get data about
@@ -179,8 +178,7 @@ class UserStatsService extends WikiaModel {
 		);
 
 		if ( $dbw->affectedRows() === 1 ) {
-			$this->wikiOptions[ $propertyName ]++;
-			$this->saveOptionsWikiToCache( $this->wikiOptions );
+			$this->purgeOptionsWikiCache( $this->userId, $this->wikiId );
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -236,12 +234,12 @@ class UserStatsService extends WikiaModel {
 		wfProfileIn( __METHOD__ );
 
 		// Get all options for wiki
-		$this->loadOptionsWiki();
+		$wikiOptions = $this->loadOptionsWiki();
 
 		// Return specific option
-		if ( isset( $this->wikiOptions[ $optionName ] ) ) {
+		if ( isset( $wikiOptions[ $optionName ] ) ) {
 			wfProfileOut( __METHOD__ );
-			return $this->wikiOptions[ $optionName ];
+			return $wikiOptions[ $optionName ];
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -251,17 +249,15 @@ class UserStatsService extends WikiaModel {
 	private function loadOptionsWiki() {
 		wfProfileIn( __METHOD__ );
 
-		if ( empty( $this->wikiOptions ) ) {
-			$this->wikiOptions = $this->getOptionsWikiFromCache();
-		}
+		$wikiOptions = $this->getOptionsWikiFromCache();
 
-		if ( empty( $this->wikiOptions ) ) {
+		if ( empty( $wikiOptions ) ) {
 			wfProfileOut( __METHOD__ );
-			$this->wikiOptions = $this->getOptionsWikiFromDB();
+			$wikiOptions = $this->getOptionsWikiFromDB();
 		}
 
 		wfProfileOut( __METHOD__ );
-		return $this->wikiOptions;
+		return $wikiOptions;
 	}
 
 	/**
@@ -285,14 +281,15 @@ class UserStatsService extends WikiaModel {
 			__METHOD__
 		);
 
+		$wikiOptions = [];
 		foreach( $res as $row ) {
-			$this->wikiOptions[ $row->wup_property ] = $row->wup_value;
+			$wikiOptions[ $row->wup_property ] = $row->wup_value;
 		}
 
-		$this->saveOptionsWikiToCache(  $this->wikiOptions );
+		$this->saveOptionsWikiToCache( $wikiOptions );
 
 		wfProfileOut( __METHOD__ );
-		return $this->wikiOptions;
+		return $wikiOptions;
 	}
 
 
@@ -317,8 +314,7 @@ class UserStatsService extends WikiaModel {
 			__METHOD__
 		);
 
-		$this->wikiOptions[ $optionName ] = $optionVal;
-		$this->saveOptionsWikiToCache(  $this->wikiOptions );
+		$this->purgeOptionsWikiCache( $this->userId, $this->wikiId );
 
 		wfProfileOut( __METHOD__ );
 		return $optionVal;
