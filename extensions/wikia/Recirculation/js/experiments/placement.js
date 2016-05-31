@@ -10,9 +10,11 @@ require([
 	'ext.wikia.recirculation.views.rail',
 	'ext.wikia.recirculation.views.footer',
 	'ext.wikia.recirculation.views.scroller',
+	'ext.wikia.recirculation.views.impactFooter',
 	'ext.wikia.recirculation.helpers.contentLinks',
 	'ext.wikia.recirculation.helpers.fandom',
 	'ext.wikia.recirculation.helpers.lateral',
+	'ext.wikia.recirculation.helpers.data',
 	'ext.wikia.recirculation.helpers.cakeRelatedContent',
 	'ext.wikia.recirculation.helpers.googleMatch',
 	'ext.wikia.adEngine.taboolaHelper',
@@ -28,9 +30,11 @@ require([
 	railView,
 	footerView,
 	scrollerView,
+	impactFooterView,
 	contentLinksHelper,
 	fandomHelper,
 	lateralHelper,
+	dataHelper,
 	cakeHelper,
 	googleMatchHelper,
 	taboolaHelper,
@@ -166,6 +170,9 @@ require([
 			view = railView();
 			isRail = true;
 			break;
+		case 'IMPACT_FOOTER':
+			renderImpactFooter();
+			return;
 		default:
 			return;
 	}
@@ -282,5 +289,21 @@ require([
 				tracker.trackVerboseClick(experimentName, label);
 			});
 		});
+	}
+
+	function renderImpactFooter() {
+		var fView = impactFooterView(),
+			rView = railView();
+
+		dataHelper({}).loadData()
+			.then(function(data) {
+				var fandomData = {
+					title: data.fandom.title,
+					items: data.fandom.items.splice(0,5)
+				};
+
+				fView.render(data);
+				rView.render(fandomData);
+			});
 	}
 });
