@@ -2641,7 +2641,7 @@ $messages['vi'] = array(
 	'tog-editsection-editpage' => 'Kích hoạt tính năng chỉnh sửa từng mục thông qua các liên kết sửa đổi',
 	'tog-editwidth' => 'Mở rộng hộp soạn thảo chế độ nguồn để lấp đầy toàn bộ màn hình',
 	'tog-minordefault-editpage' => 'Đánh dấu tất cả các sửa đổi là "nhỏ" theo mặc định',
-	'tog-forceeditsummary-editpage => 'Nhắc tôi khi tôi quên điền tóm lược sửa đổi',
+	'tog-forceeditsummary-editpage' => 'Nhắc tôi khi tôi quên điền tóm lược sửa đổi',
 );
 
 /** Simplified Chinese (中文（简体）‎)
