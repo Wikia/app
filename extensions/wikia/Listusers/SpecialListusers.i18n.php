@@ -36,7 +36,7 @@ $messages['en'] = array(
 	'listusers-options' => 'Options',
 	'listusers-results' => 'Results',
 	'listusers-username' => 'User name',
-	'listusers-blocked' => 'Blocked',
+	'listusers-blocked-special-listusers' => 'Blocked',
 	'listusers-nonegroup' => 'none',
 	'listusers-select-all' => 'Select all',
 	'listusers-deselect-all' => 'Deselect all',
@@ -80,7 +80,7 @@ $messages['de'] = array(
 	'listusers-options' => 'Optionen',
 	'listusers-results' => 'Ergebnisse',
 	'listusers-username' => 'Benutzername',
-	'listusers-blocked' => 'Gesperrt',
+	'listusers-blocked-special-listusers' => 'Gesperrt',
 );
 
 
@@ -116,7 +116,7 @@ $messages['es'] = array(
 	'listusers-options' => 'Opciones',
 	'listusers-results' => 'Resultados',
 	'listusers-username' => 'Nombre de usuario',
-	'listusers-blocked' => 'Bloqueado',
+	'listusers-blocked-special-listusers' => 'Bloqueado',
 	'listusers-nonegroup' => 'ninguno',
 );
 
@@ -182,7 +182,7 @@ $messages['fr'] = array(
 	'listusers-options' => 'Options',
 	'listusers-results' => 'Résultats',
 	'listusers-username' => 'Nom d\'utilisateur',
-	'listusers-blocked' => 'Verrouillé',
+	'listusers-blocked-special-listusers' => 'Verrouillé',
 );
 
 
@@ -216,7 +216,7 @@ $messages['ja'] = array(
 	'listusers-options' => 'オプション',
 	'listusers-results' => '結果',
 	'listusers-username' => '利用者名',
-	'listusers-blocked' => 'ブロック中',
+	'listusers-blocked-special-listusers' => 'ブロック中',
 	'listusers-nonegroup' => 'なし',
 );
 
