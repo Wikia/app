@@ -3,7 +3,6 @@ $messages = array();
 
 $messages['en'] = array(
 	'preferences-v2-desc' => 'User Preferences v2',
-	'prefs-personal' => 'My Info',
 	'preferences-v2-username' => 'My username:',
 	'preferences-v2-usergroups' => 'My user groups:',
 	'preferences-v2-gender' => 'My gender:',
@@ -63,7 +62,6 @@ $messages['en'] = array(
  */
 $messages['qqq'] = array(
 	'preferences-v2-desc' => '{{desc}}',
-	'prefs-personal' => 'Title of a tab in [[Special:Preferences]].',
 	'preferences-v2-username' => 'Label for the user name listed on [[Special:Preferences]].',
 	'preferences-v2-usergroups' => 'Label for the user groups listed on [[Special:Preferences]].',
 	'preferences-v2-gender' => "Label for the user's gender option listed on [[Special:Preferences]].",
@@ -141,7 +139,6 @@ $messages['ang'] = array(
  * @author مشعل الحربي
  */
 $messages['ar'] = array(
-	'prefs-personal' => 'معلومات عني',
 	'preferences-v2-username' => 'اسم المستخدم الخاص بي:',
 	'preferences-v2-usergroups' => 'مجموعات المستخدم الخاصة بي:',
 	'preferences-v2-gender' => 'جنسي:',
@@ -211,7 +208,6 @@ $messages['az'] = array(
  * @author DCLXVI
  */
 $messages['bg'] = array(
-	'prefs-personal' => 'Моята информация',
 	'preferences-v2-username' => 'Моето потребителско име:',
 	'preferences-v2-usergroups' => 'Моите потребителски групи:',
 	'preferences-v2-gender' => 'Моят пол:',
@@ -226,7 +222,6 @@ $messages['bg'] = array(
  * @author Y-M D
  */
 $messages['br'] = array(
-	'prefs-personal' => 'Ma zitouroù',
 	'preferences-v2-username' => 'Ma anv implijer :',
 	'preferences-v2-usergroups' => 'Strolladoù implijerien :',
 	'preferences-v2-gender' => 'Jener :',
@@ -264,7 +259,6 @@ $messages['br'] = array(
  * @author Unapersona
  */
 $messages['ca'] = array(
-	'prefs-personal' => 'La meva informació',
 	'preferences-v2-username' => "El meu nom d'usuari:",
 	'preferences-v2-usergroups' => "Els meus grups d'usuaris:",
 	'preferences-v2-gender' => 'El meu gènere:',
@@ -326,7 +320,6 @@ $messages['ce'] = array(
  */
 $messages['de'] = array(
 	'preferences-v2-desc' => 'Benutzereinstellungen v2',
-	'prefs-personal' => 'Meine Informationen',
 	'preferences-v2-username' => 'Mein Benutzername:',
 	'preferences-v2-usergroups' => 'Meine Benutzergruppen:',
 	'preferences-v2-gender' => 'Mein Geschlecht:',
@@ -382,7 +375,6 @@ $messages['de'] = array(
  * @author Mirzali
  */
 $messages['diq'] = array(
-	'prefs-personal' => 'Şınasiya me',
 	'preferences-v2-username' => 'Namey mı:',
 	'preferences-v2-usergroups' => 'Gruba mı:',
 	'preferences-v2-gender' => 'Cınsiyeta mı:',
@@ -419,7 +411,6 @@ $messages['diq'] = array(
  */
 $messages['es'] = array(
 	'preferences-v2-desc' => 'Preferencias de usuario v2',
-	'prefs-personal' => 'Información básica',
 	'preferences-v2-username' => 'Mi nombre de usuario:',
 	'preferences-v2-usergroups' => 'Pertenezco a los grupos:',
 	'preferences-v2-gender' => 'Mi género:',
@@ -495,7 +486,6 @@ $messages['eu'] = array(
  * @author Reza1615
  */
 $messages['fa'] = array(
-	'prefs-personal' => 'اطلاعات من',
 	'preferences-v2-username' => 'نام کاربری من:',
 	'preferences-v2-usergroups' => 'گروه کاربری من:',
 	'preferences-v2-gender' => 'جنسیت:',
@@ -529,7 +519,6 @@ $messages['fa'] = array(
  * @author Ville96
  */
 $messages['fi'] = array(
-	'prefs-personal' => 'Omat tiedot',
 	'preferences-v2-username' => 'Käyttäjätunnus:',
 	'preferences-v2-usergroups' => 'Käyttäjäryhmät:',
 	'preferences-v2-gender' => 'Sukupuoli:',
@@ -583,7 +572,6 @@ $messages['fi'] = array(
  */
 $messages['fr'] = array(
 	'preferences-v2-desc' => 'Préférences utilisateur v2',
-	'prefs-personal' => 'Mes infos',
 	'preferences-v2-username' => 'Nom d’utilisateur :',
 	'preferences-v2-usergroups' => 'Groupes d’utilisateurs :',
 	'preferences-v2-gender' => 'Genre :',
@@ -650,7 +638,6 @@ $messages['fy'] = array(
  * @author Vivaelcelta
  */
 $messages['gl'] = array(
-	'prefs-personal' => 'A miña información',
 	'preferences-v2-username' => 'O meu nome de usuario:',
 	'preferences-v2-usergroups' => 'Os meus grupos de usuario:',
 	'preferences-v2-gender' => 'O meu sexo:',
@@ -706,7 +693,6 @@ $messages['gl'] = array(
  * @author Tommy6
  */
 $messages['ja'] = array(
-	'prefs-personal' => '利用者情報',
 	'preferences-v2-username' => '利用者名:',
 	'preferences-v2-usergroups' => '所属利用者グループ:',
 	'preferences-v2-gender' => '性別:',
@@ -750,7 +736,6 @@ $messages['ja'] = array(
  * @author 아라
  */
 $messages['ko'] = array(
-	'prefs-personal' => '내 정보',
 	'preferences-v2-username' => '내 사용자 이름:',
 	'preferences-v2-usergroups' => '내가 속한 그룹:',
 	'preferences-v2-gender' => '내 성별:',
@@ -814,7 +799,6 @@ $messages['ku-latn'] = array(
  * @author Robby
  */
 $messages['lb'] = array(
-	'prefs-personal' => 'Informatiounen iwwer mech',
 	'preferences-v2-username' => 'Mäi Benotzernumm:',
 	'preferences-v2-usergroups' => 'Meng Benotzergruppen:',
 	'preferences-v2-password' => 'Mäi Passwuert:',
@@ -865,7 +849,6 @@ $messages['lv'] = array(
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
-	'prefs-personal' => 'Мое инфо',
 	'preferences-v2-username' => 'Моето корисничко име:',
 	'preferences-v2-usergroups' => 'Моите кориснички групи:',
 	'preferences-v2-gender' => 'Мојот пол:',
@@ -922,7 +905,6 @@ $messages['mk'] = array(
  */
 $messages['ms'] = array(
 	'preferences-v2-desc' => 'Keutamaan Pengguna v2',
-	'prefs-personal' => 'Maklumat saya',
 	'preferences-v2-username' => 'Nama samaran saya:',
 	'preferences-v2-usergroups' => 'Kumpulan pengguna saya:',
 	'preferences-v2-gender' => 'Jantina saya:',
@@ -978,7 +960,6 @@ $messages['ms'] = array(
  * @author Siebrand
  */
 $messages['nl'] = array(
-	'prefs-personal' => 'Uw gegevens',
 	'preferences-v2-username' => 'Uw gebruikersnaam:',
 	'preferences-v2-usergroups' => 'Uw gebruikersgroepen:',
 	'preferences-v2-gender' => 'Uw geslacht:',
@@ -1034,7 +1015,6 @@ $messages['nl'] = array(
  * @author Hulothe
  */
 $messages['oc'] = array(
-	'prefs-personal' => 'Mas informacions',
 	'preferences-v2-username' => "Mon nom d'utilizaire :",
 	'preferences-v2-usergroups' => 'Gropes d’utilizaires :',
 	'preferences-v2-password' => 'Mon senhal :',
@@ -1078,7 +1058,6 @@ $messages['os'] = array(
  */
 $messages['pl'] = array(
 	'preferences-v2-desc' => 'User Preferences v2',
-	'prefs-personal' => 'Moje informacje',
 	'preferences-v2-username' => 'Nazwa użytkownika:',
 	'preferences-v2-usergroups' => 'Grupy użytkownika:',
 	'preferences-v2-gender' => 'Płeć:',
@@ -1133,7 +1112,6 @@ $messages['pl'] = array(
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
 $messages['ps'] = array(
-	'prefs-personal' => 'زما مالومات',
 	'preferences-v2-username' => 'زما کارن-نوم:',
 	'preferences-v2-usergroups' => 'زما کارن ډلې:',
 	'preferences-v2-gender' => 'زما جنس:',
@@ -1168,7 +1146,6 @@ $messages['ps'] = array(
  * @author SandroHc
  */
 $messages['pt'] = array(
-	'prefs-personal' => 'Minhas Informações',
 	'preferences-v2-username' => 'Meu nome de utilizador:',
 	'preferences-v2-usergroups' => 'Meus grupos de utilizador:',
 	'preferences-v2-gender' => 'Meu género:',
@@ -1225,7 +1202,6 @@ $messages['pt'] = array(
  */
 $messages['pt-br'] = array(
 	'preferences-v2-desc' => 'Preferências de Usuário V2',
-	'prefs-personal' => 'Minhas Informações',
 	'preferences-v2-username' => 'Meu nome de usuário:',
 	'preferences-v2-usergroups' => 'Meus grupos de usuário:',
 	'preferences-v2-gender' => 'Meu gênero:',
@@ -1282,7 +1258,6 @@ $messages['pt-br'] = array(
  */
 $messages['ru'] = array(
 	'preferences-v2-desc' => 'Настройки пользователя v2',
-	'prefs-personal' => 'Моя информация',
 	'preferences-v2-username' => 'Моё имя пользователя:',
 	'preferences-v2-usergroups' => 'Мои группы пользователей:',
 	'preferences-v2-gender' => 'Мой пол:',
@@ -1338,7 +1313,6 @@ $messages['ru'] = array(
  * @author John Reid
  */
 $messages['sco'] = array(
-	'prefs-personal' => 'Ma Info',
 	'preferences-v2-username' => 'Ma uisername:',
 	'preferences-v2-usergroups' => 'Ma uiser groops:',
 	'preferences-v2-gender' => 'Ma gender:',
@@ -1433,7 +1407,6 @@ $messages['sr-el'] = array(
  */
 $messages['sv'] = array(
 	'preferences-v2-desc' => 'User Preferences v2',
-	'prefs-personal' => 'Min info',
 	'preferences-v2-username' => 'Mitt användarnamn:',
 	'preferences-v2-usergroups' => 'Mina användargrupper:',
 	'preferences-v2-gender' => 'Mitt kön:',
@@ -1488,7 +1461,6 @@ $messages['sv'] = array(
  * @author Incelemeelemani
  */
 $messages['tr'] = array(
-	'prefs-personal' => 'Bilgilerim',
 	'preferences-v2-username' => 'Kullanıcı adım:',
 	'preferences-v2-usergroups' => 'Kullanıcı gruplarım:',
 	'preferences-v2-gender' => 'Cinsiyetim:',
@@ -1544,7 +1516,6 @@ $messages['tr'] = array(
  */
 $messages['uk'] = array(
 	'preferences-v2-desc' => 'Уподобання користувачів версії v2',
-	'prefs-personal' => 'Особисті',
 	'preferences-v2-username' => "Моє ім'я користувача:",
 	'preferences-v2-usergroups' => 'Я є учасником груп:',
 	'preferences-v2-gender' => 'Моя стать:',
@@ -1600,7 +1571,6 @@ $messages['uk'] = array(
  * @author Rémy Lee
  */
 $messages['vi'] = array(
-	'prefs-personal' => 'Thông tin về tôi',
 	'preferences-v2-username' => 'Tên đăng nhập của tôi:',
 	'preferences-v2-usergroups' => 'Nhóm người dùng của tôi:',
 	'preferences-v2-gender' => 'Giới tính của tôi:',
@@ -1675,7 +1645,6 @@ $messages['vo'] = array(
  */
 $messages['zh-hans'] = array(
 	'preferences-v2-desc' => '用户参数设置v2',
-	'prefs-personal' => '我的信息',
 	'preferences-v2-username' => '我的用户名：',
 	'preferences-v2-usergroups' => '我的用户组：',
 	'preferences-v2-gender' => '我的性别：',
@@ -1735,7 +1704,6 @@ $messages['zh-hans'] = array(
  * @author Liuxinyu970226
  */
 $messages['zh-hant'] = array(
-	'prefs-personal' => '我的資訊',
 	'preferences-v2-username' => '我的使用者名稱：',
 	'preferences-v2-usergroups' => '我的使用者群組：',
 	'preferences-v2-gender' => '我的性别：',
