@@ -16,8 +16,8 @@ class UserStatsService extends WikiaModel {
 	 */
 	function __construct( $userId, $wikiId = 0 ) {
 		$this->userId = intval( $userId );
-		$this->initWikiId( $wikiId );
 		parent::__construct();
+		$this->initWikiId( $wikiId );
 	}
 
 	/**
