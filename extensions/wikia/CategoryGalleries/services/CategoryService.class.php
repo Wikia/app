@@ -27,7 +27,7 @@
 
 		/**
 		 * Creates the category service object
-		 * @param $title Title|string Title object os category name
+		 * @param $title Title|string Title object or category name
 		 */
 		public function __construct($title) {
 			if (!$title instanceof Title) {
@@ -64,7 +64,7 @@
 		 * @return array|int
 		 */
 		static protected function getPageViews( $pageIds ) {
-			global $wgStatsDB, $wgCityId, $wgDevelEnvironment, $wgStatsDBEnabled;
+			global $wgCityId;
 
 			wfProfileIn(__METHOD__);
 
@@ -102,8 +102,6 @@
 		 * @return array
 		 */
 		protected function fetchTopArticlesInfo( $count, $namespace = NS_MAIN ) {
-			global $wgDevelEnvironment;
-
 			wfProfileIn(__METHOD__);
 
 			$articles = array();
@@ -271,12 +269,7 @@
 
 			wfProfileIn(__METHOD__);
 
-			$article = Article::newFromID($pageid);
-
-			$id = $pageid;
 			$ns = $title->getNamespace();
-
-			$views = self::getPageViews($id);
 
 			$dbr = wfGetDB(DB_SLAVE);
 			$res = $dbr->select( 'categorylinks', array( 'cl_to' ),
