@@ -296,7 +296,6 @@ Please visit [//www.mediawiki.org/wiki/Localisation MediaWiki Localisation] and 
 	'achievements-leaderboard-navigation-item' => 'Wiki Leaderboard',
 	'atom' => 'Wikia Atom',
 	'addnewtalksection-link' => 'Add new section',
-	'achievements-masthead-points' => '$1 <small>points</small>',
 );
 
 $messages['qqq'] = array(
