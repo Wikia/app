@@ -8,7 +8,7 @@
 class MyHome {
 
 	// prefix for our custom data stored in rc_params
-	const customDataPrefix = "\x7f\x7f";
+	const CUSTOM_DATA_PREFIX = "\x7f\x7f";
 
 	// name of section edited
 	private static $editedSectionName = false;
@@ -275,7 +275,7 @@ class MyHome {
 		$packed = json_encode($data);
 
 		// store encoded data with our custom prefix
-		return self::customDataPrefix . $packed;
+		return self::CUSTOM_DATA_PREFIX . $packed;
 	}
 
 	/**
@@ -293,15 +293,15 @@ class MyHome {
 		}
 
 		// try to get our custom prefix
-		$prefix = substr($field, 0, strlen(self::customDataPrefix));
+		$prefix = substr($field, 0, strlen(self::CUSTOM_DATA_PREFIX));
 
-		if ($prefix != self::customDataPrefix) {
+		if ($prefix != self::CUSTOM_DATA_PREFIX) {
 			wfProfileOut(__METHOD__);
 			return null;
 		}
 
 		// get encoded data
-		$field = substr($field, strlen(self::customDataPrefix));
+		$field = substr($field, strlen(self::CUSTOM_DATA_PREFIX));
 
 		// and try to unpack it
 		try {
