@@ -59,7 +59,7 @@ AdEngine2Resource::register('wikia.ext.adengine.sp.detection', 'ResourceLoaderAd
 AdEngine2Resource::register('wikia.ext.adengine.yavli', 'ResourceLoaderAdEngineYavliModule');
 
 // Keep old resource links for cache
-// TODO: ADEN-
+// TODO: ADEN-3407
 $wgResourceModules['wikia.ext.adengine.sp.detection'] = array(
 	'class' => 'ResourceLoaderAdEngineSourcePointDetectionModule',
 );
