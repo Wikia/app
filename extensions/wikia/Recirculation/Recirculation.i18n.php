@@ -2,6 +2,7 @@
 
 $messages['en'] = [
 	'recirculation-desc' => 'Handles recirculating content',
+	'recirculation-footer-title' => 'Fan Feed',
 	'recirculation-fandom-title' => 'Trending Fandom Articles',
 	'recirculation-fandom-subtitle' => 'Also Recommended',
 	'recirculation-incontent-title' => 'Top Links',
@@ -11,6 +12,7 @@ $messages['en'] = [
 
 $messages['qqq'] = [
 	'recirculation-desc' => 'Extension description',
+	'recirculation-footer-title' => 'Title to display at the top of the Impact Footer recirculation module',
 	'recirculation-fandom-title' => 'Title to display at the top of the Fandom recirculation module',
 	'recirculation-fandom-subtitle' => 'Title to display on some design variations of the Fandom recirculation module',
 	'recirculation-incontent-title' => 'Title to display beside the incontent widget',
