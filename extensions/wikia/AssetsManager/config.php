@@ -2941,3 +2941,10 @@ $config['create_new_wiki_scss'] = [
 		'//extensions/wikia/CreateNewWiki/css/CreateNewWiki.scss'
 	]
 ];
+
+$config['contribution_prototype_scss'] = array(
+		'type' => AssetsManager::TYPE_SCSS,
+		'assets' => array(
+				'//extensions/wikia/ContributionPrototype/styles/ContributionPrototype.scss',
+		),
+);

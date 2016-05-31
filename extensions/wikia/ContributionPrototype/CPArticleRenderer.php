@@ -5,6 +5,7 @@ namespace ContributionPrototype;
 use Http;
 use MWHttpRequest;
 use OutputPage;
+use Wikia;
 use Wikia\Logger\Loggable;
 use Wikia\Service\Gateway\UrlProvider;
 
@@ -52,16 +53,23 @@ class CPArticleRenderer {
 			return;
 		}
 
-		$output->addLink([
-				'rel' => 'stylesheet',
-				'href'=> "{$this->host}/public/assets/styles/main.css",
-		]);
+		$this->addStyles($output);
 		preg_match('/<body>(.*?)<\/body>/is', $content, $matches);
 		$body = preg_replace(
 				'/<script src=("|\')\/(.*?)(\1)>/',
 				'<script src=$1'.$this->host.'/$2$1>',
 				$matches[1]);
 		$output->addHTML($body);
+	}
+
+	private function addStyles(OutputPage $output) {
+		$output->addLink([
+				'rel' => 'stylesheet',
+				'href'=> "{$this->host}/public/assets/styles/main.css",
+		]);
+
+		// this ends up using $wgOut :(
+		Wikia::addAssetsToOutput('contribution_prototype_scss');
 	}
 
 	private function getArticleContent($title) {
