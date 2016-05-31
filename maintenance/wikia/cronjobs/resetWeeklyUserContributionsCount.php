@@ -7,7 +7,7 @@ use \Wikia\Logger\WikiaLogger;
  * We need to reset it after every Sunday
  */
 
-require_once( __DIR__ ) . '/../../Maintenance.php' );
+require_once( __DIR__ . '/../../Maintenance.php' );
 
 /**
  * Class ResetWeeklyUserContributionsCount
