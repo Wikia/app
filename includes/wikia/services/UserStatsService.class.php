@@ -5,7 +5,7 @@ use Wikia\Logger\WikiaLogger;
 class UserStatsService extends WikiaModel {
 
 	const CACHE_TTL = 86400;
-	const CACHE_VERSION = 'v1.0';
+	const CACHE_VERSION = 'v1.1';
 
 	private $userId;
 	private $wikiId;
