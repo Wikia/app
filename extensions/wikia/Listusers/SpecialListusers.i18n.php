@@ -4,7 +4,7 @@ $messages = array();
 
 $messages['en'] = array(
 	'listusers-desc' => 'Special list users',
-	'listusers' => 'Local list users',
+	'listusers-local' => 'Local list users',
 	'listuserstitle'  => 'Local list users',
 	'listusersfound' => 'Found <strong>$1</strong> users',
 	'listusersrecordspager' => 'Showing <strong>$1</strong> to <strong>$2</strong> of <strong>$3</strong> records',
@@ -49,7 +49,7 @@ $messages['qqq'] = array(
 );
 
 $messages['de'] = array(
-	'listusers' => 'Benutzerverzeichnis',
+	'listusers-local' => 'Benutzerverzeichnis',
 	'listuserstitle' => 'Lokale Benutzerliste',
 	'listusersfound' => '<strong>$1</strong> Benutzer gefunden',
 	'listuserscount' => '<strong>$1</strong> Benutzer',
@@ -85,7 +85,7 @@ $messages['de'] = array(
 
 
 $messages['es'] = array(
-	'listusers' => 'Lista de usuarios',
+	'listusers-local' => 'Lista de usuarios',
 	'listuserstitle' => 'Lista de usuarios',
 	'listusersfound' => '<strong>$1</strong> usuarios encontrados',
 	'listuserscount' => '<strong>$1</strong> usuarios',
@@ -122,7 +122,7 @@ $messages['es'] = array(
 
 
 $messages['fa'] = array(
-	'listusers' => 'فهرست محلی کاربران',
+	'listusers-local' => 'فهرست محلی کاربران',
 	'listuserstitle' => 'فهرست محلی کاربران',
 	'listusersfound' => '<strong>$1</strong> کاربر یافته‌شد',
 	'listuserscount' => '<strong>$1</strong> کاربر',
@@ -154,7 +154,7 @@ $messages['fa'] = array(
 
 
 $messages['fr'] = array(
-	'listusers' => 'Liste locale des inscrits',
+	'listusers-local' => 'Liste locale des inscrits',
 	'listuserstitle' => 'Liste locale des utilisateurs',
 	'listusersfound' => '<strong>$1</strong> utilisateurs trouvés',
 	'listuserscount' => '<strong>$1</strong> utilisateurs',
@@ -187,7 +187,7 @@ $messages['fr'] = array(
 
 
 $messages['ja'] = array(
-	'listusers' => 'ローカルの登録利用者',
+	'listusers-local' => 'ローカルの登録利用者',
 	'listuserstitle' => 'ローカルの登録利用者',
 	'listusersfound' => '<strong>$1</strong> の利用者が見つかりました',
 	'listuserscount' => '<strong>$1</strong> の利用者',
@@ -221,6 +221,6 @@ $messages['ja'] = array(
 );
 
 $messages['pt'] = array(
-	'listusers' => 'Lista de usuários locais',
+	'listusers-local' => 'Lista de usuários locais',
 	'listuserstitle'  => 'Lista de usuários locais',
 );
