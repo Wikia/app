@@ -7,12 +7,12 @@ use \Wikia\Logger\WikiaLogger;
  * We need to reset it after every Sunday
  */
 
-require_once( dirname( __FILE__ ) . '/../../Maintenance.php' );
+require_once( __DIR__ ) . '/../../Maintenance.php' );
 
 /**
- * Class resetWeeklyUserContributionsCount
+ * Class ResetWeeklyUserContributionsCount
  */
-class resetWeeklyUserContributionsCount extends Maintenance {
+class ResetWeeklyUserContributionsCount extends Maintenance {
 
 	public function __construct() {
 		parent::__construct();
@@ -51,5 +51,5 @@ class resetWeeklyUserContributionsCount extends Maintenance {
 	}
 }
 
-$maintClass = 'resetWeeklyUserContributionsCount';
+$maintClass = 'ResetWeeklyUserContributionsCount';
 require_once( RUN_MAINTENANCE_IF_MAIN );
