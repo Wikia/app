@@ -371,10 +371,10 @@ This is probably caused by a link to a blacklisted external site.',
 ***homepage:Lifestyle|More...
 ",
 	'shared-Monobook-footer-wikia-links' => '* [http://www.wikia.com/wiki/Wikia:Privacy_Policy Privacy]
-* [http://www.wikia.com/wiki/Wikia:About About Wikia]
-* [http://www.wikia.com/wiki/Wikia:Terms_of_use Terms of use]
-* [[Special:Contact|Contact]]
-* [http://www.wikia.com/wiki/Wikia:Advertising_on_Wikia Advertise]',
+	* [http://www.wikia.com/wiki/Wikia:About About Wikia]
+	* [http://www.wikia.com/wiki/Wikia:Terms_of_use Terms of use]
+	* [[Special:Contact|Contact]]
+	* [http://www.wikia.com/wiki/Wikia:Advertising_on_Wikia Advertise]',
 	'scarytranscludebadinterwiki' => 'Non-transcludable interwiki provided.',
 	'shared-News_box' => '[http://www.wikia.com/Hiring Wikia is now hiring for several open positions]',
 );
@@ -620,6 +620,7 @@ Size (of a file, typically) in gibibytes (1 gibibyte = 1024×1024×1024 bytes).'
 	'specialpages-group-wiki' => 'Title of the special pages group, containing special pages like [[Special:Version]], [[Special:Statistics]], [[Special:LockDB]], etc.',
 	'specialpages-group-redirects' => 'Title of the special pages group, containing special pages that redirect to another location, like [[Special:Randompage]], [[Special:Mypage]], [[Special:Mytalk]], etc.',
 	'scarytranscludebadinterwiki' => 'Message displayed when user tries to use a non-transcludable interwiki for scary transclusion.',
+	'shared-Monobook-footer-wikia-links' => 'All global footer links written in wiki text displayed on Monobook skin',
 	'shared-News_box' => 'Message displayed in Wikia portlet in Monobook',
 );
 
@@ -8452,6 +8453,11 @@ Das liegt wahrscheinlich an einem Link auf eine externe Seite.',
 ***w:c:de.community:Spezial:Forum|Community-Forum
 ***w:c:de|Mehr...
 ",
+	'shared-Monobook-footer-wikia-links' => '* [http://de.wikia.com/Datenschutz Datenschutz]
+* [http://de.wikia.com/wiki/%C3%9Cber_Wikia Über Wikia]
+* [http://de.wikia.com/Nutzungsbedingungen Nutzungsbedingungen]<span style="color: #ff0000"> (Aktualisiert)</span>
+* [[Special:Contact|Kontakt]]
+* [http://www.wikia.com/wiki/Wikia:Advertising_on_Wikia Auf Wikia werben]',
 );
 
 $messages['de-ch'] = array(
@@ -9987,6 +9993,11 @@ Esto podría estar causado por un enlace a un sitio externo incluido en la lista
 ***w:c:es.gorillaz|Gorillaz
 ***w:c:arte|Arte
 ",
+	'shared-Monobook-footer-wikia-links' => '* [http://es.wikia.com/Pol%C3%ADtica_de_Privacidad Política de Privacidad]
+* [http://es.wikia.com/Sobre_nosotros Sobre Wikia]
+* [http://es.wikia.com/T%C3%A9rminos_de_Uso Términos de Uso]
+* [[Special:Contact|Contactar]]
+* [http://mediakit.wikia.com/wiki/Contact Publicidad]',
 );
 
 $messages['et'] = array(
@@ -11622,6 +11633,11 @@ impossible de renommer une page sur elle-même.',
 ***w:c:routes|Routes de France
 ***w:c:fr.encyclopedie|Encyclopédie
 ",
+	'shared-Monobook-footer-wikia-links' => '* [http://www.wikia.com/wiki/Wikia:Privacy_Policy Confidentialité]
+* [http://fr.wikia.com/À_propos À propos de Wikia]
+* [http://fr.wikia.com/Conditions_d\'utilisation Conditions d\'utilisation]<span style="color: #ff0000"> (Mises à jour)</span>
+* [[Special:Contact|Nous contacter]]
+* [http://www.wikia.com/wiki/Wikia:Advertising_on_Wikia Publicité]',
 );
 
 $messages['frc'] = array(
@@ -17277,6 +17293,11 @@ L'ultimo elemento del registro è riportato di seguito per informazione:",
 	'specialpages-group-spam' => 'Strumenti contro lo spam',
 	'sqlite-has-fts' => '$1 con la possibilità di ricerca completa nel testo',
 	'sqlite-no-fts' => '$1 senza la possibilità di ricerca completa nel testo',
+	'shared-Monobook-footer-wikia-links' => '* [http://www.wikia.com/wiki/Wikia:Privacy_Policy Privacy]
+	* [http://www.wikia.com/wiki/Wikia:About About Wikia]
+	* [http://it.community.wikia.com/wiki/Wiki_della_Community:Termini_di_utilizzo Termini di utilizzo]<span style="color: #ff0000"> (Aggiornati)</span>
+	* [[Special:Contact|Contact]]
+	* [http://www.wikia.com/wiki/Wikia:Advertising_on_Wikia Advertise]',
 );
 
 $messages['iu'] = array(
@@ -17701,6 +17722,11 @@ $messages['ja'] = array(
 	'share_it' => '共有ツール:',
 	'searchsuggest' => '検索補間',
 	'see_more' => '更に詳しくは',
+	'shared-Monobook-footer-wikia-links' => '* [http://www.wikia.com/wiki/Wikia:Privacy_Policy Privacy]
+* [http://www.wikia.com/wiki/Wikia:About About Wikia]
+* [http://www.wikia.com/wiki/Wikia:Terms_of_use Terms of use]
+* [[Special:Contact|Contact]]
+* [http://www.wikia.com/wiki/Wikia:Advertising_on_Wikia Advertise]',
 );
 
 $messages['jam'] = array(
@@ -27515,6 +27541,11 @@ Meestal wordt dit door een externe verwijzing op een zwarte lijst veroorzaakt.',
 	'sqlite-has-fts' => 'Versie $1 met ondersteuning voor "full-text" zoeken',
 	'sqlite-no-fts' => 'Versie $1 zonder ondersteuning voor "full-text" zoeken',
 	'share_it' => 'Deel het:',
+	'shared-Monobook-footer-wikia-links' => '* [http://www.wikia.com/wiki/Wikia:Privacy_Policy Privacy]
+* [http://www.wikia.com/wiki/Wikia:About About Wikia]
+* [http://www.wikia.com/wiki/Wikia:Terms_of_use Terms of use]
+* [[Special:Contact|Contact]]
+* [http://www.wikia.com/wiki/Wikia:Advertising_on_Wikia Advertise]',
 );
 
 $messages['nl-informal'] = array(
@@ -29390,6 +29421,11 @@ Najprawdopodobniej zostało to spowodowane przez link do zewnętrznej strony int
 ***w:c:pl.bionicle|Bionicle
 ***w:c:pl.vocaloid|Vocaloid
 ",
+'shared-Monobook-footer-wikia-links' => '* [http://pl.wikia.com/Polityka_Prywatności Polityka Prywatności]
+	* [http://pl.wikia.com/O_nas O Wikii]
+	* [http://pl.wikia.com/Zasady_Użytkowania Zasady Użytkowania]<span style="color: #ff0000"> (Zaktualizowane)</span>
+	* [[Special:Contact|Kontakt]]
+	* [http://www.wikia.com/Advertising Reklama]',
 );
 
 $messages['pms'] = array(
@@ -30417,6 +30453,11 @@ Este bloqueio foi provavelmente causado por um link para um site externo que con
 	'sqlite-has-fts' => '$1 com suporte de pesquisa de texto completo',
 	'sqlite-no-fts' => '$1 sem suporte de pesquisa de texto completo',
 	'share_it' => 'Compartilhe-o:',
+	'shared-Monobook-footer-wikia-links' => '* [http://www.wikia.com/wiki/Wikia:Privacidade_Política de privacidade]
+* [http://www.wikia.com/wiki/Wikia:Sobre Sobre a Wikia]
+* [http://www.wikia.com/wiki/Wikia:Termos_de_uso Termos de uso]
+* [[Special:Contact|Contato]]
+* [http://www.wikia.com/wiki/Wikia:Publicidade_na_Wikia Publicidade]',
 );
 
 $messages['pt-br'] = array(
@@ -31895,6 +31936,11 @@ $messages['ru'] = array(
 	'sqlite-has-fts' => '$1 с поддержкой полнотекстового поиска',
 	'sqlite-no-fts' => '$1 без поддержки полнотекстового поиска',
 	'share_it' => 'Поделиться:',
+	'shared-Monobook-footer-wikia-links' => '* [http://www.wikia.com/wiki/Wikia:Privacy_Policy Privacy]
+* [http://www.wikia.com/wiki/Wikia:About About Wikia]
+* [http://ru.community.wikia.com/wiki/%D0%92%D0%B8%D0%BA%D0%B8%D1%8F:%D0%A3%D1%81%D0%BB%D0%BE%D0%B2%D0%B8%D1%8F_%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F Условия использования]
+* [[Special:Contact|Contact]]
+* [http://www.wikia.com/wiki/Wikia:Advertising_on_Wikia Advertise]',
 );
 
 $messages['rue'] = array(
@@ -42005,6 +42051,11 @@ $messages['zh-hans'] = array(
 	'specialpages-group-spam' => '反垃圾链接工具',
 	'sqlite-has-fts' => '带全文搜索的版本$1',
 	'sqlite-no-fts' => '不带全文搜索的版本$1',
+	'shared-Monobook-footer-wikia-links' => '* [http://www.wikia.com/wiki/Wikia:Privacy_Policy Privacy]
+* [http://www.wikia.com/wiki/Wikia:About About Wikia]
+* [http://www.wikia.com/wiki/Wikia:Terms_of_use Terms of use]
+* [[Special:Contact|Contact]]
+* [http://www.wikia.com/wiki/Wikia:Advertising_on_Wikia Advertise]',
 );
 
 $messages['zh-hant'] = array(
@@ -42213,6 +42264,11 @@ $messages['zh-hant'] = array(
 	'specialpages-group-spam' => '反垃圾工具',
 	'sqlite-has-fts' => '帶全文搜尋的版本$1',
 	'sqlite-no-fts' => '不帶全文搜尋的版本$1',
+	'shared-Monobook-footer-wikia-links' => '* [http://www.wikia.com/wiki/Wikia:Privacy_Policy Privacy]
+* [http://www.wikia.com/wiki/Wikia:About About Wikia]
+* [http://www.wikia.com/wiki/Wikia:Terms_of_use Terms of use]
+* [[Special:Contact|Contact]]
+* [http://www.wikia.com/wiki/Wikia:Advertising_on_Wikia Advertise]',
 );
 
 $messages['zh-hk'] = array(
