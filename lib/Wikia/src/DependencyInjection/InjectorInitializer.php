@@ -2,6 +2,7 @@
 
 namespace Wikia\DependencyInjection;
 
+use ContributionPrototype\ContributionPrototypeModule;
 use Doctrine\Common\Cache\CacheProvider;
 use Wikia\Service\Gateway\ConsulUrlProviderModule;
 use Wikia\Service\Swagger\ApiProviderModule;
@@ -23,6 +24,7 @@ class InjectorInitializer {
 				->addModule(new AuthModule())
 				->addModule(new ConsulUrlProviderModule())
 				->addModule(new ApiProviderModule())
+				->addModule(new ContributionPrototypeModule())
 				->build());
 	}
 }

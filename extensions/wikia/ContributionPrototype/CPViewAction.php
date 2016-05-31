@@ -3,6 +3,7 @@
 namespace ContributionPrototype;
 
 use FormlessAction;
+use Wikia\DependencyInjection\Injector;
 
 class CPViewAction extends FormlessAction {
 
@@ -15,14 +16,8 @@ class CPViewAction extends FormlessAction {
 	}
 
 	public function show() {
-		global $wgDBname, $wgCityId;
-		
-		$article = new CPArticle(
-				$wgCityId, 
-				$wgDBname, 
-				$this->page->getTitle()->getBaseText(), 
-				$this->getOutput());
-		
-		$article->view();
+		/** @var CPArticleRenderer $renderer */
+		$renderer = Injector::getInjector()->get(CPArticleRenderer::class);
+		$renderer->render($this->page->getTitle()->getText(), $this->getOutput());
 	}
 }
