@@ -153,7 +153,7 @@ class Solarium_Client_Adapter_Curl extends Solarium_Client_Adapter
         curl_setopt($handler, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($handler, CURLOPT_FOLLOWLOCATION, true);
         curl_setopt($handler, CURLOPT_TIMEOUT, $options['timeout']);
-		curl_setopt($handler, CURLOPT_CONNECTTIMEOUT, $options['timeout']);
+        curl_setopt($handler, CURLOPT_CONNECTTIMEOUT, $options['timeout']);
         
         if ( $proxy = $this->getOption('proxy') ) {
         	curl_setopt($handler, CURLOPT_PROXY, $proxy);
