@@ -1,4 +1,6 @@
 <?php
+use Wikia\Util\GlobalStateWrapper;
+
 /**
  * A service to retrieve plain text snippets from articles
  *
@@ -45,6 +47,8 @@ class ArticleService extends WikiaObject {
 	 */
 	protected $solrDocumentService;
 
+	private $solrHostname;
+
 	/**
 	 * ArticleService constructor
 	 *
@@ -52,6 +56,12 @@ class ArticleService extends WikiaObject {
 	 */
 	public function __construct( $articleOrId = null ) {
 		parent::__construct();
+		global $wgSolrHost, $wgSolrKvHost;
+		if (isset($wgSolrKvHost)){
+			$this->solrHostname = $wgSolrKvHost;
+		} else {
+			$this->solrHostname = $wgSolrHost;
+		}
 
 		if ( !is_null( $articleOrId ) ) {
 			if ( is_numeric( $articleOrId ) ) {
@@ -273,21 +283,18 @@ class ArticleService extends WikiaObject {
 	 */
 	public function getTextFromSolr()
 	{
-		global $wgSolrHost, $wgSolrKvHost;
-		$oldWgSolrHost = $wgSolrHost; // store the value to restore it later to not affect sites like special search
+		$wrapper = new GlobalStateWrapper(['wgSolrHost' => $this->solrHostname]);
 
-		if (isset($wgSolrKvHost)) {
-			$wgSolrHost = $wgSolrKvHost;
-		}
-		$service = new SolrDocumentService();
-		// note that this will use wgArticleId without an article
-		if ( $this->article ) {
-			$service->setArticleId( $this->article->getId() );
-		}
+		$document = $wrapper->wrap(function(){
+			$service = new SolrDocumentService();
+			// note that this will use wgArticleId without an article
+			if ( $this->article ) {
+				$service->setArticleId( $this->article->getID() );
+			}
+			return $service->getResult();
+		});
+
 		$htmlField = Wikia\Search\Utilities::field( 'html' );
-
-		$document = $service->getResult();
-		$wgSolrHost = $oldWgSolrHost;
 
 		$text = '';
 		if ( $document !== null ) {
@@ -312,17 +319,12 @@ class ArticleService extends WikiaObject {
 		if ( !($this->article instanceof Article ) ) {
 			return '';
 		}
-		global $wgSolrHost, $wgSolrKvHost;
-		$oldWgSolrHost = $wgSolrHost; // store the value to restore it later to not affect sites like special search
-
-		if (isset($wgSolrKvHost)) {
-			$wgSolrHost = $wgSolrKvHost;
-		}
-
-		$service = new SolrDocumentService();
-		$service->setArticleId( $this->article->getId() );
-		$document = $service->getResult();
-		$wgSolrHost = $oldWgSolrHost;
+		$wrapper = new GlobalStateWrapper(['wgSolrHost' => $this->solrHostname]);
+		$document = $wrapper->wrap(function() {
+			$service = new SolrDocumentService();
+			$service->setArticleId( $this->article->getID() );
+			return $service->getResult();
+		});
 
 		$text = '';
 		if ( $document !== null ) {
