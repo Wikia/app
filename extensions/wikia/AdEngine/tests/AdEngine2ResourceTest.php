@@ -40,9 +40,9 @@ class AdEngine2ResourceTest extends WikiaBaseTest {
 
 	private function getKeysForExtension($name) {
 		return [
-			md5((new \DateTime('yesterday'))->format(AdEngine2Resource::RESOURCE_DATE_FORMAT) . $name),
-			md5((new \DateTime('now'))->format(AdEngine2Resource::RESOURCE_DATE_FORMAT) . $name),
-			md5((new \DateTime('tomorrow'))->format(AdEngine2Resource::RESOURCE_DATE_FORMAT) . $name)
+			AdEngine2Resource::getKey($name, new \DateTime('yesterday')),
+			AdEngine2Resource::getKey($name, new \DateTime('now')),
+			AdEngine2Resource::getKey($name, new \DateTime('tomorrow'))
 		];
 	}
 
