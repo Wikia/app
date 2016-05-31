@@ -39,7 +39,7 @@ class CPArticle {
 			'rel' => 'stylesheet',
 			'href'=> self::CP_HOST.'/public/assets/styles/main.css',
 		]);
-		$html = file_get_contents("http://data.wikia-test.com/wikia/lol/wiki/Home");
+		$html = file_get_contents(self::CP_HOST."/wiki/lol/wiki/Home");
 		preg_match('/<body>(.*?)<\/body>/is', $html, $matches);
 		$body = preg_replace(
 				'/<script src=("|\')\/(.*?)(\1)>/',
