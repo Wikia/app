@@ -55,7 +55,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	 * @return array
 	 */
 	public function getTopContributorsData() {
-		$userContributionCount = ( new UserStatsService( $this->getUser() ) )->getEditCountFromWeek();
+		$userContributionCount = ( new UserStatsService( $this->getUser()->getId() ) )->getEditCountFromWeek();
 		$contributors = $this->usersModel->getTopContributors( 50 );
 		// get details for only 5 of the remaining contributors
 		$contributorDetails = $this->getContributorsDetails(
