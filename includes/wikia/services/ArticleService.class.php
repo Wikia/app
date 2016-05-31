@@ -274,6 +274,8 @@ class ArticleService extends WikiaObject {
 	public function getTextFromSolr()
 	{
 		global $wgSolrHost, $wgSolrKvHost;
+		$oldWgSolrHost = $wgSolrHost; // store the value to restore it later to not affect sites like special search
+
 		if (isset($wgSolrKvHost)) {
 			$wgSolrHost = $wgSolrKvHost;
 		}
@@ -285,6 +287,7 @@ class ArticleService extends WikiaObject {
 		$htmlField = Wikia\Search\Utilities::field( 'html' );
 
 		$document = $service->getResult();
+		$wgSolrHost = $oldWgSolrHost;
 
 		$text = '';
 		if ( $document !== null ) {
@@ -310,6 +313,8 @@ class ArticleService extends WikiaObject {
 			return '';
 		}
 		global $wgSolrHost, $wgSolrKvHost;
+		$oldWgSolrHost = $wgSolrHost; // store the value to restore it later to not affect sites like special search
+
 		if (isset($wgSolrKvHost)) {
 			$wgSolrHost = $wgSolrKvHost;
 		}
@@ -317,6 +322,7 @@ class ArticleService extends WikiaObject {
 		$service = new SolrDocumentService();
 		$service->setArticleId( $this->article->getId() );
 		$document = $service->getResult();
+		$wgSolrHost = $oldWgSolrHost;
 
 		$text = '';
 		if ( $document !== null ) {
