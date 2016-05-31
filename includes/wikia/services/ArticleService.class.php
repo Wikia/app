@@ -1,4 +1,6 @@
 <?php
+use Wikia\Util\GlobalStateWrapper;
+
 /**
  * A service to retrieve plain text snippets from articles
  *
@@ -45,6 +47,8 @@ class ArticleService extends WikiaObject {
 	 */
 	protected $solrDocumentService;
 
+	private $solrHostname;
+
 	/**
 	 * ArticleService constructor
 	 *
@@ -52,6 +56,12 @@ class ArticleService extends WikiaObject {
 	 */
 	public function __construct( $articleOrId = null ) {
 		parent::__construct();
+		global $wgSolrHost, $wgSolrKvHost;
+		if (isset($wgSolrKvHost)){
+			$this->solrHostname = $wgSolrKvHost;
+		} else {
+			$this->solrHostname = $wgSolrHost;
+		}
 
 		if ( !is_null( $articleOrId ) ) {
 			if ( is_numeric( $articleOrId ) ) {
@@ -271,15 +281,20 @@ class ArticleService extends WikiaObject {
 	 *
 	 * @return string The plain text as stored in solr. Will be empty if we don't have a result.
 	 */
-	public function getTextFromSolr() {
-		$service = new SolrDocumentService();
-		// note that this will use wgArticleId without an article
-		if ( $this->article ) {
-			$service->setArticleId( $this->article->getId() );
-		}
-		$htmlField = Wikia\Search\Utilities::field( 'html' );
+	public function getTextFromSolr()
+	{
+		$wrapper = new GlobalStateWrapper(['wgSolrHost' => $this->solrHostname]);
 
-		$document = $service->getResult();
+		$document = $wrapper->wrap(function(){
+			$service = new SolrDocumentService();
+			// note that this will use wgArticleId without an article
+			if ( $this->article ) {
+				$service->setArticleId( $this->article->getID() );
+			}
+			return $service->getResult();
+		});
+
+		$htmlField = Wikia\Search\Utilities::field( 'html' );
 
 		$text = '';
 		if ( $document !== null ) {
@@ -304,10 +319,12 @@ class ArticleService extends WikiaObject {
 		if ( !($this->article instanceof Article ) ) {
 			return '';
 		}
-
-		$service = new SolrDocumentService();
-		$service->setArticleId( $this->article->getId() );
-		$document = $service->getResult();
+		$wrapper = new GlobalStateWrapper(['wgSolrHost' => $this->solrHostname]);
+		$document = $wrapper->wrap(function() {
+			$service = new SolrDocumentService();
+			$service->setArticleId( $this->article->getID() );
+			return $service->getResult();
+		});
 
 		$text = '';
 		if ( $document !== null ) {
