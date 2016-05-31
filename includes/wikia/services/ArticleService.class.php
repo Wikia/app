@@ -272,6 +272,8 @@ class ArticleService extends WikiaObject {
 	 * @return string The plain text as stored in solr. Will be empty if we don't have a result.
 	 */
 	public function getTextFromSolr() {
+		global $wgSolrHost, $wgSolrKvHost;
+		$wgSolrHost = $wgSolrKvHost;
 		$service = new SolrDocumentService();
 		// note that this will use wgArticleId without an article
 		if ( $this->article ) {
@@ -304,6 +306,8 @@ class ArticleService extends WikiaObject {
 		if ( !($this->article instanceof Article ) ) {
 			return '';
 		}
+		global $wgSolrHost, $wgSolrKvHost;
+		$wgSolrHost = $wgSolrKvHost;
 
 		$service = new SolrDocumentService();
 		$service->setArticleId( $this->article->getId() );
