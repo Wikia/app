@@ -1,3 +1,4 @@
+/*global require*/
 require(
 	['wikia.scrollToLink', 'wikia.window', 'jquery', 'wikia.browserDetect'],
 	function(scrollToLink, win, $, browserDetect) {
@@ -35,13 +36,13 @@ require(
 			//top:0 hides global navigation because it has "margin-top:-47px".
 			if (win.location.hash) {
 				$globalNavigation.css({
-					top: 0
+					top: -1 * globalNavigationHeight
 				});
 
 				$win.on('load', function() {
 					win.setTimeout(function() {
 						win.scrollTo(0, win.scrollY + offset);
-						$globalNavigation.animate({top: globalNavigationHeight}, 500);
+						$globalNavigation.animate({top: 0}, 500);
 					}, 0);
 				});
 			}
@@ -50,6 +51,6 @@ require(
 			// also scroll a bit, so element won't be sticked to GlobalNavigation
 			offset = -(globalNavigationHeight + spacingBelowGlobalNav);
 
-			$win.on('hashchange', hashChangeHandler)
+			$win.on('hashchange', hashChangeHandler);
 		});
 });
