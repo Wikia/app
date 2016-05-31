@@ -117,7 +117,7 @@ function wfReplaceImageServer( $url, $timestamp = false ) {
 	// FIXME: This needs to be removed. It should be encapsulated in the URL generation.
 	$overrideServer = !empty( $wg->DevBoxImageServerOverride ) && !$wg->EnableVignette;
 	if ( $overrideServer ) {
-		$url = preg_replace( "/\/\/(.*?)wikia-dev\.com\/(.*)/", "//{$wg->DevBoxImageServerOverride}/$2", $url );
+		$url = preg_replace( "/\\/\\/(.*?)wikia-dev\\.com\\/(.*)/", "//{$wg->DevBoxImageServerOverride}/$2", $url );
 	}
 
 	wfDebug( __METHOD__ . ": requested url $url\n" );
@@ -350,12 +350,13 @@ function wfStrToBool( $value ) {
  * @param mixed $variable: variable to be displayed/set
  * @param boolean $return default false: display or just return
  *
- * @return void or string: depends of $return param
+ * @return void|string: depends of $return param
  */
 function wfEchoIfSet( $variable, $return = false )
 {
     if ( empty( $return ) ) {
         echo isset( $variable ) ? $variable : "";
+		return null;
     }
     else {
         return isset( $variable ) ? $variable : "";
@@ -493,11 +494,12 @@ function getMessageAsArray( $messageKey, $params = [] ) {
 			return $lines;
 		}
 	}
+	return null;
 }
 
 /**
  * @author emil@wikia.com
- * @return default external cluster
+ * @return string default external cluster
  */
 function wfGetDefaultExternalCluster() {
 	global $wgDefaultExternalStore;
@@ -516,7 +518,7 @@ function wfGetDefaultExternalCluster() {
 
 /**
  * @author MoLi <moli@wikia.com>
- * @return db's handle for external storage
+ * @return DatabaseBase db's handle for external storage
  */
 function wfGetDBExt( $db = DB_MASTER, $cluster = null ) {
 	if ( !$cluster ) {
@@ -1586,6 +1588,7 @@ function wfGetUniqueArrayCI( array $arr ) {
  */
 function mb_pathinfo( $filepath ) {
 	preg_match( '%^(.*?)[\\\\/]*(([^/\\\\]*?)(\.([^\.\\\\/]+?)|))[\\\\/\.]*$%im', $filepath, $m );
+	$ret = [];
 	if ( $m[1] ) {
 		$ret['dirname'] = $m[1];
 	}
