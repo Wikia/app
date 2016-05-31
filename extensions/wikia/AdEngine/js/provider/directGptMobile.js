@@ -11,6 +11,7 @@ define('ext.wikia.adEngine.provider.directGptMobile', [
 		{
 			INVISIBLE_HIGH_IMPACT:      {size: '1x1'},
 			MOBILE_TOP_LEADERBOARD:     {size: '320x50,320x100,300x250,300x50,1x1'},
+			MOBILE_BOTTOM_LEADERBOARD:  {size: '300x50,300x250,320x50,320x100,320x480'},
 			MOBILE_IN_CONTENT:          {size: '320x50,300x250,300x50,1x1'},
 			MOBILE_IN_CONTENT_EXTRA_1:  {size: '300x250,1x1'},
 			MOBILE_IN_CONTENT_EXTRA_2:  {size: '300x250,1x1'},
