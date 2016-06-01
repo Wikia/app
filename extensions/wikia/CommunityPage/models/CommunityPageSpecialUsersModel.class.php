@@ -16,7 +16,7 @@ class CommunityPageSpecialUsersModel {
 	private $user;
 	private $admins;
 
-	public function __construct( User $user ) {
+	public function __construct( User $user = null ) {
 		$this->user = $user;
 		$this->wikiService = new WikiService();
 	}
