@@ -3,11 +3,9 @@
 class CommunityPageSpecialUsersModel {
 	const TOP_CONTRIB_MCACHE_KEY = 'community_page_top_contrib';
 	const ALL_ADMINS_MCACHE_KEY = 'community_page_all_admins';
-	const FIRST_REV_MCACHE_KEY = 'community_page_first_revision';
 	const GLOBAL_BOTS_MCACHE_KEY = 'community_page_global_bots';
 	const ALL_BOTS_MCACHE_KEY = 'community_page_all_bots';
 	const ALL_MEMBERS_MCACHE_KEY = 'community_page_all_members';
-	const MEMBER_COUNT_MCACHE_KEY = 'community_member_count';
 	const RECENTLY_JOINED_MCACHE_KEY = 'community_page_recently_joined';
 
 	const ALL_CONTRIBUTORS_MODAL_LIMIT = 50;
@@ -323,26 +321,8 @@ class CommunityPageSpecialUsersModel {
 	 * @return integer
 	 */
 	public function getMemberCount() {
-		$allContributorsCount = WikiaDataAccess::cache(
-			wfMemcKey( self::MEMBER_COUNT_MCACHE_KEY ),
-			WikiaResponse::CACHE_STANDARD,
-			function () {
-				$db = wfGetDB( DB_SLAVE );
+		$allMembers = $this->getAllContributors();
 
-				$sqlCount = ( new WikiaSQL() )
-					->SELECT( 'COUNT( DISTINCT rev_user )' )
-					->AS_( 'all_contributors_count' )
-					->FROM( 'revision' )
-					->WHERE( 'rev_timestamp > DATE_SUB(now(), INTERVAL 2 YEAR)' )
-					->AND_( 'rev_user' )->NOT_EQUAL_TO( 0 )
-					->runLoop( $db, function ( &$sqlCount, $row ) {
-						$sqlCount = $row->all_contributors_count;
-					} );
-
-				return $sqlCount;
-			}
-		);
-
-		return $allContributorsCount;
+		return count( $allMembers );
 	}
 }

@@ -28,30 +28,14 @@ class CommunityPageSpecialHooks {
 		}
 
 		// Purge Top Contributors list
-		WikiaDataAccess::cachePurge(
-			wfMemcKey( CommunityPageSpecialUsersModel::TOP_CONTRIB_MCACHE_KEY )
-		);
-
-		// Purge Recently Joined Users
-		// fixme: This should only be purged if this user making this edit is not already a member
-		// i.e. this his first edit to this community
-		$key = wfMemcKey( CommunityPageSpecialUsersModel::RECENTLY_JOINED_MCACHE_KEY, 14 );
-		WikiaDataAccess::cachePurge( $key );
+		WikiaDataAccess::cachePurge( wfMemcKey( CommunityPageSpecialUsersModel::TOP_CONTRIB_MCACHE_KEY ) );
 
 		// Purge All Members List
-		$key = wfMemcKey( CommunityPageSpecialUsersModel::ALL_MEMBERS_MCACHE_KEY );
-		WikiaDataAccess::cachePurge( $key );
-
-		// Purge Member Count
-		// fixme: Remove this once getMemberCount has been removed
-		$key = wfMemcKey( CommunityPageSpecialUsersModel::MEMBER_COUNT_MCACHE_KEY );
-		WikiaDataAccess::cachePurge( $key );
+		WikiaDataAccess::cachePurge( wfMemcKey( CommunityPageSpecialUsersModel::ALL_MEMBERS_MCACHE_KEY ) );
 
 		// Purge all admins list
 		if ( self::isAdmin( $user->getId() ) ) {
-			WikiaDataAccess::cachePurge(
-				wfMemcKey( CommunityPageSpecialUsersModel::ALL_ADMINS_MCACHE_KEY )
-			);
+			WikiaDataAccess::cachePurge( wfMemcKey( CommunityPageSpecialUsersModel::ALL_ADMINS_MCACHE_KEY ) );
 		}
 
 		return true;
@@ -82,10 +66,14 @@ class CommunityPageSpecialHooks {
 	 */
 	public static function onUserRights( User $user, array $validGroupsToAdd, array $validGroupsToRemove ) {
 		if ( self::hasAdminGroup( $validGroupsToAdd ) || self::hasAdminGroup( $validGroupsToRemove ) ) {
-			WikiaDataAccess::cachePurge(
-				wfMemcKey( CommunityPageSpecialUsersModel::ALL_ADMINS_MCACHE_KEY )
-			);
+			WikiaDataAccess::cachePurge( wfMemcKey( CommunityPageSpecialUsersModel::ALL_ADMINS_MCACHE_KEY ) );
 		}
+
+		return true;
+	}
+
+	public static function onUserFirstEditOnLocalWiki( $userId, $wikiId ) {
+		WikiaDataAccess::cachePurge( wfMemcKey( CommunityPageSpecialUsersModel::RECENTLY_JOINED_MCACHE_KEY, 14 ) );
 
 		return true;
 	}

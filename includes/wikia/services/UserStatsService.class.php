@@ -90,6 +90,11 @@ class UserStatsService extends WikiaModel {
 		// update last revision timestamp
 		$this->initLastContributionTimestamp();
 
+		// first user edit on given wiki
+		if ( $this->getEditCountWiki() === 1 ) {
+			wfRunHooks( 'UserFirstEditOnLocalWiki', [ $this->userId, $this->getWikiId() ] );
+		}
+
 		wfProfileOut( __METHOD__ );
 	}
 
