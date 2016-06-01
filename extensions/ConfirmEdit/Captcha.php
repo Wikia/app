@@ -581,7 +581,7 @@ class SimpleCaptcha {
 			}
 			$this->trigger = "{$wgUser->getName()} sending email";
 			if ( !$this->passCaptcha() ) {
-				$error = wfMsg( 'captcha-sendemail-fail' );
+				$error = wfMsg( 'captcha-sendemail-fail-confirm-edit' );
 				return false;
 			}
 		}
