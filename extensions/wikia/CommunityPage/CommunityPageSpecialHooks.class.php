@@ -29,13 +29,16 @@ class CommunityPageSpecialHooks {
 
 		// Purge Top Contributors list
 		WikiaDataAccess::cachePurge( wfMemcKey( CommunityPageSpecialUsersModel::TOP_CONTRIB_MCACHE_KEY ) );
+		CommunityPageSpecialUsersModel::logUserModelPerformanceData( 'purge', 'top_contributors' );
 
 		// Purge All Members List
 		WikiaDataAccess::cachePurge( wfMemcKey( CommunityPageSpecialUsersModel::ALL_MEMBERS_MCACHE_KEY ) );
+		CommunityPageSpecialUsersModel::logUserModelPerformanceData( 'purge', 'all_contributors' );
 
 		// Purge all admins list
 		if ( self::isAdmin( $user->getId() ) ) {
 			WikiaDataAccess::cachePurge( wfMemcKey( CommunityPageSpecialUsersModel::ALL_ADMINS_MCACHE_KEY ) );
+			CommunityPageSpecialUsersModel::logUserModelPerformanceData( 'purge', 'all_admins' );
 		}
 
 		return true;
@@ -67,6 +70,7 @@ class CommunityPageSpecialHooks {
 	public static function onUserRights( User $user, array $validGroupsToAdd, array $validGroupsToRemove ) {
 		if ( self::hasAdminGroup( $validGroupsToAdd ) || self::hasAdminGroup( $validGroupsToRemove ) ) {
 			WikiaDataAccess::cachePurge( wfMemcKey( CommunityPageSpecialUsersModel::ALL_ADMINS_MCACHE_KEY ) );
+			CommunityPageSpecialUsersModel::logUserModelPerformanceData( 'purge', 'all_admins' );
 		}
 
 		return true;
@@ -74,6 +78,7 @@ class CommunityPageSpecialHooks {
 
 	public static function onUserFirstEditOnLocalWiki( $userId, $wikiId ) {
 		WikiaDataAccess::cachePurge( wfMemcKey( CommunityPageSpecialUsersModel::RECENTLY_JOINED_MCACHE_KEY, 14 ) );
+		CommunityPageSpecialUsersModel::logUserModelPerformanceData( 'purge', 'recently_joined' );
 
 		return true;
 	}

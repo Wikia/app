@@ -1,5 +1,7 @@
 <?php
 
+use Wikia\Logger\WikiaLogger;
+
 class CommunityPageSpecialUsersModel {
 	const TOP_CONTRIB_MCACHE_KEY = 'community_page_top_contrib';
 	const ALL_ADMINS_MCACHE_KEY = 'community_page_all_admins';
@@ -11,9 +13,11 @@ class CommunityPageSpecialUsersModel {
 	const ALL_CONTRIBUTORS_MODAL_LIMIT = 50;
 
 	private $wikiService;
+	private $user;
 	private $admins;
 
-	public function __construct() {
+	public function __construct( User $user ) {
+		$this->user = $user;
 		$this->wikiService = new WikiService();
 	}
 
@@ -52,6 +56,8 @@ class CommunityPageSpecialUsersModel {
 			wfMemcKey( self::TOP_CONTRIB_MCACHE_KEY ),
 			WikiaResponse::CACHE_STANDARD,
 			function () {
+				self::logUserModelPerformanceData( 'query', 'top_contributors' );
+
 				$db = wfGetDB( DB_SLAVE );
 
 				$botIds = $this->getBotIds();
@@ -74,6 +80,12 @@ class CommunityPageSpecialUsersModel {
 				return $result;
 			}
 		);
+		self::logUserModelPerformanceData(
+			'view',
+			'top_contributors',
+			$this->isUserOnList( $data ),
+			$this->isUserLoggedIn()
+		);
 		return $data;
 	}
 	/**
@@ -87,6 +99,8 @@ class CommunityPageSpecialUsersModel {
 			wfMemcKey( self::ALL_ADMINS_MCACHE_KEY ),
 			WikiaResponse::CACHE_STANDARD,
 			function () {
+				self::logUserModelPerformanceData( 'query', 'all_admins' );
+
 				$db = wfGetDB( DB_SLAVE );
 
 				$adminIds = $this->getAdmins();
@@ -113,6 +127,7 @@ class CommunityPageSpecialUsersModel {
 				return $result;
 			}
 		);
+		self::logUserModelPerformanceData( 'view', 'all_admins', $this->isUserOnList( $data ), $this->isUserLoggedIn() );
 		return $data;
 	}
 
@@ -188,13 +203,15 @@ class CommunityPageSpecialUsersModel {
 			wfMemcKey( self::RECENTLY_JOINED_MCACHE_KEY, $limit ),
 			WikiaResponse::CACHE_STANDARD,
 			function () use ( $limit ) {
+				self::logUserModelPerformanceData( 'query', 'recently_joined' );
+
 				$db = wfGetDB( DB_SLAVE );
 
 				$sqlData = ( new WikiaSQL() )
 					->SELECT( '*' )
-					->FROM ( 'wikia_user_properties' )
-					->WHERE ( 'wup_property' )->EQUAL_TO( 'firstContributionTimestamp' )
-					->AND_ ( 'wup_value > DATE_SUB(now(), INTERVAL 14 DAY)' )
+					->FROM( 'wikia_user_properties' )
+					->WHERE( 'wup_property' )->EQUAL_TO( 'firstContributionTimestamp' )
+					->AND_( 'wup_value > DATE_SUB(now(), INTERVAL 14 DAY)' )
 					->ORDER_BY( 'wup_value DESC' )
 					->LIMIT( $limit )
 					->runLoop( $db, function ( &$sqlData, $row ) {
@@ -217,6 +234,13 @@ class CommunityPageSpecialUsersModel {
 
 				return $sqlData;
 			}
+		);
+
+		self::logUserModelPerformanceData(
+			'view',
+			'recently_joined',
+			$this->isUserOnList( $data ),
+			$this->isUserLoggedIn()
 		);
 
 		return $data;
@@ -274,6 +298,8 @@ class CommunityPageSpecialUsersModel {
 			wfMemcKey( self::ALL_MEMBERS_MCACHE_KEY ),
 			WikiaResponse::CACHE_SHORT,
 			function () {
+				self::logUserModelPerformanceData( 'query', 'all_contributors' );
+
 				$db = wfGetDB( DB_SLAVE );
 
 				$userSqlData = ( new WikiaSQL() )
@@ -311,6 +337,13 @@ class CommunityPageSpecialUsersModel {
 			}
 		);
 
+		self::logUserModelPerformanceData(
+			'view',
+			'all_contributors',
+			$this->isUserOnList( $allContributorsData ),
+			$this->isUserLoggedIn()
+		);
+
 		return $this->addCurrentUserIfContributor( $allContributorsData, $currentUserId );
 	}
 
@@ -324,5 +357,38 @@ class CommunityPageSpecialUsersModel {
 		$allMembers = $this->getAllContributors();
 
 		return count( $allMembers );
+	}
+
+	public static function logUserModelPerformanceData( $action, $method, $userOnList = '', $userLoggedIn = '' ) {
+		WikiaLogger::instance()->info(
+			'Community Page User Model',
+			[
+				'cp_action' => $action,
+				'cp_method' => $method,
+				'cp_user_on_list' => $userOnList,
+				'cp_user_logged_in' => $userLoggedIn
+			]
+		);
+	}
+
+	private function isUserOnList( $data) {
+		if ( $this->user instanceof User ) {
+			$key = array_search( $this->user->getId(), array_column( $data, 'userId' ) );
+			if ( $key ) {
+				return true;
+			}
+
+			return false;
+		}
+
+		return '';
+	}
+
+	private function isUserLoggedIn() {
+		if ( $this->user instanceof User ) {
+			return $this->user->isLoggedIn();
+		}
+
+		return false;
 	}
 }
