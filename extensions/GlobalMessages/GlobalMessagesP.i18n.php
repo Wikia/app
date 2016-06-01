@@ -263,8 +263,6 @@ The latest log entry is provided below for reference:",
 	'preferences_s' => 'Preferences',
 	'profile' => 'Profile',
 	'prefs-layout' => 'Site Layouts',
-	'prefs-general' => 'General',
-	'prefs-starting-an-edit' => 'Starting an edit',
 );
 
 $messages['qqq'] = array(
