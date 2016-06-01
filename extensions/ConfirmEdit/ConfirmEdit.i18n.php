@@ -33,7 +33,7 @@ At the moment we do not have an audio alternative available.
 Please contact the  [[{{MediaWiki:Grouppage-sysop}}|site administrators]] for assistance if this is unexpectedly preventing you from making legitimate posts.
 
 Hit the 'back' button in your browser to return to the page editor.",
-	'captcha-addurl-whitelist'   => ' #<!-- leave this line exactly as it is --> <pre>
+	'captcha-addurl-whitelist-confirm-edit'   => ' #<!-- leave this line exactly as it is --> <pre>
 # Syntax is as follows:
 #   * Everything from a "#" character to the end of the line is a comment
 #   * Every non-blank line is a regex fragment which will only match hosts inside URLs
@@ -79,7 +79,7 @@ See also
 *{{msg-mw|Fancycaptcha-create}}',
 	'captchahelp-title' => 'The page title of [[Special:Captcha/help]]',
 	'captchahelp-text-confirmedit' => 'This is the help text shown on [[Special:Captcha/help]].',
-	'captcha-addurl-whitelist' => "See also: [[MediaWiki:Spam-blacklist]] and [[MediaWiki:Spam-whitelist]]. Leave all the wiki markup, including the spaces, as is. You can translate the text, including 'Leave this line exactly as it is'. The first line of this messages has one (1) leading space.",
+	'captcha-addurl-whitelist-confirm-edit' => "See also: [[MediaWiki:Spam-blacklist]] and [[MediaWiki:Spam-whitelist]]. Leave all the wiki markup, including the spaces, as is. You can translate the text, including 'Leave this line exactly as it is'. The first line of this messages has one (1) leading space.",
 	'right-skipcaptcha' => '{{doc-right|skipcaptcha}}',
 );
 
@@ -128,7 +128,7 @@ $messages['aln'] = array(
 	'captchahelp-title' => 'Captcha ndihmë',
 	'captchahelp-cookies-needed' => 'Ju duhet të keni cookies të aktivizuara në shfletuesin tuaj për këtë për të punuar.',
 	'captchahelp-text-confirmedit' => "Web faqet që pranojnë postings nga publiku, si ky wiki, shpesh keqtrajtohen nga spammers që përdorin mjete të automatizuar të postoni lidhjet e tyre me shumë vende. Përderisa këto lidhje spam mund të hiqen, ata janë një ngatërresë të rëndësishme. Ndonjëherë, sidomos kur duke shtuar të reja lidhje interneti në një faqe, wiki mund të tregojë se një imazh i ose deformuar tekst me ngjyra dhe kërkoni ju që të shtypni fjalë të treguar. Ngaqë kjo është një detyrë që është e vështirë për të automatizuar, ajo do të lejojë të vërtetë njerëzit më të për të bërë detyrat e tyre, ndërsa ndaluar më spammers dhe robotik sulmuesit të tjera. Për fat të keq kjo bezdi përdoruesit mund me vizion të kufizuar ose duke përdorur me bazë ose shprehjeje me bazë shfletuesit tekst. Për momentin ne nuk kemi një alternativë audio në dispozicion. Ju lutemi të kontaktoni [[{{MediaWiki:Grouppage-sysop}} site administratorët) |]] për ndihmë, nëse kjo është e papritur në parandalimin e ju prej bërë postimet legjitime. Hit 'butonin mbrapa në shfletuesin tuaj për t'u kthyer në faqen e redaktorit.",
-	'captcha-addurl-whitelist' => '# <!-- leave this line exactly as it is --><pre>
+	'captcha-addurl-whitelist-confirm-edit' => '# <!-- leave this line exactly as it is --><pre>
 # Sintaksa është si më poshtë:
 # * Çdo gjë nga një "karakter #" në fund të linjës është një koment
 # * Çdo linjës jo të zbrazët është një fragment regex i cili vetëm do të përputhen me pret brenda URL
@@ -175,7 +175,7 @@ Bellas vegadas, especialment quan se mire de adhibir nuevos vinclos a una pachin
 Manimenos, isto puede estar un barrache ta usuarios con visión limitata u que faigan ser navegadors basatos en texto u en a voz. Por l'inte no tenemos garra alternativa de audio. Por favor, contacte con os [[{{MediaWiki:Grouppage-sysop}}|administradors]] d'o wiki ta demandar aduya si isto le ye privando de fer as suyas edicions lechitimas.
 
 Punche o botón 'enta zaga' d'o suyo navegador ta tornar ta l'editor de pachinas.",
-	'captcha-addurl-whitelist' => " #<!-- leave this line exactly as it is --> <pre>
+	'captcha-addurl-whitelist-confirm-edit' => " #<!-- leave this line exactly as it is --> <pre>
 # A sintaxi ye asinas:
 #  * Tot o que bi ha dende un carácter \"#\" dica a fin d'a linia ye un comentario
 #  * Qualsiquier linia con testo un troz d'expresión regular (regex) que sólo concordará con os hosts aintro d'URLs
@@ -218,7 +218,7 @@ $messages['ar'] = array(
 من فضلك راسل [[{{MediaWiki:Grouppage-sysop}}|إداريي الموقع]] للمساعدة إذا كان هذا الأمر يمنعك من التعديل ووضع وصلات قانونية.
 
 إذا كنت تحرر صفحة معينة: اضغط زر 'العودة' في متصفحك للعودة إلى التحرير.",
-	'captcha-addurl-whitelist' => ' #<!-- اترك هذا السطر تماما كما هو --> <pre>
+	'captcha-addurl-whitelist-confirm-edit' => ' #<!-- اترك هذا السطر تماما كما هو --> <pre>
 # الصيغة كما يلي:
 #  * كل شيء من علامة "#" لنهاية السطر تعليق
 #  * كل سطر غير فارغ هو جزء تعبير نمطي والذي سوف يطابق فقط المضيفين داخل العناوين
@@ -253,7 +253,7 @@ $messages['arz'] = array(
 لو سمحت تتصل [[{{MediaWiki:Grouppage-sysop}}|بلاداريين]] بتوع الموقع علشان يساعدوك لو دا منعك بشكل مش متوقع من انك تشارك بشكل قانونى.
 
 دوس على زرار 'back'اللى فى البراوزر بتاعك علشان ترجع لتحرير الصفحة.",
-	'captcha-addurl-whitelist' => ' #<!-- سيب السطر دا زى ما هو كدا بالظبط--> <pre>
+	'captcha-addurl-whitelist-confirm-edit' => ' #<!-- سيب السطر دا زى ما هو كدا بالظبط--> <pre>
 # الصيغة كدا:
 #  * كل حاجة من علامة "#" لحد نهاية السطر هى تعليق
 #  * كل سطر مش فاضى هو جزء ريجيكس و اللى ح يطابق بس المضيفين جوه URLs
@@ -318,7 +318,7 @@ Yá qu'esti ye un llabor difícil d'automatizar, permitirá a les más de les pe
 Por desgracia, esto pue ser un inconveniente pa los usuarios con visión llimitada o qu'usen navegadores de testu o voz. De momentu nun tenemos disponible una alternativa de soníu. Por favor, ponte'n contautu colos [[{{MediaWiki:Grouppage-sysop}}|alministradores del sitiu]] pa pidir ayuda si esto te torgare facer ediciones llexítimes.
 
 Calca nel botón 'atrás' del to navegador pa volver a la páxina d'edición.",
-	'captcha-addurl-whitelist' => ' #<!-- dexa esta llinia exautamente como ta --> <pre>
+	'captcha-addurl-whitelist-confirm-edit' => ' #<!-- dexa esta llinia exautamente como ta --> <pre>
 # La sintaxis ye como sigue:
 #  * Too dende\'l carauter "#" hasta la fin de la llinia ye un comentariu
 #  * Toa llinia non vacia ye un fragmentu regex que namái buscará hosts n\'URLs
@@ -360,7 +360,7 @@ $messages['ba'] = array(
 Зинһар, әгәр бындай тикшереү һеҙгә сайтта намыҫ менән эшләргә ҡамасаулаһа, [[{{MediaWiki:Grouppage-sysop}}|хәкимдәргә]] мөрәжәғәт итегеҙ.
 
 Мөхәррирләүгә кире ҡайтыу өсөн, браузерығыҙҙа кире ҡайтыу төймәһенә баҫығыҙ.',
-	'captcha-addurl-whitelist' => '#<!-- leave this line exactly as it is --> <pre>
+	'captcha-addurl-whitelist-confirm-edit' => '#<!-- leave this line exactly as it is --> <pre>
 # Синтаксистың тасуирламаһы:
 #  * "#" хәрефенән алып бөтә юл юлдың аҙағына тиклем аңлатма тип һанала
 #  * Һәр буш булмаған юл URL адресындағы үҙәк исеменең регуляр аңлатмаһы тип һанала 
@@ -392,7 +392,7 @@ $messages['bcc'] = array(
 هنو ما را تواری جایگزین نیست.
 لطفا مدیران سایت تماس گریت په کمک اگر شی یک ناخواسته این جلوگیری چه دیم دهگ قانونی انت.
 دکمه 'back' ته وتی بروزر بجنیت دان په صفحه اصلاح تریت.",
-	'captcha-addurl-whitelist' => ' #<!-- leave this line exactly as it is --> <pre>
+	'captcha-addurl-whitelist-confirm-edit' => ' #<!-- leave this line exactly as it is --> <pre>
 # Syntax is as follows:
 #   * Everything from a "#" character to the end of the line is a comment
 #   * Every non-blank line is a regex fragment which will only match hosts inside URLs
@@ -418,7 +418,7 @@ $messages['be'] = array(
 	'captcha-create' => 'Каб стварыць старонку, развяжыце простае ўраўненне, што ніжэй, і ўпішыце адказ у адпаведнае поле ([[Special:Captcha/help|больш падрабязна]]):',
 	'captchahelp-title' => 'Даведка Капчы',
 	'captchahelp-cookies-needed' => 'Каб гэтая магчымасць працавала, належыць дазволіць у браўзеры апрацоўку квіткоў ("кукі").',
-	'captcha-addurl-whitelist' => ' #<!-- радок абавязкова пакінуць як ёсць (у т.л., з прагалам у пачатку) --> <pre>
+	'captcha-addurl-whitelist-confirm-edit' => ' #<!-- радок абавязкова пакінуць як ёсць (у т.л., з прагалам у пачатку) --> <pre>
 # Сінтаксіс наступны:
 #  * Усё ад знаку "#" да канца радка гэта каментар
 #  * Кожны непусты радок гэта частковы рэгулярны выраз, які параўноўваецца з адрасамі сервераў унутры URL-яў
@@ -456,7 +456,7 @@ $messages['be-tarask'] = array(
 Калі ласка, зьвяжыцеся з [[{{MediaWiki:Grouppage-sysop}}|адміністратарамі]], калі гэтая праверка перашкаджае Вам рабіць слушныя запісы.
 
 Націсьніце кнопку «назад» у Вашым браўзэры, каб вярнуцца да рэдагаваньня старонкі.',
-	'captcha-addurl-whitelist' => ' #<!-- leave this line exactly as it is --> <pre>
+	'captcha-addurl-whitelist-confirm-edit' => ' #<!-- leave this line exactly as it is --> <pre>
 # Сынтаксіс наступны:
 #  * Усё, што пачынаецца з «#» і да канца радку, зьяўляецца камэнтарам
 #  * Усе непустыя радкі зьяўляюцца часткамі рэгулярнага выразу, які будзе выкарыстоўвацца толькі
@@ -516,7 +516,7 @@ $messages['bn'] = array(
 যারা চোখে কম দেখতে পান কিংবা টেক্সটভিত্তিক বা উক্তিভিত্তিক ব্রাউজার ব্যবহার করছেন, দুর্ভাগ্যবশত এই ব্যবস্থাটি তাদের জন্য সমস্যার সৃষ্টি করবে। এই মুহূর্তে আমাদের কাছে এই ব্যবস্থাটির কোন অডিও বিকল্প নেই। যদি ব্যবস্থাটি আপনাকে বৈধ পোস্ট করতে অযাচিত বাধা দেয়, অনুগ্রহ করে [[{{MediaWiki:Grouppage-sysop}}|সাইটের প্রশাসকদের]] কাছে সাহায্য চান।
 
 আপনি এখন ব্রাউজারের ব্যাক বোতাম চেপে পাতা সম্পাদকে ফেরত যেতে পারেন।',
-	'captcha-addurl-whitelist' => ' #<!-- leave this line exactly as it is --> <pre>
+	'captcha-addurl-whitelist-confirm-edit' => ' #<!-- leave this line exactly as it is --> <pre>
 # সিনট্যাক্স নিম্নরূপ:
 #  * "#" ক্যারেক্টার থেকে শুরু হয়ে লাইনের শেষ পর্যন্ত সবকিছু একটি মন্তব্য
 #  * খালি নয় এমন প্রতিটি লাইন একটি রেজেক্স খণ্ডাংশ যেটি URLগুলির ভেতরে হোস্টগুলির সাথে মিলে যাবে।
@@ -553,7 +553,7 @@ Koulskoude e c'hallo an implijerien berr o gweled pe ar re a implij merdeerioù 
 Kit e darempred gant [[{{MediaWiki:Grouppage-sysop}}|merourien al lec'hienn]] m'hoc'h eus diaesterioù evit kemer perzh abalamour d'an teknik-se. 
 
 Pouezit war bouton 'kent' ho merdeer evit distreiñ d'ar bajenn gemmañ.",
-	'captcha-addurl-whitelist' => " #<!-- laoskit al linenn-mañ tre evel m'emañ --> <pre>
+	'captcha-addurl-whitelist-confirm-edit' => " #<!-- laoskit al linenn-mañ tre evel m'emañ --> <pre>
 # Setu penaos emañ an ereadur :
 #  * Kement tra war-lerc'h an arouezenn \"#\" zo un urzhiad, betek penn all al linenn
 #  * Kement linenn n'eo ket goullo zo ur c'hod regex a vo implijet e diabarzh al liammoù gourdskrid hepken
@@ -592,7 +592,7 @@ U ovom trenutku, audio alternativa nije dostupna.
 Molimo Vas da kontaktirate [[{{MediaWiki:Grouppage-sysop}}|administratore sajta]] radi pomoći ako Vas ovo neočekivano ometa u pravljenju dobrih izmjena.
 
 Kliknite 'nazad' ('back') dugme vašeg preglednika da se vratite na polje za unos teksta.",
-	'captcha-addurl-whitelist' => ' #<!-- ostavite ovaj red onakav kakav je --> <pre>
+	'captcha-addurl-whitelist-confirm-edit' => ' #<!-- ostavite ovaj red onakav kakav je --> <pre>
 # Sintaksa je slijedeća:
 #  * Sve od znaka "#" do kraja reda je komentar
 #  * Svaki neprazni red je regex fragment koji će odgovarati samo domaćinima unutar URLova
@@ -629,7 +629,7 @@ Malauradament, aquest sistema pot suposar un inconvenient per a usuaris amb prob
 Necessitareu tenir les galetes (''cookies'') activades al vostre navegador per a realitzar aquestes accions.
 
 Cliqueu el botó de retrocedir del vostre navegador per a tornar al formulari.",
-	'captcha-addurl-whitelist' => " #<!-- deixeu aquesta línia tal com està --> <pre>
+	'captcha-addurl-whitelist-confirm-edit' => " #<!-- deixeu aquesta línia tal com està --> <pre>
 # La sintaxi és la següent:
 #  * Totes les línies que comencen amb un # son considerades comentaris
 #  * Tota línia no buida és un fragment d'expressió regular (regexp) que enllaçarà amb els hosts de les URL
@@ -679,7 +679,7 @@ Někdy, zvláště při přidávání nových webových odkazů, vám může wik
 Bohužel to však může představovat nepříjemný problém pro uživatele se zrakovým postižením či uživatele používající textové prohlížeče či hlasové čtečky. V současné době nemáme alternativní zvukovou verzi. Kontaktujte laskavě [[{{MediaWiki:Grouppage-sysop}}|správce serveru]], pokud vám to brání v užitečných příspěvcích a potřebujete pomoc.
 
 Pro návrat na předchozí stránku stiskněte ve svém prohlížeči tlačítko „zpět“.',
-	'captcha-addurl-whitelist' => ' #<!-- Nechte tento řádek přesně tak jak je --> <pre>
+	'captcha-addurl-whitelist-confirm-edit' => ' #<!-- Nechte tento řádek přesně tak jak je --> <pre>
 # Syntaxe je následující:
 #  * Všechno od znaku „#“ do konce řádku je komentář
 #  * Každý neprázdný řádek je fragment regulárního výrazu, který se aplikuje pouze na název stroje v URL
@@ -712,7 +712,7 @@ Ar hyn o bryd nid oes fersiwn sain ar gael.
 Cysylltwch â [[{{MediaWiki:Grouppage-sysop}}|gweinyddwyr y safle]] os ydi'r nodwedd hon yn eich rhwystro rhag ychwanegu golygiadau dilys.
 
 Gwasgwch botwm 'nôl' eich porwr er mwyn dychwelyd at y dudalen golygu.",
-	'captcha-addurl-whitelist' => '#<!-- leave this line exactly as it is --> <pre>
+	'captcha-addurl-whitelist-confirm-edit' => '#<!-- leave this line exactly as it is --> <pre>
 #
 # Dyma\'r gystrawen:
 #   * Mae popeth o nod "#" hyd at ddiwedd y llinell yn sylwad
@@ -748,7 +748,7 @@ I visse tilfælde, specielt når der tilføjes nye links til denne wiki, vil sof
 Desværre kan dette medføre problemer for svagtseende brugere, og brugere der bruger software der oplæser indholdet af siden. For øjeblikket findes der ikke et lydbaseret alternativ. Kontakt venligst en [[{{MediaWiki:Grouppage-sysop}}|administrator]] med henblik på at få hjælp, hvis dette forhindrer tilføjelsen af godartet materiale.
 
 Tryk på 'tilbage'-knappen i din browser for at returnere til redigeringssiden.",
-	'captcha-addurl-whitelist' => ' #<!-- Undlad at rette denne linie --> <pre>
+	'captcha-addurl-whitelist-confirm-edit' => ' #<!-- Undlad at rette denne linie --> <pre>
 # Vejledning:
 #   * Alt fra et "#"-tegn til slutningen af en linie er en kommentar
 #   * Alle ikke-blanke linier benyttes som regulært udtryk, der anvendes på hostnavne i URLer
@@ -789,7 +789,7 @@ Leider kann dies zu Schwierigkeiten für Personen führen, die über eine einges
 Bitte kontaktiere einen [[{{MediaWiki:Grouppage-sysop}}|Administratoren]] für weitere Hilfe, wenn dies es unmöglich macht, erwünschte Bearbeitungen vorzunehmen.
 
 Der „Zurück“-Knopf des Browsers führt zurück zum Bearbeitungsfenster.',
-	'captcha-addurl-whitelist' => ' #<!-- Diese Zeile darf nicht verändert werden! --> <pre>
+	'captcha-addurl-whitelist-confirm-edit' => ' #<!-- Diese Zeile darf nicht verändert werden! --> <pre>
 #  Syntax:
 #   * Alles von einem #-Zeichen bis zum Ende der Zeile ist ein Kommentar
 #   * Jede nicht-leere Zeile ist ein Regex-Fragment, das gegenüber den Hostnamen einer URL geprüft wird
@@ -854,7 +854,7 @@ Nika ma da sistemê vengî cinoke ti ra vaci resim da kamci cekuyan esto.
 Ma rica keno ti yew [[{{MediaWiki:Grouppage-sysop}}|idarekar]] ra yew mesaj bişavî u o ra yardim bivaci eka ti yew linkê hewlî darnone.
 
 Browser xo de goceke 'back' rê klik bike şo pela editorî.",
-	'captcha-addurl-whitelist' => '  #<!-- leave this line exactly as it is --> <pre>
+	'captcha-addurl-whitelist-confirm-edit' => '  #<!-- leave this line exactly as it is --> <pre>
 #Sîntaks ze ena yo: 
 #  * Nişanê "#" ra nişanê ke bînê xetî de pêran piya xulasa yo
 #  * Her xetî ke veng niyo fragmento regex u teyna URLan de hostan match keno
@@ -890,7 +890,7 @@ Tuchylu njamamy awdioalternatiwu.
 Staj se pšosym z [[{{MediaWiki:Grouppage-sysop}}|administratorami sedła]] z pšosbu wó pomoc do zwiska, jolic to śi njewócakane  zawobarujo słanje legitimnych pśinoskow.
 
 Klikni na tłocašk "Slědk" we swójom wobglědowaku, aby wróśił k bokowemu editoroju.',
-	'captcha-addurl-whitelist' => ' #<!-- wóstaj toś tu smužku rowno ako jo --> <pre>
+	'captcha-addurl-whitelist-confirm-edit' => ' #<!-- wóstaj toś tu smužku rowno ako jo --> <pre>
  # Syntaksa jo ako slědujo:
  #  * Wšykno wót znamuška "#" ku kóńcoju smužki jo komentar
  #  * Kužda smužka, kótaraž njejo prozna, jo fragment regularnego wuraza, kótaryž nastupa jano hostam w URL
@@ -938,7 +938,7 @@ $messages['el'] = array(
 Δυστυχώς αυτό μπορεί να ενοχλήσει τους χρήστες περιορίζοντας το όραμα τους ή αυτούς που βασίζονται στο κείμενο ή στην ομιλία που βασίζεται στις μηχανές αναζήτησης. Προς το παρόν δεν έχουμε μια διαθέσιμη εναλλακτική λύση. Παρακαλώ ελάτε σε επαφή με τους [[{{MediaWiki:Grouppage-sysop}}|διαχειριστές]] των σελίδων για βοήθεια, εάν αυτό σας αποτρέπει απροσδόκητα από την παραγωγή των νόμιμων επεξεργασιών.
 
 Πατήστε το κουμπί 'πίσω' στη μηχανή αναζήτησης σας για να επιστρέψετε στο συντάκτη σελίδων.",
-	'captcha-addurl-whitelist' => '  #<!-- αφήστε αυτή την γραμμή ακριβώς όπως είναι --> <pre>
+	'captcha-addurl-whitelist-confirm-edit' => '  #<!-- αφήστε αυτή την γραμμή ακριβώς όπως είναι --> <pre>
 # Η σύνταξη είναι όπως παρακάτω:
 #  * Οτιδήποτε από ένα χαρακτήρα "#" ως το τέλος της γραμμής είναι ένα σχόλιο
 #  * Κάθε μη κενή γραμμή είναι μια έκφραση regex που θα ταιριάζει μόνο hosts μέσα σε URL
@@ -1011,7 +1011,7 @@ Bedaŭrinde, ĉi tio eble ĝenetos uzantojn kun malbona vidkapablo kiu utiligas 
 Bonvolu kontakti la [[{{MediaWiki:Grouppage-sysop}}|administrantojn de la retejo]] por helpo se ĉi tio malebligas al vi fari bonan aldonon.
 
 Klaku la 'reiru' butonon en via retumilo por reiri al la paĝo-redaktilo.",
-	'captcha-addurl-whitelist' => ' #<!-- ne ŝanĝu ĉi tiun linion iel ajn --> <pre>
+	'captcha-addurl-whitelist-confirm-edit' => ' #<!-- ne ŝanĝu ĉi tiun linion iel ajn --> <pre>
 # Sintakso estas jen:
 #  * Ĉio ekde "#" signo al la fino de linio estas komento
 #  * Ĉiu linio ne malplena estas ero de regex kiu kongruos retnodojn nur ene de ttt-adresoj
@@ -1053,7 +1053,7 @@ En este momento no tenemos una alternativa de audio disponible.
 Por favor contacte a los  [[{{MediaWiki:Grouppage-sysop}}|administradores del sitio]] para asistencia si esto está impidiendiendo inesperadamente que hagas mensajes legítimos.
 
 Presione el botón 'atrás' en su navegador para retornar al editor de página.",
-	'captcha-addurl-whitelist' => ' #<!-- deje esta línea exactamente como está --> <pre>
+	'captcha-addurl-whitelist-confirm-edit' => ' #<!-- deje esta línea exactamente como está --> <pre>
 # La sintaxis es la siguiente:
 #  * Todo desde un caracter "#" hasta el final de la línea es un comentario
 #  * Toda línea que no esté en blanco es un fragmento de expresión regular que se comparará con las URLs
@@ -1089,7 +1089,7 @@ Kahjuks võib see tekitada ebamugavusi nägemisraskustega inimestele või neile,
 Kui sul tekib raskusi muudatuste tegemisel, võta palun ühendust selle võrgukoha [[{{MediaWiki:Grouppage-sysop}}|administraatoritega]].
 
 Konto registreerimise lehele või redigeerimisaknasse tagasi jõudmiseks klõpsa veebilehitseja tagasi-nuppu.',
-	'captcha-addurl-whitelist' => '  #<!-- Jäta see rida muutmata kujule. --> <pre>
+	'captcha-addurl-whitelist-confirm-edit' => '  #<!-- Jäta see rida muutmata kujule. --> <pre>
 # Süntaks:
 #  * Kõik alates märgist "#" kuni rea lõpuni on kommentaar
 #  * Iga rida, mis ei ole tühi, on regulaaravaldise osa, milleks sobib internetiaadressi osadest ainult hostinimi
@@ -1151,7 +1151,7 @@ $messages['fa'] = array(
 در حال حاضر ما جایگزین صوتی‌ای برای این کار نداریم. لطفاً اگر برای واردساختن پیوندهای مشروع دچار مشکل شده‌اید با [[{{MediaWiki:Grouppage-sysop}}|مدیران این تارنما]] تماس بگیرید.
 
 دکمهٔ «بازگشت» را در مرورگر خود فشار دهید تا به صفحهٔ ویرایش بازگردید.',
-	'captcha-addurl-whitelist' => ' #<!-- این سطر را همان‌گونه که هست رها کنید --> <pre>
+	'captcha-addurl-whitelist-confirm-edit' => ' #<!-- این سطر را همان‌گونه که هست رها کنید --> <pre>
 # قواعد به این شکل است:
 #  * همه‌چیز از «#» تا آخر سطر یک توضیح در نظر گرفته می‌شود.
 #  * هر سطری که خالی نباشد یک قطعه در نظر گرفته می‌شود که فقط با نام میزبان اینترنتی سنجیده می‌شود.
@@ -1188,7 +1188,7 @@ Valitettavasti tämä saattaa estää käyttäjiä, joilla on rajoittunut näkö
 Varmistus ei toimi, jos evästeet eivät ole käytössä.
 
 Voit palata muokkaustilaan selaimen paluutoiminnolla.',
-	'captcha-addurl-whitelist' => ' #<!-- leave this line exactly as it is --> <pre>
+	'captcha-addurl-whitelist-confirm-edit' => ' #<!-- leave this line exactly as it is --> <pre>
 # Syntaksi on seuraava:
 #  * Kaikki #-merkistä eteenpäin on kommenttia
 #  * Jokainen ei-tyhjä rivi on säännöllisen lausekkeen osa, joka suoritetaan vain linkeissä esiintyville verkkonimille.
@@ -1248,7 +1248,7 @@ Malheureusement, cette solution peut gêner les utilisateurs malvoyants ou qui u
 Veuillez contacter [[{{MediaWiki:Grouppage-sysop}}|les administrateurs du site]] si cela vous empêche de façon inattendue de faire des contributions légitimes.
 
 Cliquez sur le bouton « Précédent » de votre navigateur pour revenir à la page de modification.',
-	'captcha-addurl-whitelist' => ' #<!-- laissez cette ligne exactement telle quelle --><pre>
+	'captcha-addurl-whitelist-confirm-edit' => ' #<!-- laissez cette ligne exactement telle quelle --><pre>
 # La syntaxe est la suivante :
 #  * Tout caractère depuis « # » jusqu’à la fin de la ligne est interprété comme un commentaire.
 #  * Toute ligne non vide est un fragment d’expression rationnelle qui ne correspondra qu’aux hôtes dans les liens hypertextes.
@@ -1284,7 +1284,7 @@ Por lo moment, nos avens gins d’altèrnativa ôdiô.
 Vos volyéd veriér vers los [[{{MediaWiki:Grouppage-sysop}}|administrators du seto]] se cen vos empache de façon emprèvua de fâre des contribucions lèg·itimes.
 
 Clicâd sur lo boton « Devant » de voutron navigator por tornar a la bouèta d’èdicion.',
-	'captcha-addurl-whitelist' => ' #<!-- lèssiéd ceta legne justo d’ense --> <pre>
+	'captcha-addurl-whitelist-confirm-edit' => ' #<!-- lèssiéd ceta legne justo d’ense --> <pre>
 # La sintaxa est ceta :
 #  * Tot caractèro dês « # » tant qu’a la fin de la legne est considèrâ coment un comentèro.
 #  * Tota legne pas voueda est un bocon d’èxprèssion racionèla (*RegEx*) qu’analiserat ren que los hôtos dedens los lims hipèrtèxtos.
@@ -1364,7 +1364,7 @@ Polo de agora non dispoñemos dunha alternativa de son.
 Por favor, póñase en contacto cun [[{{MediaWiki:Grouppage-sysop}}|administrador do sitio]] para solicitar axuda se o sistema lle impide rexistrarse para facer contribucións lexítimas.
 
 Prema no botón "Atrás" do seu navegador para volver á páxina de edición.',
-	'captcha-addurl-whitelist' => ' #<!-- Deixe esta liña tal e como está --> <pre>
+	'captcha-addurl-whitelist-confirm-edit' => ' #<!-- Deixe esta liña tal e como está --> <pre>
 # A sintaxe é a seguinte:
 #   * Todo o que vaia despois dun carácter "#" ata o final da liña é un comentario
 #   * Toda liña que non estea en branco é un fragmento de expresión regular que só coincide con dominios dentro de enderezos URL
@@ -1407,7 +1407,7 @@ Im Momänt hän mir kei Audioalternative z Verfiegig.
 Bitte nimm Kontakt uf zum [[{{MediaWiki:Grouppage-sysop}}|Syteadministrator]] fir Unterstitzig wänn des Di uuerwartet abhaltet vu berächtigte Byyträg.
 
 Ins Bearbeitigsfänschter chunnt mer derno eifach wider mit em „Zruck“-Chnopf.',
-	'captcha-addurl-whitelist' => ' #<!-- Die Zyyle derf nit gänderet wäre! --> <pre>
+	'captcha-addurl-whitelist-confirm-edit' => ' #<!-- Die Zyyle derf nit gänderet wäre! --> <pre>
 #  Syntax:
 #   * Alles vun eme #-Zeiche bis zum Änd vu dr Zyyle isch e Kommentar
 #   * Jedi nit-lääri Zyyle isch e Regex-Fragment, wu gegeniber dr dr Hostnäme vun ere URL prieft wird
@@ -1442,7 +1442,7 @@ $messages['gu'] = array(
 કમભાગ્યે આ પદ્ધતિ, એવા લોકોને તકલિફ આપે તેમ છે જેઓની દૃષ્ટિ નબળી છે અથવાતો જેઓ વાચા આધારીત કે સાદા બ્રાઉઝરનો ઉપયોગ કરે છે. હાલમા અમારી પાસે આવા ચિત્રોની વાચા આધારિત વ્યવસ્થા નથી. જો આ કારણે આપ કોઇ લેખમાં પ્રદાન ન કરી શકતા હોવ તો વધુ સહાય માટે કૃપા કરી [[{{MediaWiki:Grouppage-sysop}}|site administrators]] નો સંપર્ક સાધો.
 
 લેખમા ફેરફાર કરવાના પાના ઉપર પાછા ફરવા માટે આપના બ્રાઉઝરના 'બેક' બટન ઉપર ક્લિક કરો.",
-	'captcha-addurl-whitelist' => ' #<!-- આ લીટીને જેમ છે તેમ જ રહેવા દો --> <pre>
+	'captcha-addurl-whitelist-confirm-edit' => ' #<!-- આ લીટીને જેમ છે તેમ જ રહેવા દો --> <pre>
 # સીન્ટેક્સ (Syntax) આ પ્રમાણે છે :
 #  * "#" સંજ્ઞાથી શરૂ કરીને લીટીના અંત સુધીનું વર્ણન એક ટીપ્પણી છે
 #  * ખાલી ન હોય તેવી દરેક લીટી રેજેક્સનો ભાગ છે, જે ફક્ત URLsમાંના હોસ્ટ સાથે જ મેળ ખાશે
@@ -1480,7 +1480,7 @@ $messages['he'] = array(
 אנא צרו קשר עם [[{{MediaWiki:Grouppage-sysop}}|מפעילי המערכת]] כדי לקבל עזרה אם המערכת מונעת מכם באופן בלתי צפוי לבצע עריכות לגיטימיות.
 
 לחצו על הכפתור \'חזור\' בדפדפן שלכם כדי לחזור לדף העריכה.',
-	'captcha-addurl-whitelist' => ' #<!-- יש להשאיר שורה זו בדיוק כפי שהיא כתובה --> <pre>
+	'captcha-addurl-whitelist-confirm-edit' => ' #<!-- יש להשאיר שורה זו בדיוק כפי שהיא כתובה --> <pre>
 # זהו תחביר ההודעה:
 #   * כל דבר בשורה שנכתב לאחר סימן "#" הוא הערה
 #   * כל שורה לא ריקה היא ביטוי רגולרי שיתאים לאתרים בכתובות URL
@@ -1516,7 +1516,7 @@ $messages['hi'] = array(
 यदि इसकी वजह से आपको वैध लेख लिखने में अवरोध आ रहा हो तो कृपया सहायता के लिए [[{{MediaWiki:Grouppage-sysop}}|स्थल प्रबंधकों]] से संपर्क करें।
 
 पन्ना संपादन पर वापस जाने के लिए अपने विचरक पर 'एक पृष्ठ पीछे जाएँ' वाली कुंजी का प्रयोग करें।",
-	'captcha-addurl-whitelist' => ' #<!-- leave this line exactly as it is --> <pre>
+	'captcha-addurl-whitelist-confirm-edit' => ' #<!-- leave this line exactly as it is --> <pre>
 # इसकी रुपरेषा इस प्रकार हैं:
 #  * "#" से शुरु होनेवाली सभी लाईनें टिप्पणीयाँ हैं।
 #  * हर अन्य लाईन regex fragment हैं जो सिर्फ URL के होस्टस्‌ को जोडता हैं
@@ -1555,7 +1555,7 @@ Na žalost, ovo može biti nepristupačno za suradnike koji koriste tekstualne k
 Molimo obratite se [[{{MediaWiki:Grouppage-sysop}}|administratorima]] za pomoć, ukoliko Vas ovo ometa pri dodavanju važećih sadržaja.
 
 Pritisnite u svom pregledniku 'nazad' kako bi se vratili na uređivač stranice.",
-	'captcha-addurl-whitelist' => ' #<!-- leave this line exactly as it is --> <pre>
+	'captcha-addurl-whitelist-confirm-edit' => ' #<!-- leave this line exactly as it is --> <pre>
 # Rabi se slijedeća sintaksa:
 #   * Sve od "#" znaka do kraja linije je komentar
 #   * Svaki neprazni redak je regularni izraz (regex) koji odgovara poslužitelju unutar URL-a
@@ -1589,7 +1589,7 @@ Tuchwilu njedisponujemy wo awdioalternatiwje.
 Prošu staj so z [[{{MediaWiki:Grouppage-sysop}}|administratorami sydła]] z prostwu wo pomoc do zwiska, jeli to će haći legitimne powěsće pósłać.
 
 Klikń na tłócatko "Wróćo" w swojim wobhladowaku, zo by so k editorej wróćił.',
-	'captcha-addurl-whitelist' => ' #<!-- leave this line exactly as it is --> <pre>
+	'captcha-addurl-whitelist-confirm-edit' => ' #<!-- leave this line exactly as it is --> <pre>
 # Syntaksa je slědowaca:
 # * Wšo wot znamješka "#" hač do kónca linky je komentar
 # * Kóžda popisana linka je fragment regex (regularneho wuraza) kotryž so z mjenom hosta wěsteje URL přirunuje
@@ -1634,7 +1634,7 @@ Az ilyen linkek kézi eltávolítása rengeteg energiát emésztene fel, ezért 
 Sajnos ez komoly kényelmetlenséget jelenthet azoknak a felhasználóknak, akik gyengén látnak, vagy szöveges/hang-alapú böngészőt használnak. Jelenleg nem tudunk hang-alapú alternatívával szolgálni; ha a captcha megakadályoz abban, hogy szerkeszd a wikit, vedd fel a kapcsolatot az [[{{MediaWiki:Grouppage-sysop}}|adminisztrátorokkal]].
 
 Ha a captcha megoldása helyett inkább visszatérnél a szöveg szerkesztéséhez, használd a böngésződ „vissza” gombját.',
-	'captcha-addurl-whitelist' => ' #<!-- ezt a sort hagyd pontosan így --> <pre>
+	'captcha-addurl-whitelist-confirm-edit' => ' #<!-- ezt a sort hagyd pontosan így --> <pre>
 # A szintaktika a következő:
 #  * Minden „#” karakterrel kezdődő sor megjegyzés
 #  * Minden nem üres sor egy reguláris kifejezés darabja, amely csak az URL-ekben található kiszolgálókra keres
@@ -1670,7 +1670,7 @@ Al momento nos non dispone de un alternativa audio.
 Per favor contacta le [[{{MediaWiki:Grouppage-sysop}}|administratores del sito]] pro assistentia si isto insperatemente te impedi de facer contributiones legitime.
 
 Clicca le button 'retro' in tu navigator pro retornar al pagina de modification.",
-	'captcha-addurl-whitelist' => ' #<!-- non modificar in alcun modo iste linea --> <pre>
+	'captcha-addurl-whitelist-confirm-edit' => ' #<!-- non modificar in alcun modo iste linea --> <pre>
 # Le syntaxe es lo sequente:
 #  * Toto a partir de un character "#" usque al fin del linea es un commento
 #  * Omne linea non vacue es un fragmento regex applicabile solmente a nomines de host intra adresses URL
@@ -1710,7 +1710,7 @@ Saat ini, kami belum memiliki suatu alternatif suara untuk hal ini.
 Silakan hubungi [[{{MediaWiki:Grouppage-sysop}}|pengurus]] untuk meminta bantuan jika hal ini menghambat Anda untuk mengirimkan suntingan yang layak.
 
 Tekan tombol 'back' di penjelajah web Anda untuk kembali ke halaman penyuntingan.",
-	'captcha-addurl-whitelist' => ' #<!-- biarkan baris ini sebagaimana adanya --> <pre>
+	'captcha-addurl-whitelist-confirm-edit' => ' #<!-- biarkan baris ini sebagaimana adanya --> <pre>
 # Sintaksisnya adalah sebagai berikut:
 #   * Semua yang diawali dengan karakter "#" hingga akhir baris adalah komentar
 #   * Semua baris yang tidak kosong adalah fragmen regex yang hanya akan dicocokkan dengan nama host di dalam URL
@@ -1746,7 +1746,7 @@ Awan pay tatta ti mangeg a pagpilian a mabalin a gun-oden.
 Pangngaasi a kontaken ti [[{{MediaWiki:Grouppage-sysop}}|administrador ti pagsaadan]] para iti pannulong no daytoy ket saan a napadpadaanan a pawilan na ti agpayso a pinagbaplaak mo.
 
 Peslen ti 'agsubli' a buton dita pagbasabasam (browser) ti agsubli idiay panid ti pinagurnos.",
-	'captcha-addurl-whitelist' => ' #<!-- baybayam nga kasta daytoy nga linia --> <pre>
+	'captcha-addurl-whitelist-confirm-edit' => ' #<!-- baybayam nga kasta daytoy nga linia --> <pre>
 # Dagiti sumaganad a gramatika:
 #   * Amin-amin a naggapu iti "#" a kabalinan inggana ti kalpasan ti linia ket komentario
 #   * Amin a saan a blanko a linia ket regex fragment a mangipada laeng ti naggapuan a nagsangailian iti uneg ti URLs
@@ -1807,7 +1807,7 @@ In alcuni casi, ad esempio quando si tenta di aggiungere nuovi collegamenti Web 
 Sfortunatamente, queste misure di sicurezza possono mettere in difficoltà gli utenti con problemi visivi o coloro che utilizzano browser testuali o basati sulla sintesi vocale. Purtroppo al momento non è disponibile un meccanismo alternativo basato su messaggi audio; se queste procedure impediscono l'inserimento informazioni che si ritengono legittime, si prega di contattare gli [[{{MediaWiki:Grouppage-sysop}}|amministratori del sito]] e chiedere loro assistenza.
 
 Fare clic sul pulsante 'back' del browser per tornare alla pagina di modifica.",
-	'captcha-addurl-whitelist' => ' #<!-- non modificare in alcun modo questa riga --> <pre>
+	'captcha-addurl-whitelist-confirm-edit' => ' #<!-- non modificare in alcun modo questa riga --> <pre>
 # La sintassi è la seguente:
 #  * Tutto ciò che segue un carattere "#" è un commento, fino al termine della riga
 #  * Tutte le righe non vuote sono frammenti di espressioni regolari che si applicano al solo nome dell\'host nelle URL
@@ -1847,7 +1847,7 @@ $messages['ja'] = array(
 正当な投稿をするにあたって本機能が障害となっている場合、[[{{MediaWiki:Grouppage-sysop}}|サイト管理者]]に連絡して協力を求めてください。
 
 ページの編集に戻るには、ブラウザの「戻る」ボタンを押してください。',
-	'captcha-addurl-whitelist' => ' #<!-- この行は変更しないでください --> <pre>
+	'captcha-addurl-whitelist-confirm-edit' => ' #<!-- この行は変更しないでください --> <pre>
 # 構文は以下の通りです:
 #  * "#"文字から行末まではコメントとして扱われます
 #  * 空白を含まない行は、URLに含まれるホスト名との一致を検出する正規表現です
@@ -1876,7 +1876,7 @@ I visse tilfælde, specielt når der tilføjes nye links til denne wiki, vil sof
 Desværre kan dette medføre problemer for svagtseende brugere, og brugere der bruger software der oplæser indholdet af siden. For øjeblikket findes der ikke et lydbaseret alternativ. Kontakt venligst en administrator med henblik på at få hjælp, hvis dette forhindrer tilføjelsen af godartet materiale.
 
 Tryk på 'tilbage'-knappen i din browser for at returnere til redigeringssiden.",
-	'captcha-addurl-whitelist' => ' #<!-- Undlad at rette denne linie --> <pre>
+	'captcha-addurl-whitelist-confirm-edit' => ' #<!-- Undlad at rette denne linie --> <pre>
 # Vejledning:
 #  * Alt fra et "#"-tegn til slutningen af en linie er en kommentar
 #  * Alle ikke-blanke linier benyttes som regulært udtryk, der anvendes på hostnavne i URLer
@@ -1906,7 +1906,7 @@ Amerga pagawéyan iki angèl diotomatisasi, pawatesan iki bisa ngidinaké mèh k
 Émané, perkara iki bisa nggawé sawetara panganggo kangélan nyunting kaca iki, utamané sing daya pandelengané kurang utawa para panganggo sing nganggo panjlajah tèks adhedhasar tèks utawa swara. Saiki iki awaké dhéwé ora duwé alternatif audio kanggo iki. Mangga nyuwun pitulung karo [[{{MediaWiki:Grouppage-sysop}}|para pangurus]] yèn perkara iki menggak panjenengan ngirimaké suntingan sing layak.
 
 Pencèten tombol 'back' ing panjlajah wèb panjenengan kanggo bali menyang kaca panyuntingan.",
-	'captcha-addurl-whitelist' => ' #<!-- leave this line exactly as it is --> <pre>
+	'captcha-addurl-whitelist-confirm-edit' => ' #<!-- leave this line exactly as it is --> <pre>
 # Sintaksisé kaya mengkéné:
 #  * Kabèh sing diawali mawa karakter "#" nganti pungkasané baris iku komentar
 #  * Kabèh garis sing ora kosong iku fragmèn regex sing namung cocog karo jeneng host sajroning URL
@@ -1943,7 +1943,7 @@ $messages['ka'] = array(
 გთხოვთ, თუ მსგავსი შემოწმება ხელს გიშლით საიტზე კეთილსინდისიერ მუშაობაში, დახმარებისათვის მიმართეთ [[{{MediaWiki:Grouppage-sysop}}|ადმინისტრატორებს]].
 
 თქვენ ბრაუზერში დააჭირეთ ღილაკს „უკან“, რათა დაუბრუნდეთ რედაქტირებას.',
-	'captcha-addurl-whitelist' => ' #<!-- leave this line exactly as it is --> <pre>
+	'captcha-addurl-whitelist-confirm-edit' => ' #<!-- leave this line exactly as it is --> <pre>
 # სინტაქსის აღწერა:
 #  * ყველაფერი, დაწყებული "#" სიმბოლოდან - ხაზის ბოლომდე ითვლება კომენტარად
 #  * ყველა არაცარიელი ხაზი ითვლება URL-ში კვანძის შესაბამისი სახელის რეგულარული გამონათქვამის ფრაგმენტად
@@ -2078,7 +2078,7 @@ $messages['ko'] = array(
 웹 브라우저에서 그림을 완벽하게 표시할 수 없거나, 그림이 나오지 않는 텍스트 방식이나 음성 합성 방식 웹 브라우저를 사용하는 경우에는 이러한 입력이 불가능합니다. 아직까지는 이런 경우에 대한 대안이 없습니다. 이 경우 [[{{MediaWiki:Grouppage-sysop}}|사이트 관리자]]에게 도움을 요청해 주세요.
 
 이전 화면으로 돌아가려면 웹 브라우저의 ‘뒤로’ 버튼을 눌러 주세요.',
-	'captcha-addurl-whitelist' => ' #<!-- leave this line exactly as it is --> <pre>
+	'captcha-addurl-whitelist-confirm-edit' => ' #<!-- leave this line exactly as it is --> <pre>
 # 문법은 다음과 같습니다:
 #  * "#"로 시작하는 줄은 주석입니다.
 #  * 빈 줄이 아닌 줄은 정규식으로, URL의 호스트만을 검사합니다.
@@ -2128,7 +2128,7 @@ Schaad es, mer hann noch keine Wääsh, dat met Shprooch odder sönswi ze maache
 wann Ühr Probbleme hatt. Do weed_Üch jehollfe weede.
 
 Jetz kanns De met Dingem Brauser singem „Zeröck“-Knopp wigger maache, wo De fürher woohß.',
-	'captcha-addurl-whitelist' => ' #<!-- Lohß di Reih he jenou esu wi se es --> <pre>
+	'captcha-addurl-whitelist-confirm-edit' => ' #<!-- Lohß di Reih he jenou esu wi se es --> <pre>
 # Dä Opbou es:
 # * Alles fun enem #-Zeiche bes an et Engk fun ene Reih es ene Kommentaa för de Minsche
 # * Jede Reih met jet dren es en Stöck regular Expression, wat Domains en URL treffe kann
@@ -2175,7 +2175,7 @@ Zu dësem Zäitpunkt hu mir leider keng audio-Alternativ zu eiser Verfügung.
 Kontaktéiert w.e.g. [[{{MediaWiki:Grouppage-sysop}}|een Administrateur]] fir Hëllef wann dëst iech onerwaarter Wäis vu legitimen Editen ofhält.
 
 Dréckt op den 'Zréck' Knäppche vun ärem Browser fir an d'Beaarbechtungsfënster zréckzekommen.",
-	'captcha-addurl-whitelist' => '  #<!-- Dës Linn onverännert loossen --> <pre>
+	'captcha-addurl-whitelist-confirm-edit' => '  #<!-- Dës Linn onverännert loossen --> <pre>
 #  Syntax:
 #  * Alles vun engem #-Zeechen u bis zum Enn vun där Zeil ass eng Bemierkung
 #  * All Zeil déi net eidel ass, ass ee Regex-Fragment, dat nëmme mat Hosten bannent URLë fonctionnéiert
@@ -2207,7 +2207,7 @@ Soms, en in het bijzonder bij het toevoegen van externe links op pagina's, toont
 Helaas levert deze bevestiging voor gebruikers met een visuele handicap of een tekst- of spraakgebaseerde browser problemen op. Op het moment is er geen alternatief met geluid beschikbaar. Vraag alstublieft assistentie van de [[{{MediaWiki:Grouppage-sysop}}|sitebeheerders]] als dit proces u verhindert een nuttige bijdrage te leveren.
 
 Klik óppe 'trök'-knoep in uw browser om terug te gaan naar het tekstbewerkingsscherm.",
-	'captcha-addurl-whitelist' => ' #<!-- laot deze regel --> <pre>
+	'captcha-addurl-whitelist-confirm-edit' => ' #<!-- laot deze regel --> <pre>
 # De syntaxis is as volgt:
 #  * Alle tekst vanaaf \'t karakter "#" tot het einde van de regels wordt gezien als opmerking
 #  * Iedere niet-lege regel is een fragment van een reguliere uitdrukking die alleen van toepassing is op hosts binnen URL\'s
@@ -2296,7 +2296,7 @@ $messages['mk'] = array(
 Контактирајте ги [[{{MediaWiki:Grouppage-sysop}}|администраторите на страната]] за помош доколку ова неочекувано ве спречува во правењето на искрени придонеси. 
 
 Кликнете на копчето „назад“ во вашиот прелисувач за да се вратите на уредувањето на страницата.',
-	'captcha-addurl-whitelist' => '  #<!-- leave this line exactly as it is --> <pre>
+	'captcha-addurl-whitelist-confirm-edit' => '  #<!-- leave this line exactly as it is --> <pre>
 # Опис на синтаксата:
 #  * Сето она што стои по знакот „#“, па до крајот на редот е коментар
 #  * Секој непразен ред се смета за фрагмент од регуларен израз кој одговара само на имиња во URL адреси
@@ -2334,7 +2334,7 @@ $messages['ml'] = array(
 ഇത് ന്യായമായ പ്രസിദ്ധപ്പെടുത്തലുകൾ ഇടുന്നതിൽ നിന്നും അപ്രതീക്ഷിതമായി താങ്കളെ തടയുന്നുവെങ്കിൽ ദയവായി [[{{MediaWiki:Grouppage-sysop}}|സൈറ്റിന്റെ കാര്യനിർവാഹകരെ]] ബന്ധപ്പെടുക.
 
 ബ്രൗസറിലെ 'ബാക്ക്' ബട്ടൺ ഞെക്കിയാൽ താങ്കൾക്ക് താൾ തിരുത്തുവാനുള്ള സംവിധാനത്തിലേയ്ക്ക് മടങ്ങിപ്പോകാവുന്നതാണ്.",
-	'captcha-addurl-whitelist' => ' #<!-- ഈ വരി ഇതുപോലെ തന്നെ നിലനിർത്തുക --> <pre>
+	'captcha-addurl-whitelist-confirm-edit' => ' #<!-- ഈ വരി ഇതുപോലെ തന്നെ നിലനിർത്തുക --> <pre>
 # സിന്റാക്സ് താഴെ കാണുന്ന പ്രകാരമാണ്‌:
 #  * "#" എന്ന അക്ഷരത്തിൽ തുടങ്ങുന്ന എല്ലാ വരികളും കുറിപ്പുകളായിരിക്കും
 #  * ശൂന്യമല്ലാത്ത എല്ലാ വരികളും യു.ആർ.എല്ലിനു അകത്തെ ഹോസ്റ്റുകളുമായി മാത്രം ഒത്തുനോക്കുന്ന റെജെക്സ് ഘടകങ്ങളായിരിക്കും
@@ -2393,7 +2393,7 @@ $messages['mr'] = array(
 कृपया [[{{MediaWiki:Grouppage-sysop}}|संस्थळ प्रचालकांशी]]  या बाबतीत संपर्क करावा.
 
 पृष्ठ संपादनाकडे परत जाण्यासाठी आपल्या ब्राउझरची ’Back' ही कळ दाबा.",
-	'captcha-addurl-whitelist' => ' #<!-- leave this line exactly as it is --> <pre>
+	'captcha-addurl-whitelist-confirm-edit' => ' #<!-- leave this line exactly as it is --> <pre>
 # रुपरेषा खालीलप्रमाणे:
 #  * "#" ने सुरु होणारे व ओळीच्या शेवटपर्यंत जाणारे वाक्य सूचना (Comment) आहे.
 #  * प्रत्येक रिकामी नसलेली ओळ ही regex fragment आहे जी फक्त URLमधील होस्टसच्या जोड्या लावेल
@@ -2430,7 +2430,7 @@ Malangnya perkara ini boleh menyukarkan pengguna yang mengalami masalah pengliha
 Sila hubungi [[{{MediaWiki:Grouppage-sysop}}|pentadbir tapak]] untuk mendapatkan bantuan sekiranya perkara ini menghalang anda daripada membuat sumbangan yang sah.
 
 Sila tekan butang 'back' di pelayar web anda untuk kembali ke laman suntingan.",
-	'captcha-addurl-whitelist' => ' #<!-- jangan ubah baris ini --> <pre>
+	'captcha-addurl-whitelist-confirm-edit' => ' #<!-- jangan ubah baris ini --> <pre>
 # Sintaks:
 #  * Aksara "#" sampai akhir baris diabaikan
 #  * Ungkapan nalar dibaca daripada setiap baris dan dipadankan dengan nama hos sahaja
@@ -2478,7 +2478,7 @@ Noen ganger, særlig hvis du vil legge til nye internettlenker til en side, kan 
 Dessverre finnes det i øyeblikket ikke noe audioalternativ for brukere med begrenset syn som som bruker tekst- eller talebaserte nettlesere. Vennligst kontakt [[{{MediaWiki:Grouppage-sysop}}|administratorene]] hvis denne funksjonen forhindrer deg i å foreta legitime endringer.
 
 Trykk på 'tilbake'-knappen for å komme tilbake til redigeringssiden.",
-	'captcha-addurl-whitelist' => ' #<!-- leave this line exactly as it is --> <pre>
+	'captcha-addurl-whitelist-confirm-edit' => ' #<!-- leave this line exactly as it is --> <pre>
 # Syntaksen er som følger:
 #  * Alle linjer som begynner med «#» er kommentarer
 #  * Alle linjer som ikke er blanke er fragmenter av regulære uttrykk som sjekker verter i URL-er
@@ -2510,7 +2510,7 @@ Dat kann aver ok angahn, dat nu ok Lüüd, de nich so good sehn köönt oder vil
 Opstunns gifft dat noch keen Audio-Alternativ för de Biller. Wenn du mit de Biller nich torechtkummst, denn schriev man an de Administraters vun de sied un beed jem üm Help.
 
 Mit den „Trüch“-Knopp vun dien Browser kummst du trüch na dat Ännerfinster.',
-	'captcha-addurl-whitelist' => ' #<!-- leave this line exactly as it is --> <pre>
+	'captcha-addurl-whitelist-confirm-edit' => ' #<!-- leave this line exactly as it is --> <pre>
 # Op disse Siet staht de Websteden, bi de en Bruker,
 # de nich anmellt is un en ne’en Lenk in de Siet infögen deit,
 # keen Captcha utfüllen mutt.
@@ -2546,7 +2546,7 @@ Voer t antwoord van disse eenvoudige rekensomme in bie t invoervienster
 Soms a'j nieje verwiezingen bie n pagina derop zetten, wö'j evreugen um iets over te tikken of in te vullen. Dit zörgt derveur dat der gien ongewunste verwiezingen eplaotst wörden, umdat dit allenig deur meensen edaon kan wörden en niet deur botgebrukers.
 
 (Klik op de knoppe 'terug' in joew webkieker, um weerumme te gaon naor t tekstbewarkingscharm.)",
-	'captcha-addurl-whitelist' => ' #<!-- laot disse regel zo as t is --> <pre>
+	'captcha-addurl-whitelist-confirm-edit' => ' #<!-- laot disse regel zo as t is --> <pre>
 # De syntaxis is as volgt:
 #  * Alle tekste vanaof t karakter "#" tot t einde van de regels wörden ezien as opmarking
 #  * Alle regels die niet leeg bin, wörden ezien as n reguliere uutdrokking die veur delen van de domein staon.
@@ -2584,7 +2584,7 @@ Op het moment is er geen alternatief met geluid beschikbaar.
 Vraag assistentie van de [[{{MediaWiki:Grouppage-sysop}}|sitebeheerders]] als dit proces u verhindert een nuttige bijdrage te leveren.
 
 Klik op de knop 'terug' in uw browser om terug te gaan naar het tekstbewerkingsscherm.",
-	'captcha-addurl-whitelist' => ' #<!-- laat deze regel zoals hij is --> <pre>
+	'captcha-addurl-whitelist-confirm-edit' => ' #<!-- laat deze regel zoals hij is --> <pre>
 # De syntaxis is als volgt:
 #   * Alle tekst vanaf het karakter "#" tot het einde van de regels wordt gezien als opmerking
 #   * Iedere niet-lege regel is een fragment van een reguliere uitdrukking die alleen van toepassing is op hosts binnen URL\'s
@@ -2617,7 +2617,7 @@ Sidan det er vanskeleg å automatisere denne oppgåva, vil funksjonen sleppe dei
 Diverre finst det i augeblikket ikkje noko lydalternativ for brukarar med nedsett syn som brukar tekst- eller talebaserte nettlesarar.
 Ver venleg å kontakte [[{{MediaWiki:Grouppage-sysop}}|administratorane]] viss denne funksjonen hindrar deg i å gjere skikkelege endringar.
 Trykk på «attende»-knappen for å kome tilbake til endringssida.',
-	'captcha-addurl-whitelist' => ' #<!-- leave this line exactly as it is --> <pre>
+	'captcha-addurl-whitelist-confirm-edit' => ' #<!-- leave this line exactly as it is --> <pre>
 # Syntaksen er slik:
 #  * Alt frå teiknet «#» til enden av lina er ein kommentar
 #  * Alle liner som ikkje er tomme er fragment av regulære uttrykk som sjekkar vertar i URL-ar
@@ -2650,7 +2650,7 @@ Dispausam pas d’alternativa àudio pel moment.
 Contactatz [[{{MediaWiki:Grouppage-sysop}}|los administrators del site]] se aquò vos empacha d'un biais imprevist de postar de contribucions legitimas.
 
 Clicatz sul boton « Precedent » de vòstre navigador per tornar a la pagina de modificacion.",
-	'captcha-addurl-whitelist' => '#<!-- daissatz aquesta linha exactament tala coma es --> <pre> # La sintaxi es la seguenta: # * Tot caractèr seguissent "#" fins a la fin de la linha serà interpretat coma un comentari # * Tota linha non voida es un còde regex que serà utilizat unicament a l\'interior dels ligams hypertext. #</pre> <!-- daissatz aquesta linha exactament tala coma es -->',
+	'captcha-addurl-whitelist-confirm-edit' => '#<!-- daissatz aquesta linha exactament tala coma es --> <pre> # La sintaxi es la seguenta: # * Tot caractèr seguissent "#" fins a la fin de la linha serà interpretat coma un comentari # * Tota linha non voida es un còde regex que serà utilizat unicament a l\'interior dels ligams hypertext. #</pre> <!-- daissatz aquesta linha exactament tala coma es -->',
 	'right-skipcaptcha' => "Acomplís lo desenclavament de las accions de captcha sens dever passar per l'intermediari aqueste darrièr",
 );
 
@@ -2682,7 +2682,7 @@ $messages['or'] = array(
 ଆପଣଙ୍କୁ ଉପଯୁକ୍ତ ଲେଖା ଦେବାରେ ସହଯୋଗ କରିବା ନିମନ୍ତେ ଦୟାକରି [[{{MediaWiki:Grouppage-sysop}}|ସାଇଟ ପରିଛା]]ମାନଙ୍କୁ ଯୋହଗାଯୋଗ କରନ୍ତୁ ।
 
 ଆପଣଙ୍କ ବ୍ରାଉଜରରେ ଥିବା  'back' ଚିପି ପୃଷ୍ଠା ସମ୍ପାଦକକୁ ଲେଉଟିଯାନ୍ତୁ ।",
-	'captcha-addurl-whitelist' => ' #<!—ଏହି ଧାଡ଼ିଟି ଯେମିତି ଅଛି ସେମିତି ଛାଡ଼ି ଦିଅନ୍ତୁ --> <pre>
+	'captcha-addurl-whitelist-confirm-edit' => ' #<!—ଏହି ଧାଡ଼ିଟି ଯେମିତି ଅଛି ସେମିତି ଛାଡ଼ି ଦିଅନ୍ତୁ --> <pre>
 # ତଳେ ସିଣ୍ଟାକ୍ସଟି ଦିଆଗଲା:
 #   * ଧାଡ଼ିର ଶେଷରେ "#" ଚିହ୍ନ ଦିଆଥିବା ସବୁକିଛି ଏକ ମତାମତ
 #   * ପ୍ରତିଟି ଅଣ-ଖାଲି ଧାଡ଼ି ଏକ regex ଖଣ୍ଡ ଯାହା କେବଳ URL ବାହାରେ ଥିବା ହୋଷ୍ଟ ମାନଙ୍କ ସଙ୍ଗେ ମେଲ ଖାଇଥାଏ
@@ -2741,7 +2741,7 @@ Obecnie nie mamy alternatywnego rozwiązania audio.
 Skontaktuj się z [[{{MediaWiki:Grouppage-sysop}}|administratorami strony]] by uzyskać pomoc, jeśli nie możesz z tego powodu dokonywać uprawnionych edycji.
 
 Wciśnij przycisk „wstecz” w przeglądarce by powrócić do edycji strony.',
-	'captcha-addurl-whitelist' => ' #<!-- nie modyfikuj tej linii --> <pre>
+	'captcha-addurl-whitelist-confirm-edit' => ' #<!-- nie modyfikuj tej linii --> <pre>
 # Składnia jest następująca:
 #   * Linie zaczynające się od znaku „#” są komentarzami
 #   * Każda linia, która nie jest pusta, jest wyrażeniem regularnym, które ma pasować do adresu serwera (fragmentu URL)
@@ -2777,7 +2777,7 @@ Dle vire, dzortut quand un a caria dj'anliure esterne neuve ansime a na pàgina,
 Për maleur sossì a peul fastudié j'uetnt ch'a ës-ciàiro nen tant bin, col ch'a dòvro dij navigator mach a test ò pura dij navigator vocaj. Për adess i l'oma nen n'altërnativa disponibila ch'a fasa lese ël test a vos. Për piasì, ch'a contata j'[[{{MediaWiki:Grouppage-sysop}}|aministrator dël sit]] se sossì a dovèissa mai nen lasseje carié dël test ch'a sia legitim (visadì, nen dla reclam).
 
 Ch'a-i bata ansima al boton 'andré' ant sò navigator për torné andré a l'editor dla pàgina.",
-	'captcha-addurl-whitelist' => " #<!-- leave this line exactly as it is --> <pre>
+	'captcha-addurl-whitelist-confirm-edit' => " #<!-- leave this line exactly as it is --> <pre>
 # La sintassi a l'é costa:
 #  * tut lòn ch'a-i ven dapress a un caràter \"#\" (fin-a a la fin dla riga) a l'é mach ëd coment
 #  * minca riga nen veujda a l'é un frament d'espression regolar ch'as dòvra për identifiché j'adrësse dle màchine servente ant j'anliure
@@ -2810,7 +2810,7 @@ $messages['pnb'] = array(
 بدقسمستی نال اے تھوڑی سوچ رکھن والے ورتنوالیاں  یا لکھت ورتن والے یا گل بات والے براؤزر نوں چنگا ناں لگے۔
 ایس ویلے ساڈے کول ایدے تھاں تے ورتیا جان والا آڈیو نئیں۔ مہربانی کرکے  [[{{MediaWiki:Grouppage-sysop}}|site administrators]] نال ملو مدد لئی اگ ایہ اچانک تواڈی ٹھیک ڈاک نوں روکدا اے۔
 بیک بٹن نوں دباؤ اپنے براؤزر چ صفہ لکھاری تک اپڑن لئی۔',
-	'captcha-addurl-whitelist' => ' #<!-- leave this line exactly as it is --> <pre>
+	'captcha-addurl-whitelist-confirm-edit' => ' #<!-- leave this line exactly as it is --> <pre>
 # Syntax is as follows:
 #   * Everything from a "#" character to the end of the line is a comment
 #   * Every non-blank line is a regex fragment which will only match hosts inside URLs
@@ -2857,7 +2857,7 @@ Neste momento, não temos disponível uma alternativa em áudio.
 Por favor, contacte os [[{{MediaWiki:Grouppage-sysop}}|administradores]] para assistência, caso a funcionalidade esteja a impedi-lo de fazer edições legítimas.
 
 Clique o botão 'voltar' do seu browser para voltar à página de edição.",
-	'captcha-addurl-whitelist' => ' #<!-- deixe esta linha exactamente como está --> <pre>
+	'captcha-addurl-whitelist-confirm-edit' => ' #<!-- deixe esta linha exactamente como está --> <pre>
 # A sintaxe é a seguinte:
 #  * Tudo desde um símbolo de cardinal (#) até ao fim da linha é um comentário
 #  * Qualquer linha que não esteja em branco é um fragmento de expressão regular (regex) que será comparado com o servidor das URLs
@@ -2895,7 +2895,7 @@ No momento, não está disponível uma alternativa em áudio.
 Por favor, contate os [[{{MediaWiki:Grouppage-sysop}}|administradores do sítio]] em casos que seja necessária a assistência de alguém para que você possa fazer as suas inserções legítimas.
 
 Pressione o botão 'voltar' de seu navegador para retornar à página de edição.",
-	'captcha-addurl-whitelist' => ' #<!-- deixe este linha exatamente como está --> <pre>
+	'captcha-addurl-whitelist-confirm-edit' => ' #<!-- deixe este linha exatamente como está --> <pre>
 # A sintaxe é a que se segue:
 #  * Tudo desde o caractere "#" até ao fim da linha é um comentário
 #  * Qualquer linha não vazia é um fragmento de regex que irá apenas verificar o servidor dentro das URLs
@@ -2938,7 +2938,7 @@ Din nefericire, această metodă îi poate deranja pe utilizatorii cu probleme v
 Vă rugăm, contactați [[{{MediaWiki:Grouppage-sysop}}|administratorii sitului]] pentru asistență dacă metoda vă oprește de la a face postări legitime.
 
 Apasă butonul „Înapoi” al browserului pentru a te reîntoarce la pagina de editare.',
-	'captcha-addurl-whitelist' => ' #<!-- lăsați această linie așa cum este --> <pre>
+	'captcha-addurl-whitelist-confirm-edit' => ' #<!-- lăsați această linie așa cum este --> <pre>
 # Sintaxa este așa cum urmează:
 #   * Toate liniile care încep cu „#” sunt considerate comentarii
 #   * Toate liniile care nu sunt goale sunt fragmente RegEx care vor găsi doar gazda din interiorul URL-urilor
@@ -2962,7 +2962,7 @@ Pe aiutà a proteggere condre a 'u spam automateche, pe piacere respunne a 'a do
 	'captcha-disabledinapi' => "St'azione ave abbesogne de 'nu captcha, accussì non g'è possibbele eseguirle cu le API.",
 	'captchahelp-title' => 'Aijute pu captcha',
 	'captchahelp-cookies-needed' => "Tu è abbesogne de avè le cookie abbilitate jndr'à 'u browser tune pe sta fatìe.",
-	'captcha-addurl-whitelist' => " #<!-- leave this line exactly as it is --> <pre>
+	'captcha-addurl-whitelist-confirm-edit' => " #<!-- leave this line exactly as it is --> <pre>
 # 'A sindasse jè a cumme segue:
 #   * Ogneccose da 'nu carattere \"#\" 'mbonde a fine d'a linèe jè 'nu commende
 #   * Ogne linèe chiene jè 'nu frammende de regex 'u quale addà sulamende combrondarse cu le host jndr'à l'URL
@@ -3002,7 +3002,7 @@ $messages['ru'] = array(
 Пожалуйста, обратитесь за помощью к [[{{MediaWiki:Grouppage-sysop}}|администраторам]], если подобная проверка мешает вам добросовестно работать с сайтом.
 
 Нажмите кнопку «Назад» в вашем браузере, чтобы вернуться к редактированию.',
-	'captcha-addurl-whitelist' => ' #<!-- leave this line exactly as it is --> <pre>
+	'captcha-addurl-whitelist-confirm-edit' => ' #<!-- leave this line exactly as it is --> <pre>
 # Описание синтаксиса:
 #  * Всё, начиная с символа "#" и до конца строки считается комментарием
 #  * Каждая непустая строка считается фрагментом регулярного выражения соответствующего имени узла в URL
@@ -3033,7 +3033,7 @@ $messages['rue'] = array(
 На жаль тото може представляти неприємный проблем про хоснователїв постиженых зраково ці голосовы чітачкы. В сучасній добі не маєме алтернатівни звукову верзію. Просиме, контактуйте [[{{MediaWiki:Grouppage-sysop}}|адміністратора сервера]], кідь вам то боронить в хосновным вкладї і треба вам поміч.
 
 Про навернутя на попередню сторінку стиснийте у своїм переглядачі клапку „назад“.',
-	'captcha-addurl-whitelist' => ' #<!-- зохабте тот рядок точно так як є --> <pre>
+	'captcha-addurl-whitelist-confirm-edit' => ' #<!-- зохабте тот рядок точно так як є --> <pre>
 # Сінтаксіс є наслїдня:
 #  * Вшытко од знаку „#“ до кінце рядка є коментарь
 #  * Каждый непорожнїй рядок є фраґмент реґуларного выразу, котры ся аплікує лем на назву госта в URL
@@ -3071,7 +3071,7 @@ $messages['sah'] = array(
 Оннук мэһэй таҕыстаҕына бука диэн баалама, биир эмит [[{{MediaWiki:Grouppage-sysop}}|дьаһабылга (администраатарга)]]  этээр, көмөлөһүө.
 
 Көннөрүүгэ төттөрү тиийэргэ браузерыҥ «Назад» тимэҕин баттаа.',
-	'captcha-addurl-whitelist' => ' #<!-- leave this line exactly as it is --> <pre>
+	'captcha-addurl-whitelist-confirm-edit' => ' #<!-- leave this line exactly as it is --> <pre>
 # Синтаксиһын быһаарыыта:
 #  * "#" бэлиэттэн строка бүтүөр дылы барыта хос быһаарыы курдук ааҕыллар
 #  * Хас биирдии кураанах буолбатах строка URL сорҕотун курдук ааҕыллар
@@ -3102,7 +3102,7 @@ Nni tanti casi, p'asèmpiu quannu si voli jùnciri novi lijami Web nti na pàggi
 Pi sfurtuna, stu strataggemma pò mèttiri 'n difficultati a l'utenti ca hannu prubremi di vista o a chiddi ca ùsanu browser testuali o basati supr'a la sìntesi vucali. Purtroppu aoggi non ci sunnu àutri miccanìsimi abbasati supr'a missaggi sunori; si sti pruciduri mpidìsciunu lu nzirimentu di nfurmazzioni ca si pènzanu ca sù liggìttimi, siti prigati di cuntattari [[{{MediaWiki:Grouppage-sysop}}|l'amministraturi dû situ]] e addumannàrini l'assistenza.
 
 Fari clic supra ô buttuni 'back' dû browser pi turnari a la pàggina di mudìfica.",
-	'captcha-addurl-whitelist' => " #<!-- non mudificari 'n nuddu modu sta riga --> <pre>
+	'captcha-addurl-whitelist-confirm-edit' => " #<!-- non mudificari 'n nuddu modu sta riga --> <pre>
 # La sintassi è chista:
 #  * Tuttu chiddu ca veni doppu nu caràtttrt \"#\" è nu cummentu, nzinu a la fini di la riga
 #  * Tutti li righi npn vacanti sunnu frammenti di sprissioni riulari ca s'àpplicanu a lu sulu nomu di l'host ntê URL
@@ -3148,7 +3148,7 @@ $messages['si'] = array(
 මෙය නිසා ඔබට ලිපි ලිවීම දැඩි ලෙස කරදරකාරී වී ඇත්නම් කරුණාකර සහය සඳහා [[{{MediaWiki:Grouppage-sysop}}|අඩවි පරිපාලකයන්]] සම්බන්ධ කරගන්න.
 
 පිටු සකසනයට ආපසු යාම සඳහා ඔබේ වෙබ් පිරික්සකයේ "පසුපසට" බොත්තම තද කරන්න.',
-	'captcha-addurl-whitelist' => '#<!-- මෙම පේළිය මෙලෙසින්ම තිබීමට ඉඩ හරින්න --> <pre>
+	'captcha-addurl-whitelist-confirm-edit' => '#<!-- මෙම පේළිය මෙලෙසින්ම තිබීමට ඉඩ හරින්න --> <pre>
 # වාග් රීතිය පහත පරිදි වේ:
 #   * "#" අක්ෂරයක සිට පේළියක අග දක්වා සියල්ල පරිකථනයක් වේ
 #   * සෑම නො-හිස්  පේළියක්ම, කලාප ලිපිනයන් (URL) තුල සත්කාරකයන් පමණක් ගලපන නිත්ප්‍රකා (නිත්‍ය ප්‍රකාශන) ඛණ්ඩයක් වේ
@@ -3180,7 +3180,7 @@ Niekedy, obzvlášť keď pridávate webové odkazy k článkom, wiki vám môž
 Nanešťastie, môže to byť prekážkou pre používateľov so zrakovým postihnutím alebo tých, ktorí používajú textové alebo hovoriace prehliadače. Momentálne nemáme dostupnú audio zvukovú alternatívu. Kontaktujte prosím [[{{MediaWiki:Grouppage-sysop}}|správcov stránok]] ak vám to neočakávane komplikuje umiestňovanie oprávnených príspevkov.
 
 Stlačením tlačidla „späť“ vo vašom prehliadači sa vrátite do editora stránky.',
-	'captcha-addurl-whitelist' => ' #<!-- leave this line exactly as it is --> <pre>
+	'captcha-addurl-whitelist-confirm-edit' => ' #<!-- leave this line exactly as it is --> <pre>
 # Syntax je nasledovná:
 #   * Všetko od znaku „#“ do konca riadka je komentár
 #   * Každý neprázdny riadok je fragment regulárneho výrazu, ktorého zhody budú iba stroje v rámci URL
@@ -3217,7 +3217,7 @@ Glasovna možnost trenutno še ni na razpolago.
 Če vam to nepričakovano preprečuje legitimno objavo, prosimo, da se obrnete na [[{{MediaWiki:Grouppage-sysop}}|administratorje spletišča]].
 
 Za vrnitev v urejevalnik izberite gumb »nazaj« v vašem brskalniku.',
-	'captcha-addurl-whitelist' => ' #<!-- pustite to vrstico takšno, kot je --> <pre>
+	'captcha-addurl-whitelist-confirm-edit' => ' #<!-- pustite to vrstico takšno, kot je --> <pre>
 # Skladnja je sledeča:
 #   * Vse od znaka »#« do konca vrstice je pripomba
 #   * Vsaka neprazna vrstica je delec regularnega izraza, ki se bo ujemal samo z gostitelji v URL-jih
@@ -3252,7 +3252,7 @@ Ndonjëherë, sidomos kur po hapni një llogari të re apo kur po shtoni lidhje 
 Fatkeqësisht ky lloj sistemi mund të bezdisi përdoruesit me pamje të kufizuar ose ata që përdorin mjete teksti ose shfletues leximi me zë. Tani për tani nuk kemi mundësi për të ofruar një sistem me zë në vend të figurave. Ju lutem lidhuni me [[{{MediaWiki:Grouppage-sysop}}|administruesit]] nëse ky sistem po ju ndalon të jepni kontribute të vlefshme.
 
 Shtypni butonin "prapa" ("back") të shfletuesit tuaj për tu kthyer tek faqja e mëparshme.',
-	'captcha-addurl-whitelist' => ' #<!-- lëreni këtë rresht siç është --> <pre>
+	'captcha-addurl-whitelist-confirm-edit' => ' #<!-- lëreni këtë rresht siç është --> <pre>
 # Sintaksa është si më poshtë:
 #  * Çdo gjë nga simboli "#" deri në fund të rreshtit është koment
 #  * Çdo rresht jo-bosh është një pjesë regex që duhet t\'i përputhet emrat të shërbyesve brenda një URL-i
@@ -3320,7 +3320,7 @@ Spietelk genouch kon dät tou Meelasje foar Persoone fiere, do der minner goud s
 Kontaktier do [[{{MediaWiki:Grouppage-sysop}}|Site-Administratore]] foar Hälpe, wan dit jou Moite rakt bie dät Hoochleeden fon Biedraage.
 
 Klik ap dän 'Tourääch'-Knoop in jou Browser uum ätter dän Sieden-Editor touräächtougungen.",
-	'captcha-addurl-whitelist' => ' #<!-- leave this line exactly as it is --> <pre>
+	'captcha-addurl-whitelist-confirm-edit' => ' #<!-- leave this line exactly as it is --> <pre>
 #  Syntax:
 #   * Alles fon n #-Teeken bit tou dän Eend fon ju Riege is n Kommentoar
 #   * Älke nit-loose Riege is n Regex-Fragment, dät juunuur den Hostnoome fon ne URL wröiged wäd
@@ -3391,7 +3391,7 @@ För tillfället finns inga ljudbaserade alternativ tillgängliga.
 Kontakta [[{{MediaWiki:Grouppage-sysop}}|webbplatsens administratörer]] för hjälp om det här hindrar dig från att göra legitima ändringar.
 
 Tryck på bakåtknappen i din webbläsare för att gå tillbaks till sidredigeringsläget.',
-	'captcha-addurl-whitelist' => ' #<!-- leave this line exactly as it is --> <pre>
+	'captcha-addurl-whitelist-confirm-edit' => ' #<!-- leave this line exactly as it is --> <pre>
 # Syntaxen är följande:
 #   * Allting från ett "#" till slutet av en rad är en kommentar
 #   * Varje icketom rad är ett reguljärt uttryck som matchar domänen i en URL
@@ -3434,7 +3434,7 @@ $messages['te'] = array(
 మీరు చెసే విలువయిన, సమ్మతమయిన వ్యాస మార్పులు భద్రపరచటము కుదరకపొతె, దయచేసి [[{{MediaWiki:Grouppage-sysop}}|సైటు నిర్వహణాధికారి]]కి లేఖ రాయండి.
 
 మీ బ్రౌజర్లోని బ్యాక్(back) మీటను నొక్కి ఇంతకు ముందరి పేజీకి వెళ్ళండి.',
-	'captcha-addurl-whitelist' => ' #<!-- ఈ పంక్తిని ఉన్నదున్నట్లు ఇలాగే వదిలివేయండి --> <pre>
+	'captcha-addurl-whitelist-confirm-edit' => ' #<!-- ఈ పంక్తిని ఉన్నదున్నట్లు ఇలాగే వదిలివేయండి --> <pre>
 # ఇక్కడ రాయాల్సిన విధానం ఇదీ:
 #  * "#" అనే అక్షరం నుండి ఆ పంక్తి చివరివరకూ వ్యాఖ్యానం
 #  * ఖాళీగా లేని ప్రతీ పంక్తీ ఒక regex భాగము, ఇది పేజీలో ఉన్న URLల్ల యొక్క హోస్టుతో మాత్రమే సరిచూడబడుతుంది
@@ -3462,7 +3462,7 @@ $messages['tg-cyrl'] = array(
 Мутассифона ин равиш мумкин аст, корбароне, ки қувваи босираашон суст ё аз мурургарҳои матнӣ ё овозӣ истифода мекунанд, дучори маҳдудиятҳое бикунад. Дар ҳоли ҳозир ҳеҷ чойгузини савтӣ барои ин равиш мавҷуд нест. Чунончи ин масъала шуморо дучори маҳдудияте дур аз интизор дар ирсоли навиштаҳои миҷоз мекунад, бо мудирони сомона оиди кӯмак тамос бигиред.
 
 Дар муругаратон тугмаи 'бозгашт'-ро бо пахш кардан ба саҳифаи вироишгар баргардед.",
-	'captcha-addurl-whitelist' => ' #<!—ин сатрро ҳамон гуна, ки ҳаст раҳо кунед --> <pre>
+	'captcha-addurl-whitelist-confirm-edit' => ' #<!—ин сатрро ҳамон гуна, ки ҳаст раҳо кунед --> <pre>
 # Қоида ба ин шакл аст:
 #  * Ҳама чиз аз "#" то охири сатр як тавзеҳ ба назар гирифта мешавад
 #  * Ҳар сатре, ки холӣ набошад як қитъа дар назар гирифта мешавад, ки фақат бо номи мизбони интернетӣ санҷида мешавад
@@ -3489,7 +3489,7 @@ Dar porai az mavorid, ba viƶa zamone, ki jak pajvandi internetiji çadid ba sah
 Mutassifona in raviş mumkin ast, korbarone, ki quvvai bosiraaşon sust jo az mururgarhoi matnī jo ovozī istifoda mekunand, ducori mahdudijathoe bikunad. Dar holi hozir heç cojguzini savtī baroi in raviş mavçud nest. Cunonci in mas'ala şumoro ducori mahdudijate dur az intizor dar irsoli naviştahoi miçoz mekunad, bo mudironi somona oidi kūmak tamos bigired.
 
 Dar murugaraton tugmai 'bozgaşt'-ro bo paxş kardan ba sahifai viroişgar bargarded.",
-	'captcha-addurl-whitelist' => ' #<!—in satrro hamon guna, ki hast raho kuned --> <pre>
+	'captcha-addurl-whitelist-confirm-edit' => ' #<!—in satrro hamon guna, ki hast raho kuned --> <pre>
 # Qoida ba in şakl ast:
 #  * Hama ciz az "#" to oxiri satr jak tavzeh ba nazar girifta meşavad
 #  * Har satre, ki xolī naboşad jak qit\'a dar nazar girifta meşavad, ki faqat bo nomi mizboni internetī sançida meşavad
@@ -3559,7 +3559,7 @@ Sa ngayon wala pa kaming pamalit na isang pangpandinig.
 Makipag-ugnayan lamang sa [[{{MediaWiki:Grouppage-sysop}}|mga tagapangasiwa ng sityo]] para humingi ng tulong kapag hindi inaasahang mapigilan ka sa pagsasagawa ng mga tunay na pagpapaskil.
 
 Pindutin ang pindutang 'bumalik' sa iyong pantingin-tingin upang makabalik sa pahinang pampatnugot.",
-	'captcha-addurl-whitelist' => " #<!-- leave this line exactly as it is --> <pre>
+	'captcha-addurl-whitelist-confirm-edit' => " #<!-- leave this line exactly as it is --> <pre>
 # Ang palaugnayan ay ayon sa mga sumusunod:
 #  * Lahat ng bagay mula sa isang \"#\" na panitik hanggang sa wakas ng isang guhit/hanay ay isang puna (kumento)
 #  * Bawat hindi/walang patlang na guhit/hanay ay isang piraso ng karaniwang pagsasaad (''regex'') na tutugma lamang sa mga tagapagpasinaya sa loob ng mga URL
@@ -3592,7 +3592,7 @@ Bazen, özellikle bir başka internet sitesine bağ eklerken, bozulmuş ve renkl
 Ne var ki bu durum, görme sorunları yaşayan kişiler ve salt yazı-tabanlı veya salt ses tabanlı internet tarayıcı programları kullanan kimseler için rahatsızlık yaratmaktadır. Ne yazık ki, şu an için sesli bir alternatifimiz bulunmamaktadır. Eğer bu, sizin geçerli gönderiler yapmanıza beklenmedik bir şekilde engel oluyorsa, lütfen destek için [[{{MediaWiki:Grouppage-sysop}}|site yöneticileriyle]] irtibata geçin.
 
 Sayfa düzenleyiciye dönmek için tarayıcınızın 'geri' tuşuna basınız.",
-	'captcha-addurl-whitelist' => ' #<!-- bu satırı olduğu gibi bırakın --> <pre>
+	'captcha-addurl-whitelist-confirm-edit' => ' #<!-- bu satırı olduğu gibi bırakın --> <pre>
 # Sözdizimi aşağıdaki gibidir:
 #  * "#" karakterinden satır sonuna kadar her şey yorumdur
 #  * Her boş olmayan satır, URLler içinde sadece host ile eşleşen regex parçalarıdır
@@ -3630,7 +3630,7 @@ $messages['uk'] = array(
 На жаль, подібний захист може спричинити незручності для людей із вадами зору. Зараз у нас нема звукової альтернативи для такої перевірки. Будь ласка, зверніться по допомогу до [[{{MediaWiki:Grouppage-sysop}}|адміністраторів]], якщо подібна перевірка заважає вам добросовісно працювати з сайтом.
 
 Натисніть кнопку «Назад» у вашому браузері, щоб повернутися до редагування.',
-	'captcha-addurl-whitelist' => '#<!-- leave this line exactly as it is --> <pre>
+	'captcha-addurl-whitelist-confirm-edit' => '#<!-- leave this line exactly as it is --> <pre>
 # Опис синтаксису:
 #  * Все, що починається з символу "#" до кінця рядка, вважається коментарем
 #  * Кожний непорожній рядок вважається фрагментом регулярного виразу відповідної назви вузла в URL
@@ -3662,7 +3662,7 @@ In çerti casi, par esenpio quando se çerca de zontar novi colegamenti web in t
 Sfortunatamente, ste misure de sicureza le pole métar in dificoltà i utenti che gà problemi de vista o quei che dòpara browser testuali o basà su la sintesi vocale. Purtropo al momento no xe disponibile nissun mecanismo alternativo basà su messagio audio; se ste procedure le inpedisse l'inserimento de informazion che se ritien legìtime, se prega de contatar i [[{{MediaWiki:Grouppage-sysop}}|aministradori del sito]] e domandarghe assistensa.
 
 Struca el boton \"Indrìo\" del to browser par tornar a la pagina de modifica.",
-	'captcha-addurl-whitelist' => ' #<!-- no sta modificar in alcun modo sta riga --> <pre>
+	'captcha-addurl-whitelist-confirm-edit' => ' #<!-- no sta modificar in alcun modo sta riga --> <pre>
 # La sintassi la xe la seguente:
 #  * Tuto quel che segue un caràtere "#" el xe un comento, fin a la fine de la riga
 #  * Tute le righe mìa vode le xe framenti de espressioni regolari che se àplica al solo nome de l\'host ne le URL
@@ -3701,7 +3701,7 @@ Hiện tại chúng tôi chưa có chức năng phát âm thay thế.
 Xin hãy liên lạc với [[{{MediaWiki:Grouppage-sysop}}|người quản trị trang web]] để được trợ giúp nếu điều này vô tình ngăn cản bạn đóng góp nội dung tốt.
 
 Nhấn chuột vào nút “Back” của trình duyệt để trở lại trang soạn thảo.',
-	'captcha-addurl-whitelist' => ' #<!-- xin để dòng này đừng thay đổi --> <pre>
+	'captcha-addurl-whitelist-confirm-edit' => ' #<!-- xin để dòng này đừng thay đổi --> <pre>
 # Cú pháp như sau:
 #   * Mọi thứ bắt đầu bằng ký tự “#” là lời chú thích
 #   * Mọi hàng không trắng là một đoạn biểu thức chính quy (regex) sẽ chỉ được so trùng với tên máy chủ trong URL
@@ -3722,7 +3722,7 @@ $messages['vo'] = array(
 	'captcha-create' => 'Ad jafön padi, dunolös saedami balugik dono e penolös saedoti in bokil ([[Special:Captcha/help|nüns pluik]]):',
 	'captchahelp-title' => 'Yuf ela Captcha',
 	'captchahelp-cookies-needed' => 'Nedol mögükön „kekilis“ bevüresodanaföme olik ad dunön atosi.',
-	'captcha-addurl-whitelist' => ' #<!-- leave this line exactly as it is --> <pre>
+	'captcha-addurl-whitelist-confirm-edit' => ' #<!-- leave this line exactly as it is --> <pre>
 # Süntag binon sökölos:
 #  * Valikos de malat: „#“ jü fin liena binon küpet
 #  * Lien no vägik alik binon brekot: „regex“, kel poleigodon te ko vöds ninü els URLs
@@ -3787,7 +3787,7 @@ $messages['yue'] = array(
 令人遺憾嘅係，咁會令到視力唔好嘅人，或者利用基於文本或者基於聲音嘅瀏覽器用戶感到不便。而目前我哋仲未能夠提供音頻嘅選擇。如果咁樣咁啱阻止到你進行正常嘅編輯，請同管理員聯繫以獲得幫助。
 
 撳一下響瀏覽器度嘅「後退」掣返去你之前所編輯緊嘅頁面。',
-	'captcha-addurl-whitelist' => ' #<!-- leave this line exactly as it is --> <pre>
+	'captcha-addurl-whitelist-confirm-edit' => ' #<!-- leave this line exactly as it is --> <pre>
 # 語法好似下面噉:
 #   * 所有由 "#" 字元之後嘅嘢到行尾係註解
 #   * 所有非空白行係一個regex部份，只係會同裏面嘅URL主機相符
@@ -3821,7 +3821,7 @@ $messages['zh-hans'] = array(
 令人遗憾是，这会使得视力不好的人，或者使用基於文本或者基於声音的浏览器的用户感到不便。而目前我们还没有提供的音频的选择。如果这正好阻止你进行正常的编辑，请和[[{{MediaWiki:Grouppage-sysop}}|站点管理员]]联系获得帮助。
 
 点击浏览器中的“后退”按钮返回你所编辑的页面。',
-	'captcha-addurl-whitelist' => ' #<!-- leave this line exactly as it is --> <pre>
+	'captcha-addurl-whitelist-confirm-edit' => ' #<!-- leave this line exactly as it is --> <pre>
 # 语法像下面这样:
 #   * 所有在 "#" 字符后的内容全部是注释
 #   * 所有非空白行是一个正则表达式，只会对URL中的内容进行匹配
@@ -3856,7 +3856,7 @@ $messages['zh-hant'] = array(
 令人遺憾是，這會使得視力不好的人，或者使用基於文字或者基於聲音的瀏覽器的使用者感到不便。而目前我們還沒有提供的音訊的選擇。如果這正好阻止你進行正常的編輯，請和[[{{MediaWiki:Grouppage-sysop}}|站點管理員]]聯繫取得幫助。
 
 點擊瀏覽器中的「後退」按鈕返回你所編輯的頁面。',
-	'captcha-addurl-whitelist' => ' #<!-- leave this line exactly as it is --> <pre>
+	'captcha-addurl-whitelist-confirm-edit' => ' #<!-- leave this line exactly as it is --> <pre>
 # 語法像下面這樣:
 #   * 所有由 "#" 字元之後嘅字元至行尾是註解
 #   * 所有非空白行是一個regex部份，只是跟在裡面的URL主機相符

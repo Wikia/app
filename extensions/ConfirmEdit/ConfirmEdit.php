@@ -140,7 +140,7 @@ $wgCaptchaBadLoginAttempts = 3;
  * Regex to whitelist URLs to known-good sites...
  * For instance:
  * $wgCaptchaWhitelist = '#^https?://([a-z0-9-]+\\.)?(wikimedia|wikipedia)\.org/#i';
- * Local admins can define a whitelist under [[MediaWiki:captcha-addurl-whitelist]]
+ * Local admins can define a whitelist under [[MediaWiki:captcha-addurl-whitelist-confirm-edit]]
  */
 $wgCaptchaWhitelist = false;
 

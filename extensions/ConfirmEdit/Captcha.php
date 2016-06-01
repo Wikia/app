@@ -361,9 +361,9 @@ class SimpleCaptcha {
 	 */
 	function filterLink( $url ) {
 		global $wgCaptchaWhitelist;
-		$source = wfMsgForContent( 'captcha-addurl-whitelist' );
+		$source = wfMsgForContent( 'captcha-addurl-whitelist-confirm-edit' );
 
-		$whitelist = wfEmptyMsg( 'captcha-addurl-whitelist', $source )
+		$whitelist = wfEmptyMsg( 'captcha-addurl-whitelist-confirm-edit', $source )
 			? false
 			: $this->buildRegexes( explode( "\n", $source ) );
 
@@ -375,7 +375,7 @@ class SimpleCaptcha {
 
 	/**
 	 * Build regex from whitelist
-	 * @param string lines from [[MediaWiki:Captcha-addurl-whitelist]]
+	 * @param string lines from [[MediaWiki:captcha-addurl-whitelist-confirm-edit]]
 	 * @return string Regex or bool false if whitelist is empty
 	 * @access private
 	 */
