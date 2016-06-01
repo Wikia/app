@@ -135,6 +135,11 @@
 	 */
 	define = function (id, dependencies, definition, defMock) {
 		if (typeof id !== strType) {
+			// Slide all the args over by one to make room for the id
+			defMock = definition;
+			definition = dependencies;
+			dependencies = id;
+
 			// Give it a temporary module name
 			id = 'module_' + (new Date()).getTime() + '_' + Math.random();
 
