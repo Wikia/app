@@ -3,10 +3,13 @@
 // php compareCaches.php true
 // first parameter if true, sets primary list of languages
 
+require_once( dirname( __FILE__ ) . '/commandLine.inc' );
+
 $primaryOnly = isset($argv[0]) && $argv[0] === 'true';
 
 error_reporting(E_ALL);
 ini_set('display_errors','On');
+
 $messageCacheDir = './messageCache';
 
 function checkLang($lang) {
