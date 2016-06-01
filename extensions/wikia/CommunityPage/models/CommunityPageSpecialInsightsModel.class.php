@@ -172,6 +172,7 @@ class CommunityPageSpecialInsightsModel {
 				[
 					'href' => $metadata['lastRevision']['userpage'],
 					'data-tracking' => 'user-profile-link',
+					'class' => 'communitypage-user-link'
 				],
 				$metadata['lastRevision']['username']
 			),

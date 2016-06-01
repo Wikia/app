@@ -511,39 +511,31 @@ $messages['ja'] = array(
 	'communitypage-modal-tab-admins' => 'アドミン(コミュニティ管理者)',
 	'communitypage-modal-tab-loadingerror' => 'データ読み込みエラー',
 	'communitypage-no-contributions' => '今週はまだ編集されていません。さっそく書き込んでみよう！',
-	'communitypage-no-admins' => 'このコミュニティは管理者を募集中です。
-',
-	'communitypage-no-admins-contact' => 'アドミン(コミュニティ管理者)に申し込む。
-',
-	'communitypage-no-members' => 'このコミュニティは仲間を募集中です。
-',
+	'communitypage-no-admins' => 'このコミュニティは管理者を募集中です。',
+	'communitypage-no-admins-contact' => 'アドミン(コミュニティ管理者)に申し込む。',
+	'communitypage-no-members' => 'このコミュニティは仲間を募集中です。',
 	'communitypage-help-us-grow' => "'''{{SITENAME}}'''で、知識と情熱を共有しよう！",
 	'communitypage-new' => 'New',
 	'communitypage-popularpages-title' => '人気のページ',
-	'communitypage-popularpages-description' => 'アクセスの多いページです。最新の情報や画像、より深い知識を書き込んでもっとページを魅力的にしよう！
-',
+	'communitypage-popularpages-description' => 'アクセスの多いページです。最新の情報や画像、より深い知識を書き込んでもっとページを魅力的にしよう！',
 	'communitypage-uncategorizedpages-title' => 'カテゴリがないページ',
 	'communitypage-uncategorizedpages-description' => 'これらのページにカテゴリを追加しましょう。コミュニティのコンテンツを整理するには、適切なカテゴリの追加が不可欠です。',
 	'communitypage-wantedpages-title' => '編集が必要なページ',
-	'communitypage-wantedpages-description' => 'これらの項目は、まだページが存在していません。新たに情報を書き込むか、正しいページにリダイレクトするよう設定し、もっとコミュニティを充実させましょう。
-',
+	'communitypage-wantedpages-description' => 'これらの項目は、まだページが存在していません。新たに情報を書き込むか、正しいページにリダイレクトするよう設定し、もっとコミュニティを充実させましょう。',
 	'communitypage-lastrevision' => '$1さんが$2を編集しました',
 	'communitypage-noofviews' => '$1 件のviews',
 	'communitypage-full-list' => '全て見る',
 	'communitypage-modal-tab-all-contribution-header' => '最終更新',
 	'communitypage-deadendpages-title' => 'リンクがないページ',
-	'communitypage-deadendpages-description' => 'これらのページに、コミュニティ内の別のページへのリンクを張りましょう。関連する内容のページにリンクを張ると読者がより知識を深めることができるようになり、さらに検索エンジンでのランキングが上がることにもつながります。
-',
+	'communitypage-deadendpages-description' => 'これらのページに、コミュニティ内の別のページへのリンクを張りましょう。関連する内容のページにリンクを張ると読者がより知識を深めることができるようになり、さらに検索エンジンでのランキングが上がることにもつながります。',
 	'communitypage-view-more' => 'もっと見る',
 	'communitypage-policy-module-link-page-name' => 'コミュニティ・ガイドライン',
-	'communitypage-recent-activity-header' => '最近のコミュニティ更新情報
-',
+	'communitypage-recent-activity-header' => '最近のコミュニティ更新情報',
 	'communitypage-help-module-title' => 'ヘルプ',
 	'communitypage-help-module-link-page-name' => 'コンテンツ',
 	'communitypage-help-module-link-text' => '初めての方はこちら',
 	'communitypage-policy-module-title' => 'コミュニティ・ポリシー',
-	'communitypage-policy-module-text' => 'このコミュニティにはすべての編集者が守らなくてはならないコミュニティ・ポリシーがあります
-',
+	'communitypage-policy-module-text' => 'このコミュニティにはすべての編集者が守らなくてはならないコミュニティ・ポリシーがあります',
 	'communitypage-policy-module-edit-link-text' => '編集',
 	'communitypage-policy-module-link-text' => 'コミュニティ・ポリシーを見る',
 );
