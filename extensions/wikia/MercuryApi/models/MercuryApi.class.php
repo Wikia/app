@@ -111,7 +111,7 @@ class MercuryApi {
 
 		return [
 			'cacheBuster' => (int)$wgCacheBuster,
-			'contentNamespaces' => array_values($wgContentNamespaces),
+			'contentNamespaces' => array_values( $wgContentNamespaces ),
 			'dbName' => $wgDBname,
 			'defaultSkin' => $wgDefaultSkin,
 			'disableAnonymousEditing' => $wgDisableAnonymousEditing,
