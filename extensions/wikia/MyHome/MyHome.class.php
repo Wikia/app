@@ -468,4 +468,15 @@ class MyHome {
 		wfProfileOut( __METHOD__ );
 		return true;
 	}
+
+	public static function getWikiActivitySurrogateKey() {
+		return Wikia::surrogateKey( 'special-wiki-activity' );
+	}
+
+	public static function onRevisionInsertComplete() {
+		Wikia::purgeSurrogateKey( self::getWikiActivitySurrogateKey() );
+
+		return true;
+	}
+
 }
