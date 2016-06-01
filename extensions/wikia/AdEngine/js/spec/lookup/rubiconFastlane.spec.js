@@ -170,7 +170,7 @@ describe('ext.wikia.adEngine.lookup.rubiconFastlane', function () {
 
 		rubiconFastlane.call();
 
-		expect(mocks.win.rubicontag.defineSlot.calls.count()).toEqual(3);
+		expect(mocks.win.rubicontag.defineSlot.calls.count()).toEqual(4);
 	});
 
 	it('Define /TOP/ slot as atf', function () {

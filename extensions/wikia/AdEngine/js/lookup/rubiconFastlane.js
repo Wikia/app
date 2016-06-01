@@ -42,6 +42,9 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 				}
 			},
 			mercury: {
+				MOBILE_BOTTOM_LEADERBOARD: {
+					sizes: [[300, 50], [300, 250], [320, 50], [320, 480]]
+				},
 				MOBILE_IN_CONTENT: {
 					sizes: [[300, 50], [300, 250], [320, 50], [320, 480]]
 				},
