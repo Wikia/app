@@ -576,7 +576,7 @@ class SimpleCaptcha {
 			if ( defined( 'MW_API' ) ) {
 				# API mode
 				# Asking for captchas in the API is really silly
-				$error = wfMsg( 'captcha-disabledinapi' );
+				$error = wfMsg( 'captcha-disabledinapi-confirm-edit' );
 				return false;
 			}
 			$this->trigger = "{$wgUser->getName()} sending email";
