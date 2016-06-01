@@ -19,6 +19,14 @@ class ImportStarterDataTest extends \WikiaBaseTest {
 	}
 
 	/**
+	 * @see PLATFORM-2224
+	 * @group Infrastructure
+	 */
+	public function testDependencies() {
+		$this->assertTrue( extension_loaded( 'bz2' ), 'bz2 extension should be loaded for XML dumps decompression' );
+	}
+
+	/**
 	 * @dataProvider checkDataProvider
 	 * @param $return
 	 * @param $expected
