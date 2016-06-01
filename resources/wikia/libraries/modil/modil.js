@@ -135,7 +135,18 @@
 	 */
 	define = function (id, dependencies, definition, defMock) {
 		if (typeof id !== strType) {
-			throw "Module id missing or not a string. " + (new Error().stack||'').replace(/\n/g, ' / ');
+            // Give it a temporary module name
+            id = 'module_' + (new Date()).getTime() + '_' + Math.random();
+
+            // Let the developer know there's a potential problem
+            var warning = "Module id missing or not a string; assigning temporary id (" + id + "). "
+                + (new Error().stack||'').replace(/\n/g, ' / ');
+
+			if( console.warn ) {
+                console.warn(warning);
+            } else if(console.log) {
+                console.log(warning);
+            }
 		}
 
 		//no dependencies array, it's actually the definition
