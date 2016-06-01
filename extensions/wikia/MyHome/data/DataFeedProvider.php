@@ -556,13 +556,15 @@ class DataFeedProvider {
 				$wgMemc->set($memcKey, $imageLinkCount, 60*60*12);
 			}
 
-			$imageObj = wfFindFile(Title::newFromText($imageName, NS_FILE));
+			if ($imageLinkCount < 20) {
+				$imageObj = wfFindFile(Title::newFromText($imageName, NS_FILE));
 
-			if ($imageObj) {
-				if ( WikiaFileHelper::isFileTypeVideo($imageObj) ) {
-					$imageClass = 'video';
-				} else {
-					$imageClass = 'image';
+				if ($imageObj) {
+					if ( WikiaFileHelper::isFileTypeVideo($imageObj) ) {
+						$imageClass = 'video';
+					} else {
+						$imageClass = 'image';
+					}
 				}
 			}
 
