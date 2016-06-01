@@ -101,7 +101,15 @@
 				<?php if ( $subtitle != '' && $headerModuleName == 'UserPagesHeader' ) { ?>
 					<div id="contentSub"><?= $subtitle ?></div>
 				<?php } ?>
-
+				<?php if ( ARecoveryModule::isLockEnabled() ) { ?>
+				<div id="WikiaArticleMsg">
+					<h2>Ad blocker interference detected!</h2>
+					<br />
+					<h3>Wikia is a free-to-use site that makes money from advertising. We have a modified experience for viewers using ad blockers.
+						<br /><br />
+						Wikia is not accessible if you’ve made further modifications. Remove the custom ad blocker rule(s) and the page will load as expected.</h3>
+				</div>
+				<?php } ?>
 				<div id="WikiaArticle" class="WikiaArticle<?= $displayAdminDashboardChromedArticle ? ' AdminDashboardChromedArticle' : '' ?>"<?= $body_ondblclick ? ' ondblclick="' . htmlspecialchars( $body_ondblclick ) . '"' : '' ?>>
 					<? if( $displayAdminDashboardChromedArticle ) { ?>
 						<?= ( string )$app->sendRequest( 'AdminDashboardSpecialPage', 'chromedArticleHeader', array( 'headerText' => $wg->Title->getText() ) ) ?>

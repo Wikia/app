@@ -23,7 +23,8 @@ class AdEngine2ContextService {
 				$monetizationServiceAds = F::app()->sendRequest( 'MonetizationModule', 'index' )->getData()['data'];
 			}
 
-			$sourcePointDetectionUrl = ResourceLoader::makeCustomURL( $wg->Out, ['wikia.ext.adengine.sp.detection'], 'scripts' );
+			$sourcePointDetectionKey = AdEngine2Resource::getKey('wikia.ext.adengine.sp.detection');
+			$sourcePointDetectionUrl = ResourceLoader::makeCustomURL( $wg->Out, [$sourcePointDetectionKey], 'scripts' );
 
 			$langCode = $title->getPageLanguage()->getCode();
 
@@ -34,7 +35,8 @@ class AdEngine2ContextService {
 			$newWikiVertical = $wikiFactoryHub->getWikiVertical( $wg->CityId );
 			$newWikiVertical = !empty($newWikiVertical['short']) ? $newWikiVertical['short'] : 'error';
 
-			$yavliUrl = ResourceLoader::makeCustomURL( $wg->Out, ['wikia.ext.adengine.yavli'], 'scripts' );
+			$yavliKey = AdEngine2Resource::getKey('wikia.ext.adengine.yavli');
+			$yavliUrl = ResourceLoader::makeCustomURL( $wg->Out, [$yavliKey], 'scripts' );
 			return [
 				'opts' => $this->filterOutEmptyItems( [
 					'adsInContent' => $wg->EnableAdsInContent,

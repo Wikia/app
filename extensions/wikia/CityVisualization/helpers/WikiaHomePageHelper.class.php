@@ -278,8 +278,8 @@ class WikiaHomePageHelper extends WikiaModel {
 					$adminAvatars = array_slice( $adminAvatars, 0, self::LIMIT_ADMIN_AVATARS );
 				}
 				foreach( $adminAvatars as &$admin ) {
-					$userStatService = new UserStatsService($admin['userId']);
-					$admin['edits'] = $userStatService->getEditCountWiki($wikiId);
+					$userStatService = new UserStatsService($admin['userId'], $wikiId);
+					$admin['edits'] = $userStatService->getEditCountWiki();
 				}
 			} catch (Exception $e) {
 				$adminAvatars = array();

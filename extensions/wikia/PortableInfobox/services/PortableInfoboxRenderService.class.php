@@ -102,6 +102,8 @@ class PortableInfoboxRenderService extends WikiaService {
 			$output = '';
 		}
 
+		\Wikia\PortableInfobox\Helpers\PortableInfoboxDataBag::getInstance()->setFirstInfoboxAlredyRendered( true );
+
 		wfProfileOut( __METHOD__ );
 
 		return $output;
@@ -158,6 +160,10 @@ class PortableInfoboxRenderService extends WikiaService {
 	private function renderInfoboxHero( $data ) {
 		$helper = new PortableInfoboxRenderServiceHelper();
 
+		// In Mercury SPA content of the first infobox's hero module has been moved to the article header.
+		$firstInfoboxAlredyRendered = \Wikia\PortableInfobox\Helpers\PortableInfoboxDataBag::getInstance()
+			->isFirstInfoboxAlredyRendered();
+
 		if ( array_key_exists( 'image', $data ) ) {
 			$image = $data[ 'image' ][ 0 ];
 			$image[ 'context' ] = self::MEDIA_CONTEXT_INFOBOX_HERO_IMAGE;
@@ -165,15 +171,15 @@ class PortableInfoboxRenderService extends WikiaService {
 			$data[ 'image' ] = $image;
 
 			if ( !$helper->isMercury() ) {
-				$markup = $this->renderItem( 'hero-mobile-wikiamobile', $data );
-			} else {
-				$markup = $this->renderItem( 'hero-mobile', $data );
+				return $this->renderItem( 'hero-mobile-wikiamobile', $data );
+			} elseif ( $firstInfoboxAlredyRendered ) {
+				return $this->renderItem( 'hero-mobile', $data );
 			}
-		} else {
-			$markup = $this->renderItem( 'title', $data[ 'title' ] );
+		} elseif ( !$helper->isMercury() || $firstInfoboxAlredyRendered ) {
+			return $this->renderItem( 'title', $data[ 'title' ] );
 		}
 
-		return $markup;
+		return '';
 	}
 
 	/**
@@ -213,7 +219,7 @@ class PortableInfoboxRenderService extends WikiaService {
 				} else {
 					$data = $helper->extendImageCollectionData( $images );
 				}
-				
+
 				$templateName = 'image-collection';
 			}
 

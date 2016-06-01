@@ -410,8 +410,7 @@ class VideoHandlerController extends WikiaController {
 	 * @return string
 	 */
 	public static function getVideoListSurrogateKey() {
-		global $wgCachePrefix;
-		return implode( '-', [ $wgCachePrefix ?: wfWikiID(), __CLASS__, 'getVideoList' ] );
+		return Wikia::surrogateKey( __CLASS__, 'getVideoList' );
 	}
 
 	protected function getVideoListParams() {

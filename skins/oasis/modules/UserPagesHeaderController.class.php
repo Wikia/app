@@ -154,8 +154,8 @@ class UserPagesHeaderController extends WikiaController {
 
 			if ( !empty( $stats ) ) {
 				// date and points formatting
-				if ( !empty( $stats['date'] ) ) {
-					$stats['date'] = $wgLang->date( wfTimestamp( TS_MW, $stats['date'] ) );
+				if ( !empty( $stats['firstRevisionDate'] ) ) {
+					$stats['date'] = $wgLang->date( wfTimestamp( TS_MW, $stats['firstRevisionDate'] ) );
 				}
 				$stats['edits'] = $wgLang->formatNum( $stats['edits'] );
 			}
