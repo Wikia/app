@@ -29,16 +29,16 @@ To help protect against automated spam, please enter the words that appear below
 $messages['qqq'] = array(
 	'fancycaptcha-desc' => '{{desc}}',
 	'fancycaptcha-addurl' => 'See also
-*{{msg-mw|captcha-addurl-confirm-edit}}
+*{{msg-mw|captcha-addurl-confirmedit}}
 *{{msg-mw|Questycaptcha-addurl}}',
 	'fancycaptcha-badlogin' => 'See also
-*{{msg-mw|captcha-badlogin-confirm-edit}}
+*{{msg-mw|captcha-badlogin-confirmedit}}
 *{{msg-mw|Questycaptcha-badlogin}}',
 	'fancycaptcha-createaccount' => 'See also
-*{{msg-mw|captcha-createaccount-confirm-edit}}
+*{{msg-mw|captcha-createaccount-confirmedit}}
 *{{msg-mw|Questycaptcha-createaccount}}',
 	'fancycaptcha-create' => 'See also
-*{{msg-mw|captcha-create-confirm-edit}}
+*{{msg-mw|captcha-create-confirmedit}}
 *{{msg-mw|Questycaptcha-create}}',
 	'fancycaptcha-edit' => 'See also
 *{{msg-mw|Captcha-edit}}

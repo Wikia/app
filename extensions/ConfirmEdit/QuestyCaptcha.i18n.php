@@ -37,16 +37,16 @@ Click the 'back' button in your browser to return to the page editor.",
 $messages['qqq'] = array(
 	'questycaptcha-desc' => '{{desc}}',
 	'questycaptcha-addurl' => 'See also
-*{{msg-mw|captcha-addurl-confirm-edit}}
+*{{msg-mw|captcha-addurl-confirmedit}}
 *{{msg-mw|Fancycaptcha-addurl}}',
 	'questycaptcha-badlogin' => 'See also
-*{{msg-mw|captcha-badlogin-confirm-edit}}
+*{{msg-mw|captcha-badlogin-confirmedit}}
 *{{msg-mw|Fancycaptcha-badlogin}}',
 	'questycaptcha-createaccount' => 'See also
-*{{msg-mw|captcha-createaccount-confirm-edit}}
+*{{msg-mw|captcha-createaccount-confirmedit}}
 *{{msg-mw|Fancycaptcha-createaccount}}',
 	'questycaptcha-create' => 'See also
-*{{msg-mw|captcha-create-confirm-edit}}
+*{{msg-mw|captcha-create-confirmedit}}
 *{{msg-mw|Fancycaptcha-create}}',
 	'questycaptcha-edit' => 'See also
 *{{msg-mw|Captcha-edit}}

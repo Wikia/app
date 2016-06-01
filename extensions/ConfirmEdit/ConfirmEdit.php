@@ -41,7 +41,7 @@ $wgExtensionCredits['antispam'][] = array(
 	'author' => array( 'Brion Vibber', '...' ),
 	'url' => 'https://www.mediawiki.org/wiki/Extension:ConfirmEdit',
 	'version' => '1.1',
-	'descriptionmsg' => 'captcha-desc-confirm-edit',
+	'descriptionmsg' => 'captcha-desc-confirmedit',
 );
 
 /**
@@ -140,7 +140,7 @@ $wgCaptchaBadLoginAttempts = 3;
  * Regex to whitelist URLs to known-good sites...
  * For instance:
  * $wgCaptchaWhitelist = '#^https?://([a-z0-9-]+\\.)?(wikimedia|wikipedia)\.org/#i';
- * Local admins can define a whitelist under [[MediaWiki:captcha-addurl-whitelist-confirm-edit]]
+ * Local admins can define a whitelist under [[MediaWiki:captcha-addurl-whitelist-confirmedit]]
  */
 $wgCaptchaWhitelist = false;
 

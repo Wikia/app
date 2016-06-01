@@ -73,7 +73,7 @@ class SimpleCaptcha {
 		$text = wfMsg( $name );
 		# Obtain a more tailored message, if possible, otherwise, fall back to
 		# the default for edits
-		return wfEmptyMsg( $name, $text ) ? wfMsg( 'captcha-edit-confirm-edit' ) : $text;
+		return wfEmptyMsg( $name, $text ) ? wfMsg( 'captcha-edit-confirmedit' ) : $text;
 	}
 
 	/**
@@ -361,9 +361,9 @@ class SimpleCaptcha {
 	 */
 	function filterLink( $url ) {
 		global $wgCaptchaWhitelist;
-		$source = wfMsgForContent( 'captcha-addurl-whitelist-confirm-edit' );
+		$source = wfMsgForContent( 'captcha-addurl-whitelist-confirmedit' );
 
-		$whitelist = wfEmptyMsg( 'captcha-addurl-whitelist-confirm-edit', $source )
+		$whitelist = wfEmptyMsg( 'captcha-addurl-whitelist-confirmedit', $source )
 			? false
 			: $this->buildRegexes( explode( "\n", $source ) );
 
@@ -375,7 +375,7 @@ class SimpleCaptcha {
 
 	/**
 	 * Build regex from whitelist
-	 * @param string lines from [[MediaWiki:captcha-addurl-whitelist-confirm-edit]]
+	 * @param string lines from [[MediaWiki:captcha-addurl-whitelist-confirmedit]]
 	 * @return string Regex or bool false if whitelist is empty
 	 * @access private
 	 */
@@ -526,7 +526,7 @@ class SimpleCaptcha {
 
 			$this->trigger = "new account '" . $u->getName() . "'";
 			if ( !$this->passCaptcha() ) {
-				$message = wfMsg( 'captcha-createaccount-fail-confirm-edit' );
+				$message = wfMsg( 'captcha-createaccount-fail-confirmedit' );
 				return false;
 			}
 		}
@@ -576,12 +576,12 @@ class SimpleCaptcha {
 			if ( defined( 'MW_API' ) ) {
 				# API mode
 				# Asking for captchas in the API is really silly
-				$error = wfMsg( 'captcha-disabledinapi-confirm-edit' );
+				$error = wfMsg( 'captcha-disabledinapi-confirmedit' );
 				return false;
 			}
 			$this->trigger = "{$wgUser->getName()} sending email";
 			if ( !$this->passCaptcha() ) {
-				$error = wfMsg( 'captcha-sendemail-fail-confirm-edit' );
+				$error = wfMsg( 'captcha-sendemail-fail-confirmedit' );
 				return false;
 			}
 		}
@@ -733,7 +733,7 @@ class SimpleCaptcha {
 		$wgOut->setPageTitle( wfMsg( 'captchahelp-title' ) );
 		$wgOut->addWikiText( wfMsg( 'captchahelp-text-confirmedit' ) );
 		if ( CaptchaStore::get()->cookiesNeeded() ) {
-			$wgOut->addWikiText( wfMsg( 'captchahelp-cookies-needed-confirm-edit' ) );
+			$wgOut->addWikiText( wfMsg( 'captchahelp-cookies-needed-confirmedit' ) );
 		}
 	}
 }
