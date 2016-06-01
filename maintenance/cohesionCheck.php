@@ -1,14 +1,28 @@
 <?php
 
-// php cohesionCheck.php 4
+// php cohesionCheck.php 4 true
+// first parameter sets the number of rounds
+// second parameter if true, sets primary list of languages
 
 require_once( dirname( __FILE__ ) . '/commandLine.inc' );
+
 error_reporting( E_ALL );
 ini_set( 'display_errors', 'On' );
 
 $max_tries = (int) $argv[0] ? (int) $argv[0] : 3;
+$primaryOnly = isset($argv[1]) && $argv[1] === 'true';
 
 $langs = [ 'en', 'pl', 'de', 'es', 'fr', 'it', 'ja', 'nl', 'pt', 'ru', 'zh-hans', 'zh-tw' ];
+
+if ( !$primaryOnly ) {
+	$codes = array_keys( Language::getLanguageNames( true ) );
+	$codes = array_filter( $codes,
+		function ( $item ) use ( $langs ) {
+			return !in_array( $item, $langs );
+		} );
+	sort( $codes );
+	$langs = array_merge( $langs, $codes );
+}
 
 for ($i = 0; $i < $max_tries; ++$i) {
 	$cmd = 'SERVER_ID=177 php maintenance/rebuildLocalisationCache.php --force --primary --cache-dir=/tmp/messagecache-new' . $i;

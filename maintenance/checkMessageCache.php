@@ -1,21 +1,36 @@
 <?php
 
-// Run from /usr/wikia/slot1/current/maintenance with $sudo SERVER_ID=177 php checkMessageCache.php
+// Run from /usr/wikia/slot1/current/maintenance with $sudo SERVER_ID=177 php checkMessageCache.php true
+// first parameter if true, sets primary list of languages
 
 require_once( dirname( __FILE__ ) . '/commandLine.inc' );
+
 error_reporting( E_ALL );
 ini_set( 'display_errors', 'On' );
 
-define(MESSAGE_CACHE_DIR, './messageCache');
+$messageCacheDir = './messageCache';
 
-//$langs = Language::getLanguageNames();
+$primaryOnly = isset($argv[0]) && $argv[0] === 'true';
+
 $langs = [ 'en', 'pl', 'de', 'es', 'fr', 'it', 'ja', 'nl', 'pt', 'ru', 'zh-hans', 'zh-tw' ];
+
+if ( !$primaryOnly ) {
+	$codes = array_keys( Language::getLanguageNames( true ) );
+	$codes = array_filter( $codes,
+		function ( $item ) use ( $langs ) {
+			return !in_array( $item, $langs );
+		} );
+	sort( $codes );
+
+	$langs = array_merge( $langs, $codes );
+}
+
 $langs_count = count($langs);
 $localizationsCacheFoldersPostfix = [ 'new', 'orig' ];
 $i = 0;
 
-if (!is_dir(MESSAGE_CACHE_DIR)) {
-	mkdir(MESSAGE_CACHE_DIR, 0775) or exit ('Was not able to create the result directory');
+if (!is_dir($messageCacheDir)) {
+	mkdir($messageCacheDir, 0775) or exit ('Was not able to create the result directory');
 }
 
 
@@ -49,6 +64,6 @@ foreach ( $localizationsCacheFoldersPostfix as $cachePostfix ) {
 
 		//foreach ($messages as $k => $m) echo "\t" . $k . PHP_EOL;
 
-		file_put_contents( MESSAGE_CACHE_DIR . '/messageCache-' . $cachePostfix .  '.dump.' . $languageCode . '.php', serialize( $messages ) );
+		file_put_contents( $messageCacheDir . '/messageCache-' . $cachePostfix .  '.dump.' . $languageCode . '.php', serialize( $messages ) );
 	}
 }
