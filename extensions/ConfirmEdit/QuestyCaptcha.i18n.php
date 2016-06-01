@@ -40,7 +40,7 @@ $messages['qqq'] = array(
 *{{msg-mw|captcha-addurl-confirm-edit}}
 *{{msg-mw|Fancycaptcha-addurl}}',
 	'questycaptcha-badlogin' => 'See also
-*{{msg-mw|captcha-badlogin}}
+*{{msg-mw|captcha-badlogin-confirm-edit}}
 *{{msg-mw|Fancycaptcha-badlogin}}',
 	'questycaptcha-createaccount' => 'See also
 *{{msg-mw|captcha-createaccount}}
