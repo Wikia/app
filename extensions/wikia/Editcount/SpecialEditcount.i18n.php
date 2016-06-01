@@ -3,7 +3,6 @@
 $messages = array(
 // English Version by Rob Church
 	'en' => array(
-	'editcount-desc' => 'Displays [[Special:Editcount|edit count]] of a user',
 	'editcount-title' => 'Edit count',
 	'editcount_username' => 'User:',
 	'editcount_submit' => 'Submit',
@@ -16,7 +15,6 @@ $messages = array(
 
 // Documentation
 	'qqq' => array(
-	'editcount-desc' => '{{desc}}',
 	'editcount-title' => 'Edit count',
 	'editcount_username' => 'Label of form field to pass username',
 	'editcount_submit' => 'Form submit button name',
