@@ -1,12 +1,13 @@
 /*global define*/
 define('ext.wikia.adEngine.provider.btfBlocker', [
 	'ext.wikia.adEngine.adContext',
-	'ext.wikia.adEngine.slotTweaker',
 	'wikia.lazyqueue',
 	'wikia.log',
 	'wikia.window'
-], function (adContext, slotTweaker, lazyQueue, log, win) {
+], function (adContext, lazyQueue, log, win) {
 	'use strict';
+
+	var logGroup = 'ext.wikia.adEngine.provider.btfBlocker';
 
 	win.ads = win.ads || {};
 	win.ads.runtime = win.ads.runtime || {};
@@ -15,8 +16,15 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 	function decorate(atfSlots, fillInSlot) {
 		var btfQueue = [],
 			btfQueueStarted = false,
-			logGroup = 'ext.wikia.adEngine.provider.btfBlocker',
 			pendingAtfSlots = []; // ATF slots pending for response
+
+		// Update state on each pv on Mercury
+		adContext.addCallback(function() {
+			btfQueue = [];
+			btfQueueStarted = false;
+			pendingAtfSlots = [];
+			win.ads.runtime.disableBtf = false;
+		});
 
 		function processBtfSlot(slot) {
 			log(['processBtfSlot', slot.name], 'debug', logGroup);
@@ -60,6 +68,10 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 		function fillInSlotWithDelay(slot) {
 			log(['fillInSlotWithDelay', slot.name], 'debug', logGroup);
 
+			function fillInSlotOnResponse() {
+				onSlotResponse(slot.name, fillInSlot);
+			}
+
 			if (!adContext.getContext().opts.delayBtf) {
 				fillInSlot(slot);
 				return;
@@ -69,9 +81,9 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 			if (atfSlots.indexOf(slot.name) > -1) {
 				pendingAtfSlots.push(slot.name);
 
-				slot.pre('success', function () { onSlotResponse(slot.name, fillInSlot); });
-				slot.pre('collapse', function () { onSlotResponse(slot.name, fillInSlot); });
-				slot.pre('hop', function () { onSlotResponse(slot.name, fillInSlot); });
+				slot.pre('success', fillInSlotOnResponse);
+				slot.pre('collapse', fillInSlotOnResponse);
+				slot.pre('hop', fillInSlotOnResponse);
 
 				fillInSlot(slot);
 				return;
