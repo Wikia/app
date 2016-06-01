@@ -44,7 +44,10 @@ $item-link-width: 14%;
 	}
 
 	.community-page-insights-module-article-data {
+		overflow: hidden;
+		text-overflow: ellipsis;
 		width: $item-data-width;
+		white-space: nowrap;
 	}
 
 	.community-page-insights-module-metadata {
@@ -57,7 +60,6 @@ $item-link-width: 14%;
 			overflow: hidden;
 			text-overflow: ellipsis;
 			vertical-align: bottom;
-			white-space: nowrap;
 		}
 	}
 
