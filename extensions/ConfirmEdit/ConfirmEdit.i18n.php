@@ -10,7 +10,7 @@ $messages = array();
 
 $messages['en'] = array(
 	'captcha-edit'               => 'To edit this page, please solve the simple sum below and enter the answer in the box ([[Special:Captcha/help|more info]]):',
-	'captcha-desc'               => 'Provides CAPTCHA techniques to protect against spam and password-guessing',
+	'captcha-desc-confirm-edit'               => 'Provides CAPTCHA techniques to protect against spam and password-guessing',
 	'captcha-addurl-confirm-edit'             => 'Your edit includes new external links.
 To help protect against automated spam, please solve the simple sum below and enter the answer in the box ([[Special:Captcha/help|more info]]):',
 	'captcha-badlogin-confirm-edit'           => 'To help protect against automated password cracking, please solve the simple sum below and enter the answer in the box ([[Special:Captcha/help|more info]]):',
@@ -60,7 +60,7 @@ $messages['qqq'] = array(
 See also
 *{{msg-mw|Questycaptcha-edit}}
 *{{msg-mw|Fancycaptcha-edit}}',
-	'captcha-desc' => '{{desc}}',
+	'captcha-desc-confirm-edit' => '{{desc}}',
 	'captcha-addurl-confirm-edit' => 'The explanation of CAPTCHA shown to users trying to add new external links.
 See also
 *{{msg-mw|Questycaptcha-addurl}}
@@ -90,7 +90,7 @@ See also
  */
 $messages['af'] = array(
 	'captcha-edit' => 'U wysiging bevat nuwe webskakels. Neem kennis dat blote reklame van u werf, produk of besigheid as vandalisme beskou kan word. As beskerming teen outomatiese gemorsbydraes, sal u die woorde wat onder verskyn in die prentjie moet intik: <br />([[Special:Captcha/help|Wat is hierdie?]])',
-	'captcha-desc' => 'Eenvoudige implementasie van captcha',
+	'captcha-desc-confirm-edit' => 'Eenvoudige implementasie van captcha',
 	'captcha-addurl-confirm-edit' => 'U wysiging bevat nuwe webskakels.
 As beskerming teen outomatiese gemorsbydraes, sal u die woorde wat onder verskyn in die prentjie moet intik ([[Special:Captcha/help|Wat is hierdie?]]):',
 	'captcha-badlogin-confirm-edit' => 'Los asseblief die onderstaande eenvoudige som op en voer die antwoord in die blokkie in ter beskerming teen die outomatiese kraak van wagwoorde ([[Special:Captcha/help|meer inligting]]):',
@@ -116,7 +116,7 @@ Gebruik die \"terug\"-knoppie van u blaaier om na die vorige blad terug te keer.
  */
 $messages['aln'] = array(
 	'captcha-edit' => 'Për të redaktuar këtë faqe, ju lutem zgjidh shuma e thjeshtë më poshtë dhe të hyjë në përgjigjen në kuti ([[Special:Captcha/help|më shumë informacion]]):',
-	'captcha-desc' => 'captcha Simple zbatimin e',
+	'captcha-desc-confirm-edit' => 'captcha Simple zbatimin e',
 	'captcha-addurl-confirm-edit' => 'Your redakto përfshin të jashtme lidhje të reja. Për të ndihmuar në mbrojtjen kundër spam automatizuar, ju lutem zgjidh shuma e thjeshtë më poshtë dhe të hyjë në përgjigjen në kuti ([[Special:Captcha/help|më shumë informacion]]):',
 	'captcha-badlogin-confirm-edit' => 'Për të ndihmuar në mbrojtjen kundër fjalëkalimin automatizuar plasaritje, ju lutem zgjidh shuma e thjeshtë më poshtë dhe të hyjë në përgjigjen në kuti ([[Special:Captcha/help|më shumë informacion]]):',
 	'captcha-createaccount-confirm-edit' => 'Për të ndihmuar në mbrojtjen kundër krijimit llogari e automatizuar, ju lutem zgjidh shuma e thjeshtë më poshtë dhe të hyjë në përgjigjen në kuti ([[Special:Captcha/help|më shumë informacion]]):',
@@ -157,7 +157,7 @@ $messages['am'] = array(
  */
 $messages['an'] = array(
 	'captcha-edit' => 'Ta editar ista pachina, faiga por favor a suma simpla que apareixe contino y escriba a solución en a caixa ([[Special:Captcha/help|más información]]):',
-	'captcha-desc' => 'Implementación de CAPTCHA ta protecher contra o spam y dovinanza de claus.',
+	'captcha-desc-confirm-edit' => 'Implementación de CAPTCHA ta protecher contra o spam y dovinanza de claus.',
 	'captcha-addurl-confirm-edit' => "A suya edición encluye vinclos esternos. Ta aduyar-nos en a proteción contra o spam automatizato, por favor, faiga a suma simpla que s'amuestra contino y escriba a respuesta en a caixa ([[Special:Captcha/help|más información]]):",
 	'captcha-badlogin-confirm-edit' => "Ta aduyar-nos en a protección contra a obtención automatizata de claus d'acceso, por favor faiga a suma simpla que amaneixe contino y escriba a respuesta en a caixa ([[Special:Captcha/help|más información]]):",
 	'captcha-createaccount-confirm-edit' => "Ta aduyar-nos en a proteción contra a creyación automatica de cuentas, por favor faiga a suma simpla que s'amuestra contino y escriba a respuesta en a caixa ([[Special:Captcha/help|más información]]):",
@@ -194,7 +194,7 @@ Punche o botón 'enta zaga' d'o suyo navegador ta tornar ta l'editor de pachinas
  */
 $messages['ar'] = array(
 	'captcha-edit' => 'لتعديل هذه الصفحة، من فضلك قم بحل المسألة الرياضية البسيطة بالأسفل وأدخل الإجابة في الصندوق ([[Special:Captcha/help|مزيد من المعلومات]]):',
-	'captcha-desc' => 'يوفر تقنيات كابتشا للحماية ضد السبام وتخمين كلمات السر',
+	'captcha-desc-confirm-edit' => 'يوفر تقنيات كابتشا للحماية ضد السبام وتخمين كلمات السر',
 	'captcha-addurl-confirm-edit' => 'تعديلك يحتوي على وصلات خارجية جديدة.
 للمساعدة في الحماية من السبام الأوتوماتيكي، من فضلك حل عملية الجمع بالأسفل وأدخل الإجابة في الصندوق  ([[Special:Captcha/help|مزيد من المعلومات]]):',
 	'captcha-badlogin-confirm-edit' => 'للمساعدة في الحماية ضد سرقة كلمات السر، من فضلك حل عملية الجمع البسيطة بالأسفل وأدخل الحل في الصندوق ([[Special:Captcha/help|مزيد من المعلومات]]):',
@@ -233,7 +233,7 @@ $messages['ar'] = array(
  */
 $messages['arz'] = array(
 	'captcha-edit' => 'علشان تعدل فى الصفحة دى، لو سمحت تحل المسالة الرياضية البسيطة اللى تحت  و اكتب الاجاية فى الصندوء ([[Special:Captcha/help|معلومات اكتر]]):',
-	'captcha-desc' => 'تطبيق بسيط لـ كابتشا',
+	'captcha-desc-confirm-edit' => 'تطبيق بسيط لـ كابتشا',
 	'captcha-addurl-confirm-edit' => 'التعديل بتاعك فيه لينكات خارجية جديدة.
 علشان تساعد فى الحماية من السبام الاوتوماتيكى،لو سمحت تحل المسالة الرياضية البسيطة اللى تحت و اكتب الاجابة فى الصندوء([[Special:Captcha/help|معلومات اكتر]]):',
 	'captcha-badlogin-confirm-edit' => 'علشان تساعد فى الحماية من السرقة الاوتوماتيكية للباسورد، لو سمجت تحل المسألة الرياضية البسيطة اللى تحت و تكتب الاجابة جوه الصندوء([[Special:Captcha/help|معلومات اكتر]]):',
@@ -298,7 +298,7 @@ $messages['as'] = array(
  */
 $messages['ast'] = array(
 	'captcha-edit' => "Pa editar esta páxina, por favor resuelvi la suma simple d'embaxo y pon la rempuesta nel caxellu ([[Special:Captcha/help|más información]]):",
-	'captcha-desc' => "Ufre téuniques de CAPTCHA pa protexese escontra'l spam y descubrimientu de contraseñes",
+	'captcha-desc-confirm-edit' => "Ufre téuniques de CAPTCHA pa protexese escontra'l spam y descubrimientu de contraseñes",
 	'captcha-addurl-confirm-edit' => "La to edición inclúi nuevos enllaces esternos. P'aidar a protexer escontra'l spam automatizáu, por favor resuelvi la suma simple d'embaxo y pon la rempuesta nel caxellu ([[Special:Captcha/help|más información]]):",
 	'captcha-badlogin-confirm-edit' => "P'aidar a protexer escontra'l descifráu automáticu de claves, por favor resuelvi la suma simple d'embaxo y pon la rempuesta nel caxellu ([[Special:Captcha/help|más información]]):",
 	'captcha-createaccount-confirm-edit' => "P'aidar a protexer escontra la creación automática de cuentes, por favor resuelvi la suma simple d'embaxo y pon la rempuesta nel caxellu ([[Special:Captcha/help|más información]]):",
@@ -338,7 +338,7 @@ $messages['az'] = array(
  */
 $messages['ba'] = array(
 	'captcha-edit' => 'Был битте мөхәррирләү өсөн, зинһар, ябай мәсьәләне сисегеҙ һәм яуабын түбәндәге юлға керетегеҙ ([[Special:Captcha/help|тулыраҡ мәғлүмәт]]):',
-	'captcha-desc' => 'Спамдан һәм паролде яратыуҙан һаҡлау өсөн CAPTCHA ысулдары менән тәьмин итә',
+	'captcha-desc-confirm-edit' => 'Спамдан һәм паролде яратыуҙан һаҡлау өсөн CAPTCHA ысулдары менән тәьмин итә',
 	'captcha-addurl-confirm-edit' => 'Һеҙҙең текстығыҙҙа яңы тышҡы һылтанмалар бар.
 Автоматик спамдан һаҡлау маҡсатында, зинһар, ябай мәсьәләне сисегеҙ һәм яуабын түбәндәге юлға керетегеҙ ([[Special:Captcha/help|тулыраҡ мәғлүмәт]]):',
 	'captcha-badlogin-confirm-edit' => 'Паролде автоматик ватыуҙан һаҡлау маҡсатында, зинһар, ябай мәсьәләне сисегеҙ һәм яуабын түбәндәге юлға керетегеҙ ([[Special:Captcha/help|тулыраҡ мәғлүмәт]]):',
@@ -373,7 +373,7 @@ $messages['ba'] = array(
  */
 $messages['bcc'] = array(
 	'captcha-edit' => 'به اصلاح کتن ای صفحه،لطفا ای جمع ساده حل کنیت و جوابء جهلا وارد کنیت ([[Special:Captcha/help|گیشتر اطلاعات]]):',
-	'captcha-desc' => ' کاربرد ساده captcha',
+	'captcha-desc-confirm-edit' => ' کاربرد ساده captcha',
 	'captcha-addurl-confirm-edit' => 'شمی اصلاح شامل نوکین درای لینک انت.
 په کمک په حمایت چه اتوماتیکی اسپم، لطفا جمع ساده حل کینت و جواب جهلء وارد کنیت  ([[Special:Captcha/help|گیشتر اطلاعات]]):',
 	'captcha-badlogin-confirm-edit' => 'په کمک په حمایت چه اتوماتیکی کلمه رمز پروشوک، لطفا ای جمع ساده حل کنیت. جوابء جهلء وارد کنید  ([[Special:Captcha/help|گیشتر اطلاعات]]):',
@@ -414,7 +414,7 @@ $messages['bcl'] = array(
  */
 $messages['be'] = array(
 	'captcha-edit' => 'Для змянення гэтай старонцы, калі ласка, вырашыце простую суму ніжэй і ўвядзіце адказ у поле ([[Special:Captcha/help|more info]]):',
-	'captcha-desc' => 'Вырашэнне простай каптчы',
+	'captcha-desc-confirm-edit' => 'Вырашэнне простай каптчы',
 	'captcha-create-confirm-edit' => 'Каб стварыць старонку, развяжыце простае ўраўненне, што ніжэй, і ўпішыце адказ у адпаведнае поле ([[Special:Captcha/help|больш падрабязна]]):',
 	'captchahelp-title' => 'Даведка Капчы',
 	'captchahelp-cookies-needed' => 'Каб гэтая магчымасць працавала, належыць дазволіць у браўзеры апрацоўку квіткоў ("кукі").',
@@ -433,7 +433,7 @@ $messages['be'] = array(
  */
 $messages['be-tarask'] = array(
 	'captcha-edit' => 'Каб рэдагаваць гэтую старонку, калі ласка, знайдзіце простую суму і ўвядзіце адказ у поле ([[Special:Captcha/help|падрабязнасьці]]):',
-	'captcha-desc' => 'Дадае мэтад CAPTCHA для абароны супраць спаму і падбору пароляў',
+	'captcha-desc-confirm-edit' => 'Дадае мэтад CAPTCHA для абароны супраць спаму і падбору пароляў',
 	'captcha-addurl-confirm-edit' => 'Вашае рэдагаваньне ўтрымлівае новыя вонкавыя спасылкі.
 У мэтах абароны ад аўтаматычнага спаму, калі ласка, знайдзіце простую суму і ўвядзіце адказ у поле ([[Special:Captcha/help|падрабязнасьці]]):',
 	'captcha-badlogin-confirm-edit' => 'У мэтах абароны ад аўтаматычнага ўзлому пароляў, калі ласка, знайдзіце простую суму і ўвядзіце адказ у поле ([[Special:Captcha/help|дадатковая інфармацыя]]):',
@@ -471,7 +471,7 @@ $messages['be-tarask'] = array(
  */
 $messages['bg'] = array(
 	'captcha-edit' => 'Редактирането на тази статия изисква потребителите да въведат отговора на задачата по-долу в текстовата кутия ([[Special:Captcha/help|повече информация]]):',
-	'captcha-desc' => 'Предоставя опростена captcha технология като защита срещу спам и налучкване на пароли',
+	'captcha-desc-confirm-edit' => 'Предоставя опростена captcha технология като защита срещу спам и налучкване на пароли',
 	'captcha-addurl-confirm-edit' => 'Тази редакция съдържа нови външни препратки. Като защита срещу автоматизиран спам системата изисква потребителите да въведат отговора на задачата по-долу в текстовата кутия ([[Special:Captcha/help|повече информация]]):',
 	'captcha-badlogin-confirm-edit' => 'Като защита срещу автоматизирано компрометиране на пароли, системата изисква потребителите да въведат отговора на задачата по-долу в текстовата кутия ([[Special:Captcha/help|повече информация]]):',
 	'captcha-createaccount-confirm-edit' => 'Като защита от автоматизирани регистрации, системата изисква при регистриране на потребителска сметка потребителите да въведат отговора на задачата по-долу в текстовата кутия ([[Special:Captcha/help|повече информация]]):',
@@ -498,7 +498,7 @@ $messages['bg'] = array(
  */
 $messages['bn'] = array(
 	'captcha-edit' => 'এই নিবন্ধটি সম্পাদনা করতে দয়া করে নিচের সহজ যোগটি সমাধান করুন এবং ফলাফলটি বাক্সটিতে প্রবেশ করান ([[Special:Captcha/help|আরও তথ্য]]):',
-	'captcha-desc' => 'সরল ক্যাপচা বাস্তবায়ন',
+	'captcha-desc-confirm-edit' => 'সরল ক্যাপচা বাস্তবায়ন',
 	'captcha-addurl-confirm-edit' => 'আপনার সম্পাদনায় নতুন বহিঃসংযোগ বিদ্যমান। স্বয়ংক্রিয় স্প্যামের বিরুদ্ধে সুরক্ষার খাতিরে অনুগ্রহ নিচের যোগটি সমাহদান করুন এবং উত্তরটি বাক্সে প্রবেশ করান ([[Special:Captcha/help|আরও তথ্য]]):',
 	'captcha-badlogin-confirm-edit' => 'স্বয়ংক্রিয় শব্দচাবি ক্র‌্যাকিং-এর বিরুদ্ধে সুরক্ষার খাতিরে অনুগ্রহ করে নিচের যোগটি সমাধান করুন এবং উত্তরটি বাক্সে প্রবেশ করান ([[Special:Captcha/help|আরও তথ্য]]):',
 	'captcha-createaccount-confirm-edit' => 'স্বয়ংক্রিয় অ্যাকাউন্ট সৃষ্টি রোধ করার খাতিরে অনুগ্রহ করে নিচের যোগটি সমাধান করুন এবং উত্তরটি বাক্সে প্রবেশ করান ([[Special:Captcha/help|আরও তথ্য]]):',
@@ -532,7 +532,7 @@ $messages['bn'] = array(
  */
 $messages['br'] = array(
 	'captcha-edit' => "A-raok gellout kemmañ ar bajenn-mañ e c'houlenner ouzhoc'h respont d'ar jedadenn eeun a-is ha lakaat an disoc'h er vaezienn ([[Special:Captcha/help|Petra eo se?]])",
-	'captcha-desc' => 'Pourchas a ra teknikoù CAPTCHA evit en em wareziñ diouzh ar strob hag an diskuliañ gerioù-tremen',
+	'captcha-desc-confirm-edit' => 'Pourchas a ra teknikoù CAPTCHA evit en em wareziñ diouzh ar strob hag an diskuliañ gerioù-tremen',
 	'captcha-addurl-confirm-edit' => "Liammoù diavaez nevez zo bet ouzhpennet ganeoc'h. A-benn talañ ouzh ar strob emgefre skrivit disoc'h ar jedadennig eeun-mañ er stern : <br />([[Special:Captcha/help|Petra eo se?]])",
 	'captcha-badlogin-confirm-edit' => "A-benn talañ ouzh preizhadur emgefre ar gerioù-tremen gant ar botoù e c'houlenner ouzhoc'h jediñ an tamm oberiadenn ha skrivañ an disoc'h anezhi er vaezienn a-is ([[Special:Captcha/help|Petra eo se ?]]):",
 	'captcha-createaccount-confirm-edit' => "A-benn hor skoazellañ da dalañ ouzh ar c'hrouiñ kontoù emgefre, skrivit ar gerioù a zeu war wel er stern-mañ evit enrollañ ho kont : <br />([[Special:Captcha/help|Petra eo se?]])",
@@ -568,7 +568,7 @@ Pouezit war bouton 'kent' ho merdeer evit distreiñ d'ar bajenn gemmañ.",
 $messages['bs'] = array(
 	'captcha-edit' => 'Vaša izmjena uključuje nove URL linkove; kao zaštita od automatizovanog vandalizma, moraćete da izračunate zadatak ispod i upišete odgovor u prozor:
 ([[Special:Captcha/help|Šta je ovo?]]):',
-	'captcha-desc' => 'Omogućava CAPTCHA tehnike za zaštitu protiv spama i probijanja šifre',
+	'captcha-desc-confirm-edit' => 'Omogućava CAPTCHA tehnike za zaštitu protiv spama i probijanja šifre',
 	'captcha-addurl-confirm-edit' => 'Vaša izmjena uključuje nove URL linkove; kao zaštita od automatizovanog vandalizma, moraćete da upišete rezultat prikazane sume u okvir ([[Special:Captcha/help|Šta je ovo?]]):',
 	'captcha-badlogin-confirm-edit' => 'Da bi ste pomogli protiv automatskog probijanja šifre, molimo riješite jednostavan zadatak sabiranja ispod i unesite rezultat u kutiju ([[Special:Captcha/help|više informacija]]):',
 	'captcha-createaccount-confirm-edit' => 'Kao zaštita od automatizovanog vandalizma, moraćete da ukucate rezultat sume u okvir ispod da biste registrovali nalog:
@@ -609,7 +609,7 @@ Kliknite 'nazad' ('back') dugme vašeg preglednika da se vratite na polje za uno
  */
 $messages['ca'] = array(
 	'captcha-edit' => 'Per a poder modificar aquesta pàgina cal que resolgueu aquesta simple suma i introduïu el resultat en el quadre ([[Special:Captcha/help|més informació]]):',
-	'captcha-desc' => "Proporciona tècniques CAPTCHA per a protegir contra la publicitat no desitjada i l'obtenció de contrasenyes",
+	'captcha-desc-confirm-edit' => "Proporciona tècniques CAPTCHA per a protegir contra la publicitat no desitjada i l'obtenció de contrasenyes",
 	'captcha-addurl-confirm-edit' => 'La vostra modificació conté enllaços externs nous. Com a protecció contra la brossa de propaganda automàtica, cal que resolgueu aquesta simple suma i introduïu el resultat en el quadre a continuació ([[Special:Captcha/help|més informació]]):',
 	'captcha-badlogin-confirm-edit' => "Per a ajudar en la protecció contra l'obtenció automatitzada de contrasenyes haureu de resoldre la suma que apareix a continuació ([[Special:Captcha/help|més informació]]):",
 	'captcha-createaccount-confirm-edit' => "Com a protecció contra la creació automàtica de comptes d'usuari necessitem que resolgueu aquesta simple suma i introduïu el resultat en el quadre a continuació ([[Special:Captcha/help|més informació]]):",
@@ -660,7 +660,7 @@ Buóh diōng kó̤ piĕng-cĭk hiĕk-miêng, áik \"diōng kó̤ sèng 1 hiĕk\"
  */
 $messages['cs'] = array(
 	'captcha-edit' => 'Abyste mohli editovat tuto stránku, musíte vyřešit následující jednoduchý součet a napsat výsledek. ([[Special:Captcha/help|Co tohle znamená?]])',
-	'captcha-desc' => 'Poskytuje techniky CAPTCHA pro ochranu před spamem a hádáním hesel',
+	'captcha-desc-confirm-edit' => 'Poskytuje techniky CAPTCHA pro ochranu před spamem a hádáním hesel',
 	'captcha-addurl-confirm-edit' => 'Vaše editace obsahuje nové externí odkazy.
 V zájmu ochrany před automatickým spamováním vyřešte následující jednoduchý součet a napište výsledek. ([[Special:Captcha/help|Co tohle znamená?]])',
 	'captcha-badlogin-confirm-edit' => 'V zájmu ochrany proti automatickým pokusům uhodnout heslo musíte vyřešit následující jednoduchý součet a napsat výsledek. ([[Special:Captcha/help|Co tohle znamená?]]):',
@@ -692,7 +692,7 @@ Pro návrat na předchozí stránku stiskněte ve svém prohlížeči tlačítko
  */
 $messages['cy'] = array(
 	'captcha-edit' => "Er mwyn gallu golygu'r dudalen, gwnewch y swm isod a gosodwch y canlyniad yn y blwch ([[Special:Captcha/help|rhagor o wybodaeth]]):",
-	'captcha-desc' => 'Yn gweithredu technegau CAPTCHA i arbed rhag sbam a dyfalu cyfrineiriau',
+	'captcha-desc-confirm-edit' => 'Yn gweithredu technegau CAPTCHA i arbed rhag sbam a dyfalu cyfrineiriau',
 	'captcha-addurl-confirm-edit' => 'Mae eich golygiad yn cynnwys cysylltiadau URL newydd. Er mwyn profi nad ydych yn beiriant sbam, byddwch gystal â theipio cyfanswm y swm canlynol yn y blwch isod ([[Special:Captcha/help|mwy o wybodaeth]]):',
 	'captcha-badlogin-confirm-edit' => 'Er mwyn ceisio rhwystro peiriannau datrys cyfrineiriau, byddwch gystal â gwneud y swm isod a gosod yr ateb yn y blwch ([[Special:Captcha/help|rhagor o wybodaeth]]):',
 	'captcha-createaccount-confirm-edit' => "Teipiwch cyfanswm y swm canlynol yn y blwch isod, os gwelwch yn dda. Mae'r nodwedd hon yn rhwystro rhaglenni sbam rhag creu cyfrifon i'w hunain ([[Special:Captcha/help|Mwy o wybodaeth]]):",
@@ -730,7 +730,7 @@ Gwasgwch botwm 'nôl' eich porwr er mwyn dychwelyd at y dudalen golygu.",
  */
 $messages['da'] = array(
 	'captcha-edit' => 'For at redigere denne side, skal du give svaret på regnestykket nedenfor, og angive resultatet i feltet under det. ([[Special:Captcha/help|mere information]]):',
-	'captcha-desc' => 'Giver CAPTCHA-teknikker til at beskytte mod spam og gætning af adgangskoder',
+	'captcha-desc-confirm-edit' => 'Giver CAPTCHA-teknikker til at beskytte mod spam og gætning af adgangskoder',
 	'captcha-addurl-confirm-edit' => 'Din redigering tilføjer nye eksterne henvisninger til artiklen. Som beskyttelse mod automatiseret spam, skal du give svaret på regnestyket nedenfor, og angive resultatet i feltet under det. ([[Special:Captcha/help|mere information]]):',
 	'captcha-badlogin-confirm-edit' => 'For at beskytte mod automatiserede gæt på kodeord, skal du give svaret på regnestyket nedenfor, og angive resultatet i feltet under det. ([[Special:Captcha/help|mere information]]):',
 	'captcha-createaccount-confirm-edit' => 'For at beskytte mod automatisk oprettelse af brugernavne, skal du give svaret på regnestyket nedenfor, og angive resultatet i feltet under det. ([[Special:Captcha/help|mere information]]):',
@@ -767,7 +767,7 @@ Tryk på 'tilbage'-knappen i din browser for at returnere til redigeringssiden."
  */
 $messages['de'] = array(
 	'captcha-edit' => 'Zur Bearbeitung der Seite löse die nachfolgende Rechenaufgabe und trage das Ergebnis in das Feld unten ein [[Special:Captcha/help|(Fragen oder Probleme?)]].',
-	'captcha-desc' => 'Ermöglicht verschiedene CAPTCHA-Techniken zum Schutz vor Spam und dem Erraten von Passwörtern',
+	'captcha-desc-confirm-edit' => 'Ermöglicht verschiedene CAPTCHA-Techniken zum Schutz vor Spam und dem Erraten von Passwörtern',
 	'captcha-addurl-confirm-edit' => 'Deine Bearbeitung enthält neue externe Links.
 Zum Schutz vor automatisiertem Spamming löse die nachfolgende Rechenaufgabe und trage das Ergebnis in das Feld unten ein. Klicke dann erneut auf „Seite speichern“ [[Special:Captcha/help|(Fragen oder Probleme?)]].',
 	'captcha-badlogin-confirm-edit' => 'Zum Schutz vor einer Kompromittierung deines Benutzerkontos löse die nachfolgende Rechenaufgabe und trage das Ergebnis in das Feld unten ein [[Special:Captcha/help|(Fragen oder Probleme?)]]:',
@@ -830,7 +830,7 @@ Der „Zurück“-Knopf des Browsers führt zurück zum Bearbeitungsfenster.',
  */
 $messages['diq'] = array(
 	'captcha-edit' => 'Qe ena pel vurnayîşî, ma rica keno cewabê problemî qutiyê ke cor de zerre ey ra binuse ([[Special:Captcha/help|enformasyonê bînî]]):',
-	'captcha-desc' => 'Rehat CAPTCHA teknoloci u  dezgina parola-ezayan',
+	'captcha-desc-confirm-edit' => 'Rehat CAPTCHA teknoloci u  dezgina parola-ezayan',
 	'captcha-addurl-confirm-edit' => 'Vurnayîşanê tu de linkanê harîcîyê newe esto.
 Qe otomatik spamî ra pawitîş, ma rica keno cewabê problemî qutiyê ke cor de zerre ey ra binuse ([[Special:Captcha/help|enformasyonê bînî]]):',
 	'captcha-badlogin-confirm-edit' => 'Qe otomatik parola crack kerdişî ra pawitîş, ma rica keno cewabê problemî qutiyê ke cor de zerre ey ra binuse ([[Special:Captcha/help|enformasyonê bînî]]):',
@@ -867,7 +867,7 @@ Browser xo de goceke 'back' rê klik bike şo pela editorî.",
  */
 $messages['dsb'] = array(
 	'captcha-edit' => 'Aby wobźěłował toś ten bok, rozwěž pšosym slědujucy jadnory liceński nadawk a zapódaj wuslědk do kašćika ([[Special:Captcha/help|Dalšne info]]):',
-	'captcha-desc' => 'Staja techniki CAPTCHA za šćit pśeśiwo spamoju a wugódanjoju gronidłow k dispoziciji',
+	'captcha-desc-confirm-edit' => 'Staja techniki CAPTCHA za šćit pśeśiwo spamoju a wugódanjoju gronidłow k dispoziciji',
 	'captcha-addurl-confirm-edit' => 'Twója změna wopśimujo nowe eksterne wótkaze.
 Za šćit pśeśiwo zawtomatizěrowanemu spamoju, rozwěž pšosym slědujucy jadnory liceński nadawk a zapódaj wuslědk do kašćika ([[Special:Captcha/help|dalšne info]]):',
 	'captcha-badlogin-confirm-edit' => 'Za šćit pśeśiwo zawtomatizěrowanemu wuzgónjowanjeju gronidła, rozwěž pšosym slědujucy jadnory liceński nadawk a zapódaj wuslědk do kašćika ([[Special:Captcha/help|dalšne info]]):',
@@ -918,7 +918,7 @@ $messages['ee'] = array(
  */
 $messages['el'] = array(
 	'captcha-edit' => 'Για να επεξεργαστείτε αυτή την σελίδα, παρακαλούμε λύστε την παρακάτω πρόσθεση και απαντήστε στο πλαίσιο ([[Special:Captcha/help|πληροφορίες]]):',
-	'captcha-desc' => 'Παρέχει τεχνικές CAPTCHA για την προστασία από spam και προσπάθειες σπασίματος  κωδικών πρόσβασης',
+	'captcha-desc-confirm-edit' => 'Παρέχει τεχνικές CAPTCHA για την προστασία από spam και προσπάθειες σπασίματος  κωδικών πρόσβασης',
 	'captcha-addurl-confirm-edit' => 'Η επεξεργασία σας περιλαμβάνει νέους εξωτερικούς συνδέσμους. Για λόγους προστασίας κατά αυτοματοποιημένου spam, παρακαλούμε λύστε την παρακάτω πρόσθεση και απαντήστε στο πλαίσιο ([[Special:Captcha/help|πληροφορίες]]):',
 	'captcha-badlogin-confirm-edit' => 'Για να βοηθήσετε στην προστασία ενάντια στον "σπασμένο" κωδικό πρόσβασης, παρακαλώ λύστε αυτή την απλή πράξη και εισάγετε το αποτέλεσμα της στο παρακάτω κενό ([[Special:Captcha/help|περισσότερες πληροφορίες]]):',
 	'captcha-createaccount-confirm-edit' => 'Για να βοηθήσετε στην προστασία ενάντια στην αυτοματοποιημένη δημιουργία λογαριασμού, παρακαλώ λύστε την απλή πράξη
@@ -987,7 +987,7 @@ Hit the 'back' button in your browser to return to the page editor.",
  */
 $messages['eo'] = array(
 	'captcha-edit' => 'Por redakti ĉi tiun paĝon, bonvolu solvi la simplan sumon jenan kaj enigi la respondon en la skatolo ([[Special:Captcha/help|plua informo]]):',
-	'captcha-desc' => 'Disponigas ilojn de Captcha por kontraŭigi spamaĵojn kaj pasvorto-divenadon',
+	'captcha-desc-confirm-edit' => 'Disponigas ilojn de Captcha por kontraŭigi spamaĵojn kaj pasvorto-divenadon',
 	'captcha-addurl-confirm-edit' => 'Via redakto entenas novajn eksterajn ligilojn.
 Por malhelpi aŭtomatan spamadon, bonvolu solvi la simplan problemon sube kaj entajpu la respondon en la kesto ([[Special:Captcha/help|pli da informo]]):',
 	'captcha-badlogin-confirm-edit' => 'Helpi protekti kontraŭ aŭtomata divenado de pasvortoj, bonvolu solvi la simplan sumon kaj enigi la respondon en la skatolo ([[Special:Captcha/help|plua informo]]):',
@@ -1032,7 +1032,7 @@ Klaku la 'reiru' butonon en via retumilo por reiri al la paĝo-redaktilo.",
  */
 $messages['es'] = array(
 	'captcha-edit' => 'Para editar este artículo, por favor resuelve la sencilla suma que aparece abajo e introduce la solución en la caja ([[Special:Captcha/help|más información]]):',
-	'captcha-desc' => 'Provee técnicas CAPTCHA para proteger contra spam y adivinación de contraseña.',
+	'captcha-desc-confirm-edit' => 'Provee técnicas CAPTCHA para proteger contra spam y adivinación de contraseña.',
 	'captcha-addurl-confirm-edit' => 'Tu edición incluye nuevos enlaces externos.
 Para ayudar a proteger contra el spam automatizado, por favor resuelve la sencilla suma de abajo e introduce la respuesta en la caja ([[Special:Captcha/help|más información]]):',
 	'captcha-badlogin-confirm-edit' => 'Para ayudar a protegernos de la creación automática de cuentas, por favor resuelve la simple suma de abajo e introduce la respuesta en la caja ([[Special:Captcha/help|más información]]):',
@@ -1068,7 +1068,7 @@ Presione el botón 'atrás' en su navegador para retornar al editor de página."
  */
 $messages['et'] = array(
 	'captcha-edit' => 'Selle lehekülje muutmiseks lahenda palun lihtne tehe ja sisesta vastus kasti ([[Special:Captcha/help|lisateave]]).',
-	'captcha-desc' => 'Pakub robotilõksu abil kaitset rämpspostituste ja paroolide äraarvamise vastu.',
+	'captcha-desc-confirm-edit' => 'Pakub robotilõksu abil kaitset rämpspostituste ja paroolide äraarvamise vastu.',
 	'captcha-addurl-confirm-edit' => 'Sinu muudatus sisaldab uusi välislinke.
 Palun lahenda allpool lihtne tehe ja sisesta vastus kasti. Abinõu on kaitseks automaadistatud rämpsmuudatuste eest ([[Special:Captcha/help|lisateave]]):',
 	'captcha-badlogin-confirm-edit' => 'Palun lahenda allpool lihtne tehe ja sisesta vastus kasti. Abinõu on kaitseks automaatsete parooliäraarvajate eest ([[Special:Captcha/help|lisateave]]):',
@@ -1105,7 +1105,7 @@ Konto registreerimise lehele või redigeerimisaknasse tagasi jõudmiseks klõpsa
  */
 $messages['eu'] = array(
 	'captcha-edit' => 'Orrialde hau editatzeko, mesedez, beheko batuketa erraz hau ebatzi eta erantzuna kutxan idatzi ([[Special:Captcha/help|argibide gehiago]]):',
-	'captcha-desc' => 'CAPTCHA teknika erabiltzen ditu spamaren aurkako babeserako',
+	'captcha-desc-confirm-edit' => 'CAPTCHA teknika erabiltzen ditu spamaren aurkako babeserako',
 	'captcha-addurl-confirm-edit' => 'Zure aldaketan URL lotura berriak daude; spam-a saihesteko, jarraian dagoen irudiko hitzak idaztea beharrezkoa da:<br /> ([[Special:Captcha/help|Zer da hau?]])',
 	'captcha-createaccount-confirm-edit' => 'Spam-a saihesteko, mesedez, irudian agertzen den hizki edo zenbaki kodea, beheko laukian idatzi zure kontua sortzeko:<br /> ([[Special:Captcha/help|Zer da hau?]])',
 	'captcha-createaccount-fail-confirm-edit' => 'Baieztatze kode ezegokia.',
@@ -1130,7 +1130,7 @@ Zure nabigatzaileko 'atzera' lotura erabili aldaketen orrialdera itzultzeko.",
  */
 $messages['fa'] = array(
 	'captcha-edit' => 'برای ویرایش این مقاله، لطفاً حاصل جمع زیر را حساب کنید و نتیجه را در جعبه وارد کنید ([[Special:Captcha/help|اطلاعات بیشتر]]):',
-	'captcha-desc' => 'روش‌های مبتنی بر CAPTCHA برای مقابله با هرزنگاری و کشف گذرواژه فراهم می‌کند',
+	'captcha-desc-confirm-edit' => 'روش‌های مبتنی بر CAPTCHA برای مقابله با هرزنگاری و کشف گذرواژه فراهم می‌کند',
 	'captcha-addurl-confirm-edit' => 'ویرایش شما شامل پیوندهای تازه‌ای به بیرون است. برای کمک به جلوگیری از ارسال خودکار هرزنامه‌ها، لطفاً حاصل جمع زیر را حساب کنید و نتیجه را در جعبه وارد کنید ([[Special:Captcha/help|اطلاعات بیشتر]]):',
 	'captcha-badlogin-confirm-edit' => 'برای کمک به جلوگیری از سرقت خودکار کلمه عبور، لطفاً حاصل جمع زیر را حساب کنید و نتیجه را در جعبه وارد کنید ([[Special:Captcha/help|اطلاعات بیشتر]]):',
 	'captcha-createaccount-confirm-edit' => 'برای جلوگیری از ایجاد خودکار حساب کاربری، لطفاً حاصل جمع زیر را حساب کنید و نتیجه را در جعبه وارد کنید ([[Special:Captcha/help|اطلاعات بیشتر]]):',
@@ -1168,7 +1168,7 @@ $messages['fa'] = array(
  */
 $messages['fi'] = array(
 	'captcha-edit' => 'Ratkaise alla oleva summa jatkaaksesi ([[Special:Captcha/help|lisätietoja]]):',
-	'captcha-desc' => 'Tarjoaa CAPTCHA-tekniikoita suojaamaan mainoslinkkejä ja salasana-arvailua vastaan.',
+	'captcha-desc-confirm-edit' => 'Tarjoaa CAPTCHA-tekniikoita suojaamaan mainoslinkkejä ja salasana-arvailua vastaan.',
 	'captcha-addurl-confirm-edit' => 'Muokkauksesi sisältää uusia linkkejä muille sivuille. Ratkaise alla oleva summa jatkaaksesi ([[Special:Captcha/help|lisätietoja]]):',
 	'captcha-badlogin-confirm-edit' => 'Salasananmurtajasovellusten takia, ratkaise alla oleva summa jatkaaksesi ([[Special:Captcha/help|lisätietoja]]):',
 	'captcha-createaccount-confirm-edit' => 'Ratkaise alla oleva summa jatkaaksesi ([[Special:Captcha/help|lisätietoja]]):',
@@ -1226,7 +1226,7 @@ $messages['fo'] = array(
  */
 $messages['fr'] = array(
 	'captcha-edit' => 'Pour modifier cette page, veuillez calculer l’opération simple ci-dessous et en inscrire le résultat dans le champ ([[Special:Captcha/help|plus d’informations]]) :',
-	'captcha-desc' => 'Offre des techniques CAPTCHA pour prétéger contre le spam et la découverte des mots de passe par essais multiples',
+	'captcha-desc-confirm-edit' => 'Offre des techniques CAPTCHA pour prétéger contre le spam et la découverte des mots de passe par essais multiples',
 	'captcha-addurl-confirm-edit' => 'Votre modification inclut de nouveaux liens externes.
 Pour nous aider dans la protection contre le pourriel automatisé, veuillez calculer l’opération simple ci-dessous et en inscrire le résultat dans le champ ([[Special:Captcha/help|plus d’informations]]) :',
 	'captcha-badlogin-confirm-edit' => 'Afin de nous aider à prévenir le cassage des mots de passe par des automates, veuillez calculer l’opération simple ci-dessous et en inscrire le résultat dans le champ ([[Special:Captcha/help|plus d’informations]]) :',
@@ -1261,7 +1261,7 @@ Cliquez sur le bouton « Précédent » de votre navigateur pour revenir à la p
  */
 $messages['frp'] = array(
 	'captcha-edit' => 'Por changiér ceta pâge, volyéd calcular l’opèracion simpla ce-desot et pués nen buchiér lo rèsultat dens la bouèta ([[Special:Captcha/help|més d’enformacions]]) :',
-	'captcha-desc' => 'Semond des tècniques CAPTCHA por protègiér contre lo spame et la dècuvèrta des contresegnos per un mouél de tentatives.',
+	'captcha-desc-confirm-edit' => 'Semond des tècniques CAPTCHA por protègiér contre lo spame et la dècuvèrta des contresegnos per un mouél de tentatives.',
 	'captcha-addurl-confirm-edit' => 'Voutron changement encllut de lims de defôr novéls.
 Por nos édiér a combatre contre lo spame ôtomatisâ, volyéd calcular l’opèracion simpla ce-desot et pués nen buchiér lo rèsultat dens la bouèta ([[Special:Captcha/help|més d’enformacions]]) :',
 	'captcha-badlogin-confirm-edit' => 'Por nos édiér a combatre contre lo cassâjo ôtomatisâ de contresegnos, volyéd calcular l’opèracion simpla ce-desot et pués nen buchiér lo rèsultat dedens la bouèta ([[Special:Captcha/help|més d’enformacions]]) :',
@@ -1341,7 +1341,7 @@ $messages['ga'] = array(
  */
 $messages['gl'] = array(
 	'captcha-edit' => 'Para editar esta páxina, resolva a suma que aparece a continuación e introduza a resposta na caixa ([[Special:Captcha/help|máis información]]):',
-	'captcha-desc' => 'Proporciona CAPTCHA como protección fronte ao spam e ao descubrimento de contrasinais',
+	'captcha-desc-confirm-edit' => 'Proporciona CAPTCHA como protección fronte ao spam e ao descubrimento de contrasinais',
 	'captcha-addurl-confirm-edit' => 'A súa edición inclúe novas ligazóns externas.
 Para contribuír na protección contra as ferramentas de publicación automática de ligazóns publicitarias, resolva a suma que aparece a continuación e introduza a resposta na caixa ([[Special:Captcha/help|máis información]]):',
 	'captcha-badlogin-confirm-edit' => 'Para contribuír a que non se descubran os contrasinais por medios automáticos, resolva a suma que aparece a continuación e introduza a resposta na caixa ([[Special:Captcha/help|máis información]]):',
@@ -1385,7 +1385,7 @@ $messages['grc'] = array(
  */
 $messages['gsw'] = array(
 	'captcha-edit' => 'Zum d Syte bearbeite lees die Rächenufgab un trag s Ergebnis in s Fäld unten yy. [[Special:Captcha/help|(Frogen oder Probläm?)]]',
-	'captcha-desc' => 'Stellt CAPTCHA-Tächnike zum Schutz vor Spam un em Rote vu Passwerter z Verfiegig',
+	'captcha-desc-confirm-edit' => 'Stellt CAPTCHA-Tächnike zum Schutz vor Spam un em Rote vu Passwerter z Verfiegig',
 	'captcha-addurl-confirm-edit' => 'In Dyynere Bearbeitig het s neiji externi Gleicher.
 Zum Schutz vor automatisiertem Spamming lees die Rächenufgab un trag s Ergebnis in s Fäld unten yy. Druck drno nomol uf „Syte spychere“. [[Special:Captcha/help|(Frogen oder Probläm?)]]',
 	'captcha-badlogin-confirm-edit' => 'Zum Schutz vor ere Kompromittierig vu Dyynem Benutzerkonto lees die Rächenufgab un trag s Ergebnis in s Fäld unten yy [[Special:Captcha/help|(Frogen oder Probläm?)]]:',
@@ -1423,7 +1423,7 @@ Ins Bearbeitigsfänschter chunnt mer derno eifach wider mit em „Zruck“-Chnop
  */
 $messages['gu'] = array(
 	'captcha-edit' => 'આ લેખમાં ફેરફાર કરવા માટે નીચે આપેલા સરળ દાખલાનો જવાબ તેની બાજુના ખાનામાં લખો ([[Special:Captcha/help|more info]]):',
-	'captcha-desc' => '',
+	'captcha-desc-confirm-edit' => '',
 	'captcha-addurl-confirm-edit' => 'તમે કરેલા ફેરફારોમાં નવી બાહ્ય કડીઓ સામેલ છે. સ્વચાલિત સ્પેમ/સ્પામ(spam) થી બચવા માટે નીચે આપેલા સરળ દાખલાનો જવાબ તેની બાજુના ખાનામાં લખો
 ([[Special:Captcha/help|more info]]):',
 	'captcha-badlogin-confirm-edit' => 'આપોઆપ થતી ગુપ્તસંજ્ઞાની ચોરી (password cracking)થી બચાવવા માટે નીચે આપેલા સરળ દાખલાનો જવાબ તેની બાજુના ખાનામાં લખો ([[Special:Captcha/help|more info]]):',
@@ -1458,7 +1458,7 @@ $messages['gu'] = array(
  */
 $messages['he'] = array(
 	'captcha-edit' => 'כדי לערוך את הדף, אנא פתרו את תרגיל החיבור הפשוט שלהלן והקלידו את התשובה בתיבה ([[Special:Captcha/help|מידע נוסף]]):',
-	'captcha-desc' => 'מתן טכניקות CAPTCHA להגנה נגד זיבול וניחוש ססמאות',
+	'captcha-desc-confirm-edit' => 'מתן טכניקות CAPTCHA להגנה נגד זיבול וניחוש ססמאות',
 	'captcha-addurl-confirm-edit' => 'עריכתכם כוללת קישורים חיצוניים חדשים. כהגנה מפני ספאם אוטומטי, אנא פתרו את תרגיל החיבור הפשוט שלהלן והקלידו את התשובה בתיבה ([[Special:Captcha/help|מידע נוסף]]):',
 	'captcha-badlogin-confirm-edit' => 'כהגנה מפני פריצת סיסמאות אוטומטית, אנא פתרו את תרגיל החיבור הפשוט שלהלן והקלידו את התשובה בתיבה ([[Special:Captcha/help|מידע נוסף]]):',
 	'captcha-createaccount-confirm-edit' => 'כהגנה מפני יצירת חשבונות אוטומטית, אנא פתרו את תרגיל החיבור הפשוט שלהלן והקלידו את התשובה בתיבה ([[Special:Captcha/help|מידע נוסף]]):',
@@ -1496,7 +1496,7 @@ $messages['he'] = array(
  */
 $messages['hi'] = array(
 	'captcha-edit' => 'यह पन्ना संपादित करने के लिये, नीचे दिये हुए आसान राशि का जवाब दिये हुए टेक्स्टबॉक्समें लिखें ([[Special:Captcha/help|अधिक ज़ानकारी]]):',
-	'captcha-desc' => 'आसानसे कॅपचा (captcha) का इस्तेमाल',
+	'captcha-desc-confirm-edit' => 'आसानसे कॅपचा (captcha) का इस्तेमाल',
 	'captcha-addurl-confirm-edit' => 'आपके बदलावोंमें नई बाह्यकड़ियां हैं। अपने आप होने वाले स्पॅमसे बचने के लिये, नीचे दिये हुए आसान राशि का जवाब दिये हुए टेक्स्टबॉक्समें लिखें ([[Special:Captcha/help|अधिक ज़ानकारी]]):',
 	'captcha-badlogin-confirm-edit' => 'अपने आप होनेवाले कूटशब्द के भेद से बचने के लिये, नीचे दिये हुए आसान राशि का जवाब दिये हुए टेक्स्टबॉक्समें लिखें ([[Special:Captcha/help|अधिक ज़ानकारी]]):',
 	'captcha-createaccount-confirm-edit' => 'अपने आप होने वाले सदस्य पंजीकरण से बचने के लिये, नीचे दिये हुए आसान राशि का जवाब दिये हुए टेक्स्टबॉक्समें लिखें ([[Special:Captcha/help|अधिक ज़ानकारी]]):',
@@ -1533,7 +1533,7 @@ $messages['hi'] = array(
  */
 $messages['hr'] = array(
 	'captcha-edit' => 'Da uredite ovu stranicu, molimo riješite jednostavno zbrajanje ispod i unesite rezultat u rubriku ([[Special:Captcha/help|više informacija]]):',
-	'captcha-desc' => 'Pruža CAPTCHA tehnike za zaštitu od neželjene pošte (spam-a) i pogađanja zaporke',
+	'captcha-desc-confirm-edit' => 'Pruža CAPTCHA tehnike za zaštitu od neželjene pošte (spam-a) i pogađanja zaporke',
 	'captcha-addurl-confirm-edit' => 'Vaše uređivanje sadrži nove vanjske poveznice. Kao zaštitu od automatskog spama, trebate unijeti slova koja vidite na slici: <br />([[Special:Captcha/help|Pomoć?]])',
 	'captcha-badlogin-confirm-edit' => 'Da se spriječi automatizirano pogađanje lozinki,
 molimo zbrojite donje brojeve i upišite rezultat ([[Special:Captcha/help|pomoć]]):',
@@ -1568,7 +1568,7 @@ Pritisnite u svom pregledniku 'nazad' kako bi se vratili na uređivač stranice.
  */
 $messages['hsb'] = array(
 	'captcha-edit' => 'Zo by stronu wobdźěłał, rozrisaj prošu slědowacy ličenski nadawk a zapodaj wuslědk do kašćika ([[Special:Captcha/help|Dalše informacije]]):',
-	'captcha-desc' => 'Staja CAPTCHA-techniki za škit přećiwo spamej a zhódowanju hesłow k dispoziciji',
+	'captcha-desc-confirm-edit' => 'Staja CAPTCHA-techniki za škit přećiwo spamej a zhódowanju hesłow k dispoziciji',
 	'captcha-addurl-confirm-edit' => 'W twojej změnje su nowe eksterne wotkazy. Jako škitna naprawa přećiwo awtomatizowanemu spamej dyrbiš slědowacy nadawk wuličić a wuslědk do kašćika [[Special:Captcha/help|(dalše informacije)]] zapisować.',
 	'captcha-badlogin-confirm-edit' => 'Zo by so awtomatiskemu zadobywanju do hesłow zadźěwało, dyrbiš slědowacy nadawk wuličeć a wuslědk do kašćika zapisować. ([[Special:Captcha/help|dalše informacije]])',
 	'captcha-createaccount-confirm-edit' => 'Jako škitna naprawa přećiwo awtomatiskemu wutworjenju wužiwarskich kontow dyrbiš slědowacy nadawk wuličeć a wuslědk do kašćika zapisować  ([[Special:Captcha/help|dalše informacije]]):',
@@ -1603,7 +1603,7 @@ Klikń na tłócatko "Wróćo" w swojim wobhladowaku, zo by so k editorej wróć
  */
 $messages['ht'] = array(
 	'captcha-edit' => 'Pou ou kapab modifye paj sa, nou mande w kalkile ti adisyon fasil sa epitou mete rezilta, repons ou an nan bwat ki bò kote l ([[Special:Captcha/help|konnen plis sou fonksyon sa]]):',
-	'captcha-desc' => 'Yon enplemantasyon captcha senp',
+	'captcha-desc-confirm-edit' => 'Yon enplemantasyon captcha senp',
 	'captcha-addurl-confirm-edit' => 'Edisyon ou an genyen nouvo lyen pou andeyò.
 Pou ede nou pwoteje sistèm an kont pouryèl, tanpri, fè ti adisyon fasil sa epi bay repons ou an nan bwat ([[Special:Captcha/help|plis èd sou fonksyon sa]]):',
 	'captcha-badlogin-confirm-edit' => 'Pou ede nou lite kont òdinatè ki ap krake, pirate mopas yo, tanpri rezoud ti adisyon fasil sa epi mete repons ou an nan bwat ([[Special:Captcha/help|konnen plis sou fonksyon sa]]):',
@@ -1616,7 +1616,7 @@ Pou ede nou pwoteje sistèm an kont pouryèl, tanpri, fè ti adisyon fasil sa ep
  */
 $messages['hu'] = array(
 	'captcha-edit' => 'A lap szerkesztéséhez meg kell, hogy kérjünk, írd be a lenti dobozba az alábbi egyszerű összeadás eredményét ([[Special:Captcha/help|segítség]]):',
-	'captcha-desc' => 'CAPTCHA-technológiák a spamek és a jelszókitalálási technikák ellen',
+	'captcha-desc-confirm-edit' => 'CAPTCHA-technológiák a spamek és a jelszókitalálási technikák ellen',
 	'captcha-addurl-confirm-edit' => 'Szerkesztésed új külső linket tartalmaz. A reklámokat elhelyező robotok kiszűrése érdekében meg kell, hogy kérjünk, írd be a lenti dobozba az alábbi matematikai művelet eredményét. ([[Special:Captcha/help|segítség]])',
 	'captcha-badlogin-confirm-edit' => 'Az automatikus jelszófeltörés kiszűrése érdekében meg kell, hogy kérjünk, írd be a lenti dobozba az alábbi egyszerű számtani művelet eredményét ([[Special:Captcha/help|segítség]]):',
 	'captcha-createaccount-confirm-edit' => 'A felhasználói fiókok automatizált létrehozásának kiszűrése érdekében meg kell, hogy kérjünk, írd be a lenti dobozba az alábbi egyszerű számtani művelet eredményét. ([[Special:Captcha/help|segítség]])',
@@ -1647,7 +1647,7 @@ Ha a captcha megoldása helyett inkább visszatérnél a szöveg szerkesztéséh
  */
 $messages['ia'] = array(
 	'captcha-edit' => 'Pro modificar iste pagina, per favor resolve le simple summa hic infra e entra le responsa in le quadro ([[Special:Captcha/help|plus info]]):',
-	'captcha-desc' => 'Forni technicas CAPTCHA de protection contra spam e discoperta de contrasignos',
+	'captcha-desc-confirm-edit' => 'Forni technicas CAPTCHA de protection contra spam e discoperta de contrasignos',
 	'captcha-addurl-confirm-edit' => 'Tu modification include nove ligamines externe.
 Como protection contra le spam automatic, per favor resolve le simple summa hic infra e entra le resultato in le quadro ([[Special:Captcha/help|plus info]]):',
 	'captcha-badlogin-confirm-edit' => 'Como protection contra le piratage automatic de contrasignos, per favor resolve le simple summa hic infra e entra le resultato in le quadro ([[Special:Captcha/help|plus info]]):',
@@ -1686,7 +1686,7 @@ Clicca le button 'retro' in tu navigator pro retornar al pagina de modification.
  */
 $messages['id'] = array(
 	'captcha-edit' => 'Untuk menyunting halaman ini, harap pecahkan penjumlahan sederhana di bawah ini dan masukkan jawaban di kotak yang tersedia ([[Special:Captcha/help|info lengkap]]):',
-	'captcha-desc' => 'Menyediakan teknik captcha untuk melindungi terhadap spam dan penebakan sandi',
+	'captcha-desc-confirm-edit' => 'Menyediakan teknik captcha untuk melindungi terhadap spam dan penebakan sandi',
 	'captcha-addurl-confirm-edit' => "Suntingan Anda menyertakan pranala luar baru. Sebagai pelindungan terhadap ''spam'' otomatis, Anda harus mengetikkan kata atau hasil perhitungan yang tertera berikut ini:<br />
 ([[Special:Captcha/help|info lengkap]])",
 	'captcha-badlogin-confirm-edit' => 'Untuk membantu pelindungan terhadap perengkahan kunci sandi otomatis, tolong masukkan kata atau hasil perhitungan sederhana berikut dalam kotak yang tersedia ([[Special:Captcha/help|info lengkap]]):',
@@ -1723,7 +1723,7 @@ Tekan tombol 'back' di penjelajah web Anda untuk kembali ke halaman penyuntingan
  */
 $messages['ilo'] = array(
 	'captcha-edit' => 'Tapno maurnos daytoy a panid, pangaasim a sulbaren ti nalaka a dagup dita baba ken ikabil ti sungbat mo dita kahon ([[Special:Captcha/help|adu pay a pakaammo]]):',
-	'captcha-desc' => 'Ikkan na kadagiti CAPTCHA a pamay-ay tapno masalakniban kadagiti spam ken agpugpugto ti kontrasenias',
+	'captcha-desc-confirm-edit' => 'Ikkan na kadagiti CAPTCHA a pamay-ay tapno masalakniban kadagiti spam ken agpugpugto ti kontrasenias',
 	'captcha-addurl-confirm-edit' => 'Ti inurnos mo ket adda nagyan na a panilpo iti ruar.
 Tapno  maasalakniban kadagiti automatiko a spam, pangaasim na sulbaren ti nalaka a dagup dita baba ken ikabil ti sungbat mo dita kahon ([[Special:Captcha/help|adu pay a pakaammo]]):',
 	'captcha-badlogin-confirm-edit' => 'Tapno  makasalaknib kadagiti automatiko a pinagsulbar ti kontrasenias, pangaasim a sulbaren ti nalaka a dagup dita baba ken ikabil ti sungbat mo dita kahon ([[Special:Captcha/help|adu pay a pakaammo]]):',
@@ -1788,7 +1788,7 @@ Notaðu „til-baka“-hnapp vafrans til að breyta síðunni.',
 $messages['it'] = array(
 	'captcha-edit' => 'Per modificare la pagina è necessario risolvere il semplice calcolo presentato di seguito e inserire il risultato nella casella
 ([[Special:Captcha/help|maggiori informazioni]]):',
-	'captcha-desc' => "Fornisce tecniche CAPTCHA per la protezione contro lo spam e l'individuazione delle password",
+	'captcha-desc-confirm-edit' => "Fornisce tecniche CAPTCHA per la protezione contro lo spam e l'individuazione delle password",
 	'captcha-addurl-confirm-edit' => "La modifica richiesta aggiunge dei nuovi collegamenti esterni alla pagina; come misura precauzionale contro l'inserimento automatico di spam, è necessario risolvere il semplice calcolo presentato di seguito e inserire il risultato nella casella ([[Special:Captcha/help|maggiori informazioni]]):",
 	'captcha-badlogin-confirm-edit' => 'Come misura precauzionale contro i tentativi di forzatura automatica della password, è necessario risolvere il semplice calcolo presentato di seguito e inserire il risultato nella casella ([[Special:Captcha/help|maggiori informazioni]]):',
 	'captcha-createaccount-confirm-edit' => 'Come misura precauzionale contro i tentativi di creazione automatica degli account, per registrarsi è necessario risolvere il semplice calcolo presentato di seguito e inserire il risultato nella casella ([[Special:Captcha/help|maggiori informazioni]]):',
@@ -1825,7 +1825,7 @@ Fare clic sul pulsante 'back' del browser per tornare alla pagina di modifica.",
  */
 $messages['ja'] = array(
 	'captcha-edit' => 'このページを編集するには、下記の簡単な数式を計算し、欄に答えを入力してください([[Special:Captcha/help|ヘルプ]])：',
-	'captcha-desc' => 'スパムやパスワード推定の攻撃を防ぐためのCAPTCHA技術を提供する',
+	'captcha-desc-confirm-edit' => 'スパムやパスワード推定の攻撃を防ぐためのCAPTCHA技術を提供する',
 	'captcha-addurl-confirm-edit' => 'あなたの編集により新たに外部リンクが追加されようとしています。スパム防止のため、下記の簡単な数式を計算し、欄に答えを入力してください。([[Special:Captcha/help|ヘルプ]])',
 	'captcha-badlogin-confirm-edit' => '自動化スクリプトによるパスワードクラック攻撃を防ぐため、下記の簡単な数式を計算し、欄に答えを入力してください。([[Special:Captcha/help|ヘルプ]])',
 	'captcha-createaccount-confirm-edit' => 'アカウントの自動作成を防ぐため、下記の簡単な数式を計算し、欄に答えを入力してください。([[Special:Captcha/help|ヘルプ]])',
@@ -1861,7 +1861,7 @@ $messages['ja'] = array(
  */
 $messages['jut'] = array(
 	'captcha-edit' => 'For at redigere denne side, skal du give svaret på regnestyket nedenfor, og angive resultatet i feltet under det. ([[Special:Captcha/help|mere information]]):',
-	'captcha-desc' => 'Semple captcha implementåsje',
+	'captcha-desc-confirm-edit' => 'Semple captcha implementåsje',
 	'captcha-addurl-confirm-edit' => 'Din redigering tilføjer nye eksterne henvisninger til artiklen. Som beskyttelse mod automatiseret spam, skal du give svaret på regnestyket nedenfor, og angive resultatet i feltet under det. ([[Special:Captcha/help|mere information]]):',
 	'captcha-badlogin-confirm-edit' => 'For at beskytte mod automatiserede gæt på kodeord, skal du give svaret på regnestyket nedenfor, og angive resultatet i feltet under det. ([[Special:Captcha/help|mere information]]):',
 	'captcha-createaccount-confirm-edit' => 'For at beskytte mod automatisk oprettelse af brugernavne, skal du give svaret på regnestyket nedenfor, og angive resultatet i feltet under det. ([[Special:Captcha/help|mere information]]):',
@@ -1889,7 +1889,7 @@ Tryk på 'tilbage'-knappen i din browser for at returnere til redigeringssiden."
  */
 $messages['jv'] = array(
 	'captcha-edit' => 'Kanggo nyunting kaca iki, mangga pecahna tambah-tambahan ing ngisor iki lan lebokna wangsulané ing kothak cedaké ([[Special:Captcha/help|info sabanjuré]]):',
-	'captcha-desc' => 'Implementasi prasaja captcha',
+	'captcha-desc-confirm-edit' => 'Implementasi prasaja captcha',
 	'captcha-addurl-confirm-edit' => "Suntingan panjenengan iku nyertakaké pranala jaba anyar.
 Kanggo ngéwangi ngreksa lawan ''spam'' otomatis, tulung pecahna itung-itungan ing ngisor iki lan lebokna kasilna sajroning kothak ([[Special:Captcha/help|info sabanjuré]]):",
 	'captcha-badlogin-confirm-edit' => 'Kanggo ngreksa lawan parengkahan kunci sandhi otomatis, tulung lebokna tembung utawa kasil itung-itungan gampang ing ngisor sajroning kothak sing wis sumedya ([[Special:Captcha/help|info sabanjuré]]):',
@@ -1920,7 +1920,7 @@ Pencèten tombol 'back' ing panjlajah wèb panjenengan kanggo bali menyang kaca 
  */
 $messages['ka'] = array(
 	'captcha-edit' => 'ამ გვერდის რედაქტირებისათვის, გთხოვთ, ამოხსნათ ქვემოთ მოცემული მარტივი მაგალითი და პასუხი შეიყვანოთ ყუთში ([[Special:Captcha/help|მეტი ინფორმაცია]]):',
-	'captcha-desc' => 'უზრუნველყოფს CAPTCHA-ს მეთოდების გამოყენებას სპამისა და პაროლის გამოცნობისაგან დასაცავად',
+	'captcha-desc-confirm-edit' => 'უზრუნველყოფს CAPTCHA-ს მეთოდების გამოყენებას სპამისა და პაროლის გამოცნობისაგან დასაცავად',
 	'captcha-addurl-confirm-edit' => 'თქვენი ცვლილება შეიცავს ახალ გარე ბმულებს.
 ავტომატური სპამინგისგან თავდაცვის მიზნით, გთხოვთ, ამოხსნათ ქვემოთ მოცემული მარტივი მაგალითი და პასუხი შეიყვანოთ ყუთში ([[Special:Captcha/help|მეტი ინფორმაცია]]):',
 	'captcha-badlogin-confirm-edit' => 'პაროლების ავტომატური გატეხვისგან თავდაცვის მიზნით, გთხოვთ, ამოხსნათ ქვემოთ მოცემული მარტივი მაგალითი და პასუხი შეიყვანოთ ყუთში ([[Special:Captcha/help|მეტი ინფორმაცია]]):',
@@ -2043,7 +2043,7 @@ Bet öñdewine qaýtw barw üşin «Artqa» degen tüýmesin basıñız.',
  */
 $messages['km'] = array(
 	'captcha-edit' => 'ដើម្បីកែប្រែ​ទំព័រនេះ សូមដោះស្រាយ​ប្រមាណវិធីបូក​ខាងក្រោម​នេះរួច​បញ្ជូលចម្លើយ​ទៅក្នុង​ប្រអប់សិន([[Special:Captcha/help|ព័ត៌មាន​បន្ថែម]])៖',
-	'captcha-desc' => 'ផ្ដល់បច្ចេកទេស CAPTCHA ដើម្បីការពារពីស្ប៉ាមនិងការការទាយពាក្យសំងាត់',
+	'captcha-desc-confirm-edit' => 'ផ្ដល់បច្ចេកទេស CAPTCHA ដើម្បីការពារពីស្ប៉ាមនិងការការទាយពាក្យសំងាត់',
 	'captcha-addurl-confirm-edit' => 'កំណែ​របស់អ្នក​មាន​តំណភ្ជាប់ក្រៅ​ថ្មី។ ដើម្បី​ជួយបង្ការ​ស្ប៉ាម​ស្វ័យប្រវត្តិ សូមដោះស្រាយ​ប្រមាណវិធីបូក​ខាងក្រោម​នេះរួច​បញ្ជូលចម្លើយ​ទៅក្នុង​ប្រអប់សិន([[Special:Captcha/help|ព័ត៌មាន​បន្ថែម]])៖',
 	'captcha-badlogin-confirm-edit' => 'ដើម្បីការពារការបំបែកពាក្យសំងាត់ដោយស្វ័យប្រវត្តិ សូមដោះស្រាយផលបូកខាងក្រោមរួចបញ្ជូលចម្លើយទៅក្នុងប្រអប់ ([[Special:Captcha/help|ព័ត៌មានបន្ថែម]])៖',
 	'captcha-createaccount-confirm-edit' => 'ដើម្បី​បង្ការការបង្កើត​គណនី​ស្វ័យប្រវត្តិ សូមដោះស្រាយ​ប្រមាណវិធីបូក​ខាងក្រោម​នេះរួច​បញ្ជូលចម្លើយ​ទៅក្នុង​ប្រអប់សិន([[Special:Captcha/help|ព័ត៌មាន​បន្ថែម]])៖',
@@ -2060,7 +2060,7 @@ $messages['km'] = array(
  */
 $messages['ko'] = array(
 	'captcha-edit' => '글을 편집하기 위해서는, 아래의 간단한 덧셈 값을 입력상자에 적어 주세요([[Special:Captcha/help|자세한 정보]]):',
-	'captcha-desc' => '스팸과 비밀번호 탈취를 방지하기 위한 캡차 기능을 제공',
+	'captcha-desc-confirm-edit' => '스팸과 비밀번호 탈취를 방지하기 위한 캡차 기능을 제공',
 	'captcha-addurl-confirm-edit' => '편집 내용에 다른 웹 사이트 링크가 포함되어 있습니다. 자동 스팸을 막기 위해, 아래의 간단한 계산 값을 입력상자에 적어 주세요([[Special:Captcha/help|자세한 정보]]):',
 	'captcha-badlogin-confirm-edit' => '계정 암호 해킹을 막기 위해, 아래의 간단한 계산 값을 입력상자에 적어 주세요. ([[Special:Captcha/help|자세한 정보]]):',
 	'captcha-createaccount-confirm-edit' => '자동 가입을 막기 위해, 아래 문제의 답을 적어 주세요. ([[Special:Captcha/help|관련 도움말]]):',
@@ -2091,7 +2091,7 @@ $messages['ko'] = array(
  */
 $messages['ksh'] = array(
 	'captcha-edit' => 'Öm de Sigg ze ändere, don di Zahle onge zosamme zälle un don de Antwoot en dat Käßje endraare. ([[Special:Captcha/help|Verklierung]])',
-	'captcha-desc' => 'Brängk en „Kaptscha“ en et Wiki, öm jääje SPAM un jäje et Paßwööter-Dorschprobeere ze schöze.',
+	'captcha-desc-confirm-edit' => 'Brängk en „Kaptscha“ en et Wiki, öm jääje SPAM un jäje et Paßwööter-Dorschprobeere ze schöze.',
 	'captcha-addurl-confirm-edit' => 'Do häß neu Lingks op frembde Websigge dobei jedonn.
 Mer schöze uns Wiki jäje automatesche SPAM, dröm
 don di Zahle onge zosamme zälle un don de Antwoot
@@ -2155,7 +2155,7 @@ $messages['la'] = array(
  */
 $messages['lb'] = array(
 	'captcha-edit' => "Fir dës Säit z'änneren, léist w.e.g. dës Rechenaufgab a gitt d'Resultat an d'Këscht ënnendrënner an ([[Special:Captcha/help|méi Informatiounen]]):",
-	'captcha-desc' => 'Stellt Captcha-Techniken zur Verfügung fir géint Spam an Errode vu Passwierder ze schützen',
+	'captcha-desc-confirm-edit' => 'Stellt Captcha-Techniken zur Verfügung fir géint Spam an Errode vu Passwierder ze schützen',
 	'captcha-addurl-confirm-edit' => 'An ärer Ännerung sinn nei extern Linken. Fir eis virun automatiséiertem Spamming ze schütze froe mir iech fir déi folgend einfach  Rechenaufgab ze léisen an d\'Resultat an d\'Feld ënnen anzedroen. Klickt duerno w.e.g. nach eng Kéier op "Säit ofspäicheren" [[Special:Captcha/help|méi Informatiounen]].',
 	'captcha-badlogin-confirm-edit' => "Fir eis géint automatescht Hacke vu Passwierder ze schützen, léist w.e.g. déi einfach Additioun hei ënnendrënner an tippt d'Äntwert an d'Këscht ([[Special:Captcha/help|méi Informatiounen]]):",
 	'captcha-createaccount-confirm-edit' => "Fir eis géint d'automatescht Uleeë vu Benotzerkonten ze schützen, léist w.e.g. déi einfach Additioun hei ënnendrënner, an tippt d'Äntwert an d'Këscht ([[Special:Captcha/help|méi Informatiounen]]):",
@@ -2189,7 +2189,7 @@ Dréckt op den 'Zréck' Knäppche vun ärem Browser fir an d'Beaarbechtungsfëns
  */
 $messages['li'] = array(
 	'captcha-edit' => "Geer wil dees pazjena bewerke. Veur estebleef 't antjwaord op de óngerstäönde einvawdife som in 't inveurvenster in ([[Special:Captcha/help|mieë informatie]]):",
-	'captcha-desc' => "Bied CAPTCHA-technieke óm besjörming te beje taenge spam en 't raoje van wachweurd.",
+	'captcha-desc-confirm-edit' => "Bied CAPTCHA-technieke óm besjörming te beje taenge spam en 't raoje van wachweurd.",
 	'captcha-addurl-confirm-edit' => "Uw bewerking bevat nieuwe externe links (URL's). Voer ter bescherming tegen geautomatiseerde spam alstublieft het antwoord op de onderstaande eenvoudige som in in het invoerveld ([[Special:Captcha/help|meer informatie]]):",
 	'captcha-badlogin-confirm-edit' => 'Los alstublieft de onderstaande eenvoudige som op en voer het antwoord in het invoervenster in ter bescherming tegen het automatisch kraken van wachtwoorden ([[Special:Captcha/help|meer informatie]]):',
 	'captcha-createaccount-confirm-edit' => 'Voer ter bescherming tegen geautomatiseerde spam het antwoord op de onderstaande eenvoudige som in het invoervenster in ([[Special:Captcha/help|meer informatie]]):',
@@ -2273,7 +2273,7 @@ $messages['mg'] = array(
  */
 $messages['mk'] = array(
 	'captcha-edit' => 'За да ја уредите оваа страница потребно е да го најдете решението на едноставната задача поставена подолу и одговорот да го внесете во соодветното поле за одговор([[Special:Captcha/help|повеќе информации]]):',
-	'captcha-desc' => 'Овозможува техники од CAPTCHA за заштита од спам и погодување на лозинки',
+	'captcha-desc-confirm-edit' => 'Овозможува техники од CAPTCHA за заштита од спам и погодување на лозинки',
 	'captcha-addurl-confirm-edit' => 'Вашето уредување содржи нови надворешни врски.
 За да ни помогнете да се заштитиме од автоматизиран спам, решете ја простата задача подолу и впишете го бројот во полето ([[Special:Captcha/help|повеќе инфо]]):',
 	'captcha-badlogin-confirm-edit' => 'За да ни помогнете да се заштитиме од автоматизирано пробивање на лозинки, решете ја простата задача подолу и впишете го решението во полето
@@ -2310,7 +2310,7 @@ $messages['mk'] = array(
  */
 $messages['ml'] = array(
 	'captcha-edit' => 'ഈ താൾ തിരുത്തുവാൻ, ദയവായി താഴെ കൊടുത്തിരിക്കുന്ന ലഘു ഗണിത ക്രിയ ചെയ്ത് അതിന്റെ ഉത്തരം താഴെയുള്ള പെട്ടിയിൽ ടൈപ്പു ചെയ്യുക ([[Special:Captcha/help|കൂടുതൽ വിവരങ്ങൾ]]):',
-	'captcha-desc' => 'പാഴെഴുത്ത് ഉൾപ്പെടുത്തലിനും രഹസ്യവാക്ക് ഊഹിക്കലിനുമെതിരെ സംരക്ഷണം തരുന്ന കാപ്ച സംവിധാനം നൽകുന്നു',
+	'captcha-desc-confirm-edit' => 'പാഴെഴുത്ത് ഉൾപ്പെടുത്തലിനും രഹസ്യവാക്ക് ഊഹിക്കലിനുമെതിരെ സംരക്ഷണം തരുന്ന കാപ്ച സംവിധാനം നൽകുന്നു',
 	'captcha-addurl-confirm-edit' => 'താങ്കളുടെ തിരുത്തലലിൽ പുറം കണ്ണികൾ ഉൾപ്പെട്ടിരിക്കുന്നു.
 യാന്ത്രിക സ്പാമിനെതിരെയുള്ള സം‌രക്ഷണത്തിന്റെ ഭാഗമായി, ദയവായി താഴെ കൊടുത്തിരിക്കുന്ന ലഘു ഗണിത ക്രിയ ചെയ്ത് അതിന്റെ ഉത്തരം താഴെയുള്ള പെട്ടിയിൽ ടൈപ്പു ചെയ്യുക ([[Special:Captcha/help|കൂടുതൽ വിവരങ്ങൾ]]):',
 	'captcha-badlogin-confirm-edit' => 'യാന്ത്രിക രഹസ്യവാക്ക് പൊളിക്കലിനെതിരായുള്ള സം‌രക്ഷണത്തിന്റെ ഭാഗമായി, ദയവായി താഴെ കൊടുത്തിരിക്കുന്ന ലഘു ഗണിത ക്രിയ ചെയ്ത് അതിന്റെ ഉത്തരം താഴെയുള്ള പെട്ടിയിൽ ടൈപ്പു ചെയ്യുക ([[Special:Captcha/help|കൂടുതൽ വിവരങ്ങൾ]]):',
@@ -2371,7 +2371,7 @@ $messages['mn'] = array(
  */
 $messages['mr'] = array(
 	'captcha-edit' => 'हे पान संपादित करण्यासाठी, खाली दिलेले सोपे गणित सोडवून त्याचे उत्तर दिलेल्या पृष्ठपेटी मध्ये लिहा ([[Special:Captcha/help|अधिक माहिती]]):',
-	'captcha-desc' => 'उत्पात आणि परवलीच्या शब्दांच्या चोरी पासून सूरक्षीत ठेवणाऱ्या ओळखपटवा-पद्धती CAPTCHA techniques पुरवते.',
+	'captcha-desc-confirm-edit' => 'उत्पात आणि परवलीच्या शब्दांच्या चोरी पासून सूरक्षीत ठेवणाऱ्या ओळखपटवा-पद्धती CAPTCHA techniques पुरवते.',
 	'captcha-addurl-confirm-edit' => 'तुमच्या संपादनात नवीन बाह्यदुवे आहेत. आपोआप होणार्‍या स्पॅम पासून वाचण्यासाठी, खाली दिलेले सोपे गणित सोडवून त्याचे उत्तर दिलेल्या पृष्ठपेटी मध्ये लिहा ([[Special:Captcha/help|अधिक माहिती]]):',
 	'captcha-badlogin-confirm-edit' => 'आपोआप होणार्‍या परवलीच्या शब्दाच्या चोरीपासून वाचण्यासाठी, खाली दिलेले सोपे गणित सोडवून त्याचे उत्तर दिलेल्या पृष्ठपेटी मध्ये लिहा ([[Special:Captcha/help|अधिक माहिती]]):',
 	'captcha-createaccount-confirm-edit' => 'आपोआप होणार्‍या सदस्य नोंदणीपासून वाचण्यासाठी, खाली दिलेले सोपे गणित सोडवून त्याचे उत्तर दिलेल्या पृष्ठपेटी मध्ये लिहा ([[Special:Captcha/help|अधिक माहिती]]):',
@@ -2408,7 +2408,7 @@ $messages['mr'] = array(
  */
 $messages['ms'] = array(
 	'captcha-edit' => 'Untuk menyunting laman ini, sila selesaikan kira-kira di bawah dan masukkan jawapannya dalam kotak yang disediakan ([[Special:Captcha/help|maklumat lanjut]]):',
-	'captcha-desc' => 'Menyediakan teknik CAPTCHA untuk melindungi daripada spam dan teka kata laluan',
+	'captcha-desc-confirm-edit' => 'Menyediakan teknik CAPTCHA untuk melindungi daripada spam dan teka kata laluan',
 	'captcha-addurl-confirm-edit' => 'Suntingan anda mengandungi pautan luar baru.
 Untuk membanteras kegiatan spam automatik, anda diminta menyelesaikan kira-kira di bawah dan masukkan jawapannya dalam kotak yang disediakan ([[Special:Captcha/help|maklumat lanjut]]):',
 	'captcha-badlogin-confirm-edit' => 'Untuk membanteras kegiatan meneka kata laluan secara automatik, anda diminta menyelesaikan kira-kira di bawah dan masukkan jawapannya dalam kotak yang disediakan ([[Special:Captcha/help|maklumat lanjut]]):',
@@ -2460,7 +2460,7 @@ $messages['nan'] = array(
  */
 $messages['nb'] = array(
 	'captcha-edit' => 'Skriv inn summen nedenfor i boksen for å kunne redigere denne siden ([[Special:Captcha/help|mer informasjon]]):',
-	'captcha-desc' => 'Gir tilgang til CAPTCHA-teknikker for å beskytte mot søppl og passordgjetting',
+	'captcha-desc-confirm-edit' => 'Gir tilgang til CAPTCHA-teknikker for å beskytte mot søppl og passordgjetting',
 	'captcha-addurl-confirm-edit' => 'Din redigering inneholder nye eksterne lenker. Løs det enkle regnestykket i boksen nedenfor for å hjelpe oss å beskytte oss mot automatisk spam ([[Special:Captcha/help|mer informasjon]]):',
 	'captcha-badlogin-confirm-edit' => 'Løs det enkle regnestykket i boksen nedenfor for å hjelpe oss å beskytte oss mot automatisk passordtyveri ([[Special:Captcha/help|mer informasjon]]):',
 	'captcha-createaccount-confirm-edit' => 'Løs det enkle regnestykket i boksen nedenfor for å hjelpe oss å beskytte oss mot automatisk kontoopprettelse ([[Special:Captcha/help|mer informasjon]]):',
@@ -2491,7 +2491,7 @@ Trykk på 'tilbake'-knappen for å komme tilbake til redigeringssiden.",
  */
 $messages['nds'] = array(
 	'captcha-edit' => 'Disse Siet to ännern, musst du disse lütte Rekenopgaav lösen un dat Resultat in dat Feld ingeven ([[Special:Captcha/help|mehr dorto]]):',
-	'captcha-desc' => 'Eenfach Captcha',
+	'captcha-desc-confirm-edit' => 'Eenfach Captcha',
 	'captcha-addurl-confirm-edit' => 'In dien Ännern sünd ne’e Weblenken in.
 As Schutz gegen automaatsch Spam, löös disse lüttje Rekenopgaav un geev dat Resultat in dat Feld ünnen in ([[Special:Captcha/help|mehr Infos]]).',
 	'captcha-badlogin-confirm-edit' => 'As Schutz gegen Passwoord-Knackers, löös disse lüttje Rekenopgaav un geev dat Resultat in dat Feld ünnen in ([[Special:Captcha/help|mehr Infos]]).',
@@ -2529,7 +2529,7 @@ Mit den „Trüch“-Knopp vun dien Browser kummst du trüch na dat Ännerfinste
  */
 $messages['nds-nl'] = array(
 	'captcha-edit' => "Um disse pagina te bewarken, mö'j eers t antwoord op disse eenvoudige somme invullen ([[Special:Captcha/help|meer informasie]]):",
-	'captcha-desc' => 'Eenvoudige invoering van captcha',
+	'captcha-desc-confirm-edit' => 'Eenvoudige invoering van captcha',
 	'captcha-addurl-confirm-edit' => 'Joew bewarking bevat nieje uutgaonde verwiezingen.
 Voer ter de bescharming tegen ongewunste reklame de somme in die hieronder steet:<br />
 ([[Special:Captcha/help|Hulpe?]])',
@@ -2560,7 +2560,7 @@ Soms a'j nieje verwiezingen bie n pagina derop zetten, wö'j evreugen um iets ov
 $messages['nl'] = array(
 	'captcha-edit' => 'U wilt deze pagina bewerken.
 Voer het antwoord op de onderstaande eenvoudige som in het invoervenster in ([[Special:Captcha/help|meer informatie]]):',
-	'captcha-desc' => 'Biedt CAPTCHA-technieken om bescherming te bieden tegen spam en het raden van wachtwoorden',
+	'captcha-desc-confirm-edit' => 'Biedt CAPTCHA-technieken om bescherming te bieden tegen spam en het raden van wachtwoorden',
 	'captcha-addurl-confirm-edit' => "Uw bewerking bevat nieuwe externe verwijzingen (URL's).
 Voer ter bescherming tegen geautomatiseerde spam het antwoord op de onderstaande eenvoudige som in in het invoerveld ([[Special:Captcha/help|meer informatie]]):",
 	'captcha-badlogin-confirm-edit' => 'Los de onderstaande eenvoudige som op en voer het antwoord in het invoervenster in ter bescherming tegen het automatisch kraken van wachtwoorden ([[Special:Captcha/help|meer informatie]]):',
@@ -2600,7 +2600,7 @@ Klik op de knop 'terug' in uw browser om terug te gaan naar het tekstbewerkingss
  */
 $messages['nn'] = array(
 	'captcha-edit' => 'For å endre denne sida, ver venleg og løys det enkle reknestykket nedanfor og skriv svaret i ruta ([[Special:Captcha/help|meir informasjon]]):',
-	'captcha-desc' => 'Enkel implementering av captcha-system.',
+	'captcha-desc-confirm-edit' => 'Enkel implementering av captcha-system.',
 	'captcha-addurl-confirm-edit' => 'Endringa di inkluderer nye lenkjer; som eit vern mot automatisert reklame (spam) er du nøydd til skrive inn orda i dette bildet: <br />([[Special:Captcha/help|Kva er dette?]])',
 	'captcha-badlogin-confirm-edit' => 'For å sikra oss mot automatisk passordtjuveri, ver venleg og skriv inn svaret på det enkle reknestykket i boksen nedanfor ([[Special:Captcha/help|meir informasjon]]):',
 	'captcha-createaccount-confirm-edit' => 'For å verne Wikipedia mot reklame (spam) må du skrive inn orda i biletet for å registrere ein konto. <br />([[Special:Captcha/help|Kva er dette?]])',
@@ -2630,7 +2630,7 @@ Trykk på «attende»-knappen for å kome tilbake til endringssida.',
  */
 $messages['oc'] = array(
 	'captcha-edit' => "Per modificar aquesta pagina, vos cal efectuar lo calcul çaijós e n'inscriure lo resultat dins lo camp ([[Special:Captcha/help|Mai d’entresenhas]]) :",
-	'captcha-desc' => 'Implementacion captcha simpla',
+	'captcha-desc-confirm-edit' => 'Implementacion captcha simpla',
 	'captcha-addurl-confirm-edit' => "Vòstra modificacion inclutz de ligams URL novèla ; per empachar las connexions automatizadas, vos cal picar los mots que s’afichan dins l’imatge que seguís : <br />([[Special:Captcha/help|Qu'es aquò?]])",
 	'captcha-badlogin-confirm-edit' => "Per ensajar de contornar las temptativas de cracatge de senhals automatizadas per de robòts, recopiatz lo tèxte çaijós dins la bóstia de tèxte plaçada al dejós d'aqueste. ([[Special:Captcha/help|Mai d’entresenhas]])",
 	'captcha-createaccount-confirm-edit' => 'Coma proteccion contra las creacions de compte abusivas, entratz lo resultat de l’addicion dins la bóstia çaijós:<br />
@@ -2659,7 +2659,7 @@ Clicatz sul boton « Precedent » de vòstre navigador per tornar a la pagina de
  */
 $messages['or'] = array(
 	'captcha-edit' => 'ଏହି ପୃଷ୍ଠାଟିକୁ ବଦଳାଇବା ନିମନ୍ତେ, ତଳେ ଥିବା ସହଜ ଅଙ୍କଟିର ସମାଧାନ କରନ୍ତୁ ଓ ଘରଟିରେ ଫଳାଫଳ ଦିଅନ୍ତୁ ([[Special:Captcha/help|ଅଧିକ ଜାଣନ୍ତୁ]]):',
-	'captcha-desc' => 'CAPTCHA କାରିଗରି ଉପାୟରେ ସ୍ପାମ ଓ ପାସବାର୍ଡ଼ ରକ୍ଷା କରିଥାଏ ।',
+	'captcha-desc-confirm-edit' => 'CAPTCHA କାରିଗରି ଉପାୟରେ ସ୍ପାମ ଓ ପାସବାର୍ଡ଼ ରକ୍ଷା କରିଥାଏ ।',
 	'captcha-addurl-confirm-edit' => 'ଆପଣଙ୍କ ସମ୍ପାଦନାରେ ନୂଆ ବାହାର ଲିଙ୍କ ରହିଛି ।
 ଆପେଆପେ ହେଉଥିବା ସ୍ପାମର ପ୍ରତିରୋଧ କରିବା ନିମନ୍ତେ ତଳେ ଥିବା ଗଣିତର ସମାଧାନ କରନ୍ତୁ ଓ ତଳେ ଥିବା ଘରେ ଉତ୍ତର ଦିଅନ୍ତୁ ([[Special:Captcha/help|ଅଧିକ ବିବରଣୀ]]):',
 	'captcha-badlogin-confirm-edit' => 'ଆପେଆପେ ହେଉଥିବା ପାସବାର୍ଡ଼ ଚୋରାଇବାକୁ ପ୍ରତିରୋଧ କରିବା ନିମନ୍ତେ ତଳେ ଥିବା ସରଳ ଗଣିତର ସମାଧାନ କରନ୍ତୁ ([[Special:Captcha/help|ଅଧିକ ସୂଚନା]]):',
@@ -2719,7 +2719,7 @@ $messages['pdc'] = array(
  */
 $messages['pl'] = array(
 	'captcha-edit' => 'Możesz edytować tę stronę, jednak najpierw musisz rozwiązać poniższe proste działanie matematyczne i wpisać wynik do pola tekstowego ([[Special:Captcha/help|pomoc]]):',
-	'captcha-desc' => 'Dodaje CAPTCHA – zabezpieczenie przed spamującymi automatami oraz odgadywaniem haseł',
+	'captcha-desc-confirm-edit' => 'Dodaje CAPTCHA – zabezpieczenie przed spamującymi automatami oraz odgadywaniem haseł',
 	'captcha-addurl-confirm-edit' => 'Dodałeś nowe linki zewnętrzne. Ze względu na ochronę przed zautomatyzowanym spamem musisz wykonać proste działanie matematyczne i wpisać wynik w pole obok ([[Special:Captcha/help|więcej informacji]]):',
 	'captcha-badlogin-confirm-edit' => 'Zabezpieczenie przed automatycznym łamaniem haseł. Wpisz w pole poniżej wynik prostego działania matematycznego ([[Special:Captcha/help|pomoc]]).',
 	'captcha-createaccount-confirm-edit' => 'Zabezpieczenie przed automatycznie dodawanym spamem. Wpisz w pole poniżej wynik prostego działania matematycznego ([[Special:Captcha/help|pomoc]]).',
@@ -2757,7 +2757,7 @@ Wciśnij przycisk „wstecz” w przeglądarce by powrócić do edycji strony.',
 $messages['pms'] = array(
 	'captcha-edit' => "Për fe-ie dle modìfiche ansima a st'artìcol-sì, për piasì ch'a fasa ël total ambelessì sota
 e ch'a buta l'arzulta ant ël quadrèt ([[Special:Captcha/help|për savejne dë pì]]):",
-	'captcha-desc' => "A dà dle técniche CAPTCHA për protege contra la rumenta e ij tentativ d'andviné la ciav",
+	'captcha-desc-confirm-edit' => "A dà dle técniche CAPTCHA për protege contra la rumenta e ij tentativ d'andviné la ciav",
 	'captcha-addurl-confirm-edit' => "Soa modìfica a la gionta dj'anliure esterne. Për giutene a vardesse da la reclam aotomatisà, për piasì ch'a fasa ël total ambelessì sota e ch'a buta l'arzultà ant ël quadrèt ([[Special:Captcha/help|për savejne dë pì]]):",
 	'captcha-badlogin-confirm-edit' => "Për giutene a vardesse da 'nt ij programa ch'a fan ciav fàosse n'aotomàtich, për piasì ch'a fasa ël total ambelessì sota e ch'a buta l'arzultà ant ël quadrèt ([[Special:Captcha/help|për savejne dë pì]]):",
 	'captcha-createaccount-confirm-edit' => "Për giutene a vardesse da ij programa ch'a deurbo dij cont n'aotomàtich, për piasì ch'a fasa ël total ambelessì sota
@@ -2790,7 +2790,7 @@ Ch'a-i bata ansima al boton 'andré' ant sò navigator për torné andré a l'ed
  */
 $messages['pnb'] = array(
 	'captcha-edit' => 'اس صفحے نوں تبدیل کرن واسطے، مہربانی کر کے اے سادہ جۓ سوال نوں حل کر کے ڈبے چ جواب لکھ دیو ([[Special:Captcha/help|مزید جانکاری]]):',
-	'captcha-desc' => 'کیپچا ول سپام تے کنجی اندازے توں بچن لئی دیندا اے۔',
+	'captcha-desc-confirm-edit' => 'کیپچا ول سپام تے کنجی اندازے توں بچن لئی دیندا اے۔',
 	'captcha-addurl-confirm-edit' => 'تواڈی تبدیلی چ نویں بارلے جوڑ نیں۔
 اس صفحے نوں تبدیل کرن واسطے، مہربانی کر کے اے سادہ جۓ سوال نوں حل کر کے ڈبے چ جواب لکھ دیو ([[Special:Captcha/help|مزید جانکاری]]):',
 	'captcha-badlogin-confirm-edit' => 'اپنے آپ کنجی توڑن دے خلاف مدد واسطے، مہربانی کر کے اے سادہ جۓ سوال نوں حل کر کے ڈبے چ جواب لکھ دیو ([[Special:Captcha/help|مزید جانکاری]]):',
@@ -2834,7 +2834,7 @@ $messages['ps'] = array(
  */
 $messages['pt'] = array(
 	'captcha-edit' => 'Para editar esta página, por favor, resolva a soma simples apresentada abaixo e introduza a resposta na caixa ([[Special:Captcha/help|mais informações]]):',
-	'captcha-desc' => 'Fornece técnicas CAPTCHA para protecção contra spam e tentativas de adivinhar a palavra-chave',
+	'captcha-desc-confirm-edit' => 'Fornece técnicas CAPTCHA para protecção contra spam e tentativas de adivinhar a palavra-chave',
 	'captcha-addurl-confirm-edit' => "A sua edição introduziu links externos novos.
 Como prevenção contra sistemas automatizados de inserção de ''spam'', resolva a soma simples apresentada abaixo e introduza a resposta na caixa ([[Special:Captcha/help|mais informações]]):",
 	'captcha-badlogin-confirm-edit' => 'Como prevenção com sistemas automatizados de descoberta de palavras-chave, resolva a soma simples apresentada abaixo e introduza a resposta na caixa ([[Special:Captcha/help|mais informações]]):',
@@ -2872,7 +2872,7 @@ Clique o botão 'voltar' do seu browser para voltar à página de edição.",
  */
 $messages['pt-br'] = array(
 	'captcha-edit' => 'Para editar esta página será necessário que você resolva a simples soma abaixo e entre com a resposta no respectivo campo ([[Special:Captcha/help|o que é isto?]])',
-	'captcha-desc' => 'Fornece técnicas captcha para proteção contra spam e tentativas de obtenção de senhas',
+	'captcha-desc-confirm-edit' => 'Fornece técnicas captcha para proteção contra spam e tentativas de obtenção de senhas',
 	'captcha-addurl-confirm-edit' => 'Sua edição inclui novas ligações externas.
 Para prevenção contra sistemas automatizados que inserem spam, será necessário que você resolva a simples soma abaixo e entre com a resposta no respectivo campo ([[Special:Captcha/help|o que é isto?]])',
 	'captcha-badlogin-confirm-edit' => 'Como prevenção contra sistemas automatizados de pesquisa e descoberta de senhas, será necessário que você resolva a simples soma abaixo e entre com a resposta no respectivo campo ([[Special:Captcha/help|o que é isto?]])',
@@ -2919,7 +2919,7 @@ $messages['qu'] = array(
  */
 $messages['ro'] = array(
 	'captcha-edit' => 'Editarea include legături externe noi. Pentru a evita spam-ul automat, vă rugăm să rezolvați adunarea de mai jos și introduceți rezultatul în căsuță ([[Special:Captcha/help|detalii]]):',
-	'captcha-desc' => 'Oferă implementare de tip CAPTCHA împotriva spamului și încercărilor de aflare a parolelor',
+	'captcha-desc-confirm-edit' => 'Oferă implementare de tip CAPTCHA împotriva spamului și încercărilor de aflare a parolelor',
 	'captcha-addurl-confirm-edit' => 'Editarea include legături externe noi. Pentru a evita spam-ul automat, vă rugăm să rezolvați adunarea de mai jos și introduceți rezultatul în căsuță ([[Special:Captcha/help|detalii]]):',
 	'captcha-badlogin-confirm-edit' => 'Ca măsură de protecție împotriva spargerii de parole, vă rugăm să rezolvați adunarea de mai jos și introduceți rezultatul în căsuță ([[Special:Captcha/help|detalii]]):',
 	'captcha-createaccount-confirm-edit' => 'Pentru a evita crearea automată de conturi, vă rugăm să rezolvați adunarea de mai jos și introduceți rezultatul în căsuță ([[Special:Captcha/help|detalii]]):',
@@ -2977,7 +2977,7 @@ Pe aiutà a proteggere condre a 'u spam automateche, pe piacere respunne a 'a do
  */
 $messages['ru'] = array(
 	'captcha-edit' => 'Чтобы отредактировать эту страницу, пожалуйста, решите простой пример и введите ответ в текстовое поле ([[Special:Captcha/help|подробнее]]):',
-	'captcha-desc' => 'Предоставляет методы CAPTCHA для защиты от спама и подбора пароля',
+	'captcha-desc-confirm-edit' => 'Предоставляет методы CAPTCHA для защиты от спама и подбора пароля',
 	'captcha-addurl-confirm-edit' => 'Вы добавили ссылку на внешний сайт;
 в целях защиты от автоматического спама, введите буквы изображённые на картинке:<br />
 ([[Special:Captcha/help|Что это такое?]])',
@@ -3015,7 +3015,7 @@ $messages['ru'] = array(
  */
 $messages['rue'] = array(
 	'captcha-edit' => 'Жебысьте могли едітовати тоту сторінку, мусите вырїшыти наступну просту суму і написати резултат. ([[Special:Captcha/help|Што тото значіть?]])',
-	'captcha-desc' => 'Забезпечує техніку CAPTCHA про охрану перед спамом і гаданём гесел',
+	'captcha-desc-confirm-edit' => 'Забезпечує техніку CAPTCHA про охрану перед спамом і гаданём гесел',
 	'captcha-addurl-confirm-edit' => 'Ваше едітованя обсягує новы одказы формов URL; про охорону перед автоматічным спамом мусите вырїшыти наступну просту суму і написати резултат. ([[Special:Captcha/help|Што тото значіть?]])',
 	'captcha-badlogin-confirm-edit' => 'В рамках охороны перед автоматічныма пробами угаднути гесло мусите вырїшыти наступну просту суму і написати резултат. ([[Special:Captcha/help|Што тото значіть?]]):',
 	'captcha-createaccount-confirm-edit' => 'В рамках охороны перед автоматічныма створёванями конт мусите про выконаня реґістрації вырїшыти наступну просту суму і написати резултат. ([[Special:Captcha/help|Што тото значіть?]]):',
@@ -3046,7 +3046,7 @@ $messages['rue'] = array(
  */
 $messages['sah'] = array(
 	'captcha-edit' => 'Сирэйи уларытыаххын баҕардаххына, манна баар примеры суоттаа уонна эппиэтин аналлаах сиргэ суруй ([[Special:Captcha/help|сиһилии]]):',
-	'captcha-desc' => 'CAPTCHA көмөтүнэн спаамтан уонна киирии тылы уорууттан көмүскэли хааччыйар',
+	'captcha-desc-confirm-edit' => 'CAPTCHA көмөтүнэн спаамтан уонна киирии тылы уорууттан көмүскэли хааччыйар',
 	'captcha-addurl-confirm-edit' => 'Тас саайка ыйынньык туруорбуккун; 
 спаамтан көмүскэнэр соруктаах суолу толор - ойууга баар буукубалары хатылаа: <br />
 ([[Special:Captcha/help|Сиһилии]])',
@@ -3086,7 +3086,7 @@ $messages['sah'] = array(
 $messages['scn'] = array(
 	'captcha-edit' => 'Pi mudificaru la pàggina è nicissàriu arisòrviri lu sèmprici càlculu prisintati di sècutu e nziriri lu risurtatu nnâ casedda
 ([[Special:Captcha/help|chiossai nfurmazzioni]]):',
-	'captcha-desc' => 'Sèmprici mplimintazzioni di na Captcha',
+	'captcha-desc-confirm-edit' => 'Sèmprici mplimintazzioni di na Captcha',
 	'captcha-addurl-confirm-edit' => "La mudìfica addumannata junci novi lijami di fora a la pàggina; pi pricauzzioni contr'a lu nzirimentu autumàticu di spam, è nicissarii arisòrviri lu sèmprici càlculu prisintatu di sècutu e nziriri lu risurtatu nnâ casedda ([[Special:Captcha/help|chiossai nfurmazzioni]]):",
 	'captcha-badlogin-confirm-edit' => "Pi pricauzzioni contr'a li tintativi di furzatura autumàtica dâ password, è nicussàriu arisòrviri lu sèmprici càlculu prusuntatu di sècutu e nziriri lu risurtatu nnâ casedda ([[Special:Captcha/help|chiossai nfurmazzioni]]):",
 	'captcha-createaccount-confirm-edit' => "Pi pricauzzioni contr'a li  tintativi di criazzioni autumàtica di l'account, pi riggistràrisi è nicissàriu arisòrviri lu sèmprici càlculu prisintatu di sècutu e nziriri lu risurtatu nnâ casedda ([[Special:Captcha/help|chiossai nfurmazzioni]]):",
@@ -3125,7 +3125,7 @@ $messages['sco'] = array(
  */
 $messages['si'] = array(
 	'captcha-edit' => 'මෙම පිටුව සංස්කරණය කිරීමට, කරුණාකර පහත දැක්වෙන සරල එකතුකිරීම විසඳා පිලිතුර කොටුවේ ඇතුලත් කරන්න ([[Special:Captcha/help|වැඩි විස්තර]]):',
-	'captcha-desc' => 'ස්පෑම් සහ මුරපද-අනුමාන වලන් ආරක්ෂාව සදහා කැප්චා තාක්ෂණය සපයනු ලැබේ',
+	'captcha-desc-confirm-edit' => 'ස්පෑම් සහ මුරපද-අනුමාන වලන් ආරක්ෂාව සදහා කැප්චා තාක්ෂණය සපයනු ලැබේ',
 	'captcha-addurl-confirm-edit' => 'ඔබගේ සංස්කරණයෙහි නව බාහිර සබැඳියන් අඩංගුයි.
 ස්වයංක්‍රීය අයාචිත තැපෑලෙන් ආරක්ෂා වනු වස්, පහත සරල ගණිත ගැටළුව විසඳා පිළිතුර කොටුවෙහි ඇතුලත් කරන්න ([[Special:Captcha/help|වැඩිමනත් තොරතුරු]]):',
 	'captcha-badlogin-confirm-edit' => 'ස්වයංක්‍රීය මුරපද බිඳීම වලක්වනු වස්, පහත සරල ගණිත ගැටළුව විසඳා පිළිතුර කොටුවෙහි ඇතුලත් කරන්න ([[Special:Captcha/help|වැඩිමනත් තොරතුරු]]):',
@@ -3161,7 +3161,7 @@ $messages['si'] = array(
  */
 $messages['sk'] = array(
 	'captcha-edit' => 'Aby ste mohli upravovať túto stránku, vyriešte prosím tento jednoduchý súčet a napíšte výsledok do poľa ([[Special:Captcha/help|viac informácií]]):',
-	'captcha-desc' => 'Poskytuje techniky captcha na ochranu pred spamom a hádaním hesla',
+	'captcha-desc-confirm-edit' => 'Poskytuje techniky captcha na ochranu pred spamom a hádaním hesla',
 	'captcha-addurl-confirm-edit' => 'Vaša úprava obsahuje nové externé odkazy. Ako pomoc pri ochrane pred automatickým spamom vyriešte prosím tento jednoduchý súčet a zadajte výsledok do poľa ([[Special:Captcha/help|viac informácií]]):',
 	'captcha-badlogin-confirm-edit' => 'Ako ochranu proti automatizovanému lámaniu hesiel, prosím vyriešte nasledujúci súčet a zadajte ho do poľa pre odpoveď ([[Special:Captcha/help|viac informácií]]):',
 	'captcha-createaccount-confirm-edit' => 'Kvôli ochrane proti automatizovanému spamu je potrebné napísať slová zobrazené na tomto obrázku, až potom bude vytvorený nový účet:
@@ -3194,7 +3194,7 @@ Stlačením tlačidla „späť“ vo vašom prehliadači sa vrátite do editora
  */
 $messages['sl'] = array(
 	'captcha-edit' => 'Če želite urejati stran, prosimo izračunajte preprost seštevek spodaj in odgovor vpišite v polje ([[Special:Captcha/help|več informacij]]):',
-	'captcha-desc' => 'Nudi pristope CAPTCHA za zaščito proti smetju in ugibanju gesel',
+	'captcha-desc-confirm-edit' => 'Nudi pristope CAPTCHA za zaščito proti smetju in ugibanju gesel',
 	'captcha-addurl-confirm-edit' => 'Vaše urejanje vključuje nove zunanje povezave.
 Zaradi zaščite pred samodejno navlako boste morali vpisati besede, ki se pojavijo v okencu ([[Special:Captcha/help|več informacij]]):',
 	'captcha-badlogin-confirm-edit' => 'Zaradi zaščite pred samodejnim ugotavljanjem gesel prosimo, da rešite preprost seštevek spodaj in vnesete odgovor v okence ([[Special:Captcha/help|več informacij]]):',
@@ -3233,7 +3233,7 @@ Za vrnitev v urejevalnik izberite gumb »nazaj« v vašem brskalniku.',
  */
 $messages['sq'] = array(
 	'captcha-edit' => 'Për të redaktuar këtë faqe ju lutem zgjidhni shumën e mëposhtme dhe vendosni përgjigjen në kuti ([[Special:Captcha/help|më shumë informacion]]):',
-	'captcha-desc' => 'Siguron teknika CAPTCHA për të mbrojtur kundër spam',
+	'captcha-desc-confirm-edit' => 'Siguron teknika CAPTCHA për të mbrojtur kundër spam',
 	'captcha-addurl-confirm-edit' => 'Redaktimi juaj ka lidhje URL të reja dhe si mbrojtje kundër abuzimeve automatike duhet të shtypni çfarë shfaqet tek figura e mëposhtme:<br /> ([[Special:Captcha|Çfarë është kjo?]])',
 	'captcha-badlogin-confirm-edit' => 'Për tu mbrojtur nga metoda automatike të gjetjes së fjalëkalimeve ju kërkojmë të gjeni zgjidhni shumën e mëposhtme dhe të vendosni përgjigjen në kuti ([[Special:Captcha/help|më shumë informacion]]):',
 	'captcha-createaccount-confirm-edit' => 'Për mbrojtje kundër regjistrimeve automatike duhet të zgjidhni ekuacionin e mëposhtëm para se të hapni llogarinë:<br />([[Special:Captcha|Çfarë është kjo?]])',
@@ -3266,7 +3266,7 @@ Shtypni butonin "prapa" ("back") të shfletuesit tuaj për tu kthyer tek faqja e
  */
 $messages['sr-ec'] = array(
 	'captcha-edit' => 'За измену ове стране, реши једноставан збри испод и унеси одговор у кутију ([[Special:Captcha/help|детаљније]]):',
-	'captcha-desc' => 'Пружа заштиту против непожељних порука у виду потврдног кода',
+	'captcha-desc-confirm-edit' => 'Пружа заштиту против непожељних порука у виду потврдног кода',
 	'captcha-addurl-confirm-edit' => 'Ваша измена садржи нове спољашње везе.
 У циљу заштите од непожељних порука, решите просту рачуницу испод и унесите одговор у поље ([[Special:Captcha/help|више информација]]):',
 	'captcha-badlogin-confirm-edit' => 'У циљу заштите од пробијања лозинки, решите просту рачуницу испод и унесите одговор у поље ([[Special:Captcha/help|више информација]]):',
@@ -3285,7 +3285,7 @@ $messages['sr-ec'] = array(
  */
 $messages['sr-el'] = array(
 	'captcha-edit' => 'Za izmenu ove strane, reši jednostavan zbri ispod i unesi odgovor u kutiju ([[Special:Captcha/help|detaljnije]]):',
-	'captcha-desc' => 'Pruža zaštitu protiv nepoželjnih poruka u vidu potvrdnog koda',
+	'captcha-desc-confirm-edit' => 'Pruža zaštitu protiv nepoželjnih poruka u vidu potvrdnog koda',
 	'captcha-addurl-confirm-edit' => 'Tvoja izmena uključuje nove spoljašnje veze. U cilju zaštite protiv automatskog spama, reši jednostavan zbir ispod i upiši odgovor u kutiju ([[Special:Captcha/help|detaljnije]]):',
 	'captcha-badlogin-confirm-edit' => 'U cilju zaštite od automatske provale u lozinku, reši jednostavan zbir ispod i unesi odgovor u kutiju ([[Special:Captcha/help|detaljnije]]):',
 	'captcha-createaccount-confirm-edit' => 'U cilju zaštite od automatskog stvaranja naloga, reši jednostavan zbir dole i unesi ga u kutiju ([[Special:Captcha/help|detaljnije]]):',
@@ -3302,7 +3302,7 @@ $messages['sr-el'] = array(
  */
 $messages['stq'] = array(
 	'captcha-edit' => 'Tou Beoarbaidenge fon ju Siede löös ätterfoulgjende Reekenapgoawe un dräch dät Resultoat in dät Fäild hierunner ien [[Special:Captcha/help|(Froagen of Probleme?)]]:',
-	'captcha-desc' => 'Eenfache Captcha-Implementierenge',
+	'captcha-desc-confirm-edit' => 'Eenfache Captcha-Implementierenge',
 	'captcha-addurl-confirm-edit' => 'Dien Beoarbaidenge änthaalt näie externe Ferbiendengen.
 Toun Skuts foar automatisierde Spammenge löös ju ätterfoulgjende Reekenapgoawe un dräch dät Resultoat in dät Fäild hierunner ien.
 Klik dan fonnäien ap „Siede spiekerje“ [[Special:Captcha/help|(Froagen of Probleme?)]].',
@@ -3334,7 +3334,7 @@ Klik ap dän 'Tourääch'-Knoop in jou Browser uum ätter dän Sieden-Editor tou
  */
 $messages['su'] = array(
 	'captcha-edit' => 'Pikeun ngédit artikel ieu, mangga eusian itungan di handap ([[Special:Captcha/help|émbaran lengkep]]):',
-	'captcha-desc' => 'Implementasi basajan captcha',
+	'captcha-desc-confirm-edit' => 'Implementasi basajan captcha',
 	'captcha-addurl-confirm-edit' => 'Éditan anjeun ngawengku tumbu kaluar anyar.
 Pikeun nyegah spam, mangga eusian itungan di handap ieu
 ([[Special:Captcha/help|émbaran lengkep]]):',
@@ -3365,7 +3365,7 @@ Hit the 'back' button in your browser to return to the page editor.",
 $messages['sv'] = array(
 	'captcha-edit' => 'För att redigera den här sidan måste du först skriva svaret på följande
 räkneuppgift i rutan ([[Special:Captcha/help|mer information]]):',
-	'captcha-desc' => 'Ger CAPTCHA tekniker för att skydda mot skräppost och lösenordsgissning',
+	'captcha-desc-confirm-edit' => 'Ger CAPTCHA tekniker för att skydda mot skräppost och lösenordsgissning',
 	'captcha-addurl-confirm-edit' => 'Din ändring lägger till nya externa länkar i texten. För att skydda wikin mot
 automatisk spam måste du skriva svaret på följande räkneuppgift i rutan ([[Special:Captcha/help|mer information]]):',
 	'captcha-badlogin-confirm-edit' => 'För att skydda mot wikin mot automatiserad lösenordsknäckning måste du skriva
@@ -3418,7 +3418,7 @@ $messages['ta'] = array(
  */
 $messages['te'] = array(
 	'captcha-edit' => 'ఈ పేజీని సరిదిద్దడానికి, కింది ఇచ్చిన చిన్న లెక్కని చేసి జవాబుని పక్కనున్న పెట్టెలో టైపు చెయ్యండి ([[ప్రత్యేక:Captcha/help|మరింత సమాచారం]]):',
-	'captcha-desc' => 'సరళమైన అమకవేప అమలు',
+	'captcha-desc-confirm-edit' => 'సరళమైన అమకవేప అమలు',
 	'captcha-addurl-confirm-edit' => 'మీ దిద్దుబాటులో కొత్త బయటి లింకులు ఉన్నాయి. ఆటోమేటెడ్ స్పాము నుండి రక్షించేందుకు గాను, కింద ఇచ్చిన లెక్క యొక్క జవాబును ఇక్కడున్న పెట్టెలో రాయండి ([[Special:Captcha/help|మరింత సహాయం]]):',
 	'captcha-badlogin-confirm-edit' => 'పాసువోర్డును బాట్ల ద్వారా తెలుసుకోకుండా ఉండేందుకు, కింద ఇచ్చిన లెక్క యొక్క జవాబును ఇక్కడున్న పెట్టెలో రాయండి ([[Special:Captcha/help|మరింత సహాయం]]):',
 	'captcha-createaccount-confirm-edit' => 'బాట్ల ద్వారా ఖాతాలను సృష్టించకుండా నిరోధించటానికి, కింద ఇచ్చిన లెక్క యొక్క జవాబును ఇక్కడున్న పెట్టెలో రాయండి ([[Special:Captcha/help|మరింత సహాయం]]):',
@@ -3447,7 +3447,7 @@ $messages['te'] = array(
  */
 $messages['tg-cyrl'] = array(
 	'captcha-edit' => 'Барои вироиши ин мақола, лутфан ҳосили ҷамъи зеринро ҳисоб кунед ва натиҷаро дар ҷаъба ворид кунед ([[Special:Captcha/help|иттилооти бештар]]):',
-	'captcha-desc' => 'Татбиқи соддаи CAPTCHA',
+	'captcha-desc-confirm-edit' => 'Татбиқи соддаи CAPTCHA',
 	'captcha-addurl-confirm-edit' => 'Вироиши шумо пайвандҳои ҷадиди хориҷиро дар бар мегирад. Барои кӯмак ба пешгири аз ирсоли худкори ҳаразномаҳо, лутфан ҳосили ҷамъи зеринро ҳисоб кунед ва натиҷаро дар ҷаъба ворид кунед ([[Special:Captcha/help|иттилооти бештар]]):',
 	'captcha-badlogin-confirm-edit' => 'Барои кӯмак ба пешгири аз шикастани калимаи убур, лутфан ҳосили ҷамъи зеринро ҳисоб кунед ва натиҷаро дар ҷаъба ворид кунед  ([[Special:Captcha/help|иттилооти бештар]]):',
 	'captcha-createaccount-confirm-edit' => 'Барои кӯмак ба пешгири аз эҷоди худкори ҳисоби корбарӣ, лутфан ҳосили ҷамъи зеринро ҳисоб кунед ва натиҷаро дар ҷаъба ворид кунед  ([[Special:Captcha/help|иттилооти бештар]]):',
@@ -3474,7 +3474,7 @@ $messages['tg-cyrl'] = array(
  */
 $messages['tg-latn'] = array(
 	'captcha-edit' => "Baroi viroişi in maqola, lutfan hosili çam'i zerinro hisob kuned va natiçaro dar ça'ba vorid kuned ([[Special:Captcha/help|ittilooti beştar]]):",
-	'captcha-desc' => 'Tatbiqi soddai CAPTCHA',
+	'captcha-desc-confirm-edit' => 'Tatbiqi soddai CAPTCHA',
 	'captcha-addurl-confirm-edit' => "Viroişi şumo pajvandhoi çadidi xoriçiro dar bar megirad. Baroi kūmak ba peşgiri az irsoli xudkori haraznomaho, lutfan hosili çam'i zerinro hisob kuned va natiçaro dar ça'ba vorid kuned ([[Special:Captcha/help|ittilooti beştar]]):",
 	'captcha-badlogin-confirm-edit' => "Baroi kūmak ba peşgiri az şikastani kalimai ubur, lutfan hosili çam'i zerinro hisob kuned va natiçaro dar ça'ba vorid kuned  ([[Special:Captcha/help|ittilooti beştar]]):",
 	'captcha-createaccount-confirm-edit' => "Baroi kūmak ba peşgiri az eçodi xudkori hisobi korbarī, lutfan hosili çam'i zerinro hisob kuned va natiçaro dar ça'ba vorid kuned  ([[Special:Captcha/help|ittilooti beştar]]):",
@@ -3517,7 +3517,7 @@ $messages['th'] = array(
  */
 $messages['tk'] = array(
 	'captcha-edit' => 'Bu sahypany redaktirlemek üçin, aşakdaky meselni çözüň we jogaby gutynyň içine ýazyň ([[Special:Captcha/help|jikme-jik]]):',
-	'captcha-desc' => 'Ýönekeý captcha ama aşyrylyşy',
+	'captcha-desc-confirm-edit' => 'Ýönekeý captcha ama aşyrylyşy',
 	'captcha-addurl-confirm-edit' => 'Özgerdişiňizde täze daşarky çykgytlar bar.
 Awtomatik spamdan goranmak üçin, aşakdaky ýönekeý soraga jogap beriň we jogaby gutynyň içine ýazyň ([[Special:Captcha/help|giňişleýin maglumat]]):',
 	'captcha-badlogin-confirm-edit' => 'Awtomat parol döwmeklikden goranmaga kömekleşmek üçin, aşakdaky meseläni çözüň we jogaby gutynyň içine ýazyň ([[Special:Captcha/help|jikme-jik]]):',
@@ -3536,7 +3536,7 @@ Awtomatik spamdan goranmak üçin, aşakdaky ýönekeý soraga jogap beriň we j
  */
 $messages['tl'] = array(
 	'captcha-edit' => 'Para magawaan ng pagbabago ang pahinang ito, pakisagot lamang ang payak na pagtutuos na nasa ibaba at ipasok ang sagot sa loob ng kahon ([[Special:Captcha/help|mas marami pang kabatiran]]):',
-	'captcha-desc' => 'Nagbibigay ng mga pamamaraan ng CAPTCHA upang maisanggalang laban sa mga basurang e-liham at panghuhula ng hudyat',
+	'captcha-desc-confirm-edit' => 'Nagbibigay ng mga pamamaraan ng CAPTCHA upang maisanggalang laban sa mga basurang e-liham at panghuhula ng hudyat',
 	'captcha-addurl-confirm-edit' => "Kasama sa mga pagbabagong ginawa mo ang bagong panlabas na mga kawing.
 Upang makatulong sa pagsasanggalang laban sa mga kusang dumarating na \"manlulusob\" (''spam''), pakisagot ang payak na pagtutuos sa ibaba at ipasok ang sagot sa loob ng kahon ([[Special:Captcha/help|mas marami pang kabatiran]]):",
 	'captcha-badlogin-confirm-edit' => 'Upang makatulong sa pagsasanggalang laban sa mga kusang paglutas ng hudyat, pakisagot lamang payak na pagtutuos na nasa ibaba at ipasok ang sagot sa loob ng kahon ([[Special:Captcha/help|mas marami pang kabatiran]]):',
@@ -3573,7 +3573,7 @@ Pindutin ang pindutang 'bumalik' sa iyong pantingin-tingin upang makabalik sa pa
  */
 $messages['tr'] = array(
 	'captcha-edit' => 'Bu sayfayı değiştirebilmek için lütfen aşağıdaki basit soruyu cevaplayın ve cevabı kutunun içine yazın ([[Special:Captcha/help|ayrıntılı bilgiler]]):',
-	'captcha-desc' => 'Basit captcha uygulaması',
+	'captcha-desc-confirm-edit' => 'Basit captcha uygulaması',
 	'captcha-addurl-confirm-edit' => 'Değişikliğiniz yeni dış bağlantılar içeriyor.
 Otomatik spamdan korunmak için, lütfen aşağıdaki basit soruyu cevaplayın ve cevabı kutunun içine yazın ([[Special:Captcha/help|ayrıntılı bilgiler]]):',
 	'captcha-badlogin-confirm-edit' => 'Otomatik parola çözülmesinden korunmak için, lütfen aşağıdaki basit soruyu cevaplayın ve kutunın içinde cevabı yazın ([[Special:Captcha/help|ayrıntılı bilgiler]]):',
@@ -3609,7 +3609,7 @@ Sayfa düzenleyiciye dönmek için tarayıcınızın 'geri' tuşuna basınız.",
  */
 $messages['uk'] = array(
 	'captcha-edit' => 'Щоб відредагувати цю сторінку, будь ласка, виконайте просту арифметичну дію і введіть відповідь у текстове поле ([[Special:Captcha/help|докладніше]]):',
-	'captcha-desc' => 'Забезпечує методи CAPTCHA для захисту від спаму і підбору пароля',
+	'captcha-desc-confirm-edit' => 'Забезпечує методи CAPTCHA для захисту від спаму і підбору пароля',
 	'captcha-addurl-confirm-edit' => 'Ви додали посилання на зовнішній сайт.
 Із метою захисту від автоматичного спаму, будь ласка, виконайте просту арифметичну дію і введіть відповідь у текстове поле ([[Special:Captcha/help|докладніше]]):',
 	'captcha-badlogin-confirm-edit' => 'Із метою захисту від автоматичного злому пароля, будь ласка, виконайте просту арифметичну дію і введіть відповідь у текстове поле ([[Special:Captcha/help|докладніше]]):',
@@ -3644,7 +3644,7 @@ $messages['uk'] = array(
 $messages['vec'] = array(
 	'captcha-edit' => 'Par modificar la pagina te ghè da risòlvar sto senplice calcolo presentà de seguito e inserir el risultato ne la casela
 ([[Special:Captcha/help|magiori informazion]]):',
-	'captcha-desc' => 'Senplice inplementazion de un Captcha',
+	'captcha-desc-confirm-edit' => 'Senplice inplementazion de un Captcha',
 	'captcha-addurl-confirm-edit' => "La modifica richiesta la zonta dei colegamenti foresti novi a la pagina; come misura precauzional contro l'inserimento automatico de spam, te ghè da risòlvar sto senplice calcolo presentà de seguito e inserir el risultato ne la casela ([[Special:Captcha/help|magiori informazion]]):",
 	'captcha-badlogin-confirm-edit' => 'Come misura precauzional contro i tentativi de forzatura automatica de la password, te ghè da risòlvar sto senplice calcolo presentà de seguito e inserir el risultato ne la casela ([[Special:Captcha/help|magiori informazion]]):',
 	'captcha-createaccount-confirm-edit' => 'Come misura precauzional contro i tentativi de creazion automatica dei account, par registrarse te ghè da risòlvar sto senplice calcolo presentà de seguito e inserir el risultato ne la casela ([[Special:Captcha/help|magiori informazion]]):',
@@ -3676,7 +3676,7 @@ Struca el boton \"Indrìo\" del to browser par tornar a la pagina de modifica.",
  */
 $messages['vi'] = array(
 	'captcha-edit' => 'Để sửa đổi trang này, xin hãy giải phép cộng đơn giản dưới đây và gõ câu trả lời vào ô ([[Special:Captcha/help|thông tin thêm]]):',
-	'captcha-desc' => 'Chống spam và sự đoán mật khẩu dùng CAPTCHA',
+	'captcha-desc-confirm-edit' => 'Chống spam và sự đoán mật khẩu dùng CAPTCHA',
 	'captcha-addurl-confirm-edit' => 'Sửa đổi của bạn có chứa các liên kết ra bên ngoài. Để giúp tránh spam tự động, xin hãy giải phép toán đơn giản ở dưới và gõ kết quả vào ô ([[Special:Captcha/help|thông tin thêm]]):',
 	'captcha-badlogin-confirm-edit' => 'Để giúp tránh hành động bẻ mật khẩu tự động, xin hãy giải phép cộng
 đơn giản ở dưới và gõ kết quả vào ô ([[Special:Captcha/help|thông tin thêm]]):',
@@ -3772,7 +3772,7 @@ $messages['yo'] = array(
 /** Cantonese (粵語) */
 $messages['yue'] = array(
 	'captcha-edit' => '要編輯呢一篇文，請答出一個簡單嘅加數和，跟住響個盒度打入 ([[Special:Captcha/help|更多資料]]):',
-	'captcha-desc' => '簡單嘅 captcha 實行',
+	'captcha-desc-confirm-edit' => '簡單嘅 captcha 實行',
 	'captcha-addurl-confirm-edit' => '你編輯嘅內容裏面有新嘅URL連結；為咗避免受到自動垃圾程式的侵擾，請答出一個簡單嘅加數和，跟住響個盒度打入 ([[Special:Captcha/help|更多資料]]):',
 	'captcha-badlogin-confirm-edit' => '為咗防止程式自動破解密碼，請答出一個簡單嘅加數和，跟住響個盒度打入 ([[Special:Captcha/help|更多資料]]):',
 	'captcha-createaccount-confirm-edit' => '為咗防止程式自動註冊，請答出一個簡單嘅加數和，跟住響個盒度打入 ([[Special:Captcha/help|更多資料]]):',
@@ -3803,7 +3803,7 @@ $messages['yue'] = array(
  */
 $messages['zh-hans'] = array(
 	'captcha-edit' => '要编辑这篇文章，请答出一个简单的加法，然後在框内输入 （[[Special:Captcha/help|更多资料]]）:',
-	'captcha-desc' => '通过验证码技术来阻止垃圾邮件和密码猜解',
+	'captcha-desc-confirm-edit' => '通过验证码技术来阻止垃圾邮件和密码猜解',
 	'captcha-addurl-confirm-edit' => '你编辑的内容中含有一个新的外部链接；为了免受自动垃圾程序的侵扰，请答出一个简单的加法，然后在框内输入（[[Special:Captcha/help|更多信息]]）:',
 	'captcha-badlogin-confirm-edit' => '为了防止程式自动破解密码，请答出一个简单的加法，然後在框内输入 （[[Special:Captcha/help|更多资料]]）:',
 	'captcha-createaccount-confirm-edit' => '为了防止程式自动注册，请答出一个简单的加法，然後在框内输入 （[[Special:Captcha/help|更多资料]]）:',
@@ -3838,7 +3838,7 @@ $messages['zh-hans'] = array(
  */
 $messages['zh-hant'] = array(
 	'captcha-edit' => '要編輯這篇文章，請答出一個簡單的加法，然後在框內輸入 （[[Special:Captcha/help|更多資料]]）:',
-	'captcha-desc' => '通過驗證碼技術來阻止垃圾郵件和密碼猜解',
+	'captcha-desc-confirm-edit' => '通過驗證碼技術來阻止垃圾郵件和密碼猜解',
 	'captcha-addurl-confirm-edit' => '你編輯的內容中含有一個新的URL連結；為了免受自動垃圾程式的侵擾，請答出一個簡單的加法，然後在框內輸入 （[[Special:Captcha/help|更多資料]]）:',
 	'captcha-badlogin-confirm-edit' => '為了防止程式自動破解密碼，請答出一個簡單的加法，然後在框內輸入 （[[Special:Captcha/help|更多資料]]）:',
 	'captcha-createaccount-confirm-edit' => '為了防止程式自動註冊，請答出一個簡單的加法，然後在框內輸入 （[[Special:Captcha/help|更多資料]]）:',
