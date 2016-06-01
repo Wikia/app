@@ -53,6 +53,14 @@ $item-link-width: 14%;
 	.community-page-insights-module-metadata {
 		color: $color-alternate-text;
 		font-size: 12px;
+
+		a {
+			display: inline-block;
+			max-width: 140px;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			vertical-align: bottom;
+		}
 	}
 
 	.community-page-insights-module-edit-link {
