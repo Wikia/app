@@ -146,7 +146,7 @@ class PreferencePersistenceSwaggerService implements PreferencePersistence {
 			\Transaction::EVENT_USER_PREFERENCES,
 			$profilerStart,
 			[
-				'user_id' => $userId,
+				'user_id' => intval($userId),
 				'method' => 'getApi',
 				'authenticated' => $userId !== null, ] );
 
@@ -160,7 +160,7 @@ class PreferencePersistenceSwaggerService implements PreferencePersistence {
 			\Transaction::EVENT_USER_PREFERENCES,
 			$profilerStart,
 			[
-				'user_id' => $userId,
+				'user_id' => intval($userId),
 				'method' => 'setPreferences', ] );
 	}
 
@@ -171,7 +171,7 @@ class PreferencePersistenceSwaggerService implements PreferencePersistence {
 			\Transaction::EVENT_USER_PREFERENCES,
 			$profilerStart,
 			[
-				'user_id' => $userId,
+				'user_id' => intval($userId),
 				'method' => 'getPreferences', ] );
 
 		return $preferences;
@@ -184,7 +184,7 @@ class PreferencePersistenceSwaggerService implements PreferencePersistence {
 			\Transaction::EVENT_USER_PREFERENCES,
 			$profilerStart,
 			[
-				'user_id' => $userId,
+				'user_id' => intval($userId),
 				'method' => 'deletePreferences', ] );
 
 		return true;
