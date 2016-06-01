@@ -730,7 +730,7 @@ class SimpleCaptcha {
 	 */
 	function showHelp() {
 		global $wgOut;
-		$wgOut->setPageTitle( wfMsg( 'captchahelp-title' ) );
+		$wgOut->setPageTitle( wfMsg( 'captchahelp-title-confirmedit' ) );
 		$wgOut->addWikiText( wfMsg( 'captchahelp-text-confirmedit' ) );
 		if ( CaptchaStore::get()->cookiesNeeded() ) {
 			$wgOut->addWikiText( wfMsg( 'captchahelp-cookies-needed-confirmedit' ) );
