@@ -13,6 +13,7 @@ ini_set('display_errors','On');
 $messageCacheDir = './messageCache';
 
 function checkLang($lang) {
+	global $messageCacheDir;
 	$s1 = unserialize(file_get_contents($messageCacheDir . '/messageCache-orig.dump.' . $lang . '.php'));
 	$s2 = unserialize(file_get_contents($messageCacheDir . '/messageCache-new.dump.' . $lang . '.php'));
 
