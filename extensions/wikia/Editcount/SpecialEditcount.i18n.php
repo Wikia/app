@@ -4,7 +4,7 @@ $messages = array(
 // English Version by Rob Church
 	'en' => array(
 	'editcount-desc' => 'Displays [[Special:Editcount|edit count]] of a user',
-	'editcount' => 'Edit count',
+	'editcount-title' => 'Edit count',
 	'editcount_username' => 'User:',
 	'editcount_submit' => 'Submit',
 	'editcount_total' => 'Total',
@@ -17,7 +17,7 @@ $messages = array(
 // Documentation
 	'qqq' => array(
 	'editcount-desc' => '{{desc}}',
-	'editcount' => 'Edit count',
+	'editcount-title' => 'Edit count',
 	'editcount_username' => 'Label of form field to pass username',
 	'editcount_submit' => 'Form submit button name',
 	'editcount_total' => 'Label of row containing aggregated editcount values ',
@@ -30,39 +30,39 @@ $messages = array(
 
 /* Arabic (Meno25) */
 	'ar' => array(
-	'editcount' => 'عداد المساهمات',
+	'editcount-title' => 'عداد المساهمات',
 	'editcount_username' => 'مستخدم:',
 	'editcount_submit' => 'تنفيذ',
 	'editcount_total' => 'الإجمالي',
 	),
 
 'bcl' => array(
-'editcount' => 'Hirahón an bilang',
+'editcount-title' => 'Hirahón an bilang',
 'editcount_submit' => 'Isumitir',
 ),
 
 'bn' => array(
-'editcount' => 'সম্পাদনা সংখ্যা',
+'editcount-title' => 'সম্পাদনা সংখ্যা',
 'editcount_username' => 'ব্যবহারকারী:',
 'editcount_submit' => 'পেশ করো',
 'editcount_total' => 'সর্বমোট',
 ),
 
 'br' => array(
-'editcount' => 'Sammad degasadennoù',
+'editcount-title' => 'Sammad degasadennoù',
 'editcount_username' => 'Implijer :',
 'editcount_submit' => 'Kas',
 'editcount_total' => 'Hollad',
 ),
 
 'ca' => array(
-'editcount' => 'Comptador d\'edicions',
+'editcount-title' => 'Comptador d\'edicions',
 'editcount_username' => 'Usuari:',
 ),
 
 // German by Leon Weber
 	'de' => array(
-	'editcount' => 'Anzahl der Seitenbearbeitungen',
+	'editcount-title' => 'Anzahl der Seitenbearbeitungen',
 	'editcount_username' => 'Benutzer:',
 	'editcount_submit' => 'Absenden',
 	'editcount_total' => 'Gesamt',
@@ -74,14 +74,14 @@ $messages = array(
 
 // French Version by Bertrand Grondin
 	'fr' => array(
-	'editcount' => 'Compteur d’éditions individuel',
+	'editcount-title' => 'Compteur d’éditions individuel',
 	'editcount_username' => 'Utilisateur :',
 	'editcount_submit' => 'Soumettre',
 	'editcount_total' => 'Total',
 	),
 
 'hsb' => array(
-'editcount' => 'Ličba změnow',
+'editcount-title' => 'Ličba změnow',
 'editcount_username' => 'Wužiwar:',
 'editcount_submit' => 'OK',
 'editcount_total' => 'dohromady',
@@ -89,7 +89,7 @@ $messages = array(
 
 // Indonesian Version by Ivan Lanin
 	'id' => array(
-	'editcount' => 'Jumlah suntingan',
+	'editcount-title' => 'Jumlah suntingan',
 	'editcount_username' => 'Pengguna:',
 	'editcount_submit' => 'Kirim',
 	'editcount_total' => 'Total',
@@ -97,7 +97,7 @@ $messages = array(
 
 // Italian Version by BrokenArrow
 	'it' => array(
-	'editcount' => 'Conteggio delle modifiche',
+	'editcount-title' => 'Conteggio delle modifiche',
 	'editcount_username' => 'Utente:',
 	'editcount_submit' => 'Invia',
 	'editcount_total' => 'Totale',
@@ -109,7 +109,7 @@ $messages = array(
 
 // nld / Dutch version by Siebrand Mazeland
 	'nl' => array(
-	'editcount' => 'Bewerkingsteller',
+	'editcount-title' => 'Bewerkingsteller',
 	'editcount_username' => 'Gebruiker:',
 	'editcount_submit' => 'OK',
 	'editcount_total' => 'Totaal',
@@ -117,7 +117,7 @@ $messages = array(
 
 // Norwegian (Jon Harald Søby)
 	'no' => array(
-	'editcount' => 'Redigeringsteller',
+	'editcount-title' => 'Redigeringsteller',
 	'editcount_username' => 'Bruker:',
 	'editcount_submit' => 'OK',
 	'editcount_total' => 'Totalt',
@@ -125,14 +125,14 @@ $messages = array(
 
 // Occitan by Cedric31
 	'oc' => array(
-	'editcount' => 'Comptaire d\'edicions individual',
+	'editcount-title' => 'Comptaire d\'edicions individual',
 	'editcount_username' => 'Utilizaire:',
 	'editcount_submit' => 'Sometre',
 	),
 
 /* Piedmontese (Bèrto 'd Sèra) */
 	'pms' => array(
-	'editcount' => 'Total dle modìfiche',
+	'editcount-title' => 'Total dle modìfiche',
 	'editcount_username' => 'Stranòm:',
 	'editcount_submit' => 'Manda',
 	'editcount_total' => 'Total',
@@ -140,7 +140,7 @@ $messages = array(
 
 // Polish (Kamil Koterba)
 	'pl' => array(
-		'editcount' => 'Licznik edycji',
+		'editcount-title' => 'Licznik edycji',
 		'editcount_username' => 'Użytkownik:',
 		'editcount_submit' => 'Wyślij',
 		'editcount_total' => 'Suma',
@@ -152,7 +152,7 @@ $messages = array(
 
 // Portuguese (Lugusto)
 	'pt' => array(
-	'editcount' => 'Contador de edições',
+	'editcount-title' => 'Contador de edições',
 	'editcount_username' => 'Usuário:',
 	'editcount_submit' => 'Enviar',
 	'editcount_total' => 'Total',
@@ -160,7 +160,7 @@ $messages = array(
 
 // Slovak version by helix84
 	'sk' => array(
-	'editcount' => 'Počet príspevkov',
+	'editcount-title' => 'Počet príspevkov',
 	'editcount_username' => 'Používateľ:',
 	'editcount_submit' => 'Odoslať',
 	'editcount_total' => 'Celkom',
@@ -168,7 +168,7 @@ $messages = array(
 
 // Serbian default version by Sasa Stefanovic
 	'sr' => array(
-	'editcount' => 'Бројач измена',
+	'editcount-title' => 'Бројач измена',
 	'editcount_username' => 'Корисник:',
 	'editcount_submit' => 'Унеси',
 	'editcount_total' => 'Укупно',
@@ -176,7 +176,7 @@ $messages = array(
 
 // Serbian cyrillic version by Sasa Stefanovic
 	'sr-ec' => array(
-	'editcount' => 'Бројач измена',
+	'editcount-title' => 'Бројач измена',
 	'editcount_username' => 'Корисник:',
 	'editcount_submit' => 'Унеси',
 	'editcount_total' => 'Укупно',
@@ -184,7 +184,7 @@ $messages = array(
 
 // Serbian latin version by Sasa Stefanovic
 	'sr-el' => array(
-	'editcount' => 'Brojač izmena',
+	'editcount-title' => 'Brojač izmena',
 	'editcount_username' => 'Korisnik:',
 	'editcount_submit' => 'Unesi',
 	'editcount_total' => 'Ukupno',
@@ -192,7 +192,7 @@ $messages = array(
 
 // Cantonese Version by Shinjiman
 	'yue' => array(
-	'editcount' => '編輯次數',
+	'editcount-title' => '編輯次數',
 	'editcount_username' => '用戶:',
 	'editcount_submit' => '遞交',
 	'editcount_total' => '總數',
@@ -200,7 +200,7 @@ $messages = array(
 
 // Chinese (Simplified) Version by Shinjiman
 	'zh-hans' => array(
-	'editcount' => '编辑次数',
+	'editcount-title' => '编辑次数',
 	'editcount_username' => '用户:',
 	'editcount_submit' => '提交',
 	'editcount_total' => '总数',
@@ -208,7 +208,7 @@ $messages = array(
 
 // Chinese (Traditional) Version by Shinjiman
 	'zh-hant' => array(
-	'editcount' => '編輯次數',
+	'editcount-title' => '編輯次數',
 	'editcount_username' => '用戶:',
 	'editcount_submit' => '遞交',
 	'editcount_total' => '總數',
@@ -227,7 +227,7 @@ $messages = array(
 
 
 $messages['es'] = array(
-	'editcount' => 'Contador de ediciones',
+	'editcount-title' => 'Contador de ediciones',
 	'editcount_username' => 'Usuario:',
 	'editcount_submit' => 'Consultar',
 	'editcount_allwikis' => 'Todos los wikis',
@@ -235,7 +235,7 @@ $messages['es'] = array(
 
 
 $messages['fa'] = array(
-	'editcount' => 'شمارش ویرایش‌ها',
+	'editcount-title' => 'شمارش ویرایش‌ها',
 	'editcount_username' => 'کاربر:',
 	'editcount_submit' => 'ارسال',
 	'editcount_total' => 'کل',
@@ -244,7 +244,7 @@ $messages['fa'] = array(
 
 
 $messages['fi'] = array(
-	'editcount' => 'Muokkauslaskuri',
+	'editcount-title' => 'Muokkauslaskuri',
 	'editcount_username' => 'Käyttäjä:',
 	'editcount_submit' => 'Lähetä',
 	'editcount_total' => 'Yhteensä',
@@ -252,7 +252,7 @@ $messages['fi'] = array(
 
 
 $messages['ja'] = array(
-	'editcount' => '編集回数のカウント',
+	'editcount-title' => '編集回数のカウント',
 	'editcount_username' => '利用者名:',
 	'editcount_submit' => '実行',
 	'editcount_total' => '合計',
