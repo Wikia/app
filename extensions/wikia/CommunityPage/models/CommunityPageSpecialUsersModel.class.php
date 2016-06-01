@@ -95,19 +95,23 @@ class CommunityPageSpecialUsersModel {
 				$botIds = $this->getBotIds();
 
 				$sqlData = ( new WikiaSQL() )
-					->SELECT( 'rev_user_text, rev_user, count(rev_id) AS revision_count' )
+					->SELECT( 'rev_user_text, rev_user, wup_value' )
 					->FROM ( 'revision FORCE INDEX (user_timestamp)' )
+					->LEFT_JOIN( 'wikia_user_properties' )
+					->ON( 'rev_user', 'wup_user' )
 					->WHERE( 'rev_user' )->NOT_EQUAL_TO( 0 )
 					->AND_( 'rev_user' )->IN( $adminIds )
 					->AND_( 'rev_user' )->NOT_IN( $botIds )
 					->AND_( 'rev_timestamp > DATE_SUB(now(), INTERVAL 2 YEAR)' )
-					->GROUP_BY( 'rev_user_text' )
-					->ORDER_BY( 'revision_count DESC, rev_user_text' );
+					->AND_( 'wup_property' )->EQUAL_TO( 'editcount' )
+					->GROUP_BY( 'rev_user' )
+					->ORDER_BY( 'CAST(wup_value as unsigned) DESC, rev_user_text' );
+
 
 				$result = $sqlData->runLoop( $db, function ( &$result, $row ) {
 					$result[] = [
 						'userId' => $row->rev_user,
-						'contributions' => $row->revision_count,
+						'contributions' => (int)$row->wup_value,
 						'isAdmin' => true,
 					];
 				} );
