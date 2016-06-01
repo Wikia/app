@@ -121,17 +121,18 @@
 	 *
 	 * @public
 	 *
+	 * @example define(function () { return {hello: 'World'}; });
+     * @example define(['dep1', 'dep2'], function (dep1, dep2) { ... });
 	 * @example define('mymod', function () { return {hello: 'World'}; });
 	 * @example define('mymod', ['dep1', 'dep2'], function (dep1, dep2) { ... });
 	 *
-	 * @param {String} id The identificator for the new module
+	 * @param {String} id [Optional] The identificator for the new module
 	 * @param {Array} dependencies [Optional] A list of module id's which
 	 * the new module depends on
 	 * @param {Object} definition The definition for the module
 	 *
-	 * @throws {Error} If id is not passed or undefined
-	 * @throws {Error} If id doesn't have a definition
-	 * @throws {Error} If dependenices is not undefined but not an array
+	 * @throws {Error} If called without a definition
+	 * @throws {Error} If dependencies is not undefined but not an array
 	 */
 	define = function (id, dependencies, definition, defMock) {
 		if (typeof id !== strType) {
