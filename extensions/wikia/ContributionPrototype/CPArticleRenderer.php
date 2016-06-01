@@ -73,10 +73,10 @@ class CPArticleRenderer {
 	}
 
 	private function getArticleContent($title) {
-		return file_get_contents("{$this->host}/wiki/lol/wiki/Home");
+		return file_get_contents("{$this->host}/wiki/{$title}");
 
 //		$internalHost = $this->urlProvider->getUrl(self::SERVICE_NAME);
-//		$path = "/wiki/{$this->dbName}/wiki/{$title}";
+//		$path = "/wiki/{$title}";
 //
 //		/** @var MWHttpRequest $response */
 //		$response = Http::request(
