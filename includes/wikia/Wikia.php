@@ -2550,4 +2550,18 @@ class Wikia {
 		return true;
 	}
 
+	public static function surrogateKey( $args ) {
+		global $wgCachePrefix;
+
+		return 'mw-' . implode( '-', [ $wgCachePrefix ?: wfWikiID(), implode( '-', func_get_args() ) ] );
+	}
+
+	public static function sharedSurrogateKey( $args ) {
+		return 'mw-' . implode( '-', func_get_args() );
+	}
+
+	public static function purgeSurrogateKey( $key ) {
+		CeleryPurge::purgeBySurrogateKey( $key );
+	}
+
 }

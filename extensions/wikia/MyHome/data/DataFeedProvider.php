@@ -8,17 +8,20 @@ class DataFeedProvider {
 	const IMAGE_THUMB_WIDTH = 150;
 	const VIDEO_THUMB_WIDTH = 150;
 
+	const ONE_PER_TITLE = 1;
+
 	const HIDDEN_CATEGORIES_LIMIT = 500;
 
-	private static $users = array();
 	private static $hiddenCategories = null;
-	private static $images = array();
+
+	private static $userLinksCache = array();
+	private static $imageClassesCache = array();
 
 	private $proxy;
 	private $proxyType;
 	private $results = array();
 	private $invisibleRevisions = array();
-	private $removeDuplicatesType;
+	private $onePerTitle = false;
 	private $parameters = array();
 
 	public function __construct($proxy, $removeDuplicatesType = 0, $parameters = array()) {
@@ -29,7 +32,8 @@ class DataFeedProvider {
 		} else {
 			$this->proxyType = self::WATCHLIST_FEED;
 		}
-		$this->removeDuplicatesType = $removeDuplicatesType;
+
+		$this->onePerTitle = $removeDuplicatesType == self::ONE_PER_TITLE;
 		$this->parameters = $parameters;
 	}
 
@@ -41,10 +45,10 @@ class DataFeedProvider {
 
 		$maxIterations = 5;
 		while((count($this->results) < $limit + 1) && $maxIterations--) {
-			$callLimit = max(10, round(($proxyLimit - count($this->results)) * 1.2));
+			$callLimit = max(10, round(($proxyLimit - count($this->results)) * 1.5));
 			$res = $this->proxy->get($callLimit, $queryPosition);
 			if (isset($res['results'])) {
-				$this->filterMany( $res['results'] );
+				$this->processMany( $res['results'] );
 			}
 
 			if (isset($res['query-continue'])) {
@@ -66,17 +70,35 @@ class DataFeedProvider {
 		return $out;
 	}
 
-	private function filterMany($results) {
+	private function processMany($results) {
 		foreach($results as $item) {
-			$this->filterOne($item);
+			$itemResult = new DataFeedProviderItemResult();
+			$this->filterOne($itemResult, $item);
+
+			if ($itemResult->getInvisibleRevisionId()) {
+				$this->invisibleRevisions[$itemResult->getInvisibleRevisionId()] = true;
+				continue;
+			}
+			if (isset($this->invisibleRevisions[$itemResult->getInvisibleRevisionId()])) {
+				continue;
+			}
+
+			if (!$itemResult->getResult()) {
+				continue;
+			}
+
+			$key = $this->onePerTitle ? $itemResult->getKeyTitle() : $itemResult->getKey();
+			if (!isset($this->results[$key])) {
+				$this->results[$key] = $itemResult->getResult();
+			}
 		}
 	}
 
-	private function filterOne($res) {
+	private function filterOne( DataFeedProviderItemResult $itemResult, $res) {
 		wfProfileIn(__METHOD__);
 
 		if ($res['type'] == 'log') {
-			$this->filterLog($res);
+			$this->filterLog($itemResult, $res);
 		} else {
 			if( empty($res['pageid']) ) {
 				$title = Title::newFromText($res['title']);
@@ -87,22 +109,24 @@ class DataFeedProvider {
 			if( $title && $title->exists() ) {
 				if ($title->isRedirect()) {
 					if ($this->proxyType == self::WATCHLIST_FEED) {
-						$this->filterRedirect($res, $title);
+						$this->filterRedirect($itemResult, $res, $title);
 					}
 				} else {
 					$res['rc_params'] = MyHome::unpackData($res['rc_params']);
 					if (isset($res['rc_params']['rollback'])) {
-						$this->invisibleRevisions[] = $res['rc_params']['revId'];
-					} elseif (!in_array($res['revid'], $this->invisibleRevisions)) {
+						$itemResult->setInvisibleRevisionId($res['rc_params']['revId']);
+					} else {
+						$itemResult->setRevisionId($res['revid']);
 						$hidenewpages = !empty($this->parameters['flags']) && in_array('hidenewpages', $this->parameters['flags']);
+
 						//do not show hidden categories (see RT#32015)
 						if (isset($res['rc_params']['categoryInserts'])) {
 							$res['rc_params']['categoryInserts'] = $this->filterHiddenCategories($res['rc_params']['categoryInserts']);
 						}
 						if ($res['type'] == 'new' && !$hidenewpages) {
-							$this->filterNew($res, $title);
+							$this->filterNew($itemResult, $res, $title);
 						} elseif ($res['type'] == 'edit') {
-							$this->filterEdit($res, $title);
+							$this->filterEdit($itemResult, $res, $title);
 						}
 					}
 				}
@@ -149,10 +173,11 @@ class DataFeedProvider {
 		return $categories;
 	}
 
-	private function filterRedirect($res, Title $title) {
+	private function filterRedirect( DataFeedProviderItemResult $itemResult, $res, Title $title) {
 		wfProfileIn(__METHOD__);
 		$article = new Article($title);
 		$this->add(
+			$itemResult,
 			[
 				'type' => 'redirect',
 				'title' => $res['title'],
@@ -166,7 +191,7 @@ class DataFeedProvider {
 		return;
 	}
 
-	private function filterEdit($res, Title $title) {
+	private function filterEdit( DataFeedProviderItemResult $itemResult, $res, Title $title) {
 		wfProfileIn(__METHOD__);
 		global $wgContentNamespaces;
 
@@ -211,13 +236,13 @@ class DataFeedProvider {
 		}
 
 		if (count($item) > 1) {
-			$this->add($item, $res);
+			$this->add($itemResult, $item, $res);
 		}
 
 		wfProfileOut(__METHOD__);
 	}
 
-	private function filterNew($res, Title $title) {
+	private function filterNew( DataFeedProviderItemResult $itemResult, $res, Title $title) {
 		wfProfileIn(__METHOD__);
 		global $wgContentNamespaces, $wgWallNS;
 
@@ -245,11 +270,9 @@ class DataFeedProvider {
 			$item['title'] = $res['title'];
 			$item['url'] = $title->getLocalURL();
 		} elseif (defined('NS_BLOG_ARTICLE') && $res['ns'] == NS_BLOG_ARTICLE && class_exists('ArticleComment')) {
-
 			$parts = ArticleComment::explode($res['title']);
 			$item['title'] = $parts['title'];
 			$item['url'] = $title->getLocalURL();
-
 		} elseif (defined('NS_BLOG_ARTICLE_TALK') && $res['ns'] == NS_BLOG_ARTICLE_TALK && class_exists('ArticleComment')) {
 			$subpageTitle = Title::newFromText($title->getBaseText(), NS_BLOG_ARTICLE_TALK);
 			/*
@@ -259,7 +282,6 @@ class DataFeedProvider {
 			$articleText = explode("/", $title->getText());
 			$item['title'] = (count($articleText) > 2) ? $articleText[1] : $subpageTitle->getSubpageText();
 			$item['url'] = $subpageTitle->getLocalURL();
-
  		} elseif (defined('NS_BLOG_LISTING') && $res['ns'] == NS_BLOG_LISTING) {
 			if ($this->proxyType == self::WATCHLIST_FEED) {
 				$item['title'] = $res['title'];
@@ -285,13 +307,13 @@ class DataFeedProvider {
 			if ($res['comment'] != '') {
 				$item['comment'] = $res['comment'];
 			}
-			$this->add($item, $res);
+			$this->add($itemResult, $item, $res);
 		}
 
 		wfProfileOut(__METHOD__);
 	}
 
-	private function filterLog($res) {
+	private function filterLog( DataFeedProviderItemResult $itemResult, $res) {
 		wfProfileIn(__METHOD__);
 		if ($res['logtype'] == 'move') {
 			if( isset($res['move'], $res['move']['new_title'], $res['move']['new_ns']) ) { //FB#35775
@@ -319,6 +341,7 @@ class DataFeedProvider {
 				}
 
 				$this->add(
+					$itemResult,
 					[
 						'type' => 'move',
 						'to_title' => $newTitle->getPrefixedText(),
@@ -335,9 +358,9 @@ class DataFeedProvider {
 		}
 
 		if ($this->proxyType == self::WATCHLIST_FEED) {
-
 			if ($res['logtype'] == 'delete') {
 				$this->add(
+					$itemResult,
 					[
 						'type' => 'delete',
 						'title' => $res['title']
@@ -345,14 +368,13 @@ class DataFeedProvider {
 					$res);
 				wfProfileOut(__METHOD__);
 				return;
-
 			} elseif ($res['logtype'] == 'upload') {
-
 				$title = Title::newFromText($res['title']);
 				if ($title && $title->exists()) {
 					$file = wfFindFile($title);
 					if ($file) {
 						$this->add(
+							$itemResult,
 							[
 								'type' => 'upload',
 								'title' => $title->getPrefixedText(),
@@ -364,158 +386,192 @@ class DataFeedProvider {
 						return;
 					}
 				}
-
 			}
-
 		}
+
 		wfProfileOut(__METHOD__);
 	}
 
-	private function add($item, $res) {
+	private function add( DataFeedProviderItemResult $itemResult, $item, $res) {
 		wfProfileIn(__METHOD__);
-		global $wgMemc;
 
-		$key = '';
-		if( $this->removeDuplicatesType == 0 ) { //default
-			$key = $res['user'].'#'.$res['title'].'#'.$res['comment'];
+		$itemResult->setKey( $this->generateKey( $res ) );
+		$itemResult->setKeyTitle( $res['title'] );
 
-			if (is_array($res['rc_params']) && !empty($res['rc_params']['imageInserts'])) {
-				$key .= json_encode($res['rc_params']['imageInserts']);
+		$item['timestamp'] = $res['timestamp'];
+
+		$item['user'] = $this->getUserLink( $res['user'], isset($res['anon']) );
+		$item['username'] = $res['user'];
+
+		if (is_array($res['rc_params'])) {
+
+			$useflags = !empty($this->parameters['flags']);
+			$shortlist = $useflags && in_array('shortlist', $this->parameters['flags']);
+			$hideimages = $useflags && ($shortlist || in_array('hideimages', $this->parameters['flags']));
+			$hidevideos = $useflags && ($shortlist || in_array('hidevideos', $this->parameters['flags']));
+
+			if (isset($res['rc_params']['autosummaryType'])) {
+				$item['autosummaryType'] = $res['rc_params']['autosummaryType'];
 			}
 
-			if (is_array($res['rc_params']) && !empty($res['rc_params']['categoryInserts'])) {
-				$key .= json_encode($res['rc_params']['categoryInserts']);
+			if (isset($res['rc_params']['imageInserts'])) {
+				$item['new_images'] = $item['new_videos'] = array();
+
+				foreach($res['rc_params']['imageInserts'] as $imageName) {
+					// note: getImageClass() strips leading colon for wikia videos image names
+					$imageClass = $this->getImageClass($imageName);
+					if (!$imageClass) {
+						continue;
+					}
+
+					$imageInfo = self::getThumb($imageName);
+					if ($imageClass === 'image' && !$hideimages) {
+						$item['new_images'][] = $imageInfo;
+					} elseif ($imageClass === 'video' && !$hidevideos) {
+						$item['new_videos'][] = $imageInfo;
+					}
+				}
+
+				if (count($item['new_images']) == 0) unset($item['new_images']);
+				if (count($item['new_videos']) == 0) unset($item['new_videos']);
 			}
-			global $wgWallNS;
-			if( !empty($res['ns']) && !empty($wgWallNS) && in_array(MWNamespace::getSubject($res['ns']), $wgWallNS) ) {
-				$key = $res['title'];
+
+			if (isset($res['rc_params']['categoryInserts']) && count($res['rc_params']['categoryInserts'])) {
+				$item['new_categories'] = $res['rc_params']['categoryInserts'];
 			}
-		} elseif ($this->removeDuplicatesType == 1) {	//used in `shortlist`, activity tag
+
+			if (isset($res['rc_params']['viewMode'])) {
+				$item['viewMode'] = $res['rc_params']['viewMode'];
+			}
+
+			if (isset($res['rc_params']['CategorySelect'])) {
+				$item['CategorySelect'] = $res['rc_params']['CategorySelect'];
+			}
+
+			if (isset($res['rc_params']['Badge'])){
+				$item['Badge'] = $res['rc_params']['Badge'];
+			}
+		}
+
+		if( class_exists('Wall') && !empty($item['wall']) ) {
+			$wh = new WallHelper();
+			if ( !empty($item['parent-id']) ) {
+				$data = $wh->getWallComments($item['parent-id']);
+				$item['comments'] = $data['comments'];
+				$item['comments-count'] = $data['count'];
+			} else {
+				$data = $wh->getWallComments($item['article-id']);
+				$item['comments'] = $data['comments'];
+				$item['comments-count'] = $data['count'];
+			}
+		}
+
+		$item['ns'] = $res['ns'];
+
+		$itemResult->setResult( $item );
+
+		wfProfileOut(__METHOD__);
+	}
+
+	private function generateKey( $res ) {
+		global $wgWallNS;
+
+		$key = $res['user'].'#'.$res['title'].'#'.$res['comment'];
+
+		if (is_array($res['rc_params']) && !empty($res['rc_params']['imageInserts'])) {
+			$key .= json_encode($res['rc_params']['imageInserts']);
+		}
+
+		if (is_array($res['rc_params']) && !empty($res['rc_params']['categoryInserts'])) {
+			$key .= json_encode($res['rc_params']['categoryInserts']);
+		}
+
+		if( !empty($res['ns']) && !empty($wgWallNS) && in_array(MWNamespace::getSubject($res['ns']), $wgWallNS) ) {
 			$key = $res['title'];
 		}
 
-		if (!isset($this->results[$key])) {
-			$item['timestamp'] = $res['timestamp'];
+		return $key;
+	}
 
-			$users = [];
-			if (!isset(self::$users[$res['user']])) {
-				if (isset($res['anon'])) {
-					$users[$res['user']] = Xml::element('a', array('href' => Skin::makeSpecialUrl('Contributions').'/'.$res['user'], 'rel' => 'nofollow'), wfMsg('masthead-anonymous-user'));
-				} else {
-					$ut = Title::newFromText($res['user'], NS_USER);
-					if (empty($ut)) {
-						//we have malformed user names in UTF-8 that causes above function to fail (see FB#1731)
-						wfProfileOut(__METHOD__);
-						return;
-					}
+	/**
+	 * @param string $username Username
+	 * @param bool $anon Is the user anon?
+	 * @return string|false
+	 */
+	private function getUserLink( $username, $anon ) {
+		wfProfileIn(__METHOD__);
+
+		if (!isset(self::$userLinksCache[$username])) {
+			$userLink = false;
+
+			if ($anon) {
+				$userLink = Xml::element('a', array('href' => Skin::makeSpecialUrl('Contributions').'/'.$username, 'rel' => 'nofollow'), wfMsg('masthead-anonymous-user'));
+			} else {
+				$ut = Title::newFromText($username, NS_USER);
+				if (!empty($ut)) {
 					if ($ut->isKnown()) {
-						$users[$res['user']] = Xml::element('a', array('href' => $ut->getLocalURL(), 'rel' => 'nofollow'), $res['user']);
+						$userLink = Xml::element('a', array('href' => $ut->getLocalURL(), 'rel' => 'nofollow'), $username);
 					} else {
-						$users[$res['user']] = Xml::element('a', array('href' => $ut->getLocalURL(), 'rel' => 'nofollow', 'class' => 'new'), $res['user']);
-						//$users[$res['user']] = Xml::element('a', array('href' => Skin::makeSpecialUrl('Contributions').'/'.$res['user'], 'rel' => 'nofollow'), $res['user']);
+						$userLink = Xml::element('a', array('href' => $ut->getLocalURL(), 'rel' => 'nofollow', 'class' => 'new'), $username);
+						//$userLink = Xml::element('a', array('href' => Skin::makeSpecialUrl('Contributions').'/'.$username, 'rel' => 'nofollow'), $username);
 					}
 				}
 			}
 
-			$item['user'] = $users[$res['user']];
-			$item['username'] = $res['user'];
-
-			if (is_array($res['rc_params'])) {
-
-				$useflags = !empty($this->parameters['flags']);
-				$shortlist = $useflags && in_array('shortlist', $this->parameters['flags']);
-				$hideimages = $useflags && ($shortlist || in_array('hideimages', $this->parameters['flags']));
-				$hidevideos = $useflags && ($shortlist || in_array('hidevideos', $this->parameters['flags']));
-
-				if (isset($res['rc_params']['autosummaryType'])) {
-					$item['autosummaryType'] = $res['rc_params']['autosummaryType'];
-				}
-
-				if (isset($res['rc_params']['imageInserts'])) {
-					$item['new_images'] = $item['new_videos'] = array();
-
-					foreach($res['rc_params']['imageInserts'] as $imageName) {
-						if (!$hidevideos && $imageName{0} == ':') { // video
-							$video = self::getThumb(substr($imageName, 1));
-							if ($video) $item['new_videos'][] = $video;
-						} elseif (!$hideimages) { // image
-							if (!isset(self::$images[$imageName])) {
-								wfProfileIn(__METHOD__ . "-imagelinks-count");
-								$memcKey = wfMemcKey('ac_image_cnt', md5($imageName));
-								self::$images[$imageName] = $wgMemc->get($memcKey);
-
-								// Note that memcache returns null if record does not exists in cache
-								// versus 0 returned from database when image does not link to anything
-								if (self::$images[$imageName] === false) {
-									$dbr = wfGetDB( DB_SLAVE );
-									self::$images[$imageName] = $dbr->selectField(
-										'imagelinks',
-										'count(*) as cnt',
-										array('il_to' => $imageName),
-										__METHOD__
-									);
-									$wgMemc->set($memcKey, self::$images[$imageName], 60*60*12);
-								}
-								wfProfileOut(__METHOD__ . "-imagelinks-count");
-							}
-							if (self::$images[$imageName] < 20) {
-								$imageObj = null;
-								/** @var File $imageObj */
-								$image = self::getThumb($imageName, $imageObj);
-
-								if ($image) {
-									if ( WikiaFileHelper::isFileTypeVideo($imageObj) ) {
-										$item['new_videos'][] = $image;
-									} else {
-										$item['new_images'][] = $image;
-									}
-								} else {
-									// this trick will avoid checking more then one time if image exists when it does not exists
-									self::$images[$imageName] = 20;
-								}
-							}
-						}
-					}
-
-					if (count($item['new_images']) == 0) unset($item['new_images']);
-					if (count($item['new_videos']) == 0) unset($item['new_videos']);
-				}
-
-				if (isset($res['rc_params']['categoryInserts']) && count($res['rc_params']['categoryInserts'])) {
-					$item['new_categories'] = $res['rc_params']['categoryInserts'];
-				}
-
-				if (isset($res['rc_params']['viewMode'])) {
-					$item['viewMode'] = $res['rc_params']['viewMode'];
-				}
-
-				if (isset($res['rc_params']['CategorySelect'])) {
-					$item['CategorySelect'] = $res['rc_params']['CategorySelect'];
-				}
-
-				if(isset($res['rc_params']['Badge'])){
-					$item['Badge'] = $res['rc_params']['Badge'];
-				}
-			}
-
-			if( class_exists('Wall') && !empty($item['wall']) ) {
-				$wh = new WallHelper();
-				if( !empty($item['parent-id']) ) {
-					$data = $wh->getWallComments($item['parent-id']);
-					$item['comments'] = $data['comments'];
-					$item['comments-count'] = $data['count'];
-				} else {
-					$data = $wh->getWallComments($item['article-id']);
-					$item['comments'] = $data['comments'];
-					$item['comments-count'] = $data['count'];
-				}
-			}
-
-			$item['ns'] = $res['ns'];
-
-			$this->results[$key] = $item;
+			self::$userLinksCache[$username] = $userLink;
 		}
+
 		wfProfileOut(__METHOD__);
+
+		return self::$userLinksCache[$username];
+	}
+
+	private function getImageClass( &$imageName ) {
+		global $wgMemc;
+
+		wfProfileIn(__METHOD__);
+
+		if ($imageName[0] == ':') {
+			$imageName = substr($imageName, 1);
+			wfProfileOut(__METHOD__);
+			return 'video';
+		}
+
+		if (!isset(self::$imageClassesCache[$imageName])) {
+			$imageClass = false;
+
+			$memcKey = wfMemcKey('DataFeedProvider','image_class', md5($imageName));
+
+			$imageLinkCount = $wgMemc->get($memcKey);
+			// Note that memcache returns null if record does not exists in cache
+			// versus 0 returned from database when image does not link to anything
+			if ($imageLinkCount === false) {
+				$dbr = wfGetDB( DB_SLAVE );
+				$imageLinkCount = $dbr->selectField(
+					'imagelinks',
+					'count(*) as cnt',
+					array('il_to' => $imageName),
+					__METHOD__
+				);
+				$wgMemc->set($memcKey, $imageLinkCount, 60*60*12);
+			}
+
+			$imageObj = wfFindFile(Title::newFromText($imageName, NS_FILE));
+
+			if ($imageObj) {
+				if ( WikiaFileHelper::isFileTypeVideo($imageObj) ) {
+					$imageClass = 'video';
+				} else {
+					$imageClass = 'image';
+				}
+			}
+
+			self::$imageClassesCache[$imageName] = $imageClass;
+		}
+
+		wfProfileOut(__METHOD__);
+
+		return self::$imageClassesCache[$imageName];
 	}
 
 	private static function getThumb($imageName, &$imageObj=null) {
@@ -540,9 +596,94 @@ class DataFeedProvider {
 
 			$imageInfo = array('name' => $imageName, 'html' => $html, 'width' => $width, 'height' => $height);
 		}
+
 		wfProfileOut(__METHOD__);
 
 		return $imageInfo;
+	}
+
+}
+
+class DataFeedProviderItemResult {
+	/** @var int */
+	private $revisionId;
+	/** @var int */
+	private $invisibleRevisionId;
+	/** @var string */
+	private $key;
+	/** @var string */
+	private $keyTitle;
+	/** @var array */
+	private $result;
+
+	/**
+	 * @return int
+	 */
+	public function getRevisionId() {
+		return $this->revisionId;
+	}
+
+	/**
+	 * @param int $revisionId
+	 */
+	public function setRevisionId( $revisionId ) {
+		$this->revisionId = intval($revisionId);
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getInvisibleRevisionId() {
+		return $this->invisibleRevisionId;
+	}
+
+	/**
+	 * @param int $invisibleRevisionId
+	 */
+	public function setInvisibleRevisionId( $invisibleRevisionId ) {
+		$this->invisibleRevisionId = intval($invisibleRevisionId);
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getKey() {
+		return $this->key;
+	}
+
+	/**
+	 * @param string $key
+	 */
+	public function setKey( $key ) {
+		$this->key = strval($key);
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getKeyTitle() {
+		return $this->keyTitle;
+	}
+
+	/**
+	 * @param string $keyTitle
+	 */
+	public function setKeyTitle( $keyTitle ) {
+		$this->keyTitle = strval($keyTitle);
+	}
+
+	/**
+	 * @return array
+	 */
+	public function getResult() {
+		return $this->result;
+	}
+
+	/**
+	 * @param array $result
+	 */
+	public function setResult( array $result ) {
+		$this->result = $result;
 	}
 
 }
