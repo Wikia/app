@@ -73,7 +73,7 @@ class SimpleCaptcha {
 		$text = wfMsg( $name );
 		# Obtain a more tailored message, if possible, otherwise, fall back to
 		# the default for edits
-		return wfEmptyMsg( $name, $text ) ? wfMsg( 'captcha-edit' ) : $text;
+		return wfEmptyMsg( $name, $text ) ? wfMsg( 'captcha-edit-confirm-edit' ) : $text;
 	}
 
 	/**
