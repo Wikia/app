@@ -38,7 +38,7 @@ $messages['qqq'] = array(
 *{{msg-mw|captcha-createaccount}}
 *{{msg-mw|Questycaptcha-createaccount}}',
 	'fancycaptcha-create' => 'See also
-*{{msg-mw|Captcha-create}}
+*{{msg-mw|captcha-create-confirm-edit}}
 *{{msg-mw|Questycaptcha-create}}',
 	'fancycaptcha-edit' => 'See also
 *{{msg-mw|Captcha-edit}}
