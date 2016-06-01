@@ -545,7 +545,7 @@ class DataFeedProvider {
 			$imageLinkCount = $wgMemc->get($memcKey);
 			// Note that memcache returns null if record does not exists in cache
 			// versus 0 returned from database when image does not link to anything
-			if ($imageLinkCount === false) {
+			if ( !is_numeric( $imageLinkCount ) ) {
 				$dbr = wfGetDB( DB_SLAVE );
 				$imageLinkCount = $dbr->selectField(
 					'imagelinks',
@@ -555,14 +555,17 @@ class DataFeedProvider {
 				);
 				$wgMemc->set($memcKey, $imageLinkCount, 60*60*12);
 			}
+			$imageLinkCount = intval($imageLinkCount);
 
-			$imageObj = wfFindFile(Title::newFromText($imageName, NS_FILE));
+			if ($imageLinkCount < 20) {
+				$imageObj = wfFindFile(Title::newFromText($imageName, NS_FILE));
 
-			if ($imageObj) {
-				if ( WikiaFileHelper::isFileTypeVideo($imageObj) ) {
-					$imageClass = 'video';
-				} else {
-					$imageClass = 'image';
+				if ($imageObj) {
+					if ( WikiaFileHelper::isFileTypeVideo($imageObj) ) {
+						$imageClass = 'video';
+					} else {
+						$imageClass = 'image';
+					}
 				}
 			}
 
