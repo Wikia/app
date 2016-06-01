@@ -122,7 +122,7 @@
 	 * @public
 	 *
 	 * @example define(function () { return {hello: 'World'}; });
-     * @example define(['dep1', 'dep2'], function (dep1, dep2) { ... });
+	 * @example define(['dep1', 'dep2'], function (dep1, dep2) { ... });
 	 * @example define('mymod', function () { return {hello: 'World'}; });
 	 * @example define('mymod', ['dep1', 'dep2'], function (dep1, dep2) { ... });
 	 *
@@ -148,7 +148,7 @@
 			var warning = "Module id missing or not a string; assigning temporary id (" + id + "). "
 				+ (new Error().stack||'').replace(/\n/g, ' / ');
 
-			if( console.warn ) {
+			if (console.warn) {
 				console.warn(warning);
 			} else if(console.log) {
 				console.log(warning);
