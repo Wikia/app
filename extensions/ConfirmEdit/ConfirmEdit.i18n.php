@@ -21,7 +21,7 @@ To help protect against automated spam, please solve the simple sum below and en
 	'captcha-sendemail-fail-confirm-edit'     => 'Incorrect or missing confirmation code.',
 	'captcha-disabledinapi-confirm-edit'      => 'This action requires a captcha, so it cannot be performed through the API.',
 	'captchahelp-title'          => 'CAPTCHA help',
-	'captchahelp-cookies-needed' => "You will need to have cookies enabled in your browser for this to work.",
+	'captchahelp-cookies-needed-confirm-edit' => "You will need to have cookies enabled in your browser for this to work.",
 	'captchahelp-text-confirmedit'           => "Web sites that accept postings from the public, like this wiki, are often abused by spammers who use automated tools to post their links to many sites.
 While these spam links can be removed, they are a significant nuisance.
 
@@ -99,7 +99,7 @@ As beskerming teen outomatiese gemorsbydraes, sal u die woorde wat onder verskyn
 	'captcha-sendemail-fail-confirm-edit' => 'Verkeerde of ontbrekende bevestigingskode.',
 	'captcha-disabledinapi-confirm-edit' => "Hierdie aksie vereis dat 'n captcha, so dit kan nie uitgevoer word deur die API nie.",
 	'captchahelp-title' => 'Captcha-hulp',
-	'captchahelp-cookies-needed' => 'U moet koekies in u webblaaier aanskakel hê om dit te laat werk.',
+	'captchahelp-cookies-needed-confirm-edit' => 'U moet koekies in u webblaaier aanskakel hê om dit te laat werk.',
 	'captchahelp-text-confirmedit' => "Webwerwe wat bydraes van die publiek aanvaar (soos hierdie wiki) word soms lastig geval deur kwaaddoeners met programme wat outomaties skakels in 'n klomp werwe plaas. Alhoewel hierdie gemors verwyder kan word, is dit lastig.
 
 In party gevalle, veral as u skakels by 'n blad voeg, sal die wiki dalk 'n beeld met verwronge teks vertoon en vra dat u die woorde daarin intik. Omdat hierdie taak moeilik geoutomatiseer word, laat dit meeste regte mense toe om bydraes te maak terwyl dit meeste kwaaddoeners stop.
@@ -125,7 +125,7 @@ $messages['aln'] = array(
 	'captcha-sendemail-fail-confirm-edit' => 'Pasakta ose të humbur Kodi i shifruar.',
 	'captcha-disabledinapi-confirm-edit' => 'Ky veprim kërkon një captcha, kështu që nuk mund të kryhet përmes API.',
 	'captchahelp-title' => 'Captcha ndihmë',
-	'captchahelp-cookies-needed' => 'Ju duhet të keni cookies të aktivizuara në shfletuesin tuaj për këtë për të punuar.',
+	'captchahelp-cookies-needed-confirm-edit' => 'Ju duhet të keni cookies të aktivizuara në shfletuesin tuaj për këtë për të punuar.',
 	'captchahelp-text-confirmedit' => "Web faqet që pranojnë postings nga publiku, si ky wiki, shpesh keqtrajtohen nga spammers që përdorin mjete të automatizuar të postoni lidhjet e tyre me shumë vende. Përderisa këto lidhje spam mund të hiqen, ata janë një ngatërresë të rëndësishme. Ndonjëherë, sidomos kur duke shtuar të reja lidhje interneti në një faqe, wiki mund të tregojë se një imazh i ose deformuar tekst me ngjyra dhe kërkoni ju që të shtypni fjalë të treguar. Ngaqë kjo është një detyrë që është e vështirë për të automatizuar, ajo do të lejojë të vërtetë njerëzit më të për të bërë detyrat e tyre, ndërsa ndaluar më spammers dhe robotik sulmuesit të tjera. Për fat të keq kjo bezdi përdoruesit mund me vizion të kufizuar ose duke përdorur me bazë ose shprehjeje me bazë shfletuesit tekst. Për momentin ne nuk kemi një alternativë audio në dispozicion. Ju lutemi të kontaktoni [[{{MediaWiki:Grouppage-sysop}} site administratorët) |]] për ndihmë, nëse kjo është e papritur në parandalimin e ju prej bërë postimet legjitime. Hit 'butonin mbrapa në shfletuesin tuaj për t'u kthyer në faqen e redaktorit.",
 	'captcha-addurl-whitelist-confirm-edit' => '# <!-- leave this line exactly as it is --><pre>
 # Sintaksa është si më poshtë:
@@ -166,7 +166,7 @@ $messages['an'] = array(
 	'captcha-sendemail-fail-confirm-edit' => 'O codigo de confirmación falta u ye incorrecto.',
 	'captcha-disabledinapi-confirm-edit' => "Ista acción requiere un captcha, asinas que no puede estar executada a traviés d'un API.",
 	'captchahelp-title' => 'Aduya sobre o "captcha"',
-	'captchahelp-cookies-needed' => 'Ta que o sistema funcione le cal tener as cookies activatas en o navegador.',
+	'captchahelp-cookies-needed-confirm-edit' => 'Ta que o sistema funcione le cal tener as cookies activatas en o navegador.',
 	'captchahelp-text-confirmedit' => "Os sitios web que acceptan mensaches d'o publico, como iste wiki, son a ormino obchecto d'abusos por spammers que fan servir ferramientas automatizatas ta encluyir-ie vinclos ta a-saber-los sitios. Encara que istos vinclos se pueden sacar, son un gran estorbo.
 
 Bellas vegadas, especialment quan se mire de adhibir nuevos vinclos a una pachina, o wiki talment le amuestre una imachen con testo en color y distorsionato, y le pregunte quáls son as parolas amostratas. Como ista ye una fayena de mal automatizar, premitirá a os usuarios humanos fer as suyas edicions de vez que aturará a muitos spammers y atacants automaticos.
@@ -205,7 +205,7 @@ $messages['ar'] = array(
 	'captcha-sendemail-fail-confirm-edit' => 'كود تأكيد غير صحيح أو مفقود',
 	'captcha-disabledinapi-confirm-edit' => 'هذا الإجراء يتطلب تحقيق , لذلك لايمكن أعتمادها من API.',
 	'captchahelp-title' => 'مساعدة الكابتشا',
-	'captchahelp-cookies-needed' => 'ستحتاج إلى أن تكون الكوكيز مفعلة في متصفحك لكي يعمل هذا',
+	'captchahelp-cookies-needed-confirm-edit' => 'ستحتاج إلى أن تكون الكوكيز مفعلة في متصفحك لكي يعمل هذا',
 	'captchahelp-text-confirmedit' => "عادة ما يتم في المواقع التي تقبل الردود والرسائل من العامة، كهذا الويكي، تخريب الموقع عن طريق الأشخاص الذين يستعملون آليات معينة لإرسال وصلاتهم لمواقع متعددة بصورة آلية.
 وعلى الرغم من أن هذا يمكن إزالته ولكنه مزعج للغاية.
 
@@ -240,7 +240,7 @@ $messages['arz'] = array(
 	'captcha-createaccount-fail-confirm-edit' => 'كود التأكيد مش صحيح أو ضايع.',
 	'captcha-create-confirm-edit' => 'علشان تبتدى الصفحة دى، لو سمحت تحل السألة الرياضية البسيطة اللى تحت و تكتب الاجابة جوه الصندوء ([[Special:Captcha/help|معلومات اكتر]]):',
 	'captchahelp-title' => 'مساعدة الكابتشا',
-	'captchahelp-cookies-needed' => 'لازم تكون الكوكيز بتاعتك متفعلة فى البراوزر علشان دا يشتغل.',
+	'captchahelp-cookies-needed-confirm-edit' => 'لازم تكون الكوكيز بتاعتك متفعلة فى البراوزر علشان دا يشتغل.',
 	'captchahelp-text-confirmedit' => "مواقع الويب اللى بتقبل رسايل من عامة الناس،زى الويكى دا،غالبا ما بيتعرضو لسوء استعمال عن طريق السبامرز اللى بيستخدمو اليات اوتوماتيكية علشان يبعتو لينكات لكذا موقع.
 على الرغم من ان السبام لينك ممكن يتشال، بس هى بتسبب ازعاج كبير .
 
@@ -276,7 +276,7 @@ $messages['as'] = array(
 	'captcha-createaccount-fail-confirm-edit' => 'ভুল বা খালী নিশ্বিতকৰণ শব্দ',
 	'captcha-create-confirm-edit' => 'এই পৃষ্ঠাটো তৈয়াৰ কৰিবলৈ, তলৰ সহজ অংকটো কৰি উত্তৰতো বাকছৰ ভিতৰত লিখক
 ([[Special:Captcha/help|অধিক তথ্য]]):',
-	'captchahelp-cookies-needed' => 'এই কামতো সম্পন্ন কৰিবলৈ, আপোনাৰ ব্ৰাউজাৰত কুকী সক্ৰীয় থাকিব লাগিব',
+	'captchahelp-cookies-needed-confirm-edit' => 'এই কামতো সম্পন্ন কৰিবলৈ, আপোনাৰ ব্ৰাউজাৰত কুকী সক্ৰীয় থাকিব লাগিব',
 	'captchahelp-text-confirmedit' => "যিবোৰ ৱেবচাইটত জনতাই পাঠ্য ভৰাব পাৰে, যেনে এই ৱিকি, সেইবোৰক প্ৰায়ে দুস্ক্ৰিতিকাৰি স্পেমাৰবোৰে স্বয়ংক্ৰীয় আহিলাৰ দ্বাৰা তেওলোকৰ চাইটলৈ সংযোগ ভৰাই আক্ৰমন কৰে।
 যদিও তেনে স্পাম সংযোগ গুচাব পাৰি, পিছে এয়া এক ডাঙৰ উপদ্ৰৱ।
 
@@ -307,7 +307,7 @@ $messages['ast'] = array(
 	'captcha-sendemail-fail-confirm-edit' => 'Códigu de confirmación incorreutu o ausente.',
 	'captcha-disabledinapi-confirm-edit' => 'Esta aición requier un captcha y, poro, nun pue facese pel API',
 	'captchahelp-title' => 'Ayuda tocante al CAPTCHA',
-	'captchahelp-cookies-needed' => "Has tener les cookies habilitaes nel to navegador pa que'l sistema funcione.",
+	'captchahelp-cookies-needed-confirm-edit' => "Has tener les cookies habilitaes nel to navegador pa que'l sistema funcione.",
 	'captchahelp-text-confirmedit' => "Los sitios web qu'aceuten mensaxes del publicu, como esta wiki, davezu son oxetu d'abusu por spammers qu'usen programes pa incluyir los sos enllaces automáticamente.
 Mientres qu'estos enllaces de puxarra puen desaniciase, son enforma cafiantes.
 
@@ -348,7 +348,7 @@ $messages['ba'] = array(
 	'captcha-sendemail-fail-confirm-edit' => 'Раҫлау коды керетелмәгән йәки дөрөҫ түгел.',
 	'captcha-disabledinapi-confirm-edit' => 'Был ғәмәл captcha тикшереүен талап итә, шуға күрә API аша башҡарыла алмай.',
 	'captchahelp-title' => 'Captcha тураһында белешмә',
-	'captchahelp-cookies-needed' => 'Бының эшләүе өсөн һеҙҙең браузерығыҙҙа куки булыуы кәрәк.',
+	'captchahelp-cookies-needed-confirm-edit' => 'Бының эшләүе өсөн һеҙҙең браузерығыҙҙа куки булыуы кәрәк.',
 	'captchahelp-text-confirmedit' => 'Үҙенә эстәлек өҫтәргә һәм эстәлеген мөхәррирләргә мөмкинлек биргән веб-сайттар, шул иҫәптән был вики, йыш ҡына сайттарға автоматик һылтанмалар өҫтәү өсөн программалар ҡулланған спамлаусыларҙың маҡсатына әйләнә.
 
 Ҡайһы бер ғәмәлдәрҙе башҡарған ваҡытта — мәҫәлән, биткә һылтанма өҫтәгән ваҡытта — һеҙ төҫлө йәки боҙолған текстлы махсус рәсем күрә алаһығыҙ, һеҙгә ошо текстты керетергә тәҡдим ителәсәк.
@@ -380,7 +380,7 @@ $messages['bcc'] = array(
 	'captcha-createaccount-fail-confirm-edit' => 'اشتباه یا گارین کد تایید',
 	'captcha-create-confirm-edit' => 'په شرکتن صفحه، لطفا ای جمع ساده حل کنیت و جواب ادان بنویسیت  ([[Special:Captcha/help|گیشتر اطلاعات]]):',
 	'captchahelp-title' => 'کمک Captcha',
-	'captchahelp-cookies-needed' => 'شمی نیاز بیت که ته وتی بروزر کوکی فعال کنیت په ای کارء',
+	'captchahelp-cookies-needed-confirm-edit' => 'شمی نیاز بیت که ته وتی بروزر کوکی فعال کنیت په ای کارء',
 	'captchahelp-text-confirmedit' => "وب سایتانی که چه عام نوشته قبول کننت، په داب ای ویکی، اغلب چه طرف اسپمرآن که چه وسایل اتوماتیکی په دیم دهگ لینکانش په بازگین سایت سوء استفاده کنگ بیت.
 اگر که ای لینک اسپمی دور کنگ بینت،بله باز اذیت کننت.
 
@@ -416,7 +416,7 @@ $messages['be'] = array(
 	'captcha-desc-confirm-edit' => 'Вырашэнне простай каптчы',
 	'captcha-create-confirm-edit' => 'Каб стварыць старонку, развяжыце простае ўраўненне, што ніжэй, і ўпішыце адказ у адпаведнае поле ([[Special:Captcha/help|больш падрабязна]]):',
 	'captchahelp-title' => 'Даведка Капчы',
-	'captchahelp-cookies-needed' => 'Каб гэтая магчымасць працавала, належыць дазволіць у браўзеры апрацоўку квіткоў ("кукі").',
+	'captchahelp-cookies-needed-confirm-edit' => 'Каб гэтая магчымасць працавала, належыць дазволіць у браўзеры апрацоўку квіткоў ("кукі").',
 	'captcha-addurl-whitelist-confirm-edit' => ' #<!-- радок абавязкова пакінуць як ёсць (у т.л., з прагалам у пачатку) --> <pre>
 # Сінтаксіс наступны:
 #  * Усё ад знаку "#" да канца радка гэта каментар
@@ -443,7 +443,7 @@ $messages['be-tarask'] = array(
 	'captcha-sendemail-fail-confirm-edit' => 'Код пацьверджаньня — няслушны альбо адсутнічае.',
 	'captcha-disabledinapi-confirm-edit' => 'Гэтае дзеяньне патрабуе праверкі captcha, і з-за гэтага ня можа быць выкананае праз API.',
 	'captchahelp-title' => 'Дапамога ў captcha',
-	'captchahelp-cookies-needed' => 'Вам трэба дазволіць файлы-кукі ў Вашым браўзэры, каб гэтая функцыя працавала.',
+	'captchahelp-cookies-needed-confirm-edit' => 'Вам трэба дазволіць файлы-кукі ў Вашым браўзэры, каб гэтая функцыя працавала.',
 	'captchahelp-text-confirmedit' => 'Вэб-сайты, якія прымаюць запісы ад грамадзкасьці, падобныя на {{GRAMMAR:вінавальны|{{SITENAME}}}}, часта атакуюцца спамэрамі, якія ўжываюць аўтаматызаваныя інструмэнты, каб зьмяшчаць свае спасылкі на шмат сайтаў.
 І хаця гэтыя спасылкі могуць быць прыбраныя, яны выклікаюць значныя нязручнасьці.
 
@@ -479,7 +479,7 @@ $messages['bg'] = array(
 	'captcha-sendemail-fail-confirm-edit' => 'Грешен или липсващ код за потвърждение.',
 	'captcha-disabledinapi-confirm-edit' => 'Това действие изисква капча, следователно не може да бъде извършено през приложния програмен интерфейс.',
 	'captchahelp-title' => 'Помощ за сaptcha',
-	'captchahelp-cookies-needed' => 'За да работи това, необходимо е бисквитките на вашия браузър да са включени.',
+	'captchahelp-cookies-needed-confirm-edit' => 'За да работи това, необходимо е бисквитките на вашия браузър да са включени.',
 	'captchahelp-text-confirmedit' => "Уеб сайтовете, които позволяват свободно да се редактира и добавя ново съдържание (като това уики), често са обект на атаки от страна на спамъри, които използват средства за автоматизирано редактиране за публикуване на препратки към много сайтове. Въпреки че тези препратки могат да бъдат премахнати, те са особено неприятни за потребителите.
 
 Понякога, особено когато се добавят нови препратки към страниците, е възможно уикито да покаже картинка с текст, който трябва да бъде въведен в посоченото поле. Тъй като това е стъпка, която е трудно да бъде прескочена при автоматизирано редактиране, тя затруднява и спира повечето спамъри и роботи, но допуска истинските потребителите да правят редакции.
@@ -507,7 +507,7 @@ $messages['bn'] = array(
 	'captcha-sendemail-fail-confirm-edit' => 'নিশ্চিতকরণ কোডটি ভুল বা দেয়া হয়নি',
 	'captcha-disabledinapi-confirm-edit' => 'এই কাজটি করার জন্য একটি ক্যাপচা প্রয়োজন, তাই এটি এপিআই দ্বারা করা যাবে না।',
 	'captchahelp-title' => 'ক্যাপচা সাহায্য',
-	'captchahelp-cookies-needed' => 'এই কাজটি করার জন্য আপনাকে আপনার ব্রাউজারের কুকি সক্রিয় করতে হবে।',
+	'captchahelp-cookies-needed-confirm-edit' => 'এই কাজটি করার জন্য আপনাকে আপনার ব্রাউজারের কুকি সক্রিয় করতে হবে।',
 	'captchahelp-text-confirmedit' => 'যেসব ওয়েবসাইট পোস্টিং-এর জন্য উন্মুক্ত, যেমন এই উইকিটি, সেগুলি প্রায়ই স্প্যামারদের আক্রমণের শিকার হয়। স্প্যামাররা স্বয়ংক্রিয় সরঞ্জাম ব্যবহার করে তাদের সংযোগগুলি বহু সাইটে পোস্ট করে। এই স্প্যাম সংযোগগুলি মুছে ফেলা সম্ভব, কিন্তু এগুলি যথেষ্ট বিরক্তির উদ্রেক করে।
 
 কখনো কখনো, বিশেষ করে কোন পাতায় নতুন ওয়েব সংযোগ যোগ করার সময়, উইকিটি আপনাকে রঙিন বা বিকৃত টেক্সটবিশিষ্ট ছবি দেখিয়ে আপনাকে শব্দটি টাইপ করতে বলতে পারে। যেহেতু এই কাজটি স্বয়ংক্রিয়ভাবে সম্পাদন করা দুরূহ, তাই এই ব্যবস্থার ফলে প্রকৃত মানুষেরা পোস্ট করতে পারবেন কিন্তু বেশির ভাগ স্প্যামার বা রোবটভিত্তিক আক্রমণ বাধাপ্রাপ্ত হবে।
@@ -541,7 +541,7 @@ $messages['br'] = array(
 	'captcha-sendemail-fail-confirm-edit' => "Pe e vank ar c'hod kadarnaat pe eo fall anezhañ.",
 	'captcha-disabledinapi-confirm-edit' => "Evit an obererezh-mañ ez eus ezhomm ur captcha, dre-se ne c'hell ket bezañ graet dre an API.",
 	'captchahelp-title' => 'Skoazell Capcha',
-	'captchahelp-cookies-needed' => "Ret eo deoc'h gweredekaet an toupinoù war ho merdeer Web evit ma'z afe en-dro.",
+	'captchahelp-cookies-needed-confirm-edit' => "Ret eo deoc'h gweredekaet an toupinoù war ho merdeer Web evit ma'z afe en-dro.",
 	'captchahelp-text-confirmedit' => "Alies e vez taget al lec'hiennoù a zegemer kemennadennoù a-berzh an holl, evel ar wiki-mañ, gant ar stroberien a implij ostilhoù emgefre evit postañ o liammoù war lec'hiennoù a bep seurt.
 Ha pa c'hallfent bezañ diverket, kazus-mat ez int memes tra. 
 
@@ -579,7 +579,7 @@ $messages['bs'] = array(
 	'captcha-sendemail-fail-confirm-edit' => 'Netačan unos ili nedostatak šifre za potvrđivanje.',
 	'captcha-disabledinapi-confirm-edit' => 'Ova akcija zahtjeva captchu, tako da se ne može izvršiti preko API.',
 	'captchahelp-title' => 'Pomoć pri captcha',
-	'captchahelp-cookies-needed' => 'Da bi ste ovo mogli raditi potrebno je da omogućite kolačiće (cookies) u Vašem pregledniku.',
+	'captchahelp-cookies-needed-confirm-edit' => 'Da bi ste ovo mogli raditi potrebno je da omogućite kolačiće (cookies) u Vašem pregledniku.',
 	'captchahelp-text-confirmedit' => "Websajtovi koji podržavaju slanje sadržaja iz javnosti, kao što je ovaj viki, često zloupotrebljavaju vandali koji koriste automatizovane alate da šalju svoje linkove ka mnogim sajtovima.
 Iako se ovi neželjeni linkovi mogu ukloniti, one ipak zadaju veliku muku.
 
@@ -618,7 +618,7 @@ $messages['ca'] = array(
 	'captcha-sendemail-fail-confirm-edit' => 'Manca el codi de confirmació, o bé és incorrecte.',
 	'captcha-disabledinapi-confirm-edit' => "Aquesta acció requereix un captcha (codi d'imatge), per la qual cosa no es pot realitzar a través de l'API.",
 	'captchahelp-title' => 'Ajuda amb el sistema captcha',
-	'captchahelp-cookies-needed' => "Heu d'activar les galetes al vostre navegador per a que funcioni.",
+	'captchahelp-cookies-needed-confirm-edit' => "Heu d'activar les galetes al vostre navegador per a que funcioni.",
 	'captchahelp-text-confirmedit' => "Els webs que accepten la publicació de missatges per part del seu públic, com aquest wiki, són sovint víctimes de spam per part de robots automàtics que hi posen enllaços cap als seus webs. Aquests enllaços es poden anar eliminant, però suposen un important destorb.
 
 Quan creeu nous comptes d'usuari o afegiu enllaços a una pàgina se us demanarà que respongueu una pregunta fàcil, una suma o que teclegeu el text que apareix en una imatge distorsionada. És difícil programar un robot per aquest tipus de tasques, i gràcies a açò, es poden aturar la majoria d'atacants robots.
@@ -670,7 +670,7 @@ V zájmu ochrany před automatickým spamováním vyřešte následující jedno
 	'captcha-sendemail-fail-confirm-edit' => 'Chybějící či neplatný potvrzovací kód.',
 	'captcha-disabledinapi-confirm-edit' => 'Tato operace vyžaduje splnění CAPTCHA, takže ji nelze provést prostřednictvím API.',
 	'captchahelp-title' => 'Nápověda ke captcha',
-	'captchahelp-cookies-needed' => 'Aby to fungovalo, musíte mít ve svém prohlížeči zapnuty cookies.',
+	'captchahelp-cookies-needed-confirm-edit' => 'Aby to fungovalo, musíte mít ve svém prohlížeči zapnuty cookies.',
 	'captchahelp-text-confirmedit' => 'Webové stránky, do kterých mohou přispívat jejich návštěvníci (jako například tato wiki), jsou často terčem spammerů, kteří pomocí automatických nástrojů vkládají své odkazy na velké množství stránek. Přestože lze tento spam odstranit, představuje nepříjemné obtěžování.
 
 Někdy, zvláště při přidávání nových webových odkazů, vám může wiki ukázat obrázek barevného či pokrouceného textu a požádat vás o opsání zobrazených znaků. Jelikož takovou úlohu lze jen těžko automatizovat, skuteční lidé mohou dále přispívat, zatímco většinu spammerů a jiných robotických útočníků to zastaví.
@@ -701,7 +701,7 @@ $messages['cy'] = array(
 	'captcha-sendemail-fail-confirm-edit' => 'Y cod cadarnhau yn anghywir neu yn eisiau.',
 	'captcha-disabledinapi-confirm-edit' => 'Mae angen "captcha" i gyflawni\'r weithred hon, felly nid oes modd ei gyflawni trwy\'r API.',
 	'captchahelp-title' => 'Cymorth "captcha"',
-	'captchahelp-cookies-needed' => "Er mwyn i hyn weithio mae'n rhaid bod cookies wedi eu galluogi ar eich gwe-lywiwr.",
+	'captchahelp-cookies-needed-confirm-edit' => "Er mwyn i hyn weithio mae'n rhaid bod cookies wedi eu galluogi ar eich gwe-lywiwr.",
 	'captchahelp-text-confirmedit' => "Yn anffodus, mae safleoedd gwe fel y wici hon, sy'n caniatau i'r cyhoedd ysgrifennu iddi, yn darged beunyddiol i sbamwyr sy'n defnyddio rhaglenni arbennig i bostio eu cysylltiadau ar wefannau lu. Gellir dileu'r dolenni o'r tudalennau, ond byddai hynny'n waith trafferthus.
 
 O dro i dro, yn enwedig wrth ychwanegu dolenni at safleoedd gwe eraill, fe fydd y safle hon yn dangos delwedd o destun, ac fe fydd yn rhaid i chi deipio'r geiriau a ddangosir. Mae hyn yn dasg anodd iawn i raglenni cyfrifiadurol, felly dylai'r rhan fwyaf o olygwyr go iawn gyflawni'r dasg yn ddi-drafferth, yn wahanol i'r rhaglenni sbam.
@@ -739,7 +739,7 @@ $messages['da'] = array(
 	'captcha-sendemail-fail-confirm-edit' => 'Forkert eller manglende bekræftelseskode.',
 	'captcha-disabledinapi-confirm-edit' => "Denne handling kræver en captcha, så det ikke kan udføres via API'en.",
 	'captchahelp-title' => 'Captcha-hjælp',
-	'captchahelp-cookies-needed' => 'Din browser skal understøtte cookies, før dette kan gennemføres.',
+	'captchahelp-cookies-needed-confirm-edit' => 'Din browser skal understøtte cookies, før dette kan gennemføres.',
 	'captchahelp-text-confirmedit' => "Websites der accepterer indhold fra offentligheden, bliver ofte udsat for angreb fra spammere. Disse angreb sker med automatiske værktøjer, der anbringer de samme links på et stort antal websites på kort tid. Selvom disse links kan fjernes, er de en vedligeholdelsesmæssig byrde.
 
 I visse tilfælde, specielt når der tilføjes nye links til denne wiki, vil softwaren vise dig et billede af et stykke forvredet og sløret tekst. Du skal indtaste det ord, der vises, før du kan gennemføre handlingen. Formålet er at skelne mellem mennesker og automatiserede værktøjer, da de sidste har meget svært ved at genkende ordene.
@@ -777,7 +777,7 @@ Zum Schutz vor automatisiertem Spamming löse die nachfolgende Rechenaufgabe und
 	'captcha-sendemail-fail-confirm-edit' => 'Falscher oder fehlender Bestätigungscode.',
 	'captcha-disabledinapi-confirm-edit' => 'Diese Aktion benötigt ein CAPTCHA. Sie kann nicht über die API ausgeführt werden.',
 	'captchahelp-title' => 'CAPTCHA-Hilfe',
-	'captchahelp-cookies-needed' => "'''Wichtiger Hinweis:''' Es müssen Cookies im Browser erlaubt sein.",
+	'captchahelp-cookies-needed-confirm-edit' => "'''Wichtiger Hinweis:''' Es müssen Cookies im Browser erlaubt sein.",
 	'captchahelp-text-confirmedit' => 'Internetangebote, die für Beiträge von praktisch jedem offen sind — so wie dieses Wiki — werden oft von Spammern missbraucht, die ihre Links automatisch auf vielen Webseiten platzieren. Diese Spam-Links können wieder entfernt werden, sie sind aber ein erhebliches Ärgernis.
 
 In manchen Fällen, insbesondere beim Hinzufügen von neuen Weblinks zu einer Seite, kann es vorkommen, dass dieses Wiki ein Bild mit einem farbigen und verzerrten Text anzeigt und dazu auffordert, die angezeigten Wörter einzutippen.
@@ -841,7 +841,7 @@ Qe otomatik spamî ra pawitîş, ma rica keno cewabê problemî qutiyê ke cor d
 	'captcha-sendemail-fail-confirm-edit' => 'Kodê testiqî vin biyo ya zi raşt niyo.',
 	'captcha-disabledinapi-confirm-edit' => 'Ena hereket de captcha lazim o, aye ra ser API ra ena hereket nibena.',
 	'captchahelp-title' => 'Yardimê captchayî',
-	'captchahelp-cookies-needed' => 'Eka şıma wazeno bıkewê pela Wikipedia, programê internetê şıma de cookiesi gani aktiv bê.',
+	'captchahelp-cookies-needed-confirm-edit' => 'Eka şıma wazeno bıkewê pela Wikipedia, programê internetê şıma de cookiesi gani aktiv bê.',
 	'captchahelp-text-confirmedit' => "Siteyan ke kamu ra aleknayişê îlanî ra destur dano, ze ena wiki, spam kerdogan ke xacetane otomatiki ser kar keno inan ra atak beno.
 Ma eşkeno linkane inan wedarno, feqat hewna inan problem zeman ma geno. 
 
@@ -877,7 +877,7 @@ Za šćit pśeśiwo zawtomatizěrowanemu spamoju, rozwěž pšosym slědujucy ja
 	'captcha-sendemail-fail-confirm-edit' => 'Wopacny abo felujucy wobkšuśeński kod.',
 	'captcha-disabledinapi-confirm-edit' => 'Toś ta akcija pomina se captcha, togodla njedajo se pśez API wuwjasć.',
 	'captchahelp-title' => 'Pomoc wó captcha',
-	'captchahelp-cookies-needed' => 'Aby to funkcioněrowało, muse cookieje dowólone byś.',
+	'captchahelp-cookies-needed-confirm-edit' => 'Aby to funkcioněrowało, muse cookieje dowólone byś.',
 	'captchahelp-text-confirmedit' => 'Websedła, kótarež akceptěruju zjawne pśinoski, ako toś ten wiki, znjewužywaju se cesto wót spamowarjow, kótarež wužywaju zawtomatizěrowane rědy, aby słali swóje wótkaze na wjele sedłow.
 Lěcrownož toś te spamowe wótkaze daju se wótpóraś, su wóne bejna pógóršota.
 
@@ -929,7 +929,7 @@ $messages['el'] = array(
 	'captcha-sendemail-fail-confirm-edit' => 'Ελλιπής ή λανθασμένος κωδικός επιβεβαίωσης.',
 	'captcha-disabledinapi-confirm-edit' => 'Η ενέργεια αυτή απαιτεί επαλήθευση λεκτικού κειμένου και για αυτό δεν μπορεί να γίνει μέσω του API.',
 	'captchahelp-title' => 'Βοήθεια για το Captcha',
-	'captchahelp-cookies-needed' => 'Θα πρέπει να έχετε τα cookies ενεργοποιημένα στον φυλλομετρητή σας για να εκτελεστεί η λειτουργία.',
+	'captchahelp-cookies-needed-confirm-edit' => 'Θα πρέπει να έχετε τα cookies ενεργοποιημένα στον φυλλομετρητή σας για να εκτελεστεί η λειτουργία.',
 	'captchahelp-text-confirmedit' => "Οι ιστοσελίδες που δέχονται τις επεξεργασίες από το κοινό, όπως αυτό το wiki, δεν χρησιμοποιούνται συχνά σωστά από τους spammers που χρησιμοποιούν τα αυτοματοποιημένα εργαλεία για να αποστείλουν τις συνδέσεις τους με πολλές σελίδες. Αυτές οι spam συνδέσεις  μπορούν να αφαιρεθούν, επειδή είναι σημαντικά ενοχλητικές.
 
 Μερικές φορές, ειδικά κατά την προσθήκη νέων συνδέσμων σε μια σελίδα, το wiki μπορεί να σας παρουσιάσει μια εικόνα με ένα χρωματισμένο ή διαστρεβλωμένο κείμενο και να σας ζητήσει να πληκτρολογήσετε τις λέξεις που παρουσιάζονται. Δεδομένου ότι αυτό είναι ένας στόχος που είναι δύσκολο να αυτοματοποιηθεί, θα επιτρέψει στους περισσότερους χρήστες να κάνουν τις επεξεργασίες τους, σταματώντας τους spammers και άλλους ρομποτικά επιτιθέμενους.
@@ -998,7 +998,7 @@ kaj enigi la respondon en la skatolo ([[Special:Captcha/help|plua informo]]):',
 	'captcha-sendemail-fail-confirm-edit' => 'Malĝusta aŭ mankanta konfirma kodo.',
 	'captcha-disabledinapi-confirm-edit' => 'Ĉi tiu ago bezonas captcha, tial ĝi ne estas farebla per API.',
 	'captchahelp-title' => 'Helpo pri captcha',
-	'captchahelp-cookies-needed' => 'Vi devas permesi kuketojn en via retumilo por funkciigi ĉi tion.',
+	'captchahelp-cookies-needed-confirm-edit' => 'Vi devas permesi kuketojn en via retumilo por funkciigi ĉi tion.',
 	'captchahelp-text-confirmedit' => "Retejoj kiuj akcepti informon de publiko, kiel ĉi tiu vikio, estas ofte misuzitaj de spamistoj kiu uzas aŭtomatajn ilojn por afiŝi ligilojn al multaj retejoj.
 Kvankam ĉi tiu spam-ligiloj estas forigeblaj, ili estas granda ĝeno.
 
@@ -1042,7 +1042,7 @@ Para ayudar a proteger contra el spam automatizado, por favor resuelve la sencil
 	'captcha-sendemail-fail-confirm-edit' => 'El código de confirmación falta o es incorrecto.',
 	'captcha-disabledinapi-confirm-edit' => 'Esta acción requiere un captcha, así que no puede ser ejecutada a través de un API.',
 	'captchahelp-title' => 'Ayuda sobre el captcha',
-	'captchahelp-cookies-needed' => 'Debe tener las cookies activadas en el navegador para que el sistema funcione.',
+	'captchahelp-cookies-needed-confirm-edit' => 'Debe tener las cookies activadas en el navegador para que el sistema funcione.',
 	'captchahelp-text-confirmedit' => "Los sitios web que aceptan mensajes del público, como esta wiki, son a menudo objeto de abusos  por spammers que utilizan programas para incluir automáticamente sus enlaces. Si bien estos enlaces pueden quitarse, son una gran molestia.
 
 En ocasiones, especialmente cuando añada nuevos enlaces a una página, la wiki le mostrará una imagen de texto coloreado o distorsionado y le pedirá que escriba las palabras que muestra. Dado que esta es una tarea difícil de automatizar, permite a la mayoría de las personas enviar sus textos, a la vez que detiene a la mayoría de los spammers y otros atacantes automáticos.
@@ -1079,7 +1079,7 @@ Palun lahenda allpool lihtne tehe ja sisesta vastus kasti. Abinõu on kaitseks a
 	'captcha-sendemail-fail-confirm-edit' => 'Vigane või puuduv kinnituskood.',
 	'captcha-disabledinapi-confirm-edit' => 'Ühes selle toiminguga tuleb läbida robotilõks ja seetõttu ei saa seda API kaudu sooritada.',
 	'captchahelp-title' => 'Mis on robotilõks?',
-	'captchahelp-cookies-needed' => 'Selle toimimiseks peab veebilehitseja lubama küpsiseid.',
+	'captchahelp-cookies-needed-confirm-edit' => 'Selle toimimiseks peab veebilehitseja lubama küpsiseid.',
 	'captchahelp-text-confirmedit' => 'Võrgukohti, mis lubavad külastajatel sisu muuta, nagu ka see viki, kasutavad sageli rämpsposti levitajad, lisades näiteks lehekülgedele reklaamilinke. Kuigi neid linke saab eemaldada, on nad siiski tülikad.
 
 Kasutajakontot registreerides või mõnele lehele uusi internetiaadresse postitades näidatakse moonutatud tekstiga pilti ja palutakse sisestada seal kuvatud sõnad. Kuna selliselt pildilt on arvutil raske teksti välja lugeda, on see efektiivseks kaitseks rämpspostirobotite vastu ja lubab samas tavakasutajatel rahus muudatusi teha.
@@ -1110,7 +1110,7 @@ $messages['eu'] = array(
 	'captcha-createaccount-fail-confirm-edit' => 'Baieztatze kode ezegokia.',
 	'captcha-create-confirm-edit' => 'Orrialde hau sortzeko, mesedez, beheko batuketa erraz hau ebatzi eta erantzuna kutxan idatzi ([[Special:Captcha/help|argibide gehiago]]):',
 	'captchahelp-title' => 'Captcha laguntza',
-	'captchahelp-cookies-needed' => 'Beharrezkoa da nabigatzailean cookieak gaituta izatea honek funtzionatzeko.',
+	'captchahelp-cookies-needed-confirm-edit' => 'Beharrezkoa da nabigatzailean cookieak gaituta izatea honek funtzionatzeko.',
 	'captchahelp-text-confirmedit' => "Publikoki aldaketak egiteko aukerak dituzten webguneetan, wiki honetan bezalaxe, spam testuak gehitzen dira sarritan tresna automatikoak erabiliz.
 Lotura horiek ezabatu egin daitezkeen arren, traba dira.
 
@@ -1139,7 +1139,7 @@ $messages['fa'] = array(
 	'captcha-sendemail-fail-confirm-edit' => 'کد تأییدی وجود ندارد یا نادرست است.',
 	'captcha-disabledinapi-confirm-edit' => 'این اقدام به کپچا نیاز دارد، بنابراین نمی‌تواند از طریق API انجام شود.',
 	'captchahelp-title' => 'راهنمای Captcha',
-	'captchahelp-cookies-needed' => 'برای کار کردن آن، شما باید کوکی‌های مرورگرتان را فعال کنید.',
+	'captchahelp-cookies-needed-confirm-edit' => 'برای کار کردن آن، شما باید کوکی‌های مرورگرتان را فعال کنید.',
 	'captchahelp-text-confirmedit' => 'تارنماهایی مثل این ویکی که به عموم اجازهٔ نوشتن مطلب می‌دهند، غالباً مورد سوءاستفادهٔ هرزفرستندگانی می‌شوند که با ابزارهای خودکار پیوندهای بیرونی به تارنماهای موردنظرشان وارد می‌کنند.
 اگر چه این پیوندهای هرز و تبلیغاتی را می‌توان دستی حذف کرد، ولی به هر حال باعث اعصاب‌خردی زیادی می‌شوند.
 
@@ -1177,7 +1177,7 @@ $messages['fi'] = array(
 	'captcha-sendemail-fail-confirm-edit' => 'Virheellinen tai puuttuva vahvistuskoodi',
 	'captcha-disabledinapi-confirm-edit' => 'Tämä toiminto vaatii kuvavarmennusta, joten et voi suorittaa sitä APIn kautta.',
 	'captchahelp-title' => 'Captcha-ohje',
-	'captchahelp-cookies-needed' => 'Tämä toiminto vaatii evästeiden hyväksymistä.',
+	'captchahelp-cookies-needed-confirm-edit' => 'Tämä toiminto vaatii evästeiden hyväksymistä.',
 	'captchahelp-text-confirmedit' => 'Verkkosivut, jotka sallivat ulkopuolisten lisätä sisältöä, joutuvat usein spam-hyökkäysten kohteeksi. Spam-hyökkäyksessä spammerit käyttävät työkaluja, jotka automaattisesti lisäävät linkkejä monille sivuille. Vaikka nämä linkit voidaan poistaa, aiheutuu niistä silti merkittävä haitta.
 
 Joskus, erityisesti kun lisäät uusia linkkejä, saatat nähdä kuvan, jossa on värillistä ja vääristynyttä tekstiä, ja sinua pyydetään kirjoittamaan sen sisältämät sanat. Koska tätä tehtävää on vaikea automatisoida, se sallii melkein kaikkien oikeiden ihmisten tehdä muutoksensa, mutta estää automaattiset lisäykset.
@@ -1207,7 +1207,7 @@ $messages['fo'] = array(
 	'captcha-sendemail-fail-confirm-edit' => 'Skeiv ella manglandi váttanar loyniorð.',
 	'captcha-disabledinapi-confirm-edit' => "Henda handling krevur ein captcha, so tað kann ikki verða framt við API'inum.",
 	'captchahelp-title' => 'Captcha hjálp',
-	'captchahelp-cookies-needed' => 'Tín kagi (brovsari) má góðtaka cookies, fyri at hetta kann virka.',
+	'captchahelp-cookies-needed-confirm-edit' => 'Tín kagi (brovsari) má góðtaka cookies, fyri at hetta kann virka.',
 );
 
 /** French (Français)
@@ -1236,7 +1236,7 @@ Pour nous aider dans la protection contre le pourriel automatisé, veuillez calc
 	'captcha-sendemail-fail-confirm-edit' => 'Code de confirmation incorrect ou manquant.',
 	'captcha-disabledinapi-confirm-edit' => 'Cette action requiert un captcha, donc elle ne peut pas être effectuée via l’IPA.',
 	'captchahelp-title' => 'Aide sur le captcha',
-	'captchahelp-cookies-needed' => "Il vous faudra autoriser les témoins (''cookies'') de votre navigateur pour que cela fonctionne.",
+	'captchahelp-cookies-needed-confirm-edit' => "Il vous faudra autoriser les témoins (''cookies'') de votre navigateur pour que cela fonctionne.",
 	'captchahelp-text-confirmedit' => 'Les sites web qui acceptent des contributions du public, tels que ce wiki, sont souvent victimes de spammeurs qui utilisent des outils automatisés pour placer de nombreux liens vers leurs sites.
 Même si cette pollution peut être effacée, elle n’en reste pas moins irritante.
 
@@ -1271,7 +1271,7 @@ Por nos édiér a combatre contre lo spame ôtomatisâ, volyéd calcular l’op�
 	'captcha-sendemail-fail-confirm-edit' => 'Code de confirmacion fôx ou ben manquent.',
 	'captcha-disabledinapi-confirm-edit' => 'Ceta accion at fôta d’un captch·a, donc pôt pas étre fêta per l’API.',
 	'captchahelp-title' => 'Éde sur lo captch·a',
-	'captchahelp-cookies-needed' => "Vos fôdrat ôtorisar los tèmouens (''cookies'') de voutron navigator por que cen fonccione.",
+	'captchahelp-cookies-needed-confirm-edit' => "Vos fôdrat ôtorisar los tèmouens (''cookies'') de voutron navigator por que cen fonccione.",
 	'captchahelp-text-confirmedit' => 'Los setos vouèbe qu’accèptont des contribucions du publico, coment ceti vouiqui, sont sovent victimos de spamors qu’utilisont des outils ôtomatisâs por betar tot plen de lims de vers lors setos.
 Mémo se celos lims de spame pôvont étre suprimâs, nen réstont pas muens una nuésence visibla.
 
@@ -1351,7 +1351,7 @@ Para contribuír na protección contra as ferramentas de publicación automátic
 	'captcha-sendemail-fail-confirm-edit' => 'Falta o código de confirmación ou é incorrecto.',
 	'captcha-disabledinapi-confirm-edit' => 'Esta acción necesita o captcha, polo que non se pode realizar a través da API.',
 	'captchahelp-title' => 'Axuda acerca do captcha',
-	'captchahelp-cookies-needed' => 'Necesita ter as cookies habilitadas no seu navegador para que funcione.',
+	'captchahelp-cookies-needed-confirm-edit' => 'Necesita ter as cookies habilitadas no seu navegador para que funcione.',
 	'captchahelp-text-confirmedit' => 'Os sitios web que aceptan publicar as contribucións dos usuarios, coma este wiki, sofren, con frecuencia, o abuso por parte de spammers que usan ferramentas que automatizan a inclusión de lixo en forma de ligazóns publicitarias, nunha chea de páxinas, en pouco tempo.
 Mentres as devanditas ligazóns non son eliminadas supoñen unha molestia e unha perda de tempo.
 
@@ -1396,7 +1396,7 @@ As Schutz gege e automatischs Spamming,  lees die Rächenufgab un trag s Ergebni
 	'captcha-sendemail-fail-confirm-edit' => 'Bestätigungscode isch falsch oder fählt.',
 	'captcha-disabledinapi-confirm-edit' => 'Die Aktion brucht e Captcha. Si cha nit iber d API uusgfiert wäre.',
 	'captchahelp-title' => 'Captcha-Hilf',
-	'captchahelp-cookies-needed' => "'''Wichtiger Hiiwyys:''' Im Browser mien Cookiers erlaubt syy.",
+	'captchahelp-cookies-needed-confirm-edit' => "'''Wichtiger Hiiwyys:''' Im Browser mien Cookiers erlaubt syy.",
 	'captchahelp-text-confirmedit' => 'Internetaagebot, wu uf sin fir Byytreg vu jedem, wie z. B. des Wiki, wäre vyylmol vu Spammer missbruucht, wu ihri Gleicher automatisch uf vyylene Netzsyte platziere. Die Spam-Gleicher cha mer wider useneh, si stere aber zimli un nämme Arbetszyt in Aaspruch.
 
 In e Teil Fäll, v. a. wänn neiji Netzgleicher in e Syte dryygfiegt wäre, cha s syy, ass des Wiki derno ne Bild mit eme farbige un verzerrte Täxt aazeigt un dezue ufforderet, di aazeigte Werte yyzgee. Wel sonigi Ufgabe nit automatische chenne usgfiert wäre, cha mer eso di meischte Spammer, wu mit automatische Wärchzyyg schaffe, ufhalte, aber normali Benutzer chenne ihri Byytreg einewäg yygee.
@@ -1433,7 +1433,7 @@ $messages['gu'] = array(
 	'captcha-sendemail-fail-confirm-edit' => 'ખોટી અથવા ખૂટતી ખાતરી સંજ્ઞા.',
 	'captcha-disabledinapi-confirm-edit' => 'આ ક્રિયા માટે કેપ્ચાની જરૂર છે, માટે તે API દ્વારા પાર પાડી શકાય તેમ નથી.',
 	'captchahelp-title' => 'કેપ્ટ્ચા/કેપ્ચા (Captcha) મદદ',
-	'captchahelp-cookies-needed' => 'આ વ્યવસ્થિત રીતે જોઇ શકાય તે માટે તમારા બ્રાઉઝરમાં કુકીઝ એનેબલ કરેલી હોવી જોઇશે.',
+	'captchahelp-cookies-needed-confirm-edit' => 'આ વ્યવસ્થિત રીતે જોઇ શકાય તે માટે તમારા બ્રાઉઝરમાં કુકીઝ એનેબલ કરેલી હોવી જોઇશે.',
 	'captchahelp-text-confirmedit' => "આપણી વિકિ જેવી વૅબ સાઇટો કે જે લોકોને યોગદાન કરવાની પરવાનગી આપે છે, તેમનો સ્પામરો દ્વારા દુરૂપયોગ થતો આવ્યો છે. આવા સ્પામરો તેમની કડીઓ એક સાથે અનેક વૅબ સાઇટો પર મુકવા માટે સ્વચાલિત સાધનો વાપરે છે. આવી કડીઓ ખરેખર એક દૂષણ છે અને તેને દૂર કરવાના ઉપાય કરવા જોઇએ.
 
 ક્યારેક, ખાસ કરીને જ્યારે તમે તમારા લેખમાં બાહ્ય કડી ઉમેરતા હોવ ત્યારે, વિકિ તમને એક રંગીન કે તુટેલા-ફુટેલા અક્ષરો કે શબ્દોનું ચિત્ર બતાવે અને તેમા વંચાતા શબ્દો બાજુનાં ખાનામાં લખવા માટે પુછે એવું બને. આનું કારણ એ છે કે આ એક એવી પદ્ધતિ છે જે સ્વચાલિત રીતે કરવી લગભગ અશક્ય છે, અને ફક્ત વ્યક્તિગત રીતે જ થઇ શકે છે, જે સ્પામરો અને અન્ય ઘુસણખોરો ના હુમલાને ખાળે છે.
@@ -1467,7 +1467,7 @@ $messages['he'] = array(
 	'captcha-sendemail-fail-confirm-edit' => 'קוד האישור שגוי או חסר.',
 	'captcha-disabledinapi-confirm-edit' => 'פעולה זו דורשת פתרון CAPTCHA ולא ניתן לבצע אותה דרך ה־API.',
 	'captchahelp-title' => 'עזרה במערכת CAPTCHA',
-	'captchahelp-cookies-needed' => 'עליכם להפעיל את תכונת העוגיות (cookies) בדפדפן שלכם כדי שזה יעבוד.',
+	'captchahelp-cookies-needed-confirm-edit' => 'עליכם להפעיל את תכונת העוגיות (cookies) בדפדפן שלכם כדי שזה יעבוד.',
 	'captchahelp-text-confirmedit' => 'פעמים רבות מנצלים מפיצי תוכן זבל ("ספאם") אתרים שמקבלים תוכן מהציבור, כמו אתר הוויקי הזה, כדי לפרסם את הקישורים שלהם לאתרים רבים באינטרנט, באמצעות כלים אוטומטיים.
 אמנם ניתן להסיר את קישורי הספאם הללו, אך הם מהווים מטרד משמעותי.
 
@@ -1503,7 +1503,7 @@ $messages['hi'] = array(
 	'captcha-create-confirm-edit' => 'यह पन्ना बनाने के लिये, नीचे दिये हुए आसान राशि का जवाब दिये हुए टेक्स्टबॉक्समें लिखें ([[Special:Captcha/help|अधिक ज़ानकारी]]):',
 	'captcha-sendemail-fail-confirm-edit' => 'गलत या लापता पुष्टिकरण कोड ।',
 	'captchahelp-title' => 'कॅप्टचा सहायता',
-	'captchahelp-cookies-needed' => 'यह कार्य करने के लिये आपने कूकीज (cookies) एनेबल किया होना आवश्यक हैं।',
+	'captchahelp-cookies-needed-confirm-edit' => 'यह कार्य करने के लिये आपने कूकीज (cookies) एनेबल किया होना आवश्यक हैं।',
 	'captchahelp-text-confirmedit' => "इस विकि जैसे जालस्थल, जो जनता जनार्दन से लेख स्वीकार करते हैं, अक्सर रद्दी काम करने वालों के फंदे में आ जाते हैं, जो स्वचालित यंत्रों से कई स्थलों पर अपनी कड़ियाँ छापने की कोशिश करते हैं।
 यूँ तो ये रद्दी कड़ियाँ हटाई जा सकती हैं, पर फिर भी ये झंझट तो खड़ा करती ही हैं।
 
@@ -1543,7 +1543,7 @@ molimo zbrojite donje brojeve i upišite rezultat ([[Special:Captcha/help|pomoć
 	'captcha-sendemail-fail-confirm-edit' => 'Potvrdni kod je nepotpun ili netočan.',
 	'captcha-disabledinapi-confirm-edit' => 'Ova akcija traži captchu, tako da se ne može izvršiti preko API-ja.',
 	'captchahelp-title' => 'Antispam pomoć',
-	'captchahelp-cookies-needed' => "Trebate imati uključene kolačiće (''cookies'') u vašem web pregledniku za ovu funkciju.",
+	'captchahelp-cookies-needed-confirm-edit' => "Trebate imati uključene kolačiće (''cookies'') u vašem web pregledniku za ovu funkciju.",
 	'captchahelp-text-confirmedit' => "Internetske stranice koji prihvaćaju doprinose od javnosti, poput ovog wikija, često zloupotrebljavaju spameri, koji koriste automatizirane alate pomoću kojih postavljaju svoje poveznice na mnoge stranice.
 Iako se te spam poveznice mogu uklanjati, one predstavljaju značajne neugodnost pri radu.
 
@@ -1577,7 +1577,7 @@ $messages['hsb'] = array(
 	'captcha-sendemail-fail-confirm-edit' => 'Wopačny abo falowacy wobkrućenski kod.',
 	'captcha-disabledinapi-confirm-edit' => 'Tuta akcija wužaduje sej captcha, tohodla njeda so přez API wuwjesć.',
 	'captchahelp-title' => 'Pomoc za CAPTCHA',
-	'captchahelp-cookies-needed' => 'Dyrbiš placki (cookies) w swojim wobhladowaku zmóžnić.',
+	'captchahelp-cookies-needed-confirm-edit' => 'Dyrbiš placki (cookies) w swojim wobhladowaku zmóžnić.',
 	'captchahelp-text-confirmedit' => 'Websydła, kotrež powěsće wot kóždeho akceptuja, so často wot spamarjow znjewužiwaja, kotřiž swoje wotkazy awtomatisce na wjele sydłach rozdźěleja. Hačrunjež so tute spamwotkazy hodźa wotstronić, su wone njesnadne mjerzanje.
 
 Druhdy, wosebje, hdyž so nowe webwotkazy stronje přidawaja, móže so stać, zo pokazuje tutón wiki wobraz z barbnym abo skomolenym tekstom a će prosy, zo by pokazane słowa zapodał.
@@ -1625,7 +1625,7 @@ $messages['hu'] = array(
 	'captcha-sendemail-fail-confirm-edit' => 'Hibás vagy hiányzó ellenőrző kód.',
 	'captcha-disabledinapi-confirm-edit' => 'Ez a művelet captcha megoldásához kötött, így nem lehet végrehajtani az API-n keresztül.',
 	'captchahelp-title' => 'Captcha segítség',
-	'captchahelp-cookies-needed' => 'Engedélyezned kell a böngésződben a sütiket.',
+	'captchahelp-cookies-needed-confirm-edit' => 'Engedélyezned kell a böngésződben a sütiket.',
 	'captchahelp-text-confirmedit' => 'Az olyan weboldalakat, amelyekre bárki írhat, gyakran támadják meg spammerek olyan eszközök felhasználásával, amelyek képesek automatikusan, emberi felügyelet nélkül elhelyezni egy linket sok különböző oldalon.
 
 Az ilyen linkek kézi eltávolítása rengeteg energiát emésztene fel, ezért néha, különösen ha egy külső linket teszel egy cikkbe, a wiki egy valamilyen módon eltorzított szöveget (captcha-t) jelenít meg, és arra kér, hogy gépeld be azt. Mivel ezt automatikusan nagyon nehéz megtenni, a valódi szerkesztők így könnyen megkülönböztethetőek a spammerek robotjaitól.
@@ -1657,7 +1657,7 @@ Como protection contra le spam automatic, per favor resolve le simple summa hic 
 	'captcha-sendemail-fail-confirm-edit' => 'Codice de confirmation incorrecte o mancante.',
 	'captcha-disabledinapi-confirm-edit' => 'Iste action require un captcha, dunque illo non pote esser exequite per medio del API.',
 	'captchahelp-title' => 'Adjuta super le captcha',
-	'captchahelp-cookies-needed' => 'Tu debe haber le cookies activate in tu navigator a fin que isto pote functionar.',
+	'captchahelp-cookies-needed-confirm-edit' => 'Tu debe haber le cookies activate in tu navigator a fin que isto pote functionar.',
 	'captchahelp-text-confirmedit' => "Le sitos web que accepta contributiones del publico, como iste wiki, es frequentemente abusate per spammatores que usa instrumentos automatic pro publicar lor ligamines in multe sitos.
 Ben que iste ligamines spam pote esser eliminate, illos constitue un considerabile molestia.
 
@@ -1697,7 +1697,7 @@ $messages['id'] = array(
 	'captcha-sendemail-fail-confirm-edit' => 'Kode konfirmasi salah atau belum diisi.',
 	'captcha-disabledinapi-confirm-edit' => 'Tindakan ini membutuhkan captcha, sehingga tidak dapat dilakukan melalui API.',
 	'captchahelp-title' => 'Mengenai Captcha',
-	'captchahelp-cookies-needed' => 'Anda perlu mengaktifkan cookie pada penjelajah web Anda untuk menggunakan fitur ini.',
+	'captchahelp-cookies-needed-confirm-edit' => 'Anda perlu mengaktifkan cookie pada penjelajah web Anda untuk menggunakan fitur ini.',
 	'captchahelp-text-confirmedit' => "Situs-situs web yang menerima tulisan dari publik, seperti wiki ini, kerapkali disalahgunakan oleh pengguna-pengguna yang tidak bertanggungjawab untuk mengirimkan spam dengan menggunakan program-program otomatis.
 Walaupun pranala-pranala spam tersebut dapat dibuang, tetapi tetap saja menimbulkan gangguan berarti.
 
@@ -1733,7 +1733,7 @@ Tapno  maasalakniban kadagiti automatiko a spam, pangaasim na sulbaren ti nalaka
 	'captcha-sendemail-fail-confirm-edit' => 'Saan a husto wenno awan ti pasingkedan a kodigo.',
 	'captcha-disabledinapi-confirm-edit' => 'Daytoy nga aramid ket masapul na ti captcha, saan a mabalin a maaramid idiay API.',
 	'captchahelp-title' => 'Tulong ti CAPTCHA',
-	'captchahelp-cookies-needed' => 'Masapul nga adda galietas ti pagbasabasam tapno mabalin daytoy.',
+	'captchahelp-cookies-needed-confirm-edit' => 'Masapul nga adda galietas ti pagbasabasam tapno mabalin daytoy.',
 	'captchahelp-text-confirmedit' => "Dagiti sapot a pagsaadan nga agaw-awat kadagiti maipablaak iti publiko, kasla daytoy a wiki, ket kanayon nga inabuso dagiti spammers nga agus-usar ti automatiko a ramramit ti pinagipablaak da kadagiti kukua da a panilpo ti adu a pagsasaadan.
 Maikkat met dagitoy a panilpo, mgen makariri da unay.
 
@@ -1768,7 +1768,7 @@ kassann ([[Special:Captcha/help|frekari upplýsinngar]]):',
 	'captcha-createaccount-fail-confirm-edit' => 'Staðfestingarkóðinn var rangur eða ekki til staðar.',
 	'captcha-create-confirm-edit' => 'Til að búa síðuna til, gjörðu svo vel og finndu summuna að neðan og skrifaðu svarið í kassann ([[Special:Captcha/help|frekari upplýsinngar]]):',
 	'captchahelp-title' => 'Captcha-hjálp',
-	'captchahelp-cookies-needed' => 'Þú verður að leyfa vefkökur til þess að þetta virki.',
+	'captchahelp-cookies-needed-confirm-edit' => 'Þú verður að leyfa vefkökur til þess að þetta virki.',
 	'captchahelp-text-confirmedit' => 'Vefsíður sem að leyfa framlög frá frá almenningi, líkt og þessi wiki-vefur, eru oft misnotaðar af svokölluðum „spömmurum“ sem nota sjálfvirk tól til þess að setja inn tengla á aðrar vefsíður. Aðrir notendur geta fjarlægt þessa tengla en töluverð truflun er af þeim.
 
 Stundum þegar þú breytir síðum, sérstaklega ef breytingin felur í sér nýja tengla á aðra vefi, getur gerst að þú sért beðin(n) um að skrifa inn orð sem birtast á lituðum eða óskýrum myndum. Fyrir flesta mannlega notendur er þetta lítið mál en sjálfvirk tól ráða ekki við þetta.
@@ -1798,7 +1798,7 @@ $messages['it'] = array(
 	'captcha-sendemail-fail-confirm-edit' => 'Codice di verifica errato o mancante.',
 	'captcha-disabledinapi-confirm-edit' => 'Questa azione richiede un captcha, quindi non può essere eseguita tramite API.',
 	'captchahelp-title' => "Cos'è il captcha?",
-	'captchahelp-cookies-needed' => 'È necessario abilitare i cookie sul proprio browser per proseguire',
+	'captchahelp-cookies-needed-confirm-edit' => 'È necessario abilitare i cookie sul proprio browser per proseguire',
 	'captchahelp-text-confirmedit' => "Capita spesso che i siti Web che accettano messaggi pubblici, come questo wiki, siano presi di mira da spammer che usano strumenti automatici per inserire collegamenti pubblicitari verso un gran numero di siti. Per quanto i collegamenti indesiderati si possano rimuovere, si tratta comunque di una seccatura non indifferente.
 
 In alcuni casi, ad esempio quando si tenta di aggiungere nuovi collegamenti Web in una pagina, il software wiki può mostrare una immagine con un breve testo colorato e/o distorto chiedendo di riscriverlo in un'apposita finestrella. Poiché si tratta di un'azione difficile da replicare da parte di un computer, questo meccanismo consente a (quasi tutti) gli utenti reali di completare l'inserimento desiderato, impedendo l'accesso alla maggior parte degli spammer e degli altri attacchi automatizzati.
@@ -1834,7 +1834,7 @@ $messages['ja'] = array(
 	'captcha-sendemail-fail-confirm-edit' => '確認コードが間違っているか入力されていません。',
 	'captcha-disabledinapi-confirm-edit' => 'この操作はキャプチャを必要としているため、APIによって実行することができません。',
 	'captchahelp-title' => 'CAPTCHA(画像認証)ヘルプ',
-	'captchahelp-cookies-needed' => 'ブラウザの Cookie を有効にする必要があります。',
+	'captchahelp-cookies-needed-confirm-edit' => 'ブラウザの Cookie を有効にする必要があります。',
 	'captchahelp-text-confirmedit' => '一般からの投稿を受け付けるこのウィキのようなウェブサイトは、自動投稿ツールを使って多くのサイトにリンクを張ってまわるスパマーにより荒らされがちです。
 このようなスパムは除去できるものの、その作業は大変に面倒なものです。
 
@@ -1867,7 +1867,7 @@ $messages['jut'] = array(
 	'captcha-createaccount-fail-confirm-edit' => 'Forkert eller manglende kodeord.',
 	'captcha-create-confirm-edit' => 'For at oprette en ny side, skal du give svaret på regnestyket nedenfor, og angive resultatet i feltet under det. ([[Special:Captcha/help|mere information]]):',
 	'captchahelp-title' => 'Captcha-hjælp',
-	'captchahelp-cookies-needed' => 'Din browser skal understøtte cookies, før dette kan gennemføres.',
+	'captchahelp-cookies-needed-confirm-edit' => 'Din browser skal understøtte cookies, før dette kan gennemføres.',
 	'captchahelp-text-confirmedit' => "Websites der accepterer indhold fra offentligheden, bliver ofte udsat for angreb fra spammere. Disse angreb sker med automatiske værktøjer, der anbringer de samme links på et stort antal websites på kort tid. Selvom disse links kan fjernes, er de en vedligeholdelsesmæssig byrde.
 
 I visse tilfælde, specielt når der tilføjes nye links til denne wiki, vil softwaren vise dig et billede af et stykke forvredet og sløret tekst. Du skal indtaste det ord, der vises, før du kan gennemføre handlingen. Formålet er at skelne mellem mennesker og automatiserede værktøjer, da de sidste har meget svært ved at genkende ordene.
@@ -1896,7 +1896,7 @@ Kanggo ngéwangi ngreksa lawan ''spam'' otomatis, tulung pecahna itung-itungan i
 	'captcha-createaccount-fail-confirm-edit' => 'Kode pandhedhesan (konfirmasi) salah utawa durung diisi.',
 	'captcha-create-confirm-edit' => 'Kanggo nggawé kaca iki, mangga itung-itungan ing ngisor iki diwangsuli sajroning kothak ([[Special:Captcha/help|info sabanjuré]]):',
 	'captchahelp-title' => 'Pitulung Captcha',
-	'captchahelp-cookies-needed' => 'Panjenengan perlu ngaktifaké cookie ing panjlajah wèb panjenengan kanggo nganggo fitur iki.',
+	'captchahelp-cookies-needed-confirm-edit' => 'Panjenengan perlu ngaktifaké cookie ing panjlajah wèb panjenengan kanggo nganggo fitur iki.',
 	'captchahelp-text-confirmedit' => "Situs-situs wèb sing nampa data saka umum, kaya ta wiki iki, kerep disalahgunakaké déning panganggo-panganggo sing ora bertanggungjawab kanggo ngirimaké ''spam'' mawa program-program otomatis. Senadyan spam-spam iku bisa dibuang kabèh, nanging waé tetep ngrusuhi lan dianggep gawé masalah.
 
 Kadhangkala, utamané yèn mènèhi pranala wèb anyar ing sawijinig kaca, wiki iki bisa nuduhaké gambar sawijining gambar tulisan sing ana wernané utawa sing rusak lan njaluk panjenengan ngetik ulang tembung sing ana gambar iki.
@@ -1930,7 +1930,7 @@ $messages['ka'] = array(
 	'captcha-sendemail-fail-confirm-edit' => 'დადასტურების კოდი არასწორია ან დაკარგულია.',
 	'captcha-disabledinapi-confirm-edit' => 'ეს მოქმედება მოითხოვს CAPTCHA-ს შემოწმებას და ამიტომ შეუძლებელია მისი შესრულება API-ით.',
 	'captchahelp-title' => 'CAPTCHA-ს დახმარება',
-	'captchahelp-cookies-needed' => 'თქვენ უნდა ჩართოთ ბრაუზერში კუკი, რათა ფუქცია ამოქმედდეს.',
+	'captchahelp-cookies-needed-confirm-edit' => 'თქვენ უნდა ჩართოთ ბრაუზერში კუკი, რათა ფუქცია ამოქმედდეს.',
 	'captchahelp-text-confirmedit' => 'ვებ-გვერდები, რომლებიც  მათი შინაარსის დამატებისა და ცვლილებების საშუალებას იძლევიან, მათ შორის ეს ვიკიც, ხშირად ხდებიან სპამერების სამიზნე, რომლებიც იყენებენ საიტზე ავტომატური ბმულების დამატების პროგრამებს.
 მიუხედავად იმისა, რომ ასეთი ბმულების წაშლა შეიძლება, ისინი მაინც არსებით შემაფერხებელს წარმადგენს.
 
@@ -1971,7 +1971,7 @@ $messages['kk-arab'] = array(
 	'captcha-create-confirm-edit' => 'جاڭا بەتتٸ باستاۋ ٷشٸن, تٶمەندەگٸ قاراپايىم قوسىندىلاۋدى شەشٸڭٸز دە,
 نٵتيجەسٸن اۋماققا ەنگٸزٸڭٸز ([[{{ns:special}}:Captcha/help|كٶبٸرەك اقپارات]]):',
 	'captchahelp-title' => 'CAPTCHA انىقتاماسى',
-	'captchahelp-cookies-needed' => 'بۇل جۇمىس ٸستەۋ ٷشٸن, شولعىشىڭىزدا  «cookies»  دەگەندٸ ەندٸرٸڭٸز.',
+	'captchahelp-cookies-needed-confirm-edit' => 'بۇل جۇمىس ٸستەۋ ٷشٸن, شولعىشىڭىزدا  «cookies»  دەگەندٸ ەندٸرٸڭٸز.',
 	'captchahelp-text-confirmedit' => 'ٶزدٸكتٸك قۇرالدارى بار «سپاممەرلەر», بارشادان جٸبەرٸلگەن حاباردى قابىلدايتىن, بۇل ۋيكي سيياقتى, ۆەب-توراپتارعا سٸلتەمەلەرٸمەن جيٸ جاۋدىرادى. وسىنداي «سپام» سٸلتەمەلەرٸن الاستاۋ بولعاندا دا, بۇل مٵندٸ ىزا كەلتٸرەدٸ.
 
 كەيدە, ٵسٸرەسە بەتكە جاڭا ۆەب سٸلتەمەسٸن قوسقاندا, ۋيكي ٶڭٸ ٶزگەرگەن نە قيسايعان مٵتٸندٸ كٶرسەتٸپ جٵنە سول سٶزدەردٸ ەنگٸزۋ سۇراۋى مٷمكٸن. بۇل تاپسىرىس ٶزدٸك تٷردە اتقارۋ ٶتە قيىن, سوندىقتان بۇل يماندى ادام كٶپشٸلٸگٸنە كەدەرگٸ بولمايدى, بٸراق «سپاممەرلەردٸ» جٵنە بۇزاقى بوتپەن باسقا شابۋىل جاساعانداردى توقتاتادى.
@@ -1997,7 +1997,7 @@ $messages['kk-cyrl'] = array(
 	'captcha-create-confirm-edit' => 'Жаңа бетті бастау үшін, төмендегі қарапайым қосындылауды шешіңіз де,
 нәтижесін аумаққа енгізіңіз ([[{{ns:special}}:Captcha/help|көбірек ақпарат]]):',
 	'captchahelp-title' => 'CAPTCHA анықтамасы',
-	'captchahelp-cookies-needed' => 'Бұл жұмыс істеу үшін, шолғышыңызда  «cookies»  дегенді ендіріңіз.',
+	'captchahelp-cookies-needed-confirm-edit' => 'Бұл жұмыс істеу үшін, шолғышыңызда  «cookies»  дегенді ендіріңіз.',
 	'captchahelp-text-confirmedit' => 'Өздіктік құралдары бар «спаммерлер», баршадан жіберілген хабарды қабылдайтын, бұл уики сияқты, веб-тораптарға сілтемелерімен жиі жаудырады. Осындай «спам» сілтемелерін аластау болғанда да, бұл мәнді ыза келтіреді.
 
 Кейде, әсіресе бетке жаңа веб сілтемесін қосқанда, уики өңі өзгерген не қисайған мәтінді көрсетіп және сол сөздерді енгізу сұрауы мүмкін. Бұл тапсырыс өздік түрде атқару өте қиын, сондықтан бұл иманды адам көпшілігіне кедергі болмайды, бірақ «спаммерлерді» және бұзақы ботпен басқа шабуыл жасағандарды тоқтатады.
@@ -2023,7 +2023,7 @@ tömendegi qarapaýım qosındılawdı şeşiñiz de, nätïjesin awmaqqa engizi
 	'captcha-create-confirm-edit' => 'Jaña betti bastaw üşin, tömendegi qarapaýım qosındılawdı şeşiñiz de,
 nätïjesin awmaqqa engiziñiz ([[{{ns:special}}:Captcha/help|köbirek aqparat]]):',
 	'captchahelp-title' => 'CAPTCHA anıqtaması',
-	'captchahelp-cookies-needed' => 'Bul jumıs istew üşin, şolğışıñızda  «cookies»  degendi endiriñiz.',
+	'captchahelp-cookies-needed-confirm-edit' => 'Bul jumıs istew üşin, şolğışıñızda  «cookies»  degendi endiriñiz.',
 	'captchahelp-text-confirmedit' => 'Özdiktik quraldarı bar «spammerler», barşadan jiberilgen xabardı qabıldaýtın, bul wïkï sïyaqtı, veb-toraptarğa siltemelerimen jïi jawdıradı. Osındaý «spam» siltemelerin alastaw bolğanda da, bul mändi ıza keltiredi.
 
 Keýde, äsirese betke jaña veb siltemesin qosqanda, wïkï öñi özgergen ne qïsaýğan mätindi körsetip jäne sol sözderdi engizw surawı mümkin. Bul tapsırıs özdik türde atqarw öte qïın, sondıqtan bul ïmandı adam köpşiligine kedergi bolmaýdı, biraq «spammerlerdi» jäne buzaqı botpen basqa şabwıl jasağandardı toqtatadı.
@@ -2069,7 +2069,7 @@ $messages['ko'] = array(
 	'captcha-sendemail-fail-confirm-edit' => '입력값이 잘못되었거나 없습니다.',
 	'captcha-disabledinapi-confirm-edit' => '이 동작은 캡차를 거쳐야 하기 때문에 API로 이 작업을 수행할 수 없습니다.',
 	'captchahelp-title' => 'Captcha 도움말',
-	'captchahelp-cookies-needed' => '정상적으로 작동하려면 웹 브라우저의 쿠키 사용이 활성화되어있어야 합니다.',
+	'captchahelp-cookies-needed-confirm-edit' => '정상적으로 작동하려면 웹 브라우저의 쿠키 사용이 활성화되어있어야 합니다.',
 	'captchahelp-text-confirmedit' => '이 위키와 같이 사람들의 공개적인 참여가 가능한 웹 사이트에서는 자동 프로그램이 스팸을 뿌리는 경우가 있습니다. 물론 이러한 스팸은 제거할 수는 있지만 번거로운 작업이 늘어납니다.
 
 이러한 스팸을 방지하기 위해서, 이 위키의 문서에 웹 사이트 주소를 추가하는 등의 행동을 할 경우에는 비틀린 글자가 들어있는 그림을 보여주고 그 그림의 글자를 입력해 달라고 하는 경우가 있습니다. 이 글자 입력 작업은 자동 프로그램을 만들기가 힘들기 때문에 스팸을 효과적으로 막으면서 일반 사용자를 막지 않을 수 있습니다.
@@ -2110,7 +2110,7 @@ un don de Antwoot en dat Käßje endraare. ([[Special:Captcha/help|Verklierung]]
 	'captcha-sendemail-fail-confirm-edit' => 'De Bestätijungszahl fählt udder es verkeeht.',
 	'captcha-disabledinapi-confirm-edit' => 'För di Aufjab moß en extra Bestätejon enjejovve wääde, un dat künne mer nit övver de API.',
 	'captchahelp-title' => 'Äklierung zum Kaptscha SPAM-Schotz',
-	'captchahelp-cookies-needed' => 'Do moß <i lang="en">Cookies</i> en Dingem Brauser enjeschalldt han, domet da hee fluppe kann.',
+	'captchahelp-cookies-needed-confirm-edit' => 'Do moß <i lang="en">Cookies</i> en Dingem Brauser enjeschalldt han, domet da hee fluppe kann.',
 	'captchahelp-text-confirmedit' => 'Op Web Saits wi dat Wiki hee, wo jeder jät beidraare kann, do kumme se öff wi de Fleeje un don met Projramme un fun Hand bloß Reklame-Lingks op de eije Websigge affläje, oohne Sinn un Verstand. Esu en SPAM kam_mer widder fott maache, dat määt ävver Ärjer un Opwand.
 
 Su jät wulle_mer nit hann, un donn_et jlish widder fottschmiiße.
@@ -2164,7 +2164,7 @@ $messages['lb'] = array(
 	'captcha-sendemail-fail-confirm-edit' => 'Falschen oder kee Confirmatiouns-Code.',
 	'captcha-disabledinapi-confirm-edit' => 'Dës Aktioun brauch e Captcha, dofir ka se net mat enger API gemaach ginn.',
 	'captchahelp-title' => 'Captcha-Hëllef',
-	'captchahelp-cookies-needed' => 'Dir musst Cookieën an ärem Browser erlaben fir dat dëst fonktionéiert.',
+	'captchahelp-cookies-needed-confirm-edit' => 'Dir musst Cookieën an ärem Browser erlaben fir dat dëst fonktionéiert.',
 	'captchahelp-text-confirmedit' => "Websäiten, déi et jiddwerengem erlaben Ännerunge virzehuelen, sou wéi op dëser Wiki, ginn dacks vu sougenannte Spammer mëssbraucht, déi automatiséiert hir Linken op vill Internetsäite setzen. Esou Spam-Linke kënne wuel geläscht ginn, mä se sinn trotzdem eng grouss Plo.
 
 Heiandsdo, besonnesch wann nei Internet-Linken op eng Säit derbäigesat ginn, weist dës Wiki Iech e Bild mat faarwegem oder verzerrtem Text a freet Iech fir déi gewise Wierder anzetipppen. Well dëst eng Aufgab ass déi schwéier ze automatiséieren ass, erlaabt dëst, datt Mënschen hir Ännerunge kënnen agi wärend déi meescht Spammer an aner Roboter-Attacke kënnen ofgewiert ginn.
@@ -2198,7 +2198,7 @@ $messages['li'] = array(
 	'captcha-sendemail-fail-confirm-edit' => 'De bevestigingscode ontbrèk of is ónjuus.',
 	'captcha-disabledinapi-confirm-edit' => "Veur dees actie is 'n captcha neudig die neet aafgehanjeldj kin waere via de API.",
 	'captchahelp-title' => 'Captcha-hölp',
-	'captchahelp-cookies-needed' => 'Ge dient in uw browser cookies ingeschakeld te hebbe om dit te laote werke.',
+	'captchahelp-cookies-needed-confirm-edit' => 'Ge dient in uw browser cookies ingeschakeld te hebbe om dit te laote werke.',
 	'captchahelp-text-confirmedit' => "Websites die vrie te bewèrke zeen, wie deze wiki, waere döks misbroek door spammers die d'r met hun programma's automatisch links op zetten naar vele websites. Hoewel deze externe links weer verwijderd kunnen worden, leveren ze wel veel hinder en administratief werk op.
 
 Soms, en in het bijzonder bij het toevoegen van externe links op pagina's, toont de wiki u een afbeelding met gekleurde of vervormde tekst en wordt u gevraagd de getoonde tekst in te voeren. Omdat dit proces lastig te automatiseren is, zijn vrijwel alleen mensen in staat dit proces succesvol te doorlopen en worden hiermee spammers en andere geautomatiseerde aanvallen geweerd.
@@ -2233,7 +2233,7 @@ $messages['lt'] = array(
 	'captcha-edit-confirm-edit' => 'Kad redaguotumėte šį straipsnį, apskaičiuokite šią paprastą sumą ir įveskite atsakymą į laukelį ([[Special:Captcha/help|daugiau informacijos]]):',
 	'captcha-createaccount-fail-confirm-edit' => 'Blogas arba nerastas patvirtinimo kodas.',
 	'captchahelp-title' => 'CAPTCHA pagalba',
-	'captchahelp-cookies-needed' => 'Jums reikia būti įjungus sausainėlius savo naršyklėje kad tai veiktu',
+	'captchahelp-cookies-needed-confirm-edit' => 'Jums reikia būti įjungus sausainėlius savo naršyklėje kad tai veiktu',
 );
 
 /** Latvian (Latviešu)
@@ -2248,7 +2248,7 @@ $messages['lv'] = array(
 	'captcha-createaccount-confirm-edit' => 'Lai pasargātos no automātiskas mēstuļošanas, Tev reģistrējoties ir jāieraksta šī vienādojuma rezultāts: <br />([[Special:Captcha/help|Kāpēc tā?]])',
 	'captcha-createaccount-fail-confirm-edit' => 'Nepareizs apstiprinājuma kods vai arī tas nav ievadīts.',
 	'captcha-create-confirm-edit' => 'Lai izveidotu šo lapu, atrisini šo vienādojumu un rezulātu ieraksti šajā lodziņā: <br />([[Special:Captcha/help|Kāpēc tā?]])',
-	'captchahelp-cookies-needed' => "Lai šis darbotos, pārlūkprogrammā jābūt iespējotām (''enabled'') sīkdatnēm (''cookies'').",
+	'captchahelp-cookies-needed-confirm-edit' => "Lai šis darbotos, pārlūkprogrammā jābūt iespējotām (''enabled'') sīkdatnēm (''cookies'').",
 	'captchahelp-text-confirmedit' => "Interneta lapas, kurās iespējams pievienot tekstu, kā šajā wiki, bieži cieš no mēstuļotājiem, kuri izmanto automatizētus līdzekļus, lai pievienotu savus saites daudzās jo daudzās interneta lapās.
 Kaut arī šīs saites var viegli dzēst, tomēr tās ir nozīmīgs traucēklis.
 
@@ -2284,7 +2284,7 @@ $messages['mk'] = array(
 	'captcha-sendemail-fail-confirm-edit' => 'Потврдниот код е неточен или недостасува.',
 	'captcha-disabledinapi-confirm-edit' => 'Ова дејство бара captcha, така што не може да се изврши преку API.',
 	'captchahelp-title' => 'Помош со Captcha',
-	'captchahelp-cookies-needed' => 'Треба да имате овозможено колачиња за да може ова да работи.',
+	'captchahelp-cookies-needed-confirm-edit' => 'Треба да имате овозможено колачиња за да може ова да работи.',
 	'captchahelp-text-confirmedit' => 'Мрежните места кои прифаќаат учество на јавноста, како ова вики, честопати страдаат од спамери кои користат автоматизирани алатки за да ги додаваат нивните врски на голем број мережни страници. Иако врските на спамерот може да се отстранат, тие значително ја пореметуваат нашата работа.
 
 Понекогаш, особено кога додава нови врски на страница, викито може да ви прикаже обоен или извитоперен текст и да ви побара да ги впишете прикажаните зборови. 
@@ -2320,7 +2320,7 @@ $messages['ml'] = array(
 	'captcha-sendemail-fail-confirm-edit' => 'തെറ്റായതോ ലഭ്യമല്ലാത്തതോ ആയ സ്ഥിരീകരണ കോഡ്.',
 	'captcha-disabledinapi-confirm-edit' => 'ഈ പ്രവൃത്തി പൂർണ്ണമാകാൻ കാപ്ച ആവശ്യമാണ്, അതുകൊണ്ടിത് എ.പി.ഐ. ഉപയോഗിച്ച് ചെയ്യാൻ കഴിയില്ല.',
 	'captchahelp-title' => 'കാപ്ച്ച സഹായം',
-	'captchahelp-cookies-needed' => 'ഇതു പ്രവർത്തിക്കണമെങ്കിൽ താങ്കളുടെ ബ്രൗസറിൽ കുക്കികൾ സജ്ജീകരിച്ചിരിക്കണം.',
+	'captchahelp-cookies-needed-confirm-edit' => 'ഇതു പ്രവർത്തിക്കണമെങ്കിൽ താങ്കളുടെ ബ്രൗസറിൽ കുക്കികൾ സജ്ജീകരിച്ചിരിക്കണം.',
 	'captchahelp-text-confirmedit' => "ഈ വിക്കിപോലെ പൊതുജനങ്ങളിൽ നിന്നും പ്രസിദ്ധപ്പെടുത്തലുകൾ സ്വീകരിക്കുന്ന വെബ്‌‌സൈറ്റുകൾ, സ്വയം പ്രവർത്തിക്കുന്ന ഉപകരണങ്ങൾ ഉപയോഗിച്ച് കണ്ണികളും മറ്റും പ്രസിദ്ധപ്പെടുത്തുന്ന സ്പാമർമാർ സാധാരണ ദുരുപയോഗം ചെയ്യാറുണ്ട്.
 ഇത്തരത്തിലുള്ള സ്പാം കണ്ണികൾ നീക്കംചെയ്യപ്പെട്ടുപോകുമെങ്കിലും, അവ ശരിക്കും ശല്യമാണ്.
 
@@ -2349,7 +2349,7 @@ $messages['mn'] = array(
 ([[Special:Captcha/help|дэлгэрэнгүй мэдээлэл]]):',
 	'captcha-createaccount-fail-confirm-edit' => 'Баталгаажуулах код алдаатай, эсвэл байхгүй байна.',
 	'captchahelp-title' => 'Captcha-н талаар тусламж',
-	'captchahelp-cookies-needed' => 'Үүнийг ажиллуулахын тулд та вэб хөтөчийнхөө күүкиг идэвхижүүлэх хэрэгтэй.',
+	'captchahelp-cookies-needed-confirm-edit' => 'Үүнийг ажиллуулахын тулд та вэб хөтөчийнхөө күүкиг идэвхижүүлэх хэрэгтэй.',
 	'captchahelp-text-confirmedit' => 'Энэ вики шиг хүссэн хүн болгон засварлах боломжтой вэбсайтуудад спаммерууд янз бүрийн сайтын холбоосыг автоматаар олноор нь оруулдаг.
 Эдгээр спам холбоосуудыг устгах боломжтой ч маш их төвөг учирдаг.
 
@@ -2380,7 +2380,7 @@ $messages['mr'] = array(
 	'captcha-sendemail-fail-confirm-edit' => 'चुकीचा अथवा रिकामा सहमती कोड',
 	'captcha-disabledinapi-confirm-edit' => 'या क्रियेसाठी कॅप्चा हवी.API मार्फत हे शक्य नाही.',
 	'captchahelp-title' => 'कॅप्टचा साहाय्य',
-	'captchahelp-cookies-needed' => 'हे काम करण्यासाठी तुम्ही कूकीज (cookies) एनेबल केलेल्या असणे गरजेचे आहे.',
+	'captchahelp-cookies-needed-confirm-edit' => 'हे काम करण्यासाठी तुम्ही कूकीज (cookies) एनेबल केलेल्या असणे गरजेचे आहे.',
 	'captchahelp-text-confirmedit' => "ज्या संकेतस्थळांवर जसे की हा विकि, सर्वसामान्य लोकांकडून संपादने करण्याची परवानगी असते, तिथे आपोआप होणारी स्वत:च्या संकेतस्थळांचे दुवे देणारी उत्पात संपादने (Spam) कायम होत असतात.
 अशी संपादने जरी काढता आली तरी ती एक डोकेदुखी होऊ शकते.
 
@@ -2418,7 +2418,7 @@ Untuk membanteras kegiatan spam automatik, anda diminta menyelesaikan kira-kira 
 	'captcha-sendemail-fail-confirm-edit' => 'Kod pengesahan tidak betul atau tidak ada.',
 	'captcha-disabledinapi-confirm-edit' => 'Tindakan ini memerlukan captcha, maka ia tidak boleh dilakukan melalui API.',
 	'captchahelp-title' => 'Bantuan CAPTCHA',
-	'captchahelp-cookies-needed' => "Sila aktifkan ''cookies'' pada pelayar web anda.",
+	'captchahelp-cookies-needed-confirm-edit' => "Sila aktifkan ''cookies'' pada pelayar web anda.",
 	'captchahelp-text-confirmedit' => "Tapak web yang menerima sumbangan daripada orang awam, seperti wiki ini, sering disalahgunakan oleh penghantar spam yang menggunakan alatan automatik untuk mengirim pautan-pautan mereka di merata web.
 Walaupun pautan ini boleh dibuang, ia amat mengganggu.
 
@@ -2469,7 +2469,7 @@ $messages['nb'] = array(
 	'captcha-sendemail-fail-confirm-edit' => 'Ukorrekt eller manglende bekreftelseskode.',
 	'captcha-disabledinapi-confirm-edit' => 'Denne handlinger krever en captcha, så den kan ikke bli gjort gjennom APIet.',
 	'captchahelp-title' => 'Hjelp med Captcha',
-	'captchahelp-cookies-needed' => 'Du må slå på informasjonskapsler for at dette skal fungere.',
+	'captchahelp-cookies-needed-confirm-edit' => 'Du må slå på informasjonskapsler for at dette skal fungere.',
 	'captchahelp-text-confirmedit' => "Internettsider som kan redigeres av alle, som denne wikien, blir ofte misbrukt av spammere som bruker roboter for å poste massive antall lenker. Selv om slike spamlenker kan fjernes er de til stor irritasjon.
 
 Noen ganger, særlig hvis du vil legge til nye internettlenker til en side, kan wikien vise deg et bilde av en farge eller ujevn tekst og be deg skrive inn ordene som vises. Siden det er vanskelig å automatisere denne oppgaven, vil funksjonen slippe de fleste virkelige mennesker igjennom, men stoppe spammere.
@@ -2498,7 +2498,7 @@ As Schutz gegen automaatsch Spam, löös disse lüttje Rekenopgaav un geev dat R
 	'captcha-createaccount-fail-confirm-edit' => 'Kood to’n Bestätigen is verkehrt oder fehlt.',
 	'captcha-create-confirm-edit' => 'De Sied nee optostellen, löös disse lüttje Rekenopgaav un geev dat Resultat in dat Feld ünnen in ([[Special:Captcha/help|mehr Infos]]).',
 	'captchahelp-title' => 'Help to Captchas',
-	'captchahelp-cookies-needed' => 'Dien Browser mutt Cookies ünnerstütten un aktiveert hebben, dat dat geiht.',
+	'captchahelp-cookies-needed-confirm-edit' => 'Dien Browser mutt Cookies ünnerstütten un aktiveert hebben, dat dat geiht.',
 	'captchahelp-text-confirmedit' => 'Websteden, de Bidrääg vun elkereen tolaten doot, so as dit Wiki, hebbt faken mit Spammers to doon, de en Computer-Programm bruukt, dat se jümmer Text oder Warf op mööglichst veel Sieden ünnerbringt.
 Ok wenn dat gau wedder rutnahmen warrt, stöört dat doch de Arbeid op dat Wiki.
 
@@ -2539,7 +2539,7 @@ Voer ter de bescharming tegen ongewunste reklame de somme in die hieronder steet
 Voer t antwoord van disse eenvoudige rekensomme in bie t invoervienster
 ([[Special:Captcha/help|meer informasie]]).',
 	'captchahelp-title' => 'Lettertoetshulpe',
-	'captchahelp-cookies-needed' => 'Je mutten scheumbestaanden (cookies) an hebben staon um disse funksie te gebruken.',
+	'captchahelp-cookies-needed-confirm-edit' => 'Je mutten scheumbestaanden (cookies) an hebben staon um disse funksie te gebruken.',
 	'captchahelp-text-confirmedit' => "Websteeën waor iederene an kan biedragen, zo as disse {{SITENAME}}-wiki, wörden vake misbruukt deurdat der ongewunste verwiezingen op ezet wörden. Op disse wiki kunnen zokken bewarkingen makkelik weerummezet wörden, mer t nimp wel tied in beslag die aanders gebruukt kan wörden.
 
 Soms a'j nieje verwiezingen bie n pagina derop zetten, wö'j evreugen um iets over te tikken of in te vullen. Dit zörgt derveur dat der gien ongewunste verwiezingen eplaotst wörden, umdat dit allenig deur meensen edaon kan wörden en niet deur botgebrukers.
@@ -2571,7 +2571,7 @@ Voer het antwoord op de onderstaande eenvoudige som in het invoervenster in ([[S
 	'captcha-sendemail-fail-confirm-edit' => 'De bevestigingscode ontbreekt of is onjuist.',
 	'captcha-disabledinapi-confirm-edit' => 'Voor deze handeling is een captcha nodig die niet afgehandeld kan worden via de API.',
 	'captchahelp-title' => 'Captcha-hulppagina',
-	'captchahelp-cookies-needed' => 'U dient in uw browser cookies ingeschakeld te hebben om dit te laten werken.',
+	'captchahelp-cookies-needed-confirm-edit' => 'U dient in uw browser cookies ingeschakeld te hebben om dit te laten werken.',
 	'captchahelp-text-confirmedit' => "Websites die vrij te bewerken zijn, zoals deze wiki, worden vaak misbruikt door spammers die er met hun programma's automatisch verwijzigen op zetten naar vele websites.
 Hoewel deze externe verwijzingen weer verwijderd kunnen worden, leveren ze wel veel hinder en administratief werk op.
 
@@ -2606,7 +2606,7 @@ $messages['nn'] = array(
 	'captcha-createaccount-fail-confirm-edit' => 'Feil eller manglande godkjenningskode.',
 	'captcha-create-confirm-edit' => 'For å opprette denne sida, ver venleg og løys det enkle reknestykket nedanfor og skriv svaret i ruta ([[Special:Captcha/help|Kva er dette?]]):',
 	'captchahelp-title' => 'Captcha-hjelp',
-	'captchahelp-cookies-needed' => 'Du må ha informasjonskapslar aktivert i nettlesaren din for at dette skal verke.',
+	'captchahelp-cookies-needed-confirm-edit' => 'Du må ha informasjonskapslar aktivert i nettlesaren din for at dette skal verke.',
 	'captchahelp-text-confirmedit' => 'Internettsider som kan verte endra av alle, som denne wikien, vert ofte misbrukte av reklameinnleggjarar (spammarar) som nyttar bottar til å poste mange lenkjer om gongen.
 Sjølv om slike reklamelenkjer kan verte fjerna er dei til stor irritasjon.
 
@@ -2637,7 +2637,7 @@ $messages['oc'] = array(
 	'captcha-createaccount-fail-confirm-edit' => 'Còde de confirmacion mancant o erronèu.',
 	'captcha-create-confirm-edit' => "Per modificar la pagina, vos cal de resòldre l'operacion çaijós e n'inscriure lo resultat dins lo camp ([[Special:Captcha/help|Mai d'infòs]]) :",
 	'captchahelp-title' => 'Ajuda suls Captcha',
-	'captchahelp-cookies-needed' => "Vos cal aver los cookies activats dins vòstre navigador per qu'aquò foncione.",
+	'captchahelp-cookies-needed-confirm-edit' => "Vos cal aver los cookies activats dins vòstre navigador per qu'aquò foncione.",
 	'captchahelp-text-confirmedit' => "Los sites webs qu'accèptan de contribucions del public, coma aqueste wiki, sovent son atacats per de spammers qu'utilizan d'espleches automatizats per plaçar de ligams nombroses cap a de sites.
 Quitament se son de bon suprimir, demòran una noisença significativa.
 
@@ -2669,7 +2669,7 @@ $messages['or'] = array(
 	'captcha-sendemail-fail-confirm-edit' => 'ନିଶ୍ଚିତ କରିବା କୋଡ଼ଟି ଭୁଲ ଅଛି ବା ମୂଳରୁ ନାହିଁ ।',
 	'captcha-disabledinapi-confirm-edit' => 'ଏହି କାମଟି ପାଇଁ ଏକ କ୍ୟାପଚା ଦରକାର, ଏହା API ଦେଇ କେଭେହେଁ ହୋଇପାରିବ ନାହିଁ ।',
 	'captchahelp-title' => 'CAPTCHA ସହଯୋଗ',
-	'captchahelp-cookies-needed' => 'ଏହି କାମତି କରିବା ପାଇଁ ଆପଣଙ୍କ ବ୍ରାଉଜରରେ କୁକି ସଚଳ କରିବାକୁ ପଡ଼ିବ ।',
+	'captchahelp-cookies-needed-confirm-edit' => 'ଏହି କାମତି କରିବା ପାଇଁ ଆପଣଙ୍କ ବ୍ରାଉଜରରେ କୁକି ସଚଳ କରିବାକୁ ପଡ଼ିବ ।',
 	'captchahelp-text-confirmedit' => "ଏହି ଉଇକି ପରି ଜନସାଧାରଣଙ୍କ ଠାରୁ ଲେଖା ଗ୍ରହଣ କରୁଥିବା ସାଇଟ ସବୁରେ ବହୁବାର ସ୍ପାମମାନେ ଆପେଆପେ ନିଜ ନିଜର ଉପକରଣ ମାଧ୍ୟମରେ ଅଦରକାରୀ ଲିଙ୍କମାନ ଦେଇଥାନ୍ତି ।
 ଯଦିଓ ସ୍ପାମ ଲିଙ୍କ ସବୁ ହଟାଇଦିଆଯାଇ ପାରିବ ସେସବୁ ବହୁ ଅସୁବିଧା ତିଆରି କରିଥାଏ ।
 
@@ -2728,7 +2728,7 @@ $messages['pl'] = array(
 	'captcha-sendemail-fail-confirm-edit' => 'Nieprawidłowy lub brak kodu potwierdzającego.',
 	'captcha-disabledinapi-confirm-edit' => 'Ta czynność wymaga potwierdzenia capcha i z tego względu nie może być przeprowadzona z użyciem API.',
 	'captchahelp-title' => 'Pomoc dla ochrony antyspamowej',
-	'captchahelp-cookies-needed' => 'Musisz mieć włączone w przeglądarce ciasteczka (cookies), aby ta opcja działała.',
+	'captchahelp-cookies-needed-confirm-edit' => 'Musisz mieć włączone w przeglądarce ciasteczka (cookies), aby ta opcja działała.',
 	'captchahelp-text-confirmedit' => 'Strony internetowe akceptujące edycje dokonywane przez każdego, tak jak ta wiki, są często atakowane przez spamerów, którzy używają automatycznych narzędzi, aby dodawać linki prowadzące do ich stron.
 Chociaż te linki mogą zostać usunięte, jest to uciążliwe.
 
@@ -2768,7 +2768,7 @@ ant ël quadrèt ([[Special:Captcha/help|për savejne dë pì]]):",
 	'captcha-sendemail-fail-confirm-edit' => "Ël còdes ëd verìfica ò ch'a manca d'autut ò ch'a l'é pa bon.",
 	'captcha-disabledinapi-confirm-edit' => "St'assion-sì a ciama na captcha, parèj a peul pa esse fàita con na API.",
 	'captchahelp-title' => 'Còs é-lo mai ës captcha?',
-	'captchahelp-cookies-needed' => "Për podej dovré sossì a l'ha da manca che sò navigator (browser) a pija ij cookies.",
+	'captchahelp-cookies-needed-confirm-edit' => "Për podej dovré sossì a l'ha da manca che sò navigator (browser) a pija ij cookies.",
 	'captchahelp-text-confirmedit' => "Soèns a-i riva che ij sit dla Ragnà che la gent a peul dovré për ëscrive chèich-còs, coma sta wiki-sì, a resto ambërlifà ëd reclam da màchine che a carìo soa ròba dadsà e dadlà n'aotomàtich. Për tant che sta reclam un a peula peuj gavela, a resta sempe un gran fastudi.
 
 Dle vire, dzortut quand un a caria dj'anliure esterne neuve ansime a na pàgina, la wiki a peul ësmon-je na figurin-a con dël test colora ò pura tut ëstòrt e ciameje d'arbate lòn ch'a-i é scrit andrinta. Da già ch'a l'é grama scrive un programa ch'a lo fasa, a ven che la pì gran part dla gent a-i la fa a scrive, ma la ói part dle màchine a-i la fa pa.
@@ -2800,7 +2800,7 @@ $messages['pnb'] = array(
 	'captcha-sendemail-fail-confirm-edit' => 'غلط یا  چھوٹے کنفرمیشن کوڈ',
 	'captcha-disabledinapi-confirm-edit' => 'ایس کم لئی کیپچا چائیدا اے، ایس لئی ایہ اے پی آئی نال نئیں چل سکدا۔',
 	'captchahelp-title' => 'کیپچا مدد',
-	'captchahelp-cookies-needed' => 'توانوں اپنے براؤزر چ ککیاں چلانیاں پین گیاں ایس نوں چلان لئی۔',
+	'captchahelp-cookies-needed-confirm-edit' => 'توانوں اپنے براؤزر چ ککیاں چلانیاں پین گیاں ایس نوں چلان لئی۔',
 	'captchahelp-text-confirmedit' => 'ویب سائیٹاں  جیہڑیاں لوکاں کولوں ڈاک لیندیاں نیں  جیویں ایہ وکی، ایناں تے خراب ڈاک پیجن والے ہلے بولدے ریندے نیں تے کئی سائیٹاں دے جوڑ جوڑدے ریندے نیں۔ ایہ سپام جوڑ ہٹاۓ جاسکدے نیں پر ایہ اک رپھڑ تے ہے نیں۔
 
 کدے کدے، خاص طور تے کسے صفے نال نویں ویب جوڑ جوڑدیاں ہویاں، وکی توانوں اک رنگ والی یا خراب لکھت دسدا اے  تے توانوں پچھدا اے جے ٹائپ ہویا بول لکھو۔
@@ -2823,7 +2823,7 @@ $messages['pnb'] = array(
 $messages['ps'] = array(
 	'captcha-create-confirm-edit' => 'ددې لپاره چې نوی ليکنه ترسره کړی، لطفاً د همدغه ساده شمېرو ځواب په ورکړ شوي چوکاټ کې وليکی ([[Special:Captcha/help|نور مالومات]]):',
 	'captchahelp-title' => 'CAPTCHA لارښود',
-	'captchahelp-cookies-needed' => 'ددې کړنې د ترسره کېدلو لپاره تاسو ته پکار ده چې د خپل کتنمل (browser) کوکيز (cookies) چارن کړی.',
+	'captchahelp-cookies-needed-confirm-edit' => 'ددې کړنې د ترسره کېدلو لپاره تاسو ته پکار ده چې د خپل کتنمل (browser) کوکيز (cookies) چارن کړی.',
 );
 
 /** Portuguese (Português)
@@ -2844,7 +2844,7 @@ Como prevenção contra sistemas automatizados de inserção de ''spam'', resolv
 	'captcha-sendemail-fail-confirm-edit' => 'Código de confirmação incorrecto ou não preenchido.',
 	'captcha-disabledinapi-confirm-edit' => 'Esta operação necessita de captcha, por isso não pode ser realizada através da API.',
 	'captchahelp-title' => 'Ajuda sobre o CAPTCHA',
-	'captchahelp-cookies-needed' => "É necessário possibilitar o uso de ''cookies'' no seu browser para que o ''captcha'' funcione.",
+	'captchahelp-cookies-needed-confirm-edit' => "É necessário possibilitar o uso de ''cookies'' no seu browser para que o ''captcha'' funcione.",
 	'captchahelp-text-confirmedit' => "Sites na internet abertos a edição pública, como é o caso desta wiki, são frequentemente abusados por ''spammers'' que utilizam ferramentas automatizadas para inserção em massa de links, em muitos sites.
 Embora esses links possam ser removidos, representam um incómodo significativo.
 
@@ -2882,7 +2882,7 @@ Para prevenção contra sistemas automatizados que inserem spam, será necessár
 	'captcha-sendemail-fail-confirm-edit' => 'Código de confirmação incorreto ou não preenchido.',
 	'captcha-disabledinapi-confirm-edit' => 'Esta operação necessita de captcha, por isso não pode ser realizada através da API.',
 	'captchahelp-title' => 'Ajuda com o Captcha',
-	'captchahelp-cookies-needed' => 'Você precisa ter cookies habilitados em seu navegador para que possa funcionar',
+	'captchahelp-cookies-needed-confirm-edit' => 'Você precisa ter cookies habilitados em seu navegador para que possa funcionar',
 	'captchahelp-text-confirmedit' => "Sites abertos a inserções públicas, como é o caso desta wiki, são vulneráveis a spammers que utilizam ferramentas automatizadas para inserir seus links em diversos locais.
 Remover tais ligações posteriormente pode ser um incômodo significativo.
 
@@ -2928,7 +2928,7 @@ $messages['ro'] = array(
 	'captcha-sendemail-fail-confirm-edit' => 'Codul de confirmare lipsește sau este incorect.',
 	'captcha-disabledinapi-confirm-edit' => 'Această acțiune necesită rezolvarea unui captcha, deci nu poate fi efectuată prin API.',
 	'captchahelp-title' => 'Despre „Captcha”',
-	'captchahelp-cookies-needed' => 'Trebuie ca browserul dumneavoastră să accepte cookie-uri pentru ca aceasta să funcționeze.',
+	'captchahelp-cookies-needed-confirm-edit' => 'Trebuie ca browserul dumneavoastră să accepte cookie-uri pentru ca aceasta să funcționeze.',
 	'captchahelp-text-confirmedit' => 'Siturile web care acceptă postări din partea publicului, precum acest wiki, sunt de obicei abuzate de persoane care folosesc unelte automate pentru a introduce legături către multe alte situri. Deși aceste legături de spam pot fi îndepărtate, acest lucru reprezintă o muncă inconvenientă.
 
 Uneori, mai ales la adăugarea de legături web noi într-o pagină, situl wiki vă poate arăta o imagine cu un text colorat sau distorsionat și veți fi rugat să introduceți cuvintele indicate. Deoarece aceasta este o sarcină greu de automatizat, ea permite majorității persoanelor reale să posteze și va opri majoritatea atacatorilor.
@@ -2960,7 +2960,7 @@ Pe aiutà a proteggere condre a 'u spam automateche, pe piacere respunne a 'a do
 	'captcha-sendemail-fail-confirm-edit' => 'Codece de conferme non corrette o mangande.',
 	'captcha-disabledinapi-confirm-edit' => "St'azione ave abbesogne de 'nu captcha, accussì non g'è possibbele eseguirle cu le API.",
 	'captchahelp-title' => 'Aijute pu captcha',
-	'captchahelp-cookies-needed' => "Tu è abbesogne de avè le cookie abbilitate jndr'à 'u browser tune pe sta fatìe.",
+	'captchahelp-cookies-needed-confirm-edit' => "Tu è abbesogne de avè le cookie abbilitate jndr'à 'u browser tune pe sta fatìe.",
 	'captcha-addurl-whitelist-confirm-edit' => " #<!-- leave this line exactly as it is --> <pre>
 # 'A sindasse jè a cumme segue:
 #   * Ogneccose da 'nu carattere \"#\" 'mbonde a fine d'a linèe jè 'nu commende
@@ -2989,7 +2989,7 @@ $messages['ru'] = array(
 	'captcha-sendemail-fail-confirm-edit' => 'Код подтверждения неправильный или отсутствует.',
 	'captcha-disabledinapi-confirm-edit' => 'Это действие требует проверки CAPTCHA, и поэтому не может быть выполнено через API.',
 	'captchahelp-title' => 'Справка о CAPTCHA',
-	'captchahelp-cookies-needed' => 'Вам нужно включить куки в браузере, чтобы эта функция заработала.',
+	'captchahelp-cookies-needed-confirm-edit' => 'Вам нужно включить куки в браузере, чтобы эта функция заработала.',
 	'captchahelp-text-confirmedit' => 'Веб-сайты, позволяющие добавлять и изменять своё содержимое, в том числе эта вики, часто становятся целью спамеров, использующих программы для автоматического добавления ссылок на сайты.
 Хотя такие ссылки могут быть впоследствии удалены, они являются существенной помехой.
 
@@ -3024,7 +3024,7 @@ $messages['rue'] = array(
 	'captcha-sendemail-fail-confirm-edit' => 'Хыблячій ці неправилный код підтверджіня.',
 	'captcha-disabledinapi-confirm-edit' => 'Тота операція потребує сповнїня CAPTCHA, также ся не дасть выконати средством API.',
 	'captchahelp-title' => 'Поміч про CAPTCHA',
-	'captchahelp-cookies-needed' => 'Абы то фунґовало, мусите мати у своїм переглядачу запнуты кукі.',
+	'captchahelp-cookies-needed-confirm-edit' => 'Абы то фунґовало, мусите мати у своїм переглядачу запнуты кукі.',
 	'captchahelp-text-confirmedit' => 'Вебовы сторінкы, до котрых можуть приспівати їх навщівници (як наприклад тота вікі), суть часто цілём спамерів, котры за помочі автоматічных інштрументів вкладають свої одказы на велике множество сторінок. І наперек тому, же тот спам ся дасть одстранити, представлює неприємне отровованя.
 
 Даколи, окремо почас придаваня новых вебовых одказів, вам може вікі указати образок фаребного ці поскручаного тексту і пожадати вас о описаня зображеных знаків. Кідьже таку задачу не годен легко автоматізовати, реалны люде можуть дале приспівати, але векшыну спамерів і іншых роботічных атакерів тото заставить.
@@ -3058,7 +3058,7 @@ $messages['sah'] = array(
 	'captcha-sendemail-fail-confirm-edit' => 'Бигэргэтии куода суох эбэтэр атын.',
 	'captcha-disabledinapi-confirm-edit' => 'Бу дьайыы CAPTCHA нөҥүө эрэ оҥоһуллар, онон API нөҥүө толоруллубат.',
 	'captchahelp-title' => 'Captcha көмөтө',
-	'captchahelp-cookies-needed' => 'Бу дьайыы үлэлиирин курдук браузергар куукины холбоо.',
+	'captchahelp-cookies-needed-confirm-edit' => 'Бу дьайыы үлэлиирин курдук браузергар куукины холбоо.',
 	'captchahelp-text-confirmedit' => 'Биһиги саайпыт курдук иһинээҕитин уларытары көҥүллүүр саайтарга сороҕор спам ыытар программалар аптамаатынан бэйэлэрин ыйынньыктарын угаллар.
 Оннук аптамаатынан эбиллибит ыйынньыктары суох оҥорор кыах баар эрээри, ол биллэн турар син биир мэһэйдэри үөскэтэр.
 
@@ -3093,7 +3093,7 @@ $messages['scn'] = array(
 	'captcha-create-confirm-edit' => 'Pi criari la pàggina è nicissàriu arisòrviri lu sèmprici càlculu prisintatu di sècutu e nziriri lu risurtatu nnâ casedda:<br />
 ([[Special:Captcha/help|chiossai nfurmazzioni]]):',
 	'captchahelp-title' => "Chi cos'è lu captcha?",
-	'captchahelp-cookies-needed' => 'È nicissàriu abbilitari li cookie supra lu browser pi jiri avanti',
+	'captchahelp-cookies-needed-confirm-edit' => 'È nicissàriu abbilitari li cookie supra lu browser pi jiri avanti',
 	'captchahelp-text-confirmedit' => "Ô spissu accàpita ca li siti Web ca accunzèntunu missaggi pùbbrichi, comu a stu wiki, sù pigghiati di mira di spammer ca ùsanu strumenti autumàtichi pi nziriri lijami pubbricitari ammeri assai nùmmira di siti. Macari ca li lijami ca non sunnu disiati si ponnu livari, sta cosa è, nti ogni casu, na granni camurrìa.
 
 Nni tanti casi, p'asèmpiu quannu si voli jùnciri novi lijami Web nti na pàggina, lu software wiki pò ammustrari na mmàggini cu nu testu nicu acculuratu e/o difurmatu addumannannu di scrivìrilu nni na finistredda. Siccomu si tratta di na cosa difficili di fari pi nu computer, stu miccanìsimu pirmetti a (quasi tutti) l'utenti riali di cumplitari lu nzirimentu disiatu, mpidennu la trasuta a li chiossai di li spammer e di l'àutri attacchi autumatizzati.
@@ -3135,7 +3135,7 @@ $messages['si'] = array(
 	'captcha-sendemail-fail-confirm-edit' => 'තහවුරුකෙරුම් කේතය සොයාගත නොහැකි හෝ වැරදිය.',
 	'captcha-disabledinapi-confirm-edit' => 'මෙම ක්‍රියාවට කැප්චාවක් අවැසි නිසා එය API හරහා කළ නොහැක.',
 	'captchahelp-title' => 'Captcha උදවු',
-	'captchahelp-cookies-needed' => 'මෙය ක්‍රියාත්මක වීමට නම් ඔබ විසින් ඔබගේ බ්‍රවුසරයෙහි කුකීස් සක්‍රිය කොට තිබිය යුතුය.',
+	'captchahelp-cookies-needed-confirm-edit' => 'මෙය ක්‍රියාත්මක වීමට නම් ඔබ විසින් ඔබගේ බ්‍රවුසරයෙහි කුකීස් සක්‍රිය කොට තිබිය යුතුය.',
 	'captchahelp-text-confirmedit' => 'මහජනයාගේ පළකෙරුම් පිළිගන්නා මෙවන් විකි වැනි අඩවි තමන්ගේ අඩවියන් වෙත සබැඳි ඇතුලත් කිරීමට ස්‍වයංක්‍රීය මෙවලම් භාවිතා කරන ස්පෑම්කරුවන්ගේ අයතා භාවිතයට ගොදුරු වේ. මෙම සබැඳියන් ඉවත් කළ හැකි වුවද, ඒවා ඉතාමත් කරදරකාරීය.
 
 ඇතැම් විට, විශේෂයෙන්ම පිටුවකට සබැඳියක් එක් කරනා විට, විකිය විසින් ඔබට වර්ණිත හෝ විකෘතිත පෙළක් පෙන්වා එහි සඳහන් වදන් යතුරුලියන ලෙස ඔබෙන් ඉල්ලනු ඇති.
@@ -3171,7 +3171,7 @@ $messages['sk'] = array(
 	'captcha-sendemail-fail-confirm-edit' => 'Nesprávny alebo chýbajúci potvrdzovací kód.',
 	'captcha-disabledinapi-confirm-edit' => 'Táto operácia vyžaduje captcha, preto nemôže byť vykonaná prostredníctvom rozhrania API.',
 	'captchahelp-title' => 'Pomocník ku captcha',
-	'captchahelp-cookies-needed' => 'Aby toto fungovalo, budete si musieť v prehliadači zapnúť koláčiky (cookies).',
+	'captchahelp-cookies-needed-confirm-edit' => 'Aby toto fungovalo, budete si musieť v prehliadači zapnúť koláčiky (cookies).',
 	'captchahelp-text-confirmedit' => 'Webstránky prijímajúce príspevky od verejnosti ako táto wiki sú často cieľom zneužitia spammermi, ktorí používajú automatizované nástroje na to, aby svoje odkazy umiestnili na množstvo stránok. Hoci je možné tieto odkazy odstrániť, zbytočne to zaťažuje používateľov.
 
 Niekedy, obzvlášť keď pridávate webové odkazy k článkom, wiki vám môže zobraziť obrázok so zafarbeným alebo pokriveným textom a požiadať vás o prepísanie zobrazených slov. Keďže takúto úlohu je ťažké zautomatizovať a umožní skutočným ľuďom poslať svoje príspevky, zastaví to väčšinu spammerov a iných robotických útočníkov.
@@ -3204,7 +3204,7 @@ Zaradi zaščite pred samodejno navlako boste morali vpisati besede, ki se pojav
 	'captcha-sendemail-fail-confirm-edit' => 'Napačna ali manjkajoča potrditvena koda.',
 	'captcha-disabledinapi-confirm-edit' => 'To dejanje zahteva preverjanje captcha, zato ga ni mogoče izvesti preko API.',
 	'captchahelp-title' => 'Pomoč za captcha',
-	'captchahelp-cookies-needed' => 'Če želite, da to deluje, boste morali v svojem brskalniku omogočiti piškotke.',
+	'captchahelp-cookies-needed-confirm-edit' => 'Če želite, da to deluje, boste morali v svojem brskalniku omogočiti piškotke.',
 	'captchahelp-text-confirmedit' => 'Spletne strani, ki omogočajo objavljanje širši javnosti, kot na primer ta wiki, pogosto zlorabljajo spamerji, ki za objavo svojih povezav na mnoge strani uporabljajo avtomatizirana orodja.
 Čeprav je neželene povezave mogoče odstraniti, so precejšnja nadloga.
 
@@ -3243,7 +3243,7 @@ $messages['sq'] = array(
 	'captcha-sendemail-fail-confirm-edit' => 'Mungon kodi i konfirmimit ose është i pasaktë.',
 	'captcha-disabledinapi-confirm-edit' => 'Ky veprim kërkon një captcha, kështu që nuk mund të kryhet nëpërmjet API.',
 	'captchahelp-title' => 'Ndihmë rreth sistemit "Captcha"',
-	'captchahelp-cookies-needed' => 'Duhet të pranoni "biskota" nga shfletuesi juaj për këtë veprim.',
+	'captchahelp-cookies-needed-confirm-edit' => 'Duhet të pranoni "biskota" nga shfletuesi juaj për këtë veprim.',
 	'captchahelp-text-confirmedit' => 'Faqet e rrjetit që pranojnë shkrime nga publiku, siç është edhe kjo wiki, shpesh abuzohen nga njerëz që duan të përfitojnë duke reklamuar ose promovuar lidhjet e tyre. Këto lloj abuzimesh mund të hiqen kollaj por janë një bezdi dhe shpenzim kohe i papranueshëm.
 
 Ndonjëherë, sidomos kur po hapni një llogari të re apo kur po shtoni lidhje të reja nëpërmjet redaktimit tuaj, sistemi mund t\'ju shfaqi një figurë që përmban fjalë me gërma ose numra të shtrembruara ose me ngjyra të ndryshme të cilat ju duhet të shtypni para se të mund të kryeni veprimin në fjalë. Kjo bëhet pasi është shumë e vështirë për një robot ose mjet automatik të kryejë të njëjtën punë. Kështu mund të dallohet nëse jeni me të vërtetë një njeri apo një robot. Ky lloj sistemi s\'mund të ndalojë tërë abuzimet por ndalon një pjesë të mirë të tyre, sidomos ato që janë automatike dhe të shumta në numër.
@@ -3275,7 +3275,7 @@ $messages['sr-ec'] = array(
 	'captcha-sendemail-confirm-edit' => 'У циљу заштите од слања непожељних порука, решите просту рачуницу испод и унесите одговор у поље ([[Special:Captcha/help|више информација]]):',
 	'captcha-sendemail-fail-confirm-edit' => 'Неправилан или непостојећи код за потврду.',
 	'captchahelp-title' => 'Помоћ око потврдног кôда',
-	'captchahelp-cookies-needed' => 'Потребно је да омогућите колачиће да би ово радило.',
+	'captchahelp-cookies-needed-confirm-edit' => 'Потребно је да омогућите колачиће да би ово радило.',
 	'right-skipcaptcha' => 'прескакање радњи које захтевају унос потврдног кода',
 );
 
@@ -3292,7 +3292,7 @@ $messages['sr-el'] = array(
 	'captcha-create-confirm-edit' => 'Za stvaranje strane reši jednostavan zbir dole i unesi ga u kutiju ([[Special:Captcha/help|detaljnije]]):',
 	'captcha-sendemail-fail-confirm-edit' => 'Nepravilan ili nepostojeći kod za potvrdu.',
 	'captchahelp-title' => 'pomoć za kapču',
-	'captchahelp-cookies-needed' => 'Da bi ovo uradio, neophodno je da su ti kolačići omogućeni u brauzeru.',
+	'captchahelp-cookies-needed-confirm-edit' => 'Da bi ovo uradio, neophodno je da su ti kolačići omogućeni u brauzeru.',
 	'right-skipcaptcha' => 'Izvedi akcije kapče bez potrebe da se prođe kroz kapču.',
 );
 
@@ -3310,7 +3310,7 @@ Klik dan fonnäien ap „Siede spiekerje“ [[Special:Captcha/help|(Froagen of P
 	'captcha-createaccount-fail-confirm-edit' => 'Falske of failjende Bestäätigengscode.',
 	'captcha-create-confirm-edit' => 'Uum disse Siede tou moakjen, löös ju ätterfoulgjende Reekenapgoawe ap un dräch dät Resultoat in dät Fäild hier unner ien [[Special:Captcha/help|(Froagen of Probleme?)]].',
 	'captchahelp-title' => 'Captcha-Hälpe',
-	'captchahelp-cookies-needed' => "'''Wichtige Waiwiesenge:''' Der mouten Cookies in dän Browser ferlööwed weese.",
+	'captchahelp-cookies-needed-confirm-edit' => "'''Wichtige Waiwiesenge:''' Der mouten Cookies in dän Browser ferlööwed weese.",
 	'captchahelp-text-confirmedit' => "Internetsteeden, do der foar Biedraage fon praktisk älkuneen eepen sunt - so as dät {{SITENAME}}-Wiki — wäide oafte fon Spammere misbruukt, do hiere Ferbiendengen automatisk ap fuul Websieden platzierje. Disse Spam-Ferbiendengen konnen wier wächhoald wäide, man jo sunt n groot Ferträit.
 
 In fuul Falle, besunners bie dät Bietouföigjen fon näie Webferbiendengen tou ne Siede, kon dät foarkuume, dät dit Wiki ne Bielde mäd n faawigen un fertroalden Text anwiest un deertou apfoardert, do anwiesde Woude ientoutippen. Deer sun Apgoawe man stuur automatisk ouhonneld wäide kon, wäide deertruch do maaste Spammere, do der mäd automatiske Reewen oarbaidje, stopped, wierjuun moanskelke Benutsere hieren Biedraach ouseende konnen.
@@ -3378,7 +3378,7 @@ i rutan ([[Special:Captcha/help|mer information]]):',
 	'captcha-sendemail-fail-confirm-edit' => 'Felaktig eller saknad bekräftelsekod.',
 	'captcha-disabledinapi-confirm-edit' => 'Denna åtgärd kräver en captcha, så den kan inte utföras genom APIet.',
 	'captchahelp-title' => 'Captchahjälp',
-	'captchahelp-cookies-needed' => 'Du måste ha cookies aktiverade i din webbläsare för att det här ska fungera.',
+	'captchahelp-cookies-needed-confirm-edit' => 'Du måste ha cookies aktiverade i din webbläsare för att det här ska fungera.',
 	'captchahelp-text-confirmedit' => 'Webbplatser som tillåter inlägg från allmänheten, som den här wikin gör, kan missbrukas av spammare som använder ofta automatiserade verktyg för att lägga till länkar på många webbsajter.
 Även om dessa spamlänkar kan tas bort så är de till stort besvär.
 
@@ -3424,7 +3424,7 @@ $messages['te'] = array(
 	'captcha-createaccount-fail-confirm-edit' => 'దృవీకరించుకోవడానికి విలువ ఇవ్వలేదు లేదా దానిని తప్పుగా ఇచ్చారు.',
 	'captcha-create-confirm-edit' => 'కొత్తపేజీని సృష్టించడానికి, కింద ఇచ్చిన లెక్క యొక్క జవాబును ఇక్కడున్న పెట్టెలో రాయండి ([[Special:Captcha/help|మరింత సహాయం]]):',
 	'captchahelp-title' => 'ఆమకవేప సహాయం',
-	'captchahelp-cookies-needed' => 'ఇది పని చెయ్యాలంటే మీ బ్రౌజరులో కూకీలు సశక్తమై ఉండాలి.',
+	'captchahelp-cookies-needed-confirm-edit' => 'ఇది పని చెయ్యాలంటే మీ బ్రౌజరులో కూకీలు సశక్తమై ఉండాలి.',
 	'captchahelp-text-confirmedit' => 'ప్రజలనుండి రచనలను స్వీకరించే ఈ వికీ వంటి వెబ్‌సైట్లు, ఆటోమాటిక్ ప్రోగ్రాములతో తమ స్వంత లింకులను చేర్చే స్పాము ముష్కరుల దాడులకు గురవడం తరచూ జరుగుతూ ఉంటుంది. ఆ లింకులను తీసేయడం పెద్ద విషయం కాకపోయినప్పటికీ, అవి తలనెప్పి అనేది మాత్రం నిజం.
 
 కొన్నిసార్లు, ముఖ్యంగా ఏదైనా పేజీ నుండి బయటకు లింకులు ఇచ్చేటపుడు, వంకర్లు తిరిగిపోయి ఉన్న పదాల బొమ్మను చూపించి ఆ పదాన్ని టైపు చెయ్యమని వికీ మిమ్మల్ని అడగవచ్చు. దీన్ని ఆటోమాటిక్ టూల్సుతో చెయ్యడం చాలా కష్టం కాబట్టి, స్పాము జిత్తులు చెల్లవు; మనుష్యులు మాత్రం మామూలుగానే చెయ్యగలరు.
@@ -3453,7 +3453,7 @@ $messages['tg-cyrl'] = array(
 	'captcha-createaccount-fail-confirm-edit' => 'Коди таъйид нодуруст ё гумшуда.',
 	'captcha-create-confirm-edit' => 'Барои эҷоди саҳифа, лутфан ҳосили ҷамъи зеринро ҳисоб кунед ва натиҷаро дар ҷаъба ворид кунед  ([[Special:Captcha/help|иттилооти бештар]]):',
 	'captchahelp-title' => 'Роҳнамои Captcha',
-	'captchahelp-cookies-needed' => 'Барои кор кардани он, шумо бояд кукиҳои мурургаратонро фаъол кунед.',
+	'captchahelp-cookies-needed-confirm-edit' => 'Барои кор кардани он, шумо бояд кукиҳои мурургаратонро фаъол кунед.',
 	'captchahelp-text-confirmedit' => "Сомонаҳое, ки имкони тағйир тавассути ҳамагон дар онҳо вуҷуд дорад, монанди ин вики, гоҳ ё ногоҳ тавассути ҳаразнигориҳое, ки тавассути абзорҳои худкор пайванди худро дар чандин сомонаҳо мефиристанд, мавриди сӯъистифода қарор мегиранд.
 
 Дар пораи аз маворид, ба вижа замоне, ки як пайванди интернетии ҷадид ба саҳифа изофа мешавад, вики метавонад, як тасвир аз ҳуруфи рангӣ ё матни бенурро ба шумо нишон бидиҳад ва аз шумо ворид кардани калимаи нишондодашударо пурсон мешавад. Ба хотири ин ки анҷоми ин кор ба шакли худкор душвор аст, ин амал ба аксари инсонҳое иҷозат медиҳад, ки ба ирсоли матолиб бипардозанд, дар ҳоле ки бештар роботҳои ҳамлакунанда ва ҳаразнигорҳоро мутавақиф мекунад.
@@ -3480,7 +3480,7 @@ $messages['tg-latn'] = array(
 	'captcha-createaccount-fail-confirm-edit' => "Kodi ta'jid nodurust jo gumşuda.",
 	'captcha-create-confirm-edit' => "Baroi eçodi sahifa, lutfan hosili çam'i zerinro hisob kuned va natiçaro dar ça'ba vorid kuned  ([[Special:Captcha/help|ittilooti beştar]]):",
 	'captchahelp-title' => 'Rohnamoi Captcha',
-	'captchahelp-cookies-needed' => "Baroi kor kardani on, şumo bojad kukihoi mururgaratonro fa'ol kuned.",
+	'captchahelp-cookies-needed-confirm-edit' => "Baroi kor kardani on, şumo bojad kukihoi mururgaratonro fa'ol kuned.",
 	'captchahelp-text-confirmedit' => "Somonahoe, ki imkoni taƣjir tavassuti hamagon dar onho vuçud dorad, monandi in viki, goh jo nogoh tavassuti haraznigorihoe, ki tavassuti abzorhoi xudkor pajvandi xudro dar candin somonaho mefiristand, mavridi sū'istifoda qaror megirand.
 
 Dar porai az mavorid, ba viƶa zamone, ki jak pajvandi internetiji çadid ba sahifa izofa meşavad, viki metavonad, jak tasvir az hurufi rangī jo matni benurro ba şumo nişon bidihad va az şumo vorid kardani kalimai nişondodaşudaro purson meşavad. Ba xotiri in ki ançomi in kor ba şakli xudkor duşvor ast, in amal ba aksari insonhoe içozat medihad, ki ba irsoli matolib bipardozand, dar hole ki beştar robothoi hamlakunanda va haraznigorhoro mutavaqif mekunad.
@@ -3508,7 +3508,7 @@ $messages['th'] = array(
 	'captcha-create-confirm-edit' => 'กรุณาแก้โจทย์ด้านล่าง และพิมพ์คำตอบลงในกล่อง เพื่อที่จะสร้างหน้า
 ([[Special:Captcha/help|รายละเอียด]]):',
 	'captchahelp-title' => 'เกี่ยวกับแคปต์ชา',
-	'captchahelp-cookies-needed' => 'คุณต้องอนุญาตคุกกี้บนเว็บบราวเซอร์ของคุณ เพื่อที่คุณจะสามารถล็อกอินได้',
+	'captchahelp-cookies-needed-confirm-edit' => 'คุณต้องอนุญาตคุกกี้บนเว็บบราวเซอร์ของคุณ เพื่อที่คุณจะสามารถล็อกอินได้',
 );
 
 /** Turkmen (Türkmençe)
@@ -3527,7 +3527,7 @@ Awtomatik spamdan goranmak üçin, aşakdaky ýönekeý soraga jogap beriň we j
 	'captcha-sendemail-fail-confirm-edit' => 'Nädogry ýa-da kem tassyklama kody.',
 	'captcha-disabledinapi-confirm-edit' => 'Bu iş captcha talap edýär, şonuň üçin hem ony API bilen berjaý edip bolmaýar.',
 	'captchahelp-title' => 'Captcha ýardamy',
-	'captchahelp-cookies-needed' => 'Munuň işlemegi üçin brauzeriňiziň kukileri kabul etmegi gerek.',
+	'captchahelp-cookies-needed-confirm-edit' => 'Munuň işlemegi üçin brauzeriňiziň kukileri kabul etmegi gerek.',
 );
 
 /** Tagalog (Tagalog)
@@ -3546,7 +3546,7 @@ Upang makatulong sa pagsasanggalang laban sa mga kusang dumarating na \"manlulus
 	'captcha-sendemail-fail-confirm-edit' => 'Hindi tama o nawawalang kodigo ng pagpapatotoo.',
 	'captcha-disabledinapi-confirm-edit' => 'Ang aksyon na ito ay nangangailangan ng isang captcha, kaya hindi ito maaring gawin sa pamamagitan ng API.',
 	'captchahelp-title' => "Tulong na pangpagsusuring ''captcha''",
-	'captchahelp-cookies-needed' => "Kinakailangan mong magkaroon ng mga gumaganang mga  \"otap\" (''cookies'') sa loob ng pantingin-tingin (''browser'') mo upang maisagawa ito.",
+	'captchahelp-cookies-needed-confirm-edit' => "Kinakailangan mong magkaroon ng mga gumaganang mga  \"otap\" (''cookies'') sa loob ng pantingin-tingin (''browser'') mo upang maisagawa ito.",
 	'captchahelp-text-confirmedit' => "Ang mga websayt na tumatanggap ng mga pagpapaskil mula sa madla, katulad ng wiking ito, ay kalimitang inaabuso ng mga tagapagpadala ng mga manlulusob na gumagamit ng kusang mga kagamitan upang makapagpaskil ng kanilang mga kawing sa maraming mga sityo.
 Bagaman maaaring matanggal ang mga kawing na pangmanlulusob na ito, isa silang malaking abala.
 
@@ -3583,7 +3583,7 @@ Otomatik spamdan korunmak için, lütfen aşağıdaki basit soruyu cevaplayın v
 	'captcha-sendemail-fail-confirm-edit' => 'Yanlış veya eksik onay kodu.',
 	'captcha-disabledinapi-confirm-edit' => 'Bu eylem captcha gerektiriyor, dolayısıyla API aracılığıyla yapılamaz.',
 	'captchahelp-title' => 'Captcha yardımı',
-	'captchahelp-cookies-needed' => 'Bunun çalışabilmesi için tarayıcınızın çerezleri kabul edilmesi gerekiyor.',
+	'captchahelp-cookies-needed-confirm-edit' => 'Bunun çalışabilmesi için tarayıcınızın çerezleri kabul edilmesi gerekiyor.',
 	'captchahelp-text-confirmedit' => "Bu viki gibi, dışarıdan katılıma izin veren web siteleri, pek çok siteye bağlantılar yaratan otomatik araçlarını çalıştıran ''spam''cilerin saldırılarına sıklıkla maruz kalırlar. Bu spam nitelikli bağlantılar silinebilir, fakat bu temizlik önemli bir sıkıntı yaratacaktır.
 
 Bazen, özellikle bir başka internet sitesine bağ eklerken, bozulmuş ve renklendirilmiş harflerden oluşan bir resim gösterilebilir ve sizden bu harfleri kutucuğa girmenizi istenir. Bu, otomatizasyonu oldukça zor bir iş olduğu için, gerçek insanlar bu işlemi yerine getirebilirken, spam yapmaya yarayan araçlar bunu yapmakta zorlanacaklardır.
@@ -3619,7 +3619,7 @@ $messages['uk'] = array(
 	'captcha-sendemail-fail-confirm-edit' => 'Неправильний або відсутній код підтвердження.',
 	'captcha-disabledinapi-confirm-edit' => 'Ця дія потребує перевірки CAPTCHA, тому не може бути здійснена за допомогою API.',
 	'captchahelp-title' => 'Довідка про CAPTCHA',
-	'captchahelp-cookies-needed' => 'Вам потрібно ввімкнути куки у браузері, щоб ця функція запрацювала.',
+	'captchahelp-cookies-needed-confirm-edit' => 'Вам потрібно ввімкнути куки у браузері, щоб ця функція запрацювала.',
 	'captchahelp-text-confirmedit' => 'Веб-сайти, що дозволяють додавати або змінювати свій вміст, у тому числі вікі, часто стають ціллю спамерів, які використовують програми для автоматичного додавання посилань.
 Хоча такі посилання і можуть бути вилучені, вони є істотною вадою.
 
@@ -3653,7 +3653,7 @@ $messages['vec'] = array(
 	'captcha-sendemail-fail-confirm-edit' => 'Codice de verifica sbaglià o mancante.',
 	'captcha-disabledinapi-confirm-edit' => 'Sta azion la richiede un captcha, quindi no se pole farla tramite API.',
 	'captchahelp-title' => "Coss'èlo sto captcha?",
-	'captchahelp-cookies-needed' => 'Te ghè da verghe i cookies abilità sul to browser par proseguir.',
+	'captchahelp-cookies-needed-confirm-edit' => 'Te ghè da verghe i cookies abilità sul to browser par proseguir.',
 	'captchahelp-text-confirmedit' => "Sucéde spesso che i siti web che i acèta messagi publici, come sta wiki, i sia tolti de mira da spammer che dòpara strumenti automatici par inserir colegamenti publicitari verso un gran nùmaro de siti. Anca se i colegamenti insiderài i se pol cavar, se trata comunque de na secadura mìa da póco.
 
 In çerti casi, par esenpio quando se çerca de zontar novi colegamenti web in te na pagina, el software wiki el pol mostrar na imagine con un breve testo colorà e/o distorto, domandàndoghe a l'utente de riscrìvarlo drento na casela fata aposta. Sicome i computer no i xe mìa boni de replicar a la perfezion sta azion, sto mecanismo el ghe consente a (quasi tuti) i utenti reali de conpletar l'inserimento che i volea, inpedéndoghe l'acesso a la magior parte dei spammer e dei altri atachi automatizà.
@@ -3688,7 +3688,7 @@ câu trả lời vào ô ([[Special:Captcha/help|thông tin thêm]]):',
 	'captcha-sendemail-fail-confirm-edit' => 'Mã xác nhận không chính xác hoặc chưa được cung cấp.',
 	'captcha-disabledinapi-confirm-edit' => 'Tác vụ này đòi người dùng giải CAPTCHA trước tiên, nên không thể thực hiện nó qua API.',
 	'captchahelp-title' => 'Trợ giúp Captcha',
-	'captchahelp-cookies-needed' => 'Bạn cần phải bật cookie trong trình duyệt để chức năng này hoạt động được.',
+	'captchahelp-cookies-needed-confirm-edit' => 'Bạn cần phải bật cookie trong trình duyệt để chức năng này hoạt động được.',
 	'captchahelp-text-confirmedit' => 'Những website cho phép bất kỳ ai cũng có thể gửi thông tin, như wiki này, thường bị các tay spam dùng công cụ tự động để gửi các liên kết của họ tới rất nhiều trang.
 Tuy chúng ta có thể xóa các liên kết này khỏi trang, chúng vẫn gây nhiều phiền toái.
 
@@ -3720,7 +3720,7 @@ $messages['vo'] = array(
 	'captcha-createaccount-fail-confirm-edit' => 'Kot fümükama paneveräton u paseleton.',
 	'captcha-create-confirm-edit' => 'Ad jafön padi, dunolös saedami balugik dono e penolös saedoti in bokil ([[Special:Captcha/help|nüns pluik]]):',
 	'captchahelp-title' => 'Yuf ela Captcha',
-	'captchahelp-cookies-needed' => 'Nedol mögükön „kekilis“ bevüresodanaföme olik ad dunön atosi.',
+	'captchahelp-cookies-needed-confirm-edit' => 'Nedol mögükön „kekilis“ bevüresodanaföme olik ad dunön atosi.',
 	'captcha-addurl-whitelist-confirm-edit' => ' #<!-- leave this line exactly as it is --> <pre>
 # Süntag binon sökölos:
 #  * Valikos de malat: „#“ jü fin liena binon küpet
@@ -3765,7 +3765,7 @@ $messages['yi'] = array(
  */
 $messages['yo'] = array(
 	'captchahelp-title' => 'Ìrànwọ́ Captcha',
-	'captchahelp-cookies-needed' => 'Ẹ gbọ́jọ̀ gba cookies láyé nínú agbétàkùn yín kí èyí ó tó ṣiṣẹ́.',
+	'captchahelp-cookies-needed-confirm-edit' => 'Ẹ gbọ́jọ̀ gba cookies láyé nínú agbétàkùn yín kí èyí ó tó ṣiṣẹ́.',
 );
 
 /** Cantonese (粵語) */
@@ -3778,7 +3778,7 @@ $messages['yue'] = array(
 	'captcha-createaccount-fail-confirm-edit' => '驗證碼錯誤或者唔見咗。',
 	'captcha-create-confirm-edit' => '要開呢一版，請答出一個簡單嘅加數和，跟住響個盒度打入 ([[Special:Captcha/help|更多資料]]):',
 	'captchahelp-title' => 'Captcha 幫助',
-	'captchahelp-cookies-needed' => '你需要開咗響瀏覽器度嘅cookies先至可以用呢樣嘢。',
+	'captchahelp-cookies-needed-confirm-edit' => '你需要開咗響瀏覽器度嘅cookies先至可以用呢樣嘢。',
 	'captchahelp-text-confirmedit' => '就好似呢個wiki咁，對公眾開放編輯嘅網站係會經常受到垃圾連結騷擾。嗰啲人利用自動化垃圾程序將佢哋嘅連結張貼到好多網站。雖然呢啲連結可以被清除，但係呢啲嘢確實令人十分之討厭。
 
 有時，特別係當響一頁添加新嘅網頁連結嗰陣，呢個網站會畀你睇一幅有顏色的或者有變形文字嘅圖像，跟住要你輸入所顯示嘅文字。因為咁係難以自動完成嘅一項任務，它將允許人保存佢哋嘅編輯，同時亦阻止大多數發送垃圾郵件者同其它機械人嘅攻擊。
@@ -3812,7 +3812,7 @@ $messages['zh-hans'] = array(
 	'captcha-sendemail-fail-confirm-edit' => '验证码错误或丢失。',
 	'captcha-disabledinapi-confirm-edit' => '这个要求需要经过验证码验证，故无法透过API使用。',
 	'captchahelp-title' => '验证码说明',
-	'captchahelp-cookies-needed' => '您需要开启浏览器上的cookies方可使用这个工具。',
+	'captchahelp-cookies-needed-confirm-edit' => '您需要开启浏览器上的cookies方可使用这个工具。',
 	'captchahelp-text-confirmedit' => '像本站一样，对公众开放编辑的网站经常被垃圾连结骚扰。那些人使用自动化垃圾程序将他们的连结张贴到很多网站。虽然这些连结可以被清除，但是这些东西确实令人十分讨厌。
 
 有时，特别是当给一个页面添加新的网页链接时，本站会让你看一幅有颜色的或者有变形文字的图像，并且要你输入所显示的文字。因为这是难以自动完成的一项任务，它将允许人保存他们的编辑，同时阻止大多数发送垃圾邮件者和其他机器人的攻击。
@@ -3847,7 +3847,7 @@ $messages['zh-hant'] = array(
 	'captcha-sendemail-fail-confirm-edit' => '驗證碼錯誤或遺失。',
 	'captcha-disabledinapi-confirm-edit' => '這個要求需要經過Captcha驗證，故無法透過API使用。',
 	'captchahelp-title' => 'Captcha 說明',
-	'captchahelp-cookies-needed' => '您需要開啟瀏覽器上的cookies方可使用這個工具。',
+	'captchahelp-cookies-needed-confirm-edit' => '您需要開啟瀏覽器上的cookies方可使用這個工具。',
 	'captchahelp-text-confirmedit' => '像本站一樣，對公眾開放編輯的網站經常被垃圾連結騷擾。那些人使用自動化垃圾程式將他們的連結張貼到很多網站。雖然這些連結可以被清除，但是這些東西確實令人十分討厭。
 
 有時，特別是當給一個頁面添加新的網頁連結時，本站會讓你看一幅有顏色的或者有變形文字的圖像，並且要你輸入所顯示的文字。因為這是難以自動完成的一項任務，它將允許人儲存他們的編輯，同時阻止大多數發送垃圾郵件者和其他機器人的攻擊。

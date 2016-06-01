@@ -733,7 +733,7 @@ class SimpleCaptcha {
 		$wgOut->setPageTitle( wfMsg( 'captchahelp-title' ) );
 		$wgOut->addWikiText( wfMsg( 'captchahelp-text-confirmedit' ) );
 		if ( CaptchaStore::get()->cookiesNeeded() ) {
-			$wgOut->addWikiText( wfMsg( 'captchahelp-cookies-needed' ) );
+			$wgOut->addWikiText( wfMsg( 'captchahelp-cookies-needed-confirm-edit' ) );
 		}
 	}
 }
