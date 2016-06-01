@@ -37,7 +37,7 @@ Click the 'back' button in your browser to return to the page editor.",
 $messages['qqq'] = array(
 	'questycaptcha-desc' => '{{desc}}',
 	'questycaptcha-addurl' => 'See also
-*{{msg-mw|captcha-addurl}}
+*{{msg-mw|captcha-addurl-confirm-edit}}
 *{{msg-mw|Fancycaptcha-addurl}}',
 	'questycaptcha-badlogin' => 'See also
 *{{msg-mw|captcha-badlogin}}

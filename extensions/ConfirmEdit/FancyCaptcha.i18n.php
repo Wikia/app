@@ -29,7 +29,7 @@ To help protect against automated spam, please enter the words that appear below
 $messages['qqq'] = array(
 	'fancycaptcha-desc' => '{{desc}}',
 	'fancycaptcha-addurl' => 'See also
-*{{msg-mw|captcha-addurl}}
+*{{msg-mw|captcha-addurl-confirm-edit}}
 *{{msg-mw|Questycaptcha-addurl}}',
 	'fancycaptcha-badlogin' => 'See also
 *{{msg-mw|captcha-badlogin}}
