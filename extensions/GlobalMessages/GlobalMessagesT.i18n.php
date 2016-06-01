@@ -30683,7 +30683,6 @@ Pozwala na wpisanie powodu w opisie zmian.',
 	'this_article' => 'Ten artykuł',
 	'this_page' => 'ta strona',
 	'top_five' => 'pierwsza piątka',
-	'tog-disablelinksuggest' => 'Nie pokazuj sugestii linków',
 	'tog-enablerichtext' => 'Włącz edytor wizualny',
 	'tog-enableuserjs' => 'Włącz osobisty kod JavaScript ([[Pomoc:Osobiste_CSS_i_JS|Dowiedz się więcej]])',
 );
