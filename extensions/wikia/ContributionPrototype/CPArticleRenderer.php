@@ -76,7 +76,7 @@ class CPArticleRenderer {
 	private function getArticleContent($title) {
 //		$internalHost = $this->urlProvider->getUrl(self::SERVICE_NAME);
 		$internalHost = $this->publicHost;
-		$path = "/wiki/{$title}";
+		$path = "wiki/{$title}";
 
 		/** @var MWHttpRequest $response */
 		$response = Http::request(

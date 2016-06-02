@@ -19,7 +19,7 @@ class CPViewAction extends FormlessAction {
 	public function show() {
 		/** @var CPArticleRenderer $renderer */
 		$renderer = $this->getRenderer();
-		$renderer->render($this->page->getTitle()->getText(), $this->getOutput());
+		$renderer->render($this->page->getTitle()->getPartialURL(), $this->getOutput());
 	}
 
 	/**
