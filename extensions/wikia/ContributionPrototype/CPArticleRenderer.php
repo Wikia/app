@@ -64,8 +64,7 @@ class CPArticleRenderer {
 				'href'=> "{$this->publicHost}/public/assets/styles/main.css",
 		]);
 
-		// this ends up using $wgOut :(
-		// TODO: try changing this to add to output directly
+		// this ends up using $wgOut, but we need it for the assets manager integration, no point in duplicating :(
 		Wikia::addAssetsToOutput('contribution_prototype_scss');
 	}
 
