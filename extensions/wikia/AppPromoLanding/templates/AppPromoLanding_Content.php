@@ -349,5 +349,6 @@ Sub-tasks:
 			<li class='done'>Make sure the title of the Wiki stays as one word</li>
 		</ul>
 	</li>
+	<li>Swap the Android & iOS images (will get new art from Peter shortly)</li>
 	<li>Translation config files & translation requests</li>
 </ul>
