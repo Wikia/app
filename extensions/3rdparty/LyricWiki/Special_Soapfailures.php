@@ -7,8 +7,7 @@
  * the LyricWiki SOAP.
  *
  * The structure of this special page was just copied from Teknomunk's
- * Batch Move special page, now it has been extracted to SearchFailuresPage which
- * is shared by SoapFailures and MobileSearches.
+ * Batch Move special page.
  *
  *DROP TABLE IF EXISTS lw_soap_failures;
  *CREATE TABLE lw_soap_failures(
@@ -27,7 +26,7 @@
  *	PRIMARY KEY (request_artist, request_song)
  *);
  *
- * TODO: Make better use of Internationalization.  There are several hardcoded strings still.
+ * TODO: Make better use of Internationalization.  There are a bunch of hardcoded strings still.
  */
 
 if(!defined('MEDIAWIKI')) die();
@@ -44,15 +43,10 @@ $wgExtensionMessagesFiles['SpecialSoapFailures'] = dirname(__FILE__).'/Special_S
 require_once($IP . '/includes/SpecialPage.php');
 $wgSpecialPages['Soapfailures'] = 'Soapfailures';
 
-class SearchFailuresPage extends SpecialPage{
+class Soapfailures extends SpecialPage{
 
-	protected $CACHE_KEY_PREFIX;
-	protected $TABLE_NAME;
-	protected $I18N_PREFIX;
-	protected $API_TYPE;
-
-	public function __construct($specialPageName){
-		parent::__construct($specialPageName);
+	public function __construct(){
+		parent::__construct('Soapfailures');
 	}
 
 	/**
@@ -64,11 +58,12 @@ class SearchFailuresPage extends SpecialPage{
 		global $wgRequest, $wgUser, $wgMemc;
 
 		$MAX_RESULTS = 100;
-		
-		$CACHE_KEY_DATA = wfMemcKey($this->CACHE_KEY_PREFIX, "data");
-		$CACHE_KEY_TIME = wfMemcKey($this->CACHE_KEY_PREFIX, "cachedOn");
-		$CACHE_KEY_STATS = wfMemcKey($this->CACHE_KEY_PREFIX, "stats");
-		$wgOut->setPageTitle(wfMsg($this->I18N_PREFIX));
+		$CACHE_KEY_PREFIX = "LW_SOAP_FAILURES";
+		$CACHE_KEY_DATA = wfMemcKey($CACHE_KEY_PREFIX, "data");
+		$CACHE_KEY_TIME = wfMemcKey($CACHE_KEY_PREFIX, "cachedOn");
+		$CACHE_KEY_STATS = wfMemcKey($CACHE_KEY_PREFIX, "stats");
+
+		$wgOut->setPageTitle(wfMsg('soapfailures'));
 
 		// This processes any requested for removal of an item from the list.
 		if(isset($_POST['artist']) && isset($_POST['song'])){
@@ -114,14 +109,13 @@ class SearchFailuresPage extends SpecialPage{
 				print '<div style="background-color:#fcc">Sorry, but ' . htmlspecialchars( $artist ) . ':' . htmlspecialchars( $song ) . " song still failed.</div>\n";
 				print_r($songResult);
 			} else {
-				$artist = str_replace("'", "\\'", $artist);
-				$song = str_replace("'", "\\'", $song);
+				$dbw = wfGetDB( DB_MASTER );
 
 				print "<html><head><title>Success</title></head><body>\n"; // TODO: i18n
 				print "Deleting record... ";
-				$dbw = wfGetDB(DB_MASTER);
+
 				$result = $dbw->delete(
-					$this->TABLE_NAME,
+					'lw_soap_failures',
 					[
 						'request_artist' => $artist,
 						'request_song' => $song,
@@ -131,29 +125,29 @@ class SearchFailuresPage extends SpecialPage{
 				if ( $result ) {
 					print "Deleted.";
 				} else {
-					print "Failed. ";
+					print "Failed. ".mysql_error();
 				}
 				print "<br/>Clearing the cache... ";
 
-				$wgMemc->delete($this->CACHE_KEY_DATA); // purge the entry from memcached
-				$wgMemc->delete($this->CACHE_KEY_TIME);
-				$wgMemc->delete($this->CACHE_KEY_STATS);
+				$wgMemc->delete($CACHE_KEY_DATA); // purge the entry from memcached
+				$wgMemc->delete($CACHE_KEY_TIME);
+				$wgMemc->delete($CACHE_KEY_STATS);
 
 				print "<div style='background-color:#cfc'>The song was retrieved successfully and ";
 				print "was removed from the failed requests list.";
 				print "</div>\n";
 			}
 			global $wgScriptPath;
-			print "<br/>Back to <a href='{$this->PAGE_URL}'>full list of search failures</a>\n"; // TODO: i18n
+			print "<br/>Back to <a href='$wgScriptPath/Special:Soapfailures'>SOAP Failures</a>\n";
 			print "</body></html>";
 			exit; // wiki system throws database-connection errors if the page is allowed to display itself.
 		} else {
 			$wgOut->addHTML("<style type='text/css'>
-				table.searchfailures{
+				table.soapfailures{
 					border-collapse:collapse;
 				}
-				.searchfailures tr.odd{background-color:#eef}
-				.searchfailures td, .searchfailures th{
+				.soapfailures tr.odd{background-color:#eef}
+				.soapfailures td, .soapfailures th{
 					border:1px solid;
 					cell-padding:0px;
 					cell-spacing:0px;
@@ -165,9 +159,9 @@ class SearchFailuresPage extends SpecialPage{
 			$msg = "";
 			if(isset($_GET['cache']) && $_GET['cache']=="clear"){
 				$msg.= "Forced clearing of the cache...\n";
-				$wgMemc->delete($this->CACHE_KEY_DATA); // purge the entry from memcached
-				$wgMemc->delete($this->CACHE_KEY_TIME);
-				$wgMemc->delete($this->CACHE_KEY_STATS);
+				$wgMemc->delete($CACHE_KEY_DATA); // purge the entry from memcached
+				$wgMemc->delete($CACHE_KEY_TIME);
+				$wgMemc->delete($CACHE_KEY_STATS);
 				unset($_GET['cache']);
 				$_SERVER['REQUEST_URI'] = str_replace("?cache=clear", "", $_SERVER['REQUEST_URI']);
 				$_SERVER['REQUEST_URI'] = str_replace("&cache=clear", "", $_SERVER['REQUEST_URI']);
@@ -177,38 +171,34 @@ class SearchFailuresPage extends SpecialPage{
 			$wgOut->addWikiText($msg);
 
 			// Form for clearing a fixed song.
-			$wgOut->addHTML(wfMsg($this->I18N_PREFIX.'-mark-as-fixed') . "
+			$wgOut->addHTML(wfMsg('soapfailures-mark-as-fixed') . "
 							<form method='post'>
-								".wfMsg($this->I18N_PREFIX.'-artist')." <input type='text' name='artist'/><br/>
-								".wfMsg($this->I18N_PREFIX.'-song')." <input type='text' name='song'/><br/>
-								<input type='submit' name='fixed' value='".wfMsg($this->I18N_PREFIX.'-fixed')."'/>
+								".wfMsg('soapfailures-artist')." <input type='text' name='artist'/><br/>
+								".wfMsg('soapfailures-song')." <input type='text' name='song'/><br/>
+								<input type='submit' name='fixed' value='".wfMsg('soapfailures-fixed')."'/>
 							</form><br/>");
 
-			$data = $wgMemc->get($this->CACHE_KEY_DATA);
-			$cachedOn = $wgMemc->get($this->CACHE_KEY_TIME);
-			$statsHtml = $wgMemc->get($this->CACHE_KEY_STATS);
+			$data = $wgMemc->get($CACHE_KEY_DATA);
+			$cachedOn = $wgMemc->get($CACHE_KEY_TIME);
+			$statsHtml = $wgMemc->get($CACHE_KEY_STATS);
 			if(!$data){
-				$data = array();
-				$dbr = wfGetDB( DB_SLAVE );
-				try{
-					$res = $dbr->select(
-						$this->TABLE_NAME,
-						[ "request_artist", "request_song", "numRequests", "lookedFor" ],
-						"",
-						__METHOD__,
-						[ 'ORDER BY' => 'numRequests DESC', 'LIMIT' => $MAX_RESULTS ]
-					);
-					while ($resRow = $dbr->fetchObject($res)) {
-						$row = array();
-						$row['artist'] = $resRow->request_artist;
-						$row['song'] = $resRow->request_song;
-						$row['numRequests'] = $resRow->numRequests;
-						$row['lookedFor'] = $resRow->lookedFor;
-						$row['lookedFor'] = $this->formatLookedFor($row['lookedFor']);
-						$data[] = $row;
+				$db = &wfGetDB(DB_SLAVE)->getProperty('mConn');
+				$queryString = "SELECT * FROM lw_soap_failures ORDER BY numRequests DESC LIMIT $MAX_RESULTS";
+				if($result = mysql_query($queryString,$db)){
+					$data = array();
+					if(($numRows = mysql_num_rows($result)) && ($numRows > 0)){
+						for($cnt=0; $cnt<$numRows; $cnt++){
+							$row = array();
+							$row['artist'] = mysql_result($result, $cnt, "request_artist");
+							$row['song'] = mysql_result($result, $cnt, "request_song");
+							$row['numRequests'] = mysql_result($result, $cnt, "numRequests");
+							$row['lookedFor'] = mysql_result($result, $cnt, "lookedFor");
+							$row['lookedFor'] = formatLookedFor($row['lookedFor']);
+							$data[] = $row;
+						}
 					}
-				} catch(MWException $ex){
-					$wgOut->addHTML("<br/><br/><strong>Error getting requests in Soapfailures. Error message: </strong>".$ex->getHtml());
+				} else {
+					$wgOut->addHTML("<br/><br/><strong>Error: with query</strong><br/><em>$queryString</em><br/><strong>Error message: </strong>".mysql_error($db));
 				}
 
 				$cachedOn = date('m/d/Y \a\t g:ia');
@@ -220,31 +210,31 @@ class SearchFailuresPage extends SpecialPage{
 				ob_start();
 				include_once __DIR__ . "/soap_stats.php"; // for tracking success/failure
 				print "<br/><br/><br/>";
-				print "<em>".wfMsg($this->I18N_PREFIX.'-stats-header')."</em><br/>\n";
+				print "<em>".wfMsg('soapfailures-stats-header')."</em><br/>\n";
 				print "<table border='1px' cellpadding='5px'>\n";
-				print "\t<tr><th>".wfMsg($this->I18N_PREFIX.'-stats-timeperiod')."</th><th>".wfMsg($this->I18N_PREFIX.'-stats-numfound')."</th><th>".wfMsg($this->I18N_PREFIX.'-stats-numnotfound')."</th><th>&nbsp;</th></tr>\n";
+				print "\t<tr><th>".wfMsg('soapfailures-stats-timeperiod')."</th><th>".wfMsg('soapfailures-stats-numfound')."</th><th>".wfMsg('soapfailures-stats-numnotfound')."</th><th>&nbsp;</th></tr>\n";
 
-				$stats = lw_soapStats_getStats(LW_TERM_DAILY, "", $this->API_TYPE);
-				print "\t<tr><td>".wfMsg($this->I18N_PREFIX.'-stats-period-today')."</td><td>{$stats[LW_API_FOUND]}</td><td>{$stats[LW_API_NOT_FOUND]}</td><td>{$stats[LW_API_PERCENT_FOUND]}%</td></tr>\n";
+				$stats = lw_soapStats_getStats(LW_TERM_DAILY, "", LW_API_TYPE_WEB);
+				print "\t<tr><td>".wfMsg('soapfailures-stats-period-today')."</td><td>{$stats[LW_API_FOUND]}</td><td>{$stats[LW_API_NOT_FOUND]}</td><td>{$stats[LW_API_PERCENT_FOUND]}%</td></tr>\n";
 
-				$stats = lw_soapStats_getStats(LW_TERM_WEEKLY, "", $this->API_TYPE);
-				print "\t<tr><td>".wfMsg($this->I18N_PREFIX.'-stats-period-thisweek')."</td><td>{$stats[LW_API_FOUND]}</td><td>{$stats[LW_API_NOT_FOUND]}</td><td>{$stats[LW_API_PERCENT_FOUND]}%</td></tr>\n";
+				$stats = lw_soapStats_getStats(LW_TERM_WEEKLY, "", LW_API_TYPE_WEB);
+				print "\t<tr><td>".wfMsg('soapfailures-stats-period-thisweek')."</td><td>{$stats[LW_API_FOUND]}</td><td>{$stats[LW_API_NOT_FOUND]}</td><td>{$stats[LW_API_PERCENT_FOUND]}%</td></tr>\n";
 
-				$stats = lw_soapStats_getStats(LW_TERM_MONTHLY, "", $this->API_TYPE);
-				print "\t<tr><td>".wfMsg($this->I18N_PREFIX.'-stats-period-thismonth')."</td><td>{$stats[LW_API_FOUND]}</td><td>{$stats[LW_API_NOT_FOUND]}</td><td>{$stats[LW_API_PERCENT_FOUND]}%</td></tr>\n";
+				$stats = lw_soapStats_getStats(LW_TERM_MONTHLY, "", LW_API_TYPE_WEB);
+				print "\t<tr><td>".wfMsg('soapfailures-stats-period-thismonth')."</td><td>{$stats[LW_API_FOUND]}</td><td>{$stats[LW_API_NOT_FOUND]}</td><td>{$stats[LW_API_PERCENT_FOUND]}%</td></tr>\n";
 				print "</table>\n";
 				$statsHtml = ob_get_clean();
 			}
 
 			if($data){
-				$wgOut->addWikiText(wfMsg($this->I18N_PREFIX.'-intro'));
+				$wgOut->addWikiText(wfMsg('soapfailures-intro'));
 
 				$wgOut->addHTML("This page is cached every 2 hours - \n"); // TODO: i18n
 				$wgOut->addHTML("last cached: <strong>$cachedOn</strong>\n"); // TODO: i18n
 				$totFailures = 0;
 				if(!empty($data)){
-					$wgOut->addHTML("<table class='searchfailures'>\n");
-					$wgOut->addHTML("<tr><th nowrap='nowrap'>".wfMsg($this->I18N_PREFIX.'-header-requests')."</th><th>".wfMsg($this->I18N_PREFIX.'-header-artist')."</th><th>".wfMsg($this->I18N_PREFIX.'-header-song')."</th><th>".wfMsg($this->I18N_PREFIX.'-header-looked-for')."</th><th>".wfMsg($this->I18N_PREFIX.'-header-fixed')."</th></tr>\n");
+					$wgOut->addHTML("<table class='soapfailures'>\n");
+					$wgOut->addHTML("<tr><th nowrap='nowrap'>".wfMsg('soapfailures-header-requests')."</th><th>".wfMsg('soapfailures-header-artist')."</th><th>".wfMsg('soapfailures-header-song')."</th><th>".wfMsg('soapfailures-header-looked-for')."</th><th>".wfMsg('soapfailures-header-fixed')."</th></tr>\n");
 					$REQUEST_URI = $_SERVER['REQUEST_URI'];
 					$rowIndex=0;
 					foreach($data as $row){
@@ -275,7 +265,7 @@ class SearchFailuresPage extends SpecialPage{
 						$wgOut->addHTML("<form action='' method='POST' target='_blank'>
 								<input type='hidden' name='artist' value=\"" . Sanitizer::encodeAttribute( $artist ) . "\"/>
 								<input type='hidden' name='song' value=\"" . Sanitizer::encodeAttribute( $song ) . "\"/>
-								<input type='submit' name='fixed' value=\"" . wfMessage( $this->I18N_PREFIX.'-fixed' )->escaped() . "\"/>
+								<input type='submit' name='fixed' value=\"" . wfMessage( 'soapfailures-fixed' )->escaped() . "\"/>
 							</form>\n");
 						$wgOut->addHTML("</td>");
 						$wgOut->addHTML("</tr>\n");
@@ -301,35 +291,20 @@ class SearchFailuresPage extends SpecialPage{
 			$wgOut->addHTML($statsHtml);
 		}
 	} // end execute()
-
-	/**
-	 * Given the string of lookedFor titles, formats them into wikitext with one title (as a link) per line.
-	 */
-	function formatLookedFor($lookedFor){
-		$titles = array_unique(explode("\n", $lookedFor));
-		$lookedFor = "";
-		foreach($titles as $pageTitle){
-			if(trim($pageTitle) != ""){
-				$pageTitle = str_replace("_", " ", $pageTitle);
-				$lookedFor .= "[[$pageTitle]]<br/>";
-			}
-		}
-		return $lookedFor;
-	} // end formatLookedFor()
-} // end class SearchFailuresPage
-
-
-
-class Soapfailures extends SearchFailuresPage{
-
-	public function __construct(){
-		parent::__construct('Soapfailures');
-
-		global $wgScriptPath;
-		$this->PAGE_URL = "$wgScriptPath/Special:Soapfailures";
-		$this->CACHE_KEY_PREFIX = "LW_SOAP_FAILURES";
-		$this->TABLE_NAME = "lw_soap_failures";
-		$this->I18N_PREFIX = "soapfailures";
-		$this->API_TYPE = LW_API_TYPE_WEB;
-	}
 }
+
+/**
+ * Given the string of lookedFor titles, formats them into wikitext with one title (as a link) per line.
+ */
+function formatLookedFor($lookedFor){
+	$titles = array_unique(explode("\n", $lookedFor));
+	$lookedFor = "";
+	foreach($titles as $pageTitle){
+		if(trim($pageTitle) != ""){
+			$pageTitle = str_replace("_", " ", $pageTitle);
+			$lookedFor .= "[[$pageTitle]]<br/>";
+		}
+	}
+	return $lookedFor;
+} // end formatLookedFor()
+

@@ -144,6 +144,8 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	public function getAllMembersData() {
 		$currentUser = $this->getUser();
 		$allMembers = $this->usersModel->getAllContributors( $currentUser->getId() );
+		$allMembers = $this->addTimeAgoDataDetail( $allMembers );
+
 		$moreMembers = SpecialPage::getTitleFor( 'ListUsers' );
 		$membersCount = $this->usersModel->getMemberCount();
 
@@ -223,6 +225,14 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 				'isAdmin' => $contributor['isAdmin'],
 			];
 		} , $contributors );
+	}
+
+	private function addTimeAgoDataDetail( $members ) {
+		foreach ( $members as $key => $member ) {
+			$members[$key]['timeAgo'] = wfTimeFormatAgo( $member['latestRevision'] );
+		}
+
+		return $members;
 	}
 
 	private function getHeroImageUrl() {

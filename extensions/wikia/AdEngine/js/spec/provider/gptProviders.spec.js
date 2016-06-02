@@ -42,7 +42,12 @@ describe('ext.wikia.adEngine.provider.*', function () {
 		lazyQueue: {},
 		window: {},
 		beforeSuccess: noop,
-		beforeHop: noop
+		beforeHop: noop,
+		btfBlocker: {
+			decorate: function(atfSlots, fillInSlot) {
+				return fillInSlot;
+			}
+		}
 	};
 
 	function createSlot(slotName) {
@@ -57,6 +62,7 @@ describe('ext.wikia.adEngine.provider.*', function () {
 		return modules['ext.wikia.adEngine.provider.factory.wikiaGpt'](
 			mocks.adContext,
 			mocks.adLogicPageParams,
+			mocks.btfBlocker,
 			mocks.gptHelper,
 			mocks.log,
 			mocks.lookups
@@ -66,16 +72,8 @@ describe('ext.wikia.adEngine.provider.*', function () {
 	function getProvider(providerName) {
 		switch (providerName) {
 			case 'directGpt':
-				return modules['ext.wikia.adEngine.provider.directGpt'](
-					mocks.adContext,
-					getFactory(),
-					mocks.slotTweaker,
-					mocks.lazyQueue,
-					mocks.log,
-					mocks.window
-				);
 			case 'remnantGpt':
-				return modules['ext.wikia.adEngine.provider.remnantGpt'](
+				return modules['ext.wikia.adEngine.provider.' + providerName](
 					getFactory(),
 					mocks.slotTweaker
 				);
