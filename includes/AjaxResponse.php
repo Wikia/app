@@ -134,6 +134,8 @@ class AjaxResponse {
 		if ( $this->mVary ) {
 			header ( "Vary: " . $this->mVary );
 		}
+
+		wfRunHooks( 'AjaxResponseSendHeadersAfter' ); # Wikia change
 	}
 
 	/**

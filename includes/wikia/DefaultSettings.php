@@ -97,6 +97,7 @@ $wgAutoloadClasses['WikiaAccessRules'] = $IP . '/includes/wikia/nirvana/WikiaAcc
 $wgAutoloadClasses['WikiaBaseTest'] = $IP . '/includes/wikia/tests/core/WikiaBaseTest.class.php';
 $wgAutoloadClasses['WikiaTestSpeedAnnotator'] = $IP . '/includes/wikia/tests/core/WikiaTestSpeedAnnotator.class.php';
 $wgAutoloadClasses['WikiaMockProxy'] = $IP . '/includes/wikia/tests/core/WikiaMockProxy.class.php';
+$wgAutoloadClasses['WikiaMockProxyUopz'] = $IP . '/includes/wikia/tests/core/WikiaMockProxyUopz.class.php';
 $wgAutoloadClasses['WikiaMockProxyAction'] = $IP . '/includes/wikia/tests/core/WikiaMockProxyAction.class.php';
 $wgAutoloadClasses['WikiaMockProxyInvocation'] = $IP . '/includes/wikia/tests/core/WikiaMockProxyInvocation.class.php';
 $wgAutoloadClasses['WikiaGlobalVariableMock'] = $IP . '/includes/wikia/tests/core/WikiaGlobalVariableMock.class.php';
@@ -1850,6 +1851,13 @@ $wgEnableFliteTagExt = false;
 $wgAdDriverAdsRecoveryMessageCountries = null;
 
 /**
+ * @name $wgARecoveryEngineCustomLog
+ * Enables Kibana logging of ad recovery interruptions
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgARecoveryEngineCustomLog = null;
+
+/**
  * Protect Piggyback logs even if the extension is disabled
  */
 $wgLogRestrictions['piggyback'] = 'piggyback';
@@ -1887,6 +1895,7 @@ $wgReviveSpotlightsCountries = null;
 
 /**
  * Enable SourcePoint recovery
+ * It should be always included even if recovery is disabled as we use Recovery classes outside the module
  */
 include_once("$IP/extensions/wikia/ARecoveryEngine/ARecoveryEngine.setup.php");
 

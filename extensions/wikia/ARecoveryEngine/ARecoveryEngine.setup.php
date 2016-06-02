@@ -13,3 +13,4 @@ $wgAutoloadClasses['ARecoveryUnlockCSS'] = __DIR__ . '/ARecoveryUnlockCSS.class.
 
 $wgHooks['WikiaSkinTopScripts'][] = 'ARecoveryEngineHooks::onWikiaSkinTopScripts';
 $wgHooks['BeforePageDisplay'][] = 'ARecoveryEngineHooks::onBeforePageDisplay';
+$wgHooks['InstantGlobalsGetVariables'][] = 'ARecoveryEngineHooks::onInstantGlobalsGetVariables';

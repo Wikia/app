@@ -126,26 +126,37 @@ class WikiaLogger implements LoggerInterface {
 	}
 
 	public function warning($message, Array $context=[]) {
+		$this->addStacktraceIfMissing($context);
 		return $this->getLogger()->warning($message, $context);
 	}
 
 	public function error($message, Array $context=[]) {
+		$this->addStacktraceIfMissing($context);
 		return $this->getLogger()->error($message, $context);
 	}
 
 	public function critical($message, Array $context=[]) {
+		$this->addStacktraceIfMissing($context);
 		return $this->getLogger()->critical($message, $context);
 	}
 
 	public function alert($message, Array $context=[]) {
+		$this->addStacktraceIfMissing($context);
 		return $this->getLogger()->alert($message, $context);
 	}
 
 	public function emergency($message, Array $context=[]) {
+		$this->addStacktraceIfMissing($context);
 		return $this->getLogger()->emergency($message, $context);
 	}
 
 	public function log($level, $message, Array $context=[]) {} // NOOP
+
+	private function addStacktraceIfMissing( array &$context ) {
+		if ( !array_key_exists( 'exception', $context ) ) {
+			$context['exception'] = new \Exception();
+		}
+	}
 
 	public function setLogger(Logger $logger) {
 		$this->logger = $logger;

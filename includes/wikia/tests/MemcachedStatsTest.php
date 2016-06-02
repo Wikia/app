@@ -2,6 +2,9 @@
 
 use Wikia\Memcached\MemcachedStats;
 
+/**
+ * @group MemcachedStats
+ */
 class MemcachedStatsTest extends WikiaBaseTest {
 
 	const WIKI_PREFIX = 'wiki123';

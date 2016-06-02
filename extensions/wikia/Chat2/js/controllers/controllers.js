@@ -41,28 +41,26 @@ var NodeChatSocketWrapper = $.createClass(Observable, {
 		}
 		this.authRequestWithMW(function (data) {
 			var socket = io.connect(url, {
-				'force new connection': true,
-				'try multiple transports': true,
-				'connect timeout': false,
-				'query': data,
-				'max reconnection attempts': 8,
-				'reconnect': true
-			});
+					'force new connection': true,
+					'try multiple transports': true,
+					'connect timeout': false,
+					'query': data,
+					'max reconnection attempts': 8,
+					'reconnect': true
+				}),
+				connectionFail = this.proxy(function (delay, count) {
+					if (count === 8) {
+						if (socket) {
+							socket.disconnect();
+						}
+						this.fire("reConnectFail", {});
+					}
+				}, this);
 
 			socket.on('message', this.proxy(this.onMsgReceived, this));
 			socket.on('connect', this.proxy(function () {
 				this.onConnect(socket, ['xhr-polling']);
 			}, this));
-
-			var connectionFail = this.proxy(function (delay, count) {
-				if (count == 8) {
-					if (socket) {
-						socket.disconnect();
-					}
-					this.fire("reConnectFail", {});
-				}
-			}, this);
-
 			socket.on('reconnecting', connectionFail);
 		});
 	},
@@ -81,12 +79,7 @@ var NodeChatSocketWrapper = $.createClass(Observable, {
 	},
 
 	authRequestWithMW: function (callback) {
-		//hacky fix of fb#19714
-		//it seems socket.io decodes it -- that's why I double encoded it
-		//but maybe we should implement here authorization via user id instead of username?
-		var encodedWgUserName = encodeURIComponent(encodeURIComponent(wgUserName));
-
-		this.proxy(callback, this)('name=' + encodedWgUserName + '&key=' + wgChatKey + '&roomId=' + this.roomId
+		this.proxy(callback, this)('name=' + encodeURIComponent(wgUserName) + '&key=' + wgChatKey + '&roomId=' + this.roomId
 			+ '&serverId=' + this.wikiId + '&wikiId=' + this.wikiId);
 	},
 
@@ -457,7 +450,9 @@ var NodeRoomController = $.createClass(Observable, {
 	},
 
 	onPartBase: function (partedUser, skipAlert) {
-		if (typeof partedUser !== 'string') partedUser = partedUser.get('name');
+		if (typeof partedUser !== 'string') {
+			partedUser = partedUser.get('name');
+		}
 
 		var connectedUser = this.model.users.findByName(partedUser);
 
