@@ -16,7 +16,7 @@ class CPArticleRenderer {
 	const SERVICE_NAME = "structdata";
 
 	/** @var string */
-	private $host;
+	private $publicHost;
 	
 	/** @var int */
 	private $wikiId;
@@ -29,13 +29,13 @@ class CPArticleRenderer {
 
 	/**
 	 * CPArticleRenderer constructor.
-	 * @param string $host
+	 * @param string $publicHost
 	 * @param int $wikiId
 	 * @param string $dbName
 	 * @param UrlProvider $urlProvider
 	 */
-	public function __construct($host, $wikiId, $dbName, $urlProvider) {
-		$this->host = $host;
+	public function __construct($publicHost, $wikiId, $dbName, $urlProvider) {
+		$this->publicHost = $publicHost;
 		$this->wikiId = $wikiId;
 		$this->dbName = $dbName;
 		$this->urlProvider = $urlProvider;
@@ -61,7 +61,7 @@ class CPArticleRenderer {
 	private function addStyles(OutputPage $output) {
 		$output->addLink([
 				'rel' => 'stylesheet',
-				'href'=> "{$this->host}/public/assets/styles/main.css",
+				'href'=> "{$this->publicHost}/public/assets/styles/main.css",
 		]);
 
 		// this ends up using $wgOut :(
@@ -70,31 +70,30 @@ class CPArticleRenderer {
 	}
 
 	private function addScripts(OutputPage $output) {
-		$output->addScript("<script src=\"{$this->host}/public/assets/app.js\"></script>");
+		$output->addScript("<script src=\"{$this->publicHost}/public/assets/app.js\"></script>");
 	}
 
 	private function getArticleContent($title) {
-		return file_get_contents("{$this->host}/wiki/{$title}");
-
 //		$internalHost = $this->urlProvider->getUrl(self::SERVICE_NAME);
-//		$path = "/wiki/{$title}";
-//
-//		/** @var MWHttpRequest $response */
-//		$response = Http::request(
-//				'GET',
-//				"{$internalHost}/{$path}",
-//				[
-//					'noProxy' => true,
-//					'returnInstance' => true,
-//					'followRedirects'=> true,
-//				]
-//		);
-//
-//		if ($response->getStatus() >= 500) {
-//			// Http::request logs when http status > 399
-//			return false;
-//		}
-//
-//		return $response->getContent();
+		$internalHost = $this->publicHost;
+		$path = "/wiki/{$title}";
+
+		/** @var MWHttpRequest $response */
+		$response = Http::request(
+				'GET',
+				"{$internalHost}/{$path}",
+				[
+					'noProxy' => true,
+					'returnInstance' => true,
+					'followRedirects'=> true,
+				]
+		);
+
+		if ($response->getStatus() >= 500) {
+			// Http::request logs when http status > 399
+			return false;
+		}
+
+		return $response->getContent();
 	}
 }
