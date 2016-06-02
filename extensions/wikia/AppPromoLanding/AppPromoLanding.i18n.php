@@ -9,7 +9,7 @@ $messages = array();
 
 $messages['en'] = array(
 	'apppromolanding-desc' => 'App Promo Landing Screen',
-	'apppromolanding-back' => '&larr; To the wiki',
+	'apppromolanding-back' => 'To the wiki',
 	'apppromolanding-pitch' => "The superfan's guide. Accurate, in-depth, created by fans.",
 	'apppromolanding-custompitch' => "The destination with everything and everyone you need to know about $1",
 	'apppromolanding-call-to-action' => "Get the free app now!",

@@ -109,12 +109,12 @@ body.appPromo, body.appPromo::before, body.appPromo::after{
 	color:#<?= $config->action_bar_color; ?>;
 	font-size:18px;
 }
-.androidPhone{
+.iosPhone{
 	position:absolute;
 	top: <?= $thumbHeight * 0.55 ?>px;
 	left: <?= ($thumbWidth * 3.25) + ($imgSpacing * 3); ?>px;
 }
-.iosPhone{
+.androidPhone{
 	position:absolute;
 	top: <?= $thumbHeight * 0.33 ?>px;
 	left: <?= ($thumbWidth * 4) + ($imgSpacing * 4); ?>px;
@@ -135,16 +135,16 @@ body.appPromo, body.appPromo::before, body.appPromo::after{
 	left:0px;
 }
 .androidPhone .screenshot{
-	top:52px;
-	left:14px;
-	width:266px;
-	height:473px;
+	left:15px;
+	top:58px;
+	width:300px;
+	height:533px;
 }
 .iosPhone .screenshot{
-	top:77px;
-	left:28px;
-	width:269px;
-	height:480px;
+	left:24px;
+	top:69px;
+	width:241px;
+	height:430px;
 }
 #branchIoForm{
 	display:inline-block;
@@ -177,6 +177,13 @@ body.appPromo, body.appPromo::before, body.appPromo::after{
 	z-index:3;
 	color:#<?= $config->action_bar_color; ?>;
 	font-size:1.5em;
+}
+.backLink svg{
+	vertical-align:middle;
+	margin-right:10px;
+}
+svg path{
+	fill: currentColor;
 }
 </style>
 <?= $debug ?>
@@ -229,19 +236,19 @@ body.appPromo, body.appPromo::before, body.appPromo::after{
 					</div>
 				</div>
 			</div>
-			<div class='phoneWrapper androidPhone'>
-				<div class='phoneFrame'>
-					<img src='<?= $androidPhoneSrc ?>'/>
-					<div class='screenshot'>
-						<img src='<?= $androidScreenShot ?>' width='266' height='473'/>
-					</div>
-				</div>
-			</div>
 			<div class='phoneWrapper iosPhone'>
 				<div class='phoneFrame'>
 					<img src='<?= $iosPhoneSrc ?>'/>
 					<div class='screenshot'>
-						<img src='<?= $iosScreenShot ?>' width='269' height='480'/>
+						<img src='<?= $iosScreenShot ?>' width='241' height='430'/>
+					</div>
+				</div>
+			</div>
+			<div class='phoneWrapper androidPhone'>
+				<div class='phoneFrame'>
+					<img src='<?= $androidPhoneSrc ?>'/>
+					<div class='screenshot'>
+						<img src='<?= $androidScreenShot ?>' width='300' height='533'/>
 					</div>
 				</div>
 			</div>
@@ -249,7 +256,7 @@ body.appPromo, body.appPromo::before, body.appPromo::after{
 	</div>
 	<div class='belowThumbs'>
 		<a class='backLink' href='<?= $mainPageUrl ?>'>
-			<?= wfMsg( 'apppromolanding-back' ) ?>
+			<?= $larrSvgCode ?><?= wfMsg( 'apppromolanding-back' ) ?>
 		</a>
 	</div>
 </div>
@@ -349,6 +356,7 @@ Sub-tasks:
 			<li class='done'>Make sure the title of the Wiki stays as one word</li>
 		</ul>
 	</li>
-	<li>Swap the Android & iOS images (will get new art from Peter shortly)</li>
+	<li class='done'>Swap the Android & iOS images (will get new art from Peter shortly)</li>
+	<li class='done'>Change the font &larr; to be the SVG from zeplin</li>
 	<li>Translation config files & translation requests</li>
 </ul>

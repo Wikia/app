@@ -155,14 +155,28 @@ class AppPromoLandingController extends WikiaController {
 		$this->numThumbsPerRow = self::THUMBS_PER_ROW;
 		$this->trendingArticles = $trendingArticles;
 		$this->mainPageUrl = Title::newMainPage()->getFullUrl();
-		$this->androidPhoneSrc = F::app()->wg->ExtensionsPath."/wikia/AppPromoLanding/images/nexus6.png";
-		//$this->androidScreenShot = "http://s3.amazonaws.com/wikia-mobile/android-screenshots/{$this->config->app_tag}/1.png"; // using our own domain is faster & cheaper than s3.
+		//$this->larrSrc = F::app()->wg->ExtensionsPath."/wikia/AppPromoLanding/images/arrow-left-long.svg";
+		$this->larrSvgCode = "<svg width=\"22px\" height=\"16px\" viewBox=\"0 0 22 16\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">
+								<title>BB56E3FE-7480-48C0-96B3-848DAFB20649</title>
+								<desc>Created with sketchtool.</desc>
+								<defs></defs>
+								<g id=\"Landing-Page\" stroke=\"none\" stroke-width=\"1\" fill=\"none\" fill-rule=\"evenodd\">
+									<g id=\"1064\" transform=\"translate(-267.000000, -622.000000)\">
+										<g id=\"back-nav\" transform=\"translate(267.000000, 622.000000)\">
+											<path d=\"M21.99875,8.00025 C21.99875,7.44825 21.55175,7.00025 20.99875,7.00025 L3.41275,7.00025 L8.70575,1.70725 C9.09675,1.31625 9.09675,0.68425 8.70575,0.29325 C8.31475,-0.09775 7.68275,-0.09775 7.29175,0.29325 L0.29275,7.29225 C0.19975,7.38525 0.12675,7.49525 0.07575,7.61825 C-0.02525,7.86225 -0.02525,8.13825 0.07575,8.38225 C0.12675,8.50525 0.19975,8.61525 0.29275,8.70825 L7.29175,15.70725 C7.48675,15.90225 7.74275,16.00025 7.99875,16.00025 C8.25475,16.00025 8.51075,15.90225 8.70575,15.70725 C9.09675,15.31625 9.09675,14.68425 8.70575,14.29325 L3.41275,9.00025 L20.99875,9.00025 C21.55175,9.00025 21.99875,8.55225 21.99875,8.00025\" id=\"arrow-left-long\"></path>
+										</g>
+									</g>
+								</g>
+							</svg>";
+
+		$this->androidPhoneSrc = F::app()->wg->ExtensionsPath."/wikia/AppPromoLanding/images/nexus6_large.png";
 		$this->androidScreenShot = "http://wikia-mobile.nocookie.net/wikia-mobile/android-screenshots/{$this->config->app_tag}/1.png";
-		$this->iosPhoneSrc = F::app()->wg->ExtensionsPath."/wikia/AppPromoLanding/images/silverIphone.png";
-		//$this->iosScreenShot = "http://s3.amazonaws.com/wikia-mobile/ios-screenshots/{$this->config->app_tag}/en/4.7/4.png.PNGCRUSH.png"; // using our own domain is faster & cheaper than s3.
-		$this->iosScreenShot = "http://wikia-mobile.nocookie.net/wikia-mobile/ios-screenshots/{$this->config->app_tag}/en/4.7/4.png.PNGCRUSH.png";
 		$this->androidStoreSrc = F::app()->wg->ExtensionsPath."/wikia/AppPromoLanding/images/playStoreButton.png";
+		
+		$this->iosPhoneSrc = F::app()->wg->ExtensionsPath."/wikia/AppPromoLanding/images/silverIphone.png";
+		$this->iosScreenShot = "http://wikia-mobile.nocookie.net/wikia-mobile/ios-screenshots/{$this->config->app_tag}/en/4.7/4.png.PNGCRUSH.png";
 		$this->iosStoreSrc = F::app()->wg->ExtensionsPath."/wikia/AppPromoLanding/images/appleAppStoreButton.png";
+
 		$this->imgSpacing = 1; // spacing between the image-grid cells.
 
 		wfProfileOut( __METHOD__ );
