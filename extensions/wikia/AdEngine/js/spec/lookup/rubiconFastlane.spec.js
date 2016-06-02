@@ -221,7 +221,7 @@ describe('ext.wikia.adEngine.lookup.rubiconFastlane', function () {
 
 		expect(rubiconFastlane.getSlotParams('MOBILE_TOP_LEADERBOARD')).toEqual({
 			'bid': 'Rxx',
-			'rpfl_7450': ['15_tier0000', '43_tier0000', '44_tier0000']
+			'rpfl_7450': ['15_tier0000', '43_tier0000', '44_tier0000', '67_tierNONE']
 		});
 	});
 
