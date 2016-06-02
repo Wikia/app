@@ -4,7 +4,7 @@ $messages = array();
 
 $messages['en'] = array(
 	'listusers-desc' => 'Special list users',
-	'listusers-local' => 'Local list users',
+	'listusers' => 'Local list users',
 	'listuserstitle'  => 'Local list users',
 	'listusersfound' => 'Found <strong>$1</strong> users',
 	'listusersrecordspager' => 'Showing <strong>$1</strong> to <strong>$2</strong> of <strong>$3</strong> records',
@@ -36,7 +36,7 @@ $messages['en'] = array(
 	'listusers-options' => 'Options',
 	'listusers-results' => 'Results',
 	'listusers-username' => 'User name',
-	'listusers-blocked-special-listusers' => 'Blocked',
+	'listusers-blocked' => 'Blocked',
 	'listusers-nonegroup' => 'none',
 	'listusers-select-all' => 'Select all',
 	'listusers-deselect-all' => 'Deselect all',
@@ -49,7 +49,7 @@ $messages['qqq'] = array(
 );
 
 $messages['de'] = array(
-	'listusers-local' => 'Benutzerverzeichnis',
+	'listusers' => 'Benutzerverzeichnis',
 	'listuserstitle' => 'Lokale Benutzerliste',
 	'listusersfound' => '<strong>$1</strong> Benutzer gefunden',
 	'listuserscount' => '<strong>$1</strong> Benutzer',
@@ -80,12 +80,12 @@ $messages['de'] = array(
 	'listusers-options' => 'Optionen',
 	'listusers-results' => 'Ergebnisse',
 	'listusers-username' => 'Benutzername',
-	'listusers-blocked-special-listusers' => 'Gesperrt',
+	'listusers-blocked' => 'Gesperrt',
 );
 
 
 $messages['es'] = array(
-	'listusers-local' => 'Lista de usuarios',
+	'listusers' => 'Lista de usuarios',
 	'listuserstitle' => 'Lista de usuarios',
 	'listusersfound' => '<strong>$1</strong> usuarios encontrados',
 	'listuserscount' => '<strong>$1</strong> usuarios',
@@ -116,13 +116,13 @@ $messages['es'] = array(
 	'listusers-options' => 'Opciones',
 	'listusers-results' => 'Resultados',
 	'listusers-username' => 'Nombre de usuario',
-	'listusers-blocked-special-listusers' => 'Bloqueado',
+	'listusers-blocked' => 'Bloqueado',
 	'listusers-nonegroup' => 'ninguno',
 );
 
 
 $messages['fa'] = array(
-	'listusers-local' => 'فهرست محلی کاربران',
+	'listusers' => 'فهرست محلی کاربران',
 	'listuserstitle' => 'فهرست محلی کاربران',
 	'listusersfound' => '<strong>$1</strong> کاربر یافته‌شد',
 	'listuserscount' => '<strong>$1</strong> کاربر',
@@ -154,7 +154,7 @@ $messages['fa'] = array(
 
 
 $messages['fr'] = array(
-	'listusers-local' => 'Liste locale des inscrits',
+	'listusers' => 'Liste locale des inscrits',
 	'listuserstitle' => 'Liste locale des utilisateurs',
 	'listusersfound' => '<strong>$1</strong> utilisateurs trouvés',
 	'listuserscount' => '<strong>$1</strong> utilisateurs',
@@ -182,12 +182,12 @@ $messages['fr'] = array(
 	'listusers-options' => 'Options',
 	'listusers-results' => 'Résultats',
 	'listusers-username' => 'Nom d\'utilisateur',
-	'listusers-blocked-special-listusers' => 'Verrouillé',
+	'listusers-blocked' => 'Verrouillé',
 );
 
 
 $messages['ja'] = array(
-	'listusers-local' => 'ローカルの登録利用者',
+	'listusers' => 'ローカルの登録利用者',
 	'listuserstitle' => 'ローカルの登録利用者',
 	'listusersfound' => '<strong>$1</strong> の利用者が見つかりました',
 	'listuserscount' => '<strong>$1</strong> の利用者',
@@ -216,11 +216,11 @@ $messages['ja'] = array(
 	'listusers-options' => 'オプション',
 	'listusers-results' => '結果',
 	'listusers-username' => '利用者名',
-	'listusers-blocked-special-listusers' => 'ブロック中',
+	'listusers-blocked' => 'ブロック中',
 	'listusers-nonegroup' => 'なし',
 );
 
 $messages['pt'] = array(
-	'listusers-local' => 'Lista de usuários locais',
+	'listusers' => 'Lista de usuários locais',
 	'listuserstitle'  => 'Lista de usuários locais',
 );
