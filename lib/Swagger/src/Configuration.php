@@ -96,7 +96,7 @@ class Configuration
      *
      * @var string
      */
-    protected $host = 'https://localhost/user-preference';
+    protected $host = 'https://localhost/';
 
     /**
      * Timeout (second) of the HTTP request, by default set to 0, no timeout
@@ -516,7 +516,7 @@ class Configuration
         $report  = "PHP SDK (Swagger\Client) Debug Report:\n";
         $report .= "    OS: ".php_uname()."\n";
         $report .= "    PHP Version: ".phpversion()."\n";
-        $report .= "    OpenAPI Spec Version: 0.2.0-SNAPSHOT\n";
+        $report .= "    OpenAPI Spec Version: 0.1.9-SNAPSHOT\n";
         $report .= "    SDK Package Version: 1.0.0\n";
         $report .= "    Temp Folder Path: ".self::getDefaultConfiguration()->getTempFolderPath()."\n";
 
