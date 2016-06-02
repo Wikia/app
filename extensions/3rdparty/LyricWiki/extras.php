@@ -75,3 +75,21 @@ function sandboxParse($wikiText)
 	// give the result
 	return $result;
 }
+
+////
+// Sends a read-only mySQL query and assumes that there will be one result.
+// Returns that result if available, empty string otherwise.
+////
+function lw_simpleQuery($queryString){
+	$retVal = "";
+	$db = wfGetDB(DB_SLAVE)->getProperty('mConn');
+
+	// TODO: use Database class instead
+	if($result = mysql_query($queryString,$db)){
+		if(($numRows = mysql_num_rows($result)) && ($numRows > 0)){
+			$row = mysql_fetch_row($result);
+			$retVal = $row[0];
+		}
+	}
+	return $retVal;
+} // end lw_simpleQuery()

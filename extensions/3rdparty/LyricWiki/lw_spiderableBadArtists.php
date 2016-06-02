@@ -42,21 +42,17 @@ function wfSpiderableBadArtists_outputPage(&$out, &$text){
 
 	// For "virtual pages" that the spiders can index.
 	if(isset($_GET['virtPage'])){
-		$subTitle = $out->getSubtitle();
+		$subTitle = $out->mSubtitle;
 		$matches = array();
-		if(0 < preg_match("/Redirected from <a href=\"[^\"]+(&amp;|\?)redirect=no\" title=\"([^\"]+)\"/i", $subTitle, $matches)){
-			$redirFrom = $matches[2];
+		if(0 < preg_match("/Redirected from <a href=\"[^\"]+&amp;redirect=no\" title=\"([^\"]+)\"/i", $subTitle, $matches)){
+			$redirFrom = $matches[1];
 			if(false === strpos($redirFrom, ":")){
 				$redirFrom = str_replace(" ", "_", $redirFrom);
 				$redirFrom = urlencode($redirFrom);
 				$from = $wgTitle->mUrlform;
 				if(strtolower($from) != strtolower($redirFrom)){
-					// Replaces just the links (taking into account wgArticlePath.
-					global $wgArticlePath;
-					$fromLink = str_replace("$1", $from, $wgArticlePath);
-					$toLink = str_replace("$1", $redirFrom, $wgArticlePath);
-					$text = str_replace("\"/$fromLink", "\"/$toLink", $text);
-					$text = str_replace("\"$fromLink", "\"$toLink", $text);
+					$text = str_replace("\"/$from", "\"/$redirFrom", $text);
+					$text = str_replace("\"$from", "\"$redirFrom", $text);
 				}
 			}
 		}
