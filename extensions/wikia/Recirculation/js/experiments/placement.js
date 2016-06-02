@@ -293,7 +293,15 @@ require([
 
 	function renderImpactFooter() {
 		var fView = impactFooterView(),
-			rView = railView();
+			rView = railView(),
+			sView = scrollerView();
+
+		contentLinksHelper({
+			count: 6,
+			extra: 6
+		}).loadData()
+			.then(sView.render)
+			.then(sView.setupTracking(experimentName));
 
 		dataHelper({}).loadData()
 			.then(function(data) {

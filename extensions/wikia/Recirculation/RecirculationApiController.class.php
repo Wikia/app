@@ -53,6 +53,7 @@ class RecirculationApiController extends WikiaApiController {
 
 		$articleId = $this->request->getVal( 'articleId' );
 		$articles = $this->app->sendRequest( 'ArticlesApi', 'getTop', [
+			'abstract' => 0,
 			'expand' => 1,
 			'height' => 190,
 			'limit' => 5,
