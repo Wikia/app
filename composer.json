@@ -23,5 +23,13 @@
     "ocramius/proxy-manager": "~1.0",
     "sensiolabs/consul-php-sdk": "^1.0",
     "wikia/phpflickr": "^3.1"
+  },
+  "require-dev": {
+    "jakub-onderka/php-parallel-lint": "^0.9.2"
+  },
+  "scripts": {
+    "lint": [
+      "parallel-lint . --exclude lib/composer"
+    ]
   }
 }
