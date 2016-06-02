@@ -165,14 +165,6 @@ $messages['ang'] = array(
 	'math_unknown_error' => 'uncūþ ƿōh',
 );
 
-/** Angika (अङ्गिका)
- * @author Angpradesh
- */
-$messages['anp'] = array(
-	'math_sample' => 'गणितीय सूत्र यहाँ डालॊ',
-	'math_tip' => 'गणितीय सूत्र (LaTeX)',
-);
-
 /** Arabic (العربية)
  * @author Ciphers
  * @author Meno25
@@ -2773,7 +2765,7 @@ Zapoznaj się z math/README w celu konfiguracji.',
  * @author Dragonòt
  */
 $messages['pms'] = array(
-	'math-desc' => 'Renderisé de fòrmule matemàtiche tra le tichëtte <code>&lt;math&gt;</code> ... 
+	'math-desc' => 'Renderisé de fòrmule matemàtiche tra le tichëtte <code>&lt;math&gt;</code> ...
 <code>&lt;/math&gt;</code>',
 	'math_sample' => 'Che a buta la fòrmula ambelessì',
 	'math_tip' => 'Fòrmula matemàtica (LaTeX)',
@@ -2942,7 +2934,7 @@ $messages['rm'] = array(
 	'math_unknown_function' => 'funcziun nunenconuschenta',
 	'math_lexing_error' => 'Errur lexicala',
 	'math_syntax_error' => 'Sbagl da la sintaxta',
-	'math_image_error' => "La conversiun da PNG n'è betg reussida; 
+	'math_image_error' => "La conversiun da PNG n'è betg reussida;
 controllescha l'installaziun correcta da latext, dvips, gs e convertescha lura",
 	'math_bad_tmpdir' => "Betg pussaivel da scriver u crear l'ordinatur temporar math",
 	'math_bad_output' => "Betg pussaivel da scriver u crear l'ordinatur da destinaziun math",
