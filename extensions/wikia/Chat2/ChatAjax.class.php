@@ -257,14 +257,20 @@ class ChatAjax {
 	}
 
 	/**
+	 * When token matches accept internal GET requests, i.e. do not report them as CSRF errors (PLATFORM-2207)
+	 *
 	 * @return bool
 	 */
 	private static function authenticateServer() {
 		global $wgRequest;
 
-		\Wikia\Security\CSRFDetector::markHttpMethodAccepted( __METHOD__ );
+		$tokenMatched = \Wikia\Security\Utils::matchToken( ChatConfig::getSecretToken(), $wgRequest->getVal( 'token' ) );
 
-		return \Wikia\Security\Utils::matchToken( ChatConfig::getSecretToken(), $wgRequest->getVal( 'token' ) );
+		if ( $tokenMatched ) {
+			\Wikia\Security\CSRFDetector::markHttpMethodAccepted( __METHOD__ );
+		}
+
+		return $tokenMatched;
 	}
 
 	private static function authenticateServerOrUser() {
