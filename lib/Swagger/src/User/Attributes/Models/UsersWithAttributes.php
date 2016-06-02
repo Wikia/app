@@ -1,6 +1,6 @@
 <?php
 /**
- * HalLink
+ * UsersWithAttributes
  *
  * PHP version 5
  *
@@ -35,7 +35,7 @@ namespace Swagger\Client\User\Attributes\Models;
 
 use \ArrayAccess;
 /**
- * HalLink Class Doc Comment
+ * UsersWithAttributes Class Doc Comment
  *
  * @category    Class
  * @description 
@@ -44,14 +44,14 @@ use \ArrayAccess;
  * @license     http://www.apache.org/licenses/LICENSE-2.0 Apache Licene v2
  * @link        https://github.com/swagger-api/swagger-codegen
  */
-class HalLink implements ArrayAccess
+class UsersWithAttributes implements ArrayAccess
 {
     /**
       * Array of property to type mappings. Used for (de)serialization 
       * @var string[]
       */
     static $swaggerTypes = array(
-        'self' => '\Swagger\Client\User\Attributes\Models\Link'
+        'users' => 'map[string,map[string,object]]'
     );
   
     static function swaggerTypes() {
@@ -63,7 +63,7 @@ class HalLink implements ArrayAccess
       * @var string[] 
       */
     static $attributeMap = array(
-        'self' => 'self'
+        'users' => 'users'
     );
   
     static function attributeMap() {
@@ -75,7 +75,7 @@ class HalLink implements ArrayAccess
       * @var string[]
       */
     static $setters = array(
-        'self' => 'setSelf'
+        'users' => 'setUsers'
     );
   
     static function setters() {
@@ -87,7 +87,7 @@ class HalLink implements ArrayAccess
       * @var string[]
       */
     static $getters = array(
-        'self' => 'getSelf'
+        'users' => 'getUsers'
     );
   
     static function getters() {
@@ -96,10 +96,10 @@ class HalLink implements ArrayAccess
 
     
     /**
-      * $self 
-      * @var \Swagger\Client\User\Attributes\Models\Link
+      * $users 
+      * @var map[string,map[string,object]]
       */
-    protected $self;
+    protected $users;
     
 
     /**
@@ -110,28 +110,28 @@ class HalLink implements ArrayAccess
     {
         
         if ($data != null) {
-            $this->self = $data["self"];
+            $this->users = $data["users"];
         }
     }
     
     /**
-     * Gets self
-     * @return \Swagger\Client\User\Attributes\Models\Link
+     * Gets users
+     * @return map[string,map[string,object]]
      */
-    public function getSelf()
+    public function getUsers()
     {
-        return $this->self;
+        return $this->users;
     }
   
     /**
-     * Sets self
-     * @param \Swagger\Client\User\Attributes\Models\Link $self 
+     * Sets users
+     * @param map[string,map[string,object]] $users 
      * @return $this
      */
-    public function setSelf($self)
+    public function setUsers($users)
     {
         
-        $this->self = $self;
+        $this->users = $users;
         return $this;
     }
     

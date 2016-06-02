@@ -41,3 +41,4 @@ After code was generated copy `lib/Swagger/README.md` to appropriate file (i.e. 
 Below you find API documentation for each service:
 * [User Preference](README_user-preference.md)
 * [User Avatar](README_user-avatar.md)
+* [User Attribute](README_user-attribute.md]
