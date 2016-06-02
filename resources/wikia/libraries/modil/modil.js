@@ -135,6 +135,8 @@
 	 * @throws {Error} If dependencies is not undefined but not an array
 	 */
 	define = function (id, dependencies, definition, defMock) {
+		var warning;
+
 		if (typeof id !== strType) {
 			// Slide all the args over by one to make room for the id
 			defMock = definition;
@@ -145,7 +147,7 @@
 			id = 'module_' + (new Date()).getTime() + '_' + Math.random();
 
 			// Let the developer know there's a potential problem
-			var warning = "Module id missing or not a string; assigning temporary id (" + id + "). "
+			warning = "Module id missing or not a string; assigning temporary id (" + id + "). "
 				+ (new Error().stack||'').replace(/\n/g, ' / ');
 
 			if (console.warn) {
