@@ -62,7 +62,7 @@ class RecirculationApiController extends WikiaApiController {
 
 		$this->response->setCacheValidity( WikiaResponse::CACHE_VERY_SHORT );
 		$this->response->setData( [
-			'title' => wfMessage( 'recirculation-footer-title' )->plain(),
+			'title' => wfMessage( 'recirculation-impact-footer-title' )->plain(),
 			'fandom' => $fandom,
 			'discussions' => $discussionsData,
 			'articles' => $articles

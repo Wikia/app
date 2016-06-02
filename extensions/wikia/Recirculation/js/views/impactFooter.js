@@ -15,8 +15,19 @@ define('ext.wikia.recirculation.views.impactFooter', [
 
 	function render(data) {
 		var renderData = {};
+		renderData.title = data.title;
 		renderData.items = organizeItems(data);
 		renderData.discussions = data.discussions;
+
+		renderData.i18n = {
+			featuredFandomSubtitle: $.msg('recirculation-impact-footer-featured-fandom-subtitle'),
+			trendingTag: $.msg('recirculation-impact-footer-trending-tag'),
+			wikiTag: $.msg('recirculation-impact-footer-wiki-tag'),
+			discussionsNew: $.msg('recirculation-discussions-new'),
+			discussionsUpvotes: $.msg('recirculation-discussions-upvotes'),
+			discussionsReplies: $.msg('recirculation-discussions-replies'),
+			discussionsPosts: $.msg('recirculation-discussions-posts')
+		};
 
 		return utils.renderTemplate(options.template, renderData).then(function($html) {
 			$('#WikiaFooter').html($html).find('.discussion-timestamp').timeago();
