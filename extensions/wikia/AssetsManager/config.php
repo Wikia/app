@@ -149,11 +149,12 @@ $config['recirculation_js'] = array(
 	),
 );
 
-$config['recirculation_lateral_js'] = array(
+$config['recirculation_trackers_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'oasis' ],
 	'assets' => array(
 		'//extensions/wikia/Recirculation/js/lateralTracker.js',
+		'//extensions/wikia/Recirculation/js/liTracker.js',
 	),
 );
 
