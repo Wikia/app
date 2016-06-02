@@ -43,3 +43,4 @@ Below you find API documentation for each service:
 * [User Avatar](README_user-avatar.md)
 * [User Attribute](README_user-attribute.md)
 * [Template Classification Storage](README_template-classification.md)
+* [Content Entity](README_content-entity.md)
