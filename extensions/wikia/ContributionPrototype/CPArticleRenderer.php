@@ -54,12 +54,8 @@ class CPArticleRenderer {
 		}
 
 		$this->addStyles($output);
-		preg_match('/<body>(.*?)<\/body>/is', $content, $matches);
-		$body = preg_replace(
-				'/<script src=("|\')\/(.*?)(\1)>/',
-				'<script src=$1'.$this->host.'/$2$1>',
-				$matches[1]);
-		$output->addHTML($body);
+		$this->addScripts($output);
+		$output->addHTML($content);
 	}
 
 	private function addStyles(OutputPage $output) {
@@ -69,7 +65,12 @@ class CPArticleRenderer {
 		]);
 
 		// this ends up using $wgOut :(
+		// TODO: try changing this to add to output directly
 		Wikia::addAssetsToOutput('contribution_prototype_scss');
+	}
+
+	private function addScripts(OutputPage $output) {
+		$output->addScript("<script src=\"{$this->host}/public/assets/app.js\"></script>");
 	}
 
 	private function getArticleContent($title) {
