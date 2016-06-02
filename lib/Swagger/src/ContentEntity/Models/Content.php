@@ -55,7 +55,8 @@ class Content implements ArrayAccess
         'url' => 'string',
         'title' => 'string',
         'image' => 'string',
-        'site_name' => 'string'
+        'site_name' => 'string',
+        'content_type' => 'string'
     );
   
     /** 
@@ -67,7 +68,8 @@ class Content implements ArrayAccess
         'url' => 'url',
         'title' => 'title',
         'image' => 'image',
-        'site_name' => 'siteName'
+        'site_name' => 'siteName',
+        'content_type' => 'contentType'
     );
   
     /**
@@ -79,7 +81,8 @@ class Content implements ArrayAccess
         'url' => 'setUrl',
         'title' => 'setTitle',
         'image' => 'setImage',
-        'site_name' => 'setSiteName'
+        'site_name' => 'setSiteName',
+        'content_type' => 'setContentType'
     );
   
     /**
@@ -91,7 +94,8 @@ class Content implements ArrayAccess
         'url' => 'getUrl',
         'title' => 'getTitle',
         'image' => 'getImage',
-        'site_name' => 'getSiteName'
+        'site_name' => 'getSiteName',
+        'content_type' => 'getContentType'
     );
   
     
@@ -125,6 +129,12 @@ class Content implements ArrayAccess
       */
     protected $site_name;
     
+    /**
+      * $content_type 
+      * @var string
+      */
+    protected $content_type;
+    
 
     /**
      * Constructor
@@ -138,6 +148,7 @@ class Content implements ArrayAccess
             $this->title = $data["title"];
             $this->image = $data["image"];
             $this->site_name = $data["site_name"];
+            $this->content_type = $data["content_type"];
         }
     }
     
@@ -243,6 +254,27 @@ class Content implements ArrayAccess
     {
         
         $this->site_name = $site_name;
+        return $this;
+    }
+    
+    /**
+     * Gets content_type
+     * @return string
+     */
+    public function getContentType()
+    {
+        return $this->content_type;
+    }
+  
+    /**
+     * Sets content_type
+     * @param string $content_type 
+     * @return $this
+     */
+    public function setContentType($content_type)
+    {
+        
+        $this->content_type = $content_type;
         return $this;
     }
     

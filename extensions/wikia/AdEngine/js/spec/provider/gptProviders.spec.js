@@ -42,7 +42,12 @@ describe('ext.wikia.adEngine.provider.*', function () {
 		lazyQueue: {},
 		window: {},
 		beforeSuccess: noop,
-		beforeHop: noop
+		beforeHop: noop,
+		btfBlocker: {
+			decorate: function(atfSlots, fillInSlot) {
+				return fillInSlot;
+			}
+		}
 	};
 
 	function createSlot(slotName) {
@@ -57,6 +62,7 @@ describe('ext.wikia.adEngine.provider.*', function () {
 		return modules['ext.wikia.adEngine.provider.factory.wikiaGpt'](
 			mocks.adContext,
 			mocks.adLogicPageParams,
+			mocks.btfBlocker,
 			mocks.gptHelper,
 			mocks.log,
 			mocks.lookups
@@ -66,16 +72,8 @@ describe('ext.wikia.adEngine.provider.*', function () {
 	function getProvider(providerName) {
 		switch (providerName) {
 			case 'directGpt':
-				return modules['ext.wikia.adEngine.provider.directGpt'](
-					mocks.adContext,
-					getFactory(),
-					mocks.slotTweaker,
-					mocks.lazyQueue,
-					mocks.log,
-					mocks.window
-				);
 			case 'remnantGpt':
-				return modules['ext.wikia.adEngine.provider.remnantGpt'](
+				return modules['ext.wikia.adEngine.provider.' + providerName](
 					getFactory(),
 					mocks.slotTweaker
 				);
@@ -124,21 +122,21 @@ describe('ext.wikia.adEngine.provider.*', function () {
 
 	it('directGpt: Push ad with specific slot sizes', function () {
 		var expectedSizes = {
-			CORP_TOP_LEADERBOARD: '728x90,1030x130,1030x65,1030x250,970x365,970x250,970x90,970x66,970x180,980x150',
+			CORP_TOP_LEADERBOARD: '728x90,1030x130,1030x65,1030x250,970x365,970x250,970x90,970x66,970x180,980x150,1024x416,1440x585',
 			CORP_TOP_RIGHT_BOXAD: '300x250,300x600,300x1050',
-			HOME_TOP_LEADERBOARD: '728x90,1030x130,1030x65,1030x250,970x365,970x250,970x90,970x66,970x180,980x150',
+			HOME_TOP_LEADERBOARD: '728x90,1030x130,1030x65,1030x250,970x365,970x250,970x90,970x66,970x180,980x150,1024x416,1440x585',
 			HOME_TOP_RIGHT_BOXAD: '300x250,300x600,300x1050',
-			HUB_TOP_LEADERBOARD: '728x90,1030x130,1030x65,1030x250,970x365,970x250,970x90,970x66,970x180,980x150',
+			HUB_TOP_LEADERBOARD: '728x90,1030x130,1030x65,1030x250,970x365,970x250,970x90,970x66,970x180,980x150,1024x416,1440x585',
 			INCONTENT_BOXAD_1: '120x600,160x600,300x250,300x600',
 			INCONTENT_LEADERBOARD: '1x1,728x90,300x250,468x60',
 			INCONTENT_PLAYER: '1x1',
 			INVISIBLE_HIGH_IMPACT_2: 'out-of-page',
 			INVISIBLE_SKIN: '1000x1000,1x1',
 			LEFT_SKYSCRAPER_2: '120x600,160x600,300x250,300x600,300x1050',
-			LEFT_SKYSCRAPER_3: '120x600,160x600,300x250,300x600',
+			LEFT_SKYSCRAPER_3: '120x600,160x600,300x250,300x600,1024x416',
 			PREFOOTER_LEFT_BOXAD: '300x250',
 			PREFOOTER_RIGHT_BOXAD: '300x250',
-			TOP_LEADERBOARD: '728x90,1030x130,1030x65,1030x250,970x365,970x250,970x90,970x66,970x180,980x150',
+			TOP_LEADERBOARD: '728x90,1030x130,1030x65,1030x250,970x365,970x250,970x90,970x66,970x180,980x150,1024x416,1440x585',
 			TOP_RIGHT_BOXAD: '300x250,300x600,300x1050'
 		};
 

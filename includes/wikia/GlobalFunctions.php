@@ -117,7 +117,7 @@ function wfReplaceImageServer( $url, $timestamp = false ) {
 	// FIXME: This needs to be removed. It should be encapsulated in the URL generation.
 	$overrideServer = !empty( $wg->DevBoxImageServerOverride ) && !$wg->EnableVignette;
 	if ( $overrideServer ) {
-		$url = preg_replace( "/\/\/(.*?)wikia-dev\.com\/(.*)/", "//{$wg->DevBoxImageServerOverride}/$2", $url );
+		$url = preg_replace( "/\\/\\/(.*?)wikia-dev\\.com\\/(.*)/", "//{$wg->DevBoxImageServerOverride}/$2", $url );
 	}
 
 	wfDebug( __METHOD__ . ": requested url $url\n" );
@@ -350,12 +350,13 @@ function wfStrToBool( $value ) {
  * @param mixed $variable: variable to be displayed/set
  * @param boolean $return default false: display or just return
  *
- * @return void or string: depends of $return param
+ * @return void|string: depends of $return param
  */
 function wfEchoIfSet( $variable, $return = false )
 {
     if ( empty( $return ) ) {
         echo isset( $variable ) ? $variable : "";
+		return null;
     }
     else {
         return isset( $variable ) ? $variable : "";
@@ -493,11 +494,12 @@ function getMessageAsArray( $messageKey, $params = [] ) {
 			return $lines;
 		}
 	}
+	return null;
 }
 
 /**
  * @author emil@wikia.com
- * @return default external cluster
+ * @return string default external cluster
  */
 function wfGetDefaultExternalCluster() {
 	global $wgDefaultExternalStore;
@@ -516,7 +518,7 @@ function wfGetDefaultExternalCluster() {
 
 /**
  * @author MoLi <moli@wikia.com>
- * @return db's handle for external storage
+ * @return DatabaseBase db's handle for external storage
  */
 function wfGetDBExt( $db = DB_MASTER, $cluster = null ) {
 	if ( !$cluster ) {
@@ -1327,47 +1329,12 @@ function endsWith( $haystack, $needle, $case = true ) {
 	return ( strcasecmp( substr( $haystack, strlen( $haystack ) - strlen( $needle ) ), $needle ) === 0 );
 }
 
-function json_encode_jsfunc( $input = array(), $funcs = array(), $level = 0 )
- {
-  foreach ( $input as $key => $value )
-         {
-          if ( is_array( $value ) )
-             {
-              $ret = json_encode_jsfunc( $value, $funcs, 1 );
-              $input[$key] = $ret[0];
-              $funcs = $ret[1];
-             }
-          else
-             {
-              if ( substr( $value, 0, 10 ) == 'function()' )
-                 {
-                  $func_key = "#" . uniqid() . "#";
-                  $funcs[$func_key] = $value;
-                  $input[$key] = $func_key;
-                 }
-             }
-         }
-  if ( $level == 1 )
-     {
-      return array( $input, $funcs );
-     }
-  else
-     {
-      $input_json = json_encode( $input );
-      foreach ( $funcs as $key => $value )
-             {
-              $input_json = str_replace( '"' . $key . '"', $value, $input_json );
-             }
-      return $input_json;
-     }
- }
-
 /**
  * @brief Handles pagination for arrays
  *
  * @author Federico "Lox" Lucignano
  *
- * @param Array $data the array to paginate
+ * @param array $data the array to paginate
  * @param integer $limit the maximum number of items per page
  * @param integer $batch [OPTIONAL] the batch to retrieve
  *
@@ -1437,7 +1404,7 @@ function wfPaginateArray( $data, $limit, $batch = 1 ) {
  *
  * @author Krzysztof Krzyżaniak (eloy) <eloy@wikia-inc.com>
  *
- * @param Array $array typical array with key => value
+ * @param array $array typical array with key => value
  *
  * @return string string for debugging purposes
  */
@@ -1621,6 +1588,7 @@ function wfGetUniqueArrayCI( array $arr ) {
  */
 function mb_pathinfo( $filepath ) {
 	preg_match( '%^(.*?)[\\\\/]*(([^/\\\\]*?)(\.([^\.\\\\/]+?)|))[\\\\/\.]*$%im', $filepath, $m );
+	$ret = [];
 	if ( $m[1] ) {
 		$ret['dirname'] = $m[1];
 	}

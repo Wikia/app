@@ -671,6 +671,9 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 		$this->result = ( $signupForm->msgType == 'error' ) ? $signupForm->msgType : 'ok';
 		$this->msg = $signupForm->msg;
 		$this->errParam = $signupForm->errParam;
+		if ( $this->request->getVal('retusername') ) {
+			$this->username = $signupForm->mUsername;
+		}
 	}
 
 	/**

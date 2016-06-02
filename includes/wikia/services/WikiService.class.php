@@ -1,6 +1,11 @@
 <?php
 
 class WikiService extends WikiaModel {
+	const ADMIN_GROUPS = [
+		'bureaucrat',
+		'sysop'
+	];
+
 	const WAM_DEFAULT_ITEM_LIMIT_PER_PAGE = 20;
 	const IMAGE_HEIGHT_KEEP_ASPECT_RATIO = -1;
 	const TOPUSER_CACHE_VALID = 10800;
@@ -93,7 +98,7 @@ class WikiService extends WikiaModel {
 	}
 
 	private static function getAdminIdsFromDB( DatabaseBase $db, $excludeBots = false, $limit = null ) {
-		$conditions = [ 'ug_group' => [ 'sysop', 'bureaucrat' ] ];
+		$conditions = [ 'ug_group' => self::ADMIN_GROUPS ];
 
 		if ( $excludeBots ) {
 			$groupList = $db->makeList( self::$botGroups );
@@ -348,16 +353,16 @@ class WikiService extends WikiaModel {
 			$userInfo['userContributionsUrl'] = ($userContributionsTitle instanceof Title) ? $userContributionsTitle->getFullURL() : '#';
 			$userInfo['userId'] = $userId;
 
-			$userStatsService = new UserStatsService($userId);
-			$stats = $userStatsService->getGlobalStats($wikiId);
+			$userStatsService = new UserStatsService($userId, $wikiId);
+			$stats = $userStatsService->getStats();
 
-			if(!empty($stats['date'])) {
-				$date = getdate(strtotime($stats['date']));
+			if(!empty($stats['firstRevisionDate'])) {
+				$date = getdate(strtotime($stats['firstRevisionDate']));
 			} else {
 				$date = getdate(strtotime('2005-06-01'));
 			}
 
-			$userInfo['lastRevision'] = $stats['lastRevision'];
+			$userInfo['lastRevision'] = $stats['lastRevisionDate'];
 
 			$userInfo['since'] = F::App()->wg->Lang->getMonthAbbreviation($date['mon']) . ' ' . $date['year'];
 		}

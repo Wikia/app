@@ -868,17 +868,17 @@ class RenameUserProcess {
 	private function resetEditCountWiki() {
 		// Renamed user
 		$uss = new UserStatsService( $this->mUserId );
-		$uss->resetEditCountWiki();
+		$uss->calculateEditCountWiki();
 
 		// FakeUser
 		if ( $this->mFakeUserId != 0 ) {
 			$uss = new UserStatsService( $this->mFakeUserId );
-			$uss->resetEditCountWiki();
+			$uss->calculateEditCountWiki();
 		} else {
 			// use OldUsername if FakeUser isn't set
 			$oldUser = User::newFromName( $this->mOldUsername );
 			$uss = new UserStatsService( $oldUser->getId() );
-			$uss->resetEditCountWiki();
+			$uss->calculateEditCountWiki();
 		}
 	}
 
