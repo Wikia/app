@@ -2,13 +2,17 @@
 @import 'skins/oasis/css/core/breakpoints-variables';
 @import 'skins/shared/mixins/flexbox';
 
-$recirculation-fandom-trending-color: #F08A24;
+$recirculation-fandom-trending-color-tag: #F08A24;
+$recirculation-fandom-wiki-tag: #1a5eb8;
+$recirculation-impact-footer-spacing: 30px;
+$recirculation-impact-footer-color-feature-overlay: rgba(0, 0, 0, .75);
+
 .WikiaFooter .recirculation-impact-footer {
 	background-color: darken($color-page, 4%);
-	border: none;
+	border: 0;
 	clear: both;
-	margin: 30px (-$padding-width-medium);
-	padding: 30px $padding-width-medium;
+	margin: $recirculation-impact-footer-spacing (-$padding-width-medium);
+	padding: $recirculation-impact-footer-spacing $padding-width-medium;
 
 	a {
 		color: $color-text;
@@ -29,7 +33,7 @@ $recirculation-fandom-trending-color: #F08A24;
 		@include flexbox();
 		@include justify-content(space-between);
 		@include align-items(flex-start);
-		flex-wrap: wrap;
+		@include flex-wrap(wrap);
 
 		h4 {
 			font-size: 16px;
@@ -43,6 +47,19 @@ $recirculation-fandom-trending-color: #F08A24;
 		margin-bottom: 15px;
 		position: relative;
 		width: 24%;
+
+		&.item-article::after {
+			background: {
+				color: $recirculation-fandom-wiki-tag;
+				image: url('/extensions/wikia/Recirculation/images/wiki.svg');
+				position: 5px center;
+				repeat: no-repeat;
+			}
+
+			content: 'Wiki';
+			padding: 5px 10px 5px 25px;
+		}
+
 	}
 
 	.item:nth-of-type(n+6) {
@@ -54,14 +71,23 @@ $recirculation-fandom-trending-color: #F08A24;
 		width: 49.5%;
 
 		h4 {
-			position: absolute;
-			left: 0;
-			right: 0;
+			background-color: $recirculation-impact-footer-color-feature-overlay;
 			bottom: 0;
-			background-color: rgba(0,0,0,0.75);
-			color: white;
+			color: $color-white;
+			font-size: 24px;
+			left: 0;
+			line-height: 28px;
 			padding: 10px;
-			font-size: 18px;
+			position: absolute;
+			right: 0;
+		}
+
+		h4::before {
+			content: attr(data-tag);
+			display: block;
+			font-size: 12px;
+			font-style: italic;
+			line-height: 14px;
 		}
 
 		.thumbnail {
@@ -69,9 +95,9 @@ $recirculation-fandom-trending-color: #F08A24;
 		}
 	}
 
-	.item:nth-of-type(1):after,
-	.item.item-article:after {
-		color: white;
+	.item:nth-of-type(1)::after,
+	.item.item-article::after {
+		color: $color-white;
 		display: block;
 		font-size: 12px;
 		font-weight: bold;
@@ -80,40 +106,28 @@ $recirculation-fandom-trending-color: #F08A24;
 		top: 0;
 	}
 
-	.item:nth-of-type(1):after {
-		background-color: $recirculation-fandom-trending-color;
+	.item:nth-of-type(1)::after {
+		background-color: $recirculation-fandom-trending-color-tag;
 		content: 'Trending';
 		padding: 5px 10px;
 	}
 
-	.item.item-article:after {
-		background: {
-			image: url(/extensions/wikia/Recirculation/images/wiki.svg);
-			repeat: no-repeat;
-			position: 5px center;
-			color: #1a5eb8;
-		}
-		
-		content: 'Wiki';
-		padding: 5px 10px 5px 25px;
-	}
-
 	.thumbnail {
-		width: 100%;
-		margin-bottom: 5px;
-		overflow: hidden;
-		position: relative;
 		background: {
-			color: #dcdcdc;
-			image: url(/extensions/wikia/Recirculation/images/brackets.svg);
+			color: $color-article-thumb-background;
+			image: url('/extensions/wikia/Recirculation/images/brackets.svg');
 			position: center;
 			repeat: no-repeat;
 			size: contain;
 		}
+		margin-bottom: 5px;
+		overflow: hidden;
+		position: relative;
+		width: 100%;
 
-		&:before {
-			display: block;
+		&::before {
 			content: '';
+			display: block;
 			padding-top: 56.25%;
 		}
 
@@ -128,13 +142,15 @@ $recirculation-fandom-trending-color: #F08A24;
 
 	.discussion-threads {
 		@include flex-direction(row);
-
 		height: auto;
 		padding: 10px 0 30px;
 	}
 
 	.discussion-thread {
 		background: $color-page;
+		font-size: 14px;
+		height: 145px;
+		line-height: 18px;
 		width: 32.5%;
 
 		&:nth-of-type(n+4) {
@@ -144,86 +160,110 @@ $recirculation-fandom-trending-color: #F08A24;
 		a {
 			text-decoration: none;
 		}
+
+		.discussion-content {
+			margin-top: 5px;
+			max-height: 55px;
+		}
 	}
 
 	.discussion-header {
-		text-align: center;
-		color: white;
+		color: $color-white;
+		font-size: 14px;
 		height: 165px;
+		text-align: center;
 
 		h3 {
-			font-size: 48px !important;
-			line-height: 48px !important;
-			padding-top: 30px !important;
-			margin-bottom: 10px !important;
-			background: none !important;
+			background: none;
+			font-size: 48px;
+			font-weight: bold;
+			line-height: 48px;
+			margin-bottom: 10px;
+			padding-top: 30px;
 		}
 
 		a {
-			color: white;
-			border-top: 1px solid white;
+			border-top: 1px solid $color-white;
+			color: $color-white;
+			display: inline-block;
 			margin-top: 10px;
 			padding: 10px 40px 0;
-			display: inline-block;
-			svg {
-				margin-left: 5px;
-				position: relative;
-				top: 2px;
-			}
+		}
+
+		svg {
+			margin-left: 5px;
+			position: relative;
+			top: 2px;
 		}
 	}
 
 	.discussion-footer {
 		text-align: center;
+	}
 
-		.button {
-			border-radius: 0;
-			background: none;
-			text-transform: uppercase;
-			color: #0f6dae;
-			padding: 10px 20px;
-			font-size: 12px;
-			font-weight: bold;
-			border-color: #0f6dae;
-			position: relative;
+	.discussion-new {
+		background: none;
+		border: {
+			color: $color-links;
+			radius: 0;
+		};
+		color: $color-links;
+		font-size: 10px;
+		font-weight: bold;
+		padding: 10px 20px;
+		position: relative;
+		text-transform: uppercase;
 
-			&:before,
-			&:after {
-				display: block;
-				content: '';
-				width: 218px;
-				height: 1px;
-				background-color: #ccc;
-				position: absolute;
-				top: 49%;
-			}
+		&::before,
+		&::after {
+			background-color: $color-page-border;
+			content: '';
+			display: block;
+			height: 1px;
+			position: absolute;
+			top: 49%;
+			width: 100%;
+		}
 
-			&:before {
-				left: -219px;
-			}
+		&::before {
+			left: -100%;
+			margin-left: -1px;
+		}
 
-			&:after {
-				right: -219px;
-			}
+		&::after {
+			margin-right: -1px;
+			right: -100%;
 		}
 	}
 
 	.discussion-header-alpha {
-		background: rgba($color-buttons, 0.8);
-		width: 100%;
+		background: rgba($color-buttons, .8);
 		height: 100%;
+		width: 100%;
 	}
 
-	$recirculation-discussion-icon-size: 24px;
+	$recirculation-discussion-icon-size: 22px;
+
 	.discussion-meta {
 
-		div span {
+		span {
+			font-weight: 400;
 			line-height: $recirculation-discussion-icon-size;
 		}
 
-		.discussion-icon {
-			width: $recirculation-discussion-icon-size;
-			height: $recirculation-discussion-icon-size;
+		.discussion-upvotes-container,
+		.discussion-comments-container {
+			background: {
+				image: url('/extensions/wikia/Recirculation/images/upvotes.svg');
+				position: center left;
+				repeat: no-repeat;
+				size: contain;
+			}
+			padding-left: $recirculation-discussion-icon-size;
+		}
+
+		.discussion-comments-container {
+			background-image: url('/extensions/wikia/Recirculation/images/comments.svg');
 		}
 	}
 }
@@ -237,29 +277,29 @@ $recirculation-fandom-trending-color: #F08A24;
 @if $widthType == 0 {
 	@media #{$breakpoint-small-only} {
 		.WikiaFooter .recirculation-impact-footer {
-			margin: 30px (-$padding-width-small);
-			padding: 30px $padding-width-small;
+			margin: $recirculation-impact-footer-spacing (-$padding-width-small);
+			padding: $recirculation-impact-footer-spacing $padding-width-small;
 		}
 	}
 
 	@media #{$breakpoint-medium-only} {
 		.WikiaFooter .recirculation-impact-footer {
-			margin: 30px (-$padding-width-medium);
-			padding: 30px $padding-width-medium;
+			margin: $recirculation-impact-footer-spacing (-$padding-width-medium);
+			padding: $recirculation-impact-footer-spacing $padding-width-medium;
 		}
 	}
 
 	@media #{$breakpoint-large-up} {
 		.WikiaFooter .recirculation-impact-footer {
-			margin: 30px (-$padding-width-large);
-			padding: 30px $padding-width-large;
+			margin: $recirculation-impact-footer-spacing (-$padding-width-large);
+			padding: $recirculation-impact-footer-spacing $padding-width-large;
 		}
 	}
 
 	@media #{$breakpoint-small-plus} {
 		.WikiaFooter .recirculation-impact-footer {
-			margin: 30px (-$padding-width-small-plus);
-			padding: 30px $padding-width-small-plus;
+			margin: $recirculation-impact-footer-spacing (-$padding-width-small-plus);
+			padding: $recirculation-impact-footer-spacing $padding-width-small-plus;
 		}
 	}
 }
