@@ -316,6 +316,7 @@ class CommunityPageSpecialUsersModel {
 					->SELECT( 'wup_user', 'wup_value' )
 					->FROM( 'wikia_user_properties' )
 					->WHERE( 'wup_property' )->EQUAL_TO( 'lastContributionTimestamp' )
+					->AND_( 'CAST(wup_value as date)' )->GREATER_THAN( $dateTwoYearsAgo )
 					->AND_( 'wup_user' )->NOT_EQUAL_TO( 0 )
 					->AND_( 'wup_user' )->NOT_IN( $botIds )
 					->ORDER_BY( 'wup_value DESC' )
@@ -357,7 +358,7 @@ class CommunityPageSpecialUsersModel {
 				}
 
 				return $usersData;
-			}, WikiaDataAccess::REFRESH_CACHE
+			}
 		);
 
 		self::logUserModelPerformanceData(
@@ -418,7 +419,7 @@ class CommunityPageSpecialUsersModel {
 					} );
 
 				return $numberOfMembers;
-			}, WikiaDataAccess::REFRESH_CACHE
+			}
 		);
 
 		return $numberOfMembers;
