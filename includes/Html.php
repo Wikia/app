@@ -635,6 +635,7 @@ class Html {
 			'href' => $url,
 			'type' => 'text/css',
 			'media' => $media,
+			'crossorigin' => 'anonymous'
 		) );
 	}
 
