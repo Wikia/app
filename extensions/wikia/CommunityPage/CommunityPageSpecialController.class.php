@@ -33,7 +33,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		$this->response->setValues( [
 			'heroImageUrl' => $this->getHeroImageUrl(),
 			'inviteFriendsText' => $this->msg( 'communitypage-invite-friends' )->plain(),
-			'headerWelcomeMsg' => $this->msg( 'communitypage-tasks-header-welcome' )->text(),
+			'headerWelcomeMsg' => $this->msg( 'communitypage-tasks-header-welcome' )->parse(),
 			'adminWelcomeMsg' => $this->msg( 'communitypage-admin-welcome-message' )->text(),
 			'pageListEmptyText' => $this->msg( 'communitypage-page-list-empty' )->plain(),
 			'pageTitle' => $this->msg( 'communitypage-title' )->plain(),
@@ -144,6 +144,8 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	public function getAllMembersData() {
 		$currentUser = $this->getUser();
 		$allMembers = $this->usersModel->getAllContributors( $currentUser->getId() );
+		$allMembers = $this->addTimeAgoDataDetail( $allMembers );
+
 		$moreMembers = SpecialPage::getTitleFor( 'ListUsers' );
 		$membersCount = $this->usersModel->getMemberCount();
 
@@ -223,6 +225,14 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 				'isAdmin' => $contributor['isAdmin'],
 			];
 		} , $contributors );
+	}
+
+	private function addTimeAgoDataDetail( $members ) {
+		foreach ( $members as $key => $member ) {
+			$members[$key]['timeAgo'] = wfTimeFormatAgo( $member['latestRevision'] );
+		}
+
+		return $members;
 	}
 
 	private function getHeroImageUrl() {

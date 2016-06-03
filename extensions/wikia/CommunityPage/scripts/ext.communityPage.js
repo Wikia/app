@@ -108,6 +108,9 @@ require([
 			nirvana.sendRequest({
 				controller: 'CommunityPageSpecial',
 				method: tab.request,
+				data: {
+					uselang: window.wgUserLanguage
+				},
 				format: 'json',
 				type: 'get',
 			}).then(function (response) {
