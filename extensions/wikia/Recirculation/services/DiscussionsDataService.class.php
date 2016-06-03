@@ -6,7 +6,7 @@ class DiscussionsDataService {
 	const DISCUSSIONS_API_SORT_KEY = 'trending';
 	const DISCUSSIONS_API_SORT_DIRECTION = 'descending';
 
-	const MCACHE_VER = '1.0';
+	const MCACHE_VER = '1.1';
 
 	public function getData() {
 		$memcKey = wfMemcKey( __METHOD__, self::MCACHE_VER );
@@ -106,6 +106,14 @@ class DiscussionsDataService {
 		return $data;
 	}
 
+	/**
+	 * Grabs the name of the discussions header image. This list is pulled from
+	 * https://github.com/Wikia/mercury/blob/dev/front/main/app/components/discussion-hero-unit.js
+	 * and if the IMPACT_FOOTER experiment design is successful we will have to come up with a better
+	 * way to handle this
+	 * @param string $siteId
+	 * @return string
+	 */
 	private function headerImage( $siteId ) {
 		$imageMap = [
 			'24357' => 'discussion-header-adventure-time.jpg',

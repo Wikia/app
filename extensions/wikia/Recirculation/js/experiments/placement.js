@@ -310,8 +310,8 @@ require([
 					items: data.fandom.items.splice(0,5)
 				};
 
-				fView.render(data);
-				rView.render(fandomData);
+				fView.render(data).then(fView.setupTracking(experimentName));
+				rView.render(fandomData).then(rView.setupTracking(experimentName));
 			});
 	}
 });

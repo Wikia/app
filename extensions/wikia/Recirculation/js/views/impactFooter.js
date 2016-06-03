@@ -20,13 +20,13 @@ define('ext.wikia.recirculation.views.impactFooter', [
 		renderData.discussions = data.discussions;
 
 		renderData.i18n = {
+			discussionsNew: $.msg('recirculation-discussions-new'),
+			discussionsPosts: $.msg('recirculation-discussions-posts'),
+			discussionsReplies: $.msg('recirculation-discussions-replies'),
+			discussionsUpvotes: $.msg('recirculation-discussions-upvotes'),
 			featuredFandomSubtitle: $.msg('recirculation-impact-footer-featured-fandom-subtitle'),
 			trendingTag: $.msg('recirculation-impact-footer-trending-tag'),
-			wikiTag: $.msg('recirculation-impact-footer-wiki-tag'),
-			discussionsNew: $.msg('recirculation-discussions-new'),
-			discussionsUpvotes: $.msg('recirculation-discussions-upvotes'),
-			discussionsReplies: $.msg('recirculation-discussions-replies'),
-			discussionsPosts: $.msg('recirculation-discussions-posts')
+			wikiTag: $.msg('recirculation-impact-footer-wiki-tag')
 		};
 
 		return utils.renderTemplate(options.template, renderData).then(function($html) {
@@ -77,9 +77,17 @@ define('ext.wikia.recirculation.views.impactFooter', [
 		return function($html) {
 			tracker.trackVerboseImpression(experimentName, 'impact-footer');
 
-			$html.on('mousedown', 'a', function() {
+			$html.on('mousedown', '.track-items', function(e) {
 				tracker.trackVerboseClick(experimentName, utils.buildLabel(this, 'impact-footer'));
 			});
+
+			if ($html.find('.discussion-module').length) {
+				tracker.trackVerboseImpression(experimentName, 'impact-footer-discussions');
+
+				$html.on('mousedown', '.track-discussions', function(e) {
+					tracker.trackVerboseClick(experimentName, utils.buildLabel(this, 'impact-footer-discussions'));
+				});
+			}
 		};
 	}
 

@@ -126,6 +126,7 @@ class FandomDataService {
 			$metadata = json_decode( $post['metadata'] );
 			if ( !empty( $metadata->postID ) && !in_array( $metadata->postID, $postIds ) ) {
 				$postIds[] = $metadata->postID;
+				$post['source'] = 'fandom';
 				$posts[] = $post;
 			}
 		}

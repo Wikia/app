@@ -3,7 +3,7 @@
 	<div class="items">
 		{{#items}}
 			<div class="item item-{{ source }}" data-index="{{ index }}" data-source="{{source}}">
-				<a title="{{ title }}" href="{{ url }}">
+				<a title="{{ title }}" href="{{ url }}" class="track-items">
 					<div class="thumbnail">
 						{{#thumbnail}}
 							<img src="{{ thumbnail }}" alt="{{ title }}">
@@ -27,7 +27,7 @@
 
 	<ul class="discussion-threads">
 		{{#posts}}
-		  <li class="discussion-thread" data-index="{{ index }}" data-source="{{source}}"><a href="{{link}}">
+		  <li class="discussion-thread" data-index="{{ index }}" data-source="{{source}}"><a class="track-discussions" href="{{link}}">
 			<div class="discussion-author">
 				<img src="{{authorAvatar}}" class="discussion-author-avatar" />
 				<h4>{{author}}</h4>

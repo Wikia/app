@@ -30,7 +30,6 @@ define('ext.wikia.recirculation.helpers.data', [
 				articles = [];
 
 			$.each(data.fandom.items, function(index, item) {
-				item.source = 'fandom';
 				item.thumbnail = item.image_url;
 				item.index = index;
 				fandomPosts.push(item);
@@ -39,7 +38,7 @@ define('ext.wikia.recirculation.helpers.data', [
 			data.fandom.items = fandomPosts;
 
 			$.each(data.articles, function(index, item) {
-				item.source = 'article';
+				item.source = 'wiki';
 				item.thumbnail = item.thumbnail;
 				item.index = index;
 				articles.push(item);

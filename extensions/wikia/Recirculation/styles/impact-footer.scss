@@ -48,7 +48,7 @@ $recirculation-impact-footer-color-feature-overlay: rgba(0, 0, 0, .75);
 		position: relative;
 		width: 24%;
 
-		&.item-article::after {
+		&.item-wiki::after {
 			background: {
 				color: $recirculation-fandom-wiki-tag;
 				image: url('/extensions/wikia/Recirculation/images/wiki.svg');
@@ -96,7 +96,7 @@ $recirculation-impact-footer-color-feature-overlay: rgba(0, 0, 0, .75);
 	}
 
 	.item:nth-of-type(1)::after,
-	.item.item-article::after {
+	.item.item-wiki::after {
 		color: $color-white;
 		display: block;
 		font-size: 12px;
