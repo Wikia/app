@@ -44,12 +44,26 @@ define('ext.wikia.recirculation.helpers.data', [
 				articles.push(item);
 			});
 
+			articles.sort(sortThumbnails);
+
 			return {
 				title: data.title,
 				fandom: data.fandom,
 				discussions: data.discussions,
-				articles: articles
+				articles: articles.slice(0,5)
 			};
+		}
+
+		function sortThumbnails(a, b) {
+			if (a.thumbnail && !b.thumbnail) {
+				return -1;
+			}
+
+			if (!a.thumbnail && b.thumbnail) {
+				return 1;
+			}
+
+			return 0;
 		}
 
 		return {

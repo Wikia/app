@@ -55,10 +55,10 @@ class RecirculationApiController extends WikiaApiController {
 		$articles = $this->app->sendRequest( 'ArticlesApi', 'getTop', [
 			'abstract' => 0,
 			'expand' => 1,
-			'height' => 190,
-			'limit' => 5,
+			'height' => 220,
+			'limit' => 8,
 			'namespaces' => 0,
-			'width' => 335,
+			'width' => 385,
 		] )->getVal( 'items' );
 
 		$this->response->setCacheValidity( WikiaResponse::CACHE_VERY_SHORT );
