@@ -416,7 +416,7 @@ class SpecialContributions extends SpecialPage {
 		if ( $tagFilter ) {
 			$filterSelection =
 				Xml::tags( 'td', array( 'class' => 'mw-label' ), array_shift( $tagFilter ) ) .
-				Xml::tags( 'td', array( 'class' => 'mw-input' ), implode( '&#160', $tagFilter ) );
+				Xml::tags( 'td', array( 'class' => 'mw-input' ), implode( '&#160;', $tagFilter ) );
 		} else {
 			$filterSelection = Xml::tags( 'td', array( 'colspan' => 2 ), '' );
 		}
