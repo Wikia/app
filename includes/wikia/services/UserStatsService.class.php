@@ -5,7 +5,7 @@ use Wikia\Logger\WikiaLogger;
 class UserStatsService extends WikiaModel {
 
 	const CACHE_TTL = 86400;
-	const CACHE_VERSION = 'v1.1';
+	const CACHE_VERSION = 'v1.2';
 	const USER_STATS_PROPERTIES = [
 		'editcount',
 		'editcountThisWeek',
