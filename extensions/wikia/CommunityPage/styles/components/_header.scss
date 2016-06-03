@@ -29,6 +29,10 @@ $hero-image-pattern: '/extensions/wikia/CommunityPage/images/hero_image_pattern.
 		font-weight: bold;
 		line-height: 48px;
 	}
+
+	h1.community-page-heading:lang(ja) {
+		font-size: 24px;
+	}
 }
 
 .community-page-admin-welcome-message {
