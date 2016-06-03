@@ -44,7 +44,7 @@ define('ext.wikia.adEngine.provider.gpt.adSizeFilter', [
 				return isLargeBreakpoints() ? slotSizes : getNewSizes(slotSizes, maxAdSize, [[300, 250]]);
 			case slotName === 'BOTTOM_LEADERBOARD':
 				var footerSize = doc.getElementById('WikiaFooter').offsetWidth;
-				return getNewSizes(slotSizes, footerSize, [[300, 250]]);
+				return getNewSizes(slotSizes, footerSize, [[728, 90]]);
 			default:
 				return slotSizes;
 		}
