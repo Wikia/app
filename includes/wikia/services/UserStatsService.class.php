@@ -67,12 +67,14 @@ class UserStatsService extends WikiaModel {
 		$stats = $this->getStats( Title::GAID_FOR_UPDATE );
 
 		// update edit counts on wiki
-		$this->updateEditCount( 'editcount' );
-		$stats['editcount']++;
+		if ( $this->updateEditCount( 'editcount' ) ) {
+			$stats['editcount']++;
+		}
 
 		// update weekly edit counts on wiki
-		$this->updateEditCount( 'editcountThisWeek' );
-		$stats['editcountThisWeek']++;
+		if ( $this->updateEditCount( 'editcountThisWeek' ) ) {
+			$stats['editcountThisWeek']++;
+		}
 
 		// update last revision timestamp
 		$stats['lastRevisionTimestamp'] = $this->initLastContributionTimestamp();
@@ -110,9 +112,9 @@ class UserStatsService extends WikiaModel {
 				if ( empty( $stats['editcount'] ) ) {
 					return [
 						'firstContributionTimestamp' => null,
-						'lastRevisionDate' => null,
-						'edits' => 0,
-						'editsThisWeek' => 0
+						'lastContributionTimestamp' => null,
+						'editcount' => 0,
+						'editcountThisWeek' => 0
 					];
 				}
 
@@ -124,7 +126,7 @@ class UserStatsService extends WikiaModel {
 					$stats['firstContributionTimestamp'] = $this->initFirstContributionTimestamp();
 				}
 
-				if ( empty( $stats['firstContributionTimestamp'] ) ) {
+				if ( empty( $stats['lastContributionTimestamp'] ) ) {
 					$stats['lastContributionTimestamp'] = $this->initLastContributionTimestamp();
 				}
 

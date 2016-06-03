@@ -173,7 +173,7 @@ class ChatWidget {
 					$stats = $userStatsService->getStats();
 
 					// edit count
-					$chatter['editCount'] = $stats['edits'];
+					$chatter['editCount'] = $stats['editcount'];
 
 					// member since
 					$chatter['showSince'] = $chatter['editCount'] != 0;

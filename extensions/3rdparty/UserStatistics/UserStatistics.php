@@ -359,7 +359,7 @@ function editsByNumber( $uid ) {
    $stats = $service->getStats();
 
   if ( !empty( $stats ) ) {
-	$ret = $stats['edits'];
+	$ret = $stats['editcount'];
   }
 
   return $ret;

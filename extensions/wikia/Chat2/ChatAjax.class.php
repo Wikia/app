@@ -99,7 +99,7 @@ class ChatAjax {
 				: '';
 
 			// NOTE: This is attached to the user so it will be in the wiki's content language instead of wgLang (which it normally will).
-			$res['editCount'] = $wgContLang->formatNum( $stats['edits'] );
+			$res['editCount'] = $wgContLang->formatNum( $stats['editcount'] );
 		}
 
 		wfProfileOut( __METHOD__ );

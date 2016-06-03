@@ -157,7 +157,7 @@ class UserPagesHeaderController extends WikiaController {
 				if ( !empty( $stats['firstContributionTimestamp'] ) ) {
 					$stats['date'] = $wgLang->date( wfTimestamp( TS_MW, $stats['firstContributionTimestamp'] ) );
 				}
-				$stats['edits'] = $wgLang->formatNum( $stats['edits'] );
+				$stats['edits'] = $wgLang->formatNum( $stats['editcount'] );
 			}
 		}
 
