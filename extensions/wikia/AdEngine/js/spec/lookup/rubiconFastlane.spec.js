@@ -153,14 +153,14 @@ describe('ext.wikia.adEngine.lookup.rubiconFastlane', function () {
 		expect(rubiconFastlane.wasCalled()).toBeTruthy();
 	});
 
-	it('Define all 7 slots for oasis skin', function () {
+	it('Define all 8 slots for oasis skin', function () {
 		spyOn(mocks.win.rubicontag, 'defineSlot').and.callThrough();
 		var rubiconFastlane = getRubiconFastlane();
 		mocks.targeting.skin = 'oasis';
 
 		rubiconFastlane.call();
 
-		expect(mocks.win.rubicontag.defineSlot.calls.count()).toEqual(7);
+		expect(mocks.win.rubicontag.defineSlot.calls.count()).toEqual(8);
 	});
 
 	it('Define all 3 slots for mercury skin', function () {

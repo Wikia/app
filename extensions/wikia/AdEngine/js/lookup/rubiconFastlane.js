@@ -32,6 +32,10 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 					sizes: [[120, 600], [160, 600], [300, 250], [300, 600]],
 					targeting: {loc: 'hivi'}
 				},
+				BOTTOM_LEADERBOARD: {
+					sizes: [[728, 90], [970, 250]],
+					targeting: {loc: 'footer'}
+				},
 				PREFOOTER_LEFT_BOXAD: {
 					sizes: [[300, 250], [336, 280]],
 					targeting: {loc: 'footer'}
