@@ -6,11 +6,13 @@ class AdminDashboardController extends WikiaController {
 	public function executeChrome () {
 		global $wgRequest, $wgTitle;
 
+		$resolvedAlias = SpecialPageFactory::resolveAlias( $wgTitle->getDBKey() );
+
 		$this->tab = $wgRequest->getVal( 'tab', '' );
 		if (
 			( empty( $this->tab ) && $this->isAdminDashboardTitle() ) ||
 			( !empty( $this->tab ) && !in_array( $this->tab, [ 'general', 'advanced' ] ) ) ||
-			AdminDashboardLogic::isGeneralApp( array_shift( SpecialPageFactory::resolveAlias( $wgTitle->getDBKey() ) ) )
+			AdminDashboardLogic::isGeneralApp( array_shift( $resolvedAlias ) )
 		) {
 			$this->tab = 'general';
 		} elseif ( empty( $this->tab ) ) {
