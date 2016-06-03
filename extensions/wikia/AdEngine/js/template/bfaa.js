@@ -30,6 +30,7 @@ define('ext.wikia.adEngine.template.bfaa', [
 		},
 
 		show: function (height, backgroundColor) {
+			nav.style.top = '';
 			page.classList.add('bfaa-template');
 			wrapper.style.background = backgroundColor;
 

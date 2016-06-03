@@ -81,6 +81,7 @@ $config['adengine2_desktop_js'] = array(
 		'//extensions/wikia/AdEngine/js/WikiaAdHelper.js',
 		'//extensions/wikia/AdEngine/js/WikiaDartHelper.js',
 		'//extensions/wikia/AdEngine/js/config/desktop.js',
+		'//extensions/wikia/AdEngine/js/provider/btfBlocker.js',
 		'//extensions/wikia/AdEngine/js/provider/directGpt.js',
 		'//extensions/wikia/AdEngine/js/provider/factoryWikiaGpt.js',
 		'//extensions/wikia/AdEngine/js/provider/gpt/adDetect.js',
@@ -148,11 +149,12 @@ $config['recirculation_js'] = array(
 	),
 );
 
-$config['recirculation_lateral_js'] = array(
+$config['recirculation_trackers_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'oasis' ],
 	'assets' => array(
 		'//extensions/wikia/Recirculation/js/lateralTracker.js',
+		'//extensions/wikia/Recirculation/js/liTracker.js',
 	),
 );
 
@@ -823,6 +825,7 @@ $config['mobile_base_ads_js'] = array(
 		'//extensions/wikia/AdEngine/js/lookup/openXBidder.js',
 		'//extensions/wikia/AdEngine/js/lookup/rubiconFastlane.js',
 		'//extensions/wikia/AdEngine/js/lookup/services.js',
+		'//extensions/wikia/AdEngine/js/provider/btfBlocker.js',
 		'//extensions/wikia/AdEngine/js/provider/directGptMobile.js',
 		'//extensions/wikia/AdEngine/js/provider/evolve2.js',
 		'//extensions/wikia/AdEngine/js/provider/hitMedia.js',
@@ -2942,3 +2945,10 @@ $config['create_new_wiki_scss'] = [
 		'//extensions/wikia/CreateNewWiki/css/CreateNewWiki.scss'
 	]
 ];
+
+$config['contribution_prototype_scss'] = array(
+		'type' => AssetsManager::TYPE_SCSS,
+		'assets' => array(
+				'//extensions/wikia/ContributionPrototype/styles/ContributionPrototype.scss',
+		),
+);

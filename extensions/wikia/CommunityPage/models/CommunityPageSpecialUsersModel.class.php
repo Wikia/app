@@ -9,6 +9,7 @@ class CommunityPageSpecialUsersModel {
 	const ALL_BOTS_MCACHE_KEY = 'community_page_all_bots';
 	const ALL_MEMBERS_MCACHE_KEY = 'community_page_all_members';
 	const RECENTLY_JOINED_MCACHE_KEY = 'community_page_recently_joined';
+	const MCACHE_VERSION = '1.0';
 
 	const ALL_CONTRIBUTORS_MODAL_LIMIT = 50;
 
@@ -53,7 +54,7 @@ class CommunityPageSpecialUsersModel {
 	 */
 	public function getTopContributors() {
 		$data = WikiaDataAccess::cache(
-			wfMemcKey( self::TOP_CONTRIB_MCACHE_KEY ),
+			$this->getMemcKey( self::TOP_CONTRIB_MCACHE_KEY ),
 			WikiaResponse::CACHE_STANDARD,
 			function () {
 				self::logUserModelPerformanceData( 'query', 'top_contributors' );
@@ -67,6 +68,7 @@ class CommunityPageSpecialUsersModel {
 					->FROM ( 'wikia_user_properties' )
 					->WHERE( 'wup_property' )->EQUAL_TO( 'editcountThisWeek' )
 					->AND_( 'wup_user' )->NOT_IN( $botIds )
+					->AND_( 'wup_value' )->GREATER_THAN( 0 )
 					->ORDER_BY( 'CAST(wup_value as unsigned) DESC, wup_user ASC' );
 
 				$result = $sqlData->runLoop( $db, function ( &$result, $row ) {
@@ -96,7 +98,7 @@ class CommunityPageSpecialUsersModel {
 	 */
 	public function getAllAdmins() {
 		$data = WikiaDataAccess::cache(
-			wfMemcKey( self::ALL_ADMINS_MCACHE_KEY ),
+			$this->getMemcKey( self::ALL_ADMINS_MCACHE_KEY ),
 			WikiaResponse::CACHE_STANDARD,
 			function () {
 				self::logUserModelPerformanceData( 'query', 'all_admins' );
@@ -139,7 +141,7 @@ class CommunityPageSpecialUsersModel {
 	 */
 	private function getGlobalBotIds() {
 		$botIds = WikiaDataAccess::cache(
-			wfMemcKey( self::GLOBAL_BOTS_MCACHE_KEY ),
+			$this->getMemcKey( self::GLOBAL_BOTS_MCACHE_KEY ),
 			WikiaResponse::CACHE_LONG,
 			function () {
 				global $wgExternalSharedDB;
@@ -163,7 +165,7 @@ class CommunityPageSpecialUsersModel {
 
 	private function getBotIds() {
 		$botIds = WikiaDataAccess::cache(
-			wfMemcKey( self::ALL_BOTS_MCACHE_KEY ),
+			$this->getMemcKey( self::ALL_BOTS_MCACHE_KEY ),
 			WikiaResponse::CACHE_STANDARD,
 			function () {
 				$db = wfGetDB( DB_SLAVE );
@@ -203,7 +205,7 @@ class CommunityPageSpecialUsersModel {
 	 */
 	public function getRecentlyJoinedUsers( $limit = 14 ) {
 		$data = WikiaDataAccess::cache(
-			wfMemcKey( self::RECENTLY_JOINED_MCACHE_KEY, $limit ),
+			$this->getMemcKey( [ self::RECENTLY_JOINED_MCACHE_KEY, $limit ] ),
 			WikiaResponse::CACHE_STANDARD,
 			function () use ( $limit ) {
 				self::logUserModelPerformanceData( 'query', 'recently_joined' );
@@ -274,7 +276,6 @@ class CommunityPageSpecialUsersModel {
 				$data = [
 					'userId' => $currentUserId,
 					'latestRevision' => $userInfo['lastRevision'],
-					'timeAgo' => wfTimeFormatAgo( $userInfo['lastRevision'] ),
 					'userName' => $userInfo['name'],
 					'isAdmin' => $this->isAdmin( $currentUserId, $this->getAdmins() ),
 					'isCurrent' => true,
@@ -298,7 +299,7 @@ class CommunityPageSpecialUsersModel {
 	 */
 	public function getAllContributors( $currentUserId = 0 ) {
 		$allContributorsData = WikiaDataAccess::cache(
-			wfMemcKey( self::ALL_MEMBERS_MCACHE_KEY ),
+			$this->getMemcKey( self::ALL_MEMBERS_MCACHE_KEY ),
 			WikiaResponse::CACHE_SHORT,
 			function () {
 				self::logUserModelPerformanceData( 'query', 'all_contributors' );
@@ -327,7 +328,6 @@ class CommunityPageSpecialUsersModel {
 							$userSqlData[] = [
 								'userId' => $userId,
 								'latestRevision' => $row->last_revision,
-								'timeAgo' => wfTimeFormatAgo( $row->last_revision ),
 								'userName' => $userName,
 								'isAdmin' => $this->isAdmin( $userId, $this->getAdmins() ),
 								'isCurrent' => false,
@@ -394,5 +394,12 @@ class CommunityPageSpecialUsersModel {
 		}
 
 		return false;
+	}
+
+	private function getMemcKey( $params ) {
+		if ( is_array( $params ) ) {
+			$params = implode( ':', $params );
+		}
+		return wfMemcKey( $params, self::MCACHE_VERSION );
 	}
 }
