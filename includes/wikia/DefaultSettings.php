@@ -1059,7 +1059,18 @@ $wgMaxLevelThreeNavElements = 10;
 /**
  * Memcached class name
  */
-$wgMemCachedClass = 'MemcacheMoxiCluster';
+
+/**
+ * PLATFORM-2233 - use a classic memcache client on devboxes and in Reston
+ * Devbox's LocalSettings.php is too late as wgMemc is initialized earlier
+ * FIXME: This is temporary code - will be removed after the full switch to twemproxy
+ */
+if ( $wgWikiaDatacenter === WIKIA_DC_RES || $wgWikiaEnvironment === WIKIA_ENV_DEV ) {
+	$wgMemCachedClass = 'MemCachedClientforWiki';
+}
+else {
+	$wgMemCachedClass = 'MemcacheMoxiCluster';
+}
 
 /**
  * Extra configuration options for memcached when using libmemcached/pecl-memcached

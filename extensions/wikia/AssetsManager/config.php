@@ -149,11 +149,12 @@ $config['recirculation_js'] = array(
 	),
 );
 
-$config['recirculation_lateral_js'] = array(
+$config['recirculation_trackers_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'oasis' ],
 	'assets' => array(
 		'//extensions/wikia/Recirculation/js/lateralTracker.js',
+		'//extensions/wikia/Recirculation/js/liTracker.js',
 	),
 );
 
@@ -2943,3 +2944,10 @@ $config['create_new_wiki_scss'] = [
 		'//extensions/wikia/CreateNewWiki/css/CreateNewWiki.scss'
 	]
 ];
+
+$config['contribution_prototype_scss'] = array(
+		'type' => AssetsManager::TYPE_SCSS,
+		'assets' => array(
+				'//extensions/wikia/ContributionPrototype/styles/ContributionPrototype.scss',
+		),
+);
