@@ -50,10 +50,10 @@ define('ext.wikia.adEngine.template.bfaa', [
 			win.Mercury.Modules.Ads.getInstance().setSiteHeadOffset(height);
 			page.style.paddingTop = height + 'px';
 			wrapper.style.background = backgroundColor;
-			page.classList.add('bfaa-template');
+			wrapper.classList.add('bfaa-template');
 
 			adContext.addCallback(function () {
-				page.classList.remove('bfaa-template');
+				wrapper.classList.remove('bfaa-template');
 				wrapper.style.background = '';
 				page.style.paddingTop = '';
 				win.Mercury.Modules.Ads.getInstance().setSiteHeadOffset(0);
