@@ -70,6 +70,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 				->text(),
 			'noContribsText' => $this->msg( 'communitypage-no-contributions' )->plain(),
 			'contributors' => $topContributorsDetailsLimitedForModule,
+			'allContributors' => $topContributors,
 			'userAvatar' => AvatarService::renderAvatar(
 				$this->getUser()->getName(),
 				AvatarService::AVATAR_SIZE_SMALL_PLUS
