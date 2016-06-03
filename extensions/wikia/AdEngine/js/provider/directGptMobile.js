@@ -16,6 +16,12 @@ define('ext.wikia.adEngine.provider.directGptMobile', [
 			MOBILE_IN_CONTENT_EXTRA_2:  {size: '300x250,1x1'},
 			MOBILE_IN_CONTENT_EXTRA_3:  {size: '300x250,1x1'},
 			MOBILE_PREFOOTER:           {size: '320x50,300x250,300x50,1x1'}
+		},
+		{
+			atfSlots: [
+				'MOBILE_TOP_LEADERBOARD',
+				'INVISIBLE_HIGH_IMPACT'
+			]
 		}
 	);
 });

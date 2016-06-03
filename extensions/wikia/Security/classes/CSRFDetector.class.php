@@ -36,6 +36,18 @@ class CSRFDetector {
 	}
 
 	/**
+	 * In some cases we consider GET requests to be secure when they're provided with a secret token
+	 *
+	 * @see PLATFORM-2207
+	 */
+	public static function markHttpMethodAccepted( $caller ) {
+		wfDebug( __METHOD__ . ": {$caller} accepted the current GET request to skip CSRF check\n" );
+
+		// make assertEditTokenAndMethodWereChecked() method think that we checked the request method
+		self::$requestWasPostedCalled = true;
+	}
+
+	/**
 	 * Bind to hooks, actions that triggered them will be checked against token and HTTP method validation
 	 *
 	 * Called via $wgExtensionFunctions

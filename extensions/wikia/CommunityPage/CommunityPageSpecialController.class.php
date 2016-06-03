@@ -33,7 +33,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		$this->response->setValues( [
 			'heroImageUrl' => $this->getHeroImageUrl(),
 			'inviteFriendsText' => $this->msg( 'communitypage-invite-friends' )->plain(),
-			'headerWelcomeMsg' => $this->msg( 'communitypage-tasks-header-welcome' )->text(),
+			'headerWelcomeMsg' => $this->msg( 'communitypage-tasks-header-welcome' )->parse(),
 			'adminWelcomeMsg' => $this->msg( 'communitypage-admin-welcome-message' )->text(),
 			'pageListEmptyText' => $this->msg( 'communitypage-page-list-empty' )->plain(),
 			'pageTitle' => $this->msg( 'communitypage-title' )->plain(),

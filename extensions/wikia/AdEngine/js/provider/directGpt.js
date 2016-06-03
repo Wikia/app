@@ -1,21 +1,16 @@
 /*global define*/
 /*jshint maxlen: 150*/
 define('ext.wikia.adEngine.provider.directGpt', [
-	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.provider.factory.wikiaGpt',
-	'ext.wikia.adEngine.slotTweaker',
-	'wikia.lazyqueue',
-	'wikia.log',
-	'wikia.window'
-], function (adContext, factory, slotTweaker, lazyQueue, log, win) {
+	'ext.wikia.adEngine.slotTweaker'
+], function (factory, slotTweaker) {
 	'use strict';
 
-	var context = adContext.getContext(),
-		logGroup = 'ext.wikia.adEngine.provider.directGpt',
-		pendingAtfSlots = [], // ATF slots pending for response
-		btfQueue = [],
-		btfQueueStarted = false,
-		slotMap = {
+	return factory.createProvider(
+		'ext.wikia.adEngine.provider.directGpt',
+		'DirectGpt',
+		'gpt',
+		{
 			CORP_TOP_LEADERBOARD:       {
 				size: '728x90,1030x130,1030x65,1030x250,970x365,970x250,970x90,970x66,970x180,980x150,1024x416,1440x585',
 				loc: 'top'
@@ -54,110 +49,28 @@ define('ext.wikia.adEngine.provider.directGpt', [
 			},
 			TOP_RIGHT_BOXAD:            {size: '300x250,300x600,300x1050', loc: 'top'}
 		},
-		recoverableSlots = [
-			'TOP_LEADERBOARD',
-			'TOP_RIGHT_BOXAD'
-		],
-		atfSlots = [
-			'CORP_TOP_LEADERBOARD',
-			'CORP_TOP_RIGHT_BOXAD',
-			'HOME_TOP_LEADERBOARD',
-			'HOME_TOP_RIGHT_BOXAD',
-			'HUB_TOP_LEADERBOARD',
-			'INVISIBLE_SKIN',
-			'TOP_LEADERBOARD',
-			'TOP_RIGHT_BOXAD',
-			'GPT_FLUSH'
-		],
-		provider;
-
-	function fillInSlotWithDelay(slot) {
-		log(['fillInSlotWithDelay', slot.name], 'debug', logGroup);
-
-		if (!context.opts.delayBtf) {
-			provider.fillInSlot(slot);
-			return;
-		}
-
-		// For the above the fold slot:
-		if (atfSlots.indexOf(slot.name) > -1) {
-			pendingAtfSlots.push(slot.name);
-			provider.fillInSlot(slot);
-			return;
-		}
-
-		// For the below the fold slot:
-		btfQueue.push(slot);
-	}
-
-	function processBtfSlot(slot) {
-		log(['processBtfSlot', slot.name], 'debug', logGroup);
-
-		if (!win.ads.runtime.disableBtf) {
-			provider.fillInSlot(slot);
-			return;
-		}
-
-		slot.success({adType: 'blocked'});
-		slotTweaker.hide(slot.name);
-	}
-
-	function startBtfQueue() {
-		log('startBtfQueue', 'debug', logGroup);
-
-		if (btfQueueStarted) {
-			return;
-		}
-
-		lazyQueue.makeQueue(btfQueue, processBtfSlot);
-		btfQueue.start();
-
-		btfQueueStarted = true;
-	}
-
-	function onSlotResponse(slotName) {
-		log(['onSlotResponse', slotName], 'debug', logGroup);
-
-		// Remove slot from pendingAtfSlots
-		var index = pendingAtfSlots.indexOf(slotName);
-		if (index > -1) {
-			pendingAtfSlots.splice(index, 1);
-
-			// If pendingAtfSlots is empty, start BTF slots
-			if (pendingAtfSlots.length === 0) {
-				startBtfQueue();
-			}
-		}
-	}
-
-	provider = factory.createProvider(
-		logGroup,
-		'DirectGpt',
-		'gpt',
-		slotMap,
 		{
 			beforeSuccess: function (slotName) {
-				log(['beforeSuccess', slotName], 'debug', logGroup);
 				slotTweaker.removeDefaultHeight(slotName);
 				slotTweaker.removeTopButtonIfNeeded(slotName);
 				slotTweaker.adjustLeaderboardSize(slotName);
-				onSlotResponse(slotName);
-			},
-			beforeCollapse: function (slotName) {
-				onSlotResponse(slotName);
-			},
-			beforeHop: function (slotName) {
-				log(['beforeHop', slotName], 'debug', logGroup);
-				onSlotResponse(slotName);
 			},
 			sraEnabled: true,
-			recoverableSlots: recoverableSlots
+			recoverableSlots: [
+				'TOP_LEADERBOARD',
+				'TOP_RIGHT_BOXAD'
+			],
+			atfSlots: [
+				'CORP_TOP_LEADERBOARD',
+				'CORP_TOP_RIGHT_BOXAD',
+				'HOME_TOP_LEADERBOARD',
+				'HOME_TOP_RIGHT_BOXAD',
+				'HUB_TOP_LEADERBOARD',
+				'INVISIBLE_SKIN',
+				'TOP_LEADERBOARD',
+				'TOP_RIGHT_BOXAD',
+				'GPT_FLUSH'
+			]
 		}
 	);
-
-	return {
-		name: provider.name,
-		canHandleSlot: provider.canHandleSlot,
-		fillInSlot: fillInSlotWithDelay
-	};
 });
