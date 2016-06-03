@@ -85,6 +85,9 @@ class CPArticleRenderer {
 					'noProxy' => true,
 					'returnInstance' => true,
 					'followRedirects'=> true,
+					'headers' => [
+						'X-Wikia-Community' => $this->dbName,
+					]
 				]
 		);
 
