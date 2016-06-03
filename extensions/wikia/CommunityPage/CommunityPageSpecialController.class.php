@@ -37,8 +37,11 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 			'adminWelcomeMsg' => $this->msg( 'communitypage-admin-welcome-message' )->text(),
 			'pageListEmptyText' => $this->msg( 'communitypage-page-list-empty' )->plain(),
 			'pageTitle' => $this->msg( 'communitypage-title' )->plain(),
-			'topContributors' => $this->sendRequest( 'CommunityPageSpecialController', 'getTopContributorsData' )
-				->getData(),
+			'topContributors' => $this->sendRequest(
+				'CommunityPageSpecialController',
+				'getTopContributorsData',
+				[ 'limit' => self::TOP_CONTRIBUTORS_MODULE_LIMIT ]
+			)->getData(),
 			'topAdminsData' => $this->sendRequest( 'CommunityPageSpecialController', 'getTopAdminsData' )
 				->getData(),
 			'recentlyJoined' => $this->sendRequest( 'CommunityPageSpecialController', 'getRecentlyJoinedData' )
@@ -55,11 +58,17 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	 * @return array
 	 */
 	public function getTopContributorsData() {
+		$limit = $this->request->getInt( 'limit', 0 );
+
 		$currentUserContributionCount = ( new UserStatsService( $this->getUser()->getId() ) )->getEditCountFromWeek();
 		$topContributors = $this->usersModel->getTopContributors();
-		$topContributorsDetailsLimitedForModule = $this->getContributorsDetails(
-			array_slice( $topContributors, 0, self::TOP_CONTRIBUTORS_MODULE_LIMIT )
-		);
+		$topContributorsCount = count( $topContributors );
+
+		if ( $limit > 0 ) {
+			$topContributors = array_slice( $topContributors, 0, $limit );
+		}
+
+		$topContributorsDetails = $this->getContributorsDetails( $topContributors );
 
 		$this->response->setData( [
 			'admin' => $this->msg( 'communitypage-admin' )->plain(),
@@ -69,13 +78,13 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 				->numParams( $this->wg->Lang->formatNum( $currentUserContributionCount ) )
 				->text(),
 			'noContribsText' => $this->msg( 'communitypage-no-contributions' )->plain(),
-			'contributors' => $topContributorsDetailsLimitedForModule,
+			'contributors' => $topContributorsDetails,
 			'userAvatar' => AvatarService::renderAvatar(
 				$this->getUser()->getName(),
 				AvatarService::AVATAR_SIZE_SMALL_PLUS
 			),
 			'userRank' => $this->calculateCurrentUserRank( $currentUserContributionCount , $topContributors ),
-			'weeklyEditorCount' => $this->formatTotalEditorsNumber( count( $topContributors ) ),
+			'weeklyEditorCount' => $this->formatTotalEditorsNumber( $topContributorsCount ),
 			'userContribCount' => $currentUserContributionCount
 		] );
 	}
