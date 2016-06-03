@@ -293,7 +293,7 @@ class CommunityPageSpecialUsersModel {
 	}
 
 	/**
-	 * Gets a list of all members of the community.
+	 * Gets a list of 50 members of the community.
 	 * Any user who has made an edit in the last 2 years is a member
 	 *
 	 * @param int $currentUserId

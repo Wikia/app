@@ -54,6 +54,8 @@ class UserStatsService extends WikiaModel {
 	 * and bump mcached values for stats and localized user options
 	 */
 	public function increaseEditsCount() {
+		global $wgMemc;
+
 		$stats = $this->getStats( Title::GAID_FOR_UPDATE );
 
 		// update edit counts on wiki
@@ -69,12 +71,17 @@ class UserStatsService extends WikiaModel {
 		// update last revision timestamp
 		$stats['lastRevisionTimestamp'] = $this->initLastContributionTimestamp();
 
+		$wgMemc->set(
+			self::getUserStatsMemcKey( $this->userId, $this->getWikiId() ),
+			self::CACHE_TTL,
+			$stats
+		);
+
 		// first user edit on given wiki
 		if ( $stats['editcount'] === 1 ) {
 			wfRunHooks( 'UserFirstEditOnLocalWiki', [ $this->userId, $this->getWikiId() ] );
 		}
 	}
-
 
 	/**
 	 * Get user wiki contributions details like
@@ -246,10 +253,14 @@ class UserStatsService extends WikiaModel {
 		$dbw->replace(
 			'wikia_user_properties',
 			[],
-			[ 'wup_user' => $this->userId, 'wup_property' => $statName, 'wup_value' => $statVal ],
+			[
+				'wup_user' => $this->userId,
+				'wup_property' => $statName,
+				'wup_value' => $statVal
+			],
 			__METHOD__
 		);
-		return $statVal;
+		return $dbw->affectedRows() === 1;
 	}
 
 	/**
