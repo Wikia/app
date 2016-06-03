@@ -41,7 +41,6 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 				'CommunityPageSpecialController',
 				'getTopContributorsData',
 				[ 'limit' => self::TOP_CONTRIBUTORS_MODULE_LIMIT ]
-
 			)->getData(),
 			'topAdminsData' => $this->sendRequest( 'CommunityPageSpecialController', 'getTopAdminsData' )
 				->getData(),
