@@ -39,6 +39,7 @@ define('ext.wikia.adEngine.provider.rubiconFastlane', [
 			'TOP_LEADERBOARD',
 			'TOP_RIGHT_BOXAD',
 
+			'MOBILE_BOTTOM_LEADERBOARD',
 			'MOBILE_IN_CONTENT',
 			'MOBILE_PREFOOTER',
 			'MOBILE_TOP_LEADERBOARD'
