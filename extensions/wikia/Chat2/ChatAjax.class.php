@@ -94,8 +94,8 @@ class ChatAjax {
 
 			// this results goes to chat server, which obiously has no user lang
 			// so we just return a short month name key - it has to be translated on client side
-			$res['since'] = !empty( $stats['firstRevisionDate'] )
-				? getdate( wfTimestamp( TS_UNIX, $stats['firstRevisionDate'] ) )
+			$res['since'] = !empty( $stats['firstContributionTimestamp'] )
+				? getdate( wfTimestamp( TS_UNIX, $stats['firstContributionTimestamp'] ) )
 				: '';
 
 			// NOTE: This is attached to the user so it will be in the wiki's content language instead of wgLang (which it normally will).

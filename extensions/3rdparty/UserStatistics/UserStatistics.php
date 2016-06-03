@@ -381,7 +381,7 @@ function editFirstDate( $uid ) {
 
    if ( !empty( $stats ) ) {
 	   /* @var Language $wgLang */
-	$ret = $wgLang->timeanddate( wfTimestamp(TS_MW, $stats['firstRevisionDate']), true);
+	$ret = $wgLang->timeanddate( wfTimestamp(TS_MW, $stats['firstContributionTimestamp']), true);
    }
 
    return $ret;

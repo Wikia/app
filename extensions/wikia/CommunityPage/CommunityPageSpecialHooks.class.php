@@ -35,6 +35,9 @@ class CommunityPageSpecialHooks {
 		WikiaDataAccess::cachePurge( wfMemcKey( CommunityPageSpecialUsersModel::ALL_MEMBERS_MCACHE_KEY ) );
 		CommunityPageSpecialUsersModel::logUserModelPerformanceData( 'purge', 'all_contributors' );
 
+		// Purge All Members Count
+		WikiaDataAccess::cachePurge( wfMemcKey( CommunityPageSpecialUsersModel::ALL_MEMBERS_COUNT_MCACHE_KEY ) );
+
 		// Purge all admins list
 		if ( self::isAdmin( $user->getId() ) ) {
 			WikiaDataAccess::cachePurge( wfMemcKey( CommunityPageSpecialUsersModel::ALL_ADMINS_MCACHE_KEY ) );
