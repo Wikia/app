@@ -68,6 +68,7 @@ class CommunityPageSpecialUsersModel {
 					->FROM ( 'wikia_user_properties' )
 					->WHERE( 'wup_property' )->EQUAL_TO( 'editcountThisWeek' )
 					->AND_( 'wup_user' )->NOT_IN( $botIds )
+					->AND_( 'wup_value' )->GREATER_THAN( 0 )
 					->ORDER_BY( 'CAST(wup_value as unsigned) DESC, wup_user ASC' );
 
 				$result = $sqlData->runLoop( $db, function ( &$result, $row ) {
