@@ -78,7 +78,7 @@ $messages['en'] = array(
 
 $messages['qqq'] = array(
 	'communitypage-title' => 'Title of the Community special page.',
-	'communitypage-header-welcome' => 'Welcome text in the header when logged in.',
+	'communitypage-header-welcome' => 'Welcome text in the header.',
 	'communitypage-header-join-button' => 'Signup button text.',
 	'communitypage-admin-welcome-message' => 'Welcome message from the admins. Displayed as a part of the Community Page header under the hero image.',
 	'communitypage-admin-group-name' => 'Name of the admin group displayed under the user name of the admin.',
