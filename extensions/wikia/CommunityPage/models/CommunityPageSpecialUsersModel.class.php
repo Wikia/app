@@ -55,7 +55,7 @@ class CommunityPageSpecialUsersModel {
 	 */
 	public function getTopContributors() {
 		$data = WikiaDataAccess::cache(
-			$this->getMemcKey( self::TOP_CONTRIB_MCACHE_KEY ),
+			self::getMemcKey( self::TOP_CONTRIB_MCACHE_KEY ),
 			WikiaResponse::CACHE_STANDARD,
 			function () {
 				self::logUserModelPerformanceData( 'query', 'top_contributors' );
@@ -99,7 +99,7 @@ class CommunityPageSpecialUsersModel {
 	 */
 	public function getAllAdmins() {
 		$data = WikiaDataAccess::cache(
-			$this->getMemcKey( self::ALL_ADMINS_MCACHE_KEY ),
+			self::getMemcKey( self::ALL_ADMINS_MCACHE_KEY ),
 			WikiaResponse::CACHE_STANDARD,
 			function () {
 				self::logUserModelPerformanceData( 'query', 'all_admins' );
@@ -143,7 +143,7 @@ class CommunityPageSpecialUsersModel {
 	 */
 	private function getGlobalBotIds() {
 		$botIds = WikiaDataAccess::cache(
-			$this->getMemcKey( self::GLOBAL_BOTS_MCACHE_KEY ),
+			self::getMemcKey( self::GLOBAL_BOTS_MCACHE_KEY ),
 			WikiaResponse::CACHE_LONG,
 			function () {
 				global $wgExternalSharedDB;
@@ -167,7 +167,7 @@ class CommunityPageSpecialUsersModel {
 
 	private function getBotIds() {
 		$botIds = WikiaDataAccess::cache(
-			$this->getMemcKey( self::ALL_BOTS_MCACHE_KEY ),
+			self::getMemcKey( self::ALL_BOTS_MCACHE_KEY ),
 			WikiaResponse::CACHE_STANDARD,
 			function () {
 				$db = wfGetDB( DB_SLAVE );
@@ -207,7 +207,7 @@ class CommunityPageSpecialUsersModel {
 	 */
 	public function getRecentlyJoinedUsers( $limit = 14 ) {
 		$data = WikiaDataAccess::cache(
-			$this->getMemcKey( [ self::RECENTLY_JOINED_MCACHE_KEY, $limit ] ),
+			self::getMemcKey( [ self::RECENTLY_JOINED_MCACHE_KEY, $limit ] ),
 			WikiaResponse::CACHE_STANDARD,
 			function () use ( $limit ) {
 				self::logUserModelPerformanceData( 'query', 'recently_joined' );
@@ -301,7 +301,7 @@ class CommunityPageSpecialUsersModel {
 	 */
 	public function getAllContributors( $currentUserId = 0 ) {
 		$allContributorsData = WikiaDataAccess::cache(
-			$this->getMemcKey( self::ALL_MEMBERS_MCACHE_KEY ),
+			self::getMemcKey( self::ALL_MEMBERS_MCACHE_KEY ),
 			WikiaResponse::CACHE_SHORT,
 			function () {
 				self::logUserModelPerformanceData( 'query', 'all_contributors' );
@@ -399,7 +399,7 @@ class CommunityPageSpecialUsersModel {
 	 */
 	public function getMemberCount() {
 		$numberOfMembers = WikiaDataAccess::cache(
-			$this->getMemcKey( self::ALL_MEMBERS_COUNT_MCACHE_KEY ),
+			self::getMemcKey( self::ALL_MEMBERS_COUNT_MCACHE_KEY ),
 			WikiaResponse::CACHE_SHORT,
 			function () {
 				$db = wfGetDB( DB_SLAVE );
@@ -456,7 +456,7 @@ class CommunityPageSpecialUsersModel {
 		return false;
 	}
 
-	private function getMemcKey( $params ) {
+	public static function getMemcKey( $params ) {
 		if ( is_array( $params ) ) {
 			$params = implode( ':', $params );
 		}

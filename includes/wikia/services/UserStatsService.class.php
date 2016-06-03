@@ -5,7 +5,7 @@ use Wikia\Logger\WikiaLogger;
 class UserStatsService extends WikiaModel {
 
 	const CACHE_TTL = 86400;
-	const CACHE_VERSION = 'v1.0';
+	const CACHE_VERSION = 'v1.1';
 	const USER_STATS_PROPERTIES = [
 		'editcount',
 		'editcountThisWeek',
@@ -69,12 +69,12 @@ class UserStatsService extends WikiaModel {
 		}
 
 		// update last revision timestamp
-		$stats['lastRevisionTimestamp'] = $this->initLastContributionTimestamp();
+		$stats['lastContributionTimestamp'] = $this->initLastContributionTimestamp();
 
 		$wgMemc->set(
 			self::getUserStatsMemcKey( $this->userId, $this->getWikiId() ),
-			self::CACHE_TTL,
-			$stats
+			$stats,
+			self::CACHE_TTL
 		);
 
 		// first user edit on given wiki
@@ -92,7 +92,7 @@ class UserStatsService extends WikiaModel {
 	 * @return array
 	 */
 	public function getStats( $flags = 0 ) {
-		$stats = WikiaDataAccess::cacheWithLock(
+		$stats = WikiaDataAccess::cache(
 			self::getUserStatsMemcKey( $this->userId, $this->getWikiId() ),
 			self::CACHE_TTL,
 			function () use ( $flags ) {
@@ -174,6 +174,7 @@ class UserStatsService extends WikiaModel {
 			[ 'wup_user' => $this->userId, 'wup_property' => $propertyName ],
 			__METHOD__
 		);
+
 		return $dbw->affectedRows() === 1;
 	}
 
