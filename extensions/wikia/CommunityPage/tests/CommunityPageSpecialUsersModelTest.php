@@ -10,7 +10,8 @@ class CommunityPageSpecialUsersModelTest extends WikiaBaseTest {
 	 * @dataProvider testIsAdminDataProvider
 	 */
 	public function testIsAdmin( $userId, $admins, $expectedResult ) {
-		$model = new CommunityPageSpecialUsersModel( $this->getMock( 'WikiService' ) );
+		$mockUser = $this->getMock( 'User' );
+		$model = new CommunityPageSpecialUsersModel( $mockUser );
 		$this->assertEquals( $expectedResult, $model->isAdmin( $userId, $admins ) );
 	}
 

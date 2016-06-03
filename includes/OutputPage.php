@@ -3745,7 +3745,9 @@ $templates
 			}
 		}
 	}
+
 	/**
+	 * @param string|array $keyArr Surrogate keys (array or space-delimited string)
 	 * @author Wikia
 	 */
 	public function tagWithSurrogateKeys( $keyArr ) {

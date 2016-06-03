@@ -2,6 +2,10 @@
 
 class CommunityPageSpecialTopAdminsFormatter {
 	const TOP_ADMINS_MODULE_LIMIT = 3;
+	const TOP_ADMINS_LIST = 'topAdminsList';
+	const OTHER_ADMINS_COUNT = 'otherAdminsCount';
+	const HAVE_OTHER_ADMINS = 'haveOtherAdmins';
+	const ALL_ADMINS_COUNT = 'allAdminsCount';
 
 	/**
 	 * Returns array with fields to supply topAdmins.mustache template
@@ -13,10 +17,10 @@ class CommunityPageSpecialTopAdminsFormatter {
 		$allAdminsCount = count( $allAdminsList );
 		$otherAdminsCount = self::prepareRemainingCount( $allAdminsCount );
 		return [
-			'topAdminsList' => self::prepareAdminsToShow( $allAdminsCount, $otherAdminsCount, $allAdminsList ),
-			'otherAdminsCount' => $otherAdminsCount,
-			'haveOtherAdmins' => $otherAdminsCount > 0,
-			'allAdminsCount' => $allAdminsCount,
+			self::TOP_ADMINS_LIST => self::prepareAdminsToShow( $allAdminsCount, $otherAdminsCount, $allAdminsList ),
+			self::OTHER_ADMINS_COUNT => $otherAdminsCount,
+			self::HAVE_OTHER_ADMINS => $otherAdminsCount > 0,
+			self::ALL_ADMINS_COUNT => $allAdminsCount,
 		];
 	}
 

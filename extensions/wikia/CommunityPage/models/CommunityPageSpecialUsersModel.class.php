@@ -1,24 +1,31 @@
 <?php
 
+use Wikia\Logger\WikiaLogger;
+
 class CommunityPageSpecialUsersModel {
 	const TOP_CONTRIB_MCACHE_KEY = 'community_page_top_contrib';
-	const FIRST_REV_MCACHE_KEY = 'community_page_first_revision';
+	const ALL_ADMINS_MCACHE_KEY = 'community_page_all_admins';
 	const GLOBAL_BOTS_MCACHE_KEY = 'community_page_global_bots';
 	const ALL_BOTS_MCACHE_KEY = 'community_page_all_bots';
 	const ALL_MEMBERS_MCACHE_KEY = 'community_page_all_members';
-	const MEMBER_COUNT_MCACHE_KEY = 'community_member_count';
 	const RECENTLY_JOINED_MCACHE_KEY = 'community_page_recently_joined';
-	const CURR_USER_CONTRIBUTIONS_MCACHE_KEY = 'community_page_current_user_contributions';
+	const MCACHE_VERSION = '1.0';
 
 	const ALL_CONTRIBUTORS_MODAL_LIMIT = 50;
 
 	private $wikiService;
+	private $user;
 	private $admins;
 
-	public function __construct() {
+	public function __construct( User $user = null ) {
+		$this->user = $user;
 		$this->wikiService = new WikiService();
 	}
 
+	/**
+	 * Returns list of User IDs that are admins
+	 * @return array of User IDs
+	 */
 	public function getAdmins() {
 		if ( $this->admins === null ) {
 			$this->admins = $this->wikiService->getWikiAdminIds( 0, false, false, null, false );
@@ -39,63 +46,93 @@ class CommunityPageSpecialUsersModel {
 	}
 
 	/**
-	 * Get the user id and contribution count of the top n contributors to the current wiki,
-	 * optionally filtered by admins only
+	 * Get the user id and this week contribution count of all users contributed to this wiki whis week;
+	 * Bots filtered out;
+	 * Ordered from most to least active;
 	 *
-	 * @param int|NULL $limit Number of rows to fetch
-	 * @param boolean $weekly True for weekly top contributors, false for all members (2 years)
-	 * @param bool $onlyAdmins Whether to filter by admins
 	 * @return array|null
 	 */
-	public function getTopContributors( $limit = 10, $weekly = true, $onlyAdmins = false ) {
+	public function getTopContributors() {
 		$data = WikiaDataAccess::cache(
-			wfMemcKey( self::TOP_CONTRIB_MCACHE_KEY, $limit, $weekly, $onlyAdmins ),
+			$this->getMemcKey( self::TOP_CONTRIB_MCACHE_KEY ),
 			WikiaResponse::CACHE_STANDARD,
-			function () use ( $limit, $weekly, $onlyAdmins ) {
+			function () {
+				self::logUserModelPerformanceData( 'query', 'top_contributors' );
+
 				$db = wfGetDB( DB_SLAVE );
 
 				$botIds = $this->getBotIds();
 
-				if ( $weekly ) {
-					// From last Sunday (matches wikia_user_properties)
-					$dateFilter = 'rev_timestamp >= FROM_DAYS(TO_DAYS(CURDATE()) - MOD(TO_DAYS(CURDATE()) - 1, 7))';
-				} else {
-					$dateFilter = 'rev_timestamp > DATE_SUB(now(), INTERVAL 2 YEAR)';
-				}
-
 				$sqlData = ( new WikiaSQL() )
-					->SELECT( 'rev_user_text, rev_user, count(rev_id) AS revision_count' )
-					->FROM ( 'revision FORCE INDEX (user_timestamp)' )
-					->WHERE( 'rev_user' )->NOT_EQUAL_TO( 0 );
-
-				if ( $onlyAdmins ) {
-					$adminIds = $this->getAdmins();
-					$sqlData
-						->AND_( 'rev_user' )->IN( $adminIds );
-				}
-
-				$sqlData
-					->AND_( 'rev_user' )->NOT_IN( $botIds )
-					->AND_( $dateFilter )
-					->GROUP_BY( 'rev_user_text' )
-					->ORDER_BY( 'revision_count DESC, rev_user_text' );
-
-				if ( $limit ) {
-					$sqlData->LIMIT( $limit );
-				}
+					->SELECT( 'wup_user, wup_value' )
+					->FROM ( 'wikia_user_properties' )
+					->WHERE( 'wup_property' )->EQUAL_TO( 'editcountThisWeek' )
+					->AND_( 'wup_user' )->NOT_IN( $botIds )
+					->AND_( 'wup_value' )->GREATER_THAN( 0 )
+					->ORDER_BY( 'CAST(wup_value as unsigned) DESC, wup_user ASC' );
 
 				$result = $sqlData->runLoop( $db, function ( &$result, $row ) {
 					$result[] = [
-						'userId' => $row->rev_user,
-						'userName' => $row->rev_user_text,
-						'contributions' => $row->revision_count,
-						'isAdmin' => $this->isAdmin( $row->rev_user, $this->getAdmins() ),
+						'userId' => $row->wup_user,
+						'contributions' => $row->wup_value,
+						'isAdmin' => $this->isAdmin( $row->wup_user, $this->getAdmins() ),
 					];
 				} );
 
 				return $result;
 			}
 		);
+		self::logUserModelPerformanceData(
+			'view',
+			'top_contributors',
+			$this->isUserOnList( $data ),
+			$this->isUserLoggedIn()
+		);
+		return $data;
+	}
+	/**
+	 * Get all admins who have contributed in the last two years ordered by number of contributions
+	 * filter out bots
+	 *
+	 * @return array|null
+	 */
+	public function getAllAdmins() {
+		$data = WikiaDataAccess::cache(
+			$this->getMemcKey( self::ALL_ADMINS_MCACHE_KEY ),
+			WikiaResponse::CACHE_STANDARD,
+			function () {
+				self::logUserModelPerformanceData( 'query', 'all_admins' );
+
+				$db = wfGetDB( DB_SLAVE );
+
+				$adminIds = $this->getAdmins();
+				$botIds = $this->getBotIds();
+
+				$sqlData = ( new WikiaSQL() )
+					->SELECT( 'rev_user_text, rev_user, wup_value' )
+					->FROM ( 'revision FORCE INDEX (user_timestamp)' )
+					->LEFT_JOIN( 'wikia_user_properties' )
+					->ON( 'rev_user', 'wup_user' )
+					->WHERE( 'rev_user' )->NOT_EQUAL_TO( 0 )
+					->AND_( 'rev_user' )->IN( $adminIds )
+					->AND_( 'rev_user' )->NOT_IN( $botIds )
+					->AND_( 'rev_timestamp > DATE_SUB(now(), INTERVAL 2 YEAR)' )
+					->AND_( 'wup_property' )->EQUAL_TO( 'editcount' )
+					->GROUP_BY( 'rev_user' )
+					->ORDER_BY( 'CAST(wup_value as unsigned) DESC, rev_user_text' );
+
+				$result = $sqlData->runLoop( $db, function ( &$result, $row ) {
+					$result[] = [
+						'userId' => $row->rev_user,
+						'contributions' => (int)$row->wup_value,
+						'isAdmin' => true,
+					];
+				} );
+
+				return $result;
+			}
+		);
+		self::logUserModelPerformanceData( 'view', 'all_admins', $this->isUserOnList( $data ), $this->isUserLoggedIn() );
 		return $data;
 	}
 
@@ -104,7 +141,7 @@ class CommunityPageSpecialUsersModel {
 	 */
 	private function getGlobalBotIds() {
 		$botIds = WikiaDataAccess::cache(
-			wfMemcKey( self::GLOBAL_BOTS_MCACHE_KEY ),
+			$this->getMemcKey( self::GLOBAL_BOTS_MCACHE_KEY ),
 			WikiaResponse::CACHE_LONG,
 			function () {
 				global $wgExternalSharedDB;
@@ -128,7 +165,7 @@ class CommunityPageSpecialUsersModel {
 
 	private function getBotIds() {
 		$botIds = WikiaDataAccess::cache(
-			wfMemcKey( self::ALL_BOTS_MCACHE_KEY ),
+			$this->getMemcKey( self::ALL_BOTS_MCACHE_KEY ),
 			WikiaResponse::CACHE_STANDARD,
 			function () {
 				$db = wfGetDB( DB_SLAVE );
@@ -152,46 +189,6 @@ class CommunityPageSpecialUsersModel {
 	}
 
 	/**
-	 * Get all contributions for a user, limited by most recent n days if $days is not null
-	 *
-	 * @param User $user
-	 * @param weekly If true get user's contributions current week. Otherwise for entire membership period (2 years)
-	 * @return int Number of contributions
-	 */
-	public function getUserContributions( User $user, $weekly = true ) {
-		$userId = $user->getId();
-
-		$revisionCount = WikiaDataAccess::cache(
-			// TODO: Should purge this when user edits
-			wfMemcKey( self::CURR_USER_CONTRIBUTIONS_MCACHE_KEY, $userId, $weekly ),
-			WikiaResponse::CACHE_VERY_SHORT, // short cache b/c it's for the current user's info
-			function () use ( $userId, $weekly ) {
-				$db = wfGetDB( DB_SLAVE );
-
-				if ( $weekly ) {
-					// From last Sunday (matches wikia_user_properties)
-					$dateFilter = 'rev_timestamp >= FROM_DAYS(TO_DAYS(CURDATE()) - MOD(TO_DAYS(CURDATE()) - 1, 7))';
-				} else {
-					$dateFilter = 'rev_timestamp > DATE_SUB(now(), INTERVAL 2 YEAR)';
-				}
-
-				$sqlData = ( new WikiaSQL() )
-					->SELECT( 'count(rev_id) AS revision_count' )
-					->FROM( 'revision' )
-					->WHERE( 'rev_user' )->EQUAL_TO( $userId )
-					->AND_( $dateFilter )
-					->runLoop( $db, function ( &$sqlData, $row ) {
-						$sqlData = $row->revision_count;
-					} );
-
-				return $sqlData;
-			}
-		);
-
-		return $revisionCount;
-	}
-
-	/**
 	 * Utility function used to filter out users that should not show up on the member's list
 	 * @param User $user
 	 * @return bool
@@ -208,16 +205,18 @@ class CommunityPageSpecialUsersModel {
 	 */
 	public function getRecentlyJoinedUsers( $limit = 14 ) {
 		$data = WikiaDataAccess::cache(
-			wfMemcKey( self::RECENTLY_JOINED_MCACHE_KEY, $limit ),
+			$this->getMemcKey( [ self::RECENTLY_JOINED_MCACHE_KEY, $limit ] ),
 			WikiaResponse::CACHE_STANDARD,
 			function () use ( $limit ) {
+				self::logUserModelPerformanceData( 'query', 'recently_joined' );
+
 				$db = wfGetDB( DB_SLAVE );
 
 				$sqlData = ( new WikiaSQL() )
 					->SELECT( '*' )
-					->FROM ( 'wikia_user_properties' )
-					->WHERE ( 'wup_property' )->EQUAL_TO( 'firstContributionTimestamp' )
-					->AND_ ( 'wup_value > DATE_SUB(now(), INTERVAL 14 DAY)' )
+					->FROM( 'wikia_user_properties' )
+					->WHERE( 'wup_property' )->EQUAL_TO( 'firstContributionTimestamp' )
+					->AND_( 'wup_value > DATE_SUB(now(), INTERVAL 14 DAY)' )
 					->ORDER_BY( 'wup_value DESC' )
 					->LIMIT( $limit )
 					->runLoop( $db, function ( &$sqlData, $row ) {
@@ -240,6 +239,13 @@ class CommunityPageSpecialUsersModel {
 
 				return $sqlData;
 			}
+		);
+
+		self::logUserModelPerformanceData(
+			'view',
+			'recently_joined',
+			$this->isUserOnList( $data ),
+			$this->isUserLoggedIn()
 		);
 
 		return $data;
@@ -270,7 +276,6 @@ class CommunityPageSpecialUsersModel {
 				$data = [
 					'userId' => $currentUserId,
 					'latestRevision' => $userInfo['lastRevision'],
-					'timeAgo' => wfTimeFormatAgo( $userInfo['lastRevision'] ),
 					'userName' => $userInfo['name'],
 					'isAdmin' => $this->isAdmin( $currentUserId, $this->getAdmins() ),
 					'isCurrent' => true,
@@ -294,44 +299,53 @@ class CommunityPageSpecialUsersModel {
 	 */
 	public function getAllContributors( $currentUserId = 0 ) {
 		$allContributorsData = WikiaDataAccess::cache(
-			wfMemcKey( self::ALL_MEMBERS_MCACHE_KEY ),
+			$this->getMemcKey( self::ALL_MEMBERS_MCACHE_KEY ),
 			WikiaResponse::CACHE_SHORT,
 			function () {
+				self::logUserModelPerformanceData( 'query', 'all_contributors' );
+
 				$db = wfGetDB( DB_SLAVE );
 
+				$botIds = $this->getBotIds();
+
 				$userSqlData = ( new WikiaSQL() )
-					->SELECT( 'rev_user, rev_timestamp' )
+					->SELECT( 'rev_user, MAX(rev_timestamp) as last_revision' )
 					->FROM( 'revision' )
 					->WHERE( 'rev_timestamp > DATE_SUB(now(), INTERVAL 2 YEAR)' )
 					->AND_( 'rev_user' )->NOT_EQUAL_TO( 0 )
+					->AND_( 'rev_user' )->NOT_IN( $botIds )
 					->GROUP_BY( 'rev_user' )
-					->ORDER_BY( 'rev_timestamp DESC' )
+					->ORDER_BY( 'last_revision DESC' )
 					->LIMIT( self::ALL_CONTRIBUTORS_MODAL_LIMIT )
 					->runLoop( $db, function ( &$userSqlData, $row ) {
 						$userId = (int) $row->rev_user;
 						$user = User::newFromId( $userId );
 
-						if ( $this->showMember( $user ) ) {
+						if ( !$user->isBlocked() ) {
 							$userName = $user->getName();
 							$avatar = AvatarService::renderAvatar( $userName, AvatarService::AVATAR_SIZE_SMALL_PLUS );
 
-							$data = [
+							$userSqlData[] = [
 								'userId' => $userId,
-								'latestRevision' => $row->rev_timestamp,
-								'timeAgo' => wfTimeFormatAgo( $row->rev_timestamp ),
+								'latestRevision' => $row->last_revision,
 								'userName' => $userName,
 								'isAdmin' => $this->isAdmin( $userId, $this->getAdmins() ),
 								'isCurrent' => false,
 								'avatar' => $avatar,
 								'profilePage' => $user->getUserPage()->getLocalURL(),
 							];
-
-							$userSqlData[] = $data;
 						}
 					} );
 
 				return $userSqlData;
 			}
+		);
+
+		self::logUserModelPerformanceData(
+			'view',
+			'all_contributors',
+			$this->isUserOnList( $allContributorsData ),
+			$this->isUserLoggedIn()
 		);
 
 		return $this->addCurrentUserIfContributor( $allContributorsData, $currentUserId );
@@ -344,26 +358,48 @@ class CommunityPageSpecialUsersModel {
 	 * @return integer
 	 */
 	public function getMemberCount() {
-		$allContributorsCount = WikiaDataAccess::cache(
-			wfMemcKey( self::MEMBER_COUNT_MCACHE_KEY ),
-			WikiaResponse::CACHE_STANDARD,
-			function () {
-				$db = wfGetDB( DB_SLAVE );
+		$allMembers = $this->getAllContributors();
 
-				$sqlCount = ( new WikiaSQL() )
-					->SELECT( 'COUNT( DISTINCT rev_user )' )
-					->AS_( 'all_contributors_count' )
-					->FROM( 'revision' )
-					->WHERE( 'rev_timestamp > DATE_SUB(now(), INTERVAL 2 YEAR)' )
-					->AND_( 'rev_user' )->NOT_EQUAL_TO( 0 )
-					->runLoop( $db, function ( &$sqlCount, $row ) {
-						$sqlCount = $row->all_contributors_count;
-					} );
+		return count( $allMembers );
+	}
 
-				return $sqlCount;
-			}
+	public static function logUserModelPerformanceData( $action, $method, $userOnList = '', $userLoggedIn = '' ) {
+		WikiaLogger::instance()->info(
+			'Community Page User Model',
+			[
+				'cp_action' => $action,
+				'cp_method' => $method,
+				'cp_user_on_list' => $userOnList,
+				'cp_user_logged_in' => $userLoggedIn
+			]
 		);
+	}
 
-		return $allContributorsCount;
+	private function isUserOnList( $data) {
+		if ( $this->user instanceof User ) {
+			$key = array_search( $this->user->getId(), array_column( $data, 'userId' ) );
+			if ( $key ) {
+				return true;
+			}
+
+			return false;
+		}
+
+		return '';
+	}
+
+	private function isUserLoggedIn() {
+		if ( $this->user instanceof User ) {
+			return $this->user->isLoggedIn();
+		}
+
+		return false;
+	}
+
+	private function getMemcKey( $params ) {
+		if ( is_array( $params ) ) {
+			$params = implode( ':', $params );
+		}
+		return wfMemcKey( $params, self::MCACHE_VERSION );
 	}
 }

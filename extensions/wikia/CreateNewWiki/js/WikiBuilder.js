@@ -39,7 +39,8 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper'], function (help
 		hiddenDuplicate,
 		userAuth,
 		errorModalHeader,
-		errorModalMessage;
+		errorModalMessage,
+		isUserLoggedIn = window.wgUserName !== null;
 
 	function init() {
 		var pane;
@@ -277,7 +278,7 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper'], function (help
 				wikiLang: wikiLanguageVal
 			});
 
-			if (window.wgUserName) {
+			if (isUserLoggedIn) {
 				onAuthSuccess();
 			} else {
 				helper.login(onAuthSuccess, helper.getLoginRedirectURL(wikiNameVal, wikiDomainVal, wikiLanguageVal));
@@ -286,6 +287,7 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper'], function (help
 	}
 
 	function onAuthSuccess() {
+		isUserLoggedIn = true;
 		transition('NameWiki', true, '+');
 	}
 

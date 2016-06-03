@@ -32,3 +32,7 @@ $wgSpecialPages['Images'] = 'WikiaNewFilesSpecialController';
 // Redirect from the old special page (Special:NewFiles)
 $wgSpecialPages['Newimages'] = 'WikiaNewFilesSpecialController';
 
+// invalidate image count cache on each image related operation
+$wgHooks['UploadComplete'][] = 'WikiaNewFilesModel::onFileOperation';
+$wgHooks['FileDeleteComplete'][] = 'WikiaNewFilesModel::onFileOperation';
+$wgHooks['FileUndeleteComplete'][] = 'WikiaNewFilesModel::onFileOperation';
