@@ -35,11 +35,7 @@ class UserStatsService extends WikiaModel {
 	 * @return Int Number of edits
 	 */
 	public function getEditCountWiki() {
-		wfProfileIn( __METHOD__ );
-
 		$stats = $this->getStats();
-
-		wfProfileOut( __METHOD__ );
 		return $stats['editcount'];
 	}
 
@@ -49,11 +45,7 @@ class UserStatsService extends WikiaModel {
 	 * @return int Number of edits
 	 */
 	public function getEditCountFromWeek() {
-		wfProfileIn( __METHOD__ );
-
 		$stats = $this->getStats();
-
-		wfProfileOut( __METHOD__ );
 		return (int)$stats['editcountThisWeek'];
 	}
 
@@ -62,8 +54,6 @@ class UserStatsService extends WikiaModel {
 	 * and bump mcached values for stats and localized user options
 	 */
 	public function increaseEditsCount() {
-		wfProfileIn( __METHOD__ );
-
 		$stats = $this->getStats( Title::GAID_FOR_UPDATE );
 
 		// update edit counts on wiki
@@ -83,8 +73,6 @@ class UserStatsService extends WikiaModel {
 		if ( $stats['editcount'] === 1 ) {
 			wfRunHooks( 'UserFirstEditOnLocalWiki', [ $this->userId, $this->getWikiId() ] );
 		}
-
-		wfProfileOut( __METHOD__ );
 	}
 
 
@@ -97,8 +85,6 @@ class UserStatsService extends WikiaModel {
 	 * @return array
 	 */
 	public function getStats( $flags = 0 ) {
-		wfProfileIn( __METHOD__ );
-
 		$stats = WikiaDataAccess::cacheWithLock(
 			self::getUserStatsMemcKey( $this->userId, $this->getWikiId() ),
 			self::CACHE_TTL,
@@ -133,8 +119,6 @@ class UserStatsService extends WikiaModel {
 				return $stats;
 			}
 		);
-
-		wfProfileOut( __METHOD__ );
 		return $stats;
 	}
 
@@ -156,8 +140,6 @@ class UserStatsService extends WikiaModel {
 	 * @return Int Number of edits
 	 */
 	public function calculateEditCountWiki( $flags = 0 ) {
-		wfProfileIn( __METHOD__ );
-
 		$dbr = $this->getDatabase( $flags );
 
 		$editCount = $dbr->selectField(
@@ -173,14 +155,10 @@ class UserStatsService extends WikiaModel {
 		);
 
 		$this->setUserStat( 'editcount', $editCount );
-
-		wfProfileOut( __METHOD__ );
 		return $editCount;
 	}
 
 	private function updateEditCount( $propertyName ) {
-		wfProfileIn( __METHOD__ );
-
 		//update edit counts in options
 		$dbw = wfGetDB( DB_MASTER );
 		$dbw->update(
@@ -189,8 +167,6 @@ class UserStatsService extends WikiaModel {
 			[ 'wup_user' => $this->userId, 'wup_property' => $propertyName ],
 			__METHOD__
 		);
-
-		wfProfileOut( __METHOD__ );
 		return $dbw->affectedRows() === 1;
 	}
 
@@ -203,8 +179,6 @@ class UserStatsService extends WikiaModel {
 	 * @return Int Number of edits
 	 */
 	private function calculateEditCountFromWeek( $flags = 0 ) {
-		wfProfileIn( __METHOD__ );
-
 		$dbr = $this->getDatabase( $flags );
 
 		$editCount = $dbr->selectField(
@@ -226,8 +200,6 @@ class UserStatsService extends WikiaModel {
 		);
 
 		$this->setUserStat( 'editcountThisWeek', $editCount );
-
-		wfProfileOut( __METHOD__ );
 		return $editCount;
 	}
 
@@ -239,7 +211,6 @@ class UserStatsService extends WikiaModel {
 	 * @return array
 	 */
 	private function loadUserStatsFromDB() {
-		wfProfileIn(__METHOD__);
 		$stats = [];
 
 		$wikiId = $this->getWikiId();
@@ -257,7 +228,6 @@ class UserStatsService extends WikiaModel {
 			$stats[ $row->wup_property ] = $row->wup_value;
 		}
 
-		wfProfileOut( __METHOD__ );
 		return $stats;
 	}
 
@@ -272,7 +242,6 @@ class UserStatsService extends WikiaModel {
 	 * @return $optionVal string|null
 	 */
 	private function setUserStat( $statName, $statVal ) {
-		wfProfileIn( __METHOD__ );
 		$dbw = $this->getDatabase( Title::GAID_FOR_UPDATE );
 		$dbw->replace(
 			'wikia_user_properties',
@@ -280,7 +249,6 @@ class UserStatsService extends WikiaModel {
 			[ 'wup_user' => $this->userId, 'wup_property' => $statName, 'wup_value' => $statVal ],
 			__METHOD__
 		);
-		wfProfileOut( __METHOD__ );
 		return $statVal;
 	}
 
@@ -293,8 +261,6 @@ class UserStatsService extends WikiaModel {
 	 * @return String Timestamp in format YmdHis e.g. 20131107192200 or empty string
 	 */
 	private function initFirstContributionTimestamp() {
-		wfProfileIn( __METHOD__ );
-
 		$dbw = $this->getDatabase( Title::GAID_FOR_UPDATE );
 		$res = $dbw->selectRow(
 			'revision',
@@ -308,14 +274,10 @@ class UserStatsService extends WikiaModel {
 			$firstContributionTimestamp = $res->firstContributionTimestamp;
 			$this->setUserStat( 'firstContributionTimestamp', $firstContributionTimestamp );
 		}
-
-		wfProfileOut( __METHOD__ );
 		return $firstContributionTimestamp;
 	}
 
 	private function initLastContributionTimestamp() {
-		wfProfileIn( __METHOD__ );
-
 		/* Get lastContributionTimestamp from database */
 		$dbw = $this->getDatabase( Title::GAID_FOR_UPDATE );
 		$res = $dbw->selectRow(
@@ -329,8 +291,6 @@ class UserStatsService extends WikiaModel {
 			$lastContributionTimestamp = $res->lastContributionTimestamp;
 			$this->setUserStat( 'lastContributionTimestamp', $lastContributionTimestamp );
 		}
-
-		wfProfileOut( __METHOD__ );
 		return $lastContributionTimestamp;
 	}
 

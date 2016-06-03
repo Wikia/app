@@ -8,9 +8,9 @@ class CommunityPageSpecialUsersModel {
 	const GLOBAL_BOTS_MCACHE_KEY = 'community_page_global_bots';
 	const ALL_BOTS_MCACHE_KEY = 'community_page_all_bots';
 	const ALL_MEMBERS_MCACHE_KEY = 'community_page_all_members';
-	const ALL_MEMBERS_COUNT_MCACHE_KEY = 'community_page_all_members';
+	const ALL_MEMBERS_COUNT_MCACHE_KEY = 'community_page_all_members_count';
 	const RECENTLY_JOINED_MCACHE_KEY = 'community_page_recently_joined';
-	const MCACHE_VERSION = '1.0';
+	const MCACHE_VERSION = '1.1';
 
 	const ALL_CONTRIBUTORS_MODAL_LIMIT = 50;
 
@@ -323,10 +323,10 @@ class CommunityPageSpecialUsersModel {
 					->LIMIT( self::ALL_CONTRIBUTORS_MODAL_LIMIT )
 					->run( $db );
 
-				$numberOfUsers = $db->affectedRows();
+				$numberOfUsers = $db->numRows( $result );
 
 				if ( $numberOfUsers == self::ALL_CONTRIBUTORS_MODAL_LIMIT ) {
-					while($user = $result->fetchObject()) {
+					while( $user = $result->fetchObject() ) {
 						$userData = $this->prepareUserData( (int)$user->wup_user, $user->wup_value );
 						if ( !empty( $userData ) ) {
 							$usersData[] = $userData;
@@ -413,7 +413,6 @@ class CommunityPageSpecialUsersModel {
 					->FROM( 'revision' )
 					->AND_( 'rev_user' )->NOT_EQUAL_TO( 0 )
 					->AND_( 'rev_user' )->NOT_IN( $botIds )
-					->GROUP_BY( 'rev_user' )
 					->runLoop( $db, function ( &$numberOfMembers, $row ) {
 						$numberOfMembers = (int)$row->members_count;
 					} );
