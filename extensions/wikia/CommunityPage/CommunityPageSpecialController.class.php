@@ -57,8 +57,11 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	public function getTopContributorsData() {
 		$currentUserContributionCount = ( new UserStatsService( $this->getUser()->getId() ) )->getEditCountFromWeek();
 		$topContributors = $this->usersModel->getTopContributors();
-		$topContributorsDetailsLimitedForModule = $this->getContributorsDetails(
-			array_slice( $topContributors, 0, self::TOP_CONTRIBUTORS_MODULE_LIMIT )
+		$topContributorsDetails = $this->getContributorsDetails( $topContributors );
+		$topContributorsDetailsLimitedForModule = array_slice(
+			$topContributorsDetails,
+			0,
+			self::TOP_CONTRIBUTORS_MODULE_LIMIT
 		);
 
 		$this->response->setData( [
@@ -70,7 +73,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 				->text(),
 			'noContribsText' => $this->msg( 'communitypage-no-contributions' )->plain(),
 			'contributors' => $topContributorsDetailsLimitedForModule,
-			'allContributors' => $topContributors,
+			'allContributors' => $topContributorsDetails,
 			'userAvatar' => AvatarService::renderAvatar(
 				$this->getUser()->getName(),
 				AvatarService::AVATAR_SIZE_SMALL_PLUS
