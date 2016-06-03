@@ -262,9 +262,7 @@ class ChatAjax {
 	private static function authenticateServer() {
 		global $wgRequest;
 
-		\Wikia\Security\CSRFDetector::markHttpMethodAccepted( __METHOD__ );
-
-		return \Wikia\Security\Utils::matchToken( ChatConfig::getSecretToken(), $wgRequest->getVal( 'token' ) );
+		return \Wikia\Security\Utils::matchSecretToken( ChatConfig::getSecretToken(), $wgRequest->getVal( 'token' ) );
 	}
 
 	private static function authenticateServerOrUser() {
