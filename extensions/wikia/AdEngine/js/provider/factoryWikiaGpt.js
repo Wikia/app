@@ -2,10 +2,11 @@
 define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adLogicPageParams',
+	'ext.wikia.adEngine.provider.btfBlocker',
 	'ext.wikia.adEngine.provider.gpt.helper',
 	'wikia.log',
 	require.optional('ext.wikia.adEngine.lookup.services')
-], function (adContext, adLogicPageParams, gptHelper, log, lookups) {
+], function (adContext, adLogicPageParams, btfBlocker, gptHelper, log, lookups) {
 	'use strict';
 
 	function overrideSizes(slotMap) {
@@ -49,6 +50,16 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 			return ret;
 		}
 
+		function addHook(slot, hookName, callback) {
+			log([hookName, slot.name], 'debug', logGroup);
+
+			slot.pre(hookName, function (adInfo) {
+				if (typeof callback === 'function') {
+					callback(slot.name, adInfo);
+				}
+			});
+		}
+
 		function fillInSlot(slot) {
 			log(['fillInSlot', slot.name], 'debug', logGroup);
 
@@ -58,21 +69,9 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 					'/5441', 'wka.' + pageParams.s0, pageParams.s1, '', pageParams.s2, src, slot.name
 				].join('/');
 
-			slot.pre('success', function (adInfo) {
-				if (typeof extra.beforeSuccess === 'function') {
-					extra.beforeSuccess(slot.name, adInfo);
-				}
-			});
-			slot.pre('collapse', function (adInfo) {
-				if (typeof extra.beforeCollapse === 'function') {
-					extra.beforeCollapse(slot.name, adInfo);
-				}
-			});
-			slot.pre('hop', function (adInfo) {
-				if (typeof extra.beforeHop === 'function') {
-					extra.beforeHop(slot.name, adInfo);
-				}
-			});
+			addHook(slot, 'success', extra.beforeSuccess);
+			addHook(slot, 'collapse', extra.beforeCollapse);
+			addHook(slot, 'hop', extra.beforeHop);
 
 			slotTargeting.pos = slotTargeting.pos || slot.name;
 			slotTargeting.src = src;
@@ -91,7 +90,7 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 		return {
 			name: providerName,
 			canHandleSlot: canHandleSlot,
-			fillInSlot: fillInSlot
+			fillInSlot: extra.atfSlots ? btfBlocker.decorate(extra.atfSlots, fillInSlot) : fillInSlot
 		};
 	}
 
