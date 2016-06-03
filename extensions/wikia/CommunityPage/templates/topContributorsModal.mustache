@@ -12,7 +12,7 @@
 	</div>
 </div>
 <ul class="reset top-contributors">
-	{{#contributors}}
+	{{#allContributors}}
 		<li class="community-page-contributors-list-item">
 			<div class="avatar-container">
 				<a data-tracking="top-contributors-user-avatar" href="{{profilePage}}">{{{avatar}}}</a>
@@ -28,7 +28,7 @@
 			</div>
 			<div class="community-page-details">{{contributionsText}}</div>
 		</li>
-	{{/contributors}}
+	{{/allContributors}}
 	{{^contributors}}
 		<div class="community-page-zero">
 			{{noContribsText}}
