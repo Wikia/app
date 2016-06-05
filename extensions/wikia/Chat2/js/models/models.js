@@ -1,41 +1,36 @@
-var STATUS_STATE_PRESENT = 'here'; // strings instead of ints just for easier debugging. always use the vars, don't hardcode strings w/these states elsewhere.
-var STATUS_STATE_AWAY = 'away';
+window.STATUS_STATE_PRESENT = 'here'; // strings instead of ints just for easier debugging. always use the vars, don't hardcode strings w/these states elsewhere.
+window.STATUS_STATE_AWAY = 'away';
 
 (function () {
-	var server = false, models;
-	if (typeof exports !== 'undefined') {
-		_ = require('underscore')._;
-		Backbone = require('backbone');
+	'use strict';
 
-		models = exports;
-		server = true;
-	} else {
-		models = this.models = {};
-	}
+	var models = window.models = {};
 
-	//
-	//models
-	//
 
+	/**
+	* models
+	*/
 	models.AuthInfo = Backbone.Model.extend({
 		defaults: {
-			'name': '', // username, NOT trusted (comes from client) but helpful w/debugging and double check.
-			'cookie': '', // the full string of cookies from the user
-			'roomId': '' // the room the user is trying to get into
+			name: '', // username, NOT trusted (comes from client) but helpful w/debugging and double check.
+			cookie: '', // the full string of cookies from the user
+			roomId: '' // the room the user is trying to get into
 		}
 	});
 
 	/** Commands **/
 	models.Command = Backbone.Model.extend({
 		defaults: {
-			'msgType': 'command', // used by the server to determine how to handle one of these objects.
-			'command': ''
+			msgType: 'command', // used by the server to determine how to handle one of these objects.
+			command: ''
 		}
 	});
 
 	models.OpenPrivateRoom = models.Command.extend({
-		initialize: function(options){
-			if(!options) return;
+		initialize: function (options) {
+			if (!options) {
+				return;
+			}
 			this.set({
 				command: 'openprivate',
 				roomId: options.roomId,
@@ -45,7 +40,7 @@ var STATUS_STATE_AWAY = 'away';
 	});
 
 	models.InitqueryCommand = models.Command.extend({
-		initialize: function(){
+		initialize: function () {
 			this.set({
 				command: 'initquery'
 			});
@@ -53,7 +48,7 @@ var STATUS_STATE_AWAY = 'away';
 	});
 
 	models.LogoutCommand = models.Command.extend({
-		initialize: function(){
+		initialize: function () {
 			this.set({
 				command: 'logout'
 			});
@@ -61,8 +56,10 @@ var STATUS_STATE_AWAY = 'away';
 	});
 
 	models.KickCommand = models.Command.extend({
-		initialize: function(options){
-			if(!options) return;
+		initialize: function (options) {
+			if (!options) {
+				return;
+			}
 			this.set({
 				command: 'kick',
 				userToKick: options.userToKick
@@ -71,8 +68,10 @@ var STATUS_STATE_AWAY = 'away';
 	});
 
 	models.BanCommand = models.Command.extend({
-		initialize: function(options){
-			if(!options) return;
+		initialize: function (options) {
+			if (!options) {
+				return;
+			}
 			this.set({
 				command: 'ban',
 				userToBan: options.userToBan,
@@ -83,8 +82,10 @@ var STATUS_STATE_AWAY = 'away';
 	});
 
 	models.GiveChatModCommand = models.Command.extend({
-		initialize: function(options){
-			if(!options) return;
+		initialize: function (options) {
+			if (!options) {
+				return;
+			}
 			this.set({
 				command: 'givechatmod',
 				userToPromote: options.userToPromote
@@ -93,8 +94,10 @@ var STATUS_STATE_AWAY = 'away';
 	});
 
 	models.SetStatusCommand = models.Command.extend({
-		initialize: function(options){
-			if(!options) return;
+		initialize: function (options) {
+			if (!options) {
+				return;
+			}
 			this.set({
 				command: 'setstatus',
 				statusState: options.statusState,
@@ -104,8 +107,10 @@ var STATUS_STATE_AWAY = 'away';
 	});
 
 	models.PartEvent = Backbone.Model.extend({
-		initialize: function(options){
-			if(!options) return;
+		initialize: function (options) {
+			if (!options) {
+				return;
+			}
 			this.set({
 				name: options.name
 			});
@@ -113,8 +118,10 @@ var STATUS_STATE_AWAY = 'away';
 	});
 
 	models.LogoutEvent = Backbone.Model.extend({
-		initialize: function(options){
-			if(!options) return;
+		initialize: function (options) {
+			if (!options) {
+				return;
+			}
 			this.set({
 				name: options.name
 			});
@@ -123,18 +130,20 @@ var STATUS_STATE_AWAY = 'away';
 
 	models.KickEvent = Backbone.Model.extend({
 		defaults: {
-			"kickedUserName": '',
-			"moderatorName": '',
-			"time": 0,
-			"reason": ''
+			kickedUserName: '',
+			moderatorName: '',
+			time: 0,
+			reason: ''
 		},
 
-		initialize: function(info) {
-			if(!info) return;
+		initialize: function (info) {
+			if (!info) {
+				return;
+			}
 			this.set({
 				kickedUserName: info.kickedUserName,
 				moderatorName: info.moderatorName,
-				time: info.time ? info.time:0,
+				time: info.time ? info.time : 0,
 				reason: info.reason ? info.reason : ''
 			});
 		}
@@ -143,14 +152,14 @@ var STATUS_STATE_AWAY = 'away';
 	/** ChatEntries (messages, alerts) **/
 	models.ChatEntry = Backbone.Model.extend({
 		defaults: {
-			'msgType': 'chat', // used by the server to determine how to handle one of these objects.
-			'roomId' : 0,
-			'name': '',
-			'text': '',
-			'avatarSrc': '',
-			'timeStamp': '',
-			'continued': false,
-			'temp': false //use for long time connection with private
+			msgType: 'chat', // used by the server to determine how to handle one of these objects.
+			roomId: 0,
+			name: '',
+			text: '',
+			avatarSrc: '',
+			timeStamp: '',
+			continued: false,
+			temp: false //use for long time connection with private
 		}
 	});
 
@@ -163,8 +172,10 @@ var STATUS_STATE_AWAY = 'away';
 	 * will be assumed to have already been done.
 	 */
 	models.InlineAlert = models.ChatEntry.extend({
-		initialize: function(options){
-			if(!options) return;
+		initialize: function (options) {
+			if (!options) {
+				return;
+			}
 			this.set({
 				isInlineAlert: true, // so that the view can detect that this should be displayed specially
 				text: options.text,
@@ -175,77 +186,81 @@ var STATUS_STATE_AWAY = 'away';
 	});
 
 
-	var modelInit = function() {
+	function modelInit() {
 		this.chats = new models.ChatCollection();
 		this.users = new models.UserCollection();
 		this.privateUsers = new models.UserCollection();
 		this.blockedUsers = new models.UserCollection();
 		this.blockedByUsers = new models.UserCollection();
 
-		this.chats.bind('add', function(current) {
+		this.chats.bind('add', function (current) {
 			var last = this.at(this.length - 2),
-				// assume that each message is a separate one, if not, override this prop below.
+			// assume that each message is a separate one, if not, override this prop below.
 				continued = false;
 
-			if (typeof(last) == 'object' &&
-				last.get('name') == current.get('name') &&
-				last.get('temp') == current.get('temp') &&
-				current.get('msgType') == 'chat')
-					{
-						continued = true;
-					}
+			if (typeof(last) === 'object' &&
+				last.get('name') === current.get('name') &&
+				last.get('temp') === current.get('temp') &&
+				current.get('msgType') === 'chat') {
+				continued = true;
+			}
 
-			current.set({'continued': continued});
+			current.set({
+				continued: continued
+			});
 
 			this.trigger('afteradd', current);
 		});
 
-		this.chats.bind('remove', function(current) {
-			current.set({'continued': false });
+		this.chats.bind('remove', function (current) {
+			current.set({
+				continued: false
+			});
 		});
-	};
+	}
 
 	models.NodeChatModel = Backbone.Model.extend({
 		defaults: {
-			"clientId": 0
+			clientId: 0
 		},
 
-		initialize: function() {
-			modelInit.apply(this,arguments);
+		initialize: function () {
+			modelInit.apply(this, arguments);
 		}
 	});
 
 	models.NodeChatModelCS = models.NodeChatModel.extend({
-		initialize: function() {
-			modelInit.apply(this,arguments);
+		initialize: function () {
+			modelInit.apply(this, arguments);
 			this.room = new models.ChatRoom();
 		}
 	});
 
 	models.User = Backbone.Model.extend({
 		defaults: {
-			'name': '',
-			'since': '',
-			'statusMessage': '',
-			'statusState': STATUS_STATE_PRESENT,
-			'isModerator': false,
-			'isStaff': false,
-			'canPromoteModerator': false,
-			'avatarSrc': "http://placekitten.com/50/50",
-			'editCount': '?',
-			'isPrivate': false,
-			'active': false,
-			'privateRoomId': false
+			name: '',
+			since: '',
+			statusMessage: '',
+			statusState: STATUS_STATE_PRESENT,
+			isModerator: false,
+			isStaff: false,
+			canPromoteModerator: false,
+			avatarSrc: 'http://placekitten.com/50/50',
+			editCount: '?',
+			isPrivate: false,
+			active: false,
+			privateRoomId: false
 		},
 
-		initialize: function(options){
-
+		initialize: function () {
 		}
 	});
 
 	models.PrivateUser = models.User.extend({
-		initialize: function(options){
-			if(!options) return;
+		initialize: function (options) {
+			if (!options) {
+				return;
+			}
 			this.set({
 				privateRoomId: options.privateRoomId,
 				isPrivate: true
@@ -255,49 +270,47 @@ var STATUS_STATE_AWAY = 'away';
 
 	models.ChatRoom = Backbone.Model.extend({
 		defaults: {
-			'roomId': 0,
-			'unreadMessage': 0,
-			'blockedMessageInput': false,
-			'isActive': false,
-			'privateUser': false
+			roomId: 0,
+			unreadMessage: 0,
+			blockedMessageInput: false,
+			isActive: false,
+			privateUser: false
 		}
 	});
 
-	//
-	//Collections
-	//
-
+	/*
+	* Collections
+	*/
 	models.ChatCollection = Backbone.Collection.extend({
 		model: models.ChatEntry
 	});
 
-	var findByName = function(name) {
-		return this.find(function(user){
-			return (user.get('name') == name);
+	function findByName(name) {
+		return this.find(function (user) {
+			return (user.get('name') === name);
 		});
-	};
+	}
 
 	models.UserCollection = Backbone.Collection.extend({
 		model: models.User,
-		initialize: function() {
+		initialize: function () {
 			this.findByName = findByName;
 		}
 	});
 
 	models.PrivateUserCollection = Backbone.Collection.extend({
 		model: models.PrivateUser,
-		initialize: function() {
+		initialize: function () {
 			this.findByName = findByName;
 		}
 	});
 
-	//
-	//Model exporting/importing
-	//
-
+	/*
+	* Model exporting/importing
+	*/
 	Backbone.Model.prototype.xport = function (opt) {
 		var result = {},
-		settings = _({recurse: true}).extend(opt || {});
+			settings = _({recurse: true}).extend(opt || {});
 
 		function process(targetObj, source) {
 			targetObj.id = source.id || null;
@@ -352,20 +365,19 @@ var STATUS_STATE_AWAY = 'away';
 			}
 		}
 
-		try{
-			process(this, JSON.parse(data) );
-		} catch (e){
-			if (typeof console != 'undefined') {
-				console.error("Unable to parse message in mport. Data attempted to parse was: ");
+		try {
+			process(this, JSON.parse(data));
+		} catch (err) {
+			if (typeof console !== 'undefined') {
+				console.error('Unable to parse message in mport. Data attempted to parse was: ');
 				console.error(data);
-				console.error("Parsing error was: ");
-				console.error(e);
+				console.error('Parsing error was: ');
+				console.error(err);
 			} else {
-				throw e;
+				throw err;
 			}
 		}
 
 		return this;
 	};
-
-})()
+})();

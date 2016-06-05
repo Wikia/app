@@ -1,5 +1,3 @@
-/*global UserLoginModal*/
-
 var ChatWidget = {
 	loading: false,
 	chatLaunchModal: null,
@@ -41,8 +39,10 @@ var ChatWidget = {
 			ChatWidget.loadChatUsers(),
 			ChatWidget.loadWidgetUserElementTemplate()
 		).then(function(usersData, templateData) {
+			var users;
+
 			if (usersData[1] === 'success' && templateData[1] === 'success') {
-				var users = usersData[0].users;
+				users = usersData[0].users;
 
 				ChatWidget.widgetUserElementTemplate = templateData[0].mustache[0];
 
@@ -96,11 +96,11 @@ var ChatWidget = {
 		});
 
 		$('.chatCarousel').each(function () {
-			$(this).get(0).innerHTML = output;
+			$(this).get(0).html(output);
 		});
 
 		// update number of users
-		$('.chat-total').innerHTML = users.length;
+		$('.chat-total').html(users.length);
 	},
 
 	initEntryPoint: function () {
@@ -148,26 +148,26 @@ var ChatWidget = {
 	/**
 	 * Creates carousel of users and fills in some of fields with translated messages
 	 *
-	 * @param $t chat module element
+	 * @param $element chat module element
 	 */
-	processModuleTemplate: function ($t) {
-		ChatWidget.initCarousel($t.find('.chat-whos-here'));
+	processModuleTemplate: function ($element) {
+		ChatWidget.initCarousel($element.find('.chat-whos-here'));
 
 		// process i18n the messages
-		$t.find('[data-msg-id]').each(function () {
-			var $e = $(this);
-			$e.text($.msg($e.data('msg-id'), $e.data('msg-param')));
+		$element.find('[data-msg-id]').each(function () {
+			var $module = $(this);
+			$module.text($.msg($module.data('msg-id'), $module.data('msg-param')));
 		});
 	},
 
 	/**
 	 * change the user list into the carousel
-	 * @param $el chat who is here element
+	 * @param $element chat who is here element
 	 */
-	initCarousel: function ($el) {
+	initCarousel: function ($element) {
 		var popoverTimeout = 0;
 
-		$el.find('.carousel-container').carousel({
+		$element.find('.carousel-container').carousel({
 			nextClass: 'arrow-right',
 			prevClass: 'arrow-left',
 			// differ number of users on chat according to it's width
@@ -180,7 +180,7 @@ var ChatWidget = {
 			}, 300);
 		}
 
-		$el.find('.chatter').popover({
+		$element.find('.chatter').popover({
 			trigger: 'manual',
 			placement: 'bottom',
 			content: function () {
@@ -235,7 +235,6 @@ var ChatWidget = {
 	},
 
 	onJoinChatFormLoaded: function (html) {
-
 		require(['wikia.ui.factory'], function (uiFactory) {
 			uiFactory.init('modal').then(function (uiModal) {
 				var joinModalConfig = {
