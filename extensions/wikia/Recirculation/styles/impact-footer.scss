@@ -51,7 +51,7 @@ $recirculation-impact-footer-color-feature-overlay: rgba(0, 0, 0, .75);
 		&.item-wiki::after {
 			background: {
 				color: $recirculation-fandom-wiki-tag;
-				image: url('/extensions/wikia/Recirculation/images/wiki.svg');
+				image: url('/extensions/wikia/Recirculation/images/wiki.svg'); /* $wgCdnStylePath */
 				position: 5px center;
 				repeat: no-repeat;
 			}
@@ -115,7 +115,7 @@ $recirculation-impact-footer-color-feature-overlay: rgba(0, 0, 0, .75);
 	.thumbnail {
 		background: {
 			color: $color-article-thumb-background;
-			image: url('/extensions/wikia/Recirculation/images/brackets.svg');
+			image: url('/extensions/wikia/Recirculation/images/brackets.svg'); /* $wgCdnStylePath */
 			position: center;
 			repeat: no-repeat;
 			size: contain;
@@ -254,7 +254,7 @@ $recirculation-impact-footer-color-feature-overlay: rgba(0, 0, 0, .75);
 		.discussion-upvotes-container,
 		.discussion-comments-container {
 			background: {
-				image: url('/extensions/wikia/Recirculation/images/upvotes.svg');
+				image: url('/extensions/wikia/Recirculation/images/upvotes.svg'); /* $wgCdnStylePath */
 				position: center left;
 				repeat: no-repeat;
 				size: contain;
@@ -263,7 +263,7 @@ $recirculation-impact-footer-color-feature-overlay: rgba(0, 0, 0, .75);
 		}
 
 		.discussion-comments-container {
-			background-image: url('/extensions/wikia/Recirculation/images/comments.svg');
+			background-image: url('/extensions/wikia/Recirculation/images/comments.svg'); /* $wgCdnStylePath */
 		}
 	}
 }
