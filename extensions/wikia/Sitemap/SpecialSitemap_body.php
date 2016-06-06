@@ -174,8 +174,6 @@ class SitemapPage extends UnlistedSpecialPage {
 	private function generateIndex() {
 		global $wgServer, $wgOut, $wgMemc, $wgContentNamespaces;
 
-		wfProfileIn( __METHOD__ );
-
 		$timestamp = wfTimestamp( TS_ISO_8601, wfTimestampNow() );
 		$id = wfWikiID();
 
@@ -214,8 +212,6 @@ class SitemapPage extends UnlistedSpecialPage {
 
 		$out .= "</sitemapindex>\n";
 
-		wfProfileOut( __METHOD__ );
-
 		print $out;
 	}
 
@@ -225,7 +221,6 @@ class SitemapPage extends UnlistedSpecialPage {
 	 */
 	private function generateNamespace( Array $sitemapIndex = null, $forceUpdate = false ) {
 		global $wgMemc;
-		wfProfileIn( __METHOD__ );
 
 		if( !$forceUpdate ) {
 			$namespaceSitemap = $this->generateNamespaceFromDb();
@@ -303,13 +298,10 @@ class SitemapPage extends UnlistedSpecialPage {
 		$endTime = microtime(true);
 		$out .= "<!-- Generating time: " . ( $endTime - $startTime ) . " sec - " . date('Y-m-d H:i:s') . " -->\n";
 
-		wfProfileOut( __METHOD__ );
 		return gzencode( $out );
 	}
 
 	private function generateNamespaceFromDb() {
-		wfProfileIn( __METHOD__ );
-
 		$dbr = wfGetDB( DB_SLAVE );
 		if( $dbr->tableExists( self::BLOBS_TABLE_NAME ) ) {
 			$sitemapContent = $dbr->selectField(
@@ -326,13 +318,10 @@ class SitemapPage extends UnlistedSpecialPage {
 			$sitemapContent = null;
 		}
 
-		wfProfileOut( __METHOD__ );
 		return $sitemapContent;
 	}
 
 	private function storeNamespaceToDb( $sitemapNamespaceContent ) {
-		wfProfileIn( __METHOD__ );
-
 		$dbr = wfGetDB( DB_MASTER );
 		if( $dbr->tableExists( self::BLOBS_TABLE_NAME ) ) {
 			$dbr->replace(
@@ -347,8 +336,6 @@ class SitemapPage extends UnlistedSpecialPage {
 			);
 			$dbr->commit();
 		}
-
-		wfProfileOut( __METHOD__ );
 	}
 
 	private function titleEntry( Title $title, $date, $priority, $includeVideo = false ) {
@@ -362,22 +349,18 @@ class SitemapPage extends UnlistedSpecialPage {
 	}
 
 	private function videoEntry( Title $title ) {
-		wfProfileIn( __METHOD__ );
-
 		$file = wfFindFile( $title );
 
 		$videoTitleData = $this->mMediaService->getMediaData( $title, 500 );
 
 		$isVideo = WikiaFileHelper::isFileTypeVideo( $file );
 		if ( !$isVideo ) {
-			wfProfileOut( __METHOD__ );
 			return '';
 		}
 
 		$metaData = $videoTitleData['meta'];
 
 		if( ( $videoTitleData['type'] != MediaQueryService::MEDIA_TYPE_VIDEO ) || $metaData['canEmbed'] === 0 ) {
-			wfProfileOut( __METHOD__ );
 			return '';
 		}
 
@@ -394,13 +377,10 @@ class SitemapPage extends UnlistedSpecialPage {
 				"\t\t\t<video:family_friendly>yes</video:family_friendly>\n" .
 				"\t\t</video:video>\n";
 
-		wfProfileOut( __METHOD__ );
 		return $entry;
 	}
 
 	public function cachePages( $namespace ) {
-		wfProfileIn( __METHOD__ );
-
 		$dbr = wfGetDB( DB_SLAVE, "vslow" );
 		$sth = $dbr->select(
 			array( "page" ),
@@ -430,14 +410,11 @@ class SitemapPage extends UnlistedSpecialPage {
 		if( empty( $index[ $pCounter ][ "end" ] ) ) {
 			$index[ $pCounter ][ "end" ] = $last;
 		}
-		wfProfileOut( __METHOD__ );
 
 		return $index;
 	}
 
 	public function cacheSitemap( $namespace, $sitemapIndex ) {
-		wfProfileIn(__METHOD__);
-
 		$this->initDb();
 
 		$this->mTitle = Title::newFromText( 'Sitemap', NS_SPECIAL );
@@ -449,19 +426,15 @@ class SitemapPage extends UnlistedSpecialPage {
 			$this->storeNamespaceToDb( $this->generateNamespace( $sitemapIndex, true ) );
 		}
 
-		wfProfileOut(__METHOD__);
 		return false;
 	}
 
 	private function initDb() {
-		wfProfileIn(__METHOD__);
 		$dbr = wfGetDb( DB_MASTER );
 
 		if( !$dbr->tableExists( self::BLOBS_TABLE_NAME ) ) {
 			$dbr->sourceFile( dirname(__FILE__) . '/sitemap_blobs.patch.sql' );
 		}
-
-		wfProfileOut(__METHOD__);
 	}
 
 	/**
@@ -484,8 +457,6 @@ class SitemapPage extends UnlistedSpecialPage {
 	 * LoadExtensionSchemaUpdates handler; set up sitemap_blobs table on install/upgrade.
 	 */
 	public static function onLoadExtensionSchemaUpdates( $updater = null ) {
-		wfProfileIn( __METHOD__ );
-
 		if( !empty( $updater ) ) {
 			$map = array(
 				'mysql' => 'sitemap_blobs.patch.sql',
@@ -501,7 +472,6 @@ class SitemapPage extends UnlistedSpecialPage {
 			}
 		}
 
-		wfProfileOut( __METHOD__ );
 		return true;
 	}
 }
