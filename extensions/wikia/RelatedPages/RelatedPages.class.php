@@ -144,7 +144,7 @@ class RelatedPages {
 					}
 
 					// limit * 2 - get more pages (some can be filtered out - RT #72703)
-					$pages = $this->getPagesForCategories( $articleId, self::LIMIT_MAX * 2, $categories );
+					$pages = $this->getPagesForCategories( $articleId, $categories );
 
 					$this->afterGet( $pages, self::LIMIT_MAX );
 				}
@@ -183,14 +183,14 @@ class RelatedPages {
 	/**
 	 * get pages that belong to a list of categories
 	 * @author Owen
+	 * @author Macbre
 	 *
 	 * @param int $articleId
-	 * @param int $limit
 	 * @param array $categories
 	 * @return array
 	 * @throws DBUnexpectedError|MWException
 	 */
-	protected function getPagesForCategories( $articleId, $limit, Array $categories ) {
+	protected function getPagesForCategories( $articleId, Array $categories ) {
 		if ( empty( $categories ) ) {
 			return [];
 		}
@@ -204,11 +204,8 @@ class RelatedPages {
 		$pages = WikiaDataAccess::cache(
 			wfMemcKey( __METHOD__, 'categories', md5( serialize( $categories ) ) ),
 			WikiaResponse::CACHE_STANDARD,
-			function() use ( $categories, $fname, $limit ) {
+			function() use ( $categories, $fname ) {
 				$dbr = wfGetDB( DB_SLAVE );
-
-				# sanitize query parameters
-				$limit = intval( $limit );
 
 				/**
 				 * SELECT count(page_id) as c, cl_from AS page_id, page_namespace, page_title, page_is_redirect, page_len, page_latest
@@ -241,7 +238,7 @@ class RelatedPages {
 					[
 						'GROUP BY' => 'page.page_id',
 						'ORDER BY' => 'c DESC',
-						'LIMIT' => $limit,
+						'LIMIT' => self::LIMIT_MAX * 2,
 					],
 					[
 						'page' => [
