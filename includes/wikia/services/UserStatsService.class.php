@@ -120,15 +120,15 @@ class UserStatsService extends WikiaModel {
 					];
 				}
 
-				if ( isset( $stats['editcountThisWeek'] ) ) {
+				if ( !isset( $stats['editcountThisWeek'] ) ) {
 					$stats['editcountThisWeek'] = $this->calculateEditCountFromWeek( $flags );
 				}
 
-				if ( isset( $stats['firstContributionTimestamp'] ) ) {
+				if ( !isset( $stats['firstContributionTimestamp'] ) ) {
 					$stats['firstContributionTimestamp'] = $this->initFirstContributionTimestamp();
 				}
 
-				if ( isset( $stats['lastContributionTimestamp'] ) ) {
+				if ( !isset( $stats['lastContributionTimestamp'] ) ) {
 					$stats['lastContributionTimestamp'] = $this->initLastContributionTimestamp();
 				}
 
