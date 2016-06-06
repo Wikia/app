@@ -21,6 +21,7 @@ function isCorrupted() {
 	return preg_match($pattern, $raw) === 1;
 }
 
+echo( "\n Processing..." );
 if ( isCorrupted() ) {
 	echo( "\n" . $wgCityId);
 }
