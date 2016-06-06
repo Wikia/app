@@ -232,62 +232,66 @@ class RelatedPages {
 	 * @throws DBUnexpectedError|MWException
 	 */
 	protected function getPagesForCategories( $articleId, $limit, Array $categories ) {
-		global $wgMemc;
-
 		if ( empty( $categories ) ) {
 			return [];
 		}
 
 		wfProfileIn( __METHOD__ );
+		$fname = __METHOD__;
 
-		$cacheKey = wfMemcKey( __METHOD__, $articleId );
-		$cache = $wgMemc->get( $cacheKey );
+		// make the caching key more deterministic
+		sort( $categories );
 
-		if ( is_array( $cache ) ) {
-			wfProfileOut( __METHOD__ );
-			return $cache;
-		}
+		$pages = WikiaDataAccess::cache(
+			wfMemcKey( __METHOD__, 'categories', md5( serialize( $category ) ) ),
+			WikiaResponse::CACHE_STANDARD,
+			function() use ( $categories, $fname, $limit ) {
+				$dbr = wfGetDB( DB_SLAVE );
+				$pages = [];
 
-		$dbr = wfGetDB( DB_SLAVE );
-		$pages = array();
+				$tables = [ "categorylinks" ];
+				$joinSql = $this->getPageJoinSql( $dbr, $tables );
 
-		$tables = array( "categorylinks" );
-		$joinSql = $this->getPageJoinSql( $dbr, $tables );
+				$innerSQL = $dbr->selectSQLText(
+					$tables,
+					array( "cl_from AS page_id" ),
+					array( "cl_to IN ( " . $dbr->makeList( $categories ) . " )" ),
+					$fname,
+					[
+						'LIMIT' => self::CATEGORY_LINKS_LIMIT
+					],
+					$joinSql
+				);
 
-		$innerSQL = $dbr->selectSQLText(
-			$tables,
-			array( "cl_from AS page_id" ),
-			array( "cl_to IN ( " . $dbr->makeList( $categories ) . " )" ),
-			__METHOD__,
-			[
-				'LIMIT' => self::CATEGORY_LINKS_LIMIT
-			],
-			$joinSql
+				# sanitize query parameters
+				$articleId = intval( $articleId );
+				$limit = intval( $limit );
+
+				$sql = "SELECT page_id, count(*) c FROM ( $innerSQL ) i GROUP BY page_id ORDER BY c desc LIMIT $limit";
+				$res = $dbr->query( $sql, $fname );
+				while ( $row = $dbr->fetchObject( $res ) ) {
+					$pageId = (int) $row->page_id;
+					$title = Title::newFromId( $pageId );
+
+					// filter out redirect pages (RT #72662)
+					if ( $title instanceof Title && $title->exists() && !$title->isRedirect() ) {
+						$pages[ $pageId ] = [
+							'url' => $title->getLocalUrl(),
+							'title' => $title->getPrefixedText(),
+							'id' => $pageId
+						];
+					}
+				}
+
+				return $pages;
+			}
 		);
 
-		# sanitize query parameters
-		$articleId = intval( $articleId );
-		$limit = intval( $limit );
-
-		$sql = "SELECT page_id, count(*) c FROM ( $innerSQL ) i WHERE page_id != $articleId GROUP BY page_id ORDER BY c desc LIMIT $limit";
-		$res = $dbr->query( $sql, __METHOD__ );
-		while ( $row = $dbr->fetchObject( $res ) ) {
-			$pageId = $row->page_id;
-			$title = Title::newFromId( $pageId );
-
-			// filter out redirect pages (RT #72662)
-			if ( !empty( $title ) && $title->exists() && !$title->isRedirect() ) {
-				$prefixedTitle = $title->getPrefixedText();
-
-				$pages[ $pageId ] = array(
-					'url' => $title->getLocalUrl(),
-					'title' => $prefixedTitle,
-					'id' => (int) $pageId
-				);
-			}
+		// filter out the page we want to get related pages for
+		if ( array_key_exists( $articleId, $pages )) {
+			unset( $pages[ $articleId ] );
 		}
 
-		$wgMemc->set( $cacheKey, $pages, WikiaResponse::CACHE_STANDARD );
 		wfProfileOut( __METHOD__ );
 		return $pages;
 	}
