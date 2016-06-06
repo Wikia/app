@@ -348,49 +348,6 @@ class RelatedPages {
 	}
 
 	/**
-	 * get category rank, based on number of articles assigned
-	 * @return array
-	 */
-	protected function getCategoryRank() {
-		wfProfileIn( __METHOD__ );
-
-		$results = WikiaDataAccess::cacheWithLock(
-			wfMemcKey( __METHOD__ ),
-			WikiaResponse::CACHE_STANDARD,
-			function () {
-				global $wgContentNamespaces;
-
-				$db = wfGetDB( DB_SLAVE );
-				$sql = ( new WikiaSQL() )
-					->SELECT( "COUNT(cl_to)" )->AS_( "count" )->FIELD( 'cl_to' )
-					->FROM( 'categorylinks' )
-					->GROUP_BY( 'cl_to' )
-					->HAVING( 'count > 1' )
-					->ORDER_BY( [ 'count', 'desc' ] );
-
-				if ( count( $wgContentNamespaces ) > 0 ) {
-					$join_cond = ( count( $wgContentNamespaces ) == 1 )
-								? "page_namespace = " . intval( reset( $wgContentNamespaces ) )
-								: "page_namespace in ( " . $db->makeList( $wgContentNamespaces ) . " )";
-
-					$sql->JOIN( 'page' )->ON( "page_id = cl_from AND $join_cond" );
-				}
-
-				$rank = 1;
-				$results = $sql->runLoop( $db, function( &$results, $row ) use ( &$rank ) {
-					$results[ $row->cl_to ] = $rank;
-					$rank++;
-				} );
-
-				return $results;
-			}
-		);
-
-		wfProfileOut( __METHOD__ );
-		return $results;
-	}
-
-	/**
 	 * @param string $category
 	 * @return int
 	 */
