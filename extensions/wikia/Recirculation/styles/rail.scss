@@ -1,4 +1,5 @@
 @import 'skins/shared/color';
+@import 'skins/shared/mixins/transform';
 
 .WikiaRail .recirculation-rail {
 	.rail-item {
@@ -33,6 +34,69 @@
 
 		&:hover {
 			color: $color-links;
+		}
+	}
+}
+
+$recirculation-fandom-dark-blue: #39414d;
+
+.recirculation-rail.group-E3 {
+	margin-top: 30px;
+
+	&::before {
+		background: {
+			color: $recirculation-fandom-dark-blue;
+			image: url('/extensions/wikia/Recirculation/images/logomark.svg');
+			position: center;
+			repeat: no-repeat;
+		};
+		border: {
+			color: $color-module-background;
+			radius: 24px;
+			style: solid;
+			width: 4px;
+		};
+		content: '';
+		display: block;
+		height: 40px;
+		left: 50%;
+		margin-left: -24px;
+		position: absolute;
+		top: -24px;
+		width: 40px;
+	}
+
+	h2 {
+		font-size: 24px;
+		line-height: 26px;
+		margin-bottom: 20px;
+		margin-top: 5px;
+		padding: 0;
+		text-align: center;
+
+		span {
+			color: $color-alternate-text;
+			font-size: 10px;
+			letter-spacing: .3px;
+			line-height: 10px;
+			text-transform: uppercase;
+		}
+
+		svg {
+			@include transform-scale(1.2);
+
+			fill: $recirculation-fandom-dark-blue;
+			margin-left: 7px;
+		}
+	}
+
+	@if ($is-dark-wiki) {
+		&::before {
+			background-color: $color-white;
+		}
+
+		h2 svg {
+			fill: $color-white;
 		}
 	}
 }

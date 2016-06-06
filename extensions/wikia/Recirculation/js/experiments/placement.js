@@ -61,6 +61,15 @@ require([
 	}
 
 	switch (group) {
+		case 'E3':
+			helper = fandomHelper({
+				limit: 5
+			});
+			view = railView({
+				formatTitle: true
+			});
+			isRail = true;
+			break;
 		case 'LATERAL_FANDOM':
 			helper = lateralHelper();
 			view = railView();
