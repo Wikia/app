@@ -6,7 +6,7 @@ This extension allows emails to be constructed using standard Wikia headers and 
 
 ### Special:SendEmail
 
-Special:SendEmail is a special page which presents a list of forms you can use to send off any of our emails. You must
+Special:SendEmail (e.g. http://garth.wikia.com/wiki/Special:SendEmail) is a special page which presents a list of forms you can use to send off any of our emails. You must
 be logged in with a staff account to access the page, and each form contains fields which correspond to the required
 parameters for each of the emails.
 
