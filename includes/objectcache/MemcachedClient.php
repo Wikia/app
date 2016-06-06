@@ -1218,9 +1218,10 @@ class MWMemcached {
 		if ( $len > self::MEMCACHED_ITEM_MAX_SIZE - 2 ) {
 			// default item_max_size is 1mb, 2 characters are reserved for trailing "\r\n"
 			if ( class_exists( 'Wikia\\Logger\\WikiaLogger' ) ) {
-				\Wikia\Logger\WikiaLogger::instance()->error( 'MemcachedClient: large value' , [
+				\Wikia\Logger\WikiaLogger::instance()->error( __METHOD__ . ' - MemcachedClient: large value' , [
 					'exception' => new Exception(),
 					'key' => $key,
+					'normalized_key' => Wikia\Memcached\MemcachedStats::normalizeKey( $key ), # for easier grouping in Kibana
 					'len' => $len,
 				] );
 			}
@@ -1241,14 +1242,14 @@ class MWMemcached {
 
 		// Wikia change - begin
 		// @author macbre (PLATFORM-774)
-		$this->error( 'MemcachedClient: store failed', [
+		$this->error( __METHOD__ . ' - MemcachedClient: store failed - ' . $line, [
 			'cmd'       => $cmd,
 			'key'       => $key,
+			'normalized_key' => Wikia\Memcached\MemcachedStats::normalizeKey( $key ), # for easier grouping in Kibana
 			'val_size'  => strlen( $val ),
-			'line'      => $line,
-			'exception' => new Exception(),
+			'exception' => new Exception( $line ),
 			'host'      => $host,
-		]);
+		] );
 		// Wikia change - end
 		return false;
 	}
