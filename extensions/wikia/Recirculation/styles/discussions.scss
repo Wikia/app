@@ -86,7 +86,9 @@ $recirculation-discussion-thread-padding: 10px;
 			overflow: hidden;
 		}
 	}
+}
 
+.discussion-test {
 	.discussion-thread:nth-child(n+3) {
 		@include align-self(flex-end);
 		font-size: $recirculation-discussion-small-font-size;
