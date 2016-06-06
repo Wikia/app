@@ -140,6 +140,7 @@ $config['recirculation_js'] = array(
 		'//extensions/wikia/Recirculation/js/helpers/LateralHelper.js',
 		'//extensions/wikia/Recirculation/js/helpers/DataHelper.js',
 		'//extensions/wikia/Recirculation/js/helpers/CakeRelatedContentHelper.js',
+		'//extensions/wikia/Recirculation/js/helpers/CuratedContentHelper.js',
 		'//extensions/wikia/Recirculation/js/views/incontent.js',
 		'//extensions/wikia/Recirculation/js/views/rail.js',
 		'//extensions/wikia/Recirculation/js/views/footer.js',

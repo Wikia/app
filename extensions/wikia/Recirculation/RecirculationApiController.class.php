@@ -1,7 +1,7 @@
 <?php
 
 class RecirculationApiController extends WikiaApiController {
-	const ALLOWED_TYPES = ['popular', 'shares', 'recent_popular', 'vertical', 'community'];
+	const ALLOWED_TYPES = ['popular', 'shares', 'recent_popular', 'vertical', 'community', 'curated'];
 
 	public function getFandomPosts() {
 		$type = $this->request->getVal( 'type' );
@@ -9,7 +9,11 @@ class RecirculationApiController extends WikiaApiController {
 			throw new InvalidParameterApiException( 'type' );
 		}
 
-		$fandomDataService = new FandomDataService();
+		if ($type === 'curated') {
+			$fandomDataService = new CuratedContentService();
+		} else {
+			$fandomDataService = new FandomDataService();
+		}
 
 		$posts = $fandomDataService->getPosts( $type );
 

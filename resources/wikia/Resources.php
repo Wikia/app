@@ -32,6 +32,7 @@ return [
 			'wikia.tracker',
 			'wikia.window',
 			'wikia.abTest',
+			'wikia.underscore',
 		],
 		'position' => 'top', // needs to be loaded before AssetsManager files
 	],
