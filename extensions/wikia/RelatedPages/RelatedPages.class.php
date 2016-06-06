@@ -13,15 +13,6 @@ class RelatedPages {
 
 	const LIMIT_MAX = 10;
 
-	/**
-	 * Limit the number of results taken from categorylinks and improve the performance on big wikis
-	 * by making the temporary table much smaller
-	 *
-	 * @author macbre
-	 * @see PLATFORM-1591
-	 */
-	const CATEGORY_LINKS_LIMIT = 100000;
-
 	protected function __construct() {
 	}
 
