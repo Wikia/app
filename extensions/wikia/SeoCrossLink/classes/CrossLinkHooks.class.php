@@ -7,9 +7,7 @@ class CrossLinkHooks {
 		$user = $out->getUser();
 		$lang = $out->getLanguage();
 
-		if ( $user && $user->isAnon()
-			&& $lang && $lang->getCode() === 'en'
-		) {
+		if ( $user && $user->isAnon() && $lang && $lang->getCode() === 'en' ) {
 			$inserter = new CrossLinkInserter();
 			$text = $inserter->insertCrossLinks( $text );
 		}

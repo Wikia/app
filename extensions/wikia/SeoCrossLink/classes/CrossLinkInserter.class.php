@@ -51,13 +51,8 @@ class CrossLinkInserter {
 			// Regex time: find the occurrence of the word after opening of <p>, <li>, <td>, <div>
 			// <span>, <b>, <i>, <string>, or <em> tag without any other HTML between the opening
 			// and the word. A closing </br> tag will do too
-			$regex = ':<(li|td|p|div|span|b|i|strong|em|/br)( [^<>]*)?>([^<>]*?)(\b' .
-				preg_quote( $hotWord ) . '\b):i';
-
-			$replacement = sprintf(
-				'<\1\2>\3<a class="external extiw" href="%s">\4</a>',
-				htmlspecialchars( $targetUrl )
-			);
+			$regex = ':<(li|td|p|div|span|b|i|strong|em|/br)( [^<>]*)?>([^<>]*?)(\b' . preg_quote( $hotWord ) . '\b):i';
+			$replacement = '<\1\2>\3<a class="external" href="' . htmlspecialchars( $targetUrl ) . '">\4</a>';
 
 			$m = [];
 			if ( preg_match( $regex, $firstPart, $m ) ) {
