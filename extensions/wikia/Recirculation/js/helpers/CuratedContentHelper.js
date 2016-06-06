@@ -1,7 +1,7 @@
 /*global define*/
 define('ext.wikia.recirculation.helpers.curatedContent', [
 	'jquery',
-	'wikia.underscore',
+	'underscore',
 	'wikia.nirvana',
 	'wikia.cache',
 	'ext.wikia.recirculation.tracker'
