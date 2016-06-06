@@ -4,7 +4,15 @@ require_once( dirname( __FILE__ ) . '/../commandLine.inc' );
 
 function isCorrupted() {
 	$title = Title::newFromText( 'Main_Page' );
+	if ( empty ($title) || !$title->exists() ) {
+		return false;
+	}
+
 	$mainPage = Article::newFromID( $title->getArticleID() );
+	if ( empty ($mainPage) || !$mainPage->exists() ) {
+		return false;
+	}
+
 	$pattern = '/<hero description="My description" imagename="" cropposition="" \/>/';
 	$raw = $mainPage->getContent();
 
@@ -13,5 +21,5 @@ function isCorrupted() {
 
 if ( isCorrupted() ) {
 	$today = date( 'd-m-Y' );
-	$this->output( "\n" . $today . "\n" );
+	echo( "\n" . $today );
 }
