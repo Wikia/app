@@ -5,6 +5,7 @@ namespace Wikia\Service\Swagger;
 use Swagger\Client\ApiException;
 use Swagger\Client\Configuration;
 use Wikia\Logger\Loggable;
+use Wikia\Tracer\WikiaTracer;
 use Wikia\Util\Statistics\BernoulliTrial;
 
 class ApiClient extends \Swagger\Client\ApiClient {
@@ -27,6 +28,10 @@ class ApiClient extends \Swagger\Client\ApiClient {
 		$start = microtime(true);
 		$response = $exception = null;
 		$code = 200;
+
+		// adding trace headers
+		$headerParams['X-Trace-Id'] = WikiaTracer::instance()->getTraceId();
+		$headerParams['X-Span-Id'] = WikiaTracer::instance()->getSpanId();
 
 		try {
 			$response = parent::callApi($resourcePath, $method, $queryParams, $postData, $headerParams, $responseType);
