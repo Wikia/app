@@ -63,6 +63,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		$currentUserContributionCount = ( new UserStatsService( $this->getUser()->getId() ) )->getEditCountFromWeek();
 		$topContributors = $this->usersModel->getTopContributors();
 		$topContributorsCount = count( $topContributors );
+		$userRank = $this->calculateCurrentUserRank( $currentUserContributionCount , $topContributors );
 
 		if ( $limit > 0 ) {
 			$topContributors = array_slice( $topContributors, 0, $limit );
@@ -83,7 +84,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 				$this->getUser()->getName(),
 				AvatarService::AVATAR_SIZE_SMALL_PLUS
 			),
-			'userRank' => $this->calculateCurrentUserRank( $currentUserContributionCount , $topContributors ),
+			'userRank' => $userRank,
 			'weeklyEditorCount' => $this->formatTotalEditorsNumber( $topContributorsCount ),
 			'userContribCount' => $currentUserContributionCount
 		] );
