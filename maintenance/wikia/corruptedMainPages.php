@@ -2,6 +2,8 @@
 
 require_once( dirname( __FILE__ ) . '/../commandLine.inc' );
 
+global $wgDBname;
+
 function isCorrupted() {
 	$title = Title::newFromText( 'Main_Page' );
 	if ( empty ($title) || !$title->exists() ) {
@@ -22,4 +24,5 @@ function isCorrupted() {
 if ( isCorrupted() ) {
 	$today = date( 'd-m-Y' );
 	echo( "\n" . $today );
+	echo( "\n" .  $wgDBname);
 }
