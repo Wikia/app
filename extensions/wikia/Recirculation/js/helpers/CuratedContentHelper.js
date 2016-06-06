@@ -87,11 +87,13 @@ define('ext.wikia.recirculation.helpers.curatedContent', [
 		function setupTracking($html) {
 			var $curatedItem = $html.find('.item-curated'),
 				label,
+				slot,
 				id;
 
 			if ($curatedItem.length) {
-				id = $curatedItem.data('id'),
-				label = 'CURATED=' + id;
+				id = $curatedItem.data('id');
+				slot = $curatedItem.data('index') + 1;
+				label = 'CURATED=' + id + '=slot_' + slot;
 
 				tracker.trackImpression(label);
 
