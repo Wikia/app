@@ -1,6 +1,7 @@
 <?php
 namespace Wikia\Service\Helios;
 
+use Wikia\Tracer\WikiaTracer;
 use Wikia\Util\GlobalStateWrapper;
 use Wikia\Service\Constants;
 
@@ -61,6 +62,10 @@ class HeliosClientImpl implements HeliosClient
 
 		global $wgRequest;
 		$headers['X-Forwarded-For'] = $wgRequest->getIP();
+
+		// adding trace headers
+		$headers['X-Trace-Id'] = WikiaTracer::instance()->getTraceId();
+		$headers['X-Span-Id'] = WikiaTracer::instance()->getSpanId();
 
 		// Request options pre-processing.
 		$options = [
