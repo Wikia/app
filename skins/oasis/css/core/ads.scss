@@ -186,10 +186,8 @@ $taboola-small-breakpoint: "#{$screen} and (max-width: 420px)";
 
 #BOTTOM_LEADERBOARD {
 	overflow: hidden;
-	padding: 13px 0 23px 0;
-	position: relative;
+	margin: 0 0 23px 0;
 	text-align: center;
-	top: 0 !important;
 	width: 100%;
 }
 
