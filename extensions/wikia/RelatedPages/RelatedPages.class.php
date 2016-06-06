@@ -181,47 +181,6 @@ class RelatedPages {
 	}
 
 	/**
-	 * get all pages for given category
-	 * @param string $category category name
-	 * @return array list of page ids
-	 */
-	protected function getPagesForCategory( $category ) {
-		global $wgMemc;
-		wfProfileIn( __METHOD__ );
-
-		$cacheKey = wfMemcKey( __METHOD__, md5($category) );
-		$cache = $wgMemc->get( $cacheKey );
-
-		if ( is_array( $cache ) ) {
-			wfProfileOut( __METHOD__ );
-			return $cache;
-		}
-
-		$dbr = wfGetDB( DB_SLAVE );
-		$tables = array( "categorylinks" );
-		$joinSql = $this->getPageJoinSql( $dbr, $tables );
-
-		$pages = array();
-		$res = $dbr->select(
-			$tables,
-			array( "cl_from AS page_id" ),
-			array( "cl_to" => $category ),
-			__METHOD__,
-			array(),
-			$joinSql
-		);
-
-		while ( $row = $dbr->fetchObject( $res ) ) {
-			$pages[] = $row->page_id;
-		}
-
-		$wgMemc->set( $cacheKey, $pages, WikiaResponse::CACHE_STANDARD );
-
-		wfProfileOut( __METHOD__ );
-		return $pages;
-	}
-
-	/**
 	 * get pages that belong to a list of categories
 	 * @author Owen
 	 *
@@ -320,34 +279,6 @@ class RelatedPages {
 
 		wfProfileOut( __METHOD__ );
 		return $pages;
-	}
-
-	protected function getPageJoinSql( $dbr, &$tables ) {
-		global $wgContentNamespaces;
-		wfProfileIn( __METHOD__ );
-
-		if ( count( $wgContentNamespaces ) > 0 ) {
-			$joinSql = array( "page" =>
-				array(
-					"JOIN",
-					implode(
-						" AND ",
-						array(
-							"page_id = cl_from",
-							( count( $wgContentNamespaces ) == 1 )
-								? "page_namespace = " . intval( reset( $wgContentNamespaces ) )
-								: "page_namespace in ( " . $dbr->makeList( $wgContentNamespaces ) . " )",
-						)
-					)
-				)
-			);
-			$tables[] = "page";
-		} else {
-			$joinSql = array();
-		}
-
-		wfProfileOut( __METHOD__ );
-		return $joinSql;
 	}
 
 	/**
