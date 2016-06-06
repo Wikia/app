@@ -1,6 +1,6 @@
 # Swagger\Client\UserAvatarsApi
 
-All URIs are relative to *https://localhost/*
+All URIs are relative to *https://localhost/user-avatar*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -21,6 +21,15 @@ Delete the users avatar
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
+
+// Configure API key authorization: access_token
+Swagger\Client\Configuration::getDefaultConfiguration()->setApiKey('X-Wikia-AccessToken', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. BEARER) for API key, if needed
+// Swagger\Client\Configuration::getDefaultConfiguration()->setApiKeyPrefix('X-Wikia-AccessToken', 'BEARER');
+// Configure API key authorization: user_id
+Swagger\Client\Configuration::getDefaultConfiguration()->setApiKey('X-Wikia-UserId', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. BEARER) for API key, if needed
+// Swagger\Client\Configuration::getDefaultConfiguration()->setApiKeyPrefix('X-Wikia-UserId', 'BEARER');
 
 $api_instance = new Swagger\Client\Api\UserAvatarsApi();
 $user_id = "user_id_example"; // string | 
@@ -45,7 +54,7 @@ void (empty response body)
 
 ### Authorization
 
-No authorization required
+[access_token](../README.md#access_token), [user_id](../README.md#user_id)
 
 ### HTTP reuqest headers
 
@@ -65,6 +74,15 @@ For external image retrieval Thumbnailer should be used, which supports image do
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
+
+// Configure API key authorization: access_token
+Swagger\Client\Configuration::getDefaultConfiguration()->setApiKey('X-Wikia-AccessToken', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. BEARER) for API key, if needed
+// Swagger\Client\Configuration::getDefaultConfiguration()->setApiKeyPrefix('X-Wikia-AccessToken', 'BEARER');
+// Configure API key authorization: user_id
+Swagger\Client\Configuration::getDefaultConfiguration()->setApiKey('X-Wikia-UserId', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. BEARER) for API key, if needed
+// Swagger\Client\Configuration::getDefaultConfiguration()->setApiKeyPrefix('X-Wikia-UserId', 'BEARER');
 
 $api_instance = new Swagger\Client\Api\UserAvatarsApi();
 $user_id = "user_id_example"; // string | 
@@ -91,7 +109,7 @@ void (empty response body)
 
 ### Authorization
 
-No authorization required
+[access_token](../README.md#access_token), [user_id](../README.md#user_id)
 
 ### HTTP reuqest headers
 
@@ -111,6 +129,15 @@ Creates an avatar for a user
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
+
+// Configure API key authorization: access_token
+Swagger\Client\Configuration::getDefaultConfiguration()->setApiKey('X-Wikia-AccessToken', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. BEARER) for API key, if needed
+// Swagger\Client\Configuration::getDefaultConfiguration()->setApiKeyPrefix('X-Wikia-AccessToken', 'BEARER');
+// Configure API key authorization: user_id
+Swagger\Client\Configuration::getDefaultConfiguration()->setApiKey('X-Wikia-UserId', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. BEARER) for API key, if needed
+// Swagger\Client\Configuration::getDefaultConfiguration()->setApiKeyPrefix('X-Wikia-UserId', 'BEARER');
 
 $api_instance = new Swagger\Client\Api\UserAvatarsApi();
 $user_id = "user_id_example"; // string | 
@@ -138,7 +165,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[access_token](../README.md#access_token), [user_id](../README.md#user_id)
 
 ### HTTP reuqest headers
 
@@ -158,6 +185,15 @@ Create an avatar for a user, potentially overwriting any existing one
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
+
+// Configure API key authorization: access_token
+Swagger\Client\Configuration::getDefaultConfiguration()->setApiKey('X-Wikia-AccessToken', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. BEARER) for API key, if needed
+// Swagger\Client\Configuration::getDefaultConfiguration()->setApiKeyPrefix('X-Wikia-AccessToken', 'BEARER');
+// Configure API key authorization: user_id
+Swagger\Client\Configuration::getDefaultConfiguration()->setApiKey('X-Wikia-UserId', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. BEARER) for API key, if needed
+// Swagger\Client\Configuration::getDefaultConfiguration()->setApiKeyPrefix('X-Wikia-UserId', 'BEARER');
 
 $api_instance = new Swagger\Client\Api\UserAvatarsApi();
 $user_id = "user_id_example"; // string | 
@@ -185,7 +221,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[access_token](../README.md#access_token), [user_id](../README.md#user_id)
 
 ### HTTP reuqest headers
 
