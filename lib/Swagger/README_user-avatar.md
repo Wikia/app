@@ -21,11 +21,11 @@ To install the bindings via [Composer](http://getcomposer.org/), add the followi
   "repositories": [
     {
       "type": "git",
-      "url": "https://github.com/YOUR_GIT_USR_ID/YOUR_GIT_REPO_ID.git"
+      "url": "https://github.com/Wikia/app.git"
     }
   ],
   "require": {
-    "YOUR_GIT_USR_ID/YOUR_GIT_REPO_ID": "*@dev"
+    "Wikia/app": "*@dev"
   }
 }
 ```
