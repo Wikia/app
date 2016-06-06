@@ -208,7 +208,6 @@ class RelatedPages {
 				$dbr = wfGetDB( DB_SLAVE );
 
 				# sanitize query parameters
-				$articleId = intval( $articleId );
 				$limit = intval( $limit );
 
 				/**
@@ -273,6 +272,8 @@ class RelatedPages {
 		);
 
 		// filter out the page we want to get related pages for
+		$articleId = intval( $articleId );
+
 		if ( array_key_exists( $articleId, $pages ) ) {
 			unset( $pages[ $articleId ] );
 		}
