@@ -134,7 +134,6 @@ class RelatedPages {
 						$categories = array_slice( $categories, 0, $this->categoriesLimit );
 					}
 
-					// limit * 2 - get more pages (some can be filtered out - RT #72703)
 					$pages = $this->getPagesForCategories( $articleId, $categories );
 
 					$this->afterGet( $pages, self::LIMIT_MAX );
@@ -205,7 +204,7 @@ class RelatedPages {
 				 * 		AND page_is_redirect = 0)
 				 * GROUP BY page.page_id
 				 * ORDER BY c desc
-				 * LIMIT 20;
+				 * LIMIT 11;
 				 *
 				 * @see PLATFORM-2226
 				 */
@@ -229,7 +228,7 @@ class RelatedPages {
 					[
 						'GROUP BY' => 'page.page_id',
 						'ORDER BY' => 'c DESC',
-						'LIMIT' => self::LIMIT_MAX * 2,
+						'LIMIT' => self::LIMIT_MAX + 1, # +1 as we get the current page (i.e. $articleId) as well
 					],
 					[
 						'page' => [
