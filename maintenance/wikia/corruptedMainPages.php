@@ -2,7 +2,7 @@
 
 require_once( dirname( __FILE__ ) . '/../commandLine.inc' );
 
-global $wgDBname;
+global $wgCityId;
 
 function isCorrupted() {
 	$title = Title::newFromText( 'Main_Page' );
@@ -22,7 +22,5 @@ function isCorrupted() {
 }
 
 if ( isCorrupted() ) {
-	$today = date( 'd-m-Y' );
-	echo( "\n" . $today );
-	echo( "\n" .  $wgDBname);
+	echo( "\n" . $wgCityId);
 }
