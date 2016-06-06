@@ -247,40 +247,66 @@ class RelatedPages {
 			WikiaResponse::CACHE_STANDARD,
 			function() use ( $categories, $fname, $limit ) {
 				$dbr = wfGetDB( DB_SLAVE );
-				$pages = [];
-
-				$tables = [ "categorylinks" ];
-				$joinSql = $this->getPageJoinSql( $dbr, $tables );
-
-				$innerSQL = $dbr->selectSQLText(
-					$tables,
-					array( "cl_from AS page_id" ),
-					array( "cl_to IN ( " . $dbr->makeList( $categories ) . " )" ),
-					$fname,
-					[
-						'LIMIT' => self::CATEGORY_LINKS_LIMIT
-					],
-					$joinSql
-				);
 
 				# sanitize query parameters
 				$articleId = intval( $articleId );
 				$limit = intval( $limit );
 
-				$sql = "SELECT page_id, count(*) c FROM ( $innerSQL ) i GROUP BY page_id ORDER BY c desc LIMIT $limit";
-				$res = $dbr->query( $sql, $fname );
+				/**
+				 * SELECT count(page_id) as c, cl_from AS page_id, page_namespace, page_title, page_is_redirect, page_len, page_latest
+				 * FROM `categorylinks` JOIN `page` ON ( (page_id = cl_from AND page_namespace = 0))
+				 * WHERE (cl_to IN ( 'Gwara','Gzik','Kuchnia_regionalna','Potrawy','Tradycja' )
+				 * 		AND page_is_redirect = 0)
+				 * GROUP BY page.page_id
+				 * ORDER BY c desc
+				 * LIMIT 20;
+				 *
+				 * @see PLATFORM-2226
+				 */
+				$res = $dbr->select(
+					[ 'categorylinks', 'page' ],
+					[
+						'count(page_id) AS c',
+						// columns below are required by Title::newFromRow
+						'page_id',
+						'page_namespace',
+						'page_title',
+						'page_is_redirect',
+						'page_len',
+						'page_latest'
+					],
+					[
+						'cl_to' => $categories,
+						'page_is_redirect' => 0, # ignore redirects
+					],
+					$fname,
+					[
+						'GROUP BY' => 'page.page_id',
+						'ORDER BY' => 'c DESC',
+						'LIMIT' => $limit,
+					],
+					[
+						'page' => [
+							'JOIN',
+							[
+								'page_id = cl_from',
+								'page_namespace = 0'
+							]
+						]
+					]
+				);
+
+				$pages = [];
+
 				while ( $row = $dbr->fetchObject( $res ) ) {
 					$pageId = (int) $row->page_id;
-					$title = Title::newFromId( $pageId );
+					$title = Title::newFromRow( $row );
 
-					// filter out redirect pages (RT #72662)
-					if ( $title instanceof Title && $title->exists() && !$title->isRedirect() ) {
-						$pages[ $pageId ] = [
-							'url' => $title->getLocalUrl(),
-							'title' => $title->getPrefixedText(),
-							'id' => $pageId
-						];
-					}
+					$pages[ $pageId ] = [
+						'url' => $title->getLocalUrl(),
+						'title' => $title->getPrefixedText(),
+						'id' => $pageId
+					];
 				}
 
 				return $pages;
@@ -288,7 +314,7 @@ class RelatedPages {
 		);
 
 		// filter out the page we want to get related pages for
-		if ( array_key_exists( $articleId, $pages )) {
+		if ( array_key_exists( $articleId, $pages ) ) {
 			unset( $pages[ $articleId ] );
 		}
 
