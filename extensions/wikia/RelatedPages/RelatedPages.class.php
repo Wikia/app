@@ -202,7 +202,7 @@ class RelatedPages {
 		sort( $categories );
 
 		$pages = WikiaDataAccess::cache(
-			wfMemcKey( __METHOD__, 'categories', md5( serialize( $category ) ) ),
+			wfMemcKey( __METHOD__, 'categories', md5( serialize( $categories ) ) ),
 			WikiaResponse::CACHE_STANDARD,
 			function() use ( $categories, $fname, $limit ) {
 				$dbr = wfGetDB( DB_SLAVE );
