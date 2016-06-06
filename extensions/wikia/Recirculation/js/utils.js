@@ -45,9 +45,11 @@ define('ext.wikia.recirculation.utils', [
 	}
 
 	function buildLabel(element, label) {
-		var slot = $(element).parent().data('index') + 1;
+		var $parent = $(element).parent(),
+			slot = $parent.data('index') + 1,
+			source = $parent.data('source');
 
-		return label + '=slot-' + slot;
+		return label + '=slot-' + slot + '=' + source;
 	}
 
 	function addUtmTracking(items, placement) {

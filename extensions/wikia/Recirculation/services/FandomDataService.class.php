@@ -4,7 +4,7 @@ class FandomDataService {
 	static protected $instance = null;
 
 	const PARSELY_API_BASE = 'https://api.parsely.com/v2/';
-	const PARSELY_API_LIMIT = 8; // We request more posts than we actually need incase we receive duplicates
+	const PARSELY_API_EXTRA = 3; // We request more posts than we actually need incase we receive duplicates
 	const PARSELY_API_PAGE = 1;
 	const PARSELY_API_PUB_DAYS = 10;
 	const PARSELY_API_SORT = '_hits';
@@ -19,20 +19,20 @@ class FandomDataService {
 	 * @param string $type
 	 * @return an array of posts
 	 */
-	public function getPosts( $type ) {
+	public function getPosts( $type, $count = self::PARSELY_POSTS_LIMIT ) {
 		$metadata = $this->buildMetaData( $type );
 
 		if ( ( $type === 'community' || $type === 'vertical' ) && count( $metadata ) === 0 ) {
 			return [];
 		}
 
-		$memcKey = wfSharedMemcKey( __METHOD__, $type, $metadata['key'], self::MCACHE_VER );
+		$memcKey = wfSharedMemcKey( __METHOD__, $type, $metadata['key'], $count, self::MCACHE_VER );
 
 		$data = WikiaDataAccess::cache(
 			$memcKey,
 			self::MCACHE_TIME,
-			function() use ( $type, $metadata ) {
-				return $this->apiRequest( $type, $metadata );
+			function() use ( $type, $metadata, $count ) {
+				return $this->apiRequest( $type, $metadata, $count );
 			}
 		);
 
@@ -44,8 +44,10 @@ class FandomDataService {
 	 * @param string $type
 	 * @return an array of posts
 	 */
-	private function apiRequest( $type, $meta ) {
+	private function apiRequest( $type, $meta, $count ) {
 		$options = [];
+		$options['limit'] = $count + self::PARSELY_API_EXTRA;
+
 		switch ( $type ) {
 			case 'vertical':
 				$options['sort'] = self::PARSELY_API_SORT;
@@ -79,7 +81,7 @@ class FandomDataService {
 		$posts = json_decode( $data, true );
 
 		if ( isset( $posts['data'] ) && is_array( $posts['data'] ) ) {
-			return $this->dedupePosts( $posts['data'] );
+			return $this->dedupePosts( $posts['data'], $count );
 		} else {
 			return [];
 		}
@@ -97,8 +99,7 @@ class FandomDataService {
 		$defaultParams = [
 			'apikey' => $wgParselyApiKey,
 			'secret' => $wgParselyApiSecret,
-			'page' => self::PARSELY_API_PAGE,
-			'limit' => self::PARSELY_API_LIMIT
+			'page' => self::PARSELY_API_PAGE
 		];
 
 		$params = array_merge( $defaultParams, $options );
@@ -113,18 +114,19 @@ class FandomDataService {
 	 * @param array $rawPosts
 	 * @return array
 	 */
-	private function dedupePosts( $rawPosts ) {
+	private function dedupePosts( $rawPosts, $count ) {
 		$posts = [];
 		$postIds = [];
 
 		foreach ( $rawPosts as $post ) {
-			if ( count( $posts ) >= self::PARSELY_POSTS_LIMIT ) {
+			if ( count( $posts ) >= $count ) {
 				break;
 			}
 
 			$metadata = json_decode( $post['metadata'] );
 			if ( !empty( $metadata->postID ) && !in_array( $metadata->postID, $postIds ) ) {
 				$postIds[] = $metadata->postID;
+				$post['source'] = 'fandom';
 				$posts[] = $post;
 			}
 		}
