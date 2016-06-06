@@ -2,7 +2,7 @@
 	<h2>{{{ titleHtml }}}</h2>
 	<ul class="thumbnails">
 		{{#items}}
-			<li class="rail-item {{classes}}" data-flag="{{ flag }}" data-index="{{ index }}" data-source="{{source}}">
+			<li class="rail-item {{classes}} item-{{source}}" {{#id}} data-id="{{ id }}" {{/id}} data-flag="{{ flag }}" data-index="{{ index }}" data-source="{{source}}">
 				<a href="{{ url }}">
 					<div class="image image-thumbnail fluid small">
 						<img src="{{ thumbnail }}" alt="{{ title }}" itemprop="thumbnail">
