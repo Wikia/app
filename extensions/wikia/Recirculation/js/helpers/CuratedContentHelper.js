@@ -1,10 +1,11 @@
 /*global define*/
 define('ext.wikia.recirculation.helpers.curatedContent', [
 	'jquery',
+	'wikia.underscore',
 	'wikia.nirvana',
 	'wikia.cache',
-	'wikia.underscore'
-], function ($, nirvana, cache, _) {
+	'ext.wikia.recirculation.tracker'
+], function ($, _, nirvana, cache , tracker) {
 
 	return function(config) {
 		var defaults = {
@@ -58,7 +59,7 @@ define('ext.wikia.recirculation.helpers.curatedContent', [
 		}
 
 		function key(post) {
-			return 'recirculation:curated:' + post.url;
+			return 'recirculation:curated:' + post.id;
 		}
 
 		function injectContent(data) {
@@ -83,8 +84,26 @@ define('ext.wikia.recirculation.helpers.curatedContent', [
 			return deferred.promise();
 		}
 
+		function setupTracking($html) {
+			var $curatedItem = $html.find('.item-curated'),
+				label,
+				id;
+
+			if ($curatedItem.length) {
+				id = $curatedItem.data('id'),
+				label = 'CURATED=' + id;
+
+				tracker.trackImpression(label);
+
+				$curatedItem.on('mousedown', 'a', function() {
+					tracker.trackClick(label);
+				});
+			}
+		}
+
 		return {
 			injectContent: injectContent,
+			setupTracking: setupTracking,
 			loadData: loadData
 		}
 	}

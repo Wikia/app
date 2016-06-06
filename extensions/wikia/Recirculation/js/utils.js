@@ -49,7 +49,12 @@ define('ext.wikia.recirculation.utils', [
 			slot = $parent.data('index') + 1,
 			source = $parent.data('source');
 
-		return label + '=slot-' + slot + '=' + source;
+		label = label + '=slot-' + slot;
+		if (source) {
+			label = label + '=' + source;
+		}
+
+		return label;
 	}
 
 	function addUtmTracking(items, placement) {

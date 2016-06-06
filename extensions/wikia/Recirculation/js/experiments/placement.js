@@ -203,10 +203,14 @@ require([
 	}
 
 	function runRailExperiment() {
+		var curated = curatedHelper();
 		helper.loadData()
-			.then(curatedHelper().injectContent)
+			.then(curated.injectContent)
 			.then(view.render)
-			.then(view.setupTracking(experimentName))
+			.then(function($html) {
+				view.setupTracking(experimentName)($html);
+				curated.setupTracking($html);
+			})
 			.fail(handleError);
 	}
 

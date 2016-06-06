@@ -47,14 +47,15 @@ class CuratedContentService {
 		$posts = [];
 
 		foreach ( $rawPosts as $index => $post ) {
-			$posts[] = new RecirculationContent(
-				$index,
-				$post['content_url'],
-				$post['thumbnail'],
-				$post['title'],
-				$post['publish_start_date'],
-				''
-			);
+			$posts[] = [
+				'index' => $index,
+				'id' => $post['post_id'],
+				'url' => $post['content_url'],
+				'thumbnail' => $post['thumbnail'],
+				'title' => $post['title'],
+				'pub_date' => $post['publish_start_date'],
+				'source' => 'curated',
+			];
 		}
 
 		return $posts;
