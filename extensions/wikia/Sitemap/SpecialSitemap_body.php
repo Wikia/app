@@ -239,7 +239,11 @@ class SitemapPage extends UnlistedSpecialPage {
 
 		$out = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
 
-		$scope = array( 'page_namespace' => $this->mNamespace );
+		$scope = [
+			'page_namespace' => $this->mNamespace,
+			'page_is_redirect' => false,
+		];
+
 		$index = is_array( $sitemapIndex ) ? $sitemapIndex : $wgMemc->get( wfMemcKey( "sitemap-index") );
 		if( isset( $index[ $this->mNamespace ] [ $this->mPage ] ) ) {
 			$scope[] = sprintf( "page_id BETWEEN %d AND %d",
@@ -251,7 +255,6 @@ class SitemapPage extends UnlistedSpecialPage {
 				$index[ $this->mNamespace ] [ $this->mPage ][ "end" ]
 			);
 		}
-		$scope['page_is_redirect'] = false;
 
 		$sth = $dbr->select(
 			'page',
