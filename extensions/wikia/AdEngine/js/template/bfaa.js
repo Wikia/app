@@ -4,8 +4,9 @@ define('ext.wikia.adEngine.template.bfaa', [
 	'ext.wikia.adEngine.adHelper',
 	'wikia.document',
 	'wikia.log',
-	'wikia.window'
-], function (adContext, adHelper, doc, log, win) {
+	'wikia.window',
+	require.optional('ext.wikia.adEngine.mobile.mercuryListener')
+], function (adContext, adHelper, doc, log, win, mercuryListener) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.template.bfaa',
@@ -54,12 +55,14 @@ define('ext.wikia.adEngine.template.bfaa', [
 			wrapper.style.background = backgroundColor;
 			wrapper.classList.add('bfaa-template');
 
-			adContext.addCallback(function () {
-				wrapper.classList.remove('bfaa-template');
-				wrapper.style.background = '';
-				page.style.paddingTop = '';
-				adsModule.setSiteHeadOffset(0);
-			});
+			if (mercuryListener) {
+				mercuryListener.onPageChange(function () {
+					wrapper.classList.remove('bfaa-template');
+					wrapper.style.background = '';
+					page.style.paddingTop = '';
+					adsModule.setSiteHeadOffset(0);
+				});
+			}
 		}
 	};
 
