@@ -173,13 +173,13 @@ class ChatWidget {
 					$stats = $userStatsService->getStats();
 
 					// edit count
-					$chatter['editCount'] = $stats['edits'];
+					$chatter['editCount'] = $stats['editcount'];
 
 					// member since
 					$chatter['showSince'] = $chatter['editCount'] != 0;
 					if ( $chatter['showSince'] ) {
 						$months = $wgLang->getMonthAbbreviationsArray();
-						$date = getdate( strtotime( $stats['firstRevisionDate'] ) );
+						$date = getdate( strtotime( $stats['firstContributionTimestamp'] ) );
 
 						$chatter['since_year'] = $date['year'];
 						$chatter['since_month'] = $date['mon'];
