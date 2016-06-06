@@ -5,7 +5,10 @@ namespace Wikia\SeoCrossLink;
 use Wikia\Logger\WikiaLogger;
 
 class CrossLinkInserter {
-	const FIRST_CHARACTERS_TO_FIND_THE_HOT_WORD_IN = 20000;
+	/**
+	 * Hot words will be only searched within this many first characters of the content
+	 */
+	const CHARACTER_LIMIT = 20000;
 
 	const HOT_WORDS = [
 		[ 'Mojito', 'http://cocktails.wikia.com/wiki/Mojito', 'cocktails' ],
@@ -26,7 +29,7 @@ class CrossLinkInserter {
 	public function insertCrossLinks( $text ) {
 		global $wgDBname;
 
-		$firstPart = mb_substr( $text, 0, self::FIRST_CHARACTERS_TO_FIND_THE_HOT_WORD_IN );
+		$firstPart = mb_substr( $text, 0, self::CHARACTER_LIMIT );
 
 		$urlsAlreadyLinked = [];
 
@@ -54,8 +57,7 @@ class CrossLinkInserter {
 			$regex = ':<(li|td|p|div|span|b|i|strong|em|/br)( [^<>]*)?>([^<>]*?)(\b' . preg_quote( $hotWord ) . '\b):i';
 			$replacement = '<\1\2>\3<a class="external" href="' . htmlspecialchars( $targetUrl ) . '">\4</a>';
 
-			$m = [];
-			if ( preg_match( $regex, $firstPart, $m ) ) {
+			if ( preg_match( $regex, $firstPart ) ) {
 				// Only replace the first matched appearance of the word
 				$firstPart = preg_replace( $regex, $replacement, $firstPart, 1 );
 				$urlsAlreadyLinked[] = $targetUrl;
@@ -68,7 +70,7 @@ class CrossLinkInserter {
 			return $text;
 		}
 
-		$remainder = mb_substr( $text, self::FIRST_CHARACTERS_TO_FIND_THE_HOT_WORD_IN );
+		$remainder = mb_substr( $text, self::CHARACTER_LIMIT );
 
 		return $firstPart . $remainder;
 	}
