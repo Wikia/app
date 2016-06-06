@@ -47,7 +47,9 @@ define('ext.wikia.adEngine.template.bfaa', [
 
 	mobileHandler =  {
 		show: function (height, backgroundColor) {
-			win.Mercury.Modules.Ads.getInstance().setSiteHeadOffset(height);
+			var adsModule = win.Mercury.Modules.Ads.getInstance();
+
+			adsModule.setSiteHeadOffset(height);
 			page.style.paddingTop = height + 'px';
 			wrapper.style.background = backgroundColor;
 			wrapper.classList.add('bfaa-template');
@@ -56,7 +58,7 @@ define('ext.wikia.adEngine.template.bfaa', [
 				wrapper.classList.remove('bfaa-template');
 				wrapper.style.background = '';
 				page.style.paddingTop = '';
-				win.Mercury.Modules.Ads.getInstance().setSiteHeadOffset(0);
+				adsModule.setSiteHeadOffset(0);
 			});
 		}
 	};
