@@ -236,38 +236,6 @@ class DataMartService extends Service {
 	}
 
 	/**
-	 * Get top wikis by videoviews over a specified span of time, optionally filtering by
-	 * public status
-	 *
-	 * @param integer $periodId The interval of time to take into consideration, one of PERIOD_ID_WEEKLY,
-	 * PERIOD_ID_MONTHLY or PERIOD_ID_QUARTERLY
-	 * @param integer $lastN The last N periods to sum results for
-	 * @param integer $limit The maximum number of results, defaults to 200
-	 * @return array $topWikis [ array( wikiId => videoviews ) ]
-	 */
-	public static function getTopWikisByVideoviews ( $periodId, $lastN, $limit = 200 ) {
-		$db = DataMartService::getDB();
-
-		$topWikis = ( new WikiaSQL() )->skipIf( self::isDisabled() )
-			->cacheGlobal( self::TTL )
-			->SELECT( 'r.wiki_id' )->AS_( 'id' )
-				->SUM( 'views' )->AS_( 'totalViews' )
-			->FROM( 'rollup_wiki_video_views' )->AS_( 'r' )
-			->WHERE( 'period_id' )->EQUAL_TO( $periodId )
-				->AND_( 'time_id' )->GREATER_THAN( sql::NOW()->MINUS_INTERVAL( $lastN, 'day' ) )
-			->GROUP_BY( 'id' )
-			->ORDER_BY( ['totalViews', 'desc'] )
-			->LIMIT( 200 )
-			->runLoop( $db, function( &$topWikis, $row ) {
-				$topWikis[$row->id] = $row->totalViews;
-			} );
-
-		$topWikis = array_slice( $topWikis, 0, $limit, true );
-
-		return $topWikis;
-	}
-
-	/**
 	 * get events by wiki Id
 	 * @param integer $periodId
 	 * @param string $startDate [YYYY-MM-DD]
