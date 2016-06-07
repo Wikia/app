@@ -71,22 +71,34 @@ class FinishCreateWikiController extends WikiaController {
 		$this->skipRendering();
 		$this->LoadState();
 
-		// SUS-563 debug
-		$mediawikiMainPageTitle = Title::newFromText('Mainpage', NS_MEDIAWIKI);
-		$mediawikiMainPageArticle = Article::newFromID( $mediawikiMainPageTitle->getArticleID() );
-		$mediawikiMainPageArticleText = $mediawikiMainPageArticle->getRawText();
-
 		$mainPage = wfMsgForContent( 'mainpage' );
 
+		// SUS-563 debug
+		$mediawikiMainPageArticleText = '';
+		$mediawikiMainPageTitle = Title::newFromText('Mainpage', NS_MEDIAWIKI);
+
+		if ( !empty ( $mediawikiMainPageTitle ) && $mediawikiMainPageTitle->exists() ) {
+			$mediawikiMainPageArticle = Article::newFromID( $mediawikiMainPageTitle->getArticleID() );
+
+			if ( !empty ( $mediawikiMainPageArticle ) && $mediawikiMainPageArticle->exists() ) {
+				$mediawikiMainPageArticleText = $mediawikiMainPageArticle->getRawText();
+			} else {
+				WikiaLogger::instance()->debug( 'SUS-563 mainpage message article issue' );
+			}
+		} else {
+			WikiaLogger::instance()->debug( 'SUS-563 mainpage message title issue' );
+		}
+		
 		WikiaLogger::instance()->debug(
-			"SUS-563",
+			'SUS-563',
 			[
-				"mediawikiMainPageArticleText" => $mediawikiMainPageArticleText,
-				"wgSitename" => $wgSitename,
-				"mainPageMessage" => $mainPage,
-				"suspicious" => ( $mainPage !== $wgSitename )
+				'mediawikiMainPageArticleText' => $mediawikiMainPageArticleText,
+				'wgSitename' => $wgSitename,
+				'mainPageMessage' => $mainPage,
+				'suspicious' => ( $mainPage !== $wgSitename )
 			]
 		);
+		// SUS-563 debug end
 
 		// set theme
 		if(!empty($this->params['color-body'])) {
