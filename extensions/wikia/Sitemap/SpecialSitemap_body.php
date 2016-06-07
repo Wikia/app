@@ -59,7 +59,15 @@ class SitemapPage extends UnlistedSpecialPage {
 	 * @param $subpage Mixed: subpage of SpecialPage
 	 */
 	public function execute( $subpage ) {
-		global $wgRequest, $wgOut;
+		global $wgMemc, $wgRequest, $wgOut;
+
+		if ( !is_array( $wgMemc->get( wfMemcKey( 'sitemap-index' ) ) ) ) {
+			$wgOut->disable();
+			header( 'HTTP/1.1 500 Internal Server Error' );
+			echo '<h1>500 Internal Server Error</h1>' . PHP_EOL;
+			echo '<p>Sitemap not available. Please check again later.</p>' . PHP_EOL;
+			return;
+		}
 
 		/**
 		 * subpage works as type param, param has precedence, default is "index"
