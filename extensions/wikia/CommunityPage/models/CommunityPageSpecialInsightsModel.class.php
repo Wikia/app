@@ -166,6 +166,14 @@ class CommunityPageSpecialInsightsModel {
 
 		$timestamp = wfTimestamp( TS_UNIX, $metadata['lastRevision']['timestamp'] );
 
+		// Retrieve user name or replacement string for anon users
+		$user = User::newFromName( $metadata['lastRevision']['username'] );
+		if ( $user ) {
+			$userName = $user->getNameWithStringForAnon( wfMessage( 'communitypage-anon-user-name' )->plain() );
+		} else {
+			$userName = wfMessage( 'communitypage-anon-user-name' )->plain();
+		}
+
 		return wfMessage( 'communitypage-lastrevision' )->rawParams(
 			Html::element(
 				'a',
@@ -174,7 +182,7 @@ class CommunityPageSpecialInsightsModel {
 					'data-tracking' => 'user-profile-link',
 					'class' => 'communitypage-user-link'
 				],
-				$metadata['lastRevision']['username']
+				$userName
 			),
 			$wgLang->userDate( $timestamp, $wgUser )
 		)->escaped();

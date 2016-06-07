@@ -8,11 +8,19 @@ class CommunityPageSpecialRecentActivityModel {
 	 */
 	public function getData() {
 		$recentActivityData = F::app()->sendRequest( 'LatestActivityController', 'executeIndex' )->getData();
-
 		$recentActivity = [];
+		
 		foreach ( $recentActivityData['changeList'] as $activity ) {
+			// Retrieve user name or replacement string for anon users
+			$user = User::newFromName( $activity['user_name'] );
+			if ( $user ) {
+				$userName = $user->getNameWithStringForAnon( wfMessage( 'communitypage-anon-user-name' )->plain() );
+			} else {
+				$userName = wfMessage( 'communitypage-anon-user-name' )->plain();
+			}
+
 			$changeTypeString = $this->getChangeTypeMessage( $activity['changetype'] );
-			$userProfileLink = $this->getUserProfileLink( $activity['user_name'], $activity['user_profile_url'] );
+			$userProfileLink = $this->getUserProfileLink( $userName, $activity['user_profile_url'] );
 			$pageLink = $this->getPageLink( $activity['page_title'], $activity['page_url'] );
 
 			$changeMessage = wfMessage( 'communitypage-activity',
