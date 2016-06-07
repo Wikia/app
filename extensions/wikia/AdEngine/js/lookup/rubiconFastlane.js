@@ -76,7 +76,8 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 			'336x280': 49,
 			'300x1050': 54,
 			'970x250': 57,
-			'320x480': 67
+			'320x480': 67,
+			'480x320': 101
 		},
 		slots;
 
@@ -156,7 +157,7 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 
 		if (context.slots.invisibleHighImpact2) {
 			slots.INVISIBLE_HIGH_IMPACT_2 = {
-				sizes: [[728, 90], [970, 250], [300, 250], [300, 600], [320, 480]],
+				sizes: [[728, 90], [970, 250], [480, 320], [300, 250], [300, 600], [320, 480]],
 				targeting: {loc: 'hivi'}
 			};
 		}
