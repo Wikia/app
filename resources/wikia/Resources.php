@@ -177,7 +177,7 @@ return [
 		],
 	],
 	'underscore' => [
-		'scripts' => 'resources/wikia/libraries/underscore/underscore.js',
+		'scripts' => 'resources/wikia/libraries/underscore/underscore-min.js',
 		'dependencies' => [
 			'amd',
 		],
