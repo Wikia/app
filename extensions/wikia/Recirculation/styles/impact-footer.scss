@@ -174,7 +174,7 @@ $recirculation-impact-footer-color-feature-overlay: rgba(0, 0, 0, .75);
 		text-align: center;
 
 		h3 {
-			background: none;
+			background: none !important; // Not the best, but is necessary to compete with some custom community css (Marvel in particular)
 			font-size: 48px;
 			font-weight: bold;
 			line-height: 48px;

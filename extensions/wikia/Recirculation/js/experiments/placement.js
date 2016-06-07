@@ -306,7 +306,8 @@ require([
 	}
 
 	function renderImpactFooter() {
-		var fView = impactFooterView(),
+		var curated = curatedHelper(),
+			fView = impactFooterView(),
 			rView = railView(),
 			sView = scrollerView();
 
@@ -324,8 +325,15 @@ require([
 					items: data.fandom.items.splice(0,5)
 				};
 
-				fView.render(data).then(fView.setupTracking(experimentName));
-				rView.render(fandomData).then(rView.setupTracking(experimentName));
+				fView.render(data)
+					.then(fView.setupTracking(experimentName));
+
+				afterRailLoads(function() {
+					curated.injectContent(fandomData)
+						.then(rView.render)
+						.then(rView.setupTracking)
+						.then(curatedHelper.setupTracking);
+				});
 			});
 	}
 });
