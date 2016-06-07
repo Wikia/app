@@ -10,12 +10,12 @@ class RecirculationApiController extends WikiaApiController {
 		}
 
 		if ($type === 'curated') {
-			$fandomDataService = new CuratedContentService();
+			$dataService = new CuratedContentService();
 		} else {
-			$fandomDataService = new FandomDataService();
+			$dataService = new ParselyDataService();
 		}
 
-		$posts = $fandomDataService->getPosts( $type );
+		$posts = $dataService->getPosts( $type );
 
 		$this->response->setCacheValidity( WikiaResponse::CACHE_VERY_SHORT );
 		$this->response->setData( [
@@ -41,10 +41,10 @@ class RecirculationApiController extends WikiaApiController {
 	}
 
 	public function getAllPosts() {
-		$fandomDataService = new FandomDataService();
+		$parselyDataService = new ParselyDataService();
 		$fandom = [
 			'title' => wfMessage( 'recirculation-fandom-title' )->plain(),
-			'items' => $fandomDataService->getPosts( 'recent_popular', 12 )
+			'items' => $parselyDataService->getPosts( 'recent_popular', 12 )
 		];
 
 		$discussionsData = [];
