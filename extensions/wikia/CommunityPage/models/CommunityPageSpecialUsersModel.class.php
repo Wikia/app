@@ -375,8 +375,12 @@ class CommunityPageSpecialUsersModel {
 		$user = User::newFromId( $userId );
 
 		if ( !$user->isBlocked() ) {
-			$userName = $user->getNameWithStringForAnon( wfMessage( 'communitypage-anon-user-name' )->plain() );
+			$userName = $user->getName();
 			$avatar = AvatarService::renderAvatar( $userName, AvatarService::AVATAR_SIZE_SMALL_PLUS );
+
+			if ( User::isIp( $userName ) ) {
+				$userName = wfMessage( 'communitypage-anon-user-name' )->plain();
+			}
 
 			return [
 				'userId' => $userId,

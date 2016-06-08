@@ -221,9 +221,13 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 
 		return array_map( function ( $contributor ) use ( &$count ) {
 			$user = User::newFromId( $contributor['userId'] );
-			$userName = $user->getNameWithStringForAnon( $this->msg( 'communitypage-anon-user-name' )->plain() );
+			$userName = $user->getName();
 			$avatar = AvatarService::renderAvatar( $userName, AvatarService::AVATAR_SIZE_SMALL_PLUS );
 			$count += 1;
+
+			if ( User::isIp( $userName ) ) {
+				$userName = $this->msg( 'communitypage-anon-user-name' )->plain();
+			}
 
 			return [
 				'userName' => $userName,

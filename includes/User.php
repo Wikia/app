@@ -1828,21 +1828,6 @@ class User {
 	}
 
 	/**
-	 * Get the user name, or a predefined string for anonymous users
-	 * @return String User's name or predefined string for anonymous users
-	 * @param $anonString The string to use for anon users
-	 */
-	public function getNameWithStringForAnon( $anonString ) {
-		$this->load();
-
-		if ( $this->isAnon() ) {
-			return $anonString;
-		}
-
-		return $this->getName();
-	}
-
-	/**
 	 * Set the user name.
 	 *
 	 * This does not reload fields from the database according to the given

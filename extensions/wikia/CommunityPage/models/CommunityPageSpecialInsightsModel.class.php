@@ -166,11 +166,9 @@ class CommunityPageSpecialInsightsModel {
 
 		$timestamp = wfTimestamp( TS_UNIX, $metadata['lastRevision']['timestamp'] );
 
-		// Retrieve user name or replacement string for anon users
-		$user = User::newFromName( $metadata['lastRevision']['username'] );
-		if ( $user ) {
-			$userName = $user->getNameWithStringForAnon( wfMessage( 'communitypage-anon-user-name' )->plain() );
-		} else {
+		$userName = $metadata['lastRevision']['username'];
+
+		if ( User::isIp( $userName ) ) {
 			$userName = wfMessage( 'communitypage-anon-user-name' )->plain();
 		}
 
