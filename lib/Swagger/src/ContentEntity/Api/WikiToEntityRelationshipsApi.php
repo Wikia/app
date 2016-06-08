@@ -10,7 +10,7 @@
  * @link     https://github.com/swagger-api/swagger-codegen
  */
 /**
- *  Copyright 2015 SmartBear Software
+ *  Copyright 2016 SmartBear Software
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -92,241 +92,6 @@ class WikiToEntityRelationshipsApi
   
     
     /**
-     * getRelatedWikis
-     *
-     * get wiki related to an entity
-     *
-     * @param string $entity_id  (required)
-     * @return string[]
-     * @throws \Swagger\Client\ApiException on non-2xx response
-     */
-    public function getRelatedWikis($entity_id)
-    {
-        
-        // verify the required parameter 'entity_id' is set
-        if ($entity_id === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $entity_id when calling getRelatedWikis');
-        }
-  
-        // parse inputs
-        $resourcePath = "/wiki/relationships/entity/{entityId}";
-        $resourcePath = str_replace("{format}", "json", $resourcePath);
-        $method = "GET";
-        $httpBody = '';
-        $queryParams = array();
-        $headerParams = array();
-        $formParams = array();
-        $_header_accept = ApiClient::selectHeaderAccept(array('application/json'));
-        if (!is_null($_header_accept)) {
-            $headerParams['Accept'] = $_header_accept;
-        }
-        $headerParams['Content-Type'] = ApiClient::selectHeaderContentType(array());
-  
-        
-        
-        // path params
-        if ($entity_id !== null) {
-            $resourcePath = str_replace(
-                "{" . "entityId" . "}",
-                $this->apiClient->getSerializer()->toPathValue($entity_id),
-                $resourcePath
-            );
-        }
-        
-        
-  
-        // for model (json/xml)
-        if (isset($_tempBody)) {
-            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
-        } else if (count($formParams) > 0) {
-            $httpBody = $formParams; // for HTTP post (form)
-        }
-        
-        // make the API Call
-        try
-        {
-            list($response, $httpHeader) = $this->apiClient->callApi(
-                $resourcePath, $method,
-                $queryParams, $httpBody,
-                $headerParams, 'string[]'
-            );
-            
-            if (!$response) {
-                return null;
-            }
-
-            return $this->apiClient->getSerializer()->deserialize($response, 'string[]', $httpHeader);
-            
-        } catch (ApiException $e) {
-            switch ($e->getCode()) { 
-            case 200:
-                $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), 'string[]', $e->getResponseHeaders());
-                $e->setResponseObject($data);
-                break;
-            case 400:
-                $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\ContentEntity\Models\ResponseObj', $e->getResponseHeaders());
-                $e->setResponseObject($data);
-                break;
-            }
-  
-            throw $e;
-        }
-        
-        return null;
-        
-    }
-    
-    /**
-     * getRelatedEntities
-     *
-     * get the entities related to wiki
-     *
-     * @param string $wiki_id  (required)
-     * @return \Swagger\Client\ContentEntity\Models\Entity[]
-     * @throws \Swagger\Client\ApiException on non-2xx response
-     */
-    public function getRelatedEntities($wiki_id)
-    {
-        
-        // verify the required parameter 'wiki_id' is set
-        if ($wiki_id === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $wiki_id when calling getRelatedEntities');
-        }
-  
-        // parse inputs
-        $resourcePath = "/wiki/relationships/{wikiId}";
-        $resourcePath = str_replace("{format}", "json", $resourcePath);
-        $method = "GET";
-        $httpBody = '';
-        $queryParams = array();
-        $headerParams = array();
-        $formParams = array();
-        $_header_accept = ApiClient::selectHeaderAccept(array('application/json'));
-        if (!is_null($_header_accept)) {
-            $headerParams['Accept'] = $_header_accept;
-        }
-        $headerParams['Content-Type'] = ApiClient::selectHeaderContentType(array());
-  
-        
-        
-        // path params
-        if ($wiki_id !== null) {
-            $resourcePath = str_replace(
-                "{" . "wikiId" . "}",
-                $this->apiClient->getSerializer()->toPathValue($wiki_id),
-                $resourcePath
-            );
-        }
-        
-        
-  
-        // for model (json/xml)
-        if (isset($_tempBody)) {
-            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
-        } else if (count($formParams) > 0) {
-            $httpBody = $formParams; // for HTTP post (form)
-        }
-        
-        // make the API Call
-        try
-        {
-            list($response, $httpHeader) = $this->apiClient->callApi(
-                $resourcePath, $method,
-                $queryParams, $httpBody,
-                $headerParams, '\Swagger\Client\ContentEntity\Models\Entity[]'
-            );
-            
-            if (!$response) {
-                return null;
-            }
-
-            return $this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\ContentEntity\Models\Entity[]', $httpHeader);
-            
-        } catch (ApiException $e) {
-            switch ($e->getCode()) { 
-            case 200:
-                $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\ContentEntity\Models\Entity[]', $e->getResponseHeaders());
-                $e->setResponseObject($data);
-                break;
-            }
-  
-            throw $e;
-        }
-        
-        return null;
-        
-    }
-    
-    /**
-     * unrelateAllFromWiki
-     *
-     * delete all of a wiki's entity relationships
-     *
-     * @param string $wiki_id  (required)
-     * @return void
-     * @throws \Swagger\Client\ApiException on non-2xx response
-     */
-    public function unrelateAllFromWiki($wiki_id)
-    {
-        
-        // verify the required parameter 'wiki_id' is set
-        if ($wiki_id === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $wiki_id when calling unrelateAllFromWiki');
-        }
-  
-        // parse inputs
-        $resourcePath = "/wiki/relationships/{wikiId}";
-        $resourcePath = str_replace("{format}", "json", $resourcePath);
-        $method = "DELETE";
-        $httpBody = '';
-        $queryParams = array();
-        $headerParams = array();
-        $formParams = array();
-        $_header_accept = ApiClient::selectHeaderAccept(array('application/json'));
-        if (!is_null($_header_accept)) {
-            $headerParams['Accept'] = $_header_accept;
-        }
-        $headerParams['Content-Type'] = ApiClient::selectHeaderContentType(array());
-  
-        
-        
-        // path params
-        if ($wiki_id !== null) {
-            $resourcePath = str_replace(
-                "{" . "wikiId" . "}",
-                $this->apiClient->getSerializer()->toPathValue($wiki_id),
-                $resourcePath
-            );
-        }
-        
-        
-  
-        // for model (json/xml)
-        if (isset($_tempBody)) {
-            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
-        } else if (count($formParams) > 0) {
-            $httpBody = $formParams; // for HTTP post (form)
-        }
-        
-        // make the API Call
-        try
-        {
-            list($response, $httpHeader) = $this->apiClient->callApi(
-                $resourcePath, $method,
-                $queryParams, $httpBody,
-                $headerParams
-            );
-            
-        } catch (ApiException $e) {
-            switch ($e->getCode()) { 
-            }
-  
-            throw $e;
-        }
-        
-    }
-    
-    /**
      * create
      *
      * creates a relationship between wiki and entity
@@ -337,6 +102,23 @@ class WikiToEntityRelationshipsApi
      * @throws \Swagger\Client\ApiException on non-2xx response
      */
     public function create($wiki_id, $entity_id)
+    {
+        list($response, $statusCode, $httpHeader) = $this->createWithHttpInfo ($wiki_id, $entity_id);
+        return $response; 
+    }
+
+
+    /**
+     * createWithHttpInfo
+     *
+     * creates a relationship between wiki and entity
+     *
+     * @param string $wiki_id  (required)
+     * @param string $entity_id  (required)
+     * @return Array of null, HTTP status code, HTTP response headers (array of strings)
+     * @throws \Swagger\Client\ApiException on non-2xx response
+     */
+    public function createWithHttpInfo($wiki_id, $entity_id)
     {
         
         // verify the required parameter 'wiki_id' is set
@@ -350,8 +132,6 @@ class WikiToEntityRelationshipsApi
   
         // parse inputs
         $resourcePath = "/wiki/relationships/{wikiId}/entity/{entityId}";
-        $resourcePath = str_replace("{format}", "json", $resourcePath);
-        $method = "PUT";
         $httpBody = '';
         $queryParams = array();
         $headerParams = array();
@@ -365,6 +145,7 @@ class WikiToEntityRelationshipsApi
         
         
         // path params
+        
         if ($wiki_id !== null) {
             $resourcePath = str_replace(
                 "{" . "wikiId" . "}",
@@ -372,6 +153,7 @@ class WikiToEntityRelationshipsApi
                 $resourcePath
             );
         }// path params
+        
         if ($entity_id !== null) {
             $resourcePath = str_replace(
                 "{" . "entityId" . "}",
@@ -379,40 +161,237 @@ class WikiToEntityRelationshipsApi
                 $resourcePath
             );
         }
+        // default format to json
+        $resourcePath = str_replace("{format}", "json", $resourcePath);
+
         
         
   
         // for model (json/xml)
         if (isset($_tempBody)) {
             $httpBody = $_tempBody; // $_tempBody is the method argument, if present
-        } else if (count($formParams) > 0) {
+        } elseif (count($formParams) > 0) {
             $httpBody = $formParams; // for HTTP post (form)
         }
         
         // make the API Call
-        try
-        {
-            list($response, $httpHeader) = $this->apiClient->callApi(
-                $resourcePath, $method,
+        try {
+            list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
+                $resourcePath, 'PUT',
                 $queryParams, $httpBody,
                 $headerParams
             );
             
+            return array(null, $statusCode, $httpHeader);
+            
         } catch (ApiException $e) {
             switch ($e->getCode()) { 
             case 400:
-                $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\ContentEntity\Models\ResponseObj', $e->getResponseHeaders());
+                $data = \Swagger\Client\ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\ContentEntity\Models\ResponseObj', $e->getResponseHeaders());
                 $e->setResponseObject($data);
                 break;
             case 404:
-                $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\ContentEntity\Models\ResponseObj', $e->getResponseHeaders());
+                $data = \Swagger\Client\ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\ContentEntity\Models\ResponseObj', $e->getResponseHeaders());
                 $e->setResponseObject($data);
                 break;
             }
   
             throw $e;
         }
+    }
+    
+    /**
+     * getRelatedEntities
+     *
+     * get the entities related to wiki
+     *
+     * @param string $wiki_id  (required)
+     * @return \Swagger\Client\ContentEntity\Models\Entity[]
+     * @throws \Swagger\Client\ApiException on non-2xx response
+     */
+    public function getRelatedEntities($wiki_id)
+    {
+        list($response, $statusCode, $httpHeader) = $this->getRelatedEntitiesWithHttpInfo ($wiki_id);
+        return $response; 
+    }
+
+
+    /**
+     * getRelatedEntitiesWithHttpInfo
+     *
+     * get the entities related to wiki
+     *
+     * @param string $wiki_id  (required)
+     * @return Array of \Swagger\Client\ContentEntity\Models\Entity[], HTTP status code, HTTP response headers (array of strings)
+     * @throws \Swagger\Client\ApiException on non-2xx response
+     */
+    public function getRelatedEntitiesWithHttpInfo($wiki_id)
+    {
         
+        // verify the required parameter 'wiki_id' is set
+        if ($wiki_id === null) {
+            throw new \InvalidArgumentException('Missing the required parameter $wiki_id when calling getRelatedEntities');
+        }
+  
+        // parse inputs
+        $resourcePath = "/wiki/relationships/{wikiId}";
+        $httpBody = '';
+        $queryParams = array();
+        $headerParams = array();
+        $formParams = array();
+        $_header_accept = ApiClient::selectHeaderAccept(array('application/json'));
+        if (!is_null($_header_accept)) {
+            $headerParams['Accept'] = $_header_accept;
+        }
+        $headerParams['Content-Type'] = ApiClient::selectHeaderContentType(array());
+  
+        
+        
+        // path params
+        
+        if ($wiki_id !== null) {
+            $resourcePath = str_replace(
+                "{" . "wikiId" . "}",
+                $this->apiClient->getSerializer()->toPathValue($wiki_id),
+                $resourcePath
+            );
+        }
+        // default format to json
+        $resourcePath = str_replace("{format}", "json", $resourcePath);
+
+        
+        
+  
+        // for model (json/xml)
+        if (isset($_tempBody)) {
+            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
+        } elseif (count($formParams) > 0) {
+            $httpBody = $formParams; // for HTTP post (form)
+        }
+        
+        // make the API Call
+        try {
+            list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
+                $resourcePath, 'GET',
+                $queryParams, $httpBody,
+                $headerParams, '\Swagger\Client\ContentEntity\Models\Entity[]'
+            );
+            
+            if (!$response) {
+                return array(null, $statusCode, $httpHeader);
+            }
+
+            return array(\Swagger\Client\ObjectSerializer::deserialize($response, '\Swagger\Client\ContentEntity\Models\Entity[]', $httpHeader), $statusCode, $httpHeader);
+            
+        } catch (ApiException $e) {
+            switch ($e->getCode()) { 
+            case 200:
+                $data = \Swagger\Client\ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\ContentEntity\Models\Entity[]', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            }
+  
+            throw $e;
+        }
+    }
+    
+    /**
+     * getRelatedWikis
+     *
+     * get wiki related to an entity
+     *
+     * @param string $entity_id  (required)
+     * @return string[]
+     * @throws \Swagger\Client\ApiException on non-2xx response
+     */
+    public function getRelatedWikis($entity_id)
+    {
+        list($response, $statusCode, $httpHeader) = $this->getRelatedWikisWithHttpInfo ($entity_id);
+        return $response; 
+    }
+
+
+    /**
+     * getRelatedWikisWithHttpInfo
+     *
+     * get wiki related to an entity
+     *
+     * @param string $entity_id  (required)
+     * @return Array of string[], HTTP status code, HTTP response headers (array of strings)
+     * @throws \Swagger\Client\ApiException on non-2xx response
+     */
+    public function getRelatedWikisWithHttpInfo($entity_id)
+    {
+        
+        // verify the required parameter 'entity_id' is set
+        if ($entity_id === null) {
+            throw new \InvalidArgumentException('Missing the required parameter $entity_id when calling getRelatedWikis');
+        }
+  
+        // parse inputs
+        $resourcePath = "/wiki/relationships/entity/{entityId}";
+        $httpBody = '';
+        $queryParams = array();
+        $headerParams = array();
+        $formParams = array();
+        $_header_accept = ApiClient::selectHeaderAccept(array('application/json'));
+        if (!is_null($_header_accept)) {
+            $headerParams['Accept'] = $_header_accept;
+        }
+        $headerParams['Content-Type'] = ApiClient::selectHeaderContentType(array());
+  
+        
+        
+        // path params
+        
+        if ($entity_id !== null) {
+            $resourcePath = str_replace(
+                "{" . "entityId" . "}",
+                $this->apiClient->getSerializer()->toPathValue($entity_id),
+                $resourcePath
+            );
+        }
+        // default format to json
+        $resourcePath = str_replace("{format}", "json", $resourcePath);
+
+        
+        
+  
+        // for model (json/xml)
+        if (isset($_tempBody)) {
+            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
+        } elseif (count($formParams) > 0) {
+            $httpBody = $formParams; // for HTTP post (form)
+        }
+        
+        // make the API Call
+        try {
+            list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
+                $resourcePath, 'GET',
+                $queryParams, $httpBody,
+                $headerParams, 'string[]'
+            );
+            
+            if (!$response) {
+                return array(null, $statusCode, $httpHeader);
+            }
+
+            return array(\Swagger\Client\ObjectSerializer::deserialize($response, 'string[]', $httpHeader), $statusCode, $httpHeader);
+            
+        } catch (ApiException $e) {
+            switch ($e->getCode()) { 
+            case 200:
+                $data = \Swagger\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'string[]', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            case 400:
+                $data = \Swagger\Client\ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\ContentEntity\Models\ResponseObj', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            }
+  
+            throw $e;
+        }
     }
     
     /**
@@ -427,6 +406,23 @@ class WikiToEntityRelationshipsApi
      */
     public function unrelate($wiki_id, $entity_id)
     {
+        list($response, $statusCode, $httpHeader) = $this->unrelateWithHttpInfo ($wiki_id, $entity_id);
+        return $response; 
+    }
+
+
+    /**
+     * unrelateWithHttpInfo
+     *
+     * delete the relationship between wiki and entity
+     *
+     * @param string $wiki_id  (required)
+     * @param string $entity_id  (required)
+     * @return Array of null, HTTP status code, HTTP response headers (array of strings)
+     * @throws \Swagger\Client\ApiException on non-2xx response
+     */
+    public function unrelateWithHttpInfo($wiki_id, $entity_id)
+    {
         
         // verify the required parameter 'wiki_id' is set
         if ($wiki_id === null) {
@@ -439,8 +435,6 @@ class WikiToEntityRelationshipsApi
   
         // parse inputs
         $resourcePath = "/wiki/relationships/{wikiId}/entity/{entityId}";
-        $resourcePath = str_replace("{format}", "json", $resourcePath);
-        $method = "DELETE";
         $httpBody = '';
         $queryParams = array();
         $headerParams = array();
@@ -454,6 +448,7 @@ class WikiToEntityRelationshipsApi
         
         
         // path params
+        
         if ($wiki_id !== null) {
             $resourcePath = str_replace(
                 "{" . "wikiId" . "}",
@@ -461,6 +456,7 @@ class WikiToEntityRelationshipsApi
                 $resourcePath
             );
         }// path params
+        
         if ($entity_id !== null) {
             $resourcePath = str_replace(
                 "{" . "entityId" . "}",
@@ -468,36 +464,126 @@ class WikiToEntityRelationshipsApi
                 $resourcePath
             );
         }
+        // default format to json
+        $resourcePath = str_replace("{format}", "json", $resourcePath);
+
         
         
   
         // for model (json/xml)
         if (isset($_tempBody)) {
             $httpBody = $_tempBody; // $_tempBody is the method argument, if present
-        } else if (count($formParams) > 0) {
+        } elseif (count($formParams) > 0) {
             $httpBody = $formParams; // for HTTP post (form)
         }
         
         // make the API Call
-        try
-        {
-            list($response, $httpHeader) = $this->apiClient->callApi(
-                $resourcePath, $method,
+        try {
+            list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
+                $resourcePath, 'DELETE',
                 $queryParams, $httpBody,
                 $headerParams
             );
             
+            return array(null, $statusCode, $httpHeader);
+            
         } catch (ApiException $e) {
             switch ($e->getCode()) { 
             case 400:
-                $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\ContentEntity\Models\ResponseObj', $e->getResponseHeaders());
+                $data = \Swagger\Client\ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\ContentEntity\Models\ResponseObj', $e->getResponseHeaders());
                 $e->setResponseObject($data);
                 break;
             }
   
             throw $e;
         }
+    }
+    
+    /**
+     * unrelateAllFromWiki
+     *
+     * delete all of a wiki's entity relationships
+     *
+     * @param string $wiki_id  (required)
+     * @return void
+     * @throws \Swagger\Client\ApiException on non-2xx response
+     */
+    public function unrelateAllFromWiki($wiki_id)
+    {
+        list($response, $statusCode, $httpHeader) = $this->unrelateAllFromWikiWithHttpInfo ($wiki_id);
+        return $response; 
+    }
+
+
+    /**
+     * unrelateAllFromWikiWithHttpInfo
+     *
+     * delete all of a wiki's entity relationships
+     *
+     * @param string $wiki_id  (required)
+     * @return Array of null, HTTP status code, HTTP response headers (array of strings)
+     * @throws \Swagger\Client\ApiException on non-2xx response
+     */
+    public function unrelateAllFromWikiWithHttpInfo($wiki_id)
+    {
         
+        // verify the required parameter 'wiki_id' is set
+        if ($wiki_id === null) {
+            throw new \InvalidArgumentException('Missing the required parameter $wiki_id when calling unrelateAllFromWiki');
+        }
+  
+        // parse inputs
+        $resourcePath = "/wiki/relationships/{wikiId}";
+        $httpBody = '';
+        $queryParams = array();
+        $headerParams = array();
+        $formParams = array();
+        $_header_accept = ApiClient::selectHeaderAccept(array('application/json'));
+        if (!is_null($_header_accept)) {
+            $headerParams['Accept'] = $_header_accept;
+        }
+        $headerParams['Content-Type'] = ApiClient::selectHeaderContentType(array());
+  
+        
+        
+        // path params
+        
+        if ($wiki_id !== null) {
+            $resourcePath = str_replace(
+                "{" . "wikiId" . "}",
+                $this->apiClient->getSerializer()->toPathValue($wiki_id),
+                $resourcePath
+            );
+        }
+        // default format to json
+        $resourcePath = str_replace("{format}", "json", $resourcePath);
+
+        
+        
+  
+        // for model (json/xml)
+        if (isset($_tempBody)) {
+            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
+        } elseif (count($formParams) > 0) {
+            $httpBody = $formParams; // for HTTP post (form)
+        }
+        
+        // make the API Call
+        try {
+            list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
+                $resourcePath, 'DELETE',
+                $queryParams, $httpBody,
+                $headerParams
+            );
+            
+            return array(null, $statusCode, $httpHeader);
+            
+        } catch (ApiException $e) {
+            switch ($e->getCode()) { 
+            }
+  
+            throw $e;
+        }
     }
     
 }

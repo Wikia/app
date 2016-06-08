@@ -10,10 +10,13 @@ require([
 	'ext.wikia.recirculation.views.rail',
 	'ext.wikia.recirculation.views.footer',
 	'ext.wikia.recirculation.views.scroller',
+	'ext.wikia.recirculation.views.impactFooter',
 	'ext.wikia.recirculation.helpers.contentLinks',
 	'ext.wikia.recirculation.helpers.fandom',
 	'ext.wikia.recirculation.helpers.lateral',
+	'ext.wikia.recirculation.helpers.data',
 	'ext.wikia.recirculation.helpers.cakeRelatedContent',
+	'ext.wikia.recirculation.helpers.curatedContent',
 	'ext.wikia.recirculation.helpers.googleMatch',
 	'ext.wikia.adEngine.taboolaHelper',
 	require.optional('videosmodule.controllers.rail')
@@ -28,10 +31,13 @@ require([
 	railView,
 	footerView,
 	scrollerView,
+	impactFooterView,
 	contentLinksHelper,
 	fandomHelper,
 	lateralHelper,
+	dataHelper,
 	cakeHelper,
+	curatedHelper,
 	googleMatchHelper,
 	taboolaHelper,
 	videosModule
@@ -166,12 +172,15 @@ require([
 			view = railView();
 			isRail = true;
 			break;
+		case 'IMPACT_FOOTER':
+			renderImpactFooter();
+			return;
 		default:
 			return;
 	}
 
 	if (isRail) {
-		afterRailLoads(runExperiment);
+		afterRailLoads(runRailExperiment);
 	} else {
 		runExperiment();
 	}
@@ -190,6 +199,18 @@ require([
 		helper.loadData()
 			.then(view.render)
 			.then(view.setupTracking(experimentName))
+			.fail(handleError);
+	}
+
+	function runRailExperiment() {
+		var curated = curatedHelper();
+		helper.loadData()
+			.then(curated.injectContent)
+			.then(view.render)
+			.then(function($html) {
+				view.setupTracking(experimentName)($html);
+				curated.setupTracking($html);
+			})
 			.fail(handleError);
 	}
 
@@ -282,5 +303,37 @@ require([
 				tracker.trackVerboseClick(experimentName, label);
 			});
 		});
+	}
+
+	function renderImpactFooter() {
+		var curated = curatedHelper(),
+			fView = impactFooterView(),
+			rView = railView(),
+			sView = scrollerView();
+
+		contentLinksHelper({
+			count: 6,
+			extra: 6
+		}).loadData()
+			.then(sView.render)
+			.then(sView.setupTracking(experimentName));
+
+		dataHelper({}).loadData()
+			.then(function(data) {
+				var fandomData = {
+					title: data.fandom.title,
+					items: data.fandom.items.splice(0,5)
+				};
+
+				fView.render(data)
+					.then(fView.setupTracking(experimentName));
+
+				afterRailLoads(function() {
+					curated.injectContent(fandomData)
+						.then(rView.render)
+						.then(rView.setupTracking)
+						.then(curatedHelper.setupTracking);
+				});
+			});
 	}
 });

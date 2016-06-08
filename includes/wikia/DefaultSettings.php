@@ -266,8 +266,6 @@ $wgAutoloadClasses[ 'Wikia\\Measurements\\Drivers'    ] = "$IP/includes/wikia/me
 $wgAutoloadClasses[ 'Wikia\\Measurements\\NewrelicDriver' ] = "$IP/includes/wikia/measurements/Drivers.php";
 $wgAutoloadClasses[ 'Wikia\\Measurements\\DummyDriver'    ] = "$IP/includes/wikia/measurements/Drivers.php";
 $wgAutoloadClasses[ 'Wikia\\Measurements\\Time'       ] = "$IP/includes/wikia/measurements/Time.class.php";
-$wgAutoloadClasses[ 'MemcacheMoxiCluster'             ] = "{$IP}/includes/wikia/MemcacheMoxiCluster.class.php";
-$wgAutoloadClasses[ 'MemcacheClientShadower'          ] = "{$IP}/includes/wikia/MemcacheClientShadower.class.php";
 $wgAutoloadClasses[ 'Wikia\\SwiftStorage'             ] = "$IP/includes/wikia/SwiftStorage.class.php";
 $wgAutoloadClasses[ 'WikiaSQL'                        ] = "$IP/includes/wikia/WikiaSQL.class.php";
 $wgAutoloadClasses[ 'WikiaSQLCache'                   ] = "$IP/includes/wikia/WikiaSQLCache.class.php";
@@ -758,8 +756,7 @@ $wgContentReviewDB = 'content_review';
 $wgExternalDatawareDB = 'dataware';
 $wgExternalArchiveDB = 'archive';
 $wgStatsDB = 'stats';
-$wgDatamartDB = 'statsdb_mart';
-$wgDWStatsDB = 'statsdb';
+$wgDWStatsDB = 'statsdb_mart';
 $wgStatsDBEnabled = true;
 $wgExternalWikiaStatsDB = 'wikiastats';
 $wgSpecialsDB = 'specials';
@@ -1060,17 +1057,7 @@ $wgMaxLevelThreeNavElements = 10;
  * Memcached class name
  */
 
-/**
- * PLATFORM-2233 - use a classic memcache client on devboxes and in Reston
- * Devbox's LocalSettings.php is too late as wgMemc is initialized earlier
- * FIXME: This is temporary code - will be removed after the full switch to twemproxy
- */
-if ( $wgWikiaDatacenter === WIKIA_DC_RES || $wgWikiaEnvironment === WIKIA_ENV_DEV ) {
-	$wgMemCachedClass = 'MemCachedClientforWiki';
-}
-else {
-	$wgMemCachedClass = 'MemcacheMoxiCluster';
-}
+$wgMemCachedClass = 'MemCachedClientforWiki';
 
 /**
  * Extra configuration options for memcached when using libmemcached/pecl-memcached
@@ -1909,9 +1896,3 @@ $wgReviveSpotlightsCountries = null;
  * It should be always included even if recovery is disabled as we use Recovery classes outside the module
  */
 include_once("$IP/extensions/wikia/ARecoveryEngine/ARecoveryEngine.setup.php");
-
-/**
- * @name $wgMemcachedMoxiProtocol
- * Set it to either 'ascii' or 'binary' (default: 'binary')
- */
-$wgMemcachedMoxiProtocol = 'binary';
