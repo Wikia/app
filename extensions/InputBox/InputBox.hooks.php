@@ -52,7 +52,7 @@ class InputBoxHooks {
 		$request,
 		$wiki )
 	{
-		global $wgScript, $wgVisualEditorNamespaces;
+		global $wgScript, $wgVisualEditorNamespaces, $wgExtraNamespacesLocal;
 
 		if ( $wiki->getAction( $request ) !== 'edit' ) {
 			// not our problem
@@ -80,7 +80,8 @@ class InputBoxHooks {
 			EditorPreference::isVisualEditorPrimary() &&
 			$user->isLoggedIn() &&
 			$title instanceof Title &&
-			$title->inNamespaces( $wgVisualEditorNamespaces )
+			$title->inNamespaces( $wgVisualEditorNamespaces ) &&
+			!$title->inNamespaces( $wgExtraNamespacesLocal )
 		) {
 			$params['veaction'] = 'edit';
 			unset( $params['action'] );
