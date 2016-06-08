@@ -352,13 +352,13 @@ class AssetsManager {
 		}
 	}
 
-	public function getSassesUrl($sassList) {
-		if (!is_array($sassList)) {
+	public function getSassesUrl( $sassList, $params = null ) {
+		if ( !is_array( $sassList ) ) {
 			$sassList = [$sassList];
 		}
 
-		$url = $this->getSassCommonURL(implode(',', $sassList));
-		$url =  str_replace(['/sass/', 'type=sass'], ['/sasses/', 'type=sasses'], $url);
+		$url = $this->getSassCommonURL( implode( ',', $sassList ), null, $params );
+		$url = str_replace( ['/sass/', 'type=sass'], ['/sasses/', 'type=sasses'], $url );
 
 		return $url;
 	}

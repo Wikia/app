@@ -107,7 +107,7 @@ class AssetsManagerServer {
 			$headers['X-Pass-Cache-Control'] = 'public, max-age=' . $cacheDuration['client'];
 		}
 
-		if ($type === 'saas' || $type === 'sasses') {
+		if ( $type === 'sasses' && strpos( $request->getRequestURL(), urlencode( 'crossorigin=anonymous' ) ) !== false ) {
 			header( 'Access-Control-Allow-Origin: *' );
 		}
 
