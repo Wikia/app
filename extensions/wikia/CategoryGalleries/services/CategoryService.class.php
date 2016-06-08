@@ -114,7 +114,10 @@
 					'page_namespace' => $namespace,
 				),
 				__METHOD__,
-				array(),
+				array(
+					// PLATFORM-2246: do not fetch all articles in the category as there can be tens of thousands of them
+					'LIMIT' => 5000
+				),
 				array( 'categorylinks'  => array( 'INNER JOIN', 'cl_from = page_id' ) )
 			);
 

@@ -11,7 +11,7 @@
  * @link     https://github.com/swagger-api/swagger-codegen
  */
 /**
- *  Copyright 2015 SmartBear Software
+ *  Copyright 2016 SmartBear Software
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -56,6 +56,10 @@ class EntityRelationshipGraph implements ArrayAccess
         'edges' => '\Swagger\Client\ContentEntity\Models\GraphEdge[]'
     );
   
+    static function swaggerTypes() {
+        return self::$swaggerTypes;
+    }
+
     /** 
       * Array of attributes where the key is the local name, and the value is the original name
       * @var string[] 
@@ -66,6 +70,10 @@ class EntityRelationshipGraph implements ArrayAccess
         'edges' => 'edges'
     );
   
+    static function attributeMap() {
+        return self::$attributeMap;
+    }
+
     /**
       * Array of attributes to setter functions (for deserialization of responses)
       * @var string[]
@@ -76,6 +84,10 @@ class EntityRelationshipGraph implements ArrayAccess
         'edges' => 'setEdges'
     );
   
+    static function setters() {
+        return self::$setters;
+    }
+
     /**
       * Array of attributes to getter functions (for serialization of requests)
       * @var string[]
@@ -86,6 +98,10 @@ class EntityRelationshipGraph implements ArrayAccess
         'edges' => 'getEdges'
     );
   
+    static function getters() {
+        return self::$getters;
+    }
+
     
     /**
       * $root_entity_id 
@@ -112,6 +128,7 @@ class EntityRelationshipGraph implements ArrayAccess
      */
     public function __construct(array $data = null)
     {
+        
         if ($data != null) {
             $this->root_entity_id = $data["root_entity_id"];
             $this->nodes = $data["nodes"];
@@ -230,9 +247,9 @@ class EntityRelationshipGraph implements ArrayAccess
     public function __toString()
     {
         if (defined('JSON_PRETTY_PRINT')) {
-            return json_encode(get_object_vars($this), JSON_PRETTY_PRINT);
+            return json_encode(\Swagger\Client\ObjectSerializer::sanitizeForSerialization($this), JSON_PRETTY_PRINT);
         } else {
-            return json_encode(get_object_vars($this));
+            return json_encode(\Swagger\Client\ObjectSerializer::sanitizeForSerialization($this));
         }
     }
 }
