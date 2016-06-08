@@ -63,9 +63,8 @@ class HeliosClientImpl implements HeliosClient
 		global $wgRequest;
 		$headers['X-Forwarded-For'] = $wgRequest->getIP();
 
-		// adding trace headers
-		$headers['X-Trace-Id'] = WikiaTracer::instance()->getTraceId();
-		$headers['X-Span-Id'] = WikiaTracer::instance()->getSpanId();
+		// adding internal headers
+		WikiaTracer::instance()->setRequestHeaders( $headers, true );
 
 		// Request options pre-processing.
 		$options = [

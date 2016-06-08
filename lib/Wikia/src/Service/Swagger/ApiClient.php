@@ -29,9 +29,8 @@ class ApiClient extends \Swagger\Client\ApiClient {
 		$response = $exception = null;
 		$code = 200;
 
-		// adding trace headers
-		$headerParams['X-Trace-Id'] = WikiaTracer::instance()->getTraceId();
-		$headerParams['X-Span-Id'] = WikiaTracer::instance()->getSpanId();
+		// adding internal headers
+		WikiaTracer::instance()->setRequestHeaders( $headerParams, true );
 
 		try {
 			$response = parent::callApi($resourcePath, $method, $queryParams, $postData, $headerParams, $responseType);
