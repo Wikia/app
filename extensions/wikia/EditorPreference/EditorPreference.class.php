@@ -47,7 +47,7 @@ class EditorPreference {
 	public static function onSkinTemplateNavigation( &$skin, &$links ) {
 		global $wgUser;
 
-		if ( !isset( $links['views']['edit'] ) || !self::shouldShowVisualEditorLink( $skin ) ) {
+		if ( !isset( $links['views']['edit'] ) || !self::isVisualEditorSupported( $skin ) ) {
 			// There's no edit link OR the Visual Editor cannot be used, so there's no change to make
 			return true;
 		}
@@ -170,14 +170,13 @@ class EditorPreference {
 	 * @param Skin Current skin object
 	 * @return boolean
 	 */
-	public static function shouldShowVisualEditorLink( $skin ) {
+	public static function isVisualEditorSupported( $skin ) {
 		global $wgTitle, $wgEnableVisualEditorExt, $wgVisualEditorNamespaces, $wgVisualEditorSupportedSkins, $wgUser;
 		return in_array( $skin->getSkinName(), $wgVisualEditorSupportedSkins ) &&
 			!$wgUser->isBlockedFrom( $wgTitle ) &&
 			!$wgTitle->isRedirect() &&
 			$wgEnableVisualEditorExt &&
-			( is_array( $wgVisualEditorNamespaces ) ?
-				in_array( $wgTitle->getNamespace(), $wgVisualEditorNamespaces ) : false );
+			( is_array( $wgVisualEditorNamespaces ) ? $wgTitle->inNamespaces( $wgVisualEditorNamespaces ) : false );
 	}
 
 	/**

@@ -72,15 +72,12 @@ class InputBoxHooks {
 			$doRedirect = true;
 		}
 
-		$title = Title::newFromText( $params['title'] );
-
 		if (
 			!empty( $params['preload'] ) &&
 			empty( $params['section'] ) &&
-			EditorPreference::isVisualEditorPrimary() &&
 			$user->isLoggedIn() &&
-			$title instanceof Title &&
-			$title->inNamespaces( $wgVisualEditorNamespaces )
+			EditorPreference::isVisualEditorPrimary() &&
+			EditorPreference::isVisualEditorSupported( $output->getSkin() )
 		) {
 			$params['veaction'] = 'edit';
 			unset( $params['action'] );
