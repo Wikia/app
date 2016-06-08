@@ -259,6 +259,10 @@ class UserStatsService extends WikiaModel {
 	 * @return $optionVal string|null
 	 */
 	private function setUserStat( $statName, $statVal ) {
+		if ( $this->userId === 0 ) {
+			return false;
+		}
+
 		$dbw = $this->getDatabase( Title::GAID_FOR_UPDATE );
 		$dbw->replace(
 			'wikia_user_properties',
