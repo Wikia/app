@@ -81,7 +81,7 @@ class InputBoxHooks {
 			$user->isLoggedIn() &&
 			$title instanceof Title &&
 			$title->inNamespaces( $wgVisualEditorNamespaces ) &&
-			!$title->inNamespaces( $wgExtraNamespacesLocal )
+			!$title->inNamespaces( array_keys( $wgExtraNamespacesLocal ) )
 		) {
 			$params['veaction'] = 'edit';
 			unset( $params['action'] );
