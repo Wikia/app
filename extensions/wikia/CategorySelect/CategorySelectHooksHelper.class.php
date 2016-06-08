@@ -7,7 +7,6 @@
  * @author Lucas Garczewski <tor@wikia-inc.com>
  * @author Kyle Florence <kflorence@wikia-inc.com>
  */
-
 class CategorySelectHooksHelper {
 
 	/**
@@ -101,6 +100,7 @@ class CategorySelectHooksHelper {
 	 * @return Boolean because it's a hook
 	 */
 	public static function onEditPageShowEditFormFields( $editPage, $out ) {
+		CategoryHelper::extractCategoriesFromWikitext( $editPage->textbox1 );
 		$out->addHTML( F::app()->renderView( 'CategorySelect', 'editPageMetadata' ) );
 		return true;
 	}
@@ -159,15 +159,15 @@ class CategorySelectHooksHelper {
 
 			JSMessages::enqueuePackage( 'CategorySelect', JSMessages::INLINE );
 
-			$wgHooks['MakeGlobalVariablesScript'][] = 'CategorySelectHooksHelper::onMakeGlobalVariablesScript';
+			$wgHooks[ 'MakeGlobalVariablesScript' ][] = 'CategorySelectHooksHelper::onMakeGlobalVariablesScript';
 
 			// Add hooks for edit pages
 			if ( $action == 'edit' || $action == 'submit' || $force ) {
-				$wgHooks['EditForm::MultiEdit:Form'][] = 'CategorySelectHooksHelper::onEditFormMultiEditForm';
-				$wgHooks['EditPage::CategoryBox'][] = 'CategorySelectHooksHelper::onEditPageCategoryBox';
-				$wgHooks['EditPage::getContent::end'][] = 'CategorySelectHooksHelper::onEditPageGetContentEnd';
-				$wgHooks['EditPage::importFormData'][] = 'CategorySelectHooksHelper::onEditPageImportFormData';
-				$wgHooks['EditPage::showEditForm:fields'][] = 'CategorySelectHooksHelper::onEditPageShowEditFormFields';
+				$wgHooks[ 'EditForm::MultiEdit:Form' ][] = 'CategorySelectHooksHelper::onEditFormMultiEditForm';
+				$wgHooks[ 'EditPage::CategoryBox' ][] = 'CategorySelectHooksHelper::onEditPageCategoryBox';
+				$wgHooks[ 'EditPage::getContent::end' ][] = 'CategorySelectHooksHelper::onEditPageGetContentEnd';
+				$wgHooks[ 'EditPage::importFormData' ][] = 'CategorySelectHooksHelper::onEditPageImportFormData';
+				$wgHooks[ 'EditPage::showEditForm:fields' ][] = 'CategorySelectHooksHelper::onEditPageShowEditFormFields';
 			}
 		}
 
