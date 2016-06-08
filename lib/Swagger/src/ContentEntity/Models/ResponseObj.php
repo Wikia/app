@@ -11,7 +11,7 @@
  * @link     https://github.com/swagger-api/swagger-codegen
  */
 /**
- *  Copyright 2015 SmartBear Software
+ *  Copyright 2016 SmartBear Software
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -52,36 +52,52 @@ class ResponseObj implements ArrayAccess
       */
     static $swaggerTypes = array(
         'title' => 'string',
-        'id' => 'string'
+        'identifier' => 'string'
     );
   
+    static function swaggerTypes() {
+        return self::$swaggerTypes;
+    }
+
     /** 
       * Array of attributes where the key is the local name, and the value is the original name
       * @var string[] 
       */
     static $attributeMap = array(
         'title' => 'title',
-        'id' => 'id'
+        'identifier' => 'identifier'
     );
   
+    static function attributeMap() {
+        return self::$attributeMap;
+    }
+
     /**
       * Array of attributes to setter functions (for deserialization of responses)
       * @var string[]
       */
     static $setters = array(
         'title' => 'setTitle',
-        'id' => 'setId'
+        'identifier' => 'setIdentifier'
     );
   
+    static function setters() {
+        return self::$setters;
+    }
+
     /**
       * Array of attributes to getter functions (for serialization of requests)
       * @var string[]
       */
     static $getters = array(
         'title' => 'getTitle',
-        'id' => 'getId'
+        'identifier' => 'getIdentifier'
     );
   
+    static function getters() {
+        return self::$getters;
+    }
+
     
     /**
       * $title 
@@ -90,10 +106,10 @@ class ResponseObj implements ArrayAccess
     protected $title;
     
     /**
-      * $id 
+      * $identifier 
       * @var string
       */
-    protected $id;
+    protected $identifier;
     
 
     /**
@@ -102,9 +118,10 @@ class ResponseObj implements ArrayAccess
      */
     public function __construct(array $data = null)
     {
+        
         if ($data != null) {
             $this->title = $data["title"];
-            $this->id = $data["id"];
+            $this->identifier = $data["identifier"];
         }
     }
     
@@ -130,23 +147,23 @@ class ResponseObj implements ArrayAccess
     }
     
     /**
-     * Gets id
+     * Gets identifier
      * @return string
      */
-    public function getId()
+    public function getIdentifier()
     {
-        return $this->id;
+        return $this->identifier;
     }
   
     /**
-     * Sets id
-     * @param string $id 
+     * Sets identifier
+     * @param string $identifier 
      * @return $this
      */
-    public function setId($id)
+    public function setIdentifier($identifier)
     {
         
-        $this->id = $id;
+        $this->identifier = $identifier;
         return $this;
     }
     
@@ -198,9 +215,9 @@ class ResponseObj implements ArrayAccess
     public function __toString()
     {
         if (defined('JSON_PRETTY_PRINT')) {
-            return json_encode(get_object_vars($this), JSON_PRETTY_PRINT);
+            return json_encode(\Swagger\Client\ObjectSerializer::sanitizeForSerialization($this), JSON_PRETTY_PRINT);
         } else {
-            return json_encode(get_object_vars($this));
+            return json_encode(\Swagger\Client\ObjectSerializer::sanitizeForSerialization($this));
         }
     }
 }
