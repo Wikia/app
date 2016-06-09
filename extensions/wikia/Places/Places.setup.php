@@ -14,7 +14,7 @@
 
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'Places',
-	'version' => '2.1',
+	'version' => '2.2',
 	'author' => array(
 		'Maciej Brencz',
 		'Jakub Kurcek' ),
