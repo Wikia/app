@@ -1,0 +1,21 @@
+<div class="module meetup-section community-page-contributors-module-section" >
+  <h2>Near By Users</h2>
+  <ul class="reset top-contributors">
+    {{#nearByUsers}}
+      {{#users}}
+        <li class="community-page-contributors-list-item">
+          <div class="avatar-container">
+            <a data-tracking="top-contributors-user-avatar" href="{{profilePage}}">{{{avatar}}}</a>
+          </div>
+          <div class="community-page-contributor-rank">
+            {{count}}.
+          </div>
+          <div class="community-page-contributor-details">
+            <a data-tracking="top-contributors-user" href="{{profilePage}}">{{userName}}</a>
+            <span class="community-page-subtle">{{contributionsText}}</span>
+          </div>
+        </li>
+      {{/users}}
+    {{/nearByUsers}}
+  <ul>
+</div>

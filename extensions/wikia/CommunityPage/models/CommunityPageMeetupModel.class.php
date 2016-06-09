@@ -19,5 +19,7 @@ class CommunityPageMeetupModel {
 		}
 	}
 
-	
+	public function getNearByUsers($currentUserLocation){
+		return (new CommunityPageLocationModel())->getUserOnCity($currentUserLocation);
+	}
 }

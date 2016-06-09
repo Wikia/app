@@ -9,11 +9,13 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 
 	private $usersModel;
 	private $wikiModel;
+	private $meetupModel;
 
 	public function __construct() {
 		parent::__construct( 'Community' );
 		$this->usersModel = new CommunityPageSpecialUsersModel( $this->getUser() );
 		$this->wikiModel = new CommunityPageSpecialWikiModel();
+		$this->meetupModel = new CommunityPageMeetupModel();
 	}
 
 	public function index() {
@@ -46,6 +48,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 				->getData(),
 			'recentlyJoined' => $this->sendRequest( 'CommunityPageSpecialController', 'getRecentlyJoinedData' )
 				->getData(),
+			'nearByUsers' => $this->sendRequest('CommunityPageSpecialController','getNearByUsers')->getData(),
 			'communityPolicyModule' => $this->getCommunityPolicyData(),
 			'recentActivityModule' => $this->getRecentActivityData(),
 			'insightsModules' => $this->getInsightsModulesData(),
@@ -172,11 +175,28 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 			'moreMembersText' => $this->msg( 'communitypage-view-more' )->plain(),
 		] );
 	}
+	
+	public function getNearByUsers(){
+		$currentUser = $this->getUser();
+		$currentUserLocation = $this->getCurrentUserLocation($currentUser);
+		$nearByUser = $this->meetupModel->getNearByUsers($currentUserLocation);
+		
+		$nearByUserDetails = $this->getContributorsDetails($nearByUser);
+
+		$this->response->setData([
+			'users' => $nearByUserDetails,
+		]);
+	}
 
 	/**
 	 * Set context for recentActivityModule template. Needs to be passed through the index method in order to work.
 	 * @return array
 	 */
+	
+	private  function getCurrentUserLocation($currentUser){
+		return (new CommunityPageLocationModel())->getCurrentUserLocation($currentUser);
+	}
+	
 	private function getRecentActivityData() {
 		return ( new CommunityPageSpecialRecentActivityModel() )->getData();
 	}
