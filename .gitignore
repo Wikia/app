@@ -8,7 +8,6 @@
 /.tags_sorted_by_file
 /mysql-connector-java-5.1.18-bin.jar
 /mysql-connector-license.txt
-.idea
 .DS_Store
 Thumbs.db
 .buildpath
@@ -38,3 +37,25 @@ maintenance/.mweval_history
 
 composer.phar
 
+# .idea
+# User-specific stuff:
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/dictionaries
+.idea/vcs.xml
+.idea/jsLibraryMappings.xml
+
+# Sensitive or high-churn files:
+.idea/dataSources.ids
+.idea/dataSources.xml
+.idea/dataSources.local.xml
+.idea/sqlDataSources.xml
+.idea/dynamic.xml
+.idea/uiDesigner.xml
+
+# Gradle:
+.idea/gradle.xml
+.idea/libraries
+
+# Mongo Explorer plugin:
+.idea/mongoSettings.xml
