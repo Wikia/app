@@ -1,9 +1,12 @@
 <?php
+
 class PlaceModel {
 	private $align = 'right';
 	private $width = 200;
 	private $height = 200;
+	/* @var $lat double */
 	private $lat = false;
+	/* @var $lon double */
 	private $lon = false;
 	private $address = '';
 	private $zoom = 14;
@@ -11,6 +14,10 @@ class PlaceModel {
 	private $categories = array();
 	private $caption = false;
 
+	/**
+	 * @param null|array $array
+	 * @return PlaceModel
+	 */
 	public static function newFromAttributes( $array = null ){
 		$oModel = (new PlaceModel);
 		if ( is_array( $array ) ){
@@ -121,6 +128,9 @@ class PlaceModel {
 		);
 	}
 
+	/**
+	 * @return bool
+	 */
 	public function isEmpty() {
 		return ($this->getLat() === false) || ($this->getLon() === false);
 	}
@@ -167,7 +177,6 @@ class PlaceModel {
 		return implode( '|', $this->categories );
 	}
 
-	// Logic
 	public function getStaticMapUrl(){
 		$latLon = implode( ',', $this->getLatLon() );
 
@@ -218,7 +227,33 @@ class PlaceModel {
 		return $ret;
 	}
 
+	/**
+	 * Calculates the distance between the current and provided point
+	 *
+	 * @see http://www.codecodex.com/wiki/Calculate_distance_between_two_points_on_a_globe#PHP
+	 *
+	 * @param PlaceModel $place
+	 * @return float distance in meters
+	 */
 	public function getDistanceTo(PlaceModel $place) {
+		wfProfileIn( __METHOD__ );
 
+		$earth_radius = 6371;
+
+		$latitude1 = $this->getLat();
+		$longitude1 = $this->getLon();
+
+		$latitude2 = $place->getLat();
+		$longitude2 = $place->getLon();
+
+		$dLat = deg2rad($latitude2 - $latitude1);
+		$dLon = deg2rad($longitude2 - $longitude1);
+
+		$a = sin($dLat/2) * sin($dLat/2) + cos(deg2rad($latitude1)) * cos(deg2rad($latitude2)) * sin($dLon/2) * sin($dLon/2);
+		$c = 2 * asin(sqrt($a));
+		$d = $earth_radius * $c;
+
+		wfProfileOut( __METHOD__ );
+		return (int) round($d * 1000);
 	}
 }
