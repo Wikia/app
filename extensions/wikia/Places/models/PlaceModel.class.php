@@ -11,6 +11,8 @@ class PlaceModel {
 	private $address = '';
 	private $zoom = 14;
 	private $pageId = 0;
+	/* @var $distance int */
+	private $distance = false;
 	private $categories = array();
 	private $caption = false;
 
@@ -100,6 +102,11 @@ class PlaceModel {
 			$this->pageId = $int;
 		}
 	}
+	public function setDistance( $int ){
+		if ( is_numeric( $int ) ) {
+			$this->distance = intval( $int);
+		}
+	}
 
 	public function getAlign(){
 		return $this->align;
@@ -145,6 +152,10 @@ class PlaceModel {
 
 	public function getPageId(){
 		return $this->pageId;
+	}
+
+	public function getDistance(){
+		return $this->distance;
 	}
 
 	public function getCaption() {
