@@ -31,6 +31,14 @@ class WikiaApiPlaces extends ApiBase {
 			$title = Title::newFromText($params['title']);
 
 			if ($title instanceof Title) {
+				if ($title->isRedirect()) {
+					$target = $title->getLinksFrom()[0];
+
+					if ($target instanceof Title) {
+						$title = $target;
+					}
+				}
+
 				$storage = PlaceStorage::newFromTitle($title);
 				$places = array(
 					$storage->getModel()
