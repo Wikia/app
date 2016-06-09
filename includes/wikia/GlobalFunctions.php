@@ -936,12 +936,8 @@ function wfTimeFormatAgo( $stamp, $hideCurrentYear = true ) {
 		// remove year from user's date format
 		$format = $wgLang->getDateFormatString( 'date', 'default' );
 		if ( $hideCurrentYear ) {
-			$format = trim( $format, ' ,yY' );
-
-			// For Japanese and Chinese the 年 character before the month number must also be stripped. See JPN-549
-			$format = str_replace('年', '', $format);
+			$format = trim( $format, ' ,yY年' );
 		}
-
 		$res = $wgLang->sprintfDate( $format, wfTimestamp( TS_MW, $stamp ) );
 	}
 
