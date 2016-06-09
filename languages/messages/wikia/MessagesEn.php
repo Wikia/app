@@ -321,12 +321,6 @@ Your account has been created. Don't forget to change your {{SITENAME}} [[Specia
 'group-voldev-member' => 'Volunteer Developer',
 'grouppage-voldev' => 'w:c:dev:Volunteer_Developers',
 
-'group-vanguard' => 'Vanguards',
-'group-vanguard-member' => 'Vanguard',
-
-'group-rcpatrol' => 'Patrollers',
-'group-rcpatrol-member' => 'Patroller',
-
 'group-content-moderator' => 'Content Moderators',
 'group-content-moderator-member' => 'Content Moderator',
 
