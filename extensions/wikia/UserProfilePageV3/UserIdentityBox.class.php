@@ -99,11 +99,11 @@ class UserIdentityBox {
 				$this->userStats = $userStatsService->getStats();
 			}
 
-			$iEdits = $this->userStats['edits'];
+			$iEdits = $this->userStats['editcount'];
 			$iEdits = $data['edits'] = is_null( $iEdits ) ? 0 : intval( $iEdits );
 
 			// data depends on which wiki it is displayed
-			$data['registration'] = $this->userStats['firstRevisionDate'];
+			$data['registration'] = $this->userStats['firstContributionTimestamp'];
 			$data['userPage'] = $this->user->getUserPage()->getFullURL();
 
 			$data = call_user_func( array( $this, $dataType ), $data );
@@ -553,7 +553,7 @@ class UserIdentityBox {
 			$this->userStats = $userStatsService->getStats();
 		}
 
-		$iEdits = $this->userStats['edits'];
+		$iEdits = $this->userStats['editcount'];
 		$iEdits = is_null( $iEdits ) ? 0 : intval( $iEdits );
 
 		$hasUserEverEditedMastheadBefore = $this->hasUserEverEditedMasthead();

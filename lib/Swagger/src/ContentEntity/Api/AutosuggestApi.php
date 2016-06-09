@@ -10,7 +10,7 @@
  * @link     https://github.com/swagger-api/swagger-codegen
  */
 /**
- *  Copyright 2015 SmartBear Software
+ *  Copyright 2016 SmartBear Software
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -97,18 +97,33 @@ class AutosuggestApi
      * finds entities with names like the provided input
      *
      * @param string $q  (optional)
-     * @param int $limit  (optional)
+     * @param int $limit  (optional, default to 10)
      * @return \Swagger\Client\ContentEntity\Models\Entity[]
      * @throws \Swagger\Client\ApiException on non-2xx response
      */
-    public function search($q=null, $limit=null)
+    public function search($q = null, $limit = null)
+    {
+        list($response, $statusCode, $httpHeader) = $this->searchWithHttpInfo ($q, $limit);
+        return $response; 
+    }
+
+
+    /**
+     * searchWithHttpInfo
+     *
+     * finds entities with names like the provided input
+     *
+     * @param string $q  (optional)
+     * @param int $limit  (optional, default to 10)
+     * @return Array of \Swagger\Client\ContentEntity\Models\Entity[], HTTP status code, HTTP response headers (array of strings)
+     * @throws \Swagger\Client\ApiException on non-2xx response
+     */
+    public function searchWithHttpInfo($q = null, $limit = null)
     {
         
   
         // parse inputs
         $resourcePath = "/autosuggest/entities";
-        $resourcePath = str_replace("{format}", "json", $resourcePath);
-        $method = "GET";
         $httpBody = '';
         $queryParams = array();
         $headerParams = array();
@@ -120,56 +135,57 @@ class AutosuggestApi
         $headerParams['Content-Type'] = ApiClient::selectHeaderContentType(array());
   
         // query params
+        
         if ($q !== null) {
             $queryParams['q'] = $this->apiClient->getSerializer()->toQueryValue($q);
         }// query params
+        
         if ($limit !== null) {
             $queryParams['limit'] = $this->apiClient->getSerializer()->toQueryValue($limit);
         }
         
         
+        // default format to json
+        $resourcePath = str_replace("{format}", "json", $resourcePath);
+
         
         
   
         // for model (json/xml)
         if (isset($_tempBody)) {
             $httpBody = $_tempBody; // $_tempBody is the method argument, if present
-        } else if (count($formParams) > 0) {
+        } elseif (count($formParams) > 0) {
             $httpBody = $formParams; // for HTTP post (form)
         }
         
         // make the API Call
-        try
-        {
-            list($response, $httpHeader) = $this->apiClient->callApi(
-                $resourcePath, $method,
+        try {
+            list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
+                $resourcePath, 'GET',
                 $queryParams, $httpBody,
                 $headerParams, '\Swagger\Client\ContentEntity\Models\Entity[]'
             );
             
             if (!$response) {
-                return null;
+                return array(null, $statusCode, $httpHeader);
             }
 
-            return $this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\ContentEntity\Models\Entity[]', $httpHeader);
+            return array(\Swagger\Client\ObjectSerializer::deserialize($response, '\Swagger\Client\ContentEntity\Models\Entity[]', $httpHeader), $statusCode, $httpHeader);
             
         } catch (ApiException $e) {
             switch ($e->getCode()) { 
             case 200:
-                $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\ContentEntity\Models\Entity[]', $e->getResponseHeaders());
+                $data = \Swagger\Client\ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\ContentEntity\Models\Entity[]', $e->getResponseHeaders());
                 $e->setResponseObject($data);
                 break;
             case 400:
-                $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\ContentEntity\Models\ResponseObj', $e->getResponseHeaders());
+                $data = \Swagger\Client\ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\ContentEntity\Models\ResponseObj', $e->getResponseHeaders());
                 $e->setResponseObject($data);
                 break;
             }
   
             throw $e;
         }
-        
-        return null;
-        
     }
     
 }

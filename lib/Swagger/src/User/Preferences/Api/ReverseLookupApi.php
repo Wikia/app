@@ -10,7 +10,7 @@
  * @link     https://github.com/swagger-api/swagger-codegen
  */
 /**
- *  Copyright 2015 SmartBear Software
+ *  Copyright 2016 SmartBear Software
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -92,27 +92,46 @@ class ReverseLookupApi
   
     
     /**
-     * findWikisWithLocalPreference
+     * findUsersWithGlobalPreference
      *
-     * finds wikis where at least one user has a local preference set to a value
+     * Finds all users that has the global preference set to a value
      *
-     * @param string $preference_name The preference name to search for (required)
-     * @param string $value The preference value (optional)
-     * @return string[]
+     * @param string $preference_name The preference name to search for, if not value provided it will return all users that have the named preference (required)
+     * @param string $value The preference value (optionally provided) (optional)
+     * @param int $limit How many results to return (optional, default to 1000)
+     * @param int $user_id_continue Find results after userId (results returned in ascending order) (optional, default to 0)
+     * @return void
      * @throws \Swagger\Client\ApiException on non-2xx response
      */
-    public function findWikisWithLocalPreference($preference_name, $value=null)
+    public function findUsersWithGlobalPreference($preference_name, $value = null, $limit = null, $user_id_continue = null)
+    {
+        list($response, $statusCode, $httpHeader) = $this->findUsersWithGlobalPreferenceWithHttpInfo ($preference_name, $value, $limit, $user_id_continue);
+        return $response; 
+    }
+
+
+    /**
+     * findUsersWithGlobalPreferenceWithHttpInfo
+     *
+     * Finds all users that has the global preference set to a value
+     *
+     * @param string $preference_name The preference name to search for, if not value provided it will return all users that have the named preference (required)
+     * @param string $value The preference value (optionally provided) (optional)
+     * @param int $limit How many results to return (optional, default to 1000)
+     * @param int $user_id_continue Find results after userId (results returned in ascending order) (optional, default to 0)
+     * @return Array of null, HTTP status code, HTTP response headers (array of strings)
+     * @throws \Swagger\Client\ApiException on non-2xx response
+     */
+    public function findUsersWithGlobalPreferenceWithHttpInfo($preference_name, $value = null, $limit = null, $user_id_continue = null)
     {
         
         // verify the required parameter 'preference_name' is set
         if ($preference_name === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $preference_name when calling findWikisWithLocalPreference');
+            throw new \InvalidArgumentException('Missing the required parameter $preference_name when calling findUsersWithGlobalPreference');
         }
   
         // parse inputs
-        $resourcePath = "/reverse-lookup/local/{preferenceName}/wikis";
-        $resourcePath = str_replace("{format}", "json", $resourcePath);
-        $method = "GET";
+        $resourcePath = "/reverse-lookup/global/{preferenceName}/users";
         $httpBody = '';
         $queryParams = array();
         $headerParams = array();
@@ -124,11 +143,21 @@ class ReverseLookupApi
         $headerParams['Content-Type'] = ApiClient::selectHeaderContentType(array());
   
         // query params
+        
         if ($value !== null) {
             $queryParams['value'] = $this->apiClient->getSerializer()->toQueryValue($value);
+        }// query params
+        
+        if ($limit !== null) {
+            $queryParams['limit'] = $this->apiClient->getSerializer()->toQueryValue($limit);
+        }// query params
+        
+        if ($user_id_continue !== null) {
+            $queryParams['userIdContinue'] = $this->apiClient->getSerializer()->toQueryValue($user_id_continue);
         }
         
         // path params
+        
         if ($preference_name !== null) {
             $resourcePath = str_replace(
                 "{" . "preferenceName" . "}",
@@ -136,41 +165,136 @@ class ReverseLookupApi
                 $resourcePath
             );
         }
+        // default format to json
+        $resourcePath = str_replace("{format}", "json", $resourcePath);
+
         
         
   
         // for model (json/xml)
         if (isset($_tempBody)) {
             $httpBody = $_tempBody; // $_tempBody is the method argument, if present
-        } else if (count($formParams) > 0) {
+        } elseif (count($formParams) > 0) {
             $httpBody = $formParams; // for HTTP post (form)
         }
         
         // make the API Call
-        try
-        {
-            list($response, $httpHeader) = $this->apiClient->callApi(
-                $resourcePath, $method,
+        try {
+            list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
+                $resourcePath, 'GET',
+                $queryParams, $httpBody,
+                $headerParams
+            );
+            
+            return array(null, $statusCode, $httpHeader);
+            
+        } catch (ApiException $e) {
+            switch ($e->getCode()) { 
+            }
+  
+            throw $e;
+        }
+    }
+    
+    /**
+     * findWikisWithLocalPreference
+     *
+     * finds wikis where at least one user has a local preference set to a value
+     *
+     * @param string $preference_name The preference name to search for (required)
+     * @param string $value The preference value (optional, default to 1)
+     * @return string[]
+     * @throws \Swagger\Client\ApiException on non-2xx response
+     */
+    public function findWikisWithLocalPreference($preference_name, $value = null)
+    {
+        list($response, $statusCode, $httpHeader) = $this->findWikisWithLocalPreferenceWithHttpInfo ($preference_name, $value);
+        return $response; 
+    }
+
+
+    /**
+     * findWikisWithLocalPreferenceWithHttpInfo
+     *
+     * finds wikis where at least one user has a local preference set to a value
+     *
+     * @param string $preference_name The preference name to search for (required)
+     * @param string $value The preference value (optional, default to 1)
+     * @return Array of string[], HTTP status code, HTTP response headers (array of strings)
+     * @throws \Swagger\Client\ApiException on non-2xx response
+     */
+    public function findWikisWithLocalPreferenceWithHttpInfo($preference_name, $value = null)
+    {
+        
+        // verify the required parameter 'preference_name' is set
+        if ($preference_name === null) {
+            throw new \InvalidArgumentException('Missing the required parameter $preference_name when calling findWikisWithLocalPreference');
+        }
+  
+        // parse inputs
+        $resourcePath = "/reverse-lookup/local/{preferenceName}/wikis";
+        $httpBody = '';
+        $queryParams = array();
+        $headerParams = array();
+        $formParams = array();
+        $_header_accept = ApiClient::selectHeaderAccept(array('application/json'));
+        if (!is_null($_header_accept)) {
+            $headerParams['Accept'] = $_header_accept;
+        }
+        $headerParams['Content-Type'] = ApiClient::selectHeaderContentType(array());
+  
+        // query params
+        
+        if ($value !== null) {
+            $queryParams['value'] = $this->apiClient->getSerializer()->toQueryValue($value);
+        }
+        
+        // path params
+        
+        if ($preference_name !== null) {
+            $resourcePath = str_replace(
+                "{" . "preferenceName" . "}",
+                $this->apiClient->getSerializer()->toPathValue($preference_name),
+                $resourcePath
+            );
+        }
+        // default format to json
+        $resourcePath = str_replace("{format}", "json", $resourcePath);
+
+        
+        
+  
+        // for model (json/xml)
+        if (isset($_tempBody)) {
+            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
+        } elseif (count($formParams) > 0) {
+            $httpBody = $formParams; // for HTTP post (form)
+        }
+        
+        // make the API Call
+        try {
+            list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
+                $resourcePath, 'GET',
                 $queryParams, $httpBody,
                 $headerParams, 'string[]'
             );
+            
+            if (!$response) {
+                return array(null, $statusCode, $httpHeader);
+            }
+
+            return array(\Swagger\Client\ObjectSerializer::deserialize($response, 'string[]', $httpHeader), $statusCode, $httpHeader);
+            
         } catch (ApiException $e) {
             switch ($e->getCode()) { 
             case 200:
-                $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), 'string[]', $httpHeader);
+                $data = \Swagger\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'string[]', $e->getResponseHeaders());
                 $e->setResponseObject($data);
                 break;
             }
   
             throw $e;
         }
-        
-        if (!$response) {
-            return null;
-        }
-  
-        return $this->apiClient->getSerializer()->deserialize($response, 'string[]');
-        
     }
     
 }

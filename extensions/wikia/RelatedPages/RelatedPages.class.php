@@ -13,15 +13,6 @@ class RelatedPages {
 
 	const LIMIT_MAX = 10;
 
-	/**
-	 * Limit the number of results taken from categorylinks and improve the performance on big wikis
-	 * by making the temporary table much smaller
-	 *
-	 * @author macbre
-	 * @see PLATFORM-1591
-	 */
-	const CATEGORY_LINKS_LIMIT = 100000;
-
 	protected function __construct() {
 	}
 
@@ -143,8 +134,7 @@ class RelatedPages {
 						$categories = array_slice( $categories, 0, $this->categoriesLimit );
 					}
 
-					// limit * 2 - get more pages (some can be filtered out - RT #72703)
-					$pages = $this->getPagesForCategories( $articleId, self::LIMIT_MAX * 2, $categories );
+					$pages = $this->getPagesForCategories( $articleId, $categories );
 
 					$this->afterGet( $pages, self::LIMIT_MAX );
 				}
@@ -181,143 +171,102 @@ class RelatedPages {
 	}
 
 	/**
-	 * get all pages for given category
-	 * @param string $category category name
-	 * @return array list of page ids
-	 */
-	protected function getPagesForCategory( $category ) {
-		global $wgMemc;
-		wfProfileIn( __METHOD__ );
-
-		$cacheKey = wfMemcKey( __METHOD__, md5($category) );
-		$cache = $wgMemc->get( $cacheKey );
-
-		if ( is_array( $cache ) ) {
-			wfProfileOut( __METHOD__ );
-			return $cache;
-		}
-
-		$dbr = wfGetDB( DB_SLAVE );
-		$tables = array( "categorylinks" );
-		$joinSql = $this->getPageJoinSql( $dbr, $tables );
-
-		$pages = array();
-		$res = $dbr->select(
-			$tables,
-			array( "cl_from AS page_id" ),
-			array( "cl_to" => $category ),
-			__METHOD__,
-			array(),
-			$joinSql
-		);
-
-		while ( $row = $dbr->fetchObject( $res ) ) {
-			$pages[] = $row->page_id;
-		}
-
-		$wgMemc->set( $cacheKey, $pages, WikiaResponse::CACHE_STANDARD );
-
-		wfProfileOut( __METHOD__ );
-		return $pages;
-	}
-
-	/**
 	 * get pages that belong to a list of categories
 	 * @author Owen
+	 * @author Macbre
 	 *
 	 * @param int $articleId
-	 * @param int $limit
 	 * @param array $categories
 	 * @return array
 	 * @throws DBUnexpectedError|MWException
 	 */
-	protected function getPagesForCategories( $articleId, $limit, Array $categories ) {
-		global $wgMemc;
-
+	protected function getPagesForCategories( $articleId, Array $categories ) {
 		if ( empty( $categories ) ) {
 			return [];
 		}
 
 		wfProfileIn( __METHOD__ );
+		$fname = __METHOD__;
 
-		$cacheKey = wfMemcKey( __METHOD__, $articleId );
-		$cache = $wgMemc->get( $cacheKey );
+		// make the caching key more deterministic
+		sort( $categories );
 
-		if ( is_array( $cache ) ) {
-			wfProfileOut( __METHOD__ );
-			return $cache;
-		}
+		$pages = WikiaDataAccess::cache(
+			wfMemcKey( __METHOD__, 'categories', md5( serialize( $categories ) ) ),
+			WikiaResponse::CACHE_STANDARD,
+			function() use ( $categories, $fname ) {
+				$dbr = wfGetDB( DB_SLAVE );
 
-		$dbr = wfGetDB( DB_SLAVE );
-		$pages = array();
+				/**
+				 * SELECT count(page_id) as c, cl_from AS page_id, page_namespace, page_title, page_is_redirect, page_len, page_latest
+				 * FROM `categorylinks` JOIN `page` ON ( (page_id = cl_from AND page_namespace = 0))
+				 * WHERE (cl_to IN ( 'Gwara','Gzik','Kuchnia_regionalna','Potrawy','Tradycja' )
+				 * 		AND page_is_redirect = 0)
+				 * GROUP BY page.page_id
+				 * ORDER BY c desc
+				 * LIMIT 11;
+				 *
+				 * @see PLATFORM-2226
+				 */
+				$res = $dbr->select(
+					[ 'categorylinks', 'page' ],
+					[
+						'count(page_id) AS c',
+						// columns below are required by Title::newFromRow
+						'page_id',
+						'page_namespace',
+						'page_title',
+						'page_is_redirect',
+						'page_len',
+						'page_latest'
+					],
+					[
+						'cl_to' => $categories,
+						'page_is_redirect' => 0, # ignore redirects
+					],
+					$fname,
+					[
+						'GROUP BY' => 'page.page_id',
+						'ORDER BY' => 'c DESC',
+						'LIMIT' => self::LIMIT_MAX + 1, # +1 as we get the current page (i.e. $articleId) as well
+					],
+					[
+						'page' => [
+							'JOIN',
+							[
+								'page_id = cl_from',
+								'page_namespace = 0'
+							]
+						]
+					]
+				);
 
-		$tables = array( "categorylinks" );
-		$joinSql = $this->getPageJoinSql( $dbr, $tables );
+				$pages = [];
 
-		$innerSQL = $dbr->selectSQLText(
-			$tables,
-			array( "cl_from AS page_id" ),
-			array( "cl_to IN ( " . $dbr->makeList( $categories ) . " )" ),
-			__METHOD__,
-			[
-				'LIMIT' => self::CATEGORY_LINKS_LIMIT
-			],
-			$joinSql
+				while ( $row = $dbr->fetchObject( $res ) ) {
+					$pageId = (int) $row->page_id;
+					$title = Title::newFromRow( $row );
+
+					$pages[ $pageId ] = [
+						'url' => $title->getLocalUrl(),
+						'title' => $title->getPrefixedText(),
+						'id' => $pageId
+					];
+				}
+
+				return $pages;
+			}
 		);
 
-		# sanitize query parameters
+		// filter out the page we want to get related pages for
 		$articleId = intval( $articleId );
-		$limit = intval( $limit );
 
-		$sql = "SELECT page_id, count(*) c FROM ( $innerSQL ) i WHERE page_id != $articleId GROUP BY page_id ORDER BY c desc LIMIT $limit";
-		$res = $dbr->query( $sql, __METHOD__ );
-		while ( $row = $dbr->fetchObject( $res ) ) {
-			$pageId = $row->page_id;
-			$title = Title::newFromId( $pageId );
-
-			// filter out redirect pages (RT #72662)
-			if ( !empty( $title ) && $title->exists() && !$title->isRedirect() ) {
-				$prefixedTitle = $title->getPrefixedText();
-
-				$pages[ $pageId ] = array(
-					'url' => $title->getLocalUrl(),
-					'title' => $prefixedTitle,
-					'id' => (int) $pageId
-				);
-			}
+		if ( array_key_exists( $articleId, $pages ) ) {
+			unset( $pages[ $articleId ] );
 		}
 
-		$wgMemc->set( $cacheKey, $pages, WikiaResponse::CACHE_STANDARD );
 		wfProfileOut( __METHOD__ );
 		return $pages;
-	}
-
-	protected function getPageJoinSql( $dbr, &$tables ) {
-		global $wgContentNamespaces;
-		wfProfileIn( __METHOD__ );
-
-		if ( count( $wgContentNamespaces ) > 0 ) {
-			$joinSql = array( "page" =>
-				array(
-					"JOIN",
-					implode(
-						" AND ",
-						array(
-							"page_id = cl_from",
-							( count( $wgContentNamespaces ) == 1 )
-								? "page_namespace = " . intval( reset( $wgContentNamespaces ) )
-								: "page_namespace in ( " . $dbr->makeList( $wgContentNamespaces ) . " )",
-						)
-					)
-				)
-			);
-			$tables[] = "page";
-		} else {
-			$joinSql = array();
-		}
-
-		wfProfileOut( __METHOD__ );
-		return $joinSql;
 	}
 
 	/**
@@ -345,49 +294,6 @@ class RelatedPages {
 		}
 
 		return count( $results ) ? array_values( $results ) : $categories;
-	}
-
-	/**
-	 * get category rank, based on number of articles assigned
-	 * @return array
-	 */
-	protected function getCategoryRank() {
-		wfProfileIn( __METHOD__ );
-
-		$results = WikiaDataAccess::cacheWithLock(
-			wfMemcKey( __METHOD__ ),
-			WikiaResponse::CACHE_STANDARD,
-			function () {
-				global $wgContentNamespaces;
-
-				$db = wfGetDB( DB_SLAVE );
-				$sql = ( new WikiaSQL() )
-					->SELECT( "COUNT(cl_to)" )->AS_( "count" )->FIELD( 'cl_to' )
-					->FROM( 'categorylinks' )
-					->GROUP_BY( 'cl_to' )
-					->HAVING( 'count > 1' )
-					->ORDER_BY( [ 'count', 'desc' ] );
-
-				if ( count( $wgContentNamespaces ) > 0 ) {
-					$join_cond = ( count( $wgContentNamespaces ) == 1 )
-								? "page_namespace = " . intval( reset( $wgContentNamespaces ) )
-								: "page_namespace in ( " . $db->makeList( $wgContentNamespaces ) . " )";
-
-					$sql->JOIN( 'page' )->ON( "page_id = cl_from AND $join_cond" );
-				}
-
-				$rank = 1;
-				$results = $sql->runLoop( $db, function( &$results, $row ) use ( &$rank ) {
-					$results[ $row->cl_to ] = $rank;
-					$rank++;
-				} );
-
-				return $results;
-			}
-		);
-
-		wfProfileOut( __METHOD__ );
-		return $results;
 	}
 
 	/**

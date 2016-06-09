@@ -589,7 +589,7 @@ class WallBaseController extends WikiaController {
 		// only use realname if user made edits (use logic from masthead)
 		$userStatsService = new UserStatsService( $this->helper->getUser()->getID() );
 		$userStats = $userStatsService->getStats();
-		if ( empty( $userStats[ 'edits' ] ) || $userStats[ 'edits' ] == 0 ) {
+		if ( empty( $userStats[ 'editcount' ] ) || $userStats[ 'editcount' ] == 0 ) {
 			$wall_username = $this->helper->getUser()->getName();
 		}
 
