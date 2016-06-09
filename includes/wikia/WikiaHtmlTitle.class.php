@@ -19,6 +19,7 @@ class WikiaHtmlTitle {
 	/** @var Message|null - The site name to include in the title */
 	private $siteName;
 
+	
 	/** @var Message - The brand name to include in the title */
 	private $brandName;
 
