@@ -379,7 +379,7 @@ class CommunityPageSpecialUsersModel {
 			$avatar = AvatarService::renderAvatar( $userName, AvatarService::AVATAR_SIZE_SMALL_PLUS );
 
 			if ( User::isIp( $userName ) ) {
-				$userName = wfMessage( 'communitypage-anon-user-name' )->plain();
+				$userName = wfMessage( 'oasis-anon-user' )->plain();
 			}
 
 			return [

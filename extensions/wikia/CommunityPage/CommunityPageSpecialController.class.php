@@ -226,7 +226,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 			$count += 1;
 
 			if ( User::isIp( $userName ) ) {
-				$userName = $this->msg( 'communitypage-anon-user-name' )->plain();
+				$userName = $this->msg( 'oasis-anon-user' )->plain();
 			}
 
 			return [

@@ -14,7 +14,7 @@ class CommunityPageSpecialRecentActivityModel {
 			$userName = $activity['user_name'];
 
 			if ( User::isIp( $userName ) ) {
-				$userName = wfMessage( 'communitypage-anon-user-name' )->plain();
+				$userName = wfMessage( 'oasis-anon-user' )->plain();
 			}
 
 			$changeTypeString = $this->getChangeTypeMessage( $activity['changetype'] );

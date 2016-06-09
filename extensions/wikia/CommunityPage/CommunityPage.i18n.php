@@ -74,7 +74,6 @@ $messages['en'] = array(
 	'communitypage-policy-module-edit-link-text' => 'Edit',
 	'communitypage-policy-module-link-text' => 'View policy',
 	'communitypage-policy-module-link-page-name' => 'Community guidelines',
-	'communitypage-anon-user-name' => 'A Wikia contributor',
 );
 
 $messages['qqq'] = array(
@@ -150,7 +149,6 @@ $messages['qqq'] = array(
 	'communitypage-policy-module-edit-link-text' => 'Link to edit the community policy',
 	'communitypage-policy-module-link-text' => 'View community policy',
 	'communitypage-policy-module-link-page-name' => 'Name of the localized community policy page without Help namespace prefix.',
-	'communitypage-anon-user-name' => 'A general name to show for anonymous contributors instead of IP address',
 );
 
 $messages['de'] = array(
