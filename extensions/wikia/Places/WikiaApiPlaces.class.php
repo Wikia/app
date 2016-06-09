@@ -98,7 +98,13 @@ class WikiaApiPlaces extends ApiBase {
 		}
 		// get geodata from all tagged articles on this wiki
 		else {
+			$all = true;
 			$places = $placesModel->getAll();
+		}
+
+		// apply limit parameter
+		if (empty($all)) {
+			$places = array_slice($places, 0, $params['limit']);
 		}
 
 		// generate results
@@ -157,6 +163,12 @@ class WikiaApiPlaces extends ApiBase {
 				ApiBase :: PARAM_DFLT => 5, // [km]
 				ApiBase :: PARAM_MAX => 50, // [km]
 			),
+			'limit' => array(
+				ApiBase :: PARAM_ISMULTI => 0,
+				ApiBase :: PARAM_TYPE => 'integer',
+				ApiBase :: PARAM_DFLT => 25,
+				ApiBase :: PARAM_MIN => 25,
+			),
 		);
 	}
 
@@ -169,6 +181,7 @@ class WikiaApiPlaces extends ApiBase {
 			'nearby' => 'get places that are near by given title (string)',
 			'nearbygeo' => 'get places that are near by given a given geolocation (string)',
 			'dist' => 'distance to use when finding near by places [in km] (integer)',
+			'limit' => 'limit number of records returned',
 		);
 	}
 
