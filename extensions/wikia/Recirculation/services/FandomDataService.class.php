@@ -79,6 +79,7 @@ class FandomDataService {
 				'thumbnail' => $post['_embedded']['wp:featuredmedia'][0]['media_details']['sizes']['thumbnail']['source_url'],
 				'title' => $post['title']['rendered'],
 				'publishDate' => $post['date'],
+				'source' => 'fandom',
 			] );
 		}
 

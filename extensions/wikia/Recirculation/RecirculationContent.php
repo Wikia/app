@@ -18,6 +18,8 @@ class RecirculationContent implements JsonSerializable {
 
 	private $author;
 
+	private $source;
+
 	/**
 	 * RecirculationContent constructor.
 	 * @param $index
@@ -45,6 +47,7 @@ class RecirculationContent implements JsonSerializable {
 			'title' => $this->get('title'),
 			'pub_date' => $this->get('publishDate'),
 			'author' => $this->get('author'),
+			'source' => $this->get('source'),
 		];
 	}
 }
