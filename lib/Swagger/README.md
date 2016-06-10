@@ -15,7 +15,7 @@ Each service should have a `settings.json` file associated with it indicating pa
 The `packagePath`, `srcBasePath`, and prefix `Swagger\Client\` should be consistent across all settings files so code will end up in this directory.
 
 ## Generating Code
-Follow the instructions on the [swagger-codegen](https://github.com/swagger-api/swagger-codegen) repo to get a local generator compiled, checkout the branch `develop_2.0` (this will NOT work on `master`), then run:
+Follow the instructions on the [swagger-codegen](https://github.com/swagger-api/swagger-codegen) repo to get a local generator compiled, then run:
 
 ```bash
 java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate \
@@ -34,3 +34,13 @@ java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate \
   -o /Users/nelson/code/wikia/app/lib \
   -c /Users/nelson/code/wikia/app/lib/Swagger/src/User/Preferences/settings.json
 ```
+
+After code was generated copy `lib/Swagger/README.md` to appropriate file (i.e. `lib/Swagger/README_user-preference.md`) and update list below.
+
+## Documentation
+Below you find API documentation for each service:
+* [User Preference](README_user-preference.md)
+* [User Avatar](README_user-avatar.md)
+* [User Attribute](README_user-attribute.md)
+* [Template Classification Storage](README_template-classification.md)
+* [Content Entity](README_content-entity.md)

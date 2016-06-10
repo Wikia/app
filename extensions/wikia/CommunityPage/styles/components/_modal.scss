@@ -2,6 +2,8 @@
 @import 'variables';
 
 .CommunityPageModalDialog.modal {
+	height: 75%;
+
 	> header {
 		background-color: transparent;
 		border-bottom: 1px solid $color-page-border-subtle;

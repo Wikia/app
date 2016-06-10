@@ -32,6 +32,10 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 					sizes: [[120, 600], [160, 600], [300, 250], [300, 600]],
 					targeting: {loc: 'hivi'}
 				},
+				BOTTOM_LEADERBOARD: {
+					sizes: [[728, 90], [970, 250]],
+					targeting: {loc: 'footer'}
+				},
 				PREFOOTER_LEFT_BOXAD: {
 					sizes: [[300, 250], [336, 280]],
 					targeting: {loc: 'footer'}
@@ -76,7 +80,8 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 			'336x280': 49,
 			'300x1050': 54,
 			'970x250': 57,
-			'320x480': 67
+			'320x480': 67,
+			'480x320': 101
 		},
 		slots;
 
@@ -156,7 +161,7 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 
 		if (context.slots.invisibleHighImpact2) {
 			slots.INVISIBLE_HIGH_IMPACT_2 = {
-				sizes: [[728, 90], [970, 250], [300, 250], [300, 600], [320, 480]],
+				sizes: [[728, 90], [970, 250], [480, 320], [300, 250], [300, 600], [320, 480]],
 				targeting: {loc: 'hivi'}
 			};
 		}

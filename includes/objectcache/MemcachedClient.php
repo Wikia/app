@@ -868,6 +868,8 @@ class MWMemcached {
 	 * @access  private
 	 */
 	function _connect_sock( &$sock, $host ) {
+		wfProfileIn( __METHOD__ );
+
 		list( $ip, $port ) = $this->parseHost($host);
 		$sock = false;
 		$timeout = $this->_connect_timeout;
@@ -893,12 +895,15 @@ class MWMemcached {
 				'timeout' => $timeout,
 			]);
 			// Wikia change - end
+
+			wfProfileOut( __METHOD__ );
 			return false;
 		}
 
 		// Initialise timeout
 		stream_set_timeout( $sock, $this->_timeout_seconds, $this->_timeout_microseconds );
 
+		wfProfileOut( __METHOD__ );
 		return true;
 	}
 
