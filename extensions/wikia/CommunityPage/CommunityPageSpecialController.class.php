@@ -200,11 +200,17 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 
 	public function deleteEvent(){
 		return $this->meetupModel->deleteEvent();
-
 	}
 
 	public function saveEvent() {
-		myvardump($this->request);
+		$params = $this->request->getParams();
+
+		$this->meetupModel->saveEvent(
+			$params['user'],
+			$params['venue'],
+			$params['date'],
+			$params['description']
+		);
 
 		$this->response->setData([
 			'error' => false,
