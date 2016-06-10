@@ -446,6 +446,10 @@ class WikiaResponse {
 	}
 
 	public function sendHeaders() {
+		global $wgEnableReflectiveCORS;
+
+		$this->reflectiveCORS( $wgEnableReflectiveCORS );
+
 		if ( !$this->hasContentType() ) {
 			if ( ( $this->getFormat() == WikiaResponse::FORMAT_JSON ) ) {
 				$this->setContentType( 'application/json; charset=utf-8' );
@@ -480,6 +484,31 @@ class WikiaResponse {
 
 		if ( !empty( $this->contentType ) ) {
 			$this->sendHeader( "Content-Type: " . $this->contentType, true );
+		}
+	}
+
+	private function reflectiveCORS($enabled) {
+
+		if ($enabled) {
+			function unparse_url($parsed_url) {
+				$scheme   = isset($parsed_url['scheme']) ? $parsed_url['scheme'] . '://' : '';
+				$host     = isset($parsed_url['host']) ? $parsed_url['host'] : '';
+				$port     = isset($parsed_url['port']) ? ':' . $parsed_url['port'] : '';
+				$user     = isset($parsed_url['user']) ? $parsed_url['user'] : '';
+				$pass     = isset($parsed_url['pass']) ? ':' . $parsed_url['pass']  : '';
+				$pass     = ($user || $pass) ? "$pass@" : '';
+
+				return "$scheme$user$pass$host$port";
+			}
+
+			$referrer = parse_url($_SERVER['HTTP_REFERER']);
+
+			(new CrossOriginResourceSharingHeaderHelper())
+				->setAllowOrigin( [ unparse_url($referrer) ] )
+				->setAllowMethod( [ 'GET', 'POST' ] )
+				->setHeaders($this);
+
+			$this->setHeader( 'Access-Control-Allow-Credentials', 'true' );
 		}
 	}
 
