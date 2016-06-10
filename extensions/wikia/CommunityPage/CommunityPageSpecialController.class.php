@@ -184,7 +184,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		$nearByUserDetails = $this->getContributorsDetails($nearByUser);
 
 		$this->response->setData([
-			'users' => $nearByUserDetails,
+			'users' => array_filter($nearByUserDetails),
 		]);
 	}
 
@@ -242,6 +242,9 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		return array_map( function ( $contributor ) use ( &$count ) {
 			$user = User::newFromId( $contributor['userId'] );
 			$userName = $user->getName();
+			if ( User::isIp( $userName ) ) {
+				return '';
+			}
 			$avatar = AvatarService::renderAvatar( $userName, AvatarService::AVATAR_SIZE_SMALL_PLUS );
 			$count += 1;
 
@@ -253,6 +256,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 				'profilePage' => $user->getUserPage()->getLocalURL(),
 				'count' => $count,
 				'isAdmin' => $contributor['isAdmin'],
+				'city' => $contributor['city'],
 			];
 		} , $contributors );
 	}

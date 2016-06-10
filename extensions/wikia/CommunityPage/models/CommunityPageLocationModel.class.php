@@ -23,6 +23,7 @@ class CommunityPageLocationModel {
 		foreach ($nearByUsers as $userId){
 			$result[] = [
 				'userId' => $userId,
+				'city' => $city,
 			];
 		}
 		return $result;
