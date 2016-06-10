@@ -26,7 +26,6 @@ class CommunityPageMeetupModel {
 	}
 	
 	public function saveEvent($createdBy, $location, $time, $description){
-		
 		$key = wfMemcKey(self::MEETUP_MCACHE_KEY);
 
 		$value = $createdBy . ':' . $location . ':' . $time . ':' . $description;
@@ -53,5 +52,9 @@ class CommunityPageMeetupModel {
 		return null;
 	}
 
-	
+	public function deleteEvent(){
+
+		$key = wfMemcKey(self::MEETUP_MCACHE_KEY);
+		F::app()->wg->Memc->delete($key);
+	}
 }

@@ -48,7 +48,8 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 				->getData(),
 			'recentlyJoined' => $this->sendRequest( 'CommunityPageSpecialController', 'getRecentlyJoinedData' )
 				->getData(),
-			'nearByUsers' => $this->sendRequest('CommunityPageSpecialController','getNearByUsers')->getData(),
+			'meetupData' => $this->sendRequest('CommunityPageSpecialController','meetupData')->getData(),
+			'deleteEvent' => $this->sendRequest('CommunityPageSpecialController','deleteEvent'),
 			'communityPolicyModule' => $this->getCommunityPolicyData(),
 			'recentActivityModule' => $this->getRecentActivityData(),
 			'insightsModules' => $this->getInsightsModulesData(),
@@ -176,13 +177,13 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		] );
 	}
 	
-	public function getNearByUsers(){
+	public function meetupData(){
 		$currentUser = $this->getUser();
 		$currentUserLocation = $this->getCurrentUserLocation($currentUser);
 		$nearByUser = $this->meetupModel->getNearByUsers($currentUserLocation);
 		
 		$nearByUserDetails = $this->getContributorsDetails($nearByUser);
-		
+
 		$currentUserData = [
 			'name' => $currentUser->getName(),
 			'location' => $currentUserLocation,
@@ -195,6 +196,10 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 			'isAdmin' => $this->usersModel->isAdmin($currentUser->getId(),$this->usersModel->getAdmins()),
 			'event' => $event,
 		]);
+	}
+
+	public function deleteEvent(){
+		$this->meetupModel->deleteEvent();
 	}
 
 	/**
