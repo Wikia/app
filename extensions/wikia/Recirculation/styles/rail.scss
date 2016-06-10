@@ -39,6 +39,7 @@
 }
 
 $recirculation-fandom-dark-blue: #39414d;
+$recirculation-fandom-icon-size: 48px;
 
 .recirculation-rail.group-E3 {
 	margin-top: 30px;
@@ -52,18 +53,19 @@ $recirculation-fandom-dark-blue: #39414d;
 		};
 		border: {
 			color: $color-module-background;
-			radius: 24px;
+			radius: $recirculation-fandom-icon-size / 2;
 			style: solid;
 			width: 4px;
 		};
+		box-sizing: border-box;
 		content: '';
 		display: block;
-		height: 40px;
+		height: $recirculation-fandom-icon-size;
 		left: 50%;
-		margin-left: -24px;
+		margin-left: -$recirculation-fandom-icon-size / 2;
 		position: absolute;
-		top: -24px;
-		width: 40px;
+		top: -$recirculation-fandom-icon-size / 2;
+		width: $recirculation-fandom-icon-size;
 	}
 
 	h2 {

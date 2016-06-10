@@ -67,9 +67,7 @@ require([
 				type: 'e3',
 				limit: 5
 			});
-			view = railView({
-				formatTitle: true
-			});
+			view = railView();
 			isRail = true;
 			break;
 		case 'LATERAL_FANDOM':

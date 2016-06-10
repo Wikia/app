@@ -30,8 +30,8 @@ class FandomDataService {
 		$data = WikiaDataAccess::cache(
 			$memcKey,
 			self::MCACHE_TIME,
-			function() use ( $type ) {
-				return $this->apiRequest( $type );
+			function() {
+				return $this->apiRequest();
 			}
 		);
 
