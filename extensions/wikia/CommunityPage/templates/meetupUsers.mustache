@@ -2,15 +2,20 @@
     {{#meetupData}}
       {{#isAdmin}}
         {{#event}}
+          <h2>Upcoming Meetups Near You</h2>
 	        <div class="event-data">
-		        {{createdBy}} has created is an event at {{location}}: {{time}}
+		        Venue : {{location}}<br/><br/>
+            Time: {{time}}<br/><br/>
 	        </div>
 	        <div class="event-description">
 		        {{description}}
 	        </div>
-            <div>
-	            <a href="#" id="community-page-delete-event" class="meetup-button">Delete Event</a>
-            </div>
+          <div class="event-organizer">
+            Contact {{createdBy}} to know more details!
+          </div>
+          <div>
+            <a href="#" id="community-page-delete-event" class="meetup-button">Delete Event</a>
+          </div>
         {{/event}}
         {{^event}}
           <h2>Nearby Users</h2>
@@ -37,9 +42,20 @@
       {{/isAdmin}}
       {{^isAdmin}}
         {{#event}}
-	        <div class="event-data">
-		        There is an event at {{location}} on {{time}}, created by {{createdBy}}.
-	        </div>
+          <h2>Upcoming Meetups Near You</h2>
+          <div class="event-data">
+            Venue : {{location}}<br/><br/>
+            Time: {{time}}<br/><br/>
+          </div>
+          <div class="event-description">
+            {{description}}
+          </div>
+          <div class="event-organizer">
+            Contact {{createdBy}} to know more details!
+          </div>
+          <div>
+            <a href="#" id="community-page-delete-event" class="meetup-button">Delete Event</a>
+          </div>
         {{/event}}
         {{^event}}
             <div class="event-data">
