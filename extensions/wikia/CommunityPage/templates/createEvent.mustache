@@ -1,3 +1,8 @@
+<div class="meetup-header">
+	{{#currentUser}}
+		This will create an event in {{location}} for this community. When you create the event, {{usersInLocation}} users in this location will be invited.
+	{{/currentUser}}
+</div>
 <form id="new-event-form" action="#" class="meetup-form">
 	<section>
 		<div class="meetup-form-line">
@@ -15,5 +20,5 @@
 	</section>
 </form>
 <div>
-	<a href="#" id="community-page-new-event" class="meetup-button">Send Invites</a>
+	<a href="#" id="community-page-new-event" class="meetup-button">Create Event and Send Invites</a>
 </div>

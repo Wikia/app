@@ -220,9 +220,19 @@ require([
 							date = $('#date').val(),
 							description = $('#description').val();
 
-						console.log(`Venue = ${venue}`);
-						console.log(`Date = ${date}`);
-						console.log(`Description = ${description}`);
+						if (!venue || !date || !description) {
+							alert("Missing data!");
+						} else {
+							try {
+								var d = new Date(date);
+
+								console.log(`Venue = ${venue}`);
+								console.log(`Date = ${d}`);
+								console.log(`Description = ${description}`);
+							} catch (e) {
+								alert('Invalid date format');
+							}
+						}
 					});
 				});
 		});

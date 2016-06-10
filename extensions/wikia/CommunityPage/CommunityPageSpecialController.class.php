@@ -186,6 +186,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		$currentUserData = [
 			'name' => $currentUser->getName(),
 			'location' => $currentUserLocation,
+			'usersInLocation' => count($nearByUserDetails),
 		];
 
 		$this->response->setData([
