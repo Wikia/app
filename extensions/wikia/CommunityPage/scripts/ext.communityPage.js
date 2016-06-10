@@ -53,6 +53,11 @@ require([
 			event.preventDefault();
 			openCommunityModal(tabs.TAB_ALL);
 		});
+
+		$('#community-page-create-event').click(function (event) {
+			event.preventDefault();
+			openCreateEventModal();
+		});
 	}
 
 	function getUiModalInstance() {
@@ -167,6 +172,34 @@ require([
 			});
 		});
 	}
+
+	function openCreateEventModal() {
+		$.when(
+			getUiModalInstance()
+		).then(function(uiModal) {
+				var createPageModalConfig = {
+						vars: {
+							classes: ['CommunityPageModalDialog'],
+							content: '',
+							htmlTitle: '<h3>Create Event</h3>',
+							id: 'CommunityPageModalDialog',
+							size: 'medium',
+						}
+					};
+
+				uiModal.createComponent(createPageModalConfig, function (modal) {
+					var html = `<p>Modal contents here</p>`;
+
+					modal.$content
+						.addClass('contributors-module meetup-modal')
+						.html(mustache.render(templates.createEvent))
+						//.find(tabToActivate.className).children(tabLinkClass).addClass('active');
+
+					modal.show();
+				});
+		});
+	}
+
 
 	function getHeader(navHtml) {
 		return $('<div>')
