@@ -27,23 +27,23 @@ $logo-url: $logo-url-light;
 	&.meetup-modal {
 		padding: 0 0 24px;
 	}
+}
 
-	.meetup-button {
-		background: $color-buttons;
-		color: $color-button-text;
-		display: inline-block;
-		font-size: 12px;
-		font-weight: bold;
-		height: 46px;
-		line-height: 46px;
-		margin: 14px 0;
-		padding: 0 30px;
+.meetup-button {
+	background: $color-buttons;
+	color: $color-button-text;
+	display: inline-block;
+	font-size: 12px;
+	font-weight: bold;
+	height: 46px;
+	line-height: 46px;
+	margin: 14px 0;
+	padding: 0 30px;
+	text-decoration: none;
+	text-transform: uppercase;
+
+	&:hover, &:active {
+		background-color: $color-button-highlight;
 		text-decoration: none;
-		text-transform: uppercase;
-
-		&:hover, &:active {
-			background-color: $color-button-highlight;
-			text-decoration: none;
-		}
 	}
 }

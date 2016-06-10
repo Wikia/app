@@ -188,14 +188,23 @@ require([
 					};
 
 				uiModal.createComponent(createPageModalConfig, function (modal) {
-					var html = `<p>Modal contents here</p>`;
-
 					modal.$content
 						.addClass('contributors-module meetup-modal')
 						.html(mustache.render(templates.createEvent))
-						//.find(tabToActivate.className).children(tabLinkClass).addClass('active');
 
 					modal.show();
+
+					$('#community-page-new-event').click(function (event) {
+						event.preventDefault();
+
+						var venue = $('#venue').val(),
+							date = $('#date').val(),
+							description = $('#description').val();
+
+						console.log(`Venue = ${venue}`);
+						console.log(`Date = ${date}`);
+						console.log(`Description = ${description}`);
+					});
 				});
 		});
 	}
