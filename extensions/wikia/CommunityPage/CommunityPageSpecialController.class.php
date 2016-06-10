@@ -182,16 +182,18 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		$nearByUser = $this->meetupModel->getNearByUsers($currentUserLocation);
 		
 		$nearByUserDetails = $this->getContributorsDetails($nearByUser);
-
+		
 		$currentUserData = [
 			'name' => $currentUser->getName(),
 			'location' => $currentUserLocation,
 			'usersInLocation' => count($nearByUserDetails),
 		];
-
+		$event = $this->meetupModel->getEvent();
 		$this->response->setData([
 			'currentUser' => $currentUserData,
 			'users' => array_filter($nearByUserDetails),
+			'isAdmin' => $this->usersModel->isAdmin($currentUser->getId(),$this->usersModel->getAdmins()),
+			'event' => $event,
 		]);
 	}
 
