@@ -183,7 +183,13 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		
 		$nearByUserDetails = $this->getContributorsDetails($nearByUser);
 
+		$currentUserData = [
+			'name' => $currentUser->getName(),
+			'location' => $currentUserLocation,
+		];
+
 		$this->response->setData([
+			'currentUser' => $currentUserData,
 			'users' => array_filter($nearByUserDetails),
 		]);
 	}

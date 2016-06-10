@@ -137,6 +137,22 @@ require([
 		return $deferred;
 	}
 
+	function getNearbyUsers() {
+		var $deferred = $.Deferred();
+
+		nirvana.sendRequest({
+			controller: 'CommunityPageSpecial',
+			method: 'getNearByUsers',
+			format: 'json',
+			type: 'get',
+		}).then(function (response) {
+			$deferred.resolve(response);
+		});
+
+		return $deferred;
+	}
+
+
 	function openCommunityModal(tabToActivate) {
 		tabToActivate = tabToActivate || tabs.TAB_LEADERBOARD;
 
@@ -175,13 +191,16 @@ require([
 
 	function openCreateEventModal() {
 		$.when(
-			getUiModalInstance()
-		).then(function(uiModal) {
+			getUiModalInstance(),
+			getNearbyUsers()
+		).then(function(uiModal, nearbyUsers) {
+				var header = `<h3>Create event for location ${nearbyUsers.currentUser.location}</h3>`;
+
 				var createPageModalConfig = {
 						vars: {
 							classes: ['CommunityPageModalDialog'],
 							content: '',
-							htmlTitle: '<h3>Create Event</h3>',
+							htmlTitle: header,
 							id: 'CommunityPageModalDialog',
 							size: 'medium',
 						}
@@ -190,7 +209,7 @@ require([
 				uiModal.createComponent(createPageModalConfig, function (modal) {
 					modal.$content
 						.addClass('contributors-module meetup-modal')
-						.html(mustache.render(templates.createEvent))
+						.html(mustache.render(templates.createEvent, nearbyUsers))
 
 					modal.show();
 
