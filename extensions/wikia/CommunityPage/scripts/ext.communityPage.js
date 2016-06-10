@@ -152,11 +152,7 @@ require([
 		return $deferred;
 	}
 
-	function saveEvent(venue, date, description) {
-		console.log(`Venue = ${venue}`);
-		console.log(`Date = ${date}`);
-		console.log(`Description = ${description}`);
-
+	function saveEvent(user, venue, date, description) {
 		var $deferred = $.Deferred();
 
 		nirvana.sendRequest({
@@ -164,6 +160,12 @@ require([
 			method: 'saveEvent',
 			format: 'json',
 			type: 'get',
+			data: {
+				user: user,
+				venue: venue,
+				date: date,
+				description: description,
+			},
 		}).then(function (response) {
 			console.log(response);
 			$deferred.resolve(response);
@@ -214,7 +216,7 @@ require([
 			getUiModalInstance(),
 			meetupData()
 		).then(function(uiModal, nearbyUsers) {
-				var header = `<h3>Create Event for ${nearbyUsers.currentUser.location}</h3>`;
+				var header = `<h3>Create event for location ${nearbyUsers.currentUser.location}</h3>`;
 
 				var createPageModalConfig = {
 						vars: {
@@ -248,9 +250,7 @@ require([
 							if (isNaN(d.getDay())) {
 								alert('Invalid date format');
 							} else {
-								saveEvent(venue, d, description);
-//								debugger;
-//								modal.hide();
+								saveEvent(nearbyUsers.currentUser.name, venue, d, description);
 							}
 						}
 					});
