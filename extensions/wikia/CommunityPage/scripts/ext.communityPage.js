@@ -137,12 +137,12 @@ require([
 		return $deferred;
 	}
 
-	function getNearbyUsers() {
+	function meetupData() {
 		var $deferred = $.Deferred();
 
 		nirvana.sendRequest({
 			controller: 'CommunityPageSpecial',
-			method: 'getNearByUsers',
+			method: 'meetupData',
 			format: 'json',
 			type: 'get',
 		}).then(function (response) {
@@ -212,9 +212,9 @@ require([
 	function openCreateEventModal() {
 		$.when(
 			getUiModalInstance(),
-			getNearbyUsers()
+			meetupData()
 		).then(function(uiModal, nearbyUsers) {
-				var header = `<h3>Create event for location ${nearbyUsers.currentUser.location}</h3>`;
+				var header = `<h3>Create Event for ${nearbyUsers.currentUser.location}</h3>`;
 
 				var createPageModalConfig = {
 						vars: {
