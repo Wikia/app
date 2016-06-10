@@ -8,7 +8,7 @@ class GlobalMessagesService {
 	const I18N_FILE_EXTENSION = ".i18n.php";
 	const PHP_FILE_EXTENSION = ".php";
 	const CORE_LOCALISATION_FILE_REGEX = "/^.+GlobalMessages[A-Z]+\.i18n\.php$/i";
-	const LOCALISATION_FILE_REGEX = "/^.+\.(i18n|aliases|alias)\.php$/i";
+	const LOCALISATION_FILE_REGEX = "/^.+\.(i18n|aliases|alias|i18n.magic|_Aliases|_Magic|namespaces|Namespaces)\.php$/i";
 	const JSON_LOCALISATION_SHIM_FILE_REGEX = "/^.+_Messages\.php$/i";
 
 	private $rootDir;

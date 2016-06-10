@@ -27,6 +27,7 @@
  *
  * @ingroup Maintenance
  */
+define('REBUILD_LOCALISATION_CACHE_IN_PROGRESS', true);
 
 require_once( __DIR__ . '/Maintenance.php' );
 
