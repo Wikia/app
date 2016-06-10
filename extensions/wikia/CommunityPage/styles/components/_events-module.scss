@@ -47,3 +47,22 @@ $logo-url: $logo-url-light;
 		text-decoration: none;
 	}
 }
+
+.meetup-form {
+	line-height: 2;
+	font-size: 20px;
+	padding-left: 20px;
+}
+
+.meetup-form-line {
+	label {
+		flex-basis: 150px;
+	}
+
+	input {
+		font-size: 20px;
+		flex-basis: 300px;
+	}
+
+	display: flex;
+}
