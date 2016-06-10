@@ -160,6 +160,8 @@ require([
 	function saveEvent(user, venue, date, description) {
 		var $deferred = $.Deferred();
 
+		console.log("desc = " + description);
+
 		nirvana.sendRequest({
 			controller: 'CommunityPageSpecial',
 			method: 'saveEvent',
@@ -235,8 +237,8 @@ require([
 		$.when(
 			getUiModalInstance(),
 			meetupData()
-		).then(function(uiModal, nearbyUsers) {
-				var header = `<h3>Create event for location ${nearbyUsers.currentUser.location}</h3>`;
+		).then(function(uiModal, meetupData) {
+				var header = `<h3>Create event for location ${meetupData.currentUser.location}</h3>`;
 
 				var createPageModalConfig = {
 						vars: {
@@ -251,7 +253,7 @@ require([
 				uiModal.createComponent(createPageModalConfig, function (modal) {
 					modal.$content
 						.addClass('contributors-module meetup-modal')
-						.html(mustache.render(templates.createEvent, nearbyUsers))
+						.html(mustache.render(templates.createEvent, meetupData))
 
 					modal.show();
 
@@ -270,7 +272,7 @@ require([
 							if (isNaN(d.getDay())) {
 								alert('Invalid date format');
 							} else {
-								saveEvent(nearbyUsers.currentUser.name, venue, d, description);
+								saveEvent(meetupData.currentUser.name, venue, d, description);
 							}
 						}
 					});

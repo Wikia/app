@@ -49,7 +49,6 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 			'recentlyJoined' => $this->sendRequest( 'CommunityPageSpecialController', 'getRecentlyJoinedData' )
 				->getData(),
 			'meetupData' => $this->sendRequest('CommunityPageSpecialController','meetupData')->getData(),
-			'deleteEvent' => $this->sendRequest('CommunityPageSpecialController','deleteEvent')->getData(),
 			'communityPolicyModule' => $this->getCommunityPolicyData(),
 			'recentActivityModule' => $this->getRecentActivityData(),
 			'insightsModules' => $this->getInsightsModulesData(),
@@ -190,6 +189,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 			'usersInLocation' => count($nearByUserDetails),
 		];
 		$event = $this->meetupModel->getEvent();
+
 		$this->response->setData([
 			'currentUser' => $currentUserData,
 			'users' => array_filter($nearByUserDetails),
