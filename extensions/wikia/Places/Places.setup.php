@@ -40,7 +40,10 @@ $wgAutoloadClasses['PlacesController'] =  $dir . '/PlacesController.class.php';
 $wgAutoloadClasses['PlacesCategoryController'] =  $dir . '/PlacesCategoryController.class.php';
 $wgAutoloadClasses['PlacesEditorController'] =  $dir . '/PlacesEditorController.class.php';
 $wgAutoloadClasses['PlacesSpecialController'] =  $dir . '/PlacesSpecialController.class.php';
+$wgAutoloadClasses['NearbySpecialController'] =  $dir . '/NearbySpecialController.class.php';
+
 $wgSpecialPages['Places'] = 'PlacesSpecialController';
+$wgSpecialPages['Nearby'] = 'NearbySpecialController';
 
 /**
  * models
@@ -85,3 +88,20 @@ JSMessages::registerPackage('Places', array(
 
 JSMessages::registerPackage('PlacesEditPageButton', array( 'places-toolbar-button-tooltip' ) );
 JSMessages::registerPackage('PlacesGeoLocationModal', array( 'places-geolocation-modal-*' ) );
+
+/**
+ * Resources Loader module
+ */
+$wgResourceModules['ext.wikia.Nearby'] = [
+	'scripts' => [
+		'js/SpecialNearby.js',
+	],
+	'styles' => [
+		'css/SpecialNearby.css'
+	],
+	'dependencies' => [
+		'mediawiki.api'
+	],
+	'localBasePath' => __DIR__,
+	'remoteExtPath' => 'wikia/Places'
+];
