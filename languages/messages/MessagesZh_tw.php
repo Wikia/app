@@ -78,7 +78,7 @@ $dateFormats = array(
 	'zh both'                => 'Y年n月j日 (D) H:i',
 
 	'minguo time'            => 'H:i',
-	'minguo date'            => 'xoY年n月j日 (l)',
+	'minguo date'            => 'xoY年n月j日',
 	'minguo both'            => 'xoY年n月j日 (D) H:i',
 
 	'minguo shorttext time'  => 'H:i',
