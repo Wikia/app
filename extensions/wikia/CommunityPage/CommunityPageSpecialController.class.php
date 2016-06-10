@@ -199,7 +199,11 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	}
 
 	public function deleteEvent(){
-		return $this->meetupModel->deleteEvent();
+		$error =  $this->meetupModel->deleteEvent();
+
+		$this->response->setData([
+			'error' => $error,
+		]);
 	}
 
 	public function saveEvent() {

@@ -2,10 +2,15 @@
     {{#meetupData}}
       {{#isAdmin}}
         {{#event}}
-          {{location}}
-          {{time}}
-          {{description}}
-          {{createdBy}}
+	        <div class="event-data">
+		        {{createdBy}} has created is an event at {{location}}: {{time}}
+	        </div>
+	        <div class="event-description">
+		        {{description}}
+	        </div>
+            <div>
+	            <a href="#" id="community-page-delete-event" class="meetup-button">Delete Event</a>
+            </div>
         {{/event}}
         {{^event}}
           <h2>Nearby Users</h2>
@@ -32,13 +37,14 @@
       {{/isAdmin}}
       {{^isAdmin}}
         {{#event}}
-          {{location}}
-          {{time}}
-          {{description}}
-          {{createdBy}}
+	        <div class="event-data">
+		        There is an event at {{location}} on {{time}}, created by {{createdBy}}.
+	        </div>
         {{/event}}
         {{^event}}
-          There are no upcoming events!
+            <div class="event-data">
+	          There are no upcoming events!
+	        </div>
         {{/event}}
       {{/isAdmin}}
     {{/meetupData}}

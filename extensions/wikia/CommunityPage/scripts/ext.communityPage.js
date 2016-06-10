@@ -58,6 +58,11 @@ require([
 			event.preventDefault();
 			openCreateEventModal();
 		});
+
+		$('#community-page-delete-event').click(function (event) {
+			event.preventDefault();
+			deleteEvent();
+		});
 	}
 
 	function getUiModalInstance() {
@@ -167,13 +172,28 @@ require([
 				description: description,
 			},
 		}).then(function (response) {
-			console.log(response);
 			$deferred.resolve(response);
+			location.reload();
 		});
 
 		return $deferred;
 	}
 
+	function deleteEvent() {
+		var $deferred = $.Deferred();
+
+		nirvana.sendRequest({
+			controller: 'CommunityPageSpecial',
+			method: 'deleteEvent',
+			format: 'json',
+			type: 'get',
+		}).then(function (response) {
+			$deferred.resolve(response);
+			location.reload();
+		});
+
+		return $deferred;
+	}
 
 	function openCommunityModal(tabToActivate) {
 		tabToActivate = tabToActivate || tabs.TAB_LEADERBOARD;
