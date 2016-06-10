@@ -61,8 +61,10 @@ require([
 	}
 
 	switch (group) {
+		// Temporary group running during E3
 		case 'E3':
 			helper = fandomHelper({
+				type: 'e3',
 				limit: 5
 			});
 			view = railView({

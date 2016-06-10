@@ -27,23 +27,24 @@ class RecirculationContent implements JsonSerializable {
 	 * @param $publishDate
 	 * @param $author
 	 */
-	public function __construct($index, $url, $thumbnail, $title, $publishDate, $author) {
-		$this->index = $index;
-		$this->url = $url;
-		$this->thumbnail = $thumbnail;
-		$this->title = $title;
-		$this->publishDate = $publishDate;
-		$this->author = $author;
+	public function __construct( array $properties = [] ) {
+		foreach($properties as $key => $value){
+			$this->{$key} = $value;
+		}
+	}
+
+	public function get( $property ){
+		return isset( $this->{ $property } ) ? $this->{ $property } : '';
 	}
 
 	function jsonSerialize() {
 		return (object) [
-			'url' => $this->url,
-			'index' => $this->index,
-			'thumbnail' => $this->thumbnail,
-			'title' => $this->title,
-			'pub_date' => $this->publishDate,
-			'author' => $this->author,
+			'url' => $this->get('url'),
+			'index' => $this->get('index'),
+			'thumbnail' => $this->get('thumbnail'),
+			'title' => $this->get('title'),
+			'pub_date' => $this->get('publishDate'),
+			'author' => $this->get('author'),
 		];
 	}
 }

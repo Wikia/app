@@ -9,6 +9,7 @@ $wgExtensionCredits['other'][] = [
 
 // Autoload
 $wgAutoloadClasses['ParselyDataService'] =  __DIR__ . '/services/ParselyDataService.class.php';
+$wgAutoloadClasses['FandomDataService'] =  __DIR__ . '/services/FandomDataService.class.php';
 $wgAutoloadClasses['DiscussionsDataService'] =  __DIR__ . '/services/DiscussionsDataService.class.php';
 $wgAutoloadClasses['CakeRelatedContentService'] =  __DIR__ . '/services/CakeRelatedContentService.php';
 $wgAutoloadClasses['CuratedContentService'] =  __DIR__ . '/services/CuratedContentService.class.php';
