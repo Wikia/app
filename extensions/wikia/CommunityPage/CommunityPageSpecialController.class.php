@@ -183,8 +183,12 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		
 		$nearByUserDetails = $this->getContributorsDetails($nearByUser);
 
+		$event = $this->meetupModel->getEvent();
+
 		$this->response->setData([
 			'users' => array_filter($nearByUserDetails),
+			'isAdmin' => $this->usersModel->isAdmin($currentUser->getId(),$this->usersModel->getAdmins()),
+			'event' => $event,
 		]);
 	}
 

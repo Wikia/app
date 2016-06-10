@@ -1,24 +1,45 @@
 <div class="module contributors-module meetup-section community-page-contributors-module-section">
-	<h2>Nearby Users</h2>
-	{{#nearByUsers}}
-		<ul class="reset top-contributors">
-			{{#users}}
-				<li class="community-page-contributors-list-item">
-					<div class="avatar-container">
-						<a data-tracking="top-contributors-user-avatar" href="{{profilePage}}">{{{avatar}}}</a>
-					</div>
-					<div class="community-page-contributor-rank">
-						{{count}}.
-					</div>
-					<div class="community-page-contributor-details">
-						<a data-tracking="top-contributors-user" href="{{profilePage}}">{{userName}}</a>
-						<span class="community-page-subtle">{{city}}</span>
-					</div>
-				</li>
-			{{/users}}
-		</ul>
-		<div>
-			<a href="#" id="community-page-create-event" class="meetup-button">Create Event</a>
-		</div>
-	{{/nearByUsers}}
+    {{#nearByUsers}}
+      {{#isAdmin}}
+        {{#event}}
+          {{location}}
+          {{time}}
+          {{description}}
+          {{createdBy}}
+        {{/event}}
+        {{^event}}
+          <h2>Nearby Users</h2>
+          <ul class="reset top-contributors">
+            {{#users}}
+              <li class="community-page-contributors-list-item">
+                <div class="avatar-container">
+                  <a data-tracking="top-contributors-user-avatar" href="{{profilePage}}">{{{avatar}}}</a>
+                </div>
+                <div class="community-page-contributor-rank">
+                  {{count}}.
+                </div>
+                <div class="community-page-contributor-details">
+                  <a data-tracking="top-contributors-user" href="{{profilePage}}">{{userName}}</a>
+                  <span class="community-page-subtle">{{city}}</span>
+                </div>
+              </li>
+            {{/users}}
+          </ul>
+          <div>
+            <a href="#" id="community-page-create-event" class="meetup-button">Create Event</a>
+          </div>
+        {{/event}}
+      {{/isAdmin}}
+      {{^isAdmin}}
+        {{#event}}
+          {{location}}
+          {{time}}
+          {{description}}
+          {{createdBy}}
+        {{/event}}
+        {{^event}}
+          There is no upcoming events!
+        {{/event}}
+      {{/isAdmin}}
+    {{/nearByUsers}}
 </div>
