@@ -152,6 +152,26 @@ require([
 		return $deferred;
 	}
 
+	function saveEvent(venue, date, description) {
+		console.log(`Venue = ${venue}`);
+		console.log(`Date = ${date}`);
+		console.log(`Description = ${description}`);
+
+		var $deferred = $.Deferred();
+
+		nirvana.sendRequest({
+			controller: 'CommunityPageSpecial',
+			method: 'saveEvent',
+			format: 'json',
+			type: 'get',
+		}).then(function (response) {
+			console.log(response);
+			$deferred.resolve(response);
+		});
+
+		return $deferred;
+	}
+
 
 	function openCommunityModal(tabToActivate) {
 		tabToActivate = tabToActivate || tabs.TAB_LEADERBOARD;
@@ -223,14 +243,14 @@ require([
 						if (!venue || !date || !description) {
 							alert("Missing data!");
 						} else {
-							try {
-								var d = new Date(date);
+							var d = new Date(date);
 
-								console.log(`Venue = ${venue}`);
-								console.log(`Date = ${d}`);
-								console.log(`Description = ${description}`);
-							} catch (e) {
+							if (isNaN(d.getDay())) {
 								alert('Invalid date format');
+							} else {
+								saveEvent(venue, d, description);
+//								debugger;
+//								modal.hide();
 							}
 						}
 					});

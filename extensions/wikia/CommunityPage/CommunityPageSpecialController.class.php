@@ -197,6 +197,14 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		]);
 	}
 
+	public function saveEvent() {
+		myvardump($this->request);
+
+		$this->response->setData([
+			'error' => false,
+		]);
+	}
+
 	/**
 	 * Set context for recentActivityModule template. Needs to be passed through the index method in order to work.
 	 * @return array
