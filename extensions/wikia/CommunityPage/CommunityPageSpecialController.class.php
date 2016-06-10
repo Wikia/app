@@ -49,7 +49,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 			'recentlyJoined' => $this->sendRequest( 'CommunityPageSpecialController', 'getRecentlyJoinedData' )
 				->getData(),
 			'meetupData' => $this->sendRequest('CommunityPageSpecialController','meetupData')->getData(),
-			'deleteEvent' => $this->sendRequest('CommunityPageSpecialController','deleteEvent'),
+			'deleteEvent' => $this->sendRequest('CommunityPageSpecialController','deleteEvent')->getData(),
 			'communityPolicyModule' => $this->getCommunityPolicyData(),
 			'recentActivityModule' => $this->getRecentActivityData(),
 			'insightsModules' => $this->getInsightsModulesData(),
@@ -199,7 +199,16 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	}
 
 	public function deleteEvent(){
-		$this->meetupModel->deleteEvent();
+		return $this->meetupModel->deleteEvent();
+
+	}
+
+	public function saveEvent() {
+		myvardump($this->request);
+
+		$this->response->setData([
+			'error' => false,
+		]);
 	}
 
 	/**

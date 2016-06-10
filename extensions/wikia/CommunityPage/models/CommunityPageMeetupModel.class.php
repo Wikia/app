@@ -55,6 +55,6 @@ class CommunityPageMeetupModel {
 	public function deleteEvent(){
 
 		$key = wfMemcKey(self::MEETUP_MCACHE_KEY);
-		F::app()->wg->Memc->delete($key);
+		return F::app()->wg->Memc->delete($key);
 	}
 }
