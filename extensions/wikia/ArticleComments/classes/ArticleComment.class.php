@@ -191,7 +191,7 @@ class ArticleComment {
 	 * @return bool
 	 */
 	public function load( $master = false ) {
-		$ret = $this->loadRevisionsAndAuthor();
+		$ret = $this->loadRevisionsAndAuthor( $master );
 		if ( $ret === false ) {
 			return false;
 		}
@@ -1593,6 +1593,8 @@ class ArticleComment {
 			return true;
 		}
 
+		wfProfileIn( __METHOD__ );
+
 		$comment = ArticleComment::newFromTitle( $title );
 		$isBlog = ( $wg->EnableBlogArticles && ArticleComment::isBlog( $title ) );
 
@@ -1631,6 +1633,7 @@ class ArticleComment {
 				$result = $return = true;
 		}
 
+		wfProfileOut( __METHOD__ );
 		return $return;
 	}
 
