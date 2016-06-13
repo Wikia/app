@@ -61,6 +61,15 @@ require([
 	}
 
 	switch (group) {
+		// Temporary group running during E3
+		case 'E3':
+			helper = fandomHelper({
+				type: 'e3',
+				limit: 5
+			});
+			view = railView();
+			isRail = true;
+			break;
 		case 'LATERAL_FANDOM':
 			helper = lateralHelper();
 			view = railView();
@@ -72,28 +81,6 @@ require([
 				count: 3
 			});
 			view = incontentView();
-			break;
-		case 'DESIGN_ONE':
-		case 'DESIGN_TWO':
-		case 'DESIGN_THREE':
-		case 'DESIGN_FIVE':
-			helper = fandomHelper({
-				limit: 5
-			});
-			view = railView({
-				formatTitle: true
-			});
-			isRail = true;
-			break;
-		case 'DESIGN_FOUR':
-			helper = fandomHelper({
-				limit: 5
-			});
-			view = railView({
-				formatTitle: true,
-				before: injectSubtitle
-			});
-			isRail = true;
 			break;
 		case 'FANDOM_RAIL':
 			helper = fandomHelper();
@@ -306,7 +293,8 @@ require([
 	}
 
 	function renderImpactFooter() {
-		var fView = impactFooterView(),
+		var curated = curatedHelper(),
+			fView = impactFooterView(),
 			rView = railView(),
 			sView = scrollerView();
 
@@ -324,8 +312,15 @@ require([
 					items: data.fandom.items.splice(0,5)
 				};
 
-				fView.render(data).then(fView.setupTracking(experimentName));
-				rView.render(fandomData).then(rView.setupTracking(experimentName));
+				fView.render(data)
+					.then(fView.setupTracking(experimentName));
+
+				afterRailLoads(function() {
+					curated.injectContent(fandomData)
+						.then(rView.render)
+						.then(rView.setupTracking)
+						.then(curatedHelper.setupTracking);
+				});
 			});
 	}
 });

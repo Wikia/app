@@ -32,7 +32,7 @@ return [
 			'wikia.tracker',
 			'wikia.window',
 			'wikia.abTest',
-			'wikia.underscore',
+			'underscore',
 		],
 		'position' => 'top', // needs to be loaded before AssetsManager files
 	],
@@ -172,6 +172,12 @@ return [
 	],
 	'wikia.throbber' => [
 		'scripts' => 'resources/wikia/modules/throbber.js',
+		'dependencies' => [
+			'amd',
+		],
+	],
+	'underscore' => [
+		'scripts' => 'resources/wikia/libraries/underscore/underscore-min.js',
 		'dependencies' => [
 			'amd',
 		],

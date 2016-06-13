@@ -15,6 +15,15 @@ $messages['en'] = array(
 	'communitypage-entry-join' => 'Join this community!',
 	'communitypage-entry-learn-more' => 'Learn more',
 	'communitypage-entry-button' => 'Community Page',
+	'communitypage-entrypoint-modal-title' => 'The $1 Community is built by $2 fans like you.',
+	'communitypage-entrypoint-modal-edit-title' => 'Edit',
+	'communitypage-entrypoint-modal-edit-text' => 'Help fellow members write articles, organize facts, and upload images to build the ultimate fan-run $1 community.',
+	'communitypage-entrypoint-modal-connect-title' => 'Connect',
+	'communitypage-entrypoint-modal-connect-text' => 'Discuss your reactions, ideas, and favorite topics with other fans who love $1 as much as you do.',
+	'communitypage-entrypoint-modal-explore-title' => 'Explore',
+	'communitypage-entrypoint-modal-explore-text' => 'Be part of something huge. The $1 Community is just one of 360,000 communities on the Wikia network.',
+	'communitypage-entrypoint-modal-button-text' => 'Help out',
+	'communitypage-entrypoint-modal-video-button-text' => 'Watch the video',
 	'communitypage-tasks-title' => 'Tasks',
 	'communitypage-entry-tasks' => 'Help us edit this wikia',
 	'communitypage-tasks-header-welcome' => 'Help us grow {{SITENAME}}!',
@@ -90,6 +99,15 @@ $messages['qqq'] = array(
 	'communitypage-entry-join' => 'Text shown on article pages in next to the button that links to the Community page.',
 	'communitypage-entry-learn-more' => 'Button text for the link to the Community page.',
 	'communitypage-entry-button' => 'Button text for the link to the Community page after the user has joined the community.',
+	'communitypage-entrypoint-modal-title' => 'Main title for popup modal displayed to users to invite to Community page; $1 - Wiki topic (e.g. James Bond, Glee, Muppets); $2 - number of wiki contributors.',
+	'communitypage-entrypoint-modal-edit-title' => 'Title of section describing benefits of editing.',
+	'communitypage-entrypoint-modal-edit-text' => 'Description of edit section naming editing benefits; $1 - Wiki topic (e.g. James Bond, Glee, Muppets).',
+	'communitypage-entrypoint-modal-connect-title' => 'Title of section describing benefits of connecting with other fans.',
+	'communitypage-entrypoint-modal-connect-text' => 'Description of section describing benefits of connecting with other fans; $1 - Wiki topic (e.g. James Bond, Glee, Muppets).',
+	'communitypage-entrypoint-modal-explore-title' => 'Title of section describing benefits of exploring wiki.',
+	'communitypage-entrypoint-modal-explore-text' => 'Description of section describing benefits of exploring wiki; $1 - Wiki topic (e.g. James Bond, Glee, Muppets).',
+	'communitypage-entrypoint-modal-button-text' => 'Text on the button leading to Community Page.',
+	'communitypage-entrypoint-modal-video-button-text' => 'Text on the button for playing a video.',
 	'communitypage-tasks-title' => 'Title of the Tasks special page.',
 	'communitypage-entry-tasks' => 'Text shown on article pages in next to the button that links to the Tasks page.',
 	'communitypage-tasks-header-welcome' => 'Welcome message shown on Tasks page.',
@@ -224,6 +242,15 @@ $messages['de'] = array(
 	'communitypage-policy-module-text' => 'Diese Community hat eine Reihe von Regeln, die von allen Benutzern befolgt werden sollten.',
 	'communitypage-policy-module-edit-link-text' => 'Bearbeiten',
 	'communitypage-policy-module-link-text' => 'Regeln anzeigen',
+	'communitypage-entrypoint-modal-title' => 'Die $1 Community wird von $2 Fans wie dir aufgebaut.',
+	'communitypage-entrypoint-modal-edit-title' => 'Bearbeiten',
+	'communitypage-entrypoint-modal-edit-text' => 'Help fellow members write articles, organize facts, and upload images to build the ultimate fan-run $1 community.',
+	'communitypage-entrypoint-modal-connect-title' => 'Verbindung aufnehmen',
+	'communitypage-entrypoint-modal-connect-text' => 'Discuss your reactions, ideas, and favorite topics with other fans who love $1 as much as you do.',
+	'communitypage-entrypoint-modal-explore-title' => 'Erkunden',
+	'communitypage-entrypoint-modal-explore-text' => 'Be part of something huge. The $1 Community is just one of 360,000 communities on the Wikia network.',
+	'communitypage-entrypoint-modal-button-text' => 'Mithelfen',
+	'communitypage-entrypoint-modal-video-button-text' => 'Video ansehen',
 );
 
 $messages['es'] = array(
@@ -299,6 +326,15 @@ $messages['es'] = array(
 	'communitypage-policy-module-text' => 'Esta comunidad tiene un conjunto de políticas que deben ser seguidas por todos los editores.',
 	'communitypage-policy-module-edit-link-text' => 'Editar',
 	'communitypage-policy-module-link-text' => 'Ver política',
+	'communitypage-entrypoint-modal-title' => 'La Comunidad de $1 está construida por $2 fans como tú.',
+	'communitypage-entrypoint-modal-edit-title' => 'Edita',
+	'communitypage-entrypoint-modal-edit-text' => 'Ayuda a otros miembros a escribir artículos, organizar hechos, y subir imágenes para construir la máxima maratón de la comunidad de $1.',
+	'communitypage-entrypoint-modal-connect-title' => 'Conéctate',
+	'communitypage-entrypoint-modal-connect-text' => 'Discute tus reacciones, ideas, y temas favoritos con otros fans que aman $1 tanto como tú.',
+	'communitypage-entrypoint-modal-explore-title' => 'Explora',
+	'communitypage-entrypoint-modal-explore-text' => 'Se parte de algo grande. La Comunidad de $1 es solo una de las 360,000 comunidades en la red de Wikia.',
+	'communitypage-entrypoint-modal-button-text' => 'Ayúdanos',
+	'communitypage-entrypoint-modal-video-button-text' => 'Mira el vídeo',
 );
 
 $messages['fr'] = array(
@@ -374,6 +410,15 @@ $messages['fr'] = array(
 	'communitypage-policy-module-text' => 'Un ensemble de règles à respecter par tous les contributeurs a été défini pour cette communauté.',
 	'communitypage-policy-module-edit-link-text' => 'Modifier',
 	'communitypage-policy-module-link-text' => 'Afficher la politique',
+	'communitypage-entrypoint-modal-title' => 'The $1 Community is built by $2 fans like you.',
+	'communitypage-entrypoint-modal-edit-title' => 'Edit',
+	'communitypage-entrypoint-modal-edit-text' => 'Help fellow members write articles, organize facts, and upload images to build the ultimate fan-run $1 community.',
+	'communitypage-entrypoint-modal-connect-title' => 'Connect',
+	'communitypage-entrypoint-modal-connect-text' => 'Discuss your reactions, ideas, and favorite topics with other fans who love $1 as much as you do.',
+	'communitypage-entrypoint-modal-explore-title' => 'Explore',
+	'communitypage-entrypoint-modal-explore-text' => 'Be part of something huge. The $1 Community is just one of 360,000 communities on the Wikia network.',
+	'communitypage-entrypoint-modal-button-text' => 'Help out',
+	'communitypage-entrypoint-modal-video-button-text' => 'Watch the video',
 );
 
 $messages['it'] = array(
@@ -449,6 +494,15 @@ $messages['it'] = array(
 	'communitypage-policy-module-text' => 'Questa community ha un set di politiche che devono essere seguite da tutti i collaboratori.',
 	'communitypage-policy-module-edit-link-text' => 'Modifica',
 	'communitypage-policy-module-link-text' => 'Visualizza politica',
+	'communitypage-entrypoint-modal-title' => 'La Community $1 è costituita da $2 fan come te.',
+	'communitypage-entrypoint-modal-edit-title' => 'Modifica',
+	'communitypage-entrypoint-modal-edit-text' => 'Aiuta gli altri membri a scrivere articoli, organizzare fatti e caricare immagini per creare la community $1 gestita da fan per eccellenza.',
+	'communitypage-entrypoint-modal-connect-title' => 'Connetti',
+	'communitypage-entrypoint-modal-connect-text' => 'Discuti le tue reazioni, idee e argomenti preferiti con altri fan che amano $1 come te.',
+	'communitypage-entrypoint-modal-explore-title' => 'Esplora',
+	'communitypage-entrypoint-modal-explore-text' => 'Fai parte di qualcosa di grande. La Community $1 è solo una delle 360.000 community presenti nella rete Wikia.',
+	'communitypage-entrypoint-modal-button-text' => 'Dai una mano',
+	'communitypage-entrypoint-modal-video-button-text' => 'Guarda il video',
 );
 
 $messages['ja'] = array(
@@ -463,7 +517,7 @@ $messages['ja'] = array(
 	'communitypage-entry-learn-more' => 'もっと見る',
 	'communitypage-tasks-header-welcome' => '{{SITENAME}}で<br>もっと知識と情熱を共有しよう！',
 	'communitypage-header-welcome' => '{{SITENAME}} コミュニティへようこそ！',
-	'communitypage-entry-button' => 'コミュニティ内ページ',
+	'communitypage-entry-button' => 'コミュニティ・ページ',
 	'communitypage-tasks-title' => 'やること',
 	'communitypage-entry-tasks' => 'あなたの知識と情熱を共有してください',
 	'communitypage-tasks-admin-welcome' => '{{SITENAME}} へようこそ。このコミュニティはあなたの知識と情熱を求めています。もっと書き込みが必要なページの一部をこちらに紹介しています。まずは知っていることを書き込んでみよう！',
@@ -524,6 +578,15 @@ $messages['ja'] = array(
 	'communitypage-policy-module-text' => 'このコミュニティで気持ち良く編集していただくために、守っていただきたいコミュニティ・ポリシーがあります。',
 	'communitypage-policy-module-edit-link-text' => '編集',
 	'communitypage-policy-module-link-text' => 'コミュニティ・ポリシーを見る',
+	'communitypage-entrypoint-modal-title' => 'The $1 Community is built by $2 fans like you.',
+	'communitypage-entrypoint-modal-edit-title' => 'Edit',
+	'communitypage-entrypoint-modal-edit-text' => 'Help fellow members write articles, organize facts, and upload images to build the ultimate fan-run $1 community.',
+	'communitypage-entrypoint-modal-connect-title' => 'Connect',
+	'communitypage-entrypoint-modal-connect-text' => 'Discuss your reactions, ideas, and favorite topics with other fans who love $1 as much as you do.',
+	'communitypage-entrypoint-modal-explore-title' => 'Explore',
+	'communitypage-entrypoint-modal-explore-text' => 'Be part of something huge. The $1 Community is just one of 360,000 communities on the Wikia network.',
+	'communitypage-entrypoint-modal-button-text' => 'Help out',
+	'communitypage-entrypoint-modal-video-button-text' => 'Watch the video',
 );
 
 $messages['nl'] = array(
@@ -599,6 +662,15 @@ $messages['nl'] = array(
 	'communitypage-policy-module-edit-link-text' => 'Edit',
 	'communitypage-policy-module-link-text' => 'View policy',
 	'communitypage-policy-module-link-page-name' => 'Community guidelines',
+	'communitypage-entrypoint-modal-title' => 'The $1 Community is built by $2 fans like you.',
+	'communitypage-entrypoint-modal-edit-title' => 'Edit',
+	'communitypage-entrypoint-modal-edit-text' => 'Help fellow members write articles, organize facts, and upload images to build the ultimate fan-run $1 community.',
+	'communitypage-entrypoint-modal-connect-title' => 'Connect',
+	'communitypage-entrypoint-modal-connect-text' => 'Discuss your reactions, ideas, and favorite topics with other fans who love $1 as much as you do.',
+	'communitypage-entrypoint-modal-explore-title' => 'Explore',
+	'communitypage-entrypoint-modal-explore-text' => 'Be part of something huge. The $1 Community is just one of 360,000 communities on the Wikia network.',
+	'communitypage-entrypoint-modal-button-text' => 'Help out',
+	'communitypage-entrypoint-modal-video-button-text' => 'Watch the video',
 );
 
 $messages['pl'] = array(
@@ -674,6 +746,15 @@ $messages['pl'] = array(
 	'communitypage-policy-module-text' => 'Ta społeczność posiada zestaw zasad, które powinny być przestrzegane przez wszystkich współtwórców.',
 	'communitypage-policy-module-edit-link-text' => 'Edytuj',
 	'communitypage-policy-module-link-text' => 'Zobacz politykę',
+	'communitypage-entrypoint-modal-title' => 'The $1 Community is built by $2 fans like you.',
+	'communitypage-entrypoint-modal-edit-title' => 'Edit',
+	'communitypage-entrypoint-modal-edit-text' => 'Help fellow members write articles, organize facts, and upload images to build the ultimate fan-run $1 community.',
+	'communitypage-entrypoint-modal-connect-title' => 'Connect',
+	'communitypage-entrypoint-modal-connect-text' => 'Discuss your reactions, ideas, and favorite topics with other fans who love $1 as much as you do.',
+	'communitypage-entrypoint-modal-explore-title' => 'Explore',
+	'communitypage-entrypoint-modal-explore-text' => 'Be part of something huge. The $1 Community is just one of 360,000 communities on the Wikia network.',
+	'communitypage-entrypoint-modal-button-text' => 'Help out',
+	'communitypage-entrypoint-modal-video-button-text' => 'Watch the video',
 );
 
 $messages['pt'] = array(
@@ -749,6 +830,15 @@ $messages['pt'] = array(
 	'communitypage-policy-module-text' => 'Esta comunidade possui um conjunto de regras que devem ser seguidas por todos os contribuidores.',
 	'communitypage-policy-module-edit-link-text' => 'Editar',
 	'communitypage-policy-module-link-text' => 'Ver regras',
+	'communitypage-entrypoint-modal-title' => 'A comunidade $1 é construída por fãs de $2 como você.',
+	'communitypage-entrypoint-modal-edit-title' => 'Editar',
+	'communitypage-entrypoint-modal-edit-text' => 'Ajude outros membros a escrever artigos, organizar fatos e fazer upload de imagens para construir a comunidade de fãs $1.',
+	'communitypage-entrypoint-modal-connect-title' => 'Conectar-se',
+	'communitypage-entrypoint-modal-connect-text' => 'Discuta suas reações, ideias e tópicos favoritos com outros fãs que amam $1 tanto quanto você.',
+	'communitypage-entrypoint-modal-explore-title' => 'Explorar',
+	'communitypage-entrypoint-modal-explore-text' => 'Faça parte de algo grandioso. A comunidade $1 é apenas uma das 360.000 comunidades na rede Wikia.',
+	'communitypage-entrypoint-modal-button-text' => 'Ajudar',
+	'communitypage-entrypoint-modal-video-button-text' => 'Assista ao vídeo',
 );
 
 $messages['ru'] = array(
@@ -824,6 +914,15 @@ $messages['ru'] = array(
 	'communitypage-policy-module-text' => 'В этом сообществе есть свои правила, которым должен следовать каждый участник.',
 	'communitypage-policy-module-edit-link-text' => 'Править',
 	'communitypage-policy-module-link-text' => 'Прочитать правила',
+	'communitypage-entrypoint-modal-title' => 'The $1 Community is built by $2 fans like you.',
+	'communitypage-entrypoint-modal-edit-title' => 'Edit',
+	'communitypage-entrypoint-modal-edit-text' => 'Help fellow members write articles, organize facts, and upload images to build the ultimate fan-run $1 community.',
+	'communitypage-entrypoint-modal-connect-title' => 'Connect',
+	'communitypage-entrypoint-modal-connect-text' => 'Discuss your reactions, ideas, and favorite topics with other fans who love $1 as much as you do.',
+	'communitypage-entrypoint-modal-explore-title' => 'Explore',
+	'communitypage-entrypoint-modal-explore-text' => 'Be part of something huge. The $1 Community is just one of 360,000 communities on the Wikia network.',
+	'communitypage-entrypoint-modal-button-text' => 'Help out',
+	'communitypage-entrypoint-modal-video-button-text' => 'Watch the video',
 );
 
 $messages['zh-hans'] = array(
@@ -899,6 +998,15 @@ $messages['zh-hans'] = array(
 	'communitypage-policy-module-text' => '这个社区有一系列的规范需要所有用户遵守。',
 	'communitypage-policy-module-edit-link-text' => '编辑',
 	'communitypage-policy-module-link-text' => '查看规范',
+	'communitypage-entrypoint-modal-title' => '$1社区是由和你一样的$2个粉丝共同创建的。',
+	'communitypage-entrypoint-modal-edit-title' => '编辑',
+	'communitypage-entrypoint-modal-edit-text' => '帮助大家一起写文章，组织内容，上传图片，共同打造由粉丝一手创建的$1社区。',
+	'communitypage-entrypoint-modal-connect-title' => '沟通',
+	'communitypage-entrypoint-modal-connect-text' => '和其他像你一样喜爱$1的粉丝一起讨论最流行最受关注的话题！',
+	'communitypage-entrypoint-modal-explore-title' => '探索',
+	'communitypage-entrypoint-modal-explore-text' => '成为大社区的一部分！$1社区只是Wikia上360,000个在线社区当中的一个。',
+	'communitypage-entrypoint-modal-button-text' => '开始贡献',
+	'communitypage-entrypoint-modal-video-button-text' => '观看视频',
 );
 
 $messages['zh-hant'] = array(
@@ -974,5 +1082,14 @@ $messages['zh-hant'] = array(
 	'communitypage-policy-module-edit-link-text' => '編輯',
 	'communitypage-policy-module-link-text' => '查看規定',
 	'communitypage-policy-module-link-page-name' => '社區指引',
+	'communitypage-entrypoint-modal-title' => '$1社區是由和你一樣的$2個粉絲共同創建的。',
+	'communitypage-entrypoint-modal-edit-title' => '編輯',
+	'communitypage-entrypoint-modal-edit-text' => '幫助大家一起寫文章，組織內容，上傳圖片，共同打造由粉絲一手創建的$1社區。',
+	'communitypage-entrypoint-modal-connect-title' => '溝通',
+	'communitypage-entrypoint-modal-connect-text' => '和其他像你一樣喜愛$1的粉絲一起討論最流行最受關注的話題！',
+	'communitypage-entrypoint-modal-explore-title' => '探索',
+	'communitypage-entrypoint-modal-explore-text' => '成為大社區的一部分！$1社區只是Wikia上360,000個線上社區當中的一個。',
+	'communitypage-entrypoint-modal-button-text' => '開始貢獻',
+	'communitypage-entrypoint-modal-video-button-text' => '觀看視頻',
 );
 
