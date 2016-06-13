@@ -122,10 +122,12 @@ define('ext.wikia.adEngine.adEngine', [
 					},
 					collapse: function (adInfo) {
 						log(['collapse', provider.name, slotName, adInfo], 'debug', logGroup);
+						slotTweaker.hide(slotName);
 						tracker.track('collapse', adInfo);
 					},
 					hop: function (adInfo) {
 						log(['hop', provider.name, slotName, adInfo], 'debug', logGroup);
+						slotTweaker.hide(container.id);
 						tracker.track('hop', adInfo);
 						nextProvider();
 					}
