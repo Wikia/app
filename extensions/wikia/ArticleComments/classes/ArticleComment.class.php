@@ -335,6 +335,8 @@ class ArticleComment {
 	}
 
 	public function parseText( $rawText ) {
+		wfProfileIn( __METHOD__ );
+
 		global $wgEnableParserCache;
 
 		$this->mRawtext = self::removeMetadataTag( $rawText );
@@ -363,6 +365,7 @@ class ArticleComment {
 
 		ParserPool::release( $parser );
 
+		wfProfileOut( __METHOD__ );
 		return $this->mText;
 	}
 
