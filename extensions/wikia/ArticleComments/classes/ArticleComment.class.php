@@ -17,7 +17,7 @@ class ArticleComment {
 	const LOG_ACTION_COMMENT = 'article_comment';
 
 	/** @var Bool (for blogs only) */
-	public $mProps;
+	private $mProps;
 
 	public $mLastRevId;
 	public $mFirstRevId;
@@ -26,13 +26,13 @@ class ArticleComment {
 	/** @var array */
 	public $mMetadata;
 
-	public $mText;
-	public $mRawtext;
+	private $mText;
+	private $mRawtext;
 	public $mHeadItems;
 	public $mNamespaceTalk;
 
 	/** @var Title */
-	public $mTitle;
+	private $mTitle;
 
 	/** @var User comment creator */
 	public $mUser;
@@ -54,7 +54,7 @@ class ArticleComment {
 	/**
 	 * @param Title $title
 	 */
-	public function __construct( $title ) {
+	public function __construct( Title $title ) {
 		$this->mTitle = $title;
 		$this->mNamespace = $title->getNamespace();
 		$this->mNamespaceTalk = MWNamespace::getTalk( $this->mNamespace );
@@ -339,6 +339,7 @@ class ArticleComment {
 
 		$this->mRawtext = self::removeMetadataTag( $rawText );
 
+		# seriously, WTF?
 		$wgEnableParserCache = false;
 
 		$parser = ParserPool::get();
@@ -365,6 +366,9 @@ class ArticleComment {
 		return $this->mText;
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getText() {
 		return $this->mText;
 	}
@@ -506,9 +510,9 @@ class ArticleComment {
 			'links' => $links,
 			'replyButton' => $replyButton,
 			'sig' => $sig,
-			'text' => $this->mText,
-			'metadata' => $this->mMetadata,
-			'rawtext' =>  $this->mRawtext,
+			'text' => $this->getText(),
+			'metadata' => $this->mMetadata, # filled by parseText()
+			'rawtext' =>  $this->mRawtext, # filled by parseText()
 			'timestamp' => $timestamp,
 			'rawtimestamp' => $rawTimestamp,
 			'rawmwtimestamp' =>	$rawMWTimestamp,
@@ -692,7 +696,7 @@ class ArticleComment {
 	public function editPage() {
 		global $wgStylePath;
 
-		if ( !$this->load( true ) ) {
+		if ( !$this->loadRevisionsAndAuthor( true ) ) {
 			return '';
 		}
 
