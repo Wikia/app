@@ -2,6 +2,7 @@
 @import 'skins/shared/mixins/flexbox';
 
 $hero-image-pattern: '/extensions/wikia/CommunityPage/images/hero_image_pattern.png';
+$hero-image-height: 200px;
 
 @if $is-dark-wiki {
 	$hero-image-pattern: '/extensions/wikia/CommunityPage/images/hero_image_pattern_dark.png';
@@ -11,7 +12,7 @@ $hero-image-pattern: '/extensions/wikia/CommunityPage/images/hero_image_pattern.
 	@include flexbox();
 	align-items: center;
 	background: url($hero-image-pattern);
-	height: 200px;
+	height: $hero-image-height;
 	justify-content: center;
 	text-align: center;
 
@@ -20,11 +21,23 @@ $hero-image-pattern: '/extensions/wikia/CommunityPage/images/hero_image_pattern.
 		background-size: cover;
 	}
 
+	&.community-page-header-cover:before {
+		background-color: rgba(0,0,0,0.35);
+		content: '';
+		height: $hero-image-height;
+		left: 0;
+		position: absolute;
+		right: 0;
+		z-index: 0;
+	}
+
 	.community-page-header-content {
 		width: 75%;
+		z-index: 0;
 	}
 
 	h1.community-page-heading {
+		color: white;
 		font-size: 36px;
 		font-weight: bold;
 		line-height: 48px;
