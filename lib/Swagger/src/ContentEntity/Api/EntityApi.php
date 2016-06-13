@@ -10,7 +10,7 @@
  * @link     https://github.com/swagger-api/swagger-codegen
  */
 /**
- *  Copyright 2015 SmartBear Software
+ *  Copyright 2016 SmartBear Software
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -101,14 +101,29 @@ class EntityApi
      * @return \Swagger\Client\ContentEntity\Models\Entity
      * @throws \Swagger\Client\ApiException on non-2xx response
      */
-    public function create($name=null, $classification=null)
+    public function create($name = null, $classification = null)
+    {
+        list($response, $statusCode, $httpHeader) = $this->createWithHttpInfo ($name, $classification);
+        return $response; 
+    }
+
+
+    /**
+     * createWithHttpInfo
+     *
+     * creates a new entity given the definition
+     *
+     * @param string $name  (optional)
+     * @param string $classification  (optional)
+     * @return Array of \Swagger\Client\ContentEntity\Models\Entity, HTTP status code, HTTP response headers (array of strings)
+     * @throws \Swagger\Client\ApiException on non-2xx response
+     */
+    public function createWithHttpInfo($name = null, $classification = null)
     {
         
   
         // parse inputs
         $resourcePath = "/entity";
-        $resourcePath = str_replace("{format}", "json", $resourcePath);
-        $method = "POST";
         $httpBody = '';
         $queryParams = array();
         $headerParams = array();
@@ -122,224 +137,55 @@ class EntityApi
         
         
         
+        // default format to json
+        $resourcePath = str_replace("{format}", "json", $resourcePath);
+
         // form params
         if ($name !== null) {
+            
+            
             $formParams['name'] = $this->apiClient->getSerializer()->toFormValue($name);
+            
         }// form params
         if ($classification !== null) {
+            
+            
             $formParams['classification'] = $this->apiClient->getSerializer()->toFormValue($classification);
+            
         }
         
   
         // for model (json/xml)
         if (isset($_tempBody)) {
             $httpBody = $_tempBody; // $_tempBody is the method argument, if present
-        } else if (count($formParams) > 0) {
+        } elseif (count($formParams) > 0) {
             $httpBody = $formParams; // for HTTP post (form)
         }
         
         // make the API Call
-        try
-        {
-            list($response, $httpHeader) = $this->apiClient->callApi(
-                $resourcePath, $method,
+        try {
+            list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
+                $resourcePath, 'POST',
                 $queryParams, $httpBody,
                 $headerParams, '\Swagger\Client\ContentEntity\Models\Entity'
             );
             
             if (!$response) {
-                return null;
+                return array(null, $statusCode, $httpHeader);
             }
 
-            return $this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\ContentEntity\Models\Entity', $httpHeader);
+            return array(\Swagger\Client\ObjectSerializer::deserialize($response, '\Swagger\Client\ContentEntity\Models\Entity', $httpHeader), $statusCode, $httpHeader);
             
         } catch (ApiException $e) {
             switch ($e->getCode()) { 
             case 200:
-                $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\ContentEntity\Models\Entity', $e->getResponseHeaders());
+                $data = \Swagger\Client\ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\ContentEntity\Models\Entity', $e->getResponseHeaders());
                 $e->setResponseObject($data);
                 break;
             }
   
             throw $e;
         }
-        
-        return null;
-        
-    }
-    
-    /**
-     * getById
-     *
-     * gets an entity by its id
-     *
-     * @param string $entity_id  (required)
-     * @return \Swagger\Client\ContentEntity\Models\Entity
-     * @throws \Swagger\Client\ApiException on non-2xx response
-     */
-    public function getById($entity_id)
-    {
-        
-        // verify the required parameter 'entity_id' is set
-        if ($entity_id === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $entity_id when calling getById');
-        }
-  
-        // parse inputs
-        $resourcePath = "/entity/{entityId}";
-        $resourcePath = str_replace("{format}", "json", $resourcePath);
-        $method = "GET";
-        $httpBody = '';
-        $queryParams = array();
-        $headerParams = array();
-        $formParams = array();
-        $_header_accept = ApiClient::selectHeaderAccept(array('application/json'));
-        if (!is_null($_header_accept)) {
-            $headerParams['Accept'] = $_header_accept;
-        }
-        $headerParams['Content-Type'] = ApiClient::selectHeaderContentType(array());
-  
-        
-        
-        // path params
-        if ($entity_id !== null) {
-            $resourcePath = str_replace(
-                "{" . "entityId" . "}",
-                $this->apiClient->getSerializer()->toPathValue($entity_id),
-                $resourcePath
-            );
-        }
-        
-        
-  
-        // for model (json/xml)
-        if (isset($_tempBody)) {
-            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
-        } else if (count($formParams) > 0) {
-            $httpBody = $formParams; // for HTTP post (form)
-        }
-        
-        // make the API Call
-        try
-        {
-            list($response, $httpHeader) = $this->apiClient->callApi(
-                $resourcePath, $method,
-                $queryParams, $httpBody,
-                $headerParams, '\Swagger\Client\ContentEntity\Models\Entity'
-            );
-            
-            if (!$response) {
-                return null;
-            }
-
-            return $this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\ContentEntity\Models\Entity', $httpHeader);
-            
-        } catch (ApiException $e) {
-            switch ($e->getCode()) { 
-            case 200:
-                $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\ContentEntity\Models\Entity', $e->getResponseHeaders());
-                $e->setResponseObject($data);
-                break;
-            case 400:
-                $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\ContentEntity\Models\ResponseObj', $e->getResponseHeaders());
-                $e->setResponseObject($data);
-                break;
-            case 404:
-                $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\ContentEntity\Models\ResponseObj', $e->getResponseHeaders());
-                $e->setResponseObject($data);
-                break;
-            }
-  
-            throw $e;
-        }
-        
-        return null;
-        
-    }
-    
-    /**
-     * update
-     *
-     * updates an entity with a new definition
-     *
-     * @param string $entity_id  (required)
-     * @param string $name  (optional)
-     * @param string $classification  (optional)
-     * @return void
-     * @throws \Swagger\Client\ApiException on non-2xx response
-     */
-    public function update($entity_id, $name=null, $classification=null)
-    {
-        
-        // verify the required parameter 'entity_id' is set
-        if ($entity_id === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $entity_id when calling update');
-        }
-  
-        // parse inputs
-        $resourcePath = "/entity/{entityId}";
-        $resourcePath = str_replace("{format}", "json", $resourcePath);
-        $method = "POST";
-        $httpBody = '';
-        $queryParams = array();
-        $headerParams = array();
-        $formParams = array();
-        $_header_accept = ApiClient::selectHeaderAccept(array('application/json'));
-        if (!is_null($_header_accept)) {
-            $headerParams['Accept'] = $_header_accept;
-        }
-        $headerParams['Content-Type'] = ApiClient::selectHeaderContentType(array());
-  
-        
-        
-        // path params
-        if ($entity_id !== null) {
-            $resourcePath = str_replace(
-                "{" . "entityId" . "}",
-                $this->apiClient->getSerializer()->toPathValue($entity_id),
-                $resourcePath
-            );
-        }
-        // form params
-        if ($name !== null) {
-            $formParams['name'] = $this->apiClient->getSerializer()->toFormValue($name);
-        }// form params
-        if ($classification !== null) {
-            $formParams['classification'] = $this->apiClient->getSerializer()->toFormValue($classification);
-        }
-        
-  
-        // for model (json/xml)
-        if (isset($_tempBody)) {
-            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
-        } else if (count($formParams) > 0) {
-            $httpBody = $formParams; // for HTTP post (form)
-        }
-        
-        // make the API Call
-        try
-        {
-            list($response, $httpHeader) = $this->apiClient->callApi(
-                $resourcePath, $method,
-                $queryParams, $httpBody,
-                $headerParams
-            );
-            
-        } catch (ApiException $e) {
-            switch ($e->getCode()) { 
-            case 400:
-                $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\ContentEntity\Models\ResponseObj', $e->getResponseHeaders());
-                $e->setResponseObject($data);
-                break;
-            case 404:
-                $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\ContentEntity\Models\ResponseObj', $e->getResponseHeaders());
-                $e->setResponseObject($data);
-                break;
-            }
-  
-            throw $e;
-        }
-        
     }
     
     /**
@@ -353,6 +199,22 @@ class EntityApi
      */
     public function delete($entity_id)
     {
+        list($response, $statusCode, $httpHeader) = $this->deleteWithHttpInfo ($entity_id);
+        return $response; 
+    }
+
+
+    /**
+     * deleteWithHttpInfo
+     *
+     * deletes an entity
+     *
+     * @param string $entity_id  (required)
+     * @return Array of null, HTTP status code, HTTP response headers (array of strings)
+     * @throws \Swagger\Client\ApiException on non-2xx response
+     */
+    public function deleteWithHttpInfo($entity_id)
+    {
         
         // verify the required parameter 'entity_id' is set
         if ($entity_id === null) {
@@ -361,8 +223,6 @@ class EntityApi
   
         // parse inputs
         $resourcePath = "/entity/{entityId}";
-        $resourcePath = str_replace("{format}", "json", $resourcePath);
-        $method = "DELETE";
         $httpBody = '';
         $queryParams = array();
         $headerParams = array();
@@ -376,6 +236,7 @@ class EntityApi
         
         
         // path params
+        
         if ($entity_id !== null) {
             $resourcePath = str_replace(
                 "{" . "entityId" . "}",
@@ -383,40 +244,257 @@ class EntityApi
                 $resourcePath
             );
         }
+        // default format to json
+        $resourcePath = str_replace("{format}", "json", $resourcePath);
+
         
         
   
         // for model (json/xml)
         if (isset($_tempBody)) {
             $httpBody = $_tempBody; // $_tempBody is the method argument, if present
-        } else if (count($formParams) > 0) {
+        } elseif (count($formParams) > 0) {
             $httpBody = $formParams; // for HTTP post (form)
         }
         
         // make the API Call
-        try
-        {
-            list($response, $httpHeader) = $this->apiClient->callApi(
-                $resourcePath, $method,
+        try {
+            list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
+                $resourcePath, 'DELETE',
                 $queryParams, $httpBody,
                 $headerParams
             );
             
+            return array(null, $statusCode, $httpHeader);
+            
         } catch (ApiException $e) {
             switch ($e->getCode()) { 
             case 400:
-                $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\ContentEntity\Models\ResponseObj', $e->getResponseHeaders());
+                $data = \Swagger\Client\ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\ContentEntity\Models\ResponseObj', $e->getResponseHeaders());
                 $e->setResponseObject($data);
                 break;
             case 404:
-                $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\ContentEntity\Models\ResponseObj', $e->getResponseHeaders());
+                $data = \Swagger\Client\ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\ContentEntity\Models\ResponseObj', $e->getResponseHeaders());
                 $e->setResponseObject($data);
                 break;
             }
   
             throw $e;
         }
+    }
+    
+    /**
+     * getById
+     *
+     * gets an entity by its id
+     *
+     * @param string $entity_id  (required)
+     * @return \Swagger\Client\ContentEntity\Models\Entity
+     * @throws \Swagger\Client\ApiException on non-2xx response
+     */
+    public function getById($entity_id)
+    {
+        list($response, $statusCode, $httpHeader) = $this->getByIdWithHttpInfo ($entity_id);
+        return $response; 
+    }
+
+
+    /**
+     * getByIdWithHttpInfo
+     *
+     * gets an entity by its id
+     *
+     * @param string $entity_id  (required)
+     * @return Array of \Swagger\Client\ContentEntity\Models\Entity, HTTP status code, HTTP response headers (array of strings)
+     * @throws \Swagger\Client\ApiException on non-2xx response
+     */
+    public function getByIdWithHttpInfo($entity_id)
+    {
         
+        // verify the required parameter 'entity_id' is set
+        if ($entity_id === null) {
+            throw new \InvalidArgumentException('Missing the required parameter $entity_id when calling getById');
+        }
+  
+        // parse inputs
+        $resourcePath = "/entity/{entityId}";
+        $httpBody = '';
+        $queryParams = array();
+        $headerParams = array();
+        $formParams = array();
+        $_header_accept = ApiClient::selectHeaderAccept(array('application/json'));
+        if (!is_null($_header_accept)) {
+            $headerParams['Accept'] = $_header_accept;
+        }
+        $headerParams['Content-Type'] = ApiClient::selectHeaderContentType(array());
+  
+        
+        
+        // path params
+        
+        if ($entity_id !== null) {
+            $resourcePath = str_replace(
+                "{" . "entityId" . "}",
+                $this->apiClient->getSerializer()->toPathValue($entity_id),
+                $resourcePath
+            );
+        }
+        // default format to json
+        $resourcePath = str_replace("{format}", "json", $resourcePath);
+
+        
+        
+  
+        // for model (json/xml)
+        if (isset($_tempBody)) {
+            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
+        } elseif (count($formParams) > 0) {
+            $httpBody = $formParams; // for HTTP post (form)
+        }
+        
+        // make the API Call
+        try {
+            list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
+                $resourcePath, 'GET',
+                $queryParams, $httpBody,
+                $headerParams, '\Swagger\Client\ContentEntity\Models\Entity'
+            );
+            
+            if (!$response) {
+                return array(null, $statusCode, $httpHeader);
+            }
+
+            return array(\Swagger\Client\ObjectSerializer::deserialize($response, '\Swagger\Client\ContentEntity\Models\Entity', $httpHeader), $statusCode, $httpHeader);
+            
+        } catch (ApiException $e) {
+            switch ($e->getCode()) { 
+            case 200:
+                $data = \Swagger\Client\ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\ContentEntity\Models\Entity', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            case 400:
+                $data = \Swagger\Client\ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\ContentEntity\Models\ResponseObj', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            case 404:
+                $data = \Swagger\Client\ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\ContentEntity\Models\ResponseObj', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            }
+  
+            throw $e;
+        }
+    }
+    
+    /**
+     * update
+     *
+     * updates an entity with a new definition
+     *
+     * @param string $entity_id  (required)
+     * @param string $name  (optional)
+     * @param string $classification  (optional)
+     * @return void
+     * @throws \Swagger\Client\ApiException on non-2xx response
+     */
+    public function update($entity_id, $name = null, $classification = null)
+    {
+        list($response, $statusCode, $httpHeader) = $this->updateWithHttpInfo ($entity_id, $name, $classification);
+        return $response; 
+    }
+
+
+    /**
+     * updateWithHttpInfo
+     *
+     * updates an entity with a new definition
+     *
+     * @param string $entity_id  (required)
+     * @param string $name  (optional)
+     * @param string $classification  (optional)
+     * @return Array of null, HTTP status code, HTTP response headers (array of strings)
+     * @throws \Swagger\Client\ApiException on non-2xx response
+     */
+    public function updateWithHttpInfo($entity_id, $name = null, $classification = null)
+    {
+        
+        // verify the required parameter 'entity_id' is set
+        if ($entity_id === null) {
+            throw new \InvalidArgumentException('Missing the required parameter $entity_id when calling update');
+        }
+  
+        // parse inputs
+        $resourcePath = "/entity/{entityId}";
+        $httpBody = '';
+        $queryParams = array();
+        $headerParams = array();
+        $formParams = array();
+        $_header_accept = ApiClient::selectHeaderAccept(array('application/json'));
+        if (!is_null($_header_accept)) {
+            $headerParams['Accept'] = $_header_accept;
+        }
+        $headerParams['Content-Type'] = ApiClient::selectHeaderContentType(array());
+  
+        
+        
+        // path params
+        
+        if ($entity_id !== null) {
+            $resourcePath = str_replace(
+                "{" . "entityId" . "}",
+                $this->apiClient->getSerializer()->toPathValue($entity_id),
+                $resourcePath
+            );
+        }
+        // default format to json
+        $resourcePath = str_replace("{format}", "json", $resourcePath);
+
+        // form params
+        if ($name !== null) {
+            
+            
+            $formParams['name'] = $this->apiClient->getSerializer()->toFormValue($name);
+            
+        }// form params
+        if ($classification !== null) {
+            
+            
+            $formParams['classification'] = $this->apiClient->getSerializer()->toFormValue($classification);
+            
+        }
+        
+  
+        // for model (json/xml)
+        if (isset($_tempBody)) {
+            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
+        } elseif (count($formParams) > 0) {
+            $httpBody = $formParams; // for HTTP post (form)
+        }
+        
+        // make the API Call
+        try {
+            list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
+                $resourcePath, 'POST',
+                $queryParams, $httpBody,
+                $headerParams
+            );
+            
+            return array(null, $statusCode, $httpHeader);
+            
+        } catch (ApiException $e) {
+            switch ($e->getCode()) { 
+            case 400:
+                $data = \Swagger\Client\ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\ContentEntity\Models\ResponseObj', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            case 404:
+                $data = \Swagger\Client\ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\ContentEntity\Models\ResponseObj', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            }
+  
+            throw $e;
+        }
     }
     
 }

@@ -5,18 +5,7 @@
  * representation of what the templates need to render a piece of content
  */
 class RecirculationContent implements JsonSerializable {
-
-	private $index;
-
-	private $url;
-
-	private $thumbnail;
-
-	private $title;
-
-	private $publishDate;
-
-	private $author;
+	private $data;
 
 	/**
 	 * RecirculationContent constructor.
@@ -27,23 +16,23 @@ class RecirculationContent implements JsonSerializable {
 	 * @param $publishDate
 	 * @param $author
 	 */
-	public function __construct($index, $url, $thumbnail, $title, $publishDate, $author) {
-		$this->index = $index;
-		$this->url = $url;
-		$this->thumbnail = $thumbnail;
-		$this->title = $title;
-		$this->publishDate = $publishDate;
-		$this->author = $author;
+	public function __construct( array $properties = [] ) {
+		$this->data = $properties;
 	}
 
-	function jsonSerialize() {
+	public function get( $property ){
+		return array_key_exists( $property, $this->data ) ? $this->data[$property] : '';
+	}
+
+	public function jsonSerialize() {
 		return (object) [
-			'url' => $this->url,
-			'index' => $this->index,
-			'thumbnail' => $this->thumbnail,
-			'title' => $this->title,
-			'pub_date' => $this->publishDate,
-			'author' => $this->author,
+			'url' => $this->get('url'),
+			'index' => $this->get('index'),
+			'thumbnail' => $this->get('thumbnail'),
+			'title' => $this->get('title'),
+			'pub_date' => $this->get('publishDate'),
+			'author' => $this->get('author'),
+			'source' => $this->get('source'),
 		];
 	}
 }

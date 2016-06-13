@@ -99,8 +99,6 @@ module.exports = function (config) {
 			//ARecoveryEngine
 			'extensions/wikia/ARecoveryEngine/js/*.js',
 			'extensions/wikia/ARecoveryEngine/js/**/*.js',
-			'extensions/wikia/ARecoveryEngine/js/spec/**/*.spec.js',
-			'extensions/wikia/ARecoveryEngine/js/spec/*.spec.js',
 
 			//PhalanxII
 			'extensions/wikia/PhalanxII/js/modules/phalanx.js',

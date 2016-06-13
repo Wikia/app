@@ -42,9 +42,9 @@ define('ext.wikia.adEngine.provider.gpt.adSizeFilter', [
 			case slotName === 'INCONTENT_LEADERBOARD':
 			case slotName === 'PREFOOTER_LEFT_BOXAD' && context.opts.overridePrefootersSizes:
 				return isLargeBreakpoints() ? slotSizes : getNewSizes(slotSizes, maxAdSize, [[300, 250]]);
-			case slotName === 'LEFT_SKYSCRAPER_3':
+			case slotName === 'BOTTOM_LEADERBOARD':
 				var footerSize = doc.getElementById('WikiaFooter').offsetWidth;
-				return getNewSizes(slotSizes, footerSize, [[300, 250]]);
+				return getNewSizes(slotSizes, footerSize, [[728, 90]]);
 			default:
 				return slotSizes;
 		}

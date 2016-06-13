@@ -400,8 +400,8 @@ class PermissionsConfigurationImpl implements PermissionsConfiguration {
 	private function loadGroupsChangeableByGroups() {
 		global $wgAddGroupsLocal, $wgRemoveGroupsLocal, $wgGroupsAddToSelfLocal, $wgGroupsRemoveFromSelfLocal;
 
-		$this->groupsAddableByGroup['bureaucrat'] = [ 'bureaucrat', 'rollback', 'sysop', 'content-moderator', 'rcpatrol' ];
-		$this->groupsRemovableByGroup['bureaucrat'] = [ 'rollback', 'sysop', 'bot', 'content-moderator', 'rcpatrol' ];
+		$this->groupsAddableByGroup['bureaucrat'] = [ 'bureaucrat', 'rollback', 'sysop', 'content-moderator' ];
+		$this->groupsRemovableByGroup['bureaucrat'] = [ 'rollback', 'sysop', 'bot', 'content-moderator' ];
 		$this->groupsSelfRemovableByGroup['bureaucrat'] = [ 'bureaucrat' ];
 
 		$this->groupsAddableByGroup['staff'] = [ 'rollback', 'bot', 'sysop', 'bureaucrat', 'content-moderator', 'chatmoderator', 'translator', 'threadmoderator', 'vanguard' ];
@@ -410,8 +410,8 @@ class PermissionsConfigurationImpl implements PermissionsConfiguration {
 		$this->groupsAddableByGroup['helper'] = [ 'rollback', 'bot', 'sysop', 'bureaucrat', 'content-moderator', 'chatmoderator', 'threadmoderator' ];
 		$this->groupsRemovableByGroup['helper'] = [ 'rollback', 'bot', 'sysop', 'bureaucrat', 'content-moderator', 'chatmoderator', 'threadmoderator' ];
 
-		$this->groupsAddableByGroup['sysop'] = [ 'chatmoderator', 'threadmoderator', 'rcpatrol' ];
-		$this->groupsRemovableByGroup['sysop'] = [ 'chatmoderator', 'threadmoderator', 'rcpatrol' ];
+		$this->groupsAddableByGroup['sysop'] = [ 'chatmoderator', 'threadmoderator' ];
+		$this->groupsRemovableByGroup['sysop'] = [ 'chatmoderator', 'threadmoderator' ];
 		$this->groupsSelfRemovableByGroup['sysop'] = [ 'sysop' ];
 
 		$this->groupsAddableByGroup['content-reviewer'] = [ 'content-reviewer' ];

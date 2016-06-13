@@ -11,6 +11,7 @@ define('ext.wikia.adEngine.provider.directGpt', [
 		'DirectGpt',
 		'gpt',
 		{
+			BOTTOM_LEADERBOARD:         {size: '728x90,970x250,1024x416', loc: 'footer'},
 			CORP_TOP_LEADERBOARD:       {
 				size: '728x90,1030x130,1030x65,1030x250,970x365,970x250,970x90,970x66,970x180,980x150,1024x416,1440x585',
 				loc: 'top'
@@ -33,7 +34,7 @@ define('ext.wikia.adEngine.provider.directGpt', [
 			INVISIBLE_HIGH_IMPACT_2:    {loc: 'hivi'},
 			INVISIBLE_SKIN:             {size: '1000x1000,1x1', loc: 'top'},
 			LEFT_SKYSCRAPER_2:          {size: '120x600,160x600,300x250,300x600,300x1050', loc: 'middle'},
-			LEFT_SKYSCRAPER_3:          {size: '120x600,160x600,300x250,300x600,1024x416', loc: 'footer'},
+			LEFT_SKYSCRAPER_3:          {size: '120x600,160x600,300x250,300x600', loc: 'footer'},
 			MODAL_INTERSTITIAL_1:       {size: '300x250,600x400,800x450,550x480', loc: 'modal'},
 			MODAL_INTERSTITIAL_2:       {size: '300x250,600x400,800x450,550x480', loc: 'modal'},
 			MODAL_INTERSTITIAL_3:       {size: '300x250,600x400,800x450,550x480', loc: 'modal'},
