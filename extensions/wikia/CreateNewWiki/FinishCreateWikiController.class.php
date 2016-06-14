@@ -5,6 +5,7 @@ use \Wikia\Logger\WikiaLogger;
 class FinishCreateWikiController extends WikiaController {
 
 	const COOKIE_NAME = 'createnewwiki';
+	const SITE_DESCRIPTION_TEMPLATE_NAME = 'SiteDescription';
 
 	// form field values
 	var $params;
@@ -101,13 +102,13 @@ class FinishCreateWikiController extends WikiaController {
 		// SUS-563 debug end
 
 		// set theme
-		if(!empty($this->params['color-body'])) {
+		if ( !empty( $this->params['color-body'] ) ) {
 			$themeSettings = new ThemeSettings();
 			$themeSettings->saveSettings($this->params);
 		}
 
 		// set description on main page
-		if(!empty($this->params['wikiDescription'])) {
+		if ( !empty( $this->params['wikiDescription'] ) ) {
 			$mainTitle = Title::newFromText( $mainPage );
 			$mainId = $mainTitle->getArticleID();
 			$mainArticle = Article::newFromID( $mainId );
@@ -115,14 +116,14 @@ class FinishCreateWikiController extends WikiaController {
 			if ( !empty( $mainArticle ) ) {
 				if ( !empty( $wgEnableNjordExt ) ) {
 					$newMainPageText = $this->getMoMMainPage( $mainArticle );
-				} else {
-					$newMainPageText = $this->getClassicMainPage( $mainArticle );
 				}
 
 				$mainArticle->doEdit( $newMainPageText, '' );
 				$this->initHeroModule( $mainPage );
 			}
 		}
+
+		$this->editSiteDescriptionTemplate();
 
 		$wgOut->enableClientCache(false);
 
@@ -155,24 +156,23 @@ class FinishCreateWikiController extends WikiaController {
 	}
 
 	/**
-	 * setup main page article content for classic main page
-	 * @param $mainArticle Article
-	 * @return string - main page article wiki text
+	 * If user provided site description, put it in the content of Template:SiteDescription
+	 * If user didn't provide a description, there is already a default one in the template, so do nothing
+	 * This template was created to be used on the main page
 	 */
-	private function getClassicMainPage( $mainArticle ) {
-		global $wgParser, $wgSitename;
-
-		$mainPageText = $mainArticle->getRawText();
-		$matches = array();
+	private function editSiteDescriptionTemplate() {
 		$description = $this->params['wikiDescription'];
 
-		if ( preg_match( '/={2,3}[^=]+={2,3}/', $mainPageText, $matches ) ) {
-			$newSectionTitle = str_replace( 'Wiki', $wgSitename, $matches[0] );
-			$description = "{$newSectionTitle}\n{$description}";
+		if ( !empty( $description ) ) {
+			$title = Title::newFromText( self::SITE_DESCRIPTION_TEMPLATE_NAME, NS_TEMPLATE );
+
+			if ( !$title->exists() ) {
+				WikiaLogger::instance()->debug( 'Starter wiki doesn\'t have a site description template' );
+				return;
+			}
+
+			$article = Article::newFromID( $title->getArticleID() );
+			$article->doEdit( $description, 'Override default description' );
 		}
-
-		$newMainPageText = $wgParser->replaceSection( $mainPageText, 1, $description );
-
-		return $newMainPageText;
 	}
 }
