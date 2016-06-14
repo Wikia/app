@@ -1,0 +1,305 @@
+@import 'skins/oasis/css/core/responsive-variables';
+@import 'skins/oasis/css/core/breakpoints-variables';
+@import 'skins/shared/mixins/flexbox';
+
+$recirculation-fandom-trending-color-tag: #F08A24;
+$recirculation-fandom-wiki-tag: #1a5eb8;
+$recirculation-impact-footer-spacing: 30px;
+$recirculation-impact-footer-color-feature-overlay: rgba(0, 0, 0, .75);
+
+.WikiaFooter .recirculation-impact-footer {
+	background-color: darken($color-page, 4%);
+	border: 0;
+	clear: both;
+	margin: $recirculation-impact-footer-spacing (-$padding-width-medium);
+	padding: $recirculation-impact-footer-spacing $padding-width-medium;
+
+	a {
+		color: $color-text;
+	}
+
+	h2 {
+		font-weight: bold;
+		margin-bottom: 10px;
+	}
+
+	img {
+		background: $color-page;
+		display: block;
+		max-width: 100%;
+	}
+
+	.items {
+		@include flexbox();
+		@include justify-content(space-between);
+		@include align-items(flex-start);
+		@include flex-wrap(wrap);
+
+		h4 {
+			font-size: 16px;
+			font-weight: normal;
+			line-height: 22px;
+			margin: 0;
+		}
+	}
+
+	.item {
+		margin-bottom: 15px;
+		position: relative;
+		width: 24%;
+
+		&.item-wiki::after {
+			background: {
+				color: $recirculation-fandom-wiki-tag;
+				image: url('/extensions/wikia/Recirculation/images/wiki.svg'); /* $wgCdnStylePath */
+				position: 5px center;
+				repeat: no-repeat;
+			}
+
+			content: 'Wiki';
+			padding: 5px 10px 5px 25px;
+		}
+
+	}
+
+	.item:nth-of-type(n+6) {
+		width: 32.5%;
+	}
+
+	.item:nth-of-type(1),
+	.item:nth-of-type(6) {
+		width: 49.5%;
+
+		h4 {
+			background-color: $recirculation-impact-footer-color-feature-overlay;
+			bottom: 0;
+			color: $color-white;
+			font-size: 24px;
+			left: 0;
+			line-height: 28px;
+			padding: 10px;
+			position: absolute;
+			right: 0;
+		}
+
+		h4::before {
+			content: attr(data-tag);
+			display: block;
+			font-size: 12px;
+			font-style: italic;
+			line-height: 14px;
+		}
+
+		.thumbnail {
+			margin-bottom: 0;
+		}
+	}
+
+	.item:nth-of-type(1)::after,
+	.item.item-wiki::after {
+		color: $color-white;
+		display: block;
+		font-size: 12px;
+		font-weight: bold;
+		left: 0;
+		position: absolute;
+		top: 0;
+	}
+
+	.item:nth-of-type(1)::after {
+		background-color: $recirculation-fandom-trending-color-tag;
+		content: 'Trending';
+		padding: 5px 10px;
+	}
+
+	.thumbnail {
+		background: {
+			color: $color-article-thumb-background;
+			image: url('/extensions/wikia/Recirculation/images/brackets.svg'); /* $wgCdnStylePath */
+			position: center;
+			repeat: no-repeat;
+			size: contain;
+		}
+		margin-bottom: 5px;
+		overflow: hidden;
+		position: relative;
+		width: 100%;
+
+		&::before {
+			content: '';
+			display: block;
+			padding-top: 56.25%;
+		}
+
+		img {
+			bottom: 0;
+			left: 0;
+			position: absolute;
+			right: 0;
+			top: 0;
+		}
+	}
+
+	.discussion-threads {
+		@include flex-direction(row);
+		height: auto;
+		padding: 10px 0 30px;
+	}
+
+	.discussion-thread {
+		background: $color-page;
+		font-size: 14px;
+		height: 145px;
+		line-height: 18px;
+		width: 32.5%;
+
+		&:nth-of-type(n+4) {
+			display: none;
+		}
+
+		a {
+			text-decoration: none;
+		}
+
+		.discussion-content {
+			margin-top: 5px;
+			max-height: 55px;
+		}
+	}
+
+	.discussion-header {
+		color: $color-white;
+		font-size: 14px;
+		height: 165px;
+		text-align: center;
+
+		h3 {
+			background: none !important; // Not the best, but is necessary to compete with some custom community css (Marvel in particular)
+			font-size: 48px;
+			font-weight: bold;
+			line-height: 48px;
+			margin-bottom: 10px;
+			padding-top: 30px;
+		}
+
+		a {
+			border-top: 1px solid $color-white;
+			color: $color-white;
+			display: inline-block;
+			margin-top: 10px;
+			padding: 10px 40px 0;
+		}
+
+		svg {
+			margin-left: 5px;
+			position: relative;
+			top: 2px;
+		}
+	}
+
+	.discussion-footer {
+		text-align: center;
+	}
+
+	.discussion-new {
+		background: none;
+		border: {
+			color: $color-links;
+			radius: 0;
+		};
+		color: $color-links;
+		font-size: 10px;
+		font-weight: bold;
+		padding: 10px 20px;
+		position: relative;
+		text-transform: uppercase;
+
+		&::before,
+		&::after {
+			background-color: $color-page-border;
+			content: '';
+			display: block;
+			height: 1px;
+			position: absolute;
+			top: 49%;
+			width: 100%;
+		}
+
+		&::before {
+			left: -100%;
+			margin-left: -1px;
+		}
+
+		&::after {
+			margin-right: -1px;
+			right: -100%;
+		}
+	}
+
+	.discussion-header-alpha {
+		background: rgba($color-buttons, .8);
+		height: 100%;
+		width: 100%;
+	}
+
+	$recirculation-discussion-icon-size: 22px;
+
+	.discussion-meta {
+
+		span {
+			font-weight: 400;
+			line-height: $recirculation-discussion-icon-size;
+		}
+
+		.discussion-upvotes-container,
+		.discussion-comments-container {
+			background: {
+				image: url('/extensions/wikia/Recirculation/images/upvotes.svg'); /* $wgCdnStylePath */
+				position: center left;
+				repeat: no-repeat;
+				size: contain;
+			}
+			padding-left: $recirculation-discussion-icon-size;
+		}
+
+		.discussion-comments-container {
+			background-image: url('/extensions/wikia/Recirculation/images/comments.svg'); /* $wgCdnStylePath */
+		}
+	}
+}
+
+@if ($is-dark-wiki) {
+	.WikiaFooter .recirculation-impact-footer {
+		background-color: lighten($color-page, 4%);
+	}
+}
+
+@if $widthType == 0 {
+	@media #{$breakpoint-small-only} {
+		.WikiaFooter .recirculation-impact-footer {
+			margin: $recirculation-impact-footer-spacing (-$padding-width-small);
+			padding: $recirculation-impact-footer-spacing $padding-width-small;
+		}
+	}
+
+	@media #{$breakpoint-medium-only} {
+		.WikiaFooter .recirculation-impact-footer {
+			margin: $recirculation-impact-footer-spacing (-$padding-width-medium);
+			padding: $recirculation-impact-footer-spacing $padding-width-medium;
+		}
+	}
+
+	@media #{$breakpoint-large-up} {
+		.WikiaFooter .recirculation-impact-footer {
+			margin: $recirculation-impact-footer-spacing (-$padding-width-large);
+			padding: $recirculation-impact-footer-spacing $padding-width-large;
+		}
+	}
+
+	@media #{$breakpoint-small-plus} {
+		.WikiaFooter .recirculation-impact-footer {
+			margin: $recirculation-impact-footer-spacing (-$padding-width-small-plus);
+			padding: $recirculation-impact-footer-spacing $padding-width-small-plus;
+		}
+	}
+}

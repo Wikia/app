@@ -10,7 +10,7 @@
  * @link     https://github.com/swagger-api/swagger-codegen
  */
 /**
- *  Copyright 2015 SmartBear Software
+ *  Copyright 2016 SmartBear Software
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -64,7 +64,7 @@ class UsersAttributesApi
     {
         if ($apiClient == null) {
             $apiClient = new ApiClient();
-            $apiClient->getConfig()->setHost('https://localhost/');
+            $apiClient->getConfig()->setHost('https://localhost/user-attribute');
         }
   
         $this->apiClient = $apiClient;
@@ -92,339 +92,46 @@ class UsersAttributesApi
   
     
     /**
-     * getAllAttributesForUser
-     *
-     * Returns all available attributes for the specified userID
-     *
-     * @param int $user_id The ID of the user (required)
-     * @return \Swagger\Client\User\Attributes\Models\AllUserAttributesHalResponse
-     * @throws \Swagger\Client\ApiException on non-2xx response
-     */
-    public function getAllAttributesForUser($user_id)
-    {
-        
-        // verify the required parameter 'user_id' is set
-        if ($user_id === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $user_id when calling getAllAttributesForUser');
-        }
-  
-        // parse inputs
-        $resourcePath = "/user/{userID}";
-        $resourcePath = str_replace("{format}", "json", $resourcePath);
-        $method = "GET";
-        $httpBody = '';
-        $queryParams = array();
-        $headerParams = array();
-        $formParams = array();
-        $_header_accept = ApiClient::selectHeaderAccept(array('application/hal+json'));
-        if (!is_null($_header_accept)) {
-            $headerParams['Accept'] = $_header_accept;
-        }
-        $headerParams['Content-Type'] = ApiClient::selectHeaderContentType(array('application/x-www-form-urlencoded'));
-  
-        
-        
-        // path params
-        if ($user_id !== null) {
-            $resourcePath = str_replace(
-                "{" . "userID" . "}",
-                $this->apiClient->getSerializer()->toPathValue($user_id),
-                $resourcePath
-            );
-        }
-        
-        
-  
-        // for model (json/xml)
-        if (isset($_tempBody)) {
-            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
-        } else if (count($formParams) > 0) {
-            $httpBody = $formParams; // for HTTP post (form)
-        }
-        
-        $apiKey = $this->apiClient->getApiKeyWithPrefix('X-Wikia-AccessToken');
-        if (isset($apiKey)) {
-            $headerParams['X-Wikia-AccessToken'] = $apiKey;
-        }
-        
-        
-        
-        $apiKey = $this->apiClient->getApiKeyWithPrefix('X-Wikia-UserId');
-        if (isset($apiKey)) {
-            $headerParams['X-Wikia-UserId'] = $apiKey;
-        }
-        
-        
-        
-        // make the API Call
-        try
-        {
-            list($response, $httpHeader) = $this->apiClient->callApi(
-                $resourcePath, $method,
-                $queryParams, $httpBody,
-                $headerParams, '\Swagger\Client\User\Attributes\Models\AllUserAttributesHalResponse'
-            );
-        } catch (ApiException $e) {
-            switch ($e->getCode()) { 
-            case 200:
-                $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\User\Attributes\Models\AllUserAttributesHalResponse', $httpHeader);
-                $e->setResponseObject($data);
-                break;
-            }
-  
-            throw $e;
-        }
-        
-        if (!$response) {
-            return null;
-        }
-  
-        return $this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\User\Attributes\Models\AllUserAttributesHalResponse');
-        
-    }
-    
-    /**
-     * getAttributeForUser
-     *
-     * Returns specific attribute for specified user
-     *
-     * @param int $user_id The userID of the user (required)
-     * @param string $attr_name The name of the attribute to be retrieved (required)
-     * @return \Swagger\Client\User\Attributes\Models\UserAttributeHalResponse
-     * @throws \Swagger\Client\ApiException on non-2xx response
-     */
-    public function getAttributeForUser($user_id, $attr_name)
-    {
-        
-        // verify the required parameter 'user_id' is set
-        if ($user_id === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $user_id when calling getAttributeForUser');
-        }
-        // verify the required parameter 'attr_name' is set
-        if ($attr_name === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $attr_name when calling getAttributeForUser');
-        }
-  
-        // parse inputs
-        $resourcePath = "/user/{userID}/attr/{attrName}";
-        $resourcePath = str_replace("{format}", "json", $resourcePath);
-        $method = "GET";
-        $httpBody = '';
-        $queryParams = array();
-        $headerParams = array();
-        $formParams = array();
-        $_header_accept = ApiClient::selectHeaderAccept(array('application/hal+json'));
-        if (!is_null($_header_accept)) {
-            $headerParams['Accept'] = $_header_accept;
-        }
-        $headerParams['Content-Type'] = ApiClient::selectHeaderContentType(array());
-  
-        
-        
-        // path params
-        if ($user_id !== null) {
-            $resourcePath = str_replace(
-                "{" . "userID" . "}",
-                $this->apiClient->getSerializer()->toPathValue($user_id),
-                $resourcePath
-            );
-        }// path params
-        if ($attr_name !== null) {
-            $resourcePath = str_replace(
-                "{" . "attrName" . "}",
-                $this->apiClient->getSerializer()->toPathValue($attr_name),
-                $resourcePath
-            );
-        }
-        
-        
-  
-        // for model (json/xml)
-        if (isset($_tempBody)) {
-            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
-        } else if (count($formParams) > 0) {
-            $httpBody = $formParams; // for HTTP post (form)
-        }
-        
-        $apiKey = $this->apiClient->getApiKeyWithPrefix('X-Wikia-AccessToken');
-        if (isset($apiKey)) {
-            $headerParams['X-Wikia-AccessToken'] = $apiKey;
-        }
-        
-        
-        
-        $apiKey = $this->apiClient->getApiKeyWithPrefix('X-Wikia-UserId');
-        if (isset($apiKey)) {
-            $headerParams['X-Wikia-UserId'] = $apiKey;
-        }
-        
-        
-        
-        // make the API Call
-        try
-        {
-            list($response, $httpHeader) = $this->apiClient->callApi(
-                $resourcePath, $method,
-                $queryParams, $httpBody,
-                $headerParams, '\Swagger\Client\User\Attributes\Models\UserAttributeHalResponse'
-            );
-        } catch (ApiException $e) {
-            switch ($e->getCode()) { 
-            case 200:
-                $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\User\Attributes\Models\UserAttributeHalResponse', $httpHeader);
-                $e->setResponseObject($data);
-                break;
-            }
-  
-            throw $e;
-        }
-        
-        if (!$response) {
-            return null;
-        }
-  
-        return $this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\User\Attributes\Models\UserAttributeHalResponse');
-        
-    }
-    
-    /**
-     * saveAttributeForUser
-     *
-     * Saves an attribute for a specified user
-     *
-     * @param int $user_id The id of the user (required)
-     * @param string $attr_name The name of the attribute to be saved (required)
-     * @param string $value Value for the specified attribute (required)
-     * @return \Swagger\Client\User\Attributes\Models\UserAttributeHalResponse
-     * @throws \Swagger\Client\ApiException on non-2xx response
-     */
-    public function saveAttributeForUser($user_id, $attr_name, $value)
-    {
-        
-        // verify the required parameter 'user_id' is set
-        if ($user_id === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $user_id when calling saveAttributeForUser');
-        }
-        // verify the required parameter 'attr_name' is set
-        if ($attr_name === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $attr_name when calling saveAttributeForUser');
-        }
-        // verify the required parameter 'value' is set
-        if ($value === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $value when calling saveAttributeForUser');
-        }
-  
-        // parse inputs
-        $resourcePath = "/user/{userID}/attr/{attrName}";
-        $resourcePath = str_replace("{format}", "json", $resourcePath);
-        $method = "PUT";
-        $httpBody = '';
-        $queryParams = array();
-        $headerParams = array();
-        $formParams = array();
-        $_header_accept = ApiClient::selectHeaderAccept(array('application/hal+json'));
-        if (!is_null($_header_accept)) {
-            $headerParams['Accept'] = $_header_accept;
-        }
-        $headerParams['Content-Type'] = ApiClient::selectHeaderContentType(array('application/x-www-form-urlencoded'));
-  
-        
-        
-        // path params
-        if ($user_id !== null) {
-            $resourcePath = str_replace(
-                "{" . "userID" . "}",
-                $this->apiClient->getSerializer()->toPathValue($user_id),
-                $resourcePath
-            );
-        }// path params
-        if ($attr_name !== null) {
-            $resourcePath = str_replace(
-                "{" . "attrName" . "}",
-                $this->apiClient->getSerializer()->toPathValue($attr_name),
-                $resourcePath
-            );
-        }
-        // form params
-        if ($value !== null) {
-            $formParams['value'] = $this->apiClient->getSerializer()->toFormValue($value);
-        }
-        
-  
-        // for model (json/xml)
-        if (isset($_tempBody)) {
-            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
-        } else if (count($formParams) > 0) {
-            $httpBody = $formParams; // for HTTP post (form)
-        }
-        
-        $apiKey = $this->apiClient->getApiKeyWithPrefix('X-Wikia-AccessToken');
-        if (isset($apiKey)) {
-            $headerParams['X-Wikia-AccessToken'] = $apiKey;
-        }
-        
-        
-        
-        $apiKey = $this->apiClient->getApiKeyWithPrefix('X-Wikia-UserId');
-        if (isset($apiKey)) {
-            $headerParams['X-Wikia-UserId'] = $apiKey;
-        }
-        
-        
-        
-        // make the API Call
-        try
-        {
-            list($response, $httpHeader) = $this->apiClient->callApi(
-                $resourcePath, $method,
-                $queryParams, $httpBody,
-                $headerParams, '\Swagger\Client\User\Attributes\Models\UserAttributeHalResponse'
-            );
-        } catch (ApiException $e) {
-            switch ($e->getCode()) { 
-            case 200:
-                $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\User\Attributes\Models\UserAttributeHalResponse', $httpHeader);
-                $e->setResponseObject($data);
-                break;
-            }
-  
-            throw $e;
-        }
-        
-        if (!$response) {
-            return null;
-        }
-  
-        return $this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\User\Attributes\Models\UserAttributeHalResponse');
-        
-    }
-    
-    /**
-     * deleteAttributeForUser
+     * deleteAttribute
      *
      * Deletes attribute for this user
      *
-     * @param int $user_id id of the user to be modified (required)
+     * @param string $user_id id of the user to be modified (required)
      * @param string $attr_name Name of attribute to be deleted for specified user (required)
      * @return void
      * @throws \Swagger\Client\ApiException on non-2xx response
      */
-    public function deleteAttributeForUser($user_id, $attr_name)
+    public function deleteAttribute($user_id, $attr_name)
+    {
+        list($response, $statusCode, $httpHeader) = $this->deleteAttributeWithHttpInfo ($user_id, $attr_name);
+        return $response; 
+    }
+
+
+    /**
+     * deleteAttributeWithHttpInfo
+     *
+     * Deletes attribute for this user
+     *
+     * @param string $user_id id of the user to be modified (required)
+     * @param string $attr_name Name of attribute to be deleted for specified user (required)
+     * @return Array of null, HTTP status code, HTTP response headers (array of strings)
+     * @throws \Swagger\Client\ApiException on non-2xx response
+     */
+    public function deleteAttributeWithHttpInfo($user_id, $attr_name)
     {
         
         // verify the required parameter 'user_id' is set
         if ($user_id === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $user_id when calling deleteAttributeForUser');
+            throw new \InvalidArgumentException('Missing the required parameter $user_id when calling deleteAttribute');
         }
         // verify the required parameter 'attr_name' is set
         if ($attr_name === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $attr_name when calling deleteAttributeForUser');
+            throw new \InvalidArgumentException('Missing the required parameter $attr_name when calling deleteAttribute');
         }
   
         // parse inputs
-        $resourcePath = "/user/{userID}/attr/{attrName}";
-        $resourcePath = str_replace("{format}", "json", $resourcePath);
-        $method = "DELETE";
+        $resourcePath = "/user/{userId}/attr/{attrName}";
         $httpBody = '';
         $queryParams = array();
         $headerParams = array();
@@ -438,13 +145,15 @@ class UsersAttributesApi
         
         
         // path params
+        
         if ($user_id !== null) {
             $resourcePath = str_replace(
-                "{" . "userID" . "}",
+                "{" . "userId" . "}",
                 $this->apiClient->getSerializer()->toPathValue($user_id),
                 $resourcePath
             );
         }// path params
+        
         if ($attr_name !== null) {
             $resourcePath = str_replace(
                 "{" . "attrName" . "}",
@@ -452,45 +161,630 @@ class UsersAttributesApi
                 $resourcePath
             );
         }
+        // default format to json
+        $resourcePath = str_replace("{format}", "json", $resourcePath);
+
         
         
   
         // for model (json/xml)
         if (isset($_tempBody)) {
             $httpBody = $_tempBody; // $_tempBody is the method argument, if present
-        } else if (count($formParams) > 0) {
+        } elseif (count($formParams) > 0) {
             $httpBody = $formParams; // for HTTP post (form)
         }
         
+        // this endpoint requires API key authentication
         $apiKey = $this->apiClient->getApiKeyWithPrefix('X-Wikia-AccessToken');
-        if (isset($apiKey)) {
+        if (strlen($apiKey) !== 0) {
             $headerParams['X-Wikia-AccessToken'] = $apiKey;
         }
         
         
-        
+        // this endpoint requires API key authentication
         $apiKey = $this->apiClient->getApiKeyWithPrefix('X-Wikia-UserId');
-        if (isset($apiKey)) {
+        if (strlen($apiKey) !== 0) {
             $headerParams['X-Wikia-UserId'] = $apiKey;
         }
         
         
-        
         // make the API Call
-        try
-        {
-            list($response, $httpHeader) = $this->apiClient->callApi(
-                $resourcePath, $method,
+        try {
+            list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
+                $resourcePath, 'DELETE',
                 $queryParams, $httpBody,
                 $headerParams
             );
+            
+            return array(null, $statusCode, $httpHeader);
+            
         } catch (ApiException $e) {
             switch ($e->getCode()) { 
             }
   
             throw $e;
         }
+    }
+    
+    /**
+     * getAllAttributes
+     *
+     * Returns all available attributes for the specified userId
+     *
+     * @param string $user_id The ID of the user (required)
+     * @return \Swagger\Client\User\Attributes\Models\AllUserAttributesHalResponse
+     * @throws \Swagger\Client\ApiException on non-2xx response
+     */
+    public function getAllAttributes($user_id)
+    {
+        list($response, $statusCode, $httpHeader) = $this->getAllAttributesWithHttpInfo ($user_id);
+        return $response; 
+    }
+
+
+    /**
+     * getAllAttributesWithHttpInfo
+     *
+     * Returns all available attributes for the specified userId
+     *
+     * @param string $user_id The ID of the user (required)
+     * @return Array of \Swagger\Client\User\Attributes\Models\AllUserAttributesHalResponse, HTTP status code, HTTP response headers (array of strings)
+     * @throws \Swagger\Client\ApiException on non-2xx response
+     */
+    public function getAllAttributesWithHttpInfo($user_id)
+    {
         
+        // verify the required parameter 'user_id' is set
+        if ($user_id === null) {
+            throw new \InvalidArgumentException('Missing the required parameter $user_id when calling getAllAttributes');
+        }
+  
+        // parse inputs
+        $resourcePath = "/user/{userId}";
+        $httpBody = '';
+        $queryParams = array();
+        $headerParams = array();
+        $formParams = array();
+        $_header_accept = ApiClient::selectHeaderAccept(array('application/hal+json; charset=UTF-8'));
+        if (!is_null($_header_accept)) {
+            $headerParams['Accept'] = $_header_accept;
+        }
+        $headerParams['Content-Type'] = ApiClient::selectHeaderContentType(array());
+  
+        
+        
+        // path params
+        
+        if ($user_id !== null) {
+            $resourcePath = str_replace(
+                "{" . "userId" . "}",
+                $this->apiClient->getSerializer()->toPathValue($user_id),
+                $resourcePath
+            );
+        }
+        // default format to json
+        $resourcePath = str_replace("{format}", "json", $resourcePath);
+
+        
+        
+  
+        // for model (json/xml)
+        if (isset($_tempBody)) {
+            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
+        } elseif (count($formParams) > 0) {
+            $httpBody = $formParams; // for HTTP post (form)
+        }
+        
+        // this endpoint requires API key authentication
+        $apiKey = $this->apiClient->getApiKeyWithPrefix('X-Wikia-AccessToken');
+        if (strlen($apiKey) !== 0) {
+            $headerParams['X-Wikia-AccessToken'] = $apiKey;
+        }
+        
+        
+        // this endpoint requires API key authentication
+        $apiKey = $this->apiClient->getApiKeyWithPrefix('X-Wikia-UserId');
+        if (strlen($apiKey) !== 0) {
+            $headerParams['X-Wikia-UserId'] = $apiKey;
+        }
+        
+        
+        // make the API Call
+        try {
+            list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
+                $resourcePath, 'GET',
+                $queryParams, $httpBody,
+                $headerParams, '\Swagger\Client\User\Attributes\Models\AllUserAttributesHalResponse'
+            );
+            
+            if (!$response) {
+                return array(null, $statusCode, $httpHeader);
+            }
+
+            return array(\Swagger\Client\ObjectSerializer::deserialize($response, '\Swagger\Client\User\Attributes\Models\AllUserAttributesHalResponse', $httpHeader), $statusCode, $httpHeader);
+            
+        } catch (ApiException $e) {
+            switch ($e->getCode()) { 
+            case 200:
+                $data = \Swagger\Client\ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\User\Attributes\Models\AllUserAttributesHalResponse', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            }
+  
+            throw $e;
+        }
+    }
+    
+    /**
+     * getAllAttributesForMultipleUsers
+     *
+     * Returns all available attributes for the specified list of users
+     *
+     * @param string[] $id  (optional)
+     * @return \Swagger\Client\User\Attributes\Models\UsersWithAttributes
+     * @throws \Swagger\Client\ApiException on non-2xx response
+     */
+    public function getAllAttributesForMultipleUsers($id = null)
+    {
+        list($response, $statusCode, $httpHeader) = $this->getAllAttributesForMultipleUsersWithHttpInfo ($id);
+        return $response; 
+    }
+
+
+    /**
+     * getAllAttributesForMultipleUsersWithHttpInfo
+     *
+     * Returns all available attributes for the specified list of users
+     *
+     * @param string[] $id  (optional)
+     * @return Array of \Swagger\Client\User\Attributes\Models\UsersWithAttributes, HTTP status code, HTTP response headers (array of strings)
+     * @throws \Swagger\Client\ApiException on non-2xx response
+     */
+    public function getAllAttributesForMultipleUsersWithHttpInfo($id = null)
+    {
+        
+  
+        // parse inputs
+        $resourcePath = "/user/bulk";
+        $httpBody = '';
+        $queryParams = array();
+        $headerParams = array();
+        $formParams = array();
+        $_header_accept = ApiClient::selectHeaderAccept(array('application/hal+json; charset=UTF-8'));
+        if (!is_null($_header_accept)) {
+            $headerParams['Accept'] = $_header_accept;
+        }
+        $headerParams['Content-Type'] = ApiClient::selectHeaderContentType(array());
+  
+        // query params
+        
+        if (is_array($id)) {
+            $id = $this->apiClient->getSerializer()->serializeCollection($id, 'multi', true);
+        }
+        
+        if ($id !== null) {
+            $queryParams['id'] = $this->apiClient->getSerializer()->toQueryValue($id);
+        }
+        
+        
+        // default format to json
+        $resourcePath = str_replace("{format}", "json", $resourcePath);
+
+        
+        
+  
+        // for model (json/xml)
+        if (isset($_tempBody)) {
+            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
+        } elseif (count($formParams) > 0) {
+            $httpBody = $formParams; // for HTTP post (form)
+        }
+        
+        // this endpoint requires API key authentication
+        $apiKey = $this->apiClient->getApiKeyWithPrefix('X-Wikia-AccessToken');
+        if (strlen($apiKey) !== 0) {
+            $headerParams['X-Wikia-AccessToken'] = $apiKey;
+        }
+        
+        
+        // this endpoint requires API key authentication
+        $apiKey = $this->apiClient->getApiKeyWithPrefix('X-Wikia-UserId');
+        if (strlen($apiKey) !== 0) {
+            $headerParams['X-Wikia-UserId'] = $apiKey;
+        }
+        
+        
+        // make the API Call
+        try {
+            list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
+                $resourcePath, 'GET',
+                $queryParams, $httpBody,
+                $headerParams, '\Swagger\Client\User\Attributes\Models\UsersWithAttributes'
+            );
+            
+            if (!$response) {
+                return array(null, $statusCode, $httpHeader);
+            }
+
+            return array(\Swagger\Client\ObjectSerializer::deserialize($response, '\Swagger\Client\User\Attributes\Models\UsersWithAttributes', $httpHeader), $statusCode, $httpHeader);
+            
+        } catch (ApiException $e) {
+            switch ($e->getCode()) { 
+            case 200:
+                $data = \Swagger\Client\ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\User\Attributes\Models\UsersWithAttributes', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            }
+  
+            throw $e;
+        }
+    }
+    
+    /**
+     * getAttribute
+     *
+     * Returns specific attribute for specified user
+     *
+     * @param string $user_id The userId of the user (required)
+     * @param string $attr_name The name of the attribute to be retrieved (required)
+     * @return \Swagger\Client\User\Attributes\Models\UserAttributeHalResponse
+     * @throws \Swagger\Client\ApiException on non-2xx response
+     */
+    public function getAttribute($user_id, $attr_name)
+    {
+        list($response, $statusCode, $httpHeader) = $this->getAttributeWithHttpInfo ($user_id, $attr_name);
+        return $response; 
+    }
+
+
+    /**
+     * getAttributeWithHttpInfo
+     *
+     * Returns specific attribute for specified user
+     *
+     * @param string $user_id The userId of the user (required)
+     * @param string $attr_name The name of the attribute to be retrieved (required)
+     * @return Array of \Swagger\Client\User\Attributes\Models\UserAttributeHalResponse, HTTP status code, HTTP response headers (array of strings)
+     * @throws \Swagger\Client\ApiException on non-2xx response
+     */
+    public function getAttributeWithHttpInfo($user_id, $attr_name)
+    {
+        
+        // verify the required parameter 'user_id' is set
+        if ($user_id === null) {
+            throw new \InvalidArgumentException('Missing the required parameter $user_id when calling getAttribute');
+        }
+        // verify the required parameter 'attr_name' is set
+        if ($attr_name === null) {
+            throw new \InvalidArgumentException('Missing the required parameter $attr_name when calling getAttribute');
+        }
+  
+        // parse inputs
+        $resourcePath = "/user/{userId}/attr/{attrName}";
+        $httpBody = '';
+        $queryParams = array();
+        $headerParams = array();
+        $formParams = array();
+        $_header_accept = ApiClient::selectHeaderAccept(array('application/hal+json; charset=UTF-8'));
+        if (!is_null($_header_accept)) {
+            $headerParams['Accept'] = $_header_accept;
+        }
+        $headerParams['Content-Type'] = ApiClient::selectHeaderContentType(array());
+  
+        
+        
+        // path params
+        
+        if ($user_id !== null) {
+            $resourcePath = str_replace(
+                "{" . "userId" . "}",
+                $this->apiClient->getSerializer()->toPathValue($user_id),
+                $resourcePath
+            );
+        }// path params
+        
+        if ($attr_name !== null) {
+            $resourcePath = str_replace(
+                "{" . "attrName" . "}",
+                $this->apiClient->getSerializer()->toPathValue($attr_name),
+                $resourcePath
+            );
+        }
+        // default format to json
+        $resourcePath = str_replace("{format}", "json", $resourcePath);
+
+        
+        
+  
+        // for model (json/xml)
+        if (isset($_tempBody)) {
+            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
+        } elseif (count($formParams) > 0) {
+            $httpBody = $formParams; // for HTTP post (form)
+        }
+        
+        // this endpoint requires API key authentication
+        $apiKey = $this->apiClient->getApiKeyWithPrefix('X-Wikia-AccessToken');
+        if (strlen($apiKey) !== 0) {
+            $headerParams['X-Wikia-AccessToken'] = $apiKey;
+        }
+        
+        
+        // this endpoint requires API key authentication
+        $apiKey = $this->apiClient->getApiKeyWithPrefix('X-Wikia-UserId');
+        if (strlen($apiKey) !== 0) {
+            $headerParams['X-Wikia-UserId'] = $apiKey;
+        }
+        
+        
+        // make the API Call
+        try {
+            list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
+                $resourcePath, 'GET',
+                $queryParams, $httpBody,
+                $headerParams, '\Swagger\Client\User\Attributes\Models\UserAttributeHalResponse'
+            );
+            
+            if (!$response) {
+                return array(null, $statusCode, $httpHeader);
+            }
+
+            return array(\Swagger\Client\ObjectSerializer::deserialize($response, '\Swagger\Client\User\Attributes\Models\UserAttributeHalResponse', $httpHeader), $statusCode, $httpHeader);
+            
+        } catch (ApiException $e) {
+            switch ($e->getCode()) { 
+            case 200:
+                $data = \Swagger\Client\ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\User\Attributes\Models\UserAttributeHalResponse', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            }
+  
+            throw $e;
+        }
+    }
+    
+    /**
+     * saveAttribute
+     *
+     * Saves an attribute for a specified user
+     *
+     * @param string $user_id The id of the user (required)
+     * @param string $attr_name The name of the attribute to be saved (required)
+     * @param string $value Value for the specified attribute (required)
+     * @return \Swagger\Client\User\Attributes\Models\UserAttributeHalResponse
+     * @throws \Swagger\Client\ApiException on non-2xx response
+     */
+    public function saveAttribute($user_id, $attr_name, $value)
+    {
+        list($response, $statusCode, $httpHeader) = $this->saveAttributeWithHttpInfo ($user_id, $attr_name, $value);
+        return $response; 
+    }
+
+
+    /**
+     * saveAttributeWithHttpInfo
+     *
+     * Saves an attribute for a specified user
+     *
+     * @param string $user_id The id of the user (required)
+     * @param string $attr_name The name of the attribute to be saved (required)
+     * @param string $value Value for the specified attribute (required)
+     * @return Array of \Swagger\Client\User\Attributes\Models\UserAttributeHalResponse, HTTP status code, HTTP response headers (array of strings)
+     * @throws \Swagger\Client\ApiException on non-2xx response
+     */
+    public function saveAttributeWithHttpInfo($user_id, $attr_name, $value)
+    {
+        
+        // verify the required parameter 'user_id' is set
+        if ($user_id === null) {
+            throw new \InvalidArgumentException('Missing the required parameter $user_id when calling saveAttribute');
+        }
+        // verify the required parameter 'attr_name' is set
+        if ($attr_name === null) {
+            throw new \InvalidArgumentException('Missing the required parameter $attr_name when calling saveAttribute');
+        }
+        // verify the required parameter 'value' is set
+        if ($value === null) {
+            throw new \InvalidArgumentException('Missing the required parameter $value when calling saveAttribute');
+        }
+  
+        // parse inputs
+        $resourcePath = "/user/{userId}/attr/{attrName}";
+        $httpBody = '';
+        $queryParams = array();
+        $headerParams = array();
+        $formParams = array();
+        $_header_accept = ApiClient::selectHeaderAccept(array('application/hal+json; charset=UTF-8'));
+        if (!is_null($_header_accept)) {
+            $headerParams['Accept'] = $_header_accept;
+        }
+        $headerParams['Content-Type'] = ApiClient::selectHeaderContentType(array('application/x-www-form-urlencoded'));
+  
+        
+        
+        // path params
+        
+        if ($user_id !== null) {
+            $resourcePath = str_replace(
+                "{" . "userId" . "}",
+                $this->apiClient->getSerializer()->toPathValue($user_id),
+                $resourcePath
+            );
+        }// path params
+        
+        if ($attr_name !== null) {
+            $resourcePath = str_replace(
+                "{" . "attrName" . "}",
+                $this->apiClient->getSerializer()->toPathValue($attr_name),
+                $resourcePath
+            );
+        }
+        // default format to json
+        $resourcePath = str_replace("{format}", "json", $resourcePath);
+
+        // form params
+        if ($value !== null) {
+            
+            
+            $formParams['value'] = $this->apiClient->getSerializer()->toFormValue($value);
+            
+        }
+        
+  
+        // for model (json/xml)
+        if (isset($_tempBody)) {
+            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
+        } elseif (count($formParams) > 0) {
+            $httpBody = $formParams; // for HTTP post (form)
+        }
+        
+        // this endpoint requires API key authentication
+        $apiKey = $this->apiClient->getApiKeyWithPrefix('X-Wikia-AccessToken');
+        if (strlen($apiKey) !== 0) {
+            $headerParams['X-Wikia-AccessToken'] = $apiKey;
+        }
+        
+        
+        // this endpoint requires API key authentication
+        $apiKey = $this->apiClient->getApiKeyWithPrefix('X-Wikia-UserId');
+        if (strlen($apiKey) !== 0) {
+            $headerParams['X-Wikia-UserId'] = $apiKey;
+        }
+        
+        
+        // make the API Call
+        try {
+            list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
+                $resourcePath, 'PUT',
+                $queryParams, $httpBody,
+                $headerParams, '\Swagger\Client\User\Attributes\Models\UserAttributeHalResponse'
+            );
+            
+            if (!$response) {
+                return array(null, $statusCode, $httpHeader);
+            }
+
+            return array(\Swagger\Client\ObjectSerializer::deserialize($response, '\Swagger\Client\User\Attributes\Models\UserAttributeHalResponse', $httpHeader), $statusCode, $httpHeader);
+            
+        } catch (ApiException $e) {
+            switch ($e->getCode()) { 
+            case 200:
+                $data = \Swagger\Client\ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\User\Attributes\Models\UserAttributeHalResponse', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            }
+  
+            throw $e;
+        }
+    }
+    
+    /**
+     * saveAttributes
+     *
+     * Saves multiple attributes for a specified user
+     *
+     * @param string $user_id The id of the user (required)
+     * @return \Swagger\Client\User\Attributes\Models\UserAttributeHalResponse
+     * @throws \Swagger\Client\ApiException on non-2xx response
+     */
+    public function saveAttributes($user_id)
+    {
+        list($response, $statusCode, $httpHeader) = $this->saveAttributesWithHttpInfo ($user_id);
+        return $response; 
+    }
+
+
+    /**
+     * saveAttributesWithHttpInfo
+     *
+     * Saves multiple attributes for a specified user
+     *
+     * @param string $user_id The id of the user (required)
+     * @return Array of \Swagger\Client\User\Attributes\Models\UserAttributeHalResponse, HTTP status code, HTTP response headers (array of strings)
+     * @throws \Swagger\Client\ApiException on non-2xx response
+     */
+    public function saveAttributesWithHttpInfo($user_id)
+    {
+        
+        // verify the required parameter 'user_id' is set
+        if ($user_id === null) {
+            throw new \InvalidArgumentException('Missing the required parameter $user_id when calling saveAttributes');
+        }
+  
+        // parse inputs
+        $resourcePath = "/user/{userId}";
+        $httpBody = '';
+        $queryParams = array();
+        $headerParams = array();
+        $formParams = array();
+        $_header_accept = ApiClient::selectHeaderAccept(array('application/hal+json; charset=UTF-8'));
+        if (!is_null($_header_accept)) {
+            $headerParams['Accept'] = $_header_accept;
+        }
+        $headerParams['Content-Type'] = ApiClient::selectHeaderContentType(array('application/x-www-form-urlencoded'));
+  
+        
+        
+        // path params
+        
+        if ($user_id !== null) {
+            $resourcePath = str_replace(
+                "{" . "userId" . "}",
+                $this->apiClient->getSerializer()->toPathValue($user_id),
+                $resourcePath
+            );
+        }
+        // default format to json
+        $resourcePath = str_replace("{format}", "json", $resourcePath);
+
+        
+        
+  
+        // for model (json/xml)
+        if (isset($_tempBody)) {
+            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
+        } elseif (count($formParams) > 0) {
+            $httpBody = $formParams; // for HTTP post (form)
+        }
+        
+        // this endpoint requires API key authentication
+        $apiKey = $this->apiClient->getApiKeyWithPrefix('X-Wikia-AccessToken');
+        if (strlen($apiKey) !== 0) {
+            $headerParams['X-Wikia-AccessToken'] = $apiKey;
+        }
+        
+        
+        // this endpoint requires API key authentication
+        $apiKey = $this->apiClient->getApiKeyWithPrefix('X-Wikia-UserId');
+        if (strlen($apiKey) !== 0) {
+            $headerParams['X-Wikia-UserId'] = $apiKey;
+        }
+        
+        
+        // make the API Call
+        try {
+            list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
+                $resourcePath, 'PATCH',
+                $queryParams, $httpBody,
+                $headerParams, '\Swagger\Client\User\Attributes\Models\UserAttributeHalResponse'
+            );
+            
+            if (!$response) {
+                return array(null, $statusCode, $httpHeader);
+            }
+
+            return array(\Swagger\Client\ObjectSerializer::deserialize($response, '\Swagger\Client\User\Attributes\Models\UserAttributeHalResponse', $httpHeader), $statusCode, $httpHeader);
+            
+        } catch (ApiException $e) {
+            switch ($e->getCode()) { 
+            case 200:
+                $data = \Swagger\Client\ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\User\Attributes\Models\UserAttributeHalResponse', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            }
+  
+            throw $e;
+        }
     }
     
 }

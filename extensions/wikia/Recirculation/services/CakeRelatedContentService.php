@@ -12,7 +12,7 @@ class CakeRelatedContentService {
 
 	use Loggable;
 	
-	const SERVICE_NAME = "content-entity";
+	const SERVICE_NAME = "content-entity-service";
 	const DISCUSSION_THREAD_TITLE_MAX_LENGTH = 105;
 	const TIMEOUT = 5;
 
@@ -62,13 +62,12 @@ class CakeRelatedContentService {
 						/** @var RelatedContent $item */
 						$content = $item->getContent();
 
-						$items[] = new RecirculationContent(
-								count($items),
-								$content->getUrl(),
-								$content->getImage(),
-								$this->formatTitle($content),
-								"",
-								"");
+						$items[] = new RecirculationContent( [
+								'index' => count($items),
+								'url' => $content->getUrl(),
+								'thumbnail' => $content->getImage(),
+								'title' => $this->formatTitle($content),
+							] );
 					}
 
 					if (count($items) >= $limit) {

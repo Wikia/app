@@ -15,9 +15,9 @@ class RecirculationController extends WikiaController {
 	}
 
 	public function index() {
-		$fandomDataService = new FandomDataService();
+		$dataService = new ParselyDataService();
 
-		$posts = $fandomDataService->getPosts( $this->type );
+		$posts = $dataService->getPosts( $this->type );
 
 		if ( count( $posts ) > 0 ) {
 			$this->response->setCacheValidity( WikiaResponse::CACHE_VERY_SHORT );

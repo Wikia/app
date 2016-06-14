@@ -10,7 +10,7 @@
  * @link     https://github.com/swagger-api/swagger-codegen
  */
 /**
- *  Copyright 2015 SmartBear Software
+ *  Copyright 2016 SmartBear Software
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -97,18 +97,33 @@ class RelatedContentApi
      * get the content related to content by url
      *
      * @param string $content_url  (optional)
-     * @param int $limit  (optional)
+     * @param int $limit  (optional, default to 20)
      * @return \Swagger\Client\ContentEntity\Models\FilteredRelatedContent
      * @throws \Swagger\Client\ApiException on non-2xx response
      */
-    public function getRelatedContentFromContentUrl($content_url=null, $limit=null)
+    public function getRelatedContentFromContentUrl($content_url = null, $limit = null)
+    {
+        list($response, $statusCode, $httpHeader) = $this->getRelatedContentFromContentUrlWithHttpInfo ($content_url, $limit);
+        return $response; 
+    }
+
+
+    /**
+     * getRelatedContentFromContentUrlWithHttpInfo
+     *
+     * get the content related to content by url
+     *
+     * @param string $content_url  (optional)
+     * @param int $limit  (optional, default to 20)
+     * @return Array of \Swagger\Client\ContentEntity\Models\FilteredRelatedContent, HTTP status code, HTTP response headers (array of strings)
+     * @throws \Swagger\Client\ApiException on non-2xx response
+     */
+    public function getRelatedContentFromContentUrlWithHttpInfo($content_url = null, $limit = null)
     {
         
   
         // parse inputs
         $resourcePath = "/related-content/from-content-url";
-        $resourcePath = str_replace("{format}", "json", $resourcePath);
-        $method = "GET";
         $httpBody = '';
         $queryParams = array();
         $headerParams = array();
@@ -120,52 +135,53 @@ class RelatedContentApi
         $headerParams['Content-Type'] = ApiClient::selectHeaderContentType(array());
   
         // query params
+        
         if ($content_url !== null) {
             $queryParams['contentUrl'] = $this->apiClient->getSerializer()->toQueryValue($content_url);
         }// query params
+        
         if ($limit !== null) {
             $queryParams['limit'] = $this->apiClient->getSerializer()->toQueryValue($limit);
         }
         
         
+        // default format to json
+        $resourcePath = str_replace("{format}", "json", $resourcePath);
+
         
         
   
         // for model (json/xml)
         if (isset($_tempBody)) {
             $httpBody = $_tempBody; // $_tempBody is the method argument, if present
-        } else if (count($formParams) > 0) {
+        } elseif (count($formParams) > 0) {
             $httpBody = $formParams; // for HTTP post (form)
         }
         
         // make the API Call
-        try
-        {
-            list($response, $httpHeader) = $this->apiClient->callApi(
-                $resourcePath, $method,
+        try {
+            list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
+                $resourcePath, 'GET',
                 $queryParams, $httpBody,
                 $headerParams, '\Swagger\Client\ContentEntity\Models\FilteredRelatedContent'
             );
             
             if (!$response) {
-                return null;
+                return array(null, $statusCode, $httpHeader);
             }
 
-            return $this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\ContentEntity\Models\FilteredRelatedContent', $httpHeader);
+            return array(\Swagger\Client\ObjectSerializer::deserialize($response, '\Swagger\Client\ContentEntity\Models\FilteredRelatedContent', $httpHeader), $statusCode, $httpHeader);
             
         } catch (ApiException $e) {
             switch ($e->getCode()) { 
             case 200:
-                $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\ContentEntity\Models\FilteredRelatedContent', $e->getResponseHeaders());
+                $data = \Swagger\Client\ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\ContentEntity\Models\FilteredRelatedContent', $e->getResponseHeaders());
                 $e->setResponseObject($data);
                 break;
             }
   
             throw $e;
         }
-        
-        return null;
-        
     }
     
     /**
@@ -174,12 +190,30 @@ class RelatedContentApi
      * get the content related to an entity
      *
      * @param string $entity_id  (required)
-     * @param int $limit  (optional)
-     * @param bool $include_root_relations  (optional)
+     * @param int $limit  (optional, default to 20)
+     * @param bool $include_root_relations  (optional, default to true)
      * @return \Swagger\Client\ContentEntity\Models\FilteredRelatedContent
      * @throws \Swagger\Client\ApiException on non-2xx response
      */
-    public function getRelatedContentFromEntityId($entity_id, $limit=null, $include_root_relations=null)
+    public function getRelatedContentFromEntityId($entity_id, $limit = null, $include_root_relations = null)
+    {
+        list($response, $statusCode, $httpHeader) = $this->getRelatedContentFromEntityIdWithHttpInfo ($entity_id, $limit, $include_root_relations);
+        return $response; 
+    }
+
+
+    /**
+     * getRelatedContentFromEntityIdWithHttpInfo
+     *
+     * get the content related to an entity
+     *
+     * @param string $entity_id  (required)
+     * @param int $limit  (optional, default to 20)
+     * @param bool $include_root_relations  (optional, default to true)
+     * @return Array of \Swagger\Client\ContentEntity\Models\FilteredRelatedContent, HTTP status code, HTTP response headers (array of strings)
+     * @throws \Swagger\Client\ApiException on non-2xx response
+     */
+    public function getRelatedContentFromEntityIdWithHttpInfo($entity_id, $limit = null, $include_root_relations = null)
     {
         
         // verify the required parameter 'entity_id' is set
@@ -189,8 +223,6 @@ class RelatedContentApi
   
         // parse inputs
         $resourcePath = "/related-content/from-entity-id/{entityId}";
-        $resourcePath = str_replace("{format}", "json", $resourcePath);
-        $method = "GET";
         $httpBody = '';
         $queryParams = array();
         $headerParams = array();
@@ -202,14 +234,17 @@ class RelatedContentApi
         $headerParams['Content-Type'] = ApiClient::selectHeaderContentType(array());
   
         // query params
+        
         if ($limit !== null) {
             $queryParams['limit'] = $this->apiClient->getSerializer()->toQueryValue($limit);
         }// query params
+        
         if ($include_root_relations !== null) {
             $queryParams['includeRootRelations'] = $this->apiClient->getSerializer()->toQueryValue($include_root_relations);
         }
         
         // path params
+        
         if ($entity_id !== null) {
             $resourcePath = str_replace(
                 "{" . "entityId" . "}",
@@ -217,48 +252,47 @@ class RelatedContentApi
                 $resourcePath
             );
         }
+        // default format to json
+        $resourcePath = str_replace("{format}", "json", $resourcePath);
+
         
         
   
         // for model (json/xml)
         if (isset($_tempBody)) {
             $httpBody = $_tempBody; // $_tempBody is the method argument, if present
-        } else if (count($formParams) > 0) {
+        } elseif (count($formParams) > 0) {
             $httpBody = $formParams; // for HTTP post (form)
         }
         
         // make the API Call
-        try
-        {
-            list($response, $httpHeader) = $this->apiClient->callApi(
-                $resourcePath, $method,
+        try {
+            list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
+                $resourcePath, 'GET',
                 $queryParams, $httpBody,
                 $headerParams, '\Swagger\Client\ContentEntity\Models\FilteredRelatedContent'
             );
             
             if (!$response) {
-                return null;
+                return array(null, $statusCode, $httpHeader);
             }
 
-            return $this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\ContentEntity\Models\FilteredRelatedContent', $httpHeader);
+            return array(\Swagger\Client\ObjectSerializer::deserialize($response, '\Swagger\Client\ContentEntity\Models\FilteredRelatedContent', $httpHeader), $statusCode, $httpHeader);
             
         } catch (ApiException $e) {
             switch ($e->getCode()) { 
             case 200:
-                $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\ContentEntity\Models\FilteredRelatedContent', $e->getResponseHeaders());
+                $data = \Swagger\Client\ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\ContentEntity\Models\FilteredRelatedContent', $e->getResponseHeaders());
                 $e->setResponseObject($data);
                 break;
             case 400:
-                $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\ContentEntity\Models\ResponseObj', $e->getResponseHeaders());
+                $data = \Swagger\Client\ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\ContentEntity\Models\ResponseObj', $e->getResponseHeaders());
                 $e->setResponseObject($data);
                 break;
             }
   
             throw $e;
         }
-        
-        return null;
-        
     }
     
     /**
@@ -267,12 +301,30 @@ class RelatedContentApi
      * get content related to an entity (by name)
      *
      * @param string $name  (required)
-     * @param int $limit  (optional)
-     * @param bool $include_root_relations  (optional)
+     * @param int $limit  (optional, default to 20)
+     * @param bool $include_root_relations  (optional, default to true)
      * @return \Swagger\Client\ContentEntity\Models\FilteredRelatedContent
      * @throws \Swagger\Client\ApiException on non-2xx response
      */
-    public function getRelatedContentFromEntityName($name, $limit=null, $include_root_relations=null)
+    public function getRelatedContentFromEntityName($name, $limit = null, $include_root_relations = null)
+    {
+        list($response, $statusCode, $httpHeader) = $this->getRelatedContentFromEntityNameWithHttpInfo ($name, $limit, $include_root_relations);
+        return $response; 
+    }
+
+
+    /**
+     * getRelatedContentFromEntityNameWithHttpInfo
+     *
+     * get content related to an entity (by name)
+     *
+     * @param string $name  (required)
+     * @param int $limit  (optional, default to 20)
+     * @param bool $include_root_relations  (optional, default to true)
+     * @return Array of \Swagger\Client\ContentEntity\Models\FilteredRelatedContent, HTTP status code, HTTP response headers (array of strings)
+     * @throws \Swagger\Client\ApiException on non-2xx response
+     */
+    public function getRelatedContentFromEntityNameWithHttpInfo($name, $limit = null, $include_root_relations = null)
     {
         
         // verify the required parameter 'name' is set
@@ -282,8 +334,6 @@ class RelatedContentApi
   
         // parse inputs
         $resourcePath = "/related-content/from-entity-name/{name}";
-        $resourcePath = str_replace("{format}", "json", $resourcePath);
-        $method = "GET";
         $httpBody = '';
         $queryParams = array();
         $headerParams = array();
@@ -295,14 +345,17 @@ class RelatedContentApi
         $headerParams['Content-Type'] = ApiClient::selectHeaderContentType(array());
   
         // query params
+        
         if ($limit !== null) {
             $queryParams['limit'] = $this->apiClient->getSerializer()->toQueryValue($limit);
         }// query params
+        
         if ($include_root_relations !== null) {
             $queryParams['includeRootRelations'] = $this->apiClient->getSerializer()->toQueryValue($include_root_relations);
         }
         
         // path params
+        
         if ($name !== null) {
             $resourcePath = str_replace(
                 "{" . "name" . "}",
@@ -310,44 +363,43 @@ class RelatedContentApi
                 $resourcePath
             );
         }
+        // default format to json
+        $resourcePath = str_replace("{format}", "json", $resourcePath);
+
         
         
   
         // for model (json/xml)
         if (isset($_tempBody)) {
             $httpBody = $_tempBody; // $_tempBody is the method argument, if present
-        } else if (count($formParams) > 0) {
+        } elseif (count($formParams) > 0) {
             $httpBody = $formParams; // for HTTP post (form)
         }
         
         // make the API Call
-        try
-        {
-            list($response, $httpHeader) = $this->apiClient->callApi(
-                $resourcePath, $method,
+        try {
+            list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
+                $resourcePath, 'GET',
                 $queryParams, $httpBody,
                 $headerParams, '\Swagger\Client\ContentEntity\Models\FilteredRelatedContent'
             );
             
             if (!$response) {
-                return null;
+                return array(null, $statusCode, $httpHeader);
             }
 
-            return $this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\ContentEntity\Models\FilteredRelatedContent', $httpHeader);
+            return array(\Swagger\Client\ObjectSerializer::deserialize($response, '\Swagger\Client\ContentEntity\Models\FilteredRelatedContent', $httpHeader), $statusCode, $httpHeader);
             
         } catch (ApiException $e) {
             switch ($e->getCode()) { 
             case 200:
-                $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\ContentEntity\Models\FilteredRelatedContent', $e->getResponseHeaders());
+                $data = \Swagger\Client\ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\ContentEntity\Models\FilteredRelatedContent', $e->getResponseHeaders());
                 $e->setResponseObject($data);
                 break;
             }
   
             throw $e;
         }
-        
-        return null;
-        
     }
     
 }

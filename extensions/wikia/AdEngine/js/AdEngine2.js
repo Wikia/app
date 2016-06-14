@@ -118,6 +118,7 @@ define('ext.wikia.adEngine.adEngine', [
 				slot = createSlot(queuedSlot, container, {
 					success: function (adInfo) {
 						log(['success', provider.name, slotName, adInfo], 'debug', logGroup);
+						slotTweaker.show(slotName);
 						tracker.track('success', adInfo);
 					},
 					collapse: function (adInfo) {
@@ -144,8 +145,6 @@ define('ext.wikia.adEngine.adEngine', [
 
 			var slotName = slot.slotName,
 				providerList = adConfig.getProviderList(slotName).slice(); // Get a copy of the array
-
-			slotTweaker.show(slotName);
 
 			log(['fillInSlot', slot, 'provider list', JSON.stringify(providerList)], 'debug', logGroup);
 

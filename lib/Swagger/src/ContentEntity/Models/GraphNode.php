@@ -11,7 +11,7 @@
  * @link     https://github.com/swagger-api/swagger-codegen
  */
 /**
- *  Copyright 2015 SmartBear Software
+ *  Copyright 2016 SmartBear Software
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -55,6 +55,10 @@ class GraphNode implements ArrayAccess
         'distance_from_root' => 'int'
     );
   
+    static function swaggerTypes() {
+        return self::$swaggerTypes;
+    }
+
     /** 
       * Array of attributes where the key is the local name, and the value is the original name
       * @var string[] 
@@ -64,6 +68,10 @@ class GraphNode implements ArrayAccess
         'distance_from_root' => 'distanceFromRoot'
     );
   
+    static function attributeMap() {
+        return self::$attributeMap;
+    }
+
     /**
       * Array of attributes to setter functions (for deserialization of responses)
       * @var string[]
@@ -73,6 +81,10 @@ class GraphNode implements ArrayAccess
         'distance_from_root' => 'setDistanceFromRoot'
     );
   
+    static function setters() {
+        return self::$setters;
+    }
+
     /**
       * Array of attributes to getter functions (for serialization of requests)
       * @var string[]
@@ -82,6 +94,10 @@ class GraphNode implements ArrayAccess
         'distance_from_root' => 'getDistanceFromRoot'
     );
   
+    static function getters() {
+        return self::$getters;
+    }
+
     
     /**
       * $entity 
@@ -102,6 +118,7 @@ class GraphNode implements ArrayAccess
      */
     public function __construct(array $data = null)
     {
+        
         if ($data != null) {
             $this->entity = $data["entity"];
             $this->distance_from_root = $data["distance_from_root"];
@@ -198,9 +215,9 @@ class GraphNode implements ArrayAccess
     public function __toString()
     {
         if (defined('JSON_PRETTY_PRINT')) {
-            return json_encode(get_object_vars($this), JSON_PRETTY_PRINT);
+            return json_encode(\Swagger\Client\ObjectSerializer::sanitizeForSerialization($this), JSON_PRETTY_PRINT);
         } else {
-            return json_encode(get_object_vars($this));
+            return json_encode(\Swagger\Client\ObjectSerializer::sanitizeForSerialization($this));
         }
     }
 }
