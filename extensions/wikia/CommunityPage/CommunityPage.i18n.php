@@ -83,6 +83,9 @@ $messages['en'] = array(
 	'communitypage-policy-module-edit-link-text' => 'Edit',
 	'communitypage-policy-module-link-text' => 'View policy',
 	'communitypage-policy-module-link-page-name' => 'Community guidelines',
+	'communitypage-anon-contrib-header' => '$1 or $2 and make an edit to this wiki to see how you rank in this community!',
+	'communitypage-anon-login' => 'Log in',
+	'communitypage-anon-register' => 'register',
 );
 
 $messages['qqq'] = array(
@@ -167,6 +170,10 @@ $messages['qqq'] = array(
 	'communitypage-policy-module-edit-link-text' => 'Link to edit the community policy',
 	'communitypage-policy-module-link-text' => 'View community policy',
 	'communitypage-policy-module-link-page-name' => 'Name of the localized community policy page without Help namespace prefix.',
+	'communitypage-anon-contrib-header' => 'Text to show for anonymous users in the heading for top contributors. Tells users to login or register',
+	'communitypage-anon-login' => 'Log in text to use in the context of communitypage-anon-contrib-header $1 together with url',
+	'communitypage-anon-register' => 'register text to use in the context of communitypage-anon-contrib-header $1 together with url',
+
 );
 
 $messages['de'] = array(

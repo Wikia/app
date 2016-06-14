@@ -2,10 +2,12 @@
 	<div class="avatar-container">
 		{{{userAvatar}}}
 	</div>
-	<div class="community-page-rank">
-		<span>{{userRank}} <small>/ {{weeklyEditorCount}}</small></span>
-		<span class="community-page-subtle">{{yourRankText}}</span>
-	</div>
+	{{^isAnon}}
+		<div class="community-page-rank">
+			<span>{{userRank}} <small>/ {{weeklyEditorCount}}</small></span>
+			<span class="community-page-subtle">{{yourRankText}}</span>
+		</div>
+	{{/isAnon}}
 	<div class="user-contrib-count">
 		<span>{{userContribCount}}</span>
 		<span class="community-page-subtle">{{userContributionsText}}</span>

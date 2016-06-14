@@ -71,6 +71,13 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 
 		$topContributorsDetails = $this->getContributorsDetails( $topContributors );
 
+		global $wgLang;
+		$redirect = 'redirect=' . urlencode( SpecialPage::getTitleFor( 'CommunityPage' )->getCanonicalURL() );
+		$uselang  = 'uselang=' . $wgLang->getCode();
+		$login = '<a href="https://www.wikia.com/signin?' . $redirect . '&' . $uselang . '">' . $this->msg( 'communitypage-anon-login' )->escaped() . '</a>';
+		$register = '<a href="https://www.wikia.com/register?' . $redirect . '&' . $uselang . '">' . $this->msg( 'communitypage-anon-register' )->escaped() . '</a>';
+		$anonText = $this->msg( 'communitypage-anon-contrib-header', $login, $register )->plain();
+
 		$this->response->setData( [
 			'admin' => $this->msg( 'communitypage-admin' )->plain(),
 			'topContribsHeaderText' => $this->msg( 'communitypage-top-contributors-week' )->plain(),
@@ -86,7 +93,9 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 			),
 			'userRank' => $userRank,
 			'weeklyEditorCount' => $this->formatTotalEditorsNumber( $topContributorsCount ),
-			'userContribCount' => $currentUserContributionCount
+			'userContribCount' => $currentUserContributionCount,
+			'isAnon' => $this->getUser()->isAnon(),
+			'anonText' => $anonText,
 		] );
 	}
 
