@@ -88,38 +88,29 @@ $taboola-small-breakpoint: "#{$screen} and (max-width: 420px)";
 	background: rgba($color-page, $page-opacity);
 	max-width: $page-width-medium;
 	margin: 0 auto;
-	padding: 0 $padding-width-medium;
 	position: relative;
 	z-index: $wikia-top-ads-index;
 
-	div div {
-		margin: 10px auto;
-	}
-
 	.thumbnails-h-abp {
 		border: none;
-		padding: 10px 0 0;
 	}
 }
 
 @if $widthType == 0 {
 	@media #{$breakpoint-small-only} {
 		#TOP_LEADERBOARD_AB {
-			padding: 0 $padding-width-small;
 			width: $page-width-small - 2 * $content-border-width;
 		}
 	}
 
 	@media #{$breakpoint-medium-only} {
 		#TOP_LEADERBOARD_AB {
-			padding: 0 $padding-width-medium;
 			width: $page-width-medium;
 		}
 	}
 
 	@media #{$breakpoint-large-up} {
 		#TOP_LEADERBOARD_AB {
-			padding: 0 $padding-width-large;
 			width: $page-width-large;
 		}
 	}
