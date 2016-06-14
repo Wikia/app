@@ -127,6 +127,17 @@ define('ext.wikia.adEngine.slotTweaker', [
 		}
 	}
 
+	function makeResponsive(slotName) {
+		var providerContainer = document.getElementById(slotName).lastElementChild;
+
+		onReady(slotName, function (iframe) {
+			var height = iframe.contentWindow.document.body.offsetHeight,
+				width = iframe.contentWindow.document.body.offsetWidth;
+
+			providerContainer.style.paddingBottom = 100/(width/height) + '%';
+		});
+	}
+
 	function adjustIframeByContentSize(slotName) {
 		onReady(slotName, function (iframe) {
 			var height = iframe.contentWindow.document.body.scrollHeight,
@@ -164,6 +175,7 @@ define('ext.wikia.adEngine.slotTweaker', [
 		adjustLeaderboardSize: adjustLeaderboardSize,
 		hackChromeRefresh: hackChromeRefresh,
 		hide: hide,
+		makeResponsive: makeResponsive,
 		removeDefaultHeight: removeDefaultHeight,
 		removeTopButtonIfNeeded: removeTopButtonIfNeeded,
 		show: show

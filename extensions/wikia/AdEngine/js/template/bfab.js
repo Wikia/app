@@ -1,19 +1,17 @@
 /*global define*/
 define('ext.wikia.adEngine.template.bfab', [
+	'ext.wikia.adEngine.slotTweaker',
 	'wikia.log',
 	'wikia.document'
-], function (log, doc) {
+], function (slotTweaker, log, doc) {
 	'use strict';
 
-	var logGroup = '9',
+	var logGroup = 'ext.wikia.adEngine.template.bfab',
 		slot = doc.getElementById('BOTTOM_LEADERBOARD') || doc.getElementById('MOBILE_BOTTOM_LEADERBOARD');
 
-	function show(params) {
-		log(['show', params], 'debug', logGroup);
-		var ratio = params.width/params.height;
-
+	function show() {
 		slot.classList.add('bfab-template');
-		slot.lastElementChild.style.paddingBottom = 100/ratio + '%';
+		slotTweaker.makeResponsive(slot.id);
 
 		log('show', 'info', logGroup);
 	}
