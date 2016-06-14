@@ -7,6 +7,7 @@ class CommunityPageSpecialUsersModel {
 	const ALL_ADMINS_MCACHE_KEY = 'community_page_all_admins';
 	const GLOBAL_BOTS_MCACHE_KEY = 'community_page_global_bots';
 	const ALL_BOTS_MCACHE_KEY = 'community_page_all_bots';
+	const ALL_BLOCKED_IDS_MCACHE_KEY = 'community_page_all_blocked_ids';
 	const ALL_MEMBERS_MCACHE_KEY = 'community_page_all_members';
 	const ALL_MEMBERS_COUNT_MCACHE_KEY = 'community_page_all_members_count';
 	const RECENTLY_JOINED_MCACHE_KEY = 'community_page_recently_joined';
@@ -62,13 +63,13 @@ class CommunityPageSpecialUsersModel {
 
 				$db = wfGetDB( DB_SLAVE );
 
-				$botIds = $this->getBotIds();
+				$blockedIds = $this->getBlockedIds();
 
 				$sqlData = ( new WikiaSQL() )
 					->SELECT( 'wup_user, wup_value' )
 					->FROM ( 'wikia_user_properties' )
 					->WHERE( 'wup_property' )->EQUAL_TO( 'editcountThisWeek' )
-					->AND_( 'wup_user' )->NOT_IN( $botIds )
+					->AND_( 'wup_user' )->NOT_IN( $blockedIds )
 					->AND_( 'wup_value' )->GREATER_THAN( 0 )
 					->ORDER_BY( 'CAST(wup_value as unsigned) DESC, wup_user ASC' );
 
@@ -188,6 +189,36 @@ class CommunityPageSpecialUsersModel {
 		);
 
 		return $botIds;
+	}
+
+
+	/**
+	 * @return array list of blocked ids for Top Contributors
+	 */
+	private function getBlockedIds(){
+		$blockedIds = WikiaDataAccess::cache(
+			self::getMemcKey( self::ALL_BLOCKED_IDS_MCACHE_KEY ),
+			WikiaResponse::CACHE_LONG,
+			function () {
+				global $wgExternalSharedDB;
+				$db = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
+
+				$sqlData = ( new WikiaSQL() )
+					->SELECT( 'ug_user' )
+					->FROM ( 'user_groups' )
+					->WHERE( 'ug_group' )->IN( [ 'bot', 'bot-global', 'staff', 'util', 'helper', 'vstf' ] )
+					->GROUP_BY( 'ug_user' )
+					->runLoop( $db, function ( &$sqlData, $row ) {
+						$sqlData[] = $row->ug_user;
+					} );
+
+				$allBlockedIds = array_merge( $sqlData, $this->getBotIds() );
+
+				return $allBlockedIds;
+			}
+		);
+
+		return $blockedIds;
 	}
 
 	/**
