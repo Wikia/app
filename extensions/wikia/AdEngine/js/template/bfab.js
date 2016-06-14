@@ -5,11 +5,16 @@ define('ext.wikia.adEngine.template.bfab', [
 ], function (log, doc) {
 	'use strict';
 
-	var logGroup = 'ext.wikia.adEngine.template.bfab',
-		footer = doc.getElementById('WikiaFooter') || doc.getElementsByClassName('mobile-bottom-leaderboard')[0];
+	var logGroup = '9',
+		slot = doc.getElementById('BOTTOM_LEADERBOARD') || doc.getElementById('MOBILE_BOTTOM_LEADERBOARD');
 
-	function show() {
-		footer.classList.add('bfab-template');
+	function show(params) {
+		log(['show', params], 'debug', logGroup);
+		var ratio = params.width/params.height;
+
+		slot.classList.add('bfab-template');
+		slot.lastElementChild.style.paddingBottom = 100/ratio + '%';
+
 		log('show', 'info', logGroup);
 	}
 
