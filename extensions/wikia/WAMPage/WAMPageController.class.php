@@ -94,6 +94,9 @@ class WAMPageController extends WikiaController
 					$this->selectedDate = null;
 				}
 			}
+		} else {
+			// DE-1673 default to two days ago because we might not have data for today
+			$this->selectedDate = strtotime( '00:00 -2 day');
 		}
 
 		$this->filterLanguages = $this->model->getWAMLanguages( $this->selectedDate );

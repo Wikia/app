@@ -111,9 +111,9 @@ class WAMPageModel extends WikiaModel {
 		if ( isset( $aDates['min_max_dates'] ) ) {
 			$aDates = $aDates['min_max_dates'];
 
-			// Set min date as next day, because we don't have previous data
-			if ( !empty( $aDates['min_date'] ) ) {
-				$aDates['min_date'] += 60 * 60 * 24;
+			// Set max date as previous day, because we don't have previous data
+			if ( !empty( $aDates['max_date'] ) ) {
+				$aDates['max_date'] -= 60 * 60 * 24;
 			}
 		} else {
 			$aDates = [
