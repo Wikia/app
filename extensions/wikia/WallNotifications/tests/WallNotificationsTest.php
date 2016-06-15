@@ -80,8 +80,10 @@ class WallNotificationsTest extends WikiaBaseTest {
 
 	public function someDataProvider() {
 		$tests = [ ];
+		$relationListItem = [ 'entityKey' => '404_101', 'authorId' => 6600, 'isReply' => false ];
+		$firstUniqueId = 4444;
+		$secondUniqueId = 5555;
 
-		$uniqueId = 5555;
 		$entityKey = '505_212';
 		$authorId = 6666;
 		$isReply = false;
@@ -89,7 +91,7 @@ class WallNotificationsTest extends WikiaBaseTest {
 		$notifyeveryone = false;
 
 		$notificationData = [
-			'unique_id' => $uniqueId,
+			'unique_id' => $secondUniqueId,
 			'entity_key' => $entityKey,
 			'is_reply' => $isReply,
 			'author_id' => $authorId,
@@ -99,12 +101,12 @@ class WallNotificationsTest extends WikiaBaseTest {
 
 		$dataS = [
 			'notification' => [
-				0 => 4444
+				0 => $firstUniqueId
 			],
 			'relation' => [
-				4444 => [
+				$firstUniqueId => [
 					'read' => true,
-					'list' => [ [ 'entityKey' => '404_101', 'authorId' => 6600, 'isReply' => false ] ],
+					'list' => [ $relationListItem ],
 					'last' => 0,
 					'count' => 1,
 					'notifyeveryone' => 0
@@ -115,18 +117,18 @@ class WallNotificationsTest extends WikiaBaseTest {
 
 		$dataF = [
 			'notification' => [
-				0 => 4444,
-				1 => $uniqueId
+				0 => $firstUniqueId,
+				1 => $secondUniqueId
 			],
 			'relation' => [
-				4444 => [
+				$firstUniqueId => [
 					'read' => true,
-					'list' => [ 0 => [ 'entityKey' => '404_101', 'authorId' => 6600, 'isReply' => false ] ],
+					'list' => [ 0 => $relationListItem ],
 					'last' => 0,
 					'count' => 1,
 					'notifyeveryone' => 0
 				],
-				$uniqueId => [
+				$secondUniqueId => [
 					'read' => $read,
 					'list' => [ 0 => [ 'entityKey' => $entityKey, 'authorId' => $authorId, 'isReply' => $isReply ] ],
 					'last' => 1,
@@ -143,18 +145,18 @@ class WallNotificationsTest extends WikiaBaseTest {
 
 		$dataF = [
 			'notification' => [
-				0 => 4444,
-				2 => $uniqueId
+				0 => $firstUniqueId,
+				2 => $secondUniqueId
 			],
 			'relation' => [
-				4444 => [
+				$firstUniqueId => [
 					'read' => true,
-					'list' => [ 0 => [ 'entityKey' => '404_101', 'authorId' => 6600, 'isReply' => false ] ],
+					'list' => [ 0 => $relationListItem ],
 					'last' => 0,
 					'count' => 1,
 					'notifyeveryone' => 0
 				],
-				$uniqueId => [
+				$secondUniqueId => [
 					'read' => $read,
 					'list' => [ 0 => [ 'entityKey' => $entityKey, 'authorId' => $authorId, 'isReply' => $isReply ] ],
 					'last' => 2,
@@ -177,18 +179,18 @@ class WallNotificationsTest extends WikiaBaseTest {
 
 		$dataF = [
 			'notification' => [
-				0 => 4444,
-				2 => $uniqueId
+				0 => $firstUniqueId,
+				2 => $secondUniqueId
 			],
 			'relation' => [
-				4444 => [
+				$firstUniqueId => [
 					'read' => true,
-					'list' => [ 0 => [ 'entityKey' => '404_101', 'authorId' => 6600, 'isReply' => false ] ],
+					'list' => [ 0 => $relationListItem ],
 					'last' => 0,
 					'count' => 1,
 					'notifyeveryone' => 0
 				],
-				$uniqueId => [
+				$secondUniqueId => [
 					'read' => $read,
 					'list' => [
 						0 => [ 'entityKey' => $entityKey,  'authorId' => $authorId,  'isReply' => $isReply ],
@@ -214,18 +216,18 @@ class WallNotificationsTest extends WikiaBaseTest {
 
 		$dataF = [
 			'notification' => [
-				0 => 4444,
-				3 => $uniqueId
+				0 => $firstUniqueId,
+				3 => $secondUniqueId
 			],
 			'relation' => [
-				4444 => [
+				$firstUniqueId => [
 					'read' => true,
-					'list' => [ 0 => [ 'entityKey' => '404_101', 'authorId' => 6600, 'isReply' => false ] ],
+					'list' => [ 0 => $relationListItem ],
 					'last' => 0,
 					'count' => 1,
 					'notifyeveryone' => 0
 				],
-				$uniqueId => [
+				$secondUniqueId => [
 					'read' => $read,
 					'list' => [
 						0 => [ 'entityKey' => $entityKey,  'authorId' => $authorId,  'isReply' => $isReply ],
@@ -252,18 +254,18 @@ class WallNotificationsTest extends WikiaBaseTest {
 
 		$dataF = [
 			'notification' => [
-				0 => 4444,
-				4 => $uniqueId
+				0 => $firstUniqueId,
+				4 => $secondUniqueId
 			],
 			'relation' => [
-				4444 => [
+				$firstUniqueId => [
 					'read' => true,
-					'list' => [ 0 => [ 'entityKey' => '404_101', 'authorId' => 6600, 'isReply' => false ] ],
+					'list' => [ 0 => $relationListItem ],
 					'last' => 0,
 					'count' => 1,
 					'notifyeveryone' => 0
 				],
-				$uniqueId => [
+				$secondUniqueId => [
 					'read' => $read,
 					'list' => [
 						0 => [ 'entityKey' => $entityKey2, 'authorId' => $authorId2, 'isReply' => $isReply ],
@@ -287,18 +289,18 @@ class WallNotificationsTest extends WikiaBaseTest {
 
 		$dataF = [
 			'notification' => [
-				0 => 4444,
-				5 => $uniqueId
+				0 => $firstUniqueId,
+				5 => $secondUniqueId
 			],
 			'relation' => [
-				4444 => [
+				$firstUniqueId => [
 					'read' => true,
-					'list' => [ 0 => [ 'entityKey' => '404_101', 'authorId' => 6600, 'isReply' => false ] ],
+					'list' => [ 0 => $relationListItem ],
 					'last' => 0,
 					'count' => 1,
 					'notifyeveryone' => 0
 				],
-				$uniqueId => [
+				$secondUniqueId => [
 					'read' => $read,
 					'list' => [
 						0 => [ 'entityKey' => $entityKey2, 'authorId' => $authorId2, 'isReply' => $isReply ],
@@ -321,8 +323,14 @@ class WallNotificationsTest extends WikiaBaseTest {
 
 		return $tests;
 	}
+
 	/**
 	 * @dataProvider someDataProvider
+	 * @param $userId
+	 * @param $wikiId
+	 * @param $notificationData
+	 * @param $dataS
+	 * @param $dataF
 	 */
 	public function testAddNotificationToData($userId, $wikiId, $notificationData, $dataS, $dataF) {
 		$wn = new testWallNotifications();
