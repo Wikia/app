@@ -88,7 +88,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 			$this->msg( 'communitypage-anon-register' )->plain()
 		);
 
-		$anonText = $this->msg( 'communitypage-anon-contrib-header', $login, $register )->plain();
+		$anonText = $this->msg( 'communitypage-anon-contrib-header' )->rawParams( $login, $register )->escaped();
 
 		$this->response->setData( [
 			'admin' => $this->msg( 'communitypage-admin' )->plain(),
