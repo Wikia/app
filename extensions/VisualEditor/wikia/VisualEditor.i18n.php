@@ -190,6 +190,10 @@ $messages['qqq'] = array(
 	'wikia-visualeditor-wikiamediaoptionwidget-preview-photo' => 'The text that prompts a user to preview a photo',
 	'wikia-visualeditor-wikiamediaoptionwidget-preview-video' => 'The text that prompts a user to preview a video
 {{Identical|Watch}}',
+	'wikia-visualeditor-dialog-image-insert-title' => 'Image insert dialog title.',
+	'wikia-visualeditor-dialogbutton-imageinsert-tooltip' => 'Tooltip shown on Image button in the toolbar.',
+	'wikia-visualeditor-dialogbutton-videoinsert-tooltip' => 'Tooltip shown on Video button in the toolbar.',
+	'wikia-visualeditor-dialog-video-insert-title' => 'Video insert dialog title.',
 );
 
 /** Tunisian Arabic (تونسي/Tûnsî)
