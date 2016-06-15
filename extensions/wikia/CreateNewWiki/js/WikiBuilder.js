@@ -108,11 +108,7 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper'], function (help
 
 	function onThemeNavNextClick() {
 		saveState(ThemeDesigner.settings, function () {
-			if (WikiBuilderCfg.skipwikiaplus) {
-				gotoMainPage();
-			} else {
-				transition('ThemeWiki', true, '+');
-			}
+			gotoMainPage();
 		});
 	}
 
