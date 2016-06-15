@@ -71,11 +71,23 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 
 		$topContributorsDetails = $this->getContributorsDetails( $topContributors );
 
-		global $wgLang;
-		$redirect = 'redirect=' . urlencode( SpecialPage::getTitleFor( 'CommunityPage' )->getCanonicalURL() );
-		$uselang  = 'uselang=' . $wgLang->getCode();
-		$login = '<a href="https://www.wikia.com/signin?' . $redirect . '&' . $uselang . '">' . $this->msg( 'communitypage-anon-login' )->escaped() . '</a>';
-		$register = '<a href="https://www.wikia.com/register?' . $redirect . '&' . $uselang . '">' . $this->msg( 'communitypage-anon-register' )->escaped() . '</a>';
+		$query = wfArrayToCGI( [
+			'redirect' => $this->getTitle()->getCanonicalURL(),
+			'uselang' => $this->getLanguage()->getCode(),
+		] );
+
+		$login = Html::element(
+			'a',
+			[ 'href' => 'https://www.wikia.com/signin?' . $query ],
+			$this->msg( 'communitypage-anon-login' )->plain()
+		);
+
+		$register = Html::element(
+			'a',
+			[ 'href' => 'https://www.wikia.com/register?' . $query ],
+			$this->msg( 'communitypage-anon-register' )->plain()
+		);
+
 		$anonText = $this->msg( 'communitypage-anon-contrib-header', $login, $register )->plain();
 
 		$this->response->setData( [
