@@ -283,8 +283,11 @@ abstract class WikiaSkin extends SkinTemplate {
 
 		wfDebug( sprintf( "%s: combined %d SASS files\n", __METHOD__, count($sassFiles) ) );
 
+		$main = strpos($sassFilesUrl, 'ads.scss') !== false ?
+			Html::linkedStyle($sassFilesUrl, 'all', 'anonymous') : Html::linkedStyle($sassFilesUrl);
+
 		wfProfileOut(__METHOD__);
-		return Html::linkedStyle($sassFilesUrl) . Html::linkedStyle($unlockUrl) . implode('', $cssLinks);
+		return $main . Html::linkedStyle($unlockUrl) . implode('', $cssLinks);
 	}
 
 	/*

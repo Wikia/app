@@ -247,4 +247,8 @@ class AdEngine2Hooks {
 		return true;
 	}
 
+	public static function onBeforePageDisplay( OutputPage $out, Skin $skin ) {
+		Wikia::addAssetsToOutput( 'adengine2_desktop_scss' );
+		return true;
+	}
 }

@@ -21,6 +21,10 @@ class AssetsManagerSassesBuilder extends AssetsManagerBaseBuilder {
 			$builder = new AssetsManagerSassBuilder($sassRequest);
 
 			$this->mContent .= "\n\n/* $file */\n" . $builder->getContent();
+
+			if (strpos($this->mOid, 'ads.scss') !== false) {
+				header( 'Access-Control-Allow-Origin: *' );
+			}
 		}
 
 		$this->mContentType = AssetsManager::TYPE_CSS;
