@@ -117,15 +117,12 @@ define('ext.wikia.adEngine.slotTweaker', [
 			log('onIframeReady - iframe does not exist', 'debug', logGroup);
 			return;
 		}
+
 		if (iframe.contentWindow.document.readyState === 'complete') {
-			window.setTimeout(function () {
-				callback(iframe);
-			}, 0);
+			callback(iframe);
 		} else {
 			iframe.addEventListener('load', function () {
-				window.setTimeout(function () {
-					callback(iframe);
-				}, 0);
+				callback(iframe);
 			});
 		}
 	}
