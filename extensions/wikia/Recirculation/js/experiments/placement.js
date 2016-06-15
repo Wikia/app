@@ -14,6 +14,7 @@ require([
 	'ext.wikia.recirculation.helpers.contentLinks',
 	'ext.wikia.recirculation.helpers.fandom',
 	'ext.wikia.recirculation.helpers.lateral',
+	'ext.wikia.recirculation.helpers.liftigniter',
 	'ext.wikia.recirculation.helpers.data',
 	'ext.wikia.recirculation.helpers.cakeRelatedContent',
 	'ext.wikia.recirculation.helpers.curatedContent',
@@ -35,6 +36,7 @@ require([
 	contentLinksHelper,
 	fandomHelper,
 	lateralHelper,
+	liftigniterHelper,
 	dataHelper,
 	cakeHelper,
 	curatedHelper,
@@ -61,6 +63,21 @@ require([
 	}
 
 	switch (group) {
+		case 'LI_RAIL':
+			helper = liftigniterHelper({
+				count: 5,
+				widget: 'fandom-rec'
+			});
+			view = railView();
+			isRail = true;
+			break;
+		case 'LI_INCONTENT':
+			helper = liftigniterHelper({
+				count: 3,
+				widget: 'in-wikia'
+			});
+			view = incontentView();
+			break;
 		// Temporary group running during E3
 		case 'E3':
 			helper = fandomHelper({
