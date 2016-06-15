@@ -53,8 +53,10 @@ define('ext.wikia.adEngine.provider.directGpt', [
 		{
 			beforeSuccess: function (slotName) {
 				slotTweaker.removeDefaultHeight(slotName);
-				slotTweaker.removeTopButtonIfNeeded(slotName);
-				slotTweaker.adjustLeaderboardSize(slotName);
+				if (slotTweaker.isUniversalAdPackageLoaded()) {
+					slotTweaker.removeTopButtonIfNeeded(slotName);
+					slotTweaker.adjustLeaderboardSize(slotName);
+				}
 			},
 			sraEnabled: true,
 			recoverableSlots: [
