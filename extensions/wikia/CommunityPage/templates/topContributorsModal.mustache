@@ -1,18 +1,23 @@
+{{#isAnon}}
+	<div class="community-page-anon-text-modal">
+		{{{anonText}}}
+	</div>
+{{/isAnon}}
+{{^isAnon}}
 <div class="user-details">
 	<div class="avatar-container">
 		{{{userAvatar}}}
 	</div>
-	{{^isAnon}}
 		<div class="community-page-rank">
 			<span>{{userRank}} <small>/ {{weeklyEditorCount}}</small></span>
 			<span class="community-page-subtle">{{yourRankText}}</span>
 		</div>
-	{{/isAnon}}
 	<div class="user-contrib-count">
 		<span>{{userContribCount}}</span>
 		<span class="community-page-subtle">{{userContributionsText}}</span>
 	</div>
 </div>
+{{/isAnon}}
 <ul class="reset top-contributors">
 	{{#contributors}}
 		<li class="community-page-contributors-list-item">
