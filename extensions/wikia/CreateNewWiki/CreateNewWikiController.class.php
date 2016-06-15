@@ -76,10 +76,6 @@ class CreateNewWikiController extends WikiaController {
 		// @TODO SUS-549 - Investigate if used
 		$skipWikiaPlus = true;
 
-		// @TODO SUS-549 - Investigate if used
-		$keys = CreateNewWikiObfuscate::generateValidSeeds();
-		$_SESSION['cnw-answer'] = CreateNewWikiObfuscate::generateAnswer($this->keys);
-
 		$this->wg->Out->addJsConfigVars([
 			'wgLangAllAgesOpt' => self::LANG_ALL_AGES_OPT
 		]);
@@ -343,13 +339,6 @@ class CreateNewWikiController extends WikiaController {
 		]);
 
 		wfProfileOut(__METHOD__);
-	}
-
-	/**
-	 * a method that exists purely for unit test.  yay.  it shouldn't be public either
-	 */
-	public function getStoredAnswer() {
-		return $_SESSION['cnw-answer'];
 	}
 
 	/**
