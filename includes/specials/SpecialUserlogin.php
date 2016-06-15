@@ -812,7 +812,7 @@ class LoginForm extends SpecialPage {
 
 		$throttleCount = 0;
 		if ( is_array( $wgPasswordAttemptThrottle ) ) {
-			$throttleKey = wfMemcKey( 'password-throttle', $wgRequest->getIP(), md5( $username ) );
+			$throttleKey = wfSharedMemcKey( 'password-throttle', $wgRequest->getIP(), md5( $username ) );
 			$count = $wgPasswordAttemptThrottle['count'];
 			$period = $wgPasswordAttemptThrottle['seconds'];
 
@@ -838,7 +838,7 @@ class LoginForm extends SpecialPage {
 		global $wgMemc, $wgRequest;
 		$username = trim( $username ); // sanity
 
-		$throttleKey = wfMemcKey( 'password-throttle', $wgRequest->getIP(), md5( $username ) );
+		$throttleKey = wfSharedMemcKey( 'password-throttle', $wgRequest->getIP(), md5( $username ) );
 		$wgMemc->delete( $throttleKey );
 	}
 
@@ -913,7 +913,7 @@ class LoginForm extends SpecialPage {
 
 				// Reset the throttle
 				$request = $this->getRequest();
-				$key = wfMemcKey( 'password-throttle', $request->getIP(), md5( $this->mUsername ) );
+				$key = wfSharedMemcKey( 'password-throttle', $request->getIP(), md5( $this->mUsername ) );
 				$wgMemc->delete( $key );
 
 				if( $this->hasSessionCookie() || $this->mSkipCookieCheck ) {

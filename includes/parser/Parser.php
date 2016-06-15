@@ -96,7 +96,7 @@ class Parser {
 	const OT_PLAIN = 4; # like extractSections() - portions of the original are returned unchanged.
 
 	# Marker Suffix needs to be accessible staticly.
-	const MARKER_SUFFIX = "-QINU\x7f";
+	const MARKER_SUFFIX = "-QINU`\"'\x7f";
 
 	# Persistent:
 	var $mTagHooks = array();
@@ -297,7 +297,7 @@ class Parser {
 		 */
 		# $this->mUniqPrefix = "\x07UNIQ" . Parser::getRandomString();
 		# Changed to \x7f to allow XML double-parsing -- TS
-		$this->mUniqPrefix = "\x7fUNIQ" . self::getRandomString();
+		$this->mUniqPrefix = "\x7f'\"`UNIQ" . self::getRandomString();
 		$this->mStripState = new StripState( $this->mUniqPrefix );
 
 
