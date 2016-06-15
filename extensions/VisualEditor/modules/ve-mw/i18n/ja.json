@@ -251,10 +251,5 @@
 	"visualeditor-viewpage-savewarning-title": "本当によろしいですか?",
 	"visualeditor-wikitext-warning": "ビジュアルエディターをご使用中です。[[{{MediaWiki:visualeditor-wikitext-warning-link}}|ウィキテキスト]]はここでは使用できません。「{{int:visualeditor-toolbar-savedialog}}」の隣のドロップダウン メニューを開いて「{{int:visualeditor-mweditmodesource-title}}」を選択することで、編集内容を保持したままいつでもソース編集に切り替えられます。",
 	"visualeditor-wikitext-warning-title": "ウィキテキスト記法を検出しました",
-	"visualeditor-dialog-media-insert-title": "メディアの挿入",
-	"visualeditor-dialog-image-insert-title": "画像を追加",
-	"visualeditor-dialog-video-insert-title": "動画を追加",
-	"wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip": "メディア",
-	"wikia-visualeditor-dialogbutton-imageinsert-tooltip": "画像",
-	"wikia-visualeditor-dialogbutton-videoinsert-tooltip": "動画"
+	"visualeditor-dialog-media-insert-title": "メディアの挿入"
 }

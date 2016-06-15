@@ -84,6 +84,10 @@ $messages['en'] = array(
 	'wikia-visualeditor-wikiamediaoptionwidget-preview-video' => 'Watch',
 	'wikia-visualeditor-media-photo-policy' => "Please adhere to this wikia's image policy when uploading new photos.",
 	'wikia-visualeditor-media-video-policy' => "Please adhere to this wiki's video policy when adding new videos.",
+	'wikia-visualeditor-dialog-image-insert-title' => 'Insert an image',
+	'wikia-visualeditor-dialogbutton-imageinsert-tooltip' => 'Image',
+	'wikia-visualeditor-dialogbutton-videoinsert-tooltip' => 'Video',
+	'wikia-visualeditor-dialog-video-insert-title' => 'Insert a video',
 );
 
 /** Message documentation (Message documentation)
@@ -580,6 +584,10 @@ $messages['de'] = array(
 	'wikia-visualeditor-dialog-infobox-insert-empty-state' => 'Sorry, es wurden keine Infoboxen gefunden',
 	'wikia-visualeditor-dialog-infobox-insert-empty-state-has-unconverted-infoboxes' => 'Einige alte Infoboxen in neues Format konvertieren',
 	'wikia-visualeditor-dialog-infobox-insert-add-new-template' => 'Neue Vorlage hinzufügen',
+	'wikia-visualeditor-dialog-image-insert-title' => 'Ein Bild einfügen',
+	'wikia-visualeditor-dialogbutton-imageinsert-tooltip' => 'Image',
+	'wikia-visualeditor-dialog-video-insert-title' => 'Ein Video einfügen',
+	'wikia-visualeditor-dialogbutton-videoinsert-tooltip' => 'Video',
 );
 
 /** Zazaki (Zazaki)
@@ -732,6 +740,10 @@ $messages['es'] = array(
 	'wikia-visualeditor-dialog-infobox-insert-empty-state' => 'Lo sentimos. No se encontraron infoboxes',
 	'wikia-visualeditor-dialog-infobox-insert-empty-state-has-unconverted-infoboxes' => 'Convierte algunas infoboxes antiguas a un nuevo formato',
 	'wikia-visualeditor-dialog-infobox-insert-add-new-template' => 'Añadir una plantilla',
+	'wikia-visualeditor-dialog-image-insert-title' => 'Añadir una imagen',
+	'wikia-visualeditor-dialogbutton-imageinsert-tooltip' => 'Imagen',
+	'wikia-visualeditor-dialog-video-insert-title' => 'Añadir un video',
+	'wikia-visualeditor-dialogbutton-videoinsert-tooltip' => 'Video',
 );
 
 /** Basque (euskara)
@@ -1313,6 +1325,10 @@ $messages['ja'] = array(
 	'wikia-visualeditor-dialog-infobox-insert-empty-state' => '申し訳ありませんが、インフォボックスは見つかりませんでした',
 	'wikia-visualeditor-dialog-infobox-insert-empty-state-has-unconverted-infoboxes' => '古いインフォボックスを新しい形式に変換',
 	'wikia-visualeditor-dialog-infobox-insert-add-new-template' => '新しいテンプレートを追加',
+	'wikia-visualeditor-dialog-image-insert-title' => '画像を追加',
+	'wikia-visualeditor-dialogbutton-imageinsert-tooltip' => '画像',
+	'wikia-visualeditor-dialog-video-insert-title' => '動画を追加',
+	'wikia-visualeditor-dialogbutton-videoinsert-tooltip' => '動画',
 );
 
 /** Georgian (ქართული)
