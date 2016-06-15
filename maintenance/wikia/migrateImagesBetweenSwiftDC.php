@@ -46,6 +46,19 @@ class MigrateImagesBetweenSwiftDC extends Maintenance {
 	}
 
 	/**
+	 * @return array
+	 */
+	private function getLoggerContext() {
+		return [
+			'id'      => $this->imageSyncQueueItem->id,
+			'action'  => $this->imageSyncQueueItem->action,
+			'city_id' => $this->imageSyncQueueItem->city_id,
+			'src'     => $this->imageSyncQueueItem->src,
+			'dst'     => $this->imageSyncQueueItem->dst,
+		];
+	}
+
+	/**
 	 * Create container and authenticate - for source Ceph/Swift storage
 	 *
 	 * @return Wikia\SwiftStorage storage instance
@@ -129,10 +142,6 @@ class MigrateImagesBetweenSwiftDC extends Maintenance {
 				 * $res === false - error, keep an item in the queue (i.e. retry in the next run)
 				 * $res === null  - error, move the item to archive (i.e. ignore the error)
 				 */
-				if ( $res === null ) {
-					$this->output( "\tFile ({$this->imageSyncQueueItem->dst}) doesn't exist in source DC\n" );
-				}
-
 				if ( $res === false ) {
 					$this->output( "\tCannot finish operation {$this->imageSyncQueueItem->action} in destination DC \n\n" );
 				} else {
@@ -293,19 +302,17 @@ class MigrateImagesBetweenSwiftDC extends Maintenance {
 			if ( $dstStorage->exists( $remoteFile ) ) {
 				$result = $dstStorage->remove( $remoteFile )->isOK();
 			} else {
+				$this->output( "\tImage to delete does not exist in dest DC \n" );
+
+				$this->getLogger()->error( 'MigrateImagesBetweenSwiftDC: file do delete does not exist in dest DC', $this->getLoggerContext());
+
 				$result = null;
 			}
 		} else {
 			$this->output( "\tImage still exists in source DC \n" );
 			$this->imageSyncQueueItem->setError( self::ERROR_FILE_EXISTS_IN_SOURCE_DC );
 
-			$this->getLogger()->error( 'MigrateImagesBetweenSwiftDC: file still exists in source DC' , [
-				'id'      => $this->imageSyncQueueItem->id,
-				'action'  => $this->imageSyncQueueItem->action,
-				'city_id' => $this->imageSyncQueueItem->city_id,
-				'src'     => $this->imageSyncQueueItem->src,
-				'dst'     => $this->imageSyncQueueItem->dst,
-			]);
+			$this->getLogger()->error( 'MigrateImagesBetweenSwiftDC: file still exists in source DC' , $this->getLoggerContext());
 
 			$result = null;
 		}

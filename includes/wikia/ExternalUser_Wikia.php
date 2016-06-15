@@ -282,8 +282,6 @@ class ExternalUser_Wikia extends ExternalUser {
 
 			$dbw->commit( __METHOD__ );
 
-			wfRunHooks( 'ExternalUserAddUserToDatabaseComplete', [ &$User ] );
-
 			\Wikia\Logger\WikiaLogger::instance()->info(
 				'HELIOS_REGISTRATION_INSERTS',
 				[ 'exception' => new Exception, 'userid' => $User->mId, 'username' => $User->mName ]

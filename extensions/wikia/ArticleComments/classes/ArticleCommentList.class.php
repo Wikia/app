@@ -718,7 +718,7 @@ class ArticleCommentList {
 				foreach ( self::$mArticlesToDelete as $page_id => $oComment ) {
 					$oCommentTitle = $oComment->getTitle();
 					if ( $oCommentTitle instanceof Title ) {
-						$oComment = new ArticleComment( $oCommentTitle );
+						$oComment = ArticleComment::newFromTitle( $oCommentTitle );
 						$oComment->doDeleteComment( $deleteReason );
 					}
 				}

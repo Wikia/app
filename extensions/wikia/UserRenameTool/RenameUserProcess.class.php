@@ -566,10 +566,6 @@ class RenameUserProcess {
 
 		$this->invalidateUser( $this->mOldUsername );
 
-		$hookName = 'UserRename::AfterAccountRename';
-		$this->addLog( "Broadcasting hook: {$hookName}" );
-		wfRunHooks( $hookName, array( $this->mUserId, $this->mOldUsername, $this->mNewUsername ) );
-
 		// process global tables
 		$this->addLog( "Initializing update of global shared DB's." );
 		$this->updateGlobal();

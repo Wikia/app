@@ -71,9 +71,10 @@ class FinishCreateWikiController extends WikiaController {
 		$this->skipRendering();
 		$this->LoadState();
 
-		$mainPage = wfMsgForContent( 'mainpage' );
+		$mainPageTitleText = $wgSitename;
 
 		// SUS-563 debug
+		$mainPageMessageContent = wfMsgForContent( 'mainpage' );
 		$mediawikiMainPageArticleText = '';
 		$mediawikiMainPageTitle = Title::newFromText('Mainpage', NS_MEDIAWIKI);
 
@@ -94,8 +95,8 @@ class FinishCreateWikiController extends WikiaController {
 			[
 				'mediawikiMainPageArticleText' => $mediawikiMainPageArticleText,
 				'wgSitename' => $wgSitename,
-				'mainPageMessage' => $mainPage,
-				'suspicious' => ( $mainPage !== $wgSitename )
+				'mainPageMessage' => $mainPageMessageContent,
+				'suspicious' => ( $mainPageMessageContent !== $wgSitename )
 			]
 		);
 		// SUS-563 debug end
@@ -108,7 +109,7 @@ class FinishCreateWikiController extends WikiaController {
 
 		// set description on main page
 		if(!empty($this->params['wikiDescription'])) {
-			$mainTitle = Title::newFromText( $mainPage );
+			$mainTitle = Title::newFromText( $mainPageTitleText );
 			$mainId = $mainTitle->getArticleID();
 			$mainArticle = Article::newFromID( $mainId );
 
@@ -120,7 +121,7 @@ class FinishCreateWikiController extends WikiaController {
 				}
 
 				$mainArticle->doEdit( $newMainPageText, '' );
-				$this->initHeroModule( $mainPage );
+				$this->initHeroModule( $mainPageTitleText );
 			}
 		}
 
@@ -128,7 +129,7 @@ class FinishCreateWikiController extends WikiaController {
 
 		$this->clearState();
 
-		$wgOut->redirect($mainPage.'?wiki-welcome=1');
+		$wgOut->redirect( $mainPageTitleText . '?wiki-welcome=1' );
 	}
 
 	/**
