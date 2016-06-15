@@ -282,7 +282,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	private function calculateCurrentUserRank( $userContributionCount , $topContributors ) {
 		$userRank = '-';
 
-		if ( $userContributionCount > 0 ) {
+		if ( $this->getUser()->isLoggedIn() && $userContributionCount > 0 ) {
 			$rank = 1;
 
 			foreach ( $topContributors as $contributor ) {

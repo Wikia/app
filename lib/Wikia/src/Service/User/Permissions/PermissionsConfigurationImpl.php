@@ -204,7 +204,6 @@ class PermissionsConfigurationImpl implements PermissionsConfiguration {
 		'powerdelete',
 		'quicktools',
 		'quickadopt',
-		'regexblock',
 		'restrictsession',
 		'scribeevents',
 		'performancestats',
