@@ -47,25 +47,21 @@ class WallHooksHelper {
 	 * @throws MWException
 	 */
 	static public function onArticleViewHeader( &$article, &$outputDone, &$useParserCache ) {
-		wfProfileIn( __METHOD__ );
 
-		$app = F::App();
+		$app = F::app();
 		$helper = new WallHelper();
 		$title = $article->getTitle();
 
-		if ( $title->getNamespace() === NS_USER_WALL_MESSAGE
-				&& intval( $title->getText() ) > 0
-		) {
+		if ( $title->getNamespace() === NS_USER_WALL_MESSAGE && intval( $title->getText() ) > 0  ) {
 			// message wall index - brick page
 			$outputDone = true;
+			$app->wg->SuppressPageHeader = true;
 
 			$mainTitle = Title::newFromId( $title->getText() );
 			if ( empty( $mainTitle ) ) {
 				$dbkey = null;
-				$fromDeleted = true;
 			} else {
 				$dbkey = $mainTitle->getDBkey();
-				$fromDeleted = false;
 			}
 
 			if ( empty( $dbkey ) ) {
@@ -73,48 +69,49 @@ class WallHooksHelper {
 				$mainTitle = Title::newFromId( $title->getText(), Title::GAID_FOR_UPDATE );
 				if ( !empty( $mainTitle ) ) {
 					$dbkey = $mainTitle->getDBkey();
-					$fromDeleted = false;
 				}
 			}
 
 			if ( empty( $dbkey ) || !$helper->isDbkeyFromWall( $dbkey ) ) {
 				// no dbkey or not from wall, redirect to wall
 				$app->wg->Out->redirect( static::getWallTitle()->getFullUrl(), 301 );
-
-				wfProfileOut( __METHOD__ );
 				return true;
-			} else {
-				// article exists or existed
-				if ( $fromDeleted ) {
-					$app->wg->SuppressPageHeader = true;
-					$app->wg->Out->addHTML(
-						$app->renderView( 'WallController', 'messageDeleted', [
-							'title' => wfMessage( 'wall-deleted-msg-pagetitle' )->text()
-						] )
-					);
-					$app->wg->Out->setPageTitle( wfMessage( 'wall-deleted-msg-pagetitle' )->text() );
-					$app->wg->Out->setHTMLTitle( wfMessage( 'errorpagetitle' )->text() );
-				} else {
-					$wallMessage = WallMessage::newFromTitle( $mainTitle );
-					$app->wg->SuppressPageHeader = true;
-					if ( $wallMessage->isVisible( $app->wg->User ) ||
-							( $wallMessage->canViewDeletedMessage( $app->wg->User ) && $app->wg->Request->getVal( 'show' ) == '1' )
-					) {
-						if ( wfRunHooks( 'WallBeforeRenderThread', [ $mainTitle, $wallMessage ] ) ) {
-							$app->wg->Out->addHTML( $app->renderView( 'WallController', 'thread',  [ 'id' => $title->getText(),  'title' => $wallMessage->getArticleTitle() ] ) );
-						}
-					} else {
-						$app->wg->Out->addHTML( $app->renderView( 'WallController', 'messageDeleted', [ 'title' => wfMessage( 'wall-deleted-msg-pagetitle' )->text() ] ) );
-					}
-				}
 			}
 
-			wfProfileOut( __METHOD__ );
+			// article exists or existed
+			$wallMessage = WallMessage::newFromTitle( $mainTitle );
+			$isDeleted = !$wallMessage->isVisible( $app->wg->User );
+			$showDeleted = ( $isDeleted
+				&& $wallMessage->canViewDeletedMessage( $app->wg->User )
+				&& $app->wg->Request->getVal( 'show' ) == '1' );
+
+			if ( $isDeleted ) {
+				$app->wg->Out->setStatusCode( 404 );
+			}
+
+			if ( $isDeleted && !$showDeleted ) {
+				$app->wg->Out->addHTML( $app->renderView(
+					'WallController',
+					'messageDeleted',
+					[ 'title' => wfMessage( 'wall-deleted-msg-pagetitle' )->text() ]
+				) );
+				return true;
+			}
+
+			if ( !wfRunHooks( 'WallBeforeRenderThread', [ $mainTitle, $wallMessage ] ) ) {
+				return true;
+			}
+
+			$app->wg->Out->addHTML( $app->renderView(
+				'WallController',
+				'thread',
+				[ 'id' => $title->getText(), 'title' => $wallMessage->getArticleTitle() ]
+			) );
+
 			return true;
 		}
 
 		if ( empty( $app->wg->EnableWallExt ) ) {
-			wfProfileOut( __METHOD__ );
 			return true;
 		}
 
@@ -132,14 +129,12 @@ class WallHooksHelper {
 		) {
 			$title = static::getWallTitle();
 			if ( empty( $title ) ) {
-				wfProfileOut( __METHOD__ );
 				return true;
 			}
 			// user talk page -> redirect to message wall
 			$outputDone = true;
 			$app->wg->Out->redirect( $title->getFullUrl(), 301 );
 
-			wfProfileOut( __METHOD__ );
 			return true;
 		}
 
@@ -156,7 +151,6 @@ class WallHooksHelper {
 			$title = Title::newFromText( $parts[0] . '/' . $parts[1], NS_USER_WALL );
 			$app->wg->Out->redirect( $title->getFullUrl(), 301 );
 
-			wfProfileOut( __METHOD__ );
 			return true;
 		}
 
@@ -176,11 +170,9 @@ class WallHooksHelper {
 
 			$app->wg->Out->addHTML( $app->renderView( 'WallController', 'renderOldUserTalkSubpage', [ 'subpage' => $parts[1], 'wallUrl' => static::getWallTitle()->getFullUrl() ] ) );
 
-			wfProfileOut( __METHOD__ );
 			return true;
 		}
 
-		wfProfileOut( __METHOD__ );
 		return true;
 	}
 
