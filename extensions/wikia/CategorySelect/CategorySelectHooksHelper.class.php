@@ -100,8 +100,8 @@ class CategorySelectHooksHelper {
 	 * @return Boolean because it's a hook
 	 */
 	public static function onEditPageShowEditFormFields( $editPage, $out ) {
-		CategoryHelper::extractCategoriesFromWikitext( $editPage->textbox1 );
-		$out->addHTML( F::app()->renderView( 'CategorySelect', 'editPageMetadata' ) );
+		$data = CategoryHelper::extractCategoriesFromWikitext( $editPage->textbox1 );
+		$out->addHTML( F::app()->renderView( 'CategorySelect', 'editPageMetadata', [ 'categories' => $data ] ) );
 		return true;
 	}
 
