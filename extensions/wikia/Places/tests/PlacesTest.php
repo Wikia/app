@@ -22,13 +22,14 @@ class PlacesTest extends WikiaBaseTest {
 		$this->model = PlaceModel::newFromAttributes($this->attribs);
 
 		// use main page as an article for this place
-		$mainPage = Title::newMainPage();
-		$this->model->setPageId($mainPage->getArticleId());
+		$this->model->setPageId(1);
+
+		// mock Title object
+		$this->mockClassWithMethods('Title', [
+			'exists' => true
+		], 'newFromId');
 	}
 
-	/**
-	 * @group UsingDB
-	 */
 	function testPlaceModelNewFromAttributes() {
 		$this->assertInstanceOf('PlaceModel', $this->model);
 
@@ -44,9 +45,6 @@ class PlacesTest extends WikiaBaseTest {
 		$this->assertEquals(52.406878001, $this->model->getLat());
 	}
 
-	/**
-	 * @group UsingDB
-	 */
 	function testPlaceFromAttributes() {
 		$resp = $this->app->sendRequest('Places', 'placeFromAttributes', array('attributes' => $this->attribs));
 		$html = $resp->toString();
@@ -56,9 +54,6 @@ class PlacesTest extends WikiaBaseTest {
 		$this->assertContains('<meta itemprop="longitude" content="16.922124">', $html);
 	}
 
-	/**
-	 * @group UsingDB
-	 */
 	function testPlaceFromModel() {
 		$resp = $this->app->sendRequest('Places', 'placeFromModel', array('model' => $this->model));
 		$html = $resp->toString();
@@ -68,15 +63,7 @@ class PlacesTest extends WikiaBaseTest {
 		$this->assertContains('<meta itemprop="longitude" content="16.922124">', $html);
 	}
 
-	/**
-	 * @group Slow
-	 * @slowExecutionTime 0.01362 ms
-	 * @group UsingDB
-	 */
 	function testRenderMarkers() {
-		// mock wgTitle needed by RedirectsService
-		$this->mockGlobalVariable( 'wgTitle', Title::newMainPage() );
-
 		$resp = $this->app->sendRequest('Places', 'renderMarkers', array('markers' => array($this->model)));
 		$html = $resp->toString();
 
@@ -85,13 +72,20 @@ class PlacesTest extends WikiaBaseTest {
 		$this->assertContains('"markers":[{"lat":52.406878,"lan":16.922124,', $html);
 	}
 
-	/**
-	 * @group UsingDB
-	 */
 	function testGetPlaceWikiTextFromModel() {
 		$resp = $this->app->sendRequest('Places', 'getPlaceWikiTextFromModel', array('model' => $this->model));
 		$html = $resp->toString();
 
 		$this->assertEquals("<place width='300' lat='52.406878' lon='16.922124' />", $html);
+	}
+
+	function testGetDistanceTo() {
+		$dest = PlaceModel::newFromAttributes( [
+			'lat' => '52.38720549',
+			'lon' => '16.95263382',
+		] );
+
+		$this->assertEquals( 0, $this->model->getDistanceTo( $this->model ) );
+		$this->assertEquals( 3012, $this->model->getDistanceTo( $dest ) );
 	}
 }
