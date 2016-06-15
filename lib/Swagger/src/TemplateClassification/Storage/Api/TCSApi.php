@@ -10,7 +10,7 @@
  * @link     https://github.com/swagger-api/swagger-codegen
  */
 /**
- *  Copyright 2015 SmartBear Software
+ *  Copyright 2016 SmartBear Software
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -92,26 +92,46 @@ class TCSApi
   
     
     /**
-     * getTemplateTypesOnWiki
+     * getTemplateDetails
      *
-     * Provides template types on wiki
+     * Provides all template types with providers information
      *
      * @param int $wiki_id Wikia ID (required)
-     * @return \Swagger\Client\TemplateClassification\Storage\Models\TemplateTypeHolder[]
+     * @param int $page_id Article ID (required)
+     * @return \Swagger\Client\TemplateClassification\Storage\Models\TemplateTypeProvider[]
      * @throws \Swagger\Client\ApiException on non-2xx response
      */
-    public function getTemplateTypesOnWiki($wiki_id)
+    public function getTemplateDetails($wiki_id, $page_id)
+    {
+        list($response, $statusCode, $httpHeader) = $this->getTemplateDetailsWithHttpInfo ($wiki_id, $page_id);
+        return $response; 
+    }
+
+
+    /**
+     * getTemplateDetailsWithHttpInfo
+     *
+     * Provides all template types with providers information
+     *
+     * @param int $wiki_id Wikia ID (required)
+     * @param int $page_id Article ID (required)
+     * @return Array of \Swagger\Client\TemplateClassification\Storage\Models\TemplateTypeProvider[], HTTP status code, HTTP response headers (array of strings)
+     * @throws \Swagger\Client\ApiException on non-2xx response
+     */
+    public function getTemplateDetailsWithHttpInfo($wiki_id, $page_id)
     {
         
         // verify the required parameter 'wiki_id' is set
         if ($wiki_id === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $wiki_id when calling getTemplateTypesOnWiki');
+            throw new \InvalidArgumentException('Missing the required parameter $wiki_id when calling getTemplateDetails');
+        }
+        // verify the required parameter 'page_id' is set
+        if ($page_id === null) {
+            throw new \InvalidArgumentException('Missing the required parameter $page_id when calling getTemplateDetails');
         }
   
         // parse inputs
-        $resourcePath = "/{wiki_id}";
-        $resourcePath = str_replace("{format}", "json", $resourcePath);
-        $method = "GET";
+        $resourcePath = "/{wiki_id}/{page_id}/providers";
         $httpBody = '';
         $queryParams = array();
         $headerParams = array();
@@ -120,56 +140,64 @@ class TCSApi
         if (!is_null($_header_accept)) {
             $headerParams['Accept'] = $_header_accept;
         }
-        $headerParams['Content-Type'] = ApiClient::selectHeaderContentType(array());
+        $headerParams['Content-Type'] = ApiClient::selectHeaderContentType(array('application/json'));
   
         
         
         // path params
+        
         if ($wiki_id !== null) {
             $resourcePath = str_replace(
                 "{" . "wiki_id" . "}",
                 $this->apiClient->getSerializer()->toPathValue($wiki_id),
                 $resourcePath
             );
+        }// path params
+        
+        if ($page_id !== null) {
+            $resourcePath = str_replace(
+                "{" . "page_id" . "}",
+                $this->apiClient->getSerializer()->toPathValue($page_id),
+                $resourcePath
+            );
         }
+        // default format to json
+        $resourcePath = str_replace("{format}", "json", $resourcePath);
+
         
         
   
         // for model (json/xml)
         if (isset($_tempBody)) {
             $httpBody = $_tempBody; // $_tempBody is the method argument, if present
-        } else if (count($formParams) > 0) {
+        } elseif (count($formParams) > 0) {
             $httpBody = $formParams; // for HTTP post (form)
         }
         
         // make the API Call
-        try
-        {
-            list($response, $httpHeader) = $this->apiClient->callApi(
-                $resourcePath, $method,
+        try {
+            list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
+                $resourcePath, 'GET',
                 $queryParams, $httpBody,
-                $headerParams, '\Swagger\Client\TemplateClassification\Storage\Models\TemplateTypeHolder[]'
+                $headerParams, '\Swagger\Client\TemplateClassification\Storage\Models\TemplateTypeProvider[]'
             );
             
             if (!$response) {
-                return null;
+                return array(null, $statusCode, $httpHeader);
             }
 
-            return $this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\TemplateClassification\Storage\Models\TemplateTypeHolder[]', $httpHeader);
+            return array(\Swagger\Client\ObjectSerializer::deserialize($response, '\Swagger\Client\TemplateClassification\Storage\Models\TemplateTypeProvider[]', $httpHeader), $statusCode, $httpHeader);
             
         } catch (ApiException $e) {
             switch ($e->getCode()) { 
             case 200:
-                $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\TemplateClassification\Storage\Models\TemplateTypeHolder[]', $e->getResponseHeaders());
+                $data = \Swagger\Client\ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\TemplateClassification\Storage\Models\TemplateTypeProvider[]', $e->getResponseHeaders());
                 $e->setResponseObject($data);
                 break;
             }
   
             throw $e;
         }
-        
-        return null;
-        
     }
     
     /**
@@ -184,6 +212,23 @@ class TCSApi
      */
     public function getTemplateType($wiki_id, $page_id)
     {
+        list($response, $statusCode, $httpHeader) = $this->getTemplateTypeWithHttpInfo ($wiki_id, $page_id);
+        return $response; 
+    }
+
+
+    /**
+     * getTemplateTypeWithHttpInfo
+     *
+     * Provides template type
+     *
+     * @param int $wiki_id Wikia ID (required)
+     * @param int $page_id Article ID (required)
+     * @return Array of \Swagger\Client\TemplateClassification\Storage\Models\TemplateTypeHolder, HTTP status code, HTTP response headers (array of strings)
+     * @throws \Swagger\Client\ApiException on non-2xx response
+     */
+    public function getTemplateTypeWithHttpInfo($wiki_id, $page_id)
+    {
         
         // verify the required parameter 'wiki_id' is set
         if ($wiki_id === null) {
@@ -196,8 +241,6 @@ class TCSApi
   
         // parse inputs
         $resourcePath = "/{wiki_id}/{page_id}";
-        $resourcePath = str_replace("{format}", "json", $resourcePath);
-        $method = "GET";
         $httpBody = '';
         $queryParams = array();
         $headerParams = array();
@@ -206,11 +249,12 @@ class TCSApi
         if (!is_null($_header_accept)) {
             $headerParams['Accept'] = $_header_accept;
         }
-        $headerParams['Content-Type'] = ApiClient::selectHeaderContentType(array());
+        $headerParams['Content-Type'] = ApiClient::selectHeaderContentType(array('application/json'));
   
         
         
         // path params
+        
         if ($wiki_id !== null) {
             $resourcePath = str_replace(
                 "{" . "wiki_id" . "}",
@@ -218,6 +262,7 @@ class TCSApi
                 $resourcePath
             );
         }// path params
+        
         if ($page_id !== null) {
             $resourcePath = str_replace(
                 "{" . "page_id" . "}",
@@ -225,44 +270,138 @@ class TCSApi
                 $resourcePath
             );
         }
+        // default format to json
+        $resourcePath = str_replace("{format}", "json", $resourcePath);
+
         
         
   
         // for model (json/xml)
         if (isset($_tempBody)) {
             $httpBody = $_tempBody; // $_tempBody is the method argument, if present
-        } else if (count($formParams) > 0) {
+        } elseif (count($formParams) > 0) {
             $httpBody = $formParams; // for HTTP post (form)
         }
         
         // make the API Call
-        try
-        {
-            list($response, $httpHeader) = $this->apiClient->callApi(
-                $resourcePath, $method,
+        try {
+            list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
+                $resourcePath, 'GET',
                 $queryParams, $httpBody,
                 $headerParams, '\Swagger\Client\TemplateClassification\Storage\Models\TemplateTypeHolder'
             );
             
             if (!$response) {
-                return null;
+                return array(null, $statusCode, $httpHeader);
             }
 
-            return $this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\TemplateClassification\Storage\Models\TemplateTypeHolder', $httpHeader);
+            return array(\Swagger\Client\ObjectSerializer::deserialize($response, '\Swagger\Client\TemplateClassification\Storage\Models\TemplateTypeHolder', $httpHeader), $statusCode, $httpHeader);
             
         } catch (ApiException $e) {
             switch ($e->getCode()) { 
             case 200:
-                $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\TemplateClassification\Storage\Models\TemplateTypeHolder', $e->getResponseHeaders());
+                $data = \Swagger\Client\ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\TemplateClassification\Storage\Models\TemplateTypeHolder', $e->getResponseHeaders());
                 $e->setResponseObject($data);
                 break;
             }
   
             throw $e;
         }
+    }
+    
+    /**
+     * getTemplateTypesOnWiki
+     *
+     * Provides template types on wiki
+     *
+     * @param int $wiki_id Wikia ID (required)
+     * @return \Swagger\Client\TemplateClassification\Storage\Models\TemplateTypeHolder[]
+     * @throws \Swagger\Client\ApiException on non-2xx response
+     */
+    public function getTemplateTypesOnWiki($wiki_id)
+    {
+        list($response, $statusCode, $httpHeader) = $this->getTemplateTypesOnWikiWithHttpInfo ($wiki_id);
+        return $response; 
+    }
+
+
+    /**
+     * getTemplateTypesOnWikiWithHttpInfo
+     *
+     * Provides template types on wiki
+     *
+     * @param int $wiki_id Wikia ID (required)
+     * @return Array of \Swagger\Client\TemplateClassification\Storage\Models\TemplateTypeHolder[], HTTP status code, HTTP response headers (array of strings)
+     * @throws \Swagger\Client\ApiException on non-2xx response
+     */
+    public function getTemplateTypesOnWikiWithHttpInfo($wiki_id)
+    {
         
-        return null;
+        // verify the required parameter 'wiki_id' is set
+        if ($wiki_id === null) {
+            throw new \InvalidArgumentException('Missing the required parameter $wiki_id when calling getTemplateTypesOnWiki');
+        }
+  
+        // parse inputs
+        $resourcePath = "/{wiki_id}";
+        $httpBody = '';
+        $queryParams = array();
+        $headerParams = array();
+        $formParams = array();
+        $_header_accept = ApiClient::selectHeaderAccept(array('application/json'));
+        if (!is_null($_header_accept)) {
+            $headerParams['Accept'] = $_header_accept;
+        }
+        $headerParams['Content-Type'] = ApiClient::selectHeaderContentType(array('application/json'));
+  
         
+        
+        // path params
+        
+        if ($wiki_id !== null) {
+            $resourcePath = str_replace(
+                "{" . "wiki_id" . "}",
+                $this->apiClient->getSerializer()->toPathValue($wiki_id),
+                $resourcePath
+            );
+        }
+        // default format to json
+        $resourcePath = str_replace("{format}", "json", $resourcePath);
+
+        
+        
+  
+        // for model (json/xml)
+        if (isset($_tempBody)) {
+            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
+        } elseif (count($formParams) > 0) {
+            $httpBody = $formParams; // for HTTP post (form)
+        }
+        
+        // make the API Call
+        try {
+            list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
+                $resourcePath, 'GET',
+                $queryParams, $httpBody,
+                $headerParams, '\Swagger\Client\TemplateClassification\Storage\Models\TemplateTypeHolder[]'
+            );
+            
+            if (!$response) {
+                return array(null, $statusCode, $httpHeader);
+            }
+
+            return array(\Swagger\Client\ObjectSerializer::deserialize($response, '\Swagger\Client\TemplateClassification\Storage\Models\TemplateTypeHolder[]', $httpHeader), $statusCode, $httpHeader);
+            
+        } catch (ApiException $e) {
+            switch ($e->getCode()) { 
+            case 200:
+                $data = \Swagger\Client\ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\TemplateClassification\Storage\Models\TemplateTypeHolder[]', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            }
+  
+            throw $e;
+        }
     }
     
     /**
@@ -276,7 +415,25 @@ class TCSApi
      * @return void
      * @throws \Swagger\Client\ApiException on non-2xx response
      */
-    public function insertTemplateDetails($wiki_id, $page_id, $body=null)
+    public function insertTemplateDetails($wiki_id, $page_id, $body = null)
+    {
+        list($response, $statusCode, $httpHeader) = $this->insertTemplateDetailsWithHttpInfo ($wiki_id, $page_id, $body);
+        return $response; 
+    }
+
+
+    /**
+     * insertTemplateDetailsWithHttpInfo
+     *
+     * Save template type data
+     *
+     * @param int $wiki_id Wikia ID (required)
+     * @param int $page_id Article ID (required)
+     * @param \Swagger\Client\TemplateClassification\Storage\Models\TemplateTypeProvider $body Provider data (optional)
+     * @return Array of null, HTTP status code, HTTP response headers (array of strings)
+     * @throws \Swagger\Client\ApiException on non-2xx response
+     */
+    public function insertTemplateDetailsWithHttpInfo($wiki_id, $page_id, $body = null)
     {
         
         // verify the required parameter 'wiki_id' is set
@@ -290,8 +447,6 @@ class TCSApi
   
         // parse inputs
         $resourcePath = "/{wiki_id}/{page_id}";
-        $resourcePath = str_replace("{format}", "json", $resourcePath);
-        $method = "POST";
         $httpBody = '';
         $queryParams = array();
         $headerParams = array();
@@ -300,11 +455,12 @@ class TCSApi
         if (!is_null($_header_accept)) {
             $headerParams['Accept'] = $_header_accept;
         }
-        $headerParams['Content-Type'] = ApiClient::selectHeaderContentType(array());
+        $headerParams['Content-Type'] = ApiClient::selectHeaderContentType(array('application/json'));
   
         
         
         // path params
+        
         if ($wiki_id !== null) {
             $resourcePath = str_replace(
                 "{" . "wiki_id" . "}",
@@ -312,6 +468,7 @@ class TCSApi
                 $resourcePath
             );
         }// path params
+        
         if ($page_id !== null) {
             $resourcePath = str_replace(
                 "{" . "page_id" . "}",
@@ -319,6 +476,9 @@ class TCSApi
                 $resourcePath
             );
         }
+        // default format to json
+        $resourcePath = str_replace("{format}", "json", $resourcePath);
+
         
         // body params
         $_tempBody = null;
@@ -329,119 +489,26 @@ class TCSApi
         // for model (json/xml)
         if (isset($_tempBody)) {
             $httpBody = $_tempBody; // $_tempBody is the method argument, if present
-        } else if (count($formParams) > 0) {
+        } elseif (count($formParams) > 0) {
             $httpBody = $formParams; // for HTTP post (form)
         }
         
         // make the API Call
-        try
-        {
-            list($response, $httpHeader) = $this->apiClient->callApi(
-                $resourcePath, $method,
+        try {
+            list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
+                $resourcePath, 'POST',
                 $queryParams, $httpBody,
                 $headerParams
             );
             
+            return array(null, $statusCode, $httpHeader);
+            
         } catch (ApiException $e) {
             switch ($e->getCode()) { 
             }
   
             throw $e;
         }
-        
-    }
-    
-    /**
-     * getTemplateDetails
-     *
-     * Provides all template types with providers information
-     *
-     * @param int $wiki_id Wikia ID (required)
-     * @param int $page_id Article ID (required)
-     * @return \Swagger\Client\TemplateClassification\Storage\Models\TemplateTypeProvider[]
-     * @throws \Swagger\Client\ApiException on non-2xx response
-     */
-    public function getTemplateDetails($wiki_id, $page_id)
-    {
-        
-        // verify the required parameter 'wiki_id' is set
-        if ($wiki_id === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $wiki_id when calling getTemplateDetails');
-        }
-        // verify the required parameter 'page_id' is set
-        if ($page_id === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $page_id when calling getTemplateDetails');
-        }
-  
-        // parse inputs
-        $resourcePath = "/{wiki_id}/{page_id}/providers";
-        $resourcePath = str_replace("{format}", "json", $resourcePath);
-        $method = "GET";
-        $httpBody = '';
-        $queryParams = array();
-        $headerParams = array();
-        $formParams = array();
-        $_header_accept = ApiClient::selectHeaderAccept(array('application/json'));
-        if (!is_null($_header_accept)) {
-            $headerParams['Accept'] = $_header_accept;
-        }
-        $headerParams['Content-Type'] = ApiClient::selectHeaderContentType(array());
-  
-        
-        
-        // path params
-        if ($wiki_id !== null) {
-            $resourcePath = str_replace(
-                "{" . "wiki_id" . "}",
-                $this->apiClient->getSerializer()->toPathValue($wiki_id),
-                $resourcePath
-            );
-        }// path params
-        if ($page_id !== null) {
-            $resourcePath = str_replace(
-                "{" . "page_id" . "}",
-                $this->apiClient->getSerializer()->toPathValue($page_id),
-                $resourcePath
-            );
-        }
-        
-        
-  
-        // for model (json/xml)
-        if (isset($_tempBody)) {
-            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
-        } else if (count($formParams) > 0) {
-            $httpBody = $formParams; // for HTTP post (form)
-        }
-        
-        // make the API Call
-        try
-        {
-            list($response, $httpHeader) = $this->apiClient->callApi(
-                $resourcePath, $method,
-                $queryParams, $httpBody,
-                $headerParams, '\Swagger\Client\TemplateClassification\Storage\Models\TemplateTypeProvider[]'
-            );
-            
-            if (!$response) {
-                return null;
-            }
-
-            return $this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\TemplateClassification\Storage\Models\TemplateTypeProvider[]', $httpHeader);
-            
-        } catch (ApiException $e) {
-            switch ($e->getCode()) { 
-            case 200:
-                $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\TemplateClassification\Storage\Models\TemplateTypeProvider[]', $e->getResponseHeaders());
-                $e->setResponseObject($data);
-                break;
-            }
-  
-            throw $e;
-        }
-        
-        return null;
-        
     }
     
 }

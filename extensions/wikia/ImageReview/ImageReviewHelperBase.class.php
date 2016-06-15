@@ -14,7 +14,7 @@ abstract class ImageReviewHelperBase extends WikiaModel {
 	 * we fetch a few icons from DB, we can skip them
 	 */
 	const LIMIT_IMAGES = 20;
-	const LIMIT_IMAGES_FROM_DB = 24;
+	const LIMIT_IMAGES_FROM_DB = 128;
 
 	/**
 	 * Define a size of a thumbnail
