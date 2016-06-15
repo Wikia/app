@@ -9,6 +9,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	'ext.wikia.adEngine.provider.gpt.googleTag',
 	'ext.wikia.aRecoveryEngine.recovery.helper',
 	'ext.wikia.adEngine.slotTweaker',
+	'wikia.window',
 	require.optional('ext.wikia.adEngine.provider.gpt.sraHelper'),
 	require.optional('ext.wikia.adEngine.slot.scrollHandler')
 ], function (
@@ -20,6 +21,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	GoogleTag,
 	recoveryHelper,
 	slotTweaker,
+	win,
 	sraHelper,
 	scrollHandler
 ) {
@@ -72,6 +74,9 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 			if (count !== null) {
 				slotTargeting.rv = count.toString();
 			}
+		}
+		if (slot.name === 'BOTTOM_LEADERBOARD' && win.ads.runtime.uap) {
+			slotTargeting.uap = win.ads.runtime.uap.toString();
 		}
 
 		element = new AdElement(slot.name, slotPath, slotTargeting);

@@ -40,7 +40,8 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 				shouldFlush: function () {
 					return true;
 				}
-			}
+			},
+			win: {}
 		};
 	mocks.googleTag.prototype.isInitialized = function () {
 		return true;
@@ -66,6 +67,7 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 			mocks.googleTag,
 			mocks.recoveryHelper,
 			mocks.slotTweaker,
+			mocks.win,
 			mocks.sraHelper
 		);
 	}

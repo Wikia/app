@@ -17,6 +17,36 @@ define('ext.wikia.adEngine.template.bfaa', [
 		page,
 		wrapper;
 
+	function getTopOffset(el) {
+		var topPos = 0;
+		for (; el !== null; el = el.offsetParent) {
+			topPos += el.offsetTop;
+		}
+
+		return topPos;
+	}
+
+	function pushBfab() {
+		var scrollPosition = win.scrollY || win.pageYOffset || doc.documentElement.scrollTop,
+			slotName = 'BOTTOM_LEADERBOARD',
+			bfab = doc.getElementById(slotName),
+			wikiaMainContent = doc.getElementById('WikiaMainContent');
+
+		if (!bfab) {
+			log(['pushBfab', 'No BFAB slot'], 'error', logGroup);
+			doc.removeEventListener('scroll', pushBfab);
+			return;
+		}
+
+		if (getTopOffset(wikiaMainContent) < scrollPosition) {
+			win.ads.runtime.disableBtf = false;
+			win.adslots2.push(slotName);
+			win.ads.runtime.disableBtf = true;
+			doc.removeEventListener('scroll', pushBfab);
+			log(['pushBfab', 'Pushed BFAB'], 'debug', logGroup);
+		}
+	}
+
 	desktopHandler = {
 		updateNavBar: function (height) {
 			var position = win.pageYOffset;
@@ -43,6 +73,8 @@ define('ext.wikia.adEngine.template.bfaa', [
 			if (win.WikiaBar) {
 				win.WikiaBar.hideContainer();
 			}
+
+			doc.addEventListener('scroll', pushBfab);
 		}
 	};
 
@@ -70,7 +102,8 @@ define('ext.wikia.adEngine.template.bfaa', [
 		var backgroundColor = params.backgroundColor ? '#' + params.backgroundColor.replace('#', '') : '#000',
 			handler,
 			height = params.height || 0,
-			skin = adContext.getContext().targeting.skin;
+			skin = adContext.getContext().targeting.skin,
+			bfabLineItemId = params.uap;
 
 		switch (skin) {
 			case 'oasis':
@@ -90,6 +123,9 @@ define('ext.wikia.adEngine.template.bfaa', [
 
 		handler.show(height, backgroundColor);
 		log('show', 'info', logGroup);
+
+		win.ads.runtime.uap = bfabLineItemId;
+		log(['show', 'uap', bfabLineItemId], 'info', logGroup);
 	}
 
 	return {
