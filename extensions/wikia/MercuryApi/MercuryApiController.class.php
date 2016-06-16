@@ -164,8 +164,9 @@ class MercuryApiController extends WikiaController {
 	private function prepareWikiVariables() {
 		$wikiVariables = $this->mercuryApi->getWikiVariables();
 		$navigation = $this->getNavigation();
-		if ( empty( $navData ) ) {
-			\Wikia\Logger\WikiaLogger::instance()->error(
+
+		if ( empty( $navigation ) ) {
+			\Wikia\Logger\WikiaLogger::instance()->notice(
 				'Fallback to empty navigation'
 			);
 		}
