@@ -95,7 +95,7 @@ SCRIPT1;
 		$param['caller'] = "$class::$func:$line";
 
 		$url = Track::getURL('special', urlencode($event_type), $param, false);
-		if (Http::get($url) !== false) {
+		if (ExternalHttp::get($url) !== false) {
 			wfProfileOut(__METHOD__);
 			return true;
 		} else {

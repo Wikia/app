@@ -1,4 +1,7 @@
 <?php
+
+use \Wikia\Logger\WikiaLogger;
+
 class FinishCreateWikiController extends WikiaController {
 
 	const COOKIE_NAME = 'createnewwiki';
@@ -59,7 +62,7 @@ class FinishCreateWikiController extends WikiaController {
 	 * The values are read from the session and only accessible by the admin.
 	 */
 	public function FinishCreate() {
-		global $wgUser, $wgOut, $wgEnableNjordExt;
+		global $wgUser, $wgOut, $wgEnableNjordExt, $wgSitename;
 
 		if ( !$wgUser->isAllowed( 'finishcreate' ) ) {
 			return false;
@@ -67,7 +70,36 @@ class FinishCreateWikiController extends WikiaController {
 
 		$this->skipRendering();
 		$this->LoadState();
-		$mainPage = wfMsgForContent( 'mainpage' );
+
+		$mainPageTitleText = $wgSitename;
+
+		// SUS-563 debug
+		$mainPageMessageContent = wfMsgForContent( 'mainpage' );
+		$mediawikiMainPageArticleText = '';
+		$mediawikiMainPageTitle = Title::newFromText('Mainpage', NS_MEDIAWIKI);
+
+		if ( !empty ( $mediawikiMainPageTitle ) && $mediawikiMainPageTitle->exists() ) {
+			$mediawikiMainPageArticle = Article::newFromID( $mediawikiMainPageTitle->getArticleID() );
+
+			if ( !empty ( $mediawikiMainPageArticle ) && $mediawikiMainPageArticle->exists() ) {
+				$mediawikiMainPageArticleText = $mediawikiMainPageArticle->getRawText();
+			} else {
+				WikiaLogger::instance()->debug( 'SUS-563 mainpage message article issue' );
+			}
+		} else {
+			WikiaLogger::instance()->debug( 'SUS-563 mainpage message title issue' );
+		}
+		
+		WikiaLogger::instance()->debug(
+			'SUS-563',
+			[
+				'mediawikiMainPageArticleText' => $mediawikiMainPageArticleText,
+				'wgSitename' => $wgSitename,
+				'mainPageMessage' => $mainPageMessageContent,
+				'suspicious' => ( $mainPageMessageContent !== $wgSitename )
+			]
+		);
+		// SUS-563 debug end
 
 		// set theme
 		if(!empty($this->params['color-body'])) {
@@ -77,7 +109,7 @@ class FinishCreateWikiController extends WikiaController {
 
 		// set description on main page
 		if(!empty($this->params['wikiDescription'])) {
-			$mainTitle = Title::newFromText( $mainPage );
+			$mainTitle = Title::newFromText( $mainPageTitleText );
 			$mainId = $mainTitle->getArticleID();
 			$mainArticle = Article::newFromID( $mainId );
 
@@ -89,7 +121,7 @@ class FinishCreateWikiController extends WikiaController {
 				}
 
 				$mainArticle->doEdit( $newMainPageText, '' );
-				$this->initHeroModule( $mainPage );
+				$this->initHeroModule( $mainPageTitleText );
 			}
 		}
 
@@ -97,7 +129,7 @@ class FinishCreateWikiController extends WikiaController {
 
 		$this->clearState();
 
-		$wgOut->redirect($mainPage.'?wiki-welcome=1');
+		$wgOut->redirect( $mainPageTitleText . '?wiki-welcome=1' );
 	}
 
 	/**

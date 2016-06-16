@@ -42,7 +42,12 @@ describe('ext.wikia.adEngine.provider.*', function () {
 		lazyQueue: {},
 		window: {},
 		beforeSuccess: noop,
-		beforeHop: noop
+		beforeHop: noop,
+		btfBlocker: {
+			decorate: function(atfSlots, fillInSlot) {
+				return fillInSlot;
+			}
+		}
 	};
 
 	function createSlot(slotName) {
@@ -57,6 +62,7 @@ describe('ext.wikia.adEngine.provider.*', function () {
 		return modules['ext.wikia.adEngine.provider.factory.wikiaGpt'](
 			mocks.adContext,
 			mocks.adLogicPageParams,
+			mocks.btfBlocker,
 			mocks.gptHelper,
 			mocks.log,
 			mocks.lookups
@@ -66,16 +72,8 @@ describe('ext.wikia.adEngine.provider.*', function () {
 	function getProvider(providerName) {
 		switch (providerName) {
 			case 'directGpt':
-				return modules['ext.wikia.adEngine.provider.directGpt'](
-					mocks.adContext,
-					getFactory(),
-					mocks.slotTweaker,
-					mocks.lazyQueue,
-					mocks.log,
-					mocks.window
-				);
 			case 'remnantGpt':
-				return modules['ext.wikia.adEngine.provider.remnantGpt'](
+				return modules['ext.wikia.adEngine.provider.' + providerName](
 					getFactory(),
 					mocks.slotTweaker
 				);
@@ -124,6 +122,7 @@ describe('ext.wikia.adEngine.provider.*', function () {
 
 	it('directGpt: Push ad with specific slot sizes', function () {
 		var expectedSizes = {
+			BOTTOM_LEADERBOARD: '728x90,970x250,1024x416',
 			CORP_TOP_LEADERBOARD: '728x90,1030x130,1030x65,1030x250,970x365,970x250,970x90,970x66,970x180,980x150,1024x416,1440x585',
 			CORP_TOP_RIGHT_BOXAD: '300x250,300x600,300x1050',
 			HOME_TOP_LEADERBOARD: '728x90,1030x130,1030x65,1030x250,970x365,970x250,970x90,970x66,970x180,980x150,1024x416,1440x585',
@@ -135,7 +134,7 @@ describe('ext.wikia.adEngine.provider.*', function () {
 			INVISIBLE_HIGH_IMPACT_2: 'out-of-page',
 			INVISIBLE_SKIN: '1000x1000,1x1',
 			LEFT_SKYSCRAPER_2: '120x600,160x600,300x250,300x600,300x1050',
-			LEFT_SKYSCRAPER_3: '120x600,160x600,300x250,300x600,1024x416',
+			LEFT_SKYSCRAPER_3: '120x600,160x600,300x250,300x600',
 			PREFOOTER_LEFT_BOXAD: '300x250',
 			PREFOOTER_RIGHT_BOXAD: '300x250',
 			TOP_LEADERBOARD: '728x90,1030x130,1030x65,1030x250,970x365,970x250,970x90,970x66,970x180,980x150,1024x416,1440x585',
@@ -166,6 +165,7 @@ describe('ext.wikia.adEngine.provider.*', function () {
 
 	it('remnantGpt: Push ad with specific slot sizes', function () {
 		var expectedSizes = {
+			BOTTOM_LEADERBOARD: '728x90,970x250,1024x416',
 			CORP_TOP_LEADERBOARD: null,
 			CORP_TOP_RIGHT_BOXAD: null,
 			HOME_TOP_LEADERBOARD: '728x90,1030x130,1030x65,1030x250,970x365,970x250,970x90,970x66,970x180,980x150',
@@ -210,9 +210,10 @@ describe('ext.wikia.adEngine.provider.*', function () {
 		var expectedSizes = {
 			INVISIBLE_HIGH_IMPACT: '1x1',
 			INVISIBLE_HIGH_IMPACT_2: null,
-			MOBILE_TOP_LEADERBOARD: '320x50,320x100,300x250,300x50,1x1',
-			MOBILE_IN_CONTENT: '320x50,300x250,300x50,1x1',
-			MOBILE_PREFOOTER: '320x50,300x250,300x50,1x1'
+			MOBILE_TOP_LEADERBOARD: '300x50,300x250,320x50,320x100,320x480',
+			MOBILE_BOTTOM_LEADERBOARD: '300x50,300x250,320x50,320x100,320x480',
+			MOBILE_IN_CONTENT: '320x50,300x250,300x50,320x480',
+			MOBILE_PREFOOTER: '320x50,300x250,300x50'
 		};
 
 		assertProviderSlotMap(getProvider('directGptMobile'), expectedSizes);
@@ -222,9 +223,10 @@ describe('ext.wikia.adEngine.provider.*', function () {
 		var expectedSizes = {
 			INVISIBLE_HIGH_IMPACT: null,
 			INVISIBLE_HIGH_IMPACT_2: null,
-			MOBILE_TOP_LEADERBOARD: '320x50,320x100,300x250,300x50,1x1',
-			MOBILE_IN_CONTENT: '320x50,300x250,300x50,1x1',
-			MOBILE_PREFOOTER: '320x50,300x250,300x50,1x1'
+			MOBILE_TOP_LEADERBOARD: '300x50,300x250,320x50,320x100,320x480',
+			MOBILE_BOTTOM_LEADERBOARD: '300x50,300x250,320x50,320x100,320x480',
+			MOBILE_IN_CONTENT: '320x50,300x250,300x50,320x480',
+			MOBILE_PREFOOTER: '320x50,300x250,300x50'
 		};
 
 		assertProviderSlotMap(getProvider('remnantGptMobile'), expectedSizes);

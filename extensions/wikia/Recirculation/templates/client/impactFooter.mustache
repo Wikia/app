@@ -1,0 +1,54 @@
+<section class="recirculation-impact-footer">
+	<h2>{{title}}</h2>
+	<div class="items">
+		{{#items}}
+			<div class="item item-{{ source }}" data-index="{{ index }}" data-source="{{source}}">
+				<a title="{{ title }}" href="{{ url }}" class="track-items">
+					<div class="thumbnail">
+						{{#thumbnail}}
+							<img src="{{ thumbnail }}" alt="{{ title }}">
+						{{/thumbnail}}
+					</div>
+					<h4 data-tag="{{i18n.featuredFandomSubtitle}}">{{ title }}</h4>
+				</a>
+			</div>
+		{{/items}}
+	</div>
+
+{{#discussions}}
+<div class="discussion-module">
+	<div class="discussion-header" style="background: url({{headerImage}}) center center;">
+		<div class="discussion-header-alpha">
+			<h3>{{title}}</h3>
+			<p>{{postCount}} {{i18n.discussionsPosts}}</p>
+			<a href="{{ discussionsUrl }}">{{linkText}} <svg xmlns="http://www.w3.org/2000/svg" width="16" height="12" viewBox="0 0 16 12"><path class="arrow-path" fill-rule="evenodd" fill="#FFFFFF" d="m9.96924,0l-1.04453,1.04453l4.17812,4.17813l-13.10283,0l0,1.49218l13.10283,0l-4.17812,4.17813l1.04453,1.04453l5.96875,-5.96875l-5.96875,-5.96875z" /></svg></a>
+		</div>
+	</div>
+
+	<ul class="discussion-threads">
+		{{#posts}}
+		  <li class="discussion-thread" data-index="{{ index }}" data-source="{{source}}"><a class="track-discussions" href="{{link}}">
+			<div class="discussion-author">
+				<img src="{{authorAvatar}}" class="discussion-author-avatar" />
+				<h4>{{author}}</h4>
+				<span class="subtext">&#183; <time class="discussion-timestamp" datetime="{{createdAt}}"></time></span>
+			</div>
+			<p class="discussion-content">{{content}}</p>
+			<div class="discussion-meta">
+				<div class="discussion-upvotes-container">
+					<span class="subtext">{{upvoteCount}} {{i18n.discussionsUpvotes}}</span>
+				</div>
+				<div class="discussion-comments-container">
+					<span class="subtext">{{commentCount}} {{i18n.discussionsReplies}}</span>
+				</div>
+			</div>
+		  </a></li>
+		{{/posts}}
+	</ul>
+
+	<div class="discussion-footer">
+		<a href="{{ discussionsUrl }}" class="button discussion-new">{{i18n.discussionsNew}}</a>
+	</div>
+</div>
+{{/discussions}}
+</section>

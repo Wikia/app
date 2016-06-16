@@ -33,12 +33,15 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		$this->response->setValues( [
 			'heroImageUrl' => $this->getHeroImageUrl(),
 			'inviteFriendsText' => $this->msg( 'communitypage-invite-friends' )->plain(),
-			'headerWelcomeMsg' => $this->msg( 'communitypage-tasks-header-welcome' )->text(),
+			'headerWelcomeMsg' => $this->msg( 'communitypage-tasks-header-welcome' )->parse(),
 			'adminWelcomeMsg' => $this->msg( 'communitypage-admin-welcome-message' )->text(),
 			'pageListEmptyText' => $this->msg( 'communitypage-page-list-empty' )->plain(),
 			'pageTitle' => $this->msg( 'communitypage-title' )->plain(),
-			'topContributors' => $this->sendRequest( 'CommunityPageSpecialController', 'getTopContributorsData' )
-				->getData(),
+			'topContributors' => $this->sendRequest(
+				'CommunityPageSpecialController',
+				'getTopContributorsData',
+				[ 'limit' => self::TOP_CONTRIBUTORS_MODULE_LIMIT ]
+			)->getData(),
 			'topAdminsData' => $this->sendRequest( 'CommunityPageSpecialController', 'getTopAdminsData' )
 				->getData(),
 			'recentlyJoined' => $this->sendRequest( 'CommunityPageSpecialController', 'getRecentlyJoinedData' )
@@ -55,11 +58,18 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	 * @return array
 	 */
 	public function getTopContributorsData() {
+		$limit = $this->request->getInt( 'limit', 0 );
+
 		$currentUserContributionCount = ( new UserStatsService( $this->getUser()->getId() ) )->getEditCountFromWeek();
 		$topContributors = $this->usersModel->getTopContributors();
-		$topContributorsDetailsLimitedForModule = $this->getContributorsDetails(
-			array_slice( $topContributors, 0, self::TOP_CONTRIBUTORS_MODULE_LIMIT )
-		);
+		$topContributorsCount = count( $topContributors );
+		$userRank = $this->calculateCurrentUserRank( $currentUserContributionCount , $topContributors );
+
+		if ( $limit > 0 ) {
+			$topContributors = array_slice( $topContributors, 0, $limit );
+		}
+
+		$topContributorsDetails = $this->getContributorsDetails( $topContributors );
 
 		$this->response->setData( [
 			'admin' => $this->msg( 'communitypage-admin' )->plain(),
@@ -69,13 +79,13 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 				->numParams( $this->wg->Lang->formatNum( $currentUserContributionCount ) )
 				->text(),
 			'noContribsText' => $this->msg( 'communitypage-no-contributions' )->plain(),
-			'contributors' => $topContributorsDetailsLimitedForModule,
+			'contributors' => $topContributorsDetails,
 			'userAvatar' => AvatarService::renderAvatar(
 				$this->getUser()->getName(),
 				AvatarService::AVATAR_SIZE_SMALL_PLUS
 			),
-			'userRank' => $this->calculateCurrentUserRank( $currentUserContributionCount , $topContributors ),
-			'weeklyEditorCount' => $this->formatTotalEditorsNumber( count( $topContributors ) ),
+			'userRank' => $userRank,
+			'weeklyEditorCount' => $this->formatTotalEditorsNumber( $topContributorsCount ),
 			'userContribCount' => $currentUserContributionCount
 		] );
 	}
@@ -144,6 +154,8 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	public function getAllMembersData() {
 		$currentUser = $this->getUser();
 		$allMembers = $this->usersModel->getAllContributors( $currentUser->getId() );
+		$allMembers = $this->addTimeAgoDataDetail( $allMembers );
+
 		$moreMembers = SpecialPage::getTitleFor( 'ListUsers' );
 		$membersCount = $this->usersModel->getMemberCount();
 
@@ -225,6 +237,14 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		} , $contributors );
 	}
 
+	private function addTimeAgoDataDetail( $members ) {
+		foreach ( $members as $key => $member ) {
+			$members[$key]['timeAgo'] = wfTimeFormatAgo( $member['latestRevision'] );
+		}
+
+		return $members;
+	}
+
 	private function getHeroImageUrl() {
 		$heroImageUrl = '';
 		$heroImage = Title::newFromText( self::COMMUNITY_PAGE_HERO_IMAGE, NS_FILE );
@@ -241,7 +261,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	private function calculateCurrentUserRank( $userContributionCount , $topContributors ) {
 		$userRank = '-';
 
-		if ( $userContributionCount > 0 ) {
+		if ( $this->getUser()->isLoggedIn() && $userContributionCount > 0 ) {
 			$rank = 1;
 
 			foreach ( $topContributors as $contributor ) {

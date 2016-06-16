@@ -42,7 +42,7 @@ define('ext.wikia.recirculation.helpers.fandom', [
 
 			$.each(data.posts, function(index, item) {
 				if (items.length < options.limit) {
-					item.thumbnail = item.image_url;
+					item.thumbnail = item.image_url || item.thumbnail;
 					item.index = index;
 					items.push(item);
 				}

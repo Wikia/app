@@ -209,7 +209,7 @@ class WAMService extends Service {
 	public function getWAMLanguages( $date ) {
 		wfProfileIn( __METHOD__ );
 
-		$date = empty( $date ) ? strtotime( '00:00 -1 day' ) : strtotime( '00:00 -1 day', $date );
+		$date = empty( $date ) ? strtotime( '00:00 -2 day' ) : strtotime( '00:00 -2 day', $date );
 		$memKey = wfSharedMemcKey( 'wam-languages', self::MEMCACHE_VER, $date );
 
 		$getData = function () use ( $date ) {
