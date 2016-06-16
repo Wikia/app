@@ -144,7 +144,17 @@ class PortableInfoboxParserTagController extends WikiaController {
 	}
 
 	public function replaceMarkers( $text ) {
-		return strtr( $text, $this->markers );
+		global $wgArticleAsJson;
+		if ( $wgArticleAsJson ) {
+			$contentArray = json_decode( $text, true );
+			$text = $contentArray['content'];
+		}
+		$text = strtr( $text, $this->markers );
+		if ( $wgArticleAsJson ) {
+			$contentArray['content'] = $text;
+			$text = json_encode( $contentArray );
+		}
+		return $text;
 	}
 
 	protected function saveToParserOutput( \ParserOutput $parserOutput, Nodes\NodeInfobox $raw ) {
