@@ -7,7 +7,6 @@ use Swagger\Client\ContentEntity\Models\RelatedContent;
 use Wikia\DependencyInjection\Injector;
 use Wikia\Logger\Loggable;
 use Wikia\Service\Swagger\ApiProvider;
-use Wikia\Logger\WikiaLogger;
 
 class CakeRelatedContentService {
 
@@ -34,7 +33,7 @@ class CakeRelatedContentService {
 		try {
 			$filteredRelatedContent = $api->getRelatedContentFromEntityName($title, $limit + 1, "true");
             if (is_null($filteredRelatedContent)) {
-                WikiaLogger::instance()->warning("getRelatedContentFromEntityName failed to retrieve recommendations", [
+                $this->warning("getRelatedContentFromEntityName failed to retrieve recommendations", [
                     "title" => $title,
                     "limit" => $limit
                 ]);
@@ -44,7 +43,7 @@ class CakeRelatedContentService {
 
             // The server may have given us a malformed response, so log and adjust accordingly
             if (!is_array($filteredRelatedContent->getFandomArticles())) {
-                WikiaLogger::instance()->warning("getRelatedContentFromEntityName expected fandom_articles to be an array", [
+                $this->warning("getRelatedContentFromEntityName expected fandom_articles to be an array", [
                     "title" => $title,
                     "limit" => $limit,
                     "fandom_articles" => $filteredRelatedContent->getFandomArticles()
@@ -53,7 +52,7 @@ class CakeRelatedContentService {
             }
 
             if (!is_array($filteredRelatedContent->getDiscussionThreads())) {
-                WikiaLogger::instance()->warning("getRelatedContentFromEntityName expected discussion_threads to be an array", [
+                $this->warning("getRelatedContentFromEntityName expected discussion_threads to be an array", [
                     "title" => $title,
                     "limit" => $limit,
                     "discussion_threads" => $filteredRelatedContent->getDiscussionThreads()
@@ -62,7 +61,7 @@ class CakeRelatedContentService {
             }
 
             if (!is_array($filteredRelatedContent->getWikiArticles())) {
-                WikiaLogger::instance()->warning("getRelatedContentFromEntityName expected wiki_articles to be an array", [
+                $this->warning("getRelatedContentFromEntityName expected wiki_articles to be an array", [
                     "title" => $title,
                     "limit" => $limit,
                     "wiki_articles" => $filteredRelatedContent->getWikiArticles()
