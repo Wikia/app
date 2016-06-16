@@ -9,43 +9,8 @@ define('ext.wikia.recirculation.helpers.liftigniter', [
 			},
 			options = $.extend({}, defaults, config);
 
-		var mock = {
-		   "items":[
-		      {
-		         "title":"Far Harbor (add-on)",
-		         "rank":"1",
-		         "thumbnail":"http://vignette1.wikia.nocookie.net/fallout/images/d/db/Fallout_4_Far_Harbor_add-on_packaging.jpg/revision/latest?cb=20160216172224",
-		         "url":"http://fallout.wikia.com/wiki/Far_Harbor_(add-on)"
-		      },
-		      {
-		         "title":"Nuka-World (add-on)",
-		         "url":"http://fallout.wikia.com/wiki/Nuka-World_(add-on)",
-		         "thumbnail":"http://vignette3.wikia.nocookie.net/fallout/images/3/31/Fallout_4_Nuka-World_add-on_packaging.jpg/revision/latest?cb=20160613034942",
-		         "rank":"2"
-		      },
-		      {
-		         "url":"http://fallout.wikia.com/wiki/Fallout_4_weapons",
-		         "rank":"3",
-		         "title":"Fallout 4 weapons",
-		         "thumbnail":"http://vignette4.wikia.nocookie.net/fallout/images/1/13/44_pistol.png/revision/latest?cb=20151122151117"
-		      },
-		      {
-		         "thumbnail":"http://vignette1.wikia.nocookie.net/fallout/images/0/0b/Fallout_4_Vault-Tec_Workshop_add-on_packaging.jpg/revision/latest?cb=20160613034404",
-		         "url":"http://fallout.wikia.com/wiki/Vault-Tec_Workshop",
-		         "rank":"4",
-		         "title":"Vault-Tec Workshop"
-		      },
-		      {
-		         "url":"http://fallout.wikia.com/wiki/Contraptions_Workshop",
-		         "title":"Contraptions Workshop",
-		         "thumbnail":"http://vignette2.wikia.nocookie.net/fallout/images/0/05/Fallout_4_Contraptions_Workshop_add-on_packaging.jpg/revision/latest?cb=20160613033830",
-		         "rank":"5"
-		      }
-		   ]
-		};
-
 		function loadData() {
-			if (!window.$p) { return deferred.resolve(formatData(mock)).promise(); }
+			if (!window.$p) { return deferred.reject('Liftigniter library not found').promise(); }
 
 			var deferred = $.Deferred(),
 				registerOptions = {
