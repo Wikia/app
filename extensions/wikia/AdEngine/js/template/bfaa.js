@@ -9,12 +9,15 @@ define('ext.wikia.adEngine.template.bfaa', [
 ], function (adContext, adHelper, doc, log, win, mercuryListener) {
 	'use strict';
 
-	var logGroup = 'ext.wikia.adEngine.template.bfaa',
+	var bfabSlotName = 'BOTTOM_LEADERBOARD',
 		breakPointWidthNotSupported = 767, // SCSS property: $breakpoint-width-not-supported
 		desktopHandler,
+		disableBtf = win.ads.runtime.disableBtf,
 		mobileHandler,
+		logGroup = 'ext.wikia.adEngine.template.bfaa',
 		nav,
 		page,
+		wikiaMainContent = doc.getElementById('WikiaMainContent'),
 		wrapper;
 
 	function getTopOffset(el) {
@@ -27,21 +30,12 @@ define('ext.wikia.adEngine.template.bfaa', [
 	}
 
 	function pushBfab() {
-		var scrollPosition = win.scrollY || win.pageYOffset || doc.documentElement.scrollTop,
-			slotName = 'BOTTOM_LEADERBOARD',
-			bfab = doc.getElementById(slotName),
-			wikiaMainContent = doc.getElementById('WikiaMainContent');
-
-		if (!bfab) {
-			log(['pushBfab', 'No BFAB slot'], 'error', logGroup);
-			doc.removeEventListener('scroll', pushBfab);
-			return;
-		}
+		var scrollPosition = win.scrollY || win.pageYOffset || doc.documentElement.scrollTop;
 
 		if (getTopOffset(wikiaMainContent) < scrollPosition) {
 			win.ads.runtime.disableBtf = false;
-			win.adslots2.push(slotName);
-			win.ads.runtime.disableBtf = true;
+			win.adslots2.push(bfabSlotName);
+			win.ads.runtime.disableBtf = disableBtf;
 			doc.removeEventListener('scroll', pushBfab);
 			log(['pushBfab', 'Pushed BFAB'], 'debug', logGroup);
 		}
@@ -61,6 +55,8 @@ define('ext.wikia.adEngine.template.bfaa', [
 		},
 
 		show: function (height, backgroundColor) {
+			var bfab = doc.getElementById(bfabSlotName);
+
 			nav.style.top = '';
 			page.classList.add('bfaa-template');
 			wrapper.style.background = backgroundColor;
@@ -72,6 +68,11 @@ define('ext.wikia.adEngine.template.bfaa', [
 
 			if (win.WikiaBar) {
 				win.WikiaBar.hideContainer();
+			}
+
+			if (!bfab) {
+				log(['show', 'No BFAB slot'], 'error', logGroup);
+				return;
 			}
 
 			doc.addEventListener('scroll', pushBfab);
