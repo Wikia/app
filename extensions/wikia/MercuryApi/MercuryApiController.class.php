@@ -166,7 +166,7 @@ class MercuryApiController extends WikiaController {
 		$navigation = $this->getNavigation();
 
 		if ( empty( $navigation ) ) {
-			\Wikia\Logger\WikiaLogger::instance()->debug(
+			\Wikia\Logger\WikiaLogger::instance()->notice(
 				'Fallback to empty navigation'
 			);
 		}
