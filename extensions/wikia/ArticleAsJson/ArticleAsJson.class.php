@@ -551,11 +551,11 @@ class ArticleAsJson extends WikiaService {
 	) {
 		$mediaDetail = WikiaFileHelper::getMediaDetail( $title, $mediaDetailConfig );
 
-		if ( !empty( $mediaDetail['mediaType'] ) ) {
+		if ( $mediaDetail['exists'] === true ) {
 			if ( empty( $mediaDetail['width'] ) ) {
 				$mediaDetail['width'] = $fallbackSize;
 
-				\Wikia\Logger\WikiaLogger::instance()->debug(
+				\Wikia\Logger\WikiaLogger::instance()->notice(
 					'ArticleAsJson - Media width was empty - fallback to fallbackSize',
 					[
 						'media_details' => $mediaDetail,
@@ -567,11 +567,11 @@ class ArticleAsJson extends WikiaService {
 			if ( empty( $mediaDetail['height'] ) ) {
 				$mediaDetail['height'] = $fallbackSize;
 
-				\Wikia\Logger\WikiaLogger::instance()->debug(
+				\Wikia\Logger\WikiaLogger::instance()->notice(
 					'ArticleAsJson - Media height was empty - fallback to fallbackSize',
 					[
-						'mediaDetails' => $mediaDetail,
-						'fallbackSize' => $fallbackSize
+						'media_details' => $mediaDetail,
+						'fallback_size' => $fallbackSize
 					]
 				);
 			}
