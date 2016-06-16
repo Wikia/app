@@ -17,7 +17,9 @@ define('ext.wikia.adEngine.template.bfaa', [
 		logGroup = 'ext.wikia.adEngine.template.bfaa',
 		nav,
 		page,
-		wikiaMainContent = doc.getElementById('WikiaMainContent'),
+		threshhold = 100,
+		viewPortHeight = Math.max(doc.documentElement.clientHeight, win.innerHeight || 0),
+		mainContent = doc.getElementById('WikiaMainContent'),
 		wrapper;
 
 	function getTopOffset(el) {
@@ -30,9 +32,10 @@ define('ext.wikia.adEngine.template.bfaa', [
 	}
 
 	function pushBfab() {
-		var scrollPosition = win.scrollY || win.pageYOffset || doc.documentElement.scrollTop;
+		var scrollPosition = win.scrollY || win.pageYOffset || doc.documentElement.scrollTop,
+			pushBfabPosition = getTopOffset(mainContent) + mainContent.offsetHeight - viewPortHeight - threshhold;
 
-		if (getTopOffset(wikiaMainContent) < scrollPosition) {
+		if (pushBfabPosition < scrollPosition) {
 			win.ads.runtime.disableBtf = false;
 			win.adslots2.push(bfabSlotName);
 			win.ads.runtime.disableBtf = disableBtf;
