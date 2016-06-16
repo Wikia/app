@@ -201,18 +201,29 @@ class CommunityPageSpecialUsersModel {
 			WikiaResponse::CACHE_LONG,
 			function () {
 				global $wgExternalSharedDB;
-				$db = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
+				$globalDb = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
 
-				$sqlData = ( new WikiaSQL() )
+				$globalIds = ( new WikiaSQL() )
 					->SELECT( 'ug_user' )
 					->FROM ( 'user_groups' )
 					->WHERE( 'ug_group' )->IN( [ 'bot', 'bot-global', 'staff', 'util', 'helper', 'vstf' ] )
 					->GROUP_BY( 'ug_user' )
-					->runLoop( $db, function ( &$sqlData, $row ) {
-						$sqlData[] = $row->ug_user;
+					->runLoop( $globalDb, function ( &$globalIds, $row ) {
+						$globalIds[] = $row->ug_user;
 					} );
 
-				$allBlockedIds = array_merge( $sqlData, $this->getBotIds() );
+				$localDb = wfGetDB( DB_SLAVE );
+
+				$localIds = ( new WikiaSQL() )
+					->SELECT( 'ug_user' )
+					->FROM ( 'user_groups' )
+					->WHERE( 'ug_group' )->IN( [ 'staff', 'util', 'helper', 'vstf' ] )
+					->GROUP_BY( 'ug_user' )
+					->runLoop( $localDb, function ( &$localIds, $row ) {
+						$localIds[] = $row->ug_user;
+					} );
+
+				$allBlockedIds = array_merge( array_diff( $globalIds, $localIds ), $this->getBotIds() );
 
 				return $allBlockedIds;
 			}
