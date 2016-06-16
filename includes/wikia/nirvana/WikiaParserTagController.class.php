@@ -69,7 +69,20 @@ abstract class WikiaParserTagController extends WikiaController {
 	}
 
 	public final function onParserAfterTidy( Parser &$parser, &$text ) {
-		$text = strtr( $text, $this->getMarkers() );
+		$markers = $this->getMarkers();
+		if ( $this->wg->ArticleAsJson ) {
+			$contentArray = json_decode( $text, true );
+			if ( is_array( $contentArray ) && isset( $contentArray['content'] ) ) {
+				$text = strtr( $contentArray['content'], $this->markers );
+				$contentArray['content'] = $text;
+				$text = json_encode( $contentArray );
+			} else {
+				$text = strtr( $text, $markers );
+			}
+		} else {
+			$text = strtr( $text, $markers );
+		}
+		$text = strtr( $text, $markers );
 		return true;
 	}
 
@@ -136,7 +149,7 @@ abstract class WikiaParserTagController extends WikiaController {
 			 *
 			 * I've chosen b) and if you think about anything which is better don't hesitate to let me know, please :)
 			 */
-			$this->markers[$markerId] = trim( json_encode( $output->toString() ), "\"" );
+			$this->markers[$markerId] = $output->toString();
 		} else {
 			$this->markers[$markerId] = $output;
 		}
