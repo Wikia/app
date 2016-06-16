@@ -17,7 +17,7 @@ define('ext.wikia.adEngine.template.bfaa', [
 		logGroup = 'ext.wikia.adEngine.template.bfaa',
 		nav,
 		page,
-		threshhold = 100,
+		threshold = 100,
 		viewPortHeight = Math.max(doc.documentElement.clientHeight, win.innerHeight || 0),
 		mainContent = doc.getElementById('WikiaMainContent'),
 		wrapper;
@@ -33,7 +33,7 @@ define('ext.wikia.adEngine.template.bfaa', [
 
 	function pushBfab() {
 		var scrollPosition = win.scrollY || win.pageYOffset || doc.documentElement.scrollTop,
-			pushBfabPosition = getTopOffset(mainContent) + mainContent.offsetHeight - viewPortHeight - threshhold;
+			pushBfabPosition = getTopOffset(mainContent) + mainContent.offsetHeight - viewPortHeight - threshold;
 
 		if (pushBfabPosition < scrollPosition) {
 			win.ads.runtime.disableBtf = false;
