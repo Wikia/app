@@ -141,12 +141,15 @@ class PortableInfoboxParserTagController extends WikiaController {
 		global $wgArticleAsJson;
 		if ( $wgArticleAsJson ) {
 			$contentArray = json_decode( $text, true );
-			$text = $contentArray['content'];
-		}
-		$text = strtr( $text, $this->markers );
-		if ( $wgArticleAsJson ) {
-			$contentArray['content'] = $text;
-			$text = json_encode( $contentArray );
+			if ( is_array( $contentArray ) && isset( $contentArray['content'] ) ) {
+				$text = strtr( $contentArray['content'], $this->markers );
+				$contentArray['content'] = $text;
+				$text = json_encode( $contentArray );
+			} else {
+				$text = strtr( $text, $this->markers );
+			}
+		} else {
+			$text = strtr( $text, $this->markers );
 		}
 		return $text;
 	}
