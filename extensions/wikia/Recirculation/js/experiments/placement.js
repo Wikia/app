@@ -64,20 +64,15 @@ require([
 
 	switch (group) {
 		case 'LI_RAIL':
-			helper = liftigniterHelper({
-				count: 5,
-				widget: 'fandom-rec'
-			});
-			view = railView();
-			isRail = true;
-			break;
-		case 'LI_INCONTENT':
-			helper = liftigniterHelper({
-				count: 3,
-				widget: 'in-wikia'
-			});
-			view = incontentView();
-			break;
+			renderLiftigniterFandom();
+			return;
+		case 'LI_COMMUNITY':
+			renderLiftigniterCommunity();
+			return;
+		case 'LI_BOTH':
+			renderLiftigniterCommunity();
+			renderLiftigniterFandom();
+			return;
 		// Temporary group running during E3
 		case 'E3':
 			helper = fandomHelper({
@@ -340,4 +335,47 @@ require([
 				});
 			});
 	}
+
+	function renderLiftigniterFandom() {
+		var view = railView(),
+			curated = curatedHelper(),
+			helper = liftigniterHelper({
+				count: 5,
+				widget: 'fandom-rec'
+			});
+
+		helper.loadData()
+			.then(curated.injectContent)
+			.then(view.render)
+			.then(function($html) {
+				var elements = $html.find('.rail-item').get();
+
+				view.setupTracking(experimentName)($html);
+				curated.setupTracking($html);
+				helper.setupTracking(elements);
+			})
+			.fail(handleError);
+	}
+
+	function renderLiftigniterCommunity() {
+		var view = railView(),
+			curated = curatedHelper(),
+			helper = liftigniterHelper({
+				count: 3,
+				widget: 'in-wikia'
+			});
+
+		helper.loadData()
+			.then(curated.injectContent)
+			.then(view.render)
+			.then(function($html) {
+				var elements = $html.find('.rail-item').get();
+				view.setupTracking(experimentName)($html);
+
+
+				helper.setupTracking(elements);
+			})
+			.fail(handleError);
+	}
+
 });

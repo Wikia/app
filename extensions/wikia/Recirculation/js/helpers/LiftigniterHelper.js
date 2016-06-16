@@ -45,71 +45,69 @@ define('ext.wikia.recirculation.helpers.liftigniter', [
 		};
 
 		function loadData() {
-			var deferred = $.Deferred();
-
 			if (!window.$p) { return deferred.resolve(formatData(mock)).promise(); }
 
+			var deferred = $.Deferred(),
+				registerOptions = {
+					max: options.count,
+					widget: options.widget,
+					callback: function(response) {
+						deferred.resolve(formatData(response));
+					}
+				};
+
+			if (options.widget === 'fandom-rec') {
+				registerOptions.opts = {resultType: "fandom"}
+			}
+
 			// Callback renders and injects results into the placeholder.
-			$p('register', {
-				max: options.count,
-				widget: options.widget,
-				callback: function(response) {
-					console.log(response);
-					// deferred.resolve(formatData(response));
-				}
-			});
+			$p('register', registerOptions);
 
 			// Executes the registered call.
 			$p('fetch');
-
-			/*
-			$p('register', {
-                  max: 5,
-                  widget: 'fandom-rec', // name of widget
-                  opts: {resultType: "fandom"},
-                  callback: function(resp) {
-                  	console.log("// FANDOM WIDGET.");
-                    console.log(resp);
-
-                  }
-               }
-			);
-
-			$p('register', {
-                  max: 5,
-                  widget: 'in-wikia', // name of widget
-                  opts: {resultType: "fandom"},
-                  callback: function(resp) {
-                  	console.log("// IN WIKIA.");
-                    console.log(resp);
-
-                  }
-               }
-			);
-			// Execute the registered call.
-			$p('fetch');
-			*/
 
 			return deferred.promise();
 		}
 
 		function formatData(data) {
-			var items = [];
+			var items = [],
+				title;
+
+			if (options.widget === 'fandom-rec') {
+				title = $.msg('recirculation-fandom-title');
+			} else {
+				title = $.msg('recirculation-incontent-title');
+			}
 
 			$.each(data.items, function(index, item) {
 				if (items.length < options.count) {
 					item.index = index;
+					item.title = item.title.replace(' - Fandom - Powered by Wikia', '');
 					items.push(item);
 				}
 			});
 
 			return {
-				title: 'Top Links',
+				title: title,
 				items: items
 			};
 		}
 
+		function setupTracking(elements) {
+			var trackOptions = {
+				elements: elements,
+				name: options.widget,
+				source: 'LI'
+			};
+
+			if (options.widget === 'fandom-rec') {
+				trackOptions.opts = {resultType: "fandom"}
+			}
+			$p('track', trackOptions);
+		}
+
 		return {
+			setupTracking: setupTracking,
 			loadData: loadData
 		}
 	}
