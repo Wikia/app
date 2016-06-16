@@ -31,13 +31,6 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 			'INCONTENT_LEADERBOARD'
 		];
 
-	function collapseElement(element) {
-		slotTweaker.hide(
-			element.getSlotName(),
-			recoveryHelper.isBlocking() && recoveryHelper.isRecoveryEnabled()
-		);
-	}
-
 	function isHiddenOnStart(slotName) {
 		return hiddenSlots.indexOf(slotName) !== -1;
 	}
@@ -82,16 +75,6 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 		}
 
 		element = new AdElement(slot.name, slotPath, slotTargeting);
-
-		slot.pre('collapse', function () {
-			collapseElement(element);
-		});
-		slot.pre('hop', function () {
-			slotTweaker.hide(
-				element.getSlotContainerId(),
-				recoveryHelper.isBlocking() && recoveryHelper.isRecoveryEnabled()
-			);
-		});
 
 		function queueAd() {
 			log(['queueAd', slot.name, element], 'debug', logGroup);

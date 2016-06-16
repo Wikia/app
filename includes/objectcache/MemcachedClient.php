@@ -1247,14 +1247,17 @@ class MWMemcached {
 
 		// Wikia change - begin
 		// @author macbre (PLATFORM-774)
-		$this->error( __METHOD__ . ' - MemcachedClient: store failed - ' . $line, [
-			'cmd'       => $cmd,
-			'key'       => $key,
-			'normalized_key' => Wikia\Memcached\MemcachedStats::normalizeKey( $key ), # for easier grouping in Kibana
-			'val_size'  => strlen( $val ),
-			'exception' => new Exception( $line ),
-			'host'      => $host,
-		] );
+		// "NOT_STORED" response is not the indicator of an error (PLATFORM-2268)
+		if ( $line !== 'NOT_STORED' ) {
+			$this->error( __METHOD__ . ' - MemcachedClient: store failed - ' . $line, [
+				'cmd' => $cmd,
+				'key' => $key,
+				'normalized_key' => Wikia\Memcached\MemcachedStats::normalizeKey( $key ), # for easier grouping in Kibana
+				'val_size' => strlen( $val ),
+				'exception' => new Exception( $line ),
+				'host' => $host,
+			] );
+		}
 		// Wikia change - end
 		return false;
 	}
