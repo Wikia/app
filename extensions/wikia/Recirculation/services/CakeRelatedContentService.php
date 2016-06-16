@@ -99,13 +99,12 @@ class CakeRelatedContentService {
 						/** @var RelatedContent $item */
 						$content = $item->getContent();
 
-						$items[] = new RecirculationContent(
-								count($items),
-								$content->getUrl(),
-								$content->getImage(),
-								$this->formatTitle($content),
-								"",
-								"");
+						$items[] = new RecirculationContent( [
+								'index' => count($items),
+								'url' => $content->getUrl(),
+								'thumbnail' => $content->getImage(),
+								'title' => $this->formatTitle($content),
+							] );
 					}
 
 					if (count($items) >= $limit) {

@@ -868,6 +868,8 @@ class MWMemcached {
 	 * @access  private
 	 */
 	function _connect_sock( &$sock, $host ) {
+		wfProfileIn( __METHOD__ );
+
 		list( $ip, $port ) = $this->parseHost($host);
 		$sock = false;
 		$timeout = $this->_connect_timeout;
@@ -893,12 +895,15 @@ class MWMemcached {
 				'timeout' => $timeout,
 			]);
 			// Wikia change - end
+
+			wfProfileOut( __METHOD__ );
 			return false;
 		}
 
 		// Initialise timeout
 		stream_set_timeout( $sock, $this->_timeout_seconds, $this->_timeout_microseconds );
 
+		wfProfileOut( __METHOD__ );
 		return true;
 	}
 
@@ -1242,14 +1247,17 @@ class MWMemcached {
 
 		// Wikia change - begin
 		// @author macbre (PLATFORM-774)
-		$this->error( __METHOD__ . ' - MemcachedClient: store failed - ' . $line, [
-			'cmd'       => $cmd,
-			'key'       => $key,
-			'normalized_key' => Wikia\Memcached\MemcachedStats::normalizeKey( $key ), # for easier grouping in Kibana
-			'val_size'  => strlen( $val ),
-			'exception' => new Exception( $line ),
-			'host'      => $host,
-		] );
+		// "NOT_STORED" response is not the indicator of an error (PLATFORM-2268)
+		if ( $line !== 'NOT_STORED' ) {
+			$this->error( __METHOD__ . ' - MemcachedClient: store failed - ' . $line, [
+				'cmd' => $cmd,
+				'key' => $key,
+				'normalized_key' => Wikia\Memcached\MemcachedStats::normalizeKey( $key ), # for easier grouping in Kibana
+				'val_size' => strlen( $val ),
+				'exception' => new Exception( $line ),
+				'host' => $host,
+			] );
+		}
 		// Wikia change - end
 		return false;
 	}

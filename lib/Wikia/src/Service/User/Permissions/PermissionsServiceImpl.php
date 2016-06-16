@@ -189,8 +189,6 @@ class PermissionsServiceImpl implements PermissionsService {
 				__METHOD__
 			);
 		}
-
-		wfRunHooks( 'AfterUserAddGlobalGroup', [ $user, $group ] );
 		return true;
 	}
 
@@ -276,9 +274,6 @@ class PermissionsServiceImpl implements PermissionsService {
 			],
 			__METHOD__
 		);
-
-		wfRunHooks( 'AfterUserRemoveGlobalGroup', [ $user, $group ] );
-
 		return true;
 	}
 

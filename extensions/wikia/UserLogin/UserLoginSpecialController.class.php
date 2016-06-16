@@ -473,6 +473,9 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 						'result' => 'ok',
 					] );
 
+					// Always make sure edit token is regenerated. (T122056)
+					$this->getRequest()->setSessionData( 'wsEditToken', null );
+
 					// regenerate session ID on user login (the approach MW's core SpecialUserLogin uses)
 					// to avoid race conditions with long running requests logging the user back in & out
 					// @see PLATFORM-1028
