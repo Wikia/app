@@ -172,8 +172,7 @@ $messages['qqq'] = array(
 	'communitypage-policy-module-link-page-name' => 'Name of the localized community policy page without Help namespace prefix.',
 	'communitypage-anon-contrib-header' => 'Text to show for anonymous users in the heading for top contributors. Tells users to login or register',
 	'communitypage-anon-login' => 'Log in text to use in the context of communitypage-anon-contrib-header $1 together with url',
-	'communitypage-anon-register' => 'register text to use in the context of communitypage-anon-contrib-header $1 together with url',
-
+	'communitypage-anon-register' => 'register text to use in the context of communitypage-anon-contrib-header $2 together with url',
 );
 
 $messages['de'] = array(
