@@ -627,20 +627,15 @@ class Html {
 	 *
 	 * @param $url string
 	 * @param $media mixed A media type string, like 'screen'
-	 * @param $crossorigin Configure the CORS requests for the fetched data
 	 * @return string Raw HTML
 	 */
-	public static function linkedStyle( $url, $media = 'all', $crossorigin = null ) {
-		$attribs = array(
+	public static function linkedStyle( $url, $media = 'all' ) {
+		return self::element( 'link', array(
 			'rel' => 'stylesheet',
 			'href' => $url,
 			'type' => 'text/css',
 			'media' => $media,
-		);
-		if ( $crossorigin !== null ) {
-			$attribs['crossorigin'] = $crossorigin;
-		}
-		return self::element( 'link', $attribs );
+		) );
 	}
 
 	/**
