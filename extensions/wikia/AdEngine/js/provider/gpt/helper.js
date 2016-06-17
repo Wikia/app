@@ -7,9 +7,9 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	'ext.wikia.adEngine.provider.gpt.adDetect',
 	'ext.wikia.adEngine.provider.gpt.adElement',
 	'ext.wikia.adEngine.provider.gpt.googleTag',
+	'ext.wikia.adEngine.uapContext',
 	'ext.wikia.aRecoveryEngine.recovery.helper',
 	'ext.wikia.adEngine.slotTweaker',
-	'wikia.window',
 	require.optional('ext.wikia.adEngine.provider.gpt.sraHelper'),
 	require.optional('ext.wikia.adEngine.slot.scrollHandler')
 ], function (
@@ -19,9 +19,9 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	adDetect,
 	AdElement,
 	GoogleTag,
+	uapContext,
 	recoveryHelper,
 	slotTweaker,
-	win,
 	sraHelper,
 	scrollHandler
 ) {
@@ -53,7 +53,8 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 			element,
 			recoverableSlots = extra.recoverableSlots || [],
 			shouldPush = !recoveryHelper.isBlocking() ||
-				(recoveryHelper.isBlocking() && recoveryHelper.isRecoverable(slot.name, recoverableSlots));
+				(recoveryHelper.isBlocking() && recoveryHelper.isRecoverable(slot.name, recoverableSlots)),
+			bfabLineItemId = uapContext.getUapId();
 
 		log(['shouldPush',
 			slot.name,
@@ -75,8 +76,8 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 				slotTargeting.rv = count.toString();
 			}
 		}
-		if (slot.name === 'BOTTOM_LEADERBOARD' && win.ads.runtime.uap) {
-			slotTargeting.uap = win.ads.runtime.uap.toString();
+		if (bfabLineItemId) {
+			slotTargeting.uap = bfabLineItemId.toString();
 		}
 
 		element = new AdElement(slot.name, slotPath, slotTargeting);

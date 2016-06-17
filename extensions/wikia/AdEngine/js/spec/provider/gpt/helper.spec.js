@@ -41,7 +41,9 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 					return true;
 				}
 			},
-			win: {}
+			uapContext: {
+				getUapId: noop
+			}
 		};
 	mocks.googleTag.prototype.isInitialized = function () {
 		return true;
@@ -65,9 +67,9 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 			mocks.adDetect,
 			AdElement,
 			mocks.googleTag,
+			mocks.uapContext,
 			mocks.recoveryHelper,
 			mocks.slotTweaker,
-			mocks.win,
 			mocks.sraHelper
 		);
 	}
