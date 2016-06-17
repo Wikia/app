@@ -1,10 +1,10 @@
 <?php
 
 class NodeDataSanitizer extends NodeSanitizer {
-	protected $allowedTags = [ 'a' ];
+	protected $allowedTags = [ 'a','br' ];
 
 	/**
-	 * @desc remove all HTML tags but links from data labels.
+	 * @desc remove all HTML tags but links and wrapping from data labels.
 	 * If label after sanitization became empty because contained only image
 	 * do not sanitize it.
 	 *
