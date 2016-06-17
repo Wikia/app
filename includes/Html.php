@@ -637,9 +637,6 @@ class Html {
 			'type' => 'text/css',
 			'media' => $media,
 		);
-		if ( $crossorigin !== null ) {
-			$attribs['crossorigin'] = $crossorigin;
-		}
 		return self::element( 'link', $attribs );
 	}
 
