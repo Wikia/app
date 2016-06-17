@@ -86,6 +86,10 @@ $messages['en'] = array(
 	'communitypage-anon-contrib-header' => '$1 or $2 and make an edit to this wiki to see how you rank in this community!',
 	'communitypage-anon-login' => 'Log in',
 	'communitypage-anon-register' => 'register',
+	'communitypage-first-edit-heading' => 'Congratulations on making your first edit to this community!',
+	'communitypage-first-edit-subheading' => 'Meet others and find more ways to help by visiting the Community Page',
+	'communitypage-first-edit-get-started' => 'Get Started',
+	'communitypage-first-edit-maybe-later' => 'Maybe Later',
 );
 
 $messages['qqq'] = array(
@@ -173,6 +177,10 @@ $messages['qqq'] = array(
 	'communitypage-anon-contrib-header' => 'Text to show for anonymous users in the heading for top contributors. Tells users to login or register',
 	'communitypage-anon-login' => 'Log in text to use in the context of communitypage-anon-contrib-header $1 together with url',
 	'communitypage-anon-register' => 'register text to use in the context of communitypage-anon-contrib-header $2 together with url',
+	'communitypage-first-edit-heading' => 'Heading for modal dialog shown when user makes his first edit on a community (first edit modal)',
+	'communitypage-first-edit-subheading' => 'Subheading for modal dialog shown when user makes his first edit on a community',
+	'communitypage-first-edit-get-started' => 'Button that leads to community page for first edit modal',
+	'communitypage-first-edit-maybe-later' => 'Button that dismisses the first edit modal',
 );
 
 $messages['de'] = array(

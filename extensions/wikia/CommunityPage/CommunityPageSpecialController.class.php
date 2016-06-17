@@ -226,6 +226,16 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		] );
 	}
 
+	public function getFirstTimeEditorModalData() {
+		$this->response->setData( [
+			'headingText'    => $this->msg( 'communitypage-first-edit-heading' )->plain(),
+			'subheadingText' => $this->msg( 'communitypage-first-edit-subheading' )->plain(),
+			'getStartedText' => $this->msg( 'communitypage-first-edit-get-started' )->plain(),
+			'maybeLaterText' => $this->msg( 'communitypage-first-edit-maybe-later' )->plain(),
+			'getStartedLink' => $this->getTitle()->getCanonicalURL(),
+		] );
+	}
+
 	private function addAssets() {
 		$this->response->addAsset( 'special_community_page_js' );
 		$this->response->addAsset( 'special_community_page_scss' );

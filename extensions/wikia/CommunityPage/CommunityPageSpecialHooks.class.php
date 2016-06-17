@@ -1,6 +1,7 @@
 <?php
 
 class CommunityPageSpecialHooks {
+	const FIRST_EDIT_COOKIE_KEY = 'community-page-first-time';
 
 	/**
 	 * Cache key invalidation when an article is edited
@@ -92,6 +93,17 @@ class CommunityPageSpecialHooks {
 		);
 		WikiaDataAccess::cachePurge( $key );
 		CommunityPageSpecialUsersModel::logUserModelPerformanceData( 'purge', 'recently_joined' );
+
+		// Set cookie to show first edit modal to user
+		global $wgCookieDomain;
+		setcookie ( self::FIRST_EDIT_COOKIE_KEY, true, time()+60, '/', $wgCookieDomain );
+
+		return true;
+	}
+
+	public static function onBeforePageDisplay( OutputPage $out, Skin $skin ) {
+		Wikia::addAssetsToOutput( 'community_page_new_user_modal_js' );
+		Wikia::addAssetsToOutput( 'community_page_new_user_modal_scss' );
 
 		return true;
 	}

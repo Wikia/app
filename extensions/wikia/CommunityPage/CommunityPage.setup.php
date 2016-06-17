@@ -20,6 +20,7 @@ $wgHooks['ArticleSaveComplete'][] = 'CommunityPageSpecialHooks::onArticleSaveCom
 $wgHooks['GetRailModuleList'][] = 'CommunityPageSpecialHooks::onGetRailModuleList';
 $wgHooks['UserRights'][] = 'CommunityPageSpecialHooks::onUserRights';
 $wgHooks['UserFirstEditOnLocalWiki'][] = 'CommunityPageSpecialHooks::onUserFirstEditOnLocalWiki';
+$wgHooks['BeforePageDisplay'][] = 'CommunityPageSpecialHooks::onBeforePageDisplay';
 
 /* i18n */
 $wgExtensionMessagesFiles['CommunityPage'] = __DIR__ . '/CommunityPage.i18n.php';
