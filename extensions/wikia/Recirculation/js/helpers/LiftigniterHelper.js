@@ -1,17 +1,19 @@
 /*global define*/
 define('ext.wikia.recirculation.helpers.liftigniter', [
-	'jquery'
-], function ($) {
+	'jquery',
+	'wikia.window',
+	'wikia.thumbnailer'
+], function ($, w, thumbnailer) {
 
 	return function(config) {
 		var defaults = {
-				count: 5
+				count: 5,
+				width: 320,
+				height: 180
 			},
 			options = $.extend({}, defaults, config);
 
-		function loadData() {
-			if (!window.$p) { return deferred.reject('Liftigniter library not found').promise(); }
-
+		function loadData(waitToFetch) {
 			var deferred = $.Deferred(),
 				registerOptions = {
 					max: options.count,
@@ -21,15 +23,22 @@ define('ext.wikia.recirculation.helpers.liftigniter', [
 					}
 				};
 
+			if (!w.$p) {
+				return deferred.reject('Liftigniter library not found').promise();
+			}
+
 			if (options.widget === 'fandom-rec') {
 				registerOptions.opts = {resultType: "fandom"}
 			}
 
 			// Callback renders and injects results into the placeholder.
-			$p('register', registerOptions);
+			w.$p('register', registerOptions);
 
 			// Executes the registered call.
-			$p('fetch');
+			if (!waitToFetch) {
+				w.$p('fetch');
+			}
+
 
 			return deferred.promise();
 		}
@@ -47,7 +56,12 @@ define('ext.wikia.recirculation.helpers.liftigniter', [
 			$.each(data.items, function(index, item) {
 				if (items.length < options.count) {
 					item.index = index;
-					item.title = item.title.replace(' - Fandom - Powered by Wikia', '');
+					if (options.widget === 'fandom-rec') {
+						item.title = item.title.replace(' - Fandom - Powered by Wikia', '');
+					} else {
+						item.thumbnail = thumbnailer(item.thumbnail, 'image', options.width, options.height);
+					}
+
 					items.push(item);
 				}
 			});
@@ -68,7 +82,7 @@ define('ext.wikia.recirculation.helpers.liftigniter', [
 			if (options.widget === 'fandom-rec') {
 				trackOptions.opts = {resultType: "fandom"}
 			}
-			$p('track', trackOptions);
+			w.$p('track', trackOptions);
 		}
 
 		return {

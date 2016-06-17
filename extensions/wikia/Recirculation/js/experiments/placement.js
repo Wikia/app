@@ -70,8 +70,8 @@ require([
 			renderLiftigniterCommunity();
 			return;
 		case 'LI_BOTH':
+			renderLiftigniterFandom(true);
 			renderLiftigniterCommunity();
-			renderLiftigniterFandom();
 			return;
 		// Temporary group running during E3
 		case 'E3':
@@ -336,7 +336,7 @@ require([
 			});
 	}
 
-	function renderLiftigniterFandom() {
+	function renderLiftigniterFandom(waitToFetch) {
 		var view = railView(),
 			curated = curatedHelper(),
 			helper = liftigniterHelper({
@@ -344,7 +344,7 @@ require([
 				widget: 'fandom-rec'
 			});
 
-		helper.loadData()
+		helper.loadData(waitToFetch)
 			.then(curated.injectContent)
 			.then(view.render)
 			.then(function($html) {
@@ -370,9 +370,8 @@ require([
 			.then(view.render)
 			.then(function($html) {
 				var elements = $html.find('.rail-item').get();
+
 				view.setupTracking(experimentName)($html);
-
-
 				helper.setupTracking(elements);
 			})
 			.fail(handleError);
