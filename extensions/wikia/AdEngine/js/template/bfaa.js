@@ -1,13 +1,14 @@
 /*global define*/
 define('ext.wikia.adEngine.template.bfaa', [
 	'ext.wikia.adEngine.adContext',
-	'ext.wikia.adEngine.uapContext',
 	'ext.wikia.adEngine.adHelper',
+	'ext.wikia.adEngine.uapContext',
+	'ext.wikia.adEngine.slot.bottomLeaderboard',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window',
 	require.optional('ext.wikia.adEngine.mobile.mercuryListener')
-], function (adContext, uapContext, adHelper, doc, log, win, mercuryListener) {
+], function (adContext, adHelper, uapContext, bottomLeaderboard, doc, log, win, mercuryListener) {
 	'use strict';
 
 	var breakPointWidthNotSupported = 767, // SCSS property: $breakpoint-width-not-supported
@@ -79,6 +80,12 @@ define('ext.wikia.adEngine.template.bfaa', [
 				page = doc.getElementsByClassName('WikiaSiteWrapper')[0];
 				wrapper = doc.getElementById('WikiaTopAds');
 				handler = desktopHandler;
+
+				if (params.uap) {
+					uapContext.setUapId(params.uap);
+					bottomLeaderboard.init();
+				}
+
 				break;
 			case 'mercury':
 				page = doc.getElementsByClassName('application-wrapper')[0];
@@ -91,8 +98,6 @@ define('ext.wikia.adEngine.template.bfaa', [
 
 		handler.show(height, backgroundColor);
 		log('show', 'info', logGroup);
-
-		uapContext.setUapId(params.uap);
 	}
 
 	return {

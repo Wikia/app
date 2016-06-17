@@ -20,7 +20,7 @@ define('ext.wikia.adEngine.slot.bottomLeaderboard', [
 			var scrollPosition = win.scrollY || win.pageYOffset || doc.documentElement.scrollTop,
 				pushPos = dom.getTopOffset(mainContent) + mainContent.offsetHeight - viewPortHeight - threshold;
 
-			if (!pushed && pushPos  < scrollPosition) {
+			if (!pushed && pushPos < scrollPosition) {
 				pushed = true;
 				doc.removeEventListener('scroll', pushBfab);
 				btfBlocker.unblock(slotName);

@@ -110,7 +110,6 @@ require([
 // Inject extra slots
 require([
 	'ext.wikia.adEngine.adContext',
-	'ext.wikia.adEngine.slot.bottomLeaderboard',
 	'ext.wikia.adEngine.slot.highImpact',
 	'ext.wikia.adEngine.slot.inContent',
 	'ext.wikia.adEngine.slot.skyScraper3',
@@ -121,7 +120,6 @@ require([
 	require.optional('ext.wikia.adEngine.slot.revcontentSlots')
 ], function (
 	adContext,
-	bottomLeaderboard,
 	highImpact,
 	inContent,
 	skyScraper3,
@@ -138,7 +136,6 @@ require([
 	function initDesktopSlots() {
 		var incontentLeaderboard = 'INCONTENT_LEADERBOARD';
 
-		bottomLeaderboard.init();
 		highImpact.init();
 		skyScraper3.init();
 
