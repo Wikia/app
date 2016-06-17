@@ -55,7 +55,6 @@ class WallHooksHelper {
 		if ( $title->getNamespace() === NS_USER_WALL_MESSAGE && intval( $title->getText() ) > 0  ) {
 			// message wall index - brick page
 			$outputDone = true;
-			$app->wg->SuppressPageHeader = true;
 
 			$mainTitle = Title::newFromId( $title->getText() );
 			if ( empty( $mainTitle ) ) {
@@ -79,10 +78,11 @@ class WallHooksHelper {
 			}
 
 			// article exists or existed
+			$app->wg->SuppressPageHeader = true;
+
 			$wallMessage = WallMessage::newFromTitle( $mainTitle );
 			$isDeleted = !$wallMessage->isVisible( $app->wg->User );
-			$showDeleted = ( $isDeleted
-				&& $wallMessage->canViewDeletedMessage( $app->wg->User )
+			$showDeleted = ( $wallMessage->canViewDeletedMessage( $app->wg->User )
 				&& $app->wg->Request->getVal( 'show' ) == '1' );
 
 			if ( $isDeleted ) {
