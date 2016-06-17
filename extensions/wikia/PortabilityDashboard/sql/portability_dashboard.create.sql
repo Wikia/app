@@ -7,5 +7,6 @@ CREATE TABLE `portability_dashboard` (
   `typeless` int(11) DEFAULT NULL,
   `custom_infoboxes` int(11) DEFAULT NULL,
   `excluded` tinyint(4) DEFAULT '0',
+  `updated` timestamp default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
   PRIMARY KEY (`wiki_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;

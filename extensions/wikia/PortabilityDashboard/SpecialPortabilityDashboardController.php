@@ -157,6 +157,12 @@ class SpecialPortabilityDashboardController extends WikiaSpecialPageController {
 					wfMessage( 'portability-dashboard-impact-desc' )->text()
 				)
 			],
+			[
+				'header' => $this->renderTooltip(
+					wfMessage( 'portability-dashboard-date-update-header' )->text(),
+					wfMessage( 'portability-dashboard-date-update-desc' )->text()
+				)
+			],
 		];
 	}
 

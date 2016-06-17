@@ -47,7 +47,8 @@ class PortabilityDashboardModel {
 						'traffic' => $row->traffic,
 						'migrationImpact' => $row->migration_impact,
 						'typelessTemplatesCount' => $row->typeless,
-						'customInfoboxesCount' => $row->custom_infoboxes
+						'customInfoboxesCount' => $row->custom_infoboxes,
+						'lastUpdated' => date('d-m-Y', strtotime($row->updated))
 					];
 				}
 				return $result;
