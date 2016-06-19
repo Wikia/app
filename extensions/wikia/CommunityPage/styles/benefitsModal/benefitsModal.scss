@@ -1,0 +1,111 @@
+@import 'skins/shared/color';
+@import '../components/variables';
+@import 'resources/wikia/ui_components/modal/css/modal-close-icon.scss';
+
+
+$color-slate-gray: #656e78;
+$color-border: #e6e6e6;
+$icon-size: 24px;
+$icon-size-outer: 60px;
+$icon-space: 8px;
+
+.modal.community-page-benefits-modal > section {
+	padding: 0;
+}
+.modal.community-page-benefits-modal {
+	background: #fff;
+	color: $color-text-dark;
+	font-family: $community-page-font-family;
+	font-size: 14px;
+	height: 90vh;
+	max-height: 698px;
+	line-height: 21px;
+	padding: 0px;
+
+	footer, header {
+		display: none;
+	}
+}
+
+.community-page-benefits-content {
+	display: flex;
+	flex-direction: column;
+	height: 90vh;
+	max-height: 698px;
+	justify-content: space-between;
+	width: 50%;
+
+}
+
+.community-page-benefits-image {
+	background: #082140 url('/extensions/wikia/CommunityPage/images/wikia-default-image.png') 50% 50%/cover no-repeat;
+	float: left;
+	height: 90vh;
+	max-height: 698px;
+	width: 50%;
+}
+
+.community-page-benefits-modal-text {
+	overflow: auto;
+	padding: 30px;
+}
+
+.community-page-benefits-modal-edit-icon {
+	background: url('/extensions/wikia/CommunityPage/images/edit-pen-blue.svg') 50% 50%/#{$icon-size} no-repeat;
+	border-radius: $icon-size-outer / 2;
+	border-radius: 50%;
+	border: 2px solid $color-slate-gray;
+	box-sizing: border-box;
+	display: inline-block;
+	float: left;
+	height: $icon-size-outer;
+	margin-right: $icon-space;
+	width: $icon-size-outer;
+}
+.community-page-benefits-modal-action-point {
+	border-top: 1px solid $color-border;
+	padding: 20px;
+	text-align: center;
+}
+.community-page-entry-point-button {
+	background: $color-buttons;
+	color: $color-button-text;
+	display: inline-block;
+	font-size: 12px;
+	font-weight: bold;
+	height: 46px;
+	line-height: 46px;
+	padding: 0 30px;
+	text-decoration: none;
+	text-transform: uppercase;
+
+	&:hover, &:active {
+		background-color: $color-button-highlight;
+		text-decoration: none;
+	}
+}
+
+.community-page-benefits-modal-main-title {
+	font-size: 24px;
+	font-weight: bold;
+	line-height: 30px;
+	margin-bottom: 24px;
+}
+
+.community-page-benefits-modal-section-title {
+	font-size: 18px;
+	font-weight: bold;
+	margin: 10px 0 5px;
+}
+
+.community-page-benefits-modal-message {
+	float: left;
+	width: calc(100% - #{$icon-size-outer + $icon-space});
+}
+
+.community-page-benefits-modal-close {
+	@include modal-close-icon();
+	position: absolute;
+	top: 10px;
+	right: 10px;
+}

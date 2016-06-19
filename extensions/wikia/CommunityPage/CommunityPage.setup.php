@@ -17,9 +17,10 @@ $wgAutoloadClasses['CommunityPageEntryPointController'] = $IP . '/skins/oasis/mo
 /* hooks */
 $wgAutoloadClasses['CommunityPageSpecialHooks'] =  __DIR__ . '/CommunityPageSpecialHooks.class.php';
 $wgHooks['ArticleSaveComplete'][] = 'CommunityPageSpecialHooks::onArticleSaveComplete';
+$wgHooks['BeforePageDisplay'][] = 'CommunityPageSpecialHooks::onBeforePageDisplay';
 $wgHooks['GetRailModuleList'][] = 'CommunityPageSpecialHooks::onGetRailModuleList';
-$wgHooks['UserRights'][] = 'CommunityPageSpecialHooks::onUserRights';
 $wgHooks['UserFirstEditOnLocalWiki'][] = 'CommunityPageSpecialHooks::onUserFirstEditOnLocalWiki';
+$wgHooks['UserRights'][] = 'CommunityPageSpecialHooks::onUserRights';
 
 /* i18n */
 $wgExtensionMessagesFiles['CommunityPage'] = __DIR__ . '/CommunityPage.i18n.php';
