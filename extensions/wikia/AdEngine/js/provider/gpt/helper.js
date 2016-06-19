@@ -54,7 +54,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 			recoverableSlots = extra.recoverableSlots || [],
 			shouldPush = !recoveryHelper.isBlocking() ||
 				(recoveryHelper.isBlocking() && recoveryHelper.isRecoverable(slot.name, recoverableSlots)),
-			bfabLineItemId = uapContext.getUapId();
+			uapId = uapContext.getUapId();
 
 		log(['shouldPush',
 			slot.name,
@@ -76,8 +76,8 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 				slotTargeting.rv = count.toString();
 			}
 		}
-		if (bfabLineItemId) {
-			slotTargeting.uap = bfabLineItemId.toString();
+		if (uapId) {
+			slotTargeting.uap = uapId.toString();
 		}
 
 		element = new AdElement(slot.name, slotPath, slotTargeting);

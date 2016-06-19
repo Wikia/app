@@ -16,16 +16,16 @@ define('ext.wikia.adEngine.slot.bottomLeaderboard', [
 		logGroup = 'ext.wikia.adEngine.slot.bottomLeaderboard',
 		pushed = false,
 
-		pushBfab = adHelper.throttle(function () {
+		pushSlot = adHelper.throttle(function () {
 			var scrollPosition = win.scrollY || win.pageYOffset || doc.documentElement.scrollTop,
 				pushPos = dom.getTopOffset(mainContent) + mainContent.offsetHeight - viewPortHeight - threshold;
 
 			if (!pushed && pushPos < scrollPosition) {
 				pushed = true;
-				doc.removeEventListener('scroll', pushBfab);
+				doc.removeEventListener('scroll', pushSlot);
 				btfBlocker.unblock(slotName);
 				win.adslots2.push(slotName);
-				log(['pushBfab', 'Pushed BFAB'], 'debug', logGroup);
+				log(['pushSlot', 'Pushed BFAB'], 'debug', logGroup);
 			}
 		});
 
@@ -35,7 +35,7 @@ define('ext.wikia.adEngine.slot.bottomLeaderboard', [
 			return;
 		}
 
-		doc.addEventListener('scroll', pushBfab);
+		doc.addEventListener('scroll', pushSlot);
 	}
 
 	return {

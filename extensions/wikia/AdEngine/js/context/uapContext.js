@@ -1,22 +1,20 @@
 /*global define*/
 define('ext.wikia.adEngine.uapContext', [
-	'wikia.window',
-], function (win) {
+], function () {
 	'use strict';
 
-	win.ads = win.ads || {};
-	win.ads.uapContext = win.ads.uapContext || {};
+	var uapId;
 
-	function setUapId(bfabLineItemId) {
-		win.ads.uapContext.uap = bfabLineItemId;
+	function setUapId(uap) {
+		uapId = uap;
 	}
 
 	function getUapId() {
-		return win.ads.uapContext.uap;
+		return uapId;
 	}
 
 	return {
-		setUapId: setUapId,
-		getUapId: getUapId
+		getUapId: getUapId,
+		setUapId: setUapId
 	};
 });
