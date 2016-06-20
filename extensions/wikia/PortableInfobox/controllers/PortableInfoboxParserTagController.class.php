@@ -50,7 +50,11 @@ class PortableInfoboxParserTagController extends WikiaController {
 	 * @return string
 	 */
 	public static function replaceInfoboxMarkers( &$parser, &$text ) {
-		$text = static::getInstance()->replaceMarkers( $text );
+		global $wgArticleAsJson;
+		// The replacements for ArticleAsJson are handled in PortableInfoboxHooks::onArticleAsJsonBeforeEncode
+		if ( !$wgArticleAsJson ) {
+			$text = static::getInstance()->replaceMarkers( $text );
+		}
 
 		return true;
 	}
@@ -138,20 +142,7 @@ class PortableInfoboxParserTagController extends WikiaController {
 	}
 
 	public function replaceMarkers( $text ) {
-		global $wgArticleAsJson;
-		if ( $wgArticleAsJson ) {
-			$contentArray = json_decode( $text, true );
-			if ( is_array( $contentArray ) && isset( $contentArray['content'] ) ) {
-				$text = strtr( $contentArray['content'], $this->markers );
-				$contentArray['content'] = $text;
-				$text = json_encode( $contentArray );
-			} else {
-				$text = strtr( $text, $this->markers );
-			}
-		} else {
-			$text = strtr( $text, $this->markers );
-		}
-		return $text;
+		return strtr( $text, $this->markers );
 	}
 
 	protected function saveToParserOutput( \ParserOutput $parserOutput, Nodes\NodeInfobox $raw ) {
