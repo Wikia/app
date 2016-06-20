@@ -131,6 +131,11 @@ $config['adengine2_desktop_js'] = array(
 $config['adengine2_desktop_scss'] = array(
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => [ 'oasis' ],
+	'header' => [
+	],
+	'html-attributes' => [
+
+	],
 	'assets' => array(
 		'//skins/oasis/css/core/ads.scss',
 	),

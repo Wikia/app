@@ -7,21 +7,21 @@ class WikiaHtml extends Html {
 	 * media type (if any).
 	 *
 	 * @param $url string
-	 * @param $media mixed A media type string, like 'screen'
-	 * @param $crossorigin mixed Configure the CORS requests for the fetched data
+	 * @param $extendAttributes array HTML attributes to extend: rel, href, type, media, crossorigin
 	 * @return string Raw HTML
 	 */
-	public static function linkedStyle( $url, $media = 'all', $crossorigin = null ) {
-		$attribs = array(
+	public static function linkedStyle( $url, $extendAttributes ) {
+		$defaultAttrib = [
 			'rel' => 'stylesheet',
 			'href' => $url,
 			'type' => 'text/css',
-			'media' => $media,
-		);
+			'media' => 'all',
+		];
 
-		if ( $crossorigin !== null ) {
-			$attribs['crossorigin'] = $crossorigin;
-		}
+		$attribs = array_merge(
+			$defaultAttrib,
+			(array) $extendAttributes
+		);
 
 		return self::element( 'link', $attribs );
 	}
