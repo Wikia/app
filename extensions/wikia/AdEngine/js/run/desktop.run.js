@@ -163,9 +163,7 @@ require([
 			exitstitial.init();
 		}
 
-		if (uapContext.getUapId()) {
-			bottomLeaderboard.init();
-		}
+		bottomLeaderboard.init();
 	}
 
 	if (doc.readyState === 'complete') {

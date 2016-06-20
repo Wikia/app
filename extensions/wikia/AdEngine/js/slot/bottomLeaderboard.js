@@ -10,15 +10,15 @@ define('ext.wikia.adEngine.slot.bottomLeaderboard', [
 	'use strict';
 
 	var slotName = 'BOTTOM_LEADERBOARD',
-		mainContent = doc.getElementById('WikiaMainContent'),
 		threshold = 100,
 		viewPortHeight = Math.max(doc.documentElement.clientHeight, win.innerHeight || 0),
 		logGroup = 'ext.wikia.adEngine.slot.bottomLeaderboard',
 		pushed = false,
+		wikiaFooter = doc.getElementById('WikiaFooter'),
 
 		pushSlot = adHelper.throttle(function () {
 			var scrollPosition = win.scrollY || win.pageYOffset || doc.documentElement.scrollTop,
-				pushPos = dom.getTopOffset(mainContent) + mainContent.offsetHeight - viewPortHeight - threshold;
+				pushPos = dom.getTopOffset(wikiaFooter) - viewPortHeight - threshold;
 
 			if (!pushed && pushPos < scrollPosition) {
 				pushed = true;
