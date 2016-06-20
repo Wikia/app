@@ -3,28 +3,41 @@
  * modal is an entry point for Community Page
  */
 define('CommunityPageBenefitsModal',
-	['wikia.loader', 'wikia.mustache'],
-	function (loader, mustache) {
+	['wikia.loader', 'mw', 'wikia.mustache', 'wikia.window'],
+	function (loader, mw, mustache, w) {
 		'use strict';
 		var modalConfig = {
-			vars: {
-				id: 'CommunityPageBenefitsModal',
-				classes: ['community-page-benefits-modal'],
-				size: 'medium'
-			}
-		};
+				vars: {
+					id: 'CommunityPageBenefitsModal',
+					classes: ['community-page-benefits-modal'],
+					size: 'medium'
+				}
+			},
+			wikiTopic = w.wgSiteName;
 
-		function openEditModal() {
+		function openModal() {
 			loader({
 				type: loader.MULTI,
 				resources: {
-					mustache: 'extensions/wikia/CommunityPage/templates/benefitsModal.mustache'
+					mustache: 'extensions/wikia/CommunityPage/templates/benefitsModal.mustache',
+					messages: 'CommunityPageBenefits'
 				}
 			}).then(handleRequestsForModal);
 		}
 
 		function handleRequestsForModal(loaderRes) {
-			modalConfig.vars.content = mustache.render(loaderRes.mustache[0]);
+			mw.messages.set(loaderRes.messages);
+
+			modalConfig.vars.content = mustache.render(loaderRes.mustache[0], {
+				mainTitle: mw.message('communitypage-entrypoint-modal-title', wikiTopic, '').plain(),
+				editSubtitle: mw.message('communitypage-entrypoint-modal-edit-title').plain(),
+				connectSubtitle: mw.message('communitypage-entrypoint-modal-connect-title').plain(),
+				exploreSubtitle: mw.message('communitypage-entrypoint-modal-explore-title').plain(),
+				editText: mw.message('communitypage-entrypoint-modal-edit-text', wikiTopic).plain(),
+				connectText: mw.message('communitypage-entrypoint-modal-connect-text', wikiTopic).plain(),
+				exploreText: mw.message('communitypage-entrypoint-modal-explore-text', wikiTopic).plain(),
+				buttonText: mw.message('communitypage-entrypoint-modal-button-text').plain(),
+			});
 
 			require(['wikia.ui.factory'], function (uiFactory) {
 				uiFactory.init(['modal']).then(createComponent);
@@ -50,7 +63,7 @@ define('CommunityPageBenefitsModal',
 		}
 
 		return {
-			open: openEditModal
+			open: openModal
 		};
 	}
 );

@@ -35,5 +35,9 @@ JSMessages::registerPackage( 'CommunityPageSpecial', [
 	'communitypage-top-contributors-week',
 ] );
 
+JSMessages::registerPackage( 'CommunityPageBenefits', [
+	'communitypage-entrypoint-modal-*'
+] );
+
 /* register special page */
 $wgSpecialPages['Community'] = 'CommunityPageSpecialController';
