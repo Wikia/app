@@ -13,6 +13,7 @@ define('CommunityPageBenefitsModal',
 					size: 'content-size'
 				}
 			},
+			specialCommunityTitle = new mw.Title('Community', -1),
 			wikiTopic = mw.config.get('wgSiteName');
 
 		function openModal() {
@@ -25,6 +26,7 @@ define('CommunityPageBenefitsModal',
 			}).then(handleRequestsForModal);
 		}
 
+
 		function handleRequestsForModal(loaderRes) {
 			mw.messages.set(loaderRes.messages);
 
@@ -36,7 +38,8 @@ define('CommunityPageBenefitsModal',
 				editText: mw.message('communitypage-entrypoint-modal-edit-text', wikiTopic).plain(),
 				connectText: mw.message('communitypage-entrypoint-modal-connect-text', wikiTopic).plain(),
 				exploreText: mw.message('communitypage-entrypoint-modal-explore-text', wikiTopic).plain(),
-				buttonText: mw.message('communitypage-entrypoint-modal-button-text').plain()
+				buttonText: mw.message('communitypage-entrypoint-modal-button-text').plain(),
+				buttonUrl: specialCommunityTitle.getUrl()
 			});
 
 			require(['wikia.ui.factory'], function (uiFactory) {
