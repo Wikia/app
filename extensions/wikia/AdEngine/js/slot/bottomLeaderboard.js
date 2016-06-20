@@ -1,12 +1,11 @@
 /*global define*/
 define('ext.wikia.adEngine.slot.bottomLeaderboard', [
 	'ext.wikia.adEngine.adHelper',
-	'ext.wikia.adEngine.provider.btfBlocker',
 	'ext.wikia.adEngine.utils.domCalculator',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window',
-], function (adHelper, btfBlocker, dom, doc, log, win) {
+], function (adHelper, dom, doc, log, win) {
 	'use strict';
 
 	var slotName = 'BOTTOM_LEADERBOARD',
@@ -27,7 +26,6 @@ define('ext.wikia.adEngine.slot.bottomLeaderboard', [
 			if (!pushed && pushPos < scrollPosition) {
 				pushed = true;
 				doc.removeEventListener('scroll', pushSlot);
-				btfBlocker.unblock(slotName);
 				win.adslots2.push(slotName);
 				log(['pushSlot', 'Pushed BFAB'], 'debug', logGroup);
 			}

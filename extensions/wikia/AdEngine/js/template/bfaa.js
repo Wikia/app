@@ -2,13 +2,24 @@
 define('ext.wikia.adEngine.template.bfaa', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adHelper',
-	'ext.wikia.adEngine.uapContext',
+	'ext.wikia.adEngine.provider.btfBlocker',
 	'ext.wikia.adEngine.slot.bottomLeaderboard',
+	'ext.wikia.adEngine.uapContext',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window',
 	require.optional('ext.wikia.adEngine.mobile.mercuryListener')
-], function (adContext, adHelper, uapContext, bottomLeaderboard, doc, log, win, mercuryListener) {
+], function (
+	adContext,
+	adHelper,
+	btfBlocker,
+	bottomLeaderboard,
+	uapContext,
+	doc,
+	log,
+	win,
+	mercuryListener
+) {
 	'use strict';
 
 	var breakPointWidthNotSupported = 767, // SCSS property: $breakpoint-width-not-supported
@@ -94,6 +105,7 @@ define('ext.wikia.adEngine.template.bfaa', [
 		log('show', 'info', logGroup);
 
 		uapContext.setUapId(params.uap);
+		btfBlocker.unblock('BOTTOM_LEADERBOARD');
 	}
 
 	return {
