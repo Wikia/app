@@ -12,6 +12,7 @@ $icon-space: 8px;
 .modal.community-page-benefits-modal > section {
 	padding: 0;
 }
+
 .modal.community-page-benefits-modal {
 	background: #fff;
 	color: $color-text-dark;
@@ -38,7 +39,11 @@ $icon-space: 8px;
 }
 
 .community-page-benefits-image {
-	background: #082140 url('/extensions/wikia/CommunityPage/images/wikia-default-image.png') 50% 50%/cover no-repeat;
+	background-color: #082140;
+	background-image: url('/extensions/wikia/CommunityPage/images/wikia-logo-in-circles.png'), url('/extensions/wikia/CommunityPage/images/wikia-logo-bg.png');
+	background-position: center, bottom;
+	background-repeat: no-repeat;
+	background-size: 70%, 100%;
 	float: left;
 	height: 90vh;
 	max-height: 698px;
@@ -47,7 +52,7 @@ $icon-space: 8px;
 
 .community-page-benefits-modal-text {
 	overflow: auto;
-	padding: 30px;
+	padding: 36px 36px 30px 30px;
 }
 
 .community-page-benefits-modal-edit-icon {
@@ -62,11 +67,13 @@ $icon-space: 8px;
 	margin-right: $icon-space;
 	width: $icon-size-outer;
 }
+
 .community-page-benefits-modal-action-point {
 	border-top: 1px solid $color-border;
 	padding: 20px;
 	text-align: center;
 }
+
 .community-page-entry-point-button {
 	background: $color-buttons;
 	color: $color-button-text;
@@ -100,12 +107,16 @@ $icon-space: 8px;
 
 .community-page-benefits-modal-message {
 	float: left;
+	margin-bottom: 24px;
 	width: calc(100% - #{$icon-size-outer + $icon-space});
 }
 
 .community-page-benefits-modal-close {
 	@include modal-close-icon();
+	background-repeat: no-repeat;
+	background-position: center;
+	padding: 12px;
 	position: absolute;
-	top: 10px;
-	right: 10px;
+	right: 0;
+	top: 0;
 }
