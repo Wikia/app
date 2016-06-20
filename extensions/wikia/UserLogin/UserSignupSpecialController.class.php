@@ -39,8 +39,8 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 	 */
 	public function index() {
 		// Redirect to standalone NewAuth page if extension enabled
-		if ( $this->app->wg->EnableNewAuthModal ) {
-			$this->getOutput()->redirect( '/register?redirect=' . Title::newMainPage()->getFullURL() );
+		if ( $this->app->wg->EnableNewAuthModal) {
+			$this->getOutput()->redirect( '/register?redirect=' . $this->userLoginHelper->getRedirectUrl() );
 		}
 
 		JSMessages::enqueuePackage( 'UserSignup', JSMessages::EXTERNAL );
