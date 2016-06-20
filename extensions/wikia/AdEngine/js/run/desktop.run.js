@@ -110,7 +110,6 @@ require([
 // Inject extra slots
 require([
 	'ext.wikia.adEngine.adContext',
-	'ext.wikia.adEngine.uapContext',
 	'ext.wikia.adEngine.slot.bottomLeaderboard',
 	'ext.wikia.adEngine.slot.highImpact',
 	'ext.wikia.adEngine.slot.inContent',
@@ -122,7 +121,6 @@ require([
 	require.optional('ext.wikia.adEngine.slot.revcontentSlots')
 ], function (
 	adContext,
-	uapContext,
 	bottomLeaderboard,
 	highImpact,
 	inContent,
