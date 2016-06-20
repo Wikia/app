@@ -340,7 +340,6 @@ class BlogTemplateClass {
 	 */
 	public static function parseTag( $input, $params, &$parser, $frame = null, $returnPlainData = false ) {
 		global $wgTitle;
-		wfProfileIn( __METHOD__ );
 
 		/* parse input parameters */
 		if ( is_null( self::$oTitle ) ) {
@@ -352,7 +351,6 @@ class BlogTemplateClass {
 		/* parse all and return result */
 		$res = self::__parse( $aParams, $params, $parser, $returnPlainData );
 
-		wfProfileOut( __METHOD__ );
 		return $res;
 	}
 
@@ -390,7 +388,6 @@ class BlogTemplateClass {
 				);
 			}
 		}
-		wfProfileOut( __METHOD__ );
 		return $aResult;
 	}
 
@@ -399,7 +396,6 @@ class BlogTemplateClass {
 	 */
 
 	private static function __getCategory( $sPageName, $iPage ) {
-		wfProfileIn( __METHOD__ );
 		$aCategories = array();
 
 		$oFauxRequest = new FauxRequest(
@@ -425,12 +421,10 @@ class BlogTemplateClass {
 		}
 
 		# ---
-		wfProfileOut( __METHOD__ );
 		return $aCategories;
 	}
 
 	private static function __parseXMLTag( $string ) {
-		wfProfileIn( __METHOD__ );
 		$aResult = array();
 		$aRes = $aTags = array();
 		if ( preg_match_all( BLOGS_XML_REGEX, $string, $aTags ) ) {
@@ -463,7 +457,6 @@ class BlogTemplateClass {
 				}
 			}
 		}
-		wfProfileOut( __METHOD__ );
 		return $aResult;
 	}
 
@@ -474,7 +467,6 @@ class BlogTemplateClass {
 
 	private static function __setDefault() {
 		/* set default options */
-    	wfProfileIn( __METHOD__ );
 		/* default tables */
 		if ( !in_array( "page", self::$aTables ) ) {
 			self::$aTables[] = "page";
@@ -532,47 +524,37 @@ class BlogTemplateClass {
 			$recentUrl = $recentUrlTitle ? $recentUrlTitle->getFullURL() : '';
 			self::__makeStringOption( 'seemore', $recentUrl );
 		}
-    	wfProfileOut( __METHOD__ );
 	}
 
 	private static function __makeOrder( $sParamName, $sParamValue ) {
-    	wfProfileIn( __METHOD__ );
     	wfDebugLog( __METHOD__, "__makeOrder: " . $sParamName . "," . $sParamValue . "\n" );
     	if ( !empty( $sParamValue ) ) {
 			if ( in_array( $sParamValue, array_keys( self::$aBlogParams[$sParamName]['pattern'] ) ) ) {
 				self::$aOptions['order'] = self::$aBlogParams[$sParamName]['pattern'][$sParamValue];
 			}
 		}
-    	wfProfileOut( __METHOD__ );
 	}
 
 	private static function __makeListOption( $sParamName, $sParamValue ) {
-    	wfProfileIn( __METHOD__ );
     	wfDebugLog( __METHOD__, "__makeListOption: " . $sParamName . "," . $sParamValue . "\n" );
 		if ( in_array( $sParamValue, self::$aBlogParams[$sParamName]['pattern'] ) ) {
 			self::$aOptions[$sParamName] = $sParamValue;
 		}
-    	wfProfileOut( __METHOD__ );
 	}
 
 	private static function __makeBoolOption( $sParamName, $sParamValue ) {
-    	wfProfileIn( __METHOD__ );
     	wfDebugLog( __METHOD__, "__makeBoolOption: " . $sParamName . "," . $sParamValue . "\n" );
 		if ( in_array( $sParamValue, array( "true", "false", 0, 1 ) ) ) {
 			self::$aOptions[$sParamName] = $sParamValue;
 		}
-    	wfProfileOut( __METHOD__ );
 	}
 
 	private static function __makeStringOption( $sParamName, $sParamValue ) {
-    	wfProfileIn( __METHOD__ );
     	wfDebugLog( __METHOD__, "__makeStringOption: " . $sParamName . "," . $sParamValue . "\n" );
 		self::$aOptions[$sParamName] = $sParamValue;
-    	wfProfileOut( __METHOD__ );
 	}
 
 	private static function __makeIntOption( $sParamName, $sParamValue ) {
-    	wfProfileIn( __METHOD__ );
     	wfDebugLog( __METHOD__, "__makeIntOption: " . $sParamName . "," . $sParamValue . "\n" );
 		$m = array();
 		if ( array_key_exists( $sParamName, self::$aBlogParams ) ) {
@@ -587,11 +569,9 @@ class BlogTemplateClass {
 				self::$aOptions[$sParamName] = $sParamValue;
 			}
 		}
-    	wfProfileOut( __METHOD__ );
 	}
 
 	private static function __addRevisionTable() {
-    	wfProfileIn( __METHOD__ );
 		$sRevisionTable = 'revision';
 		if ( !in_array( $sRevisionTable, self::$aTables ) ) {
 			self::$aWhere[] = "rev_page = page_id";
@@ -607,11 +587,9 @@ class BlogTemplateClass {
 			}
 
 		}
-    	wfProfileOut( __METHOD__ );
 	}
 
-	private static function __makeDBOrder() {
-    	wfProfileIn( __METHOD__ );
+	private static function __makeDBOrderGroupByLimitAndOffset() {
     	$dbOption = array();
     	/* ORDER BY */
     	if ( isset( self::$aOptions['order'] ) ) {
@@ -639,7 +617,6 @@ class BlogTemplateClass {
 			$dbOption['HAVING'] = implode( ' AND ', self::$aHaving );
 		}
 
-    	wfProfileOut( __METHOD__ );
     	return $dbOption;
 	}
 
@@ -657,7 +634,6 @@ class BlogTemplateClass {
 	}
 
 	private static function __getCategories ( $aParamValues, &$parser ) {
-    	wfProfileIn( __METHOD__ );
 		self::$aCategoryNames = $aParamValues;
 		$aPages = array();
     	if ( !empty( $aParamValues ) ) {
@@ -702,14 +678,12 @@ class BlogTemplateClass {
 			}
 			self::$dbr->freeResult( $res );
 		}
-    	wfProfileOut( __METHOD__ );
     	return $aPages;
 	}
 
 	private static function __truncateText( $sText, $iLength, $sEnding ) {
 		global $wgLang;
 
-		wfProfileIn( __METHOD__ );
 
 		$sResult = "";
 		if ( empty( $iLength ) ) {
@@ -801,13 +775,11 @@ class BlogTemplateClass {
 
 		$sResult = preg_replace( '/[\r\n]{2,}/siU', '<br />', trim( $sResult ) );
 
-		wfProfileOut( __METHOD__ );
 		return $sResult;
 	}
 
 	private static function __getRevisionText( $iPage, $oRev ) {
 		global $wgLang, $wgUser;
-		wfProfileIn( __METHOD__ );
 		$sResult = "";
 
 		$titleObj = Title::newFromId( $iPage );
@@ -863,7 +835,6 @@ class BlogTemplateClass {
 				$sResult = $parserOutput->getText();
 			}
 		}
-		wfProfileOut( __METHOD__ );
 		return $sResult;
 	}
 
@@ -875,8 +846,6 @@ class BlogTemplateClass {
 	}
 
 	private static function __getResults() {
-		global $wgLang;
-    	wfProfileIn( __METHOD__ );
     	/* main query */
     	$aResult = array();
     	$aFields = array( '/* BLOGS */ rev_page as page_id', 'page_namespace', 'page_title', 'min(rev_timestamp) as create_timestamp', 'unix_timestamp(rev_timestamp) as timestamp', 'rev_timestamp', 'min(rev_id) as rev_id', 'rev_user' );
@@ -885,7 +854,7 @@ class BlogTemplateClass {
 			$aFields,
 			self::$aWhere,
 			__METHOD__,
-			self::__makeDBOrder()
+			self::__makeDBOrderGroupByLimitAndOffset()
 		);
 
 		while ( $oRow = self::$dbr->fetchObject( $res ) ) {
@@ -931,7 +900,6 @@ class BlogTemplateClass {
 		wfRunHooks( 'BlogTemplateGetResults', array( &$aResult ) );
 
 		self::$dbr->freeResult( $res );
-    	wfProfileOut( __METHOD__ );
     	return $aResult;
 	}
 
@@ -955,7 +923,6 @@ class BlogTemplateClass {
 	}
 
 	private static function __makeRssOutput( $aInput ) {
-		wfProfileIn( __METHOD__ );
 		$aOutput = array();
 		if ( !empty( $aInput ) ) {
 			foreach ( $aInput as $iPage => $aRow ) {
@@ -974,24 +941,21 @@ class BlogTemplateClass {
 			}
 		}
 
-		wfProfileOut( __METHOD__ );
 		return $aOutput;
 	}
 
 	private static function __parse( $aInput, $aParams, &$parser, $returnPlainData = false ) {
-		global $wgLang, $wgUser, $wgCityId, $wgParser, $wgTitle;
+		global $wgLang, $wgUser, $wgCityId, $wgParser, $wgOut;
 		global $wgExtensionsPath, $wgStylePath, $wgRequest;
 
-		wfProfileIn( __METHOD__ );
-
 		/**
-		 * because this parser tag contains elements of interface we need to
-		 * inform parser to vary parser cache key by user lang option
+		 * Don't cache the tag. This makes the pagination work.
+		 * We rely on Varnish caching for anonymous users and bots.
 		 **/
 
 		/* @var $parser Parser */
 		if ( ( $parser instanceof Parser ) && ( $parser->mOutput instanceof ParserOutput ) ) {
-			$parser->mOutput->recordOption( 'userlang' );
+			$parser->mOutput->updateCacheExpiry( -1 );
 		}
 
 		$result = "";
@@ -1162,10 +1126,10 @@ class BlogTemplateClass {
 
 			// Allows caller to turn off paging of results
 			if ( self::$aOptions['paging'] == true ) {
-				$__pageVal = $wgRequest->getVal( 'page' );
-				if ( isset( $__pageVal ) && ( !empty( $__pageVal ) ) ) {
+				$__pageVal = $wgRequest->getInt( 'page', 0 );
+				if ( $__pageVal > 0 ) {
 					$count = intval( self::$aOptions['count'] );
-					self::__makeIntOption( 'offset', $count * $__pageVal );
+					self::__makeIntOption( 'offset', $count * ( $__pageVal - 1 ) );
 				}
 			}
 
@@ -1175,7 +1139,6 @@ class BlogTemplateClass {
 			/* build query */
 			if ( $returnPlainData ) {
 				$res = self::__getResults();
-				wfProfileOut( __METHOD__ );
 				return $res;
 			} else {
 				if ( !empty( $parser->mOutput ) && $parser->mOutput instanceof ParserOutput ) {
@@ -1192,7 +1155,9 @@ class BlogTemplateClass {
 							$sPager = "";
 							if ( self::$aOptions['type'] == 'plain' ) {
 								$iCount = self::getResultsCount();
-								$sPager = self::__getPager( $iCount, intval( self::$aOptions['offset'] ) );
+								$aPager = self::__getPager( $iCount, intval( self::$aOptions['offset'] ) );
+								$wgOut->addHeadItem( 'Paginator', $aPager['head'] );
+								$sPager = $aPager['body'];
 							}
 							if ( F::app()->checkSkin( 'oasis' ) ) {
 								wfRunHooks( 'BlogsRenderBlogArticlePage', array( &$result, $aResult, self::$aOptions, $sPager ) );
@@ -1248,43 +1213,40 @@ class BlogTemplateClass {
 		catch ( Exception $e ) {
 			wfDebugLog( __METHOD__, "parse error: " . $e->getMessage() . "\n" );
 
-		   	wfProfileOut( __METHOD__ );
 			return $e->getMessage();
 		}
 
-    	wfProfileOut( __METHOD__ );
     	return $result;
 	}
 
-	private static function __getPager( $iTotal, $iPage ) {
-		global $wgExtensionsPath, $wgStyleVersion;
-		wfProfileIn( __METHOD__ );
+	private static function __getPager( $iTotal, $iOffset ) {
+		global $wgExtensionsPath;
 
-		$sPager = "";
-		if ( $iTotal <= 0 || empty( $iTotal ) ) {
-			wfDebugLog( __METHOD__, "cannot make pager - no results found: " . $iTotal . "\n" );
-		} else {
-			$iPageCount = ceil( $iTotal / self::$aOptions['count'] );
-			$iPage = ( isset( self::$aOptions['count'] ) && self::$aOptions['count'] > 0 ) ? ceil( $iPage / intval( self::$aOptions['count'] ) ) : 0;
-			# ---
-			$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
-			$oTmpl->set_vars( array(
-				"iPageCount"		=> $iPageCount,
-				"iPage"			=> $iPage,
-				"iTotal"		=> $iTotal,
-				"iCount"		=> intval( self::$aOptions['count'] ),
-				"wgTitle"		=> self::$oTitle,
-				"pageOffsetName"	=> self::$pageOffsetName,
-				"wgExtensionsPath" 	=> $wgExtensionsPath,
-				"wgStyleVersion"	=> $wgStyleVersion,
-			) );
-			# ---
-			$sPager = ( NS_BLOG_LISTING == self::$oTitle->getNamespace() ) ? $oTmpl->render( "blog-pager-ajax" ) :
-					( ( NS_BLOG_ARTICLE == self::$oTitle->getNamespace() ) ? $oTmpl->render( "blog-pager" ) : "" );
+		$ns = self::$oTitle->getNamespace();
+
+		if ( $iTotal <= 0 || empty( $iTotal ) || !in_array( $ns, [ NS_BLOG_LISTING, NS_BLOG_ARTICLE ] ) ) {
+			return [
+				'head' => '',
+				'body' => '',
+			];
 		}
 
-		wfProfileOut( __METHOD__ );
-		return $sPager;
+		$iCount = intval( self::$aOptions['count'] );
+		$iPage = intval( $iOffset / $iCount ) + 1;
+
+		$pages = new Wikia\Paginator\Paginator( $iTotal, $iCount, self::$oTitle->getLocalURL() );
+		$pages->setActivePage( $iPage );
+
+		$script = '';
+		if ( NS_BLOG_LISTING == self::$oTitle->getNamespace() ) {
+			$scriptUrl = $wgExtensionsPath . '/wikia/Blogs/js/BlogsPager.js';
+			$script = '<script type="text/javascript" src="' . $scriptUrl . '"></script>';
+		}
+
+		return [
+			'head' => $pages->getHeadItem(),
+			'body' => $pages->getBarHTML( 'BlogPaginator' ) . $script,
+		];
 	}
 
 	public static function getSubpageText( Title $Title ) {
@@ -1302,18 +1264,17 @@ class BlogTemplateClass {
 		return $res;
 	}
 
-	public static function axShowCurrentPage ( $articleId, $namespace, $offset, $skin ) {
+	public static function axShowCurrentPage ( $articleId, $namespace, $page0, $skin ) {
 		global $wgParser;
-		wfProfileIn( __METHOD__ );
 		$result = "";
-		$offset = intval( $offset );
-		if ( $offset >= 0 ) {
+		$page0 = intval( $page0 );
+		if ( $page0 >= 0 ) {
 			$oTitle = Title::newFromID( $articleId );
 			if ( !empty( $oTitle ) && ( $oTitle instanceof Title ) ) {
 				self::$oTitle = $oTitle;
 				$oRevision = Revision::newFromTitle( $oTitle );
 				$sText = $oRevision->getText();
-				$id = Parser::extractTagsAndParams( array( BLOGTPL_TAG ), $oRevision->getText(), $matches, md5( BLOGTPL_TAG . $articleId . $namespace . $offset ) );
+				$id = Parser::extractTagsAndParams( array( BLOGTPL_TAG ), $oRevision->getText(), $matches, md5( BLOGTPL_TAG . $articleId . $namespace . $page0 ) );
 				if ( !empty( $matches ) ) {
 					list ( $sKey, $aValues ) = each ( $matches );
 					list ( , $input, $params, ) = $matches[$sKey];
@@ -1340,19 +1301,17 @@ class BlogTemplateClass {
 						if ( empty( $count ) ) {
 							$count = intval( self::$aBlogParams['count']['default'] );
 						}
-						$offset = $count * $offset;
 						/* set new value of offset */
-						$params['offset'] = $offset;
+						$params['offset'] = $count * $page0;
 
 						/* run parser */
 						$result = self::parseTag( $input, $params, $wgParser );
 					}
 				}
 			} else {
-				wfDebugLog( __METHOD__, "Invalid parameters - $articleId, $namespace, $offset \n" );
+				wfDebugLog( __METHOD__, "Invalid parameters - $articleId, $namespace, $page0 \n" );
 			}
 		}
-		wfProfileOut( __METHOD__ );
 		if ( is_array( $result ) ) {
 			return $result[0];
 		}
@@ -1372,7 +1331,6 @@ class BlogTemplateClass {
 	 * @return mixed|string
 	 */
 	public static function getShortText( $iPage, Revision $oRev ) {
-		wfProfileIn( __METHOD__ );
 		// backup current value
 		$aOptions_bck = self::$aOptions;
 
@@ -1388,7 +1346,6 @@ class BlogTemplateClass {
 		// restore options
 		self::$aOptions = $aOptions_bck;
 
-		wfProfileOut( __METHOD__ );
 		return $shortText;
 	}
 }
