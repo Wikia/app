@@ -20,6 +20,10 @@ define('ext.wikia.adEngine.slot.bottomLeaderboard', [
 			var scrollPosition = win.scrollY || win.pageYOffset || doc.documentElement.scrollTop,
 				pushPos = dom.getTopOffset(wikiaFooter) - viewPortHeight - threshold;
 
+			if (win.ArticleComments && !win.ArticleComments.initCompleted) {
+				return;
+			}
+
 			if (!pushed && pushPos < scrollPosition) {
 				pushed = true;
 				doc.removeEventListener('scroll', pushSlot);
