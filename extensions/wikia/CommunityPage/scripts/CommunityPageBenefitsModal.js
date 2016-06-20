@@ -3,8 +3,8 @@
  * modal is an entry point for Community Page
  */
 define('CommunityPageBenefitsModal',
-	['wikia.loader', 'mw', 'wikia.mustache', 'wikia.window'],
-	function (loader, mw, mustache, w) {
+	['wikia.loader', 'mw', 'wikia.mustache'],
+	function (loader, mw, mustache) {
 		'use strict';
 		var modalConfig = {
 				vars: {
@@ -13,7 +13,7 @@ define('CommunityPageBenefitsModal',
 					size: 'content-size'
 				}
 			},
-			wikiTopic = w.wgSiteName;
+			wikiTopic = mw.config.get('wgSiteName');
 
 		function openModal() {
 			loader({
@@ -36,7 +36,7 @@ define('CommunityPageBenefitsModal',
 				editText: mw.message('communitypage-entrypoint-modal-edit-text', wikiTopic).plain(),
 				connectText: mw.message('communitypage-entrypoint-modal-connect-text', wikiTopic).plain(),
 				exploreText: mw.message('communitypage-entrypoint-modal-explore-text', wikiTopic).plain(),
-				buttonText: mw.message('communitypage-entrypoint-modal-button-text').plain(),
+				buttonText: mw.message('communitypage-entrypoint-modal-button-text').plain()
 			});
 
 			require(['wikia.ui.factory'], function (uiFactory) {
