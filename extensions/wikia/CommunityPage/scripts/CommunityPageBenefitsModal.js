@@ -10,7 +10,7 @@ define('CommunityPageBenefitsModal',
 				vars: {
 					id: 'CommunityPageBenefitsModal',
 					classes: ['community-page-benefits-modal'],
-					size: 'medium'
+					size: 'content-size'
 				}
 			},
 			wikiTopic = w.wgSiteName;
