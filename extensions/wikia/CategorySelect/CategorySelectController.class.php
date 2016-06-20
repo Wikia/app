@@ -135,7 +135,7 @@ class CategorySelectController extends WikiaController {
 	 */
 	public function editPageMetadata() {
 		$categories = '';
-		$data = CategoryHelper::getExtractedCategoryData();
+		$data = $this->getVal('categories', CategoryHelper::getExtractedCategoryData());
 
 		if ( isset( $data ) && !empty( $data[ 'categories' ] ) ) {
 			$categories = htmlspecialchars( CategoryHelper::changeFormat( $data[ 'categories' ], 'array', 'json' ) );

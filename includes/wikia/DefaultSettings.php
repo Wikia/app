@@ -1305,7 +1305,7 @@ $wgEnableJavaScriptErrorLogging = false;
  * @name $wgAdDriverDelayBelowTheFold
  * Prevents from loading BTF before ATF ad slots
  */
-$wgAdDriverDelayBelowTheFold = false;
+$wgAdDriverDelayBelowTheFold = true;
 
 /**
  * @name $wgAdDriverEnableInvisibleHighImpactSlot
