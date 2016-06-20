@@ -29,7 +29,9 @@ $messages[ 'en' ] = [
 	'portability-dashboard-language-filter-all' => 'all',
 	'portability-dashboard-special-insights-template-without-title' => 'Unorganized templates on Special:Insights',
 	'portability-dashboard-special-insights-custom-infobox-title' => 'Non-portable infoboxes on Special:Insights',
-	'portability-dashboard-refresh-frequency-info' => 'Portability data, content page views and migration impact are recalculated every Wednesday at 9:00 GMT.'
+	'portability-dashboard-refresh-frequency-info' => 'Portability data, content page views and migration impact are recalculated every Saturday at 9:00 GMT.',
+	'portability-dashboard-date-update-header' => 'Updated on',
+	'portability-dashboard-date-update-desc' => 'Last wiki info update date'
 ];
 
 $messages[ 'qqq' ] = [
@@ -54,5 +56,7 @@ $messages[ 'qqq' ] = [
 	'portability-dashboard-language-filter-all' => 'Language filter link - show all languages',
 	'portability-dashboard-special-insights-template-without-title' => 'Link title for unorganized templates on Special:Insights',
 	'portability-dashboard-special-insights-custom-infobox-title' => 'Link title for non-portable infoboxes on Special: Insights',
-	'portability-dashboard-refresh-frequency-info' => 'Portability data, content page views and migration impact are recalculated every Wednesday at 9:00 GMT.'
+	'portability-dashboard-refresh-frequency-info' => 'Portability data, content page views and migration impact are recalculated every Saturday at 9:00 GMT.',
+	'portability-dashboard-date-update-header' => 'Updated on header',
+	'portability-dashboard-date-update-desc' => 'Updated on explanation'
 ];
