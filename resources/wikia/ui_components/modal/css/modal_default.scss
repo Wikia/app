@@ -1,4 +1,5 @@
 @import "skins/shared/color";
+@import "skins/oasis/css/core/breakpoints-variables";
 @import "skins/oasis/css/core/responsive-variables";
 @import "skins/shared/mixins/transition";
 @import "skins/shared/mixins/blackout";
@@ -118,12 +119,28 @@ $large-modal-margin: 50px;
 		}
 	}
 
+	&.content-size {
+		width: $page-width-medium;
+	}
+
 	.buttons {
 		bottom: 15px;
 	}
 
 	&.no-scroll > section {
 		overflow-y: hidden;
+	}
+}
+
+@media #{$breakpoint-small-only} {
+	.modal.content-size {
+		width: $page-width-small;
+	}
+}
+
+@media #{$breakpoint-large-up} {
+	.modal.content-size {
+		width: $page-width-large;
 	}
 }
 
