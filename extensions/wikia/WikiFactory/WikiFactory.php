@@ -782,12 +782,6 @@ class WikiFactory {
 			}
 			wfProfileOut( __METHOD__."-citylist" );
 			$dbw->commit();
-			$aHookParams = [
-				'city_id' => $city_id,
-				'cv_name' => $variable->cv_name,
-				'cv_value' => $value,
-			];
-			wfRunHooks( 'WikiFactoryChangeCommitted', [ $aHookParams ] );
 		}
 		catch ( DBQueryError $e ) {
 			Wikia::log( __METHOD__, "", "Database error, cannot write variable." );
@@ -1919,8 +1913,6 @@ class WikiFactory {
 			[ "city_id" => $city_id ],
 			__METHOD__
 		);
-
-		wfRunHooks( 'WikiFactoryPublicStatusChanged', [ &$city_public, &$city_id, $reason ] );
 
 		self::log( self::LOG_STATUS, $sLogMessage, $city_id );
 

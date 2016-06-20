@@ -56,6 +56,10 @@ class UserStatsService extends WikiaModel {
 	public function increaseEditsCount() {
 		global $wgMemc;
 
+		if ( !$this->validateUser() ) {
+			return false;
+		}
+
 		$stats = $this->getStats( Title::GAID_FOR_UPDATE );
 
 		// update edit counts on wiki
@@ -156,6 +160,10 @@ class UserStatsService extends WikiaModel {
 	 * @return Int Number of edits
 	 */
 	public function calculateEditCountWiki( $flags = 0 ) {
+		if ( !$this->validateUser() ) {
+			return 0;
+		}
+
 		$dbr = $this->getDatabase( $flags );
 
 		$editCount = $dbr->selectField(
@@ -196,6 +204,10 @@ class UserStatsService extends WikiaModel {
 	 * @return Int Number of edits
 	 */
 	private function calculateEditCountFromWeek( $flags = 0 ) {
+		if ( !$this->validateUser() ) {
+			return 0;
+		}
+
 		$dbr = $this->getDatabase( $flags );
 
 		$editCount = $dbr->selectField(
@@ -259,6 +271,10 @@ class UserStatsService extends WikiaModel {
 	 * @return $optionVal string|null
 	 */
 	private function setUserStat( $statName, $statVal ) {
+		if ( !$this->validateUser() ) {
+			return false;
+		}
+
 		$dbw = $this->getDatabase( Title::GAID_FOR_UPDATE );
 		$dbw->replace(
 			'wikia_user_properties',
@@ -332,5 +348,9 @@ class UserStatsService extends WikiaModel {
 
 	private static function getUserStatsMemcKey( $userId, $wikiId ) {
 		return wfSharedMemcKey( 'userStats', $wikiId, $userId, self::CACHE_VERSION );
+	}
+
+	private function validateUser() {
+		return $this->userId > 0;
 	}
 }
