@@ -410,16 +410,6 @@ class AssetsManager {
 		return $url;
 	}
 
-	private function getGroupsForAsset($filePath) {
-
-	}
-
-	public function getHtmlAttributes(Array $files) {
-		$this->loadConfig();
-
-
-	}
-
 	/**
 	 * @author Inez Korczyński <korczynski@gmail.com>
 	 * @return string Full common URL to one file, uses not wiki specific host
@@ -610,6 +600,11 @@ class AssetsManager {
 
 	public function getAllowedAssetExtensions(){
 		return $this->mAllowedAssetExtensions;
+	}
+
+	public function checkContainCrossoriginScssFile(Array $files) {
+		global $wgCrossoriginScssFile;
+		return isset($wgCrossoriginScssFile) && strpos($files, $wgCrossoriginScssFile) !== false;
 	}
 
 	/**

@@ -278,7 +278,8 @@ abstract class WikiaSkin extends SkinTemplate {
 		// get a single URL to fetch all the required SASS files
 		$sassFilesUrl = $this->assetsManager->getSassesUrl($sassFiles);
 
-		$htmlAttributes = $this->assetManager->getHtmlAttributes($sassFiles);
+		$htmlAttributes = $this->assetsManager->checkContainCrossoriginScssFile($sassFiles) ?
+			[ 'crossorigin' => 'anonymous' ] : [];
 
 		// recovery unlock css
 		$unlockUrl = ARecoveryUnlockCSS::getUnlockCSSUrl();

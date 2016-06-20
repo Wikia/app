@@ -7,7 +7,7 @@ class WikiaHtml extends Html {
 	 * media type (if any).
 	 *
 	 * @param $url string
-	 * @param $extendAttributes array HTML attributes to extend: rel, href, type, media, crossorigin
+	 * @param $extendAttributes array HTML attributes to extend: rel, href, type, media
 	 * @return string Raw HTML
 	 */
 	public static function linkedStyle( $url, $extendAttributes ) {
