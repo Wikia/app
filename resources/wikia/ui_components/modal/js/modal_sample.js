@@ -1,7 +1,7 @@
-require( [ 'jquery', 'wikia.ui.factory' ], function( $, uiFactory ) {
+require(['jquery', 'wikia.ui.factory'], function ($, uiFactory) {
 	'use strict';
-	uiFactory.init( 'modal' ).then( function( uiModal ) {
-		$( function() {
+	uiFactory.init('modal').then(function (uiModal) {
+		$(function () {
 
 			/**
 			 * Shows a modal; unified function for different modals
@@ -9,17 +9,17 @@ require( [ 'jquery', 'wikia.ui.factory' ], function( $, uiFactory ) {
 			 * @param {Object} modalConfig - uiFactory modal config object
 			 * @param {Function} callback - optional; Callback after modal is initialized
 			 */
-			function showModal( modalConfig, callback ) {
-				if ( typeof callback !== 'function' ) {
-					callback = function( demoModal ) {
+			function showModal(modalConfig, callback) {
+				if (typeof callback !== 'function') {
+					callback = function (demoModal) {
 						demoModal.show();
 					};
 				}
-				uiModal.createComponent( modalConfig, callback );
+				uiModal.createComponent(modalConfig, callback);
 			}
 
 			// opening a small modal example
-			$( '#showSmallModalExample' ).click( function() {
+			$('#showSmallModalExample').click(function () {
 				var modalConfig = {
 					type: 'default',
 					vars: {
@@ -56,11 +56,11 @@ require( [ 'jquery', 'wikia.ui.factory' ], function( $, uiFactory ) {
 						]
 					}
 				};
-				showModal( modalConfig );
-			} );
+				showModal(modalConfig);
+			});
 
 			// opening a medium modal example
-			$( '#showMediumModalExample' ).click( function() {
+			$('#showMediumModalExample').click(function () {
 				var modalConfig = {
 					type: 'default',
 					vars: {
@@ -97,11 +97,11 @@ require( [ 'jquery', 'wikia.ui.factory' ], function( $, uiFactory ) {
 						]
 					}
 				};
-				showModal( modalConfig );
-			} );
+				showModal(modalConfig);
+			});
 
 			// opening a large modal example
-			$( '#showLargeModalExample' ).click( function() {
+			$('#showLargeModalExample').click(function () {
 				var modalConfig = {
 					type: 'default',
 					vars: {
@@ -138,29 +138,29 @@ require( [ 'jquery', 'wikia.ui.factory' ], function( $, uiFactory ) {
 						]
 					}
 				};
-				showModal( modalConfig, function( demoModal ) {
+				showModal(modalConfig, function (demoModal) {
 					demoModal.show();
 
 					// opening a small modal example over large modal
-					$( '#largeModalAltLink' ).click( function( event ) {
+					$('#largeModalAltLink').click(function (event) {
 						event.preventDefault();
-						showModal( {
+						showModal({
 							type: 'default',
 							vars: {
 								id: 'smallModalExampleOverLarge',
 								size: 'small',
-								content: $.msg( 'styleguide-example-modal-small-over-large-message' ),
+								content: $.msg('styleguide-example-modal-small-over-large-message'),
 								class: 'styleguide-example-small-over-large',
-								title: $.msg( 'styleguide-example-modal-small-over-large-title' ),
-								closeText: $.msg( 'styleguide-example-modal-close-text' )
+								title: $.msg('styleguide-example-modal-small-over-large-title'),
+								closeText: $.msg('styleguide-example-modal-close-text')
 							}
-						} );
-					} );
-				} );
-			} );
+						});
+					});
+				});
+			});
 
 			// opening a content-size modal example
-			$( '#showContentSizeModalExample' ).click( function() {
+			$('#showContentSizeModalExample').click(function () {
 				var modalConfig = {
 					type: 'default',
 					vars: {
@@ -197,9 +197,9 @@ require( [ 'jquery', 'wikia.ui.factory' ], function( $, uiFactory ) {
 						]
 					}
 				};
-				showModal( modalConfig );
-			} );
-		} );
-	} );
+				showModal(modalConfig);
+			});
+		});
+	});
 
-} );
+});
