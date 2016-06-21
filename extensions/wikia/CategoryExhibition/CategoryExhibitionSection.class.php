@@ -298,9 +298,11 @@ class CategoryExhibitionSection {
 				if ( empty( $image ) ){
 					return '';
 				}
+				// ImageServing is not re-entrant, it has internal state which can break cropping
+				$cropper = new ImageServing( $mPageId, $this->thumbWidth , array( "w" => $this->thumbWidth, "h" => $this->thumbHeight ) );
 				$imageUrl = wfReplaceImageServer(
 					$image->getThumbUrl(
-						$imageServing->getCut( $image->getWidth(), $image->getHeight() )."-".$image->getName()
+						$cropper->getCut( $image->getWidth(), $image->getHeight() )."-".$image->getName()
 					)
 				);
 			}
