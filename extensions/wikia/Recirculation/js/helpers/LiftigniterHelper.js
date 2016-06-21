@@ -39,7 +39,6 @@ define('ext.wikia.recirculation.helpers.liftigniter', [
 				w.$p('fetch');
 			}
 
-
 			return deferred.promise();
 		}
 
@@ -59,7 +58,7 @@ define('ext.wikia.recirculation.helpers.liftigniter', [
 					if (options.widget === 'fandom-rec') {
 						item.title = item.title.replace(' - Fandom - Powered by Wikia', '');
 					} else {
-						item.thumbnail = thumbnailer(item.thumbnail, 'image', options.width, options.height);
+						item.thumbnail = thumbnailer.getThumbURL(item.thumbnail, 'image', options.width, options.height);
 					}
 
 					items.push(item);
