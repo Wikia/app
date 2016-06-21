@@ -51,10 +51,10 @@ class NavigationTemplate {
 		// matches block elements in between start and end marker tags
 		// <marker>(not </marker>)...(block element)...</marker>
 		$replaced = preg_replace(
-			'/(<|&lt;)' . $marker . '(>|&gt;)' .
-			'((?!(<|&lt;)\\/' . $marker . '(>|&gt;)).)*' .
+			'/(<|&lt;)' . $marker . '(>|&gt;)\\n' .
+			'((?!\\n(<|&lt;)\\/' . $marker . '(>|&gt;)).)*' .
 			'<(' . implode( '|', self::$blockLevelElements ) . ')(\s.*)?>.*' .
-			'(<|&lt;)\\/' . $marker . '(>|&gt;)/isU',
+			'\\n(<|&lt;)\\/' . $marker . '(>|&gt;)/isU',
 			// replacement
 			'',
 			$html, -1, $count
@@ -93,8 +93,6 @@ class NavigationTemplate {
 		$openMarkerRegex = "[<&lt;]\x7fNAVUNIQ_.+\x7f[>&gt;]\\n";
 		$closeMarkerRegex = "\\n[<&lt;]\\/\x7fNAVUNIQ_.+\x7f[>&gt;]";
 		preg_match_all("/(" . $openMarkerRegex . ")(.*)(" . $closeMarkerRegex . ")/s", $templateWikitext, $inside);
-
-		var_dump($templateWikitext);
 
 		$replacedOpenings = preg_replace("/" . $openMarkerRegex . "/U", "", $inside[2][0]);
 		$replaced = preg_replace("/" . $closeMarkerRegex . "/U", "", $replacedOpenings);
