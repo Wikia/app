@@ -63,7 +63,7 @@ class CommunityPageSpecialUsersModel {
 
 				$db = wfGetDB( DB_SLAVE );
 
-				$blockedIds = $this->getBlockedIds();
+				$blockedIds = $this->getBlacklistedIds();
 
 				$sqlData = ( new WikiaSQL() )
 					->SELECT( 'wup_user, wup_value' )
@@ -195,8 +195,8 @@ class CommunityPageSpecialUsersModel {
 	/**
 	 * @return array list of blocked ids for Top Contributors
 	 */
-	private function getBlockedIds(){
-		$blockedIds = WikiaDataAccess::cache(
+	private function getBlacklistedIds(){
+		$blacklistedIds = WikiaDataAccess::cache(
 			self::getMemcKey( self::ALL_BLOCKED_IDS_MCACHE_KEY ),
 			WikiaResponse::CACHE_LONG,
 			function () {
@@ -212,24 +212,13 @@ class CommunityPageSpecialUsersModel {
 						$globalIds[] = $row->ug_user;
 					} );
 
-				$localDb = wfGetDB( DB_SLAVE );
-
-				$localIds = ( new WikiaSQL() )
-					->SELECT( 'ug_user' )
-					->FROM ( 'user_groups' )
-					->WHERE( 'ug_group' )->IN( [ 'staff', 'util', 'helper', 'vstf' ] )
-					->GROUP_BY( 'ug_user' )
-					->runLoop( $localDb, function ( &$localIds, $row ) {
-						$localIds[] = $row->ug_user;
-					} );
-
-				$allBlockedIds = array_merge( array_diff( $globalIds, $localIds ), $this->getBotIds() );
+				$allBlockedIds = array_merge( $globalIds, $this->getBotIds() );
 
 				return $allBlockedIds;
 			}
 		);
 
-		return $blockedIds;
+		return $blacklistedIds;
 	}
 
 	/**
