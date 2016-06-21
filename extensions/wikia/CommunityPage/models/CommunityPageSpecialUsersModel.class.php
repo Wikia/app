@@ -7,7 +7,7 @@ class CommunityPageSpecialUsersModel {
 	const ALL_ADMINS_MCACHE_KEY = 'community_page_all_admins';
 	const GLOBAL_BOTS_MCACHE_KEY = 'community_page_global_bots';
 	const ALL_BOTS_MCACHE_KEY = 'community_page_all_bots';
-	const ALL_BLOCKED_IDS_MCACHE_KEY = 'community_page_all_blocked_ids';
+	const ALL_BLACKLISTED_IDS_MCACHE_KEY = 'community_page_all_blacklisted_ids';
 	const ALL_MEMBERS_MCACHE_KEY = 'community_page_all_members';
 	const ALL_MEMBERS_COUNT_MCACHE_KEY = 'community_page_all_members_count';
 	const RECENTLY_JOINED_MCACHE_KEY = 'community_page_recently_joined';
@@ -193,11 +193,11 @@ class CommunityPageSpecialUsersModel {
 
 
 	/**
-	 * @return array list of blocked ids for Top Contributors
+	 * @return array list of blacklisted ids for Top Contributors
 	 */
 	private function getBlacklistedIds(){
 		$blacklistedIds = WikiaDataAccess::cache(
-			self::getMemcKey( self::ALL_BLOCKED_IDS_MCACHE_KEY ),
+			self::getMemcKey( self::ALL_BLACKLISTED_IDS_MCACHE_KEY ),
 			WikiaResponse::CACHE_LONG,
 			function () {
 				global $wgExternalSharedDB;
@@ -212,9 +212,9 @@ class CommunityPageSpecialUsersModel {
 						$globalIds[] = $row->ug_user;
 					} );
 
-				$allBlockedIds = array_merge( $globalIds, $this->getBotIds() );
+				$allBlacklistedIds = array_merge( $globalIds, $this->getBotIds() );
 
-				return $allBlockedIds;
+				return $allBlacklistedIds;
 			}
 		);
 
