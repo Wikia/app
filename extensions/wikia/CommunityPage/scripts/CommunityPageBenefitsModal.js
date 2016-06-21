@@ -26,7 +26,6 @@ define('CommunityPageBenefitsModal',
 			}).then(handleRequestsForModal);
 		}
 
-
 		function handleRequestsForModal(loaderRes) {
 			mw.messages.set(loaderRes.messages);
 

@@ -1,7 +1,7 @@
 @import 'skins/shared/color';
 @import 'skins/oasis/css/core/breakpoints-variables';
 @import '../components/variables';
-@import 'resources/wikia/ui_components/modal/css/modal-close-icon.scss';
+@import 'resources/wikia/ui_components/modal/css/modal-close-icon';
 
 $color-slate-gray: #656e78;
 $color-border: #e6e6e6;
@@ -14,19 +14,19 @@ $icon-size-large: 30px;
 $icon-size-outer-large: 82px;
 $icon-space-large: 19px;
 
-.modal.community-page-benefits-modal > section {
-	padding: 0;
-}
-
 .modal.community-page-benefits-modal {
-	background: #fff;
+	background: $color-white;
 	color: $color-text-dark;
 	font-family: $community-page-font-family;
 	font-size: 16px;
 	height: 90vh;
-	max-height: 698px;
 	line-height: 21px;
-	padding: 0px;
+	max-height: 698px;
+	padding: 0;
+
+	& > section {
+		padding: 0;
+	}
 
 	footer, header {
 		display: none;
@@ -37,10 +37,9 @@ $icon-space-large: 19px;
 	display: flex;
 	flex-direction: column;
 	height: 90vh;
-	max-height: 698px;
 	justify-content: space-between;
+	max-height: 698px;
 	width: 50%;
-
 }
 
 .community-page-benefits-image {
@@ -64,9 +63,8 @@ $icon-space-large: 19px;
 .community-page-benefits-modal-edit-icon,
 .community-page-benefits-modal-search-icon {
 	background: 50% 50%/#{$icon-size-large} no-repeat;
-	border-radius: $icon-size-outer-large / 2;
-	border-radius: 50%;
 	border: 2px solid $color-slate-gray;
+	border-radius: 50%;
 	box-sizing: border-box;
 	display: inline-block;
 	float: left;
@@ -133,8 +131,8 @@ $icon-space-large: 19px;
 
 .community-page-benefits-modal-close {
 	@include modal-close-icon();
-	background-repeat: no-repeat;
 	background-position: center;
+	background-repeat: no-repeat;
 	padding: 12px;
 	position: absolute;
 	right: 0;
@@ -166,7 +164,6 @@ $icon-space-large: 19px;
 	.community-page-benefits-modal-edit-icon,
 	.community-page-benefits-modal-search-icon {
 		background-size: $icon-size;
-		border-radius: $icon-size-outer / 2;
 		height: $icon-size-outer;
 		margin-right: $icon-space;
 		width: $icon-size-outer;
