@@ -90,13 +90,16 @@ class NavigationTemplate {
 
 	public static function onEndBraceSubstitution( $templateTitle, &$templateWikitext, &$parser ) {
 		//strip outlayers
-		preg_match_all("/[<&lt;]\x7fNAVUNIQ_.+\x7f[>&gt;]\\n(.*)\\n[<&lt;]\\/\x7fNAVUNIQ_.+\x7f[>&gt;]/s", $templateWikitext, $inside);
+		$openMarkerRegex = "[<&lt;]\x7fNAVUNIQ_.+\x7f[>&gt;]\\n";
+		$closeMarkerRegex = "\\n[<&lt;]\\/\x7fNAVUNIQ_.+\x7f[>&gt;]";
+		preg_match_all("/(" . $openMarkerRegex . ")(.*)(" . $closeMarkerRegex . ")/s", $templateWikitext, $inside);
 
+		var_dump($templateWikitext);
 
+		$replacedOpenings = preg_replace("/" . $openMarkerRegex . "/U", "", $inside[2][0]);
+		$replaced = preg_replace("/" . $closeMarkerRegex . "/U", "", $replacedOpenings);
 
-		ddd($templateWikitext, $inside);
-
-
+		$templateWikitext = $inside[1][0] . $replaced . $inside[3][0];
 		return true;
 	}
 }
