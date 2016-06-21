@@ -6,12 +6,6 @@ require([
 ], function (pageviews, modal, tracker, cookies) {
 	'use strict';
 
-	var wikiaDomain = mw.config.get('wgDevelEnvironment') ? '.wikia-dev.com' : '.wikia.com',
-		// This cookie is checked in CommunityPageSpecialHooks::onBeforePageDisplay to avoid unnecessary script loading
-		modalShownCookieName = 'cpBenefitsModalShown',
-		modalShownExpirationTime = 2592000; // 30 days
-
-
 	function init() {
 		if (pageviews.getPageviewsCount() === 4) {
 			modal.open();
@@ -20,8 +14,13 @@ require([
 		}
 	}
 
+	// This cookie is checked in CommunityPageSpecialHooks::onBeforePageDisplay to avoid unnecessary script loading
 	function setModalShownCookie() {
-		cookies.set(modalShownCookieName, 1, { domain: wikiaDomain, expires: modalShownExpirationTime });
+		cookies.set('cpBenefitsModalShown', 1, {
+			domain: mw.config.get('wgCookieDomain'),
+			expires: 2592000, // 30 days
+			path: mw.config.get('wgCookiePath')
+		});
 	}
 
 	function trackModalImpression() {

@@ -10,12 +10,18 @@
  * When the url is typed in this bar we don't have information about history and last page.
  */
 define('wikia.pageviewsInSession',
-	['wikia.window', 'wikia.document', 'wikia.cookies', 'mw'], function (window, document, cookies, mw) {
+	['wikia.window', 'wikia.document', 'wikia.cookies', 'wikia.sessionStorage', 'mw'],
+	function (window, document, cookies, sessionStorage, mw) {
 	'use strict';
 
-	var wikiaDomain = mw.config.get('wgDevelEnvironment') ? '.wikia-dev.com' : '.wikia.com',
+	var wikiaDomain = mw.config.get('wgCookieDomain'),
 		pageviewsCookieName = 'pageviewsInSession',
-		opentabsNumberCookieName = 'openTabsNumber';
+		opentabsNumberCookieName = 'openTabsNumber',
+		wikiPageShownSessionKey = 'wasWikiPageShownInCurrentTab',
+		cookieOptions = {
+			domain: wikiaDomain,
+			path: mw.config.get('wgCookiePath')
+		};
 
 	function init() {
 		increaseNumberOfOpenTabs();
@@ -23,7 +29,7 @@ define('wikia.pageviewsInSession',
 
 		window.addEventListener('unload', function () {
 			decreaseNumberOfOpenTabs();
-			sessionStorage.setItem('wasWikiPageShownInCurrentTab', true);
+			sessionStorage.setItem(wikiPageShownSessionKey, true);
 		});
 	}
 
@@ -41,11 +47,11 @@ define('wikia.pageviewsInSession',
 			clearPageviewsCount();
 		}
 
-		cookies.set(pageviewsCookieName, getPageviewsCount() + 1, { domain: wikiaDomain });
+		cookies.set(pageviewsCookieName, getPageviewsCount() + 1, cookieOptions);
 	}
 
 	function clearPageviewsCount() {
-		cookies.set(pageviewsCookieName);
+		cookies.set(pageviewsCookieName, 0, cookieOptions);
 	}
 
 	function getNumberOfOpenTabs() {
@@ -62,7 +68,7 @@ define('wikia.pageviewsInSession',
 	}
 
 	function setNumberOfOpenTabs(numberOfTabs) {
-		cookies.set(opentabsNumberCookieName, numberOfTabs, { domain: wikiaDomain });
+		cookies.set(opentabsNumberCookieName, numberOfTabs, cookieOptions);
 	}
 
 	function isUserFirstPageview() {
@@ -75,7 +81,7 @@ define('wikia.pageviewsInSession',
 		 * - we don't have information about last visited page or last page is not a wiki page
 		 */
 		return (getNumberOfOpenTabs() === 1 &&
-			!sessionStorage.getItem('wasWikiPageShownInCurrentTab') &&
+			!sessionStorage.getItem(wikiPageShownSessionKey) &&
 			(!lastUrl || !hasWikiaDomain(lastUrl))
 		);
 	}
