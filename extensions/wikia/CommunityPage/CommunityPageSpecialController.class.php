@@ -246,6 +246,10 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 			$avatar = AvatarService::renderAvatar( $userName, AvatarService::AVATAR_SIZE_SMALL_PLUS );
 			$count += 1;
 
+			if ( User::isIp( $userName ) ) {
+				$userName = $this->msg( 'oasis-anon-user' )->plain();
+			}
+
 			return [
 				'userName' => $userName,
 				'avatar' => $avatar,
