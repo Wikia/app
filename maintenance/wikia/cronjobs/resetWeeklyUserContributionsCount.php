@@ -28,7 +28,9 @@ class ResetWeeklyUserContributionsCount extends Maintenance {
 			->SELECT( 'wup_user' )
 			->FROM( 'wikia_user_properties' )
 			->WHERE( 'wup_property' )->EQUAL_TO( 'editcountThisWeek' )
-			->run( $dbw );
+			->runLoop( $dbw, function( &$userIds, $row ){
+				$userIds[] = $row->wup_user;
+			} );
 
 		$result = ( new WikiaSQL() )
 			->DELETE( 'wikia_user_properties' )
