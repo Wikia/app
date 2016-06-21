@@ -33,15 +33,15 @@ define('wikia.pageviewsInSession',
 	}
 
 	function setPageviewsCount() {
-		var pageviews = getPageviewsCount();
-
 		if (isUserFirstPageview()) {
-			pageviews = 1;
-		} else {
-			pageviews = getPageviewsCount() + 1;
+			/**
+			 * We need to clear page views when user close all tabs with wiki pages (but not whole browser)
+			 * and then come back to wiki page. Then we want to start another session.
+			 */
+			clearPageviewsCount();
 		}
 
-		cookies.set(pageviewsCookieName, pageviews, { domain: wikiaDomain });
+		cookies.set(pageviewsCookieName, getPageviewsCount() + 1, { domain: wikiaDomain });
 	}
 
 	function clearPageviewsCount() {
@@ -74,19 +74,10 @@ define('wikia.pageviewsInSession',
 		 * - user has not opened wiki page in current tab before
 		 * - we don't have information about last visited page or last page is not a wiki page
 		 */
-		if (getNumberOfOpenTabs() === 1 &&
+		return (getNumberOfOpenTabs() === 1 &&
 			!sessionStorage.getItem('wasWikiPageShownInCurrentTab') &&
 			(!lastUrl || !hasWikiaDomain(lastUrl))
-		) {
-			/**
-			 * We need to clear page views when user close all tabs with wiki pages (but not whole browser)
-			 * and then come back to wiki page. Then we want to start another session.
-			 */
-			clearPageviewsCount();
-			return true;
-		}
-
-		return false;
+		);
 	}
 
 	function hasWikiaDomain(url) {

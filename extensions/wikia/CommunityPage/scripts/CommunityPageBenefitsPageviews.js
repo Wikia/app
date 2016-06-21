@@ -11,6 +11,7 @@ require([
 		modalShownCookieName = 'cpBenefitsModalShown',
 		modalShownExpirationTime = 2592000; // 30 days
 
+
 	function init() {
 		if (pageviews.getPageviewsCount() === 4) {
 			modal.open();
