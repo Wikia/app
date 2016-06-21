@@ -93,8 +93,8 @@ $icon-space-large: 19px;
 }
 
 .community-page-entry-point-button {
-	background: $color-buttons;
-	color: $color-button-text;
+	background: $color-corporate-buttons;
+	color: $color-corporate-button-text;
 	display: inline-block;
 	font-size: 14px;
 	font-weight: bold;
@@ -105,7 +105,8 @@ $icon-space-large: 19px;
 	text-transform: uppercase;
 
 	&:hover, &:active {
-		background-color: $color-button-highlight;
+		background-color: $color-corporate-button-highlight;
+		color: $color-corporate-button-text;
 		text-decoration: none;
 	}
 }
