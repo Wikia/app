@@ -7,7 +7,7 @@ require([
 	'use strict';
 
 	var wikiaDomain = mw.config.get('wgDevelEnvironment') ? '.wikia-dev.com' : '.wikia.com',
-		// This cookie is check in CommunityPageSpecialHooks::onBeforePageDisplay to avoid unnecessary script loading
+		// This cookie is checked in CommunityPageSpecialHooks::onBeforePageDisplay to avoid unnecessary script loading
 		modalShownCookieName = 'cpBenefitsModalShown',
 		modalShownExpirationTime = 2592000; // 30 days
 
