@@ -242,6 +242,12 @@ define( 'APCOND_BLOCKED', 8 );
 define( 'APCOND_ISBOT', 9 );
 /**@}*/
 
+/**@{
+ * Max string length for shell invocations; based on binfmts.h
+ */
+define( 'SHELL_MAX_ARG_STRLEN', '100000');
+/**@}*/
+
 /**
  * Protocol constants for wfExpandUrl()
  */

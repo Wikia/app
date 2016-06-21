@@ -357,7 +357,7 @@ class CommunityPageSpecialUsersModel {
 				$numberOfUsers = $db->numRows( $result );
 
 				if ( $numberOfUsers == self::ALL_CONTRIBUTORS_MODAL_LIMIT ) {
-					while( $user = $result->fetchObject() ) {
+					while ( $user = $result->fetchObject() ) {
 						$userData = $this->prepareUserData( (int)$user->wup_user, $user->wup_value );
 						if ( !empty( $userData ) ) {
 							$usersData[] = $userData;
@@ -402,12 +402,16 @@ class CommunityPageSpecialUsersModel {
 		return $this->addCurrentUserIfContributor( $allContributorsData, $currentUserId );
 	}
 
-	private function prepareUserData( $userId, $lastRevision) {
+	private function prepareUserData( $userId, $lastRevision ) {
 		$user = User::newFromId( $userId );
 
 		if ( !$user->isBlocked() ) {
 			$userName = $user->getName();
 			$avatar = AvatarService::renderAvatar( $userName, AvatarService::AVATAR_SIZE_SMALL_PLUS );
+
+			if ( User::isIp( $userName ) ) {
+				$userName = wfMessage( 'oasis-anon-user' )->plain();
+			}
 
 			return [
 				'userId' => $userId,
@@ -466,7 +470,7 @@ class CommunityPageSpecialUsersModel {
 		);
 	}
 
-	private function isUserOnList( $data) {
+	private function isUserOnList( $data ) {
 		if ( $this->user instanceof User ) {
 			$key = array_search( $this->user->getId(), array_column( $data, 'userId' ) );
 			if ( $key ) {

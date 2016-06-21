@@ -71,6 +71,25 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 
 		$topContributorsDetails = $this->getContributorsDetails( $topContributors );
 
+		$query = wfArrayToCGI( [
+			'redirect' => $this->getTitle()->getCanonicalURL(),
+			'uselang' => $this->getLanguage()->getCode(),
+		] );
+
+		$login = Html::element(
+			'a',
+			[ 'href' => 'https://www.wikia.com/signin?' . $query ],
+			$this->msg( 'communitypage-anon-login' )->plain()
+		);
+
+		$register = Html::element(
+			'a',
+			[ 'href' => 'https://www.wikia.com/register?' . $query ],
+			$this->msg( 'communitypage-anon-register' )->plain()
+		);
+
+		$anonText = $this->msg( 'communitypage-anon-contrib-header' )->rawParams( $login, $register )->escaped();
+
 		$this->response->setData( [
 			'admin' => $this->msg( 'communitypage-admin' )->plain(),
 			'topContribsHeaderText' => $this->msg( 'communitypage-top-contributors-week' )->plain(),
@@ -86,7 +105,9 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 			),
 			'userRank' => $userRank,
 			'weeklyEditorCount' => $this->formatTotalEditorsNumber( $topContributorsCount ),
-			'userContribCount' => $currentUserContributionCount
+			'userContribCount' => $currentUserContributionCount,
+			'isAnon' => $this->getUser()->isAnon(),
+			'anonText' => $anonText,
 		] );
 	}
 
@@ -225,6 +246,10 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 			$avatar = AvatarService::renderAvatar( $userName, AvatarService::AVATAR_SIZE_SMALL_PLUS );
 			$count += 1;
 
+			if ( User::isIp( $userName ) ) {
+				$userName = $this->msg( 'oasis-anon-user' )->plain();
+			}
+
 			return [
 				'userName' => $userName,
 				'avatar' => $avatar,
@@ -261,7 +286,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	private function calculateCurrentUserRank( $userContributionCount , $topContributors ) {
 		$userRank = '-';
 
-		if ( $userContributionCount > 0 ) {
+		if ( $this->getUser()->isLoggedIn() && $userContributionCount > 0 ) {
 			$rank = 1;
 
 			foreach ( $topContributors as $contributor ) {

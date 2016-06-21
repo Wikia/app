@@ -11,7 +11,7 @@ use Wikia\Service\Swagger\ApiProvider;
 class CakeRelatedContentService {
 
 	use Loggable;
-	
+
 	const SERVICE_NAME = "content-entity-service";
 	const DISCUSSION_THREAD_TITLE_MAX_LENGTH = 105;
 	const TIMEOUT = 5;
@@ -29,9 +29,46 @@ class CakeRelatedContentService {
 		}
 
 		$api = $this->relatedContentApi();
-		
+
 		try {
 			$filteredRelatedContent = $api->getRelatedContentFromEntityName($title, $limit + 1, "true");
+            if (is_null($filteredRelatedContent)) {
+                $this->warning("getRelatedContentFromEntityName failed to retrieve recommendations", [
+                    "title" => $title,
+                    "limit" => $limit
+                ]);
+
+                return [];
+            }
+
+            // The server may have given us a malformed response, so log and adjust accordingly
+            if (!is_array($filteredRelatedContent->getFandomArticles())) {
+                $this->warning("getRelatedContentFromEntityName expected fandom_articles to be an array", [
+                    "title" => $title,
+                    "limit" => $limit,
+                    "fandom_articles" => $filteredRelatedContent->getFandomArticles()
+                ]);
+                $filteredRelatedContent->setFandomArticles([]);
+            }
+
+            if (!is_array($filteredRelatedContent->getDiscussionThreads())) {
+                $this->warning("getRelatedContentFromEntityName expected discussion_threads to be an array", [
+                    "title" => $title,
+                    "limit" => $limit,
+                    "discussion_threads" => $filteredRelatedContent->getDiscussionThreads()
+                ]);
+                $filteredRelatedContent->setDiscussionThreads([]);
+            }
+
+            if (!is_array($filteredRelatedContent->getWikiArticles())) {
+                $this->warning("getRelatedContentFromEntityName expected wiki_articles to be an array", [
+                    "title" => $title,
+                    "limit" => $limit,
+                    "wiki_articles" => $filteredRelatedContent->getWikiArticles()
+                ]);
+                $filteredRelatedContent->setWikiArticles([]);
+            }
+
 			$wikiArticles = [];
 			foreach ($filteredRelatedContent->getWikiArticles() as $article) {
 				$parsed = parse_url($article->getContent()->getUrl());

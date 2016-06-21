@@ -49,13 +49,13 @@ class NodeImageTest extends WikiaBaseTest {
 		return [
 			[
 				'TABBER',
-				"<div>\x7fUNIQ123456789-tAbBeR-12345678-QINU\x7f</div>",
-				[ "\x7fUNIQ123456789-tAbBeR-12345678-QINU\x7f" ]
+				"<div>\x7f'\"`UNIQ123456789-tAbBeR-12345678-QINU`\"'\x7f</div>",
+				[ "\x7f'\"`UNIQ123456789-tAbBeR-12345678-QINU`\"'\x7f" ]
 			],
 			[
 				'GALLERY',
-				"\x7fUNIQ123456789-tAbBeR-12345678-QINU\x7f<center>\x7fUNIQabcd-gAlLeRy-12345678-QINU\x7f</center>\x7fUNIQabcd-gAlLeRy-87654321-QINU\x7f",
-				[ "\x7fUNIQabcd-gAlLeRy-12345678-QINU\x7f", "\x7fUNIQabcd-gAlLeRy-87654321-QINU\x7f" ]
+				"\x7f'\"`UNIQ123456789-tAbBeR-12345678-QINU`\"'\x7f<center>\x7f'\"`UNIQabcd-gAlLeRy-12345678-QINU`\"'\x7f</center>\x7f'\"`UNIQabcd-gAlLeRy-87654321-QINU`\"'\x7f",
+				[ "\x7f'\"`UNIQabcd-gAlLeRy-12345678-QINU`\"'\x7f", "\x7f'\"`UNIQabcd-gAlLeRy-87654321-QINU`\"'\x7f" ]
 			]
 		];
 	}
