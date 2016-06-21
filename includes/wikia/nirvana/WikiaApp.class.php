@@ -603,9 +603,13 @@ class WikiaApp {
 	 * @param string $controllerName The name of the controller, without the 'Controller' or 'Model' suffix
 	 * @param string $methodName The name of the Controller method to call
 	 * @param array $params An array with the parameters to pass to the specified method
+	 * @param bool $internal Whether the current request was made within the Wikia network
 	 * @param int $exceptionMode exception mode
 	 *
 	 * @return WikiaResponse a response object with the data produced by the method call
+	 * @throws WikiaDispatchedException
+	 * @throws WikiaException
+	 * @throws WikiaHttpException
 	 */
 	public function sendRequest( $controllerName = null, $methodName = null, $params = array(), $internal = true,
 								 $exceptionMode = null ) {
@@ -627,7 +631,7 @@ class WikiaApp {
 		$params = array_merge( (array) $params, $values );
 
 		if ( empty( $methodName ) || empty( $controllerName ) ) {
-			$internal = false;
+			$internal = F::app()->wg->Request->isWikiaInternalRequest();
 			$params = array_merge( $_POST, $_GET, $params );
 		}
 
