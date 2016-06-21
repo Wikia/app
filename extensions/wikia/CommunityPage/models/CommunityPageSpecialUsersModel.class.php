@@ -63,13 +63,13 @@ class CommunityPageSpecialUsersModel {
 
 				$db = wfGetDB( DB_SLAVE );
 
-				$blockedIds = $this->getBlacklistedIds();
+				$blacklistedIds = $this->getBlacklistedIds();
 
 				$sqlData = ( new WikiaSQL() )
 					->SELECT( 'wup_user, wup_value' )
 					->FROM ( 'wikia_user_properties' )
 					->WHERE( 'wup_property' )->EQUAL_TO( 'editcountThisWeek' )
-					->AND_( 'wup_user' )->NOT_IN( $blockedIds )
+					->AND_( 'wup_user' )->NOT_IN( $blacklistedIds )
 					->AND_( 'wup_value' )->GREATER_THAN( 0 )
 					->ORDER_BY( 'CAST(wup_value as unsigned) DESC, wup_user ASC' );
 
