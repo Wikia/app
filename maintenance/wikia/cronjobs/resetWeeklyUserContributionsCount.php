@@ -24,18 +24,17 @@ class ResetWeeklyUserContributionsCount extends Maintenance {
 
 		$dbw = wfGetDB( DB_MASTER );
 
-		$userIds = ( new WikiaSQL() )
-			->SELECT( 'wup_user' )
-			->FROM( 'wikia_user_properties' )
-			->WHERE( 'wup_property' )->EQUAL_TO( 'editcountThisWeek' )
-			->runLoop( $dbw, function( &$userIds, $row ){
-				$userIds[] = $row->wup_user;
-			} );
+		$userIds = $dbw->selectFieldValues(
+			'wikia_user_properties',
+			'wup_user',
+			[ 'wup_property' => 'editcountThisWeek' ]
+		);
 
-		$result = ( new WikiaSQL() )
-			->DELETE( 'wikia_user_properties' )
-			->WHERE( 'wup_property' )->EQUAL_TO( 'editcountThisWeek' )
-			->run( $dbw );
+		$result = $dbw->delete(
+			'wikia_user_properties',
+			[ 'wup_property' => 'editcountThisWeek' ],
+			__METHOD__
+		);
 
 		if ( $result === false ) {
 			WikiaLogger::instance()->error( 'Reset Weekly Contributions Count' );
