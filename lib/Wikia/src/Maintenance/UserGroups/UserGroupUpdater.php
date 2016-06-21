@@ -8,6 +8,8 @@ use WikiaSQL;
 
 class UserGroupUpdater {
 
+	const GLOBAL_GROUPS_CACHE_KEY = "global-groups";
+
 	const GLOBAL_GROUP_WIKI_ID = 0;
 
 	/** @var UserGroupList */
@@ -42,63 +44,43 @@ class UserGroupUpdater {
 	}
 	
 	public function updateForWiki($wikiId, DatabaseBase $wikiDb) {
-		$localUsers = $this->getLocalUserGroups($wikiId, $wikiDb);
-		$this->refreshExpiredGlobalGroups(array_keys($localUsers));
-
-		foreach ($localUsers as $userId => $localGroups) {
-			$this->deleteGroups($userId, $wikiId);
-
-			if (!empty($localGroups)) {
-				$this->saveGroups($userId, $localGroups);
-			}
-		}
+		$this->refreshGlobalGroups();
+		$this->rebuildUserGroups($wikiDb, $this->groupList->getLocalGroups(), $wikiId);
 	}
 
-	private function getLocalUserGroups($wikiId, DatabaseBase $wikiDb) {
+	private function refreshGlobalGroups() {
+		$recentlyPopulated = $this->cache->fetch(self::GLOBAL_GROUPS_CACHE_KEY);
+
+		if ($recentlyPopulated) {
+			return;
+		}
+
+		$this->rebuildUserGroups($this->wikicitiesDb, $this->groupList->getGlobalGroups(), self::GLOBAL_GROUP_WIKI_ID);
+		$this->cache->save(self::GLOBAL_GROUPS_CACHE_KEY, true, 60*60*24);
+	}
+
+	private function rebuildUserGroups(DatabaseBase $db, $groupList, $wikiId) {
 		$allGroups = $this->groupList->getGroups();
-		return (new WikiaSQL())
+
+		$userGroups = (new WikiaSQL())
 				->SELECT('ug_user', 'ug_group')
 				->FROM('user_groups')
-				->WHERE('ug_group')->IN($this->groupList->getLocalGroups())
-				->runLoop($wikiDb, function(&$localUsers, $row) use ($allGroups, $wikiId) {
-					if (!isset($localUsers[$row->ug_user])) {
-						$localUsers[$row->ug_user] = [];
+				->WHERE('ug_group')->IN($groupList)
+				->runLoop($db, function(&$userGroups, $row) use ($allGroups, $wikiId) {
+					if (!isset($userGroups[$row->ug_user])) {
+						$userGroups[$row->ug_user] = [];
 					}
 
 					if (isset($allGroups[$row->ug_group])) {
-						$localUsers[$row->ug_user][] = [$row->ug_user, $allGroups[$row->ug_group], $wikiId];
+						$userGroups[$row->ug_user][] = [$row->ug_user, $allGroups[$row->ug_group], $wikiId];
 					}
 				});
-	}
 
-	private function refreshExpiredGlobalGroups($userList) {
-		foreach ($userList as $userId) {
-			$cacheIsRecent = $this->cache->fetch($userId);
-			if ($cacheIsRecent) {
-				continue;
+		foreach ($userGroups as $userId => $groups) {
+			$this->deleteGroups($userId, $wikiId);
+			if (!empty($groups)) {
+				$this->saveGroups($userId, $groups);
 			}
-
-			$this->refreshGlobalGroups($userId);
-			$this->cache->save($userId, true, 60*60*24);
-		}
-	}
-
-	private function refreshGlobalGroups($userId) {
-		$allGroups = $this->groupList->getGroups();
-		$userGroups = (new WikiaSQL())
-				->SELECT('ug_group')
-				->FROM('user_groups')
-				->WHERE('ug_user')->EQUAL_TO($userId)
-					->AND_('ug_group')->IN($this->groupList->getGlobalGroups())
-				->runLoop($this->wikicitiesDb, function(&$userGroups, $row) use ($allGroups, $userId) {
-					if (isset($allGroups[$row->ug_group])) {
-						$userGroups[] = [$userId, $allGroups[$row->ug_group], self::GLOBAL_GROUP_WIKI_ID];
-					}
-				});
-
-		$this->deleteGroups($userId, self::GLOBAL_GROUP_WIKI_ID);
-		if (!empty($userGroups)) {
-			$this->saveGroups($userId, $userGroups);
 		}
 	}
 
