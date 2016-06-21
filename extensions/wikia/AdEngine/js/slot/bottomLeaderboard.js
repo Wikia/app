@@ -27,7 +27,7 @@ define('ext.wikia.adEngine.slot.bottomLeaderboard', [
 				pushed = true;
 				doc.removeEventListener('scroll', pushSlot);
 				win.adslots2.push(slotName);
-				log(['pushSlot', 'Pushed BFAB'], 'debug', logGroup);
+				log(['pushSlot', 'Pushed ' + slotName], 'debug', logGroup);
 			}
 		});
 
