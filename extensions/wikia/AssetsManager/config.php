@@ -2876,7 +2876,9 @@ $config['special_discussions_log_scss'] = [
 $config['community_page_benefits_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
+		'//resources/wikia/modules/pageviewsInSession.js',
 		'//extensions/wikia/CommunityPage/scripts/CommunityPageBenefitsModal.js',
+		'//extensions/wikia/CommunityPage/scripts/CommunityPageBenefitsPageviews.js',
 	],
 ];
 

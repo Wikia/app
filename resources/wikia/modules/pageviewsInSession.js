@@ -7,20 +7,21 @@
  *
  * One case is not covered in this solution:
  * User is on wiki page, navigate to external service and then type wiki address into browser address bar.
- * When the url is typed in this bar we don't have information about history and last page. *
+ * When the url is typed in this bar we don't have information about history and last page.
  */
-define('wikia.pageviewsInSession', ['wikia.window', 'wikia.document', 'wikia.cookies', 'mw'], function(window, document, cookies, mw) {
+define('wikia.pageviewsInSession',
+	['wikia.window', 'wikia.document', 'wikia.cookies', 'mw'], function (window, document, cookies, mw) {
 	'use strict';
 
 	var wikiaDomain = mw.config.get('wgDevelEnvironment') ? '.wikia-dev.com' : '.wikia.com',
-		pageviewsCookieName = 'pageviews',
+		pageviewsCookieName = 'pageviewsInSession',
 		opentabsNumberCookieName = 'openTabsNumber';
 
 	function init() {
 		increaseNumberOfOpenTabs();
 		setPageviewsCount();
 
-		window.addEventListener('unload', function() {
+		window.addEventListener('unload', function () {
 			decreaseNumberOfOpenTabs();
 			sessionStorage.setItem('wasWikiPageShownInCurrentTab', true);
 		});
@@ -77,6 +78,10 @@ define('wikia.pageviewsInSession', ['wikia.window', 'wikia.document', 'wikia.coo
 			!sessionStorage.getItem('wasWikiPageShownInCurrentTab') &&
 			(!lastUrl || !hasWikiaDomain(lastUrl))
 		) {
+			/**
+			 * We need to clear page views when user close all tabs with wiki pages (but not whole browser)
+			 * and then come back to wiki page. Then we want to start another session.
+			 */
 			clearPageviewsCount();
 			return true;
 		}

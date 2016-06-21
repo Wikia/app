@@ -62,8 +62,11 @@ class CommunityPageSpecialHooks {
 	 * @return true
 	 */
 	public static function onBeforePageDisplay( \OutputPage $out, \Skin $skin ) {
-		\Wikia::addAssetsToOutput( 'community_page_benefits_js' );
-		\Wikia::addAssetsToOutput( 'community_page_benefits_scss' );
+		//var_dump($_COOKIE);die;
+		if ( $out->getUser()->isAnon() && !isset( $_COOKIE['cpBenefitsModalShown'] ) ) {
+			\Wikia::addAssetsToOutput( 'community_page_benefits_js' );
+			\Wikia::addAssetsToOutput( 'community_page_benefits_scss' );
+		}
 		return true;
 	}
 
