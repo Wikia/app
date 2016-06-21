@@ -3,6 +3,7 @@
 @import '../components/variables';
 @import 'resources/wikia/ui_components/modal/css/modal-close-icon';
 
+$color-image-bg: #082140;
 $color-slate-gray: #656e78;
 $color-border: #e6e6e6;
 
@@ -24,7 +25,7 @@ $icon-space-large: 19px;
 	max-height: 698px;
 	padding: 0;
 
-	& > section {
+	> section {
 		padding: 0;
 	}
 
@@ -43,7 +44,7 @@ $icon-space-large: 19px;
 }
 
 .community-page-benefits-image {
-	background-color: #082140;
+	background-color: $color-image-bg;
 	background-image: url('/extensions/wikia/CommunityPage/images/wikia-logo-in-circles.png'), url('/extensions/wikia/CommunityPage/images/wikia-logo-bg.png');
 	background-position: center, bottom;
 	background-repeat: no-repeat;
@@ -136,6 +137,7 @@ $icon-space-large: 19px;
 	padding: 12px;
 	position: absolute;
 	right: 0;
+	text-indent: 50px;
 	top: 0;
 }
 
