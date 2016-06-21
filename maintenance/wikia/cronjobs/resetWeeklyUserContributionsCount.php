@@ -27,7 +27,8 @@ class ResetWeeklyUserContributionsCount extends Maintenance {
 		$userIds = $dbw->selectFieldValues(
 			'wikia_user_properties',
 			'wup_user',
-			[ 'wup_property' => 'editcountThisWeek' ]
+			[ 'wup_property' => 'editcountThisWeek' ],
+			__METHOD__
 		);
 
 		$result = $dbw->delete(
