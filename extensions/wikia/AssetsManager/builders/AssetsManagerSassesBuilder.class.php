@@ -21,7 +21,6 @@ class AssetsManagerSassesBuilder extends AssetsManagerBaseBuilder {
 			$builder = new AssetsManagerSassBuilder($sassRequest);
 
 			$this->mContent .= "\n\n/* $file */\n" . $builder->getContent();
-
 		}
 
 		$am = AssetsManager::getInstance();

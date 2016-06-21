@@ -602,9 +602,12 @@ class AssetsManager {
 		return $this->mAllowedAssetExtensions;
 	}
 
+	/**
+	 * @todo rethink this approach (FMI ADEN-3406)
+	 */
 	public function checkContainCrossoriginScssFile(Array $files) {
 		global $wgCrossoriginScssFile;
-		return isset($wgCrossoriginScssFile) && strpos($files, $wgCrossoriginScssFile) !== false;
+		return isset($wgCrossoriginScssFile) && in_array($wgCrossoriginScssFile, $files);
 	}
 
 	/**
