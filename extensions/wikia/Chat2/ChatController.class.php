@@ -7,13 +7,14 @@ class ChatController extends WikiaController {
 	const CHAT_AVATAR_DIMENSION = 41;
 
 	public function executeIndex() {
-		global $wgUser, $wgFavicon, $wgOut, $wgHooks;
+		global $wgUser, $wgFavicon, $wgOut, $wgHooks, $wgWikiaBaseDomain, $wgWikiaNocookieDomain;
 
 		Chat::info( __METHOD__ . ': Method called' );
+
 		wfProfileIn( __METHOD__ );
 
 		// String replacement logic taken from includes/Skin.php
-		$this->wgFavicon = str_replace( 'images.wikia.com', 'images1.wikia.nocookie.net', $wgFavicon );
+		$this->wgFavicon = str_replace( "images.{$wgWikiaBaseDomain}", "images1.{$wgWikiaNocookieDomain}", $wgFavicon );
 
 		$this->mainPageURL = Title::newMainPage()->getLocalURL();
 
