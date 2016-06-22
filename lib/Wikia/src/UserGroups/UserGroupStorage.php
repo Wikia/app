@@ -26,6 +26,37 @@ class UserGroupStorage {
 		$this->specialsDb = $specialsDb;
 		$this->wikiCitiesDb = $wikiCitiesDb;
 	}
+
+	public function findUsersWithGroup($groupName) {
+		return (new WikiaSQL())
+				->SELECT('user_id', 'wiki_id')
+				->FROM('user_groups')
+				->JOIN('groups')->ON('user_groups.group_id')->EQUAL_TO('groups.id')
+				->WHERE('groups.name')->EQUAL_TO($groupName)
+				->runLoop($this->specialsDb, function(&$userList, $row) {
+					$userList[] = [$row->user_id, $row->wiki_id];
+				});
+	}
+
+	public function findUsersWithGlobalGroups($groupName) {
+		return $this->findUsersWithLocalGroup($groupName, self::GLOBAL_GROUP_WIKI_ID);
+	}
+
+	public function findUsersWithLocalGroup($groupName, $wikiIds) {
+		if (!is_array($wikiIds)) {
+			$wikiIds = [$wikiIds];
+		}
+
+		return (new WikiaSQL())
+				->SELECT('user_id', 'wiki_id')
+				->FROM('user_groups')
+				->JOIN('groups')->ON('user_groups.group_id')->EQUAL_TO('groups.id')
+				->WHERE('groups.name')->EQUAL_TO($groupName)
+					->AND_('user_groups.wiki_id')->IN($wikiIds)
+				->runLoop($this->specialsDb, function(&$userList, $row) {
+					$userList[] = [$row->user_id, $row->wiki_id];
+				});
+	}
 	
 	public function syncUserGlobalGroups($groupList) {
 		$this->syncUserGroups($this->wikiCitiesDb, $groupList, self::GLOBAL_GROUP_WIKI_ID);
@@ -35,18 +66,18 @@ class UserGroupStorage {
 		$this->syncUserGroups($wikiDb, $groupList, $wikiId);
 	}
 	
-	public function buildGroups($groupList) {
+	public function buildGroups($groupNames) {
 		$groups = (new WikiaSQL())
 				->SELECT('id', 'name')
 				->FROM('groups')
-				->WHERE('name')->IN($groupList)
+				->WHERE('name')->IN($groupNames)
 				->runLoop(
 						$this->specialsDb,
 						function(&$groups, $row) {
 							$groups[$row->name] = $row->id;
 						});
 
-		$newGroups = array_diff($groupList, array_keys($groups));
+		$newGroups = array_diff($groupNames, array_keys($groups));
 
 		foreach ($newGroups as $g) {
 			(new WikiaSQL())
