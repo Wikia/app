@@ -32,5 +32,5 @@ require([
 		});
 	}
 
-	(init)();
+	init();
 });
