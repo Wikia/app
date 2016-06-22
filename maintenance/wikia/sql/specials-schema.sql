@@ -1,5 +1,3 @@
--- noinspection SqlDialectInspectionForFile
--- noinspection SqlNoDataSourceInspectionForFile
 -- MySQL dump 10.13  Distrib 5.6.24-72.2, for debian-linux-gnu (x86_64)
 --
 -- Host: slave.db-specials.service.consul    Database: specials
