@@ -1,11 +1,12 @@
 <?php
 
-namespace Wikia\Maintenance\UserGroups;
+namespace Wikia\UserGroups;
 
 use Interop\Container\ContainerInterface;
 use Wikia\Cache\BagOStuffCacheProvider;
 use Wikia\DependencyInjection\InjectorBuilder;
 use Wikia\DependencyInjection\Module;
+use Wikia\UserGroups\Maintenance\UserGroupUpdater;
 
 class UserGroupsModule implements Module {
 

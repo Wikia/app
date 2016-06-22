@@ -1,9 +1,10 @@
 <?php
 
-namespace Wikia\Maintenance\UserGroups;
+namespace Wikia\UserGroups\Maintenance;
 
 use DatabaseBase;
 use Doctrine\Common\Cache\CacheProvider;
+use Wikia\UserGroups\UserGroupList;
 use WikiaSQL;
 
 class UserGroupUpdater {

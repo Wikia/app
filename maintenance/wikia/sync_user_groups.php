@@ -1,7 +1,7 @@
 <?php
 
 use Wikia\DependencyInjection\Injector;
-use Wikia\Maintenance\UserGroups\UserGroupUpdater;
+use Wikia\UserGroups\Maintenance\UserGroupUpdater;
 
 $wgCommandLineSilentMode = true;
 

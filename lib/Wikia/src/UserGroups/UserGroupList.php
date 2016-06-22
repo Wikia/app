@@ -1,6 +1,6 @@
 <?php
 
-namespace Wikia\Maintenance\UserGroups;
+namespace Wikia\UserGroups;
 
 use DatabaseBase;
 use Doctrine\Common\Cache\CacheProvider;
