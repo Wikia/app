@@ -212,7 +212,19 @@ class CommunityPageSpecialUsersModel {
 						$globalIds[] = $row->ug_user;
 					} );
 
-				$allBlacklistedIds = array_merge( $globalIds, $this->getBotIds() );
+				$localDb = wfGetDB( DB_SLAVE );
+
+				$localUsers = ( new WikiaSQL() )
+					->SELECT( 'ug_user' )
+					->FROM ( 'user_groups' )
+					->WHERE( 'ug_group' )->NOT_IN( [ 'bot', 'bot-global' ] )
+					->GROUP_BY( 'ug_user' )
+					->runLoop( $localDb, function ( &$localUsers, $row ) {
+						$localUsers[] = $row->ug_user;
+					} );
+
+
+				$allBlacklistedIds = array_merge( array_diff( $globalIds, $localUsers ), $this->getBotIds() );
 
 				return $allBlacklistedIds;
 			}
