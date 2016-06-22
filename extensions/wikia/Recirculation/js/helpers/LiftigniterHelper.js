@@ -16,7 +16,7 @@ define('ext.wikia.recirculation.helpers.liftigniter', [
 		function loadData(waitToFetch) {
 			var deferred = $.Deferred(),
 				registerOptions = {
-					max: options.count,
+					max: options.count * 2,
 					widget: options.widget,
 					callback: function(response) {
 						deferred.resolve(formatData(response));
@@ -53,14 +53,15 @@ define('ext.wikia.recirculation.helpers.liftigniter', [
 			}
 
 			$.each(data.items, function(index, item) {
-				if (items.length < options.count) {
-					item.index = index;
+				if (items.length < options.count && item.thumbnail) {
 					if (options.widget === 'fandom-rec') {
 						item.title = item.title.replace(' - Fandom - Powered by Wikia', '');
 					} else {
 						item.thumbnail = thumbnailer.getThumbURL(item.thumbnail, 'image', options.width, options.height);
 					}
 
+					item.index = index;
+					item.source = 'liftigniter';
 					items.push(item);
 				}
 			});

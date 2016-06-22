@@ -2,10 +2,11 @@
 define('ext.wikia.recirculation.helpers.curatedContent', [
 	'jquery',
 	'underscore',
+	'wikia.window',
 	'wikia.nirvana',
 	'wikia.cache',
 	'ext.wikia.recirculation.tracker'
-], function ($, _, nirvana, cache , tracker) {
+], function ($, _, w, nirvana, cache , tracker) {
 
 	return function(config) {
 		var defaults = {
@@ -21,6 +22,7 @@ define('ext.wikia.recirculation.helpers.curatedContent', [
 				method: 'getFandomPosts',
 				format: 'json',
 				type: 'get',
+				scriptPath: w.wgCdnApiUrl,
 				data: {
 					type: 'curated'
 				},
