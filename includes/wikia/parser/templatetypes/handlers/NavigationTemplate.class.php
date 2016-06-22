@@ -91,11 +91,12 @@ class NavigationTemplate {
 	public static function removeInnerMarks( $templateWikitext ) {
 		$openMarkerRegex = "[<&lt;]\x7fNAVUNIQ_.+\x7f[>&gt;]\\n";
 		$closeMarkerRegex = "\\n[<&lt;]\\/\x7fNAVUNIQ_.+\x7f[>&gt;]";
-		preg_match_all( "/(" . $openMarkerRegex . ")(.*)(" . $closeMarkerRegex . ")/s", $templateWikitext, $inside );
 
-		$replacedOpenings = preg_replace( "/" . $openMarkerRegex . "/U", "", $inside[2][0] );
-		$replaced = preg_replace( "/" . $closeMarkerRegex . "/U", "", $replacedOpenings );
-
-		return $inside[1][0] . $replaced . $inside[3][0];
+		if (preg_match( "/(" . $openMarkerRegex . ")(.*)(" . $closeMarkerRegex . ")/s", $templateWikitext, $inside )) {
+			$replacedOpenings = preg_replace( "/" . $openMarkerRegex . "/U", "", $inside[2] );
+			$replaced = preg_replace( "/" . $closeMarkerRegex . "/U", "", $replacedOpenings );
+			return $inside[1] . $replaced . $inside[3];
+		}
+		return $templateWikitext;
 	}
 }

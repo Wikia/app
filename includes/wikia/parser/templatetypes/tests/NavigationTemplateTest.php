@@ -8,7 +8,8 @@ class NavigationTemplateTest extends WikiaBaseTest {
 	public function testMarkNavigationElements( $content, $expected, $message ) {
 		$marked = NavigationTemplate::handle( $content );
 
-		$this->assertEquals( $expected, preg_match( $markerRegex = "/<\x7f" . NavigationTemplate::MARK . ".+?\x7f>/s", $marked ), $message );
+		$this->assertEquals( $expected,
+			preg_match( $markerRegex = "/<\x7f" . NavigationTemplate::MARK . ".+?\x7f>/s", $marked ), $message );
 	}
 
 	public function markedTemplateContentProvider() {
@@ -35,7 +36,7 @@ class NavigationTemplateTest extends WikiaBaseTest {
 		return [
 			[
 				'<a>This is a <strong>template</strong> <b>without</b> a <span>block</span> element</a>.',
-				'<a>This is a <strong>template</strong> <b>without</b> a <span>block</span> element</a>.',
+				"\n<a>This is a <strong>template</strong> <b>without</b> a <span>block</span> element</a>.\n",
 				'A template with a link, formatting tags and a span one should be visible.',
 			],
 			[
@@ -70,7 +71,7 @@ class NavigationTemplateTest extends WikiaBaseTest {
 			],
 			[
 				'<poem>This is a template with a poem tag. This is one is tricky and should not be matched as a p tag.</poem>.',
-				'<poem>This is a template with a poem tag. This is one is tricky and should not be matched as a p tag.</poem>.',
+				"\n<poem>This is a template with a poem tag. This is one is tricky and should not be matched as a p tag.</poem>.\n",
 				'A template with a poem tag should be visible.',
 			]
 		];
@@ -115,19 +116,16 @@ class NavigationTemplateTest extends WikiaBaseTest {
 			],
 			[
 				"<\x7fNAVUNIQ_342\x7f><div>some content <\x7fNAVUNIQ_343\x7f> <p>nested template</p> </\x7fNAVUNIQ_343\x7f> <\x7fNAVUNIQ_344\x7f> nested template </\x7fNAVUNIQ_344\x7f></div></\x7fNAVUNIQ_342\x7f>",
-
 				"",
 				"nested templates with block elements, everything should be removed"
 			],
 			[
 				"<\x7fNAVUNIQ_342\x7f><a>some content <\x7fNAVUNIQ_343\x7f> <a>nested template</a> <\x7fNAVUNIQ_346\x7f> <a>nested nested template</a><\x7fNAVUNIQ_347\x7f> <a>nested nested nested template</a><\x7fNAVUNIQ_348\x7f> <a>nested nested nested template</a> </\x7fNAVUNIQ_348\x7f> </\x7fNAVUNIQ_347\x7f> </\x7fNAVUNIQ_346\x7f> </\x7fNAVUNIQ_343\x7f> <\x7fNAVUNIQ_344\x7f> <a>nested template</a> </\x7fNAVUNIQ_344\x7f></a></\x7fNAVUNIQ_342\x7f>",
-
 				"<a>some content  <a>nested template</a>  <a>nested nested template</a> <a>nested nested nested template</a> <a>nested nested nested template</a>      <a>nested template</a> </a>",
 				"nested templates without block elements, nothing should be removed if there is no block element"
 			],
 			[
 				"<\x7fNAVUNIQ_342\x7f><a>some content <\x7fNAVUNIQ_343\x7f> <a>nested template</a> <\x7fNAVUNIQ_346\x7f> <a>nested nested template</a><\x7fNAVUNIQ_347\x7f> <p>nested nested nested template</p><\x7fNAVUNIQ_348\x7f> <a>nested nested nested template</a> </\x7fNAVUNIQ_348\x7f> </\x7fNAVUNIQ_347\x7f> </\x7fNAVUNIQ_346\x7f> </\x7fNAVUNIQ_343\x7f> <\x7fNAVUNIQ_344\x7f> <a>nested template</a> </\x7fNAVUNIQ_344\x7f></a></\x7fNAVUNIQ_342\x7f>",
-
 				"",
 				"block element within the most inner template, everything should be removed"
 			],
@@ -135,6 +133,45 @@ class NavigationTemplateTest extends WikiaBaseTest {
 				"<\x7fNAVUNIQ_342\x7f> <a>something</a> </\x7fNAVUNIQ_342\x7f><\x7fNAVUNIQ_343\x7f><p>something2</p></\x7fNAVUNIQ_343\x7f><\x7fNAVUNIQ_342\x7f>something</\x7fNAVUNIQ_342\x7f><\x7fNAVUNIQ_343\x7f><div>something2</div></\x7fNAVUNIQ_343\x7f>",
 				" <a>something</a> something",
 				"multiple invocations of the same template, those with block elements should be removed"
+			]
+		];
+	}
+
+
+	/**
+	 * @dataProvider getMarkedWikitext
+	 */
+	public function testRemoveInnerMarks( $input, $expectedOutput, $message ) {
+		$this->assertEquals( $expectedOutput, NavigationTemplate::removeInnerMarks( $input ), $message );
+	}
+
+	public function getMarkedWikitext() {
+		return [
+			[
+				"<\x7fNAVUNIQ_342\x7f>
+				some wikitext within NAVUNIQ_342  marks
+				</\x7fNAVUNIQ_342\x7f>",
+
+				"<\x7fNAVUNIQ_342\x7f>
+				some wikitext within NAVUNIQ_342  marks
+				</\x7fNAVUNIQ_342\x7f>",
+
+				"outer marks should not be removed"
+			],
+			[
+				"<\x7fNAVUNIQ_342\x7f>\nsome <\x7fNAVUNIQ_344\x7f>\nwikitext within\n</\x7fNAVUNIQ_344\x7f> NAVUNIQ_342  marks\n</\x7fNAVUNIQ_342\x7f>",
+				"<\x7fNAVUNIQ_342\x7f>\nsome wikitext within NAVUNIQ_342  marks\n</\x7fNAVUNIQ_342\x7f>",
+				"inner marks should be removed"
+			],
+			[
+				"<\x7fNAVUNIQ_342\x7f>\n<\x7fNAVUNIQ_343\x7f>\nsome <\x7fNAVUNIQ_344\x7f>\nwikitext within\n</\x7fNAVUNIQ_344\x7f> NAVUNIQ_342  marks \n</\x7fNAVUNIQ_343\x7f>\n</\x7fNAVUNIQ_342\x7f>",
+				"<\x7fNAVUNIQ_342\x7f>\nsome wikitext within NAVUNIQ_342  marks\n</\x7fNAVUNIQ_342\x7f>",
+				"inner marks should be removed"
+			],
+			[
+				"wikitext without NAVUNIQ marks",
+				"wikitext without NAVUNIQ marks",
+				"wikitext without NAVUNIQ marks should be unchanged"
 			]
 		];
 	}

@@ -163,6 +163,7 @@ class TemplateTypesParser {
 	 */
 	private static function shouldTemplateBeParsed() {
 		global $wgEnableTemplateTypesParsing, $wgArticleAsJson;
+
 		return $wgEnableTemplateTypesParsing && $wgArticleAsJson;
 	}
 
