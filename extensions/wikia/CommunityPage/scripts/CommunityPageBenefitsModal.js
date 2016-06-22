@@ -3,8 +3,8 @@
  * modal is an entry point for Community Page
  */
 define('CommunityPageBenefitsModal',
-	['wikia.loader', 'mw', 'wikia.mustache'],
-	function (loader, mw, mustache) {
+	['jquery', 'wikia.loader', 'mw', 'wikia.mustache', 'wikia.tracker'],
+	function ($, loader, mw, mustache, tracker) {
 		'use strict';
 		var modalConfig = {
 				vars: {
@@ -13,7 +13,12 @@ define('CommunityPageBenefitsModal',
 					size: 'content-size'
 				}
 			},
-			specialCommunityTitle = new mw.Title('Community', -1);
+			specialCommunityTitle = new mw.Title('Community', -1),
+			track = tracker.buildTrackingFunction({
+				action: tracker.ACTIONS.CLICK,
+				category: 'community-page-benefits-modal',
+				trackingMethod: 'analytics'
+			});
 
 		function openModal() {
 			loader({
@@ -25,6 +30,11 @@ define('CommunityPageBenefitsModal',
 			}).then(handleRequestsForModal);
 		}
 
+		/**
+		 * Handle messages, render modal and call createComponent
+		 * One of sub-tasks for getting modal shown
+		 * @param {Object} loaderRes
+		 */
 		function handleRequestsForModal(loaderRes) {
 			var wikiTopic = mw.config.get('wgSiteName');
 
@@ -57,12 +67,36 @@ define('CommunityPageBenefitsModal',
 		}
 
 		/**
-		 * CreateComponent callback that finally shows modal
-		 * and binds submit action to Done button
-		 * One of sub-tasks for getting modal shown
+		 * CreateComponent callback that finally shows modal.
+		 * Bind tracking events.
+		 * One of sub-tasks for getting modal shown.
 		 */
 		function processInstance(modalInstance) {
 			modalInstance.show();
+
+			// Send tracking event for modal shown
+			track({
+				action: tracker.ACTIONS.IMPRESSION,
+				label: 'benefits-modal-shown'
+			});
+
+			// Bind tracking links that navigate away
+			modalInstance.$element.find('[data-track-mousedown]').bind('mousedown', function (e) {
+				track({label: $(e.target).data('trackMousedown')});
+			});
+
+			// Bind tracking clicks on elements with data-track attribute
+			modalInstance.$element.find('[data-track]').click(function (e) {
+				track({label: $(e.target).data('track')});
+			});
+
+			// Bind tracking modal close
+			modalInstance.bind('close', function () {
+				track({
+					action: tracker.ACTIONS.CLOSE,
+					label: 'modal-closed'
+				});
+			});
 		}
 
 		return {
