@@ -51,10 +51,10 @@ class NavigationTemplate {
 		// matches block elements in between start and end marker tags
 		// <marker>(not </marker>)...(block element)...</marker>
 		$replaced = preg_replace(
-			'/(<|&lt;)' . $marker . '(>|&gt;)\\n' .
-			'((?!\\n(<|&lt;)\\/' . $marker . '(>|&gt;)).)*' .
+			'/(<|&lt;)' . $marker . '(>|&gt;)' .
+			'((?!(<|&lt;)\\/' . $marker . '(>|&gt;)).)*' .
 			'<(' . implode( '|', self::$blockLevelElements ) . ')(\s.*)?>.*' .
-			'\\n(<|&lt;)\\/' . $marker . '(>|&gt;)/isU',
+			'(<|&lt;)\\/' . $marker . '(>|&gt;)/isU',
 			// replacement
 			'',
 			$html, -1, $count
@@ -90,14 +90,21 @@ class NavigationTemplate {
 
 	public static function onEndBraceSubstitution( $templateTitle, &$templateWikitext, &$parser ) {
 		//strip outlayers
-		$openMarkerRegex = "[<&lt;]\x7fNAVUNIQ_.+\x7f[>&gt;]\\n";
-		$closeMarkerRegex = "\\n[<&lt;]\\/\x7fNAVUNIQ_.+\x7f[>&gt;]";
-		preg_match_all("/(" . $openMarkerRegex . ")(.*)(" . $closeMarkerRegex . ")/s", $templateWikitext, $inside);
+		if ( self::shouldTemplateBeParsed() ) {
+			$openMarkerRegex = "[<&lt;]\x7fNAVUNIQ_.+\x7f[>&gt;]\\n";
+			$closeMarkerRegex = "\\n[<&lt;]\\/\x7fNAVUNIQ_.+\x7f[>&gt;]";
+			preg_match_all( "/(" . $openMarkerRegex . ")(.*)(" . $closeMarkerRegex . ")/s", $templateWikitext, $inside );
 
-		$replacedOpenings = preg_replace("/" . $openMarkerRegex . "/U", "", $inside[2][0]);
-		$replaced = preg_replace("/" . $closeMarkerRegex . "/U", "", $replacedOpenings);
+			$replacedOpenings = preg_replace( "/" . $openMarkerRegex . "/U", "", $inside[2][0] );
+			$replaced = preg_replace( "/" . $closeMarkerRegex . "/U", "", $replacedOpenings );
 
-		$templateWikitext = $inside[1][0] . $replaced . $inside[3][0];
+			$templateWikitext = $inside[1][0] . $replaced . $inside[3][0];
+		}
 		return true;
+	}
+
+	private static function shouldTemplateBeParsed() {
+		global $wgEnableTemplateTypesParsing, $wgArticleAsJson, $wgEnableNavigationTemplateParsing;
+		return $wgEnableTemplateTypesParsing && $wgArticleAsJson && $wgEnableNavigationTemplateParsing;
 	}
 }
