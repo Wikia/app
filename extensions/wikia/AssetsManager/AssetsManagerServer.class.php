@@ -107,6 +107,10 @@ class AssetsManagerServer {
 			$headers['X-Pass-Cache-Control'] = 'public, max-age=' . $cacheDuration['client'];
 		}
 
+		if ( $type === 'sasses' && strpos( $request->getRequestURL(), urlencode( 'crossorigin=anonymous' ) ) !== false ) {
+			header( 'Access-Control-Allow-Origin: *' );
+		}
+
 		$headers['Last-Modified'] = gmdate('D, d M Y H:i:s \G\M\T');
 
 		foreach($headers as $k => $v) {
