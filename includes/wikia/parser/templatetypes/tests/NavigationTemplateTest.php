@@ -164,7 +164,7 @@ class NavigationTemplateTest extends WikiaBaseTest {
 				"inner marks should be removed"
 			],
 			[
-				"<\x7fNAVUNIQ_342\x7f>\n<\x7fNAVUNIQ_343\x7f>\nsome <\x7fNAVUNIQ_344\x7f>\nwikitext within\n</\x7fNAVUNIQ_344\x7f> NAVUNIQ_342  marks \n</\x7fNAVUNIQ_343\x7f>\n</\x7fNAVUNIQ_342\x7f>",
+				"<\x7fNAVUNIQ_342\x7f>\n<\x7fNAVUNIQ_343\x7f>\nsome <\x7fNAVUNIQ_344\x7f>\nwikitext within\n</\x7fNAVUNIQ_344\x7f> NAVUNIQ_342  marks\n</\x7fNAVUNIQ_343\x7f>\n</\x7fNAVUNIQ_342\x7f>",
 				"<\x7fNAVUNIQ_342\x7f>\nsome wikitext within NAVUNIQ_342  marks\n</\x7fNAVUNIQ_342\x7f>",
 				"inner marks should be removed"
 			],
