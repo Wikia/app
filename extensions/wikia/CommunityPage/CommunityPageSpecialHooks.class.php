@@ -54,6 +54,20 @@ class CommunityPageSpecialHooks {
 	}
 
 	/**
+	 * Adds assets for Community Page Benefits Modal
+	 *
+	 * @param \OutputPage $out
+	 * @param \Skin $skin
+	 *
+	 * @return true
+	 */
+	public static function onBeforePageDisplay( \OutputPage $out, \Skin $skin ) {
+		\Wikia::addAssetsToOutput( 'community_page_benefits_js' );
+		\Wikia::addAssetsToOutput( 'community_page_benefits_scss' );
+		return true;
+	}
+
+	/**
 	 * Add community page entry point to article page right rail module
 	 *
 	 * @param array $railModuleList
