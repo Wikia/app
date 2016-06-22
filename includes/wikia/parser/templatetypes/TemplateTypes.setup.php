@@ -28,7 +28,6 @@ $wgHooks[ 'Parser::FetchTemplateAndTitle' ][] = 'TemplateTypesParser::onFetchTem
 $wgHooks[ 'Parser::FetchTemplateAndTitle' ][] = 'DataTables::markTranscludedTables';
 $wgHooks[ 'Parser::getTemplateDom' ][] = 'TemplateTypesParser::onGetTemplateDom';
 $wgHooks[ 'Parser::endBraceSubstitution' ][] = 'TemplateTypesParser::onEndBraceSubstitution';
-$wgHooks[ 'Parser::endBraceSubstitution' ][] = 'NavigationTemplate::onEndBraceSubstitution';
 $wgHooks[ 'ParserAfterTidy' ][] = 'DataTables::markDataTables';
 $wgHooks[ 'ParserAfterTidy' ][] = 'TemplateTypesParser::onParserAfterTidy';
 $wgHooks[ 'ParserAfterTidy' ][] = 'ArticleHTMLCleanup::doCleanup';

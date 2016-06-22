@@ -88,23 +88,14 @@ class NavigationTemplate {
 		return sprintf( "<%s>\n%s\n</%s>", $marker, $text, $marker );
 	}
 
-	public static function onEndBraceSubstitution( $templateTitle, &$templateWikitext, &$parser ) {
-		//strip outlayers
-		if ( self::shouldTemplateBeParsed() ) {
-			$openMarkerRegex = "[<&lt;]\x7fNAVUNIQ_.+\x7f[>&gt;]\\n";
-			$closeMarkerRegex = "\\n[<&lt;]\\/\x7fNAVUNIQ_.+\x7f[>&gt;]";
-			preg_match_all( "/(" . $openMarkerRegex . ")(.*)(" . $closeMarkerRegex . ")/s", $templateWikitext, $inside );
+	public static function removeInnerMarks( $templateWikitext ) {
+		$openMarkerRegex = "[<&lt;]\x7fNAVUNIQ_.+\x7f[>&gt;]\\n";
+		$closeMarkerRegex = "\\n[<&lt;]\\/\x7fNAVUNIQ_.+\x7f[>&gt;]";
+		preg_match_all( "/(" . $openMarkerRegex . ")(.*)(" . $closeMarkerRegex . ")/s", $templateWikitext, $inside );
 
-			$replacedOpenings = preg_replace( "/" . $openMarkerRegex . "/U", "", $inside[2][0] );
-			$replaced = preg_replace( "/" . $closeMarkerRegex . "/U", "", $replacedOpenings );
+		$replacedOpenings = preg_replace( "/" . $openMarkerRegex . "/U", "", $inside[2][0] );
+		$replaced = preg_replace( "/" . $closeMarkerRegex . "/U", "", $replacedOpenings );
 
-			$templateWikitext = $inside[1][0] . $replaced . $inside[3][0];
-		}
-		return true;
-	}
-
-	private static function shouldTemplateBeParsed() {
-		global $wgEnableTemplateTypesParsing, $wgArticleAsJson, $wgEnableNavigationTemplateParsing;
-		return $wgEnableTemplateTypesParsing && $wgArticleAsJson && $wgEnableNavigationTemplateParsing;
+		return $inside[1][0] . $replaced . $inside[3][0];
 	}
 }
