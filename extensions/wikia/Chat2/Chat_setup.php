@@ -110,7 +110,7 @@ $wgResourceModules['ext.Chat2'] = [
 		'chat-ban-modal-heading',
 		'chat-ban-cannt-undo',
 		'chat-browser-is-notsupported',
-
+		'chat-message-was-too-long',
 	],
 	'position' => 'top'
 ];
