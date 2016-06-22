@@ -28,6 +28,7 @@ define('ext.wikia.adEngine.template.bfaa', [
 		logGroup = 'ext.wikia.adEngine.template.bfaa',
 		nav,
 		page,
+		unblockedSlots = ['BOTTOM_LEADERBOARD', 'INCONTENT_BOXAD_1'],
 		wrapper;
 
 	desktopHandler = {
@@ -116,7 +117,7 @@ define('ext.wikia.adEngine.template.bfaa', [
 		log('show', 'info', logGroup);
 
 		uapContext.setUapId(params.uap);
-		btfBlocker.unblock('BOTTOM_LEADERBOARD');
+		unblockedSlots.forEach(btfBlocker.unblock);
 	}
 
 	return {
