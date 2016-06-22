@@ -2,18 +2,11 @@
 
 namespace Wikia\UserGroups;
 
-use DatabaseBase;
 use Doctrine\Common\Cache\CacheProvider;
-use WikiaSQL;
 
 class UserGroupList {
 
 	const CACHE_KEY = "global-groups";
-
-	const CACHE_TTL = 60*60*24;
-
-	/** @var DatabaseBase */
-	private $specialsDb;
 
 	/** @var CacheProvider */
 	private $cache;
@@ -45,14 +38,14 @@ class UserGroupList {
 
 	/**
 	 * GlobalGroups constructor.
-	 * @param DatabaseBase $specialsDb
+	 * @param UserGroupStorage $storage
 	 * @param CacheProvider $cache
 	 */
 	public function __construct(
-			DatabaseBase $specialsDb,
+			UserGroupStorage $storage,
 			CacheProvider $cache) {
 
-		$this->specialsDb = $specialsDb;
+		$this->storage = $storage;
 		$this->cache = $cache;
 		$this->groups = null;
 	}
@@ -66,45 +59,32 @@ class UserGroupList {
 			$groups = $this->cache->fetch(self::CACHE_KEY);
 
 			if (!$groups) {
-				$allGroups = array_merge($this->globalGroups, $this->localGroups);
-
-				$groups = (new WikiaSQL())
-						->SELECT('id', 'name')
-						->FROM('groups')
-						->WHERE('name')->IN($allGroups)
-						->runLoop(
-								$this->specialsDb,
-								function(&$groups, $row) {
-									$groups[$row->name] = $row->id;
-								});
-
-				$newGroups = array_diff($allGroups, array_keys($groups));
-
-				foreach ($newGroups as $g) {
-					(new WikiaSQL())
-							->INSERT('groups')
-							->SET('name', $g)
-							->run($this->specialsDb);
-
-					$groups[$g] = $this->specialsDb->insertId();
-				}
-
-				$this->cache->save(self::CACHE_KEY, $groups, self::CACHE_TTL);
+				$groups = $this->storage->buildGroups(array_merge($this->globalGroups, $this->localGroups));
+				$this->cache->save(self::CACHE_KEY, $groups, 60*60*24);
 			}
 
 			$this->groups = $groups;
 		}
 
-
 		return $this->groups;
 	}
 
 	public function getGlobalGroups() {
-		return $this->globalGroups;
+		return array_filter(
+				$this->getGroups(),
+				function($groupName) {
+					return $this->isGlobalGroup($groupName);
+				},
+				ARRAY_FILTER_USE_KEY);
 	}
 
 	public function getLocalGroups() {
-		return $this->localGroups;
+		return array_filter(
+				$this->getGroups(),
+				function($groupName) {
+					return $this->isLocalGroup($groupName);
+				},
+				ARRAY_FILTER_USE_KEY);
 	}
 
 	public function isLocalGroup($group) {

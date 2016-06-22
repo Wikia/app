@@ -15,20 +15,26 @@ class UserGroupsModule implements Module {
 
 	public function configure(InjectorBuilder $builder) {
 		$builder
-				->bind(UserGroupList::class)->to(function () {
-					global $wgSpecialsDB, $wgMemc;
+				->bind(UserGroupStorage::class)->to(function () {
+					global $wgSpecialsDB, $wgExternalSharedDB;
+					
+					return new UserGroupStorage(
+							wfGetDB(DB_MASTER, [], $wgSpecialsDB),
+							wfGetDB(DB_SLAVE, [], $wgExternalSharedDB));
+				})
+				->bind(UserGroupList::class)->to(function (ContainerInterface $c) {
+					global $wgMemc;
 
-					$specialsDb = wfGetDB(DB_MASTER, [], $wgSpecialsDB);
+					/** @var UserGroupStorage $storage */
+					$storage = $c->get(UserGroupStorage::class);
+
 					$cache = new BagOStuffCacheProvider( $wgMemc );
 					$cache->setNamespace( UserGroupList::class . ":" . self::GROUP_LIST_VERSION );
 
-					return new UserGroupList($specialsDb, $cache);
+					return new UserGroupList($storage, $cache);
 				})
 				->bind(UserGroupUpdater::class)->to(function (ContainerInterface $c) {
-					global $wgSpecialsDB, $wgMemc, $wgExternalSharedDB;
-
-					$specialsDb = wfGetDB(DB_MASTER, [], $wgSpecialsDB);
-					$wikiCitiesDb = wfGetDB(DB_SLAVE, [], $wgExternalSharedDB);
+					global $wgMemc;
 
 					$cache = new BagOStuffCacheProvider( $wgMemc );
 					$cache->setNamespace( UserGroupUpdater::class . ":" . self::USER_GROUP_VERSION );
@@ -36,7 +42,10 @@ class UserGroupsModule implements Module {
 					/** @var UserGroupList $groupList */
 					$groupList = $c->get(UserGroupList::class);
 
-					return new UserGroupUpdater($groupList, $specialsDb, $wikiCitiesDb, $cache);
+					/** @var UserGroupStorage $storage */
+					$storage = $c->get(UserGroupStorage::class);
+
+					return new UserGroupUpdater($storage, $groupList, $cache);
 				});
 	}
 }
