@@ -16,7 +16,7 @@ require([
 			type: 'get',
 			data: {
 				cityId: w.wgCityId
-			}
+			},
 			callback: function (response) {
 				$('#WikiaArticle').append(response);
 				done();

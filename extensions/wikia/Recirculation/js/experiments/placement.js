@@ -358,23 +358,20 @@ require([
 	}
 
 	function renderLiftigniterCommunity() {
-		var view = railView(),
-			curated = curatedHelper(),
+		var view = incontentView(),
 			helper = liftigniterHelper({
 				count: 3,
 				widget: 'in-wikia'
 			});
 
 		helper.loadData()
-			.then(curated.injectContent)
 			.then(view.render)
 			.then(function($html) {
 				var elements = $html.find('.rail-item').get();
 
 				view.setupTracking(experimentName)($html);
 				helper.setupTracking(elements);
-			})
-			.fail(handleError);
+			});
 	}
 
 });

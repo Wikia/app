@@ -3,7 +3,20 @@
 class RecirculationApiController extends WikiaApiController {
 	const ALLOWED_TYPES = ['popular', 'shares', 'recent_popular', 'vertical', 'community', 'curated', 'e3'];
 
+	/**
+	 * @var CrossOriginResourceSharingHeaderHelper
+	 */
+	protected $cors;
+
+	public function __construct(){
+		parent::__construct();
+		$this->cors = new CrossOriginResourceSharingHeaderHelper();
+		$this->cors->setAllowOrigin( [ '*' ] );
+	}
+
 	public function getFandomPosts() {
+		$this->cors->setHeaders($this->response);
+
 		$title = wfMessage( 'recirculation-fandom-title' )->plain();
 		$type = $this->request->getVal( 'type', null );
 		$cityId = $this->request->getVal( 'cityId', null );
@@ -36,6 +49,8 @@ class RecirculationApiController extends WikiaApiController {
 	}
 
 	public function getCakeRelatedContent() {
+		$this->cors->setHeaders($this->response);
+
 		$target = trim($this->request->getVal('relatedTo'));
 		if (empty($target)) {
 			throw new InvalidParameterApiException('relatedTo');
@@ -52,6 +67,8 @@ class RecirculationApiController extends WikiaApiController {
 	}
 
 	public function getAllPosts() {
+		$this->cors->setHeaders($this->response);
+
 		$cityId = $this->request->getVal( 'cityId', null );
 
 		if ( !empty( $cityId ) && !is_numeric( $cityId ) ) {

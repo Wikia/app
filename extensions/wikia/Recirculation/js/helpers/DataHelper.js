@@ -20,10 +20,11 @@ define('ext.wikia.recirculation.helpers.data', [
 			var deferred = $.Deferred();
 
 			nirvana.sendRequest({
-				controller: 'RecirculatonApi',
+				controller: 'RecirculationApi',
 				method: 'getAllPosts',
 				format: 'json',
 				type: 'get',
+				scriptPath: w.wgCdnApiUrl,
 				data: {
 					cityId: w.wgCityId
 				},

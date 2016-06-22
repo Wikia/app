@@ -22,6 +22,7 @@ define('ext.wikia.recirculation.helpers.fandom', [
 				method: 'getFandomPosts',
 				format: 'json',
 				type: 'get',
+				scriptPath: w.wgCdnApiUrl,
 				data: {
 					type: options.type,
 					cityId: w.wgCityId
