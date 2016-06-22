@@ -31,7 +31,7 @@ class UserGroupStorage {
 		return (new WikiaSQL())
 				->SELECT('user_id', 'wiki_id')
 				->FROM('user_groups')
-				->JOIN('groups')->ON('user_groups.group_id')->EQUAL_TO('groups.id')
+				->JOIN('groups')->ON('user_groups.group_id', 'groups.id')
 				->WHERE('groups.name')->EQUAL_TO($groupName)
 				->runLoop($this->specialsDb, function(&$userList, $row) {
 					$userList[] = [$row->user_id, $row->wiki_id];
@@ -50,7 +50,7 @@ class UserGroupStorage {
 		return (new WikiaSQL())
 				->SELECT('user_id', 'wiki_id')
 				->FROM('user_groups')
-				->JOIN('groups')->ON('user_groups.group_id')->EQUAL_TO('groups.id')
+				->JOIN('groups')->ON('user_groups.group_id', 'groups.id')
 				->WHERE('groups.name')->EQUAL_TO($groupName)
 					->AND_('user_groups.wiki_id')->IN($wikiIds)
 				->runLoop($this->specialsDb, function(&$userList, $row) {
