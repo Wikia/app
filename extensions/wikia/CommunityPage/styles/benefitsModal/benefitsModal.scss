@@ -3,6 +3,10 @@
 @import '../components/variables';
 @import 'resources/wikia/ui_components/modal/css/modal-close-icon';
 
+$button-height: 46px;
+$button-space: 20px;
+$footer-height: $button-height + $button-space * 2;
+
 $color-image-bg: #082140;
 $color-slate-gray: #656e78;
 $color-border: #e6e6e6;
@@ -57,6 +61,8 @@ $icon-space-large: 19px;
 }
 
 .community-page-benefits-modal-text {
+	box-sizing: border-box;
+	height: calc(100% - #{$footer-height});
 	overflow: auto;
 	padding: 36px 36px 30px 30px;
 }
@@ -89,7 +95,9 @@ $icon-space-large: 19px;
 
 .community-page-benefits-modal-action-point {
 	border-top: 1px solid $color-border;
-	padding: 20px;
+	box-sizing: border-box;
+	height: $footer-height;
+	padding: $button-space;
 	text-align: center;
 }
 
@@ -99,8 +107,8 @@ $icon-space-large: 19px;
 	display: inline-block;
 	font-size: 14px;
 	font-weight: bold;
-	height: 46px;
-	line-height: 46px;
+	height: $button-height;
+	line-height: $button-height;
 	padding: 0 30px;
 	text-decoration: none;
 	text-transform: uppercase;
