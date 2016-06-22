@@ -18,7 +18,7 @@ require([
 	function setModalShownCookie() {
 		cookies.set('cpBenefitsModalShown', 1, {
 			domain: mw.config.get('wgCookieDomain'),
-			expires: 2592000, // 30 days
+			expires: 2592000000, // 30 days
 			path: mw.config.get('wgCookiePath')
 		});
 	}
