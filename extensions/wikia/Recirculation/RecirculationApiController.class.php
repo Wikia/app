@@ -5,9 +5,15 @@ class RecirculationApiController extends WikiaApiController {
 
 	public function getFandomPosts() {
 		$title = wfMessage( 'recirculation-fandom-title' )->plain();
-		$type = $this->request->getVal( 'type' );
+		$type = $this->request->getVal( 'type', null );
+		$cityId = $this->request->getVal( 'cityId', null );
+
 		if ( !$type || !in_array( $type, self::ALLOWED_TYPES ) ) {
 			throw new InvalidParameterApiException( 'type' );
+		}
+
+		if ( !empty( $cityId ) && !is_numeric( $cityId ) ) {
+			throw new InvalidParameterApiException( 'cityId' );
 		}
 
 		if ( $type === 'curated' ) {
@@ -17,7 +23,7 @@ class RecirculationApiController extends WikiaApiController {
 			$title = "<span>Presented by $svg</span><br />This week at E3";
 			$dataService = new FandomDataService();
 		} else {
-			$dataService = new ParselyDataService();
+			$dataService = new ParselyDataService( $cityId );
 		}
 
 		$posts = $dataService->getPosts( $type );
@@ -46,6 +52,12 @@ class RecirculationApiController extends WikiaApiController {
 	}
 
 	public function getAllPosts() {
+		$cityId = $this->request->getVal( 'cityId', null );
+
+		if ( !empty( $cityId ) && !is_numeric( $cityId ) ) {
+			throw new InvalidParameterApiException( 'cityId' );
+		}
+
 		$parselyDataService = new ParselyDataService();
 		$fandom = [
 			'title' => wfMessage( 'recirculation-fandom-title' )->plain(),
@@ -54,28 +66,17 @@ class RecirculationApiController extends WikiaApiController {
 
 		$discussionsData = [];
 		if ( RecirculationHooks::canShowDiscussions() ) {
-			$discussionsDataService = new DiscussionsDataService();
+			$discussionsDataService = new DiscussionsDataService( $cityId );
 			$discussionsData = $discussionsDataService->getData();
 			$discussionsData['title'] = wfMessage( 'recirculation-discussion-title' )->plain();
 			$discussionsData['linkText'] = wfMessage( 'recirculation-discussion-link-text' )->plain();
 		}
-
-		$articleId = $this->request->getVal( 'articleId' );
-		$articles = $this->app->sendRequest( 'ArticlesApi', 'getTop', [
-			'abstract' => 0,
-			'expand' => 1,
-			'height' => 220,
-			'limit' => 8,
-			'namespaces' => 0,
-			'width' => 385,
-		] )->getVal( 'items' );
 
 		$this->response->setCacheValidity( WikiaResponse::CACHE_VERY_SHORT );
 		$this->response->setData( [
 			'title' => wfMessage( 'recirculation-impact-footer-title' )->plain(),
 			'fandom' => $fandom,
 			'discussions' => $discussionsData,
-			'articles' => $articles
 		] );
 	}
 }

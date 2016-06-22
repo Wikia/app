@@ -9,15 +9,26 @@ define('ext.wikia.recirculation.helpers.data', [
 	return function() {
 
 		function loadData() {
+			return $.when(loadAll(), loadArticles())
+				.done(function(data, articles) {
+					data.articles = articles;
+					return data;
+				});
+		}
+
+		function loadAll() {
 			var deferred = $.Deferred();
 
 			nirvana.sendRequest({
-				controller: 'RecirculationApi',
+				controller: 'RecirculatonApi',
 				method: 'getAllPosts',
 				format: 'json',
 				type: 'get',
+				data: {
+					cityId: w.wgCityId
+				},
 				callback: function(data) {
-					data = formatData(data);
+					data = formatFandom(data);
 					deferred.resolve(data);
 				}
 			});
@@ -25,9 +36,33 @@ define('ext.wikia.recirculation.helpers.data', [
 			return deferred.promise();
 		}
 
-		function formatData(data) {
-			var fandomPosts = [],
-				articles = [];
+		function loadArticles() {
+			var deferred = $.Deferred();
+
+			nirvana.sendRequest({
+				controller: 'ArticlesApi',
+				method: 'getTop',
+				format: 'json',
+				type: 'get',
+				data: {
+					'abstract': 0,
+					'expand': 1,
+					'height': 220,
+					'limit': 8,
+					'namespaces': 0,
+					'width': 385
+				},
+				callback: function(data) {
+					data = formatArticles(data);
+					deferred.resolve(data);
+				}
+			});
+
+			return deferred.promise();
+		}
+
+		function formatFandom(data) {
+			var fandomPosts = [];
 
 			$.each(data.fandom.items, function(index, item) {
 				item.thumbnail = item.image_url;
@@ -37,7 +72,17 @@ define('ext.wikia.recirculation.helpers.data', [
 
 			data.fandom.items = fandomPosts;
 
-			$.each(data.articles, function(index, item) {
+			return {
+				title: data.title,
+				fandom: data.fandom,
+				discussions: data.discussions,
+			};
+		}
+
+		function formatArticles(data) {
+			var articles = [];
+
+			$.each(data.items, function(index, item) {
 				item.source = 'wiki';
 				item.thumbnail = item.thumbnail;
 				item.index = index;
@@ -46,12 +91,7 @@ define('ext.wikia.recirculation.helpers.data', [
 
 			articles.sort(sortThumbnails);
 
-			return {
-				title: data.title,
-				fandom: data.fandom,
-				discussions: data.discussions,
-				articles: articles.slice(0,5)
-			};
+			return articles.slice(0,5);
 		}
 
 		function sortThumbnails(a, b) {

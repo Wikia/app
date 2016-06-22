@@ -1,10 +1,11 @@
 /*global require*/
 require([
 	'jquery',
+	'wikia.window',
 	'wikia.abTest',
 	'wikia.nirvana',
 	'ext.wikia.recirculation.tracker'
-], function ($, abTest, nirvana, tracker) {
+], function ($, w, abTest, nirvana, tracker) {
 	var experimentName = 'RECIRCULATION_DISCUSSIONS';
 
 	function injectDiscussions(done) {
@@ -13,6 +14,9 @@ require([
 			method: 'discussions',
 			format: 'html',
 			type: 'get',
+			data: {
+				cityId: w.wgCityId
+			}
 			callback: function (response) {
 				$('#WikiaArticle').append(response);
 				done();
