@@ -217,7 +217,7 @@ class CommunityPageSpecialUsersModel {
 				$localUsers = ( new WikiaSQL() )
 					->SELECT( 'ug_user' )
 					->FROM ( 'user_groups' )
-					->WHERE( 'ug_group' )->NOT_IN( [ 'bot', 'bot-global' ] )
+					->WHERE( 'ug_group' )->NOT_IN( [ 'bot' ] )
 					->GROUP_BY( 'ug_user' )
 					->runLoop( $localDb, function ( &$localUsers, $row ) {
 						$localUsers[] = $row->ug_user;
