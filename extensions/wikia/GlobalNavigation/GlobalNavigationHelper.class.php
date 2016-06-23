@@ -111,6 +111,10 @@ class GlobalNavigationHelper {
 			[3] // max 3 links
 		);
 
+		if ( $wgLang->getCode() !== 'en' ) {
+			$hubsNodes = [];
+		}
+
 		// Link to WAM - Top Communities
 		$exploreDropdownLinks[] = [
 			'text' => $WAMLinkLabel->plain(),
