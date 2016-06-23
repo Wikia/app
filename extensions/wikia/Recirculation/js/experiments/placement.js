@@ -123,6 +123,14 @@ require([
 			view = railView();
 			isRail = true;
 			break;
+		case 'FANDOM_HERO':
+			helper = fandomHelper({
+				type: 'hero',
+				limit: 5
+			});
+			view = railView();
+			isRail = true;
+			break;
 		case 'LINKS_RAIL':
 			helper = contentLinksHelper();
 			view = railView();
