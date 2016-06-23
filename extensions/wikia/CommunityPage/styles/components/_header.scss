@@ -3,15 +3,18 @@
 
 $hero-image-pattern: '/extensions/wikia/CommunityPage/images/hero_image_pattern.png';
 $hero-image-height: 200px;
+$hero-image-background: rgba(0,0,0,0.35);
 
 @if $is-dark-wiki {
 	$hero-image-pattern: '/extensions/wikia/CommunityPage/images/hero_image_pattern_dark.png';
+	$hero-image-background: rgba(0,0,0,0);
 }
 
 .community-page-header {
 	@include flexbox();
 	align-items: center;
 	background: url($hero-image-pattern);
+	background-color: $hero-image-background;
 	height: $hero-image-height;
 	justify-content: center;
 	text-align: center;

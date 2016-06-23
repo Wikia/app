@@ -18,9 +18,9 @@ $wgAutoloadClasses['CommunityPageEntryPointController'] = $IP . '/skins/oasis/mo
 $wgAutoloadClasses['CommunityPageSpecialHooks'] =  __DIR__ . '/CommunityPageSpecialHooks.class.php';
 $wgHooks['ArticleSaveComplete'][] = 'CommunityPageSpecialHooks::onArticleSaveComplete';
 $wgHooks['GetRailModuleList'][] = 'CommunityPageSpecialHooks::onGetRailModuleList';
-$wgHooks['UserRights'][] = 'CommunityPageSpecialHooks::onUserRights';
 $wgHooks['UserFirstEditOnLocalWiki'][] = 'CommunityPageSpecialHooks::onUserFirstEditOnLocalWiki';
 $wgHooks['BeforePageDisplay'][] = 'CommunityPageSpecialHooks::onBeforePageDisplay';
+$wgHooks['UserRights'][] = 'CommunityPageSpecialHooks::onUserRights';
 
 /* i18n */
 $wgExtensionMessagesFiles['CommunityPage'] = __DIR__ . '/CommunityPage.i18n.php';
@@ -33,6 +33,10 @@ JSMessages::registerPackage( 'CommunityPageSpecial', [
 	'communitypage-modal-tab-loading',
 	'communitypage-modal-tab-loadingerror',
 	'communitypage-top-contributors-week',
+] );
+
+JSMessages::registerPackage( 'CommunityPageBenefits', [
+	'communitypage-entrypoint-modal-*'
 ] );
 
 /* register special page */

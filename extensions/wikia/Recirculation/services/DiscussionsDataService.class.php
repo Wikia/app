@@ -8,6 +8,12 @@ class DiscussionsDataService {
 
 	const MCACHE_VER = '1.1';
 
+	private $cityId;
+
+	public function __construct( $cityId ) {
+		$this->cityId = $cityId;
+	}
+
 	public function getData() {
 		$memcKey = wfMemcKey( __METHOD__, self::MCACHE_VER );
 
@@ -40,9 +46,8 @@ class DiscussionsDataService {
 	 * @return an array of posts
 	 */
 	private function apiRequest() {
-		global $wgCityId;
 		$options = [];
-		$endpoint = $wgCityId . '/forums/' . $wgCityId;
+		$endpoint = $this->cityId . '/forums/' . $this->cityId;
 
 		$url = $this->buildUrl( $endpoint, $options );
 		$data = Http::get( $url );
