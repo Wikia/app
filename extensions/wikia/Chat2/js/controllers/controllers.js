@@ -389,7 +389,7 @@ var NodeRoomController = $.createClass(Observable, {
 	},
 
 	onLongMessage: function (message) {
-		if (typeof message.user == 'string' && message.user == wgUserName) {
+		if (message.user === wgUserName) {
 			var newChatEntry = new models.InlineAlert({text: mw.message('chat-message-was-too-long').escaped()});
 			this.model.chats.add(newChatEntry);
 		} 
