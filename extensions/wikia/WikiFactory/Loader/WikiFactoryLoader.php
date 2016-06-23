@@ -224,10 +224,10 @@ class WikiFactoryLoader {
 	 * @return integer: wikia id or null if wikia is not handled by WikiFactory
 	 */
 	public function execute() {
+		global $wgCityId, $wgDevelEnvironment,
+			$wgDBservers, $wgLBFactoryConf, $wgDBserver, $wgContLang, $wgWikiaBaseDomain;
 
 		wfProfileIn(__METHOD__);
-		global $wgCityId, $wgDevelEnvironment,
-			$wgDBservers, $wgLBFactoryConf, $wgDBserver, $wgContLang;
 
 		/**
 		 * Hook to allow extensions to alter the initialization.  For example,
@@ -475,7 +475,7 @@ class WikiFactoryLoader {
 					$database = strtolower( $this->mCityDB );
 					$redirect = sprintf(
 						"http://%s/wiki/Special:CloseWiki/information/%s",
-						($wgDevelEnvironment) ? "www.awc.wikia-inc.com" : "community.wikia.com",
+						($wgDevelEnvironment) ? "www.awc.wikia-inc.com" : "community.{$wgWikiaBaseDomain}",
 						$database
 					);
 				}

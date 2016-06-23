@@ -138,6 +138,7 @@ $config['recirculation_js'] = array(
 		'//extensions/wikia/Recirculation/js/helpers/ContentLinksHelper.js',
 		'//extensions/wikia/Recirculation/js/helpers/FandomHelper.js',
 		'//extensions/wikia/Recirculation/js/helpers/LateralHelper.js',
+		'//extensions/wikia/Recirculation/js/helpers/LiftigniterHelper.js',
 		'//extensions/wikia/Recirculation/js/helpers/DataHelper.js',
 		'//extensions/wikia/Recirculation/js/helpers/CakeRelatedContentHelper.js',
 		'//extensions/wikia/Recirculation/js/helpers/CuratedContentHelper.js',
@@ -2876,7 +2877,10 @@ $config['special_discussions_log_scss'] = [
 $config['community_page_benefits_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
+		'//resources/wikia/modules/pageviewsInSession.js',
+		'//resources/wikia/modules/sessionStorage.js',
 		'//extensions/wikia/CommunityPage/scripts/CommunityPageBenefitsModal.js',
+		'//extensions/wikia/CommunityPage/scripts/CommunityPageBenefitsPageviews.js',
 	],
 ];
 

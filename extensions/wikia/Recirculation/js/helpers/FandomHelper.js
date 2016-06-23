@@ -1,10 +1,11 @@
 /*global define*/
 define('ext.wikia.recirculation.helpers.fandom', [
 	'jquery',
+	'wikia.window',
 	'wikia.abTest',
 	'wikia.nirvana',
 	'wikia.mustache'
-], function ($, abTest, nirvana, Mustache) {
+], function ($, w, abTest, nirvana, Mustache) {
 
 	return function(config) {
 		var defaults = {
@@ -21,8 +22,10 @@ define('ext.wikia.recirculation.helpers.fandom', [
 				method: 'getFandomPosts',
 				format: 'json',
 				type: 'get',
+				scriptPath: w.wgCdnApiUrl,
 				data: {
-					type: options.type
+					type: options.type,
+					cityId: w.wgCityId
 				},
 				callback: function(data) {
 					data = formatData(data);

@@ -79,6 +79,11 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 	 * Route the view based on logged in status
 	 */
 	public function index() {
+		// Redirect to standalone NewAuth page if extension enabled
+		if ( $this->app->wg->EnableNewAuthModal && $this->wg->request->getVal('type') !== 'forgotPassword' ) {
+			$this->getOutput()->redirect( '/signin?redirect=' . $this->userLoginHelper->getRedirectUrl() );
+		}
+
 		if ( $this->wg->User->isLoggedIn() ) {
 			$this->forward( __CLASS__, 'loggedIn' );
 		} else {
