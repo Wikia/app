@@ -9,7 +9,6 @@ class SpecialRenameUser extends SpecialPage {
 	 * Show the special page
 	 *
 	 * @param mixed $par Parameter passed to the page
-	 *
 	 * @throws PermissionsError
 	 * @throws ReadOnlyError
 	 */

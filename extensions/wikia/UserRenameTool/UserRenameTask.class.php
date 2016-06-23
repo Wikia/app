@@ -1,10 +1,4 @@
 <?php
-/**
- * UserRenameTask
- *
- * @author Scott Rabin <srabin@wikia-inc.com>
- */
-
 use Wikia\Tasks\Tasks\BaseTask;
 
 class UserRenameTask extends BaseTask {
@@ -75,6 +69,7 @@ class UserRenameTask extends BaseTask {
 				foreach ( $opts as $opt => $val ) {
 					$cmd .= sprintf( ' --%s %s', $opt, escapeshellarg( $val ) );
 				}
+
 				if ( $renameIP ) {
 					$cmd .= ' --rename-ip-address';
 				}
@@ -88,12 +83,14 @@ class UserRenameTask extends BaseTask {
 					'exitStatus' => $exitCode,
 					'output' => $output,
 				];
+
 				if ( $exitCode > 0 ) {
 					$this->error( $logMessage, $logContext );
 					$noErrors = false;
 				} else {
 					$this->info( $logMessage, $logContext );
 				}
+
 				$this->staffLog(
 					'log',
 					$params,
@@ -166,15 +163,6 @@ class UserRenameTask extends BaseTask {
 		}
 
 		return $noErrors;
-	}
-
-	/**
-	 * Shim compatibility with RenameUserProcess calling ->log on this object
-	 *
-	 * @param string $text
-	 */
-	public function log( $text ) {
-		$this->info( $text );
 	}
 
 	/**

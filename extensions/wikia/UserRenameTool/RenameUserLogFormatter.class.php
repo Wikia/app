@@ -1,30 +1,28 @@
 <?php
-/**
- * @author: Władysław Bodzek
- *
- * A helper class for the User rename tool
- * @copyright (C) 2010, Wikia Inc.
- * @licence GNU General Public Licence 3.0 or later
- */
 class RenameUserLogFormatter {
 	const COMMUNITY_CENTRAL_CITY_ID = 177;
 
 	static public function getCommunityUser( $name, $noRedirect = false ) {
-		if ( is_int( $name ) )
+		if ( is_int( $name ) ) {
 			$name = User::whoIs( $name );
+		}
+
 		$title = GlobalTitle::newFromText( $name, NS_USER, self::COMMUNITY_CENTRAL_CITY_ID );
-		return Xml::element( 'a', array( 'href' => $title->getFullURL(
-			$noRedirect ? 'redirect=no' : ''
-		) ), $name, false );
+
+		return Xml::element(
+			'a',
+			array( 'href' => $title->getFullURL( $noRedirect ? 'redirect=no' : '') ),
+			$name,
+			false
+		);
 	}
 
 	static protected function getCommunityTask( $taskId ) {
 		$title = GlobalTitle::newFromText( 'Tasks/log', NS_SPECIAL, self::COMMUNITY_CENTRAL_CITY_ID );
+
 		return Xml::element(
 			'a',
-			[
-				'href' => $title->getFullURL( ['id' => $taskId] ),
-			],
+			['href' => $title->getFullURL( ['id' => $taskId] )],
 			"#{$taskId}",
 			false
 		);

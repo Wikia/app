@@ -1,22 +1,15 @@
 <?php
-/**
- * @author: Federico "Lox" Lucignano
- *
- * A helper class for the User rename tool
- * @copyright (C) 2010, Wikia Inc.
- * @licence GNU General Public Licence 3.0 or later
- */
 class RenameUserHelper {
 
 	const CLUSTER_DEFAULT = '';
 
 	/**
-	 * @author Federico "Lox" Lucignano
-	 * @param $userID int the registered user ID
-	 * @return Array A list of wikis' IDs related to user activity, false if the user is not an existing one or an anon
+	 * Finds on which wikis a REGISTERED user (see LookupContribs for anons) has been active
+	 * using the events table stored in the stats DB instead of the blobs table in dataware,
+	 * tests showed is faster and more accurate
 	 *
-	 * Finds on which wikis a REGISTERED user (see LookupContribs for anons) has been active using the events table stored in the stats DB
-	 * instead of the blobs table in dataware, tests showed is faster and more accurate
+	 * @param $userID int the registered user ID
+	 * @return array A list of wikis' IDs related to user activity, false if the user is not an existing one or an anon
 	 */
 	static public function lookupRegisteredUserActivity( $userID ) {
 		global $wgDevelEnvironment, $wgDWStatsDB, $wgStatsDBEnabled;
@@ -48,8 +41,7 @@ class RenameUserHelper {
 
 				$dbr->freeResult( $res );
 			}
-		}
-		else { // on devbox - set up the list manually
+		} else { // on devbox - set up the list manually
 			$result = array(
 				165, // firefly
 				831, // muppet
@@ -64,18 +56,17 @@ class RenameUserHelper {
 	/**
 	 * Gets wikis an IP address might have edits on
 	 *
-	 * @author Daniel Grunwell (Grunny)
-	 *
 	 * @param String $ipAddress The IP address to lookup
-	 *
 	 * @return array
 	 */
 	public static function lookupIPActivity( $ipAddress ) {
 		global $wgDevelEnvironment, $wgSpecialsDB;
+
 		wfProfileIn( __METHOD__ );
 
 		if ( empty( $ipAddress ) || !IP::isIPAddress( $ipAddress ) ) {
 			wfProfileOut( __METHOD__ );
+
 			return false;
 		}
 
@@ -107,12 +98,12 @@ class RenameUserHelper {
 		}
 
 		wfProfileOut( __METHOD__ );
+
 		return $result;
 	}
 
 	/**
 	 * Performs a test of all available phalanx filters and returns warning message if there are any
-	 * @author Kamil Koterba <kamil@wikia-inc.com>
 	 *
 	 * @param $text String to match
 	 * @return String with HTML to display via AJAX
@@ -126,7 +117,6 @@ class RenameUserHelper {
 		}
 
 		$service = new PhalanxService();
-
 		$blockFound = false;
 
 		foreach ( Phalanx::getAllTypeNames() as $blockType ) {
@@ -136,7 +126,6 @@ class RenameUserHelper {
 				$blockFound = true;
 				break;
 			}
-
 		}
 
 		$warning = '';
@@ -148,6 +137,7 @@ class RenameUserHelper {
 		}
 
 		wfProfileOut( __METHOD__ );
+
 		return $warning;
 	}
 }

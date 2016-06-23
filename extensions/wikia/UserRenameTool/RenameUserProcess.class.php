@@ -23,8 +23,6 @@ class RenameUserProcess {
 	 *   'userid_column' => (string) column name with user ID or null if none
 	 *   'username_column' => (string) column name with user name
 	 *   'conds' => (array) additional conditions for the query
-	 *
-	 * @var $mLocalDefaults array
 	 */
 	static private $mLocalDefaults = array(
 		# Core MW tables
@@ -33,10 +31,7 @@ class RenameUserProcess {
 		array( 'table' => 'image', 'userid_column' => 'img_user', 'username_column' => 'img_user_text' ),
 		array( 'table' => 'ipblocks', 'userid_column' => 'ipb_by', 'username_column' => 'ipb_by_text' ),
 		array( 'table' => 'ipblocks', 'userid_column' => 'ipb_user', 'username_column' => 'ipb_address' ),
-		array( 'table' => 'logging', 'userid_column' => null, 'username_column' => 'log_title',
-			'conds' => array(
-				'log_namespace' => NS_USER,
-			) ),
+		array( 'table' => 'logging', 'userid_column' => null, 'username_column' => 'log_title', 'conds' => array( 'log_namespace' => NS_USER ) ),
 		array( 'table' => 'oldimage', 'userid_column' => 'oi_user', 'username_column' => 'oi_user_text' ),
 		array( 'table' => 'recentchanges', 'userid_column' => 'rc_user', 'username_column' => 'rc_user_text' ),
 		array( 'table' => 'revision', 'userid_column' => 'rev_user', 'username_column' => 'rev_user_text' ),
@@ -49,15 +44,13 @@ class RenameUserProcess {
 	/**
 	 * Stores the predefined tasks to do for every local wiki database for IP addresses.
 	 * Here should be mentioned all core tables not connected to any extension.
-	 *
-	 * @var $mLocalIpDefaults array
 	 */
 	static private $mLocalIpDefaults = [
 		[ 'table' => 'archive', 'userid_column' => 'ar_user', 'username_column' => 'ar_user_text' ],
 		[ 'table' => 'filearchive', 'userid_column' => 'fa_user', 'username_column' => 'fa_user_text' ],
 		[ 'table' => 'ipblocks', 'userid_column' => 'ipb_user', 'username_column' => 'ipb_address' ],
 		[ 'table' => 'recentchanges', 'userid_column' => 'rc_user', 'username_column' => 'rc_user_text' ],
-		[ 'table' => 'revision', 'userid_column' => 'rev_user', 'username_column' => 'rev_user_text' ],
+		[ 'table' => 'revision', 'userid_column' => 'rev_user', 'username_column' => 'rev_user_text' ]
 	];
 
 	private $mRequestData = null;
@@ -77,19 +70,9 @@ class RenameUserProcess {
 	private $mWarnings = array();
 
 	private $mInternalLog = '';
-
-	private $mLogDestinations = array(
-		array( self::LOG_STANDARD, null ),
-	);
-	/**
-	 *
-	 * @var BatchTask
-	 */
+	private $mLogDestinations = array( array( self::LOG_STANDARD, null ) );
 	private $mLogTask = null;
 
-	/**
-	 * @var string
-	 */
 	private $mUserRenameTaskId = null;
 
 	/**
@@ -163,7 +146,7 @@ class RenameUserProcess {
 	/**
 	 * Saves passed warning for future retrieval
 	 *
-	 * @param <type> $msg
+	 * @param $msg string Error message
 	 */
 	public function addWarning( $msg ) {
 		$this->mWarnings[] = $msg;
@@ -600,16 +583,19 @@ class RenameUserProcess {
 
 		/* Move user pages */
 		$this->addLog( "Moving user pages." );
+
 		try {
 			$oldTitle = Title::makeTitle( NS_USER, $this->mOldUsername );
 			$newTitle = Title::makeTitle( NS_USER, $this->mNewUsername );
 
 			// Determine all namespaces which need processing
 			$allowedNamespaces = array( NS_USER, NS_USER_TALK );
+
 			// Blogs extension
 			if ( defined( 'NS_BLOG_ARTICLE' ) ) {
 				$allowedNamespaces = array_merge( $allowedNamespaces, array( NS_BLOG_ARTICLE, NS_BLOG_ARTICLE_TALK ) );
 			}
+
 			// NY User profile
 			if ( defined( 'NS_USER_WIKI' ) ) {
 				$allowedNamespaces = array_merge(
@@ -647,8 +633,7 @@ class RenameUserProcess {
 				if ( $newPage->exists() && !$oldPage->isValidMoveTarget( $newPage ) ) {
 					$this->addLog( "Updating wiki \"{$cityDb}\": User page " . $newPage->getText() . " already exists, moving cancelled." );
 					$this->addWarning( wfMessage( 'userrenametool-page-exists', $newPage->getText() )->inContentLanguage()->text() );
-				}
-				else {
+				} else {
 					$this->addLog( "Moving page " . $oldPage->getText() . " in namespace {$row->page_namespace} to " . $newTitle->getText() );
 					$success = $oldPage->moveTo( $newPage, false,  wfMessage( 'userrenametool-move-log', $oldTitle->getText(), $newTitle->getText() )->inContentLanguage()->text() );
 
@@ -748,7 +733,6 @@ class RenameUserProcess {
 	}
 
 	/**
-	 * @author: Władysław Bodzek
 	 * Really performs a rename task specified in arguments
 	 *
 	 * @param DatabaseBase $dbw Database to operate on
@@ -813,8 +797,6 @@ class RenameUserProcess {
 
 	/**
 	 * Reset local editcount for renamed user and fake user
-	 * @author Kamil Koterba
-	 * @since Feb 2014
 	 */
 	private function resetEditCountWiki() {
 		// Renamed user
@@ -834,7 +816,6 @@ class RenameUserProcess {
 	}
 
 	/**
-	 * @author Federico "Lox" Lucignano <federico@wikia-inc.com>
 	 * Performs action for cleaning up temporary data at the very end of a process
 	 */
 	public function cleanup() {

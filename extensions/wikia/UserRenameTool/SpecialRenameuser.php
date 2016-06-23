@@ -5,13 +5,6 @@
  *
  * REQUIRES THE FOLLOWING EXTENSIONS TO BE ENABLED:
  * StaffLog, TaskManager, Phalanx, SpecialPhalanx
- *
- * THIS EXTENSION IS DESIGNED TO BE ENABLED ONLY ON CLUSTER 1! BEWARE! ANY OTHER USE REQUIRES SOME CHANGES!
- *
- * @ingroup Wikia
- * @author Federico "Lox" Lucignano <federico@wikia-inc.com>, Władysław Bodzek <wladek@wikia-inc.com>
- * @copyright Copyright © 2010, Wikia Inc.
- * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  */
 
 // check for dependencies
