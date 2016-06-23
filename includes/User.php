@@ -3210,6 +3210,7 @@ class User {
 		$this->clearInstanceCache( 'defaults' );
 
 		$this->getRequest()->setSessionData( 'wsUserID', 0 );
+		$this->getRequest()->setSessionData( 'wsEditToken', null );
 
 		$this->clearCookie( 'UserID' );
 		$this->clearCookie( 'Token' );
@@ -3220,6 +3221,8 @@ class User {
 		$this->getRequest()->setSessionData( 'wsUserName', null );
 		$this->clearCookie( 'UserName' );
 		// Wikia change - end
+
+		wfResetSessionID();
 
 		# Remember when user logged out, to prevent seeing cached pages
 		$this->setCookie( 'LoggedOut', wfTimestampNow(), time() + 86400 );

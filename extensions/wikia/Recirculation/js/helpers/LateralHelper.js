@@ -46,14 +46,16 @@ define('ext.wikia.recirculation.helpers.lateral', [
 			options = $.extend(defaults, config);
 
 		function recommendFandom(lateral, callback) {
-			return lateral.recommendationsFandom({
+			return lateral.recommendationsHybrid({
+				recommendFrom: 'fandom',
 				count: options.count,
 				onResults: callback
 			});
 		}
 
 		function recommendCommunity(lateral, callback) {
-			return lateral.recommendationsWikia({
+			return lateral.recommendationsHybrid({
+				recommendFrom: 'self',
 				count: options.count * 2, // We load twice as many as we need in case some options do not have images
 				width: options.width,
 				height: options.height,

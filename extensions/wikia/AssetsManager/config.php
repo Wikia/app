@@ -141,6 +141,7 @@ $config['recirculation_js'] = array(
 		'//extensions/wikia/Recirculation/js/helpers/ContentLinksHelper.js',
 		'//extensions/wikia/Recirculation/js/helpers/FandomHelper.js',
 		'//extensions/wikia/Recirculation/js/helpers/LateralHelper.js',
+		'//extensions/wikia/Recirculation/js/helpers/LiftigniterHelper.js',
 		'//extensions/wikia/Recirculation/js/helpers/DataHelper.js',
 		'//extensions/wikia/Recirculation/js/helpers/CakeRelatedContentHelper.js',
 		'//extensions/wikia/Recirculation/js/helpers/CuratedContentHelper.js',
@@ -2877,13 +2878,26 @@ $config['special_discussions_log_scss'] = [
 	],
 ];
 
+$config['community_page_benefits_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => [
+		'//extensions/wikia/CommunityPage/scripts/CommunityPageBenefitsModal.js',
+	],
+];
+
+$config['community_page_benefits_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'assets' => [
+		'//extensions/wikia/CommunityPage/styles/benefitsModal/benefitsModal.scss',
+	],
+];
+
 $config['special_community_page_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
 		'//extensions/wikia/CommunityPage/scripts/ext.communityPage.js',
 		'//extensions/wikia/CommunityPage/scripts/templates.mustache.js',
 	],
-
 ];
 
 $config['special_community_page_scss'] = [

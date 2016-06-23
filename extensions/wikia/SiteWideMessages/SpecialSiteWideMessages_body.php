@@ -96,7 +96,7 @@ class SiteWideMessages extends SpecialPage {
 
 		$hubList = [];
 		while ($row = $DB->FetchObject($dbResult)) {
-			$hubList[$row->id] = $row->name;
+			$hubList[$row->vertical_id] = $row->vertical_name;
 		}
 		if ($dbResult !== false) {
 			$DB->FreeResult($dbResult);

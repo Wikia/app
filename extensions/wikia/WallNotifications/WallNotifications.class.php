@@ -770,10 +770,10 @@ class WallNotifications {
 		// The code will call this method twice for the same notification at times.  Rather than unwind this terrible
 		// mess of logic and state, just make sure we don't add the same notification twice.
 		static $seen = [];
-		if ( !empty( $seen[$entityKey] ) ) {
+		if ( !empty( $seen[$entityKey][$userId] ) ) {
 			return;
 		}
-		$seen[$entityKey] = true;
+		$seen[$entityKey][$userId] = true;
 
 		// Add the new $uniqueId and keep track of the index of the new ID in $notificationIndex.  This end/key/reset
 		// nonsense is required because of how PHP handles arrays.  Since we unset elements from this array later
@@ -850,12 +850,13 @@ class WallNotifications {
 
 		foreach ( $data['relation'][ $uniqueId ]['list'] as $rel ) {
 			if ( $rel['authorId'] == $authorId ) {
-				$found = true;
 
 				// Check the $entityKey here to make sure we're not removing an entry we just added
 				if ( $rel['entityKey'] != $entityKey ) {
 					continue;
 				}
+
+				$found = true;
 
 				// keep track of removed elements - we will remove them from db
 				// table after we are done updating in-memory structures

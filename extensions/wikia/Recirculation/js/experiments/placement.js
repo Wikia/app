@@ -14,6 +14,7 @@ require([
 	'ext.wikia.recirculation.helpers.contentLinks',
 	'ext.wikia.recirculation.helpers.fandom',
 	'ext.wikia.recirculation.helpers.lateral',
+	'ext.wikia.recirculation.helpers.liftigniter',
 	'ext.wikia.recirculation.helpers.data',
 	'ext.wikia.recirculation.helpers.cakeRelatedContent',
 	'ext.wikia.recirculation.helpers.curatedContent',
@@ -35,6 +36,7 @@ require([
 	contentLinksHelper,
 	fandomHelper,
 	lateralHelper,
+	liftigniterHelper,
 	dataHelper,
 	cakeHelper,
 	curatedHelper,
@@ -61,6 +63,16 @@ require([
 	}
 
 	switch (group) {
+		case 'LI_RAIL':
+			renderLiftigniterFandom();
+			return;
+		case 'LI_COMMUNITY':
+			renderLiftigniterCommunity();
+			return;
+		case 'LI_BOTH':
+			renderLiftigniterFandom(true);
+			renderLiftigniterCommunity();
+			return;
 		// Temporary group running during E3
 		case 'E3':
 			helper = fandomHelper({
@@ -323,4 +335,43 @@ require([
 				});
 			});
 	}
+
+	function renderLiftigniterFandom(waitToFetch) {
+		var view = railView(),
+			curated = curatedHelper(),
+			helper = liftigniterHelper({
+				count: 5,
+				widget: 'fandom-rec'
+			});
+
+		helper.loadData(waitToFetch)
+			.then(curated.injectContent)
+			.then(view.render)
+			.then(function($html) {
+				var elements = $html.find('.rail-item').get();
+
+				view.setupTracking(experimentName)($html);
+				curated.setupTracking($html);
+				helper.setupTracking(elements);
+			})
+			.fail(handleError);
+	}
+
+	function renderLiftigniterCommunity() {
+		var view = incontentView(),
+			helper = liftigniterHelper({
+				count: 3,
+				widget: 'in-wikia'
+			});
+
+		helper.loadData()
+			.then(view.render)
+			.then(function($html) {
+				var elements = $html.find('.rail-item').get();
+
+				view.setupTracking(experimentName)($html);
+				helper.setupTracking(elements);
+			});
+	}
+
 });
