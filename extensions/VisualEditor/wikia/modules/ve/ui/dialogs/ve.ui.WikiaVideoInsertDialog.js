@@ -24,7 +24,7 @@ OO.inheritClass( ve.ui.WikiaVideoInsertDialog, ve.ui.WikiaMediaInsertDialog );
 
 ve.ui.WikiaVideoInsertDialog.static.name = 'wikiaVideoInsert';
 
-ve.ui.WikiaVideoInsertDialog.static.title = OO.ui.deferMsg( 'visualeditor-dialog-video-insert-title' );
+ve.ui.WikiaVideoInsertDialog.static.title = OO.ui.deferMsg( 'wikia-visualeditor-dialog-video-insert-title' );
 
 ve.ui.WikiaVideoInsertDialog.static.trackingLabel = 'dialog-video-insert';
 

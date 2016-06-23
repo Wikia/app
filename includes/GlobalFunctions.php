@@ -3404,23 +3404,6 @@ function wfCreateObject( $name, $p ) {
 }
 
 /**
- * @return bool
- */
-function wfHttpOnlySafe() {
-	global $wgHttpOnlyBlacklist;
-
-	if( isset( $_SERVER['HTTP_USER_AGENT'] ) ) {
-		foreach( $wgHttpOnlyBlacklist as $regex ) {
-			if( preg_match( $regex, $_SERVER['HTTP_USER_AGENT'] ) ) {
-				return false;
-			}
-		}
-	}
-
-	return true;
-}
-
-/**
  * Check if there is sufficent entropy in php's built-in session generation
  * PHP's built-in session entropy is enabled if:
  * - entropy_file is set or you're on Windows with php 5.3.3+
@@ -3499,7 +3482,6 @@ function wfSetupSession( $sessionId = false ) {
 		# hasn't already been set to the desired value (that causes errors)
 		ini_set( 'session.save_handler', $wgSessionHandler );
 	}
-	$httpOnlySafe = wfHttpOnlySafe() && $wgCookieHttpOnly;
 	wfDebugLog( 'cookie',
 		'session_set_cookie_params: "' . implode( '", "',
 			array(
@@ -3507,8 +3489,8 @@ function wfSetupSession( $sessionId = false ) {
 				$wgCookiePath,
 				$wgCookieDomain,
 				$wgCookieSecure,
-				$httpOnlySafe ) ) . '"' );
-	session_set_cookie_params( 0, $wgCookiePath, $wgCookieDomain, $wgCookieSecure, $httpOnlySafe );
+				$wgCookieHttpOnly  ) ) . '"' );
+	session_set_cookie_params( 0, $wgCookiePath, $wgCookieDomain, $wgCookieSecure, $wgCookieHttpOnly  );
 	session_cache_limiter( 'private, must-revalidate' );
 	if ( $sessionId ) {
 		session_id( $sessionId );

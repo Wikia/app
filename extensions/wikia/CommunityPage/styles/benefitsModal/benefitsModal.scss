@@ -3,6 +3,11 @@
 @import '../components/variables';
 @import 'resources/wikia/ui_components/modal/css/modal-close-icon';
 
+$button-height: 46px;
+$button-space: 20px;
+$footer-height: $button-height + $button-space * 2;
+
+$color-image-bg: #082140;
 $color-slate-gray: #656e78;
 $color-border: #e6e6e6;
 
@@ -23,8 +28,9 @@ $icon-space-large: 19px;
 	line-height: 21px;
 	max-height: 698px;
 	padding: 0;
+	word-wrap: break-word;
 
-	& > section {
+	> section {
 		padding: 0;
 	}
 
@@ -43,7 +49,7 @@ $icon-space-large: 19px;
 }
 
 .community-page-benefits-image {
-	background-color: #082140;
+	background-color: $color-image-bg;
 	background-image: url('/extensions/wikia/CommunityPage/images/wikia-logo-in-circles.png'), url('/extensions/wikia/CommunityPage/images/wikia-logo-bg.png');
 	background-position: center, bottom;
 	background-repeat: no-repeat;
@@ -55,6 +61,8 @@ $icon-space-large: 19px;
 }
 
 .community-page-benefits-modal-text {
+	box-sizing: border-box;
+	height: calc(100% - #{$footer-height});
 	overflow: auto;
 	padding: 36px 36px 30px 30px;
 }
@@ -87,24 +95,27 @@ $icon-space-large: 19px;
 
 .community-page-benefits-modal-action-point {
 	border-top: 1px solid $color-border;
-	padding: 20px;
+	box-sizing: border-box;
+	height: $footer-height;
+	padding: $button-space;
 	text-align: center;
 }
 
 .community-page-entry-point-button {
-	background: $color-buttons;
-	color: $color-button-text;
+	background: $color-corporate-buttons;
+	color: $color-corporate-button-text;
 	display: inline-block;
 	font-size: 14px;
 	font-weight: bold;
-	height: 46px;
-	line-height: 46px;
+	height: $button-height;
+	line-height: $button-height;
 	padding: 0 30px;
 	text-decoration: none;
 	text-transform: uppercase;
 
 	&:hover, &:active {
-		background-color: $color-button-highlight;
+		background-color: $color-corporate-button-highlight;
+		color: $color-corporate-button-text;
 		text-decoration: none;
 	}
 }
@@ -136,6 +147,7 @@ $icon-space-large: 19px;
 	padding: 12px;
 	position: absolute;
 	right: 0;
+	text-indent: 50px;
 	top: 0;
 }
 

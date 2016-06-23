@@ -1,3 +1,4 @@
+{{^isAnon}}
 <div class="user-details">
 	<div class="avatar-container">
 		{{{userAvatar}}}
@@ -11,6 +12,7 @@
 		<span class="community-page-subtle">{{userContributionsText}}</span>
 	</div>
 </div>
+{{/isAnon}}
 <ul class="reset top-contributors">
 	{{#contributors}}
 		<li class="community-page-contributors-list-item">

@@ -287,10 +287,5 @@
 	"visualeditor-wikitext-warning": "You are using VisualEditor - [[{{MediaWiki:visualeditor-wikitext-warning-link}}|wikitext]] does not work here. To switch to source editing at any time without losing your changes, open the dropdown menu next to \"{{int:visualeditor-toolbar-savedialog}}\" and select \"{{int:visualeditor-mweditmodesource-title}}\".",
 	"visualeditor-wikitext-warning-link": "mediawikiwiki:Special:MyLanguage/Help:Formatting",
 	"visualeditor-wikitext-warning-title": "Wikitext markup detected",
-	"visualeditor-dialog-media-insert-title": "Insert media",
-	"visualeditor-dialog-image-insert-title": "Insert an image",
-	"visualeditor-dialog-video-insert-title": "Insert a video",
-	"wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip": "Media",
-	"wikia-visualeditor-dialogbutton-imageinsert-tooltip": "Image",
-	"wikia-visualeditor-dialogbutton-videoinsert-tooltip": "Video"
+	"visualeditor-dialog-media-insert-title": "Insert media"
 }
