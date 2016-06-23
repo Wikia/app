@@ -76,7 +76,7 @@ if (!empty($options['reason']))
 if (!empty($options['global-task-id']) && is_numeric($options['global-task-id']))
 	$processData['global_task_id'] = (int)$options['global-task-id'];
 
-require_once("$IP/extensions/wikia/UserRenameTool/SpecialRenameuser.php");
+require_once("$IP/extensions/wikia/UserRenameTool/SpecialRenameUser.php");
 
 $process = RenameUserProcess::newFromData($processData);
 $process->setLogDestination(RenameUserProcess::LOG_OUTPUT);
