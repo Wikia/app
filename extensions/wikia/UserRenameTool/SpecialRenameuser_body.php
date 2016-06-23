@@ -1,19 +1,6 @@
 <?php
+class SpecialRenameUser extends SpecialPage {
 
-if ( !defined( 'MEDIAWIKI' ) ) {
-	echo "RenameUser extension\n";
-	exit( 1 );
-}
-
-/**
- * Special page allows authorised users to rename
- * user accounts
- */
-class SpecialRenameuser extends SpecialPage {
-
-	/**
-	 * Constructor
-	 */
 	public function __construct() {
 		parent::__construct( 'UserRenameTool', 'renameuser', true );
 	}

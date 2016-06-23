@@ -7,17 +7,19 @@
  * @licence GNU General Public Licence 3.0 or later
  */
 class RenameUserLogFormatter {
+	const COMMUNITY_CENTRAL_CITY_ID = 177;
+
 	static public function getCommunityUser( $name, $noRedirect = false ) {
 		if ( is_int( $name ) )
 			$name = User::whoIs( $name );
-		$title = GlobalTitle::newFromText( $name, NS_USER, COMMUNITY_CENTRAL_CITY_ID );
+		$title = GlobalTitle::newFromText( $name, NS_USER, self::COMMUNITY_CENTRAL_CITY_ID );
 		return Xml::element( 'a', array( 'href' => $title->getFullURL(
 			$noRedirect ? 'redirect=no' : ''
 		) ), $name, false );
 	}
 
 	static protected function getCommunityTask( $taskId ) {
-		$title = GlobalTitle::newFromText( 'Tasks/log', NS_SPECIAL, COMMUNITY_CENTRAL_CITY_ID );
+		$title = GlobalTitle::newFromText( 'Tasks/log', NS_SPECIAL, self::COMMUNITY_CENTRAL_CITY_ID );
 		return Xml::element(
 			'a',
 			[
@@ -30,7 +32,9 @@ class RenameUserLogFormatter {
 
 	static public function getCityLink( $cityId ) {
 		global $wgCityId, $wgSitename;
+
 		$domains = WikiFactory::getDomains( $cityId );
+
 		if ( $wgCityId == $cityId ) {
 			// Hack based on the fact we should only ask for current wiki's sitename
 			$text = $wgSitename;
@@ -38,10 +42,11 @@ class RenameUserLogFormatter {
 			// The fallback to return anything
 			$text = "[" . WikiFactory::IDtoDB( $cityId ) . ":{$cityId}]";
 		}
-		if ( !empty( $domains ) )
-		{
+
+		if ( !empty( $domains ) ) {
 			$text = Xml::tags( 'a', array( "href" => "http://" . $domains[0] ), $text );
 		}
+
 		return $text;
 	}
 
@@ -57,6 +62,7 @@ class RenameUserLogFormatter {
 			$tasks ? implode( ', ', $tasks ) : '-',
 			$reason
 		);
+
 		return $text;
 	}
 
@@ -72,6 +78,7 @@ class RenameUserLogFormatter {
 			$tasks ? implode( ', ', $tasks ) : '-',
 			$reason
 		);
+
 		return $text;
 	}
 
@@ -87,6 +94,7 @@ class RenameUserLogFormatter {
 			$tasks ? implode( ', ', $tasks ) : '-',
 			$reason
 		);
+
 		return $text;
 	}
 
@@ -99,6 +107,7 @@ class RenameUserLogFormatter {
 			self::getCityLink( $cityId ),
 			$reason
 		);
+
 		return $text;
 	}
 }

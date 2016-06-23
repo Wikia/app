@@ -13,27 +13,16 @@ class RenameUserProcess {
 	const LOG_OUTPUT = 'output';
 
 	// Define what needs changing in core MW tables
-	/*
-	 * Task definition format:
-	 *	 'table' => (string) table name
-	 *   'userid_column' => (string) column name with user ID or null if none
-	 *   'username_column' => (string) column name with user name
-	 *   'conds' => (array) additional conditions for the query
-	 */
-	/**
-	 * Stores the predefined tasks to do for global (wikicities) database.
-	 * Here should be mentioned all core tables not connected to any extension.
-	 *
-	 * @var $mGlobalDefaults array
-	 */
-	static private $mGlobalDefaults = array(
-		// user table is processed separately
-//		array( 'table' => '...', 'userid_column' => '...', 'username_column' => '...' ),
-	);
 
 	/**
 	 * Stores the predefined tasks to do for every local wiki database.
 	 * Here should be mentioned all core tables not connected to any extension.
+	 *
+	 * Task definition format:
+	 *   'table' => (string) table name
+	 *   'userid_column' => (string) column name with user ID or null if none
+	 *   'username_column' => (string) column name with user name
+	 *   'conds' => (array) additional conditions for the query
 	 *
 	 * @var $mLocalDefaults array
 	 */
@@ -51,13 +40,10 @@ class RenameUserProcess {
 		array( 'table' => 'oldimage', 'userid_column' => 'oi_user', 'username_column' => 'oi_user_text' ),
 		array( 'table' => 'recentchanges', 'userid_column' => 'rc_user', 'username_column' => 'rc_user_text' ),
 		array( 'table' => 'revision', 'userid_column' => 'rev_user', 'username_column' => 'rev_user_text' ),
-		# disable in 1.19 array( 'table' => 'text', 'userid_column' => 'old_user', 'username_column' => 'old_user_text' ),
 		array( 'table' => 'user_newtalk', 'userid_column' => null, 'username_column' => 'user_ip' ),
+
 		# Core 1.16 tables
 		array( 'table' => 'logging', 'userid_column' => 'log_user', 'username_column' => 'log_user_text' ),
-
-		# Template entry
-//		array( 'table' => '...', 'userid_column' => '...', 'username_column' => '...' ),
 	);
 
 	/**
@@ -132,36 +118,12 @@ class RenameUserProcess {
 		$this->addInternalLog( "construct: old={$oldUsername} new={$newUsername}" );
 	}
 
-	public function getRequestData() {
-		return $this->mRequestData;
-	}
-
-	public function getOldUsername() {
-		return $this->mOldUsername;
-	}
-
-	public function getNewUsername() {
-		return $this->mNewUsername;
-	}
-
-	public function getReason() {
-		return $this->mReason;
-	}
-
-	public function getOldUid() {
-		return $this->mUserId;
-	}
-
 	public function getErrors() {
 		return $this->mErrors;
 	}
 
 	public function getWarnings() {
 		return $this->mWarnings;
-	}
-
-	public function getPhalanxBlockID() {
-		return $this->mPhalanxBlockId;
 	}
 
 	public function getUserRenameTaskId() {
@@ -205,10 +167,6 @@ class RenameUserProcess {
 	 */
 	public function addWarning( $msg ) {
 		$this->mWarnings[] = $msg;
-	}
-
-	protected function getUserTableName( $database ) {
-		return "`{$database}`.`user`";
 	}
 
 	protected function renameAccount() {
@@ -597,7 +555,7 @@ class RenameUserProcess {
 		$this->addLog( "Updating global shared database: wikicities." );
 		$dbw = WikiFactory::db( DB_MASTER );
 		$dbw->begin();
-		$tasks = self::$mGlobalDefaults;
+		$tasks = array();
 
 		$hookName = 'UserRename::Global';
 		$this->addLog( "Broadcasting hook: {$hookName}" );
@@ -674,7 +632,6 @@ class RenameUserProcess {
 				array( 'page_namespace', 'page_title' ),
 				array(
 					'page_namespace' => $allowedNamespaces,
-//					'page_namespace IN (' . NS_USER . ',' . NS_USER_TALK . ')',
 					'(page_title ' . $like . ' OR page_title = ' . $dbw->addQuotes( $oldKey ) . ')'
 				),
 				__METHOD__
@@ -804,8 +761,6 @@ class RenameUserProcess {
 	 * @return bool
 	 */
 	public function renameInTable( $dbw, $table, $uid, $oldusername, $newusername, $extra ) {
-
-
 		$dbName = $dbw->getDBname();
 		$this->addLog( "Processing {$dbName}.{$table}.{$extra['username_column']}." );
 
@@ -845,7 +800,7 @@ class RenameUserProcess {
 				$this->addLog( "SQL: " . $dbw->lastQuery() );
 				$dbw->commit();
 				$this->addLog( "In {$dbName}.{$table}.{$extra['username_column']} {$affectedRows} row(s) was(were) updated." );
-				sleep( USERRENAME_LOOP_PAUSE );
+				sleep( 5 );
 			}
 		} catch ( Exception $e ) {
 			$this->addLog( "Exception in renameInTable(): " . $e->getMessage() . ' in ' . $e->getFile() . ' at line ' . $e->getLine() );
@@ -892,12 +847,12 @@ class RenameUserProcess {
 			$fakeUser->saveToCache();
 		}
 
-		// TODO: Add a hook
 		$hookName = 'UserRename::Cleanup';
 		$this->addLog( "Broadcasting hook: {$hookName}" );
 		wfRunHooks( $hookName, array( $this->mRequestorId, $this->mRequestorName, $this->mUserId, $this->mOldUsername, $this->mNewUsername ) );
 
 		$tasks = [];
+
 		if ( isset( $this->mLogTask ) ) {
 			$tasks[] = $this->mLogTask->getID();
 		}
@@ -922,6 +877,7 @@ class RenameUserProcess {
 
 			/** @var BatchTask $logTask */
 			$logTask = $destinationEntry[1];
+
 			switch ( $logDestination ) {
 				case self::LOG_BATCH_TASK:
 					$logTask->log( $text );
@@ -929,7 +885,6 @@ class RenameUserProcess {
 				case self::LOG_OUTPUT:
 					echo $text . "\n";
 					break;
-//				case self::LOG_STANDARD:
 				default:
 					wfDebugLog( __CLASS__, $text );
 			}
@@ -966,14 +921,15 @@ class RenameUserProcess {
 
 	public function setRequestorUser() {
 		global $wgUser;
+
 		$oldUser = $wgUser;
-
 		$this->addLog( "Checking for need to overwrite requestor user (id={$this->mRequestorId} name={$this->mRequestorName})" );
-
 		$userId = $wgUser->getId();
+
 		if ( empty( $userId ) && !empty( $this->mRequestorId ) ) {
 			$this->addLog( "Checking if requestor exists" );
 			$newUser = User::newFromId( $this->mRequestorId );
+
 			if ( !empty( $newUser ) ) {
 				$this->addLog( "Overwriting requestor user" );
 				$wgUser = $newUser;
@@ -990,6 +946,7 @@ class RenameUserProcess {
 			$this->addLog( "invalidateUser() called with some strange argument type: " . gettype( $user ) );
 			return;
 		}
+
 		if ( is_object( $user ) ) {
 			$user->invalidateCache();
 		}
@@ -999,46 +956,9 @@ class RenameUserProcess {
 		$this->mInternalLog .= $text . "\n";
 	}
 
+	// TODO: Let's start to use this method
 	public function getInternalLog() {
 		return $this->mInternalLog;
-	}
-
-	/**
-	* Checks self::$mLocalDefaults against the current database layout and lists fields, that no longer exist.
-	*
-	* @author Michał Roszka (Mix) <michal@wikia-inc.com>
-	* @static
-	* @access public
-	* @return string
-	*/
-	static public function checkDatabaseLayout() {
-		$oDB = wfGetDB( DB_SLAVE );
-		$sOut = '';
-
-		foreach ( self::$mLocalDefaults as $aEntry ) {
-			// table.userid_column
-			if ( !empty( $aEntry['userid_column'] ) && !$oDB->fieldInfo( $aEntry['table'], $aEntry['userid_column'] ) ) {
-				$sOut .= sprintf( "The %s.%s column does not exist in the current database layout.\n", $aEntry['table'], $aEntry['userid_column'] );
-			}
-			// table.username_column
-			if ( !empty( $aEntry['username_column'] ) && !$oDB->fieldInfo( $aEntry['table'], $aEntry['username_column'] ) ) {
-				$sOut .= sprintf( "The %s.%s column does not exist in the current database layout.\n", $aEntry['table'], $aEntry['username_column'] );
-			}
-			// table.[columns in conditions]
-			if ( isset( $aEntry['conds'] ) ) {
-				foreach ( $aEntry['conds'] as $key => $value ) {
-					if ( !$oDB->fieldInfo( $aEntry['table'], $key ) ) {
-						$sOut .= sprintf( "The %s.%s column does not exist in the current database layout.\n", $aEntry['table'], $aEntry['username_column'] );
-					}
-				}
-			}
-		}
-
-		if ( empty( $sOut ) ) {
-			$sOut = 'There are no missing columns in the current database layout';
-		}
-
-		return trim( $sOut );
 	}
 
 	static public function newFromData( $data ) {
@@ -1072,30 +992,5 @@ class RenameUserProcess {
 		$o->addLog( "newFromData(): Requestor id={$o->mRequestorId} name={$o->mRequestorName}" );
 
 		return $o;
-	}
-
-
-	/* Static utility functions */
-
-	/**
-	 * Sanitizes entered old username
-	 *
-	 * @param $username string
-	 * @return string
-	 */
-	static public function createOldUserTitle( $username ) {
-		return Title::makeTitle( NS_USER, trim( str_replace( '_', ' ', $username ) ) );
-	}
-
-	/**
-	 * Sanitizes entered new username
-	 *
-	 * @param $username string
-	 * @return string
-	 */
-	static public function createNewUserTitle( $username ) {
-		global $wgContLang;
-		// Force uppercase of newusername, otherwise wikis with wgCapitalLinks=false can create lc usernames
-		return Title::makeTitleSafe( NS_USER, $wgContLang->ucfirst( $username ) );
 	}
 }
