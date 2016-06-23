@@ -208,6 +208,8 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 		$dayOffset = 0;
 		$ipHash = [ ];
 
+		gclear();
+
 		while ( count( $records ) < self::PAGINATION_SIZE && $dayOffset < self::DAYS_RANGE ) {
 			$url = $this->constructKibanaUrl( $dayOffset++ );
 			$response = $this->getSearchResults( $url, $query );
@@ -252,6 +254,7 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 	private function appendRecordsFromResponse( array &$records, $response, array &$ipHash ) {
 
 		$resultObject = json_decode( $response->getBody() );
+		gbug("result", $resultObject);
 		$hits = $resultObject->hits->hits;
 
 		foreach ( $hits as $hit ) {

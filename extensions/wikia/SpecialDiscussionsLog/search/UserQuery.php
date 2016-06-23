@@ -18,7 +18,7 @@ class UserQuery implements SearchQuery {
 				"bool": {
 					"should": [{
 						"query_string": {
-							"query":"mobile_app.event.user_id:$userId"
+							"query":"mobile_app.event.user_id:$userId OR rawTags:dis_service_contribution"
 						}
 					}]
 				}
@@ -36,3 +36,5 @@ JSON_BODY;
 	}
 
 }
+
+#							"query":"mobile_app.event.user_id:$userId OR (logger_name:com.wikia.discussionservice.* AND wikia_user_id:$userId)"
