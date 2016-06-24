@@ -1,0 +1,28 @@
+{{#communityTodoListModule}}
+	<section class="community-page-todo-list-module">
+		<div class="community-page-todo-list-module-header">
+			{{heading}}
+		</div>
+		{{#isAdmin}}
+			<div class="community-page-todo-list-module-edit">
+				<a href="{{editUrl}}">
+					<div class="community-page-todo-list-module-edit-icon"></div>
+					{{editList}}
+				</a>
+			</div>
+		{{/isAdmin}}
+		<div class="community-page-todo-list-module-description">
+			{{description}}
+		</div>
+		{{#isZeroState}}
+			<div class="community-page-todo-list-module-zerostate">
+				{{{zeroStateText}}}
+			</div>
+		{{/isZeroState}}
+		{{^isZeroState}}
+			<div class="community-page-todo-list-module-content">
+				{{{data}}}
+			</div>
+		{{/isZeroState}}
+	</section>
+{{/communityTodoListModule}}

@@ -1,0 +1,50 @@
+@import 'skins/shared/color';
+@import 'skins/oasis/css/core/breakpoints-variables';
+@import 'skins/shared/mixins/flexbox';
+
+$edit-icon-size: 16px;
+$edit-pen-url: '/extensions/wikia/CommunityPage/images/edit-pen-gray.svg';
+
+.community-page-todo-list-module {
+	margin: 0 34px 34px;
+
+	.community-page-todo-list-module-header {
+		float: left;
+		font-size: 24px;
+		font-weight: bold;
+		line-height: 28px;
+		margin: 0 0 12px;
+	}
+
+	.community-page-todo-list-module-edit {
+		float: left;
+		font-size: 16px;
+		line-height: 28px;
+		padding-left: 32px;
+	}
+
+	.community-page-todo-list-module-edit-icon {
+		background: url($edit-pen-url) no-repeat left center;
+		float: left;
+		height: 28px;
+		margin-right: 6px;
+		width: $edit-icon-size;
+	}
+
+	.community-page-todo-list-module-description {
+		clear: both;
+	}
+
+	.community-page-todo-list-module-content {
+		border-style: solid;
+		border-left: thick solid $color-buttons;
+	}
+
+	.community-page-todo-list-module-zerostate {
+		border-style: solid;
+		border-left: thick solid $color-buttons;
+		font-weight: bold;
+		margin-top: 10px;
+		padding: 5px 10px;
+	}
+}
