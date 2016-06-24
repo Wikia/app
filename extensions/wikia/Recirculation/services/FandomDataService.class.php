@@ -6,7 +6,7 @@ class FandomDataService {
 	const MCACHE_VER = '1.0';
 	const MCACHE_TIME = 900; // 15 minutes
 
-	const FANDOM_PER_PAGE = 10; // We ask for mor ethan we need in case we need to filter any out
+	const FANDOM_PER_PAGE = 10; // We ask for more than we need in case we need to filter any out
 	const LIMIT = 5;
 
 	private $options;

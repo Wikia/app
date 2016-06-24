@@ -73,15 +73,6 @@ require([
 			renderLiftigniterFandom(true);
 			renderLiftigniterCommunity();
 			return;
-		// Temporary group running during E3
-		case 'E3':
-			helper = fandomHelper({
-				type: 'e3',
-				limit: 5
-			});
-			view = railView();
-			isRail = true;
-			break;
 		case 'LATERAL_FANDOM':
 			helper = lateralHelper();
 			view = railView();
