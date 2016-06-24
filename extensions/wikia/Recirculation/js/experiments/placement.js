@@ -367,7 +367,7 @@ require([
 		helper.loadData()
 			.then(view.render)
 			.then(function($html) {
-				var elements = $html.find('.rail-item').get();
+				var elements = $html.find('.item').get();
 
 				view.setupTracking(experimentName)($html);
 				helper.setupTracking(elements);
