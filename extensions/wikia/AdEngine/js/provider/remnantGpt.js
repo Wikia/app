@@ -10,6 +10,7 @@ define('ext.wikia.adEngine.provider.remnantGpt', [
 		'RemnantGpt',
 		'remnant',
 		{
+			BOTTOM_LEADERBOARD: {size: '728x90,970x250,1024x416', loc: 'footer'},
 			EXIT_STITIAL_BOXAD_1: {size: '300x250,600x400,800x450,550x480', loc: 'exit'},
 			HOME_TOP_LEADERBOARD: {
 				size: '728x90,1030x130,1030x65,1030x250,970x365,970x250,970x90,970x66,970x180,980x150',
@@ -34,8 +35,10 @@ define('ext.wikia.adEngine.provider.remnantGpt', [
 		{
 			beforeSuccess: function (slotName) {
 				slotTweaker.removeDefaultHeight(slotName);
-				slotTweaker.removeTopButtonIfNeeded(slotName);
-				slotTweaker.adjustLeaderboardSize(slotName);
+				if (slotTweaker.isUniversalAdPackageLoaded()) {
+					slotTweaker.removeTopButtonIfNeeded(slotName);
+					slotTweaker.adjustLeaderboardSize(slotName);
+				}
 			}
 		}
 	);

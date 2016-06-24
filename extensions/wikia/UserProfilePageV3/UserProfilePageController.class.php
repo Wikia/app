@@ -468,6 +468,7 @@ class UserProfilePageController extends WikiaController {
 			$status = $this->saveUsersAvatar( $user->getID(), $userData->avatarData );
 			if ( $status !== true ) {
 				$this->setVal( 'errorMsg', $errorMsg );
+				$this->setVal( 'status', 'error' );
 				wfProfileOut( __METHOD__ );
 				return;
 			}
@@ -504,6 +505,8 @@ class UserProfilePageController extends WikiaController {
 			$data = json_decode( $this->getVal( 'data' ) );
 		}
 
+		$success = true;
+
 		if ( $isAllowed && isset( $data->source ) && isset( $data->file ) ) {
 			switch ( $data->source ) {
 				case 'sample':
@@ -515,7 +518,10 @@ class UserProfilePageController extends WikiaController {
 					$user->saveSettings();
 					break;
 				case 'uploaded':
-					$avatar = $this->saveAvatarFromUrl( $user, $data->file );
+					$url = $this->saveAvatarFromUrl( $user, $data->file );
+					if ( $url === "" ) {
+						$success = false;
+					}
 					break;
 				default:
 					break;
@@ -525,7 +531,7 @@ class UserProfilePageController extends WikiaController {
 		}
 
 		wfProfileOut( __METHOD__ );
-		return true;
+		return $success;
 	}
 
 	private function clearAttributeCache( $userId ) {
@@ -541,7 +547,7 @@ class UserProfilePageController extends WikiaController {
 	 * @param string $url url to user's avatar
 	 * @param string $errorMsg reference to a string variable where errors messages are returned
 	 *
-	 * @return string | boolean
+	 * @return string
 	 *
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
@@ -561,12 +567,11 @@ class UserProfilePageController extends WikiaController {
 		);
 
 		$localPath = $this->getLocalPath( $user );
-
-		if ( $errorNo != UPLOAD_ERR_OK ) {
-			$res = false;
-		} else {
+		$res = "";
+		if ( $errorNo == UPLOAD_ERR_OK ) {
 			$res = $localPath;
 		}
+
 		wfProfileOut( __METHOD__ );
 		return $res;
 	}

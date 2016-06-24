@@ -121,21 +121,40 @@
 	 *
 	 * @public
 	 *
+	 * @example define(function () { return {hello: 'World'}; });
+	 * @example define(['dep1', 'dep2'], function (dep1, dep2) { ... });
 	 * @example define('mymod', function () { return {hello: 'World'}; });
 	 * @example define('mymod', ['dep1', 'dep2'], function (dep1, dep2) { ... });
 	 *
-	 * @param {String} id The identificator for the new module
+	 * @param {String} id [Optional] The identificator for the new module
 	 * @param {Array} dependencies [Optional] A list of module id's which
 	 * the new module depends on
 	 * @param {Object} definition The definition for the module
 	 *
-	 * @throws {Error} If id is not passed or undefined
-	 * @throws {Error} If id doesn't have a definition
-	 * @throws {Error} If dependenices is not undefined but not an array
+	 * @throws {Error} If called without a definition
+	 * @throws {Error} If dependencies is not undefined but not an array
 	 */
 	define = function (id, dependencies, definition, defMock) {
+		var warning;
+
 		if (typeof id !== strType) {
-			throw "Module id missing or not a string. " + (new Error().stack||'').replace(/\n/g, ' / ');
+			// Slide all the args over by one to make room for the id
+			defMock = definition;
+			definition = dependencies;
+			dependencies = id;
+
+			// Give it a temporary module name
+			id = 'module_' + (new Date()).getTime() + '_' + Math.random();
+
+			// Let the developer know there's a potential problem
+			warning = "Module id missing or not a string; assigning temporary id (" + id + "). "
+				+ (new Error().stack||'').replace(/\n/g, ' / ');
+
+			if (console.warn) {
+				console.warn(warning);
+			} else if(console.log) {
+				console.log(warning);
+			}
 		}
 
 		//no dependencies array, it's actually the definition

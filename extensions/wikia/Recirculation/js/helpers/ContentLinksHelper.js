@@ -19,6 +19,7 @@ define('ext.wikia.recirculation.helpers.contentLinks', [
 
 		$.each(data.items, function(index, item) {
 			item.thumbnail = item.thumbnail || placeholderImage;
+			item.source = 'wiki';
 			item.index = index;
 			items.push(item);
 		});

@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * @group GlobalTitle
+ */
 class GlobalTitleTest extends WikiaBaseTest {
 	function setUp() {
 		parent::setUp();

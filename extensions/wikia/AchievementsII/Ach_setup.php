@@ -107,7 +107,6 @@ function Ach_Setup() {
 	$wgHooks['ArticleSaveComplete'][] = 'Ach_ArticleSaveComplete';
 	$wgHooks['GetHTMLAfterBody'][] = 'Ach_GetHTMLAfterBody';
 	$wgHooks['UploadVerification'][] = 'Ach_UploadVerification';
-	$wgHooks['Masthead::editCounter'][] = 'Ach_MastheadEditCounter';
 
 	//hooks for user preferences
 	$wgHooks['GetPreferences'][] = 'Ach_UserPreferences';
@@ -130,22 +129,6 @@ function Ach_GetMenu(&$nodes) {
 		//'parentIndex' => 0
 	);
 
-	return true;
-}
-
-function Ach_MastheadEditCounter(&$editCounter, $user) {
-	if ($user instanceof User) {
-		global $wgUser;
-
-		if(!($wgUser->getId() == $user->getId() && $wgUser->getGlobalPreference('hidepersonalachievements'))) {
-			$dbr = wfGetDB(DB_SLAVE);
-			$editCounter = $dbr->selectField('ach_user_score', 'score', array('user_id' => $user->getId()), __METHOD__);
-
-			$editCounter = '<div id="masthead-achievements">' . wfMsg('achievements-masthead-points', number_format($editCounter)) . '</div>';
-		}
-	} else {
-		$editCounter = '';
-	}
 	return true;
 }
 

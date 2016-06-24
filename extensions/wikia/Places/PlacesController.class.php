@@ -86,6 +86,9 @@ class PlacesController extends WikiaController {
 
 	/**
 	 * Internal method used to render tooltip for each marker
+	 *
+	 * @param PlaceModel[] $aMarkers
+	 * @return array
 	 */
 	protected function prepareMarkers( Array $aMarkers ) {
 		$markers = array();

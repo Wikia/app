@@ -11,7 +11,9 @@ class MonetizationModuleController extends WikiaController {
 	public function index() {
 		wfProfileIn( __METHOD__ );
 
-		if ( !MonetizationModuleHelper::canShowModule() ) {
+		$helper = new MonetizationModuleHelper();
+
+		if ( !$helper->canShowModule() ) {
 			$this->data = '';
 			wfProfileOut( __METHOD__ );
 			return true;
@@ -25,11 +27,9 @@ class MonetizationModuleController extends WikiaController {
 
 		$this->response->addAsset( 'monetization_module_js' );
 
-		$helper = new MonetizationModuleHelper();
-
 		$params = [
 			's_id' => $this->wg->CityId,
-			'max' => MonetizationModuleHelper::calculateNumberOfAds( $this->wg->Title->mLength ),
+			'max' => $helper->calculateNumberOfAds( $this->wg->Title->mLength ),
 			'vertical' => $helper->getWikiVertical(),
 			'cache' => $helper->getCacheVersion(),
 		];

@@ -3210,6 +3210,7 @@ class User {
 		$this->clearInstanceCache( 'defaults' );
 
 		$this->getRequest()->setSessionData( 'wsUserID', 0 );
+		$this->getRequest()->setSessionData( 'wsEditToken', null );
 
 		$this->clearCookie( 'UserID' );
 		$this->clearCookie( 'Token' );
@@ -3220,6 +3221,8 @@ class User {
 		$this->getRequest()->setSessionData( 'wsUserName', null );
 		$this->clearCookie( 'UserName' );
 		// Wikia change - end
+
+		wfResetSessionID();
 
 		# Remember when user logged out, to prevent seeing cached pages
 		$this->setCookie( 'LoggedOut', wfTimestampNow(), time() + 86400 );
@@ -3347,8 +3350,6 @@ class User {
 			global $wgMemc;
 			$wgMemc->incr( wfSharedMemcKey( "registered-users-number" ) );
 
-			wfRunHooks( 'CreateNewUserComplete', [ &$newUser ] );
-
 		} else {
 			$newUser = null;
 		}
@@ -3380,8 +3381,6 @@ class User {
 			), __METHOD__
 		);
 		$this->mId = $dbw->insertId();
-
-		wfRunHooks( 'AddUserToDatabaseComplete', [ &$this ] );
 
 		// Clear instance cache other than user table data, which is already accurate
 		$this->clearInstanceCache();
@@ -4022,7 +4021,6 @@ class User {
 		$this->mEmailToken = null;
 		$this->mEmailTokenExpires = null;
 		$this->setEmailAuthenticationTimestamp( null );
-		wfRunHooks( 'InvalidateEmailComplete', array( $this ) );
 		return true;
 	}
 
@@ -4170,10 +4168,7 @@ class User {
 			 */
 			if ( !empty($wgEnableEditCountLocal) ) {
 				$userStatsService = new UserStatsService( $this->getId() );
-				$editCount = $userStatsService->increaseEditsCount();
-				if ( $editCount === 1 ) {
-					$userStatsService->getFirstContributionTimestamp();
-				}
+				$userStatsService->increaseEditsCount();
 			}
 			/* end of change */
 

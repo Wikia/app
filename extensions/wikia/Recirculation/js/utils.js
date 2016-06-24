@@ -45,16 +45,23 @@ define('ext.wikia.recirculation.utils', [
 	}
 
 	function buildLabel(element, label) {
-		var slot = $(element).parent().data('index') + 1;
+		var $parent = $(element).parent(),
+			slot = $parent.data('index') + 1,
+			source = $parent.data('source');
 
-		return label + '=slot-' + slot;
+		label = label + '=slot-' + slot;
+		if (source) {
+			label = label + '=' + source;
+		}
+
+		return label;
 	}
 
 	function addUtmTracking(items, placement) {
 		var params = {
 			utm_source: 'wikia',
 			utm_campaign: 'recirc',
-			utm_placement: placement
+			utm_medium: placement
 		};
 
 		items = $.map(items, function(item, index) {

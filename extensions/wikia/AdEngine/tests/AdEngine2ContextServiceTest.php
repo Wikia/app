@@ -38,8 +38,8 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 		$mock->method( 'getMonetizationUnits' )->willReturn( ['below_category' => 'testing'] );
 		$mock->method( 'getWikiVertical' )->willReturn( 'other' );
 		$mock->method( 'getCacheVersion' )->willReturn( 'v1' );
+		$mock->method( 'canShowModule' )->willReturn( true );
 		$this->mockClass( $name, $mock );
-		$this->mockStaticMethod( $name, 'canShowModule', true );
 	}
 
 	public function adContextDataProvider() {
@@ -261,9 +261,7 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 		$customDartKvs = 'a=b;c=d';
 		$catId = WikiFactoryHub::CATEGORY_ID_LIFESTYLE;
 		$shortCat = 'shortcat';
-		$expectedSourcePointDetectionUrlFormat = 'http://%s/__load/-/cb%3D%d%26debug%3Dfalse%26lang%3D%s%26only%3Dscripts%26skin%3Doasis/wikia.ext.adengine.sp.detection';
-		$expectedSourcePointRecoveryUrlFormat = 'http://%s/__load/-/cb%3D%d%26debug%3Dfalse%26lang%3D%s%26only%3Dscripts%26skin%3Doasis/wikia.ext.adengine.sp.recovery';
-		$expectedYavliUrlFormat = 'http://%s/__load/-/cb%3D%d%26debug%3Dfalse%26lang%3D%s%26only%3Dscripts%26skin%3Doasis/wikia.ext.adengine.yavli';
+		$expectedAdEngineResourceURLFormat = 'http://%s/__load/-/cb%3D%d%26debug%3Dfalse%26lang%3D%s%26only%3Dscripts%26skin%3Doasis/%s';
 
 		if ( $titleMockType === 'article' || $titleMockType === 'mainpage' ) {
 			$expectedTargeting['pageArticleId'] = $artId;
@@ -345,6 +343,7 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 			'opts' => [
 				'pageType' => 'all_ads',
 				'showAds' => true,
+				'delayBtf' => true
 			],
 			'targeting' => [
 				'esrbRating' => 'teen',
@@ -387,11 +386,7 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 		}
 
 		// Check for SourcePoint URL
-		if ( $skinName === 'oasis' ) {
-			$this->assertStringMatchesFormat( $expectedSourcePointRecoveryUrlFormat, $result['opts']['sourcePointRecoveryUrl'] );
-			unset( $result['opts']['sourcePointRecoveryUrl'] );
-		}
-		$this->assertStringMatchesFormat( $expectedSourcePointDetectionUrlFormat, $result['opts']['sourcePointDetectionUrl'] );
+		$this->assertStringMatchesFormat( $expectedAdEngineResourceURLFormat, $result['opts']['sourcePointDetectionUrl'] );
 		unset( $result['opts']['sourcePointDetectionUrl'] );
 
 		$expected['providers']['rubiconFastlane'] = true;
@@ -404,7 +399,7 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 		}
 
 		// Check Yavli URL format
-		$this->assertStringMatchesFormat( $expectedYavliUrlFormat, $result['opts']['yavliUrl'] );
+		$this->assertStringMatchesFormat( $expectedAdEngineResourceURLFormat, $result['opts']['yavliUrl'] );
 		unset( $result['opts']['yavliUrl'] );
 
 		$this->assertEquals( $expected, $result );

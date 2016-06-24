@@ -28,9 +28,9 @@ class ImageServingDriverCategoryNS extends ImageServingDriverMainNS {
 
 	protected function addTopArticlesFromCategory( $categoryId, &$articleCategories ) {
 
-		$key = wfMemcKey("ImageServingCategoryNSTopArticles", $categoryId);
+		$key = wfMemcKey(__METHOD__, $categoryId);
 		$cachedPageIds = $this->memc->get($key);
-		if (!empty($cachedPageIds)) {
+		if (is_array($cachedPageIds)) {
 			foreach ($cachedPageIds as $page_id) {
 				if ( empty( $articleCategories[$page_id] ) ) {
 					$articleCategories[$page_id] = array();
@@ -76,13 +76,15 @@ class ImageServingDriverCategoryNS extends ImageServingDriverMainNS {
 			$options
 		);
 
+		$cachedPageIds = [];
+
 		while ( $row = $this->db->fetchRow( $res ) ) {
 			if ( empty( $articleCategories[$row['page_id']] ) ) {
 				$articleCategories[$row['page_id']] = array();
 			}
 			$articleCategories[$row['page_id']][] = $categoryId;
-			$cachedPageIds[] = $row['page_id'];
+			$cachedPageIds[] = intval( $row['page_id'] );
 		}
-		$this->memc->set($key, $cachedPageIds, 86400);
+		$this->memc->set($key, $cachedPageIds, WikiaResponse::CACHE_STANDARD);
 	}
 }

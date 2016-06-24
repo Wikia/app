@@ -398,7 +398,7 @@ class UserLoginHelper extends WikiaModel {
 	 * @throws MWException
 	 */
 	public function getPasswordThrottleCacheKey( $username ) {
-		return wfMemcKey( 'password-throttle', $this->wg->Request->getIP(), md5( $username ) );
+		return wfSharedMemcKey( 'password-throttle', $this->wg->Request->getIP(), md5( $username ) );
 	}
 
 	/**

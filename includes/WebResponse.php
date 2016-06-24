@@ -60,7 +60,6 @@ class WebResponse implements \Wikia\HTTP\Response {
 		if( $domain === null ) {
 			$domain = $wgCookieDomain;
 		}
-		$httpOnlySafe = wfHttpOnlySafe() && $wgCookieHttpOnly;
 		wfDebugLog( 'cookie',
 			'setcookie: "' . implode( '", "',
 				array(
@@ -70,14 +69,14 @@ class WebResponse implements \Wikia\HTTP\Response {
 					$wgCookiePath,
 					$domain,
 					$wgCookieSecure,
-					$httpOnlySafe ) ) . '"' );
+					$wgCookieHttpOnly ) ) . '"' );
 		setcookie( $prefix . $name,
 			$value,
 			$expire,
 			$wgCookiePath,
 			$domain,
 			$wgCookieSecure,
-			$httpOnlySafe );
+			$wgCookieHttpOnly );
 	}
 }
 

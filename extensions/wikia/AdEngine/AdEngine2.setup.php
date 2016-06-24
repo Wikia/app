@@ -15,6 +15,7 @@ $wgAutoloadClasses['AdEngine2Controller'] =  __DIR__ . '/AdEngine2Controller.cla
 $wgAutoloadClasses['AdEngine2ExitstitialHooks'] =  __DIR__ . '/AdEngine2ExitstitialHooks.class.php';
 $wgAutoloadClasses['AdEngine2Hooks'] =  __DIR__ . '/AdEngine2Hooks.class.php';
 $wgAutoloadClasses['AdEngine2PageTypeService'] = __DIR__ . '/AdEngine2PageTypeService.class.php';
+$wgAutoloadClasses['AdEngine2Resource'] = __DIR__ . '/ResourceLoaders/AdEngine2Resource.class.php';
 $wgAutoloadClasses['AdEngine2Service'] =  __DIR__ . '/AdEngine2Service.class.php';
 $wgAutoloadClasses['AdTargeting'] =  __DIR__ . '/AdTargeting.class.php';
 $wgAutoloadClasses['ResourceLoaderAdEngineBase'] = __DIR__ . '/ResourceLoaders/ResourceLoaderAdEngineBase.php';
@@ -37,6 +38,7 @@ $wgHooks['WikiaMobileAssetsPackages'][] = 'AdEngine2Hooks::onWikiaMobileAssetsPa
 $wgHooks['WikiaSkinTopScripts'][] = 'AdEngine2Hooks::onWikiaSkinTopScripts';
 $wgHooks['WikiaSkinTopModules'][] = 'AdEngine2Hooks::onWikiaSkinTopModules';
 $wgHooks['SkinAfterContent'][] = 'AdEngine2Hooks::onSkinAfterContent';
+$wgHooks['BeforePageDisplay'][] = 'AdEngine2Hooks::onBeforePageDisplay';
 
 // i18n
 $wgExtensionMessagesFiles['AdEngine'] = __DIR__ . '/AdEngine.i18n.php';
@@ -54,6 +56,11 @@ $wgExtensionFunctions[] = function() {
 	] );
 };
 
+AdEngine2Resource::register('wikia.ext.adengine.sp.detection', 'ResourceLoaderAdEngineSourcePointDetectionModule');
+AdEngine2Resource::register('wikia.ext.adengine.yavli', 'ResourceLoaderAdEngineYavliModule');
+
+// Keep old resource links for cache
+// TODO: ADEN-3407
 $wgResourceModules['wikia.ext.adengine.sp.detection'] = array(
 	'class' => 'ResourceLoaderAdEngineSourcePointDetectionModule',
 );

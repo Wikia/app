@@ -10,7 +10,7 @@
  * @link     https://github.com/swagger-api/swagger-codegen
  */
 /**
- *  Copyright 2015 SmartBear Software
+ *  Copyright 2016 SmartBear Software
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -92,22 +92,42 @@ class ContentToEntityRelationshipsApi
   
     
     /**
-     * getRelatedEntities
+     * create
      *
-     * get the entities related to some content
+     * creates a relationship from a piece of content to an entity
      *
+     * @param string $entity_id  (required)
      * @param string $content_id  (optional)
-     * @return \Swagger\Client\ContentEntity\Models\Entity[]
+     * @return void
      * @throws \Swagger\Client\ApiException on non-2xx response
      */
-    public function getRelatedEntities($content_id=null)
+    public function create($entity_id, $content_id = null)
+    {
+        list($response, $statusCode, $httpHeader) = $this->createWithHttpInfo ($entity_id, $content_id);
+        return $response; 
+    }
+
+
+    /**
+     * createWithHttpInfo
+     *
+     * creates a relationship from a piece of content to an entity
+     *
+     * @param string $entity_id  (required)
+     * @param string $content_id  (optional)
+     * @return Array of null, HTTP status code, HTTP response headers (array of strings)
+     * @throws \Swagger\Client\ApiException on non-2xx response
+     */
+    public function createWithHttpInfo($entity_id, $content_id = null)
     {
         
+        // verify the required parameter 'entity_id' is set
+        if ($entity_id === null) {
+            throw new \InvalidArgumentException('Missing the required parameter $entity_id when calling create');
+        }
   
         // parse inputs
-        $resourcePath = "/content/relationships/entity";
-        $resourcePath = str_replace("{format}", "json", $resourcePath);
-        $method = "GET";
+        $resourcePath = "/content/relationships/entity/{entityId}";
         $httpBody = '';
         $queryParams = array();
         $headerParams = array();
@@ -119,110 +139,57 @@ class ContentToEntityRelationshipsApi
         $headerParams['Content-Type'] = ApiClient::selectHeaderContentType(array());
   
         // query params
+        
         if ($content_id !== null) {
             $queryParams['contentId'] = $this->apiClient->getSerializer()->toQueryValue($content_id);
         }
         
+        // path params
         
+        if ($entity_id !== null) {
+            $resourcePath = str_replace(
+                "{" . "entityId" . "}",
+                $this->apiClient->getSerializer()->toPathValue($entity_id),
+                $resourcePath
+            );
+        }
+        // default format to json
+        $resourcePath = str_replace("{format}", "json", $resourcePath);
+
         
         
   
         // for model (json/xml)
         if (isset($_tempBody)) {
             $httpBody = $_tempBody; // $_tempBody is the method argument, if present
-        } else if (count($formParams) > 0) {
+        } elseif (count($formParams) > 0) {
             $httpBody = $formParams; // for HTTP post (form)
         }
         
         // make the API Call
-        try
-        {
-            list($response, $httpHeader) = $this->apiClient->callApi(
-                $resourcePath, $method,
+        try {
+            list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
+                $resourcePath, 'PUT',
                 $queryParams, $httpBody,
-                $headerParams, '\Swagger\Client\ContentEntity\Models\Entity[]'
+                $headerParams
             );
             
-            if (!$response) {
-                return null;
-            }
-
-            return $this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\ContentEntity\Models\Entity[]', $httpHeader);
+            return array(null, $statusCode, $httpHeader);
             
         } catch (ApiException $e) {
             switch ($e->getCode()) { 
-            case 200:
-                $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\ContentEntity\Models\Entity[]', $e->getResponseHeaders());
+            case 400:
+                $data = \Swagger\Client\ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\ContentEntity\Models\ResponseObj', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            case 404:
+                $data = \Swagger\Client\ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\ContentEntity\Models\ResponseObj', $e->getResponseHeaders());
                 $e->setResponseObject($data);
                 break;
             }
   
             throw $e;
         }
-        
-        return null;
-        
-    }
-    
-    /**
-     * unrelateAllFromContent
-     *
-     * delete all of a content's entity relationships
-     *
-     * @param string $content_id  (optional)
-     * @return void
-     * @throws \Swagger\Client\ApiException on non-2xx response
-     */
-    public function unrelateAllFromContent($content_id=null)
-    {
-        
-  
-        // parse inputs
-        $resourcePath = "/content/relationships/entity";
-        $resourcePath = str_replace("{format}", "json", $resourcePath);
-        $method = "DELETE";
-        $httpBody = '';
-        $queryParams = array();
-        $headerParams = array();
-        $formParams = array();
-        $_header_accept = ApiClient::selectHeaderAccept(array('application/json'));
-        if (!is_null($_header_accept)) {
-            $headerParams['Accept'] = $_header_accept;
-        }
-        $headerParams['Content-Type'] = ApiClient::selectHeaderContentType(array());
-  
-        // query params
-        if ($content_id !== null) {
-            $queryParams['contentId'] = $this->apiClient->getSerializer()->toQueryValue($content_id);
-        }
-        
-        
-        
-        
-  
-        // for model (json/xml)
-        if (isset($_tempBody)) {
-            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
-        } else if (count($formParams) > 0) {
-            $httpBody = $formParams; // for HTTP post (form)
-        }
-        
-        // make the API Call
-        try
-        {
-            list($response, $httpHeader) = $this->apiClient->callApi(
-                $resourcePath, $method,
-                $queryParams, $httpBody,
-                $headerParams
-            );
-            
-        } catch (ApiException $e) {
-            switch ($e->getCode()) { 
-            }
-  
-            throw $e;
-        }
-        
     }
     
     /**
@@ -236,6 +203,22 @@ class ContentToEntityRelationshipsApi
      */
     public function getRelatedContent($entity_id)
     {
+        list($response, $statusCode, $httpHeader) = $this->getRelatedContentWithHttpInfo ($entity_id);
+        return $response; 
+    }
+
+
+    /**
+     * getRelatedContentWithHttpInfo
+     *
+     * get the content related to an entity
+     *
+     * @param string $entity_id  (required)
+     * @return Array of string[], HTTP status code, HTTP response headers (array of strings)
+     * @throws \Swagger\Client\ApiException on non-2xx response
+     */
+    public function getRelatedContentWithHttpInfo($entity_id)
+    {
         
         // verify the required parameter 'entity_id' is set
         if ($entity_id === null) {
@@ -244,8 +227,6 @@ class ContentToEntityRelationshipsApi
   
         // parse inputs
         $resourcePath = "/content/relationships/entity/{entityId}";
-        $resourcePath = str_replace("{format}", "json", $resourcePath);
-        $method = "GET";
         $httpBody = '';
         $queryParams = array();
         $headerParams = array();
@@ -259,6 +240,7 @@ class ContentToEntityRelationshipsApi
         
         
         // path params
+        
         if ($entity_id !== null) {
             $resourcePath = str_replace(
                 "{" . "entityId" . "}",
@@ -266,72 +248,80 @@ class ContentToEntityRelationshipsApi
                 $resourcePath
             );
         }
+        // default format to json
+        $resourcePath = str_replace("{format}", "json", $resourcePath);
+
         
         
   
         // for model (json/xml)
         if (isset($_tempBody)) {
             $httpBody = $_tempBody; // $_tempBody is the method argument, if present
-        } else if (count($formParams) > 0) {
+        } elseif (count($formParams) > 0) {
             $httpBody = $formParams; // for HTTP post (form)
         }
         
         // make the API Call
-        try
-        {
-            list($response, $httpHeader) = $this->apiClient->callApi(
-                $resourcePath, $method,
+        try {
+            list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
+                $resourcePath, 'GET',
                 $queryParams, $httpBody,
                 $headerParams, 'string[]'
             );
             
             if (!$response) {
-                return null;
+                return array(null, $statusCode, $httpHeader);
             }
 
-            return $this->apiClient->getSerializer()->deserialize($response, 'string[]', $httpHeader);
+            return array(\Swagger\Client\ObjectSerializer::deserialize($response, 'string[]', $httpHeader), $statusCode, $httpHeader);
             
         } catch (ApiException $e) {
             switch ($e->getCode()) { 
             case 200:
-                $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), 'string[]', $e->getResponseHeaders());
+                $data = \Swagger\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'string[]', $e->getResponseHeaders());
                 $e->setResponseObject($data);
                 break;
             case 400:
-                $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\ContentEntity\Models\ResponseObj', $e->getResponseHeaders());
+                $data = \Swagger\Client\ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\ContentEntity\Models\ResponseObj', $e->getResponseHeaders());
                 $e->setResponseObject($data);
                 break;
             }
   
             throw $e;
         }
-        
-        return null;
-        
     }
     
     /**
-     * create
+     * getRelatedEntities
      *
-     * creates a relationship from a piece of content to an entity
+     * get the entities related to some content
      *
-     * @param string $entity_id  (required)
      * @param string $content_id  (optional)
-     * @return void
+     * @return \Swagger\Client\ContentEntity\Models\Entity[]
      * @throws \Swagger\Client\ApiException on non-2xx response
      */
-    public function create($entity_id, $content_id=null)
+    public function getRelatedEntities($content_id = null)
+    {
+        list($response, $statusCode, $httpHeader) = $this->getRelatedEntitiesWithHttpInfo ($content_id);
+        return $response; 
+    }
+
+
+    /**
+     * getRelatedEntitiesWithHttpInfo
+     *
+     * get the entities related to some content
+     *
+     * @param string $content_id  (optional)
+     * @return Array of \Swagger\Client\ContentEntity\Models\Entity[], HTTP status code, HTTP response headers (array of strings)
+     * @throws \Swagger\Client\ApiException on non-2xx response
+     */
+    public function getRelatedEntitiesWithHttpInfo($content_id = null)
     {
         
-        // verify the required parameter 'entity_id' is set
-        if ($entity_id === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $entity_id when calling create');
-        }
   
         // parse inputs
-        $resourcePath = "/content/relationships/entity/{entityId}";
-        $resourcePath = str_replace("{format}", "json", $resourcePath);
-        $method = "PUT";
+        $resourcePath = "/content/relationships/entity";
         $httpBody = '';
         $queryParams = array();
         $headerParams = array();
@@ -343,52 +333,49 @@ class ContentToEntityRelationshipsApi
         $headerParams['Content-Type'] = ApiClient::selectHeaderContentType(array());
   
         // query params
+        
         if ($content_id !== null) {
             $queryParams['contentId'] = $this->apiClient->getSerializer()->toQueryValue($content_id);
         }
         
-        // path params
-        if ($entity_id !== null) {
-            $resourcePath = str_replace(
-                "{" . "entityId" . "}",
-                $this->apiClient->getSerializer()->toPathValue($entity_id),
-                $resourcePath
-            );
-        }
+        
+        // default format to json
+        $resourcePath = str_replace("{format}", "json", $resourcePath);
+
         
         
   
         // for model (json/xml)
         if (isset($_tempBody)) {
             $httpBody = $_tempBody; // $_tempBody is the method argument, if present
-        } else if (count($formParams) > 0) {
+        } elseif (count($formParams) > 0) {
             $httpBody = $formParams; // for HTTP post (form)
         }
         
         // make the API Call
-        try
-        {
-            list($response, $httpHeader) = $this->apiClient->callApi(
-                $resourcePath, $method,
+        try {
+            list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
+                $resourcePath, 'GET',
                 $queryParams, $httpBody,
-                $headerParams
+                $headerParams, '\Swagger\Client\ContentEntity\Models\Entity[]'
             );
+            
+            if (!$response) {
+                return array(null, $statusCode, $httpHeader);
+            }
+
+            return array(\Swagger\Client\ObjectSerializer::deserialize($response, '\Swagger\Client\ContentEntity\Models\Entity[]', $httpHeader), $statusCode, $httpHeader);
             
         } catch (ApiException $e) {
             switch ($e->getCode()) { 
-            case 400:
-                $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\ContentEntity\Models\ResponseObj', $e->getResponseHeaders());
-                $e->setResponseObject($data);
-                break;
-            case 404:
-                $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\ContentEntity\Models\ResponseObj', $e->getResponseHeaders());
+            case 200:
+                $data = \Swagger\Client\ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\ContentEntity\Models\Entity[]', $e->getResponseHeaders());
                 $e->setResponseObject($data);
                 break;
             }
   
             throw $e;
         }
-        
     }
     
     /**
@@ -401,7 +388,24 @@ class ContentToEntityRelationshipsApi
      * @return void
      * @throws \Swagger\Client\ApiException on non-2xx response
      */
-    public function unrelate($entity_id, $content_id=null)
+    public function unrelate($entity_id, $content_id = null)
+    {
+        list($response, $statusCode, $httpHeader) = $this->unrelateWithHttpInfo ($entity_id, $content_id);
+        return $response; 
+    }
+
+
+    /**
+     * unrelateWithHttpInfo
+     *
+     * delete the relationship between content and an entity
+     *
+     * @param string $entity_id  (required)
+     * @param string $content_id  (optional)
+     * @return Array of null, HTTP status code, HTTP response headers (array of strings)
+     * @throws \Swagger\Client\ApiException on non-2xx response
+     */
+    public function unrelateWithHttpInfo($entity_id, $content_id = null)
     {
         
         // verify the required parameter 'entity_id' is set
@@ -411,8 +415,6 @@ class ContentToEntityRelationshipsApi
   
         // parse inputs
         $resourcePath = "/content/relationships/entity/{entityId}";
-        $resourcePath = str_replace("{format}", "json", $resourcePath);
-        $method = "DELETE";
         $httpBody = '';
         $queryParams = array();
         $headerParams = array();
@@ -424,11 +426,13 @@ class ContentToEntityRelationshipsApi
         $headerParams['Content-Type'] = ApiClient::selectHeaderContentType(array());
   
         // query params
+        
         if ($content_id !== null) {
             $queryParams['contentId'] = $this->apiClient->getSerializer()->toQueryValue($content_id);
         }
         
         // path params
+        
         if ($entity_id !== null) {
             $resourcePath = str_replace(
                 "{" . "entityId" . "}",
@@ -436,36 +440,118 @@ class ContentToEntityRelationshipsApi
                 $resourcePath
             );
         }
+        // default format to json
+        $resourcePath = str_replace("{format}", "json", $resourcePath);
+
         
         
   
         // for model (json/xml)
         if (isset($_tempBody)) {
             $httpBody = $_tempBody; // $_tempBody is the method argument, if present
-        } else if (count($formParams) > 0) {
+        } elseif (count($formParams) > 0) {
             $httpBody = $formParams; // for HTTP post (form)
         }
         
         // make the API Call
-        try
-        {
-            list($response, $httpHeader) = $this->apiClient->callApi(
-                $resourcePath, $method,
+        try {
+            list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
+                $resourcePath, 'DELETE',
                 $queryParams, $httpBody,
                 $headerParams
             );
             
+            return array(null, $statusCode, $httpHeader);
+            
         } catch (ApiException $e) {
             switch ($e->getCode()) { 
             case 400:
-                $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\ContentEntity\Models\ResponseObj', $e->getResponseHeaders());
+                $data = \Swagger\Client\ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\ContentEntity\Models\ResponseObj', $e->getResponseHeaders());
                 $e->setResponseObject($data);
                 break;
             }
   
             throw $e;
         }
+    }
+    
+    /**
+     * unrelateAllFromContent
+     *
+     * delete all of a content's entity relationships
+     *
+     * @param string $content_id  (optional)
+     * @return void
+     * @throws \Swagger\Client\ApiException on non-2xx response
+     */
+    public function unrelateAllFromContent($content_id = null)
+    {
+        list($response, $statusCode, $httpHeader) = $this->unrelateAllFromContentWithHttpInfo ($content_id);
+        return $response; 
+    }
+
+
+    /**
+     * unrelateAllFromContentWithHttpInfo
+     *
+     * delete all of a content's entity relationships
+     *
+     * @param string $content_id  (optional)
+     * @return Array of null, HTTP status code, HTTP response headers (array of strings)
+     * @throws \Swagger\Client\ApiException on non-2xx response
+     */
+    public function unrelateAllFromContentWithHttpInfo($content_id = null)
+    {
         
+  
+        // parse inputs
+        $resourcePath = "/content/relationships/entity";
+        $httpBody = '';
+        $queryParams = array();
+        $headerParams = array();
+        $formParams = array();
+        $_header_accept = ApiClient::selectHeaderAccept(array('application/json'));
+        if (!is_null($_header_accept)) {
+            $headerParams['Accept'] = $_header_accept;
+        }
+        $headerParams['Content-Type'] = ApiClient::selectHeaderContentType(array());
+  
+        // query params
+        
+        if ($content_id !== null) {
+            $queryParams['contentId'] = $this->apiClient->getSerializer()->toQueryValue($content_id);
+        }
+        
+        
+        // default format to json
+        $resourcePath = str_replace("{format}", "json", $resourcePath);
+
+        
+        
+  
+        // for model (json/xml)
+        if (isset($_tempBody)) {
+            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
+        } elseif (count($formParams) > 0) {
+            $httpBody = $formParams; // for HTTP post (form)
+        }
+        
+        // make the API Call
+        try {
+            list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
+                $resourcePath, 'DELETE',
+                $queryParams, $httpBody,
+                $headerParams
+            );
+            
+            return array(null, $statusCode, $httpHeader);
+            
+        } catch (ApiException $e) {
+            switch ($e->getCode()) { 
+            }
+  
+            throw $e;
+        }
     }
     
 }

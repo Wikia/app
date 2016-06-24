@@ -103,6 +103,10 @@ class MWMemcached {
 
 	const MEMCACHED_ITEM_MAX_SIZE = 1048576; // 1MB
 
+	// Wikia change - begin - @author: wladek
+	const MEMCACHED_KEY_MAX_LENGTH = 245; // actual protocol limit = 250
+	// Wikia change - end
+
 	/**
 	 * Command statistics
 	 *
@@ -271,7 +275,7 @@ class MWMemcached {
 	/**
 	 * Memcache initializer
 	 *
-	 * @param $args Array Associative array of settings
+	 * @param $args array Associative array of settings
 	 *
 	 * @return  mixed
 	 */
@@ -321,6 +325,7 @@ class MWMemcached {
 	 * @return Boolean
 	 */
 	public function add( $key, $val, $exp = 0 ) {
+		$this->_encode_key($key);
 		return $this->_set( 'add', $key, $val, $exp );
 	}
 
@@ -336,6 +341,7 @@ class MWMemcached {
 	 * @return Mixed: FALSE on failure, value on success
 	 */
 	public function decr( $key, $amt = 1 ) {
+		$this->_encode_key($key);
 		return $this->_incrdecr( 'decr', $key, $amt );
 	}
 
@@ -354,6 +360,8 @@ class MWMemcached {
 		if ( !$this->_active ) {
 			return false;
 		}
+
+		$this->_encode_key($key);
 
 		# start wikia change
 		unset( $this->_dupe_cache[ $key ] );
@@ -447,6 +455,9 @@ class MWMemcached {
 	 */
 	public function get( $key ) {
 		wfProfileIn( __METHOD__ );
+
+		$this->_encode_key($key);
+
 		wfProfileIn( __METHOD__ . "::$key" );
 
 		# start wikia change
@@ -548,9 +559,9 @@ class MWMemcached {
 	/**
 	 * Get multiple keys from the server(s)
 	 *
-	 * @param $keys Array: keys to retrieve
+	 * @param $keys array: keys to retrieve
 	 *
-	 * @return Array
+	 * @return array
 	 */
 	public function get_multi( $keys ) {
 		wfProfileIn( __METHOD__ );
@@ -563,6 +574,9 @@ class MWMemcached {
 			wfProfileOut( __METHOD__ );
 			return false;
 		}
+
+		$rev_keys = [];
+		$this->_encode_keys( $keys, $rev_keys );
 
 		if ( isset( $this->stats['get_multi'] ) ) {
 			$this->stats['get_multi']++;
@@ -586,7 +600,7 @@ class MWMemcached {
 			}
 
 			wfProfileOut( __METHOD__ );
-			return $val;
+			return $this->_decode_keys( $val, $rev_keys );
 		}
 		// Wikia change - end
 
@@ -650,7 +664,7 @@ class MWMemcached {
 		// Wikia change - end
 
 		wfProfileOut( __METHOD__ );
-		return $val;
+		return $this->_decode_keys( $val, $rev_keys );
 	}
 
 	// }}}
@@ -667,6 +681,7 @@ class MWMemcached {
 	 * exist, this returns the new value for that key.
 	 */
 	public function incr( $key, $amt = 1 ) {
+		$this->_encode_key($key);
 		return $this->_incrdecr( 'incr', $key, $amt );
 	}
 
@@ -687,6 +702,7 @@ class MWMemcached {
 	 * @return Boolean
 	 */
 	public function replace( $key, $value, $exp = 0 ) {
+		$this->_encode_key($key);
 		return $this->_set( 'replace', $key, $value, $exp );
 	}
 
@@ -758,6 +774,7 @@ class MWMemcached {
 		}
 		# end wikia change
 
+		$this->_encode_key($key);
 		return $this->_set( 'set', $key, $value, $exp );
 	}
 
@@ -793,7 +810,7 @@ class MWMemcached {
 	/**
 	 * Sets the server list to distribute key gets and puts between
 	 *
-	 * @param $list Array of servers to connect to
+	 * @param $list array of servers to connect to
 	 *
 	 * @see     MWMemcached::__construct()
 	 */
@@ -851,6 +868,8 @@ class MWMemcached {
 	 * @access  private
 	 */
 	function _connect_sock( &$sock, $host ) {
+		wfProfileIn( __METHOD__ );
+
 		list( $ip, $port ) = $this->parseHost($host);
 		$sock = false;
 		$timeout = $this->_connect_timeout;
@@ -876,12 +895,15 @@ class MWMemcached {
 				'timeout' => $timeout,
 			]);
 			// Wikia change - end
+
+			wfProfileOut( __METHOD__ );
 			return false;
 		}
 
 		// Initialise timeout
 		stream_set_timeout( $sock, $this->_timeout_seconds, $this->_timeout_microseconds );
 
+		wfProfileOut( __METHOD__ );
 		return true;
 	}
 
@@ -1045,7 +1067,7 @@ class MWMemcached {
 	 * Load items into $ret from $sock
 	 *
 	 * @param $sock Resource: socket to read from
-	 * @param $ret Array: returned values
+	 * @param $ret array: returned values
 	 *
 	 * @access private
 	 */
@@ -1201,9 +1223,10 @@ class MWMemcached {
 		if ( $len > self::MEMCACHED_ITEM_MAX_SIZE - 2 ) {
 			// default item_max_size is 1mb, 2 characters are reserved for trailing "\r\n"
 			if ( class_exists( 'Wikia\\Logger\\WikiaLogger' ) ) {
-				\Wikia\Logger\WikiaLogger::instance()->error( 'MemcachedClient: large value' , [
+				\Wikia\Logger\WikiaLogger::instance()->error( __METHOD__ . ' - MemcachedClient: large value' , [
 					'exception' => new Exception(),
 					'key' => $key,
+					'normalized_key' => Wikia\Memcached\MemcachedStats::normalizeKey( $key ), # for easier grouping in Kibana
 					'len' => $len,
 				] );
 			}
@@ -1224,14 +1247,17 @@ class MWMemcached {
 
 		// Wikia change - begin
 		// @author macbre (PLATFORM-774)
-		$this->error( 'MemcachedClient: store failed', [
-			'cmd'       => $cmd,
-			'key'       => $key,
-			'val_size'  => strlen( $val ),
-			'line'      => $line,
-			'exception' => new Exception(),
-			'host'      => $host,
-		]);
+		// "NOT_STORED" response is not the indicator of an error (PLATFORM-2268)
+		if ( $line !== 'NOT_STORED' ) {
+			$this->error( __METHOD__ . ' - MemcachedClient: store failed - ' . $line, [
+				'cmd' => $cmd,
+				'key' => $key,
+				'normalized_key' => Wikia\Memcached\MemcachedStats::normalizeKey( $key ), # for easier grouping in Kibana
+				'val_size' => strlen( $val ),
+				'exception' => new Exception( $line ),
+				'host' => $host,
+			] );
+		}
 		// Wikia change - end
 		return false;
 	}
@@ -1351,6 +1377,67 @@ class MWMemcached {
 	// }}}
 	// }}}
 	// }}}
+
+	/**
+	 * Update memcached key in place to be standard-compliant. Overly long keys get shortened using sha1.
+	 *
+	 * @param $key string Memcached key to be checked and optionally fixed
+	 */
+	function _encode_key( &$key ) {
+		if ( is_array( $key ) ) {
+			$this->_encode_key( $key[1] );
+
+			return;
+		}
+
+		$key_length = strlen( $key );
+		if ( $key_length > self::MEMCACHED_KEY_MAX_LENGTH ) {
+			$suffix = '--HASH--' . sha1( $key );
+			$suffix_length = strlen( $suffix );
+			$key = substr( $key, 0, self::MEMCACHED_KEY_MAX_LENGTH - $suffix_length ) . $suffix;
+		}
+	}
+
+	/**
+	 * Update list of memcached keys in place to be standard-compliant. Overly long keys get shortened using sha1.
+	 *
+	 * @param $keys array List of memcached keys to be checked and optionally fixed
+	 * @param $rev_keys array (out) Array that lets you expand shortened versions of key to the original ones
+	 */
+	function _encode_keys( &$keys, &$rev_keys ) {
+		if ( !is_array( $rev_keys ) ) {
+			$rev_keys = [];
+		}
+		foreach ($keys as &$key) {
+			$orig_key = is_array($key) ? $key[1] : $key;
+			$this->_encode_key($key);
+			$new_key = is_array($key) ? $key[1] : $key;
+			$rev_keys[$new_key] = $orig_key;
+		}
+	}
+
+	/**
+	 * Get a result with the key shortening reverted
+	 *
+	 * @param $result array Result set
+	 * @param $rev_keys array Reverse key map obtained from call to _encode_keys()
+	 */
+	function _decode_keys( $result, $rev_keys ) {
+		$out = [];
+		foreach ($result as $key => $value) {
+			if (isset($rev_keys[$key])) {
+				$out[$rev_keys[$key]] = $value;
+			} else {
+				// it should never happen but if it does log it
+				\Wikia\Logger\WikiaLogger::instance()->error( __METHOD__ . ' - key not found', [
+					'missing_key' => $key,
+					'all_keys' => array_keys($rev_keys)
+				] );
+				$out[$key] = $value;
+			}
+		}
+		return $out;
+	}
 }
 
 // vim: sts=3 sw=3 et

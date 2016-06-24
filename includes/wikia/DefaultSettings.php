@@ -96,6 +96,7 @@ $wgAutoloadClasses['WikiaAccessRules'] = $IP . '/includes/wikia/nirvana/WikiaAcc
 $wgAutoloadClasses['WikiaBaseTest'] = $IP . '/includes/wikia/tests/core/WikiaBaseTest.class.php';
 $wgAutoloadClasses['WikiaTestSpeedAnnotator'] = $IP . '/includes/wikia/tests/core/WikiaTestSpeedAnnotator.class.php';
 $wgAutoloadClasses['WikiaMockProxy'] = $IP . '/includes/wikia/tests/core/WikiaMockProxy.class.php';
+$wgAutoloadClasses['WikiaMockProxyUopz'] = $IP . '/includes/wikia/tests/core/WikiaMockProxyUopz.class.php';
 $wgAutoloadClasses['WikiaMockProxyAction'] = $IP . '/includes/wikia/tests/core/WikiaMockProxyAction.class.php';
 $wgAutoloadClasses['WikiaMockProxyInvocation'] = $IP . '/includes/wikia/tests/core/WikiaMockProxyInvocation.class.php';
 $wgAutoloadClasses['WikiaGlobalVariableMock'] = $IP . '/includes/wikia/tests/core/WikiaGlobalVariableMock.class.php';
@@ -264,8 +265,6 @@ $wgAutoloadClasses[ 'Wikia\\Measurements\\Drivers'    ] = "$IP/includes/wikia/me
 $wgAutoloadClasses[ 'Wikia\\Measurements\\NewrelicDriver' ] = "$IP/includes/wikia/measurements/Drivers.php";
 $wgAutoloadClasses[ 'Wikia\\Measurements\\DummyDriver'    ] = "$IP/includes/wikia/measurements/Drivers.php";
 $wgAutoloadClasses[ 'Wikia\\Measurements\\Time'       ] = "$IP/includes/wikia/measurements/Time.class.php";
-$wgAutoloadClasses[ 'MemcacheMoxiCluster'             ] = "{$IP}/includes/wikia/MemcacheMoxiCluster.class.php";
-$wgAutoloadClasses[ 'MemcacheClientShadower'          ] = "{$IP}/includes/wikia/MemcacheClientShadower.class.php";
 $wgAutoloadClasses[ 'Wikia\\SwiftStorage'             ] = "$IP/includes/wikia/SwiftStorage.class.php";
 $wgAutoloadClasses[ 'WikiaSQL'                        ] = "$IP/includes/wikia/WikiaSQL.class.php";
 $wgAutoloadClasses[ 'WikiaSQLCache'                   ] = "$IP/includes/wikia/WikiaSQLCache.class.php";
@@ -301,6 +300,7 @@ $wgAutoloadClasses['SwaggerModelProperty'] = "$IP/includes/wikia/swagger/Swagger
 $wgAutoloadClasses['SwaggerErrorResponse'] = "$IP/includes/wikia/swagger/SwaggerErrorResponse.php";
 $wgAutoloadClasses['TemplateDataExtractor'] = "$IP/includes/wikia/TemplateDataExtractor.class.php";
 $wgAutoloadClasses['WikiaHtmlTitle'] = "$IP/includes/wikia/WikiaHtmlTitle.class.php";
+$wgAutoloadClasses['WikiaHtml'] = "$IP/includes/wikia/WikiaHtml.class.php";
 
 /**
  * Resource Loader enhancements
@@ -756,7 +756,6 @@ $wgContentReviewDB = 'content_review';
 $wgExternalDatawareDB = 'dataware';
 $wgExternalArchiveDB = 'archive';
 $wgStatsDB = 'stats';
-$wgDatamartDB = 'statsdb_mart';
 $wgDWStatsDB = 'statsdb';
 $wgStatsDBEnabled = true;
 $wgExternalWikiaStatsDB = 'wikiastats';
@@ -1057,7 +1056,8 @@ $wgMaxLevelThreeNavElements = 10;
 /**
  * Memcached class name
  */
-$wgMemCachedClass = 'MemcacheMoxiCluster';
+
+$wgMemCachedClass = 'MemCachedClientforWiki';
 
 /**
  * Extra configuration options for memcached when using libmemcached/pecl-memcached
@@ -1305,7 +1305,7 @@ $wgEnableJavaScriptErrorLogging = false;
  * @name $wgAdDriverDelayBelowTheFold
  * Prevents from loading BTF before ATF ad slots
  */
-$wgAdDriverDelayBelowTheFold = false;
+$wgAdDriverDelayBelowTheFold = true;
 
 /**
  * @name $wgAdDriverEnableInvisibleHighImpactSlot
@@ -1849,6 +1849,13 @@ $wgEnableFliteTagExt = false;
 $wgAdDriverAdsRecoveryMessageCountries = null;
 
 /**
+ * @name $wgARecoveryEngineCustomLog
+ * Enables Kibana logging of ad recovery interruptions
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgARecoveryEngineCustomLog = null;
+
+/**
  * Protect Piggyback logs even if the extension is disabled
  */
 $wgLogRestrictions['piggyback'] = 'piggyback';
@@ -1886,11 +1893,6 @@ $wgReviveSpotlightsCountries = null;
 
 /**
  * Enable SourcePoint recovery
+ * It should be always included even if recovery is disabled as we use Recovery classes outside the module
  */
 include_once("$IP/extensions/wikia/ARecoveryEngine/ARecoveryEngine.setup.php");
-
-/**
- * @name $wgMemcachedMoxiProtocol
- * Set it to either 'ascii' or 'binary' (default: 'binary')
- */
-$wgMemcachedMoxiProtocol = 'binary';
