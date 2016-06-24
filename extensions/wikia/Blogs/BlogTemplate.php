@@ -360,7 +360,6 @@ class BlogTemplateClass {
 	}
 
 	public static function getUserNameRecord( $username, $nofollow = false ) {
-		wfProfileIn( __METHOD__ );
 		$aResult = array();
 
 		// RT #18653
@@ -1265,6 +1264,7 @@ class BlogTemplateClass {
 	}
 
 	public static function axShowCurrentPage ( $articleId, $namespace, $page0, $skin ) {
+		// $page0 is the 0-indexed page number: 0 for first page, 1 for second etc
 		global $wgParser;
 		$result = "";
 		$page0 = intval( $page0 );
