@@ -128,6 +128,14 @@ $config['adengine2_desktop_js'] = array(
 	),
 );
 
+$config['adengine2_desktop_scss'] = array(
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => [ 'oasis' ],
+	'assets' => array(
+		'//skins/oasis/css/core/ads.scss',
+	),
+);
+
 $config['recirculation_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'oasis' ],
