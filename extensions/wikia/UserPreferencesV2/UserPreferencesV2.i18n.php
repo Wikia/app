@@ -32,6 +32,7 @@ $messages['en'] = array(
 	'preferences-v2-redirect-wiki-activity' => 'Wiki Activity',
 	'preferences-v2-redirect-main-page' => 'Main Page',
 	'preferences-v2-redirect-recent-changes' => 'Recent Changes',
+	'preferences-v2-redirect-community-page' => 'Community Page(where available)',
 	'preferences-v2-redirect-explanation' => 'The Landing page option allows you to choose where you go when you type $1 into your browser.',
 	'prefs-monobookv2' => 'MonoBook',
 	'prefs-under-the-hood' => 'Under the Hood',
@@ -97,6 +98,8 @@ $messages['qqq'] = array(
 {{Identical|Main page}}",
 	'preferences-v2-redirect-recent-changes' => 'Option to be taken to the Recent Changes page when the user navigates to the main wiki URL without a specific page.
 {{Identical|Recent changes}}',
+	'preferences-v2-redirect-community-page' => 'Option to be taken to the Community Page when the user navigates to the main wiki URL without a specific page.
+{{Identical|Community Page}}',
 	'preferences-v2-redirect-explanation' => 'Text explaining the landing page option. $1 is the URL of the site, e.g. www.wikia.com',
 	'prefs-monobookv2' => 'Title of a section in [[Special:Preferences]].',
 	'prefs-under-the-hood' => 'Title of a tab in [[Special:Preferences]].',

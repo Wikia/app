@@ -10,6 +10,7 @@ class UserPreferencesV2 {
 	const LANDING_PAGE_MAIN_PAGE = 1;
 	const LANDING_PAGE_WIKI_ACTIVITY = 2;
 	const LANDING_PAGE_RECENT_CHANGES = 3;
+	const LANDING_PAGE_COMMUNITY_PAGE = 4;
 
 	/**
 	 * @brief This function change user preferences special page
@@ -83,9 +84,10 @@ class UserPreferencesV2 {
 			$defaultPreferences = self::moveToEndOfArray( $defaultPreferences, 'skin' );
 		}
 		if ( isset( $defaultPreferences[self::LANDING_PAGE_PROP_NAME] ) ) {
-			$redirectOptions[wfMessage( 'preferences-v2-redirect-main-page' )->plain()] = self::LANDING_PAGE_MAIN_PAGE;
-			$redirectOptions[wfMessage( 'preferences-v2-redirect-wiki-activity' )->plain()] = self::LANDING_PAGE_WIKI_ACTIVITY;
-			$redirectOptions[wfMessage( 'preferences-v2-redirect-recent-changes' )->plain()] = self::LANDING_PAGE_RECENT_CHANGES;
+			$redirectOptions[ wfMessage( 'preferences-v2-redirect-main-page' )->plain() ] = self::LANDING_PAGE_MAIN_PAGE;
+			$redirectOptions[ wfMessage( 'preferences-v2-redirect-wiki-activity' )->plain() ] = self::LANDING_PAGE_WIKI_ACTIVITY;
+			$redirectOptions[ wfMessage( 'preferences-v2-redirect-recent-changes' )->plain() ] = self::LANDING_PAGE_RECENT_CHANGES;
+			$redirectOptions[ wfMessage( 'preferences-v2-redirect-community-page')->plain() ] = self::LANDING_PAGE_COMMUNITY_PAGE;
 			$defaultPreferences[self::LANDING_PAGE_PROP_NAME]['type'] = 'select';
 			$defaultPreferences[self::LANDING_PAGE_PROP_NAME]['options'] = $redirectOptions;
 			$defaultPreferences[self::LANDING_PAGE_PROP_NAME]['label-message'] = 'preferences-v2-user-landing-page';
@@ -370,7 +372,7 @@ class UserPreferencesV2 {
 	 * @return bool true
 	 */
 	static public function onUserGetDefaultOptions( &$defOpt ) {
-		$defOpt[self::LANDING_PAGE_PROP_NAME] = self::LANDING_PAGE_MAIN_PAGE;
+		$defOpt[self::LANDING_PAGE_PROP_NAME] = self::LANDING_PAGE_COMMUNITY_PAGE;
 
 		return true;
 	}
