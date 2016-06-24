@@ -18,7 +18,7 @@ class IpAddressQuery implements SearchQuery {
 				"bool": {
 					"should": [{
 						"query_string": {
-							"query":"mobile_app.client_ip:$ipAddress OR rawTags:dis_service_contribution"
+							"query":"rawTags:dis_service_contribution AND client_ip:$ipAddress"
 						}
 					}]
 				}

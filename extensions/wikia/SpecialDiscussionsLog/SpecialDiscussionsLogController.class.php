@@ -127,7 +127,7 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 							->params( [ $userName, $userId ] )
 							->escaped(),
 
-						'noUserLogRecordsMessage' => wfMessage( 'discussionslog-no-mobile-activity-error' )
+						'noUserLogRecordsMessage' => wfMessage( 'discussionslog-no-activity-error' )
 							->params( $userName )
 							->escaped(),
 				] );
@@ -180,7 +180,7 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 					'userUrl' => $this->getTitle()->getLocalURL(
 						[ UserQuery::getKeyName() => $userLogRecord->user->getName() ]
 					),
-					'app' => $userLogRecord->app,
+					'app' => $userLogRecord->site,
 					'ip' => $userLogRecord->ip,
 					'ipUrl' => $this->getTitle()->getLocalURL( [ IpAddressQuery::getKeyName() => $userLogRecord->ip ] ),
 					'language' => $userLogRecord->language,
@@ -206,9 +206,8 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 	private function aggregateSearchLogs( $query ) {
 		$records = [];
 		$dayOffset = 0;
-		$ipHash = [ ];
-
-		gclear();
+		$ipHash = [];
+		$ipCache = [];
 
 		while ( count( $records ) < self::PAGINATION_SIZE && $dayOffset < self::DAYS_RANGE ) {
 			$url = $this->constructKibanaUrl( $dayOffset++ );
@@ -217,7 +216,7 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 				break;
 			}
 
-			$this->appendRecordsFromResponse( $records, $response, $ipHash );
+			$this->appendRecordsFromResponse( $records, $response, $ipHash, $ipCache );
 		}
 
 		krsort( $records, SORT_NUMERIC );
@@ -251,17 +250,16 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 		return $response;
 	}
 
-	private function appendRecordsFromResponse( array &$records, $response, array &$ipHash ) {
+	private function appendRecordsFromResponse( array &$records, $response, array &$ipHash, array &$ipCache ) {
 
 		$resultObject = json_decode( $response->getBody() );
-		gbug("result", $resultObject);
 		$hits = $resultObject->hits->hits;
 
 		foreach ( $hits as $hit ) {
 			$record = $hit->_source;
-			$ip = $record->{'mobile_app.client_ip'};
-			$app = $record->{'mobile_app.data.app_name'} . ' ' . $record->{'mobile_app.data.app_version'};
-			$ipHashKey = $ip . ':' . $app;
+			$ip = $record->{'client_ip'};
+			$site = $record->{'site_id'};
+			$ipHashKey = $ip . ':' . $site;
 
 			// Filter out records with duplicate ip/app
 			if ( !empty( $ipHash[$ipHashKey] ) ) {
@@ -269,7 +267,7 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 			}
 
 			try {
-				$user = $this->getUserById( $record->{'mobile_app.event.user_id'} );
+				$user = $this->getUserById( $record->{'user_id'} );
 			} catch ( \Exception $e ) {
 				$this->logger->error(
 					sprintf( 'User not found: %s', $e->getMessage() ),
@@ -277,21 +275,20 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 				);
 				continue;
 			}
-			$rawTimestamp = $record->{'mobile_app.event.timestamp'};
+
+			$wikiInfo = WikiFactory::getWikiByID($site);
+
 			$userLogRecord = new UserLogRecord();
-			$userLogRecord->app = $app;
+			$userLogRecord->site = $wikiInfo->city_title . ' (' . $wikiInfo->city_dbname . ')';
 			$userLogRecord->ip = $ip;
-			$userLogRecord->language = $record->{'mobile_app.event.device_language'};
-			$city = $record->{'mobile_app.geo_ip.city'};
-			$userLogRecord->location = ( $city ? $city . ', ' : '' )
-				. $record->{'mobile_app.geo_ip.country_name'};
-			$userLogRecord->timestamp = date( DATE_RFC2822, $rawTimestamp / 1000 );
-			$userLogRecord->userAgent =
-				$record->{'mobile_app.data.platform'} . ' ' . $record->{'mobile_app.data.platform_version'};
+			$userLogRecord->language = $record->{'language'};
+			$userLogRecord->location = $this->getLocationFromIP($ip, $ipCache);
+			$userLogRecord->timestamp = date(DATE_RFC2822, strtotime($record->{'@timestamp'}));
+			$userLogRecord->userAgent = $record->{'user_agent'};
 			$userLogRecord->user = $user;
 
 			$ipHash[ $ipHashKey ] = true;
-			$records[ $rawTimestamp ] = $userLogRecord;
+			$records[ $userLogRecord->timestamp ] = $userLogRecord;
 		}
 	}
 
@@ -299,5 +296,26 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 		if ( !$this->wg->User->isAllowed( self::DISCUSSIONS_LOG_ACTION ) ) {
 			throw new \PermissionsError( self::DISCUSSIONS_LOG_ACTION );
 		}
+	}
+
+	private function getLocationFromIP( $ip, array &$ipCache ) {
+		if (array_key_exists($ip, $ipCache)) {
+			return $ipCache[$ip];
+		}
+
+		$details = json_decode(file_get_contents("http://ipinfo.io/{$ip}/json"));
+		$location_arr = array($details->country);
+
+		if ( $details->region ) {
+			array_unshift($location_arr, $details->region);
+		}
+
+		if ( $details->city ) {
+			array_unshift($location_arr, $details->city);
+		}
+
+		$location = implode(', ', $location_arr);
+		$ipCache[$ip] = $location;
+		return $location;
 	}
 }

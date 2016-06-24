@@ -8,7 +8,7 @@ class UserLogRecord {
 	public $location;
 	public $language;
 	public $userAgent;
-	public $app;
+	public $site;
 	public $timestamp;
 	public $user;
 	public $userName;
