@@ -257,13 +257,14 @@ class AssetsManager {
 	 * @return string|array the resulting filepaths or the original url if filepath can't be determined
 	 */
 	public function getSassFilePath($urls) {
-		global $wgDevelEnvironment;
+		global $wgDevelEnvironment, $wgWikiaNocookieDomain;
 
 		/**
 		 * for production urls, where urls are similar to:
 		 * http://slot(1-9).images(1-9).wikia.nocookie.net/__am/sass/options/path/to/file.scss
 		 */
-		$regex = '/^(https?):\/\/(slot[0-9]+\.images([0-9]+))\.wikia.nocookie.net\/(.*)$/';
+		$noCookieDomainEscaped = preg_quote($wgWikiaNocookieDomain);
+		$regex = "/^(https?):\\/\\/(slot[0-9]+\\.images([0-9]+))\\.{$noCookieDomainEscaped}\\/(.*)$/";
 		if (!empty($wgDevelEnvironment)) {
 			/**
 			 * for urls in dev, where a url looks like:
@@ -600,6 +601,14 @@ class AssetsManager {
 
 	public function getAllowedAssetExtensions(){
 		return $this->mAllowedAssetExtensions;
+	}
+
+	/**
+	 * @todo rethink this approach (FMI ADEN-3406)
+	 */
+	public function checkContainCrossoriginScssFile(Array $files) {
+		global $wgCrossoriginScssFile;
+		return isset($wgCrossoriginScssFile) && in_array($wgCrossoriginScssFile, $files);
 	}
 
 	/**

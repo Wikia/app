@@ -13,8 +13,7 @@ define('CommunityPageBenefitsModal',
 					size: 'content-size'
 				}
 			},
-			specialCommunityTitle = new mw.Title('Community', -1),
-			wikiTopic = mw.config.get('wgSiteName');
+			specialCommunityTitle = new mw.Title('Community', -1);
 
 		function openModal() {
 			loader({
@@ -27,6 +26,8 @@ define('CommunityPageBenefitsModal',
 		}
 
 		function handleRequestsForModal(loaderRes) {
+			var wikiTopic = mw.config.get('wgSiteName');
+
 			mw.messages.set(loaderRes.messages);
 
 			modalConfig.vars.content = mustache.render(loaderRes.mustache[0], {

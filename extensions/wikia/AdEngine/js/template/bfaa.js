@@ -1,12 +1,13 @@
-/*global define*/
+/*global define, require*/
 define('ext.wikia.adEngine.template.bfaa', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adHelper',
+	'ext.wikia.adEngine.slotTweaker',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window',
 	require.optional('ext.wikia.adEngine.mobile.mercuryListener')
-], function (adContext, adHelper, doc, log, win, mercuryListener) {
+], function (adContext, adHelper, slotTweaker, doc, log, win, mercuryListener) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.template.bfaa',
@@ -18,8 +19,9 @@ define('ext.wikia.adEngine.template.bfaa', [
 		wrapper;
 
 	desktopHandler = {
-		updateNavBar: function (height) {
-			var position = win.pageYOffset;
+		updateNavBar: function (iframe) {
+			var height = iframe.contentWindow.document.body.offsetHeight,
+				position = win.scrollY || win.pageYOffset;
 
 			if (doc.body.offsetWidth <= breakPointWidthNotSupported || position <= height) {
 				wrapper.classList.add('bfaa-pinned-nav');
@@ -30,14 +32,13 @@ define('ext.wikia.adEngine.template.bfaa', [
 			}
 		},
 
-		show: function (height, backgroundColor) {
+		show: function (iframe) {
 			nav.style.top = '';
 			page.classList.add('bfaa-template');
-			wrapper.style.background = backgroundColor;
 
-			this.updateNavBar(height);
+			this.updateNavBar(iframe);
 			doc.addEventListener('scroll', adHelper.throttle(function () {
-				this.updateNavBar(height);
+				this.updateNavBar(iframe);
 			}.bind(this), 100));
 
 			if (win.WikiaBar) {
@@ -47,29 +48,34 @@ define('ext.wikia.adEngine.template.bfaa', [
 	};
 
 	mobileHandler =  {
-		show: function (height, backgroundColor) {
-			var adsModule = win.Mercury.Modules.Ads.getInstance();
+		show: function (iframe) {
+			var adsModule = win.Mercury.Modules.Ads.getInstance(),
+				height,
+				onResize = adHelper.throttle(function () {
+					height = iframe.contentWindow.document.body.offsetHeight;
+					page.style.paddingTop = height + 'px';
+					adsModule.setSiteHeadOffset(height);
+				}, 100);
 
-			adsModule.setSiteHeadOffset(height);
+			page.classList.add('bfaa-template');
+			height = iframe.contentWindow.document.body.offsetHeight;
 			page.style.paddingTop = height + 'px';
-			wrapper.style.background = backgroundColor;
-			wrapper.classList.add('bfaa-template');
+			adsModule.setSiteHeadOffset(height);
 
+			win.addEventListener('resize', onResize);
 			if (mercuryListener) {
 				mercuryListener.onPageChange(function () {
-					wrapper.classList.remove('bfaa-template');
-					wrapper.style.background = '';
+					page.classList.remove('bfaa-template');
 					page.style.paddingTop = '';
 					adsModule.setSiteHeadOffset(0);
+					win.removeEventListener('resize', onResize);
 				});
 			}
 		}
 	};
 
 	function show(params) {
-		var backgroundColor = params.backgroundColor ? '#' + params.backgroundColor.replace('#', '') : '#000',
-			handler,
-			height = params.height || 0,
+		var handler,
 			skin = adContext.getContext().targeting.skin;
 
 		switch (skin) {
@@ -88,7 +94,13 @@ define('ext.wikia.adEngine.template.bfaa', [
 				return log(['show', 'not supported skin'], 'info', logGroup);
 		}
 
-		handler.show(height, backgroundColor);
+		wrapper.style.opacity = '0';
+		slotTweaker.makeResponsive(params.slotName);
+		slotTweaker.onReady(params.slotName, function (iframe) {
+			handler.show(iframe);
+			wrapper.style.opacity = '';
+		});
+
 		log('show', 'info', logGroup);
 	}
 
