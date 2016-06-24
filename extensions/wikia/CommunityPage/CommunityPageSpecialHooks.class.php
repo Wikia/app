@@ -84,6 +84,20 @@ class CommunityPageSpecialHooks {
 	}
 
 	/**
+	 * Add wgWikiTopic variable to JS
+	 * @param array $vars JS variables to be added at the bottom of the page
+	 * @param OutputPage $out
+	 * @return bool
+	 */
+	public static function onMakeGlobalVariablesScript( array &$vars, OutputPage $out ) {
+		global $wgSitename, $wgWikiTopic;
+
+		$vars['wgWikiTopic'] = $wgWikiTopic ? $wgWikiTopic : WikiTopic::prepareWikiTopic( $wgSitename );
+
+		return true;
+	}
+
+	/**
 	 * Purge admins list on user rights change
 	 * @param User $user
 	 * @param array $validGroupsToAdd
