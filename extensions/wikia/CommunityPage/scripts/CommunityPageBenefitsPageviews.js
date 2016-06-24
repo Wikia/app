@@ -25,9 +25,9 @@ require([
 
 	function trackModalImpression() {
 		tracker.track({
-			action: tracker.ACTIONS.IMPRESSION,
+			action: tracker.ACTIONS.OPEN,
 			category: 'community-page-benefits-modal',
-			label: 'benefits-modal-shown-after-pageviews',
+			label: 'benefits-modal-fired-after-pageviews',
 			trackingMethod: 'analytics'
 		});
 	}

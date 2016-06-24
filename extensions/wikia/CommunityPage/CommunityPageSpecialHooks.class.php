@@ -65,7 +65,8 @@ class CommunityPageSpecialHooks {
 		if ( $out->getUser()->isAnon() &&
 			!isset( $_COOKIE['cpBenefitsModalShown'] ) &&
 			$out->getRequest()->getVal( 'action' ) !== 'edit' &&
-			$out->getRequest()->getVal( 'veaction' ) !== 'edit'
+			$out->getRequest()->getVal( 'veaction' ) !== 'edit' &&
+			$out->getRequest()->getVal( 'action' ) !== 'submit'
 		) {
 			\Wikia::addAssetsToOutput( 'community_page_benefits_js' );
 			\Wikia::addAssetsToOutput( 'community_page_benefits_scss' );
