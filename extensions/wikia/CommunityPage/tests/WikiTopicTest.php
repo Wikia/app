@@ -1,11 +1,18 @@
 <?php
 
 class WikiTopicTest extends WikiaBaseTest {
+
+	public function setUp() {
+		$this->setupFile = __DIR__ . '/../CommunityPage.setup.php';
+		parent::setUp();
+	}
 	/**
 	 * @dataProvider FormingWikiTopicProvider
 	 */
 	public function testFormingWikiTopic( $sitename, $expectedWikiTopic ) {
-		$this->assertEquals( $expectedWikiTopic, WikiTopic::prepareWikiTopic( $sitename ) );
+		$this->mockGlobalVariable( 'wgWikiTopic', null );
+		$this->mockGlobalVariable( 'wgSitename', $sitename );
+		$this->assertEquals( $expectedWikiTopic, WikiTopic::getWikiTopic() );
 	}
 
 	public function FormingWikiTopicProvider() {
@@ -16,7 +23,9 @@ class WikiTopicTest extends WikiaBaseTest {
 			[ 'MediaWiki', 'Media' ],
 			[ 'Mediawiki', 'Media' ],
 			[ 'WikiZilla', 'WikiZilla' ],
-			[ 'Greatest wiki ever', 'Greatest wiki ever' ]
+			[ 'Greatest wiki ever', 'Greatest wiki ever' ],
+			[ 'Muppet Wikia', 'Muppet' ],
+			[ 'Muppet WIKIA', 'Muppet' ],
 		];
 	}
 }

@@ -90,9 +90,7 @@ class CommunityPageSpecialHooks {
 	 * @return bool
 	 */
 	public static function onMakeGlobalVariablesScript( array &$vars, OutputPage $out ) {
-		global $wgSitename, $wgWikiTopic;
-
-		$vars['wgWikiTopic'] = $wgWikiTopic ? $wgWikiTopic : WikiTopic::prepareWikiTopic( $wgSitename );
+		$vars['wgWikiTopic'] = WikiTopic::getWikiTopic();
 
 		return true;
 	}
