@@ -25,16 +25,19 @@ define('ext.wikia.adEngine.slotTweaker', [
 		element.className = newClasses;
 	}
 
-	function hide(slotname, useInline) {
+	function hideBySlotName(slotname, useInline) {
 		log('hide ' + slotname + ' using class hidden', 6, logGroup);
+		hideByElement(document.getElementById(slotname), useInline);
+	}
 
-		var slot = document.getElementById(slotname);
+	function hideByElement(element, useInline) {
+		log('hide ' + element.id + ' using class hidden', 6, logGroup);
 
-		if (slot && useInline) {
-			slot.style.display = 'none';
-		} else if (slot) {
-			removeClass(slot, 'hidden');
-			slot.className += ' hidden';
+		if (element && useInline) {
+			element.style.display = 'none';
+		} else if (element) {
+			removeClass(element, 'hidden');
+			element.className += ' hidden';
 		}
 	}
 
@@ -180,7 +183,8 @@ define('ext.wikia.adEngine.slotTweaker', [
 		adjustIframeByContentSize: adjustIframeByContentSize,
 		adjustLeaderboardSize: adjustLeaderboardSize,
 		hackChromeRefresh: hackChromeRefresh,
-		hide: hide,
+		hide: hideBySlotName,
+		hideByElement: hideByElement,
 		isUniversalAdPackageLoaded: isUniversalAdPackageLoaded,
 		makeResponsive: makeResponsive,
 		onReady: onReady,

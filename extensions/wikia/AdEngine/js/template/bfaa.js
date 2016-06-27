@@ -45,6 +45,7 @@ define('ext.wikia.adEngine.template.bfaa', [
 		},
 
 		show: function (iframe) {
+			var spotlightFooter = document.getElementById('SPOTLIGHT_FOOTER');
 			nav.style.top = '';
 			page.classList.add('bfaa-template');
 
@@ -55,6 +56,10 @@ define('ext.wikia.adEngine.template.bfaa', [
 
 			if (win.WikiaBar) {
 				win.WikiaBar.hideContainer();
+			}
+
+			if (spotlightFooter) {
+				slotTweaker.hideByElement(spotlightFooter.parentNode, true);
 			}
 		}
 	};
