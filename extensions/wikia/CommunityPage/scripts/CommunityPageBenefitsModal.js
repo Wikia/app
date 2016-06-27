@@ -31,7 +31,7 @@ define('CommunityPageBenefitsModal',
 				}),
 				nirvana.sendRequest({
 					controller: 'CommunityPageSpecial',
-					method: 'getMembersCount',
+					method: 'getBenefitsModalData',
 					type: 'get',
 					format: 'json'
 				})
@@ -45,13 +45,13 @@ define('CommunityPageBenefitsModal',
 		 * @param {Object} nirvanaRes
 		 */
 		function handleRequestsForModal(loaderRes, nirvanaRes) {
-			var wikiTopic = mw.config.get('wgSiteName'),
-				allMembersCount = nirvanaRes.memberCount || 0;
+			var wikiTopic = nirvanaRes.wikiTopic,
+				allMembersCount = nirvanaRes.memberCount;
 
 			mw.messages.set(loaderRes.messages);
 
 			modalConfig.vars.content = mustache.render(loaderRes.mustache[0], {
-				mainTitle: mw.message('communitypage-entrypoint-modal-title', wikiTopic, (allMembersCount >= 25) ? mw.language.convertNumber(allMembersCount) : '').plain(),
+				mainTitle: mw.message('communitypage-entrypoint-modal-title', wikiTopic, allMembersCount).plain(),
 				editSubtitle: mw.message('communitypage-entrypoint-modal-edit-title').plain(),
 				connectSubtitle: mw.message('communitypage-entrypoint-modal-connect-title').plain(),
 				exploreSubtitle: mw.message('communitypage-entrypoint-modal-explore-title').plain(),

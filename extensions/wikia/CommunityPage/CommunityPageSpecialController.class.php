@@ -226,18 +226,17 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		] );
 	}
 
-	/**
-	 * Get count of all contributors to community (users with 1+ edits)
-	 *
-	 * NOTE: this must be a separate function because in getModalHeaderData & getAllMembersData,
-	 *       the count is returned formatted via wgLang::formatNum and we need non-formatted num
-	 *       for benefits modal header
-	 */
-	public function getMembersCount() {
+	public function getBenefitsModalData() {
 		$memberCount = $this->usersModel->getMemberCount();
 
+		if ( $memberCount < 25 ) {
+			$memberCount = '';
+		} else {
+			$memberCount = $this->wg->Lang->formatNum( $memberCount );
+		}
 		$this->response->setData( [
 			'memberCount' => $memberCount,
+			'wikiTopic' => $this->wg->Sitename,
 		] );
 	}
 
