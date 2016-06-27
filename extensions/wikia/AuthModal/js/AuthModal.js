@@ -1,4 +1,4 @@
-define('AuthModal', ['jquery', 'wikia.window'], function ($, window) {
+require(['jquery', 'wikia.window'], function ($, window) {
 	'use strict';
 
 	var authPopUpWindow,
@@ -8,7 +8,7 @@ define('AuthModal', ['jquery', 'wikia.window'], function ($, window) {
 		popUpName = 'WikiaAuthWindow',
 		track = getTrackingFunction();
 
-	function initPostMessageListener (onAuthSuccess) {
+	function initPostMessageListener(onAuthSuccess) {
 		$(window).on('message.authPopUpWindow', function (event) {
 			var e = event.originalEvent;
 
@@ -47,7 +47,7 @@ define('AuthModal', ['jquery', 'wikia.window'], function ($, window) {
 		});
 	}
 
-	function close (event) {
+	function close(event) {
 		if (event) {
 			event.preventDefault();
 		}
@@ -76,7 +76,7 @@ define('AuthModal', ['jquery', 'wikia.window'], function ($, window) {
 		return 'width=' + popUpWindowWidth + ',height=' + popUpWindowHeight + ',top=' + popUpWindowTop + ',left=' + popUpWindowLeft;
 	}
 
-	function getTrackingFunction () {
+	function getTrackingFunction() {
 		if (track) {
 			return track;
 		}
@@ -88,7 +88,7 @@ define('AuthModal', ['jquery', 'wikia.window'], function ($, window) {
 		return track;
 	}
 
-	function loadPopUpPage (url, forceLogin) {
+	function loadPopUpPage(url, forceLogin) {
 		var src = buildPopUpUrl(url, {'forceLogin': (forceLogin ? 1 : 0)});
 
 		authPopUpWindow = window.open(src, popUpName, getPopUpWindowSpecs());
@@ -98,7 +98,7 @@ define('AuthModal', ['jquery', 'wikia.window'], function ($, window) {
 		}
 	}
 
-	return {
+	window.wikiaAuthModal = {
 		/**
 		 * @desc launches the new auth modal if wgEnableNewAuthModal is set to true. If not, then the old UserLoginModal
 		 * is loaded.
@@ -145,6 +145,7 @@ define('AuthModal', ['jquery', 'wikia.window'], function ($, window) {
 				});
 			}
 		},
+
 		close: close
 	};
 });
