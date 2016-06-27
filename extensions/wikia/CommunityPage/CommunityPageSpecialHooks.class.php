@@ -54,6 +54,27 @@ class CommunityPageSpecialHooks {
 	}
 
 	/**
+	 * Adds assets for Community Page Benefits Modal
+	 *
+	 * @param \OutputPage $out
+	 * @param \Skin $skin
+	 *
+	 * @return true
+	 */
+	public static function onBeforePageDisplay( \OutputPage $out, \Skin $skin ) {
+		if ( $out->getUser()->isAnon() &&
+			!isset( $_COOKIE['cpBenefitsModalShown'] ) &&
+			$out->getRequest()->getVal( 'action' ) !== 'edit' &&
+			$out->getRequest()->getVal( 'veaction' ) !== 'edit' &&
+			$out->getRequest()->getVal( 'action' ) !== 'submit'
+		) {
+			\Wikia::addAssetsToOutput( 'community_page_benefits_js' );
+			\Wikia::addAssetsToOutput( 'community_page_benefits_scss' );
+		}
+		return true;
+	}
+
+	/**
 	 * Add community page entry point to article page right rail module
 	 *
 	 * @param array $railModuleList

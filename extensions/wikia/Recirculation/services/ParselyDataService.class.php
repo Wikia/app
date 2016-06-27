@@ -11,8 +11,14 @@ class ParselyDataService {
 
 	const PARSELY_POSTS_LIMIT = 5;
 
-	const MCACHE_VER = '1.0';
+	const MCACHE_VER = '1.1';
 	const MCACHE_TIME = 900; // 15 minutes
+
+	private $cityId;
+
+	public function __construct( $cityId ) {
+		$this->cityId = $cityId;
+	}
 
 	/**
 	 * Get posts for a specific type. Uses cache if available
@@ -150,9 +156,8 @@ class ParselyDataService {
 	}
 
 	private function buildVerticalData() {
-		global $wgCityId;
 		$wikiFactoryHub = WikiFactoryHub::getInstance();
-		$wgWikiVertical = $wikiFactoryHub->getWikiVertical( $wgCityId )['short'];
+		$wgWikiVertical = $wikiFactoryHub->getWikiVertical( $this->cityId )['short'];
 
 		$verticalMap = [
 			'tv' => 'TV',
@@ -175,20 +180,12 @@ class ParselyDataService {
 	}
 
 	private function buildCommunityData() {
-		global $wgCityId;
+		$tag = WikiFactory::getVarValueByName( 'wgRecirculationParselyCommunityTag', $this->cityId );
 
-		$communityMap = [
-			'147' => 'Star Wars',
-			'3035' => 'Fallout',
-			'2233' => 'Marvel',
-			'130814' => 'Game of Thrones',
-			'1706' => 'Elder Scrolls'
-		];
-
-		if ( array_key_exists( $wgCityId, $communityMap ) ) {
+		if ( !empty( $tag ) ) {
 			return [
-				'key' => $wgCityId,
-				'tag' => $communityMap[$wgCityId]
+				'key' => $this->cityId,
+				'tag' => $tag
 			];
 		} else {
 			return [];

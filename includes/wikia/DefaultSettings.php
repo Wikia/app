@@ -300,6 +300,7 @@ $wgAutoloadClasses['SwaggerModelProperty'] = "$IP/includes/wikia/swagger/Swagger
 $wgAutoloadClasses['SwaggerErrorResponse'] = "$IP/includes/wikia/swagger/SwaggerErrorResponse.php";
 $wgAutoloadClasses['TemplateDataExtractor'] = "$IP/includes/wikia/TemplateDataExtractor.class.php";
 $wgAutoloadClasses['WikiaHtmlTitle'] = "$IP/includes/wikia/WikiaHtmlTitle.class.php";
+$wgAutoloadClasses['WikiaHtml'] = "$IP/includes/wikia/WikiaHtml.class.php";
 
 /**
  * Resource Loader enhancements
