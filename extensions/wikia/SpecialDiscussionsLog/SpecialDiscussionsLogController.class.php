@@ -164,7 +164,6 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 			'appHeader' => wfMessage( 'discussionslog-app-header' )->escaped(),
 			'userNameHeader' => wfMessage( 'discussionslog-user-name-header' )->escaped(),
 			'ipAddressHeader' => wfMessage( 'discussionslog-ip-address-header' )->escaped(),
-			'languageHeader' => wfMessage( 'discussionslog-language-header' )->escaped(),
 			'locationHeader' => wfMessage( 'discussionslog-location-header' )->escaped(),
 			'timestampHeader' => wfMessage( 'discussionslog-timestamp-header' )->escaped(),
 			'userAgentHeader' => wfMessage( 'discussionslog-user-agent-header' )->escaped(),
@@ -183,8 +182,6 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 					'app' => $userLogRecord->site,
 					'ip' => $userLogRecord->ip,
 					'ipUrl' => $this->getTitle()->getLocalURL( [ IpAddressQuery::getKeyName() => $userLogRecord->ip ] ),
-					'language' => $userLogRecord->language,
-					'location' => $userLogRecord->location,
 					'timestamp' => $userLogRecord->timestamp,
 					'userAgent' => $userLogRecord->userAgent,
 				]
@@ -276,8 +273,6 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 			$userLogRecord = new UserLogRecord();
 			$userLogRecord->site = $wikiInfo->city_title . ' (' . $wikiInfo->city_dbname . ')';
 			$userLogRecord->ip = $ip;
-			$userLogRecord->language = $record->{'language'};
-			//$userLogRecord->location = $ip;
 			$userLogRecord->timestamp = date(DATE_RFC2822, strtotime($record->{'@timestamp'}));
 			$userLogRecord->userAgent = $record->{'user_agent'};
 			$userLogRecord->user = $user;

@@ -65,11 +65,11 @@
                     }
 
                     $.each(ipCache[ip], function(i, elem) {
-                        elem.find('.location').html(location);
+                        elem.find('.location').html('<a href=\'' + fallbackURL + '\' target=\'_blank\'>'+ location +'</a>');
                     });
                 }).error(function(){
                     $.each(ipCache[ip], function(i, elem) {
-                        elem.find('.location').html('<a href=\'' + fallbackURL + '\'>Click for info</a>');
+                        elem.find('.location').html('<a href=\'' + fallbackURL + '\' target=\'_blank\'>Click for info</a>');
                     });
                 });
             });
