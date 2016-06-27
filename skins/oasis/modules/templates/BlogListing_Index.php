@@ -3,7 +3,7 @@
 	if (strpos($blogListingClass, 'WikiaBlogListingBox') !== false) { ?>
 	<?= Wikia::specialPageLink('CreateBlogPage', 'blog-create-post-label', 'wikia-button', 'blank.gif', 'blog-create-post-label', 'sprite blog') ?>
 	<h2>
-		<?= $title ?>
+		<?= htmlspecialchars( $title ); ?>
 	</h2>
 	<?php } // end BlogListingBox header ?>
 	<ul>
