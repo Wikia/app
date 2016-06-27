@@ -146,7 +146,8 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 		foreach ($functionNames as $functionName) {
 			if ( empty( $mock ) && empty($functionName) ) {
 				// constructor cannot return null
-				throw new Exception( sprintf('%s: mock of class %s cannot be empty', __METHOD__, $className ) );
+				trigger_error( sprintf( '%s: mock of class %s cannot be empty', __METHOD__, $className ), E_USER_WARNING );
+				return;
 			}
 			if ( empty($functionName) ) { // regular constructor
 				$action = $this->getMockProxy()->getClassConstructor($className);
