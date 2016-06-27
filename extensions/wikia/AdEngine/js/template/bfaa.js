@@ -45,7 +45,7 @@ define('ext.wikia.adEngine.template.bfaa', [
 		},
 
 		show: function (iframe) {
-			var spotlightFooter = document.getElementById('SPOTLIGHT_FOOTER');
+			var spotlightFooter = doc.getElementById('SPOTLIGHT_FOOTER');
 			nav.style.top = '';
 			page.classList.add('bfaa-template');
 
