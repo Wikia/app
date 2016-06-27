@@ -59,7 +59,7 @@ define('ext.wikia.adEngine.template.bfaa', [
 			}
 
 			if (spotlightFooter) {
-				slotTweaker.hideByElement(spotlightFooter.parentNode, true);
+				spotlightFooter.parentNode.style.display = 'none';
 			}
 		}
 	};
