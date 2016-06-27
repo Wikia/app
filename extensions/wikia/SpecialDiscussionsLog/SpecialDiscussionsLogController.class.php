@@ -204,7 +204,6 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 		$records = [];
 		$dayOffset = 0;
 		$ipHash = [];
-		$ipCache = [];
 
 		while ( count( $records ) < self::PAGINATION_SIZE && $dayOffset < self::DAYS_RANGE ) {
 			$url = $this->constructKibanaUrl( $dayOffset++ );
@@ -213,7 +212,7 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 				break;
 			}
 
-			$this->appendRecordsFromResponse( $records, $response, $ipHash, $ipCache );
+			$this->appendRecordsFromResponse( $records, $response, $ipHash );
 		}
 
 		krsort( $records, SORT_NUMERIC );
@@ -247,7 +246,7 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 		return $response;
 	}
 
-	private function appendRecordsFromResponse( array &$records, $response, array &$ipHash, array &$ipCache ) {
+	private function appendRecordsFromResponse( array &$records, $response, array &$ipHash ) {
 
 		$resultObject = json_decode( $response->getBody() );
 		$hits = $resultObject->hits->hits;
