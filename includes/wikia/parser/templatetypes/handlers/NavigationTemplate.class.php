@@ -69,9 +69,10 @@ class NavigationTemplate {
 			$result = $replaced;
 		}
 		// remove markers from output
-		$output = preg_replace( '/(<|&lt;)\\/?' . $marker . '(>|&gt;)/sU', '', $result );
+		$outputOpenings = preg_replace( '/(<|&lt;)' . $marker . '(>|&gt;)\\n/sU', '', $result );
+		$output = preg_replace( '/\\n(<|&lt;)\\/' . $marker . '(>|&gt;)/sU', '', $outputOpenings );
 
-		if ( $output === null ) {
+		if ( $outputOpenings === null || $output === null ) {
 			\Wikia\Logger\WikiaLogger::instance()->error( 'Navigation replacement failed', [ 'code' => preg_last_error() ] );
 			return $html;
 		}
@@ -95,7 +96,11 @@ class NavigationTemplate {
 		if (preg_match( "/(" . $openMarkerRegex . ")(.*)(" . $closeMarkerRegex . ")/is", $templateWikitext, $inside )) {
 			$replacedOpenings = preg_replace( "/" . $openMarkerRegex . "/isU", "", $inside[2] );
 			$replaced = preg_replace( "/" . $closeMarkerRegex . "/isU", "", $replacedOpenings );
-			return $inside[1] . $replaced . $inside[3];
+			if ( $replacedOpenings !== null && $replaced !== null ) {
+				return $inside[1] . $replaced . $inside[3];
+			} else {
+				\Wikia\Logger\WikiaLogger::instance()->error( 'Navigation replacement failed (inner marks)', [ 'code' => preg_last_error() ] );
+			}
 		}
 		return $templateWikitext;
 	}
