@@ -4,7 +4,7 @@ class CommunityPageSpecialHelpModel {
 	public function getData() {
 		return [
 			'title' => wfMessage( 'communitypage-help-module-title' )->plain(),
-			'editPage' => wfMessage( 'communitypage-help-edit-pages' )->plain(),
+			'editPage' => wfMessage( 'communitypage-help-edit-page' )->plain(),
 			'addLinks' => wfMessage( 'communitypage-help-add-link' )->plain(),
 			'addNewPage' => wfMessage( 'communitypage-help-add-new-page' )->plain(),
 			'editPageLink' => $this->geteditPageLink(),
