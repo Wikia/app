@@ -127,7 +127,7 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 							->params( [ $userName, $userId ] )
 							->escaped(),
 
-						'noUserLogRecordsMessage' => wfMessage( 'discussionslog-no-activity-error' )
+						'noUserLogRecordsMessage' => wfMessage( 'discussionslog-no-mobile-activity-error' )
 							->params( $userName )
 							->escaped(),
 				] );
@@ -257,14 +257,9 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 
 		foreach ( $hits as $hit ) {
 			$record = $hit->_source;
-			$ip = $record->{'client_ip'};
+			$ip = $record->{'fastly_client_ip'};
 			$site = $record->{'site_id'};
 			$ipHashKey = $ip . ':' . $site;
-
-			// Filter out records with duplicate ip/app
-			if ( !empty( $ipHash[$ipHashKey] ) ) {
-				continue;
-			}
 
 			try {
 				$user = $this->getUserById( $record->{'user_id'} );
@@ -282,7 +277,7 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 			$userLogRecord->site = $wikiInfo->city_title . ' (' . $wikiInfo->city_dbname . ')';
 			$userLogRecord->ip = $ip;
 			$userLogRecord->language = $record->{'language'};
-			$userLogRecord->location = $this->getLocationFromIP($ip, $ipCache);
+			//$userLogRecord->location = $ip;
 			$userLogRecord->timestamp = date(DATE_RFC2822, strtotime($record->{'@timestamp'}));
 			$userLogRecord->userAgent = $record->{'user_agent'};
 			$userLogRecord->user = $user;
@@ -296,26 +291,5 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 		if ( !$this->wg->User->isAllowed( self::DISCUSSIONS_LOG_ACTION ) ) {
 			throw new \PermissionsError( self::DISCUSSIONS_LOG_ACTION );
 		}
-	}
-
-	private function getLocationFromIP( $ip, array &$ipCache ) {
-		if (array_key_exists($ip, $ipCache)) {
-			return $ipCache[$ip];
-		}
-
-		$details = json_decode(file_get_contents("http://ipinfo.io/{$ip}/json"));
-		$location_arr = array($details->country);
-
-		if ( $details->region ) {
-			array_unshift($location_arr, $details->region);
-		}
-
-		if ( $details->city ) {
-			array_unshift($location_arr, $details->city);
-		}
-
-		$location = implode(', ', $location_arr);
-		$ipCache[$ip] = $location;
-		return $location;
 	}
 }
