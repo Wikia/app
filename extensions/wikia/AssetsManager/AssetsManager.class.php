@@ -604,6 +604,14 @@ class AssetsManager {
 	}
 
 	/**
+	 * @todo rethink this approach (FMI ADEN-3406)
+	 */
+	public function checkContainCrossoriginScssFile(Array $files) {
+		global $wgCrossoriginScssFile;
+		return isset($wgCrossoriginScssFile) && in_array($wgCrossoriginScssFile, $files);
+	}
+
+	/**
 	 * Checks if an URL produced by any of the AssetsManager::getGroup*Url() methods is associated to a package registered for a specific skin
 	 * This method is used to filter our unwanted assets when outputting references in skin logic (e.g. in the WikiaMobile skin)
 	 *

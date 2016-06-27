@@ -73,15 +73,6 @@ require([
 			renderLiftigniterFandom(true);
 			renderLiftigniterCommunity();
 			return;
-		// Temporary group running during E3
-		case 'E3':
-			helper = fandomHelper({
-				type: 'e3',
-				limit: 5
-			});
-			view = railView();
-			isRail = true;
-			break;
 		case 'LATERAL_FANDOM':
 			helper = lateralHelper();
 			view = railView();
@@ -118,6 +109,14 @@ require([
 		case 'FANDOM_TOPIC':
 			helper = fandomHelper({
 				type: 'community',
+				limit: 5
+			});
+			view = railView();
+			isRail = true;
+			break;
+		case 'FANDOM_HERO':
+			helper = fandomHelper({
+				type: 'hero',
 				limit: 5
 			});
 			view = railView();
@@ -358,23 +357,20 @@ require([
 	}
 
 	function renderLiftigniterCommunity() {
-		var view = railView(),
-			curated = curatedHelper(),
+		var view = incontentView(),
 			helper = liftigniterHelper({
 				count: 3,
 				widget: 'in-wikia'
 			});
 
 		helper.loadData()
-			.then(curated.injectContent)
 			.then(view.render)
 			.then(function($html) {
-				var elements = $html.find('.rail-item').get();
+				var elements = $html.find('.item').get();
 
 				view.setupTracking(experimentName)($html);
 				helper.setupTracking(elements);
-			})
-			.fail(handleError);
+			});
 	}
 
 });
