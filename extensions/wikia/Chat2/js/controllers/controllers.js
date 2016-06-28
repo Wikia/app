@@ -163,6 +163,8 @@ var NodeRoomController = $.createClass(Observable, {
 		this.socket.bind('kick', $.proxy(this.onKick, this));
 		this.socket.bind('ban', $.proxy(this.onBan, this));
 
+		this.socket.bind('longMessage', $.proxy(this.onLongMessage, this));
+
 		this.socket.bind('logout', $.proxy(this.onLogout, this));
 
 		this.viewDiscussion = new NodeChatDiscussion({model: this.model, el: $('body'), roomId: roomId});
@@ -384,6 +386,13 @@ var NodeRoomController = $.createClass(Observable, {
 		this.partTimeOuts[logoutEvent.get('name')] = setTimeout(this.proxy(function () {
 			this.onPartBase(logoutEvent.get('name'), false);
 		}), 10000);
+	},
+
+	onLongMessage: function (message) {
+		if (message.user === wgUserName) {
+			var newChatEntry = new models.InlineAlert({text: mw.message('chat-message-was-too-long').escaped()});
+			this.model.chats.add(newChatEntry);
+		} 
 	},
 
 	onKick: function (message) {

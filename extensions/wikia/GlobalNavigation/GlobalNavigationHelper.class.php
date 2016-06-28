@@ -105,11 +105,15 @@ class GlobalNavigationHelper {
 		$CommunityLinkLabel = wfMessage( 'global-navigation-community-link-label');
 		$exploreWikiaLabel = wfMessage( 'global-navigation-explore-wikia-link-label');
 
-		$hubsNodes = ( new NavigationModel( true /* useSharedMemcKey */ ) )->getTree(
-			NavigationModel::TYPE_MESSAGE,
-			'global-navigation-menu-hubs',
-			[3] // max 3 links
-		);
+		if ( $wgLang->getCode() === self::DEFAULT_LANG ) {
+			$hubsNodes = (new NavigationModel(true /* useSharedMemcKey */))->getTree(
+				NavigationModel::TYPE_MESSAGE,
+				'global-navigation-menu-hubs',
+				[3] // max 3 links
+			);
+		} else {
+			$hubsNodes = [];
+		}
 
 		// Link to WAM - Top Communities
 		$exploreDropdownLinks[] = [
@@ -144,7 +148,7 @@ class GlobalNavigationHelper {
 		// Default/common case is 'en'
 		$message = wfMessage('global-navigation-wam-link')->plain();
 
-		if ( $lang !== 'en' ) {
+		if ( $lang !== self::DEFAULT_LANG ) {
 			$wamService = new WAMService();
 			$wamDates = $wamService->getWamIndexDates();
 			if (in_array( $lang, $wamService->getWAMLanguages( $wamDates['max_date'] ) ) ) {

@@ -28,7 +28,7 @@ define('AuthModal', ['jquery', 'wikia.window'], function ($, window) {
 				closeTrackTimeoutId = setTimeout(function () {
 					var trackParams;
 
-					if (!authPopUpWindow.closed) {
+					if (authPopUpWindow && !authPopUpWindow.closed) {
 						return;
 					}
 

@@ -2,20 +2,33 @@
 define('ext.wikia.adEngine.template.bfaa', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adHelper',
+	'ext.wikia.adEngine.provider.btfBlocker',
 	'ext.wikia.adEngine.slotTweaker',
+	'ext.wikia.adEngine.uapContext',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window',
 	require.optional('ext.wikia.adEngine.mobile.mercuryListener')
-], function (adContext, adHelper, slotTweaker, doc, log, win, mercuryListener) {
+], function (
+	adContext,
+	adHelper,
+	btfBlocker,
+	slotTweaker,
+	uapContext,
+	doc,
+	log,
+	win,
+	mercuryListener
+) {
 	'use strict';
 
-	var logGroup = 'ext.wikia.adEngine.template.bfaa',
-		breakPointWidthNotSupported = 767, // SCSS property: $breakpoint-width-not-supported
+	var breakPointWidthNotSupported = 767, // SCSS property: $breakpoint-width-not-supported
 		desktopHandler,
 		mobileHandler,
+		logGroup = 'ext.wikia.adEngine.template.bfaa',
 		nav,
 		page,
+		unblockedSlots = ['BOTTOM_LEADERBOARD', 'INCONTENT_BOXAD_1'],
 		wrapper;
 
 	desktopHandler = {
@@ -102,6 +115,9 @@ define('ext.wikia.adEngine.template.bfaa', [
 		});
 
 		log('show', 'info', logGroup);
+
+		uapContext.setUapId(params.uap);
+		unblockedSlots.forEach(btfBlocker.unblock);
 	}
 
 	return {
