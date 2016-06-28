@@ -232,7 +232,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		if ( $memberCount < 25 ) {
 			$memberCount = '';
 		} else {
-			$memberCount = $this->wg->Lang->formatNum( $memberCount );
+			$memberCount = $this->getLanguage()->formatNum( $memberCount );
 		}
 		$this->response->setData( [
 			'memberCount' => $memberCount,
