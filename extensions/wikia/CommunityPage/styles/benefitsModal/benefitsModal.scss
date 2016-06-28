@@ -138,6 +138,10 @@ $icon-space-large: 19px;
 	float: left;
 	margin-bottom: 33px;
 	width: calc(100% - #{$icon-size-outer-large + $icon-space-large});
+
+	&:last-child {
+		margin-bottom: 0;
+	}
 }
 
 .community-page-benefits-modal-close {
