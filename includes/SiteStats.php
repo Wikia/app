@@ -315,18 +315,16 @@ class SiteStatsInit {
 	 * @return Integer
 	 */
 	public function users() {
-		/**
-		 * wikia change
-		 * cache number of users for 12hours
-		 * it's not important to have exact numbers there
-		 */
-		$cache = F::app()->getGlobal( "wgMemc" );
-		$this->mUsers = $cache->get( wfSharedMemcKey( "registered-users-number" ) );
-		if( empty( $this->mUsers ) ) {
-			$this->mUsers = $this->dbshared->selectField( '`user`', 'COUNT(*)', '', __METHOD__ );
-			$cache->set( wfSharedMemcKey( "registered-users-number" ), $this->mUsers, 60*60*12 );
-		}
-		return $this->mUsers;
+		$fname = __METHOD__;
+
+		# Wikia change
+		return $this->mUsers = WikiaDataAccess::cache(
+			wfSharedMemcKey( __METHOD__ ),
+			WikiaResponse::CACHE_STANDARD,
+			function() use ($fname) {
+				return $this->dbshared->estimateRowCount( '`user`', '*', '', $fname );
+			}
+		);
 	}
 
 	/**
@@ -359,7 +357,7 @@ class SiteStatsInit {
 	 * - views Boolean: when true, do not update the number of page views (default: true)
 	 * - activeUsers Boolean: whether to update the number of active users (default: false)
 	 */
-	public static function doAllAndCommit( $database, array $options = array() ) {
+	public static function doAllAndCommit( $database = false, array $options = array() ) {
 		$options += array( 'update' => false, 'views' => true, 'activeUsers' => false );
 
 		// Grab the object and count everything
