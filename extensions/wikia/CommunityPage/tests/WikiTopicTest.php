@@ -2,7 +2,7 @@
 
 class WikiTopicTest extends WikiaBaseTest {
 
-	private $communityi18n= [
+	private $communityi18n = [
 		'en' => 'Community',
 		'es' => 'Comunidad',
 		'fr' => 'Communauté',
@@ -21,7 +21,7 @@ class WikiTopicTest extends WikiaBaseTest {
 	public function testFallbackToSitename( $sitename, $wikiTopic, $expectedWikiTopic, $lang ) {
 		$this->mockGlobalVariable( 'wgWikiTopic', $wikiTopic );
 		$this->mockGlobalVariable( 'wgSitename', $sitename );
-		$mock = $this->getMock( 'Message', ['plain'] );
+		$mock = $this->getMock( 'Message', [ 'plain' ] );
 		$mock->expects( $this->any() )->method( 'plain' )->willReturn( $this->communityi18n[$lang] );
 		$this->mockGlobalFunction( 'wfMessage', $mock );
 
@@ -34,7 +34,7 @@ class WikiTopicTest extends WikiaBaseTest {
 	public function testPreparingWikiTopicFromSitename( $sitename, $expectedWikiTopic, $lang ) {
 		$this->mockGlobalVariable( 'wgWikiTopic', null );
 		$this->mockGlobalVariable( 'wgSitename', $sitename );
-		$mock = $this->getMock( 'Message', ['plain'] );
+		$mock = $this->getMock( 'Message', [ 'plain' ] );
 		$mock->expects( $this->any() )->method( 'plain' )->willReturn( $this->communityi18n[$lang] );
 		$this->mockGlobalFunction( 'wfMessage', $mock );
 
@@ -43,8 +43,8 @@ class WikiTopicTest extends WikiaBaseTest {
 
 	public function fallbackToSitenameProvider() {
 		return [
-			[ 'Wookiepedia', 'Star Wars', 'Star Wars' ],
-			[ 'Wookiepedia', null, 'Wookiepedia' ],
+			[ 'Wookieepedia', 'Star Wars', 'Star Wars' ],
+			[ 'Wookieepedia', null, 'Wookieepedia' ],
 		];
 	}
 
