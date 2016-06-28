@@ -8,8 +8,7 @@ class WikiTopic {
 	}
 
 	private static function prepareWikiTopic( $siteName ) {
-		$community = wfMessage( 'communitypage-title' )->plain();
-		$siteName = trim( preg_replace( '/^the\s/i', '', $siteName ) );
-		return preg_replace( '/(^wikia?)(?=\s)|(?<=\s)(wikia?$)|(?<=\s)(Вики$)/i', $community, $siteName );
+		$siteName = preg_replace( '/^the\s/i', '', $siteName );
+		return trim( preg_replace( '/(^wikia?)(?=\s)|(?<=\s)(wikia?$)|(?<=\s)(Вики$)/i', '', $siteName ) );
 	}
 }
