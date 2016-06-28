@@ -6,18 +6,6 @@ define(
 			return $.trim(stringHelper.latinise(wikiName).replace(/[^a-zA-Z0-9 ]+/g, '')).replace(/ +/g, '-');
 		}
 
-		function getAnswer() {
-			var keys = WikiBuilderCfg['cnw-keys'],
-				v = 0,
-				i;
-
-			for (i = 0; i < keys.length; i++) {
-				v *= (i % 5) + 1;
-				v += keys[i];
-			}
-			return v;
-		}
-
 		function login(onSuccess, redirectURL) {
 			auth.load({
 				forceLogin: true,
@@ -41,7 +29,6 @@ define(
 
 		return {
 			sanitizeWikiName: sanitizeWikiName,
-			getAnswer: getAnswer,
 			login: login,
 			getLoginRedirectURL: getLoginRedirectURL
 		}

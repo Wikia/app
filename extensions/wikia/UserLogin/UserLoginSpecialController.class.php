@@ -425,6 +425,8 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 
 		$loginCase = $loginForm->authenticateUserData();
 
+		\Wikia\Util\Assert::true( is_int( $loginCase ), 'LoginForm::authenticateUserData is expected to return an int' );
+
 		switch ( $loginCase ) {
 			case LoginForm::SUCCESS:
 				// first check if user has confirmed email after sign up

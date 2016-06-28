@@ -24,14 +24,14 @@ class CommunityPageSpecialTopAdminsFormatter {
 		];
 	}
 
-	private function prepareRemainingCount( $topAdminsCount ) {
+	private static function prepareRemainingCount( $topAdminsCount ) {
 		if ( $topAdminsCount > self::TOP_ADMINS_MODULE_LIMIT ) {
 			return $topAdminsCount - self::TOP_ADMINS_MODULE_LIMIT + 1;
 		}
 		return 0;
 	}
 
-	private function prepareAdminsToShow( $allCount, $otherCount, array $list ) {
+	private static function prepareAdminsToShow( $allCount, $otherCount, array $list ) {
 		// JPN-491 Randomize top admins
 		shuffle( $list );
 		return array_slice( $list, 0, $allCount - $otherCount );
