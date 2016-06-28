@@ -7,27 +7,15 @@ class CommunityPageSpecialHelpModel {
 			'editPage' => wfMessage( 'communitypage-help-edit-page' )->plain(),
 			'addLinks' => wfMessage( 'communitypage-help-add-link' )->plain(),
 			'addNewPage' => wfMessage( 'communitypage-help-add-new-page' )->plain(),
-			'editPageLink' => $this->geteditPageLink(),
-			'addLinksPageLink' => $this->getAddLinksPageLink(),
-			'addNewPageLink' => $this->getAddNewPageLink()
+			'editPageLink' => $this->getHelpPageLink( 'communitypage-help-module-edit-page-name' ),
+			'addLinksPageLink' => $this->getHelpPageLink( 'communitypage-help-module-add-link-name' ),
+			'addNewPageLink' => $this->getHelpPageLink( 'communitypage-help-module-new-page-name' )
 		];
 	}
-	
-	private function geteditPageLink() {
-		return Title::newFromText(
-			wfMessage( 'communitypage-help-module-edit-page-name' )->inContentLanguage()->plain(), NS_HELP
-		)->getLocalURL();
-	}
 
-	private function getAddLinksPageLink() {
+	private function getHelpPageLink( $messageKey ){
 		return Title::newFromText(
-			wfMessage( 'communitypage-help-module-add-link-name' )->inContentLanguage()->plain(), NS_HELP
-		)->getLocalURL();
-	}
-
-	private function getAddNewPageLink() {
-		return Title::newFromText(
-			wfMessage( 'communitypage-help-module-new-page-name' )->inContentLanguage()->plain(), NS_HELP
+			wfMessage( $messageKey )->inContentLanguage()->plain(), NS_HELP
 		)->getLocalURL();
 	}
 }
