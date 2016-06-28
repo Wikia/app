@@ -26,7 +26,7 @@ define('CommunityPageBenefitsModal',
 		}
 
 		function handleRequestsForModal(loaderRes) {
-			var wikiTopic = mw.config.get('wgWikiTopic');
+			var wikiTopic = mw.config.get('wgSitename');
 
 			mw.messages.set(loaderRes.messages);
 

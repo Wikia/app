@@ -22,7 +22,6 @@ $wgAutoloadClasses['CommunityPageSpecialHooks'] =  __DIR__ . '/CommunityPageSpec
 $wgHooks['ArticleSaveComplete'][] = 'CommunityPageSpecialHooks::onArticleSaveComplete';
 $wgHooks['BeforePageDisplay'][] = 'CommunityPageSpecialHooks::onBeforePageDisplay';
 $wgHooks['GetRailModuleList'][] = 'CommunityPageSpecialHooks::onGetRailModuleList';
-$wgHooks['MakeGlobalVariablesScript'][] = 'CommunityPageSpecialHooks::onMakeGlobalVariablesScript';
 $wgHooks['UserFirstEditOnLocalWiki'][] = 'CommunityPageSpecialHooks::onUserFirstEditOnLocalWiki';
 $wgHooks['UserRights'][] = 'CommunityPageSpecialHooks::onUserRights';
 
