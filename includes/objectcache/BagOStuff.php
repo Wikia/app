@@ -161,11 +161,11 @@ abstract class BagOStuff {
 	 */
 	public function incrWithInit( $key, $ttl, $value = 1, $init = 1 ) {
 		$newValue = $this->incr( $key, $value );
-		if ( $newValue === false ) {
+		if ( $newValue === null ) {
 			// No key set; initialize
 			$newValue = $this->add( $key, (int)$init, $ttl ) ? $init : false;
 		}
-		if ( $newValue === false ) {
+		if ( $newValue === null ) {
 			// Raced out initializing; increment
 			$newValue = $this->incr( $key, $value );
 		}
