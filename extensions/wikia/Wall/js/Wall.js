@@ -306,11 +306,11 @@
 					forceLogin: true,
 					url: '/signin?redirect=' + encodeURIComponent(window.location.href),
 					origin: 'wall-and-forum',
-					onAuthSuccess: this.proxy(function () {
+					onAuthSuccess: function () {
 						this.voteBase(e, function () {
 							window.location.reload();
 						});
-					}.bind(this))
+					}.bind(this)
 				});
 			} else {
 				this.voteBase(e, this.proxy(function (target, data, dir) {
