@@ -48,7 +48,7 @@ define('wikia.ui.modal', [
 		// reference to UI component instance
 		uiComponent,
 		track = tracker.buildTrackingFunction({
-			action: Wikia.Tracker.ACTIONS.CLICK,
+			action: tracker.ACTIONS.CLICK,
 			category: 'ui-components-modal',
 			trackingMethod: 'analytics'
 		});
