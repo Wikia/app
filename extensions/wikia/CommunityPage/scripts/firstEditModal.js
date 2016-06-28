@@ -17,31 +17,19 @@ require([
 	 });
 
 	function getUiModalInstance() {
-		var $deferred = $.Deferred();
-
-		uiFactory.init(['modal']).then(function (uiModal) {
-			$deferred.resolve(uiModal);
-		});
-
-		return $deferred;
+		return uiFactory.init(['modal']);
 	}
 
 	function getModalContents() {
-		var $deferred = $.Deferred();
-
-		nirvana.sendRequest({
+		return nirvana.sendRequest({
 			controller: 'CommunityPageSpecial',
 			method: 'getFirstTimeEditorModalData',
 			data: {
-				uselang: window.wgUserLanguage
+				uselang: mw.config.get('wgUserLanguage')
 			},
 			format: 'json',
 			type: 'get',
-		}).then(function (response) {
-			$deferred.resolve(response);
 		});
-
-		return $deferred;
 	}
 
 	function openModal() {
@@ -65,17 +53,19 @@ require([
 			};
 
 			uiModal.createComponent(createPageModalConfig, function (modal) {
+				var contents = modalContents[0];
+
 				modal.$content
 					.html(mustache.render(templates.firstEditModal, {
-						heading: modalContents.headingText,
-						subheading: modalContents.subheadingText,
-						getStarted: modalContents.getStartedText,
-						maybeLater: modalContents.maybeLaterText,
-						getStartedLink: modalContents.getStartedLink,
+						heading: contents.headingText,
+						subheading: contents.subheadingText,
+						getStarted: contents.getStartedText,
+						maybeLater: contents.maybeLaterText,
+						getStartedLink: contents.getStartedLink,
 					}));
 
 				modal.show();
-				initModalTracking(modal);
+				initModalTracking();
 
 				modal.$element
 					.on('click', '#community-page-first-edit-maybelater-button', function (event) {
@@ -93,7 +83,7 @@ require([
 		});
 	}
 
-	function handleClick (event) {
+	function handleClick(event) {
 		var label = event.currentTarget.getAttribute('data-tracking');
 
 		if (label !== null && label.length > 0) {
@@ -104,8 +94,8 @@ require([
 	}
 
 	function openModalOnFirstEdit() {
-		var cookieName = 'community-page-first-time';
-		var cookie = cookies.get(cookieName);
+		var cookieName = 'community-page-first-time',
+			cookie = cookies.get(cookieName);
 
 		// If cookie is set on load, show dialog, this happens after CE edit
 		if (cookie) {
@@ -113,8 +103,8 @@ require([
 
 			// Delete the cookie
 			cookies.set(cookieName, null, {
-				domain: wgCookieDomain,
-				path: '/',
+				domain: mw.config.get('wgCookieDomain'),
+				path: mw.config.get('wgCookiePath'),
 			});
 		}
 	}
