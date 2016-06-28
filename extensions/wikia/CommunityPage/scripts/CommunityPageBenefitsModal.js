@@ -46,7 +46,8 @@ define('CommunityPageBenefitsModal',
 		 */
 		function handleRequestsForModal(loaderRes, nirvanaRes) {
 			var wikiTopic = nirvanaRes[0].wikiTopic,
-				allMembersCount = nirvanaRes[0].memberCount;
+				allMembersCount = nirvanaRes[0].memberCount,
+				modalImageUrl = nirvanaRes[0].modalImageUrl;
 
 			mw.messages.set(loaderRes.messages);
 
@@ -59,6 +60,7 @@ define('CommunityPageBenefitsModal',
 				connectText: mw.message('communitypage-entrypoint-modal-connect-text', wikiTopic).plain(),
 				exploreText: mw.message('communitypage-entrypoint-modal-explore-text', wikiTopic).plain(),
 				buttonText: mw.message('communitypage-entrypoint-modal-button-text').plain()
+				benefitsImageUrl: modalImageUrl
 			});
 
 			require(['wikia.ui.factory'], function (uiFactory) {
