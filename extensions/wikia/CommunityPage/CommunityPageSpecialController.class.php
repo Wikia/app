@@ -2,6 +2,7 @@
 
 class CommunityPageSpecialController extends WikiaSpecialPageController {
 	const COMMUNITY_PAGE_HERO_IMAGE = 'Community-Page-Header.jpg';
+	const COMMUNITY_PAGE_BENEFITS_MODAL_IMAGE = 'New-Contributor-Flow-modal-image.jpg';
 	const DEFAULT_TEMPLATE_ENGINE = \WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
 	const ALL_MEMBERS_LIMIT = 20;
 	const TOP_ADMINS_MODULE_LIMIT = 3;
@@ -237,6 +238,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		$this->response->setData( [
 			'memberCount' => $memberCount,
 			'wikiTopic' => WikiTopic::getWikiTopic(),
+			'modalImageUrl' => $this->getBenefitsModalImageUrl(),
 		] );
 	}
 
@@ -295,6 +297,19 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		}
 
 		return $heroImageUrl;
+	}
+
+	private function getBenefitsModalImageUrl() {
+		$benefitsModalImageUrl = '';
+		$benefitsModalImage = Title::newFromText( self::COMMUNITY_PAGE_BENEFITS_MODAL_IMAGE, NS_FILE );
+		if ( $benefitsModalImage instanceof Title && $benefitsModalImage->exists() ) {
+			$benefitsModalFile = wfFindFile( $benefitsModalImage );
+			if ( $benefitsModalFile instanceof File ) {
+				$benefitsModalImageUrl = $benefitsModalFile->getUrl();
+			}
+		}
+
+		return $benefitsModalImageUrl;
 	}
 
 	private function calculateCurrentUserRank( $userContributionCount , $topContributors ) {
