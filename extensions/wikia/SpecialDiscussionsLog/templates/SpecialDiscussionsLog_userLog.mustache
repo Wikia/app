@@ -1,5 +1,5 @@
 {{#userErrorMessage}}
-    <div class="log-error-message" xmlns="http://www.w3.org/1999/html">{{userErrorMessage}}</div>
+    <div class="log-error-message">{{userErrorMessage}}</div>
 {{/userErrorMessage}}
 {{^userErrorMessage}}
 	{{#hasNoUserLogRecords}}
@@ -23,7 +23,7 @@
 				<tr class="record">
 					<td><a href="{{userUrl}}">{{userName}}</a></td>
 					<td><a href="{{ipUrl}}" class="ip">{{ip}}</a></td>
-					<td class="location">Loading...</td>
+					<td><a href="{{locationUrl}}" class="location">{{moreInfoMsg}}</a></td>
 					<td>{{language}}</td>
 					<td class="useragent">{{userAgent}}</td>
 					<td>{{app}}</td>

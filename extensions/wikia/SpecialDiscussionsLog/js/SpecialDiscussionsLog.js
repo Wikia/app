@@ -1,9 +1,7 @@
-var SpecialDiscussionsLog = (function() {
+(function() {
 
     var ipCache = {};
-    var primaryURL = 'http://ipinfo.io/{IP}/json';
-    var fallbackURL = 'https://geoiptool.com/en/?ip={IP}';
-    var unknownLocationMsg = 'Click for info';
+    var url = 'http://ipinfo.io/{IP}/json';
 
     registerUniqueIPs();
 
@@ -25,10 +23,9 @@ var SpecialDiscussionsLog = (function() {
     }
 
     function getLocationFromIP(ip) {
-        $.getJSON(primaryURL.replace('{IP}', ip), function (data) {
+        $.getJSON(url.replace('{IP}', ip), function (data) {
             var locationArr = [],
-                locationProps = ['city', 'region', 'country'],
-                locationStr;
+                locationProps = ['city', 'region', 'country'];
 
             for (var i = 0; i < locationProps.length; i++) {
                 var prop = locationProps[i];
@@ -37,21 +34,15 @@ var SpecialDiscussionsLog = (function() {
                 }
             }
 
-            if (locationArr.length > 0) {
-                locationStr = locationArr.join(', ');
-            } else {
-                locationStr = unknownLocationMsg;
-            }
-
-            displayLocation(ip, locationStr);
-        }).error(function () {
-            displayLocation(ip, unknownLocationMsg);
+            if (locationArr.length > 0)
+                displayLocation(ip, locationArr.join(', '));
         });
-        }
+    }
 
     function displayLocation(ip, locationStr) {
         $.each(ipCache[ip], function (i, elem) {
-            elem.find('.location').html('<a href=\'' + fallbackURL.replace('{IP}', ip) + '\' target=\'_blank\'>' + locationStr + '</a>');
+            elem.find('.location').html(locationStr);
         });
     }
+
 })();

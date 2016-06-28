@@ -24,6 +24,7 @@ $messages['en'] = array(
 	'discussionslog-user-agent-header' => 'User Agent',
 	'discussionslog-app-header' => 'App',
 	'discussionslog-timestamp-header' => 'Timestamp',
+	'discussionslog-more-info' => 'Click for info',
 	'action-specialdiscussionslog' => 'Special:DiscussionsLog',
 );
 
@@ -48,6 +49,7 @@ $messages['qqq'] = array(
 	'discussionslog-user-agent-header' => 'Table header for user agent',
 	'discussionslog-app-header' => 'Table header for app',
 	'discussionslog-timestamp-header' => 'Table header for timestamp',
+	'discussionslog-more-info' => 'A message saying to click for info',
 	'action-specialdiscussionslog' => 'An action that a user has a forbidden access to when opening Special Page',
 );
 

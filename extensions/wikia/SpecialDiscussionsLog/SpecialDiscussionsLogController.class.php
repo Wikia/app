@@ -184,6 +184,8 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 					'app' => $userLogRecord->site,
 					'ip' => $userLogRecord->ip,
 					'ipUrl' => $this->getTitle()->getLocalURL( [ IpAddressQuery::getKeyName() => $userLogRecord->ip ] ),
+					'locationUrl' => 'https://geoiptool.com/en/?ip=' . $userLogRecord->ip,
+					'moreInfoMsg' => wfMessage( 'discussionslog-more-info' )->escaped(),
 					'timestamp' => $userLogRecord->timestamp,
 					'userAgent' => $userLogRecord->userAgent,
 				]
