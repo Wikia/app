@@ -31,48 +31,5 @@
 				</tr>
 			{{/userLogRecords}}
 		</table>
-        <script>
-            var ipCache = {};
-
-            $('.record').each(function( i, elem ) {
-                var ip = $(elem).find('.ip').text();
-
-                // if this IP address is already being fetched, attach to it and exit
-                if (ip in ipCache) {
-                    ipCache[ip].push($(elem));
-                    return;
-                } else {
-                    ipCache[ip] = [$(elem)];
-                }
-
-                var primaryURL = 'http://ipinfo.io/' + ip + '/json';
-                var fallbackURL = 'https://geoiptool.com/en/?ip=' + ip;
-
-                $.getJSON(primaryURL, function(data){
-                    var locationArr = [],
-                        location;
-
-                    for (var prop of ['city', 'region', 'country']) {
-                        if (data.hasOwnProperty(prop) && data[prop].length) {
-                            locationArr.push(data[prop]);
-                        }
-                    }
-
-                    if (locationArr.length > 0) {
-                        location = locationArr.join(', ');
-                    } else {
-                        location = 'Unknown';
-                    }
-
-                    $.each(ipCache[ip], function(i, elem) {
-                        elem.find('.location').html('<a href=\'' + fallbackURL + '\' target=\'_blank\'>'+ location +'</a>');
-                    });
-                }).error(function(){
-                    $.each(ipCache[ip], function(i, elem) {
-                        elem.find('.location').html('<a href=\'' + fallbackURL + '\' target=\'_blank\'>Click for info</a>');
-                    });
-                });
-            });
-        </script>
 	{{/hasNoUserLogRecords}}
 {{/userErrorMessage}}

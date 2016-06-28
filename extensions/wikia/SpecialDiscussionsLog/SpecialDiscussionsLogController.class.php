@@ -34,6 +34,8 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 		$this->setHeaders();
 		$this->response->addAsset( 'special_discussions_log_scss' );
 
+		$this->wg->Out->addModules( 'ext.wikia.SpecialDiscussionsLog' );
+
 		$this->wg->Out->setPageTitle( wfMessage( 'discussionslog-pagetitle' )->escaped() );
 
 		$userName = $this->getVal( UserQuery::getKeyName() );
