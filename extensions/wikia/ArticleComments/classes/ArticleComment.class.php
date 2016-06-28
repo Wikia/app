@@ -249,6 +249,7 @@ class ArticleComment {
 		$this->mUser->setName( $this->mFirstRevision->getUserText() );
 
 		$this->isRevisionLoaded = true;
+		return true;
 	}
 
 	/**

@@ -27,9 +27,6 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		// queue i18n messages for export to JS
 		JSMessages::enqueuePackage( 'CommunityPageSpecial', JSMessages::EXTERNAL );
 
-		// remove user styles and js
-		$this->getOutput()->disallowUserJs();
-
 		$this->response->setValues( [
 			'heroImageUrl' => $this->getHeroImageUrl(),
 			'inviteFriendsText' => $this->msg( 'communitypage-invite-friends' )->plain(),
@@ -71,6 +68,25 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 
 		$topContributorsDetails = $this->getContributorsDetails( $topContributors );
 
+		$query = wfArrayToCGI( [
+			'redirect' => $this->getTitle()->getCanonicalURL(),
+			'uselang' => $this->getLanguage()->getCode(),
+		] );
+
+		$login = Html::element(
+			'a',
+			[ 'href' => 'https://www.wikia.com/signin?' . $query ],
+			$this->msg( 'communitypage-anon-login' )->plain()
+		);
+
+		$register = Html::element(
+			'a',
+			[ 'href' => 'https://www.wikia.com/register?' . $query ],
+			$this->msg( 'communitypage-anon-register' )->plain()
+		);
+
+		$anonText = $this->msg( 'communitypage-anon-contrib-header' )->rawParams( $login, $register )->escaped();
+
 		$this->response->setData( [
 			'admin' => $this->msg( 'communitypage-admin' )->plain(),
 			'topContribsHeaderText' => $this->msg( 'communitypage-top-contributors-week' )->plain(),
@@ -86,7 +102,9 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 			),
 			'userRank' => $userRank,
 			'weeklyEditorCount' => $this->formatTotalEditorsNumber( $topContributorsCount ),
-			'userContribCount' => $currentUserContributionCount
+			'userContribCount' => $currentUserContributionCount,
+			'isAnon' => $this->getUser()->isAnon(),
+			'anonText' => $anonText,
 		] );
 	}
 
@@ -224,6 +242,10 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 			$userName = $user->getName();
 			$avatar = AvatarService::renderAvatar( $userName, AvatarService::AVATAR_SIZE_SMALL_PLUS );
 			$count += 1;
+
+			if ( User::isIp( $userName ) ) {
+				$userName = $this->msg( 'oasis-anon-user' )->plain();
+			}
 
 			return [
 				'userName' => $userName,

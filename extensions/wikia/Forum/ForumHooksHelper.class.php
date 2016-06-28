@@ -373,6 +373,7 @@ class ForumHooksHelper {
 			&& $out->getRequest()->getVal( 'diff' ) === null
 			&& $out->getRequest()->getVal( 'action' ) !== 'render'
 			&& !( $app->checkSkin( 'wikiamobile', $out->getSkin() ) )
+			&& empty( $app->wg->EnableRecirculationDiscussions )
 		) {
 			// VOLDEV-46: Omit zero-state, only render if there are related forum threads
 			$messages = RelatedForumDiscussionController::getData( $title->getArticleId() );

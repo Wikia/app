@@ -20,9 +20,10 @@ define('GRACENOTE_ALREADY_PROCESSED', '#PROCESSED#'); // this would not be a val
 // sentence (no links are required on this attribution).
 ////
 function gracenote_getBrandingHtml(){
+	global $wgWikiaBaseDomain, $wgWikiaNocookieDomain;
 	return "<div id='gracenote-branding'>".
-			"<img src='http://images1.wikia.nocookie.net/lyricwiki/images/6/66/Logo-gracenote.gif' border='0'/><br/>".
-			"Lyrics Provided by Gracenote (<a href='http://lyrics.wikia.com/Gracenote:EULA' rel='nofollow'>Lyrics Terms of Use</a>)</div>\n";
+			"<img src='http://images1.{$wgWikiaNocookieDomain}/lyricwiki/images/6/66/Logo-gracenote.gif' border='0'/><br/>".
+			"Lyrics Provided by Gracenote (<a href='http://lyrics.{$wgWikiaBaseDomain}/Gracenote:EULA' rel='nofollow'>Lyrics Terms of Use</a>)</div>\n";
 } // end gracenote_getBrandingHtml()
 
 ////

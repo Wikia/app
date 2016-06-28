@@ -89,7 +89,7 @@ class TaskRunner {
 			if ( $result->isOk()) {
 				$this->info(__METHOD__ . ' task ' . get_class( $task ) . ' finished successfully', $logContext );
 			} else {
-				$this->error(__METHOD__ . ' task ' . get_class( $task ) . ' failed ', $logContext );
+				$this->critical(__METHOD__ . ' task ' . get_class( $task ) . ' failed ', $logContext );
 				throw new \CreateWikiException( $result->getMessage() );
 			}
 		}

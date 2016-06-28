@@ -550,28 +550,31 @@ class ArticleAsJson extends WikiaService {
 		$fallbackSize = self::MAX_MERCURY_CONTENT_WIDTH
 	) {
 		$mediaDetail = WikiaFileHelper::getMediaDetail( $title, $mediaDetailConfig );
-		if ( empty( $mediaDetail['width'] ) ) {
-			$mediaDetail['width'] = $fallbackSize;
 
-			\Wikia\Logger\WikiaLogger::instance()->error(
-				'ArticleAsJson - Media width was empty - fallback to fallbackSize',
-				[
-					'media_details' => $mediaDetail,
-					'fallback_size' => $fallbackSize
-				]
-			);
-		}
+		if ( $mediaDetail['exists'] === true ) {
+			if ( empty( $mediaDetail['width'] ) ) {
+				$mediaDetail['width'] = $fallbackSize;
 
-		if ( empty( $mediaDetail['height'] ) ) {
-			$mediaDetail['height'] = $fallbackSize;
+				\Wikia\Logger\WikiaLogger::instance()->notice(
+					'ArticleAsJson - Media width was empty - fallback to fallbackSize',
+					[
+						'media_details' => $mediaDetail,
+						'fallback_size' => $fallbackSize
+					]
+				);
+			}
 
-			\Wikia\Logger\WikiaLogger::instance()->error(
-				'Image height was empty - fallback to fallbackSize',
-				[
-					'mediaDetails' => $mediaDetail,
-					'fallbackSize' => $fallbackSize
-				]
-			);
+			if ( empty( $mediaDetail['height'] ) ) {
+				$mediaDetail['height'] = $fallbackSize;
+
+				\Wikia\Logger\WikiaLogger::instance()->notice(
+					'ArticleAsJson - Media height was empty - fallback to fallbackSize',
+					[
+						'media_details' => $mediaDetail,
+						'fallback_size' => $fallbackSize
+					]
+				);
+			}
 		}
 
 		return $mediaDetail;
