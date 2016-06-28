@@ -3967,6 +3967,16 @@ $wgAggregateStatsID = false;
 $wgDisableCounters = false;
 
 /**
+ * Set this to an integer to only do synchronous site_stats updates
+ * one every *this many* updates. The other requests go into pending
+ * delta values in $wgMemc. Make sure that $wgMemc is a global cache.
+ * If set to -1, updates *only* go to $wgMemc (useful for daemons).
+ *
+ * @see PLATFORM-2275
+ */
+$wgSiteStatsAsyncFactor = false;
+
+/**
  * Parser test suite files to be run by parserTests.php when no specific
  * filename is passed to it.
  *
