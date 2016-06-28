@@ -4729,9 +4729,10 @@ $wgJobTypesExcludedFromDefaultQueue = array();
  * Additional functions to be performed with updateSpecialPages.
  * Expensive Querypages are already updated.
  */
-$wgSpecialPageCacheUpdates = array(
-	'Statistics' => array( 'SiteStatsUpdate', 'cacheUpdate' )
-);
+$wgSpecialPageCacheUpdates = [
+	'SiteStatsRegenerate' => [ 'SiteStatsInit', 'doAllAndCommit' ], # PLATFORM-2275
+	'Statistics'          => [ 'SiteStatsUpdate', 'cacheUpdate' ],
+];
 
 /**
  * Hooks that are used for outputting exceptions.  Format is:
