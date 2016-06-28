@@ -125,12 +125,12 @@ class NavigationTemplateTest extends WikiaBaseTest {
 				"nested templates without block elements, nothing should be removed if there is no block element"
 			],
 			[
-				"<\x7fNAVUNIQ_342\x7f>\n<a>some content <\x7fNAVUNIQ_343\x7f>\n <a>nested template</a> <\x7fNAVUNIQ_346\x7f>\n <a>nested nested template</a><\x7fNAVUNIQ_347\x7f>\n <p>nested nested nested template</p><\x7fNAVUNIQ_348\x7f>\n <a>nested nested nested template</a> \n</\x7fNAVUNIQ_348\x7f> \n</\x7fNAVUNIQ_347\x7f> \n</\x7fNAVUNIQ_346\x7f> \n</\x7fNAVUNIQ_343\x7f> <\x7fNAVUNIQ_344\x7f>\n <a>nested template</a> \n</\x7fNAVUNIQ_344\x7f></a>\n</\x7fNAVUNIQ_342\x7f>",
+				"<p><\x7fNAVUNIQ_342\x7f>\n</p><a>some content <p><\x7fNAVUNIQ_343\x7f>\n</p> <a>nested template</a> <p><\x7fNAVUNIQ_346\x7f>\n</p> <a>nested nested template</a><p><\x7fNAVUNIQ_347\x7f>\n</p> <p>nested nested nested template</p><p><\x7fNAVUNIQ_348\x7f>\n</p> <a>nested nested nested template</a> <p></\x7fNAVUNIQ_348\x7f>\n</p><p></\x7fNAVUNIQ_347\x7f>\n</p><p></\x7fNAVUNIQ_346\x7f>\n</p><p></\x7fNAVUNIQ_343\x7f>\n</p><p><\x7fNAVUNIQ_344\x7f>\n</p> <a>nested template</a> <p></\x7fNAVUNIQ_344\x7f>\n</p></a><p></\x7fNAVUNIQ_342\x7f>\n</p>",
 				"",
 				"block element within the most inner template, everything should be removed"
 			],
 			[
-				"<\x7fNAVUNIQ_342\x7f>\n <a>something</a> \n</\x7fNAVUNIQ_342\x7f><\x7fNAVUNIQ_343\x7f>\n<p>something2</p>\n</\x7fNAVUNIQ_343\x7f><\x7fNAVUNIQ_342\x7f>\nsomething\n</\x7fNAVUNIQ_342\x7f><\x7fNAVUNIQ_343\x7f>\n<div>something2</div>\n</\x7fNAVUNIQ_343\x7f>",
+				"<p><\x7fNAVUNIQ_342\x7f>\n</p> <a>something</a> <p></\x7fNAVUNIQ_342\x7f>\n</p><p><\x7fNAVUNIQ_343\x7f>\n</p><p>something2</p><p></\x7fNAVUNIQ_343\x7f>\n</p><p><\x7fNAVUNIQ_342\x7f>\n</p>something<p></\x7fNAVUNIQ_342\x7f>\n</p><p><\x7fNAVUNIQ_343\x7f>\n</p><div>something2</div><p></\x7fNAVUNIQ_343\x7f>\n</p>",
 				" <a>something</a> something",
 				"multiple invocations of the same template, those with block elements should be removed"
 			]

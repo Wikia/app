@@ -49,12 +49,18 @@ class NavigationTemplate {
 
 	private static function replaceMarker( $marker, $html ) {
 		// matches block elements in between start and end marker tags
+
+		// because after opening marker and before closing marker new line is added, markers after parsing are wrapped
+		// with <p></p> tags
+		$openMarkerRegex = '[<&lt;]p[>&gt;](<|&lt;)' . $marker . '(>|&gt;).[<&lt;]\\/p[>&gt;]';
+		$closeMarkerRegex = '[<&lt;]p[>&gt;](<|&lt;)\\/' . $marker . '(>|&gt;).[<&lt;]\\/p[>&gt;]';
+
 		// <marker>(not </marker>)...(block element)...</marker>
 		$replaced = preg_replace(
-			'/(<|&lt;)' . $marker . '(>|&gt;)' .
+			'/' . $openMarkerRegex .
 			'((?!(<|&lt;)\\/' . $marker . '(>|&gt;)).)*' .
 			'<(' . implode( '|', self::$blockLevelElements ) . ')(\s.*)?>.*' .
-			'(<|&lt;)\\/' . $marker . '(>|&gt;)/isU',
+			$closeMarkerRegex . '/isU',
 			// replacement
 			'',
 			$html, -1, $count
@@ -68,9 +74,10 @@ class NavigationTemplate {
 		} else {
 			$result = $replaced;
 		}
+
 		// remove markers from output
-		$outputOpenings = preg_replace( '/(<|&lt;)' . $marker . '(>|&gt;)\\n/sU', '', $result );
-		$output = preg_replace( '/\\n(<|&lt;)\\/' . $marker . '(>|&gt;)/sU', '', $outputOpenings );
+		$outputOpenings = preg_replace( '/' . $openMarkerRegex . '/sU', '', $result );
+		$output = preg_replace( '/'. $closeMarkerRegex . '/sU', '', $outputOpenings );
 
 		if ( $outputOpenings === null || $output === null ) {
 			\Wikia\Logger\WikiaLogger::instance()->error( 'Navigation replacement failed', [ 'code' => preg_last_error() ] );
@@ -86,6 +93,8 @@ class NavigationTemplate {
 	private static function mark( $text ) {
 		// marking each template with unique marker to be able to handle nested navigation templates
 		$marker = "\x7f" . self::MARK . "_" . uniqid() . "\x7f";
+
+		// adding new lines to allow parsing for example tables and lists
 		return sprintf( "<%s>\n%s\n</%s>", $marker, $text, $marker );
 	}
 
