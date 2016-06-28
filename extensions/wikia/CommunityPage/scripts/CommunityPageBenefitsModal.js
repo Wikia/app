@@ -45,8 +45,8 @@ define('CommunityPageBenefitsModal',
 		 * @param {Object} nirvanaRes
 		 */
 		function handleRequestsForModal(loaderRes, nirvanaRes) {
-			var wikiTopic = nirvanaRes.wikiTopic,
-				allMembersCount = nirvanaRes.memberCount;
+			var wikiTopic = nirvanaRes[0].wikiTopic,
+				allMembersCount = nirvanaRes[0].memberCount;
 
 			mw.messages.set(loaderRes.messages);
 
