@@ -226,6 +226,20 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		] );
 	}
 
+	public function getBenefitsModalData() {
+		$memberCount = $this->usersModel->getMemberCount();
+
+		if ( $memberCount < 25 ) {
+			$memberCount = '';
+		} else {
+			$memberCount = $this->getLanguage()->formatNum( $memberCount );
+		}
+		$this->response->setData( [
+			'memberCount' => $memberCount,
+			'wikiTopic' => $this->wg->Sitename,
+		] );
+	}
+
 	private function addAssets() {
 		$this->response->addAsset( 'special_community_page_js' );
 		$this->response->addAsset( 'special_community_page_scss' );
