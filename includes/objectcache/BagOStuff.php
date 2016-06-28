@@ -147,6 +147,31 @@ abstract class BagOStuff {
 		return $this->incr( $key, - $value );
 	}
 
+	/**
+	 * Increase stored value of $key by $value while preserving its TTL
+	 *
+	 * This will create the key with value $init and TTL $ttl instead if not present
+	 *
+	 * @param string $key
+	 * @param int $ttl
+	 * @param int $value
+	 * @param int $init
+	 * @return int|bool New value or false on failure
+	 * @since 1.24
+	 */
+	public function incrWithInit( $key, $ttl, $value = 1, $init = 1 ) {
+		$newValue = $this->incr( $key, $value );
+		if ( $newValue === false ) {
+			// No key set; initialize
+			$newValue = $this->add( $key, (int)$init, $ttl ) ? $init : false;
+		}
+		if ( $newValue === false ) {
+			// Raced out initializing; increment
+			$newValue = $this->incr( $key, $value );
+		}
+		return $newValue;
+	}
+
 	public function debug( $text ) {
 		if ( $this->debugMode ) {
 			$class = get_class( $this );

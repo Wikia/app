@@ -165,6 +165,17 @@ class SiteStatsUpdate implements DeferrableUpdate {
 	private function getTypeCacheKey( $type, $sign ) {
 		return wfMemcKey( 'sitestatsupdate', 'pendingdelta', $type, $sign );
 	}
+
+	/**
+	 * Wikia: replacement for ObjectCache::getMainStashInstance()
+	 *
+	 * @return MemcachedPhpBagOStuff
+	 */
+	private static function getCache() {
+		global $wgMemc;
+		return $wgMemc;
+	}
+
 	/**
 	 * Adjust the pending deltas for a stat type.
 	 * Each stat type has two pending counters, one for increments and decrements
@@ -172,7 +183,7 @@ class SiteStatsUpdate implements DeferrableUpdate {
 	 * @param int $delta Delta (positive or negative)
 	 */
 	protected function adjustPending( $type, $delta ) {
-		$cache = ObjectCache::getMainStashInstance();
+		$cache = self::getCache();
 		if ( $delta < 0 ) { // decrement
 			$key = $this->getTypeCacheKey( $type, '-' );
 		} else { // increment
@@ -186,15 +197,14 @@ class SiteStatsUpdate implements DeferrableUpdate {
 	 * @return array Positive and negative deltas for each type
 	 */
 	protected function getPendingDeltas() {
-		$cache = ObjectCache::getMainStashInstance();
+		$cache = self::getCache();
 		$pending = [];
 		foreach ( [ 'ss_total_edits',
 					  'ss_good_articles', 'ss_total_pages', 'ss_users', 'ss_images' ] as $type
 		) {
 			// Get pending increments and pending decrements
-			$flg = BagOStuff::READ_LATEST;
-			$pending[$type]['+'] = (int)$cache->get( $this->getTypeCacheKey( $type, '+' ), $flg );
-			$pending[$type]['-'] = (int)$cache->get( $this->getTypeCacheKey( $type, '-' ), $flg );
+			$pending[$type]['+'] = (int)$cache->get( $this->getTypeCacheKey( $type, '+' ) );
+			$pending[$type]['-'] = (int)$cache->get( $this->getTypeCacheKey( $type, '-' ) );
 		}
 		return $pending;
 	}
@@ -203,7 +213,7 @@ class SiteStatsUpdate implements DeferrableUpdate {
 	 * @param array $pd Result of getPendingDeltas(), used for DB update
 	 */
 	protected function removePendingDeltas( array $pd ) {
-		$cache = ObjectCache::getMainStashInstance();
+		$cache = self::getCache();
 		foreach ( $pd as $type => $deltas ) {
 			foreach ( $deltas as $sign => $magnitude ) {
 				// Lower the pending counter now that we applied these changes
