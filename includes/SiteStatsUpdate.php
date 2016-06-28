@@ -54,7 +54,6 @@ class SiteStatsUpdate implements DeferrableUpdate {
 	}
 	public function doUpdate() {
 		global $wgSiteStatsAsyncFactor;
-		$this->doUpdateContextStats();
 		$rate = $wgSiteStatsAsyncFactor; // convenience
 		// If set to do so, only do actual DB updates 1 every $rate times.
 		// The other times, just update "pending delta" values in memcached.
@@ -133,15 +132,6 @@ class SiteStatsUpdate implements DeferrableUpdate {
 			__METHOD__
 		);
 		return $activeUsers;
-	}
-	protected function doUpdateContextStats() {
-		$stats = RequestContext::getMain()->getStats();
-		foreach ( [ 'edits', 'articles', 'pages', 'users', 'images' ] as $type ) {
-			$delta = $this->$type;
-			if ( $delta !== 0 ) {
-				$stats->updateCount( "site.$type", $delta );
-			}
-		}
 	}
 	protected function doUpdatePendingDeltas() {
 		$this->adjustPending( 'ss_total_edits', $this->edits );
