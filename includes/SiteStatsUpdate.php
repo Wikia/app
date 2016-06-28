@@ -66,7 +66,7 @@ class SiteStatsUpdate implements DeferrableUpdate {
 	/**
 	 * Do not call this outside of SiteStatsUpdate
 	 */
-	public function tryDBUpdateInternal() {
+	protected function tryDBUpdateInternal() {
 		global $wgSiteStatsAsyncFactor;
 		$dbw = wfGetDB( DB_MASTER );
 		$lockKey = wfMemcKey( 'site_stats' ); // prepend wiki ID
@@ -103,6 +103,8 @@ class SiteStatsUpdate implements DeferrableUpdate {
 			// Commit the updates and unlock the table
 			$dbw->unlock( $lockKey, __METHOD__ );
 		}
+
+		SiteStats::invalidateCache(); // Wikia change
 	}
 	/**
 	 * @param IDatabase $dbw
@@ -131,6 +133,9 @@ class SiteStatsUpdate implements DeferrableUpdate {
 			[ 'ss_row_id' => 1 ],
 			__METHOD__
 		);
+
+		SiteStats::invalidateCache(); // Wikia change
+
 		return $activeUsers;
 	}
 	protected function doUpdatePendingDeltas() {

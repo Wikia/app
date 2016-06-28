@@ -9,6 +9,13 @@ class SiteStats {
 	static $pageCount = array();
 	static $groupMemberCounts = array();
 
+	/**
+	 * @return String
+	 */
+	private static function getMemcKey() {
+		return wfMemcKey( __CLASS__, 'row' );
+	}
+
 	static function recache() {
 		self::load( true );
 	}
@@ -29,7 +36,7 @@ class SiteStats {
 			$u = new SiteStatsUpdate( 0, 0, 0 );
 			$u->doUpdate();
 			$dbr = wfGetDB( DB_SLAVE, 'vslow' );
-			self::$row = $dbr->selectRow( 'site_stats', '*', false, __METHOD__ );
+			self::$row = self::doLoad( $dbr );
 		}
 
 		self::$loaded = true;
@@ -39,45 +46,29 @@ class SiteStats {
 	 * @return Bool|ResultWrapper
 	 */
 	static function loadAndLazyInit() {
-		wfDebug( __METHOD__ . ": reading site_stats from slave\n" );
-		$row = self::doLoad( wfGetDB( DB_SLAVE, 'vslow' ) );
+		# Wikia change
+		return WikiaDataAccess::cache(
+			self::getMemcKey(),
+			WikiaResponse::CACHE_STANDARD,
+			function() {
+				wfDebug( __METHOD__ . ": reading site_stats from slave\n" );
+				return self::doLoad( wfGetDB( DB_SLAVE, 'vslow' ) );
+			}
+		);
+	}
 
-		/*
-		if( !self::isSane( $row ) ) {
-			// Might have just been initialized during this request? Underflow?
-			wfDebug( __METHOD__ . ": site_stats damaged or missing on slave\n" );
-			$row = self::doLoad( wfGetDB( DB_MASTER ) );
-		}
-
-		if( !self::isSane( $row ) ) {
-			// Normally the site_stats table is initialized at install time.
-			// Some manual construction scenarios may leave the table empty or
-			// broken, however, for instance when importing from a dump into a
-			// clean schema with mwdumper.
-			wfDebug( __METHOD__ . ": initializing damaged or missing site_stats\n" );
-
-			SiteStatsInit::doAllAndCommit( wfGetDB( DB_SLAVE ) );
-
-			ob_start();
-			wfInitStats();
-			wfGetDB( DB_MASTER )->commit();
-			ob_end_clean();
-
-			$row = self::doLoad( wfGetDB( DB_MASTER ) );
-		}
-
-		if( !self::isSane( $row ) ) {
-			wfDebug( __METHOD__ . ": site_stats persistently nonsensical o_O\n" );
-		}
-		*/
-		return $row;
+	/**
+	 * Wikia change: invalidate cache used by SiteStats::load()
+	 */
+	public static function invalidateCache() {
+		WikiaDataAccess::cachePurge( self::getMemcKey() );
 	}
 
 	/**
 	 * @param $db DatabaseBase
 	 * @return Bool|ResultWrapper
 	 */
-	static function doLoad( $db ) {
+	private static function doLoad( $db ) {
 		return $db->selectRow( 'site_stats', '*', false, __METHOD__ );
 	}
 
@@ -394,6 +385,8 @@ class SiteStatsInit {
 		list( $values, $conds ) = $this->getDbParams();
 		$dbw = wfGetDB( DB_MASTER );
 		$dbw->update( 'site_stats', $values, $conds, __METHOD__ );
+
+		SiteStats::invalidateCache(); // Wikia change
 	}
 
 	/**
@@ -405,6 +398,8 @@ class SiteStatsInit {
 		$dbw = wfGetDB( DB_MASTER );
 		$dbw->delete( 'site_stats', $conds, __METHOD__ );
 		$dbw->insert( 'site_stats', array_merge( $values, $conds, $views ), __METHOD__ );
+
+		SiteStats::invalidateCache(); // Wikia change
 	}
 
 	/**
