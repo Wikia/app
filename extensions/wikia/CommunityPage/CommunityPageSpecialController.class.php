@@ -236,7 +236,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		}
 		$this->response->setData( [
 			'memberCount' => $memberCount,
-			'wikiTopic' => $this->wg->Sitename,
+			'wikiTopic' => WikiTopic::getWikiTopic(),
 		] );
 	}
 
