@@ -21,63 +21,6 @@ class NavigationTemplateTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @param $expectedOutput
-	 * @param $templateText
-	 * @dataProvider getNavigationTemplates
-	 */
-	public function testHideNavigationWithBlockElements( $templateText, $expectedOutput, $message ) {
-		$output = NavigationTemplate::handle( $templateText );
-		NavigationTemplate::resolve( $output );
-
-		$this->assertSame( $expectedOutput, $output, $message );
-	}
-
-	public function getNavigationTemplates() {
-		return [
-			[
-				'<a>This is a <strong>template</strong> <b>without</b> a <span>block</span> element</a>.',
-				'<a>This is a <strong>template</strong> <b>without</b> a <span>block</span> element</a>.',
-				'A template with a link, formatting tags and a span one should be visible.',
-			],
-			[
-				'<span>This is a template with a div <div>element</div></span>.',
-				'',
-				'A template with a div tag should be hidden.',
-			],
-			[
-				'<span>This is a template with a DIV <DIV>element</DIV></span>.',
-				'',
-				'A template with a DIV (uppercase) tag should be hidden.',
-			],
-			[
-				'<span>This is a template with a table <table>element</table></span>.',
-				'',
-				'A template with a table tag should be hidden.',
-			],
-			[
-				'<span>This is a template with a TABLE <TABLE>element</TABLE></span>.',
-				'',
-				'A template with a TABLE (uppercase) tag should be hidden.',
-			],
-			[
-				'<span>This is a template with a p <p>element</p></span>.',
-				'',
-				'A template with a p tag should be hidden.',
-			],
-			[
-				'<span>This is a template with a P <P>element</P></span>.',
-				'',
-				'A template with a P (uppercase) tag should be hidden.',
-			],
-			[
-				'<poem>This is a template with a poem tag. This is one is tricky and should not be matched as a p tag.</poem>.',
-				'<poem>This is a template with a poem tag. This is one is tricky and should not be matched as a p tag.</poem>.',
-				'A template with a poem tag should be visible.',
-			]
-		];
-	}
-
-	/**
 	 * @dataProvider articleHtmlProvided
 	 */
 	public function testMultiTemplates( $marked, $expected, $message ) {
@@ -90,37 +33,37 @@ class NavigationTemplateTest extends WikiaBaseTest {
 		return [
 			[ "", "", "Empty html should be correctly processed" ],
 			[
-				"<\x7fNAVUNIQ_342\x7f>\nfakjsdlkjflk <div>asdf</div>kasjdlfkjdks ksdjlafkj\n</\x7fNAVUNIQ_342\x7f>NAVUNIQ aksdjlfkj alksjdldf\nlkjsdl <\x7fNAVUNIQ_343\x7f>\nd\n</\x7fNAVUNIQ_343\x7f>",
+				"<p><\x7fNAVUNIQ_342\x7f>\n</p>fakjsdlkjflk <div>asdf</div>kasjdlfkjdks ksdjlafkj<p></\x7fNAVUNIQ_342\x7f>\n</p>NAVUNIQ aksdjlfkj alksjdldf\nlkjsdl <p><\x7fNAVUNIQ_343\x7f>\n</p>d<p></\x7fNAVUNIQ_343\x7f>\n</p>",
 				"NAVUNIQ aksdjlfkj alksjdldf\nlkjsdl d",
 				"If block element in navigation template it should be removed"
 			],
 			[
-				"<\x7fNAVUNIQ_342\x7f>\nakjsdlkjflk <div>asdf</div>kasjdlfkjdks ksdjlafkj\n</\x7fNAVUNIQ_342\x7f> test",
+				"<p><\x7fNAVUNIQ_342\x7f>\n</p>akjsdlkjflk <div>asdf</div>kasjdlfkjdks ksdjlafkj<p></\x7fNAVUNIQ_342\x7f>\n</p> test",
 				" test",
 				"Single nav template with block should be removed"
 			],
 			[
-				"&lt;\x7fNAVUNIQ_342\x7f&gt;\nakjsdlkjflk <div>asdf</div>kasjdlfkjdks ksdjlafkj\n&lt;/\x7fNAVUNIQ_342\x7f&gt; test",
+				"<p>&lt;\x7fNAVUNIQ_342\x7f&gt;\n</p>akjsdlkjflk <div>asdf</div>kasjdlfkjdks ksdjlafkj<p>&lt;/\x7fNAVUNIQ_342\x7f&gt;\n</p> test",
 				" test",
 				"Single nav template with block should be removed, even when encoded"
 			],
 			[
-				"<\x7fNAVUNIQ_342\x7f>\nasdf\n</\x7fNAVUNIQ_342\x7f> test",
+				"<p><\x7fNAVUNIQ_342\x7f>\n</p>asdf<p></\x7fNAVUNIQ_342\x7f>\n</p> test",
 				"asdf test",
 				"Single inline element should be left"
 			],
 			[
-				"<\x7fNAVUNIQ_342\x7f>\n<div>some content <\x7fNAVUNIQ_343\x7f>\n <p>nested template</p> \n</\x7fNAVUNIQ_343\x7f> <\x7fNAVUNIQ_344\x7f>\n <p>nested template</p> \n</\x7fNAVUNIQ_344\x7f></div>\n</\x7fNAVUNIQ_342\x7f>",
+				"<p><\x7fNAVUNIQ_342\x7f>\n</p><div>some content <p><\x7fNAVUNIQ_343\x7f>\n</p> <p>nested template</p> <p></\x7fNAVUNIQ_343\x7f>\n</p> <p><\x7fNAVUNIQ_344\x7f>\n</np> <p>nested template</p> <p></\x7fNAVUNIQ_344\x7f>\n</p></div><p></\x7fNAVUNIQ_342\x7f>\n</p>",
 				"",
 				"nested templates with block element and one nested template without block elements, everything should be removed"
 			],
 			[
-				"<\x7fNAVUNIQ_342\x7f>\n<div>some content <\x7fNAVUNIQ_343\x7f>\n <p>nested template</p> \n</\x7fNAVUNIQ_343\x7f> <\x7fNAVUNIQ_344\x7f>\n nested template \n</\x7fNAVUNIQ_344\x7f></div>\n</\x7fNAVUNIQ_342\x7f>",
+				"<p><\x7fNAVUNIQ_342\x7f>\n</p><div>some content <p><\x7fNAVUNIQ_343\x7f>\n</p> <p>nested template</p> <p></\x7fNAVUNIQ_343\x7f>\n</p> <p><\x7fNAVUNIQ_344\x7f>\n</p> nested template <p></\x7fNAVUNIQ_344\x7f>\n</p></div><p></\x7fNAVUNIQ_342\x7f>\n</p>",
 				"",
 				"nested templates with block elements, everything should be removed"
 			],
 			[
-				"<\x7fNAVUNIQ_342\x7f>\n<a>some content <\x7fNAVUNIQ_343\x7f>\n <a>nested template</a> <\x7fNAVUNIQ_346\x7f>\n <a>nested nested template</a><\x7fNAVUNIQ_347\x7f>\n <a>nested nested nested template</a><\x7fNAVUNIQ_348\x7f>\n <a>nested nested nested template</a> \n</\x7fNAVUNIQ_348\x7f> \n</\x7fNAVUNIQ_347\x7f> \n</\x7fNAVUNIQ_346\x7f> \n</\x7fNAVUNIQ_343\x7f> <\x7fNAVUNIQ_344\x7f>\n <a>nested template</a> \n</\x7fNAVUNIQ_344\x7f></a>\n</\x7fNAVUNIQ_342\x7f>",
+				"<p><\x7fNAVUNIQ_342\x7f>\n</p><a>some content <p><\x7fNAVUNIQ_343\x7f>\n</p> <a>nested template</a> <p><\x7fNAVUNIQ_346\x7f>\n</p> <a>nested nested template</a><p><\x7fNAVUNIQ_347\x7f>\n</p> <a>nested nested nested template</a><p><\x7fNAVUNIQ_348\x7f>\n</p> <a>nested nested nested template</a> <p></\x7fNAVUNIQ_348\x7f>\n</p> <p></\x7fNAVUNIQ_347\x7f>\n</p> <p></\x7fNAVUNIQ_346\x7f>\n</p> <p></\x7fNAVUNIQ_343\x7f>\n</p> <p><\x7fNAVUNIQ_344\x7f>\n</p> <a>nested template</a> <p></\x7fNAVUNIQ_344\x7f>\n</p></a><p></\x7fNAVUNIQ_342\x7f>\n</p>",
 				"<a>some content  <a>nested template</a>  <a>nested nested template</a> <a>nested nested nested template</a> <a>nested nested nested template</a>      <a>nested template</a> </a>",
 				"nested templates without block elements, nothing should be removed if there is no block element"
 			],
