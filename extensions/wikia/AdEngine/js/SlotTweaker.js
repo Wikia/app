@@ -132,8 +132,8 @@ define('ext.wikia.adEngine.slotTweaker', [
 
 		onReady(slotName, function (iframe) {
 			log(['makeResponsive', slotName], 'debug', logGroup);
-			var height = parseInt(iframe.height, 10),
-				width = parseInt(iframe.width, 10);
+			var height = iframe.contentWindow.document.body.scrollHeight,
+				width = iframe.contentWindow.document.body.scrollWidth;
 
 			log(['Slot ratio', height/width], 'debug', logGroup);
 			providerContainer.style.paddingBottom = 100/(width/height) + '%';

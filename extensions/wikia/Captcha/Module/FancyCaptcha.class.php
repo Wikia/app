@@ -42,7 +42,7 @@ class FancyCaptcha extends BaseCaptcha {
 	/**
 	 * @param array $resultArr
 	 */
-	public function addCaptchaAPI( Array &$resultArr ) {
+	public function addCaptchaAPI( &$resultArr ) {
 		$info = $this->pickImage();
 		if ( !$info ) {
 			$resultArr['captcha']['error'] = 'Out of images';
