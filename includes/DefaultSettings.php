@@ -3974,7 +3974,7 @@ $wgDisableCounters = false;
  *
  * @see PLATFORM-2275
  */
-$wgSiteStatsAsyncFactor = false;
+$wgSiteStatsAsyncFactor = 1;
 
 /**
  * Parser test suite files to be run by parserTests.php when no specific
