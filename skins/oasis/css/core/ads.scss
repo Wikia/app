@@ -59,8 +59,38 @@ $taboola-small-breakpoint: "#{$screen} and (max-width: 420px)";
 		}
 	}
 
-	#TOP_LEADERBOARD {
+	.WikiaTopAdsInner {
 		width: 100%;
+	}
+
+	#HOME_TOP_LEADERBOARD, #TOP_LEADERBOARD, #CORP_TOP_LEADERBOARD, #HUB_TOP_LEADERBOARD {
+		max-width: none;
+		width: 100%;
+
+		> div {
+			position: relative;
+
+			iframe {
+				height: 100%;
+				left: 0;
+				position: absolute;
+				width: 100%;
+				top: 0;
+			}
+		}
+	}
+}
+
+.bfab-template > div{
+	position: relative;
+	width: 100%;
+
+	iframe {
+		height: 100%;
+		left: 0;
+		position: absolute;
+		width: 100%;
+		top: 0;
 	}
 }
 
@@ -224,7 +254,7 @@ $taboola-small-breakpoint: "#{$screen} and (max-width: 420px)";
 
 #PREFOOTER_LEFT_BOXAD, #PREFOOTER_MIDDLE_BOXAD, #PREFOOTER_RIGHT_BOXAD {
 	float: left;
-	margin: 0 15px;
+	margin: 0 30px 0 0;
 
 	&.default-height {
 		height: 250px;
