@@ -89,8 +89,7 @@ $messages['en'] = array(
 	'communitypage-todo-module-heading' => 'Community To-do list',
 	'communitypage-todo-module-edit-list' => 'Edit list',
 	'communitypage-todo-module-description' => 'This is an area for admins to suggest pages that need work to help new contributors get started. (Admins - remember to provide details on what needs to be done.)',
-	'communitypage-todo-module-zero-state' => 'Want to know how you can contribute to this community? $1 and ask them to provide suggestions here.',
-	'communitypage-todo-module-zero-state-contact-admin' => 'Contact an admin',
+	'communitypage-todo-module-zero-state' => 'Want to know how you can contribute to this community? Contact an admin and ask them to provide suggestions here.',
 );
 
 $messages['qqq'] = array(
@@ -182,7 +181,6 @@ $messages['qqq'] = array(
 	'communitypage-todo-module-edit-list' => 'Edit list link to show to the right of community to-do list header',
 	'communitypage-todo-module-description' => 'Description of what the purpose of the community to-do list is',
 	'communitypage-todo-module-zero-state' => 'Zero text to show when there is no community to-do page',
-	'communitypage-todo-module-zero-state-contact-admin' => 'Link text for contact an admin',
 );
 
 $messages['de'] = array(

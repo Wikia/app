@@ -7,7 +7,7 @@ class CommunityPageSpecialCommunityTodoListModel {
 		$title = Title::newFromText( $messageKey, NS_MEDIAWIKI );
 		$data = [
 			'haveContent' => false,
-			'editUrl' => $title->getFullURL( ['action' => 'edit'] ),
+			'editUrl' => $title->getFullURL( [ 'action' => 'edit' ] ),
 		];
 
 		if ( !$message->isDisabled() ) {

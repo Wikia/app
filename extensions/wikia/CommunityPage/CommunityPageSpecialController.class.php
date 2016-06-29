@@ -310,21 +310,13 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		$user = $this->getUser();
 		$data = ( new CommunityPageSpecialCommunityTodoListModel() )->getData();
 
-		$contact = Html::element(
-			'a',
-			[ 'href' => 'https://www.wikia.com/' ],
-			$this->msg( 'communitypage-todo-module-zero-state-contact-admin' )->plain()
-		);
-
-		$zeroStateText = $this->msg( 'communitypage-todo-module-zero-state' )->rawParams( $contact )->escaped();
-
 		return array_merge( $data, [
 			'isAdmin' => in_array( $user->getId(), $this->usersModel->getAdmins() ),
 			'isZeroState' => !$data['haveContent'],
 			'heading' => $this->msg( 'communitypage-todo-module-heading' )->plain(),
 			'editList' => $this->msg( 'communitypage-todo-module-edit-list' )->plain(),
 			'description' => $this->msg( 'communitypage-todo-module-description' )->plain(),
-			'zeroStateText' => $zeroStateText,
+			'zeroStateText' => $this->msg( 'communitypage-todo-module-zero-state' )->plain(),
 		] );
 	}
 }

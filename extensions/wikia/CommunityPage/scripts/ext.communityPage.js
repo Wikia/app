@@ -220,6 +220,11 @@ require([
 				category: category,
 				label: label,
 			});
+
+			console.log({
+				category: category,
+				label: label,
+			});
 		}
 	}
 
@@ -254,11 +259,14 @@ require([
 
 		// Track clicks in the To-do List module
 		$('.community-page-todo-list-module-edit').on('mousedown touchstart', 'a', function (event) {
-			handleClick(event, 'community-page-todo-list-module-edit');
+			handleClick(event, 'community-page-todo-list-module');
 		});
 
 		$('.community-page-todo-list-module-content').on('mousedown touchstart', 'a', function (event) {
-			handleClick(event, 'community-page-todo-list-content');
+			track({
+				category: 'community-page-todo-list-module',
+				label: event.delegateTarget.getAttribute('data-tracking'),
+			});
 		});
 	}
 

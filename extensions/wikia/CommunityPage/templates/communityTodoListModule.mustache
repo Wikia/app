@@ -5,7 +5,7 @@
 		</div>
 		{{#isAdmin}}
 			<div class="community-page-todo-list-module-edit">
-				<a href="{{editUrl}}">
+				<a data-tracking="community-page-todo-list-module-edit" href="{{editUrl}}">
 					<div class="community-page-todo-list-module-edit-icon"></div>
 					{{editList}}
 				</a>
@@ -20,7 +20,7 @@
 			</div>
 		{{/isZeroState}}
 		{{^isZeroState}}
-			<div class="community-page-todo-list-module-content">
+			<div class="community-page-todo-list-module-content" data-tracking="community-page-todo-list-module-content">
 				{{{data}}}
 			</div>
 		{{/isZeroState}}
