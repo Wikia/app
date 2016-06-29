@@ -63,7 +63,9 @@ class CommunityPageSpecialHooks {
 	 * @return true
 	 */
 	public static function onBeforePageDisplay( \OutputPage $out, \Skin $skin ) {
-		if ( $out->getUser()->isAnon() &&
+		$user = $out->getUser();
+
+		if ( $user->isAnon() &&
 			!isset( $_COOKIE['cpBenefitsModalShown'] ) &&
 			$out->getRequest()->getVal( 'action' ) !== 'edit' &&
 			$out->getRequest()->getVal( 'veaction' ) !== 'edit' &&
@@ -73,7 +75,7 @@ class CommunityPageSpecialHooks {
 			\Wikia::addAssetsToOutput( 'community_page_benefits_scss' );
 		}
 
-		if ( !$out->getUser()->isAnon() && !$out->getUser()->isAllowed( 'first-edit-dialog-exempt' )) {
+		if ( !$user->isAnon() && !$user->isAllowed( 'first-edit-dialog-exempt' ) ) {
 			\Wikia::addAssetsToOutput( 'community_page_new_user_modal_js' );
 			\Wikia::addAssetsToOutput( 'community_page_new_user_modal_scss' );
 		}
