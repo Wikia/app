@@ -49,7 +49,7 @@ class SiteStats {
 		# Wikia change
 		return WikiaDataAccess::cache(
 			self::getMemcKey(),
-			WikiaResponse::CACHE_STANDARD,
+			WikiaResponse::CACHE_LONG,
 			function() {
 				wfDebug( __METHOD__ . ": reading site_stats from slave\n" );
 				return self::doLoad( wfGetDB( DB_SLAVE, 'vslow' ) );
