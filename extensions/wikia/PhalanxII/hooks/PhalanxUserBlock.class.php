@@ -27,7 +27,7 @@ class PhalanxUserBlock extends WikiaObject {
 	 * @return bool
 	 */
 	static public function blockCheck( User $user, $shouldLogBlockInStats = true, $global = true ) {
-		if (!$global) {
+		if ( ! $global ) {
 			return true;
 		}
 

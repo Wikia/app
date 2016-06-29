@@ -160,8 +160,8 @@ class ApiQueryUsers extends ApiQueryBase {
 				}
 
 				/* Wikia change begin - SUS-92 */
-				if ( isset( $this->prop['blockinfo'] ) || isset($this->prop['localblockinfo']) ) {
-					$isGlobalBlockCheck = !isset($this->prop['localblockinfo']);
+				if ( isset( $this->prop['blockinfo'] ) || isset( $this->prop['localblockinfo'] ) ) {
+					$isGlobalBlockCheck = !isset( $this->prop['localblockinfo'] );
 					$isBlocked = $user->isBlocked( true, false, $isGlobalBlockCheck );
 					
 					if ($isBlocked) {

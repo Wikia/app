@@ -250,7 +250,7 @@ class PhalanxHooks extends WikiaObject {
 	 * @return bool true
 	 */
 	static public function onGetBlockedStatus( User $user, $shouldLogBlockInStats=false, $global=true ) {
-		if (!$global) {
+		if ( ! $global ) {
 			return true;
 		}
 
