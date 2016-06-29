@@ -93,7 +93,7 @@ class CommunityPageSpecialUsersModel {
 		return $data;
 	}
 	/**
-	 * Get all admins who have contributed in the last two years ordered by number of contributions
+	 * Get all admins who have contributed ordered by number of contributions
 	 * filter out bots
 	 *
 	 * @return array|null
@@ -106,10 +106,10 @@ class CommunityPageSpecialUsersModel {
 				self::logUserModelPerformanceData( 'query', 'all_admins' );
 
 				$db = wfGetDB( DB_SLAVE );
-
 				$adminIds = $this->getAdmins();
 				$botIds = $this->getBotIds();
-				$dateTwoYearsAgo = date( 'Y-m-d', strtotime( '-2 years' ) );
+
+				$validAdminIds = array_diff($adminIds,$botIds);
 
 				$sqlData = ( new WikiaSQL() )
 					->SELECT( 'rev_user_text, rev_user, wup_value' )
@@ -117,9 +117,7 @@ class CommunityPageSpecialUsersModel {
 					->LEFT_JOIN( 'wikia_user_properties' )
 					->ON( 'rev_user', 'wup_user' )
 					->WHERE( 'rev_user' )->NOT_EQUAL_TO( 0 )
-					->AND_( 'rev_user' )->IN( $adminIds )
-					->AND_( 'rev_user' )->NOT_IN( $botIds )
-					->AND_( 'rev_timestamp' )->GREATER_THAN( $dateTwoYearsAgo )
+					->AND_( 'rev_user' )->IN( $validAdminIds )
 					->AND_( 'wup_property' )->EQUAL_TO( 'editcount' )
 					->GROUP_BY( 'rev_user' )
 					->ORDER_BY( 'CAST(wup_value as unsigned) DESC, rev_user_text' );
@@ -131,6 +129,17 @@ class CommunityPageSpecialUsersModel {
 						'isAdmin' => true,
 					];
 				} );
+
+				foreach($validAdminIds as $adminId){
+					if( !array_search( $adminId, array_column( $result,  'userId' ) ) ){
+						var_dump($result);
+						$result[] = [
+							'userId' => $adminId,
+							'contributions' => 0,
+							'isAdmin' => true,
+						];
+					}
+				}
 
 				return $result;
 			}
