@@ -17,7 +17,7 @@ require([
 	});
 
 	// "private" vars - don't access directly. Use getUiModalInstance().
-	var uiModalInstance, modalNavHtml, activeTab, allMembersCount, allAdminsCount;
+	var contributorsModule, uiModalInstance, modalNavHtml, activeTab, allMembersCount, allAdminsCount;
 
 	var tabs = {
 			TAB_ALL: {
@@ -43,16 +43,22 @@ require([
 
 	function init() {
 		initTracking();
+		contributorsModule = $('.ContributorsModule');
 
 		$('#openModalTopAdmins').click(function (event) {
 			event.preventDefault();
-			openCommunityModal(tabs.TAB_ADMINS);
+			initContributorsModal(tabs.TAB_ADMINS);
 		});
 
 		$('#viewAllMembers').click(function (event) {
 			event.preventDefault();
-			openCommunityModal(tabs.TAB_ALL);
+			initContributorsModal(tabs.TAB_ALL);
 		});
+	}
+
+	function initContributorsModal(tab) {
+		throbber.show(contributorsModule);
+		openCommunityModal(tab);
 	}
 
 	function getUiModalInstance() {
@@ -156,6 +162,7 @@ require([
 					.html(mustache.render(templates.modalLoadingScreen))
 					.find(tabToActivate.className).children(tabLinkClass).addClass('active');
 
+				throbber.hide(contributorsModule);
 				throbber.show($('.throbber-placeholder'));
 
 				modal.show();
