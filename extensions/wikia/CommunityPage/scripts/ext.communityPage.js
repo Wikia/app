@@ -220,11 +220,6 @@ require([
 				category: category,
 				label: label,
 			});
-
-			console.log({
-				category: category,
-				label: label,
-			});
 		}
 	}
 
