@@ -130,9 +130,8 @@ class CommunityPageSpecialUsersModel {
 					];
 				} );
 
-				foreach($validAdminIds as $adminId){
-					if( !array_search( $adminId, array_column( $result,  'userId' ) ) ){
-						var_dump($result);
+				foreach ( $validAdminIds as $adminId ) {
+					if( !in_array( $adminId, array_column( $result,  'userId' ) ) ){
 						$result[] = [
 							'userId' => $adminId,
 							'contributions' => 0,
