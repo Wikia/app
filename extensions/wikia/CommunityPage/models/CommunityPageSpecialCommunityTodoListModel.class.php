@@ -2,26 +2,19 @@
 
 class CommunityPageSpecialCommunityTodoListModel {
 	public function getData() {
-		$title = Title::newFromText(
-			wfMessage( 'communitypage-todo-module-page-name' )->inContentLanguage()->plain(),
-			NS_MEDIAWIKI
-		);
+		$messageKey = 'community-to-do-list';
+		$message = wfMessage( $messageKey );
+		$title = Title::newFromText( $messageKey, NS_MEDIAWIKI );
+		$data = [
+			'haveContent' => false,
+			'editUrl' => $title->getFullURL( ['action' => 'edit'] ),
+		];
 
-		$editUrl = $title->getFullURL( ['action' => 'edit'] );
-
-		if ( $title->exists() ) {
-			$parsedArticle = ( Article::newFromTitle( $title, RequestContext::getMain() ) )->getParserOutput();
-
-			return [
-				'haveContent' => true,
-				'editUrl' => $editUrl,
-				'data' => $parsedArticle->getText(),
-			];
-		} else {
-			return [
-				'haveContent' => false,
-				'editUrl' => $editUrl,
-			];
+		if ( !$message->isDisabled() ) {
+			$data['haveContent'] = true;
+			$data['data'] = $message->parse();
 		}
+
+		return $data;
 	}
 }
