@@ -14,7 +14,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 class BlogArticle extends Article {
 
 	// Used when constructing memcached keys.  Up the version when the format of the data changes
-	const CACHE_VERSION = 3;
+	const CACHE_VERSION = 4;
 
 	// Cache results for an hour
 	const CACHE_TTL = 3600;
