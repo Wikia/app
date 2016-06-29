@@ -260,7 +260,7 @@ require([
 		$('.community-page-todo-list-module-content').on('mousedown touchstart', 'a', function (event) {
 			track({
 				category: 'community-page-todo-list-module',
-				label: event.delegateTarget.getAttribute('data-tracking'),
+				label: 'community-page-todo-list-module-content',
 			});
 		});
 	}
