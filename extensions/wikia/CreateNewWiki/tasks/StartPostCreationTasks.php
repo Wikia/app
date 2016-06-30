@@ -22,7 +22,7 @@ class StartPostCreationTasks extends Task {
 		$jobParams['city_id'] = $this->taskContext->getCityId();
 
 		// Used by CreateNewWikiTask:changeStarterContributions
-		$jobParams->sDbStarter = $this->taskContext->getStarterDb();
+		$jobParams['sDbStarter'] = $this->taskContext->getStarterDb();
 
 		$taskId = (new AsyncTaskList())
 			->wikiId( $this->taskContext->getCityId() )

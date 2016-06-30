@@ -268,6 +268,12 @@ $messages['de'] = array(
 	'communitypage-anon-contrib-header' => '$1 oder $2 und mache eine Bearbeitung in der Community um deinen Rang zu sehen!',
 	'communitypage-anon-login' => 'Anmelden',
 	'communitypage-anon-register' => 'Anmelden',
+	'communitypage-todo-module-page-name' => 'ToDo-Liste der Community',
+	'communitypage-todo-module-heading' => 'ToDo-Liste der Community',
+	'communitypage-todo-module-edit-list' => 'Liste bearbeiten',
+	'communitypage-todo-module-description' => 'In diesem Bereich können Admins Seiten vorschlagen, an denen gearbeitet werden sollte und somit neue Beitragende bei ihrem Start unterstützen. (Admins: denkt bitte daran, detailliert zu beschreiben, was bearbeitet werden sollte).',
+	'communitypage-todo-module-zero-state' => 'Want to know how you can contribute to this community? Contact an admin and ask them to provide suggestions here.',
+	'communitypage-todo-module-zero-state-contact-admin' => 'Kontaktiere einen Admin',
 );
 
 $messages['es'] = array(
@@ -355,6 +361,12 @@ $messages['es'] = array(
 	'communitypage-anon-contrib-header' => '¡$1 o $2 y haz una edición en esta comunidad para ver cual es tu rango!',
 	'communitypage-anon-login' => 'Inicia sesión',
 	'communitypage-anon-register' => 'regístrate',
+	'communitypage-todo-module-page-name' => 'Lista-de-tareas-de-la-Comunidad',
+	'communitypage-todo-module-heading' => 'Lista de tareas de la Comunidad',
+	'communitypage-todo-module-edit-list' => 'Editar lista',
+	'communitypage-todo-module-description' => 'Esta es un área para que los administradores sugieran páginas que necesitan trabajo para ayudar a los nuevos editores a comenzar. (Administradores - recuerden proporcionar detalles sobre lo que necesita hacerse.)',
+	'communitypage-todo-module-zero-state' => 'Want to know how you can contribute to this community? Contact an admin and ask them to provide suggestions here.',
+	'communitypage-todo-module-zero-state-contact-admin' => 'Contacta a un administrador',
 );
 
 $messages['fr'] = array(
@@ -442,6 +454,12 @@ $messages['fr'] = array(
 	'communitypage-anon-contrib-header' => '$1 ou $2 pour contribuer au wikia et voir votre classement dans cette communauté !',
 	'communitypage-anon-login' => 'Connectez-vous',
 	'communitypage-anon-register' => 'inscrivez-vous',
+	'communitypage-todo-module-page-name' => 'À-faire-dans-la-communauté',
+	'communitypage-todo-module-heading' => 'À faire dans la communauté',
+	'communitypage-todo-module-edit-list' => 'Modifier la liste',
+	'communitypage-todo-module-description' => "Les administrateurs peuvent ici suggérer des pages à améliorer, sur lesquelles les nouveaux contributeurs peuvent commencer. (Administrateurs, n'oubliez pas de fournir des détails sur ce qu'il faut faire.)",
+	'communitypage-todo-module-zero-state' => 'Want to know how you can contribute to this community? Contact an admin and ask them to provide suggestions here.',
+	'communitypage-todo-module-zero-state-contact-admin' => 'Contactez un administrateur',
 );
 
 $messages['it'] = array(
@@ -449,7 +467,7 @@ $messages['it'] = array(
 	'communitypage-header-welcome' => 'Benvenuto nella comunità di {{SITENAME}}!',
 	'communitypage-header-join-button' => 'Iscriviti ora',
 	'communitypage-admin-welcome-message' => 'Benvenuto a {{SITENAME}}. Aiutaci a far crescere questa wiki modificando e aggiungendo contenuti. Apprezziamo i tuoi contributi! Torna qui spesso per conoscere gli ultimi aggiornamenti e informazioni su questa community.',
-	'communitypage-admin-group-name' => 'Ammin',
+	'communitypage-admin-group-name' => 'Amministratori',
 	'communitypage-top-contributors' => 'Principali collaboratori',
 	'communitypage-top-contributors-more' => '+ $1 altro {{PLURAL:$1|contributor|contributors}}',
 	'communitypage-page-list-empty' => 'Nessuna pagina trovata!',
@@ -472,8 +490,8 @@ $messages['it'] = array(
 	'communitypage-user-rank' => 'Il tuo rank',
 	'communitypage-user-contributions' => '{{PLURAL:$1|contribution|contributions}}',
 	'communitypage-contributions' => '$1 {{PLURAL:$1|contribution|contributions}}',
-	'communitypage-admins' => 'Ammin',
-	'communitypage-other-admins' => 'Altri ammin',
+	'communitypage-admins' => 'Amministratori',
+	'communitypage-other-admins' => 'Altri amministratori',
 	'communitypage-recently-joined' => 'Nuovi collaboratori recenti',
 	'communitypage-recent-activity' => "Visualizza tutta l'attività recente",
 	'communitypage-all-members' => 'Tutti i membri',
@@ -482,11 +500,11 @@ $messages['it'] = array(
 	'communitypage-created' => 'creato',
 	'communitypage-edited' => 'modificato',
 	'communitypage-deleted' => 'eliminato',
-	'communitypage-admin' => 'Ammin',
+	'communitypage-admin' => 'Amministratori',
 	'communitypage-joined' => 'è entrato',
 	'communitypage-modal-title' => 'Tutti i collaboratori',
 	'communitypage-modal-tab-all' => 'Tutto',
-	'communitypage-modal-tab-admins' => 'Ammin',
+	'communitypage-modal-tab-admins' => 'Amministratori',
 	'communitypage-modal-tab-loadingerror' => 'Errore caricamento dati',
 	'communitypage-no-contributions' => 'Non ci sono ancora contributi questa settimana! Sii il primo a contribuire!',
 	'communitypage-no-admins' => 'Non ci sono ancora amministratori in questo wiki.',
@@ -529,6 +547,12 @@ $messages['it'] = array(
 	'communitypage-anon-contrib-header' => '$1 o $2 e apporta una modifica a questo wiki per vedere come ti classifichi in questa community!',
 	'communitypage-anon-login' => 'Accedi',
 	'communitypage-anon-register' => 'registra',
+	'communitypage-todo-module-page-name' => 'Elenco delle cose da file community',
+	'communitypage-todo-module-heading' => 'Elenco delle cose da fare community',
+	'communitypage-todo-module-edit-list' => 'Modifica elenco',
+	'communitypage-todo-module-description' => "Si tratta di un'area per gli amministratori per suggerire pagine che necessitano di lavoro, così da aiutare i nuovi collaboratori a iniziare. (Ammin - ricordarsi di fornire dettagli su ciò che occorre fare).",
+	'communitypage-todo-module-zero-state' => 'Want to know how you can contribute to this community? Contact an admin and ask them to provide suggestions here.',
+	'communitypage-todo-module-zero-state-contact-admin' => 'Contatta un amministratore',
 );
 
 $messages['ja'] = array(
@@ -616,6 +640,12 @@ $messages['ja'] = array(
 	'communitypage-anon-contrib-header' => '$1もしくは$2してウィキアを編集し、コミュニティでのトップ編集者を目指そう！',
 	'communitypage-anon-login' => 'ログイン',
 	'communitypage-anon-register' => '登録',
+	'communitypage-todo-module-page-name' => 'このコミュニティのTo-Doリスト',
+	'communitypage-todo-module-heading' => 'このコミュニティのTo-Doリスト',
+	'communitypage-todo-module-edit-list' => 'リストを編集する',
+	'communitypage-todo-module-description' => 'ここではアドミン(管理者)が、読者やほかの編集メンバーに、より良くしたいページを紹介することができます。(アドミンの方へ -ほかのメンバーが編集しやすいように、それぞれのページを改善するためのポイントをできるだけ詳しく記載するようにしてください)',
+	'communitypage-todo-module-zero-state' => 'Want to know how you can contribute to this community? Contact an admin and ask them to provide suggestions here.',
+	'communitypage-todo-module-zero-state-contact-admin' => 'アドミンに連絡',
 );
 
 $messages['nl'] = array(
@@ -703,6 +733,12 @@ $messages['nl'] = array(
 	'communitypage-anon-contrib-header' => '$1 or $2 and make an edit to this wiki to see how you rank in this community!',
 	'communitypage-anon-login' => 'Log in',
 	'communitypage-anon-register' => 'register',
+	'communitypage-todo-module-page-name' => 'Community-to-do-list',
+	'communitypage-todo-module-heading' => 'Community To-do list',
+	'communitypage-todo-module-edit-list' => 'Edit list',
+	'communitypage-todo-module-description' => 'This is an area for admins to suggest pages that need work to help new contributors get started. (Admins - remember to provide details on what needs to be done.)',
+	'communitypage-todo-module-zero-state' => 'Want to know how you can contribute to this community? Contact an admin and ask them to provide suggestions here.',
+	'communitypage-todo-module-zero-state-contact-admin' => 'Contact an admin',
 );
 
 $messages['pl'] = array(
@@ -790,6 +826,12 @@ $messages['pl'] = array(
 	'communitypage-anon-contrib-header' => '$1 lub $2 i dokonaj edycji tej wiki, aby zobaczyć jakie miejsce zajmujesz w rankingu tej społeczności!',
 	'communitypage-anon-login' => 'Zaloguj się',
 	'communitypage-anon-register' => 'zarejestruj się',
+	'communitypage-todo-module-page-name' => 'Lista-rzeczy-do-zrobienia-Społeczności',
+	'communitypage-todo-module-heading' => 'Lista-rzeczy-do-zrobienia-Społeczności',
+	'communitypage-todo-module-edit-list' => 'Edytuj listę',
+	'communitypage-todo-module-description' => 'This is an area for admins to suggest pages that need work to help new contributors get started. (Admins - remember to provide details on what needs to be done.)',
+	'communitypage-todo-module-zero-state' => 'Want to know how you can contribute to this community? Contact an admin and ask them to provide suggestions here.',
+	'communitypage-todo-module-zero-state-contact-admin' => 'Skontaktuj się z administratorem',
 );
 
 $messages['pt'] = array(
@@ -828,7 +870,7 @@ $messages['pt'] = array(
 	'communitypage-view-all-members' => 'Ver todos os contribuidores',
 	'communitypage-activity' => '$1 $2 $3',
 	'communitypage-created' => 'criado',
-	'communitypage-edited' => 'editado',
+	'communitypage-edited' => 'editou',
 	'communitypage-deleted' => 'excluído',
 	'communitypage-admin' => 'Administrador',
 	'communitypage-joined' => 'Juntou-se',
@@ -849,7 +891,7 @@ $messages['pt'] = array(
 	'communitypage-uncategorizedpages-description' => 'Adicione categorias a estas páginas. Uma wikia de sucesso depende de uma categorização bem organizada!',
 	'communitypage-wantedpages-title' => 'Páginas pedidas',
 	'communitypage-wantedpages-description' => 'Há links apontando para essas páginas, mas elas não existem! Crie um artigo ou o redirecione para o artigo correto para ajudar os leitores a navegar em sua comunidade.',
-	'communitypage-lastrevision' => '$1 editou às $2',
+	'communitypage-lastrevision' => '$1 editou em $2',
 	'communitypage-noofviews' => '$1 visualizações',
 	'communitypage-full-list' => 'Ver lista completa',
 	'communitypage-modal-tab-all-contribution-header' => 'Última contribuição',
@@ -877,6 +919,12 @@ $messages['pt'] = array(
 	'communitypage-anon-contrib-header' => '$1 ou $2 e faça uma edição nessa wiki para ver como você se classifica nessa comunidade!',
 	'communitypage-anon-login' => 'Entre',
 	'communitypage-anon-register' => 'registre-se',
+	'communitypage-todo-module-page-name' => 'Lista-de-tarefas-da-Comunidade',
+	'communitypage-todo-module-heading' => 'Lista de tarefas da Comunidade',
+	'communitypage-todo-module-edit-list' => 'Editar lista',
+	'communitypage-todo-module-description' => 'Esta é uma área para administradores sugerirem páginas que precisam de atenção para ajudar aos novos contribuidores a começar. (Administradores - lembrem-se de inserir detalhes sobre o que precisa ser feito).',
+	'communitypage-todo-module-zero-state' => 'Want to know how you can contribute to this community? Contact an admin and ask them to provide suggestions here.',
+	'communitypage-todo-module-zero-state-contact-admin' => 'Fale com um administrador',
 );
 
 $messages['ru'] = array(
@@ -964,6 +1012,12 @@ $messages['ru'] = array(
 	'communitypage-anon-contrib-header' => '$1 или $2. Начните редактировать на этой вики и получите свой рейтинг!',
 	'communitypage-anon-login' => 'Войти',
 	'communitypage-anon-register' => 'зарегистрироваться',
+	'communitypage-todo-module-page-name' => 'Список задач сообщества',
+	'communitypage-todo-module-heading' => 'Список задач сообщества',
+	'communitypage-todo-module-edit-list' => 'Править список',
+	'communitypage-todo-module-description' => 'Здесь администраторы размещают информацию о страницах, нуждающихся в доработке, чтобы новые участники могли сразу же приступить к правке. (Администраторы, не забудьте подробно объяснить, что необходимо сделать.)',
+	'communitypage-todo-module-zero-state' => 'Want to know how you can contribute to this community? Contact an admin and ask them to provide suggestions here.',
+	'communitypage-todo-module-zero-state-contact-admin' => 'Свяжитесь с администратором',
 );
 
 $messages['zh-hans'] = array(
@@ -1051,6 +1105,12 @@ $messages['zh-hans'] = array(
 	'communitypage-anon-contrib-header' => '$1或者$2，对这个wiki社区进行编辑看看你的排名如何！',
 	'communitypage-anon-login' => '登入',
 	'communitypage-anon-register' => '注册',
+	'communitypage-todo-module-page-name' => '社区待办事项列表',
+	'communitypage-todo-module-heading' => '社区待办事项列表',
+	'communitypage-todo-module-edit-list' => '编辑列表',
+	'communitypage-todo-module-description' => '管理员可以在这里建议新的贡献者通过完成哪些不完善的页面帮助社区发展。（管理员请注意：您需要提供详细说明）。',
+	'communitypage-todo-module-zero-state' => 'Want to know how you can contribute to this community? Contact an admin and ask them to provide suggestions here.',
+	'communitypage-todo-module-zero-state-contact-admin' => '联系管理员',
 );
 
 $messages['zh-hant'] = array(
@@ -1138,5 +1198,11 @@ $messages['zh-hant'] = array(
 	'communitypage-anon-contrib-header' => '$1或$2，對這個wiki社區進行編輯看看你的排名如何！',
 	'communitypage-anon-login' => '登入',
 	'communitypage-anon-register' => '註冊',
+	'communitypage-todo-module-page-name' => '社區待辦事項清單',
+	'communitypage-todo-module-heading' => '社區待辦事項清單',
+	'communitypage-todo-module-edit-list' => '編輯清單',
+	'communitypage-todo-module-description' => '管理員可以在這裡建議新的貢獻者通過完成哪些不完善的頁面幫助社區發展。（管理員請注意：您需要提供詳細說明）。',
+	'communitypage-todo-module-zero-state' => 'Want to know how you can contribute to this community? Contact an admin and ask them to provide suggestions here.',
+	'communitypage-todo-module-zero-state-contact-admin' => '聯繫管理員',
 );
 
