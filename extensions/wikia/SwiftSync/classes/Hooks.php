@@ -13,21 +13,24 @@ namespace Wikia\SwiftSync;
 class Hooks {
 
 	/* save image into local repo */
-	public static function doStoreInternal( $params, \Status $status ) {
+	public static function doStoreInternal( array $params, \Status $status ) {
 
-		Queue::newFromParams( $params )->add();
-
-		return true;
-	}
-
-	public static function doCopyInternal( $params, \Status $status ) {
-
-		Queue::newFromParams( $params )->add();
+		if ( $status->isGood() ) {
+			Queue::newFromParams( $params )->add();
+		}
 
 		return true;
 	}
 
-	public static function doDeleteInternal( $params, \Status $status ) {
+	public static function doCopyInternal( array $params, \Status $status ) {
+
+		if ( $status->isGood() ) {
+			Queue::newFromParams( $params )->add();
+		}
+		return true;
+	}
+
+	public static function doDeleteInternal( array $params, \Status $status ) {
 
 		if ( !empty( $params['src'] ) && ( strpos( $params['src'], '/images/thumb' ) !== false ) ) {
 			return true;
@@ -37,8 +40,9 @@ class Hooks {
 			$params['op'] = 'delete';
 		}
 
-		Queue::newFromParams( $params )->add();
-
+		if ( $status->isGood() ) {
+			Queue::newFromParams( $params )->add();
+		}
 		return true;
 	}
 
