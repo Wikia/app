@@ -53,13 +53,13 @@ class RenameUserLogFormatter {
 			$tasks[$k] = self::getCommunityTask( $v );
 		}
 
-		$text = wfMsgForContent( 'userrenametool-info-started',
+		$text = wfMessage( 'userrenametool-info-started',
 			self::getCommunityUser( $requestor ),
 			self::getCommunityUser( $oldUsername, true ),
 			self::getCommunityUser( $newUsername ),
 			$tasks ? implode( ', ', $tasks ) : '-',
 			$reason
-		);
+		)->escaped();
 
 		return $text;
 	}
@@ -69,13 +69,13 @@ class RenameUserLogFormatter {
 			$tasks[$k] = self::getCommunityTask( $v );
 		}
 
-		$text = wfMsgForContent( 'userrenametool-info-finished',
+		$text = wfMessage( 'userrenametool-info-finished',
 			self::getCommunityUser( $requestor ),
 			self::getCommunityUser( $oldUsername, true ),
 			self::getCommunityUser( $newUsername ),
 			$tasks ? implode( ', ', $tasks ) : '-',
 			$reason
-		);
+		)->escaped();
 
 		return $text;
 	}
@@ -85,26 +85,26 @@ class RenameUserLogFormatter {
 			$tasks[$k] = self::getCommunityTask( $v );
 		}
 
-		$text = wfMsgForContent( 'userrenametool-info-failed',
+		$text = wfMessage( 'userrenametool-info-failed',
 			self::getCommunityUser( $requestor ),
 			self::getCommunityUser( $oldUsername, true ),
 			self::getCommunityUser( $newUsername ),
 			$tasks ? implode( ', ', $tasks ) : '-',
 			$reason
-		);
+		)->escaped();
 
 		return $text;
 	}
 
 	static public function wiki( $requestor, $oldUsername, $newUsername, $cityId, $reason, $problems = false ) {
-		$text = wfMsgForContent(
+		$text = wfMessage(
 			$problems ? 'userrenametool-info-wiki-finished-problems' : 'userrenametool-info-wiki-finished',
 			self::getCommunityUser( $requestor ),
 			self::getCommunityUser( $oldUsername, true ),
 			self::getCommunityUser( $newUsername ),
 			self::getCityLink( $cityId ),
 			$reason
-		);
+		)->escaped();
 
 		return $text;
 	}

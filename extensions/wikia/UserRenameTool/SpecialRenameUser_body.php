@@ -75,13 +75,13 @@ class SpecialRenameUser extends SpecialPage {
 				$oldUser = User::newFromName($this->oldUsername);
 
 				if ( $oldUser->getGlobalFlag( 'requested-rename', 0 ) ) {
-					$this->info[] = wfMsg( 'userrenametool-requested-rename', $this->oldUsername );
+					$this->info[] = wfMessage( 'userrenametool-requested-rename', $this->oldUsername )->escaped();
 				} else {
-					$this->errors[] = wfMsg( 'userrenametool-did-not-request-rename', $this->oldUsername );
+					$this->errors[] = wfMessage( 'userrenametool-did-not-request-rename', $this->oldUsername )->escaped();
 				}
 
 				if ( $oldUser->getGlobalFlag( 'wasRenamed', 0 ) ) {
-					$this->errors[] = wfMsg( 'userrenametool-previously-renamed', $this->oldUsername );
+					$this->errors[] = wfMessage( 'userrenametool-previously-renamed', $this->oldUsername )->escaped();
 				}
 			}
 		}
@@ -92,22 +92,22 @@ class SpecialRenameUser extends SpecialPage {
 
 		$template = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
 		$template->set_vars([
-			"submitUrl" => $wgTitle->getLocalUrl(),
-			"oldusername" => $this->oldUsername,
-			"oldusername_hsc" => htmlspecialchars( $this->oldUsername ),
-			"newusername" => $this->newUsername,
-			"newusername_hsc" => htmlspecialchars( $this->newUsername ),
-			"reason" => $this->reason,
-			"move_allowed" => $wgUser->isAllowed( 'move' ),
-			"confirmaction" => $this->confirmAction,
-			"warnings" => $this->warnings,
-			"errors" => $this->errors,
-			"infos" => $this->info,
-			"show_confirm" => $this->showConfirm,
-			"token" => $this->token,
-			"notify_renamed" => $this->notifyRenamed,
+			'submitUrl' => $wgTitle->getLocalUrl(),
+			'oldusername' => $this->oldUsername,
+			'oldusername_hsc' => htmlspecialchars( $this->oldUsername ),
+			'newusername' => $this->newUsername,
+			'newusername_hsc' => htmlspecialchars( $this->newUsername ),
+			'reason' => $this->reason,
+			'move_allowed' => $wgUser->isAllowed( 'move' ),
+			'confirmaction' => $this->confirmAction,
+			'warnings' => $this->warnings,
+			'errors' => $this->errors,
+			'infos' => $this->info,
+			'show_confirm' => $this->showConfirm,
+			'token' => $this->token,
+			'notify_renamed' => $this->notifyRenamed,
 		]);
 
-		$wgOut->addHTML( $template->render( "rename-form" ) );
+		$wgOut->addHTML( $template->render( 'rename-form' ) );
 	}
 }
