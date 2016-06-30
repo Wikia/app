@@ -9,6 +9,6 @@ class WikiTopic {
 
 	private static function prepareWikiTopic( $siteName ) {
 		$siteName = preg_replace( '/^the\s/i', '', $siteName );
-		return trim( preg_replace( '/(^wikia?)(?=\s)|(?<=\s)(wikia?$)|(?<=\s)(Вики$)/i', '', $siteName ) );
+		return trim( preg_replace( '/(^wikia?)(?=\s)|(?<=\s)(wikia?$)|(?<=\s)(Вики$)/iu', '', $siteName ) );
 	}
 }
