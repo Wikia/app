@@ -17,13 +17,6 @@ class SpecialRenameUser extends SpecialPage {
 		parent::__construct( 'UserRenameTool', 'renameuser', true );
 	}
 
-	/**
-	 * Show the special page
-	 *
-	 * @param mixed $par Parameter passed to the page
-	 * @throws PermissionsError
-	 * @throws ReadOnlyError
-	 */
 	public function execute( $par ) {
 		$this->setup();
 		$this->getRequestData( $par );
@@ -52,10 +45,21 @@ class SpecialRenameUser extends SpecialPage {
 		}
 	}
 
-	private function runRenameProcess() {
-		$wg = F::app()->wg;
+	private function getRequestData( $par ) {
+		global $wgRequest, $wgUser;
 
-		if ( $wg->Request->wasPosted() && $wg->User->matchEditToken( $wg->Request->getText( 'token' ) ) ) {
+		$this->oldUsername = $wgRequest->getText( 'oldusername', $par );
+		$this->newUsername = $wgRequest->getText( 'newusername' );
+		$this->reason = $wgRequest->getText( 'reason' );
+		$this->token = $wgUser->getEditToken();
+		$this->notifyRenamed = $wgRequest->getBool( 'notify_renamed', false );
+		$this->confirmAction = $wgRequest->wasPosted() && $wgRequest->getInt( 'confirmaction' );
+	}
+
+	private function runRenameProcess() {
+		global $wgRequest, $wgUser;
+
+		if ( $wgRequest->wasPosted() && $wgUser->matchEditToken( $wgRequest->getText( 'token' ) ) ) {
 			$process = new RenameUserProcess( $this->oldUsername, $this->newUsername, $this->confirmAction, $this->reason, $this->notifyRenamed );
 			$status = $process->run();
 			$this->warnings = $process->getWarnings();
@@ -81,17 +85,6 @@ class SpecialRenameUser extends SpecialPage {
 				}
 			}
 		}
-	}
-
-	private function getRequestData( $par ) {
-		global $wgRequest, $wgUser;
-
-		$this->oldUsername = $wgRequest->getText( 'oldusername', $par );
-		$this->newUsername = $wgRequest->getText( 'newusername' );
-		$this->reason = $wgRequest->getText( 'reason' );
-		$this->token = $wgUser->getEditToken();
-		$this->notifyRenamed = $wgRequest->getBool( 'notify_renamed', false );
-		$this->confirmAction = $wgRequest->wasPosted() && $wgRequest->getInt( 'confirmaction' );
 	}
 
 	private function renderTemplate() {
