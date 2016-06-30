@@ -13,7 +13,7 @@ class AdEngine2Controller extends WikiaController {
 		// See Liftium.js for documentation on options
 		$options = array();
 		$options['pubid'] = 999;
-		$options['baseUrl'] = '/__varnish_liftium/';
+		$options['baseUrl'] = '/__karnish_liftium/';
 		$options['kv_wgDBname'] = $wgDBname;
 		if (is_object($wgTitle)){
 			$options['kv_article_id'] = $wgTitle->getArticleID();
