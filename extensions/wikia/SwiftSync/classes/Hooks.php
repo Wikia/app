@@ -45,16 +45,4 @@ class Hooks {
 		}
 		return true;
 	}
-
-	public static function SyncFileToDC( $source, $dest) {
-
-		Queue::newFromParams( [
-			'city_id' => 0,
-			'op' => 'store',
-			'src' => $source,
-			'dst' => $dest
-		] )->add();
-
-		return true;
-	}
 }
