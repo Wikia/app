@@ -108,6 +108,6 @@ class SpecialRenameUser extends SpecialPage {
 			'notify_renamed' => $this->notifyRenamed,
 		]);
 
-		$wgOut->addHTML( $template->render( 'rename-form' ) );
+		$wgOut->addHTML( $template->render( 'RenameForm' ) );
 	}
 }
