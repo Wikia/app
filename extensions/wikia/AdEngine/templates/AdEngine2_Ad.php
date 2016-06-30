@@ -4,6 +4,7 @@
 	<? if ($includeLabel): ?>
 		<label class="wikia-ad-label"><?= wfMessage( 'adengine-advertisement' )->escaped() ?></label>
 	<? endif; ?>
+<? if ($addToAdQueue): ?>
 <script>
 	<? if ($onLoad) { ?>
 		wgAfterContentAndJS.push(function () {
@@ -13,6 +14,7 @@
 		window.adslots2.push(<?= json_encode([$slotName]) ?>);
 	<? } ?>
 </script>
+<? endif; ?>
 </div>
 <!-- END SLOTNAME: <?= htmlspecialchars($slotName) ?> -->
 <?php else: ?>
