@@ -38,6 +38,7 @@ $edit-pen-url: '/extensions/wikia/CommunityPage/images/edit-pen-gray.svg';
 	.community-page-todo-list-module-content {
 		border-style: solid;
 		border-left: thick solid $color-buttons;
+		margin-top: 10px;
 		max-height: 500px;
 		overflow: auto;
 	}
