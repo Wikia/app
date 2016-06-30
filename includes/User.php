@@ -1356,7 +1356,7 @@ class User {
 	 *                    done against master.
 	 * @param $shouldLogBlockInStats Bool flag that decides whether to log or not in PhalanxStats
 	 */
-	private function getBlockedStatus( $bFromSlave = true, $shouldLogBlockInStats = true ) {
+	private function getBlockedStatus( $bFromSlave = true, $shouldLogBlockInStats = true, $global = true ) {
 	/* Wikia change end */
 		global $wgProxyWhitelist, $wgUser;
 
@@ -1419,7 +1419,7 @@ class User {
 
 		# Extensions
 		/* Wikia change begin - SUS-92 */
-		wfRunHooks( 'GetBlockedStatus', array( &$this, $shouldLogBlockInStats ) );
+		wfRunHooks( 'GetBlockedStatus', array( &$this, $shouldLogBlockInStats, $global ) );
 		/* Wikia change end */
 
 		if ( !empty($this->mBlockedby) ) {
@@ -1656,8 +1656,9 @@ class User {
 	 *
 	 * @return Bool True if blocked, false otherwise
 	 */
-	public function isBlocked( $bFromSlave = true, $shouldLogBlockInStats = true ) { // hacked from false due to horrible probs on site
-		return $this->getBlock( $bFromSlave, $shouldLogBlockInStats ) instanceof Block && $this->getBlock()->prevents( 'edit' );
+	public function isBlocked( $bFromSlave = true, $shouldLogBlockInStats = true, $global = true ) { // hacked from false due to horrible probs on site
+		$block = $this->getBlock( $bFromSlave, $shouldLogBlockInStats, $global );
+		return $block instanceof Block && $block->prevents( 'edit' );
 	}
 
 	/**
@@ -1668,8 +1669,8 @@ class User {
 	 *
 	 * @return Block|null
 	 */
-	public function getBlock( $bFromSlave = true, $shouldLogBlockInStats = true ){
-		$this->getBlockedStatus( $bFromSlave, $shouldLogBlockInStats );
+	public function getBlock( $bFromSlave = true, $shouldLogBlockInStats = true, $global = true ){
+		$this->getBlockedStatus( $bFromSlave, $shouldLogBlockInStats, $global );
 		return $this->mBlock instanceof Block ? $this->mBlock : null;
 	}
 	/* Wikia change end */

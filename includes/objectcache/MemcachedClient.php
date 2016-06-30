@@ -1052,10 +1052,15 @@ class MWMemcached {
 			return $this->_dead_sock( $sock );
 		}
 
+		# Wikia change
+		if ( $this->_debug ) {
+			$this->_debugprint( "{$cmd}($key) {$amt}\n" );
+		}
+
 		$line = fgets( $sock );
 		$match = array();
 		if ( !preg_match( '/^(\d+)/', $line, $match ) ) {
-			return null;
+			return null; # most likely "NOT FOUND" was returned
 		}
 		return $match[1];
 	}
