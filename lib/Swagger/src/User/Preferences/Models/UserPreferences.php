@@ -1,6 +1,6 @@
 <?php
 /**
- * Problem
+ * UserPreferences
  *
  * PHP version 5
  *
@@ -42,7 +42,7 @@ namespace Swagger\Client\User\Preferences\Models;
 use \ArrayAccess;
 
 /**
- * Problem Class Doc Comment
+ * UserPreferences Class Doc Comment
  *
  * @category    Class */
 /** 
@@ -51,24 +51,21 @@ use \ArrayAccess;
  * @license     http://www.apache.org/licenses/LICENSE-2.0 Apache Licene v2
  * @link        https://github.com/swagger-api/swagger-codegen
  */
-class Problem implements ArrayAccess
+class UserPreferences implements ArrayAccess
 {
     /**
       * The original name of the model.
       * @var string
       */
-    protected static $swaggerModelName = 'Problem';
+    protected static $swaggerModelName = 'UserPreferences';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
       * @var string[]
       */
     protected static $swaggerTypes = array(
-        'title' => 'string',
-        'status' => 'int',
-        'type' => 'string',
-        'detail' => 'string',
-        'instance' => 'string'
+        'global_preferences' => '\Swagger\Client\User\Preferences\Models\GlobalPreference[]',
+        'local_preferences' => '\Swagger\Client\User\Preferences\Models\LocalPreference[]'
     );
 
     public static function swaggerTypes()
@@ -81,11 +78,8 @@ class Problem implements ArrayAccess
      * @var string[]
      */
     protected static $attributeMap = array(
-        'title' => 'title',
-        'status' => 'status',
-        'type' => 'type',
-        'detail' => 'detail',
-        'instance' => 'instance'
+        'global_preferences' => 'globalPreferences',
+        'local_preferences' => 'localPreferences'
     );
 
     public static function attributeMap()
@@ -98,11 +92,8 @@ class Problem implements ArrayAccess
      * @var string[]
      */
     protected static $setters = array(
-        'title' => 'setTitle',
-        'status' => 'setStatus',
-        'type' => 'setType',
-        'detail' => 'setDetail',
-        'instance' => 'setInstance'
+        'global_preferences' => 'setGlobalPreferences',
+        'local_preferences' => 'setLocalPreferences'
     );
 
     public static function setters()
@@ -115,11 +106,8 @@ class Problem implements ArrayAccess
      * @var string[]
      */
     protected static $getters = array(
-        'title' => 'getTitle',
-        'status' => 'getStatus',
-        'type' => 'getType',
-        'detail' => 'getDetail',
-        'instance' => 'getInstance'
+        'global_preferences' => 'getGlobalPreferences',
+        'local_preferences' => 'getLocalPreferences'
     );
 
     public static function getters()
@@ -143,11 +131,8 @@ class Problem implements ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['title'] = isset($data['title']) ? $data['title'] : null;
-        $this->container['status'] = isset($data['status']) ? $data['status'] : null;
-        $this->container['type'] = isset($data['type']) ? $data['type'] : null;
-        $this->container['detail'] = isset($data['detail']) ? $data['detail'] : null;
-        $this->container['instance'] = isset($data['instance']) ? $data['instance'] : null;
+        $this->container['global_preferences'] = isset($data['global_preferences']) ? $data['global_preferences'] : null;
+        $this->container['local_preferences'] = isset($data['local_preferences']) ? $data['local_preferences'] : null;
     }
 
     /**
@@ -158,12 +143,6 @@ class Problem implements ArrayAccess
     public function listInvalidProperties()
     {
         $invalid_properties = array();
-        if ($this->container['title'] === null) {
-            $invalid_properties[] = "'title' can't be null";
-        }
-        if ($this->container['status'] === null) {
-            $invalid_properties[] = "'status' can't be null";
-        }
         return $invalid_properties;
     }
 
@@ -175,117 +154,48 @@ class Problem implements ArrayAccess
      */
     public function valid()
     {
-        if ($this->container['title'] === null) {
-            return false;
-        }
-        if ($this->container['status'] === null) {
-            return false;
-        }
         return true;
     }
 
 
     /**
-     * Gets title
-     * @return string
+     * Gets global_preferences
+     * @return \Swagger\Client\User\Preferences\Models\GlobalPreference[]
      */
-    public function getTitle()
+    public function getGlobalPreferences()
     {
-        return $this->container['title'];
+        return $this->container['global_preferences'];
     }
 
     /**
-     * Sets title
-     * @param string $title
+     * Sets global_preferences
+     * @param \Swagger\Client\User\Preferences\Models\GlobalPreference[] $global_preferences
      * @return $this
      */
-    public function setTitle($title)
+    public function setGlobalPreferences($global_preferences)
     {
-        $this->container['title'] = $title;
+        $this->container['global_preferences'] = $global_preferences;
 
         return $this;
     }
 
     /**
-     * Gets status
-     * @return int
+     * Gets local_preferences
+     * @return \Swagger\Client\User\Preferences\Models\LocalPreference[]
      */
-    public function getStatus()
+    public function getLocalPreferences()
     {
-        return $this->container['status'];
+        return $this->container['local_preferences'];
     }
 
     /**
-     * Sets status
-     * @param int $status
+     * Sets local_preferences
+     * @param \Swagger\Client\User\Preferences\Models\LocalPreference[] $local_preferences
      * @return $this
      */
-    public function setStatus($status)
+    public function setLocalPreferences($local_preferences)
     {
-        $this->container['status'] = $status;
-
-        return $this;
-    }
-
-    /**
-     * Gets type
-     * @return string
-     */
-    public function getType()
-    {
-        return $this->container['type'];
-    }
-
-    /**
-     * Sets type
-     * @param string $type
-     * @return $this
-     */
-    public function setType($type)
-    {
-        $this->container['type'] = $type;
-
-        return $this;
-    }
-
-    /**
-     * Gets detail
-     * @return string
-     */
-    public function getDetail()
-    {
-        return $this->container['detail'];
-    }
-
-    /**
-     * Sets detail
-     * @param string $detail
-     * @return $this
-     */
-    public function setDetail($detail)
-    {
-        $this->container['detail'] = $detail;
-
-        return $this;
-    }
-
-    /**
-     * Gets instance
-     * @return string
-     */
-    public function getInstance()
-    {
-        return $this->container['instance'];
-    }
-
-    /**
-     * Sets instance
-     * @param string $instance
-     * @return $this
-     */
-    public function setInstance($instance)
-    {
-        $this->container['instance'] = $instance;
+        $this->container['local_preferences'] = $local_preferences;
 
         return $this;
     }

@@ -1,6 +1,6 @@
 <?php
 /**
- * Problem
+ * GlobalPreference
  *
  * PHP version 5
  *
@@ -42,7 +42,7 @@ namespace Swagger\Client\User\Preferences\Models;
 use \ArrayAccess;
 
 /**
- * Problem Class Doc Comment
+ * GlobalPreference Class Doc Comment
  *
  * @category    Class */
 /** 
@@ -51,24 +51,21 @@ use \ArrayAccess;
  * @license     http://www.apache.org/licenses/LICENSE-2.0 Apache Licene v2
  * @link        https://github.com/swagger-api/swagger-codegen
  */
-class Problem implements ArrayAccess
+class GlobalPreference implements ArrayAccess
 {
     /**
       * The original name of the model.
       * @var string
       */
-    protected static $swaggerModelName = 'Problem';
+    protected static $swaggerModelName = 'GlobalPreference';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
       * @var string[]
       */
     protected static $swaggerTypes = array(
-        'title' => 'string',
-        'status' => 'int',
-        'type' => 'string',
-        'detail' => 'string',
-        'instance' => 'string'
+        'name' => 'string',
+        'value' => 'string'
     );
 
     public static function swaggerTypes()
@@ -81,11 +78,8 @@ class Problem implements ArrayAccess
      * @var string[]
      */
     protected static $attributeMap = array(
-        'title' => 'title',
-        'status' => 'status',
-        'type' => 'type',
-        'detail' => 'detail',
-        'instance' => 'instance'
+        'name' => 'name',
+        'value' => 'value'
     );
 
     public static function attributeMap()
@@ -98,11 +92,8 @@ class Problem implements ArrayAccess
      * @var string[]
      */
     protected static $setters = array(
-        'title' => 'setTitle',
-        'status' => 'setStatus',
-        'type' => 'setType',
-        'detail' => 'setDetail',
-        'instance' => 'setInstance'
+        'name' => 'setName',
+        'value' => 'setValue'
     );
 
     public static function setters()
@@ -115,11 +106,8 @@ class Problem implements ArrayAccess
      * @var string[]
      */
     protected static $getters = array(
-        'title' => 'getTitle',
-        'status' => 'getStatus',
-        'type' => 'getType',
-        'detail' => 'getDetail',
-        'instance' => 'getInstance'
+        'name' => 'getName',
+        'value' => 'getValue'
     );
 
     public static function getters()
@@ -143,11 +131,8 @@ class Problem implements ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['title'] = isset($data['title']) ? $data['title'] : null;
-        $this->container['status'] = isset($data['status']) ? $data['status'] : null;
-        $this->container['type'] = isset($data['type']) ? $data['type'] : null;
-        $this->container['detail'] = isset($data['detail']) ? $data['detail'] : null;
-        $this->container['instance'] = isset($data['instance']) ? $data['instance'] : null;
+        $this->container['name'] = isset($data['name']) ? $data['name'] : null;
+        $this->container['value'] = isset($data['value']) ? $data['value'] : null;
     }
 
     /**
@@ -158,11 +143,11 @@ class Problem implements ArrayAccess
     public function listInvalidProperties()
     {
         $invalid_properties = array();
-        if ($this->container['title'] === null) {
-            $invalid_properties[] = "'title' can't be null";
+        if ($this->container['name'] === null) {
+            $invalid_properties[] = "'name' can't be null";
         }
-        if ($this->container['status'] === null) {
-            $invalid_properties[] = "'status' can't be null";
+        if ($this->container['value'] === null) {
+            $invalid_properties[] = "'value' can't be null";
         }
         return $invalid_properties;
     }
@@ -175,10 +160,10 @@ class Problem implements ArrayAccess
      */
     public function valid()
     {
-        if ($this->container['title'] === null) {
+        if ($this->container['name'] === null) {
             return false;
         }
-        if ($this->container['status'] === null) {
+        if ($this->container['value'] === null) {
             return false;
         }
         return true;
@@ -186,106 +171,43 @@ class Problem implements ArrayAccess
 
 
     /**
-     * Gets title
+     * Gets name
      * @return string
      */
-    public function getTitle()
+    public function getName()
     {
-        return $this->container['title'];
+        return $this->container['name'];
     }
 
     /**
-     * Sets title
-     * @param string $title
+     * Sets name
+     * @param string $name
      * @return $this
      */
-    public function setTitle($title)
+    public function setName($name)
     {
-        $this->container['title'] = $title;
+        $this->container['name'] = $name;
 
         return $this;
     }
 
     /**
-     * Gets status
-     * @return int
-     */
-    public function getStatus()
-    {
-        return $this->container['status'];
-    }
-
-    /**
-     * Sets status
-     * @param int $status
-     * @return $this
-     */
-    public function setStatus($status)
-    {
-        $this->container['status'] = $status;
-
-        return $this;
-    }
-
-    /**
-     * Gets type
+     * Gets value
      * @return string
      */
-    public function getType()
+    public function getValue()
     {
-        return $this->container['type'];
+        return $this->container['value'];
     }
 
     /**
-     * Sets type
-     * @param string $type
+     * Sets value
+     * @param string $value
      * @return $this
      */
-    public function setType($type)
+    public function setValue($value)
     {
-        $this->container['type'] = $type;
-
-        return $this;
-    }
-
-    /**
-     * Gets detail
-     * @return string
-     */
-    public function getDetail()
-    {
-        return $this->container['detail'];
-    }
-
-    /**
-     * Sets detail
-     * @param string $detail
-     * @return $this
-     */
-    public function setDetail($detail)
-    {
-        $this->container['detail'] = $detail;
-
-        return $this;
-    }
-
-    /**
-     * Gets instance
-     * @return string
-     */
-    public function getInstance()
-    {
-        return $this->container['instance'];
-    }
-
-    /**
-     * Sets instance
-     * @param string $instance
-     * @return $this
-     */
-    public function setInstance($instance)
-    {
-        $this->container['instance'] = $instance;
+        $this->container['value'] = $value;
 
         return $this;
     }
