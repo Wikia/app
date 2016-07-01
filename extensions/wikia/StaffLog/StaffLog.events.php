@@ -64,7 +64,7 @@ class StaffLogger {
 		global $wgUser;
 		$comment = wfMessage(
 			'stafflog-wiki-status-change',
-			RenameUserLogFormatter::getCommunityUser( $wgUser->getName() ),
+			User::getLinkToUserPageOnCommunityWiki( $wgUser->getName() ),
 			WikiFactory::getCityLink( $cityId ),
 			$cityStatus,
 			$reason

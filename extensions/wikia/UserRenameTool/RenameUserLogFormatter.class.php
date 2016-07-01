@@ -2,21 +2,6 @@
 class RenameUserLogFormatter {
 	const COMMUNITY_CENTRAL_CITY_ID = 177;
 
-	static public function getCommunityUser( $name, $noRedirect = false ) {
-		if ( is_int( $name ) ) {
-			$name = User::whoIs( $name );
-		}
-
-		$title = GlobalTitle::newFromText( $name, NS_USER, self::COMMUNITY_CENTRAL_CITY_ID );
-
-		return Xml::element(
-			'a',
-			array( 'href' => $title->getFullURL( $noRedirect ? 'redirect=no' : '') ),
-			$name,
-			false
-		);
-	}
-
 	static public function getLog( $message, $requestor, $oldUsername, $newUsername, $reason, $tasks = [] ) {
 		foreach ( $tasks as $key => $value ) {
 			$title = GlobalTitle::newFromText( 'Tasks/log', NS_SPECIAL, self::COMMUNITY_CENTRAL_CITY_ID );
@@ -31,9 +16,9 @@ class RenameUserLogFormatter {
 
 		return wfMessage(
 			$message,
-			self::getCommunityUser( $requestor ),
-			self::getCommunityUser( $oldUsername, true ),
-			self::getCommunityUser( $newUsername ),
+			User::getLinkToUserPageOnCommunityWiki( $requestor ),
+			User::getLinkToUserPageOnCommunityWiki( $oldUsername, true ),
+			User::getLinkToUserPageOnCommunityWiki( $newUsername ),
 			$tasks ? implode( ', ', $tasks ) : '-',
 			$reason
 		)->escaped();
@@ -42,9 +27,9 @@ class RenameUserLogFormatter {
 	static public function getLogForWiki($requestor, $oldUsername, $newUsername, $cityId, $reason, $problems = false ) {
 		$text = wfMessage(
 			$problems ? 'userrenametool-info-wiki-finished-problems' : 'userrenametool-info-wiki-finished',
-			self::getCommunityUser( $requestor ),
-			self::getCommunityUser( $oldUsername, true ),
-			self::getCommunityUser( $newUsername ),
+			User::getLinkToUserPageOnCommunityWiki( $requestor ),
+			User::getLinkToUserPageOnCommunityWiki( $oldUsername, true ),
+			User::getLinkToUserPageOnCommunityWiki( $newUsername ),
 			WikiFactory::getCityLink( $cityId ),
 			$reason
 		)->escaped();
