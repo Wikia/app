@@ -2,7 +2,6 @@
 class RenameUserLogFormatter {
 	const COMMUNITY_CENTRAL_CITY_ID = 177;
 
-	// 7 usages
 	static public function getCommunityUser( $name, $noRedirect = false ) {
 		if ( is_int( $name ) ) {
 			$name = User::whoIs( $name );
@@ -40,7 +39,6 @@ class RenameUserLogFormatter {
 		)->escaped();
 	}
 
-	// 3 usages
 	static public function wiki( $requestor, $oldUsername, $newUsername, $cityId, $reason, $problems = false ) {
 		$text = wfMessage(
 			$problems ? 'userrenametool-info-wiki-finished-problems' : 'userrenametool-info-wiki-finished',
