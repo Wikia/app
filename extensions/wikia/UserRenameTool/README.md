@@ -6,9 +6,9 @@
 - [x] simplify controller
 - [x] simplify log methods
 - [x] replace old message methods with wfMessage
+- [x] combine helper and log formatter files
 - [ ] simplify process file
 - [ ] simplify task file
-- [ ] combine helper and log formatter files
 - [ ] add missing log methods
 - [ ] add reverse option to each rename process step
 - [ ] use user services if possible

@@ -415,7 +415,7 @@ class RenameUserProcess {
 		if ( !$status ) {
 			$this->addMainLog(
 				'fail',
-				RenameUserLogFormatter::getLog(
+				RenameUserHelper::getLog(
 					'userrenametool-info-failed',
 					$this->mRequestorName,
 					$this->mOldUsername,
@@ -675,7 +675,7 @@ class RenameUserProcess {
 
 		$this->addLog( "Finished updating wiki database: {$cityDb}" );
 
-		$this->addMainLog( "log", RenameUserLogFormatter::getLogForWiki( $this->mRequestorName, $this->mOldUsername, $this->mNewUsername, $wgCityId, $this->mReason,
+		$this->addMainLog( "log", RenameUserHelper::getLogForWiki( $this->mRequestorName, $this->mOldUsername, $this->mNewUsername, $wgCityId, $this->mReason,
 			!empty( $this->warnings ) || !empty( $this->errors ) ) );
 
 		$this->addLog( "Invalidate user data on local Wiki ({$wgCityId}): {$this->mOldUsername}" );
@@ -727,7 +727,7 @@ class RenameUserProcess {
 
 		$this->addLog( "Finished updating wiki database: {$cityDb}" );
 
-		$this->addMainLog( "log", RenameUserLogFormatter::getLogForWiki( $this->mRequestorName, $this->mOldUsername, $this->mNewUsername, $wgCityId, $this->mReason,
+		$this->addMainLog( "log", RenameUserHelper::getLogForWiki( $this->mRequestorName, $this->mOldUsername, $this->mNewUsername, $wgCityId, $this->mReason,
 			!empty( $this->warnings ) || !empty( $this->errors ) ) );
 
 		$wgUser = $wgOldUser;
@@ -839,7 +839,7 @@ class RenameUserProcess {
 			$tasks[] = $this->mLogTask->getID();
 		}
 
-		$this->addMainLog( "finish", RenameUserLogFormatter::getLog( 'userrenametool-info-finished', $this->mRequestorName, $this->mOldUsername, $this->mNewUsername, $this->mReason, $tasks ) );
+		$this->addMainLog( "finish", RenameUserHelper::getLog( 'userrenametool-info-finished', $this->mRequestorName, $this->mOldUsername, $this->mNewUsername, $this->mReason, $tasks ) );
 	}
 
 	/**

@@ -32,7 +32,6 @@ $wgExtensionMessagesFiles['UserRenameTool'] = $dir . 'SpecialRenameUser.i18n.php
 $wgAutoloadClasses['SpecialRenameUser'] = $dir . 'SpecialRenameUser_body.php';
 $wgAutoloadClasses['RenameUserHelper'] = $dir . 'RenameUserHelper.class.php';
 $wgAutoloadClasses['RenameUserProcess'] = $dir . 'RenameUserProcess.class.php';
-$wgAutoloadClasses['RenameUserLogFormatter'] = $dir . 'RenameUserLogFormatter.class.php';
 $wgAutoloadClasses['UserRenameTask'] = $dir . 'UserRenameTask.class.php';
 
 // log type
