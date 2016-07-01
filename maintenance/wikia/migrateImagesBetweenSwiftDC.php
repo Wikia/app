@@ -55,6 +55,9 @@ class MigrateImagesBetweenSwiftDC extends Maintenance {
 			'city_id' => $this->imageSyncQueueItem->city_id,
 			'src'     => $this->imageSyncQueueItem->src,
 			'dst'     => $this->imageSyncQueueItem->dst,
+			'@root'   => [
+				'tags' => [ 'SwiftSync' ]
+			]
 		];
 	}
 
