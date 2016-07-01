@@ -2,7 +2,7 @@
 class RenameUserLogFormatter {
 	const COMMUNITY_CENTRAL_CITY_ID = 177;
 
-	// 13 usages
+	// 7 usages
 	static public function getCommunityUser( $name, $noRedirect = false ) {
 		if ( is_int( $name ) ) {
 			$name = User::whoIs( $name );
@@ -16,27 +16,6 @@ class RenameUserLogFormatter {
 			$name,
 			false
 		);
-	}
-
-	// 2 usages
-	static public function getCityLink( $cityId ) {
-		global $wgCityId, $wgSitename;
-
-		$domains = WikiFactory::getDomains( $cityId );
-
-		if ( $wgCityId == $cityId ) {
-			// Hack based on the fact we should only ask for current wiki's sitename
-			$text = $wgSitename;
-		} else {
-			// The fallback to return anything
-			$text = "[" . WikiFactory::IDtoDB( $cityId ) . ":{$cityId}]";
-		}
-
-		if ( !empty( $domains ) ) {
-			$text = Xml::tags( 'a', array( "href" => "http://" . $domains[0] ), $text );
-		}
-
-		return $text;
 	}
 
 	static public function getLog( $message, $requestor, $oldUsername, $newUsername, $reason, $tasks = [] ) {
@@ -68,7 +47,7 @@ class RenameUserLogFormatter {
 			self::getCommunityUser( $requestor ),
 			self::getCommunityUser( $oldUsername, true ),
 			self::getCommunityUser( $newUsername ),
-			self::getCityLink( $cityId ),
+			WikiFactory::getCityLink( $cityId ),
 			$reason
 		)->escaped();
 

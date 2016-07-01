@@ -3408,4 +3408,23 @@ class WikiFactory {
 		return var_export( $value, true );
 	}
 
+	static public function getCityLink( $cityId ) {
+		global $wgCityId, $wgSitename;
+
+		$domains = self::getDomains( $cityId );
+
+		if ( $wgCityId == $cityId ) {
+			// Hack based on the fact we should only ask for current wiki's sitename
+			$text = $wgSitename;
+		} else {
+			// The fallback to return anything
+			$text = "[" . self::IDtoDB( $cityId ) . ":{$cityId}]";
+		}
+
+		if ( !empty( $domains ) ) {
+			$text = Xml::tags( 'a', array( "href" => "http://" . $domains[0] ), $text );
+		}
+
+		return $text;
+	}
 };
