@@ -2,6 +2,7 @@
 class RenameUserLogFormatter {
 	const COMMUNITY_CENTRAL_CITY_ID = 177;
 
+	// 13 usages
 	static public function getCommunityUser( $name, $noRedirect = false ) {
 		if ( is_int( $name ) ) {
 			$name = User::whoIs( $name );
@@ -17,6 +18,7 @@ class RenameUserLogFormatter {
 		);
 	}
 
+	// 3 usages
 	static protected function getCommunityTask( $taskId ) {
 		$title = GlobalTitle::newFromText( 'Tasks/log', NS_SPECIAL, self::COMMUNITY_CENTRAL_CITY_ID );
 
@@ -28,6 +30,7 @@ class RenameUserLogFormatter {
 		);
 	}
 
+	// 2 usages
 	static public function getCityLink( $cityId ) {
 		global $wgCityId, $wgSitename;
 
@@ -48,54 +51,22 @@ class RenameUserLogFormatter {
 		return $text;
 	}
 
-	static public function start( $requestor, $oldUsername, $newUsername, $reason, $tasks = array() ) {
-		foreach ( $tasks as $k => $v ) {
-			$tasks[$k] = self::getCommunityTask( $v );
+	static public function getLog( $message, $requestor, $oldUsername, $newUsername, $reason, $tasks = [] ) {
+		foreach ( $tasks as $key => $value ) {
+			$tasks[$key] = self::getCommunityTask( $value );
 		}
 
-		$text = wfMessage( 'userrenametool-info-started',
+		return wfMessage(
+			$message,
 			self::getCommunityUser( $requestor ),
 			self::getCommunityUser( $oldUsername, true ),
 			self::getCommunityUser( $newUsername ),
 			$tasks ? implode( ', ', $tasks ) : '-',
 			$reason
 		)->escaped();
-
-		return $text;
 	}
 
-	static public function finish( $requestor, $oldUsername, $newUsername, $reason, $tasks = array() ) {
-		foreach ( $tasks as $k => $v ) {
-			$tasks[$k] = self::getCommunityTask( $v );
-		}
-
-		$text = wfMessage( 'userrenametool-info-finished',
-			self::getCommunityUser( $requestor ),
-			self::getCommunityUser( $oldUsername, true ),
-			self::getCommunityUser( $newUsername ),
-			$tasks ? implode( ', ', $tasks ) : '-',
-			$reason
-		)->escaped();
-
-		return $text;
-	}
-
-	static public function fail( $requestor, $oldUsername, $newUsername, $reason, $tasks = array() ) {
-		foreach ( $tasks as $k => $v ) {
-			$tasks[$k] = self::getCommunityTask( $v );
-		}
-
-		$text = wfMessage( 'userrenametool-info-failed',
-			self::getCommunityUser( $requestor ),
-			self::getCommunityUser( $oldUsername, true ),
-			self::getCommunityUser( $newUsername ),
-			$tasks ? implode( ', ', $tasks ) : '-',
-			$reason
-		)->escaped();
-
-		return $text;
-	}
-
+	// 3 usages
 	static public function wiki( $requestor, $oldUsername, $newUsername, $cityId, $reason, $problems = false ) {
 		$text = wfMessage(
 			$problems ? 'userrenametool-info-wiki-finished-problems' : 'userrenametool-info-wiki-finished',

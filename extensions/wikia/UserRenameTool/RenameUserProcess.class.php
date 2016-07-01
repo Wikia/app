@@ -415,7 +415,8 @@ class RenameUserProcess {
 		if ( !$status ) {
 			$this->addMainLog(
 				'fail',
-				RenameUserLogFormatter::fail(
+				RenameUserLogFormatter::getLog(
+					'userrenametool-info-failed',
 					$this->mRequestorName,
 					$this->mOldUsername,
 					$this->mNewUsername,
@@ -838,7 +839,7 @@ class RenameUserProcess {
 			$tasks[] = $this->mLogTask->getID();
 		}
 
-		$this->addMainLog( "finish", RenameUserLogFormatter::finish( $this->mRequestorName, $this->mOldUsername, $this->mNewUsername, $this->mReason, $tasks ) );
+		$this->addMainLog( "finish", RenameUserLogFormatter::getLog( 'userrenametool-info-finished', $this->mRequestorName, $this->mOldUsername, $this->mNewUsername, $this->mReason, $tasks ) );
 	}
 
 	/**

@@ -35,12 +35,13 @@ class UserRenameTask extends BaseTask {
 		$this->staffLog(
 			'start',
 			$params,
-			\RenameUserLogFormatter::start(
+			RenameUserLogFormatter::getLog(
+				'userrenametool-info-started',
 				$params['requestor_name'],
 				$params['rename_old_name'],
 				$params['rename_new_name'],
 				$params['reason'],
-				[ $this->getTaskId() ]
+				[$this->getTaskId()]
 			)
 		);
 
@@ -140,7 +141,8 @@ class UserRenameTask extends BaseTask {
 			$this->staffLog(
 				'finish',
 				$params,
-				\RenameUserLogFormatter::finish(
+				RenameUserLogFormatter::getLog(
+					'userrenametool-info-finished',
 					$params['requestor_name'],
 					$params['rename_old_name'],
 					$params['rename_new_name'],
@@ -152,12 +154,13 @@ class UserRenameTask extends BaseTask {
 			$this->staffLog(
 				'fail',
 				$params,
-				\RenameUserLogFormatter::fail(
+				RenameUserLogFormatter::getLog(
+					'userrenametool-info-failed',
 					$params['requestor_name'],
 					$params['rename_old_name'],
 					$params['rename_new_name'],
 					$params['reason'],
-					[ $this->getTaskId() ]
+					[$this->getTaskId()]
 				)
 			);
 		}
