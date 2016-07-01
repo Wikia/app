@@ -18,18 +18,6 @@ class RenameUserLogFormatter {
 		);
 	}
 
-	// 3 usages
-	static protected function getCommunityTask( $taskId ) {
-		$title = GlobalTitle::newFromText( 'Tasks/log', NS_SPECIAL, self::COMMUNITY_CENTRAL_CITY_ID );
-
-		return Xml::element(
-			'a',
-			['href' => $title->getFullURL( ['id' => $taskId] )],
-			"#{$taskId}",
-			false
-		);
-	}
-
 	// 2 usages
 	static public function getCityLink( $cityId ) {
 		global $wgCityId, $wgSitename;
@@ -53,7 +41,14 @@ class RenameUserLogFormatter {
 
 	static public function getLog( $message, $requestor, $oldUsername, $newUsername, $reason, $tasks = [] ) {
 		foreach ( $tasks as $key => $value ) {
-			$tasks[$key] = self::getCommunityTask( $value );
+			$title = GlobalTitle::newFromText( 'Tasks/log', NS_SPECIAL, self::COMMUNITY_CENTRAL_CITY_ID );
+
+			$tasks[$key] = Xml::element(
+				'a',
+				['href' => $title->getFullURL( ['id' => $value] )],
+				"#{$value}",
+				false
+			);
 		}
 
 		return wfMessage(
