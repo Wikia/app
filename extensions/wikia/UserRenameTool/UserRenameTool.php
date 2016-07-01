@@ -22,17 +22,17 @@ $wgExtensionCredits['specialpage'][] = array(
 $dir = dirname(__FILE__) . '/';
 
 // special pages
-$wgSpecialPages['UserRenameTool'] = 'SpecialRenameUser';
+$wgSpecialPages['UserRenameTool'] = 'UserRenameToolController';
 $wgSpecialPageGroups['UserRenameTool'] = 'users';
 
 // internationalization files
-$wgExtensionMessagesFiles['UserRenameTool'] = $dir . 'SpecialRenameUser.i18n.php';
+$wgExtensionMessagesFiles['UserRenameTool'] = $dir . 'UserRenameTool.i18n.php';
 
 // classes
-$wgAutoloadClasses['SpecialRenameUser'] = $dir . 'SpecialRenameUser_body.php';
-$wgAutoloadClasses['RenameUserHelper'] = $dir . 'RenameUserHelper.class.php';
-$wgAutoloadClasses['RenameUserProcess'] = $dir . 'RenameUserProcess.class.php';
-$wgAutoloadClasses['UserRenameTask'] = $dir . 'UserRenameTask.class.php';
+$wgAutoloadClasses['UserRenameToolController'] = $dir . 'UserRenameToolController.class.php';
+$wgAutoloadClasses['UserRenameToolHelper'] = $dir . 'UserRenameToolHelper.class.php';
+$wgAutoloadClasses['UserRenameToolProcess'] = $dir . 'UserRenameToolProcess.class.php';
+$wgAutoloadClasses['UserRenameToolTask'] = $dir . 'UserRenameToolTask.class.php';
 
 // log type
 global $wgLogTypes, $wgLogNames, $wgLogHeaders;

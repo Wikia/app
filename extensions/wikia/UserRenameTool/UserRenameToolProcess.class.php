@@ -1,6 +1,6 @@
 <?php
 
-class RenameUserProcess {
+class UserRenameToolProcess {
 
 	const RENAME_TAG = 'renamed_to';
 	const PROCESS_TAG = 'rename_in_progress';
@@ -220,12 +220,12 @@ class RenameUserProcess {
 
 		// Phalanx test
 
-		$warning = RenameUserHelper::testBlock( $oun );
+		$warning = UserRenameToolHelper::testBlock( $oun );
 		if ( !empty( $warning ) ) {
 			$this->addWarning( $warning );
 		}
 
-		$warning = RenameUserHelper::testBlock( $nun );
+		$warning = UserRenameToolHelper::testBlock( $nun );
 		if ( !empty( $warning ) ) {
 			$this->addWarning( $warning );
 		}
@@ -415,7 +415,7 @@ class RenameUserProcess {
 		if ( !$status ) {
 			$this->addMainLog(
 				'fail',
-				RenameUserHelper::getLog(
+				UserRenameToolHelper::getLog(
 					'userrenametool-info-failed',
 					$this->mRequestorName,
 					$this->mOldUsername,
@@ -448,7 +448,7 @@ class RenameUserProcess {
 
 		// enumerate IDs for wikis the user has been active in
 		$this->addLog( "Searching for user activity on wikis." );
-		$wikiIDs = RenameUserHelper::lookupRegisteredUserActivity( $this->mUserId );
+		$wikiIDs = UserRenameToolHelper::lookupRegisteredUserActivity( $this->mUserId );
 		$this->addLog( "Found " . count( $wikiIDs ) . " wikis: " . implode( ', ', $wikiIDs ) );
 
 		$hookName = 'UserRename::BeforeAccountRename';
@@ -523,7 +523,7 @@ class RenameUserProcess {
 			'reason' => $this->mReason,
 			'notify_renamed' => $this->mNotifyUser,
 		);
-		$task = ( new UserRenameTask() )
+		$task = ( new UserRenameToolTask() )
 			->setPriority( \Wikia\Tasks\Queues\PriorityQueue::NAME );
 		$task->call( 'renameUser', $wikiIDs, $callParams );
 		$this->mUserRenameTaskId = $task->queue();
@@ -675,7 +675,7 @@ class RenameUserProcess {
 
 		$this->addLog( "Finished updating wiki database: {$cityDb}" );
 
-		$this->addMainLog( "log", RenameUserHelper::getLogForWiki( $this->mRequestorName, $this->mOldUsername, $this->mNewUsername, $wgCityId, $this->mReason,
+		$this->addMainLog( "log", UserRenameToolHelper::getLogForWiki( $this->mRequestorName, $this->mOldUsername, $this->mNewUsername, $wgCityId, $this->mReason,
 			!empty( $this->warnings ) || !empty( $this->errors ) ) );
 
 		$this->addLog( "Invalidate user data on local Wiki ({$wgCityId}): {$this->mOldUsername}" );
@@ -727,7 +727,7 @@ class RenameUserProcess {
 
 		$this->addLog( "Finished updating wiki database: {$cityDb}" );
 
-		$this->addMainLog( "log", RenameUserHelper::getLogForWiki( $this->mRequestorName, $this->mOldUsername, $this->mNewUsername, $wgCityId, $this->mReason,
+		$this->addMainLog( "log", UserRenameToolHelper::getLogForWiki( $this->mRequestorName, $this->mOldUsername, $this->mNewUsername, $wgCityId, $this->mReason,
 			!empty( $this->warnings ) || !empty( $this->errors ) ) );
 
 		$wgUser = $wgOldUser;
@@ -839,7 +839,7 @@ class RenameUserProcess {
 			$tasks[] = $this->mLogTask->getID();
 		}
 
-		$this->addMainLog( "finish", RenameUserHelper::getLog( 'userrenametool-info-finished', $this->mRequestorName, $this->mOldUsername, $this->mNewUsername, $this->mReason, $tasks ) );
+		$this->addMainLog( "finish", UserRenameToolHelper::getLog( 'userrenametool-info-finished', $this->mRequestorName, $this->mOldUsername, $this->mNewUsername, $this->mReason, $tasks ) );
 	}
 
 	/**
@@ -944,7 +944,7 @@ class RenameUserProcess {
 	}
 
 	static public function newFromData( $data ) {
-		$o = new RenameUserProcess( $data['rename_old_name'], $data['rename_new_name'], '', true );
+		$o = new UserRenameToolProcess( $data['rename_old_name'], $data['rename_new_name'], '', true );
 
 		$mapping = array(
 			'mUserId' => 'rename_user_id',

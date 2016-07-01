@@ -1,6 +1,6 @@
 <?php
 
-class SpecialRenameUser extends SpecialPage {
+class UserRenameToolController extends SpecialPage {
 	private $oldUsername;
 	private $newUsername;
 	private $reason;
@@ -31,7 +31,7 @@ class SpecialRenameUser extends SpecialPage {
 
 		$this->setHeaders();
 		$oAssetsManager = AssetsManager::getInstance();
-		$sSrc = $oAssetsManager->getOneCommonURL( '/extensions/wikia/UserRenameTool/js/NewUsernameUrlEncoder.js' );
+		$sSrc = $oAssetsManager->getOneCommonURL( '/extensions/wikia/UserRenameTool/js/UserRenameTool.js' );
 		$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"{$sSrc}\"></script>" );
 
 		if ( wfReadOnly() || !$wgStatsDBEnabled ) {
@@ -60,7 +60,7 @@ class SpecialRenameUser extends SpecialPage {
 		global $wgRequest, $wgUser;
 
 		if ( $wgRequest->wasPosted() && $wgUser->matchEditToken( $wgRequest->getText( 'token' ) ) ) {
-			$process = new RenameUserProcess( $this->oldUsername, $this->newUsername, $this->confirmAction, $this->reason, $this->notifyRenamed );
+			$process = new UserRenameToolProcess( $this->oldUsername, $this->newUsername, $this->confirmAction, $this->reason, $this->notifyRenamed );
 			$status = $process->run();
 			$this->warnings = $process->getWarnings();
 			$this->errors = $process->getErrors();
@@ -108,6 +108,6 @@ class SpecialRenameUser extends SpecialPage {
 			'notify_renamed' => $this->notifyRenamed,
 		]);
 
-		$wgOut->addHTML( $template->render( 'RenameForm' ) );
+		$wgOut->addHTML( $template->render( 'UserRenameTool' ) );
 	}
 }

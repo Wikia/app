@@ -76,19 +76,19 @@ if (!empty($options['reason']))
 if (!empty($options['global-task-id']) && is_numeric($options['global-task-id']))
 	$processData['global_task_id'] = (int)$options['global-task-id'];
 
-require_once("$IP/extensions/wikia/UserRenameTool/SpecialRenameUser.php");
+require_once("$IP/extensions/wikia/UserRenameTool/UserRenameTool.php");
 
-$process = RenameUserProcess::newFromData($processData);
-$process->setLogDestination(RenameUserProcess::LOG_OUTPUT);
+$process = UserRenameToolProcess::newFromData($processData);
+$process->setLogDestination(UserRenameToolProcess::LOG_OUTPUT);
 
 if($taskId) {
 	$runningTask = UserRenameLocalTask::newFromID($taskId);
 
 	if(defined('ENV_DEVBOX')){
-		$process->addLogDestination(RenameUserProcess::LOG_BATCH_TASK, $runningTask);
+		$process->addLogDestination(UserRenameToolProcess::LOG_BATCH_TASK, $runningTask);
 	}
 	else{
-		$process->setLogDestination(RenameUserProcess::LOG_BATCH_TASK, $runningTask);
+		$process->setLogDestination(UserRenameToolProcess::LOG_BATCH_TASK, $runningTask);
 	}
 }
 $process->setRequestorUser();

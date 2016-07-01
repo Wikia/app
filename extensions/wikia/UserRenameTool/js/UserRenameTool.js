@@ -49,7 +49,7 @@ var NewUsernameUrlEncoder = {
 			this.warningsRow.hide();
 		}
 	}
-}
+};
 
 $(document).ready( function() {
 	NewUsernameUrlEncoder.init();

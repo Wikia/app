@@ -2,7 +2,7 @@
 - [x] remove unused files
 - [x] remove unused methods
 - [x] remove redundant PHPDocs
-- [x] camelcase files
+- [x] unify file names
 - [x] simplify controller
 - [x] simplify log methods
 - [x] replace old message methods with wfMessage

@@ -468,7 +468,7 @@ class ExternalUser_Wikia extends ExternalUser {
 		foreach( $clusters as $clusterName ) {
 			// This is a classic double-check. I do not want to delete the record from the primary cluster.
 			// No, really! I do not.
-			if( RenameUserHelper::CLUSTER_DEFAULT != $clusterName ) {
+			if( UserRenameToolHelper::CLUSTER_DEFAULT != $clusterName ) {
 				$memkey = sprintf( "extuser:%d:%s", $id, $clusterName );
 				$clusterName = 'wikicities_' . $clusterName;
 

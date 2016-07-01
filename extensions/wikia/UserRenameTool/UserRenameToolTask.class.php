@@ -1,7 +1,7 @@
 <?php
 use Wikia\Tasks\Tasks\BaseTask;
 
-class UserRenameTask extends BaseTask {
+class UserRenameToolTask extends BaseTask {
 	const EMAIL_CONTROLLER = \Email\Controller\UserNameChangeController::class;
 
 	/**
@@ -25,8 +25,8 @@ class UserRenameTask extends BaseTask {
 		$renameIP = !empty( $params['rename_ip'] );
 
 		$loadBalancerFactory = wfGetLBFactory();
-		$process = RenameUserProcess::newFromData( $params );
-		$process->setLogDestination( \RenameUserProcess::LOG_BATCH_TASK, $this );
+		$process = UserRenameToolProcess::newFromData( $params );
+		$process->setLogDestination( \UserRenameToolProcess::LOG_BATCH_TASK, $this );
 		$process->setRequestorUser();
 
 		$noErrors = true;
@@ -35,7 +35,7 @@ class UserRenameTask extends BaseTask {
 		$this->staffLog(
 			'start',
 			$params,
-			RenameUserHelper::getLog(
+			UserRenameToolHelper::getLog(
 				'userrenametool-info-started',
 				$params['requestor_name'],
 				$params['rename_old_name'],
@@ -95,7 +95,7 @@ class UserRenameTask extends BaseTask {
 				$this->staffLog(
 					'log',
 					$params,
-					RenameUserHelper::getLogForWiki(
+					UserRenameToolHelper::getLogForWiki(
 						$params['requestor_name'],
 						$params['rename_old_name'],
 						$params['rename_new_name'],
@@ -141,7 +141,7 @@ class UserRenameTask extends BaseTask {
 			$this->staffLog(
 				'finish',
 				$params,
-				RenameUserHelper::getLog(
+				UserRenameToolHelper::getLog(
 					'userrenametool-info-finished',
 					$params['requestor_name'],
 					$params['rename_old_name'],
@@ -154,7 +154,7 @@ class UserRenameTask extends BaseTask {
 			$this->staffLog(
 				'fail',
 				$params,
-				RenameUserHelper::getLog(
+				UserRenameToolHelper::getLog(
 					'userrenametool-info-failed',
 					$params['requestor_name'],
 					$params['rename_old_name'],

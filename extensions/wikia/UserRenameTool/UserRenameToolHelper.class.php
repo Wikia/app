@@ -1,6 +1,6 @@
 <?php
 
-class RenameUserHelper {
+class UserRenameToolHelper {
 
 	const CLUSTER_DEFAULT = '';
 	const COMMUNITY_CENTRAL_CITY_ID = 177;
