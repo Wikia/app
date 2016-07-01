@@ -39,7 +39,7 @@ class RenameUserLogFormatter {
 		)->escaped();
 	}
 
-	static public function wiki( $requestor, $oldUsername, $newUsername, $cityId, $reason, $problems = false ) {
+	static public function getLogForWiki($requestor, $oldUsername, $newUsername, $cityId, $reason, $problems = false ) {
 		$text = wfMessage(
 			$problems ? 'userrenametool-info-wiki-finished-problems' : 'userrenametool-info-wiki-finished',
 			self::getCommunityUser( $requestor ),

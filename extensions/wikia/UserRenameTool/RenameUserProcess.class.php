@@ -675,7 +675,7 @@ class RenameUserProcess {
 
 		$this->addLog( "Finished updating wiki database: {$cityDb}" );
 
-		$this->addMainLog( "log", RenameUserLogFormatter::wiki( $this->mRequestorName, $this->mOldUsername, $this->mNewUsername, $wgCityId, $this->mReason,
+		$this->addMainLog( "log", RenameUserLogFormatter::getLogForWiki( $this->mRequestorName, $this->mOldUsername, $this->mNewUsername, $wgCityId, $this->mReason,
 			!empty( $this->warnings ) || !empty( $this->errors ) ) );
 
 		$this->addLog( "Invalidate user data on local Wiki ({$wgCityId}): {$this->mOldUsername}" );
@@ -727,7 +727,7 @@ class RenameUserProcess {
 
 		$this->addLog( "Finished updating wiki database: {$cityDb}" );
 
-		$this->addMainLog( "log", RenameUserLogFormatter::wiki( $this->mRequestorName, $this->mOldUsername, $this->mNewUsername, $wgCityId, $this->mReason,
+		$this->addMainLog( "log", RenameUserLogFormatter::getLogForWiki( $this->mRequestorName, $this->mOldUsername, $this->mNewUsername, $wgCityId, $this->mReason,
 			!empty( $this->warnings ) || !empty( $this->errors ) ) );
 
 		$wgUser = $wgOldUser;

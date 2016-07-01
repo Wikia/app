@@ -95,7 +95,7 @@ class UserRenameTask extends BaseTask {
 				$this->staffLog(
 					'log',
 					$params,
-					\RenameUserLogFormatter::wiki(
+					RenameUserLogFormatter::getLogForWiki(
 						$params['requestor_name'],
 						$params['rename_old_name'],
 						$params['rename_new_name'],
