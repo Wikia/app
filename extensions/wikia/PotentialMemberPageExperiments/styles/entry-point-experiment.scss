@@ -111,6 +111,22 @@ $close-button-background: $close-dark-icon;
 	}
 }
 
+.pmp-entry-point-right-rail {
+	background: url('/extensions/wikia/PotentialMemberPageExperiments/images/background-rail.png') no-repeat left bottom;
+	box-sizing: border-box;
+	padding: 60px 30px 42px;
+
+	.pmp-entry-point-message {
+		padding-top: 0;
+	}
+}
+
+@media #{$breakpoint-below-small-plus} {
+	.pmp-entry-point-right-rail {
+		flex-basis: 49%;
+	}
+}
+
 @keyframes slidein {
 	0% {
 		right: -1000px;
