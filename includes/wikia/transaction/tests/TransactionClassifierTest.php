@@ -199,6 +199,35 @@ class TransactionClassifierTest extends WikiaBaseTest {
 				],
 				'expectedName' => 'page/blog'
 			],
+			# SemanticMediaWiki
+			[
+				'attributes' => [
+					Transaction::PARAM_ENTRY_POINT => Transaction::ENTRY_POINT_PAGE,
+					Transaction::PARAM_NAMESPACE => TransactionClassifier::SMW_NS_CONCEPT,
+				],
+				'expectedName' => 'page/semantic_mediawiki'
+			],
+			[
+				'attributes' => [
+					Transaction::PARAM_ENTRY_POINT => Transaction::ENTRY_POINT_PAGE,
+					Transaction::PARAM_NAMESPACE => TransactionClassifier::SMW_NS_PROPERTY,
+				],
+				'expectedName' => 'page/semantic_mediawiki'
+			],
+			[
+				'attributes' => [
+					Transaction::PARAM_ENTRY_POINT => Transaction::ENTRY_POINT_PAGE,
+					Transaction::PARAM_NAMESPACE => TransactionClassifier::SMW_NS_TYPE,
+				],
+				'expectedName' => 'page/semantic_mediawiki'
+			],
+			[
+				'attributes' => [
+					Transaction::PARAM_ENTRY_POINT => Transaction::ENTRY_POINT_PAGE,
+					Transaction::PARAM_NAMESPACE => TransactionClassifier::SF_NS_FORM,
+				],
+				'expectedName' => 'page/semantic_form'
+			],
 			# special pages
 			[
 				'attributes' => [
