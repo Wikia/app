@@ -14,7 +14,7 @@
 		rteForceLogin: function () {
 			//prevent onbeforeunload from being called when user is loging in
 			window.onbeforeunload = function () {};
-			window.wikiAuthModal.load({
+			window.wikiaAuthModal.load({
 				forceLogin: true,
 				origin: 'editor',
 				url: '/signin?redirect=' + encodeURIComponent(window.location.href),

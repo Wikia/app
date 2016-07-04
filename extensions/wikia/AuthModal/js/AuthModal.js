@@ -1,4 +1,4 @@
-require(['jquery', 'wikia.window'], function ($, window) {
+(function ($, window) {
 	'use strict';
 
 	var authPopUpWindow,
@@ -148,4 +148,4 @@ require(['jquery', 'wikia.window'], function ($, window) {
 
 		close: close
 	};
-});
+})($, window);
