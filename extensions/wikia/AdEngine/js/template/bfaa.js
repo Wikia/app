@@ -130,6 +130,8 @@ define('ext.wikia.adEngine.template.bfaa', [
 
 		uapContext.setUapId(params.uap);
 		unblockedSlots.forEach(btfBlocker.unblock);
+
+		win.dispatchEvent(new Event('wikia.uap'));
 	}
 
 	return {

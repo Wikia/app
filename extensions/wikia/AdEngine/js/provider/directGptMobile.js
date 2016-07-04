@@ -1,8 +1,15 @@
 /*global define*/
 define('ext.wikia.adEngine.provider.directGptMobile', [
-	'ext.wikia.adEngine.provider.factory.wikiaGpt'
-], function (factory) {
+	'ext.wikia.adEngine.provider.factory.wikiaGpt',
+	'ext.wikia.adEngine.uapContext'
+], function (factory, uapContext) {
 	'use strict';
+
+	function dispatchNoUapEvent(slotName) {
+		if (slotName === 'MOBILE_TOP_LEADERBOARD') {
+			window.dispatchEvent(new Event('wikia.not_uap'));
+		}
+	}
 
 	return factory.createProvider(
 		'ext.wikia.adEngine.provider.directGptMobile',
@@ -19,6 +26,17 @@ define('ext.wikia.adEngine.provider.directGptMobile', [
 			MOBILE_PREFOOTER:           {size: '320x50,300x250,300x50'}
 		},
 		{
+			beforeSuccess: function (slotName) {
+				if (uapContext.getUapId() === 'undefined') {
+					dispatchNoUapEvent(slotName);
+				}
+			},
+			beforeCollapse: function (slotName) {
+				dispatchNoUapEvent(slotName);
+			},
+			beforeHop: function (slotName) {
+				dispatchNoUapEvent(slotName);
+			},
 			atfSlots: [
 				'MOBILE_TOP_LEADERBOARD',
 				'INVISIBLE_HIGH_IMPACT'
