@@ -1085,7 +1085,7 @@ class Wikia {
 	 * add entries to software info
 	 */
 	static public function softwareInfo( &$software ) {
-		global $wgCityId, $wgDBcluster, $wgWikiaDatacenter, $wgLocalFileRepo, $smwgDefaultStore;
+		global $wgCityId, $wgDBcluster, $wgWikiaDatacenter, $wgLocalFileRepo, $smwgDefaultStore, $wgEnableSemanticMediaWikiExt;
 
 		$info = [];
 
@@ -1101,7 +1101,7 @@ class Wikia {
 		if( !empty( $wgWikiaDatacenter ) ) {
 			$info[] = "dc: $wgWikiaDatacenter";
 		}
-		if( !empty( $smwgDefaultStore ) ) {
+		if( !empty( $wgEnableSemanticMediaWikiExt ) ) {
 			$info[] = "smw_store: $smwgDefaultStore";
 		}
 
