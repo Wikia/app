@@ -1085,10 +1085,12 @@ class Wikia {
 	 * add entries to software info
 	 */
 	static public function softwareInfo( &$software ) {
-		global $wgCityId, $wgDBcluster, $wgWikiaDatacenter, $wgLocalFileRepo;
+		global $wgCityId, $wgDBcluster, $wgWikiaDatacenter, $wgLocalFileRepo, $smwgDefaultStore;
+
+		$info = '';
 
 		if( !empty( $wgCityId ) ) {
-			$info = "city_id: {$wgCityId}";
+			$info .= "city_id: {$wgCityId}";
 		}
 		if( empty( $wgDBcluster ) ) {
 			$info .= ", cluster: c1";
@@ -1098,6 +1100,9 @@ class Wikia {
 		}
 		if( !empty( $wgWikiaDatacenter ) ) {
 			$info .= ", dc: $wgWikiaDatacenter";
+		}
+		if( !empty( $smwgDefaultStore ) ) {
+			$info .= ", smw_store: $smwgDefaultStore";
 		}
 		$info .= ", file_repo: {$wgLocalFileRepo['backend']}";
 
