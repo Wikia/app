@@ -35,49 +35,47 @@ WikiaEmoticons.doReplacements = function (text, emoticonMapping) {
 	$().log('Processing any emoticons... ');
 
 	var imgUrlsByRegexString = emoticonMapping.getImgUrlsByRegexString(),
-		regexString,
-		imgSrc,
-		numIters,
 		origText,
 		regex,
-		glyphUsed,
-		buildTagFunc;
+		buildTagFunc,
+		maxEmoticons = 5,
+		combinedRegex = Object.keys(imgUrlsByRegexString)
+			.map(function (key) {
+					return key.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&');
+				}
+			).join('|');
 
-	for (regexString in imgUrlsByRegexString){
-		// Empty string for emote icons crash Chat so ignore them
-		if (regexString === '') {
-			continue;
-		}
-
-		imgSrc = imgUrlsByRegexString[regexString];
-		imgSrc = imgSrc.replace(/"/g, '%22'); // prevent any HTML-injection
-
-		buildTagFunc = WikiaEmoticons.buildTagGenerator(imgSrc);
-
-		// Fix > and <
-		regexString = regexString.replace(/>/g, '&gt;');
-		regexString = regexString.replace(/</g, '&lt;');
-
-		// Build the regex for the character (make it ignore the match if there is a "/" immediately
-		// after the emoticon. That creates all kinds of problems with URLs).
-		numIters = 0;
-		origText = text;
-
-		do {
-			// NOTE: \s does not work for whitespace here for some reason.
-			regex = new RegExp('(^| )(' + regexString + ')([^/]|$)', 'gi');
-			glyphUsed = text.replace(regex, '$2');
-			glyphUsed = glyphUsed.replace(/"/g, '&quot;'); // prevent any HTML-injection
-			text = text.replace(regex, buildTagFunc);
-		} while ((origText !== text) && (numIters++ < 5));
+	//return early if none match
+	if (!text.match(combinedRegex)) {
+		return text;
 	}
+
+	// Fix > and <
+	combinedRegex = combinedRegex.replace(/>/g, '&gt;');
+	combinedRegex = combinedRegex.replace(/</g, '&lt;');
+
+	buildTagFunc = WikiaEmoticons.buildTagGenerator(imgUrlsByRegexString);
+
+	do {
+		origText = text;
+		regex = new RegExp('(^|\\s)(' + combinedRegex + ')([^/]|$)', 'i');
+		text = text.replace(regex, buildTagFunc);
+	} while ((origText !== text) && --maxEmoticons > 0);
 
 	$().log('Done processing emoticons.');
 	return text;
 };
 
-WikiaEmoticons.buildTagGenerator = function (imgSrc) {
+WikiaEmoticons.buildTagGenerator = function (imgUrlsByRegexString) {
+
 	return function (match, leading, tag, trailing) {
+
+		var imgSrc = imgUrlsByRegexString[tag];
+		if (typeof imgSrc === 'undefined') {
+			return '';
+		}
+		imgSrc = imgSrc.replace(/"/g, '%22'); // prevent any HTML-injection
+
 		// Don't return any img tag if this is an external image
 		if (!imgSrc.match(/^(?:https?:)?\/\/(?:[^\/]+\.)*?wikia(?:-dev)?(?:\.com|\.nocookie\.net)\//)) {
 			return '';
@@ -159,8 +157,8 @@ if (typeof EmoticonMapping === 'undefined') {
 		};
 
 		/**
-		 * Returns a hash where the keys are regex strings (strings that can be passed into the constructor of RegExp)
-		 * and where the values are the img url of the emoticon that should be substituted for the string.
+		 * Returns a hash where the keys are emoticon and where the values are the img url of the emoticon that should
+		 * be substituted for the string.
 		 */
 		this.getImgUrlsByRegexString = function () {
 			// If the regexes haven't been built from the config yet, build them.
@@ -192,18 +190,9 @@ if (typeof EmoticonMapping === 'undefined') {
 				regexString = '';
 				for (index = 0; codes.length > index; index++){
 					code = codes[index];
-					// Escape the string for use in the regex. See: http://simonwillison.net/2006/Jan/20/escape/#p-6
-					code = code.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&');
-					if (code !== '') {
-						regexString += (regexString === '' ? '' : '|');
-						regexString += code;
-					}
+					self._regexes[code] = imgSrc;
 				}
-
-				// Stores the regex to img mapping.
-				self._regexes[regexString] = imgSrc;
 			}
-
 			return self._regexes;
 		};
 	};
