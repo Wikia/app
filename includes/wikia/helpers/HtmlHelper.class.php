@@ -69,6 +69,23 @@ class HtmlHelper {
 	}
 
 	/**
+	 * Removes wrapping node
+	 * eg.: "<div><p>test</p> <a>more test</a></div>" -> "<p>test</p> <a>more test</a>"
+	 *
+	 * @param DOMNode $node
+	 * @return DOMNode removed node
+	 */
+	public static function removeWrappingNode( DOMNode $node ) {
+		$previousNode = $node;
+		$currentLastChild = $node->lastChild;
+		while ( $currentLastChild !== null ) {
+			$previousNode = $node->parentNode->insertBefore( $currentLastChild, $previousNode );
+			$currentLastChild = $node->lastChild;
+		}
+		return HtmlHelper::removeNode( $node );
+	}
+
+	/**
 	 * Strips given attributes from HTML string
 	 * For example it can convert `<a style="color: black">1</a>` to `<a>1</a>`
 	 *
