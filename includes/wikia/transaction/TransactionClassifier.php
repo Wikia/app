@@ -118,6 +118,10 @@ class TransactionClassifier {
 		true => 'dpl',
 	);
 
+	protected static $MAP_SEMANTIC_MEDIAWIKI = array(
+		true => 'semantic_mediawiki',
+	);
+
 	protected $dependencies = array( Transaction::PARAM_ENTRY_POINT );
 	protected $attributes = array();
 	protected $nameParts = null;
@@ -218,6 +222,9 @@ class TransactionClassifier {
 
 		// add "DPL was used" information
 		$this->addByMap( Transaction::PARAM_DPL, self::$MAP_DPL );
+
+		// add "SMW was used" information
+		$this->addByMap( Transaction::PARAM_SEMANTIC_MEDIAWIKI, self::$MAP_SEMANTIC_MEDIAWIKI );
 
 		// add size category
 		if ( $this->add( Transaction::PARAM_SIZE_CATEGORY ) === null ) {
