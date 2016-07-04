@@ -75,7 +75,7 @@ class HtmlHelper {
 	 * @param DOMNode $node
 	 * @return DOMNode removed node
 	 */
-	public static function removeWrappingNode( DOMNode $node ) {
+	public static function unwrapNode( DOMNode $node ) {
 		$previousNode = $node;
 		$currentLastChild = $node->lastChild;
 		while ( $currentLastChild !== null ) {

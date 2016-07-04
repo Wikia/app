@@ -41,7 +41,7 @@ class NavigationTemplate {
 			if ( $found->length ) {
 				HtmlHelper::removeNode( $node );
 			} else {
-				HtmlHelper::removeWrappingNode( $node );
+				HtmlHelper::unwrapNode( $node );
 			}
 		}
 
@@ -61,9 +61,9 @@ class NavigationTemplate {
 		if ( $result->length ) {
 			for ( $i = 0; $i < $result->length; $i++ ) {
 				$node = $result->item( $i );
-				// implicitly remove new line from the string begining (see line: 72:51)
-				$node->firstChild->nodeValue = substr( $node->firstChild->nodeValue, 1 );
-				HtmlHelper::removeWrappingNode( $node );
+				// remove new line from the string beginning (see: NavigationTemplate::mark)
+				$node->firstChild->nodeValue = self::removeFirstCharacter( $node->firstChild->nodeValue );
+				HtmlHelper::unwrapNode( $node );
 			}
 
 			return HtmlHelper::getBodyHtml( $document );
@@ -74,5 +74,9 @@ class NavigationTemplate {
 
 	private static function mark( $text ) {
 		return sprintf( "<div data-navuniq=\"%s\">\n%s</div>", uniqid(), $text );
+	}
+
+	private static function removeFirstCharacter( $text ) {
+		return substr( $text, 1 );
 	}
 }

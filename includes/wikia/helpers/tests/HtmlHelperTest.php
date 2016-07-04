@@ -80,7 +80,7 @@ class HtmlHelperTest extends WikiaBaseTest {
 	 */
 	public function testUnwrapping( $html, $id, $expected, $message ) {
 		$document = HtmlHelper::createDOMDocumentFromText( $html );
-		HtmlHelper::removeWrappingNode( $document->getElementById( $id ) );
+		HtmlHelper::unwrapNode( $document->getElementById( $id ) );
 
 		$this->assertEquals( $expected, HtmlHelper::getBodyHtml( $document ), $message );
 	}
