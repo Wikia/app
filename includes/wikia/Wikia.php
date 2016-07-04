@@ -1087,26 +1087,26 @@ class Wikia {
 	static public function softwareInfo( &$software ) {
 		global $wgCityId, $wgDBcluster, $wgWikiaDatacenter, $wgLocalFileRepo, $smwgDefaultStore;
 
-		$info = '';
+		$info = [];
 
 		if( !empty( $wgCityId ) ) {
-			$info .= "city_id: {$wgCityId}";
+			$info[] = "city_id: {$wgCityId}";
 		}
 		if( empty( $wgDBcluster ) ) {
-			$info .= ", cluster: c1";
+			$info[] = "cluster: c1";
 		}
 		else {
-			$info .= ", cluster: $wgDBcluster";
+			$info[] = "cluster: $wgDBcluster";
 		}
 		if( !empty( $wgWikiaDatacenter ) ) {
-			$info .= ", dc: $wgWikiaDatacenter";
+			$info[] = "dc: $wgWikiaDatacenter";
 		}
 		if( !empty( $smwgDefaultStore ) ) {
-			$info .= ", smw_store: $smwgDefaultStore";
+			$info[] = "smw_store: $smwgDefaultStore";
 		}
-		$info .= ", file_repo: {$wgLocalFileRepo['backend']}";
+		$info[] = "file_repo: {$wgLocalFileRepo['backend']}";
 
-		$software[ "Internals" ] = $info;
+		$software[ "Internals" ] = join(', ', $info);
 
 		/**
 		 * obligatory hook return value
