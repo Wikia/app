@@ -1104,7 +1104,6 @@ class Wikia {
 		if( !empty( $smwgDefaultStore ) ) {
 			$info[] = "smw_store: $smwgDefaultStore";
 		}
-		$info[] = "file_repo: {$wgLocalFileRepo['backend']}";
 
 		$software[ "Internals" ] = join(', ', $info);
 
