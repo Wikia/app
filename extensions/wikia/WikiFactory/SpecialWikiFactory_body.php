@@ -111,7 +111,7 @@ class WikiFactoryPage extends SpecialPage {
 	 * @return Database Row from city_list
 	 */
 	private function getWikiData( $subpage ) {
-		global $wgRequest;
+		global $wgRequest, $wgWikiaBaseDomain;
 
 		$domain	= $wgRequest->getVal( "wpCityDomain", null );
 		$cityid	= $wgRequest->getVal( "cityid", null );
@@ -162,7 +162,7 @@ class WikiFactoryPage extends SpecialPage {
 					 */
 					if( sizeof(explode(".", $domain )) <= 2 && strlen( $domain ) > 0) {
 						$this->mDomain = $domain;
-						$domain = $domain.".wikia.com";
+						$domain = $domain.".".$wgWikiaBaseDomain;
 					} else {
 						list( $code, $subdomain ) = explode(".", $domain, 2 );
 						$exists = 0;
@@ -1032,10 +1032,11 @@ class ChangeLogPager extends TablePager {
 	 * @return string: formated table field
 	 */
 	function formatValue( $field, $value ) {
+		global $wgWikiaBaseDomain;
 		switch ($field) {
 			case "city_url":
 				preg_match("/http:\/\/([\w\.\-]+)\//", $value, $matches );
-				$sRetval = str_ireplace(".wikia.com", "", $matches[1]);
+				$sRetval = str_ireplace(".".$wgWikiaBaseDomain, "", $matches[1]);
 				return $sRetval;
 				break;
 

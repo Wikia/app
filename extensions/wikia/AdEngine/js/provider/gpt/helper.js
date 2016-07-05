@@ -7,6 +7,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	'ext.wikia.adEngine.provider.gpt.adDetect',
 	'ext.wikia.adEngine.provider.gpt.adElement',
 	'ext.wikia.adEngine.provider.gpt.googleTag',
+	'ext.wikia.adEngine.uapContext',
 	'ext.wikia.aRecoveryEngine.recovery.helper',
 	'ext.wikia.adEngine.slotTweaker',
 	require.optional('ext.wikia.adEngine.provider.gpt.sraHelper'),
@@ -18,6 +19,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	adDetect,
 	AdElement,
 	GoogleTag,
+	uapContext,
 	recoveryHelper,
 	slotTweaker,
 	sraHelper,
@@ -30,13 +32,6 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 		hiddenSlots = [
 			'INCONTENT_LEADERBOARD'
 		];
-
-	function collapseElement(element) {
-		slotTweaker.hide(
-			element.getSlotName(),
-			recoveryHelper.isBlocking() && recoveryHelper.isRecoveryEnabled()
-		);
-	}
 
 	function isHiddenOnStart(slotName) {
 		return hiddenSlots.indexOf(slotName) !== -1;
@@ -58,7 +53,8 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 			element,
 			recoverableSlots = extra.recoverableSlots || [],
 			shouldPush = !recoveryHelper.isBlocking() ||
-				(recoveryHelper.isBlocking() && recoveryHelper.isRecoverable(slot.name, recoverableSlots));
+				(recoveryHelper.isBlocking() && recoveryHelper.isRecoverable(slot.name, recoverableSlots)),
+			uapId = uapContext.getUapId();
 
 		log(['shouldPush',
 			slot.name,
@@ -80,18 +76,11 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 				slotTargeting.rv = count.toString();
 			}
 		}
+		if (uapId) {
+			slotTargeting.uap = uapId.toString();
+		}
 
 		element = new AdElement(slot.name, slotPath, slotTargeting);
-
-		slot.pre('collapse', function () {
-			collapseElement(element);
-		});
-		slot.pre('hop', function () {
-			slotTweaker.hide(
-				element.getSlotContainerId(),
-				recoveryHelper.isBlocking() && recoveryHelper.isRecoveryEnabled()
-			);
-		});
 
 		function queueAd() {
 			log(['queueAd', slot.name, element], 'debug', logGroup);

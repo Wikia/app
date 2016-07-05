@@ -1106,17 +1106,6 @@ class LocalFile extends File {
 				array( 'img_name' => $this->getName() ),
 				__METHOD__
 			);
-		} else {
-			# This is a new file
-			# Update the image count
-			#$dbw->begin( __METHOD__ ); // macbre: see PLATFORM-1311 (Beginning a transaction causes any pending transaction to be committed)
-			$dbw->update(
-				'site_stats',
-				array( 'ss_images = ss_images+1' ),
-				'*',
-				__METHOD__
-			);
-			#$dbw->commit( __METHOD__ ); // macbre: see PLATFORM-1311
 		}
 
 		$descTitle = $this->getTitle();
@@ -1197,6 +1186,9 @@ class LocalFile extends File {
 			/* wikia change - begin (VID-1568) */
 			\VideoInfoHooksHelper::purgeVideoInfoCache( $this );
 			/* wikia change - end (VID-1568) */
+		}
+		else {
+			DeferredUpdates::addUpdate( SiteStatsUpdate::factory( [ 'images' => 1 ] ) );
 		}
 
 		# Hooks, hooks, the magic of hooks...
@@ -1372,9 +1364,7 @@ class LocalFile extends File {
 		$status = $batch->execute();
 
 		if ( $status->ok ) {
-			// Update site_stats
-			$site_stats = $dbw->tableName( 'site_stats' );
-			$dbw->query( "UPDATE $site_stats SET ss_images=ss_images-1", __METHOD__ );
+			DeferredUpdates::addUpdate( SiteStatsUpdate::factory( [ 'images' => -1 ] ) );
 		}
 		$this->unlock(); // done
 		
@@ -2198,9 +2188,7 @@ class LocalFileRestoreBatch {
 			if ( !$exists ) {
 				wfDebug( __METHOD__ . " restored {$status->successCount} items, creating a new current\n" );
 
-				// Update site_stats
-				$site_stats = $dbw->tableName( 'site_stats' );
-				$dbw->query( "UPDATE $site_stats SET ss_images=ss_images+1", __METHOD__ );
+				DeferredUpdates::addUpdate( SiteStatsUpdate::factory( [ 'images' => 1 ] ) );
 
 				$this->file->purgeEverything();
 			} else {

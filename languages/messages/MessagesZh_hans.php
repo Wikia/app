@@ -238,7 +238,7 @@ $datePreferences = array(
 $defaultDateFormat = 'zh';
 $dateFormats = array(
 	'zh time' => 'H:i',
-	'zh date' => 'Y年n月j日 (l)',
+	'zh date' => 'Y年n月j日',
 	'zh both' => 'Y年n月j日 (D) H:i',
 );
 

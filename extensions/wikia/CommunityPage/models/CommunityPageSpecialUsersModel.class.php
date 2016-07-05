@@ -7,6 +7,7 @@ class CommunityPageSpecialUsersModel {
 	const ALL_ADMINS_MCACHE_KEY = 'community_page_all_admins';
 	const GLOBAL_BOTS_MCACHE_KEY = 'community_page_global_bots';
 	const ALL_BOTS_MCACHE_KEY = 'community_page_all_bots';
+	const ALL_BLACKLISTED_IDS_MCACHE_KEY = 'community_page_all_blacklisted_ids';
 	const ALL_MEMBERS_MCACHE_KEY = 'community_page_all_members';
 	const ALL_MEMBERS_COUNT_MCACHE_KEY = 'community_page_all_members_count';
 	const RECENTLY_JOINED_MCACHE_KEY = 'community_page_recently_joined';
@@ -62,13 +63,13 @@ class CommunityPageSpecialUsersModel {
 
 				$db = wfGetDB( DB_SLAVE );
 
-				$botIds = $this->getBotIds();
+				$blacklistedIds = $this->getBlacklistedIds();
 
 				$sqlData = ( new WikiaSQL() )
 					->SELECT( 'wup_user, wup_value' )
 					->FROM ( 'wikia_user_properties' )
 					->WHERE( 'wup_property' )->EQUAL_TO( 'editcountThisWeek' )
-					->AND_( 'wup_user' )->NOT_IN( $botIds )
+					->AND_( 'wup_user' )->NOT_IN( $blacklistedIds )
 					->AND_( 'wup_value' )->GREATER_THAN( 0 )
 					->ORDER_BY( 'CAST(wup_value as unsigned) DESC, wup_user ASC' );
 
@@ -107,6 +108,11 @@ class CommunityPageSpecialUsersModel {
 				$db = wfGetDB( DB_SLAVE );
 
 				$adminIds = $this->getAdmins();
+
+				if ( !$adminIds ) {
+					return [];
+				}
+
 				$botIds = $this->getBotIds();
 				$dateTwoYearsAgo = date( 'Y-m-d', strtotime( '-2 years' ) );
 
@@ -188,6 +194,48 @@ class CommunityPageSpecialUsersModel {
 		);
 
 		return $botIds;
+	}
+
+
+	/**
+	 * @return array list of blacklisted ids for Top Contributors
+	 */
+	private function getBlacklistedIds() {
+		$blacklistedIds = WikiaDataAccess::cache(
+			self::getMemcKey( self::ALL_BLACKLISTED_IDS_MCACHE_KEY ),
+			WikiaResponse::CACHE_LONG,
+			function () {
+				global $wgExternalSharedDB;
+				$globalDb = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
+
+				$globalIds = ( new WikiaSQL() )
+					->SELECT( 'ug_user' )
+					->FROM ( 'user_groups' )
+					->WHERE( 'ug_group' )->IN( [ 'bot', 'bot-global', 'staff', 'util', 'helper', 'vstf' ] )
+					->GROUP_BY( 'ug_user' )
+					->runLoop( $globalDb, function ( &$globalIds, $row ) {
+						$globalIds[] = $row->ug_user;
+					} );
+
+				$localDb = wfGetDB( DB_SLAVE );
+
+				$localUsers = ( new WikiaSQL() )
+					->SELECT( 'ug_user' )
+					->FROM ( 'user_groups' )
+					->WHERE( 'ug_group' )->NOT_IN( [ 'bot' ] )
+					->GROUP_BY( 'ug_user' )
+					->runLoop( $localDb, function ( &$localUsers, $row ) {
+						$localUsers[] = $row->ug_user;
+					} );
+
+
+				$allBlacklistedIds = array_merge( array_diff( $globalIds, $localUsers ), $this->getBotIds() );
+
+				return $allBlacklistedIds;
+			}
+		);
+
+		return $blacklistedIds;
 	}
 
 	/**
@@ -326,7 +374,7 @@ class CommunityPageSpecialUsersModel {
 				$numberOfUsers = $db->numRows( $result );
 
 				if ( $numberOfUsers == self::ALL_CONTRIBUTORS_MODAL_LIMIT ) {
-					while( $user = $result->fetchObject() ) {
+					while ( $user = $result->fetchObject() ) {
 						$userData = $this->prepareUserData( (int)$user->wup_user, $user->wup_value );
 						if ( !empty( $userData ) ) {
 							$usersData[] = $userData;
@@ -371,12 +419,16 @@ class CommunityPageSpecialUsersModel {
 		return $this->addCurrentUserIfContributor( $allContributorsData, $currentUserId );
 	}
 
-	private function prepareUserData( $userId, $lastRevision) {
+	private function prepareUserData( $userId, $lastRevision ) {
 		$user = User::newFromId( $userId );
 
 		if ( !$user->isBlocked() ) {
 			$userName = $user->getName();
 			$avatar = AvatarService::renderAvatar( $userName, AvatarService::AVATAR_SIZE_SMALL_PLUS );
+
+			if ( User::isIp( $userName ) ) {
+				$userName = wfMessage( 'oasis-anon-user' )->plain();
+			}
 
 			return [
 				'userId' => $userId,
@@ -435,7 +487,7 @@ class CommunityPageSpecialUsersModel {
 		);
 	}
 
-	private function isUserOnList( $data) {
+	private function isUserOnList( $data ) {
 		if ( $this->user instanceof User ) {
 			$key = array_search( $this->user->getId(), array_column( $data, 'userId' ) );
 			if ( $key ) {

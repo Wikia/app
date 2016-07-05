@@ -79,6 +79,11 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 	 * Route the view based on logged in status
 	 */
 	public function index() {
+		// Redirect to standalone NewAuth page if extension enabled
+		if ( $this->app->wg->EnableNewAuthModal && $this->wg->request->getVal('type') !== 'forgotPassword' ) {
+			$this->getOutput()->redirect( '/signin?redirect=' . $this->userLoginHelper->getRedirectUrl() );
+		}
+
 		if ( $this->wg->User->isLoggedIn() ) {
 			$this->forward( __CLASS__, 'loggedIn' );
 		} else {
@@ -420,6 +425,8 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 
 		$loginCase = $loginForm->authenticateUserData();
 
+		\Wikia\Util\Assert::true( is_int( $loginCase ), 'LoginForm::authenticateUserData is expected to return an int' );
+
 		switch ( $loginCase ) {
 			case LoginForm::SUCCESS:
 				// first check if user has confirmed email after sign up
@@ -472,6 +479,9 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 						'username' => $loginForm->mUsername,
 						'result' => 'ok',
 					] );
+
+					// Always make sure edit token is regenerated. (T122056)
+					$this->getRequest()->setSessionData( 'wsEditToken', null );
 
 					// regenerate session ID on user login (the approach MW's core SpecialUserLogin uses)
 					// to avoid race conditions with long running requests logging the user back in & out

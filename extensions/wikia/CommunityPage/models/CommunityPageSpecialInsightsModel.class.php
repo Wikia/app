@@ -166,6 +166,12 @@ class CommunityPageSpecialInsightsModel {
 
 		$timestamp = wfTimestamp( TS_UNIX, $metadata['lastRevision']['timestamp'] );
 
+		$userName = $metadata['lastRevision']['username'];
+
+		if ( User::isIp( $userName ) ) {
+			$userName = wfMessage( 'oasis-anon-user' )->plain();
+		}
+
 		return wfMessage( 'communitypage-lastrevision' )->rawParams(
 			Html::element(
 				'a',
@@ -174,7 +180,7 @@ class CommunityPageSpecialInsightsModel {
 					'data-tracking' => 'user-profile-link',
 					'class' => 'communitypage-user-link'
 				],
-				$metadata['lastRevision']['username']
+				$userName
 			),
 			$wgLang->userDate( $timestamp, $wgUser )
 		)->escaped();

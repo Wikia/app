@@ -14,6 +14,7 @@ require([
 	'ext.wikia.recirculation.helpers.contentLinks',
 	'ext.wikia.recirculation.helpers.fandom',
 	'ext.wikia.recirculation.helpers.lateral',
+	'ext.wikia.recirculation.helpers.liftigniter',
 	'ext.wikia.recirculation.helpers.data',
 	'ext.wikia.recirculation.helpers.cakeRelatedContent',
 	'ext.wikia.recirculation.helpers.curatedContent',
@@ -35,6 +36,7 @@ require([
 	contentLinksHelper,
 	fandomHelper,
 	lateralHelper,
+	liftigniterHelper,
 	dataHelper,
 	cakeHelper,
 	curatedHelper,
@@ -61,15 +63,16 @@ require([
 	}
 
 	switch (group) {
-		// Temporary group running during E3
-		case 'E3':
-			helper = fandomHelper({
-				type: 'e3',
-				limit: 5
-			});
-			view = railView();
-			isRail = true;
-			break;
+		case 'LI_RAIL':
+			renderLiftigniterFandom();
+			return;
+		case 'LI_COMMUNITY':
+			renderLiftigniterCommunity();
+			return;
+		case 'LI_BOTH':
+			renderLiftigniterFandom(true);
+			renderLiftigniterCommunity();
+			return;
 		case 'LATERAL_FANDOM':
 			helper = lateralHelper();
 			view = railView();
@@ -106,6 +109,14 @@ require([
 		case 'FANDOM_TOPIC':
 			helper = fandomHelper({
 				type: 'community',
+				limit: 5
+			});
+			view = railView();
+			isRail = true;
+			break;
+		case 'FANDOM_HERO':
+			helper = fandomHelper({
+				type: 'hero',
 				limit: 5
 			});
 			view = railView();
@@ -323,4 +334,43 @@ require([
 				});
 			});
 	}
+
+	function renderLiftigniterFandom(waitToFetch) {
+		var view = railView(),
+			curated = curatedHelper(),
+			helper = liftigniterHelper({
+				count: 5,
+				widget: 'fandom-rec'
+			});
+
+		helper.loadData(waitToFetch)
+			.then(curated.injectContent)
+			.then(view.render)
+			.then(function($html) {
+				var elements = $html.find('.rail-item').get();
+
+				view.setupTracking(experimentName)($html);
+				curated.setupTracking($html);
+				helper.setupTracking(elements);
+			})
+			.fail(handleError);
+	}
+
+	function renderLiftigniterCommunity() {
+		var view = incontentView(),
+			helper = liftigniterHelper({
+				count: 3,
+				widget: 'in-wikia'
+			});
+
+		helper.loadData()
+			.then(view.render)
+			.then(function($html) {
+				var elements = $html.find('.item').get();
+
+				view.setupTracking(experimentName)($html);
+				helper.setupTracking(elements);
+			});
+	}
+
 });

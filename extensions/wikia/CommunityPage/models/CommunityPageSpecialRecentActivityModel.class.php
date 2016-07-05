@@ -11,8 +11,14 @@ class CommunityPageSpecialRecentActivityModel {
 
 		$recentActivity = [];
 		foreach ( $recentActivityData['changeList'] as $activity ) {
+			$userName = $activity['user_name'];
+
+			if ( User::isIp( $userName ) ) {
+				$userName = wfMessage( 'oasis-anon-user' )->plain();
+			}
+
 			$changeTypeString = $this->getChangeTypeMessage( $activity['changetype'] );
-			$userProfileLink = $this->getUserProfileLink( $activity['user_name'], $activity['user_profile_url'] );
+			$userProfileLink = $this->getUserProfileLink( $userName, $activity['user_profile_url'] );
 			$pageLink = $this->getPageLink( $activity['page_title'], $activity['page_url'] );
 
 			$changeMessage = wfMessage( 'communitypage-activity',

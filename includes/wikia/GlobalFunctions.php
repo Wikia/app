@@ -936,7 +936,7 @@ function wfTimeFormatAgo( $stamp, $hideCurrentYear = true ) {
 		// remove year from user's date format
 		$format = $wgLang->getDateFormatString( 'date', 'default' );
 		if ( $hideCurrentYear ) {
-			$format = trim( $format, ' ,yY' );
+			$format = trim( $format, ' ,yY年' );
 		}
 		$res = $wgLang->sprintfDate( $format, wfTimestamp( TS_MW, $stamp ) );
 	}

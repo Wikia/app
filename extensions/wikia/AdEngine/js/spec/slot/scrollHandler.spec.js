@@ -37,10 +37,12 @@ describe('ext.wikia.adEngine.slot.scrollHandler', function () {
 		},
 		doc: {
 			getElementById: function () {
-				return {
-					offsetTop: 3000,
-					offsetParent: null
-				};
+				return {};
+			}
+		},
+		domCalculator: {
+			getTopOffset: function () {
+				return 3000;
 			}
 		}
 	};
@@ -54,6 +56,7 @@ describe('ext.wikia.adEngine.slot.scrollHandler', function () {
 		return modules['ext.wikia.adEngine.slot.scrollHandler'](
 			mocks.context,
 			mocks.adHelper,
+			mocks.domCalculator,
 			mocks.log,
 			mocks.doc,
 			mocks.win

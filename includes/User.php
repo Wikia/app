@@ -1356,7 +1356,7 @@ class User {
 	 *                    done against master.
 	 * @param $shouldLogBlockInStats Bool flag that decides whether to log or not in PhalanxStats
 	 */
-	private function getBlockedStatus( $bFromSlave = true, $shouldLogBlockInStats = true ) {
+	private function getBlockedStatus( $bFromSlave = true, $shouldLogBlockInStats = true, $global = true ) {
 	/* Wikia change end */
 		global $wgProxyWhitelist, $wgUser;
 
@@ -1419,7 +1419,7 @@ class User {
 
 		# Extensions
 		/* Wikia change begin - SUS-92 */
-		wfRunHooks( 'GetBlockedStatus', array( &$this, $shouldLogBlockInStats ) );
+		wfRunHooks( 'GetBlockedStatus', array( &$this, $shouldLogBlockInStats, $global ) );
 		/* Wikia change end */
 
 		if ( !empty($this->mBlockedby) ) {
@@ -1656,8 +1656,9 @@ class User {
 	 *
 	 * @return Bool True if blocked, false otherwise
 	 */
-	public function isBlocked( $bFromSlave = true, $shouldLogBlockInStats = true ) { // hacked from false due to horrible probs on site
-		return $this->getBlock( $bFromSlave, $shouldLogBlockInStats ) instanceof Block && $this->getBlock()->prevents( 'edit' );
+	public function isBlocked( $bFromSlave = true, $shouldLogBlockInStats = true, $global = true ) { // hacked from false due to horrible probs on site
+		$block = $this->getBlock( $bFromSlave, $shouldLogBlockInStats, $global );
+		return $block instanceof Block && $block->prevents( 'edit' );
 	}
 
 	/**
@@ -1668,8 +1669,8 @@ class User {
 	 *
 	 * @return Block|null
 	 */
-	public function getBlock( $bFromSlave = true, $shouldLogBlockInStats = true ){
-		$this->getBlockedStatus( $bFromSlave, $shouldLogBlockInStats );
+	public function getBlock( $bFromSlave = true, $shouldLogBlockInStats = true, $global = true ){
+		$this->getBlockedStatus( $bFromSlave, $shouldLogBlockInStats, $global );
 		return $this->mBlock instanceof Block ? $this->mBlock : null;
 	}
 	/* Wikia change end */
@@ -3210,6 +3211,7 @@ class User {
 		$this->clearInstanceCache( 'defaults' );
 
 		$this->getRequest()->setSessionData( 'wsUserID', 0 );
+		$this->getRequest()->setSessionData( 'wsEditToken', null );
 
 		$this->clearCookie( 'UserID' );
 		$this->clearCookie( 'Token' );
@@ -3220,6 +3222,8 @@ class User {
 		$this->getRequest()->setSessionData( 'wsUserName', null );
 		$this->clearCookie( 'UserName' );
 		// Wikia change - end
+
+		wfResetSessionID();
 
 		# Remember when user logged out, to prevent seeing cached pages
 		$this->setCookie( 'LoggedOut', wfTimestampNow(), time() + 86400 );

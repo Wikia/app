@@ -249,7 +249,11 @@ class PhalanxHooks extends WikiaObject {
 	 * @param User $user
 	 * @return bool true
 	 */
-	static public function onGetBlockedStatus( User $user ) {
+	static public function onGetBlockedStatus( User $user, $shouldLogBlockInStats=false, $global=true ) {
+		if ( ! $global ) {
+			return true;
+		}
+
 		global $wgRequest, $wgClientIPHeader;
 
 		// get the client IP using Fastly-generated request header
