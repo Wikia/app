@@ -23,6 +23,9 @@ class Gatherer extends SpecialPage {
 	}
 
 	public function execute( $par ) {
+
+		Wikia\Logger\WikiaLogger::instance()->info( __METHOD__ );
+
 		global $wgRequest, $wgUser, $wgOut;
 		// we need some settings to be true in order for this to work
 		if( !ini_get( 'allow_url_fopen' ) ) {
@@ -317,6 +320,8 @@ class GathererQuery {
                                 $text = false;
 			}
 
+			Wikia\Logger\WikiaLogger::instance()->info( __METHOD__, [ 'curl_getinfo' => curl_getinfo( $c ) ] );
+
 			return $text;
 	}
 
@@ -447,7 +452,10 @@ class GathererQuery {
 			if( $ret == array() ) {
 				$this->err = 'gatherer-imgerr';
 			}
+
+			Wikia\Logger\WikiaLogger::instance()->info( __METHOD__, [ 'url' => $exp ] );
 		}
+
 		return $ret;
 	}
 
@@ -471,6 +479,8 @@ class GathererQuery {
 					}
 				}
 			}
+
+			Wikia\Logger\WikiaLogger::instance()->info( __METHOD__, [ 'url' => $pic ] ); 
 		}
 		if( $ret == array() ) {
 			$this->err = 'gatherer-imgerr';
