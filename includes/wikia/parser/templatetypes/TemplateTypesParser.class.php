@@ -132,10 +132,8 @@ class TemplateTypesParser {
 					$templateWikitext = ContextLinkTemplate::handle( $templateWikitext );
 				} elseif ( $wgEnableInfoIconTemplateParsing && $type == TemplateClassificationService::TEMPLATE_INFOICON ) {
 					$templateWikitext = InfoIconTemplate::handle( $templateWikitext, $parser );
-				} else {
-					if ( $wgEnableNavigationTemplateParsing && $type == TemplateClassificationService::TEMPLATE_NAV ) {
-						$templateWikitext = NavigationTemplate::removeInnerMarks( $templateWikitext );
-					}
+				} elseif ( $wgEnableNavigationTemplateParsing && $type == TemplateClassificationService::TEMPLATE_NAV ) {
+					$templateWikitext = NavigationTemplate::removeInnerMarks( $templateWikitext );
 				}
 			}
 		}
