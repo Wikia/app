@@ -14,7 +14,11 @@
 'use strict';
 
 var WikiaEmoticons,
-	EmoticonMapping;
+	EmoticonMapping,
+	RegexSanitization = /[-[\]{}()*+?.,\\^$|#\s]/g,
+	RegexWikiaImageTag = /^(?:https?:)?\/\/(?:[^\/]+\.)*?wikia(?:-dev)?(?:\.com|\.nocookie\.net)\//,
+	RegexLineStartingByAsterisk = /^\*[ ]*([^*].*)/,
+	RegexLineStartingByTwoAsterisk = /^\*\* *([^*"][^"]*)/;
 
 // By explicitly setting the dimensions, this will make sure the feature stays as emoticons instead of getting
 // spammy or inviting disruptive vandalism (19px vandalism probably won't be AS offensive).
@@ -41,7 +45,7 @@ WikiaEmoticons.doReplacements = function (text, emoticonMapping) {
 		maxEmoticons = 5,
 		combinedRegex = Object.keys(imgUrlsByRegexString)
 			.map(function (key) {
-					return key.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&');
+				return key.replace(RegexSanitization, '\\$&');
 				}
 			).join('|');
 
@@ -55,10 +59,10 @@ WikiaEmoticons.doReplacements = function (text, emoticonMapping) {
 	combinedRegex = combinedRegex.replace(/</g, '&lt;');
 
 	buildTagFunc = WikiaEmoticons.buildTagGenerator(imgUrlsByRegexString);
+	regex = new RegExp('(^|\\s)(' + combinedRegex + ')([^/]|$)', 'i');
 
 	do {
 		origText = text;
-		regex = new RegExp('(^|\\s)(' + combinedRegex + ')([^/]|$)', 'i');
 		text = text.replace(regex, buildTagFunc);
 	} while ((origText !== text) && --maxEmoticons > 0);
 
@@ -77,7 +81,7 @@ WikiaEmoticons.buildTagGenerator = function (imgUrlsByRegexString) {
 		imgSrc = imgSrc.replace(/"/g, '%22'); // prevent any HTML-injection
 
 		// Don't return any img tag if this is an external image
-		if (!imgSrc.match(/^(?:https?:)?\/\/(?:[^\/]+\.)*?wikia(?:-dev)?(?:\.com|\.nocookie\.net)\//)) {
+		if (!imgSrc.match(RegexWikiaImageTag)) {
 			return '';
 		}
 
@@ -137,14 +141,14 @@ if (typeof EmoticonMapping === 'undefined') {
 			// Loop through array, construct object
 			for (i = 0; i < emoticonArray.length; i++) {
 				// line starting with 1 "*" then optional spaces, then some non-empty content.
-				urlMatch = emoticonArray[i].match(/^\*[ ]*([^*].*)/);
+				urlMatch = emoticonArray[i].match(RegexLineStartingByAsterisk);
 				if (urlMatch && urlMatch[1]) {
 					url = urlMatch[1];
 					self._settings[url] = [];
 					currentKey = url;
 				} else if (self._settings[currentKey]) {
 					// line starting with 2 "**"'s then optional spaces, then some non-empty content.
-					glyphMatch = emoticonArray[i].match(/^\*\* *([^*"][^"]*)/);
+					glyphMatch = emoticonArray[i].match(RegexLineStartingByTwoAsterisk);
 					if (glyphMatch && glyphMatch[1]) {
 						glyph = glyphMatch[1];
 						self._settings[currentKey].push(glyph);
