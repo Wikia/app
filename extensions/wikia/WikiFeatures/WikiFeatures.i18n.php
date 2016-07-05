@@ -72,7 +72,7 @@ $messages['en'] = array(
 	'wikifeatures-feature-heading-wgEnableNjordExt' => 'Hero Image',
 	'wikifeatures-feature-description-wgEnableNjordExt' => 'Make your wiki more attractive by uploading an image to represent it on its home page!',
 	'wikifeatures-feature-heading-wgEnablePortableInfoboxEuropaTheme' => 'Europa Infobox Theme',
-	'wikifeatures-feature-description-wgEnablePortableInfoboxEuropaTheme' => "Enable new look for your [[w:c:community:Help:Infobox|infoboxes]] to fully benefit from your wiki's color theme!",
+	'wikifeatures-feature-description-wgEnablePortableInfoboxEuropaTheme' => "Enable a new look for your [[w:c:community:Help:Infobox|infoboxes]] to fully benefit from your wiki's color theme!",
 	'wikifeatures-feature-heading-wgDisableAnonymousEditing' => 'Require all contributors to log in',
 	'wikifeatures-feature-description-wgDisableAnonymousEditing' => 'Do you want all contributors on your wikia to be logged in? When this feature is enabled, no anonymous visitors will be allowed to edit pages or participate in comments, Forum or Message Wall without logging in. Anyone can still create a Wikia account to join your community!',
 	'wikifeatures-feature-heading-emptylabs' => 'Looks like the lab is taking a break',
@@ -95,7 +95,7 @@ $messages['qqq'] = array(
 	'wikifeatures-feature-heading-wgDisableAnonymousEditing' => 'Header text for requiring all contributors to log in to edit.',
 	'wikifeatures-feature-description-wgDisableAnonymousEditing' => 'Description for requiring all contributors to log in to edit.',
 	'wikifeatures-feature-heading-wgEnablePortableInfoboxEuropaTheme' => 'Header text for Europa Infobox Theme',
-	'wikifeatures-feature-description-wgEnablePortableInfoboxEuropaTheme' => 'Description for Europa Infobox Theme feature',
+	'wikifeatures-feature-description-wgEnablePortableInfoboxEuropaTheme' => 'Description for Europa Infobox Theme feature. Link from the word "infoboxes" should link to community help page in proper language when present.',
 	'action-wikifeaturesview' => '{{doc-action|wikifeaturesview}}',
 );
 
