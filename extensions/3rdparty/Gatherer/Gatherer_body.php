@@ -272,8 +272,8 @@ class GathererQuery {
 
 	public function execute() {
 		$un = urlencode( $this->name );
-		$c1 = $this->fetchCardInfo( 'http://beta.gatherer.wizards.com/Pages/Card/Details.aspx?name=' . $un );
-		$c2 = $this->fetchCardInfo( 'http://beta.gatherer.wizards.com/Pages/Card/Printings.aspx?name=' . $un );
+		$c1 = $this->fetchCardInfo( 'http://gatherer.wizards.com/Pages/Card/Details.aspx?name=' . $un );
+		$c2 = $this->fetchCardInfo( 'http://gatherer.wizards.com/Pages/Card/Printings.aspx?name=' . $un );
 		if( empty($c1) || empty($c2)  ) {
 			return false;
 		} else {
@@ -439,7 +439,7 @@ class GathererQuery {
 			if( !array_key_exists( $s, $this->rels ) ) {
 				continue;
 			}
-			$exp = "http://beta.gatherer.wizards.com/Handlers/Image.ashx?type=symbol&set={$this->rels[$s]['abbr']}&size=small&rarity={$r}";
+			$exp = "http://gatherer.wizards.com/Handlers/Image.ashx?type=symbol&set={$this->rels[$s]['abbr']}&size=small&rarity={$r}";
 			$ret[$s][$r] = @file_get_contents( $exp );
 			if( !$ret[$s][$r] ) {
 				unset( $ret[$s] );
@@ -457,7 +457,7 @@ class GathererQuery {
 			if( !array_key_exists( $set, $this->rels ) ) {
 				continue;
 			}
-			$pic = "http://beta.gatherer.wizards.com/Handlers/Image.ashx?multiverseid={$id}&type=card";
+			$pic = "http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid={$id}&type=card";
 			$ret[$set] = @file_get_contents( $pic );
 			if( !$ret[$set] ) {
 				$this->borders[$set] = true;
