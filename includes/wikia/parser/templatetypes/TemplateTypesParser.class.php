@@ -119,7 +119,11 @@ class TemplateTypesParser {
 		global $wgEnableContextLinkTemplateParsing, $wgEnableInfoIconTemplateParsing, $wgEnableNavigationTemplateParsing;
 		wfProfileIn( __METHOD__ );
 
-		if ( self::isSuitableForProcessing( $templateWikitext ) ) {
+		if ( self::isSuitableForProcessing( $templateWikitext ) &&
+			 ( $wgEnableContextLinkTemplateParsing ||
+			   $wgEnableInfoIconTemplateParsing ||
+			   $wgEnableNavigationTemplateParsing )
+		) {
 			$title = self::getValidTemplateTitle( $templateTitle );
 
 			if ( $title ) {
@@ -128,8 +132,10 @@ class TemplateTypesParser {
 					$templateWikitext = ContextLinkTemplate::handle( $templateWikitext );
 				} elseif ( $wgEnableInfoIconTemplateParsing && $type == TemplateClassificationService::TEMPLATE_INFOICON ) {
 					$templateWikitext = InfoIconTemplate::handle( $templateWikitext, $parser );
-				} else if ($wgEnableNavigationTemplateParsing && $type == TemplateClassificationService::TEMPLATE_NAV ) {
-					$templateWikitext = NavigationTemplate::removeInnerMarks($templateWikitext);
+				} else {
+					if ( $wgEnableNavigationTemplateParsing && $type == TemplateClassificationService::TEMPLATE_NAV ) {
+						$templateWikitext = NavigationTemplate::removeInnerMarks( $templateWikitext );
+					}
 				}
 			}
 		}
