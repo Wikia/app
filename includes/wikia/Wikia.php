@@ -1105,7 +1105,7 @@ class Wikia {
 			$info[] = "smw_store: $smwgDefaultStore";
 		}
 
-		$software[ "Internals" ] = join(', ', $info);
+		$software[ "Internals" ] = join( ', ', $info );
 
 		/**
 		 * obligatory hook return value
