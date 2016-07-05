@@ -389,7 +389,7 @@ $messages['de'] = array(
 	'wikifeatures-feature-heading-wgDisableAnonymousEditing' => 'Alle Autoren müssen sich anmelden.',
 	'wikifeatures-feature-description-wgDisableAnonymousEditing' => 'Möchtest du, dass sich alle Autoren auf deinem Wikia anmelden müssen? Wenn diese Funktion aktiviert ist, dürfen anonyme Besucher keine Seiten bearbeiten, keine Kommentare schreiben und auch das Forum und die Nachrichtenseiten nicht nutzen, solange sie nicht angemeldet sind. Jeder kann nach wie vor ein Wikia-Konto einrichten, um deiner Community beizutreten!',
 	'wikifeatures-feature-heading-wgEnablePortableInfoboxEuropaTheme' => 'Infobox-Thema Europa',
-	'wikifeatures-feature-description-wgEnablePortableInfoboxEuropaTheme' => 'Aktiviere den neuen Look für deine Infoboxen, um das Farbthema deines Wikis in vollem Umfang nutzen zu können!',
+	'wikifeatures-feature-description-wgEnablePortableInfoboxEuropaTheme' => 'Aktiviere den neuen Look für deine [[w:de:community:Hilfe:Infoboxen|Infoboxen]], um das Farbthema deines Wikis in vollem Umfang nutzen zu können!',
 );
 
 /** German (formal address) (‪Deutsch (Sie-Form)‬)
@@ -501,7 +501,7 @@ $messages['es'] = array(
 	'wikifeatures-feature-heading-wgDisableAnonymousEditing' => 'Requiere a todos los editores el iniciar sesión',
 	'wikifeatures-feature-description-wgDisableAnonymousEditing' => '¿Quiere todos los editores en su wikia inicien sesión? Cuando esta funcionalidad es habilitada, los visitantes anónimos no podrán editar páginas o participar en comentarios, Foro o Muro de mensajes sin antes iniciar sesión. ¡Todavía cualquiera puede crear una cuenta de Wikia para unirse a su comunidad!',
 	'wikifeatures-feature-heading-wgEnablePortableInfoboxEuropaTheme' => 'Tema Europa de infobox',
-	'wikifeatures-feature-description-wgEnablePortableInfoboxEuropaTheme' => '¡Activa el nuevo look en tus infoboxes para beneficiarte del tema de color de tu wikia!',
+	'wikifeatures-feature-description-wgEnablePortableInfoboxEuropaTheme' => '¡Activa el nuevo look en tus [[w:es:comunidad:Ayuda:Infoboxes|infoboxes]] para beneficiarte del tema de color de tu wikia!'
 );
 
 /** French (français)
@@ -583,7 +583,7 @@ $messages['fr'] = array(
 	'wikifeatures-feature-heading-wgDisableAnonymousEditing' => 'Demander à tous les éditeurs de se connecter',
 	'wikifeatures-feature-description-wgDisableAnonymousEditing' => "Voulez-vous que tous les éditeurs de votre wikia se connectent ? Si vous activez cette fonctionnalité, les visiteurs anonymes ne pourront pas modifier de pages ni participer aux commentaires, forum ou mur de discussion sans être d'abord connectés. Il est toujours possible de créer un compte Wikia pour rejoindre votre communauté !",
 	'wikifeatures-feature-heading-wgEnablePortableInfoboxEuropaTheme' => "Thème d'infobox Europa",
-	'wikifeatures-feature-description-wgEnablePortableInfoboxEuropaTheme' => 'Permet de donner une nouvelle apparence à vos infoboxes afin de profiter au maximum de la couleur du thème de votre wiki.',
+	'wikifeatures-feature-description-wgEnablePortableInfoboxEuropaTheme' => 'Permet de donner une nouvelle apparence à vos [[w:fr:community:Aide:Infoboxes|infoboxes]] afin de profiter au maximum de la couleur du thème de votre wiki.',
 );
 
 /** Galician (Galego)
@@ -783,7 +783,7 @@ $messages['it'] = array(
 	'wikifeatures-feature-heading-wgDisableAnonymousEditing' => 'Richiedi a tutti i collaboratori di accedere',
 	'wikifeatures-feature-description-wgDisableAnonymousEditing' => 'Vuoi che tutti i collaboratori della tua wikia siano connessi? Quando questa funzione è attivata, ai visitatori anonimi non sarà permesso di modificare pagine o di partecipare nei commenti, nel Forum o alla Bacheca senza prima accedere. Chiunque potrà ancora creare un account con Wikia per unirsi alla tua community!',
 	'wikifeatures-feature-heading-wgEnablePortableInfoboxEuropaTheme' => 'Tema infobox Europa',
-	'wikifeatures-feature-description-wgEnablePortableInfoboxEuropaTheme' => 'Abilita il nuovo look per i tuoi infobox per avvantaggiarti appieno del tema colore della tua wiki!',
+	'wikifeatures-feature-description-wgEnablePortableInfoboxEuropaTheme' => 'Abilita il nuovo look per i tuoi [[w:it:community:Aiuto:Infobox|infobox]] per avvantaggiarti appieno del tema colore della tua wiki!',
 );
 
 /** Japanese (日本語)
@@ -1232,7 +1232,7 @@ $messages['pl'] = array(
 	'wikifeatures-feature-heading-wgDisableAnonymousEditing' => 'Należy być zalogowanym, aby edytować',
 	'wikifeatures-feature-description-wgDisableAnonymousEditing' => 'Czy chcesz, żeby wszyscy użytkownicy Twojej wikii byli zalogowani, aby móc edytować? Kiedy ta funkcja jest włączona, osoby odwiedzające stronę anonimowo nie mogą edytować stron, komentować treści na stronie, udzielać się na forum ani na tablicach użytkowników, bez uprzedniego zalogowania. Każdy ciągle może utworzyć konto na Wikii i dołączyć do Twojej społeczności!',
 	'wikifeatures-feature-heading-wgEnablePortableInfoboxEuropaTheme' => 'Motyw kolorystyczny Europa dla infoboksów',
-	'wikifeatures-feature-description-wgEnablePortableInfoboxEuropaTheme' => 'Aktywuj nowy wygląd swoich infoboksów, aby w pełni wykorzystać kolorystykę twojej wiki!',
+	'wikifeatures-feature-description-wgEnablePortableInfoboxEuropaTheme' => 'Aktywuj nowy wygląd swoich [[w:c:spolecznosc:Pomoc:Infoboksy|infoboksów]], aby w pełni wykorzystać kolorystykę twojej wiki!',
 );
 
 /** Pashto (پښتو)
@@ -1323,7 +1323,7 @@ $messages['pt'] = array(
 	'wikifeatures-feature-heading-wgDisableAnonymousEditing' => 'Exigir que todos os contribuidores iniciem sessão',
 	'wikifeatures-feature-description-wgDisableAnonymousEditing' => 'Você quer que todos os contribuidores em sua wikia iniciem sessão? Quando este recurso é habilitado, visitantes anônimos não poderão editar páginas ou participar nos comentários, fórum ou no mural de mensagens sem iniciarem sessão. Entretanto, qualquer pessoa ainda pode criar uma conta na Wikia para participar de sua comunidade!',
 	'wikifeatures-feature-heading-wgEnablePortableInfoboxEuropaTheme' => 'Tema de Infobox Europa',
-	'wikifeatures-feature-description-wgEnablePortableInfoboxEuropaTheme' => 'Habilita um novo visual para suas infoboxes para aproveitar o tema de cores da sua wikia!',
+	'wikifeatures-feature-description-wgEnablePortableInfoboxEuropaTheme' => 'Habilita um novo visual para suas infoboxes [[w:c:community:Ajuda:Infoboxes|infoboxes]] para aproveitar o tema de cores da sua wikia!',
 );
 
 /** Brazilian Portuguese (português do Brasil)
