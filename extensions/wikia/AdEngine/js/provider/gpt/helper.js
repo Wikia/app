@@ -134,6 +134,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	adContext.addCallback(function () {
 		if (googleApi.isInitialized()) {
 			googleApi.setPageLevelParams(adLogicPageParams.getPageLevelParams());
+			uapContext.reset();
 		}
 	});
 
