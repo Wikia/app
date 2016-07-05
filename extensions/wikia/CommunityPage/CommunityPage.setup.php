@@ -15,6 +15,9 @@ $wgAutoloadClasses['CommunityPageSpecialController'] =  __DIR__ . '/CommunityPag
 $wgAutoloadClasses['CommunityPageSpecialHooks'] =  __DIR__ . '/CommunityPageSpecialHooks.class.php';
 $wgAutoloadClasses['CommunityPageEntryPointController'] = $IP . '/skins/oasis/modules/CommunityPageEntryPointController.class.php';
 
+/* helpers */
+$wgAutoloadClasses['WikiTopic'] = __DIR__ . '/helpers/WikiTopic.php';
+
 /* hooks */
 $wgAutoloadClasses['CommunityPageSpecialHooks'] =  __DIR__ . '/CommunityPageSpecialHooks.class.php';
 $wgHooks['ArticleSaveComplete'][] = 'CommunityPageSpecialHooks::onArticleSaveComplete';
