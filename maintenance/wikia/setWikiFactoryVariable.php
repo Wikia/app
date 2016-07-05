@@ -42,6 +42,7 @@ class SetWikiFactoryVariable extends Maintenance {
 		$this->addOption( 'split', 'Convert a string value to an array to allow merge/unset options', false, false);
 		$this->addOption( 'wikiId', 'Wiki Id', false, true, 'i' );
 		$this->addOption( 'file', 'File of wiki ids', false, true, 'f' );
+		$this->addOption( 'reason', 'Reaon to provide when setting a variable (--set is used)', false, true );
 	}
 
 	public function execute() {
@@ -56,6 +57,7 @@ class SetWikiFactoryVariable extends Maintenance {
 		$remove = $this->hasOption( 'remove' );
 		$wikiId = $this->getOption( 'wikiId', '' );
 		$file = $this->getOption('file', '');
+		$reason = $this->getOption( 'reason' );
 
 		if ( empty( $this->varName ) ) {
 			die( "Error: Empty variable name.\n" );
@@ -126,7 +128,7 @@ class SetWikiFactoryVariable extends Maintenance {
 			$status = true;
 			if ( $set ) {
 				echo "Set {$this->varName} to " . var_export( $varValue, true );
-				$status = $this->setVariable( $id, $varValue );
+				$status = $this->setVariable( $id, $varValue, $reason );
 			} else if ( $append ) {
 				echo "Appending " . $varValue . " to {$this->varName}:" . PHP_EOL;
 				$varData = (array) WikiFactory::getVarByName( $this->varName, $id, true );
@@ -134,7 +136,7 @@ class SetWikiFactoryVariable extends Maintenance {
 				$newValue = $prevValue . $varValue;
 				echo "Previous value: " . $prevValue . PHP_EOL;
 				echo "New value: " . $newValue . PHP_EOL;
-				$status = $this->setVariable( $id, $newValue );
+				$status = $this->setVariable( $id, $newValue, $reason );
 			} else if ( $merge ) {
 				$varData = (array) WikiFactory::getVarByName( $this->varName, $id, true );
 				if (!empty ($split)) {
@@ -156,7 +158,7 @@ class SetWikiFactoryVariable extends Maintenance {
 					$newValue = join($split, $newValue);
 				}
 
-				$status = $this->setVariable( $id, $newValue );
+				$status = $this->setVariable( $id, $newValue, $reason );
 
 			} else if ( $unset ) {
 
@@ -186,12 +188,13 @@ class SetWikiFactoryVariable extends Maintenance {
 	 * Set the variable
 	 * @param integer $wikiId
 	 * @param mixed $varValue
+	 * @param string $reason
 	 * @return boolean
 	 */
-	protected function setVariable( $wikiId, $varValue ) {
+	protected function setVariable( $wikiId, $varValue, $reason ) {
 		$status = false;
 		if ( !$this->dryRun ) {
-			$status = WikiFactory::setVarByName( $this->varName, $wikiId, $varValue );
+			$status = WikiFactory::setVarByName( $this->varName, $wikiId, $varValue, $reason );
 			if ( $status ) {
 				WikiFactory::clearCache( $wikiId );
 			}
