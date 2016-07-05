@@ -280,16 +280,14 @@ define(
 		 * @param {function} onLoggedIn - callback function to be called after login
 		 */
 		function showForceLoginModal(origin, onLoggedIn) {
-			require(['AuthModal'], function (authModal) {
-				authModal.load({
-					forceLogin: true,
-					origin: origin,
-					url: '/signin?redirect=' + encodeURIComponent(w.location.href),
-					onAuthSuccess: function () {
-						w.UserLogin.forceLoggedIn = true;
-						onLoggedIn();
-					}
-				});
+			window.wikiaAuthModal.load({
+				forceLogin: true,
+				origin: origin,
+				url: '/signin?redirect=' + encodeURIComponent(w.location.href),
+				onAuthSuccess: function () {
+					w.UserLogin.forceLoggedIn = true;
+					onLoggedIn();
+				}
 			});
 		}
 

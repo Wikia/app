@@ -3,8 +3,8 @@
  * modal is an entry point for Community Page
  */
 define('CommunityPageBenefitsModal',
-	['jquery', 'wikia.loader', 'mw', 'wikia.mustache', 'wikia.tracker'],
-	function ($, loader, mw, mustache, tracker) {
+	['jquery', 'wikia.loader', 'mw', 'wikia.mustache', 'wikia.tracker', 'wikia.nirvana'],
+	function ($, loader, mw, mustache, tracker, nirvana) {
 		'use strict';
 		var modalConfig = {
 				vars: {
@@ -21,27 +21,37 @@ define('CommunityPageBenefitsModal',
 			});
 
 		function openModal() {
-			loader({
-				type: loader.MULTI,
-				resources: {
-					mustache: 'extensions/wikia/CommunityPage/templates/benefitsModal.mustache',
-					messages: 'CommunityPageBenefits'
-				}
-			}).then(handleRequestsForModal);
+			$.when(
+				loader({
+					type: loader.MULTI,
+					resources: {
+						mustache: 'extensions/wikia/CommunityPage/templates/benefitsModal.mustache',
+						messages: 'CommunityPageBenefits'
+					}
+				}),
+				nirvana.sendRequest({
+					controller: 'CommunityPageSpecial',
+					method: 'getBenefitsModalData',
+					type: 'get',
+					format: 'json'
+				})
+			).then(handleRequestsForModal);
 		}
 
 		/**
 		 * Handle messages, render modal and call createComponent
 		 * One of sub-tasks for getting modal shown
 		 * @param {Object} loaderRes
+		 * @param {Object} nirvanaRes
 		 */
-		function handleRequestsForModal(loaderRes) {
-			var wikiTopic = mw.config.get('wgSiteName');
+		function handleRequestsForModal(loaderRes, nirvanaRes) {
+			var wikiTopic = nirvanaRes[0].wikiTopic,
+				allMembersCount = nirvanaRes[0].memberCount;
 
 			mw.messages.set(loaderRes.messages);
 
 			modalConfig.vars.content = mustache.render(loaderRes.mustache[0], {
-				mainTitle: mw.message('communitypage-entrypoint-modal-title', wikiTopic, '').plain(),
+				mainTitle: mw.message('communitypage-entrypoint-modal-title', wikiTopic, allMembersCount).plain(),
 				editSubtitle: mw.message('communitypage-entrypoint-modal-edit-title').plain(),
 				connectSubtitle: mw.message('communitypage-entrypoint-modal-connect-title').plain(),
 				exploreSubtitle: mw.message('communitypage-entrypoint-modal-explore-title').plain(),
