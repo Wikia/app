@@ -123,7 +123,6 @@ $config['adengine2_desktop_js'] = array(
 		'//extensions/wikia/AdEngine/js/WikiaDartVideoHelper.js',
 		'//extensions/wikia/AdEngine/js/TaboolaHelper.js',
 		'//extensions/wikia/AdEngine/js/provider/evolve2.js',
-		'//extensions/wikia/AdEngine/js/provider/hitMedia.js',
 		'//extensions/wikia/AdEngine/js/provider/liftium.js',
 		'//extensions/wikia/AdEngine/js/provider/monetizationService.js',
 
@@ -836,7 +835,6 @@ $config['mobile_base_ads_js'] = array(
 		'//extensions/wikia/AdEngine/js/provider/btfBlocker.js',
 		'//extensions/wikia/AdEngine/js/provider/directGptMobile.js',
 		'//extensions/wikia/AdEngine/js/provider/evolve2.js',
-		'//extensions/wikia/AdEngine/js/provider/hitMedia.js',
 		'//extensions/wikia/AdEngine/js/provider/factoryWikiaGpt.js',
 		'//extensions/wikia/AdEngine/js/provider/rubiconFastlane.js',
 		'//extensions/wikia/AdEngine/js/provider/gpt/adDetect.js',

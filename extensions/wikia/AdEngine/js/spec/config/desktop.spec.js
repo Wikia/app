@@ -44,10 +44,6 @@ describe('ext.wikia.adEngine.config.desktop', function () {
 					name: 'evolve2',
 					canHandleSlot: noop
 				},
-				hitMedia: {
-					name: 'hitMedia',
-					canHandleSlot: noop
-				},
 				liftium: {
 					name: 'liftium'
 				},
@@ -74,7 +70,6 @@ describe('ext.wikia.adEngine.config.desktop', function () {
 		},
 		forcedProvidersMap = {
 			'evolve2': mocks.providers.evolve2.name,
-			'hitmedia': mocks.providers.hitMedia.name,
 			'liftium': mocks.providers.liftium.name,
 			'turtle': mocks.providers.turtle.name
 		};
@@ -89,7 +84,6 @@ describe('ext.wikia.adEngine.config.desktop', function () {
 			mocks.adDecoratorPageDimensions,
 			mocks.providers.directGpt,
 			mocks.providers.evolve2,
-			mocks.providers.hitMedia,
 			mocks.providers.liftium,
 			mocks.providers.monetizationService,
 			mocks.providers.remnantGpt,
@@ -127,21 +121,9 @@ describe('ext.wikia.adEngine.config.desktop', function () {
 		expect(getProviders('foo')).toEqual('turtle,remnant,liftium');
 	});
 
-	it('HitMedia: HitMedia, Remnant, Liftium', function () {
-		spyOn(mocks.providers.hitMedia, 'canHandleSlot').and.returnValue(true);
-		spyOn(mocks, 'getAdContextProviders').and.returnValue({hitMedia: true});
-		expect(getProviders('foo')).toEqual('hitMedia,remnant,liftium');
-	});
-
 	it('Turtle cannot handle slot: Direct, Remnant, Liftium', function () {
 		spyOn(mocks.providers.turtle, 'canHandleSlot').and.returnValue(false);
 		spyOn(mocks, 'getAdContextProviders').and.returnValue({turtle: true});
-		expect(getProviders('foo')).toEqual('direct,remnant,liftium');
-	});
-
-	it('HitMedia cannot handle slot: Direct, Remnant, Liftium', function () {
-		spyOn(mocks.providers.turtle, 'canHandleSlot').and.returnValue(false);
-		spyOn(mocks, 'getAdContextProviders').and.returnValue({hitMedia: true});
 		expect(getProviders('foo')).toEqual('direct,remnant,liftium');
 	});
 
