@@ -42,7 +42,7 @@ class SetWikiFactoryVariable extends Maintenance {
 		$this->addOption( 'split', 'Convert a string value to an array to allow merge/unset options', false, false);
 		$this->addOption( 'wikiId', 'Wiki Id', false, true, 'i' );
 		$this->addOption( 'file', 'File of wiki ids', false, true, 'f' );
-		$this->addOption( 'reason', 'Reaon to provide when setting a variable (--set is used)', false, true );
+		$this->addOption( 'reason', 'Reason to provide when setting a variable (--set is used)', false, true );
 	}
 
 	public function execute() {
