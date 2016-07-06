@@ -76,9 +76,8 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 				slotTargeting.rv = count.toString();
 			}
 		}
-		if (uapId) {
-			slotTargeting.uap = uapId.toString();
-		}
+
+		slotTargeting.uap = uapId ? uapId.toString() : 'none';
 
 		element = new AdElement(slot.name, slotPath, slotTargeting);
 
