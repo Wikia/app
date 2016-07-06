@@ -30,6 +30,14 @@ class TransactionClassifier {
 	const NS_BLOG_LISTING = 502;
 	const NS_BLOG_LISTING_TALK = 503;
 
+	// copied from extensions/wikia/SemanticMediaWiki/includes/SMW_Setup.php to use a constant below
+	// NOTE: this assumes $smwgNamespaceIndex is set to 300 (set in CommonExtensions.php)
+	// while not being dependant on SMW extension inclusion
+	const SMW_NS_PROPERTY = 302;
+	const SMW_NS_TYPE = 304;
+	const SF_NS_FORM = 306;
+	const SMW_NS_CONCEPT = 308;
+
 	protected static $FILTER_ARTICLE_ACTIONS = array(
 		'view',
 		'edit',
@@ -90,6 +98,11 @@ class TransactionClassifier {
 		self::NS_BLOG_ARTICLE_TALK => 'blog',
 		self::NS_BLOG_LISTING => 'blog',
 		self::NS_BLOG_LISTING_TALK => 'blog',
+
+		self::SMW_NS_PROPERTY => 'semantic_mediawiki',
+		self::SMW_NS_TYPE => 'semantic_mediawiki',
+		self::SMW_NS_CONCEPT => 'semantic_mediawiki',
+		self::SF_NS_FORM => 'semantic_form',
 	);
 
 	protected static $MAP_PARSER_CACHED_USED = array(
@@ -103,6 +116,10 @@ class TransactionClassifier {
 
 	protected static $MAP_DPL = array(
 		true => 'dpl',
+	);
+
+	protected static $MAP_SEMANTIC_MEDIAWIKI = array(
+		true => 'semantic_mediawiki',
 	);
 
 	protected $dependencies = array( Transaction::PARAM_ENTRY_POINT );
@@ -205,6 +222,9 @@ class TransactionClassifier {
 
 		// add "DPL was used" information
 		$this->addByMap( Transaction::PARAM_DPL, self::$MAP_DPL );
+
+		// add "SMW was used" information
+		$this->addByMap( Transaction::PARAM_SEMANTIC_MEDIAWIKI, self::$MAP_SEMANTIC_MEDIAWIKI );
 
 		// add size category
 		if ( $this->add( Transaction::PARAM_SIZE_CATEGORY ) === null ) {

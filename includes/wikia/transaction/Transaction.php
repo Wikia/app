@@ -39,6 +39,7 @@ class Transaction {
 	const PARAM_API_LIST = 'api_list';
 	const PARAM_WIKI = 'wiki';
 	const PARAM_DPL = 'dpl';
+	const PARAM_SEMANTIC_MEDIAWIKI = 'semantic_mediawiki';
 	const PARAM_AB_PERFORMANCE_TEST = 'perf_test';
 	const PARAM_MAINTENANCE_SCRIPT = 'maintenance_script';
 
@@ -210,6 +211,17 @@ class Transaction {
 
 		Transaction::setAttribute( Transaction::PARAM_SIZE_CATEGORY, $sizeCategory );
 
+		return true;
+	}
+
+	/**
+	 * Mark SemanticMediaWiki requests (they will always call smwfGetStore() function)
+	 *
+	 * @param SMWStore $store
+	 * @return bool
+	 */
+	public static function onAfterSmwfGetStore( $store ) {
+		self::setAttribute( self::PARAM_SEMANTIC_MEDIAWIKI, true );
 		return true;
 	}
 
