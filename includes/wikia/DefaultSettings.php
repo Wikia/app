@@ -38,6 +38,7 @@ require_once ( $IP."/includes/wikia/Defines.php" );
 require_once ( $IP."/includes/wikia/GlobalFunctions.php" );
 require_once ( $IP."/includes/wikia/Wikia.php" );
 require_once ( $IP."/includes/wikia/WikiaMailer.php" );
+require_once ( $IP."/extensions/GlobalMessages/GlobalMessages.setup.php" );
 require_once ( $IP."/extensions/Math/Math.php" );
 
 /**
@@ -277,6 +278,7 @@ $wgAutoloadClasses[ 'TransactionClassifier'           ] = "$IP/includes/wikia/tr
 $wgAutoloadClasses[ 'TransactionTraceNewrelic'        ] = "$IP/includes/wikia/transaction/TransactionTraceNewrelic.php";
 $wgAutoloadClasses[ 'TransactionTraceScribe'          ] = "$IP/includes/wikia/transaction/TransactionTraceScribe.php";
 $wgHooks          [ 'ArticleViewAddParserOutput'      ][] = 'Transaction::onArticleViewAddParserOutput';
+$wgHooks          [ 'AfterSmwfGetStore'               ][] = 'Transaction::onAfterSmwfGetStore';
 $wgHooks          [ 'RestInPeace'                     ][] = 'Transaction::onRestInPeace';
 $wgHooks          [ 'RestInPeace'                     ][] = 'ScribePurge::onRestInPeace';
 $wgHooks          [ 'RestInPeace'                     ][] = 'CeleryPurge::onRestInPeace';
@@ -300,7 +302,6 @@ $wgAutoloadClasses['SwaggerModelProperty'] = "$IP/includes/wikia/swagger/Swagger
 $wgAutoloadClasses['SwaggerErrorResponse'] = "$IP/includes/wikia/swagger/SwaggerErrorResponse.php";
 $wgAutoloadClasses['TemplateDataExtractor'] = "$IP/includes/wikia/TemplateDataExtractor.class.php";
 $wgAutoloadClasses['WikiaHtmlTitle'] = "$IP/includes/wikia/WikiaHtmlTitle.class.php";
-$wgAutoloadClasses['WikiaHtml'] = "$IP/includes/wikia/WikiaHtml.class.php";
 
 /**
  * Resource Loader enhancements
