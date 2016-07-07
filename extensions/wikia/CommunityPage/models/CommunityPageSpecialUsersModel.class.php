@@ -109,11 +109,11 @@ class CommunityPageSpecialUsersModel {
 				$adminIds = $this->getAdmins();
 				$botIds = $this->getBotIds();
 
-				$validAdminIds = array_diff($adminIds,$botIds);
+				$validAdminIds = array_diff( $adminIds, $botIds );
 
 				$sqlData = ( new WikiaSQL() )
 					->SELECT( 'rev_user_text, rev_user, wup_value' )
-					->FROM ( 'revision FORCE INDEX (user_timestamp)' )
+					->FROM ( 'revision' )
 					->LEFT_JOIN( 'wikia_user_properties' )
 					->ON( 'rev_user', 'wup_user' )
 					->WHERE( 'rev_user' )->NOT_EQUAL_TO( 0 )
