@@ -49,15 +49,18 @@ class RebuildLocalisationCache extends Maintenance {
 		return '1024M';
 	}
 
-	piublic function execute() {
+	public function execute() {
 
 		// Wikia change begin
-		global $wgCityId;
-		if ( $wgCityId != WikiFactory::COMMUNITY_CENTRAL && ! $this->hasOption( 'force-wiki-id' ) ) {
-			$this->output( sprintf( "It is recommended to run this script with SERVER_ID=%d. Use --force-wiki-id to force SERVER_ID=%d.\n", WikiFactory::COMMUNITY_CENTRAL, $wgCityId ) );
-		}
 
 		\Wikia\Logger\WikiaLogger::instance()->info( __METHOD__ );
+
+		global $wgCityId;
+
+		if ( $wgCityId != WikiFactory::COMMUNITY_CENTRAL && ! $this->hasOption( 'force-wiki-id' ) ) {
+			$this->output( sprintf( "It is recommended to run this script with SERVER_ID=%d. Use --force-wiki-id to force SERVER_ID=%d.\n", WikiFactory::COMMUNITY_CENTRAL, $wgCityId ) );
+			exit( 1 );
+		}
 
 		global $wgCacheDirectory, $wgExtensionMessagesFiles, $wgLocalisationCacheConf;
 
