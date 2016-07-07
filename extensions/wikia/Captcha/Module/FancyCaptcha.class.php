@@ -292,11 +292,11 @@ class FancyCaptcha extends BaseCaptcha {
 		// Possible keys for easy grepping: recaptcha-edit, recaptcha-addurl, recaptcha-createaccount, recaptcha-create
 		// NOTE: we're using the same messages as reCaptcha. The reCaptcha messages are generic enough to work for both
 		// reCaptcha and FancyCaptcha, and the old FancyCaptcha message included links to a deprecated Special:Captcha/Help page.
-		$name = 'recaptcha-' . $action;
+		$name = 'captcha-recaptcha-' . $action;
 		$text = wfMessage( $name )->escaped();
 		# Obtain a more tailored message, if possible, otherwise, fall back to
 		# the default for edits
-		return wfEmptyMsg( $name, $text ) ? wfMessage( 'recaptcha-edit' )->escaped() : $text;
+		return wfEmptyMsg( $name, $text ) ? wfMessage( 'captcha-recaptcha-edit' )->escaped() : $text;
 	}
 
 	/**

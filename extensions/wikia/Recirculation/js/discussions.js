@@ -18,7 +18,7 @@ require([
 				cityId: w.wgCityId
 			},
 			callback: function (response) {
-				$('#WikiaArticle').append(response);
+				$('#WikiaArticleFooter').before(response);
 				done();
 			}
 		});
