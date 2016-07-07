@@ -32,14 +32,13 @@ $header-image: '/extensions/wikia/CommunityPage/images/success-icon.svg';
 	.community-page-first-edit-heading {
 		font-size: 18px;
 		font-weight: bold;
-		padding-top: 19px;
+		padding: 20px 20px;
 	}
 
 	.community-page-first-edit-subheading {
 		border-bottom: 2px solid $color-page-border-subtle;
 		font-size: 16px;
-		padding-top: 12px;
-		padding-bottom: 30px;
+		padding: 12px 20px 30px;
 	}
 
 	.community-page-first-edit-getstarted {
