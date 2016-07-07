@@ -8,10 +8,12 @@
  * Protect against register_globals vulnerabilities.
  * This line must be present before any global variable is referenced.
  */
-if ( !defined( 'MEDIAWIKI' ) ) die();
+if ( !defined( 'MEDIAWIKI' ) ) {
+	die();
+}
 
 global $smwgIP;
-include_once( $smwgIP . 'languages/SMW_Language.php' );
+include_once ( $smwgIP . 'languages/SMW_Language.php' );
 
 /**
  * Spanish language labels for important SMW labels (namespaces, datatypes,...).
@@ -25,7 +27,6 @@ class SMWLanguageEs extends SMWLanguage {
 
 	protected $m_DatatypeLabels = array(
 		'_wpg' => 'Página', // name of page datatype
-		'_str' => 'Cadena de caracteres',  // name of the string type
 		'_txt' => 'Texto',  // name of the text type (very long strings)
 		'_cod' => 'Código',  // name of the (source) code type
 		'_boo' => 'Booleano',  // name of the boolean type
@@ -45,7 +46,8 @@ class SMWLanguageEs extends SMWLanguage {
 		'URI'                   => '_uri',
 		'Número entero'         => '_num',
 		'Número con coma'       => '_num',
-		'Enumeración'           => '_str',
+		'Cadena de caracteres'  => '_txt',  // old name of the string type
+		'Enumeración'           => '_txt',
 	);
 
 	protected $m_SpecialProperties = array(
@@ -71,6 +73,9 @@ class SMWLanguageEs extends SMWLanguage {
 		'_ASKFO'=> 'Formato de consulta',
 		'_ASKSI'=> 'Tamaño de consulta',
 		'_ASKDE'=> 'Profundidad de consulta',
+		'_ASKDU'=> 'Duración de consulta',
+		'_MEDIA'=> 'Tipo Media',
+		'_MIME' => 'Tipo MIME'
 	);
 
 	protected $m_SpecialPropertyAliases = array(

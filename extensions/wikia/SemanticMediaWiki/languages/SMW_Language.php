@@ -52,7 +52,7 @@ abstract class SMWLanguage {
 	static protected $enDatatypeAliases = array(
 		'URL'                   => '_uri',
 		'Page'                  => '_wpg',
-		'String'                => '_str',
+		'String'                => '_txt',
 		'Text'                  => '_txt',
 		'Code'                  => '_cod',
 		'Boolean'               => '_boo',
@@ -91,13 +91,16 @@ abstract class SMWLanguage {
 		'Has query format'  => '_ASKFO',
 		'Has query size'    => '_ASKSI',
 		'Has query depth'   => '_ASKDE',
+		'Has query duration' => '_ASKDU',
+		'Has media type'     => '_MEDIA',
+		'Has mime type'      => '_MIME',
 	);
 
 	public function __construct() {
 		// `$this->m_SpecialProperties' is set in descendants.
 		// Let us initialize reverse mapping.
 		foreach ( $this->m_SpecialProperties as $propId => $propName ) {
-			$this->m_SpecialPropertyIds[ $propName ] = $propId;
+			$this->m_SpecialPropertyIds[$propName] = $propId;
 		}
 	}
 
@@ -123,7 +126,7 @@ abstract class SMWLanguage {
 
 		$namespaceAliases = $this->m_NamespaceAliases;
 		if ( $this->m_useEnDefaultAliases ) {
-			$namespaceAliases = $namespaceAliases + SMWLanguage::$enNamespaceAliases;
+			$namespaceAliases = $namespaceAliases + self::$enNamespaceAliases;
 		}
 
 		if ( !$smwgHistoricTypeNamespace ) {
@@ -147,13 +150,17 @@ abstract class SMWLanguage {
 		return $this->m_DatatypeLabels;
 	}
 
+	function getCanonicalDatatypeLabels() {
+		return self::$enDatatypeAliases;
+	}
+
 	/**
 	 * Return an array that maps aliases to internal type ids. All ids used here
 	 * should also have a primary label defined in m_DatatypeLabels.
 	 */
 	function getDatatypeAliases() {
 		return $this->m_useEnDefaultAliases ?
-		       $this->m_DatatypeAliases + SMWLanguage::$enDatatypeAliases :
+		       $this->m_DatatypeAliases + self::$enDatatypeAliases :
 		       $this->m_DatatypeAliases;
 	}
 
@@ -169,7 +176,7 @@ abstract class SMWLanguage {
 	 */
 	function getPropertyAliases() {
 		return $this->m_useEnDefaultAliases ?
-		       $this->m_SpecialPropertyAliases + SMWLanguage::$enPropertyAliases :
+		       $this->m_SpecialPropertyAliases + self::$enPropertyAliases :
 		       $this->m_SpecialPropertyAliases;
 	}
 
@@ -185,8 +192,8 @@ abstract class SMWLanguage {
 		if ( isset( $this->m_SpecialPropertyAliases[$propName] ) ) {
 			return $this->m_SpecialPropertyAliases[$propName];
 		}
-		if ( $this->m_useEnDefaultAliases && isset( SMWLanguage::$enPropertyAliases[$propName] ) ) {
-			return SMWLanguage::$enPropertyAliases[$propName];
+		if ( $this->m_useEnDefaultAliases && isset( self::$enPropertyAliases[$propName] ) ) {
+			return self::$enPropertyAliases[$propName];
 		}
 		return null;
 	}

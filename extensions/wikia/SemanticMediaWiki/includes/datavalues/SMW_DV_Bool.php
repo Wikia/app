@@ -1,6 +1,5 @@
 <?php
 /**
- * @file
  * @ingroup SMWDataValues
  */
 
@@ -62,7 +61,9 @@ class SMWBoolValue extends SMWDataValue {
 	}
 
 	public function setOutputFormat( $formatstring ) {
-		if ( $formatstring == $this->m_outformat ) return;
+		if ( $formatstring == $this->m_outformat ) {
+			return;
+		}
 		unset( $this->m_truecaption );
 		unset( $this->m_falsecaption );
 		if ( $formatstring === '' ) { // no format
@@ -72,7 +73,7 @@ class SMWBoolValue extends SMWDataValue {
 			$this->m_falsecaption = 'false';
 		} elseif ( strtolower( $formatstring ) == 'x' ) { // X format
 			$this->m_truecaption = '<span style="font-family: sans-serif; ">X</span>';
-			$this->m_falsecaption = '';
+			$this->m_falsecaption = '&nbsp;';
 		} else { // format "truelabel, falselabel" (hopefully)
 			$captions = explode( ',', $formatstring, 2 );
 			if ( count( $captions ) == 2 ) { // note: escaping needed to be safe; MW-sanitising would be an alternative
@@ -115,7 +116,9 @@ class SMWBoolValue extends SMWDataValue {
 	 * @return string
 	 */
 	protected function getStandardCaption( $useformat ) {
-		if ( !$this->isValid() ) return false;
+		if ( !$this->isValid() ) {
+			return false;
+		}
 		if ( $useformat && ( isset( $this->m_truecaption ) ) ) {
 			return $this->m_dataitem->getBoolean() ? $this->m_truecaption : $this->m_falsecaption;
 		} else {

@@ -4,7 +4,6 @@
  *
  * @author Markus Krötzsch
  *
- * @file
  * @ingroup SMWDataValues
  */
 
@@ -89,7 +88,9 @@ class SMWPropertyValue extends SMWDataValue {
 	 * original object's content.
 	 */
 	public function __clone() {
-		if ( !is_null( $this->m_wikipage ) ) $this->m_wikipage = clone $this->m_wikipage;
+		if ( !is_null( $this->m_wikipage ) ) {
+			$this->m_wikipage = clone $this->m_wikipage;
+		}
 	}
 
 	/**
@@ -166,7 +167,7 @@ class SMWPropertyValue extends SMWDataValue {
 		if ( !isset( $this->m_wikipage ) ) {
 			$diWikiPage = $this->m_dataitem->getDiWikiPage();
 			if ( !is_null( $diWikiPage ) ) {
-				$this->m_wikipage = SMWDataValueFactory::newDataItemValue( $diWikiPage, null, $this->m_caption );
+				$this->m_wikipage = \SMW\DataValueFactory::getInstance()->newDataItemValue( $diWikiPage, null, $this->m_caption );
 				$this->m_wikipage->setOutputFormat( $this->m_outformat );
 				$this->addError( $this->m_wikipage->getErrors() );
 			} else { // should rarely happen ($value is only changed if the input $value really was a label for a predefined prop)
@@ -185,40 +186,53 @@ class SMWPropertyValue extends SMWDataValue {
 		return $this->isValid() && ( $this->m_dataitem->isUserDefined() || $this->m_dataitem->getLabel() !== '' );
 	}
 
+	/**
+	 * @since 2.2
+	 *
+	 * @return boolean
+	 */
+	public function canUse() {
+		return $this->isValid() && $this->m_dataitem->isUnrestrictedForUse();
+	}
+
 	public function getShortWikiText( $linked = null ) {
+
 		if ( $this->isVisible() ) {
 			$wikiPageValue = $this->getWikiPageValue();
 			return is_null( $wikiPageValue ) ? '' : $this->highlightText( $wikiPageValue->getShortWikiText( $linked ) );
-		} else {
-			return '';
 		}
+
+		return '';
 	}
 
 	public function getShortHTMLText( $linked = null ) {
+
 		if ( $this->isVisible() ) {
 			$wikiPageValue = $this->getWikiPageValue();
-			return is_null( $wikiPageValue ) ? '' : $this->highlightText( $wikiPageValue->getShortHTMLText( $linked ) );
-		} else {
-			return '';
+			return is_null( $wikiPageValue ) ? '' : $this->highlightText( $wikiPageValue->getShortHTMLText( $linked ), $linked );
 		}
+
+		return '';
 	}
 
 	public function getLongWikiText( $linked = null ) {
+
 		if ( $this->isVisible() ) {
 			$wikiPageValue = $this->getWikiPageValue();
 			return is_null( $wikiPageValue ) ? '' : $this->highlightText( $wikiPageValue->getLongWikiText( $linked ) );
-		} else {
-			return '';
 		}
+
+		return '';
 	}
 
 	public function getLongHTMLText( $linked = null ) {
+
 		if ( $this->isVisible() ) {
 			$wikiPageValue = $this->getWikiPageValue();
-			return is_null( $wikiPageValue ) ? '' : $this->highlightText( $wikiPageValue->getLongHTMLText( $linked ) );
-		} else {
-			return '';
+			return is_null( $wikiPageValue ) ? '' : $this->highlightText( $wikiPageValue->getLongHTMLText( $linked ), $linked );
 		}
+
+		return '';
 	}
 
 	public function getWikiValue() {
@@ -265,19 +279,27 @@ class SMWPropertyValue extends SMWDataValue {
 	/**
 	 * Create special highlighting for hinting at special properties.
 	 */
-	protected function highlightText( $text ) {
-		if ( $this->m_dataitem->isUserDefined() ) {
-			return $text;
-		} else {
-			SMWOutputs::requireResource( 'ext.smw.style' );
-			return smwfContextHighlighter( array (
-				'context' => 'inline',
-				'class'   => 'smwbuiltin',
-				'type'    => 'property',
-				'title'   => $text,
-				'content' => wfMessage( 'smw_isspecprop' )->inContentLanguage()->text()
+	protected function highlightText( $text, $linker = null ) {
+
+		if ( !$this->m_dataitem->isUserDefined() ) {
+
+			$msgKey = 'smw-pa-property-predefined' . strtolower( $this->m_dataitem->getKey() );
+			$content = '';
+
+			if ( wfMessage( $msgKey )->exists() ) {
+				$content = $linker === null ? wfMessage( $msgKey, $this->getText() )->escaped() : wfMessage( $msgKey, $this->getText() )->parse();
+			}
+
+			$highlighter = SMW\Highlighter::factory( SMW\Highlighter::TYPE_PROPERTY );
+			$highlighter->setContent( array (
+				'caption' => $text,
+				'content' => $content !== '' ? $content : wfMessage( 'smw_isspecprop' )->text()
 			) );
+
+			return $highlighter->getHtml();
 		}
+
+		return $text;
 	}
 
 	/**

@@ -1,13 +1,12 @@
 <?php
 /**
- * @file
  * @ingroup SMWDataItemsHandlers
  */
 
 /**
  * This class implements Store access to Concept data items.
  *
- * @note The table layout and behaviour of this class is not coherent with the
+ * @note The table layout and behavior of this class is not coherent with the
  * way that other DIs work. This is because of the unfortunate use of the
  * concept table to store extra cache data, but also due to the design of
  * concept DIs. This will be cleaned up at some point.
@@ -120,7 +119,7 @@ class SMWDIHandlerConcept extends SMWDataItemHandler {
 	 */
 	public function dataItemFromDBKeys( $dbkeys ) {
 		if ( is_array( $dbkeys) && count( $dbkeys ) == 5 ) {
-			return new SMWDIConcept( $dbkeys[0], smwfXMLContentEncode( $dbkeys[1] ),
+			return new \SMW\DIConcept( $dbkeys[0], smwfXMLContentEncode( $dbkeys[1] ),
 				$dbkeys[2], $dbkeys[3], $dbkeys[4] );
 		} else {
 			throw new SMWDataItemException( 'Failed to create data item from DB keys.' );

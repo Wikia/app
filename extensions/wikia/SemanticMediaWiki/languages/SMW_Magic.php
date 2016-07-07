@@ -2,7 +2,7 @@
 
 /**
  * Magic words
- * 
+ *
  * @file
  * @ingroup Extensions
  * @ingroup SMWLanguage
@@ -49,20 +49,22 @@ $magicWords['ar'] = array(
 	'SMW_SHOWFACTBOX' => array( 0, '__عرض_صندوق_الحقيقة__' ),
 );
 
-/** Egyptian Spoken Arabic (مصرى) */
+/** Egyptian Arabic (مصرى) */
 $magicWords['arz'] = array(
-	'ask' => array( 0, 'سؤال', 'ask' ),
-	'show' => array( 0, 'عرض', 'show' ),
-	'info' => array( 0, 'معلومات', 'info' ),
-	'concept' => array( 0, 'مبدأ', 'concept' ),
-	'set' => array( 0, 'مجموعة', 'set' ),
-	'set_recurring_event' => array( 0, 'ضبط_حدث_جاري', 'set_recurring_event' ),
-	'declare' => array( 0, 'إعلان', 'declare' ),
-	'SMW_NOFACTBOX' => array( 0, '__لا_صندوق_حقيقة__', '__NOFACTBOX__' ),
-	'SMW_SHOWFACTBOX' => array( 0, '__عرض_صندوق_الحقيقة__', '__SHOWFACTBOX__' ),
+	'ask' => array( 0, 'سؤال' ),
+	'show' => array( 0, 'عرض' ),
+	'info' => array( 0, 'معلومات' ),
+	'concept' => array( 0, 'مبدأ' ),
+	'subobject' => array( 0, 'كائن_فرعى' ),
+	'smwdoc' => array( 0, 'توثيق_سمو' ),
+	'set' => array( 0, 'مجموعة' ),
+	'set_recurring_event' => array( 0, 'ضبط_حدث_جارى' ),
+	'declare' => array( 0, 'إعلان' ),
+	'SMW_NOFACTBOX' => array( 0, '__لا_صندوق_حقيقة__' ),
+	'SMW_SHOWFACTBOX' => array( 0, '__عرض_صندوق_الحقيقة__' ),
 );
 
-/** Assamese (অসমীয়া) */
+/** Assamese (অসমীয়া) */
 $magicWords['as'] = array(
 	'ask' => array( 0, 'সোধক' ),
 	'show' => array( 0, 'দেখুৱাওক' ),
@@ -76,6 +78,19 @@ $magicWords['br'] = array(
 	'info' => array( 0, 'keloù' ),
 	'concept' => array( 0, 'meizad' ),
 	'declare' => array( 0, 'disklêriañ' ),
+);
+
+/** Czech (čeština) */
+$magicWords['cs'] = array(
+	'ask' => array( 0, 'otázka' ),
+	'show' => array( 0, 'zobrazit' ),
+	'set' => array( 0, 'nastavit' ),
+);
+
+/** Chuvash (Чӑвашла) */
+$magicWords['cv'] = array(
+	'SMW_NOFACTBOX' => array( 0, '__NOFACTBOX__' ),
+	'SMW_SHOWFACTBOX' => array( 0, '__SHOWFACTBOX__' ),
 );
 
 /** German (Deutsch) */
@@ -117,6 +132,31 @@ $magicWords['es'] = array(
 	'declare' => array( 0, 'declarar', 'declara' ),
 );
 
+/** French (français) */
+$magicWords['fr'] = array(
+	'ask' => array( 0, 'demander' ),
+	'show' => array( 0, 'afficher' ),
+	'info' => array( 0, 'infos' ),
+	'concept' => array( 0, 'concept' ),
+	'subobject' => array( 0, 'sousobjet' ),
+	'smwdoc' => array( 0, 'docsmw' ),
+	'set' => array( 0, 'définit' ),
+	'set_recurring_event' => array( 0, 'définit_périodique' ),
+	'declare' => array( 0, 'déclare' ),
+	'SMW_NOFACTBOX' => array( 0, '__SANSBOÎTEFAITS__', '__SANSBOITEFAITS__' ),
+	'SMW_SHOWFACTBOX' => array( 0, '__AFFICHERBOÎTEFAITS__', '__AFFICHERBOITEFAITS__' ),
+);
+
+/** Western Frisian (Frysk) */
+$magicWords['fy'] = array(
+	'info' => array( 0, 'ynfo' ),
+);
+
+/** Hebrew (עברית) */
+$magicWords['he'] = array(
+	'ask' => array( 0, 'שאל' ),
+);
+
 /** Indonesian (Bahasa Indonesia) */
 $magicWords['id'] = array(
 	'ask' => array( 0, 'tanya' ),
@@ -154,10 +194,19 @@ $magicWords['ko'] = array(
 	'SMW_SHOWFACTBOX' => array( 0, '__사실상자보이기__', '__사실상자표시__' ),
 );
 
+/** Cornish (kernowek) */
+$magicWords['kw'] = array(
+	'ask' => array( 0, 'govyn' ),
+	'show' => array( 0, 'diskwedhes' ),
+	'info' => array( 0, 'kedhlow' ),
+	'set' => array( 0, 'settya' ),
+);
+
 /** Luxembourgish (Lëtzebuergesch) */
 $magicWords['lb'] = array(
 	'ask' => array( 0, 'froen' ),
 	'show' => array( 0, 'weisen' ),
+	'concept' => array( 0, 'Konzept' ),
 );
 
 /** Macedonian (македонски) */
@@ -166,6 +215,8 @@ $magicWords['mk'] = array(
 	'show' => array( 0, 'прикажи' ),
 	'info' => array( 0, 'инфо' ),
 	'concept' => array( 0, 'поим' ),
+	'subobject' => array( 0, 'подобјект' ),
+	'smwdoc' => array( 0, 'смвдок' ),
 	'set' => array( 0, 'постави' ),
 	'set_recurring_event' => array( 0, 'постави_повторлив_настан' ),
 	'declare' => array( 0, 'изјави' ),
@@ -185,24 +236,24 @@ $magicWords['ml'] = array(
 
 /** Marathi (मराठी) */
 $magicWords['mr'] = array(
-	'ask' => array( 0, 'विचारा', 'ask' ),
-	'show' => array( 0, 'दाखवा', 'show' ),
-	'info' => array( 0, 'माहिती', 'info' ),
-	'concept' => array( 0, 'कंसेप्ट', 'कल्पना', 'concept' ),
-	'set' => array( 0, 'प्रयुक्त', 'सेट', 'स्थापित', 'set' ),
-	'set_recurring_event' => array( 0, 'प्रयुक्त_पुर्न_कार्य', 'set_recurring_event' ),
-	'declare' => array( 0, 'प्रकटकरा', 'declare' ),
-	'SMW_NOFACTBOX' => array( 0, '__फॅक्टबॉक्सनाही__', '__NOFACTBOX__' ),
-	'SMW_SHOWFACTBOX' => array( 0, '__फॅक्टबॉक्सदाखवा__', '__SHOWFACTBOX__' ),
+	'ask' => array( 0, 'विचारा' ),
+	'show' => array( 0, 'दाखवा' ),
+	'info' => array( 0, 'माहिती' ),
+	'concept' => array( 0, 'कंसेप्ट', 'कल्पना' ),
+	'set' => array( 0, 'प्रयुक्त', 'सेट', 'स्थापित' ),
+	'set_recurring_event' => array( 0, 'प्रयुक्त_पुर्न_कार्य' ),
+	'declare' => array( 0, 'प्रकटकरा' ),
+	'SMW_NOFACTBOX' => array( 0, '__फॅक्टबॉक्सनाही__' ),
+	'SMW_SHOWFACTBOX' => array( 0, '__फॅक्टबॉक्सदाखवा__' ),
 );
 
-/** Nedersaksies (Nedersaksies) */
+/** Low Saxon (Netherlands) (Nedersaksies) */
 $magicWords['nds-nl'] = array(
 	'concept' => array( 0, 'konsept' ),
-	'set_recurring_event' => array( 0, 'herhaolende_gebeurtenisse_instellen', 'herhalende_gebeurtenis_instellen' ),
+	'set_recurring_event' => array( 0, 'herhaolende_gebeurtenisse_instellen' ),
 	'declare' => array( 0, 'deklareren' ),
-	'SMW_NOFACTBOX' => array( 0, '__GIENFEITENKAODER__', '__GEENFEITENKADER__' ),
-	'SMW_SHOWFACTBOX' => array( 0, '__FEITENKAODERWEERGEVEN__', '__FEITENKADERWEERGEVEN__' ),
+	'SMW_NOFACTBOX' => array( 0, '__GIENFEITENKAODER__' ),
+	'SMW_SHOWFACTBOX' => array( 0, '__FEITENKAODERWEERGEVEN__' ),
 );
 
 /** Dutch (Nederlands) */
@@ -229,6 +280,7 @@ $magicWords['pl'] = array(
 	'ask' => array( 0, 'pytanie' ),
 	'show' => array( 0, 'pokaż' ),
 	'info' => array( 0, 'informacja' ),
+	'concept' => array( 0, 'koncept' ),
 	'set' => array( 0, 'ustaw' ),
 	'declare' => array( 0, 'zadeklaruj' ),
 );
@@ -238,6 +290,34 @@ $magicWords['ps'] = array(
 	'ask' => array( 0, 'پوښتل', 'ask' ),
 	'show' => array( 0, 'ښکاره_کول', 'show' ),
 	'info' => array( 0, 'مالومات', 'info' ),
+);
+
+/** Portuguese (português) */
+$magicWords['pt'] = array(
+	'ask' => array( 0, 'consultar' ),
+	'show' => array( 0, 'mostrar' ),
+	'concept' => array( 0, 'conceito' ),
+	'subobject' => array( 0, 'subobjeto' ),
+	'set' => array( 0, 'definir' ),
+	'set_recurring_event' => array( 0, 'definir_evento_recorrente' ),
+	'declare' => array( 0, 'declarar' ),
+	'SMW_NOFACTBOX' => array( 0, '__SEMCAIXADEFATOS__' ),
+	'SMW_SHOWFACTBOX' => array( 0, '__EXIBIRCAIXADEFATOS__' ),
+);
+
+/** Brazilian Portuguese (português do Brasil) */
+$magicWords['pt-br'] = array(
+	'ask' => array( 0, 'consultar' ),
+	'show' => array( 0, 'mostrar' ),
+	'info' => array( 0, 'info' ),
+	'concept' => array( 0, 'conceito' ),
+	'subobject' => array( 0, 'subobjeto' ),
+	'smwdoc' => array( 0, 'smwdoc' ),
+	'set' => array( 0, 'definir' ),
+	'set_recurring_event' => array( 0, 'definir_evento_recorrente' ),
+	'declare' => array( 0, 'declarar' ),
+	'SMW_NOFACTBOX' => array( 0, '__SEMCAIXADEFATOS__' ),
+	'SMW_SHOWFACTBOX' => array( 0, '__EXIBIRCAIXADEFATOS__' ),
 );
 
 /** Serbian (Cyrillic script) (српски (ћирилица)‎) */
@@ -276,4 +356,38 @@ $magicWords['tt-cyrl'] = array(
 	'ask' => array( 0, 'сорау' ),
 	'show' => array( 0, 'күрсәт' ),
 	'info' => array( 0, 'мәгълүмат' ),
+);
+
+/** Vietnamese (Tiếng Việt) */
+$magicWords['vi'] = array(
+	'ask' => array( 0, 'hỏi' ),
+	'show' => array( 0, 'hiển_thị' ),
+	'info' => array( 0, 'thông_tin' ),
+	'concept' => array( 0, 'khái_niệm' ),
+	'set' => array( 0, 'đặt' ),
+);
+
+/** Simplified Chinese (中文（简体）‎) */
+$magicWords['zh-hans'] = array(
+	'ask' => array( 0, '询问' ),
+	'show' => array( 0, '显示' ),
+	'info' => array( 0, '信息' ),
+	'concept' => array( 0, '概念' ),
+	'subobject' => array( 0, '子对象' ),
+	'smwdoc' => array( 0, 'SMW文档' ),
+	'set' => array( 0, '设置' ),
+	'set_recurring_event' => array( 0, '设置循环活动' ),
+	'declare' => array( 0, '宣布' ),
+	'SMW_NOFACTBOX' => array( 0, '__无实际内容框__' ),
+	'SMW_SHOWFACTBOX' => array( 0, '__显示实际内容框__' ),
+);
+
+/** Traditional Chinese (中文（繁體）‎) */
+$magicWords['zh-hant'] = array(
+	'ask' => array( 0, '訪問' ),
+	'show' => array( 0, '顯示' ),
+	'info' => array( 0, '資訊' ),
+	'smwdoc' => array( 0, 'SMW檔案' ),
+	'set' => array( 0, '設定' ),
+	'set_recurring_event' => array( 0, '設定循環活動', '設置定期活動' ),
 );

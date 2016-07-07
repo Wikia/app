@@ -1,6 +1,8 @@
 <?php
+
+use SMW\NumberFormatter;
+
 /**
- * @file
  * @ingroup SMWDataValues
  */
 
@@ -13,17 +15,34 @@
  * @ingroup SMWDataValues
  */
 class SMWQuantityValue extends SMWNumberValue {
-	/// Array with format (canonical unit ID string) => (conversion factor)
+
+	/**
+	 * Array with format (canonical unit ID string) => (conversion factor)
+	 * @var float[]|bool
+	 */
 	protected $m_unitfactors = false;
-	/// Array with format (normalised unit string) => (canonical unit ID string)
+
+	/**
+	 * Array with format (normalised unit string) => (canonical unit ID string)
+	 * @var string[]|bool
+	 */
 	protected $m_unitids = false;
-	/// Ordered array of (normalized) units that should be displayed in tooltips, etc.
+
+	/**
+	 * Ordered array of (normalized) units that should be displayed in tooltips, etc.
+	 * @var string[]|bool
+	 */
 	protected $m_displayunits = false;
-	/// Main unit in canonical form (recognised by the conversion factor 1)
+
+	/**
+	 * Main unit in canonical form (recognised by the conversion factor 1)
+	 * @var string|bool
+	 */
 	protected $m_mainunit = false;
 
 	protected function convertToMainUnit( $number, $unit ) {
 		$this->initConversionData();
+
 		if ( array_key_exists( $unit, $this->m_unitids ) ) {
 			$this->m_unitin = $this->m_unitids[$unit];
 			assert( '$this->m_unitfactors[$this->m_unitin] != 0 /* Should be filtered by initConversionData() */' );
@@ -35,10 +54,18 @@ class SMWQuantityValue extends SMWNumberValue {
 	}
 
 	protected function makeConversionValues() {
-		if ( $this->m_unitvalues !== false ) return; // do this only once
+		if ( $this->m_unitvalues !== false ) {
+			return; // do this only once
+		}
+
 		$this->m_unitvalues = array();
-		if ( !$this->isValid() ) return;
+
+		if ( !$this->isValid() ) {
+			return;
+		}
+
 		$this->initDisplayData();
+
 		if ( count( $this->m_displayunits ) == 0 ) { // no display units, just show all
 			foreach ( $this->m_unitfactors as $unit => $factor ) {
 				if ( $unit !== '' ) { // filter out the empty fallback unit that is always there
@@ -58,6 +85,7 @@ class SMWQuantityValue extends SMWNumberValue {
 
 	protected function makeUserValue() {
 		$printunit = false; // the normalised string of a known unit to use for printouts
+
 		// Check if a known unit is given as outputformat:
 		if ( ( $this->m_outformat ) && ( $this->m_outformat != '-' ) &&
 		     ( $this->m_outformat != '-n' ) && ( $this->m_outformat != '-u' ) ) { // first try given output unit
@@ -66,6 +94,7 @@ class SMWQuantityValue extends SMWNumberValue {
 				$printunit = $wantedunit;
 			}
 		}
+
 		// Alternatively, try to use the main display unit as a default:
 		if ( $printunit === false ) {
 			$this->initDisplayData();
@@ -84,8 +113,9 @@ class SMWQuantityValue extends SMWNumberValue {
 
 		$this->m_caption = '';
 		if ( $this->m_outformat != '-u' ) { // -u is the format for displaying the unit only
-			$this->m_caption .= ( ( $this->m_outformat != '-' ) && ( $this->m_outformat != '-n' ) ? smwfNumberFormat( $value ) : $value );
+			$this->m_caption .= ( ( $this->m_outformat != '-' ) && ( $this->m_outformat != '-n' ) ? NumberFormatter::getInstance()->formatNumberToLocalizedText( $value ) : $value );
 		}
+
 		if ( ( $printunit !== '' ) && ( $this->m_outformat != '-n' ) ) { // -n is the format for displaying the number only
 			if ( $this->m_outformat != '-u' ) {
 				$this->m_caption .=  ( $this->m_outformat != '-' ? '&#160;' : ' ' );
@@ -112,7 +142,10 @@ class SMWQuantityValue extends SMWNumberValue {
 	 * This method initializes $m_unitfactors, $m_unitids, and $m_mainunit.
 	 */
 	protected function initConversionData() {
-		if ( $this->m_unitids !== false ) return; // do the below only once
+		if ( $this->m_unitids !== false ) {
+			return; // do the below only once
+		}
+
 		$this->m_unitids = array();
 		$this->m_unitfactors = array();
 		$this->m_mainunit = false;
@@ -120,16 +153,19 @@ class SMWQuantityValue extends SMWNumberValue {
 		if ( !is_null( $this->m_property ) ) {
 			$propertyDiWikiPage = $this->m_property->getDiWikiPage();
 		}
+
 		if ( is_null( $this->m_property ) || is_null( $propertyDiWikiPage ) ) {
 			return; // we cannot find conversion factors without the property
 		}
 
-		$factors = smwfGetStore()->getPropertyValues( $propertyDiWikiPage, new SMWDIProperty( '_CONV' ) );
+		$factors = \SMW\StoreFactory::getStore()->getPropertyValues( $propertyDiWikiPage, new SMWDIProperty( '_CONV' ) );
 		if ( count( $factors ) == 0 ) { // no custom type
 			$this->addError( wfMessage( 'smw_nounitsdeclared' )->inContentLanguage()->text() );
 			return;
 		}
+
 		$number = $unit = '';
+
 		foreach ( $factors as $di ) {
 			if ( !( $di instanceof SMWDIBlob ) ||
 			     ( SMWNumberValue::parseNumberValue( $di->getString(), $number, $unit ) != 0 ) ||
@@ -154,9 +190,11 @@ class SMWQuantityValue extends SMWNumberValue {
 				$this->m_unitids[$unit] = $unitid;
 			}
 		}
+
 		if ( $this->m_mainunit === false ) { // No unit with factor 1? Make empty string the main unit.
 			$this->m_mainunit = '';
 		}
+
 		// always add an extra empty unit; not as a synonym for the main unit but as a new unit with ID ''
 		// so if users do not give any unit, the conversion tooltip will still display the main unit for clarity
 		// (the empty unit is never displayed; we filter it when making conversion values)
@@ -168,19 +206,25 @@ class SMWQuantityValue extends SMWNumberValue {
 	 * This method initializes $m_displayunits.
 	 */
 	protected function initDisplayData() {
-		if ( $this->m_displayunits !== false ) return; // do the below only once
+		if ( $this->m_displayunits !== false ) {
+			return; // do the below only once
+		}
 		$this->initConversionData(); // needed to normalise unit strings
 		$this->m_displayunits = array();
+
 		if ( is_null( $this->m_property ) || is_null( $this->m_property->getDIWikiPage() ) ) {
 			return;
 		}
-		$dataItems = smwfGetStore()->getPropertyValues( $this->m_property->getDIWikiPage(), new SMWDIProperty( '_UNIT' ) );
+
+		$dataItems = \SMW\StoreFactory::getStore()->getPropertyValues( $this->m_property->getDIWikiPage(), new SMWDIProperty( '_UNIT' ) );
 		$units = array();
+
 		foreach ( $dataItems as $di ) { // Join all if many annotations exist. Discouraged (random order) but possible.
 			if ( $di instanceof SMWDIBlob ) {
 				$units = $units + preg_split( '/\s*,\s*/u', $di->getString() );
 			}
 		}
+
 		foreach ( $units as $unit ) {
 			$unit = SMWNumberValue::normalizeUnit( $unit );
 			if ( array_key_exists( $unit, $this->m_unitids ) ) {

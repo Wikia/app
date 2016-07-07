@@ -8,10 +8,12 @@
  * Protect against register_globals vulnerabilities.
  * This line must be present before any global variable is referenced.
  */
-if ( !defined( 'MEDIAWIKI' ) ) die();
+if ( !defined( 'MEDIAWIKI' ) ) {
+	die();
+}
 
 global $smwgIP;
-include_once( $smwgIP . 'languages/SMW_Language.php' );
+include_once ( $smwgIP . 'languages/SMW_Language.php' );
 
 
 /**
@@ -27,7 +29,6 @@ class SMWLanguageEn extends SMWLanguage {
 
 	protected $m_DatatypeLabels = array(
 		'_wpg' => 'Page', // name of page datatype
-		'_str' => 'String',  // name of the string type
 		'_txt' => 'Text',  // name of the text type
 		'_cod' => 'Code',  // name of the (source) code type
 		'_boo' => 'Boolean',  // name of the boolean type
@@ -47,7 +48,8 @@ class SMWLanguageEn extends SMWLanguage {
 		'URI'         => '_uri',
 		'Float'       => '_num',
 		'Integer'     => '_num',
-		'Enumeration' => '_str',
+		'Enumeration' => '_txt',
+		'String'      => '_txt',
 		'Phone number' => '_tel',
 		'E-mail'       => '_ema',
 		'Geographic coordinate' => '_geo',
@@ -77,6 +79,9 @@ class SMWLanguageEn extends SMWLanguage {
 		'_ASKFO'=> 'Query format',
 		'_ASKSI'=> 'Query size',
 		'_ASKDE'=> 'Query depth',
+		'_ASKDU'=> 'Query duration',
+		'_MEDIA'=> 'Media type',
+		'_MIME' => 'MIME type'
 	);
 
 	protected $m_SpecialPropertyAliases = array(

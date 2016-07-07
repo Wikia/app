@@ -1,8 +1,9 @@
 <?php
 /**
- * @file
  * @ingroup SMWDataItems
  */
+
+use SMW\DataItemException;
 
 /**
  * This class implements number data items.
@@ -16,13 +17,13 @@ class SMWDINumber extends SMWDataItem {
 
 	/**
 	 * Internal value.
-	 * @var numeric
+	 * @var float|int
 	 */
 	protected $m_number;
 
 	public function __construct( $number ) {
 		if ( !is_numeric( $number ) ) {
-			throw new SMWDataItemException( "Initialisation value '$number' is not a number." );
+			throw new DataItemException( "Initialization value '$number' is not a number." );
 		}
 		$this->m_number = $number;
 	}
@@ -62,10 +63,11 @@ class SMWDINumber extends SMWDataItem {
 		return new SMWDINumber( floatval( $serialization ) );
 	}
 
-	public function equals( $di ) {
+	public function equals( SMWDataItem $di ) {
 		if ( $di->getDIType() !== SMWDataItem::TYPE_NUMBER ) {
 			return false;
 		}
+
 		return $di->getNumber() === $this->m_number;
 	}
 

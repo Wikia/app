@@ -8,10 +8,12 @@
  * Protect against register_globals vulnerabilities.
  * This line must be present before any global variable is referenced.
  */
-if ( !defined( 'MEDIAWIKI' ) ) die();
+if ( !defined( 'MEDIAWIKI' ) ) {
+	die();
+}
 
 global $smwgIP;
-include_once( $smwgIP . 'languages/SMW_Language.php' );
+include_once ( $smwgIP . 'languages/SMW_Language.php' );
 
 /**
  * German language labels for important SMW labels (datatypes, special properties, ...).
@@ -33,7 +35,6 @@ class SMWLanguageDe extends SMWLanguage {
 
 	protected $m_DatatypeLabels = array(
 		'_wpg' => 'Seite', // name of the page datatype
-		'_str' => 'Zeichenkette', // name of the string datatype
 		'_txt' => 'Text', // name of the text datatype
 		'_cod' => 'Quellcode', // name of the (source) code datatype
 		'_boo' => 'Wahrheitswert', // name of the boolean datatype
@@ -53,7 +54,8 @@ class SMWLanguageDe extends SMWLanguage {
 		'URI'			=> '_uri',
 		'Ganze Zahl'		=> '_num',
 		'Dezimalzahl'		=> '_num',
-		'Aufzählung'		=> '_str',
+		'Aufzählung'		=> '_txt',
+		'Zeichenkette'		=> '_txt',
 		'Menge' 		=> '_qty',
 	);
 
@@ -80,14 +82,19 @@ class SMWLanguageDe extends SMWLanguage {
 		'_ASKFO'=> 'Abfrageformat',
 		'_ASKSI'=> 'Abfragegröße',
 		'_ASKDE'=> 'Abfragetiefe',
+		'_ASKDU'=> 'Abfragedauer',
+		'_MEDIA'=> 'Medientyp',
+		'_MIME' => 'MIME-Typ'
 	);
 
 	protected $m_SpecialPropertyAliases = array(
 		'Hat Datentyp'		=> '_TYPE',
 		'Hat erlaubten Wert'	=> '_PVAL',
 		'Hat Einheiten' 	=> '_UNIT',
+		'Hat Medientyp'         => '_MEDIA',
+		'Hat MIME-Typ'          => '_MIME',
 		'Ausgabeeinheit'	=> '_UNIT',
-		'Gleichwertige URI von' => '_URI',
+		'Gleichwertige URI von' => '_URI'
 	);
 
 	protected $m_Namespaces = array(

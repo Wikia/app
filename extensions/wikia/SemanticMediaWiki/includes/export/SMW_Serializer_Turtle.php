@@ -1,10 +1,11 @@
 <?php
 
+use SMW\InMemoryPoolCache;
+
 /**
  * File holding the SMWTurtleSerializer class that provides basic functions for
  * serialising OWL data in Turtle syntax.
  *
- * @file SMW_Serializer.php
  * @ingroup SMW
  *
  * @author Markus Krötzsch
@@ -52,6 +53,13 @@ class SMWTurtleSerializer extends SMWSerializer{
 	}
 
 	/**
+	 * @since 2.3
+	 */
+	public static function reset() {
+		InMemoryPoolCache::getInstance()->resetPoolCacheFor( 'turtle.serializer' );
+	}
+
+	/**
 	 * Get an array of namespace prefixes used in SPARQL mode.
 	 * Namespaces are not serialized among triples in SPARQL mode but are
 	 * collected separately. This method returns the prefixes and empties
@@ -69,47 +77,52 @@ class SMWTurtleSerializer extends SMWSerializer{
 		if ( $this->sparqlmode ) {
 			$this->pre_ns_buffer = '';
 			$this->sparql_namespaces = array(
-				"rdf" => SMWExporter::expandURI( '&rdf;' ),
-				"rdfs" => SMWExporter::expandURI( '&rdfs;' ),
-				"owl" => SMWExporter::expandURI( '&owl;' ),
-				"swivt" => SMWExporter::expandURI( '&swivt;' ),
-				"wiki" => SMWExporter::expandURI( '&wiki;' ),
-				"property" => SMWExporter::expandURI( '&property;' ),
+				"rdf" => SMWExporter::getInstance()->expandURI( '&rdf;' ),
+				"rdfs" => SMWExporter::getInstance()->expandURI( '&rdfs;' ),
+				"owl" => SMWExporter::getInstance()->expandURI( '&owl;' ),
+				"swivt" => SMWExporter::getInstance()->expandURI( '&swivt;' ),
+				"wiki" => SMWExporter::getInstance()->expandURI( '&wiki;' ),
+				"category" => SMWExporter::getInstance()->expandURI( '&category;' ),
+				"property" => SMWExporter::getInstance()->expandURI( '&property;' ),
 				"xsd" => "http://www.w3.org/2001/XMLSchema#" ,
-				"wikiurl" => SMWExporter::expandURI( '&wikiurl;' )
+				"wikiurl" => SMWExporter::getInstance()->expandURI( '&wikiurl;' )
 			);
 		} else {
 			$this->pre_ns_buffer =
-			"@prefix rdf: <" . SMWExporter::expandURI( '&rdf;' ) . "> .\n" .
-			"@prefix rdfs: <" . SMWExporter::expandURI( '&rdfs;' ) . "> .\n" .
-			"@prefix owl: <" . SMWExporter::expandURI( '&owl;' ) . "> .\n" .
-			"@prefix swivt: <" . SMWExporter::expandURI( '&swivt;' ) . "> .\n" .
+			"@prefix rdf: <" . SMWExporter::getInstance()->expandURI( '&rdf;' ) . "> .\n" .
+			"@prefix rdfs: <" . SMWExporter::getInstance()->expandURI( '&rdfs;' ) . "> .\n" .
+			"@prefix owl: <" . SMWExporter::getInstance()->expandURI( '&owl;' ) . "> .\n" .
+			"@prefix swivt: <" . SMWExporter::getInstance()->expandURI( '&swivt;' ) . "> .\n" .
 			// A note on "wiki": this namespace is crucial as a fallback when it would be illegal to start e.g. with a number.
 			// In this case, one can always use wiki:... followed by "_" and possibly some namespace, since _ is legal as a first character.
-			"@prefix wiki: <" . SMWExporter::expandURI( '&wiki;' ) . "> .\n" .
-			"@prefix property: <" . SMWExporter::expandURI( '&property;' ) . "> .\n" .
+			"@prefix wiki: <" . SMWExporter::getInstance()->expandURI( '&wiki;' ) . "> .\n" .
+			"@prefix category: <" . SMWExporter::getInstance()->expandURI( '&category;' ) . "> .\n" .
+			"@prefix property: <" . SMWExporter::getInstance()->expandURI( '&property;' ) . "> .\n" .
 			"@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .\n" . // note that this XSD URI is hardcoded below (its unlikely to change, of course)
-			"@prefix wikiurl: <" . SMWExporter::expandURI( '&wikiurl;' ) . "> .\n";
+			"@prefix wikiurl: <" . SMWExporter::getInstance()->expandURI( '&wikiurl;' ) . "> .\n";
 		}
-		$this->global_namespaces = array( 'rdf' => true, 'rdfs' => true, 'owl' => true, 'swivt' => true, 'wiki' => true, 'property' => true );
+		$this->global_namespaces = array( 'rdf' => true, 'rdfs' => true, 'owl' => true, 'swivt' => true, 'wiki' => true, 'property' => true, 'category' => true );
 		$this->post_ns_buffer = "\n";
 	}
 
 	protected function serializeFooter() {
 		if ( !$this->sparqlmode ) {
-			$this->post_ns_buffer .= "\n# Created by Semantic MediaWiki, http://semantic-mediawiki.org/\n";
+			$this->post_ns_buffer .= "\n# Created by Semantic MediaWiki, https://semantic-mediawiki.org/\n";
 		}
 	}
 
 	public function serializeDeclaration( $uri, $typename ) {
-		$this->post_ns_buffer .= "<" . SMWExporter::expandURI( $uri ) . "> rdf:type $typename .\n";
+		$this->post_ns_buffer .= "<" . SMWExporter::getInstance()->expandURI( $uri ) . "> rdf:type $typename .\n";
 	}
 
-	public function serializeExpData( SMWExpData $data ) {
-		$this->subexpdata = array( $data );
-		while ( count( $this->subexpdata ) > 0 ) {
-			$this->serializeNestedExpData( array_pop( $this->subexpdata ), '' );
+	public function serializeExpData( SMWExpData $expData ) {
+
+		$this->subExpData = array( $expData );
+
+		while ( count( $this->subExpData ) > 0 ) {
+			$this->serializeNestedExpData( array_pop( $this->subExpData ), '' );
 		}
+
 		$this->serializeNamespaces();
 	}
 
@@ -130,7 +143,24 @@ class SMWTurtleSerializer extends SMWSerializer{
 	 * @param $indent string specifying a prefix for indentation (usually a sequence of tabs)
 	 */
 	protected function serializeNestedExpData( SMWExpData $data, $indent ) {
-		if ( count( $data->getProperties() ) == 0 ) return; // nothing to export
+		if ( count( $data->getProperties() ) == 0 ) {
+			return; // nothing to export
+		}
+
+		// Avoid posting turtle property declarations already known for the
+		// subject more than once
+		if ( $data->getSubject()->getDataItem() !== null && $data->getSubject()->getDataItem()->getNamespace() === SMW_NS_PROPERTY ) {
+
+			$hash = $data->getHash();
+			$poolCache = InMemoryPoolCache::getInstance()->getPoolCacheFor( 'turtle.serializer' );
+
+			if ( $poolCache->contains( $hash ) && $poolCache->fetch( $hash ) ) {
+				return;
+			}
+
+			$poolCache->save( $hash, true );
+		}
+
 		$this->recordDeclarationTypes( $data );
 
 		$bnode = false;
@@ -176,7 +206,7 @@ class SMWTurtleSerializer extends SMWSerializer{
 						foreach ( $collection as $subvalue ) {
 							$this->serializeNestedExpData( $subvalue, $indent . "\t\t" );
 							if ( $class_type_prop ) {
-								$this->requireDeclaration( $subvalue, SMW_SERIALIZER_DECL_CLASS );
+								$this->requireDeclaration( $subvalue->getSubject(), SMW_SERIALIZER_DECL_CLASS );
 							}
 						}
 						$this->post_ns_buffer .= " )";
@@ -228,14 +258,14 @@ class SMWTurtleSerializer extends SMWSerializer{
 			} elseif ( ( $expElement instanceof SMWExpNsResource ) && ( $expElement->hasAllowedLocalName() ) ) {
 				return $expElement->getQName();
 			} else {
-				return '<' . str_replace( '>', '\>', SMWExporter::expandURI( $expElement->getUri() ) ) . '>';
+				return '<' . str_replace( '>', '\>', SMWExporter::getInstance()->expandURI( $expElement->getUri() ) ) . '>';
 			}
 		} elseif ( $expElement instanceof SMWExpLiteral ) {
 			$lexicalForm = '"' . str_replace( array( '\\', "\n", '"' ), array( '\\\\', "\\n", '\"' ), $expElement->getLexicalForm() ) . '"';
 			$dt = $expElement->getDatatype();
 			if ( ( $dt !== '' ) && ( $dt != 'http://www.w3.org/2001/XMLSchema#string' ) ) {
 				$count = 0;
-				$newdt = str_replace( 'http://www.w3.org/2001/XMLSchema#', 'xsd:',  $dt, $count );
+				$newdt = str_replace( 'http://www.w3.org/2001/XMLSchema#', 'xsd:', $dt, $count );
 				return ( $count == 1 ) ? "$lexicalForm^^$newdt" : "$lexicalForm^^<$dt>";
 			} else {
 				return $lexicalForm;

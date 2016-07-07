@@ -1,6 +1,5 @@
 <?php
 /**
- * @file
  * @ingroup SMWDataItems
  */
 
@@ -21,7 +20,7 @@ class SMWDIBlob extends SMWDataItem {
 	protected $m_string;
 
 	public function __construct( $string ) {
-		$this->m_string = $string;
+		$this->m_string = trim( $string );
 	}
 
 	public function getDIType() {
@@ -57,10 +56,11 @@ class SMWDIBlob extends SMWDataItem {
 		return new SMWDIBlob( $serialization );
 	}
 
-	public function equals( $di ) {
+	public function equals( SMWDataItem $di ) {
 		if ( !( $di instanceof SMWDIBlob ) ) {
 			return false;
 		}
+
 		return $di->getString() === $this->m_string;
 	}
 }

@@ -1,6 +1,8 @@
 <?php
+
+use SMW\NumberFormatter;
+
 /**
- * @file
  * @ingroup SMWDataValues
  */
 
@@ -33,7 +35,8 @@ class SMWTemperatureValue extends SMWNumberValue {
 			case '°R':
 				$value = ( $number ) / 1.8;
 			break;
-			default: return false; // unsupported unit
+			default:
+			return false; // unsupported unit
 		}
 		$this->m_dataitem = new SMWDINumber( $value, $this->m_typeid );
 		return true;
@@ -41,7 +44,9 @@ class SMWTemperatureValue extends SMWNumberValue {
 
 	protected function makeConversionValues() {
 		/// NOTE This class currently ignores display units.
-		if ( $this->m_unitvalues !== false ) return; // do this only once
+		if ( $this->m_unitvalues !== false ) {
+			return; // do this only once
+		}
 		if ( !$this->isValid() ) {
 			$this->m_unitvalues = array();
 		} else {
@@ -82,7 +87,7 @@ class SMWTemperatureValue extends SMWNumberValue {
 
 		$this->m_caption = '';
 		if ( $this->m_outformat != '-u' ) { // -u is the format for displaying the unit only
-			$this->m_caption .= ( ( $this->m_outformat != '-' ) && ( $this->m_outformat != '-n' ) ? smwfNumberFormat( $value ) : $value );
+			$this->m_caption .= ( ( $this->m_outformat != '-' ) && ( $this->m_outformat != '-n' ) ? NumberFormatter::getInstance()->formatNumberToLocalizedText( $value ) : $value );
 		}
 		if ( ( $printunit !== '' ) && ( $this->m_outformat != '-n' ) ) { // -n is the format for displaying the number only
 			if ( $this->m_outformat != '-u' ) {
@@ -98,13 +103,27 @@ class SMWTemperatureValue extends SMWNumberValue {
 	protected function getUnitID( $unit ) {
 		/// TODO possibly localise some of those strings
 		switch ( $unit ) {
-			case '': case 'K': case 'Kelvin': case 'kelvin': case 'kelvins': return 'K';
+			case '':
+			case 'K':
+			case 'Kelvin':
+			case 'kelvin':
+			case 'kelvins':
+			return 'K';
 			// There's a dedicated Unicode character (℃, U+2103) for degrees C.
 			// Your font may or may not display it; do not be alarmed.
-			case '°C': case '℃': case 'Celsius': case 'centigrade': return '°C';
-			case '°F': case 'Fahrenheit': return '°F';
-			case '°R': case 'Rankine': return '°R';
-			default: return false;
+			case '°C':
+			case '℃':
+			case 'Celsius':
+			case 'centigrade':
+			return '°C';
+			case '°F':
+			case 'Fahrenheit':
+			return '°F';
+			case '°R':
+			case 'Rankine':
+			return '°R';
+			default:
+			return false;
 		}
 	}
 

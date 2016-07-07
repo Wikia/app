@@ -5,7 +5,6 @@
  * @author Markus Krötzsch
  * @author Jeroen De Dauw
  *
- * @file
  * @ingroup SMW
  */
 
@@ -221,7 +220,7 @@ class SMWInfolink {
 
 		if ( $this->mInternal ) {
 			if ( count( $this->mParams ) > 0 ) {
-				$titletext = $this->mTarget . '/' . SMWInfolink::encodeParameters( $this->mParams );
+				$titletext = $this->mTarget . '/' . self::encodeParameters( $this->mParams );
 			} else {
 				$titletext = $this->mTarget;
 			}
@@ -242,13 +241,13 @@ class SMWInfolink {
 
 				if ( !is_null( $title ) ) {
 					if ( $outputformat == SMW_OUTPUT_WIKI ) {
-						$link = '[' . $title->getFullURL( SMWInfolink::encodeParameters( $this->mParams, false ) ) . " $this->mCaption]";
+						$link = '[' . $title->getFullURL( self::encodeParameters( $this->mParams, false ) ) . " $this->mCaption]";
 					} else { // SMW_OUTPUT_HTML, SMW_OUTPUT_FILE
 						$link = $this->getLinker( $linker )->link(
 							$title,
 							$this->mCaption,
 							array(),
-							SMWInfolink::encodeParameters( $this->mParams, false )
+							self::encodeParameters( $this->mParams, false )
 						);
 					}
 				} else {
@@ -298,16 +297,16 @@ class SMWInfolink {
 			$title = Title::newFromText( $this->mTarget );
 
 			if ( !is_null( $title ) ) {
-				return $title->getFullURL( SMWInfolink::encodeParameters( $this->mParams, false ) );
+				return $title->getFullURL( self::encodeParameters( $this->mParams, false ) );
 			} else {
 				return ''; // the title was bad, normally this would indicate a software bug
 			}
 		} else {
 			if ( count( $this->mParams ) > 0 ) {
-				if ( strpos( SMWExporter::expandURI( '&wikiurl;' ), '?' ) === false ) {
-					$target = $this->mTarget . '?' . SMWInfolink::encodeParameters( $this->mParams, false );
+				if ( strpos( SMWExporter::getInstance()->expandURI( '&wikiurl;' ), '?' ) === false ) {
+					$target = $this->mTarget . '?' . self::encodeParameters( $this->mParams, false );
 				} else {
-					$target = $this->mTarget . '&' . SMWInfolink::encodeParameters( $this->mParams, false );
+					$target = $this->mTarget . '&' . self::encodeParameters( $this->mParams, false );
 				}
 			} else {
 				$target = $this->mTarget;
@@ -376,8 +375,8 @@ class SMWInfolink {
 				//      make URLs less readable
 				//
 				$value = str_replace(
-					array( '-', '#', "\n", ' ', '/', '[', ']', '<', '>', '&lt;', '&gt;', '&amp;', '\'\'', '|', '&', '%', '?', '$' ),
-					array( '-2D', '-23', '-0A', '-20', '-2F', '-5B', '-5D', '-3C', '-3E', '-3C', '-3E', '-26', '-27-27', '-7C', '-26', '-25', '-3F', '-24' ),
+					array( '-', '#', "\n", ' ', '/', '[', ']', '<', '>', '&lt;', '&gt;', '&amp;', '\'\'', '|', '&', '%', '?', '$', "\\", ";" ),
+					array( '-2D', '-23', '-0A', '-20', '-2F', '-5B', '-5D', '-3C', '-3E', '-3C', '-3E', '-26', '-27-27', '-7C', '-26', '-25', '-3F', '-24', '-5C', "-3B" ),
 					$value
 				);
 
@@ -392,7 +391,7 @@ class SMWInfolink {
 
 			foreach ( $params as $name => $value ) {
 				if ( is_string( $name ) && ( $name !== '' ) ) {
-					$value = $name . '=' . rawurlencode( $value );
+					$value = rawurlencode( $name ) . '=' . rawurlencode( $value );
 
 					if ( $result !== '' ) {
 						$result .= '&';
@@ -407,7 +406,7 @@ class SMWInfolink {
 				if ( $result !== '' ) {
 					$result = '&' . $result;
 				}
-				$result = 'x=' . rawurlencode( SMWInfolink::encodeParameters( $q, true ) ) . $result;
+				$result = 'x=' . rawurlencode( self::encodeParameters( $q, true ) ) . $result;
 			}
 		}
 

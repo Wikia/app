@@ -1,0 +1,468 @@
+/*!
+ * This file is part of the Semantic MediaWiki Extension
+ * @see https://semantic-mediawiki.org/
+ *
+ * @section LICENSE
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
+ *
+ * @since 1.8
+ *
+ * @file
+ * @ingroup SMW
+ *
+ * @licence GNU GPL v2+
+ * @author Jeroen De Dauw <jeroendedauw at gmail dot com>
+ * @author mwjames
+ */
+
+/* highlighting for builtin elements */
+span.smwbuiltin, span.smwttactiveinline span.smwbuiltin {
+	font-style: italic;
+}
+
+/* make divs look like <pre> */
+div.smwpre {
+	font-family: monospace;
+	padding: 1em;
+	border: 1px dashed #2f6fab;
+	color: black;
+	background-color: #f9f9f9;
+	line-height: 1.1em;
+	margin-bottom: 0.5em;
+	margin-top: 0.5em;
+	white-space: pre-wrap;
+	white-space: -moz-pre-wrap;
+	white-space: -pre-wrap;
+	white-space: -o-pre-wrap;
+	word-wrap: break-word;
+	word-break: break-word;
+	margin-right: 5px;
+}
+
+/* terminate page contents when inserting stuff below a page, typically used in <br> */
+#smwfootbr {
+	clear: both;
+}
+
+/* hide keys for sorting table entries */
+span.smwsortkey {
+	display: none;
+}
+
+/* buttons for sort-arrows */
+a.sortheader:hover {
+	text-decoration: none;
+}
+
+/* "semantic" span classes for Timeline */
+div.smwtimeline {
+	border: 1px solid #AAAAAA;
+	background-color: #F9F9F9;
+	/*text-align: center;*/
+	/* After hours of debugging and frustration I now can safely say: IE sucks. (mak)
+	   You can support Semantic MediaWiki development by not using Internet Explorer. Thanks.
+	   (IE centers the Timeline *elements*, which messes up the whole layout) */
+}
+
+span.smwtlevent, span.smwtlband, span.smwtlsize, span.smwtlposition {
+	display: none;
+	speak: none;
+}
+
+span.smwtlcomment {
+	font-style: italic;
+	padding: 5px;
+}
+
+/* Factbox */
+div.smwfact {
+	clear: both;
+	background-color: #F9F9F9;
+	padding: 5px;
+	margin-top: 1em;
+	border: 1px solid #AAAAAA;
+	font-size: 95%;
+	min-height: 23px; /* required by SMW_FACTBOX_SHOWN */
+}
+
+div.smwfact td, div.smwfact tr, div.smwfact table {
+	background-color: #F9F9F9;
+}
+
+.smwfactboxhead {
+	font-size: 110%;
+	font-weight: bold;
+	float: left;
+	margin-bottom: 2px;
+	max-width: 90%;
+}
+
+table.smwfacttable {
+	border-top: 1px dotted #AAAAAA;
+	width: 100%;
+	clear: both;
+}
+
+td.smwpropname, th.smwpropname, td.smwspecname {
+	text-align: right;
+	vertical-align: top;
+	padding-right: 1em;
+}
+
+td.smwprops, td.smwspecs {
+	vertical-align: top;
+	width: 75%;
+}
+
+div.smwhr hr {
+	background-color: #DDDDDD;
+	color: #DDDDDD;
+}
+
+/* warning messages */
+span.smwwarning {
+	color: #888888;
+	font-style: italic;
+	font-size: 90%;
+}
+
+
+/* Search, browse, RDF icons/ FIXME: this was only used for Factbox docu, should be removed from code */
+span.smwsearchicon {
+	padding-right: 16px;
+	margin-right: 2px;
+	color: #888888;
+	/* @embed */ background: url(../images/searchgray_iconsmall.png) center right no-repeat;
+}
+
+#bodyContent span.smwsearch a {
+	padding-right: 14px;
+	margin-right: 2px;
+	color: #888888;
+	/* @embed */ background: url(../images/searchgray_iconsmall.png) center right no-repeat;
+	background-size: 10px 10px;
+}
+
+#bodyContent span.smwsearch a:hover {
+	text-decoration: none;
+	color: #0000FF;
+	padding-right: 16px;
+	margin-right: 0px;
+	/* @embed */ background: url(../images/search_icon.png) center right no-repeat;
+	background-size: 13px 13px;
+}
+
+#bodyContent span.swmfactboxheadbrowse a {
+	padding-right: 16px;
+	margin-right: 2px;
+	color: #000000;
+	/* @embed */ background: url(../images/browse_iconsmall.png) center right no-repeat;
+	background-size: 13px 13px;
+}
+
+#bodyContent span.swmfactboxheadbrowse a:hover {
+	text-decoration: none;
+	color: #0000FF;
+	padding-right: 18px;
+	margin-right: 0px;
+	/* @embed */ background: url(../images/browse_icon.png) center right no-repeat;
+	background-size: 15px 15px;
+}
+
+#bodyContent span.smwbrowse a {
+	padding-right: 14px;
+	margin-right: 2px;
+	color: #888888;
+	/* @embed */ background: url(../images/browse_iconsmall.png) center right no-repeat;
+	background-size: 10px 10px;
+}
+
+#bodyContent span.smwbrowse a:hover {
+	text-decoration: none;
+	color: #0000FF;
+	padding-right: 16px;
+	margin-right: 0px;
+	/* @embed */ background: url(../images/browse_icon.png) center right no-repeat;
+	background-size: 13px 13px;
+}
+
+#bodyContent span.smwmap a {
+	padding-right: 20px;
+	color: #888888;
+	/* @embed */ background: url(../images/world.png) center right no-repeat;
+}
+
+#bodyContent span.smwmap a:hover {
+	padding-right: 20px;
+	color: #0000FF;
+	/* @embed */ background: url(../images/world.png) center right no-repeat;
+}
+
+.smwrdflink {
+	float: right;
+	font-size: small;
+	padding: 2px 0 0 0;
+}
+
+.concept-documenation {
+	border-top: 1px dotted #AAAAAA;
+}
+
+#bodyContent span.rdflink {
+	float: right;
+}
+
+#bodyContent span.rdflink a {
+	padding-right: 15px;
+	color: #888888;
+	/* @embed */ background: url(../images/rdf_flyer.18.gif) center right no-repeat;
+	background-size: 10px 10px;
+}
+
+#bodyContent span.rdflink a:hover {
+	text-decoration: none;
+	color: #0000FF;
+	padding-right: 15px;
+	margin-right: 0px;
+	/* @embed */ background: url(../images/rdf_flyer.18.gif) center right no-repeat;
+	background-size: 10px 10px;
+}
+
+/* @TODO Browse and Factbox should be split into seperated CSS file, CSS style file for Semantic MediaWiki Special Browse. */
+table.smwb-factbox {
+	border-left: 8px solid #DDDDDD;
+	width: 100%
+}
+
+tr.smwb-title {
+	font-size: 200%;
+	background-color: #DDDDDD;
+	line-height: 1.5;
+}
+
+tr.smwb-title td {
+	padding-left: 5px;
+	border-bottom: 2px solid white;
+}
+
+tr.smwb-propvalue {
+	width: 100%;
+	background-color: #EEEEEE;
+}
+
+tr.smwb-propvalue th {
+	text-align: right;
+	vertical-align: top;
+	font-weight: bold;
+	font-size: 120%;
+	background-color: #DDDDDD;
+	padding: 0.2em 0.6em;
+	border-bottom: 2px solid white;
+	border-top: 2px solid white;
+}
+
+tr.smwb-propvalue td {
+	padding-left:0.4em;
+	background-color: #EEEEEE;
+	border: 0px solid white;
+	border-bottom: 2px solid white;
+	border-top: 2px solid white;
+	width: 90%;
+}
+
+tr.smwb-center {
+	background-color: #DDDDDD;
+}
+
+span.smwb-value {
+}
+
+/**
+ * Inverse factbox
+ * @ignore
+ */
+table.smwb-ifactbox {
+	border-right: 8px solid #DDDDDD;
+	width: 100%
+}
+
+tr.smwb-ititle {
+	font-size: 200%;
+	background-color: #DDDDDD;
+	line-height: 1.5;
+}
+
+tr.smwb-ititle td {
+	padding-left: 5px;
+	border-bottom: 2px solid white;
+}
+
+tr.smwb-ipropvalue {
+	width: 100%;
+	background-color: #EEEEEE;
+	text-align: right;
+}
+
+tr.smwb-ipropvalue th {
+	text-align: left;
+	font-weight: bold;
+	font-size: 120%;
+	background-color: #DDDDDD;
+	padding: 0.2em 0.6em;
+	border-bottom: 3px solid white;
+	border-top: 3px solid white;
+}
+
+tr.smwb-ipropvalue td {
+	background-color: #EEEEEE;
+	border-bottom: 3px solid white;
+	border-top: 3px solid white;
+	padding-right: 1em;
+	width: 90%;
+}
+
+span.smwb-ivalue {
+}
+
+/* @since 1.9; Spinner */
+.smw-spinner .text {
+	padding-left: 2.1em;
+	font-size: 12px;
+	vertical-align: middle;
+}
+
+/* @since 1.9; Spinner for left side in-text */
+.smw-spinner.left.mw-small-spinner {
+	background-position:left;
+	vertical-align: middle;
+	display:inline-block;
+	padding: 0px !important;
+}
+
+/* @since 1.9; Sppinner for image center */
+.smw-spinner.center.mw-small-spinner {
+	vertical-align: middle;
+	display:inline-block;
+	padding: 0px !important;
+}
+
+/* @since 1.9.1 */
+table.smw-ask-query .smw-ask-query-condition {
+	width: 100%;
+}
+
+table.smw-ask-query .smw-ask-query-printout {
+	width: 100%;
+}
+
+.smw-form-horizontalrule {
+	margin-bottom: 10px;
+}
+
+.smw-form-select, .smw-form-input {
+	padding: 1px 1px;
+}
+
+.smw-form-checkbox {
+	vertical-align: middle;
+	cursor: pointer;
+}
+
+label.smw-form-checkbox {
+	vertical-align: middle;
+	cursor: pointer;
+}
+
+.smw-editpage-help {
+	background-color: #F0F0F0;
+	border: 1px solid silver;
+	/* border-top: none; */
+	padding: 1em 1em 1.5em 1em;
+	margin-bottom: 2em;
+}
+
+.smw-column-header {
+	font-weight: bold;
+	font-size: 1.17em;
+	line-height: 1.6;
+	margin-top: 0.3em;
+	margin-bottom: 0;
+	padding-bottom: 0;
+	color: black;
+	overflow: hidden;
+	padding-top: .5em;
+}
+
+.smw-column {
+	float: left;
+	word-wrap: break-word;
+}
+
+.smw-column-responsive {
+	-webkit-column-width: 25em;
+	-moz-column-width: 25em;
+	column-width: 25em;
+}
+
+.smw-column[dir="rtl"] {
+	float: right;
+}
+
+.smw-column-responsive[dir="rtl"] {
+	float: right;
+}
+
+/* Thanks to the bootstrap css*/
+.smw-callout {
+	padding: 10px;
+	margin: 0.5em 0;
+	border: 1px solid #eee;
+	border-left-width: 5px;
+	border-radius: 3px;
+}
+
+.smw-callout-info {
+	border-left-color: #1b809e;
+}
+
+.smw-callout-info .title {
+	color: #1b809e;
+}
+
+.smw-callout-warning {
+	border-left-color: #aa6708;
+}
+
+.smw-callout-warning .title {
+	color: #aa6708;
+}
+
+.smw-callout-error {
+	border-left-color: #ce4844;
+}
+
+.smw-callout .title {
+	margin-top: 0;
+	margin-bottom: 5px;
+	font-size: 16px;
+	font-family: inherit;
+	font-weight: 500;
+}
+
+/* Distinguish subobjects from other titles */
+
+.smw-subobject-entity {
+	font-style: italic;
+}
