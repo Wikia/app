@@ -138,7 +138,9 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	 * @return array
 	 */
 	public function getAllAdminsData() {
-		$allAdminsDetails = $this->getContributorsDetails( $this->usersModel->getAllAdmins() );
+		$allAdminsDetails = $this->usersModel->getAllAdmins();
+		$allAdminsDetails = $this->addTimeAgoDataDetail( $allAdminsDetails );
+		$allAdminsDetails = $this->getContributorsDetails( $allAdminsDetails );
 
 		$this->response->setData( [
 			'topAdminsHeaderText' => $this->msg( 'communitypage-admins' )->plain(),
@@ -269,6 +271,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 				'profilePage' => $user->getUserPage()->getLocalURL(),
 				'count' => $count,
 				'isAdmin' => $contributor['isAdmin'],
+				'timeAgo' => $contributor['timeAgo'],
 			];
 		} , $contributors );
 	}
