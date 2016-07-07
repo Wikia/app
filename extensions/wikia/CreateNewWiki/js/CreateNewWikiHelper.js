@@ -1,13 +1,13 @@
 define(
 	'ext.createNewWiki.helper',
-	['wikia.stringhelper', 'AuthModal', 'wikia.querystring'],
-	function (stringHelper, auth, qs) {
+	['wikia.stringhelper', 'wikia.querystring'],
+	function (stringHelper, qs) {
 		function sanitizeWikiName(wikiName) {
 			return $.trim(stringHelper.latinise(wikiName).replace(/[^a-zA-Z0-9 ]+/g, '')).replace(/ +/g, '-');
 		}
 
 		function login(onSuccess, redirectURL) {
-			auth.load({
+			window.wikiaAuthModal.load({
 				forceLogin: true,
 				url: redirectURL,
 				origin: 'create-new-wikia',
