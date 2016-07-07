@@ -1,6 +1,6 @@
 <?php
 
-class DSDataApiController extends WikiaApiController {
+class DesignSystemApiController extends WikiaApiController {
 
 	private $data = [
 		'fandom' => [
