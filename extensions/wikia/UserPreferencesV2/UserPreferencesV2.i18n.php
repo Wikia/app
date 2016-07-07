@@ -3,7 +3,6 @@ $messages = array();
 
 $messages['en'] = array(
 	'preferences-v2-desc' => 'User Preferences v2',
-	'prefs-personal' => 'My Info',
 	'preferences-v2-username' => 'My username:',
 	'preferences-v2-usergroups' => 'My user groups:',
 	'preferences-v2-gender' => 'My gender:',
@@ -24,7 +23,6 @@ $messages['en'] = array(
 	'tog-enotifminoredits-v2' => "...a page I'm following is minorly changed",
 	'tog-marketingallowed-v2' => '...Wikia has news and events',
 	'prefs-email-advanced-v2' => 'Advanced Options',
-	'prefs-wikiemail' => '{{SITENAME}} options. Email me when...',
 	'prefs-email-unsubscribe' => 'Disable all emails',
 	'unsubscribe-preferences-toggle-v2' => 'Disable all emails from Wikia (overrides all other options)',
 	'tog-watchlistdigest-v2' => '...a Weekly Digest of changes to my followed Wikia pages is ready',
@@ -64,7 +62,6 @@ $messages['en'] = array(
  */
 $messages['qqq'] = array(
 	'preferences-v2-desc' => '{{desc}}',
-	'prefs-personal' => 'Title of a tab in [[Special:Preferences]].',
 	'preferences-v2-username' => 'Label for the user name listed on [[Special:Preferences]].',
 	'preferences-v2-usergroups' => 'Label for the user groups listed on [[Special:Preferences]].',
 	'preferences-v2-gender' => "Label for the user's gender option listed on [[Special:Preferences]].",
@@ -90,7 +87,6 @@ $messages['qqq'] = array(
 	'tog-marketingallowed-v2' => 'An option in [[Special:Preferences]] > {{msg-wikia|prefs-emailv2}} > {{msg-wikia|prefs-email-me-v2}}.',
 	'prefs-email-advanced-v2' => 'Title of a section in [[Special:Preferences]].
 {{Identical|Advanced options}}',
-	'prefs-wikiemail' => 'Title of a section in [[Special:Preferences]].',
 	'prefs-email-unsubscribe' => 'Title of a section in [[Special:Preferences]].',
 	'unsubscribe-preferences-toggle-v2' => 'An option in [[Special:Preferences]] > {{msg-wikia|prefs-emailv2}} > {{msg-wikia|prefs-email-unsubscribe}}.',
 	'tog-watchlistdigest-v2' => 'An option in [[Special:Preferences]] > {{msg-wikia|prefs-emailv2}} > {{msg-wikia|prefs-email-me-v2}}.',
@@ -143,7 +139,6 @@ $messages['ang'] = array(
  * @author مشعل الحربي
  */
 $messages['ar'] = array(
-	'prefs-personal' => 'معلومات عني',
 	'preferences-v2-username' => 'اسم المستخدم الخاص بي:',
 	'preferences-v2-usergroups' => 'مجموعات المستخدم الخاصة بي:',
 	'preferences-v2-gender' => 'جنسي:',
@@ -163,7 +158,6 @@ $messages['ar'] = array(
 	'tog-enotifminoredits-v2' => '... تتغير صفحة أتابعها تغيرًا طفيفًا',
 	'tog-marketingallowed-v2' => '... توجد أخبار وأحداث بويكيا',
 	'prefs-email-advanced-v2' => 'خيارات متقدمة',
-	'prefs-wikiemail' => 'خيارات {{SITENAME}}. راسلني عندما...',
 	'prefs-email-unsubscribe' => 'تعطيل كافة رسائل البريد الإلكتروني',
 	'unsubscribe-preferences-toggle-v2' => 'تعطيل كافة رسائل البريد الإلكتروني من ويكيا (تجاوز جميع الخيارات الأخرى)',
 	'tog-watchlistdigest-v2' => '... يجهز موجز أسبوعي للتغيرات التي طرأت على صفحات ويكيا التي أراقبها',
@@ -214,7 +208,6 @@ $messages['az'] = array(
  * @author DCLXVI
  */
 $messages['bg'] = array(
-	'prefs-personal' => 'Моята информация',
 	'preferences-v2-username' => 'Моето потребителско име:',
 	'preferences-v2-usergroups' => 'Моите потребителски групи:',
 	'preferences-v2-gender' => 'Моят пол:',
@@ -229,7 +222,6 @@ $messages['bg'] = array(
  * @author Y-M D
  */
 $messages['br'] = array(
-	'prefs-personal' => 'Ma zitouroù',
 	'preferences-v2-username' => 'Ma anv implijer :',
 	'preferences-v2-usergroups' => 'Strolladoù implijerien :',
 	'preferences-v2-gender' => 'Jener :',
@@ -267,7 +259,6 @@ $messages['br'] = array(
  * @author Unapersona
  */
 $messages['ca'] = array(
-	'prefs-personal' => 'La meva informació',
 	'preferences-v2-username' => "El meu nom d'usuari:",
 	'preferences-v2-usergroups' => "Els meus grups d'usuaris:",
 	'preferences-v2-gender' => 'El meu gènere:',
@@ -287,7 +278,6 @@ $messages['ca'] = array(
 	'tog-enotifminoredits-v2' => '...una pàgina que segueixo tingui una edició menor',
 	'tog-marketingallowed-v2' => '...Wikia tingui notícies i esdeveniments',
 	'prefs-email-advanced-v2' => 'Opcions avançades',
-	'prefs-wikiemail' => "{{SITENAME}} opcions. Envia'm un correu electrònic quan...",
 	'prefs-email-unsubscribe' => 'Desactiveu tots els missatges de correu electrònic',
 	'unsubscribe-preferences-toggle-v2' => 'Desactiveu tots els missatges de correu electrònic de Wikia (ignora totes les altres opcions)',
 	'tog-watchlistdigest-v2' => '...un Resum Setmanal dels canvis a les pàgines que segueixo estigui a punt.',
@@ -330,7 +320,6 @@ $messages['ce'] = array(
  */
 $messages['de'] = array(
 	'preferences-v2-desc' => 'Benutzereinstellungen v2',
-	'prefs-personal' => 'Meine Informationen',
 	'preferences-v2-username' => 'Mein Benutzername:',
 	'preferences-v2-usergroups' => 'Meine Benutzergruppen:',
 	'preferences-v2-gender' => 'Mein Geschlecht:',
@@ -350,7 +339,6 @@ $messages['de'] = array(
 	'tog-enotifminoredits-v2' => '… eine von mir verfolgte Seite geringfügig verändert wurde',
 	'tog-marketingallowed-v2' => '… Wikia neue Nachrichten und Ereignisse hat',
 	'prefs-email-advanced-v2' => 'Erweiterte Optionen',
-	'prefs-wikiemail' => '{{SITENAME}}-Optionen. Sende mir eine E-Mail, wenn …',
 	'prefs-email-unsubscribe' => 'Alle E-Mails deaktivieren',
 	'unsubscribe-preferences-toggle-v2' => 'Alle E-Mails von Wikia deaktivieren (überschreibt alle anderen Optionen)',
 	'tog-watchlistdigest-v2' => '… eine wöchentliche Zusammenfassung von Änderungen an meinen verfolgten Wikia-Seiten fertig ist',
@@ -387,7 +375,6 @@ $messages['de'] = array(
  * @author Mirzali
  */
 $messages['diq'] = array(
-	'prefs-personal' => 'Şınasiya me',
 	'preferences-v2-username' => 'Namey mı:',
 	'preferences-v2-usergroups' => 'Gruba mı:',
 	'preferences-v2-gender' => 'Cınsiyeta mı:',
@@ -424,7 +411,6 @@ $messages['diq'] = array(
  */
 $messages['es'] = array(
 	'preferences-v2-desc' => 'Preferencias de usuario v2',
-	'prefs-personal' => 'Información básica',
 	'preferences-v2-username' => 'Mi nombre de usuario:',
 	'preferences-v2-usergroups' => 'Pertenezco a los grupos:',
 	'preferences-v2-gender' => 'Mi género:',
@@ -444,7 +430,6 @@ $messages['es'] = array(
 	'tog-enotifminoredits-v2' => '… se realicen cambios menores a una página que esté siguiendo',
 	'tog-marketingallowed-v2' => '… Wikia tenga noticias y eventos',
 	'prefs-email-advanced-v2' => 'Opciones avanzadas',
-	'prefs-wikiemail' => 'Opciones de {{SITENAME}}. Envíame un correo cuando...',
 	'prefs-email-unsubscribe' => 'Desactivar todos los correos',
 	'unsubscribe-preferences-toggle-v2' => 'Desactivar todos los correos enviados desde Wikia (anula todas las demás opciones)',
 	'tog-watchlistdigest-v2' => '… esté listo un boletín semanal de cambios en mis páginas seguidas',
@@ -501,7 +486,6 @@ $messages['eu'] = array(
  * @author Reza1615
  */
 $messages['fa'] = array(
-	'prefs-personal' => 'اطلاعات من',
 	'preferences-v2-username' => 'نام کاربری من:',
 	'preferences-v2-usergroups' => 'گروه کاربری من:',
 	'preferences-v2-gender' => 'جنسیت:',
@@ -535,7 +519,6 @@ $messages['fa'] = array(
  * @author Ville96
  */
 $messages['fi'] = array(
-	'prefs-personal' => 'Omat tiedot',
 	'preferences-v2-username' => 'Käyttäjätunnus:',
 	'preferences-v2-usergroups' => 'Käyttäjäryhmät:',
 	'preferences-v2-gender' => 'Sukupuoli:',
@@ -555,7 +538,6 @@ $messages['fi'] = array(
 	'tog-enotifminoredits-v2' => '...sivu jota seuraan on muuttunut vähän',
 	'tog-marketingallowed-v2' => '...Wikialla on uutisia ja tapahtumia',
 	'prefs-email-advanced-v2' => 'Lisäasetukset',
-	'prefs-wikiemail' => '{{SITENAME}} asetukset. Lähetä minulle sähköpostia, kun...',
 	'prefs-email-unsubscribe' => 'Poista kaikki sähköpostit käytöstä',
 	'unsubscribe-preferences-toggle-v2' => 'Älä lähetä mitään sähköpostia Wikiasta (ohittaa muut valinnat)',
 	'tog-watchlistdigest-v2' => '...viikoittainen tiedote muutoksista seuraamilleni sivuille on valmis',
@@ -590,7 +572,6 @@ $messages['fi'] = array(
  */
 $messages['fr'] = array(
 	'preferences-v2-desc' => 'Préférences utilisateur v2',
-	'prefs-personal' => 'Mes infos',
 	'preferences-v2-username' => 'Nom d’utilisateur :',
 	'preferences-v2-usergroups' => 'Groupes d’utilisateurs :',
 	'preferences-v2-gender' => 'Genre :',
@@ -610,7 +591,6 @@ $messages['fr'] = array(
 	'tog-enotifminoredits-v2' => '…une page que je suis a reçu des modifications mineures',
 	'tog-marketingallowed-v2' => '…Wikia a de nouvelles informations et des événements',
 	'prefs-email-advanced-v2' => 'Options avancées',
-	'prefs-wikiemail' => 'Options de {{SITENAME}}. M’envoyer un courriel quand…',
 	'prefs-email-unsubscribe' => 'Désactiver tous les courriels',
 	'unsubscribe-preferences-toggle-v2' => 'Désactiver tous les courriels de Wikia (écrase toutes les autres options)',
 	'tog-watchlistdigest-v2' => '…une synthèse hebdomadaire des modifications à mes pages suivies sur Wikia est prêt',
@@ -658,7 +638,6 @@ $messages['fy'] = array(
  * @author Vivaelcelta
  */
 $messages['gl'] = array(
-	'prefs-personal' => 'A miña información',
 	'preferences-v2-username' => 'O meu nome de usuario:',
 	'preferences-v2-usergroups' => 'Os meus grupos de usuario:',
 	'preferences-v2-gender' => 'O meu sexo:',
@@ -678,7 +657,6 @@ $messages['gl'] = array(
 	'tog-enotifminoredits-v2' => '...se realicen cambios pequenos nunha páxina que estou seguindo',
 	'tog-marketingallowed-v2' => '...Wikia teña noticias e eventos',
 	'prefs-email-advanced-v2' => 'Opcións avanzadas',
-	'prefs-wikiemail' => 'Opcións de {{SITENAME}}. Enviádeme un correo electrónico cando...',
 	'prefs-email-unsubscribe' => 'Desactivar todos os correos electrónicos',
 	'unsubscribe-preferences-toggle-v2' => 'Desactivar todos os correos electrónicos de Wikia (anula todas as outras opcións)',
 	'tog-watchlistdigest-v2' => '...haxa un boletín semanal dos cambios realizados nas páxinas que estou seguindo',
@@ -715,7 +693,6 @@ $messages['gl'] = array(
  * @author Tommy6
  */
 $messages['ja'] = array(
-	'prefs-personal' => '利用者情報',
 	'preferences-v2-username' => '利用者名:',
 	'preferences-v2-usergroups' => '所属利用者グループ:',
 	'preferences-v2-gender' => '性別:',
@@ -759,7 +736,6 @@ $messages['ja'] = array(
  * @author 아라
  */
 $messages['ko'] = array(
-	'prefs-personal' => '내 정보',
 	'preferences-v2-username' => '내 사용자 이름:',
 	'preferences-v2-usergroups' => '내가 속한 그룹:',
 	'preferences-v2-gender' => '내 성별:',
@@ -779,7 +755,6 @@ $messages['ko'] = array(
 	'tog-enotifminoredits-v2' => '사소한 편집도 이메일로 알림',
 	'tog-marketingallowed-v2' => '위키아에 관한 소식과 이벤트를 메일로 받기',
 	'prefs-email-advanced-v2' => '고급 설정',
-	'prefs-wikiemail' => '{{SITENAME}}에서만 받을 이메일 알림 설정',
 	'prefs-email-unsubscribe' => '이메일 알림 제한',
 	'unsubscribe-preferences-toggle-v2' => '위키아에서 보내는 이메일 모두 받지 않기 (선택시 다른 모든 설정들 무시)',
 	'preferences-v2-user-landing-page' => '위키 방문시 처음 보이는 곳:',
@@ -824,7 +799,6 @@ $messages['ku-latn'] = array(
  * @author Robby
  */
 $messages['lb'] = array(
-	'prefs-personal' => 'Informatiounen iwwer mech',
 	'preferences-v2-username' => 'Mäi Benotzernumm:',
 	'preferences-v2-usergroups' => 'Meng Benotzergruppen:',
 	'preferences-v2-password' => 'Mäi Passwuert:',
@@ -875,7 +849,6 @@ $messages['lv'] = array(
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
-	'prefs-personal' => 'Мое инфо',
 	'preferences-v2-username' => 'Моето корисничко име:',
 	'preferences-v2-usergroups' => 'Моите кориснички групи:',
 	'preferences-v2-gender' => 'Мојот пол:',
@@ -895,7 +868,6 @@ $messages['mk'] = array(
 	'tog-enotifminoredits-v2' => '...ќе има ситна промена во страница што ја следам',
 	'tog-marketingallowed-v2' => '...Викија има новости и настани',
 	'prefs-email-advanced-v2' => 'Напредни нагодувања',
-	'prefs-wikiemail' => 'Нагодувања на {{SITENAME}}. Извести ме по е-пошта кога...',
 	'prefs-email-unsubscribe' => 'Оневозможи ги сите известувања по е-пошта',
 	'unsubscribe-preferences-toggle-v2' => 'Онвозможи ги сите известувања по е-пошта од Викија (ги поништува сите други нагодувања)',
 	'tog-watchlistdigest-v2' => '...ќе има Неделен преглед на промени во страниците на Викија што ги следам',
@@ -933,7 +905,6 @@ $messages['mk'] = array(
  */
 $messages['ms'] = array(
 	'preferences-v2-desc' => 'Keutamaan Pengguna v2',
-	'prefs-personal' => 'Maklumat saya',
 	'preferences-v2-username' => 'Nama samaran saya:',
 	'preferences-v2-usergroups' => 'Kumpulan pengguna saya:',
 	'preferences-v2-gender' => 'Jantina saya:',
@@ -953,7 +924,6 @@ $messages['ms'] = array(
 	'tog-enotifminoredits-v2' => '...sebuah laman yang saya ikuti berubah sedikit',
 	'tog-marketingallowed-v2' => '...Wikia mempunyai berita dan peristiwa',
 	'prefs-email-advanced-v2' => 'Pilihan Lanjutan',
-	'prefs-wikiemail' => 'Opsyen {{SITENAME}}. E-melkan saya apabila...',
 	'prefs-email-unsubscribe' => 'Melumpuhkan kesemua e-mel',
 	'unsubscribe-preferences-toggle-v2' => 'Melumpuhkan kesemua e-mel dari Wikia (menindih semua pilihan-pilihan lain)',
 	'tog-watchlistdigest-v2' => '...sebuah Mingguan Digest tentang perubahan laman Wikia saya diikuti tersiap sedia',
@@ -990,7 +960,6 @@ $messages['ms'] = array(
  * @author Siebrand
  */
 $messages['nl'] = array(
-	'prefs-personal' => 'Uw gegevens',
 	'preferences-v2-username' => 'Uw gebruikersnaam:',
 	'preferences-v2-usergroups' => 'Uw gebruikersgroepen:',
 	'preferences-v2-gender' => 'Uw geslacht:',
@@ -1010,7 +979,6 @@ $messages['nl'] = array(
 	'tog-enotifminoredits-v2' => '...een aan pagina die u volgt een kleine wijziging is gemaakt',
 	'tog-marketingallowed-v2' => '...Wikia nieuws en evenementen heeft',
 	'prefs-email-advanced-v2' => 'Geavanceerde instellingen',
-	'prefs-wikiemail' => 'Instellingen voor {{SITENAME}}. U e-mail sturen wanneer...',
 	'prefs-email-unsubscribe' => 'Alle e-mail uitschakelen',
 	'unsubscribe-preferences-toggle-v2' => 'Alle e-mail van Wikia uitschakelen (overschrijft alle andere instellingen)',
 	'tog-watchlistdigest-v2' => "...een wekelijkse samenvatting van de wijzigingen aan door u gevolgde Wikiapagina's klaar staat",
@@ -1047,7 +1015,6 @@ $messages['nl'] = array(
  * @author Hulothe
  */
 $messages['oc'] = array(
-	'prefs-personal' => 'Mas informacions',
 	'preferences-v2-username' => "Mon nom d'utilizaire :",
 	'preferences-v2-usergroups' => 'Gropes d’utilizaires :',
 	'preferences-v2-password' => 'Mon senhal :',
@@ -1091,7 +1058,6 @@ $messages['os'] = array(
  */
 $messages['pl'] = array(
 	'preferences-v2-desc' => 'User Preferences v2',
-	'prefs-personal' => 'Moje informacje',
 	'preferences-v2-username' => 'Nazwa użytkownika:',
 	'preferences-v2-usergroups' => 'Grupy użytkownika:',
 	'preferences-v2-gender' => 'Płeć:',
@@ -1111,7 +1077,6 @@ $messages['pl'] = array(
 	'tog-enotifminoredits-v2' => '...pojawi się drobna zmiana na stronie, którą obserwuję',
 	'tog-marketingallowed-v2' => '...Wikia publikuje informacje o nowościach',
 	'prefs-email-advanced-v2' => 'Opcje Zaawansowane',
-	'prefs-wikiemail' => 'Opcje {{SITENAME}}. Powiadom jeżeli...',
 	'prefs-email-unsubscribe' => 'Wyłącz wszystkie powiadomienia e-mail',
 	'unsubscribe-preferences-toggle-v2' => 'Wyłącz wszystkie powiadomienia e-mail od Wikii (unieważnia pozostałe opcje)',
 	'tog-watchlistdigest-v2' => '...tygodniowe zestawienie zmian na obserwowanych stronach jest gotowe',
@@ -1147,7 +1112,6 @@ $messages['pl'] = array(
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
 $messages['ps'] = array(
-	'prefs-personal' => 'زما مالومات',
 	'preferences-v2-username' => 'زما کارن-نوم:',
 	'preferences-v2-usergroups' => 'زما کارن ډلې:',
 	'preferences-v2-gender' => 'زما جنس:',
@@ -1182,7 +1146,6 @@ $messages['ps'] = array(
  * @author SandroHc
  */
 $messages['pt'] = array(
-	'prefs-personal' => 'Minhas Informações',
 	'preferences-v2-username' => 'Meu nome de utilizador:',
 	'preferences-v2-usergroups' => 'Meus grupos de utilizador:',
 	'preferences-v2-gender' => 'Meu género:',
@@ -1202,7 +1165,6 @@ $messages['pt'] = array(
 	'tog-enotifminoredits-v2' => '...uma página que estou a seguir é modificada (edição menor)',
 	'tog-marketingallowed-v2' => '...a Wikia tem novidades e eventos',
 	'prefs-email-advanced-v2' => 'Opções Avançadas',
-	'prefs-wikiemail' => 'Opções de {{SITENAME}}. Enviar-me um e-mail quando...',
 	'prefs-email-unsubscribe' => 'Desativar todos os e-mails',
 	'unsubscribe-preferences-toggle-v2' => 'Desativar todos os e-mails da Wikia (substitui todas as outras opções)',
 	'tog-watchlistdigest-v2' => '...uma Compilação Semanal de modificações às minhas páginas seguidas está pronto',
@@ -1240,7 +1202,6 @@ $messages['pt'] = array(
  */
 $messages['pt-br'] = array(
 	'preferences-v2-desc' => 'Preferências de Usuário V2',
-	'prefs-personal' => 'Minhas Informações',
 	'preferences-v2-username' => 'Meu nome de usuário:',
 	'preferences-v2-usergroups' => 'Meus grupos de usuário:',
 	'preferences-v2-gender' => 'Meu gênero:',
@@ -1260,7 +1221,6 @@ $messages['pt-br'] = array(
 	'tog-enotifminoredits-v2' => '...uma página que estou seguindo tem pequenas alterações',
 	'tog-marketingallowed-v2' => '...a Wikia tenha notícias e eventos',
 	'prefs-email-advanced-v2' => 'Opções Avançadas',
-	'prefs-wikiemail' => 'Opções da {{SITENAME}}. Envie-me um e-mail quando...',
 	'prefs-email-unsubscribe' => 'Desativar todos os e-mails',
 	'unsubscribe-preferences-toggle-v2' => 'Desativar todos os e-mails da Wikia (substitui todas as outras opções)',
 	'tog-watchlistdigest-v2' => '...um Boletim Semanal das alterações nas minhas páginas seguidas da Wikia estiver pronto',
@@ -1298,7 +1258,6 @@ $messages['pt-br'] = array(
  */
 $messages['ru'] = array(
 	'preferences-v2-desc' => 'Настройки пользователя v2',
-	'prefs-personal' => 'Моя информация',
 	'preferences-v2-username' => 'Моё имя пользователя:',
 	'preferences-v2-usergroups' => 'Мои группы пользователей:',
 	'preferences-v2-gender' => 'Мой пол:',
@@ -1319,7 +1278,6 @@ $messages['ru'] = array(
 	'tog-enotifminoredits-v2' => '…нa странице, за которой я слежу, происходит малая правка',
 	'tog-marketingallowed-v2' => '…на Wikia появляются новости и события',
 	'prefs-email-advanced-v2' => 'Расширенные настройки',
-	'prefs-wikiemail' => 'Параметры {{SITENAME}}. Отправлять мне письма, когда…',
 	'prefs-email-unsubscribe' => 'Отключить все письма',
 	'unsubscribe-preferences-toggle-v2' => 'Отключить все письма от Wikia (переопределяет все другие варианты)',
 	'tog-watchlistdigest-v2' => '…готов еженедельный дайджест изменений страниц Wikia, за которыми я слежу',
@@ -1355,7 +1313,6 @@ $messages['ru'] = array(
  * @author John Reid
  */
 $messages['sco'] = array(
-	'prefs-personal' => 'Ma Info',
 	'preferences-v2-username' => 'Ma uisername:',
 	'preferences-v2-usergroups' => 'Ma uiser groops:',
 	'preferences-v2-gender' => 'Ma gender:',
@@ -1375,7 +1332,6 @@ $messages['sco'] = array(
 	'tog-enotifminoredits-v2' => "...a page that Ah'm follaein haes chynged ae wee bit",
 	'tog-marketingallowed-v2' => '...Wikia haes news n events',
 	'prefs-email-advanced-v2' => 'Advanced Opties',
-	'prefs-wikiemail' => '{{SITENAME}} opties. E-mail me whan...',
 	'prefs-email-unsubscribe' => 'Disable aw e-mails',
 	'unsubscribe-preferences-toggle-v2' => 'Disable aw e-mails fae Wikia (owergangs aw ither opties)',
 	'tog-watchlistdigest-v2' => '...ae Weeklie Rindoon o chynges tae ma follaed Wikia pages is readie',
@@ -1451,7 +1407,6 @@ $messages['sr-el'] = array(
  */
 $messages['sv'] = array(
 	'preferences-v2-desc' => 'User Preferences v2',
-	'prefs-personal' => 'Min info',
 	'preferences-v2-username' => 'Mitt användarnamn:',
 	'preferences-v2-usergroups' => 'Mina användargrupper:',
 	'preferences-v2-gender' => 'Mitt kön:',
@@ -1471,7 +1426,6 @@ $messages['sv'] = array(
 	'tog-enotifminoredits-v2' => '...en mindre redigering görs på en sida jag följer',
 	'tog-marketingallowed-v2' => '...Wikia har nyheter och evenemang',
 	'prefs-email-advanced-v2' => 'Avancerade alternativ',
-	'prefs-wikiemail' => '{{SITENAME}}alternativ. E-posta mig när...',
 	'prefs-email-unsubscribe' => 'Inaktivera all e-post',
 	'unsubscribe-preferences-toggle-v2' => 'Inaktivera alla e-postmeddelanden från Wikia (upphäver alla andra alternativ)',
 	'tog-watchlistdigest-v2' => '...en veckosammanfattning över Wikiasidorna jag följer är redo',
@@ -1507,7 +1461,6 @@ $messages['sv'] = array(
  * @author Incelemeelemani
  */
 $messages['tr'] = array(
-	'prefs-personal' => 'Bilgilerim',
 	'preferences-v2-username' => 'Kullanıcı adım:',
 	'preferences-v2-usergroups' => 'Kullanıcı gruplarım:',
 	'preferences-v2-gender' => 'Cinsiyetim:',
@@ -1563,7 +1516,6 @@ $messages['tr'] = array(
  */
 $messages['uk'] = array(
 	'preferences-v2-desc' => 'Уподобання користувачів версії v2',
-	'prefs-personal' => 'Особисті',
 	'preferences-v2-username' => "Моє ім'я користувача:",
 	'preferences-v2-usergroups' => 'Я є учасником груп:',
 	'preferences-v2-gender' => 'Моя стать:',
@@ -1583,7 +1535,6 @@ $messages['uk'] = array(
 	'tog-enotifminoredits-v2' => '...на сторінці, за якою я спостерігаю, є незначна зміна',
 	'tog-marketingallowed-v2' => '...на Вікії є важливі новини та події',
 	'prefs-email-advanced-v2' => 'Додаткові параметри',
-	'prefs-wikiemail' => 'Опції лише для даного сайту ({{SITENAME}}). Надсилати мені e-mail, якщо...',
 	'prefs-email-unsubscribe' => 'Вимкнути всі листи',
 	'unsubscribe-preferences-toggle-v2' => 'Вимкнути всі листи від Вікії (скасовує всі інші опції)',
 	'tog-watchlistdigest-v2' => '...щотижневий дайджест мого списку спостереження буде готовий',
@@ -1620,7 +1571,6 @@ $messages['uk'] = array(
  * @author Rémy Lee
  */
 $messages['vi'] = array(
-	'prefs-personal' => 'Thông tin về tôi',
 	'preferences-v2-username' => 'Tên đăng nhập của tôi:',
 	'preferences-v2-usergroups' => 'Nhóm người dùng của tôi:',
 	'preferences-v2-gender' => 'Giới tính của tôi:',
@@ -1640,7 +1590,6 @@ $messages['vi'] = array(
 	'tog-enotifminoredits-v2' => '...một trang tôi theo dõi có thay đổi nhỏ',
 	'tog-marketingallowed-v2' => '...Wikia có tin tức và sự kiện',
 	'prefs-email-advanced-v2' => 'Tùy chọn nâng cao',
-	'prefs-wikiemail' => 'Tùy chọn {{SITENAME}}. Gửi thư điện tử cho tôi khi...',
 	'prefs-email-unsubscribe' => 'Vô hiệu hoá tất cả thư điện tử',
 	'unsubscribe-preferences-toggle-v2' => 'Vô hiệu hoá tất cả thư điện tử từ Wikia (ghi đè lên tất cả các tùy chọn khác)',
 	'tog-watchlistdigest-v2' => '...một bản tóm lược thay đổi hàng tuần trang Wikia mà tôi theo dõi',
@@ -1696,7 +1645,6 @@ $messages['vo'] = array(
  */
 $messages['zh-hans'] = array(
 	'preferences-v2-desc' => '用户参数设置v2',
-	'prefs-personal' => '我的信息',
 	'preferences-v2-username' => '我的用户名：',
 	'preferences-v2-usergroups' => '我的用户组：',
 	'preferences-v2-gender' => '我的性别：',
@@ -1716,7 +1664,6 @@ $messages['zh-hans'] = array(
 	'tog-enotifminoredits-v2' => '...我关注的页面被小修改',
 	'tog-marketingallowed-v2' => '...Wikia的新闻与事件',
 	'prefs-email-advanced-v2' => '高级选项',
-	'prefs-wikiemail' => '{{SITENAME}}选项。发邮件给我，当...',
 	'prefs-email-unsubscribe' => '禁用所有电子邮件',
 	'unsubscribe-preferences-toggle-v2' => '禁用所有来自Wikia的电子邮件（覆盖所有其他选项）',
 	'tog-watchlistdigest-v2' => '……已准备好我关注的Wikia页面更新的每周摘要',
@@ -1757,7 +1704,6 @@ $messages['zh-hans'] = array(
  * @author Liuxinyu970226
  */
 $messages['zh-hant'] = array(
-	'prefs-personal' => '我的資訊',
 	'preferences-v2-username' => '我的使用者名稱：',
 	'preferences-v2-usergroups' => '我的使用者群組：',
 	'preferences-v2-gender' => '我的性别：',
@@ -1777,7 +1723,6 @@ $messages['zh-hant'] = array(
 	'tog-enotifminoredits-v2' => '...我關注的頁面有小修改',
 	'tog-marketingallowed-v2' => '...Wikia 有新聞和事件',
 	'prefs-email-advanced-v2' => '進階選項',
-	'prefs-wikiemail' => '{{SITENAME}}的選項。寄電子郵件给我，當...',
 	'prefs-email-unsubscribe' => '禁用所有的電子郵件',
 	'unsubscribe-preferences-toggle-v2' => '禁用所有來自 Wikia的電子郵件 (覆蓋所有其他選項)',
 	'tog-watchlistdigest-v2' => '我關注頁面改變的每週摘要產生時',

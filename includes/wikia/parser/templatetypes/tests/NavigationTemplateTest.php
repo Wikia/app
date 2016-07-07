@@ -2,77 +2,33 @@
 
 class NavigationTemplateTest extends WikiaBaseTest {
 
+	public function testEmptyContentMarking() {
+		$marked = NavigationTemplate::handle( '' );
+
+		$dom = HtmlHelper::createDOMDocumentFromText( $marked );
+		$xp = new DOMXPath( $dom );
+		$result = $xp->query( NavigationTemplate::NAV_PATH, $dom );
+
+		$this->assertEquals( 0, $result->length, 'Empty content marked' );
+	}
+
 	/**
 	 * @dataProvider markedTemplateContentProvider
 	 */
 	public function testMarkNavigationElements( $content, $expected, $message ) {
 		$marked = NavigationTemplate::handle( $content );
 
-		$this->assertEquals( $expected, preg_match( $markerRegex = "/<\x7f" . NavigationTemplate::MARK . ".+?\x7f>/s", $marked ), $message );
+		$dom = HtmlHelper::createDOMDocumentFromText( $marked );
+		$xp = new DOMXPath( $dom );
+		$result = $xp->query( NavigationTemplate::NAV_PATH, $dom );
+
+		$this->assertEquals( $expected, $result->item( 0 )->nodeValue, $message );
 	}
 
 	public function markedTemplateContentProvider() {
 		return [
-			[ '', 0, 'Empty content was marked' ],
-			[ '1', 1, 'Numbers should be marked' ],
-			[ '{{#invoke: Eras|main}}', 1, 'Wikitext should be marked' ],
-		];
-	}
-
-	/**
-	 * @param $expectedOutput
-	 * @param $templateText
-	 * @dataProvider getNavigationTemplates
-	 */
-	public function testHideNavigationWithBlockElements( $templateText, $expectedOutput, $message ) {
-		$output = NavigationTemplate::handle( $templateText );
-		NavigationTemplate::resolve( $output );
-
-		$this->assertSame( $expectedOutput, $output, $message );
-	}
-
-	public function getNavigationTemplates() {
-		return [
-			[
-				'<a>This is a <strong>template</strong> <b>without</b> a <span>block</span> element</a>.',
-				'<a>This is a <strong>template</strong> <b>without</b> a <span>block</span> element</a>.',
-				'A template with a link, formatting tags and a span one should be visible.',
-			],
-			[
-				'<span>This is a template with a div <div>element</div></span>.',
-				'',
-				'A template with a div tag should be hidden.',
-			],
-			[
-				'<span>This is a template with a DIV <DIV>element</DIV></span>.',
-				'',
-				'A template with a DIV (uppercase) tag should be hidden.',
-			],
-			[
-				'<span>This is a template with a table <table>element</table></span>.',
-				'',
-				'A template with a table tag should be hidden.',
-			],
-			[
-				'<span>This is a template with a TABLE <TABLE>element</TABLE></span>.',
-				'',
-				'A template with a TABLE (uppercase) tag should be hidden.',
-			],
-			[
-				'<span>This is a template with a p <p>element</p></span>.',
-				'',
-				'A template with a p tag should be hidden.',
-			],
-			[
-				'<span>This is a template with a P <P>element</P></span>.',
-				'',
-				'A template with a P (uppercase) tag should be hidden.',
-			],
-			[
-				'<poem>This is a template with a poem tag. This is one is tricky and should not be matched as a p tag.</poem>.',
-				'<poem>This is a template with a poem tag. This is one is tricky and should not be matched as a p tag.</poem>.',
-				'A template with a poem tag should be visible.',
-			]
+			[ '1', "\n1", 'Numbers should be marked' ],
+			[ '{{#invoke: Eras|main}}', "\n{{#invoke: Eras|main}}", 'Wikitext should be marked' ],
 		];
 	}
 
@@ -89,52 +45,72 @@ class NavigationTemplateTest extends WikiaBaseTest {
 		return [
 			[ "", "", "Empty html should be correctly processed" ],
 			[
-				"<\x7fNAVUNIQ_342\x7f>fakjsdlkjflk <div>asdf</div>kasjdlfkjdks ksdjlafkj</\x7fNAVUNIQ_342\x7f>NAVUNIQ aksdjlfkj alksjdldf\nlkjsdl <\x7fNAVUNIQ_343\x7f>d</\x7fNAVUNIQ_343\x7f>",
-				"NAVUNIQ aksdjlfkj alksjdldf\nlkjsdl d",
+				"<div data-navuniq=\"test\">\nfakjsdlkjflk <div>asdf</div>kasjdlfkjdks ksdjlafkj</div>\nNAVUNIQ aksdjlfkj alksjdldf\nlkjsdl <div data-navuniq=\"test_1\">\nd</div>\n",
+				"\nNAVUNIQ aksdjlfkj alksjdldf\nlkjsdl \nd",
 				"If block element in navigation template it should be removed"
 			],
 			[
-				"<\x7fNAVUNIQ_342\x7f>akjsdlkjflk <div>asdf</div>kasjdlfkjdks ksdjlafkj</\x7fNAVUNIQ_342\x7f> test",
+				"<div data-navuniq=\"test\">\nakjsdlkjflk <div>asdf</div>kasjdlfkjdks ksdjlafkj</div> test",
 				" test",
 				"Single nav template with block should be removed"
 			],
 			[
-				"&lt;\x7fNAVUNIQ_342\x7f&gt;akjsdlkjflk <div>asdf</div>kasjdlfkjdks ksdjlafkj&lt;/\x7fNAVUNIQ_342\x7f&gt; test",
-				" test",
-				"Single nav template with block should be removed, even when encoded"
-			],
-			[
-				"<\x7fNAVUNIQ_342\x7f>asdf</\x7fNAVUNIQ_342\x7f> test",
+				"<div data-navuniq=\"test\">asdf</div> test",
 				"asdf test",
 				"Single inline element should be left"
 			],
 			[
-				"<\x7fNAVUNIQ_342\x7f><div>some content <\x7fNAVUNIQ_343\x7f> <p>nested template</p> </\x7fNAVUNIQ_343\x7f> <\x7fNAVUNIQ_344\x7f> <p>nested template</p> </\x7fNAVUNIQ_344\x7f></div></\x7fNAVUNIQ_342\x7f>",
+				"<div data-navuniq=\"test\"><div>some content <div data-navuniq=\"test_1\"> <p>nested template</p> </div> <div data-navuniq=\"test_2\"> <p>nested template</p> </div></div></div>",
 				"",
 				"nested templates with block element and one nested template without block elements, everything should be removed"
 			],
 			[
-				"<\x7fNAVUNIQ_342\x7f><div>some content <\x7fNAVUNIQ_343\x7f> <p>nested template</p> </\x7fNAVUNIQ_343\x7f> <\x7fNAVUNIQ_344\x7f> nested template </\x7fNAVUNIQ_344\x7f></div></\x7fNAVUNIQ_342\x7f>",
-
+				"<div data-navuniq=\"test\"><div>some content <div data-navuniq=\"test_1\"> <p>nested template</p> </div> <div data-navuniq=\"test_2\"> nested template </div></div></div>",
 				"",
 				"nested templates with block elements, everything should be removed"
 			],
 			[
-				"<\x7fNAVUNIQ_342\x7f><a>some content <\x7fNAVUNIQ_343\x7f> <a>nested template</a> <\x7fNAVUNIQ_346\x7f> <a>nested nested template</a><\x7fNAVUNIQ_347\x7f> <a>nested nested nested template</a><\x7fNAVUNIQ_348\x7f> <a>nested nested nested template</a> </\x7fNAVUNIQ_348\x7f> </\x7fNAVUNIQ_347\x7f> </\x7fNAVUNIQ_346\x7f> </\x7fNAVUNIQ_343\x7f> <\x7fNAVUNIQ_344\x7f> <a>nested template</a> </\x7fNAVUNIQ_344\x7f></a></\x7fNAVUNIQ_342\x7f>",
-
-				"<a>some content  <a>nested template</a>  <a>nested nested template</a> <a>nested nested nested template</a> <a>nested nested nested template</a>      <a>nested template</a> </a>",
-				"nested templates without block elements, nothing should be removed if there is no block element"
-			],
-			[
-				"<\x7fNAVUNIQ_342\x7f><a>some content <\x7fNAVUNIQ_343\x7f> <a>nested template</a> <\x7fNAVUNIQ_346\x7f> <a>nested nested template</a><\x7fNAVUNIQ_347\x7f> <p>nested nested nested template</p><\x7fNAVUNIQ_348\x7f> <a>nested nested nested template</a> </\x7fNAVUNIQ_348\x7f> </\x7fNAVUNIQ_347\x7f> </\x7fNAVUNIQ_346\x7f> </\x7fNAVUNIQ_343\x7f> <\x7fNAVUNIQ_344\x7f> <a>nested template</a> </\x7fNAVUNIQ_344\x7f></a></\x7fNAVUNIQ_342\x7f>",
-
-				"",
-				"block element within the most inner template, everything should be removed"
-			],
-			[
-				"<\x7fNAVUNIQ_342\x7f> <a>something</a> </\x7fNAVUNIQ_342\x7f><\x7fNAVUNIQ_343\x7f><p>something2</p></\x7fNAVUNIQ_343\x7f><\x7fNAVUNIQ_342\x7f>something</\x7fNAVUNIQ_342\x7f><\x7fNAVUNIQ_343\x7f><div>something2</div></\x7fNAVUNIQ_343\x7f>",
+				"<div data-navuniq=\"test\"> <a>something</a> </div><div data-navuniq=\"test_1\">\n</p><p>something2</p></div><div data-navuniq=\"test\">something</div><div data-navuniq=\"test_1\"><div>something2</div></div>",
 				" <a>something</a> something",
 				"multiple invocations of the same template, those with block elements should be removed"
+			]
+		];
+	}
+
+
+	/**
+	 * @dataProvider getMarkedWikitext
+	 */
+	public function testRemoveInnerMarks( $input, $expectedOutput, $message ) {
+		$this->assertEquals( $expectedOutput, NavigationTemplate::removeInnerMarks( $input ), $message );
+	}
+
+	public function getMarkedWikitext() {
+		return [
+			[
+				"<div data-navuniq=\"test\">\nsome wikitext within NAVUNIQ_342  marks</div>",
+				"<div data-navuniq=\"test\">\nsome wikitext within NAVUNIQ_342  marks</div>",
+				"outer marks should not be removed"
+			],
+			[
+				"<div data-navuniq=\"test\">\nsome <div data-navuniq=\"test_1\">\nwikitext within\n</div> NAVUNIQ_342  marks\n</div>",
+				"<div data-navuniq=\"test\">\nsome wikitext within\n NAVUNIQ_342  marks\n</div>",
+				"inner marks should be removed"
+			],
+			[
+				"<div data-navuniq=\"test\">\n<div data-navuniq=\"test_1\">\nsome <div data-navuniq=\"test_2\">\nwikitext within\n</div> NAVUNIQ_342  marks\n</div>\n</div>",
+				"<div data-navuniq=\"test\">\nsome wikitext within\n NAVUNIQ_342  marks\n\n</div>",
+				"multiple inner marks should be removed"
+			],
+			[
+				"wikitext without NAVUNIQ marks",
+				"wikitext without NAVUNIQ marks",
+				"wikitext without NAVUNIQ marks should be unchanged"
+			],
+			[
+				"wikitext without NAVUNIQ <div data-navuniq=\"test\">\nmarks</div>",
+				"wikitext without NAVUNIQ <div data-navuniq=\"test\">\nmarks</div>",
+				"inline marker"
 			]
 		];
 	}
