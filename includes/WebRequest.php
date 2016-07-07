@@ -1146,10 +1146,10 @@ HTML;
 	 * @return bool
 	 */
 	public function isWikiaInternalAuthorizedRequest() {
-		global $wgSchwartzToken;
+		global $wgTheSchwartzSecretToken;
 
 		return $this->getHeader( self::WIKIA_INTERNAL_AUTHORIZED_REQUEST_HEADER ) ===
-			$wgSchwartzToken;
+			$wgTheSchwartzSecretToken;
 	}
 }
 
