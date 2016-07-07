@@ -6,6 +6,7 @@ define('ext.wikia.adEngine.provider.directGptMobile', [
 ], function (factory, uapContext, win) {
 	'use strict';
 
+	// TODO: ADEN-3542
 	function dispatchNoUapEvent(slotName) {
 		if (slotName === 'MOBILE_TOP_LEADERBOARD' && uapContext.getUapId() === undefined) {
 			win.dispatchEvent(new Event('wikia.not_uap'));
