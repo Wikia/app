@@ -20,24 +20,23 @@ class PermissionsConfigurationImpl implements PermissionsConfiguration {
 	private $groupsSelfRemovableByGroup = [];
 
 	private $globalGroups = [
-		'content-reviewer',
-		'staff',
-		'helper',
-		'vstf',
+		'authenticated',
 		'beta',
 		'bot-global',
-		'util',
-		'reviewer',
-		'poweruser',
-		'translator',
-		'wikifactory',
-		'restricted-login',
+		'content-reviewer',
 		'council',
-		'authenticated',
-		'wikiastars',
+		'helper',
+		'poweruser',
 		'restricted-login',
+		'reviewer',
+		'staff',
+		'translator',
+		'util',
+		'vanguard',
 		'voldev',
-		'vanguard'
+		'vstf',
+		'wikiastars',
+		'wikifactory',
 	];
 
 	private $implicitGroups = [
@@ -450,7 +449,7 @@ class PermissionsConfigurationImpl implements PermissionsConfiguration {
 		$this->groupsAddableByGroup['util'] = array_diff( $this->getExplicitGroups(),
 			array_merge( [ 'wikifactory', 'content-reviewer', 'staff', 'util' ], $this->getImplicitGroups() ) );
 		$this->groupsRemovableByGroup['util'] = array_diff( $this->getExplicitGroups(),
-			$this->getImplicitGroups() );
+			array_merge( [ 'restricted-login' ], $this->getImplicitGroups() ) );
 
 		global $wgDevelEnvironment;
 		if ( !empty( $wgDevelEnvironment ) ) {
