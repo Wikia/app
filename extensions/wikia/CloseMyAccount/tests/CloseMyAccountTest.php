@@ -130,15 +130,10 @@ class CloseMyAccountTest extends WikiaBaseTest {
 	 * @dataProvider isScheduledProvider
 	 */
 	public function testIsScheduledForClosure( $expected, $requestedClosureMap, $requestedClosureDateMap ) {
-		$userMock = $this->getMock( 'User', [ 'getGlobalAttribute', 'getGlobalFlag' ] );
+		$userMock = $this->getMock( 'User', [ 'getGlobalPreference' ] );
 
 		$userMock->expects( $this->any() )
-			->method( 'getGlobalFlag' )
-			->with( 'requested-closure', false )
-			->willReturn( $requestedClosureMap );
-
-		$userMock->expects( $this->any() )
-			->method( 'getGlobalAttribute')
+			->method( 'getGlobalPreference')
 			->with( 'requested-closure-date', false )
 			->willReturn( $requestedClosureDateMap );
 
