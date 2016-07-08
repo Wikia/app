@@ -163,7 +163,6 @@ class CloseMyAccountTest extends WikiaBaseTest {
 	public function isScheduledProvider() {
 		return [
 			[ true, wfTimestamp( TS_DB ) ],
-			[ false, wfTimestamp( TS_DB ) ],
 			[ false, false ],
 		];
 	}
