@@ -250,6 +250,13 @@ class TransactionClassifierTest extends WikiaBaseTest {
 			[
 				'attributes' => [
 					Transaction::PARAM_ENTRY_POINT => Transaction::ENTRY_POINT_SPECIAL_PAGE,
+					Transaction::PARAM_SPECIAL_PAGE_NAME => 'Browse',
+				],
+				'expectedName' => 'special_page/Browse'
+			],
+			[
+				'attributes' => [
+					Transaction::PARAM_ENTRY_POINT => Transaction::ENTRY_POINT_SPECIAL_PAGE,
 					Transaction::PARAM_SPECIAL_PAGE_NAME => 'foo',
 				],
 				'expectedName' => 'special_page/other'
