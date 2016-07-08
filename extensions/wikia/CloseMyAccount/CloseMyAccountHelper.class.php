@@ -10,6 +10,8 @@ class CloseMyAccountHelper {
 	// Number of days to wait before properly closing account
 	const CLOSE_MY_ACCOUNT_WAIT_PERIOD = 30;
 
+	const REQUEST_CLOSURE_PREF = 'requested-closure-date';
+
 	/**
 	 * Set an account to be closed, and log them out
 	 *
@@ -22,7 +24,7 @@ class CloseMyAccountHelper {
 			return true;
 		}
 
-		$user->setGlobalPreference( 'requested-closure-date', wfTimestamp( TS_DB ) );
+		$user->setGlobalPreference( self::REQUEST_CLOSURE_PREF, wfTimestamp( TS_DB ) );
 
 		$user->saveSettings();
 
@@ -69,7 +71,7 @@ class CloseMyAccountHelper {
 			return false;
 		}
 
-		$user->setGlobalPreference( 'requested-closure-date', null );
+		$user->setGlobalPreference( self::REQUEST_CLOSURE_PREF, null );
 		$user->saveSettings();
 
 		$this->track( $user, 'account-reactivated' );
@@ -85,7 +87,7 @@ class CloseMyAccountHelper {
 	 */
 	public function getDaysUntilClosure( User $user ) {
 		$daysRemaining = false;
-		$requestDate = $user->getGlobalPreference( 'requested-closure-date' );
+		$requestDate = $user->getGlobalPreference( self::REQUEST_CLOSURE_PREF );
 
 		if ( $requestDate !== null ) {
 			// Number of days remaining until closure
@@ -115,7 +117,7 @@ class CloseMyAccountHelper {
 	 * @return boolean True if the account is scheduled for closure, False otherwise
 	 */
 	public function isScheduledForClosure( User $user ) {
-		return $user->getGlobalPreference( 'requested-closure-date', false );
+		return $user->getGlobalPreference( self::REQUEST_CLOSURE_PREF, false );
 	}
 
 	/**

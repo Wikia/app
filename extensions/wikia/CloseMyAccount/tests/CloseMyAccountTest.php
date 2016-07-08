@@ -22,7 +22,7 @@ class CloseMyAccountTest extends WikiaBaseTest {
 
 		$userMock->expects( $this->once() )
 			->method( 'getGlobalPreference' )
-			->with( $this->equalTo( 'requested-closure-date'  ) )
+			->with( $this->equalTo( CloseMyAccountHelper::REQUEST_CLOSURE_PREF  ) )
 			->will( $this->returnValue( $getOptionValue ) );
 
 		$closeAccountHelper = new CloseMyAccountHelper();
@@ -150,7 +150,7 @@ class CloseMyAccountTest extends WikiaBaseTest {
 
 		$userMock->expects( $this->any() )
 			->method( 'getGlobalPreference')
-			->with( 'requested-closure-date', false )
+			->with( CloseMyAccountHelper::REQUEST_CLOSURE_PREF, false )
 			->willReturn( $requestedClosureDateMap );
 
 		$closeAccountHelper = new CloseMyAccountHelper();

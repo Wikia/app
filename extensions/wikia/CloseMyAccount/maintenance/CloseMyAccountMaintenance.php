@@ -13,8 +13,6 @@ use Wikia\Service\User\Preferences\PreferenceService;
  */
 class CloseMyAccountMaintenance extends Maintenance {
 
-	const REQUEST_CLOSURE_PREF = 'requested-closure-date';
-
 	public function __construct() {
 		parent::__construct();
 	}
@@ -32,7 +30,7 @@ class CloseMyAccountMaintenance extends Maintenance {
 		/** @var PreferenceService $preferenceService */
 		$preferenceService = Injector::getInjector()->get( PreferenceService::class );
 
-		return $preferenceService->findUsersWithGlobalPreferenceValue( self::REQUEST_CLOSURE_PREF );
+		return $preferenceService->findUsersWithGlobalPreferenceValue( CloseMyAccountHelper::REQUEST_CLOSURE_PREF );
 	}
 
 	public function closeAccounts( $users ) {
@@ -51,13 +49,14 @@ class CloseMyAccountMaintenance extends Maintenance {
 			if ( $daysRemaining === 0 ) {
 				$success = $this->closeUserAccount( $userObj );
 				if ( !$success ) {
-					$this->output( "Failed to close account for {$userObj->getName()}\n" );
 					continue;
 				}
 
 				$closeAccountHelper->track( $userObj, 'account-closed' );
 
 				$accountsClosed++;
+			} else {
+				$this->output( "User {$userObj->getName()} has $daysRemaining days left\n" );
 			}
 		}
 
@@ -65,7 +64,7 @@ class CloseMyAccountMaintenance extends Maintenance {
 	}
 
 	public function closeUserAccount( User $userObj ) {
-		$this->output( "Closing account {$userObj->getName()}...\n" );
+		$this->output( "Closing account {$userObj->getName()} ... " );
 
 		$closeReason = 'User requested account closure more than 30 days ago';
 		$statusMsg1 = '';
@@ -74,6 +73,7 @@ class CloseMyAccountMaintenance extends Maintenance {
 		$success = EditAccount::closeAccount( $userObj, $closeReason, $statusMsg1, $statusMsg2, $keepEmail );
 
 		if ( !$success ) {
+			$this->output( "failed\n" );
 			return false;
 		}
 
@@ -81,10 +81,10 @@ class CloseMyAccountMaintenance extends Maintenance {
 		$userObj->setGlobalPreference( 'disabled-by-user-request', true );
 
 		// Cleanup
-		$userObj->setGlobalPreference( 'requested-closure-date', null );
-
+		$userObj->setGlobalPreference( CloseMyAccountHelper::REQUEST_CLOSURE_PREF, null );
 		$userObj->saveSettings();
 
+		$this->output( "success\n" );
 		return true;
 	}
 
