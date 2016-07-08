@@ -11,6 +11,7 @@ class CloseMyAccountHelper {
 	const CLOSE_MY_ACCOUNT_WAIT_PERIOD = 30;
 
 	const REQUEST_CLOSURE_PREF = 'requested-closure-date';
+	const DISABLED_BY_USER_PREF = 'disabled-by-user-request';
 
 	/**
 	 * Set an account to be closed, and log them out
@@ -107,7 +108,7 @@ class CloseMyAccountHelper {
 	 * @return boolean True if the account is disabled, False otherwise
 	 */
 	public function isClosed( User $user ) {
-		return (bool)$user->getGlobalFlag( 'disabled', false );
+		return ( bool ) $user->getGlobalFlag( 'disabled', false );
 	}
 
 	/**
@@ -117,7 +118,7 @@ class CloseMyAccountHelper {
 	 * @return boolean True if the account is scheduled for closure, False otherwise
 	 */
 	public function isScheduledForClosure( User $user ) {
-		return $user->getGlobalPreference( self::REQUEST_CLOSURE_PREF, false );
+		return ( bool ) $user->getGlobalPreference( self::REQUEST_CLOSURE_PREF, false );
 	}
 
 	/**

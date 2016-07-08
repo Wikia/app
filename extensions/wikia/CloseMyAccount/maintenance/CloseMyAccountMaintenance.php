@@ -77,8 +77,8 @@ class CloseMyAccountMaintenance extends Maintenance {
 			return false;
 		}
 
-		// Set an option that signifies this user was closed automatically
-		$userObj->setGlobalPreference( 'disabled-by-user-request', true );
+		// Set a preference that indicates this user was closed automatically
+		$userObj->setGlobalPreference( CloseMyAccountHelper::DISABLED_BY_USER_PREF, true );
 
 		// Cleanup
 		$userObj->setGlobalPreference( CloseMyAccountHelper::REQUEST_CLOSURE_PREF, null );
