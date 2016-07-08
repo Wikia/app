@@ -85,7 +85,7 @@ class CloseMyAccountHelper {
 	 */
 	public function getDaysUntilClosure( User $user ) {
 		$daysRemaining = false;
-		$requestDate = $user->getGlobalAttribute( 'requested-closure-date' );
+		$requestDate = $user->getGlobalPreference( 'requested-closure-date' );
 
 		if ( $requestDate !== null ) {
 			// Number of days remaining until closure

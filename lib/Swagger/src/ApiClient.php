@@ -275,7 +275,7 @@ class ApiClient
      *
      * @return string Accept (e.g. application/json)
      */
-    public function selectHeaderAccept($accept)
+    static public function selectHeaderAccept($accept)
     {
         if (count($accept) === 0 or (count($accept) === 1 and $accept[0] === '')) {
             return null;
@@ -293,7 +293,7 @@ class ApiClient
      *
      * @return string Content-Type (e.g. application/json)
      */
-    public function selectHeaderContentType($content_type)
+    static public function selectHeaderContentType($content_type)
     {
         if (count($content_type) === 0 or (count($content_type) === 1 and $content_type[0] === '')) {
             return 'application/json';
