@@ -10,9 +10,6 @@ $tc-name-color-checked: $color-links;
 	$tc-modal-text-color: lighten($color-text, 20);
 }
 
-$tc-name-color: #000;
-$tc-modal-text-color: #000;
-
 .template-classification-type-wrapper {
 	position: relative;
 }
@@ -60,7 +57,7 @@ $tc-modal-text-color: #000;
 	}
 
 	.tc-type-name {
-		//color: $tc-name-color;
+		color: $tc-name-color;
 		font-size: 16px;
 		font-weight: bold;
 		padding-bottom: 4px;
