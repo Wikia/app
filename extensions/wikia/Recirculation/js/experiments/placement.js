@@ -230,6 +230,7 @@ require([
 				limit: 5
 			}).loadData()
 				.then(rail.render)
+				.then(setupFallbackTracking)
 				.fail(function(err) {
 					// If this doesn't work, log out why. We tried our best.
 					if (err) {
@@ -237,6 +238,23 @@ require([
 					}
 				});
 		});
+	}
+
+	function setupFallbackTracking($html) {
+		var groupName = 'CONTROL_FALLBACK',
+			position = 'rail',
+			impressionLabel = [experimentName, groupName, position].join('='),
+			abSlot = abTest.getGASlot(experimentName);
+
+		tracker.trackImpression(impressionLabel);
+
+		$html.on('mousedown', 'a', function() {
+			var clickLabel = [experimentName, groupName, utils.buildLabel(this, position)].join('=');
+
+			tracker.trackClick(clickLabel);
+		});
+
+		return $html;
 	}
 
 	function injectSubtitle($html) {
