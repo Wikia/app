@@ -155,3 +155,18 @@ $GLOBALS['wgExtensionFunctions'][] = function() {
 	$setup = new Setup( $applicationFactory, $GLOBALS, __DIR__ );
 	$setup->run();
 };
+
+/**
+ * Wikia change
+ *
+ * Register SMW namespaces as early as possible.
+ * wgExtensionFunctions are called after a first call to Language::getNamespaces - i.e. too late.
+ *
+ * @param array $namespaces
+ * @return bool
+ */
+$GLOBALS['wgHooks']['LanguageGetNamespaces'][] = function( array &$namespaces ) {
+	NamespaceManager::initCustomNamespace( $GLOBALS );
+	$namespaces += NamespaceManager::getCanonicalNames();
+	return true;
+};
