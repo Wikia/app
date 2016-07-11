@@ -43,23 +43,20 @@ WikiaEmoticons.doReplacements = function (text, emoticonMapping) {
 		regex,
 		buildTagFunc,
 		maxEmoticons = 5,
-		combinedRegex = Object.keys(imgUrlsByRegexString)
+		combinedRegexStr = Object.keys(imgUrlsByRegexString)
 			.map(function (key) {
 				return key.replace(RegexSanitization, '\\$&');
 				}
 			).join('|');
 
+	regex = new RegExp('(^|\\s)(' + combinedRegexStr + ')([^/]|$)', 'i');
+
 	//return early if none match
-	if (!text.match(combinedRegex)) {
+	if (!text.match(regex)) {
 		return text;
 	}
 
-	// Fix > and <
-	combinedRegex = combinedRegex.replace(/>/g, '&gt;');
-	combinedRegex = combinedRegex.replace(/</g, '&lt;');
-
 	buildTagFunc = WikiaEmoticons.buildTagGenerator(imgUrlsByRegexString);
-	regex = new RegExp('(^|\\s)(' + combinedRegex + ')([^/]|$)', 'i');
 
 	do {
 		origText = text;
@@ -73,10 +70,10 @@ WikiaEmoticons.doReplacements = function (text, emoticonMapping) {
 WikiaEmoticons.buildTagGenerator = function (imgUrlsByRegexString) {
 
 	return function (match, leading, tag, trailing) {
-
-		var imgSrc = imgUrlsByRegexString[tag];
+		var imgSrc = imgUrlsByRegexString[tag.toLowerCase()];
+		// If emoticon not found, return text version
 		if (typeof imgSrc === 'undefined') {
-			return '';
+			return match;
 		}
 		imgSrc = imgSrc.replace(/"/g, '%22'); // prevent any HTML-injection
 
@@ -92,9 +89,9 @@ WikiaEmoticons.buildTagGenerator = function (imgUrlsByRegexString) {
 			leading +
 			' <img ' +
 				'src="' + imgSrc + '" ' +
-				'width="' + WikiaEmoticons.EMOTICON_WIDTH + '"' +
-				'height="' + WikiaEmoticons.EMOTICON_HEIGHT + '"' +
-				'alt="' + tag + '"' +
+				'width="' + WikiaEmoticons.EMOTICON_WIDTH + '" ' +
+				'height="' + WikiaEmoticons.EMOTICON_HEIGHT + '" ' +
+				'alt="' + tag + '" ' +
 				'title="' + tag + '"/> ' +
 			trailing
 		);
@@ -194,7 +191,9 @@ if (typeof EmoticonMapping === 'undefined') {
 				regexString = '';
 				for (index = 0; codes.length > index; index++){
 					code = codes[index];
-					self._regexes[code] = imgSrc;
+					// Fix > and <
+					code = code.replace(/>/g, '&gt;').replace(/</g, '&lt;');
+					self._regexes[code.toLowerCase()] = imgSrc;
 				}
 			}
 			return self._regexes;
