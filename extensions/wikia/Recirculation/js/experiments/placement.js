@@ -178,19 +178,9 @@ require([
 	}
 
 	if (isRail) {
-		afterRailLoads(runRailExperiment);
+		utils.afterRailLoads(runRailExperiment);
 	} else {
 		runExperiment();
-	}
-
-	function afterRailLoads(callback) {
-		var $rail = $('#WikiaRail');
-
-		if ($rail.find('.loading').exists()) {
-			$rail.one('afterLoad.rail', callback);
-		} else {
-			callback();
-		}
 	}
 
 	function runExperiment() {
@@ -223,7 +213,7 @@ require([
 		}
 
 		errorHandled = true;
-		afterRailLoads(function() {
+		utils.afterRailLoads(function() {
 			var rail = railView();
 
 			fandomHelper({
@@ -280,7 +270,7 @@ require([
 				}
 			});
 
-		afterRailLoads(function() {
+		utils.afterRailLoads(function() {
 			var rail = railView();
 
 			lateralHelper({
@@ -303,7 +293,7 @@ require([
 	}
 
 	function renderTaboola() {
-		afterRailLoads(function() {
+		utils.afterRailLoads(function() {
 			taboolaHelper.initializeWidget({
 				mode: 'thumbnails-rr2',
 				container: railContainerId,
@@ -344,7 +334,7 @@ require([
 				fView.render(data)
 					.then(fView.setupTracking(experimentName));
 
-				afterRailLoads(function() {
+				utils.afterRailLoads(function() {
 					curated.injectContent(fandomData)
 						.then(rView.render)
 						.then(rView.setupTracking)
