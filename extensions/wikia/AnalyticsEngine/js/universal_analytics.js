@@ -45,7 +45,11 @@
 		window.ga = function () {};
 	}
 
-	var cookieExists, isProductionEnv, blockingTracked = false;
+	var cookieExists, isProductionEnv, blockingTracked = {
+		sourcePoint: false,
+		pageFair: false
+	};
+
 	/**
 	 * Main Tracker
 	 *
@@ -254,14 +258,30 @@
 	}
 
 	function trackBlocking(value) {
-		if (blockingTracked) {
+		if (blockingTracked.sourcePoint) {
 			return;
 		}
-		blockingTracked = true;
+		blockingTracked.sourcePoint = true;
 		_gaWikiaPush(['set', 'dimension6', value]);
 		window.ga('ads.set', 'dimension6', value);
 		guaTrackAdEvent('ad/sourcepoint/detection', value, '', 0, true);
 		guaTrackEvent('ads-sourcepoint-detection', 'impression', value, 0, true);
+	}
+
+	function trackBlockingPageFair(isBlocked) {
+		var pageFairDimension = 'dimension7',
+			value = isBlocked ? 'Yes' : 'No'
+		;
+
+		if (blockingTracked.pageFair) {
+			return;
+		}
+		blockingTracked.pageFair = true;
+
+		_gaWikiaPush(['set', pageFairDimension, value]);
+		window.ga('ads.set', pageFairDimension, value);
+		guaTrackAdEvent('ad/pagefair/detection', value, '', 0, true);
+		guaTrackEvent('ads-pagefair-detection', 'impression', value, 0, true);
 	}
 
 	/**** High-Priority Custom Dimensions ****/
@@ -420,6 +440,13 @@
 		document.addEventListener('sp.not_blocking', function () {
 			window.ads.runtime.sp.blocking = false;
 			trackBlocking('No');
+		});
+
+		document.addEventListener('pf.blocking', function () {
+			trackBlockingPageFair(true);
+		});
+		document.addEventListener('pf.not_blocking', function () {
+			trackBlockingPageFair(false);
 		});
 	}
 

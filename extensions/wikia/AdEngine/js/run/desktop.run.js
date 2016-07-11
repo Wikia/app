@@ -8,6 +8,7 @@ require([
 	'ext.wikia.adEngine.customAdsLoader',
 	'ext.wikia.adEngine.dartHelper',
 	'ext.wikia.adEngine.messageListener',
+	'ext.wikia.adEngine.pageFairDetection',
 	'ext.wikia.aRecoveryEngine.recovery.helper',
 	'ext.wikia.adEngine.slot.scrollHandler',
 	'ext.wikia.adEngine.slotTracker',
@@ -25,6 +26,7 @@ require([
 	customAdsLoader,
 	dartHelper,
 	messageListener,
+	pageFair,
 	recoveryHelper,
 	scrollHandler,
 	slotTracker,
@@ -85,6 +87,8 @@ require([
 		if (!context.opts.sourcePointRecovery) {
 			sourcePoint.initDetection();
 		}
+
+		pageFair.initDetection();
 
 		if (context.opts.googleConsumerSurveys && gcs) {
 			gcs.addRecoveryCallback();
