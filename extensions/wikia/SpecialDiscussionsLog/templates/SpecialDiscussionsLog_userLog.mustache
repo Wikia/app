@@ -1,5 +1,5 @@
 {{#userErrorMessage}}
-	<div class="log-error-message">{{userErrorMessage}}</div>
+    <div class="log-error-message">{{userErrorMessage}}</div>
 {{/userErrorMessage}}
 {{^userErrorMessage}}
 	{{#hasNoUserLogRecords}}
@@ -20,12 +20,12 @@
 			</tr>
 			</thead>
 			{{#userLogRecords}}
-				<tr>
+				<tr class="record">
 					<td><a href="{{userUrl}}">{{userName}}</a></td>
-					<td><a href="{{ipUrl}}">{{ip}}</a></td>
-					<td>{{location}}</td>
+					<td><a href="{{ipUrl}}" class="ip">{{ip}}</a></td>
+					<td><a href="{{locationUrl}}" class="location">{{moreInfoMsg}}</a></td>
 					<td>{{language}}</td>
-					<td>{{userAgent}}</td>
+					<td class="useragent">{{userAgent}}</td>
 					<td>{{app}}</td>
 					<td>{{timestamp}}</td>
 				</tr>
