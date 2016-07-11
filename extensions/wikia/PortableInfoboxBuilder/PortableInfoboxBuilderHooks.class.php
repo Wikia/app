@@ -8,7 +8,7 @@ class PortableInfoboxBuilderHooks {
 	 *
 	 * @return true
 	 */
-	public function onTCAfterEditPageAssets() {
+	public static function onTCAfterEditPageAssets() {
 		\Wikia::addAssetsToOutput( 'portable_infobox_builder_template_classification_helper_js' );
 
 		return true;
