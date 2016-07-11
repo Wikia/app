@@ -43,7 +43,7 @@ class LazyDBConnectionProvider implements DBConnectionProvider {
 	 */
 	public function __construct( $connectionId, $groups = array(), $wiki = false ) {
 		$this->connectionId = $connectionId;
-		$this->groups = 'smw'; # Wikia change - connect to a separate DB cluster when $smwgUseExternalDB = true (BugId: 666)
+		$this->groups = $groups;
 		$this->wiki = $wiki;
 	}
 
