@@ -86,9 +86,9 @@ $messages['en'] = array(
 	'communitypage-anon-contrib-header' => '$1 or $2 and make an edit to this wiki to see how you rank in this community!',
 	'communitypage-anon-login' => 'Log in',
 	'communitypage-anon-register' => 'register',
-	'communitypage-first-edit-heading' => 'Congratulations on making your first edit to this community!',
-	'communitypage-first-edit-subheading' => 'Meet others and find more ways to help by visiting the Community Page',
-	'communitypage-first-edit-get-started' => 'Get Started',
+	'communitypage-first-edit-heading' => 'Congratulations on making your first contribution to this community!',
+	'communitypage-first-edit-subheading' => 'Connect with others and find more ways to help by visiting the Community Page',
+	'communitypage-first-edit-get-started' => 'Continue',
 	'communitypage-first-edit-maybe-later' => 'Maybe Later',
 );
 
