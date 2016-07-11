@@ -45,6 +45,21 @@ class LazyDBConnectionProvider implements DBConnectionProvider {
 		$this->connectionId = $connectionId;
 		$this->groups = $groups;
 		$this->wiki = $wiki;
+
+		// Wikia change - begin
+		// moved here from wfGetDB()
+		global $smwgUseExternalDB, $wgDBname;
+
+		if( $smwgUseExternalDB === true ) {
+			if( $wiki === false ) {
+				$wiki = $wgDBname;
+			}
+			$this->wiki = "smw+" . $wiki;
+			wfDebug( __METHOD__ . ": smw+ cluster is active, requesting $wiki\n" );
+		}
+
+		$this->groups = 'smw';
+		// Wikia change - end
 	}
 
 	/**
