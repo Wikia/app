@@ -25,22 +25,22 @@ class SpecialDiscussionsController extends WikiaSpecialPageController {
 
 	public function __construct() {
 		parent::__construct( 'Discussions', '', false );
+
+		$this->assertCanAccess();
+
 		$this->sitesApi = $this->getDiscussionSitesApi();
 		$this->siteId = F::app()->wg->CityId;
-		$this->siteName = WikiFactory::getVarValueByName( 'wgSitename', $this->siteId );
+		$this->siteName = F::app()->wg->Sitename;
 		$this->logger = Wikia\Logger\WikiaLogger::instance();
 	}
 
 	public function index() {
-		$this->checkAccess();
-
 		$this->setHeaders();
 		$this->response->addAsset( 'special_discussions_scss' );
 
 		$this->wg->Out->setPageTitle( wfMessage( 'discussions-pagetitle' )->escaped() );
 
-		$editToken = $this->getVal( self::EDIT_TOKEN );
-		if ( !empty( $editToken ) ) {
+		if ( $this->request->wasPosted() ) {
 			$this->activateDiscussions();
 		}
 
@@ -48,8 +48,6 @@ class SpecialDiscussionsController extends WikiaSpecialPageController {
 	}
 
 	public function inputForm() {
-		$this->checkAccess();
-
 		$this->response->setValues(
 			[
 				'discussionsInactiveMessage' => wfMessage( 'discussions-not-active' )->escaped(),
@@ -60,8 +58,6 @@ class SpecialDiscussionsController extends WikiaSpecialPageController {
 	}
 
 	public function discussionsLink() {
-		$this->checkAccess();
-
 		$this->response->setValues(
 			[
 				'discussionsActiveMessage' => wfMessage( 'discussions-active' )->escaped(),
@@ -72,31 +68,12 @@ class SpecialDiscussionsController extends WikiaSpecialPageController {
 	}
 
 	private function setIndexOutput() {
-		if ( $this->getIsDiscussionsActive() ) {
-			$this->response->setVal(
-				'discussionsLink',
-				$this->sendSelfRequest(
-					'discussionsLink',
-					[
-						'discussionsLink' => $this->getDiscussionsLink(),
-					]
-				)
-			);
-		} else {
-			$this->response->setVal(
-				'inputForm',
-				$this->sendSelfRequest(
-					'inputForm',
-					[
-						'activateDiscussions' => $this->getActivateDiscussionsMessage(),
-					]
-				)
-			);
-		}
+		$callMethod =  $this->isDiscussionsActive() ? 'discussionsLink' : 'inputForm';
+		$this->response->setVal( 'content', $this->sendSelfRequest( $callMethod ) );
 	}
 
 	private function activateDiscussions() {
-		$this->assertValidPostRequest( $this->request, $this->getUser() );
+		$this->assertValidPostRequest();
 
 		$site = new \Swagger\Client\Discussion\Models\Site(
 			[
@@ -119,7 +96,7 @@ class SpecialDiscussionsController extends WikiaSpecialPageController {
 		}
 	}
 
-	private function getIsDiscussionsActive() {
+	private function isDiscussionsActive() {
 		try {
 			$this->getDiscussionSitesApi()->getSite( $this->siteId );
 			return true;
@@ -137,10 +114,6 @@ class SpecialDiscussionsController extends WikiaSpecialPageController {
 		return "/d/f";
 	}
 
-	private function getActivateDiscussionsMessage() {
-		return wfMessage( 'discussions-activate' )->escaped();
-	}
-
 	private function getDiscussionSitesApi() {
 		/** @var ApiProvider $apiProvider */
 		$apiProvider = Injector::getInjector()->get( ApiProvider::class );
@@ -151,14 +124,15 @@ class SpecialDiscussionsController extends WikiaSpecialPageController {
 		return $api;
 	}
 
-	private function checkAccess() {
+	private function assertCanAccess() {
 		if ( !$this->wg->User->isAllowed( self::DISCUSSIONS_ACTION ) ) {
 			throw new \PermissionsError( self::DISCUSSIONS_ACTION );
 		}
 	}
 
-	private function assertValidPostRequest( WikiaRequest $request, User $user ) {
-		if ( !$request->wasPosted() || !$user->matchEditToken( $request->getVal( self::EDIT_TOKEN ) ) ) {
+	private function assertValidPostRequest() {
+		if ( !$this->request->wasPosted() ||
+			!$this->getUser()->matchEditToken( $this->request->getVal( self::EDIT_TOKEN ) ) ) {
 			throw new BadRequestApiException();
 		}
 	}
