@@ -10,11 +10,10 @@ class ARecoveryEngineHooks {
 	 * @return bool
 	 */
 	public static function onWikiaSkinTopScripts( &$vars, &$scripts ) {
-		if ( !ARecoveryModule::isEnabled() ) {
-			return true;
-		}
 
-		$scripts .= F::app()->sendRequest( 'ARecoveryEngineApiController', 'getBootstrap' );
+		if ( !ARecoveryModule::isEnabled() ) {
+			$scripts .= F::app()->sendRequest( 'ARecoveryEngineApiController', 'getBootstrap' );
+		}
 
 		return true;
 	}
