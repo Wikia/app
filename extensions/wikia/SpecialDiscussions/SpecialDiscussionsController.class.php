@@ -101,7 +101,7 @@ class SpecialDiscussionsController extends WikiaSpecialPageController {
 		$site = new \Swagger\Client\Discussion\Models\Site(
 			[
 				'id' => $this->siteId,
-				'language_code' => F::app()->wg->ContLang->getCode(),
+				'languageCode' => F::app()->wg->ContLang->getCode(),
 			]
 		);
 
