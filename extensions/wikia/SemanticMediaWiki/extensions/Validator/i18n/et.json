@@ -1,0 +1,30 @@
+{
+	"@metadata": {
+		"authors": [
+			"Avjoska",
+			"Pikne"
+		]
+	},
+	"validator-warning": "Hoiatus: $1",
+	"validator-error": "Tõrge: $1",
+	"validator-type-string": "tekst",
+	"validator-type-integer": "täisarv",
+	"validator-type-float": "number",
+	"validator-type-boolean": "jah/ei",
+	"validator-type-char": "märk",
+	"validator-type-title": "pealkiri",
+	"validator-type-string-list": "tekstide loetelu",
+	"validator-type-float-list": "numbrite loend",
+	"validator-listerrors-errors": "Vead",
+	"validator-listerrors-low": "Madal",
+	"validator-listerrors-normal": "Normaalne",
+	"validator-listerrors-high": "Kõrge",
+	"validator-describe-descriptionmsg": "'''Kirjeldus''': $1",
+	"validator-describe-empty": "tühi",
+	"validator-describe-required": "nõutav",
+	"validator-describe-header-parameter": "Parameeter",
+	"validator-describe-header-type": "Tüüp",
+	"validator-describe-header-description": "Kirjeldus",
+	"validator-describe-parameters": "Parameetrid",
+	"validator-describe-syntax": "Süntaks"
+}

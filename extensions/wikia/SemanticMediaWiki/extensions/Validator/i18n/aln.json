@@ -1,0 +1,24 @@
+{
+	"@metadata": {
+		"authors": [
+			"Mdupont"
+		]
+	},
+	"validator-desc": "Validator është një zgjerim MediaWiki që ofron parametër përgjithshme trajtimin mbështetje të shtesave të tjera",
+	"validator_error_parameters": "Më poshtë {{PLURAL:$1|gabim ka gabime|kanë}} është zbuluar në sintaksën e juaj:",
+	"validator_warning_parameters": "Ka {{PLURAL:$1|është|janë gabime gabim}} në sintaksë tuaj.",
+	"validator_error_unknown_argument": "$1 nuk është një parametër i vlefshëm.",
+	"validator_error_required_missing": "Parametrat e nevojshëm $1 nuk jepet.",
+	"validator_error_empty_argument": "Parametër $1 nuk mund të ketë një vlerë bosh.",
+	"validator_error_must_be_number": "Parametër $1 mund të jetë vetëm një numër.",
+	"validator_error_must_be_integer": "Parametër $1 mund të jetë vetëm një numër i plotë.",
+	"validator_error_invalid_range": "Parametër $1 duhet të jetë në mes të $2 dhe $3.",
+	"validator_error_invalid_argument": "Vlera $1 nuk është i vlefshëm për parametër $2.",
+	"validator_list_error_empty_argument": "Parametër $1 nuk e pranon vlerat bosh.",
+	"validator_list_error_must_be_number": "Parametër $1 mund të përmbajë vetëm numrat.",
+	"validator_list_error_must_be_integer": "Parametër $1 mund të përmbajë vetëm numra të plotë.",
+	"validator_list_error_invalid_range": "Të gjitha vlerat e parametrit $1 duhet të jetë në mes të $2 dhe $3.",
+	"validator_list_error_invalid_argument": "Një ose më shumë vlera për parametër $1 janë të pavlefshme.",
+	"validator_error_accepts_only": "Parametër $1 vetëm pranon {{PLURAL:$3|kjo vlerë|këtyre vlerave}}: $2.",
+	"validator_list_omitted": "{{PLURAL:$2 |vlerë|vlerat}} $1 {{PLURAL:$2|ka|kanë}} janë lënë jashtë."
+}

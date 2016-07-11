@@ -1,0 +1,40 @@
+{
+	"@metadata": {
+		"authors": [
+			"David1010",
+			"ITshnik"
+		]
+	},
+	"validator-warning": "გაფრთხილება: $1",
+	"validator-error": "შეცდომა: $1",
+	"validator-fatal-error": "ფატალური შეცდომა: $1",
+	"validator_error_unknown_argument": "$1 არ არის სწორი პარამეტრი.",
+	"validator-type-string": "ტექსტი",
+	"validator-type-integer": "მთლიანი რიცხვი",
+	"validator-type-float": "ნომერი",
+	"validator-type-boolean": "დიახ/არა",
+	"validator-type-char": "სიმბოლო",
+	"validator-type-title": "სათაური",
+	"validator-type-string-list": "ტექსტების სია",
+	"validator-type-float-list": "რიცხვების სია",
+	"validator-type-boolean-list": "დიახ/არა სია",
+	"validator-type-char-list": "სიმბოლოების სია",
+	"validator-type-title-list": "სათაურების სია",
+	"validator-listerrors-errors": "შეცდომები",
+	"validator-listerrors-minor": "უმნიშვნელო",
+	"validator-listerrors-low": "დაბალი",
+	"validator-listerrors-normal": "ნორმალური",
+	"validator-listerrors-high": "მაღალი",
+	"validator-listerrors-fatal": "ფატალური",
+	"validator-describe-descriptionmsg": "'''აღწერა''': $1",
+	"validator-describe-empty": "ცარიელი",
+	"validator-describe-required": "სავალდებულოა",
+	"validator-describe-header-parameter": "პარამეტრი",
+	"validator-describe-header-aliases": "ფსევდონიმები",
+	"validator-describe-header-type": "ტიპი",
+	"validator-describe-header-default": "სტანდარტული",
+	"validator-describe-header-description": "აღწერა",
+	"validator-describe-parameters": "პარამეტრები",
+	"validator-describe-syntax": "სინტაქსი",
+	"validator_error_empty_argument": "პარამეტრი $1 არ შეუძლია ცარიელი მნიშვნელობის მიღება."
+}

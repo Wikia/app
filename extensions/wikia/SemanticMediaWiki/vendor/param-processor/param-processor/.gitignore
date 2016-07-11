@@ -1,11 +1,11 @@
 *~
 *.kate-swp
 
-build/logs/
-build/release/build-*
+!.*
+.idea/
 
 composer.phar
 composer.lock
 
-!.*
-.idea/
+vendor/
+build/

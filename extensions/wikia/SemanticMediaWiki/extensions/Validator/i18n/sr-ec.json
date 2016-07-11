@@ -1,0 +1,8 @@
+{
+	"@metadata": {
+		"authors": [
+			"Rancher"
+		]
+	},
+	"validator-listerrors-severity-message": "($1) $2"
+}
