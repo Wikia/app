@@ -3,14 +3,14 @@
 		<div class="community-page-todo-list-module-header">
 			{{heading}}
 		</div>
-		{{#isAdmin}}
+		{{#showEditLink}}
 			<div class="community-page-todo-list-module-edit">
 				<a data-tracking="community-page-todo-list-module-edit" href="{{editUrl}}" target="_blank">
 					<div class="community-page-todo-list-module-edit-icon"></div>
 					{{editList}}
 				</a>
 			</div>
-		{{/isAdmin}}
+		{{/showEditLink}}
 		<div class="community-page-todo-list-module-description">
 			{{description}}
 		</div>

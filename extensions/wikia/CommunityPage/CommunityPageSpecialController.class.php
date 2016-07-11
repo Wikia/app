@@ -325,7 +325,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		$data = ( new CommunityPageSpecialCommunityTodoListModel() )->getData();
 
 		return array_merge( $data, [
-			'isAdmin' => in_array( $user->getId(), $this->usersModel->getAdmins() ),
+			'showEditLink' => $user->isAllowed( 'editinterface' ),
 			'isZeroState' => !$data['haveContent'],
 			'heading' => $this->msg( 'communitypage-todo-module-heading' )->plain(),
 			'editList' => $this->msg( 'communitypage-todo-module-edit-list' )->plain(),
