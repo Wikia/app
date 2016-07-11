@@ -116,5 +116,10 @@ require([
 		mw.hook('postEdit').add( function() {
 			openModalOnFirstEdit();
 		});
+
+		// Hook to show modal after comment (no page reload)
+		mw.hook('wikipage.content').add( function() {
+			openModalOnFirstEdit();
+		});
 	});
 });
