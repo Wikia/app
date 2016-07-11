@@ -91,10 +91,10 @@ define('ext.wikia.recirculation.utils', [
 
 		if ($rail.find('.loading').exists()) {
 			$rail.one('afterLoad.rail', function() {
-				deferred.resolve(args);
+				deferred.resolve.apply(null, args);
 			});
 		} else {
-			deferred.resolve(args);
+			deferred.resolve.apply(null, args);
 		}
 
 		return deferred.promise();

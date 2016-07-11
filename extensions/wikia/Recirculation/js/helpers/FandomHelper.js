@@ -10,7 +10,8 @@ define('ext.wikia.recirculation.helpers.fandom', [
 	return function(config) {
 		var defaults = {
 				limit: 3,
-				type: 'recent_popular'
+				type: 'recent_popular',
+				ignoreError: false
 			},
 			options = $.extend({}, defaults, config);
 
@@ -32,7 +33,15 @@ define('ext.wikia.recirculation.helpers.fandom', [
 					if (data.items && data.items.length >= options.limit ) {
 						deferred.resolve(data);
 					} else {
-						deferred.reject('Recirculation widget not shown - Not enough items returned from Fandom API');
+
+						if (options.ignoreError) {
+							deferred.resolve({
+								title: data.title,
+								items: []
+							});
+						} else {
+							deferred.reject('Recirculation widget not shown - Not enough items returned from Fandom API');
+						}
 					}
 				}
 			});
