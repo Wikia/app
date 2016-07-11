@@ -19,6 +19,7 @@ require([
 	'ext.wikia.recirculation.helpers.cakeRelatedContent',
 	'ext.wikia.recirculation.helpers.curatedContent',
 	'ext.wikia.recirculation.helpers.googleMatch',
+	'ext.wikia.recirculation.experiments.placement.IMPACT_FOOTER',
 	'ext.wikia.adEngine.taboolaHelper',
 	require.optional('videosmodule.controllers.rail')
 ], function(
@@ -41,6 +42,7 @@ require([
 	cakeHelper,
 	curatedHelper,
 	googleMatchHelper,
+	impactFooterExperiment,
 	taboolaHelper,
 	videosModule
 ) {
@@ -171,7 +173,7 @@ require([
 			isRail = true;
 			break;
 		case 'IMPACT_FOOTER':
-			renderImpactFooter();
+			impactFooterExperiment.run(experimentName);
 			return;
 		default:
 			return;
@@ -309,38 +311,6 @@ require([
 				tracker.trackVerboseClick(experimentName, label);
 			});
 		});
-	}
-
-	function renderImpactFooter() {
-		var curated = curatedHelper(),
-			fView = impactFooterView(),
-			rView = railView(),
-			sView = scrollerView();
-
-		contentLinksHelper({
-			count: 6,
-			extra: 6
-		}).loadData()
-			.then(sView.render)
-			.then(sView.setupTracking(experimentName));
-
-		dataHelper({}).loadData()
-			.then(function(data) {
-				var fandomData = {
-					title: data.fandom.title,
-					items: data.fandom.items.splice(0,5)
-				};
-
-				fView.render(data)
-					.then(fView.setupTracking(experimentName));
-
-				utils.afterRailLoads(function() {
-					curated.injectContent(fandomData)
-						.then(rView.render)
-						.then(rView.setupTracking)
-						.then(curatedHelper.setupTracking);
-				});
-			});
 	}
 
 	function renderLiftigniterFandom(waitToFetch) {
