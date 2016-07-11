@@ -15,7 +15,6 @@ $wgExtensionCredits['specialpage'][] = [
 
 // classes
 $wgAutoloadClasses['SpecialDiscussionsController'] = $dir . 'SpecialDiscussionsController.class.php';
-$wgAutoloadClasses['SpecialDiscussionsHooks'] = $dir . 'SpecialDiscussionsHooks.class.php';
 
 // special page
 $wgSpecialPages['Discussions'] = 'SpecialDiscussionsController';
