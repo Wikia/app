@@ -2889,6 +2889,13 @@ $config['special_user_activity_scss'] = [
 	],
 ];
 
+$config['special_discussions_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'assets' => [
+		'//extensions/wikia/SpecialDiscussions/css/Discussions_Forms.scss',
+	],
+];
+
 $config['special_discussions_log_scss'] = [
 	'type' => AssetsManager::TYPE_SCSS,
 	'assets' => [
