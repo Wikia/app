@@ -78,6 +78,7 @@ class PermissionsServiceImpl implements PermissionsService {
 
 				$implicitGroups = array_unique( array_merge(
 					$implicitGroups,
+					$this->getAutomaticAccessControlGroups($user),
 					\Autopromote::getAutopromoteGroups( $user )
 				) );
 				$this->implicitUserGroups[ $user->getId() ] = $implicitGroups;
@@ -85,6 +86,27 @@ class PermissionsServiceImpl implements PermissionsService {
 		}
 
 		return $implicitGroups;
+	}
+
+	/**
+	 * Returns list of access control groups that need to be added based on the explicit user groups
+	 *
+	 * @param \User $user
+	 * @return array
+	 */
+	private function getAutomaticAccessControlGroups( \User $user ) {
+		if ($user->getId()) {
+			$explicitGroups = $this->getExplicitGlobalGroups($user);
+			$restrictedGroups = array_intersect($explicitGroups,
+				$this->permissionsConfiguration->getRestrictedAccessGroups());
+			$exemptGroups = array_intersect($explicitGroups,
+				$this->permissionsConfiguration->getRestrictedAccessExemptGroups());
+
+			if (count($restrictedGroups) > 0 && count($exemptGroups) == 0) {
+				return ['restricted-login'];
+			}
+		}
+		return [];
 	}
 
 	/**
