@@ -87,7 +87,7 @@ define('ext.wikia.recirculation.utils', [
 	function waitForRail() {
 		var $rail = $('#WikiaRail'),
 			deferred = $.Deferred(),
-			args = arguments;
+			args = Array.prototype.slice.call(arguments);
 
 		if ($rail.find('.loading').exists()) {
 			$rail.one('afterLoad.rail', function() {
