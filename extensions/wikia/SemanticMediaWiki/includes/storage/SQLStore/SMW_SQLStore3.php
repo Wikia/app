@@ -680,7 +680,7 @@ class SMWSQLStore3 extends SMWStore {
 	 *
 	 * @param string $connectionTypeId
 	 *
-	 * @return mixed
+	 * @return SMW\MediaWiki\Database
 	 */
 	public function getConnection( $connectionTypeId = 'mw.db' ) {
 		return parent::getConnection( $connectionTypeId );
