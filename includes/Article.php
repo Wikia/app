@@ -1294,7 +1294,9 @@ class Article extends Page {
 		if ( $appendSubtitle ) {
 			$out->addSubtitle( wfMessage( 'redirectpagesub' ) );
 		}
-		$out->addModuleStyles( 'mediawiki.action.view.redirectPage' );
+
+		// VOLDEV-120: Fix redirect icons on dark wikias
+		Wikia::addAssetsToOutput( 'resources/mediawiki.action/mediawiki.action.view.redirectPage.scss' );
 		return static::getRedirectHeaderHtml( $lang, $target, $forceKnown );
 	}
 
