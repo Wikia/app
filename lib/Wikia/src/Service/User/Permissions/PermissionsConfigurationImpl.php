@@ -44,7 +44,8 @@ class PermissionsConfigurationImpl implements PermissionsConfiguration {
 		'*',
 		'user',
 		'autoconfirmed',
-		'poweruser'
+		'poweruser',
+		'restricted-login-auto'
 	];
 
 	private $permissions = [

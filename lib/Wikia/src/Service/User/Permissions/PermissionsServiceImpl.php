@@ -73,12 +73,12 @@ class PermissionsServiceImpl implements PermissionsService {
 			$implicitGroups = $this->implicitUserGroups[ $user->getId() ];
 		} else {
 			$implicitGroups = array( '*' );
-			if ( $user->getId() ) {
+			if ( $user->isLoggedIn() ) {
 				$implicitGroups[] = 'user';
 
 				$implicitGroups = array_unique( array_merge(
 					$implicitGroups,
-					$this->getAutomaticAccessControlGroups($user),
+					$this->getAutomaticAccessControlGroups( $user ),
 					\Autopromote::getAutopromoteGroups( $user )
 				) );
 				$this->implicitUserGroups[ $user->getId() ] = $implicitGroups;
@@ -95,15 +95,15 @@ class PermissionsServiceImpl implements PermissionsService {
 	 * @return array
 	 */
 	private function getAutomaticAccessControlGroups( \User $user ) {
-		if ($user->getId()) {
-			$explicitGroups = $this->getExplicitGlobalGroups($user);
-			$restrictedGroups = array_intersect($explicitGroups,
-				$this->permissionsConfiguration->getRestrictedAccessGroups());
-			$exemptGroups = array_intersect($explicitGroups,
-				$this->permissionsConfiguration->getRestrictedAccessExemptGroups());
+		if ( $user->isLoggedIn() ) {
+			$explicitGroups = $this->getExplicitGlobalGroups( $user );
+			$restrictedGroups = array_intersect( $explicitGroups,
+				$this->permissionsConfiguration->getRestrictedAccessGroups() );
+			$exemptGroups = array_intersect( $explicitGroups,
+				$this->permissionsConfiguration->getRestrictedAccessExemptGroups() );
 
-			if (count($restrictedGroups) > 0 && count($exemptGroups) == 0) {
-				return ['restricted-login'];
+			if ( count( $restrictedGroups ) > 0 && count( $exemptGroups ) == 0 ) {
+				return [ 'restricted-login-auto' ];
 			}
 		}
 		return [];
@@ -202,7 +202,7 @@ class PermissionsServiceImpl implements PermissionsService {
 			return false;
 		}
 		$dbw = self::getSharedDB( DB_MASTER );
-		if ( $user->getId() ) {
+		if ( $user->isLoggedIn() ) {
 			$dbw->insert( 'user_groups',
 				[
 					'ug_user'  => $user->getID(),
@@ -216,7 +216,7 @@ class PermissionsServiceImpl implements PermissionsService {
 
 	private function addToLocalGroup( \User $user, $group ) {
 		$dbw = wfGetDB( DB_MASTER );
-		if ( $user->getId() ) {
+		if ( $user->isLoggedIn() ) {
 			$dbw->insert( 'user_groups',
 				array(
 					'ug_user'  => $user->getId(),
