@@ -14,6 +14,8 @@ use SMW\DBConnectionProvider;
  */
 class LazyDBConnectionProvider implements DBConnectionProvider {
 
+	const SMW_GROUP = 'smw'; # Wikia change
+
 	/**
 	 * @var DatabaseBase|null
 	 */
@@ -38,10 +40,10 @@ class LazyDBConnectionProvider implements DBConnectionProvider {
 	 * @since 1.9
 	 *
 	 * @param int $connectionId
-	 * @param string|array $groups
+	 * @param string|array $groups defaults to LazyDBConnectionProvider::SMW_GROUP - connect to SMW cluster (if needed) // Wikia change
 	 * @param string|boolean $wiki
 	 */
-	public function __construct( $connectionId, $groups = array(), $wiki = false ) {
+	public function __construct( $connectionId, $groups = self::SMW_GROUP, $wiki = false ) {
 		$this->connectionId = $connectionId;
 		$this->groups = $groups;
 		$this->wiki = $wiki;
@@ -50,15 +52,15 @@ class LazyDBConnectionProvider implements DBConnectionProvider {
 		// moved here from wfGetDB()
 		global $smwgUseExternalDB, $wgDBname;
 
-		if( $smwgUseExternalDB === true ) {
-			if( $wiki === false ) {
+		if ( $groups === self::SMW_GROUP && $smwgUseExternalDB === true ) {
+			if ( $wiki === false ) {
 				$wiki = $wgDBname;
 			}
 			$this->wiki = "smw+" . $wiki;
+			$this->groups = 'smw';
 			wfDebug( __METHOD__ . ": smw+ cluster is active, requesting $wiki\n" );
 		}
 
-		$this->groups = 'smw';
 		// Wikia change - end
 	}
 
