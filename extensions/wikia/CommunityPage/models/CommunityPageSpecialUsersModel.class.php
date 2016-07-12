@@ -80,6 +80,10 @@ class CommunityPageSpecialUsersModel {
 						'isAdmin' => $this->isAdmin( $row->wup_user, $this->getAdmins() ),
 					];
 				} );
+				
+				$us = new UserStatsService(1853435);
+				var_dump($us->getStats());
+				exit();
 
 				return $result;
 			}
