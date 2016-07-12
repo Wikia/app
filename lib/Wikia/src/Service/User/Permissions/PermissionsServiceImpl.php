@@ -51,7 +51,7 @@ class PermissionsServiceImpl implements PermissionsService {
 	}
 
 	/**
-	 * Return memcache key used for storing groups for a given user
+	 * Get memcached key used for storing groups for a given user
 	 *
 	 * @param $userId
 	 * @return string memcache key
@@ -89,7 +89,8 @@ class PermissionsServiceImpl implements PermissionsService {
 	}
 
 	/**
-	 * Returns list of access control groups that need to be added based on the explicit user groups
+	 * Get the list of access control groups based on explicit groups user has.
+	 * This helps us force secure access control for the most powerful accounts
 	 *
 	 * @param \User $user
 	 * @return array
@@ -162,7 +163,7 @@ class PermissionsServiceImpl implements PermissionsService {
 
 	/**
 	 * @param int $db DB_SLAVE or DB_MASTER
-	 * @return DatabaseBase
+	 * @return \DatabaseBase
 	 */
 	static private function getSharedDB( $db = DB_SLAVE ) {
 		global $wgExternalSharedDB;
