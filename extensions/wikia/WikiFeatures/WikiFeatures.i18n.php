@@ -863,7 +863,7 @@ $messages['ja'] = array(
 	'wikifeatures-feature-heading-wgDisableAnonymousEditing' => 'すべての投稿者のログインを必須にする',
 	'wikifeatures-feature-description-wgDisableAnonymousEditing' => 'あなたのWikiaコミュニティですべての投稿者のログインを必須にしますか？この機能を有効にすると、匿名ユーザーはログインせずにページを編集したり、コメントやフォーラム、メッセージウォールに参加したりすることができなくなります。ただし、誰でもWikiaアカウントを作成してコミュニティに参加することはできます。',
 	'wikifeatures-feature-heading-wgEnablePortableInfoboxEuropaTheme' => 'インフォボックスのデザインテーマ - Europa',
-	'wikifeatures-feature-description-wgEnablePortableInfoboxEuropaTheme' => 'インフォボックスの新しいデザインを有効にして、既定のコミュニティの色に合ったデザインテーマを使ってみましょう。',
+	'wikifeatures-feature-description-wgEnablePortableInfoboxEuropaTheme' => '[[w:ja:ヘルプ:インフォボックス|インフォボックス]]の新しいデザインを有効にして、既定のコミュニティの色に合ったデザインテーマを使ってみましょう。',
 );
 
 /** Kannada (ಕನ್ನಡ)
@@ -1450,7 +1450,7 @@ $messages['ru'] = array(
 	'wikifeatures-feature-heading-wgDisableAnonymousEditing' => 'Обязательная регистрация участников',
 	'wikifeatures-feature-description-wgDisableAnonymousEditing' => 'Хотите, чтобы на вашей вики редактировали только зарегистрированные участники? После подключения этого расширения анонимные участники не смогут редактировать статьи, оставлять комментарии к статьям и блогам, или общаться на Форуме и Стенах обсуждения. Только зарегистрированные участники смогут редактировать вашу вики.',
 	'wikifeatures-feature-heading-wgEnablePortableInfoboxEuropaTheme' => 'Тема для инфобоксов «Europa»',
-	'wikifeatures-feature-description-wgEnablePortableInfoboxEuropaTheme' => 'Подключите новую тему для инфобоксов, которая соответствует теме вашей вики.',
+	'wikifeatures-feature-description-wgEnablePortableInfoboxEuropaTheme' => 'Подключите новую тему для [[w:ru:Справка:Инфобоксы|инфобоксов]], которая соответствует теме вашей вики.',
 );
 
 /** Swedish (svenska)
@@ -1720,7 +1720,7 @@ $messages['zh-hant'] = array(
 	'wikifeatures-feature-heading-wgEnableNjordExt' => '封面圖',
 	'wikifeatures-feature-description-wgEnableNjordExt' => '透過上傳圖片到主頁的方法讓你的維基網站更有吸引力！',
 	'wikifeatures-feature-heading-wgEnablePortableInfoboxEuropaTheme' => 'Europa訊息框版式',
-	'wikifeatures-feature-description-wgEnablePortableInfoboxEuropaTheme' => '為訊息框開啟新的外觀並且使用你的維基社區背景顏色！',
+	'wikifeatures-feature-description-wgEnablePortableInfoboxEuropaTheme' => '為[[w:zh:Help:訊息框|訊息框]]開啟新的外觀並且使用你的維基社區背景顏色！',
 	'wikifeatures-feature-heading-wgDisableAnonymousEditing' => '要求所有貢獻者登入',
 	'wikifeatures-feature-description-wgDisableAnonymousEditing' => '希望訪問你的維基的所有貢獻者登入？啟用此功能後，任何匿名訪客將無權編輯頁面、參與評論或論壇討論，或在留言板上留言，但任何人都仍然可以創建維基帳戶加入你的社區！',
 	'wikifeatures-feature-heading-emptylabs' => '實驗项目目前似乎不能正常使用',
