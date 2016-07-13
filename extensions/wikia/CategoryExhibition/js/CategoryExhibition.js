@@ -8,6 +8,7 @@ var CategoryExhibition = {
 		$('#mw-blogs').delegate('.wikia-paginator a', 'click', CategoryExhibition.blogsPaginatorClick);
 
 		CategoryExhibition.redrawFormButtons();
+		CategoryExhibition.rewriteSubcategoryUrls();
 	},
 
 	redrawFormButtons : function(){
@@ -42,7 +43,6 @@ var CategoryExhibition = {
 	},
 
 	paginatorClick : function(pageSection, axMethod, clickedObj, name ){
-
 		if ( CategoryExhibition.lockTable[ name ] == clickedObj.attr('data-page') ){
 		 	return false;
 		}
@@ -61,8 +61,7 @@ var CategoryExhibition = {
 			display: UrlVars['display']
 		};
 
-		$.get(wgScript, data,
-		function(axData){
+		$.get(wgScript, data, function(axData){
 			var goBack = clickedObj.attr('data-back');
 			var room1 = pageSection.find('div.category-gallery-room1');
 			var room2 = pageSection.find('div.category-gallery-room2');
@@ -78,7 +77,6 @@ var CategoryExhibition = {
 					room2.html('');
 					$.dequeue( this );
 				});
-
 			} else {
 				room2.html(axData.page);
 				room1.animate( { 'margin-left' : (-1 * room1.width() ) }, 500);
