@@ -89,7 +89,7 @@ class CommunityPageSpecialUsersModel {
 				if(in_array(1853435,$blacklistedIds))
 					echo "IT'S HERE!";
 				else
-					echo "Nothing here!;
+					echo "Nothing here!";
 				exit();
 
 				return $result;
