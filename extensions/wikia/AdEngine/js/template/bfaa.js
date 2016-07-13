@@ -28,6 +28,14 @@ define('ext.wikia.adEngine.template.bfaa', [
 		logGroup = 'ext.wikia.adEngine.template.bfaa',
 		nav,
 		page,
+		unblockedSlots = [
+			'BOTTOM_LEADERBOARD',
+			'INCONTENT_BOXAD_1',
+
+			'MOBILE_BOTTOM_LEADERBOARD',
+			'MOBILE_IN_CONTENT',
+			'MOBILE_PREFOOTER'
+		],
 		wrapper;
 
 	desktopHandler = {
@@ -45,6 +53,7 @@ define('ext.wikia.adEngine.template.bfaa', [
 		},
 
 		show: function (iframe) {
+			var spotlightFooter = doc.getElementById('SPOTLIGHT_FOOTER');
 			nav.style.top = '';
 			page.classList.add('bfaa-template');
 
@@ -55,6 +64,10 @@ define('ext.wikia.adEngine.template.bfaa', [
 
 			if (win.WikiaBar) {
 				win.WikiaBar.hideContainer();
+			}
+
+			if (spotlightFooter) {
+				spotlightFooter.parentNode.style.display = 'none';
 			}
 		}
 	};
@@ -116,7 +129,11 @@ define('ext.wikia.adEngine.template.bfaa', [
 		log('show', 'info', logGroup);
 
 		uapContext.setUapId(params.uap);
-		btfBlocker.unblock('BOTTOM_LEADERBOARD');
+		unblockedSlots.forEach(btfBlocker.unblock);
+
+		if (skin === 'mercury') {
+			win.dispatchEvent(new Event('wikia.uap'));
+		}
 	}
 
 	return {

@@ -27,9 +27,6 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		// queue i18n messages for export to JS
 		JSMessages::enqueuePackage( 'CommunityPageSpecial', JSMessages::EXTERNAL );
 
-		// remove user styles and js
-		$this->getOutput()->disallowUserJs();
-
 		$this->response->setValues( [
 			'heroImageUrl' => $this->getHeroImageUrl(),
 			'inviteFriendsText' => $this->msg( 'communitypage-invite-friends' )->plain(),
@@ -95,7 +92,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 			'topContribsHeaderText' => $this->msg( 'communitypage-top-contributors-week' )->plain(),
 			'yourRankText' => $this->msg( 'communitypage-user-rank' )->plain(),
 			'userContributionsText' => $this->msg( 'communitypage-user-contributions' )
-				->numParams( $this->wg->Lang->formatNum( $currentUserContributionCount ) )
+				->numParams( $this->getLanguage()->formatNum( $currentUserContributionCount ) )
 				->text(),
 			'noContribsText' => $this->msg( 'communitypage-no-contributions' )->plain(),
 			'contributors' => $topContributorsDetails,
@@ -146,7 +143,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		$this->response->setData( [
 			'topAdminsHeaderText' => $this->msg( 'communitypage-admins' )->plain(),
 			'allAdminsList' => $allAdminsDetails,
-			'allAdminsCount' => $this->wg->Lang->formatNum( count( $allAdminsDetails ) ),
+			'allAdminsCount' => $this->getLanguage()->formatNum( count( $allAdminsDetails ) ),
 			'noAdminText' => $this->msg( 'communitypage-no-admins' )->plain(),
 			'noAdminContactText' => $this->msg( 'communitypage-no-admins-contact' )->plain(),
 			'noAdminHref' => $this->msg( 'communitypage-communitycentral-link' )->inContentLanguage()->text(),
@@ -187,7 +184,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 			'joinedText' => $this->msg( 'communitypage-joined' )->plain(),
 			'noMembersText' => $this->msg( 'communitypage-no-members' )->plain(),
 			'members' => $allMembers,
-			'membersCount' => $this->wg->Lang->formatNum( $membersCount ),
+			'membersCount' => $this->getLanguage()->formatNum( $membersCount ),
 			'haveMoreMembers' => $membersCount >= CommunityPageSpecialUsersModel::ALL_CONTRIBUTORS_MODAL_LIMIT,
 			'moreMembersLink' => $moreMembers->getCanonicalURL(),
 			'moreMembersText' => $this->msg( 'communitypage-view-more' )->plain(),
@@ -219,10 +216,24 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 
 		$this->response->setData( [
 			'allText' => $this->msg( 'communitypage-modal-tab-all' )->plain(),
-			'allCount' => $this->wg->Lang->formatNum( $memberCount ),
+			'allCount' => $this->getLanguage()->formatNum( $memberCount ),
 			'adminsText' => $this->msg( 'communitypage-modal-tab-admins' )->plain(),
-			'allAdminsCount' => $this->wg->Lang->formatNum( count( $this->usersModel->getAllAdmins() ) ),
+			'allAdminsCount' => $this->getLanguage()->formatNum( count( $this->usersModel->getAllAdmins() ) ),
 			'leaderboardText' => $this->msg( 'communitypage-top-contributors-week' )->plain(),
+		] );
+	}
+
+	public function getBenefitsModalData() {
+		$memberCount = $this->usersModel->getMemberCount();
+
+		if ( $memberCount < 25 ) {
+			$memberCount = '';
+		} else {
+			$memberCount = $this->getLanguage()->formatNum( $memberCount );
+		}
+		$this->response->setData( [
+			'memberCount' => $memberCount,
+			'wikiTopic' => WikiTopic::getWikiTopic(),
 		] );
 	}
 
@@ -254,7 +265,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 				'userName' => $userName,
 				'avatar' => $avatar,
 				'contributionsText' => $this->msg( 'communitypage-contributions' )
-					->numParams( $this->wg->Lang->formatNum( $contributor['contributions'] ) )->text(),
+					->numParams( $this->getLanguage()->formatNum( $contributor['contributions'] ) )->text(),
 				'profilePage' => $user->getUserPage()->getLocalURL(),
 				'count' => $count,
 				'isAdmin' => $contributor['isAdmin'],
@@ -290,7 +301,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 			$rank = 1;
 
 			foreach ( $topContributors as $contributor ) {
-				if ( $contributor['userId'] == $this->wg->user->getId() ) {
+				if ( $contributor['userId'] == $this->getUser()->getId() ) {
 					$userRank = $rank;
 					break;
 				}

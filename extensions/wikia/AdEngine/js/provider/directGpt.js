@@ -53,7 +53,7 @@ define('ext.wikia.adEngine.provider.directGpt', [
 		{
 			beforeSuccess: function (slotName) {
 				slotTweaker.removeDefaultHeight(slotName);
-				if (slotTweaker.isUniversalAdPackageLoaded()) {
+				if (!slotTweaker.isUniversalAdPackageLoaded()) {
 					slotTweaker.removeTopButtonIfNeeded(slotName);
 					slotTweaker.adjustLeaderboardSize(slotName);
 				}

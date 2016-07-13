@@ -425,6 +425,10 @@ class DataFeedProvider {
 					}
 
 					$imageInfo = self::getThumb($imageName);
+					if (!$imageInfo) {
+						continue;
+					}
+					
 					if ($imageClass === 'image' && !$hideimages) {
 						$item['new_images'][] = $imageInfo;
 					} elseif ($imageClass === 'video' && !$hidevideos) {

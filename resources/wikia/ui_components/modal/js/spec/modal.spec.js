@@ -27,6 +27,12 @@ describe('Modal module', function () {
 			};
 		},
 		browserDetect = {},
+		tracker = {
+			ACTIONS: {
+				CLICK: 'click'
+			},
+			buildTrackingFunction: function () {}
+		},
 		modal,
 		uiComponentMock = {
 			render: function () {}
@@ -37,7 +43,7 @@ describe('Modal module', function () {
 	jQuery.extend = window.jQuery.extend;
 	jQuery.proxy = function () {};
 
-	modal = modules['wikia.ui.modal'](jQuery, win, browserDetect);
+	modal = modules['wikia.ui.modal'](jQuery, win, browserDetect, tracker);
 
 	it('registers AMD module', function () {
 		expect(modal).toBeDefined();
@@ -88,7 +94,13 @@ describe('Modal events', function () {
 	'use strict';
 
 	var browserDetect = {},
-		module = modules['wikia.ui.modal'](jQuery, window, browserDetect),
+		tracker = {
+			ACTIONS: {
+				CLICK: 'click'
+			},
+			buildTrackingFunction: function () {}
+		},
+		module = modules['wikia.ui.modal'](jQuery, window, browserDetect, tracker),
 		modal = null,
 		uiComponentMock = {
 			render: function () {}
@@ -280,6 +292,12 @@ describe('Modal buttons', function () {
 		renderFunction = function (params) {
 			return params;
 		},
+		tracker = {
+			ACTIONS: {
+				CLICK: 'click'
+			},
+			buildTrackingFunction: function () {}
+		},
 		button = {
 			type: 'button',
 			vars: {
@@ -296,7 +314,7 @@ describe('Modal buttons', function () {
 				return subComponent;
 			}
 		},
-		modal = modules['wikia.ui.modal'](jQuery, window, browserDetect);
+		modal = modules['wikia.ui.modal'](jQuery, window, browserDetect, tracker);
 
 	it('allows modals without buttons', function () {
 		var params = {
@@ -355,7 +373,7 @@ describe('Modal buttons', function () {
 					buttons: [button, '<button>']
 				}
 			},
-			modal = modules['wikia.ui.modal'](jQuery, window, browserDetect),
+			modal = modules['wikia.ui.modal'](jQuery, window, browserDetect, tracker),
 			renderResult = {
 				type: 'default',
 				vars: {

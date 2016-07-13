@@ -51,7 +51,7 @@ class PermissionsServiceImpl implements PermissionsService {
 	}
 
 	/**
-	 * Return memcache key used for storing groups for a given user
+	 * Get memcached key used for storing groups for a given user
 	 *
 	 * @param $userId
 	 * @return string memcache key
@@ -73,11 +73,12 @@ class PermissionsServiceImpl implements PermissionsService {
 			$implicitGroups = $this->implicitUserGroups[ $user->getId() ];
 		} else {
 			$implicitGroups = array( '*' );
-			if ( $user->getId() ) {
+			if ( $user->isLoggedIn() ) {
 				$implicitGroups[] = 'user';
 
 				$implicitGroups = array_unique( array_merge(
 					$implicitGroups,
+					$this->getAutomaticAccessControlGroups( $user ),
 					\Autopromote::getAutopromoteGroups( $user )
 				) );
 				$this->implicitUserGroups[ $user->getId() ] = $implicitGroups;
@@ -85,6 +86,28 @@ class PermissionsServiceImpl implements PermissionsService {
 		}
 
 		return $implicitGroups;
+	}
+
+	/**
+	 * Get the list of access control groups based on explicit groups user has.
+	 * This helps us force secure access control for the most powerful accounts
+	 *
+	 * @param \User $user
+	 * @return array
+	 */
+	private function getAutomaticAccessControlGroups( \User $user ) {
+		if ( $user->isLoggedIn() ) {
+			$explicitGroups = $this->getExplicitGlobalGroups( $user );
+			$restrictedGroups = array_intersect( $explicitGroups,
+				$this->permissionsConfiguration->getRestrictedAccessGroups() );
+			$exemptGroups = array_intersect( $explicitGroups,
+				$this->permissionsConfiguration->getRestrictedAccessExemptGroups() );
+
+			if ( count( $restrictedGroups ) > 0 && count( $exemptGroups ) == 0 ) {
+				return [ 'restricted-login-auto' ];
+			}
+		}
+		return [];
 	}
 
 	/**
@@ -140,7 +163,7 @@ class PermissionsServiceImpl implements PermissionsService {
 
 	/**
 	 * @param int $db DB_SLAVE or DB_MASTER
-	 * @return DatabaseBase
+	 * @return \DatabaseBase
 	 */
 	static private function getSharedDB( $db = DB_SLAVE ) {
 		global $wgExternalSharedDB;
@@ -180,7 +203,7 @@ class PermissionsServiceImpl implements PermissionsService {
 			return false;
 		}
 		$dbw = self::getSharedDB( DB_MASTER );
-		if ( $user->getId() ) {
+		if ( $user->isLoggedIn() ) {
 			$dbw->insert( 'user_groups',
 				[
 					'ug_user'  => $user->getID(),
@@ -194,7 +217,7 @@ class PermissionsServiceImpl implements PermissionsService {
 
 	private function addToLocalGroup( \User $user, $group ) {
 		$dbw = wfGetDB( DB_MASTER );
-		if ( $user->getId() ) {
+		if ( $user->isLoggedIn() ) {
 			$dbw->insert( 'user_groups',
 				array(
 					'ug_user'  => $user->getId(),

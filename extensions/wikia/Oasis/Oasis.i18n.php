@@ -3357,7 +3357,7 @@ $messages['pl'] = array(
 	'wiki-navigation' => '* <nowiki>Artykuły</nowiki>
 ** #category1#
 ** #category2#
-** #category3# 
+** #category3#
 * <nowiki>Społeczność</nowiki>
 ** blogs-recent-url|blogs-recent-url-text
 * Pomoc:Zawartość|Pomoc
@@ -4947,7 +4947,7 @@ $messages['zh-hant'] = array(
 趕快看一下吧！
 - Wikia團隊
 
-___________________________________________ 
+___________________________________________
 * 訪問社區中心尋求説明和建議：http://zh.community.wikia.com
 * 不再希望收到任何消息?您可以前往以下頁面取消訂閱或更改您的電子郵件偏好設置：http://zh.community.wikia.com/Special:Preferences',
 	'oasis-label-wiki-vertical-id-0' => '其他',
