@@ -1562,7 +1562,7 @@ $wgAdDriverSourcePointRecoveryCountries = null;
  * @name $wgAdDriverPageFairWebsiteCode
  * Website code for PageFair
  */
-$wgAdDriverPageFairWebsiteCode = '33D3783E8187406D';
+$wgAdDriverPageFairWebsiteCode = null;
 
 /**
  * trusted proxy service registry
