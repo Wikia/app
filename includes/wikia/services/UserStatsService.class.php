@@ -276,6 +276,7 @@ class UserStatsService extends WikiaModel {
 		}
 
 		$dbw = $this->getDatabase( Title::GAID_FOR_UPDATE );
+		echo "HERE IT IS!";
 		$dbw->replace(
 			'wikia_user_properties',
 			[],
