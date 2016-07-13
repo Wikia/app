@@ -1,71 +1,108 @@
 <?php
+/**
+ * Special handling for category description pages
+ * Modelled after ImagePage.php
+ *
+ */
+
+if( !defined( 'MEDIAWIKI' ) )
+	die( 1 );
 
 /**
- * Custom category page showing exhibition of pages, subcategories and media in the category
  */
 class CategoryExhibitionPage extends CategoryPageII {
-	public function closeShowCategory() {
-		global $wgOut, $wgRequest, $wgUser;
 
-		$urlParams = new CategoryUrlParams( $wgRequest, $wgUser );
-		$urlParams->savePreference();
+	var $viewerClass = 'CategoryExhibitionViewer';
 
-		$sections = [
-			new CategoryExhibitionSectionPages( $this->mTitle, $urlParams ),
-			new CategoryExhibitionSectionSubcategories( $this->mTitle, $urlParams ),
-			new CategoryExhibitionSectionMedia( $this->mTitle, $urlParams ),
-			new CategoryExhibitionSectionBlogs( $this->mTitle, $urlParams ),
-		];
+	function closeShowCategory() {
+		global $wgOut, $wgRequest;
+		$viewer = new $this->viewerClass( $this->mTitle );
+		$wgOut->addHTML( $viewer->getHTML() );
+	}
+}
 
-		$oTmpl = new EasyTemplate( __DIR__ . '/templates/' );
+class CategoryExhibitionViewer extends CategoryPageIIViewer {
+	var	$title, $limit, $from, $until,
+		$articles, $articles_start_char,
+		$children, $children_start_char,
+		$showGallery, $gallery,
+		$skin;
 
-		$paginators = [];
+	/** Category object for this page */
+	private $cat;
 
-		$r = '';
-		foreach ( $sections as $section ) {
-			/** @var CategoryExhibitionSection $section */
-			$oTmpl->set_vars( $section->getTemplateVars() );
-			$r .= $oTmpl->render( 'section-wrapper' );
-			$paginators[] = $section->getPaginator();
-		}
+	function __construct( $title, $from = '', $until = '' ) {
+		global $wgCategoryPagingLimit;
+		$this->title = $title;
+		$this->from = $from;
+		$this->until = $until;
+		$this->limit = $wgCategoryPagingLimit;
+		$this->cat = Category::newFromTitle( $title );
+	}
 
-		if ( $urlParams->getDisplayParam() || $urlParams->getSortParam() ) {
-			// One of display or sort params present in the URL.
-			// We want the bots to avoid those pages and stick to the default sorting options
-			$wgOut->setRobotPolicy( 'noindex,nofollow' );
-		} else {
-			// Default sorting options, let's add pagination info for robots
-			$this->addPaginationToHead( $wgOut, $paginators );
-		}
+	/**
+	 * Format the category data list.
+	 *
+	 * @return string HTML output
+	 * @private
+	 */
+	function getHTML() {
+		global $wgOut, $wgCategoryMagicGallery, $wgCategoryPagingLimit;
+		wfProfileIn( __METHOD__ );
 
+		$r = $this->getPagesSection().
+			$this->getSubcategorySection().
+			$this->getBlogsSection().
+			$this->getMediaSection();
+			
 		// Give a proper message if category is empty
 		if ( $r == '' ) {
 			$r = wfMsgExt( 'category-empty', array( 'parse' ) );
 		}
 
-		$wgOut->addHTML( $r );
+		wfProfileOut( __METHOD__ );
+		return $r;
 	}
 
-	/**
-	 * Find the paginator that offers the most pages and use it to generate
-	 * <link rel="next/prev"> links and place them to <head>
-	 *
-	 * @param OutputPage $out
-	 * @param $paginators array of Paginator and/or null objects
-	 */
-	private function addPaginationToHead( OutputPage $out, $paginators ) {
-		$maxPages = 0;
-		$maxPagesPaginator = null;
+	function getSubcategorySection() {
+		$oSection = new CategoryExhibitionSectionSubcategories( $this->cat->getTitle() );
+		return $oSection->getSectionHTML();
+	}
 
-		foreach ( $paginators as $paginator ) {
-			if ( $paginator && $paginator->getPagesCount() > $maxPages ) {
-				$maxPages = $paginator->getPagesCount();
-				$maxPagesPaginator = $paginator;
-			}
-		}
+	function getPagesSection() {
+		$oSection = new CategoryExhibitionSectionPages( $this->cat->getTitle() );
+		return $oSection->getSectionHTML();
+	}
 
-		if ( $maxPagesPaginator ) {
-			$out->addHeadItem( 'Paginator', $maxPagesPaginator->getHeadItem() );
+	function getMediaSection() {
+		$oSection = new CategoryExhibitionSectionMedia( $this->cat->getTitle() );
+		return $oSection->getSectionHTML();
+	}
+
+	function getBlogsSection(){
+		$oSection = new CategoryExhibitionSectionBlogs( $this->cat->getTitle() );
+		return $oSection->getSectionHTML();
+	}
+
+	function getSection( $oSection, $paginatorVariable ){
+		$categoryTitle = $this->cat->getTitle();
+		return $oSection->getSectionHTML();
+	}
+
+	function getOtherSection() {
+		$r = "";
+		wfRunHooks( "CategoryViewer::getOtherSection", array( &$this, &$r ) );
+		return $r;
+	}
+
+	function getCategoryBottom() {
+		if( $this->until != '' ) {
+			return $this->pagingLinks( $this->title, $this->nextPage, $this->until, $this->limit );
+		} elseif( $this->nextPage != '' || $this->from != '' ) {
+			return $this->pagingLinks( $this->title, $this->from, $this->nextPage, $this->limit );
+		} else {
+			return '';
 		}
 	}
+
 }

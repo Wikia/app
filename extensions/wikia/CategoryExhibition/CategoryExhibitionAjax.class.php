@@ -1,5 +1,18 @@
 <?php
 
+/**
+ * ArticleComments
+ *
+ * A ArticleComments extension for MediaWiki
+ * Adding comment functionality on article pages
+ *
+ * @author Jakub Kurcek  <jakub@wikia.inc>
+ * @copyright Copyright (C) 2010 Jakub Kurcek, Wikia Inc.
+ * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
+ * @package MediaWiki
+ *
+ */
+
 class CategoryExhibitionAjax {
 
 	static public function axGetArticlesPage() {
@@ -19,31 +32,27 @@ class CategoryExhibitionAjax {
 	}
 
 	/**
-	 * Get one page of one section of a category listing as the following structure
-	 * [  'page' => HTML of the requested page
-	 *    'paginator' => HTML of the paginator ]
-	 * 'articleId', 'page', 'sort', 'display' params will be read from URL.
+	 * Returns section html.
 	 *
 	 * @param $class string
-	 * @return array
+	 * @return string
 	 */
-	static private function getSection( $class ) {
-		global $wgRequest;
 
-		$pageTitle = $wgRequest->getVal( 'articleId' );
-		$title = Title::newFromText( $pageTitle, NS_CATEGORY );
-		if ( !is_object( $title ) ) {
+	static private function getSection( $class ){
+		global $wgRequest;
+		
+		$pageText = $wgRequest->getVal( 'articleId' );
+		$iPaginatorPosition = (int)$wgRequest->getVal( 'page' );
+		$oCategoryTitle = Title::newFromText( $pageText, NS_CATEGORY );
+		if ( !is_object( $oCategoryTitle ) ){
 			return '';
 		}
+		$oSection = new $class( $oCategoryTitle );
+		$sUrl = $oCategoryTitle->getFullURL();
 
-		$urlParams = new CategoryUrlParams( $wgRequest );
-
-		/** @var CategoryExhibitionSection $oSection */
-		$oSection = new $class( $title, $urlParams );
-		$results = $oSection->getTemplateVars();
-		return [
-			'page' => $results['items'],
-			'paginator' => $results['paginator'],
-		];
+		$result = $oSection->getSectionAxHTML( $iPaginatorPosition, $sUrl );
+		
+		return $result;
 	}
+
 }

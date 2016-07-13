@@ -1,31 +1,52 @@
 <?php
+/**
+ * Special handling for category description pages
+ * Modelled after ImagePage.php
+ *
+ */
+
+if( !defined( 'MEDIAWIKI' ) )
+	die( 1 );
 
 /**
- * Standard category page decorated with the form in the top which you can use to switch
- * the view type to exhibition. Also the base for the CategoryExhibitionPage (which adds
- * closeShowCategory method)
  */
 class CategoryPageII extends CategoryPage {
-	public function openShowCategory() {
-		global $wgOut, $wgExtensionsPath, $wgJsMimeType, $wgTitle, $wgRequest, $wgUser;
 
-		$wgOut->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/CategoryExhibition/css/CategoryExhibition.scss' ) );
-		$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/CategoryExhibition/js/CategoryExhibition.js\" ></script>\n" );
+	var $viewerClass = 'CategoryPageIIViewer';
 
-		$urlParams = new CategoryUrlParams( $wgRequest, $wgUser );
-		$urlParams->savePreference();
+	function addScripts(){
+		global $wgOut, $wgExtensionsPath, $wgJsMimeType;
+		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/CategoryExhibition/js/CategoryExhibition.js\" ></script>\n");
+	}
 
-		$oTmpl = new EasyTemplate( __DIR__ . '/templates/' );
+	function openShowCategory() {
+		global $wgOut;
+		$wgOut->addStyle( AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/CategoryExhibition/css/CategoryExhibition.scss'));
+		$wgOut->addStyle( AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/CategoryExhibition/css/CategoryExhibition.IE.scss'), '', 'lte IE 8' );
+		$this->addScripts();
+		$viewer = new $this->viewerClass( $this->mTitle );
+		$wgOut->addHTML( $viewer->getFormHTML() );
+	}
+}
+
+
+class CategoryPageIIViewer {
+
+	function getFormHTML() {
+		global $wgTitle;
+
+		$categoryExhibitionSection = new CategoryExhibitionSection( $wgTitle );
+		$categoryExhibitionSection->setSortTypeFromParam();
+		$categoryExhibitionSection->setDisplayTypeFromParam();
+		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 		$oTmpl->set_vars(
-			[
+			array(
 				'path' => $wgTitle->getFullURL(),
-				'sortTypes' => $urlParams->getAllowedSortOptions(),
-				'current' => $urlParams->getSortType(),
-				'displayType' => $urlParams->getDisplayType(),
-			]
+				'current' => $categoryExhibitionSection->getSortType(),
+				'sortTypes' => $categoryExhibitionSection->getSortTypes(),
+				'displayType' => $categoryExhibitionSection->getDisplayType(),
+			)
 		);
-		$formHtml = $oTmpl->render( 'form' );
-
-		$wgOut->addHTML( $formHtml );
+		return $oTmpl->render( "form" );
 	}
 }
