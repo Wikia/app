@@ -55,7 +55,7 @@ $messages['qqq'] = array(
 
 $messages['de'] = array(
 	'discussionslog' => 'Diskussions-Benutzerprotokoll',
-	'discussionslog-desc' => 'Erweiterung des Diskussions-Benutzerprotokolls von Wikia',
+	'discussionslog-desc' => 'Erweiterung des Wikia Diskussions-Benutzerprotokolls',
 	'discussionslog-pagetitle' => 'Benutzer-Diskussionsprotokoll der mobilen App',
 	'discussionslog-contributions-link-title' => 'Diskussions-IP-Verlauf',
 	'discussionslog-username-label' => 'Benutzername: ',
@@ -76,6 +76,8 @@ $messages['de'] = array(
 	'discussionslog-multiple-input-error' => 'Es muss nur ein Feld ausgefüllt werden.',
 	'discussionslog-table-ip-caption' => 'Protokolldaten für IP-Adresse $1',
 	'discussionslog-user-name-header' => 'Benutzername',
+	'discussionslog-no-contributions-error' => '$1 hat in den letzten zwei Wochen keine Beiträge verfasst!',
+	'discussionslog-more-info' => 'Für weitere Informationen hier klicken',
 );
 
 $messages['es'] = array(
@@ -101,6 +103,8 @@ $messages['es'] = array(
 	'discussionslog-multiple-input-error' => 'Sólo un campo debe rellenarse.',
 	'discussionslog-table-ip-caption' => 'Registro de datos de la dirección IP $1',
 	'discussionslog-user-name-header' => 'Nombre de usuario',
+	'discussionslog-no-contributions-error' => '¡Ninguna contribución de $1 en las últimas dos semanas!',
+	'discussionslog-more-info' => 'Haz clic para información',
 );
 
 $messages['fr'] = array(
@@ -126,31 +130,35 @@ $messages['fr'] = array(
 	'discussionslog-multiple-input-error' => 'Seul un champ doit être renseigné.',
 	'discussionslog-table-ip-caption' => "Données de journal de l'adresse IP $1",
 	'discussionslog-user-name-header' => "Nom d'utilisateur",
+	'discussionslog-no-contributions-error' => 'Aucune contribution de $1 au cours des deux dernières semaines !',
+	'discussionslog-more-info' => "Cliquez pour plus d'infos.",
 );
 
 $messages['it'] = array(
-	'discussionslog' => 'Registro utenti discussioni',
-	'discussionslog-desc' => 'Estensione registro utenti discussioni Wikia',
-	'discussionslog-pagetitle' => 'Registri discussioni utenti app mobili',
-	'discussionslog-contributions-link-title' => 'Cronologia IP discussione',
+	'discussionslog' => 'Registro utenti di Discussioni',
+	'discussionslog-desc' => "Registro utenti dell'estensione Discussioni di Wikia",
+	'discussionslog-pagetitle' => 'Registri discussioni degli utenti app mobili',
+	'discussionslog-contributions-link-title' => "Cronologia discussioni dell'IP",
 	'discussionslog-username-label' => 'Nome utente: ',
-	'discussionslog-view-logs' => 'Visualizza',
+	'discussionslog-view-logs' => 'Vedi registri',
 	'discussionslog-no-user-match-error' => 'Il nome utente fornito non corrisponde ad alcun utente',
 	'discussionslog-no-mobile-activity-error' => 'Nessuna attività app mobile da $1 nelle ultime due settimane!',
-	'discussionslog-table-caption' => 'Dati registro per utente $1 (ID: $2)',
+	'discussionslog-table-caption' => "Dati dal registro per l'utente $1 (ID: $2)",
 	'discussionslog-ip-address-header' => 'Indirizzo IP',
 	'discussionslog-location-header' => 'Luogo',
 	'discussionslog-language-header' => 'Lingua',
-	'discussionslog-user-agent-header' => 'Agente',
+	'discussionslog-user-agent-header' => 'User Agent',
 	'discussionslog-app-header' => 'App',
 	'discussionslog-timestamp-header' => 'Timestamp',
 	'action-specialdiscussionslog' => 'Special:DiscussionsLog',
 	'discussionslog-or-label' => 'o',
 	'discussionslog-ip-invalid-error' => "L'indirizzo IP fornito non è valido.",
-	'discussionslog-no-ip-activity-error' => 'Nessuna attività recente da indirizzo IP $1 trovato.',
+	'discussionslog-no-ip-activity-error' => "Nessuna attività recente trovata dall'indirizzo IP $1.",
 	'discussionslog-multiple-input-error' => 'Solo un campo deve essere popolato.',
-	'discussionslog-table-ip-caption' => 'Dati di registro per indirizzo IP $1',
+	'discussionslog-table-ip-caption' => "Dati dal registro per l'indirizzo IP $1",
 	'discussionslog-user-name-header' => 'Nome utente',
+	'discussionslog-no-contributions-error' => 'Nessun contributo di $1 nelle ultime due settimane!',
+	'discussionslog-more-info' => 'Clicca per informazioni',
 );
 
 $messages['ja'] = array(
@@ -160,7 +168,7 @@ $messages['ja'] = array(
 	'discussionslog-contributions-link-title' => 'トークのIP履歴',
 	'discussionslog-username-label' => 'ユーザー名： ',
 	'discussionslog-view-logs' => 'ログを表示',
-	'discussionslog-no-user-match-error' => '指定されたユーザー名はどのユーザーにも一致しませんでした',
+	'discussionslog-no-user-match-error' => '入力されたユーザー名はどのユーザーにも一致しませんでした',
 	'discussionslog-no-mobile-activity-error' => '過去2週間に、$1さんによるモバイルアプリのアクティビティはありませんでした。',
 	'discussionslog-table-caption' => '$1さん（ID：$2）のログデータ',
 	'discussionslog-ip-address-header' => 'IPアドレス',
@@ -169,13 +177,15 @@ $messages['ja'] = array(
 	'discussionslog-user-agent-header' => 'エージェント',
 	'discussionslog-app-header' => 'アプリ',
 	'discussionslog-timestamp-header' => 'タイムスタンプ',
-	'action-specialdiscussionslog' => 'Special:DiscussionsLog',
+	'action-specialdiscussionslog' => '特別:トーク・ログ',
 	'discussionslog-or-label' => 'または',
 	'discussionslog-ip-invalid-error' => '指定されたIPアドレスは無効です。',
 	'discussionslog-no-ip-activity-error' => 'IPアドレス$1からの最近のアクティビティは見つかりませんでした。',
 	'discussionslog-multiple-input-error' => '入力できるのは1つの欄だけです。',
 	'discussionslog-table-ip-caption' => 'IPアドレス$1のログデータ',
 	'discussionslog-user-name-header' => 'ユーザー名',
+	'discussionslog-no-contributions-error' => '過去2週間に、$1 さんによる投稿はありませんでした。',
+	'discussionslog-more-info' => 'クリックして詳細を確認',
 );
 
 $messages['nl'] = array(
@@ -201,6 +211,8 @@ $messages['nl'] = array(
 	'discussionslog-multiple-input-error' => 'Only one field should be populated.',
 	'discussionslog-table-ip-caption' => 'Log data for IP address $1',
 	'discussionslog-user-name-header' => 'Username',
+	'discussionslog-no-contributions-error' => 'No contributions by $1 in the past two weeks!',
+	'discussionslog-more-info' => 'Click for info',
 );
 
 $messages['pl'] = array(
@@ -226,19 +238,21 @@ $messages['pl'] = array(
 	'discussionslog-multiple-input-error' => 'Tylko jedno pole powinno zostać uzupełnione.',
 	'discussionslog-table-ip-caption' => 'Dane rejestru dla adresu IP $1',
 	'discussionslog-user-name-header' => 'Nazwa użytkownika',
+	'discussionslog-no-contributions-error' => 'Brak wpisów użytkownika $1 w ciągu ostatnich dwóch tygodni!',
+	'discussionslog-more-info' => 'Kliknij, aby uzyskać informacje',
 );
 
 $messages['pt'] = array(
 	'discussionslog' => 'Registro de discussões de usuários',
 	'discussionslog-desc' => 'Extensão de registros de discussão de usuários da Wikia',
 	'discussionslog-pagetitle' => 'Registro de discussões de usuários em app móvel',
-	'discussionslog-contributions-link-title' => 'História do IP de discussão',
+	'discussionslog-contributions-link-title' => 'Histórico do IP de discussão',
 	'discussionslog-username-label' => 'Nome de usuário: ',
 	'discussionslog-view-logs' => 'Visualizar registros',
 	'discussionslog-no-user-match-error' => 'O nome de usuário fornecido não corresponde a nenhum usuário',
 	'discussionslog-no-mobile-activity-error' => 'Nenhuma atividade do app móvel de $1 nas últimas duas semanas!',
 	'discussionslog-table-caption' => 'Registro de dados do usuário $1 (ID: $2)',
-	'discussionslog-ip-address-header' => 'Endereço IP',
+	'discussionslog-ip-address-header' => 'Endereço de IP',
 	'discussionslog-location-header' => 'Localização',
 	'discussionslog-language-header' => 'Idioma',
 	'discussionslog-user-agent-header' => 'Agente',
@@ -246,36 +260,40 @@ $messages['pt'] = array(
 	'discussionslog-timestamp-header' => 'Data e Hora',
 	'action-specialdiscussionslog' => 'Special:DiscussionsLog',
 	'discussionslog-or-label' => 'ou',
-	'discussionslog-ip-invalid-error' => 'O endereço IP fornecido é inválido.',
+	'discussionslog-ip-invalid-error' => 'O endereço de IP fornecido é inválido.',
 	'discussionslog-no-ip-activity-error' => 'Nenhuma atividade recente do endereço IP $1 encontrada.',
 	'discussionslog-multiple-input-error' => 'Apenas um campo deve ser preenchido.',
-	'discussionslog-table-ip-caption' => 'Registro de dados para o endereço IP $1',
+	'discussionslog-table-ip-caption' => 'Registro de dados para o endereço de IP $1',
 	'discussionslog-user-name-header' => 'Nome de usuário',
+	'discussionslog-no-contributions-error' => 'Nenhuma contribuição de $1 nas últimas duas semanas!',
+	'discussionslog-more-info' => 'Clique para informações',
 );
 
 $messages['ru'] = array(
-	'discussionslog' => 'Журнал пользователей обсуждений',
-	'discussionslog-desc' => 'Расширение Викия - журнал пользователей обсуждений',
-	'discussionslog-pagetitle' => 'Журнал пользователей обсуждений с мобильных устройств',
-	'discussionslog-contributions-link-title' => 'История обсуждений с IP',
+	'discussionslog' => 'Журнал участников обсуждений',
+	'discussionslog-desc' => 'Журнал участников обсуждений — расширение Викия',
+	'discussionslog-pagetitle' => 'Журнал участников обсуждений для пользователей мобильных устройств',
+	'discussionslog-contributions-link-title' => 'История обсуждений с IP-адреса',
 	'discussionslog-username-label' => 'Имя участника: ',
 	'discussionslog-view-logs' => 'Просмотр журналов',
 	'discussionslog-no-user-match-error' => 'Не существует такого участника',
-	'discussionslog-no-mobile-activity-error' => 'Участник $1 не проявлял активности с мобильных устройств за последние две недели.',
-	'discussionslog-table-caption' => 'Информация о пользователе $1 (ID: $2)',
+	'discussionslog-no-mobile-activity-error' => 'Участник или участница $1 не проявляли активности с мобильных устройств за последние две недели.',
+	'discussionslog-table-caption' => 'Данные журнала об участнике $1 (ID: $2)',
 	'discussionslog-ip-address-header' => 'IP-адрес',
 	'discussionslog-location-header' => 'Местоположение',
 	'discussionslog-language-header' => 'Язык',
 	'discussionslog-user-agent-header' => 'Заголовок User-Agent',
 	'discussionslog-app-header' => 'Приложение',
 	'discussionslog-timestamp-header' => 'Время',
-	'action-specialdiscussionslog' => 'Special:DiscussionsLog',
+	'action-specialdiscussionslog' => 'Служебная:DiscussionsLog',
 	'discussionslog-or-label' => 'или',
 	'discussionslog-ip-invalid-error' => 'Данный IP-адрес недействителен.',
-	'discussionslog-no-ip-activity-error' => 'C IP-адреса $1 не велась какая-либо недавняя деятельность.',
-	'discussionslog-multiple-input-error' => 'Только одно поле должно быть заполнено.',
-	'discussionslog-table-ip-caption' => 'Данные журналов для IP $1',
+	'discussionslog-no-ip-activity-error' => 'Нет недавней активности с IP-адреса $1.',
+	'discussionslog-multiple-input-error' => 'Только одно поле может быть заполнено.',
+	'discussionslog-table-ip-caption' => 'Данные журнала для IP-адреса $1',
 	'discussionslog-user-name-header' => 'Имя участника',
+	'discussionslog-no-contributions-error' => 'Участник или участница $1 не проявляли активности за последние две недели.',
+	'discussionslog-more-info' => 'Узнать больше',
 );
 
 $messages['zh-hans'] = array(
@@ -301,6 +319,8 @@ $messages['zh-hans'] = array(
 	'discussionslog-multiple-input-error' => '只允许填充一个栏位。',
 	'discussionslog-table-ip-caption' => 'IP地址为$1的访问日志',
 	'discussionslog-user-name-header' => '用户名',
+	'discussionslog-no-contributions-error' => '过去两周$1没有进行任何贡献！',
+	'discussionslog-more-info' => '点击查看信息',
 );
 
 $messages['zh-hant'] = array(
@@ -326,5 +346,7 @@ $messages['zh-hant'] = array(
 	'discussionslog-multiple-input-error' => '只允許填充一個欄位。',
 	'discussionslog-table-ip-caption' => 'IP位址為$1的日誌資料',
 	'discussionslog-user-name-header' => '用戶名',
+	'discussionslog-no-contributions-error' => '過去兩周$1沒有進行任何貢獻！',
+	'discussionslog-more-info' => '點擊查看訊息',
 );
 
