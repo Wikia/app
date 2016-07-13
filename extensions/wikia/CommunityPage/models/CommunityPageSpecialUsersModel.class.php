@@ -83,6 +83,7 @@ class CommunityPageSpecialUsersModel {
 				
 				$us = new UserStatsService(1853435);
 				var_dump($us->getStats());
+				var_dump($result);
 				exit();
 
 				return $result;
