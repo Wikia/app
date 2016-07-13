@@ -76,6 +76,7 @@ class LazyDBConnectionProvider implements DBConnectionProvider {
 
 		if ( $this->connection === null ) {
 			$this->connection = wfGetLB( $this->wiki )->getConnection( $this->connectionId, $this->groups, $this->wiki );
+			$this->connection->clearFlag( DBO_TRX ); # Wikia change - do not start transactions automatically
 		}
 
 		if ( $this->isConnection( $this->connection ) ) {
