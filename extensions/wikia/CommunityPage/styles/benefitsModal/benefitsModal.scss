@@ -30,6 +30,10 @@ $icon-space-large: 19px;
 	padding: 0;
 	word-wrap: break-word;
 
+	&:lang(ja) {
+		font-size: 14px;
+	}
+
 	> section {
 		padding: 0;
 	}
@@ -135,6 +139,12 @@ $icon-space-large: 19px;
 	font-weight: bold;
 	line-height: 34px;
 	margin-bottom: 43px;
+
+	&:lang(ja) {
+		font-size: 24px;
+		line-height: 28px;
+		margin-bottom: 32px;
+	}
 }
 
 .community-page-benefits-modal-section-title {
@@ -142,6 +152,11 @@ $icon-space-large: 19px;
 	font-weight: bold;
 	line-height: 30px;
 	margin: 10px 0 5px;
+
+	&:lang(ja) {
+		font-size: 18px;
+		line-height: 24px;
+	}
 }
 
 .community-page-benefits-modal-message {
