@@ -18,7 +18,7 @@ class CategoryExhibitionHooks {
 		$app = F::app();
 
 		// Only touch category pages on Oasis
-		if ( !$app->checkSkin( 'oasis' ) || $title || $title->getNamespace() !== NS_CATEGORY ) {
+		if ( !$app->checkSkin( 'oasis' ) || !$title || $title->getNamespace() !== NS_CATEGORY ) {
 			return true;
 		}
 
