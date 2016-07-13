@@ -87,7 +87,7 @@ class CommunityPageSpecialUsersModel {
 				var_dump($us2->getStats());
 				var_dump($result);
 				var_dump($blacklistedIds);
-				if(in_array(1853435,$blacklistedIds)
+				if(in_array(1853435,$blacklistedIds))
 					echo "IT'S HERE!";
 				exit();
 
