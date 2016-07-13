@@ -36,7 +36,7 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 
 		$this->wg->Out->addModules( 'ext.wikia.SpecialDiscussionsLog' );
 
-		$this->wg->Out->setPageTitle( wfMessage( 'discussionslog-pagetitle' )->escaped() );
+		$this->wg->Out->setPageTitle( wfMessage( 'discussionslog-page-title' )->escaped() );
 
 		$userName = $this->getVal( UserQuery::getKeyName() );
 		$ipAddress = $this->getVal( IpAddressQuery::getKeyName() );
@@ -101,6 +101,13 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 			throw new \InvalidArgumentException( self::NO_USER_MATCH_ERROR );
 		}
 
+		$user->load();
+
+		// Anonymous users can't have contributions
+		if ($user->mName === false) {
+			throw new \InvalidArgumentException( self::NO_USER_MATCH_ERROR );
+		}
+
 		$this->users[ $user->getId() ] = $user;
 
 		return $user;
@@ -129,7 +136,7 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 							->params( [ $userName, $userId ] )
 							->escaped(),
 
-						'noUserLogRecordsMessage' => wfMessage( 'discussionslog-no-mobile-activity-error' )
+						'noUserLogRecordsMessage' => wfMessage( 'discussionslog-no-contributions-error' )
 							->params( $userName )
 							->escaped(),
 				] );
@@ -163,7 +170,7 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 		$this->response->setValues( [
 			'hasNoUserLogRecords' => empty( $userLogRecords ),
 			'userLogRecords' => $this->buildDisplayedUserLogRecords( $userLogRecords ),
-			'appHeader' => wfMessage( 'discussionslog-app-header' )->escaped(),
+			'siteHeader' => wfMessage( 'discussionslog-site-header' )->escaped(),
 			'userNameHeader' => wfMessage( 'discussionslog-user-name-header' )->escaped(),
 			'ipAddressHeader' => wfMessage( 'discussionslog-ip-address-header' )->escaped(),
 			'locationHeader' => wfMessage( 'discussionslog-location-header' )->escaped(),
@@ -181,7 +188,7 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 					'userUrl' => $this->getTitle()->getLocalURL(
 						[ UserQuery::getKeyName() => $userLogRecord->user->getName() ]
 					),
-					'app' => $userLogRecord->site,
+					'site' => $userLogRecord->site,
 					'ip' => $userLogRecord->ip,
 					'ipUrl' => $this->getTitle()->getLocalURL( [ IpAddressQuery::getKeyName() => $userLogRecord->ip ] ),
 					'locationUrl' => 'https://geoiptool.com/en/?ip=' . $userLogRecord->ip,
@@ -207,7 +214,7 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 	private function aggregateSearchLogs( $query ) {
 		$records = [];
 		$dayOffset = 0;
-		$ipHash = [];
+		$domainCache = [];
 
 		while ( count( $records ) < self::PAGINATION_SIZE && $dayOffset < self::DAYS_RANGE ) {
 			$url = $this->constructKibanaUrl( $dayOffset++ );
@@ -216,7 +223,7 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 				break;
 			}
 
-			$this->appendRecordsFromResponse( $records, $response, $ipHash );
+			$this->appendRecordsFromResponse( $records, $response, $domainCache );
 		}
 
 		krsort( $records, SORT_NUMERIC );
@@ -250,7 +257,7 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 		return $response;
 	}
 
-	private function appendRecordsFromResponse( array &$records, $response, array &$ipHash ) {
+	private function appendRecordsFromResponse( array &$records, $response, array &$domainCache ) {
 
 		$resultObject = json_decode( $response->getBody() );
 		$hits = $resultObject->hits->hits;
@@ -271,17 +278,30 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 				continue;
 			}
 
-			$wikiInfo = WikiFactory::getWikiByID($site);
+			if (!isset($domainCache[$site])) {
+				$cityTitle = WikiFactory::getWikiByID($site)->city_title;
+				$wikiDomain = preg_replace('#^https?://#', '', WikiFactory::getHostById($site));
+				if (empty($cityTitle) && empty($wikiDomain)) {
+					// most likely from a different environment (e.g. prod contribution when this is on dev, or vice versa)
+					$this->logger->warning(sprintf( 'Site not found: %d', $site ));
+					continue;
+				} else {
+					$domainCache[$site] = $cityTitle . ' (' . $wikiDomain . ')';
+				}
+			}
+
+
+			$timestamp = strtotime($record->{'@timestamp'});
 
 			$userLogRecord = new UserLogRecord();
-			$userLogRecord->site = $wikiInfo->city_title . ' (' . $wikiInfo->city_dbname . ')';
+			$userLogRecord->site = $domainCache[$site];
 			$userLogRecord->ip = $ip;
-			$userLogRecord->timestamp = date(DATE_RFC2822, strtotime($record->{'@timestamp'}));
+			$userLogRecord->timestamp = date(DATE_RFC2822, $timestamp);
 			$userLogRecord->userAgent = $record->{'user_agent'};
 			$userLogRecord->user = $user;
 
 			$ipHash[ $ipHashKey ] = true;
-			$records[ $userLogRecord->timestamp ] = $userLogRecord;
+			$records[$timestamp] = $userLogRecord;
 		}
 	}
 
