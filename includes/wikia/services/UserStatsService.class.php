@@ -111,6 +111,9 @@ class UserStatsService extends WikiaModel {
 			function () use ( $flags ) {
 				$stats = $this->loadUserStatsFromDB();
 
+				echo "STATS = ";
+				var_dump($stats);
+
 				if ( empty( $stats['editcount'] ) ) {
 					$stats['editcount'] = $this->calculateEditCountWiki( $flags );
 				}
