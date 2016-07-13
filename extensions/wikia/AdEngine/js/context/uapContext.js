@@ -3,18 +3,23 @@ define('ext.wikia.adEngine.uapContext', [
 ], function () {
 	'use strict';
 
-	var uapId;
+	var context = {};
 
 	function setUapId(uap) {
-		uapId = uap;
+		context.uapId = uap;
 	}
 
 	function getUapId() {
-		return uapId;
+		return context.uapId;
+	}
+
+	function reset() {
+		context = {};
 	}
 
 	return {
 		getUapId: getUapId,
+		reset: reset,
 		setUapId: setUapId
 	};
 });

@@ -57,6 +57,20 @@ class TransactionClassifier {
 		'Newimages',
 		'Videos',
 		'Contributions',
+		// SMW-specific special pages
+		'Ask',
+		'Browse',
+		'ExportRDF',
+		'PageProperty',
+		'Properties',
+		'QueryCreator',
+		'SearchByProperty',
+		'SemanticStatistics',
+		'SMWAdmin',
+		'Types',
+		'UnusedProperties',
+		'URIResolver',
+		'WantedProperties',
 	);
 
 	protected static $FILTER_AJAX_FUNCTIONS = array(

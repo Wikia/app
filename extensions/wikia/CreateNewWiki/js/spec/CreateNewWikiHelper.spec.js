@@ -1,4 +1,5 @@
 describe('ext.createNewWiki.helper', function () {
+	'use strict';
 	it('sanitizeWikiName', function () {
 		var testCases = [
 			{
@@ -27,7 +28,7 @@ describe('ext.createNewWiki.helper', function () {
 		testCases.forEach(function (testCase) {
 			var stringHelperMock = {
 					latinise: function () {
-						return testCase.latinise
+						return testCase.latinise;
 					}
 				},
 				helper = modules['ext.createNewWiki.helper'](stringHelperMock);
@@ -51,15 +52,16 @@ describe('ext.createNewWiki.helper', function () {
 					setVal: function () {
 					},
 					toString: function () {
-						return testCase.toStringOutput
+						return testCase.toStringOutput;
 					}
 				},
 				QueryString = function () {
-					return queryStringMock
+					return queryStringMock;
 				},
-				helper = modules['ext.createNewWiki.helper']({}, {}, QueryString);
+				helper = modules['ext.createNewWiki.helper']({}, QueryString);
 
-			expect(helper.getLoginRedirectURL(testCase.wikiName, testCase.wikiDomain, testCase.wikiLanguage)).toBe(testCase.expected);
+			expect(helper.getLoginRedirectURL(testCase.wikiName, testCase.wikiDomain, testCase.wikiLanguage))
+				.toBe(testCase.expected);
 		});
-	})
+	});
 });
