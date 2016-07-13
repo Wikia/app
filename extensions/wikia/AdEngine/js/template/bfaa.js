@@ -28,7 +28,14 @@ define('ext.wikia.adEngine.template.bfaa', [
 		logGroup = 'ext.wikia.adEngine.template.bfaa',
 		nav,
 		page,
-		unblockedSlots = ['BOTTOM_LEADERBOARD', 'INCONTENT_BOXAD_1'],
+		unblockedSlots = [
+			'BOTTOM_LEADERBOARD',
+			'INCONTENT_BOXAD_1',
+
+			'MOBILE_BOTTOM_LEADERBOARD',
+			'MOBILE_IN_CONTENT',
+			'MOBILE_PREFOOTER'
+		],
 		wrapper;
 
 	desktopHandler = {
@@ -123,6 +130,10 @@ define('ext.wikia.adEngine.template.bfaa', [
 
 		uapContext.setUapId(params.uap);
 		unblockedSlots.forEach(btfBlocker.unblock);
+
+		if (skin === 'mercury') {
+			win.dispatchEvent(new Event('wikia.uap'));
+		}
 	}
 
 	return {

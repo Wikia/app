@@ -2902,7 +2902,7 @@ class User {
 	 * @return Bool
 	 */
 	public function isLoggedIn() {
-		return $this->getID() != 0;
+		return $this->getId() != 0;
 	}
 
 	/**
