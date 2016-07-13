@@ -158,11 +158,6 @@ if ( $wgProfiler instanceof Profiler ) {
 		$sink = new ProfilerDataScribeSink();
 	}
 	$wgProfiler->addSink( $sink );
-
-	// keep the legacy stream of Mediawiki profiler data via UDP
-	if ( ( $wgProfiler instanceof ProfilerSimpleDataCollector ) and !( $sink instanceof ProfilerDataUdpSink ) ) {
-		$wgProfiler->addSink( new ProfilerDataUdpSink() );
-	}
 }
 // Wikia change - end
 

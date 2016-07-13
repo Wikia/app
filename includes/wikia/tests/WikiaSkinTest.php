@@ -122,39 +122,4 @@ class WikiaSkinTest extends \WikiaBaseTest {
 		$this->assertEquals($jsGroups, array_merge(['jquery'], $groups), '$jsGroups should contain the list of combined groups');
 	}
 
-	/**
-	 * Test for WikiaSkin::getStylesWithCombinedSASS
-	 */
-	public function testCrossoriginAttributeSet() {
-		global $wgCrossoriginScssFile;
-		$wgCrossoriginScssFile = 'foo/bar/crossorigin.scss';
-		$sassFiles = [
-			'foo/bar/crossorigin.scss',
-			'foo/bar/dummy.scss',
-		];
-		$this->mockOutputPageWithStyles([]);
-		$skin = new DummySkin();
-
-		$combinedStyles = $skin->getStylesWithCombinedSASS($sassFiles);
-
-		$this->assertEquals(1, substr_count($combinedStyles, "crossorigin=\"anonymous\""));
-	}
-
-	/**
-	 * Test for WikiaSkin::getStylesWithCombinedSASS
-	 */
-	public function testCrossoriginAttributeUnset() {
-		global $wgCrossoriginScssFile;
-		$wgCrossoriginScssFile = 'foo/bar/crossorigin.scss';
-		$sassFiles = [
-			'foo/bar/not/crossorigin.scss',
-			'foo/bar/dummy.scss',
-		];
-		$this->mockOutputPageWithStyles([]);
-		$skin = new DummySkin();
-
-		$combinedStyles = $skin->getStylesWithCombinedSASS($sassFiles);
-
-		$this->assertEquals(0, substr_count($combinedStyles, "crossorigin=\"anonymous\""));
-	}
 }

@@ -34,6 +34,8 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 		$this->setHeaders();
 		$this->response->addAsset( 'special_discussions_log_scss' );
 
+		$this->wg->Out->addModules( 'ext.wikia.SpecialDiscussionsLog' );
+
 		$this->wg->Out->setPageTitle( wfMessage( 'discussionslog-pagetitle' )->escaped() );
 
 		$userName = $this->getVal( UserQuery::getKeyName() );
@@ -164,7 +166,6 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 			'appHeader' => wfMessage( 'discussionslog-app-header' )->escaped(),
 			'userNameHeader' => wfMessage( 'discussionslog-user-name-header' )->escaped(),
 			'ipAddressHeader' => wfMessage( 'discussionslog-ip-address-header' )->escaped(),
-			'languageHeader' => wfMessage( 'discussionslog-language-header' )->escaped(),
 			'locationHeader' => wfMessage( 'discussionslog-location-header' )->escaped(),
 			'timestampHeader' => wfMessage( 'discussionslog-timestamp-header' )->escaped(),
 			'userAgentHeader' => wfMessage( 'discussionslog-user-agent-header' )->escaped(),
@@ -180,11 +181,11 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 					'userUrl' => $this->getTitle()->getLocalURL(
 						[ UserQuery::getKeyName() => $userLogRecord->user->getName() ]
 					),
-					'app' => $userLogRecord->app,
+					'app' => $userLogRecord->site,
 					'ip' => $userLogRecord->ip,
 					'ipUrl' => $this->getTitle()->getLocalURL( [ IpAddressQuery::getKeyName() => $userLogRecord->ip ] ),
-					'language' => $userLogRecord->language,
-					'location' => $userLogRecord->location,
+					'locationUrl' => 'https://geoiptool.com/en/?ip=' . $userLogRecord->ip,
+					'moreInfoMsg' => wfMessage( 'discussionslog-more-info' )->escaped(),
 					'timestamp' => $userLogRecord->timestamp,
 					'userAgent' => $userLogRecord->userAgent,
 				]
@@ -206,7 +207,7 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 	private function aggregateSearchLogs( $query ) {
 		$records = [];
 		$dayOffset = 0;
-		$ipHash = [ ];
+		$ipHash = [];
 
 		while ( count( $records ) < self::PAGINATION_SIZE && $dayOffset < self::DAYS_RANGE ) {
 			$url = $this->constructKibanaUrl( $dayOffset++ );
@@ -256,17 +257,12 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 
 		foreach ( $hits as $hit ) {
 			$record = $hit->_source;
-			$ip = $record->{'mobile_app.client_ip'};
-			$app = $record->{'mobile_app.data.app_name'} . ' ' . $record->{'mobile_app.data.app_version'};
-			$ipHashKey = $ip . ':' . $app;
-
-			// Filter out records with duplicate ip/app
-			if ( !empty( $ipHash[$ipHashKey] ) ) {
-				continue;
-			}
+			$ip = $record->{'fastly_client_ip'};
+			$site = $record->{'site_id'};
+			$ipHashKey = $ip . ':' . $site;
 
 			try {
-				$user = $this->getUserById( $record->{'mobile_app.event.user_id'} );
+				$user = $this->getUserById( $record->{'user_id'} );
 			} catch ( \Exception $e ) {
 				$this->logger->error(
 					sprintf( 'User not found: %s', $e->getMessage() ),
@@ -274,21 +270,18 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 				);
 				continue;
 			}
-			$rawTimestamp = $record->{'mobile_app.event.timestamp'};
+
+			$wikiInfo = WikiFactory::getWikiByID($site);
+
 			$userLogRecord = new UserLogRecord();
-			$userLogRecord->app = $app;
+			$userLogRecord->site = $wikiInfo->city_title . ' (' . $wikiInfo->city_dbname . ')';
 			$userLogRecord->ip = $ip;
-			$userLogRecord->language = $record->{'mobile_app.event.device_language'};
-			$city = $record->{'mobile_app.geo_ip.city'};
-			$userLogRecord->location = ( $city ? $city . ', ' : '' )
-				. $record->{'mobile_app.geo_ip.country_name'};
-			$userLogRecord->timestamp = date( DATE_RFC2822, $rawTimestamp / 1000 );
-			$userLogRecord->userAgent =
-				$record->{'mobile_app.data.platform'} . ' ' . $record->{'mobile_app.data.platform_version'};
+			$userLogRecord->timestamp = date(DATE_RFC2822, strtotime($record->{'@timestamp'}));
+			$userLogRecord->userAgent = $record->{'user_agent'};
 			$userLogRecord->user = $user;
 
 			$ipHash[ $ipHashKey ] = true;
-			$records[ $rawTimestamp ] = $userLogRecord;
+			$records[ $userLogRecord->timestamp ] = $userLogRecord;
 		}
 	}
 

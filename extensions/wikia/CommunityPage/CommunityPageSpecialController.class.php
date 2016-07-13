@@ -28,9 +28,6 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		// queue i18n messages for export to JS
 		JSMessages::enqueuePackage( 'CommunityPageSpecial', JSMessages::EXTERNAL );
 
-		// remove user styles and js
-		$this->getOutput()->disallowUserJs();
-
 		$this->response->setValues( [
 			'heroImageUrl' => $this->getHeroImageUrl(),
 			'inviteFriendsText' => $this->msg( 'communitypage-invite-friends' )->plain(),

@@ -128,7 +128,7 @@ window.TabViewClass = $.createClass(Object, {
 
 			containerSelector.startThrobbing();
 
-			$.get(tabUrl, function (html) {
+			$.get(tabUrl, {action: 'render'}, function (html) {
 				containerSelector.html(html).data('loaded', true).stopThrobbing();
 
 				// fire event when new article comment is/will be added to DOM

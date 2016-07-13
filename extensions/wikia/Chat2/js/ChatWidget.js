@@ -210,13 +210,11 @@ var ChatWidget = {
 		if (window.wgUserName) {
 			window.open(linkToSpecialChat, 'wikiachat', window.wgWikiaChatWindowFeatures);
 		} else {
-			require(['AuthModal'], function (authModal) {
-				authModal.load({
-					forceLogin: true,
-					url: '/signin?redirect=' + encodeURIComponent(window.location.href),
-					origin: 'chat',
-					onAuthSuccess: ChatWidget.onSuccessfulLogin
-				});
+			window.wikiaAuthModal.load({
+				forceLogin: true,
+				url: '/signin?redirect=' + encodeURIComponent(window.location.href),
+				origin: 'chat',
+				onAuthSuccess: ChatWidget.onSuccessfulLogin
 			});
 		}
 	},
