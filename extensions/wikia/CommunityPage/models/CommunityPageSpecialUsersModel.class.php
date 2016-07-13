@@ -86,6 +86,7 @@ class CommunityPageSpecialUsersModel {
 				var_dump($us->getStats());
 				var_dump($us2->getStats());
 				var_dump($result);
+				var_dump($blacklistedIds);
 				exit();
 
 				return $result;
