@@ -28,6 +28,7 @@ class PermissionsConfigurationImpl implements PermissionsConfiguration {
 		'helper',
 		'poweruser',
 		'restricted-login',
+		'restricted-login-exempt',
 		'reviewer',
 		'staff',
 		'translator',
@@ -43,7 +44,8 @@ class PermissionsConfigurationImpl implements PermissionsConfiguration {
 		'*',
 		'user',
 		'autoconfirmed',
-		'poweruser'
+		'poweruser',
+		'restricted-login-auto'
 	];
 
 	private $permissions = [
@@ -447,9 +449,9 @@ class PermissionsConfigurationImpl implements PermissionsConfiguration {
 			[ 'chatmoderator', 'threadmoderator' ] ) );
 
 		$this->groupsAddableByGroup['util'] = array_diff( $this->getExplicitGroups(),
-			array_merge( [ 'wikifactory', 'content-reviewer', 'staff', 'util' ], $this->getImplicitGroups() ) );
+			array_merge( [ 'wikifactory', 'content-reviewer', 'staff', 'util', 'restricted-login-exempt' ], $this->getImplicitGroups() ) );
 		$this->groupsRemovableByGroup['util'] = array_diff( $this->getExplicitGroups(),
-			array_merge( [ 'restricted-login' ], $this->getImplicitGroups() ) );
+			array_merge( [ 'restricted-login', 'restricted-login-exempt' ], $this->getImplicitGroups() ) );
 
 		global $wgDevelEnvironment;
 		if ( !empty( $wgDevelEnvironment ) ) {
@@ -458,5 +460,15 @@ class PermissionsConfigurationImpl implements PermissionsConfiguration {
 			$this->groupsSelfAddableByGroup['staff'] = $this->getExplicitGroups();
 			$this->groupsSelfRemovableByGroup['staff'] = $this->getExplicitGroups();
 		}
+	}
+
+	public function getRestrictedAccessGroups() {
+		global $wgRestrictedAccessGroups;
+		return $wgRestrictedAccessGroups;
+	}
+
+	public function getRestrictedAccessExemptGroups() {
+		global $wgRestrictedAccessExemptGroups;
+		return $wgRestrictedAccessExemptGroups;
 	}
 }
