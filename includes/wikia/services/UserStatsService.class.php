@@ -253,6 +253,8 @@ class UserStatsService extends WikiaModel {
 			__METHOD__
 		);
 
+		var_dump($res);
+
 		foreach( $res as $row ) {
 			$stats[ $row->wup_property ] = $row->wup_value;
 		}
