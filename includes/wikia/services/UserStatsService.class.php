@@ -294,6 +294,9 @@ class UserStatsService extends WikiaModel {
 			echo "FALSE";
 
 		echo $dbw->lastQuery();
+
+		var_dump($statName);
+		var_dump($statVal);
 		return $dbw->affectedRows() === 1;
 	}
 
