@@ -1280,9 +1280,6 @@ class Article extends Page {
 	/**
 	 * Return the HTML for the top of a redirect page
 	 *
-	 * Chances are you should just be using the ParserOutput from
-	 * WikitextContent::getParserOutput instead of calling this for redirects.
-	 *
 	 * @param Title|array $target Destination(s) to redirect
 	 * @param bool $appendSubtitle [optional]
 	 * @param bool $forceKnown Should the image be shown as a bluelink regardless of existence?
@@ -1302,9 +1299,6 @@ class Article extends Page {
 
 	/**
 	 * Return the HTML for the top of a redirect page
-	 *
-	 * Chances are you should just be using the ParserOutput from
-	 * WikitextContent::getParserOutput instead of calling this for redirects.
 	 *
 	 * @since 1.23
 	 * @param Language $lang
