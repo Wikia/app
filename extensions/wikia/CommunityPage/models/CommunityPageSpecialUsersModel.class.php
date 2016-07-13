@@ -82,9 +82,7 @@ class CommunityPageSpecialUsersModel {
 				} );
 				
 				$us = new UserStatsService(1853435);
-				$us2 = new UserStatsService(28325524);
 				var_dump($us->getStats());
-				var_dump($us2->getStats());
 				var_dump($result);
 				if(in_array(1853435,$blacklistedIds))
 					echo "IT'S HERE!";
