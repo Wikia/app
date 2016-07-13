@@ -128,8 +128,27 @@ abstract class JobBase extends Job {
 
 	/**
 	 * @see https://gerrit.wikimedia.org/r/#/c/162009
+	 *
+	 * @param self[] $jobs
+	 * @return bool
 	 */
 	public static function batchInsert( $jobs ) {
+		// Wikia change - start
+		$tasks = [];
+
+		// extract title and parameters from each MW job and create Wikia Task
+		foreach( $jobs as $job ) {
+			wfDebug( __METHOD__ . " {$job->getType()}\n" . wfBacktrace() . "\n" );
+
+			$task = new \Wikia\Tasks\Tasks\JobWrapperTask();
+			$task->call( $job->getType(), $job->getTitle(), $job->params );
+			$tasks[] = $task;
+		}
+
+		\Wikia\Tasks\Tasks\BaseTask::batch( $tasks );
+		return true;
+		// Wikia change - end
+/**
 
 		if ( class_exists( 'JobQueueGroup' ) ) {
 			JobQueueGroup::singleton()->push( $jobs );
@@ -137,6 +156,14 @@ abstract class JobBase extends Job {
 		}
 
 		return parent::batchInsert( $jobs );
+**/
+	}
+
+	/**
+	 * Wikia change - use our job queue - push to RabbitMQ instead of MediaWiki database
+	 */
+	function insert() {
+		self::batchInsert( [ $this ] );
 	}
 
 }
