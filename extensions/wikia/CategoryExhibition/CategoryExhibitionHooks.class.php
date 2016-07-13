@@ -15,18 +15,18 @@ class CategoryExhibitionHooks {
 	 * @return bool
 	 */
 	static public function onArticleFromTitle( &$title, &$article ) {
-		if ( !F::app()->checkSkin( 'oasis' ) || !$title || $title->getNamespace() != NS_CATEGORY ) {
+		$app = F::app();
+
+		// Only touch category pages on Oasis
+		if ( !$app->checkSkin( 'oasis' ) || $title || $title->getNamespace() !== NS_CATEGORY ) {
 			return true;
 		}
 
-		$magicWord = MagicWord::get( CATEXHIBITION_DISABLED );
-		$disabled = ( 0 < $magicWord->match( $article->getRawText() ) );
-		
-		if ( $disabled || !self::isCategoryExhibitionEnabled( $title ) ) {
+		if ( self::isExhibitionDisabledForTitle( $title, $article ) ) {
 			return true;
 		}
 
-		$urlParams = new CategoryUrlParams( F::app()->wg->Request, F::app()->wg->User );
+		$urlParams = new CategoryUrlParams( $app->wg->Request, $app->wg->User );
 
 		if ( $urlParams->getDisplayType() === 'page' ) {
 			$article = new CategoryPageII( $title );
@@ -38,34 +38,30 @@ class CategoryExhibitionHooks {
 	}
 
 	/**
-	 * @return boolean
+	 * Return true if the exhibition category type should be disabled on this page
+	 *
+	 * @param Title $title
+	 * @param Article $article
+	 * @return bool
 	 */
-	static private function isCategoryExhibitionEnabled( $title ) {
-		static $categoryExhibitionEnabled = null;
-
-		if ( !is_null( $categoryExhibitionEnabled ) ) {
-			return $categoryExhibitionEnabled;
+	static private function isExhibitionDisabledForTitle( $title, $article ) {
+		if ( !$article || MagicWord::get( CATEXHIBITION_DISABLED )->match( $article->getRawText() ) > 0 ) {
+			return true;
 		}
 
-		$categoryExhibitionEnabled = false;
-		$oTmpArticle = new Article( $title );
-		if ( !is_null( $oTmpArticle ) ) {
-			if ( $title->isRedirect() ) {
-				$rdTitle = $oTmpArticle->getRedirectTarget();
-			} else {
-				$rdTitle = $title;
-			}
-
-			if ( !is_null( $rdTitle ) && ( $rdTitle->getNamespace() == NS_CATEGORY ) ) {
-				$sCategoryDBKey = $rdTitle->getDBkey();
-
-				if ( CategoryDataService::getArticleCount( $sCategoryDBKey ) <= self::EXHIBITION_LIMIT ) {
-					$categoryExhibitionEnabled = true;
-				}
-			}
+		if ( $title->isRedirect() ) {
+			$title = $article->getRedirectTarget();
 		}
 
-		return $categoryExhibitionEnabled;
+		if ( is_null( $title ) || $title->getNamespace() !== NS_CATEGORY ) {
+			return true;
+		}
+
+		if ( CategoryDataService::getArticleCount( $title->getDBkey() ) > self::EXHIBITION_LIMIT ) {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**
