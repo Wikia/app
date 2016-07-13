@@ -12,41 +12,43 @@ if( !defined( 'MEDIAWIKI' ) )
  */
 class CategoryPageII extends CategoryPage {
 
-	var $viewerClass = 'CategoryPageIIViewer';
+	/**
+	 * @param Title $title
+	 */
+	public function __construct( Title $title ) {
+		parent::__construct( $title );
 
-	function addScripts(){
-		global $wgOut, $wgExtensionsPath, $wgJsMimeType;
-		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/CategoryExhibition/js/CategoryExhibition.js\" ></script>\n");
+		// VOLDEV-16: Load CategoryTree extension if enabled and we're in list mode
+		if ( !( $this instanceof CategoryExhibitionPage ) &&
+			F::app()->wg->EnableCategoryTreeExt
+		) {
+			$this->mCategoryViewerClass = 'CategoryTreeCategoryViewer';
+		}
 	}
 
 	function openShowCategory() {
-		global $wgOut;
-		$wgOut->addStyle( AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/CategoryExhibition/css/CategoryExhibition.scss'));
-		$wgOut->addStyle( AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/CategoryExhibition/css/CategoryExhibition.IE.scss'), '', 'lte IE 8' );
-		$this->addScripts();
-		$viewer = new $this->viewerClass( $this->mTitle );
-		$wgOut->addHTML( $viewer->getFormHTML() );
-	}
-}
+		$out = $this->getContext()->getOutput();
+		$title = $this->getContext()->getTitle();
 
+		$out->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/CategoryExhibition/css/CategoryExhibition.scss' ) );
+		$out->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/CategoryExhibition/css/CategoryExhibition.IE.scss' ), '', 'lte IE 8' );
 
-class CategoryPageIIViewer {
+		$out->addScript( Html::linkedScript( AssetsManager::getInstance()->getOneCommonURL( 'extensions/wikia/CategoryExhibition/js/CategoryExhibition.js' ) ) );
 
-	function getFormHTML() {
-		global $wgTitle;
-
-		$categoryExhibitionSection = new CategoryExhibitionSection( $wgTitle );
+		$categoryExhibitionSection = new CategoryExhibitionSection( $title );
 		$categoryExhibitionSection->setSortTypeFromParam();
 		$categoryExhibitionSection->setDisplayTypeFromParam();
-		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
+
+		$oTmpl = new EasyTemplate( __DIR__ . '/templates/' );
 		$oTmpl->set_vars(
 			array(
-				'path' => $wgTitle->getFullURL(),
+				'path' => $title->getFullURL(),
 				'current' => $categoryExhibitionSection->getSortType(),
 				'sortTypes' => $categoryExhibitionSection->getSortTypes(),
 				'displayType' => $categoryExhibitionSection->getDisplayType(),
 			)
 		);
-		return $oTmpl->render( "form" );
+
+		$out->addHTML( $oTmpl->render( "form" ) );
 	}
 }
