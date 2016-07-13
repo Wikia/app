@@ -86,7 +86,7 @@ class Ask extends Query {
 	 *
 	 * @return array
 	 */
-	protected function getExamples() {
+	public function getExamples() {
 		return array(
 			'api.php?action=ask&query=[[Modification%20date::%2B]]|%3FModification%20date|sort%3DModification%20date|order%3Ddesc',
 		);

@@ -126,7 +126,7 @@ class Info extends ApiBase {
 	 *
 	 * @return array
 	 */
-	protected function getExamples() {
+	public function getExamples() {
 		return array(
 			'api.php?action=smwinfo&info=proppagecount|propcount',
 		);

@@ -150,7 +150,7 @@ class BrowseBySubject extends ApiBase {
 	 *
 	 * @return array
 	 */
-	protected function getExamples() {
+	public function getExamples() {
 		return array(
 			'api.php?action=browsebysubject&subject=Main_Page',
 		);
