@@ -292,6 +292,8 @@ class UserStatsService extends WikiaModel {
 			echo "TRUE";
 		else
 			echo "FALSE";
+
+		echo $dbw->lastQuery();
 		return $dbw->affectedRows() === 1;
 	}
 
