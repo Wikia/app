@@ -120,7 +120,7 @@ define('ext.wikia.adEngine.template.bfaa', [
 		}
 
 		wrapper.style.opacity = '0';
-		slotTweaker.makeResponsive(params.slotName);
+		slotTweaker.makeResponsive(params.slotName, params.aspectRatio);
 		slotTweaker.onReady(params.slotName, function (iframe) {
 			handler.show(iframe);
 			wrapper.style.opacity = '';
