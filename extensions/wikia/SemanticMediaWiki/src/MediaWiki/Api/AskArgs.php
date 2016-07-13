@@ -94,7 +94,7 @@ class AskArgs extends Query {
 	 *
 	 * @return array
 	 */
-	protected function getExamples() {
+	public function getExamples() {
 		return array(
 			'api.php?action=askargs&conditions=Modification%20date::%2B&printouts=Modification%20date&parameters=|sort%3DModification%20date|order%3Ddesc',
 		);
