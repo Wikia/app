@@ -1006,9 +1006,6 @@ abstract class DatabaseBase implements DatabaseType {
 			wfProfileOut( $totalProf );
 		}
 
-		echo "RET:";
-		var_dump($ret);
-
 		return $this->resultObject( $ret );
 	}
 
