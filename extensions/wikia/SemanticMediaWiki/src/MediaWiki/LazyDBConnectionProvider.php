@@ -36,6 +36,8 @@ class LazyDBConnectionProvider implements DBConnectionProvider {
 	 */
 	protected $wiki;
 
+	static private $loadBalancer = null;
+
 	/**
 	 * @since 1.9
 	 *
@@ -75,8 +77,15 @@ class LazyDBConnectionProvider implements DBConnectionProvider {
 	public function getConnection() {
 
 		if ( $this->connection === null ) {
-			$this->connection = wfGetLB( $this->wiki )->getConnection( $this->connectionId, $this->groups, $this->wiki );
-			$this->connection->clearFlag( DBO_TRX ); # Wikia change - do not start transactions automatically
+			/**
+			 * Wikia change:
+			 *  1. self::getLoadBalancer() - get the fresh connection without a transaction started
+			 *  2. clear DBO_TRX flag - do not start transactions automatically after a connection
+			 *
+			 * @author macbre
+			 */
+			$this->connection = $this->getLoadBalancer()->getConnection( $this->connectionId, $this->groups, $this->wiki );
+			$this->connection->clearFlag( DBO_TRX );
 		}
 
 		if ( $this->isConnection( $this->connection ) ) {
@@ -87,13 +96,29 @@ class LazyDBConnectionProvider implements DBConnectionProvider {
 	}
 
 	/**
+	 * Wikia change - get new load balancer instance dedicated for SMW connections
+	 * See comments in getConnection() on why we need this
+	 *
+	 * $this->wiki value is always the same on a given wiki
+	 *
+	 * @return \LoadBalancer
+	 */
+	private function getLoadBalancer() {
+		if ( self::$loadBalancer === null ) {
+			self::$loadBalancer = wfGetLBFactory()->newMainLB( $this->wiki );
+		}
+
+		return self::$loadBalancer;
+	}
+
+	/**
 	 * @see DBConnectionProvider::releaseConnection
 	 *
 	 * @since 1.9
 	 */
 	public function releaseConnection() {
 		if ( $this->wiki !== false && $this->connection !== null ) {
-			wfGetLB( $this->wiki )->reuseConnection( $this->connection );
+			$this->getLoadBalancer()->reuseConnection( $this->connection ); # Wikia change
 		}
 	}
 
