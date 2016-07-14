@@ -2,13 +2,17 @@
 
 class CommunityPageSpecialController extends WikiaSpecialPageController {
 	const COMMUNITY_PAGE_HERO_IMAGE = 'Community-Page-Header.jpg';
-	const COMMUNITY_PAGE_BENEFITS_MODAL_IMAGE = 'New-Contributor-Flow-modal-image.jpg';
+	const COMMUNITY_PAGE_BENEFITS_MODAL_IMAGE = 'Community-Page-Modal-Image.jpg';
 	const DEFAULT_TEMPLATE_ENGINE = \WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
 	const ALL_MEMBERS_LIMIT = 20;
 	const TOP_ADMINS_MODULE_LIMIT = 3;
 	const TOP_CONTRIBUTORS_MODULE_LIMIT = 5;
+	const MODAL_IMAGE_HEIGHT = 700.0;
+	const MODAL_IMAGE_MIN_RATIO = 0.75;
+	const MODAL_IMAGE_MAX_RATIO = 2;
 
 	private $usersModel;
+
 	private $wikiModel;
 
 	public function __construct() {
@@ -61,7 +65,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		$currentUserContributionCount = ( new UserStatsService( $this->getUser()->getId() ) )->getEditCountFromWeek();
 		$topContributors = $this->usersModel->getTopContributors();
 		$topContributorsCount = count( $topContributors );
-		$userRank = $this->calculateCurrentUserRank( $currentUserContributionCount , $topContributors );
+		$userRank = $this->calculateCurrentUserRank( $currentUserContributionCount, $topContributors );
 
 		if ( $limit > 0 ) {
 			$topContributors = array_slice( $topContributors, 0, $limit );
@@ -119,9 +123,9 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		$topAdminsTemplateData = CommunityPageSpecialTopAdminsFormatter::prepareData( $allAdmins );
 
 		// Add details to top admins
-		$topAdminsTemplateData[CommunityPageSpecialTopAdminsFormatter::TOP_ADMINS_LIST] =
+		$topAdminsTemplateData[ CommunityPageSpecialTopAdminsFormatter::TOP_ADMINS_LIST ] =
 			$this->getContributorsDetails(
-				$topAdminsTemplateData[CommunityPageSpecialTopAdminsFormatter::TOP_ADMINS_LIST]
+				$topAdminsTemplateData[ CommunityPageSpecialTopAdminsFormatter::TOP_ADMINS_LIST ]
 			);
 
 		$templateMessages = [
@@ -254,7 +258,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		$count = 0;
 
 		return array_map( function ( $contributor ) use ( &$count ) {
-			$user = User::newFromId( $contributor['userId'] );
+			$user = User::newFromId( $contributor[ 'userId' ] );
 			$userName = $user->getName();
 			$avatar = AvatarService::renderAvatar( $userName, AvatarService::AVATAR_SIZE_SMALL_PLUS );
 			$count += 1;
@@ -267,17 +271,17 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 				'userName' => $userName,
 				'avatar' => $avatar,
 				'contributionsText' => $this->msg( 'communitypage-contributions' )
-					->numParams( $this->getLanguage()->formatNum( $contributor['contributions'] ) )->text(),
+					->numParams( $this->getLanguage()->formatNum( $contributor[ 'contributions' ] ) )->text(),
 				'profilePage' => $user->getUserPage()->getLocalURL(),
 				'count' => $count,
-				'isAdmin' => $contributor['isAdmin'],
+				'isAdmin' => $contributor[ 'isAdmin' ],
 			];
-		} , $contributors );
+		}, $contributors );
 	}
 
 	private function addTimeAgoDataDetail( $members ) {
 		foreach ( $members as $key => $member ) {
-			$members[$key]['timeAgo'] = wfTimeFormatAgo( $member['latestRevision'] );
+			$members[ $key ][ 'timeAgo' ] = wfTimeFormatAgo( $member[ 'latestRevision' ] );
 		}
 
 		return $members;
@@ -297,26 +301,32 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	}
 
 	private function getBenefitsModalImageUrl() {
-		$benefitsModalImageUrl = '';
-		$benefitsModalImage = Title::newFromText( self::COMMUNITY_PAGE_BENEFITS_MODAL_IMAGE, NS_FILE );
-		if ( $benefitsModalImage instanceof Title && $benefitsModalImage->exists() ) {
-			$benefitsModalFile = wfFindFile( $benefitsModalImage );
-			if ( $benefitsModalFile instanceof File ) {
-				$benefitsModalImageUrl = $benefitsModalFile->getUrl();
+		// we need variable to pass it by reference to helper
+		$title = self::COMMUNITY_PAGE_BENEFITS_MODAL_IMAGE;
+		$modalFile = WikiaFileHelper::getFileFromTitle( $title );
+		if ( $modalFile ) {
+			$ratio = floatval( $modalFile->getWidth() ) / floatval( $modalFile->getHeight() );
+			if ( $modalFile->getHeight() >= self::MODAL_IMAGE_HEIGHT &&
+				 $ratio >= self::MODAL_IMAGE_MIN_RATIO &&
+				 $ratio <= self::MODAL_IMAGE_MAX_RATIO
+			) {
+				$thumbnail = $modalFile->transform( [
+					'width' => round( $ratio * self::MODAL_IMAGE_HEIGHT )
+				] );
+				return $thumbnail ? $thumbnail->getUrl() : '';
 			}
 		}
-
-		return $benefitsModalImageUrl;
+		return '';
 	}
 
-	private function calculateCurrentUserRank( $userContributionCount , $topContributors ) {
+	private function calculateCurrentUserRank( $userContributionCount, $topContributors ) {
 		$userRank = '-';
 
 		if ( $this->getUser()->isLoggedIn() && $userContributionCount > 0 ) {
 			$rank = 1;
 
 			foreach ( $topContributors as $contributor ) {
-				if ( $contributor['userId'] == $this->getUser()->getId() ) {
+				if ( $contributor[ 'userId' ] == $this->getUser()->getId() ) {
 					$userRank = $rank;
 					break;
 				}
