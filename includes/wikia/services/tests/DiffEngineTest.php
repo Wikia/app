@@ -13,6 +13,6 @@ class DiffEngineTest extends WikiaBaseTest {
 		$textB = 'foobar';
 
 		$diff = $engine->generateDiffBody( $textA, $textB );
-		$this->assertContains( '<span class="diffchange diffchange-inline">foo</span>', $diff );
+		$this->assertContains( 'class="diffchange diffchange-inline">foo</', $diff );
 	}
 }

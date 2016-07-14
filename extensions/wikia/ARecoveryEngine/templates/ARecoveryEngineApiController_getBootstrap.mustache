@@ -1,0 +1,33 @@
+<script>
+{{{code}}}
+window._sp_ = {
+    config: {
+        account_id: 106,
+        enable_rid: true,
+        content_control_callback: function() {
+            var logGroup = 'ext.wikia.aRecoveryEngine.recovery.bootstrap';
+            if (!window.wgUserName) {
+                document.getElementById('WikiaArticle').style.display = 'none';
+                document.getElementById('WikiaArticleMsg').style.display = 'block';
+                window.addEventListener('load', function(){
+                    require(['ext.wikia.aRecoveryEngine.recovery.helper'], function (helper) {
+                        'use strict';
+                        helper.track('callback');
+                    });
+                });
+            } else {
+                window.Wikia.log(['isContentControlEnabled', false], 'debug', logGroup);
+            }
+        }
+    }
+};
+
+spBootstrap('{{domain}}/api/v1/ARecoveryEngine/delivery');
+
+window.addEventListener('load', function(){
+    require(['ext.wikia.aRecoveryEngine.recovery.helper'], function (helper) {
+        'use strict';
+        helper.verifyContent();
+    });
+});
+</script>

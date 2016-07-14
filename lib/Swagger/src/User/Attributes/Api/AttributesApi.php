@@ -10,7 +10,7 @@
  * @link     https://github.com/swagger-api/swagger-codegen
  */
 /**
- *  Copyright 2015 SmartBear Software
+ *  Copyright 2016 SmartBear Software
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -64,7 +64,7 @@ class AttributesApi
     {
         if ($apiClient == null) {
             $apiClient = new ApiClient();
-            $apiClient->getConfig()->setHost('https://localhost/');
+            $apiClient->getConfig()->setHost('https://localhost/user-attribute');
         }
   
         $this->apiClient = $apiClient;
@@ -101,12 +101,25 @@ class AttributesApi
      */
     public function getAttributes()
     {
+        list($response, $statusCode, $httpHeader) = $this->getAttributesWithHttpInfo ();
+        return $response; 
+    }
+
+
+    /**
+     * getAttributesWithHttpInfo
+     *
+     * Returns all available attributes for any user
+     *
+     * @return Array of \Swagger\Client\User\Attributes\Models\AllAttributesHalResponse, HTTP status code, HTTP response headers (array of strings)
+     * @throws \Swagger\Client\ApiException on non-2xx response
+     */
+    public function getAttributesWithHttpInfo()
+    {
         
   
         // parse inputs
         $resourcePath = "/attr";
-        $resourcePath = str_replace("{format}", "json", $resourcePath);
-        $method = "GET";
         $httpBody = '';
         $queryParams = array();
         $headerParams = array();
@@ -120,41 +133,43 @@ class AttributesApi
         
         
         
+        // default format to json
+        $resourcePath = str_replace("{format}", "json", $resourcePath);
+
         
         
   
         // for model (json/xml)
         if (isset($_tempBody)) {
             $httpBody = $_tempBody; // $_tempBody is the method argument, if present
-        } else if (count($formParams) > 0) {
+        } elseif (count($formParams) > 0) {
             $httpBody = $formParams; // for HTTP post (form)
         }
         
         // make the API Call
-        try
-        {
-            list($response, $httpHeader) = $this->apiClient->callApi(
-                $resourcePath, $method,
+        try {
+            list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
+                $resourcePath, 'GET',
                 $queryParams, $httpBody,
                 $headerParams, '\Swagger\Client\User\Attributes\Models\AllAttributesHalResponse'
             );
+            
+            if (!$response) {
+                return array(null, $statusCode, $httpHeader);
+            }
+
+            return array(\Swagger\Client\ObjectSerializer::deserialize($response, '\Swagger\Client\User\Attributes\Models\AllAttributesHalResponse', $httpHeader), $statusCode, $httpHeader);
+            
         } catch (ApiException $e) {
             switch ($e->getCode()) { 
             case 200:
-                $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\User\Attributes\Models\AllAttributesHalResponse', $httpHeader);
+                $data = \Swagger\Client\ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\User\Attributes\Models\AllAttributesHalResponse', $e->getResponseHeaders());
                 $e->setResponseObject($data);
                 break;
             }
   
             throw $e;
         }
-        
-        if (!$response) {
-            return null;
-        }
-  
-        return $this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\User\Attributes\Models\AllAttributesHalResponse');
-        
     }
     
     /**
@@ -168,6 +183,22 @@ class AttributesApi
      */
     public function getUserAttributeByName($name)
     {
+        list($response, $statusCode, $httpHeader) = $this->getUserAttributeByNameWithHttpInfo ($name);
+        return $response; 
+    }
+
+
+    /**
+     * getUserAttributeByNameWithHttpInfo
+     *
+     * Returns the value of the given attribute
+     *
+     * @param string $name name of the user attribute (required)
+     * @return Array of \Swagger\Client\User\Attributes\Models\AttributeHalResponse, HTTP status code, HTTP response headers (array of strings)
+     * @throws \Swagger\Client\ApiException on non-2xx response
+     */
+    public function getUserAttributeByNameWithHttpInfo($name)
+    {
         
         // verify the required parameter 'name' is set
         if ($name === null) {
@@ -176,8 +207,6 @@ class AttributesApi
   
         // parse inputs
         $resourcePath = "/attr/{name}";
-        $resourcePath = str_replace("{format}", "json", $resourcePath);
-        $method = "GET";
         $httpBody = '';
         $queryParams = array();
         $headerParams = array();
@@ -191,6 +220,7 @@ class AttributesApi
         
         
         // path params
+        
         if ($name !== null) {
             $resourcePath = str_replace(
                 "{" . "name" . "}",
@@ -198,41 +228,43 @@ class AttributesApi
                 $resourcePath
             );
         }
+        // default format to json
+        $resourcePath = str_replace("{format}", "json", $resourcePath);
+
         
         
   
         // for model (json/xml)
         if (isset($_tempBody)) {
             $httpBody = $_tempBody; // $_tempBody is the method argument, if present
-        } else if (count($formParams) > 0) {
+        } elseif (count($formParams) > 0) {
             $httpBody = $formParams; // for HTTP post (form)
         }
         
         // make the API Call
-        try
-        {
-            list($response, $httpHeader) = $this->apiClient->callApi(
-                $resourcePath, $method,
+        try {
+            list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
+                $resourcePath, 'GET',
                 $queryParams, $httpBody,
                 $headerParams, '\Swagger\Client\User\Attributes\Models\AttributeHalResponse'
             );
+            
+            if (!$response) {
+                return array(null, $statusCode, $httpHeader);
+            }
+
+            return array(\Swagger\Client\ObjectSerializer::deserialize($response, '\Swagger\Client\User\Attributes\Models\AttributeHalResponse', $httpHeader), $statusCode, $httpHeader);
+            
         } catch (ApiException $e) {
             switch ($e->getCode()) { 
             case 200:
-                $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\User\Attributes\Models\AttributeHalResponse', $httpHeader);
+                $data = \Swagger\Client\ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\User\Attributes\Models\AttributeHalResponse', $e->getResponseHeaders());
                 $e->setResponseObject($data);
                 break;
             }
   
             throw $e;
         }
-        
-        if (!$response) {
-            return null;
-        }
-  
-        return $this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\User\Attributes\Models\AttributeHalResponse');
-        
     }
     
 }

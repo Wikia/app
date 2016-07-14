@@ -85,18 +85,18 @@ class SiteWideMessages extends SpecialPage {
 		$formData['mLang'] = $wgRequest->getArray('mLang');
 
 		//fetching hub list
-		$DB = wfGetDB( DB_SLAVE, array(), $wgDWStatsDB );
+		$DB = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
 		$dbResult = $DB->select(
-			[ 'dimension_verticals' ],
-			[ 'id, name' ],
+			[ 'city_verticals' ],
+			[ 'vertical_id, vertical_name' ],
 			null,
 			__METHOD__,
-			[ 'ORDER BY' => 'id' ]
+			[ 'ORDER BY' => 'vertical_id' ]
 		);
 
 		$hubList = [];
 		while ($row = $DB->FetchObject($dbResult)) {
-			$hubList[$row->id] = $row->name;
+			$hubList[$row->vertical_id] = $row->vertical_name;
 		}
 		if ($dbResult !== false) {
 			$DB->FreeResult($dbResult);

@@ -12,8 +12,13 @@ require([
 	var $banner,
 		bannerBottomOffset,
 		bannerOffset,
+		contentLanguage = mw.config.get('wgContentLanguage'),
 		dismissCookieName = 'pmp-entry-point-dismissed',
-		experimentGroup = abTest.getGroup('POTENTIAL_MEMBER_PAGE_ENTRY_POINTS'),
+		experimentGroup, // To be set based on contentLanguage
+		experimentNames = {
+			en: 'POTENTIAL_MEMBER_PAGE_ENTRY_POINTS',
+			ja: 'POTENTIAL_MEMBER_PAGE_ENTRY_POINTS_JA'
+		},
 		experiments = {
 			TOP: {
 				type: 'top',
@@ -50,15 +55,23 @@ require([
 				}
 			}
 		},
-		track = tracker.buildTrackingFunction({
-			category: 'potential-member-experiment',
-			trackingMethod: 'analytics'
-		}),
+		track,
+		trackingPrefix = '',
 		viewabilityCounter = 0,
 		viewabilityInterval;
 
 	function init() {
-		if ($.cookie(dismissCookieName) || !experimentEnabled()) {
+		if ($.cookie(dismissCookieName) || !experimentNames.hasOwnProperty(contentLanguage)) {
+			return;
+		}
+
+		experimentGroup = abTest.getGroup(experimentNames[contentLanguage]);
+		track = tracker.buildTrackingFunction({
+			category: 'potential-member-page-experiment-' + contentLanguage,
+			trackingMethod: 'analytics'
+		});
+
+		if (!experimentEnabled()) {
 			return;
 		}
 
@@ -66,6 +79,7 @@ require([
 			loader({
 				type: loader.MULTI,
 				resources: {
+					messages: 'PotentialMemberPageEntryPoint',
 					mustache: '/extensions/wikia/PotentialMemberPageExperiments/templates/PMPEntryPoint.mustache',
 					styles: '/extensions/wikia/PotentialMemberPageExperiments/styles/entry-point-experiment.scss'
 				}
@@ -78,11 +92,23 @@ require([
 	}
 
 	function setupExperiment(resources) {
-		var experiment = experiments[experimentGroup];
+		var experiment = experiments[experimentGroup],
+			templateData;
 
 		loader.processStyle(resources.styles);
+		mw.messages.set(resources.messages);
 
-		$banner = $(mustache.render(resources.mustache[0], { bannerType: experiment.type }))
+		trackingPrefix = experiment.type + '-';
+
+		templateData = {
+			bannerType: experiment.type,
+			language: contentLanguage,
+			messageText: mw.message('pmp-entry-point-message').plain(),
+			buttonText: mw.message('pmp-entry-point-button').plain(),
+			buttonUrl: mw.message('pmp-entry-point-button-url').plain()
+		};
+
+		$banner = $(mustache.render(resources.mustache[0], templateData))
 			.on('mousedown touchstart', '.pmp-entry-point-button', onEntryPointClick)
 			.on('click', '.pmp-entry-point-close', close);
 
@@ -100,7 +126,7 @@ require([
 			checkViewability();
 		}
 
-		$(w).on('scroll.trackPMPEntryPoint', $.debounce(50, function() {
+		$(w).on('scroll.trackPMPEntryPoint', $.debounce(50, function () {
 			checkViewability();
 		}));
 	}
@@ -132,19 +158,21 @@ require([
 
 	function trackBannerImpression() {
 		track({
+			label: trackingPrefix + 'banner-impression',
 			action: tracker.ACTIONS.IMPRESSION
 		});
 	}
 
 	function trackBannerViewable() {
 		track({
+			label: trackingPrefix + 'banner-view',
 			action: tracker.ACTIONS.VIEW
 		});
 	}
 
 	function onEntryPointClick() {
 		track({
-			label: 'entry-point-click',
+			label: trackingPrefix + 'entry-point-click',
 			action: tracker.ACTIONS.CLICK
 		});
 		onBannerDismissed();
@@ -152,7 +180,7 @@ require([
 
 	function close() {
 		track({
-			label: 'close',
+			label: trackingPrefix + 'close',
 			action: tracker.ACTIONS.CLICK
 		});
 		$banner.remove();

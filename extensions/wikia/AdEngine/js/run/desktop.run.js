@@ -8,7 +8,7 @@ require([
 	'ext.wikia.adEngine.customAdsLoader',
 	'ext.wikia.adEngine.dartHelper',
 	'ext.wikia.adEngine.messageListener',
-	'ext.wikia.adEngine.recovery.helper',
+	'ext.wikia.aRecoveryEngine.recovery.helper',
 	'ext.wikia.adEngine.slot.scrollHandler',
 	'ext.wikia.adEngine.slotTracker',
 	'ext.wikia.adEngine.slotTweaker',
@@ -81,13 +81,9 @@ require([
 
 		// Recovery
 		recoveryHelper.initEventQueue();
-		sourcePoint.initDetection();
 
-		if (context.opts.sourcePointRecovery && win.ads) {
-			win.ads.runtime.sp.slots = win.ads.runtime.sp.slots || [];
-			recoveryHelper.addOnBlockingCallback(function () {
-				adEngineRunner.run(adConfigDesktop, win.ads.runtime.sp.slots, 'queue.sp', false);
-			});
+		if (!context.opts.sourcePointRecovery) {
+			sourcePoint.initDetection();
 		}
 
 		if (context.opts.googleConsumerSurveys && gcs) {
@@ -114,14 +110,27 @@ require([
 // Inject extra slots
 require([
 	'ext.wikia.adEngine.adContext',
+	'ext.wikia.adEngine.slot.bottomLeaderboard',
 	'ext.wikia.adEngine.slot.highImpact',
 	'ext.wikia.adEngine.slot.inContent',
 	'ext.wikia.adEngine.slot.skyScraper3',
 	'ext.wikia.adEngine.slotTweaker',
 	'wikia.document',
 	'wikia.window',
-	require.optional('ext.wikia.adEngine.slot.exitstitial')
-], function (adContext, highImpact, inContent, skyScraper3, slotTweaker, doc, win, exitstitial) {
+	require.optional('ext.wikia.adEngine.slot.exitstitial'),
+	require.optional('ext.wikia.adEngine.slot.revcontentSlots')
+], function (
+	adContext,
+	bottomLeaderboard,
+	highImpact,
+	inContent,
+	skyScraper3,
+	slotTweaker,
+	doc,
+	win,
+	exitstitial,
+	revcontentSlots
+) {
 	'use strict';
 
 	var context = adContext.getContext();
@@ -132,19 +141,27 @@ require([
 		highImpact.init();
 		skyScraper3.init();
 
+		if (revcontentSlots && context.providers.revcontent) {
+			revcontentSlots.init();
+		}
+
 		if (context.slots.incontentPlayer) {
 			inContent.init('INCONTENT_PLAYER');
 		}
 
 		if (context.slots.incontentLeaderboard) {
 			inContent.init(incontentLeaderboard, function () {
-				slotTweaker.adjustIframeByContentSize(incontentLeaderboard);
+				if (context.slots.incontentLeaderboardAsOutOfPage) {
+					slotTweaker.adjustIframeByContentSize(incontentLeaderboard);
+				}
 			});
 		}
 
 		if (exitstitial) {
 			exitstitial.init();
 		}
+
+		bottomLeaderboard.init();
 	}
 
 	if (doc.readyState === 'complete') {

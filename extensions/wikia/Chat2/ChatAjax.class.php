@@ -94,12 +94,12 @@ class ChatAjax {
 
 			// this results goes to chat server, which obiously has no user lang
 			// so we just return a short month name key - it has to be translated on client side
-			$res['since'] = !empty( $stats['date'] )
-				? getdate( wfTimestamp( TS_UNIX, $stats['date'] ) )
+			$res['since'] = !empty( $stats['firstContributionTimestamp'] )
+				? getdate( wfTimestamp( TS_UNIX, $stats['firstContributionTimestamp'] ) )
 				: '';
 
 			// NOTE: This is attached to the user so it will be in the wiki's content language instead of wgLang (which it normally will).
-			$res['editCount'] = $wgContLang->formatNum( $stats['edits'] );
+			$res['editCount'] = $wgContLang->formatNum( $stats['editcount'] );
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -262,7 +262,7 @@ class ChatAjax {
 	private static function authenticateServer() {
 		global $wgRequest;
 
-		return \Wikia\Security\Utils::matchToken( ChatConfig::getSecretToken(), $wgRequest->getVal( 'token' ) );
+		return \Wikia\Security\Utils::matchSecretToken( ChatConfig::getSecretToken(), $wgRequest->getVal( 'token' ) );
 	}
 
 	private static function authenticateServerOrUser() {

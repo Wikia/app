@@ -87,16 +87,14 @@
 
 		loginBeforeSubmit: function (action) {
 			if (window.wgDisableAnonymousEditing && !window.wgUserName) {
-				require(['AuthModal'], function (authModal) {
-					authModal.load({
-						forceLogin: true,
-						origin: 'wall-and-forum',
-						onAuthSuccess: this.proxy(function () {
-							action(false);
-							return true;
-						})
-					});
-				}.bind(this));
+				window.wikiaAuthModal.load({
+					forceLogin: true,
+					origin: 'wall-and-forum',
+					onAuthSuccess: function () {
+						action(false);
+						return true;
+					}
+				});
 			} else {
 				action(true);
 				return true;

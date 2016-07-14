@@ -1,4 +1,6 @@
 <?php
+use Wikia\Paginator\Paginator;
+
 class ManageWikiaHomeController extends WikiaSpecialPageController {
 	const WHST_VISUALIZATION_LANG_VAR_NAME = 'vl';
 	const WHST_WIKIS_PER_PAGE = 25;
@@ -248,13 +250,11 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 		$this->verticals = $this->helper->getWikiVerticals();
 
 		if( $count > self::WHST_WIKIS_PER_PAGE ) {
-			/** @var $paginator Paginator */
-			$paginator = Paginator::newFromArray( array_fill( 0, $count, '' ), self::WHST_WIKIS_PER_PAGE );
-
-			$paginator->setActivePage($currentPage - 1);
-
 			$url = $this->getUrlWithAllParams($visualizationLang, $filterOptions);
-			$this->setVal('pagination', $paginator->getBarHTML($url));
+			/** @var $paginator Paginator */
+			$paginator = new Paginator( $count, self::WHST_WIKIS_PER_PAGE, $url );
+			$paginator->setActivePage($currentPage);
+			$this->setVal('pagination', $paginator->getBarHTML());
 		}
 
 		wfProfileOut(__METHOD__);
@@ -632,7 +632,6 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 				'wiki-blocked-filter' => isset($filterParams['wiki-blocked-filter']) ? $filterParams['wiki-blocked-filter'] : 0,
 				'wiki-promoted-filter' => isset($filterParams['wiki-promoted-filter']) ? $filterParams['wiki-promoted-filter'] : 0,
 				'wiki-official-filter' => isset($filterParams['wiki-official-filter']) ? $filterParams['wiki-official-filter'] : 0,
-				'page' => '%s',
 				'vl' => $lang
 			];
 

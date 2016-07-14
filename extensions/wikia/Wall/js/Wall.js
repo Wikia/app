@@ -302,17 +302,15 @@
 		vote: function (e) {
 			e.preventDefault();
 			if (!window.wgUserName) {
-				require(['AuthModal'], function (authModal) {
-					authModal.load({
-						forceLogin: true,
-						origin: 'wall-and-forum',
-						onAuthSuccess: this.proxy(function () {
-							this.voteBase(e, function () {
-								window.location.reload();
-							});
-						})
-					});
-				}.bind(this));
+				window.wikiaAuthModal.load({
+					forceLogin: true,
+					origin: 'wall-and-forum',
+					onAuthSuccess: function () {
+						this.voteBase(e, function () {
+							window.location.reload();
+						});
+					}.bind(this)
+				});
 			} else {
 				this.voteBase(e, this.proxy(function (target, data, dir) {
 					var votes = target.closest('li.message').find('.votes:first'),

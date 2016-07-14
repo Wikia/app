@@ -7,8 +7,7 @@ class ArticleAsJson extends WikiaService {
 		'imageMaxWidth' => false
 	];
 
-	const CACHE_VERSION = '0.0.3';
-	const CACHE_VERSION_FOR_SEO_FRIENDLY_IMAGES = 1; // for $wgEnableSeoFriendlyImagesForMobile
+	const CACHE_VERSION = 1;
 
 	const ICON_MAX_SIZE = 48;
 	// Line height in Mercury
@@ -74,6 +73,8 @@ class ArticleAsJson extends WikiaService {
 					 * extensions/wikia/PortableInfobox/services/Parser/Nodes/NodeImage.php:getTabberData.
 					 * Base on presence of data-ref element is classified as an image
 					 * - without that service would return null
+					 *
+					 * @TODO XW-1460 fix the regex and remove this attribute
 					 */
 					'ref' => $id
 				]
@@ -100,7 +101,7 @@ class ArticleAsJson extends WikiaService {
 					 * extensions/wikia/PortableInfobox/services/Parser/Nodes/NodeImage.php::getGalleryData
 					 * works
 					 *
-					 * @TODO fix the regex if full rollout of experiment is confirmed
+					 * @TODO XW-1460 fix the regex and remove this attribute
 					 */
 					'ref' => $id,
 					'media' => $media,
@@ -114,17 +115,7 @@ class ArticleAsJson extends WikiaService {
 		return trim( preg_replace( '/\s+/', ' ', $string ) );
 	}
 
-	private static function createMarker( $width = 0, $height = 0, $isGallery = false ) {
-		$blankImgUrl = '//:0';
-		$id = count( self::$media ) - 1;
-		$classes = 'article-media' . ( $isGallery ? ' gallery' : '' );
-		$width = !empty( $width ) ? " width='{$width}'" : '';
-		$height = !empty( $height ) ? " height='{$height}'" : '';
-
-		return "<img src='{$blankImgUrl}' class='{$classes}' data-ref='{$id}'{$width}{$height} />";
-	}
-
-	private static function createMarkerExperimental( $media, $isGallery = false ) {
+	private static function createMarker( $media, $isGallery = false ) {
 		$id = count( self::$media ) - 1;
 
 		if ( $isGallery ) {
@@ -213,7 +204,7 @@ class ArticleAsJson extends WikiaService {
 	}
 
 	public static function onGalleryBeforeProduceHTML( $data, &$out ) {
-		global $wgArticleAsJson, $wgEnableSeoFriendlyImagesForMobile;
+		global $wgArticleAsJson;
 
 		wfProfileIn( __METHOD__ );
 
@@ -246,11 +237,7 @@ class ArticleAsJson extends WikiaService {
 			self::$media[] = $media;
 
 			if ( !empty( $media ) ) {
-				if ( !empty( $wgEnableSeoFriendlyImagesForMobile ) ) {
-					$out = self::createMarkerExperimental( $media, true );
-				} else {
-					$out = self::createMarker( $media[0]['width'], $media[0]['height'], true );
-				}
+				$out = self::createMarker( $media, true );
 			} else {
 				$out = '';
 			}
@@ -291,7 +278,7 @@ class ArticleAsJson extends WikiaService {
 		&$time,
 		&$res
 	) {
-		global $wgArticleAsJson, $wgEnableSeoFriendlyImagesForMobile;
+		global $wgArticleAsJson;
 
 		wfProfileIn( __METHOD__ );
 
@@ -315,11 +302,7 @@ class ArticleAsJson extends WikiaService {
 
 			self::addUserObj( $details );
 
-			if ( !empty( $wgEnableSeoFriendlyImagesForMobile ) ) {
-				$res = self::createMarkerExperimental( $media );
-			} else {
-				$res = self::createMarker( $details['width'], $details['height'] );
-			}
+			$res = self::createMarker( $media );
 
 			wfProfileOut( __METHOD__ );
 
@@ -332,16 +315,12 @@ class ArticleAsJson extends WikiaService {
 	}
 
 	public static function onPageRenderingHash( &$confstr ) {
-		global $wgArticleAsJson, $wgEnableSeoFriendlyImagesForMobile;
+		global $wgArticleAsJson;
 
 		wfProfileIn( __METHOD__ );
 
 		if ( $wgArticleAsJson ) {
-			if ( $wgEnableSeoFriendlyImagesForMobile ) {
-				$confstr .= '!ArticleAsJson:' . self::CACHE_VERSION_FOR_SEO_FRIENDLY_IMAGES;
-			} else {
-				$confstr .= '!ArticleAsJson:' . self::CACHE_VERSION;
-			}
+			$confstr .= '!ArticleAsJson:' . self::CACHE_VERSION;
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -393,6 +372,8 @@ class ArticleAsJson extends WikiaService {
 			foreach ( self::$media as &$media ) {
 				self::linkifyMediaCaption( $parser, $media );
 			}
+
+			wfRunHooks( 'ArticleAsJsonBeforeEncode', [ &$text ] );
 
 			$text = json_encode(
 				[
@@ -569,28 +550,31 @@ class ArticleAsJson extends WikiaService {
 		$fallbackSize = self::MAX_MERCURY_CONTENT_WIDTH
 	) {
 		$mediaDetail = WikiaFileHelper::getMediaDetail( $title, $mediaDetailConfig );
-		if ( empty( $mediaDetail['width'] ) ) {
-			$mediaDetail['width'] = $fallbackSize;
 
-			\Wikia\Logger\WikiaLogger::instance()->error(
-				'ArticleAsJson - Media width was empty - fallback to fallbackSize',
-				[
-					'media_details' => $mediaDetail,
-					'fallback_size' => $fallbackSize
-				]
-			);
-		}
+		if ( $mediaDetail['exists'] === true ) {
+			if ( empty( $mediaDetail['width'] ) ) {
+				$mediaDetail['width'] = $fallbackSize;
 
-		if ( empty( $mediaDetail['height'] ) ) {
-			$mediaDetail['height'] = $fallbackSize;
+				\Wikia\Logger\WikiaLogger::instance()->notice(
+					'ArticleAsJson - Media width was empty - fallback to fallbackSize',
+					[
+						'media_details' => $mediaDetail,
+						'fallback_size' => $fallbackSize
+					]
+				);
+			}
 
-			\Wikia\Logger\WikiaLogger::instance()->error(
-				'Image height was empty - fallback to fallbackSize',
-				[
-					'mediaDetails' => $mediaDetail,
-					'fallbackSize' => $fallbackSize
-				]
-			);
+			if ( empty( $mediaDetail['height'] ) ) {
+				$mediaDetail['height'] = $fallbackSize;
+
+				\Wikia\Logger\WikiaLogger::instance()->notice(
+					'ArticleAsJson - Media height was empty - fallback to fallbackSize',
+					[
+						'media_details' => $mediaDetail,
+						'fallback_size' => $fallbackSize
+					]
+				);
+			}
 		}
 
 		return $mediaDetail;

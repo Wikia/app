@@ -4,8 +4,9 @@ define('ext.wikia.adEngine.provider.evolve2', [
 	'ext.wikia.adEngine.provider.gpt.helper',
 	'ext.wikia.adEngine.slotTweaker',
 	'ext.wikia.adEngine.utils.adLogicZoneParams',
-	'wikia.log'
-], function (adContext, gptHelper, slotTweaker, zoneParams, log) {
+	'wikia.log',
+	'wikia.window'
+], function (adContext, gptHelper, slotTweaker, zoneParams, log, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.evolve2',
@@ -25,6 +26,13 @@ define('ext.wikia.adEngine.provider.evolve2', [
 			MOBILE_IN_CONTENT:        {size: '300x250', wsrc: 'mobile_evolve'},
 			MOBILE_PREFOOTER:         {size: '300x250', wsrc: 'mobile_evolve'}
 		};
+
+	// TODO: ADEN-3542
+	function dispatchNoUapEvent(slotName) {
+		if (slotName === 'MOBILE_TOP_LEADERBOARD') {
+			win.dispatchEvent(new Event('wikia.not_uap'));
+		}
+	}
 
 	function resetPosTargeting() {
 		posTargetingValue = {
@@ -95,6 +103,13 @@ define('ext.wikia.adEngine.provider.evolve2', [
 			slotTweaker.removeDefaultHeight(slot.name);
 			slotTweaker.removeTopButtonIfNeeded(slot.name);
 			slotTweaker.adjustLeaderboardSize(slot.name);
+			dispatchNoUapEvent(slot.name);
+		});
+		slot.pre('collapse', function() {
+			dispatchNoUapEvent(slot.name);
+		});
+		slot.pre('hop', function() {
+			dispatchNoUapEvent(slot.name);
 		});
 		gptHelper.pushAd(
 			slot,

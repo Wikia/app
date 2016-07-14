@@ -96,7 +96,8 @@ class Parser {
 	const OT_PLAIN = 4; # like extractSections() - portions of the original are returned unchanged.
 
 	# Marker Suffix needs to be accessible staticly.
-	const MARKER_SUFFIX = "-QINU\x7f";
+	const MARKER_SUFFIX = "-QINU`\"'\x7f";
+	const MARKER_PREFIX = "\x7f'\"`UNIQ";
 
 	# Persistent:
 	var $mTagHooks = array();
@@ -297,7 +298,7 @@ class Parser {
 		 */
 		# $this->mUniqPrefix = "\x07UNIQ" . Parser::getRandomString();
 		# Changed to \x7f to allow XML double-parsing -- TS
-		$this->mUniqPrefix = "\x7fUNIQ" . self::getRandomString();
+		$this->mUniqPrefix = self::MARKER_PREFIX . self::getRandomString();
 		$this->mStripState = new StripState( $this->mUniqPrefix );
 
 
@@ -3758,10 +3759,7 @@ class Parser {
 		}
 
 		# wikia start
-		global $wgEnableContextLinkTemplateParsing, $wgEnableInfoIconTemplateParsing;
-		if ( $wgEnableContextLinkTemplateParsing || $wgEnableInfoIconTemplateParsing ) {
-			wfRunHooks( 'Parser::endBraceSubstitution', array( $originalTitle, &$ret['text'], &$this ) );
-		}
+		wfRunHooks( 'Parser::endBraceSubstitution', array( $originalTitle, &$ret['text'], &$this ) );
 		# wikia end
 
 		wfProfileOut( __METHOD__ );

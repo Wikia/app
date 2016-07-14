@@ -10,11 +10,7 @@ describe('ext.wikia.adEngine.config.desktop', function () {
 		return {};
 	}
 
-	var uaIE8 = [
-			'Mozilla/5.0 (compatible; MSIE 8.0; Windows NT 6.1; Trident/4.0;',
-			'GTB7.4; InfoPath.2; SV1; .NET CLR 3.3.69573; WOW64; en-US)'
-		].join(''),
-		mocks = {
+	var mocks = {
 			adDecoratorPageDimensions: noop,
 			getAdContextOpts: function () {
 				return {
@@ -62,8 +58,9 @@ describe('ext.wikia.adEngine.config.desktop', function () {
 				remnantGpt: {
 					name: 'remnant'
 				},
-				sevenOneMedia: {
-					name: 'sevenOneMedia'
+				rubiconFastlane: {
+					name: 'rpfl',
+					canHandleSlot: noop
 				},
 				taboola: {
 					name: 'taboola',
@@ -96,7 +93,7 @@ describe('ext.wikia.adEngine.config.desktop', function () {
 			mocks.providers.liftium,
 			mocks.providers.monetizationService,
 			mocks.providers.remnantGpt,
-			mocks.providers.sevenOneMedia,
+			mocks.providers.rubiconFastlane,
 			mocks.providers.turtle,
 			mocks.providers.taboola
 		);
@@ -148,42 +145,10 @@ describe('ext.wikia.adEngine.config.desktop', function () {
 		expect(getProviders('foo')).toEqual('direct,remnant,liftium');
 	});
 
-	it('non-Evolve country, SevenOne Media on: SevenOneMedia', function () {
-		spyOn(mocks, 'getAdContextProviders').and.returnValue({sevenOneMedia: true});
-		expect(getProviders('foo')).toEqual('sevenOneMedia');
-	});
-
-	it('Evolve country, SevenOne Media on: SevenOneMedia', function () {
-		spyOn(mocks, 'getAdContextProviders').and.returnValue({evolve2: true, sevenOneMedia: true});
-		expect(getProviders('foo')).toEqual('sevenOneMedia');
-	});
-
 	it('Evolve country, Evolve-slot', function () {
 		spyOn(mocks.providers.evolve2, 'canHandleSlot').and.returnValue(true);
 		spyOn(mocks, 'getAdContextProviders').and.returnValue({evolve2: true});
 		expect(getProviders('foo')).toEqual('evolve2,remnant,liftium');
-	});
-
-	it('any country, SevenOne Media on, wgSitewideDisableSevenOneMedia on: None', function () {
-		spyOn(mocks, 'getAdContextProviders').and.returnValue({sevenOneMedia: true});
-		spyOn(mocks, 'getInstantGlobals').and.returnValue({wgSitewideDisableSevenOneMedia: true});
-		expect(getProviders('foo')).toEqual('');
-	});
-
-	it('any country, SevenOne Media off, wgSitewideDisableSevenOneMedia on: Direct, Remnant, Liftium', function () {
-		spyOn(mocks, 'getInstantGlobals').and.returnValue({wgSitewideDisableSevenOneMedia: true});
-		expect(getProviders('foo')).toEqual('direct,remnant,liftium');
-	});
-
-	it('any country, SevenOne Media on, IE8: None', function () {
-		spyOn(mocks, 'getAdContextProviders').and.returnValue({sevenOneMedia: true});
-		spyOn(mocks, 'getUserAgent').and.returnValue(uaIE8);
-		expect(getProviders('foo')).toEqual('');
-	});
-
-	it('any country, SevenOne Media off, IE8: Direct, Remnant, Liftium', function () {
-		spyOn(mocks, 'getUserAgent').and.returnValue(uaIE8);
-		expect(getProviders('foo')).toEqual('direct,remnant,liftium');
 	});
 
 	it('any country, Taboola on, Taboola slot: Taboola', function () {
@@ -234,5 +199,24 @@ describe('ext.wikia.adEngine.config.desktop', function () {
 			mocks.getAdContextForcedProvider.and.returnValue(k);
 			expect(getProviders('foo')).toEqual(forcedProvidersMap[k]);
 		});
+	});
+
+	it('RubiconFastlane country but cannot handle slot: Direct, Remnant, Liftium', function () {
+		spyOn(mocks.providers.rubiconFastlane, 'canHandleSlot').and.returnValue(false);
+		spyOn(mocks, 'getAdContextProviders').and.returnValue({rubiconFastlane: true});
+		expect(getProviders('foo')).toEqual('direct,remnant,liftium');
+	});
+
+	it('RubiconFastlane country and can handle slot: Direct, Remnant, RubiconFastlane', function () {
+		spyOn(mocks.providers.rubiconFastlane, 'canHandleSlot').and.returnValue(true);
+		spyOn(mocks, 'getAdContextProviders').and.returnValue({rubiconFastlane: true});
+		expect(getProviders('foo')).toEqual('direct,remnant,rpfl');
+	});
+
+	it('RubiconFastlane country and wgSitewideDisableGpt on: just RubiconFastlane', function () {
+		spyOn(mocks.providers.rubiconFastlane, 'canHandleSlot').and.returnValue(true);
+		spyOn(mocks, 'getInstantGlobals').and.returnValue({wgSitewideDisableGpt: true});
+		spyOn(mocks, 'getAdContextProviders').and.returnValue({rubiconFastlane: true});
+		expect(getProviders('foo')).toEqual('rpfl');
 	});
 });

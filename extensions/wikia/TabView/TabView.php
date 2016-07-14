@@ -62,7 +62,7 @@ function tabviewRender($input, $params, $parser ) {
 		if(isset($onetab[0]) && strpos($onetab[0], '<') === false && strpos($onetab[0], '>') === false) {
 			$titleObj = Title::newFromText($onetab[0]);
 			if(is_object($titleObj) && $titleObj->exists()) {
-				$url = $titleObj->getLocalURL('action=render');
+				$url = $titleObj->getLocalURL();
 				$text = $titleObj->getFullText();
 				if(isset($onetab[1]) && strpos($onetab[1], '<') === false && strpos($onetab[1], '>') === false) {
 					if($onetab[1] != '') {

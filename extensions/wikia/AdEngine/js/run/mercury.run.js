@@ -1,5 +1,6 @@
 /*global require*/
 require([
+	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.lookup.amazonMatch',
 	'ext.wikia.adEngine.lookup.openXBidder',
 	'ext.wikia.adEngine.lookup.rubiconFastlane',
@@ -12,6 +13,7 @@ require([
 	'wikia.instantGlobals',
 	'wikia.window'
 ], function (
+	adContext,
 	amazon,
 	oxBidder,
 	rubiconFastlane,
@@ -45,7 +47,7 @@ require([
 			oxBidder.call();
 		}
 
-		if (geo.isProperGeo(instantGlobals.wgAdDriverYavliCountries)) {
+		if (adContext.getContext().opts.yavli) {
 			yavliTag.add();
 		}
 	});

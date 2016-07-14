@@ -1,15 +1,26 @@
+@import 'skins/shared/color';
+@import 'skins/oasis/css/core/breakpoints-variables';
+@import 'variables';
+
 .WikiaRail .module {
-	color: $color-activity-text;
+	font-size: 14px;
+	line-height: $module-default-line-height;
 
 	h2 {
-		clear: both;
+		line-height: $module-default-line-height;
 		margin-bottom: 12px;
 		padding: 0;
 	}
 
-	.subtle {
-		color: $color-module-subtle-text;
+	.community-page-subtle {
+		color: $color-alternate-text;
 		display: block;
 		font-size: 12px;
+	}
+
+	@media #{$breakpoint-below-small-plus} {
+		margin: 12px 8px;
+		max-width: 330px;
+		vertical-align: top;
 	}
 }

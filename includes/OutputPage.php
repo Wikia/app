@@ -1834,6 +1834,20 @@ class OutputPage extends ContextSource {
 	}
 
 	/**
+	 * Return a Vary: header on which to vary caches. Based on the keys of $mVaryHeader,
+	 * such as Accept-Encoding or Cookie
+	 *
+	 * @return string
+	 */
+	public function getVaryHeader() {
+		// If we vary on cookies, let's make sure it's always included here too.
+		if ( $this->getCacheVaryCookies() ) {
+			$this->addVaryHeader( 'Cookie' );
+		}
+		return 'Vary: ' . join( ', ', array_keys( $this->mVaryHeader ) );
+	}
+
+	/**
 	 * Get a complete X-Vary-Options header
 	 *
 	 * @return String
@@ -3745,7 +3759,9 @@ $templates
 			}
 		}
 	}
+
 	/**
+	 * @param string|array $keyArr Surrogate keys (array or space-delimited string)
 	 * @author Wikia
 	 */
 	public function tagWithSurrogateKeys( $keyArr ) {

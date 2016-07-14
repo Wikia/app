@@ -22,7 +22,8 @@ class Hooks extends \ContextSource {
 
 		return !$user->isLoggedIn() &&
 			$title->inNamespace( NS_MAIN ) &&
-			$title->getPageLanguage()->getCode() === 'en' && // getPageLanguage returns wgContLang for NS_MAIN pages
+			// Title::getPageLanguage() returns wgContLang for NS_MAIN pages
+			in_array( $title->getPageLanguage()->getCode(), [ 'en', 'ja' ] ) &&
 			!$title->isMainPage() &&
 			$this->getRequest()->getVal( 'veaction' ) === null &&
 			$this->getRequest()->getVal( 'action', 'view' ) === 'view';

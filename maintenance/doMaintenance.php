@@ -104,11 +104,6 @@ if ( $wgProfiler instanceof Profiler ) {
 		$sink = new ProfilerDataScribeSink();
 	}
 	$wgProfiler->addSink( $sink );
-
-	// keep the legacy stream of Mediawiki profiler data via UDP
-	if ( ( $wgProfiler instanceof ProfilerSimpleDataCollector ) and !( $sink instanceof ProfilerDataUdpSink ) ) {
-		$wgProfiler->addSink( new ProfilerDataUdpSink() );
-	}
 }
 Transaction::setEntryPoint(Transaction::ENTRY_POINT_MAINTENANCE);
 Transaction::setAttribute(Transaction::PARAM_MAINTENANCE_SCRIPT, $maintClass);
@@ -128,6 +123,22 @@ $wgTitle = null;
 
 \Wikia\Logger\WikiaLogger::instance()->info("Maintenance script $maintClass started.");
 
+function getMaintenanceRuntimeStatistics( $exception = null ) {
+	global $wgMaintenanceStartTime, $maintenance;
+
+	$logContext = [ ];
+	if ( is_callable( [ $maintenance, 'getRuntimeStatistics' ] ) ) {
+		$logContext = array_merge( $logContext, $maintenance->getRuntimeStatistics() );
+	}
+	$logContext['status_bool'] = !$exception;
+	$logContext['total_time_float'] = microtime( true ) - $wgMaintenanceStartTime;
+	if ( $exception ) {
+		$logContext['exception'] = $exception;
+	}
+
+	return $logContext;
+}
+
 // Do the work
 try {
 	$maintenance->execute();
@@ -135,15 +146,17 @@ try {
 	// Potentially debug globals
 	$maintenance->globals();
 
-	\Wikia\Logger\WikiaLogger::instance()->info("Maintenance script $maintClass finished.", [
-		'total_time_float' => microtime(true) - $wgMaintenanceStartTime
-	]);
+	\Wikia\Logger\WikiaLogger::instance()->info( "Maintenance script $maintClass finished successfully.",
+		getMaintenanceRuntimeStatistics() );
 } catch ( MWException $mwe ) {
 	echo( $mwe->getText() );
-	\Wikia\Logger\WikiaLogger::instance()->info("Maintenance script $maintClass finished.", [
-		'total_time_float' => microtime(true) - $wgMaintenanceStartTime
-	]);
+	\Wikia\Logger\WikiaLogger::instance()->error( "Maintenance script $maintClass was interrupted by unhandled exception.",
+		getMaintenanceRuntimeStatistics( $mwe ) );
 	exit( 1 );
+} catch ( Exception $e ) {
+	\Wikia\Logger\WikiaLogger::instance()->error( "Maintenance script $maintClass was interrupted by unhandled exception.",
+		getMaintenanceRuntimeStatistics( $e ) );
+	throw $e;
 }
 
 wfRunHooks( 'RestInPeace' ); // Wikia change - @author macbre

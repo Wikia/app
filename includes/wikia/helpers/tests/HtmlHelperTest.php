@@ -1,4 +1,5 @@
 <?php
+
 class HtmlHelperTest extends WikiaBaseTest {
 
 	public function setUp() {
@@ -67,9 +68,54 @@ class HtmlHelperTest extends WikiaBaseTest {
 			],
 			[
 				'<a href="#">text</a>',
-				[],
+				[ ],
 				'<a href="#">text</a>',
 				'Does not strip anything if the black list is empty'
+			]
+		];
+	}
+
+	/**
+	 * @dataProvider unwrappingTestsProvider
+	 */
+	public function testUnwrapping( $html, $id, $expected, $message ) {
+		$document = HtmlHelper::createDOMDocumentFromText( $html );
+		HtmlHelper::unwrapNode( $document->getElementById( $id ) );
+
+		$this->assertEquals( $expected, HtmlHelper::getBodyHtml( $document ), $message );
+	}
+
+	public function unwrappingTestsProvider() {
+		return [
+			[
+				'<div id="1"></div>',
+				'1',
+				'',
+				'Should remove everything'
+			],
+			[
+				'<div id="1"><a>simple</a></div>',
+				'1',
+				'<a>simple</a>',
+				'Should unwrap link'
+			],
+			[
+				'<div id="1"><a>simple</a></div><div id="2">second div</div>',
+				'1',
+				'<a>simple</a><div id="2">second div</div>',
+				'Should leave second div untouched'
+			],
+			[
+				'<p>asdf</p>asdf<div id="1"><a>simple</a></div><div id="2">second div</div>',
+				'1',
+				'<p>asdf</p>asdf<a>simple</a><div id="2">second div</div>',
+				'Should leave text untouched'
+			],
+			[
+				'<div id="1">test<a>simple</a></div>',
+				'1',
+				'test<a>simple</a>',
+				'Should leave text node untouched'
 			]
 		];
 	}

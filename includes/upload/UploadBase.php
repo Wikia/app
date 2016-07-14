@@ -1223,7 +1223,7 @@ abstract class UploadBase {
 				&& strpos( $value, '#' ) !== 0
 			) {
 				if ( !( $strippedElement === 'a'
-					&& preg_match( '!^https?://!im', $value ) )
+					&& preg_match( '!^https?://!i', $value ) )
 				) {
 					wfDebug( __METHOD__ . ": Found href attribute <$strippedElement "
 						. "'$attrib'='$value' in uploaded file.\n" );
@@ -1274,7 +1274,7 @@ abstract class UploadBase {
 			}
 
 
-			# use handler attribute with remote / data / script 
+			# use handler attribute with remote / data / script
 			if( $stripped == 'handler' &&  preg_match( '!(http|https|data|script):!sim', $value ) ) {
 				wfDebug( __METHOD__ . ": Found svg setting handler with remote/data/script '$attrib'='$value' in uploaded file.\n" );
 				return true;

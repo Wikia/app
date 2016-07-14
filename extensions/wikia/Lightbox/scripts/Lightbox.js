@@ -1106,16 +1106,14 @@
 				if (window.wgUserName) {
 					doShareEmail(addresses);
 				} else {
-					require(['AuthModal'], function (authModal) {
-						authModal.load({
-							forceLogin: true,
-							origin: 'image-lightbox',
-							onAuthSuccess: function () {
-								doShareEmail(addresses);
-								// see VID-473 - Reload page on lightbox close
-								LightboxLoader.reloadOnClose = true;
-							}
-						});
+					window.wikiaAuthModal.load({
+						forceLogin: true,
+						origin: 'image-lightbox',
+						onAuthSuccess: function () {
+							doShareEmail(addresses);
+							// see VID-473 - Reload page on lightbox close
+							LightboxLoader.reloadOnClose = true;
+						}
 					});
 				}
 			});

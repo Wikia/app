@@ -38,6 +38,11 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 	 * employees who have been given the right explicitly.
 	 */
 	public function index() {
+		// Redirect to standalone NewAuth page if extension enabled
+		if ( $this->app->wg->EnableNewAuthModal) {
+			$this->getOutput()->redirect( '/register?redirect=' . $this->userLoginHelper->getRedirectUrl() );
+		}
+
 		JSMessages::enqueuePackage( 'UserSignup', JSMessages::EXTERNAL );
 
 		if ( $this->wg->User->isLoggedIn() && !$this->wg->User->isAllowed( 'createaccount' ) ) {
@@ -671,6 +676,9 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 		$this->result = ( $signupForm->msgType == 'error' ) ? $signupForm->msgType : 'ok';
 		$this->msg = $signupForm->msg;
 		$this->errParam = $signupForm->errParam;
+		if ( $this->request->getVal('retusername') ) {
+			$this->username = $signupForm->mUsername;
+		}
 	}
 
 	/**

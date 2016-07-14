@@ -224,10 +224,10 @@ class WikiFactoryLoader {
 	 * @return integer: wikia id or null if wikia is not handled by WikiFactory
 	 */
 	public function execute() {
+		global $wgCityId, $wgDevelEnvironment,
+			$wgDBservers, $wgLBFactoryConf, $wgDBserver, $wgContLang, $wgWikiaBaseDomain;
 
 		wfProfileIn(__METHOD__);
-		global $wgCityId, $wgDevelEnvironment,
-			$wgDBservers, $wgLBFactoryConf, $wgDBserver, $wgContLang;
 
 		/**
 		 * Hook to allow extensions to alter the initialization.  For example,
@@ -450,14 +450,15 @@ class WikiFactoryLoader {
 		if( empty( $this->mWikiID ) || $this->mIsWikiaActive == -1 ) {
 			if( ! $this->mCommandLine ) {
 				global $wgNotAValidWikia;
-				$this->debug( "redirected to {$wgNotAValidWikia}, {$this->mWikiID} {$this->mIsWikiaActive}" );
+				$redirect = $wgNotAValidWikia . '?from=' . rawurlencode( $this->mServerName );
+				$this->debug( "redirected to {$redirect}, {$this->mWikiID} {$this->mIsWikiaActive}" );
 				if( $this->mIsWikiaActive < 0 ) {
 					header( "X-Redirected-By-WF: MarkedForClosing" );
 				}
 				else {
 					header( "X-Redirected-By-WF: NotAValidWikia" );
 				}
-				header("Location: $wgNotAValidWikia");
+				header( "Location: $redirect" );
 				wfProfileOut( __METHOD__ );
 				exit(0);
 			}
@@ -474,12 +475,12 @@ class WikiFactoryLoader {
 					$database = strtolower( $this->mCityDB );
 					$redirect = sprintf(
 						"http://%s/wiki/Special:CloseWiki/information/%s",
-						($wgDevelEnvironment) ? "www.awc.wikia-inc.com" : "community.wikia.com",
+						($wgDevelEnvironment) ? "www.awc.wikia-inc.com" : "community.{$wgWikiaBaseDomain}",
 						$database
 					);
 				}
 				else {
-					$redirect = $wgNotAValidWikia;
+					$redirect = $wgNotAValidWikia . '?from=' . rawurlencode( $this->mServerName );
 				}
 				$this->debug( "disabled and not commandline, redirected to {$redirect}, {$this->mWikiID} {$this->mIsWikiaActive}" );
 				header( "X-Redirected-By-WF: Dump" );

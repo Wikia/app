@@ -46,7 +46,7 @@ class CategoryAddControllerTest extends WikiaBaseTest {
 			[ 'language', null, false, 'en' ]
 		];
 
-		$mockUser = $this->getMock( 'User', [ 'getEmail', 'getGlobalPreference', 'isBlocked' ] );
+		$mockUser = $this->getMock( 'User', [ 'getEmail', 'getGlobalPreference', 'isBlocked', 'isEmailConfirmed' ] );
 		$mockUser->expects( $this->any() )
 			->method( 'getEmail' )
 			->will( $this->returnValue( 'some.email@example.com' ) );
@@ -56,6 +56,9 @@ class CategoryAddControllerTest extends WikiaBaseTest {
 		$mockUser->expects( $this->any() )
 			->method( 'isBlocked' )
 			->will( $this->returnValue( false ) );
+		$mockUser->expects( $this->any() )
+			->method( 'isEmailConfirmed' )
+			->will( $this->returnValue( true ) );
 
 		$this->mockGlobalVariable( 'wgUser', $mockUser );
 	}

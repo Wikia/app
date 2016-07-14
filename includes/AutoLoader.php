@@ -197,7 +197,7 @@ $wgAutoloadLocalClasses = array(
 	'SiteConfiguration' => 'includes/SiteConfiguration.php',
 	'SiteStats' => 'includes/SiteStats.php',
 	'SiteStatsInit' => 'includes/SiteStats.php',
-	'SiteStatsUpdate' => 'includes/SiteStats.php',
+	'SiteStatsUpdate' => 'includes/SiteStatsUpdate.php',
 	'Skin' => 'includes/Skin.php',
 	'SkinTemplate' => 'includes/SkinTemplate.php',
 	'SpecialCreateAccount' => 'includes/SpecialPage.php',
@@ -569,8 +569,6 @@ $wgAutoloadLocalClasses = array(
 
 	# includes/json
 	'FormatJson' => 'includes/json/FormatJson.php',
-	'Services_JSON' => 'includes/json/Services_JSON.php',
-	'Services_JSON_Error' => 'includes/json/Services_JSON.php',
 
 	# includes/libs
 	'CSSJanus' => 'lib/composer/cssjanus/cssjanus/src/CSSJanus.php',
@@ -770,7 +768,6 @@ $wgAutoloadLocalClasses = array(
 	'SqlSearchResultSet' => 'includes/search/SearchEngine.php',
 
 	# includes/specials
-	'ActiveUsersPager' => 'includes/specials/SpecialActiveusers.php',
 	'AllmessagesTablePager' => 'includes/specials/SpecialAllmessages.php',
 	'AncientpagesPage' => 'includes/specials/SpecialAncientpages.php',
 	'AncientPagesPage' => 'includes/specials/SpecialAncientpages.php',
@@ -813,7 +810,6 @@ $wgAutoloadLocalClasses = array(
 	'Randompage' => 'includes/specials/SpecialRandompage.php',
 	'RandomPage' => 'includes/specials/SpecialRandompage.php',
 	'ShortPagesPage' => 'includes/specials/SpecialShortpages.php',
-	'SpecialActiveUsers' => 'includes/specials/SpecialActiveusers.php',
 	'SpecialAllmessages' => 'includes/specials/SpecialAllmessages.php',
 	'SpecialAllpages' => 'includes/specials/SpecialAllpages.php',
 	'SpecialBlankpage' => 'includes/specials/SpecialBlankpage.php',
@@ -834,7 +830,6 @@ $wgAutoloadLocalClasses = array(
 	'SpecialJavaScriptTest' => 'includes/specials/SpecialJavaScriptTest.php',
 	'SpecialListFiles' => 'includes/specials/SpecialListfiles.php',
 	'SpecialListGroupRights' => 'includes/specials/SpecialListgrouprights.php',
-	'SpecialListUsers' => 'includes/specials/SpecialListusers.php',
 	'SpecialLockdb' => 'includes/specials/SpecialLockdb.php',
 	'SpecialLog' => 'includes/specials/SpecialLog.php',
 	'SpecialMergeHistory' => 'includes/specials/SpecialMergeHistory.php',
@@ -878,7 +873,6 @@ $wgAutoloadLocalClasses = array(
 	'UploadForm' => 'includes/specials/SpecialUpload.php',
 	'UploadSourceField' => 'includes/specials/SpecialUpload.php',
 	'UserrightsPage' => 'includes/specials/SpecialUserrights.php',
-	'UsersPager' => 'includes/specials/SpecialListusers.php',
 	'WantedcategoriesPage' => 'includes/specials/SpecialWantedcategories.php',
 	'WantedCategoriesPage' => 'includes/specials/SpecialWantedcategories.php',
 	'WantedFilesPage' => 'includes/specials/SpecialWantedfiles.php',

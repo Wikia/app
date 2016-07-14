@@ -9,15 +9,13 @@
 				if (window.wgUserName) {
 					SuggestModalWikiaHubsV3.suggestArticle();
 				} else {
-					require(['AuthModal'], function (authModal) {
-						authModal.load({
-							forceLogin: true,
-							origin: 'wikia-hubs',
-							onAuthSuccess: function () {
-								window.UserLogin.forceLoggedIn = true;
-								SuggestModalWikiaHubsV3.suggestArticle();
-							}
-						});
+					window.wikiaAuthModal.load({
+						forceLogin: true,
+						origin: 'wikia-hubs',
+						onAuthSuccess: function () {
+							window.UserLogin.forceLoggedIn = true;
+							SuggestModalWikiaHubsV3.suggestArticle();
+						}
 					});
 				}
 			});

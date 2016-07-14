@@ -7,13 +7,15 @@
 @import 'skins/shared/mixins/transform';
 @import 'ads-floor';
 @import 'ads-in-content';
+@import 'ads-interstitial';
+@import 'ads-invisible-high-impact';
+@import 'extensions/wikia/GlobalNavigation/styles/GlobalNavigationVariables.scss';
 
 $wikia-top-ads-index: 2;
 $taboola-small-breakpoint: "#{$screen} and (max-width: 420px)";
 
 /** Hide invisible slots and 1x1 iframes **/
 #INVISIBLE_SKIN,
-#InvisibleHighImpactWrapper.hidden,
 .wikia-ad.hidden,
 .wikia-ad .hidden {
 	display: none !important;
@@ -46,6 +48,52 @@ $taboola-small-breakpoint: "#{$screen} and (max-width: 420px)";
 	}
 }
 
+.bfaa-template {
+	.WikiaTopAds {
+		margin-top: 0;
+		padding: 0 0 $global-navigation-height 0;
+		width: 100%;
+
+		&.bfaa-pinned-nav {
+			padding: 0;
+		}
+	}
+
+	.WikiaTopAdsInner {
+		width: 100%;
+	}
+
+	#HOME_TOP_LEADERBOARD, #TOP_LEADERBOARD, #CORP_TOP_LEADERBOARD, #HUB_TOP_LEADERBOARD {
+		max-width: none;
+		width: 100%;
+
+		> div {
+			position: relative;
+
+			iframe {
+				height: 100%;
+				left: 0;
+				position: absolute;
+				width: 100%;
+				top: 0;
+			}
+		}
+	}
+}
+
+.bfab-template > div{
+	position: relative;
+	width: 100%;
+
+	iframe {
+		height: 100%;
+		left: 0;
+		position: absolute;
+		width: 100%;
+		top: 0;
+	}
+}
+
 #TOP_BUTTON_WIDE {
 	margin-right: 10px;
 }
@@ -69,35 +117,30 @@ $taboola-small-breakpoint: "#{$screen} and (max-width: 420px)";
 #TOP_LEADERBOARD_AB {
 	background: rgba($color-page, $page-opacity);
 	max-width: $page-width-medium;
-	margin: 10px auto;
-	padding: 0 $padding-width-medium;
+	margin: 0 auto;
 	position: relative;
 	z-index: $wikia-top-ads-index;
 
 	.thumbnails-h-abp {
 		border: none;
-		padding: 10px 0 0;
 	}
 }
 
 @if $widthType == 0 {
 	@media #{$breakpoint-small-only} {
 		#TOP_LEADERBOARD_AB {
-			padding: 0 $padding-width-small;
 			width: $page-width-small - 2 * $content-border-width;
 		}
 	}
 
 	@media #{$breakpoint-medium-only} {
 		#TOP_LEADERBOARD_AB {
-			padding: 0 $padding-width-medium;
 			width: $page-width-medium;
 		}
 	}
 
 	@media #{$breakpoint-large-up} {
 		#TOP_LEADERBOARD_AB {
-			padding: 0 $padding-width-large;
 			width: $page-width-large;
 		}
 	}
@@ -162,6 +205,13 @@ $taboola-small-breakpoint: "#{$screen} and (max-width: 420px)";
 	width: 300px;
 }
 
+#BOTTOM_LEADERBOARD {
+	overflow: hidden;
+	margin: 0 0 23px 0;
+	text-align: center;
+	width: 100%;
+}
+
 /** Box ads **/
 .home-top-right-ads {
 	float: right;
@@ -204,7 +254,7 @@ $taboola-small-breakpoint: "#{$screen} and (max-width: 420px)";
 
 #PREFOOTER_LEFT_BOXAD, #PREFOOTER_MIDDLE_BOXAD, #PREFOOTER_RIGHT_BOXAD {
 	float: left;
-	margin: 0 15px;
+	margin: 0 30px 0 0;
 
 	&.default-height {
 		height: 250px;
@@ -328,6 +378,20 @@ body >a >img[src$="noad.gif"] {
 		color: $color-text;
 	}
 	.trc_rbox_div .video-label-box .branding {
+		color: $color-alternate-text;
+	}
+}
+
+#REVCONTENT_ABOVE_ARTICLE, #REVCONTENT_RIGHT_RAIL, #REVCONTENT_BELOW_ARTICLE {
+	.row-item h3 {
+		color: $color-page-opposite;
+	}
+
+	.rc-headline {
+		color: darken($color-page-opposite, 20%) !important;
+	}
+
+	.rc-provider, .rc-branding-label {
 		color: $color-alternate-text;
 	}
 }
