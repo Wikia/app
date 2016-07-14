@@ -43,8 +43,17 @@ interface PreferencePersistence {
 	 * find wikis where at least one user has a local preference set to a specific value
 	 * @param $preferenceName
 	 * @param $value
-	 * @return []string
+	 * @return string[]
 	 * @throws PersistenceException
 	 */
 	public function findWikisWithLocalPreferenceValue( $preferenceName, $value );
+
+	/**
+	 * find users that have a global preference set to a specific value
+	 * @param $preferenceName
+	 * @param $value
+	 * @return string[]
+	 * @throws PersistenceException
+	 */
+	public function findUsersWithGlobalPreferenceValue( $preferenceName, $value );
 }
