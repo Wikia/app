@@ -89,14 +89,13 @@ define('CommunityPageBenefitsModal',
 				label: 'benefits-modal-shown'
 			});
 
-			// Fire action on click on modal content
-			modalInstance.$element.on('click', function() {
-				window.location.pathname = specialCommunityTitle.getUrl();
-			});
+			// On click on modal content track this event and redirect to Special:Community
+			modalInstance.$element.on('click', function(e) {
+				track({
+					label: $(e.target).data('track') || 'modal-area'
+				});
 
-			// Bind tracking on elements with data-track attribute
-			modalInstance.$element.find('[data-track]').on('mousedown', function (e) {
-				track({label: $(e.target).data('track')});
+				window.location.pathname = specialCommunityTitle.getUrl();
 			});
 
 			// Bind tracking modal close
