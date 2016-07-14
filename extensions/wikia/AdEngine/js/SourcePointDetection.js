@@ -61,9 +61,13 @@ define('ext.wikia.adEngine.sourcePointDetection', [
 		detectionScript.setAttribute('data-client-id', getClientId());
 
 		doc.addEventListener('sp.blocking', function () {
+			window.ads.runtime.sp = window.ads.runtime.sp || {};
+			window.ads.runtime.sp.blocking = true;
 			trackStatusOnce('yes');
 		});
 		doc.addEventListener('sp.not_blocking', function () {
+			window.ads.runtime.sp = window.ads.runtime.sp || {};
+			window.ads.runtime.sp.blocking = false;
 			trackStatusOnce('no');
 		});
 
