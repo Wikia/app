@@ -38,12 +38,19 @@ body {
 	&.limit-reached .remaining {
 		color: $color-error;
 	}
-	.remaining {
+	&.limit-reached .limit-reached-msg{
+		color: $color-error;
+		display: block;
+	}
+	.remaining, .limit-reached-msg {
 		display: none;
 		line-height: 25px;
 		position: absolute;
 		top: -25px;
 		right: 5px;
+	}
+	.limit-reached-msg{
+		left: 5px;
 	}
 }
 
