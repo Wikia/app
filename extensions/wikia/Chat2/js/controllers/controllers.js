@@ -300,6 +300,7 @@ var NodeRoomController = $.createClass(Observable, {
 
 		// display character count if nearing limit
 		$('.remaining').text(remaining);
+		$('.limit-reached-msg').text(mw.message('chat-limit-reached', this.maxCharacterLimit).escaped());
 		$('body')
 			.toggleClass('warn', remaining <= 200)
 			.toggleClass('limit-near', remaining <= 100)

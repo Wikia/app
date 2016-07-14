@@ -61,6 +61,7 @@
 		</div>
 
 		<form id="Write" class="Write" onsubmit="return false">
+			<div class="limit-reached-msg"></div>
 			<div class="remaining"></div>
 			<img width="<?= ChatController::CHAT_AVATAR_DIMENSION ?>" height="<?= ChatController::CHAT_AVATAR_DIMENSION ?>" src="<?= $avatarUrl ?>">
 			<div class="message">
