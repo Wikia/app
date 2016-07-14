@@ -301,6 +301,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	}
 
 	private function getBenefitsModalImageUrl() {
+		$url = '';
 		// we need variable to pass it by reference to helper
 		$title = self::COMMUNITY_PAGE_BENEFITS_MODAL_IMAGE;
 		$modalFile = WikiaFileHelper::getFileFromTitle( $title );
@@ -313,10 +314,10 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 				$thumbnail = $modalFile->transform( [
 					'width' => round( $ratio * self::MODAL_IMAGE_HEIGHT )
 				] );
-				return $thumbnail ? $thumbnail->getUrl() : '';
+				$url = $thumbnail ? $thumbnail->getUrl() : '';
 			}
 		}
-		return '';
+		return $url;
 	}
 
 	private function calculateCurrentUserRank( $userContributionCount, $topContributors ) {
