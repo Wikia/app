@@ -873,6 +873,9 @@ abstract class DatabaseBase implements DatabaseType {
 			wfProfileIn( $queryProf );
 		}
 
+		echo "FINAL SQL:";
+		var_dump($sql);
+
 		$this->mLastQuery = $sql;
 		$is_writeable = $this->isWriteQuery( $sql );
 		if ( !$this->mDoneWrites && $is_writeable ) {
