@@ -1006,6 +1006,9 @@ abstract class DatabaseBase implements DatabaseType {
 			wfProfileOut( $totalProf );
 		}
 
+		echo "RET:";
+		var_dump($ret);
+
 		return $this->resultObject( $ret );
 	}
 
@@ -2568,6 +2571,9 @@ abstract class DatabaseBase implements DatabaseType {
 
 			$sql .= '(' . $this->makeList( $row ) . ')';
 		}
+
+		echo "SQL:";
+		var_dump($sql);
 
 		return $this->query( $sql, $fname );
 	}
