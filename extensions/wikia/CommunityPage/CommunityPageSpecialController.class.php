@@ -8,8 +8,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	const TOP_ADMINS_MODULE_LIMIT = 3;
 	const TOP_CONTRIBUTORS_MODULE_LIMIT = 5;
 	const MODAL_IMAGE_HEIGHT = 700.0;
-	const MODAL_IMAGE_MIN_RATIO = 0.75;
-	const MODAL_IMAGE_MAX_RATIO = 2;
+	const MODAL_IMAGE_MIN_RATIO = 0.85;
 
 	private $usersModel;
 
@@ -319,8 +318,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		if ( $modalFile ) {
 			$ratio = floatval( $modalFile->getWidth() ) / floatval( $modalFile->getHeight() );
 			if ( $modalFile->getHeight() >= self::MODAL_IMAGE_HEIGHT &&
-				 $ratio >= self::MODAL_IMAGE_MIN_RATIO &&
-				 $ratio <= self::MODAL_IMAGE_MAX_RATIO
+				 $ratio >= self::MODAL_IMAGE_MIN_RATIO
 			) {
 				$thumbnail = $modalFile->transform( [
 					'width' => round( $ratio * self::MODAL_IMAGE_HEIGHT )
