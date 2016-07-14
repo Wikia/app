@@ -8,10 +8,12 @@
  * Protect against register_globals vulnerabilities.
  * This line must be present before any global variable is referenced.
  */
-if ( !defined( 'MEDIAWIKI' ) ) die();
+if ( !defined( 'MEDIAWIKI' ) ) {
+	die();
+}
 
 global $smwgIP;
-include_once( $smwgIP . 'languages/SMW_Language.php' );
+include_once ( $smwgIP . 'languages/SMW_Language.php' );
 
 
 /**
@@ -25,7 +27,6 @@ class SMWLanguageFi extends SMWLanguage {
 
 	protected $m_DatatypeLabels = array(
 		'_wpg' => 'Sivu', // name of page datatype
-		'_str' => 'Merkkijono',  // name of the string type
 		'_txt' => 'Teksti',  // name of the text type
 		'_cod' => 'Lähdekoodi',  // name of the (source) code type
 		'_boo' => 'Boolean',  // name of the boolean type
@@ -39,6 +40,10 @@ class SMWLanguageFi extends SMWLanguage {
 		'_tel' => 'Puhelinnumero',  // name of the telephone (URI) type
 		'_rec' => 'Tietue', // name of record data type
 		'_qty' => 'Määrä', // name of the number type with units of measurement
+	);
+
+	protected $m_DatatypeAliases = array(
+		'Merkkijono' => '_txt',  // old name of the string type
 	);
 
 	protected $m_SpecialProperties = array(
@@ -64,6 +69,9 @@ class SMWLanguageFi extends SMWLanguage {
 		'_ASKFO'=> 'Query format', // TODO: translate
 		'_ASKSI'=> 'Query size', // TODO: translate
 		'_ASKDE'=> 'Query depth', // TODO: translate
+		'_ASKDU'=> 'Query duration', // TODO: translate
+		'_MEDIA'=> 'Media type',
+		'_MIME' => 'Mime type'
 	);
 
 	protected $m_Namespaces = array(

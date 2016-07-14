@@ -1,6 +1,8 @@
 <?php
+
+use SMW\UrlEncoder;
+
 /**
- * @file
  * @ingroup SMWDataValues
  */
 
@@ -32,6 +34,11 @@ class SMWURIValue extends SMWDataValue {
 	 */
 	private $m_mode;
 
+	/**
+	 * @var boolean
+	 */
+	private $showUrlContextInRawFormat = true;
+
 	public function __construct( $typeid ) {
 		parent::__construct( $typeid );
 		switch ( $typeid ) {
@@ -44,7 +51,10 @@ class SMWURIValue extends SMWDataValue {
 			case '_tel':
 				$this->m_mode = SMW_URI_MODE_TEL;
 			break;
-			case '_uri': case '_url': case '__spu': default:
+			case '__spu':
+			case '_uri':
+			case '_url':
+			default:
 				$this->m_mode = SMW_URI_MODE_URI;
 			break;
 		}
@@ -64,7 +74,17 @@ class SMWURIValue extends SMWDataValue {
 		}
 
 		switch ( $this->m_mode ) {
-			case SMW_URI_MODE_URI: case SMW_URI_MODE_ANNOURI:
+			case SMW_URI_MODE_URI:
+			case SMW_URI_MODE_ANNOURI:
+
+				// Whether the the url value was externally encoded or not
+				if ( strpos( $value, "%" ) === false ) {
+					$this->showUrlContextInRawFormat = false;
+				}
+
+				// If somehow the slash was encoded bring into one format
+				$value = str_replace( "%2F", "/", $value );
+
 				$parts = explode( ':', $value, 2 ); // try to split "schema:rest"
 				if ( count( $parts ) == 1 ) { // possibly add "http" as default
 					$value = 'http://' . $value;
@@ -75,7 +95,7 @@ class SMWURIValue extends SMWDataValue {
 				$uri_blacklist = explode( "\n", wfMessage( 'smw_uri_blacklist' )->inContentLanguage()->text() );
 				foreach ( $uri_blacklist as $uri ) {
 					$uri = trim( $uri );
-					if ( $uri == mb_substr( $value, 0, mb_strlen( $uri ) ) ) { // disallowed URI!
+					if ( $uri !== '' && $uri == mb_substr( $value, 0, mb_strlen( $uri ) ) ) { // disallowed URI!
 						$this->addError( wfMessage( 'smw_baduri', $value )->inContentLanguage()->text() );
 						return;
 					}
@@ -106,21 +126,25 @@ class SMWURIValue extends SMWDataValue {
 				if ( substr( $hierpart, 0, 2 ) === '//' ) {
 					$hierpart = substr( $hierpart, 2 );
 				}
+
 				break;
 			case SMW_URI_MODE_TEL:
 				$scheme = 'tel';
+
 				if ( substr( $value, 0, 4 ) === 'tel:' ) { // accept optional "tel"
 					$value = substr( $value, 4 );
 					$this->m_wikitext = $value;
 				}
+
 				$hierpart = preg_replace( '/(?<=[0-9]) (?=[0-9])/', '\1-\2', $value );
 				$hierpart = str_replace( ' ', '', $hierpart );
 				if ( substr( $hierpart, 0, 2 ) == '00' ) {
 					$hierpart = '+' . substr( $hierpart, 2 );
 				}
-				if ( ( strlen( preg_replace( '/[^0-9]/', '', $hierpart ) ) < 6 ) ||
+
+				if ( !$this->isUsedByQueryCondition && ( ( strlen( preg_replace( '/[^0-9]/', '', $hierpart ) ) < 6 ) ||
 					( preg_match( '<[-+./][-./]>', $hierpart ) ) ||
-					( !SMWURIValue::isValidTelURI( 'tel:' . $hierpart ) ) ) { /// TODO: introduce error-message for "bad" phone number
+					( !self::isValidTelURI( 'tel:' . $hierpart ) ) ) ) { /// TODO: introduce error-message for "bad" phone number
 					$this->addError( wfMessage( 'smw_baduri', $this->m_wikitext )->inContentLanguage()->text() );
 					return;
 				}
@@ -132,8 +156,7 @@ class SMWURIValue extends SMWDataValue {
 					$this->m_wikitext = $value;
 				}
 
-				$check = method_exists( 'Sanitizer', 'validateEmail' ) ? Sanitizer::validateEmail( $value ) : self::validateEmail( $value );
-				if ( !$check ) {
+				if ( !$this->isUsedByQueryCondition && !Sanitizer::validateEmail( $value ) ) {
 					/// TODO: introduce error-message for "bad" email
 					$this->addError( wfMessage( 'smw_baduri', $value )->inContentLanguage()->text() );
 					return;
@@ -165,73 +188,84 @@ class SMWURIValue extends SMWDataValue {
 	 * @return boolean
 	 */
 	protected function loadDataItem( SMWDataItem $dataItem ) {
-		if ( $dataItem->getDIType() == SMWDataItem::TYPE_URI ) {
-			$this->m_dataitem = $dataItem;
-			if ( $this->m_mode == SMW_URI_MODE_EMAIL ) {
-				$this->m_wikitext = substr( $dataItem->getURI(), 7 );
-			} elseif ( $this->m_mode == SMW_URI_MODE_TEL ) {
-				$this->m_wikitext = substr( $dataItem->getURI(), 4 );
-			} else {
-				$this->m_wikitext = $dataItem->getURI();
-			}
-			$this->m_caption = $this->m_wikitext;
-			return true;
-		} else {
+
+		if ( $dataItem->getDIType() !== SMWDataItem::TYPE_URI ) {
 			return false;
 		}
+
+		$this->m_dataitem = $dataItem;
+		if ( $this->m_mode == SMW_URI_MODE_EMAIL ) {
+			$this->m_wikitext = substr( $dataItem->getURI(), 7 );
+		} elseif ( $this->m_mode == SMW_URI_MODE_TEL ) {
+			$this->m_wikitext = substr( $dataItem->getURI(), 4 );
+		} else {
+			$this->m_wikitext = $dataItem->getURI();
+		}
+
+		$this->m_caption = $this->m_wikitext;
+		$this->showUrlContextInRawFormat = false;
+
+		return true;
 	}
 
 	public function getShortWikiText( $linked = null ) {
-		$url = $this->getURL();
+
+		list( $url, $caption ) = $this->decodeUriContext( $this->m_caption );
+
 		if ( is_null( $linked ) || ( $linked === false ) || ( $url === '' ) ||
 			( $this->m_outformat == '-' ) || ( $this->m_caption === '' ) ) {
-			return $this->m_caption;
+			return $caption;
 		} elseif ( $this->m_outformat == 'nowiki' ) {
-			return $this->makeNonlinkedWikiText( $this->m_caption );
+			return $this->makeNonlinkedWikiText( $caption );
 		} else {
-			return '[' . $url . ' ' . $this->m_caption . ']';
+			return '[' . $url . ' ' . $caption . ']';
 		}
 	}
 
 	public function getShortHTMLText( $linker = null ) {
-		$url = $this->getURL();
+
+		list( $url, $caption ) = $this->decodeUriContext( $this->m_caption );
+
 		if ( is_null( $linker ) || ( !$this->isValid() ) || ( $url === '' ) ||
 			( $this->m_outformat == '-' ) || ( $this->m_outformat == 'nowiki' ) ||
 			( $this->m_caption === '' ) ) {
-			return $this->m_caption;
+			return $caption;
 		} else {
-			return $linker->makeExternalLink( $url, $this->m_caption );
+			return $linker->makeExternalLink( $url, $caption );
 		}
 	}
 
 	public function getLongWikiText( $linked = null ) {
+
 		if ( !$this->isValid() ) {
 			return $this->getErrorText();
 		}
-		$url = $this->getURL();
+
+		list( $url, $wikitext ) = $this->decodeUriContext( $this->m_wikitext );
 
 		if ( is_null( $linked ) || ( $linked === false ) || ( $url === '' ) ||
 			( $this->m_outformat == '-' ) ) {
-			return $this->m_wikitext;
+			return $wikitext;
 		} elseif ( $this->m_outformat == 'nowiki' ) {
-			return $this->makeNonlinkedWikiText( $this->m_wikitext );
+			return $this->makeNonlinkedWikiText( $wikitext );
 		} else {
-			return '[' . $url . ' ' . $this->m_wikitext . ']';
+			return '[' . $url . ' ' . $wikitext . ']';
 		}
 	}
 
 	public function getLongHTMLText( $linker = null ) {
+
 		if ( !$this->isValid() ) {
 			return $this->getErrorText();
 		}
 
-		$url = $this->getURL();
+		list( $url, $wikitext ) = $this->decodeUriContext( $this->m_wikitext );
 
 		if ( is_null( $linker ) || ( !$this->isValid() ) || ( $url === '' ) ||
 			( $this->m_outformat == '-' ) || ( $this->m_outformat == 'nowiki' ) ) {
-			return htmlspecialchars( $this->m_wikitext );
+			return $wikitext;
 		} else {
-			return $linker->makeExternalLink( $url, $this->m_wikitext );
+			return $linker->makeExternalLink( $url, $wikitext );
 		}
 	}
 
@@ -283,35 +317,6 @@ class SMWURIValue extends SMWDataValue {
 	}
 
 	/**
-	 * This is a copy of
-	 * @see Sanitizer::validateEmail
-	 * which was introduced in MW 1.18, and is thus used for compatibility with earlier versions.
-	 */
-	public static function validateEmail( $addr ) {
-		$result = null;
-		if ( !wfRunHooks( 'isValidEmailAddr', array( $addr, &$result ) ) ) {
-			return $result;
-		}
-
-		// Please note strings below are enclosed in brackets [], this make the
-		// hyphen "-" a range indicator. Hence it is double backslashed below.
-		// See bug 26948
-		$rfc5322_atext   = "a-z0-9!#$%&'*+\\-\/=?^_`{|}~" ;
-		$rfc1034_ldh_str = "a-z0-9\\-" ;
-
-		$HTML5_email_regexp = "/
-		^                      # start of string
-		[$rfc5322_atext\\.]+    # user part which is liberal :p
-		@                      # 'apostrophe'
-		[$rfc1034_ldh_str]+       # First domain part
-		(\\.[$rfc1034_ldh_str]+)*  # Following part prefixed with a dot
-		$                      # End of string
-		/ix" ; // case Insensitive, eXtended
-
-		return (bool) preg_match( $HTML5_email_regexp, $addr );
-	}
-
-	/**
 	 * Helper function that changes a URL string in such a way that it
 	 * can be used in wikitext without being turned into a hyperlink,
 	 * while still displaying the same characters. The use of
@@ -324,5 +329,15 @@ class SMWURIValue extends SMWDataValue {
 		return str_replace( ':', '&#58;', $url );
 	}
 
-}
+	private function decodeUriContext( $context ) {
 
+		// Prior to decoding turn any `-` into an internal representation to avoid
+		// potential breakage
+		if ( !$this->showUrlContextInRawFormat ) {
+			$context = UrlEncoder::decode( str_replace( '-', '-2D', $context ) );
+		}
+
+		return array( $this->getURL(), $context );
+	}
+
+}

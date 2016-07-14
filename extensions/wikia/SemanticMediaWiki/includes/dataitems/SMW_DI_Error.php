@@ -1,6 +1,5 @@
 <?php
 /**
- * @file
  * @ingroup SMWDataItems
  */
 
@@ -38,6 +37,10 @@ class SMWDIError extends SMWDataItem {
 		return 'error';
 	}
 
+	public function getString() {
+		return $this->getSerialization();
+	}
+
 	public function getSerialization() {
 		return serialize( $this->m_errors );
 	}
@@ -52,10 +55,11 @@ class SMWDIError extends SMWDataItem {
 		return new SMWDIError( unserialize( $serialization ) );
 	}
 
-	public function equals( $di ) {
+	public function equals( SMWDataItem $di ) {
 		if ( $di->getDIType() !== SMWDataItem::TYPE_ERROR ) {
 			return false;
 		}
+
 		return $di->getSerialization() === $this->getSerialization();
 	}
 }

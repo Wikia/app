@@ -1,8 +1,9 @@
 <?php
 /**
- * @file
  * @ingroup SMWDataItems
  */
+
+use SMW\DataItemException;
 
 /**
  * Subclass of SMWSemanticData that is used to store the data in SMWDIContainer
@@ -71,7 +72,7 @@ class SMWContainerSemanticData extends SMWSemanticData {
 	 */
 	public function getSubject() {
 		if ( $this->hasAnonymousSubject() ) {
-			throw new SMWDataItemException("Trying to get the subject of a container data item that has not been given any. This container can only be used as a search pattern.");
+			throw new DataItemException("Trying to get the subject of a container data item that has not been given any. This container can only be used as a search pattern.");
 		} else {
 			return $this->mSubject;
 		}
@@ -182,15 +183,16 @@ class SMWDIContainer extends SMWDataItem {
 		/// TODO May issue an E_NOTICE when problems occur; catch this
 		$data = unserialize( $serialization );
 		if ( !( $data instanceof SMWContainerSemanticData ) ) {
-			throw new SMWDataItemException( "Could not unserialize SMWDIContainer from the given string." );
+			throw new DataItemException( "Could not unserialize SMWDIContainer from the given string." );
 		}
 		return new SMWDIContainer( $data );
 	}
 
-	public function equals( $di ) {
+	public function equals( SMWDataItem $di ) {
 		if ( $di->getDIType() !== SMWDataItem::TYPE_CONTAINER ) {
 			return false;
 		}
+
 		return $di->getSerialization() === $this->getSerialization();
 	}
 }

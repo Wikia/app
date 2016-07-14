@@ -8,10 +8,12 @@
  * Protect against register_globals vulnerabilities.
  * This line must be present before any global variable is referenced.
  */
-if ( !defined( 'MEDIAWIKI' ) ) die();
+if ( !defined( 'MEDIAWIKI' ) ) {
+	die();
+}
 
 global $smwgIP;
-include_once( $smwgIP . 'languages/SMW_Language.php' );
+include_once ( $smwgIP . 'languages/SMW_Language.php' );
 
 /**
  * Italian language labels for important SMW labels (namespaces, datatypes,...).
@@ -25,7 +27,6 @@ class SMWLanguageIt extends SMWLanguage {
 
 	protected $m_DatatypeLabels = array(
 		'_wpg' => 'Pagina',  // name of page datatypee
-		'_str' => 'Stringa',  // name of the string type
 		'_txt' => 'Testo',   // name of the text type
 		'_cod' => 'Code',  // name of the (source) code type //TODO: translate
 		'_boo' => 'Booleano',  // name of the boolean type
@@ -46,8 +47,9 @@ class SMWLanguageIt extends SMWLanguage {
 		'Float'       => '_num',
 		'Integer'     => '_num',
 		'Intero'      => '_num',
-		'Enumeration' => '_str',
-		'Enumerazione' => '_str'
+		'Enumeration' => '_txt',
+		'Enumerazione' => '_txt',
+		'Stringa'     => '_txt',  // old name of the string type
 	);
 
 	protected $m_SpecialProperties = array(
@@ -73,6 +75,9 @@ class SMWLanguageIt extends SMWLanguage {
 		'_ASKFO'=> 'Query format', // TODO: translate
 		'_ASKSI'=> 'Query size', // TODO: translate
 		'_ASKDE'=> 'Query depth', // TODO: translate
+		'_ASKDU'=> 'Query duration', // TODO: translate
+		'_MEDIA'=> 'Media type',
+		'_MIME' => 'Mime type'
 	);
 
 	protected $m_SpecialPropertyAliases = array(

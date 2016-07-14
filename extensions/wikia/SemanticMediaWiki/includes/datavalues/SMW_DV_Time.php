@@ -1,6 +1,5 @@
 <?php
 /**
- * @file
  * @ingroup SMWDataValues
  */
 
@@ -18,7 +17,7 @@
  * purposes, incomplete dates are completed with defaults (usually using the
  * earliest possible time, i.e. interpreting "2008" as "Jan 1 2008 00:00:00").
  * The information on what was unspecified is kept internally for improving
- * behaviour e.g. for outputs (defaults are not printed when querying for a
+ * behavior e.g. for outputs (defaults are not printed when querying for a
  * value). This largely uses the precision handling of SMWDITime.
  *
  *
@@ -158,7 +157,9 @@ class SMWTimeValue extends SMWDataValue {
 				if ( ( $era === false ) && ( $hours === false ) && ( $timeoffset == 0 ) ) {
 					try {
 						$jd = floatval( reset( $datecomponents ) );
-						if ( $calendarmodel == 'MJD' ) $jd += self::MJD_EPOCH;
+						if ( $calendarmodel == 'MJD' ) {
+							$jd += self::MJD_EPOCH;
+						}
 						$this->m_dataitem = SMWDITime::newFromJD( $jd, SMWDITime::CM_GREGORIAN, SMWDITime::PREC_YMDT, $this->m_typeid );
 					} catch ( SMWDataItemException $e ) {
 						$this->addError( wfMessage( 'smw_nodatetime', $this->m_wikivalue )->inContentLanguage()->text() );
@@ -199,7 +200,7 @@ class SMWTimeValue extends SMWDataValue {
 		// * yet "." is an essential date separation character in languages such as German
 		$parsevalue = str_replace( array( '/', '.', '&nbsp;', ',' ), array( '-', ' ', ' ', ' ' ), $string );
 
-		$matches = preg_split( "/([T]?[0-2]?[0-9]:[\:0-9]+[+\-]?[0-2]?[0-9\:]+|[a-z,A-Z]+|[0-9]+|[ ])/u", $parsevalue , -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY );
+		$matches = preg_split( "/([T]?[0-2]?[0-9]:[\:0-9]+[+\-]?[0-2]?[0-9\:]+|[\p{L}]+|[0-9]+|[ ])/u", $parsevalue, -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY );
 		$datecomponents = array();
 		$calendarmodel = $timezoneoffset = $era = $ampm = false;
 		$hours = $minutes = $seconds = $timeoffset = false;
@@ -235,13 +236,13 @@ class SMWTimeValue extends SMWDataValue {
 			} elseif ( $hours !== false && $timezoneoffset === false &&
 			           array_key_exists( $match, self::$m_tz ) ) {
 				// only accept timezone if time has already been set
-				$timezoneoffset = self::$m_tz[ $match ];
+				$timezoneoffset = self::$m_tz[$match];
 			} elseif ( $prevmatchwasnumber && $hours === false && $timezoneoffset === false &&
 			           array_key_exists( $match, self::$m_miltz ) &&
 				   self::parseMilTimeString( end( $datecomponents ), $hours, $minutes, $seconds ) ) {
 					// military timezone notation is found after a number -> re-interpret the number as military time
 					array_pop( $datecomponents );
-					$timezoneoffset = self::$m_miltz[ $match ];
+					$timezoneoffset = self::$m_miltz[$match];
 			} elseif ( ( $prevmatchwasdate || count( $datecomponents ) == 0 ) &&
 				   $this->parseMonthString( $match, $monthname ) ) {
 				$datecomponents[] = $monthname;
@@ -364,15 +365,21 @@ class SMWTimeValue extends SMWDataValue {
 	 * @return boolean stating whether a month was found
 	 */
 	protected static function parseMonthString( $string, &$monthname ) {
+		/**
+		 * @var SMWLanguage $smwgContLang
+		 */
 		global $smwgContLang;
+
 		$monthnum = $smwgContLang->findMonth( $string ); // takes precedence over English month names!
+
 		if ( $monthnum !== false ) {
 			$monthnum -= 1;
 		} else {
 			$monthnum = array_search( $string, self::$m_months ); // check English names
 		}
+
 		if ( $monthnum !== false ) {
-			$monthname = self::$m_monthsshort[ $monthnum ];
+			$monthname = self::$m_monthsshort[$monthnum];
 			return true;
 		} elseif ( array_search( $string, self::$m_monthsshort ) !== false ) {
 			$monthname = $string;
@@ -597,23 +604,24 @@ class SMWTimeValue extends SMWDataValue {
 		}
 	}
 
-	public function getShortWikiText( $linked = NULL ) {
+	public function getShortWikiText( $linked = null ) {
 		if ( $this->isValid() ) {
 			return ( $this->m_caption !== false ) ? $this->m_caption : $this->getPreferredCaption();
-		} else {
-			return $this->getErrorText();
 		}
+
+		// #1074
+		return $this->m_caption !== false ? $this->m_caption : '';
 	}
 
-	public function getShortHTMLText( $linker = NULL ) {
+	public function getShortHTMLText( $linker = null ) {
 		return $this->getShortWikiText( $linker ); // safe in HTML
 	}
 
-	public function getLongWikiText( $linked = NULL ) {
+	public function getLongWikiText( $linked = null ) {
 		return $this->isValid() ? $this->getPreferredCaption() : $this->getErrorText();
 	}
 
-	public function getLongHTMLText( $linker = NULL ) {
+	public function getLongHTMLText( $linker = null ) {
 		return $this->getLongWikiText( $linker ); // safe in HTML
 	}
 
@@ -747,7 +755,9 @@ class SMWTimeValue extends SMWDataValue {
 		$precision = $dataitem->getPrecision();
 
 		$year = $this->getYear();
-		if ( $year < 0 || $year > 9999 ) $year = '0000';
+		if ( $year < 0 || $year > 9999 ) {
+			$year = '0000';
+		}
 		$year = str_pad( $year, 4, "0", STR_PAD_LEFT );
 
 		if ( $precision <= SMWDITime::PREC_Y ) {
@@ -802,7 +812,11 @@ class SMWTimeValue extends SMWDataValue {
 	 * @todo Internationalize the CE and BCE strings.
 	 */
 	public function getCaptionFromDataitem( SMWDITime $dataitem ) {
+		/**
+		 * @var SMWLanguage $smwgContLang
+		 */
 		global $smwgContLang;
+
 		if ( $dataitem->getYear() > 0 ) {
 			$cestring = '';
 			$result = number_format( $dataitem->getYear(), 0, '.', '' ) . ( $cestring ? ( ' ' . $cestring ) : '' );
@@ -810,15 +824,19 @@ class SMWTimeValue extends SMWDataValue {
 			$bcestring = 'BC';
 			$result = number_format( -( $dataitem->getYear() ), 0, '.', '' ) . ( $bcestring ? ( ' ' . $bcestring ) : '' );
 		}
+
 		if ( $dataitem->getPrecision() >= SMWDITime::PREC_YM ) {
 			$result = $smwgContLang->getMonthLabel( $dataitem->getMonth() ) . " " . $result;
 		}
+
 		if ( $dataitem->getPrecision() >= SMWDITime::PREC_YMD ) {
 			$result = $dataitem->getDay() . " " . $result;
 		}
+
 		if ( $dataitem->getPrecision() >= SMWDITime::PREC_YMDT ) {
 			$result .= " " . $this->getTimeString();
 		}
+
 		return $result;
 	}
 

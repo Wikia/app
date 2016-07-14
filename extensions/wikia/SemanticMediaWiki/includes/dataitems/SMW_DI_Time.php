@@ -1,8 +1,6 @@
 <?php
-/**
- * @file
- * @ingroup SMWDataItems
- */
+
+use SMW\DataItemException;
 
 /**
  * This class implements time data items.
@@ -12,7 +10,7 @@
  * Even when not specified, the data item always assumes default values for the
  * missing parts, so the item really captures one point in time, no intervals.
  * Times are always assumed to be in UTC.
- * 
+ *
  * "Y0K issue": Neither the Gregorian nor the Julian calendar assume a year 0,
  * i.e. the year 1 BC(E) was followed by 1 AD/CE. See
  * http://en.wikipedia.org/wiki/Year_zero
@@ -90,7 +88,7 @@ class SMWDITime extends SMWDataItem {
 	 * be false to indicate that they are not specified. This will affect
 	 * the internal precision setting. The missing values are initialised
 	 * to minimal values (0 or 1) for internal calculations.
-	 * 
+	 *
 	 * @param $calendarmodel integer one of SMWDITime::CM_GREGORIAN or SMWDITime::CM_JULIAN
 	 * @param $year integer number of the year (possibly negative)
 	 * @param $month mixed integer number or false
@@ -104,10 +102,10 @@ class SMWDITime extends SMWDataItem {
 	public function __construct( $calendarmodel, $year, $month = false, $day = false,
 	                             $hour = false, $minute = false, $second = false ) {
 		if ( ( $calendarmodel != self::CM_GREGORIAN ) && ( $calendarmodel != self::CM_JULIAN ) ) {
-			throw new SMWDataItemException( "Unsupported calendar model constant \"$calendarmodel\"." );
+			throw new DataItemException( "Unsupported calendar model constant \"$calendarmodel\"." );
 		}
 		if ( $year == 0 ) {
-			throw new SMWDataItemException( "There is no year 0 in Gregorian and Julian calendars." );
+			throw new DataItemException( "There is no year 0 in Gregorian and Julian calendars." );
 		}
 		$this->m_model   = $calendarmodel;
 		$this->m_year    = intval( $year );
@@ -120,10 +118,10 @@ class SMWDITime extends SMWDataItem {
 		     ( $this->m_minutes < 0 ) || ( $this->m_minutes > 59 ) ||
 		     ( $this->m_seconds < 0 ) || ( $this->m_seconds > 59 ) ||
 		     ( $this->m_month < 1 ) || ( $this->m_month > 12 ) ) {
-			throw new SMWDataItemException( "Part of the date is out of bounds." );
+			throw new DataItemException( "Part of the date is out of bounds." );
 		}
 		if ( $this->m_day > self::getDayNumberForMonth( $this->m_month, $this->m_year, $this->m_model ) ) {
-			throw new SMWDataItemException( "Month {$this->m_month} in year {$this->m_year} did not have {$this->m_day} days in this calendar model." );
+			throw new DataItemException( "Month {$this->m_month} in year {$this->m_year} did not have {$this->m_day} days in this calendar model." );
 		}
 		if ( $month === false ) {
 			$this->m_precision = self::PREC_Y;
@@ -189,7 +187,7 @@ class SMWDITime extends SMWDataItem {
 		}
 
 		return new self(
-			SMWDITime::CM_GREGORIAN,
+			self::CM_GREGORIAN,
 			substr( $timestamp, 0, 4 ),
 			substr( $timestamp, 4, 2 ),
 			substr( $timestamp, 6, 2 ),
@@ -201,9 +199,9 @@ class SMWDITime extends SMWDataItem {
 
 	/**
 	 * Returns a MW timestamp representatation of the value.
-	 * 
+	 *
 	 * @since 1.6.2
-	 * 
+	 *
 	 * @param $outputtype
 	 *
 	 * @return mixed
@@ -285,23 +283,23 @@ class SMWDITime extends SMWDataItem {
 	public static function doUnserialize( $serialization ) {
 		$parts = explode( '/', $serialization, 7 );
 		$values = array();
-		
+
 		for ( $i = 0; $i < 7; $i += 1 ) {
 			if ( $i < count( $parts ) ) {
 				if ( is_numeric( $parts[$i] ) ) {
 					$values[$i] = intval( $parts[$i] );
 				} else {
-					throw new SMWDataItemException( "Unserialization failed: the string \"$serialization\" is no valid datetime specification." );
+					throw new DataItemException( "Unserialization failed: the string \"$serialization\" is no valid datetime specification." );
 				}
 			} else {
 				$values[$i] = false;
 			}
 		}
-		
+
 		if ( count( $parts ) <= 1 ) {
-			throw new SMWDataItemException( "Unserialization failed: the string \"$serialization\" is no valid URI." );
+			throw new DataItemException( "Unserialization failed: the string \"$serialization\" is no valid URI." );
 		}
-		
+
 		return new self( $values[0], $values[1], $values[2], $values[3], $values[4], $values[5], $values[6] );
 	}
 
@@ -461,10 +459,11 @@ class SMWDITime extends SMWDataItem {
 		}
 	}
 
-	public function equals( $di ) {
+	public function equals( SMWDataItem $di ) {
 		if ( $di->getDIType() !== SMWDataItem::TYPE_TIME ) {
 			return false;
 		}
+
 		return $di->getSortKey() === $this->getSortKey();
 	}
 }

@@ -1,12 +1,4 @@
 <?php
-/**
- * File holding abstract class SMWDataValue, the base for all datavalues in SMW.
- *
- * @author Markus Krötzsch
- *
- * @file
- * @ingroup SMWDataValues
- */
 
 /**
  * This group contains all parts of SMW that relate to the processing of datavalues
@@ -15,6 +7,9 @@
  * @defgroup SMWDataValues SMWDataValues
  * @ingroup SMW
  */
+use SMW\DataValueFactory;
+use SMW\Query\QueryComparator;
+use SMW\Deserializers\DVDescriptionDeserializerFactory;
 
 /**
  * Objects of this type represent all that is known about a certain user-provided
@@ -41,6 +36,8 @@
  * for displaying and serializing the value.
  *
  * @ingroup SMWDataValues
+ *
+ * @author Markus Krötzsch
  */
 abstract class SMWDataValue {
 
@@ -127,6 +124,26 @@ abstract class SMWDataValue {
 	private $mHasErrors = false;
 
 	/**
+	 * @var boolean
+	 */
+	private $serviceLinksRenderState = true;
+
+	/**
+	 * Extraneous services and object container
+	 *
+	 * @var array
+	 */
+	private $extraneousFunctions = array();
+
+	/**
+	 * Indicates whether a value is being used by a query condition or not which
+	 * can lead to a modified validation of a value.
+	 *
+	 * @var boolean
+	 */
+	protected $isUsedByQueryCondition = false;
+
+	/**
 	 * Constructor.
 	 *
 	 * @param string $typeid
@@ -142,11 +159,13 @@ abstract class SMWDataValue {
 	 * The given value is a string as supplied by some user. An alternative
 	 * label for printout might also be specified.
 	 *
+	 * The third argument was added in SMW 1.9 and should not be used from outside SMW.
+	 *
 	 * @param string $value
 	 * @param mixed $caption
+	 * @param boolean $ignoreAllowedValues
 	 */
-	public function setUserValue( $value, $caption = false ) {
-		wfProfileIn( 'SMWDataValue::setUserValue (SMW)' );
+	public function setUserValue( $value, $caption = false, $ignoreAllowedValues = false ) {
 
 		$this->m_dataitem = null;
 		$this->mErrors = array(); // clear errors
@@ -168,11 +187,10 @@ abstract class SMWDataValue {
 			$this->addError( wfMessage( 'smw_parseerror' )->inContentLanguage()->text() );
 		}
 
-		if ( $this->isValid() ) {
+		if ( $this->isValid() && !$ignoreAllowedValues ) {
 			$this->checkAllowedValues();
 		}
 
-		wfProfileOut( 'SMWDataValue::setUserValue (SMW)' );
 	}
 
 	/**
@@ -194,6 +212,15 @@ abstract class SMWDataValue {
 		$this->mErrors = $this->m_infolinks = array();
 		$this->mHasErrors = $this->mHasSearchLink = $this->mHasServiceLinks = $this->m_caption = false;
 		return $this->loadDataItem( $dataItem );
+	}
+
+	/**
+	 * @since 2.3
+	 *
+	 * @param boolean $usedByQueryCondition
+	 */
+	public function setQueryConditionUsage( $usedByQueryCondition ) {
+		$this->isUsedByQueryCondition = (bool)$usedByQueryCondition;
 	}
 
 	/**
@@ -264,9 +291,11 @@ abstract class SMWDataValue {
 		if ( $this->mHasServiceLinks ) {
 			return;
 		}
+
 		if ( !is_null( $this->m_property ) ) {
 			$propertyDiWikiPage = $this->m_property->getDiWikiPage();
 		}
+
 		if ( is_null( $this->m_property ) || is_null( $propertyDiWikiPage ) ) {
 			return; // no property known, or not associated with a page
 		}
@@ -278,7 +307,7 @@ abstract class SMWDataValue {
 		}
 
 		array_unshift( $args, '' ); // add a 0 element as placeholder
-		$servicelinks = smwfGetStore()->getPropertyValues( $propertyDiWikiPage, new SMWDIProperty( '_SERV' ) );
+		$servicelinks = \SMW\StoreFactory::getStore()->getPropertyValues( $propertyDiWikiPage, new SMWDIProperty( '_SERV' ) );
 
 		foreach ( $servicelinks as $dataItem ) {
 			if ( !( $dataItem instanceof SMWDIBlob ) ) {
@@ -377,7 +406,7 @@ abstract class SMWDataValue {
 	 *
 	 * @since 1.6
 	 *
-	 * @param $dataitem SMWDataItem
+	 * @param SMWDataItem $dataItem
 	 *
 	 * @return boolean
 	 */
@@ -387,57 +416,46 @@ abstract class SMWDataValue {
 ///// Query support /////
 
 	/**
-	 * Create an SMWDescription object based on a value string that was entered
-	 * in a query. Turning inputs that a user enters in place of a value within
-	 * a query string into query conditions is often a standard procedure. The
-	 * processing must take comparators like "<" into account, but otherwise
-	 * the normal parsing function can be used. However, there can be datatypes
-	 * where processing is more complicated, e.g. if the input string contains
-	 * more than one value, each of which may have comparators, as in
-	 * SMWRecordValue. In this case, it makes sense to overwrite this method.
-	 * Another reason to do this is to add new forms of comparators or new ways
-	 * of entering query conditions.
-	 *
-	 * The resulting SMWDescription may or may not make use of the datavalue
-	 * object that this function was called on, so it must be ensured that this
-	 * value is not used elsewhere when calling this method. The function can
-	 * return SMWThingDescription to not impose any condition, e.g. if parsing
-	 * failed. Error messages of this SMWDataValue object are propagated.
+	 * @see DataValueDescriptionDeserializer::deserialize
 	 *
 	 * @note Descriptions of values need to know their property to be able to
 	 * create a parsable wikitext version of a query condition again. Thus it
 	 * might be necessary to call setProperty() before using this method.
 	 *
 	 * @param string $value
+	 *
+	 * @return Description
+	 * @throws InvalidArgumentException
 	 */
 	public function getQueryDescription( $value ) {
-		$comparator = SMW_CMP_EQ;
 
-		self::prepareValue( $value, $comparator );
+		$dvDescriptionDeserializerFactory = DVDescriptionDeserializerFactory::getInstance()->getDescriptionDeserializerFor( $this );
+		$description = $dvDescriptionDeserializerFactory->deserialize( $value );
 
-		$this->setUserValue( $value );
-
-		if ( !$this->isValid() ) {
-			return new SMWThingDescription();
-		} else {
-			return new SMWValueDescription( $this->getDataItem(), $this->m_property, $comparator );
+		foreach ( $dvDescriptionDeserializerFactory->getErrors() as $error ) {
+			$this->addError( $error );
 		}
+
+		return $description;
 	}
 
 	/**
-	 * Helper function for getQueryDescription() that prepares a single value
-	 * string, possibly extracting comparators. $value is changed to consist
-	 * only of the remaining effective value string (without the comparator).
+	 * @deprecated 2.3
+	 * @see DescriptionDeserializer::prepareValue
 	 *
-	 * @param string $value
-	 * @param string $comparator
+	 * This method is no longer to be used for direct public access, instead a
+	 * DataValue is expected to register a DescriptionDeserializer with
+	 * DVDescriptionDeserializerFactory.
+	 *
+	 * FIXME as of 2.3, SMGeoCoordsValue still uses this method and requires
+	 * migration before 3.0
 	 */
-	static protected function prepareValue( &$value, &$comparator ) {
+	static public function prepareValue( &$value, &$comparator ) {
 		// Loop over the comparators to determine which one is used and what the actual value is.
-		foreach ( SMWQueryLanguage::getComparatorStrings() as $srting ) {
-			if ( strpos( $value, $srting ) === 0 ) {
-				$comparator = SMWQueryLanguage::getComparatorFromString( substr( $value, 0, strlen( $srting ) ) );
-				$value = substr( $value, strlen( $srting ) );
+		foreach ( QueryComparator::getInstance()->getComparatorStrings() as $string ) {
+			if ( strpos( $value, $string ) === 0 ) {
+				$comparator = QueryComparator::getInstance()->getComparatorFromString( substr( $value, 0, strlen( $string ) ) );
+				$value = substr( $value, strlen( $string ) );
 				break;
 			}
 		}
@@ -458,11 +476,21 @@ abstract class SMWDataValue {
 	 * @return SMWDataItem|SMWDIError
 	 */
 	public function getDataItem() {
+
 		if ( $this->isValid() ) {
 			return $this->m_dataitem;
-		} else {
-			return new SMWDIError( $this->mErrors );
 		}
+
+		return new SMWDIError( $this->mErrors );
+	}
+
+	/**
+	 * @since 2.2
+	 *
+	 * @return string
+	 */
+	public function __toString() {
+		return $this->getDataItem()->getSerialization();
 	}
 
 	/**
@@ -614,6 +642,14 @@ abstract class SMWDataValue {
 	}
 
 	/**
+	 * @since 2.1
+	 * @param boolean $renderState
+	 */
+	public function setServiceLinksRenderState( $renderState = true ) {
+		$this->serviceLinksRenderState = $renderState;
+	}
+
+	/**
 	 * Return an array of SMWLink objects that provide additional resources
 	 * for the given value. Captions can contain some HTML markup which is
 	 * admissible for wiki text, but no more. Result might have no entries
@@ -627,7 +663,7 @@ abstract class SMWDataValue {
 					$this->m_property->getLabel(), $this->getWikiValue() );
 			}
 
-			if ( !$this->mHasServiceLinks ) { // add further service links
+			if ( !$this->mHasServiceLinks && $this->serviceLinksRenderState ) { // add further service links
 				$this->addServiceLinks();
 			}
 		}
@@ -681,6 +717,51 @@ abstract class SMWDataValue {
 	}
 
 	/**
+	 * Whether a datavalue can be used or not (can be made more restrictive then
+	 * isValid).
+	 *
+	 * @note Validity defines a processable state without any technical restrictions
+	 * while usability is determined by its accessibility to a context
+	 * (permission, convention etc.)
+	 *
+	 * @since  2.2
+	 *
+	 * @return boolean
+	 */
+	public function canUse() {
+		return true;
+	}
+
+	/**
+	 * @note Normally set by the DataValueFactory, or during tests
+	 *
+	 * @since 2.3
+	 *
+	 * @param array
+	 */
+	public function setExtraneousFunctions( array $extraneousFunctions ) {
+		$this->extraneousFunctions = $extraneousFunctions;
+	}
+
+	/**
+	 * @since 2.3
+	 *
+	 * @param string $name
+	 * @param array $parameters
+	 *
+	 * @return mixed
+	 * @throws RuntimeException
+	 */
+	public function getExtraneousFunctionFor( $name, array $parameters = array() ) {
+
+		if ( isset( $this->extraneousFunctions[$name] ) && is_callable( $this->extraneousFunctions[$name] ) ) {
+			return call_user_func_array( $this->extraneousFunctions[$name], $parameters );
+		}
+
+		throw new RuntimeException( "$name is not registered as extraneous function." );
+	}
+
+	/**
 	 * Return a string that displays all error messages as a tooltip, or
 	 * an empty string if no errors happened.
 	 *
@@ -714,7 +795,7 @@ abstract class SMWDataValue {
 			return; // no property known, or no data to check
 		}
 
-		$allowedvalues = smwfGetStore()->getPropertyValues(
+		$allowedvalues = \SMW\StoreFactory::getStore()->getPropertyValues(
 			$propertyDiWikiPage,
 			new SMWDIProperty( '_PVAL' )
 		);
@@ -724,9 +805,10 @@ abstract class SMWDataValue {
 		}
 
 		$hash = $this->m_dataitem->getHash();
-		$testdv = SMWDataValueFactory::newTypeIDValue( $this->getTypeID() );
+		$testdv = DataValueFactory::getInstance()->newTypeIDValue( $this->getTypeID() );
 		$accept = false;
 		$valuestring = '';
+
 		foreach ( $allowedvalues as $di ) {
 			if ( $di instanceof SMWDIBlob ) {
 				$testdv->setUserValue( $di->getString() );
@@ -751,4 +833,5 @@ abstract class SMWDataValue {
 			);
 		}
 	}
+
 }

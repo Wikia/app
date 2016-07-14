@@ -1,6 +1,5 @@
 <?php
 /**
- * @file
  * @ingroup SMWDataValues
  */
 
@@ -50,12 +49,7 @@ class SMWPropertyListValue extends SMWDataValue {
 			$stringValue .= ( $stringValue ? ';' : '' ) . $diProperty->getKey();
 		}
 
-		try {
-			$this->m_dataitem = new SMWDIString( $stringValue );
-		} catch ( SMWStringLengthException $e ) {
-			$this->m_dataitem = new SMWDIString( 'Error' );
-			$this->addError( wfMessage( 'smw_maxstring', $stringValue )->inContentLanguage()->text() );
-		}
+		$this->m_dataitem = new SMWDIBlob( $stringValue );
 	}
 
 	/**
@@ -88,7 +82,7 @@ class SMWPropertyListValue extends SMWDataValue {
 	}
 
 	public function getShortWikiText( $linked = null ) {
-		return  ( $this->m_caption !== false ) ?  $this->m_caption : $this->makeOutputText( 2, $linked );
+		return ( $this->m_caption !== false ) ?  $this->m_caption : $this->makeOutputText( 2, $linked );
 	}
 
 	public function getShortHTMLText( $linker = null ) {
@@ -120,8 +114,10 @@ class SMWPropertyListValue extends SMWDataValue {
 		$result = '';
 		$sep = ( $type == 4 ) ? '; ' : ', ';
 		foreach ( $this->m_diProperties as $diProperty ) {
-			if ( $result !== '' ) $result .= $sep;
-			$propertyValue = SMWDataValueFactory::newDataItemValue( $diProperty, null );
+			if ( $result !== '' ) {
+				$result .= $sep;
+			}
+			$propertyValue = \SMW\DataValueFactory::getInstance()->newDataItemValue( $diProperty, null );
 			$result .= $this->makeValueOutputText( $type, $propertyValue, $linker );
 		}
 		return $result;
@@ -129,11 +125,16 @@ class SMWPropertyListValue extends SMWDataValue {
 
 	protected function makeValueOutputText( $type, $propertyValue, $linker ) {
 		switch ( $type ) {
-			case 0: return $propertyValue->getShortWikiText( $linker );
-			case 1: return $propertyValue->getShortHTMLText( $linker );
-			case 2: return $propertyValue->getLongWikiText( $linker );
-			case 3: return $propertyValue->getLongHTMLText( $linker );
-			case 4: return $propertyValue->getWikiValue();
+			case 0:
+			return $propertyValue->getShortWikiText( $linker );
+			case 1:
+			return $propertyValue->getShortHTMLText( $linker );
+			case 2:
+			return $propertyValue->getLongWikiText( $linker );
+			case 3:
+			return $propertyValue->getLongHTMLText( $linker );
+			case 4:
+			return $propertyValue->getWikiValue();
 		}
 	}
 }

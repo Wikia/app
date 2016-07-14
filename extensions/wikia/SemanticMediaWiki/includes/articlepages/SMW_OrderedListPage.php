@@ -1,11 +1,13 @@
 <?php
 
+use SMW\PropertyRegistry;
+use SMW\DIProperty;
+
 /**
  * Abstract subclass of MediaWiki's Article that handles the common tasks of
  * article pages for Concept and Property pages. This is mainly parameter
  * handling and some very basic output control.
  *
- * @file SMW_OrderedListPage.php
  * @ingroup SMW
  *
  * @author Nikolas Iwan
@@ -58,13 +60,29 @@ abstract class SMWOrderedListPage extends Article {
 	public function view() {
 		global $wgRequest, $wgUser;
 
+		if ( $this->getTitle()->getNamespace() === SMW_NS_PROPERTY ) {
+			$this->findBasePropertyToRedirectFor( $this->getTitle()->getText() );
+		}
+
 		parent::view();
 
 		// Copied from CategoryPage
 		$diff = $wgRequest->getVal( 'diff' );
-		$diffOnly = $wgRequest->getBool( 'diffonly', $wgUser->getGlobalPreference( 'diffonly' ) );
+		$diffOnly = $wgRequest->getBool( 'diffonly', $wgUser->getOption( 'diffonly' ) );
 		if ( !isset( $diff ) || !$diffOnly ) {
 			$this->showList();
+		}
+	}
+
+	private function findBasePropertyToRedirectFor( $label ) {
+
+		$property = new DIProperty(
+			PropertyRegistry::getInstance()->findPropertyIdByLabel( $label )
+		);
+
+		if ( $property->getLabel() !== '' && $label !== $property->getLabel() ) {
+			$outputPage = $this->getContext()->getOutput();
+			$outputPage->redirect( $property->getDiWikiPage()->getTitle()->getFullURL() );
 		}
 	}
 
@@ -74,17 +92,15 @@ abstract class SMWOrderedListPage extends Article {
 	protected function showList() {
 		global $wgOut, $wgRequest;
 
-		wfProfileIn( __METHOD__ . ' (SMW)' );
 
 		$this->from = $wgRequest->getVal( 'from', '' );
 		$this->until = $wgRequest->getVal( 'until', '' );
 
 		if ( $this->initParameters() ) {
-			$wgOut->addHTML( "<br id=\"smwfootbr\"/>\n" . $this->getHtml() );
+			$wgOut->addHTML( $this->getHtml() );
 			SMWOutputs::commitToOutputPage( $wgOut );
 		}
 
-		wfProfileOut( __METHOD__ . ' (SMW)' );
 	}
 
 	/**

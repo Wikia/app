@@ -1,0 +1,49 @@
+{
+	"name": "param-processor/param-processor",
+	"type": "library",
+	"description": "Parameter processing library",
+	"keywords": [
+		"ParamProcessor",
+		"Validator",
+		"MediaWiki",
+		"SMW",
+		"Semantic MediaWiki"
+	],
+	"homepage": "https://github.com/JeroenDeDauw/ParamProcessor",
+	"license": "GPL-2.0+",
+	"authors": [
+		{
+			"name": "Jeroen De Dauw",
+			"email": "jeroendedauw@gmail.com",
+			"homepage": "http://jeroendedauw.com",
+			"role": "Developer"
+		}
+	],
+	"support": {
+		"irc": "irc://irc.freenode.net/mediawiki"
+	},
+	"require": {
+		"php": ">=5.3.0",
+		"data-values/data-values": "~1.0|~0.1.1",
+		"data-values/interfaces": "~0.1.4",
+		"data-values/common": "~0.2.2",
+		"data-values/validators": "~0.1.1"
+	},
+	"autoload": {
+		"psr-4": {
+			"ParamProcessor\\": "src"
+		},
+		"classmap": [
+			"tests/phpunit/Definitions/ParamDefinitionTest.php",
+			"tests/phpunit/Definitions/NumericParamTest.php"
+		],
+		"files": [
+			"DefaultConfig.php"
+		]
+	},
+	"extra": {
+		"branch-alias": {
+			"dev-master": "1.2.x-dev"
+		}
+	}
+}

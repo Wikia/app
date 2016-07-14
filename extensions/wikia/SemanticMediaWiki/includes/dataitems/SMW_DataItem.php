@@ -1,12 +1,4 @@
 <?php
-/**
- * File holding abstract class SMWDataItem, the base for all dataitems in SMW.
- *
- * @author Markus Krötzsch
- *
- * @file
- * @ingroup SMWDataItems
- */
 
 /**
  * This group contains all parts of SMW that relate to the processing of dataitems
@@ -17,20 +9,12 @@
  */
 
 /**
- * Exception to be thrown when data items are created from unsuitable inputs.
- * 
- * @since 1.6
- */
-class SMWDataItemException extends MWException {
-}
-
-/**
  * Objects of this type represent all that is known about a certain piece of
  * data that could act as the value of some property. Data items only represent
  * the stored data, and are thus at the core of SMW's data model. Data items
  * are always immutable, i.e. they must not be changed after creation (and this
  * is mostly enforced by the API with some minor exceptions).
- * 
+ *
  * The set of available data items is fixed and cannot be extended. These are
  * the kinds of information that SMW can process. Their concrete use and
  * handling might depend on the context in which they are used. In particular,
@@ -47,10 +31,13 @@ abstract class SMWDataItem {
 	const TYPE_NOTYPE    = 0;
 	/// Data item ID for SMWDINumber
 	const TYPE_NUMBER    = 1;
-	/// Data item ID for SMWDIString
+	/**
+	 * Data item ID for SMWDIString.
+	 * @deprecated Will vanish after SMW 1.9; use TYPE_BLOB instead.
+	 */
 	const TYPE_STRING    = 2;
-	///  Data item ID for SMWDIBlob
-	const TYPE_BLOB      = 3;
+	/// Data item ID for SMWDIBlob
+	const TYPE_BLOB      = 2;
 	///  Data item ID for SMWDIBoolean
 	const TYPE_BOOLEAN   = 4;
 	///  Data item ID for SMWDIUri
@@ -83,9 +70,9 @@ abstract class SMWDataItem {
 	 * If the data is of a numerical type, the sorting must be done in
 	 * numerical order. If the data is a string, the data must be sorted
 	 * alphabetically.
-	 * 
+	 *
 	 * @note Every data item returns a sort key, even if there is no
-	 * natural linear order for the type. SMW must order listed data 
+	 * natural linear order for the type. SMW must order listed data
 	 * in some way in any case. If there is a natural order (e.g. for
 	 * Booleans where false < true), then the sortkey must agree with
 	 * this order (e.g. for Booleans where false maps to 0, and true
@@ -95,21 +82,21 @@ abstract class SMWDataItem {
 	 * sortkey that is assigned to them as a property value. When pages are
 	 * sorted, this data should be used if possible.
 	 *
-	 * @return float or string 
+	 * @return float|string
 	 */
 	abstract public function getSortKey();
 
 	/**
-	* Method to compare two SMWDataItems
-	* This should result true only if they are of the same DI type
-	* and have the same internal value
-	*
-	* @param SMWDataItem
-	* @return Boolean
-	*
-	* @since 1.8
-	*/
-	abstract public function equals( $di );
+	 * Method to compare two SMWDataItems
+	 * This should result true only if they are of the same DI type
+	 * and have the same internal value
+	 *
+	 * @since 1.8
+	 *
+	 * @param SMWDataItem $di
+	 * @return boolean
+	 */
+	abstract public function equals( SMWDataItem $di );
 
 	/**
 	 * Create a data item that represents the sortkey, i.e. either an
@@ -119,12 +106,13 @@ abstract class SMWDataItem {
 	 * @return SMWDataItem
 	 */
 	public function getSortKeyDataItem() {
-		$sortkey = $this->getSortKey();
-		if ( is_numeric( $sortkey ) ) {
-			return new SMWDINumber( $sortkey );
-		} else {
-			return new SMWDIBlob( $sortkey );
+		$sortKey = $this->getSortKey();
+
+		if ( is_numeric( $sortKey ) ) {
+			return new SMWDINumber( $sortKey );
 		}
+
+		return new SMWDIBlob( $sortKey );
 	}
 
 	/**
@@ -138,11 +126,20 @@ abstract class SMWDataItem {
 
 	/**
 	 * Get a hash string for this data item. Might be overwritten in
-	 * subclasses to obtain shorter or more efficient hashes. 
-	 * 
+	 * subclasses to obtain shorter or more efficient hashes.
+	 *
 	 * @return string
 	 */
 	public function getHash() {
+		return $this->getSerialization();
+	}
+
+	/**
+	 * @since 2.1
+	 *
+	 * @return string
+	 */
+	public function __toString() {
 		return $this->getSerialization();
 	}
 
@@ -152,8 +149,7 @@ abstract class SMWDataItem {
 	 *
 	 * @param $diType integer dataitem ID
 	 * @param $serialization string
-	 * @param $typeid string SMW type ID (optional)
-	 * 
+	 *
 	 * @return SMWDataItem
 	 */
 	public static function newFromSerialization( $diType, $serialization ) {
@@ -163,27 +159,37 @@ abstract class SMWDataItem {
 
 	/**
 	 * Gets the class name of the data item that has the provided type id.
-	 * 
+	 *
 	 * @param integer $diType Element of the SMWDataItem::TYPE_ enum
-	 * 
+	 *
 	 * @throws InvalidArgumentException
-	 * 
+	 *
 	 * @return string
 	 */
 	public static function getDataItemClassNameForId( $diType ) {
 		switch ( $diType ) {
-			case self::TYPE_NUMBER:    return 'SMWDINumber';
-			case self::TYPE_STRING:    return 'SMWDIString';
-			case self::TYPE_BLOB:      return 'SMWDIBlob';
-			case self::TYPE_BOOLEAN:   return 'SMWDIBoolean';
-			case self::TYPE_URI:       return 'SMWDIUri';
-			case self::TYPE_TIME:      return 'SMWDITime';
-			case self::TYPE_GEO:       return 'SMWDIGeoCoord';
-			case self::TYPE_CONTAINER: return 'SMWDIContainer';
-			case self::TYPE_WIKIPAGE:  return 'SMWDIWikiPage';
-			case self::TYPE_CONCEPT:   return 'SMWDIConcept';
-			case self::TYPE_PROPERTY:  return 'SMWDIProperty';
-			case self::TYPE_ERROR:     return 'SMWDIError';
+			case self::TYPE_NUMBER:
+				return 'SMWDINumber';
+			case self::TYPE_BLOB:
+				return 'SMWDIBlob';
+			case self::TYPE_BOOLEAN:
+				return 'SMWDIBoolean';
+			case self::TYPE_URI:
+				return 'SMWDIUri';
+			case self::TYPE_TIME:
+				return 'SMWDITime';
+			case self::TYPE_GEO:
+				return 'SMWDIGeoCoord';
+			case self::TYPE_CONTAINER:
+				return 'SMWDIContainer';
+			case self::TYPE_WIKIPAGE:
+				return 'SMWDIWikiPage';
+			case self::TYPE_CONCEPT:
+				return 'SMWDIConcept';
+			case self::TYPE_PROPERTY:
+				return 'SMWDIProperty';
+			case self::TYPE_ERROR:
+				return 'SMWDIError';
 			case self::TYPE_NOTYPE: default:
 				throw new InvalidArgumentException( "The value \"$diType\" is not a valid dataitem ID." );
 		}

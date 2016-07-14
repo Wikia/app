@@ -1,8 +1,6 @@
 <?php
-/**
- * @file
- * @ingroup SMWDataItems
- */
+
+use SMW\DataItemException;
 
 /**
  * This class implements URI data items.
@@ -50,10 +48,10 @@ class SMWDIUri extends SMWDataItem {
 	 */
 	public function __construct( $scheme, $hierpart, $query, $fragment ) {
 		if ( ( $scheme === '' ) || ( preg_match( '/[^a-zA-Z]/u', $scheme ) ) ) {
-			throw new SMWDataItemException( "Illegal URI scheme \"$scheme\"." );
+			throw new DataItemException( "Illegal URI scheme \"$scheme\"." );
 		}
 		if ( $hierpart === '' ) {
-			throw new SMWDataItemException( "Illegal URI hierpart \"$hierpart\"." );
+			throw new DataItemException( "Illegal URI hierpart \"$hierpart\"." );
 		}
 		$this->m_scheme   = $scheme;
 		$this->m_hierpart = $hierpart;
@@ -70,7 +68,7 @@ class SMWDIUri extends SMWDataItem {
 		$schemesWithDoubleslesh = array(
 			'http', 'https', 'ftp'
 		);
-		
+
 		$uri = $this->m_scheme . ':'
 			. ( in_array( $this->m_scheme, $schemesWithDoubleslesh ) ? '//' : '' )
 			. $this->m_hierpart
@@ -112,7 +110,7 @@ class SMWDIUri extends SMWDataItem {
 	public static function doUnserialize( $serialization ) {
 		$parts = explode( ':', $serialization, 2 ); // try to split "schema:rest"
 		if ( count( $parts ) <= 1 ) {
-			throw new SMWDataItemException( "Unserialization failed: the string \"$serialization\" is no valid URI." );
+			throw new DataItemException( "Unserialization failed: the string \"$serialization\" is no valid URI." );
 		}
 		$scheme = $parts[0];
 		$parts = explode( '?', $parts[1], 2 ); // try to split "hier-part?queryfrag"
@@ -127,16 +125,17 @@ class SMWDIUri extends SMWDataItem {
 			$hierpart = $parts[0];
 			$fragment = ( count( $parts ) == 2 ) ? $parts[1] : '';
 		}
-		
+
 		$hierpart = ltrim( $hierpart, '/' );
-		
+
 		return new SMWDIUri( $scheme, $hierpart, $query, $fragment );
 	}
 
-	public function equals( $di ) {
+	public function equals( SMWDataItem $di ) {
 		if ( $di->getDIType() !== SMWDataItem::TYPE_URI ) {
 			return false;
 		}
+
 		return $di->getURI() === $this->getURI();
 	}
 }

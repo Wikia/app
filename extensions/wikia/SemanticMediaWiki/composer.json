@@ -1,0 +1,102 @@
+{
+	"name": "mediawiki/semantic-media-wiki",
+	"type": "mediawiki-extension",
+	"description": "MediaWiki extension that lets you store and query structured data within wiki pages",
+	"keywords": [
+		"SMW",
+		"Semantic MediaWiki",
+		"Wiki",
+		"MediaWiki"
+	],
+	"homepage": "https://semantic-mediawiki.org/wiki/",
+	"license": "GPL-2.0+",
+	"authors": [
+		{
+			"name": "Markus Krötzsch",
+			"homepage": "http://korrekt.org",
+			"role": "Original author"
+		},
+		{
+			"name": "Jeroen De Dauw",
+			"email": "jeroendedauw@gmail.com",
+			"homepage": "http://jeroendedauw.com",
+			"role": "Core developer"
+		},
+		{
+			"name": "James Hong Kong",
+			"homepage": "https://semantic-mediawiki.org/wiki/User:MWJames",
+			"role": "Core developer"
+		}
+	],
+	"support": {
+		"email": "semediawiki-user@lists.sourceforge.net",
+		"issues": "https://github.com/SemanticMediaWiki/SemanticMediaWiki/issues",
+		"irc": "irc://irc.freenode.net/semantic-mediawiki",
+		"forum": "https://semantic-mediawiki.org/wiki/semantic-mediawiki.org_talk:Community_portal",
+		"wiki": "https://semantic-mediawiki.org/wiki/",
+		"source": "https://github.com/SemanticMediaWiki/SemanticMediaWiki"
+	},
+	"require": {
+		"php": ">=5.3.0",
+		"composer/installers": "1.*,>=1.0.1",
+		"mediawiki/parser-hooks": "~1.4",
+		"serialization/serialization": "~3.2",
+		"onoi/message-reporter": "~1.0",
+		"onoi/cache": "~1.2",
+		"onoi/event-dispatcher": "~1.0",
+		"onoi/blob-store": "~1.1",
+		"onoi/http-request": "~1.1",
+		"onoi/callback-container": "~1.0"
+	},
+	"require-dev": {
+		"squizlabs/php_codesniffer": "~2.1",
+		"phpmd/phpmd": "~2.1"
+	},
+	"replace": {
+		"mediawiki/semantic-mediawiki": "*"
+	},
+	"suggest": {
+		"mediawiki/semantic-result-formats": "Additional result formats for SMW queries",
+		"mediawiki/semantic-forms": "Easy creation of forms to add semantic data"
+	},
+	"extra": {
+		"branch-alias": {
+			"dev-master": "2.3.x-dev"
+		}
+	},
+	"autoload": {
+		"psr-4": {
+			"SMW\\": "src/"
+		},
+		"files" : [
+			"SemanticMediaWiki.php"
+		],
+		"classmap": [
+			"SemanticMediaWiki.hooks.php",
+			"includes/",
+			"languages/SMW_Language.php"
+		]
+	},
+	"config": {
+		"process-timeout": 0
+	},
+	"scripts": {
+		"phpunit": "php ../../tests/phpunit/phpunit.php -c phpunit.xml.dist",
+		"unit": [
+			"composer dump-autoload",
+			"php ../../tests/phpunit/phpunit.php -c phpunit.xml.dist --testsuite=semantic-mediawiki-unit"
+		],
+		"cs-standalone": [
+			"composer validate --no-interaction",
+			"vendor/bin/phpcs src/* includes/* tests/* --standard=phpcs.xml --extensions=php -sp"
+		],
+		"cs": [
+			"composer cs-standalone",
+			"vendor/bin/phpmd src/,includes/,tests/ text phpmd.xml"
+		],
+		"ci": [
+			"composer phpunit",
+			"composer cs"
+		]
+	}
+}

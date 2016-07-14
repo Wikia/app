@@ -1,0 +1,8 @@
+{
+    "@metadata": {
+        "authors": [
+            "Jeroen De Dauw"
+        ]
+    },
+    "parserhooks-desc": "OOP interface for creating MediaWiki parser hooks in a declarative fashion"
+}

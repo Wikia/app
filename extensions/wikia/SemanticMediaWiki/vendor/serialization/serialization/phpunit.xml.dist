@@ -1,0 +1,27 @@
+<phpunit backupGlobals="false"
+         backupStaticAttributes="false"
+         bootstrap="test/bootstrap.php"
+         cacheTokens="false"
+         colors="true"
+         convertErrorsToExceptions="true"
+         convertNoticesToExceptions="true"
+         convertWarningsToExceptions="true"
+         stopOnError="false"
+         stopOnFailure="false"
+         stopOnIncomplete="false"
+         stopOnSkipped="false"
+         verbose="true">
+    <testsuites>
+        <testsuite name="Deserializers">
+            <directory>test/Deserializers</directory>
+        </testsuite>
+        <testsuite name="Serializers">
+            <directory>test/Serializers</directory>
+        </testsuite>
+    </testsuites>
+    <filter>
+        <whitelist addUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">src</directory>
+        </whitelist>
+    </filter>
+</phpunit>
