@@ -21,7 +21,7 @@ $icon-space-large: 19px;
 
 .modal.community-page-benefits-modal {
 	background: $color-white;
-	cursor: pointer;
+	color: $color-text-dark;
 	font-family: $community-page-font-family;
 	font-size: 16px;
 	height: 90vh;
@@ -36,14 +36,6 @@ $icon-space-large: 19px;
 
 	footer, header {
 		display: none;
-	}
-}
-
-.community-page-benefits-modal-area {
-	color: $color-text-dark;
-
-	&:hover {
-		text-decoration: none;
 	}
 }
 
@@ -68,16 +60,6 @@ $icon-space-large: 19px;
 	overflow: hidden;
 	position: relative;
 	width: 50%;
-	overflow: hidden;
-	position: relative;
-}
-
-.community-page-benefits-image {
-	height: 100%;
-	position: absolute;
-	left: -100%;
-	right: -100%;
-	margin: auto;
 }
 
 .community-page-benefits-image {
