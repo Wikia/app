@@ -396,7 +396,7 @@ class QueryEngine {
 	private function getInstanceQueryResult( Query $query, $rootid ) {
 		global $wgDBtype;
 
-		$db = $this->store->getConnection();
+		$db = $this->store->getConnection( DB_MASTER ); # Wikia change - temporary table is created on master, issue select queries there as well, forgive me Drozdo ;)
 
 		$qobj = $this->querySegmentList[$rootid];
 
