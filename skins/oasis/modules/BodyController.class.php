@@ -422,6 +422,11 @@ class BodyController extends WikiaController {
 			$this->wg->Out->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'skins/oasis/css/modules/SpecialAllpages.scss' ) );
 		}
 
+		// VOLDEV-125: Fix Special:AllMessages colors on dark wikis
+		if ( !empty( $this->wg->Title ) && $this->wg->Title->isSpecial( 'Allmessages' ) && SassUtil::isThemeDark() ) {
+			$this->wg->Out->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'skins/oasis/css/modules/SpecialAllMessages.scss' ) );
+		}
+
 		// Forum Extension
 		if ( !empty( $this->wg->EnableForumExt ) && ForumHelper::isForum() ) {
 			$this->wg->SuppressPageHeader = true;
