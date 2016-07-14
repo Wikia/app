@@ -65,17 +65,17 @@ $icon-space-large: 19px;
 	float: left;
 	height: 90vh;
 	max-height: 698px;
-	width: 50%;
 	overflow: hidden;
 	position: relative;
+	width: 50%;
 }
 
 .community-page-benefits-image {
 	height: 100%;
-	position: absolute;
 	left: -100%;
-	right: -100%;
 	margin: auto;
+	position: absolute;
+	right: -100%;
 }
 
 .community-page-benefits-modal-text {
