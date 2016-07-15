@@ -4,7 +4,6 @@ define('ext.wikia.adEngine.template.playwire', [
 	'wikia.log'
 ], function (player, log) {
 	'use strict';
-
 	var logGroup = 'ext.wikia.adEngine.template.playwire';
 
 	/**
