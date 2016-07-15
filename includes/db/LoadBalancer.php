@@ -539,6 +539,8 @@ class LoadBalancer {
 		}
 
 		wfProfileOut( __METHOD__ );
+		echo "CONN:";
+		var_dump($conn);
 		return $conn;
 	}
 
