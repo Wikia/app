@@ -230,7 +230,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 
 	public function getFirstTimeEditorModalData() {
 		$this->response->setData( [
-			'headingText'    => $this->msg( 'communitypage-first-edit-heading' )->plain(),
+			'headingText' => $this->msg( 'communitypage-first-edit-heading' )->plain(),
 			'subheadingText' => $this->msg( 'communitypage-first-edit-subheading' )->plain(),
 			'getStartedText' => $this->msg( 'communitypage-first-edit-get-started' )->plain(),
 			'maybeLaterText' => $this->msg( 'communitypage-first-edit-maybe-later' )->plain(),
@@ -315,11 +315,10 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		// we need variable to pass it by reference to helper
 		$title = self::COMMUNITY_PAGE_BENEFITS_MODAL_IMAGE;
 		$modalFile = WikiaFileHelper::getFileFromTitle( $title );
-		if ( $modalFile ) {
+		if ( $modalFile && $modalFile->getHeight() >= self::MODAL_IMAGE_HEIGHT ) {
 			$ratio = floatval( $modalFile->getWidth() ) / floatval( $modalFile->getHeight() );
-			if ( $modalFile->getHeight() >= self::MODAL_IMAGE_HEIGHT &&
-				 $ratio >= self::MODAL_IMAGE_MIN_RATIO
-			) {
+			if ( $ratio >= self::MODAL_IMAGE_MIN_RATIO ) {
+				// this transform will make image 700 height
 				$thumbnail = $modalFile->transform( [
 					'width' => round( $ratio * self::MODAL_IMAGE_HEIGHT )
 				] );
@@ -360,7 +359,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 
 		return array_merge( $data, [
 			'showEditLink' => $user->isAllowed( 'editinterface' ),
-			'isZeroState' => !$data['haveContent'],
+			'isZeroState' => !$data[ 'haveContent' ],
 			'heading' => $this->msg( 'communitypage-todo-module-heading' )->plain(),
 			'editList' => $this->msg( 'communitypage-todo-module-edit-list' )->plain(),
 			'description' => $this->msg( 'communitypage-todo-module-description' )->plain(),

@@ -63,6 +63,7 @@ $icon-space-large: 19px;
 }
 
 .community-page-benefits-image {
+	// this positioning is used to center img, we need it to support different breakpoints modal sizes
 	height: 100%;
 	left: -100%;
 	margin: auto;
