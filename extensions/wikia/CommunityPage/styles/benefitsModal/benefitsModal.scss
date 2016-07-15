@@ -48,7 +48,7 @@ $icon-space-large: 19px;
 	width: 50%;
 }
 
-.community-page-benefits-image {
+.community-page-benefits-container {
 	background-color: $color-image-bg;
 	background-image: url('/extensions/wikia/CommunityPage/images/wikia-logo-in-circles.png'), url('/extensions/wikia/CommunityPage/images/wikia-logo-bg.png');
 	background-position: center, bottom;
@@ -57,7 +57,18 @@ $icon-space-large: 19px;
 	float: left;
 	height: 90vh;
 	max-height: 698px;
+	overflow: hidden;
+	position: relative;
 	width: 50%;
+}
+
+.community-page-benefits-image {
+	// this positioning is used to center img, we need it to support different breakpoints modal sizes
+	height: 100%;
+	left: -100%;
+	margin: auto;
+	position: absolute;
+	right: -100%;
 }
 
 .community-page-benefits-modal-text {
