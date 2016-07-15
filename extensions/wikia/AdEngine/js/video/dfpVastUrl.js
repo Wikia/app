@@ -17,7 +17,9 @@ define('ext.wikia.adEngine.video.dfpVastUrl', [
 			customParameters = [];
 
 		Object.keys(pageLevelParams).forEach(function (key) {
-			customParameters.push(key + '=' + pageLevelParams[key]);
+			if (pageLevelParams[key]) {
+				customParameters.push(key + '=' + pageLevelParams[key]);
+			}
 		});
 
 		return encodeURIComponent(customParameters.join('&'));

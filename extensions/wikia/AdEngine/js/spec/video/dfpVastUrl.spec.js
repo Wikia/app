@@ -13,7 +13,8 @@ describe('ext.wikia.adEngine.video.dfpVastUrl', function () {
 					return {
 						uno: 'foo',
 						due: 15,
-						tre: [ 'bar', 'zero' ]
+						tre: [ 'bar', 'zero' ],
+						quattro: null
 					};
 				}
 			},
@@ -75,6 +76,6 @@ describe('ext.wikia.adEngine.video.dfpVastUrl', function () {
 	it('Build VAST URL with page level params', function () {
 		var vastUrl = getModule().build();
 
-		expect(vastUrl).toMatch(/&cust_params=uno%3Dfoo%26due%3D15%26tre%3Dbar%2Czero/g);
+		expect(vastUrl).toMatch(/&cust_params=uno%3Dfoo%26due%3D15%26tre%3Dbar%2Czero$/g);
 	});
 });

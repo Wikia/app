@@ -5,6 +5,11 @@ describe('ext.wikia.adEngine.video.playwire', function () {
 	function noop () {}
 
 	var mocks = {
+			dfpVastUrl: {
+				build: function () {
+					return '//vast.url';
+				}
+			},
 			doc: {
 				createElement: function () {
 					return {
@@ -22,6 +27,7 @@ describe('ext.wikia.adEngine.video.playwire', function () {
 
 	function getModule() {
 		return modules['ext.wikia.adEngine.video.playwire'](
+			mocks.dfpVastUrl,
 			mocks.doc,
 			mocks.log
 		);
@@ -53,5 +59,25 @@ describe('ext.wikia.adEngine.video.playwire', function () {
 		playwire.inject('//fake.url', mocks.parent);
 
 		expect(mocks.parent.appendChild.calls.mostRecent().args[0]['data-config']).toEqual('//fake.url');
+	});
+
+	it('Inject player with vast url', function () {
+		var playwire = getModule();
+
+		spyOn(mocks.parent, 'appendChild');
+
+		playwire.inject('//fake.url', mocks.parent, '//custom-vast.url');
+
+		expect(mocks.parent.appendChild.calls.mostRecent().args[0]['data-ad-tag']).toEqual('//custom-vast.url');
+	});
+
+	it('Inject player with built vast url if not passed', function () {
+		var playwire = getModule();
+
+		spyOn(mocks.parent, 'appendChild');
+
+		playwire.inject('//fake.url', mocks.parent);
+
+		expect(mocks.parent.appendChild.calls.mostRecent().args[0]['data-ad-tag']).toEqual('//vast.url');
 	});
 });
