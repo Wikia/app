@@ -11,9 +11,9 @@
 		<?= $app->renderView( 'ForumController', 'boardNewThread', [ 'isTopicPage' => $isTopicPage ] ) ?>
 		<div class="ContentHeader <?php if ( $isTopicPage ): ?> Topic<?php endif; ?>">
 			<?php if ( $isTopicPage ): ?>
-				<div class="activity"><?= wfMessage( 'forum-active-threads-on-topic', $wg->Lang->formatNum( $activeThreads ), $topicText )->parse(); ?></div>
+				<div class="activity"><?= wfMessage( 'forum-active-threads-on-topic' )->numParams( $activeThreads )->params( $topicText )->parse(); ?></div>
 			<?php else : ?>
-				<div class="activity"><?= wfMessage( 'forum-active-threads', $wg->Lang->formatNum( $activeThreads ) )->escaped(); ?></div>
+				<div class="activity"><?= wfMessage( 'forum-active-threads' )->numParams( $activeThreads )->escaped(); ?></div>
 			<?php endif; ?>
 			<div class="sorting">
 				<span class="selected"><?= $sortingSelected ?><img class="arrow" src="<?= $wg->BlankImgUrl ?>" /></span>
@@ -43,7 +43,7 @@
 			] ) ?>
 		<? endif ?>
 		<div id="WallTooltipMeta">
-			<div class="tooltip-text tooltip-highlight-thread"><?= wfMsg( 'wall-message-notifyeveryone-tooltip' ) ?></div>
+			<div class="tooltip-text tooltip-highlight-thread"><?= wfMessage( 'wall-message-notifyeveryone-tooltip' )->escaped() ?></div>
 		</div>
 	</section>
 </div>
