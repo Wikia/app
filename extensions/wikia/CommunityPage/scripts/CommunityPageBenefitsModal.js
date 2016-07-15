@@ -64,7 +64,7 @@ define('CommunityPageBenefitsModal',
 				benefitsImageUrl: modalImageUrl
 			});
 
-			// wait for image to load, or show it
+			// wait for image to load, or show it on error
 			image.onload = image.onerror = function () {
 				require(['wikia.ui.factory'], function (uiFactory) {
 					uiFactory.init(['modal']).then(createComponent);
