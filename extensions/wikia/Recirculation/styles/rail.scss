@@ -38,6 +38,76 @@
 	}
 }
 
+$recirculation-fandom-dark-blue: #39414d;
+$recirculation-fandom-icon-size: 48px;
+
+.recirculation-rail.group-SDCC {
+	margin-top: 30px;
+
+	&::before {
+		background: {
+			color: $recirculation-fandom-dark-blue;
+			image: url('/extensions/wikia/Recirculation/images/fandom-logo.svg');
+			position: center;
+			repeat: no-repeat;
+		};
+		border: {
+			color: $color-module-background;
+			radius: $recirculation-fandom-icon-size / 2;
+			style: solid;
+			width: 4px;
+		};
+		box-sizing: border-box;
+		content: '';
+		display: block;
+		height: $recirculation-fandom-icon-size;
+		left: 50%;
+		margin-left: -$recirculation-fandom-icon-size / 2;
+		position: absolute;
+		top: -$recirculation-fandom-icon-size / 2;
+		width: $recirculation-fandom-icon-size;
+	}
+
+	h2 {
+		font-size: 24px;
+		line-height: 20px;
+		margin-bottom: 20px;
+		margin-top: 15px;
+		padding: 0;
+		text-align: center;
+		color: $color-alternate-text;
+
+		span {
+			font-size: 10px;
+			letter-spacing: .3px;
+			line-height: 10px;
+			text-transform: uppercase;
+			margin-top: -5px;
+		}
+
+		strong {
+			color: $color-text;
+		}
+
+		svg {
+			@include transform-scale(1.2);
+
+			fill: $recirculation-fandom-dark-blue;
+			margin-left: 7px;
+		}
+	}
+
+	@if ($is-dark-wiki) {
+		&::before {
+			background-color: $color-white;
+		}
+
+		h2 svg {
+			fill: $color-white;
+		}
+	}
+}
+
 // Update Taboola in Right Rail to match other right rail modules
 // Right rail module code found: skins/oasis/css/core/page.scss
 #RECIRCULATION_RAIL .trc_rbox_container {

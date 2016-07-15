@@ -122,6 +122,14 @@ require([
 			view = railView();
 			isRail = true;
 			break;
+		case 'SDCC':
+			helper = fandomHelper({
+				type: 'category',
+				limit: 5
+			});
+			view = railView();
+			isRail = true;
+			break;
 		case 'LINKS_RAIL':
 			helper = contentLinksHelper();
 			view = railView();
