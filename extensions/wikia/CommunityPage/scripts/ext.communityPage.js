@@ -251,6 +251,18 @@ require([
 				handleClick(event, category);
 			}
 		});
+
+		// Track clicks in the To-do List module
+		$('.community-page-todo-list-module-edit').on('mousedown touchstart', 'a', function (event) {
+			handleClick(event, 'community-page-todo-list-module');
+		});
+
+		$('.community-page-todo-list-module-content').on('mousedown touchstart', 'a', function (event) {
+			track({
+				category: 'community-page-todo-list-module',
+				label: 'community-page-todo-list-module-content',
+			});
+		});
 	}
 
 	function initModalTracking(modal) {

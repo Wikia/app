@@ -46,7 +46,8 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 			'communityPolicyModule' => $this->getCommunityPolicyData(),
 			'recentActivityModule' => $this->getRecentActivityData(),
 			'insightsModules' => $this->getInsightsModulesData(),
-			'helpModule' => $this->getHelpModuleData()
+			'helpModule' => $this->getHelpModuleData(),
+			'communityTodoListModule' => $this->getCommunityTodoListData(),
 		] );
 	}
 
@@ -327,5 +328,19 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		}
 
 		return $editors;
+	}
+
+	public function getCommunityTodoListData() {
+		$user = $this->getUser();
+		$data = ( new CommunityPageSpecialCommunityTodoListModel() )->getData();
+
+		return array_merge( $data, [
+			'showEditLink' => $user->isAllowed( 'editinterface' ),
+			'isZeroState' => !$data['haveContent'],
+			'heading' => $this->msg( 'communitypage-todo-module-heading' )->plain(),
+			'editList' => $this->msg( 'communitypage-todo-module-edit-list' )->plain(),
+			'description' => $this->msg( 'communitypage-todo-module-description' )->plain(),
+			'zeroStateText' => $this->msg( 'communitypage-todo-module-zero-state' )->plain(),
+		] );
 	}
 }

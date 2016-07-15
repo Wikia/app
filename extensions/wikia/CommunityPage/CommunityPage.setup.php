@@ -8,6 +8,7 @@ $wgAutoloadClasses['CommunityPageSpecialInsightsModel'] =  __DIR__ . '/models/Co
 $wgAutoloadClasses['CommunityPageSpecialRecentActivityModel'] =  __DIR__ . '/models/CommunityPageSpecialRecentActivityModel.class.php';
 $wgAutoloadClasses['CommunityPageSpecialHelpModel'] =  __DIR__ . '/models/CommunityPageSpecialHelpModel.class.php';
 $wgAutoloadClasses['CommunityPageSpecialCommunityPolicyModel'] =  __DIR__ . '/models/CommunityPageSpecialCommunityPolicyModel.class.php';
+$wgAutoloadClasses['CommunityPageSpecialCommunityTodoListModel'] =  __DIR__ . '/models/CommunityPageSpecialCommunityTodoListModel.class.php';
 
 /* controller */
 $wgAutoloadClasses['CommunityPageSpecialController'] =  __DIR__ . '/CommunityPageSpecialController.class.php';
