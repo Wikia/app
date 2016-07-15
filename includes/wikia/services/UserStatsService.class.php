@@ -362,6 +362,11 @@ class UserStatsService extends WikiaModel {
 		$dbName = ( $this->getWikiId() === $this->wg->CityId ) ? false : WikiFactory::IDtoDB( $this->getWikiId() );
 		$dbType = ( $flags & Title::GAID_FOR_UPDATE ) ? DB_MASTER : DB_SLAVE;
 
+		echo "dbType:";
+		var_dump($dbType);
+		echo "dbName";
+		var_dump($dbName);
+
 		return $this->getWikiDB( $dbType, $dbName );
 	}
 
