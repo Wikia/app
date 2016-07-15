@@ -60,8 +60,10 @@ function redirectToBranchLink(){
 		campaign: 'apppromolanding',
 	}, function(err, link) {
 		if(err){
-			consloe.log(err);
+			console.log(err);
 		}
-		window.location = link;
+		if(link){
+			window.location = link;
+		}
 	});	
 }

@@ -159,6 +159,7 @@ $SCALE_FOR_TABLET_IMAGE_GRID = "0.8";
 	padding: 0 65px 0 18px;
 	line-height:41px;
 	font-size:16px;
+	height:42px;
 }
 #branchIoForm button{
 	display:inline-block;
@@ -243,7 +244,6 @@ svg path{
 	}
 	.branchIo_alternate #branchIoForm input[type=text]{
 		width:232px;
-		height:42px;
 	}
 	.branchIo_alternate .storeButtons{
 		margin-top:22px;
