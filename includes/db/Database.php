@@ -893,12 +893,15 @@ abstract class DatabaseBase implements DatabaseType {
 				wfProfileOut( $queryProf );
 				wfProfileOut( $totalProf );
 			}
+			echo "ITS HERE??";
 			WikiaLogger::instance()->error( 'DB readonly mode', [
 				'exception' => new WikiaException( $fname . ' called in read-only mode' ),
 				'sql'       => $sql,
 				'server'    => $this->mServer
 			] );
+			echo "IS IT HERE TOO?";
 			wfDebug( sprintf( "%s: DB read-only mode prevented the following query: %s\n", __METHOD__, $sql ) );
+			echo "What about here?";
 			return false;
 		}
 		# </Wikia>
