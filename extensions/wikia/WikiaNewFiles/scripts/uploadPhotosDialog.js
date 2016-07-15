@@ -16,7 +16,6 @@ var UploadPhotos = {
 		if (( wgUserName == null ) && ( !UserLogin.forceLoggedIn )) {
 			window.wikiaAuthModal.load({
 				forceLogin: true,
-				url: '/signin?redirect=' + encodeURIComponent(window.location.href),
 				origin: 'latest-photos',
 				onAuthSuccess: $.proxy(function() {
 					UserLogin.forceLoggedIn = true;
