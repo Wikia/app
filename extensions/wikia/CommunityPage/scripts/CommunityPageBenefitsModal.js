@@ -61,6 +61,7 @@ define('CommunityPageBenefitsModal',
 				connectText: mw.message('communitypage-entrypoint-modal-connect-text', wikiTopic).plain(),
 				exploreText: mw.message('communitypage-entrypoint-modal-explore-text', wikiTopic).plain(),
 				buttonText: mw.message('communitypage-entrypoint-modal-button-text').plain(),
+				buttonUrl: specialCommunityTitle.getUrl(),
 				benefitsImageUrl: modalImageUrl
 			});
 
@@ -97,14 +98,11 @@ define('CommunityPageBenefitsModal',
 				label: 'benefits-modal-shown'
 			});
 
-			// Fire action on click on modal content
-			modalInstance.$element.on('click', function() {
-				window.location.pathname = specialCommunityTitle.getUrl();
-			});
-
-			// Bind tracking on elements with data-track attribute
-			modalInstance.$element.find('[data-track]').on('mousedown', function (e) {
-				track({label: $(e.target).data('track')});
+			// Bind tracking on modal on mousedown action
+			modalInstance.$element.on('mousedown', function(e) {
+				track({
+					label: $(e.target).data('track') || 'modal-area'
+				});
 			});
 
 			// Bind tracking modal close
