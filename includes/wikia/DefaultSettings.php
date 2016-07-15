@@ -149,6 +149,7 @@ $wgAutoloadClasses[ 'WikiaApiController'] =  "{$IP}/includes/wikia/api/WikiaApiC
 
 //Wikia API controllers
 $wgAutoloadClasses['DiscoverApiController'] = "{$IP}/includes/wikia/api/DiscoverApiController.class.php";
+$wgAutoloadClasses['DesignSystemApiController'] = "{$IP}/includes/wikia/api/DesignSystemApiController.class.php";
 $wgAutoloadClasses['NavigationApiController'] = "{$IP}/includes/wikia/api/NavigationApiController.class.php";
 $wgAutoloadClasses['ArticlesApiController'] = "{$IP}/includes/wikia/api/ArticlesApiController.class.php";
 $wgAutoloadClasses['RevisionApiController'] = "{$IP}/includes/wikia/api/RevisionApiController.class.php";
@@ -166,6 +167,7 @@ $wgAutoloadClasses['TemplateClassificationApiController'] = "{$IP}/includes/wiki
 $wgExtensionMessagesFiles['WikiaApi'] = "{$IP}/includes/wikia/api/WikiaApi.i18n.php";
 
 $wgWikiaApiControllers['DiscoverApiController'] = "{$IP}/includes/wikia/api/DiscoverApiController.class.php";
+$wgWikiaApiControllers['DesignSystemApiController'] = "{$IP}/includes/wikia/api/DesignSystemApiController.class.php";
 $wgWikiaApiControllers['NavigationApiController'] = "{$IP}/includes/wikia/api/NavigationApiController.class.php";
 $wgWikiaApiControllers['ArticlesApiController'] = "{$IP}/includes/wikia/api/ArticlesApiController.class.php";
 $wgWikiaApiControllers['SearchSuggestionsApiController'] = "{$IP}/includes/wikia/api/SearchSuggestionsApiController.class.php";
@@ -1531,13 +1533,6 @@ $wgHighValueCountries = null;
 $wgAdDriverTurtleCountries = null;
 
 /**
- * @name $wgAdDriverTurtleCountries
- * List of countries to call HitMedia ad partner in
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverHitMediaCountries = null;
-
-/**
  * @name $wgAdDriverSourcePointDetectionCountries
  * List of countries to call SourcePoint detection scripts
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
@@ -1641,7 +1636,8 @@ $wgApiAccess = [
 	'MoviesApiController' => ApiAccessService::WIKIA_CORPORATE,
 	'WAMApiController' => ApiAccessService::WIKIA_CORPORATE,
 	'WikiaHubsApiController' => ApiAccessService::WIKIA_CORPORATE,
-	'WikisApiController' => ApiAccessService::WIKIA_CORPORATE
+	'WikisApiController' => ApiAccessService::WIKIA_CORPORATE,
+	'DesignSystemApiController' => ApiAccessService::WIKIA_CORPORATE
 ];
 
 /**

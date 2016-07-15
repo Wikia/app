@@ -46,7 +46,8 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 			'communityPolicyModule' => $this->getCommunityPolicyData(),
 			'recentActivityModule' => $this->getRecentActivityData(),
 			'insightsModules' => $this->getInsightsModulesData(),
-			'helpModule' => $this->getHelpModuleData()
+			'helpModule' => $this->getHelpModuleData(),
+			'communityTodoListModule' => $this->getCommunityTodoListData(),
 		] );
 	}
 
@@ -225,6 +226,16 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		] );
 	}
 
+	public function getFirstTimeEditorModalData() {
+		$this->response->setData( [
+			'headingText'    => $this->msg( 'communitypage-first-edit-heading' )->plain(),
+			'subheadingText' => $this->msg( 'communitypage-first-edit-subheading' )->plain(),
+			'getStartedText' => $this->msg( 'communitypage-first-edit-get-started' )->plain(),
+			'maybeLaterText' => $this->msg( 'communitypage-first-edit-maybe-later' )->plain(),
+			'getStartedLink' => $this->getTitle()->getCanonicalURL(),
+		] );
+	}
+
 	public function getBenefitsModalData() {
 		$memberCount = $this->usersModel->getMemberCount();
 
@@ -320,5 +331,19 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		}
 
 		return $editors;
+	}
+
+	public function getCommunityTodoListData() {
+		$user = $this->getUser();
+		$data = ( new CommunityPageSpecialCommunityTodoListModel() )->getData();
+
+		return array_merge( $data, [
+			'showEditLink' => $user->isAllowed( 'editinterface' ),
+			'isZeroState' => !$data['haveContent'],
+			'heading' => $this->msg( 'communitypage-todo-module-heading' )->plain(),
+			'editList' => $this->msg( 'communitypage-todo-module-edit-list' )->plain(),
+			'description' => $this->msg( 'communitypage-todo-module-description' )->plain(),
+			'zeroStateText' => $this->msg( 'communitypage-todo-module-zero-state' )->plain(),
+		] );
 	}
 }

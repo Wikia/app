@@ -2,15 +2,16 @@
 
 <div class="CommunityPageContainer">
 	<div class="CommunityPageMainContent">
+		{{>communityTodoListModule}}
 		{{#insightsModules.modules}}
 			{{>insightsModule}}
 		{{/insightsModules.modules}}
 	</div>
 	<div class="WikiaRail">
+		{{>helpModule}}
 		{{>adminsModule}}
 		{{>contributorsModule}}
 		{{>communityPolicyModule}}
 		{{>recentActivityModule}}
-		{{>helpModule}}
 	</div>
 </div>
