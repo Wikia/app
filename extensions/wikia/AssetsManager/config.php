@@ -2951,6 +2951,23 @@ $config['community_page_entry_point_scss'] = [
 	]
 ];
 
+$config['community_page_new_user_modal_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => 'oasis',
+	'assets' => [
+		'//extensions/wikia/CommunityPage/scripts/firstEditModal.js',
+		'//extensions/wikia/CommunityPage/scripts/templates.mustache.js',
+	]
+];
+
+$config['community_page_new_user_modal_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => 'oasis',
+	'assets' => [
+		'//extensions/wikia/CommunityPage/styles/firstedit/FirstEditModal.scss',
+	]
+];
+
 $config['create_new_wiki_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
