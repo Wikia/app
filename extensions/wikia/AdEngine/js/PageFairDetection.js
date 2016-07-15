@@ -20,6 +20,10 @@ define('ext.wikia.adEngine.pageFairDetection', [
 
 	function detector(adblockDetected) {
 		log(['PageFair detection, adBlock detected:', adblockDetected], 'debug', logGroup);
+
+		window.ads.runtime.pf = window.ads.runtime.pf || {};
+		window.ads.runtime.pf.blocking = adblockDetected;
+
 		var eventName = adblockDetected ? 'pf.blocking' : 'pf.not_blocking';
 			doc.dispatchEvent(new Event(eventName));
 	}
