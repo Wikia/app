@@ -120,7 +120,11 @@ class PreferencePersistenceSwaggerService implements PreferencePersistence {
 
 	public function findWikisWithLocalPreferenceValue( $preferenceName, $value ) {
 		try {
-			return $this->findWikisWithLocalPreference( $this->getApi( null, ReverseLookupApi::class ), $preferenceName, $value );
+			return $this->findWikisWithLocalPreference(
+				$this->getApi( null, ReverseLookupApi::class ),
+				$preferenceName,
+				$value
+			);
 		} catch ( ApiException $e ) {
 			$this->handleApiException( $e );
 		}
@@ -128,6 +132,20 @@ class PreferencePersistenceSwaggerService implements PreferencePersistence {
 		return [];
 	}
 
+	public function findUsersWithGlobalPreferenceValue( $preferenceName, $value = null ) {
+		try {
+			return $this->findUsersWithGlobalPreference(
+				$this->getApi( null, ReverseLookupApi::class ),
+				$preferenceName,
+				$value
+			);
+		} catch ( ApiException $e ) {
+			$this->handleApiException( $e );
+		}
+
+		return [];
+	}
+	
 	/**
 	 * @param $userId
 	 * @param $class
@@ -148,7 +166,9 @@ class PreferencePersistenceSwaggerService implements PreferencePersistence {
 			[
 				'user_id' => intval($userId),
 				'method' => 'getApi',
-				'authenticated' => $userId !== null, ] );
+				'authenticated' => $userId !== null,
+			]
+		);
 
 		return $api;
 	}
@@ -161,7 +181,9 @@ class PreferencePersistenceSwaggerService implements PreferencePersistence {
 			$profilerStart,
 			[
 				'user_id' => intval($userId),
-				'method' => 'setPreferences', ] );
+				'method' => 'setPreferences',
+			]
+		);
 	}
 
 	private function getPreferences( UserPreferencesApi $api, $userId ) {
@@ -172,7 +194,9 @@ class PreferencePersistenceSwaggerService implements PreferencePersistence {
 			$profilerStart,
 			[
 				'user_id' => intval($userId),
-				'method' => 'getPreferences', ] );
+				'method' => 'getPreferences',
+			]
+		);
 
 		return $preferences;
 	}
@@ -185,7 +209,9 @@ class PreferencePersistenceSwaggerService implements PreferencePersistence {
 			$profilerStart,
 			[
 				'user_id' => intval($userId),
-				'method' => 'deletePreferences', ] );
+				'method' => 'deletePreferences',
+			]
+		);
 
 		return true;
 	}
@@ -197,9 +223,16 @@ class PreferencePersistenceSwaggerService implements PreferencePersistence {
 			\Transaction::EVENT_USER_PREFERENCES,
 			$profilerStart,
 			[
-				'method' => 'findWikisWithLocalPreference', ] );
+				'method' => 'findWikisWithLocalPreference',
+			]
+		);
 
 		return $wikiList;
+	}
+
+	private function findUsersWithGlobalPreference( ReverseLookupApi $api, $preferenceName, $value = null ) {
+		$userList = $api->findUsersWithGlobalPreference( $preferenceName, $value );
+		return $userList;
 	}
 
 	/**

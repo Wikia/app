@@ -109,7 +109,7 @@ require([
 				controller: 'CommunityPageSpecial',
 				method: tab.request,
 				data: {
-					uselang: window.wgUserLanguage
+					uselang: mw.config.get('wgUserLanguage')
 				},
 				format: 'json',
 				type: 'get',
