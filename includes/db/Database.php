@@ -857,12 +857,11 @@ abstract class DatabaseBase implements DatabaseType {
 	 */
 	public function query( $sql, $fname = '', $tempIgnore = false ) {
 		$isMaster = !is_null( $this->getLBInfo( 'master' ) );
+		echo "isMaster";
+		var_dump($isMaster);
 		if ( !Profiler::instance()->isStub() ) {
 			# generalizeSQL will probably cut down the query to reasonable
 			# logging size most of the time. The substr is really just a sanity check.
-
-			echo "isMaster";
-			var_dump($isMaster);
 
 			if ( $isMaster ) {
 				$queryProf = 'query-m: ' . substr( DatabaseBase::generalizeSQL( $sql ), 0, 255 );
