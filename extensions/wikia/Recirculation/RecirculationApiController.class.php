@@ -67,7 +67,7 @@ class RecirculationApiController extends WikiaApiController {
 		];
 
 		$discussionsData = [];
-		if ( RecirculationHooks::canShowDiscussions() ) {
+		if ( RecirculationHooks::canShowDiscussions( $cityId ) ) {
 			$discussionsDataService = new DiscussionsDataService( $cityId );
 			$discussionsData = $discussionsDataService->getData();
 			$discussionsData['title'] = wfMessage( 'recirculation-discussion-title' )->plain();
