@@ -90,9 +90,11 @@ define('CommunityPageBenefitsModal',
 				label: 'benefits-modal-shown'
 			});
 
-			// Bind tracking on elements with data-track attribute
-			modalInstance.$element.find('[data-track]').on('mousedown', function (e) {
-				track({label: $(e.target).data('track')});
+			// Bind tracking on modal on mousedown action
+			modalInstance.$element.on('mousedown', function(e) {
+				track({
+					label: $(e.target).data('track') || 'modal-area'
+				});
 			});
 
 			// Bind tracking modal close

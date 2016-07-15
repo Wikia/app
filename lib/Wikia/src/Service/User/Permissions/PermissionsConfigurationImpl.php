@@ -251,7 +251,8 @@ class PermissionsConfigurationImpl implements PermissionsConfiguration {
 		'mcachepurge',
 		'editrestrictedfields',
 		'viewedittab',
-		'createclass'
+		'createclass',
+		'first-edit-dialog-exempt'
 	];
 
 	public function __construct() {
