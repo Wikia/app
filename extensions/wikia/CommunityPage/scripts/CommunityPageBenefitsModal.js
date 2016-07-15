@@ -3,8 +3,8 @@
  * modal is an entry point for Community Page
  */
 define('CommunityPageBenefitsModal',
-	['jquery', 'wikia.loader', 'mw', 'wikia.mustache', 'wikia.tracker', 'wikia.nirvana'],
-	function ($, loader, mw, mustache, tracker, nirvana) {
+	['jquery', 'wikia.loader', 'mw', 'wikia.mustache', 'wikia.tracker', 'wikia.nirvana', 'wikia.cookies'],
+	function ($, loader, mw, mustache, tracker, nirvana, cookies) {
 		'use strict';
 		var modalConfig = {
 				vars: {
@@ -90,7 +90,7 @@ define('CommunityPageBenefitsModal',
 			});
 
 			// Fire action on click on modal content
-			modalInstance.$element.on('click', function() {
+			modalInstance.$element.on('click', function () {
 				window.location.pathname = specialCommunityTitle.getUrl();
 			});
 
@@ -105,6 +105,16 @@ define('CommunityPageBenefitsModal',
 					action: tracker.ACTIONS.CLOSE,
 					label: 'modal-closed'
 				});
+			});
+
+			setModalShownCookie();
+		}
+
+		function setModalShownCookie() {
+			cookies.set('cpBenefitsModalShown', 1, {
+				domain: mw.config.get('wgCookieDomain'),
+				expires: 2592000000, // 30 days
+				path: mw.config.get('wgCookiePath')
 			});
 		}
 
