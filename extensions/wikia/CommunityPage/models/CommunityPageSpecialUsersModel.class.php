@@ -117,7 +117,7 @@ class CommunityPageSpecialUsersModel {
 				$dateTwoYearsAgo = date( 'Y-m-d', strtotime( '-2 years' ) );
 
 				$sqlData = ( new WikiaSQL() )
-					->SELECT( 'rev_user_text, rev_user, wup_value, MAX(rev_timestamp) AS latest_revision' )
+					->SELECT( 'rev_user_text, rev_user, MAX(rev_timestamp) AS latest_revision' )
 					->FROM ( 'revision FORCE INDEX (user_timestamp)' )
 					->LEFT_JOIN( 'wikia_user_properties' )
 					->ON( 'rev_user', 'wup_user' )
@@ -132,7 +132,6 @@ class CommunityPageSpecialUsersModel {
 				$result = $sqlData->runLoop( $db, function ( &$result, $row ) {
 					$result[] = [
 						'userId' => $row->rev_user,
-						'contributions' => (int)$row->wup_value,
 						'latestRevision' => $row->latest_revision,
 						'isAdmin' => true,
 					];
