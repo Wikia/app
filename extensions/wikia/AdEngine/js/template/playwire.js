@@ -8,7 +8,7 @@ define('ext.wikia.adEngine.template.playwire', [
 	var logGroup = 'ext.wikia.adEngine.template.playwire';
 
 	/**
-	 * @param params
+	 * @param {object} params
 	 * @param {object} params.container - DOM element where player should be placed
 	 * @param {number} params.publisherId - Playwire publisher id (optional if configUrl is passed)
 	 * @param {number} params.videoId - Playwire video id (optional if configUrl is passed)
