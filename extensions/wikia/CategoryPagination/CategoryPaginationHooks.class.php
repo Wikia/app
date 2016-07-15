@@ -1,6 +1,8 @@
 <?php
 
 class CategoryPaginationHooks {
+	const PARAMS_DISABLING_PAGINATION = [ 'from', 'pagefrom', 'pageuntil' ];
+
 	/**
 	 * @static
 	 * @param Title $title
@@ -8,14 +10,18 @@ class CategoryPaginationHooks {
 	 * @return bool
 	 */
 	static public function onArticleFromTitle( &$title, &$article ) {
-		// Only touch category pages on Oasis
-		if ( !F::app()->checkSkin( 'oasis' ) || $title->getNamespace() != NS_CATEGORY ) {
+		$app = F::app();
+
+		// Only do anything with category pages on Oasis
+		if ( !$app->checkSkin( 'oasis' ) || $title->getNamespace() != NS_CATEGORY ) {
 			return true;
 		}
 
 		// New pagination doesn't support the from param (yet)
-		if ( F::app()->wg->Request->getVal( 'from' ) ) {
-			return true;
+		foreach ( self::PARAMS_DISABLING_PAGINATION as $param ) {
+			if ( $app->wg->Request->getVal( $param ) ) {
+				return true;
+			}
 		}
 
 		$article = new CategoryPaginationPage( $title );
