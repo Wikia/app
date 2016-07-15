@@ -47,6 +47,8 @@ body.appPromo, body.appPromo::before, body.appPromo::after{
 	left:0;
 }
 <?php
+$SCALE_FOR_TABLET_IMAGE_GRID = "0.8";
+
 // This is the overlay which makes the image grid slightly faded out ?>
 .thumbRow .imageWrapper::before{
   content:'';
@@ -83,6 +85,9 @@ body.appPromo, body.appPromo::before, body.appPromo::after{
 	font-size: 30px;
 	line-height: 1.5;
 	color: #ffffff;
+}
+.branchIo_alternate{
+	display:none; /* designed to only show on narrow screens */
 }
 .branchIoOuter{
 	position:absolute;
@@ -185,6 +190,65 @@ body.appPromo, body.appPromo::before, body.appPromo::after{
 svg path{
 	fill: currentColor;
 }
+/* Responsive Design customizations */
+@media only screen and (max-width: 768px) {
+	.entireAppPromo{
+		margin-left:-861px;
+	}
+	.thumbsWrapper{
+		transform: scale(0.80, 0.80);
+		margin-top:-55px;
+	}
+	.phoneWrapper{
+		transform: scale(0.94444, 0.94444);
+	}
+	.iosPhone{
+		top:158px;
+		left:620px;
+	}
+	.androidPhone{
+		top:140px;
+		left:720px;
+	}
+	
+	.pitchOuter{
+		left:353px;
+	}
+	.pitchInner{
+		width:257px;
+		height:148px;
+		line-height:36px;
+		margin:24px 10px 0 9px;
+		font-size:22px;
+	}
+	.branchIoInner{
+		margin:25px 26px 0 40px;
+		width:240px;
+		line-height:30px;
+		font-size:18px;
+	}
+
+	.backLink{
+		position:absolute;
+		top:-32px;
+		left:220px;
+	}
+	.branchIoOuter .branchIo, .branchIoOuter .storeButtons{
+		display:none;
+	}
+	.branchIo_alternate{
+		display:block;
+		width:320px;
+		margin:148px 0 0 415px;
+	}
+	.branchIo_alternate #branchIoForm input[type=text]{
+		width:232px;
+		height:42px;
+	}
+	.branchIo_alternate .storeButtons{
+		margin-top:22px;
+	}
+}
 </style>
 <?= $debug ?>
 
@@ -258,6 +322,29 @@ svg path{
 		<a class='backLink' href='<?= $mainPageUrl ?>'>
 			<?= $larrSvgCode ?><?= wfMsg( 'apppromolanding-back' ) ?>
 		</a>
+		<div class='branchIo_alternate'>
+			<div class='branchIo'>
+				<div class='callToAction'><?= wfMsg( 'apppromolanding-call-to-action' ) ?></div>
+				<form id='branchIoForm' method='post' onsubmit='return sendSMS();'>
+					<input type='text' name='phoneNumber' placeholder='<?= wfMsg('apppromolanding-phone-num-placeholder') ?>'/><button
+						data-send="<?= htmlspecialchars(wfMsg( 'apppromolanding-button-get' )) ?>"
+						data-sending="<?= htmlspecialchars(wfMsg( 'apppromolanding-button-sending' )) ?>"
+						data-sent="<?= htmlspecialchars(wfMsg( 'apppromolanding-button-sent' )) ?>"
+						type='submit'><?= wfMsg( 'apppromolanding-button-get' ) ?></button>
+				</form>
+			</div>
+			<div class='storeButtons'>
+				<?php
+				// The store buttons are in the opposite order on tablet. This was in the design spec & there's probably a reason for it (lots of android tablets?)
+				?>
+				<a href='<?= $androidUrl ?>'>
+					<img src='<?= $androidStoreSrc ?>'/>
+				</a>
+				<a href='<?= $iosUrl ?>'>
+					<img src='<?= $iosStoreSrc ?>'/>
+				</a>
+			</div>
+		</div>
 	</div>
 </div>
 <script>
@@ -290,8 +377,9 @@ svg path{
 		return false;
 	}
 </script>
-
-
+<div style='clear:both;margin-top:775px;'></div>
+<?php
+/*
 <!-- TODO: REMOVE EVERYTHING BELOW HERE!! -->
 <style>
 ul.tempList{
@@ -358,5 +446,18 @@ Sub-tasks:
 	</li>
 	<li class='done'>Swap the Android & iOS images (will get new art from Peter shortly)</li>
 	<li class='done'>Change the font &larr; to be the SVG from zeplin</li>
+	<li>Responsive Design changes:
+		<ul>
+			<li class='done'>Get the responsive code in there to grab 768px and below</li>
+			<li class='done'>Scale-down the grid images (-20%)</li>
+			<li class='done'>Scale-down the android phone (-25% total.. so ~5.5556% additional)</li>
+			<li class='done'>Scale-down the ios phone (-25% total.. so ~5.5556% additional)</li>
+			<li class='done'>Reposition the phones relative to the thumbs (they're closer together & lower in responsive mockup).</li>
+			<li class='done'>Adjust text-box areas to have the correct paddings after all of the adjustments</li>
+			<li class='done'>Move the branch.io field & store buttons down below the phone instead of the right</li>
+			<li class='done'>Swap the store button positions on tablet</li>
+		</ul>
+	</li>
 	<li>Translation config files & translation requests</li>
 </ul>
+*/
