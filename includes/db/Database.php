@@ -888,6 +888,11 @@ abstract class DatabaseBase implements DatabaseType {
 
 		# <Wikia>
 		global $wgDBReadOnly;
+
+		echo "is writeable";
+		var_dump($is_writeable);
+		echo "wgDBReadOnly";
+		var_dump($wgDBReadOnly);
 		if ( $is_writeable && $wgDBReadOnly ) {
 			if ( !Profiler::instance()->isStub() ) {
 				wfProfileOut( $queryProf );
