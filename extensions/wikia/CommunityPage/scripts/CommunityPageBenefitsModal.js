@@ -89,12 +89,15 @@ define('CommunityPageBenefitsModal',
 				label: 'benefits-modal-shown'
 			});
 
-			// On click on modal content track this event and redirect to Special:Community
-			modalInstance.$element.on('click', function(e) {
+			// Bind tracking on modal on mousedown action
+			modalInstance.$element.on('mousedown', function(e) {
 				track({
 					label: $(e.target).data('track') || 'modal-area'
 				});
+			});
 
+			// On click on modal redirect to Special:Community
+			modalInstance.$element.on('click', function() {
 				window.location.pathname = specialCommunityTitle.getUrl();
 			});
 
