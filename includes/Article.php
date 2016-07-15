@@ -19,10 +19,10 @@
  *
  * //Wikia Change Start - helping PHP lint
  * @property Title mTitle
- * @method exists
- * @method getID
- * @method getRedirectTarget
- * @method loadPageData
+ * @method bool exists
+ * @method int getID
+ * @method Title getRedirectTarget
+ * @method void loadPageData
  * //Wikia Change End
  */
 class Article extends Page {

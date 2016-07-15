@@ -128,7 +128,7 @@ class WikiaTracer {
 		}
 
 		if ( isset( $_SERVER['REQUEST_URI'] ) ) {
-			$context['http_url_path'] = $_SERVER['REQUEST_URI'];
+			$context['http_url_path'] = $this->stripDomainFromUrl($_SERVER['REQUEST_URI']);
 
 			if ( isset( $_SERVER['REQUEST_METHOD'] ) ) {
 				$context['http_method'] = $_SERVER['REQUEST_METHOD'];
@@ -160,6 +160,19 @@ class WikiaTracer {
 		}
 
 		return $this->removeNullEntries( $context );
+	}
+
+	private function stripDomainFromUrl( $url ) {
+		$matches = null;
+		if (preg_match('#^https?://[^/]+(/.*)?$#',$url,$matches)) {
+			if (isset($matches[1])) {
+				$url = $matches[1];
+			} else {
+				$url = '/';
+			}
+		}
+
+		return $url;
 	}
 
 	private function removeNullEntries( $array ) {

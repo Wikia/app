@@ -1,7 +1,6 @@
 @import 'skins/shared/color';
-@import 'skins/shared/mixins/flexbox';
-
-@import '../components/_variables';
+@import 'skins/oasis/css/core/breakpoints-variables';
+@import '../components/variables';
 
 $background-color-dark: #1a1a1a;
 $background-color-light: #f6f6f6;
@@ -20,15 +19,22 @@ $logo-url: $logo-url-light;
 }
 
 .WikiaRail {
-	padding-top: 20px;
-
 	.module {
 		position: relative;
+
+		&.community-page-entry-point-module {
+			padding-top: 40px;
+		}
 	}
 }
 
 .community-page-entry-point-module {
+	font-family: $community-page-font-family;
+	font-size: 16px;
+	line-height: 21px;
+	margin-top: 20px;
 	position: relative;
+	text-align: center;
 
 	.community-page-entry-point-logo {
 		background-image: url($logo-url); /* inline */
@@ -38,16 +44,6 @@ $logo-url: $logo-url-light;
 		top: 0;
 		transform: translate(-50%, -40%);
 		width: 30px;
-	}
-
-	.community-page-entry-point-container {
-		@include align-items(center);
-		@include flexbox();
-		@include flex-direction(column);
-
-		font-size: 14px;
-		font-family: $community-page-font-family;
-		padding-top: 5px;
 	}
 
 	.community-page-entry-point-button {
@@ -84,10 +80,6 @@ $logo-url: $logo-url-light;
 	}
 
 	.community-page-entry-point-description {
-		font-size: 16px;
-		padding-top: 15px;
-		text-align: center;
-		word-break: break-all;
 		white-space: pre-line; // Respect linebreaks
 
 		b {
@@ -95,5 +87,15 @@ $logo-url: $logo-url-light;
 			&:before { content: '\A'; } // Add a linebreak before bolded text
 		}
 
+	}
+}
+
+@media #{$breakpoint-below-small-plus} {
+	.WikiaRail {
+		padding-top: 20px;
+	}
+
+	.community-page-entry-point-module {
+		margin-top: 0;
 	}
 }

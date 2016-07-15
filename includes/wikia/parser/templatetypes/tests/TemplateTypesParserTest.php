@@ -83,25 +83,23 @@ class TemplateTypesParserTest extends WikiaBaseTest {
 				self::TEST_TEMPLATE_TEXT,
 				self::TEST_TEMPLATE_TEXT
 			],
-			// Revert after navigation experiment is over. Contact West-Wing team.
-			// https://wikia-inc.atlassian.net/browse/DAT-4186
-//			[
-//				[
-//					'templateId' => 4,
-//					'templateType' => 'navbox',
-//					'globals' => [
-//						'wgCityId' => 12345,
-//						'wgEnableTemplateTypesParsing' => true,
-//						'wgEnableNavboxTemplateParsing' => true,
-//						'wgEnableNavigationTemplateParsing' => true,
-//						'wgEnableNoticeTemplateParsing' => true,
-//						'wgEnableReferencesTemplateParsing' => true,
-//						'wgArticleAsJson' => true
-//					]
-//				],
-//				'navbox text',
-//				''
-//			],
+			[
+				[
+					'templateId' => 4,
+					'templateType' => 'navbox',
+					'globals' => [
+						'wgCityId' => 12345,
+						'wgEnableTemplateTypesParsing' => true,
+						'wgEnableNavboxTemplateParsing' => true,
+						'wgEnableNavigationTemplateParsing' => true,
+						'wgEnableNoticeTemplateParsing' => true,
+						'wgEnableReferencesTemplateParsing' => true,
+						'wgArticleAsJson' => true
+					]
+				],
+				'navbox text',
+				''
+			],
 			[
 				[
 					'templateId' => 5,

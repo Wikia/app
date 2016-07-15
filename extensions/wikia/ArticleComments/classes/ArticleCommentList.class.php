@@ -465,7 +465,7 @@ class ArticleCommentList {
 
 			// add spacer when there is a gap between 1st and 2nd visible page
 			if ( $firstVisiblePage > 2 ) {
-				$pagination .= wfMessage( 'article-comments-page-spacer' )->escaped();
+				$pagination .= wfMessage( 'article-comments-page-spacer' )->parse();
 			}
 
 			// generate links
@@ -475,7 +475,7 @@ class ArticleCommentList {
 
 			// add spacer when there is a gap between 2 last links
 			if ( $numberOfPages - $lastVisiblePage > 1 ) {
-				$pagination .= wfMessage( 'article-comments-page-spacer' )->escaped();
+				$pagination .= wfMessage( 'article-comments-page-spacer' )->parse();
 			}
 
 			// add last page - always visible
@@ -718,7 +718,7 @@ class ArticleCommentList {
 				foreach ( self::$mArticlesToDelete as $page_id => $oComment ) {
 					$oCommentTitle = $oComment->getTitle();
 					if ( $oCommentTitle instanceof Title ) {
-						$oComment = new ArticleComment( $oCommentTitle );
+						$oComment = ArticleComment::newFromTitle( $oCommentTitle );
 						$oComment->doDeleteComment( $deleteReason );
 					}
 				}

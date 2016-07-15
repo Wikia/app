@@ -2,10 +2,11 @@
 define('ext.wikia.adEngine.slot.scrollHandler', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adHelper',
+	'ext.wikia.adEngine.utils.domCalculator',
 	'wikia.log',
 	'wikia.document',
 	'wikia.window'
-], function (adContext, adHelper, log, doc, win) {
+], function (adContext, adHelper, dom, log, doc, win) {
 	'use strict';
 	var logGroup = 'ext.wikia.adEngine.slot.scrollHandler',
 		isRefreshed = {},
@@ -84,12 +85,7 @@ define('ext.wikia.adEngine.slot.scrollHandler', [
 			offset = el.offsetHeight;
 		}
 
-		return win.innerHeight + win.scrollY >= getTopPos(el) + offset;
-	}
-
-	function getTopPos(el) {
-		for (var topPos = 0; el !== null; topPos += el.offsetTop, el = el.offsetParent);
-		return topPos;
+		return win.innerHeight + win.scrollY >= dom.getTopOffset(el) + offset;
 	}
 
 	function getReloadedViewCount(slotName) {

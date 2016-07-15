@@ -110,6 +110,7 @@ require([
 // Inject extra slots
 require([
 	'ext.wikia.adEngine.adContext',
+	'ext.wikia.adEngine.slot.bottomLeaderboard',
 	'ext.wikia.adEngine.slot.highImpact',
 	'ext.wikia.adEngine.slot.inContent',
 	'ext.wikia.adEngine.slot.skyScraper3',
@@ -120,6 +121,7 @@ require([
 	require.optional('ext.wikia.adEngine.slot.revcontentSlots')
 ], function (
 	adContext,
+	bottomLeaderboard,
 	highImpact,
 	inContent,
 	skyScraper3,
@@ -139,7 +141,7 @@ require([
 		highImpact.init();
 		skyScraper3.init();
 
-		if (revcontentSlots) {
+		if (revcontentSlots && context.providers.revcontent) {
 			revcontentSlots.init();
 		}
 
@@ -158,6 +160,8 @@ require([
 		if (exitstitial) {
 			exitstitial.init();
 		}
+
+		bottomLeaderboard.init();
 	}
 
 	if (doc.readyState === 'complete') {

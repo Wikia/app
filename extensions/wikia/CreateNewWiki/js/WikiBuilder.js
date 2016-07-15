@@ -39,7 +39,8 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper'], function (help
 		hiddenDuplicate,
 		userAuth,
 		errorModalHeader,
-		errorModalMessage;
+		errorModalMessage,
+		isUserLoggedIn = window.wgUserName !== null;
 
 	function init() {
 		var pane;
@@ -107,11 +108,7 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper'], function (help
 
 	function onThemeNavNextClick() {
 		saveState(ThemeDesigner.settings, function () {
-			if (WikiBuilderCfg.skipwikiaplus) {
-				gotoMainPage();
-			} else {
-				transition('ThemeWiki', true, '+');
-			}
+			gotoMainPage();
 		});
 	}
 
@@ -277,7 +274,7 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper'], function (help
 				wikiLang: wikiLanguageVal
 			});
 
-			if (window.wgUserName) {
+			if (isUserLoggedIn) {
 				onAuthSuccess();
 			} else {
 				helper.login(onAuthSuccess, helper.getLoginRedirectURL(wikiNameVal, wikiDomainVal, wikiLanguageVal));
@@ -286,6 +283,7 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper'], function (help
 	}
 
 	function onAuthSuccess() {
+		isUserLoggedIn = true;
 		transition('NameWiki', true, '+');
 	}
 
@@ -509,8 +507,7 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper'], function (help
 						wLanguage: wikiLanguage.find('option:selected').val(),
 						wVertical: verticalOption.val(),
 						wCategories: categories,
-						wAllAges: wikiAllAges.is(':checked') ? wikiAllAges.val() : null,
-						wAnswer: Math.floor(helper.getAnswer())
+						wAllAges: wikiAllAges.is(':checked') ? wikiAllAges.val() : null
 					},
 					token: preferencesToken
 				},

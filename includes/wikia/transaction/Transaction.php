@@ -21,7 +21,6 @@ class Transaction {
 	const PARAM_ENVIRONMENT = 'env';
 	const PARAM_HOSTNAME = 'hostname';
 	const PARAM_PHP_VERSION = 'php_version';
-	const PARAM_MEMCACHED_PROTOCOL = 'memcached_protocol';
 	const PARAM_ENTRY_POINT = 'entry_point';
 	const PARAM_LOGGED_IN = 'logged_in';
 	const PARAM_PARSER_CACHE_USED = 'parser_cache_used';
@@ -40,6 +39,7 @@ class Transaction {
 	const PARAM_API_LIST = 'api_list';
 	const PARAM_WIKI = 'wiki';
 	const PARAM_DPL = 'dpl';
+	const PARAM_SEMANTIC_MEDIAWIKI = 'semantic_mediawiki';
 	const PARAM_AB_PERFORMANCE_TEST = 'perf_test';
 	const PARAM_MAINTENANCE_SCRIPT = 'maintenance_script';
 
@@ -67,7 +67,7 @@ class Transaction {
 	public static function getInstance() {
 		static $instance;
 		if ( $instance === null ) {
-			global $wgWikiaEnvironment, $wgMemcachedMoxiProtocol;
+			global $wgWikiaEnvironment;
 			$instance = new TransactionTrace( array(
 				// plugins
 				new TransactionTraceNewrelic(),
@@ -76,7 +76,6 @@ class Transaction {
 			$instance->set( self::PARAM_ENVIRONMENT, $wgWikiaEnvironment );
 			$instance->set( self::PARAM_HOSTNAME, wfHostname() );
 			$instance->set( self::PARAM_PHP_VERSION, explode( '-', phpversion() )[0] ); // report "5.4.17-1~precise+1" as "5.4.17"
-			$instance->set( self::PARAM_MEMCACHED_PROTOCOL, $wgMemcachedMoxiProtocol );
 		}
 		return $instance;
 	}
@@ -212,6 +211,17 @@ class Transaction {
 
 		Transaction::setAttribute( Transaction::PARAM_SIZE_CATEGORY, $sizeCategory );
 
+		return true;
+	}
+
+	/**
+	 * Mark SemanticMediaWiki requests (they will always call smwfGetStore() function)
+	 *
+	 * @param SMWStore $store
+	 * @return bool
+	 */
+	public static function onAfterSmwfGetStore( $store ) {
+		self::setAttribute( self::PARAM_SEMANTIC_MEDIAWIKI, true );
 		return true;
 	}
 

@@ -1,0 +1,201 @@
+@import 'skins/shared/color';
+@import 'skins/oasis/css/core/breakpoints-variables';
+@import '../components/variables';
+@import 'resources/wikia/ui_components/modal/css/modal-close-icon';
+
+$button-height: 46px;
+$button-space: 20px;
+$footer-height: $button-height + $button-space * 2;
+
+$color-image-bg: #082140;
+$color-slate-gray: #656e78;
+$color-border: #e6e6e6;
+
+$icon-size: 24px;
+$icon-size-outer: 60px;
+$icon-space: 8px;
+
+$icon-size-large: 30px;
+$icon-size-outer-large: 82px;
+$icon-space-large: 19px;
+
+.modal.community-page-benefits-modal {
+	background: $color-white;
+	cursor: pointer;
+	font-family: $community-page-font-family;
+	font-size: 16px;
+	height: 90vh;
+	line-height: 21px;
+	max-height: 698px;
+	padding: 0;
+	word-wrap: break-word;
+
+	> section {
+		padding: 0;
+	}
+
+	footer, header {
+		display: none;
+	}
+}
+
+.community-page-benefits-modal-area {
+	color: $color-text-dark;
+
+	&:hover {
+		text-decoration: none;
+	}
+}
+
+.community-page-benefits-content {
+	display: flex;
+	flex-direction: column;
+	height: 90vh;
+	justify-content: space-between;
+	max-height: 698px;
+	width: 50%;
+}
+
+.community-page-benefits-image {
+	background-color: $color-image-bg;
+	background-image: url('/extensions/wikia/CommunityPage/images/wikia-logo-in-circles.png'), url('/extensions/wikia/CommunityPage/images/wikia-logo-bg.png');
+	background-position: center, bottom;
+	background-repeat: no-repeat;
+	background-size: 70%, 100%;
+	float: left;
+	height: 90vh;
+	max-height: 698px;
+	width: 50%;
+}
+
+.community-page-benefits-modal-text {
+	box-sizing: border-box;
+	height: calc(100% - #{$footer-height});
+	overflow: auto;
+	padding: 36px 36px 30px 30px;
+}
+
+.community-page-benefits-modal-connect-icon,
+.community-page-benefits-modal-edit-icon,
+.community-page-benefits-modal-search-icon {
+	background: 50% 50%/#{$icon-size-large} no-repeat;
+	border: 2px solid $color-slate-gray;
+	border-radius: 50%;
+	box-sizing: border-box;
+	display: inline-block;
+	float: left;
+	height: $icon-size-outer-large;
+	margin-right: $icon-space-large;
+	width: $icon-size-outer-large;
+}
+
+.community-page-benefits-modal-edit-icon {
+	background-image: url('/extensions/wikia/CommunityPage/images/edit-pen-blue.svg'); /* inline */
+}
+
+.community-page-benefits-modal-search-icon {
+	background-image: url('/extensions/wikia/CommunityPage/images/search_icon-blue.svg'); /* inline */
+}
+
+.community-page-benefits-modal-connect-icon {
+	background-image: url('/extensions/wikia/CommunityPage/images/reply-blue.svg'); /* inline */
+}
+
+.community-page-benefits-modal-action-point {
+	border-top: 1px solid $color-border;
+	box-sizing: border-box;
+	height: $footer-height;
+	padding: $button-space;
+	text-align: center;
+}
+
+.community-page-entry-point-button {
+	background: $color-corporate-buttons;
+	border: none;
+	border-radius: 0;
+	color: $color-corporate-button-text;
+	display: inline-block;
+	font-size: 14px;
+	font-weight: bold;
+	height: $button-height;
+	line-height: $button-height;
+	padding: 0 30px;
+	text-decoration: none;
+	text-transform: uppercase;
+
+	&:hover, &:active {
+		background: $color-corporate-button-highlight none;
+		color: $color-corporate-button-text;
+		text-decoration: none;
+	}
+}
+
+.community-page-benefits-modal-main-title {
+	font-size: 28px;
+	font-weight: bold;
+	line-height: 34px;
+	margin-bottom: 43px;
+}
+
+.community-page-benefits-modal-section-title {
+	font-size: 24px;
+	font-weight: bold;
+	line-height: 30px;
+	margin: 10px 0 5px;
+}
+
+.community-page-benefits-modal-message {
+	float: left;
+	margin-bottom: 33px;
+	width: calc(100% - #{$icon-size-outer-large + $icon-space-large});
+
+	&:last-child {
+		margin-bottom: 0;
+	}
+}
+
+.community-page-benefits-modal-close {
+	@include modal-close-icon();
+	background-position: center;
+	background-repeat: no-repeat;
+	padding: 12px;
+	position: absolute;
+	right: 0;
+	text-indent: 50px;
+	top: 0;
+}
+
+@media #{$breakpoint-small-only} {
+	.modal.community-page-benefits-modal {
+		font-size: 14px;
+	}
+
+	.community-page-benefits-modal-main-title {
+		font-size: 24px;
+		line-height: 30px;
+		margin-bottom: 24px;
+	}
+
+	.community-page-benefits-modal-section-title {
+		font-size: 18px;
+		line-height: 22px;
+	}
+
+	.community-page-benefits-modal-message {
+		margin-bottom: 24px;
+		width: calc(100% - #{$icon-size-outer + $icon-space});
+	}
+
+	.community-page-benefits-modal-connect-icon,
+	.community-page-benefits-modal-edit-icon,
+	.community-page-benefits-modal-search-icon {
+		background-size: $icon-size;
+		height: $icon-size-outer;
+		margin-right: $icon-space;
+		width: $icon-size-outer;
+	}
+
+	.community-page-entry-point-button {
+		font-size: 12px;
+	}
+}

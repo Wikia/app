@@ -173,13 +173,13 @@ class ChatWidget {
 					$stats = $userStatsService->getStats();
 
 					// edit count
-					$chatter['editCount'] = $stats['edits'];
+					$chatter['editCount'] = $stats['editcount'];
 
 					// member since
 					$chatter['showSince'] = $chatter['editCount'] != 0;
 					if ( $chatter['showSince'] ) {
 						$months = $wgLang->getMonthAbbreviationsArray();
-						$date = getdate( strtotime( $stats['date'] ) );
+						$date = getdate( strtotime( $stats['firstContributionTimestamp'] ) );
 
 						$chatter['since_year'] = $date['year'];
 						$chatter['since_month'] = $date['mon'];
@@ -189,6 +189,13 @@ class ChatWidget {
 					$profileUrlNs = !empty( $wgEnableWallExt ) ? NS_USER_WALL : NS_USER_TALK;
 					$chatter['profileUrl'] = Title::makeTitle( $profileUrlNs, $chatter['username'] )->getFullURL();
 					$chatter['contribsUrl'] = SpecialPage::getTitleFor( 'Contributions', $chatter['username'] )->getFullURL();
+					if (empty( $wgEnableWallExt )){
+						$chatter['profileType'] = 'talk-page';
+						$chatter['profileTypeMsg'] = 'chat-user-menu-talk-page';
+					} else {
+						$chatter['profileType'] = 'message-wall';
+						$chatter['profileTypeMsg'] = 'chat-user-menu-message-wall';
+					}
 				}
 
 				return $chatter;

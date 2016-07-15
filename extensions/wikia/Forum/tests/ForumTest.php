@@ -32,7 +32,7 @@ class ForumTest extends WikiaBaseTest {
 
 		$this->mockStaticMethod( 'TitleBatch', 'newFromConds', $titleBatchMock );
 
-		$this->mockStaticMethodWithCallBack( 'ForumBoard', 'newFromTitle',
+		$this->mockStaticMethodWithCallBack( 'Wall', 'newFromTitle',
 			function ( $title ) {
 				return $this->getBoardMock();
 			}

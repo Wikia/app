@@ -174,6 +174,10 @@ class CloseMyAccountSpecialController extends WikiaSpecialPageController {
 			return;
 		}
 
+		// call to User::newFromConfirmationCode() is basically a token check
+		// tell CSRFDetector that we're fine here (PLATFORM-2206)
+		\Wikia\Security\CSRFDetector::onUserMatchEditToken();
+
 		$helper->reactivateAccount( $user );
 
 		BannerNotificationsController::addConfirmation( $this->msg( 'closemyaccount-reactivate-success' )->escaped() );

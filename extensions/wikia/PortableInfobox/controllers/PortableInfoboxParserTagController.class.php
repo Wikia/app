@@ -50,7 +50,11 @@ class PortableInfoboxParserTagController extends WikiaController {
 	 * @return string
 	 */
 	public static function replaceInfoboxMarkers( &$parser, &$text ) {
-		$text = static::getInstance()->replaceMarkers( $text );
+		global $wgArticleAsJson;
+		// The replacements for ArticleAsJson are handled in PortableInfoboxHooks::onArticleAsJsonBeforeEncode
+		if ( !$wgArticleAsJson ) {
+			$text = static::getInstance()->replaceMarkers( $text );
+		}
 
 		return true;
 	}
@@ -100,7 +104,6 @@ class PortableInfoboxParserTagController extends WikiaController {
 	 * @returns String $html
 	 */
 	public function renderInfobox( $text, $params, $parser, $frame ) {
-		global $wgArticleAsJson;
 		$this->markerNumber++;
 		$markup = '<' . self::PARSER_TAG_NAME . '>' . $text . '</' . self::PARSER_TAG_NAME . '>';
 
@@ -114,12 +117,7 @@ class PortableInfoboxParserTagController extends WikiaController {
 			return $this->handleError( wfMessage( 'portable-infobox-xml-parse-error-infobox-tag-attribute-unsupported', [ $e->getMessage() ] )->escaped() );
 		}
 
-		if ( $wgArticleAsJson ) {
-			// (wgArticleAsJson == true) it means that we need to encode output for use inside JSON
-			$renderedValue = trim( json_encode( $renderedValue ), '"' );
-		}
-
-		$marker = $parser->uniqPrefix() . "-" . self::PARSER_TAG_NAME . "-{$this->markerNumber}\x7f-QINU";
+		$marker = $parser->uniqPrefix() . "-" . self::PARSER_TAG_NAME . "-{$this->markerNumber}" . Parser::MARKER_SUFFIX;
 		$this->markers[ $marker ] = $renderedValue;
 
 		return [ $marker, 'markerType' => 'nowiki' ];

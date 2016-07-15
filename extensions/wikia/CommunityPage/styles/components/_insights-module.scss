@@ -2,6 +2,17 @@
 @import 'skins/oasis/css/core/breakpoints-variables';
 @import 'skins/shared/mixins/flexbox';
 
+$item-icon-size: 34px;
+$item-icon-margin-right: 6px;
+$item-data-width: calc(86% - #{$item-icon-size + $item-icon-margin-right});
+$item-link-width: 14%;
+
+$edit-icon: '/extensions/wikia/CommunityPage/images/edit-pen.svg';
+
+@if $is-dark-wiki {
+	$edit-icon: '/extensions/wikia/CommunityPage/images/edit-pen-dark.svg';
+}
+
 .community-page-insights-module {
 	margin-bottom: 34px;
 
@@ -27,33 +38,39 @@
 
 		border-bottom: 1px solid $color-page-border-subtle;
 		align-items: center;
-		font-size: 14px;
 		padding: 20px;
 	}
 
 	.community-page-insights-module-edit-icon {
-		background: $color-text url('/extensions/wikia/CommunityPage/images/edit-pen.svg') 50% 45%/45% 45% no-repeat;
-		border-radius: 50%;
-		height: 34px;
-		margin-right: 10px;
-		width: 34px;
+		background: url($edit-icon) no-repeat;
+		height: $item-icon-size;
+		margin-right: $item-icon-margin-right;
+		width: 24px;
 	}
 
 	.community-page-insights-module-article-data {
 		overflow: hidden;
 		text-overflow: ellipsis;
+		width: $item-data-width;
 		white-space: nowrap;
-		width: calc(90% - 50px);
 	}
 
 	.community-page-insights-module-metadata {
 		color: $color-alternate-text;
 		font-size: 12px;
+
+		.communitypage-user-link {
+			display: inline-block;
+			max-width: 140px;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			vertical-align: bottom;
+		}
 	}
 
 	.community-page-insights-module-edit-link {
 		text-align: right;
-		width: 10%;
+		width: $item-link-width;
 	}
 }
 

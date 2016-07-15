@@ -1,12 +1,13 @@
 <?php
 
 class CommunityPageSpecialHooks {
+	const FIRST_EDIT_COOKIE_KEY = 'community-page-first-time';
 
 	/**
 	 * Cache key invalidation when an article is edited
 	 *
 	 * @param $article
-	 * @param $user
+	 * @param User $user
 	 * @param $text
 	 * @param $summary
 	 * @param $minoredit
@@ -19,7 +20,7 @@ class CommunityPageSpecialHooks {
 	 * @return bool
 	 */
 	public static function onArticleSaveComplete(
-		$article, $user, $text, $summary, $minoredit, $watchthis,
+		$article, User $user, $text, $summary, $minoredit, $watchthis,
 		$sectionanchor, $flags, $revision, $status, $baseRevId
 	) {
 		// Early exit for edits that do not affect any cached item
@@ -27,37 +28,57 @@ class CommunityPageSpecialHooks {
 			return true;
 		}
 
-		// Purge Top Contributors (users)
-		// Fixme: only purge if this user's save affects the top list
-		$key = wfMemcKey( CommunityPageSpecialUsersModel::TOP_CONTRIB_MCACHE_KEY, 50, true, false );
+		// Purge Top Contributors list
+		$key = CommunityPageSpecialUsersModel::getMemcKey( CommunityPageSpecialUsersModel::TOP_CONTRIB_MCACHE_KEY );
 		WikiaDataAccess::cachePurge( $key );
-
-		// Purge Top Contributors (admins)
-		// Fixme: only purge if this user's save affects the top list, and if the user is an admin on this community
-		$key = wfMemcKey( CommunityPageSpecialUsersModel::TOP_CONTRIB_MCACHE_KEY, 10, false, true );
-		WikiaDataAccess::cachePurge( $key );
-
-		// Purge User Contributions
-		$key = wfMemcKey( CommunityPageSpecialUsersModel::CURR_USER_CONTRIBUTIONS_MCACHE_KEY, $user->mId, true );
-		WikiaDataAccess::cachePurge( $key );
-
-		$key = wfMemcKey( CommunityPageSpecialUsersModel::CURR_USER_CONTRIBUTIONS_MCACHE_KEY, $user->mId, false );
-		WikiaDataAccess::cachePurge( $key );
-
-		// Purge Recently Joined Users
-		// fixme: This should only be purged if this user making this edit is not already a member
-		// i.e. this his first edit to this community
-		$key = wfMemcKey( CommunityPageSpecialUsersModel::RECENTLY_JOINED_MCACHE_KEY, 14 );
-		WikiaDataAccess::cachePurge( $key );
+		CommunityPageSpecialUsersModel::logUserModelPerformanceData( 'purge', 'top_contributors' );
 
 		// Purge All Members List
-		$key = wfMemcKey( CommunityPageSpecialUsersModel::ALL_MEMBERS_MCACHE_KEY );
+		$key = CommunityPageSpecialUsersModel::getMemcKey( CommunityPageSpecialUsersModel::ALL_MEMBERS_MCACHE_KEY );
+		WikiaDataAccess::cachePurge( $key );
+		CommunityPageSpecialUsersModel::logUserModelPerformanceData( 'purge', 'all_contributors' );
+
+		// Purge All Members Count
+		$key = CommunityPageSpecialUsersModel::getMemcKey(
+			CommunityPageSpecialUsersModel::ALL_MEMBERS_COUNT_MCACHE_KEY
+		);
 		WikiaDataAccess::cachePurge( $key );
 
-		// Purge Member Count
-		// fixme: Remove this once getMemberCount has been removed
-		$key = wfMemcKey( CommunityPageSpecialUsersModel::MEMBER_COUNT_MCACHE_KEY );
-		WikiaDataAccess::cachePurge( $key );
+		// Purge all admins list
+		if ( self::isAdmin( $user->getId() ) ) {
+			$key = CommunityPageSpecialUsersModel::getMemcKey( CommunityPageSpecialUsersModel::ALL_ADMINS_MCACHE_KEY );
+			WikiaDataAccess::cachePurge( $key );
+			CommunityPageSpecialUsersModel::logUserModelPerformanceData( 'purge', 'all_admins' );
+		}
+
+		return true;
+	}
+
+	/**
+	 * Adds assets for Community Page Benefits Modal
+	 *
+	 * @param \OutputPage $out
+	 * @param \Skin $skin
+	 *
+	 * @return true
+	 */
+	public static function onBeforePageDisplay( \OutputPage $out, \Skin $skin ) {
+		$user = $out->getUser();
+
+		if ( $user->isAnon() &&
+			!isset( $_COOKIE['cpBenefitsModalShown'] ) &&
+			$out->getRequest()->getVal( 'action' ) !== 'edit' &&
+			$out->getRequest()->getVal( 'veaction' ) !== 'edit' &&
+			$out->getRequest()->getVal( 'action' ) !== 'submit'
+		) {
+			\Wikia::addAssetsToOutput( 'community_page_benefits_js' );
+			\Wikia::addAssetsToOutput( 'community_page_benefits_scss' );
+		}
+
+		if ( !$user->isAnon() && !$user->isAllowed( 'first-edit-dialog-exempt' ) ) {
+			\Wikia::addAssetsToOutput( 'community_page_new_user_modal_js' );
+			\Wikia::addAssetsToOutput( 'community_page_new_user_modal_scss' );
+		}
 
 		return true;
 	}
@@ -68,13 +89,57 @@ class CommunityPageSpecialHooks {
 	 * @param array $railModuleList
 	 * @return bool
 	 */
-	public static function onGetRailModuleList( Array &$railModuleList ) {
-		global $wgTitle, $wgUser;
+	public static function onGetRailModuleList( array &$railModuleList ) {
+		global $wgTitle;
 
-		if ( ( $wgUser->isLoggedIn() && $wgTitle->inNamespace( NS_MAIN ) ) || $wgTitle->isSpecial( 'WikiActivity' ) ) {
+		if ( $wgTitle->inNamespace( NS_MAIN ) || $wgTitle->isSpecial( 'WikiActivity' ) ) {
 			$railModuleList[1342] = [ 'CommunityPageEntryPoint', 'Index', null ];
 		}
 
 		return true;
+	}
+
+	/**
+	 * Purge admins list on user rights change
+	 * @param User $user
+	 * @param array $validGroupsToAdd
+	 * @param array $validGroupsToRemove
+	 * @return bool
+	 */
+	public static function onUserRights( User $user, array $validGroupsToAdd, array $validGroupsToRemove ) {
+		if ( self::hasAdminGroup( $validGroupsToAdd ) || self::hasAdminGroup( $validGroupsToRemove ) ) {
+			$key = CommunityPageSpecialUsersModel::getMemcKey( CommunityPageSpecialUsersModel::ALL_ADMINS_MCACHE_KEY );
+			WikiaDataAccess::cachePurge( $key );
+			CommunityPageSpecialUsersModel::logUserModelPerformanceData( 'purge', 'all_admins' );
+		}
+
+		return true;
+	}
+
+	public static function onUserFirstEditOnLocalWiki( $userId, $wikiId ) {
+		global $wgCookieDomain, $wgCookiePath;
+
+		$key = CommunityPageSpecialUsersModel::getMemcKey(
+			[ CommunityPageSpecialUsersModel::RECENTLY_JOINED_MCACHE_KEY, 14 ]
+		);
+		WikiaDataAccess::cachePurge( $key );
+		CommunityPageSpecialUsersModel::logUserModelPerformanceData( 'purge', 'recently_joined' );
+
+		// Set cookie to show first edit modal to user
+		$user = User::newFromId( $userId );
+
+		if ( !$user->isAllowed( 'first-edit-dialog-exempt' ) ) {
+			setcookie( self::FIRST_EDIT_COOKIE_KEY, true, time()+60, $wgCookiePath, $wgCookieDomain );
+		}
+
+		return true;
+	}
+
+	private static function hasAdminGroup( $userGroups ) {
+		return !empty( array_intersect( WikiService::ADMIN_GROUPS, $userGroups ) );
+	}
+
+	private static function isAdmin( $userId ) {
+		return in_array( $userId, ( new CommunityPageSpecialUsersModel() )->getAdmins() );
 	}
 }

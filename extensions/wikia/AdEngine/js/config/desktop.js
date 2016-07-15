@@ -11,7 +11,6 @@ define('ext.wikia.adEngine.config.desktop', [
 	// adProviders
 	'ext.wikia.adEngine.provider.directGpt',
 	'ext.wikia.adEngine.provider.evolve2',
-	'ext.wikia.adEngine.provider.hitMedia',
 	'ext.wikia.adEngine.provider.liftium',
 	'ext.wikia.adEngine.provider.monetizationService',
 	'ext.wikia.adEngine.provider.remnantGpt',
@@ -31,7 +30,6 @@ define('ext.wikia.adEngine.config.desktop', [
 	// AdProviders
 	adProviderDirectGpt,
 	adProviderEvolve2,
-	adProviderHitMedia,
 	adProviderLiftium,
 	adProviderMonetizationService,
 	adProviderRemnantGpt,
@@ -47,7 +45,6 @@ define('ext.wikia.adEngine.config.desktop', [
 		gptEnabled = !instantGlobals.wgSitewideDisableGpt,
 		forcedProviders = {
 			evolve2:  [adProviderEvolve2],
-			hitmedia: [adProviderHitMedia],
 			liftium:  [adProviderLiftium],
 			rpfl:     [adProviderRubiconFastlane],
 			turtle:   [adProviderTurtle]
@@ -80,7 +77,7 @@ define('ext.wikia.adEngine.config.desktop', [
 		}
 
 		// Revcontent
-		if (adProviderRevcontent && adProviderRevcontent.canHandleSlot(slotName)) {
+		if (adProviderRevcontent && context.providers.revcontent && adProviderRevcontent.canHandleSlot(slotName)) {
 			return [adProviderRevcontent];
 		}
 
@@ -93,13 +90,11 @@ define('ext.wikia.adEngine.config.desktop', [
 			return [adProviderMonetizationService];
 		}
 
-		// First provider: Turtle, Evolve, HitMedia or Direct GPT?
+		// First provider: Turtle, Evolve or Direct GPT?
 		if (context.providers.turtle && adProviderTurtle.canHandleSlot(slotName)) {
 			providerList.push(adProviderTurtle);
 		} else if (context.providers.evolve2 && adProviderEvolve2.canHandleSlot(slotName)) {
 			providerList.push(adProviderEvolve2);
-		} else if (context.providers.hitMedia && adProviderHitMedia.canHandleSlot(slotName)) {
-			providerList.push(adProviderHitMedia);
 		} else if (gptEnabled) {
 			providerList.push(adProviderDirectGpt);
 		}

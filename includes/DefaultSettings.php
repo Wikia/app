@@ -3762,17 +3762,6 @@ $wgCookiePrefix = false;
  */
 $wgCookieHttpOnly = true;
 
-/**
- * If the requesting browser matches a regex in this blacklist, we won't
- * send it cookies with HttpOnly mode, even if $wgCookieHttpOnly is on.
- */
-$wgHttpOnlyBlacklist = array(
-	// Internet Explorer for Mac; sometimes the cookies work, sometimes
-	// they don't. It's difficult to predict, as combinations of path
-	// and expiration options affect its parsing.
-	'/^Mozilla\/4\.0 \(compatible; MSIE \d+\.\d+; Mac_PowerPC\)/',
-);
-
 /** A list of cookies that vary the cache (for use by extensions) */
 $wgCacheVaryCookies = array();
 
@@ -3976,6 +3965,16 @@ $wgAggregateStatsID = false;
  * Does not work if pages are cached (for example with squid).
  */
 $wgDisableCounters = false;
+
+/**
+ * Set this to an integer to only do synchronous site_stats updates
+ * one every *this many* updates. The other requests go into pending
+ * delta values in $wgMemc. Make sure that $wgMemc is a global cache.
+ * If set to -1, updates *only* go to $wgMemc (useful for daemons).
+ *
+ * @see PLATFORM-2275
+ */
+$wgSiteStatsAsyncFactor = 1;
 
 /**
  * Parser test suite files to be run by parserTests.php when no specific
@@ -4730,9 +4729,10 @@ $wgJobTypesExcludedFromDefaultQueue = array();
  * Additional functions to be performed with updateSpecialPages.
  * Expensive Querypages are already updated.
  */
-$wgSpecialPageCacheUpdates = array(
-	'Statistics' => array( 'SiteStatsUpdate', 'cacheUpdate' )
-);
+$wgSpecialPageCacheUpdates = [
+	'SiteStatsRegenerate' => [ 'SiteStatsInit', 'doAllAndCommit' ], # PLATFORM-2275
+	'Statistics'          => [ 'SiteStatsUpdate', 'cacheUpdate' ],
+];
 
 /**
  * Hooks that are used for outputting exceptions.  Format is:
@@ -5318,7 +5318,7 @@ $wgAjaxLicensePreview = true;
  *
  */
 $wgCrossSiteAJAXdomains = [
-	'internal.vstf.wikia.com', # PLATFORM-1719
+	"internal.vstf.{$wgWikiaBaseDomain}", # PLATFORM-1719
 ];
 
 /**

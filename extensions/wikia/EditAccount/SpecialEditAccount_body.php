@@ -41,7 +41,6 @@ class EditAccount extends SpecialPage {
 	 * @param $par Mixed: parameter passed to the page or null
 	 */
 	public function execute( $par ) {
-		global $wgExternalAuthType;
 
 		// Set page title and other stuff
 		$this->setHeaders();
@@ -154,7 +153,7 @@ class EditAccount extends SpecialPage {
 				break;
 			case 'closeaccount':
 				$template = 'closeaccount';
-				$this->mStatus = (bool) $this->mUser->getGlobalFlag( 'requested-closure', 0 );
+				$this->mStatus = (bool) $this->mUser->getGlobalPreference( CloseMyAccountHelper::REQUEST_CLOSURE_PREF, 0 );
 				$this->mStatusMsg = $this->mStatus ? wfMsg( 'editaccount-requested' ) : wfMsg( 'editaccount-not-requested' );
 				break;
 			case 'closeaccountconfirm':
@@ -284,7 +283,6 @@ class EditAccount extends SpecialPage {
 				} else {
 					$this->mStatusMsg = wfMsg( 'editaccount-success-email', $this->mUser->mName, $email );
 				}
-				wfRunHooks( 'EditAccountEmailChanged', array( $this->mUser ) );
 				return true;
 			} else {
 				$this->mStatusMsg = wfMsg( 'editaccount-error-email', $this->mUser->mName );
@@ -373,20 +371,19 @@ class EditAccount extends SpecialPage {
 	/**
 	 * Clears the user's password, sets an empty e-mail and marks as disabled
 	 *
-	 * @param  User    $user         User account to close
-	 * @param  string  $changeReason Reason for change
-	 * @param  string  $mStatusMsg   Main error message
-	 * @param  string  $mStatusMsg2  Secondary (non-critical) error message
-	 * @param  boolean $keepEmail    Optionally keep the email address in a
-	 *                               user option
-	 * @return boolean               true on success, false on failure
+	 * @param string|User $user User account to close
+	 * @param  string $changeReason Reason for change
+	 * @param  string $mStatusMsg Main error message
+	 * @param  string $mStatusMsg2 Secondary (non-critical) error message
+	 * @param  boolean $keepEmail Optionally keep the email address in a user option
+	 * @return bool true on success, false on failure
+	 * @throws Exception
+	 * @throws MWException
 	 */
 	public static function closeAccount( $user = '', $changeReason = '', &$mStatusMsg = '', &$mStatusMsg2 = '', $keepEmail = true ) {
 		if ( empty( $user ) ) {
 			throw new Exception( 'User object is invalid.' );
 		}
-
-		$id = $user->getId();
 
 		# Set flag for Special:Contributions
 		# NOTE: requires FlagClosedAccounts.php to be included separately
@@ -422,8 +419,6 @@ class EditAccount extends SpecialPage {
 
 			// All clear!
 			$mStatusMsg = wfMessage( 'editaccount-success-close', $user->mName )->plain();
-
-			wfRunHooks( 'EditAccountClosed', array( $user ) );
 
 			/** @var HeliosClient $heliosClient */
 			$heliosClient = Injector::getInjector()->get(HeliosClient::class);

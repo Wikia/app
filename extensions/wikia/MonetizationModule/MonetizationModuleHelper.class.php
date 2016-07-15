@@ -59,20 +59,19 @@ class MonetizationModuleHelper extends WikiaModel {
 	 * Show the Module only on File pages, Article pages, and Main pages
 	 * @return boolean
 	 */
-	public static function canShowModule() {
+	public function canShowModule() {
 		wfProfileIn( __METHOD__ );
 
-		$app = F::app();
 		$status = false;
-		$showableNameSpaces = array_merge( $app->wg->ContentNamespaces, [ NS_FILE ] );
+		$showableNameSpaces = array_merge( $this->wg->ContentNamespaces, [ NS_FILE ] );
 		if ( !WikiaPageType::isCorporatePage()
-			&& $app->wg->Title->exists()
-			&& !$app->wg->Title->isMainPage()
-			&& in_array( $app->wg->Title->getNamespace(), $showableNameSpaces )
-			&& in_array( $app->wg->request->getVal( 'action' ), [ 'view', null ] )
-			&& $app->wg->request->getVal( 'diff' ) === null
-			&& $app->wg->User->isAnon()
-			&& $app->checkSkin( 'oasis' )
+			&& $this->wg->Title->exists()
+			&& !$this->wg->Title->isMainPage()
+			&& in_array( $this->wg->Title->getNamespace(), $showableNameSpaces )
+			&& in_array( $this->wg->request->getVal( 'action' ), [ 'view', null ] )
+			&& $this->wg->request->getVal( 'diff' ) === null
+			&& $this->wg->User->isAnon()
+			&& $this->app->checkSkin( 'oasis' )
 		) {
 			$status = true;
 		}
@@ -309,7 +308,7 @@ class MonetizationModuleHelper extends WikiaModel {
 	 * @param $pageLength
 	 * @return int
 	 */
-	public static function calculateNumberOfAds( $pageLength ) {
+	public function calculateNumberOfAds( $pageLength ) {
 		if ( $pageLength > 5000 ) {
 			// long length article
 			return 3;

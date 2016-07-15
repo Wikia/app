@@ -37,13 +37,8 @@ class UserAvatarsService {
 	function upload( $filePath ) {
 		wfProfileIn( __METHOD__ );
 
-		// prepare the POST parameters
-		$postData = [
-			'file' => curl_file_create( $filePath, 'image/png', 'avatar.png' )
-		];
-
 		try {
-			$response = $this->getApiClient()->updateOrCreateUserAvatar( $this->mUserId, $postData );
+			$response = $this->getApiClient()->putUserAvatar( $this->mUserId, $filePath );
 			wfDebug( __METHOD__ . ': resp - ' . json_encode( $response ) . "\n" );
 			wfDebug( __METHOD__ . ": <{$response->imageUrl}>\n" );
 

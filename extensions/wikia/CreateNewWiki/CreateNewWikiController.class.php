@@ -71,15 +71,7 @@ class CreateNewWikiController extends WikiaController {
 
 		// export info if user is logged in
 		$this->isUserLoggedIn = $wgUser->isLoggedIn();
-
-		// remove wikia plus for now for all languages
-		// @TODO SUS-549 - Investigate if used
-		$skipWikiaPlus = true;
-
-		// @TODO SUS-549 - Investigate if used
-		$keys = CreateNewWikiObfuscate::generateValidSeeds();
-		$_SESSION['cnw-answer'] = CreateNewWikiObfuscate::generateAnswer($this->keys);
-
+		
 		$this->wg->Out->addJsConfigVars([
 			'wgLangAllAgesOpt' => self::LANG_ALL_AGES_OPT
 		]);
@@ -102,7 +94,6 @@ class CreateNewWikiController extends WikiaController {
 			'name-wiki-submit-error' => wfMessage( 'cnw-name-wiki-submit-error' )->escaped(),
 			'desc-wiki-submit-error' => wfMessage( 'cnw-desc-wiki-submit-error' )->escaped(),
 			'currentstep' => $currentStep,
-			'skipwikiaplus' => $skipWikiaPlus,
 			'descriptionplaceholder' => wfMessage( 'cnw-desc-placeholder' )->escaped(),
 			'cnw-error-general' => wfMessage( 'cnw-error-general' )->parse(),
 			'cnw-error-general-heading' => wfMessage( 'cnw-error-general-heading' )->escaped(),
@@ -323,32 +314,26 @@ class CreateNewWikiController extends WikiaController {
 			return;
 		}
 
-		$cityId = $createWiki->getWikiInfo('city_id');
+		$cityId = $createWiki->getCityId();
 
 		if ( isset($params['wAllAges']) && !empty( $params['wAllAges'] ) ) {
 			WikiFactory::setVarByName( self::WF_WDAC_REVIEW_FLAG_NAME, $cityId, true, __METHOD__ );
 		}
 
 		$this->response->setVal( self::STATUS_FIELD, self::STATUS_OK );
-		$this->response->setVal( self::SITE_NAME_FIELD, $createWiki->getWikiInfo('sitename') );
+		$this->response->setVal( self::SITE_NAME_FIELD, $createWiki->getSiteName() );
 		$this->response->setVal( self::CITY_ID_FIELD, $cityId );
 		$finishCreateTitle = GlobalTitle::newFromText( "FinishCreate", NS_SPECIAL, $cityId );
+
 		$finishCreateUrl = empty( $wgDevelDomains ) ? $finishCreateTitle->getFullURL() : str_replace( '.wikia.com', '.'.$wgDevelDomains[0], $finishCreateTitle->getFullURL() );
 		$this->response->setVal( 'finishCreateUrl',  $finishCreateUrl );
 
-		$this->info(__METHOD__ . ': completeed', [
+		$this->info(__METHOD__ . ': completed', [
 			'city_id' => $cityId,
 			'params' => $params,
 		]);
 
 		wfProfileOut(__METHOD__);
-	}
-
-	/**
-	 * a method that exists purely for unit test.  yay.  it shouldn't be public either
-	 */
-	public function getStoredAnswer() {
-		return $_SESSION['cnw-answer'];
 	}
 
 	/**
