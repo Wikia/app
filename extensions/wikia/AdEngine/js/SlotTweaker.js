@@ -127,16 +127,20 @@ define('ext.wikia.adEngine.slotTweaker', [
 		}
 	}
 
-	function makeResponsive(slotName) {
+	function makeResponsive(slotName, aspectRatio) {
 		var providerContainer = document.getElementById(slotName).lastElementChild;
 
 		onReady(slotName, function (iframe) {
 			log(['makeResponsive', slotName], 'debug', logGroup);
-			var height = iframe.contentWindow.document.body.scrollHeight,
-				width = iframe.contentWindow.document.body.scrollWidth;
+			if (!aspectRatio) {
+				var height = iframe.contentWindow.document.body.scrollHeight,
+					width = iframe.contentWindow.document.body.scrollWidth;
 
-			log(['Slot ratio', height/width], 'debug', logGroup);
-			providerContainer.style.paddingBottom = 100/(width/height) + '%';
+				aspectRatio = width/height;
+			}
+
+			log(['Slot ratio', aspectRatio], 'debug', logGroup);
+			providerContainer.style.paddingBottom = 100/aspectRatio + '%';
 		});
 	}
 
