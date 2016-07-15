@@ -103,6 +103,8 @@ $icon-space-large: 19px;
 
 .community-page-entry-point-button {
 	background: $color-corporate-buttons;
+	border: none;
+	border-radius: 0;
 	color: $color-corporate-button-text;
 	display: inline-block;
 	font-size: 14px;
@@ -114,7 +116,7 @@ $icon-space-large: 19px;
 	text-transform: uppercase;
 
 	&:hover, &:active {
-		background-color: $color-corporate-button-highlight;
+		background: $color-corporate-button-highlight none;
 		color: $color-corporate-button-text;
 		text-decoration: none;
 	}

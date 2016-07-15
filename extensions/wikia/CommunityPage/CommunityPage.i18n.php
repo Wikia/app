@@ -92,6 +92,14 @@ $messages['en'] = array(
 	'communitypage-anon-contrib-header' => '$1 or $2 and make an edit to this wiki to see how you rank in this community!',
 	'communitypage-anon-login' => 'Log in',
 	'communitypage-anon-register' => 'register',
+	'communitypage-first-edit-heading' => 'Congratulations on making your first contribution to this community!',
+	'communitypage-first-edit-subheading' => 'Connect with others and find more ways to help by visiting the Community Page',
+	'communitypage-first-edit-get-started' => 'Continue',
+	'communitypage-first-edit-maybe-later' => 'Maybe Later',
+	'communitypage-todo-module-heading' => 'Community to-do list',
+	'communitypage-todo-module-edit-list' => 'Edit list',
+	'communitypage-todo-module-description' => 'This is an area for admins to suggest pages that need work to help new contributors get started. (Admins - remember to provide details on what needs to be done.)',
+	'communitypage-todo-module-zero-state' => 'Want to know how you can contribute to this community? Contact an admin and ask them to provide suggestions here.',
 );
 
 $messages['qqq'] = array(
@@ -185,6 +193,14 @@ $messages['qqq'] = array(
 	'communitypage-anon-contrib-header' => 'Text to show for anonymous users in the heading for top contributors. Tells users to login or register',
 	'communitypage-anon-login' => 'Log in text to use in the context of communitypage-anon-contrib-header $1 together with url',
 	'communitypage-anon-register' => 'register text to use in the context of communitypage-anon-contrib-header $2 together with url',
+	'communitypage-first-edit-heading' => 'Heading for modal dialog shown when user makes his first edit on a community (first edit modal)',
+	'communitypage-first-edit-subheading' => 'Subheading for modal dialog shown when user makes his first edit on a community',
+	'communitypage-first-edit-get-started' => 'Button that leads to community page for first edit modal',
+	'communitypage-first-edit-maybe-later' => 'Button that dismisses the first edit modal',
+	'communitypage-todo-module-heading' => 'Heading for Community To-do list',
+	'communitypage-todo-module-edit-list' => 'Edit list link to show to the right of community to-do list header',
+	'communitypage-todo-module-description' => 'Description of what the purpose of the community to-do list is',
+	'communitypage-todo-module-zero-state' => 'Zero text to show when there is no community to-do page',
 );
 
 $messages['de'] = array(
