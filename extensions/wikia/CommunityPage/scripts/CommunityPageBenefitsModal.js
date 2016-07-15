@@ -47,7 +47,8 @@ define('CommunityPageBenefitsModal',
 		function handleRequestsForModal(loaderRes, nirvanaRes) {
 			var wikiTopic = nirvanaRes[0].wikiTopic,
 				allMembersCount = nirvanaRes[0].memberCount,
-				modalImageUrl = nirvanaRes[0].modalImageUrl;
+				modalImageUrl = nirvanaRes[0].modalImageUrl,
+				image = new Image();
 
 			mw.messages.set(loaderRes.messages);
 
@@ -61,12 +62,17 @@ define('CommunityPageBenefitsModal',
 				exploreText: mw.message('communitypage-entrypoint-modal-explore-text', wikiTopic).plain(),
 				buttonText: mw.message('communitypage-entrypoint-modal-button-text').plain(),
 				buttonUrl: specialCommunityTitle.getUrl(),
-				benefitsImageUrl: modalImageUrl,
+				benefitsImageUrl: modalImageUrl
 			});
 
-			require(['wikia.ui.factory'], function (uiFactory) {
-				uiFactory.init(['modal']).then(createComponent);
-			});
+			// wait for image to load, or show it
+			image.onload = image.onerror = function () {
+				require(['wikia.ui.factory'], function (uiFactory) {
+					uiFactory.init(['modal']).then(createComponent);
+				});
+			};
+			// preload the image to run on load action
+			image.src = modalImageUrl;
 		}
 
 		/**
