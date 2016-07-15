@@ -58,7 +58,8 @@ define('CommunityPageBenefitsModal',
 				editText: mw.message('communitypage-entrypoint-modal-edit-text', wikiTopic).plain(),
 				connectText: mw.message('communitypage-entrypoint-modal-connect-text', wikiTopic).plain(),
 				exploreText: mw.message('communitypage-entrypoint-modal-explore-text', wikiTopic).plain(),
-				buttonText: mw.message('communitypage-entrypoint-modal-button-text').plain()
+				buttonText: mw.message('communitypage-entrypoint-modal-button-text').plain(),
+				buttonUrl: specialCommunityTitle.getUrl()
 			});
 
 			require(['wikia.ui.factory'], function (uiFactory) {
@@ -94,11 +95,6 @@ define('CommunityPageBenefitsModal',
 				track({
 					label: $(e.target).data('track') || 'modal-area'
 				});
-			});
-
-			// On click on modal redirect to Special:Community
-			modalInstance.$element.on('click', function() {
-				window.location.pathname = specialCommunityTitle.getUrl();
 			});
 
 			// Bind tracking modal close

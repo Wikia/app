@@ -21,7 +21,7 @@ $icon-space-large: 19px;
 
 .modal.community-page-benefits-modal {
 	background: $color-white;
-	color: $color-text-dark;
+	cursor: pointer;
 	font-family: $community-page-font-family;
 	font-size: 16px;
 	height: 90vh;
@@ -36,6 +36,14 @@ $icon-space-large: 19px;
 
 	footer, header {
 		display: none;
+	}
+}
+
+.community-page-benefits-modal-area {
+	color: $color-text-dark;
+
+	&:hover {
+		text-decoration: none;
 	}
 }
 
