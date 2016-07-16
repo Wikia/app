@@ -21,10 +21,12 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 
 	private $logger;
 	private $users;
+	private $domainCache;
 
 	public function __construct() {
 		parent::__construct( 'DiscussionsLog', '', false );
 		$this->users = [];
+		$this->domainCache = [];
 		$this->logger = Wikia\Logger\WikiaLogger::instance();
 	}
 
@@ -104,7 +106,7 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 		$user->load();
 
 		// Anonymous users can't have contributions
-		if ($user->mName === false) {
+		if ( $user->mName === false ) {
 			throw new \InvalidArgumentException( self::NO_USER_MATCH_ERROR );
 		}
 
@@ -214,7 +216,7 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 	private function aggregateSearchLogs( $query ) {
 		$records = [];
 		$dayOffset = 0;
-		$domainCache = [];
+		$uniqueRecordChecker = [];
 
 		while ( count( $records ) < self::PAGINATION_SIZE && $dayOffset < self::DAYS_RANGE ) {
 			$url = $this->constructKibanaUrl( $dayOffset++ );
@@ -223,7 +225,7 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 				break;
 			}
 
-			$this->appendRecordsFromResponse( $records, $response, $domainCache );
+			$this->appendRecordsFromResponse( $records, $response, $uniqueRecordChecker );
 		}
 
 		krsort( $records, SORT_NUMERIC );
@@ -257,7 +259,7 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 		return $response;
 	}
 
-	private function appendRecordsFromResponse( array &$records, $response, array &$domainCache ) {
+	private function appendRecordsFromResponse( array &$records, $response, array &$uniqueRecordChecker  ) {
 
 		$resultObject = json_decode( $response->getBody() );
 		$hits = $resultObject->hits->hits;
@@ -266,10 +268,17 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 			$record = $hit->_source;
 			$ip = $record->{'fastly_client_ip'};
 			$site = $record->{'site_id'};
-			$ipHashKey = $ip . ':' . $site;
+			$userId = $record->{'user_id'};
+			$recordHash = sprintf( '%s:%s:%s', $ip, $site, $userId );
+
+			if ( $uniqueRecordChecker[$recordHash] === true ) {
+				continue;
+			}
+
+			$uniqueRecordChecker[$recordHash] = true;
 
 			try {
-				$user = $this->getUserById( $record->{'user_id'} );
+				$user = $this->getUserById( $userId );
 			} catch ( \Exception $e ) {
 				$this->logger->error(
 					sprintf( 'User not found: %s', $e->getMessage() ),
@@ -278,15 +287,15 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 				continue;
 			}
 
-			if (!isset($domainCache[$site])) {
+			if ( !isset($domainCache[$site]) ) {
 				$cityTitle = WikiFactory::getWikiByID($site)->city_title;
 				$wikiDomain = preg_replace('#^https?://#', '', WikiFactory::getHostById($site));
-				if (empty($cityTitle) && empty($wikiDomain)) {
+				if ( empty($cityTitle) && empty($wikiDomain) ) {
 					// most likely from a different environment (e.g. prod contribution when this is on dev, or vice versa)
 					$this->logger->warning(sprintf( 'Site not found: %d', $site ));
 					continue;
 				} else {
-					$domainCache[$site] = $cityTitle . ' (' . $wikiDomain . ')';
+					$domainCache[$site] = sprintf( '%s (%s)', $cityTitle, $wikiDomain );
 				}
 			}
 
@@ -300,7 +309,6 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 			$userLogRecord->userAgent = $record->{'user_agent'};
 			$userLogRecord->user = $user;
 
-			$ipHash[ $ipHashKey ] = true;
 			$records[$timestamp] = $userLogRecord;
 		}
 	}
