@@ -145,6 +145,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 
 		$this->response->setData( [
 			'topAdminsHeaderText' => $this->msg( 'communitypage-admins' )->plain(),
+			'allAdminsLegend' => $this->msg( 'communitypage-modal-tab-all-contribution-header' )->plain(),
 			'allAdminsList' => $allAdminsDetails,
 			'allAdminsCount' => $this->getLanguage()->formatNum( count( $allAdminsDetails ) ),
 			'noAdminText' => $this->msg( 'communitypage-no-admins' )->plain(),
