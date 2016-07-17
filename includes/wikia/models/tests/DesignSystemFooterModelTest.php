@@ -10,6 +10,7 @@ class DesignSystemFooterModelTest extends WikiaBaseTest {
 		$wfHubMock = $this->getMock( 'WikiFactoryHub', [ 'getWikiVertical' ] );
 
 		$verticalMock = [ 'id' => '1', 'short' => $vertical ];
+
 		$wfHubMock->expects( $this->once() )
 			->method( 'getWikiVertical' )
 			->will( $this->returnValue( $verticalMock ) );
@@ -89,6 +90,13 @@ class DesignSystemFooterModelTest extends WikiaBaseTest {
 				'http://www.wikia.com/Licensing',
 				'lifestyle',
 				[
+					'vertical' => [
+						'type' => 'line-text',
+						'title' => [
+							'type' => 'translatable-text',
+							'key' => 'fandom-link-vertical-lifestyle',
+						],
+					],
 					'license' => [
 						'type' => 'link-text',
 						'title' => [
