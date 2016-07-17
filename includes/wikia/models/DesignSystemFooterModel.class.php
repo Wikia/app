@@ -382,18 +382,24 @@ class DesignSystemFooterModel extends WikiaModel {
 			$link = 'http://fandom.wikia.com/' . $vertical;
 		}
 
-		if ( !in_array( $vertical, $this->allowedVerticals ) ) {
+		if ( is_null( $vertical ) ) {
 			return [];
 		}
 
-		return [
-			'type' => 'link-text',
+		$data = [
+			'type' => 'line-text',
 			'title' => [
 				'type' => 'translatable-text',
 				'key' => 'fandom-link-vertical-' . $vertical
 			],
-			'href' => $link
 		];
+
+		if ( in_array( $vertical, $this->allowedVerticals ) ) {
+			$data['type'] = 'link-text';
+			$data['href'] = $link;
+		}
+
+		return $data;
 	}
 
 	private function getLicenseData() {
