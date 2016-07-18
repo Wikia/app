@@ -360,15 +360,17 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 			'license' => $this->getLicenseData(),
 		];
 		$verticalData = $this->getVerticalData();
+		$messageKey = 'wikia-licensing-description';
 
 		if ( !empty( $verticalData ) ) {
 			$params['vertical'] = $verticalData;
+			$messageKey = 'wikia-licensing-and-vertical-description';
 		}
 
 		$this->data['licensing_and_vertical'] = [
 			'description' => [
 				'type' => 'translatable-text',
-				'key' => 'wikia-licensing-and-vertical-description',
+				'key' => $messageKey,
 				'params' => $params
 			],
 		];
