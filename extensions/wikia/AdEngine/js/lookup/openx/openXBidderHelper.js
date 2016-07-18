@@ -28,7 +28,7 @@ define('ext.wikia.adEngine.lookup.openx.openXBidderHelper', [
 	}
 
 	function addOpenXSlot(slotName) {
-		if (slotName in Object.keys(slots)) {
+		if (isSlotSupported(slotName)) {
 			log(['addOpenXSlot', slotName], 'debug', logGroup);
 			changeTimeout();
 			win.OX.dfp_bidder.addSlots([[getPagePath(), slots[slotName].sizes, getSlothPath(slotName)]]);
@@ -37,6 +37,9 @@ define('ext.wikia.adEngine.lookup.openx.openXBidderHelper', [
 		}
 	}
 
+	function isSlotSupported(slotName) {
+		return !!slots[slotName];
+	}
 	function changeTimeout() {
 		if (!timeoutChanged) {
 			log(['changeTimeout'], 'debug', logGroup);
