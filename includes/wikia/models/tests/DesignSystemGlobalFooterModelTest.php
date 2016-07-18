@@ -43,13 +43,13 @@ class DesignSystemGlobalFooterModelTest extends WikiaBaseTest {
 				[
 					'description' => [
 						'type' => 'translatable-text',
-						'key' => 'wikia-licensing-and-vertical-description',
+						'key' => 'global-footer-wikia-licensing-and-vertical-description',
 						'params' => [
 							'vertical' => [
 								'type' => 'link-text',
 								'title' => [
 									'type' => 'translatable-text',
-									'key' => 'fandom-link-vertical-tv',
+									'key' => 'global-footer-fandom-link-vertical-tv',
 								],
 								'href' => 'http://fandom.wikia.com/tv',
 							],
@@ -72,13 +72,13 @@ class DesignSystemGlobalFooterModelTest extends WikiaBaseTest {
 				[
 					'description' => [
 						'type' => 'translatable-text',
-						'key' => 'wikia-licensing-and-vertical-description',
+						'key' => 'global-footer-wikia-licensing-and-vertical-description',
 						'params' => [
 							'vertical' => [
 								'type' => 'link-text',
 								'title' => [
 									'type' => 'translatable-text',
-									'key' => 'fandom-link-vertical-movies',
+									'key' => 'global-footer-fandom-link-vertical-movies',
 								],
 								'href' => 'http://fandom.wikia.com/movies',
 							],
@@ -101,13 +101,13 @@ class DesignSystemGlobalFooterModelTest extends WikiaBaseTest {
 				[
 					'description' => [
 						'type' => 'translatable-text',
-						'key' => 'wikia-licensing-and-vertical-description',
+						'key' => 'global-footer-wikia-licensing-and-vertical-description',
 						'params' => [
 							'vertical' => [
 								'type' => 'line-text',
 								'title' => [
 									'type' => 'translatable-text',
-									'key' => 'fandom-link-vertical-lifestyle',
+									'key' => 'global-footer-fandom-link-vertical-lifestyle',
 								],
 							],
 							'license' => [
@@ -129,7 +129,7 @@ class DesignSystemGlobalFooterModelTest extends WikiaBaseTest {
 				[
 					'description' => [
 						'type' => 'translatable-text',
-						'key' => 'wikia-licensing-description',
+						'key' => 'global-footer-wikia-licensing-description',
 						'params' => [
 							'license' => [
 								'type' => 'link-text',
