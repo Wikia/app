@@ -1251,8 +1251,8 @@ $wgAdDriverOpenXBidderCountries = null;
 $wgAdDriverOpenXBidderCountriesMobile = null;
 
 /**
- * @name $wgAdDriverOpenXBidderCountries
- * Enables OpenX bidder in these countries (given wgAdDriverEnableOpenXBidder is also true).
+ * @name $wgAdDriverOpenXBidderCountriesRemnant
+ * Enables OpenX bidder in these countries (given wgAdDriverEnableOpenXBidder is also true) in remnant slots.
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverOpenXBidderCountriesRemnant = null;
