@@ -9,11 +9,9 @@ class DesignSystemGlobalFooterModelTest extends WikiaBaseTest {
 
 		$wfHubMock = $this->getMock( 'WikiFactoryHub', [ 'getWikiVertical' ] );
 
-		$verticalMock = [ 'id' => '1', 'short' => $vertical ];
-
 		$wfHubMock->expects( $this->once() )
 			->method( 'getWikiVertical' )
-			->will( $this->returnValue( $verticalMock ) );
+			->will( $this->returnValue( $vertical ) );
 
 		$this->mockClass( 'WikiFactoryHub', $wfHubMock, 'getInstance' );
 
@@ -32,9 +30,8 @@ class DesignSystemGlobalFooterModelTest extends WikiaBaseTest {
 
 		$footerModel = new DesignSystemGlobalFooterModel( $wikiId );
 		$result = $footerModel->getData();
-		$params = $result['licensing_and_vertical']['description']['params'];
 
-		$this->assertEquals( $params, $expectedResult );
+		$this->assertEquals( $result['licensing_and_vertical'], $expectedResult );
 	}
 
 	public function licensingAndVerticalProvider() {
@@ -42,68 +39,107 @@ class DesignSystemGlobalFooterModelTest extends WikiaBaseTest {
 			[
 				'CC-BY-SA',
 				'http://www.wikia.com/Licensing',
-				'tv',
+				[ 'id' => 1, 'short' => 'tv' ],
 				[
-					'vertical' => [
-						'type' => 'link-text',
-						'title' => [
-							'type' => 'translatable-text',
-							'key' => 'fandom-link-vertical-tv',
+					'description' => [
+						'type' => 'translatable-text',
+						'key' => 'wikia-licensing-and-vertical-description',
+						'params' => [
+							'vertical' => [
+								'type' => 'link-text',
+								'title' => [
+									'type' => 'translatable-text',
+									'key' => 'fandom-link-vertical-tv',
+								],
+								'href' => 'http://fandom.wikia.com/tv',
+							],
+							'license' => [
+								'type' => 'link-text',
+								'title' => [
+									'type' => 'text',
+									'value' => 'CC-BY-SA'
+								],
+								'href' => 'http://www.wikia.com/Licensing',
+							],
 						],
-						'href' => 'http://fandom.wikia.com/tv',
-					],
-					'license' => [
-						'type' => 'link-text',
-						'title' => [
-							'type' => 'text',
-							'value' => 'CC-BY-SA'
-						],
-						'href' => 'http://www.wikia.com/Licensing',
 					],
 				],
 			],
 			[
 				'CC-BY-NC-SA',
 				'http://memory-alpha.wikia.com/wiki/Project:Licensing',
-				'movies',
+				[ 'id' => 1, 'short' => 'movies' ],
 				[
-					'vertical' => [
-						'type' => 'link-text',
-						'title' => [
-							'type' => 'translatable-text',
-							'key' => 'fandom-link-vertical-movies',
+					'description' => [
+						'type' => 'translatable-text',
+						'key' => 'wikia-licensing-and-vertical-description',
+						'params' => [
+							'vertical' => [
+								'type' => 'link-text',
+								'title' => [
+									'type' => 'translatable-text',
+									'key' => 'fandom-link-vertical-movies',
+								],
+								'href' => 'http://fandom.wikia.com/movies',
+							],
+							'license' => [
+								'type' => 'link-text',
+								'title' => [
+									'type' => 'text',
+									'value' => 'CC-BY-NC-SA'
+								],
+								'href' => 'http://memory-alpha.wikia.com/wiki/Project:Licensing',
+							],
 						],
-						'href' => 'http://fandom.wikia.com/movies',
-					],
-					'license' => [
-						'type' => 'link-text',
-						'title' => [
-							'type' => 'text',
-							'value' => 'CC-BY-NC-SA'
-						],
-						'href' => 'http://memory-alpha.wikia.com/wiki/Project:Licensing',
 					],
 				],
 			],
 			[
 				'CC-BY-SA',
 				'http://www.wikia.com/Licensing',
-				'lifestyle',
+				[ 'id' => 1, 'short' => 'lifestyle' ],
 				[
-					'vertical' => [
-						'type' => 'line-text',
-						'title' => [
-							'type' => 'translatable-text',
-							'key' => 'fandom-link-vertical-lifestyle',
+					'description' => [
+						'type' => 'translatable-text',
+						'key' => 'wikia-licensing-and-vertical-description',
+						'params' => [
+							'vertical' => [
+								'type' => 'line-text',
+								'title' => [
+									'type' => 'translatable-text',
+									'key' => 'fandom-link-vertical-lifestyle',
+								],
+							],
+							'license' => [
+								'type' => 'link-text',
+								'title' => [
+									'type' => 'text',
+									'value' => 'CC-BY-SA'
+								],
+								'href' => 'http://www.wikia.com/Licensing',
+							],
 						],
 					],
-					'license' => [
-						'type' => 'link-text',
-						'title' => [
-							'type' => 'text',
-							'value' => 'CC-BY-SA'
+				],
+			],
+			[
+				'CC-BY-SA',
+				'http://www.wikia.com/Licensing',
+				[ 'id' => 0, 'short' => '' ],
+				[
+					'description' => [
+						'type' => 'translatable-text',
+						'key' => 'wikia-licensing-description',
+						'params' => [
+							'license' => [
+								'type' => 'link-text',
+								'title' => [
+									'type' => 'text',
+									'value' => 'CC-BY-SA'
+								],
+								'href' => 'http://www.wikia.com/Licensing',
+							],
 						],
-						'href' => 'http://www.wikia.com/Licensing',
 					],
 				],
 			],
