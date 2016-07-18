@@ -1251,6 +1251,13 @@ $wgAdDriverOpenXBidderCountries = null;
 $wgAdDriverOpenXBidderCountriesMobile = null;
 
 /**
+ * @name $wgAdDriverOpenXBidderCountries
+ * Enables OpenX bidder in these countries (given wgAdDriverEnableOpenXBidder is also true).
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverOpenXBidderCountriesRemnant = null;
+
+/**
  * @name $wgAdDriverEnableRubiconFastlane
  * Enables Rubicon Fastlane
  */

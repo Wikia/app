@@ -2,10 +2,11 @@
 /*jshint camelcase:false*/
 define('ext.wikia.adEngine.lookup.openx.openXBidderHelper', [
 	'ext.wikia.adEngine.utils.adLogicZoneParams',
+	'wikia.instantGlobals',
 	'wikia.geo',
 	'wikia.log',
 	'wikia.window'
-], function (adLogicZoneParams, geo, log, win) {
+], function (adLogicZoneParams, instantGlobals, geo, log, win) {
 	'use strict';
 
 	var slots = [],
@@ -28,27 +29,31 @@ define('ext.wikia.adEngine.lookup.openx.openXBidderHelper', [
 		delete slots[slotName];
 	}
 
-	function openXRemnantEnabled() {
-		return geo.getCountryCode() === 'NZ';
+	function isOpenXRemnantEnabledInGeo() {
+		var isEnabled = geo.isProperGeo(instantGlobals.wgAdDriverOpenXBidderCountriesRemnant);
+		log(['isOpenXRemnantEnabledInGeo', isEnabled], 'debug', logGroup);
+		return !!isEnabled;
 	}
 
 	function addOpenXSlot(slotName) {
-		if (openXRemnantEnabled() && isSlotSupported(slotName)) {
-			log(['addOpenXSlot', slotName], 'debug', logGroup);
+		log(['addOpenXSlot', slotName], 'debug', logGroup);
+		if (isOpenXRemnantEnabledInGeo() && isSlotSupported(slotName)) {
 			changeTimeout();
 			win.OX.dfp_bidder.addSlots([[getPagePath(), slots[slotName].sizes, getSlothPath(slotName)]]);
-		} else {
-			log(['addOpenXSlot', slotName, geo.getCountryCode(), 'Slot not supported'], 'debug', logGroup);
 		}
 	}
 
 	function isSlotSupported(slotName) {
-		return !!slots[slotName];
+		var isSlotSupported = !!slots[slotName];
+
+		log(['isSlotSupported', slotName, isSlotSupported], 'debug', logGroup);
+		return isSlotSupported;
 	}
+
 	function changeTimeout() {
 		if (!timeoutChanged) {
-			log(['changeTimeout'], 'debug', logGroup);
 			win.OXHBConfig.DFP_mapping.timeout = 0;
+			log(['changeTimeout'], 'debug', logGroup);
 			timeoutChanged = true;
 		}
 	}
