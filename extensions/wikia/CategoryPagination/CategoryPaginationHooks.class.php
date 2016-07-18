@@ -13,7 +13,7 @@ class CategoryPaginationHooks {
 		$app = F::app();
 
 		// Only do anything with category pages on Oasis
-		if ( !$app->checkSkin( 'oasis' ) || $title->getNamespace() != NS_CATEGORY ) {
+		if ( !$app->checkSkin( 'oasis' ) || !$title || $title->getNamespace() != NS_CATEGORY ) {
 			return true;
 		}
 
@@ -27,5 +27,16 @@ class CategoryPaginationHooks {
 		$article = new CategoryPaginationPage( $title );
 
 		return true;
+	}
+
+	static public function onCategoryViewerGetSectionPagingLinks( $catViewer, $type, $position, &$r ) {
+		if ( !( $catViewer instanceof CategoryPaginationViewer ) ) {
+			return true;
+		}
+		$r = '';
+		if ( $position === 'bottom' ) {
+			$r = $catViewer->getPaginator( $type )->getBarHTML();
+		}
+		return false;
 	}
 }

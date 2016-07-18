@@ -92,15 +92,12 @@ class CategoryPaginationViewer extends CategoryViewer {
 		return null;
 	}
 
-	public function getSectionPagingLinks( $type ) {
-		// This method is called twice. Once for the pagination at the top of the section
-		// and the second time for the pagination at the bottom. We only want to output
-		// the pagination at the bottom: the second time this method is called for given type
-
-		static $wasCalled = [];
-		if ( isset( $wasCalled[$type] ) ) {
-			return $this->paginators[$type]->getBarHTML();
-		}
-		$wasCalled[$type] = true;
+	/**
+	 * Get the paginator object for given section
+	 * @param string $type: page, subcat or file
+	 * @return Paginator
+	 */
+	public function getPaginator( $type ) {
+		return $this->paginators[$type];
 	}
 }
