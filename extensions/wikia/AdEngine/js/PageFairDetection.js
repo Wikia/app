@@ -1,11 +1,10 @@
 define('ext.wikia.adEngine.pageFairDetection', [
 	'ext.wikia.adEngine.adContext',
-	'ext.wikia.adEngine.adTracker',
 	'ext.wikia.adEngine.utils.scriptLoader',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window'
-], function (adContext, adTracker, scriptLoader, doc, log, window) {
+], function (adContext, scriptLoader, doc, log, window) {
 	'use strict';
 
 	var context = adContext.getContext(),
@@ -19,7 +18,8 @@ define('ext.wikia.adEngine.pageFairDetection', [
 	}
 
 	function detector(adblockDetected) {
-		var event;
+		var event,
+			eventName = adblockDetected ? 'pf.blocking' : 'pf.not_blocking';
 
 		if (!context.opts.pageFairDetection) {
 			log('PageFair disabled', 'debug', logGroup);
@@ -30,8 +30,6 @@ define('ext.wikia.adEngine.pageFairDetection', [
 
 		window.ads.runtime.pf = window.ads.runtime.pf || {};
 		window.ads.runtime.pf.blocking = adblockDetected;
-
-		var eventName = adblockDetected ? 'pf.blocking' : 'pf.not_blocking';
 
 		try {
 			event = new Event(eventName);
