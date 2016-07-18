@@ -8,7 +8,8 @@ define('ext.wikia.adEngine.lookup.openx.openXBidderHelper', [
 	'use strict';
 
 	var slots = [],
-	logGroup = 'ext.wikia.adEngine.lookup.openx.openXBidderHelper';
+		timeoutChanged = false,
+		logGroup = 'ext.wikia.adEngine.lookup.openx.openXBidderHelper';
 
 	function setSlots(newSlots) {
 		slots = newSlots;
@@ -27,9 +28,19 @@ define('ext.wikia.adEngine.lookup.openx.openXBidderHelper', [
 	}
 
 	function addOpenXSlot(slotName) {
-		log(['addOpenXSlot', slotName], 'debug', logGroup);
-		OXHBConfig.DFP_mapping.timeout = 0;
-		win.OX.dfp_bidder.addSlots([[getPagePath(), slots[slotName].sizes, getSlothPath(slotName)]]);
+		if (slotName in Object.keys(slots)) {
+			log(['addOpenXSlot', slotName], 'debug', logGroup);
+			changeTimeout();
+			win.OX.dfp_bidder.addSlots([[getPagePath(), slots[slotName].sizes, getSlothPath(slotName)]]);
+		} else {
+			log(['addOpenXSlot', slotName, 'Slot not supported'], 'debug', logGroup);
+		}
+	}
+
+	function changeTimeout() {
+		if (!timeoutChanged) {
+			win.OXHBConfig.DFP_mapping.timeout = 0;
+		}
 	}
 
 	//function setSlotTargeting(slotName, src) {
