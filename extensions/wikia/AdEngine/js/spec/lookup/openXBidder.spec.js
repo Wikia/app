@@ -46,6 +46,16 @@ describe('ext.wikia.adEngine.lookup.openXBidder', function () {
 					return 'en';
 				}
 			},
+			openXHelper: {
+				setSlots: function () {},
+				getSlots: function() {
+					return {
+						TOP_LEADERBOARD: {
+							sizes: ['728x90', '970x250']
+						}
+					}
+				}
+			},
 			doc: {
 				node: {
 					parentNode: {
@@ -103,6 +113,7 @@ describe('ext.wikia.adEngine.lookup.openXBidder', function () {
 			getFactory(),
 			mocks.adSlot,
 			mocks.adLogicZoneParams,
+			mocks.openXHelper,
 			mocks.doc,
 			mocks.log,
 			mocks.win
