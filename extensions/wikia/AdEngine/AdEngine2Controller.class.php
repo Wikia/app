@@ -5,6 +5,8 @@
  */
 class AdEngine2Controller extends WikiaController {
 
+	const DEFAULT_TEMPLATE_ENGINE = WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
+
 	public static function getLiftiumOptionsScript() {
 		wfProfileIn(__METHOD__);
 
@@ -51,12 +53,19 @@ class AdEngine2Controller extends WikiaController {
 	 * Action to display an ad (or not)
 	 */
 	public function ad() {
-		$this->includeLabel = $this->request->getVal('includeLabel');
-		$this->onLoad = $this->request->getVal('onLoad');
-		$this->addToAdQueue = $this->request->getVal('addToAdQueue', true);
-		$this->pageTypes = $this->request->getVal('pageTypes');
-		$this->slotName = $this->request->getVal('slotName');
-		$this->showAd = AdEngine2Service::shouldShowAd($this->pageTypes);
+		$pageTypes = $this->request->getVal( 'pageTypes' );
+		$slotName = $this->request->getVal( 'slotName' );
+
+		$this->response->setValues( [
+			'includeLabel' => $this->request->getVal( 'includeLabel' ),
+			'onLoad' => $this->request->getVal( 'onLoad' ),
+			'addToAdQueue' => $this->request->getVal( 'addToAdQueue', true ),
+			'pageTypesJson' => json_encode( $pageTypes ),
+			'slotName' => $slotName,
+			'slotNameJson' => json_encode( [ $slotName ] ),
+			'showAd' => AdEngine2Service::shouldShowAd( $pageTypes ),
+			'msg-adengine-advertisement' => wfMessage( 'adengine-advertisement' )->text(),
+		] );
 	}
 
 	/**
@@ -66,8 +75,14 @@ class AdEngine2Controller extends WikiaController {
 	 * - no .wikia-ad class added to the element
 	 */
 	public function adEmptyContainer() {
-		$this->pageTypes = $this->request->getVal('pageTypes');
-		$this->slotName = $this->request->getVal('slotName');
-		$this->showAd = AdEngine2Service::shouldShowAd($this->pageTypes);
+		$pageTypes = $this->request->getVal( 'pageTypes' );
+		$slotName = $this->request->getVal( 'slotName' );
+
+		$this->response->setValues( [
+			'pageTypesJson' => json_encode( $pageTypes ),
+			'slotName' => $slotName,
+			'slotNameJson' => json_encode( [ $slotName ] ),
+			'showAd' => AdEngine2Service::shouldShowAd( $pageTypes ),
+		] );
 	}
 }

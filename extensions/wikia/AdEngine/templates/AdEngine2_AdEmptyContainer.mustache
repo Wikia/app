@@ -1,0 +1,12 @@
+{{#showAd}}
+<!-- BEGIN CONTAINER: {{slotName}} -->
+<div id="{{slotName}}">
+    <script>
+        window.adslots2.push({{{slotNameJson}}});
+    </script>
+</div>
+<!-- END CONTAINER: {{slotName}} -->
+{{/showAd}}
+{{^showAd}}
+<!-- NO CONTAINER {{slotName}} (levels: {{pageTypesJson}}) -->
+{{/showAd}}
