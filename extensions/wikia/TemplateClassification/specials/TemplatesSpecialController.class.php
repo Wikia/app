@@ -1,5 +1,7 @@
 <?php
 
+use Wikia\Paginator\Paginator;
+
 class TemplatesSpecialController extends WikiaSpecialPageController {
 
 	const ITEMS_PER_PAGE = 20;
@@ -245,8 +247,7 @@ class TemplatesSpecialController extends WikiaSpecialPageController {
 	 * @param int $page
 	 */
 	private function preparePagination( $total, $page ) {
-		$itemsPerPage = self::ITEMS_PER_PAGE;
-		$params = [ 'page' => '%s' ];
+		$params = [];
 
 		if ( $this->type ) {
 			$params['type'] = $this->type;
@@ -255,13 +256,11 @@ class TemplatesSpecialController extends WikiaSpecialPageController {
 		if ( $this->templateName ) {
 			$params['template'] = $this->templateName;
 		}
+		$url = $this->specialPage->getTitle()->getLocalUrl( $params );
 
-		if ( $total > $itemsPerPage ) {
-			$paginator = Paginator::newFromArray( array_fill( 0, $total, '' ), $itemsPerPage, 3, false, '',  self::ITEMS_PER_PAGE );
-			$paginator->setActivePage( $page );
-			$url = urldecode( $this->specialPage->getTitle()->getLocalUrl( $params ) );
-			$this->paginatorBar = $paginator->getBarHTML( $url );
-		}
+		$paginator = new Paginator( $total, self::ITEMS_PER_PAGE, $url );
+		$paginator->setActivePage( $page + 1 );
+		$this->paginatorBar = $paginator->getBarHTML();
 	}
 
 	/**

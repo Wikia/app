@@ -1,9 +1,10 @@
 /*global define*/
 define('ext.wikia.recirculation.utils', [
+	'jquery',
 	'wikia.loader',
 	'wikia.cache',
 	'wikia.mustache'
-], function (loader, cache, Mustache) {
+], function ($, loader, cache, Mustache) {
 	'use strict';
 
 	/**
@@ -45,14 +46,66 @@ define('ext.wikia.recirculation.utils', [
 	}
 
 	function buildLabel(element, label) {
-		var slot = $(element).parent().data('index') + 1;
+		var $parent = $(element).parent(),
+			slot = $parent.data('index') + 1,
+			source = $parent.data('source');
 
-		return label + '=slot-' + slot;
+		label = label + '=slot-' + slot;
+		if (source) {
+			label = label + '=' + source;
+		}
+
+		return label;
+	}
+
+	function addUtmTracking(items, placement) {
+		var params = {
+			utm_source: 'wikia',
+			utm_campaign: 'recirc',
+			utm_medium: placement
+		};
+
+		items = $.map(items, function(item, index) {
+			params.utm_content = index + 1;
+			item.url = item.url + '?' + $.param(params);
+			return item;
+		});
+
+		return items;
+	}
+
+	function afterRailLoads(callback) {
+		var $rail = $('#WikiaRail');
+
+		if ($rail.find('.loading').exists()) {
+			$rail.one('afterLoad.rail', callback);
+		} else {
+			callback();
+		}
+	}
+
+	function waitForRail() {
+		var $rail = $('#WikiaRail'),
+			deferred = $.Deferred(),
+			args = Array.prototype.slice.call(arguments);
+
+		if ($rail.find('.loading').exists()) {
+			$rail.one('afterLoad.rail', function() {
+				deferred.resolve.apply(null, args);
+			});
+		} else {
+			deferred.resolve.apply(null, args);
+		}
+
+		return deferred.promise();
 	}
 
 	return {
 		buildLabel: buildLabel,
 		loadTemplate: loadTemplate,
-		renderTemplate: renderTemplate
+		renderTemplate: renderTemplate,
+		addUtmTracking: addUtmTracking,
+		afterRailLoads: afterRailLoads,
+		waitForRail: waitForRail
 	};
 });

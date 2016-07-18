@@ -1,195 +1,46 @@
+// Variables for general Community Page styles
 @import 'skins/shared/color';
-@import 'skins/shared/mixins/transform';
+@import 'skins/oasis/css/core/breakpoints-variables';
 
+// Components
 @import 'components/variables';
-@import 'components/base';
 @import 'components/module';
 @import 'components/textborder';
 @import 'components/header';
-@import 'components/monthly-summary';
 @import 'components/recent-activity-module';
-@import 'components/banner-message';
 @import 'components/avatar';
 @import 'components/list';
 @import 'components/contributors-module';
+@import 'components/community-policy-module';
 @import 'components/modal';
+@import 'components/insights-module';
+@import 'components/recently-joined';
+@import 'components/todo-list-module';
 
-// TODO: handle dark themes
-// TODO: copy/pasted code from here down
-
-.community-page-admin-message {
-	align-items: center;
-	background-color: $color-community-page-gray;
-	color: $color-text-dark;
-	display: flex;
-	height: 250px;
-	justify-content: center;
-	text-align: center;
-
-	.admin-profile {
-		display: inline-block;
-		margin: 0 20px;
-	}
-
-	.profile-links {
-		.user-page {
-			display: block;
-			font-weight: bold;
-		}
-
-		.group-name {
-			color: $color-community-page-admin-text;
-			display: block;
-			text-transform: uppercase;
-		}
-	}
-
-	.admin-message {
-		font-weight: bold;
-		margin: 10px auto;
-		width: 70%;
-	}
+.CommunityPageContainer {
+	box-sizing: border-box;
+	padding: 34px 50px;
+	width: 100%;
 }
 
-.community-page-content {
-	margin: 20px auto;
-	width: 850px;
-}
-
-.task-page-content {
-	margin: 20px auto;
-	width: 478px;
-
-	.admin-message {
-		margin-bottom: 20px;
-		text-align: center;
-	}
-}
-
-.community-page-top-contributors {
-	background: $color-community-page-white;
-	border: 1px solid $color-community-page-dark-gray;
+.CommunityPageMainContent {
+	box-sizing: inherit;
 	float: left;
-	padding: 20px 15px 15px;
-	position: relative;
-	width: 270px;
-	word-wrap: break-word;
-
-	.more-contributors {
-		color: $color-community-page-admin-text;
-	}
-
-	h2 {
-		border: 0;
-		font-size: 18px;
-		font-weight: bold;
-		margin-bottom: 25px;
-		margin-top: 0;
-		padding-left: 2px;
-	}
-
-	ul {
-		list-style: none;
-		margin: 10px 0;
-	}
-
-	li {
-		font-size: 12px;
-		padding: 6px 3px 6px 15px;
-		position: relative;
-
-	}
-}
-
-.community-page-page-list {
-	float: right;
-	width: 500px;
-}
-
-.community-page-page-list,
-.task-page-page-list {
-	ul {
-		line-height: 50px;
-		list-style: none;
-		margin: 10px 0;
-	}
-
-	li {
-		border-top: 1px solid rgb(199, 209, 216);
-		height: 50px;
-		margin: 0;
-		padding: 6px 3px 6px 15px;
-		position: relative;
-
-		&:last-child {
-			border-bottom: 1px solid rgb(199, 209, 216);
-		}
-
-		.page-list-edit {
-			float: right;
-			padding-right: 10px;
-		}
-
-		.page-title {
-			display: inline-block;
-			margin-left: 5px;
-			overflow: hidden;
-			text-overflow: ellipsis;
-			white-space: nowrap;
-			width: 75%;
-		}
-
-		.page-list-edit-link {
-			float: left;
-		}
-
-		.edit-icon {
-			background-image: url('/extensions/wikia/CommunityPageExperiment/images/pencil.svg'); /* inline */
-			background-position: center;
-			background-repeat: no-repeat;
-			height: 30px;
-			padding-left: 15px;
-		}
-	}
-}
-
-.WikiaPage {
-	padding: 0;
-}
-
-.WikiaMainContent {
-	float: none;
+	padding-right: 34px;
+	width: calc(100% - 320px);
 }
 
 .WikiaArticle .community-page-top-contributors h2 {
 	margin-top: 0;
 }
 
-/* Temp Hacks for dark wikias until design is ready */
-@if ($is-dark-wiki) {
-	body {
-		color: $color-text-dark;
+@media #{$breakpoint-below-small-plus} {
+	.CommunityPageContainer {
+		padding: 34px 0;
 	}
 
-	.WikiaPage .WikiaPageBackground {
-		background-color: $color-page-opposite;
-	}
-
-	.community-page-admin-message a,
-	.community-page-content a,
-	.task-page-content a {
-		color: $color-links-default;
-	}
-
-	.global-footer ul li {
-		a {
-			color: $color-links-default;
-		}
-	}
-
-	.community-page-admin-message .avatar,
-	.community-page-content .avatar {
-		border: 1px solid $color-page-opposite;
+	.CommunityPageMainContent {
+		padding-right: 0;
+		width: 100%;
 	}
 }
-

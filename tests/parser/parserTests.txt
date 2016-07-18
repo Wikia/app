@@ -448,6 +448,14 @@ Bug 6200: Preformatted in <blockquote>
 
 !! end
 
+<nowiki> inside of #tag:pre
+!! wikitext
+{{#tag:pre|Foo <nowiki>&rarr;bar</nowiki>}}
+!! html
+<pre>Foo &#8594;bar</pre>
+
+!! end
+
 !! test
 <nowiki> and <pre> preference (first one wins)
 !! input

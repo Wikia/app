@@ -20,15 +20,16 @@ class LogEventsApiController extends WikiaApiController {
 	 * @throws BadRequestException
 	 */
 	public function add() {
-		global $wgTheSchwartzSecretToken, $wgTitle, $wgUser;
-
 		if ( !$this->request->wasPosted() ) {
 			throw new BadRequestException( 'This request must be POSTed' );
 		}
 
-		if ( !Wikia\Security\Utils::matchToken( $wgTheSchwartzSecretToken, $this->request->getVal( 'token' ) ) ) {
+		if ( !Wikia\Security\Utils::matchToken( $this->wg->TheSchwartzSecretToken, $this->request->getVal( 'token' ) ) ) {
 			throw new BadRequestException( 'This request must provide a valid token' );
 		}
+
+		// Disable email notifications for this request
+		$this->wg->DisableOldStyleEmail = true;
 
 		$type = $this->request->getVal( 'type' );
 		$action = $this->request->getVal( 'action' );
@@ -37,7 +38,7 @@ class LogEventsApiController extends WikiaApiController {
 
 		// exceptions thrown by addEntry() will be handled by Nirvana API dispatcher
 		$entry = new LogPage( $type );
-		$id = $entry->addEntry( $action, $wgTitle, $comment, $params, $wgUser );
+		$id = $entry->addEntry( $action, $this->wg->Title, $comment, $params, $this->wg->User );
 
 		$this->response->setCode( WikiaResponse::RESPONSE_CODE_CREATED );
 		$this->response->setData( [ 'id' => $id ] );

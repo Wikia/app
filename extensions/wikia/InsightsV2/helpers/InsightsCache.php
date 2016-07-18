@@ -80,14 +80,14 @@ class InsightsCache {
 	private function updateSortingCache( $articleId ) {
 		$sorting = InsightsSorting::getSortingTypes();
 
-		foreach ( $sorting as $key => $item ) {
-			$sortingArray = $this->get( $key );
+		foreach ( $sorting as $type => $item ) {
+			$sortingArray = $this->get( $type );
 			if ( is_array( $sortingArray ) ) {
 				$key = array_search( $articleId, $sortingArray );
 
 				if ( $key !== false && $key !== null ) {
 					unset( $sortingArray[$key] );
-					$this->set( $key, $sortingArray );
+					$this->set( $type, $sortingArray );
 				}
 			}
 		}

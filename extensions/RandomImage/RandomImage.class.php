@@ -217,7 +217,7 @@ class RandomImage {
 	/**
 	 * Get various options for database selection
 	 *
-	 * @param Database $dbr Database being queried
+	 * @param DatabaseBase $dbr Database being queried
 	 * @return array
 	 */
 	protected function getExtraSelectOptions( $dbr ) {

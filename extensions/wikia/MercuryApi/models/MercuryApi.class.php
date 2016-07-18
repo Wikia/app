@@ -111,7 +111,7 @@ class MercuryApi {
 
 		return [
 			'cacheBuster' => (int)$wgCacheBuster,
-			'contentNamespaces' => $wgContentNamespaces,
+			'contentNamespaces' => array_values( $wgContentNamespaces ),
 			'dbName' => $wgDBname,
 			'defaultSkin' => $wgDefaultSkin,
 			'disableAnonymousEditing' => $wgDisableAnonymousEditing,
@@ -143,6 +143,7 @@ class MercuryApi {
 				],
 				'nielsen' => [
 					'enabled' => AnalyticsProviderNielsen::isEnabled(),
+					'apid' => AnalyticsProviderNielsen::getApid()
 				]
 			],
 			'wikiCategories' => WikiFactoryHub::getInstance()->getWikiCategoryNames( $wgCityId ),
@@ -281,12 +282,8 @@ class MercuryApi {
 	 * @return array|null Article Ad context
 	 */
 	public function getAdsContext( Title $title ) {
-		global $wgEnableAdEngineExt;
-		if ( !empty( $wgEnableAdEngineExt ) ) {
-			$adContext = new AdEngine2ContextService();
-			return $adContext->getContext( $title, self::MERCURY_SKIN_NAME );
-		}
-		return null;
+		$adContext = new AdEngine2ContextService();
+		return $adContext->getContext( $title, self::MERCURY_SKIN_NAME );
 	}
 
 	/**

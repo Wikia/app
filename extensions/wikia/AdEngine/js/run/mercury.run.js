@@ -1,5 +1,6 @@
 /*global require*/
 require([
+	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.lookup.amazonMatch',
 	'ext.wikia.adEngine.lookup.openXBidder',
 	'ext.wikia.adEngine.lookup.prebid',
@@ -8,10 +9,12 @@ require([
 	'ext.wikia.adEngine.messageListener',
 	'ext.wikia.adEngine.mobile.mercuryListener',
 	'ext.wikia.adEngine.slot.scrollHandler',
+	'ext.wikia.adEngine.provider.yavliTag',
 	'wikia.geo',
 	'wikia.instantGlobals',
 	'wikia.window'
 ], function (
+	adContext,
 	amazon,
 	oxBidder,
 	prebid,
@@ -20,6 +23,7 @@ require([
 	messageListener,
 	mercuryListener,
 	scrollHandler,
+	yavliTag,
 	geo,
 	instantGlobals,
 	win
@@ -40,9 +44,15 @@ require([
 		if (geo.isProperGeo(instantGlobals.wgAdDriverRubiconFastlaneCountries)) {
 			rubiconFastlane.call();
 		}
+
 		if (geo.isProperGeo(instantGlobals.wgAdDriverOpenXBidderCountriesMobile)) {
 			oxBidder.call();
 		}
+
 		prebid.call();
+
+		if (adContext.getContext().opts.yavli) {
+			yavliTag.add();
+		}
 	});
 });

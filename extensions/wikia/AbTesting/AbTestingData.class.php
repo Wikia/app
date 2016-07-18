@@ -121,7 +121,6 @@ class AbTestingData extends WikiaObject {
 		// don't race with replication lag
 		$db_type = $use_master ? DB_MASTER : DB_SLAVE;
 
-		/** @var $dbr DatabaseMysql */
 		$dbr = $this->getDb( $db_type );
 		$res = $dbr->select(
 			array( // tables

@@ -38,8 +38,8 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 		$mock->method( 'getMonetizationUnits' )->willReturn( ['below_category' => 'testing'] );
 		$mock->method( 'getWikiVertical' )->willReturn( 'other' );
 		$mock->method( 'getCacheVersion' )->willReturn( 'v1' );
+		$mock->method( 'canShowModule' )->willReturn( true );
 		$this->mockClass( $name, $mock );
-		$this->mockStaticMethod( $name, 'canShowModule', true );
 	}
 
 	public function adContextDataProvider() {
@@ -93,13 +93,6 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 			],
 			[
 				'titleMockType' => 'article',
-				'flags' => ['wgAdDriverUseSevenOneMedia'],
-				'expectedOpts' => [],
-				'expectedTargeting' => [ 'newWikiCategories' => [ 'test' ] ],
-				'expectedProviders' => ['sevenOneMedia' => true]
-			],
-			[
-				'titleMockType' => 'article',
 				'flags' => ['wgAdDriverWikiIsTop1000'],
 				'expectedOpts' => [],
 				'expectedTargeting' => [ 'newWikiCategories' => [ 'test' ], 'wikiIsTop1000' => true ]
@@ -149,7 +142,6 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 				'expectedOpts' => [],
 				'expectedTargeting' => [
 					'newWikiCategories' => [ 'test' ],
-					'wikiDirectedAtChildren' => true,
 					'esrbRating' => 'ec'
 				]
 			],
@@ -159,7 +151,6 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 				'expectedOpts' => [],
 				'expectedTargeting' => [
 					'newWikiCategories' => [ 'test' ],
-					'wikiDirectedAtChildren' => true,
 					'esrbRating' => 'ec'
 				]
 			],
@@ -270,10 +261,7 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 		$customDartKvs = 'a=b;c=d';
 		$catId = WikiFactoryHub::CATEGORY_ID_LIFESTYLE;
 		$shortCat = 'shortcat';
-		$sevenOneMediaSub2Site = 'customsub2site';
-		$expectedSevenOneMediaUrlFormat = 'http://%s/__load/-/cb%3D%d%26debug%3Dfalse%26lang%3D%s%26only%3Dscripts%26skin%3Doasis/wikia.ext.adengine.sevenonemedia';
-		$expectedSourcePointDetectionUrlFormat = 'http://%s/__load/-/cb%3D%d%26debug%3Dfalse%26lang%3D%s%26only%3Dscripts%26skin%3Doasis/wikia.ext.adengine.sp.detection';
-		$expectedSourcePointRecoveryUrlFormat = 'http://%s/__load/-/cb%3D%d%26debug%3Dfalse%26lang%3D%s%26only%3Dscripts%26skin%3Doasis/wikia.ext.adengine.sp.recovery';
+		$expectedAdEngineResourceURLFormat = 'http://%s/__load/-/cb%3D%d%26debug%3Dfalse%26lang%3D%s%26only%3Dscripts%26skin%3Doasis/%s';
 
 		if ( $titleMockType === 'article' || $titleMockType === 'mainpage' ) {
 			$expectedTargeting['pageArticleId'] = $artId;
@@ -284,7 +272,6 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 		$this->mockGlobalVariable( 'wgCityId', $cityId );
 		$this->mockGlobalVariable( 'wgDartCustomKeyValues', $customDartKvs );
 		$this->mockGlobalVariable( 'wgDBname', $dbName );
-		$this->mockGlobalVariable( 'wgAdDriverSevenOneMediaOverrideSub2Site', $sevenOneMediaSub2Site );
 
 		if ( !is_null( $expectedForcedProvider ) ) {
 			$this->mockGlobalVariable( 'wgAdDriverForcedProvider', $expectedForcedProvider );
@@ -295,7 +282,6 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 		$this->mockGlobalVariable( 'wgAdDriverEnableInvisibleHighImpactSlot', false );
 		$this->mockGlobalVariable( 'wgAdDriverTrackState', false );
 		$this->mockGlobalVariable( 'wgAdDriverUseMonetizationService', false );
-		$this->mockGlobalVariable( 'wgAdDriverUseSevenOneMedia', false );
 		$this->mockGlobalVariable( 'wgEnableAdsInContent', false );
 		$this->mockGlobalVariable( 'wgEnableKruxTargeting', false );
 		$this->mockGlobalVariable( 'wgEnableMonetizationModuleExt', false );
@@ -357,12 +343,12 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 			'opts' => [
 				'pageType' => 'all_ads',
 				'showAds' => true,
+				'delayBtf' => true
 			],
 			'targeting' => [
 				'esrbRating' => 'teen',
 				'pageName' => $artDbKey,
 				'pageType' => 'article',
-				'sevenOneMediaSub2Site' => $sevenOneMediaSub2Site,
 				'skin' => $skinName,
 				'wikiCategory' => $shortCat,
 				'wikiCustomKeyValues' => $customDartKvs,
@@ -400,18 +386,10 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 		}
 
 		// Check for SourcePoint URL
-		if ( $skinName === 'oasis' ) {
-			$this->assertStringMatchesFormat( $expectedSourcePointRecoveryUrlFormat, $result['opts']['sourcePointRecoveryUrl'] );
-			unset( $result['opts']['sourcePointRecoveryUrl'] );
-		}
-		$this->assertStringMatchesFormat( $expectedSourcePointDetectionUrlFormat, $result['opts']['sourcePointDetectionUrl'] );
+		$this->assertStringMatchesFormat( $expectedAdEngineResourceURLFormat, $result['opts']['sourcePointDetectionUrl'] );
 		unset( $result['opts']['sourcePointDetectionUrl'] );
 
-		// Extra check for SevenOne Media URL
-		if ( isset( $expectedProviders['sevenOneMedia'] ) ) {
-			$this->assertStringMatchesFormat( $expectedSevenOneMediaUrlFormat, $result['providers']['sevenOneMediaCombinedUrl'] );
-			unset( $result['providers']['sevenOneMediaCombinedUrl'] );
-		}
+		$expected['providers']['rubiconFastlane'] = true;
 
 		// Extra check for Monetization Service
 		if ( isset( $expectedProviders['monetizationService'] ) ) {
@@ -419,6 +397,10 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 			$this->assertNotEmpty( $result['providers']['monetizationServiceAds'] );
 			unset( $result['providers']['monetizationServiceAds'] );
 		}
+
+		// Check Yavli URL format
+		$this->assertStringMatchesFormat( $expectedAdEngineResourceURLFormat, $result['opts']['yavliUrl'] );
+		unset( $result['opts']['yavliUrl'] );
 
 		$this->assertEquals( $expected, $result );
 	}

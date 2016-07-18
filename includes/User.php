@@ -1356,7 +1356,7 @@ class User {
 	 *                    done against master.
 	 * @param $shouldLogBlockInStats Bool flag that decides whether to log or not in PhalanxStats
 	 */
-	private function getBlockedStatus( $bFromSlave = true, $shouldLogBlockInStats = true ) {
+	private function getBlockedStatus( $bFromSlave = true, $shouldLogBlockInStats = true, $global = true ) {
 	/* Wikia change end */
 		global $wgProxyWhitelist, $wgUser;
 
@@ -1419,7 +1419,7 @@ class User {
 
 		# Extensions
 		/* Wikia change begin - SUS-92 */
-		wfRunHooks( 'GetBlockedStatus', array( &$this, $shouldLogBlockInStats ) );
+		wfRunHooks( 'GetBlockedStatus', array( &$this, $shouldLogBlockInStats, $global ) );
 		/* Wikia change end */
 
 		if ( !empty($this->mBlockedby) ) {
@@ -1656,8 +1656,9 @@ class User {
 	 *
 	 * @return Bool True if blocked, false otherwise
 	 */
-	public function isBlocked( $bFromSlave = true, $shouldLogBlockInStats = true ) { // hacked from false due to horrible probs on site
-		return $this->getBlock( $bFromSlave, $shouldLogBlockInStats ) instanceof Block && $this->getBlock()->prevents( 'edit' );
+	public function isBlocked( $bFromSlave = true, $shouldLogBlockInStats = true, $global = true ) { // hacked from false due to horrible probs on site
+		$block = $this->getBlock( $bFromSlave, $shouldLogBlockInStats, $global );
+		return $block instanceof Block && $block->prevents( 'edit' );
 	}
 
 	/**
@@ -1668,8 +1669,8 @@ class User {
 	 *
 	 * @return Block|null
 	 */
-	public function getBlock( $bFromSlave = true, $shouldLogBlockInStats = true ){
-		$this->getBlockedStatus( $bFromSlave, $shouldLogBlockInStats );
+	public function getBlock( $bFromSlave = true, $shouldLogBlockInStats = true, $global = true ){
+		$this->getBlockedStatus( $bFromSlave, $shouldLogBlockInStats, $global );
 		return $this->mBlock instanceof Block ? $this->mBlock : null;
 	}
 	/* Wikia change end */
@@ -2055,6 +2056,13 @@ class User {
 	 * for reload on the next hit.
 	 */
 	public function invalidateCache() {
+		#<Wikia>
+		global $wgLogUserInvalidateCache;
+		if ( !empty( $wgLogUserInvalidateCache ) ) {
+			$e = new Exception;
+			$this->error( 'SUS-546', [ 'traceBack' => $e->getTraceAsString() ] );
+		}
+		#</Wikia>
 		if( wfReadOnly() ) {
 			return;
 		}
@@ -2894,7 +2902,7 @@ class User {
 	 * @return Bool
 	 */
 	public function isLoggedIn() {
-		return $this->getID() != 0;
+		return $this->getId() != 0;
 	}
 
 	/**
@@ -3203,6 +3211,7 @@ class User {
 		$this->clearInstanceCache( 'defaults' );
 
 		$this->getRequest()->setSessionData( 'wsUserID', 0 );
+		$this->getRequest()->setSessionData( 'wsEditToken', null );
 
 		$this->clearCookie( 'UserID' );
 		$this->clearCookie( 'Token' );
@@ -3213,6 +3222,8 @@ class User {
 		$this->getRequest()->setSessionData( 'wsUserName', null );
 		$this->clearCookie( 'UserName' );
 		// Wikia change - end
+
+		wfResetSessionID();
 
 		# Remember when user logged out, to prevent seeing cached pages
 		$this->setCookie( 'LoggedOut', wfTimestampNow(), time() + 86400 );
@@ -3340,8 +3351,6 @@ class User {
 			global $wgMemc;
 			$wgMemc->incr( wfSharedMemcKey( "registered-users-number" ) );
 
-			wfRunHooks( 'CreateNewUserComplete', [ &$newUser ] );
-
 		} else {
 			$newUser = null;
 		}
@@ -3373,8 +3382,6 @@ class User {
 			), __METHOD__
 		);
 		$this->mId = $dbw->insertId();
-
-		wfRunHooks( 'AddUserToDatabaseComplete', [ &$this ] );
 
 		// Clear instance cache other than user table data, which is already accurate
 		$this->clearInstanceCache();
@@ -4015,7 +4022,6 @@ class User {
 		$this->mEmailToken = null;
 		$this->mEmailTokenExpires = null;
 		$this->setEmailAuthenticationTimestamp( null );
-		wfRunHooks( 'InvalidateEmailComplete', array( $this ) );
 		return true;
 	}
 
@@ -4136,7 +4142,7 @@ class User {
 	 * Will have no effect for anonymous users.
 	 */
 	public function incEditCount() {
-		global $wgMemc, $wgCityId, $wgEnableEditCountLocal;
+		global $wgEnableEditCountLocal;
 		if( !$this->isAnon() ) {
 			// wikia change, load always from first cluster when we use
 			// shared users database
@@ -4456,7 +4462,7 @@ class User {
 				->run($dbw);
 		}
 
-		$dbw->upsert('user_properties', $insertRows, [], self::$PROPERTY_UPSERT_SET_BLOCK);
+		$dbw->upsert('user_properties', $insertRows, [], self::$PROPERTY_UPSERT_SET_BLOCK, __METHOD__);
 
 		if ( $extuser ) {
 			$extuser->updateUser();

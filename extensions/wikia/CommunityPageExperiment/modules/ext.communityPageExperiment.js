@@ -28,15 +28,14 @@ require([
 		// Hack to always use the new auth modal
 		win.wgEnableNewAuthModal = true;
 
-		require(['AuthModal'], function (authModal) {
-			authModal.load({
-				url: event.currentTarget.href,
-				origin: 'community-page',
-				onAuthSuccess: function () {
-					cache.set('communityPageSignedUp', true, cache.CACHE_LONG);
-					win.location.reload();
-				}
-			});
+		win.wikiaAuthModal.load({
+			forceLogin: true,
+			url: event.currentTarget.href,
+			origin: 'community-page',
+			onAuthSuccess: function () {
+				cache.set('communityPageSignedUp', true, cache.CACHE_LONG);
+				win.location.reload();
+			}
 		});
 	}
 

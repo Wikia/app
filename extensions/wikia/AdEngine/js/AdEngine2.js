@@ -118,14 +118,17 @@ define('ext.wikia.adEngine.adEngine', [
 				slot = createSlot(queuedSlot, container, {
 					success: function (adInfo) {
 						log(['success', provider.name, slotName, adInfo], 'debug', logGroup);
+						slotTweaker.show(slotName);
 						tracker.track('success', adInfo);
 					},
 					collapse: function (adInfo) {
 						log(['collapse', provider.name, slotName, adInfo], 'debug', logGroup);
+						slotTweaker.hide(slotName);
 						tracker.track('collapse', adInfo);
 					},
 					hop: function (adInfo) {
 						log(['hop', provider.name, slotName, adInfo], 'debug', logGroup);
+						slotTweaker.hide(container.id);
 						tracker.track('hop', adInfo);
 						nextProvider();
 					}
@@ -144,8 +147,6 @@ define('ext.wikia.adEngine.adEngine', [
 
 			var slotName = slot.slotName,
 				providerList = adConfig.getProviderList(slotName).slice(); // Get a copy of the array
-
-			slotTweaker.show(slotName);
 
 			log(['fillInSlot', slot, 'provider list', JSON.stringify(providerList)], 'debug', logGroup);
 
@@ -189,7 +190,7 @@ define('ext.wikia.adEngine.adEngine', [
 		log(['run', 'initializing lazyQueue on the queue'], 'debug', logGroup);
 		lazyQueue.makeQueue(adslots, decorate(fillInSlot, decorators));
 
-		log(['run', 'launching queue on adslots'], 'debug', logGroup);
+		log(['run', 'launching queue on adslots ('+adslots.length+')'], 'debug', logGroup);
 		adslots.start();
 
 		log(['run', 'initial queue handled'], 'debug', logGroup);

@@ -82,9 +82,7 @@
 	<?php
 		echo F::app()->renderView('Ad', 'Index', ['slotName' => 'GPT_FLUSH', 'pageTypes' => ['*']]);
 		echo F::app()->renderView('Ad', 'Index', ['slotName' => 'EVOLVE_FLUSH', 'pageTypes' => ['*']]);
-		echo F::app()->renderView('Ad', 'Index', ['slotName' => 'HITMEDIA_FLUSH', 'pageTypes' => ['*']]);
 		echo F::app()->renderView('Ad', 'Index', ['slotName' => 'TURTLE_FLUSH', 'pageTypes' => ['*']]);
-		echo F::app()->renderView('Ad', 'Index', ['slotName' => 'SEVENONEMEDIA_FLUSH', 'pageTypes' => ['*']]);
 	?>
 </div>
 <? if( $jsAtBottom ): ?>
@@ -101,9 +99,7 @@
 <? endif ?>
 
 <script type="text/javascript">/*<![CDATA[*/ Wikia.LazyQueue.makeQueue(wgAfterContentAndJS, function(fn) {fn();}); wgAfterContentAndJS.start(); /*]]>*/</script>
-<?php if ($wg->EnableAdEngineExt) { ?>
 <script type="text/javascript">/*<![CDATA[*/ if (typeof AdEngine_trackPageInteractive === 'function') {wgAfterContentAndJS.push(AdEngine_trackPageInteractive);} /*]]>*/</script>
-<?php } ?>
 <?= $bottomScripts ?>
 
 <?= $nielsen ?>

@@ -170,6 +170,15 @@ describe('Method ext.wikia.adEngine.provider.gpt.adDetect.onAdLoad', function ()
 		adDriver2ForcedStatus: { FORCED_SLOT_NAME: 'hop' }
 	}, 'success');
 
+	desktop('out of page ad', 'SLOT_NAME', {
+		isEmpty: false,
+		slot: {
+			getOutOfPage: function () {
+				return true;
+			}
+		}
+	}, {}, 'success');
+
 	// Mobile
 	mobile('regular ad', 'SLOT_NAME', { isEmpty: false, size: [320, 50] }, 50, false, 'success');
 	mobile('regular ad', 'MOBILE_TOP_LEADERBOARD', { isEmpty: false, size: [320, 50] }, 50, false, 'success');

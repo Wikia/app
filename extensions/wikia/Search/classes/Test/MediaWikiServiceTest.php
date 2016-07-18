@@ -940,7 +940,7 @@ class MediaWikiServiceTest extends BaseTest
 	public function testGetRedirectTitlesForPageID() {
 		$service = $this->service->setMethods( array( 'getTitleFromPageId' ) )->getMock();
 
-		$mockDbr = $this->getMockBuilder( '\DatabaseMysql' )
+		$mockDbr = $this->getMockBuilder( '\DatabaseMysqli' )
 		                ->disableOriginalConstructor()
 		                ->setMethods( array( 'select', 'fetchObject' ) )
 		                ->getMock();
@@ -3095,7 +3095,7 @@ class MediaWikiServiceTest extends BaseTest
 	public function testGetDomainsForWikiId() {
 		$mws = $this->getMock( 'Wikia\Search\MediaWikiService', [ 'getGlobal', 'getWikiId' ] );
 
-		$mockDbr = $this->getMockBuilder( '\DatabaseMysql' )
+		$mockDbr = $this->getMockBuilder( '\DatabaseMysqli' )
 		                ->disableOriginalConstructor()
 		                ->setMethods( array( 'select', 'fetchObject' ) )
 		                ->getMock();

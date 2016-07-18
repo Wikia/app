@@ -42,7 +42,6 @@ class AdEngine2PageTypeService {
 			|| $this->wg->Request->getBool( 'noexternals', $this->wg->NoExternals )
 			|| $this->wg->Request->getBool( 'noads', false )
 			|| $this->wg->ShowAds === false
-			|| $this->wg->EnableAdEngineExt === false
 			|| !$this->app->checkSkin( [ 'oasis', 'wikiamobile' ] )
 		) {
 			$pageLevel = self::PAGE_TYPE_NO_ADS;

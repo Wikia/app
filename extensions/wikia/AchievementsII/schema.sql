@@ -69,13 +69,11 @@ CREATE TABLE IF NOT EXISTS `ach_custom_badges` (
 
 DROP TABLE IF EXISTS `ach_ranking_snapshots`;
 CREATE TABLE `ach_ranking_snapshots` (
-	`wiki_id` INT( 9 ) NOT NULL ,
-	`date` DATETIME NOT NULL ,
-	`data` TEXT NOT NULL ,
-	UNIQUE (
-	`wiki_id`
-)
-) ENGINE = INNODB CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+  `wiki_id` int(9) NOT NULL,
+  `date` datetime NOT NULL,
+  `data` text COLLATE utf8_unicode_ci NOT NULL,
+  UNIQUE KEY `wiki_id` (`wiki_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 /*
 ALTER TABLE ach_custom_badges

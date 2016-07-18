@@ -29,19 +29,3 @@ $digitTransformTable = array(
 	',' => '٬', # &#x066c;
 );
 
-$messages = array(
-# Dates
-'january' => 'کانوونی دووەم',
-
-# Categories related messages
-'hidden-category-category' => 'هاوپۆلە شاردراوەکان',
-
-'talkpagelinktext' => 'لێدوان',
-
-# All link text and link target definitions of links into project namespace that get used by other message strings, with the exception of user group pages (see grouppage) and the disambiguation template definition (see disambiguations).
-'aboutsite' => 'دەربارەی {{SITENAME}}',
-'mainpage'  => 'دەستپێک',
-
-'red-link-title' => '$1 (پەڕە بوونی نییە)',
-
-);

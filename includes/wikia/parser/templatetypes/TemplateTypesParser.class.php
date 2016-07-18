@@ -63,8 +63,10 @@ class TemplateTypesParser {
 		global $wgEnableNavigationTemplateParsing;
 		wfProfileIn( __METHOD__ );
 
-		if ( self::shouldTemplateBeParsed() && $wgEnableNavigationTemplateParsing ) {
-			NavigationTemplate::resolve( $html );
+		if ( self::shouldTemplateBeParsed() ) {
+			if ( $wgEnableNavigationTemplateParsing ) {
+				NavigationTemplate::resolve( $html );
+			}
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -114,10 +116,14 @@ class TemplateTypesParser {
 	 * @return bool
 	 */
 	public static function onEndBraceSubstitution( $templateTitle, &$templateWikitext, &$parser ) {
-		global $wgEnableContextLinkTemplateParsing, $wgEnableInfoIconTemplateParsing;
+		global $wgEnableContextLinkTemplateParsing, $wgEnableInfoIconTemplateParsing, $wgEnableNavigationTemplateParsing;
 		wfProfileIn( __METHOD__ );
 
-		if ( self::isSuitableForProcessing( $templateWikitext ) ) {
+		if ( self::isSuitableForProcessing( $templateWikitext ) &&
+			 ( $wgEnableContextLinkTemplateParsing ||
+			   $wgEnableInfoIconTemplateParsing ||
+			   $wgEnableNavigationTemplateParsing )
+		) {
 			$title = self::getValidTemplateTitle( $templateTitle );
 
 			if ( $title ) {
@@ -126,6 +132,8 @@ class TemplateTypesParser {
 					$templateWikitext = ContextLinkTemplate::handle( $templateWikitext );
 				} elseif ( $wgEnableInfoIconTemplateParsing && $type == TemplateClassificationService::TEMPLATE_INFOICON ) {
 					$templateWikitext = InfoIconTemplate::handle( $templateWikitext, $parser );
+				} elseif ( $wgEnableNavigationTemplateParsing && $type == TemplateClassificationService::TEMPLATE_NAV ) {
+					$templateWikitext = NavigationTemplate::removeInnerMarks( $templateWikitext );
 				}
 			}
 		}

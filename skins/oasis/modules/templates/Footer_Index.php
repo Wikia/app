@@ -1,4 +1,5 @@
 <footer id="WikiaFooter" class="WikiaFooter <?= $showToolbar ? '' : 'notoolbar' ?>">
+	<?= F::app()->renderView('Ad', 'Index', ['slotName' => 'BOTTOM_LEADERBOARD', 'pageTypes' => ['homepage_logged', 'corporate', 'search', 'all_ads'], 'addToAdQueue' => false]); ?>
 	<?php if( $showToolbar ): ?>
 		<div class="toolbar">
 			<?= F::app()->renderView('Notifications', 'Index'); ?>

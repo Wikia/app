@@ -7,6 +7,7 @@ use Wikia\Logger\Loggable;
 use Wikia\Persistence\User\Attributes\AttributePersistence;
 use Wikia\Util\WikiaProfiler;
 use Wikia\Service\User\Attributes;
+use Wikia\Service\PersistenceException;
 
 class AttributeKeyValueService implements AttributeService {
 
@@ -43,11 +44,11 @@ class AttributeKeyValueService implements AttributeService {
 			$profilerStart = $this->startProfile();
 			$ret = $this->persistenceAdapter->saveAttribute( $userId, $attribute );
 			$this->endProfile( AttributeKeyValueService::PROFILE_EVENT, $profilerStart,
-				[ 'user_id' => $userId, 'method' => 'saveAttribute' ] );
+				[ 'user_id' => intval($userId), 'method' => 'saveAttribute' ] );
 
 			return $ret;
 		} catch ( \Exception $e ) {
-			$this->logError( $userId, $e, "USER_ATTRIBUTES error saving to service" );
+			$this->logException( $userId, $e, "USER_ATTRIBUTES failure saving to service" );
 			return false;
 		}
 	}
@@ -66,7 +67,7 @@ class AttributeKeyValueService implements AttributeService {
 		try {
 			$attributeArray = $this->persistenceAdapter->getAttributes( $userId );
 		} catch ( \Exception $e ) {
-			$this->logError( $userId, $e, "USER_ATTRIBUTES error getting from service" );
+			$this->logException( $userId, $e, "USER_ATTRIBUTES failure getting from service" );
 		}
 
 		return $attributeArray;
@@ -87,16 +88,29 @@ class AttributeKeyValueService implements AttributeService {
 			$ret = $this->persistenceAdapter->deleteAttribute( $userId, $attribute );
 			return $ret;
 		} catch ( \Exception $e ) {
-			$this->logError( $userId, $e, "USER_ATTRIBUTES error deleting from service" );
+			$this->logException( $userId, $e, "USER_ATTRIBUTES failure deleting from service" );
 			return false;
 		}
 	}
 
-	private function logError( $userId, \Exception $e, $msg ) {
-		$this->error( $msg , [
-			'user' => $userId,
-			'exception' => $e
-		] );
+	/**
+	 * Log any exceptions thrown when contacting the attribute service. There are 4 possible exceptions
+	 * which can be thrown, and which this method can expect to receive: PersistenceException, ForbiddenException,
+	 * NotFoundException, and UnauthorizedException. Log PersistenceExceptions at error level, and all others
+	 * at warning. PersistenceExceptions indicate a problem was encountered contacting the service, or that we received
+	 * an unexpected HTTP response like a 500. The other exceptions indicate a resources wasn't found, or that the
+	 * request was refused.
+	 * @param $userId
+	 * @param \Exception $e
+	 * @param $msg
+	 */
+	private function logException( $userId, \Exception $e, $msg ) {
+		$context = [ 'user' => $userId, 'exception' => $e ];
+		if ( $e instanceof PersistenceException ) {
+			$this->error( $msg, $context );
+		} else {
+			$this->warning( $msg, $context );
+		}
 	}
 
 	protected function getLoggerContext() {

@@ -16,22 +16,45 @@ class WikiaNewFilesModel extends WikiaModel {
 	}
 
 	/**
+	 * @return string
+	 */
+	private static function getImageCountKey() {
+		return wfMemcKey( __CLASS__, 'getImageCount' );
+	}
+
+	/**
 	 * Get the total number of images
 	 * @return int number of images on current page
 	 */
 	public function getImageCount() {
-		$sql = ( new WikiaSQL() )
-			->SELECT()
-			->COUNT( '*' )->AS_( 'count' )
-			->FROM( 'image' );
+		return WikiaDataAccess::cache( self::getImageCountKey(), WikiaResponse::CACHE_STANDARD, function() {
+			$sql = (new WikiaSQL())
+				->SELECT()
+				->COUNT('*')->AS_('count')
+				->FROM('image');
 
-		$this->filterImages( $sql );
+			$this->filterImages($sql);
 
-		$count = $sql->run( $this->dbr, function ( ResultWrapper $result ) {
-			return $result->current()->count;
-		} );
+			$count = $sql->run($this->dbr, function (ResultWrapper $result) {
+				return $result->current()->count;
+			});
 
-		return intval( $count );
+			return intval($count);
+		});
+	}
+
+	/**
+	 * Invalidate getImageCount cache on each image upload / delete / undelete
+	 *
+	 * Binds to UploadComplete, FileDeleteComplete and FileUndeleteComplete hooks
+	 *
+	 * @see PLATFORM-2227
+	 *
+	 * @return bool
+	 */
+	public static function onFileOperation() {
+		WikiaDataAccess::cachePurge( self::getImageCountKey() );
+		return true;
 	}
 
 	/**

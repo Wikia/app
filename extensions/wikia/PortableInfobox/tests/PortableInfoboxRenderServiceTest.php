@@ -24,8 +24,6 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 		$isValidHeroDataItem = isset( $input[ 'isValidHeroDataItem' ] ) && $input[ 'isValidHeroDataItem' ];
 		$isMobile = isset( $input[ 'isMobile' ] ) && $input[ 'isMobile' ];
 		$isMercury = isset( $input[ 'isMercury' ] ) && $input[ 'isMercury' ];
-		$isMercuryExperimentalMarkupEnabled = isset( $input[ 'isMercuryExperimentalMarkupEnabled' ] ) &&
-			$input[ 'isMercuryExperimentalMarkupEnabled' ];
 
 		$createHorizontalGroupData = isset( $input[ 'createHorizontalGroupData' ] ) ?
 			$input[ 'createHorizontalGroupData' ] : null;
@@ -47,9 +45,6 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 		$mock->expects( $this->any() )
 			->method( 'isMercury' )
 			->will( $this->returnValue( $isMercury ) );
-		$mock->expects( $this->any() )
-			->method( 'isMercuryExperimentalMarkupEnabled' )
-			->will( $this->returnValue( $isMercuryExperimentalMarkupEnabled ) );
 		$mock->expects( $this->any() )
 			->method( 'createHorizontalGroupData' )
 			->will( $this->returnValue( $createHorizontalGroupData ) );
@@ -641,91 +636,6 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 				],
 				'output' => '<aside class="portable-infobox pi-background">
 								<div class="pi-item pi-hero">
-									<img
-									src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D" data-src="http://image.jpg" class="pi-image-thumbnail lazy media article-media" alt="image alt"  data-image-key="test1" data-image-name="test1" data-ref="1" data-params=\'[{"name":"test1", "full":"http://image.jpg"}]\' />
-								</div>
-							</aside>',
-				'description' => 'Mercury: Only image. Image is not small- should render hero.',
-				'mockParams' => [
-					'isMobile' => true,
-					'isMercury' => true,
-					'isValidHeroDataItem' => true,
-					'extendImageData' => [
-						'alt' => 'image alt',
-						'url' => 'http://image.jpg',
-						'name' => 'test1',
-						'key' => 'test1',
-						'ref' => 1,
-						'width' => '400',
-						'height' => '200',
-						'thumbnail' => 'http://image.jpg',
-						'media-type' => 'image',
-						'isVideo' => false
-					]
-				]
-			],
-			[
-				'input' => [
-					[
-						'type' => 'title',
-						'data' => [
-							'value' => 'Test <img /><a href="example.com">Title</a>'
-						]
-					],
-					[
-						'type' => 'image',
-						'data' => [
-							'url' => 'http://image.jpg',
-							'name' => 'test1',
-							'key' => 'test1',
-							'ref' => 44,
-							'isVideo' => false
-						]
-					]
-				],
-				'output' => '<aside class="portable-infobox pi-background">
-								<div class="pi-item pi-hero">
-									<hgroup class="pi-hero-title-wrapper pi-item-spacing">
-										<h2 class="pi-hero-title">Test <a href="example.com">Title</a></h2>
-									</hgroup>
-									<img
-									src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D" data-src="thumbnail.jpg" class="pi-image-thumbnail lazy media article-media" alt="" data-image-key="test1" data-image-name="test1" data-ref="44" data-params=\'[{"name":"test1", "full":"http://image.jpg"}]\'/>
-								</div>
-							</aside>',
-				'description' => 'Mercury: Infobox with full hero module with title with HTML tags',
-				'mockParams' => [
-					'isValidHeroDataItem' => true,
-					'isMobile' => true,
-					'isMercury' => true,
-					'extendImageData' => [
-						'url' => 'http://image.jpg',
-						'name' => 'test1',
-						'key' => 'test1',
-						'ref' => 44,
-						'width' => '400',
-						'height' => '200',
-						'thumbnail' => 'thumbnail.jpg',
-						'isVideo' => false,
-						'media-type' => 'image'
-					]
-				]
-			],
-			[
-				'input' => [
-					[
-						'type' => 'image',
-						'data' => [
-							'alt' => 'image alt',
-							'url' => 'http://image.jpg',
-							'ref' => 1,
-							'name' => 'test1',
-							'key' => 'test1',
-							'isVideo' => false
-						]
-					]
-				],
-				'output' => '<aside class="portable-infobox pi-background">
-								<div class="pi-item pi-hero">
 									<figure data-component="portable-infobox-hero-image" data-attrs="{&quot;itemContext&quot;:&quot;portable-infobox&quot;,&quot;ref&quot;:1}">
 										<a href="http://image.jpg">
 											<img class="article-media-placeholder" src="data:image/svg+xml;charset=utf-8,%3Csvg xmlns%3D\'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg\' viewBox%3D\'0 0 400 200\'%2F%3E" alt="" width="400" height="200"/>
@@ -736,7 +646,7 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 									</figure>
 								</div>
 							</aside>',
-				'description' => 'Mercury experimental: Only image. Image is not small- should render hero.',
+				'description' => 'Mercury: Only image. Image is not small- should render hero.',
 				'mockParams' => [
 					'isMobile' => true,
 					'isMercury' => true,
@@ -794,7 +704,7 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 									</figure>
 								</div>
 							</aside>',
-				'description' => 'Mercury experimental: Infobox with full hero module with title with HTML tags',
+				'description' => 'Mercury: Infobox with full hero module with title with HTML tags',
 				'mockParams' => [
 					'isValidHeroDataItem' => true,
 					'isMobile' => true,

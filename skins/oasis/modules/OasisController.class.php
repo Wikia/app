@@ -174,7 +174,7 @@ class OasisController extends WikiaController {
 		wfProfileIn(__METHOD__ . ' - skin Operations');
 		// add skin theme name
 		if(!empty($skin->themename)) {
-			$bodyClasses[] = "oasis-{$skin->themename}";
+			$bodyClasses[] = Sanitizer::escapeClass( "oasis-{$skin->themename}" );
 		}
 
 		// mark dark themes
@@ -189,6 +189,9 @@ class OasisController extends WikiaController {
 
 		// sets background settings by adding classes to <body>
 		$bodyClasses = array_merge($bodyClasses, $this->getOasisBackgroundClasses($wgOasisThemeSettings));
+
+		// VOLDEV-168: Add a community-specific class to the body tag
+		$bodyClasses[] = $skin->getBodyClassForCommunity();
 
 		$this->bodyClasses = $bodyClasses;
 
@@ -304,7 +307,7 @@ class OasisController extends WikiaController {
 
 	// TODO: implement as a separate module?
 	private function loadJs() {
-		global $wgJsMimeType, $wgUser, $wgDevelEnvironment, $wgEnableAdEngineExt, $wgAllInOne;
+		global $wgJsMimeType, $wgUser, $wgDevelEnvironment, $wgAllInOne;
 		wfProfileIn(__METHOD__);
 
 		$this->jsAtBottom = self::JsAtBottom();
@@ -396,7 +399,7 @@ class OasisController extends WikiaController {
 			$this->jsFiles = $jsFiles;
 		}
 
-		if ($wgEnableAdEngineExt && AdEngine2Service::shouldLoadLiftium()) {
+		if (AdEngine2Service::shouldLoadLiftium()) {
 			$this->jsFiles = AdEngine2Controller::getLiftiumOptionsScript() . $this->jsFiles;
 		}
 

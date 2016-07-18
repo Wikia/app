@@ -1,0 +1,18 @@
+body #WikiaPage {
+	#NotExistingRule {
+		font-family: serif;
+	}
+
+	#WikiaPageHeader:after {
+		content: none;
+		display: none;
+	}
+
+	#WikiaArticle {
+		display: block;
+	}
+
+  	#WikiaArticleMsg {
+		display: none;
+  	}
+}

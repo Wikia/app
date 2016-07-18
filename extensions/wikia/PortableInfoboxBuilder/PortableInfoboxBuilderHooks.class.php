@@ -8,7 +8,7 @@ class PortableInfoboxBuilderHooks {
 	 *
 	 * @return true
 	 */
-	public function onTCAfterEditPageAssets() {
+	public static function onTCAfterEditPageAssets() {
 		\Wikia::addAssetsToOutput( 'portable_infobox_builder_template_classification_helper_js' );
 
 		return true;
@@ -39,7 +39,7 @@ class PortableInfoboxBuilderHooks {
 	 * @param array $aVars
 	 * @return bool
 	 */
-	public function onEditPageMakeGlobalVariablesScript( array &$aVars ) {
+	public static function onEditPageMakeGlobalVariablesScript( array &$aVars ) {
 		$context = \RequestContext::getMain();
 		$title = $context->getTitle();
 		if ( self::shouldPassInfoboxBuilderVars( $context ) ) {
@@ -60,7 +60,7 @@ class PortableInfoboxBuilderHooks {
 	 * @param array $aVars
 	 * @return bool
 	 */
-	public function onMakeGlobalVariablesScript( array &$aVars ) {
+	public static function onMakeGlobalVariablesScript( array &$aVars ) {
 		global $wgEnablePortableInfoboxBuilderInVE, $wgEnableVisualEditorExt;
 
 		if ( $wgEnableVisualEditorExt && \VisualEditorHooks::isAvailable( \RequestContext::getMain()->getSkin() ) ) {
@@ -98,7 +98,7 @@ class PortableInfoboxBuilderHooks {
 	 * @param $context
 	 * @return bool
 	 */
-	protected function shouldPassInfoboxBuilderVars( $context ) {
+	protected static function shouldPassInfoboxBuilderVars( $context ) {
 		return ( new \Wikia\TemplateClassification\Permissions() )->shouldDisplayEntryPoint( $context->getUser(), $context->getTitle() )
 			&& \RequestContext::getMain()->getRequest()->getVal( 'action' ) === 'edit'
 			&& !\PortableInfoboxBuilderHelper::isForcedSourceMode( $context->getRequest() );

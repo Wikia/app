@@ -1,0 +1,51 @@
+<p>{{langFilterLabel}}</p>
+<ul class="portability-dashboard-language-filter">
+	<li>
+		<a href="?{{langQSParam}}" title="{{langFilterLabel}}
+			{{allLangFilter}}" class="button{{#isLangFilterSet}} secondary{{/isLangFilterSet}}">
+			{{allLangFilter}}
+		</a>
+	</li>
+	{{#langList}}
+		<li>
+			<a href="?{{langQSParam}}={{lang}}" title="{{langFilterLabel}} {{lang}}" class="button{{^active}} secondary{{/active}}">
+				{{lang}}
+			</a>
+		</li>
+	{{/langList}}
+</ul>
+<p>{{dashboardLegend}}<br/>
+    {{refreshFreqInfo}}</p>
+<table class="wikitable portability-dashboard-table sortable">
+	<thead>
+		{{#dashboardLabels}}
+            <th>{{{header}}}</th>
+		{{/dashboardLabels}}
+	</thead>
+	<tbody>
+		{{#list}}
+			<tr>
+				<td>
+					<a href="{{wikiUrl}}" title="{{wikiTitle}}">
+						{{wikiTitle}}
+					</a>
+				</td>
+				<td>{{wikiLang}}</td>
+				<td>{{portability}} %</td>
+				<td>{{infoboxPortability}} %</td>
+				<td>{{traffic}}</td>
+				<td>
+					<a href="{{wikiUrl}}{{typelessTemplatesInsightsPath}}" title="{{templatesWithoutTypeUrlTitle}}">
+						{{typelessTemplatesCount}}
+					</a>
+				</td>
+				<td>
+					<a href="{{wikiUrl}}{{customInfoboxesInsightsPath}}" title="{{customInfoboxesInsightsUrlTitle}}">
+						{{customInfoboxesCount}}
+					</a>
+				</td>
+				<td>{{migrationImpact}}</td>
+			</tr>
+		{{/list}}
+	</tbody>
+</table>

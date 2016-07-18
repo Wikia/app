@@ -1,5 +1,8 @@
 <ul class="reset modal-nav">
-	<li class="modal-nav-all"><a href="#">{{allText}} ({{allCount}})</a></li>
-	<li class="modal-nav-admins"><a href="#">{{adminsText}} ({{adminsCount}})</a></li>
-	<li class="modal-nav-leaderboard"><a href="#">{{leaderboardText}}</a></li>
+	<li class="modal-nav-all">
+		<a data-tracking="modal-tab-all" id="modalTabAll" class="modal-tab-link" href="#">{{allText}} <span id="allCount">{{allMembersCount}}</span></a></li>
+	<li class="modal-nav-admins">
+		<a data-tracking="modal-tab-admins" id="modalTabAdmins" class="modal-tab-link" href="#">{{adminsText}} <span id="allAdminsCount">{{allAdminsCount}}</span></a></li>
+	<li class="modal-nav-leaderboard">
+		<a data-tracking="modal-tab-leaderboard" id="modalTabLeaderboard" class="modal-tab-link" href="#">{{leaderboardText}}</a></li>
 </ul>

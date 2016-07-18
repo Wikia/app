@@ -1,19 +1,34 @@
+// Generic colors
+$color-black: #000;
+$color-white: #fff;
+$color-red: #f00;
+
+// Default colors
 $color-links-default: #006CB0;
+$color-header-default: #3a5766;
+$color-body-default: #bacdd8;
 
 // Main Color Variables //
-$color-body: get_command_line_param("color-body", #BACDD8); // default: light blue
-$color-body-middle: get_command_line_param("color-body-middle", $color-body); // default: same as color-body
-$color-page: get_command_line_param("color-page", #FFF); // default: white
-$color-buttons: get_command_line_param("color-buttons", $color-links-default); // default: blue
-$color-links: get_command_line_param("color-links", $color-links-default); // default: blue
-$color-header: get_command_line_param("color-header", #3A5766); // default: blue
-$background-image: get_command_line_param("background-image", "http://images1.wikia.nocookie.net/__cb21710/common/skins/oasis/images/themes/oasis.png"); // TODO: USE THE wgCdnStylePath VAR INSTEAD OF HARDCODING.
-$page-opacity: get_command_line_param("page-opacity", 100) / 100;	// default: 1
+$color-body: get_command_line_param('color-body', $color-body-default);
+$color-body-middle: get_command_line_param('color-body-middle', $color-body); // default: same as color-body
+$color-page: get_command_line_param('color-page', $color-white); // default: white
+$color-buttons: get_command_line_param('color-buttons', $color-links-default); // default: blue
+$color-links: get_command_line_param('color-links', $color-links-default); // default: blue
+$color-header: get_command_line_param('color-header', $color-header-default);
+$background-image: get_command_line_param('background-image', 'http://images1.wikia.nocookie.net/__cb21710/common/skins/oasis/images/themes/oasis.png'); // TODO: USE THE wgCdnStylePath VAR INSTEAD OF HARDCODING.
+$page-opacity: get_command_line_param('page-opacity', 100) / 100;	// default: 1
+
+
+// Corporate colors
+$color-wikia-light-blue: #1a5eb8;
+$color-corporate-buttons: $color-wikia-light-blue;
+$color-corporate-button-highlight: lighten($color-corporate-buttons, 10%);
+$color-corporate-button-text: $color-white;
 
 // Verticals colors
 $color-wikiahome-videogames: #8ca038;
 $color-wikiahome-entertainment: #07b2e0;
-$color-wikiahome-lifestyle: #ff6600;
+$color-wikiahome-lifestyle: #f60;
 $color-wikiahome-community: #092140;
 $color-wikiahome-community-bright: #ff5400;
 $color-wikiahome-community-fawn: #ff7f26;
@@ -27,18 +42,14 @@ $color-wikiahome-community-dark: #141e24;
 
 $color-wikiahome-border-primary-brand-color: #c7d1d8;
 
-// Generic colors
-$color-black: #000;
-$color-white: #FFF;
-
 ////////// DO NOT CHANGE PER THEME - BASED ON ABOVE VALUES //////////
 // Mixing colors
 
 // Theme
-$sprite-theme: "dark";
+$sprite-theme: 'dark';
 $is-dark-wiki: false;
 @if lightness($color-page) < 50 {
-	$sprite-theme: "light";
+	$sprite-theme: 'light';
 	$is-dark-wiki: true;
 }
 
@@ -52,26 +63,26 @@ $color-text: $color-text-dark;
 }
 
 // Generic Error text color
-$color-text-error: mix(#ff0000, #d4d4d4, 75%);
+$color-text-error: mix($color-red, #d4d4d4, 75%);
 @if $is-dark-wiki {
-	$color-text-error: mix(#ff0000, #2b2b2b, 60%);
+	$color-text-error: mix($color-red, #2b2b2b, 60%);
 }
 
 // Opposite page color (use this as the mixing value to darken, lighten towards the opposite of page darkness)
-$color-page-opposite: #000;
+$color-page-opposite: $color-black;
 @if $is-dark-wiki {
-	$color-page-opposite: #fff;
+	$color-page-opposite: $color-white;
 }
 
 // Alternate text (used for secondary information, less important)
-$color-alternate-text: mix($color-page, #000000, 50%);
+$color-alternate-text: mix($color-page, $color-black, 50%);
 @if $is-dark-wiki {
-	$color-alternate-text: mix($color-page, #ffffff, 50%);
+	$color-alternate-text: mix($color-page, $color-white, 50%);
 }
 
 // GlobalHeader
-$color-header-alt: mix($color-header, #000, 25%);
-$color-header-text: white;
+$color-header-alt: mix($color-header, $color-black, 25%);
+$color-header-text: $color-white;
 @if lightness($color-header) > 75 {
 	$color-header-text: black;
 }
@@ -87,33 +98,33 @@ $color-tools-nav: mix($color-buttons, $color-page, 20%);
 // Rail modules now use solid colors, but there are still components that use the module highlight and shadow vars
 $color-module-background: $color-page;
 @if $is-dark-wiki {
-	$color-module-background: mix($color-page, #FFFFFF, 97%);
+	$color-module-background: mix($color-page, $color-white, 97%);
 }
 $color-module-highlight: lighten($color-page, 2%);
 $color-module-shadow: darken($color-page, 5%);
 
 // Page Borders
-$color-page-border: mix($color-page, #000000, 80%);
+$color-page-border: mix($color-page, $color-black, 80%);
 @if $is-dark-wiki {
-	$color-page-border: mix($color-page, #ffffff, 80%);
+	$color-page-border: mix($color-page, $color-white, 80%);
 }
 $color-page-border-subtle: mix($color-page-border, $color-page, 50%);
 
 
 $color-page-shadow: #333;
 @if $is-dark-wiki {
-	$color-page-shadow: #000;
+	$color-page-shadow: $color-black;
 }
 
 // Buttons
 $color-button-highlight: lighten($color-buttons, 10%);
-$color-button-text: white;
+$color-button-text: $color-white;
 @if lightness($color-buttons) > 55 {
-	$color-button-text: black;
+	$color-button-text: $color-black;
 }
-$color-secondary-button-highlight: mix($color-page, #FFFFFF, 94%);
-$color-secondary-button: mix($color-page, #000000, 90%);
-$color-secondary-button-border: mix($color-page, #000000, 80%);
+$color-secondary-button-highlight: mix($color-page, $color-white, 94%);
+$color-secondary-button: mix($color-page, $color-black, 90%);
+$color-secondary-button-border: mix($color-page, $color-black, 80%);
 
 @if lightness($color-page) < 50 {
 	$color-secondary-button-highlight: lighten($color-page, 8%);
@@ -170,7 +181,7 @@ $color-notification-details-background: darken($color-notification-background, 1
 $color-notification-details-text: $color-button-text;
 
 //Error handling
-$color-error: #FF3333;
+$color-error: #f33;
 
 //Diff and History pages
 $color-pagehistory: darken($color-page, 5%);
@@ -203,7 +214,7 @@ $color-vertical-music-secondary: #981093;
 $color-vertical-tv-secondary: #008cce;
 
 //Site modernizations (ticket CONCF-119) module background
-$color-unified-module-background: mix($color-page, black, 90%);
+$color-unified-module-background: mix($color-page, $color-black, 90%);
 @if $is-dark-wiki {
-	$color-unified-module-background: mix($color-page, white, 90%);
+	$color-unified-module-background: mix($color-page, $color-white, 90%);
 }

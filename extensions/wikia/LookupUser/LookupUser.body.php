@@ -407,7 +407,7 @@ EOT
 			return json_encode( [ 'success' => false ] );
 		}
 
-		$apiUrl = $wiki->city_url . 'api.php?action=query&list=users&ususers=' . urlencode( $userName ) . '&usprop=blockinfo|groups|editcount&format=json';
+		$apiUrl = $wiki->city_url . 'api.php?action=query&list=users&ususers=' . urlencode( $userName ) . '&usprop=localblockinfo|groups|editcount&format=json';
 
 		$cachedData = $wgMemc->get( LookupUserPage::getUserLookupMemcKey( $userName, $wikiId ) );
 		if ( !empty( $cachedData ) ) {

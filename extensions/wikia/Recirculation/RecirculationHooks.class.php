@@ -46,10 +46,17 @@ class RecirculationHooks {
 	 * @return bool
 	 */
 	public static function onOasisSkinAssetGroups( &$jsAssets ) {
+		global $wgWikiaEnvironment, $wgNoExternals, $wgRecirculationTestGroup, $wgCityId;
+
+		// We only want to track this on production
+		if ( ( $wgWikiaEnvironment === WIKIA_ENV_PROD ) && empty( $wgNoExternals ) && !empty( $wgRecirculationTestGroup ) ) {
+			$jsAssets[] = 'recirculation_trackers_js';
+		}
+
 		if ( self::isCorrectPageType() ) {
 			$jsAssets[] = 'recirculation_js';
 
-			if ( self::canShowDiscussions() ) {
+			if ( self::canShowDiscussions( $wgCityId ) ) {
 				$jsAssets[] = 'recirculation_discussions_js';
 			}
 		}
@@ -78,9 +85,11 @@ class RecirculationHooks {
 		}
 	}
 
-	static public function canShowDiscussions() {
-		$wg = F::app()->wg;
-		if ( !empty( $wg->EnableDiscussions ) && !empty( $wg->EnableRecirculationDiscussions ) ) {
+	static public function canShowDiscussions( $cityId ) {
+		$discussionsEnabled = WikiFactory::getVarValueByName( 'wgEnableDiscussions', $cityId );
+		$recirculationDiscussionsEnabled = WikiFactory::getVarValueByName( 'wgEnableRecirculationDiscussions', $cityId );
+
+		if ( !empty( $discussionsEnabled ) && !empty( $recirculationDiscussionsEnabled ) ) {
 			return true;
 		} else {
 			return false;

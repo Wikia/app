@@ -17,18 +17,14 @@ define('ext.wikia.recirculation.views.rail', [
 		data.titleHtml = options.formatTitle ? formatTitle(data.title) : data.title;
 		data.group = abTest.getGroup('RECIRCULATION_PLACEMENT');
 
-		data.items[0].flag = 'Featured';
-		data.items[0].classes = 'featured';
-
-		data.items[1].flag = 'Trending';
-		data.items[1].classes = 'trending';
+		data.items = utils.addUtmTracking(data.items, 'rail');
 
 		return utils.renderTemplate(options.template, data).then(function($html) {
 			if (options.before) {
 				$html = options.before($html);
 			}
 
-			$('#RECIRCULATION_RAIL').html($html).find('.timeago').timeago();
+			$('#RECIRCULATION_RAIL').html($html);
 
 			return $html;
 		});
@@ -41,12 +37,14 @@ define('ext.wikia.recirculation.views.rail', [
 			$html.on('mousedown', 'a', function() {
 				tracker.trackVerboseClick(experimentName, utils.buildLabel(this, 'rail'));
 			});
+
+			return $html;
 		}
 	}
 
-	// Add a line break after the first word in the title
+	// Format title for E3
 	function formatTitle(title) {
-		return title.replace(' ', '<br>');
+		return title;
 	}
 
 	return function(config) {

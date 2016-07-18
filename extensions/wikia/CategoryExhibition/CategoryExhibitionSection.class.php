@@ -1,80 +1,92 @@
 <?php
+use Wikia\Paginator\Paginator;
 
 /**
  * Main Category Gallery class
  */
-class CategoryExhibitionSection {
-	const CACHE_VERSION = 3;
-	const EXHIBITION_LIMIT = 2000;
+abstract class CategoryExhibitionSection {
+	const CACHE_VERSION = 105;
 
 	protected $thumbWidth = 130;
 	protected $thumbHeight = 115;
-	protected $thumbMedia = 130;		// width for media section
-	protected $displayOption = false;	// current state of display option
-	protected $sortOption = false;		// current state of sort option
+	protected $thumbMedia = 130;
 
-	protected $categoryExhibitionEnabled;
-	protected $allowedSortOptions = array( 'mostvisited', 'alphabetical' );
-	protected $allowedDisplayOptions = array( 'exhibition', 'page' );
+	protected $urlParams;
+	protected $cacheHelper;
+	protected $categoryTitle;
 
-	protected $verifyChecker = '';
-	public $urlParameter = 'section';	// contains section url variable that stores pagination
-	public $paginatorPosition = 1;		// default pagination
-	public $sUrl = '';
-	/* @var Title */
-	public $categoryTitle = false;		// title object of category
-	public $templateName = 'section';	// name of the section template
-	public $isFromAjax = false;		// true if request comes from ajax
+	protected $paginatorPosition;
+	protected $templateName = 'item-regular';
 
-	public function __construct( $oCategoryTitle ){
-
-		global $wgUser;
-
-		$this->categoryTitle = $oCategoryTitle;
-
-		if ( $wgUser->isAnon() && empty($oCategoryTitle) ){
-			$this->setDisplayTypeFromParam();
-			$this->setSortTypeFromParam();
-		}
-	}
+	// Need to set those four in generateSectionData:
+	/** @var string HTML ID for the section */
+	protected $sectionId = null;
+	/** @var Message message to display in the section header */
+	protected $headerMessage = null;
+	/** @var string[] the current page contents, one item at a time */
+	protected $items = [];
+	/** @var Paginator the paginator object */
+	protected $paginator = null;
 
 	/**
-	 * @return boolean
+	 * You need to override this method to generate the four members mentioned above
+	 * You should probably use generateData method to generate items and paginator
+	 * You can then override getTemplateVarsForItem to modify what variables are
+	 * passed to the item template. The file used may be changed by overriding $templateName
+	 *
+	 * @return void
 	 */
-	public function isCategoryExhibitionEnabled() {
-		if ( !isset( $this->categoryExhibitionEnabled ) ) {
-			$this->categoryExhibitionEnabled = false;
-			$oTmpArticle = new Article( $this->categoryTitle );
-			if ( !is_null( $oTmpArticle ) ) {
-				if ( $this->categoryTitle->isRedirect() ) {
-					$rdTitle = $oTmpArticle->getRedirectTarget();
-				} else {
-					$rdTitle = $this->categoryTitle;
-				}
+	abstract protected function generateSectionData();
 
-				if ( !is_null( $rdTitle ) && ( $rdTitle->getNamespace() == NS_CATEGORY ) ) {
-					$sCategoryDBKey = $rdTitle->getDBkey();
-					$this->categoryExhibitionEnabled =
-						CategoryDataService::getArticleCount( $sCategoryDBKey ) > self::EXHIBITION_LIMIT ? false : true;
-				}
-			}
-		}
-		return $this->categoryExhibitionEnabled;
+	public function __construct( Title $oCategoryTitle, CategoryUrlParams $urlParams = null ) {
+		$this->categoryTitle = $oCategoryTitle;
+		$this->urlParams = $urlParams;
+		$this->paginatorPosition = max( 1, $this->urlParams->getPage() );
+		$this->cacheHelper = new CategoryExhibitionCacheHelper();
+		$this->generateSectionData();
 	}
 
 	/**
-	 * fetchSectionItems - returns gets array of items from category from specyfic namespace.
-	 * @param $sCategoryDBKey int category namespace
-	 * @param $mNamespace mixed: int namespace or array of int for category query
+	 * Main read interface of the class
+	 * Returns an array of the data needed to render the section-wrapper template.
+	 * The same response is returned to AJAX-based paginator
+	 *
 	 * @return array
 	 */
+	public function getTemplateVars() {
+		$vars = [
+			'sectionId' => $this->sectionId,
+			'headerMessage' => $this->headerMessage,
+			'items' => join( PHP_EOL, $this->items ),
+			'paginator' => '',
+		];
 
-	protected function fetchSectionItems( $mNamespace = NS_MAIN, $negative = false ) {
+		if ( $this->paginator ) {
+			$vars['paginator'] = $this->paginator->getBarHTML();
+		}
 
+		return $vars;
+	}
+
+	/**
+	 * @return Paginator|null
+	 */
+	public function getPaginator() {
+		return $this->paginator;
+	}
+
+	/**
+	 * Wrapper around CategoryDataService
+	 * TODO: merge with getDataFromDataService
+	 * @param $mNamespace mixed: int namespace or array of int for category query
+	 * @param $exclude boolean: false = only include given namespaces, true = exclude given namespaces
+	 * @return array
+	 */
+	private function fetchDataFromService( $mNamespace, $exclude, $sortType ) {
 		$sCategoryDBKey = $this->categoryTitle->getDBkey();
 
 		// Check if page is a redirect
-		if( $this->categoryTitle->isRedirect() ){
+		if ( $this->categoryTitle->isRedirect() ) {
 			/* @var WikiPage $oTmpArticle */
 			$oTmpArticle = new Article( $this->categoryTitle );
 			if ( !is_null( $oTmpArticle ) ) {
@@ -84,193 +96,87 @@ class CategoryExhibitionSection {
 				}
 			}
 		}
-		if (!is_array($mNamespace)){
-			$ns = (int)$mNamespace;
+		if ( !is_array( $mNamespace ) ) {
+			$ns = (int) $mNamespace;
 		} else {
-			$ns = implode(',', $mNamespace);
+			$ns = implode( ',', $mNamespace );
 		}
 
-		switch ( $this->getSortType() ){
-			case 'mostvisited':
-				if ( !is_array( $mNamespace ) ) {
-					$mNamespace = array( (int) $mNamespace );
-				}
-
-				$res = CategoryDataService::getMostVisited( $sCategoryDBKey, $mNamespace, false, $negative );
-				//FB#26239 - fall back to alphabetical order if most visited data is empty
-				return ( !empty( $res ) ) ? $res : CategoryDataService::getAlphabetical( $sCategoryDBKey, $ns, $negative );
-			case 'alphabetical': return CategoryDataService::getAlphabetical( $sCategoryDBKey, $ns, $negative );
-		}
-		return array();
-	}
-
-	/**
-	 * Sort type setters and getters
-	 */
-
-	public function getSortTypes(){
-
-		return $this->allowedSortOptions;
-	}
-
-	public function getSortType(){
-
-		global $wgUser;
-
-		if ( in_array( $this->sortOption, $this->allowedSortOptions ) ) {
-			return $this->sortOption;
-		}
-		if ( $wgUser->isAnon() ){
-			$this->setSortTypeFromParam();
-			$return = $this->sortOption;
-		} else {
-			$return = $wgUser->getGlobalPreference( 'CategoryExhibitionSortType', $this->allowedSortOptions[0] );
-		}
-
-		if ( !empty( $return ) && in_array( $return, $this->allowedSortOptions ) ){
-			return $return;
-		} else {
-			return $this->allowedSortOptions[0];
-		}
-	}
-
-	public function setSortType( $sortType ){
-
-		global $wgUser;
-
-		if ( in_array( $sortType, $this->allowedSortOptions ) ) {
-			if ( !$wgUser->isAnon() ) {
-				# PLATFORM-1801: only update the preference when needed - i.e. we do change the value and it's not a default one
-				if ( $wgUser->getGlobalPreference('CategoryExhibitionSortType', $this->allowedSortOptions[0] ) !== $sortType ) {
-					$wgUser->setGlobalPreference('CategoryExhibitionSortType', $sortType );
-					$wgUser->saveSettings();
-				}
+		if ( $sortType === 'mostvisited' ) {
+			if ( !is_array( $mNamespace ) ) {
+				$mNamespace = [ (int) $mNamespace ];
 			}
-			$this->sortOption = $sortType;
-		}
-	}
 
-	public function setSortTypeFromParam(){
-
-		global $wgRequest;
-
-		$paramVar = $wgRequest->getText( 'sort' );
-		if ( !empty( $paramVar ) ){
-			$this->setSortType( $paramVar );
-		}
-	}
-
-	/**
-	 * Display type setters and getters
-	 */
-
-	public function setDisplayTypeFromParam(){
-
-		global $wgRequest;
-
-		$paramVar = $wgRequest->getText( 'display' );
-		if ( !empty( $paramVar ) ){
-			$this->setDisplayType( $paramVar );
-		}
-	}
-
-	public function setDisplayType( $displayType ){
-
-		global $wgUser;
-		if ( in_array( $displayType, $this->allowedDisplayOptions ) ) {
-			if ( !$wgUser->isAnon() ) {
-				# PLATFORM-1801: only update the preference when needed - i.e. we do change the value and it's not a default one
-				if ( $wgUser->getGlobalPreference('CategoryExhibitionDisplayType', $this->allowedDisplayOptions[0] ) !== $displayType ) {
-					$wgUser->setGlobalPreference('CategoryExhibitionDisplayType', $displayType);
-					$wgUser->saveSettings();
-				}
+			$res = CategoryDataService::getMostVisited( $sCategoryDBKey, $mNamespace, false, $exclude );
+			if ( !empty( $res ) ) {
+				return $res;
 			}
-			$this->displayOption = $displayType;
-		}
-	}
-
-	public function getDisplayType(){
-
-		global $wgUser;
-
-		if ( !empty( $this->displayOption ) && in_array( $this->displayOption, $this->allowedDisplayOptions ) ){
-			return $this->displayOption;
 		}
 
-		if ( $wgUser->isAnon() ){
-			$this->setDisplayTypeFromParam();
-			$return = $this->displayOption;
-		} else {
-			$return = $wgUser->getGlobalPreference( 'CategoryExhibitionDisplayType', $this->allowedDisplayOptions[0] );
-		}
-
-		if ( !empty( $return ) && in_array( $return, $this->allowedDisplayOptions ) ){
-			return $return;
-		} else {
-			return $this->allowedDisplayOptions[0];
-		}
+		return CategoryDataService::getAlphabetical( $sCategoryDBKey, $ns, $exclude );
 	}
 
 	/**
-	 * main function returning filled template ready to print.
-	 * @param $itemsPerPage int number of articles per page
-	 * @param $namespace mixed: int namespace or array of int for category query
-	 * @return EasyTemplate object
+	 * Select items in (or not in) given namespace (or namespaces) from CategoryDataService,
+	 * paginate, select the current page, render the items using getTemplateVarsForItem
+	 * method to generate template context for each of the items. Save the array of the
+	 * rendered items to $this->items. Save the paginator object in $this->paginator
+	 *
+	 * @param $namespace
+	 * @param int $itemsPerPage
+	 * @param bool $negative
 	 */
-	protected function getTemplateForNameSpace( $namespace, $itemsPerPage = 16, $negative = false ){
-
-		$cachedContent = $this->getFromCache();
-		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
-		if( empty( $cachedContent ) ){
-			$aTmpData = $this->fetchSectionItems( $namespace, $negative );
-			$pages = Paginator::newFromArray( $aTmpData, $itemsPerPage );
-			if ( is_array( $aTmpData ) && count( $aTmpData ) > 0 ){
-				$aTmpData = $pages->getPage( $this->paginatorPosition, true );
-				$aData = $this->getArticles( $aTmpData );
-				$oTmpl->set_vars(
-					array (
-						'data'		=> $aData,
-						'category'	=> $this->categoryTitle->getText(),
-						'paginator'	=> $pages->getBarHTML( $this->sUrl )
-					)
+	protected function generateData( $namespace, $itemsPerPage = 16, $negative = false ){
+		$data = WikiaDataAccess::cache(
+			$this->getKey(),
+			60 * 30,
+			function () use ( $namespace, $itemsPerPage, $negative ) {
+				$serviceData = $this->fetchDataFromService(
+					$namespace,
+					$negative,
+					$this->urlParams->getSortType()
 				);
-				$this->saveToCache( $oTmpl->mVars );
-				return $oTmpl;
-			} else {
-				return null;
+
+				if ( is_array( $serviceData ) ) {
+					$paginator = $this->getPaginatorForData( $serviceData, $itemsPerPage );
+					return [
+						'paginator' => $paginator,
+						'items' => $this->renderItems( $paginator->getCurrentPage( $serviceData ) ),
+					];
+				}
 			}
-		} else {
-			$oTmpl->set_vars( $cachedContent );
-			return $oTmpl;
+		);
+
+		if ( $data ) {
+			$this->items = $data['items'];
+			$this->paginator = $data['paginator'];
 		}
 	}
 
-	/**
-	 * Exacutes template. Checks if it is done from Ajax request.
-	 * @param $oTmpl EasyTemplate template obj
-	 * @return string
-	 */
-
-	protected function executeTemplate( $oTmpl ){
-
-		if ( !empty($oTmpl) ){
-		$oTmpl->set_vars(array('fromAjax' => $this->isFromAjax));
-			if ( $this->isFromAjax ){
-				return array(
-					'page'	=> $oTmpl->render( 'page' ),
-					'paginator'	=> $oTmpl->mVars['paginator']
-				);
-			} else {
-				return $oTmpl->render( $this->templateName );
+	private function renderItems( $items ) {
+		$oTmpl = new EasyTemplate( __DIR__ . '/templates/' );
+		$out = [];
+		foreach ( $items as $item ) {
+			$articleData = $this->getTemplateVarsForItem( $item['page_id'] );
+			if ( is_array( $articleData ) ) {
+				$oTmpl->set( 'row', $articleData );
+				$out[] = $oTmpl->render( $this->templateName );
 			}
-		} else {
-			return '';
-		}
+		};
+		return $out;
 	}
 
-	public function getSectionHTML( ) {
-
-		# for overloading
+	private function getPaginatorForData( $serviceData, $itemsPerPage ) {
+		$paginator = new Paginator(
+			count( $serviceData ),
+			$itemsPerPage,
+			$this->categoryTitle->getFullURL( [
+				'display' => $this->urlParams->getDisplayParam(),
+				'sort' => $this->urlParams->getSortParam(),
+			] )
+		);
+		$paginator->setActivePage( $this->paginatorPosition );
+		return $paginator;
 	}
 
 	/**
@@ -278,9 +184,7 @@ class CategoryExhibitionSection {
 	 * @param $mPageId int page id
 	 * @return string - image url
 	 */
-
-	protected function getImageFromPageId( $mPageId ){
-
+	protected function getImageFromPageId( $mPageId ) {
 		if ( !is_array( $mPageId ) ){
 			$mPageId = array( $mPageId );
 		}
@@ -295,9 +199,11 @@ class CategoryExhibitionSection {
 				if ( empty( $image ) ){
 					return '';
 				}
+				// ImageServing is not re-entrant, it has internal state which can break cropping
+				$cropper = new ImageServing( $mPageId, $this->thumbWidth , array( "w" => $this->thumbWidth, "h" => $this->thumbHeight ) );
 				$imageUrl = wfReplaceImageServer(
 					$image->getThumbUrl(
-						$imageServing->getCut( $image->getWidth(), $image->getHeight() )."-".$image->getName()
+						$cropper->getCut( $image->getWidth(), $image->getHeight() )."-".$image->getName()
 					)
 				);
 			}
@@ -305,46 +211,17 @@ class CategoryExhibitionSection {
 		return $imageUrl;
 	}
 
-	/**
-	 * Loads detail data for articles that will be displayed in current page.
-	 * @param $aTmpData array articles in sections page
-	 * @return array - data for template
-	 */
-
-	protected function getArticles( $aTmpData ){
-
-		$aData = array();
-		foreach( $aTmpData as $item ){
-			$articleData = $this->getArticleData( $item['page_id'] );
-			if(!empty($articleData)) {
-				$aData[] = $articleData;
-			}
-		};
-		return $aData;
-	}
-
-	protected function isVerify(){
-
-		if ( empty( $this->verifyChecker ) ){
-			$this->verifyChecker = md5( F::app()->wg->server );
-		}
-		return $this->verifyChecker;
-	}
-
-	protected function getArticleData( $pageId ){
-
+	protected function getTemplateVarsForItem( $pageId ) {
 		$oTitle = Title::newFromID( $pageId );
-		if(!($oTitle instanceof Title)) {
+		if ( !( $oTitle instanceof Title ) ) {
 			return false;
 		}
 
 		$oMemCache = F::App()->wg->memc;
-		$sKey = wfSharedMemcKey(
+		$sKey = wfMemcKey(
 			'category_exhibition_category_cache_1',
 			$pageId,
-			F::App()->wg->cityId,
-			$this->isVerify(),
-			$this->getTouched($oTitle)
+			$this->cacheHelper->getTouched( $oTitle )
 		);
 
 		$cachedResult = $oMemCache->get( $sKey );
@@ -356,63 +233,25 @@ class CategoryExhibitionSection {
 		$snippetText = '';
 		$imageUrl = $this->getImageFromPageId( $pageId );
 
-		if ( empty( $imageUrl ) ){
+		if ( empty( $imageUrl ) ) {
 			$snippetService = new ArticleService ( $oTitle );
 			$snippetText = $snippetService->getTextSnippet();
 		}
 
 		$returnData = array(
-			'id'		=> $pageId,
-			'img'		=> $imageUrl,
-			'width'     => $this->thumbWidth,
-			'height'    => $this->thumbHeight,
-			'snippet'	=> $snippetText,
-			'title'		=> $this->getTitleForElement( $oTitle ),
-			'url'		=> $oTitle->getFullURL()
+			'id' => $pageId,
+			'img' => $imageUrl,
+			'width' => $this->thumbWidth,
+			'height' => $this->thumbHeight,
+			'snippet' => $snippetText,
+			'title' => $oTitle->getText(),
+			'url' => $oTitle->getFullURL(),
 		);
 
 		// will be purged elsewhere after edit
-		$oMemCache->set( $sKey, $returnData, 60*60*24 );
+		$oMemCache->set( $sKey, $returnData, 60 * 60 * 24 );
 
 		return $returnData;
-	}
-
-	/**
-	 * @param Title $oTitle
-	 * @return mixed
-	 */
-	protected function getTitleForElement( $oTitle ){
-		return $oTitle->getText();
-	}
-
-	/**
-	 * Loads data for pagination.
-	 */
-
-	function loadPaginationVars( ){
-
-		global $wgTitle, $wgRequest;
-		$variableName = $this->urlParameter;
-		$paginatorPosition = 1;
-		$reqValues = $wgRequest->getValues();
-		if ( !empty( $reqValues[ $variableName ] ) ){
-			$paginatorPosition = (int)$reqValues[ $variableName ];
-			unset( $reqValues[ $variableName ] );
-		};
-		$return = array();
-		foreach( $reqValues AS $key => $value ) {
-			$return[] = urlencode( $key ) . '=' . urlencode( $value );
-		}
-
-		$url = $wgTitle->getFullURL().'?'.implode( '&', $return );
-		if ( count($return) > 0 ){
-			$url.= '&'.$variableName.'=%s';
-		} else {
-			$url.= '?'.$variableName.'=%s';
-		}
-		$this->sUrl = $url;
-		$this->paginatorPosition = $paginatorPosition;
-		return array( 'url' => $url, 'position' => $paginatorPosition );
 	}
 
 	/**
@@ -421,56 +260,16 @@ class CategoryExhibitionSection {
 	protected function getKey() {
 		return wfMemcKey(
 			'category_exhibition_section_0',
-			md5($this->categoryTitle->getDBKey()),
-			$this->templateName,
+			self::CACHE_VERSION,
+			md5( $this->categoryTitle->getDBKey() ),
+			get_class( $this ),
 			$this->paginatorPosition,
-			$this->getDisplayType(),
-			$this->getSortType(),
-			$this->isVerify(),
-			$this->getTouched($this->categoryTitle),
-			self::CACHE_VERSION
+			$this->urlParams->getDisplayType(),
+			$this->urlParams->getSortType(),
+			$this->cacheHelper->getTouched( $this->categoryTitle ),
+			// Those are mentioned separately because they modify the pagination URL
+			$this->urlParams->getDisplayParam(),
+			$this->urlParams->getSortParam()
 		);
-	}
-
-	/**
-	 * this method help us to invalidate cache on any change on category, sub cat, page
-	 */
-	protected function getTouched($title) {
-		global $wgMemc;
-		return $wgMemc->get($this->getTouchedKey($title), 0);
-	}
-
-	public function setTouched($title) {
-		global $wgMemc;
-		$wgMemc->set($this->getTouchedKey($title), time() . rand(0,9999), 60*60*24 );
-	}
-
-	/**
-	 * @param Title $title
-	 * @return string
-	 */
-	protected function getTouchedKey( Title $title ) {
-		$key = wfMemcKey( 'category_touched', md5($title->getDBKey()), self::CACHE_VERSION );
-		return $key;
-	}
-
-	protected function saveToCache( $content ) {
-		global $wgMemc;
-		$memcData = $this->getFromCache( );
-		if ( empty($memcData) ){
-			$wgMemc->set( $this->getKey( ), $content, 60*30 );
-			return false;
-		}
-		return true;
-	}
-
-	protected function getFromCache ( ){
-		global $wgMemc;
-		return $wgMemc->get( $this->getKey( ) );
-	}
-
-	protected function clearCache ( ){
-		global $wgMemc;
-		return $wgMemc->delete( $this->getKey( ) );
 	}
 }

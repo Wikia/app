@@ -373,6 +373,7 @@ class ForumHooksHelper {
 			&& $out->getRequest()->getVal( 'diff' ) === null
 			&& $out->getRequest()->getVal( 'action' ) !== 'render'
 			&& !( $app->checkSkin( 'wikiamobile', $out->getSkin() ) )
+			&& empty( $app->wg->EnableRecirculationDiscussions )
 		) {
 			// VOLDEV-46: Omit zero-state, only render if there are related forum threads
 			$messages = RelatedForumDiscussionController::getData( $title->getArticleId() );
@@ -560,6 +561,34 @@ class ForumHooksHelper {
 		if ( $title instanceof Title ) {
 			$wallMessage = WallMessage::newFromTitle( $title );
 			$wallMessage->setInCommentsIndex( WPP_WALL_ADMINDELETE, 1 );
+		}
+
+		return true;
+	}
+
+	/**
+	 * SEO-325 Allow robots to follow topic pages on selected communities
+	 *
+	 * Do that by setting $wgNamespaceRobotPolicies to [ [2002] => 'noindex,follow' ] in WikiFactory
+	 *
+	 * After experiment, if all good we can just hard-code it here:
+	 * if ( $title && $title->getNamespace() === NS_WIKIA_FORUM_TOPIC_BOARD ) {
+	 *     $specialPolicy = [ 'index' => 'index', 'follow' => 'follow' ];
+	 * }
+	 *
+	 * Long-shot policy: decide in WikiaRobots
+	 *
+	 * @param array $specialPolicy
+	 * @param Title $title
+	 * @return bool
+	 */
+	static public function onArticleRobotPolicy( &$specialPolicy, $title ) {
+		global $wgNamespaceRobotPolicies;
+
+		$nsTopic = NS_WIKIA_FORUM_TOPIC_BOARD;
+
+		if ( $title && $title->getNamespace() === $nsTopic && isset( $wgNamespaceRobotPolicies[$nsTopic] ) ) {
+			$specialPolicy = Article::formatRobotPolicy( $wgNamespaceRobotPolicies[$nsTopic] );
 		}
 
 		return true;

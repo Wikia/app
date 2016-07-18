@@ -1,5 +1,4 @@
 <?php
-
 /**
  * ArticleComment is article, this class is used for manipulation on
  */
@@ -18,7 +17,7 @@ class ArticleComment {
 	const LOG_ACTION_COMMENT = 'article_comment';
 
 	/** @var Bool (for blogs only) */
-	public $mProps;
+	private $mProps;
 
 	public $mLastRevId;
 	public $mFirstRevId;
@@ -27,13 +26,13 @@ class ArticleComment {
 	/** @var array */
 	public $mMetadata;
 
-	public $mText;
-	public $mRawtext;
+	private $mText;
+	private $mRawtext;
 	public $mHeadItems;
 	public $mNamespaceTalk;
 
 	/** @var Title */
-	public $mTitle;
+	private $mTitle;
 
 	/** @var User comment creator */
 	public $mUser;
@@ -49,13 +48,13 @@ class ArticleComment {
 
 	protected $minRevIdFromSlave;
 
-	/** @var bool */
-	private $isLoaded = false;
+	private $isTextLoaded = false;
+	private $isRevisionLoaded = false;
 
 	/**
 	 * @param Title $title
 	 */
-	public function __construct( $title ) {
+	public function __construct( Title $title ) {
 		$this->mTitle = $title;
 		$this->mNamespace = $title->getNamespace();
 		$this->mNamespaceTalk = MWNamespace::getTalk( $this->mNamespace );
@@ -192,7 +191,34 @@ class ArticleComment {
 	 * @return bool
 	 */
 	public function load( $master = false ) {
-		if ( $this->isLoaded ) {
+		$ret = $this->loadRevisionsAndAuthor( $master );
+		if ( $ret === false ) {
+			return false;
+		}
+
+		if ( $this->isTextLoaded ) {
+			return true;
+		}
+
+		$rawText = $this->mLastRevision->getText();
+		$this->parseText( $rawText );
+
+		$this->isTextLoaded = true;
+		return true;
+	}
+
+	/**
+	 * Lazy load revisions and comment's author data
+	 *
+	 * We can use this method to check user permissions instead of calling load() that parses the content (which takes time!)
+	 *
+	 * @see PLATFORM-2260
+	 *
+	 * @param bool $master
+	 * @return bool
+	 */
+	private function loadRevisionsAndAuthor( $master = false ) {
+		if ( $this->isRevisionLoaded ) {
 			return true;
 		}
 
@@ -222,10 +248,7 @@ class ArticleComment {
 		$this->mUser = User::newFromId( $this->mFirstRevision->getUser() );
 		$this->mUser->setName( $this->mFirstRevision->getUserText() );
 
-		$rawText = $this->mLastRevision->getText();
-		$this->parseText( $rawText );
-
-		$this->isLoaded = true;
+		$this->isRevisionLoaded = true;
 		return true;
 	}
 
@@ -313,10 +336,13 @@ class ArticleComment {
 	}
 
 	public function parseText( $rawText ) {
+		wfProfileIn( __METHOD__ );
+
 		global $wgEnableParserCache;
 
 		$this->mRawtext = self::removeMetadataTag( $rawText );
 
+		# seriously, WTF?
 		$wgEnableParserCache = false;
 
 		$parser = ParserPool::get();
@@ -340,9 +366,13 @@ class ArticleComment {
 
 		ParserPool::release( $parser );
 
+		wfProfileOut( __METHOD__ );
 		return $this->mText;
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getText() {
 		return $this->mText;
 	}
@@ -392,14 +422,9 @@ class ArticleComment {
 	public function getData( $master = false ) {
 		global $wgUser, $wgBlankImgUrl, $wgMemc, $wgArticleCommentsEnableVoting;
 
-		$canDelete = $wgUser->isAllowed( 'commentdelete' );
-
-		if ( self::isBlog() ) {
-			$canDelete = $canDelete || $wgUser->isAllowed( 'blog-comments-delete' );
-		}
-
 		$title = $this->getTitle();
 		$commentId = $title->getArticleId();
+		$canDelete = !count( $title->getUserPermissionsErrors( 'delete', F::app()->wg->User, false, [] ) );
 
 		// vary cache on permission as well so it changes we can show it to a user
 		$articleDataKey = wfMemcKey(
@@ -416,7 +441,6 @@ class ArticleComment {
 
 		if ( !empty( $data ) ) {
 			$data['timestamp'] = "<a href='" . $title->getFullUrl( [ 'permalink' => $data['id'] ] ) . '#comm-' . $data['id'] . "' class='permalink'>" . wfTimeFormatAgo( $data['rawmwtimestamp'] ) . "</a>";
-
 			return $data;
 		}
 
@@ -440,7 +464,7 @@ class ArticleComment {
 		// we cannot check it using $title->getBaseText, as this returns main namespace title
 		// the subjectpage for $parts title is something like 'User blog comment:SomeUser/BlogTitle' which is fine
 		$articleTitle = Title::makeTitle( MWNamespace::getSubject( $this->mNamespace ), $parts['title'] );
-		$commentingAllowed = ArticleComment::canComment( $articleTitle );
+		$commentingAllowed = ArticleComment::userCanCommentOn( $articleTitle );
 
 		if ( ( count( $parts['partsStripped'] ) == 1 ) && $commentingAllowed ) {
 			$replyButton = '<button type="button" class="article-comm-reply wikia-button secondary actionButton">' . wfMsg( 'article-comments-reply' ) . '</button>';
@@ -452,7 +476,6 @@ class ArticleComment {
 		if ( $canDelete ) {
 			$img = '<img class="remove sprite" alt="" src="' . $wgBlankImgUrl . '" width="16" height="16" />';
 			$buttons[] = $img . '<a href="' . $title->getLocalUrl( 'redirect=no&action=delete' ) . '" class="article-comm-delete">' . wfMsg( 'article-comments-delete' ) . '</a>';
-
 			$links['delete'] = $title->getLocalUrl( 'redirect=no&action=delete' );
 		}
 
@@ -461,12 +484,16 @@ class ArticleComment {
 			$display = $this->canEdit() ? '' : ' style="display:none"';
 			$img = '<img class="edit-pencil sprite" alt="" src="' . $wgBlankImgUrl . '" width="16" height="16" />';
 			$buttons[] = "<span class='edit-link'$display>" . $img . '<a href="#comment' . $commentId . '" class="article-comm-edit actionButton" id="comment' . $commentId . '">' . wfMsg( 'article-comments-edit' ) . '</a></span>';
-
 			$links['edit'] = '#comment' . $commentId;
 		}
 
 		if ( !$this->mTitle->isNewPage( Title::GAID_FOR_UPDATE ) ) {
-			$buttons[] = RequestContext::getMain()->getSkin()->makeKnownLinkObj( $title, wfMsgHtml( 'article-comments-history' ), 'action=history', '', '', 'class="article-comm-history"' );
+			$buttons[] = Linker::linkKnown(
+				$title,
+				wfMessage( 'article-comments-history' )->escaped(),
+				[ 'class' => 'article-comm-history' ],
+				[ 'action' => 'history' ]
+			);
 
 			$links['history'] = $title->getLocalUrl( 'action=history' );
 		}
@@ -487,9 +514,9 @@ class ArticleComment {
 			'links' => $links,
 			'replyButton' => $replyButton,
 			'sig' => $sig,
-			'text' => $this->mText,
-			'metadata' => $this->mMetadata,
-			'rawtext' =>  $this->mRawtext,
+			'text' => $this->getText(),
+			'metadata' => $this->mMetadata, # filled by parseText()
+			'rawtext' =>  $this->mRawtext, # filled by parseText()
 			'timestamp' => $timestamp,
 			'rawtimestamp' => $rawTimestamp,
 			'rawmwtimestamp' =>	$rawMWTimestamp,
@@ -610,6 +637,7 @@ class ArticleComment {
 
 	/**
 	 * check if current user can edit comment
+	 * @deprecated use userCan directly on the comment's title object
 	 */
 	public function canEdit() {
 		global $wgUser;
@@ -631,36 +659,11 @@ class ArticleComment {
 	}
 
 	/**
-	 * Check if current user can comment
-	 *
-	 * @param Title $title
-	 *
-	 * @return bool
-	 */
-	public static function canComment( Title $title = null ) {
-		global $wgTitle, $wgArticleCommentsNamespaces;
-
-		$canComment = true;
-		$title = is_null( $title ) ? $wgTitle : $title;
-
-		if ( !in_array( $title->getNamespace(), $wgArticleCommentsNamespaces ) ) {
-			$canComment = false;
-		}
-		if ( self::isBlog( $title ) ) {
-			$props = BlogArticle::getProps( $title->getArticleID() );
-
-			$canComment = isset( $props[ 'commenting' ] ) ? ( bool ) $props[ 'commenting' ] : true;
-		}
-
-		return $canComment;
-	}
-
-	/**
 	 * @param $user User
 	 * @return bool
 	 */
 	public function isAuthor( $user ) {
-		if ( $this->mUser ) {
+		if ( $this->loadRevisionsAndAuthor( true ) && $this->mUser ) {
 			return $this->mUser->getId() == $user->getId() && !$user->isAnon();
 		}
 		return false;
@@ -697,16 +700,17 @@ class ArticleComment {
 	public function editPage() {
 		global $wgStylePath;
 
-		if ( !$this->load( true ) ) {
+		if ( !$this->loadRevisionsAndAuthor( true ) ) {
 			return '';
 		}
 
-		if ( !$this->canEdit() ) {
+		$canEdit = $this->getTitle()->userCan( 'edit' );
+		if ( !$canEdit ) {
 			return '';
 		}
 
 		$vars = [
-			'canEdit' => $this->canEdit(),
+			'canEdit' => $canEdit,
 			'comment' => htmlentities( ArticleCommentsAjax::getConvertedContent( $this->mLastRevision->getText() ) ),
 			'isReadOnly' => wfReadOnly(),
 			'isMiniEditorEnabled' => ArticleComment::isMiniEditorEnabled(),
@@ -739,7 +743,7 @@ class ArticleComment {
 			return false;
 		}
 
-		if ( $force || $this->canEdit() ) {
+		if ( $force || $this->getTitle()->userCan( 'edit' ) ) {
 
 			if ( wfReadOnly() ) {
 				return false;
@@ -896,11 +900,6 @@ class ArticleComment {
 		}
 		$commentTitleText = $commentTitle;
 		$commentTitle = Title::newFromText( $commentTitle, MWNamespace::getTalk( $title->getNamespace() ) );
-		/**
-		 * because we save different tile via Ajax request TODO: fix it !!
-		 */
-		$wgTitle = $commentTitle;
-
 
 		if ( !( $commentTitle instanceof Title ) ) {
 			if ( !empty( $parentId ) ) {
@@ -931,7 +930,7 @@ class ArticleComment {
 					'commentTitleText' => $commentTitleText,
 				] );
 			} else {
-				wfRunHooks( 'EditCommentsIndex', [ $article->getTitle(), $commentsIndex ] );
+				Hooks::run( 'EditCommentsIndex', [ $article->getTitle(), $commentsIndex ] );
 			}
 		}
 
@@ -948,8 +947,6 @@ class ArticleComment {
 	 * @param $commentTitle Title
 	 */
 	static public function doPurge( $title, $commentTitle ) {
-		wfProfileIn( __METHOD__ );
-
 		global $wgArticleCommentsLoadOnDemand;
 
 		// make sure our comment list is refreshed from the master RT#141861
@@ -975,8 +972,6 @@ class ArticleComment {
 				$parentTitle->purgeSquid();
 			}
 		}
-
-		wfProfileOut( __METHOD__ );
 	}
 
 	/**
@@ -999,7 +994,7 @@ class ArticleComment {
 			]
 		);
 
-		wfRunHooks( 'ArticleCommentGetSquidURLs', [ $title, &$urls ] );
+		Hooks::run( 'ArticleCommentGetSquidURLs', [ $title, &$urls ] );
 
 		return $urls;
 	}
@@ -1014,7 +1009,7 @@ class ArticleComment {
 	static public function doAfterPost( Status $status, $article, $parentId = 0 ) {
 		global $wgUser, $wgDBname;
 
-		wfRunHooks( 'ArticleCommentAfterPost', [ $status, &$article ] );
+		Hooks::run( 'ArticleCommentAfterPost', [ $status, &$article ] );
 		$commentId = $article->getId();
 		$error = false;
 		$id = 0;
@@ -1056,7 +1051,8 @@ class ArticleComment {
 				$userId = $wgUser->getId();
 				$text  = false;
 				$error = true;
-				$message = wfMsg( 'article-comments-error' );
+
+				$message = wfMessage( 'article-comments-error' )->escaped();
 
 				WikiaLogger::instance()->error( 'PLATFORM-1311', [
 					'method' => __METHOD__,
@@ -1090,7 +1086,7 @@ class ArticleComment {
 	static public function addArticlePageToWatchlist( $comment ) {
 		global $wgUser, $wgEnableArticleWatchlist, $wgBlogsEnableStaffAutoFollow;
 
-		if ( !wfRunHooks( 'ArticleCommentBeforeWatchlistAdd', [ $comment ] ) ) {
+		if ( !Hooks::run( 'ArticleCommentBeforeWatchlistAdd', [ $comment ] ) ) {
 			return true;
 		}
 
@@ -1132,9 +1128,8 @@ class ArticleComment {
 	 */
 	static public function watchlistNotify( RecentChange &$oRC ) {
 		global $wgEnableGroupedArticleCommentsRC;
-		wfProfileIn( __METHOD__ );
 
-		wfRunHooks( 'AC_RecentChange_Save', [ &$oRC ] );
+		Hooks::run( 'AC_RecentChange_Save', [ &$oRC ] );
 
 		if ( !empty( $wgEnableGroupedArticleCommentsRC ) && ( $oRC instanceof RecentChange ) ) {
 			$title = $oRC->getAttribute( 'rc_title' );
@@ -1159,8 +1154,6 @@ class ArticleComment {
 				}
 			}
 		}
-
-		wfProfileOut( __METHOD__ );
 		return true;
 	}
 
@@ -1184,7 +1177,7 @@ class ArticleComment {
 
 			$name = $wgEnotifUseRealName ? $editor->getRealName() : $editor->getName();
 			if ( $editor->isIP( $name ) ) {
-				$utext = trim( wfMsgForContent( 'enotif_anon_editor', '' ) );
+				$utext = trim( wfMessage( 'enotif_anon_editor', '' )->inContentLanguage()->escaped() );
 				$message = str_replace( '$PAGEEDITOR', $utext, $message );
 				$keys['$PAGEEDITOR'] = $utext;
 			}
@@ -1205,7 +1198,6 @@ class ArticleComment {
 	static private function addMoveTask( $oCommentTitle, &$oNewTitle, $taskParams ) {
 
 		if ( !is_object( $oCommentTitle ) ) {
-			wfProfileOut( __METHOD__ );
 			return false;
 		}
 
@@ -1579,5 +1571,99 @@ class ArticleComment {
 	 */
 	static private function isBadAccessError( $errors ) {
 		return in_array( 'badaccess-groups', $errors ) || in_array( 'badaccess-group0', $errors );
+	}
+
+	/**
+	 * Manages permissions related to article and blog comments
+	 * Hook: userCan
+	 *
+	 * @param Title $title
+	 * @param User $user
+	 * @param string $action
+	 * @param bool $result Whether $user can perform $action on $title
+	 * @return bool Whether to continue checking hooks
+	 */
+	static public function userCan( Title &$title, User &$user, $action, &$result ) {
+		$wg = F::app()->wg;
+		$commentsNS = $wg->ArticleCommentsNamespaces;
+		$ns = $title->getNamespace();
+
+		// Only handle article and blog comments
+		if ( !in_array( MWNamespace::getSubject( $ns ), $commentsNS ) ||
+			!ArticleComment::isTitleComment( $title ) ) {
+			return true;
+		}
+
+		wfProfileIn( __METHOD__ );
+
+		$comment = ArticleComment::newFromTitle( $title );
+		$isBlog = ( $wg->EnableBlogArticles && ArticleComment::isBlog( $title ) );
+
+		switch ( $action ) {
+			// Creating article comments requires 'commentcreate' permission
+			// For blogs, additionally check if the owner has enabled commenting+
+			case 'create':
+				// We have to check these permissions on the parent article
+				// due to the chicken-and-egg problem inherent in the design
+				$result = self::userCanCommentOn( $comment->getArticleTitle(), $user );
+				$return = false;
+				break;
+			// Article and blog comments can only be edited by their author,
+			// or an user with 'commentedit' permission
+			case 'edit':
+				// Prepopulate the object with revision data
+				// required by ArticleComment::isAuthor
+				$result = ( $comment->isAuthor( $user ) || $user->isAllowed( 'commentedit' ) );
+				$return = false;
+				break;
+
+			case 'move':
+			case 'move-target':
+				$result = $user->isAllowed( 'commentmove' );
+				$return = false;
+				break;
+
+			case 'delete':
+			case 'undelete':
+				$result = ( ArticleComment::isTitleComment( $title ) &&
+					( $user->isAllowed( 'commentdelete' ) || $isBlog && $user->isAllowed( 'blog-comments-delete' ) )
+				);
+				$return = false;
+				break;
+			default:
+				$result = $return = true;
+		}
+
+		wfProfileOut( __METHOD__ );
+		return $return;
+	}
+
+	/**
+	 * Check if user can add a comment to the current article
+	 * We must perform this check on the article
+	 * because of the chicken-and-egg problem inherent in the design
+	 *
+	 * @param Title $title Article title
+	 * @param User|null $user Current user
+	 * @return bool Whether $user can add a comment to $title
+	 */
+	static public function userCanCommentOn( Title $title, User $user = null ) {
+		$wg = F::app()->wg;
+		if ( !( $user instanceof User ) ) {
+			$user = $wg->User;
+		}
+
+		if ( wfReadOnly() ) {
+			return false;
+		}
+
+		$isBlog = ( $wg->EnableBlogArticles && ArticleComment::isBlog( $title ) );
+		if ( $isBlog ) {
+			$props = BlogArticle::getProps( $title->getArticleID() );
+			$commentingEnabled = isset( $props[ 'commenting' ] ) ? (bool) $props[ 'commenting' ] : true;
+			return ( $user->isAllowedAll( 'commentcreate', 'edit' ) && $commentingEnabled );
+		} else {
+			return ( $user->isAllowedAll( 'commentcreate', 'edit' ) && ArticleCommentInit::ArticleCommentCheckTitle( $title ) );
+		}
 	}
 }

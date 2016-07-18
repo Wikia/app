@@ -1,0 +1,39 @@
+{{^isAnon}}
+<div class="user-details">
+	<div class="avatar-container">
+		{{{userAvatar}}}
+	</div>
+	<div class="community-page-rank">
+		<span>{{userRank}} <small>/ {{weeklyEditorCount}}</small></span>
+		<span class="community-page-subtle">{{yourRankText}}</span>
+	</div>
+	<div class="user-contrib-count">
+		<span>{{userContribCount}}</span>
+		<span class="community-page-subtle">{{userContributionsText}}</span>
+	</div>
+</div>
+{{/isAnon}}
+<ul class="reset top-contributors">
+	{{#contributors}}
+		<li class="community-page-contributors-list-item">
+			<div class="avatar-container">
+				<a data-tracking="top-contributors-user-avatar" href="{{profilePage}}">{{{avatar}}}</a>
+			</div>
+			<div class="community-page-contributor-rank">
+				{{count}}.
+			</div>
+			<div class="community-page-contributor-details">
+				<a data-tracking="top-contributors-user" href="{{profilePage}}">{{userName}}</a>
+				{{#isAdmin}}
+					<span class="community-page-subtle">{{admin}}</span>
+				{{/isAdmin}}
+			</div>
+			<div class="community-page-details">{{contributionsText}}</div>
+		</li>
+	{{/contributors}}
+	{{^contributors}}
+		<div class="community-page-zero">
+			{{noContribsText}}
+		</div>
+	{{/contributors}}
+</ul>

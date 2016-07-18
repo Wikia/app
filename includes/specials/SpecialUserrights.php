@@ -66,7 +66,7 @@ class UserrightsPage extends SpecialPage {
 		);
 	}
 
-	public static function isGlobalNonEditableGroup( $globalGroups, $group ) {
+	private function isGlobalNonEditableGroup( $globalGroups, $group ) {
 		global $wgWikiaIsCentralWiki;
 		return $wgWikiaIsCentralWiki === false && in_array( $group, $globalGroups );
 	}
@@ -75,24 +75,22 @@ class UserrightsPage extends SpecialPage {
 	 * @param $globalGroups string[] List of global groups
 	 * @param $changeableGroups string[] Changeable groups
 	 * @param  $group String: the name of the group to check
-	 * @param $isself bool Are we change the same user that is logged in
 	 * @return bool Can we remove the group?
 	 */
-	public static function canRemove( $globalGroups, $changeableGroups, $group, $isself ) {
+	private function canRemove( $globalGroups, $changeableGroups, $group ) {
 		return !self::isGlobalNonEditableGroup( $globalGroups, $group) &&
-			in_array( $group, $changeableGroups['remove'] ) || ( $isself && in_array( $group, $changeableGroups['remove-self'] ) );
+			( in_array( $group, $changeableGroups['remove'] ) || ( $this->isself && in_array( $group, $changeableGroups['remove-self'] ) ) );
 	}
 
 	/**
 	 * @param $globalGroups string[] List of global groups
 	 * @param $changeableGroups string[] Changeable groups
 	 * @param $group string: the name of the group to check
-	 * @param $isself bool Are we change the same user that is logged in
 	 * @return bool Can we add the group?
 	 */
-	public static function canAdd( $globalGroups, $changeableGroups, $group, $isself ) {
+	private function canAdd( $globalGroups, $changeableGroups, $group ) {
 		return !self::isGlobalNonEditableGroup( $globalGroups, $group) &&
-			in_array( $group, $changeableGroups['add'] ) || ( $isself && in_array( $group, $changeableGroups['add-self'] ) );
+			( in_array( $group, $changeableGroups['add'] ) || ( $this->isself && in_array( $group, $changeableGroups['add-self'] ) ) );
 	}
 
 	public function __construct() {
@@ -251,13 +249,13 @@ class UserrightsPage extends SpecialPage {
 		$validGroupsToRemove = [];
 
 		foreach ( $groupsToAdd as $group ) {
-			if( self::canAdd( $globalGroups, $changeable, $group, $this->isself ) && !in_array( $group, $groups ) ) {
+			if( $this->canAdd( $globalGroups, $changeable, $group ) && !in_array( $group, $groups ) ) {
 				$validGroupsToAdd[] = $group;
 			}
 		}
 
 		foreach ( $groupsToRemove as $group ) {
-			if( self::canRemove( $globalGroups, $changeable, $group, $this->isself ) && in_array( $group, $groups ) ) {
+			if( $this->canRemove( $globalGroups, $changeable, $group ) && in_array( $group, $groups ) ) {
 				$validGroupsToRemove[] = $group;
 			}
 		}
@@ -558,8 +556,8 @@ class UserrightsPage extends SpecialPage {
 
 		foreach( $allgroups as $group ) {
 			$set = in_array( $group, $usergroups );
-			$canAdd = self::canAdd( $globalGroups, $changeableGroups, $group, $this->isself );
-			$canRemove = self::canRemove( $globalGroups, $changeableGroups, $group, $this->isself );
+			$canAdd = $this->canAdd( $globalGroups, $changeableGroups, $group );
+			$canRemove = $this->canRemove( $globalGroups, $changeableGroups, $group );
 			# Should the checkbox be disabled?
 			$disabled = !( ( $set && $canRemove ) || ( !$set && $canAdd ) );
 			# Do we need to point out that this action is irreversible?

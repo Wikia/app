@@ -4,25 +4,11 @@
  * Main Category Gallery class
  */
 class CategoryExhibitionSectionPages extends CategoryExhibitionSection {
-
-	public $urlParameter = 'page'; // contains section url variable that stores pagination
-	public $templateName = 'page';
-
-	public function getSectionHTML(){
-		global $wgCategoryExhibitionPagesSectionRows, $wgContentNamespaces;
-		$this->loadPaginationVars();
-		$oTmpl = $this->getTemplateForNameSpace( $this->getExcludes(), $wgCategoryExhibitionPagesSectionRows * 4, true );
-		return $this->executeTemplate( $oTmpl );
-	}
-
-	public function getSectionAxHTML( $paginatorPosition, $sUrl ){
-		global $wgCategoryExhibitionPagesSectionRows, $wgContentNamespaces;
-		$this->loadPaginationVars();
-		$this->isFromAjax = true;
-		$this->paginatorPosition = $paginatorPosition;
-		$this->sUrl = $sUrl;
-		$oTmpl = $this->getTemplateForNameSpace( $this->getExcludes(), $wgCategoryExhibitionPagesSectionRows * 4, true );
-		return $this->executeTemplate( $oTmpl );
+	protected function generateSectionData(){
+		global $wgCategoryExhibitionPagesSectionRows;
+		$this->sectionId = 'mw-pages';
+		$this->headerMessage = wfMessage( 'category-exhibition-page-header', $this->categoryTitle->getText() );
+		return $this->generateData( $this->getExcludes(), $wgCategoryExhibitionPagesSectionRows * 4, true );
 	}
 
 	protected function getTitleForElement( $oTitle ){

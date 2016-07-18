@@ -8,15 +8,9 @@ class NavigationTemplate {
 		'p',
 	];
 
-	private static $mark = 'NAVUNIQ';
+	const NAV_PATH = '//div[@data-navuniq]';
+	const NESTED_NAV_PATH = '//div[@data-navuniq]//div[@data-navuniq]';
 
-	/**
-	 * @desc If a block element div, table or p is found in a template's text, return an empty
-	 * string to hide the template.
-	 * @param $text
-	 *
-	 * @return string
-	 */
 	public static function handle( $text ) {
 		return !empty( $text ) ? self::mark( $text ) : $text;
 	}
@@ -28,27 +22,61 @@ class NavigationTemplate {
 		return true;
 	}
 
+	/**
+	 * @desc If a block element div, table or p is found in a template's text, return an empty
+	 * string to hide the template.
+	 * @param $html
+	 *
+	 * @return string
+	 */
 	private static function process( $html ) {
-		$regex = '/<(' . implode( '|', self::$blockLevelElements ) . ')[>\s]+/i';
-		$marked = self::mark( "(.*)" );
+		$document = HtmlHelper::createDOMDocumentFromText( $html );
+		$xpath = new DOMXPath( $document );
+		$result = $xpath->query( self::NAV_PATH, $document );
 
-		preg_match_all( "/{$marked}/sU", $html, $matches );
-		foreach ( $matches[ 0 ] as $key => $found ) {
-			$replacement = $matches[ 1 ][ $key ];
-			if ( preg_match( $regex, $matches[ 1 ][ $key ] ) ) {
-				$replacement = '';
+		$blockElements = implode( "|", self::$blockLevelElements );
+		for ( $i = 0; $i < $result->length; $i++ ) {
+			$node = $result->item( $i );
+			$found = $xpath->query( $blockElements, $node );
+			if ( $found->length ) {
+				HtmlHelper::removeNode( $node );
+			} else {
+				HtmlHelper::unwrapNode( $node );
 			}
-			$html = str_replace( $found, $replacement, $html );
 		}
 
-		return $html;
+		return HtmlHelper::getBodyHtml( $document );
 	}
 
 	/**
-	 * @param $text
-	 * @return int
+	 * Remove markings for nested templates
+	 * @param $templateWikitext
+	 * @return string
 	 */
+	public static function removeInnerMarks( $templateWikitext ) {
+		$document = HtmlHelper::createDOMDocumentFromText( $templateWikitext );
+		// check for nested navuniq divs
+		$xpath = new DOMXPath( $document );
+		$result = $xpath->query( self::NESTED_NAV_PATH, $document );
+		if ( $result->length ) {
+			for ( $i = 0; $i < $result->length; $i++ ) {
+				$node = $result->item( $i );
+				// remove new line from the string beginning (see: NavigationTemplate::mark)
+				$node->firstChild->nodeValue = self::removeFirstCharacter( $node->firstChild->nodeValue );
+				HtmlHelper::unwrapNode( $node );
+			}
+
+			return HtmlHelper::getBodyHtml( $document );
+		}
+
+		return $templateWikitext;
+	}
+
 	private static function mark( $text ) {
-		return sprintf( "\x7f%s%s%s\x7f", self::$mark, $text, self::$mark );
+		return sprintf( "<div data-navuniq=\"%s\">\n%s</div>", uniqid(), $text );
+	}
+
+	private static function removeFirstCharacter( $text ) {
+		return substr( $text, 1 );
 	}
 }

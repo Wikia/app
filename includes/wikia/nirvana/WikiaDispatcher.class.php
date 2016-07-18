@@ -52,7 +52,7 @@ class WikiaDispatcher {
 			if ( isset( $route['after'] ) ) $callNext = $route['after'];
 		}
 		// global var routing should probably only be for controllers and methods
-		if (isset( $route['global'] ) && isset( $app->wg->$route['global'] ) ) {
+		if (isset( $route['global'] ) && isset( $app->wg->{$route['global']} ) ) {
 			if ( isset( $route['controller'] ) ) $response->setControllerName( $route['controller'] );
 			if ( isset( $route['method'] ) ) $response->setMethodName( $route['method'] );
 			if ( isset( $route['after'] ) ) $callNext = $route['after'];
@@ -131,6 +131,15 @@ class WikiaDispatcher {
 
 				$controller = new $controllerClassName; /* @var $controller WikiaController */
 				$response->setTemplateEngine($controllerClassName::DEFAULT_TEMPLATE_ENGINE);
+
+				// uopz can not override classes returned by new operator when the class name is passed as a string
+				global $wgRunningUnitTests;
+				if ( $wgRunningUnitTests && function_exists( 'uopz_get_mock' ) ) {
+					$instance = uopz_get_mock( $controllerClassName );
+					if ( $instance ) {
+						$controller  = $instance;
+					}
+				}
 
 				if ( $callNext ) {
 					list ($nextController, $nextMethod, $resetData) = explode("::", $callNext);
@@ -288,7 +297,9 @@ class WikiaDispatcher {
 				case WikiaRequest::EXCEPTION_MODE_WRAP_AND_THROW:
 				default:
 					wfProfileOut(__METHOD__);
-					throw new WikiaDispatchedException( "Internal Throw ({$response->getException()->getMessage()})", $response->getException() );
+					$ex = $response->getException();
+					$ex_class = get_class( $ex );
+					throw new WikiaDispatchedException( "Internal Throw ({$ex_class}: {$ex->getMessage()})", $ex );
 			}
 		}
 

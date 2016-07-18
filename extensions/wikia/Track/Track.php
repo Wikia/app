@@ -65,7 +65,7 @@ class Track {
 		window.beacon_id = result[1];
 	} else {
 		// something went terribly wrong
-		document.write('<img src="http://logs-01.loggly.com/inputs/88a88e56-77c6-49cc-af41-6f44f83fe7fe.gif?message=wikia_beacon_id%20is%20empty"/>');
+		document.write('<img src="http://logs-01.loggly.com/inputs/88a88e56-77c6-49cc-af41-6f44f83fe7fe.gif?message=wikia_beacon_id%20is%20empty" style="position:absolute;top:-1000px" />');
 	}
 
 	var utma = RegExp("__utma=([0-9\.]+)").exec(document.cookie);
@@ -95,7 +95,7 @@ SCRIPT1;
 		$param['caller'] = "$class::$func:$line";
 
 		$url = Track::getURL('special', urlencode($event_type), $param, false);
-		if (Http::get($url) !== false) {
+		if (ExternalHttp::get($url) !== false) {
 			wfProfileOut(__METHOD__);
 			return true;
 		} else {

@@ -1,11 +1,13 @@
 define('wikia.ui.modal', [
 	'jquery',
 	'wikia.window',
-	'wikia.browserDetect'
+	'wikia.browserDetect',
+	'wikia.tracker'
 ], function (
 	$,
 	w,
-	browserDetect
+	browserDetect,
+	tracker
 ) {
 	'use strict';
 
@@ -44,7 +46,12 @@ define('wikia.ui.modal', [
 		},
 
 		// reference to UI component instance
-		uiComponent;
+		uiComponent,
+		track = tracker.buildTrackingFunction({
+			action: tracker.ACTIONS.CLICK,
+			category: 'ui-components-modal',
+			trackingMethod: 'analytics'
+		});
 
 	/**
 	 * THIS FUNCTION IS REQUIRED FOR EACH COMPONENT WITH AMD JS WRAPPER !!!!
@@ -200,6 +207,9 @@ define('wikia.ui.modal', [
 			var blackoutWasClicked = event.target === event.delegateTarget;
 
 			if (this.isShown() && this.isActive() && blackoutWasClicked) {
+				track({
+					label: 'modal-close-outside'
+				});
 				this.trigger('close', event);
 			}
 		}, self));
@@ -207,6 +217,9 @@ define('wikia.ui.modal', [
 		// attach close event to X icon in modal header
 		this.$close.click($.proxy(function (event) {
 			event.preventDefault();
+			track({
+				label: 'modal-close-button'
+			});
 			this.trigger('close', event);
 		}, self));
 
@@ -214,6 +227,9 @@ define('wikia.ui.modal', [
 		if (params.vars.escapeToClose) {
 			$(window).on('keydown.modal' + id, function (event) {
 				if (event.keyCode === 27) {
+					track({
+						label: 'modal-close-esc'
+					});
 					this.trigger('close', event);
 				}
 			}.bind(this));

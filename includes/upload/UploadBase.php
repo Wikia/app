@@ -123,15 +123,10 @@ abstract class UploadBase {
 		// Get the upload class
 		$type = ucfirst( $type );
 
-		// Give hooks the chance to handle this request
-		$className = null;
-		wfRunHooks( 'UploadCreateFromRequest', array( $type, &$className ) );
-		if ( is_null( $className ) ) {
-			$className = 'UploadFrom' . $type;
-			wfDebug( __METHOD__ . ": class name: $className\n" );
-			if( !in_array( $type, self::$uploadHandlers ) ) {
-				return null;
-			}
+		$className = 'UploadFrom' . $type;
+		wfDebug( __METHOD__ . ": class name: $className\n" );
+		if( !in_array( $type, self::$uploadHandlers ) ) {
+			return null;
 		}
 
 		// Check whether this upload class is enabled
@@ -1228,7 +1223,7 @@ abstract class UploadBase {
 				&& strpos( $value, '#' ) !== 0
 			) {
 				if ( !( $strippedElement === 'a'
-					&& preg_match( '!^https?://!im', $value ) )
+					&& preg_match( '!^https?://!i', $value ) )
 				) {
 					wfDebug( __METHOD__ . ": Found href attribute <$strippedElement "
 						. "'$attrib'='$value' in uploaded file.\n" );
@@ -1279,7 +1274,7 @@ abstract class UploadBase {
 			}
 
 
-			# use handler attribute with remote / data / script 
+			# use handler attribute with remote / data / script
 			if( $stripped == 'handler' &&  preg_match( '!(http|https|data|script):!sim', $value ) ) {
 				wfDebug( __METHOD__ . ": Found svg setting handler with remote/data/script '$attrib'='$value' in uploaded file.\n" );
 				return true;

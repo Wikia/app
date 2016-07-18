@@ -5,11 +5,9 @@
  */
 class UserLogRecord {
 	public $ip;
-	public $location;
-	public $language;
 	public $userAgent;
-	public $app;
+	public $site;
 	public $timestamp;
-	public $userId;
+	public $user;
 	public $userName;
 }

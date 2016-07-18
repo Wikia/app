@@ -24,10 +24,14 @@ define('ext.wikia.recirculation.views.incontent', [
 		}
 
 		// The idea is to show links above the first section under an infobox
-		width = $container.outerWidth();
+		width = $container.outerWidth(false);
 		firstSuitableSection = sections.filter(function(index, element) {
 			return element.offsetWidth === width;
 		}).first();
+
+		if (firstSuitableSection.length === 0) {
+			return false;
+		}
 
 		return firstSuitableSection;
 	}
@@ -39,6 +43,8 @@ define('ext.wikia.recirculation.views.incontent', [
 		if (!section) {
 			return deferred.reject('Recirculation in-content widget not shown - Not enough sections in article');
 		}
+
+		data.items = utils.addUtmTracking(data.items, 'incontent');
 
 		utils.renderTemplate('incontent.mustache', data).then(function($html) {
 			section.before($html);

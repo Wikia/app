@@ -1,57 +1,49 @@
+@import 'skins/shared/color';
 @import 'skins/shared/mixins/clearfix';
-@import 'skins/shared/mixins/transform';
+@import 'skins/shared/mixins/flexbox';
+@import 'variables';
 
 // Styles for the contributors module in-page and modal version
-.ContributorsModule {
+.contributors-module {
 	.avatar-container {
-		float: left;
-		margin-right: 10px;
+		display: inline-block;
+		margin: $avatar-margin;
+		vertical-align: middle;
 	}
 
-	.recently-joined {
-		clear: both;
-		display: block;
-		font-size: 14px;
-		line-height: 18px;
-		padding-top: 5px;
+	.community-page-anon-text {
+		margin-bottom: 15px;
 	}
 
+	.community-page-anon-text-modal {
+		padding: 25px 25px 15px;
+	}
 
-	.top-contributors, .top-admins {
-		font-size: 14px;
-		line-height: 20px;
+	.community-page-contributors-module-section {
+		margin-top: 12px;
 
-		li {
-			@include clearfix;
-			padding-bottom: 10px;
+		&:first-of-type {
+			margin-top: 0;
+		}
+
+		&.top-admins {
+			margin: 12px 0 18px;
 		}
 	}
 
-	.top-contributors {
-		font-size: 14px;
-		line-height: 20px;
-
-		.avatar-container {
-			@include transform-translate(0, 3px);
-		}
-
-		.contributor-details {
-			position: relative;
-		}
+	.community-page-contributor-details {
+		vertical-align: middle;
 	}
 
-	.top-admins {
-		.contributor-details {
-			@include transform-translate(0, 5px);
-			position: relative;
-		}
+	.community-page-contributor {
+		@include clearfix;
+		padding-bottom: 10px;
 	}
 
 	.user-details {
 		@include clearfix;
-		border-bottom: 2px solid $color-community-page-light-gray;
-		margin-bottom: 13px;
-		padding-bottom: 10px;
+		border-bottom: 2px solid $color-page-border-subtle;
+		margin-bottom: 12px;
 
 		> div {
 			float: left;
@@ -64,40 +56,93 @@
 		span {
 			display: block;
 			font-size: 16px;
-			line-height: 18px;
+			height: $module-default-line-height;
 			text-align: center;
 		}
 
-		.subtle {
-			color: $color-rank-subtle-text;
+		.community-page-rank {
+			margin-right: 28px;
+		}
+
+		.community-page-subtle {
+			color: $color-alternate-text;
 			font-size: 10px;
 			line-height: 12px;
 			text-transform: uppercase;
 		}
+	}
 
-		.rank {
-			margin-right: 28px;
+	.community-page-contributors-list-item {
+		@include flexbox();
+		@include align-items(flex-start);
+
+		padding: 12px 0 0;
+
+		&:first-of-type {
+			padding: 0;
+		}
+
+		.avatar-container {
+			@include flex($avatar-flex);
+		}
+
+		.community-page-contributor-rank {
+			padding: 6px 6px 0 0;
+		}
+
+		.community-page-contributor-details {
+			padding-top: 6px;
+		}
+
+		&.community-page-current-contributor {
+			border-color: $color-page-border;
+			font-weight: bold;
+		}
+
+		.community-page-details {
+			text-align: right;
+			white-space: nowrap;
 		}
 	}
 
-	&.ContributorsModuleModal {
-		padding: 0;
+	.community-page-zero {
+		margin: 12px 0;
+	}
 
-		> h2 {
-			display: none;
+	&.contributors-module-modal {
+		padding: 0 0 24px;
+
+		.community-page-all-contributors-legend {
+			color: $color-alternate-text;
+			font-size: 13px;
+			margin-top: 12px;
+			padding-right: 30px;
+			text-align: right;
 		}
 
 		.top-contributors {
 			padding: 0 $modal-horizontal-padding;
+		}
 
-			li {
-				border-bottom: 2px solid $color-activity-background;
-				padding: 15px 0;
+		.community-page-contributors-list-item {
+			border-bottom: 2px solid $color-page-border-subtle;
+			padding: 12px 0;
+
+			&:last-of-type {
+				border: 0;
 			}
 		}
 
+		.community-page-contributor-details {
+			@include flex(10 1 100%);
+		}
+
+		.community-page-details {
+			padding-top: 6px;
+		}
+
 		.user-details {
-			background: $color-activity-background;
+			background: $color-page-border-subtle;
 			border: 0;
 			margin: 0;
 			padding: 15px $modal-horizontal-padding;

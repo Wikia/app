@@ -28,10 +28,8 @@ class PowerUserHooks {
 	 * @return bool
 	 */
 	public function onNewRevisionFromEditComplete( $oArticle, $oRevision, $iBaseRevId, \User $oUser ) {
-		$oUserStatsService = new \UserStatsService( $oUser->getId() );
-
 		if ( !$oUser->isSpecificPowerUser( PowerUser::TYPE_LIFETIME ) &&
-			$oUserStatsService->getEditCountGlobal() > PowerUser::MIN_LIFETIME_EDITS
+			$oUser->getEditCount() > PowerUser::MIN_LIFETIME_EDITS
 		) {
 			$oPowerUser = new PowerUser( $oUser );
 			$oPowerUser->addPowerUserProperty( PowerUser::TYPE_LIFETIME );

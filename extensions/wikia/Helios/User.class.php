@@ -111,11 +111,13 @@ class User {
 						wfSetupSession($sessionId);
 						WikiaLogger::instance()->debug( __METHOD__ . '::startSession' );
 
-						// Update mTouched on user when he starts new MW session
-						// @see SOC-1326
-						$invalidateCacheThrottleTime = $request->getSessionData( self::INVALIDATE_CACHE_THROTTLE_SESSION_KEY );
+						// Update mTouched on user when he starts new MW session, but not too often
+						// @see SOC-1326 and SUS-546
+						global $wgMemc;
+						$throttleKey = wfSharedMemcKey( self::INVALIDATE_CACHE_THROTTLE_SESSION_KEY, $tokenInfo->user_id );
+						$invalidateCacheThrottleTime = $wgMemc->get( $throttleKey );
 						if ( $invalidateCacheThrottleTime === null || $invalidateCacheThrottleTime < time() ) {
-							$request->setSessionData( self::INVALIDATE_CACHE_THROTTLE_SESSION_KEY, time() + self::INVALIDATE_CACHE_THROTTLE );
+							$wgMemc->set( $throttleKey, time() + self::INVALIDATE_CACHE_THROTTLE, self::INVALIDATE_CACHE_THROTTLE);
 							$user->invalidateCache();
 						}
 					}

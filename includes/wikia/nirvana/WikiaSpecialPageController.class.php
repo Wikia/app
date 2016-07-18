@@ -10,12 +10,40 @@
  * @author Wojciech Szela <wojtek(at)wikia-inc.com>
  *
  * Methods automagically called from SpecialPage class via __call method:
- * @method setHeaders
- * @method checkPermissions
- * @method displayRestrictionError
- * @method msg
- * @method includable
- * @method userCanExecute
+ * @method checkPermissions()
+ * @method checkReadOnly()
+ * @method displayRestrictionError()
+ * @method mixed file( $x = null )
+ * @method mixed func( $x = null )
+ * #method IContextSource|RequestContext getContext()
+ * @method string getDescription()
+ * @method string getFile()
+ * @method Title getFullTitle()
+ * @method Language getLang()
+ * @method Language getLanguage()
+ * @method string getLocalName()
+ * @method string getName()
+ * @method OutputPage getOutput()
+ * #method WebRequest getRequest()
+ * @method string getRestriction()
+ * @method Skin getSkin()
+ * @method Title getTitle( $subpage = false )
+ * @method User getUser()
+ * @method mixed includable( $x = null )
+ * @method bool including( $x = null )
+ * @method bool isExpensive()
+ * @method bool isIncludable()
+ * @method bool isListed()
+ * @method bool isRestricted()
+ * @method bool listed( $x = null )
+ * @method Message msg()
+ * @method mixed name( $x = null )
+ * @method outputHeader( $summaryMessageKey = '' )
+ * @method mixed restriction( $x = null )
+ * #method setContext( IContextSource $context )
+ * @method setHeaders()
+ * @method bool setListed( $listed )
+ * @method bool userCanExecute( User $user )
  */
 class WikiaSpecialPageController extends WikiaController {
 	protected $specialPage = null;

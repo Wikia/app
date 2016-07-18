@@ -15,9 +15,9 @@ class RecirculationController extends WikiaController {
 	}
 
 	public function index() {
-		$fandomDataService = new FandomDataService();
+		$dataService = new ParselyDataService();
 
-		$posts = $fandomDataService->getPosts( $this->type );
+		$posts = $dataService->getPosts( $this->type );
 
 		if ( count( $posts ) > 0 ) {
 			$this->response->setCacheValidity( WikiaResponse::CACHE_VERY_SHORT );
@@ -32,14 +32,18 @@ class RecirculationController extends WikiaController {
 	}
 
 	public function discussions() {
-		global $wgCityId;
+		$cityId = $this->request->getVal( 'cityId', null );
 
-		if ( RecirculationHooks::canShowDiscussions() ) {
-			$discussionsDataService = new DiscussionsDataService();
+		if ( !empty( $cityId ) && !is_numeric( $cityId ) ) {
+			throw new InvalidParameterApiException( 'cityId' );
+		}
+
+		if ( RecirculationHooks::canShowDiscussions( $cityId ) ) {
+			$discussionsDataService = new DiscussionsDataService( $cityId );
 			$posts = $discussionsDataService->getPosts();
 
 			if ( count( $posts ) > 0 ) {
-				$discussionsUrl = "/d/f/$wgCityId/trending";
+				$discussionsUrl = "/d/f/$cityId/trending";
 
 				$this->response->setCacheValidity( WikiaResponse::CACHE_VERY_SHORT );
 				$this->response->setData( [

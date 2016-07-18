@@ -2,10 +2,9 @@
 
 class AnalyticsProviderNielsen implements iAnalyticsProvider {
 
-	private static $apid = 'T26086A07-C7FB-4124-A679-8AC404198BA7';
 	private static $bodyTemplate = 'extensions/wikia/AnalyticsEngine/templates/nielsen.body.mustache';
 	private static $headTemplate = 'extensions/wikia/AnalyticsEngine/templates/nielsen.head.mustache';
-	private static $libraryUrl = 'http://secure-dcr-cert.imrworldwide.com/novms/js/2/ggcmb500.js';
+	private static $libraryUrl = 'http://secure-dcr.imrworldwide.com/novms/js/2/ggcmb500.js';
 
 	function getSetupHtml( $params=array() ) {
 		return null;
@@ -23,7 +22,7 @@ class AnalyticsProviderNielsen implements iAnalyticsProvider {
 				return \MustacheService::getInstance()->render(
 					self::$bodyTemplate,
 					[
-						'appId' => self::$apid,
+						'appId' => self::getApid(),
 						'section' => HubService::getVerticalNameForComscore( $wgCityId ),
 						'dbName' => $wgDBname
 					]
@@ -53,5 +52,11 @@ class AnalyticsProviderNielsen implements iAnalyticsProvider {
 		global $wgEnableNielsen, $wgNoExternals;
 
 		return $wgEnableNielsen && !$wgNoExternals;
+	}
+
+	static public function getApid() {
+		global $wgNielsenApid;
+
+		return $wgNielsenApid;
 	}
 }

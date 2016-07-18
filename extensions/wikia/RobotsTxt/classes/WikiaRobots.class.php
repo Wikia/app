@@ -92,45 +92,6 @@ class WikiaRobots {
 	];
 
 	/**
-	 * Robots we want block on robots.txt level
-	 *
-	 * Only applied if $wgRobotsTxtRemoveDeprecatedDirectives = false
-	 *
-	 * @var string[]
-	 */
-	private $blockedRobots = [
-		'IsraBot',
-		'Orthogaffe',
-		'UbiCrawler',
-		'DOC',
-		'Zao',
-		'sitecheck.internetseer.com',
-		'Zealbot',
-		'MSIECrawler',
-		'SiteSnagger',
-		'WebStripper',
-		'WebCopier',
-		'Fetch',
-		'Offline Explorer',
-		'Teleport',
-		'TeleportPro',
-		'WebZIP',
-		'linko',
-		'HTTrack',
-		'Microsoft.URL.Control',
-		'Xenu',
-		'larbin',
-		'libwww',
-		'ZyBORG',
-		'Download Ninja',
-		'sitebot',
-		'wget',
-		'k2spider',
-		'NPBot',
-		'WebReaper',
-	];
-
-	/**
 	 * Whether the current robots setup is experimental or not
 	 * This switches the cache time from 24 hours to 1 hour
 	 * @var bool
@@ -150,7 +111,11 @@ class WikiaRobots {
 	 * @param PathBuilder $pathBuilder
 	 */
 	public function __construct( PathBuilder $pathBuilder ) {
-		global $wgRequest, $wgRobotsTxtCustomRules, $wgWikiaEnvironment;
+		global $wgAllowSpecialImagesInRobots,
+			   $wgEnableLocalSitemap,
+			   $wgRequest,
+			   $wgRobotsTxtCustomRules,
+			   $wgWikiaEnvironment;
 
 		$this->pathBuilder = $pathBuilder;
 		$this->accessAllowed = ( $wgWikiaEnvironment === WIKIA_ENV_PROD || $wgRequest->getBool( 'forcerobots' ) );
@@ -217,19 +182,6 @@ class WikiaRobots {
 		// Allow special pages
 		foreach ( array_keys( $this->allowedSpecialPages ) as $page ) {
 			$robots->addAllowedPaths( $this->pathBuilder->buildPathsForSpecialPage( $page, true ) );
-		}
-
-		if ( empty( $wgRobotsTxtRemoveDeprecatedDirectives ) ) {
-			// Block robots
-			$robots->addBlockedRobots( $this->blockedRobots );
-
-			// Deprecated items, probably we should delete them
-			$robots->addDisallowedPaths( [
-				'/w/',
-				'/trap/',
-				'/dbdumps/',
-				'/wikistats/',
-			] );
 		}
 
 		return $robots;
