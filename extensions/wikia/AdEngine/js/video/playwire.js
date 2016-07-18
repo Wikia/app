@@ -1,9 +1,9 @@
 /*global define*/
 define('ext.wikia.adEngine.video.playwire', [
-	'ext.wikia.adEngine.video.dfpVastUrl',
+	'ext.wikia.adEngine.video.vastBuilder',
 	'wikia.document',
 	'wikia.log'
-], function (dfpVastUrl, doc, log) {
+], function (vastBuilder, doc, log) {
 	'use strict';
 	var logGroup = 'ext.wikia.adEngine.video.playwire',
 		playerUrl = '//cdn.playwire.com/bolt/js/zeus/embed.js';
@@ -16,15 +16,11 @@ define('ext.wikia.adEngine.video.playwire', [
 		var script = doc.createElement('script');
 
 		if (!vastUrl) {
-			vastUrl = dfpVastUrl.build();
+			vastUrl = vastBuilder.build();
 		}
 
 		script.setAttribute('data-config', configUrl);
-
 		script.setAttribute('data-ad-tag', vastUrl);
-		script.setAttribute('data-desktop-ad-tag', vastUrl);
-		script.setAttribute('data-html5-ad-tag', vastUrl);
-		script.setAttribute('data-mobile-ad-tag', vastUrl);
 
 		script.setAttribute('type', 'text/javascript');
 		script.src = playerUrl;

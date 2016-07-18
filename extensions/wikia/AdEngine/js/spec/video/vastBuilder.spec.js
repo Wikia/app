@@ -1,5 +1,5 @@
 /*global describe, it, expect, modules, beforeEach, spyOn*/
-describe('ext.wikia.adEngine.video.dfpVastUrl', function () {
+describe('ext.wikia.adEngine.video.vastBuilder', function () {
 	'use strict';
 
 	function noop () {}
@@ -25,7 +25,7 @@ describe('ext.wikia.adEngine.video.dfpVastUrl', function () {
 		};
 
 	function getModule() {
-		return modules['ext.wikia.adEngine.video.dfpVastUrl'](
+		return modules['ext.wikia.adEngine.video.vastBuilder'](
 			mocks.adContext,
 			mocks.page,
 			mocks.loc,
