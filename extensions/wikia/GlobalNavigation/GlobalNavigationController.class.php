@@ -37,14 +37,29 @@ class GlobalNavigationController extends WikiaController {
 
 		$this->response->setVal( 'centralUrl', $this->wikiaLogoHelper->getMainCorpPageURL() );
 		$this->response->setVal( 'createWikiUrl', $createWikiUrl );
-		$this->response->setVal( 'notificationsEnabled', !empty( $userCanRead ) );
-		$this->response->setVal( 'isAnon', $wgUser->isAnon() );
+		$this->response->setVal( 'showNotifs', !$wgUser->isAnon() && !empty( $userCanRead ) );
 
 		$isGameStarLogoEnabled = $this->isGameStarLogoEnabled();
 		$this->response->setVal( 'isGameStarLogoEnabled', $isGameStarLogoEnabled );
 		if ( $isGameStarLogoEnabled ) {
 			$this->response->addAsset( 'extensions/wikia/GlobalNavigation/styles/GlobalNavigationGameStar.scss' );
 		}
+
+		// MW messages
+		$this->response->setValues( [
+			'msg-oasis-global-page-header' => wfMessage( 'oasis-global-page-header' )->text(),
+			'msg-global-navigation-home-of-fandom' => wfMessage( 'global-navigation-home-of-fandom' )->text(),
+			'msg-global-navigation-create-wiki' => wfMessage( 'global-navigation-create-wiki' )->text()
+		] );
+
+		// html
+		$this->response->setValues( [
+			'searchIndex' => $this->app->renderView( 'GlobalNavigation', 'searchIndex' ),
+			'accNav' => $this->app->renderView( 'GlobalNavigationAccountNavigation', 'index' ),
+			'wallNotifs' => $this->app->renderView( 'GlobalNavigationWallNotifications', 'Index' )
+		] );
+
+		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 	}
 
 	public function searchIndex() {

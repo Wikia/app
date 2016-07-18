@@ -1,0 +1,85 @@
+<!-- :-{ -->
+<nav class="global-navigation" id="globalNavigation">
+    <div class="global-navigation-container">
+        <div class="wikia-logo-container table-cell">
+            <a href="{{centralUrl}}"
+               class="wikia-logo final-url"
+               rel="nofollow"
+               data-id="wikia-logo">
+                <img src="{{blankImgUrl}}"
+                     height="24"
+                     width="91"
+                     alt="{{msg-oasis-global-page-header}}"
+                     title="{{msg-oasis-global-page-header}}">
+                {{#isFandomExposed}}
+                <span class="wikia-logo__subtitle">{{msg-global-navigation-home-of-fandom}}</span>
+                {{/isFandomExposed}}
+            </a>
+        </div >
+        {{#menuContents}}
+        <div class="table-cell hubs-links" data-visibility="desktop">
+            {{#hubs}}
+            <a class="cell-link top-level" href="{{href}}"
+               data-tracking-label="hub-{{specialAttr}}">
+                {{{textEscaped}}}
+            </a>
+            {{/hubs}}
+        </div>
+        <div class="table-cell">
+            <div class="explore-wikia-entry-point" id="exploreWikiaEntryPoint">
+                {{#exploreWikia}}
+                <a class="cell-link top-level final-url"
+                   href="{{href}}"
+                   data-tracking-label="{{trackingLabel}}">
+                    {{{textEscaped}}}
+                    <img class="chevron" src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D"/>
+                </a>
+                {{/exploreWikia}}
+                <ul class="explore-wikia-dropdown" id="exploreWikiaDropdown">
+                    {{#hubs}}
+                    <li>
+                        <a class="cell-link"
+                           data-visibility="tablet"
+                           href="{{href}}"
+                           data-tracking-label="hub-{{specialAttr}}">
+                            {{{textEscaped}}}
+                        </a>
+                    </li>
+                    {{/hubs}}
+                   {{#exploreDropdown}}
+                    <li>
+                        <a class="cell-link"
+                           href="{{href}}"
+                           data-tracking-label="{{trackingLabel}}">
+                            {{{textEscaped}}}
+                        </a>
+                    </li>
+                   {{/exploreDropdown}}
+                </ul>
+            </div>
+        {{/menuContents}}
+        </div>
+        <div class="search-container table-cell">
+            {{{searchIndex}}}
+        </div>
+        <div class="account-navigation-container table-cell">
+            {{{accNav}}}
+        </div>
+        {{#showNotifs}}
+        <div class="notifications-container table-cell" id="notificationsEntryPoint">
+            {{{wallNotifs}}}
+        </div>
+        {{/showNotifs}}
+        <div class="start-wikia-container table-cell">
+            <a href="{{createWikiUrl}}"
+               class="start-wikia"
+               title="{{msg-global-navigation-create-wiki}}"
+               data-id="start-wikia">
+                <span>{{msg-global-navigation-create-wiki}}</span>
+            </a>
+        </div>
+        {{#isGameStarLogoEnabled}}
+        <a class="gamestar-logo" href="http://gamestar.de/"></a>
+        {{/isGameStarLogoEnabled}}
+    </div>
+</nav>
