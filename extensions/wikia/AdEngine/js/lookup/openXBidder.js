@@ -5,10 +5,11 @@ define('ext.wikia.adEngine.lookup.openXBidder', [
 	'ext.wikia.adEngine.lookup.lookupFactory',
 	'ext.wikia.adEngine.slot.adSlot',
 	'ext.wikia.adEngine.utils.adLogicZoneParams',
+	'ext.wikia.adEngine.lookup.openx.openXBidderHelper',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window'
-], function (adContext, factory, adSlot, adLogicZoneParams, doc, log, win) {
+], function (adContext, factory, adSlot, adLogicZoneParams, openXHelper, doc, log, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.lookup.openXBidder',
@@ -53,32 +54,33 @@ define('ext.wikia.adEngine.lookup.openXBidder', [
 		slots = [];
 
 	function configureHomePageSlots() {
-		var slotName;
+		var slotName, slots = openXHelper.getSlots();
 		for (slotName in slots) {
 			if (slots.hasOwnProperty(slotName) && slotName.indexOf('TOP') > -1) {
-				slots['HOME_' + slotName] = slots[slotName];
-				delete slots[slotName];
+				openXHelper.addSlot('HOME_' + slotName, slots[slotName]);
+				openXHelper.removeSlot(slotName);
 			}
 		}
-		slots.PREFOOTER_MIDDLE_BOXAD = {sizes: ['300x250']};
+		openXHelper.addSlot("PREFOOTER_MIDDLE_BOXAD", {sizes: ['300x250']});
 	}
 
 	function getSlots(skin) {
 		var context = adContext.getContext(),
 			pageType = context.targeting.pageType;
 
-		slots = config[skin];
+		openXHelper.setSlots(config[skin]);
 		if (skin === 'oasis' && pageType === 'home') {
 			configureHomePageSlots();
 		}
 
-		return slots;
+		return openXHelper.getSlots();
 	}
 
 	function getAds() {
 		var ads = [],
 			sizes,
 			slotName,
+			slots = openXHelper.getSlots(),
 			slotPath = [
 				'/5441',
 				'wka.' + adLogicZoneParams.getSite(),
@@ -157,7 +159,7 @@ define('ext.wikia.adEngine.lookup.openXBidder', [
 		var openx = doc.createElement('script'),
 			node = doc.getElementsByTagName('script')[0];
 
-		slots = getSlots(skin);
+		openXHelper.setSlots(getSlots(skin));
 		win.OX_dfp_ads = getAds();
 
 		win.OX_dfp_options = {
@@ -182,7 +184,7 @@ define('ext.wikia.adEngine.lookup.openXBidder', [
 	}
 
 	function isSlotSupported(slotName) {
-		return slots[slotName];
+		return openXHelper.getSlots()[slotName];
 	}
 
 	return factory.create({

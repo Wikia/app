@@ -2,8 +2,9 @@
 /*jshint maxlen: 150*/
 define('ext.wikia.adEngine.provider.directGpt', [
 	'ext.wikia.adEngine.provider.factory.wikiaGpt',
-	'ext.wikia.adEngine.slotTweaker'
-], function (factory, slotTweaker) {
+	'ext.wikia.adEngine.slotTweaker',
+	'ext.wikia.adEngine.lookup.openx.openXBidderHelper'
+], function (factory, slotTweaker, openXHelper) {
 	'use strict';
 
 	return factory.createProvider(
@@ -56,6 +57,11 @@ define('ext.wikia.adEngine.provider.directGpt', [
 				if (!slotTweaker.isUniversalAdPackageLoaded()) {
 					slotTweaker.removeTopButtonIfNeeded(slotName);
 					slotTweaker.adjustLeaderboardSize(slotName);
+				}
+			},
+			beforeHop: function(slotName) {
+				if (Wikia.geo.getCountryCode() === 'NZ') {
+					openXHelper.addOpenXSlot(slotName);
 				}
 			},
 			sraEnabled: true,
