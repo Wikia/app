@@ -299,11 +299,8 @@ class WikiaView {
 
 		switch($this->response->getTemplateEngine()) {
 			case WikiaResponse::TEMPLATE_ENGINE_MUSTACHE:
-				$templatePath = $this->getTemplatePath();
-				wfProfileIn( __METHOD__ . ' - template: ' . $templatePath );
 				$m = MustacheService::getInstance();
-				$result = $m->render( $templatePath, $data );
-				wfProfileOut( __METHOD__ . ' - template: ' . $templatePath );
+				$result = $m->render( $this->getTemplatePath(), $data );
 				wfProfileOut(__METHOD__);
 
 				return $result;

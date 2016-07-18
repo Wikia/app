@@ -24,7 +24,6 @@ class GlobalNavigationController extends WikiaController {
 	}
 
 	public function index() {
-		wfProfileIn( __METHOD__ );
 		global $wgLang, $wgUser;
 
 		Wikia::addAssetsToOutput( 'global_navigation_scss' );
@@ -61,7 +60,6 @@ class GlobalNavigationController extends WikiaController {
 		] );
 
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
-		wfProfileOut( __METHOD__ );
 	}
 
 	public function searchIndex() {

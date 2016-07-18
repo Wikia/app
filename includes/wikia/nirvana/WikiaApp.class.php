@@ -715,9 +715,9 @@ class WikiaApp {
 	 */
 
 	public function renderView( $controllerName, $method, Array $params = null ) {
-		wfProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__ . "$controllerName::$method");
 		$out = $this->sendRequest( $controllerName, $method, $params, true )->toString();
-		wfProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__ . "$controllerName::$method");
 		return $out;
 	}
 
