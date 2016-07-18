@@ -463,6 +463,44 @@ describe('AdContext', function () {
 		expect(getModule().getContext().opts.sourcePointDetection).toBeFalsy();
 	});
 
+	it('enables detection when url param pagefairdetection is set', function () {
+		spyOn(mocks.querystring, 'getVal').and.callFake(function (param) {
+			return param === 'pagefairdetection' ?  '1' : '0';
+		});
+
+		expect(getModule().getContext().opts.pageFairDetection).toBeTruthy();
+	});
+
+	it('disable detection when noExtenals is set and pagefairdetection is set', function () {
+		spyOn(mocks.querystring, 'getVal').and.callFake(function (param) {
+		var result = ['noexternals', 'pagefairdetection'].indexOf(param) !== -1;
+			return result ? '1' : '0';
+		});
+
+		expect(getModule().getContext().opts.pageFairDetection).toBeFalsy();
+	});
+
+	it('enable PageFair detection for current country on whitelist', function () {
+		mocks.instantGlobals = {wgAdDriverPageFairDetectionCountries: ['CURRENT_COUNTRY', 'ZZ']};
+		expect(getModule().getContext().opts.pageFairDetection).toBeTruthy();
+	});
+
+	it('disable PageFair detection when current country is not on whitelist', function () {
+
+		mocks.instantGlobals = {wgAdDriverPageFairDetectionCountries: ['OTHER_COUNTRY', 'ZZ']};
+		expect(getModule().getContext().opts.pageFairDetection).toBeFalsy();
+	});
+
+	it('enables detection when url param sourcepointdetection is set and current country is on whitelist', function () {
+		mocks.instantGlobals = {wgAdDriverPageFairDetectionCountries: ['CURRENT_COUNTRY', 'ZZ']};
+		spyOn(mocks.querystring, 'getVal').and.callFake(function (param) {
+			var result = ['pagefairdetection'].indexOf(param) !== -1;
+			return result ? '1' : '0';
+		});
+
+		expect(getModule().getContext().opts.pageFairDetection).toBeTruthy();
+	});
+
 	it('enables detection when url param sourcepointdetection is set', function () {
 		mocks.win = {
 			ads: {
