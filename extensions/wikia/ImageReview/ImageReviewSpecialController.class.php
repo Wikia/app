@@ -142,6 +142,10 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 			$this->imageCount = $helper->getImageCount();
 		}
 
+		$this->imageCount = array_map(function($number) {
+			return $this->wg->Lang->formatNum($number);
+		}, $this->imageCount);
+
 		/* SUS-541 / Mix <mix@wikia.com> / scope: the following if block */
 		if ( count( $this->imageList ) < ImageReviewHelper::LIMIT_IMAGES ) {
 			$severity = 'error';
