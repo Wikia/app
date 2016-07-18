@@ -59,9 +59,6 @@ define('ext.wikia.adEngine.provider.directGpt', [
 					slotTweaker.adjustLeaderboardSize(slotName);
 				}
 			},
-			beforeHop: function(slotName) {
-				openXHelper.addOpenXSlot(slotName);
-			},
 			sraEnabled: true,
 			recoverableSlots: [
 				'TOP_LEADERBOARD',
