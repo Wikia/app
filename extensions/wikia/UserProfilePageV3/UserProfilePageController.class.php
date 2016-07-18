@@ -181,20 +181,21 @@ class UserProfilePageController extends WikiaController {
 		}
 
 		$actionButtonArray = [ ];
+		$canSessionUserEdit = $this->title->userCan( 'edit', $sessionUser );
 		if ( $namespace == NS_USER ) {
 			// profile page
 			$actionButtonArray = [
 				'action' => [
 					'href'      => $this->title->getLocalURL( $editQuery ),
-					'text'      => wfMessage( 'user-action-menu-edit-profile' )->escaped(),
+					'text'      => $canSessionUserEdit ? wfMessage( 'user-action-menu-edit-profile' )->escaped() : wfMessage( 'viewsource' )->escaped(),
 					'id'        => 'ca-edit',
-					'accesskey' => wfMessage( 'accesskey-ca-edit' )->escaped(),
+					'accesskey' => $canSessionUserEdit ? wfMessage( 'accesskey-ca-edit' )->escaped() : wfMessage( 'accesskey-ca-viewsource' )->escaped(),
 				],
-				'image'  => MenuButtonController::EDIT_ICON,
+				'image'  => $canSessionUserEdit ? MenuButtonController::EDIT_ICON : MenuButtonController::LOCK_ICON,
 				'name'   => 'editprofile',
 			];
 		} else {
-			if ( $namespace == NS_USER_TALK && empty( $this->app->wg->EnableWallExt ) ) {
+			if ( $namespace == NS_USER_TALK && empty( $this->wg->EnableWallExt ) ) {
 				// talk page
 				/**
 				 * @var $title Title
@@ -208,22 +209,22 @@ class UserProfilePageController extends WikiaController {
 						$actionButtonArray = [
 							'action' => [
 								'href'      => $this->title->getLocalURL( $editQuery ),
-								'text'      => wfMessage( 'user-action-menu-edit' )->escaped(),
+								'text'      => $canSessionUserEdit ? wfMessage( 'user-action-menu-edit' )->escaped() : wfMessage( 'viewsource' )->escaped(),
 								'id'        => 'ca-edit',
-								'accesskey' => wfMessage( 'accesskey-ca-edit' )->escaped(),
+								'accesskey' => $canSessionUserEdit ? wfMessage( 'accesskey-ca-edit' )->escaped() : wfMessage( 'accesskey-ca-viewsource' )->escaped(),
 							],
-							'image'  => MenuButtonController::EDIT_ICON,
+							'image'  => $canSessionUserEdit ? MenuButtonController::EDIT_ICON : MenuButtonController::LOCK_ICON,
 							'name'   => 'editprofile',
 						];
 					} else {
 						$actionButtonArray = [
 							'action'   => [
 								'href'      => $title->getLocalURL( array_merge( $editQuery, [ 'section' => 'new' ] ) ),
-								'text'      => wfMessage( 'user-action-menu-leave-message' )->escaped(),
+								'text'      => $canSessionUserEdit ? wfMessage( 'user-action-menu-leave-message' )->escaped() : wfMessage( 'viewsource' )->escaped(),
 								'id'        => 'ca-addsection',
-								'accesskey' => wfMessage( 'accesskey-ca-addsection' )->escaped(),
+								'accesskey' => $canSessionUserEdit ? wfMessage( 'accesskey-ca-addsection' )->escaped() : wfMessage( 'accesskey-ca-viewsource' )->escaped(),
 							],
-							'image'    => MenuButtonController::MESSAGE_ICON,
+							'image'    => $canSessionUserEdit ? MenuButtonController::MESSAGE_ICON :MenuButtonController::LOCK_ICON,
 							'name'     => 'leavemessage',
 							'dropdown' => [
 								'edit' => [
