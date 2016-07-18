@@ -109,6 +109,12 @@ define('CommunityPageBenefitsModal',
 
 			// Bind tracking modal close
 			modalInstance.bind('close', function () {
+				cookies.set('cpBenefitsModalClosed', 1, {
+					domain: mw.config.get('wgCookieDomain'),
+					expires: 2592000000, // 30 days
+					path: mw.config.get('wgCookiePath')
+				});
+
 				track({
 					action: tracker.ACTIONS.CLOSE,
 					label: 'modal-closed'
