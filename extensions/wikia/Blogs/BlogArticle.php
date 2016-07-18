@@ -372,9 +372,9 @@ class BlogArticle extends Article {
 			$r = "<div id=\"mw-pages\">\n";
 			$r .= '<h2>' . wfMsg( "blog-header", $ti ) . "</h2>\n";
 			$r .= $countmsg;
-			$r .= $catView->getSectionPagingLinks( 'page' );
+			$r .= $catView->getSectionPagingLinksExt( 'page' );
 			$r .= $catView->formatList( array_values( $catView->blogs ), $catView->blogs_start_char );
-			$r .= $catView->getSectionPagingLinks( 'page' );
+			$r .= $catView->getSectionPagingLinksExt( 'page' );
 			$r .= "\n</div>";
 		}
 		$output = $r;
