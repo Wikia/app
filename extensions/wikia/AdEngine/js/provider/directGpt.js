@@ -59,11 +59,6 @@ define('ext.wikia.adEngine.provider.directGpt', [
 					slotTweaker.adjustLeaderboardSize(slotName);
 				}
 			},
-			beforeHop: function(slotName) {
-				if (Wikia.geo.getCountryCode() === 'NZ') {
-					openXHelper.addOpenXSlot(slotName);
-				}
-			},
 			sraEnabled: true,
 			recoverableSlots: [
 				'TOP_LEADERBOARD',

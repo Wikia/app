@@ -111,9 +111,7 @@ define('ext.wikia.adEngine.provider.evolve2', [
 		});
 		slot.pre('hop', function() {
 			dispatchNoUapEvent(slot.name);
-			if (Wikia.geo.getCountryCode() === 'NZ') {
-				openXHelper.addOpenXSlot(slot.name);
-			}
+			openXHelper.addOpenXSlot(slot.name);
 		});
 		gptHelper.pushAd(
 			slot,

@@ -2,9 +2,10 @@
 /*jshint camelcase:false*/
 define('ext.wikia.adEngine.lookup.openx.openXBidderHelper', [
 	'ext.wikia.adEngine.utils.adLogicZoneParams',
+	'wikia.geo',
 	'wikia.log',
 	'wikia.window'
-], function (adLogicZoneParams, log, win) {
+], function (adLogicZoneParams, geo, log, win) {
 	'use strict';
 
 	var slots = [],
@@ -27,13 +28,17 @@ define('ext.wikia.adEngine.lookup.openx.openXBidderHelper', [
 		delete slots[slotName];
 	}
 
+	function openXRemnantEnabled() {
+		return geo.getCountryCode() === 'NZ';
+	}
+
 	function addOpenXSlot(slotName) {
-		if (isSlotSupported(slotName)) {
+		if (openXRemnantEnabled() && isSlotSupported(slotName)) {
 			log(['addOpenXSlot', slotName], 'debug', logGroup);
 			changeTimeout();
 			win.OX.dfp_bidder.addSlots([[getPagePath(), slots[slotName].sizes, getSlothPath(slotName)]]);
 		} else {
-			log(['addOpenXSlot', slotName, 'Slot not supported'], 'debug', logGroup);
+			log(['addOpenXSlot', slotName, geo.getCountryCode(), 'Slot not supported'], 'debug', logGroup);
 		}
 	}
 
@@ -44,33 +49,10 @@ define('ext.wikia.adEngine.lookup.openx.openXBidderHelper', [
 		if (!timeoutChanged) {
 			log(['changeTimeout'], 'debug', logGroup);
 			win.OXHBConfig.DFP_mapping.timeout = 0;
+			timeoutChanged = false;
 		}
 	}
 
-	//function setSlotTargeting(slotName, src) {
-	//	//var ads = getAdsWithNewSlot(slotName, src);
-	//	//OX.dfp_bidder.setOxTargeting(ads);
-	//	var ads = window.googletag.pubads().getSlots().slice();
-	//	ads.push(ads[1]);
-	//	ads[ads.length-1].G = "/5441/wka.life/_adtest//article/remnant/TOP_RIGHT_BOXAD";
-	//	OX.dfp_bidder.setOxTargeting(ads);
-	//}
-	//
-	//function getAdsWithNewSlot(slotName) {
-	//	var ads = win.googletag.pubads().getSlots().slice(), adToPush;
-	//
-	//	ads.forEach( function(ad, index) {
-	//		if (ad.G.indexOf(slotName) > -1) {
-	//			adToPush = ads.slice(index, index+1);
-	//			adToPush.G = getSlothPath(slotName);
-	//		}
-	//	});
-	//
-	//	adToPush && ads.push(adToPush);
-	//
-	//	return ads;
-	//}
-	//
 	function getPagePath() {
 		return [
 			'/5441',
