@@ -6,7 +6,7 @@ define('ext.wikia.adEngine.video.dfpVastUrl', [
 	'wikia.log'
 ], function (adContext, page, loc, log) {
 	'use strict';
-	var adUnitId = '/5441/WIKIA_ATG',
+	var adUnitId = '/5441/VIDEO_ATG',
 		adSize = '640x480',
 		baseUrl = 'https://pubads.g.doubleclick.net/gampad/ads?',
 		correlator = Math.round(Math.random() * 10000000000),

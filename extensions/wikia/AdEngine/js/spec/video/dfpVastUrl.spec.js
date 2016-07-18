@@ -52,7 +52,7 @@ describe('ext.wikia.adEngine.video.dfpVastUrl', function () {
 	it('Build VAST URL with ad unit id', function () {
 		var vastUrl = getModule().build();
 
-		expect(vastUrl).toMatch(/&iu=\/5441\/WIKIA_ATG&/g);
+		expect(vastUrl).toMatch(/&iu=\/5441\/VIDEO_ATG&/g);
 	});
 
 	it('Build VAST URL with ad size', function () {
