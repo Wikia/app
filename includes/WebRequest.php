@@ -1134,6 +1134,23 @@ HTML;
 	public function isWikiaInternalRequest() {
 		return $this->getHeader( self::WIKIA_INTERNAL_REQUEST_HEADER ) !== false;
 	}
+
+	const WIKIA_INTERNAL_AUTHORIZED_REQUEST_HEADER = 'X-Wikia-Schwartz';
+
+	/**
+	 * Use X-Wikia-Schwartz to authorize an internal request using a Schwartz token,
+	 * e.g. was sent via Http::get() helper or made by DC warmer
+	 *
+	 * @see SOC-1892
+	 *
+	 * @return bool
+	 */
+	public function isWikiaInternalAuthorizedRequest() {
+		global $wgTheSchwartzSecretToken;
+
+		return $this->getHeader( self::WIKIA_INTERNAL_AUTHORIZED_REQUEST_HEADER ) ===
+			$wgTheSchwartzSecretToken;
+	}
 }
 
 /**
