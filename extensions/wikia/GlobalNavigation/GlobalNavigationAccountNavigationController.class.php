@@ -27,8 +27,9 @@ class GlobalNavigationAccountNavigationController extends WikiaController {
 		if ( $this->isAnon ) {
 			$this->navItemLinkOpeningTag = $this->renderPersonalUrl( 'login', true );
 			$this->avatarContainerAdditionalClass = ' anon-avatar-placeholder';
-			$this->loginDropdown = F::app()->renderView( 'UserLoginSpecial', 'dropdown', [ 'template' => 'globalNavigationDropdown', 'registerLink' => $this->renderPersonalUrl( 'register' ) ] );
-
+			if ( !$wgEnableNewAuthModal ) {
+				$this->loginDropdown = F::app()->renderView( 'UserLoginSpecial', 'dropdown', [ 'template' => 'globalNavigationDropdown', 'registerLink' => $this->renderPersonalUrl( 'register' ) ] );
+			}
 			if ($wgEnableNewAuthModal) {
 				$this->authOptions = $this->getAuthOptions();
 			}
@@ -68,7 +69,7 @@ class GlobalNavigationAccountNavigationController extends WikiaController {
 			$dropdownItems[] = $this->renderPersonalUrl( 'logout', false );
 			$this->userDropdown = $dropdownItems;
 		}
-
+		$this->showChevron = !($this->isAnon && $this->enableNewAuthModal);
 		wfProfileOut( __METHOD__ );
 	}
 

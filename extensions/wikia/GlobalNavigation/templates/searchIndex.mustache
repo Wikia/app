@@ -1,0 +1,22 @@
+<div class="search-form-wrapper">
+    <form action="{{defaultSearchUrl}}" class="search-form" id="searchForm" method="get">
+        <div class="global-nav-search-input-wrapper">
+            <div class="search-select-wrapper">
+                <div class="search-select-underlay">
+                    <div class="search-icon"></div>
+                    {{^disableLocalSearchOptions}}
+                    <img class="chevron" src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D"/>
+                    <select class="search-select" id="searchSelect">
+                        <option value="local" selected="selected" data-placeholder="{{localSearchPlaceholder}}" data-search-url="{{localSearchUrl}}">{{msg-global-navigation-local-search}}</option>
+                        <option value="global" data-placeholder="{{msg-global-navigation-global-search}}" data-search-url="{{globalSearchUrl}}">{{msg-global-navigation-global-search}}</option>
+                    </select>
+                    {{/disableLocalSearchOptions}}
+                </div>
+            </div>
+            <input id="searchInput" accesskey="f" autocomplete="off" class="search-input" name="search" placeholder="{{defaultSearchPlaceholder}}" type="text" value="{{query}}"/>
+            <input type="submit" id="searchSubmit" class="search-button" value="" />
+            <input name="fulltext" type="hidden" value="{{fulltext}}"/>
+            <input disabled id="searchInputResultLang" type="hidden" name="resultsLang" value="{{lang}}"/>
+        </div>
+    </form>
+</div>

@@ -19,6 +19,7 @@ class GlobalNavigationWallNotificationsController extends WallNotificationContro
 	public function Index() {
 		wfProfileIn( __METHOD__ );
 		parent::Index();
+		$this->response->setVal( 'msg-wall-notifications-loading', wfMessage( 'wall-notifications-loading' )->plain() );
 		wfProfileOut( __METHOD__ );
 	}
 

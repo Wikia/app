@@ -54,9 +54,9 @@ class GlobalNavigationController extends WikiaController {
 
 		// html
 		$this->response->setValues( [
-			'searchIndex' => $this->app->renderView( 'GlobalNavigation', 'searchIndex' ),
-			'accNav' => $this->app->renderView( 'GlobalNavigationAccountNavigation', 'index' ),
-			'wallNotifs' => $this->app->renderView( 'GlobalNavigationWallNotifications', 'Index' )
+			'searchIndex' => $this->sendSelfRequest( 'searchIndex' )->getData(),
+			'accNav' => $this->sendRequest( 'GlobalNavigationAccountNavigation', 'index' )->getData(),
+			'wallNotifs' => $this->sendRequest( 'GlobalNavigationWallNotifications', 'Index' )->getData()
 		] );
 
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
@@ -69,7 +69,7 @@ class GlobalNavigationController extends WikiaController {
 
 		$centralUrl = $this->helper->getCentralUrlFromGlobalTitle( $lang );
 		$globalSearchUrl = $this->helper->getGlobalSearchUrl( $centralUrl );
-		$localSearchUrl = SpecialPage::getTitleFor( 'Search' )->getFullUrl();
+		$localSearchUrl = SpecialPage::getTitleFor( 'Search' )->getFullURL();
 		$fulltext = $wgUser->getGlobalPreference( 'enableGoSearch' ) ? 0 : 'Search';
 		$query = $wgRequest->getVal( 'search', $wgRequest->getVal( 'query', '' ) );
 		$localSearchPlaceholder = html_entity_decode(
@@ -90,6 +90,12 @@ class GlobalNavigationController extends WikiaController {
 		$this->response->setVal( 'fulltext', $fulltext );
 		$this->response->setVal( 'query', $query );
 		$this->response->setVal( 'lang', $lang );
+
+		// MW messages:
+		$this->response->setData( [
+			'msg-global-navigation-global-search' => wfMessage( 'global-navigation-global-search' )->plain(),
+			'msg-global-navigation-local-search' => wfMessage( 'global-navigation-local-search' )->plain()
+		] );
 	}
 
 	protected function isGameStarLogoEnabled() {

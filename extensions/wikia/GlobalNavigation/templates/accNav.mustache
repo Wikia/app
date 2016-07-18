@@ -1,0 +1,33 @@
+<ul id="AccountNavigation" class="AccountNavigation table-cell{{#enableNewAuthModal}} newAuth{{/enableNewAuthModal}}">
+    <li class="account-navigation-item">
+        <div class="links-container{{#isAnon}} anon{{/isAnon}}">
+            {{{navItemLinkOpeningTag}}}
+            <div class="avatar-container {{avatarContainerAdditionalClass}}">
+                {{profileAvatar}}
+            </div>
+            </a>
+            {{#isAnon}}
+			{{#enableNewAuthModal}}
+            <span class="auth-label">
+					<?= $authOptions ?>
+				</span>
+            {{/enableNewAuthModal}}
+            {{^enableNewAuthModal}}
+            <span class="auth-label auth-link sign-in">{{msg-global-navigation-sign-in}}</span>
+            {{/enableNewAuthModal}}
+		{{/isAnon}}
+		{{#showChevron}}
+            <img class="chevron" src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D"/>
+        {{/showChevron}}
+        </div>
+        {{^isAnon}}
+        <ul class="user-menu subnav global-nav-dropdown">
+            {{#userDropdown}}
+            <li>{{link}}</li>
+            {{/userDropdown}}
+        </ul>
+        {{/isAnon}}
+		{{{loginDropdown}}}
+	endif; ?>
+    </li>
+</ul>
