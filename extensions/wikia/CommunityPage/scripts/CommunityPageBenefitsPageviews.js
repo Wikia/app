@@ -14,9 +14,9 @@ require([
 		}
 	}
 
-	// Gets timestamp in format YYYY-mm-dd HH:mm:ss
+	// Gets timestamp in format of YYYY-mm-dd HH:mm:ss
 	function getTimestamp() {
-		return (new Date()).toISOString().substr(0,19).replace('T', ' ');
+		return (new Date()).toISOString().substr(0, 19).replace('T', ' ');
 	}
 
 	// This cookie is checked in CommunityPageSpecialHooks::onBeforePageDisplay to avoid unnecessary script loading
