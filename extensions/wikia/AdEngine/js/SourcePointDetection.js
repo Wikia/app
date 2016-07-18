@@ -14,6 +14,7 @@ define('ext.wikia.adEngine.sourcePointDetection', [
 		detectionInitialized = false,
 		spDetectionTime;
 
+
 	function getClientId() {
 		log('getClientId', 'info', logGroup);
 		return 'rMbenHBwnMyAMhR';
@@ -42,6 +43,7 @@ define('ext.wikia.adEngine.sourcePointDetection', [
 			detectionScript = doc.createElement('script'),
 			node = doc.getElementsByTagName('script')[0];
 
+		window.ads.runtime.sp = window.ads.runtime.sp || {};
 		spDetectionTime = adTracker.measureTime('spDetection', {}, 'start');
 		spDetectionTime.track();
 
@@ -61,12 +63,10 @@ define('ext.wikia.adEngine.sourcePointDetection', [
 		detectionScript.setAttribute('data-client-id', getClientId());
 
 		doc.addEventListener('sp.blocking', function () {
-			window.ads.runtime.sp = window.ads.runtime.sp || {};
 			window.ads.runtime.sp.blocking = true;
 			trackStatusOnce('yes');
 		});
 		doc.addEventListener('sp.not_blocking', function () {
-			window.ads.runtime.sp = window.ads.runtime.sp || {};
 			window.ads.runtime.sp.blocking = false;
 			trackStatusOnce('no');
 		});

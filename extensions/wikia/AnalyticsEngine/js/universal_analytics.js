@@ -257,7 +257,7 @@
 		return kruxSegment;
 	}
 
-	function trackBlocking(value) {
+	function trackBlockingSourcePoint(value) {
 		if (blockingTracked.sourcePoint) {
 			return;
 		}
@@ -270,8 +270,7 @@
 
 	function trackBlockingPageFair(isBlocked) {
 		var pageFairDimension = 'dimension7',
-			value = isBlocked ? 'Yes' : 'No'
-		;
+			value = isBlocked ? 'Yes' : 'No';
 
 		if (blockingTracked.pageFair) {
 			return;
@@ -434,10 +433,10 @@
 
 	if (window.ads && window.ads.context.opts.showAds) {
 		document.addEventListener('sp.blocking', function () {
-			trackBlocking('Yes');
+			trackBlockingSourcePoint('Yes');
 		});
 		document.addEventListener('sp.not_blocking', function () {
-			trackBlocking('No');
+			trackBlockingSourcePoint('No');
 		});
 
 		document.addEventListener('pf.blocking', function () {
