@@ -257,7 +257,8 @@ $config['adengine2_ox_bidder_js'] = array(
 	'skin' => [ 'oasis' ],
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
-		'//extensions/wikia/AdEngine/js/lookup/openXBidder.js',
+		'//extensions/wikia/AdEngine/js/lookup/openx/openXBidderHelper.js',
+		'//extensions/wikia/AdEngine/js/lookup/openXBidder.js'
 	),
 );
 

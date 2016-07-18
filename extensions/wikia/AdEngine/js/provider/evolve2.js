@@ -4,9 +4,10 @@ define('ext.wikia.adEngine.provider.evolve2', [
 	'ext.wikia.adEngine.provider.gpt.helper',
 	'ext.wikia.adEngine.slotTweaker',
 	'ext.wikia.adEngine.utils.adLogicZoneParams',
+	'ext.wikia.adEngine.lookup.openx.openXBidderHelper',
 	'wikia.log',
 	'wikia.window'
-], function (adContext, gptHelper, slotTweaker, zoneParams, log, win) {
+], function (adContext, gptHelper, slotTweaker, zoneParams, openXHelper, log, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.evolve2',
@@ -110,6 +111,9 @@ define('ext.wikia.adEngine.provider.evolve2', [
 		});
 		slot.pre('hop', function() {
 			dispatchNoUapEvent(slot.name);
+			if (Wikia.geo.getCountryCode() === 'NZ') {
+				openXHelper.addOpenXSlot(slotName);
+			}
 		});
 		gptHelper.pushAd(
 			slot,
