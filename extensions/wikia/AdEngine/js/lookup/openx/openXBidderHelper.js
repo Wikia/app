@@ -39,6 +39,7 @@ define('ext.wikia.adEngine.lookup.openx.openXBidderHelper', [
 
 	function changeTimeout() {
 		if (!timeoutChanged) {
+			log(['changeTimeout'], 'debug', logGroup);
 			win.OXHBConfig.DFP_mapping.timeout = 0;
 		}
 	}
