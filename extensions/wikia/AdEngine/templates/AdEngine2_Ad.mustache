@@ -1,21 +1,21 @@
 {{#showAd}}
 <!-- BEGIN SLOTNAME: {{slotName}} -->
 <div id="{{slotName}}" class="wikia-ad noprint default-height">
-    {{#includeLabel}}
-    <label for="{{slotName}}" class="wikia-ad-label">{{msg-adengine-advertisement}}</label>
-    {{/includeLabel}}
-    {{#addToAdQueue}}
-    <script>
-        {{#onLoad}}
-            wgAfterContentAndJS.push(function () {
-                window.adslots2.push({{{slotNameJson}}});
-            });
-        {{/onLoad}}
-        {{^onLoad}}
-            window.adslots2.push({{{slotNameJson}}});
-        {{/onLoad}}
-    </script>
-    {{/addToAdQueue}}
+{{#includeLabel}}
+	<label for="{{slotName}}" class="wikia-ad-label">{{msg-adengine-advertisement}}</label>
+{{/includeLabel}}
+{{#addToAdQueue}}
+	<script>
+	{{#onLoad}}
+		wgAfterContentAndJS.push(function () {
+			window.adslots2.push({{{slotNameJson}}});
+		});
+	{{/onLoad}}
+	{{^onLoad}}
+		window.adslots2.push({{{slotNameJson}}});
+	{{/onLoad}}
+	</script>
+{{/addToAdQueue}}
 </div>
 <!-- END SLOTNAME: {{slotname}} -->
 {{/showAd}}
