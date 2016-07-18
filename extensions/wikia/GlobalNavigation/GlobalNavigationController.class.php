@@ -24,6 +24,7 @@ class GlobalNavigationController extends WikiaController {
 	}
 
 	public function index() {
+		wfProfileIn(__METHOD__);
 		global $wgLang, $wgUser;
 
 		Wikia::addAssetsToOutput( 'global_navigation_scss' );
@@ -45,6 +46,7 @@ class GlobalNavigationController extends WikiaController {
 		if ( $isGameStarLogoEnabled ) {
 			$this->response->addAsset( 'extensions/wikia/GlobalNavigation/styles/GlobalNavigationGameStar.scss' );
 		}
+		wfProfileOut(__METHOD__);
 	}
 
 	public function searchIndex() {
