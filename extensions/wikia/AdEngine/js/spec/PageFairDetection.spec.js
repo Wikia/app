@@ -15,16 +15,19 @@ describe('Module ext.wikia.adEngine.pageFairDetection', function () {
 
 	function noop() { return noop }
 
+	function getContext() {
+		return {
+			opts: {
+				pageFairWebsiteCode: 'TEST_CODE',
+				pageFairDetection: true
+			}
+		}
+	}
+
 	function getMocks() {
 		return {
 			adContext: {
-				getContext: function () {
-					return {
-						opts: {
-							pageFairWebsiteCode: 'TEST_CODE'
-						}
-					}
-				}
+				getContext: getContext
 			},
 			adTracker: noop,
 			scriptLoader: {
@@ -72,6 +75,21 @@ describe('Module ext.wikia.adEngine.pageFairDetection', function () {
 
 		mocks.window.pf_notify(true);
 		expect(mocks.window.bm_website_code).toBe('TEST_CODE');
+	});
+
+	it('should not run detection when pagefair is not enabled', function () {
+		var mocks = getMocks();
+		mocks.adContext.getContext = function () {
+			var context = getContext();
+			context.opts.pageFairDetection = false;
+			return context;
+		};
+		var pageFairDetector = getModule(mocks);
+
+		spyOn(mocks.document, 'dispatchEvent');
+		mocks.window.pf_notify(true);
+
+		expect(mocks.document.dispatchEvent).not.toHaveBeenCalled();
 	});
 
 });
