@@ -1,5 +1,5 @@
 /*global define*/
-define('ext.wikia.adEngine.video.dfpVastUrl', [
+define('ext.wikia.adEngine.video.vastBuilder', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adLogicPageParams',
 	'wikia.location',
@@ -10,7 +10,7 @@ define('ext.wikia.adEngine.video.dfpVastUrl', [
 		adSize = '640x480',
 		baseUrl = 'https://pubads.g.doubleclick.net/gampad/ads?',
 		correlator = Math.round(Math.random() * 10000000000),
-		logGroup = 'ext.wikia.adEngine.video.dfpVastUrl';
+		logGroup = 'ext.wikia.adEngine.video.vastBuilder';
 
 	function getCustomParameters() {
 		var pageLevelParams = page.getPageLevelParams(),
