@@ -1,6 +1,6 @@
 <?php
 
-class DesignSystemFooterModel extends WikiaModel {
+class DesignSystemGlobalFooterModel extends WikiaModel {
 	private $data = [
 		'fandom' => [
 			'header' => [
@@ -335,7 +335,7 @@ class DesignSystemFooterModel extends WikiaModel {
 		],
 	];
 
-	private $allowedVerticals = [
+	private $verticalsWithLink = [
 		'games',
 		'movies',
 		'tv',
@@ -379,7 +379,6 @@ class DesignSystemFooterModel extends WikiaModel {
 		$vertical = null;
 		if ( $wikiVerticalData['id'] ) {
 			$vertical = $wikiVerticalData['short'];
-			$link = 'http://fandom.wikia.com/' . $vertical;
 		}
 
 		if ( is_null( $vertical ) ) {
@@ -394,9 +393,9 @@ class DesignSystemFooterModel extends WikiaModel {
 			],
 		];
 
-		if ( in_array( $vertical, $this->allowedVerticals ) ) {
+		if ( in_array( $vertical, $this->verticalsWithLink ) ) {
 			$data['type'] = 'link-text';
-			$data['href'] = $link;
+			$data['href'] = 'http://fandom.wikia.com/' . $vertical;
 		}
 
 		return $data;

@@ -1,6 +1,6 @@
 <?php
 
-class DesignSystemFooterModelTest extends WikiaBaseTest {
+class DesignSystemGlobalFooterModelTest extends WikiaBaseTest {
 	/**
 	 * @dataProvider licensingAndVerticalProvider
 	 */
@@ -30,7 +30,7 @@ class DesignSystemFooterModelTest extends WikiaBaseTest {
 				[ 'wgRightsUrl', $wikiId, $rightsUrlMock ],
 			] ) );
 
-		$footerModel = new DesignSystemFooterModel( $wikiId );
+		$footerModel = new DesignSystemGlobalFooterModel( $wikiId );
 		$result = $footerModel->getData();
 		$params = $result['licensing_and_vertical']['description']['params'];
 

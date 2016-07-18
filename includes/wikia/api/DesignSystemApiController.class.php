@@ -8,7 +8,7 @@ class DesignSystemApiController extends WikiaApiController {
 			throw new NotFoundApiException( "Unable to find wiki with ID {$wikiId}" );
 		}
 
-		$footerModel = new DesignSystemFooterModel( $wikiId );
+		$footerModel = new DesignSystemGlobalFooterModel( $wikiId );
 
 		$this->setResponseData( $footerModel->getData() );
 	}
