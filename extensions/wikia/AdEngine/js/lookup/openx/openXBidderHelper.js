@@ -9,7 +9,7 @@ define('ext.wikia.adEngine.lookup.openx.openXBidderHelper', [
 ], function (adLogicZoneParams, instantGlobals, geo, log, win) {
 	'use strict';
 
-	var slots = [],
+	var slots = {},
 		timeoutChanged = false,
 		logGroup = 'ext.wikia.adEngine.lookup.openx.openXBidderHelper';
 

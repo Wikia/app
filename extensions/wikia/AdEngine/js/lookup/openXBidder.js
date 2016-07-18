@@ -50,8 +50,7 @@ define('ext.wikia.adEngine.lookup.openXBidder', [
 				}
 			}
 		},
-		priceMap = {},
-		slots = [];
+		priceMap = {};
 
 	function configureHomePageSlots() {
 		var slotName, slots = openXHelper.getSlots();
