@@ -39,6 +39,7 @@
 }
 
 $recirculation-fandom-dark-blue: #39414d;
+$recirculation-mafia-color: #010201;
 $recirculation-fandom-icon-size: 48px;
 
 .recirculation-rail.group-SDCC {
@@ -70,6 +71,7 @@ $recirculation-fandom-icon-size: 48px;
 
 	h2 {
 		font-size: 24px;
+		letter-spacing: -.3px;
 		line-height: 20px;
 		margin-bottom: 20px;
 		margin-top: 15px;
@@ -79,10 +81,8 @@ $recirculation-fandom-icon-size: 48px;
 
 		span {
 			font-size: 10px;
-			letter-spacing: .3px;
 			line-height: 10px;
 			text-transform: uppercase;
-			margin-top: -5px;
 		}
 
 		strong {
@@ -90,10 +90,10 @@ $recirculation-fandom-icon-size: 48px;
 		}
 
 		svg {
-			@include transform-scale(1.2);
-
-			fill: $recirculation-fandom-dark-blue;
-			margin-left: 7px;
+			fill: $recirculation-mafia-color;
+			margin-left: 5px;
+			position: relative;
+			top: 2px;
 		}
 	}
 
