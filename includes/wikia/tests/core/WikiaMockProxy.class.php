@@ -261,11 +261,6 @@ class WikiaMockProxy {
 		self::$instance = $this;
 		$this->enabled = true;
 
-		# TODO: remove when PHP7 migration is completed (PLATFORM-2138)
-		if (function_exists(('set_new_overload'))) {
-			set_new_overload('WikiaMockProxy::overload');
-		}
-
 		foreach ($this->mocks as $list1) {
 			foreach ($list1 as $type => $mock) {
 				$this->notify($mock[self::PROP_ACTION]);
@@ -283,11 +278,6 @@ class WikiaMockProxy {
 
 		// disable this instance
 		$this->enabled = false;
-
-		# TODO: remove when PHP7 migration is completed (PLATFORM-2138)
-		if (function_exists(('unset_new_overload'))) {
-			unset_new_overload();
-		}
 
 		foreach ($this->mocks as $list1) {
 			foreach ($list1 as $type => $mock) {
