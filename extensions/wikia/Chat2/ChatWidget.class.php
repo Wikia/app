@@ -189,6 +189,13 @@ class ChatWidget {
 					$profileUrlNs = !empty( $wgEnableWallExt ) ? NS_USER_WALL : NS_USER_TALK;
 					$chatter['profileUrl'] = Title::makeTitle( $profileUrlNs, $chatter['username'] )->getFullURL();
 					$chatter['contribsUrl'] = SpecialPage::getTitleFor( 'Contributions', $chatter['username'] )->getFullURL();
+					if (empty( $wgEnableWallExt )){
+						$chatter['profileType'] = 'talk-page';
+						$chatter['profileTypeMsg'] = 'chat-user-menu-talk-page';
+					} else {
+						$chatter['profileType'] = 'message-wall';
+						$chatter['profileTypeMsg'] = 'chat-user-menu-message-wall';
+					}
 				}
 
 				return $chatter;

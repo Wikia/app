@@ -108,11 +108,7 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper'], function (help
 
 	function onThemeNavNextClick() {
 		saveState(ThemeDesigner.settings, function () {
-			if (WikiBuilderCfg.skipwikiaplus) {
-				gotoMainPage();
-			} else {
-				transition('ThemeWiki', true, '+');
-			}
+			gotoMainPage();
 		});
 	}
 
@@ -511,8 +507,7 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper'], function (help
 						wLanguage: wikiLanguage.find('option:selected').val(),
 						wVertical: verticalOption.val(),
 						wCategories: categories,
-						wAllAges: wikiAllAges.is(':checked') ? wikiAllAges.val() : null,
-						wAnswer: Math.floor(helper.getAnswer())
+						wAllAges: wikiAllAges.is(':checked') ? wikiAllAges.val() : null
 					},
 					token: preferencesToken
 				},

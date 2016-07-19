@@ -19,6 +19,7 @@ require([
 	'ext.wikia.recirculation.helpers.cakeRelatedContent',
 	'ext.wikia.recirculation.helpers.curatedContent',
 	'ext.wikia.recirculation.helpers.googleMatch',
+	'ext.wikia.recirculation.experiments.placement.IMPACT_FOOTER',
 	'ext.wikia.adEngine.taboolaHelper',
 	require.optional('videosmodule.controllers.rail')
 ], function(
@@ -41,6 +42,7 @@ require([
 	cakeHelper,
 	curatedHelper,
 	googleMatchHelper,
+	impactFooterExperiment,
 	taboolaHelper,
 	videosModule
 ) {
@@ -73,15 +75,6 @@ require([
 			renderLiftigniterFandom(true);
 			renderLiftigniterCommunity();
 			return;
-		// Temporary group running during E3
-		case 'E3':
-			helper = fandomHelper({
-				type: 'e3',
-				limit: 5
-			});
-			view = railView();
-			isRail = true;
-			break;
 		case 'LATERAL_FANDOM':
 			helper = lateralHelper();
 			view = railView();
@@ -118,6 +111,14 @@ require([
 		case 'FANDOM_TOPIC':
 			helper = fandomHelper({
 				type: 'community',
+				limit: 5
+			});
+			view = railView();
+			isRail = true;
+			break;
+		case 'FANDOM_HERO':
+			helper = fandomHelper({
+				type: 'hero',
 				limit: 5
 			});
 			view = railView();
@@ -172,26 +173,16 @@ require([
 			isRail = true;
 			break;
 		case 'IMPACT_FOOTER':
-			renderImpactFooter();
+			impactFooterExperiment.run(experimentName);
 			return;
 		default:
 			return;
 	}
 
 	if (isRail) {
-		afterRailLoads(runRailExperiment);
+		utils.afterRailLoads(runRailExperiment);
 	} else {
 		runExperiment();
-	}
-
-	function afterRailLoads(callback) {
-		var $rail = $('#WikiaRail');
-
-		if ($rail.find('.loading').exists()) {
-			$rail.one('afterLoad.rail', callback);
-		} else {
-			callback();
-		}
 	}
 
 	function runExperiment() {
@@ -224,13 +215,14 @@ require([
 		}
 
 		errorHandled = true;
-		afterRailLoads(function() {
+		utils.afterRailLoads(function() {
 			var rail = railView();
 
 			fandomHelper({
 				limit: 5
 			}).loadData()
 				.then(rail.render)
+				.then(setupFallbackTracking)
 				.fail(function(err) {
 					// If this doesn't work, log out why. We tried our best.
 					if (err) {
@@ -238,6 +230,23 @@ require([
 					}
 				});
 		});
+	}
+
+	function setupFallbackTracking($html) {
+		var groupName = 'CONTROL_FALLBACK',
+			position = 'rail',
+			impressionLabel = [experimentName, groupName, position].join('='),
+			abSlot = abTest.getGASlot(experimentName);
+
+		tracker.trackImpression(impressionLabel);
+
+		$html.on('mousedown', 'a', function() {
+			var clickLabel = [experimentName, groupName, utils.buildLabel(this, position)].join('=');
+
+			tracker.trackClick(clickLabel);
+		});
+
+		return $html;
 	}
 
 	function injectSubtitle($html) {
@@ -263,7 +272,7 @@ require([
 				}
 			});
 
-		afterRailLoads(function() {
+		utils.afterRailLoads(function() {
 			var rail = railView();
 
 			lateralHelper({
@@ -286,7 +295,7 @@ require([
 	}
 
 	function renderTaboola() {
-		afterRailLoads(function() {
+		utils.afterRailLoads(function() {
 			taboolaHelper.initializeWidget({
 				mode: 'thumbnails-rr2',
 				container: railContainerId,
@@ -302,38 +311,6 @@ require([
 				tracker.trackVerboseClick(experimentName, label);
 			});
 		});
-	}
-
-	function renderImpactFooter() {
-		var curated = curatedHelper(),
-			fView = impactFooterView(),
-			rView = railView(),
-			sView = scrollerView();
-
-		contentLinksHelper({
-			count: 6,
-			extra: 6
-		}).loadData()
-			.then(sView.render)
-			.then(sView.setupTracking(experimentName));
-
-		dataHelper({}).loadData()
-			.then(function(data) {
-				var fandomData = {
-					title: data.fandom.title,
-					items: data.fandom.items.splice(0,5)
-				};
-
-				fView.render(data)
-					.then(fView.setupTracking(experimentName));
-
-				afterRailLoads(function() {
-					curated.injectContent(fandomData)
-						.then(rView.render)
-						.then(rView.setupTracking)
-						.then(curatedHelper.setupTracking);
-				});
-			});
 	}
 
 	function renderLiftigniterFandom(waitToFetch) {
@@ -367,7 +344,7 @@ require([
 		helper.loadData()
 			.then(view.render)
 			.then(function($html) {
-				var elements = $html.find('.rail-item').get();
+				var elements = $html.find('.item').get();
 
 				view.setupTracking(experimentName)($html);
 				helper.setupTracking(elements);

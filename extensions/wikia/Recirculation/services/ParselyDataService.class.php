@@ -180,18 +180,12 @@ class ParselyDataService {
 	}
 
 	private function buildCommunityData() {
-		$communityMap = [
-			'147' => 'Star Wars',
-			'3035' => 'Fallout',
-			'2233' => 'Marvel',
-			'130814' => 'Game of Thrones',
-			'1706' => 'Elder Scrolls'
-		];
+		$tag = WikiFactory::getVarValueByName( 'wgRecirculationParselyCommunityTag', $this->cityId );
 
-		if ( array_key_exists( $this->cityId, $communityMap ) ) {
+		if ( !empty( $tag ) ) {
 			return [
 				'key' => $this->cityId,
-				'tag' => $communityMap[$this->cityId]
+				'tag' => $tag
 			];
 		} else {
 			return [];

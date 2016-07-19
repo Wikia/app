@@ -26,7 +26,11 @@ class PhalanxUserBlock extends WikiaObject {
 	 *
 	 * @return bool
 	 */
-	static public function blockCheck( User $user, $shouldLogBlockInStats = true ) {
+	static public function blockCheck( User $user, $shouldLogBlockInStats = true, $global = true ) {
+		if ( ! $global ) {
+			return true;
+		}
+
 		wfProfileIn( __METHOD__ );
 
 		$phalanxModel = new PhalanxUserModel( $user );

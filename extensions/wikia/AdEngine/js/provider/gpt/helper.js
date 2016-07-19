@@ -7,6 +7,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	'ext.wikia.adEngine.provider.gpt.adDetect',
 	'ext.wikia.adEngine.provider.gpt.adElement',
 	'ext.wikia.adEngine.provider.gpt.googleTag',
+	'ext.wikia.adEngine.uapContext',
 	'ext.wikia.aRecoveryEngine.recovery.helper',
 	'ext.wikia.adEngine.slotTweaker',
 	require.optional('ext.wikia.adEngine.provider.gpt.sraHelper'),
@@ -18,6 +19,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	adDetect,
 	AdElement,
 	GoogleTag,
+	uapContext,
 	recoveryHelper,
 	slotTweaker,
 	sraHelper,
@@ -51,7 +53,8 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 			element,
 			recoverableSlots = extra.recoverableSlots || [],
 			shouldPush = !recoveryHelper.isBlocking() ||
-				(recoveryHelper.isBlocking() && recoveryHelper.isRecoverable(slot.name, recoverableSlots));
+				(recoveryHelper.isBlocking() && recoveryHelper.isRecoverable(slot.name, recoverableSlots)),
+			uapId = uapContext.getUapId();
 
 		log(['shouldPush',
 			slot.name,
@@ -73,6 +76,8 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 				slotTargeting.rv = count.toString();
 			}
 		}
+
+		slotTargeting.uap = uapId ? uapId.toString() : 'none';
 
 		element = new AdElement(slot.name, slotPath, slotTargeting);
 
@@ -128,6 +133,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	adContext.addCallback(function () {
 		if (googleApi.isInitialized()) {
 			googleApi.setPageLevelParams(adLogicPageParams.getPageLevelParams());
+			uapContext.reset();
 		}
 	});
 

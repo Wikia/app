@@ -27,10 +27,12 @@
  *
  * @ingroup Maintenance
  */
+define('REBUILD_LOCALISATION_CACHE_IN_PROGRESS', true);
 
-require_once( dirname( __FILE__ ) . '/Maintenance.php' );
+require_once( __DIR__ . '/Maintenance.php' );
 
 class RebuildLocalisationCache extends Maintenance {
+
 	public function __construct() {
 		parent::__construct();
 		$this->mDescription = "Rebuild the localisation cache";
@@ -39,6 +41,7 @@ class RebuildLocalisationCache extends Maintenance {
 		// Wikia change begin
 		$this->addOption( 'cache-dir', 'Override the value of $wgCacheDirectory', false, true );
 		$this->addOption( 'primary', 'Only rebuild the Wikia supported languages', false, false, '-p' );
+		$this->addOption( 'force-wiki-id', 'Force specific wiki ID' );
 		// Wikia change end
 	}
 
@@ -47,10 +50,31 @@ class RebuildLocalisationCache extends Maintenance {
 	}
 
 	public function execute() {
-		global $wgLocalisationCacheConf;
 
 		// Wikia change begin
-		global $wgCacheDirectory;
+
+		\Wikia\Logger\WikiaLogger::instance()->info( __METHOD__ );
+
+		global $wgCityId;
+
+		if ( $wgCityId != WikiFactory::COMMUNITY_CENTRAL && ! $this->hasOption( 'force-wiki-id' ) ) {
+			$this->output( sprintf( "It is recommended to run this script with SERVER_ID=%d. Use --force-wiki-id to force SERVER_ID=%d.\n", WikiFactory::COMMUNITY_CENTRAL, $wgCityId ) );
+			exit( 1 );
+		}
+
+		global $wgCacheDirectory, $wgExtensionMessagesFiles, $wgLocalisationCacheConf;
+
+		$wgExtensionMessagesFiles = array_unique(
+			array_merge(
+				GlobalMessagesService::getInstance()->getCoreMessageFiles(),
+				GlobalMessagesService::getInstance()->getExtensionMessageFiles(),
+				$wgExtensionMessagesFiles
+			)
+		);
+
+		foreach ($wgExtensionMessagesFiles as $file) echo $file . PHP_EOL;
+//		die;
+
 		$wgCacheDirectory = $this->getOption( 'cache-dir', $wgCacheDirectory );
 		$primaryOnly = $this->hasOption( 'primary' );
 		// Wikia change end
@@ -149,6 +173,8 @@ class RebuildLocalisationCache extends Maintenance {
 
 		exit( $exitcode );
 	}
+
+
 
 	/**
 	 * Helper function to rebuild list of languages codes. Prints the code
