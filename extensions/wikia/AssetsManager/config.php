@@ -1282,14 +1282,6 @@ $config['chat_js2'] = array(
 	)
 );
 
-$config['chat_ban_js'] = array(
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => array(
-		'//extensions/wikia/Chat2/js/views/ChatBanModal.js',
-		'//extensions/wikia/Chat2/js/controllers/ChatBanModalLogs.js'
-	)
-);
-
 /** ThemeDesigner **/
 $config['theme_designer_js'] = array(
 	'type' => AssetsManager::TYPE_JS,

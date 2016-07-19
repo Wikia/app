@@ -77,13 +77,7 @@ class ChatHooks {
 
 		foreach ( $specialPages as $value ) {
 			if ( $out->getTitle()->isSpecial( $value ) ) {
-				// For Chat2 (doesn't exist in Chat(1))
-				$scriptUrls = AssetsManager::getInstance()->getGroupCommonURL( 'chat_ban_js', [ ] );
-
-				foreach ( $scriptUrls as $scriptUrl ) {
-					$out->addScript( '<script src="' . $scriptUrl . '"></script>' );
-				}
-				JSMessages::enqueuePackage( 'ChatBanModal', JSMessages::EXTERNAL );
+				$out->addModules( 'ext.Chat2.ChatBanModal' );
 				$out->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/Chat2/css/ChatModal.scss' ) );
 				break;
 			}

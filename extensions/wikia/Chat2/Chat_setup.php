@@ -72,13 +72,24 @@ JSMessages::registerPackage( 'Chat', [
 	'chat-*',
 ] );
 
-JSMessages::registerPackage( 'ChatBanModal', [
-	'chat-log-reason-banadd',
-	'chat-ban-modal-change-ban-heading',
-	'chat-ban-modal-button-cancel',
-	'chat-ban-modal-button-ok',
-	'chat-ban-modal-button-change-ban',
-] );
+/**
+ * ResourceLoader module for chat ban modal
+ */
+$wgResourceModules['ext.Chat2.ChatBanModal'] = [
+	'scripts' => [
+		'js/views/ChatBanModal.js',
+		'js/controllers/ChatBanModalLogs.js'
+	],
+	'messages' => [
+		'chat-log-reason-banadd',
+		'chat-ban-modal-change-ban-heading',
+		'chat-ban-modal-button-cancel',
+		'chat-ban-modal-button-ok',
+		'chat-ban-modal-button-change-ban',
+	],
+	'localBasePath' => __DIR__,
+	'remoteExtPath' => 'wikia/Chat2'
+];
 
 /**
  * ResourceLoader module for Chat Rail module and widget
@@ -116,6 +127,11 @@ $wgResourceModules['ext.Chat2'] = [
 		'chat-ban-cannt-undo',
 		'chat-browser-is-notsupported',
 		'chat-message-was-too-long',
+		// Chat ban modal
+		'chat-ban-modal-change-ban-heading',
+		'chat-ban-modal-button-cancel',
+		'chat-ban-modal-button-ok',
+		'chat-ban-modal-button-change-ban',
 	],
 	'position' => 'top'
 ];
