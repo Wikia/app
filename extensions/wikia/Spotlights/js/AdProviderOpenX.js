@@ -63,17 +63,35 @@ function isReviveEnabledInGeo() {
 	}
 }
 
+function createReviveLazyQueue() {
+	'use strict';
+
+	window.Wikia.reviveQueue = [];
+
+	window.Wikia.LazyQueue.makeQueue(window.Wikia.reviveQueue, function(item) {
+		var output = window.OA_output || [],
+			elem = document.getElementById(item.slotName);
+
+		if (output[item.zoneId]) {
+			elem.innerHTML = output[item.zoneId];
+			elem.classList.add('wikia-ad');
+			elem.classList.remove('hidden');
+		}
+	});
+
+	return window.Wikia.reviveQueue;
+}
+
 if (!window.wgNoExternals && window.wgEnableOpenXSPC && !window.wgIsEditPage && !window.navigator.userAgent.match(/sony_tvs/)) {
+	var reviveQueue = createReviveLazyQueue();
+
 	jQuery(function($) {
 		$.getScript(AdProviderOpenX.getUrl(), function() {
 			var lazy = new window.Wikia.LazyLoadAds();
 		}).done(function () {
-			$(window).trigger('wikia.revive');
-			window.revive = true;
+			reviveQueue.start();
 		});
 	});
 } else {
 	$('#SPOTLIGHT_FOOTER').parent('section').hide();
-	$(window).off('wikia.revive');
-	window.revive = false;
 }
