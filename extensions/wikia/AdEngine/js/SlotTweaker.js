@@ -2,9 +2,8 @@
 define('ext.wikia.adEngine.slotTweaker', [
 	'wikia.log',
 	'wikia.document',
-	'jquery',
-	'wikia.window',
-], function (log, doc, $, win) {
+	'wikia.window'
+], function (log, doc, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.slotTweaker',
@@ -101,34 +100,17 @@ define('ext.wikia.adEngine.slotTweaker', [
 
 	// TODO: fix it, it's a hack!
 	function removeTopButtonIfNeeded(slotname) {
-		var topButtonSelector = 'TOP_BUTTON_WIDE';
-
-		function addTopButtonAd() {
-			var output = win.OA_output || [],
-				wikiaTopButton = $('#' + topButtonSelector);
-
-			if (output[27]) {
-				log('adding ' + topButtonSelector, 'debug', logGroup);
-				wikiaTopButton.html(output[27]);
-				wikiaTopButton.addClass('wikia-ad');
-			}
-
-			show(topButtonSelector);
-		}
-
 		function isEnabled() {
 			return isLeaderboard(slotname) &&
-				isStandardLeaderboardSize(slotname);
+				isStandardLeaderboardSize(slotname) &&
+				win.Wikia.reviveQueue;
 		}
 
-		if (!isEnabled()) {
-			return;
-		}
-
-		if (win.revive) {
-			addTopButtonAd();
-		} else {
-			$(win).one('wikia.revive', addTopButtonAd);
+		if (isEnabled()) {
+			window.Wikia.reviveQueue.push({
+				zoneId: 27,
+				slotName: 'TOP_BUTTON_WIDE'
+			});
 		}
 	}
 

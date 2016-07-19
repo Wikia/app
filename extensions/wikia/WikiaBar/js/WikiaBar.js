@@ -61,32 +61,20 @@ var WikiaBar = {
 		return true;
 	},
 	getAdIfNeeded: function () {
-		function addWikiaBarAd() {
-			var output = window.OA_output || [],
-				wikiaBarBoxAd = $('#WIKIA_BAR_BOXAD_1');
-
-			if (output[28]) {
-				wikiaBarBoxAd.html(output[28]);
-				wikiaBarBoxAd.addClass('wikia-ad');
-			}
-		}
-
 		function isEnabled() {
 			return window.ads &&
 				window.ads.context &&
 				window.ads.context.opts &&
 				window.ads.context.opts.showAds &&
-				window.wgEnableWikiaBarAds;
+				window.wgEnableWikiaBarAds &&
+				window.Wikia.reviveQueue;
 		}
 
-		if (!isEnabled()) {
-			return;
-		}
-
-		if (this.$window.revive) {
-			addWikiaBarAd();
-		} else {
-			this.$window.one('wikia.revive', addWikiaBarAd);
+		if (isEnabled()) {
+			window.Wikia.reviveQueue.push({
+				zoneId: 28,
+				slotName: 'WIKIA_BAR_BOXAD_1'
+			});
 		}
 	},
 	cutMessageIntoSmallPieces: function (messageArray, container, cutMessagePrecision) {
