@@ -7,8 +7,7 @@ class ArticleAsJson extends WikiaService {
 		'imageMaxWidth' => false
 	];
 
-	const CACHE_VERSION = '0.0.3';
-	const CACHE_VERSION_FOR_SEO_FRIENDLY_IMAGES = 1; // for $wgEnableSeoFriendlyImagesForMobile
+	const CACHE_VERSION = 1;
 
 	const ICON_MAX_SIZE = 48;
 	// Line height in Mercury
@@ -27,11 +26,16 @@ class ArticleAsJson extends WikiaService {
 	private static function renderIcon( $media ) {
 		$scaledSize = self::scaleIconSize( $media['height'], $media['width'] );
 
-		$thumbUrl = VignetteRequest::fromUrl( $media['url'] )
-			->thumbnailDown()
-			->height( $scaledSize['height'] )
-			->width( $scaledSize['width'] )
-			->url();
+		try {
+			$thumbUrl = VignetteRequest::fromUrl( $media['url'] )
+				->thumbnailDown()
+				->height( $scaledSize['height'] )
+				->width( $scaledSize['width'] )
+				->url();
+		} catch (InvalidArgumentException $e) {
+			// Media URL isn't valid Vignette URL so we can't generate the thumbnail
+			$thumbUrl = null;
+		}
 
 		return self::removeNewLines(
 			\MustacheService::getInstance()->render(
@@ -64,11 +68,13 @@ class ArticleAsJson extends WikiaService {
 					'link' => $media['link'],
 					/**
 					 * data-ref has to be set for now because it's read in
-					 * extensions/wikia/PortableInfobox/services/Parser/Nodes/NodeImage.php
+					 * extensions/wikia/PortableInfobox/services/Parser/Nodes/NodeImage.php:getGalleryData
 					 * and in
-					 * extensions/wikia/PortableInfobox/services/Parser/Nodes/NodeImage.php.
+					 * extensions/wikia/PortableInfobox/services/Parser/Nodes/NodeImage.php:getTabberData.
 					 * Base on presence of data-ref element is classified as an image
 					 * - without that service would return null
+					 *
+					 * @TODO XW-1460 fix the regex and remove this attribute
 					 */
 					'ref' => $id
 				]
@@ -84,11 +90,18 @@ class ArticleAsJson extends WikiaService {
 					'galleryAttrs' => json_encode( [ 'ref' => $id ] ),
 					/**
 					 * data-ref has to be set for now because it's read in
-					 * extensions/wikia/PortableInfobox/services/Parser/Nodes/NodeImage.php
+					 * extensions/wikia/PortableInfobox/services/Parser/Nodes/NodeImage.php::getGalleryData
 					 * and in
-					 * extensions/wikia/PortableInfobox/services/Parser/Nodes/NodeImage.php.
+					 * extensions/wikia/PortableInfobox/services/Parser/Nodes/NodeImage.php::getTabberData
 					 * Base on presence of data-ref element is classified as an image
 					 * - without that service would return null
+					 *
+					 * !!! Important note - data-ref inside template has ' instead of "
+					 * because this is how regex in
+					 * extensions/wikia/PortableInfobox/services/Parser/Nodes/NodeImage.php::getGalleryData
+					 * works
+					 *
+					 * @TODO XW-1460 fix the regex and remove this attribute
 					 */
 					'ref' => $id,
 					'media' => $media,
@@ -102,25 +115,20 @@ class ArticleAsJson extends WikiaService {
 		return trim( preg_replace( '/\s+/', ' ', $string ) );
 	}
 
-	private static function createMarker( $width = 0, $height = 0, $isGallery = false ){
-		$blankImgUrl = '//:0';
-		$id = count( self::$media ) - 1;
-		$classes = 'article-media' . ($isGallery ? ' gallery' : '');
-		$width = !empty( $width ) ? " width='{$width}'" : '';
-		$height = !empty( $height ) ? " height='{$height}'": '';
-
-		return "<img src='{$blankImgUrl}' class='{$classes}' data-ref='{$id}'{$width}{$height} />";
-	}
-
-	private static function createMarkerExperimental( $media, $isGallery = false ) {
+	private static function createMarker( $media, $isGallery = false ) {
 		$id = count( self::$media ) - 1;
 
 		if ( $isGallery ) {
 			$hasLinkedImages = false;
 
-			if ( count( array_filter( $media, function ( $item ) {
-				return isset( $item['link'] );
-			} ) ) ) {
+			if ( count(
+				array_filter(
+					$media,
+					function ( $item ) {
+						return isset( $item['link'] );
+					}
+				)
+			) ) {
 				$hasLinkedImages = true;
 			}
 
@@ -177,6 +185,7 @@ class ArticleAsJson extends WikiaService {
 		}
 
 		wfProfileOut( __METHOD__ );
+
 		return $media;
 	}
 
@@ -195,7 +204,7 @@ class ArticleAsJson extends WikiaService {
 	}
 
 	public static function onGalleryBeforeProduceHTML( $data, &$out ) {
-		global $wgArticleAsJson, $wgEnableSeoFriendlyImagesForMobile;
+		global $wgArticleAsJson;
 
 		wfProfileIn( __METHOD__ );
 
@@ -228,21 +237,19 @@ class ArticleAsJson extends WikiaService {
 			self::$media[] = $media;
 
 			if ( !empty( $media ) ) {
-				if ( !empty( $wgEnableSeoFriendlyImagesForMobile ) ) {
-					$out = self::createMarkerExperimental( $media, true );
-				} else {
-					$out = self::createMarker( $media[0]['width'], $media[0]['height'], true );
-				}
+				$out = self::createMarker( $media, true );
 			} else {
 				$out = '';
 			}
 
 			ParserPool::release( $parser );
 			wfProfileOut( __METHOD__ );
+
 			return false;
 		}
 
 		wfProfileOut( __METHOD__ );
+
 		return true;
 	}
 
@@ -258,6 +265,7 @@ class ArticleAsJson extends WikiaService {
 		}
 
 		wfProfileOut( __METHOD__ );
+
 		return true;
 	}
 
@@ -270,7 +278,7 @@ class ArticleAsJson extends WikiaService {
 		&$time,
 		&$res
 	) {
-		global $wgArticleAsJson, $wgEnableSeoFriendlyImagesForMobile;
+		global $wgArticleAsJson;
 
 		wfProfileIn( __METHOD__ );
 
@@ -283,11 +291,10 @@ class ArticleAsJson extends WikiaService {
 				$linkHref = $frameParams['link-url'];
 			}
 
-			$details = self::getMediaDetailWithSizeFallback($title, self::$mediaDetailConfig);
+			$details = self::getMediaDetailWithSizeFallback( $title, self::$mediaDetailConfig );
 
 			//information for mobile skins how they should display small icons
-			$details['context'] = self::isIconImage( $details, $handlerParams ) ?
-				self::MEDIA_CONTEXT_ICON :
+			$details['context'] = self::isIconImage( $details, $handlerParams ) ? self::MEDIA_CONTEXT_ICON :
 				self::MEDIA_CONTEXT_ARTICLE_IMAGE;
 
 			$media = self::createMediaObject( $details, $title->getText(), $frameParams['caption'], $linkHref );
@@ -295,34 +302,29 @@ class ArticleAsJson extends WikiaService {
 
 			self::addUserObj( $details );
 
-			if ( !empty( $wgEnableSeoFriendlyImagesForMobile ) ) {
-				$res = self::createMarkerExperimental( $media );
-			} else {
-				$res = self::createMarker( $details['width'], $details['height'] );
-			}
+			$res = self::createMarker( $media );
 
 			wfProfileOut( __METHOD__ );
+
 			return false;
 		}
 
 		wfProfileOut( __METHOD__ );
+
 		return true;
 	}
 
 	public static function onPageRenderingHash( &$confstr ) {
-		global $wgArticleAsJson, $wgEnableSeoFriendlyImagesForMobile;
+		global $wgArticleAsJson;
 
 		wfProfileIn( __METHOD__ );
 
 		if ( $wgArticleAsJson ) {
-			if ( $wgEnableSeoFriendlyImagesForMobile ) {
-				$confstr .= '!ArticleAsJson:' . self::CACHE_VERSION_FOR_SEO_FRIENDLY_IMAGES;
-			} else {
-				$confstr .= '!ArticleAsJson:' . self::CACHE_VERSION;
-			}
+			$confstr .= '!ArticleAsJson:' . self::CACHE_VERSION;
 		}
 
 		wfProfileOut( __METHOD__ );
+
 		return true;
 	}
 
@@ -338,21 +340,31 @@ class ArticleAsJson extends WikiaService {
 			if ( !empty( $userName ) ) {
 				if ( User::isIP( $userName ) ) {
 
-					self::addUserObj([
-						'userId' => 0,
-						'userName' => $userName,
-						'userThumbUrl' => AvatarService::getAvatarUrl($userName, AvatarService::AVATAR_SIZE_MEDIUM),
-						'userPageUrl' => Title::newFromText($userName)->getLocalURL()
-					]);
+					self::addUserObj(
+						[
+							'userId' => 0,
+							'userName' => $userName,
+							'userThumbUrl' => AvatarService::getAvatarUrl(
+								$userName,
+								AvatarService::AVATAR_SIZE_MEDIUM
+							),
+							'userPageUrl' => Title::newFromText( $userName )->getLocalURL()
+						]
+					);
 				} else {
 					$user = User::newFromName( $userName );
 					if ( $user instanceof User ) {
-						self::addUserObj( [
-							'userId' => $user->getId(),
-							'userName' => $user->getName(),
-							'userThumbUrl' => AvatarService::getAvatarUrl( $user, AvatarService::AVATAR_SIZE_MEDIUM ),
-							'userPageUrl' => $user->getUserPage()->getLocalURL()
-						] );
+						self::addUserObj(
+							[
+								'userId' => $user->getId(),
+								'userName' => $user->getName(),
+								'userThumbUrl' => AvatarService::getAvatarUrl(
+									$user,
+									AvatarService::AVATAR_SIZE_MEDIUM
+								),
+								'userPageUrl' => $user->getUserPage()->getLocalURL()
+							]
+						);
 					}
 				}
 			}
@@ -361,14 +373,19 @@ class ArticleAsJson extends WikiaService {
 				self::linkifyMediaCaption( $parser, $media );
 			}
 
-			$text = json_encode( [
-				'content' => $text,
-				'media' => self::$media,
-				'users' => self::$users
-			] );
+			wfRunHooks( 'ArticleAsJsonBeforeEncode', [ &$text ] );
+
+			$text = json_encode(
+				[
+					'content' => $text,
+					'media' => self::$media,
+					'users' => self::$users
+				]
+			);
 		}
 
 		wfProfileOut( __METHOD__ );
+
 		return true;
 	}
 
@@ -388,6 +405,7 @@ class ArticleAsJson extends WikiaService {
 	 *
 	 * @param $parser Parser
 	 * @param $report
+	 *
 	 * @return bool
 	 */
 	public static function reportLimits( $parser, &$report ) {
@@ -409,13 +427,14 @@ class ArticleAsJson extends WikiaService {
 	 * @param $media
 	 */
 	private static function linkifyMediaCaption( Parser $parser, &$media ) {
-		$caption = $media['caption'];
-		if (
-			!empty( $caption ) &&
-			is_string( $caption ) &&
-			( strpos( $caption, '<!--LINK' ) !== false || strpos( $caption, '<!--IWLINK' ) !== false )
-		) {
-			$parser->replaceLinkHolders( $media['caption'] );
+		if ( array_key_exists( 'caption', $media ) ) {
+			$caption = $media['caption'];
+
+			if ( is_string( $caption ) &&
+				( strpos( $caption, '<!--LINK' ) !== false || strpos( $caption, '<!--IWLINK' ) !== false )
+			) {
+				$parser->replaceLinkHolders( $media['caption'] );
+			}
 		}
 	}
 
@@ -423,6 +442,7 @@ class ArticleAsJson extends WikiaService {
 	 * Copied from \Message::toString()
 	 *
 	 * @param $text
+	 *
 	 * @return string
 	 */
 	private static function unwrapParsedTextFromParagraph( $text ) {
@@ -436,21 +456,38 @@ class ArticleAsJson extends WikiaService {
 	}
 
 	/**
+	 * Safely get property from an array with an optional default
+	 *
+	 * @param array $array
+	 * @param string $key
+	 * @param bool $default
+	 *
+	 * @return bool
+	 */
+	private static function getWithDefault( $array, $key, $default = false ) {
+		if ( array_key_exists( $key, $array ) ) {
+			return $array[$key];
+		}
+
+		return $default;
+	}
+
+	/**
 	 * @desc Determines if image is a small image used by users on desktop
 	 * as an icon. Users to it by explicitly adding
 	 * '{width}px' or 'x{height}px' to image wikitext or uploading a small image.
 	 *
 	 * @param $details - media details
 	 * @param $handlerParams
+	 *
 	 * @return bool true if one of the image sizes is smaller than ICON_MAX_SIZE
 	 */
 	private static function isIconImage( $details, $handlerParams ) {
-		$smallFixedWidth = self::isIconSize( $handlerParams['width'] );
-		$smallFixedHeight = self::isIconSize( $handlerParams['height'] );
-		$smallWidth = self::isIconSize( $details['width'] );
-		$smallHeight = self::isIconSize( $details['height'] );
-		$templateType = isset ( $handlerParams['template-type'] ) ? $handlerParams['template-type'] : '';
-		$isInfoIcon = self::isInfoIcon( $templateType );
+		$smallFixedWidth = self::isIconSize( $handlerParams, 'width' );
+		$smallFixedHeight = self::isIconSize( $handlerParams, 'height' );
+		$smallWidth = self::isIconSize( $details, 'width' );
+		$smallHeight = self::isIconSize( $details, 'height' );
+		$isInfoIcon = self::isInfoIcon( self::getWithDefault( $handlerParams, 'template-type' ) );
 
 		return $smallFixedWidth || $smallFixedHeight || $smallWidth || $smallHeight || $isInfoIcon;
 	}
@@ -458,11 +495,16 @@ class ArticleAsJson extends WikiaService {
 	/**
 	 * @desc Checks if passed property is set and if it's value is smaller than ICON_MAX_SIZE
 	 *
-	 * @param $sizeParam - width or height property
+	 * @param array $param an array with data
+	 * @param string $key
+	 *
 	 * @return bool true if size is smaller than ICON_MAX_SIZE
+	 * and returns false if $param[$key] does not exist
 	 */
-	private static function isIconSize( $sizeParam ) {
-		return isset( $sizeParam ) ? $sizeParam <= self::ICON_MAX_SIZE : false;
+	private static function isIconSize( $param, $key ) {
+		$value = self::getWithDefault( $param, $key );
+
+		return $value ? $value <= self::ICON_MAX_SIZE : false;
 	}
 
 	private static function isInfoIcon( $templateType ) {
@@ -499,34 +541,40 @@ class ArticleAsJson extends WikiaService {
 	 * @param Title $title
 	 * @param array $mediaDetailConfig
 	 * @param int $fallbackSize
+	 *
 	 * @return array
 	 */
 	private static function getMediaDetailWithSizeFallback(
-		$title, $mediaDetailConfig, $fallbackSize=self::MAX_MERCURY_CONTENT_WIDTH
+		$title,
+		$mediaDetailConfig,
+		$fallbackSize = self::MAX_MERCURY_CONTENT_WIDTH
 	) {
 		$mediaDetail = WikiaFileHelper::getMediaDetail( $title, $mediaDetailConfig );
-		if ( empty( $mediaDetail['width'] ) ) {
-			$mediaDetail['width'] = $fallbackSize;
 
-			\Wikia\Logger\WikiaLogger::instance()->error(
-				'ArticleAsJson - Media width was empty - fallback to fallbackSize',
-				[
-					'media_details' => $mediaDetail,
-					'fallback_size' => $fallbackSize
-				]
-			);
-		}
+		if ( $mediaDetail['exists'] === true ) {
+			if ( empty( $mediaDetail['width'] ) ) {
+				$mediaDetail['width'] = $fallbackSize;
 
-		if ( empty( $mediaDetail['height']) ) {
-			$mediaDetail['height'] = $fallbackSize;
+				\Wikia\Logger\WikiaLogger::instance()->notice(
+					'ArticleAsJson - Media width was empty - fallback to fallbackSize',
+					[
+						'media_details' => $mediaDetail,
+						'fallback_size' => $fallbackSize
+					]
+				);
+			}
 
-			\Wikia\Logger\WikiaLogger::instance()->error(
-				'Image height was empty - fallback to fallbackSize',
-				[
-					'mediaDetails' => $mediaDetail,
-					'fallbackSize' => $fallbackSize
-				]
-			);
+			if ( empty( $mediaDetail['height'] ) ) {
+				$mediaDetail['height'] = $fallbackSize;
+
+				\Wikia\Logger\WikiaLogger::instance()->notice(
+					'ArticleAsJson - Media height was empty - fallback to fallbackSize',
+					[
+						'media_details' => $mediaDetail,
+						'fallback_size' => $fallbackSize
+					]
+				);
+			}
 		}
 
 		return $mediaDetail;

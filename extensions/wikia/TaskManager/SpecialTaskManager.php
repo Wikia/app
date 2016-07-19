@@ -34,18 +34,6 @@ extAddBatchTask( $dir."/Tasks/LocalMaintenanceTask.php", "local-maintenance", "L
 extAddBatchTask( $dir ."/Tasks/UpdateSpecialPagesTask.php", "update_special_pages", "UpdateSpecialPagesTask" );
 
 /**
- * permissions
- */
-$wgAvailableRights[] = 'taskmanager';
-$wgGroupPermissions['vstf']['taskmanager'] = true;
-$wgGroupPermissions['helper']['taskmanager'] = true;
-$wgGroupPermissions['staff']['taskmanager'] = true;
-
-$wgAvailableRights[] = 'taskmanager-action';
-$wgGroupPermissions['util']['taskmanager'] = true;
-$wgGroupPermissions['util']['taskmanager-action'] = true;
-
-/**
  * message file
  */
 $wgExtensionMessagesFiles[ $sSpecialPage ] = $dir . "/Special{$sSpecialPage}.i18n.php";

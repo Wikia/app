@@ -80,9 +80,7 @@ class CreateNewWikiTask extends BaseTask {
 
 		$hookParams = [ 'title' => $params['sitename'], 'url' => $params['url'], 'city_id' => $params['city_id'] ];
 
-		if ( empty( $params['disableCompleteHook'] ) ) {
-			wfRunHooks( 'CreateWikiLocalJob-complete', array( $hookParams ) );
-		}
+		wfRunHooks( 'CreateWikiLocalJob-complete', array( $hookParams ) );
 
 		return true;
 	}
@@ -101,6 +99,10 @@ class CreateNewWikiTask extends BaseTask {
 		$cmd = sprintf( "SERVER_ID={$wgCityId} php {$IP}/maintenance/refreshLinks.php --server={$server} --new-only" );
 		$output = wfShellExec( $cmd, $exitStatus );
 		$this->info( 'run refreshLinks.php', ['exitStatus' => $exitStatus, 'output' => $output] );
+
+		$cmd = sprintf( "SERVER_ID={$wgCityId} php {$IP}/maintenance/updateSpecialPages.php --server={$server}" );
+		$output = wfShellExec( $cmd, $exitStatus );
+		$this->info( 'run updateSpecialPages.php', ['exitStatus' => $exitStatus, 'output' => $output] );
 
 		$this->info( "Remove edit lock" );
 		$variable = \WikiFactory::getVarByName( 'wgReadOnly', $wgCityId );

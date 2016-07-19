@@ -77,5 +77,14 @@ $global-nav-inverse-link-hover-color: #C5CED9;
 				background-color: #ddd;
 			}
 		}
+
+		.start-wikia {
+			border-color: $global-nav-inverse-text-color;
+			color: $global-nav-inverse-text-color;
+
+			&:hover {
+				background-color: $global-nav-inverse-background-hover;
+			}
+		}
 	}
 }

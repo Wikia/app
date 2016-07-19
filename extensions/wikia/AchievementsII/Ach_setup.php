@@ -53,28 +53,6 @@ if( !empty( $wgEnableAchievementsExt ) ) {
     $wgSpecialPages['AchievementsSharing'] = 'SpecialAchievementsSharing';
 }
 
-// RIGHTS
-$wgAvailableRights[] = 'platinum';
-$wgGroupPermissions['*']['platinum'] = false;
-$wgGroupPermissions['staff']['platinum'] = true;
-$wgGroupPermissions['helper']['platinum'] = true;
-
-$wgAvailableRights[] = 'sponsored-achievements';
-$wgGroupPermissions['*']['sponsored-achievements'] = false;
-$wgGroupPermissions['staff']['sponsored-achievements'] = true;
-
-$wgAvailableRights[] = 'achievements-exempt';
-$wgGroupPermissions['*']['achievements-exempt'] = false;
-$wgGroupPermissions['helper']['achievements-exempt'] = true;
-$wgGroupPermissions['staff']['achievements-exempt'] = true;
-$wgGroupPermissions['vstf']['achievements-exempt'] = true;
-
-// overrides acievements-exempt
-$wgAvailableRights[] = 'achievements-explicit';
-$wgGroupPermissions['*']['achievements-explicit'] = false;
-$wgGroupPermissions['sysop']['achievements-explicit'] = true;
-$wgGroupPermissions['bureaucrat']['achievements-explicit'] = true;
-
 // AUTOLOADS
 
 // config
@@ -129,7 +107,6 @@ function Ach_Setup() {
 	$wgHooks['ArticleSaveComplete'][] = 'Ach_ArticleSaveComplete';
 	$wgHooks['GetHTMLAfterBody'][] = 'Ach_GetHTMLAfterBody';
 	$wgHooks['UploadVerification'][] = 'Ach_UploadVerification';
-	$wgHooks['Masthead::editCounter'][] = 'Ach_MastheadEditCounter';
 
 	//hooks for user preferences
 	$wgHooks['GetPreferences'][] = 'Ach_UserPreferences';
@@ -152,22 +129,6 @@ function Ach_GetMenu(&$nodes) {
 		//'parentIndex' => 0
 	);
 
-	return true;
-}
-
-function Ach_MastheadEditCounter(&$editCounter, $user) {
-	if ($user instanceof User) {
-		global $wgUser;
-
-		if(!($wgUser->getId() == $user->getId() && $wgUser->getGlobalPreference('hidepersonalachievements'))) {
-			$dbr = wfGetDB(DB_SLAVE);
-			$editCounter = $dbr->selectField('ach_user_score', 'score', array('user_id' => $user->getId()), __METHOD__);
-
-			$editCounter = '<div id="masthead-achievements">' . wfMsg('achievements-masthead-points', number_format($editCounter)) . '</div>';
-		}
-	} else {
-		$editCounter = '';
-	}
 	return true;
 }
 

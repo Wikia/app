@@ -17,8 +17,12 @@ class FixMalformedHTMLTest extends WikiaBaseTest {
 	function validWikiaHTMLDataProvider() {
 		return [
 			[
-				'simplest text',
+				'simplest paragraph',
 				'<p>simplest</p>'
+			],
+			[
+				'simplest text',
+				'simplest'
 			],
 			[
 				'paragraph with some formatting',
@@ -35,6 +39,10 @@ class FixMalformedHTMLTest extends WikiaBaseTest {
 			[
 				'video markup',
 				'<figure class="article-thumb tright show-info-icon" style="width: 330px"><a href="http://lizlux.liz.wikia-dev.com/wiki/File:Injustice_-_Explaining_Blackest_Night" class="video video-thumbnail medium image lightbox " itemprop="video" itemscope="" itemtype="http://schema.org/VideoObject"><img src="http://static.liz.wikia-dev.com/__cb20130401202327/video151/images/thumb/f/f5/Injustice_-_Explaining_Blackest_Night/330px-Injustice_-_Explaining_Blackest_Night.jpg" data-video-key="Injustice_-_Explaining_Blackest_Night" data-video-name="Injustice - Explaining Blackest Night" width="330" height="185" alt="Injustice - Explaining Blackest Night" itemprop="thumbnail"><span class="duration" itemprop="duration">02:28</span><span class="play-circle"></span><meta itemprop="duration" content="PT02M28S"></a><figcaption><a href="/wiki/File:Injustice_-_Explaining_Blackest_Night" class="sprite info-icon"></a><p class="title">Injustice - Explaining Blackest Night</p></figcaption></figure>'
+			],
+			[
+				'polls markup',
+				'<!-- AjaxPoll #0 --><script>JSSnippetsStack.push({dependencies:["/extensions/wikia/AjaxPoll/css/AjaxPoll.scss","/extensions/wikia/AjaxPoll/js/AjaxPoll.js"],callback:function(json){AjaxPoll.init(json)},id:"AjaxPoll.init"})</script><!-- s:poll --><div class="ajax-poll" id="ajax-poll-1A3080EAB9A09BA16F83B62BAEA7336F"><div class="header">Glee is awesome	</div><div id="wpPollStatus1A3080EAB9A09BA16F83B62BAEA7336F" class="center"> </div><form action="#" method="post" id="axPoll1A3080EAB9A09BA16F83B62BAEA7336F"><input type="hidden" name="wpPollId" value="1A3080EAB9A09BA16F83B62BAEA7336F"><div id="ajax-poll-area"><div class="pollAnswer" id="pollAnswer2"><div class="pollAnswerName"><label for="pollAnswerRadio1A3080EAB9A09BA16F83B62BAEA7336F"><input type="radio" name="wpPollRadio1A3080EAB9A09BA16F83B62BAEA7336F" id="wpPollRadio1A3080EAB9A09BA16F83B62BAEA7336F" value="2">Polls are great			</label></div><div class="pollAnswerVotes" onmouseover=\'span=this.getElementsByTagName("span")[0];tmpPollVar=span.innerHTML;span.innerHTML=span.title;span.title="";\' onmouseout=\'span=this.getElementsByTagName("span")[0];span.title=span.innerHTML;span.innerHTML=tmpPollVar;\'><span id="wpPollVote1A3080EAB9A09BA16F83B62BAEA7336F-2" title="0">0</span><div class="wpPollBar1A3080EAB9A09BA16F83B62BAEA7336F" id="wpPollBar1A3080EAB9A09BA16F83B62BAEA7336F-2" style="width: 0%;"> </div></div></div><div class="pollAnswer" id="pollAnswer3"><div class="pollAnswerName"><label for="pollAnswerRadio1A3080EAB9A09BA16F83B62BAEA7336F"><input type="radio" name="wpPollRadio1A3080EAB9A09BA16F83B62BAEA7336F" id="wpPollRadio1A3080EAB9A09BA16F83B62BAEA7336F" value="3">Glee polls rock			</label></div><div class="pollAnswerVotes" onmouseover=\'span=this.getElementsByTagName("span")[0];tmpPollVar=span.innerHTML;span.innerHTML=span.title;span.title="";\' onmouseout=\'span=this.getElementsByTagName("span")[0];span.title=span.innerHTML;span.innerHTML=tmpPollVar;\'><span id="wpPollVote1A3080EAB9A09BA16F83B62BAEA7336F-3" title="100% aller Stimmen">1</span><div class="wpPollBar1A3080EAB9A09BA16F83B62BAEA7336F" id="wpPollBar1A3080EAB9A09BA16F83B62BAEA7336F-3" style="width: 100%; border:0;"> </div></div></div><br style="clear: both;"><div>Die Umfrage wurde am March 24, 2016 um 20:44 erstellt. Bisher haben <span class="total" id="wpPollTotal1A3080EAB9A09BA16F83B62BAEA7336F">1</span> Nutzer abgestimmt.			</div></div><input type="submit" name="wpVote" id="axPollSubmit1A3080EAB9A09BA16F83B62BAEA7336F" value="Abstimmen!"><span id="pollSubmittingInfo1A3080EAB9A09BA16F83B62BAEA7336F" style="padding-left: 10px; visibility: hidden;">Bitte warte kurz, deine Stimme wird verarbeitet.		</span></form></div><!-- e:poll -->'
 			],
 		];
 	}
@@ -96,7 +104,7 @@ class FixMalformedHTMLTest extends WikiaBaseTest {
 			[
 				'Russian text should be handled properly (ie, not returned as garbage)',
 				'Ед дуо малйж факилиз. Йн лорэм видырэр жкрибэнтур ыюм. Мэль альяквюам пырикюлёз ан, аугюэ аккюсам номинави ед жят. Вэл эи унюм емпэтюсъ инзтруктеор, эи модо конгуы дикырыт дуо',
-                '<p>Ед дуо малйж факилиз. Йн лорэм видырэр жкрибэнтур ыюм. Мэль альяквюам пырикюлёз ан, аугюэ аккюсам номинави ед жят. Вэл эи унюм емпэтюсъ инзтруктеор, эи модо конгуы дикырыт дуо</p>'
+                'Ед дуо малйж факилиз. Йн лорэм видырэр жкрибэнтур ыюм. Мэль альяквюам пырикюлёз ан, аугюэ аккюсам номинави ед жят. Вэл эи унюм емпэтюсъ инзтруктеор, эи модо конгуы дикырыт дуо',
 			],
 			[
 				'html snippet should close wrapping tags it opened, even with Russian text',

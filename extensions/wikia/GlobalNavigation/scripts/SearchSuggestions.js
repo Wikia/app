@@ -42,9 +42,7 @@ $(function() {
 		WikiaSearchApp.prototype.initSuggest = function() {
 			var autocompleteReEscape = new RegExp('(\\' + ['/', '.', '*', '+', '?', '|', '(', ')',
 				'[', ']', '{', '}', '\\'].join('|\\') + ')', 'g');
-			$.when(
-					mw.loader.use('jquery.autocomplete')
-				).then($.proxy(function() {
+				mw.loader.using('jquery.autocomplete').then($.proxy(function() {
 					this.searchField.autocomplete({
 						serviceUrl: window.wgServer + window.wgScript + '?action=ajax&rs=getLinkSuggest&format=json',
 						onSelect: $.proxy(function(value, data, event) {

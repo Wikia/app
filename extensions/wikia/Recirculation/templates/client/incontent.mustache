@@ -1,0 +1,14 @@
+<div class="recirculation-horizontal recirculation-incontent">
+	<h3>{{ title }}</h3>
+
+	<div class="items">
+		{{#items}}
+		<div class="item" data-index="{{ index }}" data-source="{{source}}">
+			<a title="{{ title }}" href="{{ url }}">
+				<div class="thumbnail"><img src="{{ thumbnail }}" alt="{{ title }}"></div>
+				<h4>{{ title }}</h4>
+			</a>
+		</div>
+		{{/items}}
+	</div>
+</div>

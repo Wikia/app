@@ -55,12 +55,6 @@ $wgSpecialPages['Insights'] = 'InsightsController';
 $wgSpecialPageGroups['Insights'] = 'wikia';
 
 /**
- * Permissions
- */
-$wgAvailableRights[] = 'insights';
-$wgGroupPermissions['*']['insights'] = true;
-
-/**
  * Models
  */
 $wgAutoloadClasses['InsightsModel'] = $dir . 'models/InsightsModel.php';
@@ -72,10 +66,11 @@ $wgAutoloadClasses['InsightsWantedpagesModel'] = $dir . 'models/InsightsWantedpa
 $wgAutoloadClasses['InsightsWithoutimagesModel'] = $dir . 'models/InsightsWithoutimagesModel.php';
 
 /**
- * Counting service
+ * Services
  */
 $wgAutoloadClasses['InsightsCountService'] = $dir . 'services/InsightsCountService.class.php';
 $wgAutoloadClasses['InsightsCountApiController'] = $dir . 'controllers/InsightsCountApiController.class.php';
+$wgAutoloadClasses['InsightsService'] = $dir . 'services/InsightsService.class.php';
 
 /**
  * The right rail module

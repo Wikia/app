@@ -26,7 +26,7 @@ if ( $bShowDumps ) {
 <table width="90%" align="center" id="closed-urls">
     <tr>
         <td width="50%" style="text-align:center"><a href="http://www.wikia.com/Special:CreateWiki"><?= wfMessage( 'closed-wiki-create-wiki' )->parse() ?></a></td>
-        <td width="50%" style="text-align:center"><a href="/wiki/Wikia:Closed_Wikia"><?= wfMessage( 'closed-wiki-policy' )->escaped() ?></a></td>
+        <td width="50%" style="text-align:center"><a href="<?= wfMessage( 'closed-wiki-policy-url' )->useDatabase( false )->escaped() ?>"><?= wfMessage( 'closed-wiki-policy' )->escaped() ?></a></td>
     </tr>
 </table>
 <!-- e:<?= __FILE__ ?> -->

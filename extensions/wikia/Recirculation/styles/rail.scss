@@ -1,0 +1,64 @@
+@import 'skins/shared/color';
+@import 'skins/shared/mixins/transform';
+
+.WikiaRail .recirculation-rail {
+	.rail-item {
+		margin-bottom: 15px;
+	}
+
+	.image-thumbnail {
+		background-color: $color-headline-border;
+		display: block;
+		margin-bottom: 7px;
+		max-height: 166px;
+		max-width: 268px;
+		overflow: hidden;
+
+		img {
+			display: block;
+			max-height: 100%;
+			max-width: 100%;
+		}
+	}
+
+	.title {
+		font-size: 15px;
+	}
+
+	.metadata {
+		display: none;
+	}
+
+	a {
+		color: $color-text;
+
+		&:hover {
+			color: $color-links;
+		}
+	}
+}
+
+// Update Taboola in Right Rail to match other right rail modules
+// Right rail module code found: skins/oasis/css/core/page.scss
+#RECIRCULATION_RAIL .trc_rbox_container {
+	background: $color-page;
+	border: 1px solid $color-page-border;
+	margin-bottom: 10px;
+	padding: 20px 15px 15px;
+
+	@if ($is-dark-wiki) {
+		background: $color-module-background;
+	}
+
+	.thumbnails-rr2 {
+		padding: 0;
+
+		.video-title {
+			font-weight: 400;
+		}
+	}
+
+	.trc_rbox_header {
+		margin-bottom: 25px;
+	}
+}

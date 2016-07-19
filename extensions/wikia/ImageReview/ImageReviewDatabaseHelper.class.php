@@ -110,7 +110,7 @@ class ImageReviewDatabaseHelper {
 
 	/**
 	 * @param  mixed $mDatabase  Database machine master/slave
-	 * @return DatabaseMysql     Dataware database object
+	 * @return DatabaseBase     Dataware database object
 	 */
 	private function getDatawareDB( $mDatabase = DB_MASTER ) {
 		global $wgExternalDatawareDB;

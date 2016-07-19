@@ -212,3 +212,11 @@ ve.ui.WikiaUploadWidget.prototype.showUploadAnimation = function () {
 ve.ui.WikiaUploadWidget.prototype.hideUploadAnimation = function () {
 	this.$element.removeClass( 've-ui-texture-pending' );
 };
+
+/**
+ * Getter for upload button.
+ * @returns the upload button
+ */
+ve.ui.WikiaUploadWidget.prototype.getUploadButton = function () {
+	return this.uploadButton;
+};

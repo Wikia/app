@@ -16,11 +16,6 @@ class WikiaLoggerTest extends PHPUnit_Framework_TestCase {
 		$this->assertTrue($logger->getWebProcessor() instanceof WebProcessor);
 	}
 
-	function testDetectIdent() {
-		$ident = WikiaLogger::instance()->detectIdent();
-		$this->assertTrue(!empty($ident));
-	}
-
 	function testLogger() {
 		$loggerMock = $this->getMock('\Monolog\Logger', [], ['phpunit']);
 		$loggerMock->expects($this->any())

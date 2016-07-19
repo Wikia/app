@@ -21,6 +21,9 @@
  * @ingroup SpecialPage
  */
 
+
+use Wikia\Service\User\Permissions\PermissionsServiceAccessor;
+
 /**
  * Special page lists various statistics, including the contents of
  * `site_stats`, plus page view details if enabled
@@ -28,6 +31,7 @@
  * @ingroup SpecialPage
  */
 class SpecialStatistics extends SpecialPage {
+	use PermissionsServiceAccessor;
 
 	private $views, $edits, $good, $images, $total, $users,
 			$activeUsers = 0;
@@ -187,11 +191,11 @@ class SpecialStatistics extends SpecialPage {
 	}
 
 	private function getGroupStats() {
-		global $wgGroupPermissions, $wgImplicitGroups;
+		global $wgGroupPermissions;
 		$text = '';
 		foreach( $wgGroupPermissions as $group => $permissions ) {
 			# Skip generic * and implicit groups
-			if ( in_array( $group, $wgImplicitGroups ) || $group == '*' ) {
+			if ( $this->permissionsService()->getConfiguration()->isImplicitGroup( $group ) ) {
 				continue;
 			}
 			$groupname = htmlspecialchars( $group );
@@ -223,8 +227,7 @@ class SpecialStatistics extends SpecialPage {
 			$countUsers = SiteStats::numberingroup( $groupname );
 			if( $countUsers == 0 ) {
 				// wikia change start
-				global $wgWikiaGlobalUserGroups;
-				if( is_array( $wgWikiaGlobalUserGroups ) && in_array( $groupname, $wgWikiaGlobalUserGroups ) ) {
+				if( $this->permissionsService()->getConfiguration()->isGlobalGroup( $groupname ) ) {
 					//rt#57322 hide our effective global groups
 					continue;
 				}

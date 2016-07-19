@@ -105,11 +105,15 @@ class GlobalNavigationHelper {
 		$CommunityLinkLabel = wfMessage( 'global-navigation-community-link-label');
 		$exploreWikiaLabel = wfMessage( 'global-navigation-explore-wikia-link-label');
 
-		$hubsNodes = ( new NavigationModel( true /* useSharedMemcKey */ ) )->getTree(
-			NavigationModel::TYPE_MESSAGE,
-			'global-navigation-menu-hubs',
-			[3] // max 3 links
-		);
+		if ( $wgLang->getCode() === self::DEFAULT_LANG ) {
+			$hubsNodes = (new NavigationModel(true /* useSharedMemcKey */))->getTree(
+				NavigationModel::TYPE_MESSAGE,
+				'global-navigation-menu-hubs',
+				[3] // max 3 links
+			);
+		} else {
+			$hubsNodes = [];
+		}
 
 		// Link to WAM - Top Communities
 		$exploreDropdownLinks[] = [
@@ -140,13 +144,18 @@ class GlobalNavigationHelper {
 	}
 
 	public function getWAMLinkForLang( $lang ) {
-		$wamService = new WAMService();
-		$wamDates = $wamService->getWamIndexDates();
 
-		if ( $lang === 'en' || !in_array( $lang, $wamService->getWAMLanguages( $wamDates['max_date'] ) ) ) {
-			return wfMessage('global-navigation-wam-link')->plain();
-		} else {
-			return wfMessage('global-navigation-wam-link')->plain() . self::WAM_LANG_CODE_PARAMETER . $lang;
+		// Default/common case is 'en'
+		$message = wfMessage('global-navigation-wam-link')->plain();
+
+		if ( $lang !== self::DEFAULT_LANG ) {
+			$wamService = new WAMService();
+			$wamDates = $wamService->getWamIndexDates();
+			if (in_array( $lang, $wamService->getWAMLanguages( $wamDates['max_date'] ) ) ) {
+				$message = $message . self::WAM_LANG_CODE_PARAMETER . $lang;
+			}
 		}
+
+		return $message;
 	}
 }

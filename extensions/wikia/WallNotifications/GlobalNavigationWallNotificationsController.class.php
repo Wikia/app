@@ -31,7 +31,7 @@ class GlobalNavigationWallNotificationsController extends WallNotificationContro
 		$this->response->setVal( 'wikiCount', count( $notificationCounts ) );
 	}
 
-	public function getTitle( string $title ) {
+	public function getTitle( $title ) {
 		return $this->getWallHelper()->shortenText( $title, self::NOTIFICATION_TITLE_LIMIT );
 
 	}
@@ -43,7 +43,7 @@ class GlobalNavigationWallNotificationsController extends WallNotificationContro
 		return !empty( $suppressed );
 	}
 
-	protected function setUnread( bool $unread ) {
+	protected function setUnread( $unread ) {
 		$this->response->setVal( 'isUnread', $unread ? 'unread' : 'read' );
 	}
 

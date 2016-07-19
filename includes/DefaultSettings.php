@@ -3434,151 +3434,6 @@ $wgEmailConfirmToEdit = false;
  *
  * This replaces $wgWhitelistAccount and $wgWhitelistEdit
  */
-$wgGroupPermissions = array();
-
-/** @cond file_level_code */
-// Implicit group for all visitors
-$wgGroupPermissions['*']['createaccount']    = true;
-$wgGroupPermissions['*']['read']             = true;
-$wgGroupPermissions['*']['edit']             = true;
-$wgGroupPermissions['*']['createpage']       = true;
-$wgGroupPermissions['*']['createtalk']       = true;
-$wgGroupPermissions['*']['writeapi']         = true;
-$wgGroupPermissions['*']['editmyoptions']    = true;
-//$wgGroupPermissions['*']['patrolmarks']      = false; // let anons see what was patrolled
-
-// Implicit group for all logged-in accounts
-$wgGroupPermissions['user']['move']             = true;
-$wgGroupPermissions['user']['move-subpages']    = true;
-$wgGroupPermissions['user']['move-rootuserpages'] = true; // can move root userpages
-// $wgGroupPermissions['user']['movefile']         = true; // Disabled for now due to possible bugs and security concerns
-$wgGroupPermissions['user']['read']             = true;
-$wgGroupPermissions['user']['edit']             = true;
-$wgGroupPermissions['user']['createpage']       = true;
-$wgGroupPermissions['user']['createtalk']       = true;
-$wgGroupPermissions['user']['writeapi']         = true;
-$wgGroupPermissions['user']['upload']           = true;
-$wgGroupPermissions['user']['reupload']         = true;
-$wgGroupPermissions['user']['reupload-shared']  = true;
-$wgGroupPermissions['user']['minoredit']        = true;
-$wgGroupPermissions['user']['purge']            = true; // can use ?action=purge without clicking "ok"
-$wgGroupPermissions['user']['sendemail']        = true;
-
-// Implicit group for accounts that pass $wgAutoConfirmAge
-$wgGroupPermissions['autoconfirmed']['autoconfirmed'] = true;
-
-// Users with bot privilege can have their edits hidden
-// from various log pages by default
-$wgGroupPermissions['bot']['bot']              = true;
-$wgGroupPermissions['bot']['autoconfirmed']    = true;
-$wgGroupPermissions['bot']['nominornewtalk']   = true;
-$wgGroupPermissions['bot']['autopatrol']       = true;
-$wgGroupPermissions['bot']['suppressredirect'] = true;
-$wgGroupPermissions['bot']['apihighlimits']    = true;
-$wgGroupPermissions['bot']['writeapi']         = true;
-#$wgGroupPermissions['bot']['editprotected']    = true; // can edit all protected pages without cascade protection enabled
-
-// Most extra permission abilities go to this group
-$wgGroupPermissions['sysop']['block']            = true;
-$wgGroupPermissions['sysop']['createaccount']    = true;
-$wgGroupPermissions['sysop']['delete']           = true;
-$wgGroupPermissions['sysop']['bigdelete']        = true; // can be separately configured for pages with > $wgDeleteRevisionsLimit revs
-$wgGroupPermissions['sysop']['deletedhistory']   = true; // can view deleted history entries, but not see or restore the text
-$wgGroupPermissions['sysop']['deletedtext']      = true; // can view deleted revision text
-$wgGroupPermissions['sysop']['undelete']         = true;
-$wgGroupPermissions['sysop']['editinterface']    = true;
-$wgGroupPermissions['sysop']['editusercss']      = true;
-$wgGroupPermissions['sysop']['edituserjs']       = true;
-$wgGroupPermissions['sysop']['import']           = true;
-$wgGroupPermissions['sysop']['importupload']     = true;
-$wgGroupPermissions['sysop']['move']             = true;
-$wgGroupPermissions['sysop']['move-subpages']    = true;
-$wgGroupPermissions['sysop']['move-rootuserpages'] = true;
-$wgGroupPermissions['sysop']['patrol']           = true;
-$wgGroupPermissions['sysop']['autopatrol']       = true;
-$wgGroupPermissions['sysop']['protect']          = true;
-$wgGroupPermissions['sysop']['proxyunbannable']  = true;
-$wgGroupPermissions['sysop']['rollback']         = true;
-$wgGroupPermissions['sysop']['upload']           = true;
-$wgGroupPermissions['sysop']['reupload']         = true;
-$wgGroupPermissions['sysop']['reupload-shared']  = true;
-$wgGroupPermissions['sysop']['unwatchedpages']   = true;
-$wgGroupPermissions['sysop']['autoconfirmed']    = true;
-$wgGroupPermissions['sysop']['upload_by_url']    = true;
-$wgGroupPermissions['sysop']['ipblock-exempt']   = true;
-$wgGroupPermissions['sysop']['blockemail']       = true;
-$wgGroupPermissions['sysop']['markbotedits']     = true;
-$wgGroupPermissions['sysop']['apihighlimits']    = true;
-$wgGroupPermissions['sysop']['browsearchive']    = true;
-$wgGroupPermissions['sysop']['noratelimit']      = true;
-$wgGroupPermissions['sysop']['movefile']         = true;
-$wgGroupPermissions['sysop']['unblockself']      = true;
-$wgGroupPermissions['sysop']['suppressredirect'] = true;
-#$wgGroupPermissions['sysop']['mergehistory']     = true;
-
-// Permission to change users' group assignments
-$wgGroupPermissions['bureaucrat']['userrights']  = true;
-$wgGroupPermissions['bureaucrat']['noratelimit'] = true;
-// Permission to change users' groups assignments across wikis
-#$wgGroupPermissions['bureaucrat']['userrights-interwiki'] = true;
-// Permission to export pages including linked pages regardless of $wgExportMaxLinkDepth
-#$wgGroupPermissions['bureaucrat']['override-export-depth'] = true;
-
-#$wgGroupPermissions['sysop']['deleterevision']  = true;
-// To hide usernames from users and Sysops
-#$wgGroupPermissions['suppress']['hideuser'] = true;
-// To hide revisions/log items from users and Sysops
-#$wgGroupPermissions['suppress']['suppressrevision'] = true;
-// For private suppression log access
-#$wgGroupPermissions['suppress']['suppressionlog'] = true;
-
-/**
- * The developer group is deprecated, but can be activated if need be
- * to use the 'lockdb' and 'unlockdb' special pages. Those require
- * that a lock file be defined and creatable/removable by the web
- * server.
- */
-# $wgGroupPermissions['developer']['siteadmin'] = true;
-
-/** @endcond */
-
-/**
- * Permission keys revoked from users in each group.
- * This acts the same way as wgGroupPermissions above, except that
- * if the user is in a group here, the permission will be removed from them.
- *
- * Improperly setting this could mean that your users will be unable to perform
- * certain essential tasks, so use at your own risk!
- */
-$wgRevokePermissions = array();
-
-/**
- * Implicit groups, aren't shown on Special:Listusers or somewhere else
- */
-$wgImplicitGroups = array( '*', 'user', 'autoconfirmed' );
-
-/**
- * A map of group names that the user is in, to group names that those users
- * are allowed to add or revoke.
- *
- * Setting the list of groups to add or revoke to true is equivalent to "any group".
- *
- * For example, to allow sysops to add themselves to the "bot" group:
- *
- *    $wgGroupsAddToSelf = array( 'sysop' => array( 'bot' ) );
- *
- * Implicit groups may be used for the source group, for instance:
- *
- *    $wgGroupsRemoveFromSelf = array( '*' => true );
- *
- * This allows users in the '*' group (i.e. any user) to remove themselves from
- * any group that they happen to be in.
- *
- */
-$wgGroupsAddToSelf = array();
-
-/** @see $wgGroupsAddToSelf */
-$wgGroupsRemoveFromSelf = array();
 
 /**
  * Set of available actions that can be restricted via action=protect
@@ -3672,56 +3527,6 @@ $wgAutopromote = array(
 		array( APCOND_AGE, &$wgAutoConfirmAge ),
 	),
 );
-
-/**
- * Automatically add a usergroup to any user who matches certain conditions.
- * Does not add the user to the group again if it has been removed.
- * Also, does not remove the group if the user no longer meets the criteria.
- *
- * The format is
- *	array( event => criteria, ... )
- * where event is
- *	'onEdit' (when user edits) or 'onView' (when user views the wiki)
- * and criteria has the same format as $wgAutopromote
- *
- * @see $wgAutopromote
- * @since 1.18
- */
-$wgAutopromoteOnce = array(
-	'onEdit' => array(),
-	'onView' => array()
-);
-
-/**
- * Put user rights log entries for autopromotion in recent changes?
- * @since 1.18
- */
-$wgAutopromoteOnceLogInRC = true;
-
-/**
- * $wgAddGroups and $wgRemoveGroups can be used to give finer control over who
- * can assign which groups at Special:Userrights.  Example configuration:
- *
- * @code
- * // Bureaucrat can add any group
- * $wgAddGroups['bureaucrat'] = true;
- * // Bureaucrats can only remove bots and sysops
- * $wgRemoveGroups['bureaucrat'] = array( 'bot', 'sysop' );
- * // Sysops can make bots
- * $wgAddGroups['sysop'] = array( 'bot' );
- * // Sysops can disable other sysops in an emergency, and disable bots
- * $wgRemoveGroups['sysop'] = array( 'sysop', 'bot' );
- * @endcode
- */
-$wgAddGroups = array();
-/** @see $wgAddGroups */
-$wgRemoveGroups = array();
-
-/**
- * A list of available rights, in addition to the ones defined by the core.
- * For extensions only.
- */
-$wgAvailableRights = array();
 
 /**
  * Optional to restrict deletion of pages with higher revision counts
@@ -3957,17 +3762,6 @@ $wgCookiePrefix = false;
  */
 $wgCookieHttpOnly = true;
 
-/**
- * If the requesting browser matches a regex in this blacklist, we won't
- * send it cookies with HttpOnly mode, even if $wgCookieHttpOnly is on.
- */
-$wgHttpOnlyBlacklist = array(
-	// Internet Explorer for Mac; sometimes the cookies work, sometimes
-	// they don't. It's difficult to predict, as combinations of path
-	// and expiration options affect its parsing.
-	'/^Mozilla\/4\.0 \(compatible; MSIE \d+\.\d+; Mac_PowerPC\)/',
-);
-
 /** A list of cookies that vary the cache (for use by extensions) */
 $wgCacheVaryCookies = array();
 
@@ -4171,6 +3965,16 @@ $wgAggregateStatsID = false;
  * Does not work if pages are cached (for example with squid).
  */
 $wgDisableCounters = false;
+
+/**
+ * Set this to an integer to only do synchronous site_stats updates
+ * one every *this many* updates. The other requests go into pending
+ * delta values in $wgMemc. Make sure that $wgMemc is a global cache.
+ * If set to -1, updates *only* go to $wgMemc (useful for daemons).
+ *
+ * @see PLATFORM-2275
+ */
+$wgSiteStatsAsyncFactor = 1;
 
 /**
  * Parser test suite files to be run by parserTests.php when no specific
@@ -4925,9 +4729,10 @@ $wgJobTypesExcludedFromDefaultQueue = array();
  * Additional functions to be performed with updateSpecialPages.
  * Expensive Querypages are already updated.
  */
-$wgSpecialPageCacheUpdates = array(
-	'Statistics' => array( 'SiteStatsUpdate', 'cacheUpdate' )
-);
+$wgSpecialPageCacheUpdates = [
+	'SiteStatsRegenerate' => [ 'SiteStatsInit', 'doAllAndCommit' ], # PLATFORM-2275
+	'Statistics'          => [ 'SiteStatsUpdate', 'cacheUpdate' ],
+];
 
 /**
  * Hooks that are used for outputting exceptions.  Format is:
@@ -5513,7 +5318,7 @@ $wgAjaxLicensePreview = true;
  *
  */
 $wgCrossSiteAJAXdomains = [
-	'internal.vstf.wikia.com', # PLATFORM-1719
+	"internal.vstf.{$wgWikiaBaseDomain}", # PLATFORM-1719
 ];
 
 /**
@@ -5534,7 +5339,7 @@ $wgCrossSiteAJAXdomainExceptions = array();
 /**
  * Maximum amount of virtual memory available to shell processes under linux, in KB.
  */
-$wgMaxShellMemory = 102400;
+$wgMaxShellMemory = 0; // Wikia change - OPS-8226
 
 /**
  * Maximum file size created by shell processes under linux, in KB

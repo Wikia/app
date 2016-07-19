@@ -14,16 +14,14 @@
 		rteForceLogin: function () {
 			//prevent onbeforeunload from being called when user is loging in
 			window.onbeforeunload = function () {};
-			require(['AuthModal'], function (authModal) {
-				authModal.load({
-					origin: 'editor',
-					url: '/signin?redirect=' + encodeURIComponent(window.location.href),
-					onAuthSuccess: function () {
-						if (window.WikiaEditor) {
-							WikiaEditor.reloadEditor();
-						}
+			window.wikiaAuthModal.load({
+				forceLogin: true,
+				origin: 'editor',
+				onAuthSuccess: function () {
+					if (window.WikiaEditor) {
+						WikiaEditor.reloadEditor();
 					}
-				});
+				}
 			});
 		},
 
@@ -31,11 +29,9 @@
 			if (window.wgUserName === null) {
 				//prevent onbeforeunload from being called when user is logging in
 				window.onbeforeunload = function () {};
-				require(['AuthModal'], function (authModal) {
-					authModal.load({
-						origin: 'editor',
-						url: '/signin?redirect=' + encodeURIComponent(window.location.href),
-					});
+				window.wikiaAuthModal.load({
+					forceLogin: true,
+					origin: 'editor'
 				});
 				return true;
 			}

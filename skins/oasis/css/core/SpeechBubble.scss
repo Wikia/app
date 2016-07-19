@@ -50,9 +50,19 @@
 			overflow: hidden;
 			width: 553px;
 		}
-        .toc ul {
-            list-style-type: none;
-        }
+
+		.toc ul {
+			list-style-type: none;
+		}
+
+		div, figure {
+			max-width: 100%;
+		}
+
+		.image > img {
+			height: auto;
+			max-width: 100%;
+		}
 	}
 
 	.speech-bubble-message:before {
@@ -79,7 +89,7 @@
 		width: 0;
 	}
 
-	&.even, &.owner { 
+	&.even, &.owner {
 		.speech-bubble-message {
 			background: $color-speech-bubble-alt;
 

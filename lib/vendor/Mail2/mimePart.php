@@ -162,7 +162,7 @@ class Mail_mimePart
     *
     * @access public
     */
-    function Mail_mimePart($body = '', $params = array())
+    function __construct($body = '', $params = array())
     {
         if (!empty($params['eol'])) {
             $this->_eol = $params['eol'];
@@ -329,14 +329,7 @@ class Mail_mimePart
         } else if ($this->_body) {
             $encoded['body'] = $this->_getEncodedData($this->_body, $this->_encoding);
         } else if ($this->_body_file) {
-            // Temporarily reset magic_quotes_runtime for file reads and writes
-            if ($magic_quote_setting = get_magic_quotes_runtime()) {
-                @ini_set('magic_quotes_runtime', 0);
-            }
             $body = $this->_getEncodedDataFromFile($this->_body_file, $this->_encoding);
-            if ($magic_quote_setting) {
-                @ini_set('magic_quotes_runtime', $magic_quote_setting);
-            }
 
             if ($this->_isError($body)) {
                 return $body;
@@ -377,18 +370,9 @@ class Mail_mimePart
             return $err;
         }
 
-        // Temporarily reset magic_quotes_runtime for file reads and writes
-        if ($magic_quote_setting = get_magic_quotes_runtime()) {
-            @ini_set('magic_quotes_runtime', 0);
-        }
-
         $res = $this->_encodePartToFile($fh, $boundary, $skip_head);
 
         fclose($fh);
-
-        if ($magic_quote_setting) {
-            @ini_set('magic_quotes_runtime', $magic_quote_setting);
-        }
 
         return $this->_isError($res) ? $res : $this->_headers;
     }

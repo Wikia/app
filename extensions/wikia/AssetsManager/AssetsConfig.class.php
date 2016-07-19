@@ -135,7 +135,7 @@ class AssetsConfig {
 	 *
 	 * @param $groupName
 	 * @return array
-	 * @throws AssetsManagerException
+	 * @throws InvalidArgumentException
 	 */
 	protected function getGroupAssets( $groupName ) {
 		$this->load();
@@ -143,7 +143,7 @@ class AssetsConfig {
 		if ( $this->isGroupDefined( $groupName ) ) {
 			return self::$mConfig[$groupName]['assets'];
 		} else {
-			throw new AssetsManagerException("Group '{$groupName}' doesn't exist");
+			throw new InvalidArgumentException("Group '{$groupName}' doesn't exist");
 		}
 	}
 

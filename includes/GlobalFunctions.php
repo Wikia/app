@@ -165,8 +165,8 @@ function wfArrayDiff2_cmp( $a, $b ) {
  * Returns an array where the values in the first array are replaced by the
  * values in the second array with the corresponding keys
  *
- * @param $a Array
- * @param $b Array
+ * @param $a array
+ * @param $b array
  * @return array
  */
 function wfArrayLookup( $a, $b ) {
@@ -179,7 +179,7 @@ function wfArrayLookup( $a, $b ) {
  * @param $key String|Int
  * @param $value Mixed
  * @param $default Mixed
- * @param $changed Array to alter
+ * @param &$changed array Array to alter
  */
 function wfAppendToArrayIfNotDefault( $key, $value, $default, &$changed ) {
 	if ( is_null( $changed ) ) {
@@ -194,9 +194,9 @@ function wfAppendToArrayIfNotDefault( $key, $value, $default, &$changed ) {
  * Backwards array plus for people who haven't bothered to read the PHP manual
  * XXX: will not darn your socks for you.
  *
- * @param $array1 Array
+ * @param $array1 array
  * @param [$array2, [...]] Arrays
- * @return Array
+ * @return array
  */
 function wfArrayMerge( $array1/* ... */ ) {
 	$args = func_get_args();
@@ -224,7 +224,7 @@ function wfArrayMerge( $array1/* ... */ ) {
  *   		array( 'y' )
  *   	)
  * @param varargs
- * @return Array
+ * @return array
  */
 function wfMergeErrorArrays( /*...*/ ) {
 	$args = func_get_args();
@@ -243,10 +243,10 @@ function wfMergeErrorArrays( /*...*/ ) {
 /**
  * Insert array into another array after the specified *KEY*
  *
- * @param $array Array: The array.
- * @param $insert Array: The array to insert.
+ * @param $array array: The array.
+ * @param $insert array: The array to insert.
  * @param $after Mixed: The key to insert after
- * @return Array
+ * @return array
  */
 function wfArrayInsertAfter( $array, $insert, $after ) {
 	// Find the offset of the element to insert after.
@@ -267,9 +267,9 @@ function wfArrayInsertAfter( $array, $insert, $after ) {
 /**
  * Recursively converts the parameter (an object) to an array with the same data
  *
- * @param $objOrArray Object|Array
+ * @param $objOrArray Object|array
  * @param $recursive Bool
- * @return Array
+ * @return array
  */
 function wfObjectToArray( $objOrArray, $recursive = true ) {
 	$array = array();
@@ -290,9 +290,9 @@ function wfObjectToArray( $objOrArray, $recursive = true ) {
 /**
  * Wrapper around array_map() which also taints variables
  *
- * @param  $function Callback
- * @param  $input Array
- * @return Array
+ * @param  $function callback
+ * @param  $input array
+ * @return array
  */
 function wfArrayMap( $function, $input ) {
 	$ret = array_map( $function, $input );
@@ -373,8 +373,8 @@ function wfUrlencode( $s ) {
  * "days=7&limit=100". Options in the first array override options in the second.
  * Options set to null or false will not be output.
  *
- * @param $array1 Array ( String|Array )
- * @param $array2 Array ( String|Array )
+ * @param $array1 array ( String|Array )
+ * @param $array2 array ( String|Array )
  * @param $prefix String
  * @return String
  */
@@ -762,7 +762,7 @@ function wfUrlProtocolsWithoutProtRel() {
  * 3) Adds a "delimiter" element to the array, either '://', ':' or '//' (see (2))
  *
  * @param $url String: a URL to parse
- * @return Array: bits of the URL in an associative array, per PHP docs
+ * @return array: bits of the URL in an associative array, per PHP docs
  */
 function wfParseUrl( $url ) {
 	global $wgUrlProtocols; // Allow all protocols defined in DefaultSettings/LocalSettings.php
@@ -1527,7 +1527,7 @@ function wfMsgGetKey( $key, $useDB = true, $langCode = false, $transform = true 
  * Replace message parameter keys on the given formatted output.
  *
  * @param $message String
- * @param $args Array
+ * @param $args array
  * @return string
  * @private
  */
@@ -1599,7 +1599,7 @@ function wfMsgWikiHtml( $key ) {
  *
  * Returns message in the requested format
  * @param $key String: key of the message
- * @param $options Array: processing rules. Can take the following options:
+ * @param $options array: processing rules. Can take the following options:
  *   <i>parse</i>: parses wikitext to HTML
  *   <i>parseinline</i>: parses wikitext to HTML and removes the surrounding
  *       p's added by parser or tidy
@@ -2416,9 +2416,9 @@ function wfTimestamp( $outputtype = TS_UNIX, $ts = 0 ) {
 		# TS_EXIF
 	} elseif ( preg_match( '/^(\d{4})(\d\d)(\d\d)(\d\d)(\d\d)(\d\d)$/D', $ts, $da ) ) {
 		# TS_MW
-	} elseif ( preg_match( '/^-?\d{1,13}$/D', $ts ) ) {
+	} elseif ( preg_match( '/^-?\d{1,13}(\.\d+)?$/D', $ts ) ) {
 		# TS_UNIX
-		$uts = $ts;
+		$uts = (int) $ts;
 		$strtime = "@$ts"; // http://php.net/manual/en/datetime.formats.compound.php
 	} elseif ( preg_match( '/^\d{2}-\d{2}-\d{4} \d{2}:\d{2}:\d{2}.\d{6}$/', $ts ) ) {
 		# TS_ORACLE // session altered to DD-MM-YYYY HH24:MI:SS.FF6
@@ -2913,6 +2913,8 @@ function wfShellExec( $cmd, &$retval = null, $environ = array() ) {
 
 	wfInitShellLocale();
 
+	wfRunHooks( 'BeforeWfShellExec', [ &$cmd, &$environ ] ); // Wikia change
+
 	$envcmd = '';
 	foreach( $environ as $k => $v ) {
 		if ( wfIsWindows() ) {
@@ -2954,6 +2956,14 @@ function wfShellExec( $cmd, &$retval = null, $environ = array() ) {
 		}
 	}
 	wfDebug( "wfShellExec: $cmd\n" );
+
+	// Don't try to execute commands that exceed Linux's MAX_ARG_STRLEN.
+	// Other platforms may be more accomodating, but we don't want to be
+	// accomodating, because very long commands probably include user
+	// input. See T129506.
+	if ( strlen( $cmd ) > SHELL_MAX_ARG_STRLEN ) {
+		throw new Exception( __METHOD__ . '(): total length of $cmd must not exceed SHELL_MAX_ARG_STRLEN' );
+	}
 
 	$retval = 1; // error by default?
 	ob_start();
@@ -3394,23 +3404,6 @@ function wfCreateObject( $name, $p ) {
 }
 
 /**
- * @return bool
- */
-function wfHttpOnlySafe() {
-	global $wgHttpOnlyBlacklist;
-
-	if( isset( $_SERVER['HTTP_USER_AGENT'] ) ) {
-		foreach( $wgHttpOnlyBlacklist as $regex ) {
-			if( preg_match( $regex, $_SERVER['HTTP_USER_AGENT'] ) ) {
-				return false;
-			}
-		}
-	}
-
-	return true;
-}
-
-/**
  * Check if there is sufficent entropy in php's built-in session generation
  * PHP's built-in session entropy is enabled if:
  * - entropy_file is set or you're on Windows with php 5.3.3+
@@ -3489,7 +3482,6 @@ function wfSetupSession( $sessionId = false ) {
 		# hasn't already been set to the desired value (that causes errors)
 		ini_set( 'session.save_handler', $wgSessionHandler );
 	}
-	$httpOnlySafe = wfHttpOnlySafe() && $wgCookieHttpOnly;
 	wfDebugLog( 'cookie',
 		'session_set_cookie_params: "' . implode( '", "',
 			array(
@@ -3497,8 +3489,8 @@ function wfSetupSession( $sessionId = false ) {
 				$wgCookiePath,
 				$wgCookieDomain,
 				$wgCookieSecure,
-				$httpOnlySafe ) ) . '"' );
-	session_set_cookie_params( 0, $wgCookiePath, $wgCookieDomain, $wgCookieSecure, $httpOnlySafe );
+				$wgCookieHttpOnly  ) ) . '"' );
+	session_set_cookie_params( 0, $wgCookiePath, $wgCookieDomain, $wgCookieSecure, $wgCookieHttpOnly  );
 	session_cache_limiter( 'private, must-revalidate' );
 	if ( $sessionId ) {
 		session_id( $sessionId );
@@ -3822,8 +3814,9 @@ function wfWaitForSlaves( $wiki = false ) {
 			$lb = clone $lb;
 
 			for ( $i=0; $i < count( $slaves ); $i++ ) {
+				list( $slaveHost, $slavePort ) = explode( ':', $slaves[$i] );
 				$entry = $slaveInfo;
-				$entry['host'] = $slaves[ $i ];
+				$entry['host'] = $slaveHost;
 
 				$lb->setServerInfo( $i+1, $entry );
 			}

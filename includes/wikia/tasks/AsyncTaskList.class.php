@@ -13,7 +13,7 @@ use PhpAmqpLib\Channel\AMQPChannel;
 use PhpAmqpLib\Connection\AMQPConnection;
 use PhpAmqpLib\Message\AMQPMessage;
 use PhpAmqpLib\Exception\AMQPRuntimeException;
-use PhpAmqpLib\Exception\AMQPTimeoutException;
+use PhpAmqpLib\Exception\AMQPExceptionInterface;
 use Wikia\Logger\WikiaLogger;
 use Wikia\Tasks\Queues\ParsoidPurgePriorityQueue;
 use Wikia\Tasks\Queues\ParsoidPurgeQueue;
@@ -23,6 +23,7 @@ use Wikia\Tasks\Queues\PurgeQueue;
 use Wikia\Tasks\Queues\Queue;
 use Wikia\Tasks\Queues\SMWQueue;
 use Wikia\Tasks\Tasks\BaseTask;
+use Wikia\Tracer\WikiaTracer;
 
 class AsyncTaskList {
 	/** @const int default wiki city to run tasks in (community) */
@@ -227,6 +228,7 @@ class AsyncTaskList {
 			'task_list' => $taskList,
 			'created_by' => $this->createdBy,
 			'created_at' => microtime( true ),
+			'trace_env' => \Wikia\Tracer\WikiaTracer::instance()->getEnvVariables(),
 		]];
 	}
 
@@ -272,8 +274,7 @@ class AsyncTaskList {
 	 *
 	 * @param AMQPChannel $channel channel to publish messages to, if part of a batch
 	 * @return string the task list's id
-	 * @throws \PhpAmqpLib\Exception\AMQPRuntimeException
-	 * @throws \PhpAmqpLib\Exception\AMQPTimeoutException
+	 * @throws AMQPExceptionInterface
 	 */
 	public function queue( AMQPChannel $channel = null ) {
 		global $wgUser;
@@ -310,6 +311,8 @@ class AsyncTaskList {
 			'content-encoding' => 'UTF-8',
 			'immediate' => false,
 			'delivery_mode' => 2, // persistent
+			'app_id' => 'mediawiki',
+			'correlation_id' => WikiaTracer::instance()->getTraceId(),
 		] );
 
 		if ( $channel === null ) {
@@ -318,9 +321,7 @@ class AsyncTaskList {
 				$connection = $this->connection();
 				$channel = $connection->channel();
 				$channel->basic_publish( $message, '', $this->getQueue()->name() );
-			} catch ( AMQPRuntimeException $e ) {
-				$exception = $e;
-			} catch ( AMQPTimeoutException $e ) {
+			} catch ( AMQPExceptionInterface $e ) {
 				$exception = $e;
 			}
 
@@ -333,7 +334,7 @@ class AsyncTaskList {
 			}
 
 			if ( $exception !== null ) {
-				WikiaLogger::instance()->critical( 'AsyncTaskList::queue', [
+				WikiaLogger::instance()->error( 'AsyncTaskList::queue', [
 					'exception' => $exception
 				] );
 				return null;
@@ -357,8 +358,7 @@ class AsyncTaskList {
 
 	/**
 	 * @return AMQPConnection connection to message broker
-	 * @throws AMQPRuntimeException
-	 * @throws AMQPTimeoutException
+	 * @throws AMQPExceptionInterface
 	 */
 	protected function connection() {
 		if ( $this->connection == null ) {
@@ -424,7 +424,7 @@ class AsyncTaskList {
 	 */
 	public static function batch( $taskLists ) {
 		$logError = function( \Exception $e ) {
-			WikiaLogger::instance()->critical( 'AsyncTaskList::batch', [
+			WikiaLogger::instance()->error( 'AsyncTaskList::batch', [
 				'exception' => $e,
 				'caller' => wfGetCallerClassMethod( [ __CLASS__, 'Wikia\\Tasks\\Tasks\\BaseTask' ] ),
 			] );
@@ -434,9 +434,7 @@ class AsyncTaskList {
 
 		try {
 			$connection = self::getConnection();
-		} catch ( AMQPRuntimeException $e ) {
-			return $logError( $e );
-		} catch ( AMQPTimeoutException $e ) {
+		} catch ( AMQPExceptionInterface $e ) {
 			return $logError( $e );
 		}
 
@@ -451,9 +449,7 @@ class AsyncTaskList {
 
 		try {
 			$channel->publish_batch();
-		} catch ( AMQPRuntimeException $e ) {
-			$exception = $e;
-		} catch ( AMQPTimeoutException $e ) {
+		} catch ( AMQPExceptionInterface $e ) {
 			$exception = $e;
 		}
 

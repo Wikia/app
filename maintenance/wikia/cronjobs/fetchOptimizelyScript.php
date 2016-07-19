@@ -12,7 +12,7 @@ require_once( dirname( __FILE__ ) . '/../../commandLine.inc' );
 global $wgDevelEnvironment, $wgOptimizelyUrl, $wgOptimizelyDevUrl;
 
 $url = $wgDevelEnvironment ? $wgOptimizelyDevUrl : $wgOptimizelyUrl;
-$data = trim( Http::get( $url ) );
+$data = trim( ExternalHttp::get( $url ) );
 
 if ( !empty( $data ) ) {
 	$storageModel = new MySQLKeyValueModel();
@@ -21,4 +21,6 @@ if ( !empty( $data ) ) {
 	if ( empty( $storedData ) || $storedData !== $data ) {
 		$storageModel->set( OptimizelyController::OPTIMIZELY_SCRIPT_KEY, $data );
 	}
+} else {
+     throw new MWException("Http response empty");
 }

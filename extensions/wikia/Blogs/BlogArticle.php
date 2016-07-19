@@ -14,7 +14,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 class BlogArticle extends Article {
 
 	// Used when constructing memcached keys.  Up the version when the format of the data changes
-	const CACHE_VERSION = 3;
+	const CACHE_VERSION = 4;
 
 	// Cache results for an hour
 	const CACHE_TTL = 3600;
@@ -194,7 +194,7 @@ class BlogArticle extends Article {
 	 * @return String - memcache key
 	 */
 	public function blogListingMemcacheKey( $userKey, $pageNum ) {
-		return wfMemcKey( 'blog', 'listing', 'v'.self::CACHE_VERSION, $userKey, $pageNum );
+		return wfMemcKey( 'blog', 'listing', 'v' . self::CACHE_VERSION, $userKey, $pageNum );
 	}
 
 	/**
@@ -203,7 +203,7 @@ class BlogArticle extends Article {
 	 * @return String
 	 */
 	public function blogListingOasisMemcacheKey() {
-		return wfMemcKey( "OasisPopularBlogPosts", 'v'.self::CACHE_VERSION, F::app()->wg->Lang->getCode() );
+		return wfMemcKey( "OasisPopularBlogPosts", 'v' . self::CACHE_VERSION, F::app()->wg->Lang->getCode() );
 	}
 
 	/**
@@ -213,7 +213,7 @@ class BlogArticle extends Article {
 	 * @return String
 	 */
 	public function blogFeedMemcacheKey( $userKey, $offset ) {
-		return wfMemcKey( 'blog', 'feed', 'v'.self::CACHE_VERSION, $userKey, $offset);
+		return wfMemcKey( 'blog', 'feed', 'v' . self::CACHE_VERSION, $userKey, $offset );
 	}
 
 	/**
@@ -487,7 +487,8 @@ class BlogArticle extends Article {
 				$catView->blogs = array();
 			}
 
-			if ( F::app()->checkSkin( 'wikiamobile' ) ) {
+			// If request comes from wikiamobile or from MercuryApi return not-parsed output
+			if ( !empty( $catView->isJSON ) ) {
 				$catView->blogs[] = [
 					'name' => $title->getText(),
 					'url' => $title->getLocalUrl(),

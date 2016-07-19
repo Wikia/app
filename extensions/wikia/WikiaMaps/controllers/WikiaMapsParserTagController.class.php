@@ -111,6 +111,12 @@ class WikiaMapsParserTagController extends WikiaParserTagController {
 		$this->setVal( 'created_by', wfMessage( 'wikia-interactive-maps-parser-tag-created-by', $userName )->text() );
 		$this->setVal( 'avatarUrl', AvatarService::getAvatarUrl( $userName, AvatarService::AVATAR_SIZE_SMALL ) );
 		$this->setVal( 'view', wfMessage( 'wikia-interactive-maps-parser-tag-view' )->plain() );
+		$this->setVal( 'mercuryComponentAttrs', json_encode( [
+			'url' => $params->map->url,
+			'imageSrc' => $params->map->image,
+			'id' => $params->map->id,
+			'title' => $params->map->title,
+		] ) );
 
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 

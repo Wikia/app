@@ -18,7 +18,7 @@ class DataTables {
 			// marks wikitext tables, omits {{{{{|subst:}}} cases by checking if there is only one '{' before '|'
 			if ( preg_match_all( "/^(.*[^\\{])?\\{\\|(.*)/\n", $wikitext, $wikiTables ) ) {
 				for ( $i = 0; $i < count( $wikiTables[ 0 ] ); $i++ ) {
-					$wikitext = static::markTable( $wikitext, $wikiTables[ 0 ][ $i ], $wikiTables[ 2 ][ $i ], '{|' );
+					$wikitext = static::markTable( $wikitext, $wikiTables[ 0 ][ $i ], $wikiTables[ 2 ][ $i ], $wikiTables[1][$i].'{|' );
 				}
 			}
 			// marks html tables

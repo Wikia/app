@@ -232,30 +232,14 @@ describe('AdLogicPageParams', function () {
 		expect(params.ksgmnt).toBeUndefined('No Krux on COPPA wiki');
 	});
 
-	it('getPageLevelParams esrb + COPPA', function () {
-		var params;
-
-		params = getParams({
+	it('decodeLegacyDartParams should skip esrb', function () {
+		var params = getParams({
 			wikiCustomKeyValues: 'key1=value1;esrb=rating;key2=value2'
 		});
-		expect(params.esrb.toString()).toBe('rating', 'esrb=yes, COPPA=no');
 
-		params = getParams({
-			wikiCustomKeyValues: 'key1=value1;esrb=rating;key2=value2',
-			wikiDirectedAtChildren: true
-		});
-		expect(params.esrb.toString()).toBe('rating', 'esrb=yes, COPPA=yes');
-
-		params = getParams({
-			wikiCustomKeyValues: 'key1=value1;key2=value2'
-		});
-		expect(params.esrb.toString()).toBe('teen', 'esrb=null, COPPA=no');
-
-		params = getParams({
-			wikiCustomKeyValues: 'key1=value1;key2=value2',
-			wikiDirectedAtChildren: true
-		});
-		expect(params.esrb.toString()).toBe('ec', 'esrb=null, COPPA=yes');
+		expect(params.esrb).not.toBeDefined();
+		expect(params.key1.toString()).toBe('value1');
+		expect(params.key2.toString()).toBe('value2');
 	});
 
 	it('getPageLevelParams pv param - oasis', function () {

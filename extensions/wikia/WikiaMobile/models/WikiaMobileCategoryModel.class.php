@@ -6,20 +6,20 @@
  * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
  */
 class WikiaMobileCategoryModel extends WikiaModel {
-	const CACHE_TTL_ITEMSCOLLECTION = 1800;//30 mins, same TTL used by CategoryExhibition
-	const CACHE_TTL_EXHIBITION = 21600;//6h
-	const EXHIBITION_ITEMS_LIMIT = 4;//maximum number of items in Category Exhibition to display
+	const CACHE_TTL_ITEMSCOLLECTION = 1800;// 30 mins, same TTL used by CategoryExhibition
+	const CACHE_TTL_EXHIBITION = 21600;// 6h
+	const EXHIBITION_ITEMS_LIMIT = 4;// maximum number of items in Category Exhibition to display
 	const CACHE_VERSION = 0;
 	const BATCH_SIZE = 25;
 
-	public function getCollection( Category $category ) {
+	public function getCollection( Category $category, $format = 'json' ) {
 		return WikiaDataAccess::cache(
-			$this->getItemsCollectionCacheKey( $category->getID() ),
+			$this->getItemsCollectionCacheKey( $category->getID(), $format ),
 			self::CACHE_TTL_ITEMSCOLLECTION,
-			function () use ( $category ) {
+			function () use ( $category, $format ) {
 				wfProfileIn( __METHOD__ );
 
-				$viewer = new WikiaMobileCategoryViewer( $category );
+				$viewer = new WikiaMobileCategoryViewer( $category, $format );
 				$viewer->doCategoryQuery();
 
 				wfProfileOut( __METHOD__ );
@@ -100,16 +100,18 @@ class WikiaMobileCategoryModel extends WikiaModel {
 class WikiaMobileCategoryViewer extends CategoryViewer {
 	private $items;
 	private $count;
+	public $isJSON;
 
 	const LIMIT = 5000;
 
-	function __construct( Category $category ) {
+	function __construct( Category $category, $format = 'json' ) {
 		parent::__construct( $category->getTitle(), RequestContext::getMain() );
 
 		$this->limit = self::LIMIT; # BAC-265
 
 		$this->items = [ ];
 		$this->count = 0;
+		$this->isJSON = ( $format === 'json' || F::app()->checkSkin( 'wikiamobile' ) );
 	}
 
 	function addImage( Title $title, $sortkey, $pageLength, $isRedirect = false ) {

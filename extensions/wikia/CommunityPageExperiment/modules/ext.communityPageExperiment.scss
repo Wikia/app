@@ -1,0 +1,250 @@
+@import 'skins/shared/color';
+
+$color-community-page-white: #fff;
+$color-community-page-gray: #eee;
+$color-community-page-dark-gray: #ccc;
+$color-community-page-admin-text: #808080;
+
+.community-page-header {
+	align-items: center;
+	background-image: url('/extensions/wikia/WAMPage/images/hero.jpg'); /* inline */
+	display: flex;
+	height: 250px;
+	justify-content: center;
+	text-align: center;
+
+	.community-page-header-content {
+		width: 50%;
+	}
+
+	h1 {
+		color: $color-community-page-white;
+		font-weight: bold;
+	}
+
+	.signup-button {
+		background: $color-buttons;
+		color: $color-button-text;
+		display: inline-block;
+		font-size: 14px;
+		font-weight: bold;
+		height: 46px;
+		line-height: 46px;
+		margin: 12px 16px 16px;
+		padding: 0 30px;
+		text-decoration: none;
+		text-transform: uppercase;
+		white-space: normal;
+
+		&:hover, &:active {
+			background-color: $color-button-highlight;
+			text-decoration: none;
+		}
+	}
+}
+
+.community-page-admin-message {
+	align-items: center;
+	background-color: $color-community-page-gray;
+	color: $color-text-dark;
+	display: flex;
+	height: 250px;
+	justify-content: center;
+	text-align: center;
+
+	.admin-profile {
+		display: inline-block;
+		margin: 0 20px;
+	}
+
+	.avatar-container {
+		border: 1px solid rgb(199, 209, 216);
+		border-radius: 50%;
+		height: 50px;
+		margin: 0 auto;
+		overflow: hidden;
+		width: 50px;
+
+		&.logged-avatar-placeholder {
+			background-image: url('/extensions/wikia/GlobalNavigation/images/signin_icon.svg'); /* inline */
+			background-position: center;
+			background-repeat: no-repeat;
+		}
+	}
+
+	.profile-links {
+		.user-page {
+			display: block;
+			font-weight: bold;
+		}
+
+		.group-name {
+			color: $color-community-page-admin-text;
+			display: block;
+			text-transform: uppercase;
+		}
+	}
+
+	.admin-message {
+		font-weight: bold;
+		margin: 10px auto;
+		width: 70%;
+	}
+}
+
+.community-page-content {
+	margin: 20px auto;
+	width: 850px;
+}
+
+.task-page-content {
+	margin: 20px auto;
+	width: 478px;
+
+	.admin-message {
+		margin-bottom: 20px;
+		text-align: center;
+	}
+}
+
+.community-page-top-contributors {
+	background: $color-community-page-white;
+	border: 1px solid $color-community-page-dark-gray;
+	float: left;
+	padding: 20px 15px 15px;
+	position: relative;
+	width: 270px;
+	word-wrap: break-word;
+
+	.more-contributors {
+		color: $color-community-page-admin-text;
+	}
+
+	h2 {
+		border: 0;
+		font-size: 18px;
+		font-weight: bold;
+		margin-bottom: 25px;
+		margin-top: 0;
+		padding-left: 2px;
+	}
+
+	ul {
+		list-style: none;
+		margin: 10px 0;
+	}
+
+	li {
+		font-size: 12px;
+		padding: 6px 3px 6px 15px;
+		position: relative;
+
+		.avatar-container {
+			border: 1px solid rgb(199, 209, 216);
+			border-radius: 50%;
+			display: inline-block;
+			height: 30px;
+			margin: 0;
+			overflow: hidden;
+			vertical-align: middle;
+			width: 30px;
+		}
+
+		a {
+			font-size: 14px;
+			line-height: 17px;
+		}
+	}
+}
+
+.community-page-page-list {
+	float: right;
+	width: 500px;
+}
+
+.community-page-page-list,
+.task-page-page-list {
+	ul {
+		line-height: 50px;
+		list-style: none;
+		margin: 10px 0;
+	}
+
+	li {
+		border-top: 1px solid rgb(199, 209, 216);
+		height: 50px;
+		margin: 0;
+		padding: 6px 3px 6px 15px;
+		position: relative;
+
+		&:last-child {
+			border-bottom: 1px solid rgb(199, 209, 216);
+		}
+
+		.page-list-edit {
+			float: right;
+			padding-right: 10px;
+		}
+
+		.page-title {
+			display: inline-block;
+			margin-left: 5px;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			width: 75%;
+		}
+
+		.page-list-edit-link {
+			float: left;
+		}
+
+		.edit-icon {
+			background-image: url('/extensions/wikia/CommunityPageExperiment/images/pencil.svg'); /* inline */
+			background-position: center;
+			background-repeat: no-repeat;
+			height: 30px;
+			padding-left: 15px;
+		}
+	}
+}
+
+.WikiaPage {
+	padding: 0;
+}
+
+.WikiaMainContent {
+	float: none;
+}
+
+.WikiaArticle .community-page-top-contributors h2 {
+	margin-top: 0;
+}
+
+/* Temp Hacks for dark wikias until design is ready */
+@if ($is-dark-wiki) {
+	body {
+		color: $color-text-dark;
+	}
+
+	.WikiaPage .WikiaPageBackground {
+		background-color: $color-page-opposite;
+	}
+
+	.community-page-admin-message a,
+	.community-page-content a,
+	.task-page-content a {
+		color: $color-links-default;
+	}
+
+	.global-footer ul li {
+		a {
+			color: $color-links-default;
+		}
+	}
+
+	.community-page-admin-message .avatar,
+	.community-page-content .avatar {
+		border: 1px solid $color-page-opposite;
+	}
+}

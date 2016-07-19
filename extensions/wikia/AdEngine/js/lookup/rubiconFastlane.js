@@ -10,29 +10,34 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 	'use strict';
 
 	var config = {
+			// check also method configureSlots() as it's overriding defaults
 			oasis: {
 				TOP_LEADERBOARD: {
 					sizes: [[728, 90], [970, 250]],
 					targeting: {loc: 'top'}
 				},
 				TOP_RIGHT_BOXAD: {
-					sizes: [[300, 250], [300, 600]],
+					sizes: [[300, 250], [300, 600], [300, 1050]],
 					targeting: {loc: 'top'}
 				},
 				LEFT_SKYSCRAPER_2: {
-					sizes: [[160, 600], [300, 600]],
+					sizes: [[120, 600], [160, 600], [300, 250], [300, 600], [300, 1050]],
 					targeting: {loc: 'middle'}
 				},
 				LEFT_SKYSCRAPER_3: {
-					sizes: [[160, 600], [300, 600]],
+					sizes: [[120, 600], [160, 600], [300, 250], [300, 600]],
 					targeting: {loc: 'footer'}
 				},
 				INCONTENT_BOXAD_1: {
-					sizes: [[300, 250], [300, 600]],
-					targeting: {loc: 'middle'}
+					sizes: [[120, 600], [160, 600], [300, 250], [300, 600]],
+					targeting: {loc: 'hivi'}
+				},
+				BOTTOM_LEADERBOARD: {
+					sizes: [[728, 90], [970, 250]],
+					targeting: {loc: 'footer'}
 				},
 				PREFOOTER_LEFT_BOXAD: {
-					sizes: [[300, 250]],
+					sizes: [[300, 250], [336, 280]],
 					targeting: {loc: 'footer'}
 				},
 				PREFOOTER_RIGHT_BOXAD: {
@@ -41,25 +46,44 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 				}
 			},
 			mercury: {
+				MOBILE_BOTTOM_LEADERBOARD: {
+					sizes: [[300, 50], [300, 250], [320, 50], [320, 480]]
+				},
 				MOBILE_IN_CONTENT: {
-					sizes: [[300, 250]]
+					sizes: [[300, 50], [300, 250], [320, 50], [320, 480]]
 				},
 				MOBILE_PREFOOTER: {
-					sizes: [[300, 250]]
+					sizes: [[300, 50], [300, 250], [320, 50]]
 				},
 				MOBILE_TOP_LEADERBOARD: {
-					sizes: [[320, 50], [300, 250]]
+					sizes: [[300, 50], [300, 250], [320, 50], [320, 480]]
 				}
 			}
 		},
 		context,
 		logGroup = 'ext.wikia.adEngine.lookup.rubiconFastlane',
 		priceMap = {},
+		response,
 		rubiconSlots = [],
 		rubiconElementKey = 'rpfl_elemid',
 		rubiconTierKey = 'rpfl_7450',
 		rubiconLibraryUrl = '//ads.rubiconproject.com/header/7450.js',
-		slots = {};
+		sizeMap = {
+			'468x60': 1,
+			'728x90': 2,
+			'120x600': 8,
+			'160x600': 9,
+			'300x600': 10,
+			'300x250': 15,
+			'320x50': 43,
+			'300x50': 44,
+			'336x280': 49,
+			'300x1050': 54,
+			'970x250': 57,
+			'320x480': 67,
+			'480x320': 101
+		},
+		slots;
 
 	function compareTiers(a,b) {
 		var aMatches = /^(\d+)/.exec(a),
@@ -99,7 +123,7 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 	function defineSingleSlot(slotName, slot, skin) {
 		var position = slotName.indexOf('TOP') !== -1 ? 'atf' : 'btf',
 			provider = skin === 'oasis' ? 'gpt' : 'mobile';
-
+		log(['defineSlot', slotName, slot], 'debug', logGroup);
 		win.rubicontag.cmd.push(function () {
 			var rubiconSlot = win.rubicontag.defineSlot(slotName, slot.sizes, slotName);
 			if (skin === 'oasis') {
@@ -107,7 +131,6 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 			}
 			setTargeting(slotName, slot.targeting, rubiconSlot, provider);
 			rubiconSlots.push(rubiconSlot);
-			slots[slotName] = rubiconSlot;
 		});
 	}
 
@@ -125,24 +148,35 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 		};
 	}
 
-	function getSlots(skin) {
+	function configureSlots(skin) {
 		slots = config[skin];
 		if (skin === 'oasis' && context.targeting.pageType === 'home') {
 			configureHomePageSlots();
 		}
 
 		if (context.opts.overridePrefootersSizes) {
-			slots.PREFOOTER_LEFT_BOXAD.sizes = [[300, 250], [728, 90], [970, 250]];
+			slots.PREFOOTER_LEFT_BOXAD.sizes = [[300, 250], [336, 280], [468, 60], [728, 90]];
 			delete slots.PREFOOTER_RIGHT_BOXAD;
 		}
 
-		return slots;
+		if (context.slots.invisibleHighImpact2) {
+			slots.INVISIBLE_HIGH_IMPACT_2 = {
+				sizes: [[728, 90], [970, 250], [480, 320], [300, 250], [300, 600], [320, 480]],
+				targeting: {loc: 'hivi'}
+			};
+		}
+
+		if (context.slots.incontentLeaderboard) {
+			slots.INCONTENT_LEADERBOARD = {
+				sizes: [[300, 250], [728, 90], [468, 60]],
+				targeting: {loc: 'hivi'}
+			};
+		}
 	}
 
 	function defineSlots(skin, onResponse) {
-		var definedSlots = getSlots(skin);
-		Object.keys(definedSlots).forEach(function (slotName) {
-			defineSingleSlot(slotName, definedSlots[slotName], skin);
+		Object.keys(slots).forEach(function (slotName) {
+			defineSingleSlot(slotName, slots[slotName], skin);
 		});
 		win.rubicontag.cmd.push(function () {
 			win.rubicontag.run(onResponse, {
@@ -151,25 +185,46 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 		});
 	}
 
+	function fillInWithMissingTiers(slotName, parameters) {
+		var allTiers;
+		if (!response) {
+			return;
+		}
+
+		parameters[rubiconTierKey] = parameters[rubiconTierKey] || [];
+		allTiers = ';' + parameters[rubiconTierKey].join(';');
+		slots[slotName].sizes.forEach(function (dimensions) {
+			var size = dimensions[0] + 'x' + dimensions[1],
+				tierSize = sizeMap[size] + '_tier';
+
+			if (allTiers.indexOf(';' + tierSize) === -1) {
+				parameters[rubiconTierKey].push(tierSize + 'NONE');
+			}
+		});
+	}
+
 	function getSlotParams(slotName) {
 		var targeting,
-			values,
 			parameters = {};
 
-		if (!slots[slotName].getAdServerTargeting) {
+		if (!win.rubicontag || typeof win.rubicontag.getSlot !== 'function' || !win.rubicontag.getSlot(slotName)) {
 			return {};
 		}
 
-		targeting = slots[slotName].getAdServerTargeting();
+		targeting = win.rubicontag.getSlot(slotName).getAdServerTargeting();
 		targeting.forEach(function (params) {
 			if (params.key !== rubiconElementKey) {
-				values = params.values;
-				if (typeof values.sort === 'function') {
-					values.sort(compareTiers);
-				}
 				parameters[params.key] = params.values;
 			}
 		});
+		fillInWithMissingTiers(slotName, parameters);
+		if (parameters[rubiconTierKey] && typeof parameters[rubiconTierKey].sort === 'function') {
+			parameters[rubiconTierKey].sort(compareTiers);
+		}
+		if (parameters[rubiconTierKey] && parameters[rubiconTierKey].length > 0) {
+			parameters.bid = 'Rxx';
+		}
+
 		log(['getSlotParams', slotName, parameters], 'debug', logGroup);
 		return parameters;
 	}
@@ -183,12 +238,15 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 	}
 
 	function calculatePrices() {
-		var slotName;
-
-		for (slotName in slots) {
-			if (slots.hasOwnProperty(slotName)) {
-				addSlotPrice(slotName, slots[slotName].getAdServerTargeting());
-			}
+		var allSlots;
+		if (!win.rubicontag || typeof win.rubicontag.getAllSlots !== 'function') {
+			return;
+		}
+		allSlots = win.rubicontag.getAllSlots();
+		if (allSlots.length) {
+			win.rubicontag.getAllSlots().forEach(function (slot) {
+				addSlotPrice(slot.getSlotName(), slot.getAdServerTargeting());
+			});
 		}
 	}
 
@@ -205,7 +263,12 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 
 		node.parentNode.insertBefore(rubicon, node);
 		context = adContext.getContext();
-		defineSlots(skin, onResponse);
+		configureSlots(skin);
+		response = false;
+		defineSlots(skin, function () {
+			response = true;
+			onResponse();
+		});
 	}
 
 	function getPrices() {

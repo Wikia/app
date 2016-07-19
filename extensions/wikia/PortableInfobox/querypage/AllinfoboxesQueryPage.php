@@ -40,20 +40,18 @@ class AllinfoboxesQueryPage extends PageQueryPage {
 	 * @param bool $limit Only for consistency
 	 * @param bool $ignoreErrors Only for consistency
 	 *
-	 * @return bool|int
+	 * @return int number of rows updated
 	 */
 	public function recache( $limit = false, $ignoreErrors = true ) {
 		$dbw = wfGetDB( DB_MASTER );
 
 		$infoboxes = $this->reallyDoQuery();
-		$dbw->begin();
 
 		( new WikiaSQL() )
 			->DELETE( 'querycache' )
 			->WHERE( 'qc_type' )->EQUAL_TO( $this->getName() )
 			->run( $dbw );
 
-		$inserted = 0;
 		if ( !empty( $infoboxes ) ) {
 			( new WikiaSQL() )
 				->INSERT()->INTO( 'querycache', [
@@ -64,19 +62,11 @@ class AllinfoboxesQueryPage extends PageQueryPage {
 				] )
 				->VALUES( $infoboxes )
 				->run( $dbw );
-
-			$inserted = $dbw->affectedRows();
-			if ( $inserted === 0 ) {
-				$dbw->rollback();
-
-				return false;
-			}
-			$dbw->commit();
 		}
 
 		wfRunHooks( 'AllInfoboxesQueryRecached' );
 
-		return $inserted;
+		return count( $infoboxes );
 	}
 
 	/**
@@ -106,24 +96,47 @@ class AllinfoboxesQueryPage extends PageQueryPage {
 				return $out;
 			} );
 
-		return array_filter( $result, [ $this, 'hasInfobox' ] );
+		return array_filter( $result, [ $this, 'filterInfoboxes' ] );
 	}
 
-	protected function hasInfobox( $tmpl ) {
-		$title = Title::newFromID( $tmpl[ 'pageid' ] );
-
-		if ( $title && $title->exists() &&
-			 // omit subages from blacklist
-			 !(
-				 $title->isSubpage() &&
-				 in_array( mb_strtolower( $title->getSubpageText() ), self::$subpagesBlacklist )
-			 )
-		) {
-			$data = PortableInfoboxDataService::newFromTitle( $title )->getData();
-
-			return !empty( $data );
+	public function addTitleToCache( Title $title ) {
+		if ( !$this->hasInfobox( $title ) ) {
+			return;
 		}
 
-		return false;
+		$dbw = wfGetDB( DB_MASTER );
+		( new WikiaSQL() )
+			->INSERT()->INTO( 'querycache', [
+				'qc_type',
+				'qc_value',
+				'qc_namespace',
+				'qc_title'
+			] )
+			->VALUES( [ [
+				$this->getName(),
+				$title->getArticleID(),
+				$title->getNamespace(),
+				$title->getDBkey(),
+			] ] )
+			->run( $dbw );
+
+		wfRunHooks( 'AllInfoboxesQueryRecached' );
+	}
+
+	private function hasInfobox( Title $title ) {
+		// omit subages from blacklist
+		return !(
+				$title->isSubpage() &&
+				in_array( mb_strtolower( $title->getSubpageText() ), self::$subpagesBlacklist )
+			) &&
+			!empty( PortableInfoboxDataService::newFromTitle( $title )->getData() );
+	}
+
+	private function filterInfoboxes( $tmpl ) {
+		$title = Title::newFromID( $tmpl[ 'pageid' ] );
+
+		return $title &&
+			$title->exists() &&
+			$this->hasInfobox( $title );
 	}
 }

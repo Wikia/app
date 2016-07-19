@@ -9,8 +9,9 @@ describe('ext.wikia.adEngine.lookup.rubiconFastlane', function () {
 			adContext: {
 				getContext: function () {
 					return {
-						targeting: mocks.targeting,
-						opts: mocks.opts
+						opts: mocks.opts,
+						slots: noop,
+						targeting: mocks.targeting
 					};
 				}
 			},
@@ -67,10 +68,13 @@ describe('ext.wikia.adEngine.lookup.rubiconFastlane', function () {
 					slotParams[key] = value;
 				},
 				setPosition: noop,
+				getSlotName: function () {
+					return 'SLOT_NAME';
+				},
 				getAdServerTargeting: function () {
 					return [
 						{
-							key: 'rpflKey',
+							key: 'rpfl_7450',
 							values: mocks.tiers
 						},
 						{
@@ -89,6 +93,12 @@ describe('ext.wikia.adEngine.lookup.rubiconFastlane', function () {
 					},
 					defineSlot: function () {
 						return mocks.slot;
+					},
+					getSlot: function () {
+						return mocks.slot;
+					},
+					getAllSlots: function () {
+						return [mocks.slot];
 					}
 				}
 			}
@@ -143,14 +153,14 @@ describe('ext.wikia.adEngine.lookup.rubiconFastlane', function () {
 		expect(rubiconFastlane.wasCalled()).toBeTruthy();
 	});
 
-	it('Define all 7 slots for oasis skin', function () {
+	it('Define all 8 slots for oasis skin', function () {
 		spyOn(mocks.win.rubicontag, 'defineSlot').and.callThrough();
 		var rubiconFastlane = getRubiconFastlane();
 		mocks.targeting.skin = 'oasis';
 
 		rubiconFastlane.call();
 
-		expect(mocks.win.rubicontag.defineSlot.calls.count()).toEqual(7);
+		expect(mocks.win.rubicontag.defineSlot.calls.count()).toEqual(8);
 	});
 
 	it('Define all 3 slots for mercury skin', function () {
@@ -160,7 +170,7 @@ describe('ext.wikia.adEngine.lookup.rubiconFastlane', function () {
 
 		rubiconFastlane.call();
 
-		expect(mocks.win.rubicontag.defineSlot.calls.count()).toEqual(3);
+		expect(mocks.win.rubicontag.defineSlot.calls.count()).toEqual(4);
 	});
 
 	it('Define /TOP/ slot as atf', function () {
@@ -204,24 +214,27 @@ describe('ext.wikia.adEngine.lookup.rubiconFastlane', function () {
 
 	it('Returns parameters list on defined slot', function () {
 		var rubiconFastlane = getRubiconFastlane();
+		mocks.tiers = ['15_tier0000', '43_tier0000', '44_tier0000'];
 		mocks.targeting.skin = 'mercury';
 
 		rubiconFastlane.call();
 
 		expect(rubiconFastlane.getSlotParams('MOBILE_TOP_LEADERBOARD')).toEqual({
-			rpflKey: ['1_tier', '3_tier']
+			'bid': 'Rxx',
+			'rpfl_7450': ['15_tier0000', '43_tier0000', '44_tier0000', '67_tierNONE']
 		});
 	});
 
 	it('Returns parameters list on defined slot with sorted values', function () {
 		var rubiconFastlane = getRubiconFastlane();
-		mocks.tiers = ['10_tier', '9_tier', '13_tier', '4_tier'];
-		mocks.targeting.skin = 'mercury';
+		mocks.tiers = ['15_tier0010', '54_tier0050', '8_tier0100'];
+		mocks.targeting.skin = 'oasis';
 
 		rubiconFastlane.call();
 
-		expect(rubiconFastlane.getSlotParams('MOBILE_TOP_LEADERBOARD')).toEqual({
-			rpflKey: ['4_tier', '9_tier', '10_tier', '13_tier']
+		expect(rubiconFastlane.getSlotParams('INCONTENT_BOXAD_1')).toEqual({
+			'bid': 'Rxx',
+			'rpfl_7450': ['8_tier0100', '9_tierNONE', '10_tierNONE', '15_tier0010', '54_tier0050']
 		});
 	});
 

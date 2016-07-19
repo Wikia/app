@@ -26,12 +26,6 @@ $wgAutoloadClasses[ 'BECPHelper' ] = "{$dir}/BECPHelper.class.php";
 // i18n
 $wgExtensionMessagesFiles[ 'BECP' ] = "{$dir}/BlogEditCategoryPrompter.i18n.php";
 
-// perms
-$wgAvailableRights[ ] = BECPHelper::PERM_NAME;
-$wgGroupPermissions[ '*' ][ BECPHelper::PERM_NAME ] = false;
-$wgGroupPermissions[ 'staff' ][ BECPHelper::PERM_NAME ] = true;
-$wgGroupPermissions[ 'sysop' ][ BECPHelper::PERM_NAME ] = true;
-
 // hooks
 $wgHooks[ 'BlogArticleInitialized' ][ ] = 'BECPHelper::onBlogArticleInitialized';
 

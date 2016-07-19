@@ -566,10 +566,6 @@ class RenameUserProcess {
 
 		$this->invalidateUser( $this->mOldUsername );
 
-		$hookName = 'UserRename::AfterAccountRename';
-		$this->addLog( "Broadcasting hook: {$hookName}" );
-		wfRunHooks( $hookName, array( $this->mUserId, $this->mOldUsername, $this->mNewUsername ) );
-
 		// process global tables
 		$this->addLog( "Initializing update of global shared DB's." );
 		$this->updateGlobal();
@@ -868,17 +864,17 @@ class RenameUserProcess {
 	private function resetEditCountWiki() {
 		// Renamed user
 		$uss = new UserStatsService( $this->mUserId );
-		$uss->resetEditCountWiki();
+		$uss->calculateEditCountWiki();
 
 		// FakeUser
 		if ( $this->mFakeUserId != 0 ) {
 			$uss = new UserStatsService( $this->mFakeUserId );
-			$uss->resetEditCountWiki();
+			$uss->calculateEditCountWiki();
 		} else {
 			// use OldUsername if FakeUser isn't set
 			$oldUser = User::newFromName( $this->mOldUsername );
 			$uss = new UserStatsService( $oldUser->getId() );
-			$uss->resetEditCountWiki();
+			$uss->calculateEditCountWiki();
 		}
 	}
 

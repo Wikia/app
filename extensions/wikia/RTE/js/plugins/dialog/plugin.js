@@ -24,7 +24,7 @@ CKEDITOR.plugins.add('rte-dialog',
 
 			RTE.log('enabling MW suggest on #' + fieldId);
 
-			$.when( mw.loader.use( ['jquery.ui.autocomplete'] ) ).then( function( ) {
+			mw.loader.using( 'jquery.ui.autocomplete' ).then( function( ) {
 
 				// @see http://www.mediawiki.org/wiki/ResourceLoader/JavaScript_Deprecations#mwsuggest.js
 				// uses CSS rules from 'wikia.jquery.ui' module

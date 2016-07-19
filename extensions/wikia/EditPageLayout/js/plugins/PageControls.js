@@ -441,7 +441,7 @@
 								self.ajax('diff' , extraData),
 
 								// load CSS for diff
-								mw.loader.use('mediawiki.action.history.diff')
+								mw.loader.using('mediawiki.action.history.diff')
 							).done(function(ajaxData) {
 								var data = ajaxData[ 0 ],
 									html = '<h1 class="pagetitle">' + window.wgEditedTitle + '</h1>' + data.html;

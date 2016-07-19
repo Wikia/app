@@ -11,22 +11,19 @@ class Walls extends WikiaModel {
 	 *
 	 * @author Władysław Bodzek <wladek@wikia-inc.com>
 	 *
+	 * @param int $db
+	 * @param int $namespace
 	 * @return array List of board IDs
 	 */
 	public function getList( $db = DB_SLAVE, $namespace = NS_USER_WALL ) {
 		wfProfileIn( __METHOD__ );
 
-		$titles = $this->getListTitles( $db, $namespace );
-
-		$boards = [ ];
-		/** @var $title Title */
-		foreach ( $titles as $title ) {
-			$boards[] = $title->getArticleID();
-		}
+		/** @var TitleBatch $titleBatch */
+		$titleBatch = $this->getTitlesForNamespace( $db, $namespace );
 
 		wfProfileOut( __METHOD__ );
 
-		return $boards;
+		return $titleBatch->getArticleIds();
 	}
 
 	/**
@@ -34,12 +31,15 @@ class Walls extends WikiaModel {
 	 *
 	 * @author Władysław Bodzek <wladek@wikia-inc.com>
 	 *
-	 * @return array List of board IDs
+	 * @param int $db
+	 * @param int $namespace
+	 * @return TitleBatch $titleBatch List of board IDs
 	 */
-	public function getListTitles( $db = DB_SLAVE, $namespace = NS_USER_WALL ) {
+	public function getTitlesForNamespace( $db = DB_SLAVE, $namespace = NS_USER_WALL ) {
 		wfProfileIn( __METHOD__ );
 
-		$titles = TitleBatch::newFromConds( 'page_wikia_props', [
+		/** @var TitleBatch $titleBatch */
+		$titleBatch = TitleBatch::newFromConds( 'page_wikia_props', [
 				'page.page_namespace' => $namespace,
 				'page_wikia_props.page_id = page.page_id'
 		],
@@ -50,7 +50,7 @@ class Walls extends WikiaModel {
 
 		wfProfileOut( __METHOD__ );
 
-		return $titles;
+		return $titleBatch;
 	}
 
 }

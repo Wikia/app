@@ -7,7 +7,7 @@ class NodeGroupTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @covers       NodeGroup::getData
+	 * @covers       \Wikia\PortableInfobox\Parser\Nodes\NodeGroup::getData
 	 * @dataProvider groupNodeCollapseTestProvider
 	 *
 	 * @param $markup
@@ -28,7 +28,7 @@ class NodeGroupTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @covers       NodeGroup::getData
+	 * @covers       \Wikia\PortableInfobox\Parser\Nodes\NodeGroup::getData
 	 * @dataProvider groupNodeTestProvider
 	 *
 	 * @param $markup

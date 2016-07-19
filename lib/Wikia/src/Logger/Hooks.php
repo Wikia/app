@@ -7,7 +7,7 @@
 
 namespace Wikia\Logger;
 
-use Wikia\Util\RequestId;
+use Wikia\Tracer\WikiaTracer;
 
 class Hooks {
 
@@ -20,7 +20,7 @@ class Hooks {
 	 *
 	 */
 	public static function onWikiaSkinTopScripts( &$vars, &$scripts ) {
-		global $wgDevelEnvironment, $wgIsGASpecialWiki, $wgEnableJavaScriptErrorLogging, $wgCacheBuster, $wgMemc;
+		global $wgDevelEnvironment, $wgIsGASpecialWiki, $wgEnableJavaScriptErrorLogging, $wgMemc;
 
 		if ( !$wgDevelEnvironment ) {
 			$onError = $wgIsGASpecialWiki || $wgEnableJavaScriptErrorLogging;
@@ -80,16 +80,9 @@ class Hooks {
 	/**
 	 * A hook for setting up the WikiaLogger early in the app initialization process.
 	 *
-	 * @param \WikiFactoryLoader $wikiFactoryLoader
 	 * @return boolean true
 	 */
-	public static function onWikiFactoryExecute( \WikiFactoryLoader $wikiFactoryLoader ) {
-		global $wgDevelEnvironment;
-		if ( $wgDevelEnvironment ) {
-			// default to syslog in dev. you can override this in DevBoxSettings.php
-			WikiaLogger::instance()->setDevMode();
-		}
-
+	public static function onWikiFactoryExecute() {
 		/**
 		 * Setup the WikiaLogger as the error handler
 		 */
@@ -104,79 +97,11 @@ class Hooks {
 	/**
 	 * A hook for setting additional fields that will be sent to Logstash
 	 *
-	 * @param \WikiFactoryLoader $wikiFactoryLoader
 	 * @return bool true
 	 */
-	public static function onWikiFactoryExecuteComplete( \WikiFactoryLoader $wikiFactoryLoader ) {
-		global $wgDBname, $wgCityId, $maintClass;
-
-		$fields = [];
-
-		if ( !empty( $wgDBname ) ) {
-			$fields['db_name'] = $wgDBname;
-		}
-
-		if ( !empty( $wgCityId ) ) {
-			$fields['city_id'] = $wgCityId;
-		}
-
-		if ( isset( $_SERVER['REQUEST_URI'] ) ) {
-			$fields['url'] = $_SERVER['REQUEST_URI'];
-
-			if ( isset( $_SERVER['REQUEST_METHOD'] ) ) {
-				$fields['http_method'] = $_SERVER['REQUEST_METHOD'];
-			}
-
-			if ( isset( $_SERVER['SERVER_NAME'] ) ) {
-				$fields['server'] = $_SERVER['SERVER_NAME'];
-			}
-
-			if ( isset( $_SERVER['HTTP_REFERER'] ) ) {
-				$fields['referrer'] = $_SERVER['HTTP_REFERER'];
-			}
-		}
-
-		// add some context for maintenance scripts
-		if ( defined( 'RUN_MAINTENANCE_IF_MAIN' ) ) {
-			if ( isset( $_SERVER['SCRIPT_FILENAME'] ) ) {
-				$fields['maintenance_file'] = realpath( $_SERVER['SCRIPT_FILENAME'] );
-			}
-
-			if ( !empty( $maintClass ) ) {
-				$fields['maintenance_class'] = $maintClass;
-			}
-		}
-
-		$fields['request_id'] = RequestId::instance()->getRequestId();
-
-		WikiaLogger::instance()->pushContext( $fields, WebProcessor::RECORD_TYPE_FIELDS );
-
-		return true;
-	}
-
-	/**
-	 * A hook for adds client IP to the fields sent to Logstash
-	 *
-	 * @param \WebRequest $webRequest
-	 * @return bool true
-	 */
-	public static function onWebRequestInitialized( \WebRequest $webRequest ) {
-		$fields = [];
-
-		if ( isset( $_SERVER['REQUEST_URI'] ) ) {
-			$ip = $webRequest->getIP();
-			if ( $ip === null ) {
-				$ip = isset( $_SERVER['REMOTE_ADDR'] ) ? $_SERVER['REMOTE_ADDR'] : null;
-			}
-
-			if ( $ip != null ) {
-				$fields['ip'] = $ip;
-			}
-		}
-
-		if ( !empty( $fields ) ) {
-			WikiaLogger::instance()->pushContext( $fields, WebProcessor::RECORD_TYPE_FIELDS );
-		}
+	public static function onWikiFactoryExecuteComplete() {
+		WikiaLogger::instance()->pushContextSource(
+			WikiaTracer::instance()->getContextSource(), WebProcessor::RECORD_TYPE_FIELDS );
 
 		return true;
 	}

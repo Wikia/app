@@ -44,8 +44,6 @@
 		display: inline;
 		font-size: 26px;
 		line-height: 27px;
-		//@TODO CONCF-189 remove this declaration when social buttons are live
-		margin: 0 10px;
 		word-wrap: break-word;
 
 		strong {
@@ -119,12 +117,8 @@
 // WikiaNav - begin
 .wikinav2 {
 	.WikiaPageHeader {
-		//@TODO CONCF-189 border-bottom should be removed when social buttons enabled globally
-		border-bottom: solid 1px $color-page-border;
 		margin-bottom: 10px;
 		padding-bottom: 7px;
-		//@TODO CONCF-189 should be removed when social buttons enabled globally - flexbox enabled
-		padding-right: 175px;
 		word-wrap: break-word;
 
 		> .comments {
@@ -144,9 +138,6 @@
 
 	&.oasis-one-column {
 		.WikiaPageHeader {
-			//@TODO CONCF-189 should be removed when social buttons enabled globally - flexbox enabled
-			padding-right: 505px;
-
 			&.WikiaPageHeaderDiffHistory {
 				margin-right: 10px;
 				padding-right: 320px;
@@ -188,7 +179,6 @@
 
 // main page
 .oasis-one-column .WikiaPageHeader {
-	padding-right: 320px;
 	position: relative;
 
 	.WikiaSearch {
@@ -204,19 +194,7 @@
 }
 
 //Changes related with Social Icons roll-out
-//@TODO CONCF-189 padding-right should be removed when social buttons enabled globally
-.oasis-one-column {
-	.wikia-page-header.WikiaPageHeader {
-		padding-right: 0;
-	}
-}
 .wikia-page-header {
-	//@TODO CONCF-189 border-bottom should be removed when social buttons enabled globally
-	&.WikiaPageHeader {
-		border: none;
-		padding-right: 0;
-	}
-
 	.header-container {
 		@include align-content(stretch);
 		@include align-items(flex-start);

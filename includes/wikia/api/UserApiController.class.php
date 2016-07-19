@@ -24,10 +24,12 @@ class UserApiController extends WikiaApiController {
 	public function getDetails() {
 		wfProfileIn( __METHOD__ );
 		$ids =  $this->request->getVal( 'ids' );
+
 		if ( empty( $ids ) ) {
 			wfProfileOut( __METHOD__ );
 			throw new InvalidParameterApiException( 'ids' );
 		}
+
 		$ids = explode( ',', trim( $ids ) );
 		$size = $this->request->getInt( 'size', static::AVATAR_DEFAULT_SIZE );
 
@@ -35,9 +37,12 @@ class UserApiController extends WikiaApiController {
 		$ids = array_slice( $ids, 0, static::USER_LIMIT );
 		//users are cached inside the service
 		$users = (new UserService())->getUsers( $ids );
+
 		$items = array();
+
 		foreach ( $users as $user ) {
 			$userName = $user->getName();
+			$powerUserTypes = ( new \Wikia\PowerUser\PowerUser( $user ) )->getTypesForUser();
 
 			$item = array(
 				'user_id' => $user->getId(),
@@ -46,12 +51,19 @@ class UserApiController extends WikiaApiController {
 				'url' => AvatarService::getUrl( $userName ),
 				'numberofedits' => (int) $user->getEditCountLocal()
 			);
+
+			if ( !empty( $powerUserTypes ) ) {
+				$item['poweruser_types'] = $powerUserTypes;
+			}
+
 			//add avatar url if size !== 0
 			if ( $size > 0 ) {
 				$item[ 'avatar' ] = AvatarService::getAvatarUrl( $user, $size );
 			}
+
 			$items[] = $item;
 		}
+
 		if ( !empty( $items ) ) {
 
 			$this->setResponseData(

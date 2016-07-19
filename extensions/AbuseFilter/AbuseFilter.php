@@ -81,17 +81,6 @@ $wgHooks['MakeGlobalVariablesScript'][] = 'AbuseFilterHooks::onMakeGlobalVariabl
 $wgHooks['UserRename::Local'][] = 'AbuseFilterHooks::onUserRenameLocal';
 $wgHooks['UserRename::LocalIP'][] = 'AbuseFilterHooks::onUserRenameLocalIP';
 
-$wgAvailableRights[] = 'abusefilter-modify';
-$wgAvailableRights[] = 'abusefilter-log-detail';
-$wgAvailableRights[] = 'abusefilter-view';
-$wgAvailableRights[] = 'abusefilter-log';
-$wgAvailableRights[] = 'abusefilter-private';
-$wgAvailableRights[] = 'abusefilter-modify-restricted';
-$wgAvailableRights[] = 'abusefilter-revert';
-$wgAvailableRights[] = 'abusefilter-view-private';
-$wgAvailableRights[] = 'abusefilter-hidden-log';
-$wgAvailableRights[] = 'abusefilter-hide-log';
-
 $wgLogTypes[] = 'abusefilter';
 $wgLogNames['abusefilter']          = 'abusefilter-log-name';
 $wgLogHeaders['abusefilter']        = 'abusefilter-log-header';

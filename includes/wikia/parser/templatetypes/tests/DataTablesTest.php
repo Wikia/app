@@ -60,6 +60,32 @@ class DataTablesTest extends WikiaBaseTest {
 		return [
 			[ "", "" ],
 			[
+				'<includeonly><onlyinclude>{| class="myClass va-table va-table-center"
+! {{icon|pistol|big|tooltip=Weapon name}}
+! {{Icon|damage|big|tooltip=Weapon damage}}
+! {{Icon|merchant|big|tooltip=Weapon value}}
+! {{icon|rarity|big|Tooltip=Weapon rarity}}
+
+|-
+| [[Rusty BB gun]]
+| 0-1
+| 10
+| {{common}}
+|}</onlyinclude></includeonly>',
+				'<includeonly><onlyinclude>{| data-portable="false" class="myClass va-table va-table-center"
+! {{icon|pistol|big|tooltip=Weapon name}}
+! {{Icon|damage|big|tooltip=Weapon damage}}
+! {{Icon|merchant|big|tooltip=Weapon value}}
+! {{icon|rarity|big|Tooltip=Weapon rarity}}
+
+|-
+| [[Rusty BB gun]]
+| 0-1
+| 10
+| {{common}}
+|}</onlyinclude></includeonly>'
+			],
+			[
 				'{| class="va-table va-table-center"
 ! {{icon|pistol|big|tooltip=Weapon name}}
 ! {{Icon|damage|big|tooltip=Weapon damage}}
@@ -114,6 +140,15 @@ class DataTablesTest extends WikiaBaseTest {
 |}',
 			  '{| data-portable="false" class="va-table va-table-center"
 |}' ],
+			[
+				'<includeonly><onlyinclude>
+					<table><tr><td>sth</td><td>sth2</td></tr></table>
+				</onlyinclude></includeonly>',
+
+				'<includeonly><onlyinclude>
+					<table data-portable="false"><tr><td>sth</td><td>sth2</td></tr></table>
+				</onlyinclude></includeonly>'
+			],
 			[ '<table></table>', '<table data-portable="false"></table>' ],
 			[ '{| class="va-table va-table-center"
 ! {{icon|pistol|big|tooltip=Weapon name}}

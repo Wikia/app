@@ -19,7 +19,7 @@ class FixMissingWikiFactoryVariables extends Maintenance {
 	const REASON = 'Fixing missing WikiFactory variable';
 	const USER = 'WikiaBot';
 
-	/* @var $dbr DatabaseMysql */
+	/* @var $dbr DatabaseBase */
 	private $dbr;
 	private $isDryRun;
 	private $cityId = 0 ;

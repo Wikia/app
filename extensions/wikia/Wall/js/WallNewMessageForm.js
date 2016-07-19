@@ -17,7 +17,7 @@
 		},
 
 		initElements: function () {
-			this.buttons = $('#WallMessageBodyButtons');
+			this.buttons = $('#WallMessageBodyButtons button');
 			this.comments = $('#Wall').find('.comments');
 			this.message = $('.new-message');
 			this.loading = this.message.find('.loadingAjax');
@@ -112,18 +112,26 @@
 
 		doPostNewMessage: function (title) {
 			var topics = this.messageTopic ? this.messageTopic.data('messageTopic').getTopics() : [];
-
+			//disable buttons for user to not send multiply posts
+			this.buttons.attr('disabled', true);
 			this.model.postNew(
 				this.page,
 				title ? this.messageTitle.val() : '',
 				this.getMessageBody(),
 				this.getFormat(),
 				this.notifyEveryone.is(':checked') ? '1' : '0',
-				topics
+				topics,
+				//success callback
+				this.proxy(function () {
+					this.disableNewMessage();
+					this.clearNewMessageTitle();
+				}),
+				//fail callback
+				this.proxy(function () {
+					$.showModal($.msg('wall-posting-message-failed-title'), $.msg('wall-posting-message-failed-body'));
+					this.buttons.removeAttr('disabled');
+				}.bind(this))
 			);
-
-			this.clearNewMessageTitle();
-			this.disableNewMessage();
 		},
 
 		clearNewMessageBody: function () {

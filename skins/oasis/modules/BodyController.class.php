@@ -202,8 +202,8 @@ class BodyController extends WikiaController {
 			} else if ($wgTitle->isSpecial('WikiActivity')) {
 				$railModuleList = array (
 					1102 => array('HotSpots', 'Index', null),
-					1101 => array('CommunityCorner', 'Index', null),
-				);
+					1101 => array('CommunityCorner', 'Index', null)
+			);
 				$railModuleList[1450] = array('PagesOnWiki', 'Index', null);
 			} else if ($wgTitle->isSpecial('Following') || $wgTitle->isSpecial('Contributions') ) {
 				// intentional nothing here
@@ -329,9 +329,15 @@ class BodyController extends WikiaController {
 		// append your content to $html variable instead of echoing
 		// (taken from Monaco skin)
 		$skin = RequestContext::getMain()->getSkin();
+
 		$afterBodyHtml = '';
 		wfRunHooks('GetHTMLAfterBody', array($skin, &$afterBodyHtml));
 		$this->afterBodyHtml = $afterBodyHtml;
+
+		$beforeWikiaPageHtml = '';
+		wfRunHooks('GetHTMLBeforeWikiaPage', array(&$beforeWikiaPageHtml));
+		$this->beforeWikiaPageHtml = $beforeWikiaPageHtml;
+
 
 		// this hook is needed for SMW's factbox
 		$afterContentHookText = '';
@@ -383,7 +389,6 @@ class BodyController extends WikiaController {
 		// Display Control Center Header on certain special pages
 		if (!empty($wgEnableAdminDashboardExt) && AdminDashboardLogic::displayAdminDashboard($this->app, $wgTitle)) {
 			$this->headerModuleName = null;
-			$this->wgSuppressAds = true;
 			$this->displayAdminDashboard = true;
 			$this->displayAdminDashboardChromedArticle = ($wgTitle->getText() != SpecialPage::getTitleFor( 'AdminDashboard' )->getText());
 		} else {

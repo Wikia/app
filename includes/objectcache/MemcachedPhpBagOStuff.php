@@ -24,7 +24,7 @@ class MemcachedPhpBagOStuff extends BagOStuff {
 	 * @param $params array
 	 */
 	function __construct( $params ) {
-		global $wgMemCachedClass, $wgMoxiTestNodes;
+		global $wgMemCachedClass;
 
 		if ( !isset( $params['servers'] ) ) {
 			$params['servers'] = $GLOBALS['wgMemCachedServers'];

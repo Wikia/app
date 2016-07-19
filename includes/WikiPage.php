@@ -1494,8 +1494,8 @@ class WikiPage extends Page implements IDBAccessObject {
 							PatrolLog::record( $rc, true, $user );
 						}
 					}
-					$user->incEditCount();
 					$dbw->commit(__METHOD__);
+					$user->incEditCount();
 				}
 			} else {
 				// Bug 32948: revision ID must be set to page {{REVISIONID}} and
@@ -1581,8 +1581,8 @@ class WikiPage extends Page implements IDBAccessObject {
 					PatrolLog::record( $rc, true, $user );
 				}
 			}
-			$user->incEditCount();
 			$dbw->commit(__METHOD__);
+			$user->incEditCount();
 
 			# Update links, etc.
 			$this->doEditUpdates( $revision, $user, array( 'created' => true ) );
@@ -1601,9 +1601,6 @@ class WikiPage extends Page implements IDBAccessObject {
 
 		wfRunHooks( 'ArticleSaveComplete', array( &$this, &$user, $text, $summary,
 			$flags & EDIT_MINOR, null, null, &$flags, $revision, &$status, $baseRevId ) );
-
-		# Promote user to any groups they meet the criteria for
-		$user->addAutopromoteOnceGroups( 'onEdit' );
 
 		wfProfileOut( __METHOD__ );
 		return $status;

@@ -59,8 +59,6 @@ class ForumSpecialController extends WikiaSpecialPageController {
 
 		$output->setPageTitle( wfMessage( 'forum-forum-title' )->plain() );
 
-		$action = $this->getVal( 'action', '' );
-
 		$this->blurb = wfMessage( 'forum-specialpage-blurb' )->parse();
 		$this->blurbHeading = wfMessage( 'forum-specialpage-blurb-heading' )->parse();
 		$this->lastPostByMsg = wfMessage( 'forum-specialpage-board-lastpostby' )->escaped();
@@ -69,6 +67,8 @@ class ForumSpecialController extends WikiaSpecialPageController {
 
 		$forum = new Forum();
 
+		// TODO: once we're sure the forums are properly created when importing starter wiki
+		// don't call createDefaultBoard anymore
 		if ( $forum->createDefaultBoard() ) {
 			$this->boards = $forum->getBoardList( DB_MASTER );
 		} else {

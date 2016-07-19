@@ -75,6 +75,13 @@
 		},
 
 		editorActivated: function(event) {
+
+			$(window).on('beforeunload.PreventLeaveBeforeSave', function (e) {
+				if (this.editor.getContent().length) {
+					return $.msg('wikia-editor-leaveconfirm-message');
+				}
+			}.bind(this));
+
 			var animations = this.editor.config.animations;
 
 			// Don't activate if target is not body. Basically, this means the editor
@@ -138,6 +145,7 @@
 		},
 
 		editorDeactivated: function(force) {
+			$(window).off('beforeunload.PreventLeaveBeforeSave');
 			var animations = this.editor.config.animations;
 
 			this.hideToolbar();

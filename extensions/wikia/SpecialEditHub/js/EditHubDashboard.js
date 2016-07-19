@@ -12,14 +12,12 @@ EditHub.prototype = {
 		this.tooltipMessages[window.wgEditHubConstants.EDITED_NOT_PUBLISHED] = $.msg('edit-hub-tooltip-in-progress');
 		this.tooltipMessages[window.wgEditHubConstants.PUBLISHED] = $.msg('edit-hub-tooltip-published');
 
-		$.when(
-			// jQuery UI datepicker plugin
-			mw.loader.use(['jquery.ui.datepicker'])
-		).done($.proxy(function(getResourcesData) {
-			this.isCalendarReady = true;
-
-			this.initDatepicker();
-		}, this));
+		// jQuery UI datepicker plugin
+		mw.loader.using('jquery.ui.datepicker')
+			.done($.proxy(function(getResourcesData) {
+				this.isCalendarReady = true;
+				this.initDatepicker();
+			}, this));
 
 	},
 	initModel: function() {

@@ -67,7 +67,7 @@ define('editpage.event.diff', ['editpage.event.helper', 'wikia.window', 'jquery'
 			helper.ajax('diff' , extraData),
 
 			// load CSS for diff
-			win.mw.loader.use('mediawiki.action.history.diff')
+			win.mw.loader.using('mediawiki.action.history.diff')
 		).done(function (ajaxData) {
 			var data = ajaxData[ 0 ],
 				html = '<h1 class="pagetitle">' + win.wgEditedTitle + '</h1>' + data.html;

@@ -543,7 +543,6 @@ class WikiFactory {
 	 * @return boolean: transaction status
 	 */
 	static public function setVarById( $cv_variable_id, $city_id, $value, $reason=null ) {
-
 		global $wgWikicitiesReadOnly;
 
 		if ( ! self::isUsed() ) {
@@ -556,10 +555,8 @@ class WikiFactory {
 			return false;
 		}
 
-		global $wgUser;
-
 		if ( empty( $cv_variable_id ) || empty( $city_id ) ) {
-			return;
+			return false;
 		}
 
 		wfProfileIn( __METHOD__ );
@@ -599,6 +596,19 @@ class WikiFactory {
 				],
 				__METHOD__
 			);
+
+			$valueExported = var_export( $value, true );
+			$valueShortExcerpt = substr($valueExported, 0, 100) . (strlen($valueExported) > 100 ? ' ...' : '');
+			$valueLongExcerpt = substr($valueExported, 0, 4000) . (strlen($valueExported) > 4000 ? ' ...' : '');
+			$variableName = $variable ? $variable->cv_name : "(id: $cv_variable_id)";
+			WikiaLogger::instance()->info( __METHOD__ . " - variable $variableName changed to: $valueShortExcerpt", [
+				'exception' => new Exception(),
+				'variable_id' => $cv_variable_id,
+				'variable_name' => $variableName,
+				'variable_value' => $valueLongExcerpt,
+				'variable_value_len' => strlen($valueExported),
+				'reason' => $reason ?: '',
+			] );
 
 			wfProfileIn( __METHOD__."-changelog" );
 
@@ -772,12 +782,6 @@ class WikiFactory {
 			}
 			wfProfileOut( __METHOD__."-citylist" );
 			$dbw->commit();
-			$aHookParams = [
-				'city_id' => $city_id,
-				'cv_name' => $variable->cv_name,
-				'cv_value' => $value,
-			];
-			wfRunHooks( 'WikiFactoryChangeCommitted', [ $aHookParams ] );
 		}
 		catch ( DBQueryError $e ) {
 			Wikia::log( __METHOD__, "", "Database error, cannot write variable." );
@@ -861,6 +865,13 @@ class WikiFactory {
 						$reason2),
 					$wiki,
 					$variable_id);
+				$variableName = $variable ? $variable->cv_name : "(id: $variable_id)";
+				WikiaLogger::instance()->info( __METHOD__ . " - variable $variableName removed", [
+					'exception' => new Exception(),
+					'variable_id' => $variable_id,
+					'variable_name' => $variableName,
+					'reason' => $reason ?: '',
+				] );
 				$dbw->commit();
 				$bStatus = true;
 
@@ -1903,8 +1914,6 @@ class WikiFactory {
 			__METHOD__
 		);
 
-		wfRunHooks( 'WikiFactoryPublicStatusChanged', [ &$city_public, &$city_id, $reason ] );
-
 		self::log( self::LOG_STATUS, $sLogMessage, $city_id );
 
 		wfProfileOut( __METHOD__ );
@@ -2002,7 +2011,7 @@ class WikiFactory {
 	 * @param integer $city_id    wiki id in city_list
 	 * @param boolean $master        use master or slave connection
 	 *
-	 * @return string: path to file or null if id is not a number
+	 * @return object|false
 	 */
 	static private function loadVariableFromDB( $cv_id, $cv_name, $city_id, $master = false ) {
 
@@ -2059,7 +2068,7 @@ class WikiFactory {
 
 					// log typos in calls to WikiFactory::loadVariableFromDB
 					if ( !is_object( $oRow ) ) {
-						WikiaLogger::instance()->error('WikiFactory - variable not found', [
+						WikiaLogger::instance()->error(__METHOD__. ' - variable not found', [
 							'condition' => $condition,
 							'exception' => new Exception()
 						]);
@@ -2401,7 +2410,7 @@ class WikiFactory {
 			$dbw = self::db( DB_MASTER );
 			$dba = wfGetDB( DB_MASTER, [], $wgExternalArchiveDB );
 
-			$dba->begin();
+			$dba->begin( __METHOD__ );
 
 			/**
 			 * copy city_list to archive
@@ -2487,7 +2496,7 @@ class WikiFactory {
 				self::clearDomainCache( $row->city_id );
 			}
 			$dbw->freeResult( $sth );
-			$dba->commit();
+			$dba->commit( __METHOD__ );
 		}
 		wfProfileOut( __METHOD__ );
 	}
@@ -3341,7 +3350,6 @@ class WikiFactory {
 	 * @return string
 	 */
 	static public function renderValueOnCommunity( $name, $type ) {
-		global $$name;
 		global $preWFValues;
 
 		$value = "";
@@ -3349,9 +3357,9 @@ class WikiFactory {
 		if( isset( $preWFValues[$name] ) ) {
 			// was modified, spit out saved default
 			$value = self::parseValue( $preWFValues[$name], $type );
-		} elseif( isset( $$name ) ) {
+		} elseif( isset( $GLOBALS[$name] ) ) {
 			// was not modified, spit out actual value
-			$value = self::parseValue( $$name, $type );
+			$value = self::parseValue( $GLOBALS[$name], $type );
 		}
 		return htmlspecialchars( $value );
 	}

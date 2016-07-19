@@ -7,8 +7,7 @@ define('ext.wikia.adEngine.template.skin', [
 ], function (adContext, doc, win, log) {
 	'use strict';
 
-	var logGroup = 'ext.wikia.adengine.template.skin',
-		sevenOneMedia = adContext.getContext().providers.sevenOneMedia;
+	var logGroup = 'ext.wikia.adengine.template.skin';
 
 	/**
 	 * Show the skin ad
@@ -63,7 +62,7 @@ define('ext.wikia.adEngine.template.skin', [
 				adSkinStyle.background = 'url("' + params.skinImage + '") no-repeat top center #' + params.backgroundColor;
 			}
 
-			doc.body.className += ' background-ad';
+			doc.body.classList.add('background-ad');
 
 			adSkinStyle.position = 'fixed';
 			adSkinStyle.height = '100%';

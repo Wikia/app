@@ -112,6 +112,10 @@ class VideoFileUploader {
 		}
 		$oTitle = Title::newFromText( $this->getNormalizedDestinationTitle(), NS_FILE );
 
+		if ( $oTitle === null ) {
+			throw new Exception ( wfMessage ('videohandler-unknown-title')->inContentLanguage()->text() );
+		}
+
 		// Check if the user has the proper permissions
 		// Mimicks Special:Upload's behavior
 		$user = F::app()->wg->User;
@@ -520,24 +524,25 @@ class VideoFileUploader {
 	 * @return null|Title
 	 */
 	public static function URLtoTitle( $url, $sTitle = '', $sDescription = '' ) {
-
 		wfProfileIn( __METHOD__ );
 		$oTitle = null;
 		$oUploader = new self();
 		$oUploader->setExternalUrl( $url );
 		$oUploader->setTargetTitle( $sTitle );
-		if ( !empty($sDescription) ) {
-			$categoryVideosTxt = self::getCategoryVideosWikitext();
-			if ( strpos( $sDescription, $categoryVideosTxt ) === false ) {
-				$sDescription .= $categoryVideosTxt;
+		if ( !empty( $oUploader->getApiWrapper() ) ) {
+			if ( !empty($sDescription) ) {
+				$categoryVideosTxt = self::getCategoryVideosWikitext();
+				if ( strpos( $sDescription, $categoryVideosTxt ) === false ) {
+					$sDescription .= $categoryVideosTxt;
+				}
+				$oUploader->setDescription( $sDescription );
 			}
-			$oUploader->setDescription( $sDescription );
-		}
 
-		$status = $oUploader->upload( $oTitle );
-		if ( $status->isOK() ) {
-			wfProfileOut( __METHOD__ );
-			return $oTitle;
+			$status = $oUploader->upload( $oTitle );
+			if ( $status->isOK() ) {
+				wfProfileOut( __METHOD__ );
+				return $oTitle;
+			}
 		}
 		wfProfileOut( __METHOD__ );
 		return null;

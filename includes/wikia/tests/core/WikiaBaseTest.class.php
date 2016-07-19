@@ -92,7 +92,7 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 		if ( $this->mockProxy !== null ) {
 			throw new Exception("Previous test did not execute tearDown()");
 		}
-		$this->mockProxy = new WikiaMockProxy();
+		$this->mockProxy = version_compare( PHP_VERSION, '7.0.0.', '<' ) ? new WikiaMockProxy() : new WikiaMockProxyUopz();
 		$this->mockProxy->enable();
 	}
 
@@ -139,13 +139,14 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 	 * @param $mock PHPUnit_Framework_MockObject_MockObject instance of Mock
 	 * @param $functionName String name of static constructor
 	 * @return void
+	 * @throws Exception
 	 */
 	protected function mockClass($className, $mock, $functionName = null) {
 		$functionNames = is_array( $functionName ) ? $functionName : array( $functionName );
 		foreach ($functionNames as $functionName) {
 			if ( empty( $mock ) && empty($functionName) ) {
 				// constructor cannot return null
-				// todo: maybe we should throw an exception here instead of failing silently
+				trigger_error( sprintf( '%s: mock of class %s cannot be empty', __METHOD__, $className ), E_USER_WARNING );
 				return;
 			}
 			if ( empty($functionName) ) { // regular constructor
@@ -225,6 +226,34 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 	}
 
 	/**
+	 * Mock a static method using callback
+	 *
+	 * Example:
+	 *
+	 * $this->mockStaticMethodWithCallBack( 'Title', 'newFromID',
+	 *   function ( $titleId ) {
+	 *     $titleMock = $this->getMock( 'Title', [ 'getArticleID' ] );
+	 *     $titleMock->expects( $this->any() )
+	 *       ->method( 'getArticleID' )
+	 *       ->willReturn( $titleId );
+	 *     return $titleMock;
+	 *   }
+	 * );
+	 * $this->assertEquals( 7, Title::newFromID( 7 )->getArticleID() );
+	 * $this->assertEquals( 12, Title::newFromID( 12 )->getArticleID() );
+	 * $this->assertEquals( 123, Title::newFromID( 123 )->getArticleID() );
+	 *
+	 * @param $className string
+	 * @param $methodName string
+	 * @param $callBack callable
+	 */
+	protected function mockStaticMethodWithCallBack( $className, $methodName, callable $callBack) {
+		$this->getMockProxy()
+			->getStaticMethod($className, $methodName)
+			->willCall($callBack);
+	}
+
+	/**
 	 * Mock global ($wg...) variable.
 	 *
 	 * @param $globalName string name of global variable (e.g. wgCity - WITH wg prefix)
@@ -278,6 +307,16 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 			->method( 'get' )
 			->will( $this->returnValue( $messageContent ) );
 		return $mock;
+	}
+
+	/**
+	 * Return the database connection handler mock
+	 *
+	 * @param array $methods
+	 * @return PHPUnit_Framework_MockObject_MockObject
+	 */
+	protected function getDatabaseMock( $methods = [] ) {
+		return $this->getMock( 'DatabaseMysqli', $methods );
 	}
 
 	/**
@@ -447,15 +486,6 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 	public static function markTestIncomplete($message = '') {
 		Wikia::log(__METHOD__, '', $message);
 		parent::markTestIncomplete($message);
-	}
-
-	private function parseGlobalFunctionName( $functionName ) {
-		$last = strrpos($functionName,'\\');
-		if ( $last === false ) {
-			return [ '', $functionName ];
-		} else {
-			return [ ltrim( substr( $functionName, 0, $last + 1 ), '\\' ), substr( $functionName, $last + 1 ) ];
-		}
 	}
 
 	/**

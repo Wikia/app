@@ -399,41 +399,6 @@ $color-lightbox-border: mix($color-page-border, $color-page, 75%);
 		}
 	}
 
-	.show-ads .LightboxCarousel {
-		@include clearfix;
-		.wikia-ad {
-			width: 318px;
-			float: right;
-			padding-top: 5px;
-		}
-		.LightboxCarouselInner {
-			float: left;
-			width: 665px;
-		}
-		.LightboxCarouselContainer {
-			margin-left: 20px;
-			width: 588px;
-		}
-		.content{
-			border-right: 1px solid $color-page-border;
-			width: 625px;
-		}
-		.icon {
-			margin-right: 21px;
-		}
-		.progress {
-			margin-left: 22px;
-		}
-		.carousel-arrow {
-			&.next {
-				margin-right: -10px;
-			}
-			&.previous {
-				margin-left: -10px;
-			}
-		}
-	}
-
 	.modal_interstitial {
 		height: 100%;
 		> div {

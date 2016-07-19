@@ -79,6 +79,7 @@ class WikiaApiQueryLastEditors extends ApiQueryBase {
 			__METHOD__,
 			array(
 				'ORDER BY' => 'rev_timestamp DESC',
+				'USE INDEX' => 'for_wikia_api_last_editors_idx',
 				'LIMIT'	=> $this->params['limit'],
 				'OFFSET' => $this->params['offset']
 			)

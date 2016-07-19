@@ -233,7 +233,7 @@ $messages['es'] = array(
 	'template-classification-edit-modal-cancel-button-text' => 'Cancelar',
 	'template-classification-edit-modal-title-edit-type' => 'Editar el tipo de plantilla',
 	'template-classification-edit-modal-title-select-type' => 'Elegir el tipo de plantilla',
-	'template-classification-edit-modal-help' => 'Para conocer más sobre cada tipo de plantilla, incluyendo ejemplos, por favor visita [[w:es:Ayuda:Clasificación de plantillas]].',
+	'template-classification-edit-modal-help' => 'Para conocer más sobre cada tipo de plantilla, incluyendo ejemplos, por favor visita [[Ayuda:Clasificación de plantillas]].',
 	'template-classification-edit-modal-success' => 'Se ha guardado el nuevo tipo de plantilla. ¡Gracias!',
 	'template-classification-edit-modal-error' => 'Desafortunadamente no pudimos guardar este tipo de plantilla. ¿Te importaría volver a intentarlo?',
 	'template-classification-global-shortcuts-caption-classify-page' => 'Clasificar la página',
@@ -257,7 +257,7 @@ $messages['es'] = array(
 	'template-classification-edit-modal-bulk-task' => 'Debido al tamaño de esta categoría estamos corriendo esta edición múltiple como una tarea de segundo plano. Como resultado, puede tomar un poco de tiempo para que los cambios se activen. ¡Gracias por su paciencia!',
 	'template-classification-open-modal-key-tip' => 'Abrir diálogo de clasificación (k)',
 	'template-classification-bulk-classification-hint' => '¡Hola $1! Ayúdanos a organizar las plantillas en esta categoría. Haz clic en "Edición múltiple de tipo de plantilla" y elige uno de los tipos.
-[[w:es:Ayuda:Clasificación de plantillas|Clasificación de plantillas]].',
+[[Ayuda:Clasificación de plantillas|Clasificación de plantillas]].',
 	'template-classification-bulk-classification-agreement' => 'Entiendo',
 	'logentry-templateclassification-tc-changed' => '$1 cambió el tipo de $3 de $5 a $4.',
 	'template-classification-type-scrollbox' => 'Cuadro de desplazamiento',
@@ -724,7 +724,7 @@ $messages['ru'] = array(
 	'template-classification-edit-modal-bulk-error-limited' => 'К сожалению мы не смогли классифицировать $1 из $2 страниц. Пожалуйста, попробуйте снова.',
 	'template-classification-edit-modal-bulk-task' => 'Из-за размеров этой категории массовая классификация будет поставлена в очередь. Это означает, что классификация займет немного больше времени, чем обычно.',
 	'template-classification-open-modal-key-tip' => 'Открыть диалог классификации (k)',
-	'template-classification-bulk-classification-hint' => 'Привет, $1! Помогите нам классифицировать шаблоны в этой категории. Нажмите кнопку «Массовое изменение типов шаблонов» и выберите подходящий тип шаблонов.
+	'template-classification-bulk-classification-hint' => 'Привет, $1! Помогите нам классифицировать шаблоны в этой категории. Нажмите кнопку «Массовое изменение типов шаблонов» и выберите подходящий тип шаблонов. 
 [[w:c:ru:Справка:Классификация шаблонов|Подробнее о классификации шаблонов]].',
 	'template-classification-bulk-classification-agreement' => 'Хорошо',
 	'logentry-templateclassification-tc-changed' => '$1 изменил(а) тип шаблона $3 с $5 на $4.',

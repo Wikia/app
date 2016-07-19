@@ -349,10 +349,6 @@ class ApiVisualEditor extends ApiBase {
 		if ( !$page ) {
 			$this->dieUsageMsg( 'invalidtitle', $params['page'] );
 		}
-		if ( !in_array( $page->getNamespace(), $this->veConfig->get( 'VisualEditorNamespaces' ) ) ) {
-			$this->dieUsage( "VisualEditor is not enabled in namespace " .
-				$page->getNamespace(), 'novenamespace' );
-		}
 
 		$parserParams = array();
 		if ( isset( $params['oldid'] ) ) {

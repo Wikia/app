@@ -1,9 +1,9 @@
 <ul class="controls">
-	<li id="article-comments-counter-recent"><?= wfMsg( 'oasis-comments-showing-most-recent', count( $commentListRaw ) ) ?></li>
+	<li id="article-comments-counter-recent"><?= wfMessage( 'oasis-comments-showing-most-recent' )->numParams( count( $commentListRaw ) )->escaped() ?></li>
 </ul>
-<h1 id="article-comments-counter-header"><?= wfMsgExt( 'oasis-comments-header', [ 'parsemag' ], $wg->Lang->FormatNum( $countCommentsNested ) ) ?></h1>
+<h1 id="article-comments-counter-header"><?= wfMessage( 'oasis-comments-header' )->numParams( $countCommentsNested )->parse() ?></h1>
 <div id="article-comments" class="article-comments">
-	<? if ( !$isBlocked && $canEdit && $commentingAllowed ): ?>
+	<? if ( !$isBlocked && $commentingAllowed ): ?>
 		<? if ( $isMiniEditorEnabled ): ?>
 			<?= $app->renderView( 'MiniEditorController', 'Setup' ) ?>
 		<? endif ?>
@@ -15,12 +15,14 @@
 						'data-min-height' => 100,
 						'data-max-height' => 400
 					]
-			] )->render()
+				 ] )->render()
 			?>
 		<? endif ?>
 		<div class="session">
 			<?= $avatar ?>
-			<?= $isAnon ? wfMsg( 'oasis-comments-anonymous-prompt' ) : '' /* wfMsg( 'oasis-comments-user-prompt', $avatar->mUser->getName() ) */ ?>
+			<? if ( $isAnon ): ?>
+				<?= wfMessage( 'oasis-comments-anonymous-prompt' )->parse() ?>
+			<? endif ?>
 		</div>
 		<form action="<?= $title->getFullURL() ?>" method="post" class="article-comm-form" id="article-comm-form">
 			<input type="hidden" name="wpArticleId" value="<?= $title->getArticleId() ?>" />
@@ -33,7 +35,7 @@
 			<? endif ?>
 			<? if ( !$isReadOnly ): ?>
 				<div class="buttons" data-space-type="buttons">
-					<input type="submit" name="wpArticleSubmit" id="article-comm-submit" class="wikia-button actionButton" value="<?= wfMsg( 'article-comments-post' ) ?>" />
+					<input type="submit" name="wpArticleSubmit" id="article-comm-submit" class="wikia-button actionButton" value="<?= wfMessage( 'article-comments-post' )->escaped() ?>" />
 					<img src="<?= $ajaxicon ?>" class="throbber" />
 				</div>
 			<? endif ?>
@@ -42,12 +44,12 @@
 			<?= $app->getView( 'MiniEditorController', 'Footer' )->render() ?>
 		<? endif ?>
 	<? elseif ( $isBlocked ): ?>
-		<p><?= wfMsg( 'article-comments-comment-cannot-add' ) ?></p>
+		<p><?= wfMessage( 'article-comments-comment-cannot-add' )->escaped() ?></p>
 		<p><?= $reason ?></p>
-	<? elseif ( !$canEdit ): ?>
-		<p class="login"><?= wfMsg( 'article-comments-login', SpecialPage::getTitleFor( 'UserLogin' )->getLocalUrl() ) ?></p>
 	<? elseif ( !$commentingAllowed ): ?>
-		<p class="no-comments-allowed"><?= wfMsg( 'article-comments-comment-cannot-add' ) ?> </p>
+		<p class="no-comments-allowed">
+			<?= $isAnon ? wfMessage( 'article-comments-login' )->parse() : wfMessage( 'article-comments-comment-cannot-add' )->escaped() ?>
+		</p>
 	<? endif ?>
 	<? if ( $countComments ): ?>
 		<div class="article-comments-pagination upper-pagination"><?= $pagination ?></div>
@@ -56,7 +58,7 @@
 			'commentListRaw' => $commentListRaw,
 			'page' => $page,
 			'useMaster' => false
-	] )->render()
+		] )->render()
 	?>
 	<? if ( $countComments ): ?>
 		<div class="article-comments-pagination"><?= $pagination ?></div>

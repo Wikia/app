@@ -642,7 +642,7 @@ class VideoNotFound extends Exception {}
  */
 abstract class PseudoApiWrapper extends ApiWrapper {
 
-	protected function getInterfaceObjectFromType( $type ) {
+	protected function getInterfaceObjectFromType() {
 		// override me!
 	}
 

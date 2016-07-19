@@ -59,8 +59,3 @@ $wgSpecialPages['Listhelpers'] = 'SpecialListHelpers';
 
 // Only add Listusers to Special:SpecialPages
 $wgSpecialPageGroups['Listusers'] = 'users';
-
-/**
- * Rights
- */
-$wgAvailableRights[] = 'listusers';

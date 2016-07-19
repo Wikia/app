@@ -151,7 +151,7 @@ ve.dm.WikiaInfoboxSpecModel.prototype.isParameterSuggested = function () {
  * @returns {string} Parameter label
  */
 ve.dm.WikiaInfoboxSpecModel.prototype.getParameterLabel = function ( name ) {
-	return name;
+	return this.params[name].label || name;
 };
 
 /**

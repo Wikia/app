@@ -7,7 +7,12 @@
  * @version: $Id$
  */
 
+use Wikia\DependencyInjection\Injector;
+use Wikia\Service\User\Permissions\PermissionsService;
+use Wikia\Service\User\Permissions\PermissionsServiceAccessor;
+
 class ListusersData {
+	use PermissionsServiceAccessor;
 	var $mCityId;
 	var $mGroups;
 	var $mFilterGroup;
@@ -129,7 +134,11 @@ class ListusersData {
 			$dbs = wfGetDB( DB_SLAVE, array(), $this->mDBh );
 
 			/* initial conditions for SQL query */
-			$where = array( 'wiki_id' => $this->mCityId, "user_name != ''" );
+			$where = [
+					'wiki_id' => $this->mCityId,
+					"user_name != ''",
+					'user_is_closed' => 0
+			];
 
 			/* filter: groups */
 			if ( !empty( $this->mFilterGroup ) && is_array( $this->mFilterGroup ) ) {
@@ -481,10 +490,9 @@ class ListusersData {
 		}
 
 		$central_groups = array();
-		if ( class_exists('UserRights') ) {
-			if ( !UserRights::isCentralWiki() ) {
-				$central_groups = UserRights::getGlobalGroups($user);
-			}
+		global $wgWikiaIsCentralWiki;
+		if ( $wgWikiaIsCentralWiki === false  ) {
+			$central_groups = $this->permissionsService()->getExplicitGlobalGroups( $user );
 		}
 
 		# add groups

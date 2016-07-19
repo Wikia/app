@@ -404,7 +404,6 @@ class MultiUploadForm extends UploadForm {
 			+ $this->getDescriptionSection()
 			+ $this->getOptionsSection();
 
-		wfRunHooks( 'UploadFormInitDescriptor', array( &$descriptor ) );
 		$this->setMessagePrefix( 'multiupload' );
 		HTMLForm::__construct( $descriptor, $context, 'multiupload' ); // here's the change
 
@@ -519,7 +518,6 @@ class MultiUploadForm extends UploadForm {
 				);
 			}
 		}
-		wfRunHooks( 'UploadFormSourceDescriptors', array( &$descriptor, &$radio, $selectedSourceType ) );
 
 		$descriptor['Extensions'] = array(
 			'type' => 'info',

@@ -1097,9 +1097,6 @@ but after noinclude/includeonly/onlyinclude and other processing.
 &$text: string containing partially parsed text
 &$stripState: Parser's internal StripState object
 
-'InvalidateEmailComplete': Called after a user's email has been invalidated successfully
-$user: user (object) whose email is being invalidated
-
 'IRCLineURL': When constructing the URL to use in an IRC notification.
 Callee may modify $url and $query, URL will be constructed as $url . $query
 &$url: URL to index.php
@@ -1747,31 +1744,6 @@ $software: The array of software in format 'name' => 'version'.
 'SpecialContributionsBeforeMainOutput': Before the form on Special:Contributions
 $id: User identifier
 
-'SpecialListusersDefaultQuery': called right before the end of
-UsersPager::getDefaultQuery()
-$pager: The UsersPager instance
-$query: The query array to be returned
-
-'SpecialListusersFormatRow': called right before the end of
-UsersPager::formatRow()
-$item: HTML to be returned. Will be wrapped in <li></li> after the hook finishes
-$row: Database row object
-
-'SpecialListusersHeader': called before closing the <fieldset> in
-UsersPager::getPageHeader()
-$pager: The UsersPager instance
-$out: The header HTML
-
-'SpecialListusersHeaderForm': called before adding the submit button in
-UsersPager::getPageHeader()
-$pager: The UsersPager instance
-$out: The header HTML
-
-'SpecialListusersQueryInfo': called right before the end of
-UsersPager::getQueryInfo()
-$pager: The UsersPager instance
-$query: The query array to be returned
-
 'SpecialMovepageAfterMove': called after moving a page
 $movePage: MovePageForm object
 $oldTitle: old title (object)
@@ -1989,20 +1961,8 @@ Do not use this hook to break upload processing. This will return the user to
 a blank form with no error message; use UploadVerification and
 UploadVerifyFile instead
 
-'UploadCreateFromRequest': when UploadBase::createFromRequest has been called
-$type: (string) the requested upload type
-&$className: the class name of the Upload instance to be created
-
 'UploadComplete': when Upload completes an upload
 &$upload: an UploadBase child instance
-
-'UploadFormInitDescriptor': after the descriptor for the upload form as been
-	assembled
-$descriptor: (array) the HTMLForm descriptor
-
-'UploadFormSourceDescriptors': after the standard source inputs have been
-added to the descriptor
-$descriptor: (array) the HTMLForm descriptor
 
 'UploadVerification': additional chances to reject an uploaded file. Consider
                       using UploadVerifyFile instead.
@@ -2102,9 +2062,6 @@ email authentification
 $user: User object
 &$timestamp: timestamp, change this to override local email authentification
 	timestamp
-
-'UserGetImplicitGroups': Called in User::getImplicitGroups()
-&$groups: List of implicit (automatically-assigned) groups
 
 'UserGetLanguageObject': Called when getting user's interface language object
 $user: User object

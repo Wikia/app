@@ -56,9 +56,9 @@ class SMWRefreshJob extends Job {
 
 		$jobParams = null;
 		if ( $spos > 0 ) {
-			$jobParams = [ 'spos' => $spos, 'prog' => $progress, 'rc' => $this->params['rc'], 'run' => $run ) ];
+			$jobParams = [ 'spos' => $spos, 'prog' => $progress, 'rc' => $this->params['rc'], 'run' => $run ];
 		} elseif ( $this->params['rc'] > $run ) { // do another run from the beginning
-			$jobParams = [ 'spos' => 1, 'prog' => 0, 'rc' => $this->params['rc'], 'run' => $run + 1 ) ];
+			$jobParams = [ 'spos' => 1, 'prog' => 0, 'rc' => $this->params['rc'], 'run' => $run + 1 ];
 		}
 
 		if ( !empty( $jobParams ) ) {

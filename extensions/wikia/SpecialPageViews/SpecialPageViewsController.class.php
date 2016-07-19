@@ -10,7 +10,7 @@ class SpecialPageViewsController extends WikiaSpecialPageController {
 		parent::__construct( self::SPECIALPAGE_NAME );
 	}
 
-	public function execute() {
+	public function execute( $par ) {
 		wfProfileIn( __METHOD__ );
 		$this->setHeaders();
 

@@ -4,6 +4,7 @@ $messages = array();
 
 $messages['en'] = array(
 	'chat' => 'Chat',
+	'chatbanlist' => 'Chat Ban List',
 	'chat-desc' => '[[Special:Chat|Live chat]]',
 	'chat-no-login' => 'You must be logged in to chat.',
 	'chat-no-login-text' => 'Please login to chat.',
@@ -29,6 +30,8 @@ $messages['en'] = array(
 	'chat-ban-cannt-undo' => 'Ban has already been undone',
 
 	'chat-user-permanently-disconnected' => 'You have been disconnected, check your Internet connection and refresh browser window',
+
+	'chat-message-was-too-long' => 'The message was too long and could not be displayed.',
 
 	'chat-inlinealert-a-made-b-chatmod' => "$1 has made <strong>$2</strong> a chat moderator.",
 	'chat-err-connected-from-another-browser' => 'You have connected from another browser. This connection will be closed.',
@@ -193,6 +196,7 @@ This is used for setting the options for expiration time when banning a user fro
 
 Parameters:
 * $1 - User name is passed to the message for gender purposes',
+	'chat-message-was-too-long' => 'shown to a user when their message was too long to be displayed',
 	'chat-browser-is-notsupported' => 'shown when user broser is not supported',
 	'chat-checkuser-join-action' => 'Shown in CheckUser extension for chat-join events',
 	'chat-status-away' => 'Display when user chnages his status to away.

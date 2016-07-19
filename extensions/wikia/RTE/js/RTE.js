@@ -68,7 +68,6 @@
 				'rte-overlay,' +
 				'rte-paste,' +
 				'rte-placeholder,' +
-				'rte-poll,' +
 				'rte-signature,' +
 				'rte-spellchecker,' +
 				'rte-template,' +

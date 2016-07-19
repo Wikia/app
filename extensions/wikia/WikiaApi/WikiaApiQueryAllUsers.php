@@ -146,8 +146,6 @@ class WikiaApiQueryAllUsers extends ApiQueryAllUsers {
 	}
 
 	private function global_users() {
-		global $wgWikiaGlobalUserGroups;
-		
 		$db = $this->getSharedDB();
 
 		$limit = $this->params['limit'];

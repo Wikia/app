@@ -73,6 +73,36 @@ class WebProcessorTest extends TestCase
         $this->assertFalse(isset($record['extra']['unique_id']));
     }
 
+    public function testProcessorAddsOnlyRequestedExtraFields()
+    {
+        $server = array(
+            'REQUEST_URI'    => 'A',
+            'REMOTE_ADDR'    => 'B',
+            'REQUEST_METHOD' => 'C',
+            'SERVER_NAME'    => 'F',
+        );
+
+        $processor = new WebProcessor($server, array('url', 'http_method'));
+        $record = $processor($this->getRecord());
+
+        $this->assertSame(array('url' => 'A', 'http_method' => 'C'), $record['extra']);
+    }
+
+    public function testProcessorConfiguringOfExtraFields()
+    {
+        $server = array(
+            'REQUEST_URI'    => 'A',
+            'REMOTE_ADDR'    => 'B',
+            'REQUEST_METHOD' => 'C',
+            'SERVER_NAME'    => 'F',
+        );
+
+        $processor = new WebProcessor($server, array('url' => 'REMOTE_ADDR'));
+        $record = $processor($this->getRecord());
+
+        $this->assertSame(array('url' => 'B'), $record['extra']);
+    }
+
     /**
      * @expectedException UnexpectedValueException
      */

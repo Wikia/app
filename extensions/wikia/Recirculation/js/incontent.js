@@ -12,7 +12,8 @@ require([
 	// Currently only showing for English communities
 	if (w.wgContentLanguage !== 'en') { return; }
 
-	var logGroup = 'ext.wikia.recirculation.incontent',
+	var experimentName = 'RECIRCULATION_INCONTENT',
+		logGroup = 'ext.wikia.recirculation.incontent',
 		$container = $('#mw-content-text'),
 		minimumLinksNumber = 8,
 		minimumSectionsNumber = 3,
@@ -66,7 +67,7 @@ require([
 
 	function renderArticles(section) {
 		var placeholderImage = w.wgExtensionsPath + '/wikia/Recirculation/images/placeholder.png';
-		tracker.trackImpression('in-content');
+		tracker.trackVerboseImpression(experimentName, 'in-content');
 
 		return function (response) {
 			var items = [],
@@ -85,7 +86,7 @@ require([
 			section.$start.before($html);
 
 			$html.on('mousedown', 'a', function() {
-				tracker.trackClick('in-content');
+				tracker.trackVerboseClick(experimentName, 'in-content');
 			});
 		}
 	}
@@ -182,7 +183,7 @@ require([
 		return sortedKeys;
 	}
 
-	if (abTest.inGroup('RECIRCULATION_INCONTENT', 'YES')) {
+	if (abTest.inGroup(experimentName, 'YES')) {
 		utils.loadTemplate('extensions/wikia/Recirculation/templates/inContent.client.mustache')
 			.then(function(loadedTemplate) {
 				template = loadedTemplate;

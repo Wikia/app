@@ -19,8 +19,8 @@ define('ext.wikia.adEngine.adEngineRunner', [
 	 * @param {function} runAdEngine
 	 */
 	function delayRun(runAdEngine) {
-		var enabledBidders = [],
-			biddersQueue = [],
+		var biddersQueue = [],
+			enabledBidders = [],
 			startedByBidders = false;
 
 		/**
@@ -36,6 +36,7 @@ define('ext.wikia.adEngine.adEngineRunner', [
 			if (biddersQueue.length === enabledBidders.length) {
 				log('All bidders responded', 'info', logGroup);
 				startedByBidders = true;
+				adTracker.measureTime('adengine_runner/bidders_responded', biddersQueue.join(',')).track();
 				runAdEngine();
 			}
 		}
@@ -53,6 +54,19 @@ define('ext.wikia.adEngine.adEngineRunner', [
 			});
 		}
 
+		function getTimeoutBidders () {
+			var timeoutBidders = [];
+
+			enabledBidders.forEach(function (enabledBidder) {
+				var enabledBidderName = enabledBidder.getName();
+				if (biddersQueue.indexOf(enabledBidderName) === -1) {
+					timeoutBidders.push(enabledBidderName);
+				}
+			});
+
+			return timeoutBidders.join(',');
+		}
+
 		supportedBidders.forEach(function (bidder) {
 			if (bidder && bidder.wasCalled()) {
 				enabledBidders.push(bidder);
@@ -67,8 +81,9 @@ define('ext.wikia.adEngine.adEngineRunner', [
 			win.setTimeout(function () {
 				if (!startedByBidders) {
 					log('Timeout exceeded', 'info', logGroup);
+					adTracker.measureTime('adengine_runner/bidders_timeout', getTimeoutBidders()).track();
+					runAdEngine();
 				}
-				runAdEngine();
 			}, timeout);
 		}
 	}

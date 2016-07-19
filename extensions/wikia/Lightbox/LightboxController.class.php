@@ -26,7 +26,6 @@ class LightboxController extends WikiaController {
 		// TODO: refactor this to AdEngine2Controller.php
 		$showAds = $this->wg->ShowAds;
 		$this->showAdModalInterstitial = $showAds && $this->wg->ShowAdModalInterstitial;
-		$this->showAdModalRectangle = $showAds && $this->wg->ShowAdModalRectangle;
 
 		// set cache control to 1 day
 		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );

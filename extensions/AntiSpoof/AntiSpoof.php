@@ -21,12 +21,6 @@ $wgExtensionCredits['antispam'][] = array(
  */
 $wgAntiSpoofAccounts = true;
 
-/**
- * CE-1459: sysop and bureaucrats should not have override-antispoof
- * rights.
- */
-$wgAvailableRights[] = 'override-antispoof';
-
 $dir = dirname( __FILE__ );
 
 $wgExtensionMessagesFiles['AntiSpoof'] = "$dir/AntiSpoof.i18n.php";

@@ -6,6 +6,8 @@
  * @method setText
  * @method getText
  * @method getLang
+ * @method setShouldLogInStats
+ * @method getShouldLogInStats
  */
 abstract class PhalanxModel extends WikiaObject {
 	public $model = null;
@@ -134,7 +136,6 @@ abstract class PhalanxModel extends WikiaObject {
 				'exception' => new Exception( 'Phalanx fallback triggered' )
 			] );
 
-			Wikia::log( __METHOD__, __LINE__, "Call method from previous version of Phalanx - check Phalanx service!\n" );
 			$ret = call_user_func( array( $this, $fallback ) );
 		}
 		return $ret;

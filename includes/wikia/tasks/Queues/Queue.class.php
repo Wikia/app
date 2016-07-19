@@ -17,8 +17,8 @@ class Queue {
 	protected $routingKey;
 
 	public function __construct() {
-		$this->name = 'mediawiki';
-		$this->routingKey = 'mediawiki';
+		$this->name = 'mediawiki_main';
+		$this->routingKey = 'mediawiki.main';
 	}
 
 	public function name() {

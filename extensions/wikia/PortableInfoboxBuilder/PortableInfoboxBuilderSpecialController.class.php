@@ -5,7 +5,7 @@
  * @desc Special:Maps controller
  */
 class PortableInfoboxBuilderSpecialController extends WikiaSpecialPageController {
-	const PAGE_NAME = 'PortableInfoboxBuilder';
+	const PAGE_NAME = 'InfoboxBuilder';
 	const PAGE_RESTRICTION = 'editinterface';
 	const INFOBOX_BUILDER_MERCURY_ROUTE = 'infobox-builder';
 	const PATH_SEPARATOR = '/';
@@ -27,27 +27,39 @@ class PortableInfoboxBuilderSpecialController extends WikiaSpecialPageController
 
 	public function index() {
 		$this->wg->out->setHTMLTitle( wfMessage( 'portable-infobox-builder-title' )->text() );
-		if ( empty( $this->getPar() ) ) {
-			$this->forward( __CLASS__, 'notitle' );
-		} else {
-			$this->forward( __CLASS__, 'builder' );
-		}
-	}
-
-	public function noTitle() {
-		$this->wg->SuppressPageHeader = true;
-		$this->response->setVal( 'setTemplateNameCallToAction', wfMessage(
-			'portable-infobox-builder-no-template-title-set' )->text() );
-		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
+		$this->forward( __CLASS__, $this->getMethodName() );
 	}
 
 	public function builder() {
-		$title = explode( self::PATH_SEPARATOR, $this->getPar(), self::EXPLODE_LIMIT )[ 0 ];
+		$title = $this->getPar();
 		RenderContentOnlyHelper::setRenderContentVar( true );
 		RenderContentOnlyHelper::setRenderContentLevel( RenderContentOnlyHelper::LEAVE_GLOBAL_NAV_ONLY );
 		Wikia::addAssetsToOutput( 'portable_infobox_builder_scss' );
 		$url = implode( self::PATH_SEPARATOR, [ $this->wg->server, self::INFOBOX_BUILDER_MERCURY_ROUTE, $title ] );
 		$this->response->setVal( 'iframeUrl', $url );
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
+	}
+
+	public function sourceEditor() {
+		$this->wg->out->redirect(Title::newFromText($this->getPar(), NS_TEMPLATE)->getEditURL());
+	}
+
+	/**
+	 * @desc Decide what method to use according to rule, that we should redirect
+	 * to source editor only when there's not supported infobox markup in the template.
+	 * @return string
+	 * @throws \MWException
+	 */
+	private function getMethodName() {
+		if ( !empty( $this->getPar() ) ) {
+			$title = Title::newFromText( $this->getPar(), NS_TEMPLATE );
+			$infoboxes = PortableInfoboxDataService::newFromTitle( $title )->getInfoboxes();
+
+			if (! ( new PortableInfoboxBuilderService() )->isValidInfoboxArray( $infoboxes ) ) {
+				return 'sourceEditor';
+			}
+		}
+
+		return 'builder';
 	}
 }

@@ -12,8 +12,8 @@
 	box-sizing: border-box;
 	color: $nav-foreground-dark-color;
 	height: $global-navigation-height;
-	margin-top: -$global-navigation-negative-top-margin;
 	position: fixed;
+	top: 0;
 	transition-duration: .5s;
 	transition-property: background-color;
 	width: 100%;
@@ -25,6 +25,11 @@
 
 	&.static {
 		position: absolute;
+		top: 0;
+	}
+
+	&.bfaa-pinned {
+		position: relative;
 	}
 
 	.global-navigation-container {
@@ -90,25 +95,6 @@
 		transition-property: background-color;
 		z-index: $zTop;
 
-		.start-wikia {
-			background: $global-navigation-link-hover-color;
-			border: 1px solid $global-navigation-link-hover-color;
-			color: #fff;
-			display: inline-block;
-			font-size: 11px;
-			font-weight: bold;
-			margin: 12px 16px 16px;
-			padding: 9px 10px;
-			text-transform: uppercase;
-			width: auto;
-
-			&:hover {
-				background: #fff;
-				border-color: $global-navigation-link-hover-color;
-				color: $global-navigation-link-hover-color;
-			}
-		}
-
 		a {
 			border-top: 1px solid #ddd;
 			color: $global-navigation-text-color;
@@ -144,11 +130,42 @@
 			}
 		}
 	}
+
+	.start-wikia-container {
+		padding-left: 10px;
+
+		.start-wikia {
+			border: solid 1px $global-navigation-text-color;
+			color: $global-navigation-text-color;
+			display: inline-block;
+			font-size: 12px;
+			height: $start-a-wikia-logo-size;
+			line-height: 28px;
+			margin-bottom: $global-navigation-margin-size;
+			margin-top: $global-navigation-margin-size;
+			padding: 0 10px;
+
+			&:hover {
+				background-color: $global-navigation-active-color;
+				color: $global-wikia-background-color;
+				text-decoration: none;
+			}
+
+			span {
+				display: inline-block;
+				padding-top: 1px;
+			}
+		}
+	}
 }
 
 
 .WikiaSiteWrapper {
 	padding-top: $global-navigation-height + 1px;
+
+	&.bfaa-template {
+		padding-top: 0;
+	}
 }
 
 .ve .global-navigation {

@@ -7,6 +7,8 @@
  * or specific dimensions.
  */
 
+use Wikia\Logger\WikiaLogger;
+
 class ImageServing {
 	private $articles = array();
 	private $width;
@@ -43,6 +45,12 @@ class ImageServing {
 	 * calculated automatically
 	 */
 	function __construct( $articles = null, $width = 100, $proportionOrHeight = array( "w" => 1, "h" => 1 ), $db = null ){
+		if($width == 0 || (!is_array( $proportionOrHeight )  && $proportionOrHeight == 0)) {
+			$wg = F::app()->wg;
+			WikiaLogger::instance()->error( __METHOD__ . ' agent requested zero width or height',
+				["user_agent" => $wg->Request->getHeader( 'USER-AGENT' )] );
+		}
+
 		if( !is_array( $proportionOrHeight ) ) {
 			$height = (int) $proportionOrHeight;
 			$this->proportion = array("w" => $width, "h" => $height);
@@ -396,6 +404,14 @@ class ImageServing {
 		}
 		if (empty($this->proportion['w']) && !empty($this->proportion['h'])) {
 			$this->proportion['w'] = (float)$width * $this->proportion['h'] / $height;
+		}
+
+		if($this->proportion['w'] == 0) {
+			$this->proportion['w'] = 1;
+		}
+
+		if($this->proportion['h'] == 0) {
+			$this->proportion['h'] = 1;
 		}
 
 		$pHeight = round( ( $width ) * ( $this->proportion['h'] / $this->proportion['w'] ) );

@@ -13,18 +13,19 @@ class RecirculationHooks {
 	static public function onGetRailModuleList( &$modules ) {
 		wfProfileIn( __METHOD__ );
 
-		// Check if we're on a page where we want to show the Videos Module.
+		// Check if we're on a page where we want to show a recirculation module.
 		// If we're not, stop right here.
-		if ( !self::canShowVideosModule() ) {
+		if ( !self::isCorrectPageType() ) {
 			wfProfileOut( __METHOD__ );
 			return true;
 		}
 
 		// Use a different position depending on whether the user is logged in
+		// This is based off of the logic from the VideosModule extension
 		$app = F::App();
 		$pos = $app->wg->User->isAnon() ? 1305 : 1285;
 
-		$modules[$pos] = array( 'AdEmptyContainer', 'Index', ['slotName' => 'RECIRCULATION_RAIL', 'pageTypes' => ['*', 'no_ads']] );
+		$modules[$pos] = array( 'Recirculation', 'container', ['containerId' => 'RECIRCULATION_RAIL'] );
 
 		wfProfileOut( __METHOD__ );
 
@@ -45,10 +46,17 @@ class RecirculationHooks {
 	 * @return bool
 	 */
 	public static function onOasisSkinAssetGroups( &$jsAssets ) {
+		global $wgWikiaEnvironment, $wgNoExternals, $wgRecirculationTestGroup, $wgCityId;
+
+		// We only want to track this on production
+		if ( ( $wgWikiaEnvironment === WIKIA_ENV_PROD ) && empty( $wgNoExternals ) && !empty( $wgRecirculationTestGroup ) ) {
+			$jsAssets[] = 'recirculation_trackers_js';
+		}
+
 		if ( self::isCorrectPageType() ) {
 			$jsAssets[] = 'recirculation_js';
 
-			if ( self::canShowDiscussions() ) {
+			if ( self::canShowDiscussions( $wgCityId ) ) {
 				$jsAssets[] = 'recirculation_discussions_js';
 			}
 		}
@@ -77,19 +85,11 @@ class RecirculationHooks {
 		}
 	}
 
-	static public function canShowVideosModule() {
-		$wg = F::app()->wg;
+	static public function canShowDiscussions( $cityId ) {
+		$discussionsEnabled = WikiFactory::getVarValueByName( 'wgEnableDiscussions', $cityId );
+		$recirculationDiscussionsEnabled = WikiFactory::getVarValueByName( 'wgEnableRecirculationDiscussions', $cityId );
 
-		if ( !empty( $wg->EnableVideosModuleExt ) && self::isCorrectPageType() ) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-
-	static public function canShowDiscussions() {
-		$wg = F::app()->wg;
-		if ( !empty( $wg->EnableRecirculationDiscussions ) ) {
+		if ( !empty( $discussionsEnabled ) && !empty( $recirculationDiscussionsEnabled ) ) {
 			return true;
 		} else {
 			return false;

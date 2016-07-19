@@ -347,7 +347,13 @@ class PhalanxFallback {
 			wfSuppressWarnings();
 			$matched = preg_match($blockText, $text, $matches);
 			if ($matched === false) {
-				Wikia::log(__METHOD__, __LINE__, "Bad regex found: $blockText");
+				Wikia\Logger\WikiaLogger::instance()->error(
+					__METHOD__ . ' - bad regex found',
+					[
+						'exception' => new Exception(),
+						'regex' => $blockText
+					]
+				);
 			}
 			wfRestoreWarnings();
 			if ($matched) {
@@ -435,7 +441,13 @@ class PhalanxFallback {
 				wfSuppressWarnings();
 				$matched = preg_match($blockText, $text, $matches);
 				if ($matched === false) {
-					Wikia::log(__METHOD__, __LINE__, "Bad regex found: $blockText");
+					Wikia\Logger\WikiaLogger::instance()->error(
+						__METHOD__ . ' - bad regex found',
+						[
+							'exception' => new Exception(),
+							'regex' => $blockText
+						]
+					);
 				}
 				wfRestoreWarnings();
 				if ($matched) {

@@ -9,7 +9,7 @@
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
-/*global veTrack, Wikia */
+/*global require, veTrack, Wikia */
 
 /**
  * Platform preparation for the MediaWiki view page. This loads (when user needs it) the
@@ -25,7 +25,7 @@
 		// Used by tracking calls that go out before ve.track is available.
 		trackerConfig = {
 			category: 'editor-ve',
-			trackingMethod: 'both'
+			trackingMethod: 'analytics'
 		},
 		spinnerTimeoutId = null,
 		vePreferred;
@@ -393,6 +393,13 @@
 
 	if ( init.isAvailable ) {
 		$( function () {
+			if (mw.config.get('wgEnableVisualEditorTourExperiment')) {
+				mw.hook('ve.activationComplete').add(function initTour() {
+					require(['VisualEditorTourExperimentInit'], function (veTourInit) {
+						veTourInit.init();
+					});
+				});
+			}
 			if ( isViewPage && uri.query.veaction === 'edit' ) {
 				var isSection = uri.query.vesection !== undefined;
 				init.showLoading();

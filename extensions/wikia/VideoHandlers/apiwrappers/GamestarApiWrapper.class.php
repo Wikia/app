@@ -48,7 +48,7 @@ class GamestarApiWrapper extends ApiWrapper {
 		return $this->interfaceObj['title'];
 	}
 
-	protected function getInterfaceObjectFromType( $type ) {
+	protected function getInterfaceObjectFromType() {
 		wfProfileIn( __METHOD__ );
 
 		$apiUrl = $this->getApiUrl();

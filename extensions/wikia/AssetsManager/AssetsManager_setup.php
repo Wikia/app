@@ -28,7 +28,6 @@ $wgAutoloadClasses['AssetsManagerSassBuilder'] = __DIR__ . '/builders/AssetsMana
 $wgAutoloadClasses['AssetsManagerSassesBuilder'] = __DIR__ . '/builders/AssetsManagerSassesBuilder.class.php';
 
 $wgAutoloadClasses['AssetsManagerServer'] = __DIR__ . '/AssetsManagerServer.class.php';
-$wgAutoloadClasses['AssetsManagerException'] = __DIR__ . '/AssetsManagerException.class.php';
 
 $wgAutoloadClasses['AssetsManagerController'] = __DIR__ . '/AssetsManagerController.class.php';
 

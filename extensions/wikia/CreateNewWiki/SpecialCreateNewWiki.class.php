@@ -7,7 +7,7 @@ class SpecialCreateNewWiki extends UnlistedSpecialPage {
 	}
 
 	public function execute() {
-		global $wgUser, $wgOut, $wgExtensionsPath;
+		global $wgUser, $wgOut;
 		wfProfileIn( __METHOD__ );
 
 		if ( wfReadOnly() ) {
@@ -24,12 +24,8 @@ class SpecialCreateNewWiki extends UnlistedSpecialPage {
 
 		$wgOut->setPageTitle(wfMsg('cnw-title'));
 		$wgOut->addHtml(F::app()->renderView('CreateNewWiki', 'Index'));
-		$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/CreateNewWiki/css/CreateNewWiki.scss'));
-		$wgOut->addScript('<script src="'.$wgExtensionsPath.'/wikia/ThemeDesigner/js/ThemeDesigner.js"></script>');
-		$wgOut->addScript('<script src="'.$wgExtensionsPath.'/wikia/CreateNewWiki/js/CreateNewWiki.js"></script>');
-		$wgOut->addScript('<script src="'.$wgExtensionsPath.'/wikia/CreateNewWiki/js/CreateNewWikiSupplemental.js"></script>');
-		$wgOut->addModules('wikia.stringhelper');
-		$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/UserLogin/css/UserLoginModal.scss'));
+		Wikia::addAssetsToOutput( 'create_new_wiki_scss' );
+		Wikia::addAssetsToOutput( 'create_new_wiki_js' );
 
 		wfProfileOut( __METHOD__ );
 	}

@@ -181,6 +181,8 @@ JSMessages::registerPackage( 'Wall', [
 	'wall-action-*',
 	'wall-message-source',
 	'wall-confirm-monobook-*',
+	'wall-posting-message-failed-title',
+	'wall-posting-message-failed-body',
 	'preview',
 	'savearticle',
 	'back',
@@ -211,77 +213,3 @@ define( 'WH_REMOVE', 4 );
 define( 'WH_RESTORE', 5 );
 define( 'WH_ARCHIVE', 6 );
 define( 'WH_REOPEN', 7 );
-
-
-// wall
-$wgGroupPermissions['*']['walldelete'] = false;
-$wgGroupPermissions['util']['walldelete'] = true;
-
-$wgGroupPermissions['*']['walladmindelete'] = false;
-$wgGroupPermissions['staff']['walladmindelete'] = true;
-$wgGroupPermissions['vstf']['walladmindelete'] = true;
-$wgGroupPermissions['helper']['walladmindelete'] = true;
-$wgGroupPermissions['sysop']['walladmindelete'] = true;
-
-$wgGroupPermissions['*']['wallarchive'] = false;
-$wgGroupPermissions['staff']['wallarchive'] = true;
-$wgGroupPermissions['vstf']['wallarchive'] = true;
-$wgGroupPermissions['helper']['wallarchive'] = true;
-$wgGroupPermissions['sysop']['wallarchive'] = true;
-$wgGroupPermissions['threadmoderator']['wallarchive'] = true;
-
-$wgGroupPermissions['*']['wallremove'] = false;
-$wgGroupPermissions['staff']['wallremove'] = true;
-$wgGroupPermissions['vstf']['wallremove'] = true;
-$wgGroupPermissions['helper']['wallremove'] = true;
-$wgGroupPermissions['sysop']['wallremove'] = true;
-$wgGroupPermissions['threadmoderator']['wallremove'] = true;
-
-$wgGroupPermissions['*']['walledit'] = false;
-$wgGroupPermissions['staff']['walledit'] = true;
-$wgGroupPermissions['vstf']['walledit'] = true;
-$wgGroupPermissions['helper']['walledit'] = true;
-$wgGroupPermissions['sysop']['walledit'] = true;
-$wgGroupPermissions['threadmoderator']['walledit'] = true;
-
-$wgGroupPermissions['*']['editwallarchivedpages'] = false;
-$wgGroupPermissions['sysop']['editwallarchivedpages'] = true;
-$wgGroupPermissions['vstf']['editwallarchivedpages'] = true;
-$wgGroupPermissions['staff']['editwallarchivedpages'] = true;
-$wgGroupPermissions['helper']['editwallarchivedpages'] = true;
-
-$wgGroupPermissions['*']['wallshowwikiaemblem'] = false;
-$wgGroupPermissions['staff']['wallshowwikiaemblem'] = true;
-
-$wgGroupPermissions['*']['notifyeveryone'] = false;
-$wgGroupPermissions['sysop']['notifyeveryone'] = true;
-$wgGroupPermissions['vstf']['notifyeveryone'] = true;
-$wgGroupPermissions['staff']['notifyeveryone'] = true;
-$wgGroupPermissions['helper']['notifyeveryone'] = true;
-$wgGroupPermissions['threadmoderator']['notifyeveryone'] = true;
-
-$wgGroupPermissions['*']['wallfastadmindelete'] = false;
-$wgGroupPermissions['sysop']['wallfastadmindelete'] = false;
-$wgGroupPermissions['vstf']['wallfastadmindelete'] = true;
-$wgGroupPermissions['staff']['wallfastadmindelete'] = true;
-
-$wgGroupPermissions['*']['wallmessagemove'] = false;
-$wgGroupPermissions['threadmoderator']['wallmessagemove'] = true;
-$wgGroupPermissions['sysop']['wallmessagemove'] = true;
-$wgGroupPermissions['vstf']['wallmessagemove'] = true;
-$wgGroupPermissions['helper']['wallmessagemove'] = true;
-$wgGroupPermissions['staff']['wallmessagemove'] = true;
-
-$wgAddGroups['bureaucrat'][] = 'threadmoderator';
-$wgRemoveGroups['bureaucrat'][] = 'threadmoderator';
-$wgAddGroups['sysop'][] = 'threadmoderator';
-$wgRemoveGroups['sysop'][] = 'threadmoderator';
-$wgAddGroups['helper'][] = 'threadmoderator';
-$wgRemoveGroups['helper'][] = 'threadmoderator';
-
-if ( is_array( $wgAddGroups['staff'] ) ) {
-	$wgAddGroups[ 'staff' ][] = 'threadmoderator';
-}
-if ( is_array( $wgRemoveGroups[ 'staff' ] ) ) {
-	$wgRemoveGroups[ 'staff' ][] = 'threadmoderator';
-}

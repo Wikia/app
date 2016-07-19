@@ -1,204 +1,23 @@
-@import 'skins/shared/mixins/arrow';
-@import 'skins/shared/mixins/flexbox';
+@import 'horizontal';
+@import 'rail';
+@import 'discussions';
+@import 'perfect-scrollbar';
+@import 'scroller';
+@import 'impact-footer';
+
 @import 'skins/shared/color';
 
-@import 'incontent';
 
-.WikiaRail .recirculation-rail {
-	.title-thumbnail {
-		margin-bottom: 15px;
-	}
+// GOOGLE MATCHED CONTENT
+.recirculation-incontent.adsbygoogle {
+	border: 1px solid $color-page-border;
+	display: block;
+	height: 230px;
+	margin: 20px auto;
+	overflow: hidden;
+	width: 95%;
 
-	.image-thumbnail {
-		margin-bottom: 7px;
-	}
-
-	.title a {
-		color: $color-text;
-		display: block;
-		font-size: 15px;
-
-		&:hover {
-			color: $color-links;
-		}
-	}
-}
-
-// DISCUSSIONS
-$discussion-height: 348px;
-$discussion-small-font-size: 12px;
-$discussion-small-font-color: #999999;
-
-.discussion-module {
-	clear: both;
-	padding-top: 20px;
-	position: relative;
-
-	.subtext {
-		font-size: $discussion-small-font-size;
-		font-weight: bold;
-		color: $discussion-small-font-color;
-	}
-
-	.discussion-title {
-		margin: 0;
-	}
-
-	.discussion-link {
-		position: absolute;
-		right: 0;
-		top: 20px;
-		display: block;
-
-		svg {
-			vertical-align: baseline;
-		}
-
-		.arrow-path {
-			fill: $color-links;
-		}
-	}
-
-	.discussion-threads,
-	.discussion-thread,
-	.discussion-meta,
-	.discussion-meta div,
-	.discussion-author {
-		@include flexbox();
-	}
-
-	.discussion-threads,
-	.discussion-thread {
-		@include flex-direction(column);
-		box-sizing: border-box;
-		margin: 0;
-	}
-}
-
-
-// THREAD STYLE
-$discussion-thread-background-color-dark: #262626;
-$discussion-thread-border-color-dark: #1a1a1a;
-$discussion-thread-border-color-light: $color-headline-border;
-$discussion-thread-height: 100px;
-$discussion-thread-featured-height: 147px;
-$discussion-thread-font-size: 14px;
-$discussion-thread-line-height: 18px;
-$discussion-thread-side-padding: 15px;
-$discussion-thread-padding: 10px;
-
-.discussion-module .discussion-threads {
-	@include flex-wrap(wrap);
-	@include justify-content(space-between);
-	height: $discussion-height;
-	padding: ($discussion-thread-padding * 2) $discussion-thread-padding;
-
-	.discussion-thread {
-		border: 1px solid $discussion-thread-border-color-light;
-		font-size: $discussion-thread-font-size;
-		height: $discussion-thread-featured-height;
-		line-height: $discussion-thread-line-height;
-		list-style-type: none;
-		padding: $discussion-thread-padding $discussion-thread-side-padding;
-		position: relative;
-		width: 49%;
-		cursor: pointer;
-
-		.discussion-content {
-			max-height: 55px;
-			overflow: hidden;
-		}
-	}
-
-	.discussion-thread:nth-child(n+3) {
-		@include align-self(flex-end);
-		font-size: $discussion-small-font-size;
-		height: $discussion-thread-height;
-		line-height: 16px;
-		padding: 6px $discussion-thread-side-padding;
-
-		.discussion-meta {
-			display: none;
-		}
-
-		.discussion-content {
-			margin-top: 0.3em;
-		}
-	}
-}
-
-@if ($is-dark-wiki) {
-	.discussion-threads .discussion-thread {
-		background-color: $discussion-thread-background-color-dark;
-		border-color: $discussion-thread-border-color-dark;
-	}
-}
-
-// AUTHOR
-$discussion-avatar-size: 30px;
-
-.discussion-author {
-	@include align-items(center);
-
-	h4 {
-		color: $color-links;
-		margin: 0 6px 0;
-		max-width: 56%;
-		overflow: hidden;
-		text-overflow: ellipsis;
-		white-space: nowrap;
-	}
-
-	.discussion-author-avatar {
-		border: 2px solid $color-headline-border;
-		border-radius: $discussion-avatar-size / 2;
-		box-sizing: border-box;
-		height: $discussion-avatar-size;
-		width: $discussion-avatar-size;
-	}
-}
-
-// META
-$discussion-icon-size: 18px;
-$discussion-icon-background-light: white;
-$discussion-icon-background-dark: #262626;
-
-.discussion-meta {
-	@include align-items(center);
-	@include justify-content(space-between);
-	bottom: $discussion-thread-padding;
-	left: $discussion-thread-side-padding;
-	position: absolute;
-	right: $discussion-thread-side-padding;
-
-	div {
-		@include flex-grow(1);
-
-		span {
-			line-height: $discussion-icon-size;
-			margin-left: 5px;
-		}
-	}
-
-	.discussion-comments-container {
-		margin-left: -30px;
-	}
-
-	.discussion-icon {
-		fill: $discussion-small-font-color;
-		width: $discussion-icon-size;
-		height: $discussion-icon-size;
-	}
-
-	.upvote-icon-background {
-		fill: $discussion-icon-background-light;
-		stroke: $discussion-icon-background-light;
-	}
-
-	@if ($is-dark-wiki) {
-		.upvote-icon-background {
-			fill: $discussion-icon-background-dark;
-			stroke: $discussion-icon-background-dark;
-		}
+	iframe {
+		margin: -1px;
 	}
 }

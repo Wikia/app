@@ -74,6 +74,10 @@ class NodeGroup extends Node {
 		return $this->getSourceForChildren();
 	}
 
+	public function getSourceLabel() {
+		return $this->getSourceLabelForChildren();
+	}
+
 	protected function showIncomplete() {
 		return strcasecmp( $this->getDisplay(), self::SHOW_INCOMPLETE_OPTION ) === 0;
 	}

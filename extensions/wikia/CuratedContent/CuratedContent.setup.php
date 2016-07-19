@@ -32,15 +32,6 @@ $wgExtensionMessagesFiles['CuratedContentAlias'] = __DIR__ . '/CuratedContent.al
 $wgAutoloadClasses[ 'CuratedContentSpecialController'] =  __DIR__ . '/CuratedContentSpecialController.class.php' ;
 $wgSpecialPages[ 'CuratedContent' ] =  'CuratedContentSpecialController';
 
-$wgGroupPermissions['*']['curatedcontent'] = false;
-$wgGroupPermissions['staff']['curatedcontent'] = true;
-$wgGroupPermissions['helper']['curatedcontent'] = true;
-$wgGroupPermissions['sysop']['curatedcontent'] = true;
-
-
-$wgGroupPermissions['*']['curatedcontent-switchforadmins'] = false;
-$wgGroupPermissions['staff']['curatedcontent-switchforadmins'] = true;
-
 JSMessages::registerPackage( 'CuratedContentMsg', [
 	'wikiacuratedcontent-content-duplicate-entry',
 	'wikiacuratedcontent-content-required-entry',

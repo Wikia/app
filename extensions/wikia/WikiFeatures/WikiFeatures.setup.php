@@ -36,17 +36,6 @@ $wgExtensionMessagesFiles['WikiFeaturesAliases'] = $dir . 'WikiFeatures.alias.ph
 $wgSpecialPages['WikiFeatures'] = 'WikiFeaturesSpecialController';
 $wgSpecialPages['WikiaLabs'] = 'WikiaLabsSpecialController';
 
-$wgAvailableRights[] = 'wikifeatures';
-
-$wgGroupPermissions['*']['wikifeatures'] = false;
-$wgGroupPermissions['staff']['wikifeatures'] = true;
-$wgGroupPermissions['sysop']['wikifeatures'] = true;
-$wgGroupPermissions['bureaucrat']['wikifeatures'] = true;
-$wgGroupPermissions['helper']['wikifeatures'] = true;
-
-$wgGroupPermissions['*']['wikifeaturesview'] = false;
-$wgGroupPermissions['user']['wikifeaturesview'] = true;
-
 $wgLogTypes[] = 'wikifeatures';
 $wgLogNames['wikifeatures'] = 'wikifeatures-log-name';
 $wgLogHeaders['wikifeatures'] = 'wikifeatures-log-header';

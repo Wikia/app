@@ -91,7 +91,7 @@ class UserPreferences {
 	 * @return LocalPreference[]
 	 */
 	public function getLocalPreferencesForWiki( $wikiId ) {
-		if ( is_array( $this->localPreferences[ $wikiId ] ) ) {
+		if ( isset( $this->localPreferences[ $wikiId ] ) && is_array( $this->localPreferences[ $wikiId ] ) ) {
 			return array_values( $this->localPreferences[ $wikiId ] );
 		}
 		return [ ];

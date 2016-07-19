@@ -1,4 +1,23 @@
-<?= ThemeDesignerHelper::parseText("[[File:Aquarium.jpg|thumb|Quisque pellentesque vestibulum ullamcorper.]]
+<?= ThemeDesignerHelper::parseText("
+<infobox <?= $infoboxTheme ?>>
+<title><default>Lorem ipsum</default></title>
+<group>
+<header>Eget euismod nisl dapibus</header>
+<data><label>Nullam</label><default>pulvinar vitae sem et finibus.</default></data>
+<data><label>Nunc</label><default>
+* in
+* tristique
+* sapien
+* ut
+* molestie
+* odio
+</default></data>
+<header>Fusce maximus facilisis ipsum</header>
+<data><label>nec</label><default>imperdiet mi gravida eu</default></data>
+<data><label>Praesent</label><default>finibus tellus sed enim rhoncus</default></data>
+</group>
+</infobox>
+
 Lorem ipsum dolor sit amet, [[consectetur]] adipiscing elit. Nunc molestie velit a ante [[fringilla vitae]] euismod velit gravida. [[Curabitur]] eu sem et justo sodales [[consequat quis]] vel justo. Vestibulum ante ipsum primis in faucibus orci [[luctus et ultrices]] posuere cubilia Curae. Quisque vitae lectus odio, quis porta orci. Etiam mattis volutpat enim, id posuere eros faucibus id. [[Integer vehicula libero]] vitae est ornare a pellentesque mauris pharetra. Nam eget lorem vestibulum nisi [[commodo suscipit]] non sit amet justo. Fusce imperdiet lacus sed [[turpis ornare]] pretium. ''Maecenas'' [[ante neque]], imperdiet sed accumsan id, gravida a sem. Morbi eu nisl quis nunc tincidunt condimentum euismod sit amet est.
 
 ==Donec dapibus==

@@ -207,4 +207,20 @@ class WikiaMapsBaseController extends WikiaController {
 		return $this->wg->User->getName() === $mapData->created_by;
 	}
 
+	/**
+	 * Temporary change required for ad purpose - https://wikia-inc.atlassian.net/browse/DAT-4051.
+	 * We need to limit contribution options on protected maps related to the ad campaign only to stuff
+	 * users.
+	 * @todo: remove this as a part of https://wikia-inc.atlassian.net/browse/DAT-4055
+	 *
+	 * @param Integer $mapId
+	 * @return bool
+	 */
+	protected function shouldDisableProtectedMapEdit( $mapId ) {
+		$IntMapConfig = $this->wg->IntMapConfig;
+
+		return array_key_exists( 'protectedMaps', $IntMapConfig ) &&
+			array_key_exists($mapId, $IntMapConfig[ 'protectedMaps' ]) &&
+			$this->wg->User->isStaff() === false;
+	}
 }

@@ -22,7 +22,7 @@ class CreateBlogListingPage extends SpecialPage {
 		parent::__construct( 'CreateBlogListingPage' /*class*/, '' /*restriction*/, true );
 	}
 
-	public function execute() {
+	public function execute( $par ) {
 		global $wgOut, $wgUser, $wgRequest, $wgTitle;
 
 		wfRunHooks( 'beforeBlogListingForm', array( &$this, $wgRequest->getVal( 'article' ) ) );

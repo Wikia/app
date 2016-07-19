@@ -1,6 +1,49 @@
+$dialog-add-container-border-width: 1px;
+$dialog-add-container-space-horizontal: 3em;
+$dialog-add-container-space-vertical: 1em;
+$dialog-full-width: 100%;
+$dialog-select-widget-space: 5em;
+$dialog-zero-position: 0;
+
 .ve-ui-wikiaInfoboxInsertDialog {
 
 	.oo-ui-window-body {
-		overflow: auto
+		overflow: auto;
+	}
+}
+
+.oo-ui-selectWidget {
+	margin-bottom: $dialog-select-widget-space;
+}
+
+.ve-ui-wikiaInfoboxInsertDialog-add-container {
+	background-color: $color-page;
+	border-top: $dialog-add-container-border-width solid $color-page-border;
+	bottom: $dialog-zero-position;
+	box-sizing: border-box;
+	margin-top: $dialog-add-container-space-vertical;
+	padding: $dialog-add-container-space-vertical $dialog-add-container-space-horizontal;
+	position: fixed;
+	width: $dialog-full-width;
+}
+
+.ve-ui-wikiaInfoboxInsertDialog-add-button {
+	border: $dialog-add-container-border-width dashed $color-page-border;
+	width: $dialog-full-width;
+
+	.oo-ui-buttonElement-button {
+		width: $dialog-full-width;
+
+		&:hover {
+			background-color: $color-ve-hover;
+
+			.oo-ui-labelElement-label {
+				color: $color-text;
+			}
+		}
+	}
+
+	.oo-ui-buttonElement-button > .oo-ui-labelElement-label {
+		color: $color-text;
 	}
 }

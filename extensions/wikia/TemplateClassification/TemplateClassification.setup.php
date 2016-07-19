@@ -27,16 +27,6 @@ $wgExtensionCredits['other'][] = [
 ];
 
 /**
- * Groups and permissions
- */
-$wgAvailableRights[] = 'template-bulk-classification';
-$wgGroupPermissions['*']['template-bulk-classification'] = false;
-$wgGroupPermissions['helper']['template-bulk-classification'] = true;
-$wgGroupPermissions['vstf']['template-bulk-classification'] = true;
-$wgGroupPermissions['staff']['template-bulk-classification'] = true;
-$wgGroupPermissions['sysop']['template-bulk-classification'] = true;
-
-/**
  * UserTemplateClassificationService
  */
 $wgAutoloadClasses['UserTemplateClassificationService'] = __DIR__ . '/services/UserTemplateClassificationService.class.php';

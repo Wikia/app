@@ -175,6 +175,7 @@ abstract class EmailController extends \WikiaController {
 					$sourceType = 'email-ext' // Remove when this is the only sourceType sent
 				);
 				$this->assertGoodStatus( $status );
+				$this->afterSuccess();
 			}
 		} catch ( \Exception $e ) {
 			$this->setErrorResponse( $e );
@@ -541,6 +542,7 @@ abstract class EmailController extends \WikiaController {
 	public function assertCanEmail() {
 		$this->assertUserHasEmail();
 		$this->assertUserWantsEmail();
+		$this->assertEmailIsConfirmed();
 		$this->assertUserNotBlocked();
 	}
 
@@ -595,6 +597,17 @@ abstract class EmailController extends \WikiaController {
 	}
 
 	/**
+	 * This checks if the user has confirmed their email address
+	 *
+	 * @throws \Email\Check
+	 */
+	public function assertEmailIsConfirmed() {
+		if ( !$this->targetUser->isEmailConfirmed() ) {
+			throw new Check( 'User does not have a confirmed email address' );
+		}
+	}
+
+	/**
 	 * This checks to see if the current user is blocked
 	 *
 	 * @throws \Email\Check
@@ -604,6 +617,12 @@ abstract class EmailController extends \WikiaController {
 			throw new Check( 'User is blocked from taking this action' );
 		}
 	}
+
+	/**
+	 * Allow child classes to perform actions after an email is successfully
+	 * sent
+	 */
+	protected function afterSuccess() {}
 
 	/**
 	 * Get the form field for this email to be used on Special:SendEmail

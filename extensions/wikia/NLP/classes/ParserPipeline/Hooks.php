@@ -42,8 +42,8 @@ class Hooks
 		global $wgCityId;
 
 		$logError = function( \Exception $e, $additionalData = [] ) {
-			WikiaLogger::instance()->critical( 'NLP Processing exception', [
-				'error' => $e->getMessage(),
+			WikiaLogger::instance()->error( 'NLP Processing exception', [
+				'exception' => $e,
 				'additionalData' => $additionalData
 			] );
 

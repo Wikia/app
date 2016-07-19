@@ -104,27 +104,4 @@ $wgLogNames[AVATAR_LOG_NAME] = "useravatar-log";
 $wgLogActions[AVATAR_LOG_NAME . '/avatar_chn'] = 'blog-avatar-changed-log';
 $wgLogActions[AVATAR_LOG_NAME . '/avatar_rem'] = 'blog-avatar-removed-log';
 
-# --- permissions
-$wgAvailableRights[] = 'removeavatar';
-$wgGroupPermissions['staff']['removeavatar'] = true;
-# $wgGroupPermissions['sysop']['removeavatar'] = true;
-$wgGroupPermissions['helper']['removeavatar'] = true;
-
-
-// new right for dropdown menu of action button
-$wgGroupPermissions['sysop']['renameprofilev3'] = true;
-$wgGroupPermissions['vstf']['renameprofilev3'] = true;
-$wgGroupPermissions['staff']['renameprofilev3'] = true;
-$wgGroupPermissions['helper']['renameprofilev3'] = true;
-
-$wgGroupPermissions['sysop']['deleteprofilev3'] = true;
-$wgGroupPermissions['vstf']['deleteprofilev3'] = true;
-$wgGroupPermissions['staff']['deleteprofilev3'] = true;
-$wgGroupPermissions['helper']['deleteprofilev3'] = true;
-
-// new right to edit profile v3
-$wgGroupPermissions['staff']['editprofilev3'] = true;
-$wgGroupPermissions['vstf']['editprofilev3'] = true;
-$wgGroupPermissions['helper']['editprofilev3'] = true;
-
 $wgSpecialPageGroups['RemoveUserAvatar'] = 'users';

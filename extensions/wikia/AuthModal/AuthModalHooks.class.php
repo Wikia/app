@@ -17,7 +17,6 @@ class AuthModalHooks {
 	 */
 	public static function onBeforePageDisplay( \OutputPage $out, \Skin $skin ) {
 		if ( F::app()->checkSkin( 'oasis', $skin ) ) {
-			\Wikia::addAssetsToOutput( 'auth_modal_scss' );
 			\Wikia::addAssetsToOutput( 'auth_modal_js' );
 		}
 

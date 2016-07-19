@@ -8,7 +8,7 @@ class WikiaMobileAdService extends WikiaService {
 
 
 	public function shouldShowAds() {
-        return $this->wg->EnableAdEngineExt && AdEngine2Service::areAdsShowableOnPage();
+		return AdEngine2Service::areAdsShowableOnPage();
 	}
 
 	public function floating() {

@@ -35,10 +35,6 @@ $wgSpecialPages['LookupUser'] = 'LookupUserPage';
 // Special page group for MW 1.13+
 $wgSpecialPageGroups['LookupUser'] = 'users';
 
-// New user right, required to use the special page
-$wgAvailableRights[] = 'lookupuser';
-$wgGroupPermissions['util']['lookupuser'] = true;
-
 // small stuff week --nAndy
 global $wgAjaxExportList;
 $wgAjaxExportList[] = "LookupUserPage::loadAjaxContribData";

@@ -278,8 +278,8 @@ class WikiaHomePageHelper extends WikiaModel {
 					$adminAvatars = array_slice( $adminAvatars, 0, self::LIMIT_ADMIN_AVATARS );
 				}
 				foreach( $adminAvatars as &$admin ) {
-					$userStatService = new UserStatsService($admin['userId']);
-					$admin['edits'] = $userStatService->getEditCountWiki($wikiId);
+					$userStatService = new UserStatsService($admin['userId'], $wikiId);
+					$admin['edits'] = $userStatService->getEditCountWiki();
 				}
 			} catch (Exception $e) {
 				$adminAvatars = array();
@@ -443,7 +443,7 @@ class WikiaHomePageHelper extends WikiaModel {
 	}
 
 	protected function getNewFilesUrl($wikiId) {
-		$globalNewFilesTitle = GlobalTitle::newFromText('NewFiles', NS_SPECIAL, $wikiId);
+		$globalNewFilesTitle = GlobalTitle::newFromText('Images', NS_SPECIAL, $wikiId);
 		if ($globalNewFilesTitle instanceof Title) {
 			$newFilesUrl = $globalNewFilesTitle->getFullURL();
 			return $newFilesUrl;

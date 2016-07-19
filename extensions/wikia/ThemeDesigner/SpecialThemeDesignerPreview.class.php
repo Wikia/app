@@ -6,7 +6,7 @@ class SpecialThemeDesignerPreview extends UnlistedSpecialPage {
 		parent::__construct( 'ThemeDesignerPreview', 'themedesignerpreview' );
 	}
 
-	public function execute() {
+	public function execute( $par ) {
 		wfProfileIn( __METHOD__ );
 		global $wgOut, $wgExtensionsPath;
 

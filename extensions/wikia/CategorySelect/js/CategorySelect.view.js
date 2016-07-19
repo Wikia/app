@@ -28,8 +28,8 @@
 				loaded = true;
 
 				$.when(
-					mw.loader.use( 'jquery.ui.autocomplete' ),
-					mw.loader.use( 'jquery.ui.sortable' ),
+					mw.loader.using( 'jquery.ui.autocomplete' ),
+					mw.loader.using( 'jquery.ui.sortable' ),
 					$.getResources([
 						wgResourceBasePath + '/resources/wikia/libraries/mustache/mustache.js',
 						wgResourceBasePath + '/extensions/wikia/CategorySelect/js/CategorySelect.js',

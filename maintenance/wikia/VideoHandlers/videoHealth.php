@@ -4,7 +4,7 @@
  * Find common data errors in image and video_info table for all wikis
  */
 class VideoHealth {
-	public static function run( DatabaseMysql $db, $test = false, $verbose = false, $params ) {
+	public static function run( DatabaseBase $db, $test = false, $verbose = false, $params ) {
 		$dbname = $params['dbname'];
 
 		// 1. How many local video_info are missing provider or video_id
@@ -75,7 +75,7 @@ SQL;
 		self::outputRows( $db, $dbname, $label, $sql );
 	}
 
-	protected static function outputRows( $db, $dbname, $label, $sql ) {
+	protected static function outputRows( DatabaseBase $db, $dbname, $label, $sql ) {
 		$result = $db->query( $sql );
 		while ( $row = $db->fetchObject( $result ) ) {
 			echo "$dbname,$label,$row->video_timestamp,$row->video_title\n";

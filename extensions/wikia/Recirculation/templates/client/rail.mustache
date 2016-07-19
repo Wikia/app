@@ -1,0 +1,16 @@
+<section class="recirculation-rail module group-{{ group }}">
+	<h2>{{{ titleHtml }}}</h2>
+	<ul class="thumbnails">
+		{{#items}}
+			<li class="rail-item {{classes}} item-{{source}}" {{#id}} data-id="{{ id }}" {{/id}} data-flag="{{ flag }}" data-index="{{ index }}" data-source="{{source}}">
+				<a href="{{ url }}">
+					<div class="image image-thumbnail fluid small">
+						<img src="{{ thumbnail }}" alt="{{ title }}" itemprop="thumbnail">
+					</div>
+					<div class="title" title="{{ title }}">{{ title }}</div>
+					<div class="metadata">{{ author }} &middot; <time class="timeago" datetime="{{ pub_date }}">{{ pub_date }}</time></div>
+				</a>
+			</li>
+		{{/items}}
+	</ul>
+</section>

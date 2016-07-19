@@ -103,17 +103,3 @@ $wgExtensionMessagesFiles['ForgotPassword'] = $dir . 'i18n/ForgotPassword.i18n.p
 $wgExtensionMessagesFiles['UserRightsChanged'] = $dir . 'i18n/UserRightsChanged.i18n.php';
 $wgExtensionMessagesFiles['EmailUserNameChange'] = $dir . 'i18n/UserNameChange.i18n.php';
 
-/**
- * permissions
- */
-$wgGroupPermissions['*']['access-sendemail'] = false;
-$wgGroupPermissions['staff']['access-sendemail'] = true;
-$wgGroupPermissions['helper']['access-sendemail'] = true;
-$wgGroupPermissions['translator']['access-sendemail'] = true;
-
-if ( is_array( $wgAddGroups['staff'] ) ) {
-	$wgAddGroups[ 'staff' ][] = 'translator';
-}
-if ( is_array( $wgRemoveGroups[ 'staff' ] ) ) {
-	$wgRemoveGroups[ 'staff' ][] = 'translator';
-}

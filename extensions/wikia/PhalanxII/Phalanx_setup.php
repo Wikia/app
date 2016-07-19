@@ -77,7 +77,7 @@ $phalanxhooks = array(
 		),
 	'PhalanxWikiCreationBlock' =>
 		array(
-			'AutoCreateWiki::checkBadWords'   => 'isAllowedText'
+			'CreateWikiChecks::checkBadWords' => 'isAllowedText'
 		),
 	'PhalanxHooks' =>
 		array(
@@ -145,4 +145,4 @@ $wgLogActions['phalanxemail/add']   	= 'phalanx-rule-log-add';
 $wgLogActions['phalanxemail/edit']  	= 'phalanx-rule-log-edit';
 $wgLogActions['phalanxemail/delete'] 	= 'phalanx-rule-log-delete';
 
-$wgAvailableRights[] = 'phalanxexempt';
+$wgPhalanxServiceUrl = "http://" . $wgConsulServiceTag . "." . $wgPhalanxBaseUrl; # PLATFORM-1744

@@ -20,7 +20,7 @@ class PartnerFeed extends SpecialPage {
 		parent::__construct( "PartnerFeed" , '' /*restriction*/ );
 	}
 
-	function execute() {
+	function execute( $par ) {
 		$req = $this->getRequest();
 
 		$this->mName = $req->getText( 'wpName' );

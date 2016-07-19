@@ -1,2 +1,13 @@
 #!/bin/sh
-make phpunit-single test=../extensions/wikia/$1
+while getopts ":c" opt "$@"; do
+        case $opt in
+                c) coverage=true; shift
+                ;;
+                \?) echo "Invalid parameter used" >&2; exit
+                ;;
+        esac
+done
+if [ $coverage ];
+then make phpunit-single-coverage test=../extensions/wikia/$1;
+else make phpunit-single test=../extensions/wikia/$1;
+fi

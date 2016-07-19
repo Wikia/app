@@ -1,0 +1,126 @@
+/*
+	Portable infobox styles are used not only for styling infoboxes on oasis
+	but also inside Infobox Builder Preview on Mercury.
+
+	To avoid code duplication common parts are extracted to mixins.
+*/
+@import 'skins/shared/mixins/chevron';
+@import 'skins/shared/color';
+@import 'skins/shared/mixins/flexbox';
+@import 'skins/shared/mixins/hyphens';
+@import 'extensions/wikia/PortableInfobox/styles/PortableInfoboxVariables';
+
+@mixin commonElementsStyles() {
+	.pi-secondary-background {
+		background-color: $infobox-section-header-background;
+	}
+
+	.pi-border-color {
+		border-color: $infobox-section-header-background;
+	}
+
+	// remove border from last infobox item either <data> or <group>
+	.portable-infobox > .pi-item:last-child {
+		border-bottom: 0;
+	}
+}
+
+@mixin individualElementsStyles() {
+	$padding: 10px;
+
+	.pi-image {
+		text-align: center; // center smaller image inside infobox
+	}
+
+	.pi-caption {
+		@include hyphens();
+		color: $color-alternate-text;
+		font-size: 12px;
+		font-style: italic;
+		text-align: left;
+		word-wrap: break-word;
+	}
+
+	.pi-data:not(:last-of-type),
+	.pi-group {
+		border-bottom-style: solid;
+		border-bottom-width: 1px;
+	}
+
+	.pi-data:last-of-type + .pi-group {
+		border-top-style: solid;
+		border-top-width: 1px;
+	}
+
+	.pi-data {
+		@include flexbox;
+		@include flex-direction(row);
+		box-sizing: border-box;
+		overflow: hidden;
+		width: 100%;
+	}
+
+	.pi-data-label {
+		@include flex-basis($infobox-width / 3);
+		@include hyphens();
+		overflow: hidden;
+		word-wrap: break-word;
+	}
+
+	.pi-data-value {
+		@include hyphens();
+		font-size: 12px;
+		line-height: 18px;
+		padding-left: 0;
+		word-break: break-word;
+
+		&:not(:first-child) {
+			@include flex-basis($infobox-width * 2 / 3);
+
+			padding-left: $padding;
+		}
+	}
+}
+
+@mixin wikiaArticleOverwrites() {
+	.pi-item-spacing {
+		padding: $infobox-item-margin $infobox-item-margin * 2;
+	}
+
+	.pi-secondary-font {
+		font-size: 12px;
+		font-weight: bold;
+		line-height: 18px;
+		margin-top: 0;
+	}
+
+	.pi-header,
+	.pi-title {
+		border: 0;
+		margin: 0;
+	}
+
+	.pi-title {
+		font-size: 18px;
+		line-height: 28px;
+	}
+
+	.pi-data-label {
+		margin-bottom: inherit;
+		margin-top: 0;
+	}
+}
+
+@mixin collapsibleChevron() {
+	@include right-chevron($infobox-chevron-size, 2px, 'up', $color-text);
+	padding-right: $infobox-item-margin * 3 + $infobox-chevron-size;
+	position: relative;
+
+	&:after {
+		display: block;
+		margin-top: -($infobox-chevron-size / 2) + 2;
+		position: absolute;
+		right: $infobox-item-margin * 2;
+		top: 50%;
+	}
+}

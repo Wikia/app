@@ -122,6 +122,56 @@ Please visit and edit often...
 </p>'
 );
 
+$messages['qqq'] = array(
+	'follow-desc' => 'No documentation yet.',
+	'prefs-basic' => 'No documentation yet.',
+	'wikiafollowedpages-special-heading-category' => 'No documentation yet.',
+	'wikiafollowedpages-special-heading-article' => 'No documentation yet.',
+	'wikiafollowedpages-special-heading-blogs' => 'No documentation yet.',
+	'wikiafollowedpages-special-heading-forum' => 'No documentation yet.',
+	'wikiafollowedpages-special-heading-project' => 'No documentation yet.',
+	'wikiafollowedpages-special-heading-user' => 'No documentation yet.',
+	'wikiafollowedpages-special-heading-templates' => 'No documentation yet.',
+	'wikiafollowedpages-special-heading-mediawiki' => 'No documentation yet.',
+	'wikiafollowedpages-special-heading-media' => 'No documentation yet.',
+	'wikiafollowedpages-special-namespace' => 'No documentation yet.',
+	'wikiafollowedpages-special-heading-wall' => 'No documentation yet.',
+	'wikiafollowedpages-special-heading-board' => 'No documentation yet.',
+	'wikiafollowedpages-special-empty' => 'No documentation yet.',
+	'wikiafollowedpages-special-anon' => 'No documentation yet.',
+	'oasis-wikiafollowedpages-special-seeall' => 'No documentation yet.',
+	'wikiafollowedpages-special-seeall' => 'No documentation yet.',
+	'wikiafollowedpages-special-showall' => 'No documentation yet.',
+	'wikiafollowedpages-special-showmore' => 'No documentation yet.',
+	'wikiafollowedpages-special-title' => 'No documentation yet.',
+	'wikiafollowedpages-special-delete-tooltip' => 'No documentation yet.',
+	'wikiafollowedpages-special-hidden' => 'No documentation yet.',
+	'wikiafollowedpages-special-hidden-unhide' => 'No documentation yet.',
+	'wikiafollowedpages-special-blog-by' => 'No documentation yet.',
+	'wikiafollowedpages-special-board' => 'No documentation yet.',
+	'wikiafollowedpages-masthead' => 'No documentation yet.',
+	'wikiafollowedpages-following' => 'No documentation yet.',
+	'wikiafollowedpages-special-title-userbar' => 'No documentation yet.',
+	'tog-enotiffollowedpages' => 'No documentation yet.',
+	'tog-enotiffollowedminoredits' => 'No documentation yet.',
+	'prefs-wikiafollowedpages-prefs-advanced' => 'No documentation yet.',
+	'prefs-wikiafollowedpages-prefs-watchlist' => 'No documentation yet.',
+	'tog-hidefollowedpages' => 'No documentation yet.',
+	'follow-categoryadd-summary' => 'No documentation yet.',
+	'follow-bloglisting-summary' => 'No documentation yet.',
+	'wikiafollowedpages-userpage-heading' => 'No documentation yet.',
+	'wikiafollowedpages-userpage-hide-tooltip' => 'No documentation yet.',
+	'wikiafollowedpages-userpage-more' => 'No documentation yet.',
+	'wikiafollowedpages-userpage-hide' => 'No documentation yet.',
+	'wikiafollowedpages-userpage-empty' => 'No documentation yet.',
+	'enotif_subject_categoryadd' => 'No documentation yet.',
+	'enotif_body_categoryadd' => 'No documentation yet.',
+	'enotif_body_categoryadd-HTML' => 'No documentation yet.',
+	'enotif_subject_blogpost' => 'No documentation yet.',
+	'enotif_body_blogpost' => 'No documentation yet.',
+	'enotif_body_blogpost-HTML' => 'No documentation yet.',
+);
+
 /** Afrikaans (Afrikaans)
  * @author Naudefj
  */
@@ -848,6 +898,7 @@ $messages['fr'] = array(
 	'wikiafollowedpages-special-heading-media' => 'Images et vidéos ($1)',
 	'wikiafollowedpages-special-namespace' => '(page $1)',
 	'wikiafollowedpages-special-heading-wall' => 'Murs de discussion ($1)',
+	'wikiafollowedpages-special-heading-board' => 'Fils de forum ($1)',
 	'wikiafollowedpages-special-empty' => 'Votre liste de pages suivies est vide.
 Ajoutez des pages à cette liste en cliquant sur « {{int:watch}} » en bas d’une page.',
 	'wikiafollowedpages-special-anon' => 'Veuillez [[Special:Signup|vous identifier]] pour créer ou voir votre liste de suivi.',
@@ -1931,10 +1982,10 @@ Kom alstublieft vaak langs om bewerkingen te maken...
 
 {{SITENAME}}
 
-___________________________________________ 
-* Kom kijken op onze uitgelichte wiki\'s! http://www.wikia.com 
+___________________________________________
+* Kom kijken op onze uitgelichte wiki\'s! http://www.wikia.com
 
- * Wilt u bepalen welke e-mails u ontvangt? 
+ * Wilt u bepalen welke e-mails u ontvangt?
 Ga naar: {{fullurl:{{ns:special}}:Preferences}}.',
 	'enotif_body_categoryadd-HTML' => '<p>
 Beste $WATCHINGUSERNAME,
@@ -1963,8 +2014,8 @@ Kom alstublieft vaak langs om bewerkingen te maken...
 
 {{SITENAME}}
 
-___________________________________________ 
-* Kom kijken op onze uitgelichte wiki\'s! http://www.wikia.com 
+___________________________________________
+* Kom kijken op onze uitgelichte wiki\'s! http://www.wikia.com
 
  * Wilt u bepalen welke e-mails u ontvangt?
 Ga naar: {{fullurl:{{ns:special}}:Preferences}}.',
@@ -2004,10 +2055,10 @@ Kom alsjeblieft vaak langs om bewerkingen te maken...
 
 {{SITENAME}}
 
-___________________________________________ 
-* Kom kijken op onze uitgelichte wiki\'s! http://www.wikia.com 
+___________________________________________
+* Kom kijken op onze uitgelichte wiki\'s! http://www.wikia.com
 
- * Wil je bepalen welke e-mails je ontvangt? 
+ * Wil je bepalen welke e-mails je ontvangt?
 Ga naar: {{fullurl:{{ns:special}}:Preferences}}.',
 	'enotif_body_categoryadd-HTML' => '<p>Hoi $WATCHINGUSERNAME,
 <br /><br />
@@ -2034,8 +2085,8 @@ Kom alsjeblieft vaak langs om bewerkingen te maken...
 
 {{SITENAME}}
 
-___________________________________________ 
-* Kom kijken op onze uitgelichte wiki\'s! http://www.wikia.com 
+___________________________________________
+* Kom kijken op onze uitgelichte wiki\'s! http://www.wikia.com
 
  * Wil je bepalen welke e-mails je ontvangt?
 Ga naar: {{fullurl:{{ns:special}}:Preferences}}.',
@@ -2614,7 +2665,7 @@ $messages['ru'] = array(
 
 {{SITENAME}}
 
-___________________________________________ 
+___________________________________________
 * Посмотрите наши избранные вики! http://wikia.com
 
 * Хотите изменить параметры уведомления по электронной почте?
@@ -2888,22 +2939,22 @@ Magdagdag ng mga pahina sa talaang ito sa pamamagitan ng pagpindot sa "{{int:wat
 	'wikiafollowedpages-userpage-empty' => 'Walang laman ang talaan ng sinusundang mga pahina ng tagagamit na ito.
 Magdagdag ng mga pahina sa talaang ito sa pamamagitan ng pagpindot sa "{{int:watch}}" na nasa itaas ng isang pahina.',
 	'enotif_subject_categoryadd' => 'Ang pahinang $PAGETITLE ng {{SITENAME}} ay naidagdag na ni $PAGEEDITOR sa $CATEGORYNAME',
-	'enotif_body_categoryadd' => 'Mahal na $ WATCHINGUSERNAME, 
+	'enotif_body_categoryadd' => 'Mahal na $ WATCHINGUSERNAME,
 
-Isang pahina ang idinagdag sa isang kategoryang sinusundan mo sa {{SITENAME}}. 
+Isang pahina ang idinagdag sa isang kategoryang sinusundan mo sa {{SITENAME}}.
 
-Tingnan ang "$PAGETITLE_URL" para sa bagong pahina. 
+Tingnan ang "$PAGETITLE_URL" para sa bagong pahina.
 
-Mangyaring dalawin at madalas na mamatnugot ... 
+Mangyaring dalawin at madalas na mamatnugot ...
 
 {{SITENAME}}
 
- ___________________________________________ 
- * Tingnan ang aming tampok na mga wiki! http://www.wikia.com 
+ ___________________________________________
+ * Tingnan ang aming tampok na mga wiki! http://www.wikia.com
 
- * Nais mo bang tabanan kung anong mga e-liham ang matatanggap mo? 
+ * Nais mo bang tabanan kung anong mga e-liham ang matatanggap mo?
  Pumunta sa: {{fullurl:{{ns: special}}:Preferences}}.',
-	'enotif_body_categoryadd-HTML' => '<p>	
+	'enotif_body_categoryadd-HTML' => '<p>
 Mahal na $WATCHINGUSERNAME,
 <br /><br />
 Isang pahina ang nadagdag sa isang kategoryang tinutugaygayan mo sa {{SITENAME}}.
@@ -3049,25 +3100,25 @@ $messages['uk'] = array(
 
 У проекті {{SITENAME}} в категорії, за якою Ви слідкуєте, була створена сторінка.
 
-Дивіться нову сторінку за адресою: "$PAGETITLE_URL" 
+Дивіться нову сторінку за адресою: "$PAGETITLE_URL"
 
-Будь ласка, заходьте та редагуйте частіше... 
+Будь ласка, заходьте та редагуйте частіше...
 
 {{SITENAME}}
 
 ___________________________________________
 * Ознайомтеся з нашими обраними вікі! http://www.wikia.com
 
-* Бажаєте змінити параметри отримання повідомлень електронною поштою? 
+* Бажаєте змінити параметри отримання повідомлень електронною поштою?
 Перейдіть до: {{fullurl:{{ns:special}}:Preferences}}.',
 	'enotif_body_categoryadd-HTML' => '<p>
 Шановний $WATCHINGUSERNAME,
 <br /><br />
 У проекті {{SITENAME}} в категорії, за якою Ви слідкуєте, була створена сторінка.
 <br /><br />
-Дивіться нову сторінку за адресою: <a href="$PAGETITLE_URL">$PAGETITLE</a> 
+Дивіться нову сторінку за адресою: <a href="$PAGETITLE_URL">$PAGETITLE</a>
 <br /><br />
-Будь ласка, заходьте та редагуйте частіше... 
+Будь ласка, заходьте та редагуйте частіше...
 <br /><br />
 {{SITENAME}}
 <br /><hr />
@@ -3083,7 +3134,7 @@ ___________________________________________
 
 Дивіться зміни за адресою: "$PAGETITLE_URL"
 
-Будь ласка, заходьте та редагуйте частіше... 
+Будь ласка, заходьте та редагуйте частіше...
 
 {{SITENAME}}
 
@@ -3095,11 +3146,11 @@ ___________________________________________
 	'enotif_body_blogpost-HTML' => '<p>
 Шановний $WATCHINGUSERNAME,
 <br /><br />
-У проекті {{SITENAME}} на сторінці списку блогів, за якою ви слідкуєте, була здійснена правка. 
+У проекті {{SITENAME}} на сторінці списку блогів, за якою ви слідкуєте, була здійснена правка.
 <br /><br />
-Дивіться зміни за адресою: <a href="$PAGETITLE_URL">$ PAGETITLE</a> . 
+Дивіться зміни за адресою: <a href="$PAGETITLE_URL">$ PAGETITLE</a> .
 <br /><br />
-Будь ласка, заходьте та редагуйте частіше... 
+Будь ласка, заходьте та редагуйте частіше...
 <br /><br />
 {{SITENAME}}
 <br /><hr />
@@ -3315,7 +3366,7 @@ $messages['zh-hant'] = array(
 	'wikiafollowedpages-special-heading-media' => '圖像和影片 （ $1 ）',
 	'wikiafollowedpages-special-namespace' => '($1 頁面)',
 	'wikiafollowedpages-special-heading-wall' => '留言牆 ( $1 )',
-	'wikiafollowedpages-special-empty' => '您的監視頁面清單是空的。 
+	'wikiafollowedpages-special-empty' => '您的監視頁面清單是空的。
 通過按一下頁面頂部的"{{int:watch}}"增加頁面到此清單中。',
 	'wikiafollowedpages-special-anon' => '請先 [[Special:Signup|登入]] 以便創建及查看您的監視頁面列表。',
 	'oasis-wikiafollowedpages-special-seeall' => '顯示全部 >',

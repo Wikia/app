@@ -1,6 +1,7 @@
 <?php
 namespace Wikia\Service\Helios;
 
+use Wikia\Tracer\WikiaTracer;
 use Wikia\Util\GlobalStateWrapper;
 use Wikia\Service\Constants;
 
@@ -13,29 +14,22 @@ use Wikia\Service\Constants;
 class HeliosClientImpl implements HeliosClient
 {
 	const BASE_URI = "helios_base_uri";
-	const CLIENT_ID = "client_id";
-	const CLIENT_SECRET = "client_secret";
-
+	const SCHWARTZ_TOKEN = "schwartz_token";
+	const SCHWARTZ_HEADER_NAME = 'THE-SCHWARTZ';
 	protected $baseUri;
-	protected $clientId;
-	protected $clientSecret;
 	protected $status;
+	protected $schwartzToken;
 
 	/**
 	 * @Inject({
 	 *   Wikia\Service\Helios\HeliosClientImpl::BASE_URI,
-	 *   Wikia\Service\Helios\HeliosClientImpl::CLIENT_ID,
-	 *   Wikia\Service\Helios\HeliosClientImpl::CLIENT_SECRET})
+	 *   Wikia\Service\Helios\HeliosClientImpl::SCHWARTZ_TOKEN})
 	 * The constructor.
 	 * @param string $baseUri
-	 * @param string $clientId
-	 * @param string $clientSecret
 	 */
-	public function __construct( $baseUri, $clientId, $clientSecret )
-	{
+	public function __construct( $baseUri, $schwartzToken ) {
 		$this->baseUri = $baseUri;
-		$this->clientId = $clientId;
-		$this->clientSecret = $clientSecret;
+		$this->schwartzToken = $schwartzToken;
 	}
 
 	/**
@@ -54,10 +48,6 @@ class HeliosClientImpl implements HeliosClient
 		// Crash if we cannot make HTTP requests.
 		\Wikia\Util\Assert::true( \MWHttpRequest::canMakeRequests() );
 
-		// Add client_id and client_secret to the GET data.
-		$getParams['client_id'] = $this->clientId;
-		$getParams['client_secret'] = $this->clientSecret;
-
 		// Request URI pre-processing.
 		$uri = "{$this->baseUri}{$resourceName}?" . http_build_query($getParams);
 
@@ -72,6 +62,9 @@ class HeliosClientImpl implements HeliosClient
 
 		global $wgRequest;
 		$headers['X-Forwarded-For'] = $wgRequest->getIP();
+
+		// adding internal headers
+		WikiaTracer::instance()->setRequestHeaders( $headers, true );
 
 		// Request options pre-processing.
 		$options = [
@@ -145,12 +138,31 @@ class HeliosClientImpl implements HeliosClient
 
 		$response = $this->request(
 			'token',
-			[ 'grant_type'	=> 'password' ],
+			[],
 			$postData,
 			[ 'method'	=> 'POST' ]
 		);
 
 		return [$this->status, $response];
+	}
+
+	/**
+	 * A shortcut method to remove all tokens for user in helios
+	 *
+	 * @param $userId int for remove user tokens
+	 * @internal param $username
+	 * @return null
+	 */
+	public function forceLogout( $userId ) {
+		return $this->request(
+			sprintf( 'users/%s/tokens', $userId ),
+			[ ],
+			[ ],
+			[
+				'method' => 'DELETE',
+				'headers' => [ self::SCHWARTZ_HEADER_NAME => $this->schwartzToken ]
+			]
+		);
 	}
 
 	/**

@@ -73,6 +73,7 @@ abstract class ResourceLoaderGlobalWikiModule extends ResourceLoaderWikiModule {
 		list( $titleText, $namespace ) = $this->parseTitle( $realTitleText );
 
 		if ( $options['type'] === 'script' && $namespace != NS_USER && !empty( $wgEnableContentReviewExt ) ) {
+			wfProfileOut(__METHOD__);
 			return $this->createScriptTitle( $titleText, $options );
 		}
 
@@ -102,7 +103,7 @@ abstract class ResourceLoaderGlobalWikiModule extends ResourceLoaderWikiModule {
 		global $wgCityId;
 
 		$title = null;
-		$targetCityId = (int) $options['city_id'];
+		$targetCityId = !empty($options['city_id']) ? (int)$options['city_id'] : 0;
 
 		if ( $targetCityId !== 0 && $wgCityId !== $targetCityId && $titleText !== false ) {
 			$title = GlobalTitle::newFromTextCached( $titleText, NS_MEDIAWIKI, $targetCityId );

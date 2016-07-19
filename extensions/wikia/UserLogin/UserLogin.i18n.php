@@ -1316,35 +1316,35 @@ Vuoi controllare quali email ricevi? Vai alle tue <a href="{{fullurl:{{ns:specia
  */
 $messages['ja'] = array(
 	'userlogin-login-heading' => 'ログイン',
-	'userlogin-forgot-password' => 'パスワードを忘れた',
+	'userlogin-forgot-password' => 'パスワードを忘れた方はこちら',
 	'userlogin-forgot-password-go-to-login' => '既にパスワードをお持ちですか？（[[Special:UserLogin|ログイン]]）',
-	'userlogin-remembermypassword' => 'ログイン状態を維持する',
-	'userlogin-error-noname' => '利用者名を入力してください。',
+	'userlogin-remembermypassword' => 'ログイン状態を維持',
+	'userlogin-error-noname' => 'ユーザー名を入力してください。',
 	'userlogin-error-sessionfailure' => 'ログインセッションがタイムアウトしました。もう一度ログインしてください。',
-	'userlogin-error-nosuchuser' => 'この名前の利用者は存在しません。利用者名は大文字小文字を区別することにご注意ください。',
-	'userlogin-error-wrongpassword' => 'パスワードが間違っています。Caps lock がオフになっているか確認し再入力してください。',
+	'userlogin-error-nosuchuser' => 'この名前のユーザーは存在しません。ユーザー名は大文字小文字を区別することにご注意ください。',
+	'userlogin-error-wrongpassword' => 'パスワードを入力してください。',
 	'userlogin-error-wrongpasswordempty' => 'パスワードを入力してください。',
 	'userlogin-error-resetpass_announce' => '仮パスワードを使用しました。こちらに新しいパスワードを入力してログインしてください。',
 	'userlogin-error-login-throttled' => '誤ったパスワードでログインを試みた回数が多すぎます。しばらく待ってから再度お試しください。',
-	'userlogin-error-login-userblocked' => 'この利用者名はブロックされておりログインに使用できません。',
-	'userlogin-error-edit-account-closed-flag' => 'このアカウントはウィキアによって無効化されています。',
+	'userlogin-error-login-userblocked' => 'このユーザー名はブロックされておりログインに使用できません。',
+	'userlogin-error-edit-account-closed-flag' => 'このアカウントはWikiaによって無効化されています。',
 	'userlogin-error-cantcreateaccount-text' => 'お使いのIPアドレスからのアカウント作成は許可されていません。',
-	'userlogin-error-userexists' => 'この名前の利用者は既に存在します。他の利用者名をお試しください。',
+	'userlogin-error-userexists' => 'このユーザー名は既に使用されています。別のものをお試しください。',
 	'userlogin-error-invalidemailaddress' => '有効なメールアドレスを入力してください。',
 	'userlogin-get-account' => 'まだアカウントを取得していませんか？<a href="$1" tabindex="$2">アカウントを作成するにはこちら</a>',
-	'userlogin-error-invalid-username' => '無効な利用者名です',
+	'userlogin-error-invalid-username' => '無効なユーザー名です',
 	'userlogin-error-userlogin-unable-info' => '申し訳ありません。現在アカウントを登録できません。',
-	'userlogin-error-user-not-allowed' => 'この利用者名は許可されていません。',
+	'userlogin-error-user-not-allowed' => 'このユーザー名は許可されていません。',
 	'userlogin-error-captcha-createaccount-fail' => '入力したワードが枠内のワードと一致しません。もう一度入力してください。',
-	'userlogin-error-userlogin-bad-birthday' => '年、月、日を選択してください。',
+	'userlogin-error-userlogin-bad-birthday' => '生年月日を入力してください。',
 	'userlogin-error-externaldberror' => '申し訳ありません。現在サイトで問題が発生しています。しばらくしてからもう一度お試しください。',
 	'userlogin-error-noemailtitle' => '有効なメールアドレスを入力してください。',
 	'userlogin-error-acct_creation_throttle_hit' => 'お使いのIPアドレスからのアカウント作成が多すぎます。しばらくしてからお試しください。',
-	'userlogin-opt-in-label' => 'ウィキアの最新情報やイベントに関するメールの受信を希望する',
-	'userlogin-error-resetpass_forbidden' => 'パスワードは変更できません。',
-	'userlogin-error-blocked-mailpassword' => 'お使いのIPアドレスがウィキアによってブロックされているため、新しいパスワードを請求できません。',
+	'userlogin-opt-in-label' => 'Wikiaの最新情報やイベントに関するメールの受信を希望する',
+	'userlogin-error-resetpass_forbidden' => 'パスワードを変更できません。',
+	'userlogin-error-blocked-mailpassword' => 'お使いのIPアドレスがWikiaによってブロックされているため、新しいパスワードを請求できません。',
 	'userlogin-error-throttled-mailpassword' => '$1時間前に既にこのアカウントのパスワード復旧に関するメールを送信しました。メールを確認してください。',
-	'userlogin-error-mail-error' => 'メールの送信で問題が発生しました。[[Special:Contact/general|サポート]]までご連絡ください。',
+	'userlogin-error-mail-error' => 'メールの送信で問題が発生しました。[[w:ja:Forum:Index|サポート]]までご連絡ください。',
 	'userlogin-password-email-sent' => '「$1」のメールアドレス宛に新しいパスワードを送信しました。',
 	'userlogin-error-unconfirmed-user' => 'メールアドレスの認証が行われていません。まずはじめにメールアドレスの認証を行ってください。',
 	'userlogin-error-confirmation-reminder-already-sent' => '認証のリマインダーをメールにて既に送信しました。',
@@ -1354,24 +1354,24 @@ $messages['ja'] = array(
 	'userlogin-retypenew' => '新しいパスワードを再入力',
 	'userlogin-password-email-subject' => '新規パスワードのリクエスト',
 	'userlogin-password-email-greeting' => '$USERNAME さん、',
-	'userlogin-password-email-content' => 'ウィキアにログインするには、以下の仮パスワードを使用してください: $NEWPASSWORD<br /><br />
+	'userlogin-password-email-content' => 'Wikiaにログインするには、以下の仮パスワードを使用してください: $NEWPASSWORD<br /><br />
 新しいパスワードをリクエストした覚えがない場合でも、心配しないでください。アカウントの安全性は保たれています。このメールを無視し、これまで使用していたパスワードでウィキアにログインし続けることができます。<br /><br />
-質問や気になることがあれば、<a href="http://ja.community.wikia.com/wiki/Special:Contact/account-issue">遠慮なくお問い合わせください</a>。',
-	'userlogin-password-email-signature' => 'ウィキアコミュニティサポート',
-	'userlogin-password-email-body' => '$2 さん、こんにちは。
+質問や気になることがあれば、遠慮なくお問い合わせください。',
+	'userlogin-password-email-signature' => 'Wikia コミュニティサポート',
+	'userlogin-password-email-body' => '$2 さん、
 
 Wikiaにログインするには、以下の仮パスワードを使用してください: $3
 
-新しいパスワードをリクエストした覚えがない場合でも、心配しないでください。アカウントの安全性は保たれています。このメールを無視し、これまで使用していたパスワードでウィキアにログインし続けることができます。
+新しいパスワードをリクエストした覚えがない場合でも、心配しないでください。アカウントは安全に保たれています。このメールを無視し、これまで使用していたパスワードでWikiaにログインし続けることができます。
 
-何か質問をお持ちですか？お気軽にお問い合わせください：http://community.wikia.com/wiki/Special:Contact/account-issue
+質問や気になることがあれば、遠慮なくお問い合わせください。
 
-ウィキア コミュニティ サポート
+Wikiaサポートチーム
 ___________________________________________
 
-ウィキアの最新情報は http://ja.wikia.com/ で確認できます。
+Wikiaの最新情報は http://ja.wikia.com/ で確認できます。
 メール通知に関する設定は {{fullurl:{{ns:special}}:Preferences}} で行えます。',
-	'userlogin-email-footer-line1' => 'ウィキアの最新情報は <a style="color:#2a87d5;text-decoration:none;" href="http://ja.wikia.com/">http://ja.wikia.com/</a> で確認できます。',
+	'userlogin-email-footer-line1' => 'Wikiaの最新情報は <a style="color:#2a87d5;text-decoration:none;" href="http://ja.wikia.com/">http://ja.wikia.com/</a> で確認できます。',
 	'userlogin-email-footer-line2' => 'メール通知に関する設定は<a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">個人設定</a>のページで行えます。',
 	'userlogin-provider-or' => 'または',
 	'userlogin-provider-tooltip-facebook' => 'Facebook を利用してログインするにはボタンをクリック',
@@ -1381,7 +1381,30 @@ ___________________________________________
 	'userlogin-loginreqlink' => 'ログイン',
 	'userlogin-changepassword-needlogin' => 'パスワードを変更するには$1する必要があります。',
 	'wikiamobile-sendpassword-label' => '新しいパスワードを送信',
-	'wikiamobile-facebook-connect-fail' => 'あなたの Facebook アカウントは現在ウィキアのアカウントとリンクされていません。',
+	'wikiamobile-facebook-connect-fail' => 'あなたの Facebook アカウントは現在Wikiaのアカウントとリンクされていません。',
+	'userlogin-error-wrongcredentials' => 'このユーザー名とパスワードの組み合わせは正しくありません。再試行してください。',
+	'userlogin-error-invalidfacebook' => 'あなたの Facebook アカウントの検出に問題がありました。Facebook にログインして再試行してください。',
+	'userlogin-error-fbconnect' => 'あなたのWikiaのアカウントと Facebook との接続に問題がありました。',
+	'userlogin-logged-in-title' => '{{SITENAME}}へようこそ、$1さん!',
+	'userlogin-logged-in-message' => 'ログイン状態です。[[$1|ホーム]]から最新情報を見つけたり、[[$2|プロフィール]]を確認してみましょう。',
+	'userlogin-desc' => 'UserLogin extension',
+	'userlogin-forgot-password-button' => 'Continue',
+	'userlogin-password-email-body-HTML' => '',
+	'userlogin-email-footer-line3' => '<a href="http://www.twitter.com/wikia" style="text-decoration:none">
+<img alt="twitter" src="http://images4.wikia.nocookie.net/wikianewsletter/images/f/f7/Twitter.png" style="border:none">
+</a>
+&nbsp;
+<a href="http://www.facebook.com/wikia" style="text-decoration:none">
+<img alt="facebook" src="http://images2.wikia.nocookie.net/wikianewsletter/images/5/55/Facebook.png" style="border:none">
+</a>
+&nbsp;
+<a href="http://www.youtube.com/wikia" style="text-decoration:none">
+<img alt="youtube" src="http://images3.wikia.nocookie.net/wikianewsletter/images/a/af/Youtube.png" style="border:none">
+</a>
+&nbsp;
+<a href="http://community.wikia.com/wiki/Blog:Wikia_Staff_Blog" style="text-decoration:none">
+<img alt="wikia" src="http://images1.wikia.nocookie.net/wikianewsletter/images/b/be/Wikia_blog.png" style="border:none">
+</a>',
 );
 
 /** Georgian (ქართული)

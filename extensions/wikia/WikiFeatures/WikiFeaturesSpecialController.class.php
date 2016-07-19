@@ -125,9 +125,10 @@ class WikiFeaturesSpecialController extends WikiaSpecialPageController {
 			return;
 		}
 
-		// validate feature: valid value ($enabled and $feature), check if Feature exists ($wgValue)
-		$wgValue = WikiFactory::getVarByName( $feature, $this->wg->CityId );
-		if ( ( $enabled != 'true' && $enabled != 'false' ) || empty( $feature ) || empty( $wgValue ) ) {
+		// validate feature: valid value ($enabled and $feature), check if Feature exists ($wgVarId)
+		$wgVarId = WikiFactory::getVarIdByName( $feature, true );
+
+		if ( ( $enabled != 'true' && $enabled != 'false' ) || empty( $feature ) || empty( $wgVarId ) ) {
 			$this->setVal( 'result', 'error' );
 			$this->setVal( 'error', wfMessage( 'wikifeatures-error-invalid-parameter', $feature )->escaped() );
 			return;

@@ -29,12 +29,39 @@ class ApiQueryPortableInfobox extends ApiQueryBase {
 				$pageSet->getResult()->setIndexedTagName( $inf, 'infobox' );
 				$pageSet->getResult()->addValue( [ 'query', 'pages', $id ], 'infoboxes', $inf );
 				foreach ( $parsedInfoboxes as $count => $infobox ) {
-					$s = isset( $infobox[ 'sources' ] ) ? $infobox[ 'sources' ] : [ ];
+					$sl = isset( $infobox[ 'sourcelabels' ] ) ?
+						$infobox[ 'sourcelabels' ] :
+						$this->sourceLabelsFallback( $infobox, $articleTitle );
+
 					$pageSet->getResult()->addValue( [ 'query', 'pages', $id, 'infoboxes', $count ], 'id', $count );
-					$pageSet->getResult()->setIndexedTagName( $s, "source" );
-					$pageSet->getResult()->addValue( [ 'query', 'pages', $id, 'infoboxes', $count ], 'sources', $s );
+					$pageSet->getResult()->setIndexedTagName( $sl, "sourcelabels" );
+					$pageSet->getResult()->addValue(
+						[ 'query', 'pages', $id, 'infoboxes', $count ], 'sourcelabels', $sl
+					);
 				}
 			}
 		}
+	}
+
+	/**
+	 * We still have old infobox sources in page properties, so we need this fallback.
+	 * Monitor kibana and remove it after logs stop appear
+	 *
+	 * @param $infobox
+	 * @param $title
+	 * @return array
+	 */
+	private function sourceLabelsFallback( $infobox, $title ) {
+		global $wgCityId;
+
+		Wikia\Logger\WikiaLogger::instance()->info( 'Portable Infobox ApiQuery sourcelabels fallback' );
+
+		$task = new Wikia\Tasks\Tasks\RefreshLinksForTitleTask();
+		$task->title( $title );
+		$task->call( 'refresh' );
+		$task->wikiId( $wgCityId );
+		$task->queue();
+
+		return $infobox[ 'sources' ] ? array_fill_keys( $infobox[ 'sources' ], '' ) : [ ];
 	}
 }

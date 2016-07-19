@@ -30,15 +30,6 @@ class AssetsManagerGroupBuilder extends AssetsManagerBaseBuilder {
 					//$this->mContent .= RequestContext::getMain()->getSkin()->generateUserJs(); // FIXME
 				} else if(isset($params['action']) && $params['action'] == 'raw' && isset($params['gen']) && $params['gen'] == 'css') {
 					//$this->mContent .= RequestContext::getMain()->getSkin()->generateUserStylesheet(); // FIXME
-				} else {
-					//Debug added on May 4, 2012 to inquire external requests spikes
-					$start = microtime(true);
-					$this->mContent .= HTTP::get($asset);
-					$totalTime = microtime(true) - $start;
-
-					if ( $totalTime >= 1 ) {
-						Wikia::log(__METHOD__, false, "oid: {$this->mOid}, totalTime: {$totalTime}, asset: {$asset}, referrer: {$_SERVER['HTTP_REFERER']}, entrypoint: {$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}", true);
-					}
 				}
 			} else {
 				$this->mContent .= file_get_contents($IP . '/' . $asset);

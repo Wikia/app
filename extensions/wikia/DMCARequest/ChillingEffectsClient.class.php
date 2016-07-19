@@ -125,7 +125,7 @@ class ChillingEffectsClient {
 			'notice' => $noticeData,
 		];
 
-		return \Http::post(
+		return \ExternalHttp::post(
 			$this->baseUrl . '/notices',
 			[
 				'postData' => json_encode( $requestData ),
@@ -133,8 +133,7 @@ class ChillingEffectsClient {
 					'Accept' => 'application/json',
 					'Content-type' => 'application/json',
 				],
-				'returnInstance' => true,
-				'noProxy' => true,
+				'returnInstance' => true
 			]
 		);
 	}

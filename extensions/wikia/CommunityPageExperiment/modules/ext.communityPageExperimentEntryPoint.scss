@@ -1,0 +1,48 @@
+@import "skins/shared/color";
+
+.community-page-entry-point {
+	float: right;
+
+	span {
+		font-size: 18px;
+		font-weight: bold;
+	}
+
+	.community-page-button {
+		background: $color-buttons;
+		color: $color-button-text;
+		display: inline-block;
+		font-size: 14px;
+		font-weight: bold;
+		height: 46px;
+		line-height: 46px;
+		margin: 12px 16px 16px;
+		padding: 0 20px;
+		text-align: center;
+		text-transform: uppercase;
+		white-space: normal;
+
+		&:hover, &:active {
+			background-color: $color-button-highlight;
+			text-decoration: none;
+		}
+	}
+}
+
+.WikiaPageHeader {
+	.header-buttons {
+		border: 1px solid $color-page-border;
+		height: 75px;
+		line-height: 75px;
+
+		.wikia-button,
+		.wikia-menu-button {
+			margin-top: 0;
+			vertical-align: middle;
+		}
+
+		.wikia-menu-button {
+			margin-left: 15px;
+		}
+	}
+}

@@ -56,42 +56,6 @@ $wgExtensionMessagesFiles['Blogs'] = __DIR__ . '/Blogs.i18n.php';
 $wgExtensionMessagesFiles['BlogsAliases'] = __DIR__ . '/Blogs.alias.php';
 $wgExtensionMessagesFiles['BlogsMagic'] = __DIR__ . '/Blogs.i18n.magic.php';
 
-/**
- * permissions (eventually will be moved to CommonSettings.php)
- */
-$wgAvailableRights[] = 'blog-comments-toggle';
-$wgAvailableRights[] = 'blog-comments-delete';
-$wgAvailableRights[] = 'blog-articles-edit';
-$wgAvailableRights[] = 'blog-articles-move';
-$wgAvailableRights[] = 'blog-articles-protect';
-$wgAvailableRights[] = 'blog-auto-follow';
-
-$wgGroupPermissions['*'][ 'blog-comments-toggle' ] = false;
-$wgGroupPermissions['sysop'][ 'blog-comments-toggle' ] = true;
-$wgGroupPermissions['staff'][ 'blog-comments-toggle' ] = true;
-$wgGroupPermissions['helper'][ 'blog-comments-toggle' ] = true;
-
-$wgGroupPermissions['*'][ 'blog-comments-delete' ] = false;
-$wgGroupPermissions['sysop'][ 'blog-comments-delete' ] = true;
-$wgGroupPermissions['staff'][ 'blog-comments-delete' ] = true;
-$wgGroupPermissions['helper'][ 'blog-comments-delete' ] = true;
-$wgGroupPermissions['threadmoderator'][ 'blog-comments-delete' ] = true;
-
-$wgGroupPermissions['*'][ 'blog-articles-edit' ] = false;
-$wgGroupPermissions['sysop'][ 'blog-articles-edit' ] = true;
-$wgGroupPermissions['staff'][ 'blog-articles-edit' ] = true;
-$wgGroupPermissions['helper'][ 'blog-articles-edit' ] = true;
-
-$wgGroupPermissions['*'][ 'blog-articles-move' ] = false;
-$wgGroupPermissions['sysop'][ 'blog-articles-move' ] = true;
-$wgGroupPermissions['staff'][ 'blog-articles-move' ] = true;
-$wgGroupPermissions['helper'][ 'blog-articles-move' ] = true;
-
-$wgGroupPermissions['*'][ 'blog-articles-protect' ] = false;
-$wgGroupPermissions['sysop'][ 'blog-articles-protect' ] = true;
-$wgGroupPermissions['staff'][ 'blog-articles-protect' ] = true;
-$wgGroupPermissions['helper'][ 'blog-articles-protect' ] = true;
-
 // special pages
 $wgAutoloadClasses['CreateBlogListingPage'] = __DIR__ . '/SpecialCreateBlogListingPage.php';
 $wgSpecialPages['CreateBlogListingPage'] = 'CreateBlogListingPage';
@@ -147,6 +111,9 @@ $wgHooks[ 'TitleMoveComplete' ][] = 'BlogsHelper::onTitleMoveComplete';
 
 // Usages of images on blogs on file pages
 $wgHooks['FilePageImageUsageSingleLink'][] = 'BlogsHelper::onFilePageImageUsageSingleLink';
+
+// Checking that user is permitted to delete blog articles
+$wgHooks['BeforeDeletePermissionErrors'][] = 'BlogLockdown::onBeforeDeletePermissionErrors';
 
 /**
  * load other parts

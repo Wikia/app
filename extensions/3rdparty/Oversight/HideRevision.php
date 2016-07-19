@@ -25,20 +25,6 @@
  * http://www.gnu.org/copyleft/gpl.html
  */
 
-$wgAvailableRights = array_merge( $wgAvailableRights, array( 'hiderevision', 'oversight' ) );
-
-// The 'hiderevision' permission allows use of revision hiding.
-$wgGroupPermissions['*']['hiderevision'] = false;
-$wgGroupPermissions['oversight']['hiderevision'] = true;
-
-// 'oversight' permission is required to view a previously-hidden revision.
-$wgGroupPermissions['*']['oversight'] = false;
-$wgGroupPermissions['oversight']['oversight'] = true;
-
-// You could add a group like this:
-// $wgGroupPermissions['censor']['hiderevision'] = true;
-// $wgGroupPermissions['quiscustodiet']['oversight'] = true;
-
 $wgExtensionCredits['specialpage'][] = array(
 	'name'           => 'Oversight',
 	'author'         => 'Brion Vibber',

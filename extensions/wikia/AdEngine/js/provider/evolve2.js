@@ -1,13 +1,40 @@
 /*global define*/
 define('ext.wikia.adEngine.provider.evolve2', [
+	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.provider.gpt.helper',
 	'ext.wikia.adEngine.slotTweaker',
 	'ext.wikia.adEngine.utils.adLogicZoneParams',
-	'wikia.log'
-], function (gptHelper, slotTweaker, zoneParams, log) {
+	'wikia.log',
+	'wikia.window'
+], function (adContext, gptHelper, slotTweaker, zoneParams, log, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.evolve2',
+		posTargetingValue,
+		site = 'wikia_intl',
+		slotMap = {
+			EVOLVE_FLUSH:             {flushOnly: true},
+			HOME_TOP_LEADERBOARD:     {size: '728x90,970x250,970x300,970x90', wloc: 'top'},
+			HOME_TOP_RIGHT_BOXAD:     {size: '300x250,300x600', wloc: 'top'},
+			HUB_TOP_LEADERBOARD:      {size: '728x90,970x250,970x300,970x90', wloc: 'top'},
+			INVISIBLE_SKIN:           {size: '1000x1000,1x1', wloc: 'top'},
+			LEFT_SKYSCRAPER_2:        {size: '160x600', wloc: 'middle'},
+			TOP_LEADERBOARD:          {size: '728x90,970x250,970x300,970x90', wloc: 'top'},
+			TOP_RIGHT_BOXAD:          {size: '300x250,300x600', wloc: 'top'},
+
+			MOBILE_TOP_LEADERBOARD:   {size: '320x50,320x100,300x250', wsrc: 'mobile_evolve'},
+			MOBILE_IN_CONTENT:        {size: '300x250', wsrc: 'mobile_evolve'},
+			MOBILE_PREFOOTER:         {size: '300x250', wsrc: 'mobile_evolve'}
+		};
+
+	// TODO: ADEN-3542
+	function dispatchNoUapEvent(slotName) {
+		if (slotName === 'MOBILE_TOP_LEADERBOARD') {
+			win.dispatchEvent(new Event('wikia.not_uap'));
+		}
+	}
+
+	function resetPosTargeting() {
 		posTargetingValue = {
 			'728x90,970x250,970x300,970x90': 'a',
 			'300x250,300x600': 'a',
@@ -16,21 +43,8 @@ define('ext.wikia.adEngine.provider.evolve2', [
 
 			'320x50,320x100,300x250': 'a',
 			'300x250': 'a'
-		},
-		site = 'wikia_intl',
-		slotMap = {
-			HOME_TOP_LEADERBOARD:     {size: '728x90,970x250,970x300,970x90'},
-			HOME_TOP_RIGHT_BOXAD:     {size: '300x250,300x600'},
-			HUB_TOP_LEADERBOARD:      {size: '728x90,970x250,970x300,970x90'},
-			INVISIBLE_SKIN:           {size: '1000x1000,1x1'},
-			LEFT_SKYSCRAPER_2:        {size: '160x600'},
-			TOP_LEADERBOARD:          {size: '728x90,970x250,970x300,970x90'},
-			TOP_RIGHT_BOXAD:          {size: '300x250,300x600'},
-
-			MOBILE_TOP_LEADERBOARD:   {size: '320x50,320x100,300x250'},
-			MOBILE_IN_CONTENT:        {size: '300x250'},
-			MOBILE_PREFOOTER:         {size: '300x250'}
 		};
+	}
 
 	function getSection() {
 		var vertical = zoneParams.getVertical(),
@@ -60,7 +74,9 @@ define('ext.wikia.adEngine.provider.evolve2', [
 		var position = posTargetingValue[slot.size];
 
 		slot.pos = position;
-		slot.site = site;
+		if (!slot.wsrc) {
+			slot.wsrc = 'evolve';
+		}
 
 		// Increment pos value
 		posTargetingValue[slot.size] = nextChar(position);
@@ -79,24 +95,39 @@ define('ext.wikia.adEngine.provider.evolve2', [
 		var section = getSection(),
 			slotCopy = JSON.parse(JSON.stringify(slotMap[slot.name]));
 
-		slotCopy.sect = section;
-		setTargeting(slotCopy);
+		if (!slotCopy.flushOnly) {
+			slotCopy.wpos = slot.name;
+			setTargeting(slotCopy);
+		}
 		slot.pre('success', function () {
 			slotTweaker.removeDefaultHeight(slot.name);
 			slotTweaker.removeTopButtonIfNeeded(slot.name);
 			slotTweaker.adjustLeaderboardSize(slot.name);
+			dispatchNoUapEvent(slot.name);
+		});
+		slot.pre('collapse', function() {
+			dispatchNoUapEvent(slot.name);
+		});
+		slot.pre('hop', function() {
+			dispatchNoUapEvent(slot.name);
 		});
 		gptHelper.pushAd(
 			slot,
 			'/4403/ev/' + site + '/' + section + '/' + slot.name,
 			slotCopy,
 			{
-				forcedAdType: 'evolve2'
+				forcedAdType: 'evolve2',
+				sraEnabled: true
 			}
 		);
 
 		log(['fillInSlot', slot.name, 'done'], 'debug', logGroup);
 	}
+
+	resetPosTargeting();
+	adContext.addCallback(function () {
+		resetPosTargeting();
+	});
 
 	return {
 		name: 'Evolve2',

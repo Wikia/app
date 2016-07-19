@@ -1,0 +1,31 @@
+@import 'skins/shared/color';
+
+.text-border {
+	line-height: .5;
+	text-align: center;
+
+	span {
+		display: inline-block;
+		position: relative;
+
+		&:before, &:after {
+			border: solid 1px $color-black;
+			content: '';
+			height: 0;
+			opacity: .1;
+			position: absolute;
+			top: 2px;
+			width: 154px;
+		}
+
+		&:before {
+			margin-right: 10px;
+			right: 100%;
+		}
+
+		&:after {
+			left: 100%;
+			margin-left: 10px;
+		}
+	}
+}

@@ -3523,7 +3523,8 @@
         "title",
         "url",
         "ns",
-        "quality"
+        "quality",
+        "snippet"
       ],
       "properties": {
         "quality": {
@@ -3548,6 +3549,10 @@
         "title": {
           "type": "string",
           "description": "Article title"
+        },
+        "snippet": {
+          "type": "string",
+          "description": "snippet with highlighted match (HTML format)"
         }
       }
     },
@@ -4084,7 +4089,7 @@
         "id",
         "name",
         "hub",
-        "language",
+        "lang",
         "topic",
         "domain",
         "title",
@@ -4149,7 +4154,7 @@
           "format": "int32",
           "description": "An internal identification number for Wikia"
         },
-        "language": {
+        "lang": {
           "type": "string",
           "description": "Wikia language"
         },

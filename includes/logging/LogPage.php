@@ -433,11 +433,11 @@ class LogPage {
 	/**
 	 * Add a log entry
 	 *
-	 * @param $action String: one of '', 'block', 'protect', 'rights', 'delete', 'upload', 'move', 'move_redir'
-	 * @param $target Title object
-	 * @param $comment String: description associated
-	 * @param $params Array: parameters passed later to wfMsg.* functions
-	 * @param $doer User object: the user doing the action
+	 * @param String $action One of '', 'block', 'protect', 'rights', 'delete', 'upload', 'move', 'move_redir'
+	 * @param Title $target
+	 * @param String $comment Description associated
+	 * @param array $params Parameters passed later to wfMsg.* functions
+	 * @param int|User $doer The user doing the action
 	 *
 	 * @return bool|int|null
 	 * @TODO: make this use LogEntry::saveContent()
@@ -453,7 +453,7 @@ class LogPage {
 			$comment = '';
 		}
 
-		# Truncate for whole multibyte characters.
+		# Truncate for whole multi-byte characters.
 		$comment = $wgContLang->truncate( $comment, 255 );
 
 		$this->action = $action;

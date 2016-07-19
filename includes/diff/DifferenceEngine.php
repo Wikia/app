@@ -275,7 +275,10 @@ class DifferenceEngine extends ContextSource {
 								'action' => 'edit',
 								'undoafter' => $this->mOldid,
 								'undo' => $this->mNewid ) ),
-							'title' => Linker::titleAttrib( 'undo' )
+							'title' => Linker::titleAttrib( 'undo' ),
+							# Wikia Change begin
+							'data-action' => 'undo'
+							# Wikia Change end
 						),
 						$this->msg( 'editundo' )->text()
 					) )->escaped().'</span>';
@@ -287,8 +290,10 @@ class DifferenceEngine extends ContextSource {
 				$prevlink = Linker::linkKnown(
 					$this->mOldPage,
 					$this->msg( 'previousdiff' )->escaped(),
-					array( 'id' => 'differences-prevlink' ),
-					array( 'diff' => 'prev', 'oldid' => $this->mOldid ) + $query
+					# Wikia Change begin
+					[ 'id' => 'differences-prevlink', 'data-action' => 'older-edit-link' ],
+					# Wikia Change end
+					[ 'diff' => 'prev', 'oldid' => $this->mOldid ] + $query
 				);
 			} else {
 				$prevlink = '&#160;';
@@ -329,8 +334,10 @@ class DifferenceEngine extends ContextSource {
 			$nextlink = Linker::linkKnown(
 				$this->mNewPage,
 				$this->msg( 'nextdiff' )->escaped(),
-				array( 'id' => 'differences-nextlink' ),
-				array( 'diff' => 'next', 'oldid' => $this->mNewid ) + $query
+				# Wikia Change begin
+				[ 'id' => 'differences-nextlink', 'data-action' => 'newer-edit-link' ],
+				# Wikia Change end
+				[ 'diff' => 'next', 'oldid' => $this->mNewid ] + $query
 			);
 		} else {
 			$nextlink = '&#160;';
@@ -733,7 +740,7 @@ class DifferenceEngine extends ContextSource {
 		if ( $wgExternalDiffEngine != 'wikidiff3' && $wgExternalDiffEngine !== false ) {
 			# Wikia change - begin
 			# PLATFORM-1668: log fallback to external diff engine
-			Wikia\Logger\WikiaLogger::instance()->warning( 'External diff engine used', [
+			Wikia\Logger\WikiaLogger::instance()->error( 'External diff engine used', [
 				'engine' => $wgExternalDiffEngine
 			] );
 			# Wikia change - end
@@ -892,10 +899,21 @@ class DifferenceEngine extends ContextSource {
 			return $header;
 		}
 
+		# Wikia Change begin
+		$type = $rev->getId() == $this->getOldid() ? 'before' : 'after';
+		# Wikia Change end
+
 		$title = $rev->getTitle();
 
-		$header = Linker::linkKnown( $title, $header, array(),
-			array( 'oldid' => $rev->getID() ) );
+		$header = Linker::linkKnown(
+			$title,
+			$header,
+			/* Wikia Change begin
+			   Possible values: revision-link-before, revision-link-after */
+			[ 'data-action' => 'revision-link-' . $type ],
+			# Wikia Change end
+			[ 'oldid' => $rev->getID() ]
+		);
 
 		if ( $rev->userCan( Revision::DELETED_TEXT, $user ) ) {
 			$editQuery = array( 'action' => 'edit' );
@@ -904,8 +922,11 @@ class DifferenceEngine extends ContextSource {
 			}
 
 			$msg = $this->msg( $title->userCan( 'edit', $user ) ? 'editold' : 'viewsourceold' )->escaped();
-			/* Wikia Change begin */
-			$header .= ' <span class="mw-rev-head-action">(' . Linker::linkKnown( $title, $msg, array(), $editQuery ) . ')</span>';
+			/* Wikia Change begin
+			   Possible values: edit-revision-before, edit-revision-after */
+			$header .= ' <span class="mw-rev-head-action">(' .
+				Linker::linkKnown( $title, $msg, [ 'data-action' => 'edit-revision-' . $type ], $editQuery ) .
+				')</span>';
 			/* Wikia Change end */
 			if ( $rev->isDeleted( Revision::DELETED_TEXT ) ) {
 				$header = Html::rawElement( 'span', array( 'class' => 'history-deleted' ), $header );
@@ -948,7 +969,7 @@ class DifferenceEngine extends ContextSource {
 				$multiColspan = 2;
 			}
 			$header .= "
-			<tr valign='top'>
+			<tr class='diff-header' valign='top'>
 			<td colspan='$colspan' class='diff-otitle'>{$otitle}</td>
 			<td colspan='$colspan' class='diff-ntitle'>{$ntitle}</td>
 			</tr>";

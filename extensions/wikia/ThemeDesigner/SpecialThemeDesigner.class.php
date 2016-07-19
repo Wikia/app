@@ -6,7 +6,7 @@ class SpecialThemeDesigner extends UnlistedSpecialPage {
 		parent::__construct( 'ThemeDesigner', 'themedesigner' );
 	}
 
-	public function execute() {
+	public function execute( $par ) {
 		wfProfileIn( __METHOD__ );
 
 		// check rights

@@ -10,13 +10,18 @@ class OoyalaVideoHandler extends VideoHandler {
 	protected static $providerHomeUrl = 'http://video.wikia.com/';
 
 	public function getEmbed( $width, array $options = [] ) {
+		$wg = F::app()->wg;
+
 		$autoplay = !empty( $options['autoplay'] );
 		$isAjax = !empty( $options['isAjax'] );
 		$height = $this->getHeight($width);
 		$playerId = 'ooyalaplayer-'.$this->videoId.'-'.intval($isAjax);
 
-		$ooyalaPlayerId = F::app()->wg->OoyalaApiConfig['playerId'];
-		$jsFile = 'http://player.ooyala.com/v3/'.$ooyalaPlayerId;
+		$ooyalaPlayerId = $wg->OoyalaApiConfig['playerId'];
+		$jsFile = 'http://player.ooyala.com/v3/' . $ooyalaPlayerId;
+		if ( $wg->OoyalaPreferHtml5 || $wg->Request->getBool( 'ooyalahtml5' ) ) {
+			$jsFile .= '?platform=html5-priority';
+		}
 
 		$autoPlayStr = ( $autoplay ) ? 'true' : 'false';
 

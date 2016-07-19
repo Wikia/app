@@ -986,7 +986,7 @@ ve.init.mw.Target.prototype.getHtml = function ( newDoc ) {
  * @returns {boolean} Loading has been started
 */
 ve.init.mw.Target.prototype.load = function ( additionalModules ) {
-	var data, start, xhr, target = this;
+	var data, start, xhr, target = this, uri = new mw.Uri();
 
 	// Prevent duplicate requests
 	if ( this.loading ) {
@@ -1012,6 +1012,10 @@ ve.init.mw.Target.prototype.load = function ( additionalModules ) {
 	// seeing (slightly) stale cache.
 	if ( this.restoring ) {
 		data.oldid = this.revid;
+	}
+
+	if ( uri.query.preload && mw.config.get( 'wgArticleId' ) === 0 ) {
+		data.page = uri.query.preload;
 	}
 
 	// Load DOM

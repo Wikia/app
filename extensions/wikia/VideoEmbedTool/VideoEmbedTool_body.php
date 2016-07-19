@@ -23,21 +23,6 @@ class VideoEmbedTool {
 		return $tmpl->render( "main" );
 	}
 
-	function recentlyUploaded() {
-		global $IP, $wmu;
-
-		require_once( $IP . '/includes/SpecialPage.php' );
-		require_once( $IP . '/includes/specials/SpecialNewimages.php' );
-		// this needs to be revritten, since we will not display recently uploaded, but embedded
-
-		$isp = new IncludableSpecialPage( 'Newimages', '', 1, 'wfSpecialNewimages', $IP . '/includes/specials/SpecialNewimages.php' );
-		wfSpecialNewimages( 8, $isp );
-		$tmpl = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
-		$tmpl->set_vars( array( 'data' => $wmu ) );
-
-		return $tmpl->render( "results_recently" );
-	}
-
 	function editVideo() {
 		global $wgRequest;
 

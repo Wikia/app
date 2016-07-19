@@ -29,10 +29,6 @@ $wgExtensionCredits['other'][] = array(
 //i18n
 $wgExtensionMessagesFiles['PowerTools'] = __DIR__ . '/PowerTools.i18n.php';
 
-// New user right, required to use the extension.
-$wgAvailableRights[] = 'powerdelete';
-$wgGroupPermissions['*']['powerdelete'] = false;
-
 $wgAutoloadClasses['PowerTools'] = dirname( __FILE__ ) . '/PowerTools.class.php';
 
 $wgHooks['UnknownAction'][] = 'PowerTools::onPowerDelete';

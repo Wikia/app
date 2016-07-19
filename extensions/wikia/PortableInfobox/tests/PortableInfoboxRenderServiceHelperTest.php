@@ -25,10 +25,10 @@ class PortableInfoboxRenderServiceHelperTest extends WikiaBaseTest {
 			->setConstructorArgs( [ 'TestFile' ] )
 			->setMethods( [ 'getWidth', 'getHeight' ] )
 			->getMock();
-		$fileMock->expects($this->any())
+		$fileMock->expects( $this->any() )
 			->method( 'getWidth' )
 			->will( $this->returnValue( $fileWidth ) );
-		$fileMock->expects($this->any())
+		$fileMock->expects( $this->any() )
 			->method( 'getHeight' )
 			->will( $this->returnValue( $fileHeight ) );
 
@@ -44,10 +44,10 @@ class PortableInfoboxRenderServiceHelperTest extends WikiaBaseTest {
 		$thumbnailMock = $this->getMockBuilder( 'ThumbnailImage' )
 			->setMethods( [ 'getWidth', 'getHeight' ] )
 			->getMock();
-		$thumbnailMock->expects($this->any())
+		$thumbnailMock->expects( $this->any() )
 			->method( 'getWidth' )
 			->will( $this->returnValue( $thumbnailWidth ) );
-		$thumbnailMock->expects($this->any())
+		$thumbnailMock->expects( $this->any() )
 			->method( 'getHeight' )
 			->will( $this->returnValue( $thumbnailHeight ) );
 
@@ -207,10 +207,10 @@ class PortableInfoboxRenderServiceHelperTest extends WikiaBaseTest {
 				'item' => [
 					'type' => 'title'
 				],
-				'heroData' => [],
+				'heroData' => [ ],
 				'result' => true,
 				'description' => 'First title in infobox',
-				'mockParams' => []
+				'mockParams' => [ ]
 			],
 			[
 				'item' => [
@@ -221,14 +221,14 @@ class PortableInfoboxRenderServiceHelperTest extends WikiaBaseTest {
 				],
 				'result' => false,
 				'description' => 'not first title in infobox',
-				'mockParams' => []
+				'mockParams' => [ ]
 			],
 			[
 				'item' => [
 					'type' => 'image',
 					'data' => array( null )
 				],
-				'heroData' => [],
+				'heroData' => [ ],
 				'result' => true,
 				'description' => 'first image in infobox',
 				'mockParams' => [
@@ -252,7 +252,7 @@ class PortableInfoboxRenderServiceHelperTest extends WikiaBaseTest {
 				'item' => [
 					'type' => 'image'
 				],
-				'heroData' => [],
+				'heroData' => [ ],
 				'result' => false,
 				'description' => 'too small image',
 				'mockParams' => [
@@ -296,317 +296,163 @@ class PortableInfoboxRenderServiceHelperTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @desc test getImageSizesForThumbnailer function. It should return the sizes we pass to transform function,
-	 * not the sizes we want image to have. transform adjusts the correct sizes,
-	 * that is creates thumbnail with sizes not bigger than passed, keeping the original aspect ratio.
-	 *
-	 * @param $mockParams
-	 * @param $isWikiaMobile
-	 * @param $wgPortableInfoboxCustomImageWidth
-	 * @param $result
-	 * @param $description
-	 * @dataProvider testGetImageSizesForThumbnailerDataProvider
+	 * @param $width
+	 * @param $max
+	 * @param $imageWidth
+	 * @param $imageHeight
+	 * @param $expected
+	 * @dataProvider thumbnailSizesDataProvider
 	 */
-	public function testGetImageSizesForThumbnailer( $mockParams, $isWikiaMobile, $wgPortableInfoboxCustomImageWidth, $result, $description ) {
-		$this->mockGlobalVariable('wgPortableInfoboxCustomImageWidth', $wgPortableInfoboxCustomImageWidth);
-		$mock = $this->getMockBuilder( 'Wikia\PortableInfobox\Helpers\PortableInfoboxRenderServiceHelper' )
-			->setMethods( [ 'isWikiaMobile' ] )
-			->getMock();
-		$mock->expects( $this->any() )->method( 'isWikiaMobile' )->will( $this->returnValue( $isWikiaMobile ) );
+	public function testGetThumbnailSizes( $width, $max, $imageWidth, $imageHeight, $expected ) {
+		$helper = new PortableInfoboxRenderServiceHelper();
+		$result = $helper->getThumbnailSizes( $width, $max, $imageWidth, $imageHeight );
 
-		$file = $this->createWikiaFileHelperMock( $mockParams );
-
-		$this->assertEquals(
-			$result,
-			$mock->getImageSizesForThumbnailer( $file ),
-			$description
-		);
+		$this->assertEquals( $expected, $result );
 	}
 
-	public function testGetImageSizesForThumbnailerDataProvider() {
+	public function thumbnailSizesDataProvider() {
 		return [
 			[
-				'mockParams' => [
-					'fileHeight' => 2000,
-					'fileWidth' => 3000
-				],
-				'isWikiaMobile' => false,
-				'wgPortableInfoboxCustomImageWidth' => null,
-				'result' => [
-					'height' => 500,
-					'width' => 270
-				],
-				'description' => 'Big image on desktop'
+				'preferredWidth' => 270,
+				'maxHeight' => 500,
+				'originalWidth' => 270,
+				'originalHeight' => 250,
+				'expected' => [ 'width' => 270, 'height' => 250 ]
 			],
 			[
-				'mockParams' => [
-					'fileHeight' => 3000,
-					'fileWidth' => 250
-				],
-				'isWikiaMobile' => false,
-				'wgPortableInfoboxCustomImageWidth' => null,
-				'result' => [
-					'height' => 500,
-					'width' => 270
-				],
-				'description' => 'Tall image on desktop'
+				'preferredWidth' => 300,
+				'maxHeight' => 500,
+				'originalWidth' => 350,
+				'originalHeight' => 250,
+				'expected' => [ 'width' => 300, 'height' => 214 ]
 			],
 			[
-				'mockParams' => [
-					'fileHeight' => 200,
-					'fileWidth' => 2000
-				],
-				'isWikiaMobile' => false,
-				'wgPortableInfoboxCustomImageWidth' => null,
-				'result' => [
-					'height' => 200,
-					'width' => 270
-				],
-				'description' => 'Wide image on desktop'
+				'preferredWidth' => 300,
+				'maxHeight' => 500,
+				'originalWidth' => 300,
+				'originalHeight' => 550,
+				'expected' => [ 'width' => 273, 'height' => 500 ]
 			],
 			[
-				'mockParams' => [
-					'fileHeight' => 50,
-					'fileWidth' => 45
-				],
-				'isWikiaMobile' => false,
-				'wgPortableInfoboxCustomImageWidth' => null,
-				'result' => [
-					'height' => 50,
-					'width' => 270
-				],
-				'description' => 'Small image on desktop'
+				'preferredWidth' => 200,
+				'maxHeight' => 500,
+				'originalWidth' => 300,
+				'originalHeight' => 400,
+				'expected' => [ 'width' => 200, 'height' => 267 ]
 			],
 			[
-				'mockParams' => [
-					'fileHeight' => 2000,
-					'fileWidth' => 3000
-				],
-				'isWikiaMobile' => true,
-				'wgPortableInfoboxCustomImageWidth' => null,
-				'result' => [
-					'height' => null,
-					'width' => 360
-				],
-				'description' => 'Big image on mobile'
+				'preferredWidth' => 270,
+				'maxHeight' => 500,
+				'originalWidth' => 100,
+				'originalHeight' => 300,
+				'expected' => [ 'width' => 100, 'height' => 300 ]
 			],
 			[
-				'mockParams' => [
-					'fileHeight' => 3000,
-					'fileWidth' => 250
-				],
-				'isWikiaMobile' => true,
-				'wgPortableInfoboxCustomImageWidth' => null,
-				'result' => [
-					'height' => null,
-					'width' => 360
-				],
-				'description' => 'Tall image on mobile'
-			],
-			[
-				'mockParams' => [
-					'fileHeight' => 200,
-					'fileWidth' => 2000
-				],
-				'isWikiaMobile' => true,
-				'wgPortableInfoboxCustomImageWidth' => null,
-				'result' => [
-					'height' => null,
-					'width' => 360
-				],
-				'description' => 'Wide image on mobile'
-			],
-			[
-				'mockParams' => [
-					'fileHeight' => 50,
-					'fileWidth' => 45
-				],
-				'isWikiaMobile' => true,
-				'wgPortableInfoboxCustomImageWidth' => null,
-				'result' => [
-					'height' => null,
-					'width' => 360
-				],
-				'description' => 'Small image on mobile'
-			],
-			[
-				'mockParams' => [
-					'fileHeight' => 2000,
-					'fileWidth' => 3000
-				],
-				'isWikiaMobile' => false,
-				'wgPortableInfoboxCustomImageWidth' => 400,
-				'result' => [
-					'height' => 2000,
-					'width' => 400
-				],
-				'description' => 'Big image on desktop with custom image width'
-			],
-			[
-				'mockParams' => [
-					'fileHeight' => 3000,
-					'fileWidth' => 250
-				],
-				'isWikiaMobile' => false,
-				'wgPortableInfoboxCustomImageWidth' => 400,
-				'result' => [
-					'height' => 3000,
-					'width' => 400
-				],
-				'description' => 'Tall image on desktop with custom image width'
-			],
-			[
-				'mockParams' => [
-					'fileHeight' => 200,
-					'fileWidth' => 2000
-				],
-				'isWikiaMobile' => false,
-				'wgPortableInfoboxCustomImageWidth' => 400,
-				'result' => [
-					'height' => 200,
-					'width' => 400
-				],
-				'description' => 'Wide image on desktop with custom image width'
-			],
-			[
-				'mockParams' => [
-					'fileHeight' => 2000,
-					'fileWidth' => 3000
-				],
-				'isWikiaMobile' => true,
-				'wgPortableInfoboxCustomImageWidth' => 400,
-				'result' => [
-					'height' => null,
-					'width' => 360
-				],
-				'description' => 'Big image on mobile with custom image width'
+				'preferredWidth' => 270,
+				'maxHeight' => 500,
+				'originalWidth' => 800,
+				'originalHeight' => 600,
+				'expected' => [ 'width' => 270, 'height' => 203 ]
 			],
 		];
 	}
+
 
 	/**
-	 * @desc test getImageSizesToDisplay function. It should return the logical size used to define HTML width and
-	 * height in the output. This allows to differentiate between physical size and logical size, allowing
-	 * to achieve high pereived quality on for example Retina displays.
-	 *
-	 * @param $thumbnailSizes
-	 * @param $isWikiaMobile
-	 * @param $wgPortableInfoboxCustomImageWidth
-	 * @param $result
-	 * @param $description
-	 * @dataProvider testGetImageSizesToDisplayDataProvider
+	 * @param $customWidth
+	 * @param $preferredWidth
+	 * @param $resultDimensions
+	 * @param $thumbnailDimensions
+	 * @param $originalDimension
+	 * @dataProvider customWidthProvider
 	 */
-	public function testGetImageSizesToDisplay( $thumbnailSizes, $isWikiaMobile, $wgPortableInfoboxCustomImageWidth, $result, $description ) {
-		$this->mockGlobalVariable('wgPortableInfoboxCustomImageWidth', $wgPortableInfoboxCustomImageWidth);
-		$mock = $this->getMockBuilder( 'Wikia\PortableInfobox\Helpers\PortableInfoboxRenderServiceHelper' )
-			->setMethods( [ 'isWikiaMobile' ] )
+	public function testCustomWidthLogic( $customWidth, $preferredWidth, $resultDimensions, $thumbnailDimensions, $originalDimension ) {
+		$expected = [
+			'name' => 'test',
+			'ref' => null,
+			'thumbnail' => null,
+			'key' => '',
+			'media-type' => 'image',
+			'mercuryComponentAttrs' => '{"itemContext":"portable-infobox","ref":null}',
+			'width' => $resultDimensions[ 'width' ],
+			'height' => $resultDimensions[ 'height' ]
+		];
+		$thumb = $this->getMockBuilder( 'ThumbnailImage' )
+			->disableOriginalConstructor()
+			->setMethods( [ 'isError', 'getUrl' ] )
 			->getMock();
-		$mock->expects( $this->any() )->method( 'isWikiaMobile' )->will( $this->returnValue( $isWikiaMobile ) );
+		$file = $this->getMockBuilder( 'File' )
+			->disableOriginalConstructor()
+			->setMethods( [ 'exists', 'transform', 'getWidth', 'getHeight' ] )
+			->getMock();
+		$file->expects( $this->once() )->method( 'exists' )->will( $this->returnValue( true ) );
+		$file->expects( $this->once() )->method( 'getWidth' )->will( $this->returnValue( $originalDimension[ 'width' ] ) );
+		$file->expects( $this->once() )->method( 'getHeight' )->will( $this->returnValue( $originalDimension[ 'height' ] ) );
 
-		$thumbnailMock = $this->getThumbnailMock( $thumbnailSizes );
+		$file->expects( $this->any() )
+			->method( 'transform' )
+			->with( $this->equalTo( $thumbnailDimensions ) )
+			->will( $this->returnValue( $thumb ) );
+		$this->mockStaticMethod( 'WikiaFileHelper', 'getFileFromTitle', $file );
+		$this->mockGlobalFunction( 'wfRunHooks', true );
 
-		$this->assertEquals(
-			$result,
-			$mock->getImageSizesToDisplay( $thumbnailMock ),
-			$description
-		);
+		$globals = new \Wikia\Util\GlobalStateWrapper( [
+			'wgPortableInfoboxCustomImageWidth' => $customWidth
+		] );
+
+		$helper = new PortableInfoboxRenderServiceHelper();
+		$result = $globals->wrap( function () use ( $helper, $preferredWidth ) {
+			return $helper->extendImageData( [ 'name' => 'test' ], $preferredWidth );
+		} );
+
+		$this->assertEquals( $expected, $result );
 	}
 
-	public function testGetImageSizesToDisplayDataProvider() {
+	public function customWidthProvider() {
 		return [
 			[
-				'thumbnailSizes' => [
-					'height' => 500,
-					'width' => 270
-				],
-				'isWikiaMobile' => false,
-				'wgPortableInfoboxCustomImageWidth' => null,
-				'result' => [
-					'height' => 500,
-					'width' => 270
-				],
-				'description' => 'Regular thumbnail image on desktop with no custom width; logical size = physical size'
+				'custom' => false,
+				'preferred' => 300,
+				'result' => [ 'width' => 300, 'height' => 200 ],
+				'thumbnail' => [ 'width' => 300, 'height' => 200 ],
+				'original' => [ 'width' => 300, 'height' => 200 ]
 			],
 			[
-				'thumbnailSizes' => [
-					'height' => 1000,
-					'width' => 540
-				],
-				'isWikiaMobile' => false,
-				'wgPortableInfoboxCustomImageWidth' => 540,
-				'result' => [
-					'height' => 500,
-					'width' => 270
-				],
-				'description' => 'Regular thumbnail image on desktop with double custom width; portrait'
+				'custom' => 400,
+				'preferred' => 300,
+				'result' => [ 'width' => 300, 'height' => 200 ],
+				'thumbnail' => [ 'width' => 300, 'height' => 200 ],
+				'original' => [ 'width' => 300, 'height' => 200 ]
 			],
 			[
-				'thumbnailSizes' => [
-					'height' => 500,
-					'width' => 540
-				],
-				'isWikiaMobile' => false,
-				'wgPortableInfoboxCustomImageWidth' => 540,
-				'result' => [
-					'height' => 250,
-					'width' => 270
-				],
-				'description' => 'Regular thumbnail image on desktop with double custom width; landscape'
+				'custom' => 400,
+				'preferred' => 300,
+				'result' => [ 'width' => 300, 'height' => 180 ],
+				'thumbnail' => [ 'width' => 400, 'height' => 240 ],
+				'original' => [ 'width' => 500, 'height' => 300 ]
 			],
 			[
-				'thumbnailSizes' => [
-					'height' => 250,
-					'width' => 270
-				],
-				'isWikiaMobile' => true,
-				'wgPortableInfoboxCustomImageWidth' => null,
-				'result' => [
-					'height' => 250,
-					'width' => 270
-				],
-				'description' => 'Regular thumbnail image on mobile with no custom width; logical size = physical size'
+				'custom' => 600,
+				'preferred' => 300,
+				'result' => [ 'width' => 300, 'height' => 500 ],
+				'thumbnail' => [ 'width' => 300, 'height' => 500 ],
+				'original' => [ 'width' => 300, 'height' => 500 ]
 			],
 			[
-				'thumbnailSizes' => [
-					'height' => 360,
-					'width' => 270
-
-				],
-				'isWikiaMobile' => true,
-				'wgPortableInfoboxCustomImageWidth' => 540,
-				'result' => [
-					'height' => 360,
-					'width' => 270
-				],
-				'description' => 'Regular thumbnail image on mobile with double custom width; portrait; logical size = physical size'
+				'custom' => 600,
+				'preferred' => 300,
+				'result' => [ 'width' => 188, 'height' => 500 ],
+				'thumbnail' => [ 'width' => 188, 'height' => 500 ],
+				'original' => [ 'width' => 300, 'height' => 800 ]
 			],
 			[
-				'thumbnailSizes' => [
-					'height' => 270,
-					'width' => 360
-				],
-				'isWikiaMobile' => true,
-				'wgPortableInfoboxCustomImageWidth' => 540,
-				'result' => [
-					'height' => 270,
-					'width' => 360
-				],
-				'description' => 'Regular thumbnail image on desktop with double custom width; landscape; logical size = physical size'
+				'custom' => 600,
+				'preferred' => 300,
+				'result' => [ 'width' => 300, 'height' => 375 ],
+				'thumbnail' => [ 'width' => 600, 'height' => 750 ],
+				'original' => [ 'width' => 1200, 'height' => 1500 ]
 			],
-				[
-					'thumbnailSizes' => [
-							'height' => 600,
-							'width' => 210
-					],
-					'isWikiaMobile' => false,
-					'wgPortableInfoboxCustomImageWidth' => 540,
-					'result' => [
-							'height' => 500,
-							'width' => 175
-					],
-					'description' => 'Regular thumbnail image on desktop with double custom width; portrait extra
-					thin image edge case'
-				]
 		];
 	}
+
 }

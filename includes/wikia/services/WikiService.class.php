@@ -1,6 +1,11 @@
 <?php
 
 class WikiService extends WikiaModel {
+	const ADMIN_GROUPS = [
+		'bureaucrat',
+		'sysop'
+	];
+
 	const WAM_DEFAULT_ITEM_LIMIT_PER_PAGE = 20;
 	const IMAGE_HEIGHT_KEEP_ASPECT_RATIO = -1;
 	const TOPUSER_CACHE_VALID = 10800;
@@ -93,7 +98,7 @@ class WikiService extends WikiaModel {
 	}
 
 	private static function getAdminIdsFromDB( DatabaseBase $db, $excludeBots = false, $limit = null ) {
-		$conditions = [ 'ug_group' => [ 'sysop', 'bureaucrat' ] ];
+		$conditions = [ 'ug_group' => self::ADMIN_GROUPS ];
 
 		if ( $excludeBots ) {
 			$groupList = $db->makeList( self::$botGroups );
@@ -327,15 +332,15 @@ class WikiService extends WikiaModel {
 	 * @param integer $userId
 	 * @param integer $wikiId
 	 * @param integer $avatarSize
-	 * @param callable $checkUserCallback
+	 * @param callable $checkUserCallback (optional)
 	 * @return array userInfo
 	 *
 	 */
-	public function getUserInfo($userId, $wikiId, $avatarSize, $checkUserCallback) {
+	public function getUserInfo($userId, $wikiId, $avatarSize, $checkUserCallback = null) {
 		$userInfo = array();
 		$user = User::newFromId($userId);
 
-		if ($user instanceof User && $checkUserCallback($user)) {
+		if ( $user instanceof User && ( !is_callable( $checkUserCallback ) || $checkUserCallback( $user ) ) ) {
 			$username = $user->getName();
 
 			$userInfo['avatarUrl'] = AvatarService::getAvatarUrl($user, $avatarSize);
@@ -348,16 +353,16 @@ class WikiService extends WikiaModel {
 			$userInfo['userContributionsUrl'] = ($userContributionsTitle instanceof Title) ? $userContributionsTitle->getFullURL() : '#';
 			$userInfo['userId'] = $userId;
 
-			$userStatsService = new UserStatsService($userId);
-			$stats = $userStatsService->getGlobalStats($wikiId);
+			$userStatsService = new UserStatsService($userId, $wikiId);
+			$stats = $userStatsService->getStats();
 
-			if(!empty($stats['date'])) {
-				$date = getdate(strtotime($stats['date']));
+			if(!empty($stats['firstRevisionDate'])) {
+				$date = getdate(strtotime($stats['firstRevisionDate']));
 			} else {
 				$date = getdate(strtotime('2005-06-01'));
 			}
 
-			$userInfo['lastRevision'] = $stats['lastRevision'];
+			$userInfo['lastRevision'] = $stats['lastRevisionDate'];
 
 			$userInfo['since'] = F::App()->wg->Lang->getMonthAbbreviation($date['mon']) . ' ' . $date['year'];
 		}
@@ -427,9 +432,8 @@ class WikiService extends WikiaModel {
 				$admins = array();
 				try {
 					$admins = $this->getWikiAdminIds($wikiId, false, true, $limit, false);
-					$checkUserCallback = function ($user) { return true; };
 					foreach ($admins as &$admin) {
-						$userInfo = $this->getUserInfo($admin, $wikiId, $avatarSize, $checkUserCallback);
+						$userInfo = $this->getUserInfo($admin, $wikiId, $avatarSize);
 						$admin = $userInfo;
 					}
 				} catch (Exception $e) {
@@ -817,22 +821,28 @@ class WikiService extends WikiaModel {
 			$rows = $db->select(
 				array(
 					'city_visualization',
-					'city_list'
+					'city_list',
+					'city_verticals',
+					'city_cat_mapping',
+					'city_cats'
 				),
 				array(
 					'city_list.city_id',
 					'city_list.city_title',
+					'city_list.city_description',
 					'city_list.city_url',
 					'city_list.city_lang',
-					'city_visualization.city_vertical',
+					'city_list.city_vertical',
 					'city_visualization.city_headline',
 					'city_visualization.city_description',
 					'city_visualization.city_main_image',
 					'city_visualization.city_flags',
+					'city_verticals.vertical_name',
+					'city_cats.cat_name'
 				),
 				array(
 					'city_list.city_public' => 1,
-					'city_list.city_id IN (' . implode( ',', $wikiIds ) . ')',
+					'city_list.city_id' => $wikiIds,
 					'((city_visualization.city_flags & ' . self::FLAG_BLOCKED . ') != ' . self::FLAG_BLOCKED . ' OR city_visualization.city_flags IS NULL)'
 				),
 				__METHOD__,
@@ -841,6 +851,18 @@ class WikiService extends WikiaModel {
 					'city_visualization' => array(
 						'LEFT JOIN',
 						'city_list.city_id = city_visualization.city_id'
+					),
+					'city_verticals' => array(
+						'LEFT JOIN',
+						'city_list.city_vertical = city_verticals.vertical_id'
+					),
+					'city_cat_mapping' => array (
+						'LEFT JOIN',
+						'city_list.city_id = city_cat_mapping.city_id',
+					),
+					'city_cats' => array(
+						'LEFT JOIN',
+						'city_cat_mapping.cat_id = city_cats.cat_id'
 					)
 				)
 			);
@@ -849,8 +871,11 @@ class WikiService extends WikiaModel {
 				$item = array(
 					'name' => $row->city_title,
 					'url' => $row->city_url,
+					'domain' => $row->city_url,
+					'title' => $row->city_title,
+					'topic' => $row->cat_name,
 					'lang' => $row->city_lang,
-					'hubId' => $row->city_vertical,
+					'hub' => $row->vertical_name,
 					'headline' => $row->city_headline,
 					'desc' => $row->city_description,
 					//this is stored in a pretty peculiar format,

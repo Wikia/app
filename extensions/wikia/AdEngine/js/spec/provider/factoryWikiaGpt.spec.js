@@ -5,36 +5,41 @@ describe('ext.wikia.adEngine.provider.factory.wikiaGpt', function () {
 	function noop() {}
 
 	var mocks = {
-			log: noop,
-			context: {
-				opts: {}
-			},
-			adContext: {
-				getContext: function () {
-					return mocks.context;
-				}
-			},
-			adLogicPageParams: {
-				getPageLevelParams: function () {
-					return {
-						s0: 'ent',
-						s1: '_muppet',
-						s2: 'home'
-					};
-				}
-			},
-			gptHelper: {
-				pushAd: function (slot, slotPath, slotTargeting, extra) {
-					slot.success();
-					slot.hop();
-				}
-			},
-			lookups: {
-				extendSlotTargeting: noop
-			},
-			beforeSuccess: noop,
-			beforeHop: noop
-		};
+		log: noop,
+		context: {
+			opts: {}
+		},
+		adContext: {
+			getContext: function () {
+				return mocks.context;
+			}
+		},
+		adLogicPageParams: {
+			getPageLevelParams: function () {
+				return {
+					s0: 'ent',
+					s1: '_muppet',
+					s2: 'home'
+				};
+			}
+		},
+		gptHelper: {
+			pushAd: function (slot) {
+				slot.success();
+				slot.hop();
+			}
+		},
+		lookups: {
+			extendSlotTargeting: noop
+		},
+		beforeSuccess: noop,
+		beforeCollapse: noop,
+		window: {},
+		beforeHop: noop,
+		btfBlocker: {
+			decorate: noop
+		}
+	};
 
 	function createSlot(slotName) {
 		return {
@@ -51,6 +56,7 @@ describe('ext.wikia.adEngine.provider.factory.wikiaGpt', function () {
 		return modules['ext.wikia.adEngine.provider.factory.wikiaGpt'](
 			mocks.adContext,
 			mocks.adLogicPageParams,
+			mocks.btfBlocker,
 			mocks.gptHelper,
 			mocks.log,
 			mocks.lookups
@@ -102,6 +108,16 @@ describe('ext.wikia.adEngine.provider.factory.wikiaGpt', function () {
 		}).fillInSlot(createSlot('TOP_LEADERBOARD'));
 
 		expect(mocks.beforeSuccess).toHaveBeenCalled();
+	});
+
+	it('Call beforeCollapse on pushAd if is defined', function () {
+		spyOn(mocks, 'beforeCollapse');
+
+		getProvider({
+			beforeCollapse: mocks.beforeCollapse
+		}).fillInSlot(createSlot('TOP_LEADERBOARD'));
+
+		expect(mocks.beforeCollapse).toHaveBeenCalled();
 	});
 
 	it('Call beforeHop on pushAd if is defined', function () {

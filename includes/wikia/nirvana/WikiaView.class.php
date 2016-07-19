@@ -10,7 +10,7 @@
  * @author Wojciech Szela <wojtek(at)wikia-inc.com>
  * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
  */
-use Wikia\Util\RequestId;
+use Wikia\Tracer\WikiaTracer;
 
 class WikiaView {
 	/**
@@ -298,13 +298,6 @@ class WikiaView {
 		$data = $this->response->getData();
 
 		switch($this->response->getTemplateEngine()) {
-			case WikiaResponse::TEMPLATE_ENGINE_HANDLEBARS:
-				$handlebarsService = HandlebarsService::getInstance();
-				$result = $handlebarsService->render( $this->getTemplatePath(), $data );
-				wfProfileOut(__METHOD__);
-
-				return $result;
-				break;
 			case WikiaResponse::TEMPLATE_ENGINE_MUSTACHE:
 				$m = MustacheService::getInstance();
 				$result = $m->render( $this->getTemplatePath(), $data );
@@ -350,8 +343,8 @@ class WikiaView {
 					'code' => $exception->getCode(),
 					'details' => ''
 				],
-				// return RequestID for easier errors reporting
-				'request_id' => RequestId::instance()->getRequestId(),
+				// return TraceId for easier errors reporting
+				'trace_id' => WikiaTracer::instance()->getTraceId(),
 			];
 
 			if ( is_callable( [ $exception, 'getDetails' ] ) ) {

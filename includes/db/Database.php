@@ -651,22 +651,6 @@ abstract class DatabaseBase implements DatabaseType {
 	}
 
 	/**
-	 * Same as new DatabaseMysql( ... ), kept for backward compatibility
-	 * @deprecated since 1.17
-	 *
-	 * @param $server
-	 * @param $user
-	 * @param $password
-	 * @param $dbName
-	 * @param $flags int
-	 * @return DatabaseMysql
-	 */
-	static function newFromParams( $server, $user, $password, $dbName, $flags = 0 ) {
-		wfDeprecated( __METHOD__, '1.17' );
-		return new DatabaseMysql( $server, $user, $password, $dbName, $flags );
-	}
-
-	/**
 	 * Same as new factory( ... ), kept for backward compatibility
 	 * @deprecated since 1.18
 	 * @see Database::factory()
@@ -703,7 +687,7 @@ abstract class DatabaseBase implements DatabaseType {
 	 */
 	final public static function factory( $dbType, $p = array() ) {
 		$canonicalDBTypes = array(
-			'mysql' => array( 'mysqli', 'mysql' ),
+			'mysql' => [ 'mysqli' ],
 			'postgres' => array(),
 			'sqlite' => array(),
 			'oracle' => array(),
@@ -898,7 +882,7 @@ abstract class DatabaseBase implements DatabaseType {
 		}
 
 		# <Wikia>
-		global $wgDBReadOnly;
+		global $wgDBReadOnly, $wgReadOnly;
 		if ( $is_writeable && $wgDBReadOnly ) {
 			if ( !Profiler::instance()->isStub() ) {
 				wfProfileOut( $queryProf );
@@ -907,7 +891,8 @@ abstract class DatabaseBase implements DatabaseType {
 			WikiaLogger::instance()->error( 'DB readonly mode', [
 				'exception' => new WikiaException( $fname . ' called in read-only mode' ),
 				'sql'       => $sql,
-				'server'    => $this->mServer
+				'server'    => $this->mServer,
+				'reason'    => (string) $wgReadOnly,
 			] );
 			wfDebug( sprintf( "%s: DB read-only mode prevented the following query: %s\n", __METHOD__, $sql ) );
 			return false;
@@ -946,13 +931,13 @@ abstract class DatabaseBase implements DatabaseType {
 		}
 
 		# @author: wladek
-		$requestIdComment = '';
-		if ( class_exists("\\Wikia\\Util\\RequestId") ) {
-			$requestIdComment = sprintf(" - %s",\Wikia\Util\RequestId::instance()->getRequestId());
+		$traceIdComment = '';
+		if ( class_exists("\\Wikia\\Tracer\\WikiaTracer") ) {
+			$traceIdComment = sprintf(" - %s",\Wikia\Tracer\WikiaTracer::instance()->getTraceId());
 		}
 		# Wikia change - end
 
-		$commentedSql = preg_replace( '/\s/', " /* $fname $userName$requestIdComment */ ", $sql, 1 );
+		$commentedSql = preg_replace( '/\s/', " /* $fname $userName$traceIdComment */ ", $sql, 1 );
 
 		# Wikia change - begin
 		# @author macbre
@@ -981,7 +966,8 @@ abstract class DatabaseBase implements DatabaseType {
 			$sqlx = strtr( $sqlx, "\t\n", '  ' );
 
 			$master = $isMaster ? 'master' : 'slave';
-			wfDebug( "Query {$this->mDBname} ($cnt) ($master): $sqlx\n" );
+			$DBuser = $this->getLBInfo( 'user' );
+			wfDebug( "Query {$this->mDBname} (DB user: {$DBuser}) ($cnt) ($master): $sqlx\n" );
 		}
 
 		if ( istainted( $sql ) & TC_MYSQL ) {
@@ -1750,20 +1736,6 @@ abstract class DatabaseBase implements DatabaseType {
 	}
 
 	/**
-	 * mysql_field_type() wrapper
-	 * @param $res
-	 * @param $index
-	 * @return string
-	 */
-	function fieldType( $res, $index ) {
-		if ( $res instanceof ResultWrapper ) {
-			$res = $res->result;
-		}
-
-		return mysql_field_type( $res, $index );
-	}
-
-	/**
 	 * Determines if a given index is unique
 	 *
 	 * @param $table string
@@ -2355,7 +2327,7 @@ abstract class DatabaseBase implements DatabaseType {
 	 * Quotes an identifier using `backticks` or "double quotes" depending on the database type.
 	 * MySQL uses `backticks` while basically everything else uses double quotes.
 	 * Since MySQL is the odd one out here the double quotes are our generic
-	 * and we implement backticks in DatabaseMysql.
+	 * and we implement backticks in DatabaseMysqli.
 	 *
 	 * @param $s string
 	 *
@@ -3682,14 +3654,13 @@ abstract class DatabaseBase implements DatabaseType {
 	 * @param string $fname the function name
 	 * @param bool $isMaster is this against the master
 	 *
-	 * @return ResultWrapper|resource|bool see doQuery
+	 * @return ResultWrapper|mysqli_result|bool see doQuery
 	 */
 	protected function executeAndProfileQuery( $sql, $fname, $isMaster ) {
 		$queryId = MWDebug::query( $sql, $fname, $isMaster );
 		$start = microtime( true );
 
-		// Wikia change: DatabaseMysql returns a resource instead of ResultWrapper instance
-		/* @var $ret resource|bool */
+		/* @var $ret mysqli_result|bool */
 		$ret = $this->doQuery( $sql );
 
 		$this->logSql( $sql, $ret, $fname, microtime( true ) - $start, $isMaster );
@@ -3703,7 +3674,7 @@ abstract class DatabaseBase implements DatabaseType {
 	 * at the rate defined in self::QUERY_SAMPLE_RATE.
 	 *
 	 * @param string $sql the query
-	 * @param ResultWrapper|resource|bool $ret database results
+	 * @param ResultWrapper|mysqli_result|bool $ret database results
 	 * @param string $fname the name of the function that made this query
 	 * @param bool $isMaster is this against the master
 	 * @return void
@@ -3718,9 +3689,6 @@ abstract class DatabaseBase implements DatabaseType {
 			// for SELECT queries report how many rows are sent to the client
 			// for INSERT, UPDATE, DELETE, DROP queries report affected rows
 			$num_rows = $ret->num_rows ?: $this->affectedRows();
-		} elseif ( is_resource( $ret ) ) {
-			// for SELECT queries report how many rows are sent to the client
-			$num_rows = mysql_num_rows( $ret );
 		} elseif ( $ret === true ) {
 			// for INSERT, UPDATE, DELETE, DROP queries report affected rows
 			$num_rows = $this->affectedRows();
@@ -3743,10 +3711,12 @@ abstract class DatabaseBase implements DatabaseType {
 			'method'      => $fname,
 			'elapsed'     => $elapsedTime,
 			'num_rows'    => $num_rows,
+			'transaction_level' => $this->mTrxLevel, # either 0 or 1
 			'cluster'     => $wgDBcluster,
 			'server'      => $this->mServer,
 			'server_role' => $isMaster ? 'master' : 'slave',
 			'db_name'     => $this->mDBname,
+			'db_user'     => $this->getLBInfo( 'user' ),
 			'exception'   => new Exception(), // log the backtrace
 		];
 

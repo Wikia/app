@@ -55,14 +55,6 @@
 							</a>
 						</li>
 					<?php endforeach; ?>
-					<li>
-						<a href="<?= htmlspecialchars( $createWikiUrl ) ?>"
-							class="start-wikia"
-							title="<?= wfMessage( 'global-navigation-create-wiki' )->escaped(); ?>"
-							data-id="start-wikia">
-							<span><?= wfMessage( 'global-navigation-create-wiki' )->escaped(); ?></span>
-						</a>
-					</li>
 				</ul>
 			</div>
 		</div>
@@ -77,6 +69,14 @@
 				<?= $app->renderView( 'GlobalNavigationWallNotifications', 'Index' ); ?>
 			</div>
 		<?php endif; ?>
+		<div class="start-wikia-container table-cell">
+			<a href="<?= htmlspecialchars( $createWikiUrl ) ?>"
+			   class="start-wikia"
+			   title="<?= wfMessage( 'global-navigation-create-wiki' )->escaped(); ?>"
+			   data-id="start-wikia">
+				<span><?= ( wfMessage( 'global-navigation-create-wiki' )->escaped() ); ?></span>
+			</a>
+		</div>
 		<? if ( $isGameStarLogoEnabled ): ?>
 			<a class="gamestar-logo" href="http://gamestar.de/"></a>
 		<? endif; ?>

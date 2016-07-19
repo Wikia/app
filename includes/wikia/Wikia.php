@@ -57,6 +57,7 @@ $wgHooks['BeforeSendCacheControl']    [] = 'Wikia::onBeforeSendCacheControl';
 $wgHooks['ResourceLoaderAfterRespond'][] = 'Wikia::onResourceLoaderAfterRespond';
 $wgHooks['NirvanaAfterRespond']       [] = 'Wikia::onNirvanaAfterRespond';
 $wgHooks['ApiMainBeforeSendCacheHeaders'][] = 'Wikia::onApiMainBeforeSendCacheHeaders';
+$wgHooks['AjaxResponseSendHeadersAfter'][] = 'Wikia::onAjaxResponseSendHeadersAfter';
 
 # don't purge all variants of articles in Chinese - BAC-1278
 $wgHooks['TitleGetLangVariants'][] = 'Wikia::onTitleGetLangVariants';
@@ -74,11 +75,11 @@ $wgHooks['WebRequestInitialized'][] = 'Wikia::onWebRequestInitialized';
 # Log user email changes
 $wgHooks['BeforeUserSetEmail'][] = 'Wikia::logEmailChanges';
 
+use \Wikia\Tracer\WikiaTracer;
+
 /**
  * This class has only static methods so they can be used anywhere
- *
  */
-
 class Wikia {
 
 	const REQUIRED_CHARS = '0123456789abcdefG';
@@ -90,6 +91,7 @@ class Wikia {
 
 	const CUSTOM_INTERFACE_PREFIX = 'custom-';
 	const EDITNOTICE_INTERFACE_PREFIX = 'editnotice-';
+	const TAG_INTERFACE_PREFIX = 'tag-';
 
 	private static $vars = array();
 	private static $cachedLinker;
@@ -453,7 +455,10 @@ class Wikia {
 		$method = $sub ? $method . "-" . $sub : $method;
 		if( $wgDevelEnvironment || $wgErrorLog || $always ) {
 			$method = preg_match('/-WIKIA$/', $method) ? str_replace('-WIKIA', '', $method) : $method;
-			\Wikia\Logger\WikiaLogger::instance()->debug($message, ['method' => $method]);
+			\Wikia\Logger\WikiaLogger::instance()->debug( $message, [
+				'exception' => new Exception(),
+				'method' => $method
+			] );
 		}
 
 		/**
@@ -1080,23 +1085,27 @@ class Wikia {
 	 * add entries to software info
 	 */
 	static public function softwareInfo( &$software ) {
-		global $wgCityId, $wgDBcluster, $wgWikiaDatacenter, $wgLocalFileRepo;
+		global $wgCityId, $wgDBcluster, $wgWikiaDatacenter, $wgLocalFileRepo, $smwgDefaultStore, $wgEnableSemanticMediaWikiExt;
+
+		$info = [];
 
 		if( !empty( $wgCityId ) ) {
-			$info = "city_id: {$wgCityId}";
+			$info[] = "city_id: {$wgCityId}";
 		}
 		if( empty( $wgDBcluster ) ) {
-			$info .= ", cluster: c1";
+			$info[] = "cluster: c1";
 		}
 		else {
-			$info .= ", cluster: $wgDBcluster";
+			$info[] = "cluster: $wgDBcluster";
 		}
 		if( !empty( $wgWikiaDatacenter ) ) {
-			$info .= ", dc: $wgWikiaDatacenter";
+			$info[] = "dc: $wgWikiaDatacenter";
 		}
-		$info .= ", file_repo: {$wgLocalFileRepo['backend']}";
+		if( !empty( $wgEnableSemanticMediaWikiExt ) ) {
+			$info[] = "smw_store: $smwgDefaultStore";
+		}
 
-		$software[ "Internals" ] = $info;
+		$software[ "Internals" ] = join( ', ', $info );
 
 		/**
 		 * obligatory hook return value
@@ -2014,7 +2023,9 @@ class Wikia {
 		$isValid = ($retVal === 0);
 
 		if (!$isValid) {
-			Wikia::log(__METHOD__, 'failed',  rtrim($output), true);
+			Wikia\Logger\WikiaLogger::instance()->warning( __METHOD__ . ' failed', [
+				'output' => rtrim($output),
+			] );
 
 			// pass an error to UploadBase class
 			$error = array('verification-error');
@@ -2236,8 +2247,13 @@ class Wikia {
 		global $wgRequestTime;
 		$elapsed = microtime( true ) - $wgRequestTime;
 
-		$response->header( sprintf( 'X-Served-By:%s', wfHostname() ) );
-		$response->header( sprintf( 'X-Backend-Response-Time:%01.3f', $elapsed ) );
+		$response->header( sprintf( 'X-Served-By: %s', wfHostname() ) );
+		$response->header( sprintf( 'X-Backend-Response-Time: %01.3f', $elapsed ) );
+
+		$response->header( sprintf( 'X-Trace-Id: %s', WikiaTracer::instance()->getTraceId() ) );
+		$response->header( sprintf( 'X-Span-Id: %s', WikiaTracer::instance()->getSpanId() ) );
+
+		$response->header( sprintf( 'X-Request-Path: %s', WikiaTracer::instance()->getRequestPath() ) );
 
 		$response->header( 'X-Cache: ORIGIN' );
 		$response->header( 'X-Cache-Hits: ORIGIN' );
@@ -2295,6 +2311,17 @@ class Wikia {
 	 */
 	static function onApiMainBeforeSendCacheHeaders( WebResponse $response ) {
 		self::addExtraHeaders( $response );
+		return true;
+	}
+
+	/**
+	 * Add X-Served-By and X-Backend-Response-Time response headers to index.php?action=ajax (MW ajax requests dispatcher)
+	 *
+	 * @return bool
+	 * @author macbre
+	 */
+	static function onAjaxResponseSendHeadersAfter() {
+		self::addExtraHeaders( F::app()->wg->Request->response() );
 		return true;
 	}
 
@@ -2375,6 +2402,7 @@ class Wikia {
 			|| ( Wikia::isUsingSafeJs() && $title->isJsPage() )
 			|| startsWith( lcfirst( $title->getDBKey() ), self::CUSTOM_INTERFACE_PREFIX )
 			|| startsWith( lcfirst( $title->getDBKey() ), self::EDITNOTICE_INTERFACE_PREFIX )
+			|| startsWith( lcfirst( $title->getDBKey() ), self::TAG_INTERFACE_PREFIX )
 		) {
 			return $wgUser->isAllowed( 'editinterface' );
 		}
@@ -2524,6 +2552,20 @@ class Wikia {
 				]);
 		}
 		return true;
+	}
+
+	public static function surrogateKey( $args ) {
+		global $wgCachePrefix;
+
+		return 'mw-' . implode( '-', [ $wgCachePrefix ?: wfWikiID(), implode( '-', func_get_args() ) ] );
+	}
+
+	public static function sharedSurrogateKey( $args ) {
+		return 'mw-' . implode( '-', func_get_args() );
+	}
+
+	public static function purgeSurrogateKey( $key ) {
+		CeleryPurge::purgeBySurrogateKey( $key );
 	}
 
 }

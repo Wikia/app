@@ -94,7 +94,7 @@ describe('Loader Module', function () {
 	it('RL module is properly loaded', function (done) {
 		var mwMock = {
 				loader: {
-					use: function (use) {
+					using: function (use) {
 						expect(JSON.stringify(use)).toEqual('["jquery.mustache"]');
 
 						// mock and return deferred object
@@ -113,14 +113,14 @@ describe('Loader Module', function () {
 			loader = modules['wikia.loader'](windowMock, mwMock, nirvanaMock, jQuery, logMock, fbLocale);
 
 		// check calls to this function
-		spyOn(mwMock.loader, 'use').and.callThrough();
+		spyOn(mwMock.loader, 'using').and.callThrough();
 
 		loader({
 			type: loader.LIBRARY,
 			resources: ['mustache']
 		}).
 		done(function () {
-			expect(mwMock.loader.use).toHaveBeenCalled();
+			expect(mwMock.loader.using).toHaveBeenCalled();
 			done();
 		});
 	});

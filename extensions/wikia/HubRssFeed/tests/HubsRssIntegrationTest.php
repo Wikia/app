@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @group Integration
+ * @group ExternalIntegration
  */
 
 class HubsRssIntegrationTest extends WikiaBaseTest {

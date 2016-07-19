@@ -17,9 +17,7 @@ require([
 		if (shouldShowBanner()) {
 
 			// make sure messages are loading before we show the notification
-			mw.loader.use([
-				'ext.cookiePolicyMessages'
-			]).then(showBanner);
+			mw.loader.using('ext.cookiePolicyMessages').then(showBanner);
 		}
 	}
 

@@ -90,7 +90,13 @@ abstract class WallNotificationControllerBase extends WikiaController {
 
 		$data = $firstEntity->data;
 		if ( isset( $data->type ) && ( $data->type === 'ADMIN' || $data->type === 'OWNER' ) ) {
-			$this->forward( __CLASS__, 'NotificationAdmin' );
+			// SUS-254 this logic is duplicated in WallNotificationsExternalController::init but we need it here also
+			if ( ( $this->app->checkSkin( [ 'oasis' ] ) ) ) {
+				$controllerName = 'GlobalNavigationWallNotifications';
+			} else {
+				$controllerName = 'WallNotifications';
+			}
+			$this->forward( $controllerName, 'NotificationAdmin' );
 			return;
 		}
 
@@ -289,13 +295,13 @@ abstract class WallNotificationControllerBase extends WikiaController {
 	 * @param string $title
 	 * @return string
 	 */
-	protected abstract function getTitle( string $title );
+	protected abstract function getTitle( $title );
 
 	/**
 	 * @param bool $unread
 	 * @return void
 	 */
-	protected abstract function setUnread( bool $unread );
+	protected abstract function setUnread( $unread );
 
 	/**
 	 * @return void

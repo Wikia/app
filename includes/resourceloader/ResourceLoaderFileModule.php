@@ -712,8 +712,7 @@ class ResourceLoaderFileModule extends ResourceLoaderModule {
 				break;
 			case self::FILE_TYPE_SASS:
 				$sassService = SassService::newFromFile($fileName);
-				$params = $context->getRequest()->getVal('sass_params');
-				$params = !empty($params) ? FormatJson::decode($params,true) : array();
+				$params = $context->getSassParams();
 				$sassService->setSassVariables($params);
 				return $sassService->getCss();
 				break;

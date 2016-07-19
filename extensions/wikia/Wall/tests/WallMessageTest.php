@@ -1,4 +1,5 @@
 <?php
+
 class WallMessageTest extends WikiaBaseTest {
 
 	/**
@@ -31,4 +32,51 @@ class WallMessageTest extends WikiaBaseTest {
 
 	}
 
+	public function testNewFromIds() {
+		$slaveId = 1;
+		$onlyMasterId = 2;
+		$notExistingId = 3;
+
+		$masterData = [
+			$slaveId => $this->getSlaveTitleRow(),
+			$onlyMasterId => $this->getMasterTitle(),
+			$notExistingId => null
+		];
+
+		$mockDb = $this->getDatabaseMock([ 'select', 'selectRow' ] );
+		$mockDb->expects( $this->exactly( 1 ) )
+			->method( 'select' )
+			->will( $this->returnValue( [ $this->getSlaveTitleRow() ] ) );
+
+		$mockDb->expects( $this->exactly( 2 ) )
+			->method( "selectRow" )
+			->will( $this->returnCallback(
+				function ( $table, $vars, $conds ) use ( $masterData ) {
+					return $masterData[ $conds[ 'page_id' ] ];
+				} ) );
+
+		$this->mockGlobalFunction( 'wfGetDb', $mockDb );
+
+		$ids = [ $slaveId, $onlyMasterId, $notExistingId ];
+
+		$wallMessages = WallMessage::newFromIds( $ids );
+
+		$this->assertEquals( 2, count( $wallMessages ) );
+	}
+
+	private function getSlaveTitleRow() {
+		return (object)[
+			"page_namespace" => NS_USER_WALL_MESSAGE,
+			"page_title" => "Slave Title",
+			"page_id" => 1,
+		];
+	}
+
+	private function getMasterTitle() {
+		return (object)[
+			"page_namespace" => NS_USER_WALL_MESSAGE,
+			"page_title" => "Master Title",
+			"page_id" => 2,
+		];
+	}
 }

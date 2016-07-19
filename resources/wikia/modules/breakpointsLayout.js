@@ -51,6 +51,13 @@ define('wikia.breakpointsLayout',  function() {
 	}
 
 	/**
+	 * @returns {number}
+	 */
+	function getLargeContentWidth() {
+		return BREAKPOINT_LARGE_CONTENT_WIDTH;
+	}
+
+	/**
 	 *
 	 * @param {string} breakpoint
 	 * @param {boolean} isWidePage
@@ -79,9 +86,10 @@ define('wikia.breakpointsLayout',  function() {
 
 
 	return {
-		getArticleWidth: getArticleWidth,
 		getArticleMinWidth: getArticleMinWidth,
 		getArticlePadding: getArticlePadding,
+		getArticleWidth: getArticleWidth,
+		getLargeContentWidth: getLargeContentWidth,
 		getRailWidthWithSpacing: getRailWidthWithSpacing
 	};
 

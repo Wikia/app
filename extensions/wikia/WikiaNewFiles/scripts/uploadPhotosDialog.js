@@ -7,20 +7,21 @@ var UploadPhotos = {
 	libinit: false,
 	init: function() {
 		$(".mw-special-Images").on('click', '.upphotos', $.proxy(this.loginBeforeShowDialog, this));
+		if (Wikia.Querystring().getVal('modal') === 'UploadImage') {
+			this.loginBeforeShowDialog();
+		}
 	},
 	loginBeforeShowDialog: function(evt) {
 		var UserLoginModal = window.UserLoginModal;
 		if (( wgUserName == null ) && ( !UserLogin.forceLoggedIn )) {
-			require(['AuthModal'], function (authModal) {
-				authModal.load({
-					url: '/signin?redirect=' + encodeURIComponent(window.location.href),
-					origin: 'latest-photos',
-					onAuthSuccess: $.proxy(function() {
-						UserLogin.forceLoggedIn = true;
-						this.showDialog(evt);
-					}, this)
-				});
-			}.bind(this));
+			window.wikiaAuthModal.load({
+				forceLogin: true,
+				origin: 'latest-photos',
+				onAuthSuccess: $.proxy(function() {
+					UserLogin.forceLoggedIn = true;
+					this.showDialog(evt);
+				}, this)
+			});
 		}
 		else {
 			this.showDialog(evt);
@@ -134,7 +135,7 @@ var UploadPhotos = {
 			var json = JSON.parse(res);
 			if(json) {
 				if(json['status'] == 0) {	// 0 is success...
-					window.location = wgArticlePath.replace('$1', 'Special:NewFiles');
+					window.location = wgArticlePath.replace('$1', 'Special:Images');
 				} else if(json['status'] == -2) {	// show conflict dialog
 					UploadPhotos.step1.hide(400, function() {
 						UploadPhotos.advanced.hide();

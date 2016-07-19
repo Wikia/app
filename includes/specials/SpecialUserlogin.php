@@ -764,6 +764,7 @@ class LoginForm extends SpecialPage {
 		// which is needed or the personal links will be
 		// wrong.
 		$this->getContext()->setUser( $u );
+		wfRunHooks( 'AfterUserLogin', array( $u ) ); // Wikia change
 
 		// Please reset throttle for successful logins, thanks!
 		if ( $throttleCount ) {
@@ -807,11 +808,12 @@ class LoginForm extends SpecialPage {
 	 */
 	public static function incLoginThrottle( $username ) {
 		global $wgPasswordAttemptThrottle, $wgMemc, $wgRequest;
-		$username = trim( $username ); // sanity
+		$canUsername = User::getCanonicalName( $username, 'usable' );
+		$username = $canUsername !== false ? $canUsername : $username;
 
 		$throttleCount = 0;
 		if ( is_array( $wgPasswordAttemptThrottle ) ) {
-			$throttleKey = wfMemcKey( 'password-throttle', $wgRequest->getIP(), md5( $username ) );
+			$throttleKey = wfSharedMemcKey( 'password-throttle', $wgRequest->getIP(), md5( $username ) );
 			$count = $wgPasswordAttemptThrottle['count'];
 			$period = $wgPasswordAttemptThrottle['seconds'];
 
@@ -835,9 +837,10 @@ class LoginForm extends SpecialPage {
 	 */
 	public static function clearLoginThrottle( $username ) {
 		global $wgMemc, $wgRequest;
-		$username = trim( $username ); // sanity
+		$canUsername = User::getCanonicalName( $username, 'usable' );
+		$username = $canUsername !== false ? $canUsername : $username;
 
-		$throttleKey = wfMemcKey( 'password-throttle', $wgRequest->getIP(), md5( $username ) );
+		$throttleKey = wfSharedMemcKey( 'password-throttle', $wgRequest->getIP(), md5( $username ) );
 		$wgMemc->delete( $throttleKey );
 	}
 
@@ -912,7 +915,7 @@ class LoginForm extends SpecialPage {
 
 				// Reset the throttle
 				$request = $this->getRequest();
-				$key = wfMemcKey( 'password-throttle', $request->getIP(), md5( $this->mUsername ) );
+				$key = wfSharedMemcKey( 'password-throttle', $request->getIP(), md5( $this->mUsername ) );
 				$wgMemc->delete( $key );
 
 				if( $this->hasSessionCookie() || $this->mSkipCookieCheck ) {
@@ -1501,6 +1504,8 @@ class LoginForm extends SpecialPage {
 			$wgCookieSecure = false;
 		}
 
+		// Always make sure edit token is regenerated. (T122056)
+		$this->getRequest()->setSessionData( 'wsEditToken', null );
 		wfResetSessionID();
 	}
 

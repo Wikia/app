@@ -103,7 +103,7 @@
 			for (attr in this.cache) {
 				if (this.cache.hasOwnProperty(attr)) {
 					val = this.cache[attr];
-					tmpArr.push(encodeURIComponent(attr) + (val === u ? '' : '=' + encodeURIComponent(val)));
+					tmpArr.push(encodeURIComponent(attr) + (val === u ? '' : '=' + val));
 				}
 			}
 

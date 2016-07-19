@@ -182,6 +182,7 @@
 	"visualeditor-editnotices-tooltip": "Заметки по редактированию",
 	"visualeditor-editsummary": "Опишите внесённые изменения",
 	"visualeditor-editsummary-bytes-remaining": "Количество оставшихся байт",
+	"visualeditor-formatdropdown-format-blockquote": "Блочная цитата",
 	"visualeditor-formatdropdown-format-mw-heading1": "Заголовок страницы",
 	"visualeditor-formatdropdown-format-mw-heading2": "Заголовок",
 	"visualeditor-formatdropdown-format-mw-heading3": "Подзаголовок 1",

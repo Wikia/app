@@ -55,16 +55,12 @@ AdProviderOpenX.getUrl = function() {
 
 function isReviveEnabledInGeo() {
 	'use strict';
-
-	if (!window.Wikia.geo.isProperGeo) {
+	
+	try {
+		return window.Wikia.geo.isProperGeo(window.Wikia.InstantGlobals.wgReviveSpotlightsCountries);
+	} catch (e) {
 		return false;
 	}
-
-	if (!window.Wikia.InstantGlobals.wgReviveSpotlightsCountries) {
-		return false;
-	}
-
-	return window.Wikia.geo.isProperGeo(window.Wikia.InstantGlobals.wgReviveSpotlightsCountries);
 }
 
 if (!window.wgNoExternals && window.wgEnableOpenXSPC && !window.wgIsEditPage && !window.navigator.userAgent.match(/sony_tvs/)) {

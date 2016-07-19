@@ -118,7 +118,7 @@ class JsonFormatTest extends WikiaBaseTest {
 	protected function checkClassStructure( $data, $structure ) {
 		foreach ( $structure as $class => $params ) {
 			$classInfo = explode( ':', $class );
-			$this->assertInstanceOf( $classInfo[ 0 ], $data );
+			$this->assertInstanceOf( $classInfo[ 0 ], $data, sprintf('Instance check failed for %s', $class) );
 			$i = 0;
 			foreach ( $params as $keyOrClass => $element ) {
 				if ( is_numeric( $keyOrClass ) || !method_exists( $data, 'getChildren' ) ) {
@@ -142,21 +142,23 @@ class JsonFormatTest extends WikiaBaseTest {
 
 	protected function getParsedOutput( $wikitext ) {
 		return $this->memCacheDisabledSection( function () use ( $wikitext ) {
-			global $wgOut;
-			if ( !isset( $this->parser ) ) {
-				$this->parser = new Parser();
-			}
-			$htmlOutput = $this->parser->parse( $wikitext, new Title(), $wgOut->parserOptions() );
+			global $wgOut, $wgWikiaEnvironment;
+			$parser = ParserPool::get();
+			$htmlOutput = $parser->parse( $wikitext, new Title(), $wgOut->parserOptions() );
 
 			//check for empty result
 			if ( !empty( $wikitext ) ) {
 				$this->assertNotEmpty( $htmlOutput->getText(), 'Provided WikiText could not be parsed.' );
+				\Wikia\Logger\WikiaLogger::instance()->info(
+					'JsonFormatTest::getParsedOutput', [
+						'wikitext' => $wikitext,
+						'html_output' => $htmlOutput->getText()
+					]
+				);
 			}
 
-			if ( !isset( $this->htmlParser ) ) {
-				$this->htmlParser = new \Wikia\JsonFormat\HtmlParser();
-			}
-			$jsonOutput = $this->htmlParser->parse( $htmlOutput->getText() );
+			$htmlParser = new \Wikia\JsonFormat\HtmlParser();
+			$jsonOutput = $htmlParser->parse( $htmlOutput->getText() );
 
 			return $jsonOutput;
 		} );
@@ -238,8 +240,6 @@ width: 310px; padding: 10px; text-align: left; float: right; margin-bottom:15px;
 | valign=top | \'\'\'ISBN\'\'\'&nbsp; || Lis
 |}<noinclude>
 <br clear="all">
-
-{{Quote|Write the first paragraph of your page here.}}
 
 =Test article=
 <div class="coolStyling">
@@ -328,7 +328,6 @@ anything here -->
 					  'JsonFormatTextNode' => [ ]
 				  ],
 				  'JsonFormatTextNode:1' => [ ],
-				  'JsonFormatQuoteNode' => [ 'text', 'author' ],
 				  'JsonFormatSectionNode' => [
 					  'level', 'title',
 					  'JsonFormatTextNode' => [ ],
@@ -433,6 +432,85 @@ anything here -->
 				  ]
 			  ]
 			  ]
+			],
+			[ '
+{| class="infobox" style="clear: right; border: solid #aaa 1px; margin: 0 0 1em 1em; background: #f9f9f9; color:black;
+width: 310px; padding: 10px; text-align: left; float: right; margin-bottom:15px;"
+|- class="hiddenStructure"
+| valign=top nowrap=nowrap | \'\'\'Written by\'\'\'&nbsp; || Lorem
+|- class="hiddenStructure"
+| valign=top | \'\'\'Illustrator\'\'\'&nbsp; || Ipsum
+|- class="hiddenStructure"
+| valign=top |\'\'\'Published\'\'\'&nbsp; || Kra
+|- class="hiddenStructure"
+| valign=top |\'\'\'Publisher\'\'\'&nbsp; || Kre
+|- class="hiddenStructure"
+| valign=top | \'\'\'Series\'\'\'&nbsp; || Mija
+|- class="hiddenStructure"
+| valign=top | \'\'\'ISBN\'\'\'&nbsp; || Lis
+|}
+',
+				[
+					'JsonFormatRootNode' => [
+						'JsonFormatInfoboxNode' => [
+							'JsonFormatInfoboxKeyValueNode' => [
+								'key', 'value'
+							],
+							'JsonFormatInfoboxKeyValueNode:1' => [
+								'key', 'value'
+							],
+							'JsonFormatInfoboxKeyValueNode:2' => [
+								'key', 'value'
+							],
+							'JsonFormatInfoboxKeyValueNode:3' => [
+								'key', 'value'
+							],
+							'JsonFormatInfoboxKeyValueNode:4' => [
+								'key', 'value'
+							],
+							'JsonFormatInfoboxKeyValueNode:5' => [
+								'key', 'value'
+							]
+						]
+					]
+				]
+			],
+			[
+				'Text',
+				[
+					'JsonFormatRootNode' => [
+						'JsonFormatParagraphNode' => [
+							'JsonFormatTextNode' => [ ]
+						],
+					]
+				]
+			],
+			[
+				'[[Image:Firefly_logo.png]]
+[[File:Firefly_logo.png|thumb|200px|adsfadsfasd]]',
+				[
+					'JsonFormatRootNode' => [
+						'JsonFormatParagraphNode' => [
+							'JsonFormatImageNode' => [ 'src' ],
+						],
+						'JsonFormatTextNode' => [ ],
+						'JsonFormatImageFigureNode' => [ 'src', 'caption' ]
+					]
+				]
+			],
+			[
+				'',
+				[
+					'JsonFormatRootNode' => []
+				]
+			],
+			[
+				'=h1=',
+				[
+					'JsonFormatRootNode' => [
+						'JsonFormatSectionNode' => [ 'level', 'title' ]
+					]
+				]
 			]
 		];
 	}

@@ -1,9 +1,9 @@
 <!-- Begin IVW3 Tag -->
 <script type="text/javascript">
-	var iamData = {
+	var iam_data = {
 		st: '{{siteId}}',
-		cp: '{{vertical}}',
-		sv: 'ke'
+		cp: '{{cmKey}}',
+		sv: 'i2'
 	};
 
 	if (window.Wikia &&
@@ -13,7 +13,7 @@
 	) {
 		window.ivw3Initialized = true;
 		document.write('<script type="text/javascript" src="{{url}}"><\/script>');
-		document.write('<script type="text/javascript">window.iom.c(iamData, 2);<\/script>');
+		document.write('<script type="text/javascript">window.iom.c(iam_data, 2);<\/script>');
 	}
 </script>
 <!-- End IVW3 Tag -->

@@ -54,7 +54,7 @@ class RenameUserMaintenance extends Maintenance {
 		$res = $renameProcess->run();
 
 		if ( $res !== true ) {
-			$logger->info( __CLASS__ . ': error', [
+			$logger->error( __CLASS__ . ': error', [
 				'errors' => $renameProcess->getErrors(),
 				'warnings' => $renameProcess->getWarnings(),
 			] );

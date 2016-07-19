@@ -1790,7 +1790,7 @@ class Linker {
 		$query = array(
 			'action' => 'rollback',
 			'from' => $rev->getUserText(),
-			'token' => $wgUser->getEditToken( array( $title->getPrefixedText(), $rev->getUserText() ) ),
+			'token' => $wgUser->getEditToken( [ $title->getPrefixedText(), $rev->getUserText() ] ),
 		);
 		if ( $wgRequest->getBool( 'bot' ) ) {
 			$query['bot'] = '1';
@@ -1798,10 +1798,12 @@ class Linker {
 		}
 		return self::link(
 			$title,
-			wfMsgHtml( 'rollbacklink' ),
-			array( 'title' => wfMsg( 'tooltip-rollback' ) ),
+			wfMessage( 'rollbacklink' )->escaped(),
+			# Wikia change begin
+			[ 'title' => wfMessage( 'tooltip-rollback' ), 'data-action' => 'rollback' ],
+			# Wikia change end
 			$query,
-			array( 'known', 'noclasses' )
+			[ 'known', 'noclasses' ]
 		);
 	}
 

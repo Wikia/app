@@ -5,6 +5,9 @@ describe('Evolve2 Provider targeting', function () {
 	var evolve2,
 		noop = function () {},
 		mocks = {
+			adContext: {
+				addCallback: noop
+			},
 			gptHelper: {
 				pushAd: noop
 			},
@@ -24,6 +27,7 @@ describe('Evolve2 Provider targeting', function () {
 
 	function getEvolve2Provider() {
 		return modules['ext.wikia.adEngine.provider.evolve2'](
+			mocks.adContext,
 			mocks.gptHelper,
 			mocks.slotTweaker,
 			mocks.zoneParams,
@@ -64,51 +68,87 @@ describe('Evolve2 Provider targeting', function () {
 
 	it('Should push ad to helper with proper targeting', function () {
 		var expectedTargeting = {
-				size: '728x90,970x250,970x300,970x90',
-				pos: 'a',
-				sect: 'ros',
-				site: 'wikia_intl'
-			};
+			size: '728x90,970x250,970x300,970x90',
+			pos: 'a',
+			wloc: 'top',
+			wpos: 'TOP_LEADERBOARD',
+			wsrc: 'evolve'
+		};
 
 		evolve2.fillInSlot(createSlot('TOP_LEADERBOARD'));
 
 		expect(mocks.gptHelper.pushAd.calls.mostRecent().args[2]).toEqual(expectedTargeting);
 	});
 
+	it('Should push ad to helper with proper targeting', function () {
+		var expectedTargeting = {
+			size: '160x600',
+			pos: 'b',
+			wloc: 'middle',
+			wpos: 'LEFT_SKYSCRAPER_2',
+			wsrc: 'evolve'
+		};
+
+		evolve2.fillInSlot(createSlot('LEFT_SKYSCRAPER_2'));
+
+		expect(mocks.gptHelper.pushAd.calls.mostRecent().args[2]).toEqual(expectedTargeting);
+	});
+
+	it('Should push ad to helper with proper targeting', function () {
+		var expectedTargeting = {
+			size: '300x250',
+			pos: 'a',
+			wpos: 'MOBILE_IN_CONTENT',
+			wsrc: 'mobile_evolve'
+		};
+
+		evolve2.fillInSlot(createSlot('MOBILE_IN_CONTENT'));
+
+		expect(mocks.gptHelper.pushAd.calls.mostRecent().args[2]).toEqual(expectedTargeting);
+	});
+
 	it('Should push ad to helper with proper vertical', function () {
-		var expectedSection = 'tv';
+		var adUnitElements,
+			expectedSection = 'tv';
 
 		mocks.vertical = 'tv';
 		evolve2.fillInSlot(createSlot('LEFT_SKYSCRAPER_2'));
 
-		expect(mocks.gptHelper.pushAd.calls.mostRecent().args[2].sect).toEqual(expectedSection);
+		adUnitElements = mocks.gptHelper.pushAd.calls.mostRecent().args[1].split('/');
+		expect(adUnitElements[4]).toEqual(expectedSection);
 	});
 
 	it('Should push ad to helper with proper vertical', function () {
-		var expectedSection = 'movies';
+		var adUnitElements,
+			expectedSection = 'movies';
 
 		mocks.vertical = 'movies';
 		evolve2.fillInSlot(createSlot('LEFT_SKYSCRAPER_2'));
 
-		expect(mocks.gptHelper.pushAd.calls.mostRecent().args[2].sect).toEqual(expectedSection);
+		adUnitElements = mocks.gptHelper.pushAd.calls.mostRecent().args[1].split('/');
+		expect(adUnitElements[4]).toEqual(expectedSection);
 	});
 
 	it('Should push ad to helper with proper mapped vertical', function () {
-		var expectedSection = 'gaming';
+		var adUnitElements,
+			expectedSection = 'gaming';
 
 		mocks.mappedVertical = 'gaming';
 		evolve2.fillInSlot(createSlot('LEFT_SKYSCRAPER_2'));
 
-		expect(mocks.gptHelper.pushAd.calls.mostRecent().args[2].sect).toEqual(expectedSection);
+		adUnitElements = mocks.gptHelper.pushAd.calls.mostRecent().args[1].split('/');
+		expect(adUnitElements[4]).toEqual(expectedSection);
 	});
 
 	it('Should push ad to helper with proper mapped vertical', function () {
-		var expectedSection = 'entertainment';
+		var adUnitElements,
+			expectedSection = 'entertainment';
 
 		mocks.mappedVertical = 'ent';
 		evolve2.fillInSlot(createSlot('LEFT_SKYSCRAPER_2'));
 
-		expect(mocks.gptHelper.pushAd.calls.mostRecent().args[2].sect).toEqual(expectedSection);
+		adUnitElements = mocks.gptHelper.pushAd.calls.mostRecent().args[1].split('/');
+		expect(adUnitElements[4]).toEqual(expectedSection);
 	});
 
 	it('Should increment pos tageting value for the same size slots', function () {
