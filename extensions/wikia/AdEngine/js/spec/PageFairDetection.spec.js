@@ -5,7 +5,6 @@ describe('Module ext.wikia.adEngine.pageFairDetection', function () {
 	function getModule(mocks) {
 		return modules['ext.wikia.adEngine.pageFairDetection'](
 				mocks.adContext,
-				mocks.adTracker,
 				mocks.scriptLoader,
 				mocks.document,
 				mocks.log,
@@ -29,7 +28,6 @@ describe('Module ext.wikia.adEngine.pageFairDetection', function () {
 			adContext: {
 				getContext: getContext
 			},
-			adTracker: noop,
 			scriptLoader: {
 				loadAsync: noop
 			},
