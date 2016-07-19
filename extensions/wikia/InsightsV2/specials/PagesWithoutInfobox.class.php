@@ -53,15 +53,17 @@ class PagesWithoutInfobox extends PageQueryPage {
 		/**
 		 * 3. Insert the new records if the $pagesWithoutInfobox array is not empty
 		 */
-		( new WikiaSQL() )
-			->INSERT()->INTO( 'querycache', [
-				'qc_type',
-				'qc_value',
-				'qc_namespace',
-				'qc_title'
-			] )
-			->VALUES( $pagesWithoutInfobox )
-			->run( $dbw );
+		if ( !empty( $pagesWithoutInfobox ) ) {
+			( new WikiaSQL() )
+				->INSERT()->INTO( 'querycache', [
+					'qc_type',
+					'qc_value',
+					'qc_namespace',
+					'qc_title'
+				] )
+				->VALUES( $pagesWithoutInfobox )
+				->run( $dbw );
+		}
 
 		wfRunHooks( 'PagesWithoutInfoboxQueryRecached' );
 
@@ -80,8 +82,8 @@ class PagesWithoutInfobox extends PageQueryPage {
 
 		$tc = new UserTemplateClassificationService();
 
-		$infoboxTemplates = [];
-		foreach( $tc->getTemplatesOnWiki( $wgCityId ) as $pageId => $templateType ) {
+		$infoboxTemplates = [ ];
+		foreach ( $tc->getTemplatesOnWiki( $wgCityId ) as $pageId => $templateType ) {
 			if ( $tc->isInfoboxType( $templateType ) ) {
 				$templateTitle = Title::newFromID( $pageId );
 				if ( $templateTitle instanceof Title ) {
@@ -92,15 +94,15 @@ class PagesWithoutInfobox extends PageQueryPage {
 
 		$dbr = wfGetDB( DB_SLAVE, [ $this->getName(), __METHOD__, 'vslow' ] );
 
-		$pagesWithInfobox = [];
+		$pagesWithInfobox = [ ];
 		if ( !empty( $infoboxTemplates ) ) {
 			$pagesWithInfobox = ( new WikiaSQL() )
 				->SELECT( 'tl_from' )
 				->FROM( 'templatelinks' )
 				->WHERE( 'tl_title' )->IN( $infoboxTemplates )
-					->AND_( 'tl_namespace' )->EQUAL_TO( NS_TEMPLATE )
+				->AND_( 'tl_namespace' )->EQUAL_TO( NS_TEMPLATE )
 				->runLoop( $dbr, function ( &$pagesWithInfobox, $row ) {
-					$pagesWithInfobox[$row->tl_from] = true;
+					$pagesWithInfobox[ $row->tl_from ] = true;
 				} );
 		}
 
@@ -110,7 +112,7 @@ class PagesWithoutInfobox extends PageQueryPage {
 			->WHERE( 'page_namespace' )->IN( $wgContentNamespaces )
 			->ORDER_BY( 'page_id' )->DESC()
 			->runLoop( $dbr, function ( &$contentPages, $row ) {
-				$contentPages[$row->page_id] = [
+				$contentPages[ $row->page_id ] = [
 					$this->getName(),
 					$row->page_id,
 					$row->page_namespace,
@@ -119,7 +121,7 @@ class PagesWithoutInfobox extends PageQueryPage {
 			} );
 
 		if ( empty( $contentPages ) ) {
-			$pagesWithoutInfobox = [];
+			$pagesWithoutInfobox = [ ];
 		} elseif ( empty( $pagesWithInfobox ) ) {
 			$pagesWithoutInfobox = $contentPages;
 		} else {
