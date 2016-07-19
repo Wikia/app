@@ -6,10 +6,14 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 	const ACTION_QUESTIONABLE = 'questionable';
 	const ACTION_REJECTED     = 'rejected';
 
-	var $statsHeaders = array( 'user', 'total reviewed', 'approved', 'deleted', 'qustionable', 'distance to avg.' );
+	private $statsHeaders = array( 'user', 'total reviewed', 'approved', 'deleted', 'qustionable', 'distance to avg.' );
+	private $action;
+	private $order;
+	private $ts;
+	private $helper;
 
 	public function __construct() {
-		parent::__construct('ImageReview', 'imagereview', false /* $listed */);
+		parent::__construct( 'ImageReview', 'imagereview', false /* $listed */ );
 	}
 
 	protected function setGlobalDisplayVars() {
@@ -28,100 +32,40 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 	public function index() {
 		$this->setGlobalDisplayVars();
 
-		$action = $this->getPar();
-		$actions = explode('/',$action);
-		$action = array_pop($actions);
+		$this->action = $this->getAction();
+		$this->order = $this->getOrderingMethod();
+		$this->ts = $this->wg->request->getVal( 'ts' );
 
-		$this->action = $action;
-		$this->response->setJsVar('wgImageReviewAction', $action);
+		$this->checkUserPermissions();
+		$this->checkRedirect();
 
-		$this->accessQuestionable = $this->wg->User->isAllowed( 'questionableimagereview' );
-		$this->accessRejected = $this->wg->User->isAllowed( 'rejectedimagereview' );
+		$this->setCache();
+		$this->setAssets();
+		$this->setVariables();
 
-		// check permissions
-		if (!$this->specialPage->userCanExecute($this->wg->User)) {
-			$this->specialPage->displayRestrictionError();
-			return false;
-		} elseif ( $action == self::ACTION_QUESTIONABLE && !$this->accessQuestionable ) {
-			$this->specialPage->displayRestrictionError( 'questionableimagereview' );
-			return false;
-		} elseif ( $action == self::ACTION_REJECTED && !$this->accessRejected ) {
-			$this->specialPage->displayRestrictionError( 'rejectedimagereview' );
-			return false;
-		} elseif ( $action == 'stats' ) {
-			$this->forward( get_class( $this ), 'stats' );
-			return true;
-		} elseif ( $action == 'csvstats' ) {
-			$this->forward( get_class( $this ), 'csvStats' );
-		}
-
-		$this->response->setCacheValidity(WikiaResponse::CACHE_DISABLED);
-		$this->response->sendHeaders();
-
-		$this->response->addAsset('extensions/wikia/ImageReview/js/jquery.onImagesLoad.js');
-		$this->response->addAsset('extensions/wikia/ImageReview/js/ImageReview.js');
-		$this->response->addAsset('extensions/wikia/ImageReview/css/ImageReview.scss');
-
-		$this->response->setVal( 'accessQuestionable', $this->accessQuestionable );
-		$this->response->setVal( 'accessStats', $this->wg->User->isAllowed( 'imagereviewstats' ) );
-		$this->response->setVal( 'accessControls', $this->wg->user->isAllowed( 'imagereviewcontrols' ) );
-		$this->response->setVal( 'modeMsgSuffix', empty( $action ) ? '' : '-' . $action );
-
-		$order = $this->getOrderingMethod();
-
-		$this->response->setVal( 'order', $order );
-
-
-		$helper = $this->getHelper();
-
-		$ts = $this->wg->request->getVal( 'ts' );
-		$query = ( empty($action) ) ? '' : '/'.$action ;
-		$this->fullUrl = $this->wg->Title->getFullUrl( );
-		$this->baseUrl = $this->getBaseUrl();
-		$this->toolName = $this->getToolName();
-		$this->submitUrl = $this->baseUrl . $query;
+		$this->helper = $this->getHelper();
 
 		if( $this->wg->request->wasPosted() ) {
-			$data = $this->wg->request->getValues();
-			if ( !empty($data) ) {
-				$images = $this->parseImageData($data);
-
-				if ( count($images) > 0 ) {
-					$helper->updateImageState( $images, $action );
-				}
-				$ts = null;
-			}
+			$this->handlePostAction();
 		}
 
-		if ( !$ts || intval($ts) < 0 || intval($ts) > time() ) {
-			$this->wg->Out->redirect( $this->submitUrl. '?ts=' . time() );
-			return;
-		}
-
-		$user_key = $helper->getUserTsKey();
+		$user_key = $this->helper->getUserTsKey();
 		$newestTs = $this->wg->Memc->get( $user_key );
 
-		if ( $ts > $newestTs ) {
+		if ( $this->ts > $newestTs ) {
 			WikiaLogger::instance()->info( 'ImageReviewLog', [
 				'method' => __METHOD__,
-				'message' => "I've got the newest ts ({$ts}), I won't refetch the images",
+				'message' => "I've got the newest ts ({$this->ts}), I won't refetch the images",
 			]);
 			$this->imageList = array();
-			$this->wg->memc->set( $user_key, $ts, 3600 /* 1h */ );
+			$this->wg->memc->set( $user_key, $this->ts, 3600 /* 1h */ );
 		} else {
-			$this->imageList = $helper->refetchImageListByTimestamp( $ts );
+			$this->imageList = $this->helper->refetchImageListByTimestamp( $this->ts );
 		}
 
 		/* SUS-541 / Mix <mix@wikia.com> / scope: the following if block */
 		if ( count( $this->imageList ) < ImageReviewHelper::LIMIT_IMAGES ) {
-			WikiaLogger::instance()->debug(
-				'SUS-541',
-				[
-					'severity' => 'warning',
-					'imageList' => $this->imageList,
-					'exception' => new Exception
-				]
-			);
+			$this->logImageListCompleteness( 'warning' );
 		}
 
 		if ( count( $this->imageList ) == 0 ) {
@@ -131,49 +75,21 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 				'default'					=> ImageReviewStatuses::STATE_UNREVIEWED
 			);
 
-			if ( isset( $do[ $action ] ) ) {
-				$this->imageList = $helper->getImageList( $ts, $do[ $action ], $order );
-				$this->imageCount = $helper->getImageCount();
+			if ( isset( $do[ $this->action ] ) ) {
+				$this->imageList = $this->helper->getImageList( $this->ts, $do[ $this->action ], $this->order );
+				$this->imageCount = $this->helper->getImageCount();
 			} else {
-				$this->imageList = $helper->getImageList( $ts, $do[ 'default' ], $order );
-				$this->imageCount = $helper->getImageCount( 'unreviewed', count( $this->imageList ) );
+				$this->imageList = $this->helper->getImageList( $this->ts, $do[ 'default' ], $this->order );
+				$this->imageCount = $this->helper->getImageCount( 'unreviewed', count( $this->imageList ) );
 			}
 		} else {
-			$this->imageCount = $helper->getImageCount();
+			$this->imageCount = $this->helper->getImageCount();
 		}
 
 		/* SUS-541 / Mix <mix@wikia.com> / scope: the following if block */
-		if ( count( $this->imageList ) < ImageReviewHelper::LIMIT_IMAGES ) {
-			$severity = 'error';
-		} else {
-			$severity = 'success';
-		}
-		WikiaLogger::instance()->debug(
-			'SUS-541',
-			[
-				'severity' => $severity,
-				'imageList' => $this->imageList,
-				'exception' => new Exception
-			]
-		);
+		$severity = count( $this->imageList ) < ImageReviewHelper::LIMIT_IMAGES ? 'error' : 'success';
+		$this->logImageListCompleteness( $severity );
 	}
-
-	protected function getOrderingMethod() {
-		if ($this->wg->user->isAllowed('imagereviewcontrols')) {
-			$order = (int)$this->getVal('sort', -1);
-			if ($order >= 0) {
-				$this->app->wg->User->setGlobalPreference('imageReviewSort', $order);
-				$this->app->wg->User->saveSettings();
-			}
-
-			$order = $this->app->wg->User->getGlobalPreference('imageReviewSort');
-			return $order;
-		} else {
-			$order = -1;
-			return $order;
-		}
-	}
-
 
 	public function stats() {
 		if ( !$this->wg->User->isAllowed( 'imagereviewstats' )) {
@@ -280,4 +196,107 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 
 		return $images;
 	}
+
+	private function handlePostAction() {
+		$data = $this->wg->request->getValues();
+		if ( !empty($data) ) {
+			$images = $this->parseImageData($data);
+
+			if ( count($images) > 0 ) {
+				$this->helper->updateImageState( $images, $this->action );
+			}
+			$this->ts = null;
+		}
+	}
+
+	private function getOrderingMethod() {
+		if ($this->wg->user->isAllowed('imagereviewcontrols')) {
+			$order = (int)$this->getVal('sort', -1);
+			if ($order >= 0) {
+				$this->app->wg->User->setGlobalPreference('imageReviewSort', $order);
+				$this->app->wg->User->saveSettings();
+			}
+
+			$order = $this->app->wg->User->getGlobalPreference('imageReviewSort');
+			return $order;
+		} else {
+			$order = -1;
+			return $order;
+		}
+	}
+
+	private function getAction() {
+		$actions = explode( '/', $this->getPar() );
+		return array_pop( $actions );
+	}
+
+	private function checkUserPermissions() {
+		$this->accessQuestionable = $this->wg->User->isAllowed( 'questionableimagereview' );
+		$this->accessRejected = $this->wg->User->isAllowed( 'rejectedimagereview' );
+
+		// check permissions
+		if (!$this->specialPage->userCanExecute($this->wg->User)) {
+			$this->specialPage->displayRestrictionError();
+			return false;
+		} elseif ( $this->action == self::ACTION_QUESTIONABLE && !$this->accessQuestionable ) {
+			$this->specialPage->displayRestrictionError( 'questionableimagereview' );
+			return false;
+		} elseif ( $this->action == self::ACTION_REJECTED && !$this->accessRejected ) {
+			$this->specialPage->displayRestrictionError( 'rejectedimagereview' );
+			return false;
+		}
+	}
+
+	private function checkRedirect() {
+		if ( $this->action == 'stats' ) {
+			$this->forward( get_class( $this ), 'stats' );
+			return true;
+		} elseif ( $this->action == 'csvstats' ) {
+			$this->forward( get_class( $this ), 'csvStats' );
+		}
+
+		if ( !$this->ts || intval($this->ts) < 0 || intval($this->ts) > time() ) {
+			$this->wg->Out->redirect( $this->submitUrl. '?ts=' . time() );
+		}
+	}
+
+	private function setAssets() {
+		$this->response->addAsset('extensions/wikia/ImageReview/js/jquery.onImagesLoad.js');
+		$this->response->addAsset('extensions/wikia/ImageReview/js/ImageReview.js');
+		$this->response->addAsset('extensions/wikia/ImageReview/css/ImageReview.scss');
+	}
+
+	private function setCache() {
+		$this->response->setCacheValidity(WikiaResponse::CACHE_DISABLED);
+		$this->response->sendHeaders();
+	}
+
+	private function setVariables() {
+		$query = ( empty( $this->action ) ) ? '' : '/'. $this->action;
+
+		$this->response->setJsVar('wgImageReviewAction', $this->action);
+
+		$this->response->setVal( 'accessQuestionable', $this->accessQuestionable );
+		$this->response->setVal( 'accessStats', $this->wg->User->isAllowed( 'imagereviewstats' ) );
+		$this->response->setVal( 'accessControls', $this->wg->user->isAllowed( 'imagereviewcontrols' ) );
+		$this->response->setVal( 'modeMsgSuffix', empty( $this->action ) ? '' : '-' . $this->action );
+		$this->response->setVal( 'order', $this->order );
+		$this->response->setVal( 'fullUrl', $this->wg->Title->getFullUrl() );
+		$this->response->setVal( 'baseUrl', $this->getBaseUrl() );
+		$this->response->setVal( 'toolName', $this->getToolName() );
+		$this->response->setVal( 'submitUrl' ,$this->baseUrl . $query );
+	}
+
+	private function logImageListCompleteness( $severity ) {
+		WikiaLogger::instance()->debug(
+			'SUS-541',
+			[
+				'severity' => $severity,
+				'imageList' => $this->imageList,
+				'exception' => new Exception
+			]
+		);
+	}
+
+
 }
