@@ -8,7 +8,7 @@ AdProviderOpenX.getConfig = function() {
 	'use strict';
 
 	var config =  {
-		'zones':'14|15|16|17|18|19|20|21|22',
+		'zones':'14|15|16|17|18|19|20|21|22|27|28',
 		'source': '',
 		'r': Math.floor(Math.random()*99999999),
 		'loc': escape(window.location),
@@ -55,7 +55,7 @@ AdProviderOpenX.getUrl = function() {
 
 function isReviveEnabledInGeo() {
 	'use strict';
-	
+
 	try {
 		return window.Wikia.geo.isProperGeo(window.Wikia.InstantGlobals.wgReviveSpotlightsCountries);
 	} catch (e) {
@@ -67,8 +67,13 @@ if (!window.wgNoExternals && window.wgEnableOpenXSPC && !window.wgIsEditPage && 
 	jQuery(function($) {
 		$.getScript(AdProviderOpenX.getUrl(), function() {
 			var lazy = new window.Wikia.LazyLoadAds();
+		}).done(function () {
+			$(window).trigger('wikia.revive');
+			window.revive = true;
 		});
 	});
 } else {
 	$('#SPOTLIGHT_FOOTER').parent('section').hide();
+	$(window).off('wikia.revive');
+	window.revive = false;
 }
