@@ -1278,6 +1278,20 @@ $wgAdDriverRubiconFastlaneProviderCountries = null;
 $wgAdDriverRubiconFastlaneProviderSkipTier = 0;
 
 /**
+ * @name $wgAdDriverPrebidBidderCountries
+ * List of countries where prebid bidding platform is enabled.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverPrebidBidderCountries = null;
+
+/**
+ * @name $wgAdDriverAppNexusBidderCountries
+ * List of countries where appnexus bidding platform is enabled.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverAppNexusBidderCountries = null;
+
+/**
  * @name $wgAdDriverOverridePrefootersCountries
  * Enables overriding prefooters sizes on Oasis in these countries.
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.

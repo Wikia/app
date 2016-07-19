@@ -90,12 +90,12 @@ define('ext.wikia.adEngine.lookup.prebid', [
 	}
 
 	function getSlotParams(slotName) {
-		var params = {};
+		var params;
 		if (win.pbjs && typeof win.pbjs.getAdserverTargetingForAdUnitCode === 'function') {
 			params = win.pbjs.getAdserverTargetingForAdUnitCode(slotName) || {};
 		}
 
-		return params;
+		return params || {};
 	}
 
 	return factory.create({
