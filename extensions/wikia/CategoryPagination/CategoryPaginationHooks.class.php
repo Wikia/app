@@ -9,7 +9,7 @@ class CategoryPaginationHooks {
 	 * @param Article $article
 	 * @return bool
 	 */
-	static public function onArticleFromTitle( &$title, &$article ) {
+	public static function onArticleFromTitle( &$title, &$article ) {
 		$app = F::app();
 
 		// Only do anything with category pages on Oasis
@@ -29,7 +29,7 @@ class CategoryPaginationHooks {
 		return true;
 	}
 
-	static public function onCategoryViewerGetSectionPagingLinks( $catViewer, $type, $position, &$r ) {
+	public static function onCategoryViewerGetSectionPagingLinks( $catViewer, $type, $position, &$r ) {
 		if ( !( $catViewer instanceof CategoryPaginationViewer ) ) {
 			return true;
 		}
