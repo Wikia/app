@@ -34,7 +34,13 @@ class PreferenceServiceImplTest extends PHPUnit_Framework_TestCase {
 			->setLocalPreference( 'wiki-pref', self::TEST_WIKI_ID, '0' );
 		$this->cache = new VoidCache();
 		$this->persistence = $this->getMockBuilder( PreferencePersistence::class )
-			->setMethods( ['save', 'get', 'deleteAll', 'findWikisWithLocalPreferenceValue'] )
+			->setMethods( [
+				'save',
+				'get',
+				'deleteAll',
+				'findWikisWithLocalPreferenceValue',
+				'findUsersWithGlobalPreferenceValue'
+			] )
 			->disableOriginalConstructor()
 			->getMock();
 	}

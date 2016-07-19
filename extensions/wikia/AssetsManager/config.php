@@ -123,19 +123,10 @@ $config['adengine2_desktop_js'] = array(
 		'//extensions/wikia/AdEngine/js/WikiaDartVideoHelper.js',
 		'//extensions/wikia/AdEngine/js/TaboolaHelper.js',
 		'//extensions/wikia/AdEngine/js/provider/evolve2.js',
-		'//extensions/wikia/AdEngine/js/provider/hitMedia.js',
 		'//extensions/wikia/AdEngine/js/provider/liftium.js',
 		'//extensions/wikia/AdEngine/js/provider/monetizationService.js',
 
 		'//extensions/wikia/AdEngine/js/run/desktop.run.js',
-	),
-);
-
-$config['adengine2_desktop_scss'] = array(
-	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => [ 'oasis' ],
-	'assets' => array(
-		'//skins/oasis/css/core/ads.scss',
 	),
 );
 
@@ -159,6 +150,7 @@ $config['recirculation_js'] = array(
 		'//extensions/wikia/Recirculation/js/views/scroller.js',
 		'//extensions/wikia/Recirculation/js/views/impactFooter.js',
 		'//extensions/wikia/Recirculation/js/experiments/placement.js',
+		'//extensions/wikia/Recirculation/js/experiments/placement/impactFooter.js',
 		'//extensions/wikia/Recirculation/js/scrolldepth.js',
 		'//extensions/wikia/Recirculation/js/libs/perfect-scrollbar.js',
 	),
@@ -844,7 +836,6 @@ $config['mobile_base_ads_js'] = array(
 		'//extensions/wikia/AdEngine/js/provider/btfBlocker.js',
 		'//extensions/wikia/AdEngine/js/provider/directGptMobile.js',
 		'//extensions/wikia/AdEngine/js/provider/evolve2.js',
-		'//extensions/wikia/AdEngine/js/provider/hitMedia.js',
 		'//extensions/wikia/AdEngine/js/provider/factoryWikiaGpt.js',
 		'//extensions/wikia/AdEngine/js/provider/rubiconFastlane.js',
 		'//extensions/wikia/AdEngine/js/provider/gpt/adDetect.js',
@@ -2958,6 +2949,23 @@ $config['community_page_entry_point_scss'] = [
 	'skin' => 'oasis',
 	'assets' => [
 		'//extensions/wikia/CommunityPage/styles/entrypoint/EntryPoint.scss',
+	]
+];
+
+$config['community_page_new_user_modal_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => 'oasis',
+	'assets' => [
+		'//extensions/wikia/CommunityPage/scripts/firstEditModal.js',
+		'//extensions/wikia/CommunityPage/scripts/templates.mustache.js',
+	]
+];
+
+$config['community_page_new_user_modal_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => 'oasis',
+	'assets' => [
+		'//extensions/wikia/CommunityPage/styles/firstedit/FirstEditModal.scss',
 	]
 ];
 

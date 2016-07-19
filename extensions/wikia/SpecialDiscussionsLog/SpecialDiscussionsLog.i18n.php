@@ -12,6 +12,7 @@ $messages['en'] = array(
 	'discussionslog-no-user-match-error' => 'Provided username did not match any user',
 	'discussionslog-ip-invalid-error' => 'Provided IP address is invalid.',
 	'discussionslog-no-mobile-activity-error' => 'No mobile app activity by $1 in the past two weeks!',
+	'discussionslog-no-contributions-error' => 'No contributions by $1 in the past two weeks!',
 	'discussionslog-no-ip-activity-error' => 'No recent activity from IP address $1 found.',
 	'discussionslog-multiple-input-error' => 'Only one field should be populated.',
 	'discussionslog-table-caption' => 'Log data for user $1 (ID: $2)',
@@ -23,6 +24,7 @@ $messages['en'] = array(
 	'discussionslog-user-agent-header' => 'User Agent',
 	'discussionslog-app-header' => 'App',
 	'discussionslog-timestamp-header' => 'Timestamp',
+	'discussionslog-more-info' => 'Click for info',
 	'action-specialdiscussionslog' => 'Special:DiscussionsLog',
 );
 
@@ -35,6 +37,7 @@ $messages['qqq'] = array(
 	'discussionslog-no-user-match-error' => 'A message shown when the username did not match any user',
 	'discussionslog-ip-invalid-error' => 'A message shown when the IP address provided is invalid',
 	'discussionslog-no-mobile-activity-error' => 'Message saying that there was no mobile app activity by a given user',
+	'discussionslog-no-contributions-error' => 'Message saying that there were no contributions by a given user in the past two weeks',
 	'discussionslog-no-ip-activity-error' => 'Message saying that there was no activity from a given IP address',
 	'discussionslog-multiple-input-error' => 'Error message when multiple input fields are populated.',
 	'discussionslog-table-caption' => 'Information that the table shows log data for a specific username / userID',
@@ -46,6 +49,7 @@ $messages['qqq'] = array(
 	'discussionslog-user-agent-header' => 'Table header for user agent',
 	'discussionslog-app-header' => 'Table header for app',
 	'discussionslog-timestamp-header' => 'Table header for timestamp',
+	'discussionslog-more-info' => 'A message saying to click for info',
 	'action-specialdiscussionslog' => 'An action that a user has a forbidden access to when opening Special Page',
 );
 

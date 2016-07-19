@@ -107,43 +107,40 @@ class CommunityPageSpecialUsersModel {
 
 				$db = wfGetDB( DB_SLAVE );
 				$adminIds = $this->getAdmins();
+
+				if ( !$adminIds ) {
+					return [];
+				}
+
 				$botIds = $this->getBotIds();
 
 				$validAdminIds = array_diff( $adminIds, $botIds );
 				$validAdmins = [];
-				foreach( $validAdminIds as $id ) {
-					$validAdmins[$id] = [
+
+				foreach ( $validAdminIds as $id ) {
+					$validAdmins[ $id ] = [
 						'userId' => $id,
-						'contributions' => 0,
+						'latestRevision' => '',
 						'isAdmin' => true,
 					];
 				}
 
 				$sqlData = ( new WikiaSQL() )
-					->SELECT( 'rev_user_text, rev_user, wup_value' )
-					->FROM ( 'revision' )
-					->LEFT_JOIN( 'wikia_user_properties' )
-					->ON( 'rev_user', 'wup_user' )
+					->SELECT( 'rev_user_text, rev_user, MAX(rev_timestamp) AS latest_revision' )
+					->FROM ( 'revision FORCE INDEX (user_timestamp)' )
 					->WHERE( 'rev_user' )->NOT_EQUAL_TO( 0 )
 					->AND_( 'rev_user' )->IN( $validAdminIds )
-					->AND_( 'wup_property' )->EQUAL_TO( 'editcount' )
+					->AND_( 'rev_user' )->NOT_IN( $botIds )
 					->GROUP_BY( 'rev_user' )
-					->ORDER_BY( 'CAST(wup_value as unsigned) DESC, rev_user_text' );
+					->ORDER_BY( 'latest_revision DESC' );
 
-				$sqlData->runLoop( $db, function ( &$result, $row ) use (&$validAdmins) {
-					$validAdmins[$row->rev_user]['contributions'] = (int)$row->wup_value;
+				$sqlData->runLoop( $db, function ( &$result, $row ) use ( &$validAdmins ) {
+					$validAdmins[$row->rev_user]['latestRevision'] = $row->latest_revision;
 				} );
-
-				uasort( $validAdmins, function( $a, $b ){
-					if ($a[ 'contributions' ] === $b[ 'contributions' ]) {
-						return 0;
-					}
-					return ($a[ 'contributions' ] < $b[ 'contributions' ]) ? 1 : -1;
-				});
-
+				
 				return array_values( $validAdmins );
 
-			}, WikiaDataAccess::REFRESH_CACHE
+			} , WikiaDataAccess::REFRESH_CACHE
 		);
 		self::logUserModelPerformanceData( 'view', 'all_admins', $this->isUserOnList( $data ), $this->isUserLoggedIn() );
 		return $data;
@@ -205,7 +202,7 @@ class CommunityPageSpecialUsersModel {
 	/**
 	 * @return array list of blacklisted ids for Top Contributors
 	 */
-	private function getBlacklistedIds(){
+	private function getBlacklistedIds() {
 		$blacklistedIds = WikiaDataAccess::cache(
 			self::getMemcKey( self::ALL_BLACKLISTED_IDS_MCACHE_KEY ),
 			WikiaResponse::CACHE_LONG,

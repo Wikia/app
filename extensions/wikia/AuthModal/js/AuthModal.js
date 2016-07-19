@@ -1,4 +1,4 @@
-define('AuthModal', ['jquery', 'wikia.window'], function ($, window) {
+(function ($, window) {
 	'use strict';
 
 	var authPopUpWindow,
@@ -8,7 +8,7 @@ define('AuthModal', ['jquery', 'wikia.window'], function ($, window) {
 		popUpName = 'WikiaAuthWindow',
 		track = getTrackingFunction();
 
-	function initPostMessageListener (onAuthSuccess) {
+	function initPostMessageListener(onAuthSuccess) {
 		$(window).on('message.authPopUpWindow', function (event) {
 			var e = event.originalEvent;
 
@@ -47,7 +47,7 @@ define('AuthModal', ['jquery', 'wikia.window'], function ($, window) {
 		});
 	}
 
-	function close (event) {
+	function close(event) {
 		if (event) {
 			event.preventDefault();
 		}
@@ -76,7 +76,7 @@ define('AuthModal', ['jquery', 'wikia.window'], function ($, window) {
 		return 'width=' + popUpWindowWidth + ',height=' + popUpWindowHeight + ',top=' + popUpWindowTop + ',left=' + popUpWindowLeft;
 	}
 
-	function getTrackingFunction () {
+	function getTrackingFunction() {
 		if (track) {
 			return track;
 		}
@@ -88,7 +88,7 @@ define('AuthModal', ['jquery', 'wikia.window'], function ($, window) {
 		return track;
 	}
 
-	function loadPopUpPage (url, forceLogin) {
+	function loadPopUpPage(url, forceLogin) {
 		var src = buildPopUpUrl(url, {'forceLogin': (forceLogin ? 1 : 0)});
 
 		authPopUpWindow = window.open(src, popUpName, getPopUpWindowSpecs());
@@ -98,7 +98,7 @@ define('AuthModal', ['jquery', 'wikia.window'], function ($, window) {
 		}
 	}
 
-	return {
+	window.wikiaAuthModal = {
 		/**
 		 * @desc launches the new auth modal if wgEnableNewAuthModal is set to true. If not, then the old UserLoginModal
 		 * is loaded.
@@ -106,7 +106,7 @@ define('AuthModal', ['jquery', 'wikia.window'], function ($, window) {
 		 * @param {string} url - url for the page we want to load in the modal
 		 * @param {string} origin - used for tracking the source of force login modal
 		 * @param {function} onAuthSuccess - callback function to be called after login
-		 * @param {function} forceLogin - the window is opened from regular login button - not force login
+		 * @param {boolean} forceLogin - the window is opened from regular login button - not force login
 		 */
 		load: function (params) {
 			var trackParams = {
@@ -128,8 +128,12 @@ define('AuthModal', ['jquery', 'wikia.window'], function ($, window) {
 				if (params.forceLogin) {
 					trackParams.category = 'force-login-modal';
 
-					// for now we have only signin-page loaded in auth pop-up window
-					trackParams.label = 'signin-page-from-' + params.origin;
+					// for now we have only register-page loaded in auth pop-up window
+					trackParams.label = 'register-page-from-' + params.origin;
+				}
+
+				if (!params.url) {
+					params.url = '/register?redirect=' + encodeURIComponent(window.location.href);
 				}
 
 				initPostMessageListener(params.onAuthSuccess);
@@ -145,6 +149,7 @@ define('AuthModal', ['jquery', 'wikia.window'], function ($, window) {
 				});
 			}
 		},
+
 		close: close
 	};
-});
+})($, window);

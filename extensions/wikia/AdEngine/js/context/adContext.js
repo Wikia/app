@@ -109,10 +109,6 @@ define('ext.wikia.adEngine.adContext', [
 			context.providers.turtle = true;
 		}
 
-		if (geo.isProperGeo(instantGlobals.wgAdDriverHitMediaCountries)) {
-			context.providers.hitMedia = true;
-		}
-
 		if (context.providers.rubiconFastlane) {
 			context.providers.rubiconFastlane = geo.isProperGeo(instantGlobals.wgAdDriverRubiconFastlaneCountries) &&
 				geo.isProperGeo(instantGlobals.wgAdDriverRubiconFastlaneProviderCountries);

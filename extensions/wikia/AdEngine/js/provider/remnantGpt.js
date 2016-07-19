@@ -35,7 +35,7 @@ define('ext.wikia.adEngine.provider.remnantGpt', [
 		{
 			beforeSuccess: function (slotName) {
 				slotTweaker.removeDefaultHeight(slotName);
-				if (slotTweaker.isUniversalAdPackageLoaded()) {
+				if (!slotTweaker.isUniversalAdPackageLoaded()) {
 					slotTweaker.removeTopButtonIfNeeded(slotName);
 					slotTweaker.adjustLeaderboardSize(slotName);
 				}

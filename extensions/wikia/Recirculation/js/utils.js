@@ -1,9 +1,10 @@
 /*global define*/
 define('ext.wikia.recirculation.utils', [
+	'jquery',
 	'wikia.loader',
 	'wikia.cache',
 	'wikia.mustache'
-], function (loader, cache, Mustache) {
+], function ($, loader, cache, Mustache) {
 	'use strict';
 
 	/**
@@ -73,10 +74,38 @@ define('ext.wikia.recirculation.utils', [
 		return items;
 	}
 
+	function afterRailLoads(callback) {
+		var $rail = $('#WikiaRail');
+
+		if ($rail.find('.loading').exists()) {
+			$rail.one('afterLoad.rail', callback);
+		} else {
+			callback();
+		}
+	}
+
+	function waitForRail() {
+		var $rail = $('#WikiaRail'),
+			deferred = $.Deferred(),
+			args = Array.prototype.slice.call(arguments);
+
+		if ($rail.find('.loading').exists()) {
+			$rail.one('afterLoad.rail', function() {
+				deferred.resolve.apply(null, args);
+			});
+		} else {
+			deferred.resolve.apply(null, args);
+		}
+
+		return deferred.promise();
+	}
+
 	return {
 		buildLabel: buildLabel,
 		loadTemplate: loadTemplate,
 		renderTemplate: renderTemplate,
-		addUtmTracking: addUtmTracking
+		addUtmTracking: addUtmTracking,
+		afterRailLoads: afterRailLoads,
+		waitForRail: waitForRail
 	};
 });

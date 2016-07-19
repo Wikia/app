@@ -67,7 +67,7 @@ class RecirculationApiController extends WikiaApiController {
 		];
 
 		$discussionsData = [];
-		if ( RecirculationHooks::canShowDiscussions() ) {
+		if ( RecirculationHooks::canShowDiscussions( $cityId ) ) {
 			$discussionsDataService = new DiscussionsDataService( $cityId );
 			$discussionsData = $discussionsDataService->getData();
 			$discussionsData['title'] = wfMessage( 'recirculation-discussion-title' )->plain();
@@ -83,7 +83,7 @@ class RecirculationApiController extends WikiaApiController {
 	}
 
 	private function getParamCityId() {
-		$cityId = $this->request->getVal( 'cityId', null );
+		$cityId = $this->request->getVal( 'cityId', 0 );
 
 		if ( !empty( $cityId ) && !is_numeric( $cityId ) ) {
 			throw new InvalidParameterApiException( 'cityId' );

@@ -71,15 +71,7 @@ class CreateNewWikiController extends WikiaController {
 
 		// export info if user is logged in
 		$this->isUserLoggedIn = $wgUser->isLoggedIn();
-
-		// remove wikia plus for now for all languages
-		// @TODO SUS-549 - Investigate if used
-		$skipWikiaPlus = true;
-
-		// @TODO SUS-549 - Investigate if used
-		$keys = CreateNewWikiObfuscate::generateValidSeeds();
-		$_SESSION['cnw-answer'] = CreateNewWikiObfuscate::generateAnswer($this->keys);
-
+		
 		$this->wg->Out->addJsConfigVars([
 			'wgLangAllAgesOpt' => self::LANG_ALL_AGES_OPT
 		]);
@@ -102,7 +94,6 @@ class CreateNewWikiController extends WikiaController {
 			'name-wiki-submit-error' => wfMessage( 'cnw-name-wiki-submit-error' )->escaped(),
 			'desc-wiki-submit-error' => wfMessage( 'cnw-desc-wiki-submit-error' )->escaped(),
 			'currentstep' => $currentStep,
-			'skipwikiaplus' => $skipWikiaPlus,
 			'descriptionplaceholder' => wfMessage( 'cnw-desc-placeholder' )->escaped(),
 			'cnw-error-general' => wfMessage( 'cnw-error-general' )->parse(),
 			'cnw-error-general-heading' => wfMessage( 'cnw-error-general-heading' )->escaped(),
@@ -343,13 +334,6 @@ class CreateNewWikiController extends WikiaController {
 		]);
 
 		wfProfileOut(__METHOD__);
-	}
-
-	/**
-	 * a method that exists purely for unit test.  yay.  it shouldn't be public either
-	 */
-	public function getStoredAnswer() {
-		return $_SESSION['cnw-answer'];
 	}
 
 	/**

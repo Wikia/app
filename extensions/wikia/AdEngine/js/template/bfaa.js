@@ -28,7 +28,14 @@ define('ext.wikia.adEngine.template.bfaa', [
 		logGroup = 'ext.wikia.adEngine.template.bfaa',
 		nav,
 		page,
-		unblockedSlots = ['BOTTOM_LEADERBOARD', 'INCONTENT_BOXAD_1'],
+		unblockedSlots = [
+			'BOTTOM_LEADERBOARD',
+			'INCONTENT_BOXAD_1',
+
+			'MOBILE_BOTTOM_LEADERBOARD',
+			'MOBILE_IN_CONTENT',
+			'MOBILE_PREFOOTER'
+		],
 		wrapper;
 
 	desktopHandler = {
@@ -46,6 +53,7 @@ define('ext.wikia.adEngine.template.bfaa', [
 		},
 
 		show: function (iframe) {
+			var spotlightFooter = doc.getElementById('SPOTLIGHT_FOOTER');
 			nav.style.top = '';
 			page.classList.add('bfaa-template');
 
@@ -57,23 +65,30 @@ define('ext.wikia.adEngine.template.bfaa', [
 			if (win.WikiaBar) {
 				win.WikiaBar.hideContainer();
 			}
+
+			if (spotlightFooter) {
+				spotlightFooter.parentNode.style.display = 'none';
+			}
 		}
 	};
 
 	mobileHandler =  {
-		show: function (iframe) {
+		show: function (iframe, aspectRatio) {
 			var adsModule = win.Mercury.Modules.Ads.getInstance(),
 				height,
-				onResize = adHelper.throttle(function () {
-					height = iframe.contentWindow.document.body.offsetHeight;
+				viewPortWidth,
+				adjustPadding = function () {
+					viewPortWidth = Math.max(doc.documentElement.clientWidth, win.innerWidth || 0);
+					height = aspectRatio ?
+						viewPortWidth / aspectRatio :
+						iframe.contentWindow.document.body.offsetHeight;
 					page.style.paddingTop = height + 'px';
 					adsModule.setSiteHeadOffset(height);
-				}, 100);
+				},
+				onResize = adHelper.throttle(adjustPadding, 100);
 
 			page.classList.add('bfaa-template');
-			height = iframe.contentWindow.document.body.offsetHeight;
-			page.style.paddingTop = height + 'px';
-			adsModule.setSiteHeadOffset(height);
+			adjustPadding();
 
 			win.addEventListener('resize', onResize);
 			if (mercuryListener) {
@@ -108,9 +123,9 @@ define('ext.wikia.adEngine.template.bfaa', [
 		}
 
 		wrapper.style.opacity = '0';
-		slotTweaker.makeResponsive(params.slotName);
+		slotTweaker.makeResponsive(params.slotName, params.aspectRatio);
 		slotTweaker.onReady(params.slotName, function (iframe) {
-			handler.show(iframe);
+			handler.show(iframe, params.aspectRatio);
 			wrapper.style.opacity = '';
 		});
 
@@ -118,6 +133,10 @@ define('ext.wikia.adEngine.template.bfaa', [
 
 		uapContext.setUapId(params.uap);
 		unblockedSlots.forEach(btfBlocker.unblock);
+
+		if (skin === 'mercury') {
+			win.dispatchEvent(new Event('wikia.uap'));
+		}
 	}
 
 	return {

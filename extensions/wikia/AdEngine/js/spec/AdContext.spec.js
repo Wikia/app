@@ -57,7 +57,6 @@ describe('AdContext', function () {
 		},
 		queryParams = [
 			'evolve2',
-			'hitMedia',
 			'liftium',
 			'turtle'
 		];
@@ -283,19 +282,6 @@ describe('AdContext', function () {
 		mocks.instantGlobals = {wgAdDriverTurtleCountries: ['YY']};
 		adContext = getModule();
 		expect(adContext.getContext().providers.turtle).toBeFalsy();
-	});
-
-	it('makes providers.hitMedia true when country in instantGlobals.wgAdDriverHitMediaCountries', function () {
-		var adContext;
-
-		mocks.win = {};
-		mocks.instantGlobals = {wgAdDriverHitMediaCountries: ['CURRENT_COUNTRY', 'ZZ']};
-		adContext = getModule();
-		expect(adContext.getContext().providers.hitMedia).toBeTruthy();
-
-		mocks.instantGlobals = {wgAdDriverHitMediaCountries: ['YY']};
-		adContext = getModule();
-		expect(adContext.getContext().providers.hitMedia).toBeFalsy();
 	});
 
 	it('makes providers.rubiconFastlane true when country in wgCountries', function () {

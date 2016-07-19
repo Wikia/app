@@ -7,6 +7,7 @@ class AdController extends WikiaController {
 		$this->pageTypes = $this->request->getVal('pageTypes');
 		$this->includeLabel = $this->request->getVal('includeLabel');
 		$this->onLoad = $this->request->getVal('onLoad');
+		$this->addToAdQueue = $this->request->getVal('addToAdQueue');
 	}
 
 	public function executeConfig() {
