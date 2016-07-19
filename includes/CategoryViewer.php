@@ -477,17 +477,17 @@ class CategoryViewer extends ContextSource {
 	 * @return String: HTML output, possibly empty if there are no other pages
 	 */
 	private function getSectionPagingLinks( $type, $position = null ) {
-		$r = '';
-		if ( !wfRunHooks( 'CategoryViewerGetSectionPagingLinks', [ $this, $type, $position, &$r ] ) ) {
-			return $r;
-		}
+		/* Wikia change: introduced a hook to override the pagination HTML */
 		if ( $this->until[$type] !== null ) {
-			return $this->pagingLinks( $this->nextPage[$type], $this->until[$type], $type );
+			$r = $this->pagingLinks( $this->nextPage[$type], $this->until[$type], $type );
 		} elseif ( $this->nextPage[$type] !== null || $this->from[$type] !== null ) {
-			return $this->pagingLinks( $this->from[$type], $this->nextPage[$type], $type );
+			$r = $this->pagingLinks( $this->from[$type], $this->nextPage[$type], $type );
 		} else {
-			return '';
+			$r = '';
 		}
+		wfRunHooks( 'CategoryViewerGetSectionPagingLinks', [ $this, $type, $position, &$r ] );
+		return $r;
+		/* Wikia change end */
 	}
 
 	/**
