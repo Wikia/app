@@ -88,9 +88,7 @@ if (!window.wgNoExternals && window.wgEnableOpenXSPC && !window.wgIsEditPage && 
 	jQuery(function($) {
 		$.getScript(AdProviderOpenX.getUrl(), function() {
 			var lazy = new window.Wikia.LazyLoadAds();
-		}).done(function () {
-			reviveQueue.start();
-		});
+		}).done(reviveQueue.start);
 	});
 } else {
 	$('#SPOTLIGHT_FOOTER').parent('section').hide();
