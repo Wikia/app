@@ -66,11 +66,12 @@ var WikiaBar = {
 				window.ads.context &&
 				window.ads.context.opts &&
 				window.ads.context.opts.showAds &&
-				window.wgEnableWikiaBarAds &&
-				window.Wikia.reviveQueue;
+				window.wgEnableWikiaBarAds;
 		}
 
 		if (isEnabled()) {
+			window.Wikia.reviveQueue = window.Wikia.reviveQueue || [];
+
 			window.Wikia.reviveQueue.push({
 				zoneId: 28,
 				slotName: 'WIKIA_BAR_BOXAD_1'
