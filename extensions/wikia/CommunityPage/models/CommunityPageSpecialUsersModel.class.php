@@ -110,6 +110,14 @@ class CommunityPageSpecialUsersModel {
 				$botIds = $this->getBotIds();
 
 				$validAdminIds = array_diff( $adminIds, $botIds );
+				$validAdmins = [];
+				foreach( $validAdminIds as $id ) {
+					$validAdmins[$id] = [
+						'userId' => $id,
+						'contributions' => 0,
+						'isAdmin' => true,
+					];
+				}
 
 				$sqlData = ( new WikiaSQL() )
 					->SELECT( 'rev_user_text, rev_user, wup_value' )
@@ -122,26 +130,20 @@ class CommunityPageSpecialUsersModel {
 					->GROUP_BY( 'rev_user' )
 					->ORDER_BY( 'CAST(wup_value as unsigned) DESC, rev_user_text' );
 
-				$result = $sqlData->runLoop( $db, function ( &$result, $row ) {
-					$result[] = [
-						'userId' => $row->rev_user,
-						'contributions' => (int)$row->wup_value,
-						'isAdmin' => true,
-					];
+				$sqlData->runLoop( $db, function ( &$result, $row ) use (&$validAdmins) {
+					$validAdmins[$row->rev_user]['contributions'] = (int)$row->wup_value;
 				} );
 
-				foreach ( $validAdminIds as $adminId ) {
-					if( !in_array( $adminId, array_column( $result,  'userId' ) ) ){
-						$result[] = [
-							'userId' => $adminId,
-							'contributions' => 0,
-							'isAdmin' => true,
-						];
+				uasort( $validAdmins, function( $a, $b ){
+					if ($a[ 'contributions' ] === $b[ 'contributions' ]) {
+						return 0;
 					}
-				}
+					return ($a[ 'contributions' ] < $b[ 'contributions' ]) ? 1 : -1;
+				});
 
-				return $result;
-			}
+				return array_values( $validAdmins );
+
+			}, WikiaDataAccess::REFRESH_CACHE
 		);
 		self::logUserModelPerformanceData( 'view', 'all_admins', $this->isUserOnList( $data ), $this->isUserLoggedIn() );
 		return $data;
