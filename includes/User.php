@@ -2648,17 +2648,7 @@ class User {
 	 * @return bool
 	 */
 	private function shouldGetAttributeFromService( $attributeName ) {
-
-		// User is anonymous or nonexistant
-		if ( $this->getId() == 0 ) {
-			return false;
-		}
-
-		if ( !$this->isPublicAttribute( $attributeName ) ) {
-			return false;
-		}
-
-		return true;
+		return $this->isPublicAttribute( $attributeName );
 	}
 
 	private function isPublicAttribute( $attributeName ) {

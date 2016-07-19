@@ -68,6 +68,10 @@ class UserAttributes {
 
 	private function loadAttributes( $userId ) {
 
+		if ( $userId == 0 ) {
+			return [];
+		}
+
 		if ( isset( $this->attributes[$userId] ) ) {
 			return $this->attributes[$userId];
 		}
