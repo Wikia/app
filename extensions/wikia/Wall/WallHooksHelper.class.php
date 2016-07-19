@@ -2339,8 +2339,11 @@ class WallHooksHelper {
 	 */
 	private static function shouldBoldenFollowedLink( User $user, Title $title, WallMessage $wm ) {
 		$isWatchlist = $title->isSpecial( 'Watchlist' );
-		return ( F::app()->wg->ShowUpdatedMarker && !$user->isAnon()
+		return ( !$user->isAnon()
+			// Is this user watching this comment, or the thread, or the wall/board?
 			&& ( $wm->isWatched( $user ) || $wm->isWallWatched( $user ) || $wm->isWallOwner( $user ) )
+			// If yes, are we on RecentChanges, or was the page updated?
+			&& ( !$isWatchlist || $wm->getTitle()->getNotificationTimestamp( $user ) || $wm->getArticleTitle()->getNotificationTimestamp( $user ) )
 		);
 	}
 
