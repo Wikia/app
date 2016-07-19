@@ -3,8 +3,8 @@
  * modal is an entry point for Community Page
  */
 define('CommunityPageBenefitsModal',
-	['jquery', 'wikia.loader', 'mw', 'wikia.mustache', 'wikia.tracker', 'wikia.nirvana'],
-	function ($, loader, mw, mustache, tracker, nirvana) {
+	['jquery', 'wikia.loader', 'mw', 'wikia.mustache', 'wikia.tracker', 'wikia.nirvana', 'wikia.cookies'],
+	function ($, loader, mw, mustache, tracker, nirvana, cookies) {
 		'use strict';
 		var modalConfig = {
 				vars: {
@@ -107,6 +107,12 @@ define('CommunityPageBenefitsModal',
 
 			// Bind tracking modal close
 			modalInstance.bind('close', function () {
+				cookies.set('cpBenefitsModalClosed', 1, {
+					domain: mw.config.get('wgCookieDomain'),
+					expires: 2592000000, // 30 days
+					path: mw.config.get('wgCookiePath')
+				});
+
 				track({
 					action: tracker.ACTIONS.CLOSE,
 					label: 'modal-closed'

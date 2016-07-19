@@ -89,7 +89,6 @@
 			if (window.wgDisableAnonymousEditing && !window.wgUserName) {
 				window.wikiaAuthModal.load({
 					forceLogin: true,
-					url: '/signin?redirect=' + encodeURIComponent(window.location.href),
 					origin: 'wall-and-forum',
 					onAuthSuccess: function () {
 						action(false);
