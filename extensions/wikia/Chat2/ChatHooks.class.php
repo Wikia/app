@@ -58,13 +58,15 @@ class ChatHooks {
 	}
 
 	/**
-	 * add resources needed by chat
-	 * as chat entry points or links can appear on any page,
-	 * we really need them everywhere
+	 * Hook: BeforePageDisplay
+	 * Add resources needed by the chat ban modal to pages where it can appear
+	 * (Special:Contributions, Special:Log, and Special:RecentChanges)
+	 *
+	 * @param OutputPage $out
+	 * @param Skin $skin
+	 * @return true to continue hook processing
 	 */
 	public static function onBeforePageDisplay( OutputPage &$out, Skin &$skin ) {
-		global $wgTitle;
-
 		wfProfileIn( __METHOD__ );
 
 		$specialPages = [
@@ -74,7 +76,7 @@ class ChatHooks {
 		];
 
 		foreach ( $specialPages as $value ) {
-			if ( $wgTitle->isSpecial( $value ) ) {
+			if ( $out->getTitle()->isSpecial( $value ) ) {
 				// For Chat2 (doesn't exist in Chat(1))
 				$scriptUrls = AssetsManager::getInstance()->getGroupCommonURL( 'chat_ban_js', [ ] );
 
@@ -86,10 +88,8 @@ class ChatHooks {
 				break;
 			}
 		}
-		JSMessages::enqueuePackage( 'ChatWidget', JSMessages::INLINE );
 
 		wfProfileOut( __METHOD__ );
-
 		return true;
 	}
 

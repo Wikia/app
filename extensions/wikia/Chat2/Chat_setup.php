@@ -80,16 +80,21 @@ JSMessages::registerPackage( 'ChatBanModal', [
 	'chat-ban-modal-button-change-ban',
 ] );
 
-JSMessages::registerPackage( 'ChatWidget', [
-	'chat-join-the-chat',
-	'chat-start-a-chat',
-	'chat-user-menu-message-wall',
-	'chat-user-menu-talk-page',
-	'chat-user-menu-contribs',
-	'chat-live2',
-	'chat-edit-count',
-	'chat-member-since'
-] );
+/**
+ * ResourceLoader module for Chat Rail module and widget
+ */
+$wgResourceModules['ext.Chat2.ChatWidget'] = [
+	'messages' => [
+		'chat-join-the-chat',
+		'chat-start-a-chat',
+		'chat-user-menu-message-wall',
+		'chat-user-menu-talk-page',
+		'chat-user-menu-contribs',
+		'chat-live2',
+		'chat-edit-count',
+		'chat-member-since',
+	],
+];
 
 /**
  * ResourceLoader module
