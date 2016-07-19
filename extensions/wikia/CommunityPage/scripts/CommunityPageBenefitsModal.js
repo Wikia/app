@@ -104,16 +104,16 @@ define('CommunityPageBenefitsModal',
 					label: $(e.target).data('track') || 'modal-area'
 				});
 
-			});
-
-			// Bind tracking modal close
-			modalInstance.bind('close', function () {
-				cookies.set('cpBenefitsModalClosed', 1, {
+				cookies.set('cpBenefitsModalClicked', 1, {
 					domain: mw.config.get('wgCookieDomain'),
 					expires: 2592000000, // 30 days
 					path: mw.config.get('wgCookiePath')
 				});
 
+			});
+
+			// Bind tracking modal close
+			modalInstance.bind('close', function () {
 				track({
 					action: tracker.ACTIONS.CLOSE,
 					label: 'modal-closed'
