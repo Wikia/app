@@ -66,7 +66,7 @@ function isReviveEnabledInGeo() {
 function createReviveLazyQueue() {
 	'use strict';
 
-	window.Wikia.reviveQueue = [];
+	window.Wikia.reviveQueue = window.Wikia.reviveQueue || [];
 
 	window.Wikia.LazyQueue.makeQueue(window.Wikia.reviveQueue, function(item) {
 		var output = window.OA_output || [],

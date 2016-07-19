@@ -102,12 +102,13 @@ define('ext.wikia.adEngine.slotTweaker', [
 	function removeTopButtonIfNeeded(slotname) {
 		function isEnabled() {
 			return isLeaderboard(slotname) &&
-				isStandardLeaderboardSize(slotname) &&
-				win.Wikia.reviveQueue;
+				isStandardLeaderboardSize(slotname);
 		}
 
 		if (isEnabled()) {
-			window.Wikia.reviveQueue.push({
+			win.Wikia.reviveQueue = win.Wikia.reviveQueue || [];
+
+			win.Wikia.reviveQueue.push({
 				zoneId: 27,
 				slotName: 'TOP_BUTTON_WIDE'
 			});
