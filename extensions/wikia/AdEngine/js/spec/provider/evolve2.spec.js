@@ -32,8 +32,8 @@ describe('Evolve2 Provider targeting', function () {
 			mocks.gptHelper,
 			mocks.slotTweaker,
 			mocks.zoneParams,
-			mocks.openXHelper,
-			mocks.log
+			mocks.log,
+			mocks.openXHelper
 		);
 	}
 
