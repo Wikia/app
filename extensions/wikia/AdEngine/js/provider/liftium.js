@@ -24,9 +24,6 @@ define('ext.wikia.adEngine.provider.liftium', [
 		'TEST_TOP_RIGHT_BOXAD': {'size': '300x250'},
 		'TEST_HOME_TOP_RIGHT_BOXAD': {'size': '300x250'},
 
-		// TOP_BUTTON_WIDE after TOP_LEADERBOARD hack:
-		'TOP_BUTTON_WIDE.force': 'hack',
-
 		'TOP_LEADERBOARD': {'size': '728x90'},
 		'TOP_RIGHT_BOXAD': {'size': '300x250'},
 		'PREFOOTER_LEFT_BOXAD': {'size': '300x250'},
@@ -56,21 +53,6 @@ define('ext.wikia.adEngine.provider.liftium', [
 	fillInSlot = function (slot) {
 		log(['fillInSlot', slot.name], 'debug', logGroup);
 
-		// TOP_BUTTON_WIDE after TOP_LEADERBOARD hack:
-		if (slot.name === 'TOP_BUTTON_WIDE') {
-			log('Tried TOP_BUTTON_WIDE. Disabled (waiting for leaderboard ads)', 'info', logGroup);
-			return;
-		}
-		if (slot.name === 'TOP_BUTTON_WIDE.force') {
-			log('Forced TOP_BUTTON_WIDE call (this means leaderboard is ready and standard)', 'info', logGroup);
-			slot.name = slot.name.replace('.force', '');
-		}
-		if (slot.name.indexOf('LEADERBOARD') !== -1) {
-			log('LEADERBOARD-ish slot handled by Liftium. Running the forced TOP_BUTTON_WIDE now', 'info', logGroup);
-
-			win.adslots2.push('TOP_BUTTON_WIDE.force');
-		}
-		// END of hack
 		if (!doc.getElementById(slot.name)) {
 			log('No such element in DOM: #' + slot.name, 'info', logGroup);
 			return;
