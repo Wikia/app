@@ -61,15 +61,13 @@ var WikiaBar = {
 		return true;
 	},
 	getAdIfNeeded: function () {
-		function isEnabled() {
-			return window.ads &&
+		var isEnabled = window.ads &&
 				window.ads.context &&
 				window.ads.context.opts &&
 				window.ads.context.opts.showAds &&
 				window.wgEnableWikiaBarAds;
-		}
 
-		if (isEnabled()) {
+		if (isEnabled) {
 			window.Wikia.reviveQueue = window.Wikia.reviveQueue || [];
 
 			window.Wikia.reviveQueue.push({
