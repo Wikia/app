@@ -1,16 +1,14 @@
 /*global define*/
 define('ext.wikia.adEngine.lookup.prebid', [
 	'ext.wikia.adEngine.lookup.adapter.appnexus',
-	'ext.wikia.adEngine.lookup.adapter.matomy',
 	'ext.wikia.adEngine.lookup.lookupFactory',
 	'wikia.document',
 	'wikia.window'
-], function (appnexus, matomy, factory, doc, win) {
+], function (appnexus, factory, doc, win) {
 	'use strict';
 
 	var adapters = [
-			appnexus,
-			matomy
+			appnexus
 		],
 		adUnits = [],
 		priceMap = {},
