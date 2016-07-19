@@ -68,6 +68,7 @@ define('ext.wikia.adEngine.lookup.prebid', [
 	function calculatePrices() {
 		var slotName,
 			slots = {};
+
 		if (win.pbjs && typeof win.pbjs.getAdserverTargeting === 'function') {
 			slots = win.pbjs.getAdserverTargeting();
 		}
@@ -91,6 +92,7 @@ define('ext.wikia.adEngine.lookup.prebid', [
 
 	function getSlotParams(slotName) {
 		var params;
+
 		if (win.pbjs && typeof win.pbjs.getAdserverTargetingForAdUnitCode === 'function') {
 			params = win.pbjs.getAdserverTargetingForAdUnitCode(slotName) || {};
 		}
