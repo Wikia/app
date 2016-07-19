@@ -25,10 +25,6 @@
 		&:first-of-type {
 			margin-top: 0;
 		}
-
-		&.top-admins {
-			margin: 12px 0 18px;
-		}
 	}
 
 	.community-page-contributor-details {
@@ -116,7 +112,7 @@
 			color: $color-alternate-text;
 			font-size: 13px;
 			margin-top: 12px;
-			padding-right: 30px;
+			padding-right: 24px;
 			text-align: right;
 		}
 
