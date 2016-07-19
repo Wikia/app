@@ -61,6 +61,7 @@ define('CommunityPageBenefitsModal',
 				connectText: mw.message('communitypage-entrypoint-modal-connect-text', wikiTopic).plain(),
 				exploreText: mw.message('communitypage-entrypoint-modal-explore-text', wikiTopic).plain(),
 				buttonText: mw.message('communitypage-entrypoint-modal-button-text').plain(),
+				buttonUrl: specialCommunityTitle.getUrl(),
 				benefitsImageUrl: modalImageUrl
 			});
 
@@ -97,24 +98,22 @@ define('CommunityPageBenefitsModal',
 				label: 'benefits-modal-shown'
 			});
 
-			// Fire action on click on modal content
-			modalInstance.$element.on('click', function () {
-				window.location.pathname = specialCommunityTitle.getUrl();
-			});
+			// Bind tracking on modal on mousedown action
+			modalInstance.$element.on('mousedown', function(e) {
+				track({
+					label: $(e.target).data('track') || 'modal-area'
+				});
 
-			// Bind tracking on elements with data-track attribute
-			modalInstance.$element.find('[data-track]').on('mousedown', function (e) {
-				track({label: $(e.target).data('track')});
-			});
-
-			// Bind tracking modal close
-			modalInstance.bind('close', function () {
-				cookies.set('cpBenefitsModalClosed', 1, {
+				cookies.set('cpBenefitsModalClicked', 1, {
 					domain: mw.config.get('wgCookieDomain'),
 					expires: 2592000000, // 30 days
 					path: mw.config.get('wgCookiePath')
 				});
 
+			});
+
+			// Bind tracking modal close
+			modalInstance.bind('close', function () {
 				track({
 					action: tracker.ACTIONS.CLOSE,
 					label: 'modal-closed'
