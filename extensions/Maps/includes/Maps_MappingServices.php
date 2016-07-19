@@ -89,7 +89,8 @@ final class MapsMappingServices {
 	public static function getServiceInstance( $serviceIdentifier ) {
 		if ( !array_key_exists( $serviceIdentifier, self::$services ) ) {
 			if ( array_key_exists( $serviceIdentifier, self::$registeredServices ) ) {
-				$service = new self::$registeredServices[$serviceIdentifier]( $serviceIdentifier );
+				$className = self::$registeredServices[$serviceIdentifier];
+				$service = new $className( $serviceIdentifier );
 				
 				if ( $service instanceof iMappingService ) {
 					self::$services[$serviceIdentifier] = $service;

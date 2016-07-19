@@ -316,8 +316,9 @@ final class MapsGeocoders {
 	protected static function getGeocoderInstance( $geocoderIdentifier ) {
 		if ( !array_key_exists( $geocoderIdentifier, self::$geocoders ) ) {
 			if ( array_key_exists( $geocoderIdentifier, self::$registeredGeocoders ) ) {
-				$geocoder = new self::$registeredGeocoders[$geocoderIdentifier]( $geocoderIdentifier );
-				
+				$className = self::$registeredGeocoders[$geocoderIdentifier];
+				$geocoder = new $className( $geocoderIdentifier );
+
 				//if ( $service instanceof iMappingService ) {
 					self::$geocoders[$geocoderIdentifier] = $geocoder;
 				//}

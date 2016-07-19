@@ -94,7 +94,8 @@ class SMWDataValueFactory {
 		self::initDatatypes();
 
 		if ( array_key_exists( $typeId, self::$mTypeClasses ) ) {
-			$result = new self::$mTypeClasses[$typeId]( $typeId );
+			$className = self::$mTypeClasses[$typeId];
+			$result = new $className( $typeId );
 		} else {
 			return new SMWErrorValue( $typeId,
 				wfMessage( 'smw_unknowntype', $typeId )->inContentLanguage()->text(),
