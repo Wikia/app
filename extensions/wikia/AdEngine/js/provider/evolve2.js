@@ -4,10 +4,10 @@ define('ext.wikia.adEngine.provider.evolve2', [
 	'ext.wikia.adEngine.provider.gpt.helper',
 	'ext.wikia.adEngine.slotTweaker',
 	'ext.wikia.adEngine.utils.adLogicZoneParams',
-	'ext.wikia.adEngine.lookup.openx.openXBidderHelper',
 	'wikia.log',
-	'wikia.window'
-], function (adContext, gptHelper, slotTweaker, zoneParams, openXHelper, log, win) {
+	'wikia.window',
+	require.optional('ext.wikia.adEngine.lookup.openx.openXBidderHelper')
+], function (adContext, gptHelper, slotTweaker, zoneParams, log, win, openXHelper) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.evolve2',

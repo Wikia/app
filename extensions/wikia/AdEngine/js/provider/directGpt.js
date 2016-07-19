@@ -3,7 +3,7 @@
 define('ext.wikia.adEngine.provider.directGpt', [
 	'ext.wikia.adEngine.provider.factory.wikiaGpt',
 	'ext.wikia.adEngine.slotTweaker',
-	'ext.wikia.adEngine.lookup.openx.openXBidderHelper'
+	require.optional('ext.wikia.adEngine.lookup.openx.openXBidderHelper')
 ], function (factory, slotTweaker, openXHelper) {
 	'use strict';
 
