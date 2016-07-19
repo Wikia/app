@@ -996,8 +996,8 @@ class ArticlesApiController extends WikiaApiController {
 		}
 
 		if ( empty( $article ) ) {
-            $response = $this->getResponse();
-            $response->setCacheValidity( self::SIMPLE_JSON_VARNISH_CACHE_EXPIRATION );
+			$response = $this->getResponse();
+			$response->setCacheValidity( self::SIMPLE_JSON_VARNISH_CACHE_EXPIRATION );
 			throw new NotFoundApiException( "Unable to find any article" );
 		}
 
