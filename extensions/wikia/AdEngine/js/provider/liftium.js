@@ -23,7 +23,6 @@ define('ext.wikia.adEngine.provider.liftium', [
 		'LEFT_SKYSCRAPER_3': {'size': '160x600'},
 		'TEST_TOP_RIGHT_BOXAD': {'size': '300x250'},
 		'TEST_HOME_TOP_RIGHT_BOXAD': {'size': '300x250'},
-		'TOP_BUTTON_WIDE': {'size': '292x90'},
 
 		// TOP_BUTTON_WIDE after TOP_LEADERBOARD hack:
 		'TOP_BUTTON_WIDE.force': 'hack',
@@ -32,8 +31,7 @@ define('ext.wikia.adEngine.provider.liftium', [
 		'TOP_RIGHT_BOXAD': {'size': '300x250'},
 		'PREFOOTER_LEFT_BOXAD': {'size': '300x250'},
 		'PREFOOTER_MIDDLE_BOXAD': {'size': '300x250'},
-		'PREFOOTER_RIGHT_BOXAD': {'size': '300x250'},
-		'WIKIA_BAR_BOXAD_1': {'size': '300x250'}
+		'PREFOOTER_RIGHT_BOXAD': {'size': '300x250'}
 	};
 
 	if (adContext.getContext().opts.overridePrefootersSizes) {
