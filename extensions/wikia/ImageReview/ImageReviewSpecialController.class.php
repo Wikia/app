@@ -9,6 +9,8 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 	private $statsHeaders = array( 'user', 'total reviewed', 'approved', 'deleted', 'qustionable', 'distance to avg.' );
 	private $action;
 	private $order;
+	private $imageList;
+	private $imageCount;
 	private $ts;
 	private $helper;
 
@@ -41,7 +43,6 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 
 		$this->setCache();
 		$this->setAssets();
-		$this->setVariables();
 
 		$this->helper = $this->getHelper();
 
@@ -85,6 +86,8 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 		} else {
 			$this->imageCount = $this->helper->getImageCount();
 		}
+
+		$this->setVariables();
 
 		/* SUS-541 / Mix <mix@wikia.com> / scope: the following if block */
 		$severity = count( $this->imageList ) < ImageReviewHelper::LIMIT_IMAGES ? 'error' : 'success';
@@ -275,6 +278,11 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 		$query = ( empty( $this->action ) ) ? '' : '/'. $this->action;
 
 		$this->response->setJsVar('wgImageReviewAction', $this->action);
+
+		$this->response->setVal( 'action', $this->action );
+		$this->response->setVal( 'order', $this->order );
+		$this->response->setVal( 'imageList', $this->imageList );
+		$this->response->setVal( 'imageCount', $this->imageCount );
 
 		$this->response->setVal( 'accessQuestionable', $this->accessQuestionable );
 		$this->response->setVal( 'accessStats', $this->wg->User->isAllowed( 'imagereviewstats' ) );
