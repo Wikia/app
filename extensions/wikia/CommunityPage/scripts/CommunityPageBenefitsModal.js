@@ -103,6 +103,7 @@ define('CommunityPageBenefitsModal',
 				track({
 					label: $(e.target).data('track') || 'modal-area'
 				});
+
 			});
 
 			// Bind tracking modal close
@@ -117,6 +118,16 @@ define('CommunityPageBenefitsModal',
 					action: tracker.ACTIONS.CLOSE,
 					label: 'modal-closed'
 				});
+			});
+
+			setModalShownCookie();
+		}
+
+		function setModalShownCookie() {
+			cookies.set('cpBenefitsModalShown', 1, {
+				domain: mw.config.get('wgCookieDomain'),
+				expires: 2592000000, // 30 days
+				path: mw.config.get('wgCookiePath')
 			});
 		}
 

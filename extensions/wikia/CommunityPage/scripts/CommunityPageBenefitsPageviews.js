@@ -1,16 +1,12 @@
 require([
 	'wikia.pageviewsInSession',
-	'CommunityPageBenefitsModal',
-	'wikia.tracker',
-	'wikia.cookies'
-], function (pageviews, modal, tracker, cookies) {
+	'CommunityPageBenefitsModal'
+], function (pageviews, modal) {
 	'use strict';
 
 	function init() {
-		if (pageviews.getPageviewsCount() === 4) {
+		if (pageviews.getPageviewsCount() >= 4) {
 			modal.open();
-			setModalShownCookie();
-			trackModalImpression();
 		}
 	}
 
