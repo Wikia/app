@@ -37,6 +37,6 @@ class CategoryPaginationHooks {
 		if ( $position === 'bottom' ) {
 			$r = $catViewer->getPaginator( $type )->getBarHTML();
 		}
-		return false;
+		return true;
 	}
 }
