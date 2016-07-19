@@ -100,12 +100,7 @@ define('ext.wikia.adEngine.slotTweaker', [
 
 	// TODO: fix it, it's a hack!
 	function removeTopButtonIfNeeded(slotname) {
-		function isEnabled() {
-			return isLeaderboard(slotname) &&
-				isStandardLeaderboardSize(slotname);
-		}
-
-		if (isEnabled()) {
+		if (isLeaderboard(slotname) && isStandardLeaderboardSize(slotname)) {
 			win.Wikia.reviveQueue = win.Wikia.reviveQueue || [];
 
 			win.Wikia.reviveQueue.push({
