@@ -212,7 +212,6 @@ var ChatWidget = {
 		} else {
 			window.wikiaAuthModal.load({
 				forceLogin: true,
-				url: '/signin?redirect=' + encodeURIComponent(window.location.href),
 				origin: 'chat',
 				onAuthSuccess: ChatWidget.onSuccessfulLogin
 			});
