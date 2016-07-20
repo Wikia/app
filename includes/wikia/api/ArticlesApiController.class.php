@@ -934,11 +934,11 @@ class ArticlesApiController extends WikiaApiController {
 					)
 				);
 
-				if ( !empty( $ids ) ) {
-					return array( $ids['query']['categorymembers'], !empty( $ids['query-continue'] ) ? $ids['query-continue']['categorymembers']['cmcontinue'] : null );
-				} else {
+				if ( empty( $ids ) ) {
 					return null;
 				}
+
+				return array( $ids['query']['categorymembers'], !empty( $ids['query-continue'] ) ? $ids['query-continue']['categorymembers']['cmcontinue'] : null );
 			}
 		);
 	}
