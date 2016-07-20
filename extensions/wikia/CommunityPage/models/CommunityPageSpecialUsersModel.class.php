@@ -139,12 +139,12 @@ class CommunityPageSpecialUsersModel {
 				} );
 
 				uasort( $validAdmins, function( $a, $b){
-					if ( $a[ 'lastRevision' ] === $b[ 'lastRevision' ]){
+					if ( $a[ 'latestRevision' ] === $b[ 'latestRevision' ]){
 						return 0;
 					}
-					return ($a[ 'lastRevision' ] < $b[ 'lastRevision' ]) ? 1 : -1;
+					return ($a[ 'latestRevision' ] < $b[ 'latestRevision' ]) ? 1 : -1;
 				} );
-				
+
 				return array_values( $validAdmins );
 
 			} , WikiaDataAccess::REFRESH_CACHE
