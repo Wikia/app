@@ -33,9 +33,9 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 		];
 		foreach ( $stats_keys as $key ) {
 			if ( $key == self::STATS_REVIEWER ) {
-				$cache_key = wfMemcKey( 'ImageReviewSpecialController', 'v2', 'image_stats', $this->user_id, $key );
+				$cache_key = wfSharedMemcKey( 'ImageReviewSpecialController', 'v2', 'image_stats', $this->user_id, $key );
 			} else {
-				$cache_key = wfMemcKey( 'ImageReviewSpecialController', 'v2', 'image_stats', $key );
+				$cache_key = wfSharedMemcKey( 'ImageReviewSpecialController', 'v2', 'image_stats', $key );
 			}
 			$this->image_stats_cache_keys[$key] = $cache_key;
 		}
@@ -439,7 +439,6 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 			|| $total[self::STATS_UNREVIEWED] == 0 )
 		) {
 			wfProfileOut( __METHOD__ );
-			wfDebug("Harnash: returning stats: " . print_r($total, true));
 			return $total;
 		}
 
