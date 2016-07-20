@@ -34,9 +34,9 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 	public function index() {
 		$this->setGlobalDisplayVars();
 
-		$this->action = $this->getAction();
+		$this->action = $this->parseAction();
 		$this->order = $this->getOrderingMethod();
-		$this->ts = $this->wg->request->getVal( 'ts' );
+		$this->ts = $this->getContext()->getRequest()->getVal( 'ts' );
 
 		$this->checkUserPermissions();
 		$this->checkRedirect();
@@ -232,7 +232,7 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 		}
 	}
 
-	private function getAction() {
+	private function parseAction() {
 		$actions = explode( '/', $this->getPar() );
 		return array_pop( $actions );
 	}
