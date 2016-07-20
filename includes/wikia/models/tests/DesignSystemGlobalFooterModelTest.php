@@ -72,26 +72,6 @@ class DesignSystemGlobalFooterModelTest extends WikiaBaseTest {
 					],
 				],
 			],
-			[
-				'CC-BY-SA',
-				'http://www.wikia.com/Licensing',
-				[
-					'description' => [
-						'type' => 'translatable-text',
-						'key' => 'global-footer-licensing-description',
-						'params' => [
-							'license' => [
-								'type' => 'link-text',
-								'title' => [
-									'type' => 'text',
-									'value' => 'CC-BY-SA'
-								],
-								'href' => 'http://www.wikia.com/Licensing',
-							],
-						],
-					],
-				],
-			],
 		];
 	}
 }
