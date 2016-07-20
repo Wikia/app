@@ -60,7 +60,7 @@ define('ext.wikia.adEngine.provider.directGpt', [
 				}
 			},
 			beforeHop: function(slotName) {
-				openXHelper.addOpenXSlot(slotName);
+				openXHelper && openXHelper.addOpenXSlot(slotName);
 			},
 			sraEnabled: true,
 			recoverableSlots: [
