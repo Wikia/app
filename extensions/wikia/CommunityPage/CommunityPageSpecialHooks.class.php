@@ -80,10 +80,10 @@ class CommunityPageSpecialHooks {
 		\Wikia::addAssetsToOutput( 'community_page_benefits_js' );
 		\Wikia::addAssetsToOutput( 'community_page_benefits_scss' );
 
-		if ( !$user->isAnon() && !$user->isAllowed( 'first-edit-dialog-exempt' ) ) {
+		//if ( !$user->isAnon() && !$user->isAllowed( 'first-edit-dialog-exempt' ) ) {
 			\Wikia::addAssetsToOutput( 'community_page_new_user_modal_js' );
 			\Wikia::addAssetsToOutput( 'community_page_new_user_modal_scss' );
-		}
+		//}
 
 		return true;
 	}

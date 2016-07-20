@@ -121,5 +121,7 @@ require([
 		mw.hook('wikipage.content').add(function () {
 			openModalOnFirstEdit();
 		});
+
+		window.openModal = openModal;
 	});
 });
