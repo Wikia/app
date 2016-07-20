@@ -435,6 +435,28 @@ class ArticlesApiController extends WikiaApiController {
 	}
 
 	/**
+	 * Normalize valid namespaces into a pipe `|` separated string
+	 *
+	 * @param $namespaces
+	 * @return array|string
+	 * @throws InvalidParameterApiException
+	 */
+	public static function implodeValidNamespaces($namespaces ){
+		if ( empty( $namespaces ) ) {
+			return [];
+		}
+
+		foreach ( $namespaces as &$n ) {
+			if ( !is_numeric( $n ) ) {
+				throw new InvalidParameterApiException( self::PARAMETER_NAMESPACES );
+			}
+		}
+
+		$namespaces = implode( '|', $namespaces );
+		return $namespaces;
+	}
+
+	/**
 	 * Get Articles under a category
 	 *
 	 * @requestParam string $category [OPTIONAL] The name of a category (e.g. Characters) to use as a filter
@@ -466,36 +488,30 @@ class ArticlesApiController extends WikiaApiController {
 
 		if ( !empty( $category ) ) {
 			$category = self::resolveCategoryName( $category );
-			if ( !is_null( $category ) ) {
-				if ( !empty( $namespaces ) ) {
-					foreach ( $namespaces as &$n ) {
-						if ( !is_numeric( $n ) ) {
-							throw new InvalidParameterApiException( self::PARAMETER_NAMESPACES );
-						}
-					}
 
-					$namespaces = implode( '|', $namespaces );
-				}
-
-				/**
-				 * Wrapping global wgMiserMode.
-				 *
-				 * wgMiserMode = true (default) changes the behavior of categorymembers mediawiki API, causing it to
-				 * filter by namespace after making database query constrained by $limit and thus resulting
-				 * in Api returning fewer than $limit results
-				 *
-				 * wgMiserMode = false filters on DB level
-				 */
-				$wrapper = new GlobalStateWrapper( [
-					'wgMiserMode' => $this->excludeNamespacesFromCategoryMembersDBQuery
-				] );
-				$articles = $wrapper->wrap( function () use ( $category, $limit, $offset, $namespaces ) {
-					return self::getCategoryMembers( $category->getFullText(), $limit, $offset, $namespaces );
-				} );
-			} else {
+			if ( is_null( $category ) ) {
 				wfProfileOut( __METHOD__ );
 				throw new InvalidParameterApiException( self::PARAMETER_CATEGORY );
 			}
+
+
+			$namespaces = self::implodeValidNamespaces($namespaces);
+
+			/**
+			 * Wrapping global wgMiserMode.
+			 *
+			 * wgMiserMode = true (default) changes the behavior of categorymembers mediawiki API, causing it to
+			 * filter by namespace after making database query constrained by $limit and thus resulting
+			 * in Api returning fewer than $limit results
+			 *
+			 * wgMiserMode = false filters on DB level
+			 */
+			$wrapper = new GlobalStateWrapper( [
+				'wgMiserMode' => $this->excludeNamespacesFromCategoryMembersDBQuery
+			] );
+			$articles = $wrapper->wrap( function () use ( $category, $limit, $offset, $namespaces ) {
+				return self::getCategoryMembers( $category->getFullText(), $limit, $offset, $namespaces );
+			} );
 		} else {
 
 			$namespace = $namespaces[0];
