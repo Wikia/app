@@ -376,6 +376,7 @@ $wgAutoloadClasses['NavigationModel'] = "{$IP}/includes/wikia/models/NavigationM
 $wgAutoloadClasses['WikiaCollectionsModel'] = "{$IP}/includes/wikia/models/WikiaCollectionsModel.class.php";
 $wgAutoloadClasses['WikiaCorporateModel'] = "{$IP}/includes/wikia/models/WikiaCorporateModel.class.php";
 $wgAutoloadClasses['MySQLKeyValueModel'] = "{$IP}/includes/wikia/models/MySQLKeyValueModel.class.php";
+$wgAutoloadClasses['DesignSystemGlobalFooterModel'] = "{$IP}/includes/wikia/models/DesignSystemGlobalFooterModel.class.php";
 
 // modules
 $wgAutoloadClasses['OasisController'] = $IP.'/skins/oasis/modules/OasisController.class.php';
@@ -1244,13 +1245,6 @@ $wgAdDriverEnableOpenXBidder = true;
 $wgAdDriverOpenXBidderCountries = null;
 
 /**
- * @name $wgAdDriverOpenXBidderCountriesMobile
- * Enables OpenX bidder on mobile in these countries.
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverOpenXBidderCountriesMobile = null;
-
-/**
  * @name $wgAdDriverOpenXBidderCountriesRemnant
  * Enables OpenX bidder in these countries (given wgAdDriverEnableOpenXBidder is also true) in remnant slots.
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
@@ -1538,13 +1532,6 @@ $wgHighValueCountries = null;
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverTurtleCountries = null;
-
-/**
- * @name $wgAdDriverTurtleCountries
- * List of countries to call HitMedia ad partner in
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverHitMediaCountries = null;
 
 /**
  * @name $wgAdDriverSourcePointDetectionCountries

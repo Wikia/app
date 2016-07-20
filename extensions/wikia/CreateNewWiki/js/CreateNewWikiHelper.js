@@ -24,7 +24,7 @@ define(
 				wikiLanguage: wikiLanguage
 			});
 
-			return '/signin?redirect=' + encodeURIComponent(redirectUrl.toString());
+			return '/register?redirect=' + encodeURIComponent(redirectUrl.toString());
 		}
 
 		return {

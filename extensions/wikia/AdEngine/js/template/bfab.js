@@ -9,9 +9,9 @@ define('ext.wikia.adEngine.template.bfab', [
 	var logGroup = 'ext.wikia.adEngine.template.bfab',
 		slot = doc.getElementById('BOTTOM_LEADERBOARD') || doc.getElementById('MOBILE_BOTTOM_LEADERBOARD');
 
-	function show() {
+	function show(params) {
 		slot.classList.add('bfab-template');
-		slotTweaker.makeResponsive(slot.id);
+		slotTweaker.makeResponsive(slot.id, params.aspectRatio);
 
 		log('show', 'info', logGroup);
 	}

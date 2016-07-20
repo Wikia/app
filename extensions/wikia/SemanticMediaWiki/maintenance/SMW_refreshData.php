@@ -44,7 +44,7 @@ require_once ( getenv( 'MW_INSTALL_PATH' ) !== false
 	? getenv( 'MW_INSTALL_PATH' ) . "/maintenance/commandLine.inc"
 	: dirname( __FILE__ ) . '/../../../../maintenance/commandLine.inc' );
 
-global $smwgEnableUpdateJobs, $wgServer, $wgTitle;
+global $smwgEnableUpdateJobs, $wgServer, $wgTitle, $wgDBname;
 $wgTitle = Title::newFromText( 'SMW_refreshData.php' );
 $smwgEnableUpdateJobs = false; // do not fork additional update jobs while running this script
 
@@ -142,7 +142,7 @@ if ( $pages == false ) {
 	$id = $start;
 	while ( ( ( !$end ) || ( $id <= $end ) ) && ( $id > 0 ) ) {
 		if ( $verbose ) {
-			print "($num_files) Processing ID " . $id . " ...\n";
+			print "$wgDBname ($num_files) Processing ID " . $id . " ...\n"; # Wikia change
 		}
 		smwfGetStore()->refreshData( $id, 1, $filter, false );
 		if ( $delay !== false ) {
@@ -156,13 +156,13 @@ if ( $pages == false ) {
 	if ( $writeToStartidfile ) {
 		file_put_contents( $options['startidfile'], "$id" );
 	}
-	print "$num_files IDs refreshed.\n";
+	print "$wgDBname - $num_files IDs refreshed.\n"; # Wikia change
 } else {
 	print "Refreshing specified pages!\n\n";
 
 	foreach ( $pages as $page ) {
 		if ( $verbose ) {
-			print "($num_files) Processing page " . $page . " ...\n";
+			print "$wgDBname ($num_files) Processing page " . $page . " ...\n"; # Wikia change
 		}
 
 		$title = Title::newFromText( $page );
@@ -176,5 +176,16 @@ if ( $pages == false ) {
 		$num_files++;
 	}
 
-	print "$num_files pages refreshed.\n";
+	print "$wgDBname - $num_files pages refreshed.\n"; # Wikia change
 }
+
+
+# Wikia change - begin
+global $wgRequestTime;
+
+Wikia\Logger\WikiaLogger::instance()->info( 'SMW_refreshData.php - completed', [
+	'processed_int' => $num_files,
+	'took_float' => round( microtime( true ) - $wgRequestTime, 4 ), # [sec]
+	'args' => join( ' ', $argv ),
+] );
+# Wikia change - end

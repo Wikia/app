@@ -38,7 +38,7 @@ class RecirculationController extends WikiaController {
 			throw new InvalidParameterApiException( 'cityId' );
 		}
 
-		if ( RecirculationHooks::canShowDiscussions() ) {
+		if ( RecirculationHooks::canShowDiscussions( $cityId ) ) {
 			$discussionsDataService = new DiscussionsDataService( $cityId );
 			$posts = $discussionsDataService->getPosts();
 

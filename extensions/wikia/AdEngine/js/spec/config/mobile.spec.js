@@ -14,12 +14,6 @@ describe('ext.wikia.adEngine.config.mobile', function () {
 				return true;
 			}
 		},
-		adProviderHitMediaMock = {
-			name: 'HitMedia',
-			canHandleSlot: function () {
-				return true;
-			}
-		},
 		adProviderPaidAssetDropMock = {
 			name: 'PaidAssetDropMock',
 			canHandleSlot: function () {
@@ -68,7 +62,6 @@ describe('ext.wikia.adEngine.config.mobile', function () {
 			mocks.adContext,
 			adProviderDirectMock,
 			adProviderEvolveMock,
-			adProviderHitMediaMock,
 			adProviderPaidAssetDropMock,
 			adProviderRemnantMock,
 			adProviderRubiconFastlaneMock,
@@ -110,11 +103,11 @@ describe('ext.wikia.adEngine.config.mobile', function () {
 		expect(adConfigMobile.getProviderList('foo')).toEqual([adProviderEvolveMock, adProviderRemnantMock]);
 	});
 
-	it('getProviderLists returns HitMedia, RemnantGPT when hitMedia is enabled', function () {
-		context.providers.hitMedia = true;
+	it('getProviderLists returns DirectGpt, RemnantGPT when directGpt is enabled', function () {
+		context.providers.directGpt = true;
 		var adConfigMobile = getConfig();
 
-		expect(adConfigMobile.getProviderList('foo')).toEqual([adProviderHitMediaMock, adProviderRemnantMock]);
+		expect(adConfigMobile.getProviderList('foo')).toEqual([adProviderDirectMock, adProviderRemnantMock]);
 	});
 
 	it('getProviderLists returns DirectGpt, RemnantGPT when evolve is enabled but cannot handle the slot', function () {
@@ -125,9 +118,9 @@ describe('ext.wikia.adEngine.config.mobile', function () {
 		expect(adConfigMobile.getProviderList('foo')).toEqual([adProviderDirectMock, adProviderRemnantMock]);
 	});
 
-	it('getProviderLists returns DirectGpt, RemnantGPT when hitMedia is enabled but cant handle the slot', function () {
-		spyOn(adProviderHitMediaMock, 'canHandleSlot').and.returnValue(false);
-		context.providers.hitMedia = true;
+	it('getProviderLists returns DirectGpt, RemnantGPT when evolve is enabled but cant handle the slot', function () {
+		spyOn(adProviderEvolveMock, 'canHandleSlot').and.returnValue(false);
+		context.providers.evolve2 = true;
 		var adConfigMobile = getConfig();
 
 		expect(adConfigMobile.getProviderList('foo')).toEqual([adProviderDirectMock, adProviderRemnantMock]);
@@ -140,11 +133,11 @@ describe('ext.wikia.adEngine.config.mobile', function () {
 		expect(adConfigMobile.getProviderList('foo')).toEqual([adProviderEvolveMock]);
 	});
 
-	it('getProviderLists returns HitMedia when force provider is set', function () {
-		context.forcedProvider = 'hitmedia';
+	it('getProviderLists returns RPFL when force provider is set', function () {
+		context.forcedProvider = 'rpfl';
 		var adConfigMobile = getConfig();
 
-		expect(adConfigMobile.getProviderList('foo')).toEqual([adProviderHitMediaMock]);
+		expect(adConfigMobile.getProviderList('foo')).toEqual([adProviderRubiconFastlaneMock]);
 	});
 
 	it('getProviderLists returns Direct, Remnant when RPFL is disabled', function () {
