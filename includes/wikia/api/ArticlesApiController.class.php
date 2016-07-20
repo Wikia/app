@@ -454,7 +454,7 @@ class ArticlesApiController extends WikiaApiController {
 	}
 
 	/**
-	 * Normalize valid namespaces into a pipe `|` separated string
+	 * Normalize valid namespaces
 	 *
 	 * @param $namespaces
 	 * @return array
