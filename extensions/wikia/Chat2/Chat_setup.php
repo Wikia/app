@@ -67,11 +67,6 @@ $wgLogActionsHandlers['chatban/chatbanchange'] = "ChatHooks::formatLogEntry";
 $wgLogActionsHandlers['chatban/chatbanremove'] = "ChatHooks::formatLogEntry";
 $wgLogActionsHandlers['chatban/chatbanadd'] = "ChatHooks::formatLogEntry";
 
-// register messages package for JS
-JSMessages::registerPackage( 'Chat', [
-	'chat-*',
-] );
-
 /**
  * ResourceLoader module for chat ban modal
  */

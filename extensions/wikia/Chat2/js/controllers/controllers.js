@@ -393,7 +393,7 @@ var NodeRoomController = $.createClass(Observable, {
 		if (message.user === wgUserName) {
 			var newChatEntry = new models.InlineAlert({text: mw.message('chat-message-was-too-long').escaped()});
 			this.model.chats.add(newChatEntry);
-		} 
+		}
 	},
 
 	onKick: function (message) {
@@ -920,24 +920,23 @@ var NodeChatController = $.createClass(NodeRoomController, {
 			this.model.chats.add(newChatEntry);
 			return true;
 		}
-		$.getMessages('Chat', $.proxy(function () {
-			$.ajax({
-				type: 'POST',
-				url: wgScript + '?action=ajax&rs=ChatAjax&method=getPrivateBlocks',
-				success: $.proxy(function (data) {
-					for (var i in data.blockedChatUsers) {
-						var userClear = new models.User({'name': data.blockedChatUsers[i]});
-						this.model.blockedUsers.add(userClear);
-					}
 
-					for (var i in data.blockedByChatUsers) {
-						var userClear = new models.User({'name': data.blockedByChatUsers[i]});
-						this.model.blockedByUsers.add(userClear);
-					}
-					this.socket.connect();
-				}, this)
-			});
-		}, this));
+		$.ajax({
+			type: 'POST',
+			url: wgScript + '?action=ajax&rs=ChatAjax&method=getPrivateBlocks',
+			success: $.proxy(function (data) {
+				for (var i in data.blockedChatUsers) {
+					var userClear = new models.User({'name': data.blockedChatUsers[i]});
+					this.model.blockedUsers.add(userClear);
+				}
+
+				for (var i in data.blockedByChatUsers) {
+					var userClear = new models.User({'name': data.blockedByChatUsers[i]});
+					this.model.blockedByUsers.add(userClear);
+				}
+				this.socket.connect();
+			}, this)
+		});
 
 		/*
 		 * we cannot bind to unload, cos it's too late for sending the command - the socket is already closed...
