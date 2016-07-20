@@ -33,7 +33,6 @@ describe('ext.wikia.adEngine.template.playwire', function () {
 		template.show({});
 
 		expect(mocks.player.inject).not.toHaveBeenCalled();
-		//expect(mocks.parent.appendChild.calls.mostRecent().args[0]['data-config']).toEqual('//fake.url');
 	});
 
 	it('Show without custom config url (should get config url from player)', function () {

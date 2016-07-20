@@ -9,8 +9,8 @@ define('ext.wikia.adEngine.template.playwire', [
 	/**
 	 * @param {object} params
 	 * @param {object} params.container - DOM element where player should be placed
-	 * @param {number} params.publisherId - Playwire publisher id (optional if configUrl is passed)
-	 * @param {number} params.videoId - Playwire video id (optional if configUrl is passed)
+	 * @param {number} [params.publisherId] - Playwire publisher id (optional if configUrl is passed)
+	 * @param {number} [params.videoId] - Playwire video id (optional if configUrl is passed)
 	 * @param {string} [params.configUrl] - URL to Playwire player config
 	 * @param {string} [params.vastUrl] - Vast URL (DFP URL with page level targeting will be used if not passed)
 	 */
