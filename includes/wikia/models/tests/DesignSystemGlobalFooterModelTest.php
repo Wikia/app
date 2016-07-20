@@ -2,13 +2,13 @@
 
 class DesignSystemGlobalFooterModelTest extends WikiaBaseTest {
 	/**
-	 * @dataProvider setLicensingDataProvider
+	 * @dataProvider setLicensingAndVerticalDataProvider
 	 *
 	 * @param $rightsText license name
 	 * @param $rightsUrl license URL
 	 * @param $expectedResult
 	 */
-	public function testSetLicensing( $rightsText, $rightsUrl, $expectedResult ) {
+	public function testSetLicensingAndVertical( $rightsText, $rightsUrl, $expectedResult ) {
 		$wikiId = 1234;
 
 		$rightsTextMock = new stdClass();
@@ -27,10 +27,10 @@ class DesignSystemGlobalFooterModelTest extends WikiaBaseTest {
 		$footerModel = new DesignSystemGlobalFooterModel( $wikiId );
 		$result = $footerModel->getData();
 
-		$this->assertEquals( $result['licensing'], $expectedResult );
+		$this->assertEquals( $result['licensing_and_vertical'], $expectedResult );
 	}
 
-	public function setLicensingDataProvider() {
+	public function setLicensingAndVerticalDataProvider() {
 		return [
 			[
 				'CC-BY-SA',

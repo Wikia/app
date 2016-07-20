@@ -344,13 +344,13 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 	}
 
 	public function getData() {
-		$this->setLicensing();
+		$this->setLicensingAndVertical();
 
 		return $this->data;
 	}
 
-	private function setLicensing() {
-		$this->data['licensing'] = [
+	private function setLicensingAndVertical() {
+		$this->data['licensing_and_vertical'] = [
 			'description' => [
 				'type' => 'translatable-text',
 				'key' => 'global-footer-licensing-description',
