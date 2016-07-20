@@ -155,7 +155,7 @@ class ApiQueryUsers extends ApiQueryBase {
 				if ( isset( $this->prop['rights'] ) ) {
 					$data[$name]['rights'] = $user->getRights();
 				}
-				if ( $row->ipb_deleted ) {
+				if ( isset( $row->ipb_deleted ) /* Wikia change */ && $row->ipb_deleted ) {
 					$data[$name]['hidden'] = '';
 				}
 
