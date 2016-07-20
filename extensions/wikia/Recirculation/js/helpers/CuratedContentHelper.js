@@ -103,6 +103,8 @@ define('ext.wikia.recirculation.helpers.curatedContent', [
 					tracker.trackClick(label);
 				});
 			}
+
+			return $html;
 		}
 
 		return {
