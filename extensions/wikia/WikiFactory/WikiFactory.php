@@ -161,7 +161,7 @@ class WikiFactory {
 	 *                master (for write queries), DB_SLAVE for potentially lagged
 	 *                read queries, or an integer >= 0 for a particular server.
 	 *
-	 * @return Database object
+	 * @return DatabaseBase object
 	 */
 	static public function db( $db ) {
 		global $wgExternalSharedDB;

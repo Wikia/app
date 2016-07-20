@@ -77,7 +77,7 @@ abstract class BaseTask {
 			throw new \InvalidArgumentException;
 		}
 
-		$this->calls [] = [$method, $args];
+		$this->calls[] = [$method, $args];
 
 		return [$this, count( $this->calls ) - 1];
 	}

@@ -15,11 +15,9 @@ class UserRenameToolHelper {
 	 */
 	static public function lookupRegisteredUserActivity( $userID ) {
 		global $wgDevelEnvironment, $wgDWStatsDB, $wgStatsDBEnabled;
-		wfProfileIn( __METHOD__ );
 
 		// check for non admitted values
 		if ( empty( $userID ) || !is_int( $userID ) ) {
-			wfProfileOut( __METHOD__ );
 			return false;
 		}
 
@@ -50,8 +48,6 @@ class UserRenameToolHelper {
 			);
 		}
 
-		wfProfileOut( __METHOD__ );
-
 		return $result;
 	}
 
@@ -64,11 +60,7 @@ class UserRenameToolHelper {
 	public static function lookupIPActivity( $ipAddress ) {
 		global $wgDevelEnvironment, $wgSpecialsDB;
 
-		wfProfileIn( __METHOD__ );
-
 		if ( empty( $ipAddress ) || !IP::isIPAddress( $ipAddress ) ) {
-			wfProfileOut( __METHOD__ );
-
 			return false;
 		}
 
@@ -99,8 +91,6 @@ class UserRenameToolHelper {
 			];
 		}
 
-		wfProfileOut( __METHOD__ );
-
 		return $result;
 	}
 
@@ -111,10 +101,8 @@ class UserRenameToolHelper {
 	 * @return String with HTML to display via AJAX
 	 */
 	public static function testBlock( $text ) {
-		wfProfileIn( __METHOD__ );
 
 		if ( !class_exists( 'PhalanxService' ) ) {
-			wfProfileOut( __METHOD__ );
 			return '';
 		}
 
@@ -138,8 +126,6 @@ class UserRenameToolHelper {
 			$warning = wfMessage( 'userrenametool-warning-phalanx-block', $text )->rawParams( $linkToTest )->escaped();
 		}
 
-		wfProfileOut( __METHOD__ );
-
 		return $warning;
 	}
 
@@ -149,7 +135,7 @@ class UserRenameToolHelper {
 
 			$tasks[$key] = Xml::element(
 				'a',
-				['href' => $title->getFullURL( ['id' => $value] )],
+				[ 'href' => $title->getFullURL( ['id' => $value] ) ],
 				"#{$value}",
 				false
 			);

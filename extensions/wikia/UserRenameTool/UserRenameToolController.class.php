@@ -59,30 +59,49 @@ class UserRenameToolController extends SpecialPage {
 	private function runRenameProcess() {
 		global $wgRequest, $wgUser;
 
-		if ( $wgRequest->wasPosted() && $wgUser->matchEditToken( $wgRequest->getText( 'token' ) ) ) {
-			$process = new UserRenameToolProcess( $this->oldUsername, $this->newUsername, $this->confirmAction, $this->reason, $this->notifyRenamed );
-			$status = $process->run();
-			$this->warnings = $process->getWarnings();
-			$this->errors = $process->getErrors();
+		try {
+			$wgRequest->isValidWriteRequest( $wgUser );
+		} catch( Exception $e ) {
+			return;
+		}
 
-			if ( $status ) {
-				$this->info[] = wfMessage( 'userrenametool-info-in-progress' )->inContentLanguage()->text();
+		$process = new UserRenameToolProcess(
+			$this->oldUsername,
+			$this->newUsername,
+			$this->confirmAction,
+			$this->reason,
+			$this->notifyRenamed
+		);
+		$status = $process->run();
+
+		$this->collectMessages( $process, $status );
+	}
+
+	/**
+	 * @param UserRenameToolProcess $process
+	 * @param bool $status
+	 */
+	private function collectMessages( $process, $status ) {
+		$this->warnings = $process->getWarnings();
+		$this->errors = $process->getErrors();
+
+		if ( $status ) {
+			$this->info[] = wfMessage( 'userrenametool-info-in-progress' )->inContentLanguage()->text();
+		}
+
+		$this->showConfirm = empty( $this->errors ) && empty( $this->info );
+
+		if ( !empty( $this->oldUsername ) ) {
+			$oldUser = User::newFromName( $this->oldUsername );
+
+			if ( 1 || $oldUser->getGlobalFlag( 'requested-rename', 0 ) ) {
+				$this->info[] = wfMessage( 'userrenametool-requested-rename', $this->oldUsername )->escaped();
+			} else {
+				$this->errors[] = wfMessage( 'userrenametool-did-not-request-rename', $this->oldUsername )->escaped();
 			}
 
-			$this->showConfirm = empty( $this->errors ) && empty( $this->info );
-
-			if ( !empty( $this->oldUsername ) ) {
-				$oldUser = User::newFromName($this->oldUsername);
-
-				if ( $oldUser->getGlobalFlag( 'requested-rename', 0 ) ) {
-					$this->info[] = wfMessage( 'userrenametool-requested-rename', $this->oldUsername )->escaped();
-				} else {
-					$this->errors[] = wfMessage( 'userrenametool-did-not-request-rename', $this->oldUsername )->escaped();
-				}
-
-				if ( $oldUser->getGlobalFlag( 'wasRenamed', 0 ) ) {
-					$this->errors[] = wfMessage( 'userrenametool-previously-renamed', $this->oldUsername )->escaped();
-				}
+			if ( $oldUser->getGlobalFlag( 'wasRenamed', 0 ) ) {
+				$this->errors[] = wfMessage( 'userrenametool-previously-renamed', $this->oldUsername )->escaped();
 			}
 		}
 	}
@@ -92,7 +111,7 @@ class UserRenameToolController extends SpecialPage {
 
 		$template = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
 		$template->set_vars([
-			'submitUrl' => $wgTitle->getLocalUrl(),
+			'submitUrl' => $wgTitle->getLocalURL(),
 			'oldusername' => $this->oldUsername,
 			'oldusername_hsc' => htmlspecialchars( $this->oldUsername ),
 			'newusername' => $this->newUsername,
