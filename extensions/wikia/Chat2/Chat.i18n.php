@@ -119,9 +119,7 @@ $messages['en'] = array(
 	'chat-browser-is-notsupported' => '	Your browser is not supported. For the best experience, use a <a href="http://community.wikia.com/wiki/Help:Supported_browsers">newer browser</a>.',
 	'chat-checkuser-join-action' => 'Joined Chat',
 
-	'chat-status-away' => 'Away',
-	
-	'chat-limit-reached' => 'Sorry, but your message is too long. You may only send no more than $1 characters',
+	'chat-status-away' => 'Away'
 );
 
 /** Message documentation (Message documentation)
