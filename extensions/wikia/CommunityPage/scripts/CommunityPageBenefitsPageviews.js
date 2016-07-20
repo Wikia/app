@@ -33,4 +33,5 @@ require([
 	}
 
 	init();
+	modal.open();
 });
