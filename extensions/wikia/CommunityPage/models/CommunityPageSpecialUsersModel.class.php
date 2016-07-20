@@ -93,7 +93,7 @@ class CommunityPageSpecialUsersModel {
 		return $data;
 	}
 	/**
-	 * Get all admins who have contributed ordered by number of contributions
+	 * Get all admins who have contributed ordered by time of last contribution
 	 * filter out bots
 	 *
 	 * @return array|null
@@ -138,11 +138,11 @@ class CommunityPageSpecialUsersModel {
 					$validAdmins[$row->rev_user]['latestRevision'] = $row->latest_revision;
 				} );
 
-				uasort( $validAdmins, function( $a, $b){
-					if ( $a[ 'latestRevision' ] === $b[ 'latestRevision' ]){
+				uasort( $validAdmins, function( $a, $b ) {
+					if ( $a[ 'latestRevision' ] === $b[ 'latestRevision' ] ) {
 						return 0;
 					}
-					return ($a[ 'latestRevision' ] < $b[ 'latestRevision' ]) ? 1 : -1;
+					return ( $a[ 'latestRevision' ] < $b[ 'latestRevision' ] ) ? 1 : -1;
 				} );
 
 				return array_values( $validAdmins );
