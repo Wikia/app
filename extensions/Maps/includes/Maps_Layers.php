@@ -45,7 +45,8 @@ class MapsLayers {
 		self::initializeLayers();
 		
 		if ( self::hasLayer( $type ) ) {
-			return new self::$classes[$type]( $properties );
+			$className = self::$classes[$type];
+			return new $className( $properties );
 		}
 		else {
 			throw new exception( "There is no layer class for layer of type $type." );
