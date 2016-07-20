@@ -30,7 +30,7 @@ class CleanupMigratedAttributes extends Maintenance {
 
     private function printAttrsToBeDeleted() {
         global $wgPublicUserAttributes;
-        $this->output( "Preparing to delete following attributes wikicities.user_properties:\n\n");
+        $this->output( "Preparing to delete following attributes from wikicities.user_properties:\n\n");
         $this->output( implode( $wgPublicUserAttributes, "\n" ) );
         $this->output( "\n\n" );
         if ( $this->force ) {
@@ -54,7 +54,7 @@ class CleanupMigratedAttributes extends Maintenance {
     }
 
     private function printSuccess() {
-        $this->output( "Done!\n");
+        $this->output( "Done!\n" );
     }
 }
 
