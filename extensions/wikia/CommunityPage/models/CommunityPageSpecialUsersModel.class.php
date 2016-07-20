@@ -138,16 +138,9 @@ class CommunityPageSpecialUsersModel {
 					$validAdmins[$row->rev_user]['latestRevision'] = $row->latest_revision;
 				} );
 
-				uasort( $validAdmins, function( $a, $b ) {
-					if ( $a[ 'latestRevision' ] === $b[ 'latestRevision' ] ) {
-						return 0;
-					}
-					return ( $a[ 'latestRevision' ] < $b[ 'latestRevision' ] ) ? 1 : -1;
-				} );
+				return array_values( $this->sortAdminIds( $validAdmins ) );
 
-				return array_values( $validAdmins );
-
-			} , WikiaDataAccess::REFRESH_CACHE
+			}
 		);
 		self::logUserModelPerformanceData( 'view', 'all_admins', $this->isUserOnList( $data ), $this->isUserLoggedIn() );
 		return $data;
@@ -522,5 +515,12 @@ class CommunityPageSpecialUsersModel {
 			$params = implode( ':', $params );
 		}
 		return wfMemcKey( $params, self::MCACHE_VERSION );
+	}
+
+	private function sortAdminIds($validAdmins){
+		uasort( $validAdmins, function( $a, $b ) {
+			return ( $a[ 'latestRevision' ] <= $b[ 'latestRevision' ] ) ? 1 : -1;
+		} );
+		return $validAdmins;
 	}
 }
