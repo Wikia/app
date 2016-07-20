@@ -111,7 +111,7 @@ define('ext.wikia.adEngine.provider.evolve2', [
 		});
 		slot.pre('hop', function() {
 			dispatchNoUapEvent(slot.name);
-			openXHelper.addOpenXSlot(slot.name);
+			openXHelper && openXHelper.addOpenXSlot(slot.name);
 		});
 		gptHelper.pushAd(
 			slot,
