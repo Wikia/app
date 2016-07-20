@@ -32,6 +32,8 @@ class CommunityPageSpecialTopAdminsFormatter {
 	}
 
 	private static function prepareAdminsToShow( $allCount, $otherCount, array $list ) {
+		// JPN-491 Randomize top admins
+		shuffle( $list );
 		return array_slice( $list, 0, $allCount - $otherCount );
 	}
 }

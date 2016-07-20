@@ -376,7 +376,6 @@ $wgAutoloadClasses['NavigationModel'] = "{$IP}/includes/wikia/models/NavigationM
 $wgAutoloadClasses['WikiaCollectionsModel'] = "{$IP}/includes/wikia/models/WikiaCollectionsModel.class.php";
 $wgAutoloadClasses['WikiaCorporateModel'] = "{$IP}/includes/wikia/models/WikiaCorporateModel.class.php";
 $wgAutoloadClasses['MySQLKeyValueModel'] = "{$IP}/includes/wikia/models/MySQLKeyValueModel.class.php";
-$wgAutoloadClasses['DesignSystemGlobalFooterModel'] = "{$IP}/includes/wikia/models/DesignSystemGlobalFooterModel.class.php";
 
 // modules
 $wgAutoloadClasses['OasisController'] = $IP.'/skins/oasis/modules/OasisController.class.php';
@@ -1243,6 +1242,13 @@ $wgAdDriverEnableOpenXBidder = true;
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverOpenXBidderCountries = null;
+
+/**
+ * @name $wgAdDriverOpenXBidderCountriesMobile
+ * Enables OpenX bidder on mobile in these countries.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverOpenXBidderCountriesMobile = null;
 
 /**
  * @name $wgAdDriverEnableRubiconFastlane

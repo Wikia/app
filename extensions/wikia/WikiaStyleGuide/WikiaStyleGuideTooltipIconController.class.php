@@ -1,5 +1,5 @@
 <?php
-class WikiaStyleGuideTooltipIconController extends WikiaService {
+class WikiaStyleGuideTooltipIconController extends WikiaController {
 	/**
 	 * @desc Renders simple markup for a circle with a sign within it
 	 * 

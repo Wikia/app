@@ -47,7 +47,7 @@ class UpdateSpecialPages extends Maintenance {
 			call_user_func( $call, $dbw );
 			$t2 = explode( ' ', microtime() );
 			$this->output( sprintf( '%-30s ', $special ) );
-			$elapsed = ( $t2[ 0 ] - $t1[ 0 ] ) + ( $t2[ 1 ] - $t1[ 1 ] );
+			$elapsed = ( $t2[0] - $t1[0] ) + ( $t2[1] - $t1[1] );
 			$hours = intval( $elapsed / 3600 );
 			$minutes = intval( $elapsed % 3600 / 60 );
 			$seconds = $elapsed - $hours * 3600 - $minutes * 60;
@@ -67,7 +67,7 @@ class UpdateSpecialPages extends Maintenance {
 
 		foreach ( $wgQueryPages as $page ) {
 			list( $class, $special ) = $page;
-			$limit = isset( $page[ 2 ] ) ? $page[ 2 ] : null;
+			$limit = isset( $page[2] ) ? $page[2] : null;
 
 			# --list : just show the name of pages
 			if ( $this->hasOption( 'list' ) ) {
@@ -83,8 +83,7 @@ class UpdateSpecialPages extends Maintenance {
 			$specialObj = SpecialPageFactory::getPage( $special );
 			if ( !$specialObj ) {
 				$this->output( "No such special page: $special\n" );
-				\Wikia\Logger\WikiaLogger::instance()->error( "No such special page: $special\n" );
-				continue;
+				exit;
 			}
 			if ( $specialObj instanceof QueryPage ) {
 				$queryPage = $specialObj;
@@ -97,7 +96,7 @@ class UpdateSpecialPages extends Maintenance {
 			}
 
 			if ( !$this->hasOption( 'only' ) || $this->getOption( 'only' ) == $queryPage->getName() ) {
-				$this->output( sprintf( '%-30s ', $special ) );
+				$this->output( sprintf( '%-30s ',  $special ) );
 				if ( $queryPage->isExpensive() ) {
 					$t1 = explode( ' ', microtime() );
 					# Do the query
@@ -108,7 +107,7 @@ class UpdateSpecialPages extends Maintenance {
 					} else {
 						$this->output( "got $num rows in " );
 
-						$elapsed = ( $t2[ 0 ] - $t1[ 0 ] ) + ( $t2[ 1 ] - $t1[ 1 ] );
+						$elapsed = ( $t2[0] - $t1[0] ) + ( $t2[1] - $t1[1] );
 						$hours = intval( $elapsed / 3600 );
 						$minutes = intval( $elapsed % 3600 / 60 );
 						$seconds = $elapsed - $hours * 3600 - $minutes * 60;

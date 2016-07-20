@@ -8,6 +8,7 @@ var CategoryExhibition = {
 		$('#mw-blogs').delegate('.wikia-paginator a', 'click', CategoryExhibition.blogsPaginatorClick);
 
 		CategoryExhibition.redrawFormButtons();
+		CategoryExhibition.rewriteSubcategoryUrls();
 	},
 
 	redrawFormButtons : function(){

@@ -4,7 +4,7 @@
  * Wikia UI Style Guide Dropdown Controller
  * @author Kyle Florence
  */
-class WikiaStyleGuideDropdownController extends WikiaService {
+class WikiaStyleGuideDropdownController extends WikiaController {
 	public function multiSelect() {
 		JSMessages::enqueuePackage('WikiaStyleGuideDropdown', JSMessages::EXTERNAL);
 

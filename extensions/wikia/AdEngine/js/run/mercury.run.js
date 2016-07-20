@@ -43,7 +43,7 @@ require([
 			rubiconFastlane.call();
 		}
 
-		if (geo.isProperGeo(instantGlobals.wgAdDriverOpenXBidderCountries)) {
+		if (geo.isProperGeo(instantGlobals.wgAdDriverOpenXBidderCountriesMobile)) {
 			oxBidder.call();
 		}
 
