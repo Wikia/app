@@ -5,6 +5,7 @@ class TwitterTagController extends WikiaController {
 	const PARSER_TAG_NAME = 'twitter';
 	const TWITTER_NAME = 'Twitter';
 	const TWITTER_BASE_URL = 'https://twitter.com/';
+	const TWITTER_USER_TIMELINE = '/^https:\/\/twitter.com\/[a-z0-9_]*$/i';
 
 	const REGEX_DIGITS = '/^[0-9]*$/';
 	const REGEX_HEX_COLOR = '/#[0-9a-f]{3}(?:[0-9a-f]{3})?$/i';
@@ -52,21 +53,27 @@ class TwitterTagController extends WikiaController {
 	 * @return string
 	 */
 	public function parseTag( $input, array $args, Parser $parser, PPFrame $frame ) {
-		if ( empty( $args['widget-id'] ) ) {
-			return '<strong class="error">' . wfMessage( 'twitter-tag-widget-id' )->parse() . '</strong>';
+		if ( !empty( $args[ 'href' ] ) && preg_match( self::TWITTER_USER_TIMELINE, $args[ 'href' ] ) ) {
+			$href = $args[ 'href' ];
+		} else {
+			// if no href to user timeline check for id
+			if ( empty( $args[ 'widget-id' ] ) ) {
+				return '<strong class="error">' . wfMessage( 'twitter-tag-widget-id' )->parse() . '</strong>';
+			}
+			$href = self::TWITTER_BASE_URL;
 		}
 
 		$attributes = $this->prepareAttributes( $args, self::TAG_PERMITTED_ATTRIBUTES );
-		$attributes['href'] = self::TWITTER_BASE_URL;
+		$attributes[ 'href' ] = $href;
 		// data-wikia-widget attribute is searched for by Mercury
-		$attributes['data-wikia-widget'] = self::PARSER_TAG_NAME;
+		$attributes[ 'data-wikia-widget' ] = self::PARSER_TAG_NAME;
 
 		if ( ( new WikiaIFrameTagBuilderHelper() )->isMobileSkin() ) {
 			$html = Html::element( 'a', $attributes, self::TWITTER_NAME );
 		} else {
 			// Twitter script is searching for twitter-timeline class
-			$attributes['class'] = 'twitter-timeline';
-			$html = Html::element( 'a', $attributes, self::TWITTER_NAME  );
+			$attributes[ 'class' ] = 'twitter-timeline';
+			$html = Html::element( 'a', $attributes, self::TWITTER_NAME );
 			// Wrapper used for easily selecting the widget in Selenium tests
 			$html = Html::rawElement( 'span', [ 'class' => 'widget-twitter' ], $html );
 
@@ -90,9 +97,9 @@ class TwitterTagController extends WikiaController {
 
 		foreach ( $attributes as $attributeName => $attributeValue ) {
 			if ( array_key_exists( $attributeName, $permittedAttributes ) &&
-				preg_match( $permittedAttributes[$attributeName], $attributeValue )
+				 preg_match( $permittedAttributes[ $attributeName ], $attributeValue )
 			) {
-				$validatedAttributes['data-' . $attributeName] = $attributeValue;
+				$validatedAttributes[ 'data-' . $attributeName ] = $attributeValue;
 			}
 		}
 
