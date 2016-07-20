@@ -137,6 +137,13 @@ class CommunityPageSpecialUsersModel {
 				$sqlData->runLoop( $db, function ( &$result, $row ) use ( &$validAdmins ) {
 					$validAdmins[$row->rev_user]['latestRevision'] = $row->latest_revision;
 				} );
+
+				uasort( $validAdmins, function( $a, $b){
+					if ( $a[ 'lastRevision' ] === $b[ 'lastRevision' ]){
+						return 0;
+					}
+					return ($a[ 'lastRevision' ] < $b[ 'lastRevision' ]) ? 1 : -1;
+				} );
 				
 				return array_values( $validAdmins );
 
