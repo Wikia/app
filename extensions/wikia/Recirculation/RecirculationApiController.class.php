@@ -1,7 +1,8 @@
 <?php
 
 class RecirculationApiController extends WikiaApiController {
-	const ALLOWED_TYPES = ['popular', 'shares', 'recent_popular', 'vertical', 'community', 'curated', 'e3', 'hero'];
+	const ALLOWED_TYPES = ['recent_popular', 'vertical', 'community', 'curated', 'e3', 'hero', 'category'];
+	const FANDOM_LIMIT = 5;
 
 	/**
 	 * @var CrossOriginResourceSharingHeaderHelper
@@ -20,19 +21,31 @@ class RecirculationApiController extends WikiaApiController {
 		$type = $this->getParamType();
 		$cityId = $this->getParamCityId();
 
+		$title = wfMessage( 'recirculation-fandom-title' )->plain();
+
 		if ( $type === 'curated' ) {
 			$dataService = new CuratedContentService();
-		} elseif ( $type === 'hero' ) {
-			$dataService = new FandomDataService( $cityId );
+		} elseif ( $type === 'hero' || $type === 'category' ) {
+			$dataService = new FandomDataService( $cityId, $type );
 		} else {
 			$dataService = new ParselyDataService( $cityId );
 		}
 
+		if ( $type === 'category') {
+			$svg = file_get_contents( __DIR__ . '/images/mafia3.svg' );
+			$title = "Fandom @ <strong>Comic-Con</strong><br /><span>Presented by $svg</span>";
+		}
+
 		$posts = $dataService->getPosts( $type );
+
+		if ( $type === 'category' && count( $posts ) < self::FANDOM_LIMIT ) {
+			$ds = new FandomDataService( $cityId, $type, true );
+			$posts = array_slice( array_merge( $posts, $ds->getPosts( $type ) ), 0, self::FANDOM_LIMIT );
+		}
 
 		$this->response->setCacheValidity( WikiaResponse::CACHE_VERY_SHORT );
 		$this->response->setData( [
-			'title' => wfMessage( 'recirculation-fandom-title' )->plain(),
+			'title' => $title,
 			'posts' => $posts,
 		] );
 	}
