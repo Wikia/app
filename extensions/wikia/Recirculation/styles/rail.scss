@@ -39,6 +39,8 @@
 }
 
 $recirculation-fandom-dark-blue: #39414d;
+$recirculation-text-color: #092344;
+$recirculation-alternate-text-color: #656E78;
 $recirculation-mafia-color: #010201;
 $recirculation-fandom-icon-size: 48px;
 
@@ -77,7 +79,7 @@ $recirculation-fandom-icon-size: 48px;
 		margin-top: 15px;
 		padding: 0;
 		text-align: center;
-		color: $color-alternate-text;
+		color: $recirculation-alternate-text-color;
 
 		span {
 			font-size: 10px;
@@ -86,7 +88,7 @@ $recirculation-fandom-icon-size: 48px;
 		}
 
 		strong {
-			color: $color-text;
+			color: $recirculation-text-color;
 		}
 
 		svg {
@@ -102,8 +104,16 @@ $recirculation-fandom-icon-size: 48px;
 			background-color: $color-white;
 		}
 
-		h2 svg {
-			fill: $color-white;
+		h2 {
+			color: #999999;
+
+			strong {
+				color: $color-white;
+			}
+
+			svg {
+				fill: $color-white;
+			}
 		}
 	}
 }
