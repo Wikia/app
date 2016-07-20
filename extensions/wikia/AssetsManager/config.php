@@ -1262,7 +1262,6 @@ $config['chat_js2'] = array(
 
 		// shared libraries
 		'//extensions/wikia/AssetsManager/js/AssetsManager.js',
-		'//extensions/wikia/JSMessages/js/JSMessages.js',
 
 		'//resources/wikia/modules/querystring.js',
 		'//resources/wikia/modules/history.js',
