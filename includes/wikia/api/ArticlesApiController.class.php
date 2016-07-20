@@ -442,7 +442,7 @@ class ArticlesApiController extends WikiaApiController {
 	}
 
 	/**
-	 * Resolve categor param name into internal category name (incl. redirecst)
+	 * Resolve category param name into internal category name (incl. redirecst)
 	 * @param $category
 	 * @return mixed|Title
 	 */
@@ -457,12 +457,12 @@ class ArticlesApiController extends WikiaApiController {
 	 * Normalize valid namespaces into a pipe `|` separated string
 	 *
 	 * @param $namespaces
-	 * @return string
+	 * @return array
 	 * @throws InvalidParameterApiException
 	 */
-	public static function implodeValidNamespaces( $namespaces ) {
+	public static function validateNamespaces( $namespaces ) {
 		if ( empty( $namespaces ) ) {
-			return '';
+			return [];
 		}
 
 		foreach ( $namespaces as &$n ) {
@@ -471,7 +471,6 @@ class ArticlesApiController extends WikiaApiController {
 			}
 		}
 
-		$namespaces = implode( '|', $namespaces );
 		return $namespaces;
 	}
 
@@ -507,7 +506,7 @@ class ArticlesApiController extends WikiaApiController {
 		$expand = $this->request->getBool( static::PARAMETER_EXPAND, false );
 
 		if ( !empty( $category ) ) {
-			$namespaces = self::implodeValidNamespaces($namespaces);
+			$namespaces = implode( '|', self::implodeValidNamespaces( $namespaces ) );
 
 			/**
 			 * Wrapping global wgMiserMode.
