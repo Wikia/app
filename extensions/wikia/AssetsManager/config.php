@@ -151,6 +151,7 @@ $config['recirculation_js'] = array(
 		'//extensions/wikia/Recirculation/js/views/impactFooter.js',
 		'//extensions/wikia/Recirculation/js/experiments/placement.js',
 		'//extensions/wikia/Recirculation/js/experiments/placement/impactFooter.js',
+		'//extensions/wikia/Recirculation/js/experiments/placement/fandomTopic.js',
 		'//extensions/wikia/Recirculation/js/scrolldepth.js',
 		'//extensions/wikia/Recirculation/js/libs/perfect-scrollbar.js',
 	),
