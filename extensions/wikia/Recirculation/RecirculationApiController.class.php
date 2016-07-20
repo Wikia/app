@@ -25,21 +25,21 @@ class RecirculationApiController extends WikiaApiController {
 		if ( $type === 'curated' ) {
 			$dataService = new CuratedContentService();
 		} elseif ( $type === 'hero' || $type === 'category' ) {
-			$dataService = new FandomDataService( $cityId );
+			$dataService = new FandomDataService( $cityId, $type );
 		} else {
 			$dataService = new ParselyDataService( $cityId );
 		}
 
 		if ( $type === 'category') {
-			$svg = file_get_contents( dirname(__FILE__) . '/images/mafia3.svg' );
+			$svg = file_get_contents( __DIR__ . '/images/mafia3.svg' );
 			$title = "Fandom @ <strong>Comic-Con</strong><br /><span>Presented by $svg</span>";
 		}
 
 		$posts = $dataService->getPosts( $type );
 
-		if ( $type === 'category' && count( $posts) < 5) {
-			$ds = new FandomDataService( $cityId );
-			$posts = array_merge( $posts, $ds->getPosts( $type, true ) );
+		if ( $type === 'category' && count( $posts ) < 5) {
+			$ds = new FandomDataService( $cityId, $type, true );
+			$posts = array_merge( $posts, $ds->getPosts( $type ) );
 		}
 
 		$this->response->setCacheValidity( WikiaResponse::CACHE_VERY_SHORT );
