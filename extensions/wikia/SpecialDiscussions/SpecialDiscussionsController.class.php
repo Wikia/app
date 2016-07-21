@@ -15,6 +15,7 @@ class SpecialDiscussionsController extends WikiaSpecialPageController {
 	const SERVICE_NAME = 'discussion';
 	const TIMEOUT = 5;
 	const EDIT_TOKEN = 'editToken';
+	const SITE_NAME_MAX_LENGTH = 256;
 
 	const DEFAULT_TEMPLATE_ENGINE = \WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
 
@@ -75,15 +76,16 @@ class SpecialDiscussionsController extends WikiaSpecialPageController {
 	private function activateDiscussions() {
 		$this->assertValidPostRequest();
 
-		$site = new \Swagger\Client\Discussion\Models\Site(
+		$siteInput = new \Swagger\Client\Discussion\Models\SiteInput(
 			[
 				'id' => $this->siteId,
-				'languageCode' => F::app()->wg->ContLang->getCode(),
+				'name' => substr( $this->siteName, 0, self::SITE_NAME_MAX_LENGTH ),
+				'language_code' => F::app()->wg->ContLang->getCode(),
 			]
 		);
 
 		try {
-			$this->getDiscussionSitesApi()->createSite( $site, F::app()->wg->TheSchwartzSecretToken );
+			$this->getDiscussionSitesApi()->createSite( $siteInput, F::app()->wg->TheSchwartzSecretToken );
 		} catch ( ApiException $e ) {
 			$this->logger->error(
 				'Creating site caused an error',
