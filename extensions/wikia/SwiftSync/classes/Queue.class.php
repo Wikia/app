@@ -149,9 +149,9 @@ class Queue {
 		return wfGetDB( ( empty( $master ) ) ? DB_SLAVE : DB_MASTER, array(), $wgSwiftSyncDB );
 	}
 
-	/* 
+	/**
 	 * Save information about uploaded image in database 
-	 * @return Boolean True/False
+	 * @return int|false ID of added row or false on error
 	 */ 
 	public function add() {
 		wfProfileIn( __METHOD__ );
@@ -179,10 +179,23 @@ class Queue {
 			], 
 			__METHOD__ 
 		);
+
+		$id = $dbw->insertId();
 		$dbw->commit();
-		
+
+		WikiaLogger::instance()->info( __METHOD__, [
+			'id'      => (string) $id,
+			'action'  => $this->action,
+			'city_id' => (string) $this->city_id,
+			'src'     => $this->src,
+			'dst'     => $this->dst,
+			'@root'   => [
+				'tags' => [ 'SwiftSync' ]
+			]
+		] );
+
 		wfProfileOut( __METHOD__ );
-		return true;
+		return $id;
 	}
 	
 	/* 

@@ -8,18 +8,22 @@ $wgAutoloadClasses['CommunityPageSpecialInsightsModel'] =  __DIR__ . '/models/Co
 $wgAutoloadClasses['CommunityPageSpecialRecentActivityModel'] =  __DIR__ . '/models/CommunityPageSpecialRecentActivityModel.class.php';
 $wgAutoloadClasses['CommunityPageSpecialHelpModel'] =  __DIR__ . '/models/CommunityPageSpecialHelpModel.class.php';
 $wgAutoloadClasses['CommunityPageSpecialCommunityPolicyModel'] =  __DIR__ . '/models/CommunityPageSpecialCommunityPolicyModel.class.php';
+$wgAutoloadClasses['CommunityPageSpecialCommunityTodoListModel'] =  __DIR__ . '/models/CommunityPageSpecialCommunityTodoListModel.class.php';
 
 /* controller */
 $wgAutoloadClasses['CommunityPageSpecialController'] =  __DIR__ . '/CommunityPageSpecialController.class.php';
 $wgAutoloadClasses['CommunityPageSpecialHooks'] =  __DIR__ . '/CommunityPageSpecialHooks.class.php';
 $wgAutoloadClasses['CommunityPageEntryPointController'] = $IP . '/skins/oasis/modules/CommunityPageEntryPointController.class.php';
 
+/* helpers */
+$wgAutoloadClasses['WikiTopic'] = __DIR__ . '/helpers/WikiTopic.php';
+
 /* hooks */
 $wgAutoloadClasses['CommunityPageSpecialHooks'] =  __DIR__ . '/CommunityPageSpecialHooks.class.php';
 $wgHooks['ArticleSaveComplete'][] = 'CommunityPageSpecialHooks::onArticleSaveComplete';
-$wgHooks['BeforePageDisplay'][] = 'CommunityPageSpecialHooks::onBeforePageDisplay';
 $wgHooks['GetRailModuleList'][] = 'CommunityPageSpecialHooks::onGetRailModuleList';
 $wgHooks['UserFirstEditOnLocalWiki'][] = 'CommunityPageSpecialHooks::onUserFirstEditOnLocalWiki';
+$wgHooks['BeforePageDisplay'][] = 'CommunityPageSpecialHooks::onBeforePageDisplay';
 $wgHooks['UserRights'][] = 'CommunityPageSpecialHooks::onUserRights';
 
 /* i18n */

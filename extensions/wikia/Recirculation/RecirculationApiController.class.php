@@ -1,7 +1,7 @@
 <?php
 
 class RecirculationApiController extends WikiaApiController {
-	const ALLOWED_TYPES = ['popular', 'shares', 'recent_popular', 'vertical', 'community', 'curated', 'e3', 'hero'];
+	const ALLOWED_TYPES = ['recent_popular', 'vertical', 'community', 'curated', 'e3', 'hero', 'category'];
 
 	/**
 	 * @var CrossOriginResourceSharingHeaderHelper
@@ -20,19 +20,31 @@ class RecirculationApiController extends WikiaApiController {
 		$type = $this->getParamType();
 		$cityId = $this->getParamCityId();
 
+		$title = wfMessage( 'recirculation-fandom-title' )->plain();
+
 		if ( $type === 'curated' ) {
 			$dataService = new CuratedContentService();
-		} elseif ( $type === 'hero' ) {
-			$dataService = new FandomDataService( $cityId );
+		} elseif ( $type === 'hero' || $type === 'category' ) {
+			$dataService = new FandomDataService( $cityId, $type );
 		} else {
 			$dataService = new ParselyDataService( $cityId );
 		}
 
+		if ( $type === 'category') {
+			$svg = file_get_contents( __DIR__ . '/images/mafia3.svg' );
+			$title = "Fandom @ <strong>Comic-Con</strong><br /><span>Presented by $svg</span>";
+		}
+
 		$posts = $dataService->getPosts( $type );
+
+		if ( $type === 'category' && count( $posts ) < 5) {
+			$ds = new FandomDataService( $cityId, $type, true );
+			$posts = array_merge( $posts, $ds->getPosts( $type ) );
+		}
 
 		$this->response->setCacheValidity( WikiaResponse::CACHE_VERY_SHORT );
 		$this->response->setData( [
-			'title' => wfMessage( 'recirculation-fandom-title' )->plain(),
+			'title' => $title,
 			'posts' => $posts,
 		] );
 	}
@@ -67,7 +79,7 @@ class RecirculationApiController extends WikiaApiController {
 		];
 
 		$discussionsData = [];
-		if ( RecirculationHooks::canShowDiscussions() ) {
+		if ( RecirculationHooks::canShowDiscussions( $cityId ) ) {
 			$discussionsDataService = new DiscussionsDataService( $cityId );
 			$discussionsData = $discussionsDataService->getData();
 			$discussionsData['title'] = wfMessage( 'recirculation-discussion-title' )->plain();
@@ -83,7 +95,7 @@ class RecirculationApiController extends WikiaApiController {
 	}
 
 	private function getParamCityId() {
-		$cityId = $this->request->getVal( 'cityId', null );
+		$cityId = $this->request->getVal( 'cityId', 0 );
 
 		if ( !empty( $cityId ) && !is_numeric( $cityId ) ) {
 			throw new InvalidParameterApiException( 'cityId' );

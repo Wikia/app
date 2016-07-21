@@ -21,7 +21,7 @@ $icon-space-large: 19px;
 
 .modal.community-page-benefits-modal {
 	background: $color-white;
-	color: $color-text-dark;
+	cursor: pointer;
 	font-family: $community-page-font-family;
 	font-size: 16px;
 	height: 90vh;
@@ -39,6 +39,14 @@ $icon-space-large: 19px;
 	}
 }
 
+.community-page-benefits-modal-area {
+	color: $color-text-dark;
+
+	&:hover {
+		text-decoration: none;
+	}
+}
+
 .community-page-benefits-content {
 	display: flex;
 	flex-direction: column;
@@ -48,7 +56,7 @@ $icon-space-large: 19px;
 	width: 50%;
 }
 
-.community-page-benefits-image {
+.community-page-benefits-container {
 	background-color: $color-image-bg;
 	background-image: url('/extensions/wikia/CommunityPage/images/wikia-logo-in-circles.png'), url('/extensions/wikia/CommunityPage/images/wikia-logo-bg.png');
 	background-position: center, bottom;
@@ -57,7 +65,18 @@ $icon-space-large: 19px;
 	float: left;
 	height: 90vh;
 	max-height: 698px;
+	overflow: hidden;
+	position: relative;
 	width: 50%;
+}
+
+.community-page-benefits-image {
+	// this positioning is used to center img, we need it to support different breakpoints modal sizes
+	height: 100%;
+	left: -100%;
+	margin: auto;
+	position: absolute;
+	right: -100%;
 }
 
 .community-page-benefits-modal-text {
@@ -103,6 +122,8 @@ $icon-space-large: 19px;
 
 .community-page-entry-point-button {
 	background: $color-corporate-buttons;
+	border: none;
+	border-radius: 0;
 	color: $color-corporate-button-text;
 	display: inline-block;
 	font-size: 14px;
@@ -114,7 +135,7 @@ $icon-space-large: 19px;
 	text-transform: uppercase;
 
 	&:hover, &:active {
-		background-color: $color-corporate-button-highlight;
+		background: $color-corporate-button-highlight none;
 		color: $color-corporate-button-text;
 		text-decoration: none;
 	}
@@ -138,6 +159,10 @@ $icon-space-large: 19px;
 	float: left;
 	margin-bottom: 33px;
 	width: calc(100% - #{$icon-size-outer-large + $icon-space-large});
+
+	&:last-child {
+		margin-bottom: 0;
+	}
 }
 
 .community-page-benefits-modal-close {

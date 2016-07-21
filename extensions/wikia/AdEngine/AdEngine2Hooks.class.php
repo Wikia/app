@@ -44,13 +44,12 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverGoogleConsumerSurveysCountries';
 		$vars[] = 'wgAdDriverHighImpactSlotCountries';
 		$vars[] = 'wgAdDriverHighImpact2SlotCountries';
-		$vars[] = 'wgAdDriverHitMediaCountries';
 		$vars[] = 'wgAdDriverIncontentLeaderboardSlotCountries';
 		$vars[] = 'wgAdDriverIncontentLeaderboardOutOfPageSlotCountries';
 		$vars[] = 'wgAdDriverIncontentPlayerSlotCountries';
 		$vars[] = 'wgAdDriverKruxCountries';
 		$vars[] = 'wgAdDriverOpenXBidderCountries';
-		$vars[] = 'wgAdDriverOpenXBidderCountriesMobile';
+		$vars[] = 'wgAdDriverOpenXBidderCountriesRemnant';
 		$vars[] = 'wgAdDriverOverridePrefootersCountries';
 		$vars[] = 'wgAdDriverRevcontentCountries';
 		$vars[] = 'wgAdDriverRubiconFastlaneCountries';
@@ -247,8 +246,4 @@ class AdEngine2Hooks {
 		return true;
 	}
 
-	public static function onBeforePageDisplay( OutputPage $out, Skin $skin ) {
-		Wikia::addAssetsToOutput( 'adengine2_desktop_scss' );
-		return true;
-	}
 }

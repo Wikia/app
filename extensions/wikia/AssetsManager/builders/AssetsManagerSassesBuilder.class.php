@@ -23,11 +23,6 @@ class AssetsManagerSassesBuilder extends AssetsManagerBaseBuilder {
 			$this->mContent .= "\n\n/* $file */\n" . $builder->getContent();
 		}
 
-		$am = AssetsManager::getInstance();
-		if ($am->checkContainCrossoriginScssFile($files)) {
-			header( 'Access-Control-Allow-Origin: *' );
-		}
-
 		$this->mContentType = AssetsManager::TYPE_CSS;
 	}
 

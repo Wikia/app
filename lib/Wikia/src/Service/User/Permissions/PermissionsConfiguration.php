@@ -73,4 +73,18 @@ interface PermissionsConfiguration {
 	 *     'remove-self' => array( removable groups from self) )
 	 */
 	public function getGroupsChangeableByGroup( $group );
+
+	/**
+	 * Returns list of groups that require restricted access
+	 *
+	 * @return array
+	 */
+	public function getRestrictedAccessGroups();
+
+	/**
+	 * Returns list of groups that allow to exempt restricted access
+	 *
+	 * @return array
+	 */
+	public function getRestrictedAccessExemptGroups();
 }

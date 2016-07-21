@@ -23,15 +23,13 @@ class CreateNewWikiControllerTest extends WikiaBaseTest {
 		$wikiLanguage = 'en';
 		$wikiVertical = '3';
 		$wikiId = 322389;
-		$wikiAnswer = 12345;
 		$siteName = 'asdfasdf';
 		$mainPageUrl = 'muppet.wikia.com/wiki/Main_page';
 
 		$requestParams = array("wName" => $wikiName,
 			"wDomain" => $wikiDomain,
 			"wLanguage" => $wikiLanguage,
-			"wVertical" => $wikiVertical,
-			"wAnswer" => $wikiAnswer);
+			"wVertical" => $wikiVertical);
 
 		$wgRequest = $this->getMock('WebRequest');
 		$wgRequest->expects($this->any())

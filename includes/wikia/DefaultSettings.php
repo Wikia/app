@@ -38,6 +38,7 @@ require_once ( $IP."/includes/wikia/Defines.php" );
 require_once ( $IP."/includes/wikia/GlobalFunctions.php" );
 require_once ( $IP."/includes/wikia/Wikia.php" );
 require_once ( $IP."/includes/wikia/WikiaMailer.php" );
+require_once ( $IP."/extensions/GlobalMessages/GlobalMessages.setup.php" );
 require_once ( $IP."/extensions/Math/Math.php" );
 
 /**
@@ -96,7 +97,6 @@ $wgAutoloadClasses['WikiaAccessRules'] = $IP . '/includes/wikia/nirvana/WikiaAcc
 $wgAutoloadClasses['WikiaBaseTest'] = $IP . '/includes/wikia/tests/core/WikiaBaseTest.class.php';
 $wgAutoloadClasses['WikiaTestSpeedAnnotator'] = $IP . '/includes/wikia/tests/core/WikiaTestSpeedAnnotator.class.php';
 $wgAutoloadClasses['WikiaMockProxy'] = $IP . '/includes/wikia/tests/core/WikiaMockProxy.class.php';
-$wgAutoloadClasses['WikiaMockProxyUopz'] = $IP . '/includes/wikia/tests/core/WikiaMockProxyUopz.class.php';
 $wgAutoloadClasses['WikiaMockProxyAction'] = $IP . '/includes/wikia/tests/core/WikiaMockProxyAction.class.php';
 $wgAutoloadClasses['WikiaMockProxyInvocation'] = $IP . '/includes/wikia/tests/core/WikiaMockProxyInvocation.class.php';
 $wgAutoloadClasses['WikiaGlobalVariableMock'] = $IP . '/includes/wikia/tests/core/WikiaGlobalVariableMock.class.php';
@@ -148,6 +148,7 @@ $wgAutoloadClasses[ 'WikiaApiController'] =  "{$IP}/includes/wikia/api/WikiaApiC
 
 //Wikia API controllers
 $wgAutoloadClasses['DiscoverApiController'] = "{$IP}/includes/wikia/api/DiscoverApiController.class.php";
+$wgAutoloadClasses['DesignSystemApiController'] = "{$IP}/includes/wikia/api/DesignSystemApiController.class.php";
 $wgAutoloadClasses['NavigationApiController'] = "{$IP}/includes/wikia/api/NavigationApiController.class.php";
 $wgAutoloadClasses['ArticlesApiController'] = "{$IP}/includes/wikia/api/ArticlesApiController.class.php";
 $wgAutoloadClasses['RevisionApiController'] = "{$IP}/includes/wikia/api/RevisionApiController.class.php";
@@ -165,6 +166,7 @@ $wgAutoloadClasses['TemplateClassificationApiController'] = "{$IP}/includes/wiki
 $wgExtensionMessagesFiles['WikiaApi'] = "{$IP}/includes/wikia/api/WikiaApi.i18n.php";
 
 $wgWikiaApiControllers['DiscoverApiController'] = "{$IP}/includes/wikia/api/DiscoverApiController.class.php";
+$wgWikiaApiControllers['DesignSystemApiController'] = "{$IP}/includes/wikia/api/DesignSystemApiController.class.php";
 $wgWikiaApiControllers['NavigationApiController'] = "{$IP}/includes/wikia/api/NavigationApiController.class.php";
 $wgWikiaApiControllers['ArticlesApiController'] = "{$IP}/includes/wikia/api/ArticlesApiController.class.php";
 $wgWikiaApiControllers['SearchSuggestionsApiController'] = "{$IP}/includes/wikia/api/SearchSuggestionsApiController.class.php";
@@ -277,6 +279,7 @@ $wgAutoloadClasses[ 'TransactionClassifier'           ] = "$IP/includes/wikia/tr
 $wgAutoloadClasses[ 'TransactionTraceNewrelic'        ] = "$IP/includes/wikia/transaction/TransactionTraceNewrelic.php";
 $wgAutoloadClasses[ 'TransactionTraceScribe'          ] = "$IP/includes/wikia/transaction/TransactionTraceScribe.php";
 $wgHooks          [ 'ArticleViewAddParserOutput'      ][] = 'Transaction::onArticleViewAddParserOutput';
+$wgHooks          [ 'AfterSmwfGetStore'               ][] = 'Transaction::onAfterSmwfGetStore';
 $wgHooks          [ 'RestInPeace'                     ][] = 'Transaction::onRestInPeace';
 $wgHooks          [ 'RestInPeace'                     ][] = 'ScribePurge::onRestInPeace';
 $wgHooks          [ 'RestInPeace'                     ][] = 'CeleryPurge::onRestInPeace';
@@ -300,7 +303,6 @@ $wgAutoloadClasses['SwaggerModelProperty'] = "$IP/includes/wikia/swagger/Swagger
 $wgAutoloadClasses['SwaggerErrorResponse'] = "$IP/includes/wikia/swagger/SwaggerErrorResponse.php";
 $wgAutoloadClasses['TemplateDataExtractor'] = "$IP/includes/wikia/TemplateDataExtractor.class.php";
 $wgAutoloadClasses['WikiaHtmlTitle'] = "$IP/includes/wikia/WikiaHtmlTitle.class.php";
-$wgAutoloadClasses['WikiaHtml'] = "$IP/includes/wikia/WikiaHtml.class.php";
 
 /**
  * Resource Loader enhancements
@@ -373,6 +375,7 @@ $wgAutoloadClasses['NavigationModel'] = "{$IP}/includes/wikia/models/NavigationM
 $wgAutoloadClasses['WikiaCollectionsModel'] = "{$IP}/includes/wikia/models/WikiaCollectionsModel.class.php";
 $wgAutoloadClasses['WikiaCorporateModel'] = "{$IP}/includes/wikia/models/WikiaCorporateModel.class.php";
 $wgAutoloadClasses['MySQLKeyValueModel'] = "{$IP}/includes/wikia/models/MySQLKeyValueModel.class.php";
+$wgAutoloadClasses['DesignSystemGlobalFooterModel'] = "{$IP}/includes/wikia/models/DesignSystemGlobalFooterModel.class.php";
 
 // modules
 $wgAutoloadClasses['OasisController'] = $IP.'/skins/oasis/modules/OasisController.class.php';
@@ -1241,11 +1244,11 @@ $wgAdDriverEnableOpenXBidder = true;
 $wgAdDriverOpenXBidderCountries = null;
 
 /**
- * @name $wgAdDriverOpenXBidderCountriesMobile
- * Enables OpenX bidder on mobile in these countries.
+ * @name $wgAdDriverOpenXBidderCountriesRemnant
+ * Enables OpenX bidder in these countries (given wgAdDriverEnableOpenXBidder is also true) in remnant slots.
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
-$wgAdDriverOpenXBidderCountriesMobile = null;
+$wgAdDriverOpenXBidderCountriesRemnant = null;
 
 /**
  * @name $wgAdDriverEnableRubiconFastlane
@@ -1530,13 +1533,6 @@ $wgHighValueCountries = null;
 $wgAdDriverTurtleCountries = null;
 
 /**
- * @name $wgAdDriverTurtleCountries
- * List of countries to call HitMedia ad partner in
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverHitMediaCountries = null;
-
-/**
  * @name $wgAdDriverSourcePointDetectionCountries
  * List of countries to call SourcePoint detection scripts
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
@@ -1640,7 +1636,8 @@ $wgApiAccess = [
 	'MoviesApiController' => ApiAccessService::WIKIA_CORPORATE,
 	'WAMApiController' => ApiAccessService::WIKIA_CORPORATE,
 	'WikiaHubsApiController' => ApiAccessService::WIKIA_CORPORATE,
-	'WikisApiController' => ApiAccessService::WIKIA_CORPORATE
+	'WikisApiController' => ApiAccessService::WIKIA_CORPORATE,
+	'DesignSystemApiController' => ApiAccessService::WIKIA_CORPORATE
 ];
 
 /**

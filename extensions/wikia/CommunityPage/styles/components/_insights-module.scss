@@ -3,9 +3,15 @@
 @import 'skins/shared/mixins/flexbox';
 
 $item-icon-size: 34px;
-$item-icon-margin-right: 10px;
+$item-icon-margin-right: 6px;
 $item-data-width: calc(86% - #{$item-icon-size + $item-icon-margin-right});
 $item-link-width: 14%;
+
+$edit-icon: '/extensions/wikia/CommunityPage/images/edit-pen.svg';
+
+@if $is-dark-wiki {
+	$edit-icon: '/extensions/wikia/CommunityPage/images/edit-pen-dark.svg';
+}
 
 .community-page-insights-module {
 	margin-bottom: 34px;
@@ -36,11 +42,10 @@ $item-link-width: 14%;
 	}
 
 	.community-page-insights-module-edit-icon {
-		background: $color-text url('/extensions/wikia/CommunityPage/images/edit-pen.svg') 50% 45%/45% 45% no-repeat;
-		border-radius: 50%;
+		background: url($edit-icon) no-repeat;
 		height: $item-icon-size;
 		margin-right: $item-icon-margin-right;
-		width: $item-icon-size;
+		width: 24px;
 	}
 
 	.community-page-insights-module-article-data {
