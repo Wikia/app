@@ -1,6 +1,6 @@
 <?php
 /**
- * MoveThreadsInput
+ * SiteInput
  *
  * PHP version 5
  *
@@ -42,7 +42,7 @@ namespace Swagger\Client\Discussion\Models;
 use \ArrayAccess;
 
 /**
- * MoveThreadsInput Class Doc Comment
+ * SiteInput Class Doc Comment
  *
  * @category    Class
  * @package     Swagger\Client
@@ -50,20 +50,22 @@ use \ArrayAccess;
  * @license     http://www.apache.org/licenses/LICENSE-2.0 Apache Licene v2
  * @link        https://github.com/swagger-api/swagger-codegen
  */
-class MoveThreadsInput implements ArrayAccess
+class SiteInput implements ArrayAccess
 {
     /**
       * The original name of the model.
       * @var string
       */
-    protected static $swaggerModelName = 'MoveThreadsInput';
+    protected static $swaggerModelName = 'SiteInput';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
       * @var string[]
       */
     protected static $swaggerTypes = array(
-        'thread_ids' => 'string[]'
+        'id' => 'int',
+        'language_code' => 'string',
+        'name' => 'string'
     );
 
     public static function swaggerTypes()
@@ -76,7 +78,9 @@ class MoveThreadsInput implements ArrayAccess
      * @var string[]
      */
     protected static $attributeMap = array(
-        'thread_ids' => 'threadIds'
+        'id' => 'id',
+        'language_code' => 'languageCode',
+        'name' => 'name'
     );
 
     public static function attributeMap()
@@ -89,7 +93,9 @@ class MoveThreadsInput implements ArrayAccess
      * @var string[]
      */
     protected static $setters = array(
-        'thread_ids' => 'setThreadIds'
+        'id' => 'setId',
+        'language_code' => 'setLanguageCode',
+        'name' => 'setName'
     );
 
     public static function setters()
@@ -102,7 +108,9 @@ class MoveThreadsInput implements ArrayAccess
      * @var string[]
      */
     protected static $getters = array(
-        'thread_ids' => 'getThreadIds'
+        'id' => 'getId',
+        'language_code' => 'getLanguageCode',
+        'name' => 'getName'
     );
 
     public static function getters()
@@ -126,7 +134,9 @@ class MoveThreadsInput implements ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['thread_ids'] = isset($data['thread_ids']) ? $data['thread_ids'] : null;
+        $this->container['id'] = isset($data['id']) ? $data['id'] : null;
+        $this->container['language_code'] = isset($data['language_code']) ? $data['language_code'] : null;
+        $this->container['name'] = isset($data['name']) ? $data['name'] : null;
     }
 
     /**
@@ -137,8 +147,14 @@ class MoveThreadsInput implements ArrayAccess
     public function listInvalidProperties()
     {
         $invalid_properties = array();
-        if ($this->container['thread_ids'] === null) {
-            $invalid_properties[] = "'thread_ids' can't be null";
+        if ($this->container['id'] === null) {
+            $invalid_properties[] = "'id' can't be null";
+        }
+        if ($this->container['id'] < 1.0) {
+            $invalid_properties[] = "invalid value for 'id', must be bigger than or equal to 1.0.";
+        }
+        if ($this->container['name'] === null) {
+            $invalid_properties[] = "'name' can't be null";
         }
         return $invalid_properties;
     }
@@ -151,7 +167,13 @@ class MoveThreadsInput implements ArrayAccess
      */
     public function valid()
     {
-        if ($this->container['thread_ids'] === null) {
+        if ($this->container['id'] === null) {
+            return false;
+        }
+        if ($this->container['id'] < 1.0) {
+            return false;
+        }
+        if ($this->container['name'] === null) {
             return false;
         }
         return true;
@@ -159,22 +181,68 @@ class MoveThreadsInput implements ArrayAccess
 
 
     /**
-     * Gets thread_ids
-     * @return string[]
+     * Gets id
+     * @return int
      */
-    public function getThreadIds()
+    public function getId()
     {
-        return $this->container['thread_ids'];
+        return $this->container['id'];
     }
 
     /**
-     * Sets thread_ids
-     * @param string[] $thread_ids
+     * Sets id
+     * @param int $id
      * @return $this
      */
-    public function setThreadIds($thread_ids)
+    public function setId($id)
     {
-        $this->container['thread_ids'] = $thread_ids;
+
+        if ($id < 1.0) {
+            throw new \InvalidArgumentException('invalid value for $id when calling SiteInput., must be bigger than or equal to 1.0.');
+        }
+        $this->container['id'] = $id;
+
+        return $this;
+    }
+
+    /**
+     * Gets language_code
+     * @return string
+     */
+    public function getLanguageCode()
+    {
+        return $this->container['language_code'];
+    }
+
+    /**
+     * Sets language_code
+     * @param string $language_code
+     * @return $this
+     */
+    public function setLanguageCode($language_code)
+    {
+        $this->container['language_code'] = $language_code;
+
+        return $this;
+    }
+
+    /**
+     * Gets name
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->container['name'];
+    }
+
+    /**
+     * Sets name
+     * @param string $name
+     * @return $this
+     */
+    public function setName($name)
+    {
+        $this->container['name'] = $name;
 
         return $this;
     }
