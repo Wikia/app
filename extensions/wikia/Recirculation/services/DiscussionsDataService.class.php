@@ -11,7 +11,13 @@ class DiscussionsDataService {
 	private $cityId;
 
 	public function __construct( $cityId ) {
-		$this->cityId = $cityId;
+		$discussionsAlias = WikiFactory::getVarValueByName( 'wgRecirculationDiscussionsAlias', $cityId );
+
+		if ( !empty( $discussionsAlias ) ) {
+			$this->cityId = $discussionsAlias;
+		} else {
+			$this->cityId = $cityId;
+		}
 	}
 
 	public function getData() {
