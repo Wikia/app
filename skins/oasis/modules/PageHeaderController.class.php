@@ -284,6 +284,11 @@ class PageHeaderController extends WikiaController {
 		if ( WikiaPageType::isMainPage() ) {
 			// change page title to just "Home"
 			$this->title = wfMessage( 'oasis-home' )->escaped();
+			$this->wg->SuppressFooter = true;
+			$this->wg->SuppressArticleCategories = true;
+			$this->wg->SuppressPageHeader = true;
+			$this->wg->SuppressWikiHeader = true;
+			$this->wg->SuppressSlider = true;
 		}
 
 		// render page type info
