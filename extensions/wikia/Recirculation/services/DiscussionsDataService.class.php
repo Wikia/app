@@ -18,10 +18,12 @@ class DiscussionsDataService {
 		} else {
 			$this->cityId = $cityId;
 		}
+
+		$this->server = WikiFactory::getVarValueByName( 'wgServer', $this->cityId );
 	}
 
 	public function getData() {
-		$memcKey = wfMemcKey( __METHOD__, self::MCACHE_VER );
+		$memcKey = wfMemcKey( __METHOD__, $this->cityId, self::MCACHE_VER );
 
 		$rawData = WikiaDataAccess::cache(
 			$memcKey,
@@ -91,7 +93,7 @@ class DiscussionsDataService {
 		$post['upvoteCount'] = $rawPost['upvoteCount'];
 		$post['commentCount'] = $rawPost['postCount'];
 		$post['createdAt'] = wfTimestamp( TS_ISO_8601, $rawPost['creationDate']['epochSecond'] );
-		$post['link'] = '/d/p/' . $rawPost['id'];
+		$post['link'] = $this->server . '/d/p/' . $rawPost['id'];
 		$post['source'] = 'discussions';
 		$post['index'] = $index;
 
@@ -103,7 +105,7 @@ class DiscussionsDataService {
 		$siteId = $rawData['siteId'];
 
 		$rawPosts = $rawData['_embedded']['doc:threads'];
-		$data['discussionsUrl'] = "/d/f/$siteId/trending";
+		$data['discussionsUrl'] = $this->server . '/d/f/' .$siteId. '/trending';
 		$data['postCount'] = $rawData['threadCount'];
 		$data['posts'] = [];
 		$data['headerImage'] = $this->headerImage( $siteId );
