@@ -5,8 +5,9 @@ define('ext.wikia.adEngine.provider.evolve2', [
 	'ext.wikia.adEngine.slotTweaker',
 	'ext.wikia.adEngine.utils.adLogicZoneParams',
 	'wikia.log',
-	'wikia.window'
-], function (adContext, gptHelper, slotTweaker, zoneParams, log, win) {
+	'wikia.window',
+	require.optional('ext.wikia.adEngine.lookup.openx.openXBidderHelper')
+], function (adContext, gptHelper, slotTweaker, zoneParams, log, win, openXHelper) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.evolve2',
@@ -110,6 +111,7 @@ define('ext.wikia.adEngine.provider.evolve2', [
 		});
 		slot.pre('hop', function() {
 			dispatchNoUapEvent(slot.name);
+			openXHelper && openXHelper.addOpenXSlot(slot.name);
 		});
 		gptHelper.pushAd(
 			slot,
