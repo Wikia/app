@@ -8,7 +8,9 @@
 	</div>
 	<div class="WikiaRail">
 		{{>adminsModule}}
-		{{>contributorsModule}}
+		{{#contributorsModuleEnabled}}
+			{{>contributorsModule}}
+		{{/contributorsModuleEnabled}}
 		{{>communityPolicyModule}}
 		{{>recentActivityModule}}
 		{{>helpModule}}

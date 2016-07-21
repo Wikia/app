@@ -52,6 +52,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 			'insightsModules' => $this->getInsightsModulesData(),
 			'helpModule' => $this->getHelpModuleData(),
 			'communityTodoListModule' => $this->getCommunityTodoListData(),
+			'contributorsModuleEnabled' => !$this->wg->CommunityPageDisableTopContributors,
 		] );
 	}
 
