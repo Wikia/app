@@ -169,8 +169,6 @@ class BodyController extends WikiaController {
 						$latestActivityKey => [ 'LatestActivity', 'Index', null ],
 					];
 
-					$railModuleList[1450] = [ 'PagesOnWiki', 'Index', null ];
-
 					if ( empty( $this->wg->EnableWikiAnswers ) ) {
 						if ( $this->wg->EnableHuluVideoPanel ) {
 							$railModuleList[$huluVideoPanelKey] = [ 'HuluVideoPanel', 'Index', null ];
@@ -187,15 +185,12 @@ class BodyController extends WikiaController {
 					1102 => [ 'HotSpots', 'Index', null ],
 					1101 => [ 'CommunityCorner', 'Index', null ],
 				];
-				$railModuleList[1450] = [ 'PagesOnWiki', 'Index', null ];
 			} else if ( $this->wg->Title->isSpecial( 'Following' ) || $this->wg->Title->isSpecial( 'Contributions' ) ) {
 				// intentional nothing here
 			} else if ( $this->wg->Title->isSpecial( 'ThemeDesignerPreview' ) ) {
 				$railModuleList = [
 					$latestActivityKey => [ 'LatestActivity', 'Index', null ],
 				];
-
-				$railModuleList[1450] = [ 'PagesOnWiki', 'Index', null ];
 
 				if ( empty( $this->wg->EnableWikiAnswers ) ) {
 					if ( $this->wg->EnableHuluVideoPanel ) {
@@ -219,7 +214,6 @@ class BodyController extends WikiaController {
 			// add any content page related rail modules here
 
 			$railModuleList[$latestActivityKey] = [ 'LatestActivity', 'Index', null ];
-			$railModuleList[1450] = [ 'PagesOnWiki', 'Index', null ];
 
 			if ( empty( $this->wg->EnableWikiAnswers ) ) {
 				if ( $this->wg->EnableHuluVideoPanel ) {
@@ -272,8 +266,6 @@ class BodyController extends WikiaController {
 		$railModuleList[1440] = [ 'Ad', 'Index', [ 'slotName' => 'TOP_RIGHT_BOXAD' ] ];
 		$railModuleList[1435] = [ 'AdEmptyContainer', 'Index', [ 'slotName' => 'NATIVE_TABOOLA_RAIL' ] ];
 		$railModuleList[1100] = [ 'Ad', 'Index', [ 'slotName' => 'LEFT_SKYSCRAPER_2' ] ];
-
-		unset( $railModuleList[1450] );
 
 		wfRunHooks( 'GetRailModuleList', [ &$railModuleList ] );
 
