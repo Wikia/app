@@ -44,7 +44,7 @@ define('ext.wikia.adEngine.pageFairDetection', [
 
 	function initDetection() {
 		var node = doc.getElementsByTagName('script')[0];
-		scriptLoader.loadAsync('http://asset.pagefair.com/measure.min.js', node);
+		scriptLoader.loadAsync(context.opts.pageFairDetectionUrl, node);
 	}
 
 	return {
