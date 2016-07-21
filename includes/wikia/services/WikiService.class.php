@@ -868,11 +868,11 @@ class WikiService extends WikiaModel {
 			);
 
 			while( $row = $db->fetchObject( $rows ) ) {
-				$parsedUrl = parse_url( $row->city_url );
+				$domain = parse_url( $row->city_url, PHP_URL_HOST );
 				$item = array(
 					'name' => $row->city_title,
 					'url' => $row->city_url,
-					'domain' => !empty($parsedUrl['host']) ? $parsedUrl['host'] : null,
+					'domain' => !empty($domain) ? $domain : null,
 					'title' => $row->city_title,
 					'topic' => $row->cat_name,
 					'lang' => $row->city_lang,
