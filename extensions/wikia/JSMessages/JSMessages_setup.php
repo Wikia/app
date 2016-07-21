@@ -9,34 +9,32 @@
  * @author macbre
  */
 
-$wgExtensionCredits['other'][] = array(
-	'name' => 'JSMessages',
-	'version' => '1.1',
-	'author' => 'Maciej Brencz',
+$wgExtensionCredits['other'][] = [
+	'name'           => 'JSMessages',
+	'version'        => '2.0',
+	'author'         => 'Maciej Brencz',
 	'descriptionmsg' => 'jsmessages-desc',
-	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/JSMessages'
-);
-
-$dir = dirname(__FILE__);
+	'url'            => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/JSMessages',
+];
 
 //i18n
-$wgExtensionMessagesFiles['JSMessages'] = $dir . '/JSMessages.i18n.php';
+$wgExtensionMessagesFiles['JSMessages'] = __DIR__ . '/JSMessages.i18n.php';
 
 // classes
-$wgAutoloadClasses['JSMessages'] =  $dir . '/JSMessages.class.php';
-$wgAutoloadClasses['JSMessagesHelper'] =  $dir . '/JSMessagesHelper.class.php';
-$wgAutoloadClasses['JSMessagesController'] =  $dir . '/JSMessagesController.class.php';
+$wgAutoloadClasses['JSMessages'] = __DIR__ . '/JSMessages.class.php';
+$wgAutoloadClasses['JSMessagesHelper'] = __DIR__ . '/JSMessagesHelper.class.php';
+$wgAutoloadClasses['JSMessagesController'] = __DIR__ . '/JSMessagesController.class.php';
 
 // hooks
-$wgHooks['WikiaSkinTopScripts']        [] = 'JSMessages::onWikiaSkinTopScripts';
-$wgHooks['ResourceLoaderGetConfigVars'][] = 'JSMessages::onResourceLoaderGetConfigVars';
-$wgHooks['MessageCacheReplace']        [] = 'JSMessagesHelper::onMessageCacheReplace';
+$wgHooks['MessageCacheReplace']          [] = 'JSMessagesHelper::onMessageCacheReplace';
+$wgHooks['ResourceLoaderRegisterModules'][] = 'JSMessages::onResourceLoaderRegisterModules';
+$wgHooks['BeforePageDisplay']            [] = 'JSMessages::onBeforePageDisplay';
 
 $wgExtensionFunctions[] = function () {
 	// This has to be wrapped in a function so it isn't run before we include GlobalSettings.php
-	JSMessages::registerPackage("ConfirmModal", array(
+	JSMessages::registerPackage( "ConfirmModal", [
 		'ok',
-		'cancel'
-	));
-	JSMessages::enqueuePackage("ConfirmModal", JSMessages::EXTERNAL); // We need this to ensure the messages are loaded on every page
+		'cancel',
+	] );
+	JSMessages::enqueuePackage( "ConfirmModal", JSMessages::EXTERNAL ); // We need this to ensure the messages are loaded on every page
 };
