@@ -271,7 +271,7 @@ class UserStatsService extends WikiaModel {
 	 * @return boolean
 	 */
 	private function setUserStat( $statName, $statVal ) {
-		if ( !$this->validateUser() || $this->wg->DBReadyOnly ) {
+		if ( !$this->validateUser() || wfReadOnly() ) {
 			return false;
 		}
 
