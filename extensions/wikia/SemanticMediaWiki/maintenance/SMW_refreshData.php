@@ -38,7 +38,7 @@
  * @ingroup SMWMaintenance
  */
 
-$optionsWithArgs = array( 'd', 's', 'e', 'n', 'b', 'startidfile', 'server', 'page' ); // -d <delay>, -s <startid>, -e <endid>, -n <numids>, --startidfile <startidfile> -b <backend>
+$optionsWithArgs = array( 'd', 's', 'e', 'n', 'b', 'startidfile', 'server', 'page', 'task_id' ); // -d <delay>, -s <startid>, -e <endid>, -n <numids>, --startidfile <startidfile> -b <backend>
 
 $notSmwNamespaces = [
 	//Forum
@@ -55,7 +55,7 @@ require_once ( getenv( 'MW_INSTALL_PATH' ) !== false
 	? getenv( 'MW_INSTALL_PATH' ) . "/maintenance/commandLine.inc"
 	: dirname( __FILE__ ) . '/../../../../maintenance/commandLine.inc' );
 
-global $smwgEnableUpdateJobs, $wgServer, $wgTitle, $wgDBname;
+global $smwgEnableUpdateJobs, $wgServer, $wgTitle, $wgDBname, $wgCityId;
 $wgTitle = Title::newFromText( 'SMW_refreshData.php' );
 $smwgEnableUpdateJobs = false; // do not fork additional update jobs while running this script
 
@@ -68,6 +68,8 @@ if ( array_key_exists( 'd', $options ) ) {
 } else {
 	$delay = false;
 }
+
+$taskId = isset($options['task_id'])?$options['task_id']:'';
 
 if ( isset( $options['page'] ) ) {
 	$pages = explode( '|', $options['page'] );
@@ -174,13 +176,19 @@ if ( $pages == false ) {
 		if ( $num_files % 100 === 0 ) { // every 100 pages only
 			$linkCache->clear(); // avoid memory leaks
 		}
+
 		# Wikia Change - begin
-		Wikia\Logger\WikiaLogger::instance()->info( 'SMW_refreshData.php - process', [
-			'page_id' => $id,
-			'processed_int' => $num_files,
-			'took_float' => round( microtime( true ) - $startTime, 4 ), # [sec]
-			'args' => join( ' ', $argv ),
-		] );
+		if ($num_files % 1000 === 0) {
+			Wikia\Logger\WikiaLogger::instance()->info('SMW_refreshData.php - process', [
+				'wikia_dbname' => $wgDBname,
+				'wikia_id' => $wgCityId,
+				'task_id' => $taskId,
+				'page_id' => $id,
+				'processed_int' => $num_files,
+				'took_float' => round(microtime(true) - $startTime, 4), # [sec]
+				'args' => join(' ', $argv),
+			]);
+		}
 		# Wikia Change - end
 	}
 	if ( $writeToStartidfile ) {
