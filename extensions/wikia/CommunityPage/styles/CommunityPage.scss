@@ -44,3 +44,10 @@
 		width: 100%;
 	}
 }
+
+// remove this after ab test is over
+.community-page-insights-module {
+	.medium, .high, .lite {
+		display: none;
+	}
+}

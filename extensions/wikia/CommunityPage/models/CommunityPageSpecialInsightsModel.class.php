@@ -83,6 +83,8 @@ class CommunityPageSpecialInsightsModel {
 		 */
 		$insightPages['type'] = $type;
 		$insightPages['title'] = wfMessage( 'communitypage-' . $type . '-title' )->text();
+		$insightPages['mediumtitle'] = wfMessage( 'communitypage-' . $type . '-mediumtitle' )->text();
+		$insightPages['hightitle'] = wfMessage( 'communitypage-' . $type . '-hightitle' )->text();
 		$insightPages['description'] =  wfMessage( 'communitypage-' . $type . '-description' )->text();
 
 		if ( $insightPages['count'] > self::INSIGHTS_MODULE_ITEMS ) {
@@ -108,6 +110,7 @@ class CommunityPageSpecialInsightsModel {
 			$insightsPages['pages'][$key]['metadataDetails'] = $this->getArticleMetadataDetails( $insight['metadata'] );
 			$insightsPages['pages'][$key]['editlink'] = $this->getEditUrl( $insight['link']['articleurl'] );
 			$insightsPages['pages'][$key]['edittext'] = $this->getArticleContributeText( $insight['metadata'] );
+			$insightsPages['pages'][$key]['customedittext'] = wfMessage( 'communitypage-' . $insightsPages['type'] . '-edittext' )->text();
 
 			if ( $displayPageviews && !empty( $insight['metadata']['pv7'] ) ) {
 				$insightsPages['pages'][$key]['pageviews'] = wfMessage(
