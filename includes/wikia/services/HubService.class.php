@@ -64,31 +64,22 @@ class HubService extends Service {
 	}
 
 	/**
-	 * Get canonical (legacy) vertical name for given cityId.
-	 * For corporate homepages (actual and hub-based) return 'fandom'.
-	 * For Lifestyle and Gaming return their names.
+	 * Get comscore vertical name for given cityId.
+	 * For Lifestyle and Gaming and etc return their names.
 	 * For Other return 'lifestyle'.
-	 * For rest of values return Entertainment.
 	 *
 	 * @param integer $cityId
 	 *
 	 * @return string
 	 */
 	public static function getVerticalNameForComscore( $cityId ) {
-		global $wgDisableWAMOnHubs;
 
-		if ( WikiaPageType::isWikiaHomePage() || WikiaPageType::isWikiaHub() && $wgDisableWAMOnHubs ) {
-			return 'fandom';
-		}
+		$vertical = WikiFactoryHub::getInstance()->getWikiVertical( $cityId )['short'];
 
-		switch ( WikiFactoryHub::getInstance()->getVerticalId( $cityId ) ) {
-			case WikiFactoryHub::VERTICAL_ID_VIDEO_GAMES:
-				return 'gaming';
-			case WikiFactoryHub::VERTICAL_ID_LIFESTYLE:
-			case WikiFactoryHub::VERTICAL_ID_OTHER:
-				return 'lifestyle';
-			default:
-				return 'entertainment';
+		if ( $vertical == "other" ) {
+			return "lifestyle";
+		} else {
+			return $vertical;
 		}
 	}
 
