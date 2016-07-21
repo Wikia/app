@@ -12,15 +12,20 @@ class SMW_MigrationJob extends BaseTask {
 
 	var $cityId;
 
-	public function run($cityId) {
-		$this->cityId = $cityId;
+	public function run($wikis) {
+
+		$this->cityId = $this->getWikiId();
 		if (!$this->refreshPageProperties()) {
 			return false;
 		};
 		if (!$this->refreshPages()) {
 			return false;
 		}
-		return $this->setDb();
+		if (!$this->setDb()) {
+			return false;
+		}
+		$this->startNextJob($wikis);
+		return true;
 	}
 
 	private function refreshPageProperties() {
@@ -73,5 +78,18 @@ class SMW_MigrationJob extends BaseTask {
 			$this->info(__CLASS__ . " Done {$processName}", $logContext);
 		}
 		return $retval == 0;
+	}
+
+	private function startNextJob($wikis) {
+		$wiki = array_shift($wikis);
+		if (empty($wiki)) {
+			$this->info(__CLASS__ . " Finished migration queue", ['task_id' => $this->getTaskId()]);
+		} else {
+			$task = new SMW_MigrationJob();
+			(new \Wikia\Tasks\AsyncTaskList())
+				->wikiId($wiki)
+				->add($task->call('run', $wikis))
+				->queue();
+		}
 	}
 }
