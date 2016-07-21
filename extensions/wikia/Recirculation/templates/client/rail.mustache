@@ -1,8 +1,8 @@
-<section class="recirculation-rail module group-{{ group }}">
+<section class="recirculation-rail module group-{{ group }} recirculation-unit">
 	<h2>{{{ titleHtml }}}</h2>
 	<ul class="thumbnails">
 		{{#items}}
-			<li class="rail-item {{classes}} item-{{source}}" {{#id}} data-id="{{ id }}" {{/id}} data-flag="{{ flag }}" data-index="{{ index }}" data-source="{{source}}">
+			<li class="rail-item {{classes}} item-{{source}}{{#isVideo}} is-video{{/isVideo}}" {{#id}} data-id="{{ id }}" {{/id}} data-flag="{{ flag }}" data-index="{{ index }}" data-source="{{source}}">
 				<a href="{{ url }}">
 					<div class="image image-thumbnail fluid small">
 						<img src="{{ thumbnail }}" alt="{{ title }}" itemprop="thumbnail">
