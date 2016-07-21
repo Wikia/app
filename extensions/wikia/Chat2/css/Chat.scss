@@ -41,6 +41,7 @@ body {
 	&.limit-reached .limit-reached-msg{
 		color: $color-error;
 		display: block;
+		left: 5px;
 	}
 	.remaining, .limit-reached-msg {
 		display: none;
@@ -48,9 +49,6 @@ body {
 		position: absolute;
 		top: -25px;
 		right: 5px;
-	}
-	.limit-reached-msg{
-		left: 5px;
 	}
 }
 
