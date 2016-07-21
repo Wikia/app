@@ -90,6 +90,25 @@ class ArticlesApiController extends WikiaApiController {
 		);
 	}
 
+	/**
+	 * Validate the category name given via URL
+	 *
+	 * @param $category
+	 * @return mixed|Title
+	 * @throws InvalidParameterApiException
+	 */
+	public static function validateCategoryName($category)
+	{
+		$category = self::resolveCategoryName($category);
+
+		if (is_null($category)) {
+			wfProfileOut(__METHOD__);
+			throw new InvalidParameterApiException(self::PARAMETER_CATEGORY);
+		}
+
+		return $category;
+	}
+
 	public static function getMetadataCacheTime( $omitExpandParam = false ) {
 		$app = F::app();
 		if ( !empty( $app->wg->EnablePOIExt ) &&
@@ -423,7 +442,7 @@ class ArticlesApiController extends WikiaApiController {
 	}
 
 	/**
-	 * Resolve categor param name into internal category name (incl. redirecst)
+	 * Resolve category param name into internal category name (incl. redirecst)
 	 * @param $category
 	 * @return mixed|Title
 	 */
@@ -432,6 +451,27 @@ class ArticlesApiController extends WikiaApiController {
 		$category = self::followRedirect( $category );
 
 		return $category;
+	}
+
+	/**
+	 * Normalize valid namespaces
+	 *
+	 * @param $namespaces
+	 * @return array
+	 * @throws InvalidParameterApiException
+	 */
+	public static function validateNamespaces( $namespaces ) {
+		if ( empty( $namespaces ) ) {
+			return [];
+		}
+
+		foreach ( $namespaces as &$n ) {
+			if ( !is_numeric( $n ) ) {
+				throw new InvalidParameterApiException( self::PARAMETER_NAMESPACES );
+			}
+		}
+
+		return $namespaces;
 	}
 
 	/**
@@ -457,45 +497,34 @@ class ArticlesApiController extends WikiaApiController {
 	public function getList() {
 		wfProfileIn( __METHOD__ );
 
-		$category = $this->request->getVal( self::PARAMETER_CATEGORY, null );
-
+		$category = self::validateCategoryName(
+			$this->request->getVal( self::PARAMETER_CATEGORY, null )
+		);
 		$namespaces = $this->request->getArray( self::PARAMETER_NAMESPACES, null );
 		$limit = $this->request->getVal( 'limit', self::ITEMS_PER_BATCH );
 		$offset = $this->request->getVal( 'offset', '' );
 		$expand = $this->request->getBool( static::PARAMETER_EXPAND, false );
 
 		if ( !empty( $category ) ) {
-			$category = self::resolveCategoryName( $category );
-			if ( !is_null( $category ) ) {
-				if ( !empty( $namespaces ) ) {
-					foreach ( $namespaces as &$n ) {
-						if ( !is_numeric( $n ) ) {
-							throw new InvalidParameterApiException( self::PARAMETER_NAMESPACES );
-						}
-					}
+			$namespaces = implode( '|', self::implodeValidNamespaces( $namespaces ) );
 
-					$namespaces = implode( '|', $namespaces );
-				}
+			/**
+			 * Wrapping global wgMiserMode.
+			 *
+			 * wgMiserMode = true (default) changes the behavior of categorymembers mediawiki API, causing it to
+			 * filter by namespace after making database query constrained by $limit and thus resulting
+			 * in Api returning fewer than $limit results
+			 *
+			 * wgMiserMode = false filters on DB level
+			 */
+			$wrapper = new GlobalStateWrapper( [
+				'wgMiserMode' => $this->excludeNamespacesFromCategoryMembersDBQuery
+			] );
 
-				/**
-				 * Wrapping global wgMiserMode.
-				 *
-				 * wgMiserMode = true (default) changes the behavior of categorymembers mediawiki API, causing it to
-				 * filter by namespace after making database query constrained by $limit and thus resulting
-				 * in Api returning fewer than $limit results
-				 *
-				 * wgMiserMode = false filters on DB level
-				 */
-				$wrapper = new GlobalStateWrapper( [
-					'wgMiserMode' => $this->excludeNamespacesFromCategoryMembersDBQuery
-				] );
-				$articles = $wrapper->wrap( function () use ( $category, $limit, $offset, $namespaces ) {
-					return self::getCategoryMembers( $category->getFullText(), $limit, $offset, $namespaces );
-				} );
-			} else {
-				wfProfileOut( __METHOD__ );
-				throw new InvalidParameterApiException( self::PARAMETER_CATEGORY );
-			}
+			$articles = $wrapper->wrap( function () use ( $category, $limit, $offset, $namespaces ) {
+				return self::getCategoryMembers( $category->getFullText(), $limit, $offset, $namespaces );
+			} );
+
 		} else {
 
 			$namespace = $namespaces[0];
@@ -531,58 +560,58 @@ class ArticlesApiController extends WikiaApiController {
 
 					$pages = ApiService::call( $params );
 
-					if ( !empty( $pages ) ) {
-						return [
-							$pages['query']['allpages'],
-							!empty( $pages['query-continue'] ) ? $pages['query-continue']['allpages']['apfrom'] : null
-						];
-					} else {
+					if ( empty( $pages ) ) {
 						return null;
 					}
+
+					return [
+						$pages['query']['allpages'],
+						!empty( $pages['query-continue'] ) ? $pages['query-continue']['allpages']['apfrom'] : null
+					];
 				}
 			);
 		}
 
-		if ( is_array( $articles ) && !empty( $articles[0] ) ) {
-			$ret = [];
+		if ( !is_array( $articles ) || empty( $articles[0] ) ) {
+			wfProfileOut(__METHOD__);
+			throw new NotFoundApiException('No members');
+		}
 
-			if ( $expand ) {
-				$articleIds = array_map( function( $item ) {
-					if ( isset( $item[ 'pageid' ] ) ) {
-						return $item[ 'pageid' ];
-					}
-				} , $articles[ 0 ] );
-				$params = $this->getDetailsParams();
-				$ret = $this->getArticlesDetails( $articleIds, $params[ 'titleKeys' ], $params[ 'width' ], $params[ 'height' ], $params[ 'length' ], true );
-			} else {
-				foreach ( $articles[0] as $article ) {
-					$title = Title::newFromText( $article['title'] );
+		$ret = [];
 
-					if ( $title instanceof Title ) {
-						$ret[] = [
-							'id' => $article['pageid'],
-							'title' => $title->getText(),
-							'url' => $title->getLocalURL(),
-							'ns' => $article['ns']
-						];
-					}
+		if ( $expand ) {
+			$articleIds = array_map( function( $item ) {
+				if ( isset( $item[ 'pageid' ] ) ) {
+					return $item[ 'pageid' ];
 				}
-			}
-			$responseValues = [ 'items' => $ret, 'basepath' => $this->wg->Server ];
-
-			if ( !empty( $articles[1] ) ) {
-				$responseValues[ 'offset' ] = $articles[ 1 ];
-			}
-
-			$this->setResponseData(
-				$responseValues,
-				[ 'imgFields' => 'thumbnail', 'urlFields' => [ 'thumbnail', 'url' ] ],
-				self::getMetadataCacheTime()
-			);
+			} , $articles[ 0 ] );
+			$params = $this->getDetailsParams();
+			$ret = $this->getArticlesDetails( $articleIds, $params[ 'titleKeys' ], $params[ 'width' ], $params[ 'height' ], $params[ 'length' ], true );
 		} else {
-			wfProfileOut( __METHOD__ );
-			throw new NotFoundApiException( 'No members' );
+			foreach ( $articles[0] as $article ) {
+				$title = Title::newFromText( $article['title'] );
+
+				if ( $title instanceof Title ) {
+					$ret[] = [
+						'id' => $article['pageid'],
+						'title' => $title->getText(),
+						'url' => $title->getLocalURL(),
+						'ns' => $article['ns']
+					];
+				}
+			}
 		}
+		$responseValues = [ 'items' => $ret, 'basepath' => $this->wg->Server ];
+
+		if ( !empty( $articles[1] ) ) {
+			$responseValues[ 'offset' ] = $articles[ 1 ];
+		}
+
+		$this->setResponseData(
+			$responseValues,
+			[ 'imgFields' => 'thumbnail', 'urlFields' => [ 'thumbnail', 'url' ] ],
+			self::getMetadataCacheTime()
+		);
 
 		wfProfileOut( __METHOD__ );
 	}
@@ -905,11 +934,11 @@ class ArticlesApiController extends WikiaApiController {
 					)
 				);
 
-				if ( !empty( $ids ) ) {
-					return array( $ids['query']['categorymembers'], !empty( $ids['query-continue'] ) ? $ids['query-continue']['categorymembers']['cmcontinue'] : null );
-				} else {
+				if ( empty( $ids ) ) {
 					return null;
 				}
+
+				return array( $ids['query']['categorymembers'], !empty( $ids['query-continue'] ) ? $ids['query-continue']['categorymembers']['cmcontinue'] : null );
 			}
 		);
 	}
@@ -996,6 +1025,8 @@ class ArticlesApiController extends WikiaApiController {
 		}
 
 		if ( empty( $article ) ) {
+			$response = $this->getResponse();
+			$response->setCacheValidity( self::SIMPLE_JSON_VARNISH_CACHE_EXPIRATION );
 			throw new NotFoundApiException( "Unable to find any article" );
 		}
 
