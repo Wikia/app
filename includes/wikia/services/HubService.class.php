@@ -64,7 +64,7 @@ class HubService extends Service {
 	}
 
 	/**
-	 * Get canonical vertical name for given cityId.
+	 * Get canonical (legacy) vertical name for given cityId.
 	 * For corporate homepages (actual and hub-based) return 'fandom'.
 	 * For Lifestyle and Gaming return their names.
 	 * For Other return 'lifestyle'.
@@ -93,6 +93,29 @@ class HubService extends Service {
 	}
 
 	/**
+	 * Look for a comscore_zzz tag
+	 * @param integer $cityId
+	 * @return hash of category data { id, name, url, short, deprecated, active }
+	 */
+	public static function getComscoreCategoryOverride( $cityId ) {
+
+		$wftags = new WikiFactoryTags( $cityId );
+		$tags = $wftags->getTags();
+		if ( is_array( $tags ) ) {
+			foreach ( $tags as $name ) {
+				if ( startsWith( $name, self::$comscore_prefix, false ) ) {
+					$catName = substr( $name, strlen( self::$comscore_prefix ) );
+					$category = WikiFactoryHub::getInstance()->getCategoryByName( $catName );
+					if ( $category ) {
+						return $category;
+					}
+				}
+			}
+		}
+		return null;
+	}
+
+	/**
 	 * Get category info for given cityId
 	 *
 	 * @param integer $cityId
@@ -117,10 +140,11 @@ class HubService extends Service {
 
 	/**
 	 * Get category id for given cityId
+	 * An Ad Tag in WF with a value of comscore_(category) will override this
 	 *
 	 * @param integer $cityId
 	 *
-	 * @return stdClass ($row->cat_id $row->cat_name)
+	 * @return integer $categoryId
 	 */
 	private static function getCategoryIdForCity( $cityId ) {
 		$categoryId = null;
@@ -130,19 +154,10 @@ class HubService extends Service {
 			$categoryId = $category->cat_id;
 		}
 
-		// Look for Comscore tag
-		$wftags = new WikiFactoryTags( $cityId );
-		$tags = $wftags->getTags();
-		if ( is_array( $tags ) ) {
-			foreach ( $tags as $name ) {
-				if ( startsWith( $name, self::$comscore_prefix, false ) ) {
-					$catName = substr( $name, strlen( self::$comscore_prefix ) );
-					$category = WikiFactoryHub::getInstance()->getCategoryByName( $catName );
-					if ( $category ) {
-						return $category['id'];
-					}
-				}
-			}
+		// Check for a tag named comscore_foo and use that if "foo" exists as a category
+		$comscoreCategoryOverride = HubService::getComscoreCategoryOverride ( $cityId );
+		if ( $comscoreCategoryOverride ) {
+			$categoryId = $comscoreCategoryOverride['id'];
 		}
 
 		return $categoryId;
