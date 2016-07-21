@@ -271,12 +271,8 @@ class UserStatsService extends WikiaModel {
 	 * @return boolean
 	 */
 	private function setUserStat( $statName, $statVal ) {
-		if ( !$this->validateUser() ) {
+		if ( !$this->validateUser() || $this->wg->DBReadyOnly ) {
 			return false;
-		}
-
-		if ( $this->wg->DBReadOnly ) {
-			WikiaLogger::instance()->debug('WW-12: UserStatsService::setUserStat called while $wgDBReadOnly === true, why?');
 		}
 
 		$dbw = $this->getDatabase( Title::GAID_FOR_UPDATE );
