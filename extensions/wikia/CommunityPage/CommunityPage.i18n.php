@@ -100,6 +100,18 @@ $messages['en'] = array(
 	'communitypage-todo-module-edit-list' => 'Edit list',
 	'communitypage-todo-module-description' => 'This is an area for admins to suggest pages that need work to help new contributors get started. (Admins - remember to provide details on what needs to be done.)',
 	'communitypage-todo-module-zero-state' => 'Want to know how you can contribute to this community? Contact an admin and ask them to provide suggestions here.',
+	'communitypage-popularpages-mediumtitle' => 'medium popular pages',
+	'communitypage-popularpages-hightitle' => 'high popular pages',
+	'communitypage-popularpages-edittext' => 'edit popular pages',
+	'communitypage-uncategorizedpages-mediumtitle' => 'medium uncategorized pages',
+	'communitypage-uncategorizedpages-hightitle' => 'high uncategorized pages',
+	'communitypage-uncategorizedpages-edittext' => 'edit uncategorized pages',
+	'communitypage-wantedpages-mediumtitle' => 'medium wanted pages',
+	'communitypage-wantedpages-hightitle' => 'high wanted pages',
+	'communitypage-wantedpages-edittext' => 'edit wanted pages',
+	'communitypage-deadendpages-mediumtitle' => 'medium dead end pages',
+	'communitypage-deadendpages-hightitle' => 'high dead end pages',
+	'communitypage-deadendpages-edittext' => 'edit dead end pages',
 );
 
 $messages['qqq'] = array(
