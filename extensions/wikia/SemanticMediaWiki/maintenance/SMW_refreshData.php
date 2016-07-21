@@ -40,6 +40,17 @@
 
 $optionsWithArgs = array( 'd', 's', 'e', 'n', 'b', 'startidfile', 'server', 'page' ); // -d <delay>, -s <startid>, -e <endid>, -n <numids>, --startidfile <startidfile> -b <backend>
 
+$notSmwNamespaces = [
+	//Forum
+	110, 111,
+	//Blog
+	500, 501,
+	//Wall
+	1200, 1201, 1202,
+	//Wikia Forum
+	2000, 2001, 2002,
+];
+
 require_once ( getenv( 'MW_INSTALL_PATH' ) !== false
 	? getenv( 'MW_INSTALL_PATH' ) . "/maintenance/commandLine.inc"
 	: dirname( __FILE__ ) . '/../../../../maintenance/commandLine.inc' );
@@ -108,7 +119,17 @@ if (  array_key_exists( 't', $options ) ) {
 	$filterarray[] = SMW_NS_TYPE;
 }
 $filter = count( $filterarray ) > 0 ? $filterarray : false;
-
+# Wikia change - begin
+if ($filter === false) {
+	global $wgContLang;
+	//get all namespaces from wikia
+	$filter = $wgContLang->getNamespaceIds();
+	//filter forums, wall, blog
+	$filter = array_diff($filter, $notSmwNamespaces);
+	//filter talk pages (odd namespaces)
+	$filter = array_filter($filter, function ($var) { return !($var > 0 && ($var & 1)); });
+}
+# Wikia change - end
 if (  array_key_exists( 'f', $options ) ) {
 	print "\n  Deleting all stored data completely and rebuilding it again later!\n  Semantic data in the wiki might be incomplete for some time while this operation runs.\n\n  NOTE: It is usually necessary to run this script ONE MORE TIME after this operation,\n  since some properties' types are not stored yet in the first run.\n  The first run can normally use the parameter -p to refresh only properties.\n\n";
 	if ( ( array_key_exists( 's', $options ) )  || ( array_key_exists( 'e', $options ) ) ) {
@@ -141,6 +162,7 @@ if ( $pages == false ) {
 
 	$id = $start;
 	while ( ( ( !$end ) || ( $id <= $end ) ) && ( $id > 0 ) ) {
+		$startTime = round(microtime(true), 4); # [sec]
 		if ( $verbose ) {
 			print "$wgDBname ($num_files) Processing ID " . $id . " ...\n"; # Wikia change
 		}
@@ -152,6 +174,14 @@ if ( $pages == false ) {
 		if ( $num_files % 100 === 0 ) { // every 100 pages only
 			$linkCache->clear(); // avoid memory leaks
 		}
+		# Wikia Change - begin
+		Wikia\Logger\WikiaLogger::instance()->info( 'SMW_refreshData.php - process', [
+			'page_id' => $id,
+			'processed_int' => $num_files,
+			'took_float' => round( microtime( true ) - $startTime, 4 ), # [sec]
+			'args' => join( ' ', $argv ),
+		] );
+		# Wikia Change - end
 	}
 	if ( $writeToStartidfile ) {
 		file_put_contents( $options['startidfile'], "$id" );
