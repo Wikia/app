@@ -30,7 +30,7 @@ class UserRenameToolTask extends BaseTask {
 		global $IP;
 
 		$loadBalancerFactory = wfGetLBFactory();
-		$process = UserRenameToolProcess::newFromData( $params );
+		$process = UserRenameToolProcessLocal::newFromData( $params );
 		$process->setLogDestination( \UserRenameToolProcess::LOG_BATCH_TASK, $this );
 		$process->setRequestorUser();
 
@@ -46,6 +46,7 @@ class UserRenameToolTask extends BaseTask {
 				$cmd = sprintf( self::SCRIPT_TEMPLATE, $cityId, $IP, $opts );
 
 				$exitCode = null;
+
 				$output = wfShellExec( $cmd, $exitCode );
 				$logMessage = sprintf( "Rename user %s to %s on city id %s",
 					$params['rename_old_name'], $params['rename_new_name'], $cityId );
@@ -201,7 +202,6 @@ class UserRenameToolTask extends BaseTask {
 	 * @param string $text The text to log
 	 */
 	protected function staffLog( $action, array $params, $text ) {
-gmark("$action: $text");
 		\StaffLogger::log(
 			'renameuser',
 			$action,
@@ -221,7 +221,6 @@ gmark("$action: $text");
 	 * @param string $text
 	 */
 	public function log( $text ) {
-		gmark("Task log: ".$text);
 		$this->info( $text );
 	}
 

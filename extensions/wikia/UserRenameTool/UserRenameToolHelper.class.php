@@ -1,54 +1,10 @@
 <?php
 
 class UserRenameToolHelper {
-
-	const CLUSTER_DEFAULT = '';
 	const COMMUNITY_CENTRAL_CITY_ID = 177;
 
-	/**
-	 * Finds on which wikis a REGISTERED user (see LookupContribs for anons) has been active
-	 * using the events table stored in the stats DB instead of the blobs table in dataware,
-	 * tests showed is faster and more accurate
-	 *
-	 * @param $userID int the registered user ID
-	 * @return array A list of wikis' IDs related to user activity, false if the user is not an existing one or an anon
-	 */
-	static public function lookupRegisteredUserActivity( $userID ) {
-		global $wgDevelEnvironment, $wgDWStatsDB, $wgStatsDBEnabled;
-
-		// check for non admitted values
-		if ( empty( $userID ) || !is_int( $userID ) ) {
-			return false;
-		}
-
-		wfDebugLog( __CLASS__ . '::' . __METHOD__, "Looking up registered user activity for user with ID {$userID}" );
-
-		$result = [];
-
-		if ( empty( $wgDevelEnvironment ) ) { // on production
-			if ( !empty( $wgStatsDBEnabled ) ) {
-				$dbr = wfGetDB( DB_SLAVE, array(), $wgDWStatsDB );
-				$res = $dbr->select( 'rollup_edit_events', 'wiki_id', ['user_id' => $userID], __METHOD__, ['GROUP BY' => 'wiki_id'] );
-
-				while ( $row = $dbr->fetchObject( $res ) ) {
-					if ( WikiFactory::isPublic( $row->wiki_id ) ) {
-						$result[] = (int)$row->wiki_id;
-						wfDebugLog( __CLASS__ . '::' . __METHOD__, "Registered user with ID {$userID} was active on wiki with ID {$row->wiki_id}" );
-					} else {
-						wfDebugLog( __CLASS__ . '::' . __METHOD__, "Skipped wiki with ID {$row->wiki_id} (inactive wiki)" );
-					}
-				}
-
-				$dbr->freeResult( $res );
-			}
-		} else { // on devbox - set up the list manually
-			$result = array(
-				165, // firefly
-				831, // muppet
-			);
-		}
-
-		return $result;
+	public static function getCentralUserTable() {
+		return F::app()->wg->ExternalSharedDB . '.user';
 	}
 
 	/**
@@ -151,6 +107,16 @@ class UserRenameToolHelper {
 		)->escaped();
 	}
 
+	/**
+	 * @param string $requestor
+	 * @param string $oldUsername
+	 * @param string $newUsername
+	 * @param int $cityId
+	 * @param string $reason
+	 * @param bool $problems
+	 *
+	 * @return String
+	 */
 	static public function getLogForWiki($requestor, $oldUsername, $newUsername, $cityId, $reason, $problems = false ) {
 		$text = wfMessage(
 			$problems ? 'userrenametool-info-wiki-finished-problems' : 'userrenametool-info-wiki-finished',

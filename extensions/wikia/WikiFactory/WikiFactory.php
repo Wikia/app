@@ -3125,12 +3125,13 @@ class WikiFactory {
 	}
 
 	/**
-	 * Gets a list of all secondary database clusters, i.e. wikicities_c1, etc.
+	 * Gets a list of all secondary database clusters, e.g. c1, c2, c3.  These are
+	 * used as the suffix for the cluster DB name, e.g., wikicities_c1
+	 *
+	 * @return array
 	 */
-
 	static public function getSecondaryClusters() {
 		global $wgMemc;
-		wfProfileIn( __METHOD__ );
 
 		$key = "wikifactory:clusters";
 		$clusters = $wgMemc->get( $key );
@@ -3152,8 +3153,6 @@ class WikiFactory {
 
 			$wgMemc->set( $key, $clusters, 60*60*12 );
 		}
-
-		wfProfileOut( __METHOD__ );
 		return $clusters;
 	}
 

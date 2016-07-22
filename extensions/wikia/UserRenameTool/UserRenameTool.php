@@ -32,6 +32,8 @@ $wgExtensionMessagesFiles['UserRenameTool'] = $dir . 'UserRenameTool.i18n.php';
 $wgAutoloadClasses['UserRenameToolController'] = $dir . 'UserRenameToolController.class.php';
 $wgAutoloadClasses['UserRenameToolHelper'] = $dir . 'UserRenameToolHelper.class.php';
 $wgAutoloadClasses['UserRenameToolProcess'] = $dir . 'UserRenameToolProcess.class.php';
+$wgAutoloadClasses['UserRenameToolProcessGlobal'] = $dir . 'UserRenameToolProcessGlobal.class.php';
+$wgAutoloadClasses['UserRenameToolProcessLocal'] = $dir . 'UserRenameToolProcessLocal.class.php';
 $wgAutoloadClasses['UserRenameToolTask'] = $dir . 'UserRenameToolTask.class.php';
 
 // log type
@@ -44,8 +46,8 @@ $wgLogHeaders['renameuser'] = 'userrenametool-logpagetext';
 $wgHooks['StaffLog::formatRow'][] = 'UserRenameToolStaffLogFormatRow';
 
 function UserRenameToolStaffLogFormatRow( $type, $row, $time, $linker, &$out ) {
-	if ($type == "renameuser") {
-		$out = "{$time} Rename - {$row->slog_comment}";
+	if ( $type == "renameuser" ) {
+		$out = "$time Rename - {$row->slog_comment}";
 		return false;
 	}
 

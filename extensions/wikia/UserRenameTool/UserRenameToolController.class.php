@@ -22,7 +22,6 @@ class UserRenameToolController extends SpecialPage {
 		$this->getRequestData( $par );
 		$this->runRenameProcess();
 		$this->renderTemplate();
-
 		return;
 	}
 
@@ -57,15 +56,11 @@ class UserRenameToolController extends SpecialPage {
 	}
 
 	private function runRenameProcess() {
-		global $wgRequest, $wgUser;
-
-		try {
-			$wgRequest->isValidWriteRequest( $wgUser );
-		} catch( Exception $e ) {
+		if ( !$this->isValidRenameRequest() ) {
 			return;
 		}
 
-		$process = new UserRenameToolProcess(
+		$process = new UserRenameToolProcessGlobal(
 			$this->oldUsername,
 			$this->newUsername,
 			$this->confirmAction,
@@ -75,6 +70,32 @@ class UserRenameToolController extends SpecialPage {
 		$status = $process->run();
 
 		$this->collectMessages( $process, $status );
+	}
+
+	/**
+	 * Make sure we can start this rename request
+	 *
+	 * @return bool
+	 */
+	private function isValidRenameRequest() {
+		$wg = F::app()->wg;
+
+		// Require a POST and edit token
+		try {
+			$wg->Request->isValidWriteRequest( $wg->User );
+		} catch( Exception $e ) {
+			return false;
+		}
+
+		if ( !empty( $this->oldUsername ) ) {
+			$oldUser = User::newFromName($this->oldUsername);
+			if (!$oldUser->getGlobalFlag('requested-rename', 0)) {
+				$this->errors[] = wfMessage('userrenametool-did-not-request-rename', $this->oldUsername)->escaped();
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	/**
@@ -94,10 +115,8 @@ class UserRenameToolController extends SpecialPage {
 		if ( !empty( $this->oldUsername ) ) {
 			$oldUser = User::newFromName( $this->oldUsername );
 
-			if ( 1 || $oldUser->getGlobalFlag( 'requested-rename', 0 ) ) {
+			if ( $oldUser->getGlobalFlag( 'requested-rename', 0 ) ) {
 				$this->info[] = wfMessage( 'userrenametool-requested-rename', $this->oldUsername )->escaped();
-			} else {
-				$this->errors[] = wfMessage( 'userrenametool-did-not-request-rename', $this->oldUsername )->escaped();
 			}
 
 			if ( $oldUser->getGlobalFlag( 'wasRenamed', 0 ) ) {

@@ -24,7 +24,7 @@ class ApiClient extends \Swagger\Client\ApiClient {
 		$this->serviceName = $serviceName;
 	}
 
-	public function callApi($resourcePath, $method, $queryParams, $postData, $headerParams, $responseType=null) {
+	public function callApi($resourcePath, $method, $queryParams, $postData, $headerParams, $responseType=null, $endpointPath = NULL) {
 		$start = microtime(true);
 		$response = $exception = null;
 		$code = 200;
