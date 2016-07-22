@@ -481,17 +481,34 @@ abstract class EmailController extends \WikiaController {
 	}
 
 	protected function findUserFromRequest( $paramName, \User $default = null ) {
-		$userName = $this->getRequest()->getVal( $paramName );
-		if ( empty( $userName ) ) {
+		$user = $this->getRequest()->getVal( $paramName );
+		if ( empty( $user ) ) {
 			return $default;
 		}
 
 		// Allow an anonymous user to be specified
-		if ( $userName == self::ANONYMOUS_USER_ID ) {
+		if ( $user == self::ANONYMOUS_USER_ID ) {
 			return \User::newFromId( 0 );
 		}
 
-		return $this->getUserFromName( $userName );
+		if ( is_numeric( $user ) ) {
+			return $this->getUserFromId( $user );
+		}
+
+		return $this->getUserFromName( $user );
+	}
+
+	/**
+	 * Returns a user object from an id
+	 *
+	 * @param $userId
+	 *
+	 * @return \User
+	 * @throws Fatal
+	 * @throws \MWException
+	 */
+	private function getUserFromId( $userId ) {
+		return \User::newFromId( $userId );
 	}
 
 	/**
