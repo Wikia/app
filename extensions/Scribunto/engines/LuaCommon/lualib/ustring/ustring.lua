@@ -15,8 +15,8 @@ local S = {
 
 ---- Configuration ----
 -- To limit the length of strings or patterns processed, set these
-ustring.maxStringLength = inf
-ustring.maxPatternLength = inf
+ustring.maxStringLength = math.huge
+ustring.maxPatternLength = math.huge
 
 ---- Utility functions ----
 
@@ -33,6 +33,9 @@ local function checkType( name, argidx, arg, expecttype, nilok )
 end
 
 local function checkString( name, s )
+	if type( s ) == 'number' then
+		s = tostring( s )
+	end
 	if type( s ) ~= 'string' then
 		local msg = S.format( "bad argument #1 to '%s' (string expected, got %s)",
 			name, type( s )
@@ -48,6 +51,9 @@ local function checkString( name, s )
 end
 
 local function checkPattern( name, pattern )
+	if type( pattern ) == 'number' then
+		pattern = tostring( pattern )
+	end
 	if type( pattern ) ~= 'string' then
 		local msg = S.format( "bad argument #2 to '%s' (string expected, got %s)",
 			name, type( pattern )
@@ -137,7 +143,7 @@ local function utf8_explode( s )
 		i = i + 1 + trail
 	end
 
-	-- One past the end
+	-- Two past the end (for sub with empty string)
 	ret.bytepos[#ret.bytepos + 1] = l + 1
 
 	return ret
@@ -237,8 +243,11 @@ function ustring.codepoint( s, i, j )
 	if j < 0 then
 		j = cps.len + j + 1
 	end
-	i = math.max( 1, math.min( i, cps.len ) )
-	j = math.max( 1, math.min( j, cps.len ) )
+	if j < i then
+		return -- empty result set
+	end
+	i = math.max( 1, math.min( i, cps.len + 1 ) )
+	j = math.max( 1, math.min( j, cps.len + 1 ) )
 	return unpack( cps.codepoints, i, j )
 end
 
@@ -347,6 +356,9 @@ function ustring.sub( s, i, j )
 	j = j or -1
 	if j < 0 then
 		j = cps.len + j + 1
+	end
+	if j < i then
+		return ''
 	end
 	i = math.max( 1, math.min( i, cps.len + 1 ) )
 	j = math.max( 1, math.min( j, cps.len + 1 ) )
@@ -893,6 +905,9 @@ function ustring.gsub( s, pattern, repl, n )
 	elseif type( repl ) == 'table' then
 		tp = 2
 	elseif type( repl ) == 'string' then
+		tp = 3
+    elseif type( repl ) == 'number' then
+		repl = tostring( repl )
 		tp = 3
 	else
 		checkType( 'gsub', 3, repl, 'function or table or string' )
