@@ -8,9 +8,10 @@ define('ext.wikia.adEngine.adContext', [
 	'wikia.document',
 	'wikia.geo',
 	'wikia.instantGlobals',
+	'ext.wikia.adEngine.utils.sampler',
 	'wikia.window',
 	'wikia.querystring'
-], function (abTest, cookies, doc, geo, instantGlobals, w, Querystring) {
+], function (abTest, cookies, doc, geo, instantGlobals, Sampler, w, Querystring) {
 	'use strict';
 
 	instantGlobals = instantGlobals || {};
@@ -67,9 +68,10 @@ define('ext.wikia.adEngine.adContext', [
 		// PageFair integration
 		if (!noExternals) {
 			var geoIsSupported = geo.isProperGeo(instantGlobals.wgAdDriverPageFairDetectionCountries),
-				forcePageFairByURL = isUrlParamSet('pagefairdetection');
+				forcePageFairByURL = isUrlParamSet('pagefairdetection'),
+				canBeSampled = Sampler.sample(1, 10);
 
-			if (forcePageFairByURL || geoIsSupported) {
+            if (forcePageFairByURL || (geoIsSupported && canBeSampled)) {
 				context.opts.pageFairDetection = true;
 			}
 		}

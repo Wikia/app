@@ -48,6 +48,7 @@ describe('Module ext.wikia.adEngine.pageFairDetection', function () {
 	it('shoud dispatch event after run pf_notify from external script', function () {
 		var mocks = getMocks();
 		var pageFairDetector = getModule(mocks);
+		pageFairDetector.initDetection();
 
 		spyOn(mocks.document, 'dispatchEvent');
 		mocks.window.pf_notify(true);
@@ -58,6 +59,7 @@ describe('Module ext.wikia.adEngine.pageFairDetection', function () {
 	it('should change runtime parameter', function () {
 		var mocks = getMocks();
 		var pageFairDetector = getModule(mocks);
+		pageFairDetector.initDetection();
 
 		spyOn(mocks.document, 'dispatchEvent');
 		mocks.window.pf_notify(true);
@@ -70,6 +72,7 @@ describe('Module ext.wikia.adEngine.pageFairDetection', function () {
 	it('should provide PageFair website code from context to external script', function () {
 		var mocks = getMocks();
 		var pageFairDetector = getModule(mocks);
+		pageFairDetector.initDetection();
 
 		mocks.window.pf_notify(true);
 		expect(mocks.window.bm_website_code).toBe('TEST_CODE');
@@ -83,6 +86,7 @@ describe('Module ext.wikia.adEngine.pageFairDetection', function () {
 			return context;
 		};
 		var pageFairDetector = getModule(mocks);
+		pageFairDetector.initDetection();
 
 		spyOn(mocks.document, 'dispatchEvent');
 		mocks.window.pf_notify(true);
