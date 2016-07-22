@@ -11,7 +11,7 @@ class ARecoveryEngineHooks {
 	 */
 	public static function onWikiaSkinTopScripts( &$vars, &$scripts ) {
 
-		if ( !ARecoveryModule::isEnabled() ) {
+		if ( ARecoveryModule::isEnabled() ) {
 			$scripts .= F::app()->sendRequest( 'ARecoveryEngineApiController', 'getBootstrap' );
 		}
 

@@ -45,10 +45,24 @@
 		window.ga = function () {};
 	}
 
-	var cookieExists, isProductionEnv, blockingTracked = {
-		sourcePoint: false,
-		pageFair: false
-	};
+	var cookieExists,
+		isProductionEnv,
+		blockingTracked = {
+			sourcePoint: false,
+			pageFair: false
+		},
+		GASettings = {
+			sourcePoint: {
+				trackName: 'sourcePoint',
+				name: 'sourcepoint',
+				dimension: 6
+			},
+			pageFair: {
+				trackName: 'pageFair',
+				dimension: 7,
+				name: 'pagefair'
+			}
+		};
 
 	/**
 	 * Main Tracker
@@ -257,30 +271,16 @@
 		return kruxSegment;
 	}
 
-	function trackBlockingSourcePoint(value) {
-		if (blockingTracked.sourcePoint) {
+	function trackBlocking(detectorSettings, isBlocked) {
+		var value = isBlocked ? 'Yes' : 'No';
+		if (blockingTracked[detectorSettings.trackName]) {
 			return;
 		}
-		blockingTracked.sourcePoint = true;
-		_gaWikiaPush(['set', 'dimension6', value]);
-		window.ga('ads.set', 'dimension6', value);
-		guaTrackAdEvent('ad/sourcepoint/detection', value, '', 0, true);
-		guaTrackEvent('ads-sourcepoint-detection', 'impression', value, 0, true);
-	}
-
-	function trackBlockingPageFair(isBlocked) {
-		var pageFairDimension = 'dimension7',
-			value = isBlocked ? 'Yes' : 'No';
-
-		if (blockingTracked.pageFair) {
-			return;
-		}
-		blockingTracked.pageFair = true;
-
-		_gaWikiaPush(['set', pageFairDimension, value]);
-		window.ga('ads.set', pageFairDimension, value);
-		guaTrackAdEvent('ad/pagefair/detection', value, '', 0, true);
-		guaTrackEvent('ads-pagefair-detection', 'impression', value, 0, true);
+		blockingTracked[detectorSettings.trackName] = true;
+		_gaWikiaPush(['set', 'dimension' + detectorSettings.dimension, value]);
+		window.ga('ads.set', 'dimension' + detectorSettings.dimension, value);
+		guaTrackAdEvent('ad/' + detectorSettings.name + '/detection', value, '', 0, true);
+		guaTrackEvent('ads-' + detectorSettings.name + '-detection', 'impression', value, 0, true);
 	}
 
 	/**** High-Priority Custom Dimensions ****/
@@ -433,17 +433,17 @@
 
 	if (window.ads && window.ads.context.opts.showAds) {
 		document.addEventListener('sp.blocking', function () {
-			trackBlockingSourcePoint('Yes');
+			trackBlocking(GASettings.sourcePoint, true);
 		});
 		document.addEventListener('sp.not_blocking', function () {
-			trackBlockingSourcePoint('No');
+			trackBlocking(GASettings.sourcePoint, false);
 		});
 
 		document.addEventListener('pf.blocking', function () {
-			trackBlockingPageFair(true);
+			trackBlocking(GASettings.pageFair, true);
 		});
 		document.addEventListener('pf.not_blocking', function () {
-			trackBlockingPageFair(false);
+			trackBlocking(GASettings.pageFair, false);
 		});
 	}
 

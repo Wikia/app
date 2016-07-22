@@ -17,9 +17,20 @@ define('ext.wikia.adEngine.pageFairDetection', [
 		return context.opts.pageFairWebsiteCode;
 	}
 
+	function dispatchDetectionEvent(eventName){
+		var event = document.createEvent('Event');
+		event.initEvent(eventName, true, false);
+
+		doc.dispatchEvent(event);
+	}
+
+	function setRuntimeParams(adblockDetected){
+            window.ads.runtime.pf = window.ads.runtime.pf || {};
+            window.ads.runtime.pf.blocking = adblockDetected;
+        }
+
 	function detector(adblockDetected) {
-		var event,
-			eventName = adblockDetected ? 'pf.blocking' : 'pf.not_blocking';
+		var eventName = adblockDetected ? 'pf.blocking' : 'pf.not_blocking';
 
 		if (!context.opts.pageFairDetection) {
 			log('PageFair disabled', 'debug', logGroup);
@@ -28,18 +39,8 @@ define('ext.wikia.adEngine.pageFairDetection', [
 
 		log(['PageFair detection, adBlock detected:', adblockDetected], 'debug', logGroup);
 
-		window.ads.runtime.pf = window.ads.runtime.pf || {};
-		window.ads.runtime.pf.blocking = adblockDetected;
-
-		try {
-			event = new Event(eventName);
-		} catch (e) {
-			// Hack for PhantomJS https://github.com/ariya/phantomjs/issues/11289
-			event = document.createEvent('Event');
-			event.initEvent(eventName, true, false);
-		}
-
-		doc.dispatchEvent(event);
+		setRuntimeParams(adblockDetected);
+		dispatchDetectionEvent(eventName);
 	}
 
 	function initDetection() {
