@@ -15,8 +15,8 @@ local S = {
 
 ---- Configuration ----
 -- To limit the length of strings or patterns processed, set these
-ustring.maxStringLength = inf
-ustring.maxPatternLength = inf
+ustring.maxStringLength = math.huge
+ustring.maxPatternLength = math.huge
 
 ---- Utility functions ----
 
@@ -143,7 +143,7 @@ local function utf8_explode( s )
 		i = i + 1 + trail
 	end
 
-	-- One past the end
+	-- Two past the end (for sub with empty string)
 	ret.bytepos[#ret.bytepos + 1] = l + 1
 
 	return ret
