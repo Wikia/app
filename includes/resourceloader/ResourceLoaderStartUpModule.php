@@ -98,7 +98,6 @@ class ResourceLoaderStartUpModule extends ResourceLoaderModule {
 			'wgLegalTitleChars' => Title::convertByteClassToUnicodeClass( Title::legalChars() ),
 			// Wikia - change begin - @author: wladek
 			'wgSassParams' => SassUtil::getSassSettings(),
-			'wgCommunityPageDisableTopContributors' => $wgCommunityPageDisableTopContributors,
 			// Wikia - change end
 		);
 
