@@ -1,5 +1,4 @@
 var WikiaBar = {
-	WIKIA_BAR_BOXAD_NAME: 'WIKIA_BAR_BOXAD_1',
 	WIKIA_BAR_STATE_ANON_ML_KEY: 'AnonMainLangWikiaBar_0.0001',
 	WIKIA_BAR_STATE_ANON_NML_KEY: 'AnonNotMainLangWikiaBar_0.0001',
 	WIKIA_BAR_HIDDEN_ANON_ML_TTL: 24 * 60 * 1000, //millieseconds
@@ -62,13 +61,19 @@ var WikiaBar = {
 		return true;
 	},
 	getAdIfNeeded: function () {
-		var WikiaBarBoxAd = $('#' + this.WIKIA_BAR_BOXAD_NAME),
-			showAds = window.ads && window.ads.context && window.ads.context.opts && window.ads.context.opts.showAds;
+		var isEnabled = window.ads &&
+				window.ads.context &&
+				window.ads.context.opts &&
+				window.ads.context.opts.showAds &&
+				window.wgEnableWikiaBarAds;
 
-		if( WikiaBarBoxAd.hasClass('wikia-ad') == false && showAds && window.wgEnableWikiaBarAds ) {
-			// TODO: refactor this once AdEngine calls you back on error/success
-			window.adslots2.push(this.WIKIA_BAR_BOXAD_NAME);
-			WikiaBarBoxAd.addClass('wikia-ad');
+		if (isEnabled) {
+			window.Wikia.reviveQueue = window.Wikia.reviveQueue || [];
+
+			window.Wikia.reviveQueue.push({
+				zoneId: 28,
+				slotName: 'WIKIA_BAR_BOXAD_1'
+			});
 		}
 	},
 	cutMessageIntoSmallPieces: function (messageArray, container, cutMessagePrecision) {
