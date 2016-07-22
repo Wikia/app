@@ -62,7 +62,6 @@ class SMW_MigrationJob extends BaseTask {
 		global $IP;
 		$cmd = "SERVER_ID=" . $this->cityId . " php {$IP}/{$maintenanceScript} " . implode(' ', $options) . " --task_id " . $this->getTaskId();
 		$logContext = [
-			'wiki_id' => $this->cityId,
 			'cmd' => $cmd,
 			'process_name' => $processName,
 			'task_id' => $this->getTaskId()
