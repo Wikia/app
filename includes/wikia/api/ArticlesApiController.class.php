@@ -506,7 +506,7 @@ class ArticlesApiController extends WikiaApiController {
 		$expand = $this->request->getBool( static::PARAMETER_EXPAND, false );
 
 		if ( !empty( $category ) ) {
-			$namespaces = implode( '|', self::implodeValidNamespaces( $namespaces ) );
+			$namespaces = implode( '|', self::validateNamespaces( $namespaces ) );
 
 			/**
 			 * Wrapping global wgMiserMode.
