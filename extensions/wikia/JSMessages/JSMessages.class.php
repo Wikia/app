@@ -4,19 +4,17 @@
  * Use JSMessages::registerPackage() to register messages package to be used in JS.
  *
  * Require messages to be accessible via JS using JSMessages::enqueuePackage() method.
- * @deprecated SUS-623: use ResourceLoader instead
+ * SUS-623: use ResourceLoader instead
  */
 
 class JSMessages {
 
 	/**
-	 * @var int INLINE
-	 * @deprecated
+	 * @var int INLINE unused - reserved for backwards compatibility
 	 */
 	const INLINE = 1;
 	/**
-	 * @var int EXTERNAL
-	 * @deprecated
+	 * @var int EXTERNAL unused - reserved for backwards compatibility
 	 */
 	const EXTERNAL = 2;
 
@@ -67,10 +65,11 @@ class JSMessages {
 
 	/**
 	 * Queue a package to be added to output
+	 * Packages added to queue this way will be added via BeforePageDisplay hook handler
 	 *
 	 * @deprecated SUS-623: use ResourceLoader instead
 	 * @param string $package - package name
-	 * @param int $mode - how to emit messages (inline / external)
+	 * @param int $mode unused - reserved for backwards compatibility
 	 */
 	static public function enqueuePackage( $package, $mode ) {
 		self::$queue[] = self::RL_MODULE_PREFIX . $package;
@@ -112,7 +111,7 @@ class JSMessages {
 	 *
 	 * @deprecated SUS-623: use ResourceLoader instead
 	 * @param array $packages - list packages names
-	 * @param boolean $allowWildcards unused
+	 * @param boolean $allowWildcards unused - reserved for backwards compatibility
 	 * @return array - key/value array of messages
 	 */
 	static public function getPackages( $packages, $allowWildcards = true ) {
@@ -121,9 +120,11 @@ class JSMessages {
 		$loader = $wg->Out->getResourceLoader();
 		$messages = [];
 		foreach ( $packages as $packageName ) {
-			$messageNames = $loader->getModule( self::RL_MODULE_PREFIX . $packageName )->getMessages();
-			foreach ( $messageNames as $msg ) {
-				$messages[$msg] = wfMessage( $msg )->inLanguage( $wg->Lang )->plain();
+			if ( $loader->getModuleInfo( self::RL_MODULE_PREFIX . $packageName ) ) {
+				$messageNames = $loader->getModule( self::RL_MODULE_PREFIX . $packageName )->getMessages();
+				foreach ( $messageNames as $msg ) {
+					$messages[$msg] = wfMessage( $msg )->inLanguage( $wg->Lang )->plain();
+				}
 			}
 		}
 
@@ -175,7 +176,7 @@ class JSMessages {
 
 	/**
 	 * Hook: ResourceLoaderRegisterModules
-	 * Register JSMessage packages as ResourceLoader modules.
+	 * Registers JSMessage packages as ResourceLoader modules, prefixed with 'ext.jsmessages' to minimize potential conflicts
 	 * If a module with the same name already exists, the messages are appended to the existing module.
 	 *
 	 * @param ResourceLoader $resourceLoader

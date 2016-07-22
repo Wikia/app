@@ -1,5 +1,6 @@
 (function(context){
-	var shift = Array.prototype.shift;
+	var shift = Array.prototype.shift,
+		modulePrefix = 'ext.jsmessages.';
 
 	/**
 	 * JS version of wfMsg()
@@ -58,16 +59,28 @@
 				mw.config.set('wgUserLanguage', language);
 			}
 
+			// append prefix
+			if ($.isArray(packages)) {
+				for (var i = 0; i < packages.length; i++) {
+					packages[i] = modulePrefix + packages[i];
+				}
+			} else {
+				packages = modulePrefix + packages;
+			}
+
 			mw.loader.using(packages).
 				then(function(result) {
 					if (typeof callback == 'function') {
 						callback();
 					}
 
+					mw.config.set('wgUserLanguage', mw.config.get('wgUserLanguageTemp'));
+
 					// resolve deferred object
 					dfd.resolve();
 				}).
 				fail(function() {
+					mw.config.set('wgUserLanguage', mw.config.get('wgUserLanguageTemp'));
 					// error handling
 					dfd.reject();
 				});
