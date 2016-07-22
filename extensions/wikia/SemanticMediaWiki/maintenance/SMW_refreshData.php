@@ -180,8 +180,6 @@ if ( $pages == false ) {
 		# Wikia Change - begin
 		if ($num_files % 1000 === 0) {
 			Wikia\Logger\WikiaLogger::instance()->info('SMW_refreshData.php - process', [
-				'wikia_dbname' => $wgDBname,
-				'wikia_id' => $wgCityId,
 				'task_id' => $taskId,
 				'page_id' => $id,
 				'processed_int' => $num_files,
