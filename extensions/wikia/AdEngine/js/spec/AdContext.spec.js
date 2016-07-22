@@ -53,6 +53,11 @@ describe('AdContext', function () {
 			wikiaCookies: {
 				get: noop
 			},
+			sampler: {
+				sample: function () {
+					return false;
+				}
+			},
 			callback: noop
 		},
 		queryParams = [
@@ -69,6 +74,7 @@ describe('AdContext', function () {
 			mocks.doc,
 			mocks.geo,
 			mocks.instantGlobals,
+			mocks.sampler,
 			mocks.win,
 			mocks.Querystring
 		);
@@ -480,18 +486,32 @@ describe('AdContext', function () {
 		expect(getModule().getContext().opts.pageFairDetection).toBeFalsy();
 	});
 
-	it('enable PageFair detection for current country on whitelist', function () {
+	it('disable PageFair detection for current country on whitelist and not allowed by sampler', function () {
+		spyOn(mocks.sampler, 'sample').and.callFake(function () {
+			return false;
+		});
+
+		mocks.instantGlobals = {wgAdDriverPageFairDetectionCountries: ['CURRENT_COUNTRY', 'ZZ']};
+		expect(getModule().getContext().opts.pageFairDetection).toBeFalsy();
+	});
+
+	it('enable PageFair detection for current country on whitelist and allowed by sampler', function () {
+		spyOn(mocks.sampler, 'sample').and.callFake(function () {
+			return true;
+		});
 		mocks.instantGlobals = {wgAdDriverPageFairDetectionCountries: ['CURRENT_COUNTRY', 'ZZ']};
 		expect(getModule().getContext().opts.pageFairDetection).toBeTruthy();
 	});
 
-	it('disable PageFair detection when current country is not on whitelist', function () {
-
+	it('disable PageFair detection when current country is not on whitelist and allowed by sampler', function () {
+		spyOn(mocks.sampler, 'sample').and.callFake(function () {
+			return true;
+		});
 		mocks.instantGlobals = {wgAdDriverPageFairDetectionCountries: ['OTHER_COUNTRY', 'ZZ']};
 		expect(getModule().getContext().opts.pageFairDetection).toBeFalsy();
 	});
 
-	it('enables detection when url param sourcepointdetection is set and current country is on whitelist', function () {
+	it('enables PageFair detection when url param pagefairdetection is set and current country is on whitelist', function () {
 		mocks.instantGlobals = {wgAdDriverPageFairDetectionCountries: ['CURRENT_COUNTRY', 'ZZ']};
 		spyOn(mocks.querystring, 'getVal').and.callFake(function (param) {
 			var result = ['pagefairdetection'].indexOf(param) !== -1;
