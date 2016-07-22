@@ -33,6 +33,9 @@ local function checkType( name, argidx, arg, expecttype, nilok )
 end
 
 local function checkString( name, s )
+    if type( s ) == 'number' then
+		s = tostring( s )
+	end
 	if type( s ) ~= 'string' then
 		local msg = S.format( "bad argument #1 to '%s' (string expected, got %s)",
 			name, type( s )
@@ -48,6 +51,9 @@ local function checkString( name, s )
 end
 
 local function checkPattern( name, pattern )
+    if type( pattern ) == 'number' then
+		pattern = tostring( pattern )
+	end
 	if type( pattern ) ~= 'string' then
 		local msg = S.format( "bad argument #2 to '%s' (string expected, got %s)",
 			name, type( pattern )
@@ -893,6 +899,9 @@ function ustring.gsub( s, pattern, repl, n )
 	elseif type( repl ) == 'table' then
 		tp = 2
 	elseif type( repl ) == 'string' then
+		tp = 3
+    elseif type( repl ) == 'number' then
+		repl = tostring( repl )
 		tp = 3
 	else
 		checkType( 'gsub', 3, repl, 'function or table or string' )

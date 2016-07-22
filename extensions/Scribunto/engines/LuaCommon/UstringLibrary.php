@@ -81,6 +81,9 @@ class Scribunto_LuaUstringLibrary extends Scribunto_LuaLibraryBase {
 	}
 
 	private function checkString( $name, $s, $checkEncoding = true ) {
+		if ( $this->getLuaType( $s ) == 'number' ) {
+			$s = (string)$s;
+		}
 		$this->checkType( $name, 1, $s, 'string' );
 		if ( $checkEncoding && !$this->checkEncoding( $s ) ) {
 			throw new Scribunto_LuaError( "bad argument #1 to '$name' (string is not UTF-8)" );
@@ -220,6 +223,9 @@ class Scribunto_LuaUstringLibrary extends Scribunto_LuaLibraryBase {
 	}
 
 	private function checkPattern( $name, $pattern ) {
+		if ( $this->getLuaType( $pattern ) == 'number' ) {
+			$pattern = (string)$pattern;
+		}
 		$this->checkType( $name, 2, $pattern, 'string' );
 		if ( !$this->checkEncoding( $pattern ) ) {
 			throw new Scribunto_LuaError( "bad argument #2 to '$name' (string is not UTF-8)" );
@@ -545,6 +551,7 @@ class Scribunto_LuaUstringLibrary extends Scribunto_LuaLibraryBase {
 
 		switch ( $this->getLuaType( $repl ) ) {
 		case 'string':
+		case 'number':
 			$cb = function ( $m ) use ( $repl, $anypos, &$captures ) {
 				if ( $anypos ) {
 					$m = array_shift( $captures );
