@@ -5,16 +5,14 @@ class TwitterTagController extends WikiaController {
 	const PARSER_TAG_NAME = 'twitter';
 	const TWITTER_NAME = 'Twitter';
 	const TWITTER_BASE_URL = 'https://twitter.com/';
-	const TWITTER_USER_TIMELINE = '/^https:\/\/twitter.com\/[a-z0-9_]*$/i';
+	const TWITTER_USER_TIMELINE = '/^https:\/\/twitter.com\/[a-z0-9_]{1,15}$/i';
 
 	const REGEX_DIGITS = '/^[0-9]*$/';
 	const REGEX_HEX_COLOR = '/#[0-9a-f]{3}(?:[0-9a-f]{3})?$/i';
 	const REGEX_TWITTER_SCREEN_NAME = '/^[a-z0-9_]{1,15}$/i';
 
 	const TAG_PERMITTED_ATTRIBUTES = [
-		// Required Parameter
 		'widget-id' => self::REGEX_DIGITS,
-		// Regular Parameters
 		'chrome' => '/^((noheader|nofooter|noborders|noscrollbar|transparent) ?){0,5}$/i',
 		'tweet-limit' => self::REGEX_DIGITS,
 		'aria-polite' => '/^(off|polite|assertive)$/i',
@@ -54,7 +52,9 @@ class TwitterTagController extends WikiaController {
 	 */
 	public function parseTag( $input, array $args, Parser $parser, PPFrame $frame ) {
 		if ( !empty( $args[ 'href' ] ) && preg_match( self::TWITTER_USER_TIMELINE, $args[ 'href' ] ) ) {
-			$href = $args[ 'href' ];
+			$href = $args['href'];
+		} elseif ( !empty( $args[ 'screen-name' ] ) && preg_match( self::REGEX_TWITTER_SCREEN_NAME, $args[ 'screen-name' ] ) ) {
+			$href = self::TWITTER_BASE_URL . $args[ 'screen-name' ];
 		} else {
 			// if no href to user timeline check for id
 			if ( empty( $args[ 'widget-id' ] ) ) {
