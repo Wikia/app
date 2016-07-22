@@ -140,8 +140,11 @@ class Scribunto_LuaUstringLibrary extends Scribunto_LuaLibraryBase {
 		if ( $j < 0 ) {
 			$j = $l + $j + 1;
 		}
-		$i = max( 1, min( $i, $l ) );
-		$j = max( 1, min( $j, $l ) );
+		if ( $j < $i ) {
+			return array();
+		}
+		$i = max( 1, min( $i, $l + 1 ) );
+		$j = max( 1, min( $j, $l + 1 ) );
 		$s = mb_substr( $s, $i - 1, $j - $i + 1, 'UTF-8' );
 		return unpack( 'N*', mb_convert_encoding( $s, 'UTF-32BE', 'UTF-8' ) );
 	}
@@ -205,6 +208,9 @@ class Scribunto_LuaUstringLibrary extends Scribunto_LuaLibraryBase {
 		}
 		if ( $j < 0 ) {
 			$j = $len + $j + 1;
+		}
+		if ( $j < $i ) {
+			return array( '' );
 		}
 		$i = max( 1, min( $i, $len + 1 ) );
 		$j = max( 1, min( $j, $len + 1 ) );

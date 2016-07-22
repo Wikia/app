@@ -243,8 +243,11 @@ function ustring.codepoint( s, i, j )
 	if j < 0 then
 		j = cps.len + j + 1
 	end
-	i = math.max( 1, math.min( i, cps.len ) )
-	j = math.max( 1, math.min( j, cps.len ) )
+	if j < i then
+		return -- empty result set
+	end
+	i = math.max( 1, math.min( i, cps.len + 1 ) )
+	j = math.max( 1, math.min( j, cps.len + 1 ) )
 	return unpack( cps.codepoints, i, j )
 end
 
@@ -353,6 +356,9 @@ function ustring.sub( s, i, j )
 	j = j or -1
 	if j < 0 then
 		j = cps.len + j + 1
+	end
+	if j < i then
+		return ''
 	end
 	i = math.max( 1, math.min( i, cps.len + 1 ) )
 	j = math.max( 1, math.min( j, cps.len + 1 ) )
