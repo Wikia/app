@@ -33,7 +33,7 @@ local function checkType( name, argidx, arg, expecttype, nilok )
 end
 
 local function checkString( name, s )
-    if type( s ) == 'number' then
+	if type( s ) == 'number' then
 		s = tostring( s )
 	end
 	if type( s ) ~= 'string' then
@@ -51,7 +51,7 @@ local function checkString( name, s )
 end
 
 local function checkPattern( name, pattern )
-    if type( pattern ) == 'number' then
+	if type( pattern ) == 'number' then
 		pattern = tostring( pattern )
 	end
 	if type( pattern ) ~= 'string' then
