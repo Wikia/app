@@ -10,7 +10,7 @@ use Wikia\Tasks\Tasks\BaseTask;
 
 class SMW_MigrationJob extends BaseTask {
 
-	var $cityId;
+	private $cityId;
 
 	public function run($wikis) {
 
@@ -21,7 +21,7 @@ class SMW_MigrationJob extends BaseTask {
 		if (!$this->refreshPages()) {
 			return false;
 		}
-		if (!$this->setDb()) {
+		if (!$this->switchToNewStorage ()) {
 			return false;
 		}
 		$this->startNextJob($wikis);
@@ -47,7 +47,7 @@ class SMW_MigrationJob extends BaseTask {
 		return $this->runMaintenanceScript($options, 'refreshing all pages', "extensions/wikia/SemanticMediaWiki/maintenance/SMW_refreshData.php");
 	}
 
-	private function setDb() {
+	private function switchToNewStorage () {
 		$options = [
 			'--verbose',
 			'--varName=smwgDefaultStore',
