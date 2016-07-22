@@ -465,7 +465,11 @@ class Scribunto_LuaUstringLibrary extends Scribunto_LuaLibraryBase {
 
 		if ( $plain ) {
 			$ret = mb_strpos( $s, $pattern, 0, 'UTF-8' );
-			return array( ( $ret === false ) ? null : $ret + $init );
+			if ( $ret === false ) {
+				return array( null );
+			} else {
+				return array( $ret + $init, $ret + $init + mb_strlen( $pattern ) - 1 );
+			}
 		}
 
 		list( $re, $capt ) = $this->patternToRegex( $pattern );
