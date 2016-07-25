@@ -5,12 +5,11 @@ class TwitterTagController extends WikiaController {
 	const PARSER_TAG_NAME = 'twitter';
 	const TWITTER_NAME = 'Twitter';
 	const TWITTER_BASE_URL = 'https://twitter.com/';
-	const TWITTER_USER_TIMELINE = '/^https:\/\/twitter\.com\/[a-z0-9_]{1,15}$/i';
+	const TWITTER_USER_TIMELINE = '/^https:\/\/twitter.com\/[a-z0-9_]{1,15}$/i';
+
 	const REGEX_DIGITS = '/^[0-9]*$/';
 	const REGEX_HEX_COLOR = '/#[0-9a-f]{3}(?:[0-9a-f]{3})?$/i';
 	const REGEX_TWITTER_SCREEN_NAME = '/^[a-z0-9_]{1,15}$/i';
-	// see https://github.com/twitter/twitter-text/blob/master/rb/lib/twitter-text/regex.rb#L107-L143
-	const TWITTER_HASHTAG_URL = '/^https:\/\/twitter\.com\/hashtag\/[\p{L}\p{M}\p{Nd}]*[\p{L}\p{M}][\p{L}\p{M}\p{Nd}]*/i';
 
 	const TAG_PERMITTED_ATTRIBUTES = [
 		'widget-id' => self::REGEX_DIGITS,
@@ -52,12 +51,7 @@ class TwitterTagController extends WikiaController {
 	 * @return string
 	 */
 	public function parseTag( $input, array $args, Parser $parser, PPFrame $frame ) {
-		if ( !empty( $args[ 'href' ] ) &&
-			(
-				preg_match( self::TWITTER_USER_TIMELINE, $args[ 'href' ] ) ||
-				preg_match( self::TWITTER_HASHTAG_URL, $args[ 'href' ] )
-			)
-		) {
+		if ( !empty( $args[ 'href' ] ) && preg_match( self::TWITTER_USER_TIMELINE, $args[ 'href' ] ) ) {
 			$href = $args['href'];
 		} elseif ( !empty( $args[ 'screen-name' ] ) && preg_match( self::REGEX_TWITTER_SCREEN_NAME, $args[ 'screen-name' ] ) ) {
 			$href = self::TWITTER_BASE_URL . $args[ 'screen-name' ];
