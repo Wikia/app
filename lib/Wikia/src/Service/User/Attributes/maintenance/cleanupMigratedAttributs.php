@@ -8,6 +8,11 @@
  * Assumptions: The global variable $wgPublicUserAttributes is an array containing the names of
  * all fully migrated attributes. Do NOT add any attributes to that array unless you have fully
  * migrated all of its values from wikicities.user_properties to the attribute service.
+ *
+ * Script defaults to run as a dry run, ie, attributes are not actually deleted. To actually run
+ * the deletion, pass "false" for the dryRun parameter. Eg:
+ *
+ * php cleanupMigratedAttributes.php --dryRun=false
  */
 
 require_once( __DIR__ . '/../../../../../../../maintenance/Maintenance.php' );
