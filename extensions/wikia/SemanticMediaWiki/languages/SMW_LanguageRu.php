@@ -8,15 +8,18 @@
  * Protect against register_globals vulnerabilities.
  * This line must be present before any global variable is referenced.
  */
-if ( !defined( 'MEDIAWIKI' ) ) die();
+if ( !defined( 'MEDIAWIKI' ) ) {
+	die();
+}
 
 global $smwgIP;
-include_once( $smwgIP . 'languages/SMW_Language.php' );
+include_once ( $smwgIP . 'languages/SMW_Language.php' );
 
 /**
  * Russian language labels for important SMW labels (namespaces, datatypes,...).
  *
  * @author Dmitry Khoroshev cnit\@uniyar.ac.ru
+ * @author Yury Katkov
  * @ingroup SMWLanguage
  * @ingroup Language
  */
@@ -24,7 +27,6 @@ class SMWLanguageRu extends SMWLanguage {
 
 	protected $m_DatatypeLabels = array(
 		'_wpg' => 'Страница', // name of page datatype
-		'_str' => 'Строка',  // name of the string type
 		'_txt' => 'Текст',  // name of the text type (very long strings)
 		'_cod' => 'Исходный код',  // name of the (source) code type
 		'_boo' => 'Булево',  // name of the boolean type
@@ -38,6 +40,7 @@ class SMWLanguageRu extends SMWLanguage {
 		'_tel' => 'Номер телефона',  // name of the telephone (URI) type
 		'_rec' => 'Запись', // name of record data type
 		'_qty' => 'Количество', // name of the number type with units of measurement
+		'_mlt_rec' => 'Monolingual text',
 	);
 
 	protected $m_DatatypeAliases = array(
@@ -45,7 +48,8 @@ class SMWLanguageRu extends SMWLanguage {
 		'Целое'                 => '_num',
 		'Десятичное'            => '_num',
 		'Плавающее'             => '_num',
-		'Перечисление'          => '_str',
+		'Перечисление'          => '_txt',
+		'Строка'                => '_txt',  // old name of the string type
 		'Телефон'               => '_tel',
 	);
 
@@ -54,7 +58,7 @@ class SMWLanguageRu extends SMWLanguage {
 		'_TYPE' => 'Имеет тип',
 		'_URI'  => 'Эквивалентный URI',
 		'_SUBP' => 'Подчиненное свойству',
-		'_SUBC' => 'Subcategory of', // TODO: translate
+		'_SUBC' => 'Вложенная категория',
 		'_UNIT' => 'Отображаемые единицы',
 		'_IMPO' => 'Импортировано из',
 		'_CONV' => 'Относится к',
@@ -64,18 +68,30 @@ class SMWLanguageRu extends SMWLanguage {
 		'_CDAT' => 'Дата создания',
 		'_NEWP' => 'Новая страница',
 		'_LEDT' => 'Последний редактор',
-		'_ERRP' => 'Has improper value for', // TODO: translate
+		'_ERRP' => 'Содержит некорректное значение',
 		'_LIST' => 'Имеет поля',
-		'_SOBJ' => 'Has subobject', // TODO: translate
-		'_ASK'  => 'Has query', // TODO: translate
-		'_ASKST'=> 'Query string', // TODO: translate
-		'_ASKFO'=> 'Query format', // TODO: translate
-		'_ASKSI'=> 'Query size', // TODO: translate
-		'_ASKDE'=> 'Query depth', // TODO: translate
+		'_SOBJ' => 'Содержит субобъект',
+		'_ASK'  => 'Содержит запрос',
+		'_ASKST'=> 'Строка запроса',
+		'_ASKFO'=> 'Формат запроса',
+		'_ASKSI'=> 'Размер запроса',
+		'_ASKDE'=> 'Глубина запроса',
+		'_ASKDU'=> 'Длительность запроса',
+		'_MEDIA'=> 'Тип медиа',
+		'_MIME' => 'MIME-тип',
+		'_ERRC' => 'Has processing error',
+		'_ERRT' => 'Has processing error text',
+		'_PREC'  => 'Display precision of',
+		'_LCODE' => 'Language code',
+		'_TEXT'  => 'Text',
+		'_PDESC' => 'Has property description',
+		'_PVAP'  => 'Allows pattern',
+		'_DTITLE' => 'Display title of',
+		'_PVUC' => 'Has uniqueness constraint',
 	);
 
 	protected $m_SpecialPropertyAliases = array(
-		'Тип данных'				=> '_TYPE',
+		'Тип данных'           => '_TYPE',
 		'Отображаемая единица' => '_UNIT'
 	);
 

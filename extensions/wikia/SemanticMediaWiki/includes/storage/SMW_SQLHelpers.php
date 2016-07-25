@@ -8,7 +8,6 @@
  * @author Marcel Gsteiger
  * @author Jeroen De Dauw
  *
- * @file SMW_SQLHelpers.php
  * @ingroup SMWStore
  */
 class SMWSQLHelpers {
@@ -28,11 +27,16 @@ class SMWSQLHelpers {
 		global $wgDBtype;
 
 		switch ( $input ) {
-			case 'id': return $wgDBtype == 'postgres' ? 'SERIAL' : ($wgDBtype == 'sqlite' ? 'INTEGER' :'INT(8) UNSIGNED'); // like page_id in MW page table
-			case 'namespace': return $wgDBtype == 'postgres' ? 'BIGINT' : 'INT(11)'; // like page_namespace in MW page table
-			case 'title': return $wgDBtype == 'postgres' ? 'TEXT' : 'VARBINARY(255)'; // like page_title in MW page table
-			case 'iw': return ($wgDBtype == 'postgres' || $wgDBtype == 'sqlite') ? 'TEXT' : 'VARCHAR(32) binary'; // like iw_prefix in MW interwiki table
-			case 'blob': return $wgDBtype == 'postgres' ? 'BYTEA' : 'MEDIUMBLOB'; // larger blobs of character data, usually not subject to SELECT conditions
+			case 'id':
+			return $wgDBtype == 'postgres' ? 'SERIAL' : ($wgDBtype == 'sqlite' ? 'INTEGER' :'INT(8) UNSIGNED'); // like page_id in MW page table
+			case 'namespace':
+			return $wgDBtype == 'postgres' ? 'BIGINT' : 'INT(11)'; // like page_namespace in MW page table
+			case 'title':
+			return $wgDBtype == 'postgres' ? 'TEXT' : 'VARBINARY(255)'; // like page_title in MW page table
+			case 'iw':
+			return ($wgDBtype == 'postgres' || $wgDBtype == 'sqlite') ? 'TEXT' : 'VARBINARY(32)'; // like iw_prefix in MW interwiki table
+			case 'blob':
+			return $wgDBtype == 'postgres' ? 'BYTEA' : 'MEDIUMBLOB'; // larger blobs of character data, usually not subject to SELECT conditions
 		}
 
 		return false;
@@ -71,7 +75,7 @@ class SMWSQLHelpers {
 
 		if ( $db->tableExists( $rawTableName ) === false ) { // create new table
 			self::reportProgress( "   Table not found, now creating...\n", $reportTo );
-			self::createTable( $tableName, $fields, $db, $reportTo );
+			self::createTable( $tableName, $fields, $db );
 			self::reportProgress( "   ... done.\n", $reportTo );
 		} else {
 			self::reportProgress( "   Table already exists, checking structure ...\n", $reportTo );
@@ -86,13 +90,11 @@ class SMWSQLHelpers {
 	 * @param string $tableName The table name.
 	 * @param array $columns The fields and their types the table should have.
 	 * @param DatabaseBase|Database $db
-	 * @param object $reportTo object to report back to.
 	 */
-	protected static function createTable( $tableName, array $fields, $db, $reportTo ) {
-		global $wgDBtype, $wgDBTableOptions, $wgDBname;
+	private static function createTable( $tableName, array $fields, $db ) {
+		global $wgDBtype, $wgDBname;
 
-		// wikia change, remove $wgDBname usage
-		$sql = 'CREATE TABLE ' . ( ( $wgDBtype == 'postgres' || $wgDBtype == 'sqlite' ) ? '' : '' ) . $tableName . ' (';
+		$sql = 'CREATE TABLE ' . ( ( $wgDBtype == 'postgres' || $wgDBtype == 'sqlite' ) ? '' : "`$wgDBname`." ) . $tableName . ' (';
 
 		$fieldSql = array();
 
@@ -103,7 +105,8 @@ class SMWSQLHelpers {
 		$sql .= implode( ',', $fieldSql ) . ') ';
 
 		if ( $wgDBtype != 'postgres' && $wgDBtype != 'sqlite' ) {
-			$sql .= $wgDBTableOptions;
+			// This replacement is needed for compatibility, see http://bugs.mysql.com/bug.php?id=17501
+			$sql .= str_replace( 'TYPE', 'ENGINE', $GLOBALS['wgDBTableOptions'] );
 		}
 
 		$db->query( $sql, __METHOD__ );
@@ -117,14 +120,16 @@ class SMWSQLHelpers {
 	 * @param DatabaseBase|Database $db
 	 * @param object $reportTo Object to report back to.
 	 */
-	protected static function updateTable( $tableName, array $fields, $db, $reportTo ) {
+	private static function updateTable( $tableName, array $fields, $db, $reportTo ) {
 		global $wgDBtype;
 
 		$currentFields = self::getFields( $tableName, $db, $reportTo );
 
 		$isPostgres = $wgDBtype == 'postgres';
 
-		if ( !$isPostgres ) $position = 'FIRST';
+		if ( !$isPostgres ) {
+			$position = 'FIRST';
+		}
 
 		// Loop through all the field definitions, and handle each definition for either postgres or MySQL.
 		foreach ( $fields as $fieldName => $fieldType ) {
@@ -142,18 +147,18 @@ class SMWSQLHelpers {
 		// that differs from false, it's an obsolete one that should be removed.
 		foreach ( $currentFields as $fieldName => $value ) {
 			if ( $value !== false ) {
-				SMWSQLHelpers::reportProgress( "   ... deleting obsolete field $fieldName ... ", $reportTo );
+				self::reportProgress( "   ... deleting obsolete field $fieldName ... ", $reportTo );
 
 				if ( $isPostgres ) {
 					$db->query( 'ALTER TABLE "' . $tableName . '" DROP COLUMN "' . $fieldName . '"', __METHOD__ );
 				} elseif ( $wgDBtype == 'sqlite' ) {
 					// DROP COLUMN not supported in Sqlite3
-					SMWSQLHelpers::reportProgress( "   ... deleting obsolete field $fieldName not possible in SQLLite ... you could delete and reinitialize the tables to remove obsolete data, or just keep it ... ", $reportTo );
+					self::reportProgress( "   ... deleting obsolete field $fieldName not possible in SQLLite ... you could delete and reinitialize the tables to remove obsolete data, or just keep it ... ", $reportTo );
 				} else {
 					$db->query( "ALTER TABLE $tableName DROP COLUMN `$fieldName`", __METHOD__ );
 				}
 
-				SMWSQLHelpers::reportProgress( "done.\n", $reportTo );
+				self::reportProgress( "done.\n", $reportTo );
 			}
 		}
 	}
@@ -167,7 +172,7 @@ class SMWSQLHelpers {
 	 *
 	 * @return array
 	 */
-	protected static function getFields( $tableName, $db, $reportTo ) {
+	private static function getFields( $tableName, $db, $reportTo ) {
 		global $wgDBtype;
 
 		if ( $wgDBtype == 'postgres' ) {
@@ -257,12 +262,14 @@ EOT;
 	 * @param DatabaseBase|Database $db
 	 * @param object $reportTo Object to report back to.
 	 */
-	protected static function updatePostgresField( $tableName, $name, $type, array $currentFields, $db, $reportTo ) {
+	private static function updatePostgresField( $tableName, $name, $type, array $currentFields, $db, $reportTo ) {
 		$keypos = strpos( $type, ' PRIMARY KEY' );
 
 		if ( $keypos > 0 ) {
 			$type = substr( $type, 0, $keypos );
 		}
+
+		$type = strtoupper( $type );
 
 		if ( !array_key_exists( $name, $currentFields ) ) {
 			self::reportProgress( "   ... creating field $name ... ", $reportTo );
@@ -279,14 +286,16 @@ EOT;
 			}
 
 			$notnullposold = strpos( $currentFields[$name], ' NOT NULL' );
-			$typeold = ( $notnullposold > 0 ) ? substr( $currentFields[$name], 0, $notnullposold ) : $currentFields[$name];
+			$typeold  = strtoupper( ( $notnullposold > 0 ) ? substr( $currentFields[$name], 0, $notnullposold ) : $currentFields[$name] );
 
 			if ( $typeold != $type ) {
-				$db->query( "ALTER TABLE " . $tableName . " ALTER COLUMN \"" . $name . "\" ENGINE " . $type, __METHOD__ );
+				$sql = "ALTER TABLE " . $tableName . " ALTER COLUMN \"" . $name . "\" TYPE " . $type;
+				$db->query( $sql, __METHOD__ );
 			}
 
 			if ( $notnullposold != $notnullposnew ) {
-				$db->query( "ALTER TABLE " . $tableName . " ALTER COLUMN \"" . $name . "\" " . ( $notnullposnew > 0 ? 'SET' : 'DROP' ) . " NOT NULL", __METHOD__ );
+				$sql = "ALTER TABLE " . $tableName . " ALTER COLUMN \"" . $name . "\" " . ( $notnullposnew > 0 ? 'SET' : 'DROP' ) . " NOT NULL";
+				$db->query( $sql, __METHOD__ );
 			}
 
 			self::reportProgress( "done.\n", $reportTo );
@@ -307,7 +316,7 @@ EOT;
 	 * @param object $reportTo Object to report back to.
 	 * @param string $position
 	 */
-	protected static function updateMySqlField( $tableName, $name, $type, array $currentFields, $db, $reportTo, $position ) {
+	private static function updateMySqlField( $tableName, $name, $type, array $currentFields, $db, $reportTo, $position ) {
 		if ( !array_key_exists( $name, $currentFields ) ) {
 			self::reportProgress( "   ... creating field $name ... ", $reportTo );
 
@@ -317,6 +326,11 @@ EOT;
 			self::reportProgress( "done.\n", $reportTo );
 		} elseif ( $currentFields[$name] != $type ) {
 			self::reportProgress( "   ... changing type of field $name from '$currentFields[$name]' to '$type' ... ", $reportTo );
+
+			// To avoid Error: 1068 Multiple primary key defined when a PRIMARY is involved
+			if ( strpos( $type, 'AUTO_INCREMENT' ) !== false ) {
+				$db->query( "ALTER TABLE $tableName DROP PRIMARY KEY", __METHOD__ );
+			}
 
 			$db->query( "ALTER TABLE $tableName CHANGE `$name` `$name` $type $position", __METHOD__ );
 			$result[$name] = 'up';
@@ -338,7 +352,7 @@ EOT;
 	public static function setupIndex( $rawTableName, array $indexes, $db, $reportTo = null ) {
 		global $wgDBtype;
 
-		$tableName = $db->tableName( $rawTableName );
+		$tableName = $wgDBtype == 'postgres' ? $db->tableName( $rawTableName, 'raw' ) : $db->tableName( $rawTableName );
 
 		self::reportProgress( "Checking index structures for table $tableName ...\n", $reportTo );
 
@@ -392,14 +406,14 @@ EOT;
 	 * @param string $tableName name of table
 	 * @return array indexname => columns
 	 */
-	protected static function getIndexInfo( $db, $tableName ) {
+	private static function getIndexInfo( $db, $tableName ) {
 		global $wgDBtype;
 
 		$indexes = array();
 		if ( $wgDBtype == 'postgres' ) { // postgresql
 			$sql = "SELECT  i.relname AS indexname,"
 				. " pg_get_indexdef(i.oid) AS indexdef, "
-				. " replace(substring(pg_get_indexdef(i.oid) from '\\\\((.*)\\\\)'),' ','') AS indexcolumns"
+				. " replace(substring(pg_get_indexdef(i.oid) from E'\\\\((.*)\\\\)'), ' ' , '') AS indexcolumns"
 				. " FROM pg_index x"
 				. " JOIN pg_class c ON c.oid = x.indrelid"
 				. " JOIN pg_class i ON i.oid = x.indexrelid"
@@ -418,7 +432,7 @@ EOT;
 				$indexes[$row->indexname] = $row->indexcolumns;
 			}
 		} elseif ( $wgDBtype == 'sqlite' ) { // SQLite
-			$res = $db->query( 'PRAGMA index_list(' . $tableName . ')' , __METHOD__ );
+			$res = $db->query( 'PRAGMA index_list(' . $tableName . ')', __METHOD__ );
 
 			if ( !$res ) {
 				return false;
@@ -433,7 +447,7 @@ EOT;
 				}
 			}
 		} else { // MySQL and default
-			$res = $db->query( 'SHOW INDEX FROM ' . $tableName , __METHOD__ );
+			$res = $db->query( 'SHOW INDEX FROM ' . $tableName, __METHOD__ );
 
 			if ( !$res ) {
 				return false;
@@ -462,7 +476,7 @@ EOT;
 	 * separated; only for reporting
 	 * @param object $reportTo to report messages to
 	 */
-	protected static function dropIndex( $db, $indexName, $tableName, $columns, $reportTo = null ) {
+	private static function dropIndex( $db, $indexName, $tableName, $columns, $reportTo = null ) {
 		global $wgDBtype;
 
 		self::reportProgress( "   ... removing index $columns ...", $reportTo );
@@ -487,13 +501,13 @@ EOT;
 	 * @param array $columns list of column names to index, comma separated
 	 * @param object $reportTo object to report messages to
 	 */
-	protected static function createIndex( $db, $type, $indexName, $tableName, $columns, $reportTo = null ) {
+	private static function createIndex( $db, $type, $indexName, $tableName, $columns, $reportTo = null ) {
 		global $wgDBtype;
 
 		self::reportProgress( "   ... creating new index $columns ...", $reportTo );
 		if ( $wgDBtype == 'postgres' ) { // postgresql
 			if ( $db->indexInfo( $tableName, $indexName ) === false ) {
-				$db->query( "CREATE $type $tableName ON $tableName USING btree($columns)", __METHOD__ );
+				$db->query( "CREATE $type $indexName ON $tableName ($columns)", __METHOD__ );
 			}
 		} elseif ( $wgDBtype == 'sqlite' ) { // SQLite
 			$db->query( "CREATE $type $indexName ON $tableName ($columns)", __METHOD__ );
@@ -510,8 +524,10 @@ EOT;
 	 * @param string $msg
 	 * @param object $receiver
 	 */
-	protected static function reportProgress( $msg, $receiver ) {
-		if ( !is_null( $receiver ) ) $receiver->reportProgress( $msg );
+	private static function reportProgress( $msg, $receiver ) {
+		if ( !is_null( $receiver ) ) {
+			$receiver->reportProgress( $msg );
+		}
 	}
 
 }

@@ -10,10 +10,12 @@
  * Protect against register_globals vulnerabilities.
  * This line must be present before any global variable is referenced.
  */
-if ( !defined( 'MEDIAWIKI' ) ) die();
+if ( !defined( 'MEDIAWIKI' ) ) {
+	die();
+}
 
 global $smwgIP;
-include_once( $smwgIP . 'languages/SMW_Language.php' );
+include_once ( $smwgIP . 'languages/SMW_Language.php' );
 
 /**
  * Dutch language labels for important SMW labels (namespaces, datatypes,...).
@@ -27,7 +29,6 @@ class SMWLanguageNl extends SMWLanguage {
 
 	protected $m_DatatypeLabels = array(
 		'_wpg' => 'Pagina', // name of page datatype
-		'_str' => 'String',  // name of the string type
 		'_txt' => 'Tekst',  // name of the text type
 		'_cod' => 'Code',  // name of the (source) code type
 		'_boo' => 'Booleaans',  // name of the boolean type
@@ -41,14 +42,15 @@ class SMWLanguageNl extends SMWLanguage {
 		'_tel' => 'Telefoonnummer',  // name of the telephone (URI) type
 		'_rec' => 'Record', // name of record data type
 		'_qty' => 'Hoeveelheid', // name of the number type with units of measurement
+		'_mlt_rec' => 'Monolingual text',
 	);
 
 	protected $m_DatatypeAliases = array(
 		'URI'             => '_uri',
 		'Drijvende komma' => '_num',
 		'Integer'         => '_num',
-		'Opsomming'       => '_str',
-		'Telefoonnummer'  => '_tel',
+		'Opsomming'       => '_txt',
+		'String'          => '_txt',  // old name of the string type
 	);
 
 	protected $m_SpecialProperties = array(
@@ -70,14 +72,30 @@ class SMWLanguageNl extends SMWLanguage {
 		'_LIST' => 'Heeft velden',
 		'_SOBJ' => 'Heeft subobject',
 		'_ASK'  => 'Heeft bevraging',
-		'_ASKST'=> 'Bevragingsstring',
-		'_ASKFO'=> 'Bevragingsopmaak',
-		'_ASKSI'=> 'Bevragingsgrootte',
-		'_ASKDE'=> 'Bevragingsdiepgang',
+		'_ASKST'=> 'Zoekstring',
+		'_ASKFO'=> 'Zoekopdracht-opmaak',
+		'_ASKSI'=> 'Zoekopdracht-omvang',
+		'_ASKDE'=> 'Zoekdiepte',
+		'_ASKDU'=> 'Zoekduur',
+		'_MEDIA'=> 'Heeft Mediatype',
+		'_MIME' => 'Heeft MIME-type',
+		'_ERRC' => 'Has processing error',
+		'_ERRT' => 'Has processing error text',
+		'_PREC'  => 'Display precision of',
+		'_LCODE' => 'Language code',
+		'_TEXT'  => 'Text',
+		'_PDESC' => 'Has property description',
+		'_PVAP'  => 'Allows pattern',
+		'_DTITLE' => 'Display title of',
+		'_PVUC' => 'Has uniqueness constraint',
 	);
 
 	protected $m_SpecialPropertyAliases = array(
-		'Weergave-eenheid' => '_UNIT'
+		'Weergave-eenheid'   => '_UNIT',
+		'Bevragingsstring'   => '_ASKST',
+		'Bevragingsopmaak'   => '_ASKFO',
+		'Bevragingsgrootte'  => '_ASKSI',
+		'Bevragingsdiepgang' => '_ASKDE'
 	);
 
 	protected $m_Namespaces = array(

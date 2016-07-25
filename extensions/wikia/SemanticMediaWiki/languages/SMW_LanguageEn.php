@@ -8,10 +8,12 @@
  * Protect against register_globals vulnerabilities.
  * This line must be present before any global variable is referenced.
  */
-if ( !defined( 'MEDIAWIKI' ) ) die();
+if ( !defined( 'MEDIAWIKI' ) ) {
+	die();
+}
 
 global $smwgIP;
-include_once( $smwgIP . 'languages/SMW_Language.php' );
+include_once ( $smwgIP . 'languages/SMW_Language.php' );
 
 
 /**
@@ -27,7 +29,6 @@ class SMWLanguageEn extends SMWLanguage {
 
 	protected $m_DatatypeLabels = array(
 		'_wpg' => 'Page', // name of page datatype
-		'_str' => 'String',  // name of the string type
 		'_txt' => 'Text',  // name of the text type
 		'_cod' => 'Code',  // name of the (source) code type
 		'_boo' => 'Boolean',  // name of the boolean type
@@ -41,13 +42,15 @@ class SMWLanguageEn extends SMWLanguage {
 		'_tel' => 'Telephone number',  // name of the telephone (URI) type
 		'_rec' => 'Record', // name of record data type
 		'_qty' => 'Quantity', // name of the number type with units of measurement
+		'_mlt_rec' => 'Monolingual text',
 	);
 
 	protected $m_DatatypeAliases = array(
 		'URI'         => '_uri',
 		'Float'       => '_num',
 		'Integer'     => '_num',
-		'Enumeration' => '_str',
+		'Enumeration' => '_txt',
+		'String'      => '_txt',
 		'Phone number' => '_tel',
 		'E-mail'       => '_ema',
 		'Geographic coordinate' => '_geo',
@@ -77,10 +80,26 @@ class SMWLanguageEn extends SMWLanguage {
 		'_ASKFO'=> 'Query format',
 		'_ASKSI'=> 'Query size',
 		'_ASKDE'=> 'Query depth',
+		'_ASKDU'=> 'Query duration',
+		'_MEDIA'=> 'Media type',
+		'_MIME' => 'MIME type',
+		'_ERRC' => 'Has processing error',
+		'_ERRT' => 'Has processing error text',
+		'_PREC'  => 'Display precision of',
+		'_LCODE' => 'Language code',
+		'_TEXT'  => 'Text',
+		'_PDESC' => 'Has property description',
+		'_PVAP'  => 'Allows pattern',
+		'_DTITLE' => 'Display title of',
+		'_PVUC' => 'Has uniqueness constraint',
 	);
 
 	protected $m_SpecialPropertyAliases = array(
-		'Display unit' => '_UNIT'
+		'Display unit' => '_UNIT',
+		'Display precision' => '_PREC',
+		'Property description'     => '_PDESC',
+		'Has allows pattern' => '_PVAP',
+		'Has display title of'     => '_DTITLE'
 	);
 
 	protected $m_Namespaces = array(
@@ -98,6 +117,12 @@ class SMWLanguageEn extends SMWLanguage {
 
 	protected $m_monthsshort = array( "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" );
 
+	protected $preferredDateFormatsByPrecision = array(
+		'SMW_PREC_Y'    => 'Y',
+		'SMW_PREC_YM'   => 'F Y',
+		'SMW_PREC_YMD'  => 'F j, Y',
+		'SMW_PREC_YMDT' => 'H:i:s, j F Y'
+	);
 }
 
 

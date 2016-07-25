@@ -1,6 +1,5 @@
 <?php
 /**
- * @file
  * @author Nischay Nahata
  * @author Markus Kroetzsch
  * @ingroup SMWDataItemsHandlers
@@ -112,16 +111,31 @@ class SMWDIHandlerWikiPage extends SMWDataItemHandler {
 			if ( $namespace == SMW_NS_PROPERTY && $dbkeys[0] != '' &&
 				$dbkeys[0]{0} == '_' && $dbkeys[2] == '' ) {
 				// Correctly interpret internal property keys
-				$property = new SMWDIProperty( $dbkeys[0] );
+				$property = new SMW\DIProperty( $dbkeys[0] );
 				$wikipage = $property->getDiWikiPage( $dbkeys[4] );
 				if ( !is_null( $wikipage ) ) {
 					return $wikipage;
 				}
 			} else {
-				return new SMWDIWikiPage( $dbkeys[0], $namespace, $dbkeys[2], $dbkeys[4] );
+				return $this->newDiWikiPage( $dbkeys );
 			}
 		}
 
 		throw new SMWDataItemException( 'Failed to create data item from DB keys.' );
 	}
+
+	private function newDiWikiPage( $dbkeys ) {
+
+		$diWikiPage = new SMWDIWikiPage(
+			$dbkeys[0],
+			intval( $dbkeys[1] ),
+			$dbkeys[2],
+			$dbkeys[4]
+		);
+
+		$diWikiPage->setSortKey( $dbkeys[3] );
+
+		return $diWikiPage;
+	}
+
 }

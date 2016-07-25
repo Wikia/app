@@ -1,11 +1,14 @@
 <?php
 
+use SMW\ApplicationFactory;
+use SMW\DIProperty;
+use SMW\PropertyRegistry;
+
 /**
  * Abstract subclass of MediaWiki's Article that handles the common tasks of
  * article pages for Concept and Property pages. This is mainly parameter
  * handling and some very basic output control.
  *
- * @file SMW_OrderedListPage.php
  * @ingroup SMW
  *
  * @author Nikolas Iwan
@@ -56,16 +59,106 @@ abstract class SMWOrderedListPage extends Article {
 	 * output.
 	 */
 	public function view() {
-		global $wgRequest, $wgUser;
+		global $wgRequest, $wgUser, $wgOut;
+
+		if ( !ApplicationFactory::getInstance()->getSettings()->get( 'smwgSemanticsEnabled' ) ) {
+			$wgOut->setPageTitle( $this->getTitle()->getPrefixedText() );
+			$wgOut->addHTML( wfMessage( 'smw-semantics-not-enabled' )->text() );
+			return;
+		}
+
+		if ( $this->getTitle()->getNamespace() === SMW_NS_PROPERTY ) {
+			$this->findBasePropertyToRedirectFor( $this->getTitle()->getText() );
+		}
+
+		$this->initParameters();
+
+		if ( !isset( $diff ) || !$diffOnly ) {
+
+			// MW 1.25+
+			if ( method_exists( $wgOut, 'setIndicators' ) ) {
+				$wgOut->setIndicators( array( $this->getTopIndicator() ) );
+			}
+
+			$wgOut->addHTML( $this->getIntroductoryText() );
+		}
 
 		parent::view();
 
 		// Copied from CategoryPage
 		$diff = $wgRequest->getVal( 'diff' );
-		$diffOnly = $wgRequest->getBool( 'diffonly', $wgUser->getGlobalPreference( 'diffonly' ) );
+		$diffOnly = $wgRequest->getBool( 'diffonly', $wgUser->getOption( 'diffonly' ) );
 		if ( !isset( $diff ) || !$diffOnly ) {
 			$this->showList();
 		}
+	}
+
+	private function findBasePropertyToRedirectFor( $label ) {
+
+		$property = new DIProperty(
+			PropertyRegistry::getInstance()->findPropertyIdByLabel( $label )
+		);
+
+		if ( $property->getLabel() !== '' && $label !== $property->getLabel() ) {
+			$outputPage = $this->getContext()->getOutput();
+			$outputPage->redirect( $property->getDiWikiPage()->getTitle()->getFullURL() );
+		}
+	}
+
+	/**
+	 * @since 2.4
+	 *
+	 * @return string
+	 */
+	protected function getTopIndicator() {
+		return '';
+	}
+
+	/**
+	 * @since 2.4
+	 *
+	 * @return string
+	 */
+	protected function getIntroductoryText() {
+		return '';
+	}
+
+	/**
+	 * @since 2.4
+	 */
+	protected function getNavigationLinks( $msgKey, array $diWikiPages, $default = 50 ) {
+		global $wgRequest;
+
+		$mwCollaboratorFactory = ApplicationFactory::getInstance()->newMwCollaboratorFactory();
+
+		$messageBuilder = $mwCollaboratorFactory->newMessageBuilder(
+			$this->getContext()->getLanguage()
+		);
+
+		$title = $this->mTitle;
+		$title->setFragment( '#SMWResults' ); // Make navigation point to the result list.
+
+		$resultCount = count( $diWikiPages );
+		$navigation = '';
+
+		if ( $resultCount > 0 ) {
+			$navigation = $messageBuilder->prevNextToText(
+				$title,
+				$wgRequest->getVal( 'limit', $default ),
+				$wgRequest->getVal( 'offset', '0' ),
+				array(),
+				$resultCount < $wgRequest->getVal( 'limit', $default )
+			);
+
+			$navigation = Html::rawElement('div', array(), $navigation );
+		}
+
+		return Html::rawElement(
+			'p',
+			array(),
+			Html::element( 'span', array(), wfMessage( $msgKey, $resultCount )->parse() ) . '<br>' .
+			$navigation
+		);
 	}
 
 	/**
@@ -74,17 +167,15 @@ abstract class SMWOrderedListPage extends Article {
 	protected function showList() {
 		global $wgOut, $wgRequest;
 
-		wfProfileIn( __METHOD__ . ' (SMW)' );
 
 		$this->from = $wgRequest->getVal( 'from', '' );
 		$this->until = $wgRequest->getVal( 'until', '' );
 
 		if ( $this->initParameters() ) {
-			$wgOut->addHTML( "<br id=\"smwfootbr\"/>\n" . $this->getHtml() );
+			$wgOut->addHTML( $this->getHtml() );
 			SMWOutputs::commitToOutputPage( $wgOut );
 		}
 
-		wfProfileOut( __METHOD__ . ' (SMW)' );
 	}
 
 	/**

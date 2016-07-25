@@ -7,10 +7,12 @@
  * Protect against register_globals vulnerabilities.
  * This line must be present before any global variable is referenced.
  */
-if ( !defined( 'MEDIAWIKI' ) ) die();
+if ( !defined( 'MEDIAWIKI' ) ) {
+	die();
+}
 
 global $smwgIP;
-include_once( $smwgIP . 'languages/SMW_Language.php' );
+include_once ( $smwgIP . 'languages/SMW_Language.php' );
 
 /**
  * Arabic language labels for important SMW labels (namespaces, datatypes,...).
@@ -24,7 +26,6 @@ class SMWLanguageAr extends SMWLanguage {
 
 	protected $m_DatatypeLabels = array(
 		'_wpg' => 'الصفحة', // name of page datatype
-		'_str' => 'سلسلة',  // name of the string type
 		'_txt' => 'نص',  // name of the text type
 		'_cod' => 'كود',  // name of the (source) code type
 		'_boo' => 'منطقي',  // name of the boolean type
@@ -38,13 +39,15 @@ class SMWLanguageAr extends SMWLanguage {
 		'_tel' => 'رقم الهاتف',  // name of the telephone (URI) type
 		'_rec' => 'تسجيل', // name of record data type
 		'_qty' => 'Quantity', // name of the number type with units of measurement //TODO: translate
+		'_mlt_rec' => 'Monolingual text',
 	);
 
 	protected $m_DatatypeAliases = array(
 		'URI'         => '_uri',
 		'Float'       => '_num',
 		'Integer'     => '_num',
-		'Enumeration' => '_str'
+		 /*LTR hint for text editors*/ 'سلسلة' => '_txt',  // old name of the string type
+		'Enumeration' => '_txt'
 	);
 
 	protected $m_SpecialProperties = array(
@@ -70,6 +73,18 @@ class SMWLanguageAr extends SMWLanguage {
 		'_ASKFO'=> 'Query format', // TODO: translate
 		'_ASKSI'=> 'Query size', // TODO: translate
 		'_ASKDE'=> 'Query depth', // TODO: translate
+		'_ASKDU'=> 'Query duration', // TODO: translate
+		'_MEDIA'=> 'Media type',
+		'_MIME' => 'MIME type',
+		'_ERRC' => 'Has processing error',
+		'_ERRT' => 'Has processing error text',
+		'_PREC'  => 'Display precision of',
+		'_LCODE' => 'Language code',
+		'_TEXT'  => 'Text',
+		'_PDESC' => 'Has property description',
+		'_PVAP'  => 'Allows pattern',
+		'_DTITLE' => 'Display title of',
+		'_PVUC' => 'Has uniqueness constraint',
 	);
 
 	protected $m_SpecialPropertyAliases = array(

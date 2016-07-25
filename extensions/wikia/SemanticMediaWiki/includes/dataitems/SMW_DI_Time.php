@@ -1,8 +1,7 @@
 <?php
-/**
- * @file
- * @ingroup SMWDataItems
- */
+
+use SMW\DataItemException;
+use SMW\JulianDay;
 
 /**
  * This class implements time data items.
@@ -12,7 +11,7 @@
  * Even when not specified, the data item always assumes default values for the
  * missing parts, so the item really captures one point in time, no intervals.
  * Times are always assumed to be in UTC.
- * 
+ *
  * "Y0K issue": Neither the Gregorian nor the Julian calendar assume a year 0,
  * i.e. the year 1 BC(E) was followed by 1 AD/CE. See
  * http://en.wikipedia.org/wiki/Year_zero
@@ -32,16 +31,22 @@ class SMWDITime extends SMWDataItem {
 	const CM_GREGORIAN = 1;
 	const CM_JULIAN = 2;
 
-	const PREC_Y    = 0;
-	const PREC_YM   = 1;
-	const PREC_YMD  = 2;
-	const PREC_YMDT = 3;
+	const PREC_Y    = SMW_PREC_Y;
+	const PREC_YM   = SMW_PREC_YM;
+	const PREC_YMD  = SMW_PREC_YMD;
+	const PREC_YMDT = SMW_PREC_YMDT;
+
+	/**
+	 * The year before which we do not accept anything but year numbers and
+	 * largely discourage calendar models.
+	 */
+	const PREHISTORY = -10000;
 
 	/**
 	 * Maximal number of days in a given month.
 	 * @var array
 	 */
-	protected static $m_daysofmonths = array ( 1 => 31, 2 => 29, 3 => 31, 4 => 30, 5 => 31, 6 => 30, 7 => 31, 8 => 31, 9 => 30, 10 => 31, 11 => 30, 12 => 31 );
+	protected static $m_daysofmonths = array( 1 => 31, 2 => 29, 3 => 31, 4 => 30, 5 => 31, 6 => 30, 7 => 31, 8 => 31, 9 => 30, 10 => 31, 11 => 30, 12 => 31 );
 
 	/**
 	 * Precision SMWDITime::PREC_Y, SMWDITime::PREC_YM,
@@ -86,11 +91,26 @@ class SMWDITime extends SMWDataItem {
 	protected $m_seconds;
 
 	/**
+	 * @var integer
+	 */
+	protected $timezone;
+
+	/**
+	 * @var integer|null
+	 */
+	protected $era = null;
+
+	/**
+	 * @var integer
+	 */
+	protected $julianDay = null;
+
+	/**
 	 * Create a time data item. All time components other than the year can
 	 * be false to indicate that they are not specified. This will affect
 	 * the internal precision setting. The missing values are initialised
 	 * to minimal values (0 or 1) for internal calculations.
-	 * 
+	 *
 	 * @param $calendarmodel integer one of SMWDITime::CM_GREGORIAN or SMWDITime::CM_JULIAN
 	 * @param $year integer number of the year (possibly negative)
 	 * @param $month mixed integer number or false
@@ -98,33 +118,45 @@ class SMWDITime extends SMWDataItem {
 	 * @param $hour mixed integer number or false
 	 * @param $minute mixed integer number or false
 	 * @param $second mixed integer number or false
+	 * @param integer|false $timezone
 	 *
 	 * @todo Implement more validation here.
 	 */
 	public function __construct( $calendarmodel, $year, $month = false, $day = false,
-	                             $hour = false, $minute = false, $second = false ) {
+	                             $hour = false, $minute = false, $second = false, $timezone = false ) {
+
 		if ( ( $calendarmodel != self::CM_GREGORIAN ) && ( $calendarmodel != self::CM_JULIAN ) ) {
-			throw new SMWDataItemException( "Unsupported calendar model constant \"$calendarmodel\"." );
+			throw new DataItemException( "Unsupported calendar model constant \"$calendarmodel\"." );
 		}
+
 		if ( $year == 0 ) {
-			throw new SMWDataItemException( "There is no year 0 in Gregorian and Julian calendars." );
+			throw new DataItemException( "There is no year 0 in Gregorian and Julian calendars." );
 		}
+
 		$this->m_model   = $calendarmodel;
 		$this->m_year    = intval( $year );
 		$this->m_month   = $month != false ? intval( $month ) : 1;
 		$this->m_day     = $day != false ? intval( $day ) : 1;
 		$this->m_hours   = $hour !== false ? intval( $hour ) : 0;
 		$this->m_minutes = $minute !== false ? intval( $minute ) : 0;
-		$this->m_seconds = $second !== false ? intval( $second ) : 0;
+		$this->m_seconds = $second !== false ? floatval( $second ) : 0;
+
+		$this->timezone = $timezone !== false ? intval( $timezone ) : 0;
+		$year = strval( $year );
+		$this->era      = $year{0} === '+' ? 1 : ( $year{0} === '-' ? -1 : 0 );
+
+
 		if ( ( $this->m_hours < 0 ) || ( $this->m_hours > 23 ) ||
 		     ( $this->m_minutes < 0 ) || ( $this->m_minutes > 59 ) ||
 		     ( $this->m_seconds < 0 ) || ( $this->m_seconds > 59 ) ||
 		     ( $this->m_month < 1 ) || ( $this->m_month > 12 ) ) {
-			throw new SMWDataItemException( "Part of the date is out of bounds." );
+			throw new DataItemException( "Part of the date is out of bounds." );
 		}
+
 		if ( $this->m_day > self::getDayNumberForMonth( $this->m_month, $this->m_year, $this->m_model ) ) {
-			throw new SMWDataItemException( "Month {$this->m_month} in year {$this->m_year} did not have {$this->m_day} days in this calendar model." );
+			throw new DataItemException( "Month {$this->m_month} in year {$this->m_year} did not have {$this->m_day} days in this calendar model." );
 		}
+
 		if ( $month === false ) {
 			$this->m_precision = self::PREC_Y;
 		} elseif ( $day === false ) {
@@ -136,40 +168,169 @@ class SMWDITime extends SMWDataItem {
 		}
 	}
 
+	/**
+	 * @since 1.6
+	 *
+	 * @return integer
+	 */
 	public function getDIType() {
 		return SMWDataItem::TYPE_TIME;
 	}
 
+	/**
+	 * @since 1.6
+	 *
+	 * @return integer
+	 */
 	public function getCalendarModel() {
 		return $this->m_model;
 	}
 
+	/**
+	 * @since 1.6
+	 *
+	 * @return integer
+	 */
 	public function getPrecision() {
 		return $this->m_precision;
 	}
 
+	/**
+	 * Indicates whether a user explicitly used an era marker even for a positive
+	 * year.
+	 *
+	 * - [-1] indicates BC(E)
+	 * - [0]/null indicates no era marker
+	 * - [1] indicates AD/CE was used
+	 *
+	 * @since 2.4
+	 *
+	 * @return integer
+	 */
+	public function getEra() {
+		return $this->era;
+	}
+
+	/**
+	 * @since 1.6
+	 *
+	 * @return integer
+	 */
 	public function getYear() {
 		return $this->m_year;
 	}
 
+	/**
+	 * @since 1.6
+	 *
+	 * @return integer
+	 */
 	public function getMonth() {
 		return $this->m_month;
 	}
 
+	/**
+	 * @since 1.6
+	 *
+	 * @return integer
+	 */
 	public function getDay() {
 		return $this->m_day;
 	}
 
+	/**
+	 * @since 1.6
+	 *
+	 * @return integer
+	 */
 	public function getHour() {
 		return $this->m_hours;
 	}
 
+	/**
+	 * @since 1.6
+	 *
+	 * @return integer
+	 */
 	public function getMinute() {
 		return $this->m_minutes;
 	}
 
+	/**
+	 * @since 1.6
+	 *
+	 * @return integer
+	 */
 	public function getSecond() {
 		return $this->m_seconds;
+	}
+
+	/**
+	 * @since 2.4
+	 *
+	 * @return string
+	 */
+	public function getCalendarModelLiteral() {
+
+		$literal = array(
+			self::CM_GREGORIAN => '',
+			self::CM_JULIAN    => 'JL'
+		);
+
+		return $literal[$this->m_model];
+	}
+
+	/**
+	 * @since 2.4
+	 *
+	 * @param DateTime $dateTime
+	 *
+	 * @return SMWDITime|false
+	 */
+	public static function newFromDateTime( DateTime $dateTime ) {
+
+		$calendarModel = self::CM_JULIAN;
+
+		$year = $dateTime->format( 'Y' );
+		$month = $dateTime->format( 'm' );
+		$day = $dateTime->format( 'd' );
+
+		if ( ( $year > 1582 ) ||
+			( ( $year == 1582 ) && ( $month > 10 ) ) ||
+			( ( $year == 1582 ) && ( $month == 10 ) && ( $day > 4 ) ) ) {
+			$calendarModel = self::CM_GREGORIAN;
+		}
+
+		return self::doUnserialize( $calendarModel . '/' . $dateTime->format( 'Y/m/d/H/i/s.u' ) );
+	}
+
+	/**
+	 * @since 2.4
+	 *
+	 * @return DateTime
+	 */
+	public function asDateTime() {
+
+		$year = str_pad( $this->m_year, 4, '0', STR_PAD_LEFT );
+
+		// Avoid "Failed to parse time string (-900-02-02 00:00:00) at
+		// position 7 (-): Double timezone specification"
+		if ( $this->m_year < 0 ) {
+			$year = '-' . str_pad( $this->m_year * -1, 4, '0', STR_PAD_LEFT );
+		}
+
+		// Avoid "Failed to parse time string (1300-11-02 12:03:25.888499949) at
+		// at position 11 (1): The timezone could not ..."
+		$seconds = number_format( str_pad( $this->m_seconds, 2, '0', STR_PAD_LEFT ), 7, '.', '' );
+
+		$time = $year . '-' .
+			str_pad( $this->m_month, 2, '0', STR_PAD_LEFT )     . '-' .
+			str_pad( $this->m_day, 2, '0', STR_PAD_LEFT )       . ' ' .
+			str_pad( $this->m_hours, 2, '0', STR_PAD_LEFT )     . ':' .
+			str_pad( $this->m_minutes, 2, '0', STR_PAD_LEFT )   . ':' .
+			$seconds;
+
+		return new DateTime( $time );
 	}
 
 	/**
@@ -189,7 +350,7 @@ class SMWDITime extends SMWDataItem {
 		}
 
 		return new self(
-			SMWDITime::CM_GREGORIAN,
+			self::CM_GREGORIAN,
 			substr( $timestamp, 0, 4 ),
 			substr( $timestamp, 4, 2 ),
 			substr( $timestamp, 6, 2 ),
@@ -200,10 +361,10 @@ class SMWDITime extends SMWDataItem {
 	}
 
 	/**
-	 * Returns a MW timestamp representatation of the value.
-	 * 
+	 * Returns a MW timestamp representation of the value.
+	 *
 	 * @since 1.6.2
-	 * 
+	 *
 	 * @param $outputtype
 	 *
 	 * @return mixed
@@ -258,22 +419,40 @@ class SMWDITime extends SMWDataItem {
 		}
 	}
 
+	/**
+	 * @since 1.6
+	 *
+	 * @return double
+	 */
 	public function getJD() {
-		return self::date2JD( $this->m_year, $this->m_month, $this->m_day, $this->m_model ) +
-		       self::time2JDoffset( $this->m_hours, $this->m_minutes, $this->m_seconds );
+
+		if ( $this->julianDay === null ) {
+			$this->julianDay = JulianDay::get( $this );
+		}
+
+		return $this->julianDay;
 	}
 
+	/**
+	 * @since 1.6
+	 *
+	 * @return string
+	 */
 	public function getSerialization() {
-		$result = strval( $this->m_model ) . '/' . strval( $this->m_year );
+		$result = strval( $this->m_model ) . '/' . ( $this->era > 0 ? '+' : '' ) . strval( $this->m_year );
+
 		if ( $this->m_precision >= self::PREC_YM ) {
 			$result .= '/' . strval( $this->m_month );
 		}
+
 		if ( $this->m_precision >= self::PREC_YMD ) {
 			$result .= '/' . strval( $this->m_day );
 		}
+
 		if ( $this->m_precision >= self::PREC_YMDT ) {
-			$result .= '/' . strval( $this->m_hours ) . '/' . strval( $this->m_minutes ) . '/' . strval( $this->m_seconds );
+			$result .= '/' . strval( $this->m_hours ) . '/' . strval( $this->m_minutes ) . '/' . strval( $this->m_seconds ) . '/' . strval( $this->timezone );
 		}
+
 		return $result;
 	}
 
@@ -283,146 +462,48 @@ class SMWDITime extends SMWDataItem {
 	 * @return SMWDITime
 	 */
 	public static function doUnserialize( $serialization ) {
-		$parts = explode( '/', $serialization, 7 );
+		$parts = explode( '/', $serialization, 8 );
 		$values = array();
-		
-		for ( $i = 0; $i < 7; $i += 1 ) {
+
+		if ( count( $parts ) <= 1 ) {
+			throw new DataItemException( "Unserialization failed: the string \"$serialization\" is no valid URI." );
+		}
+
+		for ( $i = 0; $i < 8; $i += 1 ) {
+
+			$values[$i] = false;
+
 			if ( $i < count( $parts ) ) {
-				if ( is_numeric( $parts[$i] ) ) {
-					$values[$i] = intval( $parts[$i] );
-				} else {
-					throw new SMWDataItemException( "Unserialization failed: the string \"$serialization\" is no valid datetime specification." );
+
+				if ( $parts[$i] !== '' && !is_numeric( $parts[$i] ) ) {
+					throw new DataItemException( "Unserialization failed: the string \"$serialization\" is no valid datetime specification." );
 				}
-			} else {
-				$values[$i] = false;
+
+				// 6 == seconds, we want to keep microseconds
+				$values[$i] = $i == 6 ? floatval( $parts[$i] ) : intval( $parts[$i] );
+
+				// Find out whether the input contained an explicit AD/CE era marker
+				if ( $i == 1 ) {
+					$values[$i] = ( $parts[1]{0} === '+' ? '+' : '' ) . $values[$i];
+				}
 			}
 		}
-		
-		if ( count( $parts ) <= 1 ) {
-			throw new SMWDataItemException( "Unserialization failed: the string \"$serialization\" is no valid URI." );
-		}
-		
-		return new self( $values[0], $values[1], $values[2], $values[3], $values[4], $values[5], $values[6] );
+
+		return new self( $values[0], $values[1], $values[2], $values[3], $values[4], $values[5], $values[6], $values[7] );
 	}
 
 	/**
 	 * Create a new time data item from the specified Julian Day number,
 	 * calendar model, presicion, and type ID.
+	 *
 	 * @param $jdvalue double Julian Day number
 	 * @param $calendarmodel integer either SMWDITime::CM_GREGORIAN or SMWDITime::CM_JULIAN
 	 * @param $precision integer one of SMWDITime::PREC_Y, SMWDITime::PREC_YM, SMWDITime::PREC_YMD, SMWDITime::PREC_YMDT
+	 *
 	 * @return SMWDITime object
 	 */
 	public static function newFromJD( $jdvalue, $calendarmodel, $precision ) {
-		list( $year, $month, $day ) = self::JD2Date( $jdvalue, $calendarmodel );
-		if ( $precision <= self::PREC_YM ) {
-			$day = false;
-			if ( $precision == self::PREC_Y ) {
-				$month = false;
-			}
-		}
-		if ( $precision == self::PREC_YMDT ) {
-			list( $hour, $minute, $second ) = self::JD2Time( $jdvalue );
-		} else {
-			$hour = $minute = $second = false;
-		}
-		return new SMWDITime( $calendarmodel, $year, $month, $day, $hour, $minute, $second );
-	}
-
-	/**
-	 * Compute the Julian Day number from a given date in the specified
-	 * calendar model. This calculation assumes that neither calendar
-	 * has a year 0.
-	 * @param $year integer representing the year
-	 * @param $month integer representing the month
-	 * @param $day integer representing the day
-	 * @param $calendarmodel integer either SMWDITime::CM_GREGORIAN or SMWDITime::CM_JULIAN
-	 * @return float Julian Day number
-	 */
-	static public function date2JD( $year, $month, $day, $calendarmodel ) {
-		$astroyear = ( $year < 1 ) ? ( $year + 1 ) : $year;
-		if ( $calendarmodel == self::CM_GREGORIAN ) {
-			$a = intval( ( 14 - $month ) / 12 );
-			$y = $astroyear + 4800 - $a;
-			$m = $month + 12 * $a - 3;
-			return $day + floor( ( 153 * $m + 2 ) / 5 ) + 365 * $y + floor( $y / 4 ) - floor( $y / 100 ) + floor( $y / 400 ) - 32045.5;
-		} else {
-			$y2 = ( $month <= 2 ) ? ( $astroyear - 1 ) : $astroyear;
-			$m2 = ( $month <= 2 ) ? ( $month + 12 ) : $month;
-			return floor( ( 365.25 * ( $y2 + 4716 ) ) ) + floor( ( 30.6001 * ( $m2 + 1 ) ) ) + $day - 1524.5;
-		}
-	}
-
-	/**
-	 * Compute the offset for the Julian Day number from a given time.
-	 * This computation is the same for all calendar models.
-	 * @param $hours integer representing the hour
-	 * @param $minutes integer representing the minutes
-	 * @param $seconds integer representing the seconds
-	 * @return float offset for a Julian Day number to get this time
-	 */
-	static public function time2JDoffset( $hours, $minutes, $seconds ) {
-		return ( $hours / 24 ) + ( $minutes / ( 60 * 24 ) ) + ( $seconds / ( 3600 * 24 ) );
-	}
-
-	/**
-	 * Convert a Julian Day number to a date in the given calendar model.
-	 * This calculation assumes that neither calendar has a year 0.
-	 * @note The algorithm may fail for some cases, in particular since the
-	 * conversion to Gregorian needs positive JD. If this happens, wrong
-	 * values will be returned. Avoid date conversions before 10000 BCE.
-	 * @param $jdvalue float number of Julian Days
-	 * @param $calendarmodel integer either SMWDITime::CM_GREGORIAN or SMWDITime::CM_JULIAN
-	 * @return array( yearnumber, monthnumber, daynumber )
-	 */
-	static public function JD2Date( $jdvalue, $calendarmodel ) {
-		if ( $calendarmodel == self::CM_GREGORIAN ) {
-			$jdvalue += 2921940; // add the days of 8000 years (this algorithm only works for positive JD)
-			$j = floor( $jdvalue + 0.5 ) + 32044;
-			$g = floor( $j / 146097 );
-			$dg = $j % 146097;
-			$c = floor( ( ( floor( $dg / 36524 ) + 1 ) * 3 ) / 4 );
-			$dc = $dg - $c * 36524;
-			$b = floor( $dc / 1461 );
-			$db = $dc % 1461;
-			$a = floor( ( ( floor( $db / 365 ) + 1 ) * 3 ) / 4 );
-			$da = $db - ( $a * 365 );
-			$y = $g * 400 + $c * 100 + $b * 4 + $a;
-			$m = floor( ( $da * 5 + 308 ) / 153 ) - 2;
-			$d = $da - floor( ( ( $m + 4 ) * 153 ) / 5 ) + 122;
-
-			$year  = $y - 4800 + floor( ( $m + 2 ) / 12 ) - 8000;
-			$month = ( ( $m + 2 ) % 12 + 1 );
-			$day   = $d + 1;
-		} else {
-			$b = floor( $jdvalue + 0.5 ) + 1524;
-			$c = floor( ( $b - 122.1 ) / 365.25 );
-			$d = floor( 365.25 * $c );
-			$e = floor( ( $b - $d ) / 30.6001 );
-
-			$month = floor( ( $e < 14 ) ? ( $e - 1 ) : ( $e - 13 ) );
-			$year = floor( ( $month > 2 ) ? ( $c - 4716 ) : ( $c - 4715 ) );
-			$day   = ( $b - $d - floor( 30.6001 * $e ) );
-		}
-		$year  = ( $year < 1 ) ? ( $year - 1 ) : $year; // correct "year 0" to -1 (= 1 BC(E))
-		return array( $year, $month, $day );
-	}
-
-	/**
-	 * Extract the time from a Julian Day number and return it as a string.
-	 * This conversion is the same for all calendar models.
-	 * @param $jdvalue float number of Julian Days
-	 * @return array( hours, minutes, seconds )
-	 */
-	static public function JD2Time( $jdvalue ) {
-		$wjd = $jdvalue + 0.5;
-		$fraction = $wjd - floor( $wjd );
-		$time = round( $fraction * 3600 * 24 );
-		$hours = floor( $time / 3600 );
-		$time = $time - $hours * 3600;
-		$minutes = floor( $time / 60 );
-		$seconds = floor( $time - $minutes * 60 );
-		return array( $hours, $minutes, $seconds );
+		return JulianDay::newDiFromJD( $jdvalue, $calendarmodel, $precision );
 	}
 
 	/**
@@ -461,10 +542,11 @@ class SMWDITime extends SMWDataItem {
 		}
 	}
 
-	public function equals( $di ) {
+	public function equals( SMWDataItem $di ) {
 		if ( $di->getDIType() !== SMWDataItem::TYPE_TIME ) {
 			return false;
 		}
+
 		return $di->getSortKey() === $this->getSortKey();
 	}
 }

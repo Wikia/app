@@ -1,4 +1,5 @@
 <?php
+use SMW\Query\PrintRequest;
 
 /**
  * Helper class to generate HTML lists of wiki pages, with support for paged
@@ -9,10 +10,9 @@
  * different places where similar lists are used.
  *
  * Some code adapted from CategoryPage.php
- * 
- * @file SMW_PageLister.php 
+ *
  * @ingroup SMW
- * 
+ *
  * @author Nikolas Iwan
  * @author Markus Krötzsch
  * @author Jeroen De Dauw
@@ -63,7 +63,7 @@ class SMWPageLister {
 
 		if ( !is_null( $this->mUntil ) && $this->mUntil !== '' ) {
 			if ( $beyondLimit ) {
-				$first = smwfGetStore()->getWikiPageSortKey( $this->mDiWikiPages[1] );
+				$first = \SMW\StoreFactory::getStore()->getWikiPageSortKey( $this->mDiWikiPages[1] );
 			} else {
 				$first = '';
 			}
@@ -73,7 +73,7 @@ class SMWPageLister {
 			$first = $this->mFrom;
 
 			if ( $beyondLimit ) {
-				$last = smwfGetStore()->getWikiPageSortKey( $this->mDiWikiPages[$resultCount - 1] );
+				$last = \SMW\StoreFactory::getStore()->getWikiPageSortKey( $this->mDiWikiPages[$resultCount - 1] );
 			} else {
 				$last = '';
 			}
@@ -96,7 +96,7 @@ class SMWPageLister {
 
 	/**
 	 * Format an HTML link with the given text and parameters.
-	 * 
+	 *
 	 * @return string
 	 */
 	protected function makeSelfLink( Title $title, $linkText, array $parameters ) {
@@ -160,7 +160,7 @@ class SMWPageLister {
 			$order = 'ASC';
 		}
 
-		$queryDescription->addPrintRequest( new SMWPrintRequest( SMWPrintRequest::PRINT_THIS, '' ) );
+		$queryDescription->addPrintRequest( new PrintRequest( PrintRequest::PRINT_THIS, '' ) );
 
 		$query = new SMWQuery( $queryDescription );
 		$query->sortkeys[''] = $order;
@@ -199,17 +199,17 @@ class SMWPageLister {
 	/**
 	 * Format a list of SMWDIWikiPage objects chunked by letter in a three-column
 	 * list, ordered vertically.
-	 * 
+	 *
 	 * @param $start integer
 	 * @param $end integer
 	 * @param $diWikiPages array of SMWDIWikiPage
 	 * @param $diProperty SMWDIProperty that the wikipages are values of, or null
-	 * 
+	 *
 	 * @return string
 	 */
 	public static function getColumnList( $start, $end, array $diWikiPages, $diProperty ) {
 		global $wgContLang;
-		
+
 		// Divide list into three equal chunks.
 		$chunk = (int) ( ( $end - $start + 1 ) / 3 );
 
@@ -226,10 +226,10 @@ class SMWPageLister {
 			$atColumnTop = true;
 
 			// output all diWikiPages
-			for ( $index = $startChunk ; $index < $endChunk && $index < $end; ++$index ) {
-				$dataValue = SMWDataValueFactory::newDataItemValue( $diWikiPages[$index], $diProperty );
+			for ( $index = $startChunk; $index < $endChunk && $index < $end; ++$index ) {
+				$dataValue = \SMW\DataValueFactory::getInstance()->newDataValueByItem( $diWikiPages[$index], $diProperty );
 				// check for change of starting letter or begining of chunk
-				$sortkey = smwfGetStore()->getWikiPageSortKey( $diWikiPages[$index] );
+				$sortkey = \SMW\StoreFactory::getStore()->getWikiPageSortKey( $diWikiPages[$index] );
 				$startChar = $wgContLang->convert( $wgContLang->firstChar( $sortkey ) );
 
 				if ( ( $index == $startChunk ) ||
@@ -268,27 +268,27 @@ class SMWPageLister {
 
 	/**
 	 * Format a list of diWikiPages chunked by letter in a bullet list.
-	 * 
+	 *
 	 * @param $start integer
 	 * @param $end integer
 	 * @param $diWikiPages array of SMWDataItem
 	 * @param $diProperty SMWDIProperty that the wikipages are values of, or null
-	 * 
+	 *
 	 * @return string
 	 */
 	public static function getShortList( $start, $end, array $diWikiPages, $diProperty ) {
 		global $wgContLang;
 
-		$startDv = SMWDataValueFactory::newDataItemValue( $diWikiPages[$start], $diProperty );
-		$sortkey = smwfGetStore()->getWikiPageSortKey( $diWikiPages[$start] );
+		$startDv = \SMW\DataValueFactory::getInstance()->newDataValueByItem( $diWikiPages[$start], $diProperty );
+		$sortkey = \SMW\StoreFactory::getStore()->getWikiPageSortKey( $diWikiPages[$start] );
 		$startChar = $wgContLang->convert( $wgContLang->firstChar( $sortkey ) );
 		$r = '<h3>' . htmlspecialchars( $startChar ) . "</h3>\n" .
 		     '<ul><li>' . $startDv->getLongHTMLText( smwfGetLinker() ) . '</li>';
 
 		$prevStartChar = $startChar;
 		for ( $index = $start + 1; $index < $end; $index++ ) {
-			$dataValue = SMWDataValueFactory::newDataItemValue( $diWikiPages[$index], $diProperty );
-			$sortkey = smwfGetStore()->getWikiPageSortKey( $diWikiPages[$index] );
+			$dataValue = \SMW\DataValueFactory::getInstance()->newDataValueByItem( $diWikiPages[$index], $diProperty );
+			$sortkey = \SMW\StoreFactory::getStore()->getWikiPageSortKey( $diWikiPages[$index] );
 			$startChar = $wgContLang->convert( $wgContLang->firstChar( $sortkey ) );
 
 			if ( $startChar != $prevStartChar ) {

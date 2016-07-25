@@ -37,6 +37,14 @@ abstract class SMWLanguage {
 	/// each case, and the constants define the obvious order (e.g. SMW_YDM means "first Year,
 	/// then Day, then Month). Unlisted combinations will not be accepted at all.
 	protected $m_dateformats = array( array( SMW_Y ), array( SMW_MY, SMW_YM ), array( SMW_DMY, SMW_MDY, SMW_YMD, SMW_YDM ) );
+
+	protected $preferredDateFormatsByPrecision = array(
+		'SMW_PREC_Y'    => 'Y',
+		'SMW_PREC_YM'   => 'F Y',
+		'SMW_PREC_YMD'  => 'F j, Y',
+		'SMW_PREC_YMDT' => 'H:i:s, j F Y'
+	);
+
 	/// Should English default aliases be used in this language?
 	protected $m_useEnDefaultAliases = true;
 	/// Default English aliases for namespaces (typically used in all languages)
@@ -52,7 +60,7 @@ abstract class SMWLanguage {
 	static protected $enDatatypeAliases = array(
 		'URL'                   => '_uri',
 		'Page'                  => '_wpg',
-		'String'                => '_str',
+		'String'                => '_txt',
 		'Text'                  => '_txt',
 		'Code'                  => '_cod',
 		'Boolean'               => '_boo',
@@ -66,7 +74,8 @@ abstract class SMWLanguage {
 		'Email'                 => '_ema',
 		'Annotation URI'        => '_anu',
 		'Telephone number'      => '_tel',
-		'Record'                => '_rec'
+		'Record'                => '_rec',
+		'Monolingual text'      => '_mlt_rec', // need the _rec to allow for special treatment
 	);
 	/// Default English aliases for special property names (typically used in all languages)
 	static protected $enPropertyAliases = array(
@@ -83,21 +92,47 @@ abstract class SMWLanguage {
 		'Creation date'     => '_CDAT',
 		'Is a new page'     => '_NEWP',
 		'Last editor is'    => '_LEDT',
-		'Has improper value for' => '_ERRP',
+		'Media type'        => '_MEDIA',
+		'MIME type'         => '_MIME',
+		'Has improper value for'    => '_ERRP',
+		'Has processing error'      => '_ERRC',
+		'Has processing error text' => '_ERRT',
 		'Has fields'        => '_LIST',
 		'Has subobject'     => '_SOBJ',
 		'Has query'         => '_ASK',
+		'Query string'      => '_ASKST',
+		'Query format'      => '_ASKFO',
+		'Query size'        => '_ASKSI',
+		'Query depth'       => '_ASKDE',
+		'Query duration'    => '_ASKDU',
 		'Has query string'  => '_ASKST',
 		'Has query format'  => '_ASKFO',
 		'Has query size'    => '_ASKSI',
 		'Has query depth'   => '_ASKDE',
+		'Has query duration' => '_ASKDU',
+		'Has media type'     => '_MEDIA',
+		'Has mime type'      => '_MIME',
+		'Mime type'      => '_MIME',
+		'Display precision of'  => '_PREC',
+		'Language code'  => '_LCODE',
+		'Text'           => '_TEXT',
+		'Has property description'     => '_PDESC',
+		'Allows pattern' => '_PVAP',
+		'Display title of'     => '_DTITLE',
+		'Display unit' => '_UNIT',
+		'Display precision' => '_PREC',
+		'Property description'     => '_PDESC',
+		'Has allows pattern' => '_PVAP',
+		'Has display title of'     => '_DTITLE',
+		'Has uniqueness constraint'     => '_PVUC',
+		'Uniqueness constraint'     => '_PVUC',
 	);
 
 	public function __construct() {
 		// `$this->m_SpecialProperties' is set in descendants.
 		// Let us initialize reverse mapping.
 		foreach ( $this->m_SpecialProperties as $propId => $propName ) {
-			$this->m_SpecialPropertyIds[ $propName ] = $propId;
+			$this->m_SpecialPropertyIds[$propName] = $propId;
 		}
 	}
 
@@ -123,7 +158,7 @@ abstract class SMWLanguage {
 
 		$namespaceAliases = $this->m_NamespaceAliases;
 		if ( $this->m_useEnDefaultAliases ) {
-			$namespaceAliases = $namespaceAliases + SMWLanguage::$enNamespaceAliases;
+			$namespaceAliases = $namespaceAliases + self::$enNamespaceAliases;
 		}
 
 		if ( !$smwgHistoricTypeNamespace ) {
@@ -147,13 +182,17 @@ abstract class SMWLanguage {
 		return $this->m_DatatypeLabels;
 	}
 
+	function getCanonicalDatatypeLabels() {
+		return self::$enDatatypeAliases;
+	}
+
 	/**
 	 * Return an array that maps aliases to internal type ids. All ids used here
 	 * should also have a primary label defined in m_DatatypeLabels.
 	 */
 	function getDatatypeAliases() {
 		return $this->m_useEnDefaultAliases ?
-		       $this->m_DatatypeAliases + SMWLanguage::$enDatatypeAliases :
+		       $this->m_DatatypeAliases + self::$enDatatypeAliases :
 		       $this->m_DatatypeAliases;
 	}
 
@@ -164,13 +203,19 @@ abstract class SMWLanguage {
 		return $this->m_SpecialProperties;
 	}
 
+	function getCanonicalPropertyAliases() {
+		return self::$enPropertyAliases;
+	}
+
+	function getCanonicalPropertyLabels() {
+		return self::$enPropertyAliases;
+	}
+
 	/**
 	 * Aliases for predefined properties, if any.
 	 */
 	function getPropertyAliases() {
-		return $this->m_useEnDefaultAliases ?
-		       $this->m_SpecialPropertyAliases + SMWLanguage::$enPropertyAliases :
-		       $this->m_SpecialPropertyAliases;
+		return $this->m_SpecialPropertyAliases;
 	}
 
 	/**
@@ -185,8 +230,8 @@ abstract class SMWLanguage {
 		if ( isset( $this->m_SpecialPropertyAliases[$propName] ) ) {
 			return $this->m_SpecialPropertyAliases[$propName];
 		}
-		if ( $this->m_useEnDefaultAliases && isset( SMWLanguage::$enPropertyAliases[$propName] ) ) {
-			return SMWLanguage::$enPropertyAliases[$propName];
+		if ( $this->m_useEnDefaultAliases && isset( self::$enPropertyAliases[$propName] ) ) {
+			return self::$enPropertyAliases[$propName];
 		}
 		return null;
 	}
@@ -196,6 +241,10 @@ abstract class SMWLanguage {
 	 */
 	function getDateFormats() {
 		return $this->m_dateformats;
+	}
+
+	function getPreferredDateFormats() {
+		return $this->preferredDateFormatsByPrecision;
 	}
 
 	/**

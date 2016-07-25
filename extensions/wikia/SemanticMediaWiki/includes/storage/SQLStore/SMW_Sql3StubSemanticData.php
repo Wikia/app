@@ -1,9 +1,9 @@
 <?php
-/**
- * @file
- * @ingroup SMWStore
- * @since 1.8
- */
+
+use SMW\DataTypeRegistry;
+use SMW\DIProperty;
+use SMW\DIWikiPage;
+use SMW\StoreFactory;
 
 /**
  * This class provides a subclass of SMWSemanticData that can store
@@ -50,6 +50,13 @@ class SMWSql3StubSemanticData extends SMWSemanticData {
 	protected $mSubject;
 
 	/**
+	 * Whether SubSemanticData have been requested and added
+	 *
+	 * @var boolean
+	 */
+	private $subSemanticDataInitialized = false;
+
+	/**
 	 * Constructor.
 	 *
 	 * @since 1.8
@@ -61,6 +68,26 @@ class SMWSql3StubSemanticData extends SMWSemanticData {
 	public function __construct( SMWDIWikiPage $subject, SMWSQLStore3 $store, $noDuplicates = true ) {
 		$this->store = $store;
 		parent::__construct( $subject, $noDuplicates );
+	}
+
+	/**
+	 * Required to support php-serialization
+	 *
+	 * @since 2.3
+	 *
+	 * @return array
+	 */
+	public function __sleep() {
+		return array( 'mSubject', 'mPropVals', 'mProperties', 'subSemanticData', 'mStubPropVals' );
+	}
+
+	/**
+	 * @since 2.3
+	 *
+	 * @return array
+	 */
+	public function __wakeup() {
+		$this->store = StoreFactory::getStore( 'SMW\SQLStore\SQLStore' );
 	}
 
 	/**
@@ -104,11 +131,11 @@ class SMWSql3StubSemanticData extends SMWSemanticData {
 	 *
 	 * @since 1.8
 	 *
-	 * @param $property SMWDIProperty
+	 * @param DIProperty $property
 	 *
 	 * @return array of SMWDataItem
 	 */
-	public function getPropertyValues( SMWDIProperty $property ) {
+	public function getPropertyValues( DIProperty $property ) {
 		if ( $property->isInverse() ) { // we never have any data for inverses
 			return array();
 		}
@@ -117,7 +144,7 @@ class SMWSql3StubSemanticData extends SMWSemanticData {
 			// Not catching exception here; the
 			$this->unstubProperty( $property->getKey(), $property );
 			$propertyTypeId = $property->findPropertyTypeID();
-			$propertyDiId = SMWDataValueFactory::getDataItemId( $propertyTypeId );
+			$propertyDiId = DataTypeRegistry::getInstance()->getDataItemId( $propertyTypeId );
 
 			foreach ( $this->mStubPropVals[$property->getKey()] as $dbkeys ) {
 				try {
@@ -141,6 +168,52 @@ class SMWSql3StubSemanticData extends SMWSemanticData {
 	}
 
 	/**
+	 * @see SemanticData::getSubSemanticData
+	 *
+	 * @note SubSemanticData are added only on request to avoid unnecessary DB
+	 * transactions
+	 *
+	 * @since 2.0
+	 */
+	public function getSubSemanticData() {
+
+		if ( $this->subSemanticDataInitialized ) {
+			return parent::getSubSemanticData();
+		}
+
+		$this->subSemanticDataInitialized = true;
+
+		foreach ( $this->getProperties() as $property ) {
+
+			// #619 Do not resolve subobjects for redirects
+			if ( !DataTypeRegistry::getInstance()->isSubDataType( $property->findPropertyTypeID() ) || $this->isRedirect() ) {
+				continue;
+			}
+
+			$this->addSubSemanticDataToInternalCache( $property );
+		}
+
+		return parent::getSubSemanticData();
+	}
+
+	/**
+	 * @see SemanticData::hasSubSemanticData
+	 *
+	 * @note This method will initialize SubSemanticData first if it wasn't done
+	 * yet to ensure data consistency
+	 *
+	 * @since 2.0
+	 */
+	public function hasSubSemanticData( $subobjectName = null ) {
+
+		if ( !$this->subSemanticDataInitialized ) {
+			$this->getSubSemanticData();
+		}
+
+		return parent::hasSubSemanticData( $subobjectName );
+	}
+
+	/**
 	 * Remove a value for a property identified by its SMWDataItem object.
 	 * This method removes a property-value specified by the property and
 	 * dataitem. If there are no more property-values for this property it
@@ -156,7 +229,7 @@ class SMWSql3StubSemanticData extends SMWSemanticData {
 	 *
 	 * @since 1.8
 	 */
-	public function removePropertyObjectValue( SMWDIProperty $property, SMWDataItem $dataItem ) {
+	public function removePropertyObjectValue( DIProperty $property, SMWDataItem $dataItem ) {
 		$this->unstubProperties();
 		$this->getPropertyValues( $property );
 		parent::removePropertyObjectValue($property, $dataItem);
@@ -246,7 +319,7 @@ class SMWSql3StubSemanticData extends SMWSemanticData {
 	protected function unstubProperty( $propertyKey, $diProperty = null ) {
 		if ( !array_key_exists( $propertyKey, $this->mProperties ) ) {
 			if ( is_null( $diProperty ) ) {
-				$diProperty = new SMWDIProperty( $propertyKey, false );
+				$diProperty = new DIProperty( $propertyKey, false );
 			}
 
 			$this->mProperties[$propertyKey] = $diProperty;
@@ -258,6 +331,19 @@ class SMWSql3StubSemanticData extends SMWSemanticData {
 				}
 			} else {
 				$this->mHasVisibleProps = true;
+			}
+		}
+	}
+
+	protected function isRedirect() {
+		return $this->store->getObjectIds()->checkIsRedirect( $this->mSubject );
+	}
+
+	private function addSubSemanticDataToInternalCache( DIProperty $property ) {
+
+		foreach ( $this->getPropertyValues( $property ) as $value ) {
+			if ( $value instanceof DIWikiPage && $value->getSubobjectName() !== '' && !$this->hasSubSemanticData( $value->getSubobjectName() ) ) {
+				$this->addSubSemanticData( $this->store->getSemanticData( $value ) );
 			}
 		}
 	}
