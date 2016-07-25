@@ -40,7 +40,7 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 
 		$this->action = $this->parseAction();
 		$this->order = $this->getOrderingMethod();
-		$this->ts = $this->getContext()->getRequest()->getVal( 'ts' );
+		$this->ts = $this->request->getVal( 'ts' );
 
 		$this->checkUserPermissions();
 		$this->checkRedirect();
@@ -221,19 +221,18 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 	}
 
 	private function getOrderingMethod() {
-		if ($this->wg->user->isAllowed('imagereviewcontrols')) {
-			$order = (int)$this->getVal('sort', -1);
-			if ($order >= 0) {
-				$this->app->wg->User->setGlobalPreference('imageReviewSort', $order);
+		if ($this->wg->user->isAllowed( 'imagereviewcontrols' )) {
+			$preferedOrder = (int)$this->app->wg->User->getGlobalPreference( 'imageReviewSort' );
+			$order = $this->request->getInt( 'sort', $preferedOrder );
+
+			if ( $order != $preferedOrder ) {
+				$this->app->wg->User->setGlobalPreference( 'imageReviewSort', $order );
 				$this->app->wg->User->saveSettings();
 			}
 
-			$order = $this->app->wg->User->getGlobalPreference('imageReviewSort');
-			return $order;
-		} else {
-			$order = -1;
 			return $order;
 		}
+		return -1;
 	}
 
 	private function parseAction() {
@@ -256,12 +255,13 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 			$this->specialPage->displayRestrictionError( 'rejectedimagereview' );
 			return false;
 		}
+
+		return true;
 	}
 
 	private function checkRedirect() {
 		if ( $this->action == 'stats' ) {
 			$this->forward( get_class( $this ), 'stats' );
-			return true;
 		} elseif ( $this->action == 'csvstats' ) {
 			$this->forward( get_class( $this ), 'csvStats' );
 		}
