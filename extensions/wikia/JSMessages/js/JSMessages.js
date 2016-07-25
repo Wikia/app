@@ -103,7 +103,7 @@
 		var jsm = JSMessages(mediaWiki, jQuery, context);
 		jQuery.extend(jQuery, {
 			msg: function () {
-				return jsm.apply(this, arguments).escaped();
+				return jsm.apply(this, arguments).text();
 			},
 			getMessages: jsm.get,
 			getMessagesForContent: jsm.getForContent
