@@ -14,15 +14,15 @@ require_once( __DIR__ . '/../../../../../../../maintenance/Maintenance.php' );
 
 class CleanupMigratedAttributes extends Maintenance {
 
-    private $force;
+    private $dryRun;
 
     public function __construct() {
         parent::__construct();
-        $this->addOption( 'force', "Actually remove attributes from sharedDB. Script defaults to dry-run" );
+        $this->addOption( 'dryRun', "Actually remove attributes from sharedDB. Script defaults to dry-run" );
     }
 
     public function execute() {
-        $this->force = $this->hasOption( 'force' );
+        $this->dryRun = $this->getOption( 'dryRun' ) != "false";
         $this->printAttrsToBeDeleted();
         $this->deleteAttributes();
         $this->printSuccess();
@@ -33,16 +33,17 @@ class CleanupMigratedAttributes extends Maintenance {
         $this->output( "Preparing to delete following attributes from wikicities.user_properties:\n\n");
         $this->output( implode( $wgPublicUserAttributes, "\n" ) );
         $this->output( "\n\n" );
-        if ( $this->force ) {
+        if ( !$this->dryRun ) {
             $this->output( "NOT DRY RUN, ATTRIBUTES WILL BE DELETED\n" );
         }
+        $this->output( "Deletion will begin in 5 seconds...\n" );
         sleep(5);
     }
     
     private function deleteAttributes() {
         global $wgExternalSharedDB, $wgPublicAttributes;
 
-        if ( !$this->force ) {
+        if ( $this->dryRun ) {
             return;
         }
 
