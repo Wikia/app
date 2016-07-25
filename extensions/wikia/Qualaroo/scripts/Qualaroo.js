@@ -31,7 +31,8 @@
 		'visitorType': window.visitorType,
 		'isPowerUserAdmin': !!window.wikiaIsPowerUserAdmin,
 		'isPowerUserFrequent': !!window.wikiaIsPowerUserFrequent,
-		'isPowerUserLifetime': !!window.wikiaIsPowerUserLifetime
+		'isPowerUserLifetime': !!window.wikiaIsPowerUserLifetime,
+		'isLoggedIn': !!window.wgUserName
 	}]);
 
 	//This approach is hacky and we should use eventHandler provided by Qualaroo.
