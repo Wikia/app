@@ -125,8 +125,9 @@ class ApiVisualEditor extends ApiBase {
 			}
 			\Wikia\Logger\WikiaLogger::instance()->error( 'ApiVisualEditor_requestParsoid', [
 				'method' => $method,
-				'error_messages' => json_encode($errors),
-				'status_code' => $req->getStatus()
+				'error' => 'parsoidserver-' . $code,
+				'errors' => json_encode($errors),
+			    'status_code' => $req->getStatus()
 			] );
 			$this->dieUsage( "$message: " . $req->getContent(), 'parsoidserver-' . $code );
 		}
