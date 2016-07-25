@@ -2,7 +2,7 @@
 
 class DesignSystemGlobalFooterModel extends WikiaModel {
 	private $hrefs = [
-		'en' => [
+		'default' => [
 			'fan-communities' => 'http://www.wikia.com/explore',
 			'about' => 'http://www.wikia.com/about',
 			'careers' => 'https://careers.wikia.com',
@@ -21,6 +21,18 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 			'help' => 'http://community.wikia.com/wiki/Help:Contents',
 			'media-kit' => 'http://www.wikia.com/mediakit',
 			'media-kit-contact' => 'http://www.wikia.com/mediakit#contacts',
+			'social-facebook' => 'https://www.facebook.com/wikia',
+			'social-twitter' => 'https://twitter.com/wikia',
+			'social-reddit' => null,
+			'social-youtube' => 'https://www.youtube.com/user/wikia',
+			'social-instagram' => null
+		],
+		'en' => [
+			'social-facebook' => 'https://www.facebook.com/getfandom',
+			'social-twitter' => 'https://twitter.com/getfandom',
+			'social-reddit' => 'https://www.reddit.com/r/wikia',
+			'social-youtube' => 'https://www.youtube.com/channel/UC988qTQImTjO7lUdPfYabgQ',
+			'social-instagram' => 'https://www.instagram.com/getfandom/'
 		],
 		'fr' => [
 			'fan-communities' => 'http://fr.wikia.com/Wikia',
@@ -34,6 +46,9 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 			'create-new-wiki' => 'http://www.wikia.com/Special:CreateNewWiki?uselang=fr',
 			'wam' => 'http://fr.wikia.com/WAM?langCode=fr',
 			'help' => 'http://communaute.wikia.com/wiki/Aide:Contenu',
+			'social-facebook' => 'https://www.facebook.com/wikia.fr',
+			'social-twitter' => 'https://twitter.com/wikia_fr',
+			'social-youtube' => 'https://www.youtube.com/channel/UClzAEgYaMs0SyDnXS4cyefg',
 		],
 		'es' => [
 			'fan-communities' => 'http://es.wikia.com/Wikia',
@@ -49,6 +64,10 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 			'wam' => 'http://es.wikia.com/WAM?langCode=es',
 			'help' => 'http://comunidad.wikia.com/wiki/Ayuda:Contenidos',
 			'media-kit' => 'http://www.wikia.com/mediakit?uselang=es',
+			'social-facebook' => 'https://www.facebook.com/wikia.es',
+			'social-twitter' => 'https://twitter.com/wikia_es',
+			'social-youtube' => 'https://www.youtube.com/channel/UCjwNzRwdDqpmELNZsJv3PSg',
+			'social-instagram' => 'https://www.instagram.com/wikiaes/'
 		],
 		'de' => [
 			'fan-communities' => 'http://de.wikia.com/Wikia',
@@ -64,6 +83,10 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 			'wam' => 'http://de.wikia.com/WAM?langCode=de',
 			'help' => 'http://de.community.wikia.com/wiki/Hilfe:%C3%9Cbersicht',
 			'media-kit' => 'http://www.wikia.com/mediakit?uselang=de',
+			'social-facebook' => 'https://www.facebook.com/wikia.de',
+			'social-twitter' => 'https://twitter.com/wikia_de',
+			'social-youtube' => 'https://www.youtube.com/user/WikiaDE',
+			'social-instagram' => 'https://www.instagram.com/wikia_de/'
 		],
 		'ja' => [
 			'fan-communities' => 'http://ja.wikia.com/',
@@ -78,6 +101,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 			'wam' => 'http://ja.wikia.com/WAM?langCode=ja',
 			'help' => 'http://ja.community.wikia.com/wiki/%E3%83%98%E3%83%AB%E3%83%97:%E3%82%B3%E3%83%B3%E3%83%86%E3%83%B3%E3%83%84',
 			'media-kit' => 'http://www.wikia.com/mediakit?uselang=ja',
+			'social-twitter' => 'https://twitter.com/wikiajapan',
 		],
 		'pt-br' => [
 			'fan-communities' => 'http://pt-br.wikia.com/wiki/Wikia_em_Portugu%C3%AAs',
@@ -90,6 +114,9 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 			'create-new-wiki' => 'http://www.wikia.com/Special:CreateNewWiki?uselang=pt-br',
 			'wam' => 'http://www.wikia.com/WAM?langCode=pt-br',
 			'help' => 'http://comunidade.wikia.com/wiki/Ajuda:Conte%C3%BAdos',
+			'social-facebook' => 'https://www.facebook.com/WikiaemPT',
+			'social-twitter' => 'https://twitter.com/ComunidadeWikia',
+			'social-youtube' => 'https://www.youtube.com/channel/UCi8B4eUGFLU7SjHWFIjt3WQ',
 		],
 		'ru' => [
 			'fan-communities' => 'http://ru.wikia.com/wiki/%D0%92%D0%B8%D0%BA%D0%B8%D1%8F_%D0%BD%D0%B0_%D1%80%D1%83%D1%81%D1%81%D0%BA%D0%BE%D0%BC',
@@ -102,6 +129,8 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 			'create-new-wiki' => 'http://www.wikia.com/Special:CreateNewWiki?uselang=ru',
 			'wam' => 'http://www.wikia.com/WAM?langCode=ru',
 			'help' => 'http://ru.community.wikia.com/wiki/%D0%A1%D0%BF%D1%80%D0%B0%D0%B2%D0%BA%D0%B0:%D0%A1%D0%BE%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%BD%D0%B8%D0%B5',
+			'social-facebook' => 'https://www.facebook.com/wikia.ru',
+			'social-twitter' => 'https://twitter.com/wikia_ru',
 		],
 		'zh' => [
 			'fan-communities' => 'http://zh.wikia.com/wiki/Wikia%E4%B8%AD%E6%96%87',
@@ -111,6 +140,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 			'create-new-wiki' => 'http://www.wikia.com/Special:CreateNewWiki?uselang=zh',
 			'wam' => 'http://www.wikia.com/WAM?langCode=zh',
 			'help' => 'http://zh.community.wikia.com/wiki/Help:%E5%86%85%E5%AE%B9',
+			'social-facebook' => 'https://www.facebook.com/ChineseWikia',
 		],
 		'zh-tw' => [
 			'fan-communities' => 'http://zh-tw.wikia.com/wiki/Wikia%E4%B8%AD%E6%96%87',
@@ -122,6 +152,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 			'create-new-wiki' => 'http://www.wikia.com/Special:CreateNewWiki?uselang=zh-tw',
 			'wam' => 'http://www.wikia.com/WAM?langCode=zh-tw',
 			'help' => 'http://zh.community.wikia.com/wiki/Help:%E5%86%85%E5%AE%B9',
+			'social-facebook' => 'https://www.facebook.com/ChineseWikia',
 		],
 		'pl' => [
 			'fan-communities' => 'http://pl.wikia.com/Wikia',
@@ -135,6 +166,8 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 			'create-new-wiki' => 'http://www.wikia.com/Special:CreateNewWiki?uselang=pl',
 			'wam' => 'http://pl.wikia.com/WAM?langCode=pl',
 			'help' => 'http://spolecznosc.wikia.com/wiki/Pomoc:Zawarto%C5%9B%C4%87',
+			'social-facebook' => 'https://www.facebook.com/wikiapl',
+			'social-twitter' => 'https://twitter.com/wikia_pl',
 		],
 		'it' => [
 			'fan-communities' => 'http://it.community.wikia.com/wiki/Wiki_della_Community',
@@ -147,10 +180,10 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 			'create-new-wiki' => 'http://www.wikia.com/Special:CreateNewWiki?uselang=it',
 			'wam' => 'http://www.wikia.com/WAM?langCode=it',
 			'help' => 'http://it.community.wikia.com/wiki/Aiuto:Aiuto_Wiki',
+			'social-facebook' => 'https://www.facebook.com/wikia.it',
+			'social-twitter' => 'https://twitter.com/wikia_it',
 		]
 	];
-
-	private $data = [];
 
 	private $wikiId;
 	private $lang;
@@ -164,63 +197,6 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 
 	public function getData() {
 		$data = [
-			'follow_us' => [
-				'header' => [
-					'type' => 'line-text',
-					'title' => [
-						'type' => 'translatable-text',
-						'key' => 'global-footer-fandom-follow-us-header'
-					]
-				],
-				// TODO update social links
-				'links' => [
-					[
-						'type' => 'link-image',
-						'image' => 'icons-facebook',
-						'title' => [
-							'type' => 'translatable-text',
-							'key' => 'global-footer-fandom-follow-us-link-facebook'
-						],
-						'href' => 'https://www.facebook.com/getfandom'
-					],
-					[
-						'type' => 'link-image',
-						'image' => 'icons-twitter',
-						'title' => [
-							'type' => 'translatable-text',
-							'key' => 'global-footer-fandom-follow-us-link-twitter'
-						],
-						'href' => 'https://twitter.com/getfandom'
-					],
-					[
-						'type' => 'link-image',
-						'image' => 'icons-reddit',
-						'title' => [
-							'type' => 'translatable-text',
-							'key' => 'global-footer-fandom-follow-us-link-reddit'
-						],
-						'href' => 'https://www.reddit.com/r/wikia'
-					],
-					[
-						'type' => 'link-image',
-						'image' => 'icons-youtube',
-						'title' => [
-							'type' => 'translatable-text',
-							'key' => 'global-footer-fandom-follow-us-link-youtube'
-						],
-						'href' => 'https://www.youtube.com/channel/UC988qTQImTjO7lUdPfYabgQ'
-					],
-					[
-						'type' => 'link-image',
-						'image' => 'icons-instagram',
-						'title' => [
-							'type' => 'translatable-text',
-							'key' => 'global-footer-fandom-follow-us-link-instagram'
-						],
-						'href' => 'https://www.instagram.com/getfandom/'
-					]
-				]
-			],
 			'company_overview' => [
 				'header' => [
 					'type' => 'line-text',
@@ -447,6 +423,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 		];
 
 		$data['fandom_overview'] = $this->getFandomOverview();
+		$data['follow_us'] = $this->getFollowUs();
 
 		// TODO extract default
 		if ( $this->lang == 'en' ) {
@@ -554,6 +531,81 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 		return $out;
 	}
 
+	private function getFollowUs() {
+		$data = [
+			'header' => [
+				'type' => 'line-text',
+				'title' => [
+					'type' => 'translatable-text',
+					'key' => 'global-footer-fandom-follow-us-header'
+				]
+			],
+			'links' => []
+		];
+
+		if ( $this->getHref( 'social-facebook' ) ) {
+			$data['links'][] = [
+				'type' => 'link-image',
+				'image' => 'icons-facebook',
+				'title' => [
+					'type' => 'translatable-text',
+					'key' => 'global-footer-fandom-follow-us-link-facebook'
+				],
+				'href' => $this->getHref( 'social-facebook' )
+			];
+		}
+
+		if ( $this->getHref( 'social-twitter' ) ) {
+			$data['links'][] = [
+				'type' => 'link-image',
+				'image' => 'icons-twitter',
+				'title' => [
+					'type' => 'translatable-text',
+					'key' => 'global-footer-fandom-follow-us-link-twitter'
+				],
+				'href' => $this->getHref( 'social-twitter' )
+			];
+		}
+
+		if ( $this->getHref( 'social-reddit' ) ) {
+			$data['links'][] = [
+				'type' => 'link-image',
+				'image' => 'icons-reddit',
+				'title' => [
+					'type' => 'translatable-text',
+					'key' => 'global-footer-fandom-follow-us-link-reddit'
+				],
+				'href' => $this->getHref( 'social-reddit' )
+			];
+		}
+
+		if ( $this->getHref( 'social-youtube' ) ) {
+			$data['links'][] = [
+				'type' => 'link-image',
+				'image' => 'icons-youtube',
+				'title' => [
+					'type' => 'translatable-text',
+					'key' => 'global-footer-fandom-follow-us-link-youtube'
+				],
+				'href' => $this->getHref( 'social-youtube' )
+			];
+		}
+
+		if ( $this->getHref( 'social-instagram' ) ) {
+			$data['links'][] = [
+				'type' => 'link-image',
+				'image' => 'icons-instagram',
+				'title' => [
+					'type' => 'translatable-text',
+					'key' => 'global-footer-fandom-follow-us-link-instagram'
+				],
+				'href' => $this->getHref( 'social-instagram' )
+			];
+		}
+
+		return $data;
+	}
+
 	private function getLicenseUrl() {
 		$licenseUrl = WikiFactory::getVarByName( 'wgRightsUrl', $this->wikiId )->cv_value ?: $this->wg->RightsUrl;
 		$licensePage = WikiFactory::getVarByName( 'wgRightsPage', $this->wikiId )->cv_value ?: $this->wg->RightsPage;
@@ -569,6 +621,6 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 	private function getHref($hrefKey) {
 		return isset( $this->hrefs[$this->lang][$hrefKey] )
 			? $this->hrefs[$this->lang][$hrefKey]
-			: $this->hrefs['en'][$hrefKey];
+			: $this->hrefs['default'][$hrefKey];
 	}
 }
