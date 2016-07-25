@@ -68,6 +68,8 @@ class UserAttributes {
 
 	private function loadAttributes( $userId ) {
 
+		// By returning an empty array here for anonymous users, we prevent an unnecessary
+		// call to the attribute service Anon users will just use default values for attributes.
 		if ( $userId == 0 ) {
 			return [];
 		}
