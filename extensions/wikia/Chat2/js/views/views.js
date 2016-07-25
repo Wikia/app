@@ -327,7 +327,7 @@ var NodeChatDiscussion = Backbone.View.extend({
 		 		$('#ChatHeader .private').hide();
 			} else {
 		 		$('#ChatHeader .public').hide();
-		 		$('#ChatHeader .private').text($.msg('chat-private-headline').replace('$1', status.get('privateUser').get('name'))).show();
+		 		$('#ChatHeader .private').text(mw.message('chat-private-headline').text().replace('$1', status.get('privateUser').get('name'))).show();
 			}
 		} else {
 			room.removeClass('selected');
@@ -573,7 +573,7 @@ var NodeChatUsers = Backbone.View.extend({
 					this[ location ? 'actionTemplate' : 'actionTemplateNoUrl' ]({
 						actionUrl: location,
 						actionName: action,
-						actionDesc: mw.html.escape($.msg('chat-user-menu-' + action))
+						actionDesc: mw.message('chat-user-menu-' + action).escaped()
 					})
 				);
 			}
@@ -589,7 +589,7 @@ var NodeChatUsers = Backbone.View.extend({
 				adminActions.append(
 					this.actionTemplateNoUrl({
 						actionName: action,
-						actionDesc: mw.html.escape($.msg('chat-user-menu-' + action))
+						actionDesc: mw.message('chat-user-menu-' + action).escaped()
 					})
 				);
 			}
