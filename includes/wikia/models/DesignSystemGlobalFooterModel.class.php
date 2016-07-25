@@ -1,6 +1,8 @@
 <?php
 
 class DesignSystemGlobalFooterModel extends WikiaModel {
+	const DEFAULT_LANG = 'en';
+
 	private $hrefs = [
 		'default' => [
 			'fan-communities' => 'http://www.wikia.com/explore',
@@ -188,7 +190,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 	private $wikiId;
 	private $lang;
 
-	public function __construct( $wikiId, $lang ) {
+	public function __construct( $wikiId, $lang = self::DEFAULT_LANG ) {
 		parent::__construct();
 
 		$this->wikiId = $wikiId;
@@ -425,8 +427,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 		$data['fandom_overview'] = $this->getFandomOverview();
 		$data['follow_us'] = $this->getFollowUs();
 
-		// TODO extract default
-		if ( $this->lang == 'en' ) {
+		if ( $this->lang == self::DEFAULT_LANG ) {
 			$data['fandom'] = [
 				'header' => [
 					'type' => 'link-image',
@@ -486,7 +487,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 			'links' => []
 		];
 
-		if ( $this->lang == 'en' ) {
+		if ( $this->lang == self::DEFAULT_LANG ) {
 			$out['links'] = [
 				[
 					'type' => 'link-branded',
