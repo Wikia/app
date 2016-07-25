@@ -15,7 +15,6 @@ abstract class DiscussionController extends EmailController {
         $this->postTitle = $this->request->getVal( 'postTitle' );
         $this->postUrl = $this->request->getVal( 'postUrl' );
         $this->setWikiFromWikiID();
-        $this->assertValidParams();
     }
 
     private function setWikiFromWikiID() {
@@ -43,7 +42,7 @@ abstract class DiscussionController extends EmailController {
      */
     public function body() {
         $this->response->setData( [
-            'salutation' => "Hi James",
+            'salutation' => $this->getSalutation(),
             'summary' => $this->getSummary(),
             'editorProfilePage' => $this->getCurrentProfilePage(),
             'editorUserName' => $this->getCurrentUserName(),
@@ -115,8 +114,9 @@ class DiscussionReplyController extends DiscussionController {
     private $replyContent;
 
     public function initEmail() {
-        $this->replyContent = $this->request->getVal( 'replyContent' );
         parent::initEmail();
+        $this->replyContent = $this->request->getVal( 'replyContent' );
+        $this->assertValidParams();
     }
 
     protected function assertValidParams() {
@@ -192,9 +192,10 @@ class DiscussionUpvoteController extends DiscussionController {
     ];
 
     public function initEmail() {
+        parent::initEmail();
         $this->firstPostContent = $this->request->getVal( 'firstPostContent' );
         $this->upvoteCount = $this->request->getVal( 'upvoteCount' );
-        parent::initEmail();
+        $this->assertValidParams();
     }
 
     protected function assertValidParams() {
@@ -216,16 +217,13 @@ class DiscussionUpvoteController extends DiscussionController {
         if ( !empty( $this->postTitle ) ) {
             return $this->getMessage(
                 self::MESSAGE_KEYS[$this->upvoteCount]['subject-with-title'],
-                $this->postUrl,
                 $this->postTitle,
-                $this->wiki->city_url,
                 $this->wiki->city_title
             );
         }
 
         return $this->getMessage(
             self::MESSAGE_KEYS[$this->upvoteCount]['subject'],
-            $this->wiki->city_url,
             $this->wiki->city_title
         );
     }
