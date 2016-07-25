@@ -5,6 +5,7 @@ use \Wikia\Logger\WikiaLogger;
 class ImageReviewSpecialController extends WikiaSpecialPageController {
 	const ACTION_QUESTIONABLE = 'questionable';
 	const ACTION_REJECTED     = 'rejected';
+	const ACTION_UNREVIEWED   = 'unreviewed';
 
 	private $statsHeaders = array( 'user', 'total reviewed', 'approved', 'deleted', 'qustionable', 'distance to avg.' );
 	private $action;
@@ -12,6 +13,9 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 	private $imageList;
 	private $imageCount;
 	private $ts;
+	/**
+	 * @var ImageReviewHelper
+     */
 	private $helper;
 
 	public function __construct() {
@@ -81,7 +85,7 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 				$this->imageCount = $this->helper->getImageCount();
 			} else {
 				$this->imageList = $this->helper->getImageList( $this->ts, $do[ 'default' ], $this->order );
-				$this->imageCount = $this->helper->getImageCount( 'unreviewed', count( $this->imageList ) );
+				$this->imageCount = $this->helper->getImageCount( ImageReviewSpecialController::ACTION_UNREVIEWED, count( $this->imageList ) );
 			}
 		} else {
 			$this->imageCount = $this->helper->getImageCount();
