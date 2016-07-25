@@ -14,6 +14,12 @@ $GLOBALS['wgExtensionFunctions'][] = function() {
 	SemanticMediaWiki::onExtensionFunction();
 };
 
+$GLOBALS['wgHooks']['LanguageGetNamespaces'][] = function( array &$namespaces ) {
+	NamespaceManager::initCustomNamespace( $GLOBALS );
+	$namespaces += NamespaceManager::getCanonicalNames();
+	return true;
+};
+
 /**
  * @codeCoverageIgnore
  */
