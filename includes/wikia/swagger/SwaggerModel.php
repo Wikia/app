@@ -7,7 +7,7 @@ class SwaggerModel {
 	public function __construct($model) {
 		$this->id = $model->id;
 		$this->properties = $this->parseProperties($model);
-		$this->description = $model->description ?: null;
+		$this->description = !empty($model->description) ? $model->description : null;
 	}
 
 	private function parseProperties($model) {
