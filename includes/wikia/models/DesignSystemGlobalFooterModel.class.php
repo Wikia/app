@@ -373,7 +373,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 							'type' => 'translatable-text',
 							'key' => 'global-footer-wikia-community-apps-link-app-store'
 						],
-						'href' => 'https://itunes.apple.com/pl/developer/wikia-inc./id422467077'
+						'href' => 'https://itunes.apple.com/developer/wikia-inc./id422467077'
 					],
 					[
 						'type' => 'link-image',
