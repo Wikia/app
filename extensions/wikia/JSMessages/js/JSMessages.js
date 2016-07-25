@@ -31,14 +31,14 @@
 	 * ...
 	 * @return {mw.Message} - localised message object
 	 */
-	function JSMessages(mw, $, window) {
+	function JSMessages(mw, $) {
 		var JSMessages = function(){
 			// get the first function parameter then the rest are parameters to a message.
 			// trim to avoid misses when newlines or spaces got added to the
 			// argument ie. in multiline conditions in mustache templates.
 			var key = (shift.call(arguments) || '').trim();
 
-			return mw.message(key, arguments);
+			return new mw.Message(mw.messages, key, arguments).text();
 		};
 
 		/**
@@ -54,7 +54,7 @@
 			var dfd = $.Deferred();
 
 			// by default use user language
-			mw.config.set('wgUserLanguageTemp', window.wgUserLanguage);
+			mw.config.set('wgUserLanguageTemp', mw.config.get('wgUserLanguage'));
 			if (language) {
 				mw.config.set('wgUserLanguage', language);
 			}
@@ -92,7 +92,7 @@
 		 * Load messages from given package(s) using content language
 		 */
 		JSMessages.getForContent = function(packages, callback) {
-			return JSMessages.get(packages, callback, window.wgContentLanguage);
+			return JSMessages.get(packages, callback, mw.config.get('wgContentLanguage'));
 		};
 
 		return JSMessages;
@@ -100,10 +100,10 @@
 
 	//UMD inclusive
 	if(jQuery){
-		var jsm = JSMessages(mediaWiki, jQuery, context);
+		var jsm = JSMessages(mediaWiki, jQuery);
 		jQuery.extend(jQuery, {
 			msg: function () {
-				return jsm.apply(this, arguments).text();
+				return jsm.apply(this, arguments);
 			},
 			getMessages: jsm.get,
 			getMessagesForContent: jsm.getForContent
@@ -112,6 +112,6 @@
 
 	if (context.define && context.define.amd) {
 		//AMD
-		context.define('JSMessages', ['mw', 'jquery', 'wikia.window'], JSMessages);
+		context.define('JSMessages', ['mw', 'jquery'], JSMessages);
 	}
 })(this);

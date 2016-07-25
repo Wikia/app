@@ -25,6 +25,7 @@ module.exports = function (config) {
 			'resources/wikia/polyfills/bind.js',
 
 			//JSMessages
+			'resources/mediawiki/mediawiki.js',
 			'extensions/wikia/JSMessages/js/JSMessages.js',
 			'extensions/wikia/JSMessages/js/spec/JSMessages.spec.js',
 
