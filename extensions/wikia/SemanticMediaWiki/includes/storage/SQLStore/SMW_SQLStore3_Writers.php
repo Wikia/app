@@ -836,7 +836,12 @@ class SMWSQLStore3Writers {
 						foreach ( $res as $row ) {
 							$title = Title::makeTitleSafe( $row->ns, $row->t );
 							if ( !is_null( $title ) ) {
-								$jobs[] = new UpdateJob( $title );
+								// wikia change start - jobqueue migration
+								$task = new \Wikia\Tasks\Tasks\JobWrapperTask();
+								$task->call( 'UpdateJob', $title );
+								$task->dupCheck();
+								$jobs[] = $task;
+								// wikia change end
 							}
 						}
 
@@ -856,7 +861,12 @@ class SMWSQLStore3Writers {
 							foreach ( $res as $row ) {
 								$title = Title::makeTitleSafe( $row->ns, $row->t );
 								if ( !is_null( $title ) ) {
-									$jobs[] = new UpdateJob( $title );
+									// wikia change start - jobqueue migration
+									$task = new \Wikia\Tasks\Tasks\JobWrapperTask();
+									$task->call( 'UpdateJob', $title );
+									$task->dupCheck();
+									$jobs[] = $task;
+									// wikia change end
 								}
 							}
 
@@ -866,12 +876,11 @@ class SMWSQLStore3Writers {
 				}
 
 				/// NOTE: we do not update the concept cache here; this remains an offline task
-
 			}
 		}
 
 		if ( $this->store->getUpdateJobsEnabledState() ) {
-			JobBase::batchInsert( $jobs );
+			\Wikia\Tasks\Tasks\BaseTask::batch( $jobs );
 		}
 
 		// *** Finally, write the new redirect data ***//

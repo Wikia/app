@@ -94,7 +94,8 @@ class SMWSQLHelpers {
 	private static function createTable( $tableName, array $fields, $db ) {
 		global $wgDBtype, $wgDBname;
 
-		$sql = 'CREATE TABLE ' . ( ( $wgDBtype == 'postgres' || $wgDBtype == 'sqlite' ) ? '' : "`$wgDBname`." ) . $tableName . ' (';
+		// wikia change, remove $wgDBname usage
+		$sql = 'CREATE TABLE ' . ( ( $wgDBtype == 'postgres' || $wgDBtype == 'sqlite' ) ? '' : '' ) . $tableName . ' (';
 
 		$fieldSql = array();
 

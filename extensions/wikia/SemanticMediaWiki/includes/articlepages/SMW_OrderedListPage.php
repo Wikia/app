@@ -87,7 +87,7 @@ abstract class SMWOrderedListPage extends Article {
 
 		// Copied from CategoryPage
 		$diff = $wgRequest->getVal( 'diff' );
-		$diffOnly = $wgRequest->getBool( 'diffonly', $wgUser->getOption( 'diffonly' ) );
+		$diffOnly = $wgRequest->getBool( 'diffonly', $wgUser->getGlobalPreference( 'diffonly' ) );
 		if ( !isset( $diff ) || !$diffOnly ) {
 			$this->showList();
 		}
