@@ -132,7 +132,7 @@ class DiscussionReplyController extends DiscussionController {
 
     public function getSummary() {
         if ( !empty( $this->postTitle ) ) {
-            return $this->getMessage('emailext-discussion-reply-with-title-subject',
+            return $this->getMessage( 'emailext-discussion-reply-with-title-subject',
                 $this->postUrl,
                 $this->postTitle,
                 $this->wiki->city_url,
