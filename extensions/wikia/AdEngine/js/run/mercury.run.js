@@ -49,9 +49,12 @@ require([
 			oxBidder.call();
 		}
 
+		if (geo.isProperGeo(instantGlobals.wgAdDriverPrebidBidderCountries)) {
+			prebid.call();
+		}
+
 		if (adContext.getContext().opts.yavli) {
 			yavliTag.add();
 		}
-		prebid.call();
 	});
 });
