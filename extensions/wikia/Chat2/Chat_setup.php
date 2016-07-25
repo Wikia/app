@@ -107,6 +107,7 @@ $wgResourceModules['ext.Chat2.ChatWidget'] = [
  */
 $wgResourceModules['ext.Chat2'] = [
 	'messages' => [
+		// Inline alerts
 		'chat-user-permanently-disconnected',
 		'chat-welcome-message',
 		'chat-user-joined',
@@ -123,10 +124,27 @@ $wgResourceModules['ext.Chat2'] = [
 		'chat-browser-is-notsupported',
 		'chat-message-was-too-long',
 		// Chat ban modal
+		'chat-ban-modal-heading',
 		'chat-ban-modal-change-ban-heading',
 		'chat-ban-modal-button-cancel',
 		'chat-ban-modal-button-ok',
 		'chat-ban-modal-button-change-ban',
+		// User menu options
+		'chat-user-menu-message-wall',
+		'chat-user-menu-talk-page',
+		'chat-user-menu-contribs',
+		'chat-user-menu-private',
+		'chat-user-menu-give-chat-mod',
+		'chat-user-menu-kick',
+		'chat-user-menu-ban',
+		'chat-user-menu-private-block',
+		'chat-user-menu-private-allow',
+		'chat-user-menu-private-close',
+
+		// Private messages
+		'chat-private-headline',
+		'chat-user-blocked',
+		'chat-user-allow',
 	],
 	'position' => 'top'
 ];
