@@ -335,12 +335,6 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 		],
 	];
 
-	private $verticalsWithLink = [
-		'games',
-		'movies',
-		'tv',
-	];
-
 	private $wikiId;
 
 	public function __construct( $wikiId ) {
@@ -356,51 +350,15 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 	}
 
 	private function setLicensingAndVertical() {
-		$params = [
-			'license' => $this->getLicenseData(),
-		];
-		$verticalData = $this->getVerticalData();
-		$messageKey = 'global-footer-wikia-licensing-description';
-
-		if ( !empty( $verticalData ) ) {
-			$params['vertical'] = $verticalData;
-			$messageKey = 'global-footer-wikia-licensing-and-vertical-description';
-		}
-
 		$this->data['licensing_and_vertical'] = [
 			'description' => [
 				'type' => 'translatable-text',
-				'key' => $messageKey,
-				'params' => $params
+				'key' => 'global-footer-licensing-description',
+				'params' => [
+					'license' => $this->getLicenseData(),
+				]
 			],
 		];
-	}
-
-	private function getVerticalData() {
-		$wikiVerticalData = WikiFactoryHub::getInstance()->getWikiVertical( $this->wikiId );
-		$vertical = null;
-		if ( $wikiVerticalData['id'] ) {
-			$vertical = $wikiVerticalData['short'];
-		}
-
-		if ( is_null( $vertical ) ) {
-			return [];
-		}
-
-		$data = [
-			'type' => 'line-text',
-			'title' => [
-				'type' => 'translatable-text',
-				'key' => 'global-footer-fandom-link-vertical-' . $vertical
-			],
-		];
-
-		if ( in_array( $vertical, $this->verticalsWithLink ) ) {
-			$data['type'] = 'link-text';
-			$data['href'] = 'http://fandom.wikia.com/' . $vertical;
-		}
-
-		return $data;
 	}
 
 	private function getLicenseData() {
@@ -412,7 +370,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 				'type' => 'text',
 				'value' => $licenseText
 			],
-			'href' => $this->getLicenseUrl( $this->wikiId )
+			'href' => $this->getLicenseUrl()
 		];
 	}
 

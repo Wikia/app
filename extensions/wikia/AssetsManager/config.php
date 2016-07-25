@@ -111,10 +111,13 @@ $config['adengine2_desktop_js'] = array(
 		'//extensions/wikia/AdEngine/js/template/modal.js',
 		'//extensions/wikia/AdEngine/js/template/modalHandlerFactory.js',
 		'//extensions/wikia/AdEngine/js/template/modalOasisHandler.js',
+		'//extensions/wikia/AdEngine/js/template/playwire.js',
 		'//extensions/wikia/AdEngine/js/template/skin.js',
 		'//extensions/wikia/AdEngine/js/utils/AdLogicZoneParams.js',
 		'//extensions/wikia/AdEngine/js/utils/domCalculator.js',
 		'//extensions/wikia/AdEngine/js/utils/hooks.js',
+		'//extensions/wikia/AdEngine/js/video/playwire.js',
+		'//extensions/wikia/AdEngine/js/video/vastBuilder.js',
 		'//extensions/wikia/ARecoveryEngine/js/helper.js',
 		'//resources/wikia/modules/krux.js',
 
@@ -151,6 +154,7 @@ $config['recirculation_js'] = array(
 		'//extensions/wikia/Recirculation/js/views/impactFooter.js',
 		'//extensions/wikia/Recirculation/js/experiments/placement.js',
 		'//extensions/wikia/Recirculation/js/experiments/placement/impactFooter.js',
+		'//extensions/wikia/Recirculation/js/experiments/placement/fandomTopic.js',
 		'//extensions/wikia/Recirculation/js/scrolldepth.js',
 		'//extensions/wikia/Recirculation/js/libs/perfect-scrollbar.js',
 	),
@@ -257,7 +261,8 @@ $config['adengine2_ox_bidder_js'] = array(
 	'skin' => [ 'oasis' ],
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
-		'//extensions/wikia/AdEngine/js/lookup/openXBidder.js',
+		'//extensions/wikia/AdEngine/js/lookup/openx/openXBidderHelper.js',
+		'//extensions/wikia/AdEngine/js/lookup/openXBidder.js'
 	),
 );
 
@@ -840,6 +845,7 @@ $config['mobile_base_ads_js'] = array(
 		'//extensions/wikia/AdEngine/js/context/uapContext.js',
 		'//extensions/wikia/AdEngine/js/lookup/amazonMatch.js',
 		'//extensions/wikia/AdEngine/js/lookup/lookupFactory.js',
+		'//extensions/wikia/AdEngine/js/lookup/openx/openXBidderHelper.js',
 		'//extensions/wikia/AdEngine/js/lookup/openXBidder.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid.js',
 		'//extensions/wikia/AdEngine/js/lookup/rubiconFastlane.js',
@@ -860,6 +866,8 @@ $config['mobile_base_ads_js'] = array(
 		'//extensions/wikia/AdEngine/js/slot/adSlot.js',
 		'//extensions/wikia/AdEngine/js/utils/AdLogicZoneParams.js',
 		'//extensions/wikia/AdEngine/js/utils/hooks.js',
+		'//extensions/wikia/AdEngine/js/video/playwire.js',
+		'//extensions/wikia/AdEngine/js/video/vastBuilder.js',
 
 		// Recovery
 		'//extensions/wikia/ARecoveryEngine/js/helper.js',
@@ -914,6 +922,7 @@ $config['mercury_ads_js'] = array(
 		'//extensions/wikia/AdEngine/js/template/modal.js',
 		'//extensions/wikia/AdEngine/js/template/modalHandlerFactory.js',
 		'//extensions/wikia/AdEngine/js/template/modalMercuryHandler.js',
+		'//extensions/wikia/AdEngine/js/template/playwire.js',
 		'//extensions/wikia/AdEngine/js/utils/domCalculator.js',
 		'//resources/wikia/modules/abTest.js',
 		'//resources/wikia/modules/krux.js',
@@ -2879,6 +2888,13 @@ $config['special_user_activity_scss'] = [
 	'type' => AssetsManager::TYPE_SCSS,
 	'assets' => [
 		'//extensions/wikia/UserActivity/css/UserActivity.scss',
+	],
+];
+
+$config['special_discussions_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'assets' => [
+		'//extensions/wikia/SpecialDiscussions/css/Discussions_Forms.scss',
 	],
 ];
 

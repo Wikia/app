@@ -351,11 +351,13 @@ class BlogArticle extends Article {
 	 * static methods used in Hooks
 	 */
 	static public function getOtherSection( &$catView, &$output ) {
-		wfProfileIn( __METHOD__ );
+		global $wgEnableCategoryPaginationExt;
+		if ( $wgEnableCategoryPaginationExt ) {
+			return true;
+		}
 
 		/* @var $catView CategoryViewer */
 		if ( !isset( $catView->blogs ) ) {
-			wfProfileOut( __METHOD__ );
 			return true;
 		}
 		$ti = htmlspecialchars( $catView->title->getText() );
@@ -377,7 +379,6 @@ class BlogArticle extends Article {
 		}
 		$output = $r;
 
-		wfProfileOut( __METHOD__ );
 		return true;
 	}
 
@@ -479,6 +480,10 @@ class BlogArticle extends Article {
 	 * @internal param $CategoryViewer
 	 */
 	static public function addCategoryPage( &$catView, &$title, &$row, $sortkey ) {
+		global $wgEnableCategoryPaginationExt;
+		if ( $wgEnableCategoryPaginationExt ) {
+			return true;
+		}
 		if ( in_array( $row->page_namespace, array( NS_BLOG_ARTICLE, NS_BLOG_LISTING ) ) ) {
 			/**
 			 * initialize CategoryView->blogs array

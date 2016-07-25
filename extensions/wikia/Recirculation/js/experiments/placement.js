@@ -20,6 +20,7 @@ require([
 	'ext.wikia.recirculation.helpers.curatedContent',
 	'ext.wikia.recirculation.helpers.googleMatch',
 	'ext.wikia.recirculation.experiments.placement.IMPACT_FOOTER',
+	'ext.wikia.recirculation.experiments.placement.FANDOM_TOPIC',
 	'ext.wikia.adEngine.taboolaHelper',
 	require.optional('videosmodule.controllers.rail')
 ], function(
@@ -43,6 +44,7 @@ require([
 	curatedHelper,
 	googleMatchHelper,
 	impactFooterExperiment,
+	fandomTopicExperiment,
 	taboolaHelper,
 	videosModule
 ) {
@@ -108,17 +110,17 @@ require([
 			view = railView();
 			isRail = true;
 			break;
-		case 'FANDOM_TOPIC':
+		case 'FANDOM_HERO':
 			helper = fandomHelper({
-				type: 'community',
+				type: 'hero',
 				limit: 5
 			});
 			view = railView();
 			isRail = true;
 			break;
-		case 'FANDOM_HERO':
+		case 'SDCC':
 			helper = fandomHelper({
-				type: 'hero',
+				type: 'category',
 				limit: 5
 			});
 			view = railView();
@@ -175,6 +177,10 @@ require([
 		case 'IMPACT_FOOTER':
 			impactFooterExperiment.run(experimentName);
 			return;
+		case 'FANDOM_TOPIC':
+			fandomTopicExperiment.run(experimentName)
+				.fail(handleError);
+			return;
 		default:
 			return;
 	}
@@ -194,6 +200,8 @@ require([
 
 	function runRailExperiment() {
 		var curated = curatedHelper();
+
+		log('Rail loaded, running experiment', 'info', logGroup);
 		helper.loadData()
 			.then(curated.injectContent)
 			.then(view.render)

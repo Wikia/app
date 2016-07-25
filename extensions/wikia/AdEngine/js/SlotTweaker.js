@@ -3,7 +3,7 @@ define('ext.wikia.adEngine.slotTweaker', [
 	'wikia.log',
 	'wikia.document',
 	'wikia.window'
-], function (log, document, window) {
+], function (log, doc, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.slotTweaker',
@@ -28,7 +28,7 @@ define('ext.wikia.adEngine.slotTweaker', [
 	function hide(slotname, useInline) {
 		log('hide ' + slotname + ' using class hidden', 6, logGroup);
 
-		var slot = document.getElementById(slotname);
+		var slot = doc.getElementById(slotname);
 
 		if (slot && useInline) {
 			slot.style.display = 'none';
@@ -41,7 +41,7 @@ define('ext.wikia.adEngine.slotTweaker', [
 	function show(slotname) {
 		log('show ' + slotname + ' removing class hidden', 6, logGroup);
 
-		var slot = document.getElementById(slotname);
+		var slot = doc.getElementById(slotname);
 
 		if (slot) {
 			removeClass(slot, 'hidden');
@@ -49,7 +49,7 @@ define('ext.wikia.adEngine.slotTweaker', [
 	}
 
 	function removeDefaultHeight(slotname) {
-		var slot = document.getElementById(slotname);
+		var slot = doc.getElementById(slotname);
 
 		log('removeDefaultHeight ' + slotname, 6, logGroup);
 
@@ -63,7 +63,7 @@ define('ext.wikia.adEngine.slotTweaker', [
 	}
 
 	function isStandardLeaderboardSize(slotname) {
-		var slot = document.getElementById(slotname),
+		var slot = doc.getElementById(slotname),
 			isStandardSize;
 
 		if (slot) {
@@ -81,7 +81,7 @@ define('ext.wikia.adEngine.slotTweaker', [
 	}
 
 	function addDefaultHeight(slotname) {
-		var slot = document.getElementById(slotname);
+		var slot = doc.getElementById(slotname);
 
 		log('addDefaultHeight ' + slotname, 6, logGroup);
 
@@ -92,7 +92,7 @@ define('ext.wikia.adEngine.slotTweaker', [
 
 	// TODO: fix it, it's a hack!
 	function adjustLeaderboardSize(slotname) {
-		var slot = document.getElementById(slotname);
+		var slot = doc.getElementById(slotname);
 		if (isLeaderboard(slotname) && isStandardLeaderboardSize(slotname)) {
 			slot.className += ' ' + standardLeaderboardSizeClass;
 		}
@@ -100,18 +100,18 @@ define('ext.wikia.adEngine.slotTweaker', [
 
 	// TODO: fix it, it's a hack!
 	function removeTopButtonIfNeeded(slotname) {
-		if (isLeaderboard(slotname) && !isStandardLeaderboardSize(slotname)) {
-			log('removing TOP_BUTTON_WIDE', 3, logGroup);
-			hide('TOP_BUTTON_WIDE');
-		}
 		if (isLeaderboard(slotname) && isStandardLeaderboardSize(slotname)) {
-			log('pushing TOP_BUTTON_WIDE.force to Liftium2 queue', 2, logGroup);
-			window.adslots2.push('TOP_BUTTON_WIDE.force');
+			win.Wikia.reviveQueue = win.Wikia.reviveQueue || [];
+
+			win.Wikia.reviveQueue.push({
+				zoneId: 27,
+				slotName: 'TOP_BUTTON_WIDE'
+			});
 		}
 	}
 
 	function onReady(slotName, callback) {
-		var iframe = document.getElementById(slotName).querySelector('div:not(.hidden) > div[id*="_container_"] iframe');
+		var iframe = doc.getElementById(slotName).querySelector('div:not(.hidden) > div[id*="_container_"] iframe');
 
 		if (!iframe) {
 			log('onIframeReady - iframe does not exist', 'debug', logGroup);
@@ -128,7 +128,7 @@ define('ext.wikia.adEngine.slotTweaker', [
 	}
 
 	function makeResponsive(slotName, aspectRatio) {
-		var providerContainer = document.getElementById(slotName).lastElementChild;
+		var providerContainer = doc.getElementById(slotName).lastElementChild;
 
 		onReady(slotName, function (iframe) {
 			log(['makeResponsive', slotName], 'debug', logGroup);
@@ -156,7 +156,7 @@ define('ext.wikia.adEngine.slotTweaker', [
 	}
 
 	function isUniversalAdPackageLoaded() {
-		return !!document.getElementsByClassName('.bfaa-template')[0];
+		return !!doc.getElementsByClassName('.bfaa-template')[0];
 	}
 
 	function noop() {
@@ -169,7 +169,7 @@ define('ext.wikia.adEngine.slotTweaker', [
 	 * @param {string} slotId
 	 */
 	function hackChromeRefresh(slotId) {
-		var slot = document.getElementById(slotId),
+		var slot = doc.getElementById(slotId),
 			parent = slot && slot.parentElement;
 
 		if (parent && slotId.match(/^INCONTENT/)) {

@@ -66,7 +66,6 @@ class CommunityPageSpecialHooks {
 		$user = $out->getUser();
 
 		if ( $user->isAnon() &&
-			!isset( $_COOKIE['cpBenefitsModalShown'] ) &&
 			$out->getRequest()->getVal( 'action' ) !== 'edit' &&
 			$out->getRequest()->getVal( 'veaction' ) !== 'edit' &&
 			$out->getRequest()->getVal( 'action' ) !== 'submit'
