@@ -13,6 +13,10 @@ var ChatBanModal = function (title, okCallback, options) {
 	$.get(window.wgScript + '?action=ajax&rs=ChatAjax&method=BanModal', data, function (data) {
 		require(['wikia.ui.factory'], function (uiFactory) {
 			uiFactory.init(['modal']).then(function (uiModal) {
+				// uiFactory uses JSMessages internally
+				$.msg = function () {
+					return mw.message.call(this, arguments).text();
+				};
 				var banModalConfig = {
 					type: 'default',
 					vars: {
