@@ -526,7 +526,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 				'type' => 'translatable-text',
 				'key' => 'global-footer-fandom-link-fan-communities'
 			],
-			'href' => $this->getHref('fan-communities')
+			'href' => $this->getHref( 'fan-communities' )
 		];
 
 		return $out;
@@ -619,7 +619,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 		return $licenseUrl;
 	}
 
-	private function getHref($hrefKey) {
+	private function getHref( $hrefKey ) {
 		return isset( $this->hrefs[$this->lang][$hrefKey] )
 			? $this->hrefs[$this->lang][$hrefKey]
 			: $this->hrefs['default'][$hrefKey];
