@@ -23,7 +23,7 @@ class CleanupMigratedAttributes extends Maintenance {
 
     public function __construct() {
         parent::__construct();
-        $this->addOption( 'dryRun', "Actually remove attributes from sharedDB. Script defaults to dry-run" );
+        $this->addOption( 'dryRun', "Whether to actually remove attributes from sharedDB. Script defaults to dryRun = true (attributes not actually removed)" );
     }
 
     public function execute() {
