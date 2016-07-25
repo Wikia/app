@@ -129,6 +129,7 @@ $wgResourceModules['ext.Chat2'] = [
 		'chat-ban-modal-button-cancel',
 		'chat-ban-modal-button-ok',
 		'chat-ban-modal-button-change-ban',
+		'close',
 		// User menu options
 		'chat-user-menu-message-wall',
 		'chat-user-menu-talk-page',
