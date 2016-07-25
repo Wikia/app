@@ -17,8 +17,10 @@ describe('Module ext.wikia.adEngine.pageFairDetection', function () {
 	function getContext() {
 		return {
 			opts: {
-				pageFairWebsiteCode: 'TEST_CODE',
 				pageFairDetection: true
+			},
+			targeting: {
+				skin: 'oasis'
 			}
 		}
 	}
@@ -67,15 +69,6 @@ describe('Module ext.wikia.adEngine.pageFairDetection', function () {
 
 		mocks.window.pf_notify(false);
 		expect(mocks.window.ads.runtime.pf.blocking).toBe(false);
-	});
-
-	it('should provide PageFair website code from context to external script', function () {
-		var mocks = getMocks();
-		var pageFairDetector = getModule(mocks);
-		pageFairDetector.initDetection();
-
-		mocks.window.pf_notify(true);
-		expect(mocks.window.bm_website_code).toBe('TEST_CODE');
 	});
 
 	it('should not run detection when pagefair is not enabled', function () {
