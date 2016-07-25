@@ -620,8 +620,6 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 	}
 
 	private function getHref( $hrefKey ) {
-		return isset( $this->hrefs[$this->lang][$hrefKey] )
-			? $this->hrefs[$this->lang][$hrefKey]
-			: $this->hrefs['default'][$hrefKey];
+		return $this->hrefs[$this->lang][$hrefKey] ?? $this->hrefs['default'][$hrefKey];
 	}
 }
