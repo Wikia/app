@@ -1567,12 +1567,6 @@ $wgAdDriverSourcePointDetectionMobileCountries = null;
 $wgAdDriverSourcePointRecoveryCountries = null;
 
 /**
- * @name $wgAdDriverPageFairWebsiteCode
- * Website code for PageFair
- */
-$wgAdDriverPageFairWebsiteCode = null;
-
-/**
  * trusted proxy service registry
  */
 $wgAutoloadClasses[ 'TrustedProxyService'] =  "$IP/includes/wikia/services/TrustedProxyService.class.php" ;

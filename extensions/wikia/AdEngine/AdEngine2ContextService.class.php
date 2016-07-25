@@ -52,7 +52,6 @@ class AdEngine2ContextService {
 					'sourcePointDetectionUrl' => $sourcePointDetectionUrl,
 					'sourcePointRecovery' => ARecoveryModule::isEnabled(),
 					'yavliUrl' => $yavliUrl,
-					'pageFairWebsiteCode' => $wg->AdDriverPageFairWebsiteCode,
 					'pageFairDetectionUrl' => $pageFairDetectionUrl
 				] ),
 				'targeting' => $this->filterOutEmptyItems( [
