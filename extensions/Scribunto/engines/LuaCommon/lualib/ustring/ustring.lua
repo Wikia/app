@@ -145,6 +145,7 @@ local function utf8_explode( s )
 
 	-- Two past the end (for sub with empty string)
 	ret.bytepos[#ret.bytepos + 1] = l + 1
+	ret.bytepos[#ret.bytepos + 1] = l + 1
 
 	return ret
 end
