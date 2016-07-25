@@ -17,8 +17,20 @@ define('ext.wikia.adEngine.pageFairDetection', [
 		return context;
 	}
 
+	function isMobile() {
+		var isMobileSkin = getContext().targeting.skin === 'mercury',
+			userAgentIsMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
+		return isMobileSkin || userAgentIsMobile;
+	}
+
 	function getWebsiteCode() {
-		return getContext().opts.pageFairWebsiteCode;
+		var websiteKeys = {
+			mobile: 'FA8D90F8D9F54665',
+			desktop: 'FE3882548B7E471A'
+		};
+
+		return isMobile() ? websiteKeys.mobile : websiteKeys.desktop;
 	}
 
 	function dispatchDetectionEvent(eventName){
