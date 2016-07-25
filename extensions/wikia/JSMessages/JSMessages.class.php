@@ -213,6 +213,7 @@ class JSMessages {
 		// OutputPage::addModules is used so that these resources
 		// can be loaded in the same HTTP request as other extension modules
 		$out->addModules(
+			[ 'mediawiki.jqueryMsg' ] + // required for {{PLURAL:}}, {{GENDER:}} etc
 			self::$queue
 		);
 		$out->addJsConfigVars( 'wgJSMessagesCB', JSMessagesHelper::getMessagesCacheBuster() );
