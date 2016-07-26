@@ -32,7 +32,8 @@
 		'isPowerUserAdmin': !!window.wikiaIsPowerUserAdmin,
 		'isPowerUserFrequent': !!window.wikiaIsPowerUserFrequent,
 		'isPowerUserLifetime': !!window.wikiaIsPowerUserLifetime,
-		'isLoggedIn': !!window.wgUserName
+		'isLoggedIn': !!window.wgUserName,
+		'cpBenefitsModalShown': document.cookie.indexOf('cpBenefitsModalShown') > -1
 	}]);
 
 	//This approach is hacky and we should use eventHandler provided by Qualaroo.
