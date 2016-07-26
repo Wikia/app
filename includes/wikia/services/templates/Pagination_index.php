@@ -1,7 +1,7 @@
-<ul class="Pagination"  <? foreach($data as $key => $val ): ?> data-<?php echo $key ?>="<?php echo htmlentities($val); ?>" <? endforeach; ?> >
+<ul class="Pagination"  <? foreach($data as $key => $val ): ?> data-<?= htmlspecialchars( $key ) ?>="<?php echo htmlentities($val); ?>" <? endforeach; ?> >
 	<? if( $prev ): ?>
 		<li data-page="<?= $currentPage - 1; ?>"  class="prev">
-			<a href="<?= ($url !== '#' ? $url.($currentPage - 1) : $url) ?>"><?= $prevMsg ?></a>
+			<a href="<?= htmlspecialchars( $url !== '#' ? $url.($currentPage - 1) : $url) ?>"><?= htmlspecialchars( $prevMsg ) ?></a>
 		</li>
 	<? endif; ?>
 	
@@ -13,14 +13,14 @@
 			<li class="ellipsis"><?= $pages[$i] ?></li>
 		<? else: ?>
 			<li data-page="<?= $pages[$i]; ?>" class="<?= $class ?>">
-				<a href="<?= ($url !== '#' ? $url.$pages[$i] : $url) ?>"><?= $pages[$i] ?></a>
+				<a href="<?= htmlspecialchars( $url !== '#' ? $url.$pages[$i] : $url ) ?>"><?= $pages[$i] ?></a>
 			</li>
 		<? endif; ?>
 	<? endfor; ?>
 	
 	<? if( $next ): ?>
 		<li data-page="<?= $currentPage + 1; ?>" class="next">
-			<a href="<?= ($url !== '#' ? $url.($currentPage + 1) : $url) ?>"><?= $nextMsg ?></a>
+			<a href="<?= htmlspecialchars( $url !== '#' ? $url.($currentPage + 1) : $url ) ?>"><?= htmlspecialchars( $nextMsg ) ?></a>
 		</li>
 	<? endif; ?>
 </ul>
