@@ -5,6 +5,7 @@ define('ext.wikia.adEngine.template.bfaa', [
 	'ext.wikia.adEngine.provider.btfBlocker',
 	'ext.wikia.adEngine.slotTweaker',
 	'ext.wikia.adEngine.uapContext',
+	'ext.wikia.adEngine.utils.eventDispatcher',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window',
@@ -15,6 +16,7 @@ define('ext.wikia.adEngine.template.bfaa', [
 	btfBlocker,
 	slotTweaker,
 	uapContext,
+	eventDispatcher,
 	doc,
 	log,
 	win,
@@ -103,8 +105,7 @@ define('ext.wikia.adEngine.template.bfaa', [
 	};
 
 	function show(params) {
-		var event = doc.createEvent('CustomEvent'),
-			handler,
+		var handler,
 			skin = adContext.getContext().targeting.skin;
 
 		switch (skin) {
@@ -135,8 +136,7 @@ define('ext.wikia.adEngine.template.bfaa', [
 		uapContext.setUapId(params.uap);
 		unblockedSlots.forEach(btfBlocker.unblock);
 
-		event.initCustomEvent('wikia.uap', true, true, {});
-		win.dispatchEvent(event);
+		eventDispatcher.dispatch('wikia.uap');
 	}
 
 	return {
