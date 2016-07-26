@@ -495,15 +495,6 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 			$out['links'] = [
 				[
 					'type' => 'link-branded',
-					'brand' => 'tv',
-					'title' => [
-						'type' => 'translatable-text',
-						'key' => 'global-footer-fandom-link-vertical-tv'
-					],
-					'href' => 'http://fandom.wikia.com/tv'
-				],
-				[
-					'type' => 'link-branded',
 					'brand' => 'games',
 					'title' => [
 						'type' => 'translatable-text',
@@ -519,6 +510,15 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 						'key' => 'global-footer-fandom-link-vertical-movies'
 					],
 					'href' => 'http://fandom.wikia.com/movies'
+				],
+				[
+					'type' => 'link-branded',
+					'brand' => 'tv',
+					'title' => [
+						'type' => 'translatable-text',
+						'key' => 'global-footer-fandom-link-vertical-tv'
+					],
+					'href' => 'http://fandom.wikia.com/tv'
 				],
 			];
 		}
