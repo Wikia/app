@@ -465,7 +465,7 @@ describe('AdContext', function () {
 
 	it('disable detection when noExtenals is set and pagefairdetection is set', function () {
 		spyOn(mocks.querystring, 'getVal').and.callFake(function (param) {
-		var result = ['noexternals', 'pagefairdetection'].indexOf(param) !== -1;
+			var result = ['noexternals', 'pagefairdetection'].indexOf(param) !== -1;
 			return result ? '1' : '0';
 		});
 

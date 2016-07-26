@@ -88,7 +88,9 @@ require([
 			sourcePoint.initDetection();
 		}
 
-		pageFair.initDetection();
+		if (context.opts.pageFairDetection) {
+			pageFair.initDetection(context);
+		}
 
 		if (context.opts.googleConsumerSurveys && gcs) {
 			gcs.addRecoveryCallback();

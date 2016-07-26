@@ -1,10 +1,11 @@
 define('ext.wikia.adEngine.pageFairDetection', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.utils.scriptLoader',
+	'wikia.browserDetect',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window'
-], function (adContext, scriptLoader, doc, log, window) {
+], function (adContext, scriptLoader, browserDetect, doc, log, win) {
 	'use strict';
 
 	var context = null,
@@ -17,11 +18,8 @@ define('ext.wikia.adEngine.pageFairDetection', [
 		return context;
 	}
 
-	function isMobile() {
-		var isMobileSkin = getContext().targeting.skin === 'mercury',
-			userAgentIsMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-
-		return isMobileSkin || userAgentIsMobile;
+	function skinIsMobile() {
+		return getContext().targeting.skin === 'mercury';
 	}
 
 	function getWebsiteCode() {
@@ -30,19 +28,19 @@ define('ext.wikia.adEngine.pageFairDetection', [
 			desktop: 'FE3882548B7E471A'
 		};
 
-		return isMobile() ? websiteKeys.mobile : websiteKeys.desktop;
+		return skinIsMobile() || browserDetect.isMobile() ? websiteKeys.mobile : websiteKeys.desktop;
 	}
 
 	function dispatchDetectionEvent(eventName){
-		var event = document.createEvent('Event');
+		var event = doc.createEvent('Event');
 		event.initEvent(eventName, true, false);
 
 		doc.dispatchEvent(event);
 	}
 
 	function setRuntimeParams(adblockDetected){
-		window.ads.runtime.pf = window.ads.runtime.pf || {};
-		window.ads.runtime.pf.blocking = adblockDetected;
+		win.ads.runtime.pf = win.ads.runtime.pf || {};
+		win.ads.runtime.pf.blocking = adblockDetected;
 	}
 
 	function detector(adblockDetected) {
@@ -60,10 +58,10 @@ define('ext.wikia.adEngine.pageFairDetection', [
 	}
 
 	function initDetection() {
-		window.bm_website_code = getWebsiteCode();
-		window.pf_notify = detector;
-
 		var node = doc.getElementsByTagName('script')[0];
+
+		win.bm_website_code = getWebsiteCode();
+		win.pf_notify = detector;
 		scriptLoader.loadAsync(getContext().opts.pageFairDetectionUrl, node);
 	}
 

@@ -4,23 +4,27 @@ class ARecoveryEngineApiController extends WikiaController {
 	const DEFAULT_TEMPLATE_ENGINE = WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
 	const MAX_EVENT_INTERVAL = 900;
 
-	public function getDelivery() {
-		$resourceLoader = new ResourceLoaderAdEngineSourcePointCSDelivery();
+	/**
+	 * @param ResourceLoaderAdEngineBase $resourceLoader
+	 * @param int $cache
+	 */
+	protected function loadJSResource($resourceLoader, $cache = WikiaResponse::CACHE_STANDARD) {
 		$resourceLoaderContext = new ResourceLoaderContext( new ResourceLoader(), new FauxRequest() );
 		$source = $resourceLoader->getScript( $resourceLoaderContext );
+
 		$this->response->setContentType( 'text/javascript; charset=utf-8' );
 		$this->response->setBody( $source );
-		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
+		$this->response->setCacheValidity( $cache );
+	}
+
+	public function getDelivery() {
+		$resourceLoader = new ResourceLoaderAdEngineSourcePointCSDelivery();
+		$this->loadJSResource( $resourceLoader );
 	}
 
 	public function getPageFairDetection() {
-		$resourceLoader = new PageFairProvider();
-		$resourceLoaderContext = new ResourceLoaderContext( new ResourceLoader(), new FauxRequest() );
-		$source = $resourceLoader->getScript( $resourceLoaderContext );
-
-		$this->response->setContentType( 'text/javascript; charset=utf-8' );
-		$this->response->setBody( $source );
-		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
+		$resourceLoader = new ResourceLoaderAdEnginePageFairDetectionModule();
+		$this->loadJSResource( $resourceLoader );
 	}
 
 	public function getBootstrap() {
