@@ -86,7 +86,7 @@ class WikiaMapsUploadImageFromFile extends UploadFromFile {
 
 	/**
 	 * Clears warnings from things we don't need
-	 * @return Array
+	 * @return array
 	 */
 	public function checkWarnings(){
 		$warnings = parent::checkWarnings();

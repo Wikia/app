@@ -43,7 +43,7 @@ describe('wikia.maps.utils', function () {
 					key: 1
 				},
 				expectedOutput: false
-			},
+			}
 		];
 
 		testData.forEach(function (testCase) {

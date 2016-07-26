@@ -231,7 +231,7 @@ class WikiaMapsSpecialControllerTest extends WikiaBaseTest {
 	/**
 	 * Converts map data array (easier to type in data provider) to map data object (as it is returned from API)
 	 *
-	 * @param $array map data
+	 * @param array $array map data
 	 * @return stdClass
 	 */
 	private function mapDataArrayToObject( $array ) {

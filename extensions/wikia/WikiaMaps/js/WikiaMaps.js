@@ -5,7 +5,7 @@ require(
 		'wikia.window',
 		'wikia.maps.config',
 		'wikia.maps.utils',
-		'wikia.maps.pontoBridge',
+		'wikia.maps.pontoBridge'
 	],
 	function ($, qs, w, config, utils, pontoBridge) {
 		'use strict';

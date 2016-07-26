@@ -46,11 +46,11 @@ class WikiaMapsPoiController extends WikiaMapsBaseController {
 		$this->setData( 'mapId', $mapId );
 		$this->setData( 'name', $name );
 		$this->setData( 'poiCategoryId', $this->request->getInt( 'poi_category_id' ) );
-		$this->setData( 'articleTitleOrExternalUrl', $this->request->getVal( 'link_title' ), '' );
+		$this->setData( 'articleTitleOrExternalUrl', $this->request->getVal( 'link_title' ) );
 		$this->setData( 'lat', (float) $this->request->getVal( 'lat' ) );
 		$this->setData( 'lon', (float) $this->request->getVal( 'lon' ) );
 		$this->setData( 'description', $this->request->getVal( 'description' ) );
-		$this->setData( 'imageUrl', $this->request->getVal( 'imageUrl' ), '' );
+		$this->setData( 'imageUrl', $this->request->getVal( 'imageUrl' ) );
 
 		if ( $poiId > 0 ) {
 			$this->setAction( self::ACTION_UPDATE );
@@ -102,7 +102,7 @@ class WikiaMapsPoiController extends WikiaMapsBaseController {
 	/**
 	 * Creates a new point of interest
 	 *
-	 * @return Array
+	 * @return array
 	 */
 	private function createPoi() {
 		return $this->getModel()->savePoi( $this->getSanitizedData() );
@@ -111,7 +111,7 @@ class WikiaMapsPoiController extends WikiaMapsBaseController {
 	/**
 	 * Updates an existing point of interest
 	 *
-	 * @return Array
+	 * @return array
 	 */
 	private function updatePoi() {
 		return $this->getModel()->updatePoi(
@@ -313,7 +313,7 @@ class WikiaMapsPoiController extends WikiaMapsBaseController {
 	/**
 	 * @brief Sends 'photo' element in an array depending on the fact if internal article has been set
 	 *
-	 * @param Array $poiData an array with POI's data
+	 * @param array $poiData an array with POI's data
 	 */
 	public function appendPhotoIfValidData( &$poiData ) {
 		$photo = $this->getData( 'imageUrl' );
@@ -395,10 +395,10 @@ class WikiaMapsPoiController extends WikiaMapsBaseController {
 	/**
 	 * Helper method which adds additional data to API results
 	 *
-	 * @param Array $results
-	 * @param Array $fieldsList
+	 * @param array $results
+	 * @param array $fieldsList
 	 *
-	 * @return Array results array
+	 * @return array results array
 	 */
 	private function decorateResults( $results, $fieldsList ) {
 		$response = $this->getModel()->sendGetRequest( $results[ 'content' ]->url );

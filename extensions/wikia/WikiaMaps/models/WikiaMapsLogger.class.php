@@ -23,6 +23,7 @@ class WikiaMapsLogger {
 	 * Create new Log entry
 	 *
 	 * @param string $action Action name as defined above
+	 * @param $user User
 	 * @param integer $mapId Map id
 	 * @param string $comment Comment
 	 * @param array $params Additional params
@@ -52,6 +53,7 @@ class WikiaMapsLogger {
 	 * Helper method to add single logEntry
 	 *
 	 * @param string $action Action name as defined above
+	 * @param $user User
 	 * @param integer $mapId Map id
 	 * @param string $comment Comment
 	 * @param array $params Additional params
@@ -63,7 +65,7 @@ class WikiaMapsLogger {
 	/**
 	 * @brief Batch add array of Log entries
 	 *
-	 * @param Array $logEntries
+	 * @param array $logEntries
 	 */
 	public static function addLogEntries( Array $logEntries ) {
 		if ( !empty( $logEntries ) ) {

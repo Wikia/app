@@ -2,7 +2,7 @@ define(
 	'wikia.maps.pontoBridge',
 	[
 		'wikia.window',
-		'ponto',
+		'ponto'
 		//FIXME: Temporary P2 fix for DAT-2546, proper fix - ADEN-1784
 		//require.optional('ext.wikia.adEngine.adContext'),
 		//require.optional('ext.wikia.adEngine.adLogicPageParams')
@@ -131,7 +131,7 @@ define(
 	PontoBridge.init = function(iframe) {
 		ponto.setTarget(Ponto.TARGET_IFRAME, '*', iframe.contentWindow);
 		iframe.src = iframe.getAttribute('data-url');
-	}
+	};
 
 	return PontoBridge;
 });

@@ -11,6 +11,7 @@ class WikiaMapsBaseControllerTest extends WikiaBaseTest {
 	}
 
 	public function testGetStashedImage_default_parameters() {
+		/** @var WikiaUploadStashFile $fileMock */
 		$fileMock = $this->getWikiaUploadStashFileMock();
 		$wikiaMapsBase = new WikiaMapsBaseController();
 		$wikiaMapsBase->getStashedImage( $fileMock );
@@ -90,6 +91,8 @@ class WikiaMapsBaseControllerTest extends WikiaBaseTest {
 			->method( 'getName' )
 			->willReturn( $userNameMock );
 
+
+		/** @var WikiaMapsBaseController $mapsBaseControllerMock */
 		$mapsBaseControllerMock = $this->getMockBuilder('WikiaMapsBaseController')
 			->disableOriginalConstructor()
 			->setMethods( [ 'getModel' ] )

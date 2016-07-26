@@ -609,7 +609,7 @@ describe('wikia.maps.poiCategories.model', function () {
 			poiCategoriesModelModule.setPoiCategoriesOriginalData(testCase.input.poiCategoriesOriginalData);
 			currentPoiCategories = poiCategoriesModelModule.preparePoiCategoriesForPonto(
 				testCase.input.dataSent, testCase.input.dataReceived
-			)
+			);
 
 			expect(currentPoiCategories).toEqual(testCase.expectedOutput);
 		});

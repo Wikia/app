@@ -279,7 +279,7 @@ class WikiaMapsSpecialController extends WikiaSpecialPageController {
 	 * @return string
 	 */
 	static function getSpecialUrl( $name = self::PAGE_NAME ) {
-		return SpecialPage::getTitleFor( $name )->getFullUrl();
+		return SpecialPage::getTitleFor( $name )->getFullURL();
 	}
 	
 	/**
@@ -314,7 +314,7 @@ class WikiaMapsSpecialController extends WikiaSpecialPageController {
 
 	/**
 	 * Iterates through $items and changes image URL to thumbnail
-	 * @param Array $items
+	 * @param array $items
 	 * @param Integer $width
 	 * @param Integer $height
 	 */
@@ -326,7 +326,7 @@ class WikiaMapsSpecialController extends WikiaSpecialPageController {
 
 	/**
 	 * Sets template variables depending on skin
-	 * @param Array $mapsResponse an array taken from API response
+	 * @param array $mapsResponse an array taken from API response
 	 * @param String $selectedSort a sorting option passed in $_GET
 	 */
 	private function prepareTemplateData( $mapsResponse, $selectedSort ) {
@@ -409,7 +409,7 @@ class WikiaMapsSpecialController extends WikiaSpecialPageController {
 	 * Renders pagination and adds it to template variables for Oasis skin
 	 * @param Integer $totalMaps
 	 * @param Integer $currentPage
-	 * @param Array $urlParams
+	 * @param array $urlParams
 	 */
 	private function addPagination( $totalMaps, $currentPage, $urlParams ) {
 		$url = $this->getContext()->getTitle()->getFullURL( $urlParams );

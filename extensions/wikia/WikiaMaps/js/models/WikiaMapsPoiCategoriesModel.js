@@ -67,11 +67,7 @@ define('wikia.maps.poiCategories.model',
 			}
 
 			// if marker property is not empty it means there was a new image uploaded
-			if (poiCategory.marker) {
-				return true;
-			}
-
-			return false;
+			return !!poiCategory.marker;
 		}
 
 		/**
