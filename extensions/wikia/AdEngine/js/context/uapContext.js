@@ -13,12 +13,17 @@ define('ext.wikia.adEngine.uapContext', [
 		return context.uapId;
 	}
 
+	function isUapLoaded() {
+		return !!context.uapId;
+	}
+
 	function reset() {
 		context = {};
 	}
 
 	return {
 		getUapId: getUapId,
+		isUapLoaded: isUapLoaded,
 		reset: reset,
 		setUapId: setUapId
 	};
