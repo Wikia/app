@@ -5,7 +5,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 		'fandom' => [
 			'header' => [
 				'type' => 'link-image',
-				'image' => 'company-logo-fandom',
+				'image' => 'wds-company-logo-fandom',
 				'href' => 'http://fandom.wikia.com',
 				'title' => [
 					'type' => 'translatable-text',
@@ -64,7 +64,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 			'links' => [
 				[
 					'type' => 'link-image',
-					'image' => 'icons-facebook',
+					'image' => 'wds-icons-facebook',
 					'title' => [
 						'type' => 'translatable-text',
 						'key' => 'global-footer-fandom-follow-us-link-facebook'
@@ -73,7 +73,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 				],
 				[
 					'type' => 'link-image',
-					'image' => 'icons-twitter',
+					'image' => 'wds-icons-twitter',
 					'title' => [
 						'type' => 'translatable-text',
 						'key' => 'global-footer-fandom-follow-us-link-twitter'
@@ -82,7 +82,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 				],
 				[
 					'type' => 'link-image',
-					'image' => 'icons-reddit',
+					'image' => 'wds-icons-reddit',
 					'title' => [
 						'type' => 'translatable-text',
 						'key' => 'global-footer-fandom-follow-us-link-reddit'
@@ -91,7 +91,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 				],
 				[
 					'type' => 'link-image',
-					'image' => 'icons-youtube',
+					'image' => 'wds-icons-youtube',
 					'title' => [
 						'type' => 'translatable-text',
 						'key' => 'global-footer-fandom-follow-us-link-youtube'
@@ -100,7 +100,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 				],
 				[
 					'type' => 'link-image',
-					'image' => 'icons-instagram',
+					'image' => 'wds-icons-instagram',
 					'title' => [
 						'type' => 'translatable-text',
 						'key' => 'global-footer-fandom-follow-us-link-instagram'
@@ -112,7 +112,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 		'wikia' => [
 			'header' => [
 				'type' => 'line-image',
-				'image' => 'company-logo-wikia',
+				'image' => 'wds-company-logo-wikia',
 				'title' => [
 					'type' => 'translatable-text',
 					'key' => 'global-footer-wikia-header'
@@ -288,7 +288,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 			'links' => [
 				[
 					'type' => 'link-image',
-					'image' => 'company-store-appstore',
+					'image' => 'wds-company-store-appstore',
 					'title' => [
 						'type' => 'translatable-text',
 						'key' => 'global-footer-wikia-community-apps-link-app-store'
@@ -297,7 +297,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 				],
 				[
 					'type' => 'link-image',
-					'image' => 'company-store-googleplay',
+					'image' => 'wds-company-store-googleplay',
 					'title' => [
 						'type' => 'translatable-text',
 						'key' => 'global-footer-wikia-community-apps-link-google-play'
