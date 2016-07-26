@@ -9,8 +9,8 @@
 		<? $class = ($i == 0) ? ' first ' : ''; ?>
 		<? $class .= ($pages[$i] == $currentPage) ? ' selected ' : ''; ?>
 		
-		<? if( gettype($pages[$i]) == 'string' ): ?>
-			<li class="ellipsis"><?= $pages[$i] ?></li>
+		<? if( is_string($pages[$i]) ): ?>
+			<li class="ellipsis"><?= htmlspecialchars( $pages[$i] ) ?></li>
 		<? else: ?>
 			<li data-page="<?= $pages[$i]; ?>" class="<?= $class ?>">
 				<a href="<?= htmlspecialchars( $url !== '#' ? $url.$pages[$i] : $url ) ?>"><?= $pages[$i] ?></a>
