@@ -8,6 +8,11 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 	const CACHE_VERSION = 2;
 
 	/**
+	 * @var string ERR_NONEXISTENT_FILE error message returned in a CSS comment if a nonexistent Sass file was requested
+	 */
+	const ERR_NONEXISTENT_FILE = 'nonexistent file';
+
+	/**
 	 * @var bool $exists Whether the file we're trying to load exists
 	 */
 	protected $exists = true;
@@ -50,7 +55,7 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 		// SUS-399: Abort early if we received a request for a file that no longer exists
 		if ( !$this->exists ) {
 			wfProfileOut( __METHOD__ );
-			return '';
+			return $this->makeComment( static::ERR_NONEXISTENT_FILE );
 		}
 
 		$processingTimeStart = null;
