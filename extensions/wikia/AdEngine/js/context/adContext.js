@@ -71,7 +71,7 @@ define('ext.wikia.adEngine.adContext', [
 				forcePageFairByURL = isUrlParamSet('pagefairdetection'),
 				canBeSampled = Sampler.sample(1, 10);
 
-            if (forcePageFairByURL || (geoIsSupported && canBeSampled)) {
+			if (forcePageFairByURL || (geoIsSupported && canBeSampled)) {
 				context.opts.pageFairDetection = true;
 			}
 		}

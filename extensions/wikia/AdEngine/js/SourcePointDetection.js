@@ -4,16 +4,16 @@ define('ext.wikia.adEngine.sourcePointDetection', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adTracker',
 	'wikia.document',
+	'wikia.window',
 	'wikia.krux',
 	'wikia.log'
-], function (adContext, adTracker, doc, krux, log) {
+], function (adContext, adTracker, doc, win, krux, log) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.sourcePointDetection',
 		statusTracked = false,
 		detectionInitialized = false,
 		spDetectionTime;
-
 
 	function getClientId() {
 		log('getClientId', 'info', logGroup);
@@ -43,7 +43,7 @@ define('ext.wikia.adEngine.sourcePointDetection', [
 			detectionScript = doc.createElement('script'),
 			node = doc.getElementsByTagName('script')[0];
 
-		window.ads.runtime.sp = window.ads.runtime.sp || {};
+		win.ads.runtime.sp = win.ads.runtime.sp || {};
 		spDetectionTime = adTracker.measureTime('spDetection', {}, 'start');
 		spDetectionTime.track();
 

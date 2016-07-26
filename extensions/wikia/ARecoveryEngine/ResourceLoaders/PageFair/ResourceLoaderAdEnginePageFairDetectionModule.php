@@ -1,10 +1,9 @@
 <?php
 
-class ResourceLoaderAdEnginePageFairDetectionModule extends ResourceLoaderAdEngineBase
-{
+class ResourceLoaderAdEnginePageFairDetectionModule extends ResourceLoaderAdEngineBase {
 	const REMOTE_FILE_URL = 'http://asset.pagefair.com/measure.min.js';
 	const LOCAL_FILE_PATH = __DIR__ . '/../js/PageFair/measure.min.js';
-	const TTL_SCRIPTS = 86400;   // one day for fresh scripts from SourcePoint
+	const TTL_SCRIPTS = 86400;   // one day for fresh scripts from PageFair
 	const TTL_GRACE = 3600; // one hour for old scripts (served if we fail to fetch fresh scripts)
 	const CACHE_BUSTER = 1;     // increase this any time the local files change
 	const REQUEST_TIMEOUT = 30;
@@ -27,7 +26,7 @@ class ResourceLoaderAdEnginePageFairDetectionModule extends ResourceLoaderAdEngi
 	 */
 	protected function getFallbackDataWhenRequestFails() {
 		return [
-			'script' => $this->getDataFromLocalFile(self::LOCAL_FILE_PATH),
+			'script' => $this->getDataFromLocalFile( self::LOCAL_FILE_PATH ),
 			'modTime' => $this->getCurrentTimestamp(),
 			'ttl' => self::TTL_GRACE
 		];
@@ -37,14 +36,13 @@ class ResourceLoaderAdEnginePageFairDetectionModule extends ResourceLoaderAdEngi
 	 * @param string $filePath
 	 * @return bool|string
 	 */
-	protected function getDataFromLocalFile($filePath)
-	{
+	protected function getDataFromLocalFile( $filePath ) {
 		$scripts = [
 			( new ResourceLoaderScript() )
 				->setTypeLocal()
-				->setValue($filePath)
+				->setValue( $filePath )
 		];
 
-		return $this->generateData($scripts);
+		return $this->generateData( $scripts );
 	}
 }

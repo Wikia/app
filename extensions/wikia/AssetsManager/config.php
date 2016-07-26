@@ -58,6 +58,7 @@ $config['adengine2_desktop_js'] = array(
 	'skin' => [ 'oasis', 'wikiamobile' ],
 	'assets' => array(
 		// was: early queue
+		'//resources/wikia/modules/browserDetect.js',
 		'//resources/wikia/modules/iframeWriter.js',
 		'//resources/wikia/modules/scriptwriter.js',
 		'//extensions/wikia/AdEngine/js/AdDecoratorLegacyParamFormat.js',
@@ -883,6 +884,7 @@ $config['mercury_ads_js'] = array(
 		'#group_tracker_js',
 		'//resources/wikia/modules/log.js',
 		'//resources/wikia/modules/window.js',
+		'//resources/wikia/modules/browserDetect.js',
 		'//resources/wikia/modules/document.js',
 		'//resources/wikia/modules/location.js',
 		'//resources/wikia/modules/querystring.js',

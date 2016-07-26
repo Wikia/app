@@ -6,6 +6,7 @@ describe('Module ext.wikia.adEngine.pageFairDetection', function () {
 		return modules['ext.wikia.adEngine.pageFairDetection'](
 				mocks.adContext,
 				mocks.scriptLoader,
+				mocks.detectBrowser,
 				mocks.document,
 				mocks.log,
 				mocks.window
@@ -22,7 +23,7 @@ describe('Module ext.wikia.adEngine.pageFairDetection', function () {
 			targeting: {
 				skin: 'oasis'
 			}
-		}
+		};
 	}
 
 	function getMocks() {
@@ -33,17 +34,27 @@ describe('Module ext.wikia.adEngine.pageFairDetection', function () {
 			scriptLoader: {
 				loadAsync: noop
 			},
+			detectBrowser: {
+				isMobile : function () {
+					return false;
+				}
+			},
 			document: {
 				dispatchEvents: noop,
 				dispatchEvent: noop,
-				getElementsByTagName: noop
+				getElementsByTagName: noop,
+				createEvent: function () {
+					return {
+						initEvent: noop()
+					};
+				},
 			},
 			log: noop,
 			window: {
 				ads: {
 					runtime: {}
 				}
-			},
+			}
 		};
 	}
 
