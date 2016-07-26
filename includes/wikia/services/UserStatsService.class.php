@@ -62,6 +62,9 @@ class UserStatsService extends WikiaModel {
 
 		$stats = $this->getStats( Title::GAID_FOR_UPDATE );
 
+		echo "STATS 2:";
+		var_dump($stats);
+
 		// update edit counts on wiki
 		if ( empty( $stats['editcount'] ) ) {
 			$stats['editcount'] = $this->calculateEditCountWiki( Title::GAID_FOR_UPDATE );
