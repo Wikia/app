@@ -5,7 +5,7 @@
  * @author Maciej Brencz
  */
 
-class ArticleCategoriesController extends WikiaController {
+class ArticleCategoriesController extends WikiaService {
 
 	public function index() {
 		wfProfileIn( __METHOD__ );
