@@ -58,7 +58,7 @@ if ( is_array($imageList) && count($imageList) > 0) {
 	<?php
 
 	foreach($imageList as $n => $image) {
-		$id = "img-{$image['wikiId']}-{$image['pageId']}";
+		$id = "img-{$image['wiki_id']}-{$image['page_id']}";
 		$stateId = intval($image['state']);
 ?>
 
