@@ -2,17 +2,14 @@
 define('ext.wikia.adEngine.provider.directGptMobile', [
 	'ext.wikia.adEngine.provider.factory.wikiaGpt',
 	'ext.wikia.adEngine.uapContext',
-	'wikia.document',
-	'wikia.window'
-], function (factory, uapContext, doc, win) {
+	'ext.wikia.adEngine.utils.eventDispatcher'
+], function (factory, uapContext, eventDispatcher) {
 	'use strict';
 
 	// TODO: ADEN-3542
 	function dispatchNoUapEvent(slotName) {
-		var event = doc.createEvent('CustomEvent');
 		if (slotName === 'MOBILE_TOP_LEADERBOARD' && uapContext.getUapId() === undefined) {
-			event.initCustomEvent('wikia.not_uap', true, true, {});
-			win.dispatchEvent(event);
+			eventDispatcher.dispatch('wikia.not_uap');
 		}
 	}
 
