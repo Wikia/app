@@ -103,7 +103,8 @@ define('ext.wikia.adEngine.template.bfaa', [
 	};
 
 	function show(params) {
-		var handler,
+		var event = doc.createEvent('CustomEvent'),
+			handler,
 			skin = adContext.getContext().targeting.skin;
 
 		switch (skin) {
@@ -133,7 +134,9 @@ define('ext.wikia.adEngine.template.bfaa', [
 
 		uapContext.setUapId(params.uap);
 		unblockedSlots.forEach(btfBlocker.unblock);
-		win.dispatchEvent(new Event('wikia.uap'));
+
+		event.initCustomEvent('wikia.uap', true, true, {});
+		win.dispatchEvent(event);
 	}
 
 	return {
