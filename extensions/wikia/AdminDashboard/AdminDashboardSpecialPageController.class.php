@@ -25,27 +25,27 @@ class AdminDashboardSpecialPageController extends WikiaSpecialPageController {
 		$this->tab = $this->getVal( 'tab', 'general' );
 
 		// links
-		$this->urlThemeDesigner = Title::newFromText( 'ThemeDesigner', NS_SPECIAL )->getFullURL();
-		$this->urlRecentChanges = Title::newFromText( 'RecentChanges', NS_SPECIAL )->getFullURL();
+		$this->urlThemeDesigner = SpecialPage::getTitleFor( 'ThemeDesigner' )->getFullURL();
+		$this->urlRecentChanges = SpecialPage::getTitleFor( 'RecentChanges' )->getFullURL();
 		$this->urlTopNavigation = Title::newFromText( 'Wiki-navigation', NS_MEDIAWIKI )->getFullURL( 'action=edit' );
-		$this->urlWikiFeatures = Title::newFromText( 'WikiFeatures', NS_SPECIAL )->getFullURL();
+		$this->urlWikiFeatures = SpecialPage::getTitleFor( 'WikiFeatures' )->getFullURL();
 
-		$this->urlListUsers = Title::newFromText( 'ListUsers', NS_SPECIAL )->getFullURL();
-		$this->urlUserRights = Title::newFromText( 'UserRights', NS_SPECIAL )->getFullURL();
+		$this->urlListUsers = SpecialPage::getTitleFor( 'ListUsers' )->getFullURL();
+		$this->urlUserRights = SpecialPage::getTitleFor( 'UserRights' )->getFullURL();
 
 		$this->urlCommunityCorner = Title::newFromText( 'Community-corner', NS_MEDIAWIKI )->getFullURL( 'action=edit' );
-		$this->urlAllCategories = Title::newFromText( 'Categories', NS_SPECIAL )->getFullURL();
-		$this->urlAddPage = Title::newFromText( 'CreatePage', NS_SPECIAL )->getFullURL();
-		$this->urlAddPhoto = Title::newFromText( 'Upload', NS_SPECIAL )->getFullURL();
+		$this->urlAllCategories = SpecialPage::getTitleFor( 'Categories' )->getFullURL();
+		$this->urlAddPage = SpecialPage::getTitleFor( 'CreatePage' )->getFullURL();
+		$this->urlAddPhoto = SpecialPage::getTitleFor( 'Upload' )->getFullURL();
 		if ( !empty( $this->wg->EnableSpecialVideosExt ) ) {
 			$this->showVideoLink = true;
-			$this->urlAddVideo = Title::newFromText( 'WikiaVideoAdd', NS_SPECIAL )->getFullURL();
-			$this->urlAddVideoReturnUrl = SpecialPage::getTitleFor( "Videos" )->escapeLocalUrl();
+			$this->urlAddVideo = SpecialPage::getTitleFor( 'WikiaVideoAdd' )->getFullURL();
+			$this->urlAddVideoReturnUrl = SpecialPage::getTitleFor( 'Videos' )->escapeLocalURL();
 		} else {
 			$this->showVideoLink = false;
 		}
-		$this->urlCreateBlogPage = Title::newFromText( 'CreateBlogPage', NS_SPECIAL )->getFullURL();
-		$this->urlMultipleUpload = Title::newFromText( 'MultipleUpload', NS_SPECIAL )->getFullURL();
+		$this->urlCreateBlogPage = SpecialPage::getTitleFor( 'CreateBlogPage' )->getFullURL();
+		$this->urlMultipleUpload = SpecialPage::getTitleFor( 'MultipleUpload' )->getFullURL();
 		$this->urlSpecialCss = SpecialPage::getTitleFor( 'CSS' )->getFullURL();
 
 		// special:specialpages
@@ -54,9 +54,6 @@ class AdminDashboardSpecialPageController extends WikiaSpecialPageController {
 		// icon display logic
 		$this->displayWikiFeatures = !empty( $this->wg->EnableWikiFeatures );
 		$this->displaySpecialCss = !empty( $this->wg->EnableSpecialCssExt );
-
-		// add messages package
-		JSMessages::enqueuePackage( 'AdminDashboard', JSMessages::INLINE );
 
 		// Add Upload Photos Dialog
 		Wikia::addAssetsToOutput( 'upload_photos_dialog_js' );
@@ -68,12 +65,11 @@ class AdminDashboardSpecialPageController extends WikiaSpecialPageController {
 	 *
 	 */
 	public function getAdvancedSection() {
-
 		if ( !$this->wg->User->isAllowed( 'admindashboard' ) ) {
 			$this->displayRestrictionError();
 			return false; // skip rendering
 		}
-		$this->sk = $this->getContext()->getSkin();
+
 		$pages = SpecialPageFactory::getUsablePages();
 
 		if ( count( $pages ) == 0 ) {
