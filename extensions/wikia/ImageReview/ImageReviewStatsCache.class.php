@@ -56,6 +56,25 @@ class ImageReviewStatsCache
 		$this->wg = $wg;
 	}
 
+	/**
+	 * @return array
+     */
+	public function getAllowedStats() {
+		return $this->allowed_stats;
+	}
+
+	public function getStatsKey( $key ) {
+		if ( !in_array( $key, $this->allowed_stats ) ) {
+			$this->warning( "ImageReviewLog", [
+				'method' => __METHOD__,
+				'message' => 'Incorrect cache stats key',
+				'stats_key' => $key,
+			] );
+			return '';
+		}
+		return $this->image_stats_cache_keys[$key];
+	}
+
 	public function getStats() {
 		$stats = [];
 		foreach( $this->image_stats_cache_keys as $key => $cache_key ) {
@@ -69,16 +88,12 @@ class ImageReviewStatsCache
 
 	public function setStats ( $new_stats ) {
 		foreach ( $new_stats as $key => $value ) {
-			if ( !in_array( $key, $this->allowed_stats ) ) {
-				$this->warning( "ImageReviewLog", [
-					'method' => __METHOD__,
-					'message' => 'Incorrect cache stats key',
-					'stats_key' => $key,
-					'change' => $value,
-				] );
+			$cache_key = $this->getStatsKey( $key );
+			if ( empty( $cache_key ) ) {
 				continue;
 			}
-			$this->wg->memc->set( $this->image_stats_cache_keys[$key], $value, self::CACHE_EXPIRE_TIME );
+
+			$this->wg->memc->set( $cache_key, $value, self::CACHE_EXPIRE_TIME );
 		}
 	}
 
@@ -92,20 +107,15 @@ class ImageReviewStatsCache
 	 * @param $relative_change integer amount by which given stats should be changed
      */
 	public function offsetStats ( $key, $relative_change ) {
-		if ( !in_array( $key, $this->allowed_stats ) ) {
-			$this->warning( "ImageReviewLog", [
-				'method' => __METHOD__,
-				'message' => 'Incorrect cache stats key',
-				'stats_key' => $key,
-				'change' => $relative_change,
-			] );
+		$cache_key = $this->getStatsKey( $key );
+		if ( empty( $cache_key ) ) {
 			return;
 		}
 
 		if ( $relative_change > 0 ) {
-			$this->wg->memc->incr( $this->image_stats_cache_keys[$key], $relative_change );
+			$this->wg->memc->incr( $cache_key, $relative_change );
 		} else {
-			$this->wg->memc->decr( $this->image_stats_cache_keys[$key], -$relative_change );
+			$this->wg->memc->decr( $cache_key, -$relative_change );
 		}
 	}
 }
