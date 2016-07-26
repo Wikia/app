@@ -2,7 +2,7 @@
 /**
  * Pagination controller
  */
-class PaginationController extends WikiaController {
+class PaginationController extends WikiaService {
 	const MAX_DISPLAYED_PAGES = 6;
 
 	/**
