@@ -3,8 +3,8 @@
  * modal is an entry point for Community Page
  */
 define('CommunityPageBenefitsModal',
-	['jquery', 'wikia.loader', 'mw', 'wikia.mustache', 'wikia.tracker', 'wikia.nirvana'],
-	function ($, loader, mw, mustache, tracker, nirvana) {
+	['jquery', 'wikia.loader', 'mw', 'wikia.mustache', 'wikia.tracker', 'wikia.nirvana', 'wikia.cookies'],
+	function ($, loader, mw, mustache, tracker, nirvana, cookies) {
 		'use strict';
 		var modalConfig = {
 				vars: {
@@ -46,7 +46,9 @@ define('CommunityPageBenefitsModal',
 		 */
 		function handleRequestsForModal(loaderRes, nirvanaRes) {
 			var wikiTopic = nirvanaRes[0].wikiTopic,
-				allMembersCount = nirvanaRes[0].memberCount;
+				allMembersCount = nirvanaRes[0].memberCount,
+				modalImageUrl = nirvanaRes[0].modalImageUrl,
+				image = new Image();
 
 			mw.messages.set(loaderRes.messages);
 
@@ -59,12 +61,18 @@ define('CommunityPageBenefitsModal',
 				connectText: mw.message('communitypage-entrypoint-modal-connect-text', wikiTopic).plain(),
 				exploreText: mw.message('communitypage-entrypoint-modal-explore-text', wikiTopic).plain(),
 				buttonText: mw.message('communitypage-entrypoint-modal-button-text').plain(),
-				buttonUrl: specialCommunityTitle.getUrl()
+				buttonUrl: specialCommunityTitle.getUrl(),
+				benefitsImageUrl: modalImageUrl
 			});
 
-			require(['wikia.ui.factory'], function (uiFactory) {
-				uiFactory.init(['modal']).then(createComponent);
-			});
+			// wait for image to load, or show it on error
+			image.onload = image.onerror = function () {
+				require(['wikia.ui.factory'], function (uiFactory) {
+					uiFactory.init(['modal']).then(createComponent);
+				});
+			};
+			// preload the image to run on load action
+			image.src = modalImageUrl;
 		}
 
 		/**
@@ -90,9 +98,20 @@ define('CommunityPageBenefitsModal',
 				label: 'benefits-modal-shown'
 			});
 
-			// Bind tracking on elements with data-track attribute
-			modalInstance.$element.find('[data-track]').on('mousedown', function (e) {
-				track({label: $(e.target).data('track')});
+			// Bind tracking on modal on mousedown action
+			modalInstance.$element.on('mousedown', function(e) {
+				track({
+					label: $(e.target).data('track') || 'modal-area'
+				});
+
+				// set cookie that user clicked on the modal area
+				if (e.target.title !== 'close') {
+					cookies.set('cpBenefitsModalClicked', 1, {
+						domain: mw.config.get('wgCookieDomain'),
+						expires: 2592000000, // 30 days
+						path: mw.config.get('wgCookiePath')
+					});
+				}
 			});
 
 			// Bind tracking modal close
@@ -102,6 +121,21 @@ define('CommunityPageBenefitsModal',
 					label: 'modal-closed'
 				});
 			});
+
+			setModalShownCookie();
+		}
+
+		function setModalShownCookie() {
+			cookies.set('cpBenefitsModalShown', getTimestamp(), {
+				domain: mw.config.get('wgCookieDomain'),
+				expires: 2592000000, // 30 days
+				path: mw.config.get('wgCookiePath')
+			});
+		}
+
+		// Gets timestamp in format of YYYY-mm-dd HH:mm:ss
+		function getTimestamp() {
+			return (new Date()).toISOString().substr(0, 19).replace('T', ' ');
 		}
 
 		return {

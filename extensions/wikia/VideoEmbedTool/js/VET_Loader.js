@@ -86,7 +86,6 @@
 			// handle login on article page
 			window.wikiaAuthModal.load({
 				forceLogin: true,
-				url: '/signin?redirect=' + encodeURIComponent(window.location.href),
 				origin: 'vet',
 				onAuthSuccess: function () {
 					window.UserLogin.forceLoggedIn = true;

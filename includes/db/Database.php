@@ -882,7 +882,7 @@ abstract class DatabaseBase implements DatabaseType {
 		}
 
 		# <Wikia>
-		global $wgDBReadOnly;
+		global $wgDBReadOnly, $wgReadOnly;
 		if ( $is_writeable && $wgDBReadOnly ) {
 			if ( !Profiler::instance()->isStub() ) {
 				wfProfileOut( $queryProf );
@@ -891,7 +891,8 @@ abstract class DatabaseBase implements DatabaseType {
 			WikiaLogger::instance()->error( 'DB readonly mode', [
 				'exception' => new WikiaException( $fname . ' called in read-only mode' ),
 				'sql'       => $sql,
-				'server'    => $this->mServer
+				'server'    => $this->mServer,
+				'reason'    => (string) $wgReadOnly,
 			] );
 			wfDebug( sprintf( "%s: DB read-only mode prevented the following query: %s\n", __METHOD__, $sql ) );
 			return false;
@@ -969,7 +970,7 @@ abstract class DatabaseBase implements DatabaseType {
 			wfDebug( "Query {$this->mDBname} (DB user: {$DBuser}) ($cnt) ($master): $sqlx\n" );
 		}
 
-		if ( istainted( $sql ) & TC_MYSQL ) {
+		if ( is_tainted( $sql ) ) {
 			throw new MWException( 'Tainted query found' );
 		}
 

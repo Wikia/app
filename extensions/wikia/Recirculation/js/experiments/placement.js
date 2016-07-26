@@ -19,6 +19,8 @@ require([
 	'ext.wikia.recirculation.helpers.cakeRelatedContent',
 	'ext.wikia.recirculation.helpers.curatedContent',
 	'ext.wikia.recirculation.helpers.googleMatch',
+	'ext.wikia.recirculation.experiments.placement.IMPACT_FOOTER',
+	'ext.wikia.recirculation.experiments.placement.FANDOM_TOPIC',
 	'ext.wikia.adEngine.taboolaHelper',
 	require.optional('videosmodule.controllers.rail')
 ], function(
@@ -41,6 +43,8 @@ require([
 	cakeHelper,
 	curatedHelper,
 	googleMatchHelper,
+	impactFooterExperiment,
+	fandomTopicExperiment,
 	taboolaHelper,
 	videosModule
 ) {
@@ -106,17 +110,17 @@ require([
 			view = railView();
 			isRail = true;
 			break;
-		case 'FANDOM_TOPIC':
+		case 'FANDOM_HERO':
 			helper = fandomHelper({
-				type: 'community',
+				type: 'hero',
 				limit: 5
 			});
 			view = railView();
 			isRail = true;
 			break;
-		case 'FANDOM_HERO':
+		case 'SDCC':
 			helper = fandomHelper({
-				type: 'hero',
+				type: 'category',
 				limit: 5
 			});
 			view = railView();
@@ -171,26 +175,20 @@ require([
 			isRail = true;
 			break;
 		case 'IMPACT_FOOTER':
-			renderImpactFooter();
+			impactFooterExperiment.run(experimentName);
+			return;
+		case 'FANDOM_TOPIC':
+			fandomTopicExperiment.run(experimentName)
+				.fail(handleError);
 			return;
 		default:
 			return;
 	}
 
 	if (isRail) {
-		afterRailLoads(runRailExperiment);
+		utils.afterRailLoads(runRailExperiment);
 	} else {
 		runExperiment();
-	}
-
-	function afterRailLoads(callback) {
-		var $rail = $('#WikiaRail');
-
-		if ($rail.find('.loading').exists()) {
-			$rail.one('afterLoad.rail', callback);
-		} else {
-			callback();
-		}
 	}
 
 	function runExperiment() {
@@ -202,6 +200,8 @@ require([
 
 	function runRailExperiment() {
 		var curated = curatedHelper();
+
+		log('Rail loaded, running experiment', 'info', logGroup);
 		helper.loadData()
 			.then(curated.injectContent)
 			.then(view.render)
@@ -223,7 +223,7 @@ require([
 		}
 
 		errorHandled = true;
-		afterRailLoads(function() {
+		utils.afterRailLoads(function() {
 			var rail = railView();
 
 			fandomHelper({
@@ -280,7 +280,7 @@ require([
 				}
 			});
 
-		afterRailLoads(function() {
+		utils.afterRailLoads(function() {
 			var rail = railView();
 
 			lateralHelper({
@@ -303,7 +303,7 @@ require([
 	}
 
 	function renderTaboola() {
-		afterRailLoads(function() {
+		utils.afterRailLoads(function() {
 			taboolaHelper.initializeWidget({
 				mode: 'thumbnails-rr2',
 				container: railContainerId,
@@ -319,38 +319,6 @@ require([
 				tracker.trackVerboseClick(experimentName, label);
 			});
 		});
-	}
-
-	function renderImpactFooter() {
-		var curated = curatedHelper(),
-			fView = impactFooterView(),
-			rView = railView(),
-			sView = scrollerView();
-
-		contentLinksHelper({
-			count: 6,
-			extra: 6
-		}).loadData()
-			.then(sView.render)
-			.then(sView.setupTracking(experimentName));
-
-		dataHelper({}).loadData()
-			.then(function(data) {
-				var fandomData = {
-					title: data.fandom.title,
-					items: data.fandom.items.splice(0,5)
-				};
-
-				fView.render(data)
-					.then(fView.setupTracking(experimentName));
-
-				afterRailLoads(function() {
-					curated.injectContent(fandomData)
-						.then(rView.render)
-						.then(rView.setupTracking)
-						.then(curatedHelper.setupTracking);
-				});
-			});
 	}
 
 	function renderLiftigniterFandom(waitToFetch) {

@@ -784,9 +784,9 @@ class WikiService extends WikiaModel {
 	/**
 	 * Get details about one or more wikis
 	 *
-	 * @param Array $wikiIds An array of one or more wiki ID's
+	 * @param array $wikiIds An array of one or more wiki ID's
 	 *
-	 * @return Array A collection of results, the index is the wiki ID and each item has a name,
+	 * @return array A collection of results, the index is the wiki ID and each item has a name,
 	 * url, lang, hubId, headline, desc, image and flags index.
 	 */
 	public function getDetails( Array $wikiIds = null ) {
@@ -868,10 +868,11 @@ class WikiService extends WikiaModel {
 			);
 
 			while( $row = $db->fetchObject( $rows ) ) {
+				$domain = parse_url( $row->city_url, PHP_URL_HOST );
 				$item = array(
 					'name' => $row->city_title,
 					'url' => $row->city_url,
-					'domain' => $row->city_url,
+					'domain' => !empty($domain) ? $domain : null,
 					'title' => $row->city_title,
 					'topic' => $row->cat_name,
 					'lang' => $row->city_lang,
@@ -888,7 +889,7 @@ class WikiService extends WikiaModel {
 				);
 
 				$cacheKey = wfSharedMemcKey( __METHOD__, self::CACHE_VERSION, $row->city_id );
-				$this->wg->Memc->set( $cacheKey, $item, 43200 /* 12h */ );
+				$this->wg->Memc->set( $cacheKey, $item, WikiaResponse::CACHE_LONG /* 12h */ );
 				$results[$row->city_id] = $item;
 			}
 		}

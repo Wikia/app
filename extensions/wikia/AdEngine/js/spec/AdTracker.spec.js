@@ -48,7 +48,7 @@ describe('ext.wikia.adEngine.adTracker', function () {
 		});
 	});
 
-	it('track: event with sp data', function () {
+	it('track: event with sp=yes data', function () {
 		var adTracker = modules['ext.wikia.adEngine.adTracker'](trackerMock, windowMock, logMock);
 
 		windowMock.ads.runtime.sp.blocking = true;
@@ -58,6 +58,36 @@ describe('ext.wikia.adEngine.adTracker', function () {
 		expect(trackerMock.track).toHaveBeenCalledWith({
 			ga_category: 'ad/test/event',
 			ga_action: 'data1=one;sp=yes',
+			ga_label: '',
+			ga_value: 0,
+			trackingMethod: 'ad'
+		});
+	});
+
+	it('track: event with sp=no data', function () {
+		var adTracker = modules['ext.wikia.adEngine.adTracker'](trackerMock, windowMock, logMock);
+
+		windowMock.ads.runtime.sp.blocking = false;
+
+		spyOn(trackerMock, 'track');
+		adTracker.track('test/event', {data1: 'one'});
+		expect(trackerMock.track).toHaveBeenCalledWith({
+			ga_category: 'ad/test/event',
+			ga_action: 'data1=one;sp=no',
+			ga_label: '',
+			ga_value: 0,
+			trackingMethod: 'ad'
+		});
+	});
+
+	it('track: event without sp data', function () {
+		var adTracker = modules['ext.wikia.adEngine.adTracker'](trackerMock, windowMock, logMock);
+
+		spyOn(trackerMock, 'track');
+		adTracker.track('test/event', {data1: 'one'});
+		expect(trackerMock.track).toHaveBeenCalledWith({
+			ga_category: 'ad/test/event',
+			ga_action: 'data1=one',
 			ga_label: '',
 			ga_value: 0,
 			trackingMethod: 'ad'

@@ -685,6 +685,10 @@ class FeedRenderer {
 			$popupTitle = $wg->Lang->getNsText($namespace) . ':' . $item['name'];
 
 			$titleObj = Title::newFromText($item['name'], NS_FILE);
+			if (!$titleObj) {
+				continue;
+			}
+			
 			$fileName = $titleObj->getText(); // Pass display version of title to Lightbox
 
 			// wrapper for thumbnail

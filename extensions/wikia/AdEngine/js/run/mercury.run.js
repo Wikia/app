@@ -3,6 +3,7 @@ require([
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.lookup.amazonMatch',
 	'ext.wikia.adEngine.lookup.openXBidder',
+	'ext.wikia.adEngine.lookup.prebid',
 	'ext.wikia.adEngine.lookup.rubiconFastlane',
 	'ext.wikia.adEngine.customAdsLoader',
 	'ext.wikia.adEngine.messageListener',
@@ -16,6 +17,7 @@ require([
 	adContext,
 	amazon,
 	oxBidder,
+	prebid,
 	rubiconFastlane,
 	customAdsLoader,
 	messageListener,
@@ -43,8 +45,12 @@ require([
 			rubiconFastlane.call();
 		}
 
-		if (geo.isProperGeo(instantGlobals.wgAdDriverOpenXBidderCountriesMobile)) {
+		if (geo.isProperGeo(instantGlobals.wgAdDriverOpenXBidderCountries)) {
 			oxBidder.call();
+		}
+
+		if (geo.isProperGeo(instantGlobals.wgAdDriverPrebidBidderCountries)) {
+			prebid.call();
 		}
 
 		if (adContext.getContext().opts.yavli) {
