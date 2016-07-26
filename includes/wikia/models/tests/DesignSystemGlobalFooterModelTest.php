@@ -158,7 +158,6 @@ class DesignSystemGlobalFooterModelTest extends WikiaBaseTest {
 		$this->assertNotEmpty( $result['fandom'] );
 		$this->assertArrayNotHasKey( 'international_header', $result );
 
-
 		$footerModel = new DesignSystemGlobalFooterModel( 1234, 'de' );
 		$result = $footerModel->getData();
 
@@ -177,7 +176,6 @@ class DesignSystemGlobalFooterModelTest extends WikiaBaseTest {
 		$result = $footerModel->getData();
 
 		$this->assertCount( 1, $result['fandom_overview']['links'] );
-
 	}
 
 	/**
