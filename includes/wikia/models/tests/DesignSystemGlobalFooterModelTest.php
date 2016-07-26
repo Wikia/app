@@ -2,13 +2,13 @@
 
 class DesignSystemGlobalFooterModelTest extends WikiaBaseTest {
 	/**
-	 * @dataProvider setLicensingAndVerticalDataProvider
+	 * @dataProvider getLicensingAndVerticalDataProvider
 	 *
 	 * @param $rightsText license name
 	 * @param $rightsUrl license URL
 	 * @param $expectedResult
 	 */
-	public function testSetLicensingAndVertical( $rightsText, $rightsUrl, $expectedResult ) {
+	public function testGetLicensingAndVertical( $rightsText, $rightsUrl, $expectedResult ) {
 		$wikiId = 1234;
 
 		$rightsTextMock = new stdClass();
@@ -30,7 +30,7 @@ class DesignSystemGlobalFooterModelTest extends WikiaBaseTest {
 		$this->assertEquals( $result['licensing_and_vertical'], $expectedResult );
 	}
 
-	public function setLicensingAndVerticalDataProvider() {
+	public function getLicensingAndVerticalDataProvider() {
 		return [
 			[
 				'CC-BY-SA',
@@ -71,6 +71,182 @@ class DesignSystemGlobalFooterModelTest extends WikiaBaseTest {
 						],
 					],
 				],
+			],
+		];
+	}
+
+	/**
+	 * @dataProvider getHrefDataProvider
+	 *
+	 * @param $lang language code to fetch
+	 * @param $hrefs hrefs definition in different languages
+	 * @param $expectedResult
+	 */
+	public function testGetHref( $lang, $hrefs, $expectedResult ) {
+		$footerModel = new DesignSystemGlobalFooterModel( 1234, $lang );
+		$footerModel->setHrefs( $hrefs );
+
+		$result = $footerModel->getData();
+
+		$this->assertEquals( $result['create_wiki']['links'][0]['href'], $expectedResult );
+	}
+
+	public function getHrefDataProvider() {
+		return [
+			[
+				'pl',
+				[
+					'en' => [
+						'create-new-wiki' => 'http://www.wikia.com'
+					],
+					'default' => [
+						'create-new-wiki' => 'http://www.example.com'
+					],
+					'pl' => [
+						'create-new-wiki' => 'http://www.wikia.pl'
+					],
+				],
+				'http://www.wikia.pl'
+			],
+			[
+				'pl',
+				[
+					'en' => [
+						'create-new-wiki' => 'http://www.wikia.com'
+					],
+					'default' => [
+						'create-new-wiki' => 'http://www.example.com'
+					],
+					'pl' => [],
+				],
+				'http://www.example.com'
+			],
+			[
+				'pl',
+				[
+					'en' => [
+						'create-new-wiki' => 'http://www.wikia.com'
+					],
+					'default' => [
+						'create-new-wiki' => null
+					],
+					'pl' => [],
+				],
+				null
+			],
+			[
+				'en',
+				[
+					'en' => [
+						'create-new-wiki' => 'http://www.wikia.com'
+					],
+					'default' => [
+						'create-new-wiki' => null
+					],
+					'pl' => [],
+				],
+				'http://www.wikia.com'
+			],
+		];
+	}
+
+	public function testInternationalHeader() {
+		$footerModel = new DesignSystemGlobalFooterModel( 1234, 'en' );
+		$result = $footerModel->getData();
+
+		$this->assertNotEmpty( $result['wikia'] );
+		$this->assertNotEmpty( $result['fandom'] );
+		$this->assertArrayNotHasKey( 'international_header', $result );
+
+
+		$footerModel = new DesignSystemGlobalFooterModel( 1234, 'de' );
+		$result = $footerModel->getData();
+
+		$this->assertNotEmpty( $result['international_header'] );
+		$this->assertArrayNotHasKey( 'wikia', $result );
+		$this->assertArrayNotHasKey( 'fandom', $result );
+	}
+
+	public function testGetFandomOverview() {
+		$footerModel = new DesignSystemGlobalFooterModel( 1234, 'en' );
+		$result = $footerModel->getData();
+
+		$this->assertCount( 4, $result['fandom_overview']['links'] );
+
+		$footerModel = new DesignSystemGlobalFooterModel( 1234, 'pl' );
+		$result = $footerModel->getData();
+
+		$this->assertCount( 1, $result['fandom_overview']['links'] );
+
+	}
+
+	/**
+	 * @dataProvider getFollowUsDataProvider
+	 *
+	 * @param $lang language code to fetch
+	 * @param $hrefs hrefs definition in different languages
+	 * @param $expectedCount
+	 */
+	public function testGetFollowUs( $lang, $hrefs, $expectedCount ) {
+		$footerModel = new DesignSystemGlobalFooterModel( 1234, $lang );
+		$footerModel->setHrefs( $hrefs );
+
+		$result = $footerModel->getData();
+		$this->assertCount( $expectedCount, $result['follow_us']['links'] );
+	}
+
+	public function getFollowUsDataProvider() {
+		return [
+			[
+				'de',
+				[
+					'default' => [
+						'social-facebook' => 'http://facebook.com',
+						'social-youtube' => 'http://youtube.com',
+						'social-twitter' => 'http://twitter.com',
+						'social-instagram' => 'http://instagram.com',
+						'social-reddit' => 'http://reddit.com'
+					],
+					'de' => [
+						'social-facebook' => 'http://facebook.com',
+						'social-youtube' => 'http://youtube.com',
+						'social-twitter' => 'http://twitter.com',
+					],
+				],
+				5
+			],
+			[
+				'de',
+				[
+					'default' => [
+						'social-facebook' => 'http://facebook.com',
+						'social-youtube' => 'http://youtube.com',
+						'social-twitter' => 'http://twitter.com',
+						'social-instagram' => null,
+						'social-reddit' => null
+					],
+					'de' => [
+						'social-facebook' => 'http://facebook.com',
+						'social-youtube' => 'http://youtube.com',
+						'social-twitter' => 'http://twitter.com',
+					],
+				],
+				3
+			],
+			[
+				'de',
+				[
+					'default' => [
+						'social-facebook' => null,
+						'social-youtube' => null,
+						'social-twitter' => null,
+						'social-instagram' => null,
+						'social-reddit' => null
+					],
+					'de' => [
+					],
+				],
+				0
 			],
 		];
 	}
