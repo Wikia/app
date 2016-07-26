@@ -6,33 +6,31 @@
  *
  */
 
-$dir = dirname(__FILE__) . '/';
-
-$wgExtensionCredits[ 'specialpage' ][ ] = array(
+$wgExtensionCredits[ 'specialpage' ][] = [
 	'name' => 'Admin Dashboard',
 	'author' => 'Wikia',
 	'descriptionmsg' => 'admindashboard-desc',
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/AdminDashboard',
-);
+];
 
 //classes
-$wgAutoloadClasses['AdminDashboardSpecialPageController'] =  $dir . 'AdminDashboardSpecialPageController.class.php';
-$wgAutoloadClasses['AdminDashboardController'] =  $dir . 'AdminDashboardController.class.php';
-$wgAutoloadClasses['AdminDashboardLogic'] =  $dir . 'AdminDashboardLogic.class.php';
-$wgAutoloadClasses['QuickStatsController'] =  $dir . 'QuickStatsController.class.php';
+$wgAutoloadClasses['AdminDashboardSpecialPageController'] =  __DIR__ . '/AdminDashboardSpecialPageController.class.php';
+$wgAutoloadClasses['AdminDashboardController'] =  __DIR__ . '/AdminDashboardController.class.php';
+$wgAutoloadClasses['AdminDashboardLogic'] =  __DIR__ . '/AdminDashboardLogic.class.php';
+$wgAutoloadClasses['QuickStatsController'] =  __DIR__ . '/QuickStatsController.class.php';
 
 // hooks
 $wgHooks['BeforeToolbarMenu'][] = 'AdminDashboardLogic::onBeforeToolbarMenu';
 
 // i18n mapping
-$wgExtensionMessagesFiles['AdminDashboard'] = $dir . 'AdminDashboard.i18n.php';
-$wgExtensionMessagesFiles['QuickStats'] = $dir . 'QuickStats.i18n.php';
-$wgExtensionMessagesFiles['AdminDashboardAliases'] = $dir . 'AdminDashboard.alias.php';
+$wgExtensionMessagesFiles['AdminDashboard'] = __DIR__ . '/AdminDashboard.i18n.php';
+$wgExtensionMessagesFiles['QuickStats'] = __DIR__ . '/QuickStats.i18n.php';
+$wgExtensionMessagesFiles['AdminDashboardAliases'] = __DIR__ . '/AdminDashboard.alias.php';
 
 // special pages
 $wgSpecialPages[ 'AdminDashboard'] = 'AdminDashboardSpecialPageController';
 
 // register messages package for JS (BugId:41451)
-JSMessages::registerPackage('AdminDashboard', array(
+JSMessages::registerPackage('AdminDashboard', [
 	'admindashboard-loading',
-));
+] );
