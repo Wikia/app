@@ -8,6 +8,11 @@
 class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 	const CACHE_VERSION = 2;
 
+	/**
+	 * @var bool $exists Whether the file we're trying to load exists
+	 */
+	protected $exists = true;
+
 	public function __construct(WebRequest $request) {
 		global $IP;
 		parent::__construct($request);
@@ -30,7 +35,11 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 		$this->mOid = preg_replace( '/^[\/]+/', '', $this->mOid );
 
 		if ( !file_exists( "{$IP}/{$this->mOid}" ) ) {
-			throw new Exception("File {$this->mOid} does not exist!");
+			// SUS-399: allow SCSS processing to continue, log the error
+			$this->exists = false;
+			Wikia\Logger\WikiaLogger::instance()->info( 'Nonexistent SCSS file requested', [
+				'oid' => $this->mOid
+			] );
 		}
 		$this->mContentType = AssetsManager::TYPE_CSS;
 	}
@@ -38,6 +47,12 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 	public function getContent( $processingTimeStart = null ) {
 		global $IP, $wgEnableSASSSourceMaps;
 		wfProfileIn(__METHOD__);
+
+		// SUS-399: Abort early if we received a request for a file that no longer exists
+		if ( !$this->exists ) {
+			wfProfileOut( __METHOD__ );
+			return '';
+		}
 
 		$processingTimeStart = null;
 
