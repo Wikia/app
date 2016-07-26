@@ -133,7 +133,6 @@
 	<?php foreach ( $srcs as $src ): ?>
 		<script src="<?php echo $src ?>"></script>
 	<?php endforeach; ?>
-	<script src="<?php echo $jsMessagePackagesUrl ?>"></script>
 	<script type="text/javascript" src="/load.php?lang=en&mode=articles&articles=MediaWiki%3AChat.js%7CUser%3A<?php echo $wg->User->getName(); ?>%2Fchat.js&only=scripts"></script>
 </body>
 </html>

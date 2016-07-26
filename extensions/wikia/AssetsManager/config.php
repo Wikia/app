@@ -1282,7 +1282,6 @@ $config['chat_js2'] = array(
 
 		// shared libraries
 		'//extensions/wikia/AssetsManager/js/AssetsManager.js',
-		'//extensions/wikia/JSMessages/js/JSMessages.js',
 
 		'//resources/wikia/modules/querystring.js',
 		'//resources/wikia/modules/history.js',
@@ -1299,14 +1298,6 @@ $config['chat_js2'] = array(
 		'//extensions/wikia/Chat2/js/controllers/controllers.js',
 		'//extensions/wikia/Chat2/js/views/views.js',
 		'//extensions/wikia/Chat2/js/views/ChatBanModal.js',
-	)
-);
-
-$config['chat_ban_js'] = array(
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => array(
-		'//extensions/wikia/Chat2/js/views/ChatBanModal.js',
-		'//extensions/wikia/Chat2/js/controllers/ChatBanModalLogs.js'
 	)
 );
 
