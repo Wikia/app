@@ -18,7 +18,7 @@ define('ext.wikia.adEngine.pageFairDetection', [
 		return context;
 	}
 
-	function skinIsMobile() {
+	function isMobileSkin() {
 		return getContext().targeting.skin === 'mercury';
 	}
 
@@ -28,7 +28,7 @@ define('ext.wikia.adEngine.pageFairDetection', [
 			desktop: 'FE3882548B7E471A'
 		};
 
-		return skinIsMobile() || browserDetect.isMobile() ? websiteKeys.mobile : websiteKeys.desktop;
+		return isMobileSkin() || browserDetect.isMobile() ? websiteKeys.mobile : websiteKeys.desktop;
 	}
 
 	function dispatchDetectionEvent(eventName){

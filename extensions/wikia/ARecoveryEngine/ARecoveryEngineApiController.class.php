@@ -22,11 +22,6 @@ class ARecoveryEngineApiController extends WikiaController {
 		$this->loadJSResource( $resourceLoader );
 	}
 
-	public function getPageFairDetection() {
-		$resourceLoader = new ResourceLoaderAdEnginePageFairDetectionModule();
-		$this->loadJSResource( $resourceLoader );
-	}
-
 	public function getBootstrap() {
 		$resourceLoader = new ResourceLoaderAdEngineSourcePointCSBootstrap();
 		$resourceLoaderContext = new ResourceLoaderContext( new ResourceLoader(), new FauxRequest() );
