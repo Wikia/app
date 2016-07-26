@@ -43,6 +43,7 @@ class SpecialDiscussionsController extends WikiaSpecialPageController {
 
 		if ( $this->request->wasPosted() ) {
 			$this->activateDiscussions();
+			WikiFactory::setVarByName( 'wgEnableDiscussions', $this->siteId, true );
 		}
 
 		$this->setIndexOutput();
@@ -69,7 +70,7 @@ class SpecialDiscussionsController extends WikiaSpecialPageController {
 	}
 
 	private function setIndexOutput() {
-		$callMethod =  $this->isDiscussionsActive() ? 'discussionsLink' : 'inputForm';
+		$callMethod = $this->isDiscussionsActive() ? 'discussionsLink' : 'inputForm';
 		$this->response->setVal( 'content', $this->sendSelfRequest( $callMethod ) );
 	}
 
