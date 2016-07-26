@@ -4,7 +4,6 @@
  * @author Inez Korczyński <korczynski@gmail.com>
  * @author Piotr Bablok <piotr.bablok@gmail.com>
  */
-
 class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 	const CACHE_VERSION = 2;
 
@@ -13,22 +12,22 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 	 */
 	protected $exists = true;
 
-	public function __construct(WebRequest $request) {
+	public function __construct( WebRequest $request ) {
 		global $IP;
-		parent::__construct($request);
+		parent::__construct( $request );
 
 		// TODO: the background image shouldn't be passed as the url - we should pass a File reference and derive ourselves
-		if (isset($this->mParams['background-image']) && VignetteRequest::isVignetteUrl($this->mParams['background-image']) && isset($this->mParams['path-prefix'])) {
-			$connector = strpos($this->mParams['background-image'], '?') === false ? '?' : '&';
+		if ( isset( $this->mParams['background-image'] ) && VignetteRequest::isVignetteUrl( $this->mParams['background-image'] ) && isset( $this->mParams['path-prefix'] ) ) {
+			$connector = strpos( $this->mParams['background-image'], '?' ) === false ? '?' : '&';
 			$this->mParams['background-image'] .= "{$connector}path-prefix={$this->mParams['path-prefix']}";
 		}
 
-		if (strpos($this->mOid, '..') !== false) {
-			throw new Exception('File path must not contain \'..\'.');
+		if ( strpos( $this->mOid, '..' ) !== false ) {
+			throw new Exception( 'File path must not contain \'..\'.' );
 		}
 
-		if (!endsWith($this->mOid, '.scss', false)) {
-			throw new Exception('Requested file must be .scss.');
+		if ( !endsWith( $this->mOid, '.scss', false ) ) {
+			throw new Exception( 'Requested file must be .scss.' );
 		}
 
 		//remove slashes at the beginning of the string, we need a pure relative path to open the file
@@ -38,7 +37,7 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 			// SUS-399: allow SCSS processing to continue, log the error
 			$this->exists = false;
 			Wikia\Logger\WikiaLogger::instance()->info( 'Nonexistent SCSS file requested', [
-				'oid' => $this->mOid
+				'oid' => $this->mOid,
 			] );
 		}
 		$this->mContentType = AssetsManager::TYPE_CSS;
@@ -46,7 +45,7 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 
 	public function getContent( $processingTimeStart = null ) {
 		global $IP, $wgEnableSASSSourceMaps;
-		wfProfileIn(__METHOD__);
+		wfProfileIn( __METHOD__ );
 
 		// SUS-399: Abort early if we received a request for a file that no longer exists
 		if ( !$this->exists ) {
@@ -69,9 +68,9 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 		$hasErrors = false;
 
 		try {
-			$sassService = SassService::newFromFile("{$IP}/{$this->mOid}");
-			$sassService->setSassVariables($this->mParams);
-			$sassService->enableSourceMaps(!empty($wgEnableSASSSourceMaps));
+			$sassService = SassService::newFromFile( "{$IP}/{$this->mOid}" );
+			$sassService->setSassVariables( $this->mParams );
+			$sassService->enableSourceMaps( !empty( $wgEnableSASSSourceMaps ) );
 			$sassService->setFilters(
 				SassService::FILTER_IMPORT_CSS | SassService::FILTER_CDN_REWRITE
 				| SassService::FILTER_BASE64 | SassService::FILTER_JANUS
@@ -79,8 +78,8 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 
 			$cacheId = wfSharedMemcKey( __CLASS__, "minified", $sassService->getCacheKey() );
 			$content = $memc->get( $cacheId );
-		} catch (Exception $e) {
-			$content = $this->makeComment($e->getMessage());
+		} catch ( Exception $e ) {
+			$content = $this->makeComment( $e->getMessage() );
 			$hasErrors = true;
 		}
 
@@ -91,26 +90,27 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 		} else {
 			// todo: add extra logging of AM request in case of any error
 			try {
-				$this->mContent = $sassService->getCss( /* useCache */ false);
-			} catch (Exception $e) {
-				$this->mContent = $this->makeComment($e->getMessage());
+				$this->mContent = $sassService->getCss( /* useCache */
+					false );
+			} catch ( Exception $e ) {
+				$this->mContent = $this->makeComment( $e->getMessage() );
 				$hasErrors = true;
 			}
 
 			// This is the final pass on contents which, among other things, performs minification
 			parent::getContent( $processingTimeStart );
 
-			if ( !empty($cacheId) && !$this->mForceProfile && !$hasErrors ) {
+			if ( !empty( $cacheId ) && !$this->mForceProfile && !$hasErrors ) {
 				$memc->set( $cacheId, $this->mContent, WikiaResponse::CACHE_STANDARD );
 			}
 		}
 
-		if ($hasErrors) {
-			wfProfileOut(__METHOD__);
-			throw new Exception($this->mContent);
+		if ( $hasErrors ) {
+			wfProfileOut( __METHOD__ );
+			throw new Exception( $this->mContent );
 		}
 
-		wfProfileOut(__METHOD__);
+		wfProfileOut( __METHOD__ );
 
 		return $this->mContent;
 	}
