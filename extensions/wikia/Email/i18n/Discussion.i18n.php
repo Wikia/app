@@ -20,7 +20,7 @@ $messages['en'] = array(
     'emailext-discussion-100-upvote-summary' => "Your post on [$1 $2] just reached 100 upvotes!",
 );
 
-$messages['qq'] = array(
+$messages['qqq'] = array(
     'emailext-discussion-reply-with-title-subject' => 'Message indicating the user has received a new reply to their discussions post. $1 will be the URL of the post, $2 will be the title of the post, $3 will be the URL of the wiki, and $4 will be the name of the wiki',
     'emailext-discussion-reply-subject' => "Message indicating the user has received a new reply to their discussions post. $1 will be the URL of the wiki, and $2 will be the name of the wiki. Difference between this one and emailext-discussion-reply-with-title-subject is this one doesn't include the post title",
     'emailext-discussion-button-text' => 'Full Discussion, which is a CTA on a button which leads to the post with all replies (the entire discussion)',
