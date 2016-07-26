@@ -30,7 +30,13 @@ $wgExtensionMessagesFiles['AdminDashboardAliases'] = __DIR__ . '/AdminDashboard.
 // special pages
 $wgSpecialPages[ 'AdminDashboard'] = 'AdminDashboardSpecialPageController';
 
-// register messages package for JS (BugId:41451)
-JSMessages::registerPackage('AdminDashboard', [
-	'admindashboard-loading',
-] );
+// ResourceLoader module
+$wgResourceModules['ext.AdminDashboard'] = [
+	'scripts' => 'js/AdminDashboard.js',
+	'styles' => 'css/AdminDashboard.scss',
+	'messages' => [
+		'admindashboard-loading'
+	],
+	'localBasePath' => __DIR__,
+	'remoteExtPath' => 'extensions/wikia',
+];

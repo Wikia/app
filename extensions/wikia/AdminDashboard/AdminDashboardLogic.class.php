@@ -5,6 +5,11 @@
  */
 class AdminDashboardLogic {
 
+	/**
+	 * Returns whether the given special page belongs to the General section of Admin Dashboard
+	 * @param string $appName Special page name
+	 * @return bool Whether the given special page belongs to the General section of Admin Dashboard
+	 */
 	public static function isGeneralApp( $appName ) {
 		$generalApps = [
 			'Categories'     => true,
@@ -27,7 +32,11 @@ class AdminDashboardLogic {
 	}
 
 	/**
-	 * @brief hook to add toolbar item for admin dashboard
+	 * Hook: BeforeToolbarMenu
+	 * Add toolbar item for admin dashboard
+	 * @param array $items array of toolbar items (reference)
+	 * @param string $type
+	 * @return bool true to continue hook processing
 	 */
 	static function onBeforeToolbarMenu( &$items, $type ) {
 		$wg = F::app()->wg;
