@@ -9,6 +9,10 @@ class DesignSystemApiController extends WikiaApiController {
 			throw new NotFoundApiException( "Unable to find wiki with ID {$wikiId}" );
 		}
 
+		if ( empty( $lang ) ) {
+			throw new MissingParameterApiException( 'lang' );
+		}
+
 		$footerModel = new DesignSystemGlobalFooterModel( $wikiId, $lang );
 
 		$this->setResponseData( $footerModel->getData() );
