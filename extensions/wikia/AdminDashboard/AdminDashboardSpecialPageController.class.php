@@ -13,8 +13,7 @@ class AdminDashboardSpecialPageController extends WikiaSpecialPageController {
 	}
 
 	/**
-	 * @brief Displays the main menu for the admin dashboard
-	 *
+	 * Displays the main menu for the admin dashboard
 	 */
 	public function index() {
 		$this->getOutput()->setPageTitle( $this->msg( 'admindashboard-header' )->text() );
@@ -61,8 +60,7 @@ class AdminDashboardSpecialPageController extends WikiaSpecialPageController {
 	}
 
 	/**
-	 * @brief Copied and pasted code from wfSpecialSpecialpages() that have been modified and refactored.  Also removes some special pages from list.
-	 *
+	 * Returns the list of special pages that belong to the 'Advanced' section of Admin Dashboard	 *
 	 */
 	public function getAdvancedSection() {
 		if ( !$this->wg->User->isAllowed( 'admindashboard' ) ) {
