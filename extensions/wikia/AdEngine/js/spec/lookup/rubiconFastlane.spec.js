@@ -160,7 +160,7 @@ describe('ext.wikia.adEngine.lookup.rubiconFastlane', function () {
 
 		rubiconFastlane.call();
 
-		expect(mocks.win.rubicontag.defineSlot.calls.count()).toEqual(8);
+		expect(mocks.win.rubicontag.defineSlot.calls.count()).toEqual(7);
 	});
 
 	it('Define all 3 slots for mercury skin', function () {
@@ -170,7 +170,7 @@ describe('ext.wikia.adEngine.lookup.rubiconFastlane', function () {
 
 		rubiconFastlane.call();
 
-		expect(mocks.win.rubicontag.defineSlot.calls.count()).toEqual(4);
+		expect(mocks.win.rubicontag.defineSlot.calls.count()).toEqual(3);
 	});
 
 	it('Define /TOP/ slot as atf', function () {
