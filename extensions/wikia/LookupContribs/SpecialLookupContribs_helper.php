@@ -3,22 +3,25 @@
 class LookupContribsCore {
 	const CONTRIB_CACHE_TTL = 900; // 900 == 15min
 	const ACTIVITY_CACHE_TTL = 600; // 600 == 10min
-	const DEFAULT_LIMIT = 25;
 
 	const SORT_BY_TITLE = 'title';
 	const SORT_BY_URL = 'url';
 	const SORT_BY_LAST_EDIT = 'lastedit';
 	const SORT_BY_EDITS = 'edits';
 
+	const DEFAULT_LIMIT = 25;
+	const DEFAULT_SORT = self::SORT_BY_LAST_EDIT;
+	const DEFAULT_SORT_DIRECTION = 'asc';
+
 	private $mUsername;
 	private $mUserId;
 	private $mMode;
 	private $mDBname;
 
-	private $mLimit;
-	private $mOffset;
-	private $mOrder = self::SORT_BY_LAST_EDIT;
-	private $mOrderDirection = 'asc';
+	private $mLimit = self::DEFAULT_LIMIT;
+	private $mOffset = 0;
+	private $mOrder = self::DEFAULT_SORT;
+	private $mOrderDirection = self::DEFAULT_SORT_DIRECTION;
 
 	private $mWikiID;
 	private $mWikia;
@@ -64,6 +67,10 @@ class LookupContribsCore {
 	}
 
 	public function setOrder( $order ) {
+		if ( empty( $order ) ) {
+			return;
+		}
+
 		list( $orderType, $orderDirection ) = explode( ':', $order );
 
 		$this->mOrder = $orderType;
@@ -245,6 +252,13 @@ class LookupContribsCore {
 	}
 
 	private function orderData( $userActivity ) {
+		\Wikia\Logger\WikiaLogger::instance()->info( 'SpecialLookupContribs debug', [
+			'mLimit' => $this->mLimit,
+			'mOffset' => $this->mOffset,
+			'mOrder' => $this->mOrder,
+			'mOrderDirection' => $this->mOrderDirection,
+		] );
+
 		$data = $userActivity['data'];
 
 		if ( empty( $data ) || !is_array( $data ) ) {
