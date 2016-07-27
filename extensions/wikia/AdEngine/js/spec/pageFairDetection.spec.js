@@ -4,7 +4,6 @@ describe('Module ext.wikia.adEngine.pageFairDetection', function () {
 
 	function getModule(mocks) {
 		return modules['ext.wikia.adEngine.pageFairDetection'](
-				mocks.adContext,
 				mocks.scriptLoader,
 				mocks.detectBrowser,
 				mocks.document,
@@ -13,7 +12,7 @@ describe('Module ext.wikia.adEngine.pageFairDetection', function () {
 		);
 	}
 
-	function noop() { return noop }
+	function noop() { return noop; }
 
 	function getContext() {
 		return {
@@ -28,9 +27,6 @@ describe('Module ext.wikia.adEngine.pageFairDetection', function () {
 
 	function getMocks() {
 		return {
-			adContext: {
-				getContext: getContext
-			},
 			scriptLoader: {
 				loadAsync: noop
 			},
@@ -47,7 +43,7 @@ describe('Module ext.wikia.adEngine.pageFairDetection', function () {
 					return {
 						initEvent: noop()
 					};
-				},
+				}
 			},
 			log: noop,
 			window: {
@@ -61,7 +57,7 @@ describe('Module ext.wikia.adEngine.pageFairDetection', function () {
 	it('shoud dispatch event after run pf_notify from external script', function () {
 		var mocks = getMocks();
 		var pageFairDetector = getModule(mocks);
-		pageFairDetector.initDetection();
+		pageFairDetector.initDetection(getContext());
 
 		spyOn(mocks.document, 'dispatchEvent');
 		mocks.window.pf_notify(true);
@@ -72,7 +68,7 @@ describe('Module ext.wikia.adEngine.pageFairDetection', function () {
 	it('should change runtime parameter', function () {
 		var mocks = getMocks();
 		var pageFairDetector = getModule(mocks);
-		pageFairDetector.initDetection();
+		pageFairDetector.initDetection(getContext());
 
 		spyOn(mocks.document, 'dispatchEvent');
 		mocks.window.pf_notify(true);
@@ -84,13 +80,11 @@ describe('Module ext.wikia.adEngine.pageFairDetection', function () {
 
 	it('should not run detection when pagefair is not enabled', function () {
 		var mocks = getMocks();
-		mocks.adContext.getContext = function () {
-			var context = getContext();
-			context.opts.pageFairDetection = false;
-			return context;
-		};
+		var context = getContext();
+
+		context.opts.pageFairDetection = false;
 		var pageFairDetector = getModule(mocks);
-		pageFairDetector.initDetection();
+		pageFairDetector.initDetection(context);
 
 		spyOn(mocks.document, 'dispatchEvent');
 		mocks.window.pf_notify(true);

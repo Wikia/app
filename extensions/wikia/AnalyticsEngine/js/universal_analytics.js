@@ -62,7 +62,29 @@
 				dimension: 7,
 				name: 'pagefair'
 			}
-		};
+		},
+		listenerSettings = [
+			{
+				eventName: 'sp.blocking',
+				value: true,
+				detectorSettings: GASettings.sourcePoint
+			},
+			{
+				eventName: 'sp.not_blocking',
+				value: false,
+				detectorSettings: GASettings.sourcePoint
+			},
+			{
+				eventName: 'pf.blocking',
+				value: true,
+				detectorSettings: GASettings.pageFair
+			},
+			{
+				eventName: 'pf.not_blocking',
+				value: false,
+				detectorSettings: GASettings.pageFair
+			}
+		];
 
 	/**
 	 * Main Tracker
@@ -432,18 +454,11 @@
 	_gaWikiaPush(['send', 'pageview']);
 
 	if (window.ads && window.ads.context.opts.showAds) {
-		document.addEventListener('sp.blocking', function () {
-			trackBlocking(GASettings.sourcePoint, true);
-		});
-		document.addEventListener('sp.not_blocking', function () {
-			trackBlocking(GASettings.sourcePoint, false);
-		});
 
-		document.addEventListener('pf.blocking', function () {
-			trackBlocking(GASettings.pageFair, true);
-		});
-		document.addEventListener('pf.not_blocking', function () {
-			trackBlocking(GASettings.pageFair, false);
+		listenerSettings.map(function (listenerSetting) {
+			document.addEventListener(listenerSetting.eventName, function () {
+				trackBlocking(listenerSetting.detectorSettings, listenerSetting.value);
+			});
 		});
 	}
 
