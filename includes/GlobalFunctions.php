@@ -61,20 +61,15 @@ if( !function_exists( 'mb_strrpos' ) ) {
 
 
 // Support for Wietse Venema's taint feature
-if ( !function_exists( 'istainted' ) ) {
+if ( !function_exists( 'is_tainted' ) ) {
 	/** @codeCoverageIgnore */
-	function istainted( $var ) {
-		return 0;
+	function is_tainted( $var ) {
+		return false;
 	}
 	/** @codeCoverageIgnore */
 	function taint( $var, $level = 0 ) {}
 	/** @codeCoverageIgnore */
 	function untaint( $var, $level = 0 ) {}
-	define( 'TC_HTML', 1 );
-	define( 'TC_SHELL', 1 );
-	define( 'TC_MYSQL', 1 );
-	define( 'TC_PCRE', 1 );
-	define( 'TC_SELF', 1 );
 }
 
 /** Wikia change begin - backport hash_equals from MW 1.24 **/
@@ -297,7 +292,7 @@ function wfObjectToArray( $objOrArray, $recursive = true ) {
 function wfArrayMap( $function, $input ) {
 	$ret = array_map( $function, $input );
 	foreach ( $ret as $key => $value ) {
-		$taint = istainted( $input[$key] );
+		$taint = is_tainted( $input[$key] );
 		if ( $taint ) {
 			taint( $ret[$key], $taint );
 		}

@@ -274,6 +274,15 @@ $config['adengine2_rubicon_fastlane_js'] = array(
 	),
 );
 
+$config['adengine2_prebid_js'] = array(
+	'skin' => [ 'oasis' ],
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//extensions/wikia/AdEngine/js/lookup/prebid.js',
+		'//extensions/wikia/AdEngine/js/lookup/adapter/appnexus.js'
+	),
+);
+
 $config['adengine2_ads_recovery_message_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'oasis', 'wikiamobile' ],
@@ -831,12 +840,14 @@ $config['mobile_base_ads_js'] = array(
 		'//extensions/wikia/AdEngine/js/SlotTweaker.js',
 		'//extensions/wikia/AdEngine/js/WikiaAdHelper.js',
 		'//extensions/wikia/AdEngine/js/config/mobile.js',
+		'//extensions/wikia/AdEngine/js/lookup/adapter/appnexus.js',
 		'//extensions/wikia/AdEngine/js/context/adContext.js',
 		'//extensions/wikia/AdEngine/js/context/uapContext.js',
 		'//extensions/wikia/AdEngine/js/lookup/amazonMatch.js',
 		'//extensions/wikia/AdEngine/js/lookup/lookupFactory.js',
 		'//extensions/wikia/AdEngine/js/lookup/openx/openXBidderHelper.js',
 		'//extensions/wikia/AdEngine/js/lookup/openXBidder.js',
+		'//extensions/wikia/AdEngine/js/lookup/prebid.js',
 		'//extensions/wikia/AdEngine/js/lookup/rubiconFastlane.js',
 		'//extensions/wikia/AdEngine/js/lookup/services.js',
 		'//extensions/wikia/AdEngine/js/provider/btfBlocker.js',
@@ -1271,7 +1282,6 @@ $config['chat_js2'] = array(
 
 		// shared libraries
 		'//extensions/wikia/AssetsManager/js/AssetsManager.js',
-		'//extensions/wikia/JSMessages/js/JSMessages.js',
 
 		'//resources/wikia/modules/querystring.js',
 		'//resources/wikia/modules/history.js',
@@ -1288,14 +1298,6 @@ $config['chat_js2'] = array(
 		'//extensions/wikia/Chat2/js/controllers/controllers.js',
 		'//extensions/wikia/Chat2/js/views/views.js',
 		'//extensions/wikia/Chat2/js/views/ChatBanModal.js',
-	)
-);
-
-$config['chat_ban_js'] = array(
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => array(
-		'//extensions/wikia/Chat2/js/views/ChatBanModal.js',
-		'//extensions/wikia/Chat2/js/controllers/ChatBanModalLogs.js'
 	)
 );
 

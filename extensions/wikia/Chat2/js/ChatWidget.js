@@ -87,7 +87,7 @@ var ChatWidget = {
 		});
 
 		$('.chat-contents.chat-room-empty').each(function () {
-			$(this).get(0)
+			$(this).eq(0)
 				.removeClass('chat-room-empty')
 				.addClass('chat-room-active');
 		});
@@ -153,7 +153,7 @@ var ChatWidget = {
 		// process i18n the messages
 		$t.find('[data-msg-id]').each(function () {
 			var $e = $(this);
-			$e.text($.msg($e.data('msg-id'), $e.data('msg-param')));
+			$e.text(mw.message($e.data('msg-id'), $e.data('msg-param')).text());
 		});
 	},
 
@@ -237,7 +237,7 @@ var ChatWidget = {
 						id: 'JoinChatModal',
 						size: 'small',
 						content: html,
-						title: mw.html.escape($.msg('chat-start-a-chat'))
+						title: mw.message('chat-start-a-chat').escaped()
 					}
 				};
 				uiModal.createComponent(joinModalConfig, function (joinModal) {
