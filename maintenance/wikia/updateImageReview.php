@@ -148,8 +148,9 @@ class UpdateImageReview extends Maintenance {
 			$imageReviewFile = isset( $imageReviewFiles[$id] ) ? $imageReviewFiles[$id] : null;
 
 			if ( $localFile && !$imageReviewFile ) {
-				$this->updateDatawareFile( $dbw, $top200, $localFile, $imageReviewFile );
-				$stats['added']++;
+				if ( $this->updateDatawareFile( $dbw, $top200, $localFile, $imageReviewFile ) ) {
+					$stats['added']++;
+				}
 			}
 		}
 		$this->output( "Update statistics: added={$stats['added']}.\n" );
@@ -179,22 +180,29 @@ class UpdateImageReview extends Maintenance {
 			return;
 		}
 
-		$dbw->replace(
-			'image_review',
-			[
-				'wiki_id',
-				'page_id',
-			],
-			[
-				'wiki_id' => $wgCityId,
-				'page_id' => $localFile->page_id,
-				'revision_id' => $localFile->page_latest,
-				'user_id' => $localFile->rev_user,
-				'last_edited' => $localFile->page_last_edited,
-				'top_200' => $top200,
-			],
-			__METHOD__
-		);
+		$title = Title::newFromID( $localFile->page_id );
+		if ( ImagesService::isLocalImage( $title ) ) {
+			$dbw->replace(
+				'image_review',
+				[
+					'wiki_id',
+					'page_id',
+				],
+				[
+					'wiki_id' => $wgCityId,
+					'page_id' => $localFile->page_id,
+					'revision_id' => $localFile->page_latest,
+					'user_id' => $localFile->rev_user,
+					'last_edited' => $localFile->page_last_edited,
+					'top_200' => $top200,
+				],
+				__METHOD__
+			);
+
+			return true;
+		}
+
+		return false;
 	}
 
 

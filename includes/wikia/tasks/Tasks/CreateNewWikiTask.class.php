@@ -447,7 +447,7 @@ class CreateNewWikiTask extends BaseTask {
 						$key = ( isset( $pages[ $row->page_id ] ) ) ? 'edit' : 'create';
 						$scribeProducer = new \ScribeEventProducer( $key, 0 );
 						if ( is_object( $scribeProducer ) ) {
-							if ( $scribeProducer->buildEditPackage( $article, $user, $revision ) ) {
+							if ( $scribeProducer->buildEditPackage( $article, $user, $revision, null, true ) ) {
 								$scribeProducer->sendLog();
 							}
 						}
