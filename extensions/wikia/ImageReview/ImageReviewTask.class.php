@@ -10,6 +10,7 @@ namespace Wikia\Tasks\Tasks;
 use \Wikia\Logger\WikiaLogger;
 
 class ImageReviewTask extends BaseTask {
+
 	public function delete( $pageList, $suppress = false ) {
 		global $IP;
 

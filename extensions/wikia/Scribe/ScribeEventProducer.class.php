@@ -6,8 +6,6 @@ class ScribeEventProducer {
 	private $app = null;
 	private $mParams, $mKey, $mEventType;
 
-	private $mediaNS = array(NS_IMAGE, NS_FILE);
-
 	const
 		EDIT_CATEGORY 		    = 'log_edit',
 		CREATEPAGE_CATEGORY		= 'log_create',
@@ -51,7 +49,7 @@ class ScribeEventProducer {
 		$this->setCategory();
 	}
 
-	public function buildEditPackage( $oPage, $oUser, $oRevision = null, $revision_id = null, $oLocalFile = null ) {
+	public function buildEditPackage( $oPage, $oUser, $oRevision = null, $oLocalFile = null, $bIsNewWiki = false ) {
 		wfProfileIn( __METHOD__ );
 
 		if ( !is_object( $oPage ) ) {
@@ -112,10 +110,11 @@ class ScribeEventProducer {
 		$this->setTotalWords( str_word_count( $rev_text ) );
 
 		if ( $oLocalFile instanceof File ) {
-			$this->setMediaType( $oTitle );
-			$this->setIsLocalFile( $oLocalFile );
-			$this->setIsTop200( $this->app->wg->CityId );
-			$this->setIsImageForReview();
+			$this->setMediaType( $oLocalFile );
+			$this->setIsImageForReview( ImagesService::isLocalImage( $oTitle ) );
+			if ( $bIsNewWiki ) {
+				$this->setImageApproved( true );
+			}
 		} else {
 			$this->setIsImageForReview( false );
 		}
@@ -220,7 +219,7 @@ class ScribeEventProducer {
 
 		wfProfileOut( __METHOD__ );
 
-		return $this->buildEditPackage( $oPage, $oUser, null, null, $oLocalFile );
+		return $this->buildEditPackage( $oPage, $oUser, null, $oLocalFile );
 	}
 
 	public function buildMovePackage( $oTitle, $oUser, $page_id = null, $redirect_id = null ) {
@@ -327,46 +326,26 @@ class ScribeEventProducer {
 		$this->mParams['eventTS'] = $ts;
 	}
 
-	public function setIsLocalFile ( File $oLocalFile ) {
-		if( $oLocalFile instanceof File && $oLocalFile->exists() ) {
-			$bIsLocalFile = true;
-		} else {
-			$bIsLocalFile = false;
-		}
-		$this->mParams['isLocalFile'] = intval( $bIsLocalFile );
-	}
+	public function setMediaType ( $oLocalFile ) {
+		$mediaTypeCode = 0;
+		if ( $oLocalFile instanceof LocalFile ) {
+			$mediaType = $oLocalFile->getMediaType();
 
-	public function setMediaType ( $oTitle ) {
-		wfProfileIn( __METHOD__ );
-
-		$result = 0;
-		$page_namespace = $oTitle->getNamespace();
-		if ( in_array( $page_namespace, $this->mediaNS ) ) {
-
-			$mediaType = MEDIATYPE_UNKNOWN;
-			$oLocalFile = RepoGroup::singleton()->getLocalRepo()->newFile( $oTitle );
-			if ( $oLocalFile instanceof LocalFile ) {
-				$mediaType = $oLocalFile->getMediaType();
-			}
-			if ( empty($mediaType) ) {
-				$mediaType = MEDIATYPE_UNKNOWN;
-			}
 			switch ( $mediaType ) {
-				case MEDIATYPE_BITMAP			: $result = 1; break;
-				case MEDIATYPE_DRAWING		: $result = 2; break;
-				case MEDIATYPE_AUDIO			: $result = 3; break;
-				case MEDIATYPE_VIDEO			: $result = 4; break;
-				case MEDIATYPE_MULTIMEDIA	: $result = 5; break;
-				case MEDIATYPE_OFFICE			: $result = 6; break;
-				case MEDIATYPE_TEXT				: $result = 7; break;
-				case MEDIATYPE_EXECUTABLE	: $result = 8; break;
-				case MEDIATYPE_ARCHIVE		: $result = 9; break;
-				default 									: $result = 1; break;
+				case MEDIATYPE_BITMAP		: $mediaTypeCode = 1; break;
+				case MEDIATYPE_DRAWING		: $mediaTypeCode = 2; break;
+				case MEDIATYPE_AUDIO		: $mediaTypeCode = 3; break;
+				case MEDIATYPE_VIDEO		: $mediaTypeCode = 4; break;
+				case MEDIATYPE_MULTIMEDIA	: $mediaTypeCode = 5; break;
+				case MEDIATYPE_OFFICE		: $mediaTypeCode = 6; break;
+				case MEDIATYPE_TEXT			: $mediaTypeCode = 7; break;
+				case MEDIATYPE_EXECUTABLE	: $mediaTypeCode = 8; break;
+				case MEDIATYPE_ARCHIVE		: $mediaTypeCode = 9; break;
+				default 					: $mediaTypeCode = 1; break;
 			}
 		}
 
-		$this->mParams['mediaType'] = $result;
-		wfProfileOut( __METHOD__ );
+		return $mediaTypeCode;
 	}
 
 	public function setImageLinks ( $image_links ) {
@@ -409,68 +388,12 @@ class ScribeEventProducer {
 
 	}
 
-	public function setIsTop200( $city_id ) {
-		$this->mParams['isTop200'] = intval( $this->isTop200( $city_id ) );
+	public function setIsImageForReview( $bIsImageForReview = true ) {
+		$this->mParams['isImageForReview'] = intval( $bIsImageForReview );
 	}
 
-	/**
-	 * Checks if a given wikia is in the top 200 in terms of pageviews
-	 * @param  int     $city_id
-	 * @return boolean
-	 */
-	public function isTop200( $city_id ) {
-		wfProfileIn( __METHOD__ );
-
-		$sCacheKey = wfSharedMemcKey( __CLASS__, __METHOD__ );
-
-		// Check in memcache before using DataMartService
-		if ( !is_null( $this->app->wg->Memc->get( $sCacheKey ) ) ) {
-			$aTop200Wikis = $this->app->wg->Memc->get( $sCacheKey );
-		} else {
-			$aTop200Wikis = DataMartService::getTopWikisByPageviews( DataMartService::PERIOD_ID_MONTHLY );
-			$this->app->wg->Memc->set( $sCacheKey, $aTop200Wikis, \WikiaResponse::CACHE_LONG );
-		}
-
-		// city_ids are keys; return true if that one is set.
-		if ( isset( $aTop200Wikis[$city_id] ) ) {
-			wfProfileOut( __METHOD__ );
-			return true;
-		}
-
-		wfProfileOut( __METHOD__ );
-		return false;
-	}
-
-	public function setIsImageForReview( $bProvidedValue = null ) {
-		if ( $bProvidedValue === null ) {
-			$aAllowedTypes = [
-				1 => MEDIATYPE_BITMAP,
-				2 => MEDIATYPE_DRAWING,
-			];
-
-			if ( in_array( $this->mParams['pageNamespace'], $this->mediaNS )
-				&& isset( $aAllowedTypes[ $this->mParams['mediaType'] ] )
-			) {
-				if ( $this->mParams['isRedirect'] == 1 ) {
-					$sLogMessage = 'The page is a redirect';
-					$bIsImageForReview = false;
-				} elseif ( $this->mParams['isLocalFile'] == 0 ) {
-					$sLogMessage = 'The file is from an external repo';
-					$bIsImageForReview = false;
-				} elseif ( $this->mParams['isTop200'] == 1 ) {
-					$sLogMessage = 'The image was uploaded to one of the Top200 wikias';
-					$bIsImageForReview = false;
-				} else {
-					$sLogMessage = 'The image was sent for a review';
-					$bIsImageForReview = true;
-				}
-
-				$this->mParams['isImageForReview'] = intval( $bIsImageForReview );
-				$this->sendImageReviewLog( $sLogMessage );
-			}
-		} else {
-			$this->mParams['isImageForReview'] = intval( $bProvidedValue );
-		}
+	public function setImageApproved( $approved = false ) {
+		$this->mParams['imageApproved'] = intval( $approved );
 	}
 
 	/**
@@ -478,11 +401,9 @@ class ScribeEventProducer {
 	 * @param  string $sLogMessage  A log message
 	 * @return void
 	 */
-	private function sendImageReviewLog( $sLogMessage ) {
+	private function log() {
 		WikiaLogger::instance()->info( 'ImageReviewLog', [
 			'method' => __METHOD__,
-			'status' => $this->mParams['isImageForReview'],
-			'message' => $sLogMessage,
 			'params' => $this->mParams,
 		] );
 	}
@@ -492,6 +413,7 @@ class ScribeEventProducer {
 		try {
 			$data = json_encode($this->mParams);
 			WScribeClient::singleton( $this->mKey )->send( $data );
+			$this->log();
 		}
 		catch( TException $e ) {
 			Wikia::log( __METHOD__, 'scribeClient exception', $e->getMessage() );
