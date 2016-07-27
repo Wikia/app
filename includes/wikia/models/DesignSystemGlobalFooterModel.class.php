@@ -446,7 +446,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 			$data['wikia'] = [
 				'header' => [
 					'type' => 'line-image',
-					'image' => 'company-logo-wikia',
+					'image' => 'wds-company-logo-wikia',
 					'title' => [
 						'type' => 'translatable-text',
 						'key' => 'global-footer-wikia-header'
@@ -457,7 +457,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 			$data['international_header'] = [
 				'header' => [
 					'type' => 'line-image',
-					'image' => 'company-logo-wikia',
+					'image' => 'wds-company-logo-wikia',
 					'title' => [
 						'type' => 'translatable-text',
 						'key' => 'global-footer-wikia-header'
