@@ -100,6 +100,7 @@ $messages['en'] = array(
 	'communitypage-todo-module-edit-list' => 'Edit list',
 	'communitypage-todo-module-description' => 'This is an area for admins to suggest pages that need work to help new contributors get started. (Admins - remember to provide details on what needs to be done.)',
 	'communitypage-todo-module-zero-state' => 'Want to know how you can contribute to this community? Contact an admin and ask them to provide suggestions here.',
+	// TODO: to be removed in the scope of: https://wikia-inc.atlassian.net/browse/WW-83
 	'communitypage-popularpages-mediumtitle' => 'Pages that need proofreading',
 	'communitypage-popularpages-hightitle' => 'Please proofread these pages',
 	'communitypage-popularpages-mediumdescription' => 'Please proofread these pages and fix typos, grammatical mistakes or factual errors.',
