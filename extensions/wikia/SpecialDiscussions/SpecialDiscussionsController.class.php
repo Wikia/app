@@ -27,8 +27,6 @@ class SpecialDiscussionsController extends WikiaSpecialPageController {
 	public function __construct() {
 		parent::__construct( 'Discussions', '', false );
 
-		$this->assertCanAccess();
-
 		$this->sitesApi = $this->getDiscussionSitesApi();
 		$this->siteId = F::app()->wg->CityId;
 		$this->siteName = F::app()->wg->Sitename;
@@ -36,6 +34,8 @@ class SpecialDiscussionsController extends WikiaSpecialPageController {
 	}
 
 	public function index() {
+		$this->assertCanAccess();
+
 		$this->setHeaders();
 		$this->response->addAsset( 'special_discussions_scss' );
 
