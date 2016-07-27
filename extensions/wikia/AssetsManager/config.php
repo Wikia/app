@@ -3031,3 +3031,11 @@ $config['contribution_prototype_scss'] = array(
 				'//extensions/wikia/ContributionPrototype/styles/ContributionPrototype.scss',
 		),
 );
+
+$config['design_system_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/DesignSystem/bower_components/design-system/dist/styles.scss'
+	]
+];

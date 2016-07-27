@@ -1,0 +1,17 @@
+{
+  "name": "design-system",
+  "version": "0.0.7",
+  "homepage": "https://github.com/Wikia/design-system",
+  "authors": [
+    "Warkot <mateusz.warkocki@wikia-inc.com>",
+    "Bartosz V. Bentkowski <me@bartoszbentkowski.com>"
+  ],
+  "description": "Design System developed for Wikia",
+  "main": "",
+  "license": "GPL-3.0",
+  "ignore": [
+    "**/.*",
+    "assets/*",
+    "gulpfile.js"
+  ]
+}
