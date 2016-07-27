@@ -393,12 +393,14 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 		 * Don't use cached results if:
 		 * 1. In Unreviewed queue
 		 * 2. SQL select returns 0 images
-		 * 3. Cached count of unreviewed > 0
+		 * 3. Cached count of unreviewed >= 0
 		 */
-		if ( !empty( $total )
-			&& ( $sAction != ImageReviewSpecialController::ACTION_UNREVIEWED
-			|| $iImageListCount != 0
-			|| $total[ImageReviewStatsCache::STATS_UNREVIEWED] == 0 )
+		if ( !empty( $total ) &&
+		    (
+				$sAction != ImageReviewSpecialController::ACTION_UNREVIEWED ||
+				$iImageListCount != 0
+			) &&
+			$total[ImageReviewStatsCache::STATS_UNREVIEWED] >= 0
 		) {
 			wfProfileOut( __METHOD__ );
 			return $total;
