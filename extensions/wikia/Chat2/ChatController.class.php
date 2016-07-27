@@ -18,10 +18,6 @@ class ChatController extends WikiaController {
 
 		$this->mainPageURL = Title::newMainPage()->getLocalURL();
 
-		// add messages (fetch them using <script> tag)
-		JSMessages::enqueuePackage( 'Chat', JSMessages::EXTERNAL ); // package defined in Chat_setup.php
-
-		$this->jsMessagePackagesUrl = JSMessages::getExternalPackagesUrl();
 		// Variables for this user
 		$this->username = $wgUser->getName();
 		$this->avatarUrl = AvatarService::getAvatarUrl( $this->username, ChatController::CHAT_AVATAR_DIMENSION );

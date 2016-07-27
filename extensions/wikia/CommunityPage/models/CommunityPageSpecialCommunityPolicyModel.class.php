@@ -18,7 +18,7 @@ class CommunityPageSpecialCommunityPolicyModel {
 	private function getPolicyLink() {
 		$title = Title::newFromText(
 			wfMessage( 'communitypage-policy-module-link-page-name' )->inContentLanguage()->plain(),
-			NS_HELP
+			NS_MAIN
 		);
 
 		if ( $title instanceof Title ) {

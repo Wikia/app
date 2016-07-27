@@ -67,35 +67,47 @@ $wgLogActionsHandlers['chatban/chatbanchange'] = "ChatHooks::formatLogEntry";
 $wgLogActionsHandlers['chatban/chatbanremove'] = "ChatHooks::formatLogEntry";
 $wgLogActionsHandlers['chatban/chatbanadd'] = "ChatHooks::formatLogEntry";
 
-// register messages package for JS
-JSMessages::registerPackage( 'Chat', [
-	'chat-*',
-] );
+/**
+ * ResourceLoader module for chat ban modal
+ */
+$wgResourceModules['ext.Chat2.ChatBanModal'] = [
+	'scripts' => [
+		'js/views/ChatBanModal.js',
+		'js/controllers/ChatBanModalLogs.js'
+	],
+	'messages' => [
+		'chat-log-reason-banadd',
+		'chat-ban-modal-change-ban-heading',
+		'chat-ban-modal-button-cancel',
+		'chat-ban-modal-button-ok',
+		'chat-ban-modal-button-change-ban',
+	],
+	'localBasePath' => __DIR__,
+	'remoteExtPath' => 'wikia/Chat2'
+];
 
-JSMessages::registerPackage( 'ChatBanModal', [
-	'chat-log-reason-banadd',
-	'chat-ban-modal-change-ban-heading',
-	'chat-ban-modal-button-cancel',
-	'chat-ban-modal-button-ok',
-	'chat-ban-modal-button-change-ban',
-] );
-
-JSMessages::registerPackage( 'ChatWidget', [
-	'chat-join-the-chat',
-	'chat-start-a-chat',
-	'chat-user-menu-message-wall',
-	'chat-user-menu-talk-page',
-	'chat-user-menu-contribs',
-	'chat-live2',
-	'chat-edit-count',
-	'chat-member-since'
-] );
+/**
+ * ResourceLoader module for Chat Rail module and widget
+ */
+$wgResourceModules['ext.Chat2.ChatWidget'] = [
+	'messages' => [
+		'chat-join-the-chat',
+		'chat-start-a-chat',
+		'chat-user-menu-message-wall',
+		'chat-user-menu-talk-page',
+		'chat-user-menu-contribs',
+		'chat-live2',
+		'chat-edit-count',
+		'chat-member-since',
+	],
+];
 
 /**
  * ResourceLoader module
  */
 $wgResourceModules['ext.Chat2'] = [
 	'messages' => [
+		// Inline alerts
 		'chat-user-permanently-disconnected',
 		'chat-welcome-message',
 		'chat-user-joined',
@@ -111,6 +123,29 @@ $wgResourceModules['ext.Chat2'] = [
 		'chat-ban-cannt-undo',
 		'chat-browser-is-notsupported',
 		'chat-message-was-too-long',
+		// Chat ban modal
+		'chat-ban-modal-heading',
+		'chat-ban-modal-change-ban-heading',
+		'chat-ban-modal-button-cancel',
+		'chat-ban-modal-button-ok',
+		'chat-ban-modal-button-change-ban',
+		'close',
+		// User menu options
+		'chat-user-menu-message-wall',
+		'chat-user-menu-talk-page',
+		'chat-user-menu-contribs',
+		'chat-user-menu-private',
+		'chat-user-menu-give-chat-mod',
+		'chat-user-menu-kick',
+		'chat-user-menu-ban',
+		'chat-user-menu-private-block',
+		'chat-user-menu-private-allow',
+		'chat-user-menu-private-close',
+
+		// Private messages
+		'chat-private-headline',
+		'chat-user-blocked',
+		'chat-user-allow',
 	],
 	'position' => 'top'
 ];

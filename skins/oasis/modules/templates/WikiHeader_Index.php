@@ -12,8 +12,8 @@
 		</div>
 	<? endif ?>
 	<div class="hiddenLinks">
-		<?= Wikia::specialPageLink( 'Watchlist', 'watchlist', array( 'accesskey' => 'l' ) ) ?>
-		<?= Wikia::specialPageLink( 'Random', 'randompage', array( 'accesskey' => 'x' ) ) ?>
-		<?= Wikia::specialPageLink( 'RecentChanges', 'recentchanges', array( 'accesskey' => 'r' ) ) ?>
+		<a href="<?= Sanitizer::encodeAttribute( $hiddenLinks['watchlist'] ); ?>" accesskey="l"><?= wfMessage( 'watchlist' )->escaped(); ?></a>
+		<a href="<?= Sanitizer::encodeAttribute( $hiddenLinks['random'] ); ?>" accesskey="x"><?= wfMessage( 'randompage' )->escaped(); ?></a>
+		<a href="<?= Sanitizer::encodeAttribute( $hiddenLinks['recentchanges'] ); ?>" accesskey="r"><?= wfMessage( 'recentchanges' )->escaped(); ?></a>
 	</div>
 </header>

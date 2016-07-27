@@ -970,7 +970,7 @@ abstract class DatabaseBase implements DatabaseType {
 			wfDebug( "Query {$this->mDBname} (DB user: {$DBuser}) ($cnt) ($master): $sqlx\n" );
 		}
 
-		if ( istainted( $sql ) & TC_MYSQL ) {
+		if ( is_tainted( $sql ) ) {
 			throw new MWException( 'Tainted query found' );
 		}
 
