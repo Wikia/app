@@ -6,12 +6,12 @@
 class AdminDashboardController extends WikiaController {
 
 	/**
-	 * @var string TAB_GENERAL
+	 * @var string TAB_GENERAL Name of the General tab on Special:AdminDashboard
 	 */
 	const TAB_GENERAL = 'general';
 
 	/**
-	 * @var string TAB_ADVANCED
+	 * @var string TAB_ADVANCED Name of the Advanced tab on Special:AdminDashboard
 	 */
 	const TAB_ADVANCED = 'advanced';
 
@@ -25,6 +25,7 @@ class AdminDashboardController extends WikiaController {
 			$this->tab = static::TAB_ADVANCED;
 		}
 
+		// Add SCSS, JS and messages in one package
 		$this->wg->Out->addModules( 'ext.AdminDashboard' );
 
 		$this->adminDashboardUrl = $this->wg->Title->getFullURL( [ 'tab' => $this->tab ] );
