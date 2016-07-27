@@ -163,8 +163,8 @@ if ( $pages == false ) {
 	print "Processing all IDs from $start to " . ( $end ? "$end" : 'last ID' ) . " ...\n";
 
 	$id = $start;
+	$startTime = round(microtime(true), 4); # [sec]
 	while ( ( ( !$end ) || ( $id <= $end ) ) && ( $id > 0 ) ) {
-		$startTime = round(microtime(true), 4); # [sec]
 		if ( $verbose ) {
 			print "$wgDBname ($num_files) Processing ID " . $id . " ...\n"; # Wikia change
 		}
@@ -186,6 +186,7 @@ if ( $pages == false ) {
 				'took_float' => round(microtime(true) - $startTime, 4), # [sec]
 				'args' => join(' ', $argv),
 			]);
+			$startTime = round(microtime(true), 4); # [sec]
 		}
 		# Wikia Change - end
 	}
