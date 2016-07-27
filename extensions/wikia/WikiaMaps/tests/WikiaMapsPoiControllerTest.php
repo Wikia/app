@@ -14,7 +14,6 @@ class WikiaMapsPoiControllerTest extends WikiaBaseTest {
 	public function testEditPoi_throws_permission_error_when_anon() {
 		$userMock = $this->getUserMock( self::USER_TYPE_LOGGED_OUT );
 
-		/** @var WikiaMapsPoiController $controllerMock */
 		$controllerMock = $this->getWikiaMapsPoiControllerMock();
 		$controllerMock->expects( $this->any() )
 			->method( 'getData' )
@@ -29,7 +28,6 @@ class WikiaMapsPoiControllerTest extends WikiaBaseTest {
 	public function testEditPoi_throws_permission_error_when_blocked() {
 		$userMock = $this->getUserMock( self::USER_TYPE_BLOCKED );
 
-		/** @var WikiaMapsPoiController $controllerMock */
 		$controllerMock = $this->getWikiaMapsPoiControllerMock();
 		$controllerMock->expects( $this->any() )
 			->method( 'getData' )
@@ -44,7 +42,6 @@ class WikiaMapsPoiControllerTest extends WikiaBaseTest {
 	public function testDeletePoi_throws_permission_error_when_anon() {
 		$userMock = $this->getUserMock( self::USER_TYPE_LOGGED_OUT );
 
-		/** @var WikiaMapsPoiController $controllerMock */
 		$controllerMock = $this->getWikiaMapsPoiControllerMock();
 		$controllerMock->expects( $this->any() )
 			->method( 'getData' )
@@ -60,7 +57,6 @@ class WikiaMapsPoiControllerTest extends WikiaBaseTest {
 	public function testDeletePoi_throws_permission_error_when_blocked() {
 		$userMock = $this->getUserMock( self::USER_TYPE_BLOCKED );
 
-		/** @var WikiaMapsPoiController $controllerMock */
 		$controllerMock = $this->getWikiaMapsPoiControllerMock();
 		$controllerMock->expects( $this->any() )
 			->method( 'getData' )
@@ -325,7 +321,10 @@ class WikiaMapsPoiControllerTest extends WikiaBaseTest {
 			]
 		];
 	}
-	
+
+	/**
+	 * @return WikiaMapsPoiController
+	 */
 	private function getWikiaMapsPoiControllerMock() {
 		$requestMock = $this->getMockBuilder( 'WikiaRequest' )
 			->setMethods( [ 'getVal', 'getArray', 'getInt' ] )

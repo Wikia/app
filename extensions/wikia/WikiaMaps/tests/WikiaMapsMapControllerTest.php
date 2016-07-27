@@ -8,7 +8,6 @@ class WikiaMapsMapControllerTest extends WikiaBaseTest {
 	}
 
 	public function testCreateMap_throws_bad_request_api_exception() {
-		/** @var WikiaMapsMapController $controllerMock */
 		$controllerMock = $this->getWikiaMapsMapControllerMock();
 		$controllerMock->expects( $this->any() )
 			->method( 'getData' )
@@ -94,7 +93,6 @@ class WikiaMapsMapControllerTest extends WikiaBaseTest {
 				[ 'deleted', 0, WikiaMaps::MAP_DELETED ],
 			] ) );
 
-		/** @var WikiaMapsMapController $controllerMock */
 		$controllerMock = $this->getWikiaMapsMapControllerMock();
 		$controllerMock->expects( $this->never() )
 			->method( 'getModel' );
@@ -206,6 +204,9 @@ class WikiaMapsMapControllerTest extends WikiaBaseTest {
 		return $userMock;
 	}
 
+	/**
+	 * @return WikiaMapsMapController
+	 */
 	private function getWikiaMapsMapControllerMock() {
 		$controllerMock = $this->getMockBuilder( 'WikiaMapsMapController' )
 			->setMethods( [ 'getData', 'getModel', 'canUserDelete', 'isUserMapCreator' ] )
