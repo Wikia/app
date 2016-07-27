@@ -5,6 +5,7 @@ define('ext.wikia.adEngine.template.bfaa', [
 	'ext.wikia.adEngine.provider.btfBlocker',
 	'ext.wikia.adEngine.slotTweaker',
 	'ext.wikia.adEngine.uapContext',
+	'ext.wikia.adEngine.utils.eventDispatcher',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window',
@@ -15,6 +16,7 @@ define('ext.wikia.adEngine.template.bfaa', [
 	btfBlocker,
 	slotTweaker,
 	uapContext,
+	eventDispatcher,
 	doc,
 	log,
 	win,
@@ -134,9 +136,7 @@ define('ext.wikia.adEngine.template.bfaa', [
 		uapContext.setUapId(params.uap);
 		unblockedSlots.forEach(btfBlocker.unblock);
 
-		if (skin === 'mercury') {
-			win.dispatchEvent(new Event('wikia.uap'));
-		}
+		eventDispatcher.dispatch('wikia.uap');
 	}
 
 	return {

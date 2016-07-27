@@ -8,6 +8,9 @@ describe('Evolve2 Provider targeting', function () {
 			adContext: {
 				addCallback: noop
 			},
+			eventDispatcher: {
+				dispatch: noop
+			},
 			gptHelper: {
 				pushAd: noop
 			},
@@ -32,6 +35,7 @@ describe('Evolve2 Provider targeting', function () {
 			mocks.gptHelper,
 			mocks.slotTweaker,
 			mocks.zoneParams,
+			mocks.eventDispatcher,
 			mocks.log,
 			mocks.openXHelper
 		);
