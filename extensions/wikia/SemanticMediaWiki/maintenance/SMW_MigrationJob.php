@@ -15,14 +15,17 @@ class SMW_MigrationJob extends BaseTask {
 	public function run($wikis) {
 
 		$this->cityId = $this->getWikiId();
-		if (!$this->refreshPageProperties()) {
-			return false;
-		};
-		if (!$this->refreshPages()) {
-			return false;
-		}
-		if (!$this->switchToNewStorage ()) {
-			return false;
+		$currentStore = WikiFactory::getVarValueByName('smwgDefaultStore', $this->cityId);
+		if ($currentStore !== 'SMWSQLStore3') {
+			if (!$this->refreshPageProperties()) {
+				return false;
+			};
+			if (!$this->refreshPages()) {
+				return false;
+			}
+			if (!$this->switchToNewStorage()) {
+				return false;
+			}
 		}
 		$this->startNextJob($wikis);
 		return true;
