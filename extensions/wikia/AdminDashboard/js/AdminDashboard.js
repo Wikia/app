@@ -1,4 +1,4 @@
-var AdminDashboard = {
+window.AdminDashboard = {
 	controls: {},
 	section: {},
 	externalComponents: {},
@@ -136,5 +136,5 @@ var AdminDashboard = {
 };
 
 $(function() {
-	AdminDashboard.init();
+window.AdminDashboard.init();
 });
