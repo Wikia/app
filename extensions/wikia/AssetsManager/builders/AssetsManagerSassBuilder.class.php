@@ -36,7 +36,7 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 		}
 
 		//remove slashes at the beginning of the string, we need a pure relative path to open the file
-		$this->mOid = preg_replace( '/^[\/]+/', '', $this->mOid );
+		$this->mOid = ltrim( $this->mOid, '/' );
 
 		if ( !file_exists( "{$IP}/{$this->mOid}" ) ) {
 			// SUS-399: allow SCSS processing to continue, log the error
@@ -64,7 +64,7 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 			$processingTimeStart = microtime( true );
 		}
 
-		$memc = F::App()->wg->Memc;
+		$memc = F::app()->wg->Memc;
 
 		$this->mContent = null;
 
