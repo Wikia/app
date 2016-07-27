@@ -4,7 +4,7 @@ class TwitterTagController extends WikiaController {
 
 	const PARSER_TAG_NAME = 'twitter';
 	const TWITTER_NAME = 'Twitter';
-	const TWITTER_BASE_URL = 'https://twitter\.com/';
+	const TWITTER_BASE_URL = 'https://twitter.com/';
 	const TWITTER_USER_TIMELINE = '/^https:\/\/twitter\.com\/@?[a-z0-9_]{1,15}$/i';
 
 	const REGEX_DIGITS = '/^[0-9]*$/';
