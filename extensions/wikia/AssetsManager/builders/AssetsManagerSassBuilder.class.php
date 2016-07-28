@@ -1,6 +1,7 @@
 <?php
 
 /**
+ * Generates CSS from a Sass file passed via URL
  * @author Inez Korczyński <korczynski@gmail.com>
  * @author Piotr Bablok <piotr.bablok@gmail.com>
  */
@@ -17,6 +18,11 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 	 */
 	protected $exists = true;
 
+	/**
+	 * AssetsManagerSassBuilder constructor - extracts file and parameter info from request URL
+	 * @param WebRequest $request
+	 * @throws Exception if the requested file is not a Sass file or if file path contains invalid characters
+	 */
 	public function __construct( WebRequest $request ) {
 		global $IP;
 		parent::__construct( $request );
@@ -48,6 +54,12 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 		$this->mContentType = AssetsManager::TYPE_CSS;
 	}
 
+	/**
+	 * Gets the CSS generated from this Sass file
+	 * @param null|string $processingTimeStart Unix timestamp with microseconds of processing time start, if given
+	 * @return string CSS generated from this Sass file (empty if the file does not exist anymore)
+	 * @throws Exception if there were errors during file processing
+	 */
 	public function getContent( $processingTimeStart = null ) {
 		global $IP, $wgEnableSASSSourceMaps;
 		wfProfileIn( __METHOD__ );
