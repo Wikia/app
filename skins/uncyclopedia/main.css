@@ -1095,6 +1095,7 @@ input.searchButton {
 #f-copyrightico {
 	float: left;
 	height: 1%;
+	background-repeat: no-repeat;
 }
 #footer .branding {
 	display: inline-block;
