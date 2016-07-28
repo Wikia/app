@@ -19,3 +19,4 @@ $wgAutoloadClasses[ 'DesignSystemHooks' ] = $dir . 'DesignSystemHooks.class.php'
 
 // hooks
 $wgHooks[ 'BeforePageDisplay' ][] = 'DesignSystemHooks::onBeforePageDisplay';
+$wgHooks[ 'GetHTMLAfterBody' ][] = 'DesignSystemHooks::onGetHTMLAfterBody';
