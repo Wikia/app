@@ -108,6 +108,7 @@ You should have received [{{SERVER}}{{SCRIPTPATH}}/COPYING a copy of the GNU Gen
 	'vertical-lifestyle' => 'Lifestyle',
 	'vertical-music' => 'Music',
 	'vertical-movies' => 'Movies',
+	'vertical-comedy' => 'Comedy',
 );
 
 $messages['qqq'] = array(
@@ -237,6 +238,7 @@ There are no such extensions here, so look at [[wikipedia:Special:Version]] for 
 	'vertical-lifestyle' => 'Lifestyle vertical name',
 	'vertical-music' => 'Music vertical name',
 	'vertical-movies' => 'Movies vertical name',
+	'vertical-comedy' => 'Uncyclopedia wikis comscore tag label',
 );
 
 $messages['ab'] = array(
