@@ -339,7 +339,8 @@ abstract class UserCommand {
 				if ( !isset( $skin->iscontent ) ) {
 					$title = $skin->getTitle();
 
-					if ( in_array( $title->getNamespace(), [ NS_SPECIAL, NS_FILE ] ) ) {
+					// SUS-767: remove file pages from exclusion list to show "What links here" and other useful tools
+					if ( $title->inNamespace( NS_SPECIAL ) ) {
 						$skin->getOutput()->setArticleRelated( false );
 					}
 					$skin->thispage = $title->getPrefixedDBkey();
