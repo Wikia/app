@@ -13,8 +13,12 @@ define('ext.wikia.recirculation.experiments.placement.CONTROL', [
 			curated = CuratedHelper();
 
 		return FandomHelper({
-			limit: 5
+			limit: 10
 		}).loadData()
+			.then(function(data) {
+				data.items = utils.ditherRecs(data.items, 2.5).slice(0, 5);
+				return data;
+			})
 			.then(curated.injectContent)
 			.then(utils.waitForRail)
 			.then(view.render)
