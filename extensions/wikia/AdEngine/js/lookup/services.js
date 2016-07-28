@@ -11,7 +11,7 @@
 /*global define, require*/
 define('ext.wikia.adEngine.lookup.services', [
 	'wikia.log',
-	'ext.wikia.adEngine.lookup.prebid',
+	require.optional('ext.wikia.adEngine.lookup.prebid'),
 	require.optional('ext.wikia.adEngine.lookup.amazonMatch'),
 	require.optional('ext.wikia.adEngine.lookup.openXBidder'),
 	require.optional('ext.wikia.adEngine.lookup.rubiconFastlane')
