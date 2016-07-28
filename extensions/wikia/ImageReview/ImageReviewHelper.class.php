@@ -327,7 +327,7 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 				continue;
 			}
 
-			$imageInfo = $this->checkImageValidity( $image );
+			$imageInfo = self::checkImageValidity( $image );
 
 			switch( $imageInfo['reason'] ) {
 				case 'verified':
