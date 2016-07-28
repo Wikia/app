@@ -272,8 +272,8 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 
 		$oResults = $oDatabaseHelper->selectImagesForList( $this->getOrder( $order ), self::LIMIT_IMAGES_FROM_DB, $state );
 
-		$rows = array();
-		$updateWhere = array();
+		$rows = [];
+		$updateWhere = [];
 		while ( $row = $oDB->fetchObject($oResults) ) {
 			$rows[] = $row;
 			$updateWhere[] = "(wiki_id = {$row->wiki_id} and page_id = {$row->page_id})";
@@ -295,11 +295,11 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 					$target_state = ImageReviewStatuses::STATE_IN_REVIEW;
 			}
 
-			$values = array (
+			$values = [
 				'reviewer_id' => $this->user_id,
 				'review_start' => $review_start,
 				'state' => $target_state
-			);
+			];
 
 			if ( $state == ImageReviewStatuses::STATE_QUESTIONABLE || $state == ImageReviewStatuses::STATE_REJECTED ) {
 				$values[] = "review_end = '0000-00-00 00:00:00'";
@@ -308,7 +308,7 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 			$oDB->update(
 				'image_review',
 				$values,
-				array( implode(' OR ', $updateWhere) ),
+				[ implode(' OR ', $updateWhere) ],
 				__METHOD__
 			);
 		}
@@ -435,12 +435,12 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 		$oDatabaseHelper = $this->getDatabaseHelper();
 		$aCounts = $oDatabaseHelper->countImagesByState();
 
-		$total = array(
+		$total = [
 			'unreviewed' => 0,
 			'questionable' => 0,
 			'rejected' => 0,
 			'invalid' => 0,
-		);
+		];
 
 		if ( array_key_exists( ImageReviewStatuses::STATE_UNREVIEWED, $aCounts ) ) {
 			$total['unreviewed'] = $this->wg->Lang->formatNum( $aCounts[ ImageReviewStatuses::STATE_UNREVIEWED ] );
@@ -465,14 +465,14 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 		$startDate = $startYear . '-' . $startMonth . '-' . $startDay . ' 00:00:00';
 		$endDate = $endYear . '-' . $endMonth . '-' . $endDay . ' 23:59:59';
 
-		$summary = array(
+		$summary = [
 			'all' => 0,
 			ImageReviewStatuses::STATE_APPROVED 	=> 0,
 			ImageReviewStatuses::STATE_REJECTED 	=> 0,
 			ImageReviewStatuses::STATE_QUESTIONABLE => 0,
 			'avg' => 0,
-		);
-		$data = array();
+		];
+		$data = [];
 		$userCount = $total = $avg = 0;
 
 		$dbr = $this->getDatawareDB( DB_SLAVE );
@@ -488,17 +488,17 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 					continue;
 				}
 
-				$query = array();
+				$query = [];
 				foreach ( array_keys( $summary ) as $review_state ) {
 					# union query: mysql explain: Using where; Using index and max 150k rows
 					$query[] = $dbr->selectSQLText(
-						array( 'image_review_stats' ),
-						array( 'review_state', 'count(*) as cnt' ),
-						array(
+						[ 'image_review_stats' ],
+						[ 'review_state', 'count(*) as cnt' ],
+						[
 							"review_state"	=> $review_state,
 							"reviewer_id"	=> $reviewer,
 							"review_end between '{$startDate}' AND '{$endDate}'"
-						),
+						],
 						__METHOD__
 					);
 				}
@@ -510,13 +510,13 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 				while ( $row = $dbr->fetchObject( $res ) ) {
 					if ( !empty( $row->review_state ) ) {
 						if ( !isset( $data[ $reviewer ] ) ) {
-							$data[ $reviewer ] = array(
+							$data[ $reviewer ] = [
 								'name' => $user->getName(),
 								'total' => 0,
 								ImageReviewStatuses::STATE_APPROVED => 0,
 								ImageReviewStatuses::STATE_REJECTED => 0,
 								ImageReviewStatuses::STATE_QUESTIONABLE => 0,
-							);
+							];
 						}
 						$data[ $reviewer ][ $row->review_state ] = $row->cnt;
 						$data[ $reviewer ][ 'total' ] += $row->cnt;
@@ -540,10 +540,10 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 			$stats['toavg'] = $stats['total'] - $summary['avg'];
 		}
 
-		return array(
+		return [
 			'summary' => $summary,
 			'data' => $data,
-		);
+		];
 	}
 
 	public function getUserTsKey() {
@@ -590,16 +590,16 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 		$key = wfMemcKey( 'ImageReviewSpecialController', 'v2', __METHOD__);
 		$states = $this->wg->memc->get($key, null);
 		if ( empty($states) ) {
-			$states = array();
+			$states = [];
 			$db = $this->getDatawareDB( DB_SLAVE );
 
 			# MySQL explain: Using where; Using index for group-by
 			$result = $db->select(
-				array( 'image_review_stats' ),
-				array( 'review_state' ),
-				array( 'review_state > 0' ),
+				[ 'image_review_stats' ],
+				[ 'review_state' ],
+				[ 'review_state > 0' ],
 				__METHOD__,
-				array( 'GROUP BY' => 'review_state' )
+				[ 'GROUP BY' => 'review_state' ]
 			);
 
 			while( $row = $db->fetchObject($result) ) {
@@ -623,11 +623,11 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 
 			# MySQL explain: Using where; Using index for group-by
 			$result = $db->select(
-				array( 'image_review_stats' ),
-				array( 'reviewer_id' ),
-				array( 'reviewer_id > 0' ),
+				[ 'image_review_stats' ],
+				[ 'reviewer_id' ],
+				[ 'reviewer_id > 0' ],
 				__METHOD__,
-				array( 'GROUP BY' => 'reviewer_id' )
+				[ 'GROUP BY' => 'reviewer_id' ]
 			);
 
 			while( $row = $db->fetchObject($result) ) {
