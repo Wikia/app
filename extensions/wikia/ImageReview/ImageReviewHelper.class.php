@@ -214,48 +214,48 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 			}
 		}
 
-		if ( $bValidImage === true && $oImageGlobalFile instanceof GlobalFile ) {
-			$sThumbUrl = $oImageGlobalFile->getUrlGenerator()
-				->width( self::IMAGE_REVIEW_THUMBNAIL_SIZE )
-				->height( self::IMAGE_REVIEW_THUMBNAIL_SIZE )
-				->thumbnailDown()
-				->url();
-
-			$aImageInfo = array(
-				'src' => $sThumbUrl,
-				'page' => $oImagePage->getFullURL(),
-				'extension' => $oImageGlobalFile->getMimeType(),
-			);
-
-			if ( strpos( 'ico', $aImageInfo['extension'] ) ) {
-				return [
-					'reason' => 'ico',
-					'wiki_id' => $image->wiki_id,
-					'page_id' => $image->page_id,
-				];
-			} else {
-				$isThumb = true; // Vignette handles .gif and .svg files
-
-				$wikiRow = WikiFactory::getWikiByID( $image->wiki_id );
-
-				return [
-					'reason' => 'verified',
-					'wiki_id' => $image->wiki_id,
-					'page_id' => $image->page_id,
-					'state' => $image->state,
-					'src' => $aImageInfo['src'],
-					'url' => $aImageInfo['page'],
-					'priority' => $image->priority,
-					'flags' => $image->flags,
-					'isthumb' => $isThumb,
-					'wiki_url' => isset( $wikiRow->city_url ) ? $wikiRow->city_url : '',
-				];
-			}
-		} else {
+		if ( !$bValidImage ) {
 			return [
 				'wiki_id' => $image->wiki_id,
 				'page_id' => $image->page_id,
 				'reason' => $sReason,
+			];
+		}
+
+		$sThumbUrl = $oImageGlobalFile->getUrlGenerator()
+			->width( self::IMAGE_REVIEW_THUMBNAIL_SIZE )
+			->height( self::IMAGE_REVIEW_THUMBNAIL_SIZE )
+			->thumbnailDown()
+			->url();
+
+		$aImageInfo = array(
+			'src' => $sThumbUrl,
+			'page' => $oImagePage->getFullURL(),
+			'extension' => $oImageGlobalFile->getMimeType(),
+		);
+
+		if ( strpos( 'ico', $aImageInfo['extension'] ) ) {
+			return [
+				'reason' => 'ico',
+				'wiki_id' => $image->wiki_id,
+				'page_id' => $image->page_id,
+			];
+		} else {
+			$isThumb = true; // Vignette handles .gif and .svg files
+
+			$wikiRow = WikiFactory::getWikiByID( $image->wiki_id );
+
+			return [
+				'reason' => 'verified',
+				'wiki_id' => $image->wiki_id,
+				'page_id' => $image->page_id,
+				'state' => $image->state,
+				'src' => $aImageInfo['src'],
+				'url' => $aImageInfo['page'],
+				'priority' => $image->priority,
+				'flags' => $image->flags,
+				'isthumb' => $isThumb,
+				'wiki_url' => isset( $wikiRow->city_url ) ? $wikiRow->city_url : '',
 			];
 		}
 	}
