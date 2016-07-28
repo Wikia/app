@@ -96,10 +96,7 @@ class HubService extends Service {
 			foreach ( $tags as $name ) {
 				if ( startsWith( $name, self::$comscore_prefix, false ) ) {
 					$catName = substr( $name, strlen( self::$comscore_prefix ) );
-					$category = WikiFactoryHub::getInstance()->getCategoryByName( $catName );
-					if ( $category ) {
-						return $category;
-					}
+					return $catName;
 				}
 			}
 		}
@@ -148,7 +145,10 @@ class HubService extends Service {
 		// Check for a tag named comscore_foo and use that if "foo" exists as a category
 		$comscoreCategoryOverride = HubService::getComscoreCategoryOverride ( $cityId );
 		if ( $comscoreCategoryOverride ) {
-			$categoryId = $comscoreCategoryOverride['id'];
+			$category = WikiFactoryHub::getInstance()->getCategoryByName( $catName );
+			if ( $category ) {
+				$categoryId = $comscoreCategoryOverride['id'];
+			}
 		}
 
 		return $categoryId;
