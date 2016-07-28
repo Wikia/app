@@ -505,9 +505,22 @@ class WikiFactory {
 	 * @return string
 	 */
 	public static function getHostByDbName( $dbName ) {
-		global $wgDevelEnvironment, $wgDevelEnvironmentName;
 
 		$cityId = \WikiFactory::DBtoID( $dbName );
+
+		return self::getHostById($cityId);
+	}
+
+	/**
+	 * Given a wiki's id, return the wgServer value properly altered to reflect the current environment.
+	 *
+	 * @param int $cityId
+	 *
+	 * @return string
+	 */
+	public static function getHostById( $cityId ) {
+		global $wgDevelEnvironment, $wgDevelEnvironmentName;
+
 		$hostName = \WikiFactory::getVarValueByName( 'wgServer', $cityId );
 
 		if ( !empty( $wgDevelEnvironment ) ) {

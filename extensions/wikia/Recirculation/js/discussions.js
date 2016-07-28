@@ -18,7 +18,14 @@ require([
 				cityId: w.wgCityId
 			},
 			callback: function (response) {
-				$('#WikiaArticleFooter').before(response);
+				var $WikiaArticleFooter = $('#WikiaArticleFooter');
+
+				if ($WikiaArticleFooter.length) {
+					$WikiaArticleFooter.before(response);
+				} else {
+					$('#WikiaArticleBottomAd').before(response);
+				}
+
 				done();
 			}
 		});

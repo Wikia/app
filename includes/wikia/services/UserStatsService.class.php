@@ -233,7 +233,7 @@ class UserStatsService extends WikiaModel {
 	}
 
 	/**
-	 * Load user options localized per wiki from DB
+	 * Load user stats localized per wiki from DB
 	 * (wikia_user_properties table)
 	 * @since Nov 2013
 	 * @author Kamil Koterba
@@ -266,12 +266,12 @@ class UserStatsService extends WikiaModel {
 	 * @since Nov 2013
 	 * @author Kamil Koterba
 	 *
-	 * @param String $optionName name of wiki specific user option
-	 * @param String $optionValue option value to be set
-	 * @return $optionVal string|null
+	 * @param String $statName name of wiki specific user stat
+	 * @param String $statVal stat value to be set
+	 * @return boolean
 	 */
 	private function setUserStat( $statName, $statVal ) {
-		if ( !$this->validateUser() ) {
+		if ( !$this->validateUser() || wfReadOnly() ) {
 			return false;
 		}
 
@@ -294,7 +294,6 @@ class UserStatsService extends WikiaModel {
 	 * @since Nov 2013
 	 * @author Kamil Koterba
 	 *
-	 * @param int $wikiId Integer Id of wiki - specifies wiki from which to get editcount, 0 for current wiki
 	 * @return String Timestamp in format YmdHis e.g. 20131107192200 or empty string
 	 */
 	private function initFirstContributionTimestamp() {

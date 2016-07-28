@@ -1,12 +1,13 @@
-/*global define*/
+/*global define, require*/
 define('ext.wikia.adEngine.provider.evolve2', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.provider.gpt.helper',
 	'ext.wikia.adEngine.slotTweaker',
 	'ext.wikia.adEngine.utils.adLogicZoneParams',
+	'ext.wikia.adEngine.utils.eventDispatcher',
 	'wikia.log',
-	'wikia.window'
-], function (adContext, gptHelper, slotTweaker, zoneParams, log, win) {
+	require.optional('ext.wikia.adEngine.lookup.openx.openXBidderHelper')
+], function (adContext, gptHelper, slotTweaker, zoneParams, eventDispatcher, log, openXHelper) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.evolve2',
@@ -30,7 +31,7 @@ define('ext.wikia.adEngine.provider.evolve2', [
 	// TODO: ADEN-3542
 	function dispatchNoUapEvent(slotName) {
 		if (slotName === 'MOBILE_TOP_LEADERBOARD') {
-			win.dispatchEvent(new Event('wikia.not_uap'));
+			eventDispatcher.dispatch('wikia.not_uap');
 		}
 	}
 
@@ -110,6 +111,7 @@ define('ext.wikia.adEngine.provider.evolve2', [
 		});
 		slot.pre('hop', function() {
 			dispatchNoUapEvent(slot.name);
+			openXHelper && openXHelper.addOpenXSlot(slot.name);
 		});
 		gptHelper.pushAd(
 			slot,
