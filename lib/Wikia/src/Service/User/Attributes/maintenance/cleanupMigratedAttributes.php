@@ -19,6 +19,8 @@ require_once( __DIR__ . '/../../../../../../../maintenance/Maintenance.php' );
 
 class CleanupMigratedAttributes extends Maintenance {
 
+    CONST BATCH_SIZE = 1000;
+
     private $dryRun;
 
     public function __construct() {
@@ -42,21 +44,39 @@ class CleanupMigratedAttributes extends Maintenance {
             $this->output( "NOT DRY RUN, ATTRIBUTES WILL BE DELETED\n" );
         }
         $this->output( "Deletion will begin in 5 seconds...\n" );
-        sleep(5);
+        sleep( 5 );
     }
     
     private function deleteAttributes() {
-        global $wgExternalSharedDB, $wgPublicAttributes;
+        global $wgExternalSharedDB, $wgPublicUserAttributes;
+
+        $db = wfGetDB( DB_MASTER, [], $wgExternalSharedDB );
+        foreach ( $wgPublicUserAttributes as $attribute ) {
+            $this->deleteAttribute( $attribute, $db );
+        }
+    }
+
+    private function deleteAttribute( $attributeName, DatabaseMysqli $db ) {
+        $this->output( "Deleting $attributeName\n" );
 
         if ( $this->dryRun ) {
             return;
         }
 
-        $db = wfGetDB( DB_MASTER, [], $wgExternalSharedDB );
-        ( new WikiaSQL() )
-            ->DELETE( 'user_properties' )
-            ->WHERE( 'up_property' )->IN( $wgPublicAttributes )
-            ->run( $db );
+        $rowsRemaining = true;
+        while ( $rowsRemaining ) {
+            ( new WikiaSQL() )
+                ->DELETE( 'user_properties' )
+                ->WHERE( 'up_property' )->EQUAL_TO( $attributeName )
+                ->ORDER_BY( 'up_user' )->DESC()
+                ->LIMIT( self::BATCH_SIZE )
+                ->run( $db );
+
+            $rowsRemaining = $db->affectedRows() > 0;
+            $db->commit();
+
+            sleep( 2 );
+        }
     }
 
     private function printSuccess() {
