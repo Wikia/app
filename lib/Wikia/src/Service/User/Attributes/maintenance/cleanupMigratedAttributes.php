@@ -73,7 +73,6 @@ class CleanupMigratedAttributes extends Maintenance {
                 ->run( $db );
 
             $rowsRemaining = $db->affectedRows() > 0;
-            $db->commit();
 
             sleep( 2 );
         }
