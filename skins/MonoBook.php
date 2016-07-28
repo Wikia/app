@@ -178,6 +178,12 @@ if (isset($this->data['skin']) && method_exists($this->data['skin'], 'printTopHt
 	} else {
 		$footerEnd = '';
 	}
+	foreach ( $validFooterIcons as $blockName => $footerIcons ) { ?>
+	<div id="f-<?php echo htmlspecialchars($blockName); ?>ico">
+<?php foreach ( $footerIcons as $icon ) { ?>
+		<?php echo $this->getSkin()->makeFooterIcon( $icon ); ?>
+
+<?php }
 	/* Wikia change begin - @author: sactage */
 	// WW-93: Add ComScore tag for uncyclopedia-like wikis
 	global $wgCityId;
@@ -188,13 +194,7 @@ if (isset($this->data['skin']) && method_exists($this->data['skin'], 'printTopHt
 				<span><?php echo wfMessage( 'vertical-comedy' )->text(); ?></span>
 			</a>
 		</div>
-<?php } /* Wikia change end */
-	foreach ( $validFooterIcons as $blockName => $footerIcons ) { ?>
-	<div id="f-<?php echo htmlspecialchars($blockName); ?>ico">
-<?php foreach ( $footerIcons as $icon ) { ?>
-		<?php echo $this->getSkin()->makeFooterIcon( $icon ); ?>
-
-<?php }
+	<?php } /* Wikia change end */
 ?>
 	</div>
 <?php }

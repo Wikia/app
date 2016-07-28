@@ -730,6 +730,12 @@ div#footer li {
 #f-copyrightico {
 	float: left;
 	height: 1%;
+	/* Wikia change begin - @author: sactage */
+	/* for some reason this element will take up ~123px of
+	 * space when the image inside is only 88px wide, and
+	 * this breaks the comscore tags for uncyc wikis */
+	width: 88px;
+	/* Wikia change end */
 }
 #f-list {
 	list-style: none !important;
@@ -1244,6 +1250,7 @@ div.mw-lag-warn-high {
 	display: inline-block;
 	height: 40px;
 	border: 1px solid #000;
+	float: right;
 }
 
 #uncyc-branding a {

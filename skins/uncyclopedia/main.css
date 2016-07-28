@@ -1095,6 +1095,7 @@ input.searchButton {
 #f-copyrightico {
 	float: left;
 	height: 1%;
+	width: 88px;
 	background-repeat: no-repeat;
 }
 
@@ -1851,6 +1852,7 @@ p.mw-ipb-conveniencelinks {
 	display: inline-block;
 	height: 40px;
 	border: 1px solid #000;
+	float: right;
 }
 
 #uncyc-branding a {
