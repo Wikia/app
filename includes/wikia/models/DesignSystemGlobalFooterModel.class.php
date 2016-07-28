@@ -5,6 +5,9 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 
 	private $hrefs = [
 		'default' => [
+			'vertical-games' => null,
+			'vertical-movies' => null,
+			'vertical-tv' => null,
 			'fan-communities' => 'http://www.wikia.com/explore',
 			'about' => 'http://www.wikia.com/about',
 			'careers' => 'https://careers.wikia.com',
@@ -21,6 +24,8 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 			'fan-contributor' => null,
 			'wam' => 'http://www.wikia.com/WAM',
 			'help' => 'http://community.wikia.com/wiki/Help:Contents',
+			'app-store' => 'https://itunes.apple.com/developer/wikia-inc./id422467077',
+			'google-play' => 'https://play.google.com/store/apps/developer?id=Wikia,+Inc.',
 			'media-kit' => 'http://www.wikia.com/mediakit',
 			'media-kit-contact' => 'http://www.wikia.com/mediakit#contacts',
 			'social-facebook' => 'https://www.facebook.com/wikia',
@@ -49,6 +54,9 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 			'social-instagram' => 'https://www.instagram.com/wikia_de/'
 		],
 		'en' => [
+			'vertical-games' => 'http://fandom.wikia.com/games',
+			'vertical-movies' => 'http://fandom.wikia.com/movies',
+			'vertical-tv' => 'http://fandom.wikia.com/tv',
 			'fan-contributor' => 'http://fandom.wikia.com/fan-contributor',
 			'social-facebook' => 'https://www.facebook.com/getfandom',
 			'social-twitter' => 'https://twitter.com/getfandom',
@@ -188,6 +196,321 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 		]
 	];
 
+	private $baseData = [
+		'fandom_overview' => [
+			'links' => [
+				[
+					'type' => 'link-branded',
+					'brand' => 'games',
+					'title' => [
+						'type' => 'translatable-text',
+						'key' => 'global-footer-fandom-link-vertical-games'
+					],
+					'href-key' => 'vertical-games'
+				],
+				[
+					'type' => 'link-branded',
+					'brand' => 'movies',
+					'title' => [
+						'type' => 'translatable-text',
+						'key' => 'global-footer-fandom-link-vertical-movies'
+					],
+					'href-key' => 'vertical-movies'
+				],
+				[
+					'type' => 'link-branded',
+					'brand' => 'tv',
+					'title' => [
+						'type' => 'translatable-text',
+						'key' => 'global-footer-fandom-link-vertical-tv'
+					],
+					'href-key' => 'vertical-tv'
+				],
+				[
+					'type' => 'link-branded',
+					'brand' => 'fan-communities',
+					'title' => [
+						'type' => 'translatable-text',
+						'key' => 'global-footer-fandom-link-fan-communities'
+					],
+					'href-key' => 'fan-communities'
+				]
+			]
+		],
+		'follow_us' => [
+			'header' => [
+				'type' => 'line-text',
+				'title' => [
+					'type' => 'translatable-text',
+					'key' => 'global-footer-fandom-follow-us-header'
+				]
+			],
+			'links' => [
+				[
+					'type' => 'link-image',
+					'image' => 'wds-icons-facebook',
+					'title' => [
+						'type' => 'translatable-text',
+						'key' => 'global-footer-fandom-follow-us-link-facebook'
+					],
+					'href-key' => 'social-facebook'
+				],
+				[
+					'type' => 'link-image',
+					'image' => 'wds-icons-twitter',
+					'title' => [
+						'type' => 'translatable-text',
+						'key' => 'global-footer-fandom-follow-us-link-twitter'
+					],
+					'href-key' => 'social-twitter'
+				],
+				[
+					'type' => 'link-image',
+					'image' => 'wds-icons-reddit',
+					'title' => [
+						'type' => 'translatable-text',
+						'key' => 'global-footer-fandom-follow-us-link-reddit'
+					],
+					'href-key' => 'social-reddit'
+				],
+				[
+					'type' => 'link-image',
+					'image' => 'wds-icons-youtube',
+					'title' => [
+						'type' => 'translatable-text',
+						'key' => 'global-footer-fandom-follow-us-link-youtube'
+					],
+					'href-key' => 'social-youtube'
+				],
+				[
+					'type' => 'link-image',
+					'image' => 'wds-icons-instagram',
+					'title' => [
+						'type' => 'translatable-text',
+						'key' => 'global-footer-fandom-follow-us-link-instagram'
+					],
+					'href-key' => 'social-instagram'
+				]
+			]
+		],
+		'company_overview' => [
+			'header' => [
+				'type' => 'line-text',
+				'title' => [
+					'type' => 'translatable-text',
+					'key' => 'global-footer-wikia-company-overview-header'
+				]
+			],
+			'links' => [
+				[
+					'type' => 'link-text',
+					'title' => [
+						'type' => 'translatable-text',
+						'key' => 'global-footer-wikia-company-overview-link-about'
+					],
+					'href-key' => 'about'
+				],
+				[
+					'type' => 'link-text',
+					'title' => [
+						'type' => 'translatable-text',
+						'key' => 'global-footer-wikia-company-overview-link-careers'
+					],
+					'href-key' => 'careers'
+				],
+				[
+					'type' => 'link-text',
+					'title' => [
+						'type' => 'translatable-text',
+						'key' => 'global-footer-wikia-company-overview-link-press'
+					],
+					'href-key' => 'press'
+				],
+				[
+					'type' => 'link-text',
+					'title' => [
+						'type' => 'translatable-text',
+						'key' => 'global-footer-wikia-company-overview-link-contact'
+					],
+					'href-key' => 'contact'
+				],
+				[
+					'type' => 'link-text',
+					'title' => [
+						'type' => 'translatable-text',
+						'key' => 'global-footer-wikia-company-overview-link-wikia-gives-back'
+					],
+					'href-key' => 'wikia-gives-back'
+				]
+			]
+		],
+		'site_overview' => [
+			'links' => [
+				[
+					'type' => 'link-text',
+					'title' => [
+						'type' => 'translatable-text',
+						'key' => 'global-footer-wikia-site-overview-link-terms-of-use'
+					],
+					'href-key' => 'terms-of-use'
+				],
+				[
+					'type' => 'link-text',
+					'title' => [
+						'type' => 'translatable-text',
+						'key' => 'global-footer-wikia-site-overview-link-privacy-policy'
+					],
+					'href-key' => 'privacy-policy'
+				],
+				[
+					'type' => 'link-text',
+					'title' => [
+						'type' => 'translatable-text',
+						'key' => 'global-footer-wikia-site-overview-link-global-sitemap'
+					],
+					'href-key' => 'global-sitemap'
+				],
+				[
+					'type' => 'link-text',
+					'title' => [
+						'type' => 'translatable-text',
+						'key' => 'global-footer-wikia-site-overview-link-api'
+					],
+					'href-key' => 'api'
+				]
+			]
+		],
+		'community' => [
+			'header' => [
+				'type' => 'line-text',
+				'title' => [
+					'type' => 'translatable-text',
+					'key' => 'global-footer-wikia-community-header'
+				]
+			],
+			'links' => [
+				[
+					'type' => 'link-text',
+					'title' => [
+						'type' => 'translatable-text',
+						'key' => 'global-footer-wikia-community-link-community-central'
+					],
+					'href-key' => 'community-central'
+				],
+				[
+					'type' => 'link-text',
+					'title' => [
+						'type' => 'translatable-text',
+						'key' => 'global-footer-wikia-community-link-support'
+					],
+					'href-key' => 'support'
+				],
+				[
+					'type' => 'link-text',
+					'title' => [
+						'type' => 'translatable-text',
+						'key' => 'global-footer-wikia-community-link-fan-contributor-program'
+					],
+					'href-key' => 'fan-contributor'
+				],
+				[
+					'type' => 'link-text',
+					'title' => [
+						'type' => 'translatable-text',
+						'key' => 'global-footer-wikia-community-link-wam-score'
+					],
+					'href-key' => 'wam'
+				],
+				[
+					'type' => 'link-text',
+					'title' => [
+						'type' => 'translatable-text',
+						'key' => 'global-footer-wikia-community-link-help'
+					],
+					'href-key' => 'help'
+				]
+			]
+		],
+		'create_wiki' => [
+			'description' => [
+				'type' => 'translatable-text',
+				'key' => 'global-footer-wikia-create-wiki-description'
+			],
+			'links' => [
+				[
+					'type' => 'link-text',
+					'title' => [
+						'type' => 'translatable-text',
+						'key' => 'global-footer-wikia-create-wiki-link-start-wikia'
+					],
+					'href-key' => 'create-new-wiki'
+				]
+			]
+		],
+		'community_apps' => [
+			'header' => [
+				'type' => 'line-text',
+				'title' => [
+					'type' => 'translatable-text',
+					'key' => 'global-footer-wikia-community-apps-header'
+				]
+			],
+			'description' => [
+				'type' => 'translatable-text',
+				'key' => 'global-footer-wikia-community-apps-description'
+			],
+			'links' => [
+				[
+					'type' => 'link-image',
+					'image' => 'wds-company-store-appstore',
+					'title' => [
+						'type' => 'translatable-text',
+						'key' => 'global-footer-wikia-community-apps-link-app-store'
+					],
+					'href-key' => 'app-store'
+				],
+				[
+					'type' => 'link-image',
+					'image' => 'wds-company-store-googleplay',
+					'title' => [
+						'type' => 'translatable-text',
+						'key' => 'global-footer-wikia-community-apps-link-google-play'
+					],
+					'href-key' => 'google-play'
+				]
+			]
+		],
+		'advertise' => [
+			'header' => [
+				'type' => 'line-text',
+				'title' => [
+					'type' => 'translatable-text',
+					'key' => 'global-footer-wikia-advertise-header'
+				]
+			],
+			'links' => [
+				[
+					'type' => 'link-text',
+					'title' => [
+						'type' => 'translatable-text',
+						'key' => 'global-footer-wikia-advertise-link-media-kit'
+					],
+					'href-key' => 'media-kit'
+				],
+				[
+					'type' => 'link-text',
+					'title' => [
+						'type' => 'translatable-text',
+						'key' => 'global-footer-wikia-advertise-link-contact'
+					],
+					'href-key' => 'media-kit-contact'
+				]
+			]
+		],
+	];
+
+	private $data = [ ];
+
 	private $wikiId;
 	private $lang;
 
@@ -203,187 +526,20 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 	}
 
 	public function getData() {
-		$data = [
-			'company_overview' => [
-				'header' => [
-					'type' => 'line-text',
-					'title' => [
-						'type' => 'translatable-text',
-						'key' => 'global-footer-wikia-company-overview-header'
-					]
-				],
-				'links' => [
-					[
-						'type' => 'link-text',
-						'title' => [
-							'type' => 'translatable-text',
-							'key' => 'global-footer-wikia-company-overview-link-about'
-						],
-						'href' => $this->getHref( 'about' )
-					],
-					[
-						'type' => 'link-text',
-						'title' => [
-							'type' => 'translatable-text',
-							'key' => 'global-footer-wikia-company-overview-link-careers'
-						],
-						'href' => $this->getHref( 'careers' )
-					],
-					[
-						'type' => 'link-text',
-						'title' => [
-							'type' => 'translatable-text',
-							'key' => 'global-footer-wikia-company-overview-link-press'
-						],
-						'href' => $this->getHref( 'press' )
-					],
-					[
-						'type' => 'link-text',
-						'title' => [
-							'type' => 'translatable-text',
-							'key' => 'global-footer-wikia-company-overview-link-contact'
-						],
-						'href' => $this->getHref( 'contact' )
-					],
-					[
-						'type' => 'link-text',
-						'title' => [
-							'type' => 'translatable-text',
-							'key' => 'global-footer-wikia-company-overview-link-wikia-gives-back'
-						],
-						'href' => $this->getHref( 'wikia-gives-back' )
-					]
-				]
-			],
-			'site_overview' => [
-				'links' => [
-					[
-						'type' => 'link-text',
-						'title' => [
-							'type' => 'translatable-text',
-							'key' => 'global-footer-wikia-site-overview-link-terms-of-use'
-						],
-						'href' => $this->getHref( 'terms-of-use' )
-					],
-					[
-						'type' => 'link-text',
-						'title' => [
-							'type' => 'translatable-text',
-							'key' => 'global-footer-wikia-site-overview-link-privacy-policy'
-						],
-						'href' => $this->getHref( 'privacy-policy' )
-					],
-					[
-						'type' => 'link-text',
-						'title' => [
-							'type' => 'translatable-text',
-							'key' => 'global-footer-wikia-site-overview-link-global-sitemap'
-						],
-						'href' => $this->getHref( 'global-sitemap' )
-					],
-					[
-						'type' => 'link-text',
-						'title' => [
-							'type' => 'translatable-text',
-							'key' => 'global-footer-wikia-site-overview-link-api'
-						],
-						'href' => $this->getHref( 'api' )
-					]
-				]
-			],
-			'create_wiki' => [
-				'description' => [
-					'type' => 'translatable-text',
-					'key' => 'global-footer-wikia-create-wiki-description'
-				],
-				'links' => [
-					[
-						'type' => 'link-text',
-						'title' => [
-							'type' => 'translatable-text',
-							'key' => 'global-footer-wikia-create-wiki-link-start-wikia'
-						],
-						'href' => $this->getHref( 'create-new-wiki' )
-					]
-				]
-			],
-			'community_apps' => [
-				'header' => [
-					'type' => 'line-text',
-					'title' => [
-						'type' => 'translatable-text',
-						'key' => 'global-footer-wikia-community-apps-header'
-					]
-				],
-				'description' => [
-					'type' => 'translatable-text',
-					'key' => 'global-footer-wikia-community-apps-description'
-				],
-				'links' => [
-					[
-						'type' => 'link-image',
-						'image' => 'wds-company-store-appstore',
-						'title' => [
-							'type' => 'translatable-text',
-							'key' => 'global-footer-wikia-community-apps-link-app-store'
-						],
-						'href' => 'https://itunes.apple.com/developer/wikia-inc./id422467077'
-					],
-					[
-						'type' => 'link-image',
-						'image' => 'wds-company-store-googleplay',
-						'title' => [
-							'type' => 'translatable-text',
-							'key' => 'global-footer-wikia-community-apps-link-google-play'
-						],
-						'href' => 'https://play.google.com/store/apps/developer?id=Wikia,+Inc.'
-					]
-				]
-			],
-			'advertise' => [
-				'header' => [
-					'type' => 'line-text',
-					'title' => [
-						'type' => 'translatable-text',
-						'key' => 'global-footer-wikia-advertise-header'
-					]
-				],
-				'links' => [
-					[
-						'type' => 'link-text',
-						'title' => [
-							'type' => 'translatable-text',
-							'key' => 'global-footer-wikia-advertise-link-media-kit'
-						],
-						'href' => $this->getHref( 'media-kit' )
-					],
-					[
-						'type' => 'link-text',
-						'title' => [
-							'type' => 'translatable-text',
-							'key' => 'global-footer-wikia-advertise-link-contact'
-						],
-						'href' => $this->getHref( 'media-kit-contact' )
-					]
-				]
-			],
-			'licensing_and_vertical' => [
-				'description' => [
-					'type' => 'translatable-text',
-					'key' => 'global-footer-licensing-description',
-					'params' => [
-						'license' => $this->getLicenseData(),
-					]
-				],
-			],
-		];
+		$this->setHeaderData();
 
-		$data['fandom_overview'] = $this->getFandomOverview();
-		$data['follow_us'] = $this->getFollowUs();
-		$data['community'] = $this->getCommunity();
+		foreach ( $this->baseData as $sectionName => $sectionBaseData ) {
+			$this->setSectionData( $sectionName, $sectionBaseData );
+		}
 
+		$this->setLicenseData();
+
+		return $this->data;
+	}
+
+	private function setHeaderData() {
 		if ( $this->lang === self::DEFAULT_LANG ) {
-			$data['fandom'] = [
+			$this->data['fandom'] = [
 				'header' => [
 					'type' => 'link-image',
 					'image' => 'wds-company-logo-fandom',
@@ -394,7 +550,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 					]
 				]
 			];
-			$data['wikia'] = [
+			$this->data['wikia'] = [
 				'header' => [
 					'type' => 'line-image',
 					'image' => 'wds-company-logo-wikia',
@@ -405,7 +561,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 				]
 			];
 		} else {
-			$data['international_header'] = [
+			$this->data['international_header'] = [
 				'header' => [
 					'type' => 'line-image',
 					'image' => 'wds-company-logo-wikia',
@@ -420,8 +576,67 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 				]
 			];
 		}
+	}
 
-		return $data;
+	private function setSectionData( $sectionName, $sectionBaseData ) {
+		$sectionData = $this->getSectionData( $sectionBaseData );
+
+		if ( !empty( $sectionData ) ) {
+			$this->data[$sectionName] = $sectionData;
+		}
+	}
+
+	private function getSectionData( $sectionBaseData ) {
+		$sectionData = [ ];
+
+		if ( !empty( $sectionBaseData['header'] ) ) {
+			$sectionData['header'] = $sectionBaseData['header'];
+		}
+
+		if ( !empty( $sectionBaseData['description'] ) ) {
+			$sectionData['description'] = $sectionBaseData['description'];
+		}
+
+		if ( !empty( $sectionBaseData['links'] ) ) {
+			$linksData = $this->getLinksData( $sectionBaseData['links'] );
+
+			if ( !empty( $linksData ) ) {
+				$sectionData['links'] = $linksData;
+			}
+		}
+
+		return $sectionData;
+	}
+
+	private function getLinksData( $linksBaseList ) {
+		$linksList = [ ];
+
+		foreach ( $linksBaseList as $linkBaseData ) {
+			$href = $this->getHref( $linkBaseData['href-key'] );
+
+			if ( $href ) {
+				$linkBaseData['href'] = $href;
+				$linksList[] = $linkBaseData;
+			}
+		}
+
+		return $linksList;
+	}
+
+	private function getHref( $hrefKey ) {
+		return $this->hrefs[$this->lang][$hrefKey] ?? $this->hrefs['default'][$hrefKey];
+	}
+
+	private function setLicenseData() {
+		$this->data['licensing_and_vertical'] = [
+			'description' => [
+				'type' => 'translatable-text',
+				'key' => 'global-footer-licensing-description',
+				'params' => [
+					'license' => $this->getLicenseData(),
+				]
+			],
+		];
 	}
 
 	private function getLicenseData() {
@@ -437,201 +652,6 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 		];
 	}
 
-	private function getFandomOverview() {
-		$out = [
-			'links' => [ ]
-		];
-
-		if ( $this->lang === self::DEFAULT_LANG ) {
-			$out['links'] = [
-				[
-					'type' => 'link-branded',
-					'brand' => 'games',
-					'title' => [
-						'type' => 'translatable-text',
-						'key' => 'global-footer-fandom-link-vertical-games'
-					],
-					'href' => 'http://fandom.wikia.com/games'
-				],
-				[
-					'type' => 'link-branded',
-					'brand' => 'movies',
-					'title' => [
-						'type' => 'translatable-text',
-						'key' => 'global-footer-fandom-link-vertical-movies'
-					],
-					'href' => 'http://fandom.wikia.com/movies'
-				],
-				[
-					'type' => 'link-branded',
-					'brand' => 'tv',
-					'title' => [
-						'type' => 'translatable-text',
-						'key' => 'global-footer-fandom-link-vertical-tv'
-					],
-					'href' => 'http://fandom.wikia.com/tv'
-				],
-			];
-		}
-
-		$out['links'][] = [
-			'type' => 'link-branded',
-			'brand' => 'fan-communities',
-			'title' => [
-				'type' => 'translatable-text',
-				'key' => 'global-footer-fandom-link-fan-communities'
-			],
-			'href' => $this->getHref( 'fan-communities' )
-		];
-
-		return $out;
-	}
-
-	private function getFollowUs() {
-		$data = [
-			'header' => [
-				'type' => 'line-text',
-				'title' => [
-					'type' => 'translatable-text',
-					'key' => 'global-footer-fandom-follow-us-header'
-				]
-			],
-			'links' => [ ]
-		];
-
-		if ( $this->getHref( 'social-facebook' ) ) {
-			$data['links'][] = [
-				'type' => 'link-image',
-				'image' => 'wds-icons-facebook',
-				'title' => [
-					'type' => 'translatable-text',
-					'key' => 'global-footer-fandom-follow-us-link-facebook'
-				],
-				'href' => $this->getHref( 'social-facebook' )
-			];
-		}
-
-		if ( $this->getHref( 'social-twitter' ) ) {
-			$data['links'][] = [
-				'type' => 'link-image',
-				'image' => 'wds-icons-twitter',
-				'title' => [
-					'type' => 'translatable-text',
-					'key' => 'global-footer-fandom-follow-us-link-twitter'
-				],
-				'href' => $this->getHref( 'social-twitter' )
-			];
-		}
-
-		if ( $this->getHref( 'social-reddit' ) ) {
-			$data['links'][] = [
-				'type' => 'link-image',
-				'image' => 'wds-icons-reddit',
-				'title' => [
-					'type' => 'translatable-text',
-					'key' => 'global-footer-fandom-follow-us-link-reddit'
-				],
-				'href' => $this->getHref( 'social-reddit' )
-			];
-		}
-
-		if ( $this->getHref( 'social-youtube' ) ) {
-			$data['links'][] = [
-				'type' => 'link-image',
-				'image' => 'wds-icons-youtube',
-				'title' => [
-					'type' => 'translatable-text',
-					'key' => 'global-footer-fandom-follow-us-link-youtube'
-				],
-				'href' => $this->getHref( 'social-youtube' )
-			];
-		}
-
-		if ( $this->getHref( 'social-instagram' ) ) {
-			$data['links'][] = [
-				'type' => 'link-image',
-				'image' => 'wds-icons-instagram',
-				'title' => [
-					'type' => 'translatable-text',
-					'key' => 'global-footer-fandom-follow-us-link-instagram'
-				],
-				'href' => $this->getHref( 'social-instagram' )
-			];
-		}
-
-		return $data;
-	}
-
-	private function getCommunity() {
-		$data = [
-			'header' => [
-				'type' => 'line-text',
-				'title' => [
-					'type' => 'translatable-text',
-					'key' => 'global-footer-wikia-community-header'
-				]
-			],
-			'links' => [ ]
-		];
-
-		if ( $this->getHref( 'community-central' ) ) {
-			$data['links'][] = [
-				'type' => 'link-text',
-				'title' => [
-					'type' => 'translatable-text',
-					'key' => 'global-footer-wikia-community-link-community-central'
-				],
-				'href' => $this->getHref( 'community-central' )
-			];
-		}
-
-		if ( $this->getHref( 'support' ) ) {
-			$data['links'][] = [
-				'type' => 'link-text',
-				'title' => [
-					'type' => 'translatable-text',
-					'key' => 'global-footer-wikia-community-link-support'
-				],
-				'href' => $this->getHref( 'support' )
-			];
-		}
-
-		if ( $this->getHref( 'fan-contributor' ) ) {
-			$data['links'][] = [
-				'type' => 'link-text',
-				'title' => [
-					'type' => 'translatable-text',
-					'key' => 'global-footer-wikia-community-link-fan-contributor-program'
-				],
-				'href' => $this->getHref( 'fan-contributor' )
-			];
-		}
-
-		if ( $this->getHref( 'wam' ) ) {
-			$data['links'][] = [
-				'type' => 'link-text',
-				'title' => [
-					'type' => 'translatable-text',
-					'key' => 'global-footer-wikia-community-link-wam-score'
-				],
-				'href' => $this->getHref( 'wam' )
-			];
-		}
-
-		if ( $this->getHref( 'help' ) ) {
-			$data['links'][] = [
-				'type' => 'link-text',
-				'title' => [
-					'type' => 'translatable-text',
-					'key' => 'global-footer-wikia-community-link-help'
-				],
-				'href' => $this->getHref( 'help' )
-			];
-		}
-
-		return $data;
-	}
-
 	private function getLicenseUrl() {
 		$licenseUrl = WikiFactory::getVarByName( 'wgRightsUrl', $this->wikiId )->cv_value ?: $this->wg->RightsUrl;
 		$licensePage = WikiFactory::getVarByName( 'wgRightsPage', $this->wikiId )->cv_value ?: $this->wg->RightsPage;
@@ -642,9 +662,5 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 		}
 
 		return $licenseUrl;
-	}
-
-	private function getHref( $hrefKey ) {
-		return $this->hrefs[$this->lang][$hrefKey] ?? $this->hrefs['default'][$hrefKey];
 	}
 }
