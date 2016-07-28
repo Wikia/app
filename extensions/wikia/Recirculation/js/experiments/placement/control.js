@@ -8,6 +8,11 @@ define('ext.wikia.recirculation.experiments.placement.CONTROL', [
 	'ext.wikia.recirculation.views.rail'
 ], function ($, w, utils, FandomHelper, CuratedHelper, RailView) {
 
+	function ditherResults(data) {
+		data.items = utils.ditherResults(data.items, 4).slice(0, 5);
+		return data;
+	}
+
 	function run(experimentName) {
 		var view = RailView(),
 			curated = CuratedHelper();
@@ -15,10 +20,7 @@ define('ext.wikia.recirculation.experiments.placement.CONTROL', [
 		return FandomHelper({
 			limit: 10
 		}).loadData()
-			.then(function(data) {
-				data.items = utils.ditherRecs(data.items, 2.5).slice(0, 5);
-				return data;
-			})
+			.then(ditherResults)
 			.then(curated.injectContent)
 			.then(utils.waitForRail)
 			.then(view.render)

@@ -36,26 +36,26 @@ define('ext.wikia.recirculation.utils', [
 	   };
 	}
 
-	function Recommendation (item, score) {
+	function Result (item, score) {
 		return {
 			item: item,
 			score: score
 		};
 	}
 
-	function ditherRecs(recommendations, epsilon) {
+	function ditherResults(results, epsilon) {
 		var standardDeviation = (epsilon > 1) ? Math.sqrt(Math.log(epsilon)) : Math.exp(1e-10),
 			distribution = gaussian(0, standardDeviation);
 
-		return recommendations.map(Recommendation)
-			.map(function(recommendation, index) {
-				recommendation.score = Math.log(index + 1) + distribution();
-				return recommendation;
+		return results.map(Result)
+			.map(function(result, index) {
+				result.score = Math.log(index + 1) + distribution();
+				return result;
 			}).sort(function(a, b) {
 				return a.score - b.score;
-			}).map(function(recommendation, index) {
-				recommendation.item.index = index;
-				return recommendation.item
+			}).map(function(result, index) {
+				result.item.index = index;
+				return result.item
 			});
 	}
 
@@ -159,6 +159,6 @@ define('ext.wikia.recirculation.utils', [
 		addUtmTracking: addUtmTracking,
 		afterRailLoads: afterRailLoads,
 		waitForRail: waitForRail,
-		ditherRecs: ditherRecs
+		ditherResults: ditherResults
 	};
 });
