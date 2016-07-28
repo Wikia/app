@@ -7,12 +7,12 @@
 ?>
 
 <? if ( $displayHeader ): ?>
-	<h2><?= wfMessage( 'oasis-global-page-header' )->escaped(); ?></h2>
+	<h2><?= wfMsg( 'oasis-global-page-header' ); ?></h2>
 <? endif; ?>
 <div class="skiplinkcontainer">
-<a class="skiplink" rel="nofollow" href="#WikiaArticle"><?= wfMessage( 'oasis-skip-to-content' )->escaped(); ?></a>
-<a class="skiplink wikinav" rel="nofollow" href="#WikiHeader"><?= wfMessage( 'oasis-skip-to-wiki-navigation' )->escaped(); ?></a>
-<a class="skiplink sitenav" rel="nofollow" href="#GlobalNavigation"><?= wfMessage( 'oasis-skip-to-site-navigation' )->escaped(); ?></a>
+<a class="skiplink" rel="nofollow" href="#WikiaArticle"><?= wfMsg( 'oasis-skip-to-content' ); ?></a>
+<a class="skiplink wikinav" rel="nofollow" href="#WikiHeader"><?= wfMsg( 'oasis-skip-to-wiki-navigation' ); ?></a>
+<a class="skiplink sitenav" rel="nofollow" href="#GlobalNavigation"><?= wfMsg( 'oasis-skip-to-site-navigation' ); ?></a>
 </div>
 <?= $afterBodyHtml ?>
 
@@ -112,7 +112,11 @@
 						Wikia is not accessible if you’ve made further modifications. Remove the custom ad blocker rule(s) and the page will load as expected.</h3>
 				</div>
 				<?php } ?>
-				<div id="WikiaArticle" class="WikiaArticle"<?= $body_ondblclick ? ' ondblclick="' . htmlspecialchars( $body_ondblclick ) . '"' : '' ?>>
+				<div id="WikiaArticle" class="WikiaArticle<?= $displayAdminDashboardChromedArticle ? ' AdminDashboardChromedArticle' : '' ?>">
+					<? if( $displayAdminDashboardChromedArticle ) { ?>
+						<?= ( string )$app->sendRequest( 'AdminDashboardSpecialPage', 'chromedArticleHeader', array( 'headerText' => $wg->Title->getText() ) ) ?>
+					<? } ?>
+
 					<div class="home-top-right-ads">
 					<?php
 						if ( !WikiaPageType::isCorporatePage() && !$wg->EnableVideoPageToolExt && WikiaPageType::isMainPage() ) {
