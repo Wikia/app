@@ -97,6 +97,12 @@ class UncyclopediaTemplate extends MonoBookTemplate {
 
 		// Generate additional footer links
 ?>
+	<div class="branding vertical-comedy">
+		<a class="wikia-logo">
+			<img src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D">
+			<span>Comedy</span>
+		</a>
+	</div>
 	<div id="f-hostedbyico" style="float:right">
 		<a href="http://www.wikia.com/">
 			<img src="http://images.wikia.com/uncyclopedia/images/e/e1/Hosted_by_wikicities.png" alt="Wikia" />

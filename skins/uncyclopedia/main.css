@@ -1096,6 +1096,30 @@ input.searchButton {
 	float: left;
 	height: 1%;
 }
+#footer .branding {
+	display: inline-block;
+	height: 40px;
+	border: 1px solid #000;
+}
+#footer .branding a {
+	background-color: #0a6eb4;
+}
+#footer .branding .wikia-logo {
+	color: #fff;
+}
+#footer .branding .wikia-logo img {
+	background-color: #000;
+	background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20version%3D%221.1%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20x%3D%220px%22%20y%3D%220px%22%20viewBox%3D%220%200%20217.8%2060%22%20enable-background%3D%22new%200%200%20217.8%2060%22%20xml%3Aspace%3D%22preserve%22%3E%0A%3Cpath%20d%3D%22M100.6%2C58.8V0h13.2v33l3.5-4.4l7.4-8.8h18.9L128%2C35.2l16.5%2C23.7h-17.2l-9-14.9l-4.6%2C4.3v10.5H100.6z%20M51.8%2C20.1l-5%2C26.4l-6.4-26.4h-6h-0.3h-2.7h-0.3h-6l-6.4%2C26.4l-5-26.4H0l10.1%2C38.8h17.7l5-20.4l5%2C20.4h17.7l10.1-38.8H51.8z%20M217.1%2C47.5l0.7%2C11.3h-12.1l-0.9-4.2c-2.8%2C2.9-6.2%2C5.4-12.3%2C5.4c-11%2C0-17-7.1-17-20.6c0-13.5%2C6-20.6%2C17-20.6c6.1%2C0%2C9.5%2C2.4%2C12.3%2C5.4l0.9-4.2h12.1l-0.7%2C11.3V47.5z%20M203.9%2C34.4c-1.7-2.2-4.3-3.7-7.8-3.7c-4%2C0-7.1%2C2.6-7.1%2C8.7c0%2C6.1%2C3.2%2C8.7%2C7.1%2C8.7c3.5%2C0%2C6.1-1.5%2C7.8-3.7V34.4zM79.8%2C0.2c-4.2%2C0-7.6%2C3.4-7.6%2C7.6c0%2C4.2%2C3.4%2C7.6%2C7.6%2C7.6c4.2%2C0%2C7.6-3.4%2C7.6-7.6C87.4%2C3.6%2C84%2C0.2%2C79.8%2C0.2%20M91.2%2C27.8v-8.3h-5.7H72.2v13.4v12.5v13.1v0.3h19v-8.2h-5.9V27.8H91.2z%20M153.7%2C7.8c0%2C4.2%2C3.4%2C7.6%2C7.6%2C7.6c4.2%2C0%2C7.6-3.4%2C7.6-7.6c0-4.2-3.4-7.6-7.6-7.6C157.1%2C0.2%2C153.7%2C3.6%2C153.7%2C7.8%20M155.8%2C27.8v22.8h-5.9v8.2h19v-0.3V45.4V32.9V19.5h-13.2h-5.7v8.3H155.8z%22%20fill%3D%22%23fff%22%2F%3E%0A%3C%2Fsvg%3E%0A");
+}
+#footer .branding .wikia-logo span {
+	display: inline-block;
+	float: left;
+	font-weight: bold;
+	height: 40px;
+	line-height: 42px;
+	margin: 0 20px;
+	text-transform: uppercase;
+}
 
 /* js pref toc */
 #preftoc {
