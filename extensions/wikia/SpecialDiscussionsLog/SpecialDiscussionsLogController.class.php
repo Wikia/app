@@ -240,7 +240,7 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 			return false;
 		}
 
-		if ( $response->getStatusCode() !== self::HTTP_STATUS_OK ) {
+		if ( $response->getStatusCode() !== 200 ) {
 			$this->logger->error(
 				sprintf( 'Elasticsearch request error; status code %d', $response->getStatusCode() )
 			);

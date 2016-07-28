@@ -34,6 +34,7 @@ class UserRenameToolHelper {
 				__METHOD__
 			);
 
+			/** @var Object $row */
 			foreach ( $res as $row ) {
 				if ( WikiFactory::isPublic( $row->ml_city_id ) ) {
 					$result[] = (int)$row->ml_city_id;
@@ -86,44 +87,65 @@ class UserRenameToolHelper {
 	}
 
 	static public function getLog( $message, $requestor, $oldUsername, $newUsername, $reason, $tasks = [] ) {
-		foreach ( $tasks as $key => $value ) {
-			$title = GlobalTitle::newFromText( 'Tasks/log', NS_SPECIAL, self::COMMUNITY_CENTRAL_CITY_ID );
-
-			$tasks[$key] = Xml::element(
-				'a',
-				[ 'href' => $title->getFullURL( ['id' => $value] ) ],
-				"#{$value}",
-				false
-			);
-		}
+		$taskLogLinks = self::buildTaskLogLinks( $tasks );
 
 		return wfMessage(
 			$message,
 			User::getLinkToUserPageOnCommunityWiki( $requestor ),
 			User::getLinkToUserPageOnCommunityWiki( $oldUsername, true ),
 			User::getLinkToUserPageOnCommunityWiki( $newUsername ),
-			$tasks ? implode( ', ', $tasks ) : '-',
+			$taskLogLinks,
 			$reason
 		)->escaped();
 	}
 
 	/**
+	 * Given an array of task IDs construct links to each task on the Special:Task/log page.
+	 *
+	 * @param int $taskId
+	 *
+	 * @return string
+	 *
+	 * @throws Exception
+	 */
+	static public function buildTaskLogLink( $taskId ) {
+		$title = GlobalTitle::newFromText( 'Tasks/log', NS_SPECIAL, self::COMMUNITY_CENTRAL_CITY_ID );
+
+		$link = Xml::element(
+			'a',
+			[ 'href' => $title->getFullURL( ['id' => $taskId] ) ],
+			"#{$taskId}",
+			false
+		);
+
+		return $link;
+	}
+
+	/**
+	 * Given an i18n key, generate a message to use a log line in an activity log.
+	 *
+	 * @param $key
 	 * @param string $requestor
 	 * @param string $oldUsername
 	 * @param string $newUsername
-	 * @param int $cityId
 	 * @param string $reason
-	 * @param bool $problems
+	 * @param $info
 	 *
 	 * @return String
 	 */
-	static public function getLogForWiki($requestor, $oldUsername, $newUsername, $cityId, $reason, $problems = false ) {
+	static public function generateLogLine( $key, $requestor, $oldUsername, $newUsername, $reason, $info = null ) {
+		// Keys that use this log format for better grep'ability:
+		//   userrenametool-info-started
+		//   userrenametool-info-finished
+		//   userrenametool-info-failed
+		//   userrenametool-info-wiki-finished
+		//   userrenametool-info-wiki-finished-problems
 		$text = wfMessage(
-			$problems ? 'userrenametool-info-wiki-finished-problems' : 'userrenametool-info-wiki-finished',
+			$key,
 			User::getLinkToUserPageOnCommunityWiki( $requestor ),
 			User::getLinkToUserPageOnCommunityWiki( $oldUsername, true ),
 			User::getLinkToUserPageOnCommunityWiki( $newUsername ),
-			WikiFactory::getCityLink( $cityId ),
+			$info,
 			$reason
 		)->escaped();
 

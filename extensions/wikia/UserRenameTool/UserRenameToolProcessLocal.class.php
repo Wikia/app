@@ -47,44 +47,6 @@ class UserRenameToolProcessLocal  extends UserRenameToolProcess {
 	];
 
 	/**
-	 * Create a new UserRenameToolProcessLocal object from select context data.
-	 *
-	 * @param array $data
-	 * @return UserRenameToolProcess
-	 */
-	static public function newFromData( $data ) {
-		$o = new UserRenameToolProcessLocal( $data['rename_old_name'], $data['rename_new_name'], '', true );
-
-		$mapping = [
-			'mUserId' => 'rename_user_id',
-			'mOldUsername' => 'rename_old_name',
-			'mNewUsername' => 'rename_new_name',
-			'mFakeUserId' => 'rename_fake_user_id',
-			'mRequestorId' => 'requestor_id',
-			'mRequestorName' => 'requestor_name',
-			'mPhalanxBlockId' => 'phalanx_block_id',
-			'mReason' => 'reason',
-			'mRenameIP' => 'rename_ip',
-		];
-
-		foreach ( $mapping as $property => $key ) {
-			if ( array_key_exists( $key, $data ) ) {
-				$o->$property = $data[$key];
-			}
-		}
-
-		// Quick hack to recover requestor name from its id
-		if ( !empty( $o->mRequestorId ) && empty( $o->mRequestorName ) ) {
-			$requestor = User::newFromId( $o->mRequestorId );
-			$o->mRequestorName = $requestor->getName();
-		}
-
-		$o->addInternalLog( "newFromData(): Requestor id={$o->mRequestorId} name={$o->mRequestorName}" );
-
-		return $o;
-	}
-
-	/**
 	 * Processes specific local wiki database and makes all needed changes for an IP address
 	 *
 	 * Important: should only be run within maintenace script (bound to specified wiki)
@@ -101,21 +63,21 @@ class UserRenameToolProcessLocal  extends UserRenameToolProcess {
 		$wgUser = User::newFromName( 'Wikia' );
 
 		$cityDb = WikiFactory::IDtoDB( $wgCityId );
-		$this->addInternalLog( "Processing wiki database: {$cityDb}." );
+		$this->logInfo( "Processing wiki database: %s", $cityDb );
 
 		$dbw = wfGetDB( DB_MASTER );
 		$dbw->begin();
 		$tasks = self::$mLocalIpDefaults;
 
 		$hookName = 'UserRename::LocalIP';
-		$this->addInternalLog( "Broadcasting hook: {$hookName}" );
+		$this->logInfo( "Broadcasting hook: %s". $hookName );
 		wfRunHooks(
 			$hookName,
 			[ $dbw, $this->mUserId, $this->mOldUsername, $this->mNewUsername, $this, $wgCityId, &$tasks ]
 		);
 
 		foreach ( $tasks as $task ) {
-			$this->addInternalLog( "Updating wiki \"{$cityDb}\": {$task['table']}:{$task['username_column']}" );
+			$this->logInfo( 'Updating wiki "%s": %s:%s', $cityDb, $task['table'], $task['username_column'] );
 			$this->renameInTable(
 				$dbw,
 				$task['table'],
@@ -128,9 +90,13 @@ class UserRenameToolProcessLocal  extends UserRenameToolProcess {
 
 		$dbw->commit();
 
-		$this->addInternalLog( "Finished updating wiki database: {$cityDb}" );
+		$this->logInfo( "Finished updating wiki database: %s", $cityDb );
 
-		$this->logMessagesToStaff();
+		if ( $this->mWarnings || $this->mErrors ) {
+			$this->logFailWikiToStaff();
+		} else {
+			$this->logFinishWikiToStaff();
+		}
 
 		$wgUser = $wgOldUser;
 	}
@@ -164,7 +130,7 @@ class UserRenameToolProcessLocal  extends UserRenameToolProcess {
 
 		$cityDb = WikiFactory::IDtoDB( $wgCityId );
 
-		$this->addInternalLog( "Processing wiki database: {$cityDb}." );
+		$this->logInfo( "Processing wiki database: %s", $cityDb );
 
 		$dbw = wfGetDB( DB_MASTER );
 		$dbw->begin();
@@ -172,7 +138,7 @@ class UserRenameToolProcessLocal  extends UserRenameToolProcess {
 		$tasks = self::$mLocalDefaults;
 
 		$hookName = 'UserRename::Local';
-		$this->addInternalLog( "Broadcasting hook: {$hookName}" );
+		$this->logInfo( "Broadcasting hook: %s", $hookName );
 		wfRunHooks(
 			$hookName,
 			[ $dbw, $this->mUserId, $this->mOldUsername, $this->mNewUsername, $this, $wgCityId, &$tasks ]
@@ -191,17 +157,22 @@ class UserRenameToolProcessLocal  extends UserRenameToolProcess {
 				->text()
 		);
 
-		$this->addInternalLog( "Finished updating wiki database: {$cityDb}" );
-		$this->logMessagesToStaff();
+		$this->logInfo( "Finished updating wiki database: %s", $cityDb );
 
-		$this->invalidateUser( $this->mOldUsername );
-		$this->invalidateUser( $this->mNewUsername );
+		if ( $this->mWarnings || $this->mErrors ) {
+			$this->logFailWikiToStaff();
+		} else {
+			$this->logFinishWikiToStaff();
+		}
+
+		$this->invalidateUserCache( $this->mOldUsername );
+		$this->invalidateUserCache( $this->mNewUsername );
 
 		$wgUser = $wgOldUser;
 	}
 
 	protected function moveUserPages( DatabaseBase $dbw, $cityDb ) {
-		$this->addInternalLog( "Moving user pages." );
+		$this->logInfo( "Moving user pages." );
 
 		try {
 			$oldTitle = Title::makeTitle( NS_USER, $this->mOldUsername );
@@ -217,8 +188,10 @@ class UserRenameToolProcessLocal  extends UserRenameToolProcess {
 			// re-throw DB related exceptions instead of silently ignoring them (@see PLATFORM-775)
 			throw $e;
 		} catch ( Exception $e ) {
-			$this->addInternalLog( "Exception while moving pages: " . $e->getMessage() .
-				" in " . $e->getFile() . " at line " . $e->getLine() );
+			$this->logInfo(
+				"Exception while moving pages: %s in %s at line %d",
+				$e->getMessage(), $e->getFile(), $e->getLine()
+			);
 		}
 	}
 
@@ -239,12 +212,10 @@ class UserRenameToolProcessLocal  extends UserRenameToolProcess {
 			return;
 		}
 
-		$this->addInternalLog( sprintf(
+		$this->logInfo(
 			"Moving page %s in namespace %s to %s",
-			$oldPage->getText(),
-			$row->page_namespace,
-			$newTitle->getText()
-		) );
+			$oldPage->getText(), $row->page_namespace, $newTitle->getText()
+		);
 		$success = $oldPage->moveTo(
 			$newPage,
 			false,
@@ -254,15 +225,15 @@ class UserRenameToolProcessLocal  extends UserRenameToolProcess {
 		);
 
 		if ( $success === true ) {
-			$this->addInternalLog( sprintf(
+			$this->logInfo(
 				'Updating wiki "%s": User page %s moved to %s',
 				$cityDb, $oldPage->getText(), $newPage->getText()
-			) );
+			);
 		} else {
-			$this->addInternalLog( sprintf(
+			$this->logInfo(
 				'Updating wiki "%s": User page %s could not be moved to %s',
 				$cityDb, $oldPage->getText(), $newPage->getText()
-			) );
+			);
 			$this->addWarning(
 				wfMessage( 'userrenametool-page-unmoved', [ $oldPage->getText(), $newPage->getText() ] )
 					->inContentLanguage()
@@ -284,10 +255,10 @@ class UserRenameToolProcessLocal  extends UserRenameToolProcess {
 		// Do not autodelete or anything, title must not exist
 		// Info: The other case is when renaming is repeated - no action should be taken
 		if ( $newPage->exists() && !$oldPage->isValidMoveTarget( $newPage ) ) {
-			$this->addInternalLog( sprintf(
+			$this->logInfo(
 				'Updating wiki "%s": User page %s already exists, moving cancelled.',
 				$cityDb, $newPage->getText()
-			) );
+			);
 			$this->addWarning(
 				wfMessage( 'userrenametool-page-exists', $newPage->getText() )->inContentLanguage()->text()
 			);
@@ -307,7 +278,7 @@ class UserRenameToolProcessLocal  extends UserRenameToolProcess {
 		$tasks = self::$mLocalDefaults;
 
 		foreach ( $tasks as $task ) {
-			$this->addInternalLog( "Updating wiki \"{$cityDb}\": {$task['table']}:{$task['username_column']}" );
+			$this->logInfo( 'Updating wiki "%d": %s:%s', $cityDb, $task['table'], $task['username_column'] );
 			$this->renameInTable(
 				$dbw,
 				$task['table'],
@@ -370,7 +341,7 @@ class UserRenameToolProcessLocal  extends UserRenameToolProcess {
 			],
 			__METHOD__
 		);
-		$this->addInternalLog( "SQL: " . $dbw->lastQuery() );
+		$this->logInfo( "SQL: %s", $dbw->lastQuery() );
 
 		return $pages;
 	}

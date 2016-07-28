@@ -14,6 +14,7 @@ use PhpAmqpLib\Connection\AMQPConnection;
 use PhpAmqpLib\Message\AMQPMessage;
 use PhpAmqpLib\Exception\AMQPRuntimeException;
 use PhpAmqpLib\Exception\AMQPExceptionInterface;
+use PhpAmqpLib\Exception\AMQPTimeoutException;
 use Wikia\Logger\WikiaLogger;
 use Wikia\Tasks\Queues\ParsoidPurgePriorityQueue;
 use Wikia\Tasks\Queues\ParsoidPurgeQueue;
@@ -228,7 +229,7 @@ class AsyncTaskList {
 			'task_list' => $taskList,
 			'created_by' => $this->createdBy,
 			'created_at' => microtime( true ),
-			'trace_env' => \Wikia\Tracer\WikiaTracer::instance()->getEnvVariables(),
+			'trace_env' => WikiaTracer::instance()->getEnvVariables(),
 		]];
 	}
 
@@ -371,7 +372,7 @@ class AsyncTaskList {
 	/**
 	 * A helper for getting an AMQP connection
 	 *
-	 * Throws AMQPRuntimeException when task broker is disabled in a cureent environment (PLATFORM-1740)
+	 * Throws AMQPRuntimeException when task broker is disabled in a current environment (PLATFORM-1740)
 	 *
 	 * @return AMQPConnection connection to message broker
 	 * @throws AMQPRuntimeException

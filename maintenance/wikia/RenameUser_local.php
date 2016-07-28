@@ -37,13 +37,16 @@ if ( isset( $options['help'] ) && $options['help'] ) {
 	exit( 0 );
 }
 
+// Send logging to STDOUT
+$logger = Wikia\Logger\WikiaLogger::instance();
+$logger->setLogger( $logger->stdoutLogger() );
+
 validateOptions( $options );
 $processData = getProcessData( $options );
 
 /** @var UserRenameToolProcessLocal $process */
 $process = UserRenameToolProcessLocal::newFromData( $processData );
-$process->setLogDestination( UserRenameToolProcess::LOG_OUTPUT );
-$process->addInternalLog( "Starting rename script for wiki ID $wgCityId: " . __FILE__ );
+$process->logInfo( "Starting rename script for wiki ID %s: %s", $wgCityId, __FILE__ );
 
 $process->setRequestorUser();
 
@@ -61,16 +64,16 @@ try {
 }
 
 if ( !empty( $errors ) ) {
-	$process->addInternalLog( "Process for wiki with ID $wgCityId resulted in the following errors:\n" );
+	$process->logInfo( "Process for wiki with ID %s resulted in the following errors:", $wgCityId );
 
 	foreach ( $errors as $error ) {
-		$process->addInternalLog( " - $error\n" );
+		$process->logInfo( " - $error" );
 	}
 
 	exit( 1 );
 }
 
-$process->addInternalLog( "Process for wiki with ID $wgCityId was completed successfully" );
+$process->logInfo( "Process for wiki with ID %s was completed successfully", $wgCityId );
 exit( 0 );
 
 function validateOptions( &$options ) {

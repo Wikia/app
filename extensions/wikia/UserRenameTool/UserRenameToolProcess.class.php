@@ -1,19 +1,23 @@
 <?php
 
-class UserRenameToolProcess {
+use Wikia\Logger\Loggable;
 
+class UserRenameToolProcess {
+	use Loggable;
+
+	const FLAG_RENAME_DATA = 'renameData';
 	const RENAME_TAG = 'renamed_to';
 	const PROCESS_TAG = 'rename_in_progress';
 	const PHALANX_BLOCK_TAG = 'phalanx_block_id';
 
 	const MAX_ROWS_PER_QUERY = 500;
 
-	const LOG_STANDARD = 'standard';
-	const LOG_BATCH_TASK = 'task';
+	const LOG_WIKIA_LOGGER = 'wikia_logger';
 	const LOG_OUTPUT = 'output';
 
-	const ACTION_FAIL = 'fail';
+	const ACTION_START = 'start';
 	const ACTION_LOG = 'log';
+	const ACTION_FAIL = 'fail';
 	const ACTION_FINISH = 'finish';
 
 	const DB_COOL_DOWN_SECONDS = 1;
@@ -34,8 +38,10 @@ class UserRenameToolProcess {
 	protected $mErrors = [ ];
 	protected $mWarnings = [ ];
 
-	private $mLogDestinations = [ [ self::LOG_STANDARD, null ] ];
 	protected $mUserRenameTaskId = null;
+
+	protected $mRepeatRename = false;
+	protected $mPhalanxBlockId = 0;
 
 	/**
 	 * Creates new rename user process
@@ -61,6 +67,44 @@ class UserRenameToolProcess {
 		$this->mNotifyUser = $notifyUser;
 	}
 
+	/**
+	 * Create a new UserRenameToolProcessLocal object from select context data.
+	 *
+	 * @param array $data
+	 * @return UserRenameToolProcess
+	 */
+	static public function newFromData( $data ) {
+		$o = static::__construct( $data['rename_old_name'], $data['rename_new_name'], '', true );
+
+		$mapping = [
+			'mUserId' => 'rename_user_id',
+			'mOldUsername' => 'rename_old_name',
+			'mNewUsername' => 'rename_new_name',
+			'mFakeUserId' => 'rename_fake_user_id',
+			'mRequestorId' => 'requestor_id',
+			'mRequestorName' => 'requestor_name',
+			'mPhalanxBlockId' => 'phalanx_block_id',
+			'mReason' => 'reason',
+			'mRenameIP' => 'rename_ip',
+		];
+
+		foreach ( $mapping as $property => $key ) {
+			if ( array_key_exists( $key, $data ) ) {
+				$o->$property = $data[$key];
+			}
+		}
+
+		// Quick hack to recover requestor name from its id
+		if ( !empty( $o->mRequestorId ) && empty( $o->mRequestorName ) ) {
+			$requestor = User::newFromId( $o->mRequestorId );
+			$o->mRequestorName = $requestor->getName();
+		}
+
+		$o->logInfo( "newFromData(): Requestor id=%d name=%s", $o->mRequestorId, $o->mRequestorName );
+
+		return $o;
+	}
+
 	public function getErrors() {
 		return $this->mErrors;
 	}
@@ -71,27 +115,6 @@ class UserRenameToolProcess {
 
 	public function getUserRenameTaskId() {
 		return $this->mUserRenameTaskId;
-	}
-
-	/**
-	 * Sets destination for all the logs
-	 *
-	 * @param string $destination One of RenameUserProcess::LOG_* constant
-	 * @param BatchTask $task (Optional) BatchTask to send logs to
-	 */
-	public function setLogDestination( $destination, $task = null ) {
-		$this->mLogDestinations = [ ];
-		$this->addLogDestination( $destination, $task );
-	}
-
-	/**
-	 * Adds another log destination
-	 *
-	 * @param string $destination One of RenameUserProcess::LOG_* constant
-	 * @param BatchTask $task (Optional) BatchTask to send logs to
-	 */
-	private function addLogDestination( $destination, $task = null ) {
-		$this->mLogDestinations[] = [ $destination, $task ];
 	}
 
 	/**
@@ -126,11 +149,11 @@ class UserRenameToolProcess {
 	 */
 	public function renameInTable( $dbw, $table, $uid, $oldUserName, $newUserName, $extra ) {
 		$dbName = $dbw->getDBname();
-		$this->addInternalLog( "Processing {$dbName}.{$table}.{$extra['username_column']}." );
+		$this->logInfo( "Processing %s.%s.%s", $dbName, $table, $extra['username_column'] );
 
 		try {
 			if ( !$dbw->tableExists( $table ) ) {
-				$this->addInternalLog( "Table \"$table\" does not exist in database {$dbName}" );
+				$this->logInfo( 'Table "%s" does not exist in database "%s"', $table, $dbName );
 				$this->addWarning(
 					wfMessage( 'userrenametool-warn-table-missing', $dbName, $table )->inContentLanguage()->text()
 				);
@@ -156,10 +179,11 @@ class UserRenameToolProcess {
 			while ( $affectedRows > 0 ) {
 				$dbw->update( $table, $values, $conds, __METHOD__, $opts );
 				$affectedRows = $dbw->affectedRows();
-				$this->addInternalLog( "SQL: " . $dbw->lastQuery() );
+				$this->logInfo( "SQL: %s",  $dbw->lastQuery() );
 				$dbw->commit();
-				$this->addInternalLog(
-					"In {$dbName}.{$table}.{$extra['username_column']} {$affectedRows} row(s) was(were) updated."
+				$this->logInfo(
+					"In %s.%s.%s %d row(s) was(were) updated.",
+					$dbName, $table, $extra['username_column'], $affectedRows
 				);
 
 				// Make sure we don't sleep unnecessarily
@@ -168,120 +192,143 @@ class UserRenameToolProcess {
 				}
 			}
 		} catch ( Exception $e ) {
-			$this->addInternalLog( sprintf(
+			$this->logInfo(
 				"Exception in renameInTable(): %s in %s at line %",
 				$e->getMessage(), $e->getFile(), $e->getLine()
-			) );
+			);
 		}
 
-		$this->addInternalLog( "Finished processing {$dbName}.{$table}.{$extra['username_column']}." );
+		$this->logInfo( "Finished processing %s.%s.%s.", $dbName, $table, $extra['username_column'] );
 
 		return true;
 	}
 
 	/**
+	 * Retrieve the state information stored about this move in the rename data flag
+	 *
+	 * @param User $user
+	 *
+	 * @return array|mixed
+	 */
+	public function getRenameData( \User $user ) {
+		$renameDataJson = $user->getGlobalFlag( self::FLAG_RENAME_DATA );
+
+		if ( empty( $renameDataJson ) ) {
+			return [];
+		} else {
+			return json_decode( $renameDataJson );
+		}
+	}
+
+	/**
+	 * Overwrite the state information stored about this move in the rename data flag.  If you want to add
+	 * rather than replace the state information use addRenameData
+	 *
+	 * @param User $user
+	 *
+	 * @return array|mixed
+	 */
+	public function setRenameData( \User $user, $params ) {
+		if ( empty( $params ) ) {
+			$renameData = json_encode( [] );
+		} else {
+			$renameData = json_encode( $params );
+		}
+		$user->setGlobalAttribute( self::FLAG_RENAME_DATA, $renameData );
+	}
+
+	/**
+	 * Add or update values in the state information stored for this move in the rename data flag.
+	 *
+	 * @param User $user
+	 * @param $params
+	 */
+	public function addRenameData( \User $user, $params ) {
+		if ( empty( $params ) ) {
+			return;
+		}
+
+		$renameData = $this->getRenameData( $user );
+		$renameData = array_merge( $renameData, $params );
+		$this->setRenameData( $user, $renameData );
+	}
+
+	/**
 	 * Performs action for cleaning up temporary data at the very end of a process
 	 */
-	public function cleanup() {
+	public function cleanupFakeUser() {
 		if ( $this->mFakeUserId ) {
-			$this->addInternalLog( "Cleaning up process data in user option renameData for ID {$this->mFakeUserId}" );
+			$this->logInfo( "Cleaning up process data in user option renameData for ID %s", $this->mFakeUserId );
 
 			$fakeUser = User::newFromId( $this->mFakeUserId );
-			$fakeUser->setGlobalAttribute( 'renameData', self::RENAME_TAG . '=' . $this->mNewUsername );
+
+			$this->setRenameData( $fakeUser, [ self::RENAME_TAG => $this->mNewUsername ] );
 			$fakeUser->saveSettings();
 			$fakeUser->saveToCache();
 		}
-
-		$hookName = 'UserRename::Cleanup';
-		$this->addInternalLog( "Broadcasting hook: {$hookName}" );
-		wfRunHooks(
-			$hookName,
-			[ $this->mRequestorId, $this->mRequestorName, $this->mUserId, $this->mOldUsername, $this->mNewUsername ]
-		);
-
-		$this->logFinishToStaff();
 	}
 
 	/**
-	 * Sends the internal log message to the specified destination
+	 * Log when the rename operation starts to the staff log
 	 *
-	 * @param $text string Log message
-	 * @param $arg1 mixed Multiple format parameters
+	 * @param string $taskId
 	 */
-	public function addInternalLog( $text, $arg1 = null ) {
-		if ( func_num_args() > 1 ) {
-			$args = func_get_args();
-			$args = array_slice( $args, 1 );
-			$text = vsprintf( $text, $args );
-		}
-		foreach ( $this->mLogDestinations as $destinationEntry ) {
-			$logDestination = $destinationEntry[0];
-
-			/** @var BatchTask $logTask */
-			$logTask = $destinationEntry[1];
-
-			switch ( $logDestination ) {
-				case self::LOG_BATCH_TASK:
-					$logTask->log( $text );
-					break;
-				case self::LOG_OUTPUT:
-					echo $text . "\n";
-					break;
-				default:
-					wfDebugLog( __CLASS__, $text );
-			}
-		}
-	}
-
-	/**
-	 * Log any warnings or errors to the staff log
-	 */
-	public function logMessagesToStaff() {
-		global $wgCityId;
-
-		$this->addStaffLog(
-			self::ACTION_LOG,
-			UserRenameToolHelper::getLogForWiki(
-				$this->mRequestorName,
-				$this->mOldUsername,
-				$this->mNewUsername,
-				$wgCityId,
-				$this->mReason,
-				!empty( $this->mWarnings ) || !empty( $this->mErrors )
-			)
-		);
+	public function logStartToStaff( $taskId = null ) {
+		$logLink = $taskId ? \UserRenameToolHelper::buildTaskLogLink( $taskId ) : '-';
+		$this->addStaffLogAction( self::ACTION_START, 'userrenametool-info-started', $logLink );
 	}
 
 	/**
 	 * Log when the rename operation has failed to the staff log
+	 *
+	 * @param string $taskId
 	 */
-	public function logFailToStaff() {
-		$this->addStaffLog(
-			self::ACTION_FAIL,
-			UserRenameToolHelper::getLog(
-				'userrenametool-info-failed',
-				$this->mRequestorName,
-				$this->mOldUsername,
-				$this->mNewUsername,
-				$this->mReason
-			)
-		);
+	public function logFailToStaff( $taskId = null ) {
+		$logLink = $taskId ? \UserRenameToolHelper::buildTaskLogLink( $taskId ) : '-';
+		$this->addStaffLogAction( self::ACTION_FAIL, 'userrenametool-info-failed', $logLink );
 	}
 
 	/**
 	 * Log when the rename operation has completed to the staff log
+	 *
+	 * @param string $taskId
 	 */
-	public function logFinishToStaff() {
-		$this->addStaffLog(
-			self::ACTION_FINISH,
-			UserRenameToolHelper::getLog(
-				'userrenametool-info-finished',
-				$this->mRequestorName,
-				$this->mOldUsername,
-				$this->mNewUsername,
-				$this->mReason
-			)
+	public function logFinishToStaff( $taskId = null ) {
+		$logLink = $taskId ? \UserRenameToolHelper::buildTaskLogLink( $taskId ) : '-';
+		$this->addStaffLogAction( self::ACTION_FINISH, 'userrenametool-info-finished', $logLink );
+	}
+
+	/**
+	 * Log a successful rename for a single wiki
+	 *
+	 * @param int $wikiId The wiki ID for this single rename.  If not given the current value of wgCityId is used.
+	 */
+	public function logFinishWikiToStaff($wikiId = null ) {
+		$wikiId = $wikiId ? $wikiId : F::app()->wg->CityId;
+		$this->addStaffLogAction( self::ACTION_LOG, 'userrenametool-info-wiki-finished', $wikiId );
+	}
+
+	/**
+	 * Log a rename fail for a single wiki
+	 *
+	 * @param int $wikiId The wiki ID for this single rename.  If not given the current value of wgCityId is used.
+	 */
+	public function logFailWikiToStaff($wikiId = null ) {
+		$wikiId = $wikiId ? $wikiId : F::app()->wg->CityId;
+		$this->addStaffLogAction( self::ACTION_LOG, 'userrenametool-info-wiki-finished-problems', $wikiId );
+	}
+
+	public function addStaffLogAction( $action, $key, $info = null ) {
+		$formattedLogLine = \UserRenameToolHelper::generateLogLine(
+			$key,
+			$this->mRequestorName,
+			$this->mOldUsername,
+			$this->mNewUsername,
+			$this->mReason,
+			$info
 		);
+
+		$this->addStaffLog( $action, $formattedLogLine );
 	}
 
 	/**
@@ -290,7 +337,7 @@ class UserRenameToolProcess {
 	 * @param string $action
 	 * @param $text string Log message
 	 */
-	private function addStaffLog( $action, $text ) {
+	public function addStaffLog( $action, $text ) {
 		StaffLogger::log(
 			'renameuser',
 			$action,
@@ -318,22 +365,55 @@ class UserRenameToolProcess {
 		);
 	}
 
+	/**
+	 * Sends the internal log message to the specified destination
+	 *
+	 * @param $text string Log message
+	 * @param $arg1 mixed Multiple format parameters
+	 */
+	public function logInfo( $text, $arg1 = null ) {
+		if ( func_num_args() > 1 ) {
+			$args = func_get_args();
+			$args = array_slice( $args, 1 );
+			$text = vsprintf( $text, $args );
+		}
+
+		$this->info( $text );
+	}
+
+	/**
+	 * Sends the internal log message to the specified destination
+	 *
+	 * @param $text string Log message
+	 * @param $arg1 mixed Multiple format parameters
+	 */
+	public function logDebug( $text, $arg1 = null ) {
+		if ( func_num_args() > 1 ) {
+			$args = func_get_args();
+			$args = array_slice( $args, 1 );
+			$text = vsprintf( $text, $args );
+		}
+
+		$this->debug( $text );
+	}
+
 	public function setRequestorUser() {
 		global $wgUser;
 
 		$oldUser = $wgUser;
-		$this->addInternalLog(
-			"Checking for need to overwrite requestor user (id={$this->mRequestorId} name={$this->mRequestorName})"
+		$this->logInfo(
+			"Checking for need to overwrite requestor user (id=%d name=%s)",
+			$this->mRequestorId, $this->mRequestorName
 		);
 
 		$userId = $wgUser->getId();
 
 		if ( empty( $userId ) && !empty( $this->mRequestorId ) ) {
-			$this->addInternalLog( "Checking if requestor exists" );
+			$this->logInfo( "Checking if requestor exists" );
 			$newUser = User::newFromId( $this->mRequestorId );
 
 			if ( !empty( $newUser ) ) {
-				$this->addInternalLog( "Overwriting requestor user" );
+				$this->logInfo( "Overwriting requestor user" );
 				$wgUser = $newUser;
 			}
 		}
@@ -346,7 +426,7 @@ class UserRenameToolProcess {
 	 *
 	 * @param User|string $user
 	 */
-	protected function invalidateUser( $user ) {
+	protected function invalidateUserCache($user ) {
 		global $wgCityId;
 
 		if ( is_string( $user ) ) {
@@ -355,10 +435,10 @@ class UserRenameToolProcess {
 
 		if ( is_object( $user ) ) {
 			$userName = $user->getName();
-			$this->addInternalLog( "Invalidate user data on local Wiki ($wgCityId): $userName" );
+			$this->logInfo( "Invalidate user data on local Wiki (%s): %s", $wgCityId, $userName );
 			$user->invalidateCache();
 		} else {
-			$this->addInternalLog( "invalidateUser() called with some strange argument type: " . gettype( $user ) );
+			$this->logInfo( "invalidateUser() called with some strange argument type: %s", gettype( $user ) );
 		}
 	}
 
@@ -378,7 +458,7 @@ class UserRenameToolProcess {
 			return false;
 		}
 
-		$this->addInternalLog( "Looking up registered user activity for user with ID $userID" );
+		$this->logInfo( "Looking up registered user activity for user with ID %s", $userID );
 
 		// Short circuit to some known wikis in DEV.  The rollup_edit_events table is not kept up to date in DEV
 		if ( $wg->DevelEnvironment ) {
@@ -395,7 +475,7 @@ class UserRenameToolProcess {
 
 		$wikiIds = $this->lookupWikiIdsInDb( $userID );
 
-		$this->addInternalLog( "Found " . count( $wikiIds ) . " wikis: " . implode( ', ', $wikiIds ) );
+		$this->logInfo( "Found %s wikis: %s", count( $wikiIds ), implode( ', ', $wikiIds ) );
 		return $wikiIds;
 	}
 
@@ -424,9 +504,12 @@ class UserRenameToolProcess {
 		while ( $row = $dbr->fetchObject( $res ) ) {
 			if ( WikiFactory::isPublic( $row->wiki_id ) ) {
 				$result[] = ( int ) $row->wiki_id;
-				$this->addInternalLog( "Registered user with ID $userId was active on wiki with ID {$row->wiki_id}" );
+				$this->logInfo(
+					"Registered user with ID %d was active on wiki with ID %d",
+					$userId, $row->wiki_id
+				);
 			} else {
-				$this->addInternalLog( "Skipped wiki with ID {$row->wiki_id} (inactive wiki)" );
+				$this->logInfo( "Skipped wiki with ID %d (inactive wiki)", $row->wiki_id );
 			}
 		}
 

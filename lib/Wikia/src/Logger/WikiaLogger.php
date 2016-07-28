@@ -7,6 +7,7 @@
 
 namespace Wikia\Logger;
 
+use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use Psr\Log\LoggerInterface;
 
@@ -16,6 +17,9 @@ class WikiaLogger implements LoggerInterface {
 
 	/** @var SyslogHandler */
 	private $syslogHandler;
+
+	/** @var StreamHandler */
+	private $streamHandler;
 
 	/** @var WebProcessor */
 	private $webProcessor;
@@ -171,6 +175,18 @@ class WikiaLogger implements LoggerInterface {
 	}
 
 	/**
+	 * @return StreamHandler
+	 */
+	public function getStdoutHandler() {
+		if ($this->streamHandler == null) {
+			// Write to logs to STDERR
+			$this->streamHandler = new StreamHandler( STDOUT );
+		}
+
+		return $this->streamHandler;
+	}
+
+	/**
 	 * @return SyslogHandler
 	 */
 	public function getSyslogHandler() {
@@ -241,6 +257,14 @@ class WikiaLogger implements LoggerInterface {
 		return new Logger(
 			'default',
 			[$this->getSyslogHandler()],
+			[$this->getWebProcessor(), $this->getStatusProcessor()]
+		);
+	}
+	
+	public function stdoutLogger() {
+		return new Logger(
+			'stderr',
+			[$this->getStdoutHandler()],
 			[$this->getWebProcessor(), $this->getStatusProcessor()]
 		);
 	}

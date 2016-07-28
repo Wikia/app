@@ -2727,6 +2727,7 @@ class User {
 	 * disabled or if they are a power user.
 	 *
 	 * @param string $flag
+	 * @param mixed $default
 	 * @return bool
 	 */
 	public function getGlobalFlag($flag, $default = null) {
@@ -2737,6 +2738,7 @@ class User {
 	 * Set a global user flag.
 	 *
 	 * @param string $flag
+	 * @param mixed $value
 	 * @return bool
 	 * @see getGlobalFlag for more documentation about flags
 	 */

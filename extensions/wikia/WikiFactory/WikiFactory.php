@@ -505,9 +505,20 @@ class WikiFactory {
 	 * @return string
 	 */
 	public static function getHostByDbName( $dbName ) {
+		$cityId = \WikiFactory::DBtoID( $dbName );
+		return self::getHostById( $cityId );
+	}
+
+	/**
+	 * Given a wiki's ID, return the wgServer value properly altered to reflect the current environment.
+	 *
+	 * @param $cityId
+	 *
+	 * @return string
+	 */
+	public static function getHostById( $cityId ) {
 		global $wgDevelEnvironment, $wgDevelEnvironmentName;
 
-		$cityId = \WikiFactory::DBtoID( $dbName );
 		$hostName = \WikiFactory::getVarValueByName( 'wgServer', $cityId );
 
 		if ( !empty( $wgDevelEnvironment ) ) {
@@ -3410,8 +3421,6 @@ class WikiFactory {
 	static public function getCityLink( $cityId ) {
 		global $wgCityId, $wgSitename;
 
-		$domains = self::getDomains( $cityId );
-
 		if ( $wgCityId == $cityId ) {
 			// Hack based on the fact we should only ask for current wiki's sitename
 			$text = $wgSitename;
@@ -3420,8 +3429,9 @@ class WikiFactory {
 			$text = "[" . self::IDtoDB( $cityId ) . ":{$cityId}]";
 		}
 
-		if ( !empty( $domains ) ) {
-			$text = Xml::tags( 'a', array( "href" => "http://" . $domains[0] ), $text );
+		$host = self::getHostById( $cityId );
+		if ( !empty( $host ) ) {
+			$text = Xml::tags( 'a', [ "href" => $host ], $text );
 		}
 
 		return $text;

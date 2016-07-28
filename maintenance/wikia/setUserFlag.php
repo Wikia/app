@@ -12,8 +12,9 @@ ini_set('error_reporting', E_NOTICE);
 
 require_once( dirname( __FILE__ ) . '/../Maintenance.php' );
 
-class SetUserFlag extends Maintenance {
+use \Wikia\Logger;
 
+class SetUserFlag extends Maintenance {
 	const SUCCESS_MSG = "Update %s flag '%s' from '%s' to '%s' for user '%s'\n";
 
 	private $userName;

@@ -34,7 +34,9 @@ $wgAutoloadClasses['UserRenameToolHelper'] = $dir . 'UserRenameToolHelper.class.
 $wgAutoloadClasses['UserRenameToolProcess'] = $dir . 'UserRenameToolProcess.class.php';
 $wgAutoloadClasses['UserRenameToolProcessGlobal'] = $dir . 'UserRenameToolProcessGlobal.class.php';
 $wgAutoloadClasses['UserRenameToolProcessLocal'] = $dir . 'UserRenameToolProcessLocal.class.php';
-$wgAutoloadClasses['UserRenameToolTask'] = $dir . 'UserRenameToolTask.class.php';
+$wgAutoloadClasses['UserRenameTool\Tasks\WikiRenameBase'] = $dir . 'tasks/WikiRenameBase.class.php';
+$wgAutoloadClasses['UserRenameTool\Tasks\MultiWikiRename'] = $dir . 'tasks/MultiWikiRename.class.php';
+$wgAutoloadClasses['UserRenameTool\Tasks\SingleWikiRename'] = $dir . 'tasks/SingleWikiRename.class.php';
 
 // log type
 global $wgLogTypes, $wgLogNames, $wgLogHeaders;
