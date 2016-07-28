@@ -1,10 +1,10 @@
-<div class="recirculation-horizontal recirculation-incontent recirculation-scroller">
+<div class="recirculation-horizontal recirculation-incontent recirculation-scroller recirculation-unit">
 	<h3>{{ title }}</h3>
 
 	<div class="items-container">
 		<div class="items">
 			{{#items}}
-			<div class="item" data-index="{{ index }}" data-source="{{source}}">
+			<div class="item {{#isVideo}} is-video{{/isVideo}}" data-index="{{ index }}" data-source="{{source}}">
 				<a title="{{ title }}" href="{{ url }}">
 					<div class="thumbnail"><img src="{{ thumbnail }}" alt="{{ title }}"></div>
 					<h4>{{ title }}</h4>

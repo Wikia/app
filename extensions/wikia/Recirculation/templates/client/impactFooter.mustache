@@ -1,8 +1,8 @@
-<section class="recirculation-impact-footer">
+<section class="recirculation-impact-footer recirculation-unit">
 	<h2>{{title}}</h2>
 	<div class="items">
 		{{#items}}
-			<div class="item item-{{ source }}" data-index="{{ index }}" data-source="{{source}}">
+			<div class="item item-{{ source }}{{#isVideo}} is-video{{/isVideo}}" data-index="{{ index }}" data-source="{{source}}">
 				<a title="{{ title }}" href="{{ url }}" class="track-items">
 					<div class="thumbnail">
 						{{#thumbnail}}
