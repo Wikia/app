@@ -88,6 +88,7 @@ class User {
 	const EDIT_TOKEN_SUFFIX = EDIT_TOKEN_SUFFIX;
 	const CACHE_ATTRIBUTES_KEY = "attributes";
 	const GET_SET_OPTION_SAMPLE_RATE = 0.1;
+	const COMMUNITY_CENTRAL_CITY_ID = 177;
 
 	private static $PROPERTY_UPSERT_SET_BLOCK = [ "up_user = VALUES(up_user)", "up_property = VALUES(up_property)", "up_value = VALUES(up_value)" ];
 
@@ -4840,5 +4841,20 @@ class User {
 		$key = "right-$right";
 		$msg = wfMessage( $key );
 		return $msg->isBlank() ? $right : $msg->text();
+	}
+
+	static public function getLinkToUserPageOnCommunityWiki( $username, $noRedirect = false ) {
+		if ( is_int( $username ) ) {
+			$username = self::whoIs( $username );
+		}
+
+		$title = GlobalTitle::newFromText( $username, NS_USER, self::COMMUNITY_CENTRAL_CITY_ID );
+
+		return Xml::element(
+			'a',
+			array( 'href' => $title->getFullURL( $noRedirect ? 'redirect=no' : '' ) ),
+			$username,
+			false
+		);
 	}
 }

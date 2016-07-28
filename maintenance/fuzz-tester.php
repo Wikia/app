@@ -137,7 +137,7 @@ Wiki configuration for testing:
 
   // Install & enable Special Page extensions to increase code coverage. E.g.:
   require_once("extensions/Cite/SpecialCite.php");
-  require_once("extensions/Renameuser/SpecialRenameuser.php");
+  require_once("extensions/Renameuser/UserRenameTool.php");
   // --------- End ---------
 
   If you want to try E_STRICT error logging, add this to the above:

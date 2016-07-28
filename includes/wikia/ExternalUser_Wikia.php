@@ -100,23 +100,32 @@ class ExternalUser_Wikia extends ExternalUser {
 		$this->initFromId( $uid );
 
 		// exists on local
-		$User = null;
+		$user = null;
 		if( !empty( $this->mRow ) ) {
-			$memkey = sprintf( "extuser:%d:%s", $this->getId(), $wgDBcluster );
-			$user_touched = $wgMemc->get( $memkey );
+			$memKey = $this->getExtUserMemKey( $this->getId(), F::app()->wg->DBcluster );
+			$user_touched = $wgMemc->get( $memKey );
 			if( $user_touched != $this->getUserTouched() ) {
 				$_key = User::getUserTouchedKey( $this->getId() );
 				wfDebug( __METHOD__ . ": user touched is different on central and $wgDBcluster \n" );
 				wfDebug( __METHOD__ . ": clear $_key \n" );
-				$wgMemc->set( $memkey, $this->getUserTouched() );
+				$wgMemc->set( $memKey, $this->getUserTouched() );
 				$wgMemc->delete( $_key );
 			} else {
-				$User = $this->getLocalUser();
+				$user = $this->getLocalUser();
 			}
 		}
 
 		wfDebug( __METHOD__ . ": return user object \n" );
-		return is_null( $User );
+		return is_null( $user );
+	}
+
+	/**
+	 * @param int $userId
+	 * @param string $cluster
+	 * @return string
+	 */
+	public static function getExtUserMemKey( $userId, $cluster ) {
+		return sprintf( "extuser:%d:%s", $userId, $cluster );
 	}
 
 	public function getId() {
@@ -271,7 +280,6 @@ class ExternalUser_Wikia extends ExternalUser {
                     __METHOD__
                 );
                 $userId = $dbw->insertId();
-
             } else if ( ! $result ) {
                 throw new ExternalUserException();
             }
@@ -456,34 +464,35 @@ class ExternalUser_Wikia extends ExternalUser {
 	/**
 	 * Removes user info from secondary clusters so that it can be regenerated from scratch
 	 *
-	 * @author mix
-	 * @author tor
+	 * @param int $id The user ID of the record to remove
+	 *
+	 * @throws DBUnexpectedError
 	 */
 	public static function removeFromSecondaryClusters( $id ) {
-		global $wgMemc;
 
-		wfProfileIn( __METHOD__ );
-		$clusters = WikiFactory::getSecondaryClusters(); // wikicities with a c1 .. cx cluster suffix.
+		// wikicities suffixes, e.g. c1 .. cx
+		$clusters = WikiFactory::getSecondaryClusters();
 
-		foreach( $clusters as $clusterName ) {
+		foreach ( $clusters as $clusterNameSuffix ) {
+			$clusterName = 'wikicities_' . $clusterNameSuffix;
+
 			// This is a classic double-check. I do not want to delete the record from the primary cluster.
 			// No, really! I do not.
-			if( RenameUserHelper::CLUSTER_DEFAULT != $clusterName ) {
-				$memkey = sprintf( "extuser:%d:%s", $id, $clusterName );
-				$clusterName = 'wikicities_' . $clusterName;
-
-				$oDB = wfGetDB( DB_MASTER, array(), $clusterName );
-				$oDB->delete(
-					'`user`',
-					array( 'user_id' => $id ),
-					__METHOD__
-				);
-				$oDB->commit( __METHOD__ );
-
-				$wgMemc->delete( $memkey );
+			if ( F::app()->wg->ExternalSharedDB == $clusterName ) {
+				continue;
 			}
+
+			$oDB = wfGetDB( DB_MASTER, [], $clusterName );
+			$oDB->delete(
+				'user',
+				[ 'user_id' => $id ],
+				__METHOD__
+			);
+			$oDB->commit( __METHOD__ );
+
+			$memKey = self::getExtUserMemKey( $id, $clusterNameSuffix );
+			F::app()->wg->Memc->delete( $memKey );
 		}
-		wfProfileOut( __METHOD__ );
 	}
 }
 
