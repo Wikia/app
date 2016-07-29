@@ -40,17 +40,7 @@ class DesignSystemHelper {
 				'name' => $name
 			] );
 
-			$fallback = '';
-
-			if ( !empty( $alt ) ) {
-				$fallback = $alt;
-			}
-
-			if ( !empty( $name ) ) {
-				$fallback = $name;
-			}
-
-			return $fallback;
+			return $alt ?: $name ?: '';
 		}
 	}
 
