@@ -480,6 +480,15 @@ abstract class EmailController extends \WikiaController {
 		return \AvatarService::getAvatarUrl( $user, self::AVATAR_SIZE );
 	}
 
+	/**
+	 * Clients to these email controllers can specify the acting and target
+	 * user using either userName or userId.
+	 *
+	 * @param $userNameParam
+	 * @param $userIdParam
+	 * @return \User
+	 * @throws Fatal
+	 */
 	protected function findUserFromRequest( $userNameParam, $userIdParam ) {
 		$userName = $this->getRequest()->getVal( $userNameParam );
 		$userId = $this->getRequest()->getVal( $userIdParam );
