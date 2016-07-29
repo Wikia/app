@@ -10,6 +10,10 @@ class ResourceLoaderAdEngineSourcePointCSDelivery extends ResourceLoaderAdEngine
 
 	protected $fallbackScriptUrl = __DIR__ . '/../js/SourcePoint/deliveryScriptFallBack.js';
 
+	protected function getMemcKey() {
+		return wfMemcKey('adengine', get_class($this) . __FUNCTION__, static::CACHE_BUSTER);
+	}
+
 	/**
 	 * Configure scripts that should be loaded into one package
 	 * @return array of ResourceLoaderScript

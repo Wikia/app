@@ -4,6 +4,10 @@ class ResourceLoaderAdEngineSourcePointDetectionModule extends ResourceLoaderAdE
 	const CACHE_BUSTER = 3;     // increase this any time the local files change
 	const SCRIPT_DETECTION_URL = 'https://api.sourcepoint.com/script/detection?delivery=bundle';
 
+	protected function getMemcKey() {
+		return wfMemcKey('adengine', get_class($this) . __FUNCTION__, static::CACHE_BUSTER);
+	}
+
 	/**
 	 * Configure scripts that should be loaded into one package
 	 * @return array of ResourceLoaderScript
