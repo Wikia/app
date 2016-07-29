@@ -60,6 +60,11 @@ define('wikia.preview', [
 					'overflow-x': 'hidden'
 				});
 
+				// SUS-126: prevent page scrolling on large pages breaking the classic editor
+				$(document.body).css({
+					'overflow-y': 'hidden'
+				});
+
 				if (typeof callback === 'function') {
 					callback($contentNode);
 				}
