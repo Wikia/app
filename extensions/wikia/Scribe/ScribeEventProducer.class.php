@@ -115,9 +115,6 @@ class ScribeEventProducer {
 		} elseif ( $oLocalFile instanceof File ) {
 			$this->setMediaType( $oLocalFile );
 			$this->setIsImageForReview( ImagesService::isLocalImage( $oTitle ) );
-			if ( $bIsNewWiki ) {
-				$this->setImageApproved( true );
-			}
 		} else {
 			$this->setIsImageForReview( false );
 		}
