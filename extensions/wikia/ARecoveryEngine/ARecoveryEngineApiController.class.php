@@ -4,22 +4,14 @@ class ARecoveryEngineApiController extends WikiaController {
 	const DEFAULT_TEMPLATE_ENGINE = WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
 	const MAX_EVENT_INTERVAL = 900;
 
-	/**
-	 * @param ResourceLoaderAdEngineBase $resourceLoader
-	 * @param int $cache
-	 */
-	protected function loadJSResource($resourceLoader, $cache = WikiaResponse::CACHE_STANDARD) {
+	public function getDelivery() {
+		$resourceLoader = new ResourceLoaderAdEngineSourcePointCSDelivery();
 		$resourceLoaderContext = new ResourceLoaderContext( new ResourceLoader(), new FauxRequest() );
 		$source = $resourceLoader->getScript( $resourceLoaderContext );
 
 		$this->response->setContentType( 'text/javascript; charset=utf-8' );
 		$this->response->setBody( $source );
-		$this->response->setCacheValidity( $cache );
-	}
-
-	public function getDelivery() {
-		$resourceLoader = new ResourceLoaderAdEngineSourcePointCSDelivery();
-		$this->loadJSResource( $resourceLoader );
+		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
 	}
 
 	public function getBootstrap() {

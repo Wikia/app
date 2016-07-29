@@ -3,7 +3,7 @@
 class ResourceLoaderAdEnginePageFairDetectionModule extends ResourceLoaderAdEngineBase {
 	const REMOTE_FILE_URL = 'http://asset.pagefair.com/measure.min.js';
 	const LOCAL_FILE_PATH = __DIR__ . '/../js/PageFair/measure.min.js';
-	const TTL_SCRIPTS = 86400;   // one day for fresh scripts from PageFair
+	const TTL_SCRIPTS = WikiaResponse::CACHE_STANDARD;   // one day for fresh scripts from PageFair
 	const TTL_GRACE = 3600; // one hour for old scripts (served if we fail to fetch fresh scripts)
 	const CACHE_BUSTER = 1;     // increase this any time the local files change
 	const REQUEST_TIMEOUT = 30;
