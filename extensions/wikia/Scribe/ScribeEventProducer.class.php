@@ -49,7 +49,7 @@ class ScribeEventProducer {
 		$this->setCategory();
 	}
 
-	public function buildEditPackage( $oPage, $oUser, $oRevision = null, $oLocalFile = null ) {
+	public function buildEditPackage( $oPage, $oUser, $oRevision = null ) {
 		wfProfileIn( __METHOD__ );
 
 		if ( !is_object( $oPage ) ) {
@@ -109,11 +109,16 @@ class ScribeEventProducer {
 		$this->setMediaLinks( $oPage );
 		$this->setTotalWords( str_word_count( $rev_text ) );
 
-		if ( $oLocalFile instanceof File ) {
-			$this->setMediaType( $oLocalFile );
-			$this->setIsImageForReview( ImagesService::isLocalImage( $oTitle ) );
-		} else {
-			$this->setIsImageForReview( false );
+		if ( $oTitle instanceof Title && $oTitle->getNamespace() == NS_FILE ) {
+			$oLocalFile = wfLocalFile( $oTitle );
+			if ( $oLocalFile instanceof File ) {
+				$this->setMediaType( $oTitle );
+				$this->setIsLocalFile( $oLocalFile );
+				$this->setIsTop200( $this->app->wg->CityId );
+				$this->setIsImageForReview();
+			} else {
+				$this->setIsImageForReview( false );
+			}
 		}
 
 		$t = microtime(true);
@@ -209,14 +214,9 @@ class ScribeEventProducer {
 			return true;
 		}
 
-		$oLocalFile = null;
-		if ( $created && $oTitle->getNamespace() == NS_FILE ) {
-			$oLocalFile = wfLocalFile( $oTitle );
-		}
-
 		wfProfileOut( __METHOD__ );
 
-		return $this->buildEditPackage( $oPage, $oUser, null, $oLocalFile );
+		return $this->buildEditPackage( $oPage, $oUser );
 	}
 
 	public function buildMovePackage( $oTitle, $oUser, $page_id = null, $redirect_id = null ) {
