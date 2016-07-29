@@ -71,6 +71,7 @@
 <?= $rubiconFastlane ?>
 <?= $amazonMatch ?>
 <?= $openXBidder ?>
+<?= $prebid ?>
 <?= $krux ?>
 <?= $dynamicYield ?>
 <?= $ivw3 ?>

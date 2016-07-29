@@ -18,8 +18,6 @@ class ChatController extends WikiaController {
 
 		$this->mainPageURL = Title::newMainPage()->getLocalURL();
 
-		$this->wg->Out->addModules( JSMessages::RL_MODULE_PREFIX . 'Chat' );
-
 		// Variables for this user
 		$this->username = $wgUser->getName();
 		$this->avatarUrl = AvatarService::getAvatarUrl( $this->username, ChatController::CHAT_AVATAR_DIMENSION );

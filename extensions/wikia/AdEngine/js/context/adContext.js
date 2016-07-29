@@ -159,6 +159,9 @@ define('ext.wikia.adEngine.adContext', [
 			!isPageType('home')
 		);
 
+		// OpenX for remnant slot enabled
+		context.opts.openXRemnantEnabled = geo.isProperGeo(instantGlobals.wgAdDriverOpenXBidderCountriesRemnant);
+
 		context.opts.yavli = !!(
 			!noExternals &&
 			geo.isProperGeo(instantGlobals.wgAdDriverYavliCountries) &&

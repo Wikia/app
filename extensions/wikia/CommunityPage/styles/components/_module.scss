@@ -17,10 +17,4 @@
 		display: block;
 		font-size: 12px;
 	}
-
-	@media #{$breakpoint-below-small-plus} {
-		margin: 12px 8px;
-		max-width: 330px;
-		vertical-align: top;
-	}
 }

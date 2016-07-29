@@ -2,6 +2,7 @@
 
 class RecirculationApiController extends WikiaApiController {
 	const ALLOWED_TYPES = ['recent_popular', 'vertical', 'community', 'curated', 'e3', 'hero', 'category'];
+	const FANDOM_LIMIT = 5;
 
 	/**
 	 * @var CrossOriginResourceSharingHeaderHelper
@@ -37,9 +38,9 @@ class RecirculationApiController extends WikiaApiController {
 
 		$posts = $dataService->getPosts( $type );
 
-		if ( $type === 'category' && count( $posts ) < 5) {
+		if ( $type === 'category' && count( $posts ) < self::FANDOM_LIMIT) {
 			$ds = new FandomDataService( $cityId, $type, true );
-			$posts = array_merge( $posts, $ds->getPosts( $type ) );
+			$posts = array_slice( array_merge( $posts, $ds->getPosts( $type ) ), 0, self::FANDOM_LIMIT );
 		}
 
 		$this->response->setCacheValidity( WikiaResponse::CACHE_VERY_SHORT );
