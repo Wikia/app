@@ -45,8 +45,8 @@ $logger->setLogger( $logger->stdoutLogger() );
 validateOptions( $options );
 $processData = getProcessData( $options );
 
-/** @var \UserRenameTool\Process\ProcessBaseLocal $process */
-$process = \UserRenameTool\Process\ProcessBaseLocal::newFromData( $processData );
+/** @var \UserRenameTool\Process\ProcessLocal $process */
+$process = \UserRenameTool\Process\ProcessLocal::newFromData( $processData );
 $process->logInfo( "Starting rename script for wiki ID %s: %s", $wgCityId, __FILE__ );
 
 $process->setRequestorUser();

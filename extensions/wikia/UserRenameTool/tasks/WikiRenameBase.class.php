@@ -2,7 +2,7 @@
 
 namespace UserRenameTool\Tasks;
 
-use UserRenameTool\Process\ProcessBaseLocal;
+use UserRenameTool\Process\ProcessLocal;
 use Wikia\Tasks\Tasks\BaseTask;
 
 class WikiRenameBase extends BaseTask {
@@ -10,7 +10,7 @@ class WikiRenameBase extends BaseTask {
 	const FLAG_RENAME_WIKIS_TMPL = 'wikis_to_update_%s';
 	const FLAG_RENAME_WIKI_DONE_TMPL = 'wiki_%d_rename_%s';
 
-	/** @var ProcessBaseLocal */
+	/** @var ProcessLocal */
 	protected $process;
 
 	/** @var array $params
@@ -30,7 +30,7 @@ class WikiRenameBase extends BaseTask {
 	protected $fakeUser;
 
 	protected function setupProcessLocal() {
-		$this->process = ProcessBaseLocal::newFromData( $this->params );
+		$this->process = ProcessLocal::newFromData( $this->params );
 		$this->process->setRequestorUser();
 	}
 

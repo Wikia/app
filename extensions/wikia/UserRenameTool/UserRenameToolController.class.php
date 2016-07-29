@@ -60,7 +60,7 @@ class UserRenameToolController extends SpecialPage {
 			return;
 		}
 
-		$process = new UserRenameTool\Process\ProcessBaseGlobal(
+		$process = new UserRenameTool\Process\ProcessGlobal(
 			$this->oldUsername,
 			$this->newUsername,
 			$this->confirmAction,
@@ -84,6 +84,7 @@ class UserRenameToolController extends SpecialPage {
 		try {
 			$wg->Request->isValidWriteRequest( $wg->User );
 		} catch ( Exception $e ) {
+			$this->errors[] = $e->getMessage();
 			return false;
 		}
 

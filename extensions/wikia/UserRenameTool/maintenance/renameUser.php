@@ -49,7 +49,7 @@ class RenameUserMaintenance extends Maintenance {
 
 		$logger->info( __CLASS__ . ': start' );
 
-		$renameProcess = new \UserRenameTool\Process\ProcessBaseGlobal( $oldName, $newName, true, $reason );
+		$renameProcess = new \UserRenameTool\Process\ProcessGlobal( $oldName, $newName, true, $reason );
 		$res = $renameProcess->run();
 
 		if ( $res !== true ) {

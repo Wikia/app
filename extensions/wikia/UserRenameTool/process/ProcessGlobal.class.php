@@ -5,7 +5,7 @@ namespace UserRenameTool\Process;
 use UserRenameTool\Tasks\MultiWikiRename;
 use Wikia\Tasks\Queues\PriorityQueue;
 
-class ProcessBaseGlobal extends ProcessBase {
+class ProcessGlobal extends ProcessBase {
 
 	const MAX_EXECUTION_TIME = 3600; // 1h
 

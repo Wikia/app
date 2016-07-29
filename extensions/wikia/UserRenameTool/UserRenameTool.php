@@ -31,9 +31,9 @@ $wgExtensionMessagesFiles['UserRenameTool'] = $dir . 'UserRenameTool.i18n.php';
 // classes
 $wgAutoloadClasses['UserRenameToolController'] = $dir . 'UserRenameToolController.class.php';
 $wgAutoloadClasses['UserRenameToolHelper'] = $dir . 'UserRenameToolHelper.class.php';
-$wgAutoloadClasses['UserRenameTool\Process\Process'] = $dir . 'UserRenameToolProcess.class.php';
-$wgAutoloadClasses['UserRenameTool\Process\ProcessGlobal'] = $dir . 'UserRenameToolProcessGlobal.class.php';
-$wgAutoloadClasses['UserRenameTool\Process\ProcessLocal'] = $dir . 'UserRenameToolProcessLocal.class.php';
+$wgAutoloadClasses['UserRenameTool\Process\ProcessBase'] = $dir . 'process/ProcessBase.class.php';
+$wgAutoloadClasses['UserRenameTool\Process\ProcessGlobal'] = $dir . 'process/ProcessGlobal.class.php';
+$wgAutoloadClasses['UserRenameTool\Process\ProcessLocal'] = $dir . 'process/ProcessLocal.class.php';
 $wgAutoloadClasses['UserRenameTool\Tasks\WikiRenameBase'] = $dir . 'tasks/WikiRenameBase.class.php';
 $wgAutoloadClasses['UserRenameTool\Tasks\MultiWikiRename'] = $dir . 'tasks/MultiWikiRename.class.php';
 $wgAutoloadClasses['UserRenameTool\Tasks\SingleWikiRename'] = $dir . 'tasks/SingleWikiRename.class.php';

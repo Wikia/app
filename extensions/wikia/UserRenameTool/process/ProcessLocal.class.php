@@ -2,7 +2,7 @@
 
 namespace UserRenameTool\Process;
 
-class ProcessBaseLocal  extends ProcessBase {
+class ProcessLocal  extends ProcessBase {
 
 	/**
 	 * Stores the predefined tasks to do for every local wiki database.
