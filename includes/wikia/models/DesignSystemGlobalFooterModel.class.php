@@ -527,11 +527,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 
 	public function getData() {
 		$this->setHeaderData();
-
-		foreach ( $this->baseData as $sectionName => $sectionBaseData ) {
-			$this->setSectionData( $sectionName, $sectionBaseData );
-		}
-
+		$this->setSectionsData();
 		$this->setLicenseData();
 
 		return $this->data;
@@ -575,6 +571,12 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 					]
 				]
 			];
+		}
+	}
+
+	private function setSectionsData() {
+		foreach ( $this->baseData as $sectionName => $sectionBaseData ) {
+			$this->setSectionData( $sectionName, $sectionBaseData );
 		}
 	}
 
