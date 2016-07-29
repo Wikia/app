@@ -109,7 +109,10 @@ class ScribeEventProducer {
 		$this->setMediaLinks( $oPage );
 		$this->setTotalWords( str_word_count( $rev_text ) );
 
-		if ( $oLocalFile instanceof File ) {
+		if ( $bIsNewWiki && $oTitle->getNamespace() === NS_FILE ) {
+			$this->setImageApproved( true );
+			$this->setIsImageForReview( true );
+		} elseif ( $oLocalFile instanceof File ) {
 			$this->setMediaType( $oLocalFile );
 			$this->setIsImageForReview( ImagesService::isLocalImage( $oTitle ) );
 			if ( $bIsNewWiki ) {
@@ -401,8 +404,8 @@ class ScribeEventProducer {
 	 * @param  string $sLogMessage  A log message
 	 * @return void
 	 */
-	private function log() {
-		WikiaLogger::instance()->info( 'ImageReviewLog', [
+	private function logSendScribeMessage() {
+		WikiaLogger::instance()->info( 'SendScribeMessage', [
 			'method' => __METHOD__,
 			'params' => $this->mParams,
 		] );
@@ -413,7 +416,7 @@ class ScribeEventProducer {
 		try {
 			$data = json_encode($this->mParams);
 			WScribeClient::singleton( $this->mKey )->send( $data );
-			$this->log();
+			$this->logSendScribeMessage();
 		}
 		catch( TException $e ) {
 			Wikia::log( __METHOD__, 'scribeClient exception', $e->getMessage() );

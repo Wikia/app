@@ -168,20 +168,20 @@ class UpdateImageReview extends Maintenance {
 	private function updateDatawareFile( $dbw, $top200, $localFile, $imageReviewFile ) {
 		global $wgCityId;
 
-		$action = $imageReviewFile ? "Updating image_review:" : "Adding to image_review:";
-		$this->output( "{$action} {$localFile->page_textual_title}...\n" );
-
-		if ( $this->debug ) {
-			$this->output( "  * local file: " . json_encode( $localFile ) . "\n" );
-			$this->output( "  * image_review: " . json_encode( $imageReviewFile ) . "\n" );
-		}
-
 		if ( $this->dryRun ) {
 			return;
 		}
 
 		$title = Title::newFromID( $localFile->page_id );
 		if ( ImagesService::isLocalImage( $title ) ) {
+			$action = $imageReviewFile ? "Updating image_review:" : "Adding to image_review:";
+			$this->output( "{$action} {$localFile->page_textual_title}...\n" );
+
+			if ( $this->debug ) {
+				$this->output( "  * local file: " . json_encode( $localFile ) . "\n" );
+				$this->output( "  * image_review: " . json_encode( $imageReviewFile ) . "\n" );
+			}
+
 			$dbw->replace(
 				'image_review',
 				[
@@ -198,6 +198,12 @@ class UpdateImageReview extends Maintenance {
 				],
 				__METHOD__
 			);
+
+			\Wikia\Logger\WikiaLogger::instance()->info( 'Add image to review queue', [
+				'method' => __METHOD__,
+				'wiki_id' => $wgCityId,
+				'page_id' => $localFile->page_id
+			] );
 
 			return true;
 		}
