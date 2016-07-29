@@ -43,10 +43,12 @@ class WikiaTracer {
 	private $contextSource;
 
 	private function __construct() {
-		$this->spanId = RequestId::generateId();
-		$this->traceId = RequestId::instance()->getRequestId();
-
+		$this->traceId = $this->validateId( $this->getTraceEntry( self::TRACE_ID_HEADER_NAME ) )
+			?: $this->validateId( $this->getTraceEntry( self::LEGACY_TRACE_ID_HEADER_NAME ) )
+			?: self::generateId();
+		$this->spanId = self::generateId();
 		$this->parentSpanId = $this->getTraceEntry( self::PARENT_SPAN_ID_HEADER_NAME );
+
 		$this->clientIp = $this->getTraceEntry( self::CLIENT_IP_HEADER_NAME );
 		$this->clientBeaconId = $this->getTraceEntry( self::CLIENT_BEACON_ID_HEADER_NAME );
 		$this->clientDeviceId = $this->getTraceEntry( self::CLIENT_DEVICE_ID_HEADER_NAME );
@@ -54,6 +56,16 @@ class WikiaTracer {
 
 		$this->contextSource = new ContextSource( [ ] );
 		$this->updateContext();
+	}
+
+	/**
+	 * Validate given trace/span id and return it if it is valid. Otherwise return null.
+	 *
+	 * @param string $id Trace/Span ID
+	 * @return string|null
+	 */
+	private function validateId( $id ) {
+		return self::isValidId( $id ) ? $id : null;
 	}
 
 	/**
@@ -183,6 +195,24 @@ class WikiaTracer {
 		}
 
 		return $array;
+	}
+
+	/**
+	 * Return a version 4 (random) UUID (e.g. 8454441a-f0e1-11e5-9c4a-00163e046284)
+	 * @return string
+	 */
+	public static function generateId() {
+		return Uuid::v4();
+	}
+
+	/**
+	 * Validate provided request ID
+	 *
+	 * @param string $id
+	 * @return bool
+	 */
+	public static function isValidId( $id ) {
+		return Uuid::isValid( $id );
 	}
 
 	/**
