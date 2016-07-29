@@ -7,10 +7,11 @@ class DesignSystemHooks {
 	 * @desc Adds Design System styles to all Oasis pages
 	 *
 	 * @param OutputPage $out
+	 * @param object $skin
 	 *
 	 * @return bool true
 	 */
-	public static function onBeforePageDisplay( $out, &$skin ) {
+	public static function onBeforePageDisplay( $out, $skin ) {
 
 		if ( F::app()->checkSkin( 'oasis', $skin ) ) {
 			\Wikia::addAssetsToOutput( 'design_system_scss' );
