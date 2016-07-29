@@ -75,15 +75,15 @@ class ProcessGlobal extends ProcessBase {
 		$this->setNamesAndIds( $uid, $newUser, $oldUser );
 
 		// If there are only warnings and user confirmed that, do not show them again on the success page ;-)
-		if ( $this->mActionConfirmed ) {
-			$this->mWarnings = [];
-		} elseif ( count( $this->mWarnings ) ) {
+		if ( $this->actionConfirmed ) {
+			$this->warnings = [];
+		} elseif ( count( $this->warnings ) ) {
 			// In case the action is not confirmed and there are warnings, display them and wait
 			// for confirmation before running the process
 			return false;
 		}
 
-		return empty( $this->mErrors );
+		return empty( $this->errors );
 	}
 
 	/**
@@ -102,7 +102,7 @@ class ProcessGlobal extends ProcessBase {
 	 */
 	private function getOldUserName() {
 		// Sanitize input data
-		$oldTitle = \Title::makeTitle( NS_USER, trim( str_replace( '_', ' ', $this->mRequestData->oldUsername ) ) );
+		$oldTitle = \Title::makeTitle( NS_USER, trim( str_replace( '_', ' ', $this->requestData->oldUsername ) ) );
 		$oldUserName = is_object( $oldTitle ) ? $oldTitle->getText() : '';
 		$this->phalanxTest( $oldUserName );
 
@@ -118,7 +118,7 @@ class ProcessGlobal extends ProcessBase {
 		global $wgContLang;
 
 		// Force uppercase of new username, otherwise wikis with wgCapitalLinks=false can create lc usernames
-		$newTitle = \Title::makeTitleSafe( NS_USER, $wgContLang->ucfirst( $this->mRequestData->newUsername ) );
+		$newTitle = \Title::makeTitleSafe( NS_USER, $wgContLang->ucfirst( $this->requestData->newUsername ) );
 		$newUserName = is_object( $newTitle ) ? $newTitle->getText() : '';
 		$this->antiSpoofTest( $newUserName );
 		$this->phalanxTest( $newUserName );
@@ -129,7 +129,7 @@ class ProcessGlobal extends ProcessBase {
 	private function areUserNamesValid( $oldUserName, $newUserName ) {
 		if ( empty( $oldUserName ) ) {
 			$this->addError(
-				wfMessage( 'userrenametool-errorinvalid', $this->mRequestData->oldUsername )
+				wfMessage( 'userrenametool-errorinvalid', $this->requestData->oldUsername )
 					->inContentLanguage()
 					->text()
 			);
@@ -138,7 +138,7 @@ class ProcessGlobal extends ProcessBase {
 
 		if ( empty( $newUserName ) ) {
 			$this->addError(
-				wfMessage( 'userrenametool-errorinvalidnew', $this->mRequestData->newUsername )
+				wfMessage( 'userrenametool-errorinvalidnew', $this->requestData->newUsername )
 					->inContentLanguage()
 					->text()
 			);
@@ -170,10 +170,10 @@ class ProcessGlobal extends ProcessBase {
 			}
 		}
 
-		$this->mOldUsername = $oldUser->getName();
-		$this->mNewUsername = $newUser->getName();
-		$this->mUserId = (int) $uid;
-		$this->mFakeUserId = $fakeUid;
+		$this->oldUsername = $oldUser->getName();
+		$this->newUsername = $newUser->getName();
+		$this->userId = (int) $uid;
+		$this->fakeUserId = $fakeUid;
 	}
 
 	protected function newUserExists( \User $newUser ) {
@@ -200,7 +200,7 @@ class ProcessGlobal extends ProcessBase {
 
 		// Delete the record from all the secondary clusters
 		if ( class_exists( 'ExternalUser_Wikia' ) ) {
-			\ExternalUser_Wikia::removeFromSecondaryClusters( $this->mUserId );
+			\ExternalUser_Wikia::removeFromSecondaryClusters( $this->userId );
 		}
 
 		// rename the user on the shared cluster
@@ -211,8 +211,8 @@ class ProcessGlobal extends ProcessBase {
 			return false;
 		}
 
-		$this->invalidateUserCache( $this->mNewUsername );
-		$this->invalidateUserCache( $this->mOldUsername );
+		$this->invalidateUserCache( $this->newUsername );
+		$this->invalidateUserCache( $this->oldUsername );
 
 		// Create a dummy account under the old username
 		$this->initializeFakeUser();
@@ -226,11 +226,11 @@ class ProcessGlobal extends ProcessBase {
 
 	private function logRenameStart() {
 		$this->logInfo( "User rename global task start." );
-		if ( !empty( $this->mFakeUserId ) ) {
+		if ( !empty( $this->fakeUserId ) ) {
 			$this->logInfo( ' Process is being repeated.' );
 		};
 		$this->logInfo( "Renaming user %s (ID %d) to %s",
-			$this->mOldUsername, $this->mUserId, $this->mNewUsername
+			$this->oldUsername, $this->userId, $this->newUsername
 		);
 	}
 
@@ -241,15 +241,15 @@ class ProcessGlobal extends ProcessBase {
 
 		$this->logInfo(
 			"Changing user %s to %s in %s",
-			$this->mOldUsername, $this->mNewUsername, $wgExternalSharedDB
+			$this->oldUsername, $this->newUsername, $wgExternalSharedDB
 		);
 
 		$table = \UserRenameToolHelper::getCentralUserTable();
 		if ( $dbw->tableExists( $table ) ) { ;
 			$dbw->update(
 				$table,
-				[ 'user_name' => $this->mNewUsername ],
-				[ 'user_id' => $this->mUserId ],
+				[ 'user_name' => $this->newUsername ],
+				[ 'user_id' => $this->userId ],
 				__METHOD__
 			);
 
@@ -261,20 +261,20 @@ class ProcessGlobal extends ProcessBase {
 
 			// Consider this a success if some rows were updated or if we repeating a rename,
 			// in which case we probably already did this update.
-			if ( $affectedRows || $this->mRepeatRename ) {
+			if ( $affectedRows || $this->repeatRename ) {
 				$dbw->commit();
 				$this->logInfo(
 					"Changed user %s to %s in %s",
-					$this->mOldUsername, $this->mNewUsername, $wgExternalSharedDB
+					$this->oldUsername, $this->newUsername, $wgExternalSharedDB
 				);
 
-				\User::clearUserCache( $this->mUserId );
+				\User::clearUserCache( $this->userId );
 
 				return true;
 			} else {
 				$this->logInfo(
 					"No changes in %s for user %s",
-					$wgExternalSharedDB, $this->mOldUsername
+					$wgExternalSharedDB, $this->oldUsername
 				);
 			}
 		} else {
@@ -293,8 +293,8 @@ class ProcessGlobal extends ProcessBase {
 	private function initializeFakeUser() {
 		$this->logInfo( "Creating fake user account" );
 
-		if ( !empty( $this->mFakeUserId ) ) {
-			$this->logInfo( "Fake user account already exists: %d", $this->mFakeUserId );
+		if ( !empty( $this->fakeUserId ) ) {
+			$this->logInfo( "Fake user account already exists: %d", $this->fakeUserId );
 			return true;
 		}
 
@@ -303,12 +303,12 @@ class ProcessGlobal extends ProcessBase {
 			return false;
 		}
 
-		$this->mFakeUserId = $fakeUser->getId();
+		$this->fakeUserId = $fakeUser->getId();
 
 		$this->logInfo(
 			"Created fake user account for %s with ID %s and renameData '%s'",
 			$fakeUser->getName(),
-			$this->mFakeUserId,
+			$this->fakeUserId,
 			json_encode( $this->getRenameData( $fakeUser ) )
 		);
 
@@ -327,17 +327,17 @@ class ProcessGlobal extends ProcessBase {
 	 * @throws \PasswordError
 	 */
 	private function createFakeUser() {
-		$fakeUser = \User::newFromName( $this->mOldUsername, 'creatable' );
+		$fakeUser = \User::newFromName( $this->oldUsername, 'creatable' );
 
 		if ( !is_object( $fakeUser ) ) {
-			$this->logInfo( "Cannot create fake user: %s", $this->mOldUsername );
+			$this->logInfo( "Cannot create fake user: %s", $this->oldUsername );
 			return null;
 		}
 
 		$fakeUser->setPassword( null );
 		$fakeUser->setEmail( null );
 		$fakeUser->setRealName( '' );
-		$fakeUser->setName( $this->mOldUsername );
+		$fakeUser->setName( $this->oldUsername );
 
 		if ( \F::app()->wg->ExternalAuthType ) {
 			\ExternalUser_Wikia::addUser( $fakeUser, '', '', '' );
@@ -346,7 +346,7 @@ class ProcessGlobal extends ProcessBase {
 		}
 
 		$this->setRenameData( $fakeUser, [
-			self::RENAME_TAG => $this->mNewUsername,
+			self::RENAME_TAG => $this->newUsername,
 			self::PROCESS_TAG => 1,
 		] );
 
@@ -368,16 +368,16 @@ class ProcessGlobal extends ProcessBase {
 
 		$hookName = 'UserRename::Global';
 		$this->logInfo( "Broadcasting hook: %s", $hookName );
-		wfRunHooks( $hookName, [ $dbw, $this->mUserId, $this->mOldUsername, $this->mNewUsername, $this, &$tasks ] );
+		wfRunHooks( $hookName, [ $dbw, $this->userId, $this->oldUsername, $this->newUsername, $this, &$tasks ] );
 
 		foreach ( $tasks as $task ) {
 			$this->logInfo( "Updating %s.%s", $task['table'], $task['username_column'] );
 			$this->renameInTable(
 				$dbw,
 				$task['table'],
-				$this->mUserId,
-				$this->mOldUsername,
-				$this->mNewUsername,
+				$this->userId,
+				$this->oldUsername,
+				$this->newUsername,
 				$task
 			);
 		}
@@ -392,22 +392,22 @@ class ProcessGlobal extends ProcessBase {
 	 */
 	protected function queueMultiWikiRenameTask(  ) {
 		// enumerate IDs for wikis the user has been active in
-		$wikiIds = $this->lookupRegisteredUserActivity( $this->mUserId );
+		$wikiIds = $this->lookupRegisteredUserActivity( $this->userId );
 
 		$callParams = [
-			'requestor_id' => $this->mRequestorId,
-			'requestor_name' => $this->mRequestorName,
-			'rename_user_id' => $this->mUserId,
-			'rename_old_name' => $this->mOldUsername,
-			'rename_new_name' => $this->mNewUsername,
-			'rename_fake_user_id' => $this->mFakeUserId,
-			'phalanx_block_id' => $this->mPhalanxBlockId,
-			'reason' => $this->mReason,
-			'notify_renamed' => $this->mNotifyUser,
+			'requestor_id' => $this->requestorId,
+			'requestor_name' => $this->requestorName,
+			'rename_user_id' => $this->userId,
+			'rename_old_name' => $this->oldUsername,
+			'rename_new_name' => $this->newUsername,
+			'rename_fake_user_id' => $this->fakeUserId,
+			'phalanx_block_id' => $this->phalanxBlockId,
+			'reason' => $this->reason,
+			'notify_renamed' => $this->notifyUser,
 		];
 		$task = ( new MultiWikiRename() )->setPriority( PriorityQueue::NAME );
 		$task->call( 'run', $wikiIds, $callParams );
-		$this->mUserRenameTaskId = $task->queue();
+		$this->currentTaskId = $task->queue();
 	}
 
 	private function antiSpoofTest( $newUserName ) {
@@ -447,7 +447,7 @@ class ProcessGlobal extends ProcessBase {
 	private function areUserObjectsValid( $oldUser, $newUser ) {
 		if ( !is_object( $oldUser ) ) {
 			$this->addError(
-				wfMessage( 'userrenametool-errorinvalid',  $this->mRequestData->oldUsername )
+				wfMessage( 'userrenametool-errorinvalid',  $this->requestData->oldUsername )
 					->inContentLanguage()
 					->text()
 			);
@@ -456,7 +456,7 @@ class ProcessGlobal extends ProcessBase {
 
 		if ( !is_object( $newUser ) ) {
 			$this->addError(
-				wfMessage( 'userrenametool-errorinvalidnew',  $this->mRequestData->newUsername )
+				wfMessage( 'userrenametool-errorinvalidnew',  $this->requestData->newUsername )
 					->inContentLanguage()
 					->text()
 			);
@@ -468,7 +468,7 @@ class ProcessGlobal extends ProcessBase {
 
 	private function addUserDoesNotExistError() {
 		$this->addError(
-			wfMessage( 'userrenametool-errordoesnotexist', $this->mRequestData->oldUsername )
+			wfMessage( 'userrenametool-errordoesnotexist', $this->requestData->oldUsername )
 				->inContentLanguage()
 				->text()
 		);
@@ -482,7 +482,7 @@ class ProcessGlobal extends ProcessBase {
 	private function checkOldUserPermissions( $oldUser ) {
 		if ( $oldUser->isLocked() ) {
 			$this->addError(
-				wfMessage( 'userrenametool-errorlocked', $this->mRequestData->oldUsername )->inContentLanguage()->text()
+				wfMessage( 'userrenametool-errorlocked', $this->requestData->oldUsername )->inContentLanguage()->text()
 			);
 
 			return false;
@@ -490,7 +490,7 @@ class ProcessGlobal extends ProcessBase {
 
 		if ( $oldUser->isAllowed( 'bot' ) ) {
 			$this->addError(
-				wfMessage( 'userrenametool-errorbot', $this->mRequestData->oldUsername )->inContentLanguage()->text()
+				wfMessage( 'userrenametool-errorbot', $this->requestData->oldUsername )->inContentLanguage()->text()
 			);
 
 			return false;
@@ -574,19 +574,19 @@ class ProcessGlobal extends ProcessBase {
 			$oldUser->getName(), json_encode( $renameData )
 		);
 		if ( !empty( $renameData->{ self::RENAME_TAG } ) ) {
-			$this->mRepeatRename = $renameData->{ self::RENAME_TAG } == $newUser->getName();
+			$this->repeatRename = $renameData->{ self::RENAME_TAG } == $newUser->getName();
 		}
 
 		if ( !empty( $renameData->{ self::PHALANX_BLOCK_TAG } ) ) {
-			$this->mPhalanxBlockId = (int) $renameData->{ self::PHALANX_BLOCK_TAG };
+			$this->phalanxBlockId = (int) $renameData->{ self::PHALANX_BLOCK_TAG };
 		}
 
-		if ( $this->mRepeatRename ) {
+		if ( $this->repeatRename ) {
 			$this->addWarning(
 				wfMessage(
 					'userrenametool-warn-repeat',
-					$this->mRequestData->oldUsername,
-					$this->mRequestData->newUsername
+					$this->requestData->oldUsername,
+					$this->requestData->newUsername
 				)->inContentLanguage()->text()
 			);
 			// Swap the uids because the real user ID is the new user ID in this special case

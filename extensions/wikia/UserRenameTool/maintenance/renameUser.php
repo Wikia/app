@@ -64,10 +64,10 @@ class RenameUserMaintenance extends Maintenance {
 		}
 
 		$logger->info( __CLASS__ . ': done', [
-			'task_id' => $renameProcess->getUserRenameTaskId()
+			'task_id' => $renameProcess->getCurrentTaskId()
 		] );
 
-		$this->output( sprintf( "Renaming of '%s' to '%s' done, task_id is '%s'\n", $oldName, $newName, $renameProcess->getUserRenameTaskId() ) );
+		$this->output( sprintf( "Renaming of '%s' to '%s' done, task_id is '%s'\n", $oldName, $newName, $renameProcess->getCurrentTaskId() ) );
 	}
 }
 

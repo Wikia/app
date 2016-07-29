@@ -14,7 +14,7 @@ class ProcessLocal  extends ProcessBase {
 	 *   'username_column' => (string) column name with user name
 	 *   'conds' => (array) additional conditions for the query
 	 */
-	static private $mLocalDefaults = [
+	static private $localDefaults = [
 		// Core MW tables
 		[ 'table' => 'archive', 'userid_column' => 'ar_user', 'username_column' => 'ar_user_text' ],
 		[ 'table' => 'filearchive', 'userid_column' => 'fa_user', 'username_column' => 'fa_user_text' ],
@@ -40,7 +40,7 @@ class ProcessLocal  extends ProcessBase {
 	 * Stores the predefined tasks to do for every local wiki database for IP addresses.
 	 * Here should be mentioned all core tables not connected to any extension.
 	 */
-	static private $mLocalIpDefaults = [
+	static private $localIpDefaults = [
 		[ 'table' => 'archive', 'userid_column' => 'ar_user', 'username_column' => 'ar_user_text' ],
 		[ 'table' => 'filearchive', 'userid_column' => 'fa_user', 'username_column' => 'fa_user_text' ],
 		[ 'table' => 'ipblocks', 'userid_column' => 'ipb_user', 'username_column' => 'ipb_address' ],
@@ -69,13 +69,13 @@ class ProcessLocal  extends ProcessBase {
 
 		$dbw = wfGetDB( DB_MASTER );
 		$dbw->begin();
-		$tasks = self::$mLocalIpDefaults;
+		$tasks = self::$localIpDefaults;
 
 		$hookName = 'UserRename::LocalIP';
 		$this->logInfo( "Broadcasting hook: %s" . $hookName );
 		wfRunHooks(
 			$hookName,
-			[ $dbw, $this->mUserId, $this->mOldUsername, $this->mNewUsername, $this, $wgCityId, &$tasks ]
+			[ $dbw, $this->userId, $this->oldUsername, $this->newUsername, $this, $wgCityId, &$tasks ]
 		);
 
 		foreach ( $tasks as $task ) {
@@ -83,9 +83,9 @@ class ProcessLocal  extends ProcessBase {
 			$this->renameInTable(
 				$dbw,
 				$task['table'],
-				$this->mUserId,
-				$this->mOldUsername,
-				$this->mNewUsername,
+				$this->userId,
+				$this->oldUsername,
+				$this->newUsername,
 				$task
 			);
 		}
@@ -94,7 +94,7 @@ class ProcessLocal  extends ProcessBase {
 
 		$this->logInfo( "Finished updating wiki database: %s", $cityDb );
 
-		if ( $this->mWarnings || $this->mErrors ) {
+		if ( $this->warnings || $this->errors ) {
 			$this->logFailWikiToStaff();
 		} else {
 			$this->logFinishWikiToStaff();
@@ -111,9 +111,9 @@ class ProcessLocal  extends ProcessBase {
 	 */
 	protected function isValidIP() {
 		return (
-			$this->mUserId == 0 &&
-			\IP::isIPAddress( $this->mOldUsername ) &&
-			\IP::isIPAddress( $this->mNewUsername )
+			$this->userId == 0 &&
+			\IP::isIPAddress( $this->oldUsername ) &&
+			\IP::isIPAddress( $this->newUsername )
 		);
 	}
 
@@ -137,13 +137,13 @@ class ProcessLocal  extends ProcessBase {
 		$dbw = wfGetDB( DB_MASTER );
 		$dbw->begin();
 
-		$tasks = self::$mLocalDefaults;
+		$tasks = self::$localDefaults;
 
 		$hookName = 'UserRename::Local';
 		$this->logInfo( "Broadcasting hook: %s", $hookName );
 		wfRunHooks(
 			$hookName,
-			[ $dbw, $this->mUserId, $this->mOldUsername, $this->mNewUsername, $this, $wgCityId, &$tasks ]
+			[ $dbw, $this->userId, $this->oldUsername, $this->newUsername, $this, $wgCityId, &$tasks ]
 		);
 
 		$this->moveUserPages( $dbw, $cityDb );
@@ -154,21 +154,21 @@ class ProcessLocal  extends ProcessBase {
 
 		// Save entry in local Special:Log
 		$this->addLocalLog(
-			wfMessage( 'userrenametool-success', $this->mOldUsername, $this->mNewUsername )
+			wfMessage( 'userrenametool-success', $this->oldUsername, $this->newUsername )
 				->inContentLanguage()
 				->text()
 		);
 
 		$this->logInfo( "Finished updating wiki database: %s", $cityDb );
 
-		if ( $this->mWarnings || $this->mErrors ) {
+		if ( $this->warnings || $this->errors ) {
 			$this->logFailWikiToStaff();
 		} else {
 			$this->logFinishWikiToStaff();
 		}
 
-		$this->invalidateUserCache( $this->mOldUsername );
-		$this->invalidateUserCache( $this->mNewUsername );
+		$this->invalidateUserCache( $this->oldUsername );
+		$this->invalidateUserCache( $this->newUsername );
 
 		$wgUser = $wgOldUser;
 	}
@@ -177,8 +177,8 @@ class ProcessLocal  extends ProcessBase {
 		$this->logInfo( "Moving user pages." );
 
 		try {
-			$oldTitle = \Title::makeTitle( NS_USER, $this->mOldUsername );
-			$newTitle = \Title::makeTitle( NS_USER, $this->mNewUsername );
+			$oldTitle = \Title::makeTitle( NS_USER, $this->oldUsername );
+			$newTitle = \Title::makeTitle( NS_USER, $this->newUsername );
 
 			$pages = $this->getUserPages( $oldTitle, $dbw );
 
@@ -277,16 +277,16 @@ class ProcessLocal  extends ProcessBase {
 	 * @param \DatabaseBase $dbw
 	 */
 	protected function performTableUpdateTasks( $cityDb, $dbw ) {
-		$tasks = self::$mLocalDefaults;
+		$tasks = self::$localDefaults;
 
 		foreach ( $tasks as $task ) {
 			$this->logInfo( 'Updating wiki "%d": %s:%s', $cityDb, $task['table'], $task['username_column'] );
 			$this->renameInTable(
 				$dbw,
 				$task['table'],
-				$this->mUserId,
-				$this->mOldUsername,
-				$this->mNewUsername,
+				$this->userId,
+				$this->oldUsername,
+				$this->newUsername,
 				$task
 			);
 		}
@@ -298,16 +298,16 @@ class ProcessLocal  extends ProcessBase {
 	 */
 	private function resetEditCountWiki() {
 		// Renamed user
-		$uss = new \UserStatsService( $this->mUserId );
+		$uss = new \UserStatsService( $this->userId );
 		$uss->calculateEditCountWiki();
 
 		// FakeUser
-		if ( $this->mFakeUserId != 0 ) {
-			$uss = new \UserStatsService( $this->mFakeUserId );
+		if ( $this->fakeUserId != 0 ) {
+			$uss = new \UserStatsService( $this->fakeUserId );
 			$uss->calculateEditCountWiki();
 		} else {
 			// use OldUsername if FakeUser isn't set
-			$oldUser = \User::newFromName( $this->mOldUsername );
+			$oldUser = \User::newFromName( $this->oldUsername );
 			$uss = new \UserStatsService( $oldUser->getId() );
 			$uss->calculateEditCountWiki();
 		}

@@ -24,26 +24,26 @@ class ProcessBase {
 
 	const DB_COOL_DOWN_SECONDS = 1;
 
-	protected $mRequestData = null;
-	protected $mActionConfirmed = false;
+	protected $requestData = null;
+	protected $actionConfirmed = false;
 
-	protected $mOldUsername = '';
-	protected $mNewUsername = '';
+	protected $oldUsername = '';
+	protected $newUsername = '';
 
-	protected $mUserId = 0;
-	protected $mFakeUserId = 0;
-	protected $mRequestorId = 0;
-	protected $mRequestorName = '';
-	protected $mReason = null;
-	protected $mNotifyUser;
+	protected $userId = 0;
+	protected $fakeUserId = 0;
+	protected $requestorId = 0;
+	protected $requestorName = '';
+	protected $reason = null;
+	protected $notifyUser;
 
-	protected $mErrors = [ ];
-	protected $mWarnings = [ ];
+	protected $errors = [ ];
+	protected $warnings = [ ];
 
-	protected $mUserRenameTaskId = null;
+	protected $currentTaskId = null;
 
-	protected $mRepeatRename = false;
-	protected $mPhalanxBlockId = 0;
+	protected $repeatRename = false;
+	protected $phalanxBlockId = 0;
 
 	/**
 	 * Creates new rename user process
@@ -58,15 +58,15 @@ class ProcessBase {
 		global $wgUser;
 
 		// Save original request data
-		$this->mRequestData = new \stdClass();
-		$this->mRequestData->oldUsername = $oldUsername;
-		$this->mRequestData->newUsername = $newUsername;
+		$this->requestData = new \stdClass();
+		$this->requestData->oldUsername = $oldUsername;
+		$this->requestData->newUsername = $newUsername;
 
-		$this->mActionConfirmed = $confirmed;
-		$this->mReason = $reason;
-		$this->mRequestorId = $wgUser ? $wgUser->getId() : 0;
-		$this->mRequestorName = $wgUser ? $wgUser->getName() : '';
-		$this->mNotifyUser = $notifyUser;
+		$this->actionConfirmed = $confirmed;
+		$this->reason = $reason;
+		$this->requestorId = $wgUser ? $wgUser->getId() : 0;
+		$this->requestorName = $wgUser ? $wgUser->getName() : '';
+		$this->notifyUser = $notifyUser;
 	}
 
 	/**
@@ -79,15 +79,15 @@ class ProcessBase {
 		$o = new static( $data['rename_old_name'], $data['rename_new_name'], '', true );
 
 		$mapping = [
-			'mUserId' => 'rename_user_id',
-			'mOldUsername' => 'rename_old_name',
-			'mNewUsername' => 'rename_new_name',
-			'mFakeUserId' => 'rename_fake_user_id',
-			'mRequestorId' => 'requestor_id',
-			'mRequestorName' => 'requestor_name',
-			'mPhalanxBlockId' => 'phalanx_block_id',
-			'mReason' => 'reason',
-			'mRenameIP' => 'rename_ip',
+			'userId' => 'rename_user_id',
+			'oldUsername' => 'rename_old_name',
+			'newUsername' => 'rename_new_name',
+			'fakeUserId' => 'rename_fake_user_id',
+			'requestorId' => 'requestor_id',
+			'requestorName' => 'requestor_name',
+			'phalanxBlockId' => 'phalanx_block_id',
+			'reason' => 'reason',
+			'renameIP' => 'rename_ip',
 		];
 
 		foreach ( $mapping as $property => $key ) {
@@ -97,26 +97,26 @@ class ProcessBase {
 		}
 
 		// Quick hack to recover requestor name from its id
-		if ( !empty( $o->mRequestorId ) && empty( $o->mRequestorName ) ) {
-			$requestor = \User::newFromId( $o->mRequestorId );
-			$o->mRequestorName = $requestor->getName();
+		if ( !empty( $o->requestorId ) && empty( $o->requestorName ) ) {
+			$requestor = \User::newFromId( $o->requestorId );
+			$o->requestorName = $requestor->getName();
 		}
 
-		$o->logInfo( "newFromData(): Requestor id=%d name=%s", $o->mRequestorId, $o->mRequestorName );
+		$o->logInfo( "newFromData(): Requestor id=%d name=%s", $o->requestorId, $o->requestorName );
 
 		return $o;
 	}
 
 	public function getErrors() {
-		return $this->mErrors;
+		return $this->errors;
 	}
 
 	public function getWarnings() {
-		return $this->mWarnings;
+		return $this->warnings;
 	}
 
-	public function getUserRenameTaskId() {
-		return $this->mUserRenameTaskId;
+	public function getCurrentTaskId() {
+		return $this->currentTaskId;
 	}
 
 	/**
@@ -125,7 +125,7 @@ class ProcessBase {
 	 * @param string $msg Error message
 	 */
 	protected function addError( $msg ) {
-		$this->mErrors[] = $msg;
+		$this->errors[] = $msg;
 	}
 
 	/**
@@ -134,7 +134,7 @@ class ProcessBase {
 	 * @param string $msg Error message
 	 */
 	protected function addWarning( $msg ) {
-		$this->mWarnings[] = $msg;
+		$this->warnings[] = $msg;
 	}
 
 	/**
@@ -260,12 +260,12 @@ class ProcessBase {
 	 * Performs action for cleaning up temporary data at the very end of a process
 	 */
 	public function cleanupFakeUser() {
-		if ( $this->mFakeUserId ) {
-			$this->logInfo( "Cleaning up process data in user option renameData for ID %s", $this->mFakeUserId );
+		if ( $this->fakeUserId ) {
+			$this->logInfo( "Cleaning up process data in user option renameData for ID %s", $this->fakeUserId );
 
-			$fakeUser = \User::newFromId( $this->mFakeUserId );
+			$fakeUser = \User::newFromId( $this->fakeUserId );
 
-			$this->setRenameData( $fakeUser, [ self::RENAME_TAG => $this->mNewUsername ] );
+			$this->setRenameData( $fakeUser, [ self::RENAME_TAG => $this->newUsername ] );
 			$fakeUser->saveSettings();
 			$fakeUser->saveToCache();
 		}
@@ -324,10 +324,10 @@ class ProcessBase {
 	public function addStaffLogAction( $action, $key, $info = null ) {
 		$formattedLogLine = \UserRenameToolHelper::generateLogLine(
 			$key,
-			$this->mRequestorName,
-			$this->mOldUsername,
-			$this->mNewUsername,
-			$this->mReason,
+			$this->requestorName,
+			$this->oldUsername,
+			$this->newUsername,
+			$this->reason,
 			$info
 		);
 
@@ -344,10 +344,10 @@ class ProcessBase {
 		\StaffLogger::log(
 			'renameuser',
 			$action,
-			$this->mRequestorId,
-			$this->mRequestorName,
-			$this->mUserId,
-			$this->mNewUsername,
+			$this->requestorId,
+			$this->requestorName,
+			$this->userId,
+			$this->newUsername,
 			$text
 		);
 	}
@@ -361,10 +361,10 @@ class ProcessBase {
 		$log = new \LogPage( 'renameuser' );
 		$log->addEntry(
 			'renameuser',
-			\Title::newFromText( $this->mOldUsername, NS_USER ),
+			\Title::newFromText( $this->oldUsername, NS_USER ),
 			$text,
 			[ ],
-			\User::newFromId( $this->mRequestorId )
+			\User::newFromId( $this->requestorId )
 		);
 	}
 
@@ -373,15 +373,21 @@ class ProcessBase {
 	 *
 	 * @param $text string Log message
 	 * @param $arg1 mixed Multiple format parameters
+	 * @param null $context
 	 */
-	public function logInfo( $text, $arg1 = null ) {
+	public function logInfo( $text, $arg1 = null, $context = null ) {
 		if ( func_num_args() > 1 ) {
 			$args = func_get_args();
 			$args = array_slice( $args, 1 );
 			$text = vsprintf( $text, $args );
 		}
 
-		$this->info( $text );
+		// Define some default but let the caller override them
+		$defaultContext = [
+			'wikiId' => \F::app()->wg->CityId,
+		];
+		$context = array_merge( $defaultContext, $context );
+		$this->info( $text, $context );
 	}
 
 	/**
@@ -406,14 +412,14 @@ class ProcessBase {
 		$oldUser = $wgUser;
 		$this->logInfo(
 			"Checking for need to overwrite requestor user (id=%d name=%s)",
-			$this->mRequestorId, $this->mRequestorName
+			$this->requestorId, $this->requestorName
 		);
 
 		$userId = $wgUser->getId();
 
-		if ( empty( $userId ) && !empty( $this->mRequestorId ) ) {
+		if ( empty( $userId ) && !empty( $this->requestorId ) ) {
 			$this->logInfo( "Checking if requestor exists" );
-			$newUser = \User::newFromId( $this->mRequestorId );
+			$newUser = \User::newFromId( $this->requestorId );
 
 			if ( !empty( $newUser ) ) {
 				$this->logInfo( "Overwriting requestor user" );
