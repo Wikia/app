@@ -1,26 +1,24 @@
 {
   "name": "design-system",
-  "version": "0.0.7",
-  "homepage": "https://github.com/Wikia/design-system",
-  "authors": [
-    "Warkot <mateusz.warkocki@wikia-inc.com>",
-    "Bartosz V. Bentkowski <me@bartoszbentkowski.com>"
-  ],
   "description": "Design System developed for Wikia",
-  "main": "",
   "license": "GPL-3.0",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/Wikia/design-system.git"
+  },
   "ignore": [
     "**/.*",
-    "assets/*",
     "gulpfile.js"
   ],
-  "_release": "0.0.7",
+  "homepage": "https://github.com/Wikia/design-system",
+  "version": "0.1.1",
+  "_release": "0.1.1",
   "_resolution": {
     "type": "version",
-    "tag": "0.0.7",
-    "commit": "7dc9cdceb6ec77c848c9508debd4e50d3d2d20d9"
+    "tag": "0.1.1",
+    "commit": "b9de8e29ade426f7db2bacbb32dbcda9731d4c0f"
   },
   "_source": "git://github.com/Wikia/design-system.git",
-  "_target": "0.0.7",
+  "_target": "0.1.1",
   "_originalSource": "Wikia/design-system"
 }

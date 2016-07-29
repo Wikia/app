@@ -13,11 +13,9 @@
 
 	$desktop-row-header-en-margin-top: 47px;
 	$desktop-row-header-en-margin-bottom: 35px;
-	$desktop-row-header-en-height: $desktop-row-header-en-margin-top + $en-logo-height + $desktop-row-header-en-margin-bottom;
 
 	$desktop-row-header-international-padding-top: 43px;
 	$desktop-row-header-international-padding-bottom: 34px;
-	$desktop-row-header-international-height: $desktop-row-header-international-padding-top + $international-logo-height + $desktop-row-header-international-padding-bottom;
 
 	$mobile-row-header-en-fandom-margin-top: 38px;
 	$mobile-row-header-en-wikia-margin-top: 61px;
@@ -28,14 +26,10 @@
 
 	$section-line-width: 4px;
 	$desktop-row-top-height: 205px + $section-line-width;
-	$desktop-row-bottom-height: 180px + $section-line-width;
-
-	$desktop-en-sections-height: $desktop-row-header-en-height + $desktop-row-top-height + $desktop-row-bottom-height;
-	$desktop-international-sections-height: $desktop-row-top-height + $desktop-row-bottom-height;
 
 	// others
 	$desktop-width: 1024px;
-	$section-padding-top: 8px;
+	$section-vertical-padding: 8px;
 	$section-header-height: 24px;
 	$section-header-margin-bottom: 10px;
 
@@ -43,6 +37,7 @@
 	box-sizing: border-box;
 	color: $color-white;
 	margin-top: 30px;
+	word-wrap: break-word;
 
 	// reset and set some defaults (that should be set in DS)
 	* {
@@ -158,7 +153,7 @@
 	&__wikia-section {
 		border-top: $section-line-width solid $color-slate-gray;
 		margin-right: 55px;
-		padding-top: $section-padding-top;
+		padding-top: $section-vertical-padding;
 	}
 
 	&__link {
@@ -288,7 +283,7 @@
 			size: $typescale-size-plus-1;
 			weight: bold;
 		}
-		height: $section-header-height;
+		min-height: $section-header-height;
 		margin: {
 			bottom: $section-header-margin-bottom;
 			top: 0;
@@ -365,7 +360,7 @@
 			}
 
 			&.wds-is-site-overview {
-				padding-top: $section-padding-top + $section-header-height + $section-header-margin-bottom;
+				padding-top: $section-vertical-padding + $section-header-height + $section-header-margin-bottom;
 				width: 50%;
 			}
 
@@ -402,21 +397,10 @@
 
 	@media #{$breakpoint-desktop-up} {
 		&__main {
+			flex-direction: row;
 			margin: 0 auto;
+			padding-bottom: 40px;
 			width: $desktop-width;
-		}
-
-		// main content
-		&.wds-is-en {
-			.wds-global-footer__main {
-				height: $desktop-en-sections-height;
-			}
-		}
-
-		&.wds-is-international {
-			.wds-global-footer__main {
-				height: $desktop-international-sections-height;
-			}
 		}
 
 		&__header-wrapper {
@@ -437,22 +421,24 @@
 		}
 
 		&__fandom-header {
+			order: 1;
 			width: $desktop-column-fandom;
 		}
 
 		&__fandom-sections {
 			flex-direction: column;
-			height: $desktop-row-top-height + $desktop-row-bottom-height;
+			order: 3;
 			width: $desktop-column-fandom;
 		}
 
 		&__wikia-header {
+			order: 2;
 			width: $desktop-column-wikia;
 		}
 
 		&__wikia-sections {
-			flex-direction: column;
-			height: $desktop-row-top-height + $desktop-row-bottom-height;
+			align-content: flex-start;
+			order: 4;
 			width: $desktop-column-wikia;
 		}
 
@@ -463,31 +449,37 @@
 
 		// items in Wikia section
 		&__wikia-section {
+			padding-bottom: $section-vertical-padding;
+
 			&.wds-is-company-overview {
-				height: $desktop-row-top-height;
 				margin-right: 50px;
+				min-height: $desktop-row-top-height;
+				order: 1;
 				width: $desktop-second-column-width;
 			}
 
 			&.wds-is-site-overview {
-				height: $desktop-row-bottom-height;
 				margin-right: 50px;
+				order: 4;
 				width: $desktop-second-column-width;
 			}
 
 			&.wds-is-community {
-				height: $desktop-row-top-height;
+				min-height: $desktop-row-top-height;
+				order: 2;
 				width: $desktop-third-column-width;
 			}
 
 			&.wds-is-create-wiki {
-				height: $desktop-row-bottom-height;
 				display: block;
+				order: 5;
 				width: $desktop-third-column-width;
 			}
 
 			&.wds-is-community-apps {
-				height: $desktop-row-top-height;
+				margin-right: 0;
+				min-height: $desktop-row-top-height;
+				order: 3;
 				width: $desktop-fourth-column-width;
 
 				.wds-global-footer__links-list {
@@ -497,7 +489,8 @@
 			}
 
 			&.wds-is-advertise {
-				height: $desktop-row-bottom-height;
+				margin-right: 0;
+				order: 6;
 				width: $desktop-fourth-column-width;
 			}
 		}
