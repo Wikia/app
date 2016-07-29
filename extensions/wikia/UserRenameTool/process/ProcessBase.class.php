@@ -75,8 +75,8 @@ class ProcessBase {
 	 * @param array $data
 	 * @return ProcessBase
 	 */
-	static public function newFromData( $data ) {
-		$o = static::__construct( $data['rename_old_name'], $data['rename_new_name'], '', true );
+	public static function newFromData( $data ) {
+		$o = new static( $data['rename_old_name'], $data['rename_new_name'], '', true );
 
 		$mapping = [
 			'mUserId' => 'rename_user_id',
