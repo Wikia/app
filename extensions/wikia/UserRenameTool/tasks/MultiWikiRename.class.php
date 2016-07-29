@@ -32,7 +32,7 @@ class MultiWikiRename extends WikiRenameBase {
 
 		$this->startTime = time();
 
-		$this->setupLogging();
+		$this->setupProcessLocal();
 		$this->process->logStartToStaff( $this->getTaskId() );
 
 		try {

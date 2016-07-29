@@ -1,8 +1,10 @@
 <?php
 
+namespace UserRenameTool\Process;
+
 use Wikia\Logger\Loggable;
 
-class UserRenameToolProcess {
+class ProcessBase {
 	use Loggable;
 
 	const FLAG_RENAME_DATA = 'renameData';
@@ -56,7 +58,7 @@ class UserRenameToolProcess {
 		global $wgUser;
 
 		// Save original request data
-		$this->mRequestData = new stdClass();
+		$this->mRequestData = new \stdClass();
 		$this->mRequestData->oldUsername = $oldUsername;
 		$this->mRequestData->newUsername = $newUsername;
 
@@ -71,7 +73,7 @@ class UserRenameToolProcess {
 	 * Create a new UserRenameToolProcessLocal object from select context data.
 	 *
 	 * @param array $data
-	 * @return UserRenameToolProcess
+	 * @return ProcessBase
 	 */
 	static public function newFromData( $data ) {
 		$o = static::__construct( $data['rename_old_name'], $data['rename_new_name'], '', true );
@@ -96,7 +98,7 @@ class UserRenameToolProcess {
 
 		// Quick hack to recover requestor name from its id
 		if ( !empty( $o->mRequestorId ) && empty( $o->mRequestorName ) ) {
-			$requestor = User::newFromId( $o->mRequestorId );
+			$requestor = \User::newFromId( $o->mRequestorId );
 			$o->mRequestorName = $requestor->getName();
 		}
 
@@ -138,7 +140,7 @@ class UserRenameToolProcess {
 	/**
 	 * Rename the user in the table given.
 	 *
-	 * @param DatabaseBase $dbw Database to operate on
+	 * @param \DatabaseBase $dbw Database to operate on
 	 * @param string $table Table name
 	 * @param int $uid User ID
 	 * @param string $oldUserName Old username
@@ -191,7 +193,7 @@ class UserRenameToolProcess {
 					sleep( self::DB_COOL_DOWN_SECONDS );
 				}
 			}
-		} catch ( Exception $e ) {
+		} catch ( \Exception $e ) {
 			$this->logInfo(
 				"Exception in renameInTable(): %s in %s at line %",
 				$e->getMessage(), $e->getFile(), $e->getLine()
@@ -206,7 +208,7 @@ class UserRenameToolProcess {
 	/**
 	 * Retrieve the state information stored about this move in the rename data flag
 	 *
-	 * @param User $user
+	 * @param \User $user
 	 *
 	 * @return array|mixed
 	 */
@@ -224,7 +226,8 @@ class UserRenameToolProcess {
 	 * Overwrite the state information stored about this move in the rename data flag.  If you want to add
 	 * rather than replace the state information use addRenameData
 	 *
-	 * @param User $user
+	 * @param \User $user
+	 * @param array $params
 	 *
 	 * @return array|mixed
 	 */
@@ -240,7 +243,7 @@ class UserRenameToolProcess {
 	/**
 	 * Add or update values in the state information stored for this move in the rename data flag.
 	 *
-	 * @param User $user
+	 * @param \User $user
 	 * @param $params
 	 */
 	public function addRenameData( \User $user, $params ) {
@@ -260,7 +263,7 @@ class UserRenameToolProcess {
 		if ( $this->mFakeUserId ) {
 			$this->logInfo( "Cleaning up process data in user option renameData for ID %s", $this->mFakeUserId );
 
-			$fakeUser = User::newFromId( $this->mFakeUserId );
+			$fakeUser = \User::newFromId( $this->mFakeUserId );
 
 			$this->setRenameData( $fakeUser, [ self::RENAME_TAG => $this->mNewUsername ] );
 			$fakeUser->saveSettings();
@@ -304,7 +307,7 @@ class UserRenameToolProcess {
 	 * @param int $wikiId The wiki ID for this single rename.  If not given the current value of wgCityId is used.
 	 */
 	public function logFinishWikiToStaff($wikiId = null ) {
-		$wikiId = $wikiId ? $wikiId : F::app()->wg->CityId;
+		$wikiId = $wikiId ? $wikiId : \F::app()->wg->CityId;
 		$this->addStaffLogAction( self::ACTION_LOG, 'userrenametool-info-wiki-finished', $wikiId );
 	}
 
@@ -314,7 +317,7 @@ class UserRenameToolProcess {
 	 * @param int $wikiId The wiki ID for this single rename.  If not given the current value of wgCityId is used.
 	 */
 	public function logFailWikiToStaff($wikiId = null ) {
-		$wikiId = $wikiId ? $wikiId : F::app()->wg->CityId;
+		$wikiId = $wikiId ? $wikiId : \F::app()->wg->CityId;
 		$this->addStaffLogAction( self::ACTION_LOG, 'userrenametool-info-wiki-finished-problems', $wikiId );
 	}
 
@@ -338,7 +341,7 @@ class UserRenameToolProcess {
 	 * @param $text string Log message
 	 */
 	public function addStaffLog( $action, $text ) {
-		StaffLogger::log(
+		\StaffLogger::log(
 			'renameuser',
 			$action,
 			$this->mRequestorId,
@@ -355,13 +358,13 @@ class UserRenameToolProcess {
 	 * @param $text string Log message
 	 */
 	public function addLocalLog( $text ) {
-		$log = new LogPage( 'renameuser' );
+		$log = new \LogPage( 'renameuser' );
 		$log->addEntry(
 			'renameuser',
-			Title::newFromText( $this->mOldUsername, NS_USER ),
+			\Title::newFromText( $this->mOldUsername, NS_USER ),
 			$text,
 			[ ],
-			User::newFromId( $this->mRequestorId )
+			\User::newFromId( $this->mRequestorId )
 		);
 	}
 
@@ -410,7 +413,7 @@ class UserRenameToolProcess {
 
 		if ( empty( $userId ) && !empty( $this->mRequestorId ) ) {
 			$this->logInfo( "Checking if requestor exists" );
-			$newUser = User::newFromId( $this->mRequestorId );
+			$newUser = \User::newFromId( $this->mRequestorId );
 
 			if ( !empty( $newUser ) ) {
 				$this->logInfo( "Overwriting requestor user" );
@@ -424,13 +427,13 @@ class UserRenameToolProcess {
 	/**
 	 * Clear user cache, forcing a reload from DB the next time a user object for this name is requested.
 	 *
-	 * @param User|string $user
+	 * @param \User|string $user
 	 */
 	protected function invalidateUserCache($user ) {
 		global $wgCityId;
 
 		if ( is_string( $user ) ) {
-			$user = User::newFromName( $user );
+			$user = \User::newFromName( $user );
 		}
 
 		if ( is_object( $user ) ) {
@@ -451,7 +454,7 @@ class UserRenameToolProcess {
 	 * @return array A list of wikis' IDs related to user activity, false if the user is not an existing one or an anon
 	 */
 	protected function lookupRegisteredUserActivity( $userID ) {
-		$wg = F::app()->wg;
+		$wg = \F::app()->wg;
 
 		// check for invalid values
 		if ( empty( $userID ) || !is_int( $userID ) ) {
@@ -486,10 +489,10 @@ class UserRenameToolProcess {
 	 *
 	 * @return array
 	 *
-	 * @throws DBUnexpectedError
+	 * @throws \DBUnexpectedError
 	 */
 	private function lookupWikiIdsInDb( $userId ) {
-		$wg = F::app()->wg;
+		$wg = \F::app()->wg;
 
 		$dbr = wfGetDB( DB_SLAVE, array(), $wg->DWStatsDB );
 		$res = $dbr->select(
@@ -502,7 +505,7 @@ class UserRenameToolProcess {
 
 		$result = [];
 		while ( $row = $dbr->fetchObject( $res ) ) {
-			if ( WikiFactory::isPublic( $row->wiki_id ) ) {
+			if ( \WikiFactory::isPublic( $row->wiki_id ) ) {
 				$result[] = ( int ) $row->wiki_id;
 				$this->logInfo(
 					"Registered user with ID %d was active on wiki with ID %d",

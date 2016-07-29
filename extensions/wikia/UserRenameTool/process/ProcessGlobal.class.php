@@ -1,13 +1,18 @@
 <?php
 
-class UserRenameToolProcessGlobal extends UserRenameToolProcess {
+namespace UserRenameTool\Process;
+
+use UserRenameTool\Tasks\MultiWikiRename;
+use Wikia\Tasks\Queues\PriorityQueue;
+
+class ProcessBaseGlobal extends ProcessBase {
 
 	const MAX_EXECUTION_TIME = 3600; // 1h
 
 	/**
 	 * Runs the whole rename process, schedules background jobs/tasks if needed.
 	 *
-	 * @return bool True if the process succeded
+	 * @return bool True if the process succeeded
 	 */
 	public function run() {
 		if ( !$this->setup() ) {
@@ -19,7 +24,7 @@ class UserRenameToolProcessGlobal extends UserRenameToolProcess {
 
 		try {
 			$status = $this->renameUser();
-		} catch ( Exception $e ) {
+		} catch ( \Exception $e ) {
 			$this->logInfo( "%s in %s at line %d", $e->getMessage(), $e->getFile(), $e->getLine() );
 			$this->addError(
 				wfMessage( 'userrenametool-error-cannot-rename-unexpected' )->inContentLanguage()->text()
@@ -49,8 +54,8 @@ class UserRenameToolProcessGlobal extends UserRenameToolProcess {
 		}
 
 		// validate new username and disable validation for old username
-		$oldUser = User::newFromName( $oldUserName, false );
-		$newUser = User::newFromName( $newUserName, 'creatable' );
+		$oldUser = \User::newFromName( $oldUserName, false );
+		$newUser = \User::newFromName( $newUserName, 'creatable' );
 
 		if ( !$this->areUserObjectsValid( $oldUser, $newUser ) ) {
 			return false;
@@ -97,7 +102,7 @@ class UserRenameToolProcessGlobal extends UserRenameToolProcess {
 	 */
 	private function getOldUserName() {
 		// Sanitize input data
-		$oldTitle = Title::makeTitle( NS_USER, trim( str_replace( '_', ' ', $this->mRequestData->oldUsername ) ) );
+		$oldTitle = \Title::makeTitle( NS_USER, trim( str_replace( '_', ' ', $this->mRequestData->oldUsername ) ) );
 		$oldUserName = is_object( $oldTitle ) ? $oldTitle->getText() : '';
 		$this->phalanxTest( $oldUserName );
 
@@ -113,7 +118,7 @@ class UserRenameToolProcessGlobal extends UserRenameToolProcess {
 		global $wgContLang;
 
 		// Force uppercase of new username, otherwise wikis with wgCapitalLinks=false can create lc usernames
-		$newTitle = Title::makeTitleSafe( NS_USER, $wgContLang->ucfirst( $this->mRequestData->newUsername ) );
+		$newTitle = \Title::makeTitleSafe( NS_USER, $wgContLang->ucfirst( $this->mRequestData->newUsername ) );
 		$newUserName = is_object( $newTitle ) ? $newTitle->getText() : '';
 		$this->antiSpoofTest( $newUserName );
 		$this->phalanxTest( $newUserName );
@@ -147,12 +152,12 @@ class UserRenameToolProcessGlobal extends UserRenameToolProcess {
 		return true;
 	}
 
-	private function setNamesAndIds( $uid, User $newUser, User $oldUser ) {
+	private function setNamesAndIds( $uid, \User $newUser, \User $oldUser ) {
 		$fakeUid = 0;
 
 		// If new user name does exist (we have a special case - repeating rename process)
 		if ( $this->newUserExists( $newUser ) ) {
-			$oldTitle = Title::makeTitleSafe( NS_USER, $oldUser->getName() );
+			$oldTitle = \Title::makeTitleSafe( NS_USER, $oldUser->getName() );
 			$newUserNameAlreadyExistsOut = $this->handleIfNewUserNameAlreadyExists(
 				$uid,
 				$newUser,
@@ -171,10 +176,10 @@ class UserRenameToolProcessGlobal extends UserRenameToolProcess {
 		$this->mFakeUserId = $fakeUid;
 	}
 
-	protected function newUserExists( User $newUser ) {
-		$dbr = wfGetDB( DB_SLAVE, [], F::app()->wg->ExternalSharedDB );
+	protected function newUserExists( \User $newUser ) {
+		$dbr = wfGetDB( DB_SLAVE, [], \F::app()->wg->ExternalSharedDB );
 
-		$table = UserRenameToolHelper::getCentralUserTable();
+		$table = \UserRenameToolHelper::getCentralUserTable();
 		$id = $dbr->selectField(
 			$table,
 			'user_id',
@@ -188,14 +193,14 @@ class UserRenameToolProcessGlobal extends UserRenameToolProcess {
 	/**
 	 * Do the whole dirty job of renaming user
 	 *
-	 * @return bool True if the process succeded
+	 * @return bool True if the process succeeded
 	 */
 	private function renameUser() {
 		$this->logRenameStart();
 
 		// Delete the record from all the secondary clusters
 		if ( class_exists( 'ExternalUser_Wikia' ) ) {
-			ExternalUser_Wikia::removeFromSecondaryClusters( $this->mUserId );
+			\ExternalUser_Wikia::removeFromSecondaryClusters( $this->mUserId );
 		}
 
 		// rename the user on the shared cluster
@@ -239,7 +244,7 @@ class UserRenameToolProcessGlobal extends UserRenameToolProcess {
 			$this->mOldUsername, $this->mNewUsername, $wgExternalSharedDB
 		);
 
-		$table = UserRenameToolHelper::getCentralUserTable();
+		$table = \UserRenameToolHelper::getCentralUserTable();
 		if ( $dbw->tableExists( $table ) ) {;
 			$dbw->update(
 				$table,
@@ -263,7 +268,7 @@ class UserRenameToolProcessGlobal extends UserRenameToolProcess {
 					$this->mOldUsername, $this->mNewUsername, $wgExternalSharedDB
 				);
 
-				User::clearUserCache( $this->mUserId );
+				\User::clearUserCache( $this->mUserId );
 
 				return true;
 			} else {
@@ -283,7 +288,7 @@ class UserRenameToolProcessGlobal extends UserRenameToolProcess {
 	 * Create the fake user if it doesn't already exist.
 	 *
 	 * @return bool
-	 * @throws PasswordError
+	 * @throws \PasswordError
 	 */
 	private function initializeFakeUser() {
 		$this->logInfo( "Creating fake user account" );
@@ -318,11 +323,11 @@ class UserRenameToolProcessGlobal extends UserRenameToolProcess {
 	 * chance that the rename process dies and we need to restart it.  In all cases we want to
 	 * keep history clean and not let a new user start using the old username.
 	 *
-	 * @return null|User
-	 * @throws PasswordError
+	 * @return null|\User
+	 * @throws \PasswordError
 	 */
 	private function createFakeUser() {
-		$fakeUser = User::newFromName( $this->mOldUsername, 'creatable' );
+		$fakeUser = \User::newFromName( $this->mOldUsername, 'creatable' );
 
 		if ( !is_object( $fakeUser ) ) {
 			$this->logInfo( "Cannot create fake user: %s", $this->mOldUsername );
@@ -334,8 +339,8 @@ class UserRenameToolProcessGlobal extends UserRenameToolProcess {
 		$fakeUser->setRealName( '' );
 		$fakeUser->setName( $this->mOldUsername );
 
-		if ( F::app()->wg->ExternalAuthType ) {
-			ExternalUser_Wikia::addUser( $fakeUser, '', '', '' );
+		if ( \F::app()->wg->ExternalAuthType ) {
+			\ExternalUser_Wikia::addUser( $fakeUser, '', '', '' );
 		} else {
 			$fakeUser->addToDatabase();
 		}
@@ -357,7 +362,7 @@ class UserRenameToolProcessGlobal extends UserRenameToolProcess {
 	private function updateGlobalTables() {
 		// wikicities
 		$this->logInfo( "Updating global shared database: wikicities." );
-		$dbw = WikiFactory::db( DB_MASTER );
+		$dbw = \WikiFactory::db( DB_MASTER );
 		$dbw->begin();
 		$tasks = [ ];
 
@@ -400,14 +405,14 @@ class UserRenameToolProcessGlobal extends UserRenameToolProcess {
 			'reason' => $this->mReason,
 			'notify_renamed' => $this->mNotifyUser,
 		];
-		$task = ( new UserRenameTool\Tasks\MultiWikiRename() )->setPriority( \Wikia\Tasks\Queues\PriorityQueue::NAME );
+		$task = ( new MultiWikiRename() )->setPriority( PriorityQueue::NAME );
 		$task->call( 'run', $wikiIds, $callParams );
 		$this->mUserRenameTaskId = $task->queue();
 	}
 
 	private function antiSpoofTest( $newUserName ) {
 		if ( class_exists( 'SpoofUser' ) ) {
-			$oNewSpoofUser = new SpoofUser( $newUserName );
+			$oNewSpoofUser = new \SpoofUser( $newUserName );
 			if ( !$oNewSpoofUser->isLegal() ) {
 				$this->addError( wfMessage( 'userrenametool-error-antispoof-conflict', $newUserName ) );
 			}
@@ -417,7 +422,7 @@ class UserRenameToolProcessGlobal extends UserRenameToolProcess {
 	}
 
 	private function phalanxTest( $userName ) {
-		$warning = UserRenameToolHelper::testBlock( $userName );
+		$warning = \UserRenameToolHelper::testBlock( $userName );
 		if ( !empty( $warning ) ) {
 			$this->addWarning( $warning );
 		}
@@ -470,7 +475,7 @@ class UserRenameToolProcessGlobal extends UserRenameToolProcess {
 	}
 
 	/**
-	 * @param user $oldUser
+	 * @param \User $oldUser
 	 *
 	 * @return bool
 	 */
@@ -499,7 +504,7 @@ class UserRenameToolProcessGlobal extends UserRenameToolProcess {
 	 * user name capitalized.  This became a standard some time ago but users prior to this may exist.
 	 *
 	 * @param string $oldUserName
-	 * @param User $oldUser
+	 * @param \User $oldUser
 	 *
 	 * @return int
 	 */
@@ -531,7 +536,7 @@ class UserRenameToolProcessGlobal extends UserRenameToolProcess {
 	}
 
 	private function lookupUserIdFromName( $name ) {
-		$dbr = WikiFactory::db( DB_SLAVE );
+		$dbr = \WikiFactory::db( DB_SLAVE );
 		$uid = $dbr->selectField(
 			'`user`',
 			'user_id',
@@ -549,9 +554,9 @@ class UserRenameToolProcessGlobal extends UserRenameToolProcess {
 
 	/**
 	 * @param int $uid
-	 * @param User $newUser
-	 * @param User $oldUser
-	 * @param Title $oldTitle
+	 * @param \User $newUser
+	 * @param \User $oldUser
+	 * @param \Title $oldTitle
 	 *
 	 * @return bool
 	 */
@@ -559,7 +564,7 @@ class UserRenameToolProcessGlobal extends UserRenameToolProcess {
 		// Invalidate properties cache and reload to get updated data
 		// needed here, if the cache is wrong bad things happen
 		$oldUser->invalidateCache();
-		$oldUser = User::newFromName( $oldTitle->getText(), false );
+		$oldUser = \User::newFromName( $oldTitle->getText(), false );
 
 		// The information we want is attached to the old user name
 		$renameData = $this->getRenameData( $oldUser );

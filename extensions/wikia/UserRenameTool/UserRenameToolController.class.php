@@ -60,7 +60,7 @@ class UserRenameToolController extends SpecialPage {
 			return;
 		}
 
-		$process = new UserRenameToolProcessGlobal(
+		$process = new UserRenameTool\Process\ProcessBaseGlobal(
 			$this->oldUsername,
 			$this->newUsername,
 			$this->confirmAction,
@@ -99,10 +99,10 @@ class UserRenameToolController extends SpecialPage {
 	}
 
 	/**
-	 * @param UserRenameToolProcess $process
+	 * @param UserRenameTool\Process\ProcessBase $process
 	 * @param bool $status
 	 */
-	private function collectMessages( $process, $status ) {
+	private function collectMessages( UserRenameTool\Process\ProcessBase $process, $status ) {
 		$this->warnings = $process->getWarnings();
 		$this->errors = $process->getErrors();
 

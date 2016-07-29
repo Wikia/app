@@ -20,7 +20,7 @@ class SingleWikiRename extends WikiRenameBase {
 		$this->cityId = $cityId;
 		$this->params = $params;
 		
-		$this->setupLogging();
+		$this->setupProcessLocal();
 		$this->buildCommand();
 
 		try {

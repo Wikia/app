@@ -1,6 +1,8 @@
 <?php
 
-class UserRenameToolProcessLocal  extends UserRenameToolProcess {
+namespace UserRenameTool\Process;
+
+class ProcessBaseLocal  extends ProcessBase {
 
 	/**
 	 * Stores the predefined tasks to do for every local wiki database.
@@ -60,9 +62,9 @@ class UserRenameToolProcessLocal  extends UserRenameToolProcess {
 		}
 
 		$wgOldUser = $wgUser;
-		$wgUser = User::newFromName( 'Wikia' );
+		$wgUser = \User::newFromName( 'Wikia' );
 
-		$cityDb = WikiFactory::IDtoDB( $wgCityId );
+		$cityDb = \WikiFactory::IDtoDB( $wgCityId );
 		$this->logInfo( "Processing wiki database: %s", $cityDb );
 
 		$dbw = wfGetDB( DB_MASTER );
@@ -110,8 +112,8 @@ class UserRenameToolProcessLocal  extends UserRenameToolProcess {
 	protected function isValidIP() {
 		return (
 			$this->mUserId == 0 &&
-			IP::isIPAddress( $this->mOldUsername ) &&
-			IP::isIPAddress( $this->mNewUsername )
+			\IP::isIPAddress( $this->mOldUsername ) &&
+			\IP::isIPAddress( $this->mNewUsername )
 		);
 	}
 
@@ -120,15 +122,15 @@ class UserRenameToolProcessLocal  extends UserRenameToolProcess {
 	 *
 	 * Important: should only be run within maintenance script (bound to specified wiki)
 	 *
-	 * @throws DBError
+	 * @throws \DBError
 	 */
 	public function updateLocal() {
 		global $wgCityId, $wgUser;
 
 		$wgOldUser = $wgUser;
-		$wgUser = User::newFromName( 'Wikia' );
+		$wgUser = \User::newFromName( 'Wikia' );
 
-		$cityDb = WikiFactory::IDtoDB( $wgCityId );
+		$cityDb = \WikiFactory::IDtoDB( $wgCityId );
 
 		$this->logInfo( "Processing wiki database: %s", $cityDb );
 
@@ -171,12 +173,12 @@ class UserRenameToolProcessLocal  extends UserRenameToolProcess {
 		$wgUser = $wgOldUser;
 	}
 
-	protected function moveUserPages( DatabaseBase $dbw, $cityDb ) {
+	protected function moveUserPages( \DatabaseBase $dbw, $cityDb ) {
 		$this->logInfo( "Moving user pages." );
 
 		try {
-			$oldTitle = Title::makeTitle( NS_USER, $this->mOldUsername );
-			$newTitle = Title::makeTitle( NS_USER, $this->mNewUsername );
+			$oldTitle = \Title::makeTitle( NS_USER, $this->mOldUsername );
+			$newTitle = \Title::makeTitle( NS_USER, $this->mNewUsername );
 
 			$pages = $this->getUserPages( $oldTitle, $dbw );
 
@@ -184,10 +186,10 @@ class UserRenameToolProcessLocal  extends UserRenameToolProcess {
 				$this->moveUserPage( $row, $cityDb, $oldTitle, $newTitle );
 			}
 			$dbw->freeResult( $pages );
-		} catch ( DBError $e ) {
+		} catch ( \DBError $e ) {
 			// re-throw DB related exceptions instead of silently ignoring them (@see PLATFORM-775)
 			throw $e;
-		} catch ( Exception $e ) {
+		} catch ( \Exception $e ) {
 			$this->logInfo(
 				"Exception while moving pages: %s in %s at line %d",
 				$e->getMessage(), $e->getFile(), $e->getLine()
@@ -200,13 +202,13 @@ class UserRenameToolProcessLocal  extends UserRenameToolProcess {
 	 *
 	 * @param Object $row
 	 * @param int $cityDb
-	 * @param Title $oldTitle
-	 * @param Title $newTitle
+	 * @param \Title $oldTitle
+	 * @param \Title $newTitle
 	 */
-	protected function moveUserPage( $row, $cityDb, Title $oldTitle, Title $newTitle ) {
-		$oldPage = Title::makeTitleSafe( $row->page_namespace, $row->page_title );
+	protected function moveUserPage( $row, $cityDb, \Title $oldTitle, \Title $newTitle ) {
+		$oldPage = \Title::makeTitleSafe( $row->page_namespace, $row->page_title );
 		$updatedPageTitle = preg_replace( '!^[^/]+!', $newTitle->getDBkey(), $row->page_title );
-		$newPage = Title::makeTitleSafe( $row->page_namespace, $updatedPageTitle );
+		$newPage = \Title::makeTitleSafe( $row->page_namespace, $updatedPageTitle );
 
 		if ( !$this->canMoveUserPage( $cityDb, $newPage, $oldPage ) ) {
 			return;
@@ -246,12 +248,12 @@ class UserRenameToolProcessLocal  extends UserRenameToolProcess {
 	 * Test whether we can move the user page
 	 *
 	 * @param int $cityDb
-	 * @param Title $newPage
-	 * @param Title $oldPage
+	 * @param \Title $newPage
+	 * @param \Title $oldPage
 	 *
 	 * @return bool
 	 */
-	protected function canMoveUserPage( $cityDb, Title $newPage, Title $oldPage ) {
+	protected function canMoveUserPage( $cityDb, \Title $newPage, \Title $oldPage ) {
 		// Do not autodelete or anything, title must not exist
 		// Info: The other case is when renaming is repeated - no action should be taken
 		if ( $newPage->exists() && !$oldPage->isValidMoveTarget( $newPage ) ) {
@@ -272,7 +274,7 @@ class UserRenameToolProcessLocal  extends UserRenameToolProcess {
 	 * Updates a list of tables in the local wiki to have the new username
 	 *
 	 * @param int $cityDb
-	 * @param DatabaseBase $dbw
+	 * @param \DatabaseBase $dbw
 	 */
 	protected function performTableUpdateTasks( $cityDb, $dbw ) {
 		$tasks = self::$mLocalDefaults;
@@ -296,17 +298,17 @@ class UserRenameToolProcessLocal  extends UserRenameToolProcess {
 	 */
 	private function resetEditCountWiki() {
 		// Renamed user
-		$uss = new UserStatsService( $this->mUserId );
+		$uss = new \UserStatsService( $this->mUserId );
 		$uss->calculateEditCountWiki();
 
 		// FakeUser
 		if ( $this->mFakeUserId != 0 ) {
-			$uss = new UserStatsService( $this->mFakeUserId );
+			$uss = new \UserStatsService( $this->mFakeUserId );
 			$uss->calculateEditCountWiki();
 		} else {
 			// use OldUsername if FakeUser isn't set
-			$oldUser = User::newFromName( $this->mOldUsername );
-			$uss = new UserStatsService( $oldUser->getId() );
+			$oldUser = \User::newFromName( $this->mOldUsername );
+			$uss = new \UserStatsService( $oldUser->getId() );
 			$uss->calculateEditCountWiki();
 		}
 	}
@@ -322,11 +324,11 @@ class UserRenameToolProcessLocal  extends UserRenameToolProcess {
 	 *
 	 * The namespaces used come from self::findAllowedUserNamespaces.
 	 *
-	 * @param Title $oldTitle
-	 * @param DatabaseBase $dbw
-	 * @return ResultWrapper
+	 * @param \Title $oldTitle
+	 * @param \DatabaseBase $dbw
+	 * @return \ResultWrapper
 	 */
-	protected function getUserPages( Title $oldTitle, DatabaseBase $dbw) {
+	protected function getUserPages( \Title $oldTitle, \DatabaseBase $dbw) {
 		// Determine all namespaces which need processing
 		$allowedNamespaces = $this->findAllowedUserNamespaces();
 

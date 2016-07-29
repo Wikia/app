@@ -86,19 +86,6 @@ class UserRenameToolHelper {
 		return $warning;
 	}
 
-	static public function getLog( $message, $requestor, $oldUsername, $newUsername, $reason, $tasks = [] ) {
-		$taskLogLinks = self::buildTaskLogLinks( $tasks );
-
-		return wfMessage(
-			$message,
-			User::getLinkToUserPageOnCommunityWiki( $requestor ),
-			User::getLinkToUserPageOnCommunityWiki( $oldUsername, true ),
-			User::getLinkToUserPageOnCommunityWiki( $newUsername ),
-			$taskLogLinks,
-			$reason
-		)->escaped();
-	}
-
 	/**
 	 * Given an array of task IDs construct links to each task on the Special:Task/log page.
 	 *
