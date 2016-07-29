@@ -16,8 +16,8 @@ define('ext.wikia.adEngine.pageFairDetection', [
 
 	function getWebsiteCode() {
 		var websiteKeys = {
-			mobile: 'FA8D90F8D9F54665',
-			desktop: 'FE3882548B7E471A'
+			mobile: 'EFB8C00E91C84764',
+			desktop: '954076792F3C4693'
 		};
 
 		return isMobileSkin() || browserDetect.isMobile() ? websiteKeys.mobile : websiteKeys.desktop;
