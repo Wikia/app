@@ -106,7 +106,7 @@ function getProcessData( $options ) {
 		$processData['rename_ip'] = true;
 	}
 
-	if ( !empty( $options['rename-fake-user-id']) && is_numeric( $options['rename-fake-user-id'] ) ) {
+	if ( !empty( $options['rename-fake-user-id'] ) && is_numeric( $options['rename-fake-user-id'] ) ) {
 		$processData['rename_fake_user_id'] = ( int ) $options['rename-fake-user-id'];
 	}
 

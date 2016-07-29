@@ -19,7 +19,7 @@ class SingleWikiRename extends WikiRenameBase {
 	public function run( $cityId, array $params ) {
 		$this->cityId = $cityId;
 		$this->params = $params;
-		
+
 		$this->setupProcessLocal();
 		$this->buildCommand();
 
@@ -27,11 +27,11 @@ class SingleWikiRename extends WikiRenameBase {
 			$this->runCommand();
 			$this->logFinish();
 			$this->cleanup();
-		} catch (\Exception $e) {
-			$this->error("error while renaming user", [
+		} catch ( \Exception $e ) {
+			$this->error( "error while renaming user", [
 				'message' => $e->getMessage(),
 				'stack' => $e->getTraceAsString(),
-			]);
+			] );
 			return false;
 		}
 
@@ -42,13 +42,13 @@ class SingleWikiRename extends WikiRenameBase {
 
 	private function buildCommand() {
 		global $IP;
-		
+
 		$opts = $this->getShellOptions( $this->params );
 
 		// Run the maintenance script for each wiki
-		$this->command = sprintf(self::SCRIPT_TEMPLATE, $this->cityId, $IP, $opts);
+		$this->command = sprintf( self::SCRIPT_TEMPLATE, $this->cityId, $IP, $opts );
 	}
-	
+
 	private function getShellOptions( $params ) {
 		$renameIP = !empty( $params['rename_ip'] );
 
@@ -84,18 +84,18 @@ class SingleWikiRename extends WikiRenameBase {
 	private function runCommand() {
 		$output = wfShellExec( $this->command, $this->exitCode );
 
-		$logMessage = sprintf("Rename user %s to %s on city id %s",
-			$this->params['rename_old_name'], $this->params['rename_new_name'], $this->cityId);
+		$logMessage = sprintf( "Rename user %s to %s on city id %s",
+			$this->params['rename_old_name'], $this->params['rename_new_name'], $this->cityId );
 		$logContext = [
 			'command' => $this->command,
 			'exitStatus' => $this->exitCode,
 			'output' => $output,
 		];
 
-		if ($this->exitCode > 0) {
-			$this->error($logMessage, $logContext);
+		if ( $this->exitCode > 0 ) {
+			$this->error( $logMessage, $logContext );
 		} else {
-			$this->info($logMessage, $logContext);
+			$this->info( $logMessage, $logContext );
 		}
 	}
 

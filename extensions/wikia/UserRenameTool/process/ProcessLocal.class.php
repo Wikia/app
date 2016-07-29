@@ -72,7 +72,7 @@ class ProcessBaseLocal  extends ProcessBase {
 		$tasks = self::$mLocalIpDefaults;
 
 		$hookName = 'UserRename::LocalIP';
-		$this->logInfo( "Broadcasting hook: %s". $hookName );
+		$this->logInfo( "Broadcasting hook: %s" . $hookName );
 		wfRunHooks(
 			$hookName,
 			[ $dbw, $this->mUserId, $this->mOldUsername, $this->mNewUsername, $this, $wgCityId, &$tasks ]
@@ -328,7 +328,7 @@ class ProcessBaseLocal  extends ProcessBase {
 	 * @param \DatabaseBase $dbw
 	 * @return \ResultWrapper
 	 */
-	protected function getUserPages( \Title $oldTitle, \DatabaseBase $dbw) {
+	protected function getUserPages( \Title $oldTitle, \DatabaseBase $dbw ) {
 		// Determine all namespaces which need processing
 		$allowedNamespaces = $this->findAllowedUserNamespaces();
 

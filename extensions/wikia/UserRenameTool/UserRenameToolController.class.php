@@ -83,14 +83,14 @@ class UserRenameToolController extends SpecialPage {
 		// Require a POST and edit token
 		try {
 			$wg->Request->isValidWriteRequest( $wg->User );
-		} catch( Exception $e ) {
+		} catch ( Exception $e ) {
 			return false;
 		}
 
 		if ( !empty( $this->oldUsername ) ) {
-			$oldUser = User::newFromName($this->oldUsername);
-			if (!$oldUser->getGlobalFlag('requested-rename', 0)) {
-				$this->errors[] = wfMessage('userrenametool-did-not-request-rename', $this->oldUsername)->escaped();
+			$oldUser = User::newFromName( $this->oldUsername );
+			if ( !$oldUser->getGlobalFlag( 'requested-rename', 0 ) ) {
+				$this->errors[] = wfMessage( 'userrenametool-did-not-request-rename', $this->oldUsername )->escaped();
 				return false;
 			}
 		}
@@ -129,7 +129,7 @@ class UserRenameToolController extends SpecialPage {
 		global $wgTitle, $wgUser, $wgOut;
 
 		$template = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
-		$template->set_vars([
+		$template->set_vars( [
 			'submitUrl' => $wgTitle->getLocalURL(),
 			'oldusername' => $this->oldUsername,
 			'oldusername_hsc' => htmlspecialchars( $this->oldUsername ),
@@ -144,7 +144,7 @@ class UserRenameToolController extends SpecialPage {
 			'show_confirm' => $this->showConfirm,
 			'token' => $this->token,
 			'notify_renamed' => $this->notifyRenamed,
-		]);
+		] );
 
 		$wgOut->addHTML( $template->render( 'UserRenameTool' ) );
 	}

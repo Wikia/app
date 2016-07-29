@@ -8,18 +8,18 @@
  */
 
 // check for dependencies
-if (!defined('MEDIAWIKI')) die("This is MediaWiki extension and cannot be used standalone.");
+if ( !defined( 'MEDIAWIKI' ) ) die( "This is MediaWiki extension and cannot be used standalone." );
 
 $wgExtensionCredits['specialpage'][] = array(
 	'path' => __FILE__,
 	'name' => 'UserRenameTool',
-	'author' => array('Federico "Lox" Lucignano', 'Władysław Bodzek'),
+	'author' => array( 'Federico "Lox" Lucignano', 'Władysław Bodzek' ),
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/UserRenameTool',
 	'description' => 'Renames a user (need \'\'renameuser\'\' right)',
 	'descriptionmsg' => 'userrenametool-desc'
 );
 
-$dir = dirname(__FILE__) . '/';
+$dir = dirname( __FILE__ ) . '/';
 
 // special pages
 $wgSpecialPages['UserRenameTool'] = 'UserRenameToolController';

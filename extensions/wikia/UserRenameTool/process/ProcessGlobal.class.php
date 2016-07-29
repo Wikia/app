@@ -227,7 +227,7 @@ class ProcessBaseGlobal extends ProcessBase {
 	private function logRenameStart() {
 		$this->logInfo( "User rename global task start." );
 		if ( !empty( $this->mFakeUserId ) ) {
-			$this->logInfo(' Process is being repeated.');
+			$this->logInfo( ' Process is being repeated.' );
 		};
 		$this->logInfo( "Renaming user %s (ID %d) to %s",
 			$this->mOldUsername, $this->mUserId, $this->mNewUsername
@@ -245,7 +245,7 @@ class ProcessBaseGlobal extends ProcessBase {
 		);
 
 		$table = \UserRenameToolHelper::getCentralUserTable();
-		if ( $dbw->tableExists( $table ) ) {;
+		if ( $dbw->tableExists( $table ) ) { ;
 			$dbw->update(
 				$table,
 				[ 'user_name' => $this->mNewUsername ],
@@ -573,12 +573,12 @@ class ProcessBaseGlobal extends ProcessBase {
 			"Scanning user '%s' for renameData for process data: %s",
 			$oldUser->getName(), json_encode( $renameData )
 		);
-		if ( !empty( $renameData->{self::RENAME_TAG} ) ) {
-			$this->mRepeatRename = $renameData->{self::RENAME_TAG} == $newUser->getName();
+		if ( !empty( $renameData->{ self::RENAME_TAG } ) ) {
+			$this->mRepeatRename = $renameData->{ self::RENAME_TAG } == $newUser->getName();
 		}
 
-		if ( !empty( $renameData->{self::PHALANX_BLOCK_TAG} ) ) {
-			$this->mPhalanxBlockId = (int) $renameData->{self::PHALANX_BLOCK_TAG};
+		if ( !empty( $renameData->{ self::PHALANX_BLOCK_TAG } ) ) {
+			$this->mPhalanxBlockId = (int) $renameData->{ self::PHALANX_BLOCK_TAG };
 		}
 
 		if ( $this->mRepeatRename ) {

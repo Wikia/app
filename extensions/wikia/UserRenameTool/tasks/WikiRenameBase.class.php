@@ -12,7 +12,7 @@ class WikiRenameBase extends BaseTask {
 
 	/** @var ProcessBaseLocal */
 	protected $process;
-	
+
 	/** @var array $params
 	 *		requestor_id => ID of the user requesting this rename action
 	 *		requestor_name => Name of the user requesting this rename action
@@ -25,7 +25,7 @@ class WikiRenameBase extends BaseTask {
 	 *		phalanx_block_id => Phalanx login block ID
 	 */
 	protected $params;
-	
+
 	/** @var \User The user being renamed */
 	protected $fakeUser;
 

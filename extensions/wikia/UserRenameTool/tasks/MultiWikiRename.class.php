@@ -82,7 +82,7 @@ class MultiWikiRename extends WikiRenameBase {
 	 * If a local rename task dies and doesn't update user flag indicated a completed status
 	 * we could end up waiting forever here.  Break out after a predetermined amount of time
 	 * based on self::TASK_MAX_WAIT
-	 * 
+	 *
 	 * @return bool
 	 */
 	private function shouldGiveUpWaiting() {

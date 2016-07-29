@@ -306,7 +306,7 @@ class ProcessBase {
 	 *
 	 * @param int $wikiId The wiki ID for this single rename.  If not given the current value of wgCityId is used.
 	 */
-	public function logFinishWikiToStaff($wikiId = null ) {
+	public function logFinishWikiToStaff( $wikiId = null ) {
 		$wikiId = $wikiId ? $wikiId : \F::app()->wg->CityId;
 		$this->addStaffLogAction( self::ACTION_LOG, 'userrenametool-info-wiki-finished', $wikiId );
 	}
@@ -316,7 +316,7 @@ class ProcessBase {
 	 *
 	 * @param int $wikiId The wiki ID for this single rename.  If not given the current value of wgCityId is used.
 	 */
-	public function logFailWikiToStaff($wikiId = null ) {
+	public function logFailWikiToStaff( $wikiId = null ) {
 		$wikiId = $wikiId ? $wikiId : \F::app()->wg->CityId;
 		$this->addStaffLogAction( self::ACTION_LOG, 'userrenametool-info-wiki-finished-problems', $wikiId );
 	}
@@ -429,7 +429,7 @@ class ProcessBase {
 	 *
 	 * @param \User|string $user
 	 */
-	protected function invalidateUserCache($user ) {
+	protected function invalidateUserCache( $user ) {
 		global $wgCityId;
 
 		if ( is_string( $user ) ) {
