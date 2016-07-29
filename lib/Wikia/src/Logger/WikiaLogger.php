@@ -21,6 +21,9 @@ class WikiaLogger implements LoggerInterface {
 	/** @var StreamHandler */
 	private $streamHandler;
 
+	/** @var StreamHandler */
+	private $logFileHandler;
+
 	/** @var WebProcessor */
 	private $webProcessor;
 
@@ -178,12 +181,25 @@ class WikiaLogger implements LoggerInterface {
 	 * @return StreamHandler
 	 */
 	public function getStdoutHandler() {
-		if ($this->streamHandler == null) {
+		if ( $this->streamHandler == null ) {
 			// Write to logs to STDERR
 			$this->streamHandler = new StreamHandler( STDOUT );
 		}
 
 		return $this->streamHandler;
+	}
+
+	/**
+	 * @param string $file
+	 * @return StreamHandler
+	 */
+	public function getLogFileHandler( $file ) {
+		if ( $this->logFileHandler == null ) {
+			$stream = fopen( $file, 'a' );
+			$this->logFileHandler = new StreamHandler( $stream );
+		}
+
+		return $this->logFileHandler;
 	}
 
 	/**
@@ -264,8 +280,16 @@ class WikiaLogger implements LoggerInterface {
 	public function stdoutLogger() {
 		return new Logger(
 			'stderr',
-			[$this->getStdoutHandler()],
-			[$this->getWebProcessor(), $this->getStatusProcessor()]
+			[ $this->getStdoutHandler() ],
+			[ $this->getWebProcessor(), $this->getStatusProcessor() ]
+		);
+	}
+
+	public function logFileLogger( $file ) {
+		return new Logger(
+			'stderr',
+			[ $this->getLogFileHandler( $file ) ],
+			[ $this->getWebProcessor(), $this->getStatusProcessor() ]
 		);
 	}
 
