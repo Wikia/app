@@ -20,20 +20,18 @@ abstract class DiscussionController extends EmailController {
     private function setWikiFromWikiID() {
         $siteId = $this->request->getVal( 'siteId' );
         if ( empty( $siteId ) ) {
-            throw new Check( "Empty value passed for required param siteId" );
+            throw new Check( 'Empty value passed for required param siteId' );
         }
 
-        $wiki = \WikiFactory::getWikiByID( $siteId );
-        if ( $wiki == false ) {
+        $this->wiki = \WikiFactory::getWikiByID( $siteId );
+        if ( !$this->wiki == false ) {
             throw new Check( "Unable to find wiki information for siteId $siteId" );
         }
-
-        $this->wiki = $wiki;
     }
 
     protected function assertValidParams() {
         if ( empty( $this->postUrl ) ) {
-            throw new Check( "Empty value passed for required param postUrl" );
+            throw new Check( 'Empty value passed for required param postUrl' );
         }
     }
 
@@ -51,7 +49,7 @@ abstract class DiscussionController extends EmailController {
             'buttonText' => $this->getButtonText(),
             'buttonLink' => $this->postUrl,
             'contentFooterMessages' => $this->getFooterMessages(),
-            'hasContentFooterMessages' => true
+            'hasContentFooterMessages' => true,
         ] );
     }
 
@@ -73,7 +71,7 @@ abstract class DiscussionController extends EmailController {
     }
 
     private function getDiscussionsLink() {
-        return $this->wiki->city_url . "d";
+        return $this->wiki->city_url . 'd';
     }
 
     protected static function getEmailSpecificFormFields() {
@@ -82,27 +80,27 @@ abstract class DiscussionController extends EmailController {
                 [
                     'type' => 'text',
                     'name' => 'siteId',
-                    'label' => "Site ID"
+                    'label' => 'Site ID',
                 ],
                 [
                     'type' => 'text',
                     'name' => 'postTitle',
-                    'label' => "Title of Post (Optional)"
+                    'label' => 'Title of Post (Optional)',
                 ],
                 [
                     'type' => 'text',
                     'name' => 'currentUser',
-                    'label' => "ID of user to send email as"
+                    'label' => 'ID of user to send email as',
                 ],
                 [
                     'type' => 'text',
                     'name' => 'targetUser',
-                    'label' => "ID of user to send email to"
+                    'label' => 'ID of user to send email to',
                 ],
                 [
                 'type' => 'text',
                 'name' => 'postUrl',
-                'label' => "URL of the post"
+                'label' => 'URL of the post',
                 ]
             ]
         ];
@@ -122,7 +120,7 @@ class DiscussionReplyController extends DiscussionController {
     protected function assertValidParams() {
         parent::assertValidParams();
         if ( empty( $this->replyContent ) ) {
-            throw new Check( "Empty value passed for required param replyContent" );
+            throw new Check( 'Empty value passed for required param replyContent' );
         }
     }
 
@@ -156,7 +154,7 @@ class DiscussionReplyController extends DiscussionController {
                 [
                     'type' => 'text',
                     'name' => 'replyContent',
-                    'label' => "Reply Content",
+                    'label' => 'Reply Content',
                 ]
             ]
         ];
@@ -175,19 +173,19 @@ class DiscussionUpvoteController extends DiscussionController {
             'subject-with-title' => 'emailext-discussion-5-upvote-subject-with-title',
             'subject' => 'emailext-discussion-5-upvote-subject',
             'summary-with-title' => 'emailext-discussion-5-upvote-summary-with-title',
-            'summary' => 'emailext-discussion-5-upvote-summary'
+            'summary' => 'emailext-discussion-5-upvote-summary',
         ],
         25 => [
             'subject-with-title' => 'emailext-discussion-25-upvote-subject-with-title',
             'subject' => 'emailext-discussion-25-upvote-subject',
             'summary-with-title' => 'emailext-discussion-25-upvote-summary-with-title',
-            'summary' => 'emailext-discussion-25-upvote-summary'
+            'summary' => 'emailext-discussion-25-upvote-summary',
         ],
         100 => [
             'subject-with-title' => 'emailext-discussion-100-upvote-subject-with-title',
             'subject' => 'emailext-discussion-100-upvote-subject',
             'summary-with-title' => 'emailext-discussion-100-upvote-summary-with-title',
-            'summary' => 'emailext-discussion-100-upvote-summary'
+            'summary' => 'emailext-discussion-100-upvote-summary',
         ]
     ];
 
@@ -201,15 +199,15 @@ class DiscussionUpvoteController extends DiscussionController {
     protected function assertValidParams() {
         parent::assertValidParams();
         if ( empty( $this->firstPostContent ) ) {
-            throw new Check( "Empty value passed for required param firstPostContent" );
+            throw new Check( 'Empty value passed for required param firstPostContent' );
         }
 
         if ( empty( $this->upvoteCount ) ) {
-            throw new Check( "Empty value passed for required param upvoteCount" );
+            throw new Check( 'Empty value passed for required param upvoteCount' );
         }
 
         if ( !array_key_exists( $this->upvoteCount, self::MESSAGE_KEYS ) ) {
-            throw new Check( "Invalid value for param upvoteCount. Must be 5, 25, 100" );
+            throw new Check( 'Invalid value for param upvoteCount. Must be 5, 25, 100' );
         }
     }
 
@@ -256,12 +254,12 @@ class DiscussionUpvoteController extends DiscussionController {
                 [
                     'type' => 'text',
                     'name' => 'firstPostContent',
-                    'label' => "First Post Content"
+                    'label' => 'First Post Content',
                 ],
                 [
                     'type' => 'text',
                     'name' => 'upvoteCount',
-                    'label' => "Upvote Count"
+                    'label' => 'Upvote Count',
                 ],
             ],
         ];
