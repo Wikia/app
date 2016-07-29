@@ -3,7 +3,7 @@
 namespace UserRenameTool\Tasks;
 
 class SingleWikiRename extends WikiRenameBase {
-	const SCRIPT_TEMPLATE = "SERVER_ID=%s php %s/maintenance/wikia/RenameUser_local.php %s";
+	const SCRIPT_TEMPLATE = "SERVER_ID=%s php %s/extensions/wikia/maintenance/RenameUser_local.php %s";
 
 	private $cityId;
 	private $command;

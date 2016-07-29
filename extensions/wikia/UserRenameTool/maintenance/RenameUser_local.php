@@ -8,7 +8,7 @@
  * @usage: SERVER_ID=177 php RenameUser_local.php --conf /usr/wikia/conf/current/wiki.factory/LocalSettings.php --aconf /usr/wikia/conf/current/AdminSettings.php
  */
 
-ini_set( "include_path", dirname( __FILE__ ) . "/../" );
+ini_set( "include_path", dirname( __FILE__ ) . "/../../../" );
 
 $options = [ 'help' ];
 
@@ -27,10 +27,11 @@ $optionsWithArgs = [
 	'global-task-id'
 ];
 
+global $IP, $wgCityId;
+
 require_once( 'commandLine.inc' );
 require_once( "$IP/extensions/wikia/UserRenameTool/UserRenameTool.php" );
 
-global $IP, $wgCityId;
 
 if ( isset( $options['help'] ) && $options['help'] ) {
 	echo( "Usage: SERVER_ID=target_cityId php RenameUser_local.php --rename-user-id {int} --rename-old-name {string} --rename-new-name {string} --requestor-id {int} [--phalanx-block-id {int}] [--task-id {int}] [--reason {string}] --conf {path} --aconf {path}\n\n" );

@@ -9,7 +9,7 @@
 
 putenv( 'SERVER_ID=177' ); // run in the context of community wiki
 
-require_once( dirname( __FILE__ ) . '/../Maintenance.php' );
+require_once( dirname( __FILE__ ) . '/../../../Maintenance.php' );
 
 /**
  * Maintenance script class

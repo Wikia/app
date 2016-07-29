@@ -5,7 +5,7 @@
  * This script is an answer to a lot of unfinished and broken user rename processes. It allows
  * you to easily rerun the RenameUser_local.php script on every wikia that a user has contributed at.
  */
-require_once( __DIR__ . '/../Maintenance.php' );
+require_once( __DIR__ . '/../../../Maintenance.php' );
 
 class RerunRenameUserLocal extends Maintenance {
 
