@@ -24,7 +24,7 @@ abstract class DiscussionController extends EmailController {
         }
 
         $this->wiki = \WikiFactory::getWikiByID( $siteId );
-        if ( !$this->wiki == false ) {
+        if ( !$this->wiki ) {
             throw new Check( "Unable to find wiki information for siteId $siteId" );
         }
     }
@@ -89,18 +89,13 @@ abstract class DiscussionController extends EmailController {
                 ],
                 [
                     'type' => 'text',
-                    'name' => 'currentUser',
+                    'name' => 'currentUserId',
                     'label' => 'ID of user to send email as',
                 ],
                 [
                     'type' => 'text',
-                    'name' => 'targetUser',
-                    'label' => 'ID of user to send email to',
-                ],
-                [
-                'type' => 'text',
-                'name' => 'postUrl',
-                'label' => 'URL of the post',
+                    'name' => 'postUrl',
+                    'label' => 'URL of the post',
                 ]
             ]
         ];

@@ -69,8 +69,8 @@ abstract class EmailController extends \WikiaController {
 				return;
 			}
 
-			$this->currentUser = $this->findUserFromRequest( 'currentUser', $this->wg->User );
-			$this->targetUser = $this->findUserFromRequest( 'targetUser', $this->wg->User );
+			$this->currentUser = $this->findUserFromRequest( 'currentUser',  'currentUserId' );
+			$this->targetUser = $this->findUserFromRequest( 'targetUser',  'targetUserId' );
 			$this->targetLang = $this->getVal( 'targetLang', $this->targetUser->getGlobalPreference( 'language' ) );
 			$this->test = $this->getVal( 'test', false );
 			$this->marketingFooter = $this->request->getBool( 'marketingFooter' );
@@ -480,35 +480,19 @@ abstract class EmailController extends \WikiaController {
 		return \AvatarService::getAvatarUrl( $user, self::AVATAR_SIZE );
 	}
 
-	protected function findUserFromRequest( $paramName, \User $default = null ) {
-		$user = $this->getRequest()->getVal( $paramName );
-		if ( empty( $user ) ) {
-			return $default;
+	protected function findUserFromRequest( $userNameParam, $userIdParam ) {
+		$userName = $this->getRequest()->getVal( $userNameParam );
+		$userId = $this->getRequest()->getVal( $userIdParam );
+
+		if ( !empty( $userName ) ) {
+			return $this->getUserFromName( $userName );
 		}
 
-		// Allow an anonymous user to be specified
-		if ( $user == self::ANONYMOUS_USER_ID ) {
-			return \User::newFromId( 0 );
+		if ( !empty( $userId ) ) {
+			return \User::newFromId( $userId );
 		}
 
-		if ( is_numeric( $user ) ) {
-			return $this->getUserFromId( $user );
-		}
-
-		return $this->getUserFromName( $user );
-	}
-
-	/**
-	 * Returns a user object from an id
-	 *
-	 * @param $userId
-	 *
-	 * @return \User
-	 * @throws Fatal
-	 * @throws \MWException
-	 */
-	private function getUserFromId( $userId ) {
-		return \User::newFromId( $userId );
+		return $this->wg->User;
 	}
 
 	/**
@@ -522,6 +506,11 @@ abstract class EmailController extends \WikiaController {
 	protected function getUserFromName( $username ) {
 		if ( !$username ) {
 			throw new Fatal( 'Required username has been left empty' );
+		}
+
+		// Allow an anonymous user to be specified
+		if ( $username == self::ANONYMOUS_USER_ID ) {
+			return \User::newFromId( 0 );
 		}
 
 		if ( $username instanceof \User ) {
