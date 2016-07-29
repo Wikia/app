@@ -25,7 +25,11 @@ class ProcessGlobal extends ProcessBase {
 		try {
 			$status = $this->renameUser();
 		} catch ( \Exception $e ) {
-			$this->logInfo( "%s in %s at line %d", $e->getMessage(), $e->getFile(), $e->getLine() );
+			$this->logError( "Global rename failed", [
+				'errorMessage' => $e->getMessage(),
+				'errorLocation' => $e->getFile(),
+				'errorLine' => $e->getLine()
+			] );
 			$this->addError(
 				wfMessage( 'userrenametool-error-cannot-rename-unexpected' )->inContentLanguage()->text()
 			);
@@ -205,7 +209,7 @@ class ProcessGlobal extends ProcessBase {
 
 		// rename the user on the shared cluster
 		if ( !$this->renameAccount() ) {
-			$this->logInfo( "Failed to rename the user on the primary cluster. Report the problem to the engineers." );
+			$this->logError( "Failed to rename the user on the primary cluster" );
 			$this->addError( wfMessage( 'userrenametool-error-cannot-rename-account' )->inContentLanguage()->text() );
 
 			return false;
@@ -227,11 +231,8 @@ class ProcessGlobal extends ProcessBase {
 	private function logRenameStart() {
 		$this->logInfo( "User rename global task start." );
 		if ( !empty( $this->fakeUserId ) ) {
-			$this->logInfo( ' Process is being repeated.' );
+			$this->logDebug( 'Process is being repeated.' );
 		};
-		$this->logInfo( "Renaming user %s (ID %d) to %s",
-			$this->oldUsername, $this->userId, $this->newUsername
-		);
 	}
 
 	private function renameAccount() {
@@ -239,47 +240,43 @@ class ProcessGlobal extends ProcessBase {
 
 		$dbw = wfGetDB( DB_MASTER, [ ], $wgExternalSharedDB );
 
-		$this->logInfo(
-			"Changing user %s to %s in %s",
-			$this->oldUsername, $this->newUsername, $wgExternalSharedDB
-		);
+		$this->logInfo( "Renaming old username to new username", [ 'cluster' => $wgExternalSharedDB ] );
 
 		$table = \UserRenameToolHelper::getCentralUserTable();
-		if ( $dbw->tableExists( $table ) ) { ;
-			$dbw->update(
-				$table,
-				[ 'user_name' => $this->newUsername ],
-				[ 'user_id' => $this->userId ],
-				__METHOD__
-			);
-
-			$affectedRows = $dbw->affectedRows();
-			$this->logInfo(
-				'Running query: %s resulted in %s row(s) being affected.',
-				$dbw->lastQuery(), $affectedRows
-			);
-
-			// Consider this a success if some rows were updated or if we repeating a rename,
-			// in which case we probably already did this update.
-			if ( $affectedRows || $this->repeatRename ) {
-				$dbw->commit();
-				$this->logInfo(
-					"Changed user %s to %s in %s",
-					$this->oldUsername, $this->newUsername, $wgExternalSharedDB
-				);
-
-				\User::clearUserCache( $this->userId );
-
-				return true;
-			} else {
-				$this->logInfo(
-					"No changes in %s for user %s",
-					$wgExternalSharedDB, $this->oldUsername
-				);
-			}
-		} else {
-			$this->logInfo( 'Table "%s" not found in %s', $table, $wgExternalSharedDB );
+		if ( !$dbw->tableExists( $table ) ) {
+			$this->logError( sprintf( 'Table "%s" not found in %s', $table, $wgExternalSharedDB ) );
 		}
+
+		$dbw->update(
+			$table,
+			[ 'user_name' => $this->newUsername ],
+			[ 'user_id' => $this->userId ],
+			__METHOD__
+		);
+
+		$affectedRows = $dbw->affectedRows();
+		$this->logDebug( sprintf(
+			'Running query: %s resulted in %s row(s) being affected.',
+			$dbw->lastQuery(), $affectedRows
+		) );
+
+		// Consider this a success if some rows were updated or if we repeating a rename,
+		// in which case we probably already did this update.
+		if ( $affectedRows || $this->repeatRename ) {
+			$dbw->commit();
+			$this->logDebug( "Rename of old username to new username done", [
+				'cluster' => $wgExternalSharedDB
+			] );
+
+			\User::clearUserCache( $this->userId );
+
+			return true;
+		}
+
+		$this->logError(
+			"Rename of old username to new username created no changes", [
+			'cluster' => $wgExternalSharedDB
+		] );
 
 		return false;
 	}
@@ -294,7 +291,7 @@ class ProcessGlobal extends ProcessBase {
 		$this->logInfo( "Creating fake user account" );
 
 		if ( !empty( $this->fakeUserId ) ) {
-			$this->logInfo( "Fake user account already exists: %d", $this->fakeUserId );
+			$this->logInfo( "Fake user account already exists" );
 			return true;
 		}
 
@@ -305,12 +302,9 @@ class ProcessGlobal extends ProcessBase {
 
 		$this->fakeUserId = $fakeUser->getId();
 
-		$this->logInfo(
-			"Created fake user account for %s with ID %s and renameData '%s'",
-			$fakeUser->getName(),
-			$this->fakeUserId,
-			json_encode( $this->getRenameData( $fakeUser ) )
-		);
+		$this->logInfo( sprintf( "Created fake user account with name %s", $fakeUser->getName() ), [
+			'renameData' => $this->getRenameData( $fakeUser ),
+		] );
 
 		return true;
 	}
@@ -330,7 +324,7 @@ class ProcessGlobal extends ProcessBase {
 		$fakeUser = \User::newFromName( $this->oldUsername, 'creatable' );
 
 		if ( !is_object( $fakeUser ) ) {
-			$this->logInfo( "Cannot create fake user: %s", $this->oldUsername );
+			$this->logError( "Cannot create fake user from old username" );
 			return null;
 		}
 
@@ -361,17 +355,17 @@ class ProcessGlobal extends ProcessBase {
 	 */
 	private function updateGlobalTables() {
 		// wikicities
-		$this->logInfo( "Updating global shared database: wikicities." );
+		$this->logInfo( "Updating global shared database" );
 		$dbw = \WikiFactory::db( DB_MASTER );
 		$dbw->begin();
 		$tasks = [ ];
 
 		$hookName = 'UserRename::Global';
-		$this->logInfo( "Broadcasting hook: %s", $hookName );
+		$this->logDebug( "Broadcasting hook: %s", $hookName );
 		wfRunHooks( $hookName, [ $dbw, $this->userId, $this->oldUsername, $this->newUsername, $this, &$tasks ] );
 
 		foreach ( $tasks as $task ) {
-			$this->logInfo( "Updating %s.%s", $task['table'], $task['username_column'] );
+			$this->logDebug( sprintf( "Updating %s.%s", $task['table'], $task['username_column'] ) );
 			$this->renameInTable(
 				$dbw,
 				$task['table'],
@@ -383,16 +377,16 @@ class ProcessGlobal extends ProcessBase {
 		}
 
 		$dbw->commit();
-		$this->logInfo( "Finished updating shared database: wikicities." );
+		$this->logDebug( "Finished updating shared database" );
 	}
 
 	/**
 	 * Starts a task that runs a shell script for each wiki ID given in $wikiIds.  This script
 	 * performs the re-attribution tasks (among others) needed to rename the user everywhere.
 	 */
-	protected function queueMultiWikiRenameTask(  ) {
+	protected function queueMultiWikiRenameTask() {
 		// enumerate IDs for wikis the user has been active in
-		$wikiIds = $this->lookupRegisteredUserActivity( $this->userId );
+		$wikiIds = $this->lookupRegisteredUserActivity();
 
 		$callParams = [
 			'requestor_id' => $this->requestorId,
@@ -544,10 +538,10 @@ class ProcessGlobal extends ProcessBase {
 			__METHOD__
 		);
 
-		$this->logInfo(
+		$this->logDebug( sprintf(
 			"Running query: %s resulted in %s row(s) being affected.",
 			$dbr->lastQuery(), $dbr->affectedRows()
-		);
+		) );
 
 		return $uid;
 	}
@@ -569,10 +563,7 @@ class ProcessGlobal extends ProcessBase {
 		// The information we want is attached to the old user name
 		$renameData = $this->getRenameData( $oldUser );
 
-		$this->logInfo(
-			"Scanning user '%s' for renameData for process data: %s",
-			$oldUser->getName(), json_encode( $renameData )
-		);
+		$this->logInfo( "Scanned old username for renameData", [ 'renameData' => $renameData ] );
 		if ( !empty( $renameData->{ self::RENAME_TAG } ) ) {
 			$this->repeatRename = $renameData->{ self::RENAME_TAG } == $newUser->getName();
 		}

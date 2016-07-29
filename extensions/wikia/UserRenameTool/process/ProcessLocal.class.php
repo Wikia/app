@@ -65,21 +65,25 @@ class ProcessLocal  extends ProcessBase {
 		$wgUser = \User::newFromName( 'Wikia' );
 
 		$cityDb = \WikiFactory::IDtoDB( $wgCityId );
-		$this->logInfo( "Processing wiki database: %s", $cityDb );
+		$this->logInfo( "Updating local tables for new IP", [ 'wikiId' => $cityDb ] );
 
 		$dbw = wfGetDB( DB_MASTER );
 		$dbw->begin();
 		$tasks = self::$localIpDefaults;
 
 		$hookName = 'UserRename::LocalIP';
-		$this->logInfo( "Broadcasting hook: %s" . $hookName );
+		$this->logDebug( "Broadcasting hook", [ 'hookName' => $hookName ] );
 		wfRunHooks(
 			$hookName,
 			[ $dbw, $this->userId, $this->oldUsername, $this->newUsername, $this, $wgCityId, &$tasks ]
 		);
 
 		foreach ( $tasks as $task ) {
-			$this->logInfo( 'Updating wiki "%s": %s:%s', $cityDb, $task['table'], $task['username_column'] );
+			$this->logDebug( 'Updating one local table for IP', [
+				'wikiId' => $cityDb,
+				'updateTable' => $task['table'],
+				'updateColumn' => $task['username_column']
+			] );
 			$this->renameInTable(
 				$dbw,
 				$task['table'],
@@ -92,7 +96,7 @@ class ProcessLocal  extends ProcessBase {
 
 		$dbw->commit();
 
-		$this->logInfo( "Finished updating wiki database: %s", $cityDb );
+		$this->logInfo( "Finished updating wiki database for IP", [ 'wikiId' => $cityDb ] );
 
 		if ( $this->warnings || $this->errors ) {
 			$this->logFailWikiToStaff();
@@ -132,7 +136,7 @@ class ProcessLocal  extends ProcessBase {
 
 		$cityDb = \WikiFactory::IDtoDB( $wgCityId );
 
-		$this->logInfo( "Processing wiki database: %s", $cityDb );
+		$this->logInfo( "Updating local tables", [ 'wikiId' => $cityDb ] );
 
 		$dbw = wfGetDB( DB_MASTER );
 		$dbw->begin();
@@ -140,7 +144,7 @@ class ProcessLocal  extends ProcessBase {
 		$tasks = self::$localDefaults;
 
 		$hookName = 'UserRename::Local';
-		$this->logInfo( "Broadcasting hook: %s", $hookName );
+		$this->logDebug( "Broadcasting hook", [ 'hookName' => $hookName ] );
 		wfRunHooks(
 			$hookName,
 			[ $dbw, $this->userId, $this->oldUsername, $this->newUsername, $this, $wgCityId, &$tasks ]
@@ -159,7 +163,7 @@ class ProcessLocal  extends ProcessBase {
 				->text()
 		);
 
-		$this->logInfo( "Finished updating wiki database: %s", $cityDb );
+		$this->logInfo( "Finished updating local tables", [ 'wikiId' => $cityDb ] );
 
 		if ( $this->warnings || $this->errors ) {
 			$this->logFailWikiToStaff();
@@ -174,7 +178,7 @@ class ProcessLocal  extends ProcessBase {
 	}
 
 	protected function moveUserPages( \DatabaseBase $dbw, $cityDb ) {
-		$this->logInfo( "Moving user pages." );
+		$this->logInfo( "Moving all local user pages" );
 
 		try {
 			$oldTitle = \Title::makeTitle( NS_USER, $this->oldUsername );
@@ -190,10 +194,11 @@ class ProcessLocal  extends ProcessBase {
 			// re-throw DB related exceptions instead of silently ignoring them (@see PLATFORM-775)
 			throw $e;
 		} catch ( \Exception $e ) {
-			$this->logInfo(
-				"Exception while moving pages: %s in %s at line %d",
-				$e->getMessage(), $e->getFile(), $e->getLine()
-			);
+			$this->logError( "Exception while moving local user pages", [
+				'errorMessage' => $e->getMessage(),
+				'errorFile' => $e->getFile(),
+				'errorLine' => $e->getLine(),
+			] );
 		}
 	}
 
@@ -214,10 +219,11 @@ class ProcessLocal  extends ProcessBase {
 			return;
 		}
 
-		$this->logInfo(
-			"Moving page %s in namespace %s to %s",
-			$oldPage->getText(), $row->page_namespace, $newTitle->getText()
-		);
+		$this->logInfo( "Moving one local user page", [
+			'oldPageTitle' => $oldPage->getText(),
+			'oldPageNs' => $row->page_namespace,
+			'newPageTitle' => $newTitle->getText(),
+		] );
 		$success = $oldPage->moveTo(
 			$newPage,
 			false,
@@ -227,15 +233,17 @@ class ProcessLocal  extends ProcessBase {
 		);
 
 		if ( $success === true ) {
-			$this->logInfo(
-				'Updating wiki "%s": User page %s moved to %s',
-				$cityDb, $oldPage->getText(), $newPage->getText()
-			);
+			$this->logDebug( 'Moved one local user page', [
+				'wikiId' => $cityDb,
+				'oldPageTitle' => $oldPage->getText(),
+				'newPageTitle' => $newTitle->getText(),
+			] );
 		} else {
-			$this->logInfo(
-				'Updating wiki "%s": User page %s could not be moved to %s',
-				$cityDb, $oldPage->getText(), $newPage->getText()
-			);
+			$this->logWarn( 'Unable to move a local user page', [
+				'wikiId' => $cityDb,
+				'oldPageTitle' => $oldPage->getText(),
+				'newPageTitle' => $newTitle->getText(),
+			] );
 			$this->addWarning(
 				wfMessage( 'userrenametool-page-unmoved', [ $oldPage->getText(), $newPage->getText() ] )
 					->inContentLanguage()
@@ -257,10 +265,10 @@ class ProcessLocal  extends ProcessBase {
 		// Do not autodelete or anything, title must not exist
 		// Info: The other case is when renaming is repeated - no action should be taken
 		if ( $newPage->exists() && !$oldPage->isValidMoveTarget( $newPage ) ) {
-			$this->logInfo(
-				'Updating wiki "%s": User page %s already exists, moving cancelled.',
-				$cityDb, $newPage->getText()
-			);
+			$this->logWarn( 'New local user page already exists, moving cancelled', [
+				'wikiId' => $cityDb,
+				'newPageTitle' => $newPage->getText(),
+			] );
 			$this->addWarning(
 				wfMessage( 'userrenametool-page-exists', $newPage->getText() )->inContentLanguage()->text()
 			);
@@ -280,7 +288,11 @@ class ProcessLocal  extends ProcessBase {
 		$tasks = self::$localDefaults;
 
 		foreach ( $tasks as $task ) {
-			$this->logInfo( 'Updating wiki "%d": %s:%s', $cityDb, $task['table'], $task['username_column'] );
+			$this->logDebug( 'Updating local wiki table', [
+				'wikiId' => $cityDb,
+				'localTable' => $task['table'],
+				'localColumn' => $task['username_column'],
+				] );
 			$this->renameInTable(
 				$dbw,
 				$task['table'],
@@ -343,7 +355,7 @@ class ProcessLocal  extends ProcessBase {
 			],
 			__METHOD__
 		);
-		$this->logInfo( "SQL: %s", $dbw->lastQuery() );
+		$this->logDebug( sprintf( "Select user pages SQL: %s", $dbw->lastQuery() ) );
 
 		return $pages;
 	}

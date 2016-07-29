@@ -47,7 +47,7 @@ $processData = getProcessData( $options );
 
 /** @var \UserRenameTool\Process\ProcessLocal $process */
 $process = \UserRenameTool\Process\ProcessLocal::newFromData( $processData );
-$process->logInfo( "Starting rename script for wiki ID %s: %s", $wgCityId, __FILE__ );
+$process->logInfo( "Starting local rename script" );
 
 $process->setRequestorUser();
 
@@ -61,20 +61,19 @@ try {
 	$errors = $process->getErrors();
 } catch ( Exception $e ) {
 	$errors = $process->getErrors();
-	$errors[] = "Exception in updateLocal(): " . $e->getMessage() . ' in ' . $e->getFile() . ' at line ' . $e->getLine();
+	$errors[] = sprintf(
+		"Exception in updateLocal(): %s in %s at line %d",
+		$e->getMessage(), $e->getFile(), $e->getLine()
+	);
 }
 
 if ( !empty( $errors ) ) {
-	$process->logInfo( "Process for wiki with ID %s resulted in the following errors:", $wgCityId );
-
-	foreach ( $errors as $error ) {
-		$process->logInfo( " - $error" );
-	}
+	$process->logError( "Local rename had errors:", [ "errors" => $errors ] );
 
 	exit( 1 );
 }
 
-$process->logInfo( "Process for wiki with ID %s was completed successfully", $wgCityId );
+$process->logInfo( "Local rename completed successfully" );
 exit( 0 );
 
 function validateOptions( &$options ) {

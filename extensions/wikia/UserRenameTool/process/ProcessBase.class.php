@@ -102,7 +102,7 @@ class ProcessBase {
 			$o->requestorName = $requestor->getName();
 		}
 
-		$o->logInfo( "newFromData(): Requestor id=%d name=%s", $o->requestorId, $o->requestorName );
+		$o->logDebug( "Created new ProcessBase instance in newFromData()" );
 
 		return $o;
 	}
@@ -151,11 +151,11 @@ class ProcessBase {
 	 */
 	public function renameInTable( $dbw, $table, $uid, $oldUserName, $newUserName, $extra ) {
 		$dbName = $dbw->getDBname();
-		$this->logInfo( "Processing %s.%s.%s", $dbName, $table, $extra['username_column'] );
+		$this->logInfo( sprintf( "Processing %s.%s.%s", $dbName, $table, $extra['username_column'] ) );
 
 		try {
 			if ( !$dbw->tableExists( $table ) ) {
-				$this->logInfo( 'Table "%s" does not exist in database "%s"', $table, $dbName );
+				$this->logWarn( sprintf( 'Table "%s" does not exist in database "%s"', $table, $dbName ) );
 				$this->addWarning(
 					wfMessage( 'userrenametool-warn-table-missing', $dbName, $table )->inContentLanguage()->text()
 				);
@@ -181,12 +181,12 @@ class ProcessBase {
 			while ( $affectedRows > 0 ) {
 				$dbw->update( $table, $values, $conds, __METHOD__, $opts );
 				$affectedRows = $dbw->affectedRows();
-				$this->logInfo( "SQL: %s",  $dbw->lastQuery() );
+				$this->logDebug( sprintf( "Update SQL: %s",  $dbw->lastQuery() ) );
 				$dbw->commit();
-				$this->logInfo(
+				$this->logDebug( sprintf(
 					"In %s.%s.%s %d row(s) was(were) updated.",
 					$dbName, $table, $extra['username_column'], $affectedRows
-				);
+				) );
 
 				// Make sure we don't sleep unnecessarily
 				if ( $affectedRows >= self::MAX_ROWS_PER_QUERY ) {
@@ -194,13 +194,13 @@ class ProcessBase {
 				}
 			}
 		} catch ( \Exception $e ) {
-			$this->logInfo(
+			$this->logWarn( sprintf(
 				"Exception in renameInTable(): %s in %s at line %",
 				$e->getMessage(), $e->getFile(), $e->getLine()
-			);
+			) );
 		}
 
-		$this->logInfo( "Finished processing %s.%s.%s.", $dbName, $table, $extra['username_column'] );
+		$this->logDebug( sprintf( "Finished processing %s.%s.%s.", $dbName, $table, $extra['username_column'] ) );
 
 		return true;
 	}
@@ -261,7 +261,7 @@ class ProcessBase {
 	 */
 	public function cleanupFakeUser() {
 		if ( $this->fakeUserId ) {
-			$this->logInfo( "Cleaning up process data in user option renameData for ID %s", $this->fakeUserId );
+			$this->logInfo( "Writing renameData for fake user" );
 
 			$fakeUser = \User::newFromId( $this->fakeUserId );
 
@@ -369,56 +369,81 @@ class ProcessBase {
 	}
 
 	/**
-	 * Sends the internal log message to the specified destination
+	 * Log info to kibana
 	 *
 	 * @param $text string Log message
-	 * @param $arg1 mixed Multiple format parameters
-	 * @param null $context
+	 * @param array $context
 	 */
-	public function logInfo( $text, $arg1 = null, $context = null ) {
-		if ( func_num_args() > 1 ) {
-			$args = func_get_args();
-			$args = array_slice( $args, 1 );
-			$text = vsprintf( $text, $args );
-		}
-
-		// Define some default but let the caller override them
-		$defaultContext = [
-			'wikiId' => \F::app()->wg->CityId,
-		];
-		$context = array_merge( $defaultContext, $context );
+	public function logInfo( $text, $context = null ) {
+		$context = $this->addDefaultsToContext( $context );
 		$this->info( $text, $context );
 	}
 
 	/**
-	 * Sends the internal log message to the specified destination
+	 * Log warning to kibana
 	 *
 	 * @param $text string Log message
-	 * @param $arg1 mixed Multiple format parameters
+	 * @param array $context
 	 */
-	public function logDebug( $text, $arg1 = null ) {
-		if ( func_num_args() > 1 ) {
-			$args = func_get_args();
-			$args = array_slice( $args, 1 );
-			$text = vsprintf( $text, $args );
-		}
+	public function logWarn( $text, $context = null ) {
+		$context = $this->addDefaultsToContext( $context );
+		$this->warning( $text, $context );
+	}
 
-		$this->debug( $text );
+	/**
+	 * Log error to kibana
+	 *
+	 * @param $text string Log message
+	 * @param array $context
+	 */
+	public function logError( $text, $context = null ) {
+		$context = $this->addDefaultsToContext( $context );
+		$this->error( $text, $context );
+	}
+
+	/**
+	 * Log debug to kibana
+	 *
+	 * @param $text string Log message
+	 * @param array $context
+	 */
+	public function logDebug( $text, $context = null ) {
+		$context = $this->addDefaultsToContext( $context );
+		$this->debug( $text, $context );
+	}
+
+	private function addDefaultsToContext( $context ) {
+		return array_merge( $this->getDefaultLogContext(), $context );
+	}
+
+	private function getDefaultLogContext() {
+		return [
+			'wikiId' => \F::app()->wg->CityId,
+			'userId' => $this->userId,
+			'oldUsername' => $this->oldUsername,
+			'newUsername' => $this->newUsername,
+			'fakeUserId' => $this->fakeUserId,
+			'requestorId' => $this->requestorId,
+			'requestorName' => $this->requestorName,
+			'phalanxBlockId' => $this->phalanxBlockId,
+			'reason' => $this->reason,
+			'currentTaskId' => $this->currentTaskId,
+		];
 	}
 
 	public function setRequestorUser() {
 		global $wgUser;
 
 		$oldUser = $wgUser;
-		$this->logInfo(
+		$this->logDebug( sprintf(
 			"Checking for need to overwrite requestor user (id=%d name=%s)",
 			$this->requestorId, $this->requestorName
-		);
+		) );
 
 		$userId = $wgUser->getId();
 
 		if ( empty( $userId ) && !empty( $this->requestorId ) ) {
-			$this->logInfo( "Checking if requestor exists" );
+			$this->logDebug( "Checking if requestor exists" );
 			$newUser = \User::newFromId( $this->requestorId );
 
 			if ( !empty( $newUser ) ) {
@@ -436,18 +461,16 @@ class ProcessBase {
 	 * @param \User|string $user
 	 */
 	protected function invalidateUserCache( $user ) {
-		global $wgCityId;
-
 		if ( is_string( $user ) ) {
 			$user = \User::newFromName( $user );
 		}
 
 		if ( is_object( $user ) ) {
 			$userName = $user->getName();
-			$this->logInfo( "Invalidate user data on local Wiki (%s): %s", $wgCityId, $userName );
+			$this->logInfo( sprintf( "Invalidating user data on local Wiki for '%s'", $userName ) );
 			$user->invalidateCache();
 		} else {
-			$this->logInfo( "invalidateUser() called with some strange argument type: %s", gettype( $user ) );
+			$this->logError( sprintf( __METHOD__ . " called with some strange argument type: %s", gettype( $user ) ) );
 		}
 	}
 
@@ -456,18 +479,17 @@ class ProcessBase {
 	 * using the events table stored in the stats DB instead of the blobs table in dataware,
 	 * tests showed is faster and more accurate
 	 *
-	 * @param $userID int the registered user ID
 	 * @return array A list of wikis' IDs related to user activity, false if the user is not an existing one or an anon
 	 */
-	protected function lookupRegisteredUserActivity( $userID ) {
+	protected function lookupRegisteredUserActivity() {
 		$wg = \F::app()->wg;
 
 		// check for invalid values
-		if ( empty( $userID ) || !is_int( $userID ) ) {
+		if ( empty( $this->userId ) || !is_int( $this->userId ) ) {
 			return false;
 		}
 
-		$this->logInfo( "Looking up registered user activity for user with ID %s", $userID );
+		$this->logInfo( "Looking up user activity" );
 
 		// Short circuit to some known wikis in DEV.  The rollup_edit_events table is not kept up to date in DEV
 		if ( $wg->DevelEnvironment ) {
@@ -482,29 +504,27 @@ class ProcessBase {
 			return [];
 		}
 
-		$wikiIds = $this->lookupWikiIdsInDb( $userID );
+		$wikiIds = $this->lookupWikiIdsInDb();
 
-		$this->logInfo( "Found %s wikis: %s", count( $wikiIds ), implode( ', ', $wikiIds ) );
+		$this->logDebug( sprintf( "Found %d wiki IDs", count( $wikiIds ) ), [ 'wikiIds' => $wikiIds ] );
 		return $wikiIds;
 	}
 
 	/**
 	 * Look for user edits in the rollup_edit_events table
 	 *
-	 * @param int $userId
-	 *
 	 * @return array
 	 *
 	 * @throws \DBUnexpectedError
 	 */
-	private function lookupWikiIdsInDb( $userId ) {
+	private function lookupWikiIdsInDb() {
 		$wg = \F::app()->wg;
 
 		$dbr = wfGetDB( DB_SLAVE, array(), $wg->DWStatsDB );
 		$res = $dbr->select(
 			'rollup_edit_events',
 			'wiki_id',
-			[ 'user_id' => $userId ],
+			[ 'user_id' => $this->userId ],
 			__METHOD__,
 			[ 'GROUP BY' => 'wiki_id' ]
 		);
@@ -513,12 +533,9 @@ class ProcessBase {
 		while ( $row = $dbr->fetchObject( $res ) ) {
 			if ( \WikiFactory::isPublic( $row->wiki_id ) ) {
 				$result[] = ( int ) $row->wiki_id;
-				$this->logInfo(
-					"Registered user with ID %d was active on wiki with ID %d",
-					$userId, $row->wiki_id
-				);
+				$this->logDebug( sprintf( "Registered user was active on wiki with ID %d", $row->wiki_id ) );
 			} else {
-				$this->logInfo( "Skipped wiki with ID %d (inactive wiki)", $row->wiki_id );
+				$this->logDebug( sprintf( "Skipped wiki with ID %d (inactive wiki)", $row->wiki_id ) );
 			}
 		}
 

@@ -13,9 +13,9 @@ if ( !defined( 'MEDIAWIKI' ) ) die( "This is MediaWiki extension and cannot be u
 $wgExtensionCredits['specialpage'][] = array(
 	'path' => __FILE__,
 	'name' => 'UserRenameTool',
-	'author' => array( 'Federico "Lox" Lucignano', 'Władysław Bodzek' ),
+	'author' => [ 'Federico "Lox" Lucignano', 'Władysław Bodzek' ],
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/UserRenameTool',
-	'description' => 'Renames a user (need \'\'renameuser\'\' right)',
+	'description' => "Renames a user (need ''renameuser'' right)",
 	'descriptionmsg' => 'userrenametool-desc'
 );
 
@@ -47,7 +47,7 @@ $wgLogHeaders['renameuser'] = 'userrenametool-logpagetext';
 // hooks
 $wgHooks['StaffLog::formatRow'][] = 'UserRenameToolStaffLogFormatRow';
 
-function UserRenameToolStaffLogFormatRow( $type, $row, $time, $linker, &$out ) {
+function UserRenameToolStaffLogFormatRow($type, $row, $time, $linker, &$out ) {
 	if ( $type == "renameuser" ) {
 		$out = "$time Rename - {$row->slog_comment}";
 		return false;
