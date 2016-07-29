@@ -2,13 +2,13 @@
 
 class DesignSystemGlobalFooterModelTest extends WikiaBaseTest {
 	/**
-	 * @dataProvider getLicensingAndVerticalDataProvider
+	 * @dataProvider getLicenseDataDataProvider
 	 *
 	 * @param $rightsText license name
 	 * @param $rightsUrl license URL
 	 * @param $expectedResult
 	 */
-	public function testGetLicensingAndVertical( $rightsText, $rightsUrl, $expectedResult ) {
+	public function testGetLicenseData( $rightsText, $rightsUrl, $expectedResult ) {
 		$wikiId = 1234;
 
 		$rightsTextMock = new stdClass();
@@ -30,7 +30,7 @@ class DesignSystemGlobalFooterModelTest extends WikiaBaseTest {
 		$this->assertEquals( $result['licensing_and_vertical'], $expectedResult );
 	}
 
-	public function getLicensingAndVerticalDataProvider() {
+	public function getLicenseDataDataProvider() {
 		return [
 			[
 				'CC-BY-SA',
@@ -117,7 +117,7 @@ class DesignSystemGlobalFooterModelTest extends WikiaBaseTest {
 					'default' => [
 						'create-new-wiki' => 'http://www.example.com'
 					],
-					'pl' => [],
+					'pl' => [ ],
 				],
 				'http://www.example.com'
 			],
@@ -130,7 +130,7 @@ class DesignSystemGlobalFooterModelTest extends WikiaBaseTest {
 					'default' => [
 						'create-new-wiki' => null
 					],
-					'pl' => [],
+					'pl' => [ ],
 				],
 				null
 			],
@@ -143,7 +143,7 @@ class DesignSystemGlobalFooterModelTest extends WikiaBaseTest {
 					'default' => [
 						'create-new-wiki' => null
 					],
-					'pl' => [],
+					'pl' => [ ],
 				],
 				'http://www.wikia.com'
 			],
@@ -179,21 +179,52 @@ class DesignSystemGlobalFooterModelTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @dataProvider getFollowUsDataProvider
+	 * @dataProvider getLinksDataProvider
 	 *
-	 * @param $lang language code to fetch
-	 * @param $hrefs hrefs definition in different languages
-	 * @param $expectedCount
+	 * @param string $lang language code to fetch
+	 * @param array $hrefs hrefs definition in different languages
+	 * @param array $baseData data template before parsing hrefs
+	 * @param array $expected
 	 */
-	public function testGetFollowUs( $lang, $hrefs, $expectedCount ) {
+	public function testGetLinksData( $lang, $hrefs, $baseData, $expected ) {
 		$footerModel = new DesignSystemGlobalFooterModel( 1234, $lang );
 		$footerModel->setHrefs( $hrefs );
+		$footerModel->setBaseData( $baseData );
 
 		$result = $footerModel->getData();
-		$this->assertCount( $expectedCount, $result['follow_us']['links'] );
+
+		$this->assertEquals( $expected, $result['follow_us']['links'] );
 	}
 
-	public function getFollowUsDataProvider() {
+	public function getLinksDataProvider() {
+		$baseData = [
+			'follow_us' => [
+				'header' => 'header data',
+				'links' => [
+					[
+						'href-key' => 'social-facebook',
+						'other-key' => 'foo'
+					],
+					[
+						'href-key' => 'social-twitter',
+						'other-key' => 'bar'
+					],
+					[
+						'href-key' => 'social-reddit',
+						'other-key' => 'baz'
+					],
+					[
+						'href-key' => 'social-youtube',
+						'other-key' => 'qux'
+					],
+					[
+						'href-key' => 'social-instagram',
+						'other-key' => 'quux'
+					],
+				],
+			],
+		];
+
 		return [
 			[
 				'de',
@@ -206,15 +237,37 @@ class DesignSystemGlobalFooterModelTest extends WikiaBaseTest {
 						'social-reddit' => 'http://reddit.com'
 					],
 					'de' => [
-						'social-facebook' => 'http://facebook.com',
-						'social-youtube' => 'http://youtube.com',
-						'social-twitter' => 'http://twitter.com',
+						'social-facebook' => 'http://de.facebook.com',
+						'social-youtube' => 'http://de.youtube.com',
+						'social-twitter' => 'http://de.twitter.com',
 					],
 				],
-				5
+				$baseData,
+				[
+					[
+						'href' => 'http://de.facebook.com',
+						'other-key' => 'foo'
+					],
+					[
+						'href' => 'http://de.twitter.com',
+						'other-key' => 'bar'
+					],
+					[
+						'href' => 'http://reddit.com',
+						'other-key' => 'baz'
+					],
+					[
+						'href' => 'http://de.youtube.com',
+						'other-key' => 'qux'
+					],
+					[
+						'href' => 'http://instagram.com',
+						'other-key' => 'quux'
+					],
+				],
 			],
 			[
-				'de',
+				'pl',
 				[
 					'default' => [
 						'social-facebook' => 'http://facebook.com',
@@ -223,16 +276,30 @@ class DesignSystemGlobalFooterModelTest extends WikiaBaseTest {
 						'social-instagram' => null,
 						'social-reddit' => null
 					],
-					'de' => [
-						'social-facebook' => 'http://facebook.com',
-						'social-youtube' => 'http://youtube.com',
-						'social-twitter' => 'http://twitter.com',
+					'pl' => [
+						'social-facebook' => 'http://pl.facebook.com',
+						'social-youtube' => 'http://pl.youtube.com',
+						'social-twitter' => 'http://pl.twitter.com',
 					],
 				],
-				3
+				$baseData,
+				[
+					[
+						'href' => 'http://pl.facebook.com',
+						'other-key' => 'foo'
+					],
+					[
+						'href' => 'http://pl.twitter.com',
+						'other-key' => 'bar'
+					],
+					[
+						'href' => 'http://pl.youtube.com',
+						'other-key' => 'qux'
+					],
+				],
 			],
 			[
-				'de',
+				'fr',
 				[
 					'default' => [
 						'social-facebook' => null,
@@ -241,10 +308,11 @@ class DesignSystemGlobalFooterModelTest extends WikiaBaseTest {
 						'social-instagram' => null,
 						'social-reddit' => null
 					],
-					'de' => [
+					'fr' => [
 					],
 				],
-				0
+				$baseData,
+				null
 			],
 		];
 	}
