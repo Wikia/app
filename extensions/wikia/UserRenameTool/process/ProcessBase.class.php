@@ -3,6 +3,7 @@
 namespace UserRenameTool\Process;
 
 use Wikia\Logger\Loggable;
+use Wikia\Logger\WikiaLogger;
 
 class ProcessBase {
 	use Loggable;
@@ -374,7 +375,7 @@ class ProcessBase {
 	 * @param $text string Log message
 	 * @param array $context
 	 */
-	public function logInfo( $text, $context = null ) {
+	public function logInfo( $text, $context = [] ) {
 		$context = $this->addDefaultsToContext( $context );
 		$this->info( $text, $context );
 	}
@@ -385,7 +386,7 @@ class ProcessBase {
 	 * @param $text string Log message
 	 * @param array $context
 	 */
-	public function logWarn( $text, $context = null ) {
+	public function logWarn( $text, $context = [] ) {
 		$context = $this->addDefaultsToContext( $context );
 		$this->warning( $text, $context );
 	}
@@ -396,7 +397,7 @@ class ProcessBase {
 	 * @param $text string Log message
 	 * @param array $context
 	 */
-	public function logError( $text, $context = null ) {
+	public function logError( $text, $context = [] ) {
 		$context = $this->addDefaultsToContext( $context );
 		$this->error( $text, $context );
 	}
@@ -407,12 +408,12 @@ class ProcessBase {
 	 * @param $text string Log message
 	 * @param array $context
 	 */
-	public function logDebug( $text, $context = null ) {
+	public function logDebug( $text, $context = [] ) {
 		$context = $this->addDefaultsToContext( $context );
 		$this->debug( $text, $context );
 	}
 
-	private function addDefaultsToContext( $context ) {
+	private function addDefaultsToContext( $context = [] ) {
 		return array_merge( $this->getDefaultLogContext(), $context );
 	}
 

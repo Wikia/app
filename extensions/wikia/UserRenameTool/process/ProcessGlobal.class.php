@@ -361,7 +361,7 @@ class ProcessGlobal extends ProcessBase {
 		$tasks = [ ];
 
 		$hookName = 'UserRename::Global';
-		$this->logDebug( "Broadcasting hook: %s", $hookName );
+		$this->logDebug( "Broadcasting hook", [ 'hookName' => $hookName ] );
 		wfRunHooks( $hookName, [ $dbw, $this->userId, $this->oldUsername, $this->newUsername, $this, &$tasks ] );
 
 		foreach ( $tasks as $task ) {
