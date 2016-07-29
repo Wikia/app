@@ -3,8 +3,11 @@
 require_once __DIR__ . '/../../../../maintenance/Maintenance.php';
 require_once __DIR__ . '/../../../../includes/wikia/nirvana/WikiaObject.class.php';
 require_once __DIR__ . '/../../../../includes/wikia/nirvana/WikiaModel.class.php';
+require_once __DIR__ . '/../../../../lib/Wikia/src/Logger/Loggable.php';
+require_once __DIR__ . '/../../../../includes/wikia/tasks/Tasks/BaseTask.class.php';
 require_once __DIR__ . '/../ImageReviewHelperBase.class.php';
 require_once __DIR__ . '/../ImageReviewHelper.class.php';
+require_once __DIR__ . '/../ImageReviewTask.class.php';
 
 class ImageReviewDeleteInvalidEntries extends Maintenance {
 
