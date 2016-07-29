@@ -525,6 +525,10 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 		$this->hrefs = $hrefs;
 	}
 
+	public function setBaseData( $baseData ) {
+		$this->baseData = $baseData;
+	}
+
 	/**
 	 * Get prepared/parsed data.
 	 *
