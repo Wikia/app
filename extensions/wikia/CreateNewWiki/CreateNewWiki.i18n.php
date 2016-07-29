@@ -18,7 +18,6 @@ $messages['en'] = array(
 	'cnw-name-wiki-label' => 'Name your wikia',
 	'cnw-name-wiki-domain-label' => 'Give your wikia an address',
 	'cnw-name-wiki-language' => '',
-	'cnw-name-wiki-domain' => '.wikia.com',
 	'cnw-name-wiki-submit-error' => 'Oops! You need to fill in both of the boxes above to keep going.',
 	'cnw-login' => 'Log In',
 	'cnw-signup' => 'Create Account',
@@ -758,7 +757,6 @@ $messages['de'] = array(
 	'cnw-error-unconfirmed-email-header' => 'Deine E-Mail-Adresse wurde nicht bestätigt',
 	'cnw-error-unconfirmed-email' => 'Deine E-Mail-Adresse muss zum Erstellen eines Wikis bestätigt werden.',
 	'cnw-name-wiki-language' => '',
-	'cnw-name-wiki-domain' => '.wikia.com',
 );
 
 /** German (formal address) (Deutsch (Sie-Form)‎)
@@ -892,7 +890,6 @@ $messages['es'] = array(
 	'cnw-error-unconfirmed-email-header' => 'Tu correo electrónico no ha sido confirmado',
 	'cnw-error-unconfirmed-email' => 'Tu correo electrónico debe ser confirmado para crear una wikia.',
 	'cnw-name-wiki-language' => '',
-	'cnw-name-wiki-domain' => '.wikia.com',
 );
 
 /** Basque (euskara)
@@ -1139,7 +1136,6 @@ $messages['fr'] = array(
 	'cnw-error-unconfirmed-email-header' => "Votre adresse e-mail n'a pas été confirmée.",
 	'cnw-error-unconfirmed-email' => 'Avant de pouvoir créer un wikia, vous devez confirmer votre adresse e-mail.',
 	'cnw-name-wiki-language' => '',
-	'cnw-name-wiki-domain' => '.wikia.com',
 );
 
 /** Western Frisian (Frysk)
@@ -1577,7 +1573,6 @@ $messages['it'] = array(
 	'cnw-error-unconfirmed-email-header' => 'Il tuo indirizzo email non è stato confermato',
 	'cnw-error-unconfirmed-email' => 'Il tuo indirizzo email deve essere confermato per creare una wikia.',
 	'cnw-name-wiki-language' => '',
-	'cnw-name-wiki-domain' => '.wikia.com',
 	'cnw-desc-select-vertical' => "Seleziona una categoria dell'Hub",
 	'cnw-desc-select-categories' => 'Seleziona una o più categorie aggiuntive',
 	'cnw-desc-all-ages' => 'Questa wikia è per bambini?',
@@ -1648,7 +1643,6 @@ $messages['ja'] = array(
 	'cnw-error-bot-header' => 'ボットとして検出されました',
 	'cnw-error-unconfirmed-email' => 'Wikiaコミュニティを作成するには、メールの認証を行っていただく必要があります。',
 	'cnw-name-wiki-language' => '',
-	'cnw-name-wiki-domain' => '.wikia.com',
 	'cnw-userauth-marketing-body' => 'Wikiaコミュニティを作成するためにはアカウントが必要です。アカウントの作成は数分で完了します。',
 	'cnw-desc-select-vertical' => 'カテゴリを選んでください',
 	'cnw-desc-select-categories' => '他にあてはまるカテゴリがあれば選んでください（複数可）。',
@@ -2401,7 +2395,6 @@ $messages['nl'] = array(
 	'cnw-error-unconfirmed-email-header' => 'Uw e-mailadres is niet bevestigd',
 	'cnw-error-unconfirmed-email' => 'Uw e-mailadres moet bevestigd zijn om een wiki te kunnen aanmaken.',
 	'cnw-name-wiki-language' => '',
-	'cnw-name-wiki-domain' => '.wikia.com',
 );
 
 /** Nederlands (informeel)‎ (Nederlands (informeel)‎)
@@ -2560,7 +2553,6 @@ $messages['pl'] = array(
 	'cnw-error-unconfirmed-email-header' => 'Twój e-mail nie został potwierdzony',
 	'cnw-error-unconfirmed-email' => 'Twój e-mail musi być potwierdzony, aby stworzyć Wiki.',
 	'cnw-name-wiki-language' => '',
-	'cnw-name-wiki-domain' => '.wikia.com',
 );
 
 /** Piedmontese (Piemontèis)
@@ -2742,7 +2734,6 @@ $messages['pt'] = array(
 	'cnw-error-unconfirmed-email-header' => 'Seu endereço de e-mail não foi confirmado.',
 	'cnw-error-unconfirmed-email' => 'Seu endereço de e-mail deve ser confirmado para criar uma wikia.',
 	'cnw-name-wiki-language' => '',
-	'cnw-name-wiki-domain' => '.wikia.com',
 	'cnw-desc-select-vertical' => 'Selecione um Portal',
 	'cnw-desc-select-categories' => 'Selecione categorias adicionais',
 );
@@ -2972,7 +2963,6 @@ $messages['ru'] = array(
 	'cnw-error-unconfirmed-email-header' => 'Адрес электронной почты не был подтверждён',
 	'cnw-error-unconfirmed-email' => 'Чтобы создать Вики, необходимо подтвердить адрес электронной почты.',
 	'cnw-name-wiki-language' => '',
-	'cnw-name-wiki-domain' => '.wikia.com',
 );
 
 /** Sanskrit (संस्कृतम्)
@@ -3798,7 +3788,6 @@ $messages['zh-hans'] = array(
 	'cnw-error-unconfirmed-email-header' => '您的电子邮件尚未验证。',
 	'cnw-error-unconfirmed-email' => '您需要先验证邮件才能创建维基。',
 	'cnw-name-wiki-language' => '',
-	'cnw-name-wiki-domain' => '.wikia.com',
 );
 
 /** Traditional Chinese (中文（繁體）‎)
@@ -3883,7 +3872,6 @@ $messages['zh-tw'] = array(
 	'cnw-name-wiki-label' => '給你的維基命名',
 	'cnw-name-wiki-domain-label' => '給你的維基一個網址',
 	'cnw-name-wiki-language' => '',
-	'cnw-name-wiki-domain' => '.wikia.com',
 	'cnw-name-wiki-submit-error' => '抱歉！需要填寫上面兩欄才能繼續。',
 	'cnw-login' => '登入',
 	'cnw-signup' => '創建帳戶',

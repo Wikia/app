@@ -23,7 +23,7 @@ class CreateNewWikiController extends WikiaController {
 	const LANG_ALL_AGES_OPT        = 'en';
 
 	public function index() {
-		global $wgSuppressWikiHeader, $wgSuppressPageHeader, $wgSuppressFooter, $wgSuppressToolbar, $wgRequest, $wgUser;
+		global $wgSuppressWikiHeader, $wgSuppressPageHeader, $wgSuppressFooter, $wgSuppressToolbar, $wgRequest, $wgUser, $wgWikiaBaseDomain;
 		wfProfileIn( __METHOD__ );
 
 		// hide some default oasis UI things
@@ -102,6 +102,9 @@ class CreateNewWikiController extends WikiaController {
 
 		// theme designer application theme settings
 		$this->applicationThemeSettings = SassUtil::getApplicationThemeSettings();
+
+		// use either wikia.com (production) or wikia-staging.com (staging)
+		$this->wikiaBaseDomain = $wgWikiaBaseDomain;
 
 		wfProfileOut( __METHOD__ );
 	}
