@@ -141,4 +141,16 @@ class CommunityPageSpecialHooks {
 	private static function isAdmin( $userId ) {
 		return in_array( $userId, ( new CommunityPageSpecialUsersModel() )->getAdmins() );
 	}
+
+	/**
+	 * Add wgCommunityPageDisableTopContributors global variable to startup ResourceLoader module
+	 *
+	 * @param array $vars JS global variables
+	 * @return bool true
+	 */
+	public static function onResourceLoaderGetConfigVars(Array &$vars) {
+		global $wgCommunityPageDisableTopContributors;
+		$vars['wgCommunityPageDisableTopContributors'] = $wgCommunityPageDisableTopContributors;
+		return true;
+	}
 }
