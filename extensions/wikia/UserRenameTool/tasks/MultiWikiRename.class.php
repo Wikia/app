@@ -60,9 +60,9 @@ class MultiWikiRename extends WikiRenameBase {
 	 * method WikiaRenameBase::recordWikiRenamed for more details.
 	 */
 	private function monitorTasks() {
-		// Start with the full list of 
-		$leftToRename = $this->cityIds;
-		$this->recordWikisLeftToUpdate( $leftToRename );
+		// If we're restarting a rename, there will still be data here we can use to start where we left off
+		$leftToRename = $this->getWikisLeftToUpdate();
+		$leftToRename = empty( $leftToRename ) ? $this->cityIds : $leftToRename;
 
 		while ( count( $leftToRename ) ) {
 			$leftToRename = $this->checkStatus( $leftToRename );

@@ -6,7 +6,7 @@ use Wikia\Tasks\Tasks\BaseTask;
 
 class WikiRenameBase extends BaseTask {
 
-	const FLAG_RENAME_WIKIS = 'wikis_to_update';
+	const FLAG_RENAME_WIKIS_TMPL = 'wikis_to_update_%s';
 	const FLAG_RENAME_WIKI_DONE_TMPL = 'wiki_%d_rename_%s';
 
 	/** @var  \UserRenameToolProcessLocal */
@@ -34,6 +34,21 @@ class WikiRenameBase extends BaseTask {
 	}
 
 	/**
+	 * Return the flag to use for returning list of wiki IDs that remain to be processed for this rename.
+	 * The flag has the format:
+	 *
+	 *    wikis_to_update_%s
+	 *
+	 * Where %s is the new username.
+	 *
+	 * @return string
+	 */
+	protected function getWikisToRenameFlag() {
+		$newName = $this->params['rename_new_name'];
+		return sprintf( self::FLAG_RENAME_WIKIS_TMPL, $newName );
+	}
+
+	/**
 	 * Record the current list of wikis that need to have the target user renamed.
 	 *
 	 * @param array $wikiIds
@@ -42,22 +57,21 @@ class WikiRenameBase extends BaseTask {
 	 */
 	protected function recordWikisLeftToUpdate( array $wikiIds ) {
 		$user = $this->getFakeUser();
-		$user->setGlobalFlag( self::FLAG_RENAME_WIKIS, $wikiIds );
+		$user->setGlobalFlag( $this->getWikisToRenameFlag(), $wikiIds );
 		$user->saveSettings();
-		$user->saveToCache();
 	}
 
 	/**
 	 * Returns the list of wiki IDs that still need to be updated
 	 *
-	 * @return bool
+	 * @return array
 	 *
 	 * @throws \Exception
 	 */
 	protected function getWikisLeftToUpdate() {
 		$user = $this->getFakeUser();
 		$user->clearInstanceCache();
-		return $user->getGlobalFlag( self::FLAG_RENAME_WIKIS );
+		return $user->getGlobalFlag( $this->getWikisToRenameFlag() );
 	}
 
 	/**
