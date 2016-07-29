@@ -1093,10 +1093,10 @@ input.searchButton {
 	height: 1%;
 }
 #f-copyrightico {
+	background-repeat: no-repeat;
 	float: left;
 	height: 1%;
 	width: 88px;
-	background-repeat: no-repeat;
 }
 
 /* js pref toc */
@@ -1886,3 +1886,4 @@ p.mw-ipb-conveniencelinks {
 	line-height: 42px;
 	margin: 0 20px;
 	text-transform: uppercase;
+}
