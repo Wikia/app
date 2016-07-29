@@ -1,4 +1,4 @@
-define('ext.wikia.adEngine.utils.sampler', [], function () {
+define('ext.wikia.adEngine.utils.sampler', function () {
 	'use strict';
 
 	function sample(partToSample, all) {
