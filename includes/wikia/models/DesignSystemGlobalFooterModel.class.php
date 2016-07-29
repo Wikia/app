@@ -613,6 +613,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 
 		foreach ( $linksBaseList as $linkBaseData ) {
 			$href = $this->getHref( $linkBaseData['href-key'] );
+			unset( $linkBaseData['href-key'] );
 
 			if ( $href ) {
 				$linkBaseData['href'] = $href;
