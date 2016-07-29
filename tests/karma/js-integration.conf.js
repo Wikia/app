@@ -21,6 +21,7 @@ module.exports = function (config) {
 			'resources/wikia/libraries/define.mock.js',
 
 			// JSMessages
+			'resources/mediawiki/mediawiki.js',
 			'extensions/wikia/JSMessages/js/JSMessages.js',
 
 			// Chat Tests
