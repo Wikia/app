@@ -79,6 +79,9 @@ class CommunityPageSpecialHooks {
 			\Wikia::addAssetsToOutput( 'community_page_new_user_modal_scss' );
 		}
 
+		// add inspectlet tracking
+		(new Inspectlet)->addExperiment(676892673);
+
 		return true;
 	}
 
