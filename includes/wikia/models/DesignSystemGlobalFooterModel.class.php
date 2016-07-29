@@ -525,6 +525,11 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 		$this->hrefs = $hrefs;
 	}
 
+	/**
+	 * Get prepared/parsed data.
+	 *
+	 * @return array
+	 */
 	public function getData() {
 		$this->setHeaderData();
 		$this->setSectionsData();
@@ -533,6 +538,9 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 		return $this->data;
 	}
 
+	/**
+	 * Add footer headers to $this->data property depending on the chosen language.
+	 */
 	private function setHeaderData() {
 		if ( $this->lang === self::DEFAULT_LANG ) {
 			$this->data['fandom'] = [
@@ -574,12 +582,21 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 		}
 	}
 
+	/**
+	 * Add footer sections to $this->data property by reading $this->baseData property.
+	 */
 	private function setSectionsData() {
 		foreach ( $this->baseData as $sectionName => $sectionBaseData ) {
 			$this->setSectionData( $sectionName, $sectionBaseData );
 		}
 	}
 
+	/**
+	 * Add single footer section to $this->data property.
+	 *
+	 * @param string $sectionName
+	 * @param array $sectionBaseData
+	 */
 	private function setSectionData( $sectionName, $sectionBaseData ) {
 		$sectionData = $this->getSectionData( $sectionBaseData );
 
@@ -588,6 +605,14 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 		}
 	}
 
+	/**
+	 * Get data for a single footer section.
+	 * Returned data has link href keys parsed to hrefs, making it ready to be added to the response.
+	 *
+	 * @param array $sectionBaseData
+	 *
+	 * @return array
+	 */
 	private function getSectionData( $sectionBaseData ) {
 		if ( !empty( $sectionBaseData['links'] ) ) {
 			$linksData = $this->getLinksData( $sectionBaseData['links'] );
@@ -602,6 +627,13 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 		return $sectionBaseData;
 	}
 
+	/**
+	 * Get list of links data entries with parsed href keys to hrefs.
+	 *
+	 * @param array $linksBaseList
+	 *
+	 * @return array
+	 */
 	private function getLinksData( $linksBaseList ) {
 		$linksList = [ ];
 
@@ -618,10 +650,21 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 		return $linksList;
 	}
 
+	/**
+	 * Get the href value for a particular href key.
+	 * If there's no href key defined for the selected language, fallback to a default value.
+	 *
+	 * @param string $hrefKey
+	 *
+	 * @return string|null
+	 */
 	private function getHref( $hrefKey ) {
 		return $this->hrefs[$this->lang][$hrefKey] ?? $this->hrefs['default'][$hrefKey];
 	}
 
+	/**
+	 * Add license data to $this->data property.
+	 */
 	private function setLicenseData() {
 		$this->data['licensing_and_vertical'] = [
 			'description' => [
@@ -634,6 +677,11 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 		];
 	}
 
+	/**
+	 * Get detailed license data.
+	 *
+	 * @return array
+	 */
 	private function getLicenseData() {
 		$licenseText = WikiFactory::getVarByName( 'wgRightsText', $this->wikiId )->cv_value ?: $this->wg->RightsText;
 
@@ -647,6 +695,11 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 		];
 	}
 
+	/**
+	 * Get the URL of the license assigned to the particular wiki.
+	 *
+	 * @return mixed|null|string
+	 */
 	private function getLicenseUrl() {
 		$licenseUrl = WikiFactory::getVarByName( 'wgRightsUrl', $this->wikiId )->cv_value ?: $this->wg->RightsUrl;
 		$licensePage = WikiFactory::getVarByName( 'wgRightsPage', $this->wikiId )->cv_value ?: $this->wg->RightsPage;
