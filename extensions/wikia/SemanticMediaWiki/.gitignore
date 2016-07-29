@@ -1,8 +1,6 @@
 *~
 *.kate-swp
 
-vendor/
-extensions/
 build/logs/
 build/release/build-*
 
