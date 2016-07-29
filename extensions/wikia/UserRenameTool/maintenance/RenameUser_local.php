@@ -8,7 +8,7 @@
  * @usage: SERVER_ID=177 php RenameUser_local.php --conf /usr/wikia/conf/current/wiki.factory/LocalSettings.php --aconf /usr/wikia/conf/current/AdminSettings.php
  */
 
-ini_set( "include_path", dirname( __FILE__ ) . "/../../../" );
+ini_set( "include_path", dirname( __FILE__ ) . "/../../../../maintenance" );
 
 $options = [ 'help' ];
 

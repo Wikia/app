@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Perform user rename process
  *
@@ -9,7 +8,7 @@
 
 putenv( 'SERVER_ID=177' ); // run in the context of community wiki
 
-require_once( dirname( __FILE__ ) . '/../../../Maintenance.php' );
+require_once( dirname( __FILE__ ) . '/../../../../maintenance/Maintenance.php' );
 
 /**
  * Maintenance script class
@@ -73,4 +72,5 @@ class RenameUserMaintenance extends Maintenance {
 }
 
 $maintClass = "RenameUserMaintenance";
+/** @noinspection PhpIncludeInspection */
 require_once( RUN_MAINTENANCE_IF_MAIN );
