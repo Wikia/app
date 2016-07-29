@@ -15,8 +15,8 @@ $wgExtensionCredits['api'][] = [
 $wgExtensionMessagesFiles['DesignSystem'] = $dir . 'DesignSystem.i18n.php';
 
 // helpers
+$wgAutoloadClasses[ 'DesignSystemHelper' ] = $dir . 'DesignSystemHelper.class.php';
 $wgAutoloadClasses[ 'DesignSystemHooks' ] = $dir . 'DesignSystemHooks.class.php';
 
 // hooks
 $wgHooks[ 'BeforePageDisplay' ][] = 'DesignSystemHooks::onBeforePageDisplay';
-$wgHooks[ 'GetHTMLAfterBody' ][] = 'DesignSystemHooks::onGetHTMLAfterBody';
