@@ -9,7 +9,9 @@
  * @author Krzysztof Krzyżaniak (eloy) <eloy@wikia-inc.com>
  */
 
-$options = array( 'help' );
+putenv( "SERVER_ID=177" );
+
+$options = [ 'help' ];
 
 ini_set( "include_path", dirname( __FILE__ ) . "/../" );
 require_once( 'commandLine.inc' );
@@ -41,7 +43,7 @@ if ( !is_object( $user ) ) {
 }
 
 # Insert the account into the database
-$user->addToDatabase();
+//$user->addToDatabase();
 $user->setEmail( $email );
 $user->setPassword( $password );
 $user->confirmEmail();

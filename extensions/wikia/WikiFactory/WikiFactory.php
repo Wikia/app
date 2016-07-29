@@ -161,7 +161,7 @@ class WikiFactory {
 	 *                master (for write queries), DB_SLAVE for potentially lagged
 	 *                read queries, or an integer >= 0 for a particular server.
 	 *
-	 * @return Database object
+	 * @return DatabaseBase object
 	 */
 	static public function db( $db ) {
 		global $wgExternalSharedDB;
@@ -3138,12 +3138,13 @@ class WikiFactory {
 	}
 
 	/**
-	 * Gets a list of all secondary database clusters, i.e. wikicities_c1, etc.
+	 * Gets a list of all secondary database clusters, e.g. c1, c2, c3.  These are
+	 * used as the suffix for the cluster DB name, e.g., wikicities_c1
+	 *
+	 * @return array
 	 */
-
 	static public function getSecondaryClusters() {
 		global $wgMemc;
-		wfProfileIn( __METHOD__ );
 
 		$key = "wikifactory:clusters";
 		$clusters = $wgMemc->get( $key );
@@ -3165,8 +3166,6 @@ class WikiFactory {
 
 			$wgMemc->set( $key, $clusters, 60*60*12 );
 		}
-
-		wfProfileOut( __METHOD__ );
 		return $clusters;
 	}
 
@@ -3421,4 +3420,23 @@ class WikiFactory {
 		return var_export( $value, true );
 	}
 
+	static public function getCityLink( $cityId ) {
+		global $wgCityId, $wgSitename;
+
+		$domains = self::getDomains( $cityId );
+
+		if ( $wgCityId == $cityId ) {
+			// Hack based on the fact we should only ask for current wiki's sitename
+			$text = $wgSitename;
+		} else {
+			// The fallback to return anything
+			$text = "[" . self::IDtoDB( $cityId ) . ":{$cityId}]";
+		}
+
+		if ( !empty( $domains ) ) {
+			$text = Xml::tags( 'a', array( "href" => "http://" . $domains[0] ), $text );
+		}
+
+		return $text;
+	}
 };

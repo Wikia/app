@@ -141,7 +141,7 @@ class CoppaToolController extends WikiaController {
 		$ipAddr = IP::sanitizeIP( $ipAddr );
 		$newIpAddr = '0.0.0.0';
 
-		$wikiIDs = RenameUserHelper::lookupIPActivity( $ipAddr );
+		$wikiIDs = UserRenameToolHelper::lookupIPActivity( $ipAddr );
 
 		$taskParams = [
 			'requestor_id' => $this->wg->User->getID(),
@@ -153,7 +153,7 @@ class CoppaToolController extends WikiaController {
 			'notify_renamed' => false,
 			'reason' => wfMessage( 'coppatool-reason' )->plain(),
 		];
-		$task = ( new UserRenameTask() )
+		$task = ( new UserRenameToolTask() )
 			->setPriority( \Wikia\Tasks\Queues\PriorityQueue::NAME );
 		$task->call('renameUser', $wikiIDs, $taskParams);
 		$taskID = $task->queue();
