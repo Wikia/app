@@ -53,14 +53,6 @@ class ImageReviewDeleteInvalidEntries extends Maintenance {
 						'page_id' => $row->page_id,
 						'state'   => ImageReviewStatuses::STATE_ICO_IMAGE,
 					];
-					\Wikia\Logger\WikiaLogger::instance()->info( "ImageReviewUpdateIconEntries", [
-						'method' => __METHOD__,
-						'message' => "Image skipped",
-						'maintanance' => true,
-						'reason' => $verified['reason'],
-						'page_id' => $row->page_id,
-						'wiki_id' => $row->wiki_id,
-					] );
 					break;
 				default:
 					$this->output( sprintf( "DEL wiki: %d, page: %d, reason: %s\n", $row->wiki_id, $row->page_id, $verified['reason'] ) );
@@ -69,14 +61,6 @@ class ImageReviewDeleteInvalidEntries extends Maintenance {
 						'page_id' => $row->page_id,
 						'reason'  => $verified['reason']
 					];
-					\Wikia\Logger\WikiaLogger::instance()->info( "ImageReviewUpdateIconEntries", [
-						'method' => __METHOD__,
-						'message' => "Image skipped",
-						'maintanance' => true,
-						'reason' => $verified['reason'],
-						'page_id' => $row->page_id,
-						'wiki_id' => $row->wiki_id,
-					] );
 			}
 
 			// full batch
@@ -104,7 +88,7 @@ class ImageReviewDeleteInvalidEntries extends Maintenance {
 		}
 
 		$this->output( sprintf( "Summary: %d image(s) marked as icons\n", self::BATCH_SIZE ) );
-		\Wikia\Logger\WikiaLogger::instance()->info( 'ImageReviewUpdateIconEntries', [ 'images' => $set ] );
+		\Wikia\Logger\WikiaLogger::instance()->info( 'ImageReviewDeleteInvalidEntries', [ 'type' => 'ico', 'images' => $set ] );
 		if ( $this->dry_run ) {
 			return;
 		}
@@ -120,7 +104,7 @@ class ImageReviewDeleteInvalidEntries extends Maintenance {
 		}
 
 		$this->output( sprintf( "Summary: %d image(s) marked for deletion\n", self::BATCH_SIZE ) );
-		\Wikia\Logger\WikiaLogger::instance()->info( 'ImageReviewDeleteInvalidEntries', [ 'images' => $set ] );
+		\Wikia\Logger\WikiaLogger::instance()->info( 'ImageReviewDeleteInvalidEntries', [ 'type' => 'delete', 'images' => $set ] );
 		if ( $this->dry_run ) {
 			return;
 		}
