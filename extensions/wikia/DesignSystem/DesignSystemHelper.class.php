@@ -29,7 +29,7 @@ class DesignSystemHelper {
 				$xml->addAttribute( 'class', $classNames );
 			}
 
-			if ( !empty( $classNames ) ) {
+			if ( !empty( $alt ) ) {
 				$xml->addAttribute( 'alt', $alt );
 			}
 
@@ -40,7 +40,17 @@ class DesignSystemHelper {
 				'name' => $name
 			] );
 
-			return $alt || $name || '';
+			$fallback = '';
+
+			if ( !empty( $alt ) ) {
+				$fallback = $alt;
+			}
+
+			if ( !empty( $name ) ) {
+				$fallback = $name;
+			}
+
+			return $fallback;
 		}
 	}
 

@@ -2,7 +2,6 @@
 /**
  * Design System Extension
  */
-$dir = dirname( __FILE__ ) . '/';
 
 $wgExtensionCredits['api'][] = [
 	'name' => 'Design System',
@@ -12,11 +11,11 @@ $wgExtensionCredits['api'][] = [
 ];
 
 // i18n
-$wgExtensionMessagesFiles['DesignSystem'] = $dir . 'DesignSystem.i18n.php';
+$wgExtensionMessagesFiles['DesignSystem'] = __DIR__ . '/DesignSystem.i18n.php';
 
 // helpers
-$wgAutoloadClasses[ 'DesignSystemHelper' ] = $dir . 'DesignSystemHelper.class.php';
-$wgAutoloadClasses[ 'DesignSystemHooks' ] = $dir . 'DesignSystemHooks.class.php';
+$wgAutoloadClasses[ 'DesignSystemHelper' ] = __DIR__ . '/DesignSystemHelper.class.php';
+$wgAutoloadClasses[ 'DesignSystemHooks' ] = __DIR__ . '/DesignSystemHooks.class.php';
 
 // hooks
 $wgHooks[ 'BeforePageDisplay' ][] = 'DesignSystemHooks::onBeforePageDisplay';
