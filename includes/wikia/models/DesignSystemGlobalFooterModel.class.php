@@ -587,25 +587,17 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 	}
 
 	private function getSectionData( $sectionBaseData ) {
-		$sectionData = [ ];
-
-		if ( !empty( $sectionBaseData['header'] ) ) {
-			$sectionData['header'] = $sectionBaseData['header'];
-		}
-
-		if ( !empty( $sectionBaseData['description'] ) ) {
-			$sectionData['description'] = $sectionBaseData['description'];
-		}
-
 		if ( !empty( $sectionBaseData['links'] ) ) {
 			$linksData = $this->getLinksData( $sectionBaseData['links'] );
 
 			if ( !empty( $linksData ) ) {
-				$sectionData['links'] = $linksData;
+				$sectionBaseData['links'] = $linksData;
+			} else {
+				unset( $sectionBaseData['links'] );
 			}
 		}
 
-		return $sectionData;
+		return $sectionBaseData;
 	}
 
 	private function getLinksData( $linksBaseList ) {
