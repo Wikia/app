@@ -238,7 +238,7 @@ There are no such extensions here, so look at [[wikipedia:Special:Version]] for 
 	'vertical-lifestyle' => 'Lifestyle vertical name',
 	'vertical-music' => 'Music vertical name',
 	'vertical-movies' => 'Movies vertical name',
-	'vertical-comedy' => 'Uncyclopedia wikis comscore tag label',
+	'vertical-comedy' => 'Comedy vertical name, used only by Uncyclopedia',
 );
 
 $messages['ab'] = array(

@@ -1247,10 +1247,10 @@ div.mw-lag-warn-high {
 
 /* WW-93: ComScore tag in footer for uncyclo wikis */
 #uncyc-branding {
-	display: inline-block;
-	height: 40px;
 	border: 1px solid #000;
+	display: inline-block;
 	float: right;
+	height: 40px;
 }
 
 #uncyc-branding a {
