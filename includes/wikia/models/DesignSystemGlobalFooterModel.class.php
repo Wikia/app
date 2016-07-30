@@ -18,7 +18,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 			'community-central' => 'http://community.wikia.com/wiki/Community_Central',
 			'support' => 'http://community.wikia.com/wiki/Special:Contact',
 			'create-new-wiki' => 'http://www.wikia.com/Special:CreateNewWiki',
-			'fan-contributor' => 'http://fandom.wikia.com/fan-contributor',
+			'fan-contributor' => null,
 			'wam' => 'http://www.wikia.com/WAM',
 			'help' => 'http://community.wikia.com/wiki/Help:Contents',
 			'media-kit' => 'http://www.wikia.com/mediakit',
@@ -49,6 +49,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 			'social-instagram' => 'https://www.instagram.com/wikia_de/'
 		],
 		'en' => [
+			'fan-contributor' => 'http://fandom.wikia.com/fan-contributor',
 			'social-facebook' => 'https://www.facebook.com/getfandom',
 			'social-twitter' => 'https://twitter.com/getfandom',
 			'social-reddit' => 'https://www.reddit.com/r/wikia',
@@ -106,7 +107,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 		],
 		'ja' => [
 			'fan-communities' => 'http://ja.wikia.com/',
-			'about' => 'http://ja.wikia.com/%E3%82%A6%E3%82%A3%E3%82%AD%E3%82%A2%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6',
+			'about' => 'http://ja.wikia.com/companyinfo',
 			'contact' => 'http://ja.wikia.com/%E7%89%B9%E5%88%A5:%E3%81%8A%E5%95%8F%E3%81%84%E5%90%88%E3%82%8F%E3%81%9B',
 			'wikia-gives-back' => 'http://www.wikia.com/wikiagivesback?uselang=ja',
 			'terms-of-use' => 'http://ja.wikia.com/%E5%88%A9%E7%94%A8%E8%A6%8F%E7%B4%84',
@@ -290,57 +291,6 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 					]
 				]
 			],
-			'community' => [
-				'header' => [
-					'type' => 'line-text',
-					'title' => [
-						'type' => 'translatable-text',
-						'key' => 'global-footer-wikia-community-header'
-					]
-				],
-				'links' => [
-					[
-						'type' => 'link-text',
-						'title' => [
-							'type' => 'translatable-text',
-							'key' => 'global-footer-wikia-community-link-community-central'
-						],
-						'href' => $this->getHref( 'community-central' )
-					],
-					[
-						'type' => 'link-text',
-						'title' => [
-							'type' => 'translatable-text',
-							'key' => 'global-footer-wikia-community-link-support'
-						],
-						'href' => $this->getHref( 'support' )
-					],
-					[
-						'type' => 'link-text',
-						'title' => [
-							'type' => 'translatable-text',
-							'key' => 'global-footer-wikia-community-link-fan-contributor-program'
-						],
-						'href' => $this->getHref( 'fan-contributor' )
-					],
-					[
-						'type' => 'link-text',
-						'title' => [
-							'type' => 'translatable-text',
-							'key' => 'global-footer-wikia-community-link-wam-score'
-						],
-						'href' => $this->getHref( 'wam' )
-					],
-					[
-						'type' => 'link-text',
-						'title' => [
-							'type' => 'translatable-text',
-							'key' => 'global-footer-wikia-community-link-help'
-						],
-						'href' => $this->getHref( 'help' )
-					]
-				]
-			],
 			'create_wiki' => [
 				'description' => [
 					'type' => 'translatable-text',
@@ -430,6 +380,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 
 		$data['fandom_overview'] = $this->getFandomOverview();
 		$data['follow_us'] = $this->getFollowUs();
+		$data['community'] = $this->getCommunity();
 
 		if ( $this->lang === self::DEFAULT_LANG ) {
 			$data['fandom'] = [
@@ -487,8 +438,8 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 	}
 
 	private function getFandomOverview() {
-		$out =  [
-			'links' => []
+		$out = [
+			'links' => [ ]
 		];
 
 		if ( $this->lang === self::DEFAULT_LANG ) {
@@ -545,7 +496,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 					'key' => 'global-footer-fandom-follow-us-header'
 				]
 			],
-			'links' => []
+			'links' => [ ]
 		];
 
 		if ( $this->getHref( 'social-facebook' ) ) {
@@ -605,6 +556,76 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 					'key' => 'global-footer-fandom-follow-us-link-instagram'
 				],
 				'href' => $this->getHref( 'social-instagram' )
+			];
+		}
+
+		return $data;
+	}
+
+	private function getCommunity() {
+		$data = [
+			'header' => [
+				'type' => 'line-text',
+				'title' => [
+					'type' => 'translatable-text',
+					'key' => 'global-footer-wikia-community-header'
+				]
+			],
+			'links' => [ ]
+		];
+
+		if ( $this->getHref( 'community-central' ) ) {
+			$data['links'][] = [
+				'type' => 'link-text',
+				'title' => [
+					'type' => 'translatable-text',
+					'key' => 'global-footer-wikia-community-link-community-central'
+				],
+				'href' => $this->getHref( 'community-central' )
+			];
+		}
+
+		if ( $this->getHref( 'support' ) ) {
+			$data['links'][] = [
+				'type' => 'link-text',
+				'title' => [
+					'type' => 'translatable-text',
+					'key' => 'global-footer-wikia-community-link-support'
+				],
+				'href' => $this->getHref( 'support' )
+			];
+		}
+
+		if ( $this->getHref( 'fan-contributor' ) ) {
+			$data['links'][] = [
+				'type' => 'link-text',
+				'title' => [
+					'type' => 'translatable-text',
+					'key' => 'global-footer-wikia-community-link-fan-contributor-program'
+				],
+				'href' => $this->getHref( 'fan-contributor' )
+			];
+		}
+
+		if ( $this->getHref( 'wam' ) ) {
+			$data['links'][] = [
+				'type' => 'link-text',
+				'title' => [
+					'type' => 'translatable-text',
+					'key' => 'global-footer-wikia-community-link-wam-score'
+				],
+				'href' => $this->getHref( 'wam' )
+			];
+		}
+
+		if ( $this->getHref( 'help' ) ) {
+			$data['links'][] = [
+				'type' => 'link-text',
+				'title' => [
+					'type' => 'translatable-text',
+					'key' => 'global-footer-wikia-community-link-help'
+				],
+				'href' => $this->getHref( 'help' )
 			];
 		}
 
