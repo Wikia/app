@@ -24,7 +24,8 @@ $optionsWithArgs = [
 	'task-id',
 	'requestor-id',
 	'reason',
-	'global-task-id'
+	'global-task-id',
+	'start-time',
 ];
 
 global $IP, $wgCityId;

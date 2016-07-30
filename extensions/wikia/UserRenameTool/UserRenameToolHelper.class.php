@@ -134,7 +134,7 @@ class UserRenameToolHelper {
 			User::getLinkToUserPageOnCommunityWiki( $newUsername ),
 			$info,
 			$reason
-		)->escaped();
+		)->text();
 
 		return $text;
 	}

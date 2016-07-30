@@ -56,6 +56,7 @@ class SingleWikiRename extends WikiRenameBase {
 			'rename-user-id' => $params['rename_user_id'],
 			'requestor-id' => $params['requestor_id'],
 			'reason' => $params['reason'],
+			'start-time' => $params['start_time'],
 		];
 
 		if ( $renameIP ) {

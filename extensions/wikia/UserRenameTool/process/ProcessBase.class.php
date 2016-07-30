@@ -23,8 +23,12 @@ class ProcessBase {
 	const ACTION_FAIL = 'fail';
 	const ACTION_FINISH = 'finish';
 
+	// An arbitrary amount of time to sleep between updates of MAX_ROWS_PER_QUERY rows to the DB
+	// If this is too high, we spend all our time sleeping, if too low, we hammer the DB.  Likely
+	// a value of 1 second (or lower if we use usleep()) would be sufficient.
 	const DB_COOL_DOWN_SECONDS = 1;
 
+	protected $startTime = 0;
 	protected $requestData = null;
 	protected $actionConfirmed = false;
 
@@ -58,6 +62,8 @@ class ProcessBase {
 	public function __construct( $oldUsername, $newUsername, $confirmed = false, $reason = null, $notifyUser = true ) {
 		global $wgUser;
 
+		$this->startTime = time();
+
 		// Save original request data
 		$this->requestData = new \stdClass();
 		$this->requestData->oldUsername = $oldUsername;
@@ -89,6 +95,7 @@ class ProcessBase {
 			'phalanxBlockId' => 'phalanx_block_id',
 			'reason' => 'reason',
 			'renameIP' => 'rename_ip',
+			'startTime' => 'start_time',
 		];
 
 		foreach ( $mapping as $property => $key ) {
@@ -419,6 +426,7 @@ class ProcessBase {
 
 	private function getDefaultLogContext() {
 		return [
+			'process' => 'user-rename',
 			'wikiId' => \F::app()->wg->CityId,
 			'userId' => $this->userId,
 			'oldUsername' => $this->oldUsername,
@@ -429,6 +437,7 @@ class ProcessBase {
 			'phalanxBlockId' => $this->phalanxBlockId,
 			'reason' => $this->reason,
 			'currentTaskId' => $this->currentTaskId,
+			'elapsedSeconds' => ( time() - $this->startTime ),
 		];
 	}
 

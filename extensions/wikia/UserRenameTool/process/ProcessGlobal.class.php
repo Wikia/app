@@ -15,13 +15,12 @@ class ProcessGlobal extends ProcessBase {
 	 * @return bool True if the process succeeded
 	 */
 	public function run() {
+		$this->logInfo( "User rename process started" );
 		if ( !$this->setup() ) {
 			return false;
 		}
 
-		// Execute the worker
 		$status = false;
-
 		try {
 			$status = $this->renameUser();
 		} catch ( \Exception $e ) {
@@ -358,7 +357,7 @@ class ProcessGlobal extends ProcessBase {
 		$this->logInfo( "Updating global shared database" );
 		$dbw = \WikiFactory::db( DB_MASTER );
 		$dbw->begin();
-		$tasks = [ ];
+		$tasks = [];
 
 		$hookName = 'UserRename::Global';
 		$this->logDebug( "Broadcasting hook", [ 'hookName' => $hookName ] );
@@ -398,6 +397,7 @@ class ProcessGlobal extends ProcessBase {
 			'phalanx_block_id' => $this->phalanxBlockId,
 			'reason' => $this->reason,
 			'notify_renamed' => $this->notifyUser,
+			'start_time' => $this->startTime,
 		];
 		$task = ( new MultiWikiRename() )->setPriority( PriorityQueue::NAME );
 		$task->call( 'run', $wikiIds, $callParams );

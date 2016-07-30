@@ -70,6 +70,7 @@ class MultiWikiRename extends WikiRenameBase {
 			sleep( self::TASK_POLL_SECONDS );
 
 			if ( $this->shouldGiveUpWaiting() ) {
+				$this->process->logError( "Rename process aborted waiting for tasks to complete" );
 				// Return leaving success as its default false value
 				return;
 			}
@@ -140,6 +141,7 @@ class MultiWikiRename extends WikiRenameBase {
 		}
 
 		$this->process->logFinishToStaff( $this->getTaskId() );
+		$this->process->logInfo( "Rename process finished" );
 		return true;
 	}
 
