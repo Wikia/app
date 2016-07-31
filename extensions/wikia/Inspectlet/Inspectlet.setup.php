@@ -1,6 +1,8 @@
 <?php
 /**
  * Inspectlet setup
+ * @desc Adds inspectlet script with given experiment ID if
+ * experiment ID was set before WikiaSkinTopScripts hook.
  *
  * @author Diana Falkowska
  *

@@ -1,10 +1,5 @@
 <?php
-/**
- * Inspectlet
- *
- * @author Diana Falkowska
- *
- */
+
 class Inspectlet {
 	private static $experimentId = 0;
 
