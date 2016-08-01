@@ -21,3 +21,32 @@
 		margin: -1px;
 	}
 }
+
+.recirculation-unit {
+
+	.rail-item.is-video,
+	.item.is-video {
+		.image-thumbnail,
+		.thumbnail {
+			position: relative;
+
+			&::after {
+				background: {
+					image: url('/extensions/wikia/Recirculation/images/playhead.svg'); /* $wgCdnStylePath */
+					position: center center;
+					repeat: no-repeat;
+					size: cover;
+				}
+
+				bottom: 12px;
+				content: '';
+				display: block;
+				height: 48px;
+				position: absolute;
+				right: 12px;
+				width: 48px;
+				z-index: 1;
+			}
+		}
+	}
+}
