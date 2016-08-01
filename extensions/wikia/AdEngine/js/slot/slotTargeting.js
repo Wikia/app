@@ -37,7 +37,7 @@ define('ext.wikia.adEngine.slot.slotTargeting', [
 			MOBILE_BOTTOM_LEADERBOARD: 'b'
 		};
 
-	function valOrX(map, key) {
+	function valueOrX(map, key) {
 		if (!key || !map[key]) {
 			return 'x';
 		}
@@ -48,10 +48,10 @@ define('ext.wikia.adEngine.slot.slotTargeting', [
 	function getWikiaSlotId(slotName, slotSource) {
 		var context = adContext.getContext(),
 
-			skin = valOrX(skins, context.targeting.skin),
-			slot = valOrX(wsiSlots, slotName),
-			pageType = valOrX(pageTypes, context.targeting.pageType),
-			src = valOrX(slotSources, slotSource);
+			skin = valueOrX(skins, context.targeting.skin),
+			slot = valueOrX(wsiSlots, slotName),
+			pageType = valueOrX(pageTypes, context.targeting.pageType),
+			src = valueOrX(slotSources, slotSource);
 
 		return skin + slot + pageType + src;
 	}
