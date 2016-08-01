@@ -68,7 +68,7 @@ class RevisionDeleteUser {
 		$dbw->update(
 			'archive',
 			array( "ar_deleted = ar_deleted $op $delUser" ),
-			array( 'ar_user_text' => $name ),
+			array( 'ar_user' => $userId ),
 			__METHOD__
 		);
 

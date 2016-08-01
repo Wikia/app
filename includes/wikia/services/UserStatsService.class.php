@@ -174,7 +174,7 @@ class UserStatsService extends WikiaModel {
 
 		$editCount += $dbr->selectField(
 			'archive', 'count(*)',
-			[ 'ar_user_text' => User::newFromId( $this->userId )->getName() ],
+			[ 'ar_user' => $this->userId ],
 			__METHOD__
 		);
 
