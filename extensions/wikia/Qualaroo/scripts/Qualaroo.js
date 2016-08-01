@@ -27,13 +27,18 @@
 		'contentLanguage': window.wgContentLanguage,
 		'pageType': window.wikiaPageType,
 		'isCorporatePage': (window.wikiaPageIsCorporate ? 'Yes' : 'No'),
+		// canonical vertical only: 'Games', 'Entertainment', 'Lifestyle', 'Wikia'
 		'verticalName': window.verticalName,
+		// all verticals
+		'fullVerticalName': window.fullVerticalName,
 		'visitorType': window.visitorType,
 		'isPowerUserAdmin': !!window.wikiaIsPowerUserAdmin,
 		'isPowerUserFrequent': !!window.wikiaIsPowerUserFrequent,
 		'isPowerUserLifetime': !!window.wikiaIsPowerUserLifetime,
 		'isLoggedIn': !!window.wgUserName,
-		'cpBenefitsModalShown': document.cookie.indexOf('cpBenefitsModalShown') > -1
+		'cpBenefitsModalShown': document.cookie.indexOf('cpBenefitsModalShown') > -1,
+		'isContributor': window.isContributor,
+		'isCurrentWikiAdmin': window.isCurrentWikiAdmin
 	}]);
 
 	//This approach is hacky and we should use eventHandler provided by Qualaroo.
