@@ -5,7 +5,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	const COMMUNITY_PAGE_BENEFITS_MODAL_IMAGE = 'Community-Page-Modal-Image.jpg';
 	// ID of the Communty Page in inspectlet app: https://www.inspectlet.com/dashboard
 	// kept here as it's only temporary tracking, will be removed as part of: https://wikia-inc.atlassian.net/browse/WW-111
-	const INSPECTLET_EXPERIMENT_ID = 676892673;
+	const INSPECTLET_EXPERIMENT_ID = 1280339383;
 	const DEFAULT_TEMPLATE_ENGINE = \WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
 	const ALL_MEMBERS_LIMIT = 20;
 	const TOP_ADMINS_MODULE_LIMIT = 3;
