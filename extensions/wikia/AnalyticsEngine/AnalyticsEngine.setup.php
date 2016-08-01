@@ -22,6 +22,7 @@ $wgAutoloadClasses['AnalyticsProviderIVW3'] = __DIR__ . '/AnalyticsProviderIVW3.
 $wgAutoloadClasses['AnalyticsProviderKrux'] = __DIR__ . '/AnalyticsProviderKrux.php';
 $wgAutoloadClasses['AnalyticsProviderNielsen'] = __DIR__ . '/AnalyticsProviderNielsen.php';
 $wgAutoloadClasses['AnalyticsProviderOpenXBidder'] = __DIR__ . '/AnalyticsProviderOpenXBidder.php';
+$wgAutoloadClasses['AnalyticsProviderPrebid'] = __DIR__ . '/AnalyticsProviderPrebid.php';
 $wgAutoloadClasses['AnalyticsProviderRubiconFastlane'] = __DIR__ . '/AnalyticsProviderRubiconFastlane.php';
 $wgAutoloadClasses['AnalyticsProviderGoogleUA'] = __DIR__ . '/AnalyticsProviderGoogleUA.php';
 

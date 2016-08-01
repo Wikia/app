@@ -5,6 +5,7 @@ define('ext.wikia.adEngine.template.bfaa', [
 	'ext.wikia.adEngine.provider.btfBlocker',
 	'ext.wikia.adEngine.slotTweaker',
 	'ext.wikia.adEngine.uapContext',
+	'ext.wikia.adEngine.utils.eventDispatcher',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window',
@@ -15,6 +16,7 @@ define('ext.wikia.adEngine.template.bfaa', [
 	btfBlocker,
 	slotTweaker,
 	uapContext,
+	eventDispatcher,
 	doc,
 	log,
 	win,
@@ -73,19 +75,22 @@ define('ext.wikia.adEngine.template.bfaa', [
 	};
 
 	mobileHandler =  {
-		show: function (iframe) {
+		show: function (iframe, aspectRatio) {
 			var adsModule = win.Mercury.Modules.Ads.getInstance(),
 				height,
-				onResize = adHelper.throttle(function () {
-					height = iframe.contentWindow.document.body.offsetHeight;
+				viewPortWidth,
+				adjustPadding = function () {
+					viewPortWidth = Math.max(doc.documentElement.clientWidth, win.innerWidth || 0);
+					height = aspectRatio ?
+						viewPortWidth / aspectRatio :
+						iframe.contentWindow.document.body.offsetHeight;
 					page.style.paddingTop = height + 'px';
 					adsModule.setSiteHeadOffset(height);
-				}, 100);
+				},
+				onResize = adHelper.throttle(adjustPadding, 100);
 
 			page.classList.add('bfaa-template');
-			height = iframe.contentWindow.document.body.offsetHeight;
-			page.style.paddingTop = height + 'px';
-			adsModule.setSiteHeadOffset(height);
+			adjustPadding();
 
 			win.addEventListener('resize', onResize);
 			if (mercuryListener) {
@@ -120,9 +125,9 @@ define('ext.wikia.adEngine.template.bfaa', [
 		}
 
 		wrapper.style.opacity = '0';
-		slotTweaker.makeResponsive(params.slotName);
+		slotTweaker.makeResponsive(params.slotName, params.aspectRatio);
 		slotTweaker.onReady(params.slotName, function (iframe) {
-			handler.show(iframe);
+			handler.show(iframe, params.aspectRatio);
 			wrapper.style.opacity = '';
 		});
 
@@ -131,9 +136,7 @@ define('ext.wikia.adEngine.template.bfaa', [
 		uapContext.setUapId(params.uap);
 		unblockedSlots.forEach(btfBlocker.unblock);
 
-		if (skin === 'mercury') {
-			win.dispatchEvent(new Event('wikia.uap'));
-		}
+		eventDispatcher.dispatch('wikia.uap');
 	}
 
 	return {

@@ -92,7 +92,7 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 		if ( $this->mockProxy !== null ) {
 			throw new Exception("Previous test did not execute tearDown()");
 		}
-		$this->mockProxy = version_compare( PHP_VERSION, '7.0.0.', '<' ) ? new WikiaMockProxy() : new WikiaMockProxyUopz();
+		$this->mockProxy = new WikiaMockProxy();
 		$this->mockProxy->enable();
 	}
 
@@ -532,6 +532,12 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 		$this->mockGlobalVariable( 'wgWikiaEnvironment', WIKIA_ENV_PREVIEW );
 	}
 
+	protected function mockStagingEnv() {
+		$this->mockGlobalVariable( 'wgDevelEnvironment', false );
+		$this->mockGlobalVariable( 'wgWikiaBaseDomain', 'wikia-staging.com' );
+		$this->mockGlobalVariable( 'wgWikiaEnvironment', WIKIA_ENV_STAGING );
+	}
+
 	protected function mockVerifyEnv() {
 		$this->mockGlobalVariable( 'wgDevelEnvironment', false );
 		$this->mockGlobalVariable( 'wgStagingEnvironment', true );
@@ -550,6 +556,7 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 
 	protected function mockProdEnv() {
 		$this->mockGlobalVariable( 'wgDevelEnvironment', false );
+		$this->mockGlobalVariable( 'wgWikiaBaseDomain', 'wikia.com' );
 		$this->mockGlobalVariable( 'wgWikiaEnvironment', WIKIA_ENV_PROD );
 	}
 
@@ -568,6 +575,9 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 				break;
 			case WIKIA_ENV_PREVIEW:
 				$this->mockPreviewEnv();
+				break;
+			case WIKIA_ENV_STAGING:
+				$this->mockStagingEnv();
 				break;
 			case WIKIA_ENV_VERIFY:
 				$this->mockVerifyEnv();

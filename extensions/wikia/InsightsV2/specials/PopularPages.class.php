@@ -73,12 +73,12 @@ class PopularPages extends PageQueryPage {
 	 * @return array
 	 */
 	public function reallyDoQuery( $limit = false, $offset = false ) {
-		global $wgCityId;
+		global $wgCityId, $wgContentNamespaces;
 
 		$topArticles = DataMartService::getTopArticlesByPageview(
 			$wgCityId,
 			null,
-			null,
+			$wgContentNamespaces,
 			false,
 			self::LIMIT
 		);

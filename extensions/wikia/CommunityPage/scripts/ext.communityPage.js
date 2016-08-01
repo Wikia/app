@@ -82,6 +82,7 @@ require([
 				leaderboardText: $.msg('communitypage-top-contributors-week'),
 				allMembersCount: allMembersCount,
 				allAdminsCount: allAdminsCount,
+				contributorsModuleEnabled: !mw.config.get('wgCommunityPageDisableTopContributors'),
 			});
 			$deferred.resolve(modalNavHtml);
 		}
@@ -109,7 +110,7 @@ require([
 				controller: 'CommunityPageSpecial',
 				method: tab.request,
 				data: {
-					uselang: window.wgUserLanguage
+					uselang: mw.config.get('wgUserLanguage')
 				},
 				format: 'json',
 				type: 'get',
@@ -251,6 +252,18 @@ require([
 				handleClick(event, category);
 			}
 		});
+
+		// Track clicks in the To-do List module
+		$('.community-page-todo-list-module-edit').on('mousedown touchstart', 'a', function (event) {
+			handleClick(event, 'community-page-todo-list-module');
+		});
+
+		$('.community-page-todo-list-module-content').on('mousedown touchstart', 'a', function (event) {
+			track({
+				category: 'community-page-todo-list-module',
+				label: 'community-page-todo-list-module-content',
+			});
+		});
 	}
 
 	function initModalTracking(modal) {
@@ -265,6 +278,14 @@ require([
 				label: 'modal-close',
 			});
 		});
+
+		if (!mw.config.get('wgCommunityPageDisableTopContributors')) {
+			// Track impression for top contributors module
+			track({
+				action: tracker.ACTIONS.IMPRESSION,
+				label: 'top-contributor-module-loaded',
+			});
+		}
 	}
 
 	$(init);

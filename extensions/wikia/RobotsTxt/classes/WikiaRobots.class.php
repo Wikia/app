@@ -83,6 +83,7 @@ class WikiaRobots {
 	private $blockedParams = [
 		'action',
 		'feed',
+		'from', // user-supplied legacy MW pagination
 		'oldid',
 		'printable',
 		'redirect',

@@ -17,7 +17,6 @@
 			window.wikiaAuthModal.load({
 				forceLogin: true,
 				origin: 'editor',
-				url: '/signin?redirect=' + encodeURIComponent(window.location.href),
 				onAuthSuccess: function () {
 					if (window.WikiaEditor) {
 						WikiaEditor.reloadEditor();
@@ -32,8 +31,7 @@
 				window.onbeforeunload = function () {};
 				window.wikiaAuthModal.load({
 					forceLogin: true,
-					origin: 'editor',
-					url: '/signin?redirect=' + encodeURIComponent(window.location.href),
+					origin: 'editor'
 				});
 				return true;
 			}

@@ -19,15 +19,17 @@ define('ext.wikia.recirculation.views.rail', [
 
 		data.items = utils.addUtmTracking(data.items, 'rail');
 
-		return utils.renderTemplate(options.template, data).then(function($html) {
-			if (options.before) {
-				$html = options.before($html);
-			}
+		return utils.renderTemplate(options.template, data)
+			.then(utils.waitForRail)
+			.then(function($html) {
+				if (options.before) {
+					$html = options.before($html);
+				}
 
-			$('#RECIRCULATION_RAIL').html($html);
+				$('#RECIRCULATION_RAIL').html($html);
 
-			return $html;
-		});
+				return $html;
+			});
 	}
 
 	function setupTracking(experimentName) {

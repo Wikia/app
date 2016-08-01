@@ -109,10 +109,6 @@ define('ext.wikia.adEngine.adContext', [
 			context.providers.turtle = true;
 		}
 
-		if (geo.isProperGeo(instantGlobals.wgAdDriverHitMediaCountries)) {
-			context.providers.hitMedia = true;
-		}
-
 		if (context.providers.rubiconFastlane) {
 			context.providers.rubiconFastlane = geo.isProperGeo(instantGlobals.wgAdDriverRubiconFastlaneCountries) &&
 				geo.isProperGeo(instantGlobals.wgAdDriverRubiconFastlaneProviderCountries);
@@ -162,6 +158,9 @@ define('ext.wikia.adEngine.adContext', [
 			geo.isProperGeo(instantGlobals.wgAdDriverOverridePrefootersCountries) &&
 			!isPageType('home')
 		);
+
+		// OpenX for remnant slot enabled
+		context.opts.openXRemnantEnabled = geo.isProperGeo(instantGlobals.wgAdDriverOpenXBidderCountriesRemnant);
 
 		context.opts.yavli = !!(
 			!noExternals &&

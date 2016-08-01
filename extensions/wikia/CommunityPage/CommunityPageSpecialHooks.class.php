@@ -1,6 +1,7 @@
 <?php
 
 class CommunityPageSpecialHooks {
+	const FIRST_EDIT_COOKIE_KEY = 'community-page-first-time';
 
 	/**
 	 * Cache key invalidation when an article is edited
@@ -62,8 +63,9 @@ class CommunityPageSpecialHooks {
 	 * @return true
 	 */
 	public static function onBeforePageDisplay( \OutputPage $out, \Skin $skin ) {
-		if ( $out->getUser()->isAnon() &&
-			!isset( $_COOKIE['cpBenefitsModalShown'] ) &&
+		$user = $out->getUser();
+
+		if ( $user->isAnon() &&
 			$out->getRequest()->getVal( 'action' ) !== 'edit' &&
 			$out->getRequest()->getVal( 'veaction' ) !== 'edit' &&
 			$out->getRequest()->getVal( 'action' ) !== 'submit'
@@ -71,6 +73,12 @@ class CommunityPageSpecialHooks {
 			\Wikia::addAssetsToOutput( 'community_page_benefits_js' );
 			\Wikia::addAssetsToOutput( 'community_page_benefits_scss' );
 		}
+
+		if ( !$user->isAnon() && !$user->isAllowed( 'first-edit-dialog-exempt' ) ) {
+			\Wikia::addAssetsToOutput( 'community_page_new_user_modal_js' );
+			\Wikia::addAssetsToOutput( 'community_page_new_user_modal_scss' );
+		}
+
 		return true;
 	}
 
@@ -108,11 +116,20 @@ class CommunityPageSpecialHooks {
 	}
 
 	public static function onUserFirstEditOnLocalWiki( $userId, $wikiId ) {
+		global $wgCookieDomain, $wgCookiePath;
+
 		$key = CommunityPageSpecialUsersModel::getMemcKey(
 			[ CommunityPageSpecialUsersModel::RECENTLY_JOINED_MCACHE_KEY, 14 ]
 		);
 		WikiaDataAccess::cachePurge( $key );
 		CommunityPageSpecialUsersModel::logUserModelPerformanceData( 'purge', 'recently_joined' );
+
+		// Set cookie to show first edit modal to user
+		$user = User::newFromId( $userId );
+
+		if ( !$user->isAllowed( 'first-edit-dialog-exempt' ) ) {
+			setcookie( self::FIRST_EDIT_COOKIE_KEY, true, time()+60, $wgCookiePath, $wgCookieDomain );
+		}
 
 		return true;
 	}
@@ -123,5 +140,17 @@ class CommunityPageSpecialHooks {
 
 	private static function isAdmin( $userId ) {
 		return in_array( $userId, ( new CommunityPageSpecialUsersModel() )->getAdmins() );
+	}
+
+	/**
+	 * Add wgCommunityPageDisableTopContributors global variable to startup ResourceLoader module
+	 *
+	 * @param array $vars JS global variables
+	 * @return bool true
+	 */
+	public static function onResourceLoaderGetConfigVars(Array &$vars) {
+		global $wgCommunityPageDisableTopContributors;
+		$vars['wgCommunityPageDisableTopContributors'] = $wgCommunityPageDisableTopContributors;
+		return true;
 	}
 }
