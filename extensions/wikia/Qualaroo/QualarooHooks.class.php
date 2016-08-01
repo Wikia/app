@@ -38,10 +38,13 @@ class QualarooHooks {
 	}
 
 	static public function onMakeGlobalVariablesScript ( &$vars, $outputPage ) {
-		global $wgNoExternals, $wgQualarooDevUrl, $wgDevelEnvironment, $wgQualarooUrl;
+		global $wgNoExternals, $wgQualarooDevUrl, $wgDevelEnvironment, $wgQualarooUrl, $wgUser;
 
 		if ( empty( $wgNoExternals ) && $outputPage->getSkin()->skinname == 'oasis' ) {
 			$vars['wgQualarooUrl'] = ($wgDevelEnvironment) ? $wgQualarooDevUrl : $wgQualarooUrl;
+			$vars['isContributor'] = $wgUser->getEditCount() > 0;
+			$vars['isCurrentWikiAdmin'] = in_array( $wgUser, ( new CommunityPageSpecialUsersModel() )->getAdmins() );
+			$vars['fullVerticalName'] = (new MonetizationModuleHelper())->getWikiVertical();
 		}
 
 		return true;
