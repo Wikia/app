@@ -20,6 +20,7 @@ require([
 	'ext.wikia.recirculation.helpers.curatedContent',
 	'ext.wikia.recirculation.helpers.googleMatch',
 	'ext.wikia.recirculation.experiments.placement.IMPACT_FOOTER',
+	'ext.wikia.recirculation.experiments.placement.FANDOM_TOPIC',
 	'ext.wikia.adEngine.taboolaHelper',
 	require.optional('videosmodule.controllers.rail')
 ], function(
@@ -43,6 +44,7 @@ require([
 	curatedHelper,
 	googleMatchHelper,
 	impactFooterExperiment,
+	fandomTopicExperiment,
 	taboolaHelper,
 	videosModule
 ) {
@@ -108,17 +110,17 @@ require([
 			view = railView();
 			isRail = true;
 			break;
-		case 'FANDOM_TOPIC':
+		case 'FANDOM_HERO':
 			helper = fandomHelper({
-				type: 'community',
+				type: 'hero',
 				limit: 5
 			});
 			view = railView();
 			isRail = true;
 			break;
-		case 'FANDOM_HERO':
+		case 'SDCC':
 			helper = fandomHelper({
-				type: 'hero',
+				type: 'category',
 				limit: 5
 			});
 			view = railView();
@@ -175,12 +177,16 @@ require([
 		case 'IMPACT_FOOTER':
 			impactFooterExperiment.run(experimentName);
 			return;
+		case 'FANDOM_TOPIC':
+			fandomTopicExperiment.run(experimentName)
+				.fail(handleError);
+			return;
 		default:
 			return;
 	}
 
 	if (isRail) {
-		utils.afterRailLoads(runRailExperiment);
+		runRailExperiment();
 	} else {
 		runExperiment();
 	}
@@ -194,6 +200,8 @@ require([
 
 	function runRailExperiment() {
 		var curated = curatedHelper();
+
+		log('Rail loaded, running experiment', 'info', logGroup);
 		helper.loadData()
 			.then(curated.injectContent)
 			.then(view.render)
@@ -205,6 +213,8 @@ require([
 	}
 
 	function handleError(err) {
+		var rail;
+
 		if (err) {
 			log(err, 'info', logGroup);
 		}
@@ -214,22 +224,20 @@ require([
 			return;
 		}
 
+		rail = railView();
 		errorHandled = true;
-		utils.afterRailLoads(function() {
-			var rail = railView();
 
-			fandomHelper({
-				limit: 5
-			}).loadData()
-				.then(rail.render)
-				.then(setupFallbackTracking)
-				.fail(function(err) {
-					// If this doesn't work, log out why. We tried our best.
-					if (err) {
-						log(err, 'info', logGroup);
-					}
-				});
-		});
+		fandomHelper({
+			limit: 5
+		}).loadData()
+			.then(rail.render)
+			.then(setupFallbackTracking)
+			.fail(function(err) {
+				// If this doesn't work, log out why. We tried our best.
+				if (err) {
+					log(err, 'info', logGroup);
+				}
+			});
 	}
 
 	function setupFallbackTracking($html) {
@@ -257,7 +265,8 @@ require([
 	}
 
 	function renderBothLateralExperiments() {
-		var incontent = incontentView();
+		var incontent = incontentView(),
+			rail = railView();
 
 		lateralHelper({
 			type: 'community',
@@ -272,17 +281,13 @@ require([
 				}
 			});
 
-		utils.afterRailLoads(function() {
-			var rail = railView();
-
-			lateralHelper({
-				type: 'fandom',
-				count: 5
-			}).loadData()
-				.then(rail.render)
-				.then(rail.setupTracking(experimentName))
-				.fail(handleError);
-		});
+		lateralHelper({
+			type: 'fandom',
+			count: 5
+		}).loadData()
+			.then(rail.render)
+			.then(rail.setupTracking(experimentName))
+			.fail(handleError);
 	}
 
 	function renderGoogleIncontent() {

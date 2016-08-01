@@ -93,8 +93,8 @@ class CategoryViewer extends ContextSource {
 			$this->getPagesSection() .
 			$this->getImageSection() .
 		# <Wikia>
-			$this->getOtherSection(); 
-		# </Wikia>	
+			$this->getOtherSection();
+		# </Wikia>
 
 		if ( $r == '' ) {
 			// If there is no category content to display, only
@@ -320,7 +320,7 @@ class CategoryViewer extends ContextSource {
 					$humanSortkey = $title->getCategorySortkey( $row->cl_sortkey_prefix );
 				}
 
-				if ( ++$count > $this->limit 
+				if ( ++$count > $this->limit
 					/* Wikia change begin - @author: Federico "Lox" Lucignano */
 					/* allow getting all the items in a category */
 					&& is_integer( $this->limit )
@@ -357,7 +357,7 @@ class CategoryViewer extends ContextSource {
 		/* Category Galleries hook */
 		wfRunHooks('CategoryPage::getCategoryTop',array($this,&$r));
 		/* Wikia change end */
-				
+
 		$r .= $this->getCategoryBottom();
 		return $r === ''
 			? $r
@@ -379,9 +379,11 @@ class CategoryViewer extends ContextSource {
 			$r .= "<div id=\"mw-subcategories\">\n";
 			$r .= '<h2>' . wfMsg( 'subcategories' ) . "</h2>\n";
 			$r .= $countmsg;
-			$r .= $this->getSectionPagingLinks( 'subcat' );
+			/* Wikia change: $position param: top/bottom */
+			$r .= $this->getSectionPagingLinks( 'subcat', 'top' );
 			$r .= $this->formatList( $this->children, $this->children_start_char );
-			$r .= $this->getSectionPagingLinks( 'subcat' );
+			$r .= $this->getSectionPagingLinks( 'subcat', 'bottom' );
+			/* Wikia change end */
 			$r .= "\n</div>";
 		}
 		return $r;
@@ -408,9 +410,11 @@ class CategoryViewer extends ContextSource {
 			$r = "<div id=\"mw-pages\">\n";
 			$r .= '<h2>' . wfMsg( 'category_header', $ti ) . "</h2>\n";
 			$r .= $countmsg;
-			$r .= $this->getSectionPagingLinks( 'page' );
+			/* Wikia change: $position param: top/bottom */
+			$r .= $this->getSectionPagingLinks( 'page', 'top' );
 			$r .= $this->formatList( $this->articles, $this->articles_start_char );
-			$r .= $this->getSectionPagingLinks( 'page' );
+			$r .= $this->getSectionPagingLinks( 'page', 'bottom' );
+			/* Wikia change end */
 			$r .= "\n</div>";
 		}
 		return $r;
@@ -429,13 +433,15 @@ class CategoryViewer extends ContextSource {
 			$r .= "<div id=\"mw-category-media\">\n";
 			$r .= '<h2>' . wfMsg( 'category-media-header', htmlspecialchars( $this->title->getText() ) ) . "</h2>\n";
 			$r .= $countmsg;
-			$r .= $this->getSectionPagingLinks( 'file' );
+			/* Wikia change: $position param: top/bottom */
+			$r .= $this->getSectionPagingLinks( 'file', 'top' );
 			if ( $this->showGallery ) {
 				$r .= $this->gallery->toHTML();
 			} else {
 				$r .= $this->formatList( $this->imgsNoGallery, $this->imgsNoGallery_start_char );
 			}
-			$r .= $this->getSectionPagingLinks( 'file' );
+			$r .= $this->getSectionPagingLinks( 'file', 'bottom' );
+			/* Wikia change end */
 			$r .= "\n</div>";
 		}
 		return $r;
@@ -461,22 +467,27 @@ class CategoryViewer extends ContextSource {
 		return $paginationLinks;
 	}
 	/* </Wikia> */
-	
+
 	/**
 	 * Get the paging links for a section (subcats/pages/files), to go at the top and bottom
 	 * of the output.
 	 *
 	 * @param $type String: 'page', 'subcat', or 'file'
+	 * @param $position
 	 * @return String: HTML output, possibly empty if there are no other pages
 	 */
-	private function getSectionPagingLinks( $type ) {
+	private function getSectionPagingLinks( $type, $position = null ) {
+		/* Wikia change: introduced a hook to override the pagination HTML */
 		if ( $this->until[$type] !== null ) {
-			return $this->pagingLinks( $this->nextPage[$type], $this->until[$type], $type );
+			$r = $this->pagingLinks( $this->nextPage[$type], $this->until[$type], $type );
 		} elseif ( $this->nextPage[$type] !== null || $this->from[$type] !== null ) {
-			return $this->pagingLinks( $this->from[$type], $this->nextPage[$type], $type );
+			$r = $this->pagingLinks( $this->from[$type], $this->nextPage[$type], $type );
 		} else {
-			return '';
+			$r = '';
 		}
+		wfRunHooks( 'CategoryViewerGetSectionPagingLinks', [ $this, $type, $position, &$r ] );
+		return $r;
+		/* Wikia change end */
 	}
 
 	/**
@@ -721,7 +732,7 @@ class CategoryViewer extends ContextSource {
 		}
 		return wfMessage( "category-$type-count" )->numParams( $rescnt, $totalcnt )->parseAsBlock();
 	}
-	
+
 	/**
 	 * getter for private $cat variable, used in Hooks
 	 *

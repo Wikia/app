@@ -1,9 +1,11 @@
-/*global define*/
+/*global define, require*/
 /*jshint maxlen: 150*/
 define('ext.wikia.adEngine.provider.directGpt', [
 	'ext.wikia.adEngine.provider.factory.wikiaGpt',
-	'ext.wikia.adEngine.slotTweaker'
-], function (factory, slotTweaker) {
+	'ext.wikia.adEngine.slotTweaker',
+	'ext.wikia.adEngine.uapContext',
+	require.optional('ext.wikia.adEngine.lookup.openx.openXBidderHelper')
+], function (factory, slotTweaker, uapContext, openXHelper) {
 	'use strict';
 
 	return factory.createProvider(
@@ -53,10 +55,13 @@ define('ext.wikia.adEngine.provider.directGpt', [
 		{
 			beforeSuccess: function (slotName) {
 				slotTweaker.removeDefaultHeight(slotName);
-				if (!slotTweaker.isUniversalAdPackageLoaded()) {
+				if (!uapContext.isUapLoaded()) {
 					slotTweaker.removeTopButtonIfNeeded(slotName);
 					slotTweaker.adjustLeaderboardSize(slotName);
 				}
+			},
+			beforeHop: function(slotName) {
+				openXHelper && openXHelper.addOpenXSlot(slotName);
 			},
 			sraEnabled: true,
 			recoverableSlots: [

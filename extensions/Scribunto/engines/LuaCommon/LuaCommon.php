@@ -58,8 +58,23 @@ abstract class Scribunto_LuaEngine extends ScribuntoEngineBase {
 		return new Scribunto_LuaModule( $this, $text, $chunkName );
 	}
 
+	/**
+	 * @param string $message
+	 * @param array $params
+	 * @return Scribunto_LuaError
+	 */
 	public function newLuaError( $message, $params = array() ) {
-		return new Scribunto_LuaError( $message, $this->getDefaultExceptionParams() + $params );
+		// Wikia change - begin
+		$ex = new Scribunto_LuaError( $message, $this->getDefaultExceptionParams() + $params );
+
+		Wikia\Logger\WikiaLogger::instance()->error( __METHOD__, [
+			'exception' => $ex,
+			'lua_message' => $ex->getLuaMessage(),
+			'lua_params' => $params,
+		] );
+		// Wikia change - end
+
+		return $ex;
 	}
 
 	public function destroy() {
@@ -91,6 +106,7 @@ abstract class Scribunto_LuaEngine extends ScribuntoEngineBase {
 			'expandTemplate',
 			'preprocess',
 			'incrementExpensiveFunctionCount',
+			'getFrameTitle',
 		);
 
 		$lib = array();
@@ -381,6 +397,14 @@ abstract class Scribunto_LuaEngine extends ScribuntoEngineBase {
 	function parentFrameExists() {
 		$frame = $this->getFrameById( 'parent' );
 		return array( $frame !== false );
+	}
+
+	/**
+	 * Handler for getTitle()
+	 */
+	function getFrameTitle( $frameId ) {
+		$frame = $this->getFrameById( $frameId );
+		return array( $frame->getTitle()->getPrefixedText() );
 	}
 
 	/**

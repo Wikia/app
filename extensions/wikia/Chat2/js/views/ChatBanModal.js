@@ -13,6 +13,10 @@ var ChatBanModal = function (title, okCallback, options) {
 	$.get(window.wgScript + '?action=ajax&rs=ChatAjax&method=BanModal', data, function (data) {
 		require(['wikia.ui.factory'], function (uiFactory) {
 			uiFactory.init(['modal']).then(function (uiModal) {
+				// uiFactory uses JSMessages internally
+				$.msg = function () {
+					return mw.message.call(this, arguments).text();
+				};
 				var banModalConfig = {
 					type: 'default',
 					vars: {
@@ -24,8 +28,8 @@ var ChatBanModal = function (title, okCallback, options) {
 							{
 								vars: {
 									value: data.isChangeBan ?
-										$.msg('chat-ban-modal-button-change-ban') :
-										$.msg('chat-ban-modal-button-ok'),
+										mw.message('chat-ban-modal-button-change-ban').escaped() :
+										mw.message('chat-ban-modal-button-ok').escaped(),
 									classes: ['normal', 'primary'],
 									data: [
 										{
@@ -37,7 +41,7 @@ var ChatBanModal = function (title, okCallback, options) {
 							},
 							{
 								'vars': {
-									'value': $.msg('chat-ban-modal-button-cancel'),
+									'value': mw.message('chat-ban-modal-button-cancel').escaped(),
 									data: [
 										{
 											key: 'event',

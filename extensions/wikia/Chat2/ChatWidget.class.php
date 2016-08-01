@@ -74,9 +74,13 @@ class ChatWidget {
 
 	/**
 	 * Chat tag parser implementation.
-	 * Return html of a chat wrapped in nowiki tags.
+	 *
+	 * @param string $input tag contents - unused
+	 * @param array $args tag attributes - unused
+	 * @param Parser $parser MW parser instance
+	 * @return string parsed widget HTML wrapped in <nowiki> tags
 	 */
-	public static function parseTag( $input, $args, $parser ) {
+	public static function parseTag( $input, array $args, Parser $parser ) {
 		wfProfileIn( __METHOD__ );
 
 		$templateEngine = ( new Wikia\Template\MustacheEngine )
@@ -88,6 +92,9 @@ class ChatWidget {
 
 		// remove newlines so parser does not try to wrap lines into paragraphs
 		$html = str_replace( "\n", "", $html );
+
+		// SUS-749: Add required MW messages to output
+		$parser->getOutput()->addModuleMessages( 'ext.Chat2.ChatWidget' );
 
 		wfProfileOut( __METHOD__ );
 

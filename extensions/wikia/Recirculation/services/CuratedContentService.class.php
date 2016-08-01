@@ -55,6 +55,7 @@ class CuratedContentService {
 				'title' => $post['title'],
 				'pub_date' => $post['publish_start_date'],
 				'source' => 'curated',
+				'isVideo' => $post['is_video_post'],
 			];
 		}
 

@@ -138,6 +138,11 @@ class WikiFactoryTest extends WikiaBaseTest {
 				'expected' => 'http://verify.gta.wikia.com/wiki/test/test/test'
 			],
 			[
+				'env' => WIKIA_ENV_STAGING,
+				'url' => 'http://gta.wikia.com/wiki/test/test/test',
+				'expected' => 'http://gta.wikia-staging.com/wiki/test/test/test'
+			],
+			[
 				'env' => WIKIA_ENV_DEV,
 				'url' => 'http://gta.wikia.com/',
 				'expected' => 'http://gta.' . self::MOCK_DEV_NAME . '.wikia-dev.com'
