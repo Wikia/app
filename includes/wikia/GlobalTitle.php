@@ -151,6 +151,12 @@ class GlobalTitle extends Title {
 		return $title;
 	}
 
+	/**
+	 * @param $text
+	 * @param $namespace
+	 * @param $city_id
+	 * @return GlobalTitle
+	 */
 	public static function newFromTextCached( $text, $namespace, $city_id ) {
 		if ( !isset( self::$cachedObjects[$city_id][$namespace][$text] ) ) {
 			self::$cachedObjects[$city_id][$namespace][$text] =
