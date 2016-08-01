@@ -1231,6 +1231,8 @@ class WikiFactory {
 				return 'http://preview.' . $server . '.wikia.com'.$address;
 			case WIKIA_ENV_VERIFY:
 				return 'http://verify.' . $server . '.wikia.com'.$address;
+			case WIKIA_ENV_STAGING:
+				return 'http://' . $server . '.wikia-staging.com'.$address;
 			case WIKIA_ENV_SANDBOX:
 				return 'http://' . self::getExternalHostName() . '.' . $server . '.wikia.com' . $address;
 			case WIKIA_ENV_DEV:
