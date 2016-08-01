@@ -55,8 +55,9 @@ describe('Module ext.wikia.adEngine.pageFairDetection', function () {
 	}
 
 	it('shoud dispatch event after run pf_notify from external script', function () {
-		var mocks = getMocks();
-		var pageFairDetector = getModule(mocks);
+		var mocks = getMocks(),
+			pageFairDetector = getModule(mocks);
+
 		pageFairDetector.initDetection(getContext());
 
 		spyOn(mocks.document, 'dispatchEvent');
@@ -66,8 +67,9 @@ describe('Module ext.wikia.adEngine.pageFairDetection', function () {
 	});
 
 	it('should change runtime parameter', function () {
-		var mocks = getMocks();
-		var pageFairDetector = getModule(mocks);
+		var mocks = getMocks(),
+			pageFairDetector = getModule(mocks);
+
 		pageFairDetector.initDetection(getContext());
 
 		spyOn(mocks.document, 'dispatchEvent');
@@ -79,11 +81,11 @@ describe('Module ext.wikia.adEngine.pageFairDetection', function () {
 	});
 
 	it('should not run detection when pagefair is not enabled', function () {
-		var mocks = getMocks();
-		var context = getContext();
+		var context = getContext(),
+			mocks = getMocks(),
+			pageFairDetector = getModule(mocks);
 
 		context.opts.pageFairDetection = false;
-		var pageFairDetector = getModule(mocks);
 		pageFairDetector.initDetection(context);
 
 		spyOn(mocks.document, 'dispatchEvent');

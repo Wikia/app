@@ -1555,8 +1555,7 @@ $wgAdDriverSourcePointDetectionCountries = null;
 
 /**
  * @name $wgAdDriverPageFairDetectionCountries
- * List of countries to call SourcePoint detection scripts
- *
+ * List of countries to call PageFair detection scripts
  */
 $wgAdDriverPageFairDetectionCountries = null;
 

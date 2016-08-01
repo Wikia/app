@@ -28,15 +28,13 @@ describe('Module ext.wikia.adEngine.utils.scriptLoader', function () {
 	}
 
 	it('should add parameters to created node', function () {
-		var scriptLoader = getModule(getMocks());
-
-		var node = {
-			parentNode: {
-				insertBefore: noop
-			}
-		};
-
-		var result = scriptLoader.loadScript('TEST_SRC', node, 'TEST_TYPE', true);
+		var scriptLoader = getModule(getMocks()),
+			node = {
+				parentNode: {
+					insertBefore: noop
+				}
+			},
+			result = scriptLoader.loadScript('TEST_SRC', node, 'TEST_TYPE', true);
 
 		expect(result.src).toBe('TEST_SRC');
 		expect(result.type).toBe('TEST_TYPE');
