@@ -22,7 +22,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 			'wam' => 'http://www.wikia.com/WAM',
 			'help' => 'http://community.wikia.com/wiki/Help:Contents',
 			'media-kit' => 'http://www.wikia.com/mediakit',
-			'media-kit-contact' => 'http://www.wikia.com/mediakit#contacts',
+			'media-kit-contact' => 'http://www.wikia.com/mediakit/contact',
 			'social-facebook' => 'https://www.facebook.com/wikia',
 			'social-twitter' => 'https://twitter.com/wikia',
 			'social-reddit' => null,
