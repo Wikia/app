@@ -159,7 +159,9 @@ class Wikia {
 					}
 				}
 
-				return GlobalFile::newFromText( $faviconFilename, self::COMMUNITY_WIKI_ID )->getURL();
+				// SUS-214: fallback to $wgFavicon instead of Community Central
+				$wg = F::app()->wg;
+				return wfReplaceImageServer( $wg->ResourceBasePath . $wg->Favicon );
 			}
 		);
 	}
