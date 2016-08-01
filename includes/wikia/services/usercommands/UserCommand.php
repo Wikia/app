@@ -48,11 +48,11 @@ abstract class UserCommand {
 	 */
 	public function getInfo() {
 		$defaultCaption = $this->getAbstractCaption();
-		$caption = !empty( $this->data['caption'] ) ? $this->data['caption'] : $defaultCaption;
+		$caption = $this->data['caption'] ?? $defaultCaption;
 		return [
-			'id'             => $this->getId(),
+			'id' => $this->getId(),
 			'defaultCaption' => $defaultCaption,
-			'caption'        => $caption,
+			'caption' => $caption,
 		];
 	}
 
@@ -174,9 +174,14 @@ abstract class UserCommand {
 	 */
 	protected function getListItemAttributes() {
 		$attributes = [];
-		if ( $this->listItemId ) $attributes['id'] = $this->listItemId;
+		if ( $this->listItemId ) {
+			$attributes['id'] = $this->listItemId;
+		}
+
 		$listItemClass = trim( $this->listItemClass . ( $this->overflow ? ' overflow' : '' ) );
-		if ( $listItemClass ) $attributes['class'] = $listItemClass;
+		if ( $listItemClass ) {
+			$attributes['class'] = $listItemClass;
+		}
 		return $attributes;
 	}
 
@@ -185,13 +190,26 @@ abstract class UserCommand {
 	 * @return array key-value array of attributes and their values
 	 */
 	protected function getLinkAttributes() {
-		$attributes = [];
-		$attributes['data-tool-id'] = $this->id;
-		$attributes['data-name'] = $this->getTrackerName();
-		if ( $this->href ) $attributes['href'] = $this->href;
-		if ( $this->linkId ) $attributes['id'] = $this->linkId;
-		if ( $this->linkClass ) $attributes['class'] = $this->linkClass;
-		if ( $this->accessKey ) $attributes['accesskey'] = $this->accessKey;
+		$attributes = [
+			'data-tool-id' => $this->id,
+			'data-name' => $this->getTrackerName(),
+		];
+
+		if ( $this->href ) {
+			$attributes['href'] = $this->href;
+		}
+
+		if ( $this->linkId ) {
+			$attributes['id'] = $this->linkId;
+		}
+
+		if ( $this->linkClass ) {
+			$attributes['class'] = $this->linkClass;
+		}
+
+		if ( $this->accessKey ) {
+			$attributes['accesskey'] = $this->accessKey;
+		}
 		return $attributes;
 	}
 
@@ -214,8 +232,7 @@ abstract class UserCommand {
 			return '';
 		}
 
-		$html = '';
-		$html .= Xml::openElement( 'li', $this->getListItemAttributes() );
+		$html = Xml::openElement( 'li', $this->getListItemAttributes() );
 
 		$html .= $this->renderIcon();
 
@@ -239,14 +256,17 @@ abstract class UserCommand {
 	 */
 	public function getRenderData() {
 		$this->needData();
-		if ( !$this->available )
+
+		if ( !$this->available ) {
 			return false;
+		}
 
 		$data = [
-			'type'         => $this->defaultRenderType,
-			'caption'      => $this->caption,
+			'type' => $this->defaultRenderType,
+			'caption' => $this->caption,
 			'tracker-name' => $this->getTrackerName(),
 		];
+
 		if ( $this->enabled ) {
 			$data['href'] = $this->href;
 		} else {
@@ -328,7 +348,7 @@ abstract class UserCommand {
 			if ( $skinTemplateObj ) {
 				self::$skinData = [
 					'content_actions' => $skinTemplateObj->get( 'content_actions' ),
-					'nav_urls'        => $skinTemplateObj->get( 'nav_urls' ),
+					'nav_urls' => $skinTemplateObj->get( 'nav_urls' ),
 				];
 			} else {
 				/** @var $context RequestContext */
@@ -349,7 +369,7 @@ abstract class UserCommand {
 
 				self::$skinData = [
 					'content_actions' => $skin->buildContentActionUrls( $skin->buildContentNavigationUrls() ),
-					'nav_urls'        => $skin->buildNavUrls(),
+					'nav_urls' => $skin->buildNavUrls(),
 				];
 			}
 		}
