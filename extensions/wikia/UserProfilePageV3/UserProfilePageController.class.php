@@ -960,8 +960,6 @@ class UserProfilePageController extends WikiaController {
 	}
 
 	public function fetchDiscussionPostsNumberFrom($user) {
-		wfProfileIn( __METHOD__ );
-
 		global $wgEnableDiscussionPostsCountInUserIdentityBox;
 
 		$this->setVal('discussionPostsCountInUserIdentityBoxEnabled', $wgEnableDiscussionPostsCountInUserIdentityBox);
@@ -974,8 +972,6 @@ class UserProfilePageController extends WikiaController {
 			$this->setVal('discussionAllPostsByUserLink',
 				$discussionInfo->getDiscussionAllPostsByUserLink());
 		}
-
-		wfProfileOut( __METHOD__ );
 	}
 
 	/**

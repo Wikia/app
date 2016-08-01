@@ -33,8 +33,6 @@ class UserIdentityBoxDiscussion {
 	}
 
 	public function fetchDiscussionPostsNumber() {
-		wfProfileIn( __METHOD__ );
-
 		$siteId = F::app()->wg->CityId;
 
 		$this->discussionActive = $this->checkDiscussionActive($siteId);
@@ -42,13 +40,9 @@ class UserIdentityBoxDiscussion {
 			$this->discussionPostsCount = $this->fetchDiscussionPostsCount($siteId);
 			$this->discussionAllPostsByUserLink = "/d/u/{$this->userId}";
 		}
-
-		wfProfileOut( __METHOD__ );
 	}
 
 	private function checkDiscussionActive($siteId) {
-		wfProfileIn( __METHOD__ );
-
 		try {
 			$this->getDiscussionSitesApi()->getSite( $siteId );
 			return true;
@@ -60,8 +54,6 @@ class UserIdentityBoxDiscussion {
 				] );
 		}
 
-		wfProfileOut( __METHOD__ );
-
 		return false;
 	}
 
@@ -70,20 +62,14 @@ class UserIdentityBoxDiscussion {
 	}
 
 	private function getDiscussionApi($apiClass) {
-		wfProfileIn( __METHOD__ );
-
 		$apiProvider = Injector::getInjector()->get(ApiProvider::class);
 		$api = $apiProvider->getApi(self::DISCUSSION_SERVICE_NAME, $apiClass);
 		$api->getApiClient()->getConfig()->setCurlTimeout(self::TIMEOUT);
-
-		wfProfileOut( __METHOD__ );
 
 		return $api;
 	}
 
 	private function fetchDiscussionPostsCount($siteId) {
-		wfProfileIn( __METHOD__ );
-
 		$postCount = 0;
 
 		try {
@@ -96,8 +82,6 @@ class UserIdentityBoxDiscussion {
 					'error' => $e->getMessage()
 				] );
 		}
-
-		wfProfileOut( __METHOD__ );
 
 		return $postCount;
 	}
