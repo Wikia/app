@@ -42,6 +42,7 @@ $messages['en'] = array(
 	'user-identity-i-am' => '<span>I am</span> $1',
 	'user-identity-box-edits-since-joining' => 'Edits since joining this wiki<br />$1',
 	'user-identity-box-edits' => '<em>$1</em><span>EDITS</span>',
+	'user-identity-box-discussion-posts' => 'Discussion posts',
 	'user-identity-box-group-blocked' => 'Blocked',
 	'user-identity-box-group-chatmoderator' => 'Chat moderator',
 	'user-identity-box-group-sysop' => 'Admin',
