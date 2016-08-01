@@ -61,6 +61,7 @@
 		</div>
 
 		<form id="Write" class="Write" onsubmit="return false">
+			<div class="limit-reached-msg"><?= wfMessage( 'chat-message-was-too-long' ) ?></div>
 			<div class="remaining"></div>
 			<img width="<?= ChatController::CHAT_AVATAR_DIMENSION ?>" height="<?= ChatController::CHAT_AVATAR_DIMENSION ?>" src="<?= $avatarUrl ?>">
 			<div class="message">
@@ -133,7 +134,6 @@
 	<?php foreach ( $srcs as $src ): ?>
 		<script src="<?php echo $src ?>"></script>
 	<?php endforeach; ?>
-	<script src="<?php echo $jsMessagePackagesUrl ?>"></script>
 	<script type="text/javascript" src="/load.php?lang=en&mode=articles&articles=MediaWiki%3AChat.js%7CUser%3A<?php echo $wg->User->getName(); ?>%2Fchat.js&only=scripts"></script>
 </body>
 </html>

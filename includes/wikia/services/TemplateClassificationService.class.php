@@ -47,9 +47,17 @@ class TemplateClassificationService {
 	public function getType( $wikiId, $pageId ) {
 		$templateType = self::TEMPLATE_UNCLASSIFIED;
 
-		$type = $this->getApiClient()->getTemplateType( $wikiId, $pageId );
-		if ( !is_null( $type ) ) {
-			$templateType = $type->getType();
+		try {
+			$type = $this->getApiClient()->getTemplateType( $wikiId, $pageId );
+			if ( !is_null( $type ) ) {
+				$templateType = $type->getType();
+			}
+		} catch (\Swagger\Client\ApiException $e) {
+			\Wikia\Logger\WikiaLogger::instance()->error( 'Failed to contact Template Classification service', [
+				'exception' => $e,
+				'wiki_id' => intval($wikiId),
+				'page_id' => intval($pageId),
+			] );
 		}
 
 		return $templateType;

@@ -115,6 +115,7 @@ $config['adengine2_desktop_js'] = array(
 		'//extensions/wikia/AdEngine/js/template/skin.js',
 		'//extensions/wikia/AdEngine/js/utils/AdLogicZoneParams.js',
 		'//extensions/wikia/AdEngine/js/utils/domCalculator.js',
+		'//extensions/wikia/AdEngine/js/utils/eventDispatcher.js',
 		'//extensions/wikia/AdEngine/js/utils/hooks.js',
 		'//extensions/wikia/AdEngine/js/video/playwire.js',
 		'//extensions/wikia/AdEngine/js/video/vastBuilder.js',
@@ -271,6 +272,15 @@ $config['adengine2_rubicon_fastlane_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		'//extensions/wikia/AdEngine/js/lookup/rubiconFastlane.js',
+	),
+);
+
+$config['adengine2_prebid_js'] = array(
+	'skin' => [ 'oasis' ],
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//extensions/wikia/AdEngine/js/lookup/prebid.js',
+		'//extensions/wikia/AdEngine/js/lookup/adapter/appnexus.js'
 	),
 );
 
@@ -831,12 +841,14 @@ $config['mobile_base_ads_js'] = array(
 		'//extensions/wikia/AdEngine/js/SlotTweaker.js',
 		'//extensions/wikia/AdEngine/js/WikiaAdHelper.js',
 		'//extensions/wikia/AdEngine/js/config/mobile.js',
+		'//extensions/wikia/AdEngine/js/lookup/adapter/appnexus.js',
 		'//extensions/wikia/AdEngine/js/context/adContext.js',
 		'//extensions/wikia/AdEngine/js/context/uapContext.js',
 		'//extensions/wikia/AdEngine/js/lookup/amazonMatch.js',
 		'//extensions/wikia/AdEngine/js/lookup/lookupFactory.js',
 		'//extensions/wikia/AdEngine/js/lookup/openx/openXBidderHelper.js',
 		'//extensions/wikia/AdEngine/js/lookup/openXBidder.js',
+		'//extensions/wikia/AdEngine/js/lookup/prebid.js',
 		'//extensions/wikia/AdEngine/js/lookup/rubiconFastlane.js',
 		'//extensions/wikia/AdEngine/js/lookup/services.js',
 		'//extensions/wikia/AdEngine/js/provider/btfBlocker.js',
@@ -854,6 +866,7 @@ $config['mobile_base_ads_js'] = array(
 		'//extensions/wikia/AdEngine/js/provider/remnantGptMobile.js',
 		'//extensions/wikia/AdEngine/js/slot/adSlot.js',
 		'//extensions/wikia/AdEngine/js/utils/AdLogicZoneParams.js',
+		'//extensions/wikia/AdEngine/js/utils/eventDispatcher.js',
 		'//extensions/wikia/AdEngine/js/utils/hooks.js',
 		'//extensions/wikia/AdEngine/js/video/playwire.js',
 		'//extensions/wikia/AdEngine/js/video/vastBuilder.js',
@@ -1271,7 +1284,6 @@ $config['chat_js2'] = array(
 
 		// shared libraries
 		'//extensions/wikia/AssetsManager/js/AssetsManager.js',
-		'//extensions/wikia/JSMessages/js/JSMessages.js',
 
 		'//resources/wikia/modules/querystring.js',
 		'//resources/wikia/modules/history.js',
@@ -1288,14 +1300,6 @@ $config['chat_js2'] = array(
 		'//extensions/wikia/Chat2/js/controllers/controllers.js',
 		'//extensions/wikia/Chat2/js/views/views.js',
 		'//extensions/wikia/Chat2/js/views/ChatBanModal.js',
-	)
-);
-
-$config['chat_ban_js'] = array(
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => array(
-		'//extensions/wikia/Chat2/js/views/ChatBanModal.js',
-		'//extensions/wikia/Chat2/js/controllers/ChatBanModalLogs.js'
 	)
 );
 
@@ -3010,3 +3014,11 @@ $config['contribution_prototype_scss'] = array(
 				'//extensions/wikia/ContributionPrototype/styles/ContributionPrototype.scss',
 		),
 );
+
+$config['design_system_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/DesignSystem/bower_components/design-system/dist/styles.scss'
+	]
+];

@@ -151,6 +151,10 @@ class EditAccount extends SpecialPage {
 				$this->mStatus = $this->setRealName( $newRealName, $changeReason );
 				$template = 'displayuser';
 				break;
+			case 'logout':
+				$this->mStatus = $this->logOut();
+				$template = 'displayuser';
+				break;
 			case 'closeaccount':
 				$template = 'closeaccount';
 				$this->mStatus = (bool) $this->mUser->getGlobalPreference( CloseMyAccountHelper::REQUEST_CLOSURE_PREF, 0 );
@@ -567,5 +571,30 @@ class EditAccount extends SpecialPage {
 		);
 
 		$wgOut->addHTML( $oTmpl->render( "changelog" ) );
+	}
+
+	private function logOut() {
+		$ok = false;
+		try {
+			/** @var HeliosClient $heliosClient */
+			$heliosClient = Injector::getInjector()->get(HeliosClient::class);
+			$response = $heliosClient->forceLogout($this->mUser->getId());
+
+			// successful logout returns 204 No Content and forceLogout() returns null
+			$ok = is_null($response);
+		} catch (\Wikia\Service\Helios\ClientException $e) {
+			\Wikia\Logger\WikiaLogger::instance()->error( "Exception while logging out user", [
+				'exception' => $e,
+				'user_name' => $this->mUser->getName()
+			] );
+		}
+
+		if ($ok) {
+			$this->mStatusMsg = $this->msg( 'editaccount-success-logout', $this->mUser->getName() );
+		} else {
+			$this->mStatusMsg = $this->msg( 'editaccount-error-logout', $this->mUser->getName() );
+		}
+
+		return $ok;
 	}
 }

@@ -15,6 +15,7 @@ class SpecialDiscussionsController extends WikiaSpecialPageController {
 	const SERVICE_NAME = 'discussion';
 	const TIMEOUT = 5;
 	const EDIT_TOKEN = 'editToken';
+	const SITE_NAME_MAX_LENGTH = 256;
 
 	const DEFAULT_TEMPLATE_ENGINE = \WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
 
@@ -26,8 +27,6 @@ class SpecialDiscussionsController extends WikiaSpecialPageController {
 	public function __construct() {
 		parent::__construct( 'Discussions', '', false );
 
-		$this->assertCanAccess();
-
 		$this->sitesApi = $this->getDiscussionSitesApi();
 		$this->siteId = F::app()->wg->CityId;
 		$this->siteName = F::app()->wg->Sitename;
@@ -35,6 +34,8 @@ class SpecialDiscussionsController extends WikiaSpecialPageController {
 	}
 
 	public function index() {
+		$this->assertCanAccess();
+
 		$this->setHeaders();
 		$this->response->addAsset( 'special_discussions_scss' );
 
@@ -42,6 +43,7 @@ class SpecialDiscussionsController extends WikiaSpecialPageController {
 
 		if ( $this->request->wasPosted() ) {
 			$this->activateDiscussions();
+			WikiFactory::setVarByName( 'wgEnableDiscussions', $this->siteId, true );
 		}
 
 		$this->setIndexOutput();
@@ -68,22 +70,23 @@ class SpecialDiscussionsController extends WikiaSpecialPageController {
 	}
 
 	private function setIndexOutput() {
-		$callMethod =  $this->isDiscussionsActive() ? 'discussionsLink' : 'inputForm';
+		$callMethod = $this->isDiscussionsActive() ? 'discussionsLink' : 'inputForm';
 		$this->response->setVal( 'content', $this->sendSelfRequest( $callMethod ) );
 	}
 
 	private function activateDiscussions() {
 		$this->assertValidPostRequest();
 
-		$site = new \Swagger\Client\Discussion\Models\Site(
+		$siteInput = new \Swagger\Client\Discussion\Models\SiteInput(
 			[
 				'id' => $this->siteId,
-				'languageCode' => F::app()->wg->ContLang->getCode(),
+				'name' => substr( $this->siteName, 0, self::SITE_NAME_MAX_LENGTH ),
+				'language_code' => F::app()->wg->ContLang->getCode(),
 			]
 		);
 
 		try {
-			$this->getDiscussionSitesApi()->createSite( $site, F::app()->wg->TheSchwartzSecretToken );
+			$this->getDiscussionSitesApi()->createSite( $siteInput, F::app()->wg->TheSchwartzSecretToken );
 		} catch ( ApiException $e ) {
 			$this->logger->error(
 				'Creating site caused an error',

@@ -64,32 +64,43 @@ class HubService extends Service {
 	}
 
 	/**
-	 * Get canonical vertical name for given cityId.
-	 * For corporate homepages (actual and hub-based) return 'fandom'.
-	 * For Lifestyle and Gaming return their names.
+	 * Get comscore vertical name for given cityId.
+	 * For Lifestyle and Gaming and etc return their names.
 	 * For Other return 'lifestyle'.
-	 * For rest of values return Entertainment.
 	 *
 	 * @param integer $cityId
 	 *
 	 * @return string
 	 */
 	public static function getVerticalNameForComscore( $cityId ) {
-		global $wgDisableWAMOnHubs;
 
-		if ( WikiaPageType::isWikiaHomePage() || WikiaPageType::isWikiaHub() && $wgDisableWAMOnHubs ) {
-			return 'fandom';
-		}
+		$vertical = WikiFactoryHub::getInstance()->getWikiVertical( $cityId )['short'];
 
-		switch ( WikiFactoryHub::getInstance()->getVerticalId( $cityId ) ) {
-			case WikiFactoryHub::VERTICAL_ID_VIDEO_GAMES:
-				return 'gaming';
-			case WikiFactoryHub::VERTICAL_ID_LIFESTYLE:
-			case WikiFactoryHub::VERTICAL_ID_OTHER:
-				return 'lifestyle';
-			default:
-				return 'entertainment';
+		if ( $vertical == "other" ) {
+			return "lifestyle";
+		} else {
+			return $vertical;
 		}
+	}
+
+	/**
+	 * Look for a comscore_zzz tag
+	 * @param integer $cityId
+	 * @return hash of category data { id, name, url, short, deprecated, active }
+	 */
+	public static function getComscoreCategoryOverride( $cityId ) {
+
+		$wftags = new WikiFactoryTags( $cityId );
+		$tags = $wftags->getTags();
+		if ( is_array( $tags ) ) {
+			foreach ( $tags as $name ) {
+				if ( startsWith( $name, self::$comscore_prefix, false ) ) {
+					$catName = substr( $name, strlen( self::$comscore_prefix ) );
+					return $catName;
+				}
+			}
+		}
+		return null;
 	}
 
 	/**
@@ -116,32 +127,29 @@ class HubService extends Service {
 	}
 
 	/**
-	 * Get category id for given cityId
+	 * Get legacy category id for given cityId
+	 * An Ad Tag in WF with a value of comscore_(category) will override this
 	 *
 	 * @param integer $cityId
 	 *
-	 * @return stdClass ($row->cat_id $row->cat_name)
+	 * @return integer $categoryId
 	 */
 	private static function getCategoryIdForCity( $cityId ) {
 		$categoryId = null;
 
+		// Warning: this returns the "legacy" category_id only
 		$category = WikiFactory::getCategory( $cityId );
 		if ( $category ) {
 			$categoryId = $category->cat_id;
 		}
 
-		// Look for Comscore tag
-		$wftags = new WikiFactoryTags( $cityId );
-		$tags = $wftags->getTags();
-		if ( is_array( $tags ) ) {
-			foreach ( $tags as $name ) {
-				if ( startsWith( $name, self::$comscore_prefix, false ) ) {
-					$catName = substr( $name, strlen( self::$comscore_prefix ) );
-					$category = WikiFactoryHub::getInstance()->getCategoryByName( $catName );
-					if ( $category ) {
-						return $category['id'];
-					}
-				}
+		// Check for a tag named comscore_foo and use that if "foo" exists as a category
+		// Some comscore tags don't match up with the old categories, but if it does, use the override
+		$comscoreCategoryOverride = HubService::getComscoreCategoryOverride ( $cityId );
+		if ( $comscoreCategoryOverride ) {
+			$category = WikiFactoryHub::getInstance()->getCategoryByName( $comscoreCategoryOverride );
+			if ( $category ) {
+				$categoryId = $comscoreCategoryOverride['id'];
 			}
 		}
 
@@ -149,6 +157,7 @@ class HubService extends Service {
 	}
 
 	private static function constructCategoryInfoFromCategoryId( $categoryId ) {
+		// Default fall-through value is "lifestyle", which probably isn't correct in many cases
 		$categoryId = self::getCanonicalCategoryId( $categoryId );
 		$categoryRow = WikiFactoryHub::getInstance()->getCategory( $categoryId );
 		$categoryInfo = new stdClass();
