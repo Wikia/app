@@ -44,8 +44,8 @@ class MercuryApiController extends WikiaController {
 			];
 
 			$smartBannerConfig[ 'appScheme' ] = [
-				'ios' => $meta[ 'ios-scheme' ],
-				'android' => $meta[ 'android-scheme' ]
+				'ios' => $meta[ 'ios-scheme' ] ?? null,
+				'android' => $meta[ 'android-scheme' ] ?? null,
 			];
 
 			return $smartBannerConfig;
