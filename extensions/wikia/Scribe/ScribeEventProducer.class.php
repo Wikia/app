@@ -49,7 +49,7 @@ class ScribeEventProducer {
 		$this->setCategory();
 	}
 
-	public function buildEditPackage( $oPage, $oUser, $oRevision = null, $oLocalFile = null, $bIsNewWiki = false ) {
+	public function buildEditPackage( $oPage, $oUser, $oRevision = null, $oLocalFile = null ) {
 		wfProfileIn( __METHOD__ );
 
 		if ( !is_object( $oPage ) ) {
@@ -109,10 +109,7 @@ class ScribeEventProducer {
 		$this->setMediaLinks( $oPage );
 		$this->setTotalWords( str_word_count( $rev_text ) );
 
-		if ( $bIsNewWiki && $oTitle->getNamespace() === NS_FILE ) {
-			$this->setImageApproved( true );
-			$this->setIsImageForReview( true );
-		} elseif ( $oLocalFile instanceof File ) {
+		if ( $oLocalFile instanceof File ) {
 			$this->setMediaType( $oLocalFile );
 			$this->setIsImageForReview( ImagesService::isLocalImage( $oTitle ) );
 		} else {
