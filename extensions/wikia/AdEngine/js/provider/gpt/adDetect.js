@@ -162,6 +162,7 @@ define('ext.wikia.adEngine.provider.gpt.adDetect', [
 	function onAdLoad(slot, gptEvent, iframe, forcedAdType) {
 
 		var adType = forcedAdType || getAdType(slot.name, gptEvent, iframe),
+			isCollapsed = false,
 			shouldPollForSuccess = false,
 			expectAsyncCollapse = false,
 			expectAsyncHop = false,
@@ -184,6 +185,7 @@ define('ext.wikia.adEngine.provider.gpt.adDetect', [
 			adInfo = adInfo || {};
 			adInfo.adType = adType;
 
+			isCollapsed = true;
 			clearTimeout(successTimer);
 			slot.collapse(adInfo);
 		}
@@ -197,6 +199,10 @@ define('ext.wikia.adEngine.provider.gpt.adDetect', [
 		}
 
 		function pollForSuccess() {
+			if (isCollapsed) {
+				return;
+			}
+
 			successTimer = setTimeout(function () {
 				log(['pollForSuccess', slot.name], 'info', logGroup);
 				pollForSuccess();
