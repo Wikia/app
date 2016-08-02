@@ -22,6 +22,8 @@
 		_kiq.push(['identify', window.wgUser]);
 	}
 
+	var dartGnreValues = window.dartGnreValues || [];
+
 	_kiq.push(['set', {
 		'userLanguage': window.wgUserLanguage,
 		'contentLanguage': window.wgContentLanguage,
@@ -38,7 +40,24 @@
 		'isLoggedIn': !!window.wgUserName,
 		'cpBenefitsModalShown': document.cookie.indexOf('cpBenefitsModalShown') > -1,
 		'isContributor': window.isContributor,
-		'isCurrentWikiAdmin': window.isCurrentWikiAdmin
+		'isCurrentWikiAdmin': window.isCurrentWikiAdmin,
+		'isDartGnreAdventure': dartGnreValues.indexOf('adventure') > -1,
+		'isDartGnreAction': dartGnreValues.indexOf('action') > -1,
+		'isDartGnreFantasy': dartGnreValues.indexOf('fantasy') > -1,
+		'isDartGnreRpg':dartGnreValues.indexOf('rpg') > -1,
+		'isDartGnreScifi': dartGnreValues.indexOf('scifi') > -1,
+		'isDartGnreFighting': dartGnreValues.indexOf('fighting') > -1,
+		'isDartGnreDrama': dartGnreValues.indexOf('drama') > -1,
+		'isDartGnreCasual': dartGnreValues.indexOf('casual') > -1,
+		'isDartGnreAnime': dartGnreValues.indexOf('anime') > -1,
+		'isDartGnreShooter': dartGnreValues.indexOf('shooter') > -1,
+		'isDartGnreCartoon': dartGnreValues.indexOf('cartoon') > -1,
+		'isDartGnreComedy': dartGnreValues.indexOf('comedy') > -1,
+		'isDartGnre3rdpersonshooter': dartGnreValues.indexOf('3rdpersonshooter') > -1,
+		'isDartGnreFps': dartGnreValues.indexOf('fps') > -1,
+		'isDartGnreHorror': dartGnreValues.indexOf('horror') > -1,
+		'isDartGnreDriving': dartGnreValues.indexOf('driving') > -1,
+		'isDartGnreSports': dartGnreValues.indexOf('sports') > -1
 	}]);
 
 	//This approach is hacky and we should use eventHandler provided by Qualaroo.
