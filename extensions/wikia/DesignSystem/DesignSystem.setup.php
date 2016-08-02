@@ -13,6 +13,9 @@ $wgExtensionCredits['api'][] = [
 // i18n
 $wgExtensionMessagesFiles['DesignSystem'] = __DIR__ . '/DesignSystem.i18n.php';
 
+// controllers
+$wgAutoloadClasses[ 'DesignSystemGlobalFooterController' ] = __DIR__ . '/controllers/DesignSystemGlobalFooterController.class.php';
+
 // helpers
 $wgAutoloadClasses[ 'DesignSystemHelper' ] = __DIR__ . '/DesignSystemHelper.class.php';
 $wgAutoloadClasses[ 'DesignSystemHooks' ] = __DIR__ . '/DesignSystemHooks.class.php';
