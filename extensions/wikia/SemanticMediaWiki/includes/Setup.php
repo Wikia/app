@@ -117,7 +117,9 @@ final class Setup {
 		);
 
 		// Connection can be used to redirect queries to another DB cluster
+		// Wikia Change - Start
 		$queryengineConnectionProvider = $mwCollaboratorFactory->newQueryEngineDatabaseConnectionProvider();
+		// Wikia Change - End
 
 		$connectionManager->registerConnectionProvider(
 			'mw.db.queryengine',
