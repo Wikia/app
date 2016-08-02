@@ -16,5 +16,6 @@ class DesignSystemApiController extends WikiaApiController {
 		$footerModel = new DesignSystemGlobalFooterModel( $wikiId, $lang );
 
 		$this->setResponseData( $footerModel->getData() );
+		$this->response->setCacheValidity( WikiaResponse::CACHE_VERY_SHORT );
 	}
 }
