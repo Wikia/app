@@ -1,0 +1,498 @@
+.wds-global-footer {
+	// columns
+	$desktop-column-fandom: 25%;
+	$desktop-column-wikia: 75%;
+	$desktop-first-column-width: 200px;
+	$desktop-second-column-width: 124px;
+	$desktop-third-column-width: 290px;
+	$desktop-fourth-column-width: 200px;
+
+	// rows
+	$en-logo-height: 26px;
+	$international-logo-height: 30px;
+
+	$desktop-row-header-en-margin-top: 47px;
+	$desktop-row-header-en-margin-bottom: 35px;
+
+	$desktop-row-header-international-padding-top: 43px;
+	$desktop-row-header-international-padding-bottom: 34px;
+
+	$mobile-row-header-en-fandom-margin-top: 38px;
+	$mobile-row-header-en-wikia-margin-top: 61px;
+	$mobile-row-header-en-margin-bottom: 29px;
+
+	$mobile-row-header-international-padding-top: 34px;
+	$mobile-row-header-international-padding-bottom: 35px;
+
+	$section-line-width: 4px;
+	$desktop-row-top-height: 205px + $section-line-width;
+
+	// others
+	$desktop-width: 1024px;
+	$section-vertical-padding: 8px;
+	$section-header-height: 24px;
+	$section-header-margin-bottom: 10px;
+
+	background-color: $color-dark-blue-gray;
+	box-sizing: border-box;
+	color: $color-white;
+	margin-top: 30px;
+	word-wrap: break-word;
+
+	// reset and set some defaults (that should be set in DS)
+	* {
+		box-sizing: inherit;
+	}
+
+	// we should have class that removes defaults from UL
+	ul {
+		list-style-type: none;
+		padding: 0;
+		margin: 0;
+	}
+
+	// main title and license
+	&__header-wrapper {
+		display: block;
+		width: 100%;
+	}
+
+	&__header {
+		align-items: center;
+		display: flex;
+		justify-content: center;
+		margin: 0;
+	}
+
+	&__licensing-and-vertical {
+		align-items: center;
+		background: rgba($color-night-sky, .5);
+		color: $color-white;
+		display: flex;
+		font-size: $typescale-size-minus-2;
+		justify-content: center;
+		line-height: $line-height;
+		min-height: 50px;
+		padding: 16px 20px;
+
+		/**
+		 * Note: The following rule is an exception on DS Class Naming because whole
+		 * text is user-supplied and we don't insert class names there.
+		 */
+		a,
+		a:visited {
+			color: $color-link;
+			text-decoration: none;
+		}
+
+		a:hover {
+			color: $color-white;
+		}
+	}
+
+	&__fandom-logo {
+		height: $en-logo-height;
+		width: 122px;
+	}
+
+	&__wikia-logo {
+		height: $en-logo-height;
+		width: 67px;
+
+		&.wds-is-large {
+			height: $international-logo-height;
+			padding: 0;
+			width: 84px;
+		}
+	}
+
+	// "Home of Fandom" subtitle
+	&__home-of-fandom {
+		border: {
+			bottom: 1px solid $color-blue-gray;
+			top: 1px solid $color-blue-gray;
+		}
+		color: #7f90a1;
+		display: block;
+		letter-spacing: 0.5px;
+		font: {
+			size: $typescale-size-minus-2;
+			weight: bold;
+		}
+		margin: {
+			left: 13px;
+			top: 5px;
+		}
+		padding: 3px 0;
+		text-transform: uppercase;
+		white-space: nowrap;
+	}
+
+	// main content
+	&__main {
+		display: flex;
+		flex: {
+			direction: column;
+			wrap: wrap;
+		}
+	}
+
+	// left (Fandom) and right (Wikia) header and sections
+	&__fandom-header,
+	&__wikia-header {
+		margin: 0;
+	}
+
+	&__fandom-sections,
+	&__wikia-sections {
+		display: flex;
+		flex-wrap: wrap;
+	}
+
+	&__fandom-section,
+	&__wikia-section {
+		border-top: $section-line-width solid $color-slate-gray;
+		margin-right: 55px;
+		padding-top: $section-vertical-padding;
+	}
+
+	&__link {
+		&,
+		&:active,
+		&:visited,
+		&:focus {
+			color: $color-blue-gray;
+			font-size: $typescale-size-minus-1;
+			font-weight: normal;
+			line-height: 2em;
+			text-decoration: none;
+		}
+
+		&:hover {
+			color: $color-white;
+		}
+	}
+
+	&__fandom-section {
+		&.wds-is-fandom-overview {
+			border: 0;
+			padding: 0;
+
+			.wds-global-footer__link {
+				align-items: center;
+				border-top: $section-line-width solid $color-slate-gray;
+				display: flex;
+				font: {
+					size: $typescale-size-plus-1;
+					weight: bold;
+				}
+				justify-content: space-between;
+				margin: 0;
+				padding: 2px 0 28px 0;
+				text-decoration: none;
+
+				&.wds-is-games {
+					border-color: $color-games;
+				}
+
+				&.wds-is-movies {
+					border-color: $color-movies;
+				}
+
+				&.wds-is-tv {
+					border-color: $color-tv;
+				}
+			}
+
+			.wds-global-footer__image {
+				transform: rotate(180deg);
+			}
+		}
+
+		&.wds-is-follow-us {
+			.wds-global-footer__links-list {
+				display: flex;
+				flex-wrap: nowrap;
+			}
+
+			.wds-global-footer__link {
+				$social-icon-size: 24px;
+
+				background: no-repeat center;
+				background-size: $social-icon-size;
+				display: inline-block;
+				height: $social-icon-size;
+				margin-right: 20px;
+				width: $social-icon-size;
+			}
+
+			.wds-global-footer__image {
+				color: $color-slate-gray;
+				&:hover {
+					color: $color-white;
+				}
+			}
+		}
+	}
+
+	&__wikia-section {
+		&.wds-is-create-wiki {
+			.wds-global-footer__link {
+				border: solid 1px $color-blue-gray;
+				color: $color-blue-gray;
+				display: inline-block;
+				font: {
+					size: $typescale-size-minus-2;
+					weight: bold;
+				}
+				letter-spacing: 0.3px;
+				line-height: normal;
+				margin-top: 13px;
+				padding: 14px 18px;
+				text-decoration: none;
+				text-transform: uppercase;
+
+				&:hover {
+					color: $color-white;
+				}
+			}
+		}
+
+		&.wds-is-community-apps {
+			.wds-global-footer__links-list {
+				display: flex;
+			}
+
+			.wds-global-footer__link {
+				display: block;
+				line-height: normal;
+				margin-top: 6px;
+				width: 119px;
+			}
+
+			.wds-global-footer__image {
+				height: 35px;
+				width: 119px;
+			}
+		}
+	}
+
+	&__section-header {
+		color: $color-white;
+		font: {
+			size: $typescale-size-plus-1;
+			weight: bold;
+		}
+		min-height: $section-header-height;
+		margin: {
+			bottom: $section-header-margin-bottom;
+			top: 0;
+		}
+		padding: 0;
+	}
+
+	&__section-description {
+		color: $color-white;
+		font-size: $typescale-size-minus-1;
+		line-height: $line-height;
+		margin: 0;
+		padding: 0;
+	}
+
+	@media #{$breakpoint-tablet-down} {
+		&__main {
+			margin: 0 20px;
+		}
+
+		&__header-wrapper {
+			padding: {
+				bottom: $mobile-row-header-international-padding-bottom;
+				top: $mobile-row-header-international-padding-top;
+			}
+		}
+
+		&__fandom-header {
+			margin: {
+				bottom: $mobile-row-header-en-margin-bottom;
+				top: $mobile-row-header-en-fandom-margin-top;
+			}
+		}
+
+		&__wikia-header {
+			margin: {
+				bottom: $mobile-row-header-en-margin-bottom;
+				top: $mobile-row-header-en-wikia-margin-top;
+			}
+		}
+
+		// left (Fandom) and right (Wikia) sections
+		&__fandom-section,
+		&__wikia-section {
+			margin: 0;
+			width: 100%;
+		}
+
+		&__fandom-section {
+			&.wds-is-fandom-overview {
+				.wds-global-footer__links-list-item {
+					margin-bottom: 0;
+				}
+			}
+
+			&.wds-is-follow-us {
+				.wds-global-footer__links-list-item {
+					margin-bottom: 0;
+				}
+
+				.wds-global-footer__link {
+					height: 42px;
+					margin-right: 10px;
+					width: 42px;
+				}
+			}
+		}
+
+		&__wikia-section {
+			margin-bottom: 20px;
+
+			&.wds-is-company-overview {
+				width: 50%;
+			}
+
+			&.wds-is-site-overview {
+				padding-top: $section-vertical-padding + $section-header-height + $section-header-margin-bottom;
+				width: 50%;
+			}
+
+			&.wds-is-create-wiki {
+				display: none;
+			}
+
+			&.wds-is-community-apps {
+				.wds-global-footer__links-list {
+					margin-top: 5px;
+					margin-bottom: 0;
+				}
+
+				.wds-global-footer__link {
+					margin-right: 25px;
+				}
+			}
+		}
+
+		&.wds-is-international {
+			.wds-global-footer__fandom-section.wds-is-follow-us {
+				margin-bottom: 37px;
+			}
+		}
+
+		&__links-list-item {
+			margin-bottom: 10px;
+		}
+
+		&__licensing-and-vertical {
+			text-align: center;
+		}
+	}
+
+	@media #{$breakpoint-desktop-up} {
+		&__main {
+			flex-direction: row;
+			margin: 0 auto;
+			padding-bottom: 40px;
+			width: $desktop-width;
+		}
+
+		&__header-wrapper {
+			padding: {
+				bottom: $desktop-row-header-international-padding-bottom;
+				top: $desktop-row-header-international-padding-top;
+			}
+		}
+
+		// left (Fandom) and right (Wikia) headers and sections
+		&__fandom-header,
+		&__wikia-header {
+			height: $en-logo-height;
+			margin: {
+				bottom: $desktop-row-header-en-margin-bottom;
+				top: $desktop-row-header-en-margin-top;
+			}
+		}
+
+		&__fandom-header {
+			order: 1;
+			width: $desktop-column-fandom;
+		}
+
+		&__fandom-sections {
+			flex-direction: column;
+			order: 3;
+			width: $desktop-column-fandom;
+		}
+
+		&__wikia-header {
+			order: 2;
+			width: $desktop-column-wikia;
+		}
+
+		&__wikia-sections {
+			align-content: flex-start;
+			order: 4;
+			width: $desktop-column-wikia;
+		}
+
+		// items in Fandom section
+		&__fandom-section {
+			width: $desktop-first-column-width;
+		}
+
+		// items in Wikia section
+		&__wikia-section {
+			padding-bottom: $section-vertical-padding;
+
+			&.wds-is-company-overview {
+				margin-right: 50px;
+				min-height: $desktop-row-top-height;
+				order: 1;
+				width: $desktop-second-column-width;
+			}
+
+			&.wds-is-site-overview {
+				margin-right: 50px;
+				order: 4;
+				width: $desktop-second-column-width;
+			}
+
+			&.wds-is-community {
+				min-height: $desktop-row-top-height;
+				order: 2;
+				width: $desktop-third-column-width;
+			}
+
+			&.wds-is-create-wiki {
+				display: block;
+				order: 5;
+				width: $desktop-third-column-width;
+			}
+
+			&.wds-is-community-apps {
+				margin-right: 0;
+				min-height: $desktop-row-top-height;
+				order: 3;
+				width: $desktop-fourth-column-width;
+
+				.wds-global-footer__links-list {
+					flex-direction: column;
+					margin-top: 5px;
+				}
+			}
+
+			&.wds-is-advertise {
+				margin-right: 0;
+				order: 6;
+				width: $desktop-fourth-column-width;
+			}
+		}
+	}
+}

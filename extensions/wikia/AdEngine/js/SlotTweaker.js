@@ -155,10 +155,6 @@ define('ext.wikia.adEngine.slotTweaker', [
 		});
 	}
 
-	function isUniversalAdPackageLoaded() {
-		return !!doc.getElementsByClassName('.bfaa-template')[0];
-	}
-
 	function noop() {
 		return;
 	}
@@ -186,7 +182,6 @@ define('ext.wikia.adEngine.slotTweaker', [
 		hackChromeRefresh: hackChromeRefresh,
 		hide: hide,
 		isTopLeaderboard: isTopLeaderboard,
-		isUniversalAdPackageLoaded: isUniversalAdPackageLoaded,
 		makeResponsive: makeResponsive,
 		onReady: onReady,
 		removeDefaultHeight: removeDefaultHeight,

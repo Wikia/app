@@ -1,8 +1,9 @@
 /*global define*/
 define('ext.wikia.adEngine.provider.remnantGpt', [
 	'ext.wikia.adEngine.provider.factory.wikiaGpt',
-	'ext.wikia.adEngine.slotTweaker'
-], function (factory, slotTweaker) {
+	'ext.wikia.adEngine.slotTweaker',
+	'ext.wikia.adEngine.uapContext'
+], function (factory, slotTweaker, uapContext) {
 	'use strict';
 
 	return factory.createProvider(
@@ -35,7 +36,7 @@ define('ext.wikia.adEngine.provider.remnantGpt', [
 		{
 			beforeSuccess: function (slotName) {
 				slotTweaker.removeDefaultHeight(slotName);
-				if (!slotTweaker.isUniversalAdPackageLoaded()) {
+				if (!uapContext.isUapLoaded()) {
 					slotTweaker.removeTopButtonIfNeeded(slotName);
 					slotTweaker.adjustLeaderboardSize(slotName);
 				}

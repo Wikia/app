@@ -51,10 +51,10 @@ $recirculation-impact-footer-color-feature-overlay: rgba(0, 0, 0, .75);
 		&.item-wiki::after {
 			background: {
 				color: $recirculation-fandom-wiki-tag;
-				image: url('/extensions/wikia/Recirculation/images/wiki.svg'); /* $wgCdnStylePath */
 				position: 5px center;
 				repeat: no-repeat;
 			}
+			background-image: url('/extensions/wikia/Recirculation/images/wiki.svg'); /* $wgCdnStylePath */
 
 			content: 'Wiki';
 			padding: 5px 10px 5px 25px;
@@ -80,6 +80,7 @@ $recirculation-impact-footer-color-feature-overlay: rgba(0, 0, 0, .75);
 			padding: 10px;
 			position: absolute;
 			right: 0;
+			min-height: 70px;
 		}
 
 		h4::before {
@@ -92,6 +93,19 @@ $recirculation-impact-footer-color-feature-overlay: rgba(0, 0, 0, .75);
 
 		.thumbnail {
 			margin-bottom: 0;
+
+			&::after {
+				bottom: 15px;
+				height: 60px;
+				right: 15px;
+				width: 60px;
+			}
+		}
+
+		&.is-video {
+			h4 {
+				padding-right: 88px;
+			}
 		}
 	}
 

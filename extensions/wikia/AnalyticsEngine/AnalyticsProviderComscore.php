@@ -46,7 +46,7 @@ class AnalyticsProviderComscore implements iAnalyticsProvider {
 
 		$categoryOverride = HubService::getComscoreCategoryOverride( $wgCityId );
 		if ( $categoryOverride ) {
-			$verticalName = $categoryOverride['short'];
+			$verticalName = $categoryOverride;
 		}
 
 		if ( !$verticalName ) {

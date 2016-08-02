@@ -576,7 +576,10 @@ class EditAccount extends SpecialPage {
 	private function logOut() {
 		$ok = false;
 		try {
-			$response = \Wikia\Helios\User::getHeliosClient()->forceLogout( $this->mUser->getId() );
+			/** @var HeliosClient $heliosClient */
+			$heliosClient = Injector::getInjector()->get(HeliosClient::class);
+			$response = $heliosClient->forceLogout($this->mUser->getId());
+
 			// successful logout returns 204 No Content and forceLogout() returns null
 			$ok = is_null($response);
 		} catch (\Wikia\Service\Helios\ClientException $e) {
