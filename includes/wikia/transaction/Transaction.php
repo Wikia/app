@@ -237,15 +237,29 @@ class Transaction {
 	 * - Cache-Control: public, max-age=2592000 (AssetsManager, cacheable)
 	 * - Cache-Control: private, must-revalidate, max-age=0 (special page, not cacheable)
 	 *
-	 * @param array $headers key - value list of HTTP response headers
+	 * @param array $headers list of headers to be sent as returned by headers_list()
 	 * @return bool|null will return null for maintenance / CLI scripts
 	 */
-	public static function isCacheable( $headers ) {
-		if ( empty( $headers['Cache-Control'] ) ) {
+	public static function isCacheable( array $headers ) {
+		/**
+		 * $headers will have entries like the following ones:
+		 *
+		 * 'X-Served-By: dev-macbre'
+		 * 'X-Trace-Id: 2d425caa-19a9-4f78-a5e7-8bdda3286f0d'
+		 *
+		 * Map it to an associative array
+		 */
+		$headersMap = [];
+		foreach($headers as $header) {
+			list($key, $val) = explode(':', $header, 2);
+			$headersMap[ strtoupper( $key ) ] = $val;
+		}
+
+		if ( empty( $headersMap['CACHE-CONTROL'] ) ) {
 			return null;
 		}
 
-		$cacheControl = $headers['Cache-Control'];
+		$cacheControl = $headersMap['CACHE-CONTROL'];
 		$sMaxAge = 0;
 
 		// has "private" entry?
@@ -268,15 +282,13 @@ class Transaction {
 	/**
 	 * Analyze the response header and set "cacheablity" flag
 	 *
-	 * @return bool true (hook handler
+	 * @return bool true (hook handler)
 	 */
 	public static function onRestInPeace() {
-		if ( function_exists( 'apache_response_headers' ) ) {
-			$isCacheable = self::isCacheable( apache_response_headers() );
+		$isCacheable = self::isCacheable( headers_list() );
 
-			if ( is_bool( $isCacheable ) ) {
-				self::setAttribute( 'cacheable', $isCacheable );
-			}
+		if ( is_bool( $isCacheable ) ) {
+			self::setAttribute( 'cacheable', $isCacheable );
 		}
 		return true;
 	}
