@@ -1,140 +1,142 @@
-window.AdminDashboard = {
-	controls: {},
-	section: {},
-	externalComponents: {},
-	init: function() {
-		// precache
-		AdminDashboard.cc = $('#AdminDashboard');
+require(['jquery', 'mw', 'wikia.nirvana'], function($, mw, nirvana) {
+	var AdminDashboard = {
+		controls: {},
+		section: {},
+		externalComponents: {},
+		init: function () {
+			// precache
+			this.cc = $('#AdminDashboard');
 
-		if(AdminDashboard.cc.length === 0) {
-			return;
-		}
+			if (this.cc.length === 0) {
+				return;
+			}
 
-		AdminDashboard.allControls = AdminDashboard.cc.find('.control');
-		AdminDashboard.tabs = $('#AdminDashboardTabs');
-		AdminDashboard.allTabs = AdminDashboard.tabs.find('.tab');
-		AdminDashboard.generalTab = AdminDashboard.tabs.find('[data-section=general]');
-		AdminDashboard.section.general = $('#AdminDashboardGeneral');
-		AdminDashboard.section.advanced = $('#AdminDashboardAdvanced');
-		AdminDashboard.section.contentarea = $('#AdminDashboardContentArea');
-		AdminDashboard.wikiaArticle = $('#WikiaArticle');
+			this.allControls = this.cc.find('.control');
+			this.tabs = $('#AdminDashboardTabs');
+			this.allTabs = this.tabs.find('.tab');
+			this.generalTab = this.tabs.find('[data-section=general]');
+			this.section.general = $('#AdminDashboardGeneral');
+			this.section.advanced = $('#AdminDashboardAdvanced');
+			this.section.contentarea = $('#AdminDashboardContentArea');
+			this.wikiaArticle = $('#WikiaArticle');
 
-		// events
-		AdminDashboard.allControls.hover(function() {
-			var el = $(this);
-			AdminDashboard.tooltip = el.closest('.control-section').find('header .dashboard-tooltip');
-			AdminDashboard.tooltip.text(el.data('tooltip'));
-		}, function() {
-			AdminDashboard.tooltip.text('');
-		}).click(AdminDashboard.handleControlClick);
+			// events
+			this.allControls.hover(function () {
+				var el = $(this);
+				this.tooltip = el.closest('.control-section').find('header .dashboard-tooltip');
+				this.tooltip.text(el.data('tooltip'));
+			}, function () {
+				this.tooltip.text('');
+			}).click(this.handleControlClick);
 
-		// init addVideo jQuery plugin
-		var addVideoButton = AdminDashboard.cc.find('.addVideoButton'),
-			addVideoButtonReturnUrl = addVideoButton.data('return-url');
+			// init addVideo jQuery plugin
+			var addVideoButton = this.cc.find('.addVideoButton'),
+				addVideoButtonReturnUrl = addVideoButton.data('return-url');
 
-		if( $.fn.addVideoButton ) { //FB#68272
-			addVideoButton.addVideoButton({
-				callbackAfterSelect: function(url, VET) {
-					$.nirvana.postJson(
-						// controller
-						'VideosController',
-						// method
-						'addVideo',
-						// data
-						{
-							token: mw.user.tokens.get('editToken'),
-							url: url
-						},
-						// success callback
-						function( formRes ) {
-							if ( formRes.error ) {
-								new window.BannerNotification(formRes.error, 'error')
-									.show();
-							} else {
-								VET.close();
-								window.location = addVideoButtonReturnUrl;
+			if ($.fn.addVideoButton) { //FB#68272
+				addVideoButton.addVideoButton({
+					callbackAfterSelect: function (url, VET) {
+						nirvana.postJson(
+							// controller
+							'VideosController',
+							// method
+							'addVideo',
+							// data
+							{
+								token: mw.user.tokens.get('editToken'),
+								url: url
+							},
+							// success callback
+							function (formRes) {
+								if (formRes.error) {
+									new window.BannerNotification(formRes.error, 'error')
+										.show();
+								} else {
+									VET.close();
+									window.location = addVideoButtonReturnUrl;
+								}
+							},
+							// error callback
+							function () {
+								new window.BannerNotification(
+									$.msg('vet-error-while-loading'),
+									'error'
+								).show();
 							}
-						},
-						// error callback
-						function () {
-							new window.BannerNotification(
-								$.msg('vet-error-while-loading'),
-								'error'
-							).show();
-						}
-					);
-					// Don't move on to second VET screen.  We're done.
-					return false;
-				}
+						);
+						// Don't move on to second VET screen.  We're done.
+						return false;
+					}
+				});
+			}
+
+			this.allTabs.click(function (e) {
+				e.preventDefault();
+				var el = $(this);
+				this.ui.resetAll();
+				this.ui.selectTab(el);
+				this.ui.showSection(el.data('section'));
 			});
-		}
 
-		AdminDashboard.allTabs.click(function(e) {
-			e.preventDefault();
-			var el = $(this);
-			AdminDashboard.ui.resetAll();
-			AdminDashboard.ui.selectTab(el);
-			AdminDashboard.ui.showSection(el.data('section'));
-		});
-
-		AdminDashboard.cc.on('mousedown', 'a[data-tracking]', function(e) {
-			var t = $(this);
-			AdminDashboard.track(Wikia.Tracker.ACTIONS.CLICK, t.data('tracking'), null, {}, e);
-		});
-	},
-	track: function(action, label, value, params, event) {
-		Wikia.Tracker.track({
-			category: 'admin-dashboard',
-			action: action,
-			browserEvent: event,
-			label: label,
-			trackingMethod: 'analytics',
-			value: value
-		}, params);
-	},
-	handleControlClick: function(e) {
-		var modal = $(this).data('modal');
-		if (modal) {
-			e.preventDefault();
-			AdminDashboard.modalLoad['load'+modal]();
-		}
-	},
-	ui: {
-		resetAll: function() {
-			AdminDashboard.ui.deselectAllTabs();
-			AdminDashboard.ui.hideAllSections();
-			AdminDashboard.section.contentarea.html(mw.message('admindashboard-loading').escaped());
-			AdminDashboard.wikiaArticle.removeClass('AdminDashboardChromedArticle expanded');
-			$('.AdminDashboardDrawer, .AdminDashboardNavigation, .AdminDashboardArticleHeader').remove();
-			if(typeof FounderProgressList !== 'undefined') {
-				FounderProgressList.hideListModal();
+			this.cc.on('mousedown', 'a[data-tracking]', function (e) {
+				var t = $(this);
+				this.track(Wikia.Tracker.ACTIONS.CLICK, t.data('tracking'), null, {}, e);
+			});
+		},
+		track: function (action, label, value, params, event) {
+			Wikia.Tracker.track({
+				category: 'admin-dashboard',
+				action: action,
+				browserEvent: event,
+				label: label,
+				trackingMethod: 'analytics',
+				value: value
+			}, params);
+		},
+		handleControlClick: function (e) {
+			var modal = $(this).data('modal');
+			if (modal) {
+				e.preventDefault();
+				this.modalLoad['load' + modal]();
 			}
 		},
-		hideAllSections: function() {
-			for(var s in AdminDashboard.section) {
-				$(AdminDashboard.section[s]).hide();
+		ui: {
+			resetAll: function () {
+				this.ui.deselectAllTabs();
+				this.ui.hideAllSections();
+				this.section.contentarea.html(mw.message('admindashboard-loading').escaped());
+				this.wikiaArticle.removeClass('AdminDashboardChromedArticle expanded');
+				$('.AdminDashboardDrawer, .AdminDashboardNavigation, .AdminDashboardArticleHeader').remove();
+				if (typeof FounderProgressList !== 'undefined') {
+					FounderProgressList.hideListModal();
+				}
+			},
+			hideAllSections: function () {
+				for (var s in this.section) {
+					if (this.section.hasOwnProperty(s)) {
+						$(this.section[s]).hide();
+					}
+				}
+			},
+			showSection: function (section) {
+				this.section[section].show();
+			},
+			deselectAllTabs: function () {
+				this.allTabs.removeClass('active');
+			},
+			selectTab: function (tab) {
+				$(tab).addClass('active');
 			}
 		},
-		showSection: function(section) {
-			AdminDashboard.section[section].show();
-		},
-		deselectAllTabs: function() {
-			AdminDashboard.allTabs.removeClass('active');
-		},
-		selectTab: function(tab) {
-			$(tab).addClass('active');
+		modalLoad: {
+			loadAddPage: function () {
+				CreatePage.requestDialog();
+			},
+			loadAddPhoto: function () {
+				UploadPhotos.showDialog();
+			}
 		}
-	},
-	modalLoad: {
-		loadAddPage: function() {
-			CreatePage.requestDialog();
-		},
-		loadAddPhoto: function() {
-			UploadPhotos.showDialog();
-		}
-	}
-};
+	};
 
-$(function() {
-window.AdminDashboard.init();
+	$(AdminDashboard.init.bind(AdminDashboard));
 });
