@@ -12,23 +12,24 @@ class AdminDashboardLogic {
 	 */
 	public static function isGeneralApp( $appName ) {
 		$generalApps = [
-			'Categories'     => true,
-			'CreateBlogPage' => true,
-			'CreatePage'     => true,
-			'CSS'            => true,
-			'Listusers'      => true,
-			'ListUsers'      => true,
-			'MultipleUpload' => true,
-			'Recentchanges'  => true,
-			'RecentChanges'  => true,
-			'ThemeDesigner'  => true,
-			'Upload'         => true,
-			'UserRights'     => true,
-			'Userrights'     => true,
-			'WikiFeatures'   => true,
-			'WikiaVideoAdd'  => true,
+			'Categories',
+			'CreateBlogPage',
+			'CreatePage',
+			'CSS',
+			'Listusers',
+			'ListUsers',
+			'MultipleUpload',
+			'Recentchanges',
+			'RecentChanges',
+			'ThemeDesigner',
+			'Upload',
+			'UserRights',
+			'Userrights',
+			'WikiFeatures',
+			'WikiaVideoAdd',
 		];
-		return !empty( $generalApps[$appName] );
+
+		return in_array( $appName, $generalApps );
 	}
 
 	/**
