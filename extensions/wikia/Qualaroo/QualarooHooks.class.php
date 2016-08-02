@@ -45,6 +45,7 @@ class QualarooHooks {
 			$vars['isContributor'] = $wgUser->getEditCount() > 0;
 			$vars['isCurrentWikiAdmin'] = in_array( $wgUser, ( new CommunityPageSpecialUsersModel() )->getAdmins() );
 			$vars['fullVerticalName'] = (new MonetizationModuleHelper())->getWikiVertical();
+			$vars['dartGnreValues'] = AdTargeting::getRatingFromDartKeyValues( 'gnre' );
 		}
 
 		return true;
