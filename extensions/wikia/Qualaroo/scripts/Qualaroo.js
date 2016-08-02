@@ -46,6 +46,7 @@
 		'isDartGnreFantasy': dartGnreValues.indexOf('fantasy') > -1,
 		'isDartGnreRpg':dartGnreValues.indexOf('rpg') > -1,
 		'isDartGnreScifi': dartGnreValues.indexOf('scifi') > -1,
+		'isDartGnreOpenworld': dartGnreValues.indexOf('openworld') > -1,
 		'isDartGnreFighting': dartGnreValues.indexOf('fighting') > -1,
 		'isDartGnreDrama': dartGnreValues.indexOf('drama') > -1,
 		'isDartGnreCasual': dartGnreValues.indexOf('casual') > -1,
