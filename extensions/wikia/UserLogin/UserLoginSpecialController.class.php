@@ -82,10 +82,10 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 		$contentLangCode = $this->app->wg->ContLang->getCode();
 
 		// Redirect to standalone NewAuth page if extension enabled
-		if ( $this->app->wg->EnableNewAuthModal && $this->wg->request->getVal('type') !== 'forgotPassword' ) {
+		if ( $this->app->wg->EnableNewAuthModal && $this->wg->request->getVal( 'type' ) !== 'forgotPassword' ) {
 			$newLoginPageUrl = '/signin?redirect=' . $this->userLoginHelper->getRedirectUrl();
 
-			if ($contentLangCode !== 'en') {
+			if ( $contentLangCode !== 'en' ) {
 				$newLoginPageUrl .= '&uselang=' . $contentLangCode;
 			}
 
