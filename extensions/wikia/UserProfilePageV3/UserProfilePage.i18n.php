@@ -187,6 +187,7 @@ Parameters:
 	'user-identity-box-edits' => 'This message is used to show how many edits the user has made already - visible on user profile page. HTML tags are used for styling UI.
 Parameters:
 * $1 is the number of edits',
+	'user-identity-box-discussion-posts' => 'This message is used to show how many discussion posts the user has already made.',
 	'user-identity-box-group-blocked' => 'Group name shown on user profile page next to user login for users who are "Blocked".',
 	'user-identity-box-group-chatmoderator' => 'Group name shown on user profile page next to user login for users who are "Chat moderator".',
 	'user-identity-box-group-sysop' => 'Group name shown on user profile page next to user login for users who are "Admin".',
