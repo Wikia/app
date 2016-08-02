@@ -145,7 +145,13 @@ class ApiQueryFilearchive extends ApiQueryBase {
 			}
 			if ( $fld_user ) {
 				$file['userid'] = $row->fa_user;
-				$file['user'] = $row->fa_user_text;
+				/* Wikia change begin */
+				if ( $row->fa_user > 0 ) {
+					$file['user'] = User::newFromId( $row->fa_user )->getName();
+				} else {
+					$file['user'] = $row->fa_user_text;
+				}
+				/* Wikia change end */
 			}
 			if ( $fld_size || $fld_dimensions ) {
 				$file['size'] = $row->fa_size;

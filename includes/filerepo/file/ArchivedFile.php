@@ -163,7 +163,7 @@ class ArchivedFile {
 			$this->media_type = $row->fa_media_type;
 			$this->description = $row->fa_description;
 			$this->user = $row->fa_user;
-			$this->user_text = $row->fa_user_text;
+			$this->user_text = ( $row->fa_user > 0 ) ? User::newFromId( $row->fa_user )->getName() : $row->fa_user_text;
 			$this->timestamp = $row->fa_timestamp;
 			$this->deleted = $row->fa_deleted;
 		} else {
@@ -199,7 +199,13 @@ class ArchivedFile {
 		$file->media_type = $row->fa_media_type;
 		$file->description = $row->fa_description;
 		$file->user = $row->fa_user;
-		$file->user_text = $row->fa_user_text;
+		/* Wikia change begin */
+		if ( is_numeric( $row->fa_user ) && $row->fa_user > 0 ) {
+			$file->user_text = User::newFromId( $row->fa_user )->getName();
+		} else {
+			$file->user_text = $row->fa_user_text;
+		}
+		/* Wikia change end */
 		$file->timestamp = $row->fa_timestamp;
 		$file->deleted = $row->fa_deleted;
 

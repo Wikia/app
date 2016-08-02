@@ -1134,10 +1134,13 @@ class SpecialUndelete extends SpecialPage {
 		}
 		if( $haveFiles ) {
 			$batch = new LinkBatch();
+			/* Wikia change begin */
 			foreach ( $files as $row ) {
-				$batch->addObj( Title::makeTitleSafe( NS_USER, $row->fa_user_text ) );
-				$batch->addObj( Title::makeTitleSafe( NS_USER_TALK, $row->fa_user_text ) );
+				$userName = ( $row->fa_user > 0 ) ? User::newFromId( $row->fa_user )->getName() : $row->fa_user_text;
+				$batch->addObj( Title::makeTitleSafe( NS_USER, $userName ) );
+				$batch->addObj( Title::makeTitleSafe( NS_USER_TALK, $userName ) );
 			}
+			/* Wikia change end */
 			$batch->execute();
 			$files->seek( 0 );
 		}
