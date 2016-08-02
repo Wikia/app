@@ -1,7 +1,7 @@
 /*global define*/
 define('ext.wikia.adEngine.template.interstitial', [
 	'wikia.document',
-	'wikia.log',
+	'wikia.log'
 ], function (doc, log) {
 	'use strict';
 
