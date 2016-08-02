@@ -448,6 +448,10 @@ class CreateNewWikiTask extends BaseTask {
 						$scribeProducer = new \ScribeEventProducer( $key, 0 );
 						if ( is_object( $scribeProducer ) ) {
 							if ( $scribeProducer->buildEditPackage( $article, $user, $revision, null, true ) ) {
+								// SUS-760 Autoapprove all images (creations and edits) while creating a wiki.
+								if ( $article->getTitle()->getNamespace() == NS_FILE ) {
+									$scribeProducer->setImageApproved( true );
+								}
 								$scribeProducer->sendLog();
 							}
 						}
