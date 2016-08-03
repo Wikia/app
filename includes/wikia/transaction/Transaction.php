@@ -226,6 +226,32 @@ class Transaction {
 	}
 
 	/**
+	 * Extract given header value from the list of all response headers provided by headers_list() function
+	 *
+	 * @param $headerName
+	 * @param array $headers
+	 * @return string|null
+	 */
+	private static function getHeaderValue( $headerName, array $headers ) {
+		/**
+		 * $headers will have entries like the following ones:
+		 *
+		 * 'X-Served-By: dev-macbre'
+		 * 'X-Trace-Id: 2d425caa-19a9-4f78-a5e7-8bdda3286f0d'
+		 */
+		$headerName = strtolower( $headerName );
+
+		foreach( $headers as $header ) {
+			if ( startsWith( strtolower( $header ), $headerName . ':' ) ) {
+				list( $_, $val ) = explode( ':', $header, 2 );
+				return $val;
+			}
+		}
+
+		return null;
+	}
+
+	/**
 	 * Given the list of respons headers detect whether the response can be cached on CDN
 	 *
 	 * We assume that the response is cacheable if s-maxage entry in Cache-Control header
@@ -241,25 +267,11 @@ class Transaction {
 	 * @return bool|null will return null for maintenance / CLI scripts
 	 */
 	public static function isCacheable( array $headers ) {
-		/**
-		 * $headers will have entries like the following ones:
-		 *
-		 * 'X-Served-By: dev-macbre'
-		 * 'X-Trace-Id: 2d425caa-19a9-4f78-a5e7-8bdda3286f0d'
-		 *
-		 * Map it to an associative array
-		 */
-		$headersMap = [];
-		foreach($headers as $header) {
-			list($key, $val) = explode(':', $header, 2);
-			$headersMap[ strtoupper( $key ) ] = $val;
-		}
-
-		if ( empty( $headersMap['CACHE-CONTROL'] ) ) {
+		$cacheControl = self::getHeaderValue( 'Cache-Control', $headers );
+		if ( is_null( $cacheControl ) ) {
 			return null;
 		}
 
-		$cacheControl = $headersMap['CACHE-CONTROL'];
 		$sMaxAge = 0;
 
 		// has "private" entry?
