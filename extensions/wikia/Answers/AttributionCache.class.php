@@ -154,7 +154,7 @@ class AttributionCache {
 		$results = array();
 
 		$dbs = wfGetDB( DB_MASTER );
-		$res = $dbs->select( 'revision', array( 'rev_user', 'rev_user_text' ), array( 'rev_page' => $title->getArticleID() ), __METHOD__, array( 'GROUP BY' => 'rev_user' ) );
+		$res = $dbs->select( 'revision', array( 'rev_user' ), array( 'rev_page' => $title->getArticleID() ), __METHOD__, array( 'GROUP BY' => 'rev_user' ) );
 
 		$firstRevisionUserId = $this->getFirstRevisionUserId($title);
 		while($row = $dbs->fetchObject($res)) {
@@ -179,7 +179,7 @@ class AttributionCache {
 						continue;
 					}
 				}
-				$results[] = $this->getContribsEntry($row->rev_user, $this->getUserEditPoints($row->rev_user), $row->rev_user_text);
+				$results[] = $this->getContribsEntry( $row->rev_user, $this->getUserEditPoints( $row->rev_user ), $user->getName() );
 			}
 		}
 
@@ -367,14 +367,14 @@ class AttributionCache {
                 $key = wfMemcKey('first_contributor', $page_title_id, 3);
                 $data = $wgMemc->get( $key );
 
-                $num1 = array();
+                $contributor = array();
                 if (empty($data)) {
                         wfDebug( "loading first contributor for {$page_title_id} from db\n" );
                         $dbr =& wfGetDB( DB_SLAVE );
 
                         $params['ORDER BY'] = "rev_id  ASC";
                         $params['LIMIT'] = 1;
-                        $s = $dbr->selectRow( 'revision',
+                        $row = $dbr->selectRow( 'revision',
                                         array( 'rev_user','rev_user_text'),
                                         array( 'rev_page' =>  $page_title_id )
                                         , __METHOD__,
@@ -382,14 +382,14 @@ class AttributionCache {
                         );
                         // set to 1 if anon, as only one person can actually "ask" the question..
                         $editsNum = !empty($s->rev_user) ? $this->getUserEditPoints($s->rev_user) : 1;
-                        $num1 = $this->getContribsEntry($s->rev_user, $editsNum, $s->rev_user_text);
+                        $contributor = $this->getContribsEntry( $row->rev_user, $editsNum, User::newFromId( $row->rev_user )->getName() );
                         $wgMemc->set( $key, $num1, 60 * 60 );
                 }
                 else {
                         wfDebug( "loading first contributor for page {$page_title_id} from cache\n" );
-                        $num1 = $data;
+                        $contributor = $data;
                 }
-                return $num1;
+                return $contributor;
         }
 
 }

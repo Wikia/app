@@ -96,7 +96,7 @@ class PageByRenderer {
 
 			if (!isset($users[$row->rev_user])) {
 				$users[$row->rev_user] = array(
-					'name' => $row->rev_user ? $row->rev_user_text : null,
+					'name' => $row->rev_user ? User::newFromId( $row->rev_user )->getName() : null,
 					'id' => $row->rev_user,
 					'count' => 0,
 				);
@@ -154,8 +154,9 @@ class PageByRenderer {
 		#TODO: somehere link the page history. And mention the page name, if it's not the local page.
 
 		if ($this->showfirst) {
-			$firstuser = Title::makeTitle(NS_USER, $first->rev_user_text);
-			$ulink =  $sk->makeLinkObj($firstuser, htmlspecialchars($first->rev_user_text));
+			$firstUserName = User::newFromId( $first->rev_user )->getName();
+			$firstuser = Title::makeTitle( NS_USER, $firstUserName );
+			$ulink =  $sk->makeLinkObj( $firstuser, htmlspecialchars( $firstUserName ) );
 			$date = $this->showtime ? $wgContLang->timeanddate($first->rev_timestamp) : $wgContLang->date($first->rev_timestamp);
 			$diff = $this->title->getLocalURL('diff=' . $first->rev_id);
 			$comment = htmlspecialchars( $first->rev_comment );
@@ -198,8 +199,9 @@ class PageByRenderer {
 		}
 
 		if (!$this->showfirst || $edits > 1) {
-			$lastuser = Title::makeTitle(NS_USER, $last->rev_user_text);
-			$ulink =  $sk->makeLinkObj($lastuser, htmlspecialchars($last->rev_user_text));
+			$lastUserName = User::newFromId( $last->rev_user );
+			$lastuser = Title::makeTitle( NS_USER, $lastUserName );
+			$ulink =  $sk->makeLinkObj( $lastuser, htmlspecialchars( $lastUserName ) );
 			$date = $this->showtime ? $wgContLang->timeanddate($last->rev_timestamp) : $wgContLang->date($last->rev_timestamp);
 			$diff = $this->title->getLocalURL('diff=' . $last->rev_id);
 			$comment = htmlspecialchars( $last->rev_comment );

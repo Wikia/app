@@ -5,18 +5,19 @@ class QuickToolsHelper extends ContextSource {
 	/**
 	 * Get all pages that should be rolled back for a given user
 	 *
-	 * @param  string $user A name to check against rev_user_text
+	 * @param  string $user A name whose ID is checked against rev_user
 	 * @param  string $time Timestamp to revert since
 	 * @return Array  An array of page titles to revert
 	 */
 	public function getRollbackTitles( $user, $time ) {
+		$userId = User::newFromName( $user )->getId();
 		$dbr = wfGetDB( DB_SLAVE );
 
 		$titles = [];
 		$where = [
 			'rev_page = page_id',
 			'page_latest = rev_id',
-			'rev_user_text' => $user,
+			'rev_user' => $userId,
 		];
 
 		if ( $time !== '' ) {
@@ -135,7 +136,7 @@ class QuickToolsHelper extends ContextSource {
 		$dbr = wfGetDB( DB_SLAVE );
 		$res = $dbr->select(
 			'revision',
-			[ 'rev_id', 'rev_user_text', 'rev_timestamp' ],
+			[ 'rev_id', 'rev_user', 'rev_timestamp' ],
 			[
 				'rev_page' => $pageId,
 			],
@@ -144,12 +145,13 @@ class QuickToolsHelper extends ContextSource {
 				'ORDER BY' => 'rev_id DESC',
 			]
 		);
+		$userId = User::newFromName( $userName )->getId();
 
 		// Find the newest edit done by another user
 		$revertRevId = false;
 
 		foreach ( $res as $row ) {
-			if ( $row->rev_user_text !== $userName || ( $time !== '' && $row->rev_timestamp < $time ) ) {
+			if ( $row->rev_user !== $userId || ( $time !== '' && $row->rev_timestamp < $time ) ) {
 				$revertRevId = $row->rev_id;
 				break;
 			}
