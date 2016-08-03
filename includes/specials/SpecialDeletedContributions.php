@@ -72,8 +72,17 @@ class DeletedContribsPager extends IndexPager {
 
 	function getUserCond() {
 		$condition = array();
-
-		$condition['ar_user_text'] = $this->target;
+		// If the target is a valid user name, we want to search by the user's ID in case
+		// they were renamed at some point. However, for both non-existent users and anon
+		// users, user ID will be 0. So we need to check whether the given target is an IP
+		// address or not to avoid searching by user ID = 0.
+		if ( IP::isIPAddress( $this->target ) ) {
+			// Match on the user name column to match IP
+			$condition['ar_user_text'] = $this->target;
+		} else {
+			// Match on user ID
+			$condition['ar_user'] = User::idFromName( $this->target );
+		}
 		$index = 'usertext_timestamp';
 
 		return array( $index, $condition );
@@ -288,13 +297,19 @@ class DeletedContributionsPage extends SpecialPage {
 		$options['limit'] = $request->getInt( 'limit', $wgQueryPageDefaultLimit );
 		$options['target'] = $target;
 
+		if ( User::idFromName( $target ) === null ) {
+			// User doesn't exist, so stop here
+			$out->addHTML( $this->getForm( $options ) );
+			$out->addWikiMsg( 'nocontribs' );
+			return;
+		}
+
 		$userObj = User::newFromName( $target, false );
 		if ( !$userObj ) {
 			$out->addHTML( $this->getForm( '' ) );
 			return;
 		}
 
-		$target = $userObj->getName();
 		$out->addSubtitle( $this->getSubTitle( $userObj ) );
 
 		if ( ( $ns = $request->getVal( 'namespace', null ) ) !== null && $ns !== '' ) {
@@ -346,19 +361,19 @@ class DeletedContributionsPage extends SpecialPage {
 		} else {
 			$user = Linker::link( $userObj->getUserPage(), htmlspecialchars( $userObj->getName() ) );
 		}
-		$nt = $userObj->getUserPage();
-		$id = $userObj->getID();
-		$talk = $nt->getTalkPage();
+		$userTitle = $userObj->getUserPage();
+		$userId = $userObj->getID();
+		$talk = $userTitle->getTalkPage();
 		if( $talk ) {
 			# Talk page link
 			$tools[] = Linker::link( $talk, $this->msg( 'sp-contributions-talk' )->escaped() );
-			if( ( $id !== null ) || ( $id === null && IP::isIPAddress( $nt->getText() ) ) ) {
+			if( ( $userId !== null ) || ( $userId === null && IP::isIPAddress( $userTitle->getText() ) ) ) {
 				if( $this->getUser()->isAllowed( 'block' ) ) { # Block / Change block / Unblock links
 					/* Wikia change begin - SUS-92 */
 					if ( $userObj->isBlocked( true, false ) && $userObj->getBlock( true, false )->getType() !== Block::TYPE_AUTO ) {
 					/* Wikia change end */
 						$tools[] = Linker::linkKnown( # Change block link
-							SpecialPage::getTitleFor( 'Block', $nt->getDBkey() ),
+							SpecialPage::getTitleFor( 'Block', $userTitle->getDBkey() ),
 							$this->msg( 'change-blocklink' )->escaped()
 						);
 						$tools[] = Linker::linkKnown( # Unblock link
@@ -367,13 +382,13 @@ class DeletedContributionsPage extends SpecialPage {
 							array(),
 							array(
 								'action' => 'unblock',
-								'ip' => $nt->getDBkey()
+								'ip' => $userTitle->getDBkey()
 							)
 						);
 					}
 					else { # User is not blocked
 						$tools[] = Linker::linkKnown( # Block link
-							SpecialPage::getTitleFor( 'Block', $nt->getDBkey() ),
+							SpecialPage::getTitleFor( 'Block', $userTitle->getDBkey() ),
 							$this->msg( 'blocklink' )->escaped()
 						);
 					}
@@ -385,7 +400,7 @@ class DeletedContributionsPage extends SpecialPage {
 					array(),
 					array(
 						'type' => 'block',
-						'page' => $nt->getPrefixedText()
+						'page' => $userTitle->getPrefixedText()
 					)
 				);
 			}
@@ -394,23 +409,23 @@ class DeletedContributionsPage extends SpecialPage {
 				SpecialPage::getTitleFor( 'Log' ),
 				$this->msg( 'sp-contributions-logs' )->escaped(),
 				array(),
-				array( 'user' => $nt->getText() )
+				array( 'user' => $userTitle->getText() )
 			);
 			# Link to contributions
 			$tools[] = Linker::linkKnown(
-				SpecialPage::getTitleFor( 'Contributions', $nt->getDBkey() ),
+				SpecialPage::getTitleFor( 'Contributions', $userTitle->getDBkey() ),
 				$this->msg( 'sp-deletedcontributions-contribs' )->escaped()
 			);
 
 			# Add a link to change user rights for privileged users
-			if( $id !== null && UserrightsPage::userCanChangeRights( User::newFromId( $id ), false ) ) {
+			if( UserrightsPage::userCanChangeRights( $userObj, false ) ) {
 				$tools[] = Linker::linkKnown(
-					SpecialPage::getTitleFor( 'Userrights', $nt->getDBkey() ),
+					SpecialPage::getTitleFor( 'Userrights', $userTitle->getDBkey() ),
 					$this->msg( 'sp-contributions-userrights' )->escaped()
 				);
 			}
 
-			wfRunHooks( 'ContributionsToolLinks', array( $id, $nt, &$tools ) );
+			wfRunHooks( 'ContributionsToolLinks', array( $userId, $userTitle, &$tools ) );
 
 			$links = $this->getLanguage()->pipeList( $tools );
 
@@ -422,14 +437,14 @@ class DeletedContributionsPage extends SpecialPage {
 				LogEventsList::showLogExtract(
 					$out,
 					'block',
-					$nt,
+					$userTitle,
 					'',
 					array(
 						'lim' => 1,
 						'showIfEmpty' => false,
 						'msgKey' => array(
 							'sp-contributions-blocked-notice',
-							$nt->getText() # Support GENDER in 'sp-contributions-blocked-notice'
+							$userTitle->getText() # Support GENDER in 'sp-contributions-blocked-notice'
 						),
 						'offset' => '' # don't use $this->getRequest() parameter offset
 					)
