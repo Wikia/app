@@ -959,18 +959,17 @@ class UserProfilePageController extends WikiaController {
 		wfProfileOut( __METHOD__ );
 	}
 
-	public function fetchDiscussionPostsNumberFrom($user) {
+	public function fetchDiscussionPostsNumberFrom( $user ) {
 		global $wgEnableDiscussionPostsCountInUserIdentityBox;
 
-		$this->setVal('discussionPostsCountInUserIdentityBoxEnabled', $wgEnableDiscussionPostsCountInUserIdentityBox);
-		if ($wgEnableDiscussionPostsCountInUserIdentityBox) {
-			$discussionInfo = new UserIdentityBoxDiscussion($user);
-			$discussionInfo->fetchDiscussionPostsNumber();
+		$this->setVal( 'discussionPostsCountInUserIdentityBoxEnabled', $wgEnableDiscussionPostsCountInUserIdentityBox );
+		if ( $wgEnableDiscussionPostsCountInUserIdentityBox ) {
+			$discussionInfo = UserIdentityBoxDiscussionInfo::createFor( $user );
 
-			$this->setVal('discussionActive', $discussionInfo->isDiscussionActive());
-			$this->setVal('discussionPostsCount', $discussionInfo->getDiscussionPostsCount());
-			$this->setVal('discussionAllPostsByUserLink',
-				$discussionInfo->getDiscussionAllPostsByUserLink());
+			$this->setVal( 'discussionActive', $discussionInfo->isDiscussionActive() );
+			$this->setVal( 'discussionPostsCount', $discussionInfo->getDiscussionPostsCount() );
+			$this->setVal( 'discussionAllPostsByUserLink',
+				$discussionInfo->getDiscussionAllPostsByUserLink() );
 		}
 	}
 
