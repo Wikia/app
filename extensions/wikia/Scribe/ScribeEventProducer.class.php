@@ -7,33 +7,33 @@ class ScribeEventProducer {
 	private $mParams, $mKey, $mEventType;
 
 	const
-		EDIT_CATEGORY 		    = 'log_edit',
-		CREATEPAGE_CATEGORY		= 'log_create',
-		UNDELETE_CATEGORY	    = 'log_undelete',
-		DELETE_CATEGORY		    = 'log_delete';
+		EDIT_CATEGORY       = 'log_edit',
+		CREATEPAGE_CATEGORY = 'log_create',
+		UNDELETE_CATEGORY   = 'log_undelete',
+		DELETE_CATEGORY     = 'log_delete';
 
 	const
-		EDIT_CATEGORY_INT			= 1,
-		CREATEPAGE_CATEGORY_INT		= 2,
-		DELETE_CATEGORY_INT			= 3,
-		UNDELETE_CATEGORY_INT		= 4;
+		EDIT_CATEGORY_INT       = 1,
+		CREATEPAGE_CATEGORY_INT = 2,
+		DELETE_CATEGORY_INT     = 3,
+		UNDELETE_CATEGORY_INT   = 4;
 
 	function __construct( $key, $archive = 0 ) {
 		$this->app = F::app();
 		switch ( $key ) {
-			case 'edit' 		:
+			case 'edit':
 				$this->mKey = self::EDIT_CATEGORY;
 				$this->mEventType = self::EDIT_CATEGORY_INT;
 				break;
-			case 'create' 		:
+			case 'create':
 				$this->mKey = self::CREATEPAGE_CATEGORY;
 				$this->mEventType = self::CREATEPAGE_CATEGORY_INT;
 				break;
-			case 'delete' 		:
+			case 'delete':
 				$this->mKey = self::DELETE_CATEGORY;
 				$this->mEventType = self::DELETE_CATEGORY_INT;
 				break;
-			case 'undelete'		:
+			case 'undelete':
 				$this->mKey = self::UNDELETE_CATEGORY;
 				$this->mEventType = self::UNDELETE_CATEGORY_INT;
 				break;
@@ -329,16 +329,16 @@ class ScribeEventProducer {
 			$mediaType = $oLocalFile->getMediaType();
 
 			switch ( $mediaType ) {
-				case MEDIATYPE_BITMAP		: $mediaTypeCode = 1; break;
-				case MEDIATYPE_DRAWING		: $mediaTypeCode = 2; break;
-				case MEDIATYPE_AUDIO		: $mediaTypeCode = 3; break;
-				case MEDIATYPE_VIDEO		: $mediaTypeCode = 4; break;
-				case MEDIATYPE_MULTIMEDIA	: $mediaTypeCode = 5; break;
-				case MEDIATYPE_OFFICE		: $mediaTypeCode = 6; break;
-				case MEDIATYPE_TEXT			: $mediaTypeCode = 7; break;
-				case MEDIATYPE_EXECUTABLE	: $mediaTypeCode = 8; break;
-				case MEDIATYPE_ARCHIVE		: $mediaTypeCode = 9; break;
-				default 					: $mediaTypeCode = 1; break;
+				case MEDIATYPE_BITMAP:     $mediaTypeCode = 1; break;
+				case MEDIATYPE_DRAWING:    $mediaTypeCode = 2; break;
+				case MEDIATYPE_AUDIO:      $mediaTypeCode = 3; break;
+				case MEDIATYPE_VIDEO:      $mediaTypeCode = 4; break;
+				case MEDIATYPE_MULTIMEDIA: $mediaTypeCode = 5; break;
+				case MEDIATYPE_OFFICE:     $mediaTypeCode = 6; break;
+				case MEDIATYPE_TEXT:       $mediaTypeCode = 7; break;
+				case MEDIATYPE_EXECUTABLE: $mediaTypeCode = 8; break;
+				case MEDIATYPE_ARCHIVE:    $mediaTypeCode = 9; break;
+				default:                   $mediaTypeCode = 1; break;
 			}
 		}
 
