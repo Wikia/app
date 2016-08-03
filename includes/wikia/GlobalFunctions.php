@@ -1668,7 +1668,11 @@ function wfGetValueExcerpt( $value ) {
 	if ( is_bool( $value ) ) {
 		$parts[] = $value ? "true" : "false";
 	} else if ( !is_null( $value ) ) {
-		$stringValue = strval( $value );
+		if ( is_array( $value ) ) {
+			$stringValue = json_encode( $value );
+		} else {
+			$stringValue = strval( $value );
+		}
 		if ( strlen( $stringValue ) > 50 ) {
 			$stringValue = substr( $stringValue, 0, 50 ) . "...";
 		}
