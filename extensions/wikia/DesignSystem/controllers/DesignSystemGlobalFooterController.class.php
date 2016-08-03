@@ -28,16 +28,12 @@ class DesignSystemGlobalFooterController extends WikiaController {
 		$this->setVal( 'model', $this->getVal( 'model' ) );
 	}
 
-	/**
-	 * TODO XW-1804 use the API
-	 *
-	 * @return array
-	 */
 	private function getData() {
 		global $wgCityId, $wgLang;
 
-		$footerModel = new DesignSystemGlobalFooterModel( $wgCityId, $wgLang->getCode() );
-
-		return $footerModel->getData();
+		return $this->sendRequest( 'DesignSystemApi', 'getFooter', [
+			'wikiId' => $wgCityId,
+			'lang' => $wgLang->getCode()
+		] )->getData();
 	}
 }
