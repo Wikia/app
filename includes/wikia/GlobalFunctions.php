@@ -1668,7 +1668,11 @@ function wfGetValueExcerpt( $value ) {
 	if ( is_bool( $value ) ) {
 		$parts[] = $value ? "true" : "false";
 	} else if ( !is_null( $value ) ) {
-		$stringValue = var_export( $value, true );
+		if ( is_scalar( $value ) ) {
+			$stringValue = strval( $value );
+		} else {
+			$stringValue = var_export( $value, true );
+		}
 		if ( strlen( $stringValue ) > 1000 ) {
 			$stringValue = substr( $stringValue, 0, 1000 ) . "...";
 		}
