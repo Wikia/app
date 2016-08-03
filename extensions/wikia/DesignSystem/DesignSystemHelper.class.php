@@ -5,7 +5,7 @@ use \Wikia\Logger\WikiaLogger;
 class DesignSystemHelper {
 
 	const DESIGN_SYSTEM_DIR = __DIR__ . '/bower_components/design-system';
-	const ASSETS_DIR = self::DESIGN_SYSTEM_DIR . '/assets';
+	const SVG_DIR = self::DESIGN_SYSTEM_DIR . '/dist/svg';
 
 	private static $svgCache = [];
 
@@ -49,30 +49,14 @@ class DesignSystemHelper {
 	 *
 	 * @return SimpleXMLElement
 	 */
-	private static function getCachedSvg( $name ) {
+	public static function getCachedSvg( $name ) {
 		if ( isset( self::$svgCache[ $name ] ) ) {
 			$xml = self::$svgCache[ $name ];
 		} else {
-			$xml = simplexml_load_file( self::ASSETS_DIR . '/' . self::resolveSvgPath( $name ) . '.svg' );
+			$xml = simplexml_load_file( self::SVG_DIR . '/' . $name . '.svg' );
 			self::$svgCache[ $name ] = $xml;
 		}
 
 		return $xml;
-	}
-
-	/**
-	 * @desc DesignSystem API returns SVG names in format `wds-{group}-{name}`
-	 *       We need to convert it to path `{group}/{name}` to access the correct SVG file
-	 *
-	 * @param string $name
-	 *
-	 * @return string
-	 */
-	private static function resolveSvgPath( $name ) {
-		$name = substr_replace( $name, '', 0, 4 );
-		$firstDashPosition = strpos( $name, '-' );
-		$path = substr_replace( $name, '/', $firstDashPosition, 1 );
-
-		return $path;
 	}
 }
