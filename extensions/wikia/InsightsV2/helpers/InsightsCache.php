@@ -17,7 +17,8 @@ class InsightsCache {
 	}
 
 	public function get( $params ) {
-		return $this->memc->get( $this->getMemcKey( $params ) );
+		$data = $this->memc->get( $this->getMemcKey( $params ) );
+		return is_array($data) ? $data : [];
 	}
 
 	public function set( $params, $data, $ttl = self::INSIGHTS_MEMC_TTL ) {
