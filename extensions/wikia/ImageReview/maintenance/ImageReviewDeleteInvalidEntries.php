@@ -15,12 +15,13 @@ class ImageReviewDeleteInvalidEntries extends Maintenance {
 	var $dry_run = false;
 
 	public function execute() {
-		$this->output( "Querying the database...\n" );
+		$this->output( PHP_EOL . "Running " . basename( __FILE__ ) . PHP_EOL );
 		$this->dry_run = $this->getOption( 'dry-run', false );
 		if ( $this->dry_run ) {
-			$this->output( "Running in DRY RUN mode!\n" );
+			$this->output( "Running in DRY RUN mode!" . PHP_EOL );
 		}
 
+		$this->output( "Querying the database..." . PHP_EOL );
 		global $wgExternalDatawareDB;
 		$db = wfGetDB( DB_SLAVE, [], $wgExternalDatawareDB );
 		$res = $db->select(
@@ -39,8 +40,7 @@ class ImageReviewDeleteInvalidEntries extends Maintenance {
 				]
 			]
 		);
-
-		$this->output( sprintf( "Fetched %d row(s)...\n", $db->numRows( $res ) ) );
+		$this->output( sprintf( "Fetched %d row(s)..." . PHP_EOL, $db->numRows( $res ) ) );
 
 		$delete = [];
 		$icons = [];
@@ -58,7 +58,7 @@ class ImageReviewDeleteInvalidEntries extends Maintenance {
 					];
 					break;
 				default:
-					$this->output( sprintf( "DEL wiki: %d, page: %d, reason: %s\n", $row->wiki_id, $row->page_id, $verified['reason'] ) );
+					$this->output( sprintf( "DEL wiki: %d, page: %d, reason: %s" . PHP_EOL, $row->wiki_id, $row->page_id, $verified['reason'] ) );
 					$delete[] = [
 						'wiki_id' => $row->wiki_id,
 						'page_id' => $row->page_id,
@@ -70,13 +70,17 @@ class ImageReviewDeleteInvalidEntries extends Maintenance {
 			if ( count( $delete ) == self::BATCH_SIZE ) {
 				$this->queueTaskForDelete( $delete );
 				$delete = [];
-				sleep(1);
+				if ( !$this->dry_run ) {
+					sleep(1);
+				}
 			}
 
 			if ( count( $icons ) == self::BATCH_SIZE ) {
 				$this->queueTaskForUpdate( $icons );
 				$icons = [];
-				sleep(1);
+				if ( !$this->dry_run ) {
+					sleep(1);
+				}
 			}
 		}
 
@@ -90,7 +94,7 @@ class ImageReviewDeleteInvalidEntries extends Maintenance {
 			return;
 		}
 
-		$this->output( sprintf( "Summary: %d image(s) marked as icons\n", self::BATCH_SIZE ) );
+		$this->output( sprintf( "Summary: %d image(s) marked as icons" . PHP_EOL, self::BATCH_SIZE ) );
 		\Wikia\Logger\WikiaLogger::instance()->info( 'ImageReviewDeleteInvalidEntries', [ 'type' => 'ico', 'images' => $set ] );
 		if ( $this->dry_run ) {
 			return;
@@ -106,7 +110,7 @@ class ImageReviewDeleteInvalidEntries extends Maintenance {
 			return;
 		}
 
-		$this->output( sprintf( "Summary: %d image(s) marked for deletion\n", self::BATCH_SIZE ) );
+		$this->output( sprintf( "Summary: %d image(s) marked for deletion" . PHP_EOL, self::BATCH_SIZE ) );
 		\Wikia\Logger\WikiaLogger::instance()->info( 'ImageReviewDeleteInvalidEntries', [ 'type' => 'delete', 'images' => $set ] );
 		if ( $this->dry_run ) {
 			return;
