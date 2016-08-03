@@ -570,7 +570,7 @@ class Message {
 		// MessageCache::parse can return a string (PLATFORM-807)
 		$parserOutput = MessageCache::singleton()->parse( $string, $this->title, /*linestart*/true, $this->interface, $this->language );
 		Wikia\Util\Assert::true( $parserOutput instanceof ParserOutput, 
-			'Message::parseText: parse() did not return ParserOutput, got ' . wfGetValueExcerpt($parserOutput) );
+			'Message::parseText: parse() did not return ParserOutput, got ' . wfGetValueExcerpt( $parserOutput ) );
 
 		return $parserOutput->getText();
 		// Wikia change - end
