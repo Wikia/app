@@ -29,14 +29,14 @@ class DesignSystemGlobalFooterController extends WikiaController {
 	}
 
 	/**
-	 * TODO XW-1804 use the API and the proper language
+	 * TODO XW-1804 use the API
 	 *
 	 * @return array
 	 */
 	private function getData() {
-		global $wgCityId, $wgContentLanguage;
+		global $wgCityId, $wgLang;
 
-		$footerModel = new DesignSystemGlobalFooterModel( $wgCityId, $wgContentLanguage );
+		$footerModel = new DesignSystemGlobalFooterModel( $wgCityId, $wgLang->getCode() );
 
 		return $footerModel->getData();
 	}
