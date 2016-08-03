@@ -129,10 +129,11 @@ class ParselyDataService {
 				break;
 			}
 
-			$metadata = json_decode( $post['metadata'] );
-			if ( !empty( $metadata->postID ) && !in_array( $metadata->postID, $postIds ) ) {
-				$postIds[] = $metadata->postID;
+			$metadata = json_decode( $post['metadata'], true );
+			if ( !empty( $metadata['postID'] ) && !in_array( $metadata['postID'], $postIds ) ) {
+				$postIds[] = $metadata['postID'];
 				$post['source'] = 'fandom';
+				$post['isVideo'] = $metadata['isVideo'] ?? null;
 				$posts[] = $post;
 			}
 		}

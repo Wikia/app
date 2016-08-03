@@ -449,6 +449,27 @@ describe('AdContext', function () {
 		expect(getModule().getContext().opts.sourcePointDetection).toBeFalsy();
 	});
 
+	it('disables Source Point detection when Source Point recovery is enabled', function () {
+		mocks.instantGlobals = {
+			wgAdDriverSourcePointDetectionCountries: [
+				'CURRENT_COUNTRY',
+				'ZZ'
+			]
+		};
+		mocks.win = {
+			ads: {
+				context: {
+					opts: {
+						sourcePointDetectionUrl: '//blah.blah',
+						sourcePointRecovery: true
+					}
+				}
+			}
+		};
+
+		expect(getModule().getContext().opts.sourcePointDetection).toBeFalsy();
+	});
+
 	it('enables detection when url param sourcepointdetection is set', function () {
 		mocks.win = {
 			ads: {
