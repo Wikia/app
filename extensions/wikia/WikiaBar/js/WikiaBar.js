@@ -191,12 +191,14 @@ var WikiaBar = {
 	},
 	show: function () {
 		$('#WikiaNotifications').removeClass('hidden');
+		$('body').addClass('wikia-bar-visible');
 		this.wikiaBarCollapseWrapperObj.addClass('hidden');
 		this.wikiaBarWrapperObj.removeClass('hidden');
 		this.wikiaBarHidden = false;
 	},
 	hide: function () {
 		$('#WikiaNotifications').addClass('hidden');
+		$('body').removeClass('wikia-bar-visible');
 		this.wikiaBarCollapseWrapperObj.removeClass('hidden');
 		this.wikiaBarWrapperObj.addClass('hidden');
 		this.wikiaBarHidden = true;
