@@ -3,7 +3,7 @@
 	<div class="wds-global-footer__header-wrapper">
 		<h2 class="wds-global-footer__header">
 			<?= DesignSystemHelper::getSvg( $model['international_header']['header']['image'], 'wds-global-footer__wikia-logo wds-is-large' ) ?>
-			<span class="wds-global-footer__home-of-fandom"><?= wfMessage( $model['international_header']['header']['subtitle']['key'] )->escaped() ?> ?></span>
+			<span class="wds-global-footer__home-of-fandom"><?= wfMessage( $model['international_header']['header']['subtitle']['key'] )->escaped() ?></span>
 		</h2>
 	</div>
 	<?php endif; ?>
