@@ -32,6 +32,7 @@ $messages['en'] = array(
 	'tog-previewonfirst' => 'Show preview on first edit',
 	'tog-nocache' => 'Disable browser page caching',
 	'tog-enotifwatchlistpages' => 'E-mail me when a page on my watchlist is changed',
+	'tog-enotifdiscussions' => 'E-mail me when my Discussion posts receive replies and upvotes',
 	'tog-enotifusertalkpages' => 'E-mail me when my user talk page is changed',
 	'tog-enotifminoredits' => 'E-mail me also for minor edits of pages',
 	'tog-enotifrevealaddr' => 'Reveal my e-mail address in notification e-mails',

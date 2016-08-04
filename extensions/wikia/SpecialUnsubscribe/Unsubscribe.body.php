@@ -271,6 +271,7 @@ EOT
 				$user->setGlobalPreference( 'enotifwatchlistpages', 0);
 				$user->setGlobalPreference( 'enotifminoredits', 0);
 				$user->setGlobalPreference( 'watchlistdigest', 0);
+				$user->setGlobalPreference( 'enotifdiscussions', 0);
 				$user->setGlobalPreference( 'marketingallowed', 0);
 				$user->setGlobalPreference( 'disablemail', 1);
 
