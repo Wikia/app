@@ -191,17 +191,23 @@ var WikiaBar = {
 	},
 	show: function () {
 		$('#WikiaNotifications').removeClass('hidden');
-		$('body').addClass('wikia-bar-visible');
 		this.wikiaBarCollapseWrapperObj.addClass('hidden');
 		this.wikiaBarWrapperObj.removeClass('hidden');
 		this.wikiaBarHidden = false;
+
+		if ($('#WikiaBarWrapper')) {
+			$('body').addClass('wikia-bar-visible');
+		}
 	},
 	hide: function () {
 		$('#WikiaNotifications').addClass('hidden');
-		$('body').removeClass('wikia-bar-visible');
 		this.wikiaBarCollapseWrapperObj.removeClass('hidden');
 		this.wikiaBarWrapperObj.addClass('hidden');
 		this.wikiaBarHidden = true;
+
+		if ($('#WikiaBarWrapper')) {
+			$('body').removeClass('wikia-bar-visible');
+		}
 	},
 	isWikiaBarHidden: function () {
 		return this.wikiaBarHidden;
