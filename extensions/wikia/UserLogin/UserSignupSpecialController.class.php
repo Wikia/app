@@ -38,9 +38,17 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 	 * employees who have been given the right explicitly.
 	 */
 	public function index() {
+		$contentLangCode = $this->app->wg->ContLang->getCode();
+
 		// Redirect to standalone NewAuth page if extension enabled
-		if ( $this->app->wg->EnableNewAuthModal) {
-			$this->getOutput()->redirect( '/register?redirect=' . $this->userLoginHelper->getRedirectUrl() );
+		if ( $this->app->wg->EnableNewAuthModal ) {
+			$newSignupPageUrl = '/register?redirect=' . $this->userLoginHelper->getRedirectUrl();
+
+			if ( $contentLangCode !== 'en' ) {
+				$newSignupPageUrl .= '&uselang=' . $contentLangCode;
+			}
+
+			$this->getOutput()->redirect( $newSignupPageUrl );
 		}
 
 		JSMessages::enqueuePackage( 'UserSignup', JSMessages::EXTERNAL );

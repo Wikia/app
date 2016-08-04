@@ -67,7 +67,7 @@ abstract class WatchedPageController extends EmailController {
 	protected function getFooterMessages() {
 		$footerMessages = [
 			$this->getMessage( 'emailext-unfollow-text',
-				$this->title->getCanonicalUrl( 'action=unwatch' ),
+				$this->title->getCanonicalURL( 'action=unwatch' ),
 				$this->title->getPrefixedText() )->parse()
 		];
 		return array_merge( $footerMessages, parent::getFooterMessages() );
@@ -372,7 +372,7 @@ class WatchedPageRestoredController extends WatchedPageController {
 	 * @return String
 	 */
 	protected function getButtonLink() {
-		return $this->title->getFullUrl();
+		return $this->title->getFullURL();
 	}
 
 	/**
