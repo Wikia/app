@@ -44,21 +44,6 @@ require([
 
 	win.AdEngine_getTrackerStats = slotTracker.getStats;
 
-	// DART API for Liftium
-	win.LiftiumDART = {
-		getUrl: function (slotname, slotsize) {
-			if (slotsize) {
-				slotsize += ',1x1';
-			}
-			return dartHelper.getUrl({
-				slotname: slotname,
-				slotsize: slotsize,
-				adType: 'adi',
-				src: 'liftium'
-			});
-		}
-	};
-
 	messageListener.init();
 
 	// Register window.wikiaDartHelper so jwplayer can use it
