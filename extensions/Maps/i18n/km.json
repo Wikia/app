@@ -1,0 +1,18 @@
+{
+	"@metadata": {
+		"authors": [
+			"គីមស៊្រុន"
+		]
+	},
+	"maps_map": "ផែនទី",
+	"maps-loading-map": "កំពុងផ្ទុកផែនទី...",
+	"maps-load-failed": "ផ្ទុកផែនទីមិនបានសម្រេចទេ!",
+	"maps-markers": "សញ្ញាសម្គាល់",
+	"maps-others": "ផ្សេងទៀត",
+	"maps-abb-north": "ជ",
+	"maps-abb-east": "ក",
+	"maps-abb-south": "ត",
+	"maps-abb-west": "ល",
+	"maps-latitude": "រយៈទទឹង៖",
+	"maps-longitude": "រយៈបណ្តោយ៖"
+}

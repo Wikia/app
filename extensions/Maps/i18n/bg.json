@@ -1,0 +1,33 @@
+{
+	"@metadata": {
+		"authors": [
+			"DCLXVI",
+			"පසිඳු කාවින්ද",
+			"StanProg",
+			"Plamen"
+		]
+	},
+	"maps_map": "Карта",
+	"maps-copycoords-prompt": "CTRL+C, ENTER",
+	"maps-ns-layer": "Слой",
+	"maps-layer-value": "Стойност",
+	"maps-layer-errors": "Грешки",
+	"maps-abb-north": "С",
+	"maps-abb-east": "И",
+	"maps-abb-south": "Ю",
+	"maps-abb-west": "З",
+	"maps-latitude": "Географска ширина:",
+	"maps-longitude": "Географска дължина:",
+	"maps-googlemaps3-incompatbrowser": "Вашият браузър не е съвместим с Google Maps v3.",
+	"mapeditor": "Редактор на карти",
+	"specialpages-group-maps": "Карти",
+	"mapeditor-done-button": "Готово",
+	"mapeditor-remove-button": "Премахване",
+	"mapeditor-import-button2": "Внасяне",
+	"mapeditor-code-title": "Уики код",
+	"mapeditor-link-title-switcher-link-text": "Препратка",
+	"mapeditor-form-field-title": "Заглавие",
+	"mapeditor-form-field-text": "Текст",
+	"mapeditor-form-field-link": "Препратка",
+	"mapeditor-form-field-group": "Група"
+}

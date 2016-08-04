@@ -1,0 +1,15 @@
+{
+	"@metadata": {
+		"authors": [
+			"Yekrats"
+		]
+	},
+	"maps-abb-north": "N",
+	"maps-abb-east": "O",
+	"maps-abb-south": "S",
+	"maps-abb-west": "U",
+	"maps-latitude": "Latitudo:",
+	"maps-longitude": "Longitudo:",
+	"maps_map_cannot_be_displayed": "La mapo ne esti montrebla.",
+	"maps_click_to_activate": "Klaku aktivigi mapon"
+}

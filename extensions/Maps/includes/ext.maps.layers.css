@@ -1,0 +1,70 @@
+/**
+ * Stylesheet for layer pages
+ * The definitions for the maps layer box is based on Semantic-MediaWikis
+ * (http://semantic-mediawiki.org) factbox styles.
+ *
+ * @since 3.0
+ * @ingroup Maps
+ *
+ * @licence GNU GPL v3+
+ * @author Daniel Werner < daniel.a.r.werner@gmail.com >
+ */
+
+div.mapslayer {
+	clear: both;
+	background-color: #F9F9F9;
+	padding: 5px;
+	margin-top: 1em;
+	margin-bottom: 1em;
+	border: 1px solid #AAAAAA;
+	font-size: 95%;
+}
+
+div.mapslayererror {
+	border-color: #cc0000;
+}
+
+div.mapslayer td, div.mapslayer tr, div.mapslayer table {
+	background-color: #F9F9F9;
+}
+
+span.mapslayerhead {
+	font-size: 110%;
+	font-weight: bold;
+	float: left;
+}
+
+span.mapslayersupports {
+	font-size: 90%;
+	margin-left: 0.8em;
+}
+
+table.mapslayertable, table.mapslayerwarntable, table.mapslayererrortable {
+	border-top: 1px dotted #AAAAAA;
+	width: 100%;
+	clear: both;
+}
+
+table.mapslayerwarntable, td.mapslayerpropval .error {
+	color: #ff7f00;
+}
+
+table.mapslayererrortable {
+	color: #cc0000;
+}
+
+td.mapslayerpropname {
+	text-align: right;
+	vertical-align: middle;
+	padding-right: 1em;
+	font-weight: bold;
+}
+
+td.mapslayerpropval {
+	vertical-align: top;
+	width: 75%;
+}
+
+td.mapslayerpropval .thumb {
+	margin: 0;
+}

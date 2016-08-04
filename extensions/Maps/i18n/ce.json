@@ -1,0 +1,34 @@
+{
+	"@metadata": {
+		"authors": [
+			"Умар"
+		]
+	},
+	"maps-others": "кхин",
+	"maps-ns-layer-talk": "ГӀатан дийцаре",
+	"maps-layer-property": "Билгало",
+	"maps-layer-value": "МаьӀна",
+	"maps-layerdef-invalid": "{{PLURAL:$1|Ца магийна билгалдакхар|Ца магийна билгалдакхарш}}",
+	"maps-layerpage-usage": "Картанаш долу агӀоно лелош ю «$1»",
+	"validation-error-invalid-layer": "Параметр $1 нийса хила еза.",
+	"maps-layer-of-type": "Тайпан $1 чкъор",
+	"maps-layer-of-type-and-name": "Тайпан «$1» «$2» чкъор",
+	"validation-error-invalid-image": "Параметр $1 хила еза нийса сурт.",
+	"maps-abb-east": "Цу",
+	"maps-latitude": "Шоралла:",
+	"maps-longitude": "Дохалла:",
+	"mapeditor": "Картанаш тадерг",
+	"specialpages-group-maps": "Карташ",
+	"mapeditor-done-button": "Кийчча ю",
+	"mapeditor-export-button": "Экспорт ян викийоза сана",
+	"mapeditor-import-button": "Импорт ян викийозанах",
+	"mapeditor-mapparam-button": "Картан параметраш нисъе",
+	"mapeditor-clear-button": "ЦӀанде карта",
+	"mapeditor-link-title-switcher-link-text": "Хьажорг",
+	"mapeditor-form-field-title": "ЦӀе",
+	"mapeditor-form-field-link": "Хьажорг",
+	"mapeditor-mapparam-title": "Картан параметраш нисъе",
+	"mapeditor-imageoverlay-button": "ТӀетоха сурт тӀе диллар",
+	"mapeditor-form-field-image": "Сурт",
+	"mapeditor-imageoverlay-title": "Сурт"
+}

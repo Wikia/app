@@ -1,0 +1,28 @@
+{
+	"@metadata": {
+		"authors": [
+			"Milicevic01",
+			"Rancher",
+			"Михајло Анђелковић"
+		]
+	},
+	"maps_map": "Мапа",
+	"maps-loading-map": "Учитавање мапе...",
+	"validation-error-invalid-location": "Параметар $1 мора бити валидна локација",
+	"validation-error-invalid-locations": "Параметар $1 мора бити једна или више важећих локација.",
+	"validation-error-invalid-width": "Параметар $1 мора бити валидна ширина.",
+	"validation-error-invalid-height": "Параметар $1 мора бити валидна висина.",
+	"validation-error-invalid-distance": "Параметар $1 мора бити валидно растојање.",
+	"validation-error-invalid-distances": "Параметар $1 мора бити једно или више валидних растојања.",
+	"validation-error-invalid-image": "Параметар $1 мора бити валидна слика.",
+	"validation-error-invalid-images": "Параметар $1 мора бити једна или више валидних слика.",
+	"maps-abb-north": "С",
+	"maps-abb-east": "И",
+	"maps-abb-south": "Ј",
+	"maps-abb-west": "З",
+	"maps-latitude": "Географска ширина:",
+	"maps-longitude": "Географска дужина:",
+	"maps_googlemaps3": "Гугл мапе, треће издање",
+	"maps_openlayers": "Опенлејерс",
+	"maps_osm": "OpenStreetMap"
+}

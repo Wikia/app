@@ -1,0 +1,35 @@
+{
+	"@metadata": {
+		"authors": [
+			"Cedric31",
+			"Macofe"
+		]
+	},
+	"maps-desc": "Permet d'afichar de mapas dinamicas dins las paginas del wiki, d'adreças geoencodadas e d'autras operacions geograficas",
+	"right-geocode": "Geocòde",
+	"maps_map": "Mapa",
+	"maps-loading-map": "Cargament de la mapa...",
+	"maps-load-failed": "Impossible de cargar la mapa !",
+	"maps-markers": "Marcadors",
+	"maps-copycoords-prompt": "CTRL+C, ENTRADA",
+	"maps-searchmarkers-text": "Marcadors de filtre",
+	"maps-others": "autres",
+	"maps-ns-layer": "Jaç",
+	"maps-ns-layer-talk": "Discussion jaç",
+	"maps-layer-property": "Proprietat",
+	"maps-layer-value": "Valor",
+	"maps-abb-north": "N",
+	"maps-abb-east": "E",
+	"maps-abb-south": "S",
+	"maps-abb-west": "O",
+	"maps-latitude": "Latitud :",
+	"maps-longitude": "Longitud :",
+	"maps_coordinates_missing": "Cap de coordenada es pas estada provesida pel plan.",
+	"maps_geocoding_failed": "{{PLURAL:$2|L'adreça seguenta a pas pogut èsser geoencodada|Las adreças seguentas an pas pogut èsser geoencodadas}} : $1.\nLo plan pòt pas èsser afichat.",
+	"maps_geocoding_failed_for": "{{PLURAL:$2|L'adreça seguenta a pas pogut èsser geoencodada|Las adreças seguentas an pas pogut èsser geoencodadas}} e {{PLURAL:$2|es pas afichada|son pas afichadas}} sul plan : $1",
+	"maps_unrecognized_coords": "{{PLURAL:$2|La coordenada seguenta es pas estada reconeguda|Las coordenadas seguentas son pas estadas reconegudas}} : $1.",
+	"maps_unrecognized_coords_for": "{{PLURAL:$2|La coordenada seguenta es pas estada reconeguda|Las coordenadas seguentas son pas estadas reconegudas}} e {{PLURAL:$2|es estada omesa|son estadas omesas}} sus la mapa :\n$1",
+	"maps_map_cannot_be_displayed": "La mapa pòt pas èsser afichada.",
+	"maps_click_to_activate": "Clicar per activar la mapa",
+	"maps_centred_on": "Mapa centrada sus $1, $2."
+}

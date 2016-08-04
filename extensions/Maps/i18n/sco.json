@@ -1,0 +1,9 @@
+{
+	"@metadata": {
+		"authors": [
+			"John Reid"
+		]
+	},
+	"maps-geodistance-par-geoservice": "The mapping service this parser function is uised thegather wi.\nThis can affect the default geocoding service value.",
+	"maps-displaymap-par-visitedicon": "The filename o aen eemage tae be uised fer maurker icons efter the oreeginal maurkers hae been clap't"
+}

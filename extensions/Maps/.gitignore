@@ -1,0 +1,11 @@
+*~
+*.kate-swp
+
+!.*
+.idea/
+
+vendor/
+extensions/
+
+composer.phar
+composer.lock

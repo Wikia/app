@@ -1,0 +1,20 @@
+{
+	"@metadata": {
+		"authors": [
+			"Harald Khan",
+			"Njardarlogar"
+		]
+	},
+	"maps_map": "Kart",
+	"maps-abb-north": "N",
+	"maps-abb-east": "A",
+	"maps-abb-south": "S",
+	"maps-abb-west": "V",
+	"maps-latitude": "Breiddegrad:",
+	"maps-longitude": "Lengdegrad:",
+	"maps_coordinates_missing": "Ingen koordinatar vart oppgjevne for kartet.",
+	"maps_unrecognized_coords": "Dei fylgjande koordinatane vart ikkje kjende att: $1.",
+	"maps_map_cannot_be_displayed": "Kartet kan ikkje verta vist.",
+	"maps_click_to_activate": "Trykk for å aktivera kartet",
+	"maps_centred_on": "Kart sentrert på $1, $2."
+}

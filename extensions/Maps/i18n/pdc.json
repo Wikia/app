@@ -1,0 +1,11 @@
+{
+	"@metadata": {
+		"authors": [
+			"Xqt"
+		]
+	},
+	"maps-abb-north": "N",
+	"maps-abb-east": "O",
+	"maps-abb-south": "S",
+	"maps-abb-west": "W"
+}

@@ -1,0 +1,18 @@
+{
+	"@metadata": {
+		"authors": [
+			"Bruce89",
+			"Lloffiwr",
+			"Reedy",
+			"Shirayuki"
+		]
+	},
+	"maps-displaymap-par-centre": "Allows setting the coordinates of the map's centre for display_point(s).\nAccepts both addresses and coordinates.\nWhen this property is not provided, the map will centre itself on the provided marker, or between the provided markers.",
+	"maps-invalid-coordinates": "The value $1 was not recognised as a valid set of coordinates.",
+	"maps_unrecognized_coords": "The following {{PLURAL:$2|coordinate was|coordinates were}} not recognised: $1.",
+	"maps_unrecognized_coords_for": "The following {{PLURAL:$2|coordinate was|coordinates were}} not recognised and {{PLURAL:$2|has|have}} been omitted from the map:\n$1",
+	"maps_centred_on": "Map centred on $1, $2.",
+	"maps-par-centre": "The location on which the map should be centred",
+	"mapeditor-form-field-strokecolor": "Stroke colour",
+	"mapeditor-form-field-fillcolor": "Fill colour"
+}

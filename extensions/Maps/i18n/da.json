@@ -1,0 +1,14 @@
+{
+	"@metadata": {
+		"authors": [
+			"Christian List",
+			"Peter Alberti"
+		]
+	},
+	"maps-ns-layer": "Lag",
+	"maps-abb-north": "N",
+	"maps-abb-east": "Ø",
+	"maps-abb-south": "S",
+	"maps-abb-west": "V",
+	"mapeditor-form-field-text": "Tekst"
+}

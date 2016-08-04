@@ -1,0 +1,26 @@
+{
+	"@metadata": {
+		"authors": [
+			"Ansumang",
+			"Siddhartha Ghai",
+			"Sfic"
+		]
+	},
+	"maps_map": "मानचित्र",
+	"maps-ns-layer": "परत",
+	"maps-layer-errors": "त्रुटि",
+	"maps-abb-north": "N",
+	"maps-abb-east": "E",
+	"maps-abb-south": "S",
+	"maps-abb-west": "W",
+	"maps-latitude": "अक्षांश:",
+	"maps-longitude": "रेखांश:",
+	"specialpages-group-maps": "मानचित्र",
+	"mapeditor-none-text": "कोई नहीं",
+	"mapeditor-remove-button": "निकालें",
+	"mapeditor-import-button2": "आयात करें",
+	"mapeditor-form-field-title": "शीर्षक",
+	"mapeditor-form-field-text": "पाठ",
+	"mapeditor-form-field-icon": "आइकन",
+	"mapeditor-form-field-image": "छवि"
+}

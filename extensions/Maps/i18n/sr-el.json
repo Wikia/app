@@ -1,0 +1,26 @@
+{
+	"@metadata": {
+		"authors": [
+			"Milicevic01"
+		]
+	},
+	"maps_map": "Mapa",
+	"maps-loading-map": "Učitavanje mape...",
+	"validation-error-invalid-location": "Parametar $1 mora biti validna lokacija",
+	"validation-error-invalid-locations": "Parametar $1 mora biti jedna ili više važećih lokacija.",
+	"validation-error-invalid-width": "Parametar $1 mora biti validna širina.",
+	"validation-error-invalid-height": "Parametar $1 mora biti validna visina.",
+	"validation-error-invalid-distance": "Parametar $1 mora biti validno rastojanje.",
+	"validation-error-invalid-distances": "Parametar $1 mora biti jedno ili više validnih rastojanja.",
+	"validation-error-invalid-image": "Parametar $1 mora biti validna slika.",
+	"validation-error-invalid-images": "Parametar $1 mora biti jedna ili više validnih slika.",
+	"maps-abb-north": "S",
+	"maps-abb-east": "I",
+	"maps-abb-south": "J",
+	"maps-abb-west": "Z",
+	"maps-latitude": "Geografska širina:",
+	"maps-longitude": "Geografska dužina:",
+	"maps_googlemaps3": "Gugl mape, treće izdanje",
+	"maps_openlayers": "Openlejers",
+	"maps_osm": "OpenStreetMap"
+}

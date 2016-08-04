@@ -1,0 +1,28 @@
+{
+	"@metadata": {
+		"authors": [
+			"Paucabot",
+			"PerroVerd",
+			"Toniher"
+		]
+	},
+	"maps_map": "Mapa",
+	"maps-layerdef-invalid": "{{PLURAL:$1|Definició no vàlida|Definicions no vàlides}}",
+	"maps-layerdef-wrong-namespace": "Les definicions de capes només són vàlides en pàgines de l'espai de noms «$1»",
+	"maps-layerpage-nousage": "Cap pàgina està utilitzant aquesta capa de moment.",
+	"validation-error-no-non-numerics": "El paràmetre «$1» ha de ser una o més cadenes no numèriques.",
+	"maps-layer-of-type-and-name": "Capa «$2» de tipus «$1»",
+	"validation-error-invalid-locations": "El paràmetre «$1» ha de ser una o més ubicacions vàlides.",
+	"validation-error-invalid-width": "El paràmetre «$1» ha de ser una amplada vàlida.",
+	"validation-error-invalid-height": "El paràmetre «$1» ha de ser una alçada vàlida.",
+	"validation-error-invalid-distance": "El paràmetre «$1» ha de ser una distància vàlida.",
+	"validation-error-invalid-distances": "El paràmetre «$1» ha de ser una o més distàncies vàlides.",
+	"maps-abb-north": "N",
+	"maps-abb-east": "E",
+	"maps-abb-south": "S",
+	"maps-abb-west": "O",
+	"maps-latitude": "Latitud:",
+	"maps-longitude": "Longitud:",
+	"maps_coordinates_missing": "No s'han proporcionat coordenades pel mapa.",
+	"maps_centred_on": "Mapa centrat en $1, $2."
+}

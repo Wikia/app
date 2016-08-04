@@ -1,0 +1,9 @@
+{
+	"@metadata": {
+		"authors": [
+			"Woraponboonkerd"
+		]
+	},
+	"maps-desc": "ให้ความสามารถในการแสดงพิกัดในแผนที่ และที่อยู่ที่เป็นรหัสทางภูมิศาสตร์([http://mapping.referata.com/wiki/Maps_examples demo]).\n<br />บริการแผนที่ที่มีอยู่: $1",
+	"maps_coordinates_missing": "ไม่ได้กำหนดพิกัดของแผนที่มาให้"
+}

@@ -1,0 +1,24 @@
+{
+	"@metadata": {
+		"authors": [
+			"Joachim Mos"
+		]
+	},
+	"maps_map": "Koort",
+	"maps-layer-property": "Egenschop",
+	"maps-layer-errors": "Fählers",
+	"maps-abb-north": "N",
+	"maps-abb-east": "O",
+	"maps-abb-south": "S",
+	"maps-abb-west": "W",
+	"mapeditor-none-text": "Keen",
+	"mapeditor-done-button": "Färtig",
+	"mapeditor-code-title": "Wikicode",
+	"mapeditor-link-title-switcher-link-text": "Lenk",
+	"mapeditor-form-field-title": "Titel",
+	"mapeditor-form-field-text": "Text",
+	"mapeditor-form-field-link": "Lenk",
+	"mapeditor-form-field-icon": "Symbool",
+	"mapeditor-form-field-group": "Köppel",
+	"mapeditor-form-field-image": "Bild"
+}
