@@ -29,7 +29,3 @@ $wgGroupPermissions['user']['specialdiscussions'] = false;
 $wgGroupPermissions['vstf']['specialdiscussions'] = false;
 $wgGroupPermissions['helper']['specialdiscussions'] = false;
 $wgGroupPermissions['staff']['specialdiscussions'] = true;
-
-// Default email preference
-$cityId = F::app()->wg->CityId;
-$wgDefaultUserOptions["enotifdiscussions-$cityId"] = 1;

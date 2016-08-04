@@ -64,10 +64,7 @@ abstract class DiscussionController extends EmailController {
      * @throws \Email\Check
      */
     protected function assertSubscribedToDiscussionsEmail() {
-        $wantsDiscussionEmails = $this->targetUser->getLocalPreference(
-            'enotifdiscussions',
-            $this->wiki->city_id
-        );
+        $wantsDiscussionEmails = $this->targetUser->getGlobalPreference( 'enotifdiscussions' );
 
         if ( !$wantsDiscussionEmails ) {
             throw new Check( 'User is not subscribed to Discussions emails.' );
