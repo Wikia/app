@@ -245,12 +245,6 @@ class OasisController extends WikiaController {
 			$this->krux = AnalyticsEngine::track('Krux', AnalyticsEngine::EVENT_PAGEVIEW);
 		}
 
-		if (!empty($wgEnableAdminDashboardExt) && AdminDashboardLogic::displayAdminDashboard($this->app, $wgTitle)) {
-			$this->displayAdminDashboard = true;
-		} else {
-			$this->displayAdminDashboard = false;
-		}
-
 		wfProfileOut(__METHOD__);
 	}
 
