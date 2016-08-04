@@ -381,7 +381,9 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 					'type' => 'translatable-text',
 					'key' => 'global-footer-licensing-description',
 					'params' => [
-						'license' => $this->getLicenseData(),
+						'sitename' => $this->getSitenameData(),
+						'vertical' => $this->getVerticalData(),
+						'license' => $this->getLicenseData()
 					]
 				],
 			],
@@ -433,8 +435,33 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 		return $data;
 	}
 
+	private function getSitenameData() {
+		$value = $this->wg->Sitename;
+
+		if ( $wgSitenameForComscore = WikiFactory::getVarValueByName( 'wgSitenameForComscore', $this->wikiId ) ) {
+			$value = $wgSitenameForComscore;
+		} else if ( $wgSitename = WikiFactory::getVarValueByName( 'wgSitename', $this->wikiId ) ) {
+			$value = $wgSitename;
+		}
+
+		return [
+			'type' => 'text',
+			'value' => $value
+		];
+	}
+
+	private function getVerticalData() {
+		$key = WikiFactoryHub::getInstance()->getWikiVertical( $this->wikiId )['short'];
+		$key = 'global-footer-vertical-' . $key;
+
+		return [
+			'type' => 'translatable-text',
+			'key' => $key
+		];
+	}
+
 	private function getLicenseData() {
-		$licenseText = WikiFactory::getVarByName( 'wgRightsText', $this->wikiId )->cv_value ?: $this->wg->RightsText;
+		$licenseText = WikiFactory::getVarValueByName( 'wgRightsText', $this->wikiId ) ?: $this->wg->RightsText;
 
 		return [
 			'type' => 'link-text',
@@ -642,8 +669,8 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 	}
 
 	private function getLicenseUrl() {
-		$licenseUrl = WikiFactory::getVarByName( 'wgRightsUrl', $this->wikiId )->cv_value ?: $this->wg->RightsUrl;
-		$licensePage = WikiFactory::getVarByName( 'wgRightsPage', $this->wikiId )->cv_value ?: $this->wg->RightsPage;
+		$licenseUrl = WikiFactory::getVarValueByName( 'wgRightsUrl', $this->wikiId ) ?: $this->wg->RightsUrl;
+		$licensePage = WikiFactory::getVarValueByName( 'wgRightsPage', $this->wikiId ) ?: $this->wg->RightsPage;
 
 		if ( $licensePage ) {
 			$title = GlobalTitle::newFromText( $licensePage, NS_MAIN, $this->wikiId );
