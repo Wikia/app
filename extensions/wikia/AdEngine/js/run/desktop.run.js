@@ -3,7 +3,6 @@
 require([
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adEngineRunner',
-	'ext.wikia.adEngine.adLogicHighValueCountry',
 	'ext.wikia.adEngine.config.desktop',
 	'ext.wikia.adEngine.customAdsLoader',
 	'ext.wikia.adEngine.dartHelper',
@@ -21,7 +20,6 @@ require([
 ], function (
 	adContext,
 	adEngineRunner,
-	adLogicHighValueCountry,
 	adConfigDesktop,
 	customAdsLoader,
 	dartHelper,
@@ -48,9 +46,6 @@ require([
 
 	// Register window.wikiaDartHelper so jwplayer can use it
 	win.wikiaDartHelper = dartHelper;
-
-	// Register adLogicHighValueCountry as so Liftium can use it
-	win.adLogicHighValueCountry = adLogicHighValueCountry;
 
 	// Register adSlotTweaker so DART creatives can use it
 	// https://www.google.com/dfp/5441#delivery/CreateCreativeTemplate/creativeTemplateId=10017012
