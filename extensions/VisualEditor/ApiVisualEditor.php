@@ -112,7 +112,7 @@ class ApiVisualEditor extends ApiBase {
 		} elseif ( $status->isGood() ) {
 			\Wikia\Logger\WikiaLogger::instance()->error( 'ApiVisualEditor_requestParsoid', [
 				'method' => $method,
-				'error' => 'parsoidserver-http-' . $req->getStatus(),
+				'error' => 'parsoidserver-http-' . $req->getStatus()
 			] );
 			$this->dieUsage( $req->getContent(), 'parsoidserver-http-' . $req->getStatus() );
 		} elseif ( $errors = $status->getErrorsByType( 'error' ) ) {
@@ -126,8 +126,7 @@ class ApiVisualEditor extends ApiBase {
 			\Wikia\Logger\WikiaLogger::instance()->error( 'ApiVisualEditor_requestParsoid', [
 				'method' => $method,
 				'error_messages' => json_encode($errors),
-				'status_code' => $req->getStatus(),
-				'headers' => implode("; ", $req->getResponseHeaders()),
+				'status_code' => $req->getStatus()
 			] );
 			$this->dieUsage( "$message: " . $req->getContent(), 'parsoidserver-' . $code );
 		}

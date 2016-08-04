@@ -1542,7 +1542,7 @@ $wgVisualEditorParsoidPrefix = 'localhost';
 $wgVisualEditorParsoidForwardCookies = false;
 
 // Timeout for HTTP requests to Parsoid in seconds
-$wgVisualEditorParsoidTimeout = 100;
+$wgVisualEditorParsoidTimeout = 600;
 
 // Serialization cache timeout, in seconds
 $wgVisualEditorSerializationCacheTimeout = 3600;
