@@ -11,11 +11,11 @@
     "gulpfile.js"
   ],
   "homepage": "https://github.com/Wikia/design-system",
-  "_release": "0ee2772a72",
+  "_release": "0dceecce3a",
   "_resolution": {
     "type": "branch",
     "branch": "XW-1575",
-    "commit": "0ee2772a72b45a39008d57d78e813c06fcf8003a"
+    "commit": "0dceecce3aec087d6cc34853e8487f55841f1ab8"
   },
   "_source": "git://github.com/Wikia/design-system.git",
   "_target": "XW-1575",
