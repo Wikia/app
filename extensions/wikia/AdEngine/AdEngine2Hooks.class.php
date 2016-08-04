@@ -13,8 +13,6 @@ class AdEngine2Hooks {
 	const ASSET_GROUP_ADENGINE_RUBICON_FASTLANE = 'adengine2_rubicon_fastlane_js';
 	const ASSET_GROUP_ADENGINE_TABOOLA = 'adengine2_taboola_js';
 	const ASSET_GROUP_ADENGINE_TRACKING = 'adengine2_tracking_js';
-	const ASSET_GROUP_LIFTIUM = 'liftium_ads_js';
-	const ASSET_GROUP_LIFTIUM_EXTRA = 'liftium_ads_extra_js';
 
 	/**
 	 * Handle URL parameters and set proper global variables early enough
@@ -68,7 +66,6 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverYavliCountries';
 		$vars[] = 'wgAmazonMatchCountries';
 		$vars[] = 'wgAmazonMatchCountriesMobile';
-		$vars[] = 'wgHighValueCountries'; // Used by Liftium only
 
 		/**
 		 * Disaster Recovery
@@ -76,7 +73,6 @@ class AdEngine2Hooks {
 		 */
 		$vars[] = 'wgSitewideDisableGpt';
 		$vars[] = 'wgSitewideDisableKrux';
-		$vars[] = 'wgSitewideDisableLiftium';
 		$vars[] = 'wgSitewideDisableMonetizationService';
 		$vars[] = 'wgSitewideDisableSevenOneMedia'; // TODO: ADEN-3314
 
@@ -129,11 +125,6 @@ class AdEngine2Hooks {
 		$isArticle = WikiaPageType::getPageType() === 'article';
 
 		$jsAssets[] = self::ASSET_GROUP_ADENGINE_DESKTOP;
-
-		if ( AdEngine2Service::shouldLoadLiftium() ) {
-			$jsAssets[] = self::ASSET_GROUP_LIFTIUM;
-			$jsAssets[] = self::ASSET_GROUP_LIFTIUM_EXTRA;
-		}
 
 		if ( $wgAdDriverUseGoogleConsumerSurveys && $isArticle ) {
 			$jsAssets[] = self::ASSET_GROUP_ADENGINE_GCS;
