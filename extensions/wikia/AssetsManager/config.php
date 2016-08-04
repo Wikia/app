@@ -33,26 +33,6 @@ $config['tracker_js'] = array(
 	)
 );
 
-$config['liftium_ads_js'] = array(
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis', 'wikiamobile' ],
-	'assets' => array(
-		'//extensions/wikia/AdEngine/liftium/Liftium.js',
-	)
-);
-
-$config['liftium_ads_extra_js'] = array(
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis', 'wikiamobile' ],
-	'assets' => array(
-		// TODO: get rid of those:
-		'//extensions/wikia/AdEngine/liftium/Wikia.Athena.js',
-		'//extensions/wikia/AdEngine/liftium/Wikia.AQ.js',
-		'//extensions/wikia/AdEngine/liftium/Wikia.meerkat.js',
-		'//extensions/wikia/AdEngine/liftium/Wikia.ve_alternate.js',
-	)
-);
-
 $config['adengine2_desktop_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'oasis', 'wikiamobile' ],
@@ -127,7 +107,6 @@ $config['adengine2_desktop_js'] = array(
 		'//extensions/wikia/AdEngine/js/WikiaDartVideoHelper.js',
 		'//extensions/wikia/AdEngine/js/TaboolaHelper.js',
 		'//extensions/wikia/AdEngine/js/provider/evolve2.js',
-		'//extensions/wikia/AdEngine/js/provider/liftium.js',
 		'//extensions/wikia/AdEngine/js/provider/monetizationService.js',
 
 		'//extensions/wikia/AdEngine/js/run/desktop.run.js',

@@ -393,10 +393,6 @@ class OasisController extends WikiaController {
 			$this->jsFiles = $jsFiles;
 		}
 
-		if (AdEngine2Service::shouldLoadLiftium()) {
-			$this->jsFiles = AdEngine2Controller::getLiftiumOptionsScript() . $this->jsFiles;
-		}
-
 		wfProfileOut(__METHOD__);
 	}
 

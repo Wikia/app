@@ -57,7 +57,6 @@ describe('AdContext', function () {
 		},
 		queryParams = [
 			'evolve2',
-			'liftium',
 			'turtle'
 		];
 
