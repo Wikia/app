@@ -379,7 +379,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 			'licensing_and_vertical' => [
 				'description' => [
 					'type' => 'translatable-text',
-					'key' => 'global-footer-licensing-description',
+					'key' => 'global-footer-licensing-and-vertical-description',
 					'params' => [
 						'sitename' => $this->getSitenameData(),
 						'vertical' => $this->getVerticalData(),
