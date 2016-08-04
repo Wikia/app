@@ -2,7 +2,10 @@
 *.kate-swp
 
 !.*
-.idea
+.idea/
 
 composer.phar
 composer.lock
+
+vendor/
+build/
