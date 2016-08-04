@@ -36,7 +36,7 @@ class DesignSystemGlobalFooterModelTest extends WikiaBaseTest {
 				[
 					'description' => [
 						'type' => 'translatable-text',
-						'key' => 'global-footer-licensing-description',
+						'key' => 'global-footer-licensing-and-vertical-description',
 						'params' => [
 							'sitename' => [
 								'type' => 'text',
@@ -65,7 +65,7 @@ class DesignSystemGlobalFooterModelTest extends WikiaBaseTest {
 				[
 					'description' => [
 						'type' => 'translatable-text',
-						'key' => 'global-footer-licensing-description',
+						'key' => 'global-footer-licensing-and-vertical-description',
 						'params' => [
 							'sitename' => [
 								'type' => 'text',
