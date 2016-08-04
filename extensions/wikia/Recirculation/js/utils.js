@@ -13,7 +13,7 @@ define('ext.wikia.recirculation.utils', [
 			use_last = false;
 		return function() {
 			var y1;
-			if(use_last) {
+			if (use_last) {
 				y1 = y2;
 				use_last = false;
 			} else {
