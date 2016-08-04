@@ -4,24 +4,21 @@ class DesignSystemGlobalFooterModelTest extends WikiaBaseTest {
 	/**
 	 * @dataProvider getLicensingAndVerticalDataProvider
 	 *
+	 * @param $sitename
 	 * @param $rightsText license name
 	 * @param $rightsUrl license URL
 	 * @param $expectedResult
 	 */
-	public function testGetLicensingAndVertical( $rightsText, $rightsUrl, $expectedResult ) {
+	public function testGetLicensingAndVertical( $sitename, $rightsText, $rightsUrl, $expectedResult ) {
 		$wikiId = 1234;
 
-		$rightsTextMock = new stdClass();
-		$rightsTextMock->cv_value = $rightsText;
-		$rightsUrlMock = new stdClass();
-		$rightsUrlMock->cv_value = $rightsUrl;
-
-		$this->getStaticMethodMock( 'WikiFactory', 'getVarByName' )
+		$this->getStaticMethodMock( 'WikiFactory', 'getVarValueByName' )
 			->expects( $this->any() )
-			->method( 'getVarByName' )
+			->method( 'getVarValueByName' )
 			->will( $this->returnValueMap( [
-				[ 'wgRightsText', $wikiId, $rightsTextMock ],
-				[ 'wgRightsUrl', $wikiId, $rightsUrlMock ],
+				[ 'wgRightsText', $wikiId, $rightsText ],
+				[ 'wgRightsUrl', $wikiId, $rightsUrl ],
+				[ 'wgSitename', $wikiId, $sitename ]
 			] ) );
 
 		$footerModel = new DesignSystemGlobalFooterModel( $wikiId );
@@ -33,6 +30,7 @@ class DesignSystemGlobalFooterModelTest extends WikiaBaseTest {
 	public function getLicensingAndVerticalDataProvider() {
 		return [
 			[
+				'wikia',
 				'CC-BY-SA',
 				'http://www.wikia.com/Licensing',
 				[
@@ -40,6 +38,14 @@ class DesignSystemGlobalFooterModelTest extends WikiaBaseTest {
 						'type' => 'translatable-text',
 						'key' => 'global-footer-licensing-description',
 						'params' => [
+							'sitename' => [
+								'type' => 'text',
+								'value' => 'wikia'
+							],
+							'vertical' => [
+								'type' => 'translatable-text',
+								'key' => 'global-footer-vertical-other'
+							],
 							'license' => [
 								'type' => 'link-text',
 								'title' => [
@@ -53,6 +59,7 @@ class DesignSystemGlobalFooterModelTest extends WikiaBaseTest {
 				],
 			],
 			[
+				'memory-alpha',
 				'CC-BY-NC-SA',
 				'http://memory-alpha.wikia.com/wiki/Project:Licensing',
 				[
@@ -60,6 +67,14 @@ class DesignSystemGlobalFooterModelTest extends WikiaBaseTest {
 						'type' => 'translatable-text',
 						'key' => 'global-footer-licensing-description',
 						'params' => [
+							'sitename' => [
+								'type' => 'text',
+								'value' => 'memory-alpha'
+							],
+							'vertical' => [
+								'type' => 'translatable-text',
+								'key' => 'global-footer-vertical-other'
+							],
 							'license' => [
 								'type' => 'link-text',
 								'title' => [
