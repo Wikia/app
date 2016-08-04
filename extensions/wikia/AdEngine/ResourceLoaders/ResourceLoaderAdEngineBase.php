@@ -5,6 +5,7 @@ abstract class ResourceLoaderAdEngineBase extends ResourceLoaderModule {
 	const TTL_GRACE = 300;    // five minutes -- cache last response additionally for this time if we can't download the scripts anymore
 	const CACHE_BUSTER = 3;
 	public static $localCache = null;
+
 	/**
 	 * Configure scripts that should be loaded into one package
 	 * @return array of ResourceLoaderScript
@@ -24,6 +25,10 @@ abstract class ResourceLoaderAdEngineBase extends ResourceLoaderModule {
 	 */
 	protected function fetchRemoteScript( $url ) {
 		return ExternalHttp::get( $url );
+	}
+
+	protected function getMemcKey() {
+		return wfSharedMemcKey( 'adengine', get_class( $this ) . __FUNCTION__, static::CACHE_BUSTER );
 	}
 
 	/**
@@ -50,17 +55,16 @@ abstract class ResourceLoaderAdEngineBase extends ResourceLoaderModule {
 	 */
 	protected function generateData( $scriptItems ) {
 
-		$scriptsToMerge = [];
-		foreach ( $scriptItems as $scriptItem ) { /* @var ResourceLoaderScript $scriptItem */
+		$scriptsToMerge = [ ];
+		foreach ( $scriptItems as $scriptItem ) {
+			/* @var ResourceLoaderScript $scriptItem */
 
 			$script = false;
 			if ( $scriptItem->getType() == ResourceLoaderScript::TYPE_REMOTE ) {
 				$script = $this->fetchRemoteScript( $scriptItem->getValue() );
-			}
-			elseif ( $scriptItem->getType() == ResourceLoaderScript::TYPE_LOCAL ) {
+			} elseif ( $scriptItem->getType() == ResourceLoaderScript::TYPE_LOCAL ) {
 				$script = $this->fetchLocalScript( $scriptItem->getValue() );
-			}
-			elseif ( $scriptItem->getType() == ResourceLoaderScript::TYPE_INLINE ) {
+			} elseif ( $scriptItem->getType() == ResourceLoaderScript::TYPE_INLINE ) {
 				$script = $this->getInlineScript( $scriptItem->getValue() );
 			}
 
@@ -71,7 +75,7 @@ abstract class ResourceLoaderAdEngineBase extends ResourceLoaderModule {
 			$scriptsToMerge[] = $script;
 		}
 
-		return join(PHP_EOL, $scriptsToMerge);
+		return join( PHP_EOL, $scriptsToMerge );
 	}
 
 	/**
@@ -80,7 +84,7 @@ abstract class ResourceLoaderAdEngineBase extends ResourceLoaderModule {
 	 */
 	protected function getCurrentTimestamp() {
 		static $now;
-		if (!$now) {
+		if ( !$now ) {
 			$now = time();
 		}
 		return $now;
@@ -93,36 +97,36 @@ abstract class ResourceLoaderAdEngineBase extends ResourceLoaderModule {
 	protected function getData() {
 		global $wgMemc;
 
-		if ( !empty( static::$localCache[get_class($this)] ) ) {
-			return static::$localCache[get_class($this)];
+		if ( !empty(static::$localCache[get_class( $this )]) ) {
+			return static::$localCache[get_class( $this )];
 		}
 
 		$now = $this->getCurrentTimestamp();
 
-		$memKey = wfSharedMemcKey('adengine', get_class($this) . __FUNCTION__, static::CACHE_BUSTER);
-		$cached = $wgMemc->get($memKey);
-		if (is_array($cached) && $cached['ttl'] > $now) {
+		$memKey = $this->getMemcKey();
+		$cached = $wgMemc->get( $memKey );
+		if ( is_array( $cached ) && $cached['ttl'] > $now ) {
 			// Cache hit!
-			static::$localCache[get_class($this)] = $cached;
+			static::$localCache[get_class( $this )] = $cached;
 			return $cached;
 		}
 		// Cache miss, need to re-download the scripts
 		$generated = $this->generateData( $this->getScripts() );
 
-		if ($generated === false) {
+		if ( $generated === false ) {
 			// HTTP request didn't work
 
-			if (is_array($cached)) {
+			if ( is_array( $cached ) ) {
 				// Oh, we still have the thing cached
 				// Let's use the script for the next a few minutes
 
 				$cached['ttl'] = $now + static::TTL_GRACE;
-				$wgMemc->set($memKey, $cached);
+				$wgMemc->set( $memKey, $cached );
 				static::$localCache[get_class( $this )] = $cached;
 				return $cached;
 			}
 			$data = $this->getFallbackDataWhenRequestFails();
-			$wgMemc->set($memKey, $data);
+			$wgMemc->set( $memKey, $data );
 
 			\Wikia\Logger\WikiaLogger::instance()
 				->warning(
@@ -143,7 +147,7 @@ abstract class ResourceLoaderAdEngineBase extends ResourceLoaderModule {
 			'ttl' => $now + static::TTL_SCRIPTS,
 		];
 
-		if ( md5($data['script']) !== md5($cached['script']) ) {
+		if ( md5( $data['script'] ) !== md5( $cached['script'] ) ) {
 			\Wikia\Logger\WikiaLogger::instance()
 				->info(
 					'ResourceLoaderAdEngine - scripts updated',
@@ -163,17 +167,17 @@ abstract class ResourceLoaderAdEngineBase extends ResourceLoaderModule {
 				);
 		}
 
-		if ($generated === $cached['script']) {
+		if ( $generated === $cached['script'] ) {
 			$data['modTime'] = $cached['modTime'];
 		}
 
-		$wgMemc->set($memKey, $data);
+		$wgMemc->set( $memKey, $data );
 
-		static::$localCache[get_class($this)] = $data;
+		static::$localCache[get_class( $this )] = $data;
 		return $data;
 	}
 
-	public function getModifiedTime(ResourceLoaderContext $context) {
+	public function getModifiedTime( ResourceLoaderContext $context ) {
 		return $this->getData()['modTime'];
 	}
 
@@ -181,7 +185,7 @@ abstract class ResourceLoaderAdEngineBase extends ResourceLoaderModule {
 		return $this->getData()['ttl'];
 	}
 
-	public function getScript(ResourceLoaderContext $context) {
+	public function getScript( ResourceLoaderContext $context ) {
 		$data = $this->getData();
 		return $data['script'];
 	}

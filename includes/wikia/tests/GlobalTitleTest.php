@@ -118,7 +118,8 @@ class GlobalTitleTest extends WikiaBaseTest {
 			[ WIKIA_ENV_PROD, 'Test Ze Spacjami', NS_TALK, 177, 'http://community.wikia.com/wiki/Talk:Test_Ze_Spacjami' ],
 			[ WIKIA_ENV_PREVIEW, 'Test Ze Spacjami', NS_TALK, 177, 'http://preview.community.wikia.com/wiki/Talk:Test_Ze_Spacjami' ],
 			[ WIKIA_ENV_VERIFY, 'Test Ze Spacjami', NS_TALK, 177, 'http://verify.community.wikia.com/wiki/Talk:Test_Ze_Spacjami' ],
-			[ WIKIA_ENV_SANDBOX, 'Test Ze Spacjami', NS_TALK, 177, 'http://sandbox-s1.community.wikia.com/wiki/Talk:Test_Ze_Spacjami' ]
+			[ WIKIA_ENV_SANDBOX, 'Test Ze Spacjami', NS_TALK, 177, 'http://sandbox-s1.community.wikia.com/wiki/Talk:Test_Ze_Spacjami' ],
+			[ WIKIA_ENV_STAGING, 'Test Ze Spacjami', NS_TALK, 177, 'http://community.wikia-staging.com/wiki/Talk:Test_Ze_Spacjami' ],
 		];
 	}
 

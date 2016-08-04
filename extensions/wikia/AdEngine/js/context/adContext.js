@@ -65,7 +65,7 @@ define('ext.wikia.adEngine.adContext', [
 		}
 
 		// SourcePoint detection integration
-		if (!noExternals && context.opts.sourcePointDetectionUrl) {
+		if (!noExternals && !context.opts.sourcePointRecovery && context.opts.sourcePointDetectionUrl) {
 			context.opts.sourcePointDetection = isUrlParamSet('sourcepointdetection') ||
 				(context.targeting.skin === 'oasis' &&
 				geo.isProperGeo(instantGlobals.wgAdDriverSourcePointDetectionCountries));

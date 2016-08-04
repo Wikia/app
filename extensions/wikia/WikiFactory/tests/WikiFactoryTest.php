@@ -123,6 +123,11 @@ class WikiFactoryTest extends WikiaBaseTest {
 				'expected' => 'http://verify.muppet.wikia.com/wiki/Muppet'
 			],
 			[
+				'env' => WIKIA_ENV_STABLE,
+				'url' => 'http://muppet.wikia.com/wiki/Muppet',
+				'expected' => 'http://stable.muppet.wikia.com/wiki/Muppet'
+			],
+			[
 				'env' => WIKIA_ENV_DEV,
 				'url' => 'http://muppet.wikia.com/wiki',
 				'expected' => 'http://muppet.' . self::MOCK_DEV_NAME . '.wikia-dev.com/wiki'
@@ -136,6 +141,11 @@ class WikiFactoryTest extends WikiaBaseTest {
 				'env' => WIKIA_ENV_VERIFY,
 				'url' => 'http://gta.wikia.com/wiki/test/test/test',
 				'expected' => 'http://verify.gta.wikia.com/wiki/test/test/test'
+			],
+			[
+				'env' => WIKIA_ENV_STAGING,
+				'url' => 'http://gta.wikia.com/wiki/test/test/test',
+				'expected' => 'http://gta.wikia-staging.com/wiki/test/test/test'
 			],
 			[
 				'env' => WIKIA_ENV_DEV,
