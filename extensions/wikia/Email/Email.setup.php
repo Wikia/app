@@ -73,7 +73,9 @@ $wgAutoloadClasses['Email\Controller\WelcomeController'] = $dir . 'Controller/We
 $wgAutoloadClasses['Email\Controller\UserRightsChangedController'] =  $dir . 'Controller/UserRightsChangedController.class.php';
 $wgAutoloadClasses['Email\Controller\UserNameChangeController'] = $dir . 'Controller/UserNameChangeController.class.php';
 $wgAutoloadClasses['Email\Controller\FacebookDisconnectController'] = $dir . 'Controller/FacebookDisconnectController.class.php';
-$wgAutoloadClasses['Email\SpecialSendEmailController'] = $dir .  'SpecialSendEmailController.class.php';
+$wgAutoloadClasses['Email\Controller\DiscussionReplyController'] = $dir . 'Controller/DiscussionController.class.php';
+$wgAutoloadClasses['Email\Controller\DiscussionUpvoteController'] = $dir . 'Controller/DiscussionController.class.php';
+$wgAutoloadClasses['Email\SpecialSendEmailController'] = $dir . 'SpecialSendEmailController.class.php';
 
 /**
  * special pages
@@ -102,4 +104,5 @@ $wgExtensionMessagesFiles['SpecialSendEmail'] = $dir . 'i18n/specialSendEmail.i1
 $wgExtensionMessagesFiles['ForgotPassword'] = $dir . 'i18n/ForgotPassword.i18n.php';
 $wgExtensionMessagesFiles['UserRightsChanged'] = $dir . 'i18n/UserRightsChanged.i18n.php';
 $wgExtensionMessagesFiles['EmailUserNameChange'] = $dir . 'i18n/UserNameChange.i18n.php';
+$wgExtensionMessagesFiles['EmailDiscussions'] = $dir . 'i18n/Discussion.i18n.php';
 

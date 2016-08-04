@@ -1,3 +1,4 @@
+{{>inspectlet}}
 {{>pageHeader}}
 
 <div class="CommunityPageContainer">
@@ -10,7 +11,9 @@
 	<div class="WikiaRail">
 		{{>helpModule}}
 		{{>adminsModule}}
-		{{>contributorsModule}}
+		{{#contributorsModuleEnabled}}
+			{{>contributorsModule}}
+		{{/contributorsModuleEnabled}}
 		{{>communityPolicyModule}}
 		{{>recentActivityModule}}
 	</div>

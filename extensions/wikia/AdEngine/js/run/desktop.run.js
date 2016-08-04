@@ -166,9 +166,9 @@ require([
 		if (exitstitial) {
 			exitstitial.init();
 		}
-
-		bottomLeaderboard.init();
 	}
+
+	win.addEventListener('wikia.uap', bottomLeaderboard.init);
 
 	if (doc.readyState === 'complete') {
 		initDesktopSlots();

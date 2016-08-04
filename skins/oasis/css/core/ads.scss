@@ -34,7 +34,7 @@ $taboola-small-breakpoint: "#{$screen} and (max-width: 420px)";
 	.WikiaTopAdsInner {
 		@include clearfix;
 		display: inline-block;
-		>div {
+		> div {
 			float: right;
 		}
 	}
@@ -42,8 +42,8 @@ $taboola-small-breakpoint: "#{$screen} and (max-width: 420px)";
 		max-width: 728px;
 	}
 	.wikia-ad {
-		>img {
-			float: right;	/* invisible tracking pixel is taking up height for some reason.  taking it out of the flow for now */
+		> img {
+			float: right; /* invisible tracking pixel is taking up height for some reason.  taking it out of the flow for now */
 		}
 	}
 }
@@ -81,7 +81,7 @@ $taboola-small-breakpoint: "#{$screen} and (max-width: 420px)";
 	}
 }
 
-.bfab-template > div{
+.bfab-template > div {
 	position: relative;
 	width: 100%;
 
@@ -105,11 +105,11 @@ $taboola-small-breakpoint: "#{$screen} and (max-width: 420px)";
 }
 
 #LEFT_SKYSCRAPER_2, #LEFT_SKYSCRAPER_3, #HOME_TOP_LEADERBOARD, #TOP_LEADERBOARD, #CORP_TOP_LEADERBOARD, #HUB_TOP_LEADERBOARD {
-	>div {
+	> div {
 		margin-left: auto;
 		margin-right: auto;
 	}
-	>div[id^=Liftium_] {
+	> div[id^=Liftium_] {
 		text-align: center;
 	}
 }
@@ -167,30 +167,34 @@ $taboola-small-breakpoint: "#{$screen} and (max-width: 420px)";
 
 #INCONTENT_LEADERBOARD {
 	text-align: center;
-	>div {
+	> div {
 		margin-left: auto;
 		margin-right: auto;
 	}
 }
 
 #INCONTENT_WRAPPER {
-  text-align: center;
+	text-align: center;
 }
 
 #INCONTENT_LEADERBOARD {
-  display: inline-block;
+	display: inline-block;
 }
 
 #INCONTENT_LEADERBOARD:before {
-  color: $color-text;
-  content: attr(data-label);
-  display: block;
-  font-size: 0.625rem;
-  line-height: 0.75rem;
-  padding-bottom: 6px;
-  padding-top: 6px;
-  text-align: left;
-  text-transform: uppercase;
+	color: $color-text;
+	content: attr(data-label);
+	display: block;
+	font-size: 0.625rem;
+	line-height: 0.75rem;
+	padding-bottom: 6px;
+	padding-top: 6px;
+	text-align: left;
+	text-transform: uppercase;
+}
+
+#INCONTENT_LEADERBOARD.hide-label:before {
+	display: none;
 }
 
 #LEFT_SKYSCRAPER_2 {
@@ -233,6 +237,7 @@ $taboola-small-breakpoint: "#{$screen} and (max-width: 420px)";
 	width: 300px;
 	z-index: 100;
 }
+
 /* grid layout transition temp code.  remove and integrate into main code after transition is complete */
 .WikiaGrid {
 	#HOME_TOP_RIGHT_BOXAD,
@@ -241,6 +246,7 @@ $taboola-small-breakpoint: "#{$screen} and (max-width: 420px)";
 		padding: 15px;
 	}
 }
+
 /* end transistion temp code */
 
 #TOP_BOXAD {
@@ -323,7 +329,7 @@ $taboola-small-breakpoint: "#{$screen} and (max-width: 420px)";
 }
 
 /** DART calls for INVISIBLE slots return a pixel. Hide this pixel. **/
-body >a >img[src$="noad.gif"] {
+body > a > img[src$="noad.gif"] {
 	position: absolute;
 	z-index: 0;
 }

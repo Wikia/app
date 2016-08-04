@@ -505,9 +505,22 @@ class WikiFactory {
 	 * @return string
 	 */
 	public static function getHostByDbName( $dbName ) {
-		global $wgDevelEnvironment, $wgDevelEnvironmentName;
 
 		$cityId = \WikiFactory::DBtoID( $dbName );
+
+		return self::getHostById($cityId);
+	}
+
+	/**
+	 * Given a wiki's id, return the wgServer value properly altered to reflect the current environment.
+	 *
+	 * @param int $cityId
+	 *
+	 * @return string
+	 */
+	public static function getHostById( $cityId ) {
+		global $wgDevelEnvironment, $wgDevelEnvironmentName;
+
 		$hostName = \WikiFactory::getVarValueByName( 'wgServer', $cityId );
 
 		if ( !empty( $wgDevelEnvironment ) ) {
@@ -1184,7 +1197,7 @@ class WikiFactory {
 	 * @return string	url pointing to local env
 	 */
 	static public function getLocalEnvURL( $url ) {
-		global $wgWikiaEnvironment;
+		global $wgWikiaEnvironment, $wgWikiaBaseDomain;
 
 		// first - normalize URL
 		$regexp = '/^http:\/\/([^\/]+)\/?(.*)?$/';
@@ -1218,14 +1231,18 @@ class WikiFactory {
 				return 'http://preview.' . $server . '.wikia.com'.$address;
 			case WIKIA_ENV_VERIFY:
 				return 'http://verify.' . $server . '.wikia.com'.$address;
+			case WIKIA_ENV_STABLE:
+				return 'http://stable.' . $server . '.wikia.com'.$address;
+			case WIKIA_ENV_STAGING:
+			case WIKIA_ENV_PROD:
+				return sprintf( 'http://%s.%s%s', $server, $wgWikiaBaseDomain, $address ) ;
 			case WIKIA_ENV_SANDBOX:
 				return 'http://' . self::getExternalHostName() . '.' . $server . '.wikia.com' . $address;
 			case WIKIA_ENV_DEV:
 				return 'http://' . $server . '.' . self::getExternalHostName() . '.wikia-dev.com'.$address;
 		}
 
-		// by default return original address
-		return $url;
+		throw new Exception( sprintf( '%s: %s', __METHOD__, 'unknown env detected' ) );
 	}
 
 	/**
