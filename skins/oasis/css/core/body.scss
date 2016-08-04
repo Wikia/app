@@ -76,9 +76,7 @@ a {
 	color: $color-text;
 }
 
-// Customization for Special:Allpages
-.mw-special-Allpages {
-	#mw-content-text a span {
-		color: $color-text;
-	}
+// Customization for Local_Sitemap
+.local-sitemap-line a span {
+	color: $color-text;
 }
