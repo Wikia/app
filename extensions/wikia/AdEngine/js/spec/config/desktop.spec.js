@@ -110,7 +110,7 @@ describe('ext.wikia.adEngine.config.desktop', function () {
 		expect(getProviders('foo')).toEqual('direct,remnant');
 	});
 
-	it('Turtle: Turtle, Remnant, Liftium', function () {
+	it('Turtle: Turtle, Remnant', function () {
 		spyOn(mocks.providers.turtle, 'canHandleSlot').and.returnValue(true);
 		spyOn(mocks, 'getAdContextProviders').and.returnValue({turtle: true});
 		expect(getProviders('foo')).toEqual('turtle,remnant');
