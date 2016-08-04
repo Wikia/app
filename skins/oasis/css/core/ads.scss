@@ -109,9 +109,6 @@ $taboola-small-breakpoint: "#{$screen} and (max-width: 420px)";
 		margin-left: auto;
 		margin-right: auto;
 	}
-	> div[id^=Liftium_] {
-		text-align: center;
-	}
 }
 
 #HOME_TOP_LEADERBOARD, #TOP_LEADERBOARD, #CORP_TOP_LEADERBOARD, #HUB_TOP_LEADERBOARD {
