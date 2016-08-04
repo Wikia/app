@@ -436,27 +436,27 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 	}
 
 	private function getSitenameData() {
-		$value = $this->wg->Sitename;
+		$sitename = $this->wg->Sitename;
 
-		if ( $wgSitenameForComscore = WikiFactory::getVarValueByName( 'wgSitenameForComscore', $this->wikiId ) ) {
-			$value = $wgSitenameForComscore;
-		} else if ( $wgSitename = WikiFactory::getVarValueByName( 'wgSitename', $this->wikiId ) ) {
-			$value = $wgSitename;
+		if ( $wgSitenameForComscoreForWikiId = WikiFactory::getVarValueByName( 'wgSitenameForComscore', $this->wikiId ) ) {
+			$sitename = $wgSitenameForComscoreForWikiId;
+		} else if ( $wgSitenameForWikiId = WikiFactory::getVarValueByName( 'wgSitename', $this->wikiId ) ) {
+			$sitename = $wgSitenameForWikiId;
 		}
 
 		return [
 			'type' => 'text',
-			'value' => $value
+			'value' => $sitename
 		];
 	}
 
 	private function getVerticalData() {
-		$key = WikiFactoryHub::getInstance()->getWikiVertical( $this->wikiId )['short'];
-		$key = 'global-footer-vertical-' . $key;
+		$verticalMessageKey = WikiFactoryHub::getInstance()->getWikiVertical( $this->wikiId )['short'];
+		$verticalMessageKey = 'global-footer-vertical-' . $verticalMessageKey;
 
 		return [
 			'type' => 'translatable-text',
-			'key' => $key
+			'key' => $verticalMessageKey
 		];
 	}
 
