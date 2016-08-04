@@ -157,11 +157,6 @@ body.skin-oasis {
 				display: none;
 			}
 		}
-
-		.WikiaTopAds, .WikiaPage {
-			// (3) ... and both TopAds and WikiaPage will lay on top of them.
-			z-index: 2;
-		}
 	}
 
 	@media #{$breakpoint-small-only} {
