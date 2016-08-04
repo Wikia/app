@@ -113,9 +113,9 @@ class RecirculationApiController extends WikiaApiController {
 	}
 
 	private function getParamFill() {
-		$fill = $this->request->getVal( 'fill', false );
+		$fill = $this->request->getVal( 'fill', 'false' );
 
-		if ( !empty( $fill ) && ( $fill !== 'true' && $fill !== 'false' ) ) {
+		if ( $fill !== 'true' && $fill !== 'false' ) {
 			throw new InvalidParameterApiException( 'fill' );
 		}
 
