@@ -3022,3 +3022,11 @@ $config['design_system_scss'] = [
 		'//extensions/wikia/DesignSystem/bower_components/design-system/dist/styles.scss'
 	]
 ];
+
+$config['contribution_appreciation_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/ContributionAppreciation/js/ContributionAppreciation.js'
+	]
+];
