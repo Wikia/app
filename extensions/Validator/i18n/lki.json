@@ -1,0 +1,9 @@
+{
+	"@metadata": {
+		"authors": [
+			"Lakzon"
+		]
+	},
+	"validator-describe-descriptionmsg": "'''شرح''': $1",
+	"validator-describe-header-description": "تشریح"
+}
