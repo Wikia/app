@@ -485,7 +485,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 					'brand' => 'games',
 					'title' => [
 						'type' => 'translatable-text',
-						'key' => 'global-footer-fandom-link-vertical-games'
+						'key' => 'global-footer-vertical-games'
 					],
 					'href' => 'http://fandom.wikia.com/games'
 				],
@@ -494,7 +494,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 					'brand' => 'movies',
 					'title' => [
 						'type' => 'translatable-text',
-						'key' => 'global-footer-fandom-link-vertical-movies'
+						'key' => 'global-footer-vertical-movies'
 					],
 					'href' => 'http://fandom.wikia.com/movies'
 				],
@@ -503,7 +503,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 					'brand' => 'tv',
 					'title' => [
 						'type' => 'translatable-text',
-						'key' => 'global-footer-fandom-link-vertical-tv'
+						'key' => 'global-footer-vertical-tv'
 					],
 					'href' => 'http://fandom.wikia.com/tv'
 				],
