@@ -20,7 +20,7 @@ $messages['en'] = array(
 	'tog-enotifwatchlistpages-v2' => "...a page I'm following is changed",
 	'tog-enotifusertalkpages-v2' => '...my user talk page is changed',
 	'tog-enotifminoredits-v2' => "...a page I'm following is minorly changed",
-	'tog-enotifdiscussions-v2' => '...my discussion posts receive replies and upvotes',
+	'tog-enotifdiscussions-v2' => '...my Discussion posts receive replies and upvotes',
 	'tog-marketingallowed-v2' => '...Wikia has news and events',
 	'prefs-email-advanced-v2' => 'Advanced Options',
 	'prefs-email-unsubscribe' => 'Disable all emails',
@@ -82,6 +82,7 @@ $messages['qqq'] = array(
 	'tog-enotifwatchlistpages-v2' => 'An option in [[Special:Preferences]] > {{int:prefs-emailv2}} > {{int:prefs-email-me-v2}}.',
 	'tog-enotifusertalkpages-v2' => 'An option in [[Special:Preferences]] > {{int:prefs-emailv2}} > {{int:prefs-email-me-v2}}.',
 	'tog-enotifminoredits-v2' => 'An option in [[Special:Preferences]] > {{int:prefs-emailv2}} > {{int:prefs-email-me-v2}}.',
+	'tog-enotifdiscussions-v2' => 'An option in [[Special:Preferences]] > {{int:prefs-emailv2}} > {{int:prefs-email-me-v2}}.',
 	'tog-marketingallowed-v2' => 'An option in [[Special:Preferences]] > {{msg-wikia|prefs-emailv2}} > {{msg-wikia|prefs-email-me-v2}}.',
 	'prefs-email-advanced-v2' => 'Title of a section in [[Special:Preferences]].
 {{Identical|Advanced options}}',
