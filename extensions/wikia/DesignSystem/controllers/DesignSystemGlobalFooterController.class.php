@@ -28,6 +28,10 @@ class DesignSystemGlobalFooterController extends WikiaController {
 		$this->setVal( 'model', $this->getVal( 'model' ) );
 	}
 
+	public function licensingAndVertical() {
+		$this->setVal( 'model', $this->getVal( 'model' ) );
+	}
+
 	private function getData() {
 		global $wgCityId, $wgLang;
 

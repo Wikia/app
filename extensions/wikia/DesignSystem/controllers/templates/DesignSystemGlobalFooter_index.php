@@ -3,7 +3,7 @@
 	<div class="wds-global-footer__header-wrapper">
 		<h2 class="wds-global-footer__header">
 			<?= DesignSystemHelper::getSvg( $model['international_header']['header']['image'], 'wds-global-footer__wikia-logo wds-is-large' ) ?>
-			<span class="wds-global-footer__home-of-fandom"><?= $model['international_header']['header']['subtitle']['key'] ?></span>
+			<span class="wds-global-footer__home-of-fandom"><?= wfMessage( $model['international_header']['header']['subtitle']['key'] )->escaped() ?> ?></span>
 		</h2>
 	</div>
 	<?php endif; ?>
@@ -65,7 +65,7 @@
 			]); ?>
 		</div>
 	</div>
-	<div class="wds-global-footer__licensing-and-vertical">
-		<span><?= $model['licensing_and_vertical']['description']['key'] ?></span>
-	</div>
+	<?= $app->renderView('DesignSystemGlobalFooter', 'licensingAndVertical', [
+		'model' => $model['licensing_and_vertical']
+	]); ?>
 </footer>
