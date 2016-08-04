@@ -53,7 +53,7 @@ class ApiVisualEditor extends ApiBase {
 			$this->getProxyConf(),
 			array(
 				'method' => $method,
-				'timeout' => 600,//$this->veConfig->get( 'VisualEditorParsoidTimeout' ),
+				'timeout' => $this->veConfig->get( 'VisualEditorParsoidTimeout' ),
 			)
 		);
 
