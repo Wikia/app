@@ -5,11 +5,8 @@ class ContributionAppreciationController extends WikiaController {
 	public function appreciate() {
 		global $wgUser;
 
-		if ( $this->request->wasPosted() && $wgUser->matchEditToken( $this->getVal( 'token' ) ) ) {
+		if ( $this->request->isValidWriteRequest( $wgUser ) ) {
 			//TODO: do something with apprecation
-			$this->response->setFormat( WikiaResponse::FORMAT_JSON );
-			$this->setVal( 'user', $wgUser->getName() );
-			$this->setVal( 'for', Revision::newFromId( $this->request->getInt( 'revision' ) )->getUserText() );
 		}
 	}
 
@@ -33,9 +30,9 @@ class ContributionAppreciationController extends WikiaController {
 	}
 
 	private static function getAppreciationLink( $revision ) {
-		return Html::element( 'a',
+		return Html::element( 'button',
 			[
-				'class' => 'like',
+				'class' => 'appreciation-button',
 				'href' => '#',
 				'data-revision' => $revision
 			],
