@@ -123,6 +123,11 @@ class WikiFactoryTest extends WikiaBaseTest {
 				'expected' => 'http://verify.muppet.wikia.com/wiki/Muppet'
 			],
 			[
+				'env' => WIKIA_ENV_STABLE,
+				'url' => 'http://muppet.wikia.com/wiki/Muppet',
+				'expected' => 'http://stable.muppet.wikia.com/wiki/Muppet'
+			],
+			[
 				'env' => WIKIA_ENV_DEV,
 				'url' => 'http://muppet.wikia.com/wiki',
 				'expected' => 'http://muppet.' . self::MOCK_DEV_NAME . '.wikia-dev.com/wiki'

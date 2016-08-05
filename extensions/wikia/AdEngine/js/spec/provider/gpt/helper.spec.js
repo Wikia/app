@@ -43,6 +43,9 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 			},
 			uapContext: {
 				getUapId: noop
+			},
+			slotTargetingHelper: {
+				getWikiaSlotId: noop
 			}
 		};
 	mocks.googleTag.prototype.isInitialized = function () {
@@ -67,6 +70,7 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 			mocks.adDetect,
 			AdElement,
 			mocks.googleTag,
+			mocks.slotTargetingHelper,
 			mocks.uapContext,
 			mocks.recoveryHelper,
 			mocks.slotTweaker,

@@ -57,7 +57,7 @@ class DesignSystemHelper {
 	 *
 	 * @return SimpleXMLElement
 	 */
-	public static function getCachedSvg( $name ) {
+	private static function getCachedSvg( $name ) {
 		if ( isset( self::$svgCache[ $name ] ) ) {
 			$xml = self::$svgCache[ $name ];
 		} else {

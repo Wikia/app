@@ -1338,15 +1338,6 @@ class Wikia {
 		return $params;
 	}
 
-	static public function getAllHeaders() {
-		if ( function_exists( 'getallheaders' ) ) {
-			$headers = getallheaders();
-		} else {
-			$headers = $_SERVER;
-		}
-		return $headers;
-	}
-
 	static public function isUnsubscribed( $to, $body, $subject ) {
 		# Hook moved from SpecialUnsubscribe extension
 		#if this opt is set, fake their conf status to OFF, and stop here.
