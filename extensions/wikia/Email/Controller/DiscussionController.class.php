@@ -7,13 +7,11 @@ use Email\EmailController;
 
 abstract class DiscussionController extends EmailController {
 
-    protected $postTitle;
     protected $postContent;
     protected $postUrl;
     protected $wiki;
 
     public function initEmail() {
-        $this->postTitle = $this->request->getVal( 'postTitle' );
         $this->postContent = $this->request->getVal( 'postContent' );
         $this->postUrl = $this->request->getVal( 'postUrl' );
         $this->setWikiFromWikiID();
@@ -92,11 +90,6 @@ abstract class DiscussionController extends EmailController {
                 ],
                 [
                     'type' => 'text',
-                    'name' => 'postTitle',
-                    'label' => 'Title of Post (Optional)',
-                ],
-                [
-                    'type' => 'text',
                     'name' => 'postContent',
                     'label' => 'Content of the post',
                 ],
@@ -117,15 +110,22 @@ abstract class DiscussionController extends EmailController {
 
 class DiscussionReplyController extends DiscussionController {
 
+    private $threadTitle;
+
+    public function initEmail() {
+        parent::initEmail();
+        $this->threadTitle = $this->request->getVal( "threadTitle" );
+    }
+
     public function getSubject() {
         return strip_tags( $this->getSummary() );
     }
 
     public function getSummary() {
-        if ( !empty( $this->postTitle ) ) {
+        if ( !empty( $this->threadTitle ) ) {
             return $this->getMessage( 'emailext-discussion-reply-with-title-subject',
                 $this->postUrl,
-                $this->postTitle,
+                $this->threadTitle,
                 $this->wiki->city_url,
                 $this->wiki->city_title
             )->parse();
@@ -136,10 +136,25 @@ class DiscussionReplyController extends DiscussionController {
             $this->wiki->city_title
         )->parse();
     }
+
+    protected static function getEmailSpecificFormFields() {
+        $formFields = [
+            'inputs' => [
+                [
+                    'type' => 'text',
+                    'name' => 'threadTitle',
+                    'label' => 'Title of thread being responded to (Optional)',
+                ]
+            ]
+        ];
+
+        return array_merge_recursive( parent::getEmailSpecificFormFields(), $formFields );
+    }
 }
 
 class DiscussionUpvoteController extends DiscussionController {
 
+    protected $postTitle;
     private $upVotes;
 
     CONST MESSAGE_KEYS = [
@@ -165,6 +180,7 @@ class DiscussionUpvoteController extends DiscussionController {
 
     public function initEmail() {
         parent::initEmail();
+        $this->postTitle = $this->request->getVal( 'postTitle' );
         $this->upVotes = $this->request->getVal( 'upVotes' );
         $this->assertValidParams();
     }
@@ -216,6 +232,11 @@ class DiscussionUpvoteController extends DiscussionController {
     protected static function getEmailSpecificFormFields() {
         $formFields = [
             'inputs' => [
+                [
+                    'type' => 'text',
+                    'name' => 'postTitle',
+                    'label' => 'Title of Post (Optional)',
+                ],
                 [
                     'type' => 'text',
                     'name' => 'upVotes',
