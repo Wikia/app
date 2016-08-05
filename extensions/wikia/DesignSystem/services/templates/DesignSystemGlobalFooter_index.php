@@ -9,56 +9,56 @@
 	<?php endif; ?>
 	<div class="wds-global-footer__main">
 		<?php if ( $model['fandom']['header'] ) : ?>
-			<?= $app->renderView('DesignSystemGlobalFooter', 'imageHeader', [
+			<?= $app->renderView('DesignSystemGlobalFooterService', 'imageHeader', [
 				'model' => $model['fandom']['header'],
 				'section' => 'fandom'
 			]); ?>
 		<?php endif; ?>
 		<div class="wds-global-footer__fandom-sections">
-			<?= $app->renderView('DesignSystemGlobalFooter', 'section', [
+			<?= $app->renderView('DesignSystemGlobalFooterService', 'section', [
 				'model' => $model['fandom_overview'],
 				'name' => 'fandom-overview',
 				'parentName' => 'fandom'
 			]); ?>
-			<?= $app->renderView('DesignSystemGlobalFooter', 'section', [
+			<?= $app->renderView('DesignSystemGlobalFooterService', 'section', [
 				'model' => $model['follow_us'],
 				'name' => 'follow-us',
 				'parentName' => 'fandom'
 			]); ?>
 		</div>
 		<?php if ( $model['wikia']['header'] ) : ?>
-			<?= $app->renderView('DesignSystemGlobalFooter', 'imageHeader', [
+			<?= $app->renderView('DesignSystemGlobalFooterService', 'imageHeader', [
 				'model' => $model['wikia']['header'],
 				'section' => 'wikia'
 			]); ?>
 		<? endif; ?>
 		<div class="wds-global-footer__wikia-sections">
-			<?= $app->renderView('DesignSystemGlobalFooter', 'section', [
+			<?= $app->renderView('DesignSystemGlobalFooterService', 'section', [
 				'model' => $model['company_overview'],
 				'name' => 'company-overview',
 				'parentName' => 'wikia'
 			]); ?>
-			<?= $app->renderView('DesignSystemGlobalFooter', 'section', [
+			<?= $app->renderView('DesignSystemGlobalFooterService', 'section', [
 				'model' => $model['site_overview'],
 				'name' => 'site-overview',
 				'parentName' => 'wikia'
 			]); ?>
-			<?= $app->renderView('DesignSystemGlobalFooter', 'section', [
+			<?= $app->renderView('DesignSystemGlobalFooterService', 'section', [
 				'model' => $model['community'],
 				'name' => 'community',
 				'parentName' => 'wikia'
 			]); ?>
-			<?= $app->renderView('DesignSystemGlobalFooter', 'section', [
+			<?= $app->renderView('DesignSystemGlobalFooterService', 'section', [
 				'model' => $model['create_wiki'],
 				'name' => 'create-wiki',
 				'parentName' => 'wikia'
 			]); ?>
-			<?= $app->renderView('DesignSystemGlobalFooter', 'section', [
+			<?= $app->renderView('DesignSystemGlobalFooterService', 'section', [
 				'model' => $model['community_apps'],
 				'name' => 'community-apps',
 				'parentName' => 'wikia'
 			]); ?>
-			<?= $app->renderView('DesignSystemGlobalFooter', 'section', [
+			<?= $app->renderView('DesignSystemGlobalFooterService', 'section', [
 				'model' => $model['advertise'],
 				'name' => 'advertise',
 				'parentName' => 'wikia'
