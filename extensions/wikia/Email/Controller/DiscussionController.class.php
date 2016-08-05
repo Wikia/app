@@ -52,7 +52,7 @@ abstract class DiscussionController extends EmailController {
             'details' => $this->getDetails(),
             'buttonText' => $this->getButtonText(),
             'buttonLink' => $this->postUrl,
-            'contentFooterMessages' => $this->getFooterMessages(),
+            'contentFooterMessages' => $this->getContentFooterMessages(),
             'hasContentFooterMessages' => true,
         ] );
     }
@@ -67,7 +67,7 @@ abstract class DiscussionController extends EmailController {
         return $this->getMessage( 'emailext-discussion-button-text' )->text();
     }
 
-    protected function getFooterMessages() {
+    protected function getContentFooterMessages() {
         return [
             $this->getMessage( 'emailext-discussion-all-discussions',
                 $this->getDiscussionsLink(),
