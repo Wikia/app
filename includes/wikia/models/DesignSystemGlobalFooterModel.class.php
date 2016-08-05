@@ -379,9 +379,11 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 			'licensing_and_vertical' => [
 				'description' => [
 					'type' => 'translatable-text',
-					'key' => 'global-footer-licensing-description',
+					'key' => 'global-footer-licensing-and-vertical-description',
 					'params' => [
-						'license' => $this->getLicenseData(),
+						'sitename' => $this->getSitenameData(),
+						'vertical' => $this->getVerticalData(),
+						'license' => $this->getLicenseData()
 					]
 				],
 			],
@@ -433,8 +435,61 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 		return $data;
 	}
 
+	private function getSitenameData() {
+		$wgSitenameForComscoreForWikiId = WikiFactory::getVarValueByName( 'wgSitenameForComscore', $this->wikiId );
+
+		if ( $wgSitenameForComscoreForWikiId ) {
+			$sitename = $wgSitenameForComscoreForWikiId;
+		} else {
+			$wgSitenameForWikiId = WikiFactory::getVarValueByName( 'wgSitename', $this->wikiId );
+
+			if ( $wgSitenameForWikiId ) {
+				$sitename = $wgSitenameForWikiId;
+			} else {
+				$sitename = $this->wg->Sitename;
+			}
+		}
+
+		return [
+			'type' => 'text',
+			'value' => $sitename
+		];
+	}
+
+	private function getVerticalData() {
+		$wikiFactoryInstance = WikiFactoryHub::getInstance();
+		$verticalData = $wikiFactoryInstance->getWikiVertical( $this->wikiId );
+
+		/**
+		 * We don't want to show vertical 'Other' instead we show vertical 'Lifestyle'
+		 * This is Comscore requirement
+		 */
+		if ( $verticalData['id'] == WikiFactoryHub::VERTICAL_ID_OTHER ) {
+			$verticalMessageKey = $wikiFactoryInstance->getAllVerticals()[WikiFactoryHub::VERTICAL_ID_LIFESTYLE]['short'];
+		} else {
+			$verticalMessageKey = $verticalData['short'];
+		}
+
+		/**
+		 * Possible outputs:
+		 * - global-footer-licensing-and-vertical-description-param-vertical-tv
+		 * - global-footer-licensing-and-vertical-description-param-vertical-games
+		 * - global-footer-licensing-and-vertical-description-param-vertical-lifestyle
+		 * - global-footer-licensing-and-vertical-description-param-vertical-books
+		 * - global-footer-licensing-and-vertical-description-param-vertical-music
+		 * - global-footer-licensing-and-vertical-description-param-vertical-comics
+		 * - global-footer-licensing-and-vertical-description-param-vertical-movies
+		 */
+		$verticalMessageKey = 'global-footer-licensing-and-vertical-description-param-vertical-' . $verticalMessageKey;
+
+		return [
+			'type' => 'translatable-text',
+			'key' => $verticalMessageKey
+		];
+	}
+
 	private function getLicenseData() {
-		$licenseText = WikiFactory::getVarByName( 'wgRightsText', $this->wikiId )->cv_value ?: $this->wg->RightsText;
+		$licenseText = WikiFactory::getVarValueByName( 'wgRightsText', $this->wikiId ) ?: $this->wg->RightsText;
 
 		return [
 			'type' => 'link-text',
@@ -642,8 +697,8 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 	}
 
 	private function getLicenseUrl() {
-		$licenseUrl = WikiFactory::getVarByName( 'wgRightsUrl', $this->wikiId )->cv_value ?: $this->wg->RightsUrl;
-		$licensePage = WikiFactory::getVarByName( 'wgRightsPage', $this->wikiId )->cv_value ?: $this->wg->RightsPage;
+		$licenseUrl = WikiFactory::getVarValueByName( 'wgRightsUrl', $this->wikiId ) ?: $this->wg->RightsUrl;
+		$licensePage = WikiFactory::getVarValueByName( 'wgRightsPage', $this->wikiId ) ?: $this->wg->RightsPage;
 
 		if ( $licensePage ) {
 			$title = GlobalTitle::newFromText( $licensePage, NS_MAIN, $this->wikiId );
