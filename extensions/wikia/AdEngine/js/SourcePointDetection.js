@@ -4,9 +4,10 @@ define('ext.wikia.adEngine.sourcePointDetection', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adTracker',
 	'wikia.document',
+	'wikia.window',
 	'wikia.krux',
 	'wikia.log'
-], function (adContext, adTracker, doc, krux, log) {
+], function (adContext, adTracker, doc, win, krux, log) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.sourcePointDetection',
@@ -42,6 +43,7 @@ define('ext.wikia.adEngine.sourcePointDetection', [
 			detectionScript = doc.createElement('script'),
 			node = doc.getElementsByTagName('script')[0];
 
+		win.ads.runtime.sp = win.ads.runtime.sp || {};
 		spDetectionTime = adTracker.measureTime('spDetection', {}, 'start');
 		spDetectionTime.track();
 
@@ -61,9 +63,11 @@ define('ext.wikia.adEngine.sourcePointDetection', [
 		detectionScript.setAttribute('data-client-id', getClientId());
 
 		doc.addEventListener('sp.blocking', function () {
+			window.ads.runtime.sp.blocking = true;
 			trackStatusOnce('yes');
 		});
 		doc.addEventListener('sp.not_blocking', function () {
+			window.ads.runtime.sp.blocking = false;
 			trackStatusOnce('no');
 		});
 

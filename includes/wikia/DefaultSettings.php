@@ -1552,6 +1552,13 @@ $wgAdDriverTurtleCountries = null;
  */
 $wgAdDriverSourcePointDetectionCountries = null;
 
+
+/**
+ * @name $wgAdDriverPageFairDetectionCountries
+ * List of countries to call PageFair detection scripts
+ */
+$wgAdDriverPageFairDetectionCountries = null;
+
 /**
  * @name $wgAdDriverSourcePointDetectionMobileCountries
  * List of countries to call SourcePoint detection scripts on Mercury
