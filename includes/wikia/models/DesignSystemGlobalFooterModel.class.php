@@ -451,10 +451,11 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 	}
 
 	private function getVerticalData() {
-		$verticalData = WikiFactoryHub::getInstance()->getWikiVertical( $this->wikiId );
+		$wikiFactoryInstance = WikiFactoryHub::getInstance();
+		$verticalData = $wikiFactoryInstance->getWikiVertical( $this->wikiId );
 
 		if ( $verticalData['id'] == WikiFactoryHub::VERTICAL_ID_OTHER ) {
-			$verticalMessageKey = 'lifestyle';
+			$verticalMessageKey = $wikiFactoryInstance->getAllVerticals()[WikiFactoryHub::VERTICAL_ID_LIFESTYLE]['short'];
 		} else {
 			$verticalMessageKey = $verticalData['short'];
 		}
