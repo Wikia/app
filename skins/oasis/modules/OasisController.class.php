@@ -81,7 +81,7 @@ class OasisController extends WikiaController {
 		if (WikiaPageType::isSearch() || WikiaPageType::isForum()) {
 			// Remove this whole condition when AdDriver2.js is fully implemented and deployed
 
-			$jsAtBottom = true;	// Liftium.js (part of AssetsManager) must be loaded after LiftiumOptions variable is set in page source
+			$jsAtBottom = true;
 		}
 		elseif ($wgTitle->getNamespace() == NS_SPECIAL || BodyController::isEditPage()) {
 			$jsAtBottom = false;
@@ -391,10 +391,6 @@ class OasisController extends WikiaController {
 			$this->squeezeMediawikiLoad($jsFiles,$bottomScripts);
 			$this->bottomScripts = $bottomScripts;
 			$this->jsFiles = $jsFiles;
-		}
-
-		if (AdEngine2Service::shouldLoadLiftium()) {
-			$this->jsFiles = AdEngine2Controller::getLiftiumOptionsScript() . $this->jsFiles;
 		}
 
 		wfProfileOut(__METHOD__);
