@@ -10,7 +10,6 @@ class ContributionAppreciationMessageController extends EmailController {
 	protected $buttonLink;
 	protected $editedWikiName;
 	protected $appreciatorName;
-	/** @var \Title */
 	protected $editedPageTitleText;
 	protected $revisionUrl;
 
@@ -43,10 +42,6 @@ class ContributionAppreciationMessageController extends EmailController {
 		if ( empty( $this->editedWikiName ) ) {
 			throw new Check( "Wiki where contribution was made (editedWikiName) is required" );
 		}
-
-//		if ( empty( $this->buttonLink ) ) {
-//			throw new Check( "Button link (buttonLink) is required" );
-//		}
 
 		if ( empty( $this->revisionUrl ) ) {
 			throw new Check( "Link to revision (revisionUrl) is required" );

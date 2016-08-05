@@ -1,6 +1,7 @@
 <?php
 
 class ContributionAppreciationController extends WikiaController {
+	const CONTRIBUTION_APPRECIATION_EMAIL_CONTROLLER = Email\Controller\ContributionAppreciationMessageController::class;
 
 	public function appreciate() {
 		global $wgUser;
@@ -10,6 +11,8 @@ class ContributionAppreciationController extends WikiaController {
 			$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 			$this->setVal( 'user', $wgUser->getName() );
 			$this->setVal( 'for', Revision::newFromId( $this->request->getInt( 'revision' ) )->getUserText() );
+
+			$this->sendMail( Revision::newFromId( $this->request->getInt( 'revision' ) ) );
 		}
 	}
 
@@ -42,23 +45,28 @@ class ContributionAppreciationController extends WikiaController {
 			wfMessage( 'appreciation-text' )->escaped() );
 	}
 
-	public function sendMail() {
-		global $wgUser;
-		$controller = Email\Controller\ContributionAppreciationMessageController::class;
+	public function sendMail( \Revision $revision ) {
+	//public function sendMail() {
+		global $wgUser, $wgSitename;
 
-		$editedPageTitle = \Title::newFromText('Ponies');
-		$editedWikiName = 'MY WIKIANAME';
-		$buttonLink = SpecialPage::getTitleFor( 'Community' )->getLocalUrl();
+		//$revision = Revision::newFromId( 1569246 );
 
-		var_dump($buttonLink);
+		if ( !$revision ) {
+			return;
+		}
+		$editedPageTitle = $revision->getTitle();
+
 		$params = [
-			'buttonLink' => $buttonLink,
-			'targetUser' => $wgUser, //testing
-			'editedPageTitle' => $editedPageTitle->getText(),
-			'editedWikiName' => $editedWikiName,
-			'revisionUrl' => 'http://mlp.wikia.com/index.php?title=Cranky_Doodle_Donkey&diff=1697147&oldid=1697137'
+			'buttonLink' =>  SpecialPage::getTitleFor( 'Community' )->getFullURL(),
+			//'targetUser' => $wgUser, //testing
+			'targetUser' => $revision->getUserText(),
+			'editedPageTitleText' => $editedPageTitle->getText(),
+			'editedWikiName' => $wgSitename,
+			'revisionUrl' => $editedPageTitle->getFullURL( [
+				'diff' => $revision->getId()
+			] )
 		];
 
-		F::app()->sendRequest( $controller, 'handle', $params );
+		F::app()->sendRequest( self::CONTRIBUTION_APPRECIATION_EMAIL_CONTROLLER, 'handle', $params );
 	}
 }
