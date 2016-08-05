@@ -40,8 +40,8 @@ class LocalSitemapSpecialPage extends SpecialAllpages {
 		$outpointf = $wgContLang->truncate( $outpointf, $this->maxPageLength );
 
 		$link = '?' . http_build_query( [
-				'pagefrom' => $inpoint,
-				'pageto' => $outpoint,
+				'namefrom' => $inpoint,
+				'nameto' => $outpoint,
 			] );
 
 		$out = '<div class="local-sitemap-line"><a href="' . htmlspecialchars( $link ) . '"><span>';
@@ -66,8 +66,8 @@ class LocalSitemapSpecialPage extends SpecialAllpages {
 			$out->mSquidMaxage = WikiaResponse::CACHE_VERY_SHORT;
 		}
 
-		$from = $request->getVal( 'pagefrom', null );
-		$to = $request->getVal( 'pageto', null );
+		$from = $request->getVal( 'namefrom', null );
+		$to = $request->getVal( 'nameto', null );
 
 		$this->showToplevel( NS_MAIN, $from, $to );
 	}

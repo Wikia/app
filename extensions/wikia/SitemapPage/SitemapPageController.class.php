@@ -20,8 +20,8 @@ class SitemapPageController extends WikiaController {
 			return true;
 		}
 
-		$from = $this->getVal( 'dbfrom', '' );
-		$to = $this->getVal( 'dbto', '' );
+		$from = $this->getVal( 'namefrom', '' );
+		$to = $this->getVal( 'nameto', '' );
 
 		$sitemapPage = new SitemapPageModel();
 		$this->wikis = $sitemapPage->getWikiListTopLevel( $level, $from, $to );
@@ -34,8 +34,8 @@ class SitemapPageController extends WikiaController {
 	 * Show list of wikis
 	 */
 	public function showList() {
-		$from = $this->getVal( 'dbfrom', '' );
-		$to = $this->getVal( 'dbto', '' );
+		$from = $this->getVal( 'namefrom', '' );
+		$to = $this->getVal( 'nameto', '' );
 
 		$sitemapPage = new SitemapPageModel();
 		$this->wikis = $sitemapPage->getWikiList( $from, $to );
