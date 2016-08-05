@@ -6,14 +6,18 @@ class DesignSystemGlobalFooterController extends WikiaController {
 	}
 
 	public function section() {
-		$this->setVal( 'model', $this->getVal( 'model' ) );
-		$this->setVal( 'name', $this->getVal( 'name' ) );
-		$this->setVal( 'parentName', $this->getVal( 'parentName' ) );
+		$this->response->setValues( [
+			'model' => $this->getVal( 'model' ),
+			'name' => $this->getVal( 'name' ),
+			'parentName' => $this->getVal( 'parentName' )
+		] );
 	}
 
 	public function imageHeader() {
-		$this->setVal( 'model', $this->getVal( 'model' ) );
-		$this->setVal( 'section', $this->getVal( 'section' ) );
+		$this->response->setValues( [
+			'model' => $this->getVal( 'model' ),
+			'section' => $this->getVal( 'section' )
+		] );
 	}
 
 	public function linkBranded() {
