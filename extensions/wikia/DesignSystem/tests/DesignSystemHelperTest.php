@@ -11,9 +11,14 @@ class DesignSystemHelperTest extends WikiaBaseTest {
 	 * @dataProvider renderTextProvider
 	 *
 	 * @param $fields
+	 * @param $messages
 	 * @param $expected
 	 */
-	public function testRenderText( $fields, $expected ) {
+	public function testRenderText( $fields, $messages, $expected ) {
+		foreach ( $messages as $key => $value ) {
+			$this->mockMessage( $key, $value );
+		}
+
 		$this->assertEquals( $expected, DesignSystemHelper::renderText( $fields ) );
 	}
 
@@ -41,6 +46,10 @@ class DesignSystemHelperTest extends WikiaBaseTest {
 							'href' => 'http://wikia.com/Licensing'
 						]
 					]
+				],
+				'messages' => [
+					'global-footer-licensing-and-vertical-description' => '$1 is a Fandom $2 Community. Content is available under $3.',
+					'global-footer-licensing-and-vertical-description-param-vertical-tv' => 'TV'
 				],
 				'expected' => 'Muppet Wiki is a Fandom TV Community. Content is available under <a href="http://wikia.com/Licensing">CC-BY-SA</a>.'
 			],
