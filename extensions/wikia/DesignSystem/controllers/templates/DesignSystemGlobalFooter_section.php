@@ -1,4 +1,4 @@
-<section class="wds-global-footer__<?= $parentName ?>-section wds-is-<?= $name ?>">
+<section class="wds-global-footer__<?= Sanitizer::encodeAttribute( $parentName ) ?>-section wds-is-<?= Sanitizer::encodeAttribute( $name ) ?>">
 	<?php if ( $model['header']['title'] ) : ?>
 		<h3 class="wds-global-footer__section-header"><?= wfMessage( $model['header']['title']['key'] )->escaped() ?></h3>
 	<?php endif; ?>
