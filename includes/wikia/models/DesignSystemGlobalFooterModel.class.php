@@ -436,17 +436,13 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 	}
 
 	private function getSitenameData() {
-		$sitename = $this->wg->Sitename;
 		$wgSitenameForComscoreForWikiId = WikiFactory::getVarValueByName( 'wgSitenameForComscore', $this->wikiId );
 
 		if ( $wgSitenameForComscoreForWikiId ) {
 			$sitename = $wgSitenameForComscoreForWikiId;
 		} else {
 			$wgSitenameForWikiId = WikiFactory::getVarValueByName( 'wgSitename', $this->wikiId );
-
-			if ( $wgSitenameForWikiId ) {
-				$sitename = $wgSitenameForWikiId;
-			}
+			$sitename = $wgSitenameForWikiId ? $wgSitenameForWikiId : $this->wg->Sitename;
 		}
 
 		return [
@@ -469,6 +465,16 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 			$verticalMessageKey = $verticalData['short'];
 		}
 
+		/**
+		 * Possible outputs:
+		 * - global-footer-licensing-and-vertical-description-param-vertical-tv
+		 * - global-footer-licensing-and-vertical-description-param-vertical-games
+		 * - global-footer-licensing-and-vertical-description-param-vertical-lifestyle
+		 * - global-footer-licensing-and-vertical-description-param-vertical-books
+		 * - global-footer-licensing-and-vertical-description-param-vertical-music
+		 * - global-footer-licensing-and-vertical-description-param-vertical-comics
+		 * - global-footer-licensing-and-vertical-description-param-vertical-movies
+		 */
 		$verticalMessageKey = 'global-footer-licensing-and-vertical-description-param-vertical-' . $verticalMessageKey;
 
 		return [
