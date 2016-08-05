@@ -36,20 +36,39 @@ define('ext.wikia.recirculation.views.incontent', [
 		return firstSuitableSection;
 	}
 
-	function render(data) {
-		var deferred = $.Deferred(),
-			section = findSuitableSection();
+	function waitForToc() {
+		var $toc = $('#toc'),
+			deferred = $.Deferred(),
+			args = Array.prototype.slice.call(arguments);
 
-		if (!section) {
-			return deferred.reject('Recirculation in-content widget not shown - Not enough sections in article');
+		if ($toc.length === 0 || $toc.data('loaded') === true || !$toc.hasClass( 'show' )) {
+			deferred.resolve.apply(null, args);
+		} else {
+			$toc.one('afterLoad.toc', function() {
+				deferred.resolve.apply(null, args);
+			});
 		}
+
+		return deferred.promise();
+	}
+
+	function render(data) {
+		var deferred = $.Deferred();
 
 		data.items = utils.addUtmTracking(data.items, 'incontent');
 
-		utils.renderTemplate('incontent.mustache', data).then(function($html) {
-			section.before($html);
-			deferred.resolve($html);
-		});
+		utils.renderTemplate('incontent.mustache', data)
+			.then(waitForToc)
+			.then(function($html) {
+				var section = findSuitableSection();
+
+				if (!section) {
+					return deferred.reject('Recirculation in-content widget not shown - Not enough sections in article');
+				}
+
+				section.before($html);
+				deferred.resolve($html);
+			});
 
 		return deferred.promise();
 	}
