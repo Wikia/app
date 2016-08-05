@@ -437,11 +437,16 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 
 	private function getSitenameData() {
 		$sitename = $this->wg->Sitename;
+		$wgSitenameForComscoreForWikiId = WikiFactory::getVarValueByName( 'wgSitenameForComscore', $this->wikiId );
 
-		if ( $wgSitenameForComscoreForWikiId = WikiFactory::getVarValueByName( 'wgSitenameForComscore', $this->wikiId ) ) {
+		if ( $wgSitenameForComscoreForWikiId ) {
 			$sitename = $wgSitenameForComscoreForWikiId;
-		} else if ( $wgSitenameForWikiId = WikiFactory::getVarValueByName( 'wgSitename', $this->wikiId ) ) {
-			$sitename = $wgSitenameForWikiId;
+		} else {
+			$wgSitenameForWikiId = WikiFactory::getVarValueByName( 'wgSitename', $this->wikiId );
+
+			if ( $wgSitenameForComscoreForWikiId ) {
+				$sitename = $wgSitenameForWikiId;
+			}
 		}
 
 		return [
