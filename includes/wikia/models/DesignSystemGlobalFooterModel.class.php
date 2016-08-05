@@ -436,18 +436,22 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 	}
 
 	private function getSitenameData() {
-		$sitename = $this->wg->Sitename;
-		$wgSitenameForComscoreForWikiId = WikiFactory::getVarValueByName( 'wgSitenameForComscore', $this->wikiId );
-
-		if ( $wgSitenameForComscoreForWikiId ) {
-			$sitename = $wgSitenameForComscoreForWikiId;
-		} else {
-			$wgSitenameForWikiId = WikiFactory::getVarValueByName( 'wgSitename', $this->wikiId );
-
-			if ( $wgSitenameForWikiId ) {
-				$sitename = $wgSitenameForWikiId;
-			}
-		}
+		/**
+		 * take value from wgSitenameForComscore if set
+		 * or take value from wgSitename if set
+		 * or fallback to default $this->wg->Sitename
+		 */
+		$sitename = WikiFactory::getVarValueByName(
+			'wgSitenameForComscore',
+			$this->wikiId,
+			false,
+			WikiFactory::getVarValueByName(
+				'wgSitename',
+				$this->wikiId,
+				false,
+				$this->wg->Sitename
+			)
+		);
 
 		return [
 			'type' => 'text',
@@ -459,6 +463,10 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 		$wikiFactoryInstance = WikiFactoryHub::getInstance();
 		$verticalData = $wikiFactoryInstance->getWikiVertical( $this->wikiId );
 
+		/**
+		 * We don't want to show vertical 'Other' instead we show vertical 'Lifestyle'
+		 * This is Comscore requirement
+		 */
 		if ( $verticalData['id'] == WikiFactoryHub::VERTICAL_ID_OTHER ) {
 			$verticalMessageKey = $wikiFactoryInstance->getAllVerticals()[WikiFactoryHub::VERTICAL_ID_LIFESTYLE]['short'];
 		} else {
