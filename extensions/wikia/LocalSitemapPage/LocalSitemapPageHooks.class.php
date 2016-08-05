@@ -19,6 +19,7 @@ class LocalSitemapPageHooks {
 
 	public static function onArticleFromTitle( &$title, &$article ) {
 		if ( self::isLocalSitemap( $title ) ) {
+			F::app()->wg->SuppressRail = true;
 			$article = new LocalSitemapPageArticle( $title );
 		}
 
