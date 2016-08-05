@@ -5,7 +5,7 @@ var fs = require('fs'),
 	destDir = './i18n',
 	variablesMapping = {
 		'global-footer-licensing-and-vertical-description': {
-			community: '$1',
+			sitename: '$1',
 			vertical: '$2',
 			license: '$3'
 		}

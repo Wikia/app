@@ -14,8 +14,6 @@
   "global-footer-fandom-link-vertical-lifestyle": "Estilo de vida",
   "global-footer-fandom-link-vertical-music": "Música",
   "global-footer-international-logo-home-of-fandom": "El hogar del fandom",
-  "global-footer-licensing-and-vertical-description": "$1 es una comunidad Fandom de $2. El contenido está disponible bajo la licencia $3.",
-  "global-footer-licensing-description": "El contenido está disponible bajo la licencia __license__.",
   "global-footer-wikia-create-wiki-link-start-wikia": "Crear una wikia",
   "global-footer-wikia-create-wiki-description": "¿No has encontrado una comunidad que te apasione? Crea una propia y comienza algo épico.",
   "global-footer-wikia-advertise-header": "Publicidad",
@@ -39,5 +37,13 @@
   "global-footer-wikia-site-overview-link-global-sitemap": "Mapa del sitio global",
   "global-footer-wikia-site-overview-link-local-sitemap": "Mapa del sitio local",
   "global-footer-wikia-site-overview-link-terms-of-use": "Términos de uso",
-  "global-footer-wikia-site-overview-link-privacy-policy": "Política de privacidad"
+  "global-footer-wikia-site-overview-link-privacy-policy": "Política de privacidad",
+  "global-footer-licensing-and-vertical-description": "$1 es una comunidad Fandom de $2. El contenido está disponible bajo la licencia $3.",
+  "global-footer-licensing-and-vertical-description-param-vertical-games": "Juegos",
+  "global-footer-licensing-and-vertical-description-param-vertical-movies": "Películas",
+  "global-footer-licensing-and-vertical-description-param-vertical-tv": "TV",
+  "global-footer-licensing-and-vertical-description-param-vertical-books": "Libros",
+  "global-footer-licensing-and-vertical-description-param-vertical-comics": "Cómics",
+  "global-footer-licensing-and-vertical-description-param-vertical-lifestyle": "Estilo de vida",
+  "global-footer-licensing-and-vertical-description-param-vertical-music": "Música"
 }

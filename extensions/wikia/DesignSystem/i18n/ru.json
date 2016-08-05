@@ -14,8 +14,6 @@
   "global-footer-fandom-link-vertical-lifestyle": "Увлечения",
   "global-footer-fandom-link-vertical-music": "Музыка",
   "global-footer-international-logo-home-of-fandom": "Твой фэндом",
-  "global-footer-licensing-and-vertical-description": "$1 — это сообщество в фэндоме $2. Содержание доступно в соответствии с лицензией $3.",
-  "global-footer-licensing-description": "Содержимое доступно в соответствии с __license__.",
   "global-footer-wikia-create-wiki-link-start-wikia": "Создать вики",
   "global-footer-wikia-create-wiki-description": "Не удаётся найти сообщество по интересующей вас теме? Создайте своё и положите начало легенде!",
   "global-footer-wikia-advertise-header": "Реклама на сайте",
@@ -39,5 +37,13 @@
   "global-footer-wikia-site-overview-link-global-sitemap": "Общая карта сайта",
   "global-footer-wikia-site-overview-link-local-sitemap": "Локальная карта сайта",
   "global-footer-wikia-site-overview-link-terms-of-use": "Условия использования",
-  "global-footer-wikia-site-overview-link-privacy-policy": "Политика конфиденциальности"
+  "global-footer-wikia-site-overview-link-privacy-policy": "Политика конфиденциальности",
+  "global-footer-licensing-and-vertical-description": "$1 — это сообщество в фэндоме $2. Содержание доступно в соответствии с лицензией $3.",
+  "global-footer-licensing-and-vertical-description-param-vertical-games": "Видеоигры",
+  "global-footer-licensing-and-vertical-description-param-vertical-movies": "Кино",
+  "global-footer-licensing-and-vertical-description-param-vertical-tv": "ТВ",
+  "global-footer-licensing-and-vertical-description-param-vertical-books": "Книги",
+  "global-footer-licensing-and-vertical-description-param-vertical-comics": "Комиксы",
+  "global-footer-licensing-and-vertical-description-param-vertical-lifestyle": "Увлечения",
+  "global-footer-licensing-and-vertical-description-param-vertical-music": "Музыка"
 }

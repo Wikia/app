@@ -1,10 +1,10 @@
 <section class="wds-global-footer__<?= Sanitizer::encodeAttribute( $parentName ) ?>-section wds-is-<?= Sanitizer::encodeAttribute( $name ) ?>">
 	<?php if ( $model['header']['title'] ) : ?>
-		<h3 class="wds-global-footer__section-header"><?= wfMessage( $model['header']['title']['key'] )->escaped() ?></h3>
+		<h3 class="wds-global-footer__section-header"><?= DesignSystemHelper::renderText( $model['header']['title'] ) ?></h3>
 	<?php endif; ?>
 
 	<?php if ( $model['description'] ) : ?>
-		<span class="wds-global-footer__section-description"><?= wfMessage( $model['description']['key'] )->escaped() ?></span>
+		<span class="wds-global-footer__section-description"><?= DesignSystemHelper::renderText( $model['description'] ) ?></span>
 	<?php endif; ?>
 
 	<ul class="wds-global-footer__links-list">

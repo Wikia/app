@@ -33,11 +33,32 @@ class DesignSystemGlobalFooterController extends WikiaController {
 	}
 
 	public function licensingAndVertical() {
-		$model = $this->getVal( 'model' );
-
-		$messageKey = $model['description']['key'];
-		$params = $model['description']['params'];
-
+		// TODO uncomment after API changes from XW-1741 are merged to this branch
+		//$model = $this->getVal( 'model' );
+		$model = [
+			'description' => [
+				'type' => 'translatable-text',
+				'key' => 'global-footer-licensing-and-vertical-description',
+				'params' => [
+					'sitename' => [
+						'type' => 'text',
+						'value' => 'Muppet Wiki'
+					],
+					'vertical' => [
+						'type' => 'translatable-text',
+						'key' => 'global-footer-licensing-and-vertical-description-param-vertical-tv'
+					],
+					'license' => [
+						'type' => 'link-text',
+						'title' => [
+							'type' => 'text',
+							'value' => 'CC-BY-SA'
+						],
+						'href' => 'http://wikia.com/Licensing'
+					]
+				]
+			]
+		];
 
 		$this->setVal( 'model', $model );
 	}

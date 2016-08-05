@@ -7,6 +7,14 @@ class DesignSystemHelper {
 	const DESIGN_SYSTEM_DIR = __DIR__ . '/bower_components/design-system';
 	const SVG_DIR = self::DESIGN_SYSTEM_DIR . '/dist/svg';
 
+	const MESSAGE_PARAMS_ORDER = [
+		'global-footer-licensing-and-vertical-description' => [
+			'sitename',
+			'vertical',
+			'license'
+		]
+	];
+
 	private static $svgCache = [];
 
 	/**
@@ -58,5 +66,29 @@ class DesignSystemHelper {
 		}
 
 		return $xml;
+	}
+
+	public static function renderText( $fields ) {
+		if ( $fields['type'] === 'text' ) {
+			return $fields['value'];
+		}
+
+		if ( $fields['type'] === 'translatable-text' ) {
+			if ( isset( $fields['params'] ) ) {
+				$paramsRendered = [];
+
+				foreach ( self::MESSAGE_PARAMS_ORDER[$fields['key']] as $index => $paramKey ) {
+					$paramsRendered[] = self::renderText( $fields['params'][$paramKey] );
+				}
+
+				return wfMessage( $fields['key'] )->rawParams( $paramsRendered )->escaped();
+			} else {
+				return wfMessage( $fields['key'] )->escaped();
+			}
+		}
+
+		if ( $fields['type'] === 'link-text' ) {
+			return '<a href="' . $fields['href'] . '">' . self::renderText( $fields['title'] ) . '</a>';
+		}
 	}
 }
