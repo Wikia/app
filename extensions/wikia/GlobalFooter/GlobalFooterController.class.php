@@ -110,7 +110,7 @@ class GlobalFooterController extends WikiaController {
 		);
 
 		// Don't link to local sitemap on corporate sites and community.wikia.com (controlled via WikiFactory)
-		if ( $this->wg->EnableLocalSitemap ) {
+		if ( $this->wg->EnableLocalSitemapPageExt ) {
 			$sitemapLinks[] = parseItem(
 				'*' . self::SITEMAP_LOCAL . '|' . wfMessage( 'global-footer-local-sitemap' )->escaped()
 			);
