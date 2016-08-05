@@ -459,6 +459,10 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 		$wikiFactoryInstance = WikiFactoryHub::getInstance();
 		$verticalData = $wikiFactoryInstance->getWikiVertical( $this->wikiId );
 
+		/**
+		 * We don't want to show vertical 'Other' instead we show vertical 'Lifestyle'
+		 * This is Comscore requirement
+		 */
 		if ( $verticalData['id'] == WikiFactoryHub::VERTICAL_ID_OTHER ) {
 			$verticalMessageKey = $wikiFactoryInstance->getAllVerticals()[WikiFactoryHub::VERTICAL_ID_LIFESTYLE]['short'];
 		} else {
