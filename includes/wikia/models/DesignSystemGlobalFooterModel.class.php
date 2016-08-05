@@ -451,8 +451,15 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 	}
 
 	private function getVerticalData() {
-		$verticalMessageKey = WikiFactoryHub::getInstance()->getWikiVertical( $this->wikiId )['short'];
-		$verticalMessageKey = 'global-footer-vertical-' . $verticalMessageKey;
+		$verticalData = WikiFactoryHub::getInstance()->getWikiVertical( $this->wikiId );
+
+		if ($verticalData['id'] === '0') {
+			$verticalMessageKey = 'lifestyle';
+		} else {
+			$verticalMessageKey = $verticalData['short'];
+		}
+
+		$verticalMessageKey = 'global-footer-licensing-and-vertical-description-param-vertical-' . $verticalMessageKey;
 
 		return [
 			'type' => 'translatable-text',
@@ -485,7 +492,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 					'brand' => 'games',
 					'title' => [
 						'type' => 'translatable-text',
-						'key' => 'global-footer-vertical-games'
+						'key' => 'global-footer-fandom-link-vertical-games'
 					],
 					'href' => 'http://fandom.wikia.com/games'
 				],
@@ -494,7 +501,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 					'brand' => 'movies',
 					'title' => [
 						'type' => 'translatable-text',
-						'key' => 'global-footer-vertical-movies'
+						'key' => 'global-footer-fandom-link-vertical-movies'
 					],
 					'href' => 'http://fandom.wikia.com/movies'
 				],
@@ -503,7 +510,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 					'brand' => 'tv',
 					'title' => [
 						'type' => 'translatable-text',
-						'key' => 'global-footer-vertical-tv'
+						'key' => 'global-footer-fandom-link-vertical-tv'
 					],
 					'href' => 'http://fandom.wikia.com/tv'
 				],
