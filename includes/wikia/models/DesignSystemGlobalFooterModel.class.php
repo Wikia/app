@@ -444,7 +444,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 		} else {
 			$wgSitenameForWikiId = WikiFactory::getVarValueByName( 'wgSitename', $this->wikiId );
 
-			if ( $wgSitenameForComscoreForWikiId ) {
+			if ( $wgSitenameForWikiId ) {
 				$sitename = $wgSitenameForWikiId;
 			}
 		}
