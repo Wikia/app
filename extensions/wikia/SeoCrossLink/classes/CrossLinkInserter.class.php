@@ -24,10 +24,6 @@ class CrossLinkInserter {
 		[ 'AK-47', 'http://guns.wikia.com/wiki/Kalashnikov_rifle', 'guns' ],
 		[ 'AK 47', 'http://guns.wikia.com/wiki/Kalashnikov_rifle', 'guns' ],
 		[ 'AK47', 'http://guns.wikia.com/wiki/Kalashnikov_rifle', 'guns' ],
-		[ 'Pokémon', 'http://pokemon.wikia.com/wiki/Pok%C3%A9mon_Wiki', 'pokemon' ],
-		[ 'Pokemon', 'http://pokemon.wikia.com/wiki/Pok%C3%A9mon_Wiki', 'pokemon' ],
-		[ 'Dragon', 'http://mythology.wikia.com/wiki/Dragon', 'mythology' ],
-		[ 'Dragons', 'http://mythology.wikia.com/wiki/Dragon', 'mythology' ],
 	];
 
 	public function insertCrossLinks( $text ) {
