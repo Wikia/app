@@ -6,6 +6,7 @@ use Email\Check;
 use Email\EmailController;
 
 class ContributionAppreciationMessageController extends EmailController {
+	const LAYOUT_CSS = 'contributionAppreciation.css';
 
 	protected $buttonLink;
 	protected $editedWikiName;
