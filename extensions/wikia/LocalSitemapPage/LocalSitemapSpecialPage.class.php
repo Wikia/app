@@ -56,15 +56,9 @@ class LocalSitemapSpecialPage extends SpecialAllpages {
 	public function execute( $par ) {
 		$request = $this->getRequest();
 		$out = $this->getOutput();
-		$user = $this->getUser();
 
-		// TODO: migrate to own i18n files after the new global footer release
-		$out->setPageTitle( wfMessage( 'global-footer-local-sitemap' ) );
+		$out->setPageTitle( wfMessage( 'local-sitemap-page-header' ) );
 		$out->setRobotPolicy( 'noindex,follow' );
-
-		if ( $user && !$user->isLoggedIn() ) {
-			$out->mSquidMaxage = WikiaResponse::CACHE_VERY_SHORT;
-		}
 
 		$from = $request->getVal( 'namefrom', null );
 		$to = $request->getVal( 'nameto', null );
