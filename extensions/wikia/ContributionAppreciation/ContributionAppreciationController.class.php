@@ -41,4 +41,24 @@ class ContributionAppreciationController extends WikiaController {
 			],
 			wfMessage( 'appreciation-text' )->escaped() );
 	}
+
+	public function sendMail() {
+		global $wgUser;
+		$controller = Email\Controller\ContributionAppreciationMessageController::class;
+
+		$editedPageTitle = \Title::newFromText('Ponies');
+		$editedWikiName = 'MY WIKIANAME';
+		$buttonLink = SpecialPage::getTitleFor( 'Community' )->getLocalUrl();
+
+		var_dump($buttonLink);
+		$params = [
+			'buttonLink' => $buttonLink,
+			'targetUser' => $wgUser, //testing
+			'editedPageTitle' => $editedPageTitle->getText(),
+			'editedWikiName' => $editedWikiName,
+			'revisionUrl' => 'http://mlp.wikia.com/index.php?title=Cranky_Doodle_Donkey&diff=1697147&oldid=1697137'
+		];
+
+		F::app()->sendRequest( $controller, 'handle', $params );
+	}
 }

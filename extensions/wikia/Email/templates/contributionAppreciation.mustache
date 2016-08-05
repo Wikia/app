@@ -1,0 +1,10 @@
+{{> greeting}}
+<table>
+	<p>{{appreciationInfo}}</p>
+	<blockquote>{{appreciationText}}</blockquote>
+	{{> button}}
+	<a href="{{viewEditUrl}}">{{viewEditText}}</a>
+	{{# hasContentFooterMessages}}
+		{{> contentFooterMessages}}
+	{{/ hasContentFooterMessages}}
+</table>
