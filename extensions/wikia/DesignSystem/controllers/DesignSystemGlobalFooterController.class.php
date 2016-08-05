@@ -1,6 +1,6 @@
 <?php
 
-class DesignSystemGlobalFooterController extends WikiaController {
+class DesignSystemGlobalFooterController extends WikiaService {
 	public function index() {
 		$this->setVal( 'model', $this->getData() );
 	}
