@@ -68,9 +68,19 @@ class DesignSystemHelper {
 		return $xml;
 	}
 
+	/**
+	 * @desc Renders text based on value of the `type` field, supports following types:
+	 *       - text
+	 *       - translatable-text
+	 *       - link-text
+	 *
+	 * @param array $fields
+	 *
+	 * @return string
+	 */
 	public static function renderText( $fields ) {
 		if ( $fields['type'] === 'text' ) {
-			return $fields['value'];
+			return htmlspecialchars( $fields['value'] );
 		}
 
 		if ( $fields['type'] === 'translatable-text' ) {
@@ -88,7 +98,13 @@ class DesignSystemHelper {
 		}
 
 		if ( $fields['type'] === 'link-text' ) {
-			return '<a href="' . $fields['href'] . '">' . self::renderText( $fields['title'] ) . '</a>';
+			return Html::rawElement(
+				'a',
+				[
+					'href' => $fields['href']
+				],
+				self::renderText( $fields['title'] )
+			);
 		}
 	}
 }

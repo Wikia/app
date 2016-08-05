@@ -53,6 +53,35 @@ class DesignSystemHelperTest extends WikiaBaseTest {
 				],
 				'expected' => 'Muppet Wiki is a Fandom TV Community. Content is available under <a href="http://wikia.com/Licensing">CC-BY-SA</a>.'
 			],
+			[
+				'fields' => [
+					'type' => 'translatable-text',
+					'key' => 'global-footer-licensing-and-vertical-description',
+					'params' => [
+						'sitename' => [
+							'type' => 'text',
+							'value' => '><script>alert()</script>'
+						],
+						'vertical' => [
+							'type' => 'translatable-text',
+							'key' => 'global-footer-licensing-and-vertical-description-param-vertical-tv'
+						],
+						'license' => [
+							'type' => 'link-text',
+							'title' => [
+								'type' => 'text',
+								'value' => 'CC-BY-SA'
+							],
+							'href' => '"><script>alert()</script>'
+						]
+					]
+				],
+				'messages' => [
+					'global-footer-licensing-and-vertical-description' => '$1 is a Fandom $2 Community. Content is available under $3.',
+					'global-footer-licensing-and-vertical-description-param-vertical-tv' => 'TV'
+				],
+				'expected' => '&gt;&lt;script&gt;alert()&lt;/script&gt; is a Fandom TV Community. Content is available under <a href="&quot;&gt;&lt;script&gt;alert()&lt;/script&gt;">CC-BY-SA</a>.'
+			],
 		];
 	}
 }
