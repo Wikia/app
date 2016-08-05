@@ -14,6 +14,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 			'terms-of-use' => 'http://www.wikia.com/Terms_of_use',
 			'privacy-policy' => 'http://www.wikia.com/Privacy_Policy',
 			'global-sitemap' => 'http://www.wikia.com/Sitemap',
+			'local-sitemap' => '/Special:AllPages',
 			'api' => 'http://api.wikia.com/wiki/Wikia_API_Wiki',
 			'community-central' => 'http://community.wikia.com/wiki/Community_Central',
 			'support' => 'http://community.wikia.com/wiki/Special:Contact',
@@ -280,6 +281,14 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 							'key' => 'global-footer-wikia-site-overview-link-global-sitemap'
 						],
 						'href' => $this->getHref( 'global-sitemap' )
+					],
+					[
+						'type' => 'link-text',
+						'title' => [
+							'type' => 'translatable-text',
+							'key' => 'global-footer-wikia-site-overview-link-local-sitemap'
+						],
+						'href' => $this->getHref( 'local-sitemap' )
 					],
 					[
 						'type' => 'link-text',

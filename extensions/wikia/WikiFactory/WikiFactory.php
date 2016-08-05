@@ -1231,6 +1231,8 @@ class WikiFactory {
 				return 'http://preview.' . $server . '.wikia.com'.$address;
 			case WIKIA_ENV_VERIFY:
 				return 'http://verify.' . $server . '.wikia.com'.$address;
+			case WIKIA_ENV_STABLE:
+				return 'http://stable.' . $server . '.wikia.com'.$address;
 			case WIKIA_ENV_STAGING:
 			case WIKIA_ENV_PROD:
 				return sprintf( 'http://%s.%s%s', $server, $wgWikiaBaseDomain, $address ) ;
