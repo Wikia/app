@@ -9,7 +9,6 @@ class GlobalFooterController extends WikiaController {
 	const MESSAGE_KEY_GLOBAL_FOOTER_LINKS = 'shared-Oasis-footer-wikia-links';
 	const MEMC_EXPIRY = 3600;
 	const SITEMAP_GLOBAL = 'http://www.wikia.com/Sitemap';
-	const SITEMAP_LOCAL = 'Special:AllPages';
 
 	public function index() {
 		Wikia::addAssetsToOutput( 'global_footer_scss' );
@@ -111,9 +110,9 @@ class GlobalFooterController extends WikiaController {
 
 		// Don't link to local sitemap on corporate sites and community.wikia.com (controlled via WikiFactory)
 		if ( $this->wg->EnableLocalSitemapPageExt ) {
-			$sitemapLinks[] = parseItem(
-				'*' . self::SITEMAP_LOCAL . '|' . wfMessage( 'global-footer-local-sitemap' )->escaped()
-			);
+			$link = LocalSitemapPageHelper::getLocalSitemapArticleDBkey();
+			$label = wfMessage( 'global-footer-local-sitemap' )->escaped();
+			$sitemapLinks[] = parseItem( '*' . $link . '|' . $label );
 		}
 
 		return $sitemapLinks;

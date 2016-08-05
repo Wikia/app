@@ -6,7 +6,6 @@
  * This class represents all the modifications to the Special:AllPages required
  * to use it as the local HTML sitemap:
  *
- *  * Allow the page to be cached for a short time for anonymous users
  *  * No forms and prev/next links
  *  * Better format of the from A to B links
  *  * Use alternative from/to params to overcome ?from robot.txt block
