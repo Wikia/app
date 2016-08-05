@@ -65,7 +65,7 @@
 			]); ?>
 		</div>
 	</div>
-	<?= $app->renderView('DesignSystemGlobalFooter', 'licensingAndVertical', [
+	<?= $app->renderView('DesignSystemGlobalFooterService', 'licensingAndVertical', [
 		'model' => $model['licensing_and_vertical']
 	]); ?>
 </footer>
