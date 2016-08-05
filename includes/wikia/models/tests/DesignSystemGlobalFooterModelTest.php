@@ -44,7 +44,7 @@ class DesignSystemGlobalFooterModelTest extends WikiaBaseTest {
 							],
 							'vertical' => [
 								'type' => 'translatable-text',
-								'key' => 'global-footer-vertical-other'
+								'key' => 'global-footer-licensing-and-vertical-description-param-vertical-lifestyle'
 							],
 							'license' => [
 								'type' => 'link-text',
@@ -73,7 +73,7 @@ class DesignSystemGlobalFooterModelTest extends WikiaBaseTest {
 							],
 							'vertical' => [
 								'type' => 'translatable-text',
-								'key' => 'global-footer-vertical-other'
+								'key' => 'global-footer-licensing-and-vertical-description-param-vertical-lifestyle'
 							],
 							'license' => [
 								'type' => 'link-text',
