@@ -1,3 +1,3 @@
-<a href="<?= Sanitizer::cleanUrl( $model['href'] ) ?>" class="wds-global-footer__link">
+<a href="<?= Sanitizer::encodeAttribute( $model['href'] ) ?>" class="wds-global-footer__link">
 	<?= DesignSystemHelper::getSvg( $model['image'], 'wds-global-footer__image wds-icon' ) ?>
 </a>
