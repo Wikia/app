@@ -493,7 +493,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 				'type' => 'line-text',
 				'title' => [
 					'type' => 'translatable-text',
-					'key' => 'global-footer-fandom-follow-us-header'
+					'key' => 'global-footer-follow-us-header'
 				]
 			],
 			'links' => [ ]
@@ -505,7 +505,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 				'image' => 'wds-icons-facebook',
 				'title' => [
 					'type' => 'translatable-text',
-					'key' => 'global-footer-fandom-follow-us-link-facebook'
+					'key' => 'global-footer-follow-us-link-facebook'
 				],
 				'href' => $this->getHref( 'social-facebook' )
 			];
@@ -517,7 +517,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 				'image' => 'wds-icons-twitter',
 				'title' => [
 					'type' => 'translatable-text',
-					'key' => 'global-footer-fandom-follow-us-link-twitter'
+					'key' => 'global-footer-follow-us-link-twitter'
 				],
 				'href' => $this->getHref( 'social-twitter' )
 			];
@@ -529,7 +529,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 				'image' => 'wds-icons-reddit',
 				'title' => [
 					'type' => 'translatable-text',
-					'key' => 'global-footer-fandom-follow-us-link-reddit'
+					'key' => 'global-footer-follow-us-link-reddit'
 				],
 				'href' => $this->getHref( 'social-reddit' )
 			];
@@ -541,7 +541,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 				'image' => 'wds-icons-youtube',
 				'title' => [
 					'type' => 'translatable-text',
-					'key' => 'global-footer-fandom-follow-us-link-youtube'
+					'key' => 'global-footer-follow-us-link-youtube'
 				],
 				'href' => $this->getHref( 'social-youtube' )
 			];
@@ -553,7 +553,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 				'image' => 'wds-icons-instagram',
 				'title' => [
 					'type' => 'translatable-text',
-					'key' => 'global-footer-fandom-follow-us-link-instagram'
+					'key' => 'global-footer-follow-us-link-instagram'
 				],
 				'href' => $this->getHref( 'social-instagram' )
 			];
