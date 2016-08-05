@@ -485,9 +485,9 @@ class ArticlesApiController extends WikiaApiController {
 		$expand = $this->request->getBool( static::PARAMETER_EXPAND, false );
 
 		if ( !empty( $category ) ) {
-			if (!self::resolveCategoryName($category)){
-				wfProfileOut(__METHOD__);
-				throw new InvalidParameterApiException(self::PARAMETER_CATEGORY);
+			if ( ! ( $category = self::resolveCategoryName( $category ) ) ) {
+				wfProfileOut( __METHOD__ );
+				throw new InvalidParameterApiException( self::PARAMETER_CATEGORY );
 			}
 
 			$namespaces = implode( '|', self::validateNamespaces( $namespaces ) );
