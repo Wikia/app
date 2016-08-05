@@ -15,7 +15,7 @@
   "global-footer-fandom-link-vertical-music": "音乐",
   "global-footer-international-logo-home-of-fandom": "粉丝社群家园",
   "global-footer-licensing-and-vertical-description": "$1 是一個由粉丝所建立的 $2 社区。內容允许以 $3 授权使用。",
-  "global-footer-licensing-description": "內容以 $1 發布",
+  "global-footer-licensing-description": "內容以 __license__ 發布",
   "global-footer-wikia-create-wiki-link-start-wikia": "创建维基",
   "global-footer-wikia-create-wiki-description": "找不到你所喜爱的社区？那就创建一个你自己的社区展示你的爱好吧。",
   "global-footer-wikia-advertise-header": "广告投放",

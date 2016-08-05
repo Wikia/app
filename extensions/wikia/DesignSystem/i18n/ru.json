@@ -15,7 +15,7 @@
   "global-footer-fandom-link-vertical-music": "Музыка",
   "global-footer-international-logo-home-of-fandom": "Твой фэндом",
   "global-footer-licensing-and-vertical-description": "$1 — это сообщество в фэндоме $2. Содержание доступно в соответствии с лицензией $3.",
-  "global-footer-licensing-description": "Содержимое доступно в соответствии с $1.",
+  "global-footer-licensing-description": "Содержимое доступно в соответствии с __license__.",
   "global-footer-wikia-create-wiki-link-start-wikia": "Создать вики",
   "global-footer-wikia-create-wiki-description": "Не удаётся найти сообщество по интересующей вас теме? Создайте своё и положите начало легенде!",
   "global-footer-wikia-advertise-header": "Реклама на сайте",

@@ -15,7 +15,7 @@
   "global-footer-fandom-link-vertical-music": "Musik",
   "global-footer-international-logo-home-of-fandom": "Das Fandom-Universum",
   "global-footer-licensing-and-vertical-description": "$1 is a Fandom $2 Community. Content is available under $3.",
-  "global-footer-licensing-description": "Inhalt ist verfügbar unter $1.",
+  "global-footer-licensing-description": "Inhalt ist verfügbar unter __license__.",
   "global-footer-wikia-create-wiki-link-start-wikia": "Starte ein Wiki",
   "global-footer-wikia-create-wiki-description": "Du findest keine Community, die dir richtig gut gefällt? Erstelle eine eigene und starte etwas Phänomenales.",
   "global-footer-wikia-advertise-header": "Werbung",

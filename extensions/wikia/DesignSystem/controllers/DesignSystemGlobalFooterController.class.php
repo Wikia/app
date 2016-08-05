@@ -29,7 +29,13 @@ class DesignSystemGlobalFooterController extends WikiaController {
 	}
 
 	public function licensingAndVertical() {
-		$this->setVal( 'model', $this->getVal( 'model' ) );
+		$model = $this->getVal( 'model' );
+
+		$messageKey = $model['description']['key'];
+		$params = $model['description']['params'];
+
+
+		$this->setVal( 'model', $model );
 	}
 
 	private function getData() {

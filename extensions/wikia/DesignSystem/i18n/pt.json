@@ -15,7 +15,7 @@
   "global-footer-fandom-link-vertical-music": "Música",
   "global-footer-international-logo-home-of-fandom": "O Reinado de fãs",
   "global-footer-licensing-and-vertical-description": "$1 é uma comunidade Fandom de $2. O conteúdo está disponível sob a licença $3.",
-  "global-footer-licensing-description": "O conteúdo está disponível sob a licença $1.",
+  "global-footer-licensing-description": "O conteúdo está disponível sob a licença __license__.",
   "global-footer-wikia-create-wiki-link-start-wikia": "Começar uma wiki",
   "global-footer-wikia-create-wiki-description": "Não consegue encontrar uma comunidade que você ama? Crie a sua própria e comece algo épico.",
   "global-footer-wikia-advertise-header": "Anuncie",
