@@ -3,12 +3,17 @@
  * Local Sitemap Page Hooks
  */
 class LocalSitemapPageHooks {
-	const LOCAL_SITEMAP_PAGE_TITLE = 'Local Sitemap';
+	const LOCAL_SITEMAP_PAGE_DBKEY = 'Local_Sitemap';
 
+	/**
+	 * Whether the page is the one we want to convert to the local sitemap
+	 * @param Title $title
+	 * @return bool
+	 */
 	private static function isLocalSitemap( $title ) {
 		return ( $title
 			&& $title->getNamespace() === NS_MAIN
-			&& $title->getText() === self::LOCAL_SITEMAP_PAGE_TITLE
+			&& $title->getDBkey() === self::LOCAL_SITEMAP_PAGE_DBKEY
 		);
 	}
 
@@ -21,11 +26,12 @@ class LocalSitemapPageHooks {
 	}
 
 	/**
-	 * Don't display "talk" button on Local Sitemap
+	 * Don't display "talk" and "create" buttons on Local Sitemap
 	 */
 	public static function onPageHeaderPageTypePrepared( $pageHeaderController, $title ) {
 		if ( self::isLocalSitemap( $title ) ) {
 			$pageHeaderController->comments = false;
+			$pageHeaderController->action = false;
 		}
 		return true;
 	}

@@ -2,7 +2,7 @@
 
 class LocalSitemapPageArticle extends Article {
 	public function view() {
-		$sap = new LocalSitemapSpecialPage();
-		$sap->execute( null );
+		$page = new LocalSitemapSpecialPage();
+		$page->execute( null );
 	}
 }
