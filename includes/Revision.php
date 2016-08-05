@@ -120,7 +120,7 @@ class Revision implements IDBAccessObject {
 			'id'         => isset( $row->ar_rev_id ) ? $row->ar_rev_id : null,
 			'comment'    => $row->ar_comment,
 			'user'       => $row->ar_user,
-			'user_text'  => $row->ar_user_text,
+			'user_text'  => User::newFromId( $row->ar_user )->getName(),
 			'timestamp'  => $row->ar_timestamp,
 			'minor_edit' => $row->ar_minor_edit,
 			'text_id'    => isset( $row->ar_text_id ) ? $row->ar_text_id : null,

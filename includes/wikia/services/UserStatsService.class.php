@@ -222,7 +222,7 @@ class UserStatsService extends WikiaModel {
 		$editCount += $dbr->selectField(
 			'archive', 'count(*)',
 			[
-				'ar_user_text' => User::newFromId( $this->userId )->getName(),
+				'ar_user' => $this->userId,
 				'ar_timestamp >= FROM_DAYS(TO_DAYS(CURDATE()) - MOD(TO_DAYS(CURDATE()) - 1, 7))'
 			],
 			__METHOD__
