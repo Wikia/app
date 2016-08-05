@@ -453,7 +453,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 	private function getVerticalData() {
 		$verticalData = WikiFactoryHub::getInstance()->getWikiVertical( $this->wikiId );
 
-		if ($verticalData['id'] === '0') {
+		if ( $verticalData['id'] == WikiFactoryHub::VERTICAL_ID_OTHER ) {
 			$verticalMessageKey = 'lifestyle';
 		} else {
 			$verticalMessageKey = $verticalData['short'];
