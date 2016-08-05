@@ -26,6 +26,9 @@ class AdEngine2ContextService {
 			$sourcePointDetectionKey = AdEngine2Resource::getKey('wikia.ext.adengine.sp.detection');
 			$sourcePointDetectionUrl = ResourceLoader::makeCustomURL( $wg->Out, [$sourcePointDetectionKey], 'scripts' );
 
+			$pageFairDetectionKey = AdEngine2Resource::getKey('wikia.ext.adengine.pf.detection');
+			$pageFairDetectionUrl = ResourceLoader::makeCustomURL( $wg->Out, [$pageFairDetectionKey], 'scripts' );
+
 			$langCode = $title->getPageLanguage()->getCode();
 
 			// 1 of 3 verticals
@@ -49,6 +52,7 @@ class AdEngine2ContextService {
 					'sourcePointDetectionUrl' => $sourcePointDetectionUrl,
 					'sourcePointRecovery' => ARecoveryModule::isEnabled(),
 					'yavliUrl' => $yavliUrl,
+					'pageFairDetectionUrl' => $pageFairDetectionUrl
 				] ),
 				'targeting' => $this->filterOutEmptyItems( [
 					'enableKruxTargeting' => AnalyticsProviderKrux::isEnabled(),

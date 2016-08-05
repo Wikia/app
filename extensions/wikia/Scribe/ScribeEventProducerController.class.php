@@ -23,7 +23,7 @@ class ScribeEventProducerController {
 		$oLocalFile = $oForm->getLocalFile();
 
 		$oScribeProducer = new ScribeEventProducer( 'edit' );
-		if ( $oScribeProducer->buildEditPackage( self::$oPage, self::$oUser, self::$oRevision, null, $oLocalFile ) ) {
+		if ( $oScribeProducer->buildEditPackage( self::$oPage, self::$oUser, self::$oRevision, $oLocalFile ) ) {
 			$oScribeProducer->sendLog();
 		}
 
@@ -77,7 +77,7 @@ class ScribeEventProducerController {
 					self::$oRevision = $oRevision;
 				}
 
-				if ( $oScribeProducer->buildEditPackage( $oPage, $oUser, $oRevision, $revision_id ) ) {
+				if ( $oScribeProducer->buildEditPackage( $oPage, $oUser, $oRevision ) ) {
 					$oScribeProducer->sendLog();
 				}
 			}
