@@ -29,11 +29,9 @@ class DesignSystemGlobalFooterController extends WikiaController {
 	}
 
 	private function getData() {
-		global $wgCityId, $wgLang;
-
 		return $this->sendRequest( 'DesignSystemApi', 'getFooter', [
-			'wikiId' => $wgCityId,
-			'lang' => $wgLang->getCode()
+			'wikiId' => $this->wg->CityId,
+			'lang' => $this->wg->Lang->getCode()
 		] )->getData();
 	}
 }
