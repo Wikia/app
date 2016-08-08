@@ -1136,6 +1136,12 @@ class SpecialUndelete extends SpecialPage {
 			$batch = new LinkBatch();
 			/* Wikia change begin */
 			foreach ( $files as $row ) {
+				if ( ( new Wikia\Util\Statistics\BernoulliTrial( 0.01 ) )->shouldSample() ) {
+					Wikia\Logger\WikiaLogger::instance()->debug(
+						'SUS-810',
+						[ 'method' => __METHOD__, 'exception' => new Exception() ]
+					);
+				}
 				$userName = ( $row->fa_user > 0 ) ? User::newFromId( $row->fa_user )->getName() : $row->fa_user_text;
 				$batch->addObj( Title::makeTitleSafe( NS_USER, $userName ) );
 				$batch->addObj( Title::makeTitleSafe( NS_USER_TALK, $userName ) );

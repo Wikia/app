@@ -146,6 +146,12 @@ class ApiQueryFilearchive extends ApiQueryBase {
 			if ( $fld_user ) {
 				$file['userid'] = $row->fa_user;
 				/* Wikia change begin */
+				if ( ( new Wikia\Util\Statistics\BernoulliTrial( 0.01 ) )->shouldSample() ) {
+					Wikia\Logger\WikiaLogger::instance()->debug(
+						'SUS-810',
+						[ 'method' => __METHOD__, 'exception' => new Exception() ]
+					);
+				}
 				if ( $row->fa_user > 0 ) {
 					$file['user'] = User::newFromId( $row->fa_user )->getName();
 				} else {
