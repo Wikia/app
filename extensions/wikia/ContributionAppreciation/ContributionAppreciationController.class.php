@@ -19,9 +19,7 @@ class ContributionAppreciationController extends WikiaController {
 	}
 
 	public static function onAfterDiffRevisionHeader( DifferenceEngine $diffPage, Revision $newRev, OutputPage $out ) {
-		global $wgUser;
-
-		if ( $wgUser->isLoggedIn() ) {
+		if ( self::shouldDisplayApprectiation() ) {
 			Wikia::addAssetsToOutput( 'contribution_appreciation_js' );
 			Wikia::addAssetsToOutput( 'contribution_appreciation_scss' );
 			$out->addHTML( F::app()->renderView(
@@ -35,9 +33,7 @@ class ContributionAppreciationController extends WikiaController {
 	}
 
 	public static function onPageHistoryToolsList( HistoryPager $pager, $row, &$tools ) {
-		global $wgUser;
-
-		if ( $wgUser->isLoggedIn() ) {
+		if ( self::shouldDisplayApprectiation() ) {
 			$tools[] = F::app()->renderView( 'ContributionAppreciation', 'historyModule', [ 'revision' => $row->rev_id ] );
 		}
 
@@ -45,13 +41,17 @@ class ContributionAppreciationController extends WikiaController {
 	}
 
 	public static function onPageHistoryBeforeList() {
-		global $wgUser;
-
-		if ( $wgUser->isLoggedIn() ) {
+		if ( self::shouldDisplayApprectiation() ) {
 			Wikia::addAssetsToOutput( 'contribution_appreciation_js' );
 			Wikia::addAssetsToOutput( 'contribution_appreciation_scss' );
 		}
 
 		return true;
+	}
+
+	private static function shouldDisplayApprectiation() {
+		global $wgUser, $wgLang;
+
+		return $wgUser->isLoggedIn() && $wgLang->getCode() === 'en';
 	}
 }
