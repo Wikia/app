@@ -3,7 +3,8 @@ var fs = require('fs'),
 	rootDir = process.cwd() + '/node_modules/design-system-i18n/i18n',
 	filename = 'design-system.json',
 	destDir = './i18n',
-	variablesMapping = {
+	// keep in sync with DesignSystem/DesignSystemHelper.class.php
+	messageParamsMapping = {
 		'global-footer-licensing-and-vertical-description': {
 			sitename: '$1',
 			vertical: '$2',
@@ -14,8 +15,7 @@ var fs = require('fs'),
 function directoryExists(path) {
 	try {
 		return fs.statSync(path).isDirectory();
-	}
-	catch (err) {
+	} catch (err) {
 		return false;
 	}
 }
@@ -37,10 +37,10 @@ var languages = fs.readdirSync(rootDir).filter(function (file) {
 languages.forEach(function (lang) {
 	var i18n = require(rootDir + '/' + lang + '/' + filename);
 
-	Object.keys(variablesMapping).forEach(function (key) {
+	Object.keys(messageParamsMapping).forEach(function (key) {
 		if (i18n.hasOwnProperty(key)) {
-			i18n[key] = i18n[key].replace(/__([a-z]+)__/gi, function (match, variable) {
-				return variablesMapping[key][variable];
+			i18n[key] = i18n[key].replace(/__([a-z]+)__/gi, function (match, param) {
+				return messageParamsMapping[key][param];
 			});
 		}
 	});

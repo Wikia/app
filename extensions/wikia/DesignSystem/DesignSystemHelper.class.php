@@ -7,6 +7,7 @@ class DesignSystemHelper {
 	const DESIGN_SYSTEM_DIR = __DIR__ . '/bower_components/design-system';
 	const SVG_DIR = self::DESIGN_SYSTEM_DIR . '/dist/svg';
 
+	// keep in sync with DesignSystem/i18n/build.js
 	const MESSAGE_PARAMS_ORDER = [
 		'global-footer-licensing-and-vertical-description' => [
 			'sitename',
@@ -15,7 +16,7 @@ class DesignSystemHelper {
 		]
 	];
 
-	private static $svgCache = [];
+	private static $svgCache = [ ];
 
 	/**
 	 * @desc Returns SVG content
@@ -42,9 +43,12 @@ class DesignSystemHelper {
 
 			return $xml->asXML();
 		} else {
-			WikiaLogger::instance()->error( 'Design System SVG could not be loaded', [
-				'name' => $name
-			] );
+			WikiaLogger::instance()->error(
+				'Design System SVG could not be loaded',
+				[
+					'name' => $name
+				]
+			);
 
 			return $alt ?: $name ?: '';
 		}
@@ -58,11 +62,11 @@ class DesignSystemHelper {
 	 * @return SimpleXMLElement
 	 */
 	private static function getCachedSvg( $name ) {
-		if ( isset( self::$svgCache[ $name ] ) ) {
-			$xml = self::$svgCache[ $name ];
+		if ( isset( self::$svgCache[$name] ) ) {
+			$xml = self::$svgCache[$name];
 		} else {
 			$xml = simplexml_load_file( self::SVG_DIR . '/' . $name . '.svg' );
-			self::$svgCache[ $name ] = $xml;
+			self::$svgCache[$name] = $xml;
 		}
 
 		return $xml;
@@ -85,10 +89,20 @@ class DesignSystemHelper {
 
 		if ( $fields['type'] === 'translatable-text' ) {
 			if ( isset( $fields['params'] ) ) {
-				$paramsRendered = [];
+				$paramsRendered = [ ];
 
-				foreach ( self::MESSAGE_PARAMS_ORDER[$fields['key']] as $index => $paramKey ) {
-					$paramsRendered[] = self::renderText( $fields['params'][$paramKey] );
+				if ( !array_key_exists( $fields['key'], self::MESSAGE_PARAMS_ORDER ) ) {
+					WikiaLogger::instance()->error(
+						'Design System tried to render a message with params that we don\'t support, ignore params',
+						[
+							'messageKey' => $fields['key'],
+							'params' => $fields['params']
+						]
+					);
+				} else {
+					foreach ( self::MESSAGE_PARAMS_ORDER[$fields['key']] as $index => $paramKey ) {
+						$paramsRendered[] = self::renderText( $fields['params'][$paramKey] );
+					}
 				}
 
 				return wfMessage( $fields['key'] )->rawParams( $paramsRendered )->escaped();
