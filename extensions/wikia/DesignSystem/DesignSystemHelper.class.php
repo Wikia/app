@@ -85,9 +85,7 @@ class DesignSystemHelper {
 	public static function renderText( $fields ) {
 		if ( $fields['type'] === 'text' ) {
 			return htmlspecialchars( $fields['value'] );
-		}
-
-		if ( $fields['type'] === 'translatable-text' ) {
+		} elseif ( $fields['type'] === 'translatable-text' ) {
 			if ( isset( $fields['params'] ) ) {
 				$paramsRendered = [ ];
 
@@ -109,9 +107,7 @@ class DesignSystemHelper {
 			} else {
 				return wfMessage( $fields['key'] )->escaped();
 			}
-		}
-
-		if ( $fields['type'] === 'link-text' ) {
+		} elseif ( $fields['type'] === 'link-text' ) {
 			return Html::rawElement(
 				'a',
 				[
@@ -119,6 +115,15 @@ class DesignSystemHelper {
 				],
 				self::renderText( $fields['title'] )
 			);
+		} else {
+			WikiaLogger::instance()->error(
+				'Design System tried to render a text of unsupported type',
+				[
+					'fields' => $fields
+				]
+			);
+
+			return '';
 		}
 	}
 }
