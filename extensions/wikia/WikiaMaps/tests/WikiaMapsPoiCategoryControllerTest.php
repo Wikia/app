@@ -302,6 +302,7 @@ class WikiaMapsPoiCategoryControllerTest extends WikiaBaseTest {
 					->method( 'isLoggedIn' )
 					->willReturn( false );
 				break;
+			/** @noinspection PhpMissingBreakStatementInspection */
 			case self::USER_TYPE_BLOCKED:
 				$userMock->expects( $this->once() )
 					->method( 'isBlocked' )

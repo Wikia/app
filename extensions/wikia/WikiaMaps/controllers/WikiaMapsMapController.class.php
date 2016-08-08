@@ -11,7 +11,7 @@ class WikiaMapsMapController extends WikiaMapsBaseController {
 	/**
 	 * Gets list of tile sets
 	 *
-	 * @return Array
+	 * @return array
 	 */
 	public function getTileSets() {
 		$params = [
@@ -63,7 +63,7 @@ class WikiaMapsMapController extends WikiaMapsBaseController {
 	/**
 	 * Creates a custom map for given tileset or creating a tileset and then map out of it
 	 *
-	 * @return Array
+	 * @return array
 	 */
 	private function createCustomMap() {
 		$tileSetId = $this->getData( 'tileSetId' );
@@ -88,7 +88,7 @@ class WikiaMapsMapController extends WikiaMapsBaseController {
 	/**
 	 * Creates a map from Geo tileset
 	 *
-	 * @return Array
+	 * @return array
 	 */
 	private function createGeoMap() {
 		$this->setData( 'tileSetId', $this->mapsModel->getGeoMapTilesetId() );
@@ -136,7 +136,7 @@ class WikiaMapsMapController extends WikiaMapsBaseController {
 	 * Helper method which sends request to maps service to create a map from existing tiles' set
 	 * and processes the response providing results array
 	 *
-	 * @return Array
+	 * @return array
 	 */
 	private function createMapFromTilesetId() {
 		$cityId = $this->getData( 'cityId' );
@@ -156,7 +156,7 @@ class WikiaMapsMapController extends WikiaMapsBaseController {
 			$response[ 'content' ]->mapUrl = Title::newFromText(
 				WikiaMapsSpecialController::PAGE_NAME . '/' . $mapId,
 				NS_SPECIAL
-			)->getFullUrl();
+			)->getFullURL();
 
 			// Log new map created
 			WikiaMapsLogger::addLogEntry(

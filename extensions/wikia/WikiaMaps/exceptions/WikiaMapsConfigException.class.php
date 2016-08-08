@@ -4,6 +4,6 @@ class WikiaMapsConfigException extends WikiaHttpException {
 	protected $message = "Invalid configuration";
 
 	public function __construct($details) {
-		$this->details = $details;
+		parent::__construct($details);
 	}
 }

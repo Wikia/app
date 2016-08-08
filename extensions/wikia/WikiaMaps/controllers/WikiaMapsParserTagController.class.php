@@ -85,7 +85,7 @@ class WikiaMapsParserTagController extends WikiaParserTagController {
 	public function mapThumbnail() {
 		$params = $this->getMapPlaceholderParams();
 		$userName = $params->map->created_by;
-		$isMobile = $this->app->checkskin( 'wikiamobile' );
+		$isMobile = $this->app->checkSkin( 'wikiamobile' );
 
 		if ( $isMobile ) {
 			//proper image is lazy loaded from the thumbnailer
@@ -162,9 +162,9 @@ class WikiaMapsParserTagController extends WikiaParserTagController {
 	/**
 	 * @desc Sanitizes given data
 	 *
-	 * @param Array $data
+	 * @param array $data
 	 *
-	 * @return Array
+	 * @return array
 	 */
 	public function sanitizeParserTagArguments( $data ) {
 		$result = [];
@@ -181,7 +181,7 @@ class WikiaMapsParserTagController extends WikiaParserTagController {
 	/**
 	 * @desc Validates data provided in parser tag arguments, returns empty string if there is no error
 	 *
-	 * @param Array $params an array with parser tag arguments
+	 * @param array $params an array with parser tag arguments
 	 * @param String $errorMessage a variable where the error message will be assigned to
 	 *
 	 * @return String

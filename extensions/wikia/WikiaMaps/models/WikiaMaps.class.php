@@ -63,7 +63,7 @@ class WikiaMaps extends WikiaObject {
 	 *
 	 * @return string - URL
 	 */
-	public function buildUrl( Array $segments, Array $params = [] ) {
+	public function buildUrl( array $segments, array $params = [] ) {
 		return sprintf(
 			'%s://%s:%d/api/%s/%s%s',
 			$this->config[ 'protocol' ],
@@ -80,7 +80,7 @@ class WikiaMaps extends WikiaObject {
 	 *
 	 * @param String $url
 	 *
-	 * @return Array
+	 * @return array
 	 */
 	public function sendGetRequest( $url ) {
 		return $this->processServiceResponse(
@@ -92,9 +92,9 @@ class WikiaMaps extends WikiaObject {
 	 * Wrapper for Http::post() with authorization token attached
 	 *
 	 * @param String $url
-	 * @param Array $data
+	 * @param array $data
 	 *
-	 * @return Array
+	 * @return array
 	 */
 	private function postRequest( $url, $data ) {
 		return $this->processServiceResponse(
@@ -106,9 +106,9 @@ class WikiaMaps extends WikiaObject {
 	 * Wrapper for Http::request() with authorization token attached
 	 *
 	 * @param String $url
-	 * @param Array $data
+	 * @param array $data
 	 *
-	 * @return Array
+	 * @return array
 	 */
 	private function putRequest( $url, $data ) {
 		return $this->processServiceResponse(
@@ -121,7 +121,7 @@ class WikiaMaps extends WikiaObject {
 	 *
 	 * @param String $url
 	 *
-	 * @return Array
+	 * @return array
 	 */
 	private function deleteRequest( $url ) {
 		return $this->processServiceResponse(
@@ -132,11 +132,11 @@ class WikiaMaps extends WikiaObject {
 	/**
 	 * Get Map instances from IntMaps API server
 	 *
-	 * @param Array $params an array with parameters which will be added to the url after ? sign
+	 * @param array $params an array with parameters which will be added to the url after ? sign
 	 *
 	 * @return mixed
 	 */
-	public function getMapsFromApi( Array $params ) {
+	public function getMapsFromApi( array $params ) {
 		$mapsData = new stdClass();
 		$url = $this->buildUrl( [ self::ENTRY_POINT_MAP ], $params );
 		$response = $this->sendGetRequest( $url );
@@ -214,7 +214,7 @@ class WikiaMaps extends WikiaObject {
 	 * @param array $params Additional get params
 	 * @return string URL
 	 */
-	public function getMapRenderUrl( Array $segments, Array $params = [] ) {
+	public function getMapRenderUrl( array $segments, array $params = [] ) {
 		array_unshift( $segments, self::ENTRY_POINT_RENDER );
 		return $this->buildUrl( $segments, $params );
 	}
@@ -269,11 +269,11 @@ class WikiaMaps extends WikiaObject {
 	/**
 	 * Sends request to Wikia Maps service and returns list of tile sets
 	 *
-	 * @param Array $params - request params
+	 * @param array $params - request params
 	 *
-	 * @return Array - list of tile sets
+	 * @return array - list of tile sets
 	 */
-	public function getTileSets( Array $params ) {
+	public function getTileSets( array $params ) {
 		$url = $this->buildUrl( [ self::ENTRY_POINT_TILE_SET ], $params );
 
 		//TODO: consider caching the response
@@ -317,9 +317,9 @@ class WikiaMaps extends WikiaObject {
 	/**
 	 * Sends a request to IntMap Service API to create a map with given parameters
 	 *
-	 * @param Array $mapData array with required parameters to service API
+	 * @param array $mapData array with required parameters to service API
 	 *
-	 * @return Array
+	 * @return array
 	 */
 	public function saveMap( $mapData ) {
 		return $this->postRequest(
@@ -331,9 +331,9 @@ class WikiaMaps extends WikiaObject {
 	/**
 	 * Sends a request to IntMap Service API to create a tiles' set with given parameters
 	 *
-	 * @param Array $tileSetData array with required parameters to service API
+	 * @param array $tileSetData array with required parameters to service API
 	 *
-	 * @return Array
+	 * @return array
 	 */
 	public function saveTileset( $tileSetData ) {
 		return $this->postRequest(
@@ -373,9 +373,9 @@ class WikiaMaps extends WikiaObject {
 	/**
 	 * Sends a request to IntMap Service API to create a POI category with given parameters
 	 *
-	 * @param Array $poiCategoryData array with required parameters to service API
+	 * @param array $poiCategoryData array with required parameters to service API
 	 *
-	 * @return Array
+	 * @return array
 	 */
 	public function savePoiCategory( $poiCategoryData ) {
 		return $this->postRequest(
@@ -388,9 +388,9 @@ class WikiaMaps extends WikiaObject {
 	 * Sends a request to IntMap Service API to update a POI category with given parameters
 	 *
 	 * @param Integer $poiCategoryId
-	 * @param Array $poiCategoryData array with required parameters to service API
+	 * @param array $poiCategoryData array with required parameters to service API
 	 *
-	 * @return Array
+	 * @return array
 	 */
 	public function updatePoiCategory( $poiCategoryId, $poiCategoryData ) {
 		return $this->putRequest(
@@ -404,7 +404,7 @@ class WikiaMaps extends WikiaObject {
 	 *
 	 * @param Integer $poiCategoryId
 	 *
-	 * @return Array
+	 * @return array
 	 */
 	public function deletePoiCategory( $poiCategoryId ) {
 		return $this->deleteRequest(
@@ -415,9 +415,9 @@ class WikiaMaps extends WikiaObject {
 	/**
 	 * Sends a request to IntMap Service API to create a point of interest (POI) with given parameters
 	 *
-	 * @param Array $poiData array with required parameters to service API
+	 * @param array $poiData array with required parameters to service API
 	 *
-	 * @return Array
+	 * @return array
 	 */
 	public function savePoi( $poiData ) {
 		return $this->postRequest(
@@ -430,9 +430,9 @@ class WikiaMaps extends WikiaObject {
 	 * Sends a request to IntMap Service API to update a point of interest (POI) with given parameters
 	 *
 	 * @param Integer $poiId unique id of existing POI
-	 * @param Array $poiData array with required parameters to service API
+	 * @param array $poiData array with required parameters to service API
 	 *
-	 * @return Array
+	 * @return array
 	 */
 	public function updatePoi( $poiId, $poiData ) {
 		return $this->putRequest(
@@ -446,7 +446,7 @@ class WikiaMaps extends WikiaObject {
 	 *
 	 * @param Integer $poiId unique id of existing POI
 	 *
-	 * @return Array
+	 * @return array
 	 */
 	public function deletePoi( $poiId ) {
 		return $this->deleteRequest(
@@ -508,6 +508,7 @@ class WikiaMaps extends WikiaObject {
 	 *
 	 * @param MWHttpRequest $response
 	 * @todo: how about extracting results to an object?
+	 * @return array
 	 */
 	private function processServiceResponse( MWHttpRequest $response ) {
 		$status = $response->getStatus();
@@ -560,7 +561,7 @@ class WikiaMaps extends WikiaObject {
 	 *
 	 * @return array
 	 */
-	public function getHttpRequestOptions( Array $postData = [] ) {
+	public function getHttpRequestOptions( array $postData = [] ) {
 		$options = [
 			'returnInstance' => true,
 			//'noProxy' => true,
@@ -642,7 +643,7 @@ class WikiaMaps extends WikiaObject {
 		$title = Title::newFromText( $titleText );
 
 		if( !is_null( $title ) ) {
-			$articleId = $title->getArticleId();
+			$articleId = $title->getArticleID();
 			$is = new ImageServing( [ $articleId ], $width, $height );
 			$images = $is->getImages( 1 );
 

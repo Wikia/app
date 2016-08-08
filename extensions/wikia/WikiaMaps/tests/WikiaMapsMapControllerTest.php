@@ -204,6 +204,9 @@ class WikiaMapsMapControllerTest extends WikiaBaseTest {
 		return $userMock;
 	}
 
+	/**
+	 * @return WikiaMapsMapController
+	 */
 	private function getWikiaMapsMapControllerMock() {
 		$controllerMock = $this->getMockBuilder( 'WikiaMapsMapController' )
 			->setMethods( [ 'getData', 'getModel', 'canUserDelete', 'isUserMapCreator' ] )

@@ -16,7 +16,7 @@ class WikiaMapsBaseController extends WikiaController {
 
 	/**
 	 * Keeps data needed while creating map/tile/poi process
-	 * @var Array
+	 * @var array
 	 */
 	protected $data;
 
@@ -53,7 +53,7 @@ class WikiaMapsBaseController extends WikiaController {
 
 	/**
 	 * Returns all data
-	 * @return Array
+	 * @return array
 	 */
 	protected function getAllData() {
 		return $this->data;

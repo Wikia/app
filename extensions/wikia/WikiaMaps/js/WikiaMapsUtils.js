@@ -7,7 +7,7 @@ define(
 		'wikia.loader',
 		'wikia.ui.factory',
 		'wikia.mustache',
-		'wikia.tracker',
+		'wikia.tracker'
 	],
 	function ($, w, cache, loader, uiFactory, mustache, tracker) {
 		'use strict';
@@ -324,10 +324,9 @@ define(
 		 */
 		function getNirvanaExceptionMessage(response) {
 			var responseText = response.responseText,
-				exception = JSON.parse(responseText).exception,
-				message = exception.details || exception.message || response.statusText;
+				exception = JSON.parse(responseText).exception;
 
-			return message;
+			return exception.details || exception.message || response.statusText;
 		}
 
 		/**

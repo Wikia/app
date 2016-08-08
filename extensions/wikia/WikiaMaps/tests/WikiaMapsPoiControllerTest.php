@@ -321,7 +321,10 @@ class WikiaMapsPoiControllerTest extends WikiaBaseTest {
 			]
 		];
 	}
-	
+
+	/**
+	 * @return WikiaMapsPoiController
+	 */
 	private function getWikiaMapsPoiControllerMock() {
 		$requestMock = $this->getMockBuilder( 'WikiaRequest' )
 			->setMethods( [ 'getVal', 'getArray', 'getInt' ] )
@@ -359,6 +362,7 @@ class WikiaMapsPoiControllerTest extends WikiaBaseTest {
 					->method( 'isLoggedIn' )
 					->willReturn( false );
 				break;
+			/** @noinspection PhpMissingBreakStatementInspection */
 			case self::USER_TYPE_BLOCKED:
 				$userMock->expects( $this->once() )
 					->method( 'isBlocked' )

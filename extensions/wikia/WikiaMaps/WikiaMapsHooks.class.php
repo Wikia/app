@@ -4,7 +4,7 @@ class WikiaMapsHooks {
 	/**
 	 * Adds Wikia Maps assets
 	 *
-	 * @param Array $assetsArray
+	 * @param array $assetsArray
 	 *
 	 * @return bool
 	 */
@@ -64,9 +64,9 @@ class WikiaMapsHooks {
 	/**
 	 * @brief WikiaMobile hook to add assets so they are minified and concatenated
 	 *
-	 * @param Array $jsStaticPackages
-	 * @param Array $jsExtensionPackages
-	 * @param Array $scssPackages
+	 * @param array $jsStaticPackages
+	 * @param array $jsExtensionPackages
+	 * @param array $scssPackages
 	 *
 	 * @return Boolean
 	 */
