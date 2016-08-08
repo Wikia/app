@@ -1126,7 +1126,11 @@ class SpecialUndelete extends SpecialPage {
 		if( $haveRevisions ) {
 			$batch = new LinkBatch();
 			foreach ( $revisions as $row ) {
-				$userName = User::newFromId( $row->ar_user )->getName();
+				if ( is_numeric( $row->ar_user ) && $row->ar_user > 0 ) {
+					$userName = User::newFromId( $row->ar_user )->getName();
+				} else {
+					$userName = $row->ar_user_text;
+				}
 				$batch->addObj( Title::makeTitleSafe( NS_USER, $userName ) );
 				$batch->addObj( Title::makeTitleSafe( NS_USER_TALK, $userName ) );
 			}
