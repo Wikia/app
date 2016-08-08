@@ -9,15 +9,15 @@
 
 	<ul class="wds-global-footer__links-list">
 		<?php foreach ( $model['links'] as $link ) : ?>
-		<li class="wds-global-footer__links-list-item">
-			<?php if ( $link['type'] === 'link-image' ) : ?>
-				<?= $app->renderView('DesignSystemGlobalFooterService', 'linkImage', [ 'model' => $link ]); ?>
-			<?php elseif ( $link['type'] === 'link-branded' ) : ?>
-				<?= $app->renderView('DesignSystemGlobalFooterService', 'linkBranded', [ 'model' => $link ]); ?>
-			<?php else : ?>
-				<?= $app->renderView('DesignSystemGlobalFooterService', 'linkText', [ 'model' => $link ]); ?>
-			<?php endif; ?>
-		</li>
+			<li class="wds-global-footer__links-list-item">
+				<?php if ( $link['type'] === 'link-image' ) : ?>
+					<?= $app->renderView( 'DesignSystemGlobalFooterService', 'linkImage', [ 'model' => $link ] ); ?>
+				<?php elseif ( $link['type'] === 'link-branded' ) : ?>
+					<?= $app->renderView( 'DesignSystemGlobalFooterService', 'linkBranded', [ 'model' => $link ] ); ?>
+				<?php else : ?>
+					<?= $app->renderView( 'DesignSystemGlobalFooterService', 'linkText', [ 'model' => $link ] ); ?>
+				<?php endif; ?>
+			</li>
 		<?php endforeach; ?>
 	</ul>
 </section>
