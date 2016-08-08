@@ -54,10 +54,7 @@ class ContributionAppreciationController extends WikiaController {
 	}
 
 	public function sendMail( \Revision $revision ) {
-	//public function sendMail() {
-		global $wgUser, $wgSitename;
-
-		//$revision = Revision::newFromId( 1569246 );
+		global $wgSitename;
 
 		if ( !$revision ) {
 			return;
@@ -66,7 +63,6 @@ class ContributionAppreciationController extends WikiaController {
 
 		$params = [
 			'buttonLink' =>  SpecialPage::getTitleFor( 'Community' )->getFullURL(),
-			//'targetUser' => $wgUser, //testing
 			'targetUser' => $revision->getUserText(),
 			'editedPageTitleText' => $editedPageTitle->getText(),
 			'editedWikiName' => $wgSitename,

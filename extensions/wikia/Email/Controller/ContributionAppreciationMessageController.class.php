@@ -65,7 +65,7 @@ class ContributionAppreciationMessageController extends EmailController {
 	}
 
 	/**
-	 * Get the localized text describing the full message thread link
+	 * Get the localized button text
 	 *
 	 * @return string
 	 */
@@ -74,7 +74,7 @@ class ContributionAppreciationMessageController extends EmailController {
 	}
 
 	/**
-	 * Get the localized text describing the revision link
+	 * Get the localized text describing the "view edit" link below button
 	 *
 	 * @return string
 	 */
@@ -86,7 +86,7 @@ class ContributionAppreciationMessageController extends EmailController {
 	}
 
 	/**
-	 * Get the summary text immediately following the salutation in the email
+	 * Get the body of email - info about appreciation
 	 *
 	 * @return string
 	 */
@@ -98,6 +98,11 @@ class ContributionAppreciationMessageController extends EmailController {
 		)->text();
 	}
 
+	/**
+	 * Get the text of appreciation
+	 *
+	 * @return string
+	 */
 	protected function getAppreciationText() {
 		return $this->getMessage( 'emailext-appreciation-received-text' )->text();
 	}
