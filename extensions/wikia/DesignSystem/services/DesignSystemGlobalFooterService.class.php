@@ -32,6 +32,10 @@ class DesignSystemGlobalFooterService extends WikiaService {
 		$this->setVal( 'model', $this->getVal( 'model' ) );
 	}
 
+	public function licensingAndVertical() {
+		$this->setVal( 'model', $this->getVal( 'model' ) );
+	}
+
 	private function getData() {
 		return $this->sendRequest( 'DesignSystemApi', 'getFooter', [
 			'wikiId' => $this->wg->CityId,
