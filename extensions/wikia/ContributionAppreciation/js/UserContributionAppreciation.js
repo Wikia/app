@@ -1,4 +1,17 @@
-require(['wikia.nirvana', 'jquery', 'BannerNotification'], function (nirvana, $, BannerNotification) {
+require([
+	'wikia.nirvana',
+	'jquery',
+	'BannerNotification',
+	'wikia.tracker'
+], function (nirvana, $, BannerNotification, tracker)	{
+	'use strict';
+
+	var track = tracker.buildTrackingFunction({
+		action: tracker.ACTIONS.CLICK,
+		category: 'contribution-appreciation',
+		trackingMethod: 'analytics'
+	});
+
 	function setUserNotified() {
 		nirvana.sendRequest({
 			controller: 'RevisionUpvotesApi',
@@ -10,6 +23,27 @@ require(['wikia.nirvana', 'jquery', 'BannerNotification'], function (nirvana, $,
 		});
 	}
 
+	function bindClickTracking(notification) {
+		notification.$element.on('mousedown', 'a', function () {
+			track({
+				label: $(this).data('tracking')
+			});
+		});
+
+		notification.onClose(function () {
+			track({
+				label: 'notification-close'
+			});
+		});
+	}
+
+	function trackImpression() {
+		track({
+			action: tracker.ACTIONS.IMPRESSION,
+			label: 'notification'
+		});
+	}
+
 	function getAppreciations() {
 		nirvana.sendRequest({
 			controller: 'ContributionAppreciation',
@@ -18,7 +52,10 @@ require(['wikia.nirvana', 'jquery', 'BannerNotification'], function (nirvana, $,
 			format: 'json',
 			callback: function (data) {
 				if (data.html) {
-					new BannerNotification(data.html, 'warn').show();
+					var notification = new BannerNotification(data.html, 'warn');
+					notification.show();
+					bindClickTracking(notification);
+					trackImpression();
 					setUserNotified();
 				}
 			}
