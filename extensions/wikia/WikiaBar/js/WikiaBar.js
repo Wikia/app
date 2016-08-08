@@ -195,7 +195,7 @@ var WikiaBar = {
 		this.wikiaBarWrapperObj.removeClass('hidden');
 		this.wikiaBarHidden = false;
 
-		if ($('#WikiaBarWrapper')) {
+		if (this.wikiaBarWrapperObj.length) {
 			$('body').addClass('wikia-bar-visible');
 		}
 	},
@@ -205,7 +205,7 @@ var WikiaBar = {
 		this.wikiaBarWrapperObj.addClass('hidden');
 		this.wikiaBarHidden = true;
 
-		if ($('#WikiaBarWrapper')) {
+		if (this.wikiaBarWrapperObj.length) {
 			$('body').removeClass('wikia-bar-visible');
 		}
 	},
