@@ -370,6 +370,7 @@ $messages['de'] = array(
 	'prefs-personal' => 'Meine Informationen',
 	'prefs-wikiemail' => '{{SITENAME}}-Optionen. Sende mir eine E-Mail, wenn …',
 	'preferences-v2-redirect-community-page' => 'Community-Seite (wo verfügbar)',
+	'tog-enotifdiscussions-v2' => '...my Discussion posts receive replies and upvotes',
 );
 
 /** Zazaki (Zazaki)
@@ -464,6 +465,7 @@ $messages['es'] = array(
 	'prefs-personal' => 'Información básica',
 	'prefs-wikiemail' => 'Opciones de {{SITENAME}}. Envíame un correo cuando...',
 	'preferences-v2-redirect-community-page' => 'Página Comunitaria (donde esté disponible)',
+	'tog-enotifdiscussions-v2' => '... mis discusiones tengan respuestas y votos',
 );
 
 /** Basque (euskara)
@@ -578,7 +580,7 @@ $messages['fi'] = array(
 $messages['fr'] = array(
 	'preferences-v2-desc' => 'Préférences utilisateur v2',
 	'preferences-v2-username' => 'Nom d’utilisateur :',
-	'preferences-v2-usergroups' => 'Groupes d’utilisateurs :',
+	'preferences-v2-usergroups' => 'Groupes utilisateur :',
 	'preferences-v2-gender' => 'Genre :',
 	'preferences-v2-password' => 'Mot de passe :',
 	'preferences-v2-oldsig' => 'Signature actuelle :',
@@ -606,10 +608,10 @@ $messages['fr'] = array(
 	'preferences-v2-redirect-recent-changes' => 'Modifications récentes',
 	'preferences-v2-redirect-explanation' => 'L’option Page d’arrivée vous permet de choisir où aller quand vous saisissez $1 dans votre navigateur.',
 	'prefs-monobookv2' => 'MonoBook',
-	'prefs-under-the-hood' => 'Sous le capot',
-	'prefs-recent-changesv2' => 'Modifications, historiques et journaux récents',
+	'prefs-under-the-hood' => 'Options avancées',
+	'prefs-recent-changesv2' => 'Modifications récentes, historiques et journaux',
 	'prefs-followed-pagesv2' => 'Fil des pages suivies',
-	'prefs-advanced-displayv2' => 'Options d’affichage avancé',
+	'prefs-advanced-displayv2' => 'Options d’affichage avancées',
 	'tog-highlightbrokenv2' => 'Afficher les liens brisés en rouge, sans point d’interrogation.',
 	'tog-showAdsv2' => 'Publicités :',
 	'prefs-addressv2' => 'Adresse',
@@ -622,12 +624,13 @@ $messages['fr'] = array(
 	'preferences-v2-showads-disable' => 'Ne pas afficher toutes les publicités',
 	'preferences-v2-my-email-address' => 'Mon e-mail :',
 	'prefs-patrolled-editsv2' => 'Modifications patrouillées',
-	'tog-editsectiononrightclick-v2' => 'Modifier les sections en faisant un clic droit sur les titres de section',
-	'tog-editondblclick-v2' => 'Modifier les pages en faisant un double-clic',
+	'tog-editsectiononrightclick-v2' => 'Modifier les sections en cliquant avec le bouton droit sur les titres de section',
+	'tog-editondblclick-v2' => 'Modifier les pages sur double-clic',
 	'tog-hidefollowedpages-v2' => 'Masquer ma liste de pages suivies pour tout le monde',
 	'prefs-personal' => 'Mes infos',
 	'prefs-wikiemail' => 'Options de {{SITENAME}}. M’envoyer un e-mail quand...',
 	'preferences-v2-redirect-community-page' => 'Page Communauté (si disponible)',
+	'tog-enotifdiscussions-v2' => '...my Discussion posts receive replies and upvotes',
 );
 
 /** Western Frisian (Frysk)
@@ -749,6 +752,7 @@ $messages['it'] = array(
 	'tog-editsectiononrightclick-v2' => 'Modifica le sezioni facendo clic con il pulsante destro del mouse sui titoli di sezione',
 	'tog-editondblclick-v2' => 'Modifica le pagine con un doppio clic',
 	'tog-hidefollowedpages-v2' => 'Nascondi il mio elenco delle pagine seguite a tutti',
+	'tog-enotifdiscussions-v2' => '...my Discussion posts receive replies and upvotes',
 );
 
 /** Japanese (日本語)
@@ -756,8 +760,8 @@ $messages['it'] = array(
  * @author Tommy6
  */
 $messages['ja'] = array(
-	'preferences-v2-username' => '利用者名:',
-	'preferences-v2-usergroups' => '所属利用者グループ:',
+	'preferences-v2-username' => 'ユーザー名:',
+	'preferences-v2-usergroups' => '参加しているユーザーグループ:',
 	'preferences-v2-gender' => '性別:',
 	'preferences-v2-password' => 'パスワード:',
 	'preferences-v2-oldsig' => '現在の署名:',
@@ -770,23 +774,23 @@ $messages['ja'] = array(
 	'preferences-v2-skin' => 'スキン:',
 	'prefs-emailv2' => 'メールの設定',
 	'prefs-email-me-v2' => '以下のイベントをメールで通知する',
-	'prefs-email-advanced-v2' => '高度な設定',
-	'prefs-email-unsubscribe' => '全てのメール通知の無効化',
+	'prefs-email-advanced-v2' => '詳細設定',
+	'prefs-email-unsubscribe' => '全てのメール通知を無効にする',
 	'preferences-v2-user-landing-page' => '初期ページ:',
 	'preferences-v2-redirect-wiki-activity' => 'ウィキアクティビティ',
 	'preferences-v2-redirect-main-page' => 'メインページ',
 	'preferences-v2-redirect-recent-changes' => '最近の更新',
-	'preferences-v2-redirect-explanation' => '初期ページオプションは、「$1」のようにページ名を指定せずにサイトにアクセスした際に、どのページを表示するかを選択するものです。',
+	'preferences-v2-redirect-explanation' => '初期ページオプションでは、「$1」のようにページ名を指定せずにサイトにアクセスした際に、どのページを表示するかを選択することができます。',
 	'prefs-under-the-hood' => 'システム設定',
 	'prefs-recent-changesv2' => '最近の更新、履歴、ログ',
 	'prefs-followed-pagesv2' => 'フォローページフィード',
-	'prefs-advanced-displayv2' => '高度な設定',
+	'prefs-advanced-displayv2' => '詳細設定',
 	'prefs-addressv2' => 'メールアドレス',
 	'prefs-followed-pages-iv2' => '以下のアクション時にページをフォローに追加する',
 	'preferences-v2-watchdefault' => '編集',
 	'preferences-v2-watchmoves' => '移動',
 	'preferences-v2-watchdeletion' => '削除',
-	'preferences-v2-watchcreations' => 'ページ作成',
+	'preferences-v2-watchcreations' => '新規作成',
 	'preferences-v2-showads-enable' => '全ての広告を表示する',
 	'preferences-v2-showads-disable' => '広告を表示しない',
 	'preferences-v2-my-email-address' => 'メールアドレス:',
@@ -794,20 +798,21 @@ $messages['ja'] = array(
 	'prefs-personal' => '利用者情報',
 	'tog-enotifwatchlistpages-v2' => 'フォローしているページが変更された場合',
 	'tog-enotifusertalkpages-v2' => '自分のトークページが変更された場合',
-	'tog-enotifminoredits-v2' => 'フォローしているページが一部変更された場合',
+	'tog-enotifminoredits-v2' => 'フォローしているページの細部が変更された場合',
 	'tog-marketingallowed-v2' => 'ウィキアから最新ニュースやイベントの連絡がある場合',
 	'prefs-wikiemail' => '{{SITENAME}} のオプション。次の際にメールの受信を希望します:',
-	'unsubscribe-preferences-toggle-v2' => 'ウィキアからのメール配信をすべて停止 (その他オプションがすべて上書きされます)',
+	'unsubscribe-preferences-toggle-v2' => 'ウィキアからのメール配信をすべて停止 (その他のオプションがすべて上書きされます)',
 	'tog-watchlistdigest-v2' => 'フォローしているウィキア・ページへの変更に関するウィークリーダイジェストが作成された場合',
 	'tog-justify-v2' => '段落を両端揃えで表示する',
 	'preferences-v2-redirect-community-page' => 'コミュニティ・ページ (可能な場合のみ)',
 	'prefs-monobookv2' => 'MonoBook',
 	'tog-highlightbrokenv2' => '壊れたリンクを「？」ではなく赤で表示する。',
-	'tog-showAdsv2' => '広告',
+	'tog-showAdsv2' => '広告:',
 	'prefs-patrolled-editsv2' => 'パトロールされた編集',
-	'tog-editsectiononrightclick-v2' => 'セクションのタイトルを右クリックでセクション編集を開始する',
+	'tog-editsectiononrightclick-v2' => 'セクションのタイトルを右クリックし、セクション編集を開始する',
 	'tog-editondblclick-v2' => 'ダブルクリックでページの編集を開始する',
 	'tog-hidefollowedpages-v2' => 'フォローしているページのリストを非公開にする',
+	'tog-enotifdiscussions-v2' => '...my Discussion posts receive replies and upvotes',
 );
 
 /** Korean (한국어)
@@ -1093,6 +1098,7 @@ $messages['nl'] = array(
 	'prefs-personal' => 'Uw gegevens',
 	'prefs-wikiemail' => 'Instellingen voor {{SITENAME}}. U e-mail sturen wanneer...',
 	'preferences-v2-redirect-community-page' => 'Community Page (where available)',
+	'tog-enotifdiscussions-v2' => '...my Discussion posts receive replies and upvotes',
 );
 
 /** Occitan (occitan)
@@ -1194,6 +1200,7 @@ $messages['pl'] = array(
 	'prefs-personal' => 'Moje informacje',
 	'prefs-wikiemail' => 'Opcje {{SITENAME}}. Powiadom jeżeli...',
 	'preferences-v2-redirect-community-page' => 'Strona Społeczności (gdzie dostępna)',
+	'tog-enotifdiscussions-v2' => '...my Discussion posts receive replies and upvotes',
 );
 
 /** Pashto (پښتو)
@@ -1286,6 +1293,7 @@ $messages['pt'] = array(
 	'prefs-personal' => 'Minhas Informações',
 	'prefs-wikiemail' => 'Opções da {{SITENAME}}. Envie-me um e-mail quando...',
 	'preferences-v2-redirect-community-page' => 'Página da Comunidade (quando disponível)',
+	'tog-enotifdiscussions-v2' => '...my Discussion posts receive replies and upvotes',
 );
 
 /** Brazilian Portuguese (português do Brasil)
@@ -1358,22 +1366,22 @@ $messages['ru'] = array(
 	'preferences-v2-nickname' => 'Пользовательская подпись:',
 	'preferences-v2-fancysig' => 'Я хочу использовать вики-текст в моей подписи<br />
 [[{{MediaWiki:preferences-v2-fancysig-help-page-name}}|Что такое подписи?]]',
-	'preferences-v2-fancysig-help-page-name' => 'Help:Signature',
+	'preferences-v2-fancysig-help-page-name' => 'Справка:Подпись',
 	'prefs-appearance' => 'Внешний вид',
 	'preferences-v2-date' => 'Формат даты:',
 	'preferences-v2-time' => 'Часовой пояс:',
 	'preferences-v2-skin' => 'Макет:',
 	'prefs-emailv2' => 'Электронная почта',
 	'prefs-email-me-v2' => 'Отправлять мне письма, когда…',
-	'tog-enotifwatchlistpages-v2' => '…страницы, за которой я слежу, изменяется',
-	'tog-enotifusertalkpages-v2' => '…моя страница обсуждения изменяется',
-	'tog-enotifminoredits-v2' => '…нa странице, за которой я слежу, происходит малая правка',
+	'tog-enotifwatchlistpages-v2' => '…страница, за которой я слежу, была изменена',
+	'tog-enotifusertalkpages-v2' => '…моя страница обсуждения была изменена',
+	'tog-enotifminoredits-v2' => '…нa странице, за которой я слежу, была сделана малая правка',
 	'tog-marketingallowed-v2' => '…на Викия появляются новости и события',
 	'prefs-email-advanced-v2' => 'Расширенные настройки',
 	'prefs-email-unsubscribe' => 'Отключить все письма',
-	'unsubscribe-preferences-toggle-v2' => 'Отключить все письма от Викия (переопределяет все другие варианты)',
+	'unsubscribe-preferences-toggle-v2' => 'Отключить все письма от Викия (заменяет все другие варианты)',
 	'tog-watchlistdigest-v2' => '…готов еженедельный дайджест изменений страниц Викия, за которыми я слежу',
-	'tog-justify-v2' => 'Показать выравненные параграфы',
+	'tog-justify-v2' => 'Показать выровненные параграфы',
 	'preferences-v2-user-landing-page' => 'Целевая страница:',
 	'preferences-v2-redirect-wiki-activity' => 'Вики-деятельность',
 	'preferences-v2-redirect-main-page' => 'Заглавная страница',
@@ -1382,26 +1390,27 @@ $messages['ru'] = array(
 	'prefs-monobookv2' => 'MonoBook',
 	'prefs-under-the-hood' => 'Движок',
 	'prefs-recent-changesv2' => 'Недавние правки, истории и журналы',
-	'prefs-followed-pagesv2' => 'Канал страниц, за которыми я слежу',
-	'prefs-advanced-displayv2' => 'Настройки расширенного отображения',
+	'prefs-followed-pagesv2' => 'Список страниц, за которыми я слежу',
+	'prefs-advanced-displayv2' => 'Расширенные настройки отображения',
 	'tog-highlightbrokenv2' => 'Выделять неработающие ссылки красным цветом вместо вопросительного знака.',
-	'tog-showAdsv2' => 'Объявления:',
+	'tog-showAdsv2' => 'Реклама:',
 	'prefs-addressv2' => 'Адрес',
 	'prefs-followed-pages-iv2' => 'Следить за страницами, которые я…',
 	'preferences-v2-watchdefault' => 'Редактирую',
 	'preferences-v2-watchmoves' => 'Переименовываю',
 	'preferences-v2-watchdeletion' => 'Удаляю',
 	'preferences-v2-watchcreations' => 'Создаю',
-	'preferences-v2-showads-enable' => 'Показывать все объявления',
-	'preferences-v2-showads-disable' => 'Не показывать все объявления',
+	'preferences-v2-showads-enable' => 'Показывать всю рекламу',
+	'preferences-v2-showads-disable' => 'Не показывать всю рекламу',
 	'preferences-v2-my-email-address' => 'Моя электронная почта:',
 	'prefs-patrolled-editsv2' => 'Проверенные правки',
 	'tog-editsectiononrightclick-v2' => 'Править разделы по правому щелчку мыши на заголовке',
 	'tog-editondblclick-v2' => 'Править страницы по двойному щелчку мышью',
-	'tog-hidefollowedpages-v2' => 'Скрыть список страниц, за которыми я слежу, от всех',
+	'tog-hidefollowedpages-v2' => 'Скрыть список отслеживаемых мной страниц от всех',
 	'prefs-personal' => 'Моя информация',
 	'prefs-wikiemail' => 'Параметры {{SITENAME}}. Отправлять мне письма, когда…',
 	'preferences-v2-redirect-community-page' => 'Cтраница сообщества (если имеется)',
+	'tog-enotifdiscussions-v2' => '...мои сообщения в Обсуждениях получают ответы и оценки',
 );
 
 /** Scots (Scots)
@@ -1791,6 +1800,7 @@ $messages['zh-hans'] = array(
 	'prefs-personal' => '我的信息',
 	'prefs-wikiemail' => '{{SITENAME}}选项。发邮件给我，当...',
 	'preferences-v2-redirect-community-page' => '社区页（如果可用）',
+	'tog-enotifdiscussions-v2' => '...我的讨论帖收到答复或被赞',
 );
 
 /** Traditional Chinese (中文（繁體）‎)
@@ -1854,5 +1864,6 @@ $messages['zh-hant'] = array(
 	'prefs-personal' => '我的資訊',
 	'prefs-wikiemail' => '{{SITENAME}}的選項。寄電子郵件给我，當...',
 	'preferences-v2-redirect-community-page' => '社區頁（如果可用）',
+	'tog-enotifdiscussions-v2' => '...我的討論文章獲得回覆或被按讚的時候',
 );
 
