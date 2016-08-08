@@ -151,32 +151,38 @@ class RevisionUpvotesService {
 	 * Get all upvotes for revisions made by given user
 	 *
 	 * @param int $userId
+	 * @param string $afterDate date in TS_DB format (YYYY-MM-DD HH:MM:SS)
 	 * @return bool|array
 	 */
-	public function getUserUpvotes( $userId ) {
+	public function getUserUpvotes( $userId, $afterDate = '' ) {
 		$db = $this->getDatabaseForRead();
 
-		$upvotes = ( new \WikiaSQL() )
+		$sql = ( new \WikiaSQL() )
 			->SELECT_ALL()
 			->FROM( self::UPVOTE_REVISIONS_TABLE )->AS_( 'revs' )
 			->LEFT_JOIN( self::UPVOTE_TABLE )->AS_( 'uv' )
 			->ON( 'revs.upvote_id', 'uv.upvote_id' )
-			->WHERE( 'user_id' )->EQUAL_TO( $userId )
-			->runLoop( $db, function( &$upvotes, $row ) {
-				if ( empty( $upvotes[$row->upvote_id]['revision'] ) ) {
-					$upvotes[$row->upvote_id]['revision'] = [
-						'wikiId' => (int) $row->wiki_id,
-						'pageId' => (int) $row->page_id,
-						'revisionId' => (int) $row->revision_id,
-						'userId' => (int) $row->user_id,
-						'upvoteId' => (int) $row->upvote_id
-					];
-				}
+			->WHERE( 'user_id' )->EQUAL_TO( $userId );
 
-				$upvotes[$row->upvote_id]['upvotes'][] = [
-					'from_user' => (int) $row->from_user
+		if ( !empty( $afterDate ) ) {
+			$sql->AND_( 'date' )->GREATER_THAN( $afterDate );
+		}
+
+		$upvotes = $sql->runLoop( $db, function( &$upvotes, $row ) {
+			if ( empty( $upvotes[$row->upvote_id]['revision'] ) ) {
+				$upvotes[$row->upvote_id]['revision'] = [
+					'wikiId' => (int) $row->wiki_id,
+					'pageId' => (int) $row->page_id,
+					'revisionId' => (int) $row->revision_id,
+					'userId' => (int) $row->user_id,
+					'upvoteId' => (int) $row->upvote_id
 				];
-			} );
+			}
+
+			$upvotes[$row->upvote_id]['upvotes'][] = [
+				'from_user' => (int) $row->from_user
+			];
+		} );
 
 		foreach ( $upvotes as $upvoteId => $upvote ) {
 			$upvotes[$upvoteId]['count'] = count( $upvotes[$upvoteId]['upvotes'] );
@@ -186,17 +192,55 @@ class RevisionUpvotesService {
 	}
 
 	/**
+	 * Get new upvotes for revisions made by given user
+	 *
+	 * @param int $userId
+	 * @return bool|array
+	 */
+	public function getUserNewUpvotes( $userId ) {
+		$status = $this->getUserUpvotesStatus( $userId );
+
+		if ( $status['notified'] ) {
+			return [];
+		}
+
+		$upvotes = $this->getUserUpvotes( $userId, $status['last_notified'] );
+
+		return $upvotes;
+	}
+
+	private function getUserUpvotesStatus( $userId ) {
+		$db = $this->getDatabaseForRead();
+
+		$status = ( new \WikiaSQL() )
+			->SELECT_ALL()
+			->FROM( self::UPVOTE_USERS_TABLE )
+			->WHERE( 'user_id' )->EQUAL_TO( $userId )
+			->runLoop( $db, function( &$status, $row ) {
+				$status = [
+					'total' => (int) $row->total,
+					'new' => (int) $row->new,
+					'notified' => (bool) $row->notified,
+					'last_notified' => $row->last_notified ? $row->last_notified : ''
+				];
+			} );
+
+		return $status;
+	}
+
+	/**
 	 * Update user upvotes notification state
 	 *
 	 * @param $userId
 	 */
-	public function userNotified( $userId ) {
+	public function setUserNotified( $userId ) {
 		$db = $this->getDatabaseForWrite();
 
 		( new \WikiaSQL() )
 			->UPDATE( self::UPVOTE_USERS_TABLE )
 			->SET( 'notified', true )
 			->SET( 'new', 0 )
+			->SET( 'last_notified', wfTimestamp( TS_DB ) )
 			->WHERE( 'user_id' )->EQUAL_TO( $userId )
 			->run( $db );
 	}

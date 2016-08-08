@@ -9,3 +9,4 @@ $wgExtensionMessagesFiles[ 'ContributionAppreciation' ] = $dir . 'ContributionAp
 $wgHooks['DiffViewHeader'][] = 'ContributionAppreciationController::onDiffHeader';
 $wgHooks['PageHistoryLineEnding'][] = 'ContributionAppreciationController::onPageHistoryLineEnding';
 $wgHooks['PageHistoryBeforeList'][] = 'ContributionAppreciationController::onPageHistoryBeforeList';
+$wgHooks['BeforePageDisplay'][] = 'ContributionAppreciationController::onBeforePageDisplay';
