@@ -178,15 +178,6 @@ call_user_func( function() {
 	define( 'Maps_NS_LAYER' , $GLOBALS['egMapsNamespaceIndex'] + 0 );
 	define( 'Maps_NS_LAYER_TALK' , $GLOBALS['egMapsNamespaceIndex'] + 1 );
 
-	$GLOBALS['wgAvailableRights'][] = 'geocode';
-
-	// Users that can geocode. By default the same as those that can edit.
-	foreach ( $GLOBALS['wgGroupPermissions'] as $group => $rights ) {
-		if ( array_key_exists( 'edit' , $rights ) ) {
-			$GLOBALS['wgGroupPermissions'][$group]['geocode'] = $GLOBALS['wgGroupPermissions'][$group]['edit'];
-		}
-	}
-
 	$GLOBALS['wgParamDefinitions']['coordinate'] = array(
 		'string-parser' => 'DataValues\Geo\Parsers\GeoCoordinateParser',
 	);
