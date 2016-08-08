@@ -1,17 +1,38 @@
 <?php
 
 class CategoryUrlParams {
-	private $display;
-	private $sort;
-	private $page;
+	const ALLOWED_SORT_TYPES = [ 'mostvisited', 'alphabetical' ];
+	const ALLOWED_DISPLAY_TYPES = [ 'exhibition', 'page' ];
 
+	/**
+	 * @var user passed through constructor. Used to read and save the preferences for sort and display types
+	 */
 	private $user;
 
-	private $allowedSortOptions = array( 'mostvisited', 'alphabetical' );
-	private $sortOption;
+	/**
+	 * @var String display param value as appears in URL
+	 */
+	private $display;
 
-	private $allowedDisplayOptions = array( 'exhibition', 'page' );
-	private $displayOption;
+	/**
+	 * @var String sort param value as appears in URL
+	 */
+	private $sort;
+
+	/**
+	 * @var int page number as appears in URL, converted to int, 0 being the default value
+	 */
+	private $page;
+
+	/**
+	 * @var string the computed sort type. One of self::ALLOWED_SORT_TYPES
+	 */
+	private $sortType;
+
+	/**
+	 * @var string the computed display type. One of self::ALLOWED_DISPLAY_TYPES
+	 */
+	private $displayType;
 
 	public function __construct( WebRequest $request, User $user = null ) {
 		$this->user = $user;
@@ -19,8 +40,8 @@ class CategoryUrlParams {
 		$this->sort = $request->getVal( 'sort', null );
 		$this->page = $request->getInt( 'page', 0 );
 
-		$this->sortOption = $this->initOption( $this->sort, $this->allowedSortOptions, 'CategoryExhibitionSortType' );
-		$this->displayOption = $this->initOption( $this->display, $this->allowedDisplayOptions, 'CategoryExhibitionDisplayType' );
+		$this->sortType = $this->initType( $this->sort, self::ALLOWED_SORT_TYPES, 'CategoryExhibitionSortType' );
+		$this->displayType = $this->initType( $this->display, self::ALLOWED_DISPLAY_TYPES, 'CategoryExhibitionDisplayType' );
 	}
 
 	/**
@@ -50,32 +71,32 @@ class CategoryUrlParams {
 		return $this->page;
 	}
 
-	public function getAllowedSortOptions() {
-		return $this->allowedSortOptions;
+	public function getAllowedSortTypes() {
+		return self::ALLOWED_SORT_TYPES;
 	}
 
-	public function getAllowedDisplayOptions() {
-		return $this->allowedDisplayOptions;
+	public function getAllowedDisplayTypes() {
+		return self::ALLOWED_DISPLAY_TYPES;
 	}
 
 	/**
 	 * Get the sort type requested by user either through the URL or the user preference.
-	 * Defaults to the first of the available sort options. Always returns one of the
-	 * available options (getAllowedSortOptions).
+	 * Defaults to the first of the available sort types. Always returns one of the
+	 * allowed types (getAllowedSortTypes).
 	 * @return string
 	 */
 	public function getSortType() {
-		return $this->sortOption;
+		return $this->sortType;
 	}
 
 	/**
 	 * Get the display type requested by user either through the URL or the user preference.
-	 * Defaults to the first of the available display options. Always returns one of the
-	 * available options (getAllowedDisplayOptions).
+	 * Defaults to the first of the available display types. Always returns one of the
+	 * allowed types (getAllowedDisplayTypes).
 	 * @return string
 	 */
 	public function getDisplayType() {
-		return $this->displayOption;
+		return $this->displayType;
 	}
 
 	/**
@@ -91,33 +112,33 @@ class CategoryUrlParams {
 			return;
 		}
 
-		$userPrefSort = $this->user->getGlobalPreference( 'CategoryExhibitionSortType', $this->allowedSortOptions[0] );
+		$userPrefSort = $this->user->getGlobalPreference( 'CategoryExhibitionSortType', self::ALLOWED_SORT_TYPES[0] );
 		if ( $userPrefSort !== $this->sortType ) {
 			$this->user->setGlobalPreference( 'CategoryExhibitionSortType', $this->sortType );
 			$this->user->saveSettings();
 		}
 
-		$userPrefDisplay = $this->user->getGlobalPreference( 'CategoryExhibitionDisplayType', $this->allowedDisplayOptions[0] );
+		$userPrefDisplay = $this->user->getGlobalPreference( 'CategoryExhibitionDisplayType', self::ALLOWED_DISPLAY_TYPES[0] );
 		if ( $userPrefDisplay !== $this->displayType ) {
 			$this->user->setGlobalPreference( 'CategoryExhibitionDisplayType', $this->displayType );
 			$this->user->saveSettings();
 		}
 	}
 
-	private function initOption( $urlParam, $allowedOptions, $userPreferenceName ) {
-		$defaultOption = $allowedOptions[0];
+	private function initType( $urlParam, $allowedTypes, $userPreferenceName ) {
+		$defaultType = $allowedTypes[0];
 
-		if ( in_array( $urlParam, $allowedOptions ) ) {
+		if ( in_array( $urlParam, $allowedTypes ) ) {
 			return $urlParam;
 		}
 
 		if ( $this->user && !$this->user->isAnon() ) {
-			$userOption = $this->user->getGlobalPreference( $userPreferenceName, $defaultOption );
-			if ( in_array( $userOption, $allowedOptions ) ) {
-				return $userOption;
+			$userType = $this->user->getGlobalPreference( $userPreferenceName, $defaultType );
+			if ( in_array( $userType, $allowedTypes ) ) {
+				return $userType;
 			}
 		}
 
-		return $defaultOption;
+		return $defaultType;
 	}
 }
