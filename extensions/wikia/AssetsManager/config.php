@@ -3031,9 +3031,9 @@ $config['contribution_appreciation_js'] = [
 	]
 ];
 
-$config['contribution_appreciation_scss'] = array(
+$config['contribution_appreciation_scss'] = [
 	'type' => AssetsManager::TYPE_SCSS,
-	'assets' => array(
+	'assets' => [
 		'//extensions/wikia/ContributionAppreciation/styles/ContributionAppreciation.scss',
-	),
-);
+	],
+];
