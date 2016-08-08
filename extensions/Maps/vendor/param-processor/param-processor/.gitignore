@@ -4,7 +4,8 @@
 !.*
 .idea/
 
-extensions/
-
 composer.phar
 composer.lock
+
+vendor/
+build/
