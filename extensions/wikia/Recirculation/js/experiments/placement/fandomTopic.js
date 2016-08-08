@@ -16,18 +16,19 @@ define('ext.wikia.recirculation.experiments.placement.FANDOM_TOPIC', [
 
 	function loadData() {
 		var popular = FandomHelper({
-			    type: 'community',
-			    fill: true,
-				limit: 15
+				type: 'community',
+				fill: true,
+				limit: 10
 			}).loadData(),
 			recent = FandomHelper({
 				type: 'latest',
-				limit: 1
+				limit: 1,
+				ignoreError: true
 			}).loadData();
 
 		return $.when(popular, recent)
 			.then(function(popularData, recentData) {
-				var items = utils.ditherResults(popularData.items, 2),
+				var items = utils.ditherResults(popularData.items, 2).slice(0,5),
 					mostRecent = recentData.items[0];
 
 				if (mostRecent && items.every(isNot(mostRecent))) {
