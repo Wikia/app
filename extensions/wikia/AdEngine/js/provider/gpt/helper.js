@@ -54,8 +54,8 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 		var count,
 			element,
 			recoverableSlots = extra.recoverableSlots || [],
-			shouldPush = !recoveryHelper.isBlocking() ||
-				(recoveryHelper.isBlocking() && recoveryHelper.isRecoverable(slot.name, recoverableSlots)),
+			shouldPushRecoverableAd = recoveryHelper.isBlocking() && recoveryHelper.isRecoverable(slot.name, recoverableSlots),
+			shouldPush = !recoveryHelper.isBlocking() || shouldPushRecoverableAd,
 			uapId = uapContext.getUapId();
 
 		log(['shouldPush',
@@ -77,6 +77,9 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 			if (count !== null) {
 				slotTargetingData.rv = count.toString();
 			}
+		}
+		if (shouldPushRecoverableAd) {
+			slotTargeting.src = 'rec';
 		}
 
 		slotTargetingData.wsi = slotTargeting.getWikiaSlotId(slot.name, slotTargetingData.src);
