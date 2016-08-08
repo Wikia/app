@@ -143,11 +143,16 @@ class DeletedContribsPager extends IndexPager {
 	function formatRow( $row ) {
 		wfProfileIn( __METHOD__ );
 
+		if ( is_numeric( $row->ar_user ) && $row->ar_user > 0 ) {
+			$userName = User::newFromId( $row->ar_user )->getName();
+		} else {
+			$userName = $row->ar_user_text;
+		}
 		$rev = new Revision( array(
 				'id'         => $row->ar_rev_id,
 				'comment'    => $row->ar_comment,
 				'user'       => $row->ar_user,
-				'user_text'  => $row->ar_user_text,
+				'user_text'  => $userName,
 				'timestamp'  => $row->ar_timestamp,
 				'minor_edit' => $row->ar_minor_edit,
 				'deleted'    => $row->ar_deleted,
