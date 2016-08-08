@@ -11,11 +11,11 @@ class ContributionAppreciationController extends WikiaController {
 	}
 
 	public function diffModule() {
-		$this->response->setValues( $this->request->getParams() );
+		$this->response->setValues( array_map( [ 'Sanitizer', 'encodeAttribute' ], $this->request->getParams() ) );
 	}
 
 	public function historyModule() {
-		$this->response->setValues( $this->request->getParams() );
+		$this->response->setValues( array_map( [ 'Sanitizer', 'encodeAttribute' ], $this->request->getParams() ) );
 	}
 
 	public static function onAfterDiffRevisionHeader( DifferenceEngine $diffPage, Revision $newRev, OutputPage $out ) {
