@@ -110,6 +110,16 @@ class RevisionDeleteUser {
 		);
 
 		# Hide name from deleted images
+		# Wikia change begin
+		# Log this for better understanding of the usage and further effort around
+		# removing redundant user data.
+		if ( ( new Wikia\Util\Statistics\BernoulliTrial( 0.01 ) )->shouldSample() ) {
+			Wikia\Logger\WikiaLogger::instance()->debug(
+				'SUS-810',
+				[ 'method' => __METHOD__, 'exception' => new Exception() ]
+			);
+		}
+		# Wikia change end
 		$dbw->update(
 			'filearchive',
 			array( "fa_deleted = fa_deleted $op $delUser" ),
