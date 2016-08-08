@@ -79,10 +79,17 @@ class DesignSystemHelper {
 	 *       - link-text
 	 *
 	 * @param array $fields
+	 * @param int $recursionDepth
 	 *
 	 * @return string
 	 */
-	public static function renderText( $fields ) {
+	public static function renderText( $fields, $recursionDepth = 0 ) {
+		if ( $recursionDepth > 5 ) {
+			WikiaLogger::instance()->error( 'Recursion depth maximum reached' );
+
+			return '';
+		}
+
 		if ( $fields['type'] === 'text' ) {
 			return htmlspecialchars( $fields['value'] );
 		} elseif ( $fields['type'] === 'translatable-text' ) {
@@ -98,8 +105,8 @@ class DesignSystemHelper {
 						]
 					);
 				} else {
-					foreach ( self::MESSAGE_PARAMS_ORDER[$fields['key']] as $index => $paramKey ) {
-						$paramsRendered[] = self::renderText( $fields['params'][$paramKey] );
+					foreach ( self::MESSAGE_PARAMS_ORDER[$fields['key']] as $paramKey ) {
+						$paramsRendered[] = self::renderText( $fields['params'][$paramKey], $recursionDepth + 1 );
 					}
 				}
 
@@ -113,7 +120,7 @@ class DesignSystemHelper {
 				[
 					'href' => $fields['href']
 				],
-				self::renderText( $fields['title'] )
+				self::renderText( $fields['title'], $recursionDepth + 1 )
 			);
 		} else {
 			WikiaLogger::instance()->error(
