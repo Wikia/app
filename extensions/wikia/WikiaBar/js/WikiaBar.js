@@ -195,9 +195,7 @@ var WikiaBar = {
 		this.wikiaBarWrapperObj.removeClass('hidden');
 		this.wikiaBarHidden = false;
 
-		if (this.wikiaBarWrapperObj.length) {
-			$('body').addClass('wikia-bar-visible');
-		}
+		this.addVisibilityClassToBody();
 	},
 	hide: function () {
 		$('#WikiaNotifications').addClass('hidden');
@@ -205,18 +203,29 @@ var WikiaBar = {
 		this.wikiaBarWrapperObj.addClass('hidden');
 		this.wikiaBarHidden = true;
 
-		if (this.wikiaBarWrapperObj.length) {
-			$('body').removeClass('wikia-bar-visible');
-		}
+		this.removeVisibilityClassToBody();
 	},
 	isWikiaBarHidden: function () {
 		return this.wikiaBarHidden;
 	},
 	showContainer: function() {
 		$('#WikiaBar').show();
+		this.addVisibilityClassToBody();
 	},
 	hideContainer: function() {
 		$('#WikiaBar').hide();
+		this.removeVisibilityClassToBody();
+
+	},
+	addVisibilityClassToBody: function() {
+		if (this.wikiaBarWrapperObj.length) {
+			$('body').addClass('wikia-bar-visible');
+		}
+	},
+	removeVisibilityClassToBody: function() {
+		if (this.wikiaBarWrapperObj.length) {
+			$('body').removeClass('wikia-bar-visible');
+		}
 	},
 	isContainerHidden: function() {
 		return $('#WikiaBar').is(":visible");
