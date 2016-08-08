@@ -173,13 +173,22 @@ class Editcount extends SpecialPage {
 		$arcount = $wgMemc->get($key);
 
 		if ( empty($arcount) ) {
+			if ( $uid > 0 ) {
+				$where = array(
+					'ar_user' => $uid
+				);
+			} else {
+				// Anonymous user, match by IP address
+				$userName = User::newFromId( $uid )->getName();
+				$where = array(
+					'ar_user_text' => $userName
+				);
+			}
 			$dbr =& wfGetDB( DB_SLAVE );
 			$arcount = $dbr->selectField(
 				array( 'archive' ),
 				array( 'COUNT(*) as count' ),
-				array(
-					'ar_user' => $uid
-				),
+				$where,
 				__METHOD__
 			);
 

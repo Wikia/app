@@ -115,12 +115,11 @@ class Revision implements IDBAccessObject {
 	 * @return Revision
 	 */
 	public static function newFromArchiveRow( $row, $overrides = array() ) {
-		$attribs = $overrides + array(
+		$attribs = array(
 			'page'       => isset( $row->ar_page_id ) ? $row->ar_page_id : null,
 			'id'         => isset( $row->ar_rev_id ) ? $row->ar_rev_id : null,
 			'comment'    => $row->ar_comment,
 			'user'       => $row->ar_user,
-			'user_text'  => User::newFromId( $row->ar_user )->getName(),
 			'timestamp'  => $row->ar_timestamp,
 			'minor_edit' => $row->ar_minor_edit,
 			'text_id'    => isset( $row->ar_text_id ) ? $row->ar_text_id : null,
@@ -128,6 +127,15 @@ class Revision implements IDBAccessObject {
 			'len'        => $row->ar_len,
 			'sha1'       => isset( $row->ar_sha1 ) ? $row->ar_sha1 : null,
 		);
+
+		if ( is_numeric( $row->ar_user ) && $row->ar_user > 0 ) {
+			$attribs['user_text'] = User::newFromId( $row->ar_user )->getName();
+		} else {
+			$attribs['user_text'] = $row->ar_user_text;
+		}
+
+		$attribs = $overrides + $attribs
+
 		if ( isset( $row->ar_text ) && !$row->ar_text_id ) {
 			// Pre-1.5 ar_text row
 			$attribs['text'] = self::getRevisionText( $row, 'ar_' );

@@ -220,7 +220,11 @@ class ApiQueryDeletedrevs extends ApiQueryBase {
 				$rev['parentid'] = intval( $row->ar_parent_id );
 			}
 			if ( $fld_user ) {
-				$rev['user'] = User::newFromId( $row->ar_user )->getName();
+				if ( $row->ar_user > 0 ) {
+					$rev['user'] = User::newFromId( $row->ar_user )->getName();
+				} else {
+					$rev['user'] = $row->ar_user_text;
+				}
 			}
 			if ( $fld_userid ) {
 				$rev['userid'] = $row->ar_user;
