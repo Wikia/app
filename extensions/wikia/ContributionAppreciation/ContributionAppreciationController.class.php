@@ -54,53 +54,58 @@ class ContributionAppreciationController extends WikiaController {
 		], $user->getName() );
 	}
 
-	public static function onDiffHeader( DifferenceEngine $diffPage, $oldRev, Revision $newRev ) {
-		global $wgUser;
+	public function diffModule() {
+		$this->response->setValues( $this->request->getParams() );
+	}
 
-		if ( $wgUser->isLoggedIn() ) {
+	public function historyModule() {
+		$this->response->setValues( $this->request->getParams() );
+	}
+
+	public static function onAfterDiffRevisionHeader( DifferenceEngine $diffPage, Revision $newRev, OutputPage $out ) {
+		if ( self::shouldDisplayApprectiation() ) {
 			Wikia::addAssetsToOutput( 'contribution_appreciation_js' );
-			$diffPage->getOutput()->addHTML( self::getAppreciationLink( $newRev->getId() ) );
+			Wikia::addAssetsToOutput( 'contribution_appreciation_scss' );
+			$out->addHTML( F::app()->renderView(
+				'ContributionAppreciation',
+				'diffModule',
+				[ 'revision' => $newRev->getId(), 'username' => $newRev->getUserText() ]
+			) );
 		}
 
 		return true;
 	}
 
-	public static function onPageHistoryLineEnding( HistoryPager $pager, $row, &$s, $classes ) {
-		global $wgUser;
-
-		if ( $wgUser->isLoggedIn() ) {
-			$s .= self::getAppreciationLink( $row->rev_id );
+	public static function onPageHistoryToolsList( HistoryPager $pager, $row, &$tools ) {
+		if ( self::shouldDisplayApprectiation() ) {
+			$tools[] = F::app()->renderView( 'ContributionAppreciation', 'historyModule', [ 'revision' => $row->rev_id ] );
 		}
 
 		return true;
 	}
 
 	public static function onPageHistoryBeforeList() {
-		global $wgUser;
-
-		if ( $wgUser->isLoggedIn() ) {
+		if ( self::shouldDisplayApprectiation() ) {
 			Wikia::addAssetsToOutput( 'contribution_appreciation_js' );
+			Wikia::addAssetsToOutput( 'contribution_appreciation_scss' );
 		}
 
 		return true;
 	}
 
 	public static function onBeforePageDisplay( \OutputPage $out, \Skin $skin ) {
-		if ( $out->getUser()->isLoggedIn() ) {
+		if ( self::shouldDisplayApprectiation() ) {
 			Wikia::addAssetsToOutput( 'contribution_appreciation_user_js' );
 		}
 
 		return true;
 	}
 
-	private static function getAppreciationLink( $revision ) {
-		return Html::element( 'button',
-			[
-				'class' => 'appreciation-button',
-				'href' => '#',
-				'data-revision' => $revision
-			],
-			wfMessage( 'appreciation-text' )->escaped() );
+	private static function shouldDisplayApprectiation() {
+		global $wgUser, $wgLang;
+
+		return $wgUser->isLoggedIn() && $wgLang->getCode() === 'en';
+
 	}
 
 	private function prepareAppreciations( $upvotes ) {
