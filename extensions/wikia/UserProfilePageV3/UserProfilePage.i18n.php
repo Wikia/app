@@ -122,6 +122,13 @@ $messages['en'] = [
 	'right-authenticated' => 'An account which has been vetted by Wikia, as being a legitimate industry source (for example, a celebrity or a game developer)',
 	'right-displaywikiastarslabel' => 'Flags the user as "Wikia Star" on user profile',
 	'right-removeavatar' => 'Remove a user\'s avatar icon',
+	'right-loggedin' => 'Flags user as being logged in to an account',
+
+
+	// miscellaneous rights
+	'right-editprofilev3' => 'Edit other user\'s profile data',
+	'right-deleteprofilev3' => 'Delete user pages',
+	'right-renameprofilev3' => 'Move user pages',
 ];
 
 /** Message documentation (Message documentation)

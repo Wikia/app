@@ -196,6 +196,7 @@ Before contributing to the {{SITENAME}} Forums, please keep in mind a few best p
 	/* rights */
 	'right-forumadmin' => 'Has admin access to the forums',
 	'right-forumoldedit' => 'Can edit the old, archived forums',
+	'right-boardedit' => 'Edit Forum board information',
 ];
 
 /** Message documentation (Message documentation)
