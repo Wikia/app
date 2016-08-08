@@ -84,7 +84,7 @@ class Geocode extends ApiBase {
 		);
 	}
 
-	protected function getExamples() {
+	public function getExamples() {
 		return array(
 			'api.php?action=geocode&locations=new york',
 			'api.php?action=geocode&locations=new york|brussels|london',
