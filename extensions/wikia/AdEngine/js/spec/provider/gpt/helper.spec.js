@@ -36,7 +36,7 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 			slotElement: {
 				appendChild: noop
 			},
-			slotTargeting: {},
+			slotTargetingData: {},
 			sraHelper: {
 				shouldFlush: function () {
 					return true;
@@ -89,8 +89,8 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 	}
 
 	beforeEach(function () {
-		AdElement = function (slotName, slotPath, slotTargeting) {
-			mocks.slotTargeting = slotTargeting;
+		AdElement = function (slotName, slotPath, slotTargetingData) {
+			mocks.slotTargetingData = slotTargetingData;
 		};
 
 		AdElement.prototype.getId = function () {
@@ -215,15 +215,15 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 		var pushAd = function() {
  			getModule().pushAd(createSlot('MY_SLOT'), '/blah/blah', {}, {});
 		};
-		spyOn(mocks, 'slotTargeting');
+		spyOn(mocks, 'slotTargetingData');
 		mocks.recoveryHelper.isBlocking = function () { return true; };
 
 		mocks.recoveryHelper.isRecoverable = function () { return false; };
 		pushAd();
-		expect(mocks.slotTargeting.src).not.toBeDefined();
+		expect(mocks.slotTargetingData.src).not.toBeDefined();
 
 		mocks.recoveryHelper.isRecoverable = function () { return true; };
 		pushAd();
-		expect(mocks.slotTargeting.src).toBe('rec');
+		expect(mocks.slotTargetingData.src).toBe('rec');
 	});
 });
