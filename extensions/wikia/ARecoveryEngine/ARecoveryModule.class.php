@@ -10,7 +10,8 @@ class ARecoveryModule {
 	 */
 	public static function isEnabled() {
 		global $wgEnableUsingSourcePointProxyForCSS;
-
+		//TODO: only for test
+		return false;
 		return !empty( $wgEnableUsingSourcePointProxyForCSS );
 	}
 
