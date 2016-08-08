@@ -16,6 +16,8 @@ class DesignSystemHelper {
 		]
 	];
 
+	const MAX_RECURSION_DEPTH = 10;
+
 	private static $svgCache = [ ];
 
 	/**
@@ -84,7 +86,7 @@ class DesignSystemHelper {
 	 * @return string
 	 */
 	public static function renderText( $fields, $recursionDepth = 0 ) {
-		if ( $recursionDepth > 5 ) {
+		if ( $recursionDepth > self::MAX_RECURSION_DEPTH ) {
 			WikiaLogger::instance()->error( 'Recursion depth maximum reached' );
 
 			return '';
