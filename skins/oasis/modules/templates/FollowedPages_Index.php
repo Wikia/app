@@ -1,10 +1,10 @@
 <section class="FollowedPagesModule module">
 	<h2><?= wfMessage( 'wikiafollowedpages-userpage-heading' )->escaped(); ?></h2>
-<?php if(count($data) == 0): ?>
+<?php if ( count( $data ) == 0 ): ?>
 	<?= wfMessage( 'wikiafollowedpages-special-empty' )->escaped(); ?>
 <?php else: ?>
 	<ul>
-	<?php for ($i=0; $i < $max_followed_pages; $i++): ?>
+	<?php for ( $i = 0; $i < $max_followed_pages; $i++ ): ?>
 		<? $item = $data[$i]; ?>
 		<li>
 			<div>
@@ -15,7 +15,6 @@
 		</li>
 	<?php endfor; ?>
 <?php endif; ?>
-?>
 	</ul>
-	<?= isset($follow_all_link) ? $follow_all_link : '' ?>
+	<?= $follow_all_link ?? '' ?>
 </section>
