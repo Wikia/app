@@ -2,19 +2,49 @@
 define('ext.wikia.recirculation.experiments.placement.FANDOM_TOPIC', [
 	'jquery',
 	'wikia.window',
+	'ext.wikia.recirculation.utils',
 	'ext.wikia.recirculation.helpers.fandom',
 	'ext.wikia.recirculation.helpers.curatedContent',
 	'ext.wikia.recirculation.views.rail'
-], function ($, w, FandomHelper, CuratedHelper, RailView) {
+], function ($, w, utils, FandomHelper, CuratedHelper, RailView) {
+
+	function isNot(item) {
+		return function(element) {
+			return element.title !== item.title;
+		}
+	}
+
+	function loadData() {
+		var popular = FandomHelper({
+			    type: 'community',
+			    fill: true,
+				limit: 15
+			}).loadData(),
+			recent = FandomHelper({
+				type: 'latest',
+				limit: 1
+			}).loadData();
+
+		return $.when(popular, recent)
+			.then(function(popularData, recentData) {
+				var items = utils.ditherResults(popularData.items, 2),
+					mostRecent = recentData.items[0];
+
+				if (mostRecent && items.every(isNot(mostRecent))) {
+					items.unshift(mostRecent);
+				}
+
+				popularData.items = items.slice(0,5);
+
+				return popularData;
+			});
+	}
 
 	function run(experimentName) {
 		var view = RailView(),
 			curated = CuratedHelper();
 
-		return FandomHelper({
-		    type: 'community',
-			limit: 5
-		}).loadData()
+		return loadData()
 			.then(curated.injectContent)
 			.then(view.render)
 			.then(view.setupTracking(experimentName))

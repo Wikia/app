@@ -79,6 +79,7 @@ class FandomDataService {
 	private function buildUrl( $type, $options ) {
 		switch ( $type ) {
 			case 'latest':
+				$options['after'] = new DateTime()->modify( '-24 hours' )->format( DateTime::ATOM );
 				$endpoint = 'posts';
 				break;
 			default:
