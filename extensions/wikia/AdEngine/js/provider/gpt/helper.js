@@ -79,7 +79,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 			}
 		}
 		if (shouldPushRecoverableAd) {
-			slotTargeting.src = 'rec';
+			slotTargetingData.src = 'rec';
 		}
 
 		slotTargetingData.wsi = slotTargeting.getWikiaSlotId(slot.name, slotTargetingData.src);
