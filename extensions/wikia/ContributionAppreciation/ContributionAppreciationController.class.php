@@ -10,22 +10,35 @@ class ContributionAppreciationController extends WikiaController {
 		}
 	}
 
-	public static function onDiffHeader( DifferenceEngine $diffPage, $oldRev, Revision $newRev ) {
+	public function diffModule() {
+		$this->response->setValues( $this->request->getParams() );
+	}
+
+	public function historyModule() {
+		$this->response->setValues( $this->request->getParams() );
+	}
+
+	public static function onAfterDiffRevisionHeader( DifferenceEngine $diffPage, Revision $newRev, OutputPage $out ) {
 		global $wgUser;
 
 		if ( $wgUser->isLoggedIn() ) {
 			Wikia::addAssetsToOutput( 'contribution_appreciation_js' );
-			$diffPage->getOutput()->addHTML( self::getAppreciationLink( $newRev->getId() ) );
+			Wikia::addAssetsToOutput( 'contribution_appreciation_scss' );
+			$out->addHTML( F::app()->renderView(
+				'ContributionAppreciation',
+				'diffModule',
+				[ 'revision' => $newRev->getId(), 'username' => $newRev->getUserText() ]
+			) );
 		}
 
 		return true;
 	}
 
-	public static function onPageHistoryLineEnding( HistoryPager $pager, $row, &$s, $classes ) {
+	public static function onPageHistoryToolsList( HistoryPager $pager, $row, &$tools ) {
 		global $wgUser;
 
 		if ( $wgUser->isLoggedIn() ) {
-			$s .= self::getAppreciationLink( $row->rev_id );
+			$tools[] = F::app()->renderView( 'ContributionAppreciation', 'historyModule', [ 'revision' => $row->rev_id ] );
 		}
 
 		return true;
@@ -36,18 +49,9 @@ class ContributionAppreciationController extends WikiaController {
 
 		if ( $wgUser->isLoggedIn() ) {
 			Wikia::addAssetsToOutput( 'contribution_appreciation_js' );
+			Wikia::addAssetsToOutput( 'contribution_appreciation_scss' );
 		}
 
 		return true;
-	}
-
-	private static function getAppreciationLink( $revision ) {
-		return Html::element( 'button',
-			[
-				'class' => 'appreciation-button',
-				'href' => '#',
-				'data-revision' => $revision
-			],
-			wfMessage( 'appreciation-text' )->escaped() );
 	}
 }

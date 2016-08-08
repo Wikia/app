@@ -3027,6 +3027,13 @@ $config['contribution_appreciation_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'oasis' ],
 	'assets' => [
-		'//extensions/wikia/ContributionAppreciation/js/ContributionAppreciation.js'
+		'//extensions/wikia/ContributionAppreciation/scripts/ContributionAppreciation.js'
 	]
 ];
+
+$config['contribution_appreciation_scss'] = array(
+	'type' => AssetsManager::TYPE_SCSS,
+	'assets' => array(
+		'//extensions/wikia/ContributionAppreciation/styles/ContributionAppreciation.scss',
+	),
+);
