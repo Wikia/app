@@ -154,7 +154,7 @@ class DiscussionReplyController extends DiscussionController {
 
 class DiscussionUpvoteController extends DiscussionController {
 
-    protected $postTitle;
+    private $postTitle;
     private $upVotes;
 
     CONST MESSAGE_KEYS = [
