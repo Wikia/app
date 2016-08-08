@@ -39,7 +39,7 @@ languages.forEach(function (lang) {
 
 	Object.keys(messageParamsMapping).forEach(function (key) {
 		if (i18n.hasOwnProperty(key)) {
-			i18n[key] = i18n[key].replace(/__([a-z]+)__/gi, function (match, param) {
+			i18n[key] = i18n[key].replace(/__([a-z0-9]+)__/gi, function (match, param) {
 				return messageParamsMapping[key][param];
 			});
 		}

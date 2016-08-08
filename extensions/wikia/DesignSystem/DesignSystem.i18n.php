@@ -1,6 +1,8 @@
 <?php
 
 /**
+ * Copied from /extensions/SemanticDrilldown/languages/SD_Messages.php
+ *
  * Beginning with MediaWiki 1.23, translation strings are stored in json files,
  * and the EXTENSION.i18n.php file only exists to provide compatibility with
  * older releases of MediaWiki. For more information about this migration, see:
