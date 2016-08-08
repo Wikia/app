@@ -452,14 +452,14 @@ class BodyController extends WikiaController {
 
 					$this->subtitle .= ' | ';
 					$this->subtitle .= $bubble;
-					$this->subtitle .= Wikia::link( $talkPage );
+					$this->subtitle .= Linker::link( $talkPage );
 					break;
 
 				case NS_USER_TALK:
 					$subjectPage = $this->wg->Title->getSubjectPage();
 
 					$this->subtitle .= ' | ';
-					$this->subtitle .= Wikia::link( $subjectPage );
+					$this->subtitle .= Linker::link( $subjectPage );
 					break;
 			}
 		}

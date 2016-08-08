@@ -11,7 +11,7 @@ $runNjord = ( !empty( $wg->EnableNjordExt ) && WikiaPageType::isMainPage() );
 if ( $runNjord ) {
 	// edit button with actions dropdown
 	if ( !empty( $action ) ) {
-		echo F::app()->renderView(
+		echo $app->renderView(
 			'MenuButton',
 			'Index',
 			[ 'action' => $action, 'image' => $actionImage, 'dropdown' => $dropdown, 'name' => $actionName ]
@@ -49,7 +49,7 @@ if ( $runNjord ) {
 
 		// edit button with actions dropdown
 		if ( !empty( $action ) ) {
-			echo F::app()->renderView(
+			echo $app->renderView(
 				'MenuButton',
 				'Index',
 				[ 'action' => $action, 'image' => $actionImage, 'dropdown' => $dropdown, 'name' => $actionName ]
@@ -60,16 +60,12 @@ if ( $runNjord ) {
 
 		// TODO: use PageHeaderIndexExtraButtons hook for these buttons
 		// "Add a photo" button
-		if ( !empty( $isSpecialImages ) && !empty( $wg->EnableUploads ) ) {
-			echo Wikia::specialPageLink(
-				'Upload',
-				'oasis-add-photo',
-				'wikia-button upphotos',
-				'blank.gif',
-				'oasis-add-photo-to-wiki',
-				'sprite photo'
-			);
-		}
+		if ( !empty( $isSpecialImages ) && !empty( $wg->EnableUploads ) ): ?>
+			<a class="wikia-button upphotos" href="<?= Skin::makeSpecialUrl( 'Upload' ); ?>">
+				<img src="<?= $wg->BlankImgUrl ?>" class="sprite photo" alt="<?= wfMessage( 'oasis-add-photo' )->escaped(); ?>" />
+				<?= wfMessage( 'oasis-add-photo' )->escaped(); ?>
+			</a>
+		<?php endif;
 
 		// "Add a video" button
 		if ( !empty( $isSpecialVideos ) && !empty( $wg->EnableUploads ) && $showAddVideoBtn ): ?>
@@ -80,7 +76,7 @@ if ( $runNjord ) {
 
 		// comments & like button
 		if ( !$isWallEnabled ) {
-			echo F::app()->renderView( 'CommentsLikes', 'Index', [ 'comments' => $comments ] );
+			echo $app->renderView( 'CommentsLikes', 'Index', [ 'comments' => $comments ] );
 		}
 
 		foreach ( $extraButtons as $button ) {
