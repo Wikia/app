@@ -1,25 +1,29 @@
-<?php
-if(count($data) == 5) {
-	echo wfMsg('myhome-hot-spots-newest')
-?>
+<?php if ( count( $data ) == 5 ): ?>
+	<?= wfMessage( 'myhome-hot-spots-newest' )->escaped(); ?>
 <ul class="clearfix" style="margin-top: 5px;">
-<?php foreach($data as $item) { ?>
+<?php foreach ( $data as $item ): ?>
 	<li>
-		<span><a href="<?= htmlspecialchars($item['url']) ?>" class="title" rel="nofollow"><?= htmlspecialchars($item['title'])  ?></a></span>
+		<span>
+			<a href="<?= Sanitizer::encodeAttribute( $item['url'] ); ?>" class="title" rel="nofollow">
+				<?= htmlspecialchars( $item['title'] );  ?>
+			</a>
+		</span>
 	</li>
-<?php } ?>
+<?php endforeach; ?>
 </ul>
-<?php } else if(count($data) == 2) {
-	echo '<p style="margin-bottom: 5px">'.wfMsgExt('myhome-hot-spots-definition','parsemag',$data['interval']).'</p>';
+<?php elseif ( count( $data ) == 2 ): ?>
+<p style="margin-bottom: 5px"><?= wfMessage( 'myhome-hot-spots-definition', $data['interval'] )->escaped(); ?></p>
+<?php
 	$hotSpotSeverity = 1; //used to set background color heat level. 1 (hottest) - 5 (coolest).
-	$hotSpotLast = Array(); //used to compare the last rendered item to current.
+	$hotSpotLast = []; //used to compare the last rendered item to current.
 	$hotSpotFire = '';
-	if($data['results'][0]['count'] - $data['results'][1]['count'] > 2) {
+	if ( $data['results'][0]['count'] - $data['results'][1]['count'] > 2 ) {
 		$hotSpotFire = ' class="fire"';
 	}
-	echo '<ul id="myhome-hot-spots" class="reset">';
-	foreach($data['results'] as $row) {
-		if (isset($hotSpotLast['count']) && ($row['count'] == $hotSpotLast['count']) ) { //same count as before?
+?>
+<ul id="myhome-hot-spots" class="reset">
+	<?php foreach ( $data['results'] as $row ) {
+		if ( isset( $hotSpotLast['count'] ) && ( $row['count'] == $hotSpotLast['count'] ) ) { //same count as before?
 			$thisSeverity = $hotSpotLast['severity']; //use the last severity level
 		} else {
 			$thisSeverity = $hotSpotSeverity; //use the actual severity level for this row
@@ -29,11 +33,14 @@ if(count($data) == 5) {
 			<div class="myhome-hot-spots-fire">
 				<div class="hot-spot-severity-<?=$thisSeverity?>">
 					<big><?= $row['count'] ?></big>
-					<small><?= wfMsg('myhome-hot-spots-number-of-editors') ?></small>
+					<small><?= wfMessage( 'myhome-hot-spots-number-of-editors' )->escaped(); ?></small>
 				</div>
 			</div>
-
-			<span><a href="<?= htmlspecialchars($row['url']) ?>" class="title" rel="nofollow"><?= htmlspecialchars($row['title'])  ?></a></span>
+			<span>
+				<a href="<?= Sanitizer::encodeAttribute( $row['url'] ); ?>" class="title" rel="nofollow">
+					<?= htmlspecialchars( $row['title'] ); ?>
+				</a>
+			</span>
 		</li>
 <?php
 		$hotSpotLast['count'] = $row['count'];
@@ -41,6 +48,7 @@ if(count($data) == 5) {
 
 		$hotSpotFire = '';
 		$hotSpotSeverity++;
-	}
-	echo '</ul>';
-} ?>
+	} // endforeach;
+?>
+</ul>
+<?php endif; ?>

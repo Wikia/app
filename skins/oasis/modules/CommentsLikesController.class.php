@@ -1,12 +1,13 @@
 <?php
+
 /**
  * Renders comments chicklet button with given value for given title
  *
  * @author Maciej Brencz
  */
-
 class CommentsLikesController extends WikiaController {
 
+	/** @var Title $contextTitle */
 	private $contextTitle;
 
 	public function init() {
@@ -18,7 +19,7 @@ class CommentsLikesController extends WikiaController {
 	 * Are article comments enabled for context title?
 	 */
 	private function checkArticleComments() {
-		$this->isArticleComments = class_exists('ArticleComment') && ArticleCommentInit::ArticleCommentCheckTitle($this->contextTitle);
+		$this->isArticleComments = class_exists( 'ArticleComment' ) && ArticleCommentInit::ArticleCommentCheckTitle( $this->contextTitle );
 		return $this->isArticleComments;
 	}
 
@@ -26,25 +27,22 @@ class CommentsLikesController extends WikiaController {
 	 * Get URL of the page comments button should be linking to
 	 */
 	private function getCommentsLink() {
-		wfProfileIn(__METHOD__);
-		global $wgTitle, $wgRequest;
+		wfProfileIn( __METHOD__ );
 
-		$isHistory = $wgRequest->getVal('action') == 'history';
+		$isHistory = $this->wg->Request->getVal( 'action' ) == 'history';
 
-		if ($this->checkArticleComments()) {
+		if ( $this->checkArticleComments() ) {
 			// link to article comments section
-			if ($this->contextTitle != $wgTitle || $isHistory) {
-				$commentsLink = $this->contextTitle->getLocalUrl() . '#WikiaArticleComments';
-			}
-			else {
+			if ( $this->contextTitle != $this->wg->Title || $isHistory ) {
+				$commentsLink = $this->contextTitle->getLocalURL() . '#WikiaArticleComments';
+			} else {
 				// fix for redirected articles
 				$commentsLink = '#WikiaArticleComments';
 			}
-		}
-		else {
+		} else {
 			// link to talk page
-			if ($this->contextTitle->canTalk($this->contextTitle->getNamespace())) {
-				$commentsLink = $this->contextTitle->getTalkPage()->getLocalUrl();
+			if ( $this->contextTitle->canTalk() ) {
+				$commentsLink = $this->contextTitle->getTalkPage()->getLocalURL();
 			} else {
 				// This case shouldn't happen other than Special:ThemeDesignerPreview
 				// We're faking some comments to show a user what an article would look like
@@ -52,7 +50,7 @@ class CommentsLikesController extends WikiaController {
 			}
 		}
 
-		wfProfileOut(__METHOD__);
+		wfProfileOut( __METHOD__ );
 		return $commentsLink;
 	}
 
@@ -60,10 +58,9 @@ class CommentsLikesController extends WikiaController {
 	 * Get tooltip for comments button
 	 */
 	private function getCommentsTooltip() {
-		if ($this->comments == 0) {
-			$commentsTooltip = wfMsg('oasis-page-header-no-comments-tooltip');
-		}
-		else {
+		if ( $this->comments == 0 ) {
+			$commentsTooltip = wfMessage( 'oasis-page-header-no-comments-tooltip' )->escaped();
+		} else {
 			$commentsTooltip = '';
 		}
 
@@ -75,40 +72,37 @@ class CommentsLikesController extends WikiaController {
 	 * @param Integer $count - number of comments/talk pages
 	 * @return String - formatted count
 	 */
-	private function formatCount($count) {
-		if ($count > 999999) {
-			return $formattedComments = wfMessage('oasis-page-header-comments-m', floor($count / 1000000))->text();
-		}
-		else if ($count > 999) {
-			return $formattedComments = wfMessage('oasis-page-header-comments-k', floor($count / 1000))->text();
+	private function formatCount( $count ) {
+		if ( $count > 999999 ) {
+			return $formattedComments = wfMessage( 'oasis-page-header-comments-m', floor( $count / 1000000 ) )->escaped();
+		} else if ( $count > 999 ) {
+			return $formattedComments = wfMessage( 'oasis-page-header-comments-k', floor( $count / 1000 ) )->escaped();
 		}
 		return $count;
 	}
 
-	public function executeIndex($data) {
-		wfProfileIn(__METHOD__);
-		global $wgTitle, $wgContentNamespaces, $wgExtraNamespacesLocal;
+	public function index( $data ) {
+		wfProfileIn( __METHOD__ );
 
-		if(empty($wgExtraNamespacesLocal)){
-			$wgExtraNamespacesLocal = array();
+		if ( empty( $this->wg->ExtraNamespacesLocal ) ) {
+			$this->wg->ExtraNamespacesLocal = [];
 		}
 
 		// set the page for which we're showing comments / likes
 		// used for proper linking on blog posts listings
-		if (!empty($data['title'])) {
-			$this->contextTitle = $data['title'];
-		}
-		else {
+		if ( $this->request->getVal( 'title' ) ) {
+			$this->contextTitle = $this->request->getVal( 'title' );
+		} else {
 			// by default we're showing # of comments for current page
-			$this->contextTitle = &$wgTitle;
+			$this->contextTitle = &$this->wg->Title;
 		}
 
 		// comments / talks
-		if (isset($data['comments']) && is_numeric($data['comments'])) {
-			$this->comments = $data['comments'];
+		if ( is_numeric( $this->request->getVal( 'comments' ) ) ) {
+			$this->comments = $this->request->getInt( 'comments' );
 
 			// format number of comments (1200 -> 1k, 9999 -> 9k, 1.300.000 -> 1M)
-			$this->formattedComments = $this->formatCount($this->comments);
+			$this->formattedComments = $this->formatCount( $this->comments );
 
 			$this->commentsLink = $this->getCommentsLink();
 			$this->commentsTooltip = $this->getCommentsTooltip();
@@ -118,38 +112,36 @@ class CommentsLikesController extends WikiaController {
 			$this->commentsEnabled = $this->checkArticleComments();
 
 			// pass accesskey => false to this module to disable accesskey attribute (BugId:15685)
-			if (!isset($data['accesskey']) || $data['accesskey'] !== false) {
+			if ( !isset( $data['accesskey'] ) || $data['accesskey'] !== false ) {
 				$this->commentsAccesskey = ' accesskey="t"';
 			}
 
 			// render comments count as just a bubble
-			$this->commentsBubble = !empty($data['bubble']);
+			$this->commentsBubble = $this->request->getBool( 'bubble' );
 		}
 
-		wfProfileOut(__METHOD__);
+		wfProfileOut( __METHOD__ );
 	}
 
 	public function getData() {
-		global $wgTitle;
+		wfProfileIn( __METHOD__ );
 
-		wfProfileIn(__METHOD__);
+		$this->contextTitle = $this->wg->Title;
 
-		$this->contextTitle = $wgTitle;
-
-		$count = $this->request->getVal('count');
-		$formattedCount = $this->formatCount($count);
+		$count = $this->request->getVal( 'count' );
+		$formattedCount = $this->formatCount( $count );
 		$href = $this->getCommentsLink();
 		$tooltip = $this->getCommentsTooltip();
 		$mgsKey = $this->checkArticleComments() ? 'oasis-page-header-comments' : 'oasis-page-header-talk';
-		$title = wfMessage($mgsKey)->text();
+		$title = wfMessage( $mgsKey )->text();
 
-		wfProfileOut(__METHOD__);
+		wfProfileOut( __METHOD__ );
 
-		$this->response->setVal('data', [
+		$this->response->setVal( 'data', [
 			'href' => $href,
 			'tooltip' => $tooltip,
 			'formattedCount' => $formattedCount,
-			'title' => $title
-		]);
+			'title' => $title,
+		] );
 	}
 }

@@ -10,7 +10,7 @@ class PageHeaderController extends WikiaController {
 
 	var $content_actions;
 
-	/* @var SkinTemplate */
+	/* @var WikiaSkinTemplate $skinTemplate */
 	private $skinTemplate;
 
 	public function init() {
@@ -35,10 +35,7 @@ class PageHeaderController extends WikiaController {
 	 * Use MW core variable to generate action button
 	 */
 	protected function prepareActionButton() {
-
-		global $wgTitle, $wgUser, $wgRequest;
-
-		$isDiff = !is_null( $wgRequest->getVal( 'diff' ) );
+		$isDiff = !is_null( $this->wg->Request->getVal( 'diff' ) );
 
 		// "Add topic" action
 		if ( isset( $this->content_actions['addsection'] ) ) {
@@ -53,9 +50,9 @@ class PageHeaderController extends WikiaController {
 
 		// handle protected pages (they should have viewsource link and lock icon) - BugId:9494
 		if ( isset( $this->content_actions['viewsource'] ) &&
-			!$wgTitle->isProtected() &&
-			!$wgTitle->isNamespaceProtected( $wgUser ) &&
-			!$wgUser->isLoggedIn() /* VOLDEV-74: logged in users should see the viewsource button, not edit */
+			!$this->wg->Title->isProtected() &&
+			!$this->wg->Title->isNamespaceProtected( $this->wg->User ) &&
+			!$this->wg->User->isLoggedIn() /* VOLDEV-74: logged in users should see the viewsource button, not edit */
 		) {
 			// force login to edit page that is not protected
 			$this->content_actions['edit'] = $this->content_actions['viewsource'];
@@ -64,7 +61,7 @@ class PageHeaderController extends WikiaController {
 		}
 
 		// If cascade protected, show viewsource button - BugId:VE-89
-		if ( isset( $this->content_actions['edit'] ) && $wgTitle->isCascadeProtected() ) {
+		if ( isset( $this->content_actions['edit'] ) && $this->wg->Title->isCascadeProtected() ) {
 			$this->content_actions['viewsource'] = $this->content_actions['edit'];
 			$this->content_actions['viewsource']['text'] = wfMessage( 'viewsource' )->text();
 			unset( $this->content_actions['edit'] );
@@ -73,7 +70,7 @@ class PageHeaderController extends WikiaController {
 		// "Add topic"
 		if ( isset( $this->content_actions['addsection'] ) ) {
 			$action = $this->content_actions['addsection'];
-			$action['text'] = wfMsg( 'oasis-page-header-add-topic' );
+			$action['text'] = wfMessage( 'oasis-page-header-add-topic' )->text();
 			$this->action = $action;
 
 			$this->actionImage = MenuButtonController::ADD_ICON;
@@ -110,7 +107,7 @@ class PageHeaderController extends WikiaController {
 	 * Get content actions for dropdown
 	 */
 	protected function getDropdownActions() {
-		$ret = [ ];
+		$ret = [];
 
 		$editActions = [ ];
 		if ( isset( $this->content_actions['edit'] ) ) {
@@ -141,9 +138,7 @@ class PageHeaderController extends WikiaController {
 	}
 
 	private function getCuratedContentButton() {
-		global $wgEnableCuratedContentExt;
-
-		if ( !empty( $wgEnableCuratedContentExt ) ) {
+		if ( !empty( $this->wg->EnableCuratedContentExt ) ) {
 			return $this->app->sendRequest( 'CuratedContent', 'editButton' );
 		} else {
 			return null;
@@ -152,11 +147,8 @@ class PageHeaderController extends WikiaController {
 
 	/**
 	 * Render default page header (with edit dropdown, history dropdown, ...)
-	 *
-	 * @param: array $params
-	 *    key: showSearchBox (default: false)
 	 */
-	public function executeIndex( $params ) {
+	public function index() {
 		wfProfileIn( __METHOD__ );
 
 		$this->isUserLoggedIn = $this->wg->User->isLoggedIn();
@@ -396,9 +388,7 @@ class PageHeaderController extends WikiaController {
 		$this->loginClass = !empty( $this->wg->DisableAnonymousEditing ) ? ' require-login' : '';
 
 		// render monetization module
-		if ( !empty( $params['monetizationModules'] ) ) {
-			$this->monetizationModules = $params['monetizationModules'];
-		}
+		$this->monetizationModules = $this->request->getArray( 'monetizationModules' );
 
 		wfProfileOut( __METHOD__ );
 	}
@@ -406,32 +396,28 @@ class PageHeaderController extends WikiaController {
 	/**
 	 * Render header for edit page
 	 */
-	public function executeEditPage() {
-		global $wgTitle, $wgRequest, $wgSuppressToolbar, $wgShowMyToolsOnly, $wgEnableWallExt;
-		wfProfileIn( __METHOD__ );
-
+	public function editPage() {
 		// special handling for special pages (CreateBlogPost, CreatePage)
-		$ns = $wgTitle->getNamespace();
-		if ( $ns == NS_SPECIAL ) {
-			wfProfileOut( __METHOD__ );
+		if ( $this->wg->Title->isSpecialPage() ) {
 			return;
 		}
+		wfProfileIn( __METHOD__ );
 
 		// detect section edit
-		$isSectionEdit = is_numeric( $wgRequest->getVal( 'section' ) );
+		$isSectionEdit = is_numeric( $this->wg->Request->getVal( 'section' ) );
 
 		// show proper message in the header
-		$action = $wgRequest->getVal( 'action', 'view' );
+		$action = $this->wg->Request->getVal( 'action', 'view' );
 
-		$isPreview = $wgRequest->getCheck( 'wpPreview' ) || $wgRequest->getCheck( 'wpLivePreview' );
-		$isShowChanges = $wgRequest->getCheck( 'wpDiff' );
-		$isDiff = !is_null( $wgRequest->getVal( 'diff' ) ); // RT #69931
+		$isPreview = $this->wg->Request->getCheck( 'wpPreview' ) || $this->wg->Request->getCheck( 'wpLivePreview' );
+		$isShowChanges = $this->wg->Request->getCheck( 'wpDiff' );
+		$isDiff = !is_null( $this->wg->Request->getVal( 'diff' ) ); // RT #69931
 		$isEdit = in_array( $action, [ 'edit', 'submit' ] );
 		$isHistory = $action == 'history';
 
 		/** start of wikia changes @author nAndy */
 		$this->isHistory = $isHistory;
-		$this->isUserTalkArchiveModeEnabled = ( !empty( $wgEnableWallExt ) && $ns == NS_USER_TALK );
+		$this->isUserTalkArchiveModeEnabled = ( !empty( $this->wg->EnableWallExt ) && $this->wg->Title->inNamespace( NS_USER_TALK ) );
 		/** end of wikia changes */
 
 		// add editor's right rail when not editing main page
@@ -441,7 +427,7 @@ class PageHeaderController extends WikiaController {
 
 		// hide floating toolbar when on edit page / in preview mode / show changes
 		if ( $isEdit || $isPreview ) {
-			$wgSuppressToolbar = true;
+			$this->wg->SuppressToolbar = true;
 		}
 
 		// choose header message
@@ -460,11 +446,11 @@ class PageHeaderController extends WikiaController {
 		}
 
 		$this->displaytitle = true;
-		$this->title = wfMsg( $titleMsg, htmlspecialchars( $wgTitle->getPrefixedText() ) );
+		$this->title = wfMessage( $titleMsg, $this->wg->Title->getPrefixedText() )->parse();
 
 		// back to article link
 		if ( !$isPreview && !$isShowChanges ) {
-			$this->subtitle = Wikia::link( $wgTitle, wfMsg( 'oasis-page-header-back-to-article' ), [ 'accesskey' => 'c' ], [ ], 'known' );
+			$this->subtitle = Linker::linkKnown( $this->wg->Title, wfMessage( 'oasis-page-header-back-to-article' )->escaped(), [ 'accesskey' => 'c' ] );
 		}
 
 		// add edit button
@@ -472,54 +458,48 @@ class PageHeaderController extends WikiaController {
 			$this->prepareActionButton();
 
 			// show only "My Tools" dropdown on toolbar
-			$wgShowMyToolsOnly = true;
+			$this->wg->ShowMyToolsOnly = true;
 		}
 
 		// render edit dropdown / commments chicklet on history pages
 		if ( $isHistory ) {
 			// FB#1137 - re-add missing log and undelete links
 			$logPage = SpecialPage::getTitleFor( 'Log' );
-			$this->subtitle .= ' | ' . Wikia::link(
+			$this->subtitle .= wfMessage( 'pipe-separator' )->escaped() . Linker::linkKnown(
 					$logPage,
-					wfMsgHtml( 'viewpagelogs' ),
+					wfMessage( 'viewpagelogs' )->escaped(),
 					[ ],
-					[ 'page' => $wgTitle->getPrefixedText() ],
-					[ 'known', 'noclasses' ]
+					[ 'page' => $this->wg->Title->getPrefixedText() ]
 				);
 
-			// FIXME: Skin is now an abstract class (MW1.19)
-			// (wladek) created non-abstract FakeSkin class, is it the correct solution?
-			$sk = new FakeSkin();
-			$sk->setRelevantTitle( $wgTitle );
-
-			$undeleteLink = $sk->getUndeleteLink();
+			$undeleteLink = $this->getContext()->getSkin()->getUndeleteLink();
 
 			if ( !empty( $undeleteLink ) ) {
-				$this->subtitle .= ' | ' . $undeleteLink;
+				$this->subtitle .= wfMessage( 'pipe-separator' )->escaped() . $undeleteLink;
 			}
 
 			// dropdown actions
 			$this->dropdown = $this->getDropdownActions();
 
 			// use service to get data
-			$service = new PageStatsService( $wgTitle->getArticleId() );
+			$service = new PageStatsService( $this->wg->Title->getArticleID() );
 
 			// comments
 			$this->comments = $service->getCommentsCount();
 		}
 
-		wfRunHooks( 'PageHeaderEditPage', [ &$this, $ns, $isPreview, $isShowChanges, $isDiff, $isEdit, $isHistory ] );
+		Hooks::run( 'PageHeaderEditPage', [ &$this, $this->wg->Title->getNamespace(), $isPreview, $isShowChanges, $isDiff, $isEdit, $isHistory ] );
 		wfProfileOut( __METHOD__ );
 	}
 
 	/**
 	 * Render edit box header when doing preview / showing changes
 	 */
-	public function executeEditBox() {
-		global $wgTitle, $wgRequest;
+	public function editBox() {
+		global $wgTitle;
 
 		// detect section edit
-		$isSectionEdit = is_numeric( $wgRequest->getVal( 'wpSection' ) );
+		$isSectionEdit = is_numeric( $this->wg->Request->getVal( 'wpSection' ) );
 
 		if ( $isSectionEdit ) {
 			$msg = 'oasis-page-header-editing-section';
@@ -529,20 +509,19 @@ class PageHeaderController extends WikiaController {
 
 		// Editing: foo
 		$this->displaytitle = true;
-		$this->title = wfMsg( $msg, htmlspecialchars( $wgTitle->getPrefixedText() ) );
+		$this->title = wfMessage( $msg, $this->wg->Title->getPrefixedText() )->parse();
 
 		// back to article link
-		$this->subtitle = Wikia::link( $wgTitle, wfMsg( 'oasis-page-header-back-to-article' ), [ 'accesskey' => 'c' ], [ ], 'known' );
+		$this->subtitle = Linker::linkKnown( $this->wg->Title, wfMessage( 'oasis-page-header-back-to-article' )->escaped(), [ 'accesskey' => 'c' ] );
 	}
 
 	/**
-	 * Called instead of executeIndex when the CorporatePage extension is enabled.
+	 * Called instead of index when the CorporatePage extension is enabled.
 	 */
-	public function executeCorporate() {
-		global $wgTitle, $wgOut, $wgUser, $wgSuppressNamespacePrefix;
+	public function corporate() {
 		wfProfileIn( __METHOD__ );
 
-		$this->canAct = $wgUser->isAllowed( 'edit' );
+		$this->canAct = $this->wg->User->isAllowed( 'edit' );
 		if ( $this->canAct ) {
 			$this->prepareActionButton();
 			// dropdown actions
@@ -550,25 +529,25 @@ class PageHeaderController extends WikiaController {
 		}
 
 		// page namespace
-		$ns = $wgTitle->getNamespace();
+		$ns = $this->wg->Title->getNamespace();
 
 		// default title "settings" (RT #145371), don't touch special pages
 		if ( $ns == NS_FORUM ) {
-			$this->title = $wgTitle->getText();
+			$this->title = $this->wg->Title->getText();
 			$this->displaytitle = false;
 			// we don't want htmlspecialchars for SpecialPages (BugId:6012)
 		} else if ( $ns == NS_SPECIAL ) {
 			$this->displaytitle = true;
 		} else if ( $ns != NS_SPECIAL ) {
 			$this->displaytitle = true;
-			$this->title = $wgOut->getPageTitle();
+			$this->title = $this->wg->Out->getPageTitle();
 		}
 
 		// remove namespaces prefix from title
 		$namespaces = [ NS_MEDIAWIKI, NS_TEMPLATE, NS_CATEGORY, NS_FILE ];
 
-		if ( in_array( $ns, array_merge( $namespaces, $wgSuppressNamespacePrefix ) ) ) {
-			$this->title = $wgTitle->getText();
+		if ( in_array( $ns, array_merge( $namespaces, $this->wg->SuppressNamespacePrefix ) ) ) {
+			$this->title = $this->wg->Title->getText();
 			$this->displaytitle = false;
 		}
 
@@ -582,12 +561,8 @@ class PageHeaderController extends WikiaController {
 
 	/**
 	 * Render page header for Hubs
-	 *
-	 * @param: array $params
 	 */
-	public function executeHubs( $params ) {
-		global $wgSupressPageTitle;
-
+	public function hubs() {
 		wfProfileIn( __METHOD__ );
 
 		$this->displaytitle = true;
@@ -599,7 +574,7 @@ class PageHeaderController extends WikiaController {
 		// number of pages on this wiki
 		$this->tallyMsg = wfMessage( 'oasis-total-articles-mainpage', SiteStats::articles() )->parse();
 
-		if ( !empty( $wgSupressPageTitle ) ) {
+		if ( !empty( $this->wg->SupressPageTitle ) ) {
 			$this->title = '';
 		}
 
@@ -608,8 +583,7 @@ class PageHeaderController extends WikiaController {
 
 	static function onArticleSaveComplete( &$article, &$user, $text, $summary,
 										   $minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId ) {
-		global $wgMemc;
-		$wgMemc->delete( wfMemcKey( 'mOasisRecentRevisions2', $article->getTitle()->getArticleId() ) );
+		F::app()->wg->Memc->delete( wfMemcKey( 'mOasisRecentRevisions2', $article->getTitle()->getArticleId() ) );
 		return true;
 	}
 

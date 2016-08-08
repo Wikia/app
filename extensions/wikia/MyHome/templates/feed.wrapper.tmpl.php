@@ -1,20 +1,12 @@
-<?/*<div class="activityfeed reset clearfix">*/?>
-
-<h2 class="dark_text_2"><?= wfMsg("myhome-{$type}-feed") ?></h2>
-
-<?php
-	echo $defaultSwitch;
-?>
+<h2 class="dark_text_2"><?= wfMessage( "myhome-{$type}-feed" )->escaped(); ?></h2>
+<?= $defaultSwitch ?>
 <div id="myhome-<?= $type ?>-feed-content">
-<?php
-	echo $content;
-?>
+	<?= $content ?>
 </div>
-<?php
-	if (!empty($showMore)) {
-?>
-	<div class="myhome-feed-more"><a id="myhome-<?= $type ?>-feed-more" onclick="MyHome.fetchMore(this)" rel="nofollow"><?= wfMsg('myhome-activity-more') ?></a></div>
-<?php
-	}
-?>
-<?/*</div>*/?>
+<?php if ( !empty( $showMore ) ): ?>
+	<div class="myhome-feed-more">
+		<a id="myhome-<?= $type ?>-feed-more" onclick="MyHome.fetchMore(this);" rel="nofollow">
+			<?= wfMessage( 'myhome-activity-more' )->escaped(); ?>
+		</a>
+	</div>
+<?php endif; ?>

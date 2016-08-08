@@ -1,36 +1,36 @@
 <section class="WikiFeatures" id="WikiFeatures">
 	<h2 class="heading-features">
-		<?= wfMsg('wikifeatures-heading') ?>
+		<?= wfMessage( 'wikifeatures-heading' )->escaped(); ?>
 	</h2>
 	<p class="creative">
-		<?= wfMsg('wikifeatures-creative') ?>
+		<?= wfMessage( 'wikifeatures-creative' )->escaped(); ?>
 	</p>
-	
+
 	<ul class="features">
-		<? foreach ($features as $feature) { ?>
-			<?= F::app()->getView( 'WikiFeaturesSpecial', 'feature', array('feature' => $feature, 'editable' => $editable ) ) ?>
-		<? } ?>
+		<? foreach ( $features as $feature ): ?>
+			<?= $app->renderView( 'WikiFeaturesSpecial', 'feature', [ 'feature' => $feature, 'editable' => $editable ] ) ?>
+		<? endforeach; ?>
 	</ul>
-	
+
 	<h2 class="heading-labs">
-		<?= wfMsg('wikifeatures-labs-heading') ?>
+		<?= wfMessage( 'wikifeatures-labs-heading' )->escaped(); ?>
 	</h2>
 	<p class="creative">
-		<?= wfMsg('wikifeatures-labs-creative') ?>
+		<?= wfMessage( 'wikifeatures-labs-creative' )->escaped(); ?>
 	</p>
-	
+
 	<ul class="features">
-		<? if (!empty($labsFeatures)) { ?>
-			<? foreach ($labsFeatures as $feature) { ?>
-				<?= F::app()->getView( 'WikiFeaturesSpecial', 'feature', array('feature' => $feature, 'editable' => $editable ) ) ?>
-			<? } ?>
-		<? } else { ?>
-		<? 
-			$feature = array(
-				"name" => "emptylabs"
-			); 
-		?>
-			<?= F::app()->getView( 'WikiFeaturesSpecial', 'feature', array('feature' => $feature, 'editable' => $editable ) ) ?>
-		<? } ?>
+		<? if ( !empty( $labsFeatures ) ): ?>
+			<? foreach ( $labsFeatures as $feature ): ?>
+				<?= $app->renderView( 'WikiFeaturesSpecial', 'feature', [ 'feature' => $feature, 'editable' => $editable ] ) ?>
+			<? endforeach; ?>
+		<? else: ?>
+			<?
+			$feature = [
+				"name" => "emptylabs",
+			];
+			?>
+			<?= $app->renderView( 'WikiFeaturesSpecial', 'feature', [ 'feature' => $feature, 'editable' => $editable ] ) ?>
+		<? endif; ?>
 	</ul>
 </section>

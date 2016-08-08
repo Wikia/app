@@ -1,11 +1,11 @@
 <?php
 
 // render "Contribute" menu
-echo F::app()->renderView('MenuButton', 'Index', array(
-	'action' => array(
-		'text' => wfMsg('oasis-button-contribute-tooltip'),
-	),
+echo $app->renderView( 'MenuButton', 'Index', [
+	'action' => [
+		'text' => wfMessage( 'oasis-button-contribute-tooltip' )->text(),
+	],
 	'class' => 'contribute secondary',
 	'image' => MenuButtonController::CONTRIBUTE_ICON,
 	'dropdown' => $dropdownItems,
-));
+] );
