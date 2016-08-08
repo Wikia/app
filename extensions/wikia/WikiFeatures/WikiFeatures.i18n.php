@@ -1,13 +1,13 @@
 <?php
 /**
-* Internationalisation file for the WikiFeatures extension.
-*
-* @addtogroup Languages
-*/
+ * Internationalisation file for the WikiFeatures extension.
+ *
+ * @addtogroup Languages
+ */
 
-$messages = array();
+$messages = [];
 
-$messages['en'] = array(
+$messages['en'] = [
 	'wikifeatures-desc' => "Allows privileged users to toggle Wikia's optional features",
 	'wikifeatures' => 'Wiki Features',
 	'wikifeatures-title' => 'Wiki Features',
@@ -80,12 +80,14 @@ $messages['en'] = array(
 	'wikifeatures-log-name' => 'Wiki Features log',
 	'wikifeatures-log-header' => 'Below is a list of Wiki Features settings changes.',
 	'action-wikifeaturesview' => 'view Wiki Features',
-);
+	'right-wikifeatures' => 'Can toggle extensions available in Special:WikiFeatures',
+	'right-wikifeaturesview' => 'Can view Special:WikiFeatures',
+];
 
 /** Message documentation (Message documentation)
  * @author Siebrand
  */
-$messages['qqq'] = array(
+$messages['qqq'] = [
 	'wikifeatures-desc' => '{{desc}}',
 	'wikifeatures-feature-description-wgEnableChat' => 'Feel free not to translate "lol omg rolfl" if there is no proper equivalent in your language. These are acronyms for Laughing Out Loud, Oh My God, and Rolling On The Floor Laughing.',
 	'wikifeatures-feature-heading-wgEnableWikiaInteractiveMaps' => 'Heading title for the Maps feature.',
@@ -97,12 +99,12 @@ $messages['qqq'] = array(
 	'wikifeatures-feature-heading-wgEnablePortableInfoboxEuropaTheme' => 'Header text for Europa Infobox Theme',
 	'wikifeatures-feature-description-wgEnablePortableInfoboxEuropaTheme' => 'Description for Europa Infobox Theme feature. Link from the word "infoboxes" should link to community help page in proper language when present.',
 	'action-wikifeaturesview' => '{{doc-action|wikifeaturesview}}',
-);
+];
 
 /** Arabic (العربية)
  * @author روخو
  */
-$messages['ar'] = array(
+$messages['ar'] = [
 	'wikifeatures' => 'سمات الويكي',
 	'wikifeatures-heading' => 'سمات',
 	'wikifeatures-toggle-active' => 'مفعل',
@@ -122,19 +124,19 @@ $messages['ar'] = array(
 	'wikifeatures-feature-heading-wgEnableEditPageReskinExt' => 'إعادة تصميم محرر ويكيا',
 	'wikifeatures-feature-heading-wgEnableAjaxPollExt' => 'استطلاعات الرأي',
 	'wikifeatures-feature-heading-wgEnableBlogArticles' => 'مدونات',
-);
+];
 
 /** Azerbaijani (azərbaycanca)
  * @author Cekli829
  */
-$messages['az'] = array(
+$messages['az'] = [
 	'wikifeatures-feedback-comment-label' => 'Şərh',
-);
+];
 
 /** Bavarian (Boarisch)
  * @author Mucalexx
  */
-$messages['bar'] = array(
+$messages['bar'] = [
 	'wikifeatures' => 'Wiki-Funkzióner',
 	'wikifeatures-title' => 'Wiki-Funkzióner',
 	'wikifeatures-heading' => 'Funkzióner',
@@ -159,19 +161,19 @@ A wengerl experimentiern - du kauhst dert jeederzeid d' Tools deaktiviern, dé d
 	'wikifeatures-an-idea-for-project' => "I ho' a Idee fyr dés Prójekt",
 	'wikifeatures-feedback-heading' => 'Ryckmejdung',
 	'wikifeatures-promotion-new' => 'Neich',
-);
+];
 
 /** Bulgarian (български)
  * @author DCLXVI
  */
-$messages['bg'] = array(
+$messages['bg'] = [
 	'wikifeatures-deactivate-cancel-button' => 'Отказване',
-);
+];
 
 /** Breton (brezhoneg)
  * @author Y-M D
  */
-$messages['br'] = array(
+$messages['br'] = [
 	'wikifeatures-toggle-active' => 'Gweredekaet',
 	'wikifeatures-toggle-inactive' => 'Diweredekaet',
 	'wikifeatures-active-on' => 'Oberiant war $1 wiki',
@@ -192,13 +194,13 @@ $messages['br'] = array(
 	'wikifeatures-feature-heading-wgEnableChat' => 'Flap',
 	'wikifeatures-feature-heading-wgEnableAjaxPollExt' => 'Sontadegoù',
 	'wikifeatures-feature-heading-wgEnableBlogArticles' => 'Blogoù',
-);
+];
 
 /** Catalan (català)
  * @author CuBaN VeRcEttI
  * @author Gemmaa
  */
-$messages['ca'] = array(
+$messages['ca'] = [
 	'wikifeatures' => 'Wiki Funcionalitats',
 	'wikifeatures-title' => 'Wiki Funcionalitats',
 	'wikifeatures-heading' => 'Funcionalitats',
@@ -249,12 +251,12 @@ $messages['ca'] = array(
 	'wikifeatures-feature-description-wgEnableBlogArticles' => 'Els blogs permeten als usuaris del teu wiki crear les seves pròpies entrades de blog als seus perfils i poden usar-se per comunicar notícies i esdeveniments a la comunitat del teu wiki.',
 	'wikifeatures-feature-heading-emptylabs' => 'Sembla que el laboratori està prenent un descans',
 	'wikifeatures-feature-description-emptylabs' => 'Els nostres tècnics estan treballant dur per crear noves funcionalitats que podràs provar aviat. Visita aquesta pàgina aviat per trobar més novetats!',
-);
+];
 
 /** Czech (česky)
  * @author Darth Daron
  */
-$messages['cs'] = array(
+$messages['cs'] = [
 	'wikifeatures' => 'Wiki funkce',
 	'wikifeatures-title' => 'Wiki funkce',
 	'wikifeatures-heading' => 'Funkce',
@@ -306,7 +308,7 @@ $messages['cs'] = array(
 	'wikifeatures-feature-heading-wgEnableWallExt' => 'Zeď zpráv',
 	'wikifeatures-feature-heading-emptylabs' => 'Vypadá to, že laboratoř má přestávku',
 	'wikifeatures-feature-description-emptylabs' => 'Naši vědci tvrdě pracují. Již brzy očekávejte nové funkce!',
-);
+];
 
 /** German (Deutsch)
  * @author Kghbln
@@ -315,7 +317,7 @@ $messages['cs'] = array(
  * @author Sebastian Wallroth
  * @author Tiin
  */
-$messages['de'] = array(
+$messages['de'] = [
 	'wikifeatures' => 'Wiki-Funktionen',
 	'wikifeatures-title' => 'Wiki-Funktionen',
 	'wikifeatures-heading' => 'Wiki-Funktionen',
@@ -390,19 +392,19 @@ $messages['de'] = array(
 	'wikifeatures-feature-description-wgDisableAnonymousEditing' => 'Möchtest du, dass sich alle Autoren auf deinem Wikia anmelden müssen? Wenn diese Funktion aktiviert ist, dürfen anonyme Besucher keine Seiten bearbeiten, keine Kommentare schreiben und auch das Forum und die Nachrichtenseiten nicht nutzen, solange sie nicht angemeldet sind. Jeder kann nach wie vor ein Wikia-Konto einrichten, um deiner Community beizutreten!',
 	'wikifeatures-feature-heading-wgEnablePortableInfoboxEuropaTheme' => 'Infobox-Thema Europa',
 	'wikifeatures-feature-description-wgEnablePortableInfoboxEuropaTheme' => 'Aktiviere den neuen Look für deine [[w:de:Hilfe:Infoboxen|Infoboxen]], um das Farbthema deines Wikis in vollem Umfang nutzen zu können!',
-);
+];
 
 /** German (formal address) (‪Deutsch (Sie-Form)‬)
  * @author Kghbln
  */
-$messages['de-formal'] = array(
+$messages['de-formal'] = [
 	'wikifeatures-error-permission' => 'Sie haben nicht die erforderliche Berechtigung, um diese Seite aufrufen zu können.',
-);
+];
 
 /** Zazaki (Zazaki)
  * @author Erdemaslancan
  */
-$messages['diq'] = array(
+$messages['diq'] = [
 	'wikifeatures' => 'Xasiyeyê Wiki',
 	'wikifeatures-title' => 'Xasiyeyê Wiki',
 	'wikifeatures-heading' => 'Xasiyey',
@@ -419,7 +421,7 @@ $messages['diq'] = array(
 	'wikifeatures-feature-heading-wgEnableChat' => 'Mıhebet',
 	'wikifeatures-feature-heading-wgEnableAjaxPollExt' => 'Anket',
 	'wikifeatures-feature-heading-wgEnableWallExt' => 'Mesacê Dêsi',
-);
+];
 
 /** Spanish (español)
  * @author Benfutbol10
@@ -427,7 +429,7 @@ $messages['diq'] = array(
  * @author VegaDark
  * @author Vivaelcelta
  */
-$messages['es'] = array(
+$messages['es'] = [
 	'wikifeatures' => 'Funcionalidades de Wikia',
 	'wikifeatures-title' => 'Funcionalidades de Wikia',
 	'wikifeatures-heading' => 'Funcionalidades',
@@ -501,15 +503,15 @@ $messages['es'] = array(
 	'wikifeatures-feature-heading-wgDisableAnonymousEditing' => 'Requiere a todos los editores el iniciar sesión',
 	'wikifeatures-feature-description-wgDisableAnonymousEditing' => '¿Quiere todos los editores en su wikia inicien sesión? Cuando esta funcionalidad es habilitada, los visitantes anónimos no podrán editar páginas o participar en comentarios, Foro o Muro de mensajes sin antes iniciar sesión. ¡Todavía cualquiera puede crear una cuenta de Wikia para unirse a su comunidad!',
 	'wikifeatures-feature-heading-wgEnablePortableInfoboxEuropaTheme' => 'Tema Europa de infobox',
-	'wikifeatures-feature-description-wgEnablePortableInfoboxEuropaTheme' => '¡Activa el nuevo look en tus [[w:es:Ayuda:Infoboxes|infoboxes]] para beneficiarte del tema de color de tu wikia!'
-);
+	'wikifeatures-feature-description-wgEnablePortableInfoboxEuropaTheme' => '¡Activa el nuevo look en tus [[w:es:Ayuda:Infoboxes|infoboxes]] para beneficiarte del tema de color de tu wikia!',
+];
 
 /** French (français)
  * @author Gomoko
  * @author Od1n
  * @author Wyz
  */
-$messages['fr'] = array(
+$messages['fr'] = [
 	'wikifeatures' => 'Composants de wikia',
 	'wikifeatures-title' => 'Composants de wikia',
 	'wikifeatures-heading' => 'Fonctionnalités',
@@ -584,12 +586,12 @@ $messages['fr'] = array(
 	'wikifeatures-feature-description-wgDisableAnonymousEditing' => "Voulez-vous que tous les éditeurs de votre wikia se connectent ? Si vous activez cette fonctionnalité, les visiteurs anonymes ne pourront pas modifier de pages ni participer aux commentaires, forum ou mur de discussion sans être d'abord connectés. Il est toujours possible de créer un compte Wikia pour rejoindre votre communauté !",
 	'wikifeatures-feature-heading-wgEnablePortableInfoboxEuropaTheme' => "Thème d'infobox Europa",
 	'wikifeatures-feature-description-wgEnablePortableInfoboxEuropaTheme' => 'Permet de donner une nouvelle apparence à vos [[w:fr:Aide:Infoboxes|infoboxes]] afin de profiter au maximum de la couleur du thème de votre wiki.',
-);
+];
 
 /** Galician (Galego)
  * @author Toliño
  */
-$messages['gl'] = array(
+$messages['gl'] = [
 	'wikifeatures' => 'Características do wiki',
 	'wikifeatures-title' => 'Características do wiki',
 	'wikifeatures-heading' => 'Características',
@@ -644,12 +646,12 @@ $messages['gl'] = array(
 	'wikifeatures-feature-description-emptylabs' => 'Os nosos científicos traballan arreo para concibir novas características que poida probar. Volva pronto por aquí para atopar máis funcións!',
 	'wikifeatures-log-name' => 'Rexistro das características do wiki',
 	'wikifeatures-log-header' => 'A continuación hai unha lista cos cambios feitos nas características do wiki.',
-);
+];
 
 /** Interlingua (interlingua)
  * @author McDutchie
  */
-$messages['ia'] = array(
+$messages['ia'] = [
 	'wikifeatures' => 'Functionalitate wiki',
 	'wikifeatures-title' => 'Functionalitate wiki',
 	'wikifeatures-heading' => 'Functiones',
@@ -704,12 +706,12 @@ $messages['ia'] = array(
 	'wikifeatures-feature-description-emptylabs' => 'Nostre technicos labora durmente pro conciper nove functionalitate que tu pote probar. Reveni hic tosto pro nove projectos de laboratorio!',
 	'wikifeatures-log-name' => 'Registro de functionalitate wiki',
 	'wikifeatures-log-header' => 'Ecce un lista de cambios de configuration in le functionalitate wiki.',
-);
+];
 
 /** Italian (italiano)
  * @author Minerva Titani
  */
-$messages['it'] = array(
+$messages['it'] = [
 	'wikifeatures' => 'Wiki Funzioni',
 	'wikifeatures-title' => 'Wiki Funzioni',
 	'wikifeatures-heading' => 'Funzioni',
@@ -784,12 +786,12 @@ $messages['it'] = array(
 	'wikifeatures-feature-description-wgDisableAnonymousEditing' => 'Vuoi che tutti i collaboratori della tua wikia siano connessi? Quando questa funzione è attivata, ai visitatori anonimi non sarà permesso di modificare pagine o di partecipare nei commenti, nel Forum o alla Bacheca senza prima accedere. Chiunque potrà ancora creare un account con Wikia per unirsi alla tua community!',
 	'wikifeatures-feature-heading-wgEnablePortableInfoboxEuropaTheme' => 'Tema infobox Europa',
 	'wikifeatures-feature-description-wgEnablePortableInfoboxEuropaTheme' => 'Abilita il nuovo look per i tuoi [[w:it:Aiuto:Infobox|infobox]] per avvantaggiarti appieno del tema colore della tua wiki!',
-);
+];
 
 /** Japanese (日本語)
  * @author Tommy6
  */
-$messages['ja'] = array(
+$messages['ja'] = [
 	'wikifeatures-title' => 'ウィキ・フィーチャーズ',
 	'wikifeatures-heading' => '機能',
 	'wikifeatures-creative' => 'ウィキ・フィーチャーズでは、自分のWikiaコミュニティで使いたい拡張機能の有効、無効をご希望で切り替えることができます。役立ちそうだと思う機能を見つけたらぜひお試しください。切り替えはいつでも行うことができ、一度有効にした機能を再度無効にすることもできます。',
@@ -864,20 +866,20 @@ $messages['ja'] = array(
 	'wikifeatures-feature-description-wgDisableAnonymousEditing' => 'あなたのWikiaコミュニティですべての投稿者のログインを必須にしますか？この機能を有効にすると、匿名ユーザーはログインせずにページを編集したり、コメントやフォーラム、メッセージウォールに参加したりすることができなくなります。ただし、誰でもWikiaアカウントを作成してコミュニティに参加することはできます。',
 	'wikifeatures-feature-heading-wgEnablePortableInfoboxEuropaTheme' => 'インフォボックスのデザインテーマ - Europa',
 	'wikifeatures-feature-description-wgEnablePortableInfoboxEuropaTheme' => '[[w:ja:ヘルプ:インフォボックス|インフォボックス]]の新しいデザインを有効にして、既定のコミュニティの色に合ったデザインテーマを使ってみましょう。',
-);
+];
 
 /** Kannada (ಕನ್ನಡ)
  * @author Nayvik
  */
-$messages['kn'] = array(
+$messages['kn'] = [
 	'wikifeatures-category-choose-one' => 'ಒಂದನ್ನು ಆರಿಸಿ...',
 	'wikifeatures-promotion-new' => 'ಹೊಸ',
-);
+];
 
 /** Kurdish (Latin script) (‪Kurdî (latînî)‬)
  * @author Gomada
  */
-$messages['ku-latn'] = array(
+$messages['ku-latn'] = [
 	'wikifeatures-title' => 'Taybetmendiyên Wîkî',
 	'wikifeatures-heading' => 'Taybetmendî',
 	'wikifeatures-love-this-project' => 'Ez ji vê projeyê hez dikim.',
@@ -888,12 +890,12 @@ $messages['ku-latn'] = array(
 	'wikifeatures-promotion-new' => 'Nû',
 	'wikifeatures-feature-heading-wgEnableAchievementsExt' => 'Serkeftin',
 	'wikifeatures-feature-heading-wgEnableArticleCommentsExt' => 'Şîroveyên gotarê',
-);
+];
 
 /** Macedonian (македонски)
  * @author Bjankuloski06
  */
-$messages['mk'] = array(
+$messages['mk'] = [
 	'wikifeatures' => 'Можности на викито',
 	'wikifeatures-title' => 'Можности на викито',
 	'wikifeatures-heading' => 'Можности',
@@ -948,12 +950,12 @@ $messages['mk'] = array(
 	'wikifeatures-feature-description-emptylabs' => 'Нашите технолози работат напорно на нови функции што ќе можете да ги испробувате. Вратете се тука наскоро, и ќе најдете повеќе лаборатории!',
 	'wikifeatures-log-name' => 'Дневник на Функции на викито',
 	'wikifeatures-log-header' => 'Подолу е наведен список на промени во поставките на Функциите на викито.',
-);
+];
 
 /** Malay (Bahasa Melayu)
  * @author Anakmalaysia
  */
-$messages['ms'] = array(
+$messages['ms'] = [
 	'wikifeatures' => 'Wiki Features',
 	'wikifeatures-title' => 'Wiki Features',
 	'wikifeatures-heading' => 'Ciri-ciri',
@@ -1008,12 +1010,12 @@ $messages['ms'] = array(
 	'wikifeatures-feature-description-emptylabs' => 'Para saintis kami tengah berusaha membangunkan ciri-ciri baru untuk anda cuba. Nantikan kemunculan makmal baru di sini tidak lama lagi!',
 	'wikifeatures-log-name' => 'Log Ciri-Ciri Wiki',
 	'wikifeatures-log-header' => 'Berikut ialah senarai perubahan tetapan Ciri-Ciri Wiki.',
-);
+];
 
 /** Norwegian Bokmål (‪norsk (bokmål)‬)
  * @author Audun
  */
-$messages['nb'] = array(
+$messages['nb'] = [
 	'wikifeatures' => 'Wiki-funksjoner',
 	'wikifeatures-title' => 'Wiki-funksjoner',
 	'wikifeatures-heading' => 'Funksjoner',
@@ -1068,7 +1070,7 @@ $messages['nb'] = array(
 	'wikifeatures-feature-description-emptylabs' => 'Teknikerne våre jobber hardt med å koke i hop nye funksjoner du kan prøve ut. Se etter flere laber her snart!',
 	'wikifeatures-log-name' => 'Logg over Wiki-funksjoner',
 	'wikifeatures-log-header' => 'Under følger en liste over endringer i innstillingene for Wiki-funksjoner.',
-);
+];
 
 /** Dutch (Nederlands)
  * @author AvatarTeam
@@ -1076,7 +1078,7 @@ $messages['nb'] = array(
  * @author Siebrand
  * @author TBloemink
  */
-$messages['nl'] = array(
+$messages['nl'] = [
 	'wikifeatures' => 'Wiki Features',
 	'wikifeatures-title' => 'Wiki Features',
 	'wikifeatures-heading' => 'Features',
@@ -1151,14 +1153,14 @@ $messages['nl'] = array(
 	'wikifeatures-feature-description-wgDisableAnonymousEditing' => 'Do you want all contributors on your wikia to be logged in? When this feature is enabled, no anonymous visitors will be allowed to edit pages or participate in comments, Forum or Message Wall without logging in. Anyone can still create a Wikia account to join your community!',
 	'wikifeatures-feature-heading-wgEnablePortableInfoboxEuropaTheme' => 'Europa Infobox Theme',
 	'wikifeatures-feature-description-wgEnablePortableInfoboxEuropaTheme' => "Enable new look for your infoboxes to fully benefit from your wiki's color theme!",
-);
+];
 
 /** Polish (polski)
  * @author BeginaFelicysym
  * @author Sovq
  * @author Wladekb
  */
-$messages['pl'] = array(
+$messages['pl'] = [
 	'wikifeatures' => 'Rozszerzenia Wiki',
 	'wikifeatures-title' => 'Rozszerzenia Wiki',
 	'wikifeatures-heading' => 'Rozszerzenia',
@@ -1233,12 +1235,12 @@ $messages['pl'] = array(
 	'wikifeatures-feature-description-wgDisableAnonymousEditing' => 'Czy chcesz, żeby wszyscy użytkownicy Twojej wikii byli zalogowani, aby móc edytować? Kiedy ta funkcja jest włączona, osoby odwiedzające stronę anonimowo nie mogą edytować stron, komentować treści na stronie, udzielać się na forum ani na tablicach użytkowników, bez uprzedniego zalogowania. Każdy ciągle może utworzyć konto na Wikii i dołączyć do Twojej społeczności!',
 	'wikifeatures-feature-heading-wgEnablePortableInfoboxEuropaTheme' => 'Motyw kolorystyczny Europa dla infoboksów',
 	'wikifeatures-feature-description-wgEnablePortableInfoboxEuropaTheme' => 'Aktywuj nowy wygląd swoich [[w:pl:Pomoc:Infoboksy|infoboksów]], aby w pełni wykorzystać kolorystykę twojej wiki!',
-);
+];
 
 /** Pashto (پښتو)
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
-$messages['ps'] = array(
+$messages['ps'] = [
 	'wikifeatures-labs-heading' => 'ازمېنتون',
 	'wikifeatures-category-choose-one' => 'يو وټاکۍ...',
 	'wikifeatures-deactivate-cancel-button' => 'ناګارل',
@@ -1246,9 +1248,9 @@ $messages['ps'] = array(
 	'wikifeatures-feature-heading-wgShowTopListsInCreatePage' => 'د سر 10 لړليکونه',
 	'wikifeatures-feature-heading-wgEnableAchievementsExt' => 'برياوې',
 	'wikifeatures-feature-heading-wgEnableChat' => 'بانډار',
-);
+];
 
-$messages['pt'] = array(
+$messages['pt'] = [
 	'wikifeatures-desc' => 'Permite que usuários com privilégios habilitem ou desabilitem recursos opcionais da Wikia',
 	'wikifeatures' => 'Recursos da Wikia',
 	'wikifeatures-title' => 'Recursos da Wikia',
@@ -1324,13 +1326,13 @@ $messages['pt'] = array(
 	'wikifeatures-feature-description-wgDisableAnonymousEditing' => 'Você quer que todos os contribuidores em sua wikia iniciem sessão? Quando este recurso é habilitado, visitantes anônimos não poderão editar páginas ou participar nos comentários, fórum ou no mural de mensagens sem iniciarem sessão. Entretanto, qualquer pessoa ainda pode criar uma conta na Wikia para participar de sua comunidade!',
 	'wikifeatures-feature-heading-wgEnablePortableInfoboxEuropaTheme' => 'Tema de Infobox Europa',
 	'wikifeatures-feature-description-wgEnablePortableInfoboxEuropaTheme' => 'Habilita um novo visual para suas infoboxes [[w:pt:Ajuda:Infoboxes|infoboxes]] para aproveitar o tema de cores da sua wikia!',
-);
+];
 
 /** Brazilian Portuguese (português do Brasil)
  * @author Caio1478
  * @author Pedroca cerebral
  */
-$messages['pt-br'] = array(
+$messages['pt-br'] = [
 	'wikifeatures' => 'Recursos da Wiki',
 	'wikifeatures-title' => 'Recursos da Wiki',
 	'wikifeatures-heading' => 'Recursos',
@@ -1370,13 +1372,13 @@ $messages['pt-br'] = array(
 	'wikifeatures-feature-heading-wgEnableAjaxPollExt' => 'Enquetes',
 	'wikifeatures-feature-heading-wgEnableWallExt' => 'Mural de Mensagens',
 	'wikifeatures-log-name' => 'Registro Recursos da Wiki',
-);
+];
 
 /** Russian (русский)
  * @author Kuzura
  * @author Lvova
  */
-$messages['ru'] = array(
+$messages['ru'] = [
 	'wikifeatures-heading' => 'Расширения',
 	'wikifeatures-creative' => 'Wiki Features позволяют Вам выбрать, какие из дополнительных расширений Викия Вы хотели бы иметь на Вашей вики. Попробуйте эти расширения. Вы можете включить или отключить эти расширения в любое время.',
 	'wikifeatures-labs-heading' => 'Лаборатория',
@@ -1451,13 +1453,13 @@ $messages['ru'] = array(
 	'wikifeatures-feature-description-wgDisableAnonymousEditing' => 'Хотите, чтобы на вашей вики редактировали только зарегистрированные участники? После подключения этого расширения анонимные участники не смогут редактировать статьи, оставлять комментарии к статьям и блогам, или общаться на Форуме и Стенах обсуждения. Только зарегистрированные участники смогут редактировать вашу вики.',
 	'wikifeatures-feature-heading-wgEnablePortableInfoboxEuropaTheme' => 'Тема для инфобоксов «Europa»',
 	'wikifeatures-feature-description-wgEnablePortableInfoboxEuropaTheme' => 'Подключите новую тему для [[w:ru:Справка:Инфобоксы|инфобоксов]], которая соответствует теме вашей вики.',
-);
+];
 
 /** Swedish (svenska)
  * @author VickyC
  * @author WikiPhoenix
  */
-$messages['sv'] = array(
+$messages['sv'] = [
 	'wikifeatures' => 'Wiki-funktioner',
 	'wikifeatures-title' => 'Wiki-funktioner',
 	'wikifeatures-heading' => 'Funktioner',
@@ -1501,20 +1503,20 @@ $messages['sv'] = array(
 	'wikifeatures-feature-heading-emptylabs' => 'Det ser ut som labbet tar en paus',
 	'wikifeatures-feature-description-emptylabs' => 'Våra tekniker jobbar hårt med att koka ihop nya funktioner till dig att prova ut. Leta efter fler labbar här snart!',
 	'wikifeatures-log-name' => 'Logg över Wiki-funktioner',
-);
+];
 
 /** Turkish (Türkçe)
  * @author Bilalokms
  */
-$messages['tr'] = array(
+$messages['tr'] = [
 	'wikifeatures-deactivate-cancel-button' => 'İptal',
 	'wikifeatures-promotion-new' => 'Yeni',
-);
+];
 
 /** Vietnamese (Tiếng Việt)
  * @author Xiao Qiao
  */
-$messages['vi'] = array(
+$messages['vi'] = [
 	'wikifeatures' => 'Tính năng Wiki',
 	'wikifeatures-title' => 'Tính năng Wiki',
 	'wikifeatures-heading' => 'Tính năng',
@@ -1569,13 +1571,13 @@ $messages['vi'] = array(
 	'wikifeatures-feature-description-emptylabs' => 'Các kỹ sư của chúng tôi đang nỗ lực trong công việc xây dựng các tính năng mới để bạn có thể thử. Tìm kiếm nhiều thí nghiệm hơn ở đây!',
 	'wikifeatures-log-name' => 'Nhật trình Tính năng Wiki',
 	'wikifeatures-log-header' => 'Dưới đây là danh sách các thay đổi trong thiết lập các Tính năng Wiki.',
-);
+];
 
 /** Simplified Chinese (‪中文（简体）‬)
  * @author Anakmalaysia
  * @author Dimension
  */
-$messages['zh-hans'] = array(
+$messages['zh-hans'] = [
 	'wikifeatures' => '维基功能',
 	'wikifeatures-title' => '维基功能',
 	'wikifeatures-feedback' => '提供反馈',
@@ -1650,12 +1652,12 @@ $messages['zh-hans'] = array(
 	'wikifeatures-feature-description-wgDisableAnonymousEditing' => '希望访问您维基的所有贡献者登入？启用此功能后，任何匿名访客均无权编辑页面、参与评论或论坛讨论，或在留言板上留言，但任何人都仍然可以创建维基帐户加入您的社区！',
 	'wikifeatures-feature-heading-wgEnablePortableInfoboxEuropaTheme' => 'Europa讯息框版式',
 	'wikifeatures-feature-description-wgEnablePortableInfoboxEuropaTheme' => '为讯息框开启新的外观并且使用你的维基社区背景颜色！',
-);
+];
 
 /** Traditional Chinese (‪中文（繁體）‬)
  * @author Ffaarr
  */
-$messages['zh-hant'] = array(
+$messages['zh-hant'] = [
 	'wikifeatures' => '維基功能',
 	'wikifeatures-title' => '維基功能',
 	'wikifeatures-heading' => '功能',
@@ -1728,9 +1730,9 @@ $messages['zh-hant'] = array(
 	'wikifeatures-log-name' => '維基功能日誌',
 	'wikifeatures-log-header' => '下面是維基的功能設置更改列表。',
 	'action-wikifeaturesview' => '查看維基功能',
-);
+];
 
-$messages['zh-tw'] = array(
+$messages['zh-tw'] = [
 	'wikifeatures-desc' => '允許授權用戶實行Wikia可選功能間的切換',
 	'wikifeatures' => '維基功能',
 	'wikifeatures-title' => '維基功能',
@@ -1803,5 +1805,5 @@ $messages['zh-tw'] = array(
 	'action-wikifeaturesview' => '查看維基功能',
 	'wikifeatures-feature-heading-wgDisableAnonymousEditing' => '要求所有貢獻者登入',
 	'wikifeatures-feature-description-wgDisableAnonymousEditing' => '希望訪問你的維基的所有貢獻者登入？啟用此功能後，任何匿名訪客將無權編輯頁面、參與評論或論壇討論，或在留言板上留言，但任何人都仍然可以創建維基帳戶加入你的社區！',
-);
+];
 
