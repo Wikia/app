@@ -18,4 +18,9 @@ class ARecoveryModule {
 		$user = F::app()->wg->User;
 		return self::isEnabled() && ( $user && !$user->isLoggedIn() );
 	}
+
+	public static function isUntouchableAdsEnabled() {
+		//TODO: Add wgVar
+		return true;
+	}
 }
