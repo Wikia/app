@@ -12,7 +12,7 @@ class ComposerStaticInit7d0f818300453bfa898c5a9575c6ce60
         '90559502573a0d473dc66fde5c0ff7e2' => __DIR__ . '/..' . '/data-values/common/Common.php',
         '0dd9431cbbfa9ed9cb9d565d7129dbaf' => __DIR__ . '/..' . '/data-values/validators/Validators.php',
         'af3cc937b8a54e5b4209c82d6cfe8889' => __DIR__ . '/..' . '/param-processor/param-processor/DefaultConfig.php',
-        'c3ae67574219cc56cab6c30ef8877b85' => __DIR__ . '/../..' . '/extensions/Validator/Validator.php',
+        'c3ae67574219cc56cab6c30ef8877b85' => __DIR__ . '/../../..' . '/Validator/Validator.php', // Wikia Change, set correct path to validator
         '5a494680c593293bd6035e42e2a6825c' => __DIR__ . '/..' . '/data-values/geo/Geo.php',
         '9ebf2cbcc0b7687b276c44d77096b002' => __DIR__ . '/../..' . '/Maps.php',
     );
