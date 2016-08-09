@@ -87,7 +87,7 @@ var ChatWidget = {
 		});
 
 		$('.chat-contents.chat-room-empty').each(function () {
-			$(this).get(0)
+			$(this).eq(0)
 				.removeClass('chat-room-empty')
 				.addClass('chat-room-active');
 		});

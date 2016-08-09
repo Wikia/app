@@ -8,11 +8,10 @@ class PrepareDomain extends Task {
 
 	use Loggable;
 
-	const DEFAULT_DOMAIN = "wikia.com";
 	const LOCK_DOMAIN_TIMEOUT = 30;
 
 	public function prepare() {
-		global $wgContLang;
+		global $wgContLang, $wgWikiaBaseDomain;
 
 		$wikiLanguage = $this->taskContext->getLanguage();
 		$inputDomain = $this->taskContext->getInputDomain();
@@ -33,8 +32,8 @@ class PrepareDomain extends Task {
 			$subdomain = strtolower( $wikiLanguage ) . "." . $domain;
 		}
 
-		$this->taskContext->setDomain( sprintf( "%s.%s", $subdomain, self::DEFAULT_DOMAIN ) );
-		$this->taskContext->setUrl( sprintf( "http://%s.%s/", $subdomain, self::DEFAULT_DOMAIN ) );
+		$this->taskContext->setDomain( sprintf( "%s.%s", $subdomain, $wgWikiaBaseDomain ) );
+		$this->taskContext->setUrl( sprintf( "http://%s.%s/", $subdomain, $wgWikiaBaseDomain ) );
 
 		return TaskResult::createForSuccess();
 	}

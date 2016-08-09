@@ -405,7 +405,6 @@ $wgAutoloadClasses['CommunityCornerController'] = $IP.'/skins/oasis/modules/Comm
 $wgAutoloadClasses['PopularBlogPostsController'] = $IP.'/skins/oasis/modules/PopularBlogPostsController.class.php';
 $wgAutoloadClasses['RandomWikiController'] = $IP.'/skins/oasis/modules/RandomWikiController.class.php';
 $wgAutoloadClasses['ArticleInterlangController'] = $IP.'/skins/oasis/modules/ArticleInterlangController.class.php';
-$wgAutoloadClasses['PagesOnWikiController'] = $IP.'/skins/oasis/modules/PagesOnWikiController.class.php';
 $wgAutoloadClasses['ContributeMenuController'] = $IP.'/skins/oasis/modules/ContributeMenuController.class.php';
 $wgAutoloadClasses['WikiNavigationController'] = $IP.'/skins/oasis/modules/WikiNavigationController.class.php';
 $wgAutoloadClasses['UploadPhotosController'] = $IP.'/skins/oasis/modules/UploadPhotosController.class.php';
@@ -1435,17 +1434,6 @@ $wgSitewideDisableIVW3 = false;
 $wgAnalyticsDriverIVW3Countries = ['AT', 'CH', 'DE'];
 
 /**
- * @name $wgSitewideDisableLiftium
- * @link https://one.wikia-inc.com/wiki/Ads/Disaster_recovery
- * @link http://community.wikia.com/wiki/Special:WikiFactory/community/variables/wgSitewideDisableLiftium
- *
- * Disable Liftium sitewide in case a disaster happens.
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- * For more details consult https://one.wikia-inc.com/wiki/Ads/Disaster_recovery
- */
-$wgSitewideDisableLiftium = false;
-
-/**
  * @name $wgSitewideDisablePaidAssetDrop
  * @link https://one.wikia-inc.com/wiki/Ads/Disaster_recovery
  * @link http://community.wikia.com/wiki/Special:WikiFactory/community/variables/wgSitewideDisablePaidAssetDrop
@@ -1493,7 +1481,6 @@ $wgAdDriverTrackState = false;
 
 /**
  * @name $wgAdDriverForcedProvider
- * @example 'liftium', 'turtle'
  * Forces to use passed provider for all slots managed by this provider and disables other providers.
  */
 $wgAdDriverForcedProvider = null;
@@ -1552,6 +1539,13 @@ $wgAdDriverTurtleCountries = null;
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverSourcePointDetectionCountries = null;
+
+
+/**
+ * @name $wgAdDriverPageFairDetectionCountries
+ * List of countries to call PageFair detection scripts
+ */
+$wgAdDriverPageFairDetectionCountries = null;
 
 /**
  * @name $wgAdDriverSourcePointDetectionMobileCountries

@@ -2,21 +2,21 @@
 define('ext.wikia.recirculation.experiments.placement.IMPACT_FOOTER', [
 	'jquery',
 	'underscore',
-	'ext.wikia.recirculation.utils',
 	'ext.wikia.recirculation.helpers.contentLinks',
 	'ext.wikia.recirculation.helpers.fandom',
 	'ext.wikia.recirculation.helpers.data',
 	'ext.wikia.recirculation.views.rail',
 	'ext.wikia.recirculation.views.scroller',
 	'ext.wikia.recirculation.views.impactFooter'
-], function ($, _, utils, ContentLinks, FandomHelper, DataHelper, RailView, ScrollerView, ImpactFooterView) {
+], function ($, _, ContentLinks, FandomHelper, DataHelper, RailView, ScrollerView, ImpactFooterView) {
 
 	function run(experimentName) {
 		var scrollerView = ScrollerView(),
 			fandomData = FandomHelper({
 			    type: 'community',
-				limit: 5,
-				ignoreError: true
+				limit: 6,
+				ignoreError: true,
+				fill: true
 			}).loadData(),
 			linksData = ContentLinks({
 				count: 6,
@@ -31,7 +31,6 @@ define('ext.wikia.recirculation.experiments.placement.IMPACT_FOOTER', [
 		return DataHelper({}).loadData()
 			.then(formatData)
 			.then(renderImpactFooter(experimentName))
-			.then(utils.waitForRail)
 			.then(renderRail(experimentName));
 	}
 
@@ -48,21 +47,18 @@ define('ext.wikia.recirculation.experiments.placement.IMPACT_FOOTER', [
 	}
 
 	function formatScrollerData(fandomData, linksData) {
-		var mergedArray = [].concat(fandomData.items, linksData.items);
-		var items = linksData.items;
-		var count = fandomData.items.length;
-
-		while(count > 0) {
-			var rand = Math.floor(Math.random() * items.length);
-
-			items.splice(rand, 0, fandomData.items.shift());
-
-			count --;
-		}
+		// Zippers fandomData and linksData together
+		var mergedArray = linksData.items.reduce(function(last, current, index) {
+			if (fandomData.items[index]) {
+				return last.concat(current, fandomData.items[index]);
+			} else {
+				return last.concat(current);
+			}
+		}, []);
 
 		return {
 			title: linksData.title,
-			items: items
+			items: utils.ditherResults(mergedArray, 2.5)
 		};
 	}
 

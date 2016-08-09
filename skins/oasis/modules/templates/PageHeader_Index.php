@@ -73,8 +73,8 @@ if ( $runNjord ) {
 
 		// "Add a video" button
 		if ( !empty( $isSpecialVideos ) && !empty( $wg->EnableUploads ) && $showAddVideoBtn ): ?>
-			<a class="button addVideo" href="#" rel="tooltip" title="<?= wfMsg( 'related-videos-tooltip-add' ); ?>">
-				<img src="<?= wfBlankImgUrl(); ?>" class="sprite addRelatedVideo"/> <?= wfMsg( 'videos-add-video' ) ?>
+			<a class="button addVideo" href="#" rel="tooltip" title="<?= wfMessage( 'related-videos-tooltip-add' )->escaped(); ?>">
+				<img src="<?= wfBlankImgUrl(); ?>" class="sprite addRelatedVideo"/> <?= wfMessage( 'videos-add-video' )->escaped(); ?>
 			</a>
 		<? endif;
 

@@ -2,8 +2,13 @@
 
 class WikiHeaderController extends WikiaController {
 
-	public function executeIndex() {
-		OasisController::addBodyClass('wikinav2');
+	/**
+	 * @var string WORDMARK_TYPE_GRAPHIC Image wordmark
+	 */
+	const WORDMARK_TYPE_GRAPHIC = 'graphic';
+
+	public function Index() {
+		OasisController::addBodyClass( 'wikinav2' );
 
 		$themeSettings = new ThemeSettings();
 		$settings = $themeSettings->getSettings();
@@ -13,33 +18,39 @@ class WikiHeaderController extends WikiaController {
 		$this->wordmarkSize = $settings["wordmark-font-size"];
 		$this->wordmarkFont = $settings["wordmark-font"];
 
-		if ($this->wordmarkType == "graphic") {
-			wfProfileIn(__METHOD__ . 'graphicWordmarkV2');
+		if ( $this->wordmarkType == self::WORDMARK_TYPE_GRAPHIC ) {
+			wfProfileIn( __METHOD__ . 'graphicWordmarkV2' );
 			$this->wordmarkUrl = $themeSettings->getWordmarkUrl();
-			$imageTitle = Title::newFromText($themeSettings::WordmarkImageName, NS_IMAGE);
-			if ($imageTitle instanceof Title) {
-				$attributes = array();
-				$file = wfFindFile($imageTitle);
-				if ($file instanceof File) {
-					$attributes [] = 'width="' . $file->width . '"';
-					$attributes [] = 'height="' . $file->height . '"';
+			$imageTitle = Title::newFromText( $themeSettings::WordmarkImageName, NS_IMAGE );
+			if ( $imageTitle instanceof Title ) {
+				$attributes = [];
+				$file = wfFindFile( $imageTitle );
+				if ( $file instanceof File ) {
+					$attributes[] = 'width="' . $file->width . '"';
+					$attributes[] = 'height="' . $file->height . '"';
 
-					if (!empty($attributes)) {
-						$this->wordmarkStyle = ' ' . implode(' ', $attributes) . ' ';
+					if ( !empty( $attributes ) ) {
+						$this->wordmarkStyle = ' ' . implode( ' ', $attributes ) . ' ';
 					}
 				}
 			}
-			wfProfileOut(__METHOD__ . 'graphicWordmarkV2');
+			wfProfileOut( __METHOD__ . 'graphicWordmarkV2' );
 		}
 
 		$this->mainPageURL = Title::newMainPage()->getLocalURL();
 
-		$this->displaySearch = !empty($this->wg->EnableAdminDashboardExt) && AdminDashboardLogic::displayAdminDashboard($this, $this->wg->Title);
+		$this->displaySearch = $this->wg->Title->isSpecial( 'AdminDashboard' );
 		$this->setVal( 'displayHeader', !$this->wg->HideNavigationHeaders );
 		$this->displayHeaderButtons = !WikiaPageType::isWikiaHubMain();
+
+		$this->hiddenLinks = [
+			'watchlist' => SpecialPage::getTitleFor( 'Watchlist' )->getLocalURL(),
+			'random' => SpecialPage::getTitleFor( 'Random' )->getLocalURL(),
+			'recentchanges' => SpecialPage::getTitleFor( 'RecentChanges' )->getLocalURL(),
+		];
 	}
 
-	public function executeWordmark() {
+	public function Wordmark() {
 		$themeSettings = new ThemeSettings();
 		$settings = $themeSettings->getSettings();
 
@@ -47,25 +58,25 @@ class WikiHeaderController extends WikiaController {
 		$this->wordmarkType = $settings['wordmark-type'];
 		$this->wordmarkSize = $settings['wordmark-font-size'];
 		$this->wordmarkFont = $settings['wordmark-font'];
-		$this->wordmarkFontClass = !empty($settings["wordmark-font"]) ? "font-{$settings['wordmark-font']}" : '';
+		$this->wordmarkFontClass = !empty( $settings["wordmark-font"] ) ? "font-{$settings['wordmark-font']}" : '';
 		$this->wordmarkUrl = '';
-		if ($this->wordmarkType == "graphic") {
-			wfProfileIn(__METHOD__ . 'graphicWordmark');
+		if ( $this->wordmarkType == self::WORDMARK_TYPE_GRAPHIC ) {
+			wfProfileIn( __METHOD__ . 'graphicWordmark' );
 			$this->wordmarkUrl = $themeSettings->getWordmarkUrl();
-			$imageTitle = Title::newFromText($themeSettings::WordmarkImageName, NS_IMAGE);
-			if ($imageTitle instanceof Title) {
-				$attributes = array();
-				$file = wfFindFile($imageTitle);
-				if ($file instanceof File) {
+			$imageTitle = Title::newFromText( $themeSettings::WordmarkImageName, NS_IMAGE );
+			if ( $imageTitle instanceof Title ) {
+				$attributes = [ ];
+				$file = wfFindFile( $imageTitle );
+				if ( $file instanceof File ) {
 					$attributes [] = 'width="' . $file->width . '"';
 					$attributes [] = 'height="' . $file->height . '"';
 
-					if (!empty($attributes)) {
-						$this->wordmarkStyle = ' ' . implode(' ', $attributes) . ' ';
+					if ( !empty( $attributes ) ) {
+						$this->wordmarkStyle = ' ' . implode( ' ', $attributes ) . ' ';
 					}
 				}
 			}
-			wfProfileOut(__METHOD__ . 'graphicWordmark');
+			wfProfileOut( __METHOD__ . 'graphicWordmark' );
 		}
 
 		$this->mainPageURL = Title::newMainPage()->getLocalURL();

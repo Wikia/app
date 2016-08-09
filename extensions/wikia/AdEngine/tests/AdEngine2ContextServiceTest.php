@@ -389,6 +389,11 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 		$this->assertStringMatchesFormat( $expectedAdEngineResourceURLFormat, $result['opts']['sourcePointDetectionUrl'] );
 		unset( $result['opts']['sourcePointDetectionUrl'] );
 
+		// Check for PageFair URL
+		$this->assertStringMatchesFormat( $expectedAdEngineResourceURLFormat, $result['opts']['pageFairDetectionUrl'] );
+		unset( $result['opts']['pageFairDetectionUrl'] );
+
+
 		$expected['providers']['rubiconFastlane'] = true;
 
 		// Extra check for Monetization Service

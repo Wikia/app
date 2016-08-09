@@ -58,8 +58,8 @@ define('ext.wikia.adEngine.slotTweaker', [
 		}
 	}
 
-	function isLeaderboard(slotname) {
-		return slotname.indexOf('LEADERBOARD') !== -1;
+	function isTopLeaderboard(slotname) {
+		return slotname.indexOf('TOP_LEADERBOARD') !== -1;
 	}
 
 	function isStandardLeaderboardSize(slotname) {
@@ -93,14 +93,14 @@ define('ext.wikia.adEngine.slotTweaker', [
 	// TODO: fix it, it's a hack!
 	function adjustLeaderboardSize(slotname) {
 		var slot = doc.getElementById(slotname);
-		if (isLeaderboard(slotname) && isStandardLeaderboardSize(slotname)) {
+		if (isTopLeaderboard(slotname) && isStandardLeaderboardSize(slotname)) {
 			slot.className += ' ' + standardLeaderboardSizeClass;
 		}
 	}
 
 	// TODO: fix it, it's a hack!
 	function removeTopButtonIfNeeded(slotname) {
-		if (isLeaderboard(slotname) && isStandardLeaderboardSize(slotname)) {
+		if (isTopLeaderboard(slotname) && isStandardLeaderboardSize(slotname)) {
 			win.Wikia.reviveQueue = win.Wikia.reviveQueue || [];
 
 			win.Wikia.reviveQueue.push({
@@ -155,10 +155,6 @@ define('ext.wikia.adEngine.slotTweaker', [
 		});
 	}
 
-	function isUniversalAdPackageLoaded() {
-		return !!doc.getElementsByClassName('.bfaa-template')[0];
-	}
-
 	function noop() {
 		return;
 	}
@@ -185,7 +181,7 @@ define('ext.wikia.adEngine.slotTweaker', [
 		adjustLeaderboardSize: adjustLeaderboardSize,
 		hackChromeRefresh: hackChromeRefresh,
 		hide: hide,
-		isUniversalAdPackageLoaded: isUniversalAdPackageLoaded,
+		isTopLeaderboard: isTopLeaderboard,
 		makeResponsive: makeResponsive,
 		onReady: onReady,
 		removeDefaultHeight: removeDefaultHeight,
