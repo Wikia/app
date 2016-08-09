@@ -3,29 +3,29 @@
 class ContributionAppreciationController extends WikiaController {
 
 	public function appreciate() {
-		global $wgUser;
+		global $wgUser, $wgCityId;
 
 		$this->request->assertValidWriteRequest( $wgUser );
 
 		$revisionId = $this->request->getInt( 'revision' );
 		$revision = Revision::newFromId( $revisionId );
-		if ( $revision instanceof Revision ) {
+		if ( $revision ) {
 			( new RevisionUpvotesService() )->addUpvote(
-				$this->wg->CityId,
+				$wgCityId,
 				$revision->getPage(),
 				$revisionId,
 				$revision->getUser(),
 				$wgUser->getId()
 			);
 		}
-
 	}
 
 	public function getAppreciations() {
+		global $wgUser;
+
 		$html = '';
-		$user = $this->wg->User;
 		$upvotesService = new RevisionUpvotesService();
-		$upvotes = $upvotesService->getUserNewUpvotes( $user->getId() );
+		$upvotes = $upvotesService->getUserNewUpvotes( $wgUser->getId() );
 
 		if ( !empty( $upvotes ) ) {
 			$appreciations = $this->prepareAppreciations( $upvotes );
@@ -33,7 +33,7 @@ class ContributionAppreciationController extends WikiaController {
 			if ( !empty( $appreciations ) ) {
 				$html = $this->app->renderView( 'ContributionAppreciation', 'appreciations', [
 					'appreciations' => $appreciations,
-					'userName' => $user
+					'userName' => $wgUser
 				] );
 			}
 		}
@@ -109,15 +109,13 @@ class ContributionAppreciationController extends WikiaController {
 			$wikiId = $upvote['revision']['wikiId'];
 			$title = GlobalTitle::newFromId( $upvote['revision']['pageId'], $wikiId );
 
-			if ( !$title instanceof Title ) {
-				continue;
-			}
+			if ( $title && $title->exists() ) {
+				$diffLink = $this->getDiffLink( $title, $upvote['revision']['revisionId'] );
+				$userLinks = $this->getUserLinks( $upvote['upvotes'], $wikiId );
 
-			$diffLink = $this->getDiffLink( $title, $upvote['revision']['revisionId'] );
-			$userLinks = $this->getUserLinks( $upvote['upvotes'], $wikiId );
-
-			if ( !empty( $userLinks ) ) {
-				$appreciations[] = $this->getUserAppreciationMessage( $userLinks, $diffLink );
+				if ( !empty( $userLinks ) ) {
+					$appreciations[] = $this->getUserAppreciationMessage( $userLinks, $diffLink );
+				}
 			}
 		}
 
