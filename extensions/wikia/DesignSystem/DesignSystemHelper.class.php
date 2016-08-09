@@ -43,7 +43,10 @@ class DesignSystemHelper {
 				$xml->addAttribute( 'alt', $alt );
 			}
 
-			return $xml->asXML();
+			// We don't use asXML() method to skip XML Declaration tag that causes warnings in browsers
+			$dom = dom_import_simplexml( $xml );
+			return $dom->ownerDocument->saveXML( $dom->ownerDocument->documentElement );
+
 		} else {
 			WikiaLogger::instance()->error(
 				'Design System SVG could not be loaded',
