@@ -52,11 +52,11 @@ require([
 			format: 'json',
 			callback: function (response) {
 				if (response.html) {
-					var notification = new BannerNotification(response.html, 'warn');
+					var notification = new BannerNotification(response.html, 'appreciation-banner');
 					notification.show();
 					bindClickTracking(notification);
 					trackImpression();
-					setUserNotified();
+					// setUserNotified();
 				}
 			}
 		});

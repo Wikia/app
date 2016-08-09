@@ -123,8 +123,9 @@ class ContributionAppreciationController extends WikiaController {
 		return Html::element( 'a', [
 			'href' => $title->getFullURL( [ 'diff' => $revisionId, 'oldid' => 'prev' ] ),
 			'data-tracking' => 'notification-diff-link',
-			'target' => '_blank'
-		], wfMessage( 'appreciation-user-contribution' )->escaped() );
+			'target' => '_blank',
+            'class' => 'article-title'
+		], $title->getText());
 	}
 
 	private function getUserLinks( $upvotes, $wikiId ) {
@@ -143,14 +144,15 @@ class ContributionAppreciationController extends WikiaController {
 		return Html::element( 'a', [
 			'href' => $title->getFullURL(),
 			'data-tracking' => 'notification-userpage-link',
-			'target' => '_blank'
+			'target' => '_blank',
+            'class' => 'username'
 		], $user->getName() );
 	}
 
-	private function getUserAppreciationMessage( $userLinks, $diffLink ) {
-		return wfMessage( 'appreciation-user', count( $userLinks ) )->rawParams(
-			implode( ', ', $userLinks ),
-			$diffLink
-		)->escaped();
-	}
+    private function getUserAppreciationMessage($userLinks, $diffLink)
+    {
+        return wfMessage('appreciation-user')
+            ->rawParams($diffLink, implode(', ', $userLinks))
+            ->escaped();
+    }
 }
