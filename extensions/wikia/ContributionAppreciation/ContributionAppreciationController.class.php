@@ -1,14 +1,12 @@
 <?php
 
 class ContributionAppreciationController extends WikiaController {
-	const CONTRIBUTION_APPRECIATION_EMAIL_CONTROLLER = Email\Controller\ContributionAppreciationMessageController::class;
-
 	public function appreciate() {
 		global $wgUser;
 
 		if ( $this->request->isValidWriteRequest( $wgUser ) ) {
 			//TODO: do something with apprecation
-			$this->sendMail( Revision::newFromId( $this->request->getInt( 'revision' ) ) );
+			$this->sendMail( $this->request->getInt( 'revision' ) );
 		}
 	}
 
@@ -53,24 +51,24 @@ class ContributionAppreciationController extends WikiaController {
 			wfMessage( 'appreciation-text' )->escaped() );
 	}
 
-	public function sendMail( \Revision $revision ) {
+	private function sendMail( $revisionId ) {
 		global $wgSitename;
 
-		if ( !$revision ) {
-			return;
+		$revision = Revision::newFromId( $revisionId );
+
+		if ( $revision ) {
+			$editedPageTitle = $revision->getTitle();
+			$params = [
+				'buttonLink' =>  SpecialPage::getTitleFor( 'Community' )->getFullURL(),
+				'targetUser' => $revision->getUserText(),
+				'editedPageTitleText' => $editedPageTitle->getText(),
+				'editedWikiName' => $wgSitename,
+				'revisionUrl' => $editedPageTitle->getFullURL( [
+					'diff' => $revision->getId()
+				] )
+			];
+
+			$this->app->sendRequest( 'ContributionAppreciationMessage', 'handle', $params );
 		}
-		$editedPageTitle = $revision->getTitle();
-
-		$params = [
-			'buttonLink' =>  SpecialPage::getTitleFor( 'Community' )->getFullURL(),
-			'targetUser' => $revision->getUserText(),
-			'editedPageTitleText' => $editedPageTitle->getText(),
-			'editedWikiName' => $wgSitename,
-			'revisionUrl' => $editedPageTitle->getFullURL( [
-				'diff' => $revision->getId()
-			] )
-		];
-
-		F::app()->sendRequest( self::CONTRIBUTION_APPRECIATION_EMAIL_CONTROLLER, 'handle', $params );
 	}
 }
