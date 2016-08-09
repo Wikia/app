@@ -61,9 +61,9 @@
 
 			// append prefix
 			if ($.isArray(packages)) {
-				for (var i = 0; i < packages.length; i++) {
-					packages[i] = modulePrefix + packages[i];
-				}
+				packages = packages.map(function(x) {
+					return modulePrefix + x;
+				});
 			} else {
 				packages = modulePrefix + packages;
 			}

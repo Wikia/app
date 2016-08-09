@@ -24,6 +24,11 @@ class JSMessages {
 	const RL_MODULE_PREFIX = 'ext.jsmessages.';
 
 	/**
+	 * @var string RL_MESSAGES Array key used in ResourceLoader config arrays for the list of messages
+	 */
+	const RL_MESSAGES = 'messages';
+
+	/**
 	 * @var array $queue List of ResourceLoader module names that will be added to the output
 	 */
 	static private $queue = [];
@@ -132,12 +137,17 @@ class JSMessages {
 	}
 
 	/**
-	 * Given a message name ending with a wildcard (*), get a list of all matching message names
+	 * Given a message name, or a message name pattern ending in a wildcard (*), get a list of all matching message names
 	 *
-	 * @param string $pattern message name pattern ending with a *
+	 * @param string $pattern message name, or message name pattern ending with a *
 	 * @return array list of matching message names
 	 */
 	static private function getMatchingMessagesForPattern( $pattern ) {
+		// If the input does not end with a wildcard, return only the message name
+		if ( substr( $pattern, -1 ) != '*' ) {
+			return [ $pattern ];
+		}
+
 		$pattern = substr( $pattern, 0, -1 );
 		$patternLen = strlen( $pattern );
 
@@ -163,11 +173,7 @@ class JSMessages {
 		if ( is_array( $keys ) ) {
 			// Expand any wildcards, otherwise just push the message onto the list
 			foreach ( $keys as $message ) {
-				if ( substr( $message, -1 ) == '*' ) {
-					$list += self::getMatchingMessagesForPattern( $message );
-				} else {
-					$list[] = $message;
-				}
+				$list = array_merge( $list, self::getMatchingMessagesForPattern( $message ) );
 			}
 		}
 
@@ -187,7 +193,7 @@ class JSMessages {
 
 		foreach ( self::$packages as $packageName => $messageKeys ) {
 			$module = [
-				'messages' => self::expandWildcards( $messageKeys ),
+				self::RL_MESSAGES => self::expandWildcards( $messageKeys ),
 			];
 
 			// If a module with this name already exists, append our messages to it.
