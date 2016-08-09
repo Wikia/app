@@ -193,7 +193,7 @@ class WikiExporter {
 
 		foreach ( $res as $row ) {
 			if ( $row->rev_user > 0 ) {
-				$userName = User::fromNewId( $row->rev_user )->getName();
+				$userName = User::newFromId( $row->rev_user )->getName();
 			} else {
 				// Anon user, use IP address
 				$userName = $row->rev_user_text;
@@ -537,7 +537,12 @@ class XmlDumpWriter {
 		if ( $row->rev_deleted & Revision::DELETED_USER ) {
 			$out .= "      " . Xml::element( 'contributor', array( 'deleted' => 'deleted' ) ) . "\n";
 		} else {
-			$out .= $this->writeContributor( $row->rev_user, User::newFromId( $row->rev_user )->getName() );
+			if ( $row->rev_user > 0 ) {
+				$userName = User::newFromId( $row->rev_user )->getName();
+			} else {
+				$userName = $row->rev_user_text;
+			}
+			$out .= $this->writeContributor( $row->rev_user, $userName );
 		}
 
 		if ( $row->rev_minor_edit ) {

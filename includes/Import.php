@@ -1289,7 +1289,6 @@ class WikiRevision {
 
 			$where = array( 'rev_page' => $pageId,
 				'rev_timestamp' => $dbw->timestamp( $this->timestamp ),
-				'rev_user_text' => $userText,
 				'rev_comment'   => $this->getComment()
 			);
 			if ( $userId > 0 ) {
