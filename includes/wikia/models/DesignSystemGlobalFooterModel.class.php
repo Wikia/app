@@ -14,7 +14,8 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 			'terms-of-use' => 'http://www.wikia.com/Terms_of_use',
 			'privacy-policy' => 'http://www.wikia.com/Privacy_Policy',
 			'global-sitemap' => 'http://www.wikia.com/Sitemap',
-			'local-sitemap' => '/Special:AllPages',
+			'local-sitemap' => '/wiki/Local_Sitemap',
+			'local-sitemap-fandom' => 'http://fandom.wikia.com/local-sitemap',
 			'api' => 'http://api.wikia.com/wiki/Wikia_API_Wiki',
 			'community-central' => 'http://community.wikia.com/wiki/Community_Central',
 			'support' => 'http://community.wikia.com/wiki/Special:Contact',
@@ -288,7 +289,9 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 							'type' => 'translatable-text',
 							'key' => 'global-footer-site-overview-link-local-sitemap'
 						],
-						'href' => $this->getHref( 'local-sitemap' )
+						'href' => $this->getHref(
+							$this->isLocalSitemapAvailable() ? 'local-sitemap' : 'local-sitemap-fandom'
+						)
 					],
 					[
 						'type' => 'link-text',
@@ -694,6 +697,11 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 		}
 
 		return $data;
+	}
+
+	private function isLocalSitemapAvailable() {
+		$default = true; // $wgEnableLocalSitemapPageExt = true; in CommonSettings
+		return WikiFactory::getVarValueByName( 'wgEnableLocalSitemapPageExt' , $this->wikiId, false, $default );
 	}
 
 	private function getLicenseUrl() {
