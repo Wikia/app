@@ -1135,6 +1135,18 @@ class SpecialUndelete extends SpecialPage {
 		if( $haveFiles ) {
 			$batch = new LinkBatch();
 			foreach ( $files as $row ) {
+				/**
+				 * Check, how often is this code executed. Scope: the following if block.
+				 *
+				 * @author Mix
+				 * @see SUS-810
+				 */
+				if ( ( new Wikia\Util\Statistics\BernoulliTrial( 0.01 ) )->shouldSample() ) {
+					Wikia\Logger\WikiaLogger::instance()->debug(
+						'SUS-810',
+						[ 'method' => __METHOD__, 'exception' => new Exception() ]
+					);
+				}
 				$batch->addObj( Title::makeTitleSafe( NS_USER, $row->fa_user_text ) );
 				$batch->addObj( Title::makeTitleSafe( NS_USER_TALK, $row->fa_user_text ) );
 			}
