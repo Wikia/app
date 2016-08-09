@@ -113,6 +113,12 @@ class WikiaLogger implements LoggerInterface {
 		}
 	}
 
+	public function frequency($sampling, $message, Array $context=[]) {
+		if ( ( new Wikia\Util\Statistics\BernoulliTrial($sampling) )->shouldSample() ) {
+			return $this->debug($message, $context);
+		}
+	}
+
 	public function debug($message, Array $context=[]) {
 		return $this->getLogger()->debug($message, $context);
 	}
