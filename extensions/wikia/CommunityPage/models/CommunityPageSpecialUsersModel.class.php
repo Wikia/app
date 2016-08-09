@@ -117,7 +117,7 @@ class CommunityPageSpecialUsersModel {
 				$dateTwoYearsAgo = date( 'Y-m-d', strtotime( '-2 years' ) );
 
 				$sqlData = ( new WikiaSQL() )
-					->SELECT( 'rev_user_text, rev_user, MAX(rev_timestamp) AS latest_revision' )
+					->SELECT( 'rev_user, MAX(rev_timestamp) AS latest_revision' )
 					->FROM ( 'revision FORCE INDEX (user_timestamp)' )
 					->WHERE( 'rev_user' )->NOT_EQUAL_TO( 0 )
 					->AND_( 'rev_user' )->IN( $adminIds )

@@ -16,7 +16,6 @@ class QuickToolsHelper extends ContextSource {
 		$where = [
 			'rev_page = page_id',
 			'page_latest = rev_id',
-			'rev_user' => $userId,
 		];
 
 		if ( IP::isIPAddress( $user ) ) {

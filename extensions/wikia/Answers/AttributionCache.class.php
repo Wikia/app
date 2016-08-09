@@ -154,7 +154,7 @@ class AttributionCache {
 		$results = array();
 
 		$dbs = wfGetDB( DB_MASTER );
-		$res = $dbs->select( 'revision', array( 'rev_user' ), array( 'rev_page' => $title->getArticleID() ), __METHOD__, array( 'GROUP BY' => 'rev_user' ) );
+		$res = $dbs->select( 'revision', array( 'rev_user', 'rev_user_text' ), array( 'rev_page' => $title->getArticleID() ), __METHOD__, array( 'GROUP BY' => 'rev_user' ) );
 
 		$firstRevisionUserId = $this->getFirstRevisionUserId($title);
 		while($row = $dbs->fetchObject($res)) {
@@ -179,7 +179,13 @@ class AttributionCache {
 						continue;
 					}
 				}
-				$results[] = $this->getContribsEntry( $row->rev_user, $this->getUserEditPoints( $row->rev_user ), $user->getName() );
+
+				if ( $row->rev_user > 0 ) {
+					$userName = $user->getName();
+				} else {
+					$userName = $row->rev_user_text;
+				}
+				$results[] = $this->getContribsEntry( $row->rev_user, $this->getUserEditPoints( $row->rev_user ), $userName );
 			}
 		}
 
@@ -382,7 +388,12 @@ class AttributionCache {
                         );
                         // set to 1 if anon, as only one person can actually "ask" the question..
                         $editsNum = !empty($s->rev_user) ? $this->getUserEditPoints($s->rev_user) : 1;
-                        $contributor = $this->getContribsEntry( $row->rev_user, $editsNum, User::newFromId( $row->rev_user )->getName() );
+                        if ( $row->rev_user > 0 ) {
+                                $userName = User::newFromId( $row->rev_user )->getName();
+                        } else {
+                                $userName = $row->rev_user_text;
+                        }
+                        $contributor = $this->getContribsEntry( $row->rev_user, $editsNum, $userName );
                         $wgMemc->set( $key, $num1, 60 * 60 );
                 }
                 else {

@@ -643,7 +643,7 @@ class RecentChange {
 			'rc_timestamp' => wfTimestamp(TS_MW, $row->rev_timestamp),
 			'rc_cur_time' => $row->rev_timestamp,
 			'rc_user' => $row->rev_user,
-			'rc_user_text' => User::newFromId( $row->rev_user )->getName(),
+			'rc_user_text' => $row->rev_user_text,
 			'rc_namespace' => $row->page_namespace,
 			'rc_title' => $row->page_title,
 			'rc_comment' => $row->rev_comment,

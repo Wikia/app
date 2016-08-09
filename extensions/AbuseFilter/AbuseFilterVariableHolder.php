@@ -316,7 +316,7 @@ class AFComputedVariable {
 
 				$dbr = wfGetDB( DB_SLAVE );
 				$res = $dbr->select( 'revision',
-					'DISTINCT rev_user_text',
+					'DISTINCT rev_user_text, rev_user',
 					array(
 						'rev_page' => $title->getArticleId(),
 						'rev_timestamp<' . $dbr->addQuotes( $dbr->timestamp( $cutOff ) )
@@ -327,7 +327,12 @@ class AFComputedVariable {
 
 				$users = array();
 				foreach( $res as $row ) {
-					$users[] = $row->rev_user_text;
+					if ( $row->rev_user > 0 ) {
+						$userName = User::newFromId( $row->rev_user )->getName();
+					} else {
+						$userName = $row->rev_user_text;
+					}
+					$users[] = $userName;
 				}
 				$result = $users;
 				break;
