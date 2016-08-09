@@ -33,31 +33,12 @@ $config['tracker_js'] = array(
 	)
 );
 
-$config['liftium_ads_js'] = array(
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis', 'wikiamobile' ],
-	'assets' => array(
-		'//extensions/wikia/AdEngine/liftium/Liftium.js',
-	)
-);
-
-$config['liftium_ads_extra_js'] = array(
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis', 'wikiamobile' ],
-	'assets' => array(
-		// TODO: get rid of those:
-		'//extensions/wikia/AdEngine/liftium/Wikia.Athena.js',
-		'//extensions/wikia/AdEngine/liftium/Wikia.AQ.js',
-		'//extensions/wikia/AdEngine/liftium/Wikia.meerkat.js',
-		'//extensions/wikia/AdEngine/liftium/Wikia.ve_alternate.js',
-	)
-);
-
 $config['adengine2_desktop_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'oasis', 'wikiamobile' ],
 	'assets' => array(
 		// was: early queue
+		'//resources/wikia/modules/browserDetect.js',
 		'//resources/wikia/modules/iframeWriter.js',
 		'//resources/wikia/modules/scriptwriter.js',
 		'//extensions/wikia/AdEngine/js/AdDecoratorLegacyParamFormat.js',
@@ -70,6 +51,7 @@ $config['adengine2_desktop_js'] = array(
 		'//extensions/wikia/AdEngine/js/AdLogicPageParams.js',
 		'//extensions/wikia/AdEngine/js/AdLogicPageViewCounter.js',
 		'//extensions/wikia/AdEngine/js/CustomAdsLoader.js',
+		'//extensions/wikia/AdEngine/js/utils/sampler.js',
 		'//extensions/wikia/AdEngine/js/context/adContext.js',
 		'//extensions/wikia/AdEngine/js/context/uapContext.js',
 		'//extensions/wikia/AdEngine/js/DartUrl.js',
@@ -79,6 +61,7 @@ $config['adengine2_desktop_js'] = array(
 		'//extensions/wikia/AdEngine/js/SlotTracker.js',
 		'//extensions/wikia/AdEngine/js/SlotTweaker.js',
 		'//extensions/wikia/AdEngine/js/SourcePointDetection.js',
+		'//extensions/wikia/AdEngine/js/pageFairDetection.js',
 		'//extensions/wikia/AdEngine/js/WikiaAdHelper.js',
 		'//extensions/wikia/AdEngine/js/WikiaDartHelper.js',
 		'//extensions/wikia/AdEngine/js/config/desktop.js',
@@ -103,6 +86,7 @@ $config['adengine2_desktop_js'] = array(
 		'//extensions/wikia/AdEngine/js/slot/inContent.js',
 		'//extensions/wikia/AdEngine/js/slot/scrollHandler.js',
 		'//extensions/wikia/AdEngine/js/slot/skyScraper3.js',
+		'//extensions/wikia/AdEngine/js/slot/slotTargeting.js',
 		'//extensions/wikia/AdEngine/js/template/bfaa.js',
 		'//extensions/wikia/AdEngine/js/template/bfab.js',
 		'//extensions/wikia/AdEngine/js/template/floor.js',
@@ -126,8 +110,8 @@ $config['adengine2_desktop_js'] = array(
 		'//extensions/wikia/AdEngine/js/OoyalaTracking.js',
 		'//extensions/wikia/AdEngine/js/WikiaDartVideoHelper.js',
 		'//extensions/wikia/AdEngine/js/TaboolaHelper.js',
+		'//extensions/wikia/AdEngine/js/utils/scriptLoader.js',
 		'//extensions/wikia/AdEngine/js/provider/evolve2.js',
-		'//extensions/wikia/AdEngine/js/provider/liftium.js',
 		'//extensions/wikia/AdEngine/js/provider/monetizationService.js',
 
 		'//extensions/wikia/AdEngine/js/run/desktop.run.js',
@@ -156,6 +140,7 @@ $config['recirculation_js'] = array(
 		'//extensions/wikia/Recirculation/js/experiments/placement.js',
 		'//extensions/wikia/Recirculation/js/experiments/placement/impactFooter.js',
 		'//extensions/wikia/Recirculation/js/experiments/placement/fandomTopic.js',
+		'//extensions/wikia/Recirculation/js/experiments/placement/control.js',
 		'//extensions/wikia/Recirculation/js/scrolldepth.js',
 		'//extensions/wikia/Recirculation/js/libs/perfect-scrollbar.js',
 	),
@@ -242,6 +227,7 @@ $config['adengine2_tracking_js'] = array(
 		'//extensions/wikia/AdEngine/js/AdLogicPageParams.js',
 		'//extensions/wikia/AdEngine/js/AdLogicPageViewCounter.js',
 		'//extensions/wikia/AdEngine/js/AdTracker.js',
+		'//extensions/wikia/AdEngine/js/utils/sampler.js',
 		'//extensions/wikia/AdEngine/js/context/adContext.js',
 		'//extensions/wikia/AdEngine/js/lookup/lookupFactory.js',
 		'//extensions/wikia/AdEngine/js/slot/adSlot.js',
@@ -842,6 +828,7 @@ $config['mobile_base_ads_js'] = array(
 		'//extensions/wikia/AdEngine/js/WikiaAdHelper.js',
 		'//extensions/wikia/AdEngine/js/config/mobile.js',
 		'//extensions/wikia/AdEngine/js/lookup/adapter/appnexus.js',
+		'//extensions/wikia/AdEngine/js/utils/sampler.js',
 		'//extensions/wikia/AdEngine/js/context/adContext.js',
 		'//extensions/wikia/AdEngine/js/context/uapContext.js',
 		'//extensions/wikia/AdEngine/js/lookup/amazonMatch.js',
@@ -898,6 +885,7 @@ $config['mercury_ads_js'] = array(
 		'#group_tracker_js',
 		'//resources/wikia/modules/log.js',
 		'//resources/wikia/modules/window.js',
+		'//resources/wikia/modules/browserDetect.js',
 		'//resources/wikia/modules/document.js',
 		'//resources/wikia/modules/location.js',
 		'//resources/wikia/modules/querystring.js',
@@ -915,9 +903,11 @@ $config['mercury_ads_js'] = array(
 		'//extensions/wikia/AdEngine/js/AdLogicPageViewCounter.js',
 		'//extensions/wikia/AdEngine/js/CustomAdsLoader.js',
 		'//extensions/wikia/AdEngine/js/SourcePointDetection.js',
+		'//extensions/wikia/AdEngine/js/pageFairDetection.js',
 		'//extensions/wikia/AdEngine/js/mobile/mercuryListener.js',
 		'//extensions/wikia/AdEngine/js/provider/yavliTag.js',
 		'//extensions/wikia/AdEngine/js/slot/scrollHandler.js',
+		'//extensions/wikia/AdEngine/js/slot/slotTargeting.js',
 		'//extensions/wikia/AdEngine/js/template/bfaa.js',
 		'//extensions/wikia/AdEngine/js/template/bfab.js',
 		'//extensions/wikia/AdEngine/js/template/floor.js',
@@ -927,6 +917,7 @@ $config['mercury_ads_js'] = array(
 		'//extensions/wikia/AdEngine/js/template/playwire.js',
 		'//extensions/wikia/AdEngine/js/template/interstitial.js',
 		'//extensions/wikia/AdEngine/js/utils/domCalculator.js',
+		'//extensions/wikia/AdEngine/js/utils/scriptLoader.js',
 		'//resources/wikia/modules/abTest.js',
 		'//resources/wikia/modules/krux.js',
 		'//extensions/wikia/AdEngine/js/run/mercury.run.js',

@@ -1,43 +1,42 @@
 <?php
 
+/**
+ * Renders the header chrome and side rail on Special:AdminDashboard
+ */
 class AdminDashboardController extends WikiaController {
 
-	// Render the Admin Dashboard chrome
-	public function executeChrome () {
-		global $wgRequest, $wgTitle;
+	/**
+	 * @var string TAB_GENERAL Name of the General tab on Special:AdminDashboard
+	 */
+	const TAB_GENERAL = 'general';
 
-		$resolvedAlias = SpecialPageFactory::resolveAlias( $wgTitle->getDBKey() );
+	/**
+	 * @var string TAB_ADVANCED Name of the Advanced tab on Special:AdminDashboard
+	 */
+	const TAB_ADVANCED = 'advanced';
 
-		$this->tab = $wgRequest->getVal( 'tab', '' );
-		if (
-			( empty( $this->tab ) && $this->isAdminDashboardTitle() ) ||
-			( !empty( $this->tab ) && !in_array( $this->tab, [ 'general', 'advanced' ] ) ) ||
-			AdminDashboardLogic::isGeneralApp( array_shift( $resolvedAlias ) )
-		) {
-			$this->tab = 'general';
-		} elseif ( empty( $this->tab ) ) {
-			$this->tab = 'advanced';
+	/**
+	 * Renders the Admin Dashboard article chrome on Special:AdminDashboard
+	 */
+	public function chrome() {
+		// Get currently active tab from URL parameter (defaults to General)
+		$this->tab = $this->wg->Request->getVal( 'tab', static::TAB_GENERAL );
+		if ( !in_array( $this->tab, [ static::TAB_GENERAL, static::TAB_ADVANCED ] ) ) {
+			$this->tab = static::TAB_ADVANCED;
 		}
 
-		$this->response->addAsset('extensions/wikia/AdminDashboard/css/AdminDashboard.scss');
-		$this->response->addAsset('extensions/wikia/AdminDashboard/js/AdminDashboard.js');
+		// Add SCSS, JS and messages in one package
+		$this->wg->Out->addModules( 'ext.AdminDashboard' );
 
-		$this->isAdminDashboard = $this->isAdminDashboardTitle();
-		$this->adminDashboardUrl = Title::newFromText('AdminDashboard', NS_SPECIAL)->getFullURL( [ 'tab' => $this->tab ] );
-		$this->adminDashboardUrlGeneral = Title::newFromText('AdminDashboard', NS_SPECIAL)->getFullURL( [ 'tab' => 'general' ] );
-		$this->adminDashboardUrlAdvanced = Title::newFromText('AdminDashboard', NS_SPECIAL)->getFullURL( [ 'tab' => 'advanced' ] );
+		$this->adminDashboardUrl = $this->wg->Title->getFullURL( [ 'tab' => $this->tab ] );
+		$this->adminDashboardUrlGeneral = $this->wg->Title->getFullURL( [ 'tab' => 'general' ] );
+		$this->adminDashboardUrlAdvanced = $this->wg->Title->getFullURL( [ 'tab' => 'advanced' ] );
 	}
 
-	public function executeRail () {
-		if (!$this->isAdminDashboardTitle()) {
-			$this->skipRendering();
-		}
+	/**
+	 * Stub - renders side rail on Special:AdminDashboard
+	 */
+	public function rail() {
+		// only render template
 	}
-
-	private function isAdminDashboardTitle() {
-		global $wgTitle;
-		$adminDashboardTitle = SpecialPage::getTitleFor( 'AdminDashboard' );
-		return $wgTitle->getText() == $adminDashboardTitle->getText();
-	}
-
 }

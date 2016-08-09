@@ -21,7 +21,11 @@ describe('ext.wikia.adEngine.adEngine', function () {
 		},
 		hooksMock = noop,
 		slotTrackerMock = function () { return { track: noop }; },
-		slotTweakerMock = { show: noop, hide: noop },
+		slotTweakerMock = {
+			show: noop,
+			hide: noop,
+			isTopLeaderboard: noop
+		},
 		docMock = {
 			getElementById: function () {
 				return {
