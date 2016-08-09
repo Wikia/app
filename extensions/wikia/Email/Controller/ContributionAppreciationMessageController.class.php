@@ -58,7 +58,7 @@ class ContributionAppreciationMessageController extends EmailController {
 					$this->appreciatorName
 				)->text(),
 			'appreciationText' => $this->getMessage( 'emailext-appreciation-received-text' )->text(),
-			'viewEditText' => $this->$this->getMessage(
+			'viewEditText' => $this->getMessage(
 					'emailext-appreciation-view-edit',
 					$this->editedPageTitleText
 				)->text(),

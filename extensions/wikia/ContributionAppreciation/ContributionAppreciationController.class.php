@@ -5,7 +5,6 @@ class ContributionAppreciationController extends WikiaController {
 		global $wgUser;
 
 		if ( $this->request->isValidWriteRequest( $wgUser ) ) {
-			//TODO: do something with apprecation
 			$this->sendMail( $this->request->getInt( 'revision' ) );
 		}
 	}
@@ -72,7 +71,7 @@ class ContributionAppreciationController extends WikiaController {
 				] )
 			];
 
-			$this->app->sendRequest( 'ContributionAppreciationMessage', 'handle', $params );
+			$this->app->sendRequest( 'Email\Controller\ContributionAppreciationMessageController', 'handle', $params );
 		}
 	}
 }
