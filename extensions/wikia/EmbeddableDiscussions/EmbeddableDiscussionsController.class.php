@@ -1,6 +1,6 @@
 <?php
 
-class EmbeddableDiscussionsController extends WikiaApiController {
+class EmbeddableDiscussionsController {
 	const TAG_NAME = 'discussions';
 	const ITEMS_DEFAULT = 5;
 	const ITEMS_MIN = 3;
@@ -8,10 +8,6 @@ class EmbeddableDiscussionsController extends WikiaApiController {
 	const COLUMNS_DEFAULT = 1;
 	const COLUMNS_MIN = 1;
 	const COLUMNS_MAX = 2;
-
-	public function __construct() {
-		parent::__construct();
-	}
 
 	public static function onParserFirstCallInit( Parser $parser ) {
 		global $wgEnableDiscussions;
