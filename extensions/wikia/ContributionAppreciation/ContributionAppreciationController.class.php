@@ -4,9 +4,8 @@ class ContributionAppreciationController extends WikiaController {
 	public function appreciate() {
 		global $wgUser;
 
-		if ( $this->request->isValidWriteRequest( $wgUser ) ) {
-			$this->sendMail( $this->request->getInt( 'revision' ) );
-		}
+		$this->request->assertValidWriteRequest( $wgUser );
+		$this->sendMail( $this->request->getInt( 'revision' ) );
 	}
 
 	public function diffModule() {
@@ -18,7 +17,7 @@ class ContributionAppreciationController extends WikiaController {
 	}
 
 	public static function onAfterDiffRevisionHeader( DifferenceEngine $diffPage, Revision $newRev, OutputPage $out ) {
-		if ( self::shouldDisplayApprectiation() ) {
+		if ( self::shouldDisplayAppreciation() ) {
 			Wikia::addAssetsToOutput( 'contribution_appreciation_js' );
 			Wikia::addAssetsToOutput( 'contribution_appreciation_scss' );
 			$out->addHTML( F::app()->renderView(
@@ -32,7 +31,7 @@ class ContributionAppreciationController extends WikiaController {
 	}
 
 	public static function onPageHistoryToolsList( HistoryPager $pager, $row, &$tools ) {
-		if ( self::shouldDisplayApprectiation() ) {
+		if ( self::shouldDisplayAppreciation() ) {
 			$tools[] = F::app()->renderView( 'ContributionAppreciation', 'historyModule', [ 'revision' => $row->rev_id ] );
 		}
 
@@ -40,7 +39,7 @@ class ContributionAppreciationController extends WikiaController {
 	}
 
 	public static function onPageHistoryBeforeList() {
-		if ( self::shouldDisplayApprectiation() ) {
+		if ( self::shouldDisplayAppreciation() ) {
 			Wikia::addAssetsToOutput( 'contribution_appreciation_js' );
 			Wikia::addAssetsToOutput( 'contribution_appreciation_scss' );
 		}
@@ -48,9 +47,10 @@ class ContributionAppreciationController extends WikiaController {
 		return true;
 	}
 
-	private static function shouldDisplayApprectiation() {
+	private static function shouldDisplayAppreciation() {
 		global $wgUser, $wgLang;
 
+		// we want to run it only for english users
 		return $wgUser->isLoggedIn() && $wgLang->getCode() === 'en';
 	}
 
