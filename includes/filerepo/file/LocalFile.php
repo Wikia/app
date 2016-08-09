@@ -350,6 +350,12 @@ class LocalFile extends File {
 			$this->$name = $value;
 		}
 
+		/* Wikia Change begin */
+		if ( array_key_exists( 'user', $array ) && $array['user'] > 0 ) {
+			$this->user_text = User::newFromId( $array['user'] )->getName();
+		}
+		/* Wikia change end */
+
 		$this->fileExists = true;
 		$this->maybeUpgradeRow();
 	}
@@ -1312,7 +1318,7 @@ class LocalFile extends File {
 		foreach ( $archiveNames as $archiveName ) {
 			$this->purgeOldThumbnails( $archiveName );
 		}
-		
+
 		if ( $status->isOk() ) {
 			// Now switch the object
 			$this->title = $target;
@@ -1351,10 +1357,10 @@ class LocalFile extends File {
 
 		# Get old version relative paths
 		$dbw = $this->repo->getMasterDB();
-		$result = $dbw->select( 
-			'oldimage', 
+		$result = $dbw->select(
+			'oldimage',
 			array( 'oi_archive_name' ),
-			array( 'oi_name' => $this->getName() ) 
+			array( 'oi_name' => $this->getName() )
 		);
 		$archiveNames = [];
 		foreach ( $result as $row ) {
@@ -1367,7 +1373,7 @@ class LocalFile extends File {
 			DeferredUpdates::addUpdate( SiteStatsUpdate::factory( [ 'images' => -1 ] ) );
 		}
 		$this->unlock(); // done
-		
+
 		if ( $status->ok ) {
 			$this->purgeEverything();
 			foreach ( $archiveNames as $archiveName ) {
@@ -2367,7 +2373,7 @@ class LocalFileMoveBatch {
 				"{$archiveBase}/{$this->newHash}{$timestamp}!{$this->newName}"
 			);
 		}
-		
+
 		return $archiveNames;
 	}
 
