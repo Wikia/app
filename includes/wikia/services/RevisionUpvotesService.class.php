@@ -222,7 +222,7 @@ class RevisionUpvotesService {
 
 				if ( !empty( $row ) ) {
 					$status = [
-						'notified' => 1,
+						'notified' => $row->notified,
 						'last_notified' => $row->last_notified
 					];
 				}
