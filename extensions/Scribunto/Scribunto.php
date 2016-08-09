@@ -147,7 +147,7 @@ $wgScribuntoEngineConf = array(
 		// The location of the Lua binary, or null to use the bundled binary.
 		'luaPath' => null,
 		'memoryLimit' => 350 * 1024 * 1024,
-		'cpuLimit' => 7,
+		'cpuLimit' => 15, # the CPU time limit in seconds (enforced using ulimit)
 		'allowEnvFuncs' => false,
 	),
 );
