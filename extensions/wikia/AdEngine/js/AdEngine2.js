@@ -57,8 +57,7 @@ define('ext.wikia.adEngine.adEngine', [
 	}
 
 	function prepareAdProviderContainer(providerName, slotName) {
-		// TODO: remove after Liftium-era
-		var providerContainerId = providerName + '_' + slotName.split('.')[0],
+		var providerContainerId = providerName + '_' + slotName,
 			adContainer = doc.getElementById(slotName),
 			providerContainer = doc.getElementById(providerContainerId);
 
@@ -196,7 +195,7 @@ define('ext.wikia.adEngine.adEngine', [
 		log(['run', 'initializing lazyQueue on the queue'], 'debug', logGroup);
 		lazyQueue.makeQueue(adslots, decorate(fillInSlot, decorators));
 
-		log(['run', 'launching queue on adslots ('+adslots.length+')'], 'debug', logGroup);
+		log(['run', 'launching queue on adslots (' + adslots.length + ')'], 'debug', logGroup);
 		adslots.start();
 
 		log(['run', 'initial queue handled'], 'debug', logGroup);
