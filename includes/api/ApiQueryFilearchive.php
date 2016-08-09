@@ -150,12 +150,11 @@ class ApiQueryFilearchive extends ApiQueryBase {
 				 * @author Mix
 				 * @see SUS-810
 				 */
-				if ( ( new Wikia\Util\Statistics\BernoulliTrial( 0.01 ) )->shouldSample() ) {
-					Wikia\Logger\WikiaLogger::instance()->debug(
-						'SUS-810',
-						[ 'method' => __METHOD__, 'exception' => new Exception() ]
-					);
-				}
+				Wikia\Logger\WikiaLogger::instance()->frequency(
+					0.01,
+					'SUS-810',
+					[ 'method' => __METHOD__, 'exception' => new Exception() ]
+				);
 				$file['userid'] = $row->fa_user;
 				$file['user'] = $row->fa_user_text;
 			}
