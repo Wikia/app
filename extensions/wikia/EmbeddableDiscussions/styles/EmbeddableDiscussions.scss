@@ -9,6 +9,7 @@ $upvote-icon: '/extensions/wikia/EmbeddableDiscussions/images/upvote.svg';
 $upvote-icon-active: '/extensions/wikia/EmbeddableDiscussions/images/upvote-active.svg';
 $upvote-icon-tiny: '/extensions/wikia/EmbeddableDiscussions/images/upvote-tiny.svg';
 $share-icon: '/extensions/wikia/EmbeddableDiscussions/images/share.svg';
+$plus-icon: '/extensions/wikia/EmbeddableDiscussions/images/plus-x-large.svg';
 
 $gray: #999;
 $card-border-color: $color-page-border;
@@ -16,9 +17,11 @@ $container-border-color: lighten($color-page-border, 10%);
 
 $icon-size: 24px;
 $tiny-icon-size: 14px;
+$plus-icon-size: 34px;
 
 $font-size-small: 12px;
 $font-size-regular: 14px;
+$font-size-large: 16px;
 
 .embeddable-discussions-module {
 	border: 1px solid $container-border-color;
@@ -198,6 +201,25 @@ $font-size-regular: 14px;
 	}
 
 	.embeddable-discussions-zero {
+		@include flexbox();
+		@include flex-direction(column);
+
+		align-items: center;
+		border: 1px dashed $card-border-color;
 		clear: both;
+		padding: 48px 0 75px;
+		line-height: 1.4;
+		text-align: center;
+	}
+
+	.embeddable-discussions-zero-plus {
+		background: url($plus-icon) no-repeat;
+		height: $plus-icon-size;
+		padding-bottom: 18px;
+		width: $plus-icon-size
+	}
+
+	.embeddable-discussions-zero-text {
+		font-size: $font-size-large;
 	}
 }

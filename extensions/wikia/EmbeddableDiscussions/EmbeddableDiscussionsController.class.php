@@ -60,6 +60,7 @@ class EmbeddableDiscussionsController {
 		$modelData['trendingHeading'] = wfMessage( 'embeddable-discussions-show-trending' )->plain();
 		$modelData['upvoteText'] = wfMessage( 'embeddable-discussions-upvote' )->plain();
 		$modelData['zeroText'] = wfMessage( 'embeddable-discussions-zero' )->plain();
+		$modelData['zeroTextDetail'] = wfMessage( 'embeddable-discussions-zero-detail' )->plain();
 
 		$templateEngine = ( new Wikia\Template\MustacheEngine )->setPrefix( __DIR__ . '/templates' );
 

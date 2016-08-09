@@ -78,7 +78,11 @@
 		{{/threads}}
 		{{^threads}}
 			<div class="embeddable-discussions-zero">
-				{{zeroText}}
+				<svg class="embeddable-discussions-zero-plus"></svg>
+				<div class="embeddable-discussions-zero-text">
+					<div>{{zeroText}}</div>
+					<div>{{zeroTextDetail}}</div>
+				</div>
 			</div>
 		{{/threads}}
 	</div>
