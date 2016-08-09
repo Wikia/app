@@ -1141,7 +1141,7 @@ class SpecialUndelete extends SpecialPage {
 				 * @author Mix
 				 * @see SUS-810
 				 */
-				Wikia\Logger\WikiaLogger::instance()->frequency(
+				Wikia\Logger\WikiaLogger::instance()->debugSampled(
 					0.01,
 					'SUS-810',
 					[ 'method' => __METHOD__, 'exception' => new Exception() ]

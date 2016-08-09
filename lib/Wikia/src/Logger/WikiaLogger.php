@@ -113,7 +113,7 @@ class WikiaLogger implements LoggerInterface {
 		}
 	}
 
-	public function frequency($sampling, $message, Array $context=[]) {
+	public function debugSampled($sampling, $message, Array $context=[]) {
 		if ( ( new Wikia\Util\Statistics\BernoulliTrial($sampling) )->shouldSample() ) {
 			return $this->debug($message, $context);
 		}
