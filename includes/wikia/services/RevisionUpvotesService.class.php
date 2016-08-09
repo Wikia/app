@@ -213,11 +213,21 @@ class RevisionUpvotesService {
 		$db = $this->getDatabaseForRead();
 
 		$status = ( new \WikiaSQL() )
-			->SELECT_ALL()
+			->SELECT( 'notified', 'last_notified' )
 			->FROM( self::UPVOTE_USERS_TABLE )
 			->WHERE( 'user_id' )->EQUAL_TO( $userId )
 			->run( $db, function( $result ) {
-				return $result->fetchRow();
+				$status = [];
+				$row = $result->fetchObject();
+
+				if ( !empty( $row ) ) {
+					$status = [
+						'notified' => 1,
+						'last_notified' => $row->last_notified
+					];
+				}
+
+				return $status;
 			} );
 
 		return $status;

@@ -29,10 +29,12 @@ class ContributionAppreciationController extends WikiaController {
 		if ( !empty( $upvotes ) ) {
 			$appreciations = $this->prepareAppreciations( $upvotes );
 
-			$html = $this->app->renderView( 'ContributionAppreciation', 'appreciations', [
-				'appreciations' => $appreciations,
-				'userName' => $user
-			] );
+			if ( !empty( $appreciations ) ) {
+				$html = $this->app->renderView( 'ContributionAppreciation', 'appreciations', [
+					'appreciations' => $appreciations,
+					'userName' => $user
+				] );
+			}
 		}
 
 		$this->setVal( 'html', $html );
