@@ -174,7 +174,7 @@ class ArticleCommentsAjax {
 		$result = [ 'error' => 1 ];
 
 		try {
-			$wgRequest->isValidWriteRequest( $wgUser );
+			$wgRequest->assertValidWriteRequest( $wgUser );
 		} catch ( \BadRequestException $bre ) {
 			$result['msg'] = wfMessage( 'sessionfailure' )->escaped();
 			return $result;
