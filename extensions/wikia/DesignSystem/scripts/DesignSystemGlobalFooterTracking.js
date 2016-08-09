@@ -5,7 +5,7 @@ $(function ($) {
 	 */
 	var track = Wikia.Tracker.buildTrackingFunction({
 		action: Wikia.Tracker.ACTIONS.CLICK,
-		category: 'Footer',
+		category: 'footer',
 		trackingMethod: 'analytics'
 	});
 
