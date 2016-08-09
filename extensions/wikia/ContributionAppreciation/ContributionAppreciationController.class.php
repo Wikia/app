@@ -3,9 +3,9 @@
 class ContributionAppreciationController extends WikiaController {
 
 	public function appreciate() {
-		$user = $this->wg->User;
+		global $wgUser;
 
-		$this->request->isValidWriteRequest( $user );
+		$this->request->assertValidWriteRequest( $wgUser );
 
 		$revisionId = $this->request->getInt( 'revision' );
 		$revision = Revision::newFromId( $revisionId );
@@ -15,9 +15,10 @@ class ContributionAppreciationController extends WikiaController {
 				$revision->getPage(),
 				$revisionId,
 				$revision->getUser(),
-				$user->getId()
+				$wgUser->getId()
 			);
 		}
+
 	}
 
 	public function getAppreciations() {
@@ -54,7 +55,7 @@ class ContributionAppreciationController extends WikiaController {
 	}
 
 	public static function onAfterDiffRevisionHeader( DifferenceEngine $diffPage, Revision $newRev, OutputPage $out ) {
-		if ( self::shouldDisplayApprectiation() ) {
+		if ( self::shouldDisplayAppreciation() ) {
 			Wikia::addAssetsToOutput( 'contribution_appreciation_js' );
 			Wikia::addAssetsToOutput( 'contribution_appreciation_scss' );
 			$out->addHTML( F::app()->renderView(
@@ -68,7 +69,7 @@ class ContributionAppreciationController extends WikiaController {
 	}
 
 	public static function onPageHistoryToolsList( HistoryPager $pager, $row, &$tools ) {
-		if ( self::shouldDisplayApprectiation() ) {
+		if ( self::shouldDisplayAppreciation() ) {
 			$tools[] = F::app()->renderView( 'ContributionAppreciation', 'historyModule', [ 'revision' => $row->rev_id ] );
 		}
 
@@ -76,7 +77,7 @@ class ContributionAppreciationController extends WikiaController {
 	}
 
 	public static function onPageHistoryBeforeList() {
-		if ( self::shouldDisplayApprectiation() ) {
+		if ( self::shouldDisplayAppreciation() ) {
 			Wikia::addAssetsToOutput( 'contribution_appreciation_js' );
 			Wikia::addAssetsToOutput( 'contribution_appreciation_scss' );
 		}
@@ -84,17 +85,19 @@ class ContributionAppreciationController extends WikiaController {
 		return true;
 	}
 
+
 	public static function onBeforePageDisplay( \OutputPage $out, \Skin $skin ) {
-		if ( self::shouldDisplayApprectiation() ) {
+		if ( self::shouldDisplayAppreciation() ) {
 			Wikia::addAssetsToOutput( 'contribution_appreciation_user_js' );
 		}
 
 		return true;
 	}
 
-	private static function shouldDisplayApprectiation() {
+	private static function shouldDisplayAppreciation() {
 		global $wgUser, $wgLang;
 
+		// we want to run it only for english users
 		return $wgUser->isLoggedIn() && $wgLang->getCode() === 'en';
 
 	}
