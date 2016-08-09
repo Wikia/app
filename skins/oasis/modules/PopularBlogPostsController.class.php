@@ -15,13 +15,13 @@ class PopularBlogPostsController extends WikiaController {
 			$time = date( 'Ymd', strtotime( "-1 week" ) ) . '000000'; // 7 days ago
 //			$time = '20091212000000';  // use this value for testing if there are no recent posts
 			$params = [
-				"summary" => true,
-				"paging" => false,
-				"create_timestamp" => $time,
-				"count" => 50,
-				"displaycount" => 4,
-				"order" => "comments"
-				//				"style" => "add additionalClass if necessary"
+				'summary' => true,
+				'paging' => false,
+				'create_timestamp' => $time,
+				'count' => 50,
+				'displaycount' => 4,
+				'order' => 'comments'
+				// 'style' => 'add additionalClass if necessary'
 			];
 
 			$this->body = BlogTemplateClass::parseTag( $input, $params, $this->wg->Parser );

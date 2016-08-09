@@ -12,8 +12,8 @@
 </form>
 <?php if ( ( !$wg->WikiaSearchIsDefault ) && $wg->Title->isSpecial( 'Search' ) ): ?>
 	<?php if ( $isCrossWikiaSearch ): ?>
-	<h1><?= wfMessage( 'oasis-search-results-from-all-wikis' )->escaped(); ?></h1>
+		<h1><?= wfMessage( 'oasis-search-results-from-all-wikis' )->escaped(); ?></h1>
 	<?php else: ?>
-	<h1><?= wfMessage( 'oasis-search-results-from', $wg->Sitename )->escaped(); ?></h1>
+		<h1><?= wfMessage( 'oasis-search-results-from', $wg->Sitename )->escaped(); ?></h1>
 	<?php endif; ?>
 <?php endif; ?>

@@ -41,10 +41,10 @@ class UserPagesHeaderController extends WikiaController {
 
 		$userName = null;
 
-		if ( in_array( $title->getNamespace(), $namespaces ) ) {
+		if ( $title->inNamespaces( $namespaces ) ) {
 			// get "owner" of this user / user talk / blog page
 			$parts = explode( '/', $title->getText() );
-		} else if ( $title->getNamespace() == NS_SPECIAL ) {
+		} else if ( $title->isSpecialPage() ) {
 			if ( $title->isSpecial( 'Following' ) || $title->isSpecial( 'Contributions' ) ) {
 				$target = $wg->Request->getText( 'target' );
 				if ( $target != '' ) {

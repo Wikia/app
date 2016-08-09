@@ -100,8 +100,7 @@ class LatestActivityController extends WikiaController {
 		wfProfileOut( __METHOD__ );
 	}
 
-	static function onArticleSaveComplete( &$article, &$user, $text, $summary,
-										   $minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId ) {
+	static function onArticleSaveComplete( &$article, &$user, $text, $summary, $minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId ) {
 		$wg = F::app()->wg;
 		$wg->Memc->delete( wfMemcKey( 'mOasisLatestActivity' ) );
 		$wg->Memc->delete( wfMemcKey( 'mOasisLatestActivity_times', $wg->Lang->getCode() ) );
