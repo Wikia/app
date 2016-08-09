@@ -282,6 +282,7 @@ $config['oasis_noads_extensions_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		'#group_bucky_js',
+		'#group_design_system_js',
 		'//resources/wikia/libraries/jquery/ellipses.js',
 		'//extensions/wikia/CreatePage/js/CreatePage.js',
 		'//extensions/wikia/VideoHandlers/js/VideoBootstrap.js',
@@ -2087,6 +2088,15 @@ $config['global_footer_js'] = array(
 	'skin' => [ 'oasis' ],
 	'assets' => array(
 		'//extensions/wikia/GlobalFooter/scripts/GlobalFooter.js'
+	)
+);
+
+/** DesignSystem extension */
+$config['design_system_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => [ 'oasis' ],
+	'assets' => array(
+		'//extensions/wikia/DesignSystem/scripts/DesignSystemGlobalFooterTracking.js'
 	)
 );
 
