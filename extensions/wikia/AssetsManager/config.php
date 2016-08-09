@@ -2092,13 +2092,13 @@ $config['global_footer_js'] = array(
 );
 
 /** DesignSystem extension */
-$config['design_system_js'] = array(
+$config['design_system_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'oasis' ],
-	'assets' => array(
+	'assets' => [
 		'//extensions/wikia/DesignSystem/scripts/DesignSystemGlobalFooterTracking.js'
-	)
-);
+	]
+];
 
 /** CorporateFooter extension */
 $config['corporate_footer_js'] = array(
