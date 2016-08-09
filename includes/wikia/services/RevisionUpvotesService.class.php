@@ -200,7 +200,7 @@ class RevisionUpvotesService {
 	public function getUserNewUpvotes( $userId ) {
 		$status = $this->getUserUpvotesStatus( $userId );
 
-		if ( $status['notified'] ) {
+		if ( !empty( $status['notified'] ) ) {
 			return [];
 		}
 
@@ -216,13 +216,8 @@ class RevisionUpvotesService {
 			->SELECT_ALL()
 			->FROM( self::UPVOTE_USERS_TABLE )
 			->WHERE( 'user_id' )->EQUAL_TO( $userId )
-			->runLoop( $db, function( &$status, $row ) {
-				$status = [
-					'total' => (int) $row->total,
-					'new' => (int) $row->new,
-					'notified' => (bool) $row->notified,
-					'last_notified' => $row->last_notified ? $row->last_notified : ''
-				];
+			->run( $db, function( $result ) {
+				return $result->fetchRow();
 			} );
 
 		return $status;

@@ -50,9 +50,9 @@ require([
 			method: 'getAppreciations',
 			type: 'get',
 			format: 'json',
-			callback: function (data) {
-				if (data.html) {
-					var notification = new BannerNotification(data.html, 'warn');
+			callback: function (response) {
+				if (response.html) {
+					var notification = new BannerNotification(response.html, 'warn');
 					notification.show();
 					bindClickTracking(notification);
 					trackImpression();

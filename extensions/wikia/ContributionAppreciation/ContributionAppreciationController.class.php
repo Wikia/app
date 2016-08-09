@@ -43,17 +43,6 @@ class ContributionAppreciationController extends WikiaController {
 		$this->appreciations = $this->getVal( 'appreciations' );
 	}
 
-	private function getUserLink( $userId, $wikiId ) {
-		$user = User::newFromId( $userId );
-		$title = GlobalTitle::newFromText( $user->getName(), NS_USER, $wikiId);
-
-		return Html::element( 'a', [
-			'href' => $title->getFullURL(),
-			'data-tracking' => 'notification-userpage-link',
-			'target' => '_blank'
-		], $user->getName() );
-	}
-
 	public function diffModule() {
 		$this->response->setValues( $this->request->getParams() );
 	}
@@ -109,7 +98,7 @@ class ContributionAppreciationController extends WikiaController {
 	}
 
 	private function prepareAppreciations( $upvotes ) {
-		$appreciatons = [];
+		$appreciations = [];
 
 		foreach( $upvotes as $upvote ) {
 			$wikiId = $upvote['revision']['wikiId'];
@@ -120,21 +109,14 @@ class ContributionAppreciationController extends WikiaController {
 			}
 
 			$diffLink = $this->getDiffLink( $title, $upvote['revision']['revisionId'] );
-
-			$userLinks = [];
-			foreach ( $upvote['upvotes'] as $userUpvote ) {
-				$userLinks[] = $this->getUserLink( $userUpvote['from_user'], $wikiId );
-			}
+			$userLinks = $this->getUserLinks( $upvote['upvotes'], $wikiId );
 
 			if ( !empty( $userLinks ) ) {
-				$appreciatons[] = wfMessage( 'appreciation-user', count( $userLinks ) )->rawParams(
-					implode( ', ', $userLinks ),
-					$diffLink
-				)->escaped();
+				$appreciations[] = $this->getUserAppreciationMessage( $userLinks, $diffLink );
 			}
 		}
 
-		return $appreciatons;
+		return $appreciations;
 	}
 
 	private function getDiffLink( Title $title, $revisionId ) {
@@ -143,5 +125,32 @@ class ContributionAppreciationController extends WikiaController {
 			'data-tracking' => 'notification-diff-link',
 			'target' => '_blank'
 		], wfMessage( 'appreciation-user-contribution' )->escaped() );
+	}
+
+	private function getUserLinks( $upvotes, $wikiId ) {
+		$userLinks = [];
+		foreach ( $upvotes as $upvote ) {
+			$userLinks[] = $this->getUserLink( $upvote['from_user'], $wikiId );
+		}
+
+		return $userLinks;
+	}
+
+	private function getUserLink( $userId, $wikiId ) {
+		$user = User::newFromId( $userId );
+		$title = GlobalTitle::newFromText( $user->getName(), NS_USER, $wikiId);
+
+		return Html::element( 'a', [
+			'href' => $title->getFullURL(),
+			'data-tracking' => 'notification-userpage-link',
+			'target' => '_blank'
+		], $user->getName() );
+	}
+
+	private function getUserAppreciationMessage( $userLinks, $diffLink ) {
+		return wfMessage( 'appreciation-user', count( $userLinks ) )->rawParams(
+			implode( ', ', $userLinks ),
+			$diffLink
+		)->escaped();
 	}
 }
