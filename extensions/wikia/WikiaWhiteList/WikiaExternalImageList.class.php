@@ -28,16 +28,19 @@ class WikiaExternalImageList {
 		$list = explode( "\n", $listPage->getContent() ?? '' );
 
 		// Handle whitelist items in the same way as MediaWiki:External image whitelist
+		// Remove blank entries/comments
+		$i = 0;
 		foreach ( $list as $entry ) {
-			// Sanitize the regex fragment, make it case-insensitive, ignore blank entries/comments
 			if ( strpos( $entry, '#' ) === 0 || $entry === '' ) {
-				continue;
+				unset( $list[$i] );
 			}
-			if ( preg_match( '/' . str_replace( '/', '\\/', $entry ) . '/i', $url ) ) {
-				return true;
-			}
+			$i++;
 		}
 
-		return false;
+		// Combine and evaluate the list as a single regular expression
+		$combinedRegex = implode( '|', $list );
+		$combinedRegex = str_replace( '/', '\\/', $combinedRegex );
+
+		return (bool) preg_match( '/(' . $combinedRegex . ')/i', $url );
 	}
 }
