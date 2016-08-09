@@ -126,13 +126,18 @@ if ( $wgUser->isAnon() ) {
                                 $revText = Revision::getRevisionText( $row, 'ar_' );
                         }
 
+			if ( is_numeric( $row->ar_user ) && $row->ar_user > 0 ) {
+				$userName = User::newFromId( $row->ar_user )->getName();
+			} else {
+				$userName = $row->ar_user_text;
+			}
                         $revision = new Revision( array(
 				'page'       => $pageId,
                                 'id'         => $row->ar_rev_id,
                                 'text'       => $revText,
                                 'comment'    => $row->ar_comment,
                                 'user'       => $row->ar_user,
-                                'user_text'  => $row->ar_user_text,
+                                'user_text'  => $userName,
                                 'timestamp'  => $row->ar_timestamp,
                                 'minor_edit' => $row->ar_minor_edit,
                                 'text_id'    => $row->ar_text_id,
