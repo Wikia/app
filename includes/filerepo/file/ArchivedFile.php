@@ -169,12 +169,11 @@ class ArchivedFile {
 			 * @author Mix
 			 * @see SUS-810
 			 */
-			if ( ( new Wikia\Util\Statistics\BernoulliTrial( 0.01 ) )->shouldSample() ) {
-				Wikia\Logger\WikiaLogger::instance()->debug(
-					'SUS-810',
-					[ 'method' => __METHOD__, 'exception' => new Exception() ]
-				);
-			}
+			Wikia\Logger\WikiaLogger::instance()->frequency(
+				0.01,
+				'SUS-810',
+				[ 'method' => __METHOD__, 'exception' => new Exception() ]
+			);
 			$this->user_text = $row->fa_user_text;
 			$this->timestamp = $row->fa_timestamp;
 			$this->deleted = $row->fa_deleted;

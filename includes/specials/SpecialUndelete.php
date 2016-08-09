@@ -1141,12 +1141,11 @@ class SpecialUndelete extends SpecialPage {
 				 * @author Mix
 				 * @see SUS-810
 				 */
-				if ( ( new Wikia\Util\Statistics\BernoulliTrial( 0.01 ) )->shouldSample() ) {
-					Wikia\Logger\WikiaLogger::instance()->debug(
-						'SUS-810',
-						[ 'method' => __METHOD__, 'exception' => new Exception() ]
-					);
-				}
+				Wikia\Logger\WikiaLogger::instance()->frequency(
+					0.01,
+					'SUS-810',
+					[ 'method' => __METHOD__, 'exception' => new Exception() ]
+				);
 				$batch->addObj( Title::makeTitleSafe( NS_USER, $row->fa_user_text ) );
 				$batch->addObj( Title::makeTitleSafe( NS_USER_TALK, $row->fa_user_text ) );
 			}
