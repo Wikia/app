@@ -42,6 +42,8 @@ class SendGridPostbackController extends WikiaApiController {
 			return;
 		}
 
+		wfRunHooks( 'SendGridPostbackLogEvents', [ $events ] );
+
 		foreach ( $events as $event ) {
 			$eventType = $this->safeGet( $event, 'event' );
 
