@@ -2,6 +2,7 @@
 
 class ContributionAppreciationController extends WikiaController {
 	const EMAIL_CATEGORY = 'ContributionAppreciationMessage';
+	const TRACKING_URL = 'https://beacon.wikia-services.com/__track/special/appreciation_email';
 
 	public function appreciate() {
 		global $wgUser;
@@ -71,22 +72,19 @@ class ContributionAppreciationController extends WikiaController {
 	 * @param int $revisionId
 	 */
 	private static function sendDataToDW( $action, $wikiId, $revisionId ) {
-		// TODO: to be changed to: 'appreciation_email'
-		$url = 'https://beacon.wikia-services.com/__track/special/testappreciation_email' .
-			'?wiki_id=' . $wikiId .
-			'&email_action=' . $action;
-
 		$dbname = \WikiFactory::IDtoDB( $wikiId );
 		$db = wfGetDB( DB_SLAVE, [ ], $dbname );
 		$revision = Revision::loadFromId( $db, $revisionId );
 
 		if ( $revision ) {
-			$url .=
+			$url = self::TRACKING_URL .
+				'?wiki_id=' . $wikiId .
+				'&email_action=' . $action .
 				'&page_id=' . $revision->getTitle()->getArticleID() .
 				'&user_id=' . $revision->getUser();
-		}
 
-		Http::get( $url );
+			Http::get( $url );
+		}
 	}
 
 	private static function shouldDisplayAppreciation() {
@@ -100,7 +98,6 @@ class ContributionAppreciationController extends WikiaController {
 		global $wgSitename;
 
 		$revision = Revision::newFromId( $revisionId );
-		$userText = $revision->getUserText();
 
 		if ( $revision ) {
 			$editedPageTitle = $revision->getTitle();
@@ -108,7 +105,7 @@ class ContributionAppreciationController extends WikiaController {
 				'buttonLink' =>  SpecialPage::getTitleFor( 'Community' )->getFullURL( [
 					'rev_id' => $revision->getId()
 				] ),
-				'targetUser' => $userText,
+				'targetUser' => $revision->getUserText(),
 				'editedPageTitleText' => $editedPageTitle->getText(),
 				'editedWikiName' => $wgSitename,
 				'revisionUrl' => $editedPageTitle->getFullURL( [
