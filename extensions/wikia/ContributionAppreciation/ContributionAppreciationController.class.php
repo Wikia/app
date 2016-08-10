@@ -1,14 +1,13 @@
 <?php
 
 class ContributionAppreciationController extends WikiaController {
-
 	public function appreciate() {
 		global $wgUser, $wgCityId;
 
 		$this->request->assertValidWriteRequest( $wgUser );
-
 		$revisionId = $this->request->getInt( 'revision' );
 		$revision = Revision::newFromId( $revisionId );
+
 		if ( $revision ) {
 			( new RevisionUpvotesService() )->addUpvote(
 				$wgCityId,
@@ -17,6 +16,8 @@ class ContributionAppreciationController extends WikiaController {
 				$revision->getUser(),
 				$wgUser->getId()
 			);
+
+			$this->sendMail( $revisionId );
 		}
 	}
 
@@ -151,5 +152,26 @@ class ContributionAppreciationController extends WikiaController {
 			'data-tracking' => 'notification-userpage-link',
 			'target' => '_blank'
 		], $user->getName() );
+	}
+
+	private function sendMail( $revisionId ) {
+		global $wgSitename;
+
+		$revision = Revision::newFromId( $revisionId );
+
+		if ( $revision ) {
+			$editedPageTitle = $revision->getTitle();
+			$params = [
+				'buttonLink' =>  SpecialPage::getTitleFor( 'Community' )->getFullURL(),
+				'targetUser' => $revision->getUserText(),
+				'editedPageTitleText' => $editedPageTitle->getText(),
+				'editedWikiName' => $wgSitename,
+				'revisionUrl' => $editedPageTitle->getFullURL( [
+					'diff' => $revision->getId()
+				] )
+			];
+
+			$this->app->sendRequest( 'Email\Controller\ContributionAppreciationMessageController', 'handle', $params );
+		}
 	}
 }
