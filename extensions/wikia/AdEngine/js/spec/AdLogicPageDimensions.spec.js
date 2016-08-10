@@ -137,8 +137,6 @@ describe('AdLogicPageDimensions', function () {
 	it('checks if screen is too narrow for a slot', function () {
 
 		expect(adShown('foo', 5000, 'responsive', width2000)).toBeTruthy('width=2000 slot=foo -> ADS');
-		expect(adShown('TOP_BUTTON_WIDE', 5000, 'responsive', width2000)).toBeTruthy('width=2000 slot=TOP_BUTTON_WIDE -> ADS');
-		expect(adShown('TOP_BUTTON_WIDE.force', 5000, 'responsive', width2000)).toBeTruthy('width=2000 slot=TOP_BUTTON_WIDE.force -> ADS');
 		expect(adShown('TOP_RIGHT_BOXAD', 5000, 'responsive', width2000)).toBeTruthy('width=2000 slot=TOP_RIGHT_BOXAD -> ADS');
 		expect(adShown('HOME_TOP_RIGHT_BOXAD', 5000, 'responsive', width2000)).toBeTruthy('width=2000 slot=HOME_TOP_RIGHT_BOXAD -> ADS');
 		expect(adShown('LEFT_SKYSCRAPER_2', 5000, 'responsive', width2000)).toBeTruthy('width=2000 slot=LEFT_SKYSCRAPER_2 -> ADS');
@@ -147,8 +145,6 @@ describe('AdLogicPageDimensions', function () {
 		expect(adShown('PREFOOTER_MIDDLE_BOXAD', 5000, 'responsive', width2000)).toBeTruthy('width=2000 slot=PREFOOTER_MIDDLE_BOXAD -> ADS');
 
 		expect(adShown('foo', 5000, 'responsive', width1024)).toBeTruthy('width=1024 slot=foo -> ADS');
-		expect(adShown('TOP_BUTTON_WIDE', 5000, 'responsive', width1024)).toBeFalsy('width=1024 slot=TOP_BUTTON_WIDE -> ADS');
-		expect(adShown('TOP_BUTTON_WIDE.force', 5000, 'responsive', width1024)).toBeFalsy('width=1024 slot=TOP_BUTTON_WIDE.force -> ADS');
 		expect(adShown('TOP_RIGHT_BOXAD', 5000, 'responsive', width1024)).toBeTruthy('width=1024 slot=TOP_RIGHT_BOXAD -> ADS');
 		expect(adShown('HOME_TOP_RIGHT_BOXAD', 5000, 'responsive', width1024)).toBeTruthy('width=1024 slot=HOME_TOP_RIGHT_BOXAD -> ADS');
 		expect(adShown('LEFT_SKYSCRAPER_2', 5000, 'responsive', width1024)).toBeTruthy('width=1024 slot=LEFT_SKYSCRAPER_2 -> ADS');
@@ -157,8 +153,6 @@ describe('AdLogicPageDimensions', function () {
 		expect(adShown('PREFOOTER_MIDDLE_BOXAD', 5000, 'responsive', width1024)).toBeFalsy('width=1024 slot=PREFOOTER_MIDDLE_BOXAD -> ADS');
 
 		expect(adShown('foo', 5000, 'responsive', width800)).toBeTruthy('width=800 slot=foo -> ADS');
-		expect(adShown('TOP_BUTTON_WIDE', 5000, 'responsive', width800)).toBeFalsy('width=800 slot=TOP_BUTTON_WIDE -> ADS');
-		expect(adShown('TOP_BUTTON_WIDE.force', 5000, 'responsive', width800)).toBeFalsy('width=800 slot=TOP_BUTTON_WIDE.force -> ADS');
 		expect(adShown('TOP_RIGHT_BOXAD', 5000, 'responsive', width800)).toBeFalsy('width=800 slot=TOP_RIGHT_BOXAD -> ADS');
 		expect(adShown('HOME_TOP_RIGHT_BOXAD', 5000, 'responsive', width800)).toBeFalsy('width=800 slot=HOME_TOP_RIGHT_BOXAD -> ADS');
 		expect(adShown('LEFT_SKYSCRAPER_2', 5000, 'responsive', width800)).toBeFalsy('width=800 slot=LEFT_SKYSCRAPER_2 -> ADS');
