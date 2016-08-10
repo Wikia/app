@@ -33,8 +33,7 @@ class ContributionAppreciationController extends WikiaController {
 
 			if ( !empty( $appreciations ) ) {
 				$html = $this->app->renderView( 'ContributionAppreciation', 'appreciations', [
-					'appreciations' => $appreciations,
-					'numberOfAppreciations' => count( $appreciations )
+					'appreciations' => $appreciations
 				] );
 			}
 		}
@@ -43,8 +42,10 @@ class ContributionAppreciationController extends WikiaController {
 	}
 
 	public function appreciations() {
-		$this->numberOfAppreciations = $this->getVal( 'numberOfAppreciations' );
-		$this->appreciations = $this->getVal( 'appreciations' );
+		$appreciations = $this->getVal( 'appreciations' );
+		$numberOfAppreciations = count( $appreciations );
+		$this->numberOfHiddenAppreciations = $numberOfAppreciations > 2 ? $numberOfAppreciations - 2 : 0;
+		$this->appreciations = $appreciations;
 	}
 
 	public function diffModule() {

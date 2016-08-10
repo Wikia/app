@@ -12,9 +12,9 @@
 				->escaped(); ?>
 		</p>
 	<?php endforeach ?>
-	<?php if ( $numberOfAppreciations > 2 ): ?>
+	<?php if ( $numberOfHiddenAppreciations ): ?>
 		<a href="#" class="expand-link">
-			<?= wfMessage( 'appreciation-user-see-more', ( $numberOfAppreciations - 2 ) )->escaped() ?>&nbsp;&rarr;
+			<?= wfMessage( 'appreciation-user-see-more', $numberOfHiddenAppreciations )->escaped() ?>&nbsp;&rarr;
 		</a>
 	<?php endif ?>
 </div>
