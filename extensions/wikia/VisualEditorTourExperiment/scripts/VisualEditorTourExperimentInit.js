@@ -8,20 +8,21 @@ define('VisualEditorTourExperimentInit',
 			usersWithoutEditExperimentId = 5735670451;
 
 		function init() {
+			var lang = mw.config.get('wgUserLanguage');
 			if (isEnabled()) {
 				clearEntrypointPopover();
-				(new VETour(veTourConfig)).start();
+				(new VETour(veTourConfig[lang])).start();
 			}
 		}
 
 		function isEnabled() {
-			return isExperimentVariation() &&
+			return isJapaneseCommunity() &&
 				(isNewlyregistered() || isUserwithoutedit()) &&
 				!$.cookie('vetourdisabled');
 		}
 
 		function trackPublish() {
-			if (isExperimentVariation() && (isNewlyregistered() || isUserwithoutedit())) {
+			if (isJapaneseCommunity() && (isNewlyregistered() || isUserwithoutedit())) {
 				tracker.trackVerboseSuccess(experimentName, 'publish');
 			}
 		}
@@ -30,11 +31,8 @@ define('VisualEditorTourExperimentInit',
 			$('#ca-ve-edit').popover('destroy');
 		}
 
-		function isExperimentVariation() {
-			return window.optimizely && (
-					window.optimizely.variationNamesMap[freshlyRegisteredExperimentId] === 'VE-TOUR' ||
-					window.optimizely.variationNamesMap[usersWithoutEditExperimentId] === 'VE-TOUR'
-				);
+		function isJapaneseCommunity() {
+			return mw.config.get('wgContentLanguage') === 'ja';
 		}
 
 		function isNewlyregistered() {
