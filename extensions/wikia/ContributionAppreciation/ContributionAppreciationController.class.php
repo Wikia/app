@@ -114,7 +114,10 @@ class ContributionAppreciationController extends WikiaController {
 				$userLinks = $this->getUserLinks( $upvote['upvotes'], $wikiId );
 
 				if ( !empty( $userLinks ) ) {
-					$appreciations[] = $this->getUserAppreciationMessage( $userLinks, $diffLink );
+					$appreciations[] = [
+						'userLinks' => $userLinks,
+						'diffLink' => $diffLink
+					];
 				}
 			}
 		}
@@ -148,12 +151,5 @@ class ContributionAppreciationController extends WikiaController {
 			'data-tracking' => 'notification-userpage-link',
 			'target' => '_blank'
 		], $user->getName() );
-	}
-
-	private function getUserAppreciationMessage( $userLinks, $diffLink ) {
-		return wfMessage( 'appreciation-user', count( $userLinks ) )->rawParams(
-			implode( ', ', $userLinks ),
-			$diffLink
-		)->escaped();
 	}
 }
