@@ -21,6 +21,7 @@ require([
 	'ext.wikia.recirculation.helpers.googleMatch',
 	'ext.wikia.recirculation.experiments.placement.IMPACT_FOOTER',
 	'ext.wikia.recirculation.experiments.placement.FANDOM_TOPIC',
+	'ext.wikia.recirculation.experiments.placement.CONTROL',
 	'ext.wikia.adEngine.taboolaHelper',
 	require.optional('videosmodule.controllers.rail')
 ], function(
@@ -45,6 +46,7 @@ require([
 	googleMatchHelper,
 	impactFooterExperiment,
 	fandomTopicExperiment,
+	controlExperiment,
 	taboolaHelper,
 	videosModule
 ) {
@@ -153,13 +155,6 @@ require([
 			});
 			view = scrollerView();
 			break;
-		case 'CONTROL':
-			helper = fandomHelper({
-				limit: 5
-			});
-			view = railView();
-			isRail = true;
-			break;
 		case 'GOOGLE_INCONTENT':
 			renderGoogleIncontent();
 			return;
@@ -181,6 +176,9 @@ require([
 			fandomTopicExperiment.run(experimentName)
 				.fail(handleError);
 			return;
+		case 'CONTROL':
+			controlExperiment.run(experimentName)
+				.fail(handleError);
 		default:
 			return;
 	}

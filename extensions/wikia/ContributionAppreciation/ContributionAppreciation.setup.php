@@ -6,7 +6,7 @@ $wgAutoloadClasses[ 'ContributionAppreciationController' ] = $dir . 'Contributio
 // i18n mapping
 $wgExtensionMessagesFiles[ 'ContributionAppreciation' ] = $dir . 'ContributionAppreciation.i18n.php';
 
-$wgHooks['DiffViewHeader'][] = 'ContributionAppreciationController::onDiffHeader';
-$wgHooks['PageHistoryLineEnding'][] = 'ContributionAppreciationController::onPageHistoryLineEnding';
+$wgHooks['AfterDiffRevisionHeader'][] = 'ContributionAppreciationController::onAfterDiffRevisionHeader';
+$wgHooks['PageHistoryToolsList'][] = 'ContributionAppreciationController::onPageHistoryToolsList';
 $wgHooks['PageHistoryBeforeList'][] = 'ContributionAppreciationController::onPageHistoryBeforeList';
 $wgHooks['SendGridPostbackLogEvents'][] = 'ContributionAppreciationController::onSendGridPostbackLogEvents';
