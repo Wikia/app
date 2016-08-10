@@ -19,6 +19,7 @@ class DiscussionsThreadModel {
 		$this->cityId = $cityId;
 	}
 
+	// TODO: Refactor this to use Swagger, see JPN-631.
 	private function getRequestUrl( $showLatest, $limit ) {
 		global $wgDevelEnvironment;
 
