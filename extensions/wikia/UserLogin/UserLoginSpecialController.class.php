@@ -719,7 +719,6 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 	 */
 	private function setResponseGeneric( $key, $params, $result = 'ok', $postProcess = 'escaped' ) {
 		$msg = wfMessage( $key, $params )->$postProcess();
-
 		$this->response->setData( [
 			'result' => $result,
 			'msg' => $msg,
