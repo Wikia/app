@@ -38,7 +38,7 @@ class ContributionAppreciationController extends WikiaController {
 			}
 		}
 
-		$this->setVal( 'html', $html );
+		$this->response->setBody( $html );
 	}
 
 	public function appreciations() {

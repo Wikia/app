@@ -49,10 +49,10 @@ require([
 			controller: 'ContributionAppreciation',
 			method: 'getAppreciations',
 			type: 'get',
-			format: 'json',
-			callback: function (response) {
-				if (response.html) {
-					var notification = new BannerNotification(response.html, 'warn');
+			format: 'html',
+			callback: function (html) {
+				if (html) {
+					var notification = new BannerNotification(html, 'warn');
 					notification.show();
 					bindClickTracking(notification);
 					trackImpression();
