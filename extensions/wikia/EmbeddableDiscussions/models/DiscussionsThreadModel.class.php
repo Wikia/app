@@ -31,6 +31,16 @@ class DiscussionsThreadModel {
 		return self::DISCUSSIONS_API_BASE_DEV . "$this->cityId/threads?sortKey=$sortKey&limit=$limit&viewableOnly=false";
 	}
 
+	private function getUpvoteRequestUrl( $id ) {
+		global $wgDevelEnvironment;
+
+		if ( empty( $wgDevelEnvironment ) ) {
+			return self::DISCUSSIONS_API_BASE . "$this->cityId/votes/post/$id";
+		}
+
+		return self::DISCUSSIONS_API_BASE_DEV . "$this->cityId/votes/post/$id";
+	}
+
 	private function apiRequest( $url ) {
 		$data = Http::get( $url );
 		$obj = json_decode( $data, true );
@@ -52,6 +62,7 @@ class DiscussionsThreadModel {
 			'id' => $rawPost['id'],
 			'index' => $index,
 			'link' => '/d/p/' . $rawPost['id'],
+			'upvoteUrl' => $this->getUpvoteRequestUrl( $rawPost['id']),
 			'title' => $rawPost['title'],
 			'upvoteCount' => $rawPost['upvoteCount'],
 		];

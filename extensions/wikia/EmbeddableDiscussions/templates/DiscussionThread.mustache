@@ -61,16 +61,22 @@
 				<div>
 					<ul class="embeddable-discussions-post-actions">
 						<li class="small-4 large-4 embeddable-discussions-upvote-area">
-							<svg class="embeddable-discussions-upvote-icon"></svg>
-							{{upvoteText}}
+							<a href="#" class="upvote" data-id="{{id}}" data-url="{{upvoteUrl}}">
+								<svg class="embeddable-discussions-upvote-icon"></svg>
+								{{upvoteText}}
+							</a>
 						</li>
 						<li class="small-4 large-4 embeddable-discussions-replies-area">
-							<svg class="embeddable-discussions-reply-icon"></svg>
-							{{replyText}}
+							<a href="{{link}}">
+								<svg class="embeddable-discussions-reply-icon"></svg>
+								{{replyText}}
+							</a>
 						</li>
 						<li class="small-4 large-4 embeddable-discussions-share-area">
-							<svg class="embeddable-discussions-share-icon"></svg>
-							{{shareText}}
+							<a href="#" class="share" data-id="{{id}}">
+								<svg class="embeddable-discussions-share-icon"></svg>
+								{{shareText}}
+							</a>
 						</li>
 					</ul>
 				</div>
