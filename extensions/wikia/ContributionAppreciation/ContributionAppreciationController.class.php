@@ -33,7 +33,7 @@ class ContributionAppreciationController extends WikiaController {
 			if ( !empty( $appreciations ) ) {
 				$html = $this->app->renderView( 'ContributionAppreciation', 'appreciations', [
 					'appreciations' => $appreciations,
-					'userName' => $wgUser
+					'numberOfAppreciations' => count( $appreciations )
 				] );
 			}
 		}
@@ -42,7 +42,7 @@ class ContributionAppreciationController extends WikiaController {
 	}
 
 	public function appreciations() {
-		$this->userName = $this->getVal( 'userName' );
+		$this->numberOfAppreciations = $this->getVal( 'numberOfAppreciations' );
 		$this->appreciations = $this->getVal( 'appreciations' );
 	}
 
@@ -89,6 +89,7 @@ class ContributionAppreciationController extends WikiaController {
 	public static function onBeforePageDisplay( \OutputPage $out, \Skin $skin ) {
 		if ( self::shouldDisplayAppreciation() ) {
 			Wikia::addAssetsToOutput( 'contribution_appreciation_user_js' );
+			Wikia::addAssetsToOutput( 'contribution_appreciation_user_scss' );
 		}
 
 		return true;

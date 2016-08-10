@@ -1,0 +1,33 @@
+.appreciation-banner {
+	.thumb-up-icon {
+
+	}
+
+	.header {
+
+	}
+
+	.message {
+		.article_title {
+
+		}
+
+		.username {
+
+		}
+	}
+
+	.message:nth-of-type(n+3) {
+		display: none;
+	}
+
+	&.expanded {
+		.message:nth-of-type(n+3) {
+			display: block;
+		}
+
+		.expand-link {
+			display: none;
+		}
+	}
+}

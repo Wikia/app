@@ -37,6 +37,12 @@ require([
 		});
 	}
 
+	function bindEvents(notification) {
+		notification.$element.one('click', '.expand-link', function (e) {
+			e.delegateTarget.classList.add('expanded');
+		})
+	}
+
 	function trackImpression() {
 		track({
 			action: tracker.ACTIONS.IMPRESSION,
@@ -56,6 +62,7 @@ require([
 					notification.show();
 					bindClickTracking(notification);
 					trackImpression();
+					bindEvents(notification);
 					// setUserNotified();
 				}
 			}
