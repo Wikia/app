@@ -81,6 +81,14 @@ class JSMessages {
 	}
 
 	/**
+	 * Delete all packages from the list and queue
+	 * Used by JSMessagesTest
+	 */
+	static public function flushPackagesAndQueue() {
+		self::$queue = self::$packages = [];
+	}
+
+	/**
 	 * Helper method to get all messages
 	 *
 	 * @param Language $lang - Language object to get all messages from
@@ -189,17 +197,13 @@ class JSMessages {
 	 * @return bool true to continue hook processing
 	 */
 	static public function onResourceLoaderRegisterModules( ResourceLoader &$resourceLoader ) {
-		global $wgResourceModules;
-
 		foreach ( self::$packages as $packageName => $messageKeys ) {
 			$module = [
 				self::RL_MESSAGES => self::expandWildcards( $messageKeys ),
 			];
 
-			// If a module with this name already exists, append our messages to it.
-			if ( is_array( $wgResourceModules[$packageName] ) ) {
-				$wgResourceModules[$packageName] += $module;
-			} else {
+			// Avoid duplicate registrations
+			if ( !( $resourceLoader->getModuleInfo( $packageName ) ) ) {
 				$resourceLoader->register( $packageName, $module );
 			}
 		}
@@ -219,8 +223,10 @@ class JSMessages {
 		// OutputPage::addModules is used so that these resources
 		// can be loaded in the same HTTP request as other extension modules
 		$out->addModules(
-			[ 'mediawiki.jqueryMsg' ] + // required for {{PLURAL:}}, {{GENDER:}} etc
-			self::$queue
+			array_merge(
+				[ 'mediawiki.jqueryMsg' ], // required for {{PLURAL:}}, {{GENDER:}} etc
+				self::$queue
+			)
 		);
 		$out->addJsConfigVars( 'wgJSMessagesCB', JSMessagesHelper::getMessagesCacheBuster() );
 		return true;
