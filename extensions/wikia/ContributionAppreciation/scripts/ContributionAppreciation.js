@@ -23,7 +23,15 @@ require(['jquery', 'wikia.tracker'],
 			};
 
 		$(function () {
-			$('.appreciation-link').bind('click', function (e) {
+			var $links = $('.appreciation-link'),
+				$button = $('.appreciation-button');
+
+			if ($links.length) {
+				track({
+					label: 'appreciation-history-shown'
+				});
+			}
+			$links.bind('click', function (e) {
 				var link = $(this);
 
 				e.preventDefault();
@@ -36,7 +44,12 @@ require(['jquery', 'wikia.tracker'],
 				link.parent('.appreciation-history-link').find('.appreciation-feedback').show();
 			});
 
-			$('.appreciation-button').bind('click', function (e) {
+			if ($button.length) {
+				track({
+					label: 'appreciation-diff-shown'
+				});
+			}
+			$button.bind('click', function (e) {
 				var button = $(this);
 
 				e.preventDefault();
