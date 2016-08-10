@@ -305,7 +305,7 @@ class FeedRenderer {
 		] );
 		$html .= Xml::element( 'label', [
 			'for' => 'myhome-feed-switch-default-checkbox',
-		], wfMsg( 'myhome-default-view-checkbox', static::getTypeMessage( $this->type )->plain() ) );
+		], wfMessage( 'myhome-default-view-checkbox', static::getTypeMessage( $this->type )->plain() )->text() );
 		$html .= Xml::closeElement( 'div' );
 
 		return $html;
@@ -395,7 +395,7 @@ class FeedRenderer {
 			$last_space = strrpos( $intro, ' ' );
 
 			if ( $last_space > 0 ) {
-				$intro = substr( $intro, 0, $last_space ) . wfMsg( 'ellipsis' );
+				$intro = substr( $intro, 0, $last_space ) . wfMessage( 'ellipsis' )->escaped();
 			}
 		}
 
@@ -541,7 +541,7 @@ class FeedRenderer {
 		$html = Xml::openElement( 'a', [
 			'class' => 'activityfeed-diff',
 			'href' => $row['diff'],
-			'title' => wfMsg( 'myhome-feed-diff-alt' ),
+			'title' => wfMessage( 'myhome-feed-diff-alt' )->text(),
 			'rel' => 'nofollow',
 		] );
 		$html .= Xml::element( 'img', [

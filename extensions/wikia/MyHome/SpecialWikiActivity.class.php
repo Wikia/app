@@ -89,7 +89,7 @@ JS
 		}
 
 		// use message from MyHome as special page title
-		$wgOut->setPageTitle( wfMsg( 'oasis-activity-header' ) );
+		$wgOut->setPageTitle( $this->msg( 'oasis-activity-header' ) );
 
 		$template = new EasyTemplate( __DIR__ . '/templates' );
 		$template->set( 'data', $data['results'] );
@@ -99,7 +99,7 @@ JS
 			$template->set( 'query_continue', $data['query-continue'] );
 		}
 		if ( empty( $data['results'] ) ) {
-			$template->set( 'emptyMessage', wfMsgExt( "myhome-activity-feed-empty", [ 'parse' ] ) );
+			$template->set( 'emptyMessage', $this->msg( 'myhome-activity-feed-empty' )->parse() );
 		}
 
 		$template->set_vars( [
