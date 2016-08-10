@@ -37,6 +37,12 @@ require([
 		});
 	}
 
+	function bindEvents(notification) {
+		notification.$element.one('click', '.expand-link', function (e) {
+			e.delegateTarget.classList.add('expanded');
+		})
+	}
+
 	function trackImpression() {
 		track({
 			action: tracker.ACTIONS.IMPRESSION,
@@ -52,10 +58,11 @@ require([
 			format: 'html',
 			callback: function (html) {
 				if (html) {
-					var notification = new BannerNotification(html, 'warn');
+					var notification = new BannerNotification(html, 'appreciation-banner');
 					notification.show();
 					bindClickTracking(notification);
 					trackImpression();
+					bindEvents(notification);
 					setUserNotified();
 				}
 			}

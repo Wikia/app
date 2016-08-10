@@ -33,8 +33,7 @@ class ContributionAppreciationController extends WikiaController {
 
 			if ( !empty( $appreciations ) ) {
 				$html = $this->app->renderView( 'ContributionAppreciation', 'appreciations', [
-					'appreciations' => $appreciations,
-					'userName' => $wgUser
+					'appreciations' => $appreciations
 				] );
 			}
 		}
@@ -43,8 +42,10 @@ class ContributionAppreciationController extends WikiaController {
 	}
 
 	public function appreciations() {
-		$this->userName = $this->getVal( 'userName' );
-		$this->appreciations = $this->getVal( 'appreciations' );
+		$appreciations = $this->getVal( 'appreciations' );
+		$numberOfAppreciations = count( $appreciations );
+		$this->numberOfHiddenAppreciations = $numberOfAppreciations > 2 ? $numberOfAppreciations - 2 : 0;
+		$this->appreciations = $appreciations;
 	}
 
 	public function diffModule() {
@@ -96,6 +97,7 @@ class ContributionAppreciationController extends WikiaController {
 	public static function onBeforePageDisplay( \OutputPage $out, \Skin $skin ) {
 		if ( self::shouldDisplayAppreciation() ) {
 			Wikia::addAssetsToOutput( 'contribution_appreciation_user_js' );
+			Wikia::addAssetsToOutput( 'contribution_appreciation_user_scss' );
 		}
 
 		return true;
@@ -135,8 +137,9 @@ class ContributionAppreciationController extends WikiaController {
 		return Html::element( 'a', [
 			'href' => $title->getFullURL( [ 'diff' => $revisionId, 'oldid' => 'prev' ] ),
 			'data-tracking' => 'notification-diff-link',
-			'target' => '_blank'
-		], wfMessage( 'appreciation-user-contribution' )->escaped() );
+			'target' => '_blank',
+			'class' => 'article-title'
+		], $title->getText());
 	}
 
 	private function getUserLinks( $upvotes, $wikiId ) {
@@ -155,7 +158,8 @@ class ContributionAppreciationController extends WikiaController {
 		return Html::element( 'a', [
 			'href' => $title->getFullURL(),
 			'data-tracking' => 'notification-userpage-link',
-			'target' => '_blank'
+			'target' => '_blank',
+			'class' => 'username'
 		], $user->getName() );
 	}
 
