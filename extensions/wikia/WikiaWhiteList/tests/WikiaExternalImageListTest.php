@@ -1,6 +1,12 @@
 <?php
 
 class WikiaExternalImageListTest extends WikiaBaseTest {
+
+	public function setUp() {
+		$this->setupFile = __DIR__ . '/../WikiaWhiteList.php';
+		parent::setUp();
+	}
+
 	/**
 	 * @covers WikiaExternalImageList
 	 * @dataProvider checkingUrlsAgainstWhiteListProvider
@@ -9,8 +15,8 @@ class WikiaExternalImageListTest extends WikiaBaseTest {
 		$globalTitleMock = $this->getMock( 'GlobalTitle', [ 'getContent' ] );
 		$globalTitleMock->expects( $this->any() )
 			->method( 'getContent' )
-			->willReturn( $whiteList );
-		$this->mockClass( 'GlobalTitle', $globalTitleMock );
+			->willReturn( implode( "\n", $whiteList ) );
+		$this->mockClass( 'GlobalTitle', $globalTitleMock, 'newFromTextCached' );
 
 		$result = WikiaExternalImageList::onOutputMakeExternalImage( $url );
 		$this->assertEquals( $expected, $result );
