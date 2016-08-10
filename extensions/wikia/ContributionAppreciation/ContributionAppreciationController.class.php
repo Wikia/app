@@ -56,7 +56,10 @@ class ContributionAppreciationController extends WikiaController {
 	}
 
 	public static function onAfterDiffRevisionHeader( DifferenceEngine $diffPage, Revision $newRev, OutputPage $out ) {
-		if ( self::shouldDisplayAppreciation() ) {
+		global $wgUser;
+
+		// no appreciation for yourself
+		if ( self::shouldDisplayAppreciation() && $wgUser->getId() !== $newRev->getUser() ) {
 			Wikia::addAssetsToOutput( 'contribution_appreciation_js' );
 			Wikia::addAssetsToOutput( 'contribution_appreciation_scss' );
 			$out->addHTML( F::app()->renderView(
@@ -70,7 +73,10 @@ class ContributionAppreciationController extends WikiaController {
 	}
 
 	public static function onPageHistoryToolsList( HistoryPager $pager, $row, &$tools ) {
-		if ( self::shouldDisplayAppreciation() ) {
+		global $wgUser;
+
+		// no appreciation for yourself
+		if ( self::shouldDisplayAppreciation() && $wgUser->getId() !== intval( $row->rev_user ) ) {
 			$tools[] = F::app()->renderView( 'ContributionAppreciation', 'historyModule', [ 'revision' => $row->rev_id ] );
 		}
 
@@ -100,19 +106,18 @@ class ContributionAppreciationController extends WikiaController {
 
 		// we want to run it only for english users
 		return $wgUser->isLoggedIn() && $wgLang->getCode() === 'en';
-
 	}
 
 	private function prepareAppreciations( $upvotes ) {
-		$appreciations = [];
+		$appreciations = [ ];
 
-		foreach( $upvotes as $upvote ) {
-			$wikiId = $upvote['revision']['wikiId'];
-			$title = GlobalTitle::newFromId( $upvote['revision']['pageId'], $wikiId );
+		foreach ( $upvotes as $upvote ) {
+			$wikiId = $upvote[ 'revision' ][ 'wikiId' ];
+			$title = GlobalTitle::newFromId( $upvote[ 'revision' ][ 'pageId' ], $wikiId );
 
 			if ( $title && $title->exists() ) {
-				$diffLink = $this->getDiffLink( $title, $upvote['revision']['revisionId'] );
-				$userLinks = $this->getUserLinks( $upvote['upvotes'], $wikiId );
+				$diffLink = $this->getDiffLink( $title, $upvote[ 'revision' ][ 'revisionId' ] );
+				$userLinks = $this->getUserLinks( $upvote[ 'upvotes' ], $wikiId );
 
 				if ( !empty( $userLinks ) ) {
 					$appreciations[] = [
@@ -135,9 +140,9 @@ class ContributionAppreciationController extends WikiaController {
 	}
 
 	private function getUserLinks( $upvotes, $wikiId ) {
-		$userLinks = [];
+		$userLinks = [ ];
 		foreach ( $upvotes as $upvote ) {
-			$userLinks[] = $this->getUserLink( $upvote['from_user'], $wikiId );
+			$userLinks[] = $this->getUserLink( $upvote[ 'from_user' ], $wikiId );
 		}
 
 		return $userLinks;
@@ -145,7 +150,7 @@ class ContributionAppreciationController extends WikiaController {
 
 	private function getUserLink( $userId, $wikiId ) {
 		$user = User::newFromId( $userId );
-		$title = GlobalTitle::newFromText( $user->getName(), NS_USER, $wikiId);
+		$title = GlobalTitle::newFromText( $user->getName(), NS_USER, $wikiId );
 
 		return Html::element( 'a', [
 			'href' => $title->getFullURL(),
@@ -162,7 +167,7 @@ class ContributionAppreciationController extends WikiaController {
 		if ( $revision ) {
 			$editedPageTitle = $revision->getTitle();
 			$params = [
-				'buttonLink' =>  SpecialPage::getTitleFor( 'Community' )->getFullURL(),
+				'buttonLink' => SpecialPage::getTitleFor( 'Community' )->getFullURL(),
 				'targetUser' => $revision->getUserText(),
 				'editedPageTitleText' => $editedPageTitle->getText(),
 				'editedWikiName' => $wgSitename,
