@@ -81,11 +81,12 @@ class JSMessages {
 	}
 
 	/**
-	 * Delete all packages from the list and queue
+	 * Delete all packages from the list and queue, and delete the list of message keys from in-object cache
 	 * Used by JSMessagesTest
 	 */
-	static public function flushPackagesAndQueue() {
+	static public function flushData() {
 		self::$queue = self::$packages = [];
+		self::$allMessageKeys = null;
 	}
 
 	/**

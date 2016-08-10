@@ -31,8 +31,8 @@ class JSMessagesTest extends WikiaBaseTest {
 		$this->mockGlobalVariable( 'wgLang', $languageMock );
 		$this->mockClass( Language::class, $languageMock, 'factory' );
 
-		// Clear any packages set or queued by extensions in setup files
-		JSMessages::flushPackagesAndQueue();
+		// Clear any packages set or queued by extensions in setup files, and delete message keys from in-object cache
+		JSMessages::flushData();
 	}
 
 	/**
