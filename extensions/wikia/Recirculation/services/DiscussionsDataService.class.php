@@ -89,7 +89,7 @@ class DiscussionsDataService {
 		$post = [];
 		$post['author'] = $rawPost['createdBy']['name'];
 		$post['authorAvatar'] = $rawPost['createdBy']['avatarUrl'];
-		$post['content'] = $wgContLang->truncate($rawPost['_embedded']['firstPost'][0]['rawContent'], 120);
+		$post['content'] = wfShortenText($rawPost['_embedded']['firstPost'][0]['rawContent'], 120);
 		$post['upvoteCount'] = $rawPost['upvoteCount'];
 		$post['commentCount'] = $rawPost['postCount'];
 		$post['createdAt'] = wfTimestamp( TS_ISO_8601, $rawPost['creationDate']['epochSecond'] );

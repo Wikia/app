@@ -210,7 +210,7 @@ abstract class WikiaDispatchableObject extends WikiaObject {
 	public function checkWriteRequest() {
 		// skip internal requests, write access should be checked when direct user interaction happen
 		if ( !$this->request->isInternal() ) {
-			$this->request->isValidWriteRequest( $this->wg->User );
+			$this->request->assertValidWriteRequest( $this->wg->User );
 		}
 	}
 
