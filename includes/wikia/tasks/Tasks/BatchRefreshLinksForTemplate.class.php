@@ -1,6 +1,8 @@
 <?php
 /**
  * Replacement task for the core RefreshLinksJob.
+ *
+ * This job is created by \LinksUpdate::queueRefreshTasks
  */
 
 namespace Wikia\Tasks\Tasks;
@@ -26,7 +28,11 @@ class BatchRefreshLinksForTemplate extends BaseTask {
 
 		$titles = $this->getTitlesWithBackLinks();
 
-		$this->enqueueRefreshLinksTasksForTitles( $titles );
+		// refresh a batch of pages
+		// do not enqueue tasks for each title, run them one by one - PLATFORM-2375
+		foreach( $titles as $title ) {
+			$this->runForTitle( $title );
+		}
 
 		return true;
 	}
@@ -64,41 +70,15 @@ class BatchRefreshLinksForTemplate extends BaseTask {
 		return $this->title->getLinksFromBacklinkCache( self::BACKLINK_CACHE_TABLE, $this->start, $this->end );
 	}
 
-	public function enqueueRefreshLinksTasksForTitles( $titles ) {
-		$batchTasks = array();
-		foreach ( $titles as $title ) {
-			if ( is_null( $title ) ) {
-				$this->error( "empty BackLink title" );
-				continue;
-			}
-
-			$batchTasks[] = $this->readyRefreshLinksForTitleTask( $title );
-		}
-
-		$this->batchEnqueue( $batchTasks );
-	}
-
-	public function readyRefreshLinksForTitleTask( \Title $title ) {
+	/**
+	 * @param \Title $title
+	 */
+	private function runForTitle( \Title $title ) {
 		$task = new RefreshLinksForTitleTask();
-		$task->title( $title );
-		$task->call( 'refresh' );
-		$task->wikiId( $this->getWikiId() );
 
-		// TODO: delay the tasks - see PLATFORM-1192
-
-		return $task;
-	}
-
-	protected function batchEnqueue( array $tasks ) {
-		if ( !empty( $tasks ) ) {
-			$this->info( 'BatchRefreshLinksForTemplate::batchEnqueue', [
-				'tasks' => count( $tasks ),
-				'title' => $this->title->getText(),
-				'start' => $this->getStart(),
-				'end' => $this->getEnd()
-			] );
-			BaseTask::batch( $tasks );
-		}
+		$task
+			->setTitle( $title )
+			->refresh();
 	}
 
 	public function getStart() {
