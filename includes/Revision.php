@@ -134,7 +134,7 @@ class Revision implements IDBAccessObject {
 			$attribs['user_text'] = $row->ar_user_text;
 		}
 
-		$attribs = $overrides + $attribs
+		$attribs = $overrides + $attribs;
 
 		if ( isset( $row->ar_text ) && !$row->ar_text_id ) {
 			// Pre-1.5 ar_text row
