@@ -1,4 +1,4 @@
-<h2 class="dark_text_2"><?= wfMessage( "myhome-{$type}-feed" )->escaped(); ?></h2>
+<h2 class="dark_text_2"><?= $typeMessage ?></h2>
 <?= $defaultSwitch ?>
 <div id="myhome-<?= $type ?>-feed-content">
 	<?= $content ?>

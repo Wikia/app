@@ -144,6 +144,7 @@ JS
 			'loggedIn' => $wgUser->isLoggedIn(),
 			'showDefaultViewSwitch' => $showDefaultViewSwitch,
 			'type' => $this->feedSelected,
+			'typeMessage' => FeedRenderer::getTypeMessage( $this->feedSelected )->plain(), // only used as message parameter
 		] );
 
 		// replace subtitle with navigation for WikiActivity

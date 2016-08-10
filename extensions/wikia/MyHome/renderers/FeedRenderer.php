@@ -15,6 +15,34 @@ class FeedRenderer {
 	const FEED_MOVE_ICON = 'move';
 	const FEED_DELETE_ICON = 'delete';
 	const FEED_CATEGORY_ICON = 'categorization';
+	
+	// Possible feed types
+	const TYPE_ACTIVITY = 'activity';
+	const TYPE_HOT_SPOTS = 'hot-spots';
+	const TYPE_CONTRIBUTIONS = 'user-contributions';
+	const TYPE_WATCHLIST = 'watchlist';
+	
+	// User actions shown in feed
+	const ACTION_COMMENT = 'comment';
+	const ACTION_ARTICLE_COMMENT_CREATED = 'article-comment-created';
+	const ACTION_ARTICLE_COMMENT_EDITED = 'article-comment-edited';
+	const ACTION_BLOG_POSTED = 'posted';
+	const ACTION_CREATE = 'created';
+	const ACTION_EDIT = 'edited';
+	const ACTION_MOVE = 'moved';
+	const ACTION_DELETE = 'deleted';
+	
+	// Details row item types
+	const ITEM_TYPE_PAGE_MOVE = 'move';
+	const ITEM_TYPE_NEW_BLOG_POST = 'new-blog-post';
+	const ITEM_TYPE_NEW_BLOG_COMMENT = 'new-blog-comment';
+	const ITEM_TYPE_NEW_ARTICLE_COMMENT = 'new-article-comment';
+	const ITEM_TYPE_NEW_PAGE = 'new-page';
+	const ITEM_TYPE_SECTION_EDIT = 'section-edit';
+	const ITEM_TYPE_EDIT_SUMMARY = 'summary';
+	const ITEM_TYPE_CATEGORY_INSERT = 'inserted-category';
+	const ITEM_TYPE_IMAGE_INSERT = 'inserted-image';
+	const ITEM_TYPE_VIDEO_INSERT = 'inserted-video';
 
 	protected $template;
 	protected $type;
@@ -34,6 +62,142 @@ class FeedRenderer {
 	}
 
 	/**
+	 * Returns the MediaWiki message that names this type of feed
+	 * @param string $type Feed type (one of: user-contributions, hot-spots, watchlist or activity)
+	 * @return Message the matching Message object
+	 */
+	public static function getTypeMessage( $type ) {
+		$msg = null;
+		switch ( $type ) {
+			case static::TYPE_CONTRIBUTIONS:
+				$msg = wfMessage( 'myhome-user-contributions-feed' );
+				break;
+			case static::TYPE_HOT_SPOTS:
+				$msg = wfMessage( 'myhome-hot-spots-feed' );
+				break;
+			case static::TYPE_WATCHLIST:
+				$msg = wfMessage( 'myhome-watchlist-feed' );
+				break;
+			case static::TYPE_ACTIVITY:
+				$msg = wfMessage( 'myhome-activity-feed' );
+				break;
+			default:
+				$msg = wfMessage( 'myhome-activity-feed' );
+		}
+
+		return $msg;
+	}
+
+	/**
+	 * Returns the MediaWiki message that should be shown if this feed is empty
+	 * @param string $type Feed type (one of: user-contributions, hot-spots, watchlist or activity)
+	 * @return Message the matching Message object
+	 */
+	public static function getEmptyFeedMessage( $type ) {
+		$msg = null;
+		switch ( $type ) {
+			case static::TYPE_CONTRIBUTIONS:
+				$msg = wfMessage( 'myhome-user-contributions-feed-empty' );
+				break;
+			case static::TYPE_HOT_SPOTS:
+				$msg = wfMessage( 'myhome-hot-spots-feed-empty' );
+				break;
+			case static::TYPE_WATCHLIST:
+				$msg = wfMessage( 'myhome-watchlist-feed-empty' );
+				break;
+			default: // TYPE_CONTRIBUTIONS
+				$msg = wfMessage( 'myhome-user-contribution-feed-empty' );
+		}
+
+		return $msg;
+	}
+
+	/**
+	 * Returns the MediaWiki message shown for this user action in feed items
+	 * @param string $action Action performed
+	 * (one of: comment, article-comment-created, article-comment-edited, posted, created, edited, moved, deleted)
+	 * @return Message the matching Message object
+	 */
+	public static function getActionMessage( $action ) {
+		$msg = null;
+		switch ( $action ) {
+			case static::ACTION_COMMENT:
+				$msg = wfMessage( 'myhome-feed-comment-by' );
+				break;
+			case static::ACTION_ARTICLE_COMMENT_CREATED:
+				$msg = wfMessage( 'myhome-feed-article-comment-created-by' );
+				break;
+			case static::ACTION_ARTICLE_COMMENT_EDITED:
+				$msg = wfMessage( 'myhome-feed-article-comment-edited-by' );
+				break;
+			case static::ACTION_BLOG_POSTED:
+				$msg = wfMessage( 'myhome-feed-posted-by' );
+				break;
+			case static::ACTION_CREATE:
+				$msg = wfMessage( 'myhome-feed-created-by' );
+				break;
+			case static::ACTION_EDIT:
+				$msg = wfMessage( 'myhome-feed-edited-by' );
+				break;
+			case static::ACTION_MOVE:
+				$msg = wfMessage( 'myhome-feed-moved-by' );
+				break;
+			case static::ACTION_DELETE:
+				$msg = wfMessage( 'myhome-feed-deleted-by' );
+				break;
+			default: // ACTION_EDIT
+				$msg = wfMessage( 'myhome-feed-edited-by' );
+		}
+
+		return $msg;
+	}
+
+	/**
+	 * Returns the MediaWiki message that should be shown for this item in the details row
+	 * @param string $type Details row item type
+	 * @return Message the matching Message object
+	 */
+	public static function getDetailsMessage( $type ) {
+		$msg = null;
+		switch ( $type ) {
+			case static::ITEM_TYPE_PAGE_MOVE:
+				$msg = wfMessage( 'myhome-feed-move-details' );
+				break;
+			case static::ITEM_TYPE_NEW_BLOG_POST:
+				$msg = wfMessage( 'myhome-feed-new-blog-post-details' );
+				break;
+			case static::ITEM_TYPE_NEW_BLOG_COMMENT:
+				$msg = wfMessage( 'myhome-feed-new-blog-comment-details' );
+				break;
+			case static::ITEM_TYPE_NEW_ARTICLE_COMMENT:
+				$msg = wfMessage( 'myhome-feed-new-article-comment-details' );
+				break;
+			case static::ITEM_TYPE_NEW_PAGE:
+				$msg = wfMessage( 'myhome-feed-new-page-details' );
+				break;
+			case static::ITEM_TYPE_SECTION_EDIT:
+				$msg = wfMessage( 'myhome-feed-section-edit-details' );
+				break;
+			case static::ITEM_TYPE_EDIT_SUMMARY:
+				$msg = wfMessage( 'myhome-feed-summary-details' );
+				break;
+			case static::ITEM_TYPE_CATEGORY_INSERT:
+				$msg = wfMessage( 'myhome-feed-inserted-category-details' );
+				break;
+			case static::ITEM_TYPE_IMAGE_INSERT:
+				$msg = wfMessage( 'myhome-feed-inserted-image-details' );
+				break;
+			case static::ITEM_TYPE_VIDEO_INSERT:
+				$msg = wfMessage( 'myhome-feed-inserted-video-details' );
+				break;
+			default: // ITEM_TYPE_NEW_PAGE
+				$msg = wfMessage( 'myhome-feed-new-page-details' );
+		}
+
+		return $msg;
+	}
+
+	/**
 	 * Add header and wrap feed HTML
 	 * @param $content
 	 * @param bool $showMore
@@ -45,6 +209,7 @@ class FeedRenderer {
 			'defaultSwitch' => $this->renderDefaultSwitch(),
 			'showMore' => $showMore,
 			'type' => $this->type,
+			'typeMessage' => static::getTypeMessage( $this->type )->escaped(),
 		] );
 		return $this->template->render( 'feed.wrapper' );
 	}
@@ -76,7 +241,7 @@ class FeedRenderer {
 
 		// handle message to be shown when given feed is empty
 		if ( empty( $data['results'] ) ) {
-			$this->template->set( 'emptyMessage', wfMsgExt( "myhome-{$this->type}-feed-empty", [ 'parse' ] ) );
+			$this->template->set( 'emptyMessage', static::getEmptyFeedMessage( $this->type )->parse() );
 		}
 
 		$tagid = isset( $parameters['tagid'] ) ? $parameters['tagid'] : 'myhome-activityfeed';
@@ -140,7 +305,7 @@ class FeedRenderer {
 		] );
 		$html .= Xml::element( 'label', [
 			'for' => 'myhome-feed-switch-default-checkbox',
-		], wfMsg( 'myhome-default-view-checkbox', wfMsg( "myhome-{$this->type}-feed" ) ) );
+		], wfMsg( 'myhome-default-view-checkbox', static::getTypeMessage( $this->type )->plain() ) );
 		$html .= Xml::closeElement( 'div' );
 
 		return $html;
@@ -165,33 +330,33 @@ class FeedRenderer {
 					( defined( 'NS_USER_WALL_MESSAGE' ) && $ns == NS_USER_WALL_MESSAGE ) ||
 					( defined( 'NS_BLOG_ARTICLE_TALK' ) && $ns == NS_BLOG_ARTICLE_TALK )
 				) {
-					$msgType = 'comment';
+					$msgType = static::ACTION_COMMENT;
 				} else if ( defined( 'NS_BLOG_ARTICLE' ) && $ns == NS_BLOG_ARTICLE ) {
-					$msgType = 'posted';
+					$msgType = static::ACTION_BLOG_POSTED;
 				} else if ( !empty( $row['articleComment'] ) ) {
-					$msgType = 'article-comment-created';
+					$msgType = static::ACTION_ARTICLE_COMMENT_CREATED;
 				} else {
-					$msgType = 'created';
+					$msgType = static::ACTION_CREATE;
 				}
 				break;
 
 			case 'delete':
-				$msgType = 'deleted';
+				$msgType = static::ACTION_DELETE;
 				break;
 
 			case 'move':
-				$msgType = 'moved';
+				$msgType = static::ACTION_MOVE;
 				break;
 
 			default:
 				if ( !empty( $row['articleComment'] ) ) {
-					$msgType = 'article-comment-edited';
+					$msgType = static::ACTION_ARTICLE_COMMENT_EDITED;
 				} else {
-					$msgType = 'edited';
+					$msgType = static::ACTION_EDIT;
 				}
 		}
-
-		$res = wfMsg( "myhome-feed-{$msgType}-by", self::getUserPageLink( $row ) ) . ' ';
+		
+		$res = static::getActionMessage( $msgType )->rawParams( static::getUserPageLink( $row ) )->escaped() . ' ';
 
 		wfProfileOut( __METHOD__ );
 
@@ -253,15 +418,16 @@ class FeedRenderer {
 	public static function formatDetailsRow( $type, $content, $encodeContent = true, $count = false ) {
 		wfProfileIn( __METHOD__ );
 
+		$msg = static::getDetailsMessage( $type );
 		if ( is_numeric( $count ) ) {
-			$msg = wfMsgExt( "myhome-feed-{$type}-details", [ 'parsemag' ], $count );
+			$msg = $msg->numParams( $count )->escaped();
 		} else {
-			$msg = wfMsg( "myhome-feed-{$type}-details" );
+			$msg = $msg->escaped();
 		}
 
 		$html = Xml::openElement( 'tr', [ 'data-type' => $type ] );
 		$html .= Xml::openElement( 'td', [ 'class' => 'activityfeed-details-label' ] );
-		$html .= Xml::element( 'em', [ 'class' => 'dark_text_2' ], $msg );
+		$html .= Html::rawElement( 'em', [ 'class' => 'dark_text_2' ], $msg );
 		$html .= ': ';
 		$html .= Xml::closeElement( 'td' );
 		$html .= Xml::openElement( 'td' );
@@ -502,45 +668,49 @@ class FeedRenderer {
 
 		wfProfileIn( __METHOD__ );
 
+		$msg = null;
 		switch ( $type ) {
 			case self::FEED_SUN_ICON:
-				$msg = 'newpage';
+				$msg = wfMessage( 'myhome-feed-newpage' );
 				break;
 
 			case self::FEED_PENCIL_ICON:
-				$msg = 'edit';
+				$msg = wfMessage( 'myhome-feed-edit' );
 				break;
 
 			case self::FEED_MOVE_ICON:
-				$msg = 'move';
+				$msg = wfMessage( 'myhome-feed-move' );
 				break;
 
 			case self::FEED_TALK_ICON:
-				$msg = 'talkpage';
+				$msg = wfMessage( 'myhome-feed-talkpage' );
 				break;
 
 			case self::FEED_COMMENT_ICON:
-				$msg = 'blogcomment';
+				$msg = wfMessage( 'myhome-feed-blogcomment' );
 				break;
 
 			case self::FEED_DELETE_ICON:
-				$msg = 'delete';
+				$msg = wfMessage( 'myhome-feed-delete' );
 				break;
 
 			case self::FEED_PHOTO_ICON:
-				$msg = 'image';
+				$msg = wfMessage( 'myhome-feed-image' );
 				break;
 
 			case self::FEED_FILM_ICON:
-				$msg = 'video';
+				$msg = wfMessage( 'myhome-feed-video' );
 				break;
 
 			case self::FEED_CATEGORY_ICON:
-				$msg = 'categorization';
+				$msg = wfMessage( 'myhome-feed-categorization' );
 				break;
+
+			default: // FEED_PENCIL_ICON
+				$msg = wfMessage( 'myhome-feed-edit' );
 		}
 
-		$alt = wfMsg( "myhome-feed-{$msg}" );
+		$alt = $msg->text();
 		$ret = Xml::expandAttributes( [ 'alt' => $alt, 'title' => $alt ] );
 
 		wfProfileOut( __METHOD__ );

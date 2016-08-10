@@ -1,7 +1,7 @@
 <nav class="activity-nav">
 	<ul>
 		<?php if ( $loggedIn ): ?>
-			<?php if ( $type == 'watchlist' ): ?>
+			<?php if ( $type == FeedRenderer::TYPE_WATCHLIST ): ?>
 				<li class="watchlist">
 					<a href="<?= Skin::makeSpecialUrl( 'WikiActivity/activity' ); ?>">
 						<?= wfMessage( 'myhome-activity-feed' )->escaped(); ?>
@@ -25,7 +25,7 @@
 	<p>
 		<input type="checkbox" id="wikiactivity-default-view-switch" data-type="<?= $type ?>" disabled="disabled">
 		<label for="wikiactivity-default-view-switch">
-			<?= wfMessage( 'myhome-default-view-checkbox', wfMessage( "myhome-{$type}-feed" )->plain() )->escaped(); ?>
+			<?= wfMessage( 'myhome-default-view-checkbox', $typeMessage )->escaped(); ?>
 		</label>
 	</p>
 <?php endif; ?>
