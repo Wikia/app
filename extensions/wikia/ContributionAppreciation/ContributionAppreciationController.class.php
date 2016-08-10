@@ -52,11 +52,10 @@ class ContributionAppreciationController extends WikiaController {
 	public static function onSendGridPostbackLogEvents( $events ) {
 		foreach ( $events as $event ) {
 			if ( $event[ 'event' ] == 'click' && strpos( $event[ 'category' ], self::EMAIL_CATEGORY ) !== false ) {
-				if ( preg_match( '/diff=([0-9]*)/', $event[ 'url' ], $matches ) ) {
-					self::sendDataToDW( 'button_clicked', $event[ 'wikia-email-city-id' ], $matches[ 1 ] );
-					// for now appreciation functionality is enabled only in English
-				} elseif ( strpos( $event[ 'url' ], 'Special:Community' ) !== false ) {
-					self::sendDataToDW( 'diff_link_clicked', $event[ 'wikia-email-city-id' ] );
+				if ( preg_match( '/diff=([0-9]*)/', $event[ 'url' ], $diff ) ) {
+					self::sendDataToDW( 'button_clicked', $event[ 'wikia-email-city-id' ], $diff[ 1 ] );
+				} elseif ( preg_match( '/rev_id=([0-9]*)/', $event[ 'url' ], $revId ) ) {
+					self::sendDataToDW( 'diff_link_clicked', $event[ 'wikia-email-city-id' ], $revId[ 1 ] );
 				}
 			}
 		}
@@ -71,23 +70,20 @@ class ContributionAppreciationController extends WikiaController {
 	 * @param int $wikiId - id of wiki user made contribution on
 	 * @param int $revisionId
 	 */
-	private static function sendDataToDW( $action, $wikiId, $revisionId = -1 ) {
-
+	private static function sendDataToDW( $action, $wikiId, $revisionId ) {
 		// TODO: to be changed to: 'appreciation_email'
 		$url = 'https://beacon.wikia-services.com/__track/special/testappreciation_email' .
 			'?wiki_id=' . $wikiId .
 			'&email_action=' . $action;
 
-		if ( $revisionId > 0 ) {
-			$dbname = \WikiFactory::IDtoDB( $wikiId );
-			$db = wfGetDB( DB_SLAVE, [ ], $dbname );
-			$revision = Revision::loadFromId( $db, $revisionId );
+		$dbname = \WikiFactory::IDtoDB( $wikiId );
+		$db = wfGetDB( DB_SLAVE, [ ], $dbname );
+		$revision = Revision::loadFromId( $db, $revisionId );
 
-			if ( $revision ) {
-				$url .=
-					'&page_id=' . $revision->getTitle()->getArticleID() .
-					'&user_id=' . $revision->getUser();
-			}
+		if ( $revision ) {
+			$url .=
+				'&page_id=' . $revision->getTitle()->getArticleID() .
+				'&user_id=' . $revision->getUser();
 		}
 
 		Http::get( $url );
@@ -104,12 +100,15 @@ class ContributionAppreciationController extends WikiaController {
 		global $wgSitename;
 
 		$revision = Revision::newFromId( $revisionId );
+		$userText = $revision->getUserText();
 
 		if ( $revision ) {
 			$editedPageTitle = $revision->getTitle();
 			$params = [
-				'buttonLink' =>  SpecialPage::getTitleFor( 'Community' )->getFullURL(),
-				'targetUser' => $revision->getUserText(),
+				'buttonLink' =>  SpecialPage::getTitleFor( 'Community' )->getFullURL( [
+					'rev_id' => $revision->getId()
+				] ),
+				'targetUser' => $userText,
 				'editedPageTitleText' => $editedPageTitle->getText(),
 				'editedWikiName' => $wgSitename,
 				'revisionUrl' => $editedPageTitle->getFullURL( [
