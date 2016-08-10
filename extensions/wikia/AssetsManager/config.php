@@ -3022,6 +3022,14 @@ $config['contribution_appreciation_js'] = [
 	]
 ];
 
+$config['contribution_appreciation_user_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/ContributionAppreciation/js/UserContributionAppreciation.js'
+	]
+];
+
 $config['contribution_appreciation_scss'] = [
 	'type' => AssetsManager::TYPE_SCSS,
 	'assets' => [
