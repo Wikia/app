@@ -20,7 +20,7 @@ $messages['en'] = array(
 	'tog-enotifwatchlistpages-v2' => "...a page I'm following is changed",
 	'tog-enotifusertalkpages-v2' => '...my user talk page is changed',
 	'tog-enotifminoredits-v2' => "...a page I'm following is minorly changed",
-	'tog-enotifdiscussions-v2' => '...my Discussion posts receive replies and upvotes',
+	'tog-enotifdiscussions-v2' => '...my Discussions posts receive replies and upvotes',
 	'tog-marketingallowed-v2' => '...Wikia has news and events',
 	'prefs-email-advanced-v2' => 'Advanced Options',
 	'prefs-email-unsubscribe' => 'Disable all emails',
@@ -370,7 +370,7 @@ $messages['de'] = array(
 	'prefs-personal' => 'Meine Informationen',
 	'prefs-wikiemail' => '{{SITENAME}}-Optionen. Sende mir eine E-Mail, wenn …',
 	'preferences-v2-redirect-community-page' => 'Community-Seite (wo verfügbar)',
-	'tog-enotifdiscussions-v2' => '...my Discussion posts receive replies and upvotes',
+	'tog-enotifdiscussions-v2' => '...my Discussions posts receive replies and upvotes',
 );
 
 /** Zazaki (Zazaki)
@@ -630,7 +630,7 @@ $messages['fr'] = array(
 	'prefs-personal' => 'Mes infos',
 	'prefs-wikiemail' => 'Options de {{SITENAME}}. M’envoyer un e-mail quand...',
 	'preferences-v2-redirect-community-page' => 'Page Communauté (si disponible)',
-	'tog-enotifdiscussions-v2' => '...my Discussion posts receive replies and upvotes',
+	'tog-enotifdiscussions-v2' => '...my Discussions posts receive replies and upvotes',
 );
 
 /** Western Frisian (Frysk)
@@ -752,7 +752,7 @@ $messages['it'] = array(
 	'tog-editsectiononrightclick-v2' => 'Modifica le sezioni facendo clic con il pulsante destro del mouse sui titoli di sezione',
 	'tog-editondblclick-v2' => 'Modifica le pagine con un doppio clic',
 	'tog-hidefollowedpages-v2' => 'Nascondi il mio elenco delle pagine seguite a tutti',
-	'tog-enotifdiscussions-v2' => '...my Discussion posts receive replies and upvotes',
+	'tog-enotifdiscussions-v2' => '...my Discussions posts receive replies and upvotes',
 );
 
 /** Japanese (日本語)
@@ -812,7 +812,7 @@ $messages['ja'] = array(
 	'tog-editsectiononrightclick-v2' => 'セクションのタイトルを右クリックし、セクション編集を開始する',
 	'tog-editondblclick-v2' => 'ダブルクリックでページの編集を開始する',
 	'tog-hidefollowedpages-v2' => 'フォローしているページのリストを非公開にする',
-	'tog-enotifdiscussions-v2' => '...my Discussion posts receive replies and upvotes',
+	'tog-enotifdiscussions-v2' => '...my Discussions posts receive replies and upvotes',
 );
 
 /** Korean (한국어)
@@ -1098,7 +1098,7 @@ $messages['nl'] = array(
 	'prefs-personal' => 'Uw gegevens',
 	'prefs-wikiemail' => 'Instellingen voor {{SITENAME}}. U e-mail sturen wanneer...',
 	'preferences-v2-redirect-community-page' => 'Community Page (where available)',
-	'tog-enotifdiscussions-v2' => '...my Discussion posts receive replies and upvotes',
+	'tog-enotifdiscussions-v2' => '...my Discussions posts receive replies and upvotes',
 );
 
 /** Occitan (occitan)
@@ -1200,7 +1200,7 @@ $messages['pl'] = array(
 	'prefs-personal' => 'Moje informacje',
 	'prefs-wikiemail' => 'Opcje {{SITENAME}}. Powiadom jeżeli...',
 	'preferences-v2-redirect-community-page' => 'Strona Społeczności (gdzie dostępna)',
-	'tog-enotifdiscussions-v2' => '...my Discussion posts receive replies and upvotes',
+	'tog-enotifdiscussions-v2' => '...my Discussions posts receive replies and upvotes',
 );
 
 /** Pashto (پښتو)
@@ -1293,7 +1293,7 @@ $messages['pt'] = array(
 	'prefs-personal' => 'Minhas Informações',
 	'prefs-wikiemail' => 'Opções da {{SITENAME}}. Envie-me um e-mail quando...',
 	'preferences-v2-redirect-community-page' => 'Página da Comunidade (quando disponível)',
-	'tog-enotifdiscussions-v2' => '...my Discussion posts receive replies and upvotes',
+	'tog-enotifdiscussions-v2' => '...my Discussions posts receive replies and upvotes',
 );
 
 /** Brazilian Portuguese (português do Brasil)
