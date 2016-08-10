@@ -644,7 +644,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 				sprintf( "Junior helper cannot change account info - user: %s", $user->getName() )
 			);
 
-			$this->setErrorResponse( 'userlogin-account-admin-error' );
+			$this->setParsedErrorResponse( 'userlogin-account-admin-error' );
 			return;
 		}
 
@@ -719,6 +719,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 	 */
 	private function setResponseGeneric( $key, $params, $result = 'ok', $postProcess = 'escaped' ) {
 		$msg = wfMessage( $key, $params )->$postProcess();
+
 		$this->response->setData( [
 			'result' => $result,
 			'msg' => $msg,
