@@ -104,6 +104,16 @@ class TwitterTagTest extends WikiaBaseTest {
 				[ 'data-height' => '500' ]
 			],
 			[
+				[ 'height' => '300' ],
+				TwitterTagController::TAG_PERMITTED_ATTRIBUTES,
+				[ 'data-height' => '300' ]
+			],
+			[
+				[ 'height' => '800' ],
+				TwitterTagController::TAG_PERMITTED_ATTRIBUTES,
+				[ 'data-height' => '800' ]
+			],
+			[
 				[
 					'widget-id' => '123',
 					'chrome' => 'transparent noborders noheader',
