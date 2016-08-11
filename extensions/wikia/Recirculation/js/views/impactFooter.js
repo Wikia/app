@@ -16,7 +16,7 @@ define('ext.wikia.recirculation.views.impactFooter', [
 	function render(data) {
 		var renderData = {};
 		renderData.title = data.title;
-		renderData.items = utils.addUtmTracking(organizeItems(data), 'impact-footer');
+		renderData.items = organizeItems(data);
 		renderData.discussions = data.discussions;
 
 		renderData.i18n = {

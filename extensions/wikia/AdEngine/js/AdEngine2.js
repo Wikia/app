@@ -134,6 +134,12 @@ define('ext.wikia.adEngine.adEngine', [
 					}
 				});
 
+			if (slotTweaker.isTopLeaderboard(slotName)) {
+				slot.pre('collapse', function () {
+					slotTweaker.hide('TOP_BUTTON_WIDE');
+				});
+			}
+
 			// Notify people there's the slot handled
 			eventDispatcher.trigger('ext.wikia.adEngine fillInSlot', slotName, provider);
 

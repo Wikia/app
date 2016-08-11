@@ -42,6 +42,7 @@ $messages['en'] = array(
 	'user-identity-i-am' => '<span>I am</span> $1',
 	'user-identity-box-edits-since-joining' => 'Edits since joining this wiki<br />$1',
 	'user-identity-box-edits' => '<em>$1</em><span>EDITS</span>',
+	'user-identity-box-discussion-posts' => 'Discussion posts',
 	'user-identity-box-group-blocked' => 'Blocked',
 	'user-identity-box-group-chatmoderator' => 'Chat moderator',
 	'user-identity-box-group-sysop' => 'Admin',
@@ -186,6 +187,7 @@ Parameters:
 	'user-identity-box-edits' => 'This message is used to show how many edits the user has made already - visible on user profile page. HTML tags are used for styling UI.
 Parameters:
 * $1 is the number of edits',
+	'user-identity-box-discussion-posts' => 'This message is used to show how many discussion posts the user has already made.',
 	'user-identity-box-group-blocked' => 'Group name shown on user profile page next to user login for users who are "Blocked".',
 	'user-identity-box-group-chatmoderator' => 'Group name shown on user profile page next to user login for users who are "Chat moderator".',
 	'user-identity-box-group-sysop' => 'Group name shown on user profile page next to user login for users who are "Admin".',
@@ -714,6 +716,7 @@ $messages['de'] = array(
 	'user-identity-box-about-fb-page' => 'Wie lautet der Link zu deinem Facebook-Profil?',
 	'user-identity-avatars-maintenance' => 'Das Hochladen und Löschen von Avataren ist aus Wartungsgründen momentan nicht möglich!',
 	'userprofilepage-edit-modal-error' => 'Ein unerwarteter Fehler ist aufgetreten.',
+	'user-identity-box-group-adminmentor' => 'Adminmentor',
 );
 
 /** Swiss High German (Schweizer Hochdeutsch)
@@ -890,6 +893,7 @@ $messages['es'] = array(
 	'user-identity-box-about-fb-page' => '¿Cuál es el enlace de tu perfil de Facebook?',
 	'user-identity-avatars-maintenance' => '¡La subida y eliminación de avatares se desactiva durante el mantenimiento!',
 	'userprofilepage-edit-modal-error' => 'Ha ocurrido un error inesperado',
+	'user-identity-box-group-adminmentor' => 'Mentor',
 );
 
 /** Finnish (suomi)
@@ -1122,6 +1126,7 @@ $messages['fr'] = array(
 	'user-identity-box-about-fb-page' => 'Quel est le lien vers votre profil Facebook ?',
 	'user-identity-avatars-maintenance' => 'Importation et retrait des avatars désactivés momentanément pour cause de maintenance !',
 	'userprofilepage-edit-modal-error' => "Un erreur inattendue s'est produite",
+	'user-identity-box-group-adminmentor' => 'Administrateur référent',
 );
 
 /** Galician (galego)
@@ -1583,6 +1588,7 @@ $messages['it'] = array(
 	'user-identity-remove-fail' => "C'è stato un problema durante la rimozione dell'avatar!",
 	'user-identity-avatars-maintenance' => 'Il caricamento e la rimozione di avatar non sono temporaneamente possibili durante la manutenzione!',
 	'userprofilepage-edit-modal-error' => 'Si è verificato un errore imprevisto',
+	'user-identity-box-group-adminmentor' => 'Admin Mentor',
 );
 
 /** Japanese (日本語)
@@ -1700,6 +1706,7 @@ $messages['ja'] = array(
 	'user-identity-remove-fail' => 'アバターの削除中にエラーが発生しました',
 	'user-identity-avatars-maintenance' => 'メンテナンス中のため、アバターのアップロードと削除ができなくなっています。',
 	'userprofilepage-edit-modal-error' => '予期しないエラーが発生しました',
+	'user-identity-box-group-adminmentor' => 'アドミン・アドバイザー',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -2153,7 +2160,7 @@ $messages['nl'] = array(
 	'user-identity-box-avatar-choose-avatar' => 'Kies een avatar',
 	'user-identity-box-avatar-save' => 'Opslaan, ik ben klaar',
 	'user-identity-box-avatar-cancel' => 'Annuleren',
-	'user-identity-box-avatar-anon-user-error' => 'U moet aanmelden voor u iets kunt wijzigen',
+	'user-identity-box-avatar-anon-user-error' => 'U moet inloggen voor u iets kunt wijzigen',
 	'user-identity-box-hide-edits-wikis' => 'Alles verbergen',
 	'user-identity-box-banned-from-chat' => 'Verbannen uit chat',
 	'user-identity-box-aka-label' => '<span>ook bekend als</span> $1',
@@ -2201,7 +2208,7 @@ $messages['nl'] = array(
 	'user-identity-box-connect-to-fb' => 'Verbinding maken met Facebook',
 	'user-identity-box-unsyc-fb' => 'Koppeling met Facebook verbreken',
 	'user-identity-box-fb-page' => 'Wat is uw Facebook-pagina?',
-	'user-identity-box-invalid-fb-id-error' => 'Ongeldige Facebook-ID',
+	'user-identity-box-invalid-fb-id-error' => 'Ongeldig Facebook-ID',
 	'user-identity-box-fb-prefs' => 'Feedvoorkeuren',
 	'user-identity-box-avatar-error-nofile' => 'Fout: er is geen avatarbestand gevonden om te uploaden',
 	'user-identity-box-avatar-error-cantwrite' => 'Fout: het is niet mogelijk naar de tijdelijke map te schrijven',
@@ -2211,7 +2218,7 @@ $messages['nl'] = array(
 	'userprofilepage-lightbox-about-me-save' => 'Opslaan, ik ben klaar',
 	'user-identity-box-saving-error' => 'Het opslaan van de gebruikersgegevens is mislukt. Uw gegevens moeten aangeleverd worden als platte tekst',
 	'user-identity-box-saving-internal-error' => 'Het opslaan van de gebruikersgegevens is mislukt. Er is een interne fout opgetreden',
-	'userprofilepage-closing-popup-header' => 'Profiel bewerken verlaten',
+	'userprofilepage-closing-popup-header' => 'Profielbewerker verlaten',
 	'userprofilepage-closing-popup-info' => 'Er zijn niet-opgeslagen wijzigingen in uw profiel. Wat wilt u doen?',
 	'userprofilepage-closing-popup-discard-and-quit' => 'Wijzigingen negeren en afsluiten',
 	'userprofilepage-closing-popup-save-and-quit' => 'Opslaan en sluiten',
@@ -2240,6 +2247,7 @@ $messages['nl'] = array(
 	'user-identity-box-about-fb-page' => 'Wat is jouw Facebook profiel-link?',
 	'user-identity-avatars-maintenance' => 'Het uploaden en verwijderen van profielafbeeldingen is tijdelijk uitgeschakeld wegens werkzaamheden!',
 	'userprofilepage-edit-modal-error' => 'Er zijn onbekende fouten opgetreden',
+	'user-identity-box-group-adminmentor' => 'Beheerdersmentor',
 );
 
 /** Pälzisch (Pälzisch)
@@ -2372,6 +2380,7 @@ $messages['pl'] = array(
 	'user-identity-box-about-fb-page' => 'Jaki jest link do Twojego profilu na Facebooku?',
 	'user-identity-avatars-maintenance' => 'Przesyłanie i usuwanie avatarów tymczasowo wyłączone na czas konserwacji!',
 	'userprofilepage-edit-modal-error' => 'Wystąpił nieznany błąd',
+	'user-identity-box-group-adminmentor' => 'Mentor',
 );
 
 /** Piedmontese (Piemontèis)
@@ -2549,6 +2558,7 @@ $messages['pt'] = array(
 	'usermasthead-log-alt' => 'Registro de edições no cabeçalho do usuário',
 	'user-identity-avatars-maintenance' => 'Carregamento e exclusão de avatares temporariamente desativados durante a manutenção!',
 	'userprofilepage-edit-modal-error' => 'Um erro desconhecido ocorreu',
+	'user-identity-box-group-adminmentor' => 'Mentor de admin',
 );
 
 /** Brazilian Portuguese (português do Brasil)
@@ -2756,6 +2766,7 @@ $messages['ru'] = array(
 	'user-identity-box-about-fb-page' => 'Дайте ссылку на свою страницу в Facebook',
 	'user-identity-avatars-maintenance' => 'Загрузка и удаление аватара временно отключено. Идут технические работы.',
 	'userprofilepage-edit-modal-error' => 'Неизвестная ошибка',
+	'user-identity-box-group-adminmentor' => 'Администратор-наставник',
 );
 
 /** Serbian (Cyrillic script) (српски (ћирилица)‎)
@@ -3320,7 +3331,8 @@ $messages['zh-hans'] = array(
 	'user-identity-box-my-fb-page' => '我的Facebook',
 	'user-identity-box-fav-wikis' => '我最喜欢的wiki',
 	'user-identity-box-edits-since-joining' => '次编辑<br/>于$1加入Wikia',
-	'user-identity-box-edits' => '<em>$1</em><span>次编辑</span>',
+	'user-identity-box-edits' => '<em>$1</em><span>次编辑</span>
+',
 	'user-identity-box-group-authenticated' => '官方认证',
 	'user-identity-box-group-council' => '委员',
 	'user-identity-box-group-wikiastars' => 'Wikia Star',
@@ -3366,6 +3378,7 @@ $messages['zh-hans'] = array(
 	'user-identity-remove-fail' => '移除个人头像时遇到问题！',
 	'user-identity-avatars-maintenance' => '系统处于维护状态，上传和删除头像暂时不可用！',
 	'userprofilepage-edit-modal-error' => '发生未知错误',
+	'user-identity-box-group-adminmentor' => '管理员导师',
 );
 
 /** Traditional Chinese (中文（繁體）‎)
@@ -3447,6 +3460,44 @@ $messages['zh-hant'] = array(
 	'user-action-menu-leave-message' => '留言',
 	'blog-avatar-changed-log' => '添加或更改頭像',
 	'blog-avatar-removed-log' => '刪除 $1 的頭像',
+	'userprofilepage-question-caption' => '$2個問題之$1',
+	'userprofilepage-interview-save-error' => '保存訪談記錄失敗',
+	'userprofilepage-interview-save-internal-error' => '保存訪談記錄失敗-發生內部錯誤',
+	'userprofilepage-answers-stats-title' => '訪談統計',
+	'userprofilepage-question-save' => '保存提問',
+	'userprofilepage-question-list-title' => '$2個問題之$1',
+	'userprofilepage-interview-section-title' => '使用者採訪',
+	'userprofilepage-avatar-error-type' => '不正確MIME檔案類型。允許的檔案類型: $1',
+	'userprofilepage-avatar-error-resolution' => '使用者頭像最大解析度為2000×2000',
+	'user-identity-box-banned-from-chat' => '禁止聊天',
+	'user-identity-box-aka-label' => '<span>我是</span> $1',
+	'user-identity-box-edits-since-joining' => '次編輯<br/>于$1加入Wikia',
+	'user-identity-box-edits' => '<em>$1</em><span>次編輯</span>',
+	'user-identity-box-group-council' => '委員',
+	'user-identity-box-group-adminmentor' => '管理員導師',
+	'user-identity-box-group-wikiastars' => 'Wikia Star',
+	'user-identity-box-group-voldev' => '志願開發者',
+	'user-identity-box-group-threadmoderator' => '主持人',
+	'user-identity-box-about-fb-page' => '你的Facebook帳戶頁面是什麼？',
+	'user-identity-box-join-more-wikis' => '加入更多的Wiki，它們將在這裡顯示',
+	'user-identity-box-unsyc-fb' => '與Facebook斷開連接',
+	'user-identity-box-fb-prefs' => 'Feed首選項',
+	'user-identity-box-avatar-error-cantwrite' => '錯誤: 無法寫入臨時目錄',
+	'user-action-menu-view-source' => '查看原始程式碼',
+	'user-action-menu-protect' => '保護',
+	'user-action-menu-unprotect' => '取消保護',
+	'user-action-menu-rename' => '重命名',
+	'user-action-menu-delete' => '刪除',
+	'user-action-menu-history' => '歷史記錄',
+	'usermasthead-log' => '使用者刊頭',
+	'usermasthead-log-message' => '添加個人檔案資訊',
+	'usermasthead-log-alt' => '使用者刊頭編輯日誌',
+	'useravatar-log' => '使用者頭像日誌',
+	'blog-avatar-alt' => '使用者頭像添加或清除日誌',
+	'user-identity-remove-confirmation' => '你確定你想要刪除個人頭像嗎?',
+	'user-identity-remove-fail' => '移除個人頭像時遇到問題！',
+	'user-identity-avatars-maintenance' => '系統處於維護狀態，上傳和刪除頭像暫時不可用！',
+	'userprofilepage-edit-modal-error' => '發生未知錯誤',
 );
 
 $messages['zh-tw'] = array(

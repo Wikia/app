@@ -37,7 +37,6 @@ class PermissionsConfigurationImpl implements PermissionsConfiguration {
 		'voldev',
 		'vstf',
 		'wikiastars',
-		'wikifactory',
 	];
 
 	private $implicitGroups = [
@@ -450,7 +449,7 @@ class PermissionsConfigurationImpl implements PermissionsConfiguration {
 			[ 'chatmoderator', 'threadmoderator' ] ) );
 
 		$this->groupsAddableByGroup['util'] = array_diff( $this->getExplicitGroups(),
-			array_merge( [ 'wikifactory', 'content-reviewer', 'staff', 'util', 'restricted-login-exempt' ], $this->getImplicitGroups() ) );
+			array_merge( [ 'content-reviewer', 'staff', 'util', 'restricted-login-exempt' ], $this->getImplicitGroups() ) );
 		$this->groupsRemovableByGroup['util'] = array_diff( $this->getExplicitGroups(),
 			array_merge( [ 'restricted-login', 'restricted-login-exempt' ], $this->getImplicitGroups() ) );
 
