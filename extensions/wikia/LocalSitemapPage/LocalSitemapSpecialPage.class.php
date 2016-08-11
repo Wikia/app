@@ -27,9 +27,10 @@ class LocalSitemapSpecialPage extends SpecialAllpages {
 	 *
 	 * @param String $inpoint
 	 * @param String $outpoint
+	 * @param int $namespace (ignored)
 	 * @return string
 	 */
-	public function showline( $inpoint, $outpoint ) {
+	public function showline( $inpoint, $outpoint, $namespace = NS_MAIN ) {
 		global $wgContLang;
 		$inpointf = htmlspecialchars( str_replace( '_', ' ', $inpoint ) );
 		$outpointf = htmlspecialchars( str_replace( '_', ' ', $outpoint ) );
