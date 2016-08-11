@@ -31,7 +31,7 @@ class AppPromoLandingController extends WikiaController {
 	/**
 	 * Render HTML for whole App Promo Landing page.
 	 */
-	public function executeIndex() {
+	public function index() {
 		wfProfileIn( __METHOD__ );
 
 		// Since this "Community_App" article won't be found, we need to manually say it's okay so that it's not a 404.
@@ -76,7 +76,7 @@ class AppPromoLandingController extends WikiaController {
 		}
 
 		// render the custom App Promo Landing body (this includes the nav bar and the custom content).
-		$body = $this->app->renderView( 'AppPromoLanding', 'Content', [ ] );
+		$body = $this->app->renderView( 'AppPromoLanding', 'content', [ ] );
 
 		// page has one column
 		OasisController::addBodyClass( 'oasis-one-column' );
@@ -88,7 +88,7 @@ class AppPromoLandingController extends WikiaController {
 		OasisController::addBodyClass( 'WikiaGrid' );
 
 		// render Oasis module to the 'html' var which the AppPromoLanding_index template will just dump out.
-		$this->html = $this->app->renderView( 'Oasis', 'Index', [ 'body' => $body ] );
+		$this->html = $this->app->renderView( 'Oasis', 'index', [ 'body' => $body ] );
 
 		wfProfileOut( __METHOD__ );
 	}
@@ -97,7 +97,7 @@ class AppPromoLandingController extends WikiaController {
 	 * This part of the controller is responsible for dumping the "body" of the page which
 	 * will include both the standard Wikia GlobalNavigation
 	 */
-	public function executeContent( $params ){
+	public function content( $params ){
 		wfProfileIn( __METHOD__ );
 
 		// render global and user navigation
