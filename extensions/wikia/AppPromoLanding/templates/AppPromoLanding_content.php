@@ -279,7 +279,7 @@ svg path{
 			</div>
 			<div class='branchIoOuter'>
 				<div class='branchIoInner'>
-					<p><?= wfMessage( 'apppromolanding-custompitch', "<wbr><span>{$config->name}</span>" )->rawParams()->escaped() ?></p>
+					<p><?= wfMessage( 'apppromolanding-custompitch' )->rawParams( "<wbr><span>{$config->name}</span>" )->escaped() ?></p>
 					<div class='branchIo'>
 						<div class='callToAction'><?= wfMessage( 'apppromolanding-call-to-action' )->escaped() ?></div>
 						<form id='branchIoForm' method='post' onsubmit='return sendSMS();'>
