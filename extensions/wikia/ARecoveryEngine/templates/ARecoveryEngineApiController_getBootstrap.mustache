@@ -22,7 +22,9 @@ window._sp_ = {
     }
 };
 
-spBootstrap('{{domain}}/api/v1/ARecoveryEngine/delivery');
+if (window.wikiaSPStatus !== false) {
+    spBootstrap('{{domain}}/api/v1/ARecoveryEngine/delivery');
+}
 
 window.addEventListener('load', function(){
     require(['ext.wikia.aRecoveryEngine.recovery.helper'], function (helper) {
