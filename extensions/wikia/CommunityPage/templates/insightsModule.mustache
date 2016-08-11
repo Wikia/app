@@ -1,11 +1,8 @@
 <section class="community-page-insights-module" data-tracking="community-page-insights-{{type}}">
-	<h3 class="community-page-insights-module-header control">{{title}}</h3>
-	<h3 class="community-page-insights-module-header medium">{{mediumtitle}}</h3>
-	<h3 class="community-page-insights-module-header high lite">{{hightitle}}</h3>
-	<p class="community-page-insights-module-description control">{{description}}</p>
-	<p class="community-page-insights-module-description medium">{{mediumdescription}}</p>
-	<p class="community-page-insights-module-description high">{{highdescription}}</p>
-	<p class="community-page-insights-module-description lite"></p>
+	<h3 class="community-page-insights-module-header">{{title}}</h3>
+    {{#description}}
+        <p class="community-page-insights-module-description">{{description}}</p>
+    {{/description}}
 	{{#fulllistlink}}
 		<a class="community-page-insights-module-full-list-link" href="{{fulllistlink}}" data-tracking="view-full-list">
 			{{insightsModules.messages.fulllist}}&nbsp;&rarr;
@@ -19,8 +16,7 @@
 					<a href="{{link.articleurl}}" data-tracking="page-link">{{link.text}}</a>
 					<div class="community-page-insights-module-metadata">{{{metadataDetails}}} {{#pageviews}}&middot; {{pageviews}}{{/pageviews}}</div>
 				</span>
-				<a class="community-page-insights-module-edit-link control" data-tracking="edit-link" href="{{editlink}}">{{edittext}}</a>
-				<a class="community-page-insights-module-edit-link medium high lite" data-tracking="edit-link" href="{{editlink}}">{{customedittext}}</a>
+				<a class="community-page-insights-module-edit-link" data-tracking="edit-link" href="{{editlink}}">{{edittext}}</a>
 			</li>
 		{{/pages}}
 	</ul>
