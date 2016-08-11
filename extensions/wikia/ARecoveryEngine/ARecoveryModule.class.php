@@ -11,10 +11,7 @@ class ARecoveryModule {
 	public static function isEnabled() {
 		global $wgEnableUsingSourcePointProxyForCSS;
 
-		$skin = RequestContext::getMain()->getSkin();
-		$skinName = $skin->getSkinName();
-
-		return !empty( $wgEnableUsingSourcePointProxyForCSS ) && $skinName === 'oasis';
+		return !empty( $wgEnableUsingSourcePointProxyForCSS );
 	}
 
 	public static function isLockEnabled() {
