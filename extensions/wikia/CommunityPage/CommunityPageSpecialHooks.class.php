@@ -63,9 +63,11 @@ class CommunityPageSpecialHooks {
 	 * @return true
 	 */
 	public static function onBeforePageDisplay( \OutputPage $out, \Skin $skin ) {
+		global $wgEnableNCFDialog;
 		$user = $out->getUser();
 
-		if ( $user->isAnon() &&
+		if ( !empty( $wgEnableNCFDialog ) &&
+			$user->isAnon() &&
 			$out->getRequest()->getVal( 'action' ) !== 'edit' &&
 			$out->getRequest()->getVal( 'veaction' ) !== 'edit' &&
 			$out->getRequest()->getVal( 'action' ) !== 'submit'
