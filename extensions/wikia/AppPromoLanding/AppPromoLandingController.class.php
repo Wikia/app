@@ -40,7 +40,7 @@ class AppPromoLandingController extends WikiaController {
 		// Pull in the app-configuration (has data for all apps)
 		$appConfig = [];
 		$memcKey = wfMemcKey( static::$CACHE_KEY, static::$CACHE_KEY_VERSION );
-		$response = F::app()->wg->memc->get( $memcKey );
+		$response = $this->wg->memc->get( $memcKey );
 		if ( empty( $response ) ){
 			$req = MWHttpRequest::factory( self::APP_CONFIG_SERVICE_URL, array( 'noProxy' => true ) );
 			$status = $req->execute();
@@ -51,7 +51,7 @@ class AppPromoLandingController extends WikiaController {
 					throw new EmptyResponseException( self::APP_CONFIG_SERVICE_URL );
 				} else {
 					// Request was successful. Cache it in memcached (faster than going over network-card even on our internal network).
-					F::app()->wg->memc->set( $memcKey, $response, static::$CACHE_EXPIRY );
+					$this->wg->memc->set( $memcKey, $response, static::$CACHE_EXPIRY );
 				}
 			}
 		}
@@ -76,7 +76,7 @@ class AppPromoLandingController extends WikiaController {
 		}
 
 		// render the custom App Promo Landing body (this includes the nav bar and the custom content).
-		$body = F::app()->renderView( 'AppPromoLanding', 'Content', [ ] );
+		$body = $this->app->renderView( 'AppPromoLanding', 'Content', [ ] );
 
 		// page has one column
 		OasisController::addBodyClass( 'oasis-one-column' );
@@ -88,7 +88,7 @@ class AppPromoLandingController extends WikiaController {
 		OasisController::addBodyClass( 'WikiaGrid' );
 
 		// render Oasis module to the 'html' var which the AppPromoLanding_index template will just dump out.
-		$this->html = F::app()->renderView( 'Oasis', 'Index', [ 'body' => $body ] );
+		$this->html = $this->app->renderView( 'Oasis', 'Index', [ 'body' => $body ] );
 
 		wfProfileOut( __METHOD__ );
 	}
@@ -101,7 +101,7 @@ class AppPromoLandingController extends WikiaController {
 		wfProfileIn( __METHOD__ );
 
 		// render global and user navigation
-		$this->header = F::app()->renderView( 'GlobalNavigation', 'index' );
+		$this->header = $this->app->renderView( 'GlobalNavigation', 'index' );
 
 		// Get the config for this app, from the service.
 		$this->config = AppPromoLandingController::getConfigForWiki( $this->wg->CityId );
@@ -112,7 +112,7 @@ class AppPromoLandingController extends WikiaController {
 
 		//Fetch Trending Articles images to use as the image-grid background.
 		try {
-			$trendingArticlesData = F::app()->sendRequest( 'ArticlesApi', 'getTop' )->getVal( 'items' );
+			$trendingArticlesData = $this->app->sendRequest( 'ArticlesApi', 'getTop' )->getVal( 'items' );
 		}
 		catch ( Exception $e ) {
 			$trendingArticlesData = false;
@@ -161,9 +161,9 @@ class AppPromoLandingController extends WikiaController {
 		
 		// The app configs store the branch_app_id but not the branch_key. We need to hit the Branch API to grab that.
 		$branchKeyMemcKey = wfMemcKey( static::$CACHE_KEY_BRANCH, static::$CACHE_KEY_VERSION_BRANCH );
-		$this->branchKey = F::app()->wg->memc->get( $branchKeyMemcKey );
+		$this->branchKey = $this->wg->memc->get( $branchKeyMemcKey );
 		if ( empty( $this->branchKey ) ){
-			$branchUrl = self::BRANCH_API_URL."{$this->config->branch_app_id}?user_id=".F::app()->wg->BranchUserId;
+			$branchUrl = self::BRANCH_API_URL."{$this->config->branch_app_id}?user_id=".$this->wg->BranchUserId;
 			$req = MWHttpRequest::factory( $branchUrl, array( 'noProxy' => true ) );
 			$status = $req->execute();
 			if( $status->isOK() ) {
@@ -176,7 +176,7 @@ class AppPromoLandingController extends WikiaController {
 					$this->branchKey = $branchData->branch_key;
 					if(!empty( $this->branchKey )){
 						// Request was successful. Cache the branch_key in memcached (faster than going over network).
-						F::app()->wg->memc->set( $branchKeyMemcKey, $this->branchKey, static::$CACHE_EXPIRY );
+						$this->wg->memc->set( $branchKeyMemcKey, $this->branchKey, static::$CACHE_EXPIRY );
 					}
 				}
 			}
@@ -188,7 +188,7 @@ class AppPromoLandingController extends WikiaController {
 		$this->numThumbsPerRow = self::THUMBS_PER_ROW;
 		$this->trendingArticles = $trendingArticles;
 		$this->mainPageUrl = Title::newMainPage()->getFullUrl();
-		//$this->larrSrc = F::app()->wg->ExtensionsPath."/wikia/AppPromoLanding/images/arrow-left-long.svg";
+		//$this->larrSrc = $this->wg->ExtensionsPath."/wikia/AppPromoLanding/images/arrow-left-long.svg";
 		$this->larrSvgCode = "<svg width=\"22px\" height=\"16px\" viewBox=\"0 0 22 16\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">
 								<title>BB56E3FE-7480-48C0-96B3-848DAFB20649</title>
 								<desc>Created with sketchtool.</desc>
@@ -202,13 +202,13 @@ class AppPromoLandingController extends WikiaController {
 								</g>
 							</svg>";
 
-		$this->androidPhoneSrc = F::app()->wg->ExtensionsPath."/wikia/AppPromoLanding/images/nexus6_large.png";
+		$this->androidPhoneSrc = $this->wg->ExtensionsPath."/wikia/AppPromoLanding/images/nexus6_large.png";
 		$this->androidScreenShot = "http://wikia-mobile.nocookie.net/wikia-mobile/android-screenshots/{$this->config->app_tag}/1.png";
-		$this->androidStoreSrc = F::app()->wg->ExtensionsPath."/wikia/AppPromoLanding/images/playStoreButton.png";
+		$this->androidStoreSrc = $this->wg->ExtensionsPath."/wikia/AppPromoLanding/images/playStoreButton.png";
 		
-		$this->iosPhoneSrc = F::app()->wg->ExtensionsPath."/wikia/AppPromoLanding/images/silverIphone.png";
+		$this->iosPhoneSrc = $this->wg->ExtensionsPath."/wikia/AppPromoLanding/images/silverIphone.png";
 		$this->iosScreenShot = "http://wikia-mobile.nocookie.net/wikia-mobile/ios-screenshots/{$this->config->app_tag}/en/4.7/4.png.PNGCRUSH.png";
-		$this->iosStoreSrc = F::app()->wg->ExtensionsPath."/wikia/AppPromoLanding/images/appleAppStoreButton.png";
+		$this->iosStoreSrc = $this->wg->ExtensionsPath."/wikia/AppPromoLanding/images/appleAppStoreButton.png";
 
 		$this->imgSpacing = 1; // spacing between the image-grid cells.
 

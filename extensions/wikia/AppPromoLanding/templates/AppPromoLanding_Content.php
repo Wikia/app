@@ -259,7 +259,7 @@ svg path{
 			$numThumbs = 0;
 			foreach($trendingArticles as $topArticle){
 				print "<div class='imageWrapper'>";
-					print "<img src='{$topArticle["imgUrl"]}' title='{$topArticle["title"]}' width='{$topArticle["width"]}' height='{$topArticle["height"]}'/>";
+					print "<img src='{$topArticle["imgUrl"]}' title=\"".htmlentities($topArticle["title"])."\" width='{$topArticle["width"]}' height='{$topArticle["height"]}'/>";
 				print "</div>";
 
 				$numThumbs++;
@@ -274,20 +274,20 @@ svg path{
 		<div class='topContent'>
 			<div class='pitchOuter'>
 				<div class='pitchInner'>
-					<?= wfMsg( 'apppromolanding-pitch' ) ?>
+					<?= wfMessage( 'apppromolanding-pitch' )->escaped() ?>
 				</div>
 			</div>
 			<div class='branchIoOuter'>
 				<div class='branchIoInner'>
-					<p><?= wfMsg('apppromolanding-custompitch', "<wbr><span>{$config->name}</span>") ?></p>
+					<p><?= wfMessage( 'apppromolanding-custompitch', "<wbr><span>{$config->name}</span>" )->escaped() ?></p>
 					<div class='branchIo'>
-						<div class='callToAction'><?= wfMsg( 'apppromolanding-call-to-action' ) ?></div>
+						<div class='callToAction'><?= wfMessage( 'apppromolanding-call-to-action' )->escaped() ?></div>
 						<form id='branchIoForm' method='post' onsubmit='return sendSMS();'>
-							<input type='text' name='phoneNumber' placeholder='<?= wfMsg('apppromolanding-phone-num-placeholder') ?>'/><button
-								data-send="<?= htmlspecialchars(wfMsg( 'apppromolanding-button-get' )) ?>"
-								data-sending="<?= htmlspecialchars(wfMsg( 'apppromolanding-button-sending' )) ?>"
-								data-sent="<?= htmlspecialchars(wfMsg( 'apppromolanding-button-sent' )) ?>"
-								type='submit'><?= wfMsg( 'apppromolanding-button-get' ) ?></button>
+							<input type='text' name='phoneNumber' placeholder='<?= wfMessage( 'apppromolanding-phone-num-placeholder' )->escaped() ?>'/><button
+								data-send="<?= htmlspecialchars( wfMessage( 'apppromolanding-button-get' )->escaped() ) ?>"
+								data-sending="<?= htmlspecialchars( wfMessage( 'apppromolanding-button-sending' )->escaped() ) ?>"
+								data-sent="<?= htmlspecialchars( wfMessage( 'apppromolanding-button-sent' )->escaped() ) ?>"
+								type='submit'><?= wfMessage( 'apppromolanding-button-get' )->escaped() ?></button>
 						</form>
 					</div>
 					<div class='storeButtons'>
@@ -320,17 +320,17 @@ svg path{
 	</div>
 	<div class='belowThumbs'>
 		<a class='backLink' href='<?= $mainPageUrl ?>'>
-			<?= $larrSvgCode ?><?= wfMsg( 'apppromolanding-back' ) ?>
+			<?= $larrSvgCode ?><?= wfMessage( 'apppromolanding-back' )->escaped() ?>
 		</a>
 		<div class='branchIo_alternate'>
 			<div class='branchIo'>
-				<div class='callToAction'><?= wfMsg( 'apppromolanding-call-to-action' ) ?></div>
+				<div class='callToAction'><?= wfMessage( 'apppromolanding-call-to-action' )->escaped() ?></div>
 				<form id='branchIoForm' method='post' onsubmit='return sendSMS();'>
-					<input type='text' name='phoneNumber' placeholder='<?= wfMsg('apppromolanding-phone-num-placeholder') ?>'/><button
-						data-send="<?= htmlspecialchars(wfMsg( 'apppromolanding-button-get' )) ?>"
-						data-sending="<?= htmlspecialchars(wfMsg( 'apppromolanding-button-sending' )) ?>"
-						data-sent="<?= htmlspecialchars(wfMsg( 'apppromolanding-button-sent' )) ?>"
-						type='submit'><?= wfMsg( 'apppromolanding-button-get' ) ?></button>
+					<input type='text' name='phoneNumber' placeholder='<?= wfMessage( 'apppromolanding-phone-num-placeholder' )->escaped() ?>'/><button
+						data-send="<?= htmlspecialchars( wfMessage( 'apppromolanding-button-get' )->escaped() ) ?>"
+						data-sending="<?= htmlspecialchars( wfMessage( 'apppromolanding-button-sending' )->escaped() ) ?>"
+						data-sent="<?= htmlspecialchars( wfMessage( 'apppromolanding-button-sent' )->escaped() ) ?>"
+						type='submit'><?= wfMessage( 'apppromolanding-button-get' )->escaped() ?></button>
 				</form>
 			</div>
 			<div class='storeButtons'>
@@ -366,7 +366,7 @@ svg path{
 					// Usually, this is an invalid phone number.
 					$('#branchIoForm button').text( $('#branchIoForm button').data('send') );
 					$('#branchIoForm button').attr('disabled', ''); // re-enable
-					alert("<?= wfMsg('apppromolanding-invalid-phone-num') ?>");
+					alert("<?= wfMessage( 'apppromolanding-invalid-phone-num' )->escaped() ?>");
 					console.log(err);
 				} else {
 					$('#branchIoForm button').text( $('#branchIoForm button').data('sent') );
