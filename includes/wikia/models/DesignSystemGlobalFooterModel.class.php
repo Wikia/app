@@ -289,9 +289,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 							'type' => 'translatable-text',
 							'key' => 'global-footer-site-overview-link-local-sitemap'
 						],
-						'href' => $this->getHref(
-							$this->isLocalSitemapAvailable() ? 'local-sitemap' : 'local-sitemap-fandom'
-						)
+						'href' => $this->getLocalSitemapUrl()
 					],
 					[
 						'type' => 'link-text',
@@ -699,9 +697,18 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 		return $data;
 	}
 
-	private function isLocalSitemapAvailable() {
+	private function getLocalSitemapUrl() {
 		$default = true; // $wgEnableLocalSitemapPageExt = true; in CommonSettings
-		return WikiFactory::getVarValueByName( 'wgEnableLocalSitemapPageExt' , $this->wikiId, false, $default );
+		$localSitemapAvailable = WikiFactory::getVarValueByName(
+			'wgEnableLocalSitemapPageExt', $this->wikiId, false, $default
+		);
+
+		if ( $localSitemapAvailable ) {
+			return $this->getHref( 'local-sitemap' );
+		}
+
+		// Fall back to fandom sitemap when the local one is unavailable
+		return $this->getHref( 'local-sitemap-fandom' );
 	}
 
 	private function getLicenseUrl() {
