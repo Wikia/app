@@ -11,10 +11,10 @@ class BatchRefreshLinksForTemplate extends BaseTask {
 
 	const BACKLINK_CACHE_TABLE = 'templatelinks';
 
-	/** @var integer $start */
+	/** @var integer|false $start */
 	private $start = null;
 
-	/** @var integer $end */
+	/** @var integer|false $end */
 	private $end   = null;
 
 	public function refreshTemplateLinks( $start, $end ) {
@@ -49,7 +49,7 @@ class BatchRefreshLinksForTemplate extends BaseTask {
 	}
 
 	/**
-	 * Is the task valid?
+	 * Is the task valid? start and end should be either int or false
 	 *
 	 * @return bool true on success, false on failure
 	 */

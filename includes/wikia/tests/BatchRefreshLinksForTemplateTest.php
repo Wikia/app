@@ -13,6 +13,10 @@ class BatchRefreshLinksForTemplateTest extends PHPUnit_Framework_TestCase {
 		$this->assertFalse( $task->isValidTask() );
 
 		$task = new BatchRefreshLinksForTemplate();
+		$task->setStartAndEndBoundaries( false, false );
+		$this->assertTrue( $task->isValidTask() );
+
+		$task = new BatchRefreshLinksForTemplate();
 		$task->setStartAndEndBoundaries( $start, $start );
 		$this->assertTrue( $task->isValidTask() );
 	}
