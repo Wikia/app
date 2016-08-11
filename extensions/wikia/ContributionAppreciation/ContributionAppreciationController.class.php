@@ -98,11 +98,10 @@ class ContributionAppreciationController extends WikiaController {
 
 	public static function onSendGridPostbackLogEvents( $events ) {
 		foreach ( $events as $event ) {
-			if ( $event[ 'event' ] == 'click' && strpos( $event[ 'category' ], self::EMAIL_CATEGORY ) !== false ) {
+			if ( self::isAppreciationEmailEvent( $event ) ) {
 				if ( preg_match( '/diff=([0-9]*)/', $event[ 'url' ], $diff ) ) {
 					self::sendDataToDW( 'button_clicked', $event[ 'wikia-email-city-id' ], $diff[ 1 ] );
-				}
-				elseif ( preg_match( '/rev_id=([0-9]*)/', $event[ 'url' ], $revId ) ) {
+				} elseif ( preg_match( '/rev_id=([0-9]*)/', $event[ 'url' ], $revId ) ) {
 					self::sendDataToDW( 'diff_link_clicked', $event[ 'wikia-email-city-id' ], $revId[ 1 ] );
 				}
 			}
@@ -116,6 +115,22 @@ class ContributionAppreciationController extends WikiaController {
 		}
 
 		return true;
+	}
+
+	/**
+	 * Check if event is from sendgrid hook is an appreciation email and has set
+	 * all needed fields.
+	 *
+	 * @param $event from sendgrid hook
+	 * @return bool
+	 */
+	private static function isAppreciationEmailEvent( $event ) {
+		return isset( $event[ 'event' ] ) &&
+			isset( $event[ 'category' ] ) &&
+			isset( $event[ 'url' ] ) &&
+			isset( $event[ 'wikia-email-city-id' ] ) &&
+			$event[ 'event' ] == 'click' &&
+			strpos( $event[ 'category' ], self::EMAIL_CATEGORY ) !== false;
 	}
 
 	/**
@@ -135,6 +150,7 @@ class ContributionAppreciationController extends WikiaController {
 				'?wiki_id=' . $wikiId .
 				'&email_action=' . $action .
 				'&page_id=' . $revision->getTitle()->getArticleID() .
+				'&rev_id=' . $revision->getId() .
 				'&user_id=' . $revision->getUser();
 
 			Http::get( $url );
@@ -209,7 +225,7 @@ class ContributionAppreciationController extends WikiaController {
 		if ( $revision ) {
 			$editedPageTitle = $revision->getTitle();
 			$params = [
-				'buttonLink' =>  SpecialPage::getTitleFor( 'Community' )->getFullURL( [
+				'buttonLink' => SpecialPage::getTitleFor( 'Community' )->getFullURL( [
 					'rev_id' => $revision->getId()
 				] ),
 				'targetUser' => $revision->getUserText(),
