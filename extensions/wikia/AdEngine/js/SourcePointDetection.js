@@ -35,7 +35,9 @@ define('ext.wikia.adEngine.sourcePointDetection', [
 
 		statusTracked = true;
 		sendKruxEvent(value);
-		spDetectionTime.measureDiff({}, 'end').track();
+		if (spDetectionTime) {
+			spDetectionTime.measureDiff({}, 'end').track();
+		}
 	}
 
 	function initDetection() {
@@ -43,7 +45,6 @@ define('ext.wikia.adEngine.sourcePointDetection', [
 			detectionScript = doc.createElement('script'),
 			node = doc.getElementsByTagName('script')[0];
 
-		win.ads.runtime.sp = win.ads.runtime.sp || {};
 		spDetectionTime = adTracker.measureTime('spDetection', {}, 'start');
 		spDetectionTime.track();
 
@@ -62,19 +63,21 @@ define('ext.wikia.adEngine.sourcePointDetection', [
 		detectionScript.src = context.opts.sourcePointDetectionUrl;
 		detectionScript.setAttribute('data-client-id', getClientId());
 
-		doc.addEventListener('sp.blocking', function () {
-			window.ads.runtime.sp.blocking = true;
-			trackStatusOnce('yes');
-		});
-		doc.addEventListener('sp.not_blocking', function () {
-			window.ads.runtime.sp.blocking = false;
-			trackStatusOnce('no');
-		});
-
 		log('Appending detection script to head', 'debug', logGroup);
 		node.parentNode.insertBefore(detectionScript, node);
 		detectionInitialized = true;
 	}
+
+	win.ads.runtime.sp = win.ads.runtime.sp || {};
+
+	doc.addEventListener('sp.blocking', function () {
+		win.ads.runtime.sp.blocking = true;
+		trackStatusOnce('yes');
+	});
+	doc.addEventListener('sp.not_blocking', function () {
+		win.ads.runtime.sp.blocking = false;
+		trackStatusOnce('no');
+	});
 
 	return {
 		initDetection: initDetection,

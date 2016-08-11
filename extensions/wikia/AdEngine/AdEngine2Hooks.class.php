@@ -98,7 +98,12 @@ class AdEngine2Hooks {
 		$vars['ads'] = [
 			'context' => $adContext,
 			'runtime' => [
-				'sp' => []
+				'pf' => [
+					'blocking' => null
+				],
+				'sp' => [
+					'blocking' => null
+				],
 			],
 		];
 
