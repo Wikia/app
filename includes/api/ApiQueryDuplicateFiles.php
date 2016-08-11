@@ -61,12 +61,15 @@ class ApiQueryDuplicateFiles extends ApiQueryGeneratorBase {
 
 		$this->addTables( 'image', 'i1' );
 		$this->addTables( 'image', 'i2' );
+		/* Wikia change begin */
 		$this->addFields( array(
 			'i1.img_name AS orig_name',
 			'i2.img_name AS dup_name',
+			'i2.img_user AS dup_user',
 			'i2.img_user_text AS dup_user_text',
 			'i2.img_timestamp AS dup_timestamp'
 		) );
+		/* Wikia change end */
 
 		$this->addWhere( array(
 			'i1.img_name' => array_keys( $images ),
@@ -108,11 +111,13 @@ class ApiQueryDuplicateFiles extends ApiQueryGeneratorBase {
 			if ( !is_null( $resultPageSet ) ) {
 				$titles[] = Title::makeTitle( NS_FILE, $row->dup_name );
 			} else {
+				/* Wikia change begin */
 				$r = array(
 					'name' => $row->dup_name,
-					'user' => $row->dup_user_text,
+					'user' => ( $row->dup_user > 0 ) ? User::newFromId( $row->dup_user )->getName() : $row->dup_user_text,
 					'timestamp' => wfTimestamp( TS_ISO_8601, $row->dup_timestamp )
 				);
+				/* Wikia change end */
 				$fit = $this->addPageSubItem( $images[$row->orig_name], $r );
 				if ( !$fit ) {
 					$this->setContinueEnumParameter( 'continue',
