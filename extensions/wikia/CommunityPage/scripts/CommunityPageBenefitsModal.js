@@ -25,8 +25,7 @@ define('CommunityPageBenefitsModal',
 				loader({
 					type: loader.MULTI,
 					resources: {
-						mustache: 'extensions/wikia/CommunityPage/templates/benefitsModal.mustache,' +
-							'extensions/wikia/CommunityPage/templates/inspectlet.mustache',
+						mustache: 'extensions/wikia/CommunityPage/templates/benefitsModal.mustache',
 						messages: 'CommunityPageBenefits'
 					}
 				}),
@@ -49,11 +48,7 @@ define('CommunityPageBenefitsModal',
 			var wikiTopic = nirvanaRes[0].wikiTopic,
 				allMembersCount = nirvanaRes[0].memberCount,
 				modalImageUrl = nirvanaRes[0].modalImageUrl,
-				inspectletExperimentId =  nirvanaRes[0].inspectletExperimentId,
-				image = new Image(),
-				inspectletCode =  mustache.render(loaderRes.mustache[1], {
-					inspectletExperimentId: inspectletExperimentId
-				});
+				image = new Image();
 
 			mw.messages.set(loaderRes.messages);
 
@@ -67,8 +62,7 @@ define('CommunityPageBenefitsModal',
 				exploreText: mw.message('communitypage-entrypoint-modal-explore-text', wikiTopic).plain(),
 				buttonText: mw.message('communitypage-entrypoint-modal-button-text').plain(),
 				buttonUrl: specialCommunityTitle.getUrl(),
-				benefitsImageUrl: modalImageUrl,
-				inspectletCode: inspectletCode
+				benefitsImageUrl: modalImageUrl
 			});
 
 			// wait for image to load, or show it on error
