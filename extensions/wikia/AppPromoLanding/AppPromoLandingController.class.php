@@ -11,8 +11,9 @@ class AppPromoLandingController extends WikiaController {
 	private static $extraBodyClasses = []; // TODO: REMOVE - ONLY DURING THE TEMPORARY COPYING OF OASISCONTROLLER
 
 	const RESPONSE_OK = 200;
-	const APP_CONFIG_SERVICE_URL = "http://prod.deploypanel.service.sjc.consul/api/app-configuration/";
-	const BRANCH_API_URL = "https://api.branch.io/v1/app/";
+	const APP_CONFIG_SERVICE_URL = 'http://prod.deploypanel.service.sjc.consul/api/app-configuration/';
+	const BRANCH_API_URL = 'https://api.branch.io/v1/app/';
+	const PROMO_PAGE_TITLE = 'Community_App';
 
 	// Settings for the background image-grid.
 	const MAX_TRENDING_ARTICLES = 40; // we need about 33 images, and not all articles have images.
@@ -21,8 +22,8 @@ class AppPromoLandingController extends WikiaController {
 	const IMG_HEIGHT = 184; // sizes directly from Zeplin.io mockup.
 	const IMG_WIDTH = 184;
 
-	protected static $CACHE_KEY = "mobileAppConfigs";
-	protected static $CACHE_KEY_BRANCH = "branchioBranchKey";
+	protected static $CACHE_KEY = 'mobileAppConfigs';
+	protected static $CACHE_KEY_BRANCH = 'branchioBranchKey';
 	protected static $CACHE_KEY_VERSION = 0.1;
 	protected static $CACHE_KEY_VERSION_BRANCH = 0.1;
 	protected static $CACHE_EXPIRY = 86400;
@@ -31,10 +32,10 @@ class AppPromoLandingController extends WikiaController {
 	 * Render HTML for whole App Promo Landing page.
 	 */
 	public function executeIndex() {
-		wfProfileIn(__METHOD__);
+		wfProfileIn( __METHOD__ );
 
 		// Since this "Community_App" article won't be found, we need to manually say it's okay so that it's not a 404.
-		$this->response->setCode(self::RESPONSE_OK);
+		$this->response->setCode( self::RESPONSE_OK );
 		
 		// Pull in the app-configuration (has data for all apps)
 		$appConfig = [];
@@ -62,17 +63,11 @@ class AppPromoLandingController extends WikiaController {
 
 		}
 
-		$config = $this->getConfigForWiki($appConfig, $this->wg->CityId);
+		$config = $this->getConfigForWiki( $appConfig, $this->wg->CityId );
 
 		// Create the direct-link URLs for the apps on each store.
-		$this->androidUrl = $this->getAndroidUrl($config);
-		$this->iosUrl = $this->getIosUrl($config);
-
-		// Inject the JS
-		$srcs = AssetsManager::getInstance()->getGroupCommonURL( 'app_promo_landing_js' );
-		foreach( $srcs as $src ) {
-			$this->wg->Out->addScript( "<script type=\"{$wgJsMimeType}\" src=\"{$src}\"></script>" );
-		}
+		$this->androidUrl = $this->getAndroidUrl( $config );
+		$this->iosUrl = $this->getIosUrl( $config );
 
 		// Inject the JS
 		$srcs = AssetsManager::getInstance()->getGroupCommonURL( 'app_promo_landing_js' );
@@ -81,16 +76,16 @@ class AppPromoLandingController extends WikiaController {
 		}
 
 		// render the custom App Promo Landing body (this includes the nav bar and the custom content).
-		$body = F::app()->renderView('AppPromoLanding', 'Content', [ ]);
+		$body = F::app()->renderView( 'AppPromoLanding', 'Content', [ ] );
 
 		// page has one column
-		OasisController::addBodyClass('oasis-one-column');
+		OasisController::addBodyClass( 'oasis-one-column' );
 
 		// adding 'appPromo' class as a CSS helper
-		OasisController::addBodyClass('appPromo');
+		OasisController::addBodyClass( 'appPromo' );
 
 		// temporary grid transition code, remove after transition
-		OasisController::addBodyClass('WikiaGrid');
+		OasisController::addBodyClass( 'WikiaGrid' );
 
 		// render Oasis module to the 'html' var which the AppPromoLanding_index template will just dump out.
 		$this->html = F::app()->renderView( 'Oasis', 'Index', [ 'body' => $body ] );
@@ -102,18 +97,18 @@ class AppPromoLandingController extends WikiaController {
 	 * This part of the controller is responsible for dumping the "body" of the page which
 	 * will include both the standard Wikia GlobalNavigation
 	 */
-	public function executeContent($params){
+	public function executeContent( $params ){
 		wfProfileIn( __METHOD__ );
 
 		// render global and user navigation
 		$this->header = F::app()->renderView( 'GlobalNavigation', 'index' );
 
 		// Get the config for this app, from the service.
-		$this->config = AppPromoLandingController::getConfigForWiki($this->wg->CityId);
+		$this->config = AppPromoLandingController::getConfigForWiki( $this->wg->CityId );
 
 		// Create the direct-link URLs for the apps on each store.
-		$this->androidUrl = $this->getAndroidUrl($this->config);
-		$this->iosUrl = $this->getIosUrl($this->config);
+		$this->androidUrl = $this->getAndroidUrl( $this->config );
+		$this->iosUrl = $this->getIosUrl( $this->config );
 
 		//Fetch Trending Articles images to use as the image-grid background.
 		try {
@@ -153,14 +148,14 @@ class AppPromoLandingController extends WikiaController {
 
 		// Not all articles will have images, so we may have more or less than we need. Here,
 		// we will right-size the array.
-		$numThumbsNeeded = (self::THUMBS_NUM_ROWS * self::THUMBS_PER_ROW);
-		if(count($trendingArticles) > $numThumbsNeeded){
+		$numThumbsNeeded = ( self::THUMBS_NUM_ROWS * self::THUMBS_PER_ROW );
+		if(count( $trendingArticles ) > $numThumbsNeeded){
 			$trendingArticles = array_slice($trendingArticles, 0, $numThumbsNeeded);
-		} else if(count($trendingArticles) < $numThumbsNeeded){
+		} else if(count( $trendingArticles ) < $numThumbsNeeded ){
 			// There weren't enough thumbs, so fill the remainder of the array with duplicates
 			// that are selected in a random order.
-			while(count($trendingArticles) < $numThumbsNeeded){
-				$trendingArticles[] = $trendingArticles[ rand(0, count($trendingArticles)-1) ];
+			while(count( $trendingArticles ) < $numThumbsNeeded ){
+				$trendingArticles[] = $trendingArticles[ rand(0, count( $trendingArticles )-1) ];
 			}
 		}
 		
@@ -179,7 +174,7 @@ class AppPromoLandingController extends WikiaController {
 				} else {
 					$branchData = json_decode( $response );
 					$this->branchKey = $branchData->branch_key;
-					if(!empty($this->branchKey)){
+					if(!empty( $this->branchKey )){
 						// Request was successful. Cache the branch_key in memcached (faster than going over network).
 						F::app()->wg->memc->set( $branchKeyMemcKey, $this->branchKey, static::$CACHE_EXPIRY );
 					}
@@ -228,7 +223,7 @@ class AppPromoLandingController extends WikiaController {
 	 * @return stdClass object containing the config for the given wiki. If
 	 *         there is no app configured for the given wiki, then null is returned.
 	 */
-	static private function getConfigForWiki($cityId){
+	static private function getConfigForWiki( $cityId ){
 		wfProfileIn( __METHOD__ );
 		$desiredConfig = null;
 
@@ -244,7 +239,7 @@ class AppPromoLandingController extends WikiaController {
 				}
 			}
 			
-			if(!empty($desiredConfig)){
+			if(!empty( $desiredConfig )){
 				break;
 			}
 		}
@@ -294,7 +289,7 @@ class AppPromoLandingController extends WikiaController {
 	 *                 from APP_CONFIG_SERVICE_URL.
 	 * @return string containing the URL of the app for android devices (eg: on Google Play Store).
 	 */
-	private function getAndroidUrl($config){
+	private function getAndroidUrl( $config ){
 		return "https://play.google.com/store/apps/details?id={$config->android_release}&utm_source=General&utm_medium=Site&utm_campaign=AppPromoLanding";
 	}
 	
@@ -303,7 +298,7 @@ class AppPromoLandingController extends WikiaController {
 	 *                 from APP_CONFIG_SERVICE_URL.
 	 * @return string containing the URL of the app for iOS devices (on the iTunes App Store).
 	 */
-	private function getIosUrl($config){
+	private function getIosUrl( $config ){
 		return "https://itunes.apple.com/us/app/id{$config->ios_release}?utm_source=General&utm_medium=Site&utm_campaign=AppPromoLanding";
 	}
 
@@ -314,12 +309,12 @@ class AppPromoLandingController extends WikiaController {
 	 */
 	public static function onOutputPageBeforeHTML( OutputPage &$out, &$text ){
 		// Only steal this page if the wiki has an app configured.
-		$config = AppPromoLandingController::getConfigForWiki(F::app()->wg->CityId);
+		$config = AppPromoLandingController::getConfigForWiki( F::app()->wg->CityId );
 		if($config !== null){
 			$title = $out->getTitle();
 			$origTitle = $title->getDBkey();
 			
-			if($origTitle == "Community_App"){
+			if($origTitle == self::PROMO_PAGE_TITLE){
 				Wikia::setVar( 'OasisEntryControllerName', 'AppPromoLanding' );
 			}
 		}

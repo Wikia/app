@@ -5,7 +5,7 @@
 * @addtogroup Languages
 */
 
-$messages = array();
+$messages = [];
 
 $messages['en'] = array(
 	'apppromolanding-desc' => 'App Promo Landing Screen',
