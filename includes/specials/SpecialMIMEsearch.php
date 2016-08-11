@@ -43,6 +43,7 @@ class MIMEsearchPage extends QueryPage {
 	}
 
 	public function getQueryInfo() {
+		/* Wikia change begin */
 		return array(
 			'tables' => array( 'image' ),
 			'fields' => array( "'" . NS_FILE . "' AS namespace",
@@ -51,11 +52,13 @@ class MIMEsearchPage extends QueryPage {
 					'img_size',
 					'img_width',
 					'img_height',
+					'img_user',
 					'img_user_text',
 					'img_timestamp' ),
 			'conds' => array( 'img_major_mime' => $this->major,
 					'img_minor_mime' => $this->minor )
 		);
+		/* Wikia change end */
 	}
 
 	function execute( $par ) {
@@ -100,6 +103,11 @@ class MIMEsearchPage extends QueryPage {
 			$lang->formatNum( $result->img_width ),
 			$lang->formatNum( $result->img_height )
 		) );
+		/* Wikia change begin */
+		if ( $result->img_user > 0 ) {
+			$result->img_user_text = User::newFromId( $result->img_user )->getName();
+		}
+		/* Wikia change end */
 		$user = Linker::link( Title::makeTitle( NS_USER, $result->img_user_text ), htmlspecialchars( $result->img_user_text ) );
 		$time = htmlspecialchars( $lang->timeanddate( $result->img_timestamp ) );
 
