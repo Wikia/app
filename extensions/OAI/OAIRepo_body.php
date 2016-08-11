@@ -912,15 +912,22 @@ class WikiOAIRecord extends OAIRecord {
 				global $wgServer;
 				$url = $wgServer . $url;
 			}
+			/* Wikia change begin */
+			if ( $imageRow->img_user > 0 ) {
+				$username = User::newFromId( $imageRow->img_user )->getName();
+			} else {
+				$username = $imageRow->img_user_text;
+			}
 			return implode( "\n", array(
 				"<upload>",
 				oaiTag( 'timestamp', array(), wfTimestamp( TS_ISO_8601, $imageRow->img_timestamp ) ),
-				$this->renderContributor( $imageRow->img_user, $imageRow->img_user_text ),
+				$this->renderContributor( $imageRow->img_user, $username ),
 				oaiTag( 'comment',   array(), $imageRow->img_description ),
 				oaiTag( 'filename',  array(), $imageRow->img_name ),
 				oaiTag( 'src',       array(), $url ),
 				oaiTag( 'size',      array(), $imageRow->img_size ),
 				"</upload>\n" ) );
+			/* Wikia change end */
 		} else {
 			return '';
 		}
