@@ -11,7 +11,8 @@ define('ext.wikia.recirculation.helpers.fandom', [
 		var defaults = {
 				limit: 3,
 				type: 'recent_popular',
-				ignoreError: false
+				ignoreError: false,
+				fill: false
 			},
 			options = $.extend({}, defaults, config);
 
@@ -26,7 +27,9 @@ define('ext.wikia.recirculation.helpers.fandom', [
 				scriptPath: w.wgCdnApiUrl,
 				data: {
 					type: options.type,
-					cityId: w.wgCityId
+					cityId: w.wgCityId,
+					limit: options.limit,
+					fill: options.fill
 				},
 				callback: function(data) {
 					data = formatData(data);

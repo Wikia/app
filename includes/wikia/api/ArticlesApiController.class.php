@@ -90,25 +90,6 @@ class ArticlesApiController extends WikiaApiController {
 		);
 	}
 
-	/**
-	 * Validate the category name given via URL
-	 *
-	 * @param $category
-	 * @return mixed|Title
-	 * @throws InvalidParameterApiException
-	 */
-	public static function validateCategoryName($category)
-	{
-		$category = self::resolveCategoryName($category);
-
-		if (is_null($category)) {
-			wfProfileOut(__METHOD__);
-			throw new InvalidParameterApiException(self::PARAMETER_CATEGORY);
-		}
-
-		return $category;
-	}
-
 	public static function getMetadataCacheTime( $omitExpandParam = false ) {
 		$app = F::app();
 		if ( !empty( $app->wg->EnablePOIExt ) &&
@@ -497,15 +478,18 @@ class ArticlesApiController extends WikiaApiController {
 	public function getList() {
 		wfProfileIn( __METHOD__ );
 
-		$category = self::validateCategoryName(
-			$this->request->getVal( self::PARAMETER_CATEGORY, null )
-		);
-		$namespaces = $this->request->getArray( self::PARAMETER_NAMESPACES, null );
+		$category = $this->request->getVal( self::PARAMETER_CATEGORY, null );
+		$namespaces = $this->request->getArray( self::PARAMETER_NAMESPACES, [] );
 		$limit = $this->request->getVal( 'limit', self::ITEMS_PER_BATCH );
 		$offset = $this->request->getVal( 'offset', '' );
 		$expand = $this->request->getBool( static::PARAMETER_EXPAND, false );
 
 		if ( !empty( $category ) ) {
+			if ( ! ( $category = self::resolveCategoryName( $category ) ) ) {
+				wfProfileOut( __METHOD__ );
+				throw new InvalidParameterApiException( self::PARAMETER_CATEGORY );
+			}
+
 			$namespaces = implode( '|', self::validateNamespaces( $namespaces ) );
 
 			/**
@@ -956,10 +940,13 @@ class ArticlesApiController extends WikiaApiController {
 		return $category;
 	}
 
+
 	/**
-	 * @param Array $namespaces
+	 * @param      $namespaces
+	 * @param null $caller
 	 *
-	 * @return Array
+	 * @return mixed
+	 * @throws InvalidParameterApiException
 	 */
 	static private function processNamespaces( $namespaces, $caller = null ) {
 		if ( !empty( $namespaces ) ) {
