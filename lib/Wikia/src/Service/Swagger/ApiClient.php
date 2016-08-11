@@ -24,7 +24,7 @@ class ApiClient extends \Swagger\Client\ApiClient {
 		$this->serviceName = $serviceName;
 	}
 
-	public function callApi($resourcePath, $method, $queryParams, $postData, $headerParams, $responseType=null) {
+	public function callApi($resourcePath, $method, $queryParams, $postData, $headerParams, $responseType=null, $endpointPath=null) {
 		$start = microtime(true);
 		$response = $exception = null;
 		$code = 200;
@@ -33,7 +33,7 @@ class ApiClient extends \Swagger\Client\ApiClient {
 		WikiaTracer::instance()->setRequestHeaders( $headerParams, true );
 
 		try {
-			$response = parent::callApi($resourcePath, $method, $queryParams, $postData, $headerParams, $responseType);
+			$response = parent::callApi($resourcePath, $method, $queryParams, $postData, $headerParams, $responseType, $endpointPath);
 		} catch (ApiException $e) {
 			$exception = $e;
 			$code = $e->getCode();
