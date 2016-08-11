@@ -35,15 +35,29 @@ define('ext.wikia.adEngine.sourcePointDetection', [
 
 		statusTracked = true;
 		sendKruxEvent(value);
-		if (spDetectionTime) {
-			spDetectionTime.measureDiff({}, 'end').track();
-		}
+		spDetectionTime.measureDiff({}, 'end').track();
+	}
+
+	function loadLibrary(context) {
+		var detectionScript = doc.createElement('script'),
+			node = doc.getElementsByTagName('script')[0];
+
+		spDetectionTime = adTracker.measureTime('spDetection', {}, 'start');
+		spDetectionTime.track();
+		log('init', 'debug', logGroup);
+
+		detectionScript.async = true;
+		detectionScript.type = 'text/javascript';
+		detectionScript.src = context.opts.sourcePointDetectionUrl;
+		detectionScript.setAttribute('data-client-id', getClientId());
+
+		log('Appending detection script to head', 'debug', logGroup);
+		node.parentNode.insertBefore(detectionScript, node);
+		detectionInitialized = true;
 	}
 
 	function initDetection() {
-		var context = adContext.getContext(),
-			detectionScript = doc.createElement('script'),
-			node = doc.getElementsByTagName('script')[0];
+		var context = adContext.getContext();
 
 		spDetectionTime = adTracker.measureTime('spDetection', {}, 'start');
 		spDetectionTime.track();
@@ -58,27 +72,22 @@ define('ext.wikia.adEngine.sourcePointDetection', [
 		}
 		log('init', 'debug', logGroup);
 
-		detectionScript.async = true;
-		detectionScript.type = 'text/javascript';
-		detectionScript.src = context.opts.sourcePointDetectionUrl;
-		detectionScript.setAttribute('data-client-id', getClientId());
+		win.ads.runtime = win.ads.runtime || {};
+		win.ads.runtime.sp = win.ads.runtime.sp || {};
 
-		log('Appending detection script to head', 'debug', logGroup);
-		node.parentNode.insertBefore(detectionScript, node);
-		detectionInitialized = true;
+		doc.addEventListener('sp.blocking', function () {
+			win.ads.runtime.sp.blocking = true;
+			trackStatusOnce('yes');
+		});
+		doc.addEventListener('sp.not_blocking', function () {
+			win.ads.runtime.sp.blocking = false;
+			trackStatusOnce('no');
+		});
+
+		if (!context.opts.sourcePointRecovery) {
+			loadLibrary(context);
+		}
 	}
-
-	win.ads.runtime = win.ads.runtime || {};
-	win.ads.runtime.sp = win.ads.runtime.sp || {};
-
-	doc.addEventListener('sp.blocking', function () {
-		win.ads.runtime.sp.blocking = true;
-		trackStatusOnce('yes');
-	});
-	doc.addEventListener('sp.not_blocking', function () {
-		win.ads.runtime.sp.blocking = false;
-		trackStatusOnce('no');
-	});
 
 	return {
 		initDetection: initDetection,
