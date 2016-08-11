@@ -64,9 +64,7 @@ require([
 		// Recovery
 		recoveryHelper.initEventQueue();
 
-		if (!context.opts.sourcePointRecovery) {
-			sourcePoint.initDetection();
-		}
+		sourcePoint.initDetection();
 
 		if (context.opts.pageFairDetection) {
 			pageFair.initDetection(context);

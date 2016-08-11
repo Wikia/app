@@ -74,10 +74,12 @@ define('ext.wikia.adEngine.sourcePointDetection', [
 		doc.addEventListener('sp.blocking', function () {
 			win.ads.runtime.sp.blocking = true;
 			trackStatusOnce('yes');
+			log('sp.blocking', 'info', logGroup);
 		});
 		doc.addEventListener('sp.not_blocking', function () {
 			win.ads.runtime.sp.blocking = false;
 			trackStatusOnce('no');
+			log('sp.not_blocking', 'info', logGroup);
 		});
 
 		if (!context.opts.sourcePointRecovery) {
