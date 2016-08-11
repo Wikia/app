@@ -279,14 +279,14 @@ svg path{
 			</div>
 			<div class='branchIoOuter'>
 				<div class='branchIoInner'>
-					<p><?= wfMessage( 'apppromolanding-custompitch', "<wbr><span>{$config->name}</span>" )->plain() ?></p>
+					<p><?= wfMessage( 'apppromolanding-custompitch', "<wbr><span>{$config->name}</span>" )->rawParams()->escaped() ?></p>
 					<div class='branchIo'>
 						<div class='callToAction'><?= wfMessage( 'apppromolanding-call-to-action' )->escaped() ?></div>
 						<form id='branchIoForm' method='post' onsubmit='return sendSMS();'>
 							<input type='text' name='phoneNumber' placeholder='<?= wfMessage( 'apppromolanding-phone-num-placeholder' )->escaped() ?>'/><button
-								data-send="<?= htmlspecialchars( wfMessage( 'apppromolanding-button-get' )->escaped() ) ?>"
-								data-sending="<?= htmlspecialchars( wfMessage( 'apppromolanding-button-sending' )->escaped() ) ?>"
-								data-sent="<?= htmlspecialchars( wfMessage( 'apppromolanding-button-sent' )->escaped() ) ?>"
+								data-send="<?= wfMessage( 'apppromolanding-button-get' )->escaped() ?>"
+								data-sending="<?= wfMessage( 'apppromolanding-button-sending' )->escaped() ?>"
+								data-sent="<?= wfMessage( 'apppromolanding-button-sent' )->escaped() ?>"
 								type='submit'><?= wfMessage( 'apppromolanding-button-get' )->escaped() ?></button>
 						</form>
 					</div>
@@ -327,9 +327,9 @@ svg path{
 				<div class='callToAction'><?= wfMessage( 'apppromolanding-call-to-action' )->escaped() ?></div>
 				<form id='branchIoForm' method='post' onsubmit='return sendSMS();'>
 					<input type='text' name='phoneNumber' placeholder='<?= wfMessage( 'apppromolanding-phone-num-placeholder' )->escaped() ?>'/><button
-						data-send="<?= htmlspecialchars( wfMessage( 'apppromolanding-button-get' )->escaped() ) ?>"
-						data-sending="<?= htmlspecialchars( wfMessage( 'apppromolanding-button-sending' )->escaped() ) ?>"
-						data-sent="<?= htmlspecialchars( wfMessage( 'apppromolanding-button-sent' )->escaped() ) ?>"
+						data-send="<?= wfMessage( 'apppromolanding-button-get' )->escaped() ?>"
+						data-sending="<?= wfMessage( 'apppromolanding-button-sending' )->escaped() ?>"
+						data-sent="<?= wfMessage( 'apppromolanding-button-sent' )->escaped() ?>"
 						type='submit'><?= wfMessage( 'apppromolanding-button-get' )->escaped() ?></button>
 				</form>
 			</div>
