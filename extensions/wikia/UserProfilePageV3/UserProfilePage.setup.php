@@ -51,6 +51,11 @@ $wgAutoloadClasses['UserWikisFilterRestrictedDecorator'] = $dir . '/filters/User
 $wgAutoloadClasses['UserWikisFilterPrivateDecorator'] = $dir . '/filters/UserWikisFilterPrivateDecorator.class.php';
 
 /**
+ * helpers - discussion
+ */
+$wgAutoloadClasses['UserIdentityBoxDiscussionInfo'] = $dir . '/UserIdentityBoxDiscussionInfo.class.php';
+
+/**
  * hooks
  */
 $wgAutoloadClasses['UserProfilePageHooks'] =  $dir . '/UserProfilePageHooks.class.php';
