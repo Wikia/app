@@ -356,7 +356,7 @@ class LocalFile extends File {
 		 * @author Mix
 		 * @see SUS-809
 		 */
-		Wikia\Logger\WikiaLogger::instance()->debugSampled(
+		\Wikia\Logger\WikiaLogger::instance()->debugSampled(
 			0.01,
 			'SUS-809',
 			[ 'method' => __METHOD__, 'exception' => new Exception() ]
