@@ -1,5 +1,7 @@
 <?php
 
+use Wikia\Logger\WikiaLogger;
+
 class ScribeEventProducerController {
 
 	static public function onUploadComplete( UploadBase $oForm ) {
@@ -38,12 +40,19 @@ class ScribeEventProducerController {
 		return true;
 	}
 
-	static public function onDeleteComplete( &$oPage, &$oUser, $reason, $page_id ) {
+	static public function onArticleDeleteComplete( &$oPage, &$oUser, $reason, $page_id ) {
 		wfProfileIn( __METHOD__ );
+
+		WikiaLogger::instance()->debug( "SUS-761::onArticleDeleteComplete", [
+			'page_id' => $page_id
+		] );
 
  		$oScribeProducer = new ScribeEventProducer( 'delete' );
 		if ( is_object( $oScribeProducer ) ) {
 			if ( $oScribeProducer->buildRemovePackage ( $oPage, $oUser, $page_id ) ) {
+
+				WikiaLogger::instance()->debug( "SUS-761::onArticleDeleteComplete LOG");
+
 				$oScribeProducer->sendLog();
 			}
 		}

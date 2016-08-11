@@ -7,7 +7,7 @@ $wgAutoloadClasses['ScribeEventProducer'] =  $dir . '/ScribeEventProducer.class.
 $wgAutoloadClasses['ScribeEventProducerController'] =  $dir . '/ScribeEventProducerController.class.php';
 
 $wgHooks['ArticleSaveComplete'][] = 'ScribeEventProducerController::onSaveComplete';
-$wgHooks['ArticleDeleteComplete'][] = 'ScribeEventProducerController::onDeleteComplete';
+$wgHooks['ArticleDeleteComplete'][] = 'ScribeEventProducerController::onArticleDeleteComplete';
 $wgHooks['ArticleUndelete'][] = 'ScribeEventProducerController::onArticleUndelete';
 $wgHooks['TitleMoveComplete'][] = 'ScribeEventProducerController::onMoveComplete'; 
 $wgHooks['UploadComplete'][] = 'ScribeEventProducerController::onUploadComplete';

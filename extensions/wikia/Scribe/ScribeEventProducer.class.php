@@ -132,6 +132,8 @@ class ScribeEventProducer {
 	}
 
 	public function buildRemovePackage ( $oPage, $oUser, $page_id ) {
+		global $wgCityId;
+
 		wfProfileIn( __METHOD__ );
 
 		if ( !is_object( $oPage ) ) {
@@ -147,6 +149,28 @@ class ScribeEventProducer {
 		}
 
 		$oTitle = $oPage->getTitle();
+
+		if ( $oTitle instanceof Title && $oTitle->getNamespace() == NS_FILE ) {
+			$oLocalFile = wfLocalFile( $oTitle );
+			if ( $oLocalFile instanceof File ) {
+				// Remove Local file from the queue
+
+				\Wikia\Logger\WikiaLogger::instance()->info( 'ScribeEventProducer::buildRemovePackage', [
+					'oTitle' => $oTitle,
+					'oFile' => $oLocalFile,
+				] );
+				$task = new \Wikia\Tasks\Tasks\ImageReviewTask();
+				$task->call('deleteFromQueue', [
+					'wiki_id' => $wgCityId,
+					'page_id' => $page_id,
+				] );
+				$task->prioritize();
+				$task->queue();
+
+				wfProfileOut( __METHOD__ );
+				return 0;
+			}
+		}
 
 		$table = 'recentchanges';
 		$what = array( 'rc_logid' );

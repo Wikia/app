@@ -94,6 +94,10 @@ class ImageReviewTask extends BaseTask {
 				'page_id' => $aRow['page_id'],
 			];
 
+			WikiaLogger::instance()->debug( "SUS-761::deleteFromQueue", [
+				'aImageData' => $aImageData
+			] );
+
 			$oDB->delete(
 				'image_review',
 				$aImageData,
