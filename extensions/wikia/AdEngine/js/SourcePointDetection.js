@@ -42,10 +42,6 @@ define('ext.wikia.adEngine.sourcePointDetection', [
 		var detectionScript = doc.createElement('script'),
 			node = doc.getElementsByTagName('script')[0];
 
-		spDetectionTime = adTracker.measureTime('spDetection', {}, 'start');
-		spDetectionTime.track();
-		log('init', 'debug', logGroup);
-
 		detectionScript.async = true;
 		detectionScript.type = 'text/javascript';
 		detectionScript.src = context.opts.sourcePointDetectionUrl;
@@ -59,9 +55,6 @@ define('ext.wikia.adEngine.sourcePointDetection', [
 	function initDetection() {
 		var context = adContext.getContext();
 
-		spDetectionTime = adTracker.measureTime('spDetection', {}, 'start');
-		spDetectionTime.track();
-
 		if (!context.opts.sourcePointDetection && !context.opts.sourcePointDetectionMobile) {
 			log(['init', 'SourcePoint detection disabled'], 'debug', logGroup);
 			return;
@@ -70,6 +63,9 @@ define('ext.wikia.adEngine.sourcePointDetection', [
 			log(['init', 'SourcePoint detection already initialized'], 'debug', logGroup);
 			return;
 		}
+
+		spDetectionTime = adTracker.measureTime('spDetection', {}, 'start');
+		spDetectionTime.track();
 		log('init', 'debug', logGroup);
 
 		win.ads.runtime = win.ads.runtime || {};
