@@ -53,7 +53,7 @@ $wgAutoloadClasses['UserWikisFilterPrivateDecorator'] = $dir . '/filters/UserWik
 /**
  * helpers - discussion
  */
-$wgAutoloadClasses['UserIdentityBoxDiscussion'] = $dir . '/UserIdentityBoxDiscussionInfo.class.php';
+$wgAutoloadClasses['UserIdentityBoxDiscussionInfo'] = $dir . '/UserIdentityBoxDiscussionInfo.class.php';
 
 /**
  * hooks

@@ -1,0 +1,66 @@
+@import 'skins/shared/color';
+
+.appreciation-banner {
+	background-color: mix($color-buttons, $color-body, 10%);
+	color: $color-text;
+	font-size: 14px;
+
+	.msg {
+		padding: 16px;
+	}
+
+	a {
+		color: $color-links;
+	}
+
+	.thumbs-up-svg {
+		float: left;
+
+		.thumbs-up-icon {
+			fill: $color-buttons;
+			height: 48px;
+			object-fit: contain;
+			padding: 24px;
+			width: 48px;
+		}
+	}
+
+	.banner-body {
+		margin-left: 80px;
+
+		h4 {
+			font-size: 18px;
+			font-weight: bold;
+			line-height: 18px;
+			margin-bottom: 12px;
+		}
+
+		.message {
+			line-height: 20px;
+			a {
+				font-weight: bold;
+				text-transform: uppercase;
+				text-decoration: none;
+			}
+		}
+	}
+
+	.message:nth-of-type(n+3) {
+		display: none;
+	}
+
+	.expand-link {
+		display: block;
+		margin-top: 12px;
+	}
+
+	&.expanded {
+		.message:nth-of-type(n+3) {
+			display: block;
+		}
+
+		.expand-link {
+			display: none;
+		}
+	}
+}
