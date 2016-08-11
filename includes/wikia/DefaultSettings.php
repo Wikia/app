@@ -1330,13 +1330,6 @@ $wgAdDriverDelayBelowTheFold = true;
 $wgAdDriverEnableInvisibleHighImpactSlot = true;
 
 /**
- * @name $wgAdDriverMobileTransitionInterstitialCountries
- * Enables Mercury Interstitial inside INVISIBLE_HIGH_IMPACT_2 on transition.
- * Works only when $wgAdDriverEnableInvisibleHighImpact2Slot is set to true/current geo.
- */
-$wgAdDriverMobileTransitionInterstitialCountries = true;
-
-/**
  * @name $wgAdDriverUseAdsAfterInfobox
  * Enable new mobile_in_content slot after infobox placement
  */
@@ -1818,6 +1811,14 @@ $wgPaidAssetDropConfig = false;
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverHighImpact2SlotCountries = null;
+
+/**
+ * @name $wgAdDriverMobileTransitionInterstitialCountries
+ * Enables Mercury Interstitial inside INVISIBLE_HIGH_IMPACT_2 on transition.
+ * Works only when $wgAdDriverHighImpact2SlotCountries is set to true/current geo.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverMobileTransitionInterstitialCountries = null;
 
 /**
  * @name $wgAdDriverIncontentLeaderboardSlotCountries
