@@ -68,6 +68,7 @@ define('ext.wikia.adEngine.sourcePointDetection', [
 		detectionInitialized = true;
 	}
 
+	win.ads.runtime = win.ads.runtime || {};
 	win.ads.runtime.sp = win.ads.runtime.sp || {};
 
 	doc.addEventListener('sp.blocking', function () {
