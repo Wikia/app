@@ -363,7 +363,7 @@ class PartnerFeed extends SpecialPage {
 		$dbw = wfGetDB( DB_SLAVE );
 
 		$res = $dbw->select( 'image',
-				[ "img_name", "img_user_text", "img_size", "img_width", "img_height" ],
+				[ "img_name", "img_user", "img_user_text", "img_size", "img_width", "img_height" ],
 				[
 					"img_media_type != 'VIDEO'",
 					"img_width > 32",
@@ -396,7 +396,7 @@ class PartnerFeed extends SpecialPage {
 				'description' => $row->img_name,
 				'url' => $tmpTitle->getFullURL(),
 				'date' => $image->getTimestamp(),
-				'author' => $row->img_user_text,
+				'author' => ( $row->img_user > 0 ) ? User::newFromId( $row->img_user )->getName() : $row->img_user_text,
 				'otherTags' => [
 						'image' => $testImage
 				]
