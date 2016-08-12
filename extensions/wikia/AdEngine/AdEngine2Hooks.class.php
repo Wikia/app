@@ -98,7 +98,7 @@ class AdEngine2Hooks {
 		$vars['ads'] = [
 			'context' => $adContext,
 			'runtime' => [
-				'sp' => []
+				'disableBtf' => false,
 			],
 		];
 
