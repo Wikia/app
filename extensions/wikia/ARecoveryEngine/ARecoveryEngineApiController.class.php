@@ -26,6 +26,7 @@ class ARecoveryEngineApiController extends WikiaController {
 		$resourceLoaderContext = new ResourceLoaderContext( new ResourceLoader(), new FauxRequest() );
 		$this->response->setVal( 'code', $resourceLoader->getScript( $resourceLoaderContext ) );
 		$this->response->setVal( 'domain', F::app()->wg->server );
+		$this->response->setVal( 'cs_endpoint', ResourceLoaderAdEngineSourcePointCSDelivery::CS_ENDPOINT );
 	}
 
 	public function getLogInfo() {

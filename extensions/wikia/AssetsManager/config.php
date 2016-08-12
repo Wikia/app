@@ -46,7 +46,6 @@ $config['adengine2_desktop_js'] = array(
 		'//extensions/wikia/AdEngine/js/AdEngine2.js',
 		'//extensions/wikia/AdEngine/js/AdEngineRunner.js',
 		'//extensions/wikia/AdEngine/js/AdLogicDartSubdomain.js',
-		'//extensions/wikia/AdEngine/js/AdLogicHighValueCountry.js',
 		'//extensions/wikia/AdEngine/js/AdLogicPageDimensions.js',
 		'//extensions/wikia/AdEngine/js/AdLogicPageParams.js',
 		'//extensions/wikia/AdEngine/js/AdLogicPageViewCounter.js',
@@ -282,6 +281,7 @@ $config['oasis_noads_extensions_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		'#group_bucky_js',
+		'#group_design_system_js',
 		'//resources/wikia/libraries/jquery/ellipses.js',
 		'//extensions/wikia/CreatePage/js/CreatePage.js',
 		'//extensions/wikia/VideoHandlers/js/VideoBootstrap.js',
@@ -2090,6 +2090,15 @@ $config['global_footer_js'] = array(
 	)
 );
 
+/** DesignSystem extension */
+$config['design_system_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/DesignSystem/scripts/DesignSystemGlobalFooterTracking.js'
+	]
+];
+
 /** CorporateFooter extension */
 $config['corporate_footer_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
@@ -3010,6 +3019,37 @@ $config['design_system_scss'] = [
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => [ 'oasis' ],
 	'assets' => [
-		'//extensions/wikia/DesignSystem/bower_components/design-system/dist/styles.scss'
+		'//extensions/wikia/DesignSystem/bower_components/design-system/dist/styles.scss',
+		'//extensions/wikia/DesignSystem/styles/design-system.scss'
 	]
+];
+
+$config['contribution_appreciation_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/ContributionAppreciation/scripts/ContributionAppreciation.js'
+	]
+];
+
+$config['contribution_appreciation_user_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/ContributionAppreciation/scripts/UserContributionAppreciation.js'
+	]
+];
+
+$config['contribution_appreciation_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'assets' => [
+		'//extensions/wikia/ContributionAppreciation/styles/ContributionAppreciation.scss',
+	],
+];
+
+$config['contribution_appreciation_user_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'assets' => [
+		'//extensions/wikia/ContributionAppreciation/styles/UserContributionAppreciation.scss',
+	],
 ];

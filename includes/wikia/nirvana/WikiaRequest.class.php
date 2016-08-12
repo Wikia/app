@@ -293,7 +293,7 @@ class WikiaRequest implements Wikia\Interfaces\IRequest {
 	 * @return mixed
 	 * @throws BadRequestException
 	 */
-	public function isValidWriteRequest( \User $user ) {
+	public function assertValidWriteRequest( \User $user ) {
 		if ( !$this->wasPosted() || !$user->matchEditToken( $this->getVal( 'token' ) ) ) {
 			throw new BadRequestException( 'Request must be POSTed and provide a valid edit token.' );
 		}
