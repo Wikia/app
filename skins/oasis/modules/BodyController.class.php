@@ -152,8 +152,8 @@ class BodyController extends WikiaController {
 		// Forum Extension
 		if ( $this->wg->EnableForumExt && ForumHelper::isForum() ) {
 			$railModuleList = [
-				1202 => [ 'Forum', 'forumRelatedThreads', null ],
-				1201 => [ 'Forum', 'forumActivityModule', null ],
+				1202 => [ 'Forum', 'forumRelatedThreads', [ 'excludeAssets' => true ] ],
+				1201 => [ 'Forum', 'forumActivityModule', [ 'excludeAssets' => true ] ],
 				1490 => [ 'Ad', 'Index', [ 'slotName' => 'TOP_RIGHT_BOXAD' ] ],
 			];
 

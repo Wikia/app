@@ -11,9 +11,9 @@ class ForumController extends WallBaseController {
 	public function init() {
 		/**
 		 * Include Forum.scss only if
-		 * the method is called in a Forum context
+		 * the method is called in a Forum context, and we aren't rendering a rail module
 		 */
-		if ( ForumHelper::isForum() ) {
+		if ( ForumHelper::isForum() && !$this->request->getBool( 'excludeAssets' ) ) {
 			$this->response->addAsset( 'extensions/wikia/Forum/css/Forum.scss' );
 		}
 	}

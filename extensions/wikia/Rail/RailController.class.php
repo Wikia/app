@@ -84,21 +84,11 @@ class RailController extends WikiaController {
 				}
 			}
 
-			if (!empty($sassFiles)) {
-				$excludeScss = (array) $this->getRequest()->getVal('excludeScss', []);
-				$sassFilePath = (array) $assetManager->getSassFilePath($sassFiles);
-				$includeScss = array_diff($sassFilePath, $excludeScss);
+			if ( !empty( $sassFiles ) ) {
+				$sassFilePath = (array)$assetManager->getSassFilePath( $sassFiles );
 
-				// SUS-771: Log any duplicate CSS that rail modules try to load but are already loaded by Oasis skin
-				$duplicateScss = array_intersect( $sassFilePath, $excludeScss );
-				if ( count( $duplicateScss ) ) {
-					Wikia\Logger\WikiaLogger::instance()->info( 'SUS-771', [
-						'styles' => json_encode( $duplicateScss )
-					] );
-				}
-
-				if (!empty($includeScss)) {
-					$this->css[] = $assetManager->getSassesUrl($includeScss);
+				if ( !empty( $sassFilePath ) ) {
+					$this->css[] = $assetManager->getSassesUrl( $sassFilePath );
 				}
 			}
 
