@@ -3,7 +3,8 @@ $messages = [];
 
 $messages['en'] = [
 	'content-review-desc' => 'This extension creates a process by which community JavaScript is manually reviewed before it goes live for visitors.',
-	'right-content-review' => 'Review user-submitted Javascript customizations',
+	'right-content-review' => 'Allows access to content review tools',
+	'right-content-review-test-mode' => 'Allows access to content review testing environment',
 	'group-content-reviewer' => 'Content Reviewers',
 	'content-review-module-title' => 'Custom JavaScript status',
 	'content-review-module-header-latest' => 'Latest revision:',
