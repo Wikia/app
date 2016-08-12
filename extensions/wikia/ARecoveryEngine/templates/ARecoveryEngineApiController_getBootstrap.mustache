@@ -1,9 +1,9 @@
 <script>
-{{{code}}}
 window._sp_ = {
     config: {
         account_id: 106,
         enable_rid: true,
+        publisher_base: '{{domain}}/{{cs_endpoint}}',
         content_control_callback: function() {
             var logGroup = 'ext.wikia.aRecoveryEngine.recovery.bootstrap';
             if (!window.wgUserName) {
@@ -22,7 +22,9 @@ window._sp_ = {
     }
 };
 
-spBootstrap('{{domain}}/api/v1/ARecoveryEngine/delivery');
+{{{code}}}
+
+window._sp_.boostrap('{{domain}}/api/v1/ARecoveryEngine/delivery');
 
 window.addEventListener('load', function(){
     require(['ext.wikia.aRecoveryEngine.recovery.helper'], function (helper) {
