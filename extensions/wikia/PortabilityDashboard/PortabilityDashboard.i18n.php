@@ -30,7 +30,7 @@ $messages[ 'en' ] = [
 	'portability-dashboard-special-insights-template-without-title' => 'Unorganized templates on Special:Insights',
 	'portability-dashboard-special-insights-custom-infobox-title' => 'Non-portable infoboxes on Special:Insights',
 	'portability-dashboard-refresh-frequency-info' => 'Portability data, content page views and migration impact are recalculated every Saturday at 9:00 GMT.',
-	'portability-dashboard-no-results-info' => 'No results have been found for selected language.'
+	'portability-dashboard-no-results-info' => 'We don\'t have any wikis in selected language that are in top $1 most significant communities from the migration impact perspective.'
 ];
 
 $messages[ 'qqq' ] = [
@@ -56,5 +56,5 @@ $messages[ 'qqq' ] = [
 	'portability-dashboard-special-insights-template-without-title' => 'Link title for unorganized templates on Special:Insights',
 	'portability-dashboard-special-insights-custom-infobox-title' => 'Link title for non-portable infoboxes on Special: Insights',
 	'portability-dashboard-refresh-frequency-info' => 'Portability data, content page views and migration impact are recalculated every Saturday at 9:00 GMT.',
-	'portability-dashboard-no-results-info' => 'No results have been found for selected language.'
+	'portability-dashboard-no-results-info' => 'Message displayed when there is no results to show within the table.'
 ];

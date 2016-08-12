@@ -51,7 +51,8 @@ class SpecialPortabilityDashboardController extends WikiaSpecialPageController {
 			'customInfoboxesInsightsUrlTitle', wfMessage( 'portability-dashboard-special-insights-custom-infobox-title'
 		)->text() );
 		$this->response->setVal( 'refreshFreqInfo', wfMessage( 'portability-dashboard-refresh-frequency-info' )->text() );
-		$this->response->setVal( 'noResultsInfo', wfMessage( 'portability-dashboard-no-results-info' )->text() );
+		$this->response->setVal( 'noResultsInfo', wfMessage( 'portability-dashboard-no-results-info',
+			PortabilityDashboardModel::WIKIS_LIMIT )->text() );
 
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 
