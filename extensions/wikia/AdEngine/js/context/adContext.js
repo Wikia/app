@@ -77,7 +77,7 @@ define('ext.wikia.adEngine.adContext', [
 		}
 
 		// SourcePoint disaster recovery
-		if (w.wikiaSPStatus === false) {
+		if (w.wikiaSourcePointStatus === false) {
 			context.opts.sourcePointRecovery = false;
 		}
 
