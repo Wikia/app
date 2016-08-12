@@ -83,7 +83,9 @@ class CommunityPageSpecialInsightsModel {
 		 */
 		$insightPages['type'] = $type;
 		$insightPages['title'] = wfMessage( 'communitypage-' . $type . '-title' )->text();
-		$insightPages['description'] =  $type === 'wantedpages' ? wfMessage( 'communitypage-wantedpages-description' )->text() : null;
+		$insightPages['description'] =  $type === 'wantedpages' ?
+			wfMessage( 'communitypage-wantedpages-description' )->text() :
+			null;
 
 		if ( $insightPages['count'] > self::INSIGHTS_MODULE_ITEMS ) {
 			$insightPages['fulllistlink'] = SpecialPage::getTitleFor( 'Insights', $type )
@@ -107,7 +109,9 @@ class CommunityPageSpecialInsightsModel {
 		foreach ( $insightsPages['pages'] as $key => $insight ) {
 			$insightsPages['pages'][$key]['metadataDetails'] = $this->getArticleMetadataDetails( $insight['metadata'] );
 			$insightsPages['pages'][$key]['editlink'] = $this->getEditUrl( $insight['link']['articleurl'] );
-			$insightsPages['pages'][$key]['edittext'] = $this->getArticleContributeText( $insight['metadata'], $insightsPages['type'] );
+			$insightsPages['pages'][$key]['edittext'] = $this->getArticleContributeText(
+				$insight['metadata'],
+				$insightsPages['type'] );
 
 			if ( $displayPageviews && !empty( $insight['metadata']['pv7'] ) ) {
 				$insightsPages['pages'][$key]['pageviews'] = wfMessage(
@@ -139,6 +143,10 @@ class CommunityPageSpecialInsightsModel {
 			return wfMessage( 'communitypage-page-list-create' )->text();
 		}
 
+		// Messages that can be used here:
+		// * communitypage-popularpages-edittext
+		// * communitypage-uncategorizedpages-edittext
+		// * communitypage-deadendpages-edittext
 		return wfMessage( 'communitypage-' . $type . '-edittext' )->text();
 	}
 
