@@ -76,10 +76,7 @@ class CommunityPageSpecialInsightsModel {
 		 * communitypage-uncategorizedpages-title'
 		 * communitypage-wantedpages-title'
 		 * communitypage-deadendpages-title'
-		 * communitypage-popularpages-description'
-		 * communitypage-uncategorizedpages-description'
 		 * communitypage-wantedpages-description'
-		 * communitypage-deadendpages-description'
 		 */
 		$insightPages['type'] = $type;
 		$insightPages['title'] = wfMessage( 'communitypage-' . $type . '-title' )->text();
