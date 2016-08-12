@@ -9,12 +9,14 @@ class ComposerStaticInitb367f9b4bf4d43e0d5ea402c134db26b
     public static $files = array (
         'd1715cacc3c23b16a030645514266a76' => __DIR__ . '/..' . '/data-values/interfaces/Interfaces.php',
         '7cb394c3af2b1ae832979b0368e0da62' => __DIR__ . '/..' . '/data-values/data-values/DataValues.php',
-        'ad155f8f1cf0d418fe49e248db8c661b' => __DIR__ . '/..' . '/react/promise/src/functions_include.php',
         '90559502573a0d473dc66fde5c0ff7e2' => __DIR__ . '/..' . '/data-values/common/Common.php',
+        'ad155f8f1cf0d418fe49e248db8c661b' => __DIR__ . '/..' . '/react/promise/src/functions_include.php',
         '0dd9431cbbfa9ed9cb9d565d7129dbaf' => __DIR__ . '/..' . '/data-values/validators/Validators.php',
-        'bbf73f3db644d3dced353b837903e74c' => __DIR__ . '/..' . '/php-di/php-di/src/DI/functions.php',
         'af3cc937b8a54e5b4209c82d6cfe8889' => __DIR__ . '/..' . '/param-processor/param-processor/DefaultConfig.php',
         '5a494680c593293bd6035e42e2a6825c' => __DIR__ . '/..' . '/data-values/geo/Geo.php',
+        'c3ae67574219cc56cab6c30ef8877b85' => __DIR__ . '/../../..' . '/extensions/Validator/Validator.php',
+        'bbf73f3db644d3dced353b837903e74c' => __DIR__ . '/..' . '/php-di/php-di/src/DI/functions.php',
+        '9ebf2cbcc0b7687b276c44d77096b002' => __DIR__ . '/../../..' . '/extensions/Maps/Maps.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -50,6 +52,7 @@ class ComposerStaticInitb367f9b4bf4d43e0d5ea402c134db26b
         'M' => 
         array (
             'Monolog\\' => 8,
+            'Maps\\' => 5,
         ),
         'I' => 
         array (
@@ -72,6 +75,10 @@ class ComposerStaticInitb367f9b4bf4d43e0d5ea402c134db26b
             'DataValues\\Geo\\' => 15,
             'DataValues\\' => 11,
             'DI\\' => 3,
+        ),
+        'C' => 
+        array (
+            'Composer\\Installers\\' => 20,
         ),
     );
 
@@ -122,10 +129,15 @@ class ComposerStaticInitb367f9b4bf4d43e0d5ea402c134db26b
         'ParamProcessor\\' => 
         array (
             0 => __DIR__ . '/..' . '/param-processor/param-processor/src',
+            1 => __DIR__ . '/../../..' . '/extensions/Validator/src/ParamProcessor',
         ),
         'Monolog\\' => 
         array (
             0 => __DIR__ . '/..' . '/monolog/monolog/src/Monolog',
+        ),
+        'Maps\\' => 
+        array (
+            0 => __DIR__ . '/../../..' . '/extensions/Maps/src/Maps',
         ),
         'Invoker\\' => 
         array (
@@ -166,6 +178,10 @@ class ComposerStaticInitb367f9b4bf4d43e0d5ea402c134db26b
         'DI\\' => 
         array (
             0 => __DIR__ . '/..' . '/php-di/php-di/src/DI',
+        ),
+        'Composer\\Installers\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/composer/installers/src/Composer/Installers',
         ),
     );
 
@@ -224,12 +240,72 @@ class ComposerStaticInitb367f9b4bf4d43e0d5ea402c134db26b
     public static $classMap = array (
         'Comparable' => __DIR__ . '/..' . '/data-values/data-values/src/interfaces/Comparable.php',
         'Copyable' => __DIR__ . '/..' . '/data-values/data-values/src/interfaces/Copyable.php',
+        'CriterionIsNonNumeric' => __DIR__ . '/../../..' . '/extensions/Maps/includes/criteria/CriterionIsNonNumeric.php',
+        'CriterionMapLayer' => __DIR__ . '/../../..' . '/extensions/Maps/includes/criteria/CriterionMapLayer.php',
+        'CriterionOLLayer' => __DIR__ . '/../../..' . '/extensions/Maps/includes/services/OpenLayers/CriterionOLLayer.php',
         'DataValues\\Tests\\DataValueTest' => __DIR__ . '/..' . '/data-values/data-values/tests/phpunit/DataValueTest.php',
         'File_Iterator' => __DIR__ . '/..' . '/phpunit/php-file-iterator/File/Iterator.php',
         'File_Iterator_Facade' => __DIR__ . '/..' . '/phpunit/php-file-iterator/File/Iterator/Facade.php',
         'File_Iterator_Factory' => __DIR__ . '/..' . '/phpunit/php-file-iterator/File/Iterator/Factory.php',
         'Hashable' => __DIR__ . '/..' . '/data-values/data-values/src/interfaces/Hashable.php',
         'Immutable' => __DIR__ . '/..' . '/data-values/data-values/src/interfaces/Immutable.php',
+        'MapEditorHtml' => __DIR__ . '/../../..' . '/extensions/Maps/includes/editor/MapEditorHTML.php',
+        'MapsBaseFillableElement' => __DIR__ . '/../../..' . '/extensions/Maps/includes/Maps_BaseFillableElement.php',
+        'MapsBaseStrokableElement' => __DIR__ . '/../../..' . '/extensions/Maps/includes/Maps_BaseStrokableElement.php',
+        'MapsCoordinates' => __DIR__ . '/../../..' . '/extensions/Maps/includes/parserhooks/Maps_Coordinates.php',
+        'MapsDisplayMap' => __DIR__ . '/../../..' . '/extensions/Maps/includes/parserhooks/Maps_DisplayMap.php',
+        'MapsDisplayMapRenderer' => __DIR__ . '/../../..' . '/extensions/Maps/includes/Maps_DisplayMapRenderer.php',
+        'MapsDistance' => __DIR__ . '/../../..' . '/extensions/Maps/includes/parserhooks/Maps_Distance.php',
+        'MapsDistanceParser' => __DIR__ . '/../../..' . '/extensions/Maps/includes/Maps_DistanceParser.php',
+        'MapsFinddestination' => __DIR__ . '/../../..' . '/extensions/Maps/includes/parserhooks/Maps_Finddestination.php',
+        'MapsGeoFunctions' => __DIR__ . '/../../..' . '/extensions/Maps/includes/Maps_GeoFunctions.php',
+        'MapsGeocode' => __DIR__ . '/../../..' . '/extensions/Maps/includes/parserhooks/Maps_Geocode.php',
+        'MapsGeocoderusGeocoder' => __DIR__ . '/../../..' . '/extensions/Maps/includes/geocoders/Maps_GeocoderusGeocoder.php',
+        'MapsGeodistance' => __DIR__ . '/../../..' . '/extensions/Maps/includes/parserhooks/Maps_Geodistance.php',
+        'MapsGeonamesGeocoder' => __DIR__ . '/../../..' . '/extensions/Maps/includes/geocoders/Maps_GeonamesGeocoder.php',
+        'MapsGoogleGeocoder' => __DIR__ . '/../../..' . '/extensions/Maps/includes/geocoders/Maps_GoogleGeocoder.php',
+        'MapsGoogleMaps3' => __DIR__ . '/../../..' . '/extensions/Maps/includes/services/GoogleMaps3/Maps_GoogleMaps3.php',
+        'MapsHooks' => __DIR__ . '/../../..' . '/extensions/Maps/Maps.hooks.php',
+        'MapsImageLayer' => __DIR__ . '/../../..' . '/extensions/Maps/includes/layers/Maps_ImageLayer.php',
+        'MapsKMLFormatter' => __DIR__ . '/../../..' . '/extensions/Maps/includes/Maps_KMLFormatter.php',
+        'MapsLayer' => __DIR__ . '/../../..' . '/extensions/Maps/includes/Maps_Layer.php',
+        'MapsLayerDefinition' => __DIR__ . '/../../..' . '/extensions/Maps/includes/parserhooks/Maps_LayerDefinition.php',
+        'MapsLayerGroup' => __DIR__ . '/../../..' . '/extensions/Maps/includes/Maps_LayerGroup.php',
+        'MapsLayerPage' => __DIR__ . '/../../..' . '/extensions/Maps/includes/Maps_LayerPage.php',
+        'MapsLayerTypes' => __DIR__ . '/../../..' . '/extensions/Maps/includes/Maps_LayerTypes.php',
+        'MapsLayers' => __DIR__ . '/../../..' . '/extensions/Maps/includes/Maps_Layers.php',
+        'MapsLeaflet' => __DIR__ . '/../../..' . '/extensions/Maps/includes/services/Leaflet/Maps_Leaflet.php',
+        'MapsMapper' => __DIR__ . '/../../..' . '/extensions/Maps/includes/Maps_Mapper.php',
+        'MapsMappingService' => __DIR__ . '/../../..' . '/extensions/Maps/includes/Maps_MappingService.php',
+        'MapsMappingServices' => __DIR__ . '/../../..' . '/extensions/Maps/includes/Maps_MappingServices.php',
+        'MapsMapsDoc' => __DIR__ . '/../../..' . '/extensions/Maps/includes/parserhooks/Maps_MapsDoc.php',
+        'MapsOpenLayers' => __DIR__ . '/../../..' . '/extensions/Maps/includes/services/OpenLayers/Maps_OpenLayers.php',
+        'MapsParamLayerDefinition' => __DIR__ . '/../../..' . '/extensions/Maps/includes/manipulations/Maps_ParamLayerDefinition.php',
+        'MapsParamOLLayers' => __DIR__ . '/../../..' . '/extensions/Maps/includes/services/OpenLayers/Maps_ParamOLLayers.php',
+        'MapsParamSwitchIfGreaterThan' => __DIR__ . '/../../..' . '/extensions/Maps/includes/manipulations/Maps_ParamSwitchIfGreaterThan.php',
+        'Maps\\Api\\Geocode' => __DIR__ . '/../../..' . '/extensions/Maps/includes/api/ApiGeocode.php',
+        'Maps\\CircleParser' => __DIR__ . '/../../..' . '/extensions/Maps/includes/parsers/CircleParser.php',
+        'Maps\\DistanceParser' => __DIR__ . '/../../..' . '/extensions/Maps/includes/parsers/DistanceParser.php',
+        'Maps\\Element' => __DIR__ . '/../../..' . '/extensions/Maps/includes/Element.php',
+        'Maps\\ElementOptions' => __DIR__ . '/../../..' . '/extensions/Maps/includes/Element.php',
+        'Maps\\Geocoder' => __DIR__ . '/../../..' . '/extensions/Maps/includes/Geocoder.php',
+        'Maps\\Geocoders' => __DIR__ . '/../../..' . '/extensions/Maps/includes/Geocoders.php',
+        'Maps\\ImageOverlayParser' => __DIR__ . '/../../..' . '/extensions/Maps/includes/parsers/ImageOverlayParser.php',
+        'Maps\\LineParser' => __DIR__ . '/../../..' . '/extensions/Maps/includes/parsers/LineParser.php',
+        'Maps\\LocationParser' => __DIR__ . '/../../..' . '/extensions/Maps/includes/parsers/LocationParser.php',
+        'Maps\\OptionsObject' => __DIR__ . '/../../..' . '/extensions/Maps/includes/Element.php',
+        'Maps\\PolygonParser' => __DIR__ . '/../../..' . '/extensions/Maps/includes/parsers/PolygonParser.php',
+        'Maps\\RectangleParser' => __DIR__ . '/../../..' . '/extensions/Maps/includes/parsers/RectangleParser.php',
+        'Maps\\ServiceParam' => __DIR__ . '/../../..' . '/extensions/Maps/includes/ServiceParam.php',
+        'Maps\\Test\\ParserHookTest' => __DIR__ . '/../../..' . '/extensions/Maps/tests/phpunit/parserhooks/ParserHookTest.php',
+        'Maps\\Tests\\Elements\\BaseElementTest' => __DIR__ . '/../../..' . '/extensions/Maps/tests/phpunit/elements/BaseElementTest.php',
+        'Maps\\Tests\\Elements\\CircleTest' => __DIR__ . '/../../..' . '/extensions/Maps/tests/phpunit/elements/CircleTest.php',
+        'Maps\\Tests\\Elements\\ImageOverlayTest' => __DIR__ . '/../../..' . '/extensions/Maps/tests/phpunit/elements/ImageOverlayTest.php',
+        'Maps\\Tests\\Elements\\LineTest' => __DIR__ . '/../../..' . '/extensions/Maps/tests/phpunit/elements/LineTest.php',
+        'Maps\\Tests\\Elements\\LocationTest' => __DIR__ . '/../../..' . '/extensions/Maps/tests/phpunit/elements/LocationTest.php',
+        'Maps\\Tests\\Elements\\PolygonTest' => __DIR__ . '/../../..' . '/extensions/Maps/tests/phpunit/elements/PolygonTest.php',
+        'Maps\\Tests\\Elements\\RectangleTest' => __DIR__ . '/../../..' . '/extensions/Maps/tests/phpunit/elements/RectangleTest.php',
+        'Maps\\WmsOverlayParser' => __DIR__ . '/../../..' . '/extensions/Maps/includes/parsers/WmsOverlayParser.php',
         'PHPUnit_Exception' => __DIR__ . '/..' . '/phpunit/phpunit/src/Exception.php',
         'PHPUnit_Extensions_GroupTestSuite' => __DIR__ . '/..' . '/phpunit/phpunit/src/Extensions/GroupTestSuite.php',
         'PHPUnit_Extensions_PhptTestCase' => __DIR__ . '/..' . '/phpunit/phpunit/src/Extensions/PhptTestCase.php',
@@ -589,6 +665,8 @@ class ComposerStaticInitb367f9b4bf4d43e0d5ea402c134db26b
         'PHP_Token_YIELD' => __DIR__ . '/..' . '/phpunit/php-token-stream/PHP/Token.php',
         'ParamProcessor\\Tests\\Definitions\\NumericParamTest' => __DIR__ . '/..' . '/param-processor/param-processor/tests/phpunit/Definitions/NumericParamTest.php',
         'ParamProcessor\\Tests\\Definitions\\ParamDefinitionTest' => __DIR__ . '/..' . '/param-processor/param-processor/tests/phpunit/Definitions/ParamDefinitionTest.php',
+        'ParserHook' => __DIR__ . '/../../..' . '/extensions/Validator/src/legacy/ParserHook.php',
+        'ParserHookCaller' => __DIR__ . '/../../..' . '/extensions/Validator/src/legacy/ParserHook.php',
         'SebastianBergmann\\Comparator\\ArrayComparator' => __DIR__ . '/..' . '/sebastian/comparator/src/ArrayComparator.php',
         'SebastianBergmann\\Comparator\\Comparator' => __DIR__ . '/..' . '/sebastian/comparator/src/Comparator.php',
         'SebastianBergmann\\Comparator\\ComparisonFailure' => __DIR__ . '/..' . '/sebastian/comparator/src/ComparisonFailure.php',
@@ -614,6 +692,7 @@ class ComposerStaticInitb367f9b4bf4d43e0d5ea402c134db26b
         'SebastianBergmann\\Exporter\\Exception' => __DIR__ . '/..' . '/sebastian/exporter/src/Exception.php',
         'SebastianBergmann\\Exporter\\Exporter' => __DIR__ . '/..' . '/sebastian/exporter/src/Exporter.php',
         'SebastianBergmann\\Version' => __DIR__ . '/..' . '/sebastian/version/src/Version.php',
+        'SpecialMapEditor' => __DIR__ . '/../../..' . '/extensions/Maps/includes/specials/SpecialMapEditor.php',
         'Text_Template' => __DIR__ . '/..' . '/phpunit/php-text-template/Text/Template.php',
         'ValueFormatters\\Test\\ValueFormatterTestBase' => __DIR__ . '/..' . '/data-values/interfaces/tests/ValueFormatters/ValueFormatterTestBase.php',
         'ValueParsers\\Normalizers\\Test\\NullStringNormalizerTest' => __DIR__ . '/..' . '/data-values/common/tests/ValueParsers/Normalizers/NullStringNormalizerTest.php',
@@ -625,6 +704,12 @@ class ComposerStaticInitb367f9b4bf4d43e0d5ea402c134db26b
         'ValueParsers\\Test\\StringParserTest' => __DIR__ . '/..' . '/data-values/common/tests/ValueParsers/StringParserTest.php',
         'ValueParsers\\Test\\StringValueParserTest' => __DIR__ . '/..' . '/data-values/common/tests/ValueParsers/StringValueParserTest.php',
         'ValueParsers\\Test\\ValueParserTestBase' => __DIR__ . '/..' . '/data-values/common/tests/ValueParsers/ValueParserTestBase.php',
+        'iBubbleMapElement' => __DIR__ . '/../../..' . '/extensions/Maps/includes/properties/iBubbleMapElement.php',
+        'iFillableMapElement' => __DIR__ . '/../../..' . '/extensions/Maps/includes/properties/iFillableMapElement.php',
+        'iHoverableMapElement' => __DIR__ . '/../../..' . '/extensions/Maps/includes/properties/iHoverableMapElement.php',
+        'iLinkableMapElement' => __DIR__ . '/../../..' . '/extensions/Maps/includes/properties/iLinkableMapElement.php',
+        'iMappingService' => __DIR__ . '/../../..' . '/extensions/Maps/includes/iMappingService.php',
+        'iStrokableMapElement' => __DIR__ . '/../../..' . '/extensions/Maps/includes/properties/iStrokableMapElement.php',
         'phpFlickr' => __DIR__ . '/..' . '/wikia/phpflickr/phpFlickr.php',
         'phpFlickr_pager' => __DIR__ . '/..' . '/wikia/phpflickr/phpFlickr.php',
     );

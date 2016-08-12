@@ -3,6 +3,10 @@
     {
       "type": "git",
       "url": "https://github.com/Wikia/fluent-sql-php"
+    },
+    {
+      "type": "git",
+      "url": "https://github.com/Wikia/Maps"
     }
   ],
   "config": {
@@ -24,6 +28,8 @@
     "sensiolabs/consul-php-sdk": "^1.0",
     "wikia/phpflickr": "^3.1",
     "param-processor/param-processor": "~1.2",
-    "data-values/geo": "~1.0"
+    "data-values/geo": "~1.0",
+    "mediawiki/maps": "3.5.1"
   }
 }
+

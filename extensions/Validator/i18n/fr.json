@@ -33,7 +33,6 @@
 	"validator-type-float": "nombre",
 	"validator-type-boolean": "oui/non",
 	"validator-type-char": "caractère",
-	"validator-type-dimension": "nombre et unité de dimension",
 	"validator-type-title": "titre",
 	"validator-type-string-list": "liste de textes",
 	"validator-type-integer-list": "liste de nombres entiers",

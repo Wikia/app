@@ -24,7 +24,6 @@
 	"validator-type-float": "лік",
 	"validator-type-boolean": "так/не",
 	"validator-type-char": "сымбаль",
-	"validator-type-dimension": "колькасьць і адзінка вымярэньня",
 	"validator-type-title": "назва",
 	"validator-type-string-list": "сьпіс тэкстаў",
 	"validator-type-integer-list": "сьпіс цэлых лікаў",

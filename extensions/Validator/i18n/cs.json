@@ -5,8 +5,7 @@
 			"Mormegil",
 			"Reaperman",
 			"Vks",
-			"XenoPheX",
-			"Dvorapa"
+			"XenoPheX"
 		]
 	},
 	"validator-desc": "Knihovna pro deklarativní zpracování parametrů",
@@ -24,7 +23,6 @@
 	"validator-type-float": "číslo",
 	"validator-type-boolean": "ano/ne",
 	"validator-type-char": "znak",
-	"validator-type-dimension": "číslo a jednotka délky",
 	"validator-listerrors-errors": "Chyby",
 	"validator-listerrors-low": "Nízká",
 	"validator-listerrors-normal": "Střední",

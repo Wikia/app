@@ -27,7 +27,6 @@
 	"validator-type-float": "Gleitkommazahl",
 	"validator-type-boolean": "ja/nein",
 	"validator-type-char": "Zeichen",
-	"validator-type-dimension": "Zahl mit Maßeinheit",
 	"validator-type-title": "Titel",
 	"validator-type-string-list": "Liste mit Texten",
 	"validator-type-integer-list": "Liste mit ganzen Zahlen",

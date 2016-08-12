@@ -30,7 +30,6 @@
 	"validator-type-float": "число",
 	"validator-type-boolean": "да/нет",
 	"validator-type-char": "символ",
-	"validator-type-dimension": "число и единица измерения",
 	"validator-type-title": "название",
 	"validator-type-string-list": "список текстов",
 	"validator-type-integer-list": "список целых чисел",

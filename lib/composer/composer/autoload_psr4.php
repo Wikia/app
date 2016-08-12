@@ -16,8 +16,9 @@ return array(
     'SensioLabs\\Consul\\' => array($vendorDir . '/sensiolabs/consul-php-sdk/Consul'),
     'React\\Promise\\' => array($vendorDir . '/react/promise/src'),
     'PhpDocReader\\' => array($vendorDir . '/php-di/phpdoc-reader/src/PhpDocReader'),
-    'ParamProcessor\\' => array($vendorDir . '/param-processor/param-processor/src'),
+    'ParamProcessor\\' => array($vendorDir . '/param-processor/param-processor/src', $baseDir . '/extensions/Validator/src/ParamProcessor'),
     'Monolog\\' => array($vendorDir . '/monolog/monolog/src/Monolog'),
+    'Maps\\' => array($baseDir . '/extensions/Maps/src/Maps'),
     'Invoker\\' => array($vendorDir . '/php-di/invoker/src'),
     'Interop\\Container\\' => array($vendorDir . '/container-interop/container-interop/src/Interop/Container'),
     'GuzzleHttp\\Stream\\' => array($vendorDir . '/guzzlehttp/streams/src'),
@@ -28,4 +29,5 @@ return array(
     'DataValues\\Geo\\' => array($vendorDir . '/data-values/geo/src'),
     'DataValues\\' => array($vendorDir . '/data-values/common/src/DataValues'),
     'DI\\' => array($vendorDir . '/php-di/php-di/src/DI'),
+    'Composer\\Installers\\' => array($vendorDir . '/composer/installers/src/Composer/Installers'),
 );

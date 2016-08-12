@@ -27,7 +27,6 @@
 	"validator-type-float": "число",
 	"validator-type-boolean": "так/ні",
 	"validator-type-char": "символ",
-	"validator-type-dimension": "число й одиниця виміру",
 	"validator-type-title": "заголовок",
 	"validator-type-string-list": "список текстів",
 	"validator-type-integer-list": "список цілих чисел",

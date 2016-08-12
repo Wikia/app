@@ -2369,5 +2369,242 @@
             "parsers",
             "wikidata"
         ]
+    },
+    {
+        "name": "composer/installers",
+        "version": "v1.1.0",
+        "version_normalized": "1.1.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/composer/installers.git",
+            "reference": "a3595c5272a6f247228abb20076ed27321e4aae9"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/composer/installers/zipball/a3595c5272a6f247228abb20076ed27321e4aae9",
+            "reference": "a3595c5272a6f247228abb20076ed27321e4aae9",
+            "shasum": ""
+        },
+        "require": {
+            "composer-plugin-api": "^1.0"
+        },
+        "replace": {
+            "roundcube/plugin-installer": "*",
+            "shama/baton": "*"
+        },
+        "require-dev": {
+            "composer/composer": "1.0.*@dev",
+            "phpunit/phpunit": "4.1.*"
+        },
+        "time": "2016-07-05 06:18:20",
+        "type": "composer-plugin",
+        "extra": {
+            "class": "Composer\\Installers\\Plugin",
+            "branch-alias": {
+                "dev-master": "1.0-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Composer\\Installers\\": "src/Composer/Installers"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Kyle Robinson Young",
+                "email": "kyle@dontkry.com",
+                "homepage": "https://github.com/shama"
+            }
+        ],
+        "description": "A multi-framework Composer library installer",
+        "homepage": "https://composer.github.io/installers/",
+        "keywords": [
+            "Craft",
+            "Dolibarr",
+            "Hurad",
+            "ImageCMS",
+            "MODX Evo",
+            "Mautic",
+            "OXID",
+            "RadPHP",
+            "SMF",
+            "Thelia",
+            "WolfCMS",
+            "agl",
+            "aimeos",
+            "annotatecms",
+            "bitrix",
+            "cakephp",
+            "chef",
+            "codeigniter",
+            "concrete5",
+            "croogo",
+            "dokuwiki",
+            "drupal",
+            "elgg",
+            "expressionengine",
+            "fuelphp",
+            "grav",
+            "installer",
+            "joomla",
+            "kohana",
+            "laravel",
+            "lithium",
+            "magento",
+            "mako",
+            "mediawiki",
+            "modulework",
+            "moodle",
+            "phpbb",
+            "piwik",
+            "ppi",
+            "puppet",
+            "roundcube",
+            "shopware",
+            "silverstripe",
+            "symfony",
+            "typo3",
+            "wordpress",
+            "zend",
+            "zikula"
+        ]
+    },
+    {
+        "name": "mediawiki/validator",
+        "version": "2.0.6",
+        "version_normalized": "2.0.6.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/JeroenDeDauw/Validator.git",
+            "reference": "860b673fccf25863bdedbe5ae733f7edc7711a3e"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/JeroenDeDauw/Validator/zipball/860b673fccf25863bdedbe5ae733f7edc7711a3e",
+            "reference": "860b673fccf25863bdedbe5ae733f7edc7711a3e",
+            "shasum": ""
+        },
+        "require": {
+            "param-processor/param-processor": "~1.1",
+            "php": ">=5.3.0"
+        },
+        "require-dev": {
+            "data-values/common": "~0.3.1"
+        },
+        "time": "2016-07-01 18:07:25",
+        "type": "mediawiki-extension",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "2.0.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "files": [
+                "Validator.php"
+            ],
+            "psr-4": {
+                "ParamProcessor\\": "src/ParamProcessor/"
+            },
+            "classmap": [
+                "src/legacy/"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "authors": [
+            {
+                "name": "Jeroen De Dauw",
+                "email": "jeroendedauw@gmail.com",
+                "homepage": "http://jeroendedauw.com",
+                "role": "Developer"
+            }
+        ],
+        "description": "MediaWiki wrapper for the ParamProcessor library",
+        "homepage": "https://github.com/JeroenDeDauw/Validator",
+        "keywords": [
+            "ParamProcessor",
+            "SMW",
+            "Semantic MediaWiki",
+            "mediawiki",
+            "validator"
+        ]
+    },
+    {
+        "name": "mediawiki/maps",
+        "version": "3.5.1",
+        "version_normalized": "3.5.1.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/Wikia/Maps",
+            "reference": "a391388478238f27b9d383e987bdd5a98e32f7bf"
+        },
+        "require": {
+            "composer/installers": "^1.0.1",
+            "data-values/geo": "~1.0",
+            "mediawiki/validator": "^2.0.2",
+            "php": ">=5.3.2"
+        },
+        "time": "2016-08-12 15:47:38",
+        "type": "mediawiki-extension",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "3.5.x-dev"
+            }
+        },
+        "installation-source": "source",
+        "autoload": {
+            "files": [
+                "Maps.php"
+            ],
+            "psr-4": {
+                "Maps\\": "src/Maps/"
+            },
+            "classmap": [
+                "includes/",
+                "Maps.hooks.php",
+                "tests/phpunit/elements/",
+                "tests/phpunit/parserhooks/ParserHookTest.php"
+            ]
+        },
+        "scripts": {
+            "phpunit": [
+                "php ../../tests/phpunit/phpunit.php -c phpunit.xml.dist"
+            ]
+        },
+        "license": [
+            "GPL-2.0+"
+        ],
+        "authors": [
+            {
+                "name": "Jeroen De Dauw",
+                "email": "jeroendedauw@gmail.com",
+                "homepage": "http://jeroendedauw.com",
+                "role": "Creator and lead developer"
+            }
+        ],
+        "description": "Adds various mapping features to MediaWiki",
+        "homepage": "https://github.com/JeroenDeDauw/Maps",
+        "keywords": [
+            "Google Maps",
+            "Maps",
+            "MediaWiki",
+            "OSM",
+            "OpenLayers",
+            "OpenStreetMap",
+            "Semantic MediaWiki"
+        ],
+        "support": {
+            "email": "semediawiki-user@lists.sourceforge.net",
+            "irc": "irc://irc.freenode.net/mediawiki",
+            "source": "https://github.com/JeroenDeDauw/Maps"
+        }
     }
 ]

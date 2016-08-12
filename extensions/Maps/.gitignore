@@ -4,6 +4,7 @@
 !.*
 .idea/
 
+vendor/
 extensions/
 
 composer.phar
