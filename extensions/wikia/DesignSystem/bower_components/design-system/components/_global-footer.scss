@@ -37,6 +37,7 @@
 	box-sizing: border-box;
 	color: $color-white;
 	margin-top: 30px;
+	word-break: keep-all;
 	word-wrap: break-word;
 
 	// reset and set some defaults (that should be set in DS)
