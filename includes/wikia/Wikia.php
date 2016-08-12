@@ -93,6 +93,8 @@ class Wikia {
 	const EDITNOTICE_INTERFACE_PREFIX = 'editnotice-';
 	const TAG_INTERFACE_PREFIX = 'tag-';
 
+	const DEFAULT_FAVICON_FILE = '/skins/common/images/favicon.ico';
+
 	private static $vars = array();
 	private static $cachedLinker;
 
@@ -154,7 +156,7 @@ class Wikia {
 				}
 
 				// SUS-214: fallback to image in repo instead of Community Central
-				return F::app()->wg->ResourceBasePath . '/' . lcfirst( $faviconFilename );
+				return F::app()->wg->ResourceBasePath . static::DEFAULT_FAVICON_FILE;
 			}
 		);
 	}
