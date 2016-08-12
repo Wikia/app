@@ -14,10 +14,10 @@ class ARecoveryEngineApiController extends WikiaController {
 		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
 	}
 
-	public function getSPStatus() {
+	public function getSourcePointStatus() {
 		$this->response->setContentType( 'text/javascript; charset=utf-8' );
 		$wgGlobalEnableSourcePoint = WikiFactory::getVarValueByName( 'wgGlobalEnableSourcePoint', Wikia::COMMUNITY_WIKI_ID );
-		$this->response->setBody( 'window.wikiaSPStatus = ' . ( $wgGlobalEnableSourcePoint ? 'true;' : 'false;' ) );
+		$this->response->setBody( 'window.wikiaSourcePointStatus = ' . ( $wgGlobalEnableSourcePoint ? 'true;' : 'false;' ) );
 		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
 	}
 
