@@ -158,8 +158,7 @@ body.skin-oasis {
 			}
 		}
 
-		.WikiaTopAds, .WikiaPage {
-			// (3) ... and both TopAds and WikiaPage will lay on top of them.
+		&.ve .WikiaPage {
 			z-index: 2;
 		}
 	}

@@ -281,6 +281,7 @@ $config['oasis_noads_extensions_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		'#group_bucky_js',
+		'#group_design_system_js',
 		'//resources/wikia/libraries/jquery/ellipses.js',
 		'//extensions/wikia/CreatePage/js/CreatePage.js',
 		'//extensions/wikia/VideoHandlers/js/VideoBootstrap.js',
@@ -2089,6 +2090,15 @@ $config['global_footer_js'] = array(
 	)
 );
 
+/** DesignSystem extension */
+$config['design_system_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/DesignSystem/scripts/DesignSystemGlobalFooterTracking.js'
+	]
+];
+
 /** CorporateFooter extension */
 $config['corporate_footer_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
@@ -3009,7 +3019,8 @@ $config['design_system_scss'] = [
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => [ 'oasis' ],
 	'assets' => [
-		'//extensions/wikia/DesignSystem/bower_components/design-system/dist/styles.scss'
+		'//extensions/wikia/DesignSystem/bower_components/design-system/dist/styles.scss',
+		'//extensions/wikia/DesignSystem/styles/design-system.scss'
 	]
 ];
 
