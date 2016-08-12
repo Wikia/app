@@ -105,6 +105,10 @@ class LatestActivityController extends WikiaController {
 		global $wgMemc, $wgLang;
 		$wgMemc->delete(wfMemcKey('mOasisLatestActivity'));
 		$wgMemc->delete(wfMemcKey('mOasisLatestActivity_times', $wgLang->getCode()));
+
+		Wikia::purgeSurrogateKey(
+			RailController::getSurrogateKeyForModule( 'LatestActivity', 'Index' )
+		);
 		return true;
 	}
 }

@@ -28,23 +28,20 @@ $(function () {
 
 	if (rail.find('.loading').exists()) {
 		params = {
-			'articleTitle': window.wgTitle,
-			'namespace': window.wgNamespaceNumber,
+			controller: 'Rail',
+			method: (window.wgUserName) ? 'lazy' : 'lazyForAnons',
 			'cb': window.wgStyleVersion
 		};
 
-		if (typeof wgSassLoadedScss !== 'undefined') {
-			params.excludeScss = window.wgSassLoadedScss;
-		}
-
 		$.extend(params, getParamsFromUrl());
 
-		$.nirvana.sendRequest({
-			controller: 'RailController',
-			method: (window.wgUserName) ? 'lazy' : 'lazyForAnons',
+		$.ajax('/wikia.php', {
 			data: params,
 			type: 'get',
 			format: 'json',
+			headers: {
+				'WikiaTitle': window.wgTitle + ':' + window.wgNamespaceNumber
+			},
 			callback: function (data) {
 				var loadRailContents = function (data) {
 					rail.addClass('loaded')

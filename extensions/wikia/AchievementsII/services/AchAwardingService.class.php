@@ -297,6 +297,17 @@ class AchAwardingService {
 
 			//run a hook to let other extensions know when Achievements-related cache should be purged
 			wfRunHooks( 'AchievementsInvalidateCache', array(  $this->mUser  ) );
+
+			// SUS-770: Purge Achievements rail module on this user's page
+			$userPage = $this->mUser->getUserPage();
+			Wikia::purgeSurrogateKey(
+				RailController::getSurrogateKeyForTitle( $userPage )
+			);
+
+			// SUS-770: Purge Recently Earned Badges rail module on this wiki
+			Wikia::purgeSurrogateKey(
+				RailController::getSurrogateKeyForModule( 'LatestEarnedBadges', 'Index' )
+			);
 		}
 
 		wfProfileOut( __METHOD__ );

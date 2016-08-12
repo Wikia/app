@@ -757,6 +757,13 @@ class WallExternalController extends WikiaController {
 		if ( !empty( $mw ) ) {
 			$mw->load();
 			$mw->setRelatedTopics( $this->wg->User, $relatedTopics );
+
+			// SUS-770: purge Related Threads rail module if we're on Forum
+			if ( $this->wg->EnableForumExt && $mw->getTitle()->inNamespaces( ForumHelper::$forumNamespaces ) ) {
+				Wikia::purgeSurrogateKey(
+					RailController::getSurrogateKeyForModule( 'Forum', 'forumRelatedThreads' )
+				);
+			}
 		}
 
 		foreach ( $relatedTopics as $topic ) {

@@ -32,6 +32,7 @@ if ( !empty($wgEnableWikiaFollowedPages) && $wgEnableWikiaFollowedPages ) {
 	$wgSpecialPageGroups['Following'] = 'changes';
 	$wgAjaxExportList[] = 'FollowHelper::showAll';
 	$wgHooks['MailNotifyBuildKeys'][] = 'FollowHelper::mailNotifyBuildKeys';
+	$wgHooks['WatchArticleComplete'][] = 'FollowHelper::onWatchArticleComplete';
 }
 
 $wgHooks['beforeBlogListingForm'][] = 'FollowHelper::categoryIndexer';

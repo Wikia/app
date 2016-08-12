@@ -796,4 +796,20 @@ class FollowHelper {
 		}
 		return true;
 	}
+
+	/**
+	 * SUS-770: Invalidate Followed Pages Rail module if the user follows a page
+	 * @param User $user User who followed the page
+	 * @param WikiPage|Article $article unused
+	 * @return bool true to continue hook processing
+	 */
+	static public function onWatchArticleComplete( User $user, $article ) {
+		Wikia::purgeSurrogateKey(
+			$user->getUserPage()
+		);
+		Wikia::purgeSurrogateKey(
+			$user->getTalkPage()
+		);
+		return true;
+	}
 }
