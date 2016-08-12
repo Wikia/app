@@ -253,6 +253,7 @@ ve.init.mw.ViewPageTarget.prototype.setupLocalNoticeMessages = function () {
  * @return {jQuery.Promise}
  */
 ve.init.mw.ViewPageTarget.prototype.activate = function () {
+	var extraModules = [ 'user' ];
 	if ( !this.active && !this.activating ) {
 		this.activating = true;
 		this.activatingDeferred = $.Deferred();
@@ -272,7 +273,12 @@ ve.init.mw.ViewPageTarget.prototype.activate = function () {
 
 		this.saveScrollPosition();
 
-		this.load( [ 'site', 'user' ] );
+		// Only ensure site JS is loaded if it is enabled (SEC-73)
+		if ( mw.config.get( 'wgUseSiteJs' ) ) {
+			extraModules[extraModules.length] = 'site';
+		}
+
+		this.load( extraModules );
 	}
 	return this.activatingDeferred.promise();
 };
