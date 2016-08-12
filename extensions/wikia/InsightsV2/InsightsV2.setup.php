@@ -32,6 +32,7 @@ $wgExtensionCredits['specialpage'][] = [
 $wgAutoloadClasses['InsightsController'] = $dir . 'InsightsController.class.php';
 $wgAutoloadClasses['InsightsLoopController'] = $dir . 'InsightsLoopController.class.php';
 $wgAutoloadClasses['InsightsContext'] = $dir . 'InsightsContext.class.php';
+$wgAutoloadClasses['InsightsUpdateController'] = $dir . 'InsightsUpdateController.class.php';
 
 /**
  * Config
@@ -53,6 +54,8 @@ $wgAutoloadClasses['InsightsItemData'] = $dir . 'helpers/InsightsItemData.php';
  */
 $wgSpecialPages['Insights'] = 'InsightsController';
 $wgSpecialPageGroups['Insights'] = 'wikia';
+$wgSpecialPages['InsightsUpdate'] = 'InsightsUpdateController';
+$wgSpecialPageGroups['InsightsUpdate'] = 'wikia';
 
 /**
  * Models
@@ -71,6 +74,11 @@ $wgAutoloadClasses['InsightsWithoutimagesModel'] = $dir . 'models/InsightsWithou
 $wgAutoloadClasses['InsightsCountService'] = $dir . 'services/InsightsCountService.class.php';
 $wgAutoloadClasses['InsightsCountApiController'] = $dir . 'controllers/InsightsCountApiController.class.php';
 $wgAutoloadClasses['InsightsService'] = $dir . 'services/InsightsService.class.php';
+
+/**
+ * Tasks
+ */
+$wgAutoloadClasses['\Wikia\Tasks\Tasks\InsightsCleanupTask'] = $dir . '/tasks/InsightsCleanupTask.class.php';
 
 /**
  * The right rail module
