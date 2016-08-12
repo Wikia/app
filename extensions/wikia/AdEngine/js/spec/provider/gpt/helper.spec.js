@@ -25,8 +25,7 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 			recoveryHelper: {
 				recoverSlots: noop,
 				isBlocking: noop,
-				isRecoverable: noop,
-				isRecoveryEnabled: noop
+				isRecoverable: noop
 			},
 			slotTweaker: {
 				show: noop,

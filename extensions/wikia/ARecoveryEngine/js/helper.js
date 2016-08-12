@@ -19,7 +19,11 @@ define('ext.wikia.aRecoveryEngine.recovery.helper', [
 	var logGroup = 'ext.wikia.aRecoveryEngine.recovery.helper',
 		context = adContext.getContext(),
 		customLogEndpoint = '/wikia.php?controller=ARecoveryEngineApi&method=getLogInfo&kind=',
-		onBlockingEventsQueue = [];
+		onBlockingEventsQueue = [],
+		recoverableSlots = [
+			'TOP_LEADERBOARD',
+			'TOP_RIGHT_BOXAD'
+		];
 
 	function initEventQueue() {
 		lazyQueue.makeQueue(onBlockingEventsQueue, function (callback) {
@@ -45,8 +49,16 @@ define('ext.wikia.aRecoveryEngine.recovery.helper', [
 		return !!(win.ads && win.ads.runtime.sp && win.ads.runtime.sp.blocking);
 	}
 
-	function isRecoverable(slotName, recoverableSlots) {
-		return isRecoveryEnabled() && recoverableSlots.indexOf(slotName) !== -1;
+	function isRecoverable(slotName) {
+		return isRecoveryEnabled() && isBlocking() && recoverableSlots.indexOf(slotName) !== -1;
+	}
+
+	function removeSlotFromList(slotName) {
+		var index = recoverableSlots.indexOf(slotName);
+
+		if (index !== -1) {
+			recoverableSlots.splice(index, 1);
+		}
 	}
 
 	function track(type) {
@@ -81,12 +93,22 @@ define('ext.wikia.aRecoveryEngine.recovery.helper', [
 		}
 	}
 
+	addOnBlockingCallback(function () {
+		console.log('ROZKRECAMY KARUZELE');
+		recoverableSlots.forEach(function (slotName) {
+			win.adslots2.push({
+				slotName: slotName,
+				recoverable: true
+			});
+		});
+	});
+
 	return {
 		addOnBlockingCallback: addOnBlockingCallback,
 		initEventQueue: initEventQueue,
-		isRecoveryEnabled: isRecoveryEnabled,
 		isBlocking: isBlocking,
 		isRecoverable: isRecoverable,
+		removeSlotFromList: removeSlotFromList,
 		track: track,
 		verifyContent: verifyContent
 	};

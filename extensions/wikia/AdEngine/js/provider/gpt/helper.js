@@ -53,16 +53,10 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 		extra = extra || {};
 		var count,
 			element,
-			recoverableSlots = extra.recoverableSlots || [],
-			shouldPushRecoverableAd = recoveryHelper.isBlocking() && recoveryHelper.isRecoverable(slot.name, recoverableSlots),
-			shouldPush = !recoveryHelper.isBlocking() || shouldPushRecoverableAd,
+			isRecoverable = recoveryHelper.isRecoverable(slot.name),
 			uapId = uapContext.getUapId();
 
-		log(['shouldPush',
-			slot.name,
-			recoveryHelper.isBlocking(),
-			recoverableSlots,
-			recoveryHelper.isRecoverable(slot.name, recoverableSlots)], 'debug', logGroup);
+		log(['pushAd', slot.name, isRecoverable], 'debug', logGroup);
 
 		slotTargetingData = JSON.parse(JSON.stringify(slotTargetingData)); // copy value
 
@@ -78,7 +72,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 				slotTargetingData.rv = count.toString();
 			}
 		}
-		if (shouldPushRecoverableAd) {
+		if (isRecoverable) {
 			slotTargetingData.src = 'rec';
 		}
 
@@ -88,10 +82,22 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 		element = new AdElement(slot.name, slotPath, slotTargetingData);
 
 		function queueAd() {
-			log(['queueAd', slot.name, element], 'debug', logGroup);
+			var shouldPush = !recoveryHelper.isBlocking() || isRecoverable;
+
+			log(['queueAd', slot.name, element, shouldPush], 'debug', logGroup);
+
+			if (!shouldPush) {
+				log(['Push blocked', slot.name], 'debug', logGroup);
+				slotTweaker.removeDefaultHeight(slot.name);
+				return;
+			}
 			slot.container.appendChild(element.getNode());
+			googleApi.registerCallback(element.getId(), gptCallback);
 
 			googleApi.addSlot(element);
+			if (recoveryHelper.isRecoverable(slot.name)) {
+				recoveryHelper.removeSlotFromList(slot.name);
+			}
 		}
 
 		function onAdLoadCallback(slotElementId, gptEvent, iframe) {
@@ -114,15 +120,8 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 			googleApi.setPageLevelParams(adLogicPageParams.getPageLevelParams());
 		}
 
-		if (!shouldPush) {
-			log(['Push blocked', slot.name], 'debug', logGroup);
-			slotTweaker.removeDefaultHeight(slot.name);
-			return;
-		}
-
 		log(['pushAd', slot.name], 'info', logGroup);
 		if (!slotTargetingData.flushOnly) {
-			googleApi.registerCallback(element.getId(), gptCallback);
 			googleApi.push(queueAd);
 		}
 
