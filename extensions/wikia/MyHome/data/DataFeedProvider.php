@@ -75,11 +75,14 @@ class DataFeedProvider {
 			$itemResult = new DataFeedProviderItemResult();
 			$this->filterOne($itemResult, $item);
 
+			// If this edit was a rollback, hide the revision that it rolled back
 			if ($itemResult->getInvisibleRevisionId()) {
 				$this->invisibleRevisions[$itemResult->getInvisibleRevisionId()] = true;
 				continue;
 			}
-			if (isset($this->invisibleRevisions[$itemResult->getInvisibleRevisionId()])) {
+
+			// SUS-871: If we marked this revision as a rollbacked one, it should not be displayed
+			if (isset($this->invisibleRevisions[$itemResult->getRevisionId()])) {
 				continue;
 			}
 
