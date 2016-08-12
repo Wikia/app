@@ -30,18 +30,16 @@
   "global-footer-company-overview-link-press": "プレスリリース",
   "global-footer-company-overview-link-wikia-gives-back": "Wikia Gives Back",
   "global-footer-site-overview-link-api": "API",
-  "global-footer-site-overview-link-global-sitemap": "グローバル サイトマップ",
-  "global-footer-site-overview-link-local-sitemap": "コミュニティ サイトマップ",
+  "global-footer-site-overview-link-global-sitemap": "グローバル・サイトマップ",
+  "global-footer-site-overview-link-local-sitemap": "コミュニティ・サイトマップ",
   "global-footer-site-overview-link-terms-of-use": "利用規約",
   "global-footer-site-overview-link-privacy-policy": "プライバシー",
   "global-footer-licensing-and-vertical-description": "$1は$2ジャンルのファンによるコミュニティです。コンテンツは$3で利用できます。",
-  "global-footer-licensing-and-vertical-description-param-vertical-tv": "テレビ",
   "global-footer-licensing-and-vertical-description-param-vertical-games": "ゲーム",
+  "global-footer-licensing-and-vertical-description-param-vertical-movies": "映画",
+  "global-footer-licensing-and-vertical-description-param-vertical-tv": "テレビ",
   "global-footer-licensing-and-vertical-description-param-vertical-books": "書籍",
   "global-footer-licensing-and-vertical-description-param-vertical-comics": "コミック",
   "global-footer-licensing-and-vertical-description-param-vertical-lifestyle": "ライフスタイル",
-  "global-footer-licensing-and-vertical-description-param-vertical-music": "音楽",
-  "global-footer-licensing-and-vertical-description-param-vertical-movies": "映画",
-  "global-footer-full-site-link": "PC版サイト",
-  "global-footer-mobile-site-link": "モバイル版サイト"
+  "global-footer-licensing-and-vertical-description-param-vertical-music": "音楽"
 }
