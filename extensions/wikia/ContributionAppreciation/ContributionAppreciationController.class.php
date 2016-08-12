@@ -104,10 +104,10 @@ class ContributionAppreciationController extends WikiaController {
 	}
 
 	private static function shouldDisplayAppreciation() {
-		global $wgUser, $wgLang;
+		global $wgUser, $wgLang, $wgEnableCommunityPageExt;
 
 		// we want to run it only for english users
-		return $wgUser->isLoggedIn() && $wgLang->getCode() === 'en';
+		return $wgUser->isLoggedIn() && $wgLang->getCode() === 'en' && !empty( $wgEnableCommunityPageExt );
 	}
 
 	private function prepareAppreciations( $upvotes ) {
