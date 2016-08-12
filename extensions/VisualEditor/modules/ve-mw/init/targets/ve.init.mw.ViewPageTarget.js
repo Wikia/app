@@ -273,6 +273,7 @@ ve.init.mw.ViewPageTarget.prototype.activate = function () {
 
 		this.saveScrollPosition();
 
+		// Only ensure site JS is loaded if it is enabled (SEC-73)
 		if ( mw.config.get( 'wgUseSiteJs' ) ) {
 			extraModules[extraModules.length] = 'site';
 		}
