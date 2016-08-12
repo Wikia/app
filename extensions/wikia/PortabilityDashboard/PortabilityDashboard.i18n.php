@@ -30,7 +30,7 @@ $messages[ 'en' ] = [
 	'portability-dashboard-special-insights-template-without-title' => 'Unorganized templates on Special:Insights',
 	'portability-dashboard-special-insights-custom-infobox-title' => 'Non-portable infoboxes on Special:Insights',
 	'portability-dashboard-refresh-frequency-info' => 'Portability data, content page views and migration impact are recalculated every Saturday at 9:00 GMT.',
-	'portability-dashboard-no-results-info' => 'We don\'t have any wikis in selected language that are in top $1 most significant communities from the migration impact perspective.'
+	'portability-dashboard-no-results-info' => 'No Wikis in selected language in top $1.'
 ];
 
 $messages[ 'qqq' ] = [
