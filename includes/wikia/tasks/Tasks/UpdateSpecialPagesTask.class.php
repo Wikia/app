@@ -84,8 +84,6 @@ class UpdateSpecialPagesTask extends BaseTask {
 			}
 			$this->info( sprintf("%-30s updated %d rows in %.2fs", $special, $num, $end - $start) );
 
-			wfRunHooks( 'AfterUpdateSpecialPages', [ $queryPage ] );
-
 			if ( wfGetLB()->pingAll() ) {
 				// commit the changes if all connections are still open
 				$dbw->commit();
@@ -99,6 +97,9 @@ class UpdateSpecialPagesTask extends BaseTask {
 
 			// Wait for the slave to catch up
 			wfWaitForSlaves();
+
+			// SUS-832: Run post-transaction hook once the DB transactions are finished
+			\Hooks::run( 'AfterUpdateSpecialPages', [ $queryPage ] );
 		}
 	}
 
