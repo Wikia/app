@@ -135,6 +135,8 @@ class UserProfilePageController extends WikiaController {
 		$this->setVal( 'isWikiStaff', $sessionUser->isAllowed( 'staff' ) );
 		$this->setVal( 'canEditProfile', ( $isUserPageOwner || $sessionUser->isAllowed( 'staff' ) || $sessionUser->isAllowed( 'editprofilev3' ) ) );
 
+		$this->fetchDiscussionPostsNumberFrom($user);
+
 		if ( !empty( $this->title ) ) {
 			$this->setVal( 'reloadUrl', htmlentities( $this->title->getFullURL(), ENT_COMPAT, 'UTF-8' ) );
 		} else {
@@ -955,6 +957,20 @@ class UserProfilePageController extends WikiaController {
 		// we want only the template for now...
 
 		wfProfileOut( __METHOD__ );
+	}
+
+	public function fetchDiscussionPostsNumberFrom( $user ) {
+		global $wgEnableDiscussionPostsCountInUserIdentityBox;
+
+		$this->setVal( 'discussionPostsCountInUserIdentityBoxEnabled', $wgEnableDiscussionPostsCountInUserIdentityBox );
+		if ( $wgEnableDiscussionPostsCountInUserIdentityBox ) {
+			$discussionInfo = UserIdentityBoxDiscussionInfo::createFor( $user );
+
+			$this->setVal( 'discussionActive', $discussionInfo->isDiscussionActive() );
+			$this->setVal( 'discussionPostsCount', $discussionInfo->getDiscussionPostsCount() );
+			$this->setVal( 'discussionAllPostsByUserLink',
+				$discussionInfo->getDiscussionAllPostsByUserLink() );
+		}
 	}
 
 	/**

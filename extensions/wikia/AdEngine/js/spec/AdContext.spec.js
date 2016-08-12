@@ -527,24 +527,6 @@ describe('AdContext', function () {
 		expect(getModule().getContext().opts.pageFairDetection).toBeTruthy();
 	});
 
-	it('enables detection when url param sourcepointdetection is set', function () {
-		mocks.win = {
-			ads: {
-				context: {
-					opts: {
-						sourcePointDetectionUrl: '//foo.bar'
-					}
-				}
-			}
-		};
-		spyOn(mocks.querystring, 'getVal').and.callFake(function (param) {
-			return param === 'sourcepointdetection' ?  '1' : '0';
-		});
-
-		expect(getModule().getContext().opts.sourcePointDetection).toBeTruthy();
-		expect(getModule().getContext().opts.sourcePointDetectionMobile).toBeTruthy();
-	});
-
 	it('enables detection when instantGlobals.wgAdDriverSourcePointDetectionMobileCountries', function () {
 		mocks.win = {
 			ads: {

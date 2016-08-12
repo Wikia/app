@@ -5,7 +5,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 
 	private $hrefs = [
 		'default' => [
-			'fan-communities' => 'http://www.wikia.com/explore',
+			'fan-communities' => 'http://fandom.wikia.com/explore',
 			'about' => 'http://www.wikia.com/about',
 			'careers' => 'https://careers.wikia.com',
 			'press' => 'http://fandom.wikia.com/press',

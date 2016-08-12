@@ -163,6 +163,17 @@ class ArchivedFile {
 			$this->media_type = $row->fa_media_type;
 			$this->description = $row->fa_description;
 			$this->user = $row->fa_user;
+			/**
+			 * Check, how often is this code executed. Scope: the following if block.
+			 *
+			 * @author Mix
+			 * @see SUS-810
+			 */
+			Wikia\Logger\WikiaLogger::instance()->debugSampled(
+				0.01,
+				'SUS-810',
+				[ 'method' => __METHOD__, 'exception' => new Exception() ]
+			);
 			$this->user_text = $row->fa_user_text;
 			$this->timestamp = $row->fa_timestamp;
 			$this->deleted = $row->fa_deleted;

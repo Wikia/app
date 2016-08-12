@@ -36,6 +36,7 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 			slotElement: {
 				appendChild: noop
 			},
+			slotTargetingData: {},
 			sraHelper: {
 				shouldFlush: function () {
 					return true;
@@ -88,7 +89,9 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 	}
 
 	beforeEach(function () {
-		AdElement = noop;
+		AdElement = function (slotName, slotPath, slotTargetingData) {
+			mocks.slotTargetingData = slotTargetingData;
+		};
 
 		AdElement.prototype.getId = function () {
 			return 'TOP_LEADERBOARD';
@@ -206,5 +209,21 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 
 		expect(mocks.googleTag.prototype.push).toHaveBeenCalled();
 		expect(mocks.googleTag.prototype.flush).toHaveBeenCalled();
+	});
+
+	it('Change src to rec if ad is recoverable', function () {
+		var pushAd = function() {
+ 			getModule().pushAd(createSlot('MY_SLOT'), '/blah/blah', {}, {});
+		};
+		spyOn(mocks, 'slotTargetingData');
+		mocks.recoveryHelper.isBlocking = function () { return true; };
+
+		mocks.recoveryHelper.isRecoverable = function () { return false; };
+		pushAd();
+		expect(mocks.slotTargetingData.src).not.toBeDefined();
+
+		mocks.recoveryHelper.isRecoverable = function () { return true; };
+		pushAd();
+		expect(mocks.slotTargetingData.src).toBe('rec');
 	});
 });
