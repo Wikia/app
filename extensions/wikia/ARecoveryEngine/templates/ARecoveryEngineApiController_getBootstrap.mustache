@@ -1,28 +1,26 @@
-<script>
-window._sp_ = {
-    config: {
-        account_id: 106,
-        enable_rid: true,
-        publisher_base: '{{domain}}/{{cs_endpoint}}',
-        content_control_callback: function() {
-            var logGroup = 'ext.wikia.aRecoveryEngine.recovery.bootstrap';
-            if (!window.wgUserName) {
-                document.getElementById('WikiaArticle').style.display = 'none';
-                document.getElementById('WikiaArticleMsg').style.display = 'block';
-                window.addEventListener('load', function(){
-                    require(['ext.wikia.aRecoveryEngine.recovery.helper'], function (helper) {
-                        'use strict';
-                        helper.track('callback');
-                    });
-                });
-            } else {
-                window.Wikia.log(['isContentControlEnabled', false], 'debug', logGroup);
-            }
-        }
+<script type="text/javascript">
+{{{code}}}
+
+window._sp_ = window._sp_ || {};
+window._sp_.config = window._sp_.config || {};
+window._sp_.config.account_id = 106;
+window._sp_.config.publisher_base = '{{domain}}/{{cs_endpoint}}';
+window._sp_.config.enable_rid = true;
+window._sp_.content_control_callback = function() {
+    var logGroup = 'ext.wikia.aRecoveryEngine.recovery.bootstrap';
+    if (!window.wgUserName) {
+        document.getElementById('WikiaArticle').style.display = 'none';
+        document.getElementById('WikiaArticleMsg').style.display = 'block';
+        window.addEventListener('load', function(){
+            require(['ext.wikia.aRecoveryEngine.recovery.helper'], function (helper) {
+                'use strict';
+                helper.track('callback');
+            });
+        });
+    } else {
+        window.Wikia.log(['isContentControlEnabled', false], 'debug', logGroup);
     }
 };
-
-{{{code}}}
 
 window._sp_.boostrap('{{domain}}/api/v1/ARecoveryEngine/delivery');
 
