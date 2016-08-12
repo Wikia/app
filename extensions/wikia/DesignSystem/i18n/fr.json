@@ -35,13 +35,11 @@
   "global-footer-site-overview-link-terms-of-use": "Conditions d'utilisation",
   "global-footer-site-overview-link-privacy-policy": "Politique de confidentialité",
   "global-footer-licensing-and-vertical-description": "$1 est une communauté de Fandom appartenant à la catégorie $2. Contenu disponible sous licence $3.",
-  "global-footer-licensing-and-vertical-description-param-vertical-tv": "Télévision",
   "global-footer-licensing-and-vertical-description-param-vertical-games": "Jeux vidéo",
+  "global-footer-licensing-and-vertical-description-param-vertical-movies": "Cinéma",
+  "global-footer-licensing-and-vertical-description-param-vertical-tv": "Télévision",
   "global-footer-licensing-and-vertical-description-param-vertical-books": "Littérature",
   "global-footer-licensing-and-vertical-description-param-vertical-comics": "Bandes dessinées",
   "global-footer-licensing-and-vertical-description-param-vertical-lifestyle": "Mode de vie",
-  "global-footer-licensing-and-vertical-description-param-vertical-music": "Musique",
-  "global-footer-licensing-and-vertical-description-param-vertical-movies": "Cinéma",
-  "global-footer-full-site-link": "Voir le site complet",
-  "global-footer-mobile-site-link": "Visiter le site mobile"
+  "global-footer-licensing-and-vertical-description-param-vertical-music": "Musique"
 }

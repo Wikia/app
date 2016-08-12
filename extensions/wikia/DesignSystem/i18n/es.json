@@ -35,13 +35,11 @@
   "global-footer-site-overview-link-terms-of-use": "Términos de uso",
   "global-footer-site-overview-link-privacy-policy": "Política de privacidad",
   "global-footer-licensing-and-vertical-description": "$1 es una comunidad Fandom de $2. El contenido está disponible bajo la licencia $3.",
-  "global-footer-licensing-and-vertical-description-param-vertical-tv": "TV",
   "global-footer-licensing-and-vertical-description-param-vertical-games": "Juegos",
+  "global-footer-licensing-and-vertical-description-param-vertical-movies": "Películas",
+  "global-footer-licensing-and-vertical-description-param-vertical-tv": "TV",
   "global-footer-licensing-and-vertical-description-param-vertical-books": "Libros",
   "global-footer-licensing-and-vertical-description-param-vertical-comics": "Cómics",
   "global-footer-licensing-and-vertical-description-param-vertical-lifestyle": "Estilo de vida",
-  "global-footer-licensing-and-vertical-description-param-vertical-music": "Música",
-  "global-footer-licensing-and-vertical-description-param-vertical-movies": "Películas",
-  "global-footer-full-site-link": "Ver sitio completo",
-  "global-footer-mobile-site-link": "Ver sitio móvil"
+  "global-footer-licensing-and-vertical-description-param-vertical-music": "Música"
 }
