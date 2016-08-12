@@ -82,7 +82,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 		element = new AdElement(slot.name, slotPath, slotTargetingData);
 
 		function queueAd() {
-			var shouldPush = !recoveryHelper.isBlocking() || isRecoverable;
+			var shouldPush = !recoveryHelper.isBlocking() || recoveryHelper.isRecoverable(slot.name);
 
 			log(['queueAd', slot.name, element, shouldPush], 'debug', logGroup);
 
