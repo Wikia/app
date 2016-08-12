@@ -2,13 +2,14 @@
 define('ext.wikia.recirculation.experiments.placement.IMPACT_FOOTER', [
 	'jquery',
 	'underscore',
+	'ext.wikia.recirculation.utils',
 	'ext.wikia.recirculation.helpers.contentLinks',
 	'ext.wikia.recirculation.helpers.fandom',
 	'ext.wikia.recirculation.helpers.data',
 	'ext.wikia.recirculation.views.rail',
 	'ext.wikia.recirculation.views.scroller',
 	'ext.wikia.recirculation.views.impactFooter'
-], function ($, _, ContentLinks, FandomHelper, DataHelper, RailView, ScrollerView, ImpactFooterView) {
+], function ($, _, utils, ContentLinks, FandomHelper, DataHelper, RailView, ScrollerView, ImpactFooterView) {
 
 	function run(experimentName) {
 		var scrollerView = ScrollerView(),
