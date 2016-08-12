@@ -76,6 +76,11 @@ define('ext.wikia.adEngine.adContext', [
 			}
 		}
 
+		// SourcePoint disaster recovery
+		if (w.wikiaSPStatus === false) {
+			context.opts.sourcePointRecovery = false;
+		}
+
 		// SourcePoint detection integration
 		if (!noExternals && !context.opts.sourcePointRecovery && context.opts.sourcePointDetectionUrl) {
 			context.opts.sourcePointDetection = isUrlParamSet('sourcepointdetection') ||
