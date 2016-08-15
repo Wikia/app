@@ -23,8 +23,13 @@ require([
 
 			$(svg).attr('class', 'embeddable-discussions-upvote-icon-active');
 
-			// fixme: Requires auth cookie, which is not sent, so the call returns 401
-			$.post(upvoteUrl).fail(function() {
+			$.ajax({
+				type: 'POST',
+				url: upvoteUrl,
+				xhrFields: {
+					withCredentials: true
+				},
+			}).fail(function() {
 				$(svg).attr('class', 'embeddable-discussions-upvote-icon');
 			});
 
