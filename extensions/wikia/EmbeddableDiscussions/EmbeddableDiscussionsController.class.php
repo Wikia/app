@@ -48,26 +48,41 @@ class EmbeddableDiscussionsController {
 			$columns = self::COLUMNS_MAX;
 		}
 
-		$modelData = ( new DiscussionsThreadModel( $wgCityId ) )->getData( $showLatest, $itemCount );
-
-		$modelData['columns'] = $columns;
-		$modelData['columnsClass'] = $columns === 2 ? 'embeddable-discussions-post-detail-columns' : '';
-		$modelData['latestHeading'] = wfMessage( 'embeddable-discussions-show-latest' )->plain();
-		$modelData['replyText'] = wfMessage( 'embeddable-discussions-reply' )->plain();
-		$modelData['shareText'] = wfMessage( 'embeddable-discussions-share' )->plain();
-		$modelData['showAll'] = wfMessage( 'embeddable-discussions-show-all' )->plain();
-		$modelData['showLatest'] = $showLatest;
-		$modelData['trendingHeading'] = wfMessage( 'embeddable-discussions-show-trending' )->plain();
-		$modelData['upvoteText'] = wfMessage( 'embeddable-discussions-upvote' )->plain();
-		$modelData['zeroText'] = wfMessage( 'embeddable-discussions-zero' )->plain();
-		$modelData['zeroTextDetail'] = wfMessage( 'embeddable-discussions-zero-detail' )->plain();
-
 		$templateEngine = ( new Wikia\Template\MustacheEngine )->setPrefix( __DIR__ . '/templates' );
 
-		$html = $templateEngine->clearData()
-			->setData( $modelData )
-			->render( 'DiscussionThread.mustache' );
+		if ( F::app()->checkSkin( 'wikiamobile' ) ) {
+			// In Mercury, discussions are rendered client side as an Ember component
+			$modelData = [
+				'show' => $showLatest ? 'latest' : 'trending',
+				'itemCount' => $itemCount,
+			];
 
-		return $html;
+			// In mercury, discussions app is rendered client side
+			$html = $templateEngine->clearData()
+				->setData( $modelData )
+				->render( 'DiscussionThreadMobile.mustache' );
+
+			return $html;
+		} else {
+			$modelData = ( new DiscussionsThreadModel( $wgCityId ) )->getData( $showLatest, $itemCount );
+
+			$modelData['columns'] = $columns;
+			$modelData['columnsClass'] = $columns === 2 ? 'embeddable-discussions-post-detail-columns' : '';
+			$modelData['latestHeading'] = wfMessage( 'embeddable-discussions-show-latest' )->plain();
+			$modelData['replyText'] = wfMessage( 'embeddable-discussions-reply' )->plain();
+			$modelData['shareText'] = wfMessage( 'embeddable-discussions-share' )->plain();
+			$modelData['showAll'] = wfMessage( 'embeddable-discussions-show-all' )->plain();
+			$modelData['showLatest'] = $showLatest;
+			$modelData['trendingHeading'] = wfMessage( 'embeddable-discussions-show-trending' )->plain();
+			$modelData['upvoteText'] = wfMessage( 'embeddable-discussions-upvote' )->plain();
+			$modelData['zeroText'] = wfMessage( 'embeddable-discussions-zero' )->plain();
+			$modelData['zeroTextDetail'] = wfMessage( 'embeddable-discussions-zero-detail' )->plain();
+
+			$html = $templateEngine->clearData()
+				->setData( $modelData )
+				->render( 'DiscussionThread.mustache' );
+
+			return $html;
+		}
 	}
 }
