@@ -5,7 +5,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 
 	private $hrefs = [
 		'default' => [
-			'fan-communities' => 'http://www.wikia.com/explore',
+			'fan-communities' => 'http://fandom.wikia.com/explore',
 			'about' => 'http://www.wikia.com/about',
 			'careers' => 'https://careers.wikia.com',
 			'press' => 'http://fandom.wikia.com/press',
@@ -14,7 +14,8 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 			'terms-of-use' => 'http://www.wikia.com/Terms_of_use',
 			'privacy-policy' => 'http://www.wikia.com/Privacy_Policy',
 			'global-sitemap' => 'http://www.wikia.com/Sitemap',
-			'local-sitemap' => '/Special:AllPages',
+			'local-sitemap' => '/wiki/Local_Sitemap',
+			'local-sitemap-fandom' => 'http://fandom.wikia.com/local-sitemap',
 			'api' => 'http://api.wikia.com/wiki/Wikia_API_Wiki',
 			'community-central' => 'http://community.wikia.com/wiki/Community_Central',
 			'support' => 'http://community.wikia.com/wiki/Special:Contact',
@@ -288,7 +289,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 							'type' => 'translatable-text',
 							'key' => 'global-footer-site-overview-link-local-sitemap'
 						],
-						'href' => $this->getHref( 'local-sitemap' )
+						'href' => $this->getLocalSitemapUrl()
 					],
 					[
 						'type' => 'link-text',
@@ -694,6 +695,20 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 		}
 
 		return $data;
+	}
+
+	private function getLocalSitemapUrl() {
+		$default = true; // $wgEnableLocalSitemapPageExt = true; in CommonSettings
+		$localSitemapAvailable = WikiFactory::getVarValueByName(
+			'wgEnableLocalSitemapPageExt', $this->wikiId, false, $default
+		);
+
+		if ( $localSitemapAvailable ) {
+			return $this->getHref( 'local-sitemap' );
+		}
+
+		// Fall back to fandom sitemap when the local one is unavailable
+		return $this->getHref( 'local-sitemap-fandom' );
 	}
 
 	private function getLicenseUrl() {
