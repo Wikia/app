@@ -24,5 +24,3 @@
 
 ApiClient.php
 Configuration.php
-autoload.php
-composer.json
