@@ -21,7 +21,7 @@ class CakeRelatedContentService {
 	 * @param $ignore
 	 * @return RecirculationContent[]
 	 */
-	public function getContentRelatedTo($title, $limit=5, $ignore=null) {
+	public function getContentRelatedTo($title, $universeName=null, $limit=5, $ignore=null) {
 		$items = [];
 
 		if (!$this->onValidWiki() || !$this->onValidPage($title)) {
@@ -31,7 +31,7 @@ class CakeRelatedContentService {
 		$api = $this->relatedContentApi();
 
 		try {
-			$filteredRelatedContent = $api->getRelatedContentFromEntityName($title, $limit + 1, "true");
+			$filteredRelatedContent = $api->getRelatedContentFromEntityName($title, $universeName, $limit + 1, "true");
 			if (is_null($filteredRelatedContent)) {
 				$this->warning("getRelatedContentFromEntityName failed to retrieve recommendations", [
 						"title" => $title,
@@ -72,7 +72,7 @@ class CakeRelatedContentService {
 			$wikiArticles = [];
 			foreach ($filteredRelatedContent->getWikiArticles() as $article) {
 				$parsed = parse_url($article->getContent()->getUrl());
-				if ($parsed['path'] != $ignore) {
+				if (urldecode($parsed['path']) != $ignore) {
 					$wikiArticles[] = $article;
 				}
 			}
