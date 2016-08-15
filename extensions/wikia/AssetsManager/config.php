@@ -2997,6 +2997,22 @@ $config['community_page_new_user_modal_scss'] = [
 	]
 ];
 
+$config['embeddable_discussions_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => 'oasis',
+	'assets' => [
+		'//extensions/wikia/EmbeddableDiscussions/scripts/ext.embeddableDiscussions.js',
+	]
+];
+
+$config['embeddable_discussions_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => 'oasis',
+	'assets' => [
+		'//extensions/wikia/EmbeddableDiscussions/styles/EmbeddableDiscussions.scss',
+	]
+];
+
 $config['create_new_wiki_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
