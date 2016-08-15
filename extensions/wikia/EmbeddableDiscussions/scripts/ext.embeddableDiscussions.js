@@ -19,9 +19,9 @@ require([
 
 		$('.upvote').click(function(event) {
 			var upvoteUrl = event.currentTarget.getAttribute('data-url'),
-				svg = $( event.currentTarget ).children()[0];
+				$svg = $($(event.currentTarget).children()[0]);
 
-			$(svg).attr('class', 'embeddable-discussions-upvote-icon-active');
+			$svg.attr('class', 'embeddable-discussions-upvote-icon-active');
 
 			$.ajax({
 				type: 'POST',
@@ -30,16 +30,8 @@ require([
 					withCredentials: true
 				},
 			}).fail(function() {
-				$(svg).attr('class', 'embeddable-discussions-upvote-icon');
+				$svg.attr('class', 'embeddable-discussions-upvote-icon');
 			});
-
-			event.preventDefault();
-		});
-
-		$('.share').click(function(event) {
-			var label = event.currentTarget.getAttribute('data-id');
-
-			// fixme: show share icons
 
 			event.preventDefault();
 		});
