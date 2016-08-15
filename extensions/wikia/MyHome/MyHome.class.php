@@ -166,7 +166,7 @@ class MyHome {
 	public static function getInitialMainPage(Title &$title) {
 		wfProfileIn(__METHOD__);
 
-		global $wgUser, $wgTitle, $wgRequest, $wgEnableWikiaHomePageExt;
+		global $wgUser, $wgTitle, $wgRequest, $wgEnableWikiaHomePageExt, $wgEnableCommunityPageExt;
 
 		// dirty hack to make skin chooser work ($wgTitle is not set at this point yet)
 		$wgTitle = Title::newMainPage();
@@ -181,14 +181,18 @@ class MyHome {
 		//this is not used for Corporate Sites where Wikia Visualization is enabled
 		if( $wgUser->isLoggedIn() && empty($wgEnableWikiaHomePageExt) ) {
 			$value = $wgUser->getGlobalPreference(UserPreferencesV2::LANDING_PAGE_PROP_NAME);
-			switch($value) {
-				case UserPreferencesV2::LANDING_PAGE_WIKI_ACTIVITY:
-					$title = SpecialPage::getTitleFor('WikiActivity');
-					break;
-				case UserPreferencesV2::LANDING_PAGE_RECENT_CHANGES:
-					$title = SpecialPage::getTitleFor('RecentChanges');
-					break;
+			if ( $value == UserPreferencesV2::LANDING_PAGE_WIKI_ACTIVITY ) {
+				$title = SpecialPage::getTitleFor( 'WikiActivity' );
+			} elseif ( $value == UserPreferencesV2::LANDING_PAGE_RECENT_CHANGES ) {
+				$title = SpecialPage::getTitleFor( 'RecentChanges' );
+			} elseif ( $value == UserPreferencesV2::LANDING_PAGE_COMMUNITY_PAGE ) {
+				if ( $wgEnableCommunityPageExt == false ) {
+					$title = SpecialPage::getTitleFor( 'WikiActivity' );
+				} else {
+					$title = SpecialPage::getTitleFor( 'Community' );
+				}
 			}
+
 		}
 
 		wfProfileOut(__METHOD__);
