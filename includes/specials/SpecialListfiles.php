@@ -74,7 +74,14 @@ class ImageListPager extends TablePager {
 			$nt = Title::newFromText( $userName, NS_USER );
 			if ( !is_null( $nt ) ) {
 				$this->mUserName = $nt->getText();
-				$this->mQueryConds['img_user_text'] = $this->mUserName;
+				/* Wikia change begin */
+				$userId = User::idFromName( $this->mUserName );
+				if ( !empty( $userId ) ) {
+					$this->mQueryConds['img_user'] = $userId;
+				} else {
+					$this->mQueryConds['img_user_text'] = $this->mUserName;
+				}
+				/* Wikia change end */
 			}
 		}
 
