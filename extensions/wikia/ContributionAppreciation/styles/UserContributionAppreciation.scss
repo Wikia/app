@@ -1,27 +1,42 @@
 @import 'skins/shared/color';
 
+$color-dark-gray: #333;
+$color-off-white: #f6f6f6;
+
 .appreciation-banner {
-	background-color: mix($color-buttons, $color-body, 10%);
+	background-color: $color-off-white;
 	color: $color-text;
 	font-size: 14px;
 
-	.msg {
-		padding: 16px;
+	a {
+		color: $color-wikia-light-blue;
 	}
 
-	a {
-		color: $color-links;
+	.msg {
+		padding: 16px;
 	}
 
 	.thumbs-up-svg {
 		float: left;
 
 		.thumbs-up-icon {
-			fill: $color-buttons;
+			fill: $color-wikia-light-blue;
 			height: 48px;
 			object-fit: contain;
 			padding: 24px;
 			width: 48px;
+		}
+	}
+
+	.oasis-dark-theme & {
+		background-color: $color-dark-gray;
+
+		a {
+			color: $color-wikiahome-entertainment;
+		}
+
+		.thumbs-up-svg > .thumbs-up-icon {
+			fill: $color-wikiahome-entertainment;
 		}
 	}
 
@@ -62,5 +77,21 @@
 		.expand-link {
 			display: none;
 		}
+	}
+}
+
+.appreciation-banner.light {
+
+}
+
+.appreciation-banner.dark {
+	background-color: $color-dark-gray;
+
+	a {
+		color: $color-wikiahome-entertainment;
+	}
+
+	.thumbs-up-svg > .thumbs-up-icon {
+		fill: $color-wikiahome-entertainment;
 	}
 }
