@@ -84,15 +84,6 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 				'expectedOpts' => ['trackSlotState' => true],
 				'expectedTargeting' => [ 'newWikiCategories' => [ 'test' ] ]
 			],
-			/*
-			[
-				'titleMockType' => 'article',
-				'flags' => ['wgAdDriverUseMonetizationService', 'wgEnableMonetizationModuleExt'],
-				'expectedOpts' => [],
-				'expectedTargeting' => [ 'newWikiCategories' => [ 'test' ] ],
-				'expectedProviders' => ['monetizationService' => true]
-			],
-			*/
 			[
 				'titleMockType' => 'article',
 				'flags' => ['wgAdDriverWikiIsTop1000'],

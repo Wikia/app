@@ -1,15 +1,20 @@
 <?php
 
 class ContributionAppreciationController extends WikiaController {
+	const SUPPORTED_LANGUAGES = [ 'en' ];
+	const EMAIL_CATEGORY = 'ContributionAppreciationMessage';
+	const TRACKING_URL = 'https://beacon.wikia-services.com/__track/special/appreciation_email';
+
 	public function appreciate() {
 		global $wgUser, $wgCityId;
 
+		$id = 0;
 		$this->request->assertValidWriteRequest( $wgUser );
 		$revisionId = $this->request->getInt( 'revision' );
 		$revision = Revision::newFromId( $revisionId );
 
 		if ( $revision ) {
-			( new RevisionUpvotesService() )->addUpvote(
+			$id = ( new RevisionUpvotesService() )->addUpvote(
 				$wgCityId,
 				$revision->getPage(),
 				$revisionId,
@@ -19,6 +24,12 @@ class ContributionAppreciationController extends WikiaController {
 
 			$this->sendMail( $revisionId );
 		}
+
+		$this->response->setValues( [
+			'id' => $id,
+			'appreciated' => !empty( $id )
+		] );
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 	}
 
 	public function getAppreciations() {
@@ -93,6 +104,17 @@ class ContributionAppreciationController extends WikiaController {
 		return true;
 	}
 
+	public static function onSendGridPostbackLogEvents( $events ) {
+		foreach ( $events as $event ) {
+			if ( self::isAppreciationEmailEvent( $event ) ) {
+				if ( preg_match( '/diff=([0-9]*)/', $event[ 'url' ], $diff ) ) {
+					self::sendDataToDW( 'button_clicked', $event[ 'wikia-email-city-id' ], $diff[ 1 ] );
+				} elseif ( preg_match( '/rev_id=([0-9]*)/', $event[ 'url' ], $revId ) ) {
+					self::sendDataToDW( 'diff_link_clicked', $event[ 'wikia-email-city-id' ], $revId[ 1 ] );
+				}
+			}
+		}
+	}
 
 	public static function onBeforePageDisplay( \OutputPage $out, \Skin $skin ) {
 		if ( self::shouldDisplayAppreciation() ) {
@@ -103,11 +125,57 @@ class ContributionAppreciationController extends WikiaController {
 		return true;
 	}
 
+	/**
+	 * Check if event is from sendgrid hook is an appreciation email and has set
+	 * all needed fields.
+	 *
+	 * @param $event from sendgrid hook
+	 * @return bool
+	 */
+	private static function isAppreciationEmailEvent( $event ) {
+		return isset( $event[ 'event' ] ) &&
+			isset( $event[ 'category' ] ) &&
+			isset( $event[ 'url' ] ) &&
+			isset( $event[ 'wikia-email-city-id' ] ) &&
+			$event[ 'event' ] == 'click' &&
+			strpos( $event[ 'category' ], self::EMAIL_CATEGORY ) !== false;
+	}
+
+	/**
+	 * Basing on params, create url to send tracking data to DW and send it.
+	 *
+	 * @param string $action - how user interacted with email
+	 * @param int $wikiId - id of wiki user made contribution on
+	 * @param int $revisionId
+	 */
+	private static function sendDataToDW( $action, $wikiId, $revisionId ) {
+		$dbname = \WikiFactory::IDtoDB( $wikiId );
+		$db = wfGetDB( DB_SLAVE, [ ], $dbname );
+		$revision = Revision::loadFromId( $db, $revisionId );
+
+		if ( $revision ) {
+			$url = self::TRACKING_URL .
+				'?wiki_id=' . $wikiId .
+				'&email_action=' . $action .
+				'&page_id=' . $revision->getTitle()->getArticleID() .
+				'&rev_id=' . $revision->getId() .
+				'&user_id=' . $revision->getUser();
+
+			Http::get( $url );
+		}
+	}
+
 	private static function shouldDisplayAppreciation() {
 		global $wgUser, $wgLang, $wgEnableCommunityPageExt;
 
 		// we want to run it only for english users
-		return $wgUser->isLoggedIn() && $wgLang->getCode() === 'en' && !empty( $wgEnableCommunityPageExt );
+		return $wgUser->isLoggedIn() &&
+			self::isSuportedAppreciationLang( $wgLang->getCode() ) &&
+			!empty( $wgEnableCommunityPageExt );
+	}
+
+	private static function isSuportedAppreciationLang( $lang ) {
+		return in_array( $lang, self::SUPPORTED_LANGUAGES );
 	}
 
 	private function prepareAppreciations( $upvotes ) {
@@ -169,18 +237,23 @@ class ContributionAppreciationController extends WikiaController {
 		$revision = Revision::newFromId( $revisionId );
 
 		if ( $revision ) {
-			$editedPageTitle = $revision->getTitle();
-			$params = [
-				'buttonLink' => SpecialPage::getTitleFor( 'Community' )->getFullURL(),
-				'targetUser' => $revision->getUserText(),
-				'editedPageTitleText' => $editedPageTitle->getText(),
-				'editedWikiName' => $wgSitename,
-				'revisionUrl' => $editedPageTitle->getFullURL( [
-					'diff' => $revision->getId()
-				] )
-			];
+			$diffAuthor = \User::newFromId( $revision->getUser() );
 
-			$this->app->sendRequest( 'Email\Controller\ContributionAppreciationMessageController', 'handle', $params );
+			// we want to send appreciation email for en users only
+			if ( $diffAuthor && self::isSuportedAppreciationLang( $diffAuthor->getGlobalPreference( 'language' ) ) ) {
+				$editedPageTitle = $revision->getTitle();
+				$params = [
+					'buttonLink' => SpecialPage::getTitleFor( 'Community' )->getFullURL(),
+					'targetUser' => $diffAuthor->getName(),
+					'editedPageTitleText' => $editedPageTitle->getText(),
+					'editedWikiName' => $wgSitename,
+					'revisionUrl' => $editedPageTitle->getFullURL( [
+						'diff' => $revision->getId()
+					] )
+				];
+
+				$this->app->sendRequest( 'Email\Controller\ContributionAppreciationMessageController', 'handle', $params );
+			}
 		}
 	}
 }

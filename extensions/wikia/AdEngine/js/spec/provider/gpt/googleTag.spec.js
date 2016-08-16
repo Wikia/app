@@ -32,6 +32,11 @@ describe('ext.wikia.adEngine.provider.gpt.googleTag', function () {
 				refresh: noop,
 				setTargeting: noop
 			},
+			recoveryHelper: {
+				isBlocking: function () {
+					return false;
+				}
+			},
 			window: {
 				googletag: {
 					cmd: {
@@ -60,6 +65,7 @@ describe('ext.wikia.adEngine.provider.gpt.googleTag', function () {
 
 	beforeEach(function () {
 		var GoogleTag = modules['ext.wikia.adEngine.provider.gpt.googleTag'](
+			mocks.recoveryHelper,
 			document,
 			mocks.log,
 			mocks.window

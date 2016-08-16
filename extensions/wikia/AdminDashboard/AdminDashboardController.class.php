@@ -25,7 +25,9 @@ class AdminDashboardController extends WikiaController {
 			$this->tab = static::TAB_ADVANCED;
 		}
 
-		// Add SCSS, JS and messages in one package
+		// Add SCSS, JS and messages
+		$this->response->addAsset( 'special_admindashboard_scss' );
+		$this->response->addAsset( 'special_admindashboard_js' );
 		$this->wg->Out->addModules( 'ext.AdminDashboard' );
 
 		$this->adminDashboardUrl = $this->wg->Title->getFullURL( [ 'tab' => $this->tab ] );
