@@ -82,6 +82,7 @@ require([
 				leaderboardText: $.msg('communitypage-top-contributors-week'),
 				allMembersCount: allMembersCount,
 				allAdminsCount: allAdminsCount,
+				contributorsModuleEnabled: !mw.config.get('wgCommunityPageDisableTopContributors'),
 			});
 			$deferred.resolve(modalNavHtml);
 		}
@@ -277,6 +278,14 @@ require([
 				label: 'modal-close',
 			});
 		});
+
+		if (!mw.config.get('wgCommunityPageDisableTopContributors')) {
+			// Track impression for top contributors module
+			track({
+				action: tracker.ACTIONS.IMPRESSION,
+				label: 'top-contributor-module-loaded',
+			});
+		}
 	}
 
 	$(init);

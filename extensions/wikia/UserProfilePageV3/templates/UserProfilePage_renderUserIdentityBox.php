@@ -65,6 +65,19 @@
 				<? endif; ?>
 			</div>
 
+			<? if ( $discussionPostsCountInUserIdentityBoxEnabled && $discussionActive ): ?>
+				<div class="discussion-details tally">
+					<? if (intval( $discussionPostsCount ) != 0 ): ?>
+						<a id="discussionAllPostsByUser" href="<?= $discussionAllPostsByUserLink ?>">
+					<? endif; ?>
+							<em><?= $discussionPostsCount ?></em>
+							<span class="discussion-label"><?= wfMessage( 'user-identity-box-discussion-posts' )->escaped(); ?></span>
+					<? if (intval( $discussionPostsCount ) != 0 ): ?>
+						</a>
+					<? endif; ?>
+				</div>
+			<? endif; ?>
+
 			<? if ( !$isBlocked ): ?>
 				<ul class="links">
 					<? if ( !empty( $user['twitter'] ) ): ?>

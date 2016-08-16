@@ -2,9 +2,10 @@
 define('ext.wikia.adEngine.lookup.lookupFactory', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adTracker',
+	'ext.wikia.aRecoveryEngine.recovery.helper',
 	'wikia.lazyqueue',
 	'wikia.log'
-], function (adContext, adTracker, lazyQueue, log) {
+], function (adContext, adTracker, helper, lazyQueue, log) {
 	'use strict';
 
 	function create(module) {
@@ -43,6 +44,8 @@ define('ext.wikia.adEngine.lookup.lookupFactory', [
 			// in mercury ad context is being reloaded after XHR call that's why at this point we don't have skin
 			module.call(context.targeting.skin || 'mercury', onResponse);
 			called = true;
+
+			helper.addOnBlockingCallback(onResponseCallbacks.start);
 		}
 
 		function wasCalled() {

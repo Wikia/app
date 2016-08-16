@@ -685,13 +685,13 @@ class WikiFactoryLoader {
 				}
 
 				if ($key == 'wgServer') {
-					$headers = Wikia::getAllHeaders();
-					if (array_key_exists('X-Original-Host', $headers) &&
-					    !empty($headers['X-Original-Host'])) {
+					if ( !empty( $_SERVER['HTTP_X_ORIGINAL_HOST'] ) ) {
 						global $wgConf;
-						$tValue = 'http://'.$headers['X-Original-Host'];
-						$wgConf->localVHosts = array_merge($wgConf->localVHosts,
-										   array( $headers['X-Original-Host'] ));
+
+						$stagingServer = $_SERVER['HTTP_X_ORIGINAL_HOST'];
+
+						$tValue = 'http://'.$stagingServer;
+						$wgConf->localVHosts = array_merge( $wgConf->localVHosts, [ $stagingServer ] );
 					}
 				}
 

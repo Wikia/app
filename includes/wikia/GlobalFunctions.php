@@ -1650,3 +1650,34 @@ function wfHandleCrossSiteAJAXdomain() {
 		}
 	}
 }
+
+function wfGetValueExcerpt( $value ) {
+	$parts = [];
+	$parts[] = gettype( $value );
+
+	if ( is_object( $value ) ) {
+		$parts[] = get_class( $value );
+	} else if ( is_resource( $value ) ) {
+		$parts[] = get_resource_type( $value );
+	}
+
+	if ( is_string( $value ) ) {
+		$parts[] = strlen( $value );
+	}
+
+	if ( is_bool( $value ) ) {
+		$parts[] = $value ? "true" : "false";
+	} else if ( !is_null( $value ) ) {
+		if ( is_scalar( $value ) ) {
+			$stringValue = strval( $value );
+		} else {
+			$stringValue = var_export( $value, true );
+		}
+		if ( strlen( $stringValue ) > 1000 ) {
+			$stringValue = substr( $stringValue, 0, 1000 ) . "...";
+		}
+		$parts[] = $stringValue;
+	}
+
+	return "[" . implode( ':', $parts ) . "]";
+}

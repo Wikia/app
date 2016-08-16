@@ -165,15 +165,15 @@ $animationSpeed: 200ms;
 	}
 }
 
-body.nowikiabar {
-	padding-bottom: 0;
-	margin-bottom: 17px;
-	&.editor {
-		margin-bottom: 0;
+body {
+	&.nowikiabar {
+		padding-bottom: 0;
+	}
+
+	&.wikia-bar-visible {
+		padding-bottom: 25px;
 	}
 }
-
-
 
 .WikiaBarWrapper .wikia-bar {
 	margin: auto;

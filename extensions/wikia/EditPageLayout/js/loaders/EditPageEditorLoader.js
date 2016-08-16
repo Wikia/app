@@ -126,25 +126,7 @@
 
 		},
 
-		launchInfoboxPreview: function() {
-			var editorValue = window.wgEnableCodePageEditor ? ace.edit('editarea').getValue() : WikiaEditor.getInstance().getContent(),
-				wikiaDomain = mw.config.get('wgServer').split('://')[1],
-				templateName = (new mw.Title(mw.config.get('wgPageName'))).getMain(),
-				infoboxPreviewURL = mw.config.get('wgInfoboxPreviewURL');
-
-			$('<form>')
-				.attr({'action': infoboxPreviewURL, 'method': 'POST', 'target': '_blank'})
-				.append(
-					$('<textarea>').val(editorValue).attr({'name': 'editor_value'}),
-					$('<input>').val(wikiaDomain).attr({'name': 'wikia_domain'}),
-					$('<input>').val(templateName).attr({'name': 'template_name'})
-				)
-				.submit();
-		},
-
 		init: function() {
-			$('.InfoboxPreview').click(this.launchInfoboxPreview);
-
 			if (window.wgEnableCodePageEditor) {
 				this.initAceEditor();
 			} else {

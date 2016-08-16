@@ -127,7 +127,7 @@ class HubService extends Service {
 	}
 
 	/**
-	 * Get category id for given cityId
+	 * Get legacy category id for given cityId
 	 * An Ad Tag in WF with a value of comscore_(category) will override this
 	 *
 	 * @param integer $cityId
@@ -137,17 +137,19 @@ class HubService extends Service {
 	private static function getCategoryIdForCity( $cityId ) {
 		$categoryId = null;
 
+		// Warning: this returns the "legacy" category_id only
 		$category = WikiFactory::getCategory( $cityId );
 		if ( $category ) {
 			$categoryId = $category->cat_id;
 		}
 
 		// Check for a tag named comscore_foo and use that if "foo" exists as a category
+		// Some comscore tags don't match up with the old categories, but if it does, use the override
 		$comscoreCategoryOverride = HubService::getComscoreCategoryOverride ( $cityId );
 		if ( $comscoreCategoryOverride ) {
-			$category = WikiFactoryHub::getInstance()->getCategoryByName( $catName );
+			$category = WikiFactoryHub::getInstance()->getCategoryByName( $comscoreCategoryOverride );
 			if ( $category ) {
-				$categoryId = $comscoreCategoryOverride['id'];
+				$categoryId = $category['id'];
 			}
 		}
 
@@ -155,6 +157,7 @@ class HubService extends Service {
 	}
 
 	private static function constructCategoryInfoFromCategoryId( $categoryId ) {
+		// Default fall-through value is "lifestyle", which probably isn't correct in many cases
 		$categoryId = self::getCanonicalCategoryId( $categoryId );
 		$categoryRow = WikiFactoryHub::getInstance()->getCategory( $categoryId );
 		$categoryInfo = new stdClass();

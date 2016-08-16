@@ -448,6 +448,10 @@ class CreateNewWikiTask extends BaseTask {
 						$scribeProducer = new \ScribeEventProducer( $key, 0 );
 						if ( is_object( $scribeProducer ) ) {
 							if ( $scribeProducer->buildEditPackage( $article, $user, $revision ) ) {
+								// SUS-760 Do not send images images (creations and edits) for review while creating a wiki.
+								if ( $article->getTitle()->inNamespaces( NS_FILE, NS_IMAGE ) ) {
+									$scribeProducer->setIsImageForReview( false );
+								}
 								$scribeProducer->sendLog();
 							}
 						}

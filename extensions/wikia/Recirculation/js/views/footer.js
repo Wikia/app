@@ -10,7 +10,6 @@ define('ext.wikia.recirculation.views.footer', [
 	var logGroup = 'ext.wikia.recirculation.views.footer';
 
 	function render(data) {
-		data.items = utils.addUtmTracking(data.items, 'footer');
 
 		return utils.renderTemplate('footer.mustache', data).then(function($html) {
 			$('#WikiaArticle').append($html);

@@ -26,12 +26,6 @@ class AdEngine2Service {
 		return in_array( $pageType, $pageTypes );
 	}
 
-	public static function shouldLoadLiftium() {
-		$pageType = ( new AdEngine2PageTypeService() )->getPageType();
-
-		return $pageType !== AdEngine2PageTypeService::PAGE_TYPE_NO_ADS;
-	}
-
 	/**
 	 * @deprecated
 	 * @return array
