@@ -1,10 +1,15 @@
 @import 'skins/shared/color';
 
-$color-dark-gray: #333;
-$color-off-white: #f6f6f6;
+$banner-bg-color: #f6f6f6;
+$banner-link-color: $color-wikia-light-blue;
+
+@if $is-dark-wiki {
+	$banner-bg-color: #333;
+	$banner-link-color: $color-wikiahome-entertainment;
+}
 
 .appreciation-banner {
-	background-color: $color-off-white;
+	background-color: $banner-bg-color;
 	color: $color-text;
 	font-size: 14px;
 
@@ -13,30 +18,18 @@ $color-off-white: #f6f6f6;
 	}
 
 	a {
-		color: $color-wikia-light-blue;
+		color: $banner-link-color;
 	}
 
 	.thumbs-up-svg {
 		float: left;
 
 		.thumbs-up-icon {
-			fill: $color-wikia-light-blue;
+			fill: $banner-link-color;
 			height: 48px;
 			object-fit: contain;
 			padding: 24px;
 			width: 48px;
-		}
-	}
-
-	.oasis-dark-theme & {
-		background-color: $color-dark-gray;
-
-		a {
-			color: $color-wikiahome-entertainment;
-		}
-
-		.thumbs-up-svg > .thumbs-up-icon {
-			fill: $color-wikiahome-entertainment;
 		}
 	}
 
