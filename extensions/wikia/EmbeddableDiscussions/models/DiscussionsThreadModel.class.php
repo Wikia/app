@@ -61,9 +61,10 @@ class DiscussionsThreadModel {
 			'createdAt' => $timeAgo,
 			'forumName' => wfMessage( 'embeddable-discussions-forum-name', $rawPost['forumName'] )->plain(),
 			'id' => $rawPost['id'],
+			'firstPostId' => $rawPost['firstPostId'],
 			'index' => $index,
 			'link' => '/d/p/' . $rawPost['id'],
-			'upvoteUrl' => $this->getUpvoteRequestUrl( $rawPost['id'] ),
+			'upvoteUrl' => $this->getUpvoteRequestUrl( $rawPost['firstPostId'] ),
 			'title' => $rawPost['title'],
 			'upvoteCount' => $rawPost['upvoteCount'],
 		];
