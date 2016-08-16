@@ -532,10 +532,22 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 		$this->mockGlobalVariable( 'wgWikiaEnvironment', WIKIA_ENV_PREVIEW );
 	}
 
+	protected function mockStagingEnv() {
+		$this->mockGlobalVariable( 'wgDevelEnvironment', false );
+		$this->mockGlobalVariable( 'wgWikiaBaseDomain', 'wikia-staging.com' );
+		$this->mockGlobalVariable( 'wgWikiaEnvironment', WIKIA_ENV_STAGING );
+	}
+
 	protected function mockVerifyEnv() {
 		$this->mockGlobalVariable( 'wgDevelEnvironment', false );
 		$this->mockGlobalVariable( 'wgStagingEnvironment', true );
 		$this->mockGlobalVariable( 'wgWikiaEnvironment', WIKIA_ENV_VERIFY );
+	}
+
+	protected function mockStableEnv() {
+		$this->mockGlobalVariable( 'wgDevelEnvironment', false );
+		$this->mockGlobalVariable( 'wgStagingEnvironment', true );
+		$this->mockGlobalVariable( 'wgWikiaEnvironment', WIKIA_ENV_STABLE );
 	}
 
 	protected function mockSandboxEnv() {
@@ -550,6 +562,7 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 
 	protected function mockProdEnv() {
 		$this->mockGlobalVariable( 'wgDevelEnvironment', false );
+		$this->mockGlobalVariable( 'wgWikiaBaseDomain', 'wikia.com' );
 		$this->mockGlobalVariable( 'wgWikiaEnvironment', WIKIA_ENV_PROD );
 	}
 
@@ -569,6 +582,9 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 			case WIKIA_ENV_PREVIEW:
 				$this->mockPreviewEnv();
 				break;
+			case WIKIA_ENV_STAGING:
+				$this->mockStagingEnv();
+				break;
 			case WIKIA_ENV_VERIFY:
 				$this->mockVerifyEnv();
 				break;
@@ -577,6 +593,9 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 				break;
 			case WIKIA_ENV_DEV:
 				$this->mockDevEnv();
+				break;
+			case WIKIA_ENV_STABLE:
+				$this->mockStableEnv();
 				break;
 		}
 	}

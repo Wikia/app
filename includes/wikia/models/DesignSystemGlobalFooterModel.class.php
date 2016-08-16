@@ -5,7 +5,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 
 	private $hrefs = [
 		'default' => [
-			'fan-communities' => 'http://www.wikia.com/explore',
+			'fan-communities' => 'http://fandom.wikia.com/explore',
 			'about' => 'http://www.wikia.com/about',
 			'careers' => 'https://careers.wikia.com',
 			'press' => 'http://fandom.wikia.com/press',
@@ -14,6 +14,8 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 			'terms-of-use' => 'http://www.wikia.com/Terms_of_use',
 			'privacy-policy' => 'http://www.wikia.com/Privacy_Policy',
 			'global-sitemap' => 'http://www.wikia.com/Sitemap',
+			'local-sitemap' => '/wiki/Local_Sitemap',
+			'local-sitemap-fandom' => 'http://fandom.wikia.com/local-sitemap',
 			'api' => 'http://api.wikia.com/wiki/Wikia_API_Wiki',
 			'community-central' => 'http://community.wikia.com/wiki/Community_Central',
 			'support' => 'http://community.wikia.com/wiki/Special:Contact',
@@ -209,7 +211,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 					'type' => 'line-text',
 					'title' => [
 						'type' => 'translatable-text',
-						'key' => 'global-footer-wikia-company-overview-header'
+						'key' => 'global-footer-company-overview-header'
 					]
 				],
 				'links' => [
@@ -217,7 +219,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 						'type' => 'link-text',
 						'title' => [
 							'type' => 'translatable-text',
-							'key' => 'global-footer-wikia-company-overview-link-about'
+							'key' => 'global-footer-company-overview-link-about'
 						],
 						'href' => $this->getHref( 'about' )
 					],
@@ -225,7 +227,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 						'type' => 'link-text',
 						'title' => [
 							'type' => 'translatable-text',
-							'key' => 'global-footer-wikia-company-overview-link-careers'
+							'key' => 'global-footer-company-overview-link-careers'
 						],
 						'href' => $this->getHref( 'careers' )
 					],
@@ -233,7 +235,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 						'type' => 'link-text',
 						'title' => [
 							'type' => 'translatable-text',
-							'key' => 'global-footer-wikia-company-overview-link-press'
+							'key' => 'global-footer-company-overview-link-press'
 						],
 						'href' => $this->getHref( 'press' )
 					],
@@ -241,7 +243,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 						'type' => 'link-text',
 						'title' => [
 							'type' => 'translatable-text',
-							'key' => 'global-footer-wikia-company-overview-link-contact'
+							'key' => 'global-footer-company-overview-link-contact'
 						],
 						'href' => $this->getHref( 'contact' )
 					],
@@ -249,7 +251,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 						'type' => 'link-text',
 						'title' => [
 							'type' => 'translatable-text',
-							'key' => 'global-footer-wikia-company-overview-link-wikia-gives-back'
+							'key' => 'global-footer-company-overview-link-wikia-gives-back'
 						],
 						'href' => $this->getHref( 'wikia-gives-back' )
 					]
@@ -261,7 +263,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 						'type' => 'link-text',
 						'title' => [
 							'type' => 'translatable-text',
-							'key' => 'global-footer-wikia-site-overview-link-terms-of-use'
+							'key' => 'global-footer-site-overview-link-terms-of-use'
 						],
 						'href' => $this->getHref( 'terms-of-use' )
 					],
@@ -269,7 +271,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 						'type' => 'link-text',
 						'title' => [
 							'type' => 'translatable-text',
-							'key' => 'global-footer-wikia-site-overview-link-privacy-policy'
+							'key' => 'global-footer-site-overview-link-privacy-policy'
 						],
 						'href' => $this->getHref( 'privacy-policy' )
 					],
@@ -277,7 +279,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 						'type' => 'link-text',
 						'title' => [
 							'type' => 'translatable-text',
-							'key' => 'global-footer-wikia-site-overview-link-global-sitemap'
+							'key' => 'global-footer-site-overview-link-global-sitemap'
 						],
 						'href' => $this->getHref( 'global-sitemap' )
 					],
@@ -285,7 +287,15 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 						'type' => 'link-text',
 						'title' => [
 							'type' => 'translatable-text',
-							'key' => 'global-footer-wikia-site-overview-link-api'
+							'key' => 'global-footer-site-overview-link-local-sitemap'
+						],
+						'href' => $this->getLocalSitemapUrl()
+					],
+					[
+						'type' => 'link-text',
+						'title' => [
+							'type' => 'translatable-text',
+							'key' => 'global-footer-site-overview-link-api'
 						],
 						'href' => $this->getHref( 'api' )
 					]
@@ -294,14 +304,14 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 			'create_wiki' => [
 				'description' => [
 					'type' => 'translatable-text',
-					'key' => 'global-footer-wikia-create-wiki-description'
+					'key' => 'global-footer-create-wiki-description'
 				],
 				'links' => [
 					[
 						'type' => 'link-text',
 						'title' => [
 							'type' => 'translatable-text',
-							'key' => 'global-footer-wikia-create-wiki-link-start-wikia'
+							'key' => 'global-footer-create-wiki-link-start-wikia'
 						],
 						'href' => $this->getHref( 'create-new-wiki' )
 					]
@@ -312,12 +322,12 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 					'type' => 'line-text',
 					'title' => [
 						'type' => 'translatable-text',
-						'key' => 'global-footer-wikia-community-apps-header'
+						'key' => 'global-footer-community-apps-header'
 					]
 				],
 				'description' => [
 					'type' => 'translatable-text',
-					'key' => 'global-footer-wikia-community-apps-description'
+					'key' => 'global-footer-community-apps-description'
 				],
 				'links' => [
 					[
@@ -325,7 +335,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 						'image' => 'wds-company-store-appstore',
 						'title' => [
 							'type' => 'translatable-text',
-							'key' => 'global-footer-wikia-community-apps-link-app-store'
+							'key' => 'global-footer-community-apps-link-app-store'
 						],
 						'href' => 'https://itunes.apple.com/developer/wikia-inc./id422467077'
 					],
@@ -334,7 +344,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 						'image' => 'wds-company-store-googleplay',
 						'title' => [
 							'type' => 'translatable-text',
-							'key' => 'global-footer-wikia-community-apps-link-google-play'
+							'key' => 'global-footer-community-apps-link-google-play'
 						],
 						'href' => 'https://play.google.com/store/apps/developer?id=Wikia,+Inc.'
 					]
@@ -345,7 +355,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 					'type' => 'line-text',
 					'title' => [
 						'type' => 'translatable-text',
-						'key' => 'global-footer-wikia-advertise-header'
+						'key' => 'global-footer-advertise-header'
 					]
 				],
 				'links' => [
@@ -353,7 +363,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 						'type' => 'link-text',
 						'title' => [
 							'type' => 'translatable-text',
-							'key' => 'global-footer-wikia-advertise-link-media-kit'
+							'key' => 'global-footer-advertise-link-media-kit'
 						],
 						'href' => $this->getHref( 'media-kit' )
 					],
@@ -361,7 +371,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 						'type' => 'link-text',
 						'title' => [
 							'type' => 'translatable-text',
-							'key' => 'global-footer-wikia-advertise-link-contact'
+							'key' => 'global-footer-advertise-link-contact'
 						],
 						'href' => $this->getHref( 'media-kit-contact' )
 					]
@@ -370,9 +380,11 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 			'licensing_and_vertical' => [
 				'description' => [
 					'type' => 'translatable-text',
-					'key' => 'global-footer-licensing-description',
+					'key' => 'global-footer-licensing-and-vertical-description',
 					'params' => [
-						'license' => $this->getLicenseData(),
+						'sitename' => $this->getSitenameData(),
+						'vertical' => $this->getVerticalData(),
+						'license' => $this->getLicenseData()
 					]
 				],
 			],
@@ -415,7 +427,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 					],
 					'subtitle' => [
 						'type' => 'translatable-text',
-						'key' => 'global-footer-international-logo-home-of-fandom'
+						'key' => 'global-footer-international-header-subtitle'
 					]
 				]
 			];
@@ -424,8 +436,61 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 		return $data;
 	}
 
+	private function getSitenameData() {
+		$wgSitenameForComscoreForWikiId = WikiFactory::getVarValueByName( 'wgSitenameForComscore', $this->wikiId );
+
+		if ( $wgSitenameForComscoreForWikiId ) {
+			$sitename = $wgSitenameForComscoreForWikiId;
+		} else {
+			$wgSitenameForWikiId = WikiFactory::getVarValueByName( 'wgSitename', $this->wikiId );
+
+			if ( $wgSitenameForWikiId ) {
+				$sitename = $wgSitenameForWikiId;
+			} else {
+				$sitename = $this->wg->Sitename;
+			}
+		}
+
+		return [
+			'type' => 'text',
+			'value' => $sitename
+		];
+	}
+
+	private function getVerticalData() {
+		$wikiFactoryInstance = WikiFactoryHub::getInstance();
+		$verticalData = $wikiFactoryInstance->getWikiVertical( $this->wikiId );
+
+		/**
+		 * We don't want to show vertical 'Other' instead we show vertical 'Lifestyle'
+		 * This is Comscore requirement
+		 */
+		if ( $verticalData['id'] == WikiFactoryHub::VERTICAL_ID_OTHER ) {
+			$verticalMessageKey = $wikiFactoryInstance->getAllVerticals()[WikiFactoryHub::VERTICAL_ID_LIFESTYLE]['short'];
+		} else {
+			$verticalMessageKey = $verticalData['short'];
+		}
+
+		/**
+		 * Possible outputs:
+		 * - global-footer-licensing-and-vertical-description-param-vertical-tv
+		 * - global-footer-licensing-and-vertical-description-param-vertical-games
+		 * - global-footer-licensing-and-vertical-description-param-vertical-lifestyle
+		 * - global-footer-licensing-and-vertical-description-param-vertical-books
+		 * - global-footer-licensing-and-vertical-description-param-vertical-music
+		 * - global-footer-licensing-and-vertical-description-param-vertical-comics
+		 * - global-footer-licensing-and-vertical-description-param-vertical-movies
+		 */
+		$verticalMessageKey = 'global-footer-licensing-and-vertical-description-param-vertical-' . $verticalMessageKey;
+
+		return [
+			'type' => 'translatable-text',
+			'key' => $verticalMessageKey
+		];
+	}
+
 	private function getLicenseData() {
-		$licenseText = WikiFactory::getVarByName( 'wgRightsText', $this->wikiId )->cv_value ?: $this->wg->RightsText;
+		$licenseText = WikiFactory::getVarValueByName( 'wgRightsText', $this->wikiId ) ?: $this->wg->RightsText;
 
 		return [
 			'type' => 'link-text',
@@ -449,7 +514,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 					'brand' => 'games',
 					'title' => [
 						'type' => 'translatable-text',
-						'key' => 'global-footer-fandom-link-vertical-games'
+						'key' => 'global-footer-fandom-overview-link-vertical-games'
 					],
 					'href' => 'http://fandom.wikia.com/games'
 				],
@@ -458,7 +523,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 					'brand' => 'movies',
 					'title' => [
 						'type' => 'translatable-text',
-						'key' => 'global-footer-fandom-link-vertical-movies'
+						'key' => 'global-footer-fandom-overview-link-vertical-movies'
 					],
 					'href' => 'http://fandom.wikia.com/movies'
 				],
@@ -467,7 +532,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 					'brand' => 'tv',
 					'title' => [
 						'type' => 'translatable-text',
-						'key' => 'global-footer-fandom-link-vertical-tv'
+						'key' => 'global-footer-fandom-overview-link-vertical-tv'
 					],
 					'href' => 'http://fandom.wikia.com/tv'
 				],
@@ -479,7 +544,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 			'brand' => 'fan-communities',
 			'title' => [
 				'type' => 'translatable-text',
-				'key' => 'global-footer-fandom-link-fan-communities'
+				'key' => 'global-footer-fandom-overview-link-fan-communities'
 			],
 			'href' => $this->getHref( 'fan-communities' )
 		];
@@ -493,7 +558,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 				'type' => 'line-text',
 				'title' => [
 					'type' => 'translatable-text',
-					'key' => 'global-footer-fandom-follow-us-header'
+					'key' => 'global-footer-follow-us-header'
 				]
 			],
 			'links' => [ ]
@@ -505,7 +570,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 				'image' => 'wds-icons-facebook',
 				'title' => [
 					'type' => 'translatable-text',
-					'key' => 'global-footer-fandom-follow-us-link-facebook'
+					'key' => 'global-footer-follow-us-link-facebook'
 				],
 				'href' => $this->getHref( 'social-facebook' )
 			];
@@ -517,7 +582,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 				'image' => 'wds-icons-twitter',
 				'title' => [
 					'type' => 'translatable-text',
-					'key' => 'global-footer-fandom-follow-us-link-twitter'
+					'key' => 'global-footer-follow-us-link-twitter'
 				],
 				'href' => $this->getHref( 'social-twitter' )
 			];
@@ -529,7 +594,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 				'image' => 'wds-icons-reddit',
 				'title' => [
 					'type' => 'translatable-text',
-					'key' => 'global-footer-fandom-follow-us-link-reddit'
+					'key' => 'global-footer-follow-us-link-reddit'
 				],
 				'href' => $this->getHref( 'social-reddit' )
 			];
@@ -541,7 +606,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 				'image' => 'wds-icons-youtube',
 				'title' => [
 					'type' => 'translatable-text',
-					'key' => 'global-footer-fandom-follow-us-link-youtube'
+					'key' => 'global-footer-follow-us-link-youtube'
 				],
 				'href' => $this->getHref( 'social-youtube' )
 			];
@@ -553,7 +618,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 				'image' => 'wds-icons-instagram',
 				'title' => [
 					'type' => 'translatable-text',
-					'key' => 'global-footer-fandom-follow-us-link-instagram'
+					'key' => 'global-footer-follow-us-link-instagram'
 				],
 				'href' => $this->getHref( 'social-instagram' )
 			];
@@ -568,7 +633,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 				'type' => 'line-text',
 				'title' => [
 					'type' => 'translatable-text',
-					'key' => 'global-footer-wikia-community-header'
+					'key' => 'global-footer-community-header'
 				]
 			],
 			'links' => [ ]
@@ -579,7 +644,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 				'type' => 'link-text',
 				'title' => [
 					'type' => 'translatable-text',
-					'key' => 'global-footer-wikia-community-link-community-central'
+					'key' => 'global-footer-community-link-community-central'
 				],
 				'href' => $this->getHref( 'community-central' )
 			];
@@ -590,7 +655,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 				'type' => 'link-text',
 				'title' => [
 					'type' => 'translatable-text',
-					'key' => 'global-footer-wikia-community-link-support'
+					'key' => 'global-footer-community-link-support'
 				],
 				'href' => $this->getHref( 'support' )
 			];
@@ -601,7 +666,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 				'type' => 'link-text',
 				'title' => [
 					'type' => 'translatable-text',
-					'key' => 'global-footer-wikia-community-link-fan-contributor-program'
+					'key' => 'global-footer-community-link-fan-contributor-program'
 				],
 				'href' => $this->getHref( 'fan-contributor' )
 			];
@@ -612,7 +677,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 				'type' => 'link-text',
 				'title' => [
 					'type' => 'translatable-text',
-					'key' => 'global-footer-wikia-community-link-wam-score'
+					'key' => 'global-footer-community-link-wam-score'
 				],
 				'href' => $this->getHref( 'wam' )
 			];
@@ -623,7 +688,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 				'type' => 'link-text',
 				'title' => [
 					'type' => 'translatable-text',
-					'key' => 'global-footer-wikia-community-link-help'
+					'key' => 'global-footer-community-link-help'
 				],
 				'href' => $this->getHref( 'help' )
 			];
@@ -632,9 +697,23 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 		return $data;
 	}
 
+	private function getLocalSitemapUrl() {
+		$default = true; // $wgEnableLocalSitemapPageExt = true; in CommonSettings
+		$localSitemapAvailable = WikiFactory::getVarValueByName(
+			'wgEnableLocalSitemapPageExt', $this->wikiId, false, $default
+		);
+
+		if ( $localSitemapAvailable ) {
+			return $this->getHref( 'local-sitemap' );
+		}
+
+		// Fall back to fandom sitemap when the local one is unavailable
+		return $this->getHref( 'local-sitemap-fandom' );
+	}
+
 	private function getLicenseUrl() {
-		$licenseUrl = WikiFactory::getVarByName( 'wgRightsUrl', $this->wikiId )->cv_value ?: $this->wg->RightsUrl;
-		$licensePage = WikiFactory::getVarByName( 'wgRightsPage', $this->wikiId )->cv_value ?: $this->wg->RightsPage;
+		$licenseUrl = WikiFactory::getVarValueByName( 'wgRightsUrl', $this->wikiId ) ?: $this->wg->RightsUrl;
+		$licensePage = WikiFactory::getVarValueByName( 'wgRightsPage', $this->wikiId ) ?: $this->wg->RightsPage;
 
 		if ( $licensePage ) {
 			$title = GlobalTitle::newFromText( $licensePage, NS_MAIN, $this->wikiId );

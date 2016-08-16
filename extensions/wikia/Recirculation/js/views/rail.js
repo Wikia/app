@@ -17,8 +17,6 @@ define('ext.wikia.recirculation.views.rail', [
 		data.titleHtml = options.formatTitle ? formatTitle(data.title) : data.title;
 		data.group = abTest.getGroup('RECIRCULATION_PLACEMENT');
 
-		data.items = utils.addUtmTracking(data.items, 'rail');
-
 		return utils.renderTemplate(options.template, data)
 			.then(utils.waitForRail)
 			.then(function($html) {

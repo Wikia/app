@@ -49,11 +49,6 @@ define('ext.wikia.adEngine.slotTracker', [
 		if (data.provider === 'Null' || data.provider === 'Later') {
 			return false;
 		}
-		// Liftium has its own tracking
-		if (data.provider === 'Liftium') {
-			return false;
-			//eventName === 'register';
-		}
 		// Flush slots
 		if (data.slotname.match(/_FLUSH$/)) {
 			return false;

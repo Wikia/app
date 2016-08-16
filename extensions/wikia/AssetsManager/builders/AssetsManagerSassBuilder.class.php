@@ -21,7 +21,7 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 	/**
 	 * AssetsManagerSassBuilder constructor - extracts file and parameter info from request URL
 	 * @param WebRequest $request
-	 * @throws Exception if the requested file is not a Sass file or if file path contains invalid characters
+	 * @throws Exception if the file path contains invalid characters
 	 */
 	public function __construct( WebRequest $request ) {
 		global $IP;
@@ -38,7 +38,11 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 		}
 
 		if ( !endsWith( $this->mOid, '.scss', false ) ) {
-			throw new Exception( 'Requested file must be .scss.' );
+			// SUS-802: allow SCSS processing to continue, log the error
+			$this->exists = false;
+			Wikia\Logger\WikiaLogger::instance()->error( 'Requested file must be .scss.', [
+				'oid' => $this->mOid,
+			] );
 		}
 
 		//remove slashes at the beginning of the string, we need a pure relative path to open the file
@@ -47,7 +51,7 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 		if ( !file_exists( "{$IP}/{$this->mOid}" ) ) {
 			// SUS-399: allow SCSS processing to continue, log the error
 			$this->exists = false;
-			Wikia\Logger\WikiaLogger::instance()->info( 'Nonexistent SCSS file requested', [
+			Wikia\Logger\WikiaLogger::instance()->error( 'Nonexistent SCSS file requested', [
 				'oid' => $this->mOid,
 			] );
 		}
@@ -57,18 +61,17 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 	/**
 	 * Gets the CSS generated from this Sass file
 	 * @param null|string $processingTimeStart Unix timestamp with microseconds of processing time start, if given
-	 * @return string CSS generated from this Sass file (empty if the file does not exist anymore)
+	 * @return string CSS generated from this Sass file (or commented error message if the file does not exist anymore, or is invalid)
 	 * @throws Exception if there were errors during file processing
 	 */
 	public function getContent( $processingTimeStart = null ) {
-		global $IP, $wgEnableSASSSourceMaps;
-		wfProfileIn( __METHOD__ );
-
 		// SUS-399: Abort early if we received a request for a file that no longer exists
 		if ( !$this->exists ) {
-			wfProfileOut( __METHOD__ );
 			return $this->makeComment( static::ERR_NONEXISTENT_FILE );
 		}
+
+		global $IP, $wgEnableSASSSourceMaps;
+		wfProfileIn( __METHOD__ );
 
 		$processingTimeStart = null;
 

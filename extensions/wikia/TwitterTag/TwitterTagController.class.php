@@ -7,6 +7,8 @@ class TwitterTagController extends WikiaController {
 	const TWITTER_BASE_URL = 'https://twitter.com/';
 	const TWITTER_USER_TIMELINE = '/^https:\/\/twitter\.com\/@?[a-z0-9_]{1,15}$/i';
 
+	const DEFAULT_HEIGHT = '500';
+
 	const REGEX_DIGITS = '/^[0-9]*$/';
 	const REGEX_HEX_COLOR = '/#[0-9a-f]{3}(?:[0-9a-f]{3})?$/i';
 	const REGEX_TWITTER_SCREEN_NAME = '/^@?[a-z0-9_]{1,15}$/i';
@@ -94,6 +96,9 @@ class TwitterTagController extends WikiaController {
 	 */
 	private function prepareAttributes( array $attributes, array $permittedAttributes ) {
 		$validatedAttributes = [ ];
+
+		// setting default values
+		$validatedAttributes[ 'data-height' ] = self::DEFAULT_HEIGHT;
 
 		foreach ( $attributes as $attributeName => $attributeValue ) {
 			if ( array_key_exists( $attributeName, $permittedAttributes ) &&

@@ -111,4 +111,15 @@ class RevisionUpvotesApiController extends WikiaApiController {
 
 		$this->setResponseData( $upvotes );
 	}
+
+	public function setUserNotified() {
+		$user = $this->wg->User;
+
+		if ( !$user->isLoggedIn() ) {
+			throw new UnauthorizedException();
+		}
+		$this->checkWriteRequest();
+
+		( new RevisionUpvotesService() )->setUserNotified( $user->getId() );
+	}
 }
