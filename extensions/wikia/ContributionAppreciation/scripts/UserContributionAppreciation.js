@@ -63,7 +63,7 @@ require([
 					bindClickTracking(notification);
 					trackImpression();
 					bindEvents(notification);
-					setUserNotified();
+					// setUserNotified();
 				}
 			}
 		});
