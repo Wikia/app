@@ -16,7 +16,6 @@ class DiscussionsCategoryModel {
 	private function getRequestUrl() {
 		global $wgDevelEnvironment;
 
-
 		if ( empty( $wgDevelEnvironment ) ) {
 			return self::DISCUSSIONS_API_BASE . "$this->cityId/forums?responseGroup=small&viewableOnly=true";
 		}
@@ -31,7 +30,7 @@ class DiscussionsCategoryModel {
 		return $obj;
 	}
 
-	private function categoryLookup( $category, $rawData ){
+	private function categoryLookup( $category, $rawData ) {
 		$categories = $rawData['_embedded']['doc:forum'];
 
 		if ( is_array( $categories ) && count( $categories ) > 0 ) {

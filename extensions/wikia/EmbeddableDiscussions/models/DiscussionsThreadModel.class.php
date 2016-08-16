@@ -63,7 +63,7 @@ class DiscussionsThreadModel {
 			'id' => $rawPost['id'],
 			'index' => $index,
 			'link' => '/d/p/' . $rawPost['id'],
-			'upvoteUrl' => $this->getUpvoteRequestUrl( $rawPost['id']),
+			'upvoteUrl' => $this->getUpvoteRequestUrl( $rawPost['id'] ),
 			'title' => $rawPost['title'],
 			'upvoteCount' => $rawPost['upvoteCount'],
 		];
