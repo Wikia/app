@@ -1,8 +1,0 @@
-{
-	"@metadata": {
-		"authors": [
-			"Xuacu"
-		]
-	},
-	"parserhooks-desc": "Interfaz OOP pa crear enganches del analizador de MediaWiki de manera declarativa"
-}

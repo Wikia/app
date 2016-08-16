@@ -1,8 +1,0 @@
-{
-	"@metadata": {
-		"authors": [
-			"Beta16"
-		]
-	},
-	"parserhooks-desc": "Interfaccia OOP per la creazione di parser hooks MediaWiki in maniera dichiarativa"
-}

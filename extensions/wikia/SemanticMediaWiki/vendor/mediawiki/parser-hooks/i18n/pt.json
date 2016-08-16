@@ -1,8 +1,0 @@
-{
-	"@metadata": {
-		"authors": [
-			"Hamilton Abreu"
-		]
-	},
-	"parserhooks-desc": "Interface orientada para objetos, para criação de ''hooks'' do analisador sintático do MediaWiki de forma declarativa"
-}

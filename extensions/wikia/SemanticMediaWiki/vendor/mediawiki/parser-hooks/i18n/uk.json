@@ -1,8 +1,0 @@
-{
-	"@metadata": {
-		"authors": [
-			"Andriykopanytsia"
-		]
-	},
-	"parserhooks-desc": "Інтерфейс ООП для сворення аналізатора MediaWiki, приєднаному у декларативному стилі"
-}

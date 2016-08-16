@@ -1,8 +1,0 @@
-{
-	"@metadata": {
-		"authors": [
-			"Lokal Profil"
-		]
-	},
-	"parserhooks-desc": "OOP-gränssnitt för att skapa MediaWiki tolk-hooks (parser hooks) krokar på ett deklarativt sätt"
-}
