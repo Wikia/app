@@ -149,7 +149,7 @@ class HubService extends Service {
 		if ( $comscoreCategoryOverride ) {
 			$category = WikiFactoryHub::getInstance()->getCategoryByName( $comscoreCategoryOverride );
 			if ( $category ) {
-				$categoryId = $comscoreCategoryOverride['id'];
+				$categoryId = $category['id'];
 			}
 		}
 

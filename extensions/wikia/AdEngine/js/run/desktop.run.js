@@ -3,7 +3,6 @@
 require([
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adEngineRunner',
-	'ext.wikia.adEngine.adLogicHighValueCountry',
 	'ext.wikia.adEngine.config.desktop',
 	'ext.wikia.adEngine.customAdsLoader',
 	'ext.wikia.adEngine.dartHelper',
@@ -21,7 +20,6 @@ require([
 ], function (
 	adContext,
 	adEngineRunner,
-	adLogicHighValueCountry,
 	adConfigDesktop,
 	customAdsLoader,
 	dartHelper,
@@ -44,28 +42,10 @@ require([
 
 	win.AdEngine_getTrackerStats = slotTracker.getStats;
 
-	// DART API for Liftium
-	win.LiftiumDART = {
-		getUrl: function (slotname, slotsize) {
-			if (slotsize) {
-				slotsize += ',1x1';
-			}
-			return dartHelper.getUrl({
-				slotname: slotname,
-				slotsize: slotsize,
-				adType: 'adi',
-				src: 'liftium'
-			});
-		}
-	};
-
 	messageListener.init();
 
 	// Register window.wikiaDartHelper so jwplayer can use it
 	win.wikiaDartHelper = dartHelper;
-
-	// Register adLogicHighValueCountry as so Liftium can use it
-	win.adLogicHighValueCountry = adLogicHighValueCountry;
 
 	// Register adSlotTweaker so DART creatives can use it
 	// https://www.google.com/dfp/5441#delivery/CreateCreativeTemplate/creativeTemplateId=10017012
@@ -81,16 +61,14 @@ require([
 		win.adslots2 = win.adslots2 || [];
 		adEngineRunner.run(adConfigDesktop, win.adslots2, 'queue.desktop', !!context.opts.delayEngine);
 
-		// Recovery
-		recoveryHelper.initEventQueue();
-
-		if (!context.opts.sourcePointRecovery) {
-			sourcePoint.initDetection();
-		}
+		sourcePoint.initDetection();
 
 		if (context.opts.pageFairDetection) {
 			pageFair.initDetection(context);
 		}
+
+		// Recovery
+		recoveryHelper.initEventQueue();
 
 		if (context.opts.googleConsumerSurveys && gcs) {
 			gcs.addRecoveryCallback();
