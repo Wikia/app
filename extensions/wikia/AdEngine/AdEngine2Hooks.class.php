@@ -39,6 +39,7 @@ class AdEngine2Hooks {
 	{
 		$vars[] = 'wgAdDriverAdsRecoveryMessageCountries';
 		$vars[] = 'wgAdDriverDelayCountries';
+		$vars[] = 'wgAdDriverDelayTimeout';
 		$vars[] = 'wgAdDriverEvolve2Countries';
 		$vars[] = 'wgAdDriverGoogleConsumerSurveysCountries';
 		$vars[] = 'wgAdDriverHighImpactSlotCountries';

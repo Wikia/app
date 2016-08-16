@@ -1,10 +1,11 @@
 /*global define*/
 /*jshint maxlen:125, camelcase:false, maxdepth:7*/
 define('ext.wikia.adEngine.provider.gpt.googleTag', [
+	'ext.wikia.aRecoveryEngine.recovery.helper',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window'
-], function (doc, log, window) {
+], function (helper, doc, log, window) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.gpt.googleTag',
@@ -60,7 +61,7 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 
 		window.googletag = window.googletag || {};
 		window.googletag.cmd = window.googletag.cmd || [];
-		if (!window.googletag.apiReady) {
+		if (!window.googletag.apiReady && !helper.isBlocking()) {
 			gads.async = true;
 			gads.type = 'text/javascript';
 			gads.src = '//www.googletagservices.com/tag/js/gpt.js';

@@ -103,6 +103,7 @@ $config['adengine2_desktop_js'] = [
 		'//extensions/wikia/AdEngine/js/video/playwire.js',
 		'//extensions/wikia/AdEngine/js/video/vastBuilder.js',
 		'//extensions/wikia/ARecoveryEngine/js/helper.js',
+		'//extensions/wikia/ARecoveryEngine/js/sourcePointRecovery.js',
 		'//resources/wikia/modules/krux.js',
 
 		// was: late queue
@@ -231,7 +232,8 @@ $config['adengine2_tracking_js'] = [
 		'//extensions/wikia/AdEngine/js/lookup/lookupFactory.js',
 		'//extensions/wikia/AdEngine/js/slot/adSlot.js',
 		'//extensions/wikia/AdEngine/js/utils/AdLogicZoneParams.js',
-		'//resources/wikia/modules/krux.js',
+		'//extensions/wikia/ARecoveryEngine/js/helper.js',
+		'//resources/wikia/modules/krux.js'
 	],
 ];
 

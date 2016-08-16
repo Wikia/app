@@ -1499,6 +1499,13 @@ $wgAdDriverEnableAdsInMaps = true;
 $wgAdDriverDelayCountries = null;
 
 /**
+ * @name $wgAdDriverDelayTimeout
+ * AdEngine delay timeout (in ms)
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverDelayTimeout = 2000;
+
+/**
  * @name $wgAdDriverKruxCountries
  * List of countries Krux will be enabled on
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
