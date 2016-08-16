@@ -22,6 +22,9 @@ class EmbeddableDiscussionsController {
 	public static function onBeforePageDisplay( \OutputPage $out, \Skin $skin ) {
 		\Wikia::addAssetsToOutput( 'embeddable_discussions_js' );
 		\Wikia::addAssetsToOutput( 'embeddable_discussions_scss' );
+
+		JSMessages::enqueuePackage( 'EmbeddableDiscussions', JSMessages::EXTERNAL );
+
 		return true;
 	}
 
