@@ -46,7 +46,6 @@ describe('ext.wikia.adEngine.lookup.prebid', function () {
 				}
 			},
 			doc: {
-				addEventListener: noop,
 				node: {
 					parentNode: {
 						insertBefore: noop
@@ -67,7 +66,7 @@ describe('ext.wikia.adEngine.lookup.prebid', function () {
 			},
 			log: noop,
 			recoveryHelper: {
-				addResponseListener: noop
+				addOnBlockingCallback: noop
 			},
 			win: {
 				pbjs: {
@@ -124,7 +123,6 @@ describe('ext.wikia.adEngine.lookup.prebid', function () {
 			mocks.adContext,
 			mocks.adTracker,
 			mocks.recoveryHelper,
-			mocks.doc,
 			mocks.lazyQueue,
 			mocks.log
 		);
