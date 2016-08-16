@@ -67,6 +67,7 @@ describe('ext.wikia.adEngine.lookup.openXBidder', function () {
 				}
 			},
 			doc: {
+				addEventListener: noop,
 				node: {
 					parentNode: {
 						insertBefore: noop
@@ -88,6 +89,9 @@ describe('ext.wikia.adEngine.lookup.openXBidder', function () {
 				}
 			},
 			log: noop,
+			recoveryHelper: {
+				addResponseListener: noop
+			},
 			tiers: [],
 			win: {
 				OX: {
@@ -112,6 +116,8 @@ describe('ext.wikia.adEngine.lookup.openXBidder', function () {
 		return modules['ext.wikia.adEngine.lookup.lookupFactory'](
 			mocks.adContext,
 			mocks.adTracker,
+			mocks.recoveryHelper,
+			mocks.doc,
 			mocks.lazyQueue,
 			mocks.log
 		);
