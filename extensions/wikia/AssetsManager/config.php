@@ -3077,3 +3077,18 @@ $config['contribution_appreciation_user_scss'] = [
 		'//extensions/wikia/ContributionAppreciation/styles/UserContributionAppreciation.scss',
 	],
 ];
+
+/** Assets for Special:AdminDashboard */
+$config['special_admindashboard_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'assets' => [
+		'//extensions/wikia/AdminDashboard/css/AdminDashboard.scss',
+	],
+];
+
+$config['special_admindashboard_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => [
+		'//extensions/wikia/AdminDashboard/js/AdminDashboard.js',
+	],
+];
