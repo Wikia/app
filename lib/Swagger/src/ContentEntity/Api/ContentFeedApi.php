@@ -1,6 +1,6 @@
 <?php
 /**
- * RelatedContentApi
+ * ContentFeedApi
  * PHP version 5
  *
  * @category Class
@@ -42,7 +42,7 @@ use \Swagger\Client\ApiException;
 use \Swagger\Client\ObjectSerializer;
 
 /**
- * RelatedContentApi Class Doc Comment
+ * ContentFeedApi Class Doc Comment
  *
  * @category Class
  * @package  Swagger\Client
@@ -50,7 +50,7 @@ use \Swagger\Client\ObjectSerializer;
  * @license  http://www.apache.org/licenses/LICENSE-2.0 Apache Licene v2
  * @link     https://github.com/swagger-api/swagger-codegen
  */
-class RelatedContentApi
+class ContentFeedApi
 {
 
     /**
@@ -90,7 +90,7 @@ class RelatedContentApi
      *
      * @param \Swagger\Client\ApiClient $apiClient set the API client
      *
-     * @return RelatedContentApi
+     * @return ContentFeedApi
      */
     public function setApiClient(\Swagger\Client\ApiClient $apiClient)
     {
@@ -135,7 +135,7 @@ class RelatedContentApi
             throw new \InvalidArgumentException('Missing the required parameter $content_id when calling getRelatedContentFromContentId');
         }
         // parse inputs
-        $resourcePath = "/related-content/from-content-id/{contentId}";
+        $resourcePath = "/content-feed/from-content-id/{contentId}";
         $httpBody = '';
         $queryParams = array();
         $headerParams = array();
@@ -185,7 +185,7 @@ class RelatedContentApi
                 $httpBody,
                 $headerParams,
                 '\Swagger\Client\ContentEntity\Models\FilteredRelatedContent',
-                '/related-content/from-content-id/{contentId}'
+                '/content-feed/from-content-id/{contentId}'
             );
 
             return array($this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\ContentEntity\Models\FilteredRelatedContent', $httpHeader), $statusCode, $httpHeader);
@@ -246,11 +246,11 @@ class RelatedContentApi
             throw new \InvalidArgumentException('Missing the required parameter $url when calling getRelatedContentFromContentUrl');
         }
         if (!preg_match(".+", $url)) {
-            throw new \InvalidArgumentException('invalid value for "url" when calling RelatedContentApi.getRelatedContentFromContentUrl, must conform to the pattern .+.');
+            throw new \InvalidArgumentException('invalid value for "url" when calling ContentFeedApi.getRelatedContentFromContentUrl, must conform to the pattern .+.');
         }
 
         // parse inputs
-        $resourcePath = "/related-content/from-content-url/{url}";
+        $resourcePath = "/content-feed/from-content-url/{url}";
         $httpBody = '';
         $queryParams = array();
         $headerParams = array();
@@ -300,7 +300,7 @@ class RelatedContentApi
                 $httpBody,
                 $headerParams,
                 '\Swagger\Client\ContentEntity\Models\FilteredRelatedContent',
-                '/related-content/from-content-url/{url}'
+                '/content-feed/from-content-url/{url}'
             );
 
             return array($this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\ContentEntity\Models\FilteredRelatedContent', $httpHeader), $statusCode, $httpHeader);
@@ -363,7 +363,7 @@ class RelatedContentApi
             throw new \InvalidArgumentException('Missing the required parameter $entity_id when calling getRelatedContentFromEntityId');
         }
         // parse inputs
-        $resourcePath = "/related-content/from-entity-id/{entityId}";
+        $resourcePath = "/content-feed/from-entity-id/{entityId}";
         $httpBody = '';
         $queryParams = array();
         $headerParams = array();
@@ -417,7 +417,7 @@ class RelatedContentApi
                 $httpBody,
                 $headerParams,
                 '\Swagger\Client\ContentEntity\Models\FilteredRelatedContent',
-                '/related-content/from-entity-id/{entityId}'
+                '/content-feed/from-entity-id/{entityId}'
             );
 
             return array($this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\ContentEntity\Models\FilteredRelatedContent', $httpHeader), $statusCode, $httpHeader);
@@ -482,7 +482,7 @@ class RelatedContentApi
             throw new \InvalidArgumentException('Missing the required parameter $name when calling getRelatedContentFromEntityName');
         }
         // parse inputs
-        $resourcePath = "/related-content/from-entity-name/{name}";
+        $resourcePath = "/content-feed/from-entity-name/{name}";
         $httpBody = '';
         $queryParams = array();
         $headerParams = array();
@@ -540,7 +540,96 @@ class RelatedContentApi
                 $httpBody,
                 $headerParams,
                 '\Swagger\Client\ContentEntity\Models\FilteredRelatedContent',
-                '/related-content/from-entity-name/{name}'
+                '/content-feed/from-entity-name/{name}'
+            );
+
+            return array($this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\ContentEntity\Models\FilteredRelatedContent', $httpHeader), $statusCode, $httpHeader);
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\ContentEntity\Models\FilteredRelatedContent', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+                case 404:
+                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\ContentEntity\Models\ResponseObj', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+            }
+
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation getWikiRelatedContent
+     *
+     * get content feed for a given community
+     *
+     * @param string $community_name  (required)
+     * @return \Swagger\Client\ContentEntity\Models\FilteredRelatedContent
+     * @throws \Swagger\Client\ApiException on non-2xx response
+     */
+    public function getWikiRelatedContent($community_name)
+    {
+        list($response) = $this->getWikiRelatedContentWithHttpInfo($community_name);
+        return $response;
+    }
+
+    /**
+     * Operation getWikiRelatedContentWithHttpInfo
+     *
+     * get content feed for a given community
+     *
+     * @param string $community_name  (required)
+     * @return Array of \Swagger\Client\ContentEntity\Models\FilteredRelatedContent, HTTP status code, HTTP response headers (array of strings)
+     * @throws \Swagger\Client\ApiException on non-2xx response
+     */
+    public function getWikiRelatedContentWithHttpInfo($community_name)
+    {
+        // verify the required parameter 'community_name' is set
+        if ($community_name === null) {
+            throw new \InvalidArgumentException('Missing the required parameter $community_name when calling getWikiRelatedContent');
+        }
+        // parse inputs
+        $resourcePath = "/content-feed/community/{communityName}";
+        $httpBody = '';
+        $queryParams = array();
+        $headerParams = array();
+        $formParams = array();
+        $_header_accept = $this->apiClient->selectHeaderAccept(array('text/html', 'application/json'));
+        if (!is_null($_header_accept)) {
+            $headerParams['Accept'] = $_header_accept;
+        }
+        $headerParams['Content-Type'] = $this->apiClient->selectHeaderContentType(array());
+
+        // path params
+        if ($community_name !== null) {
+            $resourcePath = str_replace(
+                "{" . "communityName" . "}",
+                $this->apiClient->getSerializer()->toPathValue($community_name),
+                $resourcePath
+            );
+        }
+        // default format to json
+        $resourcePath = str_replace("{format}", "json", $resourcePath);
+
+        
+        // for model (json/xml)
+        if (isset($_tempBody)) {
+            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
+        } elseif (count($formParams) > 0) {
+            $httpBody = $formParams; // for HTTP post (form)
+        }
+        // make the API Call
+        try {
+            list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
+                $resourcePath,
+                'GET',
+                $queryParams,
+                $httpBody,
+                $headerParams,
+                '\Swagger\Client\ContentEntity\Models\FilteredRelatedContent',
+                '/content-feed/community/{communityName}'
             );
 
             return array($this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\ContentEntity\Models\FilteredRelatedContent', $httpHeader), $statusCode, $httpHeader);
