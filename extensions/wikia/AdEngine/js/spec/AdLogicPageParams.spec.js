@@ -4,7 +4,12 @@
 describe('AdLogicPageParams', function () {
 	'use strict';
 
-	var logMock = function () { return; };
+	var logMock = function () { return;},
+		geoMock = {
+			getCountryCode: function() {
+				return 'PL';
+			}
+		};
 
 	function mockAdContext(targeting) {
 		return {
@@ -114,6 +119,7 @@ describe('AdLogicPageParams', function () {
 			windowMock.document,
 			windowMock.location,
 			windowMock,
+			geoMock,
 			abTestMock,
 			kruxMock
 		).getPageLevelParams(opts.getPageLevelParamsOptions);
@@ -131,6 +137,7 @@ describe('AdLogicPageParams', function () {
 		expect(params.dmn).toBe('zone_domain');
 		expect(params.hostpre).toBe('zone_hostname_prefix');
 		expect(params.lang).toBe('zl');
+		expect(params.geo).toBe('PL');
 	});
 
 	it('getPageLevelParams wpage param', function () {
