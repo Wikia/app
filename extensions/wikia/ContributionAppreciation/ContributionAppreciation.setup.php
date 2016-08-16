@@ -10,3 +10,4 @@ $wgHooks['AfterDiffRevisionHeader'][] = 'ContributionAppreciationController::onA
 $wgHooks['PageHistoryToolsList'][] = 'ContributionAppreciationController::onPageHistoryToolsList';
 $wgHooks['PageHistoryBeforeList'][] = 'ContributionAppreciationController::onPageHistoryBeforeList';
 $wgHooks['BeforePageDisplay'][] = 'ContributionAppreciationController::onBeforePageDisplay';
+$wgHooks['SendGridPostbackLogEvents'][] = 'ContributionAppreciationController::onSendGridPostbackLogEvents';
