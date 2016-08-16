@@ -42,6 +42,7 @@ describe('ext.wikia.adEngine.lookup.rubiconFastlane', function () {
 				}
 			},
 			doc: {
+				addEventListener: noop,
 				node: {
 					parentNode: {
 						insertBefore: noop
@@ -63,6 +64,9 @@ describe('ext.wikia.adEngine.lookup.rubiconFastlane', function () {
 				}
 			},
 			log: noop,
+			recoveryHelper: {
+				addResponseListener: noop
+			},
 			slot: {
 				setFPI: function (key, value) {
 					slotParams[key] = value;
@@ -108,6 +112,8 @@ describe('ext.wikia.adEngine.lookup.rubiconFastlane', function () {
 		return modules['ext.wikia.adEngine.lookup.lookupFactory'](
 			mocks.adContext,
 			mocks.adTracker,
+			mocks.recoveryHelper,
+			mocks.doc,
 			mocks.lazyQueue,
 			mocks.log
 		);

@@ -46,6 +46,7 @@ describe('ext.wikia.adEngine.lookup.prebid', function () {
 				}
 			},
 			doc: {
+				addEventListener: noop,
 				node: {
 					parentNode: {
 						insertBefore: noop
@@ -65,6 +66,9 @@ describe('ext.wikia.adEngine.lookup.prebid', function () {
 				}
 			},
 			log: noop,
+			recoveryHelper: {
+				addResponseListener: noop
+			},
 			win: {
 				pbjs: {
 					que: [],
@@ -97,7 +101,7 @@ describe('ext.wikia.adEngine.lookup.prebid', function () {
 									placementId: '5823309'
 								}
 							}
-						]
+						];
 					}
 				}
 			}
@@ -119,6 +123,8 @@ describe('ext.wikia.adEngine.lookup.prebid', function () {
 		return modules['ext.wikia.adEngine.lookup.lookupFactory'](
 			mocks.adContext,
 			mocks.adTracker,
+			mocks.recoveryHelper,
+			mocks.doc,
 			mocks.lazyQueue,
 			mocks.log
 		);
