@@ -8,6 +8,9 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 		callbacks = [],
 		mocks = {
 			log: noop,
+			geo: {
+				getCountryCode: noop
+			},
 			googleTag: function () {},
 			context: { opts: {} },
 			adContext: {
@@ -66,6 +69,7 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 	function getModule() {
 		return modules['ext.wikia.adEngine.provider.gpt.helper'](
 			mocks.log,
+			mocks.geo,
 			mocks.adContext,
 			mocks.adLogicPageParams,
 			mocks.adDetect,
@@ -223,7 +227,9 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 		expect(mocks.slotTargetingData.src).not.toBeDefined();
 
 		mocks.recoveryHelper.isRecoverable = function () { return true; };
+		mocks.geo.getCountryCode = function () { return 'PL'; };
 		pushAd();
 		expect(mocks.slotTargetingData.src).toBe('rec');
+		expect(mocks.slotTargetingData.countryCode).toBe('PL');
 	});
 });
