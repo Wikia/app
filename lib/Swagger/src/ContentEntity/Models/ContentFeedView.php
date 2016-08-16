@@ -1,6 +1,6 @@
 <?php
 /**
- * EntityRelationshipGraph
+ * ContentFeedView
  *
  * PHP version 5
  *
@@ -40,7 +40,7 @@ namespace Swagger\Client\ContentEntity\Models;
 use \ArrayAccess;
 
 /**
- * EntityRelationshipGraph Class Doc Comment
+ * ContentFeedView Class Doc Comment
  *
  * @category    Class */
 /** 
@@ -49,22 +49,20 @@ use \ArrayAccess;
  * @license     http://www.apache.org/licenses/LICENSE-2.0 Apache Licene v2
  * @link        https://github.com/swagger-api/swagger-codegen
  */
-class EntityRelationshipGraph implements ArrayAccess
+class ContentFeedView implements ArrayAccess
 {
     /**
       * The original name of the model.
       * @var string
       */
-    protected static $swaggerModelName = 'EntityRelationshipGraph';
+    protected static $swaggerModelName = 'ContentFeedView';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
       * @var string[]
       */
     protected static $swaggerTypes = array(
-        'root_entity_id' => 'string',
-        'nodes' => '\Swagger\Client\ContentEntity\Models\GraphNode[]',
-        'edges' => '\Swagger\Client\ContentEntity\Models\GraphEdge[]'
+        'entity' => '\Swagger\Client\ContentEntity\Models\Entity'
     );
 
     public static function swaggerTypes()
@@ -77,9 +75,7 @@ class EntityRelationshipGraph implements ArrayAccess
      * @var string[]
      */
     protected static $attributeMap = array(
-        'root_entity_id' => 'rootEntityId',
-        'nodes' => 'nodes',
-        'edges' => 'edges'
+        'entity' => 'entity'
     );
 
     public static function attributeMap()
@@ -92,9 +88,7 @@ class EntityRelationshipGraph implements ArrayAccess
      * @var string[]
      */
     protected static $setters = array(
-        'root_entity_id' => 'setRootEntityId',
-        'nodes' => 'setNodes',
-        'edges' => 'setEdges'
+        'entity' => 'setEntity'
     );
 
     public static function setters()
@@ -107,9 +101,7 @@ class EntityRelationshipGraph implements ArrayAccess
      * @var string[]
      */
     protected static $getters = array(
-        'root_entity_id' => 'getRootEntityId',
-        'nodes' => 'getNodes',
-        'edges' => 'getEdges'
+        'entity' => 'getEntity'
     );
 
     public static function getters()
@@ -133,9 +125,7 @@ class EntityRelationshipGraph implements ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['root_entity_id'] = isset($data['root_entity_id']) ? $data['root_entity_id'] : null;
-        $this->container['nodes'] = isset($data['nodes']) ? $data['nodes'] : null;
-        $this->container['edges'] = isset($data['edges']) ? $data['edges'] : null;
+        $this->container['entity'] = isset($data['entity']) ? $data['entity'] : null;
     }
 
     /**
@@ -162,64 +152,22 @@ class EntityRelationshipGraph implements ArrayAccess
 
 
     /**
-     * Gets root_entity_id
-     * @return string
+     * Gets entity
+     * @return \Swagger\Client\ContentEntity\Models\Entity
      */
-    public function getRootEntityId()
+    public function getEntity()
     {
-        return $this->container['root_entity_id'];
+        return $this->container['entity'];
     }
 
     /**
-     * Sets root_entity_id
-     * @param string $root_entity_id
+     * Sets entity
+     * @param \Swagger\Client\ContentEntity\Models\Entity $entity
      * @return $this
      */
-    public function setRootEntityId($root_entity_id)
+    public function setEntity($entity)
     {
-        $this->container['root_entity_id'] = $root_entity_id;
-
-        return $this;
-    }
-
-    /**
-     * Gets nodes
-     * @return \Swagger\Client\ContentEntity\Models\GraphNode[]
-     */
-    public function getNodes()
-    {
-        return $this->container['nodes'];
-    }
-
-    /**
-     * Sets nodes
-     * @param \Swagger\Client\ContentEntity\Models\GraphNode[] $nodes
-     * @return $this
-     */
-    public function setNodes($nodes)
-    {
-        $this->container['nodes'] = $nodes;
-
-        return $this;
-    }
-
-    /**
-     * Gets edges
-     * @return \Swagger\Client\ContentEntity\Models\GraphEdge[]
-     */
-    public function getEdges()
-    {
-        return $this->container['edges'];
-    }
-
-    /**
-     * Sets edges
-     * @param \Swagger\Client\ContentEntity\Models\GraphEdge[] $edges
-     * @return $this
-     */
-    public function setEdges($edges)
-    {
-        $this->container['edges'] = $edges;
+        $this->container['entity'] = $entity;
 
         return $this;
     }
