@@ -630,6 +630,8 @@ class HistoryPager extends ReverseChronologicalPager {
 			}
 		}
 
+		wfRunHooks( 'PageHistoryToolsList', [ $this, &$row, &$tools ] );
+
 		if ( $tools ) {
 			$s .= ' (' . $lang->pipeList( $tools ) . ')';
 		}

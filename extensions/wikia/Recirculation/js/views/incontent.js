@@ -55,8 +55,6 @@ define('ext.wikia.recirculation.views.incontent', [
 	function render(data) {
 		var deferred = $.Deferred();
 
-		data.items = utils.addUtmTracking(data.items, 'incontent');
-
 		utils.renderTemplate('incontent.mustache', data)
 			.then(waitForToc)
 			.then(function($html) {
