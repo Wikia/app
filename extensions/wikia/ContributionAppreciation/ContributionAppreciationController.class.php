@@ -1,6 +1,7 @@
 <?php
 
 class ContributionAppreciationController extends WikiaController {
+	const SUPPORTED_LANGUAGES = [ 'en' ];
 	const EMAIL_CATEGORY = 'ContributionAppreciationMessage';
 	const TRACKING_URL = 'https://beacon.wikia-services.com/__track/special/appreciation_email';
 
@@ -168,7 +169,13 @@ class ContributionAppreciationController extends WikiaController {
 		global $wgUser, $wgLang, $wgEnableCommunityPageExt;
 
 		// we want to run it only for english users
-		return $wgUser->isLoggedIn() && $wgLang->getCode() === 'en' && !empty( $wgEnableCommunityPageExt );
+		return $wgUser->isLoggedIn() &&
+			self::isSuportedAppreciationLang( $wgLang->getCode() ) &&
+			!empty( $wgEnableCommunityPageExt );
+	}
+
+	private static function isSuportedAppreciationLang( $lang ) {
+		return in_array( $lang, self::SUPPORTED_LANGUAGES );
 	}
 
 	private function prepareAppreciations( $upvotes ) {
@@ -230,20 +237,23 @@ class ContributionAppreciationController extends WikiaController {
 		$revision = Revision::newFromId( $revisionId );
 
 		if ( $revision ) {
-			$editedPageTitle = $revision->getTitle();
-			$params = [
-				'buttonLink' => SpecialPage::getTitleFor( 'Community' )->getFullURL( [
-					'rev_id' => $revision->getId()
-				] ),
-				'targetUser' => $revision->getUserText(),
-				'editedPageTitleText' => $editedPageTitle->getText(),
-				'editedWikiName' => $wgSitename,
-				'revisionUrl' => $editedPageTitle->getFullURL( [
-					'diff' => $revision->getId()
-				] )
-			];
+			$diffAuthor = \User::newFromId( $revision->getUser() );
 
-			$this->app->sendRequest( 'Email\Controller\ContributionAppreciationMessageController', 'handle', $params );
+			// we want to send appreciation email for en users only
+			if ( $diffAuthor && self::isSuportedAppreciationLang( $diffAuthor->getGlobalPreference( 'language' ) ) ) {
+				$editedPageTitle = $revision->getTitle();
+				$params = [
+					'buttonLink' => SpecialPage::getTitleFor( 'Community' )->getFullURL(),
+					'targetUser' => $diffAuthor->getName(),
+					'editedPageTitleText' => $editedPageTitle->getText(),
+					'editedWikiName' => $wgSitename,
+					'revisionUrl' => $editedPageTitle->getFullURL( [
+						'diff' => $revision->getId()
+					] )
+				];
+
+				$this->app->sendRequest( 'Email\Controller\ContributionAppreciationMessageController', 'handle', $params );
+			}
 		}
 	}
 }
