@@ -1,6 +1,8 @@
 <?php
 
 class ContributionAppreciationController extends WikiaController {
+	const SUPPORTED_LANGUAGES = [ 'en' ];
+
 	public function appreciate() {
 		global $wgUser, $wgCityId;
 
@@ -107,7 +109,13 @@ class ContributionAppreciationController extends WikiaController {
 		global $wgUser, $wgLang, $wgEnableCommunityPageExt;
 
 		// we want to run it only for english users
-		return $wgUser->isLoggedIn() && $wgLang->getCode() === 'en' && !empty( $wgEnableCommunityPageExt );
+		return $wgUser->isLoggedIn() &&
+			self::isSuportedAppreciationLang( $wgLang->getCode() ) &&
+			!empty( $wgEnableCommunityPageExt );
+	}
+
+	private static function isSuportedAppreciationLang( $lang ) {
+		return in_array( $lang, self::SUPPORTED_LANGUAGES );
 	}
 
 	private function prepareAppreciations( $upvotes ) {
@@ -172,7 +180,7 @@ class ContributionAppreciationController extends WikiaController {
 			$diffAuthor = \User::newFromId( $revision->getUser() );
 
 			// we want to send appreciation email for en users only
-			if ( $diffAuthor && $diffAuthor->getGlobalPreference( 'language' ) == 'en' ) {
+			if ( $diffAuthor && self::isSuportedAppreciationLang( $diffAuthor->getGlobalPreference( 'language' ) ) ) {
 				$editedPageTitle = $revision->getTitle();
 				$params = [
 					'buttonLink' => SpecialPage::getTitleFor( 'Community' )->getFullURL(),
