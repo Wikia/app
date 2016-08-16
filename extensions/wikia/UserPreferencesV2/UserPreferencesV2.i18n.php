@@ -370,7 +370,7 @@ $messages['de'] = array(
 	'prefs-personal' => 'Meine Informationen',
 	'prefs-wikiemail' => '{{SITENAME}}-Optionen. Sende mir eine E-Mail, wenn …',
 	'preferences-v2-redirect-community-page' => 'Community-Seite (wo verfügbar)',
-	'tog-enotifdiscussions-v2' => '...my Discussions posts receive replies and upvotes',
+	'tog-enotifdiscussions-v2' => '...meine Diskussionsbeiträge erhalten Antworten und Stimmen',
 );
 
 /** Zazaki (Zazaki)
@@ -630,7 +630,7 @@ $messages['fr'] = array(
 	'prefs-personal' => 'Mes infos',
 	'prefs-wikiemail' => 'Options de {{SITENAME}}. M’envoyer un e-mail quand...',
 	'preferences-v2-redirect-community-page' => 'Page Communauté (si disponible)',
-	'tog-enotifdiscussions-v2' => '...my Discussions posts receive replies and upvotes',
+	'tog-enotifdiscussions-v2' => '...mes publications reçoivent des réponses et des votes',
 );
 
 /** Western Frisian (Frysk)
@@ -752,7 +752,7 @@ $messages['it'] = array(
 	'tog-editsectiononrightclick-v2' => 'Modifica le sezioni facendo clic con il pulsante destro del mouse sui titoli di sezione',
 	'tog-editondblclick-v2' => 'Modifica le pagine con un doppio clic',
 	'tog-hidefollowedpages-v2' => 'Nascondi il mio elenco delle pagine seguite a tutti',
-	'tog-enotifdiscussions-v2' => '...my Discussions posts receive replies and upvotes',
+	'tog-enotifdiscussions-v2' => '...i miei post in Discussioni ricevono risposte e voti',
 );
 
 /** Japanese (日本語)
@@ -812,7 +812,7 @@ $messages['ja'] = array(
 	'tog-editsectiononrightclick-v2' => 'セクションのタイトルを右クリックし、セクション編集を開始する',
 	'tog-editondblclick-v2' => 'ダブルクリックでページの編集を開始する',
 	'tog-hidefollowedpages-v2' => 'フォローしているページのリストを非公開にする',
-	'tog-enotifdiscussions-v2' => '...my Discussions posts receive replies and upvotes',
+	'tog-enotifdiscussions-v2' => '...自分の投稿に返信や賛成があったとき',
 );
 
 /** Korean (한국어)
@@ -1293,7 +1293,7 @@ $messages['pt'] = array(
 	'prefs-personal' => 'Minhas Informações',
 	'prefs-wikiemail' => 'Opções da {{SITENAME}}. Envie-me um e-mail quando...',
 	'preferences-v2-redirect-community-page' => 'Página da Comunidade (quando disponível)',
-	'tog-enotifdiscussions-v2' => '...my Discussions posts receive replies and upvotes',
+	'tog-enotifdiscussions-v2' => 'Envie-me um email quando uma das minhas discussões receber respostas ou votos',
 );
 
 /** Brazilian Portuguese (português do Brasil)
