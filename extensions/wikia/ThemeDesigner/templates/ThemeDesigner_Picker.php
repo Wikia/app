@@ -72,7 +72,7 @@
 		<?php if ( !empty( $wg->EnableUploads ) ) { ?>
 			<h1><?= wfMsg('themedesigner-upload-your-own') ?></h1>
 
-			<form id="BackgroundImageForm" class="BackgroundImageForm" action="<?= $wg->ScriptPath ?>/wikia.php?controller=ThemeDesigner&method=BackgroundImageUpload&format=html" method="POST" enctype="multipart/form-data">
+			<form id="BackgroundImageForm" class="BackgroundImageForm" action="<?= $wg->ScriptPath ?>/wikia.php?controller=ThemeDesigner&method=BackgroundImageUpload" method="POST" enctype="multipart/form-data">
 				<input id="backgroundImageUploadFile" name="wpUploadFile" type="file">
 				<input type="submit" value="<?= wfMsg('themedesigner-button-upload') ?>" onclick="return ThemeDesigner.backgroundImageUpload(event);">
 				<?= wfMsgExt('themedesigner-rules-background', array( 'parsemag' ), UploadBackgroundFromFile::FILESIZE_LIMIT / 1024 ) ?>

@@ -48,7 +48,7 @@
 		<?php if ( empty( $wg->EnableUploads ) ) { ?>
 			<p><?= wfMessage( 'themedesigner-upload-disabled' )->plain(); ?></p>
 		<?php } else { ?>
-			<form id="WordMarkUploadForm" action="<?= $wg->ScriptPath ?>/wikia.php?controller=ThemeDesigner&method=WordmarkUpload&format=html" method="POST" enctype="multipart/form-data">
+			<form id="WordMarkUploadForm" action="<?= $wg->ScriptPath ?>/wikia.php?controller=ThemeDesigner&method=WordmarkUpload" method="POST" enctype="multipart/form-data">
 				<input id="WordMarkUploadFile" name="wpUploadFile" class="file-upload" type="file" />
 				<input id="token" type="hidden" value="<?= $token ?>" />
 				<br />
@@ -73,7 +73,7 @@
 		<?php if ( empty( $wg->EnableUploads ) ) { ?>
 			<p><?= wfMessage( 'themedesigner-upload-disabled' )->plain(); ?></p>
 		<?php } else { ?>
-			<form id="FaviconUploadForm" action="<?= $wg->ScriptPath ?>/wikia.php?controller=ThemeDesigner&method=FaviconUpload&format=html" method="POST" enctype="multipart/form-data">
+			<form id="FaviconUploadForm" action="<?= $wg->ScriptPath ?>/wikia.php?controller=ThemeDesigner&method=FaviconUpload" method="POST" enctype="multipart/form-data">
 				<input id="FaviconUploadFile" name="wpUploadFile" class="file-upload" type="file" />
 				<input id="token" type="hidden" value="<?= $token ?>" />
 				<input type="submit" value="<?= wfMsg( 'themedesigner-button-upload-wordmark' ) ?>" />
