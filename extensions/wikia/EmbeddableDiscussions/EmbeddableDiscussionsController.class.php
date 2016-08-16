@@ -31,6 +31,7 @@ class EmbeddableDiscussionsController {
 		$showLatest = filter_var( $args['latest'], FILTER_VALIDATE_BOOLEAN );
 		$itemCount = empty( $args['size'] ) ? self::ITEMS_DEFAULT : intval( $args['size'] );
 		$columns = empty( $args['columns'] ) ? self::COLUMNS_DEFAULT : intval( $args['columns'] );
+		$category = empty( $args['category'] ) ? $wgCityId : ( new DiscussionsCategoryModel( $wgCityId ) )->getCategoryId( $args['category'] );
 
 		if ( $itemCount > self::ITEMS_MAX ) {
 			$itemCount = self::ITEMS_MAX;
@@ -64,7 +65,7 @@ class EmbeddableDiscussionsController {
 
 			return $html;
 		} else {
-			$modelData = ( new DiscussionsThreadModel( $wgCityId ) )->getData( $showLatest, $itemCount );
+			$modelData = ( new DiscussionsThreadModel( $wgCityId ) )->getData( $showLatest, $itemCount, $category );
 
 			$modelData['columns'] = $columns;
 			$modelData['columnsClass'] = $columns === 2 ? 'embeddable-discussions-post-detail-columns' : '';

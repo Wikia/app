@@ -10,6 +10,7 @@ $wgExtensionCredits['parserhook'][] = [
 
 // model
 $wgAutoloadClasses['DiscussionsThreadModel'] = __DIR__ . '/models/DiscussionsThreadModel.class.php';
+$wgAutoloadClasses['DiscussionsCategoryModel'] = __DIR__ . '/models/DiscussionsCategoryModel.class.php';
 
 // controller
 $wgAutoloadClasses['EmbeddableDiscussionsController'] =  __DIR__ . '/EmbeddableDiscussionsController.class.php';

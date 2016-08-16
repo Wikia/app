@@ -20,16 +20,16 @@ class DiscussionsThreadModel {
 	}
 
 	// TODO: Refactor this to use Swagger, see JPN-631.
-	private function getRequestUrl( $showLatest, $limit ) {
+	private function getRequestUrl( $showLatest, $limit, $category ) {
 		global $wgDevelEnvironment;
 
 		$sortKey = $showLatest ? self::SORT_LATEST : self::SORT_TRENDING;
 
 		if ( empty( $wgDevelEnvironment ) ) {
-			return self::DISCUSSIONS_API_BASE . "$this->cityId/threads?sortKey=$sortKey&limit=$limit&viewableOnly=false";
+			return self::DISCUSSIONS_API_BASE . "$this->cityId/threads?forumId=$category&sortKey=$sortKey&limit=$limit&viewableOnly=false";
 		}
 
-		return self::DISCUSSIONS_API_BASE_DEV . "$this->cityId/threads?sortKey=$sortKey&limit=$limit&viewableOnly=false";
+		return self::DISCUSSIONS_API_BASE_DEV . "$this->cityId/threads?forumId=$category&sortKey=$sortKey&limit=$limit&viewableOnly=false";
 	}
 
 	private function getUpvoteRequestUrl( $id ) {
@@ -68,7 +68,6 @@ class DiscussionsThreadModel {
 			'upvoteCount' => $rawPost['upvoteCount'],
 		];
 
-		return $post;
 	}
 
 	private function formatData( $rawData, $showLatest ) {
@@ -89,14 +88,14 @@ class DiscussionsThreadModel {
 		return $data;
 	}
 
-	public function getData( $showLatest, $limit ) {
+	public function getData( $showLatest, $limit, $category ) {
 		$memcKey = wfMemcKey( __METHOD__, self::MCACHE_VER );
 
 		$rawData = WikiaDataAccess::cache(
 			$memcKey,
 			WikiaResponse::CACHE_VERY_SHORT,
-			function() use ( $showLatest, $limit ) {
-				return $this->apiRequest( $this->getRequestUrl( $showLatest, $limit ) );
+			function() use ( $showLatest, $limit, $category ) {
+				return $this->apiRequest( $this->getRequestUrl( $showLatest, $limit, $category ) );
 			}
 		);
 
