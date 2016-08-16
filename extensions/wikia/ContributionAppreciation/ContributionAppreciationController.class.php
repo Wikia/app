@@ -22,6 +22,8 @@ class ContributionAppreciationController extends WikiaController {
 
 			$this->sendMail( $revisionId );
 		}
+
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 	}
 
 	public function getAppreciations() {
