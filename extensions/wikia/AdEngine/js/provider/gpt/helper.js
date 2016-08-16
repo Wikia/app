@@ -2,7 +2,6 @@
 /*jshint maxlen:125, camelcase:false, maxdepth:7*/
 define('ext.wikia.adEngine.provider.gpt.helper', [
 	'wikia.log',
-	'wikia.geo',
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adLogicPageParams',
 	'ext.wikia.adEngine.provider.gpt.adDetect',
@@ -16,7 +15,6 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	require.optional('ext.wikia.adEngine.slot.scrollHandler')
 ], function (
 	log,
-	geo,
 	adContext,
 	adLogicPageParams,
 	adDetect,
@@ -82,7 +80,6 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 		}
 		if (shouldPushRecoverableAd) {
 			slotTargetingData.src = 'rec';
-			slotTargetingData.countryCode = geo.getCountryCode();
 		}
 
 		slotTargetingData.wsi = slotTargeting.getWikiaSlotId(slot.name, slotTargetingData.src);
