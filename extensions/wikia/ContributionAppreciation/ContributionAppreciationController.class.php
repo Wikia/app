@@ -7,12 +7,13 @@ class ContributionAppreciationController extends WikiaController {
 	public function appreciate() {
 		global $wgUser, $wgCityId;
 
+		$id = 0;
 		$this->request->assertValidWriteRequest( $wgUser );
 		$revisionId = $this->request->getInt( 'revision' );
 		$revision = Revision::newFromId( $revisionId );
 
 		if ( $revision ) {
-			( new RevisionUpvotesService() )->addUpvote(
+			$id = ( new RevisionUpvotesService() )->addUpvote(
 				$wgCityId,
 				$revision->getPage(),
 				$revisionId,
@@ -22,6 +23,12 @@ class ContributionAppreciationController extends WikiaController {
 
 			$this->sendMail( $revisionId );
 		}
+
+		$this->response->setValues( [
+			'id' => $id,
+			'appreciated' => !empty( $id )
+		] );
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 	}
 
 	public function getAppreciations() {
