@@ -25,10 +25,6 @@
 		var applicationThemeSettings = <?= json_encode($applicationThemeSettings) ?>;
 	</script>
 
-	<!--[if lt IE 8]>
-		<script src="<?= $wg->ResourceBasePath ?>/resources/wikia/libraries/json2/json2.js"></script>
-	<![endif]-->
-
 <?php
 	$srcs = AssetsManager::getInstance()->getGroupCommonURL('theme_designer_js');
 
@@ -92,8 +88,5 @@
 	<?= F::app()->renderView('ThemeDesigner', 'Picker') ?>
 
 	<iframe frameborder=0 id="PreviewFrame" class="PreviewFrame" src="<?= str_replace('$1', 'Special:ThemeDesignerPreview', $wg->ArticlePath) ?>?noexternals=1"></iframe>
-
-<?= $analytics ?>
-
 </body>
 </html>
