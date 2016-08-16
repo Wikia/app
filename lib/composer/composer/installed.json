@@ -2606,5 +2606,526 @@
             "irc": "irc://irc.freenode.net/mediawiki",
             "source": "https://github.com/JeroenDeDauw/Maps"
         }
+    },
+    {
+        "name": "onoi/callback-container",
+        "version": "1.1.0",
+        "version_normalized": "1.1.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/onoi/callback-container.git",
+            "reference": "0cd9f879676d84033ea7d5a8499b497a108300aa"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/onoi/callback-container/zipball/0cd9f879676d84033ea7d5a8499b497a108300aa",
+            "reference": "0cd9f879676d84033ea7d5a8499b497a108300aa",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.2"
+        },
+        "time": "2016-04-30 07:11:39",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "1.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Onoi\\CallbackContainer\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "authors": [
+            {
+                "name": "mwjames",
+                "homepage": "https://github.com/mwjames"
+            }
+        ],
+        "description": "A simple callback container registry library",
+        "homepage": "https://github.com/onoi/callback-container",
+        "keywords": [
+            "cache"
+        ]
+    },
+    {
+        "name": "onoi/cache",
+        "version": "1.2.0",
+        "version_normalized": "1.2.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/onoi/cache.git",
+            "reference": "ecc999186aab7c8db411aedd892b2e5fe5a0b422"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/onoi/cache/zipball/ecc999186aab7c8db411aedd892b2e5fe5a0b422",
+            "reference": "ecc999186aab7c8db411aedd892b2e5fe5a0b422",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.2"
+        },
+        "time": "2015-06-02 08:52:45",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "1.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Onoi\\Cache\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "authors": [
+            {
+                "name": "mwjames",
+                "homepage": "https://github.com/mwjames"
+            }
+        ],
+        "description": "A minimalistic cache adapter interface library",
+        "homepage": "https://github.com/onoi/cache",
+        "keywords": [
+            "cache"
+        ]
+    },
+    {
+        "name": "onoi/http-request",
+        "version": "1.3.0",
+        "version_normalized": "1.3.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/onoi/http-request.git",
+            "reference": "e6b704d95763d8cffa484f8790dc283aa3aa05b4"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/onoi/http-request/zipball/e6b704d95763d8cffa484f8790dc283aa3aa05b4",
+            "reference": "e6b704d95763d8cffa484f8790dc283aa3aa05b4",
+            "shasum": ""
+        },
+        "require": {
+            "onoi/cache": "~1.2",
+            "php": ">=5.3.2"
+        },
+        "suggest": {
+            "lib-curl": "Allows making CURL requests"
+        },
+        "time": "2015-11-23 14:04:14",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "1.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Onoi\\HttpRequest\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "authors": [
+            {
+                "name": "mwjames",
+                "homepage": "https://github.com/mwjames"
+            }
+        ],
+        "description": "A minimalistic http/curl request interface library",
+        "homepage": "https://github.com/onoi/http-request",
+        "keywords": [
+            "curl",
+            "http request"
+        ]
+    },
+    {
+        "name": "onoi/blob-store",
+        "version": "1.2.1",
+        "version_normalized": "1.2.1.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/onoi/blob-store.git",
+            "reference": "c3e1f15214977e904fc0e91e0480175a464977ce"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/onoi/blob-store/zipball/c3e1f15214977e904fc0e91e0480175a464977ce",
+            "reference": "c3e1f15214977e904fc0e91e0480175a464977ce",
+            "shasum": ""
+        },
+        "require": {
+            "onoi/cache": "~1.1",
+            "php": ">=5.3.2"
+        },
+        "time": "2016-07-09 17:32:53",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "1.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Onoi\\BlobStore\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "authors": [
+            {
+                "name": "mwjames"
+            }
+        ],
+        "description": "A simple interface to manage schema-free temporal persistent key/values",
+        "homepage": "https://github.com/onoi/blob-store",
+        "keywords": [
+            "messages"
+        ]
+    },
+    {
+        "name": "onoi/event-dispatcher",
+        "version": "1.0.0",
+        "version_normalized": "1.0.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/onoi/event-dispatcher.git",
+            "reference": "2ab3958a7c6341451afe4c31503d00d423b30b64"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/onoi/event-dispatcher/zipball/2ab3958a7c6341451afe4c31503d00d423b30b64",
+            "reference": "2ab3958a7c6341451afe4c31503d00d423b30b64",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.2"
+        },
+        "time": "2015-03-25 23:19:55",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "1.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Onoi\\EventDispatcher\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "authors": [
+            {
+                "name": "mwjames"
+            }
+        ],
+        "description": "A minimalistic interface to relay generic events to registered listeners",
+        "homepage": "https://github.com/onoi/event-dispatcher",
+        "keywords": [
+            "events",
+            "listener"
+        ]
+    },
+    {
+        "name": "onoi/message-reporter",
+        "version": "1.2.0",
+        "version_normalized": "1.2.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/onoi/message-reporter.git",
+            "reference": "72a30b7ae393fed978bf6928a2e2440b1c0c0e93"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/onoi/message-reporter/zipball/72a30b7ae393fed978bf6928a2e2440b1c0c0e93",
+            "reference": "72a30b7ae393fed978bf6928a2e2440b1c0c0e93",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.2"
+        },
+        "time": "2016-08-02 04:16:55",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "1.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Onoi\\MessageReporter\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "authors": [
+            {
+                "name": "Jeroen De Dauw"
+            },
+            {
+                "name": "mwjames"
+            }
+        ],
+        "description": "An interface to report and relay arbitrary messages to registered handlers",
+        "homepage": "https://github.com/onoi/message-reporter",
+        "keywords": [
+            "messages"
+        ]
+    },
+    {
+        "name": "serialization/serialization",
+        "version": "3.2.1",
+        "version_normalized": "3.2.1.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/wmde/Serialization.git",
+            "reference": "8e06ec58c8f52079942c9cb2f30b2260f62dc1f4"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/wmde/Serialization/zipball/8e06ec58c8f52079942c9cb2f30b2260f62dc1f4",
+            "reference": "8e06ec58c8f52079942c9cb2f30b2260f62dc1f4",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.0"
+        },
+        "time": "2014-08-19 01:53:31",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "3.2.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "files": [
+                "Serialization.php"
+            ],
+            "psr-4": {
+                "Deserializers\\": "src/Deserializers/",
+                "Serializers\\": "src/Serializers/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "authors": [
+            {
+                "name": "Jeroen De Dauw",
+                "email": "jeroendedauw@gmail.com",
+                "homepage": "http://jeroendedauw.com",
+                "role": "Developer"
+            }
+        ],
+        "description": "Library defining a Serializer and a Deserializer interface and basic utilities",
+        "homepage": "https://github.com/wmde/Serialization",
+        "keywords": [
+            "deserialization",
+            "deserializer",
+            "serialization",
+            "serializer",
+            "unserialization",
+            "wikidata"
+        ]
+    },
+    {
+        "name": "mediawiki/parser-hooks",
+        "version": "1.5.0",
+        "version_normalized": "1.5.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/JeroenDeDauw/ParserHooks.git",
+            "reference": "8139d79191e467d71139d53ac12bb4acb7b3963d"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/JeroenDeDauw/ParserHooks/zipball/8139d79191e467d71139d53ac12bb4acb7b3963d",
+            "reference": "8139d79191e467d71139d53ac12bb4acb7b3963d",
+            "shasum": ""
+        },
+        "require": {
+            "param-processor/param-processor": "~1.2",
+            "php": ">=5.3.0"
+        },
+        "time": "2016-03-05 15:47:04",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "1.5.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "files": [
+                "ParserHooks.php"
+            ],
+            "psr-4": {
+                "ParserHooks\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "authors": [
+            {
+                "name": "Jeroen De Dauw",
+                "email": "jeroendedauw@gmail.com",
+                "homepage": "https://www.entropywins.wtf"
+            }
+        ],
+        "description": "Adds a OOP and declarative parser hook interface on top of MediaWiki",
+        "homepage": "https://github.com/JeroenDeDauw/ParserHooks/blob/master/README.md",
+        "keywords": [
+            "mediawiki",
+            "parser function",
+            "parser hook",
+            "parserhooks",
+            "tag extension"
+        ]
+    },
+    {
+        "name": "mediawiki/semantic-media-wiki",
+        "version": "2.4.2",
+        "version_normalized": "2.4.2.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/Wikia/SemanticMediaWiki",
+            "reference": "87590e9eed7ddbca6eb1fb3b276e2fdf04310e70"
+        },
+        "require": {
+            "composer/installers": "1.*,>=1.0.1",
+            "ext-mbstring": "*",
+            "mediawiki/parser-hooks": "~1.4",
+            "onoi/blob-store": "~1.2",
+            "onoi/cache": "~1.2",
+            "onoi/callback-container": "~1.0",
+            "onoi/event-dispatcher": "~1.0",
+            "onoi/http-request": "~1.1",
+            "onoi/message-reporter": "~1.0",
+            "param-processor/param-processor": "~1.2",
+            "php": ">=5.3.0",
+            "serialization/serialization": "~3.2"
+        },
+        "replace": {
+            "mediawiki/semantic-mediawiki": "*"
+        },
+        "require-dev": {
+            "phpmd/phpmd": "~2.1",
+            "squizlabs/php_codesniffer": "~2.1"
+        },
+        "suggest": {
+            "mediawiki/semantic-forms": "Easy creation of forms to add semantic data",
+            "mediawiki/semantic-result-formats": "Additional result formats for SMW queries"
+        },
+        "time": "2016-08-02 08:58:45",
+        "type": "mediawiki-extension",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "2.4.x-dev"
+            }
+        },
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "SMW\\": "src/",
+                "SMW\\Maintenance\\": "maintenance/"
+            },
+            "files": [
+                "src/Aliases.php",
+                "src/Defines.php",
+                "src/GlobalFunctions.php",
+                "DefaultSettings.php",
+                "SemanticMediaWiki.php"
+            ],
+            "classmap": [
+                "includes/",
+                "languages/SMW_Language.php"
+            ]
+        },
+        "scripts": {
+            "phpunit": [
+                "php ../../tests/phpunit/phpunit.php -c phpunit.xml.dist"
+            ],
+            "unit": [
+                "composer dump-autoload",
+                "php ../../tests/phpunit/phpunit.php -c phpunit.xml.dist --testsuite=semantic-mediawiki-unit"
+            ],
+            "cs-standalone": [
+                "composer validate --no-interaction",
+                "vendor/bin/phpcs src/* includes/* tests/* --standard=phpcs.xml --extensions=php -sp"
+            ],
+            "cs": [
+                "composer cs-standalone",
+                "vendor/bin/phpmd src/,includes/,tests/ text phpmd.xml"
+            ],
+            "ci": [
+                "composer phpunit",
+                "composer cs"
+            ]
+        },
+        "license": [
+            "GPL-2.0+"
+        ],
+        "authors": [
+            {
+                "name": "Markus Krötzsch",
+                "homepage": "http://korrekt.org",
+                "role": "Original author"
+            },
+            {
+                "name": "Jeroen De Dauw",
+                "email": "jeroendedauw@gmail.com",
+                "homepage": "http://jeroendedauw.com",
+                "role": "Core developer"
+            },
+            {
+                "name": "James Hong Kong",
+                "homepage": "https://www.semantic-mediawiki.org/wiki/User:MWJames",
+                "role": "Core developer"
+            }
+        ],
+        "description": "MediaWiki extension that lets you store and query structured data within wiki pages",
+        "homepage": "https://www.semantic-mediawiki.org/wiki/",
+        "keywords": [
+            "MediaWiki",
+            "SMW",
+            "Semantic MediaWiki",
+            "Wiki"
+        ],
+        "support": {
+            "email": "semediawiki-user@lists.sourceforge.net",
+            "issues": "https://github.com/SemanticMediaWiki/SemanticMediaWiki/issues",
+            "irc": "irc://irc.freenode.net/semantic-mediawiki",
+            "forum": "https://www.semantic-mediawiki.org/wiki/semantic-mediawiki.org_talk:Community_portal",
+            "wiki": "https://www.semantic-mediawiki.org/wiki/",
+            "source": "https://github.com/SemanticMediaWiki/SemanticMediaWiki"
+        }
     }
 ]
