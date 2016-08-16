@@ -169,18 +169,23 @@ class ContributionAppreciationController extends WikiaController {
 		$revision = Revision::newFromId( $revisionId );
 
 		if ( $revision ) {
-			$editedPageTitle = $revision->getTitle();
-			$params = [
-				'buttonLink' => SpecialPage::getTitleFor( 'Community' )->getFullURL(),
-				'targetUser' => $revision->getUserText(),
-				'editedPageTitleText' => $editedPageTitle->getText(),
-				'editedWikiName' => $wgSitename,
-				'revisionUrl' => $editedPageTitle->getFullURL( [
-					'diff' => $revision->getId()
-				] )
-			];
+			$diffAuthor = \User::newFromId( $revision->getUser() );
 
-			$this->app->sendRequest( 'Email\Controller\ContributionAppreciationMessageController', 'handle', $params );
+			// we want to send appreciation email for en users only
+			if ( $diffAuthor && $diffAuthor->getGlobalPreference( 'language' ) == 'en' ) {
+				$editedPageTitle = $revision->getTitle();
+				$params = [
+					'buttonLink' => SpecialPage::getTitleFor( 'Community' )->getFullURL(),
+					'targetUser' => $diffAuthor->getName(),
+					'editedPageTitleText' => $editedPageTitle->getText(),
+					'editedWikiName' => $wgSitename,
+					'revisionUrl' => $editedPageTitle->getFullURL( [
+						'diff' => $revision->getId()
+					] )
+				];
+
+				$this->app->sendRequest( 'Email\Controller\ContributionAppreciationMessageController', 'handle', $params );
+			}
 		}
 	}
 }
