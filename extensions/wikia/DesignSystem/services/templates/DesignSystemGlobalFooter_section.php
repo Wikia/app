@@ -1,9 +1,9 @@
 <section class="wds-global-footer__<?= Sanitizer::encodeAttribute( $parentName ) ?>-section wds-is-<?= Sanitizer::encodeAttribute( $name ) ?>">
-	<?php if ( $model['header']['title'] ) : ?>
+	<?php if ( isset ( $model['header']['title'] ) ) : ?>
 		<h3 class="wds-global-footer__section-header"><?= DesignSystemHelper::renderText( $model['header']['title'] ) ?></h3>
 	<?php endif; ?>
 
-	<?php if ( $model['description'] ) : ?>
+	<?php if ( isset ( $model['description'] ) ) : ?>
 		<span class="wds-global-footer__section-description"><?= DesignSystemHelper::renderText( $model['description'] ) ?></span>
 	<?php endif; ?>
 
