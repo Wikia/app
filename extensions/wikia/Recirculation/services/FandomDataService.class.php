@@ -18,11 +18,11 @@ class FandomDataService {
 		$this->options = [
 			'_embed' => 1,
 			'per_page' => self::FANDOM_PER_PAGE,
-			'filter' => ['orderby' => 'menu_order'],
+			'filter' => [],
 			'context' => 'embed'
 		];
 
-		if ( $type === 'category' ) {
+		if ( $type === 'category' || $type === 'latest' ) {
 			$this->setupCategories( $ignoreTopic );
 		} else {
 			$this->setupVerticalCategory( $vertical );
@@ -51,35 +51,15 @@ class FandomDataService {
 		return $data;
 	}
 
-	private function categoryApiRequest( $tag ) {
-		$options = [
-			'search' => $tag,
-			'orderby' => 'count',
-			'order' => 'desc',
-			'per_page' => 1,
-		];
-
-		$url = self::API_BASE . 'categories?' . http_build_query( $options );
-
-		$data = ExternalHttp::get( $url );
-		$data = json_decode( $data, true );
-
-		if ( is_array( $data ) && count( $data ) > 0 ) {
-			return $data[0]['id'];
-		} else {
-			return 0;
-		}
-	}
-
 	/**
 	 * Make an API request to parsely to gather posts
 	 *
 	 * @return an array of posts
 	 */
-	private function apiRequest() {
+	private function apiRequest( $type ) {
 		$options = [];
 
-		$url = $this->buildUrl( $this->options );
+		$url = $this->buildUrl( $type, $this->options );
 		$data = ExternalHttp::get( $url );
 
 		$data = json_decode( $data, true );
@@ -96,10 +76,20 @@ class FandomDataService {
 	 * @param array $options
 	 * @return string
 	 */
-	private function buildUrl( $options ) {
-		$url = self::API_BASE . 'hero_unit?' . http_build_query( $options );
+	private function buildUrl( $type, $options ) {
+		switch ( $type ) {
+			case 'latest':
+				$date = (new \DateTime())->modify( '-24 hours' );
+				$options['after'] = $date->format( DateTime::ATOM );
+				$endpoint = 'posts';
+				break;
+			default:
+				$options['filter']['orderby'] = 'menu_order';
+				$endpoint = 'hero_unit';
+				break;
+		}
 
-		return $url;
+		return self::API_BASE . $endpoint . '?' . http_build_query( $options );
 	}
 
 	private function formatPosts( $data ) {
@@ -108,7 +98,7 @@ class FandomDataService {
 		foreach ($data as $key => $post) {
 			if ($this->postHasImage( $post ) && count( $posts ) < self::LIMIT ) {
 				$posts[] = new RecirculationContent( [
-					'url' => $post['upstream_content_link'],
+					'url' => empty($post['upstream_content_link']) ? $post['link'] : $post['upstream_content_link'],
 					'index' => $key,
 					'thumbnail' => $post['_embedded']['wp:featuredmedia'][0]['media_details']['sizes']['thumbnail']['source_url'],
 					'title' => html_entity_decode( $post['title']['rendered'] ),
@@ -137,9 +127,6 @@ class FandomDataService {
 	}
 
 	private function setupCategories( $ignoreTopic ) {
-		// Hard coding in the SDCC category for now, eventually we will want to pass this in from JS
-		$this->options['categories'] = 4435;
-
 		$topicId = $this->getTopicCategoryId();
 
 		if ( !empty( $topicId ) && empty( $ignoreTopic ) ) {
@@ -170,6 +157,26 @@ class FandomDataService {
 		);
 
 		return $data;
+	}
+
+	private function categoryApiRequest( $tag ) {
+		$options = [
+			'search' => $tag,
+			'orderby' => 'count',
+			'order' => 'desc',
+			'per_page' => 1,
+		];
+
+		$url = self::API_BASE . 'categories?' . http_build_query( $options );
+
+		$data = ExternalHttp::get( $url );
+		$data = json_decode( $data, true );
+
+		if ( is_array( $data ) && count( $data ) > 0 ) {
+			return $data[0]['id'];
+		} else {
+			return 0;
+		}
 	}
 
 	private function postHasImage( $post ) {
