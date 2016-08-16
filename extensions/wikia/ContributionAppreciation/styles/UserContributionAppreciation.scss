@@ -8,12 +8,12 @@ $color-off-white: #f6f6f6;
 	color: $color-text;
 	font-size: 14px;
 
-	a {
-		color: $color-wikia-light-blue;
-	}
-
 	.msg {
 		padding: 16px;
+	}
+
+	a {
+		color: $color-wikia-light-blue;
 	}
 
 	.thumbs-up-svg {
@@ -77,21 +77,5 @@ $color-off-white: #f6f6f6;
 		.expand-link {
 			display: none;
 		}
-	}
-}
-
-.appreciation-banner.light {
-
-}
-
-.appreciation-banner.dark {
-	background-color: $color-dark-gray;
-
-	a {
-		color: $color-wikiahome-entertainment;
-	}
-
-	.thumbs-up-svg > .thumbs-up-icon {
-		fill: $color-wikiahome-entertainment;
 	}
 }
