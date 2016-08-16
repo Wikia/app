@@ -490,21 +490,21 @@ class FeedRenderer {
 			}
 
 			$html .= Xml::openElement( 'tr' );
-			$html .= Xml::openElement( 'td' );
-			$html .= $comment['avatar'];
-			$html .= Xml::closeElement( 'td' );
-			$html .= Xml::openElement( 'td' );
-			$html .= Xml::openElement( 'p' );
-			$html .= $authorLine;
-			$html .= Xml::closeElement( 'p' );
-			$html .= Xml::openElement( 'p' );
-			$html .= $comment['wall-comment'];
-			$html .= ' ';
-			$html .= Xml::openElement( 'a', [ 'href' => $comment['wall-message-url'] ] );
-			$html .= $timestamp;
-			$html .= Xml::closeElement( 'a' );
-			$html .= Xml::closeElement( 'p' );
-			$html .= Xml::closeElement( 'td' );
+				$html .= Xml::openElement( 'td' );
+					$html .= $comment['avatar'];
+				$html .= Xml::closeElement( 'td' );
+				$html .= Xml::openElement( 'td' );
+					$html .= Xml::openElement( 'p' );
+						$html .= $authorLine;
+					$html .= Xml::closeElement( 'p' );
+					$html .= Xml::openElement( 'p' );
+						$html .= $comment['wall-comment'];
+						$html .= ' ';
+						$html .= Xml::openElement( 'a', [ 'href' => $comment['wall-message-url'] ] );
+							$html .= $timestamp;
+						$html .= Xml::closeElement( 'a' );
+					$html .= Xml::closeElement( 'p' );
+				$html .= Xml::closeElement( 'td' );
 			$html .= Xml::closeElement( 'tr' );
 		}
 
