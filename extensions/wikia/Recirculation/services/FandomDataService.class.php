@@ -43,8 +43,8 @@ class FandomDataService {
 		$data = WikiaDataAccess::cache(
 			$memcKey,
 			self::MCACHE_TIME,
-			function() {
-				return $this->apiRequest();
+			function() use ( $type ) {
+				return $this->apiRequest( $type );
 			}
 		);
 
@@ -80,7 +80,8 @@ class FandomDataService {
 		switch ( $type ) {
 			case 'latest':
 				$date = (new \DateTime())->modify( '-24 hours' );
-				$options['after'] = $date->format( DateTime::ATOM );
+				$options['after'] = $date->format( 'Y-m-d\TH:i:s' );
+				$options['per_page'] = 1;
 				$endpoint = 'posts';
 				break;
 			default:
