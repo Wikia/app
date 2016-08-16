@@ -2,16 +2,17 @@
 define('ext.wikia.adEngine.adEngineRunner', [
 	'ext.wikia.adEngine.adEngine',
 	'ext.wikia.adEngine.adTracker',
+	'wikia.instantGlobals',
 	'wikia.log',
 	'wikia.window',
 	require.optional('ext.wikia.adEngine.lookup.amazonMatch'),
 	require.optional('ext.wikia.adEngine.lookup.rubiconFastlane')
-], function (adEngine, adTracker, log, win, amazonMatch, rubiconFastlane) {
+], function (adEngine, adTracker, instantGlobals, log, win, amazonMatch, rubiconFastlane) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.adEngineRunner',
 		supportedBidders = [amazonMatch, rubiconFastlane],
-		timeout = 2000;
+		timeout = instantGlobals.wgAdDriverDelayTimeout || 2000;
 
 	/**
 	 * Delay running AdEngine by bidder responses or by configured timeout
@@ -80,7 +81,7 @@ define('ext.wikia.adEngine.adEngineRunner', [
 			registerBidders();
 			win.setTimeout(function () {
 				if (!startedByBidders) {
-					log('Timeout exceeded', 'info', logGroup);
+					log(['Timeout exceeded', timeout], 'info', logGroup);
 					adTracker.measureTime('adengine_runner/bidders_timeout', getTimeoutBidders()).track();
 					runAdEngine();
 				}
