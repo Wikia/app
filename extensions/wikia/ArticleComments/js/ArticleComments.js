@@ -1,14 +1,7 @@
-/* global wgAfterContentAndJS, wgArticleId, wgPageName, wgScript, MiniEditor, skin */
-
-(function (window, $) {
+require(
+	['jquery', 'mw', 'wikia.loader', 'wikia.nirvana', 'wikia.window'],
+	function($, mw, loader, nirvana, window) {
 	'use strict';
-
-	// This file is included on every page.
-	// If we aren't on an article page, halt execution here.
-	// TODO: revisit this at some point when we have dependency loading.
-	if (!window.wgIsArticle) {
-		return;
-	}
 
 	var $window = $(window),
 		ArticleComments;
@@ -18,8 +11,8 @@
 		processing: false,
 		mostRecentCount: 0,
 		messagesLoaded: false,
-		miniEditorEnabled: window.wgEnableMiniEditorExt,
-		loadOnDemand: window.wgArticleCommentsLoadOnDemand,
+		miniEditorEnabled: mw.config.get('wgEnableMiniEditorExt'),
+		loadOnDemand: mw.config.get('wgArticleCommentsLoadOnDemand'),
 		initCompleted: false,
 		wrapperSelector: '#WikiaArticleComments',
 		bucky: window.Bucky('ArticleComments'),
@@ -56,7 +49,7 @@
 				}
 			}
 
-			if (window.wgDisableAnonymousEditing && !window.wgUserName) {
+			if (mw.config.get('wgDisableAnonymousEditing') && !mw.config.get('wgUserName')) {
 				$('.article-comm-reply').hide();
 			} else {
 				$articleComments.on('click', '.article-comm-edit', ArticleComments.actionProxy(ArticleComments.edit));
@@ -87,7 +80,7 @@
 				e.preventDefault();
 
 				// Prevent the action if MiniEditor is enabled and loading
-				if (ArticleComments.miniEditorEnabled && MiniEditor.editorIsLoading) {
+				if (ArticleComments.miniEditorEnabled && window.MiniEditor.editorIsLoading) {
 					$().log('Event cancelled because editor is loading: ', e);
 					return true;
 				}
@@ -104,9 +97,8 @@
 			}
 
 			// If MiniEditor is enabled, we need to determine the correct content format before making the request
-			if (ArticleComments.miniEditorEnabled && !MiniEditor.assetsLoaded) {
-				MiniEditor.loadAssets(makeRequest);
-
+			if (ArticleComments.miniEditorEnabled && !window.MiniEditor.assetsLoaded) {
+				window.MiniEditor.loadAssets(makeRequest);
 			} else {
 				makeRequest();
 			}
@@ -116,15 +108,14 @@
 				var commentId = e.target.id.replace(/^comment/, ''),
 					$textfield = $('#article-comm-textfield-' + commentId);
 
-				$.getJSON(wgScript, {
+				$.getJSON(mw.config.get('wgScript'), {
 					action: 'ajax',
-					article: wgArticleId,
+					article: mw.config.get('wgArticleId'),
 					convertToFormat: ArticleComments.getLoadConversionFormat($textfield),
 					id: commentId,
 					method: 'axEdit',
 					rs: 'ArticleCommentsAjax',
-					useskin: window.skin
-
+					useskin: mw.config.get('skin')
 				}, function (json) {
 					if (!json.error) {
 						var $buttons = $(e.target).closest('.buttons'),
@@ -218,14 +209,14 @@
 				$throbber.css('visibility', 'visible');
 				$textfield.attr('readonly', 'readonly');
 
-				$.postJSON(wgScript, {
+				$.postJSON(mw.config.get('wgScript'), {
 					action: 'ajax',
-					article: wgArticleId,
+					article: mw.config.get('wgArticleId'),
 					convertToFormat: ArticleComments.getSaveConversionFormat($textfield),
 					id: commentId,
 					method: 'axSave',
 					rs: 'ArticleCommentsAjax',
-					title: wgPageName,
+					title: mw.config.get('wgPageName'),
 					wpArticleComment: content
 
 				}, function (json) {
@@ -274,15 +265,14 @@
 				return;
 			}
 
-			$.getJSON(wgScript, {
+			$.getJSON(mw.config.get('wgScript'), {
 				action: 'ajax',
-				article: wgArticleId,
+				article: mw.config.get('wgArticleId'),
 				id: $(this).closest('.comment').attr('id').replace(/^comm-/, ''),
 				method: 'axReply',
 				rs: 'ArticleCommentsAjax',
-				title: wgPageName,
-				useskin: window.skin
-
+				title: mw.config.get('wgPageName'),
+				useskin: mw.config.get('skin')
 			}, function (json) {
 				var $blockquote = $('#comm-text-' + json.id).parent(),
 					$editbox = $blockquote.find('.article-comm-edit-box'),
@@ -308,7 +298,7 @@
 
 					// General error. TODO: add caption
 				} else {
-					require(['wikia.ui.factory'], function (uiFactory) {
+					require(['wikia.ui.factory'], function(uiFactory) {
 						uiFactory.init(['modal']).then(function (uiModal) {
 							var moduleConfig = {
 								vars: {
@@ -373,14 +363,14 @@
 
 			data = {
 				action: 'ajax',
-				article: wgArticleId,
+				article: mw.config.get('wgArticleId'),
 				convertToFormat: ArticleComments.getSaveConversionFormat($source),
 				method: 'axPost',
 				rs: 'ArticleCommentsAjax',
-				title: wgPageName,
+				title: mw.config.get('wgPageName'),
 				wpArticleComment: content,
-				useskin: window.skin,
-				token: window.mw.user.tokens.get('editToken')
+				useskin: mw.config.get('skin'),
+				token: mw.user.tokens.get('editToken')
 			};
 
 			if (e.data.parentId) {
@@ -431,11 +421,9 @@
 					}
 
 					//update counter
-					// Counter update disabled for MAIN-7023.  Until we can find a way to have wikitext
-					// as part of this message AND have this JS update the counter, this should stay commented out
-					//$('#article-comments-counter-header').html($.msg('oasis-comments-header', json.counter));
+					$('#article-comments-counter-header').html(mw.message('oasis-comments-header', json.counter).escaped());
 
-					if (window.skin === 'oasis') {
+					if (mw.config.get('skin') === 'oasis') {
 						$('#WikiaPageHeader, #WikiaUserPagesHeader').find('.commentsbubble').html(json.counter);
 
 						if (!parentId) {
@@ -444,7 +432,7 @@
 								ArticleComments.$commentsList.children('li').length;
 
 							$('#article-comments-counter-recent').html(
-								$.msg('oasis-comments-showing-most-recent', ArticleComments.mostRecentCount)
+								mw.message('oasis-comments-showing-most-recent', ArticleComments.mostRecentCount).escaped()
 							);
 						}
 					}
@@ -488,11 +476,12 @@
 
 			ArticleComments.$commentsList.addClass('loading');
 
-			$.getJSON(wgScript + '?action=ajax&rs=ArticleCommentsAjax&method=axGetComments', {
-				article: wgArticleId,
+			$.getJSON(mw.config.get('wgScript') + '?action=ajax&rs=ArticleCommentsAjax&method=axGetComments', {
+				article: mw.config.get('wgArticleId'),
 				order: $('#article-comm-order').attr('value'),
 				page: page,
-				useskin: window.skin
+				useskin: mw.config.get('skin'),
+				uselang: mw.config.get('wgUserLanguage')
 			}, function (json) {
 				ArticleComments.$commentsList.removeClass('loading');
 
@@ -594,9 +583,9 @@
 				}
 
 				// Load assets first so we have the proper config.mode (BugId:25182)
-				if (!MiniEditor.assetsLoaded) {
-					MiniEditor.loading($element);
-					MiniEditor.loadAssets(initEditor);
+				if (!window.MiniEditor.assetsLoaded) {
+					window.MiniEditor.loading($element);
+					window.MiniEditor.loadAssets(initEditor);
 
 				} else {
 					initEditor();
@@ -665,7 +654,7 @@
 
 	if (ArticleComments.loadOnDemand) {
 		$(function () {
-			var content, hash, permalink, styleAssets = [], belowTheFold, loadAssets;
+			var hash, permalink, styleAssets = [], belowTheFold, loadAssets;
 
 			// Cache jQuery selector after DOM ready
 			ArticleComments.$wrapper = $(ArticleComments.wrapperSelector);
@@ -678,38 +667,38 @@
 			hash = window.location.hash;
 			permalink = /^#comm-/.test(hash);
 
-			styleAssets.push($.getSassCommonURL('skins/oasis/css/core/ArticleComments.scss'));
+			styleAssets.push('skins/oasis/css/core/ArticleComments.scss');
 
 			belowTheFold = function () {
 				return ArticleComments.$wrapper.offset().top >= ($window.scrollTop() + $window.height());
 			};
 
 			if (ArticleComments.miniEditorEnabled) {
-				styleAssets.push($.getSassCommonURL('extensions/wikia/MiniEditor/css/MiniEditor.scss'));
-				styleAssets.push($.getSassCommonURL(
-					'extensions/wikia/MiniEditor/css/ArticleComments/ArticleComments.scss'));
+				styleAssets.push('extensions/wikia/MiniEditor/css/MiniEditor.scss');
+				styleAssets.push('extensions/wikia/MiniEditor/css/ArticleComments/ArticleComments.scss');
 			}
 
 			loadAssets = function () {
 				ArticleComments.bucky.timer.start('loadAssets');
 				$.when(
-					$.getResources(styleAssets),
-					$.nirvana.sendRequest({
-						controller: 'ArticleCommentsController',
+					nirvana.sendRequest({
+						controller: 'ArticleComments',
 						method: 'Content',
-						format: 'html',
 						type: 'GET',
+						format: 'html',
 						data: {
-							articleId: window.wgArticleId,
+							articleId: mw.config.get('wgArticleId'),
 							page: ArticleComments.$wrapper.data('page'),
-							useskin: window.skin
-						},
-						callback: function (response) {
-							content = response;
+							useskin: mw.config.get('skin'),
+							uselang: mw.config.get('wgUserLanguage')
 						}
+					}),
+					loader({
+						type: loader.SCSS,
+						resources: styleAssets
 					})
-				).then(function () {
-					ArticleComments.$wrapper.removeClass('loading').html(content);
+				).then(function (template) {
+					ArticleComments.$wrapper.removeClass('loading').html(template[0]);
 
 					ArticleComments.init();
 
@@ -738,10 +727,10 @@
 		});
 
 	} else {
-		wgAfterContentAndJS.push(ArticleComments.init);
+		window.wgAfterContentAndJS.push(ArticleComments.init);
 	}
 
 	// Exports
 	window.ArticleComments = ArticleComments;
 
-})(this, jQuery);
+});
