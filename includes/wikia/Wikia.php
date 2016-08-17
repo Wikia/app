@@ -2521,6 +2521,10 @@ class Wikia {
 			$vars['wgWikiDirectedAtChildrenByFounder'] = $wgWikiDirectedAtChildrenByFounder;
 		}
 
+		if ( self::isUsingSafeJs() ) {
+			$vars['wgUseSiteJs'] = true;
+		}
+
 		return true;
 	}
 

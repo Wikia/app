@@ -1,6 +1,6 @@
 {
   "name": "design-system",
-  "version": "0.1.3",
+  "version": "0.2.1",
   "description": "Design System developed for Wikia",
   "scripts": {
     "svgo": "svgo --precision 3 --config .svgo.yml assets/icons"

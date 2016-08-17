@@ -1,12 +1,11 @@
 <?php
 
 /**
- * Class AdEngine2HooksIntegrationTest
+ * Class RobotsIntegrationTest
  *
- * @group Integration
- * @group AdEngIntegration
+ * @group SeoIntegration
  */
-class AdEngine2HooksIntegrationTest extends WikiaBaseTest {
+class RobotsIntegrationTest extends WikiaBaseTest {
 	const SHOWCASE_ADTEST_PAGE_LINK = 'http://showcase.adtest.wikia.com/wiki/Wikia_Ad_Testing';
 	const ADTEST_PAGE_LINK = 'http://adtest.wikia.com/wiki/Wikia_Ad_Testing';
 	const NO_INDEX_NO_FOLLOW = '<meta name="robots" content="noindex,nofollow" />';

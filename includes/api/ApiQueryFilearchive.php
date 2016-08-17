@@ -144,6 +144,17 @@ class ApiQueryFilearchive extends ApiQueryBase {
 				$file['timestamp'] = wfTimestamp( TS_ISO_8601, $row->fa_timestamp );
 			}
 			if ( $fld_user ) {
+				/**
+				 * Check, how often is this code executed. Scope: the following if block.
+				 *
+				 * @author Mix
+				 * @see SUS-810
+				 */
+				Wikia\Logger\WikiaLogger::instance()->debugSampled(
+					0.01,
+					'SUS-810',
+					[ 'method' => __METHOD__, 'exception' => new Exception() ]
+				);
 				$file['userid'] = $row->fa_user;
 				$file['user'] = $row->fa_user_text;
 			}

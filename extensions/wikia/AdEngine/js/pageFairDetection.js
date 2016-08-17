@@ -31,6 +31,7 @@ define('ext.wikia.adEngine.pageFairDetection', [
 	}
 
 	function setRuntimeParams(isAdBlockDetected) {
+		win.ads.runtime = win.ads.runtime || {};
 		win.ads.runtime.pf = win.ads.runtime.pf || {};
 		win.ads.runtime.pf.blocking = isAdBlockDetected;
 	}
