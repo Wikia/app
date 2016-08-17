@@ -162,7 +162,8 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 
 		var params,
 			targeting = context.targeting,
-			pvs = pvCounter.get();
+			pvs = pvCounter.get(),
+			countryCode = geo.getCountryCode();
 
 		options = options || {};
 
@@ -183,9 +184,12 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 			lang: zoneParams.getLanguage(),
 			wpage: targeting.pageName && targeting.pageName.toLowerCase(),
 			ref: getRefParam(),
-			esrb: targeting.esrbRating,
-			geo: geo.getCountryCode()
+			esrb: targeting.esrbRating
 		};
+
+		if (countryCode) {
+			params.geo = countryCode;
+		}
 
 		if (pvs) {
 			params.pv = pvs.toString();

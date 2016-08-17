@@ -4,7 +4,7 @@
 describe('AdLogicPageParams', function () {
 	'use strict';
 
-	var logMock = function () { return;},
+	var logMock = function () { return; },
 		geoMock = {
 			getCountryCode: function() {
 				return 'PL';
@@ -343,5 +343,12 @@ describe('AdLogicPageParams', function () {
 		});
 
 		expect(params.ar).toBe('3:4');
+	});
+
+	it('geo is set only when Wikia.Geo.getCountryCode returns value', function () {
+		geoMock.getCountryCode = function() { return; };
+		var params = getParams();
+
+		expect(params.geo).toBeFalsy();
 	});
 });
