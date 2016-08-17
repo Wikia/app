@@ -105,11 +105,11 @@
 				<?php } ?>
 				<?php if ( ARecoveryModule::isLockEnabled() ) { ?>
 					<div id="WikiaArticleMsg">
-						<h2><?php echo wfMessage('arecovery-blocked-message-headline')->text();?></h2>
+						<h2><?= wfMessage('arecovery-blocked-message-headline')->escaped() ?></h2>
 						<br />
-						<h3><?php echo wfMessage('arecovery-blocked-message-part-one')->text();?>
+						<h3><?= wfMessage('arecovery-blocked-message-part-one')->escaped() ?>
 							<br /><br />
-							<?php echo wfMessage('arecovery-blocked-message-part-two')->text();?></h3>
+							<?= wfMessage('arecovery-blocked-message-part-two')->escaped() ?></h3>
 					</div>
 				<?php } ?>
 				<div id="WikiaArticle" class="WikiaArticle">
