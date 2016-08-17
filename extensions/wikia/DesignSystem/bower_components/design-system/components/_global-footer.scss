@@ -64,16 +64,13 @@
 		margin: 0;
 	}
 
-	&__licensing-and-vertical {
-		align-items: center;
+	&__bottom-bar {
 		background: rgba($color-night-sky, .5);
-		color: $color-white;
-		display: flex;
 		font-size: $typescale-size-minus-2;
-		justify-content: center;
 		line-height: $line-height;
 		min-height: 50px;
-		padding: 16px 20px;
+		padding: 0 20px;
+		text-align: center;
 
 		/**
 		 * Note: The following rule is an exception on DS Class Naming because whole
@@ -88,6 +85,30 @@
 		a:hover {
 			color: $color-white;
 		}
+	}
+
+	&__bottom-bar-row {
+		margin: 0 auto;
+
+		&.wds-has-border-top {
+			border-top: 1px solid $color-slate-gray;
+		}
+
+		&.wds-has-padding {
+			padding: 16px 0;
+		}
+	}
+
+	// @todo To be moved to a separate component during XW-1618
+	&__button-link {
+		display: inline-block;
+		font-weight: bold;
+		letter-spacing: .3px;
+		line-height: normal;
+		min-height: 45px;
+		padding: 14px 18px;
+		text-decoration: none;
+		text-transform: uppercase;
 	}
 
 	&__fandom-logo {
@@ -114,11 +135,11 @@
 		}
 		color: #7f90a1;
 		display: block;
-		letter-spacing: 0.5px;
 		font: {
 			size: $typescale-size-minus-2;
 			weight: bold;
 		}
+		letter-spacing: .5px;
 		margin: {
 			left: 13px;
 			top: 5px;
@@ -188,7 +209,7 @@
 				}
 				justify-content: space-between;
 				margin: 0;
-				padding: 2px 0 28px 0;
+				padding: 2px 0 28px;
 				text-decoration: none;
 
 				&.wds-is-games {
@@ -228,6 +249,7 @@
 
 			.wds-global-footer__image {
 				color: $color-slate-gray;
+
 				&:hover {
 					color: $color-white;
 				}
@@ -389,10 +411,6 @@
 		&__links-list-item {
 			margin-bottom: 10px;
 		}
-
-		&__licensing-and-vertical {
-			text-align: center;
-		}
 	}
 
 	@media #{$breakpoint-desktop-up} {
@@ -400,6 +418,14 @@
 			flex-direction: row;
 			margin: 0 auto;
 			padding-bottom: 40px;
+			width: $desktop-width;
+		}
+
+		&__bottom-bar {
+			padding: 0;
+		}
+
+		&__bottom-bar-row {
 			width: $desktop-width;
 		}
 

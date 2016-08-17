@@ -5,6 +5,8 @@ class SpecialPortabilityDashboardController extends WikiaSpecialPageController {
 	const SPECIAL_INSIGHTS_TYPELESS_TEMPLATE_PAGE = 'templateswithouttype';
 	const SPECIAL_CUSTOM_INFOBOXES_PAGE = 'nonportableinfoboxes';
 	const LANGUAGE_FILTER_QS_PARAM = 'lang';
+	const SUPPORTED_LANGUAGE_FILTERS = [ 'de', 'en', 'es', 'fr', 'id', 'it', 'ja', 'ko', 'nl', 'pl', 'pt', 'pt-br',
+		'ru', 'vi', 'zh', 'zh-hk' ];
 
 
 	public function __construct() {
@@ -30,7 +32,7 @@ class SpecialPortabilityDashboardController extends WikiaSpecialPageController {
 		$this->response->setVal(
 			'langList',
 			$this->extendLanguagesListWithActiveLanguage(
-				$this->getUniqueSortedLanguagesList( $list ),
+				self::SUPPORTED_LANGUAGE_FILTERS,
 				$langFilter
 			)
 		);
@@ -48,32 +50,13 @@ class SpecialPortabilityDashboardController extends WikiaSpecialPageController {
 		$this->response->setVal(
 			'customInfoboxesInsightsUrlTitle', wfMessage( 'portability-dashboard-special-insights-custom-infobox-title'
 		)->text() );
-		$this->response->setVal( 'refreshFreqInfo', wfMessage('portability-dashboard-refresh-frequency-info')->text() );
+		$this->response->setVal( 'refreshFreqInfo', wfMessage( 'portability-dashboard-refresh-frequency-info' )->text() );
+		$this->response->setVal( 'noResultsInfo', wfMessage( 'portability-dashboard-no-results-info',
+			PortabilityDashboardModel::WIKIS_LIMIT )->text() );
 
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 
 		Wikia::addAssetsToOutput( 'special_portability_dashboard_scss' );
-	}
-
-	/**
-	 * gets array on community languages without duplicates
-	 * @param array $list - model
-	 * @return array - array of languages
-	 */
-	private function getUniqueSortedLanguagesList( $list ) {
-		$languages = [ ];
-
-		foreach ( $list as $item ) {
-			$lang = $item[ 'wikiLang' ];
-
-			if ( !empty( $lang ) && !in_array( $lang, $languages ) ) {
-				$languages[] = $lang;
-			}
-		}
-
-		asort( $languages );
-
-		return $languages;
 	}
 
 	/**
