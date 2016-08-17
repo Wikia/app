@@ -66,7 +66,7 @@ require([
 
 		sourcePoint.initDetection();
 
-		if (context.opts.pageFairDetection) {
+		if (pageFair.canBeInitialized(context)) {
 			pageFair.initDetection(context);
 		}
 

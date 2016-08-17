@@ -50,8 +50,19 @@ define('ext.wikia.adEngine.pageFairDetection', [
 		dispatchDetectionEvent(eventName);
 	}
 
+	function canBeInitialized(injectedContext) {
+		return injectedContext !== undefined &&
+			   injectedContext.hasOwnProperty('opts') &&
+			   injectedContext.opts.hasOwnProperty('pageFairDetection') &&
+			   injectedContext.opts.pageFairDetection;
+	}
+
 	function initDetection(injectedContext) {
 		var node = doc.getElementsByTagName('script')[0];
+
+		if (!canBeInitialized(injectedContext)) {
+			throw 'Can\'t initialize PageFair detector';
+		}
 		context = injectedContext;
 
 		win.bm_website_code = getWebsiteCode();
@@ -60,6 +71,7 @@ define('ext.wikia.adEngine.pageFairDetection', [
 	}
 
 	return {
+		canBeInitialized: canBeInitialized,
 		initDetection: initDetection
 	};
 });
