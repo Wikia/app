@@ -1,17 +1,41 @@
-(function($, tracker) {
-  $('#wpTextbox1').keyup(function() {
-    var dataKey = 'keyup-tracked';
-    var tracked = $.data(this, dataKey);
-    if (tracked) {
-      return;
-    }
+(function($, tracker, wikiaEditor) {
+  var dataKey = 'keyup-tracked';
+  var textBoxId = 'wpTextbox1';
+  var textBox = $('#'+textBoxId);
 
-    $.data(this, dataKey, true);
+  var keyupTracked = function() {
+    return $.data(textBox.get(0), dataKey);
+  };
+
+  var trackKeyup = function(category) {
+    $.data(textBox.get(0), dataKey, true);
     tracker.track({
+      category: category,
       action: 'enable',
-      category: 'editor',
-      label: 'nelsontest',
+      label: 'button-publish',
       trackingMethod: 'analytics'
+    })
+  };
+
+  var tryTrackKeyup = function(category) {
+    if (!keyupTracked()) {
+      trackKeyup(category);
+    }
+  };
+
+  if (typeof(wikiaEditor) != 'undefined' &&
+    wikiaEditor.getInstance(textBoxId) != null &&
+    wikiaEditor.getInstance(textBoxId).config.mode == 'wysiwyg') { // wysiwyg
+
+    wikiaEditor.getInstance(textBoxId).events['ck-keyUp'].push({
+      fn: function() {
+        tryTrackKeyup('editor-ck');
+      },
+      scope: {}
+    })
+  } else { // source mode
+    textBox.keyup(function() {
+      tryTrackKeyup('editor-mw');
     });
-  });
-})($, Wikia.Tracker);
+  }
+})($, Wikia.Tracker, WikiaEditor);
