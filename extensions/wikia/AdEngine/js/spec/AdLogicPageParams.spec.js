@@ -349,6 +349,6 @@ describe('AdLogicPageParams', function () {
 		geoMock.getCountryCode = function() { return; };
 		var params = getParams();
 
-		expect(params.geo).toBeFalsy();
+		expect(params.geo).toBe('none');
 	});
 });

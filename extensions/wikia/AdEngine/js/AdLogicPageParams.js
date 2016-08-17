@@ -183,10 +183,9 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 			lang: zoneParams.getLanguage(),
 			wpage: targeting.pageName && targeting.pageName.toLowerCase(),
 			ref: getRefParam(),
-			esrb: targeting.esrbRating
+			esrb: targeting.esrbRating,
+			geo: geo.getCountryCode() || 'none'
 		};
-
-		params.geo = geo.getCountryCode() || 'none';
 
 		if (pvs) {
 			params.pv = pvs.toString();
