@@ -63,6 +63,9 @@ describe('ext.wikia.adEngine.lookup.rubiconFastlane', function () {
 				}
 			},
 			log: noop,
+			recoveryHelper: {
+				addOnBlockingCallback: noop
+			},
 			slot: {
 				setFPI: function (key, value) {
 					slotParams[key] = value;
@@ -108,6 +111,7 @@ describe('ext.wikia.adEngine.lookup.rubiconFastlane', function () {
 		return modules['ext.wikia.adEngine.lookup.lookupFactory'](
 			mocks.adContext,
 			mocks.adTracker,
+			mocks.recoveryHelper,
 			mocks.lazyQueue,
 			mocks.log
 		);

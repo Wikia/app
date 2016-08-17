@@ -12,6 +12,7 @@ describe('Method ext.wikia.adEngine.lookup.amazonMatch', function () {
 		return modules['ext.wikia.adEngine.lookup.lookupFactory'](
 			mocks.adContext,
 			mocks.adTracker,
+			mocks.recoveryHelper,
 			mocks.lazyQueue,
 			mocks.log
 		);
@@ -56,6 +57,9 @@ describe('Method ext.wikia.adEngine.lookup.amazonMatch', function () {
 				};
 			},
 			track: noop
+		},
+		recoveryHelper: {
+			addOnBlockingCallback: noop
 		},
 		document: {
 			createElement: function () {
