@@ -293,4 +293,13 @@ return [
 			'resources/wikia/modules/importScriptHelper.js'
 		]
 	],
+
+	'wikia.article.edit' => [
+		'scripts' => [
+			'resources/wikia/modules/article.edit.js',
+		],
+		'dependencies' => [
+			'wikia.tracker',
+		]
+	],
 ];
