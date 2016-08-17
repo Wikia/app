@@ -61,10 +61,20 @@
 				<div>
 					<ul class="embeddable-discussions-post-actions">
 						<li class="small-4 large-4 embeddable-discussions-upvote-area">
-							<a href="#" class="upvote" data-id="{{firstPostId}}" data-url="{{upvoteUrl}}">
-								<svg class="embeddable-discussions-upvote-icon"></svg>
-								{{upvoteText}}
-							</a>
+							{{#hasUpvoted}}
+								<a href="#" class="upvote" data-id="{{firstPostId}}" data-url="{{upvoteUrl}}"
+								   data-hasUpvoted="1">
+									<svg class="embeddable-discussions-upvote-icon-active"></svg>
+									{{upvoteText}}
+								</a>
+							{{/hasUpvoted}}
+							{{^hasUpvoted}}
+								<a href="#" class="upvote" data-id="{{firstPostId}}" data-url="{{upvoteUrl}}"
+								   data-hasUpvoted="0">
+									<svg class="embeddable-discussions-upvote-icon"></svg>
+									{{upvoteText}}
+								</a>
+							{{/hasUpvoted}}
 						</li>
 						<li class="small-4 large-4 embeddable-discussions-replies-area">
 							<a href="{{link}}">
