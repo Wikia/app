@@ -289,9 +289,6 @@ $config['oasis_noads_extensions_js'] = [
 		'//extensions/wikia/VideoHandlers/js/VideoBootstrap.js',
 		'//extensions/wikia/Lightbox/scripts/LightboxLoader.js',
 		'#group_imglzy_js',
-		'//extensions/wikia/MiniEditor/js/MiniEditor.js',
-		// needs to load after MiniEditor
-		'#group_articlecomments_js',
 
 		// This needs to load last after all common extensions, please keep this last.
 		'//skins/oasis/js/GlobalModal.js',
@@ -1043,7 +1040,6 @@ $config['monobook_js'] = [
 		'#group_oasis_shared_core_js',
 		'#group_oasis_jquery',
 		'#group_bucky_js',
-		'#group_articlecomments_js',
 
 		// TODO: remove dependency on YUI (see BugId:3116)
 		'//resources/wikia/libraries/yui/utilities/utilities.js',
@@ -1077,7 +1073,16 @@ $config['monobook_js'] = [
 /** Article Comments **/
 $config['articlecomments_js'] = [
 	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis', 'monobook' ],
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/MiniEditor/js/MiniEditor.js',
+		'//extensions/wikia/ArticleComments/js/ArticleComments.js',
+	],
+];
+
+$config['articlecomments_monobook_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => [ 'monobook' ],
 	'assets' => [
 		'//extensions/wikia/ArticleComments/js/ArticleComments.js',
 	],

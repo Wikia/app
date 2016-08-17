@@ -49,10 +49,7 @@ class ArticleCommentsController extends WikiaController {
 			$this->isLoadingOnDemand = ArticleComment::isLoadingOnDemand();
 			$this->isMiniEditorEnabled = ArticleComment::isMiniEditorEnabled();
 
-			if ( $this->isLoadingOnDemand ) {
-				$this->response->setJsVar( 'wgArticleCommentsLoadOnDemand', true );
-
-			} else {
+			if ( !$this->isLoadingOnDemand ) {
 				$this->getCommentsData( $this->wg->Title, $this->page );
 
 				if ( $isMobile ) {
@@ -217,15 +214,26 @@ class ArticleCommentsController extends WikiaController {
 			// This is the actual entry point for Article Comment generation
 			self::$content = $app->sendRequest( 'ArticleComments', 'index' );
 
+			$isLoadingOnDemand = ArticleComment::isLoadingOnDemand();
+
 			// Load MiniEditor assets (oasis skin only)
 			if ( ArticleComment::isMiniEditorEnabled() ) {
 				$app->sendRequest( 'MiniEditor', 'loadAssets', [
-					'loadStyles' => !ArticleComment::isLoadingOnDemand(),
+					'loadStyles' => !$isLoadingOnDemand,
 					'loadOnDemand' => true,
 					'loadOnDemandAssets' => [
 						'/extensions/wikia/MiniEditor/js/Wall/Wall.Animations.js'
 					]
 				] );
+			}
+
+			// SUS-897: Add ArticleComments JS and messages on-demand
+			$out->addModules( 'ext.ArticleComments' );
+			$out->addJsConfigVars( 'wgArticleCommentsLoadOnDemand', $isLoadingOnDemand );
+			if ( $app->checkSkin( 'oasis' ) ) {
+				Wikia::addAssetsToOutput( 'articlecomments_js' );
+			} elseif ( $app->checkSkin( 'monobook' ) ) {
+				Wikia::addAssetsToOutput( 'articlecomments_monobook_js' );
 			}
 		}
 		return true;

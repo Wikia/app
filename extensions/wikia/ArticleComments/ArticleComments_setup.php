@@ -95,11 +95,14 @@ if (!empty($wgEnableWallEngine) || !empty($wgEnableArticleCommentsExt) || !empty
 
 //$wgHooks['BeforeDeletePermissionErrors'][] = 'ArticleComment::onBeforeDeletePermissionErrors';
 
-//JSMEssages setup
-JSMessages::registerPackage( 'ArticleCommentsCounter', [
-	'oasis-comments-header',
-	'oasis-comments-showing-most-recent'
-] );
+
+// ResourceLoader module for messages
+$wgResourceModules['ext.ArticleComments'] = [
+	'messages' => [
+		'oasis-comments-header',
+		'oasis-comments-showing-most-recent',
+	],
+];
 
 JSMessages::registerPackage( 'WikiaMobileComments', [
 	'wikiamobile-article-comments-replies',
