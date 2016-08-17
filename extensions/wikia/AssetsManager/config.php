@@ -271,14 +271,6 @@ $config['adengine2_prebid_js'] = [
 	],
 ];
 
-$config['adengine2_ads_recovery_message_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis', 'wikiamobile' ],
-	'assets' => [
-		'//extensions/wikia/AdEngine/js/recovery/message.js',
-	],
-];
-
 $config['oasis_noads_extensions_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
