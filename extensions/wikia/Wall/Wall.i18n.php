@@ -128,6 +128,8 @@ The original post and your summary will still appear in the wiki's history.",
 	'wall-action-move-thread-ok' => 'Move thread',
 	'wall-action-move-board-label' => 'Select a board to move to',
 
+	'wall-action-monobook-login' => 'Please log in to post a message on this wiki',
+
 	'wall-posting-message-failed-title' => 'An error occurred while posting a message',
 	'wall-posting-message-failed-body' => 'Copy your work and try again later',
 
