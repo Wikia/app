@@ -10,7 +10,7 @@ abstract class ResourceLoaderAdEngineSourcePointBase extends ResourceLoaderAdEng
 	protected $fallbackScriptUrl = null;
 
 	protected function getMemcKey() {
-		return wfMemcKey('adengine', get_class($this) . __FUNCTION__, static::CACHE_BUSTER);
+		return wfSharedMemcKey( 'adengine', get_class($this) . __FUNCTION__, static::CACHE_BUSTER );
 	}
 
 	/**
