@@ -41,19 +41,6 @@
 	<script>/*@cc_on'abbr article aside audio canvas details figcaption figure footer header hgroup mark menu meter nav output progress section summary time video'.replace(/\w+/g,function(n){document.createElement(n)})@*/</script>
 <![endif]-->
 
-<? if ( !$jsAtBottom ): ?>
-	<!--[if lt IE 8]>
-		<script src="<?= $wg->ResourceBasePath ?>/resources/wikia/libraries/json2/json2.js"></script>
-	<![endif]-->
-
-	<!--[if lt IE 9]>
-		<script src="<?= $wg->ResourceBasePath ?>/resources/wikia/libraries/html5/html5.min.js"></script>
-	<![endif]-->
-
-	<!-- Combined JS files and head scripts -->
-	<?= $jsFiles ?>
-<? endif ?>
-
 <?= $headItems ?>
 
 </head>
@@ -81,18 +68,16 @@
 		echo F::app()->renderView('Ad', 'Index', ['slotName' => 'TURTLE_FLUSH', 'pageTypes' => ['*']]);
 	?>
 </div>
-<? if( $jsAtBottom ): ?>
-	<!--[if lt IE 8]>
-		<script src="<?= $wg->ResourceBasePath ?>/resources/wikia/libraries/json2/json2.js"></script>
-	<![endif]-->
+<!--[if lt IE 8]>
+	<script src="<?= $wg->ResourceBasePath ?>/resources/wikia/libraries/json2/json2.js"></script>
+<![endif]-->
 
-	<!--[if lt IE 9]>
-		<script src="<?= $wg->ResourceBasePath ?>/resources/wikia/libraries/html5/html5.min.js"></script>
-	<![endif]-->
+<!--[if lt IE 9]>
+	<script src="<?= $wg->ResourceBasePath ?>/resources/wikia/libraries/html5/html5.min.js"></script>
+<![endif]-->
 
-	<!-- Combined JS files and head scripts -->
-	<?= $jsFiles ?>
-<? endif ?>
+<!-- Combined JS files and head scripts -->
+<?= $jsFiles ?>
 
 <script type="text/javascript">/*<![CDATA[*/ Wikia.LazyQueue.makeQueue(wgAfterContentAndJS, function(fn) {fn();}); wgAfterContentAndJS.start(); /*]]>*/</script>
 <script type="text/javascript">/*<![CDATA[*/ if (typeof AdEngine_trackPageInteractive === 'function') {wgAfterContentAndJS.push(AdEngine_trackPageInteractive);} /*]]>*/</script>
