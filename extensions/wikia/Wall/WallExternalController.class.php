@@ -72,6 +72,14 @@ class WallExternalController extends WikiaController {
 	 * @request rootMessageId - thread id
 	 */
 	public function moveThread() {
+		try {
+			// SUS-664: Validate edit token
+			$this->checkWriteRequest();
+		} catch ( BadRequestException $e ) {
+			$this->setTokenMismatchError();
+			return false;
+		}
+
 		// permission check needed here
 		if ( !$this->wg->User->isAllowed( 'wallmessagemove' ) ) {
 			$this->displayRestrictionError();
@@ -163,6 +171,14 @@ class WallExternalController extends WikiaController {
 	}
 
 	public function switchWatch() {
+		try {
+			// SUS-664: Validate edit token
+			$this->checkWriteRequest();
+		} catch ( BadRequestException $e ) {
+			$this->setTokenMismatchError();
+			return false;
+		}
+
 		$this->response->setVal( 'status', false );
 		$isWatched = $this->request->getVal( 'isWatched' );
 		/**
@@ -243,6 +259,14 @@ class WallExternalController extends WikiaController {
 	}
 
 	public function deleteMessage() {
+		try {
+			// SUS-664: Validate edit token
+			$this->checkWriteRequest();
+		} catch ( BadRequestException $e ) {
+			$this->setTokenMismatchError();
+			return false;
+		}
+
 		$result = false;
 		/**
 		 * @var $mw WallMessage
@@ -326,6 +350,14 @@ class WallExternalController extends WikiaController {
 	}
 
 	public function changeThreadStatus() {
+		try {
+			// SUS-664: Validate edit token
+			$this->checkWriteRequest();
+		} catch ( BadRequestException $e ) {
+			$this->setTokenMismatchError();
+			return false;
+		}
+
 		$result = false;
 		$newState = $this->request->getVal( 'newState', false );
 		/**
@@ -496,6 +528,14 @@ class WallExternalController extends WikiaController {
 	}
 
 	public function notifyEveryoneSave() {
+		try {
+			// SUS-664: Validate edit token
+			$this->checkWriteRequest();
+		} catch ( BadRequestException $e ) {
+			$this->setTokenMismatchError();
+			return false;
+		}
+
 		$msgid = $this->request->getVal( 'msgid' );
 		$dir = $this->request->getVal( 'dir' );
 		/**
@@ -735,6 +775,14 @@ class WallExternalController extends WikiaController {
 	 * @return string status - success/failure
 	 */
 	public function updateTopics() {
+		try {
+			// SUS-664: Validate edit token
+			$this->checkWriteRequest();
+		} catch ( BadRequestException $e ) {
+			$this->setTokenMismatchError();
+			return false;
+		}
+
 		$messageId = $this->request->getVal( 'msgid', '' );
 		$relatedTopics = $this->request->getVal( 'relatedTopics', [ ] );
 			// place holder data, replace this with magic
@@ -767,5 +815,15 @@ class WallExternalController extends WikiaController {
 
 		$this->response->setVal( 'status', $status );
 		$this->response->setVal( 'topics', $topics );
+	}
+
+	/**
+	 * Set proper error data if the user is not allowed to perform an action
+	 */
+	protected function displayRestrictionError() {
+		$this->response->setData( [
+			'status' => 'error',
+			'errormsg' => wfMessage( 'permissionserrors' )->escaped()
+		] );
 	}
 }
