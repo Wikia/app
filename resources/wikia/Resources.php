@@ -296,7 +296,7 @@ return [
 
 	'wikia.article.edit' => [
 		'scripts' => [
-			'resources/wikia/modules/article.edit.js',
+			'resources/wikia/modules/articleEditTracking.js',
 		],
 		'dependencies' => [
 			'wikia.tracker',
