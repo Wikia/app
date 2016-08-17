@@ -115,11 +115,11 @@ describe('AdLogicPageParams', function () {
 			mockAdContext(targeting),
 			mockPageViewCounter(opts.pvCount),
 			mockAdLogicZoneParams(),
-			logMock,
 			windowMock.document,
-			windowMock.location,
-			windowMock,
 			geoMock,
+			windowMock.location,
+			logMock,
+			windowMock,
 			abTestMock,
 			kruxMock
 		).getPageLevelParams(opts.getPageLevelParamsOptions);
