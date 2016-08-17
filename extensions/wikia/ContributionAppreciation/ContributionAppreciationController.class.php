@@ -114,6 +114,8 @@ class ContributionAppreciationController extends WikiaController {
 				}
 			}
 		}
+
+		return true;
 	}
 
 	public static function onBeforePageDisplay( \OutputPage $out, \Skin $skin ) {
