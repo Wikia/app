@@ -1,5 +1,5 @@
-<footer class="wds-global-footer <?= $model['international_header'] ? 'wds-is-international' : 'wds-is-en' ?>">
-	<?php if ( $model['international_header'] ) : ?>
+<footer class="wds-global-footer <?= !empty( $model['international_header'] ) ? 'wds-is-international' : 'wds-is-en' ?>">
+	<?php if ( !empty( $model['international_header'] ) ) : ?>
 		<div class="wds-global-footer__header-wrapper">
 			<h2 class="wds-global-footer__header">
 				<?= DesignSystemHelper::getSvg(
@@ -13,7 +13,7 @@
 		</div>
 	<?php endif; ?>
 	<div class="wds-global-footer__main">
-		<?php if ( $model['fandom']['header'] ) : ?>
+		<?php if ( !empty( $model['fandom']['header'] ) ) : ?>
 			<?= $app->renderView(
 				'DesignSystemGlobalFooterService',
 				'imageHeader',
@@ -43,7 +43,7 @@
 				]
 			); ?>
 		</div>
-		<?php if ( $model['wikia']['header'] ) : ?>
+		<?php if ( !empty( $model['wikia']['header'] ) ) : ?>
 			<?= $app->renderView(
 				'DesignSystemGlobalFooterService',
 				'imageHeader',
