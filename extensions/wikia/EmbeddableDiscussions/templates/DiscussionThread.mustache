@@ -1,0 +1,90 @@
+<section class="module embeddable-discussions-module">
+	<div class="embeddable-discussions-heading-container">
+		<div class="embeddable-discussions-heading">
+			{{heading}}
+		</div>
+		<div class="embeddable-discussions-show-all">
+			<a href="{{discussionsUrl}}">
+				{{showAll}}
+			</a>
+		</div>
+	</div>
+	<div class="embeddable-discussions-threads {{columnsWrapperClass}}">
+		{{#threads}}
+			<div class="embeddable-discussions-post-detail {{columnsDetailsClass}}">
+				<div class="embeddable-discussions-side-spaced">
+					<div id="post-{{id}}" class="embeddable-discussions-header-container">
+						<div class="avatar-container">
+							{{#authorAvatar}}
+								<a href="http://fallout.pgroland.wikia-dev.com/wiki/User:{{author}}">
+									<img src="{{authorAvatar}}" class="avatar" alt="{{author}}" width="42px" height="42px">
+								</a>
+							{{/authorAvatar}}
+							{{^authorAvatar}}
+								<div class="logged-avatar-placeholder"></div>
+							{{/authorAvatar}}
+						</div>
+						<div class="avatar-details">
+							<a class="avatar-username" href="http://fallout.pgroland.wikia-dev.com/wiki/User:{{author}}">
+								{{author}}
+							</a>
+							<span class="embeddable-discussions-timestamp">
+								• {{createdAt}}
+							</span>
+						</div>
+					</div>
+					<div class="embeddable-discussions-title">
+						{{title}}
+					</div>
+					<div class="embeddable-discussions-content">
+						{{content}}
+					</div>
+					<div class="embeddable-discussions-forum">
+						{{forumName}}
+					</div>
+					<div class="embeddable-discussions-post-counters">
+						<span class="embeddable-discussions-post-counter">
+							<svg class="embeddable-discussions-upvote-icon-tiny"></svg>
+							{{upvoteCount}}
+						</span>
+						<span class="embeddable-discussions-post-counter">
+							<svg class="embeddable-discussions-reply-icon-tiny"></svg>
+							{{commentCount}}
+						</span>
+					</div>
+				</div>
+				<div>
+					<ul class="embeddable-discussions-post-actions">
+						<li class="small-4 large-4 embeddable-discussions-upvote-area">
+							<a href="#" class="upvote" data-id="{{firstPostId}}" data-url="{{upvoteUrl}}">
+								<svg class="embeddable-discussions-upvote-icon"></svg>
+								{{upvoteText}}
+							</a>
+						</li>
+						<li class="small-4 large-4 embeddable-discussions-replies-area">
+							<a href="{{link}}">
+								<svg class="embeddable-discussions-reply-icon"></svg>
+								{{replyText}}
+							</a>
+						</li>
+						<li class="small-4 large-4 embeddable-discussions-share-area">
+							<a href="#" class="share" data-id="{{firstPostId}}">
+								<svg class="embeddable-discussions-share-icon"></svg>
+								{{shareText}}
+							</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		{{/threads}}
+		{{^threads}}
+			<div class="embeddable-discussions-zero">
+				<svg class="embeddable-discussions-zero-plus"></svg>
+				<div class="embeddable-discussions-zero-text">
+					<div>{{zeroText}}</div>
+					<div>{{zeroTextDetail}}</div>
+				</div>
+			</div>
+		{{/threads}}
+	</div>
+</section>

@@ -50,7 +50,7 @@ class AdEngine2ContextService {
 					'showAds' => $adPageTypeService->areAdsShowableOnPage(),
 					'trackSlotState' => $wg->AdDriverTrackState,
 					'sourcePointDetectionUrl' => $sourcePointDetectionUrl,
-					'sourcePointRecovery' => ARecoveryModule::isEnabled(),
+					'sourcePointRecovery' => $skinName === 'oasis' && ARecoveryModule::isEnabled(),
 					'yavliUrl' => $yavliUrl,
 					'pageFairDetectionUrl' => $pageFairDetectionUrl
 				] ),

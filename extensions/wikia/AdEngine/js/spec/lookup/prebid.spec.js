@@ -65,6 +65,9 @@ describe('ext.wikia.adEngine.lookup.prebid', function () {
 				}
 			},
 			log: noop,
+			recoveryHelper: {
+				addOnBlockingCallback: noop
+			},
 			win: {
 				pbjs: {
 					que: [],
@@ -97,7 +100,7 @@ describe('ext.wikia.adEngine.lookup.prebid', function () {
 									placementId: '5823309'
 								}
 							}
-						]
+						];
 					}
 				}
 			}
@@ -119,6 +122,7 @@ describe('ext.wikia.adEngine.lookup.prebid', function () {
 		return modules['ext.wikia.adEngine.lookup.lookupFactory'](
 			mocks.adContext,
 			mocks.adTracker,
+			mocks.recoveryHelper,
 			mocks.lazyQueue,
 			mocks.log
 		);

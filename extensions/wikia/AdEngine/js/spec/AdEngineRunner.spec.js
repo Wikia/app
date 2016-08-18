@@ -19,6 +19,7 @@ describe('ext.wikia.adEngine.adEngineRunner', function () {
 					};
 				}
 			},
+			instantGlobals: {},
 			log: noop,
 			win: {},
 			amazonMatch: {
@@ -38,6 +39,7 @@ describe('ext.wikia.adEngine.adEngineRunner', function () {
 		return modules['ext.wikia.adEngine.adEngineRunner'](
 			mocks.adEngine,
 			mocks.adTracker,
+			mocks.instantGlobals,
 			mocks.log,
 			mocks.win,
 			bidders.amazonMatch,

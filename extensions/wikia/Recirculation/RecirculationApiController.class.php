@@ -1,7 +1,7 @@
 <?php
 
 class RecirculationApiController extends WikiaApiController {
-	const ALLOWED_TYPES = ['recent_popular', 'vertical', 'community', 'curated', 'e3', 'hero', 'category'];
+	const ALLOWED_TYPES = ['recent_popular', 'vertical', 'community', 'curated', 'hero', 'category', 'latest'];
 	const FANDOM_LIMIT = 5;
 
 	/**
@@ -27,7 +27,7 @@ class RecirculationApiController extends WikiaApiController {
 
 		if ( $type === 'curated' ) {
 			$dataService = new CuratedContentService();
-		} elseif ( $type === 'hero' || $type === 'category' ) {
+		} elseif ( $type === 'hero' || $type === 'category' || $type === 'latest' ) {
 			$dataService = new FandomDataService( $cityId, $type );
 		} else {
 			$dataService = new ParselyDataService( $cityId );
@@ -61,7 +61,7 @@ class RecirculationApiController extends WikiaApiController {
 		$this->response->setCacheValidity(WikiaResponse::CACHE_VERY_SHORT);
 		$this->response->setData([
 				'title' => wfMessage( 'recirculation-fandom-subtitle' )->plain(),
-				'items' => (new CakeRelatedContentService())->getContentRelatedTo($target, $limit, $ignore),
+				'items' => (new CakeRelatedContentService())->getContentRelatedTo($target, $this->wg->sitename, $limit, $ignore),
 		]);
 	}
 
