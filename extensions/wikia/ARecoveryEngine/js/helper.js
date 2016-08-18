@@ -92,6 +92,7 @@ define('ext.wikia.aRecoveryEngine.recovery.helper', [
 		initEventQueue: initEventQueue,
 		isBlocking: isBlocking,
 		isRecoverable: isRecoverable,
+		isRecoveryEnabled: isRecoveryEnabled,
 		track: track,
 		verifyContent: verifyContent
 	};

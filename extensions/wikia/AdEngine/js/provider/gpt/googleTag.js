@@ -62,7 +62,7 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 		window.googletag = window.googletag || {};
 		window.googletag.cmd = window.googletag.cmd || [];
 
-		if (!window.googletag.apiReady && !helper.isBlocking()) {
+		if (!window.googletag.apiReady) {
 			gads.async = true;
 			gads.type = 'text/javascript';
 			gads.src = '//www.googletagservices.com/tag/js/gpt.js';

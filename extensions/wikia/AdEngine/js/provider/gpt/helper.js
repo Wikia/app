@@ -55,8 +55,6 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 			element,
 			uapId = uapContext.getUapId();
 
-		log(['pushAd', slot.name], 'debug', logGroup);
-
 		slotTargetingData = JSON.parse(JSON.stringify(slotTargetingData)); // copy value
 
 		if (isHiddenOnStart(slot.name)) {
@@ -134,7 +132,10 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	}
 
 	recoveryHelper.addOnBlockingCallback(function () {
-		googleApi.reset();
+		if (recoveryHelper.isRecoveryEnabled()) {
+			googleApi.reset();
+			window._sp_.dfp.loadGPT();
+		}
 	});
 
 	adContext.addCallback(function () {
