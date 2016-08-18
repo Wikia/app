@@ -53,6 +53,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 		extra = extra || {};
 		var count,
 			element,
+			recoverableSlots = extra.recoverableSlots || [],
 			uapId = uapContext.getUapId();
 
 		slotTargetingData = JSON.parse(JSON.stringify(slotTargetingData)); // copy value
@@ -76,10 +77,10 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 		element = new AdElement(slot.name, slotPath, slotTargetingData);
 
 		function queueAd() {
-			var isRecoverable = recoveryHelper.isRecoverable(slot.name),
+			var isRecoverable = recoveryHelper.isRecoverable(slot.name, recoverableSlots),
 				shouldPush = !recoveryHelper.isBlocking() || isRecoverable;
 
-			log(['queueAd', slot.name, element, shouldPush], 'debug', logGroup);
+			log(['queueAd', slot.name, element, shouldPush, isRecoverable], 'debug', logGroup);
 
 			if (!shouldPush) {
 				log(['Push blocked', slot.name], 'debug', logGroup);

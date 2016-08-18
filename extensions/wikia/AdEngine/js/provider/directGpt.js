@@ -64,6 +64,12 @@ define('ext.wikia.adEngine.provider.directGpt', [
 				openXHelper && openXHelper.addOpenXSlot(slotName);
 			},
 			sraEnabled: true,
+			recoverableSlots: [
+				'TOP_LEADERBOARD',
+				'TOP_RIGHT_BOXAD',
+				'LEFT_SKYSCRAPER_2',
+				'LEFT_SKYSCRAPER_3'
+			],
 			atfSlots: [
 				'CORP_TOP_LEADERBOARD',
 				'CORP_TOP_RIGHT_BOXAD',

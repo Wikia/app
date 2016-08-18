@@ -1,4 +1,4 @@
-/*global define*/
+/*global define, XMLHttpRequest*/
 define('ext.wikia.aRecoveryEngine.recovery.helper', [
 	'ext.wikia.adEngine.adContext',
 	'wikia.document',
@@ -19,13 +19,7 @@ define('ext.wikia.aRecoveryEngine.recovery.helper', [
 	var logGroup = 'ext.wikia.aRecoveryEngine.recovery.helper',
 		context = adContext.getContext(),
 		customLogEndpoint = '/wikia.php?controller=ARecoveryEngineApi&method=getLogInfo&kind=',
-		onBlockingEventsQueue = [],
-		recoverableSlots = [
-			'TOP_LEADERBOARD',
-			'TOP_RIGHT_BOXAD',
-			'LEFT_SKYSCRAPER_2',
-			'LEFT_SKYSCRAPER_3'
-		];
+		onBlockingEventsQueue = [];
 
 	function initEventQueue() {
 		lazyQueue.makeQueue(onBlockingEventsQueue, function (callback) {
@@ -51,36 +45,36 @@ define('ext.wikia.aRecoveryEngine.recovery.helper', [
 		return !!(win.ads && win.ads.runtime.sp && win.ads.runtime.sp.blocking);
 	}
 
-	function isRecoverable(slotName) {
+	function isRecoverable(slotName, recoverableSlots) {
 		return isRecoveryEnabled() && isBlocking() && recoverableSlots.indexOf(slotName) !== -1;
 	}
 
 	function track(type) {
-		if (win._sp_ && !win._sp_.trackingSent) {
-			if (win.Wikia && win.Wikia.Tracker) {
-				win.Wikia.Tracker.track({
-					'eventName': 'ads.recovery',
-					'ga_category': 'ads-recovery-blocked',
-					'ga_action': win.Wikia.Tracker.ACTIONS.IMPRESSION,
-					'ga_label': type,
-					'trackingMethod': 'analytics'
+		if (window._sp_ && !window._sp_.trackingSent) {
+			if (Wikia && Wikia.Tracker) {
+				Wikia.Tracker.track({
+					eventName: 'ads.recovery',
+					ga_category: 'ads-recovery-blocked',
+					ga_action: Wikia.Tracker.ACTIONS.IMPRESSION,
+					ga_label: type,
+					trackingMethod: 'analytics'
 				});
 			}
 			if (instantGlobals.wgARecoveryEngineCustomLog) {
 				try {
-					var xmlHttp = new win.XMLHttpRequest();
+					var xmlHttp = new XMLHttpRequest();
 					xmlHttp.open('GET', customLogEndpoint+type, true);
 					xmlHttp.send();
 				} catch (ignore) {}
 			}
-			win._sp_.trackingSent = true;
+			window._sp_.trackingSent = true;
 		}
 	}
 
 	function verifyContent() {
 		var wikiaArticle = doc.getElementById('WikiaArticle'),
 			display = wikiaArticle.currentStyle ?
-				wikiaArticle.currentStyle.display : win.getComputedStyle(wikiaArticle, null).display;
+						wikiaArticle.currentStyle.display : getComputedStyle(wikiaArticle, null).display;
 
 		if (display === 'none') {
 			track('css-display-none');

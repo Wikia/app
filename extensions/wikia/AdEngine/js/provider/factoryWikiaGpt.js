@@ -81,7 +81,8 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 			}
 
 			gptHelper.pushAd(slot, slotPath, slotTargeting, {
-				sraEnabled: extra.sraEnabled
+				sraEnabled: extra.sraEnabled,
+				recoverableSlots: extra.recoverableSlots
 			});
 			log(['fillInSlot', slot.name, 'done'], 'debug', logGroup);
 		}
