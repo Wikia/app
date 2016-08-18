@@ -133,30 +133,32 @@ function SiteWideMessagesSiteNoticeAfter( &$siteNotice ) {
  *
  * @author macbre
  */
-function SiteWideMessagesAddNotifications(&$skim, &$tpl) {
+function SiteWideMessagesAddNotifications( Skin &$skin, &$tpl ) {
 	global $wgOut, $wgUser, $wgExtensionsPath;
 	wfProfileIn(__METHOD__);
+	$user = $skin->getUser();
+	$out = $skin->getOutput();
 
 	if ( F::app()->checkSkin( 'oasis' ) ) {
 		// Add site wide notifications that haven't been dismissed
-		if ( !$wgUser->isLoggedIn() ) {
-			$wgOut->addModuleScripts( 'ext.siteWideMessages.anon' );
+		if ( !$user->isLoggedIn() ) {
+			$out->addModules( 'ext.siteWideMessages.anon' );
 			wfProfileOut( __METHOD__ );
 			return true;
 		}
 
-		$msgs = SiteWideMessages::getAllUserMessages( $wgUser, false, false );
+		$msgs = SiteWideMessages::getAllUserMessages( $user, false, false );
 
 		if ( !empty( $msgs ) ) {
 			wfProfileIn( __METHOD__ . '::parse' );
 			foreach ( $msgs as &$data ) {
-				$data['text'] = $wgOut->parse( $data['text'] );
+				$data['text'] = $out->parse( $data['text'] );
 			}
 			wfProfileOut( __METHOD__ . '::parse' );
 
 			wfRunHooks( 'SiteWideMessagesNotification', array( $msgs ) );
 
-			$wgOut->addScript( "<script type=\"text/javascript\" src=\"{$wgExtensionsPath}/wikia/SiteWideMessages/js/SiteWideMessages.tracking.js\"></script>" );
+			$out->addScript( "<script type=\"text/javascript\" src=\"{$wgExtensionsPath}/wikia/SiteWideMessages/js/SiteWideMessages.tracking.js\"></script>" );
 		}
 	}
 
