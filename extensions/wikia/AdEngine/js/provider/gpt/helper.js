@@ -133,6 +133,10 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 		}
 	}
 
+	recoveryHelper.addOnBlockingCallback(function () {
+		googleApi.reset();
+	});
+
 	adContext.addCallback(function () {
 		if (googleApi.isInitialized()) {
 			googleApi.setPageLevelParams(adLogicPageParams.getPageLevelParams());

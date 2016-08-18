@@ -9,6 +9,7 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.gpt.googleTag',
+		recoveryCmd = [],
 		registeredCallbacks = {},
 		slots = {},
 		slotQueue = [],
@@ -99,6 +100,9 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 
 	GoogleTag.prototype.push = function (callback) {
 		window.googletag.cmd.push(callback);
+		if (!helper.isBlocking()) {
+			recoveryCmd.push(callback);
+		}
 	};
 
 	GoogleTag.prototype.flush = function () {
@@ -154,6 +158,20 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 		var iframe = element.getNode().querySelector('div[id*="_container_"] iframe');
 
 		onAdLoadCallback(element.getId(), gptEvent, iframe);
+	};
+
+	GoogleTag.prototype.reset = function () {
+		if (this.initialized) {
+			return;
+		}
+
+		this.push(function () {
+			window.googletag.destroySlots();
+		});
+
+		this.initialized = false;
+		window.googletag = {};
+		window.googletag.cmd = recoveryCmd;
 	};
 
 	return GoogleTag;

@@ -55,14 +55,6 @@ define('ext.wikia.aRecoveryEngine.recovery.helper', [
 		return isRecoveryEnabled() && isBlocking() && recoverableSlots.indexOf(slotName) !== -1;
 	}
 
-	function removeSlotFromList(slotName) {
-		var index = recoverableSlots.indexOf(slotName);
-
-		if (index !== -1) {
-			recoverableSlots.splice(index, 1);
-		}
-	}
-
 	function track(type) {
 		if (win._sp_ && !win._sp_.trackingSent) {
 			if (win.Wikia && win.Wikia.Tracker) {
@@ -100,7 +92,6 @@ define('ext.wikia.aRecoveryEngine.recovery.helper', [
 		initEventQueue: initEventQueue,
 		isBlocking: isBlocking,
 		isRecoverable: isRecoverable,
-		removeSlotFromList: removeSlotFromList,
 		track: track,
 		verifyContent: verifyContent
 	};
