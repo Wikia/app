@@ -15,10 +15,6 @@ require([
 		trackingMethod: 'analytics'
 	});
 
-	function getUiModalInstance() {
-		return uiFactory.init(['modal']);
-	}
-
 	function openModal(link, title) {
 		// Track impression
 		track({
@@ -26,10 +22,8 @@ require([
 			label: 'embeddable-discussions-share-modal-loaded',
 		});
 
-		$.when(
-			getUiModalInstance()
-		).then(function (uiModal) {
-				var modalConfig = {
+		uiFactory.init(['modal']).then(function (uiModal) {
+			var modalConfig = {
 					vars: {
 						classes: ['embeddable-discussions-share-modal'],
 						content: '',
