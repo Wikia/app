@@ -13,44 +13,44 @@ define('EmbeddableDiscussionsSharing',
 				'reddit',
 				'tumblr'
 			],
-				ja: [
+			ja: [
 				'facebook',
 				'twitter',
 				'google',
 				'line'
 			],
-				'pt-br': [
+			'pt-br': [
 				'facebook',
 				'twitter',
 				'reddit',
 				'tumblr'
 			],
-				zh: [
+			zh: [
 				'facebook',
 				'weibo'
 			],
-				de: [
+			de: [
 				'facebook',
 				'twitter',
 				'tumblr'
 			],
-				fr: [
+			fr: [
 				'facebook',
 				'twitter'
 			],
-				es: [
+			es: [
 				'facebook',
 				'twitter',
 				'meneame',
 				'tumblr'
 			],
-				ru: [
+			ru: [
 				'vkontakte',
 				'facebook',
 				'odnoklassniki',
 				'twitter'
 			],
-				pl: [
+			pl: [
 				'facebook',
 				'twitter',
 				'nk',

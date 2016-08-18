@@ -24,24 +24,24 @@ require([
 
 		uiFactory.init(['modal']).then(function (uiModal) {
 			var modalConfig = {
-					vars: {
-						classes: ['embeddable-discussions-share-modal'],
-						content: '',
-						id: 'EmbeddableDiscussionsShareModal',
-						size: 'small',
-					}
-				};
+				vars: {
+					classes: ['embeddable-discussions-share-modal'],
+					content: '',
+					id: 'EmbeddableDiscussionsShareModal',
+					size: 'small',
+				}
+			};
 
-				uiModal.createComponent(modalConfig, function (modal) {
-					modal.$content
-						.html(mustache.render(templates.ShareModal, {
-							heading: $.msg('embeddable-discussions-share-heading'),
-							icons: sharing.getData(mw.config.get('wgUserLanguage'), link, title),
-						}));
+			uiModal.createComponent(modalConfig, function (modal) {
+				modal.$content
+					.html(mustache.render(templates.ShareModal, {
+						heading: $.msg('embeddable-discussions-share-heading'),
+						icons: sharing.getData(mw.config.get('wgUserLanguage'), link, title),
+					}));
 
-					modal.show();
-				});
+				modal.show();
 			});
+		});
 	}
 
 	$(function () {
