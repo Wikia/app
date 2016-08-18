@@ -238,6 +238,7 @@ class SitemapPage extends UnlistedSpecialPage {
 				return gzencode( str_replace( 'http://localhost/', 'http://' . $_SERVER['SERVER_NAME'] . '/', gzdecode( $namespaceSitemap ) ) );
 			}
 		}
+		$startTime = microtime( true );
 
 		$dbr = wfGetDB( DB_SLAVE, 'vslow' );
 
@@ -276,28 +277,12 @@ class SitemapPage extends UnlistedSpecialPage {
 			]
 		);
 
-		$includeVideo = (bool) F::app()->wg->EnableVideoSitemaps;
-		if ( $includeVideo && ( $this->mNamespace != NS_FILE ) ) {
-			$includeVideo = false;
-		}
-		$startTime = microtime( true );
+		$includeVideo = F::app()->wg->EnableVideoSitemaps && $this->mNamespace == NS_FILE;
 
 		$out .= "<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\"" . ( $includeVideo ? ' xmlns:video="http://www.google.com/schemas/sitemap-video/1.1"' : '' ) . ">\n";
 		while ( $row = $dbr->fetchObject( $sth ) ) {
 			$size = strlen( $out );
-			$title = Title::makeTitle( $row->page_namespace, $row->page_title );
-			$stamp = wfTimestamp( TS_ISO_8601, $row->page_touched );
-			$prior = isset( $this->mPriorities[$row->page_namespace] )
-				? $this->mPriorities[$row->page_namespace]
-				: '0.5';
-
-			if ( $includeVideo ) {
-				$skipSnippet = !$this->hasSnippet( $row->page_id );
-			} else {
-				$skipSnippet = true;
-			}
-
-			$entry = $this->titleEntry( $title, $stamp, $prior, $includeVideo, $skipSnippet );
+			$entry = $this->titleEntry( $row, $includeVideo );
 
 			/**
 			 * break if it's to big
@@ -351,20 +336,32 @@ class SitemapPage extends UnlistedSpecialPage {
 		}
 	}
 
-	private function titleEntry( Title $title, $date, $priority, $includeVideo = false, $skipSnippet = false ) {
+	private function titleEntry( $row, $includeVideo ) {
+		$title = Title::makeTitle( $row->page_namespace, $row->page_title );
+		$timestamp = wfTimestamp( TS_ISO_8601, $row->page_touched );
+		$priority = isset( $this->mPriorities[$row->page_namespace] )
+			? $this->mPriorities[$row->page_namespace]
+			: '0.5';
+
+		$videoEntry = '';
+		if ( $includeVideo ) {
+			$skipDescription = !$this->hasSnippet( $row->page_id );
+			$videoEntry = $this->videoEntry( $title, $skipDescription );
+		}
+
 		return
 			"\t<url>\n" .
 			"\t\t<loc>{$title->getFullURL()}</loc>\n" .
-			"\t\t<lastmod>$date</lastmod>\n" .
+			"\t\t<lastmod>$timestamp</lastmod>\n" .
 			"\t\t<priority>$priority</priority>\n" .
-			( $includeVideo ? $this->videoEntry( $title, $skipSnippet ) : '' ) .
+			$videoEntry .
 			"\t</url>\n";
 	}
 
-	private function videoEntry( Title $title, $skipSnippet = false ) {
+	private function videoEntry( Title $title, $skipDescription = false ) {
 		$file = wfFindFile( $title );
 
-		$videoTitleData = $this->mMediaService->getMediaData( $title, $skipSnippet ? 0 : 500 );
+		$videoTitleData = $this->mMediaService->getMediaData( $title, $skipDescription ? 0 : 500 );
 
 		$isVideo = WikiaFileHelper::isFileTypeVideo( $file );
 		if ( !$isVideo ) {
@@ -503,10 +500,7 @@ class SitemapPage extends UnlistedSpecialPage {
 		if ( is_null( $pageIdsWithSnippets ) ) {
 			$pageIdsWithSnippets = [];
 
-			$luceneQuery = sprintf(
-				'wid:%d AND is_image:false AND ns:6',
-				$wgCityId
-			);
+			$luceneQuery = sprintf( 'wid:%d AND is_image:false AND ns:%d', $wgCityId, NS_FILE );
 
 			$config = new Wikia\Search\Config();
 			$config->setDirectLuceneQuery( true );

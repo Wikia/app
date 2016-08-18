@@ -232,7 +232,7 @@ class MediaQueryService extends WikiaService {
 				}
 				$this->mediaCache[ $media->getDBKey() ] = array(
 					'title' => $media->getText(),
-					'desc' => $length > 0 ? $articleService->getTextSnippet( $length ) : '',
+					'desc' => ( $length > 0 ? $articleService->getTextSnippet( $length ) : '' ),
 					'type' => ( $isVideo ? self::MEDIA_TYPE_VIDEO : self::MEDIA_TYPE_IMAGE ),
 					'meta' => ( $videoHandler ? array_merge( $videoHandler->getVideoMetadata(true), $videoHandler->getEmbedSrcData() ) : array() ),
 					'thumbUrl' => ( !empty($thumb) ? $thumb->getUrl() : false
