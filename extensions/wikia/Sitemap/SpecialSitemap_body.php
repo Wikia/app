@@ -19,6 +19,16 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 class SitemapPage extends UnlistedSpecialPage {
 
 	const BLOBS_TABLE_NAME = 'sitemap_blobs';
+
+	/**
+	 * For video-extended sitemaps, we query Solr to find out which file pages with videos are
+	 * indexed in it. This is a limit for this query. If the limit is exceeded, the optimization
+	 * is disabled and we query Solr for each of the file pages with videos separately.
+	 *
+	 * @see SitemapPage::hasSnippet
+	 */
+	const SOLR_LIMIT = 10000;
+
 	private $mType, $mTitle, $mNamespaces, $mNamespace, $mPriorities,
 		$mSizeLimit, $mPage;
 
@@ -489,6 +499,8 @@ class SitemapPage extends UnlistedSpecialPage {
 	 * This means no querying Solr for information it doesn't have and no falling back to parsing
 	 * wikitext for mostly empty pages (if they weren't empty, they would be indexed).
 	 *
+	 * If more there are more than self::SOLR_LIMIT documents, we'll always return true.
+	 *
 	 * @param $pageId
 	 * @return bool
 	 */
@@ -496,6 +508,7 @@ class SitemapPage extends UnlistedSpecialPage {
 		global $wgCityId;
 
 		static $pageIdsWithSnippets = null;
+		static $alwaysReturnTrue = false;
 
 		if ( is_null( $pageIdsWithSnippets ) ) {
 			$pageIdsWithSnippets = [];
@@ -504,17 +517,26 @@ class SitemapPage extends UnlistedSpecialPage {
 
 			$config = new Wikia\Search\Config();
 			$config->setDirectLuceneQuery( true );
-			$config->setLimit( 100000 );
+			$config->setLimit( self::SOLR_LIMIT );
 			$config->setQuery( $luceneQuery );
 
 			$queryServiceFactory = new Wikia\Search\QueryService\Factory();
 			$response = $queryServiceFactory->getFromConfig( $config )->search();
-			$results = (array)$response->getResults();
 
-			foreach ( $results as $result ) {
-				$pageId = $result->getFields()['pageid'];
-				$pageIdsWithSnippets[$pageId] = true;
+			if ( $response->getResultsNum() >= self::SOLR_LIMIT ) {
+				$alwaysReturnTrue = true;
+			} else {
+				$results = (array)$response->getResults();
+
+				foreach ( $results as $result ) {
+					$pageId = $result->getFields()['pageid'];
+					$pageIdsWithSnippets[$pageId] = true;
+				}
 			}
+		}
+
+		if ( $alwaysReturnTrue ) {
+			return true;
 		}
 
 		return isset( $pageIdsWithSnippets[$pageId] );
