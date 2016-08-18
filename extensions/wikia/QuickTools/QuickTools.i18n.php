@@ -6,12 +6,12 @@
  * @ingroup Extensions
  */
 
-$messages = array();
+$messages = [];
 
 /** English
  * @author Daniel Grunwell (grunny)
  */
-$messages['en'] = array(
+$messages['en'] = [
 	'quicktools' => 'QuickTools',
 	'quicktools-desc' => 'A collection of tools to make fighting spam and vandalism, and other tasks for staff and volunteers easier',
 	'right-quicktools' => 'Quickly revert and delete spam and vandalism',
@@ -58,12 +58,12 @@ $messages['en'] = array(
 	'quicktools-adopt-confirm-ok' => 'Yes',
 	'quicktools-adopt-confirm-cancel' => 'No',
 	'quicktools-adopt-confirm-title' => 'Confirm Adoption',
-);
+];
 
 /**
  * @author Daniel Grunwell (grunny)
  */
-$messages['qqq'] = array(
+$messages['qqq'] = [
 	'quicktools' => 'Extension name',
 	'quicktools-desc' => '{{desc}}',
 	'right-quicktools' => '{{doc-right|quicktools}}',
@@ -106,4 +106,4 @@ $messages['qqq'] = array(
 	'quicktools-adopt-confirm-ok' => 'Message for the OK button in the confirm dialog',
 	'quicktools-adopt-confirm-cancel' => 'Message for the cancel button in the confirm dialog',
 	'quicktools-adopt-confirm-title' => 'Title of confirm dialog',
-);
+];

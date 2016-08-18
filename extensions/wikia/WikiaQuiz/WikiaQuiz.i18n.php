@@ -1,9 +1,10 @@
 <?php
 
-$messages = array();
+$messages = [];
 
-$messages['en'] = array(
+$messages['en'] = [
 	'wikiaquiz-desc' => 'Provides an easy way to create and manage quizzes',
+	'right-wikiaquiz' => 'Allows creating and managing quizzes',
 	'wikiaquiz-createquiz-headline' => 'Create Quiz',
 	'wikiaquiz-editquiz-headline' => 'Edit Quiz',
 	'wikiaquiz-createquizarticle-headline' => 'Create Quiz Question and Answers',
@@ -65,13 +66,13 @@ $messages['en'] = array(
 	'wikiaquiz-game-email-error' => 'There was an error while sending this email: $1',
 	'wikiaquiz-game-challenge' => 'Challenge your friends to play!',
 	'wikiaquiz-game-mute' => 'Mute',
-);
+];
 
 /** Message documentation (Message documentation)
  * @author LWChris
  * @author Shirayuki
  */
-$messages['qqq'] = array(
+$messages['qqq'] = [
 	'wikiaquiz-desc' => '{{desc}}',
 	'wikiaquiz-createquiz-headline' => 'Headline for Create Quiz Special Page.',
 	'wikiaquiz-editquiz-headline' => 'Headline for Edit Quiz Special Page.',
@@ -123,12 +124,12 @@ $messages['qqq'] = array(
 	'wikiaquiz-game-email-subject' => 'Subject of an email sent to the user when quiz is completed',
 	'wikiaquiz-game-email-body' => 'Body of an email sent to the user when quiz is completed',
 	'wikiaquiz-game-email-error' => 'Message shown when there was an error when sending an email. $1 is an error message.',
-);
+];
 
 /** Arabic (العربية)
  * @author Achraf94
  */
-$messages['ar'] = array(
+$messages['ar'] = [
 	'wikiaquiz-desc' => 'توفر طريقة سهلة لصنع وإدارة مسابقات وألغاز',
 	'wikiaquiz-createquiz-headline' => 'إنشاء مسابقة',
 	'wikiaquiz-editquiz-headline' => 'تعديل المسابقة',
@@ -189,12 +190,12 @@ $messages['ar'] = array(
 	'wikiaquiz-game-email-error' => 'حدث خطأ أثناء إرسال هذا البريد الإلكتروني: $1',
 	'wikiaquiz-game-challenge' => 'تحدى أصدقائك للعب!',
 	'wikiaquiz-game-mute' => 'مكتوم',
-);
+];
 
 /** Azerbaijani (azərbaycanca)
  * @author Cekli829
  */
-$messages['az'] = array(
+$messages['az'] = [
 	'wikiaquiz-title-label' => 'Başlıq',
 	'wikiaquiz-questions-label' => 'Suallar',
 	'wikiaquiz-answers-label' => 'Cavablar',
@@ -203,12 +204,12 @@ $messages['az'] = array(
 	'wikiaquiz-publish-label' => 'Naşir',
 	'wikiaquiz-game-finish-button' => 'Son',
 	'wikiaquiz-game-email-placeholder' => 'yourname@youremail.com',
-);
+];
 
 /** Bulgarian (български)
  * @author DCLXVI
  */
-$messages['bg'] = array(
+$messages['bg'] = [
 	'wikiaquiz-title-label' => 'Заглавие',
 	'wikiaquiz-moreinfoarticle-label' => 'Статия',
 	'wikiaquiz-question-label' => 'Въпрос',
@@ -221,14 +222,14 @@ $messages['bg'] = array(
 	'wikiaquiz-game-next-button' => 'Следващ въпрос',
 	'wikiaquiz-game-finish-button' => 'Приключване',
 	'wikiaquiz-game-continue-button' => 'Продължаване',
-);
+];
 
 /** Breton (brezhoneg)
  * @author Fohanno
  * @author Fulup
  * @author Y-M D
  */
-$messages['br'] = array(
+$messages['br'] = [
 	'wikiaquiz-createquiz-headline' => "Krouiñ ur c'hwiz",
 	'wikiaquiz-editquiz-headline' => "Aozañ ar c'hwiz",
 	'wikiaquiz-title-label' => 'Titl',
@@ -277,14 +278,14 @@ $messages['br'] = array(
 	'wikiaquiz-game-email-error' => 'Ur fazi a oa bet pa oad o kas ar postel-mañ : $1',
 	'wikiaquiz-game-challenge' => "Broudit ho mignoned da c'hoari !",
 	'wikiaquiz-game-mute' => 'Hep son',
-);
+];
 
 /** Catalan (català)
  * @author Alvaro Vidal-Abarca
  * @author Fitoschido
  * @author Gemmaa
  */
-$messages['ca'] = array(
+$messages['ca'] = [
 	'wikiaquiz-desc' => 'Proporciona una manera fàcil de crear i gestionar els qüestionaris',
 	'wikiaquiz-createquiz-headline' => 'Crear Quiz',
 	'wikiaquiz-editquiz-headline' => 'Editar Quiz',
@@ -345,20 +346,20 @@ $messages['ca'] = array(
 	'wikiaquiz-game-email-error' => "Hi ha hagut un error en l'enviament d'aquest correu electrònic:$1",
 	'wikiaquiz-game-challenge' => 'Desafia als teus amics per jugar!',
 	'wikiaquiz-game-mute' => 'Atenuar-se',
-);
+];
 
 /** Chechen (нохчийн)
  * @author Умар
  */
-$messages['ce'] = array(
+$messages['ce'] = [
 	'wikiaquiz-game-continue-button' => 'Кхин дӀа',
-);
+];
 
 /** Czech (čeština)
  * @author Chmee2
  * @author Vks
  */
-$messages['cs'] = array(
+$messages['cs'] = [
 	'wikiaquiz-createquiz-headline' => 'Vytvořit kvíz',
 	'wikiaquiz-editquiz-headline' => 'Upravit kvíz',
 	'wikiaquiz-title-label' => 'Název',
@@ -396,13 +397,13 @@ $messages['cs'] = array(
 	'wikiaquiz-game-thanks' => 'Díky za hru!',
 	'wikiaquiz-game-email-placeholder' => 'yourname@youremail.com',
 	'wikiaquiz-game-email-subject' => 'Děkujeme za vložení.',
-);
+];
 
 /** Welsh (Cymraeg)
  * @author Lloffiwr
  * @author Thefartydoctor
  */
-$messages['cy'] = array(
+$messages['cy'] = [
 	'wikiaquiz-createquiz-headline' => 'Llunio Cwis',
 	'wikiaquiz-editquiz-headline' => 'Golygu Cwis',
 	'wikiaquiz-createquizarticle-headline' => 'Llunio Cwestiynau ac Atebion Cwis',
@@ -416,7 +417,7 @@ $messages['cy'] = array(
 	'wikiaquiz-cancel-label' => 'Diddymu',
 	'wikiaquiz-game-next-button' => 'Cwestiwn Nesaf',
 	'wikiaquiz-game-email-placeholder' => 'eichenw@eichebost.com',
-);
+];
 
 /** German (Deutsch)
  * @author Avatar
@@ -425,7 +426,7 @@ $messages['cy'] = array(
  * @author PtM
  * @author Sebastian Wallroth
  */
-$messages['de'] = array(
+$messages['de'] = [
 	'wikiaquiz-desc' => 'Einfache Möglichkeit zum Erstellen und Verwalten von Quizfragen',
 	'wikiaquiz-createquiz-headline' => 'Quiz erstellen',
 	'wikiaquiz-editquiz-headline' => 'Quiz bearbeiten',
@@ -486,13 +487,13 @@ $messages['de'] = array(
 	'wikiaquiz-game-email-error' => 'Beim Senden dieser e-Mail ist ein Fehler aufgetreten:$1',
 	'wikiaquiz-game-challenge' => 'Fordere deine Freunde zum Spielen heraus!',
 	'wikiaquiz-game-mute' => 'Ton aus',
-);
+];
 
 /** Zazaki (Zazaki)
  * @author Erdemaslancan
  * @author Mirzali
  */
-$messages['diq'] = array(
+$messages['diq'] = [
 	'wikiaquiz-createquiz-headline' => 'Quiz vırazê',
 	'wikiaquiz-editquiz-headline' => 'Quizi bıvurnê',
 	'wikiaquiz-createquizarticle-headline' => 'Quiz rê Persi u Cıwabi dekerê de',
@@ -520,13 +521,13 @@ $messages['diq'] = array(
 	'wikiaquiz-game-your-score' => 'SKORÊ ŞIMA',
 	'wikiaquiz-game-continue-button' => 'Dewam ke',
 	'wikiaquiz-game-mute' => 'Bêveng',
-);
+];
 
 /** Spanish (español)
  * @author Benfutbol10
  * @author VegaDark
  */
-$messages['es'] = array(
+$messages['es'] = [
 	'wikiaquiz-desc' => 'Proporciona una forma fácil de crear y administrar quices',
 	'wikiaquiz-createquiz-headline' => 'Crear Quiz',
 	'wikiaquiz-editquiz-headline' => 'Editar Quiz',
@@ -587,12 +588,12 @@ $messages['es'] = array(
 	'wikiaquiz-game-email-error' => 'Hubo un error al enviar este correo electrónico: $1',
 	'wikiaquiz-game-challenge' => '¡Desafía a tus amigos a jugar!',
 	'wikiaquiz-game-mute' => 'Mudo',
-);
+];
 
 /** Basque (euskara)
  * @author Subi
  */
-$messages['eu'] = array(
+$messages['eu'] = [
 	'wikiaquiz-questions-label' => 'Galderak',
 	'wikiaquiz-answers-label' => 'Erantzunak',
 	'wikiaquiz-answer-label' => 'Erantzuna',
@@ -604,13 +605,13 @@ $messages['eu'] = array(
 	'wikiaquiz-game-finish-button' => 'Amaitu',
 	'wikiaquiz-game-continue-button' => 'Jarraitu',
 	'wikiaquiz-game-email-placeholder' => 'zureizena@zureposta.com',
-);
+];
 
 /** Persian (فارسی)
  * @author Mjbmr
  * @author Reza1615
  */
-$messages['fa'] = array(
+$messages['fa'] = [
 	'wikiaquiz-title-label' => 'عنوان',
 	'wikiaquiz-moreinfoarticle-label' => 'مقاله',
 	'wikiaquiz-question-label' => 'پرسش',
@@ -628,28 +629,28 @@ $messages['fa'] = array(
 	'wikiaquiz-game-continue-button' => 'ادامه',
 	'wikiaquiz-game-email-valid-please' => 'لطفاً یک آدرس ایمیل معتبر وارد کنید.',
 	'wikiaquiz-game-mute' => 'صامت‌سازی',
-);
+];
 
 /** Finnish (suomi)
  * @author Silvonen
  */
-$messages['fi'] = array(
+$messages['fi'] = [
 	'wikiaquiz-questions-label' => 'Kysymykset',
 	'wikiaquiz-answers-label' => 'Vastaukset',
 	'wikiaquiz-publish-label' => 'Julkaise',
 	'wikiaquiz-game-start-button' => 'Käynnistä peli',
 	'wikiaquiz-game-continue-button' => 'Jatka',
-);
+];
 
 /** Faroese (føroyskt)
  * @author EileenSanda
  */
-$messages['fo'] = array(
+$messages['fo'] = [
 	'wikiaquiz-desc' => 'Veitir ein lættan máta at upprætta og skipa spurnakappingum',
 	'wikiaquiz-createquiz-headline' => 'Upprætta spurnakapping',
 	'wikiaquiz-editquiz-headline' => 'Ritsjórna spurnakapping',
 	'wikiaquiz-title-label' => 'Heiti',
-);
+];
 
 /** French (français)
  * @author Cmarget
@@ -657,7 +658,7 @@ $messages['fo'] = array(
  * @author Gomoko
  * @author Wyz
  */
-$messages['fr'] = array(
+$messages['fr'] = [
 	'wikiaquiz-desc' => 'Fournit un moyen facile de créer et de gérer des quizz',
 	'wikiaquiz-createquiz-headline' => 'Créer un quizz',
 	'wikiaquiz-editquiz-headline' => 'Modifier le quizz',
@@ -718,19 +719,19 @@ $messages['fr'] = array(
 	'wikiaquiz-game-email-error' => 'Une erreur est survenue à l’envoi de ce courriel : $1',
 	'wikiaquiz-game-challenge' => 'Défiez vos amis d’y participer !',
 	'wikiaquiz-game-mute' => 'Muet',
-);
+];
 
 /** Western Frisian (Frysk)
  * @author Robin0van0der0vliet
  */
-$messages['fy'] = array(
+$messages['fy'] = [
 	'wikiaquiz-cancel-label' => 'Annulearje',
-);
+];
 
 /** Galician (galego)
  * @author Toliño
  */
-$messages['gl'] = array(
+$messages['gl'] = [
 	'wikiaquiz-desc' => 'Proporciona un xeito doado de crear e xestionar cuestionarios',
 	'wikiaquiz-createquiz-headline' => 'Crear un cuestionario',
 	'wikiaquiz-editquiz-headline' => 'Editar o cuestionario',
@@ -791,12 +792,12 @@ $messages['gl'] = array(
 	'wikiaquiz-game-email-error' => 'Houbo un erro ao enviar o correo electrónico: $1',
 	'wikiaquiz-game-challenge' => 'Desafíe aos seus amigos para que participen!',
 	'wikiaquiz-game-mute' => 'Silenciar',
-);
+];
 
 /** Hungarian (magyar)
  * @author TK-999
  */
-$messages['hu'] = array(
+$messages['hu'] = [
 	'wikiaquiz-desc' => 'Egyszerű lehetőséget biztosít a kvízek létrehozására és kezelésére',
 	'wikiaquiz-createquiz-headline' => 'Kvíz létrehozása',
 	'wikiaquiz-editquiz-headline' => 'Kvíz szerkesztése',
@@ -851,12 +852,12 @@ $messages['hu'] = array(
 	'wikiaquiz-game-email-error' => 'Hiba történt az e-mail küldése közben: $1',
 	'wikiaquiz-game-challenge' => 'Hívd ki a barátaidat is a játékban!',
 	'wikiaquiz-game-mute' => 'Elnémítás',
-);
+];
 
 /** Interlingua (interlingua)
  * @author McDutchie
  */
-$messages['ia'] = array(
+$messages['ia'] = [
 	'wikiaquiz-desc' => 'Forni un modo facile de crear e gerer quizzes',
 	'wikiaquiz-createquiz-headline' => 'Crear quiz',
 	'wikiaquiz-editquiz-headline' => 'Modificar quiz',
@@ -917,12 +918,12 @@ $messages['ia'] = array(
 	'wikiaquiz-game-email-error' => 'Un error occurreva durante le invio de iste e-mail: $1',
 	'wikiaquiz-game-challenge' => 'Defia tu amicos a jocar!',
 	'wikiaquiz-game-mute' => 'Assurdar',
-);
+];
 
 /** Indonesian (Bahasa Indonesia)
  * @author Aldnonymous
  */
-$messages['id'] = array(
+$messages['id'] = [
 	'wikiaquiz-desc' => 'Memberikan cara mudah untuk membuat dan mengelola kuis',
 	'wikiaquiz-createquiz-headline' => 'Buat Kuis',
 	'wikiaquiz-editquiz-headline' => 'Sunting Kuis',
@@ -968,12 +969,12 @@ $messages['id'] = array(
 	'wikiaquiz-game-thanks' => 'Terima kasih telah bermain!',
 	'wikiaquiz-game-challenge' => 'Tantang teman Anda untuk bermain!',
 	'wikiaquiz-game-mute' => 'Diam',
-);
+];
 
 /** Italian (italiano)
  * @author Minerva Titani
  */
-$messages['it'] = array(
+$messages['it'] = [
 	'wikiaquiz-createquiz-headline' => 'Crea Quiz',
 	'wikiaquiz-editquiz-headline' => 'Modifica Quiz',
 	'wikiaquiz-createquizarticle-headline' => 'Crea domanda e risposte del Quiz',
@@ -999,12 +1000,12 @@ $messages['it'] = array(
 	'wikiaquiz-game-continue-button' => 'Continua',
 	'wikiaquiz-game-thanks' => 'Grazie per aver giocato!',
 	'wikiaquiz-game-mute' => 'Muto',
-);
+];
 
 /** Japanese (日本語)
  * @author Shirayuki
  */
-$messages['ja'] = array(
+$messages['ja'] = [
 	'wikiaquiz-desc' => 'クイズを作成/管理する簡単な方法を提供する',
 	'wikiaquiz-createquiz-headline' => 'クイズを作成',
 	'wikiaquiz-editquiz-headline' => 'クイズを編集',
@@ -1065,26 +1066,26 @@ $messages['ja'] = array(
 	'wikiaquiz-game-email-error' => 'このメールの送信中にエラーが発生しました：$1',
 	'wikiaquiz-game-challenge' => 'あなたの友達に挑戦しましょう!',
 	'wikiaquiz-game-mute' => 'ミュート',
-);
+];
 
 /** Kannada (ಕನ್ನಡ)
  * @author VASANTH S.N.
  */
-$messages['kn'] = array(
+$messages['kn'] = [
 	'wikiaquiz-title-label' => 'ಶೀರ್ಷಿಕೆ',
 	'wikiaquiz-moreinfoarticle-label' => 'ಲೇಖನಗಳು',
 	'wikiaquiz-question-label' => 'ಪ್ರಶ್ನೆ',
 	'wikiaquiz-questions-label' => 'ಪ್ರಶ್ನೆಗಳು',
 	'wikiaquiz-cancel-label' => 'ವಜಾ ಮಾಡಿ',
 	'wikiaquiz-game-cadence-1' => 'ಹೋಗು!',
-);
+];
 
 /** Korean (한국어)
  * @author Infinity
  * @author Miri-Nae
  * @author 아라
  */
-$messages['ko'] = array(
+$messages['ko'] = [
 	'wikiaquiz-desc' => '퀴즈를 생성하고 관리할 수 있는 편리한 방법을 제공',
 	'wikiaquiz-createquiz-headline' => '퀴즈 만들기',
 	'wikiaquiz-editquiz-headline' => '퀴즈 편집',
@@ -1134,21 +1135,21 @@ $messages['ko'] = array(
 	'wikiaquiz-game-thanks' => '게임에 참여해주셔서 감사합니다!',
 	'wikiaquiz-game-challenge' => '게임을 진행한 친구에게 도전해보세요!',
 	'wikiaquiz-game-mute' => '음소거',
-);
+];
 
 /** Kurdish (Latin script) (Kurdî (latînî)‎)
  * @author George Animal
  */
-$messages['ku-latn'] = array(
+$messages['ku-latn'] = [
 	'wikiaquiz-title-label' => 'Sernav',
 	'wikiaquiz-answer-label' => 'Bersiv',
 	'wikiaquiz-cancel-label' => 'Betal bike',
-);
+];
 
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
-$messages['lb'] = array(
+$messages['lb'] = [
 	'wikiaquiz-title-label' => 'Titel',
 	'wikiaquiz-moreinfoarticle-label' => 'Artikel',
 	'wikiaquiz-question-label' => 'Fro',
@@ -1167,12 +1168,12 @@ $messages['lb'] = array(
 	'wikiaquiz-game-next-button' => 'Nächst Fro',
 	'wikiaquiz-game-finish-button' => 'Fäerdeg maachen',
 	'wikiaquiz-game-continue-button' => 'Viru fueren',
-);
+];
 
 /** Maithili (मैथिली)
  * @author Vinitutpal
  */
-$messages['mai'] = array(
+$messages['mai'] = [
 	'wikiaquiz-createquiz-headline' => 'प्रश्नोतरी बनाऊ',
 	'wikiaquiz-editquiz-headline' => 'प्रश्नोतरी के संपादन करू',
 	'wikiaquiz-createquizarticle-headline' => 'प्रश्नोतरीक प्रश्न आ उत्तर के बनाऊ',
@@ -1216,12 +1217,12 @@ $messages['mai'] = array(
 	'wikiaquiz-game-thanks' => 'खेलहि लेल धन्यवाद.',
 	'wikiaquiz-game-challenge' => 'खेलहि लेल अप्पन मित्र के बजाऊ.',
 	'wikiaquiz-game-mute' => 'चुप',
-);
+];
 
 /** Macedonian (македонски)
  * @author Bjankuloski06
  */
-$messages['mk'] = array(
+$messages['mk'] = [
 	'wikiaquiz-desc' => 'Овозможува лесен начин на правење и раководење со квизови',
 	'wikiaquiz-createquiz-headline' => 'Направи квиз',
 	'wikiaquiz-editquiz-headline' => 'Уреди квиз',
@@ -1282,12 +1283,12 @@ $messages['mk'] = array(
 	'wikiaquiz-game-email-error' => 'Се појави грешка при испраќањето на поракава: $1',
 	'wikiaquiz-game-challenge' => 'Предизвикајте ги пријателите на квизов!',
 	'wikiaquiz-game-mute' => 'Искл. звук',
-);
+];
 
 /** Malay (Bahasa Melayu)
  * @author Anakmalaysia
  */
-$messages['ms'] = array(
+$messages['ms'] = [
 	'wikiaquiz-desc' => 'Menyediakan cara yang mudah untuk mencipta dan menguruskan kuiz',
 	'wikiaquiz-createquiz-headline' => 'Buka Kuiz',
 	'wikiaquiz-editquiz-headline' => 'Sunting Kuiz',
@@ -1348,12 +1349,12 @@ $messages['ms'] = array(
 	'wikiaquiz-game-email-error' => 'Terdapat ralat ketika menghantar e-mel ini: $1',
 	'wikiaquiz-game-challenge' => 'Cabar kawan-kawan anda!',
 	'wikiaquiz-game-mute' => 'Bisu',
-);
+];
 
 /** Norwegian Bokmål (norsk bokmål)
  * @author Audun
  */
-$messages['nb'] = array(
+$messages['nb'] = [
 	'wikiaquiz-desc' => 'Tilbyr en enkel måte å opprette og administrere quizer.',
 	'wikiaquiz-createquiz-headline' => 'Opprett quiz',
 	'wikiaquiz-editquiz-headline' => 'Rediger quiz',
@@ -1414,14 +1415,14 @@ $messages['nb'] = array(
 	'wikiaquiz-game-email-error' => 'Det oppstod en feil under sendingen av denne e-posten: $1',
 	'wikiaquiz-game-challenge' => 'Utfordre vennene dine til å spille!',
 	'wikiaquiz-game-mute' => 'Demp',
-);
+];
 
 /** Dutch (Nederlands)
  * @author HanV
  * @author SPQRobin
  * @author Siebrand
  */
-$messages['nl'] = array(
+$messages['nl'] = [
 	'wikiaquiz-desc' => 'Maakt het aanmaken en beheren van peilingen mogelijk',
 	'wikiaquiz-createquiz-headline' => 'Quiz aanmaken',
 	'wikiaquiz-editquiz-headline' => 'Quiz bewerken',
@@ -1482,12 +1483,12 @@ $messages['nl'] = array(
 	'wikiaquiz-game-email-error' => 'Er is een fout opgetreden tijdens het verzenden van deze e-mail: $1',
 	'wikiaquiz-game-challenge' => 'Daag uw vrienden uit om deel te nemen!',
 	'wikiaquiz-game-mute' => 'Dempen',
-);
+];
 
 /** Occitan (occitan)
  * @author Cedric31
  */
-$messages['oc'] = array(
+$messages['oc'] = [
 	'wikiaquiz-desc' => 'Provesís un mejan aisit de crear e de gerir de quizzes',
 	'wikiaquiz-createquiz-headline' => 'Crear un quizz',
 	'wikiaquiz-editquiz-headline' => 'Modificar lo quizz',
@@ -1526,14 +1527,14 @@ $messages['oc'] = array(
 	'wikiaquiz-game-finish-button' => 'Acabar',
 	'wikiaquiz-game-continue-button' => 'Contunhar',
 	'wikiaquiz-game-mute' => 'Mut',
-);
+];
 
 /** Polish (polski)
  * @author BeginaFelicysym
  * @author Sovq
  * @author Wedkarski
  */
-$messages['pl'] = array(
+$messages['pl'] = [
 	'wikiaquiz-desc' => 'Pozwala łatwo tworzyć i zarządzać quizami',
 	'wikiaquiz-createquiz-headline' => 'Utwórz quiz',
 	'wikiaquiz-editquiz-headline' => 'Edytuj quiz',
@@ -1594,13 +1595,13 @@ $messages['pl'] = array(
 	'wikiaquiz-game-email-error' => 'Wystąpił błąd podczas wysyłania tej wiadomości e-mail: $1',
 	'wikiaquiz-game-challenge' => 'Wyzwij znajomych w grze!',
 	'wikiaquiz-game-mute' => 'Wyciszenie',
-);
+];
 
 /** Piedmontese (Piemontèis)
  * @author Borichèt
  * @author Dragonòt
  */
-$messages['pms'] = array(
+$messages['pms'] = [
 	'wikiaquiz-desc' => 'A forniss na manera còmoda ëd creé e gestì dij gieugh ëd chestion',
 	'wikiaquiz-createquiz-headline' => 'Creé un gieugh ëd chestion',
 	'wikiaquiz-editquiz-headline' => 'Modifiché ël gieugh ëd chestion',
@@ -1661,12 +1662,12 @@ $messages['pms'] = array(
 	'wikiaquiz-game-email-error' => "A-i é staje n'eror an mandand ës mëssagi: $1",
 	'wikiaquiz-game-challenge' => 'Cissa ij tò amis a giughé!',
 	'wikiaquiz-game-mute' => 'Mut',
-);
+];
 
 /** Pashto (پښتو)
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
-$messages['ps'] = array(
+$messages['ps'] = [
 	'wikiaquiz-title-label' => 'سرليک',
 	'wikiaquiz-moreinfoarticle-label' => 'ليکنه',
 	'wikiaquiz-question-label' => 'پوښتنه',
@@ -1685,14 +1686,14 @@ $messages['ps'] = array(
 	'wikiaquiz-game-finish-button' => 'پای',
 	'wikiaquiz-game-provide-email' => 'لطفاً برېښليک مو ورکړۍ',
 	'wikiaquiz-game-mute' => 'ټپول',
-);
+];
 
 /** Portuguese (português)
  * @author Caio1478
  * @author Hamilton Abreu
  * @author Luckas
  */
-$messages['pt'] = array(
+$messages['pt'] = [
 	'wikiaquiz-desc' => 'Uma forma fácil de criar e gerir testes',
 	'wikiaquiz-createquiz-headline' => 'Criar Teste',
 	'wikiaquiz-editquiz-headline' => 'Editar Quiz',
@@ -1741,13 +1742,13 @@ $messages['pt'] = array(
 	'wikiaquiz-game-thanks' => 'Obrigado por ter jogado!',
 	'wikiaquiz-game-challenge' => 'Desafie os seus amigos a jogar!',
 	'wikiaquiz-game-mute' => 'Mudo',
-);
+];
 
 /** Brazilian Portuguese (português do Brasil)
  * @author Luckas
  * @author Luckas Blade
  */
-$messages['pt-br'] = array(
+$messages['pt-br'] = [
 	'wikiaquiz-title-label' => 'Título',
 	'wikiaquiz-moreinfoarticle-label' => 'Artigo',
 	'wikiaquiz-question-label' => 'Pergunta',
@@ -1762,12 +1763,12 @@ $messages['pt-br'] = array(
 	'wikiaquiz-game-continue-button' => 'Continuar',
 	'wikiaquiz-game-thanks' => 'Obrigado por jogar!',
 	'wikiaquiz-game-mute' => 'Mudo',
-);
+];
 
 /** tarandíne (tarandíne)
  * @author Joetaras
  */
-$messages['roa-tara'] = array(
+$messages['roa-tara'] = [
 	'wikiaquiz-desc' => "Dèje 'nu mode facile de ccrejà e gestì le quiz",
 	'wikiaquiz-createquiz-headline' => "Ccreje 'nu Quiz",
 	'wikiaquiz-editquiz-headline' => "Cange 'nu Quiz",
@@ -1828,14 +1829,14 @@ $messages['roa-tara'] = array(
 	'wikiaquiz-game-email-error' => "Ha assute 'n'errore quanne ste mannave st'email: $1",
 	'wikiaquiz-game-challenge' => 'Sfide le amice tue a sciucà!',
 	'wikiaquiz-game-mute' => 'Citte',
-);
+];
 
 /** Russian (русский)
  * @author DCamer
  * @author Kaganer
  * @author Kuzura
  */
-$messages['ru'] = array(
+$messages['ru'] = [
 	'wikiaquiz-desc' => 'Позволяет легко и просто создать викторину',
 	'wikiaquiz-createquiz-headline' => 'Создать викторину',
 	'wikiaquiz-editquiz-headline' => 'Править викторину',
@@ -1896,12 +1897,12 @@ $messages['ru'] = array(
 	'wikiaquiz-game-email-error' => 'Произошла ошибка при отправке этого письма: $1',
 	'wikiaquiz-game-challenge' => 'Бросьте вызов своим друзьям в викторине!',
 	'wikiaquiz-game-mute' => 'Без звука',
-);
+];
 
 /** Serbian (Cyrillic script) (српски (ћирилица)‎)
  * @author Rancher
  */
-$messages['sr-ec'] = array(
+$messages['sr-ec'] = [
 	'wikiaquiz-desc' => 'Једноставан начин за стварање и управљање квизовима',
 	'wikiaquiz-createquiz-headline' => 'Прављење квиза',
 	'wikiaquiz-editquiz-headline' => 'Уређивање квиза',
@@ -1961,12 +1962,12 @@ $messages['sr-ec'] = array(
 	'wikiaquiz-game-email-error' => 'Дошло је до грешке при слању поруке: $1',
 	'wikiaquiz-game-challenge' => 'Позовите пријатеље на квиз!',
 	'wikiaquiz-game-mute' => 'Искључи звук',
-);
+];
 
 /** Swedish (svenska)
  * @author WikiPhoenix
  */
-$messages['sv'] = array(
+$messages['sv'] = [
 	'wikiaquiz-desc' => 'Ger ett enkelt sätt att skapa och hantera quizar (frågesporter)',
 	'wikiaquiz-createquiz-headline' => 'Skapa quiz',
 	'wikiaquiz-editquiz-headline' => 'Redigera quiz',
@@ -2027,13 +2028,13 @@ $messages['sv'] = array(
 	'wikiaquiz-game-email-error' => 'Ett fel uppstod när detta e-postmeddelande skulle skickas: $1',
 	'wikiaquiz-game-challenge' => 'Utmana dina vänner att spela!',
 	'wikiaquiz-game-mute' => 'Tyst',
-);
+];
 
 /** Tamil (தமிழ்)
  * @author Karthi.dr
  * @author மதனாஹரன்
  */
-$messages['ta'] = array(
+$messages['ta'] = [
 	'wikiaquiz-desc' => 'புதிர்களை உருவாக்கவும் முகாமிக்கவும் ஓர் எளிய வழியை வழங்குகின்றது',
 	'wikiaquiz-createquiz-headline' => 'புதிரை உருவாக்கவும்',
 	'wikiaquiz-editquiz-headline' => 'புதிரைத் தொகுக்கவும்',
@@ -2081,12 +2082,12 @@ $messages['ta'] = array(
 	'wikiaquiz-game-email-valid-please' => 'தயவு செய்து செல்லுபடியாகும் மின்னஞ்சல் முகவரியொன்றை உள்ளிடவும்.',
 	'wikiaquiz-game-email-error' => 'இம்மின்னஞ்சலை அனுப்பும்போது தவறொன்று ஏற்பட்டுள்ளது: $1',
 	'wikiaquiz-game-mute' => 'அமைதியாக்கவும்',
-);
+];
 
 /** Telugu (తెలుగు)
  * @author Veeven
  */
-$messages['te'] = array(
+$messages['te'] = [
 	'wikiaquiz-moreinfolinktext-label' => 'లంకె పాఠ్యం',
 	'wikiaquiz-question-label' => 'ప్రశ్న',
 	'wikiaquiz-image-label' => 'బొమ్మ (ఐచ్చికం)',
@@ -2099,12 +2100,12 @@ $messages['te'] = array(
 	'wikiaquiz-game-cadence-1' => 'వెళ్ళు!',
 	'wikiaquiz-game-next-button' => 'తర్వాతి ప్రశ్న',
 	'wikiaquiz-game-continue-button' => 'కొనసాగించు',
-);
+];
 
 /** Tagalog (Tagalog)
  * @author AnakngAraw
  */
-$messages['tl'] = array(
+$messages['tl'] = [
 	'wikiaquiz-desc' => 'Nagbibigay ng isang maginhawang paraan upang lumikha at mamahala ng mga pagsusulit',
 	'wikiaquiz-createquiz-headline' => 'Lumikha ng Pagsusulit',
 	'wikiaquiz-editquiz-headline' => 'Baguhin ang Pagsusulit',
@@ -2165,7 +2166,7 @@ $messages['tl'] = array(
 	'wikiaquiz-game-email-error' => 'Nagkaroon ng isang kamalian habang ipinapadala ang e-liham na ito: $1',
 	'wikiaquiz-game-challenge' => 'Hamunin mong maglaro ang mga kaibigan mo!',
 	'wikiaquiz-game-mute' => 'Walang tunog',
-);
+];
 
 /** Ukrainian (українська)
  * @author A1
@@ -2173,7 +2174,7 @@ $messages['tl'] = array(
  * @author Steve.rusyn
  * @author SteveR
  */
-$messages['uk'] = array(
+$messages['uk'] = [
 	'wikiaquiz-desc' => 'Забезпечує простий спосіб створення та керування вікторинами',
 	'wikiaquiz-createquiz-headline' => 'Створити вікторину',
 	'wikiaquiz-editquiz-headline' => 'Редагувати вікторину',
@@ -2234,13 +2235,13 @@ $messages['uk'] = array(
 	'wikiaquiz-game-email-error' => 'Виникла помилка під час надсилання на цю електронну пошту: $1',
 	'wikiaquiz-game-challenge' => 'Киньте виклик своїм друзям, щоб грати!',
 	'wikiaquiz-game-mute' => 'Без звуку',
-);
+];
 
 /** Vietnamese (Tiếng Việt)
  * @author Baonguyen21022003
  * @author Dinhxuanduyet
  */
-$messages['vi'] = array(
+$messages['vi'] = [
 	'wikiaquiz-desc' => 'Cung cấp một cách đơn giản để tạo vào quản lý các câu hỏi nhanh (quiz)',
 	'wikiaquiz-createquiz-headline' => 'Tạo Câu hỏi nhanh',
 	'wikiaquiz-editquiz-headline' => 'Chỉnh sửa các câu hỏi nhanh (Quiz)',
@@ -2297,14 +2298,14 @@ $messages['vi'] = array(
 	'wikiaquiz-game-email-error' => 'Có một lỗi khi gửi email này: $1',
 	'wikiaquiz-game-challenge' => 'Hãy thách thức những người bạn của bạn chơi trò này!',
 	'wikiaquiz-game-mute' => 'Tắt tiếng',
-);
+];
 
 /** Simplified Chinese (中文（简体）‎)
  * @author Hydra
  * @author Hzy980512
  * @author Yanmiao liu
  */
-$messages['zh-hans'] = array(
+$messages['zh-hans'] = [
 	'wikiaquiz-desc' => '提供一种创建和管理测验的简单方法',
 	'wikiaquiz-createquiz-headline' => '创建测验',
 	'wikiaquiz-editquiz-headline' => '编辑测验',
@@ -2365,21 +2366,21 @@ $messages['zh-hans'] = array(
 	'wikiaquiz-game-email-error' => '发送此邮件时出错：$1',
 	'wikiaquiz-game-challenge' => '挑战您的朋友来参与！',
 	'wikiaquiz-game-mute' => '静音',
-);
+];
 
 /** Traditional Chinese (中文（繁體）‎)
  * @author Ffaarr
  */
-$messages['zh-hant'] = array(
+$messages['zh-hant'] = [
 	'wikiaquiz-editquiz-headline' => '編輯測驗',
 	'wikiaquiz-createquizarticle-headline' => '創建測驗的問題和答案',
 	'wikiaquiz-editquizarticle-headline' => '編輯測驗的問題和答案',
 	'wikiaquiz-title-label' => '標題',
-);
+];
 
 /** Chinese (Hong Kong) (中文（香港）‎)
  * @author Tcshek
  */
-$messages['zh-hk'] = array(
+$messages['zh-hk'] = [
 	'wikiaquiz-error-invalid-image' => '圖像無效: $1',
-);
+];
