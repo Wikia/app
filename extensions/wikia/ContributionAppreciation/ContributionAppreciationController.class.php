@@ -22,7 +22,9 @@ class ContributionAppreciationController extends WikiaController {
 				$wgUser->getId()
 			);
 
-			$this->sendMail( $revisionId );
+			// send email that user received appreciation.
+			// Currently disabled because of: https://wikia-inc.atlassian.net/browse/WW-172
+			// $this->sendMail( $revisionId );
 		}
 
 		$this->response->setValues( [
