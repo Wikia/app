@@ -45,20 +45,16 @@ class ContributionAppreciationController extends WikiaController {
 			$appreciations = $this->prepareAppreciations( $upvotes );
 
 			if ( !empty( $appreciations ) ) {
-				$html = $this->app->renderView( 'ContributionAppreciation', 'appreciations', [
-					'appreciations' => $appreciations
-				] );
+				$numberOfAppreciations = count( $appreciations );
+				$numberOfHiddenAppreciations = $numberOfAppreciations > 2 ? $numberOfAppreciations - 2 : 0;
+				$html = ( new Wikia\Template\PHPEngine )
+					->setVal('appreciations', $appreciations)
+					->setVal('numberOfHiddenAppreciations', $numberOfHiddenAppreciations)
+					->render( __DIR__ . '/templates/ContributionAppreciation_appreciations.php' );
 			}
 		}
 
 		$this->response->setBody( $html );
-	}
-
-	public function appreciations() {
-		$appreciations = $this->getVal( 'appreciations' );
-		$numberOfAppreciations = count( $appreciations );
-		$this->numberOfHiddenAppreciations = $numberOfAppreciations > 2 ? $numberOfAppreciations - 2 : 0;
-		$this->appreciations = $appreciations;
 	}
 
 	public function diffModule() {
