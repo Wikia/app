@@ -37,12 +37,8 @@ define('ext.wikia.adEngine.provider.gpt.adElement', [
 		return this.id;
 	};
 
-	AdElement.prototype.getSlotContainerId = function () {
-		return this.slotContainerId;
-	};
-
-	AdElement.prototype.setSlotContainerId = function (slotContainerId) {
-		this.slotContainerId = slotContainerId;
+	AdElement.prototype.setTargeting = function (key, value) {
+		this.slotTargeting[key] = value;
 	};
 
 	AdElement.prototype.getSlotName = function () {
