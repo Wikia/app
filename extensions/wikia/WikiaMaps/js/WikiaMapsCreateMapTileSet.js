@@ -20,12 +20,6 @@ define(
 				chooseTypeTipLink: $.msg('wikia-interactive-maps-create-map-choose-type-tip-link'),
 				mapType: [
 					{
-						type: 'geo',
-						name: $.msg('wikia-interactive-maps-create-map-choose-type-geo'),
-						event: 'selectTileSet',
-						image: ''
-					},
-					{
 						type: 'custom',
 						name: $.msg('wikia-interactive-maps-create-map-choose-type-custom'),
 						event: 'browseTileSets',
