@@ -1501,11 +1501,6 @@ class ArticleComment {
 		return null;
 	}
 
-	static public function getSurrogateKey( $articleId ) {
-		global $wgCityId;
-		return 'Wiki_' . $wgCityId . '_ArticleComments_' . $articleId;
-	}
-
 	/**
 	 * Checks if article comments will be loading on demand.
 	 *

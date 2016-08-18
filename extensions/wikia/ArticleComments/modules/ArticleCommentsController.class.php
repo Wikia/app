@@ -34,6 +34,7 @@ class ArticleCommentsController extends WikiaController {
 									//wgOut redirect doesn't work when running fully under the
 									//Nirvana stack (WikiaMobile skin), also send back to the first page of comments
 									$this->response->redirect( $oTitle->getLocalURL( [ 'page' => 1 ] ) . '#article-comments' );
+									static::purgeCache( $iArticleId );
 								} else {
 									$this->response->setVal( 'error', $response[ 2 ][ 'msg' ] );
 								}
@@ -92,14 +93,9 @@ class ArticleCommentsController extends WikiaController {
 		$this->getCommentsData( $title, $page );
 		$this->isMiniEditorEnabled = ArticleComment::isMiniEditorEnabled();
 
-		// Uncomment this when surrogate key purging works
-		//$this->wg->Out->tagWithSurrogateKeys( ArticleComment::getSurrogateKey($articleId) );
-
-		// When lazy loading this request it shouldn't be cached in the browser
-		if ( !empty( $this->wg->ArticleCommentsLoadOnDemand ) ) {
-			$this->response->setCachePolicy( WikiaResponse::CACHE_PRIVATE );
-			$this->response->setCacheValidity( WikiaResponse::CACHE_DISABLED );
-		}
+		// SUS-897: Tag output with surrogate keys to ease caching
+		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD, WikiaResponse::CACHE_DISABLED );
+		$this->wg->Out->tagWithSurrogateKeys( static::getSurrogateKey( $articleId ) );
 	}
 
 	/**
@@ -212,7 +208,7 @@ class ArticleCommentsController extends WikiaController {
 			$app = F::app();
 
 			// This is the actual entry point for Article Comment generation
-			self::$content = $app->sendRequest( 'ArticleComments', 'index' );
+			self::$content = $app->sendRequest( 'ArticleComments', 'Index' );
 
 			$isLoadingOnDemand = ArticleComment::isLoadingOnDemand();
 
@@ -237,5 +233,22 @@ class ArticleCommentsController extends WikiaController {
 			}
 		}
 		return true;
+	}
+
+	/**
+	 * SUS-897: Gets the surrogate key that the ArticleCommentsController AJAX response will be tagged with
+	 * @param int $articleId MediaWiki article id of the page we are rendering comments for
+	 * @return string surrogate key
+	 */
+	public static function getSurrogateKey( $articleId ) {
+		return Wikia::surrogateKey( __CLASS__, $articleId );
+	}
+
+	/**
+	 * SUS-897: Invalidate cache for a given article's comments by purging their surrogate key
+	 * @param int $articleId MediaWiki article id of the page we are rendering comments for
+	 */
+	public static function purgeCache( $articleId ) {
+		Wikia::purgeSurrogateKey( static::getSurrogateKey( $articleId ) );
 	}
 }

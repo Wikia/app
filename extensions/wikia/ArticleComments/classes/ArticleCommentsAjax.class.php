@@ -70,6 +70,9 @@ class ArticleCommentsAjax {
 			return $errorResult;
 		}
 
+		// SUS-897: Purge cache for this page
+		ArticleCommentsController::purgeCache( $articleId );
+
 		$status = $response[0];
 		$article = $response[1];
 
@@ -232,6 +235,9 @@ class ArticleCommentsAjax {
 		if ( $parentId ) {
 			$result['parentId'] = $parentId;
 		}
+
+		// SUS-897: Purge cache for this page
+		ArticleCommentsController::purgeCache( $articleId );
 
 		return $result;
 	}
