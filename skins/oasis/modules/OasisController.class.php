@@ -76,19 +76,14 @@ class OasisController extends WikiaController {
 	public static function JsAtBottom(){
 		global $wgTitle;
 
-		// decide where JS should be placed (only add JS at the top for non-search Special and edit pages)
-		if (WikiaPageType::isSearch() || WikiaPageType::isForum()) {
-			// Remove this whole condition when AdDriver2.js is fully implemented and deployed
-
-			$jsAtBottom = true;
-		}
-		elseif ($wgTitle->getNamespace() == NS_SPECIAL || BodyController::isEditPage()) {
-			$jsAtBottom = false;
-		}
-		else {
-			$jsAtBottom = true;
-		}
-		return $jsAtBottom;
+		// decide where JS should be placed (only add JS at the top for legacy datatable-based special pages)
+		return !(
+			$wgTitle->isSpecial( 'MultiLookup' ) ||
+			$wgTitle->isSpecial( 'LookupUser' ) ||
+			$wgTitle->isSpecial( 'WikiFactory' ) ||
+			$wgTitle->isSpecial( 'Listusers' ) ||
+			$wgTitle->isSpecial( 'LookupContribs' )
+		);
 	}
 
 	public function executeIndex($params) {
@@ -289,13 +284,11 @@ class OasisController extends WikiaController {
 		$this->jsFiles = $headScripts . $jsLoader . $this->jsFiles;
 
 		// experiment: squeeze calls to mw.loader.load() to make fewer HTTP requests
-		if ($this->jsAtBottom) {
-			$jsFiles = $this->jsFiles;
-			$bottomScripts = $this->bottomScripts;
-			$this->squeezeMediawikiLoad($jsFiles,$bottomScripts);
-			$this->bottomScripts = $bottomScripts;
-			$this->jsFiles = $jsFiles;
-		}
+		$jsFiles = $this->jsFiles;
+		$bottomScripts = $this->bottomScripts;
+		$this->squeezeMediawikiLoad( $jsFiles, $bottomScripts );
+		$this->bottomScripts = $bottomScripts;
+		$this->jsFiles = $jsFiles;
 
 		wfProfileOut(__METHOD__);
 	}
