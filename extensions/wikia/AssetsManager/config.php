@@ -12,7 +12,6 @@ $config['oasis_shared_core_js'] = [
 		'//resources/wikia/libraries/mustache/mustache.js',
 		'//resources/wikia/modules/browserDetect.js',
 		'//resources/mediawiki/mediawiki.Uri.js',
-		'#group_banner_notifications_js',
 		'#group_ui_repo_api_js',
 	],
 ];
@@ -2388,15 +2387,6 @@ $config['banner_notifications_scss'] = [
 	'assets' => [
 		'//extensions/wikia/BannerNotifications/css/BannerNotifications.scss',
 		'//extensions/wikia/BannerNotifications/css/BannerNotifications.monobook.scss',
-	],
-];
-
-$config['banner_notifications_js'] = [
-	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => [ 'oasis', 'monobook' ],
-	'assets' => [
-		'//extensions/wikia/BannerNotifications/js/BannerNotifications.js',
-		'//extensions/wikia/BannerNotifications/js/templates.mustache.js',
 	],
 ];
 
