@@ -1,12 +1,7 @@
 <section class="module embeddable-discussions-module">
 	<div class="embeddable-discussions-heading-container">
 		<div class="embeddable-discussions-heading">
-			{{#showLatest}}
-				{{latestHeading}}
-			{{/showLatest}}
-			{{^showLatest}}
-				{{trendingHeading}}
-			{{/showLatest}}
+			{{heading}}
 		</div>
 		<div class="embeddable-discussions-show-all">
 			<a href="{{discussionsUrl}}">
@@ -14,9 +9,9 @@
 			</a>
 		</div>
 	</div>
-	<div class="embeddable-discussions-threads">
+	<div class="embeddable-discussions-threads {{columnsWrapperClass}}">
 		{{#threads}}
-			<div class="embeddable-discussions-post-detail {{columnsClass}}">
+			<div class="embeddable-discussions-post-detail {{columnsDetailsClass}}">
 				<div class="embeddable-discussions-side-spaced">
 					<div id="post-{{id}}" class="embeddable-discussions-header-container">
 						<div class="avatar-container">
@@ -33,7 +28,7 @@
 							<a class="avatar-username" href="http://fallout.pgroland.wikia-dev.com/wiki/User:{{author}}">
 								{{author}}
 							</a>
-							<span class="embeddable-discussions-timestamp"">
+							<span class="embeddable-discussions-timestamp">
 								• {{createdAt}}
 							</span>
 						</div>
