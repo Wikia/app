@@ -8,6 +8,7 @@ class ParselyDataService {
 	const PARSELY_API_PAGE = 1;
 	const PARSELY_API_PUB_DAYS = 10;
 	const PARSELY_API_SORT = '_hits';
+	const PARSELY_API_TIMEOUT = 5;
 
 	const PARSELY_POSTS_LIMIT = 5;
 
@@ -82,7 +83,7 @@ class ParselyDataService {
 		}
 
 		$url = $this->buildUrl( $endpoint, $options );
-		$data = ExternalHttp::get( $url );
+		$data = ExternalHttp::get( $url, self::PARSELY_API_TIMEOUT );
 
 		$posts = json_decode( $data, true );
 

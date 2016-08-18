@@ -1081,6 +1081,7 @@ class ExternalHttp {
 	 * @return string|bool|MWHttpRequest
 	 */
 	public static function get( $url, $timeout = 'default', array $options = array() ) {
+		$options['timeout'] = $timeout;
 		return self::request( 'GET', $url, $options );
 	}
 
