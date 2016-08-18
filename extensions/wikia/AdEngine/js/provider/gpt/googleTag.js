@@ -62,7 +62,7 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 		window.googletag = window.googletag || {};
 		window.googletag.cmd = window.googletag.cmd || [];
 
-		if (!window.googletag.apiReady) {
+		if (!window.googletag.apiReady && !helper.isBlocking()) {
 			gads.async = true;
 			gads.type = 'text/javascript';
 			gads.src = '//www.googletagservices.com/tag/js/gpt.js';
@@ -161,16 +161,16 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 	};
 
 	GoogleTag.prototype.reset = function () {
-		if (this.initialized) {
-			return;
+		if (window.googletag) {
+			this.push(function () {
+				console.log('SLOTS:', window.googletag.getSlots().length);
+				window.googletag.destroySlots();
+			});
+			window.googletag = {};
 		}
 
-		this.push(function () {
-			window.googletag.destroySlots();
-		});
-
 		this.initialized = false;
-		window.googletag = {};
+		window.googletag = window.googletag || {};
 		window.googletag.cmd = recoveryCmd;
 	};
 
