@@ -1,13 +1,13 @@
 <?php
 /**
-* Internationalisation file for the AdminDashboard extension.
-*
-* @addtogroup Languages
-*/
+ * Internationalisation file for the AdminDashboard extension.
+ *
+ * @addtogroup Languages
+ */
 
-$messages = array();
+$messages = [];
 
-$messages['en'] = array(
+$messages['en'] = [
 	'admindashboard-desc' => 'A dashboard for administrators with easy access to their tools',
 	'admindashboard-loading' => 'Loading…',
 	'admindashboard-title' => '{{SITENAME}} Dashboard',
@@ -60,11 +60,13 @@ $messages['en'] = array(
 	'admindashboard-control-multiple-upload-tooltip' => 'Upload more than one photo at once with the multiple photo upload tool.',
 
 // Chrome
-	'admindashboard-back-to-dashboard' => 'Back to Dashboard'
-);
+	'admindashboard-back-to-dashboard' => 'Back to Dashboard',
+// Rights
+	'right-admindashboard' => 'Allows access to wiki admin tools, via Special:AdminDashboard',
+];
 
 /** Message documentation (Message documentation) */
-$messages['qqq'] = array(
+$messages['qqq'] = [
 	'admindashboard-desc' => '{{desc}}',
 	'admindashboard-title' => 'html <title> element displayed on admin dashboard pages',
 	'admindashboard-header' => 'page header for Admin Dashboard - html <h1> element',
@@ -108,26 +110,26 @@ $messages['qqq'] = array(
 	'admindashboard-control-multiple-upload-label' => 'label for link to special:MultipleUpload',
 	'admindashboard-control-multiple-upload-tooltip' => 'tooltip/hover describing special:multipleupload',
 	'admindashboard-control-special-css-label' => 'Label for link to Special:CSS page',
-	'admindashboard-control-special-css-tooltip' => 'Tooltip/hover describing Special:CSS'
-);
+	'admindashboard-control-special-css-tooltip' => 'Tooltip/hover describing Special:CSS',
+];
 
 /** Magyar (magázó) (Magyar (magázó))
  * @author TK-999
  */
-$messages['hu-formal'] = array(
+$messages['hu-formal'] = [
 	'admindashboard-control-theme-designer-tooltip' => 'A tématervezővel megváltoztathatja a wiki színeit, hátterét és még sok mást.',
 	'admindashboard-control-user-list-tooltip' => 'A wikin részt vett felhasználók listájának megtekintése',
 	'admindashboard-control-user-rights-tooltip' => 'A wikin résztvevő felhasználók jogainak módosítása.',
 	'admindashboard-control-community-corner-tooltip' => 'Változtassa meg a wikid közösségi sarkát a felhasználók figyelmének felhívására.',
 	'admindashboard-control-add-blog-tooltip' => 'Blogbejegyzés hozzáadása a wikihez.',
-);
+];
 
 /** Arabic (العربية)
  * @author Achraf94
  * @author Meno25
  * @author ترجمان05
  */
-$messages['ar'] = array(
+$messages['ar'] = [
 	'admindashboard-title' => 'لوحة إدارة {{SITENAME}}',
 	'admindashboard-header' => 'لوحة الإداريين',
 	'admindashboard-toolbar-link' => 'الادارة',
@@ -164,12 +166,12 @@ $messages['ar'] = array(
 	'admindashboard-control-add-photo-tooltip' => 'أضف صورا جديدة إلى الويكي الخاص بك.',
 	'admindashboard-control-multiple-upload-label' => 'أضف صورا متعددة',
 	'admindashboard-back-to-dashboard' => 'العودة إلى لوحة التحكم',
-);
+];
 
 /** Assamese (অসমীয়া)
  * @author Bishnu Saikia
  */
-$messages['as'] = array(
+$messages['as'] = [
 	'admindashboard-toolbar-link' => 'প্ৰশাসক',
 	'admindashboard-tab-advanced' => 'উচ্চতৰ',
 	'admindashboard-tab-general' => 'সাধাৰণ',
@@ -182,13 +184,13 @@ $messages['as'] = array(
 	'admindashboard-control-help-tooltip' => 'সাহায্য সন্ধান',
 	'admindashboard-control-categories-list-label' => 'সকলোবোৰ শ্ৰেণী',
 	'admindashboard-control-add-photo-label' => 'চিত্ৰ যোগ কৰক',
-);
+];
 
 /** Azerbaijani (azərbaycanca)
  * @author Cekli829
  * @author Melikov Memmed
  */
-$messages['az'] = array(
+$messages['az'] = [
 	'admindashboard-control-recent-changes-label' => 'Təzə dəyişikliklər',
 	'admindashboard-control-user-list-label' => 'İstifadəçi siyahısı',
 	'admindashboard-control-invite-label' => 'Dəvət et',
@@ -199,12 +201,12 @@ $messages['az'] = array(
 	'admindashboard-control-add-photo-label' => 'Şəkil əlavə et',
 	'admindashboard-control-add-photo-tooltip' => 'Öz vikinə yeni şəkil əlavə et',
 	'admindashboard-control-multiple-upload-label' => 'Çox sayda şəkil əlavə et',
-);
+];
 
 /** Bavarian (Boarisch)
  * @author Mucalexx
  */
-$messages['bar'] = array(
+$messages['bar'] = [
 	'admindashboard-title' => '{{SITENAME}} Ywersicht',
 	'admindashboard-header' => 'Admin-Ywersicht',
 	'admindashboard-toolbar-link' => 'Admin',
@@ -220,12 +222,12 @@ $messages['bar'] = array(
 	'admindashboard-control-wiki-features-label' => 'Wiki-Funkzióner',
 	'admindashboard-control-wiki-features-tooltip' => "D' Wiki-Funkzióner dalaam da, zuasétzliche Funkzióner fyr deih Wiki z' aktiviern.",
 	'admindashboard-control-page-layout-builder-label' => 'Seiten-Layout-Erstejer',
-);
+];
 
 /** Bulgarian (български)
  * @author DCLXVI
  */
-$messages['bg'] = array(
+$messages['bg'] = [
 	'admindashboard-loading' => 'Зареждане...',
 	'admindashboard-header' => 'Административно табло',
 	'admindashboard-toolbar-link' => 'Администратор',
@@ -239,13 +241,13 @@ $messages['bg'] = array(
 	'admindashboard-control-categories-list-label' => 'Всички категории',
 	'admindashboard-control-add-page-label' => 'Добавяне на страница',
 	'admindashboard-control-add-photo-label' => 'Добавяне на снимка',
-);
+];
 
 /** Breton (brezhoneg)
  * @author Fulup
  * @author Y-M D
  */
-$messages['br'] = array(
+$messages['br'] = [
 	'admindashboard-loading' => 'O kargañ...',
 	'admindashboard-title' => '{{SITENAME}} - Taolenn-stur',
 	'admindashboard-header' => 'Taolenn-stur merour',
@@ -274,12 +276,12 @@ $messages['br'] = array(
 	'admindashboard-control-multiple-upload-label' => 'Ouzhpennañ meur a skeudenn',
 	'admindashboard-control-multiple-upload-tooltip' => 'Enporzhiañ meur a skeudenn war un dro gant an ostilh enporzhier skeudennoù a vras.',
 	'admindashboard-back-to-dashboard' => "Distreiñ d'an daolenn-stur",
-);
+];
 
 /** Catalan (català)
  * @author BroOk
  */
-$messages['ca'] = array(
+$messages['ca'] = [
 	'admindashboard-title' => "Panell d'Administració de {{SITENAME}}",
 	'admindashboard-header' => "Panell d'administració",
 	'admindashboard-toolbar-link' => 'Administració',
@@ -289,14 +291,14 @@ $messages['ca'] = array(
 	'admindashboard-control-theme-designer-label' => 'Dissenyador de Temes',
 	'admindashboard-control-theme-designer-tooltip' => 'El Dissenyador de Temes et permet personalitzar els colors del wiki, el fons i molt més.',
 	'admindashboard-control-recent-changes-label' => 'Canvis Recents',
-);
+];
 
 /** Czech (česky)
  * @author Jezevec
  * @author Mr. Richard Bolla
  * @author Vks
  */
-$messages['cs'] = array(
+$messages['cs'] = [
 	'admindashboard-header' => 'Administrátorský panel',
 	'admindashboard-toolbar-link' => 'Správce',
 	'admindashboard-tab-advanced' => 'Pokročilé',
@@ -321,14 +323,14 @@ $messages['cs'] = array(
 	'admindashboard-control-add-blog-tooltip' => 'Přidat příspěvek blogu do vaší wiki.',
 	'admindashboard-control-multiple-upload-label' => 'Přidat více fotografií',
 	'admindashboard-control-multiple-upload-tooltip' => 'Nahrát více než jednu fotografii současně pomocí nástroje hromadného vkládání fotek.',
-);
+];
 
 /** German (Deutsch)
  * @author LWChris
  * @author PtM
  * @author SVG
  */
-$messages['de'] = array(
+$messages['de'] = [
 	'admindashboard-loading' => 'Lade …',
 	'admindashboard-title' => '{{SITENAME}} Übersicht',
 	'admindashboard-header' => 'Admin-Übersicht',
@@ -372,12 +374,12 @@ $messages['de'] = array(
 	'admindashboard-control-multiple-upload-label' => 'Mehrere Fotos hinzufügen',
 	'admindashboard-control-multiple-upload-tooltip' => 'Lade mehr als ein Foto gleichzeitig hoch mit dem Mehrere Fotos hochladen Tool.',
 	'admindashboard-back-to-dashboard' => 'Zurück zur Übersicht',
-);
+];
 
 /** Zazaki (Zazaki)
  * @author Erdemaslancan
  */
-$messages['diq'] = array(
+$messages['diq'] = [
 	'admindashboard-loading' => 'Barêno...',
 	'admindashboard-title' => 'panoy {{SITENAME}}',
 	'admindashboard-header' => 'Panoy Admini',
@@ -405,15 +407,15 @@ $messages['diq'] = array(
 	'admindashboard-control-add-blog-label' => 'Nuştey blog dekerê de',
 	'admindashboard-control-add-blog-tooltip' => 'Wiki da xo rê nuştey blog dekerê de',
 	'admindashboard-control-multiple-upload-label' => 'Zaf Fotraf Deke',
-);
+];
 
 /** Greek (Ελληνικά)
  * @author Glavkos
  */
-$messages['el'] = array(
+$messages['el'] = [
 	'admindashboard-loading' => 'Φόρτωση...',
 	'admindashboard-control-invite-label' => 'Πρόσκληση',
-);
+];
 
 /** Spanish (español)
  * @author Benfutbol10
@@ -422,7 +424,7 @@ $messages['el'] = array(
  * @author VegaDark
  * @author Vivaelcelta
  */
-$messages['es'] = array(
+$messages['es'] = [
 	'admindashboard-loading' => 'Cargando...',
 	'admindashboard-title' => 'Panel de Administración de {{SITENAME}}',
 	'admindashboard-header' => 'Panel de administración',
@@ -466,13 +468,13 @@ $messages['es'] = array(
 	'admindashboard-control-multiple-upload-label' => 'Añadir varias imágenes',
 	'admindashboard-control-multiple-upload-tooltip' => 'Sube varias fotos simultáneamente con la herramienta de subida múltiple',
 	'admindashboard-back-to-dashboard' => 'Regresar al Panel',
-);
+];
 
 /** Persian (فارسی)
  * @author Mjbmr
  * @author Reza1615
  */
-$messages['fa'] = array(
+$messages['fa'] = [
 	'admindashboard-toolbar-link' => 'مدیر',
 	'admindashboard-tab-advanced' => 'پیشرفته',
 	'admindashboard-tab-general' => 'عمومی',
@@ -483,14 +485,14 @@ $messages['fa'] = array(
 	'admindashboard-control-help-label' => 'راهنما',
 	'admindashboard-control-help-tooltip' => 'جستجوی راهنما',
 	'admindashboard-control-categories-list-label' => 'همهٔ رده‌ها',
-);
+];
 
 /** Finnish (suomi)
  * @author Centerlink
  * @author Nike
  * @author VezonThunder
  */
-$messages['fi'] = array(
+$messages['fi'] = [
 	'admindashboard-loading' => 'Ladataan...',
 	'admindashboard-title' => '{{GRAMMAR:genitive|{{SITENAME}}}} kojelauta',
 	'admindashboard-header' => 'Ylläpitäjän kojelauta',
@@ -533,12 +535,12 @@ $messages['fi'] = array(
 	'admindashboard-control-multiple-upload-label' => 'Lisää useita kuvia',
 	'admindashboard-control-multiple-upload-tooltip' => 'Lisää yhtä useampia kuvia samalla kertaa usean kuvan lataustyökalulla.',
 	'admindashboard-back-to-dashboard' => 'Takaisin kojelautaan',
-);
+];
 
 /** Faroese (føroyskt)
  * @author EileenSanda
  */
-$messages['fo'] = array(
+$messages['fo'] = [
 	'admindashboard-loading' => 'Tekur niður...',
 	'admindashboard-title' => '{{SITENAME}} Tólborð',
 	'admindashboard-header' => 'Tólborð fyri umboðsstjórar (administratorar)',
@@ -557,13 +559,13 @@ $messages['fo'] = array(
 	'admindashboard-control-add-photo-label' => 'Legg eina mynd her',
 	'admindashboard-control-add-photo-tooltip' => 'Legg nýggjar myndir á tína wiki.',
 	'admindashboard-control-multiple-upload-label' => 'Legg fleiri myndir her',
-);
+];
 
 /** French (français)
  * @author Gomoko
  * @author Wyz
  */
-$messages['fr'] = array(
+$messages['fr'] = [
 	'admindashboard-loading' => 'Chargement…',
 	'admindashboard-title' => '{{SITENAME}} — Tableau de bord',
 	'admindashboard-header' => 'Tableau de bord administrateur',
@@ -606,12 +608,12 @@ $messages['fr'] = array(
 	'admindashboard-control-multiple-upload-label' => 'Ajouter plusieurs images',
 	'admindashboard-control-multiple-upload-tooltip' => "Importer plus d’une image à la fois avec l’outil d'importation d’importation d’images multiples.",
 	'admindashboard-back-to-dashboard' => 'Retour au tableau de bord',
-);
+];
 
 /** Galician (galego)
  * @author Toliño
  */
-$messages['gl'] = array(
+$messages['gl'] = [
 	'admindashboard-loading' => 'Cargando…',
 	'admindashboard-title' => 'Taboleiro de {{SITENAME}}',
 	'admindashboard-header' => 'Taboleiro dos administradores',
@@ -654,7 +656,7 @@ $messages['gl'] = array(
 	'admindashboard-control-multiple-upload-label' => 'Engadir varias fotografías',
 	'admindashboard-control-multiple-upload-tooltip' => 'Cargar máis dunha foto á vez coa ferramenta de subida múltiple de fotos.',
 	'admindashboard-back-to-dashboard' => 'Volver ao taboleiro',
-);
+];
 
 /** Hebrew (עברית)
  * @author Amire80
@@ -662,7 +664,7 @@ $messages['gl'] = array(
  * @author Ofekalef
  * @author Yova
  */
-$messages['he'] = array(
+$messages['he'] = [
 	'admindashboard-toolbar-link' => 'מפעיל מערכת',
 	'admindashboard-tab-advanced' => 'Cמתקדם',
 	'admindashboard-tab-general' => 'כללי',
@@ -695,13 +697,13 @@ $messages['he'] = array(
 	'admindashboard-control-add-blog-tooltip' => 'הוספת הודעת בלוג חדשה לוויקי שלך.',
 	'admindashboard-control-multiple-upload-label' => 'הוספת תמונות מרובות',
 	'admindashboard-control-multiple-upload-tooltip' => 'להוספת יותר מתמונה אחת בו זמניתת באמצעות כלי העלאת תמונות מרובות.',
-);
+];
 
 /** Hungarian (magyar)
  * @author R-Joe
  * @author TK-999
  */
-$messages['hu'] = array(
+$messages['hu'] = [
 	'admindashboard-loading' => 'Betöltés…',
 	'admindashboard-title' => '{{SITENAME}} Műszerfal',
 	'admindashboard-header' => 'Adminisztrációs panel',
@@ -742,12 +744,12 @@ $messages['hu'] = array(
 	'admindashboard-control-multiple-upload-label' => 'Több kép feltöltése',
 	'admindashboard-control-multiple-upload-tooltip' => 'Több kép egyidejű feltöltése.',
 	'admindashboard-back-to-dashboard' => 'Vissza a műszerfalhoz',
-);
+];
 
 /** Interlingua (interlingua)
  * @author McDutchie
  */
-$messages['ia'] = array(
+$messages['ia'] = [
 	'admindashboard-loading' => 'Cargamento…',
 	'admindashboard-title' => 'Pannello de instrumentos de {{SITENAME}}',
 	'admindashboard-header' => 'Pannello de administration',
@@ -790,13 +792,13 @@ $messages['ia'] = array(
 	'admindashboard-control-multiple-upload-label' => 'Adder multiple photos',
 	'admindashboard-control-multiple-upload-tooltip' => 'Incargar plure photos simultaneemente con le instrumento pro incargamento de multiple photos.',
 	'admindashboard-back-to-dashboard' => 'Retornar al pannello de instrumentos',
-);
+];
 
 /** Indonesian (Bahasa Indonesia)
  * @author Aldnonymous
  * @author De.crown
  */
-$messages['id'] = array(
+$messages['id'] = [
 	'admindashboard-title' => '{{SITENAME}} Dasbor',
 	'admindashboard-header' => 'Admin Dasbor',
 	'admindashboard-toolbar-link' => 'Pengurus',
@@ -838,7 +840,7 @@ $messages['id'] = array(
 	'admindashboard-control-multiple-upload-label' => 'Menambahkan beberapa foto',
 	'admindashboard-control-multiple-upload-tooltip' => 'Mengunggah lebih dari satu foto secara bersamaan dengan alat unggah foto secara bersamaan.',
 	'admindashboard-back-to-dashboard' => 'Kembali ke Dashboard',
-);
+];
 
 /** Italian (italiano)
  * @author Beta16
@@ -848,7 +850,7 @@ $messages['id'] = array(
  * @author WM3DAS
  * @author Ximo17
  */
-$messages['it'] = array(
+$messages['it'] = [
 	'admindashboard-loading' => 'Caricamento in corso...',
 	'admindashboard-title' => 'Pannello di controllo di {{SITENAME}}',
 	'admindashboard-header' => 'Pannello di controllo Admin',
@@ -891,13 +893,13 @@ $messages['it'] = array(
 	'admindashboard-control-multiple-upload-label' => 'Aggiungi più foto',
 	'admindashboard-control-multiple-upload-tooltip' => 'Carica più di una foto alla volta con lo strumento: Carica più foto.',
 	'admindashboard-back-to-dashboard' => 'Torna al Cruscotto',
-);
+];
 
 /** Japanese (日本語)
  * @author Shirayuki
  * @author Tommy6
  */
-$messages['ja'] = array(
+$messages['ja'] = [
 	'admindashboard-title' => '{{SITENAME}} ダッシュボード',
 	'admindashboard-header' => '管理者ダッシュボード',
 	'admindashboard-toolbar-link' => '管理作業',
@@ -935,13 +937,13 @@ $messages['ja'] = array(
 	'admindashboard-control-multiple-upload-label' => '複数の画像をアップロード',
 	'admindashboard-control-multiple-upload-tooltip' => '複数の画像を一度にアップロードできるツールです。',
 	'admindashboard-back-to-dashboard' => 'ダッシュボードに戻る',
-);
+];
 
 /** Korean (한국어)
  * @author Excalibur777
  * @author 아라
  */
-$messages['ko'] = array(
+$messages['ko'] = [
 	'admindashboard-loading' => '불러오는 중…',
 	'admindashboard-title' => '{{SITENAME}} 대시보드',
 	'admindashboard-header' => '관리자 대시보드',
@@ -984,21 +986,21 @@ $messages['ko'] = array(
 	'admindashboard-control-multiple-upload-label' => '여러 장의 사진 추가',
 	'admindashboard-control-multiple-upload-tooltip' => '여러 개의 사진 업로드 도구를 사용하여 한 번에 하나 이상의 사진을 업로드합니다.',
 	'admindashboard-back-to-dashboard' => '대시보드로 돌아가기',
-);
+];
 
 /** Kurdish (Latin script) (‪Kurdî (latînî)‬)
  * @author Gomada
  */
-$messages['ku-latn'] = array(
+$messages['ku-latn'] = [
 	'admindashboard-control-help-label' => 'Alîkarî',
 	'admindashboard-controls-content-header' => 'Naverok',
 	'admindashboard-control-categories-list-label' => 'Hemû kategorî',
-);
+];
 
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
-$messages['lb'] = array(
+$messages['lb'] = [
 	'admindashboard-tab-general' => 'Allgemeng',
 	'admindashboard-controls-wiki-header' => 'Wiki',
 	'admindashboard-control-recent-changes-label' => 'Rezent Ännerungen',
@@ -1014,12 +1016,12 @@ $messages['lb'] = array(
 	'admindashboard-control-add-page-tooltip' => 'Eng nei Säit bei Är Wiki derbäisetzen.',
 	'admindashboard-control-add-photo-label' => 'Eng Foto derbäisetzen',
 	'admindashboard-control-multiple-upload-label' => 'Méi Fotoen derbäisetzen',
-);
+];
 
 /** Lithuanian (lietuvių)
  * @author Eitvys200
  */
-$messages['lt'] = array(
+$messages['lt'] = [
 	'admindashboard-toolbar-link' => 'Administratorius',
 	'admindashboard-tab-advanced' => 'Išplėstinis',
 	'admindashboard-controls-wiki-header' => 'Wiki',
@@ -1044,12 +1046,12 @@ $messages['lt'] = array(
 	'admindashboard-control-add-blog-tooltip' => 'Pridėti naują internetinio dienoraščio pranešimą į savo wiki.',
 	'admindashboard-control-multiple-upload-label' => 'Pridėti kelias nuotraukas',
 	'admindashboard-control-multiple-upload-tooltip' => 'Įkelkite daugiau nei vieną nuotrauką iš karto su "the multiple photo upload tool".',
-);
+];
 
 /** Macedonian (македонски)
  * @author Bjankuloski06
  */
-$messages['mk'] = array(
+$messages['mk'] = [
 	'admindashboard-loading' => 'Вчитувам...',
 	'admindashboard-title' => 'Табла на {{SITENAME}}',
 	'admindashboard-header' => 'Администраторска табла',
@@ -1093,12 +1095,12 @@ $messages['mk'] = array(
 	'admindashboard-control-multiple-upload-label' => 'Додај повеќе слики наеднаш',
 	'admindashboard-control-multiple-upload-tooltip' => 'Додајте повеќе слики наеднаш со алатката за повеќекратно подигање на слики.',
 	'admindashboard-back-to-dashboard' => 'Назад на Таблата',
-);
+];
 
 /** Malay (Bahasa Melayu)
  * @author Anakmalaysia
  */
-$messages['ms'] = array(
+$messages['ms'] = [
 	'admindashboard-loading' => 'Sedang dimuatkan...',
 	'admindashboard-title' => 'Papan Pemuka {{SITENAME}}',
 	'admindashboard-header' => 'Papan Pemuka Pentadbir',
@@ -1141,12 +1143,12 @@ $messages['ms'] = array(
 	'admindashboard-control-multiple-upload-label' => 'Tambah Berbilang Gambar',
 	'admindashboard-control-multiple-upload-tooltip' => 'Muat naik lebih daripada satu gambar sekali dengan alat muat naik berbilang gambar.',
 	'admindashboard-back-to-dashboard' => 'Kembali ke Papan Pemuka',
-);
+];
 
 /** Norwegian Bokmål (‪norsk (bokmål)‬)
  * @author Audun
  */
-$messages['nb'] = array(
+$messages['nb'] = [
 	'admindashboard-loading' => 'Laster...',
 	'admindashboard-title' => '{{SITENAME}}-dashbord',
 	'admindashboard-header' => 'Dashbord for administratorer',
@@ -1190,13 +1192,13 @@ $messages['nb'] = array(
 	'admindashboard-control-multiple-upload-label' => 'Legg til flere bilder',
 	'admindashboard-control-multiple-upload-tooltip' => 'Last opp mer enn ett bilde av gangen med verktøyet for opplasting av flere bilder.',
 	'admindashboard-back-to-dashboard' => 'Tilbake til dashbordet',
-);
+];
 
 /** Dutch (Nederlands)
  * @author SPQRobin
  * @author Siebrand
  */
-$messages['nl'] = array(
+$messages['nl'] = [
 	'admindashboard-loading' => 'Bezig met laden...',
 	'admindashboard-title' => '{{SITENAME}}-dashboard',
 	'admindashboard-header' => 'Beheerdersdashboard',
@@ -1239,29 +1241,29 @@ $messages['nl'] = array(
 	'admindashboard-control-multiple-upload-label' => 'Meerdere afbeeldingen toevoegen',
 	'admindashboard-control-multiple-upload-tooltip' => 'Upload meerdere afbeeldingen tegelijkertijd met dit uploadprogramma.',
 	'admindashboard-back-to-dashboard' => 'Terug naar het Dashboard',
-);
+];
 
 /** Pälzisch (Pälzisch)
  * @author Manuae
  */
-$messages['pfl'] = array(
+$messages['pfl'] = [
 	'admindashboard-toolbar-link' => 'Admin',
 	'admindashboard-controls-wiki-header' => 'Wiki',
-);
+];
 
 /** Pali (पाळि)
  * @author Anand Vivek Satpathi
  */
-$messages['pi'] = array(
+$messages['pi'] = [
 	'admindashboard-controls-wiki-header' => 'विकि',
-);
+];
 
 /** Polish (polski)
  * @author Cloudissimo
  * @author Sovq
  * @author Woytecr
  */
-$messages['pl'] = array(
+$messages['pl'] = [
 	'admindashboard-loading' => 'Trwa ładowanie...',
 	'admindashboard-title' => 'Panel {{SITENAME}}',
 	'admindashboard-header' => 'Panel Administratora',
@@ -1305,13 +1307,13 @@ $messages['pl'] = array(
 	'admindashboard-control-multiple-upload-label' => 'Dodaj wiele obrazów',
 	'admindashboard-control-multiple-upload-tooltip' => 'Przesyła więcej niż jeden obraz za pomocą narzędzia do jednoczesnego przesyłania wielu obrazów.',
 	'admindashboard-back-to-dashboard' => 'Powrót do panelu',
-);
+];
 
 /** Pashto (پښتو)
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  * @author Wahidullah Kaleem
  */
-$messages['ps'] = array(
+$messages['ps'] = [
 	'admindashboard-toolbar-link' => 'پازوال',
 	'admindashboard-tab-advanced' => 'پرمختللی',
 	'admindashboard-tab-general' => 'ټولګړی',
@@ -1331,7 +1333,7 @@ $messages['ps'] = array(
 	'admindashboard-control-add-photo-label' => 'يو انځور ورګډول',
 	'admindashboard-control-add-photo-tooltip' => 'خپل ويکي ته نوي انځورونه ورګډ کړی.',
 	'admindashboard-control-multiple-upload-label' => 'ګڼ انځورونه ورډېرول',
-);
+];
 
 /** Portuguese (português)
  * @author Andresilvazito
@@ -1340,7 +1342,7 @@ $messages['ps'] = array(
  * @author Rhaijin
  * @author SandroHc
  */
-$messages['pt'] = array(
+$messages['pt'] = [
 	'admindashboard-loading' => 'A carregar...',
 	'admindashboard-title' => 'Painel de administração da {{SITENAME}}',
 	'admindashboard-header' => 'Painel de administração',
@@ -1383,13 +1385,13 @@ $messages['pt'] = array(
 	'admindashboard-control-multiple-upload-label' => 'Adicionar várias imagens',
 	'admindashboard-control-multiple-upload-tooltip' => 'Envie mais do que uma imagem de cada vez com a nossa ferramenta de envio de imagens.',
 	'admindashboard-back-to-dashboard' => 'Voltar ao Painel de administração',
-);
+];
 
 /** Brazilian Portuguese (português do Brasil)
  * @author Aristóbulo
  * @author Caio1478
  */
-$messages['pt-br'] = array(
+$messages['pt-br'] = [
 	'admindashboard-title' => 'Painel de Administração da {{SITENAME}}',
 	'admindashboard-header' => 'Painel de administração',
 	'admindashboard-toolbar-link' => 'Administração',
@@ -1427,24 +1429,24 @@ $messages['pt-br'] = array(
 	'admindashboard-control-add-blog-label' => 'Adicionar uma postagem de Blog',
 	'admindashboard-control-add-blog-tooltip' => 'Adicionar uma postagem de Blog para sua wiki.',
 	'admindashboard-control-multiple-upload-label' => 'Adicionar várias imagens',
-);
+];
 
 /** tarandíne (tarandíne)
  * @author Joetaras
  */
-$messages['roa-tara'] = array(
+$messages['roa-tara'] = [
 	'admindashboard-tab-general' => 'Generale',
 	'admindashboard-controls-wiki-header' => 'Uicchi',
 	'admindashboard-controls-community-header' => 'Comunitate',
 	'admindashboard-controls-content-header' => 'Condenute',
-);
+];
 
 /** Russian (русский)
  * @author Askarmuk
  * @author DCamer
  * @author Kuzura
  */
-$messages['ru'] = array(
+$messages['ru'] = [
 	'admindashboard-loading' => 'Загрузка...',
 	'admindashboard-title' => 'Кабинет администратора {{SITENAME}}',
 	'admindashboard-header' => 'Кабинет администратора',
@@ -1487,22 +1489,22 @@ $messages['ru'] = array(
 	'admindashboard-control-multiple-upload-label' => 'Добавить несколько фотографий',
 	'admindashboard-control-multiple-upload-tooltip' => 'Загрузить несколько изображений одновременно с помощью специального инструмента.',
 	'admindashboard-back-to-dashboard' => 'Вернуться в Кабинет',
-);
+];
 
 /** Sinhala (සිංහල)
  * @author බිඟුවා
  */
-$messages['si'] = array(
+$messages['si'] = [
 	'admindashboard-toolbar-link' => 'පරිපාලක',
 	'admindashboard-tab-advanced' => 'ප්‍රගත',
 	'admindashboard-tab-general' => 'සාමාන්‍ය',
 	'admindashboard-controls-wiki-header' => 'විකි',
-);
+];
 
 /** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
  * @author Rancher
  */
-$messages['sr-ec'] = array(
+$messages['sr-ec'] = [
 	'admindashboard-title' => 'Табла на {{SITENAME}}',
 	'admindashboard-header' => 'Администраторска табла',
 	'admindashboard-toolbar-link' => 'Администратор',
@@ -1533,12 +1535,12 @@ $messages['sr-ec'] = array(
 	'admindashboard-control-add-blog-tooltip' => 'Додајте блоговску поруку на вики.',
 	'admindashboard-control-multiple-upload-label' => 'Додај више слика одједном',
 	'admindashboard-back-to-dashboard' => 'Назад на Таблу',
-);
+];
 
 /** Swedish (svenska)
  * @author WikiPhoenix
  */
-$messages['sv'] = array(
+$messages['sv'] = [
 	'admindashboard-loading' => 'Läser in...',
 	'admindashboard-title' => '{{SITENAME}}s instrumentpanel',
 	'admindashboard-header' => 'Instrumentpanel för administratörer',
@@ -1581,12 +1583,12 @@ $messages['sv'] = array(
 	'admindashboard-control-multiple-upload-label' => 'Lägg till flera foton',
 	'admindashboard-control-multiple-upload-tooltip' => 'Ladda upp fler än ett foto på en gång med verktyget för överföring av flera foton.',
 	'admindashboard-back-to-dashboard' => 'Tillbaka till instrumentpanel',
-);
+];
 
 /** Tamil (தமிழ்)
  * @author Shanmugamp7
  */
-$messages['ta'] = array(
+$messages['ta'] = [
 	'admindashboard-toolbar-link' => 'நிர்வாகி',
 	'admindashboard-tab-advanced' => 'மேம்பட்ட',
 	'admindashboard-tab-general' => 'பொது',
@@ -1600,23 +1602,23 @@ $messages['ta'] = array(
 	'admindashboard-controls-content-header' => 'பொருளடக்கம்',
 	'admindashboard-control-categories-list-label' => 'அனைத்து பகுப்புகளும்',
 	'admindashboard-control-add-page-label' => 'ஒரு பக்கத்தை சேர்',
-);
+];
 
 /** Telugu (తెలుగు)
  * @author Veeven
  */
-$messages['te'] = array(
+$messages['te'] = [
 	'admindashboard-tab-advanced' => 'ఉన్నతం',
 	'admindashboard-tab-general' => 'సాధారణం',
 	'admindashboard-controls-wiki-header' => 'వికీ',
 	'admindashboard-control-help-label' => 'సహాయం',
 	'admindashboard-control-categories-list-label' => 'అన్ని వర్గాలు',
-);
+];
 
 /** Tagalog (Tagalog)
  * @author AnakngAraw
  */
-$messages['tl'] = array(
+$messages['tl'] = [
 	'admindashboard-loading' => 'Ikinakarga…',
 	'admindashboard-title' => 'Tapalodo ng {{SITENAME}}',
 	'admindashboard-header' => 'Tapalodo ng Tagapangasiwa',
@@ -1660,13 +1662,13 @@ $messages['tl'] = array(
 	'admindashboard-control-multiple-upload-label' => 'Magdagdag ng Maramihang mga Larawan',
 	'admindashboard-control-multiple-upload-tooltip' => 'Sabay-sabay na magkarga ng mahigit sa isang larawan sa pamamagitan ng kasangkapan na pangmaramihang larawan.',
 	'admindashboard-back-to-dashboard' => 'Magbalik sa Tapalodo',
-);
+];
 
 /** толышә зывон (толышә зывон)
  * @author Erdemaslancan
  * @author Гусейн
  */
-$messages['tly'] = array(
+$messages['tly'] = [
 	'admindashboard-controls-wiki-header' => 'Вики',
 	'admindashboard-control-recent-changes-label' => 'Ән нујә дәгишон',
 	'admindashboard-control-help-label' => 'Арајиш',
@@ -1675,12 +1677,12 @@ $messages['tly'] = array(
 	'admindashboard-control-add-page-tooltip' => 'Тожә сәһифә зијод карде бә вики.',
 	'admindashboard-control-add-photo-label' => 'Шикил зијод карде',
 	'admindashboard-control-add-photo-tooltip' => 'Тожә шикилон зијод карде бә вики.',
-);
+];
 
 /** Turkish (Türkçe)
  * @author Suelnur
  */
-$messages['tr'] = array(
+$messages['tr'] = [
 	'admindashboard-tab-general' => 'Genel',
 	'admindashboard-control-recent-changes-label' => 'Son Değişiklikler',
 	'admindashboard-controls-community-header' => 'Topluluk',
@@ -1689,12 +1691,12 @@ $messages['tr'] = array(
 	'admindashboard-control-group-rights-label' => 'Grup Hakları',
 	'admindashboard-control-help-label' => 'Yardım',
 	'admindashboard-control-categories-list-label' => 'Tüm Kategoriler',
-);
+];
 
 /** Tatar (Cyrillic script) (татарча)
  * @author Ajdar
  */
-$messages['tt-cyrl'] = array(
+$messages['tt-cyrl'] = [
 	'admindashboard-loading' => 'Йөкләү...',
 	'admindashboard-title' => '{{SITENAME}} идарәчесе бүлмәсе',
 	'admindashboard-header' => 'Идарәче бүлмәсе',
@@ -1738,13 +1740,13 @@ $messages['tt-cyrl'] = array(
 	'admindashboard-control-multiple-upload-label' => 'Берничә сурәт өстәргә',
 	'admindashboard-control-multiple-upload-tooltip' => 'Махсус корал ярдәмендә бер юлы берничә сурәт  өстәргә.',
 	'admindashboard-back-to-dashboard' => 'Кабинетка кире кайтырга',
-);
+];
 
 /** Ukrainian (українська)
  * @author A1
  * @author Vox
  */
-$messages['uk'] = array(
+$messages['uk'] = [
 	'admindashboard-title' => 'Панель адміністратора {{SITENAME}}',
 	'admindashboard-header' => 'Панель адміністратора',
 	'admindashboard-toolbar-link' => 'Адміністратор',
@@ -1786,12 +1788,12 @@ $messages['uk'] = array(
 	'admindashboard-control-multiple-upload-label' => 'Додати кілька фотографій',
 	'admindashboard-control-multiple-upload-tooltip' => 'Завантажити кілька зображень одночасно за допомогою спеціального інструменту.',
 	'admindashboard-back-to-dashboard' => 'Повернутися до Панелі керування',
-);
+];
 
 /** Veps (vepsän kel’)
  * @author Игорь Бродский
  */
-$messages['vep'] = array(
+$messages['vep'] = [
 	'admindashboard-toolbar-link' => 'Admin',
 	'admindashboard-controls-wiki-header' => 'Wiki',
 	'admindashboard-control-theme-designer-label' => 'Temiden dizainer',
@@ -1799,13 +1801,13 @@ $messages['vep'] = array(
 	'admindashboard-control-invite-label' => 'Kucta',
 	'admindashboard-control-help-label' => 'Abu',
 	'admindashboard-control-help-tooltip' => 'Löuta abud',
-);
+];
 
 /** Vietnamese (Tiếng Việt)
  * @author Thanhtai2009
  * @author Xiao Qiao
  */
-$messages['vi'] = array(
+$messages['vi'] = [
 	'admindashboard-loading' => 'Đang tải...',
 	'admindashboard-title' => 'Bảng điều khiển {{SITENAME}}',
 	'admindashboard-header' => 'Bảng điều khiển Bảo quản viên',
@@ -1848,7 +1850,7 @@ $messages['vi'] = array(
 	'admindashboard-control-multiple-upload-label' => 'Thêm nhiều ảnh',
 	'admindashboard-control-multiple-upload-tooltip' => 'Tải lên nhiều hình ảnh cùng một lúc với công cụ tải nhiều ảnh.',
 	'admindashboard-back-to-dashboard' => 'Trở về Bảng điều khiển',
-);
+];
 
 /** Simplified Chinese (‪中文（简体）‬)
  * @author Anakmalaysia
@@ -1856,7 +1858,7 @@ $messages['vi'] = array(
  * @author Hzy980512
  * @author Yfdyh000
  */
-$messages['zh-hans'] = array(
+$messages['zh-hans'] = [
 	'admindashboard-title' => '{{SITENAME}}面板',
 	'admindashboard-header' => '管理员控制面板',
 	'admindashboard-toolbar-link' => '管理员',
@@ -1891,12 +1893,12 @@ $messages['zh-hans'] = array(
 	'admindashboard-control-add-blog-tooltip' => '添加博客文章至您的维基。',
 	'admindashboard-control-multiple-upload-label' => '添加多个图片',
 	'admindashboard-back-to-dashboard' => '返回面板',
-);
+];
 
 /** Traditional Chinese (‪中文（繁體）‬)
  * @author Ffaarr
  */
-$messages['zh-hant'] = array(
+$messages['zh-hant'] = [
 	'admindashboard-title' => '{{SITENAME}}面板',
 	'admindashboard-header' => '管理員控制面板',
 	'admindashboard-toolbar-link' => '管理員',
@@ -1935,5 +1937,5 @@ $messages['zh-hant'] = array(
 	'admindashboard-control-add-blog-tooltip' => '新增一篇部落格文章到你的wiki',
 	'admindashboard-control-multiple-upload-label' => '新增多張圖片',
 	'admindashboard-control-multiple-upload-tooltip' => '利用多圖上傳工具，一次上傳多張圖片。',
-);
+];
 
