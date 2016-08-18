@@ -282,14 +282,9 @@ class OasisController extends WikiaController {
 		$skin = $this->getContext()->getSkin();
 		$jsLoader = $skin->getScriptsWithCombinedGroups( $assetGroups );
 
-		$tpl = $this->app->getSkinTemplateObj();
-
-		// $tpl->set( 'headscripts', $out->getHeadScripts() . $out->getHeadItems() );
-		// FIXME: we need to remove head items - i.e. <meta> tags
-		$remove = $this->wg->out->getHeadItemsArray();
-		$remove[ ] = $this->topScripts;
-		array_walk( $remove, 'trim' );
-		$headScripts = str_replace( $remove, '', $tpl->data[ 'headscripts' ] );
+		// These Wikia-specific scripts have already been output in the <head>
+		$this->wg->Out->topScripts = '';
+		$headScripts = $this->wg->Out->getHeadScripts();
 
 		$this->jsFiles = $headScripts . $jsLoader . $this->jsFiles;
 
