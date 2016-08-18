@@ -3,9 +3,8 @@ define('VisualEditorTourExperimentInit',
 	function ($, VETour, veTourConfig, abTest, tracker) {
 		'use strict';
 
-		var experimentName = 'contribution-experiments',
-			freshlyRegisteredExperimentId = 5654433460,
-			usersWithoutEditExperimentId = 5735670451;
+		var experimentName = 'contribution-experiments';
+
 
 		function init() {
 			var lang = mw.config.get('wgUserLanguage');
@@ -16,13 +15,13 @@ define('VisualEditorTourExperimentInit',
 		}
 
 		function isEnabled() {
-			return isJapaneseCommunity() &&
+			return isAllowedCommunity() &&
 				(isNewlyregistered() || isUserwithoutedit()) &&
 				!$.cookie('vetourdisabled');
 		}
 
 		function trackPublish() {
-			if (isJapaneseCommunity() && (isNewlyregistered() || isUserwithoutedit())) {
+			if (isAllowedCommunity() && (isNewlyregistered() || isUserwithoutedit())) {
 				tracker.trackVerboseSuccess(experimentName, 'publish');
 			}
 		}
@@ -31,8 +30,9 @@ define('VisualEditorTourExperimentInit',
 			$('#ca-ve-edit').popover('destroy');
 		}
 
-		function isJapaneseCommunity() {
-			return mw.config.get('wgContentLanguage') === 'ja';
+		function isAllowedCommunity() {
+			var allowedLanguages = ['ja','es','de'];
+			return allowedLanguages.indexOf(mw.config.get('wgContentLanguage')) > -1;
 		}
 
 		function isNewlyregistered() {
