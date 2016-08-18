@@ -80,22 +80,17 @@ describe('Module ext.wikia.adEngine.pageFairDetection', function () {
 		expect(mocks.window.ads.runtime.pf.blocking).toBe(false);
 	});
 
-	it('should throw an exception if its try to initialize without correct context', function () {
-		var mocks = getMocks(),
-			pageFairDetector = getModule(mocks),
-			expectedException = 'Can\'t initialize PageFair detector';
-
-		expect(pageFairDetector.initDetection.bind({})).toThrow(expectedException);
-	});
-
 	it('should not run detection when pagefair is not enabled', function () {
 		var context = getContext(),
 			mocks = getMocks(),
-			pageFairDetector = getModule(mocks),
-			expectedException = 'Can\'t initialize PageFair detector';
+			pageFairDetector = getModule(mocks);
 
 		context.opts.pageFairDetection = false;
+		pageFairDetector.initDetection(context);
 
-		expect(pageFairDetector.initDetection.bind({})).toThrow(expectedException);
+		spyOn(mocks.document, 'dispatchEvent');
+		mocks.window.pf_notify(true);
+
+		expect(mocks.document.dispatchEvent).not.toHaveBeenCalled();
 	});
 });
