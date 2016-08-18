@@ -36,7 +36,6 @@ class OasisController extends WikiaController {
 		$this->pageClass = $skinVars['pageclass'];
 		$this->pageCss = $skinVars['pagecss'];
 		$this->skinNameClass = $skinVars['skinnameclass'];
-		$this->bottomScripts = $skinVars['bottomscripts'];
 		// initialize variables
 		$this->comScore = null;
 		$this->quantServe = null;
@@ -158,9 +157,6 @@ class OasisController extends WikiaController {
 		$this->itemType = self::getItemType();
 
 		$skin = RequestContext::getMain()->getSkin(); /* @var $skin WikiaSkin */
-		// this is bad but some extensions could have added some scripts to bottom queue
-		// todo: make it not run twice during each request
-		$this->bottomScripts = $skin->bottomScripts();
 
 		// generate list of CSS classes for <body> tag
 		$bodyClasses = array('mediawiki', $this->dir, $this->pageClass);
@@ -207,7 +203,7 @@ class OasisController extends WikiaController {
 		$this->cssLinks = $skin->getStylesWithCombinedSASS($sassFiles);
 
 		// $sassFiles will be updated by getStylesWithCombinedSASS method will all extracted and concatenated SASS files
-		$this->bottomScripts .= Html::inlineScript("var wgSassLoadedScss = ".json_encode($sassFiles).";");
+		$this->bottomScripts = Html::inlineScript("var wgSassLoadedScss = ".json_encode($sassFiles).";");
 
 		$this->headLinks = $wgOut->getHeadLinks();
 		$this->headItems = $skin->getHeadItems();
@@ -248,57 +244,6 @@ class OasisController extends WikiaController {
 		wfProfileOut(__METHOD__);
 	}
 
-	/**
-	 * Gets the URL and converts it to minified one if it points to single static file (JS or CSS)
-	 * If it's not recognized as static asset the original URL is returned
-	 *
-	 * @param $url string URL to be inspected
-	 * @return string
-	 */
-	private function minifySingleAsset( $url ) {
-		global $wgAllInOne;
-		if ( !empty( $wgAllInOne ) ) {
-			static $map;
-			if (empty($map)) {
-				$map = array(
-					array( $this->app->wg->ExtensionsPath, 'extensions/' ),
-					array( $this->app->wg->StylePath, 'skins/' ),
-					// $wgResourceBasePath = $wgCdnStylePath (there's no /resources in it)
-					array( $this->app->wg->ResourceBasePath . '/resources', 'resources/' ),
-				);
-			}
-
-			// BugId:38195 - don't minify already minified assets
-			if (strpos($url, '/__am/') !== false) {
-				return $url;
-			}
-
-			// don't minify already minified JS files
-			if (strpos($url, '.min.js') !== false) {
-				return $url;
-			}
-
-			foreach ($map as $item) {
-				list( $prefix, $replacement ) = $item;
-
-				// BugId: 38195 - wgExtensionPath / stylePath / ResourceBasePath do not end with a slash
-				// add one to remove double slashes in resulting URL
-				$prefix .= '/';
-
-				if (startsWith($url, $prefix)) {
-					$nurl = substr($url,strlen($prefix));
-					$matches = array();
-					if (preg_match("/^([^?]+)/",$nurl,$matches)) {
-						if (preg_match("/\\.(css|js)\$/i",$matches[1])) {
-							return $this->assetsManager->getOneCommonURL($replacement . $matches[1],true);
-						}
-					}
-				}
-			}
-		}
-		return $url;
-	}
-
 	// TODO: implement as a separate module?
 	private function loadJs() {
 		global $wgJsMimeType, $wgUser, $wgDevelEnvironment, $wgAllInOne;
@@ -308,7 +253,6 @@ class OasisController extends WikiaController {
 
 		// load AbTesting files, anything that's so mandatory that we're willing to make a blocking request to load it.
 		$this->globalBlockingScripts = '';
-		$jsReferences = array();
 
 		$jsAssetGroups = array( 'oasis_blocking' );
 		wfRunHooks('OasisSkinAssetGroupsBlocking', array(&$jsAssetGroups));
@@ -318,28 +262,6 @@ class OasisController extends WikiaController {
 			$this->globalBlockingScripts .= "<script type=\"$wgJsMimeType\" src=\"$blockingFile\"></script>";
 		}
 
-		// move JS files added to OutputPage to list of files to be loaded
-		$scripts = RequestContext::getMain()->getSkin()->getScripts();
-
-			foreach ( $scripts as $s ) {
-			//add inline scripts to jsFiles and move non-inline to the queue
-			if ( !empty( $s['url'] ) ) {
-				// FIXME: quick hack to load MW core JavaScript at the top of the page - really, please fix me!
-				// @author macbre
-				if (strpos($s['url'], 'load.php') !== false) {
-					$this->globalVariablesScript = $s['tag'] . $this->globalVariablesScript;
-				}
-				else {
-					$url = $s['url'];
-					if ( $wgAllInOne ) {
-						$url = $this->minifySingleAsset( $url );
-					}
-					$jsReferences[] = $url;
-				}
-			} else {
-				$this->jsFiles .= $s['tag'];
-			}
-		}
 		$isLoggedIn = $wgUser->isLoggedIn();
 
 		$assetGroups = ['oasis_shared_core_js', 'oasis_shared_js'];
@@ -350,28 +272,15 @@ class OasisController extends WikiaController {
 			$assetGroups[] = 'oasis_anon_js';
 		}
 
-
-		$jsLoader = '';
-
 		wfRunHooks('OasisSkinAssetGroups', array(&$assetGroups));
 
 		// add groups queued via OasisController::addSkinAssetGroup
 		$assetGroups = array_merge($assetGroups, self::$skinAssetGroups);
 
-		$assets = $this->assetsManager->getURL( $assetGroups ) ;
-
-		// jQueryless version - appears only to be used by the ad-experiment at the moment.
-		// disabled - not needed atm (and skipped in wsl-version anyway)
-		// $assets[] = $this->assetsManager->getURL( $isLoggedIn ? 'oasis_nojquery_shared_js_user' : 'oasis_nojquery_shared_js_anon' );
-
-		// add $jsReferences
-		$assets = array_merge($assets, $jsReferences);
-
-		// generate direct script tags
-		foreach ($assets as $url) {
-			$url = htmlspecialchars( $url );
-			$jsLoader .= "<script src=\"{$url}\"></script>\n";
-		}
+		// SUS-905: Load all AssetsManager JS groups in a single HTTP request
+		/** @var SkinOasis $skin */
+		$skin = $this->getContext()->getSkin();
+		$jsLoader = $skin->getScriptsWithCombinedGroups( $assetGroups );
 
 		$tpl = $this->app->getSkinTemplateObj();
 
