@@ -216,7 +216,9 @@ class MediaQueryService extends WikiaService {
 	private function getMediaDataFromCache( Title $media, $length = 256 ) {
 		wfProfileIn(__METHOD__);
 
-		if ( !isset($this->mediaCache[ $media->getDBKey() ] ) ) {
+		$cacheKey = $media->getDBkey() . ':' . $length;
+
+		if ( !isset($this->mediaCache[ $cacheKey ] ) ) {
 			$file = wfFindFile( $media );
 			if ( !empty( $file ) && $file->canRender() ) {
 				$articleService = new ArticleService( $media );
@@ -230,7 +232,7 @@ class MediaQueryService extends WikiaService {
 				else {
 					$videoHandler = false;
 				}
-				$this->mediaCache[ $media->getDBKey() ] = array(
+				$this->mediaCache[ $cacheKey ] = array(
 					'title' => $media->getText(),
 					'desc' => ( $length > 0 ? $articleService->getTextSnippet( $length ) : '' ),
 					'type' => ( $isVideo ? self::MEDIA_TYPE_VIDEO : self::MEDIA_TYPE_IMAGE ),
@@ -239,12 +241,12 @@ class MediaQueryService extends WikiaService {
 				));
 			}
 			else {
-				$this->mediaCache[ $media->getDBKey() ] = false;
+				$this->mediaCache[ $cacheKey ] = false;
 			}
 		}
 
 		wfProfileOut(__METHOD__);
-		return $this->mediaCache[ $media->getDBKey() ];
+		return $this->mediaCache[ $cacheKey ];
 	}
 
 	/**

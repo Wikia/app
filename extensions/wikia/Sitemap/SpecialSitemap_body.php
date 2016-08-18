@@ -493,7 +493,7 @@ class SitemapPage extends UnlistedSpecialPage {
 	}
 
 	/**
-	 * Query Solr (once) to find out which NS=6 pages are indexed in Solr
+	 * Query Solr (once) to find out which NS_FILE pages are indexed in Solr
 	 *
 	 * Later we use this information to only expect a snippet for pages that are indexed in Solr.
 	 * This means no querying Solr for information it doesn't have and no falling back to parsing
@@ -517,15 +517,27 @@ class SitemapPage extends UnlistedSpecialPage {
 
 			$config = new Wikia\Search\Config();
 			$config->setDirectLuceneQuery( true );
-			$config->setLimit( self::SOLR_LIMIT );
+			$config->setLimit( 1 );
 			$config->setQuery( $luceneQuery );
 
 			$queryServiceFactory = new Wikia\Search\QueryService\Factory();
 			$response = $queryServiceFactory->getFromConfig( $config )->search();
 
-			if ( $response->getResultsNum() >= self::SOLR_LIMIT ) {
+			$numResults = $response->getResultsFound();
+
+			if ( $numResults >= self::SOLR_LIMIT ) {
 				$alwaysReturnTrue = true;
-			} else {
+				return true;
+			}
+
+			$limit = Wikia\Search\Config::MAX_RESULTS_PER_PAGE;
+
+			for ( $page = 0; $page < $numResults / $limit; $page++ ) {
+				$config->setLimit( $limit );
+				$config->setStart( $page * $limit );
+				$query = $queryServiceFactory->getFromConfig( $config );
+				$response = $query->search();
+
 				$results = (array)$response->getResults();
 
 				foreach ( $results as $result ) {
