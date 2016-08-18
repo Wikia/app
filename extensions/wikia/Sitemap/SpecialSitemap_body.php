@@ -266,6 +266,7 @@ class SitemapPage extends UnlistedSpecialPage {
 				'page_namespace',
 				'page_title',
 				'page_touched',
+				'page_id',
 			],
 			$scope,
 			__METHOD__,
@@ -290,7 +291,13 @@ class SitemapPage extends UnlistedSpecialPage {
 				? $this->mPriorities[$row->page_namespace]
 				: '0.5';
 
-			$entry = $this->titleEntry( $title, $stamp, $prior, $includeVideo );
+			if ( $includeVideo ) {
+				$skipSnippet = !$this->hasSnippet( $row->page_id );
+			} else {
+				$skipSnippet = true;
+			}
+
+			$entry = $this->titleEntry( $title, $stamp, $prior, $includeVideo, $skipSnippet );
 
 			/**
 			 * break if it's to big
@@ -344,20 +351,20 @@ class SitemapPage extends UnlistedSpecialPage {
 		}
 	}
 
-	private function titleEntry( Title $title, $date, $priority, $includeVideo = false ) {
+	private function titleEntry( Title $title, $date, $priority, $includeVideo = false, $skipSnippet = false ) {
 		return
 			"\t<url>\n" .
 			"\t\t<loc>{$title->getFullURL()}</loc>\n" .
 			"\t\t<lastmod>$date</lastmod>\n" .
 			"\t\t<priority>$priority</priority>\n" .
-			( $includeVideo ? $this->videoEntry( $title ) : "" ) .
+			( $includeVideo ? $this->videoEntry( $title, $skipSnippet ) : '' ) .
 			"\t</url>\n";
 	}
 
-	private function videoEntry( Title $title ) {
+	private function videoEntry( Title $title, $skipSnippet = false ) {
 		$file = wfFindFile( $title );
 
-		$videoTitleData = $this->mMediaService->getMediaData( $title, 500 );
+		$videoTitleData = $this->mMediaService->getMediaData( $title, $skipSnippet ? 0 : 500 );
 
 		$isVideo = WikiaFileHelper::isFileTypeVideo( $file );
 		if ( !$isVideo ) {
@@ -476,5 +483,46 @@ class SitemapPage extends UnlistedSpecialPage {
 		}
 
 		return true;
+	}
+
+	/**
+	 * Query Solr (once) to find out which NS=6 pages are indexed in Solr
+	 *
+	 * Later we use this information to only expect a snippet for pages that are indexed in Solr.
+	 * This means no querying Solr for information it doesn't have and no falling back to parsing
+	 * wikitext for mostly empty pages (if they weren't empty, they would be indexed).
+	 *
+	 * @param $pageId
+	 * @return bool
+	 */
+	private function hasSnippet( $pageId ) {
+		global $wgCityId;
+
+		static $pageIdsWithSnippets = null;
+
+		if ( is_null( $pageIdsWithSnippets ) ) {
+			$pageIdsWithSnippets = [];
+
+			$luceneQuery = sprintf(
+				'wid:%d AND is_image:false AND ns:6',
+				$wgCityId
+			);
+
+			$config = new Wikia\Search\Config();
+			$config->setDirectLuceneQuery( true );
+			$config->setLimit( 100000 );
+			$config->setQuery( $luceneQuery );
+
+			$queryServiceFactory = new Wikia\Search\QueryService\Factory();
+			$response = $queryServiceFactory->getFromConfig( $config )->search();
+			$results = (array)$response->getResults();
+
+			foreach ( $results as $result ) {
+				$pageId = $result->getFields()['pageid'];
+				$pageIdsWithSnippets[$pageId] = true;
+			}
+		}
+
+		return isset( $pageIdsWithSnippets[$pageId] );
 	}
 }
