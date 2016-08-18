@@ -133,8 +133,8 @@ function SiteWideMessagesSiteNoticeAfter( &$siteNotice ) {
  *
  * @author macbre
  */
-function SiteWideMessagesAddNotifications( Skin &$skin, &$tpl ) {
-	global $wgOut, $wgUser, $wgExtensionsPath;
+function SiteWideMessagesAddNotifications( Skin $skin, &$tpl ) {
+	global $wgExtensionsPath;
 	wfProfileIn(__METHOD__);
 	$user = $skin->getUser();
 	$out = $skin->getOutput();

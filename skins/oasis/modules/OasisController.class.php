@@ -87,7 +87,7 @@ class OasisController extends WikiaController {
 	}
 
 	public function executeIndex($params) {
-		global $wgOut, $wgUser, $wgTitle, $wgRequest, $wgEnableAdminDashboardExt, $wgOasisThemeSettings,
+		global $wgOut, $wgUser, $wgRequest, $wgOasisThemeSettings,
 		$wgWikiaMobileSmartBannerConfig;
 
 		wfProfileIn(__METHOD__);
@@ -241,7 +241,7 @@ class OasisController extends WikiaController {
 
 	// TODO: implement as a separate module?
 	private function loadJs() {
-		global $wgJsMimeType, $wgUser, $wgDevelEnvironment, $wgAllInOne;
+		global $wgJsMimeType, $wgUser;
 		wfProfileIn(__METHOD__);
 
 		$this->jsAtBottom = self::JsAtBottom();
