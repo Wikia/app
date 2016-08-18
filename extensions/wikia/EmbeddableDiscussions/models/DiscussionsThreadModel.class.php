@@ -44,9 +44,8 @@ class DiscussionsThreadModel {
 	}
 
 	private function apiRequest( $url ) {
-		global $wgUser;
+		$request = RequestContext::getMain()->getRequest();
 
-		$request = $wgUser->getRequest();
 		$options = [
 			'returnInstance' => false,
 			'headers' => [
