@@ -86,13 +86,6 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 			],
 			[
 				'titleMockType' => 'article',
-				'flags' => ['wgAdDriverUseMonetizationService', 'wgEnableMonetizationModuleExt'],
-				'expectedOpts' => [],
-				'expectedTargeting' => [ 'newWikiCategories' => [ 'test' ] ],
-				'expectedProviders' => ['monetizationService' => true]
-			],
-			[
-				'titleMockType' => 'article',
 				'flags' => ['wgAdDriverWikiIsTop1000'],
 				'expectedOpts' => [],
 				'expectedTargeting' => [ 'newWikiCategories' => [ 'test' ], 'wikiIsTop1000' => true ]
@@ -388,6 +381,11 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 		// Check for SourcePoint URL
 		$this->assertStringMatchesFormat( $expectedAdEngineResourceURLFormat, $result['opts']['sourcePointDetectionUrl'] );
 		unset( $result['opts']['sourcePointDetectionUrl'] );
+
+		// Check for PageFair URL
+		$this->assertStringMatchesFormat( $expectedAdEngineResourceURLFormat, $result['opts']['pageFairDetectionUrl'] );
+		unset( $result['opts']['pageFairDetectionUrl'] );
+
 
 		$expected['providers']['rubiconFastlane'] = true;
 

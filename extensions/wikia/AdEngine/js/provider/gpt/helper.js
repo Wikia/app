@@ -7,6 +7,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	'ext.wikia.adEngine.provider.gpt.adDetect',
 	'ext.wikia.adEngine.provider.gpt.adElement',
 	'ext.wikia.adEngine.provider.gpt.googleTag',
+	'ext.wikia.adEngine.slot.slotTargeting',
 	'ext.wikia.adEngine.uapContext',
 	'ext.wikia.aRecoveryEngine.recovery.helper',
 	'ext.wikia.adEngine.slotTweaker',
@@ -19,6 +20,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	adDetect,
 	AdElement,
 	GoogleTag,
+	slotTargeting,
 	uapContext,
 	recoveryHelper,
 	slotTweaker,
@@ -42,18 +44,18 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	 *
 	 * @param {Object}   slot               - slot (ext.wikia.adEngine.slot.adSlot::create instance)
 	 * @param {string}   slotPath           - slot path
-	 * @param {Object}   slotTargeting      - slot targeting details
+	 * @param {Object}   slotTargetingData  - slot targeting details
 	 * @param {Object}   extra              - optional parameters
 	 * @param {boolean}  extra.sraEnabled   - whether to use Single Request Architecture
 	 * @param {string}   extra.forcedAdType - ad type for callbacks info
 	 */
-	function pushAd(slot, slotPath, slotTargeting, extra) {
+	function pushAd(slot, slotPath, slotTargetingData, extra) {
 		extra = extra || {};
 		var count,
 			element,
 			recoverableSlots = extra.recoverableSlots || [],
-			shouldPush = !recoveryHelper.isBlocking() ||
-				(recoveryHelper.isBlocking() && recoveryHelper.isRecoverable(slot.name, recoverableSlots)),
+			shouldPushRecoverableAd = recoveryHelper.isBlocking() && recoveryHelper.isRecoverable(slot.name, recoverableSlots),
+			shouldPush = !recoveryHelper.isBlocking() || shouldPushRecoverableAd,
 			uapId = uapContext.getUapId();
 
 		log(['shouldPush',
@@ -62,7 +64,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 			recoverableSlots,
 			recoveryHelper.isRecoverable(slot.name, recoverableSlots)], 'debug', logGroup);
 
-		slotTargeting = JSON.parse(JSON.stringify(slotTargeting)); // copy value
+		slotTargetingData = JSON.parse(JSON.stringify(slotTargetingData)); // copy value
 
 		if (isHiddenOnStart(slot.name)) {
 			slotTweaker.hide(slot.name);
@@ -73,13 +75,17 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 		if (scrollHandler) {
 			count = scrollHandler.getReloadedViewCount(slot.name);
 			if (count !== null) {
-				slotTargeting.rv = count.toString();
+				slotTargetingData.rv = count.toString();
 			}
 		}
+		if (shouldPushRecoverableAd) {
+			slotTargetingData.src = 'rec';
+		}
 
-		slotTargeting.uap = uapId ? uapId.toString() : 'none';
+		slotTargetingData.wsi = slotTargeting.getWikiaSlotId(slot.name, slotTargetingData.src);
+		slotTargetingData.uap = uapId ? uapId.toString() : 'none';
 
-		element = new AdElement(slot.name, slotPath, slotTargeting);
+		element = new AdElement(slot.name, slotPath, slotTargetingData);
 
 		function queueAd() {
 			log(['queueAd', slot.name, element], 'debug', logGroup);
@@ -115,7 +121,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 		}
 
 		log(['pushAd', slot.name], 'info', logGroup);
-		if (!slotTargeting.flushOnly) {
+		if (!slotTargetingData.flushOnly) {
 			googleApi.registerCallback(element.getId(), gptCallback);
 			googleApi.push(queueAd);
 		}
@@ -125,7 +131,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 			googleApi.flush();
 		}
 
-		if (slotTargeting.flushOnly) {
+		if (slotTargetingData.flushOnly) {
 			slot.success();
 		}
 	}

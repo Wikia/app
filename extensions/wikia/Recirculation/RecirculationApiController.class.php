@@ -1,7 +1,7 @@
 <?php
 
 class RecirculationApiController extends WikiaApiController {
-	const ALLOWED_TYPES = ['recent_popular', 'vertical', 'community', 'curated', 'e3', 'hero', 'category'];
+	const ALLOWED_TYPES = ['recent_popular', 'vertical', 'community', 'curated', 'hero', 'category', 'latest'];
 	const FANDOM_LIMIT = 5;
 
 	/**
@@ -20,27 +20,24 @@ class RecirculationApiController extends WikiaApiController {
 
 		$type = $this->getParamType();
 		$cityId = $this->getParamCityId();
+		$limit = $this->getParamLimit();
+		$fill = $this->getParamFill();
 
 		$title = wfMessage( 'recirculation-fandom-title' )->plain();
 
 		if ( $type === 'curated' ) {
 			$dataService = new CuratedContentService();
-		} elseif ( $type === 'hero' || $type === 'category' ) {
+		} elseif ( $type === 'hero' || $type === 'category' || $type === 'latest' ) {
 			$dataService = new FandomDataService( $cityId, $type );
 		} else {
 			$dataService = new ParselyDataService( $cityId );
 		}
 
-		if ( $type === 'category') {
-			$svg = file_get_contents( __DIR__ . '/images/mafia3.svg' );
-			$title = "Fandom @ <strong>Comic-Con</strong><br /><span>Presented by $svg</span>";
-		}
+		$posts = $dataService->getPosts( $type, $limit );
 
-		$posts = $dataService->getPosts( $type );
-
-		if ( $type === 'category' && count( $posts ) < self::FANDOM_LIMIT) {
-			$ds = new FandomDataService( $cityId, $type, true );
-			$posts = array_slice( array_merge( $posts, $ds->getPosts( $type ) ), 0, self::FANDOM_LIMIT );
+		if ( $fill === 'true' && count( $posts ) < $limit ) {
+			$ds = new ParselyDataService( $cityId );
+			$posts = array_slice( array_merge( $posts, $ds->getPosts( 'recent_popular', $limit ) ), 0, $limit );
 		}
 
 		$this->response->setCacheValidity( WikiaResponse::CACHE_VERY_SHORT );
@@ -64,7 +61,7 @@ class RecirculationApiController extends WikiaApiController {
 		$this->response->setCacheValidity(WikiaResponse::CACHE_VERY_SHORT);
 		$this->response->setData([
 				'title' => wfMessage( 'recirculation-fandom-subtitle' )->plain(),
-				'items' => (new CakeRelatedContentService())->getContentRelatedTo($target, $limit, $ignore),
+				'items' => (new CakeRelatedContentService())->getContentRelatedTo($target, $this->wg->sitename, $limit, $ignore),
 		]);
 	}
 
@@ -113,5 +110,25 @@ class RecirculationApiController extends WikiaApiController {
 		}
 
 		return $type;
+	}
+
+	private function getParamFill() {
+		$fill = $this->request->getVal( 'fill', 'false' );
+
+		if ( $fill !== 'true' && $fill !== 'false' ) {
+			throw new InvalidParameterApiException( 'fill' );
+		}
+
+		return $fill;
+	}
+
+	private function getParamLimit() {
+		$limit = $this->request->getVal( 'limit', self::FANDOM_LIMIT );
+
+		if ( !empty( $limit ) && !is_numeric( $limit ) ) {
+			throw new InvalidParameterApiException( 'limit' );
+		}
+
+		return $limit;
 	}
 }

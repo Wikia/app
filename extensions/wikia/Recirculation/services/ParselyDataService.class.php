@@ -87,7 +87,7 @@ class ParselyDataService {
 		$posts = json_decode( $data, true );
 
 		if ( isset( $posts['data'] ) && is_array( $posts['data'] ) ) {
-			return $this->dedupePosts( $posts['data'], $count );
+			return $this->dedupePosts( $posts['data'], $count, $type );
 		} else {
 			return [];
 		}
@@ -120,7 +120,7 @@ class ParselyDataService {
 	 * @param array $rawPosts
 	 * @return array
 	 */
-	private function dedupePosts( $rawPosts, $count ) {
+	private function dedupePosts( $rawPosts, $count, $type ) {
 		$posts = [];
 		$postIds = [];
 
@@ -129,10 +129,12 @@ class ParselyDataService {
 				break;
 			}
 
-			$metadata = json_decode( $post['metadata'] );
-			if ( !empty( $metadata->postID ) && !in_array( $metadata->postID, $postIds ) ) {
-				$postIds[] = $metadata->postID;
+			$metadata = json_decode( $post['metadata'], true );
+			if ( !empty( $metadata['postID'] ) && !in_array( $metadata['postID'], $postIds ) ) {
+				$postIds[] = $metadata['postID'];
 				$post['source'] = 'fandom';
+				$post['isVideo'] = $metadata['isVideo'] ?? null;
+				$post['type'] = $type;
 				$posts[] = $post;
 			}
 		}

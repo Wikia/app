@@ -63,9 +63,11 @@ class CommunityPageSpecialHooks {
 	 * @return true
 	 */
 	public static function onBeforePageDisplay( \OutputPage $out, \Skin $skin ) {
+		global $wgEnableNCFDialog;
 		$user = $out->getUser();
 
-		if ( $user->isAnon() &&
+		if ( !empty( $wgEnableNCFDialog ) &&
+			$user->isAnon() &&
 			$out->getRequest()->getVal( 'action' ) !== 'edit' &&
 			$out->getRequest()->getVal( 'veaction' ) !== 'edit' &&
 			$out->getRequest()->getVal( 'action' ) !== 'submit'
@@ -140,5 +142,17 @@ class CommunityPageSpecialHooks {
 
 	private static function isAdmin( $userId ) {
 		return in_array( $userId, ( new CommunityPageSpecialUsersModel() )->getAdmins() );
+	}
+
+	/**
+	 * Add wgCommunityPageDisableTopContributors global variable to startup ResourceLoader module
+	 *
+	 * @param array $vars JS global variables
+	 * @return bool true
+	 */
+	public static function onResourceLoaderGetConfigVars(Array &$vars) {
+		global $wgCommunityPageDisableTopContributors;
+		$vars['wgCommunityPageDisableTopContributors'] = $wgCommunityPageDisableTopContributors;
+		return true;
 	}
 }

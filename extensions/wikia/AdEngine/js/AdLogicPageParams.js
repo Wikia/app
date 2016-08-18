@@ -4,13 +4,14 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adLogicPageViewCounter',
 	'ext.wikia.adEngine.utils.adLogicZoneParams',
-	'wikia.log',
 	'wikia.document',
+	'wikia.geo',
 	'wikia.location',
+	'wikia.log',
 	'wikia.window',
 	require.optional('wikia.abTest'),
 	require.optional('wikia.krux')
-], function (adContext, pvCounter, zoneParams, log, doc, loc, win, abTest, krux) {
+], function (adContext, pvCounter, zoneParams, doc, geo, loc, log, win, abTest, krux) {
 	'use strict';
 
 	var context = {},
@@ -182,7 +183,8 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 			lang: zoneParams.getLanguage(),
 			wpage: targeting.pageName && targeting.pageName.toLowerCase(),
 			ref: getRefParam(),
-			esrb: targeting.esrbRating
+			esrb: targeting.esrbRating,
+			geo: geo.getCountryCode() || 'none'
 		};
 
 		if (pvs) {

@@ -1,0 +1,226 @@
+@import 'skins/shared/mixins/flexbox';
+@import 'skins/shared/color';
+
+@import 'avatar';
+
+$reply-icon: '/extensions/wikia/EmbeddableDiscussions/images/reply.svg';
+$reply-icon-tiny: '/extensions/wikia/EmbeddableDiscussions/images/reply-tiny.svg';
+$upvote-icon: '/extensions/wikia/EmbeddableDiscussions/images/upvote.svg';
+$upvote-icon-active: '/extensions/wikia/EmbeddableDiscussions/images/upvote-active.svg';
+$upvote-icon-tiny: '/extensions/wikia/EmbeddableDiscussions/images/upvote-tiny.svg';
+$share-icon: '/extensions/wikia/EmbeddableDiscussions/images/share.svg';
+$plus-icon: '/extensions/wikia/EmbeddableDiscussions/images/plus-x-large.svg';
+
+$gray: #999;
+$card-border-color: $color-page-border;
+$container-border-color: lighten($color-page-border, 10%);
+
+$icon-size: 24px;
+$tiny-icon-size: 14px;
+$plus-icon-size: 34px;
+
+$font-size-small: 12px;
+$font-size-regular: 14px;
+$font-size-large: 16px;
+
+.embeddable-discussions-module {
+	border: 1px solid $container-border-color;
+	margin: 0;
+	padding: 3px 21px 30px 27px;
+
+	p {
+		margin: 0;
+	}
+
+	.embeddable-discussions-forum {
+		color: $gray;
+		float: left;
+	}
+
+	.embeddable-discussions-content {
+		font-size: $font-size-regular;
+	}
+
+	.embeddable-discussions-header-container {
+		@include flexbox();
+		@include flex-direction(row);
+	}
+
+	.embeddable-discussions-heading-container {
+		@include flexbox();
+
+		margin-top: 10px;
+	}
+
+	.embeddable-discussions-heading {
+		height: 24px;
+		font-size: 18px;
+	}
+
+	.embeddable-discussions-post-actions {
+		@include flexbox();
+		@include align-items(center);
+		@include align-self(center);
+		@include justify-content(center);
+
+		border-top: 1px solid $card-border-color;
+		font-size: $font-size-small;
+		font-weight: 500;
+		list-style: none;
+		margin: 0;
+		max-width: none;
+		padding: 6px 0;
+		width: auto;
+	}
+
+	.embeddable-discussions-post-actions li {
+		@include flexbox();
+		@include align-items(center);
+		@include align-self(center);
+		@include justify-content(center);
+
+		color: $gray;
+		cursor: pointer;
+		height: 33px;
+		line-height: 33px;
+		text-align: center;
+	}
+
+	.embeddable-discussions-post-actions a {
+		@include flexbox();
+		@include align-items(center);
+		@include align-self(center);
+		@include justify-content(center);
+
+		color: $gray;
+		cursor: pointer;
+		font-size: $font-size-small;
+		font-weight: 500;
+		height: 33px;
+		line-height: 33px;
+		text-align: center;
+	}
+
+	.embeddable-discussions-post-counter {
+		padding-left: 10px;
+		vertical-align: top;
+	}
+
+	.embeddable-discussions-post-counters {
+		@include flexbox();
+		@include align-items(center);
+		@include align-self(center);
+		@include justify-content(center);
+
+		color: $gray;
+		font-size: $font-size-small;
+		justify-content: flex-end;
+		line-height: $font-size-small;
+		padding-bottom: 14px;
+		text-align: right;
+	}
+
+	.embeddable-discussions-post-detail {
+		border: 1px solid $card-border-color;
+		margin: 0 0 20px;
+		padding: 20px 0 0;
+	}
+
+	.embeddable-discussions-post-detail-columns {
+		height: 100%;
+		margin-right: 10px;
+		width: 48%;
+	}
+
+	.embeddable-discussions-reply-icon {
+		background: url($reply-icon) no-repeat;
+		height: $icon-size;
+		width: $icon-size;
+	}
+
+	.embeddable-discussions-reply-icon-tiny {
+		background: url($reply-icon-tiny) no-repeat;
+		height: $tiny-icon-size;
+		margin-right: 4px;
+		width: $tiny-icon-size;
+	}
+
+	.embeddable-discussions-share-icon {
+		background: url($share-icon) no-repeat;
+		height: $icon-size;
+		width: $icon-size;
+	}
+
+	.embeddable-discussions-show-all {
+		font-size: $font-size-small;
+		font-weight: bold;
+		line-height: 24px;
+		margin-left: auto;
+	}
+
+	.embeddable-discussions-side-spaced {
+		padding-left: 15px;
+		padding-right: 15px;
+	}
+
+	.embeddable-discussions-threads {
+		clear: both;
+		padding-top: 14px;
+	}
+
+	.embeddable-discussions-threads-columns {
+		@include flexbox();
+		@include flex-wrap(wrap);
+	}
+
+	.embeddable-discussions-timestamp {
+		color: $gray;
+	}
+
+	.embeddable-discussions-title {
+		font-size: $font-size-regular;
+		font-weight: bold;
+	}
+
+	.embeddable-discussions-upvote-icon {
+		background: url($upvote-icon) no-repeat;
+		height: $icon-size;
+		width: $icon-size;
+	}
+
+	.embeddable-discussions-upvote-icon-active {
+		background: url($upvote-icon-active) no-repeat;
+		height: $icon-size;
+		width: $icon-size;
+	}
+
+	.embeddable-discussions-upvote-icon-tiny {
+		background: url($upvote-icon-tiny) no-repeat;
+		margin-right: 4px;
+		height: $tiny-icon-size;
+		width: $tiny-icon-size;
+	}
+
+	.embeddable-discussions-zero {
+		@include flexbox();
+		@include flex-direction(column);
+
+		align-items: center;
+		border: 1px dashed $card-border-color;
+		clear: both;
+		padding: 48px 0 75px;
+		line-height: 1.4;
+		text-align: center;
+	}
+
+	.embeddable-discussions-zero-plus {
+		background: url($plus-icon) no-repeat;
+		height: $plus-icon-size;
+		padding-bottom: 18px;
+		width: $plus-icon-size
+	}
+
+	.embeddable-discussions-zero-text {
+		font-size: $font-size-large;
+	}
+}

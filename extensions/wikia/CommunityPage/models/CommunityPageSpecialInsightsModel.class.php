@@ -85,6 +85,13 @@ class CommunityPageSpecialInsightsModel {
 		$insightPages['title'] = wfMessage( 'communitypage-' . $type . '-title' )->text();
 		$insightPages['description'] =  wfMessage( 'communitypage-' . $type . '-description' )->text();
 
+		// TODO: to be removed in the scope of: https://wikia-inc.atlassian.net/browse/WW-83
+		$insightPages['mediumtitle'] = wfMessage( 'communitypage-' . $type . '-mediumtitle' )->text();
+		$insightPages['hightitle'] = wfMessage( 'communitypage-' . $type . '-hightitle' )->text();
+		$insightPages['mediumdescription'] =  wfMessage( 'communitypage-' . $type . '-mediumdescription' )->text();
+		$insightPages['highdescription'] =  wfMessage( 'communitypage-' . $type . '-highdescription' )->text();
+
+
 		if ( $insightPages['count'] > self::INSIGHTS_MODULE_ITEMS ) {
 			$insightPages['fulllistlink'] = SpecialPage::getTitleFor( 'Insights', $type )
 				->getLocalURL( $this->getSortingParam( $config[self::INSIGHTS_CONFIG_SORT_TYPE_KEY] ) );
@@ -108,6 +115,9 @@ class CommunityPageSpecialInsightsModel {
 			$insightsPages['pages'][$key]['metadataDetails'] = $this->getArticleMetadataDetails( $insight['metadata'] );
 			$insightsPages['pages'][$key]['editlink'] = $this->getEditUrl( $insight['link']['articleurl'] );
 			$insightsPages['pages'][$key]['edittext'] = $this->getArticleContributeText( $insight['metadata'] );
+
+			// TODO: to be removed in the scope of: https://wikia-inc.atlassian.net/browse/WW-83
+			$insightsPages['pages'][$key]['customedittext'] = wfMessage( 'communitypage-' . $insightsPages['type'] . '-edittext' )->text();
 
 			if ( $displayPageviews && !empty( $insight['metadata']['pv7'] ) ) {
 				$insightsPages['pages'][$key]['pageviews'] = wfMessage(

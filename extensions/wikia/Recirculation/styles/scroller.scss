@@ -10,6 +10,13 @@
 		margin-right: 20px;
 	}
 
+	.item.is-video {
+		.thumbnail::after {
+			height: 36px;
+			width: 36px;
+		}
+	}
+
 	&:hover {
 		.scroller-arrow {
 			opacity: .95;

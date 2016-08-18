@@ -10,10 +10,15 @@ use \Wikia\Logger\WikiaLogger;
 class ImageReviewHelper extends ImageReviewHelperBase {
 
 	private $user_id = 0;
-
+	/**
+	 * @var ImageReviewStatsCache
+     */
+	private $stats_cache;
+	
 	function __construct() {
 		parent::__construct();
-		$this->user_id = $this->wg->user->getId();
+		$this->user_id     = $this->wg->user->getId();
+		$this->stats_cache = new ImageReviewStatsCache( $this->user_id, $this->wg );
 	}
 
 	/**
@@ -75,34 +80,37 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 		$db->commit();
 
 		// update stats directly in memcache so they look nice without impacting the database
-		$key = wfMemcKey( 'ImageReviewSpecialController', 'ImageReviewHelper::getImageCount', $this->user_id );
-		$stats = $this->wg->memc->get($key, null);
-		if ($stats) {
-			switch ( $action ) {
-				case '':
-				//	$stats['reviewer'] += count($images);
-				//	$stats['unreviewed'] -= count($images);
-					$stats['questionable'] += count($sqlWhere[ImageReviewStatuses::STATE_QUESTIONABLE]);
-					break;
-				case ImageReviewSpecialController::ACTION_QUESTIONABLE:
-					$changedState = count( $sqlWhere[ImageReviewStatuses::STATE_APPROVED] ) + count( $sqlWhere[ImageReviewStatuses::STATE_REJECTED] );
-				//	$stats['reviewer'] += $changedState;
-					$stats['questionable'] -= $changedState;
-					break;
-				case ImageReviewSpecialController::ACTION_REJECTED:
-					$changedState = count( $sqlWhere[ImageReviewStatuses::STATE_APPROVED] ) + count( $sqlWhere[ImageReviewStatuses::STATE_DELETED] );
-					$stats['rejected'] -= $changedState;
-					break;
-			}
-			$this->wg->memc->set( $key, $stats, 3600 /* 1h */ );
-			// Quick hack/fix for stats going negative -- FIXME
-			if ($stats['unreviewed'] < 0)
-				$this->wg->memc->delete( $key );
-		}
+		$this->updateStatsOnAction(
+			$action,
+			count($images),
+			count($sqlWhere[ImageReviewStatuses::STATE_APPROVED]),
+			count($sqlWhere[ImageReviewStatuses::STATE_QUESTIONABLE]),
+			count($sqlWhere[ImageReviewStatuses::STATE_REJECTED]),
+			count($deletionList)
+		);
 
 		$this->createDeleteImagesTask( $deletionList );
 
 		wfProfileOut( __METHOD__ );
+	}
+
+	public function updateStatsOnAction( $action, $reviewed, $approved, $questionable, $rejected, $deleted ) {
+		switch ( $action ) {
+			case '':
+				$this->stats_cache->offsetStats( ImageReviewStatsCache::STATS_REVIEWER, $reviewed );
+				$this->stats_cache->offsetStats( ImageReviewStatsCache::STATS_UNREVIEWED, -$reviewed );
+				$this->stats_cache->offsetStats( ImageReviewStatsCache::STATS_REJECTED, $rejected );
+				$this->stats_cache->offsetStats( ImageReviewStatsCache::STATS_QUESTIONABLE, $questionable );
+				break;
+			case ImageReviewSpecialController::ACTION_QUESTIONABLE:
+				$this->stats_cache->offsetStats( ImageReviewStatsCache::STATS_REVIEWER, $approved + $rejected );
+				$this->stats_cache->offsetStats( ImageReviewStatsCache::STATS_QUESTIONABLE, -($approved + $rejected) );
+				break;
+			case ImageReviewSpecialController::ACTION_REJECTED:
+				$this->stats_cache->offsetStats( ImageReviewStatsCache::STATS_UNREVIEWED, -$reviewed );
+				$this->stats_cache->offsetStats( ImageReviewStatsCache::STATS_REJECTED, -($approved + $deleted) );
+				break;
+		}
 	}
 
 	/**
@@ -374,50 +382,57 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 		] );
 	}
 
+
+
 	public function getImageCount( $sAction = false, $iImageListCount = false ) {
 		wfProfileIn( __METHOD__ );
 
-		$key = wfMemcKey( 'ImageReviewSpecialController', 'v2', __METHOD__ );
-		$total = $this->wg->memc->get( $key, null );
+		$total = $this->stats_cache->getStats();
 
 		/**
 		 * Don't use cached results if:
 		 * 1. In Unreviewed queue
 		 * 2. SQL select returns 0 images
-		 * 3. Cached count of unreviewed > 0
+		 * 3. Cached count of unreviewed >= 0
 		 */
-		if ( !empty( $total )
-			&& ( $sAction != 'unreviewed'
-			|| $iImageListCount != 0
-			|| $total['unreviewed'] == 0 )
+		if ( !empty( $total ) &&
+		    (
+				$sAction != ImageReviewSpecialController::ACTION_UNREVIEWED ||
+				$iImageListCount != 0
+			) &&
+			$total[ImageReviewStatsCache::STATS_UNREVIEWED] >= 0
 		) {
 			wfProfileOut( __METHOD__ );
 			return $total;
 		}
 
-		$oDatabaseHelper = $this->getDatabaseHelper();
-		$aCounts = $oDatabaseHelper->countImagesByState();
+		static $initial_stats = [
+			ImageReviewStatsCache::STATS_INVALID      => 0,
+			ImageReviewStatsCache::STATS_UNREVIEWED   => 0,
+			ImageReviewStatsCache::STATS_QUESTIONABLE => 0,
+			ImageReviewStatsCache::STATS_REJECTED     => 0,
+			ImageReviewStatsCache::STATS_REVIEWER     => 0,
+		];
 
-		$total = array(
-			'unreviewed' => 0,
-			'questionable' => 0,
-			'rejected' => 0,
-			'invalid' => 0,
-		);
+		$total = array_merge( $initial_stats, $total );
 
-		if ( array_key_exists( ImageReviewStatuses::STATE_UNREVIEWED, $aCounts ) ) {
-			$total['unreviewed'] = $this->wg->Lang->formatNum( $aCounts[ ImageReviewStatuses::STATE_UNREVIEWED ] );
+		$db_helper = $this->getDatabaseHelper();
+		$counters = $db_helper->countImagesByState();
+
+		if ( array_key_exists( ImageReviewStatuses::STATE_UNREVIEWED, $counters ) ) {
+			$total[ImageReviewStatsCache::STATS_UNREVIEWED] = $counters[ ImageReviewStatuses::STATE_UNREVIEWED ];
 		}
-		if ( array_key_exists( ImageReviewStatuses::STATE_QUESTIONABLE, $aCounts ) ) {
-			$total['questionable'] = $this->wg->Lang->formatNum( $aCounts[ ImageReviewStatuses::STATE_QUESTIONABLE ] );
+		if ( array_key_exists( ImageReviewStatuses::STATE_QUESTIONABLE, $counters ) ) {
+			$total[ImageReviewStatsCache::STATS_QUESTIONABLE] = $counters[ ImageReviewStatuses::STATE_QUESTIONABLE ];
 		}
-		if ( array_key_exists( ImageReviewStatuses::STATE_REJECTED, $aCounts ) ) {
-			$total['rejected'] = $this->wg->Lang->formatNum( $aCounts[ ImageReviewStatuses::STATE_REJECTED ] );
+		if ( array_key_exists( ImageReviewStatuses::STATE_REJECTED, $counters ) ) {
+			$total[ImageReviewStatsCache::STATS_REJECTED] = $counters[ ImageReviewStatuses::STATE_REJECTED ];
 		}
-		if ( array_key_exists( ImageReviewStatuses::STATE_INVALID_IMAGE, $aCounts ) ) {
-			$total['invalid'] = $this->wg->Lang->formatNum( $aCounts[ ImageReviewStatuses::STATE_INVALID_IMAGE ] );
+		if ( array_key_exists( ImageReviewStatuses::STATE_INVALID_IMAGE, $counters ) ) {
+			$total[ImageReviewStatsCache::STATS_INVALID] = $counters[ ImageReviewStatuses::STATE_INVALID_IMAGE ];
 		}
-		$this->wg->memc->set( $key, $total, 3600 /* 1h */ );
+
+		$this->stats_cache->setStats( $total );
 
 		wfProfileOut( __METHOD__ );
 		return $total;
@@ -551,7 +566,7 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 		wfProfileIn( __METHOD__ );
 
 		$key = wfMemcKey( 'ImageReviewSpecialController', 'v2', __METHOD__);
-		$states = $this->wg->memc->get($key, null);
+		$states = $this->wg->memc->get($key);
 		if ( empty($states) ) {
 			$states = array();
 			$db = $this->getDatawareDB( DB_SLAVE );
@@ -579,7 +594,7 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 		wfProfileIn( __METHOD__ );
 
 		$key = wfMemcKey( 'ImageReviewSpecialController', 'v2', __METHOD__);
-		$reviewers = $this->wg->memc->get($key, null);
+		$reviewers = $this->wg->memc->get($key);
 		if ( empty($reviewers) ) {
 			$reviewers = array();
 			$db = $this->getDatawareDB( DB_SLAVE );
