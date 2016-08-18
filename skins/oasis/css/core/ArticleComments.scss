@@ -130,8 +130,16 @@
 		float: right;
 	}
 
-	.edited-by .wikia-button {
-		margin-right: 5px;
+	.edited-by {
+		.wikia-button {
+			margin-right: 5px;
+		}
+
+		.stafflogo {
+			height: 13px;
+			width: 44px;
+			margin-bottom: -3px;
+		}
 	}
 
 	.article-comm-history {

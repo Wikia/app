@@ -2,7 +2,7 @@
 	<li id="article-comments-counter-recent"><?= wfMessage( 'oasis-comments-showing-most-recent' )->numParams( count( $commentListRaw ) )->escaped() ?></li>
 </ul>
 <h1 id="article-comments-counter-header"><?= wfMessage( 'oasis-comments-header' )->numParams( $countCommentsNested )->parse() ?></h1>
-<div id="article-comments" class="article-comments">
+<div id="article-comments" class="article-comments" data-page-count="<?= intval( $countComments / $wg->ArticleCommentsMaxPerPage ) + 1; ?>">
 	<? if ( !$isBlocked && $commentingAllowed ): ?>
 		<? if ( $isMiniEditorEnabled ): ?>
 			<?= $app->renderView( 'MiniEditorController', 'Setup' ) ?>

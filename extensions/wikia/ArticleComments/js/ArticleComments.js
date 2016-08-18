@@ -1,6 +1,6 @@
 require(
-	['jquery', 'mw', 'wikia.loader', 'wikia.nirvana', 'wikia.window'],
-	function($, mw, loader, nirvana, window) {
+	['jquery', 'mw', 'wikia.loader', 'wikia.mustache', 'wikia.nirvana', 'wikia.window'],
+	function($, mw, loader, mustache, nirvana, window) {
 	'use strict';
 
 	var $window = $(window),
@@ -16,6 +16,9 @@ require(
 		initCompleted: false,
 		wrapperSelector: '#WikiaArticleComments',
 		bucky: window.Bucky('ArticleComments'),
+		$pagination: null,
+		$rootElement: null,
+		mustache: {},
 
 		init: function () {
 			ArticleComments.bucky.timer.start('init');
@@ -475,24 +478,28 @@ require(
 			e.preventDefault();
 
 			ArticleComments.$commentsList.addClass('loading');
+			ArticleComments.updatePagination(page);
 
-			$.getJSON(mw.config.get('wgScript') + '?action=ajax&rs=ArticleCommentsAjax&method=axGetComments', {
-				article: mw.config.get('wgArticleId'),
-				order: $('#article-comm-order').attr('value'),
-				page: page,
-				useskin: mw.config.get('skin'),
-				uselang: mw.config.get('wgUserLanguage')
-			}, function (json) {
+			nirvana.sendRequest({
+				controller: 'ArticleComments',
+				method: 'Pagination',
+				type: 'GET',
+				data: {
+					articleId: mw.config.get('wgArticleId'),
+					page: page,
+					uselang: mw.config.get('wgUserLanguage')
+				}
+			}).then(function (json) {
 				ArticleComments.$commentsList.removeClass('loading');
 
-				if (!json.error) {
-					ArticleComments.$commentsList.html(json.text);
-					var $articleCommentsPagination = $('.article-comments-pagination');
-					if ($articleCommentsPagination.exists()) {
-						$articleCommentsPagination.html(json.pagination);
-					}
-
-					ArticleComments.addHover();
+				if (json.comments && json.comments.length) {
+					ArticleComments.$commentsList.html(
+						mustache.render(
+							ArticleComments.mustache.commentsList,
+							json,
+							{ comm: ArticleComments.mustache.comment }
+						)
+					);
 				}
 
 				ArticleComments.processing = false;
@@ -516,6 +523,77 @@ require(
 				}, function () {
 					$(this).removeClass('accent');
 				});
+		},
+
+		updatePagination: function (page) {
+			var $wrapper = ArticleComments.$pagination || $('.article-comments-pagination'),
+				baseURL = mw.config.get('wgArticlePath').replace('$1', mw.config.get('wgTitle')),
+				pageCount = (ArticleComments.$rootElement || $('#article-comments')).attr('data-page-count'),
+				paginationStart, paginationEnd;
+			$wrapper.html('');
+
+			if (page > 1) {
+				$('<a>').attr({
+					href: baseURL + '?page=' + (page - 1) + '#article-comments',
+					id: 'article-comments-pagination-link-prev',
+					class: 'article-comments-pagination-link dark_text_1',
+					page: (page - 1)
+				}).text(mw.message('article-comments-prev-page').text()).appendTo($wrapper);
+			}
+
+			$('<a>').attr({
+				href: baseURL + '?page=1#article-comments',
+				id: 'article-comments-pagination-link-1',
+				class: 'article-comments-pagination-link dark_text_1',
+				page: 1
+			}).text(1).appendTo($wrapper);
+
+			if (page <= 4) {
+				paginationStart = 2;
+				paginationEnd = 6;
+			} else if (page >= pageCount - 4) {
+				paginationStart = pageCount - 6;
+				paginationEnd = pageCount - 1;
+			} else {
+				paginationStart = page - 2;
+				paginationEnd = page + 2;
+			}
+
+			if (paginationStart > 2) {
+				$wrapper.append(mw.message('article-comments-page-spacer').parse());
+			}
+
+			for (var i = paginationStart; i <= paginationEnd; i++) {
+				$('<a>').attr({
+					href: baseURL + '?page=' + i + '#article-comments',
+					id: 'article-comments-pagination-link-' + i,
+					class: 'article-comments-pagination-link dark_text_1',
+					page: i
+				}).text(i).appendTo($wrapper);
+			}
+
+			if (paginationStart < pageCount - 1) {
+				$wrapper.append(mw.message('article-comments-page-spacer').parse());
+			}
+
+			$('<a>').attr({
+				href: baseURL + '?page=1#article-comments',
+				id: 'article-comments-pagination-link-' + pageCount,
+				class: 'article-comments-pagination-link dark_text_1',
+				page: pageCount
+			}).text(pageCount).appendTo($wrapper);
+
+			if (page < pageCount) {
+				$('<a>').attr({
+					href: baseURL + '?page=' + (page + 1) + '#article-comments',
+					id: 'article-comments-pagination-link-next',
+					class: 'article-comments-pagination-link dark_text_1',
+					page: (page + 1)
+				}).text(mw.message('article-comments-next-page').text()).appendTo($wrapper);
+			}
+
+			$('#article-comments-pagination-link-' + page).addClass('article-comments-pagination-link-active');
+			ArticleComments.addHover();
 		},
 
 		// Used to initialize MiniEditor
@@ -694,10 +772,19 @@ require(
 						}
 					}),
 					loader({
-						type: loader.SCSS,
-						resources: styleAssets
+						type: loader.MULTI,
+						resources: {
+							styles: styleAssets.join(','),
+							mustache: [
+								'/extensions/wikia/ArticleComments/modules/templates/ArticleComments_CommentList.mustache',
+								'/extensions/wikia/ArticleComments/modules/templates/ArticleComments_Comment.mustache'
+							].join(',')
+						}
 					})
-				).then(function (template) {
+				).then(function (template, resources) {
+					loader.processStyle(resources.styles);
+					ArticleComments.mustache.commentsList = resources.mustache[0];
+					ArticleComments.mustache.comment = resources.mustache[1];
 					ArticleComments.$wrapper.removeClass('loading').html(template[0]);
 
 					ArticleComments.init();

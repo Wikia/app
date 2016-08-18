@@ -99,6 +99,89 @@ class ArticleCommentsController extends WikiaController {
 	}
 
 	/**
+	 * Used by pagination to fetch the content of the next page
+	 */
+	public function pagination() {
+		$page = $this->request->getInt( 'page', 1 );
+		$articleId = $this->request->getInt( 'articleId', null );
+		$title = Title::newFromID( $articleId );
+
+		// Return valid JSON and don't cache the response if the request was invalid
+		if ( !( $title instanceof Title ) ) {
+			$this->response->setFormat( WikiaResponse::FORMAT_JSON );
+			$this->response->setData( [ 'comments' => [] ] );
+			return;
+		}
+
+		$this->wg->Title = $title;
+
+		$data = ArticleCommentList::newFromTitle( $title )->getCommentPages( true, $page );
+		$comments = [];
+
+		$odd = false;
+		foreach ( $data as $commentId => $commentArr ) {
+			/** @var ArticleComment $comment */
+			$comment = $commentArr['level1'];
+			if ( !( $comment instanceof ArticleComment ) ) {
+				continue;
+			}
+
+			$commentData = $this->formatCommentData( $comment );
+			$commentData['commentId'] = $commentId;
+			$commentData['rowClass'] = $odd ? 'odd' : 'even';
+			$commentData['level'] = 1;
+
+			$replies = [];
+			if ( is_array( $commentArr['level2'] ) ) {
+				$replyOdd = false;
+				foreach ( $commentArr[ 'level2' ] as $replyId => $reply ) {
+					if ( !( $reply instanceof ArticleComment ) ) {
+						continue;
+					}
+
+					$replyData = $this->formatCommentData( $reply );
+					$replyData['commentId'] = $replyId;
+					$replyData['rowClass'] = $replyOdd ? 'odd' : 'even';
+					$replyData['level'] = 2;
+					$replies[] = $replyData;
+					$replyOdd = !$replyOdd;
+				}
+			}
+
+			$comments[] = [
+				'comment' => $commentData,
+				'replies' => [
+					'replies' => $replies
+				]
+			];
+		}
+
+		$this->response->setData( [
+			'comments' => $comments
+		] );
+
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
+		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
+		$this->wg->Out->tagWithSurrogateKeys( static::getSurrogateKey( $articleId ) );
+	}
+
+	private function formatCommentData( ArticleComment $comment ) {
+		$commentData = $comment->getData( true );
+		$commentData['added-by'] = wfMessage( 'oasis-comments-added-by' )
+			->rawParams( $commentData['timestamp'], $commentData['sig'] )
+			->escaped();
+
+		if ( count( $commentData['buttons']) || $commentData['replyButton'] ) {
+			$commentData['buttons'] = [
+				'buttons' => $commentData['buttons'],
+				'replyButton' => $commentData['replyButton']
+			];
+		}
+
+		return $commentData;
+	}
+
+	/**
 	 * Overrides the main template for the WikiaMobile skin
 	 *
 	 * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>

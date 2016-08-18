@@ -99,9 +99,13 @@ if (!empty($wgEnableWallEngine) || !empty($wgEnableArticleCommentsExt) || !empty
 // ResourceLoader module for messages
 $wgResourceModules['ext.ArticleComments'] = [
 	'messages' => [
+		'article-comments-page-spacer',
+		'article-comments-prev-page',
+		'article-comments-next-page',
 		'oasis-comments-header',
 		'oasis-comments-showing-most-recent',
 	],
+	'dependencies' => [ 'mediawiki.jqueryMsg' ]
 ];
 
 JSMessages::registerPackage( 'WikiaMobileComments', [
