@@ -8,7 +8,7 @@ class PortabilityDashboardModel {
 
 	private $connection;
 
-	const WIKIS_LIMIT = 500;
+	const WIKIS_LIMIT = 5;
 
 	public function __construct( $db = null ) {
 		$this->connection = $db;
@@ -23,6 +23,43 @@ class PortabilityDashboardModel {
 		$wikiParamsList = $this->getWikiParamsList( $rowList );
 
 		return $this->extendRowListWithWikiParams( $rowList, $wikiParamsList );
+	}
+
+	public function getWikiByUrl( $wikiUrl ) {
+		$wikiId = WikiFactory::UrlToID( $wikiUrl );
+		$result = [];
+
+		if ( $wikiId ) {
+			$result = $this->getWikiById( $wikiId );
+		}
+
+		return $result;
+	}
+
+	private function getWikiById( $id ) {
+		return ( new WikiaSQL() )
+			->SELECT_ALL()
+			->FROM( self::PORTABILITY_DASHBOARD_TABLE )
+			->WHERE( 'excluded' )->EQUAL_TO( 0 )
+			->AND_( 'wiki_id' )->EQUAL_TO( $id )
+			->ORDER_BY( 'migration_impact' )
+			->DESC()
+			->LIMIT( 1 )
+			->run( $this->readDB(), function ( ResultWrapper $rows ) {
+				$result = [ ];
+				while ( $row = $rows->fetchObject() ) {
+					$result[] = [
+						'wikiId' => $row->wiki_id,
+						'portability' => $this->floatToPercent( $row->portability ),
+						'infoboxPortability' => $this->floatToPercent( $row->infobox_portability ),
+						'traffic' => $row->traffic,
+						'migrationImpact' => $row->migration_impact,
+						'typelessTemplatesCount' => $row->typeless,
+						'customInfoboxesCount' => $row->custom_infoboxes
+					];
+				}
+				return $result;
+			} );
 	}
 
 	/**
