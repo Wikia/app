@@ -11,7 +11,7 @@
   "global-footer-fandom-overview-link-vertical-tv": "電視",
   "global-footer-international-header-subtitle": "粉絲社群家園",
   "global-footer-create-wiki-link-start-wikia": "創建維基",
-  "global-footer-create-wiki-description": "找不到你所喜愛的社區？那就創建你的自己社區展示你的愛好吧！",
+  "global-footer-create-wiki-description": "找不到你所喜愛的社區？那就創建你自己的社區展示你的愛好吧！",
   "global-footer-advertise-header": "廣告投放",
   "global-footer-advertise-link-contact": "聯繫我們",
   "global-footer-advertise-link-media-kit": "媒體包",
@@ -35,11 +35,13 @@
   "global-footer-site-overview-link-terms-of-use": "使用條款",
   "global-footer-site-overview-link-privacy-policy": "隱私政策",
   "global-footer-licensing-and-vertical-description": "$1 是一個由粉絲所建立的 $2 社區。內容允許以 $3 授權使用。",
-  "global-footer-licensing-and-vertical-description-param-vertical-games": "遊戲",
-  "global-footer-licensing-and-vertical-description-param-vertical-movies": "電影",
   "global-footer-licensing-and-vertical-description-param-vertical-tv": "電視",
+  "global-footer-licensing-and-vertical-description-param-vertical-games": "遊戲",
   "global-footer-licensing-and-vertical-description-param-vertical-books": "書籍",
   "global-footer-licensing-and-vertical-description-param-vertical-comics": "漫畫",
   "global-footer-licensing-and-vertical-description-param-vertical-lifestyle": "生活",
-  "global-footer-licensing-and-vertical-description-param-vertical-music": "音樂"
+  "global-footer-licensing-and-vertical-description-param-vertical-music": "音樂",
+  "global-footer-licensing-and-vertical-description-param-vertical-movies": "電影",
+  "global-footer-full-site-link": "查看完整版網頁",
+  "global-footer-mobile-site-link": "查看手機版網頁"
 }

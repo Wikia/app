@@ -1,8 +1,8 @@
 <?php
 
-$messages = array();
+$messages = [];
 
-$messages['en'] = array(
+$messages['en'] = [
 	'wikiagameguides-desc' => 'Wikia Game Guides mobile app modules',
 
 	//Preview page
@@ -48,12 +48,18 @@ $messages['en'] = array(
 	'wikiagameguides-sponsored-orphaned-video' => 'Video has to have a language',
 	'wikiagameguides-sponsored-delete-videos-are-you-sure' => 'Are you sure you want to erase everything?',
 	'wikiagameguides-sponsored-video-does-not-exist' => 'This video does not exist',
-	'wikiagameguides-sponsored-video-is-not-ooyala' => 'This video is not provided by Ooyala'
-);
+	'wikiagameguides-sponsored-video-is-not-ooyala' => 'This video is not provided by Ooyala',
+
+	// rights
+	'right-gameguidescontent' => 'Allows access to Special:GameGuidesContent',
+	'right-gameguidescontent-switchforadmins' => 'Allows access to Special:GameGuidesContent',
+	'right-gameguidespreview' => 'Preview how a wiki mainpage looks in the Game Guides app',
+	'right-gameguidessponsored' => 'Update Sponsored Videos in the Game Guides app',
+];
 
 /** Message documentation (Message documentation)
  */
-$messages['qqq'] = array(
+$messages['qqq'] = [
 	'wikiagameguides-desc' => 'Wikia Game Guides is the name of a product, do not translate on a per-word basis',
 	'wikiagameguides-content-have-been-deprecated-by' => 'Information about GameGuides being deprecated and functionality moved to CuratedContent',
 
@@ -99,35 +105,35 @@ $messages['qqq'] = array(
 	'wikiagameguides-sponsored-orphaned-video' => 'Popup message next to a row of a video that is not assigned to any language',
 	'wikiagameguides-sponsored-delete-videos-are-you-sure' => 'Popup message that asks if user is sure to delete all data',
 	'wikiagameguides-sponsored-video-does-not-exist' => 'Popup message next to an input with a video that do not exist',
-	'wikiagameguides-sponsored-video-is-not-ooyala' => 'Popup message next to an input with a video that is not provided by ooyala video provider'
-);
+	'wikiagameguides-sponsored-video-is-not-ooyala' => 'Popup message next to an input with a video that is not provided by ooyala video provider',
+];
 
 /** Asturian (asturianu)
  * @author Xuacu
  */
-$messages['ast'] = array(
+$messages['ast'] = [
 	'wikiagameguides-desc' => "Guíes de Xuegu Wikia pa módulos d'aplicaciones móviles",
-);
+];
 
 /** Breton (brezhoneg)
  * @author Fulup
  */
-$messages['br'] = array(
+$messages['br'] = [
 	'wikiagameguides-desc' => 'Wikia Game Guides evit modulennoù arloadoù pellgomzerioù hezoug',
-);
+];
 
 /** Catalan (català)
  * @author SMP
  */
-$messages['ca'] = array(
+$messages['ca'] = [
 	'wikiagameguides-desc' => "Mòduls de l'aplicació mòbil de Wikia Game Guides",
-);
+];
 
 /** Czech (česky)
  * @author Chmee2
  * @author Dontlietome7
  */
-$messages['cs'] = array(
+$messages['cs'] = [
 	'wikiagameguides-desc' => 'Moduly mobilní aplikace Wikia Herní manuály',
 	'wikiagameguides-content-category' => 'Kategorie',
 	'wikiagameguides-content-tag' => 'Tag', # Fuzzy
@@ -135,13 +141,13 @@ $messages['cs'] = array(
 	'wikiagameguides-content-save' => 'Uložit',
 	'wikiagameguides-content-category-error' => 'Kategorie neexistuje.', # Fuzzy
 	'wikiagameguides-content-duplicate-entry' => 'Tato hodnota je duplicitní',
-);
+];
 
 /** German (Deutsch)
  * @author LWChris
  * @author Metalhead64
  */
-$messages['de'] = array(
+$messages['de'] = [
 	'wikiagameguides-desc' => 'Wikia Game Guides Mobile App Module',
 	'wikiagameguides-preview-description' => 'Dies ist nur eine Vorschau, wie Seiten in einer Wikia-Game-Guides-Anwendung aussehen würden.',
 	'wikiagameguides-content-title' => 'Inhaltsverwaltungswerkzeug für Wikia Game Guides',
@@ -151,13 +157,13 @@ $messages['de'] = array(
 	'wikiagameguides-content-save' => 'Speichern',
 	'wikiagameguides-content-category-error' => 'Kategorie ist nicht vorhanden', # Fuzzy
 	'wikiagameguides-content-duplicate-entry' => 'Dieser Wert ist doppelt',
-);
+];
 
 /** Spanish (español)
  * @author Armando-Martin
  * @author VegaDark
  */
-$messages['es'] = array(
+$messages['es'] = [
 	'wikiagameguides-desc' => 'Guías de Juego de Wikia para módulos de aplicaciones móviles',
 	'wikiagameguides-preview-description' => 'Esto es solo una vista previa de cómo se verían las páginas en un aplicación de Wikia Game Guides.',
 	'wikiagameguides-content-title' => 'Herramienta de administración de contenido de Wikia Game Guides',
@@ -167,31 +173,31 @@ $messages['es'] = array(
 	'wikiagameguides-content-save' => 'Guardar',
 	'wikiagameguides-content-category-error' => 'No existe la categoría', # Fuzzy
 	'wikiagameguides-content-duplicate-entry' => 'Este valor está duplicado',
-);
+];
 
 /** Basque (euskara)
  * @author An13sa
  */
-$messages['eu'] = array(
+$messages['eu'] = [
 	'wikiagameguides-desc' => 'Wikia Game Guides mugikorrerako app modukuak',
-);
+];
 
 /** Finnish (suomi)
  * @author Ilkea
  * @author Nedergard
  */
-$messages['fi'] = array(
+$messages['fi'] = [
 	'wikiagameguides-desc' => 'Wikia Game Guides mobiilisovellus moduulit',
 	'wikiagameguides-content-category' => 'Luokka',
 	'wikiagameguides-content-save' => 'Tallenna',
 	'wikiagameguides-content-category-error' => 'Luokkaa ei ole', # Fuzzy
-);
+];
 
 /** French (français)
  * @author Gomoko
  * @author Wyz
  */
-$messages['fr'] = array(
+$messages['fr'] = [
 	'wikiagameguides-desc' => 'Modules de l’application mobile Wikia Game Guides',
 	'wikiagameguides-preview-description' => 'Ceci est un simple aperçu de ce à quoi ressembleront les pages dans une application de guide de jeu de Wikia.',
 	'wikiagameguides-content-title' => 'Outil de gestion du contenu des guides de jeu de Wikia',
@@ -201,12 +207,12 @@ $messages['fr'] = array(
 	'wikiagameguides-content-save' => 'Enregistrer',
 	'wikiagameguides-content-category-error' => "La catégorie n'existe pas", # Fuzzy
 	'wikiagameguides-content-duplicate-entry' => 'Cette valeur est dupliquée',
-);
+];
 
 /** Galician (galego)
  * @author Toliño
  */
-$messages['gl'] = array(
+$messages['gl'] = [
 	'wikiagameguides-desc' => 'Módulos de aplicacións móbiles Wikia Game Guides',
 	'wikiagameguides-preview-description' => 'Esta é só unha vista previa de como se verían as páxinas nunha aplicación de Wikia Game Guides.',
 	'wikiagameguides-content-title' => 'Ferramenta de administración de contido de Wikia Game Guides',
@@ -216,49 +222,49 @@ $messages['gl'] = array(
 	'wikiagameguides-content-save' => 'Gardar',
 	'wikiagameguides-content-category-error' => 'A categoría non existe', # Fuzzy
 	'wikiagameguides-content-duplicate-entry' => 'O valor está duplicado',
-);
+];
 
 /** Hungarian (magyar)
  * @author Dj
  */
-$messages['hu'] = array(
+$messages['hu'] = [
 	'wikiagameguides-desc' => 'Wikia játék útmutató mobil alkalmazás modulok',
-);
+];
 
 /** Interlingua (interlingua)
  * @author McDutchie
  */
-$messages['ia'] = array(
+$messages['ia'] = [
 	'wikiagameguides-desc' => 'Modulos de application mobile pro Wikia Game Guides',
-);
+];
 
 /** Italian (italiano)
  * @author Federico "Lox" Lucignano <federico@wikia-inc.com>
  */
-$messages['it'] = array(
+$messages['it'] = [
 	'wikiagameguides-desc' => "Moduli per l'applicazione mobile Wikia Game Guides",
-);
+];
 
 /** Colognian (Ripoarisch)
  * @author Purodha
  */
-$messages['ksh'] = array(
+$messages['ksh'] = [
 	'wikiagameguides-desc' => 'Module för de Wikia Spellaanleidonge (<i lang="en">Wikia Game Guides</i>) ier mobile Aanwändong.',
-);
+];
 
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
-$messages['lb'] = array(
+$messages['lb'] = [
 	'wikiagameguides-content-category' => 'Kategorie',
 	'wikiagameguides-content-save' => 'Späicheren',
 	'wikiagameguides-content-category-error' => 'Kategorie gëtt et net', # Fuzzy
-);
+];
 
 /** Macedonian (македонски)
  * @author Bjankuloski06
  */
-$messages['mk'] = array(
+$messages['mk'] = [
 	'wikiagameguides-desc' => 'Водичи низ игри на Викија за модули на мобилни апликации',
 	'wikiagameguides-preview-description' => 'Ова е само преглед на тоа како би изгледале страниците во прилоготот „Водич за игри“ на Викија',
 	'wikiagameguides-content-title' => 'Алатка за раководење со содржините - Водич за игри на Викија',
@@ -268,12 +274,12 @@ $messages['mk'] = array(
 	'wikiagameguides-content-save' => 'Зачувај',
 	'wikiagameguides-content-category-error' => 'Категоријата не постои', # Fuzzy
 	'wikiagameguides-content-duplicate-entry' => 'Оваа вредност е дуплирана',
-);
+];
 
 /** Malay (Bahasa Melayu)
  * @author Anakmalaysia
  */
-$messages['ms'] = array(
+$messages['ms'] = [
 	'wikiagameguides-desc' => 'Modul aplikasi mudah alih Panduan Permainan Wikia',
 	'wikiagameguides-preview-description' => 'Ini hanya pralihat untuk rupa halaman dalam aplikasi Wikia Game Guides.',
 	'wikiagameguides-content-title' => 'Alat pengurusan kandungan Wikia Game Guides',
@@ -283,12 +289,12 @@ $messages['ms'] = array(
 	'wikiagameguides-content-save' => 'Simpan',
 	'wikiagameguides-content-category-error' => 'Kategori tidak wujud', # Fuzzy
 	'wikiagameguides-content-duplicate-entry' => 'Nilai ini diduakan',
-);
+];
 
 /** Norwegian Bokmål (norsk bokmål)
  * @author Audun
  */
-$messages['nb'] = array(
+$messages['nb'] = [
 	'wikiagameguides-desc' => 'Moduler for Wikias spillguide-app',
 	'wikiagameguides-preview-description' => 'Dette er bare en forhåndsvisning av hvordan sider ville sett ut i en Wikia Spillguider-applikasjon.',
 	'wikiagameguides-content-title' => 'Verktøy for innholdshåndtering av Wikia Spillguider',
@@ -298,13 +304,13 @@ $messages['nb'] = array(
 	'wikiagameguides-content-save' => 'Lagre',
 	'wikiagameguides-content-category-error' => 'Kategorien eksisterer ikke', # Fuzzy
 	'wikiagameguides-content-duplicate-entry' => 'Denne verdien er duplisert',
-);
+];
 
 /** Dutch (Nederlands)
  * @author Siebrand
  * @author Wiki13
  */
-$messages['nl'] = array(
+$messages['nl'] = [
 	'wikiagameguides-desc' => 'Applicatiemodules voor mobiel voor Wikia Game Guides',
 	'wikiagameguides-preview-description' => 'Dit is alleen maar een voorvertoning van hoe een pagina eruit ziet in de Wikia Game Guides.',
 	'wikiagameguides-content-title' => 'Contentbeheerprogramma voor Wikia Game Guides',
@@ -318,12 +324,12 @@ $messages['nl'] = array(
 	'wikiagameguides-content-required-entry' => 'Een categorie is verplicht.',
 	'wikiagameguides-content-duplicate-entry' => 'Deze waarde komt meerdere keren voor',
 	'wikiagameguides-content-empty-tag' => 'Dit label heeft categorieën nodig',
-);
+];
 
 /** Polish (polski)
  * @author Sovq
  */
-$messages['pl'] = array(
+$messages['pl'] = [
 	'wikiagameguides-desc' => 'Aplikacje Wikia Game Guides dla urządzeń mobilnych',
 	'wikiagameguides-preview-description' => 'To jedynie podgląd tego jak strona wyglądałaby w aplikacji Wikia Game Guides.',
 	'wikiagameguides-content-title' => 'Narzędzie zarządzania zawartością Wikia Game Guides',
@@ -333,13 +339,13 @@ $messages['pl'] = array(
 	'wikiagameguides-content-save' => 'Zapisz',
 	'wikiagameguides-content-category-error' => 'Kategoria nie istnieje', # Fuzzy
 	'wikiagameguides-content-duplicate-entry' => 'Ta wartość jest zduplikowana',
-);
+];
 
 /** Piedmontese (Piemontèis)
  * @author Borichèt
  * @author Dragonòt
  */
-$messages['pms'] = array(
+$messages['pms'] = [
 	'wikiagameguides-desc' => "Mòdoj ëd l'aplicassion mòbil Wikia Games Guides",
 	'wikiagameguides-preview-description' => "Costa a l'é mach na preuva ëd com le pagine a dovrìo smijé ant n'aplicassion Wikia Game Guides.",
 	'wikiagameguides-content-title' => 'Utis ëd gestion dël contnù ëd Wikia Game Guides.',
@@ -349,42 +355,42 @@ $messages['pms'] = array(
 	'wikiagameguides-content-save' => 'Salva',
 	'wikiagameguides-content-category-error' => 'La categorìa a esist pa', # Fuzzy
 	'wikiagameguides-content-duplicate-entry' => "Sto valor a l'é duplicà",
-);
+];
 
 /** Pashto (پښتو)
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
-$messages['ps'] = array(
+$messages['ps'] = [
 	'wikiagameguides-content-category' => 'وېشنيزه',
 	'wikiagameguides-content-save' => 'خوندي کول',
-);
+];
 
 /** Portuguese (português)
  * @author Hamilton Abreu
  */
-$messages['pt'] = array(
+$messages['pt'] = [
 	'wikiagameguides-desc' => 'Módulos de aplicações móveis dos Guias de Jogos da Wikia',
-);
+];
 
 /** Brazilian Portuguese (português do Brasil)
  * @author Aristóbulo
  */
-$messages['pt-br'] = array(
+$messages['pt-br'] = [
 	'wikiagameguides-desc' => 'Módulos de aplicações móveis dos Guias de Jogos da Wikia',
-);
+];
 
 /** tarandíne (tarandíne)
  * @author Joetaras
  */
-$messages['roa-tara'] = array(
+$messages['roa-tara'] = [
 	'wikiagameguides-desc' => "Module de l'applicazione mobile Wikia Game Guides",
-);
+];
 
 /** Russian (русский)
  * @author DCamer
  * @author Kuzura
  */
-$messages['ru'] = array(
+$messages['ru'] = [
 	'wikiagameguides-desc' => 'Модули мобильного приложения Wikia Game Guides',
 	'wikiagameguides-preview-description' => 'Это только предварительный просмотр страницы. Так она будет выглядеть в приложении Wikia Game Guides.',
 	'wikiagameguides-content-title' => 'Инструмент управления содержимым Wikia Game Guides',
@@ -394,26 +400,26 @@ $messages['ru'] = array(
 	'wikiagameguides-content-save' => 'Сохранить',
 	'wikiagameguides-content-category-error' => 'Категория не существует', # Fuzzy
 	'wikiagameguides-content-duplicate-entry' => 'Это значение является дубликатом',
-);
+];
 
 /** Sinhala (සිංහල)
  * @author පසිඳු කාවින්ද
  */
-$messages['si'] = array(
+$messages['si'] = [
 	'wikiagameguides-content-add' => 'එක් කරන්න',
-);
+];
 
 /** Slovenian (slovenščina)
  * @author Yerpo
  */
-$messages['sl'] = array(
+$messages['sl'] = [
 	'wikiagameguides-desc' => 'Moduli za mobilno aplikacijo Wikia Game Guides',
-);
+];
 
 /** Swedish (svenska)
  * @author WikiPhoenix
  */
-$messages['sv'] = array(
+$messages['sv'] = [
 	'wikiagameguides-desc' => 'Moduler för appen Wikia Spelguider',
 	'wikiagameguides-preview-description' => 'Detta är bara en förhandsgranskning av hur sidor skulle se ut i appen Wikia Spelguider.',
 	'wikiagameguides-content-title' => 'Verktyg för innehållshantering i Wikia Spelguider',
@@ -423,36 +429,36 @@ $messages['sv'] = array(
 	'wikiagameguides-content-save' => 'Spara',
 	'wikiagameguides-content-category-error' => 'Kategorin finns inte', # Fuzzy
 	'wikiagameguides-content-duplicate-entry' => 'Detta värde är dubblerad',
-);
+];
 
 /** Tagalog (Tagalog)
  * @author AnakngAraw
  */
-$messages['tl'] = array(
+$messages['tl'] = [
 	'wikiagameguides-desc' => 'Mga modyul ng aplikasyong naililipat-lipat ng Mga Gabay sa Laro ng Wikia',
-);
+];
 
 /** Tatar (Cyrillic script) (татарча)
  * @author Ajdar
  */
-$messages['tt-cyrl'] = array(
+$messages['tt-cyrl'] = [
 	'wikiagameguides-desc' => 'Wikia Game Guides мобиль кушымтасы өчен модульләр',
-);
+];
 
 /** Ukrainian (українська)
  * @author Steve.rusyn
  */
-$messages['uk'] = array(
+$messages['uk'] = [
 	'wikiagameguides-content-category' => 'Категорія',
 	'wikiagameguides-content-save' => 'Зберегти',
 	'wikiagameguides-content-category-error' => 'Категорія не існує', # Fuzzy
-);
+];
 
 /** Simplified Chinese (中文（简体）‎)
  * @author Dimension
  * @author Sam Wang
  */
-$messages['zh-hans'] = array(
+$messages['zh-hans'] = [
 	'wikiagameguides-content-save' => '保存',
 	'wikiagameguides-content-category-error' => '不存在该分类', # Fuzzy
-);
+];

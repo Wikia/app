@@ -5,9 +5,9 @@
  * @addtogroup Languages
  */
 
-$messages = array();
+$messages = [];
 
-$messages['en'] = array(
+$messages['en'] = [
 	'edithub-desc' => 'Internal tool to configure Hub page',
 	'edithub' => 'Edit Hub',
 	'action-edithub' => 'Edit Hub',
@@ -41,11 +41,12 @@ $messages['en'] = array(
 	'edit-hub-module-publish-error-modules-not-saved' => 'There are unsaved modules. Please check their content, save them and try publish hub page again.',
 	'edit-hub-module-publish-error-db-error' => 'A database error occured. The hub pages has not been published.',
 	'edit-hub-module-publish-success' => 'Hub page published for $1',
-);
+	'right-edithub' => 'Can configure hub pages',
+];
 
-$messages['qqq'] = array(
+$messages['qqq'] = [
 	'edithub-desc' => '{{desc}}',
 	'action-edithub' => 'Edit Hub Special Page Name',
 	'edit-hub-title' => 'Edit Hub Special Page title',
 	'edit-hub-hub-module-explore-link-url' => 'The parameter here is alphanumeric: for sections it reads "Header 1." for links in section "Header a." in example',
-);
+];
