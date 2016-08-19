@@ -25,9 +25,10 @@
 	$mobile-row-header-international-padding-bottom: 35px;
 
 	$section-line-width: 4px;
-	$desktop-row-top-height: 205px + $section-line-width;
+	$desktop-row-top-height: 206px + $section-line-width;
 
 	// others
+	$footer-line-height: 1.3em;
 	$desktop-width: 1024px;
 	$section-vertical-padding: 8px;
 	$section-header-height: 24px;
@@ -67,7 +68,7 @@
 	&__bottom-bar {
 		background: rgba($color-night-sky, .5);
 		font-size: $typescale-size-minus-2;
-		line-height: $line-height;
+		line-height: $footer-line-height;
 		min-height: 50px;
 		padding: 0 20px;
 		text-align: center;
@@ -104,7 +105,7 @@
 		display: inline-block;
 		font-weight: bold;
 		letter-spacing: .3px;
-		line-height: normal;
+		line-height: $footer-line-height;
 		min-height: 45px;
 		padding: 14px 18px;
 		text-decoration: none;
@@ -185,13 +186,17 @@
 			color: $color-blue-gray;
 			font-size: $typescale-size-minus-1;
 			font-weight: normal;
-			line-height: 2em;
+			line-height: $footer-line-height;
 			text-decoration: none;
 		}
 
 		&:hover {
 			color: $color-white;
 		}
+	}
+
+	&__links-list-item {
+		margin-bottom: 8px;
 	}
 
 	&__fandom-section {
@@ -209,7 +214,7 @@
 				}
 				justify-content: space-between;
 				margin: 0;
-				padding: 2px 0 28px;
+				padding: 6px 0 28px;
 				text-decoration: none;
 
 				&.wds-is-games {
@@ -267,8 +272,8 @@
 					size: $typescale-size-minus-2;
 					weight: bold;
 				}
-				letter-spacing: 0.3px;
-				line-height: normal;
+				letter-spacing: .3px;
+				line-height: $footer-line-height;
 				margin-top: 13px;
 				padding: 14px 18px;
 				text-decoration: none;
@@ -287,7 +292,7 @@
 
 			.wds-global-footer__link {
 				display: block;
-				line-height: normal;
+				line-height: $footer-line-height;
 				margin-top: 6px;
 				width: 119px;
 			}
@@ -316,7 +321,7 @@
 	&__section-description {
 		color: $color-white;
 		font-size: $typescale-size-minus-1;
-		line-height: $line-height;
+		line-height: $footer-line-height;
 		margin: 0;
 		padding: 0;
 	}
@@ -409,7 +414,7 @@
 		}
 
 		&__links-list-item {
-			margin-bottom: 10px;
+			margin-bottom: 20px;
 		}
 	}
 

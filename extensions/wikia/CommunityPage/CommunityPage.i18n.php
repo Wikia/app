@@ -1,7 +1,7 @@
 <?php
-$messages = array();
+$messages = [];
 
-$messages['en'] = array(
+$messages['en'] = [
 	'communitypage-title' => 'Community',
 	'communitypage-header-welcome' => 'Welcome to the {{SITENAME}} community!',
 	'communitypage-header-join-button' => 'Join Now',
@@ -99,10 +99,10 @@ $messages['en'] = array(
 	'communitypage-todo-module-heading' => 'Community to-do list',
 	'communitypage-todo-module-edit-list' => 'Edit list',
 	'communitypage-todo-module-description' => 'This is an area for admins to suggest pages that need work to help new contributors get started. (Admins - remember to provide details on what needs to be done.)',
-	'communitypage-todo-module-zero-state' => 'Want to know how you can contribute to this community? Contact an admin and ask them to provide suggestions here.',
-);
+	'communitypage-todo-module-zero-state' => 'Want to know how you can contribute to this community? Contact an admin and ask them to provide suggestions here.'
+];
 
-$messages['qqq'] = array(
+$messages['qqq'] = [
 	'communitypage-title' => 'Title of the Community special page.',
 	'communitypage-header-welcome' => 'Welcome text in the header.',
 	'communitypage-header-join-button' => 'Signup button text.',
@@ -201,9 +201,9 @@ $messages['qqq'] = array(
 	'communitypage-todo-module-edit-list' => 'Edit list link to show to the right of community to-do list header',
 	'communitypage-todo-module-description' => 'Description of what the purpose of the community to-do list is',
 	'communitypage-todo-module-zero-state' => 'Zero text to show when there is no community to-do page',
-);
+];
 
-$messages['de'] = array(
+$messages['de'] = [
 	'communitypage-title' => 'Community',
 	'communitypage-header-welcome' => 'Willkommen in der {{SITENAME}}-Community!',
 	'communitypage-header-join-button' => 'Jetzt anmelden',
@@ -304,9 +304,9 @@ $messages['de'] = array(
 	'communitypage-first-edit-subheading' => 'Besuche die Community-Seite, um andere Benutzer zu treffen und herauszufinden, wie du der Community helfen kannst',
 	'communitypage-first-edit-get-started' => 'Weiter',
 	'communitypage-first-edit-maybe-later' => 'Vielleicht später',
-);
+];
 
-$messages['es'] = array(
+$messages['es'] = [
 	'communitypage-title' => 'Comunidad',
 	'communitypage-header-welcome' => '¡Bienvenido a la comunidad de {{SITENAME}}!',
 	'communitypage-header-join-button' => 'Participar ahora',
@@ -407,9 +407,9 @@ $messages['es'] = array(
 	'communitypage-first-edit-subheading' => 'Conoce a otras personas y encuentra más formas de ayudar visitando la Página Comunitaria',
 	'communitypage-first-edit-get-started' => 'Continuar',
 	'communitypage-first-edit-maybe-later' => 'Tal vez más tarde',
-);
+];
 
-$messages['fr'] = array(
+$messages['fr'] = [
 	'communitypage-title' => 'Communauté',
 	'communitypage-header-welcome' => 'Bienvenue dans la communauté {{SITENAME}} !',
 	'communitypage-header-join-button' => 'Rejoindre',
@@ -510,9 +510,9 @@ $messages['fr'] = array(
 	'communitypage-first-edit-subheading' => "Rencontrez des contributeurs et découvrez encore d'autres façons d'aider en visitant la page Communauté.",
 	'communitypage-first-edit-get-started' => 'Continuer',
 	'communitypage-first-edit-maybe-later' => 'Une prochaine fois',
-);
+];
 
-$messages['it'] = array(
+$messages['it'] = [
 	'communitypage-title' => 'Community',
 	'communitypage-header-welcome' => 'Benvenuto nella comunità di {{SITENAME}}!',
 	'communitypage-header-join-button' => 'Iscriviti ora',
@@ -613,9 +613,9 @@ $messages['it'] = array(
 	'communitypage-first-edit-subheading' => 'Connettiti con altri utenti e scopri nuovi modi per aiutare visitando la pagina della Community',
 	'communitypage-first-edit-get-started' => 'Continua',
 	'communitypage-first-edit-maybe-later' => 'Forse più tardi',
-);
+];
 
-$messages['ja'] = array(
+$messages['ja'] = [
 	'communitypage-title' => 'コミュニティ',
 	'communitypage-header-join-button' => 'いますぐ参加',
 	'communitypage-admin-group-name' => 'アドミン(管理者)',
@@ -716,9 +716,9 @@ $messages['ja'] = array(
 	'communitypage-first-edit-subheading' => 'コミュニティページにアクセスしよう！他のファンとの出会いや、コミュニティへの参加方法についての詳しい情報が見つかります。',
 	'communitypage-first-edit-get-started' => '編集スタート！',
 	'communitypage-first-edit-maybe-later' => '後で',
-);
+];
 
-$messages['nl'] = array(
+$messages['nl'] = [
 	'communitypage-title' => 'Community',
 	'communitypage-header-welcome' => 'Welkom op de {{SITENAME}} community!',
 	'communitypage-header-join-button' => 'Nu lid worden',
@@ -819,9 +819,9 @@ $messages['nl'] = array(
 	'communitypage-first-edit-subheading' => 'Ontmoet anderen en vind meer manieren om te helpen door de community-pagina te bezoeken',
 	'communitypage-first-edit-get-started' => 'Doorgaan',
 	'communitypage-first-edit-maybe-later' => 'Misschien later',
-);
+];
 
-$messages['pl'] = array(
+$messages['pl'] = [
 	'communitypage-title' => 'Społeczność',
 	'communitypage-header-welcome' => 'Witamy w społeczności {{SITENAME}}!',
 	'communitypage-header-join-button' => 'Dołącz teraz',
@@ -922,9 +922,9 @@ $messages['pl'] = array(
 	'communitypage-first-edit-subheading' => 'Połącz się z innymi i znajdź więcej sposobów, aby pomagać poprzez odwiedzenie Strony Społeczności',
 	'communitypage-first-edit-get-started' => 'Dalej',
 	'communitypage-first-edit-maybe-later' => 'Może później',
-);
+];
 
-$messages['pt'] = array(
+$messages['pt'] = [
 	'communitypage-title' => 'Comunidade',
 	'communitypage-header-welcome' => 'Bem-vindo à {{SITENAME}}!',
 	'communitypage-header-join-button' => 'Acesse agora',
@@ -1025,9 +1025,9 @@ $messages['pt'] = array(
 	'communitypage-first-edit-subheading' => 'Visite a Página da Comunidade para conhecer outras pessoas e encontrar mais maneiras de ajudar',
 	'communitypage-first-edit-get-started' => 'Continuar',
 	'communitypage-first-edit-maybe-later' => 'Talvez mais tarde',
-);
+];
 
-$messages['ru'] = array(
+$messages['ru'] = [
 	'communitypage-title' => 'Сообщество',
 	'communitypage-header-welcome' => 'Добро пожаловать в сообщество {{SITENAME}}!',
 	'communitypage-header-join-button' => 'Присоединиться',
@@ -1128,9 +1128,9 @@ $messages['ru'] = array(
 	'communitypage-first-edit-subheading' => 'Познакомьтесь с другими участниками и узнайте, как помочь вики, на Странице сообщества',
 	'communitypage-first-edit-get-started' => 'Продолжить',
 	'communitypage-first-edit-maybe-later' => 'Возможно, позже',
-);
+];
 
-$messages['zh-hans'] = array(
+$messages['zh-hans'] = [
 	'communitypage-title' => '社区',
 	'communitypage-header-welcome' => '欢迎来到{{SITENAME}}社区！',
 	'communitypage-header-join-button' => '现在加入',
@@ -1231,9 +1231,9 @@ $messages['zh-hans'] = array(
 	'communitypage-first-edit-subheading' => '访问社区页认识其他朋友，了解如何更好地为社区做出贡献。',
 	'communitypage-first-edit-get-started' => '继续',
 	'communitypage-first-edit-maybe-later' => '以后再说',
-);
+];
 
-$messages['zh-hant'] = array(
+$messages['zh-hant'] = [
 	'communitypage-title' => '社區',
 	'communitypage-header-welcome' => '歡迎來到{{SITENAME}}社區 ！',
 	'communitypage-header-join-button' => '現在加入',
@@ -1334,5 +1334,5 @@ $messages['zh-hant'] = array(
 	'communitypage-first-edit-subheading' => '訪問社區頁認識其他朋友，瞭解如何更好地為社區做出貢獻',
 	'communitypage-first-edit-get-started' => '繼續',
 	'communitypage-first-edit-maybe-later' => '以後再說',
-);
+];
 
