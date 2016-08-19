@@ -19,7 +19,7 @@ class SpecialPortabilityDashboardController extends WikiaSpecialPageController {
 		$langFilter = $this->getVal( self::LANGUAGE_FILTER_QS_PARAM, '' );
 		$isLangFilterSet = !empty( $langFilter );
 
-		// template model 
+		// template model
 		$this->response->setVal( 'list', $isLangFilterSet ? $this->filterListByLang( $list, $langFilter ) : $list );
 
 		// template helpers
@@ -53,6 +53,9 @@ class SpecialPortabilityDashboardController extends WikiaSpecialPageController {
 		$this->response->setVal( 'refreshFreqInfo', wfMessage( 'portability-dashboard-refresh-frequency-info' )->text() );
 		$this->response->setVal( 'noResultsInfo', wfMessage( 'portability-dashboard-no-results-info',
 			PortabilityDashboardModel::WIKIS_LIMIT )->text() );
+		$this->response->setVal( 'searchHeadline', wfMessage( 'portability-dashboard-search-headline' )->text() );
+		$this->response->setVal( 'searchPlaceholder', wfMessage( 'portability-dashboard-search-placeholder' )->text() );
+		$this->response->setVal( 'blankImgUrl', F::app()->wg->BlankImgUrl );
 
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 

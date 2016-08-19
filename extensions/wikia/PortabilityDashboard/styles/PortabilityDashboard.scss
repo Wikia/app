@@ -1,4 +1,5 @@
 @import 'skins/shared/color';
+@import 'extensions/wikia/Search/css/WikiaSearch';
 
 $cell-padding: 10px;
 $filter-pill-border-width: 1px;
@@ -43,5 +44,18 @@ $filter-pill-padding: 5px;
 
 	.portability-dashboard-noresults {
 		text-align: center;
+	}
+
+	.Search {
+		border-bottom: solid 1px $color-page-border;
+		margin-bottom: 18px;
+
+		.WikiaSearch {
+			margin-bottom: 25px;
+
+			.SearchInput > .grid-1.alpha {
+				width: 200px;
+			}
+		}
 	}
 }
