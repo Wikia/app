@@ -5,24 +5,22 @@ class PortabilityDashboardModel {
 	const WIKI_ID_FIELD = 'wiki_id';
 	const CUSTOM_INFOBOXES_FIELD = 'custom_infoboxes';
 	const TYPELESS_FIELD = 'typeless';
+	const WIKIS_LIMIT = 500;
 
 	private $connection;
-
-	const WIKIS_LIMIT = 5;
 
 	public function __construct( $db = null ) {
 		$this->connection = $db;
 	}
 
 	/**
-	 * gets model data for portability dashboard
+	 * gets full (non filtered) list of data for portability dashboard
 	 * @return array
 	 */
 	public function getList() {
 		$rowList = $this->getRowList();
-		$wikiParamsList = $this->getWikiParamsList( $rowList );
 
-		return $this->extendRowListWithWikiParams( $rowList, $wikiParamsList );
+		return $this->extendList( $rowList );
 	}
 
 	/**
@@ -34,34 +32,53 @@ class PortabilityDashboardModel {
 	 * return portability data
 	 *
 	 * @param $wikiUrl
-	 * @return array|bool|mixed
+	 * @return array
 	 */
 	public function getWikiByUrl( $wikiUrl ) {
-		$result = [];
-		if (strpos ($wikiUrl, 'www.') === false ) {
-			$wikiUrl = 'www.' . $wikiUrl;
+		$wiki = [ ];
+		$wwwPrefix = 'www.';
+		$httpPrefix = 'http://';
+		$wikiacomSuffix = '.wikia.com';
+
+		if ( strpos( $wikiUrl, $wwwPrefix ) === false ) {
+			$wikiUrl = $wwwPrefix . $wikiUrl;
 		}
 
-		if (strpos ($wikiUrl, 'http://') === false ) {
-			$wikiUrl = 'http://' . $wikiUrl;
+		if ( strpos( $wikiUrl, $httpPrefix ) === false ) {
+			$wikiUrl = $httpPrefix . $wikiUrl;
 		}
 
-		if (strpos ($wikiUrl, '.wikia.com') === false ) {
-			$wikiUrl = $wikiUrl .'.wikia.com';
+		if ( strpos( $wikiUrl, $wikiacomSuffix ) === false ) {
+			$wikiUrl = $wikiUrl . $wikiacomSuffix;
 		}
 
 		$wikiId = WikiFactory::UrlToID( $wikiUrl );
+
 		if ( $wikiId ) {
-			$result = $this->getWikiById( $wikiId );
+			$dataRow = $this->getWikiById( $wikiId );
+
+			if ( $dataRow ) {
+				$wiki = $this->extendList( $dataRow );
+			}
 		}
 
-		return $result;
+		return $wiki;
+	}
+
+	/**
+	 * @param $rowList
+	 * @return array
+	 */
+	private function extendList( $rowList ) {
+		$wikiParamsList = $this->getWikiParamsList( $rowList );
+
+		return $this->extendRowListWithWikiParams( $rowList, $wikiParamsList );
 	}
 
 	private function getWikiById( $id ) {
 		return ( new WikiaSQL() )
 			->SELECT_ALL()
-			->FROM( self::PORTABILITY_DASHBOARD_TABLE )
+			->FROM( static::PORTABILITY_DASHBOARD_TABLE )
 			->WHERE( 'excluded' )->EQUAL_TO( 0 )
 			->AND_( 'wiki_id' )->EQUAL_TO( $id )
 			->ORDER_BY( 'migration_impact' )
@@ -91,11 +108,11 @@ class PortabilityDashboardModel {
 	private function getRowList() {
 		return ( new WikiaSQL() )
 			->SELECT_ALL()
-			->FROM( self::PORTABILITY_DASHBOARD_TABLE )
+			->FROM( static::PORTABILITY_DASHBOARD_TABLE )
 			->WHERE( 'excluded' )->EQUAL_TO( 0 )
 			->ORDER_BY( 'migration_impact' )
 			->DESC()
-			->LIMIT( self::WIKIS_LIMIT )
+			->LIMIT( static::WIKIS_LIMIT )
 			->run( $this->readDB(), function ( ResultWrapper $rows ) {
 				$result = [ ];
 				while ( $row = $rows->fetchObject() ) {

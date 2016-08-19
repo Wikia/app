@@ -15,9 +15,14 @@ class SpecialPortabilityDashboardController extends WikiaSpecialPageController {
 	}
 
 	public function index() {
-		$langFilter = $this->getVal( self::LANGUAGE_FILTER_QS_PARAM, '' );
-		$wikiUrlParam = $this->getVal( self::WIKI_URL_QS_PARAM, '' );
+		$langFilter = $this->getVal( static::LANGUAGE_FILTER_QS_PARAM, '' );
+		$wikiUrlParam = $this->getVal( static::WIKI_URL_QS_PARAM, '' );
+		$isLangFilterSet = !empty( $langFilter );
 		$list = $this->getResultsList( $langFilter, $wikiUrlParam );
+		$noResultsInfoMessage = wfMessage(
+			$isLangFilterSet ? 'portability-dashboard-no-results-for-lang-info' : 'portability-dashboard-no-results-for-url-info',
+			PortabilityDashboardModel::WIKIS_LIMIT
+		)->text();
 
 		// template model
 		$this->response->setVal( 'list', $list );
@@ -36,7 +41,7 @@ class SpecialPortabilityDashboardController extends WikiaSpecialPageController {
 				$langFilter
 			)
 		);
-		$this->response->setVal( 'isLangFilterSet', !empty( $langFilter ) );
+		$this->response->setVal( 'isLangFilterSet', $isLangFilterSet );
 		$this->response->setVal( 'langQSParam', self::LANGUAGE_FILTER_QS_PARAM );
 
 		// i18n template strings
@@ -51,9 +56,7 @@ class SpecialPortabilityDashboardController extends WikiaSpecialPageController {
 			'customInfoboxesInsightsUrlTitle', wfMessage( 'portability-dashboard-special-insights-custom-infobox-title'
 		)->text() );
 		$this->response->setVal( 'refreshFreqInfo', wfMessage( 'portability-dashboard-refresh-frequency-info' )->text() );
-		$this->response->setVal( 'noResultsInfo', wfMessage( 'portability-dashboard-no-results-info',
-			PortabilityDashboardModel::WIKIS_LIMIT )->text() );
-
+		$this->response->setVal( 'noResultsInfo', $noResultsInfoMessage );
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 
 		Wikia::addAssetsToOutput( 'special_portability_dashboard_scss' );
@@ -66,7 +69,7 @@ class SpecialPortabilityDashboardController extends WikiaSpecialPageController {
 			$modelList = $model->getList();
 			$list = empty( $langFilter ) ? $modelList : $this->filterListByLang( $modelList, $langFilter );
 		} else {
-			$list = $model->getWikiByUrl( $wikiUrlParam );
+			$list = $model->getWikiByUrl( Sanitizer::encodeAttribute( $wikiUrlParam ) );
 		}
 
 		return $list;
