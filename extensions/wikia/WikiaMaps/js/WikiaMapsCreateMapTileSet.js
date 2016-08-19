@@ -16,8 +16,6 @@ define(
 			tileSetThumbTemplate,
 			// template data
 			templateData = {
-				chooseTypeTip: $.msg('wikia-interactive-maps-create-map-choose-type-tip'),
-				chooseTypeTipLink: $.msg('wikia-interactive-maps-create-map-choose-type-tip-link'),
 				mapType: [
 					{
 						type: 'custom',
