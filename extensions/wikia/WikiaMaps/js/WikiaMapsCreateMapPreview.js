@@ -94,8 +94,6 @@ define(
 			modal.trigger('cleanUpError');
 
 			tileSetData = tileSet;
-			// set type param for mustache template
-			tileSetData.custom = true;
 
 			if(originalImageURL) {
 				tileSetData.originalImageURL = utils.createThumbURL(originalImageURL, thumbWidth);
