@@ -192,7 +192,7 @@ class ArticleCommentsController extends WikiaController {
 		] );
 
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
-		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
+		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD, WikiaResponse::CACHE_DISABLED );
 		$this->wg->Out->tagWithSurrogateKeys( static::getSurrogateKey( $articleId ) );
 	}
 
