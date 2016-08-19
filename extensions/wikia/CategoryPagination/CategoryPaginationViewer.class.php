@@ -2,7 +2,7 @@
 
 use Wikia\Paginator\Paginator;
 
-class CategoryPaginationViewer extends CategoryViewer {
+class CategoryPaginationViewer extends CategoryTreeCategoryViewer {
 	private $page;
 	private $counts;
 	/** @var Paginator[] */
