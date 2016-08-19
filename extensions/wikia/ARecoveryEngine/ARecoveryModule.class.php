@@ -9,7 +9,11 @@ class ARecoveryModule {
 	 * @return bool
 	 */
 	public static function isEnabled() {
-		global $wgEnableUsingSourcePointProxyForCSS;
+		global $wgUser, $wgEnableUsingSourcePointProxyForCSS;
+
+		if( $wgUser instanceof User && $wgUser->isLoggedIn() ) {
+			return false;
+		}
 
 		$wgGlobalEnableSourcePoint = WikiFactory::getVarValueByName( 'wgGlobalEnableSourcePoint', Wikia::COMMUNITY_WIKI_ID );
 
