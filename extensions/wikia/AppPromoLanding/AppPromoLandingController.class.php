@@ -7,6 +7,7 @@
  * @author Sean Colombo
  */
 class AppPromoLandingController extends WikiaController {
+	use \Wikia\Logger\Loggable;
 
 	const RESPONSE_OK = 200;
 	const APP_CONFIG_SERVICE_URL = 'http://prod.deploypanel.service.sjc.consul/api/app-configuration/';
@@ -45,8 +46,11 @@ class AppPromoLandingController extends WikiaController {
 			if( $status->isOK() ) {
 				$response = $req->getContent();
 				if ( empty( $response ) ) {
+					// Request failed (app config service failure). Do not cache this response.
+					error_log( 'APPPROMOLANDING_NO_RESPONSE_FROM_APPCONFIG' );
+					$this->response->setCode( \WikiaResponse::RESPONSE_CODE_INTERNAL_SERVER_ERROR );
+
 					wfProfileOut( __METHOD__ );
-					throw new EmptyResponseException( static::APP_CONFIG_SERVICE_URL );
 				} else {
 					// Request was successful. Cache it in memcached (faster than going over network-card even on our internal network).
 					$this->wg->memc->set( $memcKey, $response, static::$CACHE_EXPIRY );
@@ -57,7 +61,8 @@ class AppPromoLandingController extends WikiaController {
 		$appConfig = json_decode( $response );
 		if(empty($appConfig)){
 
-			// TODO: How should we handle the error of not having an appConfig? We won't be able to link the user to the apps.
+			// If no config was found for this wiki (which is totally normal on sites without an app) just return an empty array.
+			$appConfig = [];
 
 		}
 
