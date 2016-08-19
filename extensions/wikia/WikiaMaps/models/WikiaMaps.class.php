@@ -618,18 +618,6 @@ class WikiaMaps extends WikiaObject {
 	}
 
 	/**
-	 * Fetches and caches the RealMap thumbnail image
-	 *
-	 * @return string
-	 */
-	public function getRealMapImageUrl() {
-		$memCacheKey = wfSharedMemcKey( __CLASS__, __METHOD__ );
-		return WikiaDataAccess::cache( $memCacheKey, self::REAL_MAP_THUMB_EXPIRE_TIME, function () {
-			return $this->fetchRealMapImageUrl();
-		} );
-	}
-
-	/**
 	 * Returns an URL for an image from article with given title
 	 *
 	 * @param String $titleText

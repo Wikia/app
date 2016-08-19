@@ -35,7 +35,7 @@ define(
 			//modal events
 			events = {
 				chooseTileSet: [
-					chooseTileSet
+					renderChooseTileSet
 				],
 				browseTileSets: [
 					function () {
@@ -116,21 +116,6 @@ define(
 			$searchInput = $('#intMapTileSetSearch');
 
 			showStep(stepsStack.pop());
-		}
-
-		/**
-		 * @desc entry point for choose tile set steps
-		 */
-		function chooseTileSet() {
-			$.nirvana.getJson(
-				'WikiaMapsSpecial',
-				'getRealMapImageUrl',
-				function (data) {
-					templateData.mapType[0].image = data.url;
-					renderChooseTileSet();
-				},
-				renderChooseTileSet
-			);
 		}
 
 		/**
