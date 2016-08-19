@@ -24,17 +24,14 @@ class PortabilityDashboardModel {
 	}
 
 	/**
-	 * For wiki url in form:
-	 * - www.yugioh.wikia.com
-	 * - yugioh.wikia.com
-	 * return portability data
+	 * For wiki url or domain name return portability data
 	 *
 	 * @param $wikiUrl
 	 * @return array
 	 */
 	public function getWikiByUrl( $wikiUrl ) {
 		$wiki = [ ];
-		$wikiId = WikiFactory::DomainToID( $wikiUrl );
+		$wikiId = WikiFactory::UrlToID( $wikiUrl );
 
 		if ( $wikiId ) {
 			$dataRow = $this->getWikiById( $wikiId );

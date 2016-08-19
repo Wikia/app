@@ -75,6 +75,14 @@ class WikiFactoryTest extends WikiaBaseTest {
 		$this->assertEquals($expHost, WikiFactory::getCurrentStagingHost($dbName, $default, $host));
 	}
 
+	/**
+	 * @dataProvider testPrepareUrlToParseDataProvider
+	 */
+	public function testPrepareUrlToParse( $url, $expected ) {
+		$url = WikiFactory::prepareUrlToParse( $url );
+		$this->assertEquals( $expected, $url );
+	}
+
 	public function testGetCurrentStagingHostDataProvider() {
 		return [
 			[
@@ -151,6 +159,39 @@ class WikiFactoryTest extends WikiaBaseTest {
 				'env' => WIKIA_ENV_DEV,
 				'url' => 'http://gta.wikia.com/',
 				'expected' => 'http://gta.' . self::MOCK_DEV_NAME . '.wikia-dev.com'
+			]
+		];
+	}
+
+	public function testPrepareUrlToParseDataProvider() {
+		return [
+			[
+				'http://www.community-name.wikia.com',
+				'http://www.community-name.wikia.com',
+			],
+			[
+				'http://community-name.wikia.com',
+				'http://community-name.wikia.com',
+			],
+			[
+				'www.community-name.wikia.com',
+				'http://www.community-name.wikia.com',
+			],
+			[
+				'community-name.wikia.com',
+				'http://community-name.wikia.com',
+			],
+			[
+				'http://www.community-name',
+				'http://www.community-name.wikia.com',
+			],
+			[
+				'www.community-name',
+				'http://www.community-name.wikia.com',
+			],
+			[
+				'community-name',
+				'http://community-name.wikia.com',
 			]
 		];
 	}

@@ -424,13 +424,20 @@ class WikiFactory {
 	 * @static
 	 *
 	 * @param $url string - domain name in form:
-	 * http://community-name.wikia.com
+	 * - http://www.community-name.wikia.com
+	 * - http://community-name.wikia.com
+	 * - www.community-name.wikia.com
+	 * - community-name.wikia.com
+	 * - community-name
 	 *
 	 * @return integer - id of domain or null if not found
 	 */
 	static public function UrlToID( $url ) {
 		$city_id = false;
+
+		$url = self::prepareUrlToParse( $url );
 		$parts = parse_url( $url );
+
 		if ( isset( $parts[ "host" ] ) ) {
 			$host = self::getDomainHash( $parts[ "host" ] );
 			$host = preg_replace('/^(?:preview\.|verify\.)/i', '', $host);
@@ -438,6 +445,32 @@ class WikiFactory {
 		}
 
 		return $city_id;
+	}
+
+	/**
+	 * Convert url in form of:
+	 * - www.community-name.wikia.com
+	 * - community-name.wikia.com
+	 * - community-name
+	 * to full valid url.
+	 * See: testPrepareUrlToParse
+	 *
+	 * @param $url
+	 * @return string
+	 */
+	static public function prepareUrlToParse( $url ) {
+		$httpPrefix = 'http://';
+		$wikiacomSuffix = '.wikia.com';
+
+		if ( strpos( $url, $httpPrefix ) === false ) {
+			$url = $httpPrefix . $url;
+		}
+
+		if ( strpos( $url, $wikiacomSuffix ) === false ) {
+			$url = $url . $wikiacomSuffix;
+		}
+
+		return $url;
 	}
 
 	/**
