@@ -525,16 +525,16 @@ class SitemapPage extends UnlistedSpecialPage {
 
 			$numResults = $response->getResultsFound();
 
-			if ( $numResults >= self::SOLR_LIMIT ) {
+			if ( $numResults > self::SOLR_LIMIT ) {
 				$alwaysReturnTrue = true;
 				return true;
 			}
 
 			$limit = Wikia\Search\Config::MAX_RESULTS_PER_PAGE;
 
-			for ( $page = 0; $page < $numResults / $limit; $page++ ) {
+			for ( $start = 0; $start < $numResults; $start += $limit ) {
 				$config->setLimit( $limit );
-				$config->setStart( $page * $limit );
+				$config->setStart( $start );
 				$query = $queryServiceFactory->getFromConfig( $config );
 				$response = $query->search();
 
