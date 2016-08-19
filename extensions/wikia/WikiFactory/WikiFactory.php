@@ -76,6 +76,7 @@ class WikiFactory {
 	const db            = "wikicities"; // @see $wgExternalSharedDB
 	const DOMAINCACHE   = "/tmp/wikifactory/domains.ser";
 	const CACHEDIR      = "/tmp/wikifactory/wikis";
+	const DOT_WIKIA_COM = '.wikia.com';
 
 	// Community Central's city_id in wikicities.city_list.
 	const COMMUNITY_CENTRAL = 177;
@@ -435,13 +436,13 @@ class WikiFactory {
 	static public function UrlToID( $url ) {
 		$city_id = false;
 
-		$url = self::prepareUrlToParse( $url );
+		$url = static::prepareUrlToParse( $url );
 		$parts = parse_url( $url );
 
 		if ( isset( $parts[ "host" ] ) ) {
-			$host = self::getDomainHash( $parts[ "host" ] );
+			$host = static::getDomainHash( $parts[ "host" ] );
 			$host = preg_replace('/^(?:preview\.|verify\.)/i', '', $host);
-			$city_id = self::DomainToId( $host );
+			$city_id = static::DomainToId( $host );
 		}
 
 		return $city_id;
@@ -460,14 +461,13 @@ class WikiFactory {
 	 */
 	static public function prepareUrlToParse( $url ) {
 		$httpPrefix = 'http://';
-		$wikiacomSuffix = '.wikia.com';
 
 		if ( strpos( $url, $httpPrefix ) === false ) {
 			$url = $httpPrefix . $url;
 		}
 
-		if ( strpos( $url, $wikiacomSuffix ) === false ) {
-			$url = $url . $wikiacomSuffix;
+		if ( strpos( $url, static::DOT_WIKIA_COM ) === false ) {
+			$url = $url . static::DOT_WIKIA_COM;
 		}
 
 		return $url;
@@ -545,8 +545,8 @@ class WikiFactory {
 		$hostName = \WikiFactory::getVarValueByName( 'wgServer', $cityId );
 
 		if ( !empty( $wgDevelEnvironment ) ) {
-			if ( strpos( $hostName, "wikia.com" ) ) {
-				$hostName = str_replace( "wikia.com", "{$wgDevelEnvironmentName}.wikia-dev.com", $hostName );
+			if ( strpos( $hostName, static::DOT_WIKIA_COM ) ) {
+				$hostName = str_replace( static::DOT_WIKIA_COM, "{$wgDevelEnvironmentName}.wikia-dev.com", $hostName );
 			} else {
 				$hostName = \WikiFactory::getLocalEnvURL( $hostName );
 			}
@@ -1183,11 +1183,11 @@ class WikiFactory {
 		}
 
 		if ( preg_match( '/^(demo-[a-z0-9]+)-[s|r][0-9]+$/i', $host, $m ) ) {
-			return $m[ 1 ] . '.' . ( $dbName ? $dbName : 'www' ) . '.wikia.com';
+			return $m[ 1 ] . '.' . ( $dbName ? $dbName : 'www' ) . static::DOT_WIKIA_COM;
 		}
 
 		if ( in_array( $host, $wgStagingList ) ) {
-			return $host . '.' . ( $dbName ? $dbName : 'www' ) . '.wikia.com';
+			return $host . '.' . ( $dbName ? $dbName : 'www' ) . static::DOT_WIKIA_COM;
 		}
 
 		if ( preg_match( '/^dev-([a-z0-9]+)$/i', $host, $m ) ) {
@@ -1244,21 +1244,21 @@ class WikiFactory {
 		}
 
 		$server = str_replace( '.' . $devbox . '.wikia-dev.com', '', $server );
-		$server = str_replace( '.wikia.com', '', $server );
+		$server = str_replace( static::DOT_WIKIA_COM, '', $server );
 
 		// put the address back into shape and return
 		switch($wgWikiaEnvironment) {
 			case WIKIA_ENV_PREVIEW:
-				return 'http://preview.' . $server . '.wikia.com'.$address;
+				return 'http://preview.' . $server . static::DOT_WIKIA_COM . $address;
 			case WIKIA_ENV_VERIFY:
-				return 'http://verify.' . $server . '.wikia.com'.$address;
+				return 'http://verify.' . $server . static::DOT_WIKIA_COM . $address;
 			case WIKIA_ENV_STABLE:
-				return 'http://stable.' . $server . '.wikia.com'.$address;
+				return 'http://stable.' . $server . static::DOT_WIKIA_COM . $address;
 			case WIKIA_ENV_STAGING:
 			case WIKIA_ENV_PROD:
 				return sprintf( 'http://%s.%s%s', $server, $wgWikiaBaseDomain, $address ) ;
 			case WIKIA_ENV_SANDBOX:
-				return 'http://' . self::getExternalHostName() . '.' . $server . '.wikia.com' . $address;
+				return 'http://' . self::getExternalHostName() . '.' . $server . static::DOT_WIKIA_COM . $address;
 			case WIKIA_ENV_DEV:
 				return 'http://' . $server . '.' . self::getExternalHostName() . '.wikia-dev.com'.$address;
 		}
