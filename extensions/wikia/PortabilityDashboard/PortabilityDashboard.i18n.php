@@ -25,13 +25,13 @@ $messages[ 'en' ] = [
 	'portability-dashboard-infoboxes-desc' => 'Number of non-portable infoboxes on this community with link to Special:Insights',
 	'portability-dashboard-impact-header' => 'Migration Impact',
 	'portability-dashboard-impact-desc' => 'Number of this community\'s content page views coming from pages with non-portable infoboxes',
-	'portability-dashboard-language-filter-label' => 'Filter table by language',
+	'portability-dashboard-language-filter-label' => 'Or filter table by language',
 	'portability-dashboard-language-filter-all' => 'all',
 	'portability-dashboard-special-insights-template-without-title' => 'Unorganized templates on Special:Insights',
 	'portability-dashboard-special-insights-custom-infobox-title' => 'Non-portable infoboxes on Special:Insights',
 	'portability-dashboard-refresh-frequency-info' => 'Portability data, content page views and migration impact are recalculated every Saturday at 9:00 GMT.',
 	'portability-dashboard-search-headline' => 'Search for a Community',
-	'portability-dashboard-search-placeholder' => 'Community name',
+	'portability-dashboard-search-placeholder' => 'Community url ie. community-name.wikia.com or www.community-name.wikia.com',
 	'portability-dashboard-no-results-for-lang-info' => 'No Wikis in selected language in top $1.',
 	'portability-dashboard-no-results-for-url-info' => 'No data available'
 ];
