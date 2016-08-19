@@ -129,6 +129,9 @@ class RedirectService extends WikiaService {
 	private function getRedirectURL() {
 		global $wgTitle;
 
+		// SOC-2909
+		if ( empty( $wgTitle ) ) return null;
+
 		$url = null;
 		$titleText = mb_strtolower( $wgTitle->getText() );
 		$redirects = $this->getRedirects();
