@@ -72,7 +72,7 @@ class AppPromoLandingController extends WikiaController {
 		// Inject the JS
 		$srcs = AssetsManager::getInstance()->getGroupCommonURL( 'app_promo_landing_js' );
 		foreach( $srcs as $src ) {
-			$this->wg->Out->addScript( "<script type=\"{$wgJsMimeType}\" src=\"{$src}\"></script>" );
+			$this->wg->Out->addScript( "<script type=\"{$this->wg->JsMimeType}\" src=\"{$src}\"></script>" );
 		}
 
 		// render the custom App Promo Landing body (this includes the nav bar and the custom content).
@@ -99,6 +99,7 @@ class AppPromoLandingController extends WikiaController {
 	 */
 	public function content( $params ){
 		wfProfileIn( __METHOD__ );
+		$this->debug = "";
 
 		// render global and user navigation
 		$this->header = $this->app->renderView( 'GlobalNavigation', 'index' );
@@ -129,7 +130,10 @@ class AppPromoLandingController extends WikiaController {
 					'count' => 1
 				] )->getVal( 'result' );
 
-				$thumbnail = $img[$item['id']][0]['url'];
+				$thumnail = null;
+				if( isset( $img[ $item['id'] ] ) ){
+					$thumbnail = $img[$item['id']][0]['url'];
+				}
 
 				if ( empty( $thumbnail ) ) {
 					// If there is no thumbnail, then it's not useful for our grid.
@@ -275,8 +279,8 @@ class AppPromoLandingController extends WikiaController {
 
 		$appConfig = json_decode( $response );
 		if(empty($appConfig)){
-
-			// TODO: How should we handle the error of not having an appConfig? We won't be able to link the user to the apps.
+			
+			// If no config was found for this wiki (which is totally normal on sites without an app) just return an empty array.
 			$appConfig = [];
 
 		}
@@ -291,16 +295,16 @@ class AppPromoLandingController extends WikiaController {
 	 * @return string containing the URL of the app for android devices (eg: on Google Play Store).
 	 */
 	private function getAndroidUrl( $config ){
-		return "https://play.google.com/store/apps/details?id={$config->android_release}&utm_source=General&utm_medium=Site&utm_campaign=AppPromoLanding";
+		return (empty($config) ? "" : "https://play.google.com/store/apps/details?id={$config->android_release}&utm_source=General&utm_medium=Site&utm_campaign=AppPromoLanding" );
 	}
-	
+
 	/**
 	 * @param config - associative array containing the config for a single wiki, as parsed 
 	 *                 from APP_CONFIG_SERVICE_URL.
 	 * @return string containing the URL of the app for iOS devices (on the iTunes App Store).
 	 */
 	private function getIosUrl( $config ){
-		return "https://itunes.apple.com/us/app/id{$config->ios_release}?utm_source=General&utm_medium=Site&utm_campaign=AppPromoLanding";
+		return (empty($config) ? "" : "https://itunes.apple.com/us/app/id{$config->ios_release}?utm_source=General&utm_medium=Site&utm_campaign=AppPromoLanding" );
 	}
 
 	/**
