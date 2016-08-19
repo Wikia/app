@@ -11,6 +11,11 @@ $wgAutoloadClasses['ARecoveryEngineApiController'] = __DIR__ . '/ARecoveryEngine
 $wgAutoloadClasses['ARecoveryModule'] = __DIR__ . '/ARecoveryModule.class.php';
 $wgAutoloadClasses['ARecoveryUnlockCSS'] = __DIR__ . '/ARecoveryUnlockCSS.class.php';
 
+$wgAutoloadClasses['ResourceLoaderAdEnginePageFairDetectionModule'] = __DIR__ . '/ResourceLoaders/PageFair/ResourceLoaderAdEnginePageFairDetectionModule.php';
+
 $wgHooks['WikiaSkinTopScripts'][] = 'ARecoveryEngineHooks::onWikiaSkinTopScripts';
 $wgHooks['BeforePageDisplay'][] = 'ARecoveryEngineHooks::onBeforePageDisplay';
 $wgHooks['InstantGlobalsGetVariables'][] = 'ARecoveryEngineHooks::onInstantGlobalsGetVariables';
+
+// i18n
+$wgExtensionMessagesFiles['ARecoveryEngine'] = __DIR__ . '/ARecoveryEngine.i18n.php';

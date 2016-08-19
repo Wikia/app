@@ -56,12 +56,13 @@ define('ext.wikia.recirculation.helpers.liftigniter', [
 				if (items.length < options.count && item.thumbnail) {
 					if (options.widget === 'fandom-rec') {
 						item.title = item.title.replace(' - Fandom - Powered by Wikia', '');
+						item.source = 'fandom';
 					} else {
 						item.thumbnail = thumbnailer.getThumbURL(item.thumbnail, 'image', options.width, options.height);
+						item.source = 'wiki';
 					}
 
 					item.index = index;
-					item.source = 'liftigniter';
 					items.push(item);
 				}
 			});

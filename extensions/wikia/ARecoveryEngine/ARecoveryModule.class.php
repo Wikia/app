@@ -9,9 +9,15 @@ class ARecoveryModule {
 	 * @return bool
 	 */
 	public static function isEnabled() {
-		global $wgEnableUsingSourcePointProxyForCSS;
+		global $wgUser, $wgEnableUsingSourcePointProxyForCSS;
 
-		return !empty( $wgEnableUsingSourcePointProxyForCSS );
+		if( $wgUser instanceof User && $wgUser->isLoggedIn() ) {
+			return false;
+		}
+
+		$wgGlobalEnableSourcePoint = WikiFactory::getVarValueByName( 'wgGlobalEnableSourcePoint', Wikia::COMMUNITY_WIKI_ID );
+
+		return !empty( $wgEnableUsingSourcePointProxyForCSS ) || !empty( $wgGlobalEnableSourcePoint );
 	}
 
 	public static function isLockEnabled() {

@@ -1,8 +1,8 @@
 <?php
 
-$messages = array();
+$messages = [];
 
-$messages['en'] = array(
+$messages['en'] = [
 	'action-themedesigner' => 'access Theme Designer',
 	'themedesigner-or' => 'or',
 	'themedesigner-desc' => 'Allows wiki administrators to design a theme for a wiki',
@@ -64,7 +64,8 @@ $messages['en'] = array(
 	'themedesigner-wordmark-preview-error' => 'Oops! The name of the wiki can\'t be blank,
 please enter the name of the wiki to save.',
 	'themedesigner-upload-disabled' => 'Sorry, we\'ve temporarily disabled uploads. Check back shortly to make changes',
-);
+	'right-themedesigner' => 'Create a theme for your wiki at [[Special:ThemeDesigner]]',
+];
 
 /** Message documentation (Message documentation)
  * @author EugeneZelenko
@@ -73,7 +74,7 @@ please enter the name of the wiki to save.',
  * @author Siebrand
  * @author The Evil IP address
  */
-$messages['qqq'] = array(
+$messages['qqq'] = [
 	'action-themedesigner' => '{{doc-action|themedesigner}}',
 	'themedesigner-or' => '"or", as in, either Text Wordmark *or* Graphic Wordmark.
 {{Identical|Or}}',
@@ -108,12 +109,12 @@ $messages['qqq'] = array(
 	'themedesigner-wodmark-preview' => '{{Identical|Preview}}',
 	'themedesigner-wordmark-preview-error' => 'Validation error on attempt to save empty text wordmark',
 	'themedesigner-upload-disabled' => 'Message shown when file uploads are disabled',
-);
+];
 
 /** Afrikaans (Afrikaans)
  * @author Naudefj
  */
-$messages['af'] = array(
+$messages['af'] = [
 	'themedesigner-desc' => "Laat wiki-administrateurs toe om 'n tema vir 'n wiki te ontwerp",
 	'themedesigner-title' => 'Wikia se Temaontwerper',
 	'themedesigner-background' => 'Agtergrond',
@@ -158,7 +159,7 @@ $messages['af'] = array(
 	'themedesigner-button-change-text' => 'Verander teks',
 	'themedesigner-size-error' => 'Foutiewe lêergrootte',
 	'themedesigner-type-error' => 'Foutiewe lêertipe',
-);
+];
 
 /** Arabic (العربية)
  * @author Achraf94
@@ -167,7 +168,7 @@ $messages['af'] = array(
  * @author Meno25
  * @author OsamaK
  */
-$messages['ar'] = array(
+$messages['ar'] = [
 	'action-themedesigner' => 'دخول مصمم الويكي',
 	'themedesigner-or' => 'أو',
 	'themedesigner-desc' => 'يسمح للإداريين بالقيام بتصميم مظهر للويكي',
@@ -229,13 +230,13 @@ $messages['ar'] = array(
 	'themedesigner-wordmark-preview-error' => 'عفوا! لا يمكن أن يكون اسم الويكي فارغا،
 رجاء أدخل اسم ويكي حتى يتم الحفظ.',
 	'themedesigner-upload-disabled' => 'عذرا، فقد قمنا بتعطيل الرفع مؤقتا. تحقق بعد فترة لإجراء التغييرات',
-);
+];
 
 /** Azerbaijani (azərbaycanca)
  * @author Cekli829
  * @author Vugar 1981
  */
-$messages['az'] = array(
+$messages['az'] = [
 	'themedesigner-or' => 'və ya',
 	'themedesigner-page' => 'Səhifə',
 	'themedesigner-color' => 'rəng', # Fuzzy
@@ -249,12 +250,12 @@ $messages['az'] = array(
 	'themedesigner-size' => 'həcm',
 	'themedesigner-button-save' => 'Qeyd et',
 	'themedesigner-history-item' => '$1 tərəfindən $2',
-);
+];
 
 /** Belarusian (Taraškievica orthography) (беларуская (тарашкевіца)‎)
  * @author Jim-by
  */
-$messages['be-tarask'] = array(
+$messages['be-tarask'] = [
 	'themedesigner-desc' => 'Дазваляе адміністратарам ствараць тэмы для вікі',
 	'themedesigner-title' => 'Канструктар тэмаў для Wikia',
 	'themedesigner-background' => 'Фон',
@@ -269,12 +270,12 @@ $messages['be-tarask'] = array(
 	'themedesigner-medium' => 'Сярэдні',
 	'themedesigner-large' => 'Вялікі',
 	'themedesigner-tab-theme' => 'Афармленьне',
-);
+];
 
 /** Bulgarian (български)
  * @author DCLXVI
  */
-$messages['bg'] = array(
+$messages['bg'] = [
 	'themedesigner-background' => 'Фон',
 	'themedesigner-color' => 'цвят', # Fuzzy
 	'themedesigner-buttons' => 'бутони',
@@ -287,7 +288,7 @@ $messages['bg'] = array(
 	'themedesigner-font' => 'шрифт',
 	'themedesigner-size' => 'размер',
 	'themedesigner-button-save' => 'Съхраняване',
-);
+];
 
 /** Breton (brezhoneg)
  * @author Fohanno
@@ -295,7 +296,7 @@ $messages['bg'] = array(
  * @author Gwenn-Ael
  * @author Y-M D
  */
-$messages['br'] = array(
+$messages['br'] = [
 	'themedesigner-or' => 'pe',
 	'themedesigner-desc' => "Aotren a ra merourien ar wiki da sevel un tres d'ar wiki",
 	'themedesigner-title' => 'Empenter tresoù Wikia',
@@ -345,12 +346,12 @@ $messages['br'] = array(
 	'themedesigner-favicon-heading' => 'Favicon',
 	'themedesigner-wodmark-preview' => 'Rakwelet',
 	'themedesigner-wordmark-preview-error' => "Hopopop ! Ne c'hall ket anv ar wiki bezañ goullo, lakait anv ar wiki da enrollañ, mar plij.",
-);
+];
 
 /** Bosnian (bosanski)
  * @author CERminator
  */
-$messages['bs'] = array(
+$messages['bs'] = [
 	'themedesigner-desc' => 'Omogućava wiki administratorima dizajniranje teme za wiki',
 	'themedesigner-title' => 'Dizajner Wikia tema',
 	'themedesigner-background' => 'Pozadina',
@@ -364,7 +365,7 @@ $messages['bs'] = array(
 	'themedesigner-small' => 'Malehno',
 	'themedesigner-medium' => 'Srednje',
 	'themedesigner-large' => 'Veliko',
-);
+];
 
 /** Catalan (català)
  * @author BroOk
@@ -373,7 +374,7 @@ $messages['bs'] = array(
  * @author Pintor Smeargle
  * @author Unapersona
  */
-$messages['ca'] = array(
+$messages['ca'] = [
 	'action-themedesigner' => 'accedir al Dissenyador de Temes',
 	'themedesigner-or' => 'o',
 	'themedesigner-desc' => 'Permet als administradors del wiki dissenyar un tema per a un wiki',
@@ -431,12 +432,12 @@ $messages['ca'] = array(
 	'themedesigner-wodmark-preview' => 'Previsualització',
 	'themedesigner-wordmark-preview-error' => 'Error! El nom del wiki no pot estar en blanc, si us plau, escriu el nom del wiki per desar.',
 	'themedesigner-upload-disabled' => 'Ho sentim, hem desactiven temporalment les càrregues.',
-);
+];
 
 /** Chechen (нохчийн)
  * @author Умар
  */
-$messages['ce'] = array(
+$messages['ce'] = [
 	'themedesigner-header' => 'корта',
 	'themedesigner-preview-mode' => 'Хьалха хьажар...',
 	'themedesigner-button-upload' => 'Чуяккха',
@@ -444,7 +445,7 @@ $messages['ce'] = array(
 	'themedesigner-font' => 'шрифт',
 	'themedesigner-upload-a-graphic' => 'чуяккха',
 	'themedesigner-wodmark-preview' => 'Хьалха хьажар',
-);
+];
 
 /** Czech (čeština)
  * @author Chmee2
@@ -453,7 +454,7 @@ $messages['ce'] = array(
  * @author Reaperman
  * @author Utar
  */
-$messages['cs'] = array(
+$messages['cs'] = [
 	'themedesigner-or' => 'nebo',
 	'themedesigner-desc' => 'Umožňuje administrátorům wiki změnit motiv wiki',
 	'themedesigner-title' => 'Návrhář motivů Wikia',
@@ -505,16 +506,16 @@ $messages['cs'] = array(
 	'themedesigner-unknown-error' => 'Nastala neidentifikovaná chyba, prosím opakujte akci.',
 	'themedesigner-favicon-heading' => 'Favicon',
 	'themedesigner-wodmark-preview' => 'Náhled',
-);
+];
 
 /** Welsh (Cymraeg)
  * @author Thefartydoctor
  */
-$messages['cy'] = array(
+$messages['cy'] = [
 	'themedesigner-small' => 'Bach',
 	'themedesigner-large' => 'Mawr',
 	'themedesigner-button-ok' => 'Iawn',
-);
+];
 
 /** German (Deutsch)
  * @author Avatar
@@ -527,7 +528,7 @@ $messages['cy'] = array(
  * @author The Evil IP address
  * @author Tiin
  */
-$messages['de'] = array(
+$messages['de'] = [
 	'action-themedesigner' => 'auf den Theme Designer zuzugreifen',
 	'themedesigner-or' => 'oder',
 	'themedesigner-desc' => 'Erlaubt Wiki-Administratoren die Erstellung eines Themes für ein Wiki',
@@ -589,13 +590,13 @@ $messages['de'] = array(
 	'themedesigner-wordmark-preview-error' => 'Hoppla! Der Name des Wikis kann nicht leer sein.
 Bitte gib zum Speichern den Namen des Wikis ein.',
 	'themedesigner-upload-disabled' => 'Leider sind vorübergehend Uploads deaktiviert. Um Änderungen durchzuführen, versuche es später erneut.',
-);
+];
 
 /** Zazaki (Zazaki)
  * @author Erdemaslancan
  * @author Mirzali
  */
-$messages['diq'] = array(
+$messages['diq'] = [
 	'themedesigner-or' => 'ya na',
 	'themedesigner-page' => 'Pele',
 	'themedesigner-color' => 'dawte', # Fuzzy
@@ -619,17 +620,17 @@ $messages['diq'] = array(
 	'themedesigner-history-item' => '$1 ra $2',
 	'themedesigner-favicon-heading' => 'Favicon',
 	'themedesigner-wodmark-preview' => 'Verqayt',
-);
+];
 
 /** British English (British English)
  * @author Shirayuki
  */
-$messages['en-gb'] = array(
+$messages['en-gb'] = [
 	'themedesigner-rules-color-middle' => 'Different colour for middle of the page',
 	'themedesigner-tab-customize' => 'Customise',
 	'themedesigner-pick-a-color' => 'Pick a colour',
 	'themedesigner-color-name-or-hex-code' => 'Colour name or hex code',
-);
+];
 
 /** Spanish (español)
  * @author Absay
@@ -643,7 +644,7 @@ $messages['en-gb'] = array(
  * @author Sanbec
  * @author VegaDark
  */
-$messages['es'] = array(
+$messages['es'] = [
 	'action-themedesigner' => 'acceder al Diseñador de Temas',
 	'themedesigner-or' => 'o',
 	'themedesigner-desc' => 'Permitir a los administradores del wiki poder diseñar un tema propio para el wiki',
@@ -704,23 +705,23 @@ $messages['es'] = array(
 	'themedesigner-wodmark-preview' => 'Previsualización',
 	'themedesigner-wordmark-preview-error' => '¡Error! El nombre del wiki no puede estar en blanco, por favor escribe el nombre del wiki para guardar.',
 	'themedesigner-upload-disabled' => 'Lo sentimos, hemos desactivado temporalmente la subida de archivos. Para hacer cambios, regresa en unos momentos',
-);
+];
 
 /** Basque (euskara)
  * @author Subi
  */
-$messages['eu'] = array(
+$messages['eu'] = [
 	'themedesigner-previous-versions' => 'Aurreko bertsioak',
 	'themedesigner-button-ok' => 'Ados',
 	'themedesigner-button-save' => 'Gorde',
-);
+];
 
 /** Persian (فارسی)
  * @author BlueDevil
  * @author Ebraminio
  * @author Reza1615
  */
-$messages['fa'] = array(
+$messages['fa'] = [
 	'themedesigner-or' => 'یا',
 	'themedesigner-title' => 'طراح پوستهٔ ویکیا',
 	'themedesigner-background' => 'پیش‌زمینه',
@@ -749,7 +750,7 @@ $messages['fa'] = array(
 	'themedesigner-history-item' => '$1 توسط $2',
 	'themedesigner-button-change-text' => 'تغییر متن',
 	'themedesigner-wodmark-preview' => 'پیش‌نمایش',
-);
+];
 
 /** Finnish (suomi)
  * @author Crt
@@ -758,7 +759,7 @@ $messages['fa'] = array(
  * @author Nike
  * @author VezonThunder
  */
-$messages['fi'] = array(
+$messages['fi'] = [
 	'action-themedesigner' => 'käytä Teemansuunnittelijaa',
 	'themedesigner-or' => 'tai',
 	'themedesigner-desc' => 'Mahdollistaa teeman suunnittelun wikille wikiylläpitäjille.',
@@ -819,7 +820,7 @@ $messages['fi'] = array(
 	'themedesigner-wodmark-preview' => 'Esikatselu',
 	'themedesigner-wordmark-preview-error' => 'Hups! Wikin nimi ei voi olla tyhjä -- ole hyvä ja syötä tallennettava nimi',
 	'themedesigner-upload-disabled' => 'Pahoittelumme: kuvien tallennus on väliakiaisesti poissa käytöstä. Palaa tekemään muutoksesi vähän ajan kuluttua.',
-);
+];
 
 /** French (français)
  * @author Crochet.david
@@ -831,7 +832,7 @@ $messages['fi'] = array(
  * @author Verdy p
  * @author Wyz
  */
-$messages['fr'] = array(
+$messages['fr'] = [
 	'action-themedesigner' => 'accéder au Concepteur de thèmes',
 	'themedesigner-or' => 'ou',
 	'themedesigner-desc' => 'Permet aux administrateurs du wiki de concevoir un thème pour un wiki',
@@ -893,23 +894,23 @@ $messages['fr'] = array(
 	'themedesigner-wordmark-preview-error' => 'Oups ! Le nom du wiki ne peut pas être vide,
 veuillez entrer le nom du wiki pour sauvegarder.',
 	'themedesigner-upload-disabled' => 'Désolé, nous avons temporairement désactivé les téléchargements. Vérifiez prochainement pour faire des modifications',
-);
+];
 
 /** Western Frisian (Frysk)
  * @author Robin0van0der0vliet
  */
-$messages['fy'] = array(
+$messages['fy'] = [
 	'themedesigner-background' => 'Eftergrûn',
 	'themedesigner-small' => 'Lyts',
 	'themedesigner-large' => 'Grut',
 	'themedesigner-button-cancel' => 'Annulearje',
-);
+];
 
 /** Galician (galego)
  * @author Toliño
  * @author Vivaelcelta
  */
-$messages['gl'] = array(
+$messages['gl'] = [
 	'action-themedesigner' => 'acceder ao Deseñador de temas visuais',
 	'themedesigner-or' => 'ou',
 	'themedesigner-desc' => 'Permite aos administradores deseñar o tema visual do wiki',
@@ -971,13 +972,13 @@ $messages['gl'] = array(
 	'themedesigner-wordmark-preview-error' => 'Vaites! O nome do wiki non pode quedar baleiro.
 Para gardar, escriba o nome do wiki.',
 	'themedesigner-upload-disabled' => 'Sentímolo. A subida de ficheiros está desactivada temporalmente. Volve nuns minutos para facer os cambios',
-);
+];
 
 /** Hungarian (magyar)
  * @author Dani
  * @author TK-999
  */
-$messages['hu'] = array(
+$messages['hu'] = [
 	'action-themedesigner' => 'a Stílustervező használata',
 	'themedesigner-or' => 'vagy',
 	'themedesigner-desc' => 'Lehetővé teszi a wiki stílusának megtervezését a wiki adminisztrátorainak',
@@ -1032,12 +1033,12 @@ $messages['hu'] = array(
 	'themedesigner-manual-upload-error' => 'Használd a Stílustervezőt a wiki hátterének vagy logójának módosításához',
 	'themedesigner-favicon-heading' => 'Favicon',
 	'themedesigner-wodmark-preview' => 'Előnézet',
-);
+];
 
 /** Interlingua (interlingua)
  * @author McDutchie
  */
-$messages['ia'] = array(
+$messages['ia'] = [
 	'themedesigner-or' => 'o',
 	'themedesigner-desc' => 'Permitte que administratores wiki designa un apparentia pro un wiki',
 	'themedesigner-title' => 'Designator de apparentias de Wikia',
@@ -1091,16 +1092,16 @@ $messages['ia'] = array(
 	'themedesigner-manual-upload-error' => 'Usa le designator de apparentias pro incargar un marca de parola o un fundo pro le wiki.',
 	'themedesigner-favicon-heading' => 'Favicon',
 	'themedesigner-wodmark-preview' => 'Previsualisar',
-);
+];
 
 /** Ingush (ГӀалгӀай)
  * @author Sapral Mikail
  */
-$messages['inh'] = array(
+$messages['inh'] = [
 	'themedesigner-page' => 'Оаг|ув',
 	'themedesigner-color' => 'кертера',
 	'themedesigner-links' => 'хьожадергаш',
-);
+];
 
 /** Japanese (日本語)
  * @author Barrel0116
@@ -1108,7 +1109,7 @@ $messages['inh'] = array(
  * @author Shirayuki
  * @author Tommy6
  */
-$messages['ja'] = array(
+$messages['ja'] = [
 	'action-themedesigner' => 'テーマデザイナへのアクセス',
 	'themedesigner-or' => 'または',
 	'themedesigner-desc' => '管理者がウィキのテーマをデザインすることを可能にします。',
@@ -1163,12 +1164,12 @@ $messages['ja'] = array(
 	'themedesigner-manual-upload-error' => '画像ロゴや背景画像のアップロードにはテーマデザイナを使用してください',
 	'themedesigner-favicon-heading' => 'favicon',
 	'themedesigner-wodmark-preview' => 'プレビュー',
-);
+];
 
 /** Khmer (ភាសាខ្មែរ)
  * @author គីមស៊្រុន
  */
-$messages['km'] = array(
+$messages['km'] = [
 	'themedesigner-background' => 'ផ្ទៃខាងក្រោយ',
 	'themedesigner-page' => 'ទំព័រ',
 	'themedesigner-color' => 'ពណ៌', # Fuzzy
@@ -1203,19 +1204,19 @@ $messages['km'] = array(
 	'themedesigner-dimensions-error' => 'រូបភាពធំជាងវិមាត្រកំហិត',
 	'themedesigner-type-error' => 'ប្រភេទឯកសារមិនត្រឹមត្រូវ',
 	'themedesigner-unknown-error' => 'មានបញ្ហាកើតឡើង ដោយយើងមិនដឹងថាមកពីមូលហេតុអ្វី។ សូមសាកល្បងម្ដងទៀត',
-);
+];
 
 /** Kannada (ಕನ್ನಡ)
  * @author VASANTH S.N.
  */
-$messages['kn'] = array(
+$messages['kn'] = [
 	'themedesigner-page' => 'ಪುಟ',
 	'themedesigner-color' => 'ಮುಖ್ಯ',
 	'themedesigner-small' => 'ಸಣ್ಣ',
 	'themedesigner-large' => 'ದೊಡ್ಡದು',
 	'themedesigner-size' => 'ಗಾತ್ರ',
 	'themedesigner-button-save' => 'ಉಳಿಸಿ',
-);
+];
 
 /** Korean (한국어)
  * @author Cafeinlove
@@ -1224,7 +1225,7 @@ $messages['kn'] = array(
  * @author Revi
  * @author 아라
  */
-$messages['ko'] = array(
+$messages['ko'] = [
 	'action-themedesigner' => '테마 디자이너에 접근',
 	'themedesigner-or' => '또는',
 	'themedesigner-desc' => '위키 관리자가 테마를 디자인하도록 허용',
@@ -1265,13 +1266,13 @@ $messages['ko'] = array(
 	'themedesigner-type-error' => '잘못된 파일 형식',
 	'themedesigner-favicon-heading' => '파비콘',
 	'themedesigner-wodmark-preview' => '미리 보기',
-);
+];
 
 /** Kurdish (Latin script) (Kurdî (latînî)‎)
  * @author Bikarhêner
  * @author George Animal
  */
-$messages['ku-latn'] = array(
+$messages['ku-latn'] = [
 	'themedesigner-or' => 'an',
 	'themedesigner-page' => 'rûpel',
 	'themedesigner-color' => 'sereke',
@@ -1284,12 +1285,12 @@ $messages['ku-latn'] = array(
 	'themedesigner-button-ok' => 'Temam',
 	'themedesigner-button-save' => 'Qeyd bike',
 	'themedesigner-button-change-text' => 'Nivîsê biguherîne',
-);
+];
 
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
-$messages['lb'] = array(
+$messages['lb'] = [
 	'themedesigner-background' => 'Hannergrond',
 	'themedesigner-page' => 'Säit',
 	'themedesigner-small' => 'Kleng',
@@ -1300,12 +1301,12 @@ $messages['lb'] = array(
 	'themedesigner-button-upload' => 'Eroplueden',
 	'themedesigner-button-save' => 'Späicheren',
 	'themedesigner-wordmark-preview-error' => 'Ups! Den Numm vun der Wiki kann net eidel sinn, gitt w.e.g. den Numm vun der Wiki a fir se ze späicheren.',
-);
+];
 
 /** Northern Luri (لوری مینجایی)
  * @author Mogoeilor
  */
-$messages['lrc'] = array(
+$messages['lrc'] = [
 	'themedesigner-or' => 'يا',
 	'themedesigner-page' => 'بلگه',
 	'themedesigner-color-middle' => 'مینجا ون',
@@ -1326,12 +1327,12 @@ $messages['lrc'] = array(
 	'themedesigner-history-item' => '$1 وا
 $2',
 	'themedesigner-wodmark-preview' => 'پيش سيل',
-);
+];
 
 /** Macedonian (македонски)
  * @author Bjankuloski06
  */
-$messages['mk'] = array(
+$messages['mk'] = [
 	'action-themedesigner' => 'пристап на Уредник на изглед',
 	'themedesigner-or' => 'или',
 	'themedesigner-desc' => 'Им овозможува на вики-администраторите ликовно да го уредат изгледот на викито',
@@ -1393,20 +1394,20 @@ $messages['mk'] = array(
 	'themedesigner-wordmark-preview-error' => 'Упс! Името на викито не може да стои празно.
 Внесете име за да можете да го зачувате викито.',
 	'themedesigner-upload-disabled' => 'Нажалост, подигањата се привремено оневозможени. Навратете се набргу',
-);
+];
 
 /** Mongolian (монгол)
  * @author Chinneeb
  */
-$messages['mn'] = array(
+$messages['mn'] = [
 	'themedesigner-page' => 'Хуудас',
-);
+];
 
 /** Malay (Bahasa Melayu)
  * @author Anakmalaysia
  * @author SNN95
  */
-$messages['ms'] = array(
+$messages['ms'] = [
 	'action-themedesigner' => 'akses Reka Bentuk Tema',
 	'themedesigner-or' => 'atau',
 	'themedesigner-desc' => 'Membolekan pentadbir wiki mereka bentuk tema untuk wiki',
@@ -1467,12 +1468,12 @@ $messages['ms'] = array(
 	'themedesigner-wodmark-preview' => 'Pralihat',
 	'themedesigner-wordmark-preview-error' => 'Maaf, tajuk wiki tidak boleh dibiarkan kosong. Sila berikan nama kepada wiki sebelum menyimpan.',
 	'themedesigner-upload-disabled' => 'Maaf, kami menyahdayakan pemuat naik buat sementara waktu. Semak semula selepas ini untuk membuat perubahan',
-);
+];
 
 /** Burmese (မြန်မာဘာသာ)
  * @author Erikoo
  */
-$messages['my'] = array(
+$messages['my'] = [
 	'themedesigner-page' => 'စာ​မျက်​နှာ​',
 	'themedesigner-color' => 'အရောင်', # Fuzzy
 	'themedesigner-links' => 'လင့်',
@@ -1490,20 +1491,20 @@ $messages['my'] = array(
 	'themedesigner-size' => 'အရွယ်အစား',
 	'themedesigner-button-save' => 'သိမ်းရန်',
 	'themedesigner-history-item' => '$2 က $1',
-);
+];
 
 /** Mazanderani (مازِرونی)
  * @author محک
  */
-$messages['mzn'] = array(
+$messages['mzn'] = [
 	'themedesigner-button-upload' => 'باربی‌یشتن',
-);
+];
 
 /** Norwegian Bokmål (norsk bokmål)
  * @author Audun
  * @author Nghtwlkr
  */
-$messages['nb'] = array(
+$messages['nb'] = [
 	'themedesigner-or' => 'eller',
 	'themedesigner-desc' => 'Lar wiki-administratorer utforme et tema for en wiki',
 	'themedesigner-title' => 'Wikia-temautformer',
@@ -1557,7 +1558,7 @@ $messages['nb'] = array(
 	'themedesigner-manual-upload-error' => 'Bruk Temautformeren for å laste opp en logo eller bakgrunn for wikien',
 	'themedesigner-favicon-heading' => 'Favicon',
 	'themedesigner-wodmark-preview' => 'Forhåndsvisning',
-);
+];
 
 /** Dutch (Nederlands)
  * @author Flightmare
@@ -1567,7 +1568,7 @@ $messages['nb'] = array(
  * @author Siebrand
  * @author Tjcool007
  */
-$messages['nl'] = array(
+$messages['nl'] = [
 	'action-themedesigner' => 'toegang te krijgen tot de Themaontwerper',
 	'themedesigner-or' => 'of',
 	'themedesigner-desc' => 'Staat wikibeheerders toe een thema voor een wiki te ontwerpen',
@@ -1629,12 +1630,12 @@ $messages['nl'] = array(
 	'themedesigner-wordmark-preview-error' => 'De naam van de wiki mag niet leeg zijn.
 Geef een naam op voor de wiki.',
 	'themedesigner-upload-disabled' => 'We hebben uploads tijdelijk uitgeschakeld. Probeer het binnenkort opnieuw om veranderingen te maken.',
-);
+];
 
 /** Occitan (occitan)
  * @author Cedric31
  */
-$messages['oc'] = array(
+$messages['oc'] = [
 	'themedesigner-or' => 'o',
 	'themedesigner-page' => 'Pagina',
 	'themedesigner-color' => 'principal',
@@ -1667,13 +1668,13 @@ $messages['oc'] = array(
 	'themedesigner-size-error' => 'Talha de fichièr incorrècta',
 	'themedesigner-favicon-heading' => 'Favicon',
 	'themedesigner-wodmark-preview' => 'Apercebut',
-);
+];
 
 /** Pennsylvania German (Deitsch)
  */
-$messages['pdc'] = array(
+$messages['pdc'] = [
 	'themedesigner-small' => 'Glee',
-);
+];
 
 /** Polish (polski)
  * @author BeginaFelicysym
@@ -1685,7 +1686,7 @@ $messages['pdc'] = array(
  * @author Sp5uhe
  * @author Wladekb
  */
-$messages['pl'] = array(
+$messages['pl'] = [
 	'action-themedesigner' => 'edycji skórki poprzez Kreator motywu',
 	'themedesigner-or' => 'lub',
 	'themedesigner-desc' => 'Pozwala administratorom edytować motyw graficzny wiki.',
@@ -1746,13 +1747,13 @@ $messages['pl'] = array(
 	'themedesigner-wodmark-preview' => 'Podgląd',
 	'themedesigner-wordmark-preview-error' => 'Błąd – nazwa wiki nie może być pusta, wprowadź nazwę wiki, aby zapisać.',
 	'themedesigner-upload-disabled' => 'Przepraszamy, przesyłanie plików jest tymczasowo niedostępne. Spróbuj ponownie później.',
-);
+];
 
 /** Piedmontese (Piemontèis)
  * @author Borichèt
  * @author Dragonòt
  */
-$messages['pms'] = array(
+$messages['pms'] = [
 	'themedesigner-or' => 'o',
 	'themedesigner-desc' => "A përmët a j'aministrator ëd la wiki ëd disegné un tema për na wiki",
 	'themedesigner-title' => 'Dissegnator ëd Tema ëd Wikia',
@@ -1806,12 +1807,12 @@ $messages['pms'] = array(
 	'themedesigner-manual-upload-error' => "Ch'a deuvra Theme Designer për carié na marca o në sfond për la wiki",
 	'themedesigner-favicon-heading' => 'Favicon',
 	'themedesigner-wodmark-preview' => 'Preuva',
-);
+];
 
 /** Pashto (پښتو)
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
-$messages['ps'] = array(
+$messages['ps'] = [
 	'themedesigner-or' => 'يا',
 	'themedesigner-background' => 'مخينه',
 	'themedesigner-page' => 'مخ',
@@ -1832,7 +1833,7 @@ $messages['ps'] = array(
 	'themedesigner-button-save' => 'خوندي کول',
 	'themedesigner-button-change-text' => 'متن بدلول',
 	'themedesigner-wodmark-preview' => 'مخليدنه',
-);
+];
 
 /** Portuguese (português)
  * @author Hamilton Abreu
@@ -1843,7 +1844,7 @@ $messages['ps'] = array(
  * @author SandroHc
  * @author Waldir
  */
-$messages['pt'] = array(
+$messages['pt'] = [
 	'action-themedesigner' => 'aceder ao Compositor de Variantes do Tema',
 	'themedesigner-or' => 'ou',
 	'themedesigner-desc' => 'Permite que os administradores componham variantes do tema da wiki',
@@ -1905,7 +1906,7 @@ $messages['pt'] = array(
 	'themedesigner-wordmark-preview-error' => 'Oops! O nome da wiki não pode ficar vazio,
 escreve o nome da wiki para guardar.',
 	'themedesigner-upload-disabled' => 'Lamentamos, desativamos temporariamente os envies. Verifica mais tarde para fazer alterações',
-);
+];
 
 /** Brazilian Portuguese (português do Brasil)
  * @author Aristóbulo
@@ -1916,7 +1917,7 @@ escreve o nome da wiki para guardar.',
  * @author Luckas
  * @author Luckas Blade
  */
-$messages['pt-br'] = array(
+$messages['pt-br'] = [
 	'action-themedesigner' => 'acessar o Designer de Temas',
 	'themedesigner-or' => 'ou',
 	'themedesigner-desc' => 'Permite aos administradores compor um tema visual para a wiki',
@@ -1978,22 +1979,22 @@ $messages['pt-br'] = array(
 	'themedesigner-wordmark-preview-error' => 'Ops! O nome da wikia não pode ficar em branco, 
 digite o nome da wikia para salvar.',
 	'themedesigner-upload-disabled' => 'Desculpe, nós desativamos os uploads temporariamente. Volte em breve para fazer mudanças',
-);
+];
 
 /** Romanian (română)
  * @author Stelistcristi
  */
-$messages['ro'] = array(
+$messages['ro'] = [
 	'themedesigner-page' => 'Pagină',
 	'themedesigner-color' => 'culoare', # Fuzzy
 	'themedesigner-font' => 'font',
 	'themedesigner-size' => 'mărime',
-);
+];
 
 /** tarandíne (tarandíne)
  * @author Joetaras
  */
-$messages['roa-tara'] = array(
+$messages['roa-tara'] = [
 	'themedesigner-or' => 'o',
 	'themedesigner-page' => 'Pàgene',
 	'themedesigner-color' => 'prengepàle',
@@ -2015,7 +2016,7 @@ $messages['roa-tara'] = array(
 	'themedesigner-button-upload' => 'Careche',
 	'themedesigner-button-upload-wordmark' => 'Careche',
 	'themedesigner-button-save' => 'Reggìstre',
-);
+];
 
 /** Russian (русский)
  * @author DCamer
@@ -2024,7 +2025,7 @@ $messages['roa-tara'] = array(
  * @author Kuzura
  * @author Okras
  */
-$messages['ru'] = array(
+$messages['ru'] = [
 	'action-themedesigner' => 'доступ к Конструктору тем',
 	'themedesigner-or' => 'или',
 	'themedesigner-desc' => 'Позволяет администраторам разрабатывать темы для вики',
@@ -2085,20 +2086,20 @@ $messages['ru'] = array(
 	'themedesigner-wodmark-preview' => 'Предпросмотр',
 	'themedesigner-wordmark-preview-error' => 'Ой! Название проекта не может быть пустым. Пожалуйста, введите имя проекта для сохранения.',
 	'themedesigner-upload-disabled' => 'К сожалению мы временно отключили загрузку файлов. Попробуйте проверить ещё раз через некоторое время.',
-);
+];
 
 /** Slovenian (slovenščina)
  * @author Eleassar
  */
-$messages['sl'] = array(
+$messages['sl'] = [
 	'themedesigner-wordmark-preview-error' => 'Ups! Ime wikija ne more biti prazno. Da shranite, vnesite ime wikija.',
-);
+];
 
 /** Serbian (Cyrillic script) (српски (ћирилица)‎)
  * @author Milicevic01
  * @author Rancher
  */
-$messages['sr-ec'] = array(
+$messages['sr-ec'] = [
 	'themedesigner-title' => 'Прављење тема',
 	'themedesigner-background' => 'Позадина',
 	'themedesigner-page' => 'Страница',
@@ -2136,13 +2137,13 @@ $messages['sr-ec'] = array(
 	'themedesigner-size-error' => 'Неисправна величина датотеке',
 	'themedesigner-dimensions-error' => 'Слика прелази ограничење величине',
 	'themedesigner-type-error' => 'Неисправна врста датотеке',
-);
+];
 
 /** Swedish (svenska)
  * @author Tobulos1
  * @author WikiPhoenix
  */
-$messages['sv'] = array(
+$messages['sv'] = [
 	'action-themedesigner' => 'komma åt temadesignern',
 	'themedesigner-or' => 'eller',
 	'themedesigner-desc' => 'Allows wiki administrators to design a theme for a wiki',
@@ -2204,13 +2205,13 @@ $messages['sv'] = array(
 	'themedesigner-wordmark-preview-error' => 'Hoppsan! Wikins namn kan inte vara tomt,
 var god ange wikins namn för att spara.',
 	'themedesigner-upload-disabled' => 'Tyvärr, vi har tillfälligt inaktiverat uppladdningar. Återkom inom kort för att göra ändringar',
-);
+];
 
 /** Telugu (తెలుగు)
  * @author Chaduvari
  * @author Veeven
  */
-$messages['te'] = array(
+$messages['te'] = [
 	'themedesigner-page' => 'పేజీ',
 	'themedesigner-color' => 'రంగు', # Fuzzy
 	'themedesigner-buttons' => 'బొత్తాలు',
@@ -2223,19 +2224,19 @@ $messages['te'] = array(
 	'themedesigner-button-upload' => 'ఎక్కించు',
 	'themedesigner-size' => 'పరిమాణం',
 	'themedesigner-button-save' => 'భద్రపరచు',
-);
+];
 
 /** Tetum (tetun)
  * @author MF-Warburg
  */
-$messages['tet'] = array(
+$messages['tet'] = [
 	'themedesigner-page' => 'Pájina',
-);
+];
 
 /** Tagalog (Tagalog)
  * @author AnakngAraw
  */
-$messages['tl'] = array(
+$messages['tl'] = [
 	'themedesigner-or' => 'o',
 	'themedesigner-desc' => 'Nagpapahintulot sa mga tagapangasiwa ng wiki na makapagdisenyo ng isang tema para sa isang wiki',
 	'themedesigner-title' => 'Tagapagdisenyo ng Tema ng Wikia',
@@ -2289,20 +2290,20 @@ $messages['tl'] = array(
 	'themedesigner-manual-upload-error' => 'Gamitin ang Tagapagdisenyo ng Tema upang makapagkargang papaitaas ng marka ng salita o panlikuran ng wiki',
 	'themedesigner-favicon-heading' => 'Favicon',
 	'themedesigner-wodmark-preview' => 'Paunang tingin',
-);
+];
 
 /** Talysh (толышә зывон)
  * @author Erdemaslancan
  */
-$messages['tly'] = array(
+$messages['tly'] = [
 	'themedesigner-page' => 'Сәһифә',
-);
+];
 
 /** Ukrainian (українська)
  * @author Andriykopanytsia
  * @author Тест
  */
-$messages['uk'] = array(
+$messages['uk'] = [
 	'action-themedesigner' => 'доступ до Конструктора тем',
 	'themedesigner-or' => 'або',
 	'themedesigner-desc' => 'Дозволяє адміністраторам вікі проектувати тему для вікі',
@@ -2363,7 +2364,7 @@ $messages['uk'] = array(
 	'themedesigner-wodmark-preview' => 'Попередній перегляд',
 	'themedesigner-wordmark-preview-error' => "Йой! Назва вікі не можу бути порожньою, будь ласка, введіть ім'я вікі для збереження.",
 	'themedesigner-upload-disabled' => 'Вибачте, ми тимчасово відключили завантаження файлів. Перевірте, незадовго до внесення змін',
-);
+];
 
 /** Vietnamese (Tiếng Việt)
  * @author Baonguyen21022003
@@ -2372,7 +2373,7 @@ $messages['uk'] = array(
  * @author Xiao Qiao
  * @author XiaoQiaoGrace
  */
-$messages['vi'] = array(
+$messages['vi'] = [
 	'action-themedesigner' => 'truy cập Thiết kế chủ đề',
 	'themedesigner-or' => 'hoặc',
 	'themedesigner-desc' => 'Cho phép các bảo quản viên thiết kế chủ đề trên wiki',
@@ -2433,14 +2434,14 @@ $messages['vi'] = array(
 	'themedesigner-wodmark-preview' => 'Xem thử',
 	'themedesigner-wordmark-preview-error' => 'Rất tiếc! Tên của wiki không được phép để trống. Xin vui lòng nhập tên của wiki để lưu lại.',
 	'themedesigner-upload-disabled' => 'Xin lỗi, chúng tôi đã tạm thời vô hiệu hóa việc tải lên. Hãy quay lại sau khi có thay đổi',
-);
+];
 
 /** Wu Chinese (吴语)
  * @author 十弌
  */
-$messages['wuu'] = array(
+$messages['wuu'] = [
 	'themedesigner-wordmark-preview-error' => '皇天！wiki個名字嘸處空起，打進去再保存。',
-);
+];
 
 /** Simplified Chinese (中文（简体）‎)
  * @author Ffaarr
@@ -2450,7 +2451,7 @@ $messages['wuu'] = array(
  * @author Sam Wang
  * @author Yfdyh000
  */
-$messages['zh-hans'] = array(
+$messages['zh-hans'] = [
 	'action-themedesigner' => '访问主题设计器',
 	'themedesigner-or' => '或',
 	'themedesigner-desc' => '允许wiki管理员为wiki设计一个主题',
@@ -2511,13 +2512,13 @@ $messages['zh-hans'] = array(
 	'themedesigner-wodmark-preview' => '预览',
 	'themedesigner-wordmark-preview-error' => '哎呀！Wiki名称不能留空，请输入Wiki的名字后再保存。',
 	'themedesigner-upload-disabled' => '对不起，我们已经暂时禁用上传。请稍后回来检查，再进行变更',
-);
+];
 
 /** Traditional Chinese (中文（繁體）‎)
  * @author Ffaarr
  * @author LNDDYL
  */
-$messages['zh-hant'] = array(
+$messages['zh-hant'] = [
 	'action-themedesigner' => '訪問主題設計器',
 	'themedesigner-or' => '或',
 	'themedesigner-desc' => '允許wiki管理員為wiki設計一個主題',
@@ -2578,4 +2579,4 @@ $messages['zh-hant'] = array(
 	'themedesigner-wodmark-preview' => '預覽',
 	'themedesigner-wordmark-preview-error' => '哎呀 ！Wiki 的名稱不能為空 ！請輸入wiki的名稱後再儲存。',
 	'themedesigner-upload-disabled' => '抱歉，我們已經暫時禁用上傳。請過一會來看看再作編輯。',
-);
+];

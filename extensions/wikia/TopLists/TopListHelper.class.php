@@ -617,7 +617,7 @@ class TopListHelper {
 		global $wgRequest, $wgUser;
 
 		try {
-			$wgRequest->isValidWriteRequest( $wgUser );
+			$wgRequest->assertValidWriteRequest( $wgUser );
 		} catch ( BadRequestException $exception ) {
 			return self::getJsonExceptionResponse( $exception );
 		}
@@ -685,7 +685,7 @@ class TopListHelper {
 		global $wgRequest, $wgUser;
 
 		try {
-			$wgRequest->isValidWriteRequest( $wgUser );
+			$wgRequest->assertValidWriteRequest( $wgUser );
 		} catch ( BadRequestException $exception ) {
 			return self::getJsonExceptionResponse( $exception );
 		}

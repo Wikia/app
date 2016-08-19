@@ -10,11 +10,16 @@ class ARecoveryEngineHooks {
 	 * @return bool
 	 */
 	public static function onWikiaSkinTopScripts( &$vars, &$scripts ) {
-		if ( !ARecoveryModule::isEnabled() ) {
-			return true;
-		}
+		global $wgDevelEnvironment;
 
-		$scripts .= F::app()->sendRequest( 'ARecoveryEngineApiController', 'getBootstrap' );
+		if ( ARecoveryModule::isEnabled() ) {
+			$spStatusURL = 'http://community.wikia.com/api/v1/ARecoveryEngine/SourcePointStatus';
+			if ( !empty( $wgDevelEnvironment ) ) {
+				$spStatusURL = '/api/v1/ARecoveryEngine/SourcePointStatus';
+			}
+			$scripts .= '<script src="' . $spStatusURL . '"></script>';
+			$scripts .= F::app()->sendRequest( 'ARecoveryEngineApiController', 'getBootstrap' );
+		}
 
 		return true;
 	}

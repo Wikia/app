@@ -1,0 +1,9 @@
+{
+  "name": "design-system",
+  "scripts": {
+    "setup": "npm install && node i18n/build && SERVER_ID=177 php ../../../maintenance/rebuildLocalisationCache.php --force --thread=2 --primary"
+  },
+  "dependencies": {
+    "design-system-i18n": "Wikia/design-system-i18n#0.3.3"
+  }
+}

@@ -344,22 +344,20 @@ class BodyController extends WikiaController {
 			}
 		}
 
-		// Display Control Center Header on certain special pages
-		if ( !empty( $this->wg->EnableAdminDashboardExt ) && AdminDashboardLogic::displayAdminDashboard( $this->app, $this->wg->Title ) ) {
+		// Display chromed header on Special:AdminDashboard
+		if ( $this->wg->Title->isSpecial( 'AdminDashboard' ) && $this->wg->User->isAllowed( 'admindashboard' ) ) {
 			$this->headerModuleName = null;
 			$this->displayAdminDashboard = true;
-			$this->displayAdminDashboardChromedArticle = ( $this->wg->Title->getText() != SpecialPage::getTitleFor( 'AdminDashboard' )->getText() );
 		} else {
 			$this->displayAdminDashboard = false;
-			$this->displayAdminDashboardChromedArticle = false;
 		}
 
 		$this->railModulesExist = true;
 
 		// use one column layout for pages with no right rail modules
 		if ( count( $this->railModuleList ) == 0 || !empty( $this->wg->SuppressRail ) ) {
-			// Special:AdminDashboard doesn't need this class, but pages chromed with it do
-			if ( !$this->displayAdminDashboard || $this->displayAdminDashboardChromedArticle ) {
+			// Special:AdminDashboard doesn't need this class
+			if ( !$this->displayAdminDashboard ) {
 				OasisController::addBodyClass( 'oasis-one-column' );
 			}
 
