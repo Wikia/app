@@ -2339,12 +2339,27 @@ class WallHooksHelper {
 	 * @return bool Whether to bolden the link
 	 */
 	private static function shouldBoldenFollowedLink( User $user, Title $title, WallMessage $wm ) {
-		$isWatchlist = $title->isSpecial( 'Watchlist' );
-		return ( !$user->isAnon()
-			// Is this user watching this comment, or the thread, or the wall/board?
-			&& ( $wm->isWatched( $user ) || $wm->isWallWatched( $user ) || $wm->isWallOwner( $user ) )
-			// If yes, are we on RecentChanges, or was the page updated?
-			&& ( !$isWatchlist || $wm->getTitle()->getNotificationTimestamp( $user ) || $wm->getArticleTitle()->getNotificationTimestamp( $user ) )
+		// Anon users can't follow pages
+		if ( $user->isAnon() ) {
+			return false;
+		}
+
+		// This user is not following this thread, isn't the wall owner, and isn't following the Forum board
+		if ( !$wm->isWatched( $user ) && !$wm->isWallWatched( $user ) && !$wm->isWallOwner( $user ) ) {
+			return false;
+		}
+
+		$wmTitle = $wm->getTitle();
+		$wmArticleTitle = $wm->getArticleTitle();
+		// Invalid/stale data, exit here
+		if ( !( $wmTitle instanceof Title ) || !( $wmArticleTitle instanceof Title ) ) {
+			return false;
+		}
+		$isRecentChanges = $title->isSpecial( 'Recentchanges' );
+
+		return ( $isRecentChanges ||
+			$wmTitle->getNotificationTimestamp( $user ) ||
+			$wmArticleTitle->getNotificationTimestamp( $user )
 		);
 	}
 
