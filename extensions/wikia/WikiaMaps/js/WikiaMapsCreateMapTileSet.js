@@ -61,9 +61,7 @@ define(
 			steps = {
 				browseTileSet: {
 					id: '#intMapBrowse',
-					buttons: {
-						'#intMapBack': 'previousStep'
-					},
+					buttons: {},
 					helper: loadDefaultTileSets
 				}
 			},
