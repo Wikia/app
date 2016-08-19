@@ -58,10 +58,10 @@ class AssetsConfig {
 
 		if ( !empty( $wgUseJQueryFromCDN ) && empty( $params['noexternals'] ) ) {
 			$url = $minify
-				? '#external_http://ajax.googleapis.com/ajax/libs/jquery/' . self::JQUERY_VERSION . '/jquery.min.js'
-				: '#external_http://ajax.googleapis.com/ajax/libs/jquery/' . self::JQUERY_VERSION . '/jquery.js';
+				? '#external_http://ajax.googleapis.com/ajax/libs/jquery/' . static::JQUERY_VERSION . '/jquery.min.js'
+				: '#external_http://ajax.googleapis.com/ajax/libs/jquery/' . static::JQUERY_VERSION . '/jquery.js';
 		} else {
-			$url = 'resources/jquery/jquery-' . self::JQUERY_VERSION . '.js';
+			$url = 'resources/jquery/jquery-' . static::JQUERY_VERSION . '.js';
 		}
 
 		return array( $url );
@@ -73,12 +73,12 @@ class AssetsConfig {
 	 * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
 	 */
 	private function load() {
-		if ( empty( self::$mConfig ) ) {
+		if ( empty( static::$mConfig ) ) {
 			wfProfileIn( __METHOD__ );
 			include( __DIR__ . '/config.php' );
 
 			/* @var $config Array */
-			self::$mConfig = $config;
+			static::$mConfig = $config;
 
 			wfProfileOut( __METHOD__ );
 		}
@@ -93,7 +93,7 @@ class AssetsConfig {
 		$this->load();
 
 		if ( $this->isGroupDefined( $groupName ) ) {
-			return ( isset( self::$mConfig[$groupName]['skin'] ) ) ? self::$mConfig[$groupName]['skin'] : null;
+			return ( isset( static::$mConfig[$groupName]['skin'] ) ) ? static::$mConfig[$groupName]['skin'] : null;
 		} else {
 			// this is being called on non-defined groups programmatically, so no need to log failure
 			return null;
@@ -109,7 +109,7 @@ class AssetsConfig {
 		$this->load();
 
 		if ( $this->isGroupDefined( $groupName ) ) {
-			return self::$mConfig[$groupName]['type'];
+			return static::$mConfig[$groupName]['type'];
 		} else {
 			// this is being called on non-defined groups programmatically, so no need to log failure
 			return null;
@@ -129,7 +129,7 @@ class AssetsConfig {
 		$this->load();
 
 		if ( $this->isGroupDefined( $groupName ) ) {
-			return self::$mConfig[$groupName]['assets'];
+			return static::$mConfig[$groupName]['assets'];
 		} else {
 			throw new InvalidArgumentException("Group '{$groupName}' doesn't exist");
 		}
@@ -182,12 +182,12 @@ class AssetsConfig {
 	 * @return bool true if the group is defined
 	 */
 	public function isGroupDefined($groupName) {
-		return is_string( $groupName ) && isset( self::$mConfig[$groupName] );
+		return is_string( $groupName ) && isset( static::$mConfig[$groupName] );
 	}
 
 	public function getGroupNames() {
 		$this->load();
 
-		return array_keys( self::$mConfig );
+		return array_keys( static::$mConfig );
 	}
 }
