@@ -37,24 +37,17 @@ class ContributionAppreciationController extends WikiaController {
 	public function getAppreciations() {
 		global $wgUser;
 
-		$html = '';
-		$upvotesService = new RevisionUpvotesService();
-		$upvotes = $upvotesService->getUserNewUpvotes( $wgUser->getId() );
+		$upvotes = ( new RevisionUpvotesService() )->getUserNewUpvotes( $wgUser->getId() );
 
 		if ( !empty( $upvotes ) ) {
 			$appreciations = $this->prepareAppreciations( $upvotes );
 
 			if ( !empty( $appreciations ) ) {
 				$numberOfAppreciations = count( $appreciations );
-				$numberOfHiddenAppreciations = $numberOfAppreciations > 2 ? $numberOfAppreciations - 2 : 0;
-				$html = ( new Wikia\Template\PHPEngine )
-					->setVal('appreciations', $appreciations)
-					->setVal('numberOfHiddenAppreciations', $numberOfHiddenAppreciations)
-					->render( __DIR__ . '/templates/ContributionAppreciation_appreciations.php' );
+				$this->appreciations = $appreciations;
+				$this->numberOfHiddenAppreciations = $numberOfAppreciations > 2 ? $numberOfAppreciations - 2 : 0;
 			}
 		}
-
-		$this->response->setBody( $html );
 	}
 
 	public function diffModule() {
