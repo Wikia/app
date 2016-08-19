@@ -5,6 +5,7 @@ class SpecialPortabilityDashboardController extends WikiaSpecialPageController {
 	const SPECIAL_INSIGHTS_TYPELESS_TEMPLATE_PAGE = 'templateswithouttype';
 	const SPECIAL_CUSTOM_INFOBOXES_PAGE = 'nonportableinfoboxes';
 	const LANGUAGE_FILTER_QS_PARAM = 'lang';
+	const WIKI_URL_QS_PARAM = 'url';
 	const SUPPORTED_LANGUAGE_FILTERS = [ 'de', 'en', 'es', 'fr', 'id', 'it', 'ja', 'ko', 'nl', 'pl', 'pt', 'pt-br',
 		'ru', 'vi', 'zh', 'zh-hk' ];
 
@@ -14,13 +15,17 @@ class SpecialPortabilityDashboardController extends WikiaSpecialPageController {
 	}
 
 	public function index() {
-		$model = new PortabilityDashboardModel();
-		$list = $model->getList();
-		$langFilter = $this->getVal( self::LANGUAGE_FILTER_QS_PARAM, '' );
+		$langFilter = $this->getVal( static::LANGUAGE_FILTER_QS_PARAM, '' );
+		$wikiUrlParam = $this->getVal( static::WIKI_URL_QS_PARAM, '' );
 		$isLangFilterSet = !empty( $langFilter );
+		$list = $this->getResultsList( $langFilter, $wikiUrlParam );
+		$noResultsInfoMessage = wfMessage(
+			$isLangFilterSet ? 'portability-dashboard-no-results-for-lang-info' : 'portability-dashboard-no-results-for-url-info',
+			PortabilityDashboardModel::WIKIS_LIMIT
+		)->text();
 
 		// template model
-		$this->response->setVal( 'list', $isLangFilterSet ? $this->filterListByLang( $list, $langFilter ) : $list );
+		$this->response->setVal( 'list', $list );
 
 		// template helpers
 		$this->response->setVal(
@@ -56,14 +61,27 @@ class SpecialPortabilityDashboardController extends WikiaSpecialPageController {
 		$this->response->setVal( 'searchHeadline', wfMessage( 'portability-dashboard-search-headline' )->text() );
 		$this->response->setVal( 'searchPlaceholder', wfMessage( 'portability-dashboard-search-placeholder' )->text() );
 		$this->response->setVal( 'blankImgUrl', F::app()->wg->BlankImgUrl );
-
+		$this->response->setVal( 'noResultsInfo', $noResultsInfoMessage );
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 
 		Wikia::addAssetsToOutput( 'special_portability_dashboard_scss' );
 	}
 
+	private function getResultsList( $langFilter, $wikiUrlParam ) {
+		$model = new PortabilityDashboardModel();
+
+		if ( empty( $wikiUrlParam ) ) {
+			$modelList = $model->getList();
+			$list = empty( $langFilter ) ? $modelList : $this->filterListByLang( $modelList, $langFilter );
+		} else {
+			$list = $model->getWikiByUrl( Sanitizer::encodeAttribute( $wikiUrlParam ) );
+		}
+
+		return $list;
+	}
+
 	/**
-	 * extends languages list with active laguage filter
+	 * extends languages list with active language filter
 	 * @param array $list - languages list
 	 * @param string $activeLangFilter - language code for active language filter
 	 * @return array - extended languages list

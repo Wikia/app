@@ -30,9 +30,10 @@ $messages[ 'en' ] = [
 	'portability-dashboard-special-insights-template-without-title' => 'Unorganized templates on Special:Insights',
 	'portability-dashboard-special-insights-custom-infobox-title' => 'Non-portable infoboxes on Special:Insights',
 	'portability-dashboard-refresh-frequency-info' => 'Portability data, content page views and migration impact are recalculated every Saturday at 9:00 GMT.',
-	'portability-dashboard-no-results-info' => 'No Wikis in selected language in top $1.',
 	'portability-dashboard-search-headline' => 'Search for a Community',
-	'portability-dashboard-search-placeholder' => 'Community name'
+	'portability-dashboard-search-placeholder' => 'Community name',
+	'portability-dashboard-no-results-for-lang-info' => 'No Wikis in selected language in top $1.',
+	'portability-dashboard-no-results-for-url-info' => 'No data available'
 ];
 
 $messages[ 'qqq' ] = [
@@ -58,7 +59,8 @@ $messages[ 'qqq' ] = [
 	'portability-dashboard-special-insights-template-without-title' => 'Link title for unorganized templates on Special:Insights',
 	'portability-dashboard-special-insights-custom-infobox-title' => 'Link title for non-portable infoboxes on Special: Insights',
 	'portability-dashboard-refresh-frequency-info' => 'Portability data, content page views and migration impact are recalculated every Saturday at 9:00 GMT.',
-	'portability-dashboard-no-results-info' => 'Message displayed when there is no results to show within the table.',
 	'portability-dashboard-search-headline' => 'Portability search header',
-	'portability-dashboard-search-placeholder' => 'Portability search placeholder'
+	'portability-dashboard-search-placeholder' => 'Portability search placeholder',
+	'portability-dashboard-no-results-for-lang-info' => 'Message displayed when language filter returned no results to show within the table.',
+	'portability-dashboard-no-results-for-url-info' => 'Message displayed when search returned no results to show within the table.'
 ];
