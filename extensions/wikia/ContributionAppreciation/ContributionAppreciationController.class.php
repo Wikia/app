@@ -37,28 +37,17 @@ class ContributionAppreciationController extends WikiaController {
 	public function getAppreciations() {
 		global $wgUser;
 
-		$html = '';
-		$upvotesService = new RevisionUpvotesService();
-		$upvotes = $upvotesService->getUserNewUpvotes( $wgUser->getId() );
+		$upvotes = ( new RevisionUpvotesService() )->getUserNewUpvotes( $wgUser->getId() );
 
 		if ( !empty( $upvotes ) ) {
 			$appreciations = $this->prepareAppreciations( $upvotes );
 
 			if ( !empty( $appreciations ) ) {
-				$html = $this->app->renderView( 'ContributionAppreciation', 'appreciations', [
-					'appreciations' => $appreciations
-				] );
+				$numberOfAppreciations = count( $appreciations );
+				$this->appreciations = $appreciations;
+				$this->numberOfHiddenAppreciations = $numberOfAppreciations > 2 ? $numberOfAppreciations - 2 : 0;
 			}
 		}
-
-		$this->response->setBody( $html );
-	}
-
-	public function appreciations() {
-		$appreciations = $this->getVal( 'appreciations' );
-		$numberOfAppreciations = count( $appreciations );
-		$this->numberOfHiddenAppreciations = $numberOfAppreciations > 2 ? $numberOfAppreciations - 2 : 0;
-		$this->appreciations = $appreciations;
 	}
 
 	public function diffModule() {
