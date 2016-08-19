@@ -190,7 +190,6 @@ class AppPromoLandingController extends WikiaController {
 		$this->numThumbsPerRow = static::THUMBS_PER_ROW;
 		$this->trendingArticles = $trendingArticles;
 		$this->mainPageUrl = Title::newMainPage()->getFullUrl();
-		//$this->larrSrc = $this->wg->ExtensionsPath."/wikia/AppPromoLanding/images/arrow-left-long.svg";
 		$this->larrSvgCode = "<svg width=\"22px\" height=\"16px\" viewBox=\"0 0 22 16\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">
 								<title>BB56E3FE-7480-48C0-96B3-848DAFB20649</title>
 								<desc>Created with sketchtool.</desc>
