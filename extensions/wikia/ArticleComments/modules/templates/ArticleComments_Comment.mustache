@@ -1,4 +1,4 @@
-<li id="comm-{{commentId}}" class="comment SpeechBubble {{rowClass}}" data-user="{{username}}">
+<li id="comm-{{commentId}}" class="comment SpeechBubble {{rowClass}} level-{{level}}" data-user="{{username}}">
 	<div class="speech-bubble-avatar">
 		<a href="{{userurl}}">{{{avatar}}}</a>
 	</div>
@@ -7,7 +7,8 @@
 			{{{text}}}
 		</div>
 		<div class="edited-by">
-			{{{added-by}}}
+			<a rel="nofollow" class="permalink" href="{{permalink}}">{{date}}</a>
+			<a href="{{userurl}}">{{usertext}}</a>
 			{{#isStaff}}
 				<abbr title="This user is a member of Wikia Staff">
 					<svg xmlns="http://www.w3.org/2000/svg" width="64" height="23" viewBox="0 0 64 23" class="stafflogo">
@@ -15,16 +16,24 @@
 					</svg>
 				</abbr>
 			{{/isStaff}}
-			{{#buttons}}
 			<div class="buttons">
-				{{{replyButton}}}
+				{{#replyButton}}
+					<button type="button" class="article-comm-reply wikia-button secondary actionButton">{{replyText}}</button>
+				{{/replyButton}}
 				<span class="tools">
-					{{#buttons}}
-						{{button}}
-					{{/buttons}}
+					{{#deleteLink}}
+						<img class="remove sprite" alt="" src="{{blankImgUrl}}" width="16" height="16" />
+						<a href="{{delete}}" class="article-comm-delete">{{deleteText}}</a>
+					{{/deleteLink}}
+					{{#editLink}}
+						<span class="edit-link">
+							<img class="edit-pencil sprite" alt="" src="{{blankImgUrl}}" width="16" height="16" />
+							<a href="#" data-comment="{{commentId}}" class="article-comm-edit actionButton">{{editText}}</a>
+						</span>
+					{{/editLink}}
+					<a href="{{history}}" class="article-comm-history">{{historyText}}</a>
 				</span>
 			</div>
-			{{/buttons}}
 		</div>
 	</blockquote>
 </li>

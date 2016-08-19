@@ -99,6 +99,10 @@ if (!empty($wgEnableWallEngine) || !empty($wgEnableArticleCommentsExt) || !empty
 // ResourceLoader module for messages
 $wgResourceModules['ext.ArticleComments'] = [
 	'messages' => [
+		'article-comments-edit',
+		'article-comments-delete',
+		'article-comments-reply',
+		'article-comments-history',
 		'article-comments-page-spacer',
 		'article-comments-prev-page',
 		'article-comments-next-page',

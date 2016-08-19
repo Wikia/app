@@ -198,17 +198,12 @@ class ArticleCommentsController extends WikiaController {
 
 	private function formatCommentData( ArticleComment $comment ) {
 		$commentData = $comment->getData( true );
-		$commentData['added-by'] = wfMessage( 'oasis-comments-added-by' )
-			->rawParams( $commentData['timestamp'], $commentData['sig'] )
-			->escaped();
-
-		if ( count( $commentData['buttons']) || $commentData['replyButton'] ) {
-			$commentData['buttons'] = [
-				'buttons' => $commentData['buttons'],
-				'replyButton' => $commentData['replyButton']
-			];
-		}
-
+		$rev = Revision::newFromId( $comment->getTitle()->getLatestRevID() );
+		$commentData['timestamp'] = wfTimestamp( TS_UNIX, $rev->getTimestamp() );
+		$commentData['permalink'] = $comment->getTitle()->getLocalURL( [ 'permalink' => $commentData['commentId'] ] );
+		$commentData['history'] = $comment->getTitle()->getLocalURL( [ 'action' => 'history' ] );
+		$commentData['delete'] = $comment->getTitle()->getLocalURL( [ 'action' => 'delete' ] );
+		unset( $commentData['title'] );
 		return $commentData;
 	}
 
@@ -338,10 +333,14 @@ class ArticleCommentsController extends WikiaController {
 			}
 
 			// SUS-897: Add ArticleComments JS and messages on-demand
+			$user = $out->getUser();
 			$out->addModules( 'ext.ArticleComments' );
 			$out->addJsConfigVars( [
 				'wgArticleCommentsLoadOnDemand' => $isLoadingOnDemand,
-				'wgArticleCommentsMaxPerPage' => $app->wg->ArticleCommentsMaxPerPage
+				'wgArticleCommentsMaxPerPage' => $app->wg->ArticleCommentsMaxPerPage,
+				'canEditOthersComments' => $user->isAllowedAll( 'commentedit', 'edit' ),
+				'canDeleteComments' => $user->isAllowedAny( 'commentdelete', 'delete' ),
+				'canReplyToComments' => $user->isAllowedAll( 'commentcreate', 'edit' ),
 			] );
 			if ( $app->checkSkin( 'oasis', $skin ) ) {
 				Wikia::addAssetsToOutput( 'articlecomments_js' );

@@ -108,7 +108,7 @@ require(
 
 			function makeRequest() {
 				ArticleComments.bucky.timer.start('edit.makeRequest');
-				var commentId = e.target.id.replace(/^comment/, ''),
+				var commentId = $(e.target).data('comment'),
 					$textfield = $('#article-comm-textfield-' + commentId);
 
 				$.getJSON(mw.config.get('wgScript'), {
@@ -487,9 +487,9 @@ require(
 				data: {
 					articleId: mw.config.get('wgArticleId'),
 					page: page,
-					uselang: mw.config.get('wgUserLanguage')
 				}
 			}).then(function (json) {
+				ArticleComments.addButtonsConfig(json.view);
 				ArticleComments.$commentsList.removeClass('loading');
 
 				if (json.view) {
@@ -704,6 +704,32 @@ require(
 			}
 		},
 
+		addButtonsConfig: function (view) {
+			var buttonsConfig = {
+				deleteLink: mw.config.get('canDeleteComments'),
+				editLink: mw.config.get('canEditOthersComments'),
+				replyText: mw.message('article-comments-reply').text(),
+				deleteText: mw.message('article-comments-delete').text(),
+				editText: mw.message('article-comments-edit').text(),
+				historyText: mw.message('article-comments-history').text(),
+				blankImgUrl: mw.config.get('wgBlankImgUrl'),
+				date: function () {
+					this.timestamp = parseInt(this.timestamp) * 1000;
+					return (new Date(this.timestamp)).toLocaleString(mw.config.get('wgUserLanguage'));
+				},
+				usertext: function () {
+					return mw.util.isIPv4Address(this.username) ? mw.message('oasis-anon-user').escaped() : this.username;
+				}
+			};
+
+			view.comments.forEach(function (item) {
+				buttonsConfig.editLink = buttonsConfig.editLink || item.comment.username;
+				Object.getOwnPropertyNames(buttonsConfig).forEach(function(key) {
+					item.comment[key] = buttonsConfig[key];
+				});
+			});
+		},
+
 		showMoreComments: function () {
 			var $nodesToHide = this.$wrapper.find('.comments').children().slice(3),
 				$pagination = $('.article-comments-pagination', this.$wrapper),
@@ -787,7 +813,7 @@ require(
 							styles: styleAssets.join(','),
 							mustache: [
 								'/extensions/wikia/ArticleComments/modules/templates/ArticleComments_CommentList.mustache',
-								'/extensions/wikia/ArticleComments/modules/templates/ArticleComments_Comment.mustache'
+								'/extensions/wikia/ArticleComments/modules/templates/ArticleComments_Comment.mustache',
 							].join(',')
 						}
 					})
@@ -796,8 +822,11 @@ require(
 					loader.processStyle(resources.styles);
 					ArticleComments.mustache.commentsList = resources.mustache[0];
 					ArticleComments.mustache.comment = resources.mustache[1];
+					ArticleComments.mustache.buttons = resources.mustache[2];
 
 					ArticleComments.$wrapper.find('#article-comments').prepend(commentsHeader[0]);
+
+					ArticleComments.addButtonsConfig(commentsListData.view);
 					ArticleComments.$wrapper.removeClass('loading').find('#article-comments-ul').html(
 						mustache.render(ArticleComments.mustache.commentsList, commentsListData.view, {
 							comm: ArticleComments.mustache.comment
