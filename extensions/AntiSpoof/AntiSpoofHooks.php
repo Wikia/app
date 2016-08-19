@@ -136,7 +136,7 @@ class AntiSpoofHooks {
 	 * @param $tasks
 	 */
 	public static function asAfterWikiaRenameUserHook( $dbw, $uid, $oldusername, $newusername, $process, &$tasks ) {
-		$spoof = self::makeSpoofUser( $newusername );
+		$spoof = static::makeSpoofUser( $newusername );
 		$spoof->record();
 		return true;
 	}
