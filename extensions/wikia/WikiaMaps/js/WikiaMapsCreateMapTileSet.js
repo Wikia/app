@@ -59,10 +59,6 @@ define(
 			},
 			// steps for choose tile set
 			steps = {
-				selectType: {
-					id: '#intMapChooseType',
-					buttons: {}
-				},
 				browseTileSet: {
 					id: '#intMapBrowse',
 					buttons: {
@@ -97,7 +93,7 @@ define(
 			utils.bindEvents(modal, events);
 
 			// set base step
-			addToStack('selectType');
+			addToStack('browseTileSet');
 
 			// TODO: figure out where is better place to place it and move it there
 			modal.$element
