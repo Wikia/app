@@ -1,28 +1,22 @@
 <?php
 
 require_once __DIR__ . '/../../../../maintenance/Maintenance.php';
-require_once __DIR__ . '/../../../../includes/wikia/nirvana/WikiaObject.class.php';
-require_once __DIR__ . '/../../../../includes/wikia/nirvana/WikiaModel.class.php';
-require_once __DIR__ . '/../../../../lib/Wikia/src/Logger/Loggable.php';
-require_once __DIR__ . '/../../../../includes/wikia/tasks/Tasks/BaseTask.class.php';
-require_once __DIR__ . '/../ImageReviewHelperBase.class.php';
-require_once __DIR__ . '/../ImageReviewHelper.class.php';
-require_once __DIR__ . '/../ImageReviewTask.class.php';
 
 class ImageReviewDeleteInvalidEntries extends Maintenance {
 
 	const BATCH_SIZE = 128;
-	var $dry_run = false;
+	private $dryRun = false;
 
 	public function execute() {
-		$this->output( PHP_EOL . "Running " . basename( __FILE__ ) . PHP_EOL );
-		$this->dry_run = $this->getOption( 'dry-run', false );
-		if ( $this->dry_run ) {
-			$this->output( "Running in DRY RUN mode!" . PHP_EOL );
+		global $wgExternalDatawareDB;
+
+		$this->output( PHP_EOL . 'Running ' . basename( __FILE__ ) . PHP_EOL );
+		$this->dryRun = $this->hasOption( 'dry-run' );
+		if ( $this->dryRun ) {
+			$this->output( 'Running in DRY RUN mode!' . PHP_EOL );
 		}
 
-		$this->output( "Querying the database..." . PHP_EOL );
-		global $wgExternalDatawareDB;
+		$this->output( 'Querying the database...' . PHP_EOL );
 		$db = wfGetDB( DB_SLAVE, [], $wgExternalDatawareDB );
 		$res = $db->select(
 			/* tables */ [ 'image_review', 'pages' ],
@@ -44,10 +38,10 @@ class ImageReviewDeleteInvalidEntries extends Maintenance {
 
 		$delete = [];
 		$icons = [];
-		while ( $row = $db->fetchObject( $res ) ) {
-			$verified = ImageReviewHelper::checkImageValidity($row);
+		foreach ( $res as $row ) {
+			$verified = ImageReviewHelper::checkImageValidity( $row );
 
-			switch( $verified['reason'] ) {
+			switch ( $verified['reason'] ) {
 				case 'verified':
 					break;
 				case 'ico':
@@ -70,7 +64,7 @@ class ImageReviewDeleteInvalidEntries extends Maintenance {
 			if ( count( $delete ) == self::BATCH_SIZE ) {
 				$this->queueTaskForDelete( $delete );
 				$delete = [];
-				if ( !$this->dry_run ) {
+				if ( !$this->dryRun ) {
 					sleep(1);
 				}
 			}
@@ -78,7 +72,7 @@ class ImageReviewDeleteInvalidEntries extends Maintenance {
 			if ( count( $icons ) == self::BATCH_SIZE ) {
 				$this->queueTaskForUpdate( $icons );
 				$icons = [];
-				if ( !$this->dry_run ) {
+				if ( !$this->dryRun ) {
 					sleep(1);
 				}
 			}
@@ -96,11 +90,11 @@ class ImageReviewDeleteInvalidEntries extends Maintenance {
 
 		$this->output( sprintf( "Summary: %d image(s) marked as icons" . PHP_EOL, self::BATCH_SIZE ) );
 		\Wikia\Logger\WikiaLogger::instance()->info( 'ImageReviewDeleteInvalidEntries', [ 'type' => 'ico', 'images' => $set ] );
-		if ( $this->dry_run ) {
+		if ( $this->dryRun ) {
 			return;
 		}
 		$task = new \Wikia\Tasks\Tasks\ImageReviewTask();
-		$task->call('setImageReviewState', $set );
+		$task->call( 'setImageReviewState', $set );
 		$task->prioritize();
 		$task->queue();
 	}
@@ -112,11 +106,11 @@ class ImageReviewDeleteInvalidEntries extends Maintenance {
 
 		$this->output( sprintf( "Summary: %d image(s) marked for deletion" . PHP_EOL, self::BATCH_SIZE ) );
 		\Wikia\Logger\WikiaLogger::instance()->info( 'ImageReviewDeleteInvalidEntries', [ 'type' => 'delete', 'images' => $set ] );
-		if ( $this->dry_run ) {
+		if ( $this->dryRun ) {
 			return;
 		}
 		$task = new \Wikia\Tasks\Tasks\ImageReviewTask();
-		$task->call('deleteFromQueue', $set );
+		$task->call( 'deleteFromQueue', $set );
 		$task->prioritize();
 		$task->queue();
 	}
