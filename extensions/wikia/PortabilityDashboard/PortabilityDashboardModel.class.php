@@ -25,10 +25,32 @@ class PortabilityDashboardModel {
 		return $this->extendRowListWithWikiParams( $rowList, $wikiParamsList );
 	}
 
+	/**
+	 * For wiki url in form:
+	 * - http://www.yugioh.wikia.com
+	 * - www.yugioh.wikia.com
+	 * - yugioh.wikia.com
+	 * - yugioh
+	 * return portability data
+	 *
+	 * @param $wikiUrl
+	 * @return array|bool|mixed
+	 */
 	public function getWikiByUrl( $wikiUrl ) {
-		$wikiId = WikiFactory::UrlToID( $wikiUrl );
 		$result = [];
+		if (strpos ($wikiUrl, 'www.') === false ) {
+			$wikiUrl = 'www.' . $wikiUrl;
+		}
 
+		if (strpos ($wikiUrl, 'http://') === false ) {
+			$wikiUrl = 'http://' . $wikiUrl;
+		}
+
+		if (strpos ($wikiUrl, '.wikia.com') === false ) {
+			$wikiUrl = $wikiUrl .'.wikia.com';
+		}
+
+		$wikiId = WikiFactory::UrlToID( $wikiUrl );
 		if ( $wikiId ) {
 			$result = $this->getWikiById( $wikiId );
 		}
