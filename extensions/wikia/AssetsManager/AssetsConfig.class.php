@@ -12,11 +12,15 @@ class AssetsConfig {
 
 	const JQUERY_VERSION = '1.8.2';
 
-	public static function getSiteJS( $combine ) {
+	/*
+	 * The getters below are called by resolveItemsToAssets method (when '#function_' is used in config.php)
+	 */
+
+	public static function getSiteJS() {
 		return array( Title::newFromText( '-' )->getFullURL( 'action=raw&smaxage=0&gen=js&useskin=oasis' ) );
 	}
 
-	public static function getRTEAssets( $combine ) {
+	public static function getRTEAssets() {
 		global $IP;
 		$path = "extensions/wikia/RTE";
 		$files = array(
@@ -39,7 +43,7 @@ class AssetsConfig {
 		return $files;
 	}
 
-	public static function getEPLAssets( $combine ) {
+	public static function getEPLAssets() {
 		$files = [];
 
 		if ( class_exists( 'EditPageLayoutHelper' ) ) {
@@ -163,11 +167,8 @@ class AssetsConfig {
 			} elseif ( substr ( $item, 0, 10 ) == '#function_' ) {
 				// reference to a function that returns array of URIs
 				$assets = array_merge( $assets, call_user_func( substr( $item, 10 ), $combine, $minify, $params ) );
-			} elseif ( substr ( $item, 0, 10 ) == '#external_' ) {
+			} elseif ( substr ( $item, 0, 10 ) == '#external_' || Http::isValidURI( $item ) ) {
 				// reference to a file to be fetched by the browser from external server (BugId:9522)
-				$assets[] = $item;
-			} elseif ( Http::isValidURI( $item ) ) {
-				// reference to remote file (http and https)
 				$assets[] = $item;
 			}
 		}
