@@ -421,7 +421,7 @@ class ArticleCommentList {
 			'isReadOnly' => $isReadOnly,
 			'page' => $page,
 			'pagination' => $pagination,
-			'reason' => $isBlocked ? $this->blockedPage() : '',
+			'reason' => $isBlocked ? static::blockedPage() : '',
 			'stylePath' => $wg->StylePath,
 			'title' => $this->mTitle,
 		];
@@ -496,7 +496,7 @@ class ArticleCommentList {
 	 *
 	 * @return String HTML text
 	 */
-	public function blockedPage() {
+	public static function blockedPage() {
 		/** @var Language $wgLang */
 		global $wgUser, $wgLang, $wgContLang, $wgRequest;
 

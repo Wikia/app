@@ -1,14 +1,12 @@
-<ul id="article-comments-ul" class="comments">
-	{{#comments}}
-		{{#comment}}
-			{{>comm}}
-		{{/comment}}
+{{#comments}}
+	{{#comment}}
+		{{>comm}}
+	{{/comment}}
+	{{#replies}}
+	<ul class="sub-comments">
 		{{#replies}}
-		<ul class="sub-comments">
-			{{#replies}}
-				{{>comm}}
-			{{/replies}}
-		</ul>
+			{{>comm}}
 		{{/replies}}
-	{{/comments}}
-</ul>
+	</ul>
+	{{/replies}}
+{{/comments}}

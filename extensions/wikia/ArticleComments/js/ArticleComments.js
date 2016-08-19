@@ -492,11 +492,11 @@ require(
 			}).then(function (json) {
 				ArticleComments.$commentsList.removeClass('loading');
 
-				if (json.comments && json.comments.length) {
+				if (json.view) {
 					ArticleComments.$commentsList.html(
 						mustache.render(
 							ArticleComments.mustache.commentsList,
-							json,
+							json.view,
 							{ comm: ArticleComments.mustache.comment }
 						)
 					);
@@ -528,7 +528,7 @@ require(
 		updatePagination: function (page) {
 			var $wrapper = ArticleComments.$pagination || $('.article-comments-pagination'),
 				baseURL = mw.config.get('wgArticlePath').replace('$1', mw.config.get('wgTitle')),
-				pageCount = (ArticleComments.$rootElement || $('#article-comments')).attr('data-page-count'),
+				pageCount = (ArticleComments.$rootElement || $('#article-comments')).data('page-count'),
 				paginationStart, paginationEnd;
 			$wrapper.html('');
 
@@ -577,7 +577,7 @@ require(
 			}
 
 			$('<a>').attr({
-				href: baseURL + '?page=1#article-comments',
+				href: baseURL + '?page=' + pageCount + '#article-comments',
 				id: 'article-comments-pagination-link-' + pageCount,
 				class: 'article-comments-pagination-link dark_text_1',
 				page: pageCount
@@ -592,7 +592,7 @@ require(
 				}).text(mw.message('article-comments-next-page').text()).appendTo($wrapper);
 			}
 
-			$('#article-comments-pagination-link-' + page).addClass('article-comments-pagination-link-active');
+			$('#article-comments-pagination-link-' + page).addClass('article-comments-pagination-link-active accent');
 			ArticleComments.addHover();
 		},
 
@@ -732,7 +732,7 @@ require(
 
 	if (ArticleComments.loadOnDemand) {
 		$(function () {
-			var hash, permalink, styleAssets = [], belowTheFold, loadAssets;
+			var hash, permalink, styleAssets = [], belowTheFold, loadAssets, page;
 
 			// Cache jQuery selector after DOM ready
 			ArticleComments.$wrapper = $(ArticleComments.wrapperSelector);
@@ -744,6 +744,7 @@ require(
 
 			hash = window.location.hash;
 			permalink = /^#comm-/.test(hash);
+			page = ArticleComments.$wrapper.data('page');
 
 			styleAssets.push('skins/oasis/css/core/ArticleComments.scss');
 
@@ -761,13 +762,22 @@ require(
 				$.when(
 					nirvana.sendRequest({
 						controller: 'ArticleComments',
-						method: 'Content',
+						method: 'Header',
 						type: 'GET',
 						format: 'html',
 						data: {
+							title: mw.config.get('wgTitle'),
+							namespace: mw.config.get('wgNamespaceNumber')
+						}
+					}),
+					nirvana.sendRequest({
+						controller: 'ArticleComments',
+						method: 'Pagination',
+						type: 'GET',
+						data: {
 							articleId: mw.config.get('wgArticleId'),
-							page: ArticleComments.$wrapper.data('page'),
-							useskin: mw.config.get('skin'),
+							page: page || 1,
+							fetchTotalComments: true,
 							uselang: mw.config.get('wgUserLanguage')
 						}
 					}),
@@ -781,11 +791,31 @@ require(
 							].join(',')
 						}
 					})
-				).then(function (template, resources) {
+				).then(function (commentsHeader, commentsListData, resources) {
+					commentsListData = commentsListData[0];
 					loader.processStyle(resources.styles);
 					ArticleComments.mustache.commentsList = resources.mustache[0];
 					ArticleComments.mustache.comment = resources.mustache[1];
-					ArticleComments.$wrapper.removeClass('loading').html(template[0]);
+
+					ArticleComments.$wrapper.find('#article-comments').prepend(commentsHeader[0]);
+					ArticleComments.$wrapper.removeClass('loading').find('#article-comments-ul').html(
+						mustache.render(ArticleComments.mustache.commentsList, commentsListData.view, {
+							comm: ArticleComments.mustache.comment
+						})
+					);
+
+					$('#article-comments-counter-recent').html(
+						mw.message('oasis-comments-showing-most-recent', commentsListData.commentsCount).parse()
+					);
+					$('#article-comments-counter-header').html(
+						mw.message('oasis-comments-header', commentsListData.totalComments).parse()
+					);
+
+					ArticleComments.$wrapper.find('#article-comments').data(
+						'page-count', parseInt(commentsListData.levelOneComments / mw.config.get('wgArticleCommentsMaxPerPage')) + 1
+					);
+
+					ArticleComments.updatePagination(page);
 
 					ArticleComments.init();
 

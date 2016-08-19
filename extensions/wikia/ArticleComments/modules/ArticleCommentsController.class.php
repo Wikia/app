@@ -99,11 +99,30 @@ class ArticleCommentsController extends WikiaController {
 	}
 
 	/**
+	 * Renders header with user specific data (edit form/blocked message/avatar)
+	 */
+	public function header() {
+		$isBlocked = $this->wg->User->isBlocked();
+		$this->response->setData( [
+			'isMiniEditorEnabled' => ArticleComment::isMiniEditorEnabled(),
+			'avatar' => AvatarService::renderAvatar( $this->wg->User->getName(), 50 ),
+			'isAnon' => $this->wg->User->isAnon(),
+			'title' => $this->wg->Title,
+			'isReadOnly' => wfReadOnly(),
+			'ajaxicon' => $this->wg->StylePath . '/common/images/ajax.gif',
+			'isBlocked' => $isBlocked,
+			'commentingAllowed' => ArticleComment::userCanCommentOn( $this->wg->Title ),
+			'reason' => $isBlocked ? ArticleCommentList::blockedPage(): '',
+		] );
+	}
+
+	/**
 	 * Used by pagination to fetch the content of the next page
 	 */
 	public function pagination() {
 		$page = $this->request->getInt( 'page', 1 );
 		$articleId = $this->request->getInt( 'articleId', null );
+		$fetchTotalComments = $this->request->getBool( 'fetchTotalComments', false );
 		$title = Title::newFromID( $articleId );
 
 		// Return valid JSON and don't cache the response if the request was invalid
@@ -115,7 +134,14 @@ class ArticleCommentsController extends WikiaController {
 
 		$this->wg->Title = $title;
 
-		$data = ArticleCommentList::newFromTitle( $title )->getCommentPages( true, $page );
+		$list = ArticleCommentList::newFromTitle( $title );
+		$data = $list->getCommentPages( true, $page );
+		$totalComments = false;
+		$levelOneComments = false;
+		if ( $fetchTotalComments ) {
+			$totalComments = $list->getCountAllNested();
+			$levelOneComments = $list->getCountAll();
+		}
 		$comments = [];
 
 		$odd = false;
@@ -157,7 +183,12 @@ class ArticleCommentsController extends WikiaController {
 		}
 
 		$this->response->setData( [
-			'comments' => $comments
+			'view' => [
+				'comments' => $comments
+			],
+			'commentsCount' => count( $comments ),
+			'totalComments' => $totalComments,
+			'levelOneComments' => $levelOneComments,
 		] );
 
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
@@ -308,10 +339,13 @@ class ArticleCommentsController extends WikiaController {
 
 			// SUS-897: Add ArticleComments JS and messages on-demand
 			$out->addModules( 'ext.ArticleComments' );
-			$out->addJsConfigVars( 'wgArticleCommentsLoadOnDemand', $isLoadingOnDemand );
-			if ( $app->checkSkin( 'oasis' ) ) {
+			$out->addJsConfigVars( [
+				'wgArticleCommentsLoadOnDemand' => $isLoadingOnDemand,
+				'wgArticleCommentsMaxPerPage' => $app->wg->ArticleCommentsMaxPerPage
+			] );
+			if ( $app->checkSkin( 'oasis', $skin ) ) {
 				Wikia::addAssetsToOutput( 'articlecomments_js' );
-			} elseif ( $app->checkSkin( 'monobook' ) ) {
+			} elseif ( $app->checkSkin( 'monobook', $skin ) ) {
 				Wikia::addAssetsToOutput( 'articlecomments_monobook_js' );
 			}
 		}
