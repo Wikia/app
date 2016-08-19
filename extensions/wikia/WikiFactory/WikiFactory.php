@@ -423,30 +423,18 @@ class WikiFactory {
 	 * @access public
 	 * @static
 	 *
-	 * @param $url string - domain name
+	 * @param $url string - domain name in form:
+	 * http://community-name.wikia.com
 	 *
 	 * @return integer - id of domain or null if not found
 	 */
 	static public function UrlToID( $url ) {
-
 		$city_id = false;
 		$parts = parse_url( $url );
 		if ( isset( $parts[ "host" ] ) ) {
 			$host = self::getDomainHash( $parts[ "host" ] );
-
-			// TODO: Eloy: Can this hack be removed?
-			if ( $host === "memory-alpha.org" ) {
-				/**
-				 * for memory-alpha check first element of path
-				 */
-				$parts = explode( "/", $parts[ "path" ] );
-				$host = sprintf( "%s.%s", $parts[ 1 ], $host );
-				$city_id = self::DomainToId( $host );
-			}
-			else {
-				$host = preg_replace('/^(?:preview\.|verify\.)/i', '', $host);
-				$city_id = self::DomainToId( $host );
-			}
+			$host = preg_replace('/^(?:preview\.|verify\.)/i', '', $host);
+			$city_id = self::DomainToId( $host );
 		}
 
 		return $city_id;

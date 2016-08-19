@@ -25,10 +25,8 @@ class PortabilityDashboardModel {
 
 	/**
 	 * For wiki url in form:
-	 * - http://www.yugioh.wikia.com
 	 * - www.yugioh.wikia.com
 	 * - yugioh.wikia.com
-	 * - yugioh
 	 * return portability data
 	 *
 	 * @param $wikiUrl
@@ -36,23 +34,7 @@ class PortabilityDashboardModel {
 	 */
 	public function getWikiByUrl( $wikiUrl ) {
 		$wiki = [ ];
-		$wwwPrefix = 'www.';
-		$httpPrefix = 'http://';
-		$wikiacomSuffix = '.wikia.com';
-
-		if ( strpos( $wikiUrl, $wwwPrefix ) === false ) {
-			$wikiUrl = $wwwPrefix . $wikiUrl;
-		}
-
-		if ( strpos( $wikiUrl, $httpPrefix ) === false ) {
-			$wikiUrl = $httpPrefix . $wikiUrl;
-		}
-
-		if ( strpos( $wikiUrl, $wikiacomSuffix ) === false ) {
-			$wikiUrl = $wikiUrl . $wikiacomSuffix;
-		}
-
-		$wikiId = WikiFactory::UrlToID( $wikiUrl );
+		$wikiId = WikiFactory::DomainToID( $wikiUrl );
 
 		if ( $wikiId ) {
 			$dataRow = $this->getWikiById( $wikiId );
@@ -79,8 +61,8 @@ class PortabilityDashboardModel {
 		return ( new WikiaSQL() )
 			->SELECT_ALL()
 			->FROM( static::PORTABILITY_DASHBOARD_TABLE )
-			->WHERE( 'excluded' )->EQUAL_TO( 0 )
-			->AND_( 'wiki_id' )->EQUAL_TO( $id )
+			->WHERE( 'wiki_id' )->EQUAL_TO( $id )
+			->AND_( 'excluded' )->EQUAL_TO( 0 )
 			->ORDER_BY( 'migration_impact' )
 			->DESC()
 			->LIMIT( 1 )
