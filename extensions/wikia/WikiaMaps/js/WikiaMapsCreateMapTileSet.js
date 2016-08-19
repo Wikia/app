@@ -166,13 +166,9 @@ define(
 		 * @param {Event} event
 		 */
 		function selectTileSet(event) {
-			var $target = $(event.currentTarget),
-				mapTypeChosen = $target.data('type');
-
-			utils.track(utils.trackerActions.CLICK_LINK_IMAGE, mapTypeChosen + '-map-chosen');
+			var $target = $(event.currentTarget);
 
 			modal.trigger('previewTileSet', {
-				type: mapTypeChosen,
 				tileSetId: $target.data('id'),
 				originalImageURL: $target.data('image')
 			});
