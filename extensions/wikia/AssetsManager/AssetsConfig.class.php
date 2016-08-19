@@ -75,7 +75,8 @@ class AssetsConfig {
 	private function load() {
 		if ( empty( self::$mConfig ) ) {
 			wfProfileIn( __METHOD__ );
-			include( 'config.php' );
+			include( __DIR__ . '/config.php' );
+
 			/* @var $config Array */
 			self::$mConfig = $config;
 
