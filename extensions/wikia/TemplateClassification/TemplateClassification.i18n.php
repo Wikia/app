@@ -1,7 +1,7 @@
 <?php
-$messages = array();
+$messages = [];
 
-$messages['en'] = array(
+$messages['en'] = [
 	'template-classification-description' => 'Interface for classifying templates to understand content better.',
 	'template-classification-type-unclassified' => 'Unclassified',
 	'template-classification-type-infobox' => 'Infobox',
@@ -66,9 +66,10 @@ $messages['en'] = array(
 	'special-templates-non-portable-infobox' => 'Non-portable',
 	'logentry-templateclassification-tc-changed' => '$1 changed type of $3 from $5 to $4.',
 	'templates' => 'Templates on wikia',
-);
+	'right-template-bulk-classification' => 'Allows classifying multiple templates at once',
+];
 
-$messages['qqq'] = array(
+$messages['qqq'] = [
 	'template-classification-description' => 'Description of extension viewed on Special:Version',
 	'template-classification-type-unclassified' => 'Name of an unclassified type',
 	'template-classification-type-infobox' => 'Name of an infobox type',
@@ -132,9 +133,9 @@ $messages['qqq'] = array(
 	'special-templates-non-portable-infobox' => 'Inform that given infobox is non-portable',
 	'logentry-templateclassification-tc-changed' => "A message that is saved to a user-facing log if a type of a template is changed to another one. Parameters are: $1 - User's name, $3 - A link to a target page, $4 - New type of the template, $5 - Old type of the template.",
 	'templates' => 'Describe that Special:Templates page contains templates on wikia.',
-);
+];
 
-$messages['de'] = array(
+$messages['de'] = [
 	'templates' => 'Vorlagen auf Wikia',
 	'template-classification-description' => 'Schnittstelle zur Klassifizierung von Vorlagen, um Inhalte besser zu verstehen.',
 	'template-classification-type-unclassified' => 'Nicht klassifiziert',
@@ -199,9 +200,9 @@ $messages['de'] = array(
 	'template-classification-description-infoicon' => 'Diese Vorlage wird verwendet, um einen Link mit einem kleinen Symbol zu erzeugen.',
 	'special-templates-portable-infobox' => 'Portabel',
 	'special-templates-non-portable-infobox' => 'Nicht portabel',
-);
+];
 
-$messages['es'] = array(
+$messages['es'] = [
 	'templates' => 'Plantillas en wikia',
 	'template-classification-description' => 'Interfaz para clasificar plantillas para entender mejor el contenido.',
 	'template-classification-type-unclassified' => 'No clasificado',
@@ -266,9 +267,9 @@ $messages['es'] = array(
 	'template-classification-description-infoicon' => 'Esta plantilla se utiliza para crear un enlace con un pequeño icono.',
 	'special-templates-portable-infobox' => 'Portable',
 	'special-templates-non-portable-infobox' => 'No-portable',
-);
+];
 
-$messages['fr'] = array(
+$messages['fr'] = [
 	'template-classification-description' => 'Interface de classification des modèles permettant de mieux comprendre le contenu.',
 	'template-classification-type-unclassified' => 'Non classifié',
 	'template-classification-type-infobox' => 'Infobox',
@@ -333,9 +334,9 @@ $messages['fr'] = array(
 	'special-templates-portable-infobox' => 'Portable',
 	'special-templates-non-portable-infobox' => 'Non-portable',
 	'templates' => 'Modèles sur Wikia',
-);
+];
 
-$messages['it'] = array(
+$messages['it'] = [
 	'template-classification-description' => 'Interfaccia di classificazione dei template per comprendere meglio il contenuto.',
 	'template-classification-type-unclassified' => 'Non classificato',
 	'template-classification-type-infobox' => 'Infobox',
@@ -400,9 +401,9 @@ $messages['it'] = array(
 	'special-templates-portable-infobox' => 'Esportabile',
 	'special-templates-non-portable-infobox' => 'Non esportabile',
 	'templates' => 'Modelli su Wikia',
-);
+];
 
-$messages['ja'] = array(
+$messages['ja'] = [
 	'template-classification-description' => 'テンプレートを分類してコンテンツをわかりやすくするためのインターフェイス。',
 	'template-classification-type-unclassified' => '未分類',
 	'template-classification-type-infobox' => 'インフォボックス',
@@ -467,9 +468,9 @@ $messages['ja'] = array(
 	'special-templates-portable-infobox' => 'ポータブル',
 	'special-templates-non-portable-infobox' => '非ポータブル',
 	'templates' => 'コミュニティのテンプレート',
-);
+];
 
-$messages['nl'] = array(
+$messages['nl'] = [
 	'template-classification-description' => 'Interface for classifying templates to understand content better.',
 	'template-classification-type-unclassified' => 'Unclassified',
 	'template-classification-type-infobox' => 'Infobox',
@@ -533,9 +534,9 @@ $messages['nl'] = array(
 	'special-templates-portable-infobox' => 'Portable',
 	'special-templates-non-portable-infobox' => 'Non-portable',
 	'templates' => 'Templates on wikia',
-);
+];
 
-$messages['pl'] = array(
+$messages['pl'] = [
 	'template-classification-description' => 'Interfejs do klasyfikacji szablonów w celu lepszego zrozumienia treści.',
 	'template-classification-type-unclassified' => 'Niesklasyfikowany',
 	'template-classification-type-infobox' => 'Infoboks',
@@ -600,9 +601,9 @@ $messages['pl'] = array(
 	'special-templates-non-portable-infobox' => 'Nieprzenośne',
 	'template-classification-bulk-classification-hint' => 'Cześć $1! Pomóż nam zorganizować szablony w tej kategorii. Kliknij "Edycja zbiorcza typu szablonu" i wybierz jeden z typów. [[w:c:pl:Pomoc:Szablony|Dowiedz się więcej]].',
 	'templates' => 'Szablony na wikii',
-);
+];
 
-$messages['pt'] = array(
+$messages['pt'] = [
 	'template-classification-description' => 'Interface para a classificação de predefinições para auxiliar na compreensão do conteúdo.',
 	'template-classification-type-unclassified' => 'Não classificado',
 	'template-classification-type-infobox' => 'Infobox',
@@ -667,9 +668,9 @@ $messages['pt'] = array(
 	'special-templates-portable-infobox' => 'Portátil',
 	'special-templates-non-portable-infobox' => 'Não-portátil',
 	'templates' => 'Predefinições na wikia',
-);
+];
 
-$messages['ru'] = array(
+$messages['ru'] = [
 	'templates' => 'Шаблоны на Викия',
 	'template-classification-description' => 'Интерфейс классификации шаблонов для лучшего понимания их содержимого.',
 	'template-classification-type-unclassified' => 'Неклассифицированные',
@@ -734,9 +735,9 @@ $messages['ru'] = array(
 	'template-classification-description-infoicon' => 'Эти шаблоны используются для создания информационных иконок на страницах.',
 	'special-templates-portable-infobox' => 'Модульный инфобокс',
 	'special-templates-non-portable-infobox' => 'Классический инфобокс',
-);
+];
 
-$messages['zh-hans'] = array(
+$messages['zh-hans'] = [
 	'template-classification-description' => '界面用于分类模板以更好地理解内容。',
 	'template-classification-type-unclassified' => '未分类',
 	'template-classification-type-infobox' => '信息框',
@@ -800,9 +801,9 @@ $messages['zh-hans'] = array(
 	'special-templates-portable-infobox' => '便携式',
 	'special-templates-non-portable-infobox' => '非便携式',
 	'templates' => 'Wikia上的所有模板',
-);
+];
 
-$messages['zh-hant'] = array(
+$messages['zh-hant'] = [
 	'template-classification-description' => '介面用於分類模版以更好地理解內容。',
 	'template-classification-type-unclassified' => '未分類',
 	'template-classification-type-infobox' => '訊息框',
@@ -866,5 +867,5 @@ $messages['zh-hant'] = array(
 	'special-templates-portable-infobox' => '可擕式',
 	'special-templates-non-portable-infobox' => '非可擕式',
 	'templates' => 'Wikia上的所有模板',
-);
+];
 

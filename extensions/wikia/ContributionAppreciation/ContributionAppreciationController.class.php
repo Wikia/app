@@ -13,7 +13,7 @@ class ContributionAppreciationController extends WikiaController {
 		$revisionId = $this->request->getInt( 'revision' );
 		$revision = Revision::newFromId( $revisionId );
 
-		if ( $revision ) {
+		if ( $revision && !$wgUser->isBlocked() ) {
 			$id = ( new RevisionUpvotesService() )->addUpvote(
 				$wgCityId,
 				$revision->getPage(),
@@ -22,7 +22,9 @@ class ContributionAppreciationController extends WikiaController {
 				$wgUser->getId()
 			);
 
-			$this->sendMail( $revisionId );
+			// send email that user received appreciation.
+			// Currently disabled because of: https://wikia-inc.atlassian.net/browse/WW-172
+			// $this->sendMail( $revisionId );
 		}
 
 		$this->response->setValues( [
@@ -35,28 +37,17 @@ class ContributionAppreciationController extends WikiaController {
 	public function getAppreciations() {
 		global $wgUser;
 
-		$html = '';
-		$upvotesService = new RevisionUpvotesService();
-		$upvotes = $upvotesService->getUserNewUpvotes( $wgUser->getId() );
+		$upvotes = ( new RevisionUpvotesService() )->getUserNewUpvotes( $wgUser->getId() );
 
 		if ( !empty( $upvotes ) ) {
 			$appreciations = $this->prepareAppreciations( $upvotes );
 
 			if ( !empty( $appreciations ) ) {
-				$html = $this->app->renderView( 'ContributionAppreciation', 'appreciations', [
-					'appreciations' => $appreciations
-				] );
+				$numberOfAppreciations = count( $appreciations );
+				$this->appreciations = $appreciations;
+				$this->numberOfHiddenAppreciations = $numberOfAppreciations > 2 ? $numberOfAppreciations - 2 : 0;
 			}
 		}
-
-		$this->response->setBody( $html );
-	}
-
-	public function appreciations() {
-		$appreciations = $this->getVal( 'appreciations' );
-		$numberOfAppreciations = count( $appreciations );
-		$this->numberOfHiddenAppreciations = $numberOfAppreciations > 2 ? $numberOfAppreciations - 2 : 0;
-		$this->appreciations = $appreciations;
 	}
 
 	public function diffModule() {
@@ -170,8 +161,10 @@ class ContributionAppreciationController extends WikiaController {
 	private static function shouldDisplayAppreciation() {
 		global $wgUser, $wgLang, $wgEnableCommunityPageExt;
 
-		// we want to run it only for english users
+		// we want to run it only for a subset of users: logged in, not blocked,
+		// using languages supported in experiment
 		return $wgUser->isLoggedIn() &&
+			!$wgUser->isBlocked() &&
 			self::isSuportedAppreciationLang( $wgLang->getCode() ) &&
 			!empty( $wgEnableCommunityPageExt );
 	}

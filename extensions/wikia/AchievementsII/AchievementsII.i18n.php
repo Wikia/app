@@ -1,7 +1,7 @@
 <?php
-$messages = array();
+$messages = [];
 
-$messages['en'] = array(
+$messages['en'] = [
 	'achievementsii-desc' => 'An achievement badges system for wiki users',
 	'achievements-upload-error' => 'Sorry!
 That picture does not work.
@@ -14,6 +14,8 @@ Please try another one!',
 	'achievements-no-stub-category' => 'Please do not create tracks for stubs.',
 	'right-platinum' => 'Create and edit Platinum badges',
 	'right-sponsored-achievements' => 'Manage Sponsored achievements',
+	'right-achievements-exempt' => 'User is ineligible to earn achievement points',
+	'right-achievements-explicit' => 'User is eligible to earn achievement points (Overrides exempt)',
 	'action-platinum' => 'create and edit Platinum badges',
 	'achievements-platinum' => 'Platinum',
 	'achievements-gold' => 'Gold',
@@ -305,7 +307,7 @@ on someone else's talk page!",
 	'achievements-userprofile-no-badges-visitor' => "This user hasn't earned any badge yet.",
 	'achievements-userprofile-profile-score' => '<em>$1</em> Achievement<br />points',
 	'achievements-userprofile-ranked' => '[[Special:Leaderboard|Ranked #$1]]<br />on this wiki',
-);
+];
 
 /** Message documentation (Message documentation)
  * @author Ajdar
@@ -320,7 +322,7 @@ on someone else's talk page!",
  * @author Siebrand
  * @author TK-999
  */
-$messages['qqq'] = array(
+$messages['qqq'] = [
 	'achievementsii-desc' => '{{desc}}',
 	'achievements-upload-error' => 'Гафу итегез!
 Бу рәсем дөрес укылмый.
@@ -521,12 +523,12 @@ $4 is any of:
 *$2 is the number of badges the user has earned",
 	'achievements-userprofile-ranked' => '*$1 is the ranking of the user.',
 	'action-platinum' => '{{doc-action|platinum}}',
-);
+];
 
 /** Afrikaans (Afrikaans)
  * @author Naudefj
  */
-$messages['af'] = array(
+$messages['af'] = [
 	'achievements-platinum' => 'Platinum',
 	'achievements-gold' => 'Goud',
 	'achievements-silver' => 'Silwer',
@@ -543,7 +545,7 @@ $messages['af'] = array(
 	'achievements-badge-name-picture-3' => 'Versamelaar',
 	'achievements-badge-name-picture-6' => 'Ontwerper',
 	'achievements-badge-name-picture-7' => 'Kurator',
-);
+];
 
 /** Arabic (العربية)
  * @author Achraf94
@@ -552,7 +554,7 @@ $messages['af'] = array(
  * @author Houcinee1
  * @author OsamaK
  */
-$messages['ar'] = array(
+$messages['ar'] = [
 	'achievementsii-desc' => 'نظام الشارات الإنجاز لمستخدمي ويكي',
 	'achievements-upload-error' => 'آسف! N! تلك الصورة لا يعمل! N! تأكد أنه هو ملف. jpg أو بابوا نيو غينيا.! N! إذا كان لا يزال لا يعمل ، ثم أن الصورة قد تكون كبيرة جدا.! N! الرجاء المحاولة واحد آخر!',
 	'achievements-upload-not-allowed' => 'يمكن للإداريين تغيير أسماء وصور اشارات الانجاز من خلال الذهاب الى صفحة [[Special:AchievementsCustomize|the Customize achievements]]',
@@ -603,26 +605,26 @@ $messages['ar'] = array(
 	'achievements-community-platinum-edit' => 'عدل',
 	'achievements-community-platinum-save' => 'احفظ',
 	'achievements-community-platinum-cancel' => 'ألغِ',
-);
+];
 
 /** Assamese (অসমীয়া)
  * @author Jaminianurag
  */
-$messages['as'] = array(
+$messages['as'] = [
 	'achievements-upload-error' => 'দুঃখিত!
 এই ছবিখন কাৰ্য্যক্ষম নহয় |
 ছবিখন .jpg বা .png হয় নে নহয় পুনাৰাই চাওক |
 যদি তথাপিও ই কাৰ্য্যকৰী নহয় তেন্তে ছবিখন নিশ্চয় ডাঙৰ আকৃতিৰ |
 অনুগ্ৰহ কৰি আন এখন ছবি চেষ্টা কৰক |',
 	'achievements-non-existing-category' => 'উল্লেখিত শ্রেনীটোৰ  কোনো অস্তিত্ব নাই।',
-);
+];
 
 /** Azerbaijani (azərbaycanca)
  * @author Cekli829
  * @author Ebrahimi-amir
  * @author Vago
  */
-$messages['az'] = array(
+$messages['az'] = [
 	'achievementsii-desc' => 'Wiki istifadəçilər üçün bir nailiyyət döş nişanları sistemi',
 	'achievements-upload-error' => 'Bağışlayın!
 
@@ -692,12 +694,12 @@ Başqa bir cəhd edin!',
 	'achievements-badge-to-get-creator' => 'Bu wikinin xaliqi olmaq',
 	'achievements-badge-to-get-pounce' => 'tez ol',
 	'achievements-badge-to-get-luckyedit' => 'bəxtiyar ol',
-);
+];
 
 /** Bashkir (Башҡортса)
  * @author Sagan
  */
-$messages['ba'] = array(
+$messages['ba'] = [
 	'achievementsii-desc' => 'Вики-сайт ҡулланыусыларының ҡаҙаныштары систамаһы',
 	'achievements-upload-error' => 'Ғафү итегеҙ!
 Был рәсем тура килмәй.Файлдың .JPG йәки .PNG форматында булыуын тикшерегеҙ.
@@ -705,20 +707,20 @@ $messages['ba'] = array(
 Тағы бер мәртәбә эшләп ҡарағыҙ!',
 	'achievements-upload-not-allowed' => ' Хакимдәр [[Special:AchievementsCustomize|Ҡаҙаныштар менән идары итеү]]  тигән махсус биттә тамғаларҙың исемдәрен һәм рәсемндәрен үҙгәртә ала.',
 	'achievements-non-existing-category' => 'Был категория юҡ.',
-);
+];
 
 /** Belarusian (беларуская)
  * @author Тест
  */
-$messages['be'] = array(
+$messages['be'] = [
 	'achievements-viewless' => 'Закрыць',
-);
+];
 
 /** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  */
-$messages['be-tarask'] = array(
+$messages['be-tarask'] = [
 	'achievementsii-desc' => 'Сыстэма дасягненьняў для вікі-карыстальнікаў',
 	'achievements-upload-error' => 'Прабачце!
 Гэтая выява — няслушная.
@@ -896,12 +898,12 @@ $5",
 	'achievements-badge-desc-sayhi' => 'за стварэньне паведамленьня на чыёй-небудзь старонцы абмеркаваньня!',
 	'achievements-badge-desc-creator' => 'за стварэньне вікі!',
 	'achievements-badge-desc-pounce' => 'за рэдагаваньне 100 старонак на працягу гадзіны пасьля стварэньня старонкі!',
-);
+];
 
 /** Bulgarian (български)
  * @author DCLXVI
  */
-$messages['bg'] = array(
+$messages['bg'] = [
 	'achievements-non-existing-category' => 'Посочената категория не съществува.',
 	'achievements-platinum' => 'Платина',
 	'achievements-gold' => 'Злато',
@@ -954,14 +956,14 @@ $messages['bg'] = array(
 	'achievements-badge-desc-welcome' => 'за присъединяване към уикито!',
 	'achievements-badge-desc-creator' => 'за създаване на уикито!',
 	'achievements-userprofile-no-badges-owner' => 'Вижте списъка по-долу, за да видите всички значки, които можете да спечелите в това уики!',
-);
+];
 
 /** Bengali (বাংলা)
  * @author RIPENDIL
  */
-$messages['bn'] = array(
+$messages['bn'] = [
 	'achievements-non-existing-category' => 'উল্লেখিত শ্রেনীটির কোন অস্তিত্ব নেই।',
-);
+];
 
 /** Breton (brezhoneg)
  * @author Fohanno
@@ -969,7 +971,7 @@ $messages['bn'] = array(
  * @author Gwenn-Ael
  * @author Y-M D
  */
-$messages['br'] = array(
+$messages['br'] = [
 	'achievementsii-desc' => 'Ur sistem badjoù evit implijerien ar wiki',
 	'achievements-upload-error' => "Digarezit !
 Ar skeudenn-mañ ne 'z a ket en-dro.
@@ -1242,13 +1244,13 @@ war pajenn kaozeal unan bennak all !',
 	'achievements-userprofile-no-badges-visitor' => "An implijer-mañ n'en deus gounezet badj ebet evit ar mare",
 	'achievements-userprofile-profile-score' => '<em>$1</em> poentoù<br /> garedon',
 	'achievements-userprofile-ranked' => '[[Special:Leaderboard|gant ar renk #$1]] war ar wiki-mañ',
-);
+];
 
 /** Bosnian (bosanski)
  * @author CERminator
  * @author Palapa
  */
-$messages['bs'] = array(
+$messages['bs'] = [
 	'right-platinum' => 'Napravi i uredi Platinaste bedževe',
 	'achievements-platinum' => 'platina',
 	'achievements-gold' => 'Zlato',
@@ -1338,13 +1340,13 @@ $messages['bs'] = array(
 	'achievements-badge-desc-introduction' => 'za pravljenje vlastite korisničke stranice!',
 	'achievements-badge-desc-sayhi' => 'za ostavljanje poruke na nečijoj stranici za razgovor!',
 	'achievements-badge-desc-creator' => 'za pravljenje wiki!',
-);
+];
 
 /** Catalan (català)
  * @author BroOk
  * @author SMP
  */
-$messages['ca'] = array(
+$messages['ca'] = [
 	'right-platinum' => 'Crear i editar medalles de Platí',
 	'achievements-platinum' => 'Platí',
 	'achievements-gold' => 'Or',
@@ -1415,14 +1417,14 @@ $5",
 	'achievements-userprofile-no-badges-visitor' => 'Aquest usuari encara no ha guanyat cap medalla.',
 	'achievements-userprofile-profile-score' => '<em>$1</em> Punts<br />aconseguits',
 	'achievements-userprofile-ranked' => '[[Special:Leaderboard|Número #$1]]<br />en aquest wiki',
-);
+];
 
 /** Chechen (Нохчийн)
  * @author Sasan700
  */
-$messages['ce'] = array(
+$messages['ce'] = [
 	'achievements-leaderboard-member-label' => 'Декъашхо',
-);
+];
 
 /** Czech (česky)
  * @author Darth Daron
@@ -1430,7 +1432,7 @@ $messages['ce'] = array(
  * @author Mr. Richard Bolla
  * @author Spiffyk
  */
-$messages['cs'] = array(
+$messages['cs'] = [
 	'achievementsii-desc' => 'Systém odznaků úspěchů pro uživatele wiki',
 	'achievements-upload-error' => 'Omlouváme se!
 Tento obrázek nefunguje.
@@ -1673,14 +1675,14 @@ vaší uživatelskou stránku!',
 	'achievements-badge-desc-caffeinated' => 'Odměněn/a za provedení 100 editací v jediném dni!',
 	'achievements-userprofile-no-badges-visitor' => 'Tento uživatel ještě nemá žádný odznak!',
 	'achievements-userprofile-ranked' => '[[Special:Leaderboard|Hodnocení #$1]]<br />na této wiki',
-);
+];
 
 /** Danish (dansk)
  * @author DaneOfScandinavy
  */
-$messages['da'] = array(
+$messages['da'] = [
 	'achievements-badge-name-edit-1' => 'Bare begyndelsen',
-);
+];
 
 /** German (Deutsch)
  * @author Avatar
@@ -1696,7 +1698,7 @@ $messages['da'] = array(
  * @author MF-Warburg
  * @author The Evil IP address
  */
-$messages['de'] = array(
+$messages['de'] = [
 	'achievementsii-desc' => 'Leistungsbasierte Abzeichen für Wiki-Benutzer',
 	'achievements-upload-error' => 'Entschuldigung!
 Dieses Bild funktioniert nicht.
@@ -1999,14 +2001,14 @@ auf der Diskussionsseite eines anderen!',
 	'action-platinum' => 'Platin-Abzeichen erstellen und bearbeiten',
 	'achievements-next-oasis' => 'Weiter',
 	'achievements-prev-oasis' => 'Vorherige',
-);
+];
 
 /** German (formal address) (‪Deutsch (Sie-Form)‬)
  * @author Claudia Hattitten
  * @author Geitost
  * @author The Evil IP address
  */
-$messages['de-formal'] = array(
+$messages['de-formal'] = [
 	'achievements-upload-error' => 'Verzeihung,
 dieses Bild funktioniert nicht.
 Stellen Sie sicher, dass es sich um eine JPEG- oder PNG-Datei handelt.
@@ -2097,13 +2099,13 @@ Klicken Sie auf den „{{int:activityfeed}}“-Button, um die neuen Seiten zu se
 	'achievements-badge-to-get-caffeinated-details' => 'Diese Auszeichnung benötigt einen Tag volles Engagement.
 Geben Sie nicht nach!',
 	'achievements-userprofile-no-badges-owner' => 'Erreichbare Auszeichnungen können Sie untenstehender Liste entnehmen.',
-);
+];
 
 /** Zazaki (Zazaki)
  * @author Erdemaslancan
  * @author Mirzali
  */
-$messages['diq'] = array(
+$messages['diq'] = [
 	'achievements-platinum' => 'Platinyum',
 	'achievements-gold' => 'Altun',
 	'achievements-bronze' => 'Bronz',
@@ -2134,7 +2136,7 @@ $messages['diq'] = array(
 	'achievements-badge-name-sharing-2' => 'Qısekar',
 	'achievements-badge-name-sharing-4' => 'Ewangelis',
 	'achievements-userprofile-profile-score' => '<em>$1</em>Puanê<br />qezenci',
-);
+];
 
 /** Greek (Ελληνικά)
  * @author Crazymadlover
@@ -2142,7 +2144,7 @@ $messages['diq'] = array(
  * @author Glavkos
  * @author Omnipaedista
  */
-$messages['el'] = array(
+$messages['el'] = [
 	'achievementsii-desc' => 'Ένα σύστημα επιτεύξεων με κονκάρδες για τους χρήστες wiki',
 	'achievements-upload-error' => 'Συγγνώμη! N! Η εικόνα δεν λειτουργεί.!Βεβαιωθείτε ότι είναι. Jpg ή. Png αρχείο.! Αν εξακολουθεί να μην λειτουργεί, τότε η εικόνα μπορεί να είναι πολύ μεγάλη.! Παρακαλώ δοκιμάστε μια άλλη!',
 	'achievements-non-existing-category' => 'Η συγκεκριμένη κατηγορία δεν υπάρχει.',
@@ -2233,19 +2235,19 @@ $messages['el'] = array(
 	'achievements-badge-name-creator' => 'O δημιουργός',
 	'achievements-badge-desc-welcome' => 'για τη συμμετοχή στο wiki!',
 	'achievements-badge-desc-creator' => 'για τη δημιουργία του wiki!',
-);
+];
 
 /** Esperanto (Esperanto)
  * @author Tradukisto
  */
-$messages['eo'] = array(
+$messages['eo'] = [
 	'achievements-upload-error' => 'Tiu dosiero ne funkcias.
 Certiĝu, ke ĝi estas formatp .jpg aŭ .png.
 Se ĝi senĉese ne funkcios, la dosiero povas esti tro granda.
 Provu kun la alia!',
 	'achievements-badge-name-edit-5' => 'Viki Konstruanto',
 	'achievements-badge-name-welcome' => 'Bonvenon al la Vikio',
-);
+];
 
 /** Spanish (español)
  * @author Absay
@@ -2256,7 +2258,7 @@ Provu kun la alia!',
  * @author Sanbec
  * @author VegaDark
  */
-$messages['es'] = array(
+$messages['es'] = [
 	'achievementsii-desc' => 'Un sistema de logros para los usuarios de la wikia',
 	'achievements-upload-error' => '¡Lo sentimos!
 Esa imagen no funciona.
@@ -2549,12 +2551,12 @@ a {{PLURAL:$1|una categoría|varias categorías}}!',
 	'action-platinum' => 'crear y editar insignias de Platino',
 	'achievements-next-oasis' => 'Siguiente',
 	'achievements-prev-oasis' => 'Anterior',
-);
+];
 
 /** Estonian (eesti)
  * @author Cylly1512
  */
-$messages['et'] = array(
+$messages['et'] = [
 	'achievementsii-desc' => 'Saavutusembleemidesüsteem viki kasutajatele',
 	'achievements-upload-error' => 'Vabandust!
 Pilt ei tööta.
@@ -2582,12 +2584,12 @@ Palun proovi mõnda teist pilti!',
 	'achievements-track-name-edit' => 'Muutmiste tee',
 	'achievements-track-name-picture' => 'Piltide tee',
 	'achievements-track-name-category' => 'Kategooriate tee',
-);
+];
 
 /** Basque (euskara)
  * @author An13sa
  */
-$messages['eu'] = array(
+$messages['eu'] = [
 	'achievements-platinum' => 'Platinoa',
 	'achievements-gold' => 'Urrea',
 	'achievements-silver' => 'Zilarra',
@@ -2622,7 +2624,7 @@ $messages['eu'] = array(
 	'achievements-badge-name-welcome' => 'Ongi etorri Wikira',
 	'achievements-badge-name-introduction' => 'Sarrera',
 	'achievements-badge-name-creator' => 'Sortzailea',
-);
+];
 
 /** Persian (فارسی)
  * @author BlueDevil
@@ -2631,7 +2633,7 @@ $messages['eu'] = array(
  * @author Wayiran
  * @author ZxxZxxZ
  */
-$messages['fa'] = array(
+$messages['fa'] = [
 	'achievementsii-desc' => 'سامانه‌ای برای مدال‌های افتخار کاربران ویکی',
 	'achievements-upload-error' => 'با پوزش!
 این عکس کار نمی‌کند.
@@ -2862,7 +2864,7 @@ $messages['fa'] = array(
 	'achievements-badge-your-desc-caffeinated' => 'برای انجام ۱۰۰ ویرایش در صفحات در یک روز!',
 	'achievements-badge-your-desc-luckyedit' => 'برای انجام خوش‌شانس $1مین ویرایش در ویکی!',
 	'achievements-badge-desc-welcome' => 'برای پیوستن به ویکی!',
-);
+];
 
 /** Finnish (suomi)
  * @author Crt
@@ -2872,7 +2874,7 @@ $messages['fa'] = array(
  * @author Tm T
  * @author Tofu II
  */
-$messages['fi'] = array(
+$messages['fi'] = [
 	'achievementsii-desc' => 'Kunniamerkkijärjestelmä wikin käyttäjille',
 	'achievements-upload-error' => 'Tämä kuva ei toimi.
 Varmista, että se on tyypiltään jpg tai png.
@@ -2970,12 +2972,12 @@ jonkun henkilön keskustelusivulle!',
 	'achievements-badge-hover-desc-creator' => 'Myönnetty wikin luomisesta!',
 	'achievements-badge-your-desc-edit' => 'Palkittiin {{PLURAL:$1|ensimmäisen muokkauksesi|$1 muokkausta}} {{PLURAL:$1|artikkeliin|artikkeliin}}!',
 	'achievements-userprofile-title-no' => 'Käyttäjän $1 ansaitsemat kunniamerkit',
-);
+];
 
 /** Faroese (føroyskt)
  * @author EileenSanda
  */
-$messages['fo'] = array(
+$messages['fo'] = [
 	'achievementsii-desc' => 'Ein avriks kort skipan fyri wiki brúkarar',
 	'achievements-upload-error' => 'Orsaka!
 Handa myndin kann ikki brúkast.
@@ -3054,7 +3056,7 @@ Vinarliga royn við aðrari mynd!',
 	'achievements-community-platinum-save' => 'goym',
 	'achievements-community-platinum-cancel' => 'ógilda',
 	'achievements-badge-name-edit-1' => 'Bert byrjanin',
-);
+];
 
 /** French (français)
  * @author Gomoko
@@ -3065,7 +3067,7 @@ Vinarliga royn við aðrari mynd!',
  * @author Wyz
  * @author Zetud
  */
-$messages['fr'] = array(
+$messages['fr'] = [
 	'achievementsii-desc' => 'Un système de badges pour les utilisateurs du wiki',
 	'achievements-upload-error' => "Désolé !
 Cette image ne fonctionne pas.
@@ -3365,12 +3367,12 @@ sur la page de discussion de quelqu’un d'autre !",
 	'action-platinum' => 'créer et modifier des badges de platine',
 	'achievements-next-oasis' => 'Suite',
 	'achievements-prev-oasis' => 'Précédent',
-);
+];
 
 /** Galician (Galego)
  * @author Toliño
  */
-$messages['gl'] = array(
+$messages['gl'] = [
 	'achievementsii-desc' => 'Un sistema de insignias para os usuarios do wiki',
 	'achievements-upload-error' => 'Sentímolo!
 A imaxe non vai.
@@ -3671,14 +3673,14 @@ na páxina de conversa de alguén!',
 	'achievements-userprofile-no-badges-visitor' => 'Este usuario aínda non gañou ningunha insignia.',
 	'achievements-userprofile-profile-score' => '<em>$1</em> puntos<br />de logro',
 	'achievements-userprofile-ranked' => '[[Special:Leaderboard|Posto nº$1]]<br />neste wiki',
-);
+];
 
 /** Ancient Greek (Ἀρχαία ἑλληνικὴ)
  * @author Crazymadlover
  */
-$messages['grc'] = array(
+$messages['grc'] = [
 	'achievements-community-platinum-cancel' => 'Ἀκυροῦν',
-);
+];
 
 /** Hebrew (עברית)
  * @author Amire80
@@ -3686,7 +3688,7 @@ $messages['grc'] = array(
  * @author Ofekalef
  * @author Yova
  */
-$messages['he'] = array(
+$messages['he'] = [
 	'achievementsii-desc' => 'מערכת מתן תגי הוכרה למשתמשי ויקי',
 	'achievements-upload-error' => 'מצטערים!
 התמונה אינה מתאימה.
@@ -3777,12 +3779,12 @@ $messages['he'] = array(
 	'achievements-badge-name-picture-7' => 'אוצר/ת',
 	'achievements-badge-name-introduction' => 'מבוא',
 	'achievements-badge-your-desc-edit' => 'עבור ביצוע {{PLURAL:$1|העריכה הראשונה|$1 העריכות}} ב{{PLURAL:$1|דף|דפים}}!',
-);
+];
 
 /** Hindi (हिन्दी)
  * @author Rajivkurjee
  */
-$messages['hi'] = array(
+$messages['hi'] = [
 	'achievements-upload-error' => 'क्षमा करें!
 वह तस्वीर काम नहीं करता है!
 सुनिश्चित करें कि यह एक .jpg या .png फ़ाइल है!
@@ -3792,13 +3794,13 @@ $messages['hi'] = array(
 	'achievements-silver' => 'रजत',
 	'achievements-bronze' => 'कांस्य',
 	'achievements-you-must' => 'इस बैज अर्जित करने के लिए आपको $1 की जरूरत है।',
-);
+];
 
 /** Hungarian (magyar)
  * @author Dani
  * @author TK-999
  */
-$messages['hu'] = array(
+$messages['hu'] = [
 	'achievementsii-desc' => 'Eredményalapú jelvényrendszer a wiki felhasználói számára',
 	'achievements-upload-error' => 'Hoppá!
 
@@ -4073,12 +4075,12 @@ más vitalapján hagyott üzenetért kaptál!',
 	'achievements-userprofile-no-badges-owner' => 'Tekintsd meg a lenti listát, hogy megismerhesd a wikin megszerezhető jelvényeket!',
 	'achievements-userprofile-no-badges-visitor' => 'Ennek a felhasználónak még nincsenek jelvényei.',
 	'achievements-userprofile-ranked' => '[[Special:Leaderboard|$1. helyezett]]<br />ezen a wikin.',
-);
+];
 
 /** Interlingua (interlingua)
  * @author McDutchie
  */
-$messages['ia'] = array(
+$messages['ia'] = [
 	'achievementsii-desc' => 'Un systema de insignias de merito pro usatores del wiki',
 	'achievements-upload-error' => 'Guai!
 Iste imagine non functiona.
@@ -4375,13 +4377,13 @@ in le pagina de discussion de un altere persona!',
 	'achievements-userprofile-no-badges-visitor' => 'Iste usator non ha ancora ganiate alcun insignia.',
 	'achievements-userprofile-profile-score' => '<em>$1</em> Punctos de<br />merito',
 	'achievements-userprofile-ranked' => '[[Special:Leaderboard|Rango №$1]]<br />in iste wiki',
-);
+];
 
 /** Indonesian (Bahasa Indonesia)
  * @author Aldnonymous
  * @author Farras
  */
-$messages['id'] = array(
+$messages['id'] = [
 	'achievementsii-desc' => 'System lencana prestasi untuk pengguna wiki',
 	'achievements-upload-error' => 'Maaf!
 Gambar itu tidak dapat di gunakan.
@@ -4538,20 +4540,20 @@ Cobalah!',
 	'achievements-badge-to-get-introduction' => 'tambahkan ke halaman pengguna Anda',
 	'achievements-badge-to-get-sayhi' => 'tinggalkan pesan kepada seseorang di halaman pembicaraannya',
 	'achievements-badge-to-get-creator' => 'jadilah pencipta wiki ini',
-);
+];
 
 /** Igbo (Igbo)
  * @author Ukabia
  */
-$messages['ig'] = array(
+$messages['ig'] = [
 	'achievements-viewless' => 'Mèchié',
 	'achievements-badge-name-category-4' => 'Ọtúzọr',
-);
+];
 
 /** Ingush (ГӀалгӀай)
  * @author Sapral Mikail
  */
-$messages['inh'] = array(
+$messages['inh'] = [
 	'achievements-non-existing-category' => 'Лаьрха цатег йоацаш я',
 	'achievements-gold' => 'Дошув',
 	'achievements-silver' => 'Дотув',
@@ -4573,7 +4575,7 @@ $messages['inh'] = array(
 	'achievements-community-platinum-edit' => 'хувца',
 	'achievements-community-platinum-save' => 'кходе',
 	'achievements-community-platinum-cancel' => 'дIадаккха',
-);
+];
 
 /** Italian (italiano)
  * @author Beta16
@@ -4582,7 +4584,7 @@ $messages['inh'] = array(
  * @author Valepert
  * @author Ximo17
  */
-$messages['it'] = array(
+$messages['it'] = [
 	'achievementsii-desc' => 'Un sistema di medaglie per i successi degli utenti',
 	'achievements-upload-error' => "Spiacenti!
 Questa immagine non funziona.
@@ -4882,13 +4884,13 @@ nella pagina di discussione di un altro utente!',
 	'action-platinum' => 'crea e modifica medaglie di platino',
 	'achievements-next-oasis' => 'Successivo',
 	'achievements-prev-oasis' => 'Precedente',
-);
+];
 
 /** Japanese (日本語)
  * @author Shirayuki
  * @author Tommy6
  */
-$messages['ja'] = array(
+$messages['ja'] = [
 	'achievementsii-desc' => 'コミュニティ編集者のためのアチーブメント・バッジシステム',
 	'achievements-upload-error' => '申し訳ありません、この画像は使用できません。
 .jpg もしくは .png のファイルをご利用ください。
@@ -5185,12 +5187,12 @@ $5",
 	'achievements-badge-hover-desc-sharing' => '{{#ifeq:$1|0|リンク1個を共有|{{PLURAL:$1|1人|$1人}}が共有リンクをクリック}}する',
 	'achievements-badge-your-desc-sharing' => '{{#ifeq:$1|0|リンク1個をシェア|シェアしたリンクを{{PLURAL:$1|1人|$1人}} がクリック}} を達成',
 	'achievements-badge-desc-sharing' => '{{#ifeq:$1|0|リンク1個のシェア|シェアしたリンクの{{PLURAL:$1|1|$1}} クリック}} を達成',
-);
+];
 
 /** Georgian (ქართული)
  * @author David1010
  */
-$messages['ka'] = array(
+$messages['ka'] = [
 	'achievementsii-desc' => 'ვიკი მომხმარებლების მიღწევების სისტემა',
 	'achievements-upload-error' => 'უკაცრავად!
 ეს სურათი არ არის თავსებადი.
@@ -5235,19 +5237,19 @@ $messages['ka'] = array(
 	'achievements-viewall' => 'ყველას ჩვენება',
 	'achievements-viewless' => 'დახურვა',
 	'achievements-profile-title-oasis' => 'მიღწევების <br /> ქულები',
-);
+];
 
 /** Khowar (کھوار)
  * @author Rachitrali
  */
-$messages['khw'] = array(
+$messages['khw'] = [
 	'achievements-gold' => 'سوروم',
-);
+];
 
 /** Khmer (ភាសាខ្មែរ)
  * @author T-Rithy
  */
-$messages['km'] = array(
+$messages['km'] = [
 	'achievements-platinum' => 'ប្លាទីន',
 	'achievements-gold' => 'មាស',
 	'achievements-silver' => 'ប្រាក់',
@@ -5269,13 +5271,13 @@ $messages['km'] = array(
 	'achievements-badge-name-sharing-0' => 'អ្នកចែករំលែក',
 	'achievements-badge-name-sharing-3' => 'អ្នកផ្សព្វផ្សាយ',
 	'achievements-badge-to-get-welcome' => 'ចូលរួមវិគី',
-);
+];
 
 /** Kannada (ಕನ್ನಡ)
  * @author Nayvik
  * @author VASANTH S.N.
  */
-$messages['kn'] = array(
+$messages['kn'] = [
 	'achievements-platinum' => 'ಪ್ಲಾಟಿನಂ',
 	'achievements-gold' => 'ಸ್ವರ್ಣ',
 	'achievements-silver' => 'ರಜತ',
@@ -5288,14 +5290,14 @@ $messages['kn'] = array(
 	'platinum' => 'ಪ್ಲಾಟಿನಂ',
 	'achievements-community-platinum-edit' => 'ಸಂಪಾದಿಸಿ',
 	'achievements-community-platinum-save' => 'ಉಳಿಸಿ',
-);
+];
 
 /** Korean (한국어)
  * @author Cwt96
  * @author Infinity
  * @author 아라
  */
-$messages['ko'] = array(
+$messages['ko'] = [
 	'achievementsii-desc' => '위키 사용자의 기여도를 배지로 환산해주는 시스템',
 	'achievements-upload-error' => '죄송합니다!
 이 그림은 적합하지 않습니다.
@@ -5427,12 +5429,12 @@ $messages['ko'] = array(
 	'achievements-userprofile-no-badges-visitor' => '이 사용자는 아직 아무 배지도 획득하지 않았습니다.',
 	'achievements-userprofile-profile-score' => '<em>$1</em> <br />포인트',
 	'achievements-userprofile-ranked' => '이 위키에서<br />[[Special:Leaderboard|$1위]]입니다',
-);
+];
 
 /** Kinaray-a (Kinaray-a)
  * @author Datu
  */
-$messages['krj'] = array(
+$messages['krj'] = [
 	'achievements-upload-error' => 'Pasaylo!
 Ang litrato wara naga gana.
 Siguraduha nga .jpeg o kun .png ang litrato.
@@ -5447,12 +5449,12 @@ Palihog tirawi nga mag gamit ka iba nga litrato!',
 	'leaderboard-intro-hide' => 'Itago',
 	'leaderboard-intro-open' => 'Bukas',
 	'achievements-leaderboard-member-label' => 'Imaw',
-);
+];
 
 /** Colognian (Ripoarisch)
  * @author Purodha
  */
-$messages['ksh'] = array(
+$messages['ksh'] = [
 	'achievementsii-desc' => 'E Süßteem för Afzeische för Leißtunge em Wiki verdeene.',
 	'achievements-upload-not-allowed' => 'Dem Wiki sing Köbeße künne de Naame un Belder vun de [[Special:AchievementsCustomize|Afzeische ändere]].',
 	'achievements-non-existing-category' => 'De aanjejovve Saachjropp jidd_et nit.',
@@ -5600,12 +5602,12 @@ op sing Klaafsigg jedonn ze han!',
 	'achievements-userprofile-title' => '{{GENDER:$1|Däm|Däm|Däm Metmaacher|Dä|Däm}} $1 {{GENDER:$1|sing|sing|sing|ier|sing}} {{PLURAL:$2|Afzeische}} ($2)',
 	'achievements-userprofile-no-badges-owner' => 'Loor op heh di Leß, doh sen de Afzeische dren, di De Der heh em Wiki verdeene kanns!',
 	'achievements-userprofile-no-badges-visitor' => 'Dä Metmaacher hät noch kein Afzeische verdeent.',
-);
+];
 
 /** Kurdish (Latin script) (‪Kurdî (latînî)‬)
  * @author George Animal
  */
-$messages['ku-latn'] = array(
+$messages['ku-latn'] = [
 	'achievements-gold' => 'Zêr',
 	'achievements-silver' => 'Zîv',
 	'achievements-bronze' => 'Bronz',
@@ -5620,22 +5622,22 @@ $messages['ku-latn'] = array(
 	'achievements-community-platinum-save' => 'tomar bike',
 	'achievements-community-platinum-cancel' => 'betal bike',
 	'achievements-badge-name-category-2' => 'Explorer',
-);
+];
 
 /** Latin (Latina)
  * @author Rsa23899
  */
-$messages['la'] = array(
+$messages['la'] = [
 	'achievements-gold' => 'Aurum',
 	'achievements-silver' => 'Argentum',
 	'achievements-bronze' => 'Aerāmen',
 	'achievements-badge-hover-desc-creator' => 'nam vicium creāns!',
-);
+];
 
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
-$messages['lb'] = array(
+$messages['lb'] = [
 	'achievements-non-existing-category' => 'Déi Kategorie déi ugi gouf gëtt et net.',
 	'achievements-platinum' => 'Platin',
 	'achievements-gold' => 'Gold',
@@ -5700,22 +5702,22 @@ Klickt op de Knäppchen "{{int:edit}}" an Dir kënnt all Säit änneren!',
 	'achievements-badge-hover-desc-introduction' => "Ausgezeechent fir d'Derbaissetzen<br />
 vun Ärer eegener Benotzersäit!",
 	'achievements-badge-desc-caffeinated' => 'Ausgezeechent fir 100 Ännerungen op Säiten an engem eenzegen Dag gemaach ze hunn!',
-);
+];
 
 /** Lezghian (Лезги)
  * @author Namik
  */
-$messages['lez'] = array(
+$messages['lez'] = [
 	'achievements-community-platinum-edit' => 'Дегишарун',
 	'achievements-badge-name-category-4' => 'Къекъуьн',
-);
+];
 
 /** Lithuanian (lietuvių)
  * @author Cyklopas
  * @author Eitvys200
  * @author Perkunas
  */
-$messages['lt'] = array(
+$messages['lt'] = [
 	'achievementsii-desc' => 'Viki naudotojų pasiekimų raiščiai',
 	'achievements-platinum' => 'Platina',
 	'achievements-gold' => 'Auksas',
@@ -5806,20 +5808,20 @@ $messages['lt'] = array(
 	'achievements-badge-to-get-pounce' => 'skubėk',
 	'achievements-badge-to-get-luckyedit' => 'būk sėkmingas',
 	'achievements-badge-hover-desc-welcome' => 'už prisijungimą prie Wiki!',
-);
+];
 
 /** Latgalian (latgaļu)
  * @author Dark Eagle
  */
-$messages['ltg'] = array(
+$messages['ltg'] = [
 	'achievements-viewless' => 'Aizdareit',
 	'leaderboard-intro-hide' => 'nūglobuot',
-);
+];
 
 /** Basa Banyumasan (Basa Banyumasan)
  * @author StefanusRA
  */
-$messages['map-bms'] = array(
+$messages['map-bms'] = [
 	'achievements-non-existing-category' => 'Kategori sing digoleti ora ana',
 	'achievements-gold' => 'Emas',
 	'achievements-silver' => 'Perak',
@@ -5827,12 +5829,12 @@ $messages['map-bms'] = array(
 	'achievements-viewall' => 'Deleng kabeh',
 	'achievements-viewless' => 'Tutup',
 	'achievements-send' => 'Simpen gambar',
-);
+];
 
 /** Minangkabau (Baso Minangkabau)
  * @author VoteITP
  */
-$messages['min'] = array(
+$messages['min'] = [
 	'achievements-gold' => '↓ Ameh',
 	'achievements-silver' => '↓ Perak',
 	'achievements-bronze' => '↓ Perunggu',
@@ -5840,13 +5842,13 @@ $messages['min'] = array(
 	'achievements-silver-points' => '↓ 50<br />pts',
 	'achievements-bronze-points' => '↓ 10<br />pts',
 	'achievements-you-must' => '↓ Awak ang mesti malakuan $1 untuak mandapek lencana ko.',
-);
+];
 
 /** Macedonian (македонски)
  * @author Bjankuloski06
  * @author Rancher
  */
-$messages['mk'] = array(
+$messages['mk'] = [
 	'achievementsii-desc' => 'Систем на значки за достигнувања на вики-корисници',
 	'achievements-upload-error' => 'Жалиме!
 Таа слика не работи.
@@ -6133,12 +6135,12 @@ $5',
 	'achievements-userprofile-no-badges-visitor' => 'Овој корисник сè уште нема заработено ниедна значка.',
 	'achievements-userprofile-profile-score' => '<em>$1</em> бода за<br />достигнувања',
 	'achievements-userprofile-ranked' => '[[Special:Leaderboard|На $1 место]]<br />на ова вики',
-);
+];
 
 /** Malayalam (മലയാളം)
  * @author Praveenp
  */
-$messages['ml'] = array(
+$messages['ml'] = [
 	'achievements-platinum' => 'പ്ലാറ്റിനം',
 	'achievements-gold' => 'സ്വർണ്ണം',
 	'achievements-silver' => 'വെള്ളി',
@@ -6173,12 +6175,12 @@ $messages['ml'] = array(
 	'achievements-badge-to-get-pounce' => 'പെട്ടന്നാവട്ടെ',
 	'achievements-badge-your-desc-welcome' => 'വിക്കിയിൽ ചേർന്നതിന്!',
 	'achievements-badge-desc-welcome' => 'വിക്കിയിൽ ചേർന്നതിന്!',
-);
+];
 
 /** Marathi (मराठी)
  * @author Htt
  */
-$messages['mr'] = array(
+$messages['mr'] = [
 	'achievements-platinum' => 'प्लॅटिनम',
 	'achievements-gold' => 'सोने',
 	'achievements-silver' => 'चांदी',
@@ -6186,12 +6188,12 @@ $messages['mr'] = array(
 	'achievements-gold-points' => '१००<br />गुण',
 	'achievements-silver-points' => '५०<br /> गुण',
 	'achievements-bronze-points' => '१०<br /> गुण',
-);
+];
 
 /** Malay (Bahasa Melayu)
  * @author Anakmalaysia
  */
-$messages['ms'] = array(
+$messages['ms'] = [
 	'achievementsii-desc' => 'Sistem lencana pencapaian untuk pengguna wiki',
 	'achievements-upload-error' => 'Maaf!
 Gambar ini tidak dapat digunakan.
@@ -6489,12 +6491,12 @@ dalam laman perbincangan orang lain!',
 	'achievements-userprofile-no-badges-visitor' => 'Pengguna ini belum meraih lencana lagi.',
 	'achievements-userprofile-profile-score' => '<em>$1</em> mata<br />Pencapaian',
 	'achievements-userprofile-ranked' => '[[Special:Leaderboard|Tangga #$1]]<br />di wiki ini',
-);
+];
 
 /** Maltese (Malti)
  * @author Chrisportelli
  */
-$messages['mt'] = array(
+$messages['mt'] = [
 	'achievements-upload-error' => "Jiddispjaċina!
 Din l-istampa ma taħdimx.
 Kun żgur li hija fajl .jpg jew .png.
@@ -6504,12 +6506,12 @@ Jekk jogħġbok, ipprova oħra!",
 	'achievements-gold-points' => '100<br />punt',
 	'achievements-silver-points' => '50<br />punt',
 	'achievements-bronze-points' => '10<br />punti',
-);
+];
 
 /** Burmese (မြန်မာဘာသာ)
  * @author Erikoo
  */
-$messages['my'] = array(
+$messages['my'] = [
 	'achievements-gold' => 'ရွှေ',
 	'achievements-silver' => 'ငွေထည်',
 	'achievements-points' => 'တည်းဖြတ်မှု $1 {{PLURAL:$1|ခု|ခု}}',
@@ -6520,19 +6522,19 @@ $messages['my'] = array(
 	'leaderboard-intro-open' => 'ဖွင့်ရန်',
 	'achievements-leaderboard-points' => 'တည်းဖြတ်မှု $1 {{PLURAL:$1|ခု|ခု}}',
 	'achievements-save' => 'ပြင်​ဆင်​ထား​သည်​များ​ကို​ သိမ်းရန်',
-);
+];
 
 /** Mazanderani (مازِرونی)
  * @author محک
  */
-$messages['mzn'] = array(
+$messages['mzn'] = [
 	'achievements-community-platinum-edit' => 'دچی‌ین',
-);
+];
 
 /** Min Nan Chinese (Bân-lâm-gú)
  * @author Ianbu
  */
-$messages['nan'] = array(
+$messages['nan'] = [
 	'achievementsii-desc' => '予Wiki用者的成就徽章系統',
 	'achievements-gold' => '金',
 	'achievements-silver' => '銀',
@@ -6553,13 +6555,13 @@ $messages['nan'] = array(
 	'achievements-community-platinum-save' => '保存',
 	'achievements-community-platinum-cancel' => '取消',
 	'achievements-community-platinum-sponsored-badge-click-tooltip' => '點擊就通看另外的',
-);
+];
 
 /** Norwegian Bokmål (‪norsk (bokmål)‬)
  * @author Audun
  * @author Nghtwlkr
  */
-$messages['nb'] = array(
+$messages['nb'] = [
 	'achievementsii-desc' => 'Et utmerkelsessystem for wikibrukere',
 	'achievements-upload-error' => 'Beklager!
 Det bildet fungerer ikke.
@@ -6843,14 +6845,14 @@ på noen andres diskusjonsside!',
 	'achievements-userprofile-no-badges-visitor' => 'Denne brukeren har ikke mottatt noen utmerkelser ennå.',
 	'achievements-userprofile-profile-score' => '<em>$1</em> utmerkelses-<br />poeng',
 	'achievements-userprofile-ranked' => '[[Special:Leaderboard|Plassert som #$1]]<br /> på denne wikien',
-);
+];
 
 /** Dutch (Nederlands)
  * @author AvatarTeam
  * @author McDutchie
  * @author Siebrand
  */
-$messages['nl'] = array(
+$messages['nl'] = [
 	'achievementsii-desc' => 'Een speldjessysteem voor door wikigebruikers geleverde prestaties',
 	'achievements-upload-error' => 'Dat plaatje werkt niet.
 Zorg dat het een .jpg- of .png-bestand is.
@@ -7150,13 +7152,13 @@ de overlegpagina van een andere gebruiker!',
 	'action-platinum' => 'create and edit Platinum badges',
 	'achievements-next-oasis' => 'Next',
 	'achievements-prev-oasis' => 'Previous',
-);
+];
 
 /** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
  * @author AvatarTeam
  * @author Siebrand
  */
-$messages['nl-informal'] = array(
+$messages['nl-informal'] = [
 	'achievements-you-must' => 'Je moet $1 om dit speldje te verdienen.',
 	'achievements-no-badges' => 'Hieronder staan de speldjes die je op deze wiki kunt verdienen!',
 	'achievements-notification-subtitle' => 'Je hebt zojuist het speldje "$1" verdiend $2',
@@ -7242,13 +7244,13 @@ je eigen gebruikerspagina!',
 	'achievements-badge-your-desc-introduction' => 'voor het aanmaken van je eigen gebruikerspagina!',
 	'achievements-badge-desc-introduction' => 'voor het aanmaken van je eigen gebruikerspagina!',
 	'achievements-userprofile-no-badges-owner' => 'Hieronder staat de lijst met speldjes die je in deze wiki kunt verdienen!',
-);
+];
 
 /** Oriya (ଓଡ଼ିଆ)
  * @author Jnanaranjan Sahu
  * @author Psubhashish
  */
-$messages['or'] = array(
+$messages['or'] = [
 	'achievements-non-existing-category' => 'ଆପଣ ଖୋଜୁଥିବା ବିଭାଗଟି ମିଳୁନାହିଁ ।',
 	'achievements-platinum' => 'ହୀରକ',
 	'achievements-gold' => 'ସ୍ଵର୍ଣ',
@@ -7259,19 +7261,19 @@ $messages['or'] = array(
 	'achievements-bronze-points' => '୧୦<br />pts',
 	'achievements-leaderboard-member-label' => 'ସଭ୍ୟ',
 	'achievements-about-title' => 'ଏହି ପୃଷ୍ଠା ବିଷୟରେ ...',
-);
+];
 
 /** Deitsch (Deitsch)
  * @author Xqt
  */
-$messages['pdc'] = array(
+$messages['pdc'] = [
 	'achievements-community-platinum-save' => 'beilege',
-);
+];
 
 /** Pälzisch (Pälzisch)
  * @author Manuae
  */
-$messages['pfl'] = array(
+$messages['pfl'] = [
 	'achievementsii-desc' => 'Abzaische fa Laischdunge fa Wiki-Benudza',
 	'achievements-upload-error' => "Dschuldischung!
 Awa des Bild fungzioniad ned.
@@ -7333,7 +7335,7 @@ Vasuchs mol midm oanare!",
 	'achievements-badge-name-sharing-1' => 'Brings zrigg',
 	'achievements-badge-to-get-welcome' => "m'Wiki baidreede",
 	'achievements-badge-to-get-luckyedit' => 'Gligg hawe',
-);
+];
 
 /** Polish (polski)
  * @author Anoon6
@@ -7343,7 +7345,7 @@ Vasuchs mol midm oanare!",
  * @author Sovq
  * @author Sp5uhe
  */
-$messages['pl'] = array(
+$messages['pl'] = [
 	'achievementsii-desc' => 'System odznaczeń dla użytkowników wiki',
 	'achievements-upload-error' => 'Nie można wyświetlić tego obrazu.
 Upewnij się że jest to plik .jpg lub .png.
@@ -7640,13 +7642,13 @@ na czyjejś stronie dyskusji!',
 	'action-platinum' => 'tworzenie i edytowanie Platynowych odznaczeń',
 	'achievements-next-oasis' => 'Następny',
 	'achievements-prev-oasis' => 'Poprzedni',
-);
+];
 
 /** Piedmontese (Piemontèis)
  * @author Borichèt
  * @author Dragonòt
  */
-$messages['pms'] = array(
+$messages['pms'] = [
 	'achievementsii-desc' => "Un sistema ëd distintiv dle realisassion për j'utent ëd la wiki",
 	'achievements-upload-error' => "Darmagi!
 Sta figura a marcia pa.
@@ -7938,13 +7940,13 @@ an sla pàgina ëd discussion ëd quaidun!',
 	'achievements-badge-desc-pounce' => "Për avèj fàit dle modìfiche su 100 pàgine ant n'ora da soa creassion!",
 	'achievements-badge-desc-caffeinated' => 'për avèj fàit 100 modìfiche su dle pàgine ant un di sol!',
 	'achievements-badge-desc-luckyedit' => 'për avèj fàit la modìfica Fortunà nùmer $1 an sla wiki!',
-);
+];
 
 /** Pashto (پښتو)
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  * @author Wahidullah Kaleem
  */
-$messages['ps'] = array(
+$messages['ps'] = [
 	'achievements-platinum' => 'پلاټېنيم',
 	'achievements-gold' => 'سره زر',
 	'achievements-silver' => 'سپين زر',
@@ -7984,7 +7986,7 @@ $messages['ps'] = array(
 	'achievements-badge-to-get-introduction' => 'خپل کارن مخ ته يې ګډول',
 	'achievements-badge-to-get-pounce' => 'چټک اوسه',
 	'achievements-badge-your-desc-creator' => 'د ويکي جوړولو لپاره ورکړ شوی!',
-);
+];
 
 /** Portuguese (português)
  * @author Crazymadlover
@@ -7994,7 +7996,7 @@ $messages['ps'] = array(
  * @author Rhaijin
  * @author Waldir
  */
-$messages['pt'] = array(
+$messages['pt'] = [
 	'achievementsii-desc' => 'Um sistema de recompensa através de medalhas para os usuários da wikia',
 	'achievements-upload-error' => 'Desculpe!
 Essa imagem não funciona.
@@ -8302,14 +8304,14 @@ a {{PLURAL:$1|a $2 artigo|$2 artigos}}!',
 	'action-platinum' => 'Crie e edite medalhas de platina',
 	'achievements-next-oasis' => 'Próximo',
 	'achievements-prev-oasis' => 'Anterior',
-);
+];
 
 /** Brazilian Portuguese (português do Brasil)
  * @author Aristóbulo
  * @author Luckas Blade
  * @author Rhaijin
  */
-$messages['pt-br'] = array(
+$messages['pt-br'] = [
 	'achievementsii-desc' => 'Um sistema de recompensa através de medalhas para os usuários da wiki',
 	'achievements-upload-error' => 'Desculpe-nos!
 Essa imagem não funciona.
@@ -8609,14 +8611,14 @@ página de discussão de outro utilizador!',
 	'achievements-userprofile-no-badges-visitor' => 'Este utilizador ainda não ganhou nenhuma medalha.',
 	'achievements-userprofile-profile-score' => '<em>$1</em> Pontos<br />',
 	'achievements-userprofile-ranked' => '[[Special:Leaderboard|Posição #$1]]<br />nesta wiki',
-);
+];
 
 /** Romanian (română)
  * @author AddyC
  * @author Minisarm
  * @author Stelistcristi
  */
-$messages['ro'] = array(
+$messages['ro'] = [
 	'achievementsii-desc' => 'Un sistem de medalii pentru reușitele utilizatorilor',
 	'achievements-upload-error' => 'Ne pare rău!
 Această imagine nu este bună.
@@ -8917,12 +8919,12 @@ pe pagina cuiva de discuție!',
 	'achievements-userprofile-no-badges-visitor' => 'Acest utilizator încă nu a câștigat nicio medalie.',
 	'achievements-userprofile-profile-score' => '<em>$1</em> Puncte pentru<br />reușite',
 	'achievements-userprofile-ranked' => 'Pe locul [[Special:Leaderboard|$1]]<br />pe wiki',
-);
+];
 
 /** tarandíne (tarandíne)
  * @author Joetaras
  */
-$messages['roa-tara'] = array(
+$messages['roa-tara'] = [
 	'achievements-non-existing-category' => "'A categorije specificate non g'esiste.",
 	'achievements-platinum' => 'Platine',
 	'achievements-gold' => 'Ore',
@@ -8973,7 +8975,7 @@ $messages['roa-tara'] = array(
 	'achievements-badge-name-sharing-4' => 'Evangeliste',
 	'achievements-badge-name-welcome' => "Bovègne jndr'à Uicchi",
 	'achievements-badge-name-introduction' => "'Ndroduzione",
-);
+];
 
 /** Russian (русский)
  * @author DCamer
@@ -8988,7 +8990,7 @@ $messages['roa-tara'] = array(
  * @author Александр Сигачёв
  * @author Сrower
  */
-$messages['ru'] = array(
+$messages['ru'] = [
 	'achievementsii-desc' => 'Система достижений пользователей вики-сайта',
 	'achievements-upload-error' => 'Простите!
 Это изображение не подходит.
@@ -9285,14 +9287,14 @@ $5',
 	'achievements-badge-hover-desc-sharing' => 'за {{#ifeq:$1|0|то, что вы поделились одной ссылкой|то, что {{PLURAL:$1|один посетитель|$1 посетителей}} кликнул(и) по ссылке, которой вы поделились}}',
 	'achievements-badge-your-desc-sharing' => 'Награда за {{#ifeq:$1|0|то, что вы поделились одной ссылкой|то, что {{PLURAL:$1|один посетитель|$1 посетителей}} кликнул(и) по ссылке, которой вы поделились}}',
 	'achievements-badge-desc-sharing' => 'Награда за {{#ifeq:$1|0|то, что вы поделились одной ссылкой|то, что {{PLURAL:$1|один посетитель|$1 посетителей}} кликнул(и) по ссылке, которой вы поделились}}',
-);
+];
 
 /** Sinhala (සිංහල)
  * @author Singhalawap
  * @author පසිඳු කාවින්ද
  * @author බිඟුවා
  */
-$messages['si'] = array(
+$messages['si'] = [
 	'achievements-platinum' => 'ප්ලැටිනම්',
 	'achievements-gold' => 'රත්‍රන්',
 	'achievements-silver' => 'රිදී',
@@ -9308,12 +9310,12 @@ $messages['si'] = array(
 	'achievements-community-platinum-edit' => 'සංස්කරණය කරන්න',
 	'achievements-community-platinum-save' => 'සුරකින්න',
 	'achievements-community-platinum-cancel' => 'අත් හරින්න',
-);
+];
 
 /** Slovenian (slovenščina)
  * @author Irena Plahuta
  */
-$messages['sl'] = array(
+$messages['sl'] = [
 	'achievements-platinum' => 'Platina',
 	'achievements-gold' => 'Zlata',
 	'achievements-silver' => 'Srebrna',
@@ -9327,19 +9329,19 @@ $messages['sl'] = array(
 	'achievements-title' => 'Dosežki',
 	'leaderboard-title' => 'Lestvica',
 	'achievements-recent-earned-badges' => 'Nedavno pridobljene značke',
-);
+];
 
 /** Albanian (shqip)
  * @author Marinari
  */
-$messages['sq'] = array(
+$messages['sq'] = [
 	'achievementsii-desc' => 'Një shenjë arritjeje e sistemit për wiki përdoruesit',
-);
+];
 
 /** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
  * @author Rancher
  */
-$messages['sr-ec'] = array(
+$messages['sr-ec'] = [
 	'achievementsii-desc' => 'Систем значки за достигнућа корисника',
 	'achievements-upload-error' => 'Нажалост, та слика не ради. Проверите да ли је формата JPG или PNG.
 Ако и поред тога не ради, онда је вероватно превелика. Пробајте другу.',
@@ -9516,14 +9518,14 @@ $5',
 	'achievements-userprofile-no-badges-visitor' => 'Овај корисник још није освојио ниједну значку.',
 	'achievements-userprofile-profile-score' => '<em>$1</em> бода за<br />достигнућа',
 	'achievements-userprofile-ranked' => '[[Special:Leaderboard|На $1 месту]]<br />на овом викију',
-);
+];
 
 /** Swedish (svenska)
  * @author Lokal Profil
  * @author Tobulos1
  * @author WikiPhoenix
  */
-$messages['sv'] = array(
+$messages['sv'] = [
 	'achievementsii-desc' => 'En prestationsemblems-system för wiki-användare',
 	'achievements-upload-error' => 'Tyvärr!
 Den här bilden fungerar inte.
@@ -9823,12 +9825,12 @@ på någon annans diskussionssida!',
 	'achievements-userprofile-no-badges-visitor' => 'Denna användare har inte tjänat några emblem ännu.',
 	'achievements-userprofile-profile-score' => '<em>$1</em> prestations-<br />poäng',
 	'achievements-userprofile-ranked' => '[[Special:Leaderboard|Rankad som #$1]]<br />på denna wiki',
-);
+];
 
 /** Swahili (Kiswahili)
  * @author Muddyb Blast Producer
  */
-$messages['sw'] = array(
+$messages['sw'] = [
 	'achievements-upload-error' => 'Pole!
 Picha hiyo haifanyi kazi.
 Hakikisha kwamba hilo faili ni .jpg au .png.
@@ -9837,7 +9839,7 @@ Tafadhali jaribu nyingine!',
 	'achievements-viewless' => 'Funga',
 	'achievements-community-platinum-edit' => 'hariri',
 	'achievements-community-platinum-save' => 'hifadhi',
-);
+];
 
 /** Tamil (தமிழ்)
  * @author Balajijagadesh
@@ -9846,7 +9848,7 @@ Tafadhali jaribu nyingine!',
  * @author TRYPPN
  * @author செல்வா
  */
-$messages['ta'] = array(
+$messages['ta'] = [
 	'achievements-upload-error' => '↓மன்னிக்கவும்!</br>
 அந்த படம் வேலை செய்யவில்லை.</br>
 அது ஒரு .jpg அல்லது .png கோப்பு என்பதை உறுதி செய்யவும்.</br>
@@ -9886,13 +9888,13 @@ $messages['ta'] = array(
 	'achievements-community-platinum-save' => 'சேமி',
 	'achievements-community-platinum-cancel' => 'ரத்து செய்',
 	'achievements-badge-name-edit-1' => 'தொடக்கம் மட்டுமே',
-);
+];
 
 /** Telugu (తెలుగు)
  * @author Praveen Illa
  * @author Veeven
  */
-$messages['te'] = array(
+$messages['te'] = [
 	'achievements-platinum' => 'ప్లాటినం',
 	'achievements-gold' => 'స్వర్ణం',
 	'achievements-silver' => 'రజతం',
@@ -9904,19 +9906,19 @@ $messages['te'] = array(
 	'achievements-community-platinum-edit' => 'సవరించు',
 	'achievements-community-platinum-save' => 'భద్రపరుచు',
 	'achievements-community-platinum-cancel' => 'రద్దుచేయి',
-);
+];
 
 /** Tetum (tetun)
  * @author MF-Warburg
  */
-$messages['tet'] = array(
+$messages['tet'] = [
 	'achievements-community-platinum-edit' => 'edita',
-);
+];
 
 /** Thai (ไทย)
  * @author Ariesanywhere
  */
-$messages['th'] = array(
+$messages['th'] = [
 	'achievements-viewall' => 'เปิดดูทั้งหมด',
 	'achievements-viewless' => 'ปิด',
 	'achievements-viewall-oasis' => 'ดูทั้งหมด',
@@ -9935,12 +9937,12 @@ $messages['th'] = array(
 	'achievements-community-platinum-save' => 'บันทึก',
 	'achievements-community-platinum-cancel' => 'ยกเลิก',
 	'achievements-community-platinum-sponsored-badge-click-tooltip' => 'คลิกดูรายละเอียดเพิ่มเติม',
-);
+];
 
 /** Tagalog (Tagalog)
  * @author AnakngAraw
  */
-$messages['tl'] = array(
+$messages['tl'] = [
 	'achievementsii-desc' => 'Isang sistema ng mga tsapa ng naisagawa para sa mga tagagamit ng wiki',
 	'achievements-upload-error' => 'Paumanhin!
 Hindi gumagana ang larawang iyan!
@@ -10138,12 +10140,12 @@ Magpatuloy sa pamamatnugot!',
 	'achievements-badge-desc-luckyedit' => 'para sa paggawa ng Mapalad na ika-$1 na pamamatnugot sa wiki!',
 	'achievements-userprofile-title-no' => 'Nakamit na mga Tsapa ni $1',
 	'achievements-userprofile-no-badges-visitor' => 'Ang tagagamit na ito ay hindi pa nagkakamit ng anumang tsapa.',
-);
+];
 
 /** толышә зывон (толышә зывон)
  * @author Гусейн
  */
-$messages['tly'] = array(
+$messages['tly'] = [
 	'achievements-gold' => 'Телы',
 	'achievements-silver' => 'Нығә',
 	'achievements-bronze' => 'Бырынҹ',
@@ -10168,14 +10170,14 @@ $messages['tly'] = array(
 	'achievements-badge-name-blogpost-0' => 'Чичсә вотеј',
 	'achievements-badge-name-welcome' => 'Бә Вики хәш омәјон',
 	'achievements-badge-name-sayhi' => 'Вәсе "Сәлом" вотеј',
-);
+];
 
 /** Turkish (Türkçe)
  * @author 82-145
  * @author Emperyan
  * @author Gizemb
  */
-$messages['tr'] = array(
+$messages['tr'] = [
 	'achievementsii-desc' => 'Viki kullanıcıları için bir başarı nişanı sistemi',
 	'achievements-upload-error' => 'Üzgünüz!
 Bu resim çalışmıyor.
@@ -10280,13 +10282,13 @@ Lütfen bir başkasını deneyin.',
 	'achievements-badge-desc-introduction' => 'kendi kullanıcı sayfanı eklediğin için!',
 	'achievements-badge-desc-sayhi' => 'başkasının tartışma sayfasına mesaj bıraktığın için!',
 	'achievements-badge-desc-creator' => 'wiki oluşturduğun için!',
-);
+];
 
 /** Tatar (Cyrillic script) (татарча)
  * @author Ajdar
  * @author Рашат Якупов
  */
-$messages['tt-cyrl'] = array(
+$messages['tt-cyrl'] = [
 	'achievementsii-desc' => 'Вики-сайт кулланучыларның казанышлар системасы',
 	'achievements-upload-error' => 'Гафу итегез!
 Бу рәсем туры килми.
@@ -10513,7 +10515,7 @@ $5',
 	'achievements-badge-desc-introduction' => 'Үз сәхифәңне өстәгән өчен бүләк!',
 	'achievements-badge-desc-creator' => 'Вики төзегән өчен бүләк!',
 	'achievements-userprofile-no-badges-owner' => 'Бу викида яулап алырга мөмкин булган тамгалар исемлеген карагыз!',
-);
+];
 
 /** Ukrainian (українська)
  * @author A1
@@ -10522,7 +10524,7 @@ $5',
  * @author Olvin
  * @author Тест
  */
-$messages['uk'] = array(
+$messages['uk'] = [
 	'achievementsii-desc' => 'Система відзнак для користувачів',
 	'achievements-upload-error' => '↓Вибачте!
 Не вдалося зчитати малюнок.
@@ -10603,12 +10605,12 @@ $messages['uk'] = array(
 	'achievements-badge-to-get-creator' => 'бути засновником цієї вікі',
 	'achievements-badge-to-get-pounce' => 'поспішайте',
 	'achievements-badge-to-get-luckyedit' => 'щасти',
-);
+];
 
 /** Veps (Vepsän kel’)
  * @author Игорь Бродский
  */
-$messages['vep'] = array(
+$messages['vep'] = [
 	'achievements-viewall' => 'Kacta kaik',
 	'achievements-viewless' => 'Saubata',
 	'leaderboard-intro-hide' => 'peitta',
@@ -10632,7 +10634,7 @@ $messages['vep'] = array(
 	'achievements-badge-name-creator' => 'Sädai',
 	'achievements-badge-to-get-pounce' => 'rigehtida',
 	'achievements-badge-your-desc-creator' => 'wikin sädmas!',
-);
+];
 
 /** Vietnamese (Tiếng Việt)
  * @author Minh Nguyen
@@ -10642,7 +10644,7 @@ $messages['vep'] = array(
  * @author Xiao Qiao
  * @author XiaoQiaoGrace
  */
-$messages['vi'] = array(
+$messages['vi'] = [
 	'achievementsii-desc' => 'Một hệ thống phù hiệu cho thành viên',
 	'achievements-upload-error' => 'Rấc tiếc!
 Không thể dùng ảnh đó.
@@ -10677,7 +10679,7 @@ Hãy thử những ảnh khác!',
 	'achievements-community-platinum-edit' => 'sửa',
 	'achievements-community-platinum-save' => 'Lưu',
 	'achievements-badge-name-picture-1' => 'Tay săn ảnh',
-);
+];
 
 /** Simplified Chinese (‪中文（简体）‬)
  * @author A911504820
@@ -10687,7 +10689,7 @@ Hãy thử những ảnh khác!',
  * @author Hzy980512
  * @author Map it
  */
-$messages['zh-hans'] = array(
+$messages['zh-hans'] = [
 	'achievementsii-desc' => '一项为维基用户提供成就徽章的系统',
 	'achievements-upload-error' => '对不起！
 这张图片无法使用。
@@ -10991,14 +10993,14 @@ $5",
 	'achievements-badge-your-desc-picture' => '在{{PLURAL:$1|一篇文章|文章}}中添加了{{PLURAL:$1|第一张图片|$1张图片}}获得奖励!',
 	'achievements-badge-your-desc-category' => '在{{PLURAL:$1|一个类别|类别}}中添加了{{PLURAL:$1|第一篇文章|$1篇文章}}获得奖励!',
 	'achievements-badge-desc-sharing' => '{{#ifeq:$1|0|由于分享了一个链接|由于{{PLURAL:$1|一个人|$1个人}}点击分享了这个链接}}而获得徽章。',
-);
+];
 
 /** Traditional Chinese (‪中文（繁體）‬)
  * @author Dream
  * @author Ffaarr
  * @author Lauhenry
  */
-$messages['zh-hant'] = array(
+$messages['zh-hant'] = [
 	'achievements-platinum' => '白金',
 	'achievements-gold' => '黃金',
 	'achievements-silver' => '白銀',
@@ -11305,26 +11307,26 @@ $5",
 	'achievements-userprofile-profile-score' => '<em>$1</em>成就<br />點',
 	'achievements-userprofile-ranked' => '這個wiki上<br />
 [[Special:Leaderboard|排名第$1]]',
-);
+];
 
 /** Chinese (Hong Kong) (‪中文（香港）‬)
  * @author C933103
  */
-$messages['zh-hk'] = array(
+$messages['zh-hk'] = [
 	'achievements-non-existing-category' => '指定的類別不存在。',
 	'achievements-platinum' => '白金',
 	'achievements-gold' => '金',
 	'achievements-silver' => '銀',
 	'achievements-bronze' => '銅',
 	'leaderboard-button' => '成就排行榜',
-);
+];
 
 /** Chinese (Taiwan) (‪中文（台灣）‬)
  * @author Ffaarr
  */
-$messages['zh-tw'] = array(
+$messages['zh-tw'] = [
 	'achievements-community-platinum-edit' => '編輯',
 	'achievements-community-platinum-save' => '儲存',
 	'achievements-community-platinum-cancel' => '取消',
-);
+];
 
