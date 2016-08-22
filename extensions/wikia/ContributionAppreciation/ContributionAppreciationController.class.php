@@ -60,7 +60,7 @@ class ContributionAppreciationController extends WikiaController {
 		global $wgUser;
 
 		// no appreciation for yourself
-		if ( self::shouldDisplayAppreciation() && $wgUser->getId() !== $newRev->getUser() ) {
+		if ( static::shouldDisplayAppreciation() && $wgUser->getId() !== $newRev->getUser() ) {
 			Wikia::addAssetsToOutput( 'contribution_appreciation_js' );
 			Wikia::addAssetsToOutput( 'contribution_appreciation_scss' );
 			$out->addHTML( F::app()->renderView(
@@ -77,7 +77,7 @@ class ContributionAppreciationController extends WikiaController {
 		global $wgUser;
 
 		// no appreciation for yourself
-		if ( self::shouldDisplayAppreciation() && $wgUser->getId() !== intval( $row->rev_user ) ) {
+		if ( static::shouldDisplayAppreciation() && $wgUser->getId() !== intval( $row->rev_user ) ) {
 			$tools[] = F::app()->renderView( 'ContributionAppreciation', 'historyModule', [ 'revision' => $row->rev_id ] );
 		}
 
@@ -85,7 +85,7 @@ class ContributionAppreciationController extends WikiaController {
 	}
 
 	public static function onPageHistoryBeforeList() {
-		if ( self::shouldDisplayAppreciation() ) {
+		if ( static::shouldDisplayAppreciation() ) {
 			Wikia::addAssetsToOutput( 'contribution_appreciation_js' );
 			Wikia::addAssetsToOutput( 'contribution_appreciation_scss' );
 		}
@@ -94,7 +94,7 @@ class ContributionAppreciationController extends WikiaController {
 	}
 
 	public static function onBeforePageDisplay( \OutputPage $out, \Skin $skin ) {
-		if ( self::shouldDisplayAppreciation() ) {
+		if ( static::shouldDisplayAppreciation() ) {
 			Wikia::addAssetsToOutput( 'contribution_appreciation_user_js' );
 			Wikia::addAssetsToOutput( 'contribution_appreciation_user_scss' );
 		}
@@ -109,12 +109,12 @@ class ContributionAppreciationController extends WikiaController {
 		// using languages supported in experiment
 		return $wgUser->isLoggedIn() &&
 			!$wgUser->isBlocked() &&
-			self::isSuportedAppreciationLang( $wgLang->getCode() ) &&
+			static::isSuportedAppreciationLang( $wgLang->getCode() ) &&
 			!empty( $wgEnableCommunityPageExt );
 	}
 
 	private static function isSuportedAppreciationLang( $lang ) {
-		return in_array( $lang, self::SUPPORTED_LANGUAGES );
+		return in_array( $lang, static::SUPPORTED_LANGUAGES );
 	}
 
 	private function prepareAppreciations( $upvotes ) {
@@ -179,7 +179,7 @@ class ContributionAppreciationController extends WikiaController {
 			$diffAuthor = \User::newFromId( $revision->getUser() );
 
 			// we want to send appreciation email for en users only
-			if ( $diffAuthor && self::isSuportedAppreciationLang( $diffAuthor->getGlobalPreference( 'language' ) ) ) {
+			if ( $diffAuthor && static::isSuportedAppreciationLang( $diffAuthor->getGlobalPreference( 'language' ) ) ) {
 				$editedPageTitle = $revision->getTitle();
 				$params = [
 					'buttonLink' => SpecialPage::getTitleFor( 'Community' )->getFullURL(),

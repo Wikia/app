@@ -6,11 +6,11 @@ class ContributionAppreciationCommonHooks {
 
 	public static function onSendGridPostbackLogEvents( $events ) {
 		foreach ( $events as $event ) {
-			if ( self::isAppreciationEmailEvent( $event ) ) {
+			if ( static::isAppreciationEmailEvent( $event ) ) {
 				if ( preg_match( '/diff=([0-9]*)/', $event[ 'url' ], $diff ) ) {
-					self::sendDataToDW( 'button_clicked', $event[ 'wikia-email-city-id' ], $diff[ 1 ] );
+					static::sendDataToDW( 'button_clicked', $event[ 'wikia-email-city-id' ], $diff[ 1 ] );
 				} elseif ( preg_match( '/rev_id=([0-9]*)/', $event[ 'url' ], $revId ) ) {
-					self::sendDataToDW( 'diff_link_clicked', $event[ 'wikia-email-city-id' ], $revId[ 1 ] );
+					static::sendDataToDW( 'diff_link_clicked', $event[ 'wikia-email-city-id' ], $revId[ 1 ] );
 				}
 			}
 		}
@@ -31,11 +31,13 @@ class ContributionAppreciationCommonHooks {
 		isset( $event[ 'url' ] ) &&
 		isset( $event[ 'wikia-email-city-id' ] ) &&
 		$event[ 'event' ] == 'click' &&
-		strpos( $event[ 'category' ], self::EMAIL_CATEGORY ) !== false;
+		strpos( $event[ 'category' ], static::EMAIL_CATEGORY ) !== false;
 	}
 
 	/**
 	 * Basing on params, create url to send tracking data to DW and send it.
+	 * If code will appear to be used not only in experiment, move it to
+	 * place independent of this extension: https://wikia-inc.atlassian.net/browse/WW-178
 	 *
 	 * @param string $action - how user interacted with email
 	 * @param int $wikiId - id of wiki user made contribution on
@@ -47,7 +49,7 @@ class ContributionAppreciationCommonHooks {
 		$revision = Revision::loadFromId( $db, $revisionId );
 
 		if ( $revision ) {
-			$url = self::TRACKING_URL .
+			$url = static::TRACKING_URL .
 				'?wiki_id=' . $wikiId .
 				'&email_action=' . $action .
 				'&page_id=' . $revision->getTitle()->getArticleID() .
