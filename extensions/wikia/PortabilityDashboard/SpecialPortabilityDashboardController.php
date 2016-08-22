@@ -15,6 +15,8 @@ class SpecialPortabilityDashboardController extends WikiaSpecialPageController {
 	}
 
 	public function index() {
+		global $wgBlankImgUrl;
+
 		$langFilter = $this->getVal( static::LANGUAGE_FILTER_QS_PARAM, '' );
 		$wikiUrlParam = $this->getVal( static::WIKI_URL_QS_PARAM, '' );
 		$isLangFilterSet = !empty( $langFilter );
@@ -34,10 +36,13 @@ class SpecialPortabilityDashboardController extends WikiaSpecialPageController {
 			'langList' => $this->extendLanguagesListWithActiveLanguage( static::SUPPORTED_LANGUAGE_FILTERS, $langFilter ),
 			'isLangFilterSet'=> $isLangFilterSet,
 			'langQSParam' => static::LANGUAGE_FILTER_QS_PARAM,
+			'blankImgUrl' => $wgBlankImgUrl,
 			// i18n template strings
 			'langFilterLabel' => wfMessage( 'portability-dashboard-language-filter-label' )->text(),
 			'dashboardLegend' => wfMessage( 'portability-dashboard-hover-info' )->text(),
 			'allLangFilter'=> wfMessage( 'portability-dashboard-language-filter-all' )->text(),
+			'searchHeadline' => wfMessage( 'portability-dashboard-search-headline' )->text(),
+			'searchPlaceholder' => wfMessage( 'portability-dashboard-search-placeholder' )->text(),
 			'dashboardLabels'=> $this->getDashboardLabels(),
 			'templatesWithoutTypeUrlTitle' => wfMessage( 'portability-dashboard-special-insights-template-without-title' )->text(),
 			'customInfoboxesInsightsUrlTitle' => wfMessage( 'portability-dashboard-special-insights-custom-infobox-title' )->text(),
