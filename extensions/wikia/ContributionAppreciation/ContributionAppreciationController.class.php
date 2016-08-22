@@ -28,8 +28,7 @@ class ContributionAppreciationController extends WikiaController {
 
 			\Wikia\Logger\WikiaLogger::instance()->info('ContributionAppreciationMessage email send', [
 				'revision_id' => $revisionId,
-				'wiki_id' => $wgCityId,
-				'user_id' => $wgUser->getId()
+				'appreciation_receiver' => $revision->getRawUser()
 			]);
 		}
 
