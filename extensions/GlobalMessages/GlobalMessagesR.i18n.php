@@ -187,6 +187,7 @@ Please check the logs.',
 	'right-editusercssjs' => "Edit other users' CSS and JavaScript files",
 	'right-editusercss' => "Edit other users' CSS files",
 	'right-edituserjs' => "Edit other users' JavaScript files",
+	'right-hideblockername' => "Not have their user name show up in block notices",
 	'right-rollback' => 'Quickly rollback the edits of the last user who edited a particular page',
 	'right-markbotedits' => 'Mark rolled-back edits as bot edits',
 	'right-noratelimit' => 'Not be affected by rate limits',
@@ -554,6 +555,7 @@ Basic right to create pages. The right to edit discussion/talk pages is {{msg|ri
 Basic right to create discussion/talk pages. The right to edit other pages is {{msg|right-createpage|pl=yes}}.',
 	'right-createaccount' => '{{doc-right}}
 The right to [[Special:CreateAccount|create a user account]].',
+	'right-hideblockername' => "{{doc-right}}",
 	'right-minoredit' => '{{doc-right}}
 The right to use the "This is a minor edit" checkbox. See {{msg|minoredit|pl=yes}} for the message used for that checkbox.',
 	'right-move' => '{{doc-right}}

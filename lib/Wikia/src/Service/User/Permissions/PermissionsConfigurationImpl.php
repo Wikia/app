@@ -251,7 +251,8 @@ class PermissionsConfigurationImpl implements PermissionsConfiguration {
 		'editrestrictedfields',
 		'viewedittab',
 		'createclass',
-		'first-edit-dialog-exempt'
+		'first-edit-dialog-exempt',
+		'hideblockername',
 	];
 
 	public function __construct() {
