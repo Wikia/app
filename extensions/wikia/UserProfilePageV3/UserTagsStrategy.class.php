@@ -26,7 +26,7 @@ class UserTagsStrategy extends WikiaObject {
 	const LOCAL_GROUPS_RANK = [
 		'bureaucrat',
 		'sysop',
-		'contentmoderator',
+		'content-moderator',
 		'threadmoderator',
 		'chatmoderator',
 	];
@@ -162,7 +162,7 @@ class UserTagsStrategy extends WikiaObject {
 				case 'sysop':
 					$tags[] = wfMessage( 'user-identity-box-group-sysop' )->escaped();
 					break;
-				case 'contentmoderator':
+				case 'content-moderator':
 					$tags[] = wfMessage( 'user-identity-box-group-content-moderator' )->escaped();
 					break;
 				case 'threadmoderator':
