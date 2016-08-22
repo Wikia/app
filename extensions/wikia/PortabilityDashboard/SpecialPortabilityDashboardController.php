@@ -15,6 +15,8 @@ class SpecialPortabilityDashboardController extends WikiaSpecialPageController {
 	}
 
 	public function index() {
+		global $wgBlankImgUrl;
+
 		$langFilter = $this->getVal( static::LANGUAGE_FILTER_QS_PARAM, '' );
 		$wikiUrlParam = $this->getVal( static::WIKI_URL_QS_PARAM, '' );
 		$isLangFilterSet = !empty( $langFilter );
@@ -58,7 +60,7 @@ class SpecialPortabilityDashboardController extends WikiaSpecialPageController {
 		$this->response->setVal( 'refreshFreqInfo', wfMessage( 'portability-dashboard-refresh-frequency-info' )->text() );
 		$this->response->setVal( 'searchHeadline', wfMessage( 'portability-dashboard-search-headline' )->text() );
 		$this->response->setVal( 'searchPlaceholder', wfMessage( 'portability-dashboard-search-placeholder' )->text() );
-		$this->response->setVal( 'blankImgUrl', $this->wgBlankImgUrl );
+		$this->response->setVal( 'blankImgUrl', $wgBlankImgUrl );
 		$this->response->setVal( 'noResultsInfo', $noResultsInfoMessage );
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 
