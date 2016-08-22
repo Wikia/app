@@ -25,6 +25,11 @@ class ContributionAppreciationController extends WikiaController {
 			// send email that user received appreciation.
 			// Currently disabled because of: https://wikia-inc.atlassian.net/browse/WW-172
 			// $this->sendMail( $revisionId );
+
+			\Wikia\Logger\WikiaLogger::instance()->info('ContributionAppreciationMessage email send', [
+				'revision_id' => $revisionId,
+				'appreciation_receiver' => $revision->getRawUser()
+			]);
 		}
 
 		$this->response->setValues( [
