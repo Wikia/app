@@ -82,7 +82,11 @@ class OasisController extends WikiaController {
 			$wgTitle->isSpecial( 'LookupUser' ) ||
 			$wgTitle->isSpecial( 'WikiFactory' ) ||
 			$wgTitle->isSpecial( 'Listusers' ) ||
-			$wgTitle->isSpecial( 'LookupContribs' )
+			$wgTitle->isSpecial( 'LookupContribs' ) ||
+			$wgTitle->isSpecial( 'WhereIsExtension' ) ||
+			$wgTitle->isSpecial( 'InterwikiEdit' ) ||
+			$wgTitle->isSpecial( 'CreateBlogListingPage' ) ||
+			$wgTitle->isSpecial( 'AchievementsCustomize' )
 		);
 	}
 
