@@ -14,16 +14,6 @@ class PortabilityDashboardModel {
 	}
 
 	/**
-	 * gets full (non filtered) list of data for portability dashboard
-	 * @return array
-	 */
-	public function getList() {
-		$rowList = $this->getRowList();
-
-		return $this->extendList( $rowList );
-	}
-
-	/**
 	 * For wiki url or domain name return portability data
 	 *
 	 * @param $wikiUrl
@@ -34,11 +24,7 @@ class PortabilityDashboardModel {
 		$wikiId = WikiFactory::UrlToID( $wikiUrl );
 
 		if ( $wikiId ) {
-			$dataRow = $this->getWikiById( $wikiId );
-
-			if ( $dataRow ) {
-				$wiki = $this->extendList( $dataRow );
-			}
+			$wiki = $this->getWikiById( $wikiId );
 		}
 
 		return $wiki;
@@ -48,7 +34,7 @@ class PortabilityDashboardModel {
 	 * @param $rowList
 	 * @return array
 	 */
-	private function extendList( $rowList ) {
+	public function extendList( $rowList ) {
 		$wikiParamsList = $this->getWikiParamsList( $rowList );
 
 		return $this->extendRowListWithWikiParams( $rowList, $wikiParamsList );
@@ -81,10 +67,12 @@ class PortabilityDashboardModel {
 	}
 
 	/**
-	 * gets row list from DB
+	 * gets full (non filtered) list of data for portability dashboard
+	 * with regard to WIKIS_LIMIT
+	 *
 	 * @return bool|mixed
 	 */
-	private function getRowList() {
+	public function getRowList() {
 		return ( new WikiaSQL() )
 			->SELECT_ALL()
 			->FROM( static::PORTABILITY_DASHBOARD_TABLE )
