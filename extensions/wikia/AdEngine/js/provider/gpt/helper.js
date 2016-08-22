@@ -8,7 +8,9 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	'ext.wikia.adEngine.provider.gpt.adElement',
 	'ext.wikia.adEngine.provider.gpt.googleTag',
 	'ext.wikia.adEngine.slot.slotTargeting',
+	'ext.wikia.adEngine.template.floating-rail',
 	'ext.wikia.adEngine.uapContext',
+	'ext.wikia.adEngine.utils.math',
 	'ext.wikia.aRecoveryEngine.recovery.helper',
 	'ext.wikia.adEngine.slotTweaker',
 	require.optional('ext.wikia.adEngine.provider.gpt.sraHelper'),
@@ -21,7 +23,9 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	AdElement,
 	GoogleTag,
 	slotTargeting,
+	floatingRail,
 	uapContext,
+	math,
 	recoveryHelper,
 	slotTweaker,
 	sraHelper,
@@ -54,7 +58,8 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 		var count,
 			element,
 			recoverableSlots = extra.recoverableSlots || [],
-			shouldPushRecoverableAd = recoveryHelper.isBlocking() && recoveryHelper.isRecoverable(slot.name, recoverableSlots),
+			shouldPushRecoverableAd = recoveryHelper.isBlocking() &&
+				recoveryHelper.isRecoverable(slot.name, recoverableSlots),
 			shouldPush = !recoveryHelper.isBlocking() || shouldPushRecoverableAd,
 			uapId = uapContext.getUapId();
 
@@ -72,18 +77,8 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 				slotTweaker.show(slot.name);
 			});
 		}
-		if (scrollHandler) {
-			count = scrollHandler.getReloadedViewCount(slot.name);
-			if (count !== null) {
-				slotTargetingData.rv = count.toString();
-			}
-		}
-		if (shouldPushRecoverableAd) {
-			slotTargetingData.src = 'rec';
-		}
 
-		slotTargetingData.wsi = slotTargeting.getWikiaSlotId(slot.name, slotTargetingData.src);
-		slotTargetingData.uap = uapId ? uapId.toString() : 'none';
+		setAdditionalTargeting(slotTargetingData);
 
 		element = new AdElement(slot.name, slotPath, slotTargetingData);
 
@@ -92,6 +87,31 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 			slot.container.appendChild(element.getNode());
 
 			googleApi.addSlot(element);
+		}
+
+		function setAdditionalTargeting(slotTargetingData) {
+			if (scrollHandler) {
+				count = scrollHandler.getReloadedViewCount(slot.name);
+				if (count !== null) {
+					slotTargetingData.rv = count.toString();
+				}
+			}
+
+			if (shouldPushRecoverableAd) {
+				slotTargetingData.src = 'rec';
+			}
+
+			slotTargetingData.wsi = slotTargeting.getWikiaSlotId(slot.name, slotTargetingData.src);
+			slotTargetingData.uap = uapId ? uapId.toString() : 'none';
+
+			if (slot.name === 'TOP_RIGHT_BOXAD') {
+				slotTargetingData.floatspace = math.getBucket(floatingRail.getAvailableSpace(), 100).toString();
+			}
+
+			if (slot.name === 'INCONTENT_BOXAD_1' && floatingRail.getFloatingSpace()) {
+				slotTargetingData.floatingSpace = math.getBucket(
+					Math.max(0, floatingRail.getAvailableSpace() - floatingRail.getFloatingSpace()), 100).toString();
+			}
 		}
 
 		function onAdLoadCallback(slotElementId, gptEvent, iframe) {
