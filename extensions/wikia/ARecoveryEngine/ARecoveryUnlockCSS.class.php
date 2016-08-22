@@ -25,20 +25,30 @@ class ARecoveryUnlockCSS {
 			if ( $cachedCriptedUrl ) {
 				return $cachedCriptedUrl;
 			} else {
-				$spQuery = self::postJson(self::API_URL . self::API_ENDPOINT, $jsonData);
+				try {
+					$spQuery = self::postJson(self::API_URL . self::API_ENDPOINT, $jsonData);
+				} catch ( Exception $e ) {
+					self::logFetchingCryptedCSSFailure( $jsonData );
+					return $wikiaCssUrl;
+				}
+
 				if ( $spQuery['code'] == 200 && self::verifyContent( $spQuery['response'] ) ) {
 					$memCache->set( $memcKey, $spQuery['response'], self::CACHE_TTL) ;
 					return $spQuery['response'];
 				} else {
-					\Wikia\Logger\WikiaLogger::instance()
-						->warning( 'Failed to fetch crypted CSS',
-							['url' => self::API_URL . self::API_ENDPOINT,
-							 'data' => $jsonData]
-						);
+					self::logFetchingCryptedCSSFailure( $jsonData );
 				}
 			}
 		}
 		return $wikiaCssUrl;
+	}
+
+	private static function logFetchingCryptedCSSFailure( $jsonData ) {
+		\Wikia\Logger\WikiaLogger::instance()
+			->warning( 'Failed to fetch crypted CSS',
+				['url' => self::API_URL . self::API_ENDPOINT,
+					'data' => $jsonData]
+			);
 	}
 
 	private static function verifyContent( $url ) {
@@ -47,7 +57,13 @@ class ARecoveryUnlockCSS {
 			'timeout' => self::TIMEOUT,
 			'noProxy' => true
 		];
-		$response = \Http::get( $url, self::TIMEOUT, $options );
+
+		try {
+			$response = \Http::get( $url, self::TIMEOUT, $options );
+		} catch ( Exception $e ) {
+			return false;
+		}
+
 		if ( strpos( $response->getContent(), '#WikiaArticle' ) !== false ) {
 			return true;
 		}
