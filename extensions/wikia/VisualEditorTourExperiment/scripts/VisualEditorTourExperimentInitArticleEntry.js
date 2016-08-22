@@ -11,7 +11,7 @@ require(['jquery', 'mw', 'VisualEditorTourExperimentInit', 'ext.wikia.spitfires.
 				mw.config.get('wgNamespaceNumber') === 0 &&
 				mw.config.get('wgVisualEditorPreferred')
 			) {
-				if (mw.config.get('wgUserLanguage') == 'ja') {
+				if (mw.config.get('wgUserLanguage') === 'ja') {
 					$editButton.popover({
 						content: '<div class="ve-tour-experiment">' +
 						'<div class="close"></div>' +
