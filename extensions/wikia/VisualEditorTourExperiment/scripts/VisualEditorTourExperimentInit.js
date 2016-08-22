@@ -3,10 +3,8 @@ define('VisualEditorTourExperimentInit',
 	function ($, VETour, veTourConfig, abTest, tracker) {
 		'use strict';
 
-		var experimentName = 'contribution-experiments',
-			freshlyRegisteredExperimentId = 5654433460,
-			usersWithoutEditExperimentId = 5735670451;
-
+		var experimentName = 'contribution-experiments';
+		
 		function init() {
 			var lang = mw.config.get('wgUserLanguage');
 			if (isEnabled()) {
