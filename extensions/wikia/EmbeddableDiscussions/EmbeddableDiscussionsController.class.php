@@ -28,7 +28,7 @@ class EmbeddableDiscussionsController {
 	public static function render( $input, array $args, Parser $parser, PPFrame $frame ) {
 		global $wgCityId;
 
-		$showLatest = filter_var( $args['latest'], FILTER_VALIDATE_BOOLEAN );
+		$showLatest = empty( $args['mostrecent'] ) ? false : filter_var( $args['mostrecent'], FILTER_VALIDATE_BOOLEAN );
 		$itemCount = empty( $args['size'] ) ? self::ITEMS_DEFAULT : intval( $args['size'] );
 		$columns = empty( $args['columns'] ) ? self::COLUMNS_DEFAULT : intval( $args['columns'] );
 
