@@ -633,9 +633,6 @@ class WikiaApp {
 
 		$request = new WikiaRequest($params);
 
-		if (false == $internal) {
-			$internal = F::app()->wg->request->isWikiaInternalRequest();
-		}
 		$request->setInternal( $internal );
 
 		if ( $exceptionMode !== null ) {
