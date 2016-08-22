@@ -2706,8 +2706,6 @@ class WikiFactory {
 	 * @return flags
 	 */
 	static public function getFlags( $city_id ) {
-		global $wgWikicitiesReadOnly;
-
 		if ( !static::isUsed() ) {
 			Wikia::log( __METHOD__, 'info', 'WikiFactory is not used.' );
 			return false;
@@ -3349,7 +3347,7 @@ class WikiFactory {
 	 * @param $ids array List of wiki ids
 	 * @param $what int Flags specifying what data to prefetch
 	 */
-	static public function prefetchWikisById( $ids, $what = static::PREFETCH_DEFAULT ) {
+	static public function prefetchWikisById( $ids, $what = self::PREFETCH_DEFAULT ) {
 		global $wgMemc;
 		if ( !is_array( $ids ) ) $ids = [ $ids ];
 		$keys = [];

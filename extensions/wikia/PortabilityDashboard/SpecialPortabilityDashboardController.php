@@ -17,14 +17,23 @@ class SpecialPortabilityDashboardController extends WikiaSpecialPageController {
 	public function index() {
 		global $wgBlankImgUrl;
 
+		$model = new PortabilityDashboardModel();
 		$langFilter = $this->getVal( static::LANGUAGE_FILTER_QS_PARAM, '' );
 		$wikiUrlParam = $this->getVal( static::WIKI_URL_QS_PARAM, '' );
 		$isLangFilterSet = !empty( $langFilter );
-		$list = $this->getResultsList( $langFilter, $wikiUrlParam );
+		$isWikiUrlParamSet = !empty( $wikiUrlParam );
 		$noResultsInfoMessage = wfMessage(
 			$isLangFilterSet ? 'portability-dashboard-no-results-for-lang-info' : 'portability-dashboard-no-results-for-url-info',
 			PortabilityDashboardModel::WIKIS_LIMIT
 		)->text();
+
+		if ( $isWikiUrlParamSet ) {
+			$list = $model->getWikiDataByUrl( Sanitizer::encodeAttribute( $wikiUrlParam ) );
+		} else {
+			$modelList = $model->getRowList();
+			$list = $isLangFilterSet ? $this->filterListByLang( $modelList, $langFilter ) : $modelList;
+		}
+		$list = empty( $list ) ? [] : $model->extendList( $list );
 
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 		$this->response->setValues( [
@@ -51,19 +60,6 @@ class SpecialPortabilityDashboardController extends WikiaSpecialPageController {
 		] );
 
 		Wikia::addAssetsToOutput( 'special_portability_dashboard_scss' );
-	}
-
-	private function getResultsList( $langFilter, $wikiUrlParam ) {
-		$model = new PortabilityDashboardModel();
-
-		if ( empty( $wikiUrlParam ) ) {
-			$modelList = $model->getRowList();
-			$list = empty( $langFilter ) ? $modelList : $this->filterListByLang( $modelList, $langFilter );
-		} else {
-			$list = $model->getWikiDataByUrl( Sanitizer::encodeAttribute( $wikiUrlParam ) );
-		}
-
-		return empty( $list ) ? [] : $model->extendList( $list );
 	}
 
 	/**
