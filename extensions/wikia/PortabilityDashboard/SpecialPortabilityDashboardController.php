@@ -29,11 +29,11 @@ class SpecialPortabilityDashboardController extends WikiaSpecialPageController {
 			// template model
 			'list' => $list,
 			// template helpers
-			'typelessTemplatesInsightsPath' =>  self::SPECIAL_INSIGHTS_PATH . self::SPECIAL_INSIGHTS_TYPELESS_TEMPLATE_PAGE,
-			'customInfoboxesInsightsPath' => self::SPECIAL_INSIGHTS_PATH . self::SPECIAL_CUSTOM_INFOBOXES_PAGE,
-			'langList' => $this->extendLanguagesListWithActiveLanguage( self::SUPPORTED_LANGUAGE_FILTERS, $langFilter ),
+			'typelessTemplatesInsightsPath' =>  static::SPECIAL_INSIGHTS_PATH . static::SPECIAL_INSIGHTS_TYPELESS_TEMPLATE_PAGE,
+			'customInfoboxesInsightsPath' => static::SPECIAL_INSIGHTS_PATH . static::SPECIAL_CUSTOM_INFOBOXES_PAGE,
+			'langList' => $this->extendLanguagesListWithActiveLanguage( static::SUPPORTED_LANGUAGE_FILTERS, $langFilter ),
 			'isLangFilterSet'=> $isLangFilterSet,
-			'langQSParam' => self::LANGUAGE_FILTER_QS_PARAM,
+			'langQSParam' => static::LANGUAGE_FILTER_QS_PARAM,
 			// i18n template strings
 			'langFilterLabel' => wfMessage( 'portability-dashboard-language-filter-label' )->text(),
 			'dashboardLegend' => wfMessage( 'portability-dashboard-hover-info' )->text(),
