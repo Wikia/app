@@ -204,7 +204,10 @@ class RevisionUpvotesService {
 			return [];
 		}
 
-		$upvotes = $this->getUserUpvotes( $userId, $status['last_notified'] );
+		$upvotes = $this->getUserUpvotes(
+			$userId,
+			!empty( $status['last_notified'] ) ? $status['last_notified'] : null
+		);
 
 		return $upvotes;
 	}
