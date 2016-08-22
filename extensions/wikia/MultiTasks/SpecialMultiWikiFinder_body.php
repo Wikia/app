@@ -13,14 +13,10 @@ class MultiwikifinderSpecialPage extends SpecialPage {
 	function execute($page = null, $limit = "", $offset = "", $show = true) {
 		global $wgRequest, $wgUser, $wgOut;
 
-		if( $wgUser->isBlocked() ) {
-			throw new UserBlockedError( $this->getUser()->mBlock );
-		}
-
-		if( !$wgUser->isAllowed( 'multiwikifinder' ) ) {
-			$this->displayRestrictionError();
-			return;
-		}
+		$this->setHeaders();
+		// SUS-288: Check permissions before checking for block
+		$this->checkPermissions();
+		$this->checkIfUserIsBlocked();
 
 		$page = $wgRequest->getVal('target', $page);
 		if (empty($limit) && empty($offset)) {
