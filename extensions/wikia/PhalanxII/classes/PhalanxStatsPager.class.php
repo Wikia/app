@@ -52,10 +52,13 @@ class PhalanxStatsPager extends PhalanxPager {
 		$url = ( isset( $row->ps_referrer ) ) ? $row->ps_referrer : "";
 		$url = ( empty( $url ) && isset( $oWiki ) ) ? $oWiki->city_url : $url;
 
+		// SUS-184: Render usernames containing spaces correctly
+		$encUserName = str_replace(' ', '_', $username );
+
 		$specialContributionsURL = GlobalTitle::newFromText( 'Contributions', NS_SPECIAL, $row->ps_wiki_id )->getFullURL();
 
 		if ( !empty( $specialContributionsURL ) ) {
-			$username = '[' . $specialContributionsURL . '/' . $username . ' ' . $username . ']';
+			$username = '[' . $specialContributionsURL . '/' . $encUserName . ' ' . $username . ']';
 		}
 
 		$html  = Html::openElement( 'li' );
