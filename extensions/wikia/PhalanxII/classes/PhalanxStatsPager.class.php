@@ -47,8 +47,8 @@ class PhalanxStatsPager extends PhalanxPager {
 	function formatRow( $row ) {
 		$type = implode( ", ", Phalanx::getTypeNames( ( isset( $row->ps_blocker_hit ) ) ? $row->ps_blocker_hit : $row->ps_blocker_type ) );
 		$username = $row->ps_blocked_user;
-		$timestamp = $this->app->wg->Lang->timeanddate( $row->ps_timestamp );
-		$oWiki = WikiFactory::getWikiById( $row->ps_wiki_id );
+		$timestamp = $this->getLanguage()->timeanddate( $row->ps_timestamp );
+		$oWiki = WikiFactory::getWikiByID( $row->ps_wiki_id );
 		$url = ( isset( $row->ps_referrer ) ) ? $row->ps_referrer : "";
 		$url = ( empty( $url ) && isset( $oWiki ) ) ? $oWiki->city_url : $url;
 
@@ -62,7 +62,7 @@ class PhalanxStatsPager extends PhalanxPager {
 		}
 
 		$html  = Html::openElement( 'li' );
-		$html .= wfMessage( 'phalanx-stats-row', $type, $username, $url, $timestamp )->parse();
+		$html .= $this->msg( 'phalanx-stats-row', $type, $username, $url, $timestamp )->parse();
 		$html .= Html::closeElement( 'li' );
 
 		return $html;
