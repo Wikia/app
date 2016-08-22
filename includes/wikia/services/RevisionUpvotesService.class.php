@@ -42,7 +42,7 @@ class RevisionUpvotesService {
 		$db->begin();
 
 		( new \WikiaSQL() )
-			->DELETE( self::UPVOTE_TABLE )
+			->DELETE( static::UPVOTE_TABLE )
 			->WHERE( 'id' )->EQUAL_TO( $id )
 			->AND_( 'from_user' )->EQUAL_TO( $fromUser )
 			->run( $db );
@@ -51,7 +51,7 @@ class RevisionUpvotesService {
 
 		if ( $this->shouldStoreUserData( $userId ) ) {
 			( new \WikiaSQL() )
-				->UPDATE( self::UPVOTE_USERS_TABLE )
+				->UPDATE( static::UPVOTE_USERS_TABLE )
 				->SET_RAW( 'total', 'IF(`total` > 0, `total` - 1, 0)' )
 				->SET_RAW( 'new', 'IF(`new` > 0, `new` - 1, 0)' )
 				->WHERE( 'user_id' )->EQUAL_TO( $userId )
@@ -79,8 +79,8 @@ class RevisionUpvotesService {
 
 		$upvote = ( new \WikiaSQL() )
 			->SELECT_ALL()
-			->FROM( self::UPVOTE_REVISIONS_TABLE )->AS_( 'revs' )
-			->INNER_JOIN( self::UPVOTE_TABLE )->AS_( 'uv' )
+			->FROM( static::UPVOTE_REVISIONS_TABLE )->AS_( 'revs' )
+			->INNER_JOIN( static::UPVOTE_TABLE )->AS_( 'uv' )
 			->ON( 'revs.upvote_id', 'uv.upvote_id' )
 			->WHERE( 'wiki_id' )->EQUAL_TO( $wikiId )
 			->AND_( 'revision_id' )->EQUAL_TO( $revisionId )
@@ -118,8 +118,8 @@ class RevisionUpvotesService {
 
 		$upvotes = ( new \WikiaSQL() )
 			->SELECT_ALL()
-			->FROM( self::UPVOTE_REVISIONS_TABLE )->AS_( 'revs' )
-			->INNER_JOIN( self::UPVOTE_TABLE )->AS_( 'uv' )
+			->FROM( static::UPVOTE_REVISIONS_TABLE )->AS_( 'revs' )
+			->INNER_JOIN( static::UPVOTE_TABLE )->AS_( 'uv' )
 			->ON( 'revs.upvote_id', 'uv.upvote_id' )
 			->WHERE( 'wiki_id' )->EQUAL_TO( $wikiId )
 			->AND_( 'revision_id' )->IN( $revisionsIds )
@@ -159,8 +159,8 @@ class RevisionUpvotesService {
 
 		$sql = ( new \WikiaSQL() )
 			->SELECT_ALL()
-			->FROM( self::UPVOTE_REVISIONS_TABLE )->AS_( 'revs' )
-			->LEFT_JOIN( self::UPVOTE_TABLE )->AS_( 'uv' )
+			->FROM( static::UPVOTE_REVISIONS_TABLE )->AS_( 'revs' )
+			->LEFT_JOIN( static::UPVOTE_TABLE )->AS_( 'uv' )
 			->ON( 'revs.upvote_id', 'uv.upvote_id' )
 			->WHERE( 'user_id' )->EQUAL_TO( $userId );
 
@@ -215,7 +215,7 @@ class RevisionUpvotesService {
 
 		$status = ( new \WikiaSQL() )
 			->SELECT( 'notified', 'last_notified' )
-			->FROM( self::UPVOTE_USERS_TABLE )
+			->FROM( static::UPVOTE_USERS_TABLE )
 			->WHERE( 'user_id' )->EQUAL_TO( $userId )
 			->run( $db, function( $result ) {
 				$status = [];
@@ -243,7 +243,7 @@ class RevisionUpvotesService {
 		$db = $this->getDatabaseForWrite();
 
 		( new \WikiaSQL() )
-			->UPDATE( self::UPVOTE_USERS_TABLE )
+			->UPDATE( static::UPVOTE_USERS_TABLE )
 			->SET( 'notified', true )
 			->SET( 'new', 0 )
 			->SET( 'last_notified', wfTimestamp( TS_DB ) )
@@ -263,7 +263,7 @@ class RevisionUpvotesService {
 
 		$upvoteId = ( new \WikiaSQL() )
 			->SELECT( 'upvote_id' )
-			->FROM( self::UPVOTE_REVISIONS_TABLE )
+			->FROM( static::UPVOTE_REVISIONS_TABLE )
 			->WHERE( 'wiki_id' )->EQUAL_TO( $wikiId )
 			->AND_( 'revision_id' )->EQUAL_TO( $revisionId )
 			->run( $db, function( $result ) {
@@ -287,7 +287,7 @@ class RevisionUpvotesService {
 		$db = $this->getDatabaseForWrite();
 
 		( new \WikiaSQL() )
-			->INSERT( self::UPVOTE_REVISIONS_TABLE )
+			->INSERT( static::UPVOTE_REVISIONS_TABLE )
 			->SET( 'wiki_id', $wikiId )
 			->SET( 'page_id', $pageId )
 			->SET( 'revision_id', $revisionId )
@@ -314,13 +314,13 @@ class RevisionUpvotesService {
 
 		$db->begin();
 
-		$db->insert( self::UPVOTE_TABLE, [ 'upvote_id' => $upvoteId, 'from_user' => $fromUser ] );
+		$db->insert( static::UPVOTE_TABLE, [ 'upvote_id' => $upvoteId, 'from_user' => $fromUser ] );
 
 		$lastId = $db->insertId();
 
 		if ( $this->shouldStoreUserData( $userId ) ) {
 			$db->upsert(
-				self::UPVOTE_USERS_TABLE,
+				static::UPVOTE_USERS_TABLE,
 				[
 					'user_id' => $userId,
 					'total' => 1,
