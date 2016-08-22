@@ -49,11 +49,7 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 				getWikiaSlotId: noop
 			},
 			floatingRail: {
-				getAvailableSpace: noop,
-				getFloatingSpace: noop
-			},
-			math: {
-				getBucket: function() {
+				getFloatingSpaceParam: function() {
 					return {
 						toString: noop
 					};
@@ -85,7 +81,6 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 			mocks.slotTargetingHelper,
 			mocks.floatingRail,
 			mocks.uapContext,
-			mocks.math,
 			mocks.recoveryHelper,
 			mocks.slotTweaker,
 			mocks.sraHelper

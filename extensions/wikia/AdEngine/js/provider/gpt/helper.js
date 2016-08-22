@@ -10,7 +10,6 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	'ext.wikia.adEngine.slot.slotTargeting',
 	'ext.wikia.adEngine.template.floating-rail',
 	'ext.wikia.adEngine.uapContext',
-	'ext.wikia.adEngine.utils.math',
 	'ext.wikia.aRecoveryEngine.recovery.helper',
 	'ext.wikia.adEngine.slotTweaker',
 	require.optional('ext.wikia.adEngine.provider.gpt.sraHelper'),
@@ -25,7 +24,6 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	slotTargeting,
 	floatingRail,
 	uapContext,
-	math,
 	recoveryHelper,
 	slotTweaker,
 	sraHelper,
@@ -61,7 +59,8 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 			shouldPushRecoverableAd = recoveryHelper.isBlocking() &&
 				recoveryHelper.isRecoverable(slot.name, recoverableSlots),
 			shouldPush = !recoveryHelper.isBlocking() || shouldPushRecoverableAd,
-			uapId = uapContext.getUapId();
+			uapId = uapContext.getUapId(),
+			floatingSpace = floatingRail.getFloatingSpaceParam(slot.name);
 
 		log(['shouldPush',
 			slot.name,
@@ -104,13 +103,8 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 			slotTargetingData.wsi = slotTargeting.getWikiaSlotId(slot.name, slotTargetingData.src);
 			slotTargetingData.uap = uapId ? uapId.toString() : 'none';
 
-			if (slot.name === 'TOP_RIGHT_BOXAD') {
-				slotTargetingData.floatspace = math.getBucket(floatingRail.getAvailableSpace(), 100).toString();
-			}
-
-			if (slot.name === 'INCONTENT_BOXAD_1' && floatingRail.getFloatingSpace()) {
-				slotTargetingData.floatingSpace = math.getBucket(
-					Math.max(0, floatingRail.getAvailableSpace() - floatingRail.getFloatingSpace()), 100).toString();
+			if (floatingSpace !== null) {
+				slotTargetingData.floatspace = floatingSpace.toString();
 			}
 		}
 

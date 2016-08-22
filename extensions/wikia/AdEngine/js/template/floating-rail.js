@@ -2,15 +2,16 @@
 define('ext.wikia.adEngine.template.floating-rail', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.uapContext',
+	'ext.wikia.adEngine.utils.math',
 	'ext.wikia.adEngine.adHelper',
 	'jquery',
 	'wikia.log',
 	'wikia.document',
 	'wikia.window'
-], function (adContext, uapContext, adHelper, $, log, doc, win) {
+], function (adContext, uapContext, math, adHelper, $, log, doc, win) {
 	'use strict';
 
-	var	$medrec = $('#TOP_RIGHT_BOXAD'),
+	var $medrec = $('#TOP_RIGHT_BOXAD'),
 		$rail = $('#WikiaRail'),
 		$railWrapper = $('#WikiaRailWrapper'),
 		$wikiaMainContent = $('#WikiaMainContent'),
@@ -31,6 +32,7 @@ define('ext.wikia.adEngine.template.floating-rail', [
 			startPosition = parseInt($railWrapper.offset().top, 10) - globalNavHeight - margin;
 			stopPosition = startPosition + floatingSpace;
 
+			// Check if medrec has hidden class for handling tablet mode
 			if ($win.scrollTop() <= startPosition || $medrec.hasClass('hidden')) {
 				$rail.css({
 					position: 'relative',
@@ -52,6 +54,18 @@ define('ext.wikia.adEngine.template.floating-rail', [
 			}
 		}, 50);
 
+	function getAvailableSpace() {
+		if (!availableSpace) {
+			availableSpace =
+				$wikiaMainContent.height() - $railWrapper.height() + medrecDefaultSize - adsInRail * biggestAdSize;
+			availableSpace = Math.max(0, availableSpace);
+
+			log(['getAvailableSpace', availableSpace], 'debug', logGroup);
+		}
+
+		return availableSpace;
+	}
+
 	function show(params) {
 		var offset = params.offset || 0,
 			context = adContext.getContext(),
@@ -68,26 +82,20 @@ define('ext.wikia.adEngine.template.floating-rail', [
 		win.addEventListener('resize', update);
 	}
 
-	function getFloatingSpace() {
-		return floatingSpace;
-	}
-
-	function getAvailableSpace() {
-		if (!availableSpace) {
-			availableSpace = Math.max(
-				0,
-				$wikiaMainContent.height() - $railWrapper.height() + medrecDefaultSize - adsInRail * biggestAdSize
-			);
-
-			log(['getAvailableSpace', availableSpace], 'debug', logGroup);
+	function getFloatingSpaceParam(slotName) {
+		switch (slotName)    {
+			case 'TOP_RIGHT_BOXAD':
+				return math.getBucket(getAvailableSpace(), 100);
+			case 'INCONTENT_BOXAD_1':
+				return floatingSpace ?
+					math.getBucket(Math.max(0, getAvailableSpace() - floatingSpace), 100) : null;
+			default:
+				return null;
 		}
-
-		return availableSpace;
 	}
 
 	return {
-		getAvailableSpace: getAvailableSpace,
-		getFloatingSpace: getFloatingSpace,
+		getFloatingSpaceParam: getFloatingSpaceParam,
 		show: show
 	};
 });
