@@ -15,11 +15,12 @@ class PortabilityDashboardModel {
 
 	/**
 	 * For wiki url or domain name return portability data
+	 * (dictionary in the one-item array) or empty array if not found
 	 *
 	 * @param $wikiUrl
 	 * @return array
 	 */
-	public function getWikiByUrl( $wikiUrl ) {
+	public function getWikiDataByUrl( $wikiUrl ) {
 		$wiki = [ ];
 		$wikiId = WikiFactory::UrlToID( $wikiUrl );
 
@@ -31,7 +32,10 @@ class PortabilityDashboardModel {
 	}
 
 	/**
-	 * @param $rowList
+	 * Extend array of data received from db with data needed to display
+	 * wiki in Portability Dashboard - wiki url, title and lang.
+	 *
+	 * @param $rowList array
 	 * @return array
 	 */
 	public function extendList( $rowList ) {
@@ -40,6 +44,12 @@ class PortabilityDashboardModel {
 		return $this->extendRowListWithWikiParams( $rowList, $wikiParamsList );
 	}
 
+	/**
+	 * gets data for portability dashboard for one wiki
+	 *
+	 * @param $id
+	 * @return bool|mixed
+	 */
 	private function getWikiById( $id ) {
 		return ( new WikiaSQL() )
 			->SELECT_ALL()

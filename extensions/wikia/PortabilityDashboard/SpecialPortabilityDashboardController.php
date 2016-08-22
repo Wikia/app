@@ -60,7 +60,7 @@ class SpecialPortabilityDashboardController extends WikiaSpecialPageController {
 			$modelList = $model->getRowList();
 			$list = empty( $langFilter ) ? $modelList : $this->filterListByLang( $modelList, $langFilter );
 		} else {
-			$list = $model->getWikiByUrl( Sanitizer::encodeAttribute( $wikiUrlParam ) );
+			$list = $model->getWikiDataByUrl( Sanitizer::encodeAttribute( $wikiUrlParam ) );
 		}
 
 		return empty( $list ) ? [] : $model->extendList( $list );

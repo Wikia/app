@@ -84,7 +84,7 @@ class WikiFactory {
 	const PREFETCH_WIKI_METADATA = 1;
 	const PREFETCH_VARIABLES = 2;
 	const PREFETCH_ALL = 255;
-	const PREFETCH_DEFAULT = static::PREFETCH_ALL;
+	const PREFETCH_DEFAULT = self::PREFETCH_ALL;
 
 	static public $types = [
 		"integer",
