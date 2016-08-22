@@ -19,6 +19,8 @@
  *
  * @file
  */
+use \Wikia\DependencyInjection\Injector;
+use \Wikia\Service\User\Permissions\PermissionsService;
 class Block {
 	/* public*/ var $mReason, $mTimestamp, $mAuto, $mExpiry, $mHideName;
 
@@ -1224,5 +1226,46 @@ class Block {
 	 */
 	public function setCreateAccount( $createAccount ) {
 		$this->mCreateAccount = $createAccount;
+	}
+
+	/**
+	 * Wikia change
+	 * SUS-288: Hide blocker name from logs and error pages if the block was made by staff/VSTF
+	 * @return bool Whether to hide the blocker's user name
+	 */
+	public function shouldHideBlockerName() {
+		$blocker = ( $this->blocker instanceof User ) ? $this->blocker : User::newFromName( $this->blocker );
+
+		if ( $blocker instanceof User ) {
+			$this->blocker = $blocker;
+			return $blocker->isAllowed( 'hideblockername' );
+		}
+
+		return false;
+	}
+
+	/**
+	 * SUS-288: Return the group name that should be shown instead of user name if the blocker name is hidden
+	 * (i.e. if the block was made by staff/VSTF)
+	 */
+	public function getGroupNameForHiddenBlocker() {
+		/** @var User $blockerUser */
+		$blockerUser = $this->getBlocker();
+		/** @var PermissionsService $permissionsService */
+		$permissionsService = Injector::getInjector()->get( PermissionsService::class );
+
+		// Get the global groups of this user that have 'hideblockername' permission
+		$groups = array_intersect(
+			$permissionsService->getExplicitGlobalGroups( $blockerUser ),
+			$permissionsService->getConfiguration()->getGroupsWithPermission( 'hideblockername' )
+		);
+
+		// Select the group name to show in the block message
+		if ( count( $groups ) ) {
+			$group = array_shift( $groups );
+			return wfMessage( "group-$group" )->plain();
+		}
+
+		return '';
 	}
 }
