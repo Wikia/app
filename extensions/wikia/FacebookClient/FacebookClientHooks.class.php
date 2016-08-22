@@ -159,7 +159,7 @@ class FacebookClientHooks {
 	 * @param Skin $skin
 	 * @return bool true to continue hook processing
 	 */
-	public static function onBeforePageDisplay( &$out, &$skin ) {
+	public static function onBeforePageDisplay( OutputPage $out, Skin $skin ) {
 		Wikia::addAssetsToOutput( 'facebook_client_fbtags_js' );
 		return true;
 	}
