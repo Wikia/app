@@ -5,7 +5,7 @@
 * @addtogroup Languages
 */
 
-$messages = [ ];
+$messages = [];
 
 $messages['en'] = [
 	'forum-desc' => 'Wikia\'s Special:Forum extension',
@@ -192,6 +192,11 @@ Before contributing to the {{SITENAME}} Forums, please keep in mind a few best p
 	'forum-related-discussion-see-more' => 'See more discussions',
 	'forum-confirmation-board-deleted' => '"$1" has been deleted.',
 	'forum-token-mismatch' => 'Oops! Token doesn\'t match',
+
+	/* rights */
+	'right-forumadmin' => 'Has admin access to the forums',
+	'right-forumoldedit' => 'Can edit the old, archived forums',
+	'right-boardedit' => 'Edit Forum board information',
 ];
 
 /** Message documentation (Message documentation)

@@ -6,7 +6,7 @@ class SpecialCreateNewWiki extends UnlistedSpecialPage {
 		parent::__construct('CreateNewWiki', 'createnewwiki');
 	}
 
-	public function execute() {
+	public function execute( $par = null ) {
 		global $wgUser, $wgOut;
 		wfProfileIn( __METHOD__ );
 

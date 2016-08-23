@@ -3201,7 +3201,7 @@ abstract class DatabaseBase implements DatabaseType {
 	 * installations. Most callers should use LoadBalancer::safeGetLag()
 	 * instead.
 	 *
-	 * @return Database replication lag in seconds
+	 * @return int replication lag in seconds
 	 */
 	function getLag() {
 		return intval( $this->mFakeSlaveLag );

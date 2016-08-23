@@ -277,6 +277,7 @@ class AppPromoLandingController extends WikiaController {
 		if(empty($appConfig)){
 
 			// TODO: How should we handle the error of not having an appConfig? We won't be able to link the user to the apps.
+			$appConfig = [];
 
 		}
 

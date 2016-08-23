@@ -1312,7 +1312,7 @@ class LocalFile extends File {
 		foreach ( $archiveNames as $archiveName ) {
 			$this->purgeOldThumbnails( $archiveName );
 		}
-		
+
 		if ( $status->isOk() ) {
 			// Now switch the object
 			$this->title = $target;
@@ -1351,10 +1351,10 @@ class LocalFile extends File {
 
 		# Get old version relative paths
 		$dbw = $this->repo->getMasterDB();
-		$result = $dbw->select( 
-			'oldimage', 
+		$result = $dbw->select(
+			'oldimage',
 			array( 'oi_archive_name' ),
-			array( 'oi_name' => $this->getName() ) 
+			array( 'oi_name' => $this->getName() )
 		);
 		$archiveNames = [];
 		foreach ( $result as $row ) {
@@ -1367,7 +1367,7 @@ class LocalFile extends File {
 			DeferredUpdates::addUpdate( SiteStatsUpdate::factory( [ 'images' => -1 ] ) );
 		}
 		$this->unlock(); // done
-		
+
 		if ( $status->ok ) {
 			$this->purgeEverything();
 			foreach ( $archiveNames as $archiveName ) {
@@ -2084,8 +2084,9 @@ class LocalFileRestoreBatch {
 
 				// The live (current) version cannot be hidden!
 				if ( !$this->unsuppress && $row->fa_deleted ) {
-					$storeBatch[] = array( $deletedUrl, 'public', $destRel );
-					$this->cleanupBatch[] = $row->fa_storage_key;
+					$status->fatal( 'undeleterevdel' );
+					$this->file->unlock();
+					return $status;
 				}
 			} else {
 				$archiveName = $row->fa_archive_name;
@@ -2367,7 +2368,7 @@ class LocalFileMoveBatch {
 				"{$archiveBase}/{$this->newHash}{$timestamp}!{$this->newName}"
 			);
 		}
-		
+
 		return $archiveNames;
 	}
 
