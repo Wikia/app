@@ -35,17 +35,12 @@ class UserIdentityBoxDiscussionInfo {
 	}
 
 	private function fetchDiscussionPostsNumber() {
-		$siteId = F::app()->wg->CityId;
 
-		$this->discussionActive = $this->checkDiscussionActive( $siteId );
+		$this->discussionActive = F::app()->wg->EnableDiscussions;
 		if ( $this->discussionActive ) {
-			$this->discussionPostsCount = $this->fetchDiscussionPostsCount( $siteId );
+			$this->discussionPostsCount = $this->fetchDiscussionPostsCount();
 			$this->discussionAllPostsByUserLink = "/d/u/{$this->userId}";
 		}
-	}
-
-	private function checkDiscussionActive( $siteId ) {
-		return WikiFactory::getVarValueByName( 'wgEnableDiscussions', $siteId );
 	}
 
 	private function getDiscussionApi( $apiClass ) {
@@ -56,8 +51,9 @@ class UserIdentityBoxDiscussionInfo {
 		return $api;
 	}
 
-	private function fetchDiscussionPostsCount( $siteId ) {
+	private function fetchDiscussionPostsCount() {
 		$postCount = 0;
+		$siteId = F::app()->wg->CityId;
 
 		try {
 			$postCount = $this->getDiscussionContributionApi()->getPosts( $siteId, $this->userId )->getPostCount();
