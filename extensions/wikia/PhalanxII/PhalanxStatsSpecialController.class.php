@@ -42,6 +42,7 @@ class PhalanxStatsSpecialController extends WikiaSpecialPageController {
 	}
 
 	private function blockStats($blockId) {
+		$out = $this->getOutput();
 		$this->wg->Out->setPageTitle( sprintf( "%s #%s", wfMsg('phalanx-stats-title'), $blockId ) );
 		$this->wg->Out->addBacklinkSubtitle( $this->title );
 
@@ -115,6 +116,7 @@ class PhalanxStatsSpecialController extends WikiaSpecialPageController {
 
 		$this->setVal('table', $table);
 		$this->setVal('editUrl', $this->phalanxTitle->getLocalUrl( array( 'id' => $data['id'] ) ));
+		$this->setVal( 'blockId', $blockId );
 
 		/* match statistics */
 		$pager = new PhalanxStatsPager( $blockId );
@@ -123,6 +125,10 @@ class PhalanxStatsSpecialController extends WikiaSpecialPageController {
 			$pager->getBody() .
 			$pager->getNavigationBar()
 		);
+
+		// SUS-269: Add JS for unblock button
+		$out->addModules( 'ext.wikia.Phalanx' );
+		$this->wg->Out->addJsConfigVars( 'wgPhalanxToken', $this->getUser()->getEditToken() );
 	}
 
 	private function blockWikia($wikiId) {

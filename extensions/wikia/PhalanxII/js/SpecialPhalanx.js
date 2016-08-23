@@ -4,7 +4,7 @@ require(['jquery', 'mw', 'phalanx', 'BannerNotification'], function($, mw, phala
 
 	$('body').
 		// handle blocks "unblocking" (i.e. removing blocks)
-		on('click', 'button.unblock', function(ev) {
+		on('click', 'button.unblock, a.unblock', function(ev) {
 			var node = $(this),
 				blockId = parseInt(node.data('id'), 10);
 
