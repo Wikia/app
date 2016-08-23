@@ -89,3 +89,7 @@
 #entersingle {
 	vertical-align: top;
 }
+
+.phalanx-stats-table {
+	width: 100%;
+}
