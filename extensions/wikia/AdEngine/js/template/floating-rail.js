@@ -88,9 +88,9 @@ define('ext.wikia.adEngine.template.floating-rail', [
 				return math.getBucket(getAvailableSpace(), 100);
 			case 'INCONTENT_BOXAD_1':
 				return floatingSpace ?
-					math.getBucket(Math.max(0, getAvailableSpace() - floatingSpace), 100) : null;
+					math.getBucket(Math.max(0, getAvailableSpace() - floatingSpace), 100) : 0;
 			default:
-				return null;
+				return 0;
 		}
 	}
 

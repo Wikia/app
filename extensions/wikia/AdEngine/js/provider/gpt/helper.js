@@ -102,7 +102,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 			slotTargetingData.wsi = slotTargeting.getWikiaSlotId(slot.name, slotTargetingData.src);
 			slotTargetingData.uap = uapId ? uapId.toString() : 'none';
 
-			if (floatingSpace !== null) {
+			if (floatingSpace) {
 				slotTargetingData.floatspace = floatingSpace.toString();
 			}
 		}
