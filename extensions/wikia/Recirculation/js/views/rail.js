@@ -5,16 +5,19 @@ define('ext.wikia.recirculation.views.rail', [
 	'wikia.log',
 	'wikia.abTest',
 	'ext.wikia.recirculation.tracker',
-	'ext.wikia.recirculation.utils'
-], function ($, w, log, abTest, tracker, utils) {
+	'ext.wikia.recirculation.utils',
+	'ext.wikia.recirculation.helpers.curatedContent'
+], function ($, w, log, abTest, tracker, utils, CuratedHelper) {
 
 	var options = {};
 
 	function render(data) {
 		data.titleHtml = options.formatTitle ? formatTitle(data.title) : data.title;
 		data.group = abTest.getGroup('RECIRCULATION_PLACEMENT');
+		var curated = CuratedHelper();
 
-		return utils.renderTemplate('rail.mustache', data)
+		return curated.injectContent(data)
+			.then(renderTemplate(options.template))
 			.then(utils.waitForRail)
 			.then(function($html) {
 				if (options.before) {
@@ -25,6 +28,13 @@ define('ext.wikia.recirculation.views.rail', [
 
 				return $html;
 			});
+	}
+
+	function renderTemplate(templateName) {
+		return function(data) {
+			data.items = data.items.slice(0, 5);
+			return utils.renderTemplate(templateName, data);
+		}
 	}
 
 	function setupTracking(experimentName) {
