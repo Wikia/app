@@ -1862,13 +1862,6 @@ $wgPreferenceServiceWrite = true;
 $wgEnableFliteTagExt = false;
 
 /**
- * @name $wgAdDriverAdsRecoveryMessageCountries
- * Enables module which displays a simple message to users with ad blockers
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverAdsRecoveryMessageCountries = null;
-
-/**
  * @name $wgARecoveryEngineCustomLog
  * Enables Kibana logging of ad recovery interruptions
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
