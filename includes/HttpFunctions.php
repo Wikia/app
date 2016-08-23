@@ -87,6 +87,7 @@ class Http {
 
 			$params = [
 				'statusCode' => $req->getStatus(),
+				'served-by' => $req->getResponseHeader('x-served-by') ?: '',
 				'reqMethod' => $method,
 				'reqUrl' => $url,
 				'caller' => $caller,

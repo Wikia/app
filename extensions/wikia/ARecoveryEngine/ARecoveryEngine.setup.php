@@ -16,3 +16,6 @@ $wgAutoloadClasses['ResourceLoaderAdEnginePageFairDetectionModule'] = __DIR__ . 
 $wgHooks['WikiaSkinTopScripts'][] = 'ARecoveryEngineHooks::onWikiaSkinTopScripts';
 $wgHooks['BeforePageDisplay'][] = 'ARecoveryEngineHooks::onBeforePageDisplay';
 $wgHooks['InstantGlobalsGetVariables'][] = 'ARecoveryEngineHooks::onInstantGlobalsGetVariables';
+
+// i18n
+$wgExtensionMessagesFiles['ARecoveryEngine'] = __DIR__ . '/ARecoveryEngine.i18n.php';
