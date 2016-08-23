@@ -29,7 +29,7 @@ define('ext.wikia.adEngine.template.floating-rail', [
 		stopPosition,
 
 		update = adHelper.throttle(function () {
-			startPosition = parseInt($railWrapper.offset().top, 10) - globalNavHeight - margin;
+			startPosition = parseInt($railWrapper.offset().top) - globalNavHeight - margin;
 			stopPosition = startPosition + floatingSpace;
 
 			// Check if medrec has hidden class for handling tablet mode
