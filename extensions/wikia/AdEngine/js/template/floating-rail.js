@@ -27,14 +27,14 @@ define('ext.wikia.adEngine.template.floating-rail', [
 
 		availableSpace,
 		floatingSpace,
+		scrollTop,
 		startPosition,
 		stopPosition,
 
 		update = adHelper.throttle(function () {
 			startPosition = parseInt($railWrapper.offset().top, 10) - globalNavHeight - margin;
 			stopPosition = startPosition + floatingSpace;
-
-			var scrollTop = $win.scrollTop();
+			scrollTop = $win.scrollTop();
 
 			// Check if medrec has hidden class for handling tablet mode
 			if (scrollTop <= startPosition || $medrec.hasClass('hidden')) {
@@ -87,16 +87,20 @@ define('ext.wikia.adEngine.template.floating-rail', [
 	}
 
 	function getFloatingSpaceParam(slotName) {
-		switch (slotName)    {
+		var floatingSpaceParam;
+
+		switch (slotName) {
 			case 'TOP_RIGHT_BOXAD':
-				return math.getBucket(getAvailableSpace(), 100);
+				floatingSpaceParam = getAvailableSpace();
+				break;
 			case 'INCONTENT_BOXAD_1':
-				return floatingSpace ?
-					math.getBucket(Math.max(0, getAvailableSpace() - floatingSpace), 100) :
-					math.getBucket(getAvailableSpace(), 100);
+				floatingSpaceParam = getAvailableSpace() - (floatingSpace || 0);
+				break;
 			default:
-				return 0;
+				floatingSpaceParam = 0;
 		}
+
+		return math.getBucket(floatingSpaceParam, 100);
 	}
 
 	return {
