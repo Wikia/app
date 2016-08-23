@@ -1,6 +1,6 @@
 <?php
 
-$messages = [ ];
+$messages = [];
 
 $messages['en'] = [
 	'wall-no-title' => 'No title',
@@ -321,6 +321,16 @@ The original post and your summary will still appear in the wiki's history.",
 	'group-threadmoderator' => 'Discussions Moderators',
 	'group-threadmoderator-member' => 'Discussions Moderator',
 	'grouppage-threadmoderator' => 'w:c:community:Help:Moderators',
+	'right-walledit' => 'Can edit wall posts',
+	'right-wallarchive' => 'Can archive wall posts',
+	'right-wallremove' => 'Can remove wall threads',
+	'right-wallshowwikiaemblem' => 'Flags user as "Wikia Staff" on wall posts',
+	'right-wallfastadmindelete' => 'Can delete wall messages with one click',
+	'right-walladmindelete' => 'Can delete message wall messages',
+	'right-walldelete' => 'Can delete message wall messages',
+	'right-wallmessagemove' => 'Can move wall messages',
+	'right-notifyeveryone' => 'Can notify everyone about a Forum thread',
+	'right-editwallarchivedpages' => 'Can edit archived talk pages',
 ];
 
 /** Message documentation (Message documentation)

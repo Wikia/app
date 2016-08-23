@@ -909,11 +909,11 @@ $config['mercury_ads_js'] = [
 		'//extensions/wikia/AdEngine/js/template/modalHandlerFactory.js',
 		'//extensions/wikia/AdEngine/js/template/modalMercuryHandler.js',
 		'//extensions/wikia/AdEngine/js/template/playwire.js',
+		'//extensions/wikia/AdEngine/js/template/interstitial.js',
 		'//extensions/wikia/AdEngine/js/utils/domCalculator.js',
 		'//extensions/wikia/AdEngine/js/utils/scriptLoader.js',
 		'//resources/wikia/modules/abTest.js',
 		'//resources/wikia/modules/krux.js',
-
 		'//extensions/wikia/AdEngine/js/run/mercury.run.js',
 	],
 ];

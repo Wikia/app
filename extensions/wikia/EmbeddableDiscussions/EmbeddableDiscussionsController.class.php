@@ -28,7 +28,7 @@ class EmbeddableDiscussionsController {
 	public static function render( $input, array $args, Parser $parser, PPFrame $frame ) {
 		global $wgCityId;
 
-		$showLatest = filter_var( $args['latest'], FILTER_VALIDATE_BOOLEAN );
+		$showLatest = empty( $args['mostrecent'] ) ? false : filter_var( $args['mostrecent'], FILTER_VALIDATE_BOOLEAN );
 		$itemCount = empty( $args['size'] ) ? self::ITEMS_DEFAULT : intval( $args['size'] );
 		$columns = empty( $args['columns'] ) ? self::COLUMNS_DEFAULT : intval( $args['columns'] );
 
@@ -67,13 +67,14 @@ class EmbeddableDiscussionsController {
 			$modelData = ( new DiscussionsThreadModel( $wgCityId ) )->getData( $showLatest, $itemCount );
 
 			$modelData['columns'] = $columns;
-			$modelData['columnsClass'] = $columns === 2 ? 'embeddable-discussions-post-detail-columns' : '';
-			$modelData['latestHeading'] = wfMessage( 'embeddable-discussions-show-latest' )->plain();
+			$modelData['columnsWrapperClass'] = $columns === 2 ? 'embeddable-discussions-threads-columns' : '';
+			$modelData['columnsDetailsClass'] = $columns === 2 ? 'embeddable-discussions-post-detail-columns' : '';
+			$modelData['heading'] = $showLatest ? wfMessage( 'embeddable-discussions-show-latest' )->plain() :
+				wfMessage( 'embeddable-discussions-show-trending' )->plain();
 			$modelData['replyText'] = wfMessage( 'embeddable-discussions-reply' )->plain();
 			$modelData['shareText'] = wfMessage( 'embeddable-discussions-share' )->plain();
 			$modelData['showAll'] = wfMessage( 'embeddable-discussions-show-all' )->plain();
 			$modelData['showLatest'] = $showLatest;
-			$modelData['trendingHeading'] = wfMessage( 'embeddable-discussions-show-trending' )->plain();
 			$modelData['upvoteText'] = wfMessage( 'embeddable-discussions-upvote' )->plain();
 			$modelData['zeroText'] = wfMessage( 'embeddable-discussions-zero' )->plain();
 			$modelData['zeroTextDetail'] = wfMessage( 'embeddable-discussions-zero-detail' )->plain();

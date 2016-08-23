@@ -6,187 +6,188 @@
  * @ingroup Extensions
  */
 
-$messages = array();
-$messages['en'] = array(
+$messages = [];
+$messages['en'] = [
 	"newwikis-desc" => "Get list of the newest Wikis",
 	"newwikis" => "New wikis",
 	"newwikisstart" => "Display wikis starting at:",
-);
-$messages['af'] = array(
+	"right-newwikislist" => "Allows access to Special:Newwikis",
+];
+$messages['af'] = [
 	'newwikis' => "Nuwe wiki's",
 	'newwikisstart' => "Wys wiki's, beginnende by:",
-);
-$messages['ar'] = array(
+];
+$messages['ar'] = [
 	'newwikis' => 'ويكيات جديدة',
 	'newwikisstart' => 'عرض الويكيات إنطلاقا من:',
-);
-$messages['as'] = array(
+];
+$messages['as'] = [
 	'newwikis' => 'নতুন ৱিকিসমূহ',
-);
-$messages['bg'] = array(
+];
+$messages['bg'] = [
 	'newwikis' => 'Нови уикита',
-);
-$messages['br'] = array(
+];
+$messages['br'] = [
 	'newwikis' => 'Wikioù nevez',
 	'newwikisstart' => 'Diskouez ar Wikioù adal :',
-);
-$messages['ca'] = array(
+];
+$messages['ca'] = [
 	'newwikis' => 'Nous wikis',
 	'newwikisstart' => 'Mostrar wikis començant per:',
-);
-$messages['cs'] = array(
+];
+$messages['cs'] = [
 	'newwikis' => 'Nová wiki',
 	'newwikisstart' => 'Zobrazit wiki založené od:',
-);
-$messages['da'] = array(
+];
+$messages['da'] = [
 	'newwikis' => 'Nye wikier',
 	'newwikisstart' => 'Vis wikier fra og med:',
-);
-$messages['de'] = array(
+];
+$messages['de'] = [
 	'newwikis' => 'Neue Wikis',
 	'newwikisstart' => 'Zeige Wikis ab:',
-);
-$messages['diq'] = array(
+];
+$messages['diq'] = [
 	'newwikis' => 'Wikiyo newe',
 	'newwikisstart' => 'Asengeya wikiya seroknê :',
-);
-$messages['el'] = array(
+];
+$messages['el'] = [
 	'newwikis' => 'Νέα wiki',
-);
-$messages['es'] = array(
+];
+$messages['es'] = [
 	'newwikis' => 'Nuevos wikis',
 	'newwikisstart' => 'Mostrar wikis comenzando por:',
-);
-$messages['fa'] = array(
+];
+$messages['fa'] = [
 	'newwikis' => 'ویکی‌های جدید',
 	'newwikisstart' => 'نمایش ویکی‌هایی که شروع می‌شوند در:',
-);
-$messages['fi'] = array(
+];
+$messages['fi'] = [
 	'newwikis' => 'Uudet wikit',
 	'newwikisstart' => 'Näytä wikit alkaen:',
-);
-$messages['fr'] = array(
+];
+$messages['fr'] = [
 	'newwikis' => 'Nouveaux wikis',
 	'newwikisstart' => 'Afficher les wikis depuis :',
-);
-$messages['gl'] = array(
+];
+$messages['gl'] = [
 	'newwikis' => 'Novos wikis',
 	'newwikisstart' => 'Mostrar os wikis que comecen por:',
-);
-$messages['he'] = array(
+];
+$messages['he'] = [
 	'newwikis' => 'אתרי וויקי חדשים',
 	'newwikisstart' => 'הצג אתרי וויקי המתחילים ב:',
-);
-$messages['hu'] = array(
+];
+$messages['hu'] = [
 	'newwikis' => 'Új wikik',
 	'newwikisstart' => 'Wikik megjelenítése a következőtől:',
-);
-$messages['ia'] = array(
+];
+$messages['ia'] = [
 	'newwikis' => 'Nove wikis',
 	'newwikisstart' => 'Monstrar wikis a partir de:',
-);
-$messages['id'] = array(
+];
+$messages['id'] = [
 	'newwikis' => 'Wiki baru',
 	'newwikisstart' => 'Tampilkan wiki diawali dengan:',
-);
-$messages['ig'] = array(
+];
+$messages['ig'] = [
 	'newwikis' => 'Wiki ne ohụru',
-);
-$messages['inh'] = array(
+];
+$messages['inh'] = [
 	'newwikis' => 'Керда ВIикIаш',
-);
-$messages['it'] = array(
+];
+$messages['it'] = [
 	'newwikis' => 'Nuove wiki',
 	'newwikisstart' => 'Mostra le wiki a partire da:',
-);
-$messages['ja'] = array(
+];
+$messages['ja'] = [
 	'newwikis' => '新しいウィキ',
 	'newwikisstart' => '次の文字列から始まるウィキを表示:',
-);
-$messages['ko'] = array(
+];
+$messages['ko'] = [
 	'newwikis' => '새 위키',
-);
-$messages['ksh'] = array(
+];
+$messages['ksh'] = [
 	'newwikis' => 'Neu Wikis',
 	'newwikisstart' => 'Wikis aanzeije af:',
-);
-$messages['lb'] = array(
+];
+$messages['lb'] = [
 	'newwikis' => 'Nei Wikien',
-);
-$messages['mk'] = array(
+];
+$messages['mk'] = [
 	'newwikis' => 'Нови викија',
 	'newwikisstart' => 'Прикажи викија со почеток во:',
-);
-$messages['ms'] = array(
+];
+$messages['ms'] = [
 	'newwikis' => 'Wiki baru',
 	'newwikisstart' => 'Paparkan wiki bermula dengan:',
-);
-$messages['nb'] = array(
+];
+$messages['nb'] = [
 	'newwikis' => 'Nye wikier',
 	'newwikisstart' => 'Vis wikier fra og med:',
-);
-$messages['nl'] = array(
+];
+$messages['nl'] = [
 	'newwikis' => "Nieuwe wiki's",
 	'newwikisstart' => "Wiki's weergeven vanaf:",
-);
-$messages['pl'] = array(
+];
+$messages['pl'] = [
 	'newwikis' => 'Nowe wiki',
 	'newwikisstart' => 'Wyświetl wiki rozpoczynając od:',
-);
-$messages['pms'] = array(
+];
+$messages['pms'] = [
 	'newwikis' => 'neuve wiki',
 	'newwikisstart' => 'Visualisa Wiki partend da:',
-);
-$messages['ps'] = array(
+];
+$messages['ps'] = [
 	'newwikis' => 'نوې ويکي ګانې',
-);
-$messages['pt'] = array(
+];
+$messages['pt'] = [
 	'newwikis' => 'Wikis novas',
 	'newwikisstart' => 'Mostrar wikis, começando por:',
-);
-$messages['pt-br'] = array(
+];
+$messages['pt-br'] = [
 	'newwikis' => 'Novas wikis',
 	'newwikisstart' => 'Mostrar Wikis começando com:',
-);
-$messages['ro'] = array(
+];
+$messages['ro'] = [
 	'newwikis' => 'Wiki-uri noi',
-);
-$messages['ru'] = array(
+];
+$messages['ru'] = [
 	'newwikis' => 'Новые вики',
 	'newwikisstart' => 'Показать вики, начиная с:',
-);
-$messages['sr-ec'] = array(
+];
+$messages['sr-ec'] = [
 	'newwikis' => 'Нови викији',
-);
-$messages['sv'] = array(
+];
+$messages['sv'] = [
 	'newwikis' => 'Nya wikis',
 	'newwikisstart' => 'Visa wikis som börjar med:',
-);
-$messages['ta'] = array(
+];
+$messages['ta'] = [
 	'newwikis' => 'புதிய விக்கிகள்',
-);
-$messages['te'] = array(
+];
+$messages['te'] = [
 	'newwikis' => 'కొత్త వికీలు',
-);
-$messages['tl'] = array(
+];
+$messages['tl'] = [
 	'newwikis' => 'Bagong mga wiki',
 	'newwikisstart' => 'Ipakita ang mga wiki na nagsisimula sa:',
-);
-$messages['tt-cyrl'] = array(
+];
+$messages['tt-cyrl'] = [
 	'newwikis' => 'Яңа викилар',
-);
-$messages['tzm'] = array(
+];
+$messages['tzm'] = [
 	'newwikis' => 'ⵉⴷ ⵡⵉⴽⵉ ⵉⵎⴰⵢⵏⵓⵜⵏ',
-);
-$messages['uk'] = array(
+];
+$messages['uk'] = [
 	'newwikis' => 'Нові вікі',
 	'newwikisstart' => 'Показати вікі, починаючи з:',
-);
-$messages['zh-hans'] = array(
+];
+$messages['zh-hans'] = [
 	'newwikis' => '新的维基',
 	'newwikisstart' => '以此页面打开维基：',
-);
-$messages['zh-hant'] = array(
+];
+$messages['zh-hant'] = [
 	'newwikis' => '新的 wiki',
 	'newwikisstart' => '顯示從此處開始的wiki:',
-);
+];

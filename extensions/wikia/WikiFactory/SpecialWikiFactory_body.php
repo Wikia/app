@@ -108,7 +108,7 @@ class WikiFactoryPage extends SpecialPage {
 	 *
 	 * @param mixed $subpage:
 	 *
-	 * @return Database Row from city_list
+	 * @return mixed: database row from city_list
 	 */
 	private function getWikiData( $subpage ) {
 		global $wgRequest, $wgWikiaBaseDomain;
