@@ -2,7 +2,6 @@
 
 use Swagger\Client\ApiException;
 use Swagger\Client\Discussion\Api\ContributionApi;
-use Swagger\Client\Discussion\Api\SitesApi;
 use Wikia\DependencyInjection\Injector;
 use Wikia\Logger\WikiaLogger;
 use Wikia\Service\Swagger\ApiProvider;
@@ -46,25 +45,7 @@ class UserIdentityBoxDiscussionInfo {
 	}
 
 	private function checkDiscussionActive( $siteId ) {
-		try {
-			$this->getDiscussionSitesApi()->getSite( $siteId );
-			return true;
-		} catch ( ApiException $e ) {
-			$this->logger->debug( 'Getting site caused an error',
-				[
-					'siteId' => $siteId,
-					'error' => $e->getMessage(),
-				] );
-		}
-
-		return false;
-	}
-
-	/**
-	 * @return SiteApi
-	 */
-	private function getDiscussionSitesApi() {
-		return $this->getDiscussionApi( SitesApi::class );
+		return WikiFactory::getVarValueByName( 'wgEnableDiscussions', $siteId );
 	}
 
 	private function getDiscussionApi( $apiClass ) {
