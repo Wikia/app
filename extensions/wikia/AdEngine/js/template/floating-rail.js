@@ -16,15 +16,17 @@ define('ext.wikia.adEngine.template.floating-rail', [
 		$railWrapper = $('#WikiaRailWrapper'),
 		$wikiaMainContent = $('#WikiaMainContent'),
 		$win = $(win),
+
 		adsInRail = 2,
-		availableSpace,
 		biggestAdSize = 600,
 		globalNavHeight = $('#globalNavigation').height(),
-		floatingSpace,
 		margin = 10,
 		medrecDefaultSize = 250,
 		logGroup = 'ext.wikia.adEngine.template.floating-rail',
 		railWidth = 300,
+
+		availableSpace,
+		floatingSpace,
 		startPosition,
 		stopPosition,
 
