@@ -53,8 +53,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	 */
 	function pushAd(slot, slotPath, slotTargetingData, extra) {
 		extra = extra || {};
-		var count,
-			element,
+		var element,
 			recoverableSlots = extra.recoverableSlots || [],
 			shouldPushRecoverableAd = recoveryHelper.isBlocking() &&
 				recoveryHelper.isRecoverable(slot.name, recoverableSlots),
@@ -90,7 +89,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 
 		function setAdditionalTargeting(slotTargetingData) {
 			if (scrollHandler) {
-				count = scrollHandler.getReloadedViewCount(slot.name);
+				var count = scrollHandler.getReloadedViewCount(slot.name);
 				if (count !== null) {
 					slotTargetingData.rv = count.toString();
 				}
