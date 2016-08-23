@@ -6,7 +6,7 @@ require([
 	'wikia.nirvana',
 	'ext.wikia.recirculation.tracker'
 ], function ($, w, abTest, nirvana, tracker) {
-	var experimentName = 'RECIRCULATION_DISCUSSIONS';
+	var experimentName = 'RECIRCULATION_MIX';
 
 	function injectDiscussions(done) {
 		nirvana.sendRequest({
@@ -31,7 +31,7 @@ require([
 		});
 	}
 
-	if (abTest.inGroup(experimentName, 'ARTICLE_FOOTER')) {
+	// if (abTest.inGroup(experimentName, 'CONTROL')) {
 		injectDiscussions(function () {
 			tracker.trackVerboseImpression(experimentName, 'discussions');
 			$('.discussion-timestamp').timeago();
@@ -47,5 +47,5 @@ require([
 				tracker.trackVerboseClick(experimentName, 'discussions-link');
 			});
 		});
-	}
+	// }
 });

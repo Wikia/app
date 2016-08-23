@@ -12,8 +12,15 @@ define('ext.wikia.recirculation.views.impactFooter', [
 	function render(data) {
 		var renderData = {};
 		renderData.title = data.title;
-		renderData.items = organizeItems(data);
-		renderData.discussions = data.discussions;
+		if (data.fandom) {
+			renderData.items = organizeItems(data);
+		} else {
+			renderData.items = orgItems(data.items);
+		}
+
+		if (data.discussions) {
+			renderData.discussions = discussionsData;
+		}
 
 		renderData.i18n = {
 			discussionsNew: $.msg('recirculation-discussions-new'),
@@ -67,6 +74,30 @@ define('ext.wikia.recirculation.views.impactFooter', [
 		});
 
 		return items;
+	}
+
+	function orgItems(items) {
+		var fandom = items.filter(function(element) {
+			return element.source === 'fandom';
+		});
+
+		var wiki = items.filter(function(element) {
+			return element.source === 'wiki';
+		});
+
+		items = [];
+
+		items.push(fandom.shift());
+		items = items.concat(wiki.splice(0, 2));
+		items = items.concat(fandom);
+		items = items.concat(wiki);
+
+		items.forEach(function(item, index) {
+			items[index].index = index;
+		});
+
+		return items;
+
 	}
 
 	function setupTracking(experimentName) {

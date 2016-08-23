@@ -6,9 +6,17 @@ define('ext.wikia.recirculation.helpers.data', [
 	'wikia.nirvana'
 ], function ($, w, abTest, nirvana) {
 
-	return function() {
+	return function(options) {
+		options = options || {};
 
 		function loadData() {
+			if (options.type === 'articles') {
+				return loadArticles().then(function(articles) {
+					return { items: articles };
+				});
+			}
+
+
 			return $.when(loadAll(), loadArticles())
 				.done(function(data, articles) {
 					data.articles = articles;
