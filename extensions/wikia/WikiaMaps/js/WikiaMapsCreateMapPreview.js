@@ -129,7 +129,7 @@ define(
 
 				if (value) {
 					tileSetData[$(this).attr('name')] = value;
-					return true
+					return true;
 				} else {
 					isValid = false;
 					return false;
