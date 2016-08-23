@@ -31,7 +31,7 @@ $messages[ 'en' ] = [
 	'portability-dashboard-special-insights-custom-infobox-title' => 'Non-portable infoboxes on Special:Insights',
 	'portability-dashboard-refresh-frequency-info' => 'Portability data, content page views and migration impact are recalculated every Saturday at 9:00 GMT.',
 	'portability-dashboard-search-headline' => 'Search for a Community',
-	'portability-dashboard-search-placeholder' => 'Community url or name',
+	'portability-dashboard-search-placeholder' => 'Community url',
 	'portability-dashboard-no-results-for-lang-info' => 'No Wikis in selected language in top $1.',
 	'portability-dashboard-no-results-info' => 'No data available'
 ];
