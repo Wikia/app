@@ -15,9 +15,17 @@ class ARecoveryEngineApiController extends WikiaController {
 	}
 
 	public function getSourcePointStatus() {
-		$this->response->setContentType( 'text/javascript; charset=utf-8' );
+
 		$wgGlobalEnableSourcePoint = WikiFactory::getVarValueByName( 'wgGlobalEnableSourcePoint', Wikia::COMMUNITY_WIKI_ID );
-		$this->response->setBody( 'window.wikiaSourcePointStatus = ' . ( $wgGlobalEnableSourcePoint ? 'true;' : 'false;' ) );
+
+		$varId = WikiFactory::getVarIdByName( 'wgEnableUsingSourcePointProxyForCSS' );
+		$sourcePointEnabledWikis = array_keys( WikiFactory::getListOfWikisWithVar( $varId, 'bool', '=', true ) );
+
+		$resoponseBody = 'window.wikiaSourcePointStatus = ' . ( $wgGlobalEnableSourcePoint ? 'true;' : 'false;' ) . PHP_EOL;
+		$resoponseBody .= 'window.wikiaSourcePointEnabledWikis = ' . json_encode( $sourcePointEnabledWikis ) . ';';
+
+		$this->response->setContentType( 'text/javascript; charset=utf-8' );
+		$this->response->setBody( $resoponseBody );
 		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD, WikiaResponse::CACHE_DISABLED );
 	}
 

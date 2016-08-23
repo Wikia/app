@@ -1,6 +1,14 @@
 <script type="text/javascript">
 {{{code}}}
 
+if (window.wikiaSourcePointStatus === false) {
+    if (window.wikiaSourcePointEnabledWikis && window.wikiaSourcePointEnabledWikis.indexOf) {
+        if (window.wikiaSourcePointEnabledWikis.indexOf(parseInt(window.wgCityId,10)) > -1) {
+            window.wikiaSourcePointStatus = true;
+        }
+    }
+}
+
 window._sp_ = window._sp_ || {};
 window._sp_.config = window._sp_.config || {};
 window._sp_.config.account_id = 106;
