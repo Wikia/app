@@ -20,7 +20,7 @@ class UserPreferencesV2 {
 	 * @return Bool
 	 */
 	static public function onGetPreferences( $user, &$defaultPreferences ) {
-		global $wgEnableWallExt, $wgOut, $wgScriptPath, $wgServer, $wgUser, $wgAuth;
+		global $wgEnableWallExt, $wgEnableDiscussions, $wgOut, $wgScriptPath, $wgServer, $wgUser, $wgAuth;
 
 		// add javascript
 		// TODO: use $wgExtensionsPath instead
@@ -146,6 +146,13 @@ class UserPreferencesV2 {
 			$defaultPreferences['enotifminoredits']['section'] = 'emailv2/email-me-v2';
 			$defaultPreferences['enotifminoredits']['label-message'] = 'tog-enotifminoredits-v2';
 			$defaultPreferences = self::moveToEndOfArray( $defaultPreferences, 'enotifminoredits' );
+		}
+		if ( $wgEnableDiscussions ) {
+			if ( isset( $defaultPreferences['enotifdiscussions'] ) ) {
+				$defaultPreferences['enotifdiscussions']['section'] = 'emailv2/email-me-v2';
+				$defaultPreferences['enotifdiscussions']['label-message'] = 'tog-enotifdiscussions-v2';
+				$defaultPreferences = self::moveToEndOfArray( $defaultPreferences, 'enotifdiscussions' );
+			}
 		}
 		if ( isset( $defaultPreferences['enotifusertalkpages'] ) ) {
 			$defaultPreferences['enotifusertalkpages']['section'] = 'emailv2/email-me-v2';

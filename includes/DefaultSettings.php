@@ -1128,6 +1128,11 @@ $wgEmailAuthentication = true;
 $wgEnotifWatchlist = false;
 
 /**
+ * Allow users to enable email notification ("enotif") on Discussions changes.
+ */
+$wgEnotifDiscussions = true;
+
+/**
  * Allow users to enable email notification ("enotif") when someone edits their
  * user talk page.
  */
