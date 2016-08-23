@@ -22,18 +22,21 @@ class SpecialPortabilityDashboardController extends WikiaSpecialPageController {
 		$wikiUrlParam = $this->getVal( static::WIKI_URL_QS_PARAM, '' );
 		$isLangFilterSet = !empty( $langFilter );
 		$isWikiUrlParamSet = !empty( $wikiUrlParam );
-		$noResultsInfoMessage = wfMessage(
-			$isLangFilterSet ? 'portability-dashboard-no-results-for-lang-info' : 'portability-dashboard-no-results-for-url-info',
-			PortabilityDashboardModel::WIKIS_LIMIT
-		)->text();
+		$noResultsInfoMessageKey = 'portability-dashboard-no-results-info';
 
 		if ( $isWikiUrlParamSet ) {
 			$list = $model->getWikiDataByUrl( Sanitizer::encodeAttribute( $wikiUrlParam ) );
 		} else {
-			$modelList = $model->getRowList();
-			$list = $isLangFilterSet ? $this->filterListByLang( $modelList, $langFilter ) : $modelList;
+			$list = $model->getRowList();
 		}
-		$list = empty( $list ) ? [] : $model->extendList( $list );
+
+		// add data needed for portability dashboard: wiki url, title and lang
+		$list = $model->extendList( $list );
+
+		if ( $isLangFilterSet ) {
+			$list = $this->filterListByLang( $list, $langFilter );
+			$noResultsInfoMessageKey = 'portability-dashboard-no-results-for-lang-info';
+		}
 
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 		$this->response->setValues( [
@@ -56,7 +59,7 @@ class SpecialPortabilityDashboardController extends WikiaSpecialPageController {
 			'templatesWithoutTypeUrlTitle' => wfMessage( 'portability-dashboard-special-insights-template-without-title' )->text(),
 			'customInfoboxesInsightsUrlTitle' => wfMessage( 'portability-dashboard-special-insights-custom-infobox-title' )->text(),
 			'refreshFreqInfo' => wfMessage( 'portability-dashboard-refresh-frequency-info' )->text(),
-			'noResultsInfo' => $noResultsInfoMessage
+			'noResultsInfo' => wfMessage( $noResultsInfoMessageKey, PortabilityDashboardModel::WIKIS_LIMIT )->text()
 		] );
 
 		Wikia::addAssetsToOutput( 'special_portability_dashboard_scss' );

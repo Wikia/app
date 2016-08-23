@@ -122,8 +122,9 @@ class WikiFactory {
 	 */
 	static public function isUsed( $flag = false ) {
 		if ( $flag ) {
-			static::$mIsUsed = (bool )$flag;
+			static::$mIsUsed = (bool) $flag;
 		}
+
 		return static::$mIsUsed;
 	}
 
@@ -441,7 +442,7 @@ class WikiFactory {
 
 		if ( isset( $parts[ "host" ] ) ) {
 			$host = static::getDomainHash( $parts[ "host" ] );
-			$host = preg_replace('/^(?:preview\.|verify\.)/i', '', $host);
+			$host = \WikiFactory::getLocalEnvURL( $host, WIKIA_ENV_PROD );
 			$city_id = static::DomainToId( $host );
 		}
 
@@ -1196,8 +1197,11 @@ class WikiFactory {
 	/**
 	 * getLocalEnvURL
 	 *
-	 * return URL specific to current env
+	 * return URL specific to current env:
 	 * (production, preview, verify, devbox, sandbox)
+	 * or forced one:
+	 * (production, preview, verify)
+	 *
 	 * Handled server patterns
 	 * en.wikiname.wikia.com
 	 * wikiname.wikia.com
@@ -1209,11 +1213,12 @@ class WikiFactory {
 	 * @author pbablok@wikia
 	 * @static
 	 *
-	 * @param string $url	general URL pointing to any server
-	 *
-	 * @return string	url pointing to local env
+	 * @param string $url general URL pointing to any server
+	 * @param null $forcedEnv go get url for env we want to
+	 * @return string url pointing to local env
+	 * @throws \Exception
 	 */
-	static public function getLocalEnvURL( $url ) {
+	static public function getLocalEnvURL( $url, $forcedEnv = null ) {
 		global $wgWikiaEnvironment, $wgWikiaBaseDomain;
 
 		// first - normalize URL
@@ -1222,10 +1227,10 @@ class WikiFactory {
 			// on fail at least return original url
 			return $url;
 		}
-		$server = $groups[1];
-		$address = $groups[2];
+		$server = $groups[ 1 ];
+		$address = $groups[ 2 ];
 
-		if ( !empty($address) ) {
+		if ( !empty( $address ) ) {
 			$address = '/' . $address;
 		}
 
@@ -1234,7 +1239,7 @@ class WikiFactory {
 		$devboxRegex = '/\.([^\.]+)\.wikia-dev\.com$/';
 
 		if ( preg_match( $devboxRegex, $server, $groups ) === 1 ) {
-			$devbox = $groups[1];
+			$devbox = $groups[ 1 ];
 		} else {
 			$devbox = '';
 		}
@@ -1242,8 +1247,15 @@ class WikiFactory {
 		$server = str_replace( '.' . $devbox . '.wikia-dev.com', '', $server );
 		$server = str_replace( static::WIKIA_TOP_DOMAIN, '', $server );
 
+		// determine the environment we want to get url for
+		$environment = (
+			$forcedEnv &&
+			$forcedEnv !== WIKIA_ENV_DEV &&
+			$forcedEnv !== WIKIA_ENV_SANDBOX
+		) ? $forcedEnv : $wgWikiaEnvironment;
+
 		// put the address back into shape and return
-		switch($wgWikiaEnvironment) {
+		switch ( $environment ) {
 			case WIKIA_ENV_PREVIEW:
 				return 'http://preview.' . $server . static::WIKIA_TOP_DOMAIN . $address;
 			case WIKIA_ENV_VERIFY:
@@ -1252,11 +1264,11 @@ class WikiFactory {
 				return 'http://stable.' . $server . static::WIKIA_TOP_DOMAIN . $address;
 			case WIKIA_ENV_STAGING:
 			case WIKIA_ENV_PROD:
-				return sprintf( 'http://%s.%s%s', $server, $wgWikiaBaseDomain, $address ) ;
+				return sprintf( 'http://%s.%s%s', $server, $wgWikiaBaseDomain, $address );
 			case WIKIA_ENV_SANDBOX:
 				return 'http://' . static::getExternalHostName() . '.' . $server . static::WIKIA_TOP_DOMAIN . $address;
 			case WIKIA_ENV_DEV:
-				return 'http://' . $server . '.' . static::getExternalHostName() . '.wikia-dev.com'.$address;
+				return 'http://' . $server . '.' . static::getExternalHostName() . '.wikia-dev.com' . $address;
 		}
 
 		throw new Exception( sprintf( '%s: %s', __METHOD__, 'unknown env detected' ) );

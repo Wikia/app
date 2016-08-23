@@ -45,9 +45,9 @@ class WikiFactoryTest extends WikiaBaseTest {
 	/**
 	 * @dataProvider testGetLocalEnvURLDataProvider
 	 */
-	public function testGetLocalEnvURL( $environment, $url, $expected ) {
+	public function testGetLocalEnvURL( $environment, $forcedEnv, $url, $expected ) {
 		$this->mockEnvironment( $environment );
-		$url = WikiFactory::getLocalEnvURL( $url );
+		$url = WikiFactory::getLocalEnvURL( $url, $forcedEnv );
 		$this->assertEquals( $expected, $url );
 	}
 
@@ -122,43 +122,63 @@ class WikiFactoryTest extends WikiaBaseTest {
 		return [
 			[
 				'env' => WIKIA_ENV_PREVIEW,
+				'forcedEnv' => null,
 				'url' => 'http://muppet.wikia.com',
 				'expected' => 'http://preview.muppet.wikia.com'
 			],
 			[
 				'env' => WIKIA_ENV_VERIFY,
+				'forcedEnv' => null,
 				'url' => 'http://muppet.wikia.com/wiki/Muppet',
 				'expected' => 'http://verify.muppet.wikia.com/wiki/Muppet'
 			],
 			[
 				'env' => WIKIA_ENV_STABLE,
+				'forcedEnv' => null,
 				'url' => 'http://muppet.wikia.com/wiki/Muppet',
 				'expected' => 'http://stable.muppet.wikia.com/wiki/Muppet'
 			],
 			[
 				'env' => WIKIA_ENV_DEV,
+				'forcedEnv' => null,
 				'url' => 'http://muppet.wikia.com/wiki',
-				'expected' => 'http://muppet.' . self::MOCK_DEV_NAME . '.wikia-dev.com/wiki'
+				'expected' => 'http://muppet.' . static::MOCK_DEV_NAME . '.wikia-dev.com/wiki'
 			],
 			[
 				'env' => WIKIA_ENV_SANDBOX,
+				'forcedEnv' => null,
 				'url' => 'http://gta.wikia.com/Vehicles_in_GTA_III',
 				'expected' => 'http://sandbox-s1.gta.wikia.com/Vehicles_in_GTA_III'
 			],
 			[
 				'env' => WIKIA_ENV_VERIFY,
+				'forcedEnv' => null,
 				'url' => 'http://gta.wikia.com/wiki/test/test/test',
 				'expected' => 'http://verify.gta.wikia.com/wiki/test/test/test'
 			],
 			[
 				'env' => WIKIA_ENV_STAGING,
+				'forcedEnv' => null,
 				'url' => 'http://gta.wikia.com/wiki/test/test/test',
 				'expected' => 'http://gta.wikia-staging.com/wiki/test/test/test'
 			],
 			[
 				'env' => WIKIA_ENV_DEV,
+				'forcedEnv' => null,
 				'url' => 'http://gta.wikia.com/',
-				'expected' => 'http://gta.' . self::MOCK_DEV_NAME . '.wikia-dev.com'
+				'expected' => 'http://gta.' . static::MOCK_DEV_NAME . '.wikia-dev.com'
+			],
+			[
+				'env' => WIKIA_ENV_DEV,
+				'forcedEnv' => WIKIA_ENV_PREVIEW,
+				'url' => 'http://gta.wikia.com/',
+				'expected' => 'http://preview.gta.wikia.com'
+			],
+			[
+				'env' => WIKIA_ENV_PREVIEW,
+				'forcedEnv' => WIKIA_ENV_DEV,
+				'url' => 'http://gta.wikia.com/',
+				'expected' => 'http://preview.gta.wikia.com'
 			]
 		];
 	}

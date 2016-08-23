@@ -39,9 +39,7 @@ class PortabilityDashboardModel {
 	 * @return array
 	 */
 	public function extendList( $rowList ) {
-		$wikiParamsList = $this->getWikiParamsList( $rowList );
-
-		return $this->extendRowListWithWikiParams( $rowList, $wikiParamsList );
+		return $this->extendRowListWithWikiParams( $rowList, $this->getWikiParamsList( $rowList ) );
 	}
 
 	/**
