@@ -35,15 +35,13 @@ class ParselyDataService {
 
 		$memcKey = wfSharedMemcKey( __METHOD__, $type, $metadata['key'], $count, static::MCACHE_VER );
 
-		$data = WikiaDataAccess::cache(
+		return WikiaDataAccess::cache(
 			$memcKey,
 			static::MCACHE_TIME,
 			function() use ( $type, $metadata, $count ) {
 				return $this->apiRequest( $type, $metadata, $count );
 			}
 		);
-
-		return $data;
 	}
 
 	/**
@@ -57,10 +55,6 @@ class ParselyDataService {
 
 		switch ( $type ) {
 			case 'vertical':
-				$options['sort'] = static::PARSELY_API_SORT;
-				$options['pub_days'] = 30;
-				$endpoint = 'analytics/tag/' . rawurlencode( $meta['tag'] ) . '/detail';
-				break;
 			case 'community':
 				$options['sort'] = static::PARSELY_API_SORT;
 				$options['pub_days'] = 30;
@@ -111,9 +105,7 @@ class ParselyDataService {
 
 		$params = array_merge( $defaultParams, $options );
 
-		$url = static::PARSELY_API_BASE . $endpoint . '?' . http_build_query( $params );
-
-		return $url;
+		return static::PARSELY_API_BASE . $endpoint . '?' . http_build_query( $params );
 	}
 
 	/**
