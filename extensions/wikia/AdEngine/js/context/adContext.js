@@ -75,11 +75,7 @@ define('ext.wikia.adEngine.adContext', [
 				context.opts.pageFairDetection = true;
 			}
 		}
-
-		// SourcePoint disaster recovery
-		if (w.wikiaSourcePointStatus === false) {
-			context.opts.sourcePointRecovery = false;
-		}
+		
 
 		// SourcePoint detection integration
 		if (!noExternals && context.opts.sourcePointDetectionUrl) {

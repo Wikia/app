@@ -22,8 +22,14 @@ window._sp_.content_control_callback = function() {
     }
 };
 
-
-window._sp_.bootstrap('{{domain}}/api/v1/ARecoveryEngine/delivery');
+require([
+"ext.wikia.adEngine.adContext",
+], function (adContext) {
+    var context = adContext.getContext();
+    if (context.opts.sourcePointRecovery === true) {
+        window._sp_.bootstrap('{{domain}}/api/v1/ARecoveryEngine/delivery');
+    }
+});
 
 
 window.addEventListener('load', function(){

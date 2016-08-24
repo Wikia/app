@@ -3,7 +3,7 @@
 class AnalyticsProviderSourcePoint implements iAnalyticsProvider {
 
 	public static function isEnabled() {
-		return true; //ARecoveryModule::isEnabled();
+		return ARecoveryModule::isEnabled();
 	}
 
 	public function getSetupHtml( $params = array() ) {
