@@ -62,6 +62,7 @@
 	<div class="background-image-gradient"></div>
 <? endif ?>
 
+<?= $sourcePoint ?>
 <?= $comScore ?>
 <?= $quantServe ?>
 <?= $rubiconFastlane ?>

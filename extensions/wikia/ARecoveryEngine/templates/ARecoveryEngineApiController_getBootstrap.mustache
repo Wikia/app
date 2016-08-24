@@ -1,4 +1,4 @@
-<script type="text/javascript">
+
 {{{code}}}
 
 window._sp_ = window._sp_ || {};
@@ -22,9 +22,9 @@ window._sp_.content_control_callback = function() {
     }
 };
 
-if (window.wikiaSourcePointStatus !== false) {
-    window._sp_.bootstrap('{{domain}}/api/v1/ARecoveryEngine/delivery');
-}
+
+window._sp_.bootstrap('{{domain}}/api/v1/ARecoveryEngine/delivery');
+
 
 window.addEventListener('load', function(){
     require(['ext.wikia.aRecoveryEngine.recovery.helper'], function (helper) {
@@ -32,4 +32,3 @@ window.addEventListener('load', function(){
         helper.verifyContent();
     });
 });
-</script>

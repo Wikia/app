@@ -12,14 +12,14 @@ class ARecoveryEngineHooks {
 	public static function onWikiaSkinTopScripts( &$vars, &$scripts ) {
 		global $wgDevelEnvironment;
 
-		if ( ARecoveryModule::isEnabled() ) {
-			$spStatusURL = 'http://community.wikia.com/api/v1/ARecoveryEngine/SourcePointStatus';
-			if ( !empty( $wgDevelEnvironment ) ) {
-				$spStatusURL = '/api/v1/ARecoveryEngine/SourcePointStatus';
-			}
-			$scripts .= '<script src="' . $spStatusURL . '"></script>';
-			$scripts .= F::app()->sendRequest( 'ARecoveryEngineApiController', 'getBootstrap' );
-		}
+//		if ( ARecoveryModule::isEnabled() ) {
+//			$spStatusURL = 'http://community.wikia.com/api/v1/ARecoveryEngine/SourcePointStatus';
+//			if ( !empty( $wgDevelEnvironment ) ) {
+//				$spStatusURL = '/api/v1/ARecoveryEngine/SourcePointStatus';
+//			}
+//			$scripts .= '<script src="' . $spStatusURL . '"></script>';
+//			$scripts .= F::app()->sendRequest( 'ARecoveryEngineApiController', 'getBootstrap' );
+//		}
 
 		return true;
 	}
