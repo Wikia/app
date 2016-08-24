@@ -4,7 +4,7 @@
 			<?= AvatarService::renderAvatar($username, 50) ?>
 		</div>
 		<div class="speech-bubble-message">
-			<? if ( $wg->EnableMiniEditorExtForWall ):
+			<? if ( $showMiniEditor ):
 				echo $app->getView( 'MiniEditorController', 'Header', [
 					'attributes' => [
 						'id' => 'wall-new-message',
@@ -14,14 +14,14 @@
 				] )->render();
 			endif; ?>
 			<div class="no-title-container">
-				<div class="no-title-warning" style="display:none"><?= wfMsg('wall-no-title-warning') ?></div>
+				<div class="no-title-warning" style="display:none"><?= wfMessage( 'wall-no-title-warning' )->escaped(); ?></div>
 			</div>
-			<textarea id="WallMessageTitle" class="title" type="text" placeholder="<?= wfMsg('wall-placeholder-topic') ?>"></textarea>
-			<? if ( $wg->EnableMiniEditorExtForWall ):
-				echo $app->getView( 'MiniEditorController', 'Editor_Header' )->render(); 
+			<textarea id="WallMessageTitle" class="title" type="text" placeholder="<?= wfMessage( 'wall-placeholder-topic' )->escaped(); ?>"></textarea>
+			<? if ( $showMiniEditor ):
+				echo $app->getView( 'MiniEditorController', 'Editor_Header' )->render();
 			endif; ?>
 			<textarea id="WallMessageBody" class="body" placeholder="<?= $wall_message ?>" data-space-type="editarea"></textarea>
-			<? if ( $wg->EnableMiniEditorExtForWall ):
+			<? if ( $showMiniEditor ):
 				echo $app->getView( 'MiniEditorController', 'Editor_Footer' )->render(); 
 			endif; ?>
 			<?php if($notify_everyone): ?>
@@ -32,13 +32,13 @@
 				<label class="highlight">
 					<input type="checkbox" class="notify-everyone" name="notifyEveryone" value="1" />
 				</label>
-				<button id="WallMessageSubmit" disabled="disabled"><?= wfMsg('wall-button-to-submit-comment') ?></button>
+				<button id="WallMessageSubmit" disabled="disabled"><?= wfMessage( 'wall-button-to-submit-comment' )->escaped(); ?></button>
 				
-				<button class="secondary" id="WallMessagePreview" disabled="disabled"><?= wfMsg('wall-button-to-preview-comment') ?></button>
+				<button class="secondary" id="WallMessagePreview" disabled="disabled"><?= wfMessage( 'wall-button-to-preview-comment' )->escaped(); ?></button>
 				
 				<div class="loadingAjax"></div>
 			</div>
-			<? if ( $wg->EnableMiniEditorExtForWall ):
+			<? if ( $showMiniEditor ):
 				echo $app->getView( 'MiniEditorController', 'Footer' )->render(); 
 			endif; ?>
 		</div>

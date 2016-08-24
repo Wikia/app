@@ -128,6 +128,8 @@ The original post and your summary will still appear in the wiki's history.",
 	'wall-action-move-thread-ok' => 'Move thread',
 	'wall-action-move-board-label' => 'Select a board to move to',
 
+	'wall-action-monobook-login' => 'Please log in to post a message on this wiki',
+
 	'wall-posting-message-failed-title' => 'An error occurred while posting a message',
 	'wall-posting-message-failed-body' => 'Copy your work and try again later',
 
@@ -452,6 +454,7 @@ See also:
 	'wall-action-all-confirm-notify' => 'Option to notify an admin on a remove or deleted reply modal box',
 	'wall-action-remove-reply-title' => 'Title of the modal box for removing a reply',
 	'wall-action-remove-thread-title' => 'Title of the modal box for removing a thread',
+	'wall-action-monobook-login' => 'Error message shown to anon users on Monobook if they try to post a wall message',
 	'wall-confirm-monobook-remove' => "Explanation of the remove modal box for Monobook users, puts extra info in because Monobook users don't see the complete modal box",
 	'wall-confirm-monobook-admin' => "Explanation of the delete modal box for Monobook users, puts extra info in because Monobook users don't see the complete modal box",
 	'wall-confirm-monobook-restore' => 'Asks for a summary for restoring a message or reply for Monoboo users',

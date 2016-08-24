@@ -26,6 +26,11 @@
 		&.open .speech-bubble-message {
 			margin-left: 50px;
 		}
+
+		&.new-message .speech-bubble-buttons {
+			display: block;
+		}
+
 		.SpeechBubble {
 			&:before, &:after { display: none; }
 		}

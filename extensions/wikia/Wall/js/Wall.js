@@ -1,4 +1,4 @@
-(function (window, $) {
+(function (window, $, mw) {
 	'use strict';
 
 	var Wall = $.createClass(Object, {
@@ -17,7 +17,7 @@
 			this.wall = $(element);
 			this.settings = $.extend(true, {}, Wall.settings, settings);
 			this.deletedMessages = {};
-			this.isMonobook = window.skin && window.skin === 'monobook';
+			this.isMonobook = Wall.isMonobook;
 			this.hasMiniEditor = typeof window.wgEnableMiniEditorExt !== 'undefined' && !this.isMonobook;
 			this.title = window.wgTitle;
 			this.page = {
@@ -302,15 +302,20 @@
 		vote: function (e) {
 			e.preventDefault();
 			if (!window.wgUserName) {
-				window.wikiaAuthModal.load({
-					forceLogin: true,
-					origin: 'wall-and-forum',
-					onAuthSuccess: function () {
-						this.voteBase(e, function () {
-							window.location.reload();
-						});
-					}.bind(this)
-				});
+				if (!this.isMonobook) {
+					window.wikiaAuthModal.load({
+						forceLogin: true,
+						origin: 'wall-and-forum',
+						onAuthSuccess: function () {
+							this.voteBase(e, function () {
+								window.location.reload();
+							});
+						}.bind(this)
+					});
+				} else {
+					// SUS-550: AuthModal doesn't work on Monobook, breaks the page
+					Wall.showMonobookLoginPopup();
+				}
 			} else {
 				this.voteBase(e, this.proxy(function (target, data, dir) {
 					var votes = target.closest('li.message').find('.votes:first'),
@@ -736,15 +741,20 @@
 			e.preventDefault();
 			var rootMessageId = $(e.target).closest('.message').data('id');
 			if (window.wgDisableAnonymousEditing && !window.wgUserName) {
-				require(['AuthModal'], function (authModal) {
-					authModal.load({
-						forceLogin: true,
-						origin: 'wall-and-forum',
-						onAuthSuccess: this.proxy(function () {
-							this.editTopics(rootMessageId);
-						})
-					});
-				}.bind(this));
+				if (!this.isMonobook) {
+					require(['AuthModal'], function (authModal) {
+						authModal.load({
+							forceLogin: true,
+							origin: 'wall-and-forum',
+							onAuthSuccess: this.proxy(function () {
+								this.editTopics(rootMessageId);
+							})
+						});
+					}.bind(this));
+				} else {
+					// SUS-550: AuthModal doesn't work on Monobook, breaks the page
+					Wall.showMonobookLoginPopup();
+				}
 			} else {
 				this.editTopics(rootMessageId);
 			}
@@ -891,6 +901,25 @@
 		classBindings: {}
 	};
 
+	// Static methods and properties
+	/**
+	 * Whether we are using Monobook
+	 */
+	Wall.isMonobook = (mw.config.get('skin') === 'monobook');
+
+	/**
+	 * SUS-550: Show a login popup message for anons on Monobook
+	 */
+	Wall.showMonobookLoginPopup = function () {
+		new BannerNotification(
+			$('<a>')
+				.attr('href', '/wiki/Special:UserLogin')
+				.text($.msg('wall-action-monobook-login'))
+				.prop('outerHTML'),
+			'error'
+		).show()
+	};
+
 	// jQuery bridge
 	$.fn.wikiaWall = function (settings) {
 		return this.each(function () {
@@ -901,4 +930,4 @@
 	// Exports
 	window.Wall = Wall;
 
-})(window, jQuery);
+})(window, jQuery, mediaWiki);
