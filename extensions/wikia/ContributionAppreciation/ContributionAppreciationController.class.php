@@ -1,8 +1,7 @@
 <?php
 
 class ContributionAppreciationController extends WikiaController {
-	const EMAIL_CATEGORY = 'ContributionAppreciationMessage';
-	const TRACKING_URL = 'https://beacon.wikia-services.com/__track/special/appreciation_email';
+	const SUPPORTED_LANGUAGES = [ 'en' ];
 
 	public function appreciate() {
 		global $wgUser, $wgCityId;
@@ -12,7 +11,7 @@ class ContributionAppreciationController extends WikiaController {
 		$revisionId = $this->request->getInt( 'revision' );
 		$revision = Revision::newFromId( $revisionId );
 
-		if ( $revision ) {
+		if ( $revision && !$wgUser->isBlocked() ) {
 			$id = ( new RevisionUpvotesService() )->addUpvote(
 				$wgCityId,
 				$revision->getPage(),
@@ -21,7 +20,14 @@ class ContributionAppreciationController extends WikiaController {
 				$wgUser->getId()
 			);
 
-			$this->sendMail( $revisionId );
+			// send email that user received appreciation.
+			// Currently disabled because of: https://wikia-inc.atlassian.net/browse/WW-172
+			// $this->sendMail( $revisionId );
+
+			\Wikia\Logger\WikiaLogger::instance()->info('ContributionAppreciationMessage email send', [
+				'revision_id' => $revisionId,
+				'appreciation_receiver' => $revision->getRawUser()
+			]);
 		}
 
 		$this->response->setValues( [
@@ -34,28 +40,17 @@ class ContributionAppreciationController extends WikiaController {
 	public function getAppreciations() {
 		global $wgUser;
 
-		$html = '';
-		$upvotesService = new RevisionUpvotesService();
-		$upvotes = $upvotesService->getUserNewUpvotes( $wgUser->getId() );
+		$upvotes = ( new RevisionUpvotesService() )->getUserNewUpvotes( $wgUser->getId() );
 
 		if ( !empty( $upvotes ) ) {
 			$appreciations = $this->prepareAppreciations( $upvotes );
 
 			if ( !empty( $appreciations ) ) {
-				$html = $this->app->renderView( 'ContributionAppreciation', 'appreciations', [
-					'appreciations' => $appreciations
-				] );
+				$numberOfAppreciations = count( $appreciations );
+				$this->appreciations = $appreciations;
+				$this->numberOfHiddenAppreciations = $numberOfAppreciations > 2 ? $numberOfAppreciations - 2 : 0;
 			}
 		}
-
-		$this->response->setBody( $html );
-	}
-
-	public function appreciations() {
-		$appreciations = $this->getVal( 'appreciations' );
-		$numberOfAppreciations = count( $appreciations );
-		$this->numberOfHiddenAppreciations = $numberOfAppreciations > 2 ? $numberOfAppreciations - 2 : 0;
-		$this->appreciations = $appreciations;
 	}
 
 	public function diffModule() {
@@ -70,7 +65,7 @@ class ContributionAppreciationController extends WikiaController {
 		global $wgUser;
 
 		// no appreciation for yourself
-		if ( self::shouldDisplayAppreciation() && $wgUser->getId() !== $newRev->getUser() ) {
+		if ( static::shouldDisplayAppreciation() && $wgUser->getId() !== $newRev->getUser() ) {
 			Wikia::addAssetsToOutput( 'contribution_appreciation_js' );
 			Wikia::addAssetsToOutput( 'contribution_appreciation_scss' );
 			$out->addHTML( F::app()->renderView(
@@ -87,7 +82,7 @@ class ContributionAppreciationController extends WikiaController {
 		global $wgUser;
 
 		// no appreciation for yourself
-		if ( self::shouldDisplayAppreciation() && $wgUser->getId() !== intval( $row->rev_user ) ) {
+		if ( static::shouldDisplayAppreciation() && $wgUser->getId() !== intval( $row->rev_user ) ) {
 			$tools[] = F::app()->renderView( 'ContributionAppreciation', 'historyModule', [ 'revision' => $row->rev_id ] );
 		}
 
@@ -95,7 +90,7 @@ class ContributionAppreciationController extends WikiaController {
 	}
 
 	public static function onPageHistoryBeforeList() {
-		if ( self::shouldDisplayAppreciation() ) {
+		if ( static::shouldDisplayAppreciation() ) {
 			Wikia::addAssetsToOutput( 'contribution_appreciation_js' );
 			Wikia::addAssetsToOutput( 'contribution_appreciation_scss' );
 		}
@@ -103,20 +98,8 @@ class ContributionAppreciationController extends WikiaController {
 		return true;
 	}
 
-	public static function onSendGridPostbackLogEvents( $events ) {
-		foreach ( $events as $event ) {
-			if ( self::isAppreciationEmailEvent( $event ) ) {
-				if ( preg_match( '/diff=([0-9]*)/', $event[ 'url' ], $diff ) ) {
-					self::sendDataToDW( 'button_clicked', $event[ 'wikia-email-city-id' ], $diff[ 1 ] );
-				} elseif ( preg_match( '/rev_id=([0-9]*)/', $event[ 'url' ], $revId ) ) {
-					self::sendDataToDW( 'diff_link_clicked', $event[ 'wikia-email-city-id' ], $revId[ 1 ] );
-				}
-			}
-		}
-	}
-
 	public static function onBeforePageDisplay( \OutputPage $out, \Skin $skin ) {
-		if ( self::shouldDisplayAppreciation() ) {
+		if ( static::shouldDisplayAppreciation() ) {
 			Wikia::addAssetsToOutput( 'contribution_appreciation_user_js' );
 			Wikia::addAssetsToOutput( 'contribution_appreciation_user_scss' );
 		}
@@ -124,51 +107,19 @@ class ContributionAppreciationController extends WikiaController {
 		return true;
 	}
 
-	/**
-	 * Check if event is from sendgrid hook is an appreciation email and has set
-	 * all needed fields.
-	 *
-	 * @param $event from sendgrid hook
-	 * @return bool
-	 */
-	private static function isAppreciationEmailEvent( $event ) {
-		return isset( $event[ 'event' ] ) &&
-			isset( $event[ 'category' ] ) &&
-			isset( $event[ 'url' ] ) &&
-			isset( $event[ 'wikia-email-city-id' ] ) &&
-			$event[ 'event' ] == 'click' &&
-			strpos( $event[ 'category' ], self::EMAIL_CATEGORY ) !== false;
-	}
-
-	/**
-	 * Basing on params, create url to send tracking data to DW and send it.
-	 *
-	 * @param string $action - how user interacted with email
-	 * @param int $wikiId - id of wiki user made contribution on
-	 * @param int $revisionId
-	 */
-	private static function sendDataToDW( $action, $wikiId, $revisionId ) {
-		$dbname = \WikiFactory::IDtoDB( $wikiId );
-		$db = wfGetDB( DB_SLAVE, [ ], $dbname );
-		$revision = Revision::loadFromId( $db, $revisionId );
-
-		if ( $revision ) {
-			$url = self::TRACKING_URL .
-				'?wiki_id=' . $wikiId .
-				'&email_action=' . $action .
-				'&page_id=' . $revision->getTitle()->getArticleID() .
-				'&rev_id=' . $revision->getId() .
-				'&user_id=' . $revision->getUser();
-
-			Http::get( $url );
-		}
-	}
-
 	private static function shouldDisplayAppreciation() {
 		global $wgUser, $wgLang, $wgEnableCommunityPageExt;
 
-		// we want to run it only for english users
-		return $wgUser->isLoggedIn() && $wgLang->getCode() === 'en' && !empty( $wgEnableCommunityPageExt );
+		// we want to run it only for a subset of users: logged in, not blocked,
+		// using languages supported in experiment
+		return $wgUser->isLoggedIn() &&
+			!$wgUser->isBlocked() &&
+			static::isSuportedAppreciationLang( $wgLang->getCode() ) &&
+			!empty( $wgEnableCommunityPageExt );
+	}
+
+	private static function isSuportedAppreciationLang( $lang ) {
+		return in_array( $lang, static::SUPPORTED_LANGUAGES );
 	}
 
 	private function prepareAppreciations( $upvotes ) {
@@ -230,20 +181,23 @@ class ContributionAppreciationController extends WikiaController {
 		$revision = Revision::newFromId( $revisionId );
 
 		if ( $revision ) {
-			$editedPageTitle = $revision->getTitle();
-			$params = [
-				'buttonLink' => SpecialPage::getTitleFor( 'Community' )->getFullURL( [
-					'rev_id' => $revision->getId()
-				] ),
-				'targetUser' => $revision->getUserText(),
-				'editedPageTitleText' => $editedPageTitle->getText(),
-				'editedWikiName' => $wgSitename,
-				'revisionUrl' => $editedPageTitle->getFullURL( [
-					'diff' => $revision->getId()
-				] )
-			];
+			$diffAuthor = \User::newFromId( $revision->getUser() );
 
-			$this->app->sendRequest( 'Email\Controller\ContributionAppreciationMessageController', 'handle', $params );
+			// we want to send appreciation email for en users only
+			if ( $diffAuthor && static::isSuportedAppreciationLang( $diffAuthor->getGlobalPreference( 'language' ) ) ) {
+				$editedPageTitle = $revision->getTitle();
+				$params = [
+					'buttonLink' => SpecialPage::getTitleFor( 'Community' )->getFullURL(),
+					'targetUser' => $diffAuthor->getName(),
+					'editedPageTitleText' => $editedPageTitle->getText(),
+					'editedWikiName' => $wgSitename,
+					'revisionUrl' => $editedPageTitle->getFullURL( [
+						'diff' => $revision->getId()
+					] )
+				];
+
+				$this->app->sendRequest( 'Email\Controller\ContributionAppreciationMessageController', 'handle', $params );
+			}
 		}
 	}
 }
