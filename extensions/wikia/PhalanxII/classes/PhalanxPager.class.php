@@ -5,26 +5,32 @@ class PhalanxPager extends ReverseChronologicalPager {
 	protected $id = 0;
 	private $pInx = '';
 
+	/** @var Skin|Linker $mSkin */
+	protected $mSkin;
+
 	public function __construct() {
 		parent::__construct();
 		$this->app = F::app();
 
-		$this->mDb = wfGetDB( DB_SLAVE, array(), $this->app->wg->ExternalSharedDB );
-		$this->mSearchText = $this->app->wg->Request->getText( 'wpPhalanxCheckBlocker', null );
-		$this->mSearchFilter = $this->app->wg->Request->getArray( 'wpPhalanxTypeFilter' );
-		$this->mSearchId = $this->app->wg->Request->getInt( 'id' );
+		$this->mDb = wfGetDB( DB_SLAVE, [], $this->app->wg->ExternalSharedDB );
 
-		// handle "type" parameter from URLs comming from hook messages
-		$type = $this->app->wg->Request->getInt('type');
-		if ($type > 0) {
-			$this->mSearchFilter = array($type);
+		$request = $this->getRequest();
+		$this->mSearchText = $request->getText( 'wpPhalanxCheckBlocker', null );
+		$this->mSearchFilter = $request->getArray( 'wpPhalanxTypeFilter' );
+		$this->mSearchId = $request->getInt( 'id' );
+
+		// handle "type" parameter from URLs coming from hook messages
+		$type = $request->getInt( 'type' );
+		if ( $type > 0 ) {
+			$this->mSearchFilter = [ $type ];
 		}
 
 		$this->mTitle = Title::newFromText( 'Phalanx/stats', NS_SPECIAL );
-		$this->mSkin = RequestContext::getMain()->getSkin();
 
-		$this->phalanxPage = SpecialPage::getTitleFor('Phalanx');
-		$this->phalanxStatsPage = SpecialPage::getTitleFor('PhalanxStats');
+		$this->phalanxPage = SpecialPage::getTitleFor( 'Phalanx' );
+		$this->phalanxStatsPage = SpecialPage::getTitleFor( 'PhalanxStats' );
+
+		$this->mSkin = $this->getSkin();
 	}
 
 	/**
@@ -37,12 +43,11 @@ class PhalanxPager extends ReverseChronologicalPager {
 	 * @return Array
 	 */
 	function getSearchFilter() {
-		if (is_array($this->mSearchFilter)) {
-			$filters = array_map('intval', $this->mSearchFilter);
-			return array_fill_keys($filters, true);
-		}
-		else {
-			return array();
+		if ( is_array( $this->mSearchFilter ) ) {
+			$filters = array_map( 'intval', $this->mSearchFilter );
+			return array_fill_keys( $filters, true );
+		} else {
+			return [];
 		}
 	}
 
@@ -75,7 +80,7 @@ class PhalanxPager extends ReverseChronologicalPager {
 	}
 
 	function getStartBody() {
-		return Html::openElement( 'ul', array( "id" => 'phalanx-block-' . $this->pInx . '-' . $this->id . '-stats' ) );
+		return Html::openElement( 'ul', [ "id" => 'phalanx-block-' . $this->pInx . '-' . $this->id . '-stats' ] );
 	}
 
 	function getEndBody() {
@@ -83,12 +88,12 @@ class PhalanxPager extends ReverseChronologicalPager {
 	}
 
 	function getEmptyBody() {
-		return Html::element('div', array('class' => 'error'), wfMsg('phalanx-no-results'));
+		return Html::element( 'div', [ 'class' => 'error' ], $this->msg( 'phalanx-no-results' )->text() );
 	}
 
 	function formatRow( $row ) {
 		// hide e-mail filters
-		if ( ( $row->p_type & Phalanx::TYPE_EMAIL ) && !$this->app->wg->User->isAllowed( 'phalanxemailblock' ) ) {
+		if ( ( $row->p_type & Phalanx::TYPE_EMAIL ) && !$this->getUser()->isAllowed( 'phalanxemailblock' ) ) {
 			return '';
 		}
 
@@ -96,63 +101,61 @@ class PhalanxPager extends ReverseChronologicalPager {
 		if ( isset( $row->p_authorId ) ) {
 			$author = User::newFromId( $row->p_authorId );
 			$authorName = $author->getName();
-		}
-		else {
+		} else {
 			$authorName = '';
 		}
 
 		$statsUrl = sprintf( "%s/%s", $this->phalanxStatsPage->getLocalUrl(), $row->p_id );
 
-		$html  = Html::openElement( 'li', array( 'id' => 'phalanx-block-' . $row->p_id ) );
-		$html .= Html::element( 'b', array('class' => 'blockContent'), $row->p_text );
+		$html = Html::openElement( 'li', [ 'id' => 'phalanx-block-' . $row->p_id ] );
+		$html .= Html::element( 'b', [ 'class' => 'blockContent' ], $row->p_text );
 		$html .= sprintf( " (%s%s%s) ",
-			( !empty($row->p_regex) ? 'regex' : 'plain' ),
-			( !empty($row->p_case)  ? ',case' : '' ),
-			( !empty($row->p_exact) ? ',exact': '' )
+			( !empty( $row->p_regex ) ? 'regex' : 'plain' ),
+			( !empty( $row->p_case ) ? ',case' : '' ),
+			( !empty( $row->p_exact ) ? ',exact' : '' )
 		);
 
 		/* control links */
 		$html .= sprintf( " &bull; %s &bull; %s",
-			Html::element( 'a', array(
+			Html::element( 'a', [
 				'class' => 'modify',
-				'href' => $this->phalanxPage->getLocalUrl( array( 'id' => $row->p_id ) )
-			), wfMsg('phalanx-link-modify') ),
-			Html::element( 'a', array(
+				'href' => $this->phalanxPage->getLocalUrl( [ 'id' => $row->p_id ] ),
+			], $this->msg( 'phalanx-link-modify' )->text() ),
+			Html::element( 'a', [
 				'class' => 'stats',
-				'href' => $statsUrl
-			), wfMsg('phalanx-link-stats') )
+				'href' => $statsUrl,
+			], $this->msg( 'phalanx-link-stats' )->text() )
 		);
 
 		/* remove block button - handled via AJAX */
-		$html .= Html::element( 'button', array(
+		$html .= Html::element( 'button', [
 			'class' => 'unblock',
 			'data-id' => $row->p_id,
-		), wfMsg('phalanx-link-unblock') );
+		], $this->msg( 'phalanx-link-unblock' )->text() );
 
-		$html .= Html::element('br');
+		$html .= Html::element( 'br' );
 
 		/* types */
-		$html .= wfMsg('phalanx-display-row-blocks', implode( ', ', Phalanx::getTypeNames( $row->p_type ) ) );
+		$html .= $this->msg( 'phalanx-display-row-blocks', implode( ', ', Phalanx::getTypeNames( $row->p_type ) ) )->escaped();
 
 		/* created */
-		if (isset($row->p_timestamp)) {
-			$html .= sprintf( " &bull; %s ",
-				wfMsgExt( 'phalanx-display-row-created', array('parseinline'),
-					$authorName,
-					$this->app->wg->Lang->timeanddate( $row->p_timestamp )
-				)
-			);
+		if ( isset( $row->p_timestamp ) ) {
+			$html .= ' &bull; ';
+			$html .= $this->msg( 'phalanx-display-row-created' )
+					->params( $authorName, $this->getLanguage()->timeanddate( $row->p_timestamp ) )
+					->parse();
 		}
 
 		/* valid till */
-		if (property_exists($row, 'p_expire')) {
-			if (is_null($row->p_expire)) {
-				$html .= sprintf( " &bull; %s ", wfMsg('phalanx-display-row-expire-infinity'));
-			}
-			else if (is_numeric($row->p_expire)) {
-				$html .= sprintf( " &bull; %s ",
-					wfMsg( 'phalanx-display-row-expire', $this->app->wg->Lang->timeanddate( $row->p_expire ))
-				);
+		if ( property_exists( $row, 'p_expire' ) ) {
+			if ( is_null( $row->p_expire ) ) {
+				$html .= ' &bull; ';
+				$html .= $this->msg( 'phalanx-display-row-expire-infinity' )->escaped();
+			} elseif ( is_numeric( $row->p_expire ) ) {
+				$html .= ' &bull; ';
+				$html .= $this->msg( 'phalanx-display-row-expire' )
+					->params( $this->getLanguage()->timeanddate( $row->p_expire ) )
+					->escaped();
 			}
 		}
 
