@@ -5,6 +5,7 @@ class SpecialPortabilityDashboardController extends WikiaSpecialPageController {
 	const SPECIAL_INSIGHTS_TYPELESS_TEMPLATE_PAGE = 'templateswithouttype';
 	const SPECIAL_CUSTOM_INFOBOXES_PAGE = 'nonportableinfoboxes';
 	const LANGUAGE_FILTER_QS_PARAM = 'lang';
+	const WIKI_URL_QS_PARAM = 'url';
 	const SUPPORTED_LANGUAGE_FILTERS = [ 'de', 'en', 'es', 'fr', 'id', 'it', 'ja', 'ko', 'nl', 'pl', 'pt', 'pt-br',
 		'ru', 'vi', 'zh', 'zh-hk' ];
 
@@ -14,53 +15,58 @@ class SpecialPortabilityDashboardController extends WikiaSpecialPageController {
 	}
 
 	public function index() {
+		global $wgBlankImgUrl;
+
 		$model = new PortabilityDashboardModel();
-		$list = $model->getList();
-		$langFilter = $this->getVal( self::LANGUAGE_FILTER_QS_PARAM, '' );
+		$langFilter = $this->getVal( static::LANGUAGE_FILTER_QS_PARAM, '' );
+		$wikiUrlParam = $this->getVal( static::WIKI_URL_QS_PARAM, '' );
 		$isLangFilterSet = !empty( $langFilter );
+		$isWikiUrlParamSet = !empty( $wikiUrlParam );
+		$noResultsInfoMessageKey = 'portability-dashboard-no-results-info';
 
-		// template model 
-		$this->response->setVal( 'list', $isLangFilterSet ? $this->filterListByLang( $list, $langFilter ) : $list );
+		if ( $isWikiUrlParamSet ) {
+			$list = $model->getWikiDataByUrl( Sanitizer::encodeAttribute( $wikiUrlParam ) );
+		} else {
+			$list = $model->getRowList();
+		}
 
-		// template helpers
-		$this->response->setVal(
-			'typelessTemplatesInsightsPath', self::SPECIAL_INSIGHTS_PATH . self::SPECIAL_INSIGHTS_TYPELESS_TEMPLATE_PAGE
-		);
-		$this->response->setVal(
-			'customInfoboxesInsightsPath', self::SPECIAL_INSIGHTS_PATH . self::SPECIAL_CUSTOM_INFOBOXES_PAGE
-		);
-		$this->response->setVal(
-			'langList',
-			$this->extendLanguagesListWithActiveLanguage(
-				self::SUPPORTED_LANGUAGE_FILTERS,
-				$langFilter
-			)
-		);
-		$this->response->setVal( 'isLangFilterSet', $isLangFilterSet );
-		$this->response->setVal( 'langQSParam', self::LANGUAGE_FILTER_QS_PARAM );
+		// add data needed for portability dashboard: wiki url, title and lang
+		$list = $model->extendList( $list );
 
-		// i18n template strings
-		$this->response->setVal( 'langFilterLabel', wfMessage( 'portability-dashboard-language-filter-label' )->text() );
-		$this->response->setVal( 'dashboardLegend', wfMessage( 'portability-dashboard-hover-info' )->text() );
-		$this->response->setVal( 'allLangFilter', wfMessage( 'portability-dashboard-language-filter-all' )->text() );
-		$this->response->setVal( 'dashboardLabels', $this->getDashboardLabels() );
-		$this->response->setVal(
-			'templatesWithoutTypeUrlTitle', wfMessage( 'portability-dashboard-special-insights-template-without-title'
-		)->text() );
-		$this->response->setVal(
-			'customInfoboxesInsightsUrlTitle', wfMessage( 'portability-dashboard-special-insights-custom-infobox-title'
-		)->text() );
-		$this->response->setVal( 'refreshFreqInfo', wfMessage( 'portability-dashboard-refresh-frequency-info' )->text() );
-		$this->response->setVal( 'noResultsInfo', wfMessage( 'portability-dashboard-no-results-info',
-			PortabilityDashboardModel::WIKIS_LIMIT )->text() );
+		if ( $isLangFilterSet ) {
+			$list = $this->filterListByLang( $list, $langFilter );
+			$noResultsInfoMessageKey = 'portability-dashboard-no-results-for-lang-info';
+		}
 
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
+		$this->response->setValues( [
+			// template model
+			'list' => $list,
+			// template helpers
+			'typelessTemplatesInsightsPath' =>  static::SPECIAL_INSIGHTS_PATH . static::SPECIAL_INSIGHTS_TYPELESS_TEMPLATE_PAGE,
+			'customInfoboxesInsightsPath' => static::SPECIAL_INSIGHTS_PATH . static::SPECIAL_CUSTOM_INFOBOXES_PAGE,
+			'langList' => $this->extendLanguagesListWithActiveLanguage( static::SUPPORTED_LANGUAGE_FILTERS, $langFilter ),
+			'isLangFilterSet'=> $isLangFilterSet,
+			'langQSParam' => static::LANGUAGE_FILTER_QS_PARAM,
+			'blankImgUrl' => $wgBlankImgUrl,
+			// i18n template strings
+			'langFilterLabel' => wfMessage( 'portability-dashboard-language-filter-label' )->text(),
+			'dashboardLegend' => wfMessage( 'portability-dashboard-hover-info' )->text(),
+			'allLangFilter'=> wfMessage( 'portability-dashboard-language-filter-all' )->text(),
+			'searchHeadline' => wfMessage( 'portability-dashboard-search-headline' )->text(),
+			'searchPlaceholder' => wfMessage( 'portability-dashboard-search-placeholder' )->text(),
+			'dashboardLabels'=> $this->getDashboardLabels(),
+			'templatesWithoutTypeUrlTitle' => wfMessage( 'portability-dashboard-special-insights-template-without-title' )->text(),
+			'customInfoboxesInsightsUrlTitle' => wfMessage( 'portability-dashboard-special-insights-custom-infobox-title' )->text(),
+			'refreshFreqInfo' => wfMessage( 'portability-dashboard-refresh-frequency-info' )->text(),
+			'noResultsInfo' => wfMessage( $noResultsInfoMessageKey, PortabilityDashboardModel::WIKIS_LIMIT )->text()
+		] );
 
 		Wikia::addAssetsToOutput( 'special_portability_dashboard_scss' );
 	}
 
 	/**
-	 * extends languages list with active laguage filter
+	 * extends languages list with active language filter
 	 * @param array $list - languages list
 	 * @param string $activeLangFilter - language code for active language filter
 	 * @return array - extended languages list

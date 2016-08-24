@@ -16,9 +16,7 @@ class ResourceLoaderAdEngineSourcePointCSDelivery extends ResourceLoaderAdEngine
 	 */
 	protected function getScripts() {
 		$url = self::SCRIPT_DELIVERY_URL.
-			'?fmt=js&pub_base=http://'.
-			$_SERVER['HTTP_HOST'].'/'.
-			self::CS_ENDPOINT.'&pub_adserver=dfp&env=prod';
+			'?fmt=js&pub_adserver=dfp&env=prod';
 		return [
 			(new ResourceLoaderScript())->setTypeRemote()->setValue($url)
 		];

@@ -13,6 +13,7 @@ $messages['en'] = [
 	'special-pageviews-report-series' => 'Page views',
 	'special-pageviews-beta-info' => 'This is a beta version of the dashboard.',
 	'special-pageviews-redraw-link-text' => 'Redraw the chart',
+	'right-pageviews' => 'View page view statistics',
 ];
 
 /** Message documentation

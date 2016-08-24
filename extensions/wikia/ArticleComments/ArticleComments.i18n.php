@@ -75,6 +75,11 @@ ___________________________________________
 <li>Want to receive fewer messages from us? You can unsubscribe or change your email preferences here: <a href="http://community.wikia.com/Special:Preferences">http://community.wikia.com/Special:Preferences</a></li>
 </ul>
 </p>',
+
+	'right-commentdelete' => 'Can delete article comments',
+	'right-commentedit' => 'Can edit article comments',
+	'right-commentmove' => 'Can move article comments',
+	'right-commentcreate' => 'Can create article comments',
 ];
 
 /** Message documentation (Message documentation)
