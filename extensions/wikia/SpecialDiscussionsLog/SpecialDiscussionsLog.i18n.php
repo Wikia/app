@@ -26,6 +26,7 @@ $messages['en'] = [
 	'discussionslog-app-header' => 'App',
 	'discussionslog-site-header' => 'Site',
 	'discussionslog-timestamp-header' => 'Timestamp',
+	'discussionslog-user-action-header' => 'Action',
 	'discussionslog-more-info' => 'Click for info',
 	'action-specialdiscussionslog' => 'Special:DiscussionsLog',
 	'right-specialdiscussionslog' => 'View [[Special:DiscussionsLog]]',
@@ -54,6 +55,7 @@ $messages['qqq'] = [
 	'discussionslog-app-header' => 'Table header for app',
 	'discussionslog-site-header' => 'Table header for site',
 	'discussionslog-timestamp-header' => 'Table header for timestamp',
+	'discussionslog-user-action-header' => 'Table header for user action',
 	'discussionslog-more-info' => 'A message saying to click for info',
 	'action-specialdiscussionslog' => 'An action that a user has a forbidden access to when opening Special Page',
 ];
