@@ -137,6 +137,9 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 		$this->setVal( 'type', $this->wg->Request->getInt('type') );
 		$this->setVal( 'typeSections', $typeSections);
 
+		// SUS-270: preload username into filter search box
+		$this->setVal( 'checkBlocker', $data['checkBlocker'] !== '' ? $data['checkBlocker'] : $data['text'] );
+
 		wfProfileOut( __METHOD__ );
 	}
 

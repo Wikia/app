@@ -128,7 +128,7 @@
 				<form id="phalanx-filters" method="get" action="<?= $action ?>">
 					<div id="phalanx-check-options">
 						<label for="wpPhalanxCheckBlocker"><?= wfMessage( 'phalanx-view-blocker' )->escaped() ?></label>
-						<input type="text" id="wpPhalanxCheckBlocker" name="wpPhalanxCheckBlocker" class="blue" size="30" value="<?= htmlspecialchars($data['checkBlocker']) ?>">
+						<input type="text" id="wpPhalanxCheckBlocker" name="wpPhalanxCheckBlocker" class="blue" size="30" value="<?= Sanitizer::encodeAttribute( $checkBlocker ); ?>">
 						<input type="submit" value="<?= wfMessage( 'phalanx-view-blocks' )->escaped() ?>"  />
 
 						<label for="wpPhalanxCheckId"><?= wfMessage( 'phalanx-view-id' )->escaped() ?></label>
