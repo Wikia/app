@@ -92,8 +92,9 @@ class PhalanxPager extends ReverseChronologicalPager {
 			return '';
 		}
 
-		if (isset($row->p_author_id)) {
-			$author = User::newFromId( $row->p_author_id );
+		// SUS-270: Get author from correct field
+		if ( isset( $row->p_authorId ) ) {
+			$author = User::newFromId( $row->p_authorId );
 			$authorName = $author->getName();
 		}
 		else {
