@@ -10,6 +10,7 @@ class DiscussionSpecialController extends WikiaSpecialPageController {
 	}
 
 	public function index() {
+		$this->getResponse()->setCacheValidity(WikiaResponse::CACHE_LONG);
 		$this->getResponse()->redirect( '/d' );
 	}
 
