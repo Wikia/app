@@ -49,7 +49,7 @@ class PhalanxStatsPager extends PhalanxPager {
 		$username = $row->ps_blocked_user;
 		$timestamp = $this->getLanguage()->timeanddate( $row->ps_timestamp );
 		$oWiki = WikiFactory::getWikiByID( $row->ps_wiki_id );
-		$url = $row->ps_referrer ?? "";
+		$url = $row->ps_referrer ?? '';
 		$url = ( empty( $url ) && isset( $oWiki ) ) ? $oWiki->city_url : $url;
 
 		// SUS-184: Render usernames containing spaces correctly
