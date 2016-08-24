@@ -53,8 +53,11 @@ class EmbeddableDiscussionsController {
 		if ( F::app()->checkSkin( 'wikiamobile' ) ) {
 			// In Mercury, discussions are rendered client side as an Ember component
 			$modelData = [
-				'show' => $showLatest ? 'latest' : 'trending',
-				'itemCount' => $itemCount,
+				'mercuryComponentAttrs' => json_encode( [
+					'show' => $showLatest ? 'latest' : 'trending',
+					'itemCount' => $itemCount,
+				] ),
+				'loading' => wfMessage( 'embeddable-discussions-loading' )->plain()
 			];
 
 			// In mercury, discussions app is rendered client side

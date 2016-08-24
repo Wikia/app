@@ -11,6 +11,7 @@ $messages['en'] = array(
 	'embeddable-discussions-zero' => 'No posts yet.',
 	'embeddable-discussions-zero-detail' => 'Get the discussion started, create the first post now!',
 	'embeddable-discussions-forum-name' => 'In $1',
+	'embeddable-discussions-loading' => 'Loading Discussions...',
 );
 
 $messages['qqq'] = array(
@@ -23,6 +24,7 @@ $messages['qqq'] = array(
 	'embeddable-discussions-zero' => 'Text for zero state (heading) when there are no discussion posts',
 	'embeddable-discussions-zero-detail' => 'Text for zero state (second line) when there are no discussion posts',
 	'embeddable-discussions-forum-name' => 'Show which forum a post belongs to. Forum name filled in from $1',
+	'embeddable-discussions-loading' => 'Text to show when loading discussions cards (used on mobile only)',
 );
 
 $messages['de'] = array(
