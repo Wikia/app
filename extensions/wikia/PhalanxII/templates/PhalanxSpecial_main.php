@@ -33,26 +33,32 @@
 						<!-- Format -->
 						<div class="clearfix">
 							<div class="left-spacer">&nbsp;</div>
-							<input type="checkbox" id="wpPhalanxFormatRegex" value="1" <? if ( !empty( $data['regex'] ) ): ?>checked="checked" <? endif; ?>/>
-							<label for="wpPhalanxFormatRegex"><?= wfMessage( 'phalanx-format-regex' )->escaped() ?></label>
+							<label for="wpPhalanxFormatRegex">
+								<input type="checkbox" name="wpPhalanxFormatRegex" value="1" <? if ( !empty( $data['regex'] ) ): ?>checked="checked" <? endif; ?>/>
+								<?= wfMessage( 'phalanx-format-regex' )->escaped() ?>
+							</label>
 
-							<input type="checkbox" id="wpPhalanxFormatCase" value="1" <? if ( !empty( $data['case'] ) ): ?>checked="checked" <? endif; ?>/>
-							<label for="wpPhalanxFormatCase"><?= wfMessage( 'phalanx-format-case' )->escaped() ?></label>
+							<label for="wpPhalanxFormatCase">
+								<input type="checkbox" name="wpPhalanxFormatCase" value="1" <? if ( !empty( $data['case'] ) ): ?>checked="checked" <? endif; ?>/>
+								<?= wfMessage( 'phalanx-format-case' )->escaped() ?>
+							</label>
 
-							<input type="checkbox" id="wpPhalanxFormatExact" value="1" <? if ( !empty( $data['exact'] ) ): ?>checked="checked" <? endif; ?>/>
-							<label for="wpPhalanxFormatExact"><?= wfMessage( 'phalanx-format-exact' )->escaped() ?></label>
+							<label for="wpPhalanxFormatExact">
+								<input type="checkbox" name="wpPhalanxFormatExact" value="1" <? if ( !empty( $data['exact'] ) ): ?>checked="checked" <? endif; ?>/>
+								<?= wfMessage( 'phalanx-format-exact' )->escaped() ?>
+							</label>
 						</div>
 						<!-- Expiry-->
 						<div class="clearfix">
 							<label>
-								<strong><?= wfMsg( 'phalanx-label-expiry' ) ?></strong>
+								<strong><?= wfMessage( 'phalanx-label-expiry' )->escaped(); ?></strong>
 								<?php if (!empty($editMode)): ?>
 								<span class="expires"><?php
 									if ($data['expire'] === null) {
-										echo wfMsg('phalanx-expires-infinite');
+										echo wfMessage( 'phalanx-expires-infinite' )->escaped();
 									}
 									else if (is_numeric($data['expire'])) {
-										echo wfMsg('phalanx-expires', $app->wg->Lang->timeanddate($data['expire']));
+										echo wfMessage( 'phalanx-expires', $wg->Lang->timeanddate($data['expire']) )->escaped();
 									}
 								?></span>
 								<?php endif; ?>
@@ -61,7 +67,7 @@
 									<?php foreach ($expiries as $k => $v): ?>
 									<option value="<?=$k?>"><?=$v?></option>
 									<?php endforeach; ?>
-									<option value="custom" data-is-custom="true"><?= wfMessage('phalanx-expire-custom')->plain() ?></option>
+									<option value="custom" data-is-custom="true"><?= wfMessage( 'phalanx-expire-custom' )->escaped(); ?></option>
 									<?php endif; ?>
 								</select>
 							</label>
@@ -82,7 +88,7 @@
 								$typeName = str_replace('_', '-', $blockTypes[$typeId]);
 ?>
 								<label title="<?= wfMessage( "phalanx-help-type-{$typeName}" )->escaped(); ?>">
-									<input type="checkbox" id="wpPhalanxType[]"
+									<input type="checkbox" name="wpPhalanxType[]"
 										   value="<?= Sanitizer::encodeAttribute( $typeId ); ?>"
 										   <? if ( isset( $data['type'][$typeId] ) ): ?>checked="checked" <? endif; ?>
 									/>
@@ -144,13 +150,11 @@
 							$typeName = str_replace('_', '-', $typeName);
 ?>
 							<label title="<?= wfMessage( "phalanx-help-type-{$typeName}" )->escaped(); ?>">
-								<input type="checkbox" id="wpPhalanxTypeFilter[]"
+								<input type="checkbox" name="wpPhalanxTypeFilter[]"
 									   value="<?= Sanitizer::encodeAttribute( $typeId ); ?>"
 										<? if ( !empty( $typeFilter[$typeId] ) ): ?> checked="checked" <? endif; ?>
 								/>
-
 								<?= wfMessage( "phalanx-type-{$typeName}" )->escaped(); ?>
-
 							</label>
 <?php
 						}
