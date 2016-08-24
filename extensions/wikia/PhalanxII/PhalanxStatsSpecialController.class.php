@@ -81,26 +81,32 @@ class PhalanxStatsSpecialController extends WikiaSpecialPageController {
 		unset($row['comment']);
 		unset($row['ip_hex']);
 
-		// parse block comment
-		if ($data['comment'] != '') {
-			$comment = ParserPool::parse(
-				$data['comment'],
-				$this->getTitle(),
-				ParserOptions::newFromContext( $this->getContext() )
-			)->getText();
+		// parse block reason and comment
+		$parserOptions = ParserOptions::newFromContext( $this->getContext() );
+		$parser = ParserPool::get();
+
+		if ($data['reason'] != '') {
+			$reason = $parser->parse( $data['reason'], $this->getTitle(), $parserOptions )->getText();
+		} else {
+			$reason = '';
 		}
-		else {
+
+		if ($data['comment'] != '') {
+			$comment = $parser->parse( $data['comment'], $this->getTitle(), $parserOptions )->getText();
+		} else {
 			$comment = '';
 		}
+
+		ParserPool::release( $parser );
 
 		$this->response->setValues( [
 			'firstRow' => $row,
 			'text' => $data['text'],
-			'reason' => $data['reason'],
+			'reason' => $reason,
 			'comment' => $comment,
+			'editUrl' => $this->phalanxTitle->getLocalURL( [ 'id' => $data['id'] ] ),
+			'blockId' => $blockId,
 		] );
-		$this->setVal('editUrl', $this->phalanxTitle->getLocalURL( [ 'id' => $data['id'] ] ) );
-		$this->setVal( 'blockId', $blockId );
 
 		/* match statistics */
 		$pager = new PhalanxStatsPager( $blockId );
@@ -113,7 +119,6 @@ class PhalanxStatsSpecialController extends WikiaSpecialPageController {
 
 		// SUS-269: Add JS for unblock button
 		$out->addModules( 'ext.wikia.Phalanx' );
-		$out->addJsConfigVars( 'wgPhalanxToken', $this->getUser()->getEditToken() );
 	}
 
 	private function blockWikia($wikiId) {

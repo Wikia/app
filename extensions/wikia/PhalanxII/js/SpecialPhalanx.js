@@ -1,6 +1,6 @@
 require(['jquery', 'mw', 'phalanx', 'BannerNotification'], function($, mw, phalanx, notification) {
 	// edit token is required by Phalanx API
-	phalanx.init(mw.config.get('wgPhalanxToken'));
+	phalanx.init(mw.user.tokens.get('editToken'));
 
 	$('body').
 		// handle blocks "unblocking" (i.e. removing blocks)

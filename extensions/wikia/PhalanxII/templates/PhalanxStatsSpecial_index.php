@@ -33,7 +33,7 @@
 	</tbody>
 </table>
 <a href="<?= htmlspecialchars($editUrl) ?>" class="modify"><?= wfMessage( 'phalanx-link-modify' )->escaped(); ?></a> &#183;
-<a href="#" class="unblock" data-id="<?= Sanitizer::encodeAttribute( $blockId ); ?>"><?= $wg->Lang->lc( wfMessage( 'phalanx-link-unblock' )->escaped() ); ?></a>
+<a href="#" class="unblock" data-id="<?= Sanitizer::encodeAttribute( $blockId ); ?>"><?= $wg->Lang->lcfirst( wfMessage( 'phalanx-link-unblock' )->escaped() ); ?></a>
 
 <fieldset>
 	<legend><?= wfMessage( 'phalanx-stats-results' )->escaped(); ?></legend>
