@@ -5,6 +5,11 @@ use \Wikia\DependencyInjection\Injector;
 use \DI\ContainerBuilder;
 
 /**
+ * Expected behavior of user tags:
+ *
+ * If an user is a member of global user groups, and local user groups, show the most important global and local group
+ * If an user has only local groups, show the two most important local groups
+ * If a user has only global groups, show the two most important global groups
  * @class UserTagsStrategyTest
  * @covers UserTagsStrategy
  */
@@ -28,6 +33,7 @@ class UserTagsStrategyTest extends WikiaBaseTest {
 	}
 
 	/**
+	 * Given the current user's user groups, blocked status, chatban status and if they're the founder, validate the generated user tags
 	 * @param array $globalGroups Array of strings (global groups for this user)
 	 * @param array $localGroups Array of strings (local groups for this user)
 	 * @param bool $isBlocked Whether this user is blocked

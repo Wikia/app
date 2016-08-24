@@ -37,10 +37,10 @@ class UserTagsStrategy extends WikiaObject {
 	/** @var string[] List of explicit local groups this user belongs to */
 	protected $usersLocalGroups = [];
 
-	/** @var array $globalGroupsWithTags Global groups that have an associated user tag */
+	/** @var array $globalGroupsWithTags Global groups of this user that have an associated user tag */
 	protected $globalGroupsWithTags = [];
 
-	/** @var array $localGroupsWithTags Local groups that have an associated user tag */
+	/** @var array $localGroupsWithTags Local groups of this user that have an associated user tag */
 	protected $localGroupsWithTags = [];
 
 	/** @var User $user The user whose masthead we are rendering */
@@ -173,7 +173,9 @@ class UserTagsStrategy extends WikiaObject {
 					break;
 			}
 		}
-		
+
+		// The founder tag overrides the least important local tag,
+		// since it is not an user group but a wiki setting
 		if ( $this->shouldShowFounderTag() ) {
 			$tags[$count - 1] = wfMessage( 'user-identity-box-founder' )->escaped();
 		}
