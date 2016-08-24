@@ -6,7 +6,6 @@ class ARecoveryEngineHooks {
 		if ( ARecoveryModule::isLockEnabled() ) {
 			Wikia::addAssetsToOutput( ARecoveryModule::ASSET_GROUP_ARECOVERY_LOCK );
 		}
-
 		return true;
 	}
 

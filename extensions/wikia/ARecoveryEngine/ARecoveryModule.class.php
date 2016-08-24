@@ -21,9 +21,8 @@ class ARecoveryModule {
 	public static function getSourcePointBootStrapCode() {
 		if ( !static::isEnabled() ) {
 			return PHP_EOL . '<!-- SourcePoint recovery disabled. -->' . PHP_EOL;
-		} 
-		$sourcePointScript = F::app()->sendRequest( 'ARecoveryEngineApiController', 'getBootstrap' );
-		return $sourcePointScript;
+		}
+		return F::app()->sendRequest( 'ARecoveryEngineApiController', 'getBootstrap' );
 	}
 	
 
