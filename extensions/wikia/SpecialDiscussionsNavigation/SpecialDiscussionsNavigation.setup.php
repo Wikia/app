@@ -12,4 +12,4 @@ $wgExtensionCredits[ 'specialpage' ][] = [
 ];
 
 $wgAutoloadClasses[ 'SpecialDiscussionsNavigationController' ] = $dir . 'SpecialDiscussionsNavigationController.class.php';
-$wgSpecialPages[ 'Discussion' ] = 'SpecialDiscussionsNavigationController';
+$wgSpecialPages[ 'DiscussionsNavigation' ] = 'SpecialDiscussionsNavigationController';
