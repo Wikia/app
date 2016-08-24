@@ -792,14 +792,6 @@ $config['wikiamobile_tables_js'] = [
 	],
 ];
 
-$config['wikiamobile_widget_iframe_unwrapper'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => 'wikiamobile',
-	'assets' => [
-		'//extensions/wikia/WikiaMobile/js/widget_iframe_unwrapper.js',
-	],
-];
-
 $config['mobile_base_ads_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => 'wikiamobile',
