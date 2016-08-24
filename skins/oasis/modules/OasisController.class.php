@@ -239,7 +239,7 @@ class OasisController extends WikiaController {
 			$this->openXBidder = AnalyticsEngine::track('OpenXBidder', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->prebid = AnalyticsEngine::track('Prebid', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->rubiconFastlane = AnalyticsEngine::track('RubiconFastlane', AnalyticsEngine::EVENT_PAGEVIEW);
-			$this->sourcePoint = AnalyticsEngine::track('SourcePoint', AnalyticsEngine::EVENT_PAGEVIEW);
+			$this->sourcePoint = ARecoveryModule::getSourcePointBootStrapCode();
 			$this->dynamicYield = AnalyticsEngine::track('DynamicYield', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->ivw2 = AnalyticsEngine::track('IVW2', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->ivw3 = AnalyticsEngine::track('IVW3', AnalyticsEngine::EVENT_PAGEVIEW);

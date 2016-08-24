@@ -62,7 +62,6 @@
 	<div class="background-image-gradient"></div>
 <? endif ?>
 
-<?= $sourcePoint ?>
 <?= $comScore ?>
 <?= $quantServe ?>
 <?= $rubiconFastlane ?>
@@ -73,6 +72,7 @@
 <?= $dynamicYield ?>
 <?= $ivw3 ?>
 <?= $ivw2 ?>
+<?= $sourcePoint ?>
 <div class="WikiaSiteWrapper">
 	<?= $body ?>
 

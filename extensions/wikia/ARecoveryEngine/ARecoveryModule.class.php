@@ -17,6 +17,15 @@ class ARecoveryModule {
 
 		return !empty( $wgEnableUsingSourcePointProxyForCSS );
 	}
+	
+	public static function getSourcePointBootStrapCode() {
+		if ( !static::isEnabled() ) {
+			return '<!-- SourcePoint recovery disabled. -->';
+		}
+		$sourcePointScript = F::app()->sendRequest( 'ARecoveryEngineApiController', 'getBootstrap' );
+		return $sourcePointScript;
+	}
+	
 
 	public static function isLockEnabled() {
 		$user = F::app()->wg->User;
