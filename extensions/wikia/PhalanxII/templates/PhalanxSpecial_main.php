@@ -1,6 +1,6 @@
 <div id="phalanx-mainframe">
 	<div id="phalanx-nav-area">
-<?= $app->renderView('PhalanxSpecial', 'tabs', array('currentTab' => 'main')); ?>
+<?= $app->renderPartial( 'PhalanxSpecial', 'tabs', [ 'currentTab' => 'main' ] ); ?>
 	</div>
 
 	<div id="phalanx-content-area">
@@ -16,15 +16,15 @@
 						<?php endif; ?>
 						<div id="singlemode">
 							<label for="wpPhalanxFilter" class="left"><?= wfMessage( 'phalanx-label-filter' )->escaped() ?></label>
-							<input type="text" id="wpPhalanxFilter" name="wpPhalanxFilter" class="blue" size="40" value="<?= htmlspecialchars($data['text']) ?>" />
+							<input type="text" id="wpPhalanxFilter" name="wpPhalanxFilter" class="blue" size="40" value="<?= Sanitizer::encodeAttribute( $data['text'] ); ?>" />
 							<input type="button" id="validate" value="<?= wfMessage( 'phalanx-validate-regexp' )->escaped() ?>" />
 							<?php if (empty($editMode)): ?>
-							<input type="button" id="enterbulk" value="<?= wfMsg('phalanx-bulkmode') ?>">
+							<input type="button" id="enterbulk" value="<?= wfMessage( 'phalanx-bulkmode' )->escaped(); ?>">
 						</div>
 						<div id="bulkmode" style="display: none">
 							<label for="wpPhalanxFilterBulk" class="left">Bulk<br/><?= wfMessage( 'phalanx-label-filter' )->escaped() ?></label>
 							<textarea type="text" id="wpPhalanxFilterBulk" name="wpPhalanxFilterBulk" class="blue" rows="10" cols="40" value="" ></textarea>
-							<input type="button" id="entersingle" value="<?= wfMsg('phalanx-singlemode') ?>">
+							<input type="button" id="entersingle" value="<?= wfMessage( 'phalanx-singlemode' )->escaped(); ?>">
 						<?php endif; ?>
 						</div>
 						<div>
@@ -33,13 +33,13 @@
 						<!-- Format -->
 						<div class="clearfix">
 							<div class="left-spacer">&nbsp;</div>
-							<?= Xml::check( 'wpPhalanxFormatRegex', !empty( $data['regex'] ), array( 'id' => 'wpPhalanxFormatRegex' ) ) ?>
+							<input type="checkbox" id="wpPhalanxFormatRegex" value="1" <? if ( !empty( $data['regex'] ) ): ?>checked="checked" <? endif; ?>/>
 							<label for="wpPhalanxFormatRegex"><?= wfMessage( 'phalanx-format-regex' )->escaped() ?></label>
 
-							<?= Xml::check( 'wpPhalanxFormatCase', !empty( $data['case'] ), array( 'id' => 'wpPhalanxFormatCase' ) ) ?>
+							<input type="checkbox" id="wpPhalanxFormatCase" value="1" <? if ( !empty( $data['case'] ) ): ?>checked="checked" <? endif; ?>/>
 							<label for="wpPhalanxFormatCase"><?= wfMessage( 'phalanx-format-case' )->escaped() ?></label>
 
-							<?= Xml::check( 'wpPhalanxFormatExact', !empty( $data['exact'] ), array( 'id' => 'wpPhalanxFormatExact' ) ) ?>
+							<input type="checkbox" id="wpPhalanxFormatExact" value="1" <? if ( !empty( $data['exact'] ) ): ?>checked="checked" <? endif; ?>/>
 							<label for="wpPhalanxFormatExact"><?= wfMessage( 'phalanx-format-exact' )->escaped() ?></label>
 						</div>
 						<!-- Expiry-->
@@ -65,7 +65,7 @@
 									<?php endif; ?>
 								</select>
 							</label>
-							<input type="text" id="wpPhalanxExpireCustom" name="wpPhalanxExpireCustom" size="20" placeholder="<?= wfMessage('phalanx-expire-custom-tooltip')->plain() ?>" style="display: none">
+							<input type="text" id="wpPhalanxExpireCustom" name="wpPhalanxExpireCustom" size="20" placeholder="<?= wfMessage( 'phalanx-expire-custom-tooltip' )->escaped(); ?>" style="display: none">
 						</div>
 					</div>
 					<!-- Type -->
@@ -76,15 +76,17 @@
 						foreach($typeSections as $section => $types) {
 ?>
 							<fieldset>
-								<legend><?= wfMessage("phalanx-section-type-{$section}")->plain() ?></legend>
+								<legend><?= wfMessage("phalanx-section-type-{$section}")->escaped(); ?></legend>
 <?php
 							foreach($types as $typeId) {
 								$typeName = str_replace('_', '-', $blockTypes[$typeId]);
 ?>
-								<label title="<?= wfMsg("phalanx-help-type-{$typeName}"); ?>">
-									<?= Xml::check('wpPhalanxType[]', isset($data['type'][$typeId]), array('value' => $typeId)); ?>
-									<?= wfMsg("phalanx-type-{$typeName}"); ?>
-
+								<label title="<?= wfMessage( "phalanx-help-type-{$typeName}" )->escaped(); ?>">
+									<input type="checkbox" id="wpPhalanxType[]"
+										   value="<?= Sanitizer::encodeAttribute( $typeId ); ?>"
+										   <? if ( isset( $data['type'][$typeId] ) ): ?>checked="checked" <? endif; ?>
+									/>
+									<?= wfMessage( "phalanx-type-{$typeName}" )->escaped(); ?>
 								</label>
 <?php
 							}
@@ -98,11 +100,11 @@
 					<div id="phalanx-block-optionals" class="clearfix">
 						<div class="clearfix">
 							<label for="wpPhalanxReason" class="left"><?= wfMessage( 'phalanx-label-reason' )->escaped() ?></label>
-							<input type="text" id="wpPhalanxReason" name="wpPhalanxReason" class="blue" size="40" value="<?= htmlspecialchars($data['reason']) ?>" />
+							<input type="text" id="wpPhalanxReason" name="wpPhalanxReason" class="blue" size="40" value="<?= Sanitizer::encodeAttribute( $data['reason'] ); ?>" />
 						</div>
 						<div class="clearfix">
 							<label for="wpPhalanxComment" class="left"><?= wfMessage( 'phalanx-label-comment' )->escaped() ?></label>
-							<input type="text" id="wpPhalanxComment" name="wpPhalanxComment" size="40" value="<?= htmlspecialchars($data['comment']) ?>" />
+							<input type="text" id="wpPhalanxComment" name="wpPhalanxComment" size="40" value="<?= Sanitizer::encodeAttribute( $data['comment'] ); ?>" />
 						</div>
 						<div class="clearfix">
 							<label for="wpPhalanxLanguages" class="left"><?= wfMessage( 'phalanx-label-lang' )->escaped() ?></label>
@@ -138,13 +140,16 @@
 
 						<div class="phalanx-block-types">
 <?php
-						foreach($blockTypes as $typeId => $typeName) {
+						foreach ( $blockTypes as $typeId => $typeName ) {
 							$typeName = str_replace('_', '-', $typeName);
 ?>
-							<label title="<?= wfMsg("phalanx-help-type-{$typeName}"); ?>">
-								<?= Xml::check('wpPhalanxTypeFilter[]', !empty($typeFilter[$typeId]), array('value' => $typeId)); ?>
+							<label title="<?= wfMessage( "phalanx-help-type-{$typeName}" )->escaped(); ?>">
+								<input type="checkbox" id="wpPhalanxTypeFilter[]"
+									   value="<?= Sanitizer::encodeAttribute( $typeId ); ?>"
+										<? if ( !empty( $typeFilter[$typeId] ) ): ?> checked="checked" <? endif; ?>
+								/>
 
-								<?= wfMsg("phalanx-type-{$typeName}"); ?>
+								<?= wfMessage( "phalanx-type-{$typeName}" )->escaped(); ?>
 
 							</label>
 <?php
