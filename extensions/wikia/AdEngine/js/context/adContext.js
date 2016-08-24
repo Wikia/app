@@ -75,7 +75,6 @@ define('ext.wikia.adEngine.adContext', [
 				context.opts.pageFairDetection = true;
 			}
 		}
-		
 
 		// SourcePoint detection integration
 		if (!noExternals && context.opts.sourcePointDetectionUrl) {
