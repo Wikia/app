@@ -8,7 +8,7 @@
 
 	<ul class="features">
 		<? foreach ( $features as $feature ): ?>
-			<?= $app->renderView( 'WikiFeaturesSpecial', 'feature', [ 'feature' => $feature, 'editable' => $editable ] ) ?>
+			<?= $app->renderPartial( 'WikiFeaturesSpecial', 'feature', [ 'feature' => $feature, 'editable' => $editable ] ); ?>
 		<? endforeach; ?>
 	</ul>
 
@@ -22,7 +22,7 @@
 	<ul class="features">
 		<? if ( !empty( $labsFeatures ) ): ?>
 			<? foreach ( $labsFeatures as $feature ): ?>
-				<?= $app->renderView( 'WikiFeaturesSpecial', 'feature', [ 'feature' => $feature, 'editable' => $editable ] ) ?>
+				<?= $app->renderPartial( 'WikiFeaturesSpecial', 'feature', [ 'feature' => $feature, 'editable' => $editable ] ); ?>
 			<? endforeach; ?>
 		<? else: ?>
 			<?
@@ -30,7 +30,7 @@
 				"name" => "emptylabs",
 			];
 			?>
-			<?= $app->renderView( 'WikiFeaturesSpecial', 'feature', [ 'feature' => $feature, 'editable' => $editable ] ) ?>
+			<?= $app->renderPartial( 'WikiFeaturesSpecial', 'feature', [ 'feature' => $feature, 'editable' => $editable ] ); ?>
 		<? endif; ?>
 	</ul>
 </section>
