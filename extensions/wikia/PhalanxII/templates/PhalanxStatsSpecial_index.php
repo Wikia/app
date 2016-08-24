@@ -32,7 +32,7 @@
 		</tr>
 	</tbody>
 </table>
-<a href="<?= htmlspecialchars($editUrl) ?>" class="modify"><?= wfMessage( 'phalanx-link-modify' )->escaped(); ?></a> &#183;
+<a href="<?= Sanitizer::encodeAttribute( $editUrl ); ?>" class="modify"><?= wfMessage( 'phalanx-link-modify' )->escaped(); ?></a> &#183;
 <a href="#" class="unblock" data-id="<?= Sanitizer::encodeAttribute( $blockId ); ?>"><?= $wg->Lang->lcfirst( wfMessage( 'phalanx-link-unblock' )->escaped() ); ?></a>
 
 <fieldset>
