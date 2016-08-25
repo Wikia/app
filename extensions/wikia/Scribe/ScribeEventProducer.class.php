@@ -19,6 +19,10 @@ class ScribeEventProducer {
 		DELETE_CATEGORY_INT     = 3,
 		UNDELETE_CATEGORY_INT   = 4;
 
+	const IMAGE = 'image';
+
+	const VIDEO = 'video';
+
 	function __construct( $key, $archive = 0 ) {
 		$this->app = F::app();
 		switch ( $key ) {
@@ -473,7 +477,7 @@ class ScribeEventProducer {
 	public function setMediaLinks( $oPage ) {
 		wfProfileIn(__METHOD__);
 
-		$links = [ 'image' => 0, 'video' => 0 ];
+		$links = [ self::IMAGE => 0, self::VIDEO => 0 ];
 		if ( isset( $oPage->mPreparedEdit ) && isset( $oPage->mPreparedEdit->output ) ) {
 			$images = $oPage->mPreparedEdit->output->getImages();
 			if ( !empty($images) ) {
@@ -481,18 +485,18 @@ class ScribeEventProducer {
 					$file = wfFindFile($iname);
 					if ($file instanceof LocalFile) {
 						$mediaType = $file->getMediaType();
-						$linkName = $mediaType === MEDIATYPE_VIDEO ? 'video' : 'image';
+						$linkName = $mediaType === MEDIATYPE_VIDEO ? self::VIDEO : self::IMAGE;
 					}
 					else {
-						$linkName = substr( $iname, 0, 1 ) == ':' ? 'video' : 'image';
+						$linkName = substr( $iname, 0, 1 ) == ':' ? self::VIDEO : self::IMAGE;
 					}
 					$links[ $linkName ]++;
 				}
 			}
 		}
 
-		$this->setImageLinks( $links['image'] );
-		$this->setVideoLinks( $links['video'] );
+		$this->setImageLinks( $links[ self::IMAGE ] );
+		$this->setVideoLinks( $links[ self::VIDEO ] );
 
 		wfProfileOut(__METHOD__);
 
