@@ -42,7 +42,7 @@ class ScribeEventProducer {
 
 		$this->setCityId( $this->app->wg->CityId );
 		$this->setServerName( $this->app->wg->Server );
-		$this->setIp( $this->app->wg->Request->getIP() );
+		$this->setIP( $this->app->wg->Request->getIP() );
 		$this->setHostname( wfHostname() );
 		$this->setBeaconId ( wfGetBeaconId() );
 		$this->setArchive( $archive );
@@ -142,8 +142,6 @@ class ScribeEventProducer {
 			$oLocalFile = wfLocalFile( $oTitle );
 			if ( $oLocalFile instanceof File ) {
 				$this->setMediaType( $oTitle );
-				$this->setIsLocalFile( $oLocalFile );
-				$this->setIsTop200( $this->app->wg->CityId );
 				$this->setIsImageForReview();
 			} else {
 				$this->setIsImageForReview( false );
@@ -206,7 +204,7 @@ class ScribeEventProducer {
 			'rc_title'		=> $oTitle->getDBkey(),
 			'rc_namespace'	=> $oTitle->getNamespace(),
 			'rc_log_action'	=> 'delete',
-			'rc_user' 		=> $oUser->getID()
+			'rc_user' 		=> $oUser->getId()
 		);
 		$options = array( 'ORDER BY' => 'rc_id DESC' );
 
@@ -296,7 +294,7 @@ class ScribeEventProducer {
 		}
 
 		if ( empty( $page_id ) || $page_id < 0 ) {
-			$page_id = $oTitle->getArticleId();
+			$page_id = $oTitle->getArticleID();
 		}
 
 		$oPage = WikiPage::newFromID( $page_id );
@@ -447,7 +445,6 @@ class ScribeEventProducer {
 
 	/**
 	 * Sends a unified ImageReviewLog message
-	 * @param  string $sLogMessage  A log message
 	 * @return void
 	 */
 	private function logSendScribeMessage() {
