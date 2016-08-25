@@ -13,7 +13,7 @@ class WikiaTracer {
 	const CLIENT_IP_HEADER_NAME = 'X-Client-Ip';
 	const CLIENT_BEACON_ID_HEADER_NAME = 'X-Client-Beacon-Id';
 	const CLIENT_DEVICE_ID_HEADER_NAME = 'X-Client-Device-Id';
-	const CLIENT_USER_ID = 'X-User-Id';
+	const CLIENT_USER_ID = 'X-Wikia-UserId';
 
 	const ORIGIN_HOST_HEADER_NAME = 'X-Request-Origin-Host';
 	const INTERNAL_REQUEST_HEADER_NAME = 'X-Wikia-Internal-Request';
@@ -22,6 +22,7 @@ class WikiaTracer {
 
 	const LEGACY_TRACE_ID_HEADER_NAME = 'X-Request-Id';
 	const LEGACY_BEACON_HEADER_NAME = 'X-Beacon';
+	const LEGACY_CLIENT_USER_ID = 'X-User-Id';
 
 	const REQUEST_PATH_HEADER_NAME = 'X-Request-Path';
 
@@ -52,7 +53,8 @@ class WikiaTracer {
 		$this->clientIp = $this->getTraceEntry( self::CLIENT_IP_HEADER_NAME );
 		$this->clientBeaconId = $this->getTraceEntry( self::CLIENT_BEACON_ID_HEADER_NAME );
 		$this->clientDeviceId = $this->getTraceEntry( self::CLIENT_DEVICE_ID_HEADER_NAME );
-		$this->userId = $this->getTraceEntry( self::CLIENT_USER_ID );
+		$this->userId = $this->getTraceEntry( self::CLIENT_USER_ID )
+			?: $this->getTraceEntry( self::LEGACY_CLIENT_USER_ID );
 
 		$this->contextSource = new ContextSource( [ ] );
 		$this->updateContext();
