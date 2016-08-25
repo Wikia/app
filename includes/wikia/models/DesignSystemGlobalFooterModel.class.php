@@ -420,7 +420,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 		$data['follow_us'] = $this->getFollowUs();
 		$data['community'] = $this->getCommunity();
 
-		if ( $this->lang === self::DEFAULT_LANG ) {
+		if ( $this->lang === static::DEFAULT_LANG ) {
 			$data['fandom'] = [
 				'header' => [
 					'type' => 'link-image',
@@ -533,7 +533,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 			'links' => [ ]
 		];
 
-		if ( $this->lang === self::DEFAULT_LANG ) {
+		if ( $this->lang === static::DEFAULT_LANG ) {
 			$out['links'] = [
 				[
 					'type' => 'link-branded',
