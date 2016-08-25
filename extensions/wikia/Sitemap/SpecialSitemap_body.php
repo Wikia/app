@@ -157,6 +157,8 @@ class SitemapPage extends UnlistedSpecialPage {
 			]
 		);
 
+		$this->mNamespaces = [];
+
 		while ( $row = $dbr->fetchObject( $res ) ) {
 			$this->mNamespaces[] = $row->page_namespace;
 		}
