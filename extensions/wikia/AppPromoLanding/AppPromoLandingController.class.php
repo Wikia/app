@@ -47,7 +47,9 @@ class AppPromoLandingController extends WikiaController {
 				$response = $req->getContent();
 				if ( empty( $response ) ) {
 					// Request failed (app config service failure). Do not cache this response.
-					error_log( 'APPPROMOLANDING_NO_RESPONSE_FROM_APPCONFIG' );
+					$this->error(__METHOD__ . ' app config service failure.', [
+						'exception' => new Exception()
+					] );
 					$this->response->setCode( \WikiaResponse::RESPONSE_CODE_INTERNAL_SERVER_ERROR );
 
 					wfProfileOut( __METHOD__ );
