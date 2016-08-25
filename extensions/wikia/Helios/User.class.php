@@ -252,6 +252,11 @@ class User {
 		return true; // So that wfRunHooks evaluates to true.
 	}
 
+	public static function onUserInvalidateToken() {
+        self::invalidateAccessTokenInHelios();
+	    return true;
+    }
+
 	/**
 	 * Call helios invalidate token.
 	 */

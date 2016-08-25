@@ -256,8 +256,9 @@ class SpecialChangePassword extends UnlistedSpecialPage {
 
 		try {
 			$user->setPassword( $this->mNewpass );
+            $user->invalidateToken();
 			wfRunHooks( 'PrefsPasswordAudit', array( $user, $newpass, 'success' ) );
-			$this->mNewpass = $this->mOldpass = $this->mRetypePass = '';
+            $this->mNewpass = $this->mOldpass = $this->mRetypePass = '';
 		} catch( PasswordError $e ) {
 			wfRunHooks( 'PrefsPasswordAudit', array( $user, $newpass, 'error' ) );
 			throw new PasswordError( $e->getMessage() );

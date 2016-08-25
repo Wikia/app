@@ -3187,6 +3187,13 @@ class User {
 		}
 	}
 
+    /**
+     * Invalidate user Tokens in Helios
+     */
+    public function invalidateToken() {
+        wfRunHooks('InvalidateToken', array(&$this));
+    }
+
 	/**
 	 * Clear the user's cookies and session, and reset the instance cache.
 	 * @see logout()
