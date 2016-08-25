@@ -19,9 +19,9 @@
  *
  * @file
  */
-use \Wikia\DependencyInjection\Injector;
-use \Wikia\Service\User\Permissions\PermissionsService;
+use \Wikia\Service\User\Permissions\PermissionsServiceAccessor;
 class Block {
+	use PermissionsServiceAccessor;
 	/* public*/ var $mReason, $mTimestamp, $mAuto, $mExpiry, $mHideName;
 
 	protected
@@ -1238,7 +1238,7 @@ class Block {
 
 		if ( $blocker instanceof User ) {
 			$this->blocker = $blocker;
-			return $blocker->isAllowed( 'hideblockername' );
+			return $this->permissionsService()->hasPermission( $blocker, 'hideblockername' );
 		}
 
 		return false;
@@ -1247,12 +1247,12 @@ class Block {
 	/**
 	 * SUS-288: Return the group name that should be shown instead of user name if the blocker name is hidden
 	 * (i.e. if the block was made by staff/VSTF)
+	 * @return string Group name text that will be parsed and output on the error page
 	 */
 	public function getGroupNameForHiddenBlocker() {
 		/** @var User $blockerUser */
 		$blockerUser = $this->getBlocker();
-		/** @var PermissionsService $permissionsService */
-		$permissionsService = Injector::getInjector()->get( PermissionsService::class );
+		$permissionsService = $this->permissionsService();
 
 		// Get the global groups of this user that have 'hideblockername' permission
 		$groups = array_intersect(
