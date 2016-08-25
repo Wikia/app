@@ -38,6 +38,9 @@ class ScribeEventProducer {
 				$this->mKey = self::UNDELETE_CATEGORY;
 				$this->mEventType = self::UNDELETE_CATEGORY_INT;
 				break;
+			default:
+				WikiaLogger::instance()->error("ScribeEventProducer::not valid key");
+				break;
 		}
 
 		$this->setCityId( $this->app->wg->CityId );
@@ -101,7 +104,7 @@ class ScribeEventProducer {
 			return false;
 		}
 
-		$revision_id = $page_id = $page_namespace = 0;
+		$revision_id = $page_id = 0;
 		$oTitle = $oPage->getTitle();
 
 		if ( $oRevision instanceof Revision ) {
