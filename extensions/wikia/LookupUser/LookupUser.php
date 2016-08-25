@@ -49,17 +49,17 @@ $wgHooks['ContributionsToolLinks'][] = 'efLoadLookupUserLink';
  *
  * @param integer $id
  * @param Title $nt
- *
+ * @param array $links
+ * @param IContextSource $context
  * @return bool true
  */
-function efLoadLookupUserLink( $id, $nt, &$links ) {
-	global $wgUser;
-	if ( $wgUser->isAllowed( 'lookupuser' ) && $id !== 0 ) {
+function efLoadLookupUserLink( $id, $nt, &$links, IContextSource $context ) {
+	if ( $context->getUser()->isAllowed( 'lookupuser' ) && $id !== 0 ) {
 		$links[] = Linker::linkKnown(
-			SpecialPage::getTitleFor( 'LookupUser' ),
-			wfMsgHtml( 'lookupuser' ),
-			array(),
-			array( 'target' => $nt->getText() )
+			GlobalTitle::newFromText( 'LookupUser', NS_SPECIAL, Wikia::COMMUNITY_WIKI_ID ),
+			$context->msg( 'lookupuser' )->escaped(), /* text */
+			[], /* attributes */
+			[ 'target' => $nt->getText() ] /* query string */
 		);
 	}
 	return true;
