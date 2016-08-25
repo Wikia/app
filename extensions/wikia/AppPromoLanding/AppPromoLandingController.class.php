@@ -7,11 +7,10 @@
  * @author Sean Colombo
  */
 class AppPromoLandingController extends WikiaController {
-
-	private static $extraBodyClasses = []; // TODO: REMOVE - ONLY DURING THE TEMPORARY COPYING OF OASISCONTROLLER
+	use \Wikia\Logger\Loggable;
 
 	const RESPONSE_OK = 200;
-	const APP_CONFIG_SERVICE_URL = 'http://prod.deploypanel.service.sjc.consul/api/app-configuration/';
+	const APP_CONFIG_SERVICE_URL = 'https://services.wikia.com/mobile-applications/platform/PARAM_IGNORED';
 	const BRANCH_API_URL = 'https://api.branch.io/v1/app/';
 	const PROMO_PAGE_TITLE = 'Community_App';
 
@@ -22,7 +21,7 @@ class AppPromoLandingController extends WikiaController {
 	const IMG_HEIGHT = 184; // sizes directly from Zeplin.io mockup.
 	const IMG_WIDTH = 184;
 
-	protected static $CACHE_KEY = 'mobileAppConfigs';
+	protected static $CACHE_KEY = 'mobileAppConfigs_';
 	protected static $CACHE_KEY_BRANCH = 'branchioBranchKey';
 	protected static $CACHE_KEY_VERSION = 0.1;
 	protected static $CACHE_KEY_VERSION_BRANCH = 0.1;
@@ -35,34 +34,10 @@ class AppPromoLandingController extends WikiaController {
 		wfProfileIn( __METHOD__ );
 
 		// Since this "Community_App" article won't be found, we need to manually say it's okay so that it's not a 404.
-		$this->response->setCode( self::RESPONSE_OK );
+		$this->response->setCode( static::RESPONSE_OK );
 
 		// Pull in the app-configuration (has data for all apps)
-		$appConfig = [];
-		$memcKey = wfMemcKey( static::$CACHE_KEY, static::$CACHE_KEY_VERSION );
-		$response = $this->wg->memc->get( $memcKey );
-		if ( empty( $response ) ){
-			$req = MWHttpRequest::factory( self::APP_CONFIG_SERVICE_URL, array( 'noProxy' => true ) );
-			$status = $req->execute();
-			if( $status->isOK() ) {
-				$response = $req->getContent();
-				if ( empty( $response ) ) {
-					wfProfileOut( __METHOD__ );
-					throw new EmptyResponseException( self::APP_CONFIG_SERVICE_URL );
-				} else {
-					// Request was successful. Cache it in memcached (faster than going over network-card even on our internal network).
-					$this->wg->memc->set( $memcKey, $response, static::$CACHE_EXPIRY );
-				}
-			}
-		}
-
-		$appConfig = json_decode( $response );
-		if(empty($appConfig)){
-
-			// TODO: How should we handle the error of not having an appConfig? We won't be able to link the user to the apps.
-
-		}
-
+		$appConfig = AppPromoLandingController::getAllAppConfigs();
 		$config = $this->getConfigForWiki( $appConfig, $this->wg->CityId );
 
 		// Create the direct-link URLs for the apps on each store.
@@ -72,7 +47,7 @@ class AppPromoLandingController extends WikiaController {
 		// Inject the JS
 		$srcs = AssetsManager::getInstance()->getGroupCommonURL( 'app_promo_landing_js' );
 		foreach( $srcs as $src ) {
-			$this->wg->Out->addScript( "<script type=\"{$wgJsMimeType}\" src=\"{$src}\"></script>" );
+			$this->wg->Out->addScript( "<script type=\"{$this->wg->JsMimeType}\" src=\"{$src}\"></script>" );
 		}
 
 		// render the custom App Promo Landing body (this includes the nav bar and the custom content).
@@ -99,6 +74,7 @@ class AppPromoLandingController extends WikiaController {
 	 */
 	public function content( $params ){
 		wfProfileIn( __METHOD__ );
+		$this->debug = "";
 
 		// render global and user navigation
 		$this->header = $this->app->renderView( 'GlobalNavigation', 'index' );
@@ -119,17 +95,20 @@ class AppPromoLandingController extends WikiaController {
 		}
 		$trendingArticles = [];
 		if ( !empty( $trendingArticlesData ) ) {
-			$items = array_slice( $trendingArticlesData, 0, self::MAX_TRENDING_ARTICLES );
+			$items = array_slice( $trendingArticlesData, 0, static::MAX_TRENDING_ARTICLES );
 			//load data from response to template
 			foreach( $items as $item ) {
 				$img = $this->app->sendRequest( 'ImageServing', 'getImages', [
 					'ids' => [ $item['id'] ],
-					'height' => self::IMG_HEIGHT,
-					'width' => self::IMG_WIDTH,
+					'height' => static::IMG_HEIGHT,
+					'width' => static::IMG_WIDTH,
 					'count' => 1
 				] )->getVal( 'result' );
 
-				$thumbnail = $img[$item['id']][0]['url'];
+				$thumbnail = null;
+				if( isset( $img[ $item['id'] ] ) ){
+					$thumbnail = $img[$item['id']][0]['url'];
+				}
 
 				if ( empty( $thumbnail ) ) {
 					// If there is no thumbnail, then it's not useful for our grid.
@@ -139,8 +118,8 @@ class AppPromoLandingController extends WikiaController {
 						//'url' => $item['url'],
 						'title' => $item['title'],
 						'imgUrl' => $thumbnail,
-						'width' => self::IMG_WIDTH,
-						'height' => self::IMG_HEIGHT
+						'width' => static::IMG_WIDTH,
+						'height' => static::IMG_HEIGHT
 					];
 				}
 			}
@@ -148,7 +127,7 @@ class AppPromoLandingController extends WikiaController {
 
 		// Not all articles will have images, so we may have more or less than we need. Here,
 		// we will right-size the array.
-		$numThumbsNeeded = ( self::THUMBS_NUM_ROWS * self::THUMBS_PER_ROW );
+		$numThumbsNeeded = ( static::THUMBS_NUM_ROWS * static::THUMBS_PER_ROW );
 		if(count( $trendingArticles ) > $numThumbsNeeded){
 			$trendingArticles = array_slice($trendingArticles, 0, $numThumbsNeeded);
 		} else if(count( $trendingArticles ) < $numThumbsNeeded ){
@@ -163,7 +142,7 @@ class AppPromoLandingController extends WikiaController {
 		$branchKeyMemcKey = wfMemcKey( static::$CACHE_KEY_BRANCH, static::$CACHE_KEY_VERSION_BRANCH );
 		$this->branchKey = $this->wg->memc->get( $branchKeyMemcKey );
 		if ( empty( $this->branchKey ) ){
-			$branchUrl = self::BRANCH_API_URL."{$this->config->branch_app_id}?user_id=".$this->wg->BranchUserId;
+			$branchUrl = static::BRANCH_API_URL."{$this->config->branch_app_id}?user_id=".$this->wg->BranchUserId;
 			$req = MWHttpRequest::factory( $branchUrl, array( 'noProxy' => true ) );
 			$status = $req->execute();
 			if( $status->isOK() ) {
@@ -182,13 +161,12 @@ class AppPromoLandingController extends WikiaController {
 			}
 		}
 
-		$this->thumbWidth = self::IMG_WIDTH;
-		$this->thumbHeight = self::IMG_HEIGHT;
-		$this->thumbRows = self::THUMBS_NUM_ROWS;
-		$this->numThumbsPerRow = self::THUMBS_PER_ROW;
+		$this->thumbWidth = static::IMG_WIDTH;
+		$this->thumbHeight = static::IMG_HEIGHT;
+		$this->thumbRows = static::THUMBS_NUM_ROWS;
+		$this->numThumbsPerRow = static::THUMBS_PER_ROW;
 		$this->trendingArticles = $trendingArticles;
 		$this->mainPageUrl = Title::newMainPage()->getFullUrl();
-		//$this->larrSrc = $this->wg->ExtensionsPath."/wikia/AppPromoLanding/images/arrow-left-long.svg";
 		$this->larrSvgCode = "<svg width=\"22px\" height=\"16px\" viewBox=\"0 0 22 16\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">
 								<title>BB56E3FE-7480-48C0-96B3-848DAFB20649</title>
 								<desc>Created with sketchtool.</desc>
@@ -259,13 +237,18 @@ class AppPromoLandingController extends WikiaController {
 		$memcKey = wfMemcKey( static::$CACHE_KEY, static::$CACHE_KEY_VERSION );
 		$response = F::app()->wg->memc->get( $memcKey );
 		if ( empty( $response ) ){
-			$req = MWHttpRequest::factory( self::APP_CONFIG_SERVICE_URL, array( 'noProxy' => true ) );
+			$req = MWHttpRequest::factory( static::APP_CONFIG_SERVICE_URL, array( 'noProxy' => true ) );
 			$status = $req->execute();
 			if( $status->isOK() ) {
 				$response = $req->getContent();
 				if ( empty( $response ) ) {
+					// Request failed (app config service failure). Do not cache this response.
+					$this->error(__METHOD__ . ' app config service failure.', [
+						'exception' => new Exception()
+					] );
+					$this->response->setCode( \WikiaResponse::RESPONSE_CODE_INTERNAL_SERVER_ERROR );
+
 					wfProfileOut( __METHOD__ );
-					throw new EmptyResponseException( self::APP_CONFIG_SERVICE_URL );
 				} else {
 					// Request was successful. Cache it in memcached (faster than going over network-card even on our internal network).
 					F::app()->wg->memc->set( $memcKey, $response, static::$CACHE_EXPIRY );
@@ -274,10 +257,15 @@ class AppPromoLandingController extends WikiaController {
 		}
 
 		$appConfig = json_decode( $response );
-		if(empty($appConfig)){
+		if(empty($appConfig) || (!isset($appConfig->apps))){
 
-			// TODO: How should we handle the error of not having an appConfig? We won't be able to link the user to the apps.
+			// If no config was found, just return an empty array.
 			$appConfig = [];
+
+		} else {
+
+			// This api-endpoint wraps the actual data inside of 'apps' property. Unwrap it.
+			$appConfig = $appConfig->apps;
 
 		}
 
@@ -291,7 +279,7 @@ class AppPromoLandingController extends WikiaController {
 	 * @return string containing the URL of the app for android devices (eg: on Google Play Store).
 	 */
 	private function getAndroidUrl( $config ){
-		return "https://play.google.com/store/apps/details?id={$config->android_release}&utm_source=General&utm_medium=Site&utm_campaign=AppPromoLanding";
+		return (empty($config) ? "" : "https://play.google.com/store/apps/details?id={$config->android_release}&utm_source=General&utm_medium=Site&utm_campaign=AppPromoLanding" );
 	}
 
 	/**
@@ -300,7 +288,7 @@ class AppPromoLandingController extends WikiaController {
 	 * @return string containing the URL of the app for iOS devices (on the iTunes App Store).
 	 */
 	private function getIosUrl( $config ){
-		return "https://itunes.apple.com/us/app/id{$config->ios_release}?utm_source=General&utm_medium=Site&utm_campaign=AppPromoLanding";
+		return (empty($config) ? "" : "https://itunes.apple.com/us/app/id{$config->ios_release}?utm_source=General&utm_medium=Site&utm_campaign=AppPromoLanding" );
 	}
 
 	/**
@@ -312,7 +300,7 @@ class AppPromoLandingController extends WikiaController {
 		$title = $out->getTitle();
 		$origTitle = $title->getDBkey();
 
-		if( $origTitle === self::PROMO_PAGE_TITLE ){
+		if( $origTitle === static::PROMO_PAGE_TITLE ){
 			// Only steal this page if the wiki has an app configured.
 			$config = AppPromoLandingController::getConfigForWiki( F::app()->wg->CityId );
 			if($config !== null){
