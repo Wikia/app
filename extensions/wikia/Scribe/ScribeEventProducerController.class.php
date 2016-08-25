@@ -30,7 +30,7 @@ class ScribeEventProducerController {
 		$is_archive = !empty( $undef1 );
 
  		$oScribeProducer = new ScribeEventProducer( $key, $is_archive );
-		if ( is_object( $oScribeProducer ) && $oScribeProducer->buildEditPackage( $oPage, $oUser, $oRevision )) {
+		if ( $oScribeProducer->buildEditPackage( $oPage, $oUser, $oRevision ) ) {
 				$oScribeProducer->sendLog();
 		}
 
@@ -45,14 +45,10 @@ class ScribeEventProducerController {
 			'page_id' => $page_id
 		] );
 
- 		$oScribeProducer = new ScribeEventProducer( 'delete' );
-		if ( is_object( $oScribeProducer ) ) {
-			if ( $oScribeProducer->buildRemovePackage ( $oPage, $oUser, $page_id ) ) {
-
-				WikiaLogger::instance()->debug( "SUS-761::onArticleDeleteComplete LOG");
-
-				$oScribeProducer->sendLog();
-			}
+		$oScribeProducer = new ScribeEventProducer( 'delete' );
+		if ( $oScribeProducer->buildRemovePackage( $oPage, $oUser, $page_id ) ) {
+			WikiaLogger::instance()->debug( "SUS-761::onArticleDeleteComplete LOG" );
+			$oScribeProducer->sendLog();
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -63,10 +59,8 @@ class ScribeEventProducerController {
 		wfProfileIn( __METHOD__ );
 
  		$oScribeProducer = new ScribeEventProducer( 'undelete' );
-		if ( is_object( $oScribeProducer ) ) {
-			if ( $oScribeProducer->buildUndeletePackage( $oTitle, $created ) ) {
-				$oScribeProducer->sendLog();
-			}
+		if ( $oScribeProducer->buildUndeletePackage( $oTitle ) ) {
+			$oScribeProducer->sendLog();
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -77,18 +71,14 @@ class ScribeEventProducerController {
 		wfProfileIn( __METHOD__ );
 
  		$oScribeProducer = new ScribeEventProducer( 'edit' );
-		if ( is_object( $oScribeProducer ) ) {
-			if ( $oScribeProducer->buildMovePackage( $oNewTitle, $oUser, $page_id ) ) {
-				$oScribeProducer->sendLog();
-			}
+		if ( $oScribeProducer->buildMovePackage( $oNewTitle, $oUser, $page_id ) ) {
+			$oScribeProducer->sendLog();
 		}
 
 		if ( !empty( $redirect_id ) ) {
 			$oScribeProducer = new ScribeEventProducer( 'edit' );
-			if ( is_object( $oScribeProducer ) ) {
-				if ( $oScribeProducer->buildMovePackage( $oOldTitle, $oUser, null, $redirect_id ) ) {
-					$oScribeProducer->sendLog();
-				}
+			if ( $oScribeProducer->buildMovePackage( $oOldTitle, $oUser, null, $redirect_id ) ) {
+				$oScribeProducer->sendLog();
 			}
 		}
 
@@ -114,10 +104,8 @@ class ScribeEventProducerController {
 		}
 
 		$oScribeProducer = new ScribeEventProducer( 'edit' );
-		if ( is_object( $oScribeProducer ) ) {
-			if ( $oScribeProducer->buildEditPackage( $oPage, $oUser) ) {
-				$oScribeProducer->sendLog();
-			}
+		if ( $oScribeProducer->buildEditPackage( $oPage, $oUser ) ) {
+			$oScribeProducer->sendLog();
 		}
 
 		wfProfileOut( __METHOD__ );
