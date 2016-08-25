@@ -1,4 +1,7 @@
 <?php
+
+use Wikia\Security\CSRFDetector;
+
 /**
  * Provides the special page for single point unsubscribe.
  * Access is done via links provided in emails to user ONLY.
@@ -74,11 +77,15 @@ class UnsubscribePage extends UnlistedSpecialPage {
 
 		#generate what the token SHOULD be
 		$shouldToken = wfGenerateUnsubToken($email, $timestamp);
-		if( $token != $shouldToken ) {
+		if( !hash_equals( $shouldToken, $token ) ) {
 			$wgOut->addWikiMsg( 'unsubscribe-badtoken' );
 			// $wgOut->addHTML("shouldtoken={$shouldToken}\n"); #DEVL (remove before release)
 			return;
 		}
+
+		// PLATFORM-2389: request token is checked above
+		// tell CSRFDetector that we're fine here
+		CSRFDetector::onUserMatchEditToken();
 
 		#does the non-blank email they gave us look like an email?
 		if( Sanitizer::validateEmail( $email ) == false ) {
