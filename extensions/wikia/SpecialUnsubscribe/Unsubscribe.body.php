@@ -35,7 +35,7 @@ class UnsubscribePage extends UnlistedSpecialPage {
 	 * @param $subpage Mixed: parameter passed to the page or null
 	 */
 	public function execute( $subpage ) {
-		global $wgRequest, $wgUser, $wgOut;
+		global $wgRequest, $wgOut;
 
 		$this->setHeaders();
 
@@ -142,7 +142,7 @@ class UnsubscribePage extends UnlistedSpecialPage {
 	 * @param $token string: token from url, to verify this link
 	 */
 	function showInfo( $email, $token, $timestamp ) {
-		global $wgOut, $wgLang, $wgScript;
+		global $wgOut;
 
 
 		/**
