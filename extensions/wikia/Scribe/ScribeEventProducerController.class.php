@@ -30,10 +30,8 @@ class ScribeEventProducerController {
 		$is_archive = !empty( $undef1 );
 
  		$oScribeProducer = new ScribeEventProducer( $key, $is_archive );
-		if ( is_object( $oScribeProducer ) ) {
-			if ( $oScribeProducer->buildEditPackage( $oPage, $oUser, $oRevision ) ) {
+		if ( is_object( $oScribeProducer ) && $oScribeProducer->buildEditPackage( $oPage, $oUser, $oRevision )) {
 				$oScribeProducer->sendLog();
-			}
 		}
 
 		wfProfileOut( __METHOD__ );
