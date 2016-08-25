@@ -346,7 +346,10 @@ class SpecialContributions extends SpecialPage {
 			}
 		}
 
-		wfRunHooks( 'ContributionsToolLinks', array( $id, $userpage, &$tools ) );
+		// Wikia change - begin:
+		// Pass request context to hook handlers in line with newer core
+		Hooks::run( 'ContributionsToolLinks', [ $id, $userpage, &$tools, $this->getContext() ] );
+		// Wikia change - end
 		return $tools;
 	}
 
