@@ -5,6 +5,7 @@ use \Wikia\Logger\WikiaLogger;
 class ScribeEventProducer {
 	private $app = null;
 	private $mParams, $mKey, $mEventType;
+	private $errorTemplateMsg;
 
 	const
 		EDIT_CATEGORY       = 'log_edit',
@@ -47,29 +48,57 @@ class ScribeEventProducer {
 		$this->setArchive( $archive );
 		$this->setLanguage();
 		$this->setCategory();
+		$this->setErrorTemplateMessage();
 	}
 
+	/**
+	 * @param $oUser User
+	 * @return bool
+	 */
+	public function isUser( $oUser ) {
+		if ( !$oUser instanceof User ) {
+			\Wikia\Logger\WikiaLogger::instance()->error( $this->errorTemplateMsg . "invalid user object" );
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * @param $oPage WikiPage
+	 * @return bool
+	 */
+	public function isObject( $oPage ) {
+		if ( !is_object( $oPage ) ) {
+			\Wikia\Logger\WikiaLogger::instance()->error( $this->errorTemplateMsg . "invalid WikiPage object" );
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * @param $oRevision Revision
+	 * @return bool
+	 */
+	public function isRevision( $oRevision ) {
+		if ( !empty( $oRevision ) && !$oRevision instanceof Revision ) {
+			\Wikia\Logger\WikiaLogger::instance()->error( $this->errorTemplateMsg . "invalid revision object" );
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * @param $oPage WikiPage
+	 * @param $oUser User
+	 * @param null $oRevision Revision
+	 * @return bool
+	 */
 	public function buildEditPackage( $oPage, $oUser, $oRevision = null ) {
 		wfProfileIn( __METHOD__ );
 
-		if ( !is_object( $oPage ) ) {
-			Wikia::log( __METHOD__, "error", "Cannot send log using scribe ({$this->app->wg->CityId}): invalid WikiPage object" );
+		if ( !( $this->isObject( $oPage ) && $this->isUser( $oUser ) && $this->isRevision( $oRevision ) ) ) {
 			wfProfileOut( __METHOD__ );
 			return false;
-		}
-
-		if ( !$oUser instanceof User ) {
-			Wikia::log( __METHOD__, "error", "Cannot send log using scribe ({$this->app->wg->CityId}): invalid user object" );
-			wfProfileOut( __METHOD__ );
-			return false;
-		}
-
-		if ( !empty( $oRevision ) ) {
-			if ( !$oRevision instanceof Revision ) {
-				Wikia::log( __METHOD__, "error", "Cannot send log using scribe ({$this->app->wg->CityId}): invalid revision object" );
-				wfProfileOut( __METHOD__ );
-				return false;
-			}
 		}
 
 		$revision_id = $page_id = $page_namespace = 0;
@@ -131,19 +160,18 @@ class ScribeEventProducer {
 		return true;
 	}
 
-	public function buildRemovePackage ( $oPage, $oUser, $page_id ) {
+	/**
+	 * @param $oPage WikiPage
+	 * @param $oUser User
+	 * @param $page_id int
+	 * @return bool|int
+	 */
+	public function buildRemovePackage( $oPage, $oUser, $page_id ) {
 		global $wgCityId;
 
 		wfProfileIn( __METHOD__ );
 
-		if ( !is_object( $oPage ) ) {
-			Wikia::log( __METHOD__, "error", "Cannot send log using scribe ({$this->app->wg->CityId}): invalid WikiPage object" );
-			wfProfileOut( __METHOD__ );
-			return false;
-		}
-
-		if ( !$oUser instanceof User ) {
-			Wikia::log( __METHOD__, "error", "Cannot send log using scribe ({$this->app->wg->CityId}): invalid user object" );
+		if ( !( $this->isObject( $oPage ) && $this->isUser( $oUser ) ) ) {
 			wfProfileOut( __METHOD__ );
 			return false;
 		}
@@ -208,7 +236,7 @@ class ScribeEventProducer {
 		return $logid;
 	}
 
-	public function buildUndeletePackage( $oTitle, $created = false ) {
+	public function buildUndeletePackage( $oTitle ) {
 		wfProfileIn( __METHOD__ );
 
 		if ( !is_object( $oTitle ) ) {
@@ -479,5 +507,9 @@ class ScribeEventProducer {
 		wfProfileOut(__METHOD__);
 
 		return $links;
+	}
+
+	private function setErrorTemplateMessage() {
+		$this->errorTemplateMsg = "Cannot send log using scribe ({$this->app->wg->CityId}): ";
 	}
 }
