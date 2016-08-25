@@ -37,12 +37,13 @@ class AdEngine2Hooks {
 	 */
 	public static function onInstantGlobalsGetVariables( array &$vars )
 	{
-		$vars[] = 'wgAdDriverAdsRecoveryMessageCountries';
 		$vars[] = 'wgAdDriverDelayCountries';
+		$vars[] = 'wgAdDriverDelayTimeout';
 		$vars[] = 'wgAdDriverEvolve2Countries';
 		$vars[] = 'wgAdDriverGoogleConsumerSurveysCountries';
 		$vars[] = 'wgAdDriverHighImpactSlotCountries';
 		$vars[] = 'wgAdDriverHighImpact2SlotCountries';
+		$vars[] = 'wgAdDriverMobileTransitionInterstitialCountries';
 		$vars[] = 'wgAdDriverIncontentLeaderboardSlotCountries';
 		$vars[] = 'wgAdDriverIncontentLeaderboardOutOfPageSlotCountries';
 		$vars[] = 'wgAdDriverIncontentPlayerSlotCountries';
@@ -98,7 +99,7 @@ class AdEngine2Hooks {
 		$vars['ads'] = [
 			'context' => $adContext,
 			'runtime' => [
-				'sp' => []
+				'disableBtf' => false,
 			],
 		];
 

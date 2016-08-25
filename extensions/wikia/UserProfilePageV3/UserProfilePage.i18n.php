@@ -1,7 +1,7 @@
 <?php
-$messages = array();
+$messages = [];
 
-$messages['en'] = array(
+$messages['en'] = [
 	'userprofilepage-edit-modal-header' => 'Edit Profile',
 	'userprofilepage-question-caption' => 'Question $1/$2',
 	'userprofilepage-lightbox-interview-cancel' => 'Cancel',
@@ -116,12 +116,26 @@ $messages['en'] = array(
 	'user-identity-remove-fail' => 'There was some problem when removing the avatar!',
 	'user-identity-avatars-maintenance' => 'Upload and deletion of avatars temporarily disabled during maintenance!',
 	'userprofilepage-edit-modal-error' => 'Unexpected error occurred',
-);
+
+	// user rights associated with groups
+	'right-council' => 'Can access the Community Council Wiki',
+	'right-voldev' => 'Flags user as "Volunteer Developer" on user profile',
+	'right-authenticated' => 'An account which has been vetted by Wikia, as being a legitimate industry source (for example, a celebrity or a game developer)',
+	'right-displaywikiastarslabel' => 'Flags the user as "Wikia Star" on user profile',
+	'right-removeavatar' => 'Remove a user\'s avatar icon',
+	'right-loggedin' => 'Flags user as being logged in to an account',
+
+
+	// miscellaneous rights
+	'right-editprofilev3' => 'Edit other user\'s profile data',
+	'right-deleteprofilev3' => 'Delete user pages',
+	'right-renameprofilev3' => 'Move user pages',
+];
 
 /** Message documentation (Message documentation)
  * @author Damian <damian@wikia-inc.com>
  */
-$messages['qqq'] = array(
+$messages['qqq'] = [
 	'userprofilepage-edit-modal-header' => 'Header for edit profile modal on user profile page.',
 	'userprofilepage-question-caption' => 'Currently not in use!
 	Parameters:
@@ -265,19 +279,19 @@ Parameters:
 	'user-identity-remove-fail' => 'Error message, general error message during avatar picture removal.',
 	'user-identity-avatars-maintenance' => "Info message that avatars are currently under maintenance and can't be modified right now.",
 	'userprofilepage-edit-modal-error' => 'General error message for user profile page.',
-);
+];
 
 /** Arabic (العربية)
  */
-$messages['ar'] = array(
+$messages['ar'] = [
 	'useravatar-log' => 'سجل تغييرات الصور الرمزية',
 	'blog-avatar-changed-log' => 'أضاف أو غير الصورة الرمزية',
-);
+];
 
 /** Azerbaijani (azərbaycanca)
  * @author AZISS
  */
-$messages['az'] = array(
+$messages['az'] = [
 	'userprofilepage-lightbox-interview-cancel' => 'İmtina',
 	'user-identity-box-edit' => 'Redaktə et',
 	'user-identity-box-avatar-choose-avatar' => 'Avatar seç',
@@ -306,12 +320,12 @@ $messages['az'] = array(
 	'userprofilepage-closing-popup-cancel' => 'İmtina',
 	'user-action-menu-delete' => 'Sil',
 	'user-action-menu-history' => 'Tarixçə',
-);
+];
 
 /** Bulgarian (български)
  * @author DCLXVI
  */
-$messages['bg'] = array(
+$messages['bg'] = [
 	'userprofilepage-edit-modal-header' => 'Редактиране на профила',
 	'userprofilepage-question-caption' => 'Въпрос $1/$2',
 	'userprofilepage-lightbox-interview-cancel' => 'Отказване',
@@ -331,14 +345,14 @@ $messages['bg'] = array(
 	'user-action-menu-rename' => 'Преименуване',
 	'user-action-menu-delete' => 'Изтриване',
 	'user-action-menu-history' => 'История',
-);
+];
 
 /** Breton (brezhoneg)
  * @author Fohanno
  * @author Fulup
  * @author Y-M D
  */
-$messages['br'] = array(
+$messages['br'] = [
 	'userprofilepage-lightbox-interview-cancel' => 'Nullañ',
 	'userprofilepage-add-question' => 'Ouzhpennañ ur goulenn nevez',
 	'user-identity-box-edit' => 'Aozañ',
@@ -366,14 +380,14 @@ $messages['br'] = array(
 	'blog-avatar-changed-log' => 'en deus ouzhpennet pe kemmet e avatar',
 	'blog-avatar-removed-log' => 'En deus dilamet avatarioù $1',
 	'blog-avatar-alt' => 'Marilh ouzhpennadennoù pe dilammadennoù avataroù an implijerien',
-);
+];
 
 /** Catalan (català)
  * @author BroOk
  * @author CuBaN VeRcEttI
  * @author Gemmaa
  */
-$messages['ca'] = array(
+$messages['ca'] = [
 	'userprofilepage-edit-modal-header' => 'Edita el Perfil',
 	'userprofilepage-question-caption' => 'Pregunta  $1 /$2',
 	'userprofilepage-lightbox-interview-cancel' => 'Cancel·la',
@@ -478,7 +492,7 @@ $messages['ca'] = array(
 	'blog-avatar-changed-log' => 'Avatar afegit o canviat',
 	'blog-avatar-removed-log' => "Esborrats avatars de l'usuari $1",
 	'blog-avatar-alt' => "Registre d'addicions o esborrats d'avatars d'usuari",
-);
+];
 
 /** Czech (česky)
  * @author Chmee2
@@ -486,7 +500,7 @@ $messages['ca'] = array(
  * @author Dontlietome7
  * @author Vks
  */
-$messages['cs'] = array(
+$messages['cs'] = [
 	'userprofilepage-edit-modal-header' => 'Upravit profil',
 	'userprofilepage-question-caption' => 'Otázka $1/$2',
 	'userprofilepage-lightbox-interview-cancel' => 'Zrušit',
@@ -593,7 +607,7 @@ $messages['cs'] = array(
 	'blog-avatar-alt' => 'Protokoly přidáni nebo odstranění uživatelova avataru',
 	'user-identity-remove-confirmation' => 'Opravdu chcete odstranit avatar?',
 	'user-identity-remove-fail' => 'Došlo k problému při odebírání avataru!',
-);
+];
 
 /** German (Deutsch)
  * @author Alphakilo
@@ -603,7 +617,7 @@ $messages['cs'] = array(
  * @author SVG
  * @author Sebastian Wallroth
  */
-$messages['de'] = array(
+$messages['de'] = [
 	'userprofilepage-edit-modal-header' => 'Profil bearbeiten',
 	'userprofilepage-question-caption' => 'Frage  $1/$2',
 	'userprofilepage-lightbox-interview-cancel' => 'Abbrechen',
@@ -719,20 +733,20 @@ $messages['de'] = array(
 	'user-identity-box-group-adminmentor' => 'Adminmentor',
 	'user-identity-box-discussion-posts' => 'Diskussionsbeiträge',
 	'user-identity-box-group-vanguard' => 'Vanguard',
-);
+];
 
 /** Swiss High German (Schweizer Hochdeutsch)
  * @author Geitost
  */
-$messages['de-ch'] = array(
+$messages['de-ch'] = [
 	'user-identity-box-avatar-error-size' => 'Fehler: Avatar-Datei ist zu gross (maximal {{PLURAL:$1|$1|$1}} KB).',
-);
+];
 
 /** Zazaki (Zazaki)
  * @author Erdemaslancan
  * @author Mirzali
  */
-$messages['diq'] = array(
+$messages['diq'] = [
 	'userprofilepage-edit-modal-header' => 'Profili bıvurnê',
 	'userprofilepage-question-caption' => 'Pers $1/$2',
 	'userprofilepage-lightbox-interview-cancel' => 'Bıterkne',
@@ -772,7 +786,7 @@ $messages['diq'] = array(
 	'user-action-menu-rename' => 'Zewmi name cıdı',
 	'user-action-menu-delete' => 'Besterne',
 	'user-action-menu-history' => 'Tarix',
-);
+];
 
 /** Spanish (español)
  * @author Armando-Martin
@@ -782,7 +796,7 @@ $messages['diq'] = array(
  * @author Mor
  * @author VegaDark
  */
-$messages['es'] = array(
+$messages['es'] = [
 	'userprofilepage-edit-modal-header' => 'Editar perfil',
 	'userprofilepage-question-caption' => 'Pregunta $1 de $2',
 	'userprofilepage-lightbox-interview-cancel' => 'Cancelar',
@@ -898,13 +912,13 @@ $messages['es'] = array(
 	'user-identity-box-group-adminmentor' => 'Mentor',
 	'user-identity-box-discussion-posts' => 'Discusiones',
 	'user-identity-box-group-vanguard' => 'Vanguard',
-);
+];
 
 /** Finnish (suomi)
  * @author Ilkea
  * @author Tm T
  */
-$messages['fi'] = array(
+$messages['fi'] = [
 	'userprofilepage-edit-modal-header' => 'Muokkaa profiilia',
 	'userprofilepage-question-caption' => 'Kysymys  $1/$2',
 	'userprofilepage-lightbox-interview-cancel' => 'Peruuta',
@@ -1011,13 +1025,13 @@ $messages['fi'] = array(
 	'blog-avatar-alt' => 'Avatar',
 	'user-identity-remove-confirmation' => 'Haluatko varmasti poistaa avatarin?',
 	'user-identity-remove-fail' => 'Ongelma poistaessa avataria!',
-);
+];
 
 /** French (français)
  * @author Gomoko
  * @author Wyz
  */
-$messages['fr'] = array(
+$messages['fr'] = [
 	'userprofilepage-edit-modal-header' => 'Modifier le profil',
 	'userprofilepage-question-caption' => 'Question $1 de $2',
 	'userprofilepage-lightbox-interview-cancel' => 'Annuler',
@@ -1133,12 +1147,12 @@ $messages['fr'] = array(
 	'user-identity-box-group-adminmentor' => 'Administrateur référent',
 	'user-identity-box-discussion-posts' => 'Messages de discussion',
 	'user-identity-box-group-vanguard' => 'Vanguard',
-);
+];
 
 /** Galician (galego)
  * @author Toliño
  */
-$messages['gl'] = array(
+$messages['gl'] = [
 	'userprofilepage-edit-modal-header' => 'Editar o perfil',
 	'userprofilepage-question-caption' => 'Pregunta $1/$2',
 	'userprofilepage-lightbox-interview-cancel' => 'Cancelar',
@@ -1245,13 +1259,13 @@ $messages['gl'] = array(
 	'blog-avatar-alt' => 'Rexistros das adicións e eliminacións de avatares de usuario',
 	'user-identity-remove-confirmation' => 'Está seguro de querer eliminar o avatar?',
 	'user-identity-remove-fail' => 'Houbo un problema ao eliminar o avatar!',
-);
+];
 
 /** Hungarian (magyar)
  * @author Dani
  * @author TK-999
  */
-$messages['hu'] = array(
+$messages['hu'] = [
 	'userprofilepage-edit-modal-header' => 'Profil szerkesztése',
 	'userprofilepage-question-caption' => '$1./$2 kérdés',
 	'userprofilepage-lightbox-interview-cancel' => 'Mégse',
@@ -1358,18 +1372,18 @@ $messages['hu'] = array(
 	'blog-avatar-alt' => 'A felhasználói avatarok hozzáadásainak és eltávolításainak naplója',
 	'user-identity-remove-confirmation' => 'Biztosan el szeretnéd távolítani az avatarodat?',
 	'user-identity-remove-fail' => 'Hiba történt az avatar eltávolítása közben!',
-);
+];
 
 /** Armenian (Հայերեն)
  */
-$messages['hy'] = array(
+$messages['hy'] = [
 	'blog-avatar-changed-log' => 'ավելացրել է կամ փոխել է ավատարը',
-);
+];
 
 /** Interlingua (interlingua)
  * @author McDutchie
  */
-$messages['ia'] = array(
+$messages['ia'] = [
 	'userprofilepage-edit-modal-header' => 'Modificar profilo',
 	'userprofilepage-question-caption' => 'Question $1 de $2',
 	'userprofilepage-lightbox-interview-cancel' => 'Cancellar',
@@ -1476,12 +1490,12 @@ $messages['ia'] = array(
 	'blog-avatar-alt' => 'Registro de additiones o remotiones de avatares de usatores',
 	'user-identity-remove-confirmation' => 'Es tu secur de voler remover le avatar?',
 	'user-identity-remove-fail' => 'Un problema occurreva con le remotion del avatar!',
-);
+];
 
 /** Italian (italiano)
  * @author Minerva Titani
  */
-$messages['it'] = array(
+$messages['it'] = [
 	'user-identity-box-fb-prefs' => 'Feed delle Preferenze',
 	'blog-avatar-changed-log' => 'Avatar aggiunto o modificato',
 	'userprofilepage-edit-modal-header' => 'Modifica profilo',
@@ -1597,11 +1611,11 @@ $messages['it'] = array(
 	'user-identity-box-group-adminmentor' => 'Admin Mentor',
 	'user-identity-box-discussion-posts' => 'Post in discussioni',
 	'user-identity-box-group-vanguard' => 'Vanguard',
-);
+];
 
 /** Japanese (日本語)
  */
-$messages['ja'] = array(
+$messages['ja'] = [
 	'useravatar-log' => 'アバターのログ',
 	'blog-avatar-changed-log' => 'アバターが追加、または変更されました',
 	'blog-avatar-removed-log' => '$1 のアバターを削除しました',
@@ -1717,12 +1731,12 @@ $messages['ja'] = array(
 	'user-identity-box-group-adminmentor' => 'アドミン・アドバイザー',
 	'user-identity-box-discussion-posts' => 'トークの投稿数',
 	'user-identity-box-group-vanguard' => 'Vanguard',
-);
+];
 
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
-$messages['lb'] = array(
+$messages['lb'] = [
 	'userprofilepage-edit-modal-header' => 'Profil änneren',
 	'userprofilepage-question-caption' => 'Fro $1/$2',
 	'userprofilepage-lightbox-interview-cancel' => 'Ofbriechen',
@@ -1746,12 +1760,12 @@ $messages['lb'] = array(
 	'user-action-menu-edit' => 'Änneren',
 	'user-action-menu-rename' => 'Ëmbenennen',
 	'user-action-menu-delete' => 'Läschen',
-);
+];
 
 /** Lezghian (лезги)
  * @author Migraghvi
  */
-$messages['lez'] = array(
+$messages['lez'] = [
 	'userprofilepage-edit-modal-header' => 'Профил дуьзар хъувун',
 	'userprofilepage-question-caption' => 'Жузун $1/$2',
 	'userprofilepage-lightbox-interview-cancel' => 'Гьич авун',
@@ -1801,12 +1815,12 @@ $messages['lez'] = array(
 	'user-action-menu-delete' => 'Алудун',
 	'user-action-menu-history' => 'Тарих',
 	'usermasthead-log' => 'Уртахдикай малумат',
-);
+];
 
 /** Macedonian (македонски)
  * @author Bjankuloski06
  */
-$messages['mk'] = array(
+$messages['mk'] = [
 	'userprofilepage-edit-modal-header' => 'Уреди профил',
 	'userprofilepage-question-caption' => 'Прашање $1/$2',
 	'userprofilepage-lightbox-interview-cancel' => 'Откажи',
@@ -1913,12 +1927,12 @@ $messages['mk'] = array(
 	'blog-avatar-alt' => 'Дневници на додавања и отстранувања на кориснички аватари',
 	'user-identity-remove-confirmation' => 'Дали сте сигурни дека сакате да го отстраните аватарот?',
 	'user-identity-remove-fail' => 'Се појави некаков проблем при отстранувањето на аватарот!',
-);
+];
 
 /** Malay (Bahasa Melayu)
  * @author Anakmalaysia
  */
-$messages['ms'] = array(
+$messages['ms'] = [
 	'userprofilepage-edit-modal-header' => 'Sunting Profil',
 	'userprofilepage-question-caption' => 'Soalan $1/$2',
 	'userprofilepage-lightbox-interview-cancel' => 'Batalkan',
@@ -2025,12 +2039,12 @@ $messages['ms'] = array(
 	'blog-avatar-alt' => 'Log penambahan atau pengguguran avatar pengguna',
 	'user-identity-remove-confirmation' => 'Adakah anda benar-benar ingin menggugurkan avatar ini?',
 	'user-identity-remove-fail' => 'Ada sedikit masalah ketika menggugurkan avatar!',
-);
+];
 
 /** Norwegian Bokmål (norsk bokmål)
  * @author Audun
  */
-$messages['nb'] = array(
+$messages['nb'] = [
 	'userprofilepage-edit-modal-header' => 'Rediger profil',
 	'userprofilepage-question-caption' => 'Spørsmål $1/$2',
 	'userprofilepage-lightbox-interview-cancel' => 'Avbryt',
@@ -2137,14 +2151,14 @@ $messages['nb'] = array(
 	'blog-avatar-alt' => 'Logger over brukeravatar-tillegg eller -fjerninger',
 	'user-identity-remove-confirmation' => 'Er du sikker på at du vil fjerne avataren?',
 	'user-identity-remove-fail' => 'Det oppstod et problem under fjerning av avataren!',
-);
+];
 
 /** Dutch (Nederlands)
  * @author MarkvA
  * @author SPQRobin
  * @author Siebrand
  */
-$messages['nl'] = array(
+$messages['nl'] = [
 	'userprofilepage-edit-modal-header' => 'Profiel aanpassen',
 	'userprofilepage-question-caption' => 'Vraag $1/$2',
 	'userprofilepage-lightbox-interview-cancel' => 'Annuleren',
@@ -2260,26 +2274,26 @@ $messages['nl'] = array(
 	'user-identity-box-group-adminmentor' => 'Beheerdersmentor',
 	'user-identity-box-discussion-posts' => 'Discussion posts',
 	'user-identity-box-group-vanguard' => 'Vanguard',
-);
+];
 
 /** Pälzisch (Pälzisch)
  * @author Manuae
  */
-$messages['pfl'] = array(
+$messages['pfl'] = [
 	'userprofilepage-lightbox-about-me-cancel' => 'Uffhere',
 	'userprofilepage-lightbox-about-me-save' => 'Schbaischare, isch bin feadisch',
 	'userprofilepage-closing-popup-save-and-quit' => 'schbaischare un uffhere',
 	'userprofilepage-closing-popup-cancel' => 'Uffhere',
 	'user-action-menu-edit' => 'Bearwaide',
 	'user-action-menu-delete' => 'Lesche',
-);
+];
 
 /** Polish (polski)
  * @author BeginaFelicysym
  * @author Cloudissimo
  * @author Sovq
  */
-$messages['pl'] = array(
+$messages['pl'] = [
 	'userprofilepage-edit-modal-header' => 'Edycja profilu',
 	'userprofilepage-question-caption' => 'Pytanie $1/$2',
 	'userprofilepage-lightbox-interview-cancel' => 'Anuluj',
@@ -2395,21 +2409,21 @@ $messages['pl'] = array(
 	'user-identity-box-group-adminmentor' => 'Mentor',
 	'user-identity-box-discussion-posts' => 'Postów w Dyskusjach',
 	'user-identity-box-group-vanguard' => 'Vanguard',
-);
+];
 
 /** Piedmontese (Piemontèis)
  */
-$messages['pms'] = array(
+$messages['pms'] = [
 	'useravatar-log' => "Registr dj'avatar ëd j'utent",
 	'blog-avatar-changed-log' => 'Avatar giontà o cangià',
 	'blog-avatar-removed-log' => 'Avatar ëd $1 gavà',
 	'blog-avatar-alt' => "Registr ëd le gionte o dle scancelassion ëd j'avatar ëd j'utent",
-);
+];
 
 /** Pashto (پښتو)
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
-$messages['ps'] = array(
+$messages['ps'] = [
 	'userprofilepage-edit-modal-header' => 'پېژنليک سمول',
 	'userprofilepage-lightbox-interview-cancel' => 'ناګارل',
 	'userprofilepage-add-question' => 'نوې پوښتنه ورګډول',
@@ -2454,12 +2468,12 @@ $messages['ps'] = array(
 	'user-action-menu-rename' => 'نوم بدلول',
 	'user-action-menu-delete' => 'ړنګول',
 	'user-action-menu-history' => 'پېښليک',
-);
+];
 
 /** Portuguese (português)
  * @author SandroHc
  */
-$messages['pt'] = array(
+$messages['pt'] = [
 	'userprofilepage-edit-modal-header' => 'Editar perfil',
 	'userprofilepage-question-caption' => 'Pergunta $1/$2',
 	'userprofilepage-lightbox-interview-cancel' => 'Cancelar',
@@ -2575,12 +2589,12 @@ $messages['pt'] = array(
 	'user-identity-box-group-adminmentor' => 'Mentor de admin',
 	'user-identity-box-discussion-posts' => 'Posts em Discussões',
 	'user-identity-box-group-vanguard' => 'Vanguard',
-);
+];
 
 /** Brazilian Portuguese (português do Brasil)
  * @author Luckas Blade
  */
-$messages['pt-br'] = array(
+$messages['pt-br'] = [
 	'userprofilepage-edit-modal-header' => 'Editar perfil',
 	'userprofilepage-question-caption' => 'Pergunta $1/$2',
 	'userprofilepage-lightbox-interview-cancel' => 'Cancelar',
@@ -2648,12 +2662,12 @@ $messages['pt-br'] = array(
 	'blog-avatar-changed-log' => 'Adicionou ou alterou avatar',
 	'blog-avatar-removed-log' => 'Removeu os avatares de $1',
 	'blog-avatar-alt' => 'Registros de adições e remoções de avatares',
-);
+];
 
 /** tarandíne (tarandíne)
  * @author Joetaras
  */
-$messages['roa-tara'] = array(
+$messages['roa-tara'] = [
 	'userprofilepage-edit-modal-header' => "Cange 'u profile",
 	'userprofilepage-question-caption' => 'Domande $1/$2',
 	'userprofilepage-lightbox-interview-cancel' => 'Annulle',
@@ -2662,14 +2676,14 @@ $messages['roa-tara'] = array(
 	'user-action-menu-edit' => 'Cange',
 	'user-action-menu-edit-profile' => "Cange 'u profile",
 	'user-action-menu-leave-message' => "Lasse 'u messàgge",
-);
+];
 
 /** Russian (русский)
  * @author DCamer
  * @author Kaganer
  * @author Kuzura
  */
-$messages['ru'] = array(
+$messages['ru'] = [
 	'userprofilepage-edit-modal-header' => 'Правка профайла',
 	'userprofilepage-question-caption' => 'Вопрос $1/$2',
 	'userprofilepage-lightbox-interview-cancel' => 'Отмена',
@@ -2785,12 +2799,12 @@ $messages['ru'] = array(
 	'user-identity-box-group-adminmentor' => 'Администратор-наставник',
 	'user-identity-box-discussion-posts' => 'Сообщения',
 	'user-identity-box-group-vanguard' => 'Vanguard',
-);
+];
 
 /** Serbian (Cyrillic script) (српски (ћирилица)‎)
  * @author Rancher
  */
-$messages['sr-ec'] = array(
+$messages['sr-ec'] = [
 	'userprofilepage-edit-modal-header' => 'Уређивање профила',
 	'userprofilepage-question-caption' => 'Питање $1/$2',
 	'userprofilepage-lightbox-interview-cancel' => 'Откажи',
@@ -2805,13 +2819,13 @@ $messages['sr-ec'] = array(
 	'userprofilepage-question-list-title' => '$1/$2 питања',
 	'userprofilepage-interview-section-title' => 'Интервју с корисником',
 	'userprofilepage-invalid-user' => 'Неисправан корисник. Нисте пријављени или немате права да наставите',
-);
+];
 
 /** Swedish (svenska)
  * @author VickyC
  * @author WikiPhoenix
  */
-$messages['sv'] = array(
+$messages['sv'] = [
 	'userprofilepage-edit-modal-header' => 'Redigera profil',
 	'userprofilepage-question-caption' => 'Fråga $1/$2',
 	'userprofilepage-lightbox-interview-cancel' => 'Avbryt',
@@ -2918,13 +2932,13 @@ $messages['sv'] = array(
 	'blog-avatar-alt' => 'Logbok över användares tillagda eller borttagna avatarer.',
 	'user-identity-remove-confirmation' => 'Är du säker på att du vill ta bort avataren?',
 	'user-identity-remove-fail' => 'Det uppstod ett problem när avataren skulle tas bort!',
-);
+];
 
 /** Telugu (తెలుగు)
  * @author Jprmvnvijay5
  * @author Veeven
  */
-$messages['te'] = array(
+$messages['te'] = [
 	'userprofilepage-lightbox-interview-save' => 'అయిపోయింది, ఇక దాచిపెట్టండి.',
 	'userprofilepage-interview-edit-new-summary' => 'వాడుకరితో మాటామంతీ కల్పించాము.',
 	'userprofilepage-interview-section-title' => 'వాడుకరితో మాటామంతీ',
@@ -2944,12 +2958,12 @@ $messages['te'] = array(
 	'userprofilepage-lightbox-about-me-save' => 'అయిపోయింది, ఇక దాచిపెట్టండి.',
 	'user-action-menu-view-source' => 'వేరును చూపండి',
 	'user-action-menu-protect' => 'కాపాడండి',
-);
+];
 
 /** Tagalog (Tagalog)
  * @author AnakngAraw
  */
-$messages['tl'] = array(
+$messages['tl'] = [
 	'userprofilepage-edit-modal-header' => 'Baguhin ang Balangkas ng Katangian',
 	'userprofilepage-question-caption' => 'Tanong $1/$2',
 	'userprofilepage-lightbox-interview-cancel' => 'Huwag ituloy',
@@ -3056,32 +3070,32 @@ $messages['tl'] = array(
 	'blog-avatar-alt' => 'Mga talaan ng mga pagdaragdag o pagtatanggal ng abatar ng tagagamit',
 	'user-identity-remove-confirmation' => 'Talaga bang gusto mong tanggalin ang abatar?',
 	'user-identity-remove-fail' => 'Mayroong ilang suliranin noong tinatanggal ang abatar!',
-);
+];
 
 /** толышә зывон (толышә зывон)
  * @author Гусейн
  */
-$messages['tly'] = array(
+$messages['tly'] = [
 	'user-identity-box-about-fav-wikis-refresh' => 'Тожә кардеј',
-);
+];
 
 /** Turkish (Türkçe)
  * @author Bilalokms
  * @author Emperyan
  * @author Erdemaslancan
  */
-$messages['tr'] = array(
+$messages['tr'] = [
 	'userprofilepage-edit-modal-header' => 'Profil Düzenle',
 	'user-identity-box-avatar-cancel' => 'İptal',
 	'user-identity-box-aka-label' => '$1 <span>olarak bilinir</span>',
 	'user-identity-box-fav-wikis' => 'Favori vikilerim',
 	'userprofilepage-closing-popup-cancel' => 'İptal',
-);
+];
 
 /** Tatar (Cyrillic script) (татарча)
  * @author Ajdar
  */
-$messages['tt-cyrl'] = array(
+$messages['tt-cyrl'] = [
 	'userprofilepage-lightbox-interview-cancel' => 'Баш тарту',
 	'user-identity-box-edit' => 'Үзгәртү',
 	'user-identity-box-avatar-cancel' => 'Баш тарту',
@@ -3098,13 +3112,13 @@ $messages['tt-cyrl'] = array(
 	'user-action-menu-edit' => 'Үзгәртү',
 	'user-action-menu-view-source' => 'Башлангыч кодны карау',
 	'user-action-menu-protect' => 'Якларга',
-);
+];
 
 /** Ukrainian (українська)
  * @author A1
  * @author Steve.rusyn
  */
-$messages['uk'] = array(
+$messages['uk'] = [
 	'userprofilepage-edit-modal-header' => 'Редагувати профіль',
 	'userprofilepage-question-caption' => 'Запитання $1/$2',
 	'userprofilepage-lightbox-interview-cancel' => 'Скасувати',
@@ -3166,20 +3180,20 @@ $messages['uk'] = array(
 	'user-action-menu-history' => 'Історія',
 	'usermasthead-log-message' => 'Додана інформація до профілю',
 	'usermasthead-log-alt' => 'Журнали зміни даних про користувачів',
-);
+];
 
 /** Uzbek (oʻzbekcha)
  * @author CoderSI
  */
-$messages['uz'] = array(
+$messages['uz'] = [
 	'user-identity-box-about-fav-wikis-refresh' => 'Yangilash',
 	'user-action-menu-view-source' => "Manbasini ko'rish",
-);
+];
 
 /** Vietnamese (Tiếng Việt)
  * @author Xiao Qiao
  */
-$messages['vi'] = array(
+$messages['vi'] = [
 	'userprofilepage-edit-modal-header' => 'Sửa đổi hồ sơ',
 	'userprofilepage-question-caption' => 'Câu hỏi  $1/$2',
 	'userprofilepage-lightbox-interview-cancel' => 'Hủy bỏ',
@@ -3274,7 +3288,7 @@ $messages['vi'] = array(
 	'user-action-menu-delete' => 'Xóa',
 	'user-action-menu-history' => 'Lịch sử',
 	'usermasthead-log-message' => 'bổ sung thông tin hồ sơ',
-);
+];
 
 /** Simplified Chinese (中文（简体）‎)
  * @author Anakmalaysia
@@ -3282,7 +3296,7 @@ $messages['vi'] = array(
  * @author Hzy980512
  * @author Sam Wang
  */
-$messages['zh-hans'] = array(
+$messages['zh-hans'] = [
 	'userprofilepage-edit-modal-header' => '编辑个人资料',
 	'userprofilepage-question-caption' => '$2个问题之$1',
 	'userprofilepage-lightbox-interview-cancel' => '取消',
@@ -3398,12 +3412,12 @@ $messages['zh-hans'] = array(
 	'user-identity-box-group-adminmentor' => '管理员导师',
 	'user-identity-box-discussion-posts' => '讨论版帖子',
 	'user-identity-box-group-vanguard' => '先锋',
-);
+];
 
 /** Traditional Chinese (中文（繁體）‎)
  * @author Ffaarr
  */
-$messages['zh-hant'] = array(
+$messages['zh-hant'] = [
 	'userprofilepage-edit-modal-header' => '編輯個人資料',
 	'userprofilepage-lightbox-interview-cancel' => '取消',
 	'userprofilepage-lightbox-interview-save' => '已經完成了，儲存',
@@ -3519,9 +3533,9 @@ $messages['zh-hant'] = array(
 	'userprofilepage-edit-modal-error' => '發生未知錯誤',
 	'user-identity-box-discussion-posts' => '討論版文章',
 	'user-identity-box-group-vanguard' => '先鋒',
-);
+];
 
-$messages['zh-tw'] = array(
+$messages['zh-tw'] = [
 	'userprofilepage-edit-modal-header' => '編輯個人資料',
 	'userprofilepage-question-caption' => '$2個問題之$1',
 	'userprofilepage-lightbox-interview-cancel' => '取消',
@@ -3634,5 +3648,5 @@ $messages['zh-tw'] = array(
 	'user-identity-remove-fail' => '移除個人頭像時遇到問題！',
 	'user-identity-avatars-maintenance' => '系統處於維護狀態，上傳和刪除頭像暫時不可用！',
 	'userprofilepage-edit-modal-error' => '發生未知錯誤',
-);
+];
 

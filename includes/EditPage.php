@@ -1959,6 +1959,8 @@ class EditPage {
 			$this->displayPreviewArea( $previewOutput, false );
 		}
 
+		$wgOut->addModules('wikia.article.edit');
+
 		wfProfileOut( __METHOD__ );
 	}
 

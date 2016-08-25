@@ -31,77 +31,87 @@ class TwitterTagTest extends WikiaBaseTest {
 			[
 				[ 'foo' => 'bar' ],
 				[ ],
-				[ ]
+				[ 'data-height' => '500' ]
 			],
 			[
 				[ 'foo' => 'bar' ],
 				[ 'foo' => '/fizz/' ],
-				[ ]
+				[ 'data-height' => '500' ]
 			],
 			[
 				[ 'foo' => 'bar' ],
 				[ 'foo' => '/bar/' ],
-				[ 'data-foo' => 'bar' ]
+				[ 'data-foo' => 'bar', 'data-height' => '500' ]
 			],
 			[
 				[ 'foo' => 'BAR' ],
 				[ 'foo' => '/bar/' ],
-				[ ]
+				[ 'data-height' => '500' ]
 			],
 			[
 				[ 'foo' => 'BAR' ],
 				[ 'foo' => '/bar/i' ],
-				[ 'data-foo' => 'BAR' ]
+				[ 'data-foo' => 'BAR', 'data-height' => '500' ]
 			],
 			[
 				[ 'attr' => '0123456789' ],
 				[ 'attr' => TwitterTagController::REGEX_DIGITS ],
-				[ 'data-attr' => '0123456789' ]
+				[ 'data-attr' => '0123456789' , 'data-height' => '500' ]
 			],
 			[
 				[ 'attr' => 'NaN' ],
 				[ 'attr' => TwitterTagController::REGEX_DIGITS ],
-				[ ]
+				[ 'data-height' => '500' ]
 			],
 			[
 				[ 'attr' => '#bada55' ],
 				[ 'attr' => TwitterTagController::REGEX_HEX_COLOR ],
-				[ 'data-attr' => '#bada55' ]
+				[ 'data-attr' => '#bada55', 'data-height' => '500' ]
 			],
 			[
 				[ 'attr' => '#1ce' ],
 				[ 'attr' => TwitterTagController::REGEX_HEX_COLOR ],
-				[ 'data-attr' => '#1ce' ]
+				[ 'data-attr' => '#1ce', 'data-height' => '500' ]
 			],
 			[
 				[ 'attr' => '#beef' ],
 				[ 'attr' => TwitterTagController::REGEX_HEX_COLOR ],
-				[ ]
+				[ 'data-height' => '500' ]
 			],
 			[
 				[ 'attr' => 'GoodTestName_15' ],
 				[ 'attr' => TwitterTagController::REGEX_TWITTER_SCREEN_NAME ],
-				[ 'data-attr' => 'GoodTestName_15' ]
+				[ 'data-attr' => 'GoodTestName_15', 'data-height' => '500' ]
 			],
 			[
 				[ 'attr' => 'TooLongTestName_18' ],
 				[ 'attr' => TwitterTagController::REGEX_TWITTER_SCREEN_NAME ],
-				[ ]
+				[ 'data-height' => '500' ]
 			],
 			[
 				[ '' => '' ],
 				TwitterTagController::TAG_PERMITTED_ATTRIBUTES,
-				[ ]
+				[ 'data-height' => '500' ]
 			],
 			[
 				[ 'widget-id' => '666' ],
 				TwitterTagController::TAG_PERMITTED_ATTRIBUTES,
-				[ 'data-widget-id' => '666' ]
+				[ 'data-widget-id' => '666', 'data-height' => '500' ]
 			],
 			[
 				[ 'widget-id' => 'foo' ],
 				TwitterTagController::TAG_PERMITTED_ATTRIBUTES,
-				[ ]
+				[ 'data-height' => '500' ]
+			],
+			[
+				[ 'height' => '300' ],
+				TwitterTagController::TAG_PERMITTED_ATTRIBUTES,
+				[ 'data-height' => '300' ]
+			],
+			[
+				[ 'height' => '800' ],
+				TwitterTagController::TAG_PERMITTED_ATTRIBUTES,
+				[ 'data-height' => '800' ]
 			],
 			[
 				[
@@ -172,6 +182,7 @@ class TwitterTagTest extends WikiaBaseTest {
 					'data-theme' => 'light',
 					'data-border-color' => '#123abc',
 					'data-width' => '800',
+					'data-height' => '500',
 					'data-show-replies' => 'true',
 					'data-user-id' => '1142492828',
 					'data-list-owner-screen-id' => '1142492828',

@@ -93,6 +93,8 @@ class Wikia {
 	const EDITNOTICE_INTERFACE_PREFIX = 'editnotice-';
 	const TAG_INTERFACE_PREFIX = 'tag-';
 
+	const DEFAULT_FAVICON_FILE = '/skins/common/images/favicon.ico';
+
 	private static $vars = array();
 	private static $cachedLinker;
 
@@ -146,20 +148,15 @@ class Wikia {
 			wfMemcKey( self::FAVICON_URL_CACHE_KEY ),
 			WikiaResponse::CACHE_STANDARD,
 			function () {
-				$faviconFilename = 'Favicon.ico';
+				$faviconFilename = ThemeSettings::FaviconImageName;
+				$localFavicon = wfFindFile( $faviconFilename );
 
-				$localFaviconTitle = Title::newFromText( $faviconFilename, NS_FILE );
-
-				#FIXME: Checking existance of Title in order to use File. #VID-1744
-				if ( $localFaviconTitle->exists() ) {
-					$localFavicon = wfFindFile( $faviconFilename );
-
-					if ( $localFavicon ) {
-						return $localFavicon->getURL();
-					}
+				if ( $localFavicon ) {
+					return $localFavicon->getUrl();
 				}
 
-				return GlobalFile::newFromText( $faviconFilename, self::COMMUNITY_WIKI_ID )->getURL();
+				// SUS-214: fallback to image in repo instead of Community Central
+				return F::app()->wg->ResourceBasePath . static::DEFAULT_FAVICON_FILE;
 			}
 		);
 	}
@@ -2519,6 +2516,10 @@ class Wikia {
 
 		if ( !empty( $wgWikiDirectedAtChildrenByFounder ) ) {
 			$vars['wgWikiDirectedAtChildrenByFounder'] = $wgWikiDirectedAtChildrenByFounder;
+		}
+
+		if ( self::isUsingSafeJs() ) {
+			$vars['wgUseSiteJs'] = true;
 		}
 
 		return true;

@@ -5,38 +5,89 @@ class PortabilityDashboardModel {
 	const WIKI_ID_FIELD = 'wiki_id';
 	const CUSTOM_INFOBOXES_FIELD = 'custom_infoboxes';
 	const TYPELESS_FIELD = 'typeless';
+	const WIKIS_LIMIT = 500;
 
 	private $connection;
-
-	const WIKIS_LIMIT = 500;
 
 	public function __construct( $db = null ) {
 		$this->connection = $db;
 	}
 
 	/**
-	 * gets model data for portability dashboard
+	 * For wiki url or domain name return portability data
+	 * (dictionary in the one-item array) or empty array if not found
+	 *
+	 * @param $wikiUrl
 	 * @return array
 	 */
-	public function getList() {
-		$rowList = $this->getRowList();
-		$wikiParamsList = $this->getWikiParamsList( $rowList );
+	public function getWikiDataByUrl( $wikiUrl ) {
+		$wiki = [ ];
+		$wikiId = WikiFactory::UrlToID( $wikiUrl );
 
-		return $this->extendRowListWithWikiParams( $rowList, $wikiParamsList );
+		if ( $wikiId ) {
+			$wiki = $this->getWikiById( $wikiId );
+		}
+
+		return $wiki;
 	}
 
 	/**
-	 * gets row list from DB
+	 * Extend array of data received from db with data needed to display
+	 * wiki in Portability Dashboard - wiki url, title and lang.
+	 *
+	 * @param $rowList array
+	 * @return array
+	 */
+	public function extendList( $rowList ) {
+		return $this->extendRowListWithWikiParams( $rowList, $this->getWikiParamsList( $rowList ) );
+	}
+
+	/**
+	 * gets data for portability dashboard for one wiki
+	 *
+	 * @param $id
 	 * @return bool|mixed
 	 */
-	private function getRowList() {
+	private function getWikiById( $id ) {
 		return ( new WikiaSQL() )
 			->SELECT_ALL()
-			->FROM( self::PORTABILITY_DASHBOARD_TABLE )
+			->FROM( static::PORTABILITY_DASHBOARD_TABLE )
+			->WHERE( 'wiki_id' )->EQUAL_TO( $id )
+			->AND_( 'excluded' )->EQUAL_TO( 0 )
+			->ORDER_BY( 'migration_impact' )
+			->DESC()
+			->LIMIT( 1 )
+			->run( $this->readDB(), function ( ResultWrapper $rows ) {
+				$result = [ ];
+				while ( $row = $rows->fetchObject() ) {
+					$result[] = [
+						'wikiId' => $row->wiki_id,
+						'portability' => $this->floatToPercent( $row->portability ),
+						'infoboxPortability' => $this->floatToPercent( $row->infobox_portability ),
+						'traffic' => $row->traffic,
+						'migrationImpact' => $row->migration_impact,
+						'typelessTemplatesCount' => $row->typeless,
+						'customInfoboxesCount' => $row->custom_infoboxes
+					];
+				}
+				return $result;
+			} );
+	}
+
+	/**
+	 * gets full (non filtered) list of data for portability dashboard
+	 * with regard to WIKIS_LIMIT
+	 *
+	 * @return bool|mixed
+	 */
+	public function getRowList() {
+		return ( new WikiaSQL() )
+			->SELECT_ALL()
+			->FROM( static::PORTABILITY_DASHBOARD_TABLE )
 			->WHERE( 'excluded' )->EQUAL_TO( 0 )
 			->ORDER_BY( 'migration_impact' )
 			->DESC()
-			->LIMIT( self::WIKIS_LIMIT )
+			->LIMIT( static::WIKIS_LIMIT )
 			->run( $this->readDB(), function ( ResultWrapper $rows ) {
 				$result = [ ];
 				while ( $row = $rows->fetchObject() ) {

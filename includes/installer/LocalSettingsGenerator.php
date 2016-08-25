@@ -42,7 +42,7 @@ class LocalSettingsGenerator {
 				'wgServer', 'wgScriptPath', 'wgScriptExtension',
 				'wgPasswordSender', 'wgImageMagickConvertCommand', 'wgShellLocale',
 				'wgLanguageCode', 'wgEnableEmail', 'wgEnableUserEmail', 'wgDiff3',
-				'wgEnotifUserTalk', 'wgEnotifWatchlist', 'wgEmailAuthentication',
+				'wgEnotifDiscussions', 'wgEnotifUserTalk', 'wgEnotifWatchlist', 'wgEmailAuthentication',
 				'wgDBtype', 'wgSecretKey', 'wgRightsUrl', 'wgSitename', 'wgRightsIcon',
 				'wgRightsText', 'wgMainCacheType', 'wgEnableUploads',
 				'wgMainCacheType', '_MemCachedServers', 'wgDBserver', 'wgDBuser',
@@ -54,7 +54,7 @@ class LocalSettingsGenerator {
 
 		$unescaped = array( 'wgRightsIcon' );
 		$boolItems = array(
-			'wgEnableEmail', 'wgEnableUserEmail', 'wgEnotifUserTalk',
+			'wgEnableEmail', 'wgEnableUserEmail', 'wgEnotifDiscussions', 'wgEnotifUserTalk',
 			'wgEnotifWatchlist', 'wgEmailAuthentication', 'wgEnableUploads', 'wgUseInstantCommons'
 		);
 
@@ -267,6 +267,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 \$wgEmergencyContact = \"{$this->values['wgEmergencyContact']}\";
 \$wgPasswordSender   = \"{$this->values['wgPasswordSender']}\";
 
+\$wgEnotifDiscussions   = {$this->values['wgEnotifDiscussions']}; # UPO
 \$wgEnotifUserTalk      = {$this->values['wgEnotifUserTalk']}; # UPO
 \$wgEnotifWatchlist     = {$this->values['wgEnotifWatchlist']}; # UPO
 \$wgEmailAuthentication = {$this->values['wgEmailAuthentication']};

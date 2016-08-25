@@ -3129,6 +3129,7 @@ $templates
 	public function userCanPreview() {
 		if ( $this->getRequest()->getVal( 'action' ) != 'submit'
 			|| !$this->getRequest()->wasPosted()
+			|| !$this->getUser()->isLoggedIn()
 			|| !$this->getUser()->matchEditToken(
 				$this->getRequest()->getVal( 'wpEditToken' ) )
 		) {

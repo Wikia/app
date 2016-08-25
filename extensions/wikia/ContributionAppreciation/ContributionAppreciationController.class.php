@@ -1,15 +1,18 @@
 <?php
 
 class ContributionAppreciationController extends WikiaController {
+	const SUPPORTED_LANGUAGES = [ 'en' ];
+
 	public function appreciate() {
 		global $wgUser, $wgCityId;
 
+		$id = 0;
 		$this->request->assertValidWriteRequest( $wgUser );
 		$revisionId = $this->request->getInt( 'revision' );
 		$revision = Revision::newFromId( $revisionId );
 
-		if ( $revision ) {
-			( new RevisionUpvotesService() )->addUpvote(
+		if ( $revision && !$wgUser->isBlocked() ) {
+			$id = ( new RevisionUpvotesService() )->addUpvote(
 				$wgCityId,
 				$revision->getPage(),
 				$revisionId,
@@ -17,35 +20,37 @@ class ContributionAppreciationController extends WikiaController {
 				$wgUser->getId()
 			);
 
-			$this->sendMail( $revisionId );
+			// send email that user received appreciation.
+			// Currently disabled because of: https://wikia-inc.atlassian.net/browse/WW-172
+			// $this->sendMail( $revisionId );
+
+			\Wikia\Logger\WikiaLogger::instance()->info('ContributionAppreciationMessage email send', [
+				'revision_id' => $revisionId,
+				'appreciation_receiver' => $revision->getRawUser()
+			]);
 		}
+
+		$this->response->setValues( [
+			'id' => $id,
+			'appreciated' => !empty( $id )
+		] );
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 	}
 
 	public function getAppreciations() {
 		global $wgUser;
 
-		$html = '';
-		$upvotesService = new RevisionUpvotesService();
-		$upvotes = $upvotesService->getUserNewUpvotes( $wgUser->getId() );
+		$upvotes = ( new RevisionUpvotesService() )->getUserNewUpvotes( $wgUser->getId() );
 
 		if ( !empty( $upvotes ) ) {
 			$appreciations = $this->prepareAppreciations( $upvotes );
 
 			if ( !empty( $appreciations ) ) {
-				$html = $this->app->renderView( 'ContributionAppreciation', 'appreciations', [
-					'appreciations' => $appreciations
-				] );
+				$numberOfAppreciations = count( $appreciations );
+				$this->appreciations = $appreciations;
+				$this->numberOfHiddenAppreciations = $numberOfAppreciations > 2 ? $numberOfAppreciations - 2 : 0;
 			}
 		}
-
-		$this->response->setBody( $html );
-	}
-
-	public function appreciations() {
-		$appreciations = $this->getVal( 'appreciations' );
-		$numberOfAppreciations = count( $appreciations );
-		$this->numberOfHiddenAppreciations = $numberOfAppreciations > 2 ? $numberOfAppreciations - 2 : 0;
-		$this->appreciations = $appreciations;
 	}
 
 	public function diffModule() {
@@ -60,7 +65,7 @@ class ContributionAppreciationController extends WikiaController {
 		global $wgUser;
 
 		// no appreciation for yourself
-		if ( self::shouldDisplayAppreciation() && $wgUser->getId() !== $newRev->getUser() ) {
+		if ( static::shouldDisplayAppreciation() && $wgUser->getId() !== $newRev->getUser() ) {
 			Wikia::addAssetsToOutput( 'contribution_appreciation_js' );
 			Wikia::addAssetsToOutput( 'contribution_appreciation_scss' );
 			$out->addHTML( F::app()->renderView(
@@ -77,7 +82,7 @@ class ContributionAppreciationController extends WikiaController {
 		global $wgUser;
 
 		// no appreciation for yourself
-		if ( self::shouldDisplayAppreciation() && $wgUser->getId() !== intval( $row->rev_user ) ) {
+		if ( static::shouldDisplayAppreciation() && $wgUser->getId() !== intval( $row->rev_user ) ) {
 			$tools[] = F::app()->renderView( 'ContributionAppreciation', 'historyModule', [ 'revision' => $row->rev_id ] );
 		}
 
@@ -85,7 +90,7 @@ class ContributionAppreciationController extends WikiaController {
 	}
 
 	public static function onPageHistoryBeforeList() {
-		if ( self::shouldDisplayAppreciation() ) {
+		if ( static::shouldDisplayAppreciation() ) {
 			Wikia::addAssetsToOutput( 'contribution_appreciation_js' );
 			Wikia::addAssetsToOutput( 'contribution_appreciation_scss' );
 		}
@@ -93,9 +98,8 @@ class ContributionAppreciationController extends WikiaController {
 		return true;
 	}
 
-
 	public static function onBeforePageDisplay( \OutputPage $out, \Skin $skin ) {
-		if ( self::shouldDisplayAppreciation() ) {
+		if ( static::shouldDisplayAppreciation() ) {
 			Wikia::addAssetsToOutput( 'contribution_appreciation_user_js' );
 			Wikia::addAssetsToOutput( 'contribution_appreciation_user_scss' );
 		}
@@ -104,10 +108,18 @@ class ContributionAppreciationController extends WikiaController {
 	}
 
 	private static function shouldDisplayAppreciation() {
-		global $wgUser, $wgLang;
+		global $wgUser, $wgLang, $wgEnableCommunityPageExt;
 
-		// we want to run it only for english users
-		return $wgUser->isLoggedIn() && $wgLang->getCode() === 'en';
+		// we want to run it only for a subset of users: logged in, not blocked,
+		// using languages supported in experiment
+		return $wgUser->isLoggedIn() &&
+			!$wgUser->isBlocked() &&
+			static::isSuportedAppreciationLang( $wgLang->getCode() ) &&
+			!empty( $wgEnableCommunityPageExt );
+	}
+
+	private static function isSuportedAppreciationLang( $lang ) {
+		return in_array( $lang, static::SUPPORTED_LANGUAGES );
 	}
 
 	private function prepareAppreciations( $upvotes ) {
@@ -169,18 +181,23 @@ class ContributionAppreciationController extends WikiaController {
 		$revision = Revision::newFromId( $revisionId );
 
 		if ( $revision ) {
-			$editedPageTitle = $revision->getTitle();
-			$params = [
-				'buttonLink' => SpecialPage::getTitleFor( 'Community' )->getFullURL(),
-				'targetUser' => $revision->getUserText(),
-				'editedPageTitleText' => $editedPageTitle->getText(),
-				'editedWikiName' => $wgSitename,
-				'revisionUrl' => $editedPageTitle->getFullURL( [
-					'diff' => $revision->getId()
-				] )
-			];
+			$diffAuthor = \User::newFromId( $revision->getUser() );
 
-			$this->app->sendRequest( 'Email\Controller\ContributionAppreciationMessageController', 'handle', $params );
+			// we want to send appreciation email for en users only
+			if ( $diffAuthor && static::isSuportedAppreciationLang( $diffAuthor->getGlobalPreference( 'language' ) ) ) {
+				$editedPageTitle = $revision->getTitle();
+				$params = [
+					'buttonLink' => SpecialPage::getTitleFor( 'Community' )->getFullURL(),
+					'targetUser' => $diffAuthor->getName(),
+					'editedPageTitleText' => $editedPageTitle->getText(),
+					'editedWikiName' => $wgSitename,
+					'revisionUrl' => $editedPageTitle->getFullURL( [
+						'diff' => $revision->getId()
+					] )
+				];
+
+				$this->app->sendRequest( 'Email\Controller\ContributionAppreciationMessageController', 'handle', $params );
+			}
 		}
 	}
 }
