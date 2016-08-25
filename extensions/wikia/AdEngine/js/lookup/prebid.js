@@ -1,10 +1,11 @@
 /*global define*/
 define('ext.wikia.adEngine.lookup.prebid', [
+	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.lookup.adapter.appnexus',
 	'ext.wikia.adEngine.lookup.lookupFactory',
 	'wikia.document',
 	'wikia.window'
-], function (appnexus, factory, doc, win) {
+], function (adContext, appnexus, factory, doc, win) {
 	'use strict';
 
 	var adapters = [
@@ -15,7 +16,7 @@ define('ext.wikia.adEngine.lookup.prebid', [
 		bidderKey = 'hb_bidder',
 		bidKey = 'hb_pb',
 		sizeKey = 'hb_size',
-		url = '//acdn.adnxs.com/prebid/prebid.js';
+		url = adContext.getContext().opts.prebidBidderUrl || '//acdn.adnxs.com/prebid/prebid.js';
 
 	function addAdUnits(adapterAdUnits) {
 		adapterAdUnits.forEach(function (adUnit) {
