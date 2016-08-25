@@ -473,7 +473,7 @@ class ScribeEventProducer {
 	public function setMediaLinks( $oPage ) {
 		wfProfileIn(__METHOD__);
 
-		$links = array( 'image' => 0, 'video' => 0 );
+		$links = [ 'image' => 0, 'video' => 0 ];
 		if ( isset( $oPage->mPreparedEdit ) && isset( $oPage->mPreparedEdit->output ) ) {
 			$images = $oPage->mPreparedEdit->output->getImages();
 			if ( !empty($images) ) {
@@ -481,22 +481,12 @@ class ScribeEventProducer {
 					$file = wfFindFile($iname);
 					if ($file instanceof LocalFile) {
 						$mediaType = $file->getMediaType();
-						switch ($mediaType) {
-							case MEDIATYPE_VIDEO:
-								$links['video']++;
-								break;
-							default:
-								$links['image']++;
-						}
+						$linkName = $mediaType === MEDIATYPE_VIDEO ? 'video' : 'image';
 					}
 					else {
-						//@todo remove this code after video refactoring
-						if ( substr($iname, 0, 1) == ':' ) {
-							$links['video']++;
-						} else {
-							$links['image']++;
-						}
+						$linkName = substr( $iname, 0, 1 ) == ':' ? 'video' : 'image';
 					}
+					$links[ $linkName ]++;
 				}
 			}
 		}
