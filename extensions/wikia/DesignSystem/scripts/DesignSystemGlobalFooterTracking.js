@@ -18,8 +18,8 @@ $(function ($) {
 
 		if (label !== false) {
 			track({
-					  label: label
-				  });
+				label: label
+			});
 		}
 	});
 });
