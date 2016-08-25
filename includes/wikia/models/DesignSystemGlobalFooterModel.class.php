@@ -29,7 +29,9 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 			'social-twitter' => 'https://twitter.com/wikia',
 			'social-reddit' => null,
 			'social-youtube' => 'https://www.youtube.com/user/wikia',
-			'social-instagram' => null
+			'social-instagram' => null,
+			'app-store' => 'https://itunes.apple.com/developer/wikia-inc./id422467077',
+			'google-play' => 'https://play.google.com/store/apps/developer?id=Wikia,+Inc.'
 		],
 		'de' => [
 			'fan-communities' => 'http://de.wikia.com/Wikia',
@@ -48,7 +50,9 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 			'social-facebook' => 'https://www.facebook.com/wikia.de',
 			'social-twitter' => 'https://twitter.com/wikia_de',
 			'social-youtube' => 'https://www.youtube.com/user/WikiaDE',
-			'social-instagram' => 'https://www.instagram.com/wikia_de/'
+			'social-instagram' => 'https://www.instagram.com/wikia_de/',
+			'app-store' => 'https://itunes.apple.com/de/artist/wikia-inc./id422467077',
+			'google-play' => 'https://play.google.com/store/apps/developer?id=Wikia,+Inc.&hl=de'
 		],
 		'en' => [
 			'fan-contributor' => 'http://fandom.wikia.com/fan-contributor',
@@ -75,7 +79,9 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 			'social-facebook' => 'https://www.facebook.com/wikia.es',
 			'social-twitter' => 'https://twitter.com/wikia_es',
 			'social-youtube' => 'https://www.youtube.com/channel/UCjwNzRwdDqpmELNZsJv3PSg',
-			'social-instagram' => 'https://www.instagram.com/wikiaes/'
+			'social-instagram' => 'https://www.instagram.com/wikiaes/',
+			'app-store' => 'https://itunes.apple.com/es/artist/wikia-inc./id422467077',
+			'google-play' => 'https://play.google.com/store/apps/developer?id=Wikia,+Inc.&hl=es'
 		],
 		'fr' => [
 			'fan-communities' => 'http://fr.wikia.com/Wikia',
@@ -92,6 +98,8 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 			'social-facebook' => 'https://www.facebook.com/wikia.fr',
 			'social-twitter' => 'https://twitter.com/wikia_fr',
 			'social-youtube' => 'https://www.youtube.com/channel/UClzAEgYaMs0SyDnXS4cyefg',
+			'app-store' => 'https://itunes.apple.com/fr/artist/wikia-inc./id422467077',
+			'google-play' => 'https://play.google.com/store/apps/developer?id=Wikia,+Inc.&hl=fr'
 		],
 		'it' => [
 			'fan-communities' => 'http://it.community.wikia.com/wiki/Wiki_della_Community',
@@ -106,6 +114,8 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 			'help' => 'http://it.community.wikia.com/wiki/Aiuto:Aiuto_Wiki',
 			'social-facebook' => 'https://www.facebook.com/wikia.it',
 			'social-twitter' => 'https://twitter.com/wikia_it',
+			'app-store' => 'https://itunes.apple.com/it/artist/wikia-inc./id422467077',
+			'google-play' => 'https://play.google.com/store/apps/developer?id=Wikia,+Inc.&hl=it'
 		],
 		'ja' => [
 			'fan-communities' => 'http://ja.wikia.com/',
@@ -121,6 +131,8 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 			'help' => 'http://ja.community.wikia.com/wiki/%E3%83%98%E3%83%AB%E3%83%97:%E3%82%B3%E3%83%B3%E3%83%86%E3%83%B3%E3%83%84',
 			'media-kit' => 'http://www.wikia.com/mediakit?uselang=ja',
 			'social-twitter' => 'https://twitter.com/wikiajapan',
+			'app-store' => 'https://itunes.apple.com/jp/artist/wikia-inc./id422467077',
+			'google-play' => 'https://play.google.com/store/apps/developer?id=Wikia,+Inc.&hl=ja'
 		],
 		'pl' => [
 			'fan-communities' => 'http://pl.wikia.com/Wikia',
@@ -136,6 +148,8 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 			'help' => 'http://spolecznosc.wikia.com/wiki/Pomoc:Zawarto%C5%9B%C4%87',
 			'social-facebook' => 'https://www.facebook.com/wikiapl',
 			'social-twitter' => 'https://twitter.com/wikia_pl',
+			'app-store' => 'https://itunes.apple.com/pl/artist/wikia-inc./id422467077',
+			'google-play' => 'https://play.google.com/store/apps/developer?id=Wikia,+Inc.&hl=pl'
 		],
 		'pt-br' => [
 			'fan-communities' => 'http://pt-br.wikia.com/wiki/Wikia_em_Portugu%C3%AAs',
@@ -151,6 +165,8 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 			'social-facebook' => 'https://www.facebook.com/WikiaemPT',
 			'social-twitter' => 'https://twitter.com/ComunidadeWikia',
 			'social-youtube' => 'https://www.youtube.com/channel/UCi8B4eUGFLU7SjHWFIjt3WQ',
+			'app-store' => 'https://itunes.apple.com/br/artist/wikia-inc./id422467077',
+			'google-play' => 'https://play.google.com/store/apps/developer?id=Wikia,+Inc.&hl=pt-br'
 		],
 		'ru' => [
 			'fan-communities' => 'http://ru.wikia.com/wiki/%D0%92%D0%B8%D0%BA%D0%B8%D1%8F_%D0%BD%D0%B0_%D1%80%D1%83%D1%81%D1%81%D0%BA%D0%BE%D0%BC',
@@ -165,6 +181,8 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 			'help' => 'http://ru.community.wikia.com/wiki/%D0%A1%D0%BF%D1%80%D0%B0%D0%B2%D0%BA%D0%B0:%D0%A1%D0%BE%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%BD%D0%B8%D0%B5',
 			'social-facebook' => 'https://www.facebook.com/wikia.ru',
 			'social-twitter' => 'https://twitter.com/wikia_ru',
+			'app-store' => 'https://itunes.apple.com/ru/artist/wikia-inc./id422467077',
+			'google-play' => 'https://play.google.com/store/apps/developer?id=Wikia,+Inc.&hl=ru'
 		],
 		'zh' => [
 			'fan-communities' => 'http://zh.wikia.com/wiki/Wikia%E4%B8%AD%E6%96%87',
@@ -175,6 +193,8 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 			'wam' => 'http://www.wikia.com/WAM?langCode=zh',
 			'help' => 'http://zh.community.wikia.com/wiki/Help:%E5%86%85%E5%AE%B9',
 			'social-facebook' => 'https://www.facebook.com/ChineseWikia',
+			'app-store' => 'https://itunes.apple.com/cn/artist/wikia-inc./id422467077',
+			'google-play' => 'https://play.google.com/store/apps/developer?id=Wikia,+Inc.&hl=zh'
 		],
 		'zh-tw' => [
 			'fan-communities' => 'http://zh-tw.wikia.com/wiki/Wikia%E4%B8%AD%E6%96%87',
@@ -187,6 +207,8 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 			'wam' => 'http://www.wikia.com/WAM?langCode=zh-tw',
 			'help' => 'http://zh.community.wikia.com/wiki/Help:%E5%86%85%E5%AE%B9',
 			'social-facebook' => 'https://www.facebook.com/ChineseWikia',
+			'app-store' => 'https://itunes.apple.com/tw/artist/wikia-inc./id422467077',
+			'google-play' => 'https://play.google.com/store/apps/developer?id=Wikia,+Inc.&hl=zh-tw'
 		]
 	];
 
@@ -337,7 +359,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 							'type' => 'translatable-text',
 							'key' => 'global-footer-community-apps-link-app-store'
 						],
-						'href' => 'https://itunes.apple.com/developer/wikia-inc./id422467077'
+						'href' => $this->getHref( 'app-store' )
 					],
 					[
 						'type' => 'link-image',
@@ -346,7 +368,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 							'type' => 'translatable-text',
 							'key' => 'global-footer-community-apps-link-google-play'
 						],
-						'href' => 'https://play.google.com/store/apps/developer?id=Wikia,+Inc.'
+						'href' => $this->getHref( 'google-play' )
 					]
 				]
 			],
