@@ -18,9 +18,9 @@ class ARecoveryModule {
 		return !empty( $wgEnableUsingSourcePointProxyForCSS );
 	}
 	
-	public static function getSourcePointBootStrapCode() {
+	public static function getSourcePointBootstrapCode() {
 		if ( !static::isEnabled() ) {
-			return PHP_EOL . '<!-- SourcePoint recovery disabled. -->' . PHP_EOL;
+			return PHP_EOL . '<!-- Recovery disabled. -->' . PHP_EOL;
 		}
 		return F::app()->sendRequest( 'ARecoveryEngineApiController', 'getBootstrap' );
 	}
