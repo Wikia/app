@@ -23,20 +23,20 @@ class ScribeEventProducer {
 		$this->app = F::app();
 		switch ( $key ) {
 			case 'edit':
-				$this->mKey = self::EDIT_CATEGORY;
-				$this->mEventType = self::EDIT_CATEGORY_INT;
+				$this->mKey = static::EDIT_CATEGORY;
+				$this->mEventType = static::EDIT_CATEGORY_INT;
 				break;
 			case 'create':
-				$this->mKey = self::CREATEPAGE_CATEGORY;
-				$this->mEventType = self::CREATEPAGE_CATEGORY_INT;
+				$this->mKey = static::CREATEPAGE_CATEGORY;
+				$this->mEventType = static::CREATEPAGE_CATEGORY_INT;
 				break;
 			case 'delete':
-				$this->mKey = self::DELETE_CATEGORY;
-				$this->mEventType = self::DELETE_CATEGORY_INT;
+				$this->mKey = static::DELETE_CATEGORY;
+				$this->mEventType = static::DELETE_CATEGORY_INT;
 				break;
 			case 'undelete':
-				$this->mKey = self::UNDELETE_CATEGORY;
-				$this->mEventType = self::UNDELETE_CATEGORY_INT;
+				$this->mKey = static::UNDELETE_CATEGORY;
+				$this->mEventType = static::UNDELETE_CATEGORY_INT;
 				break;
 			default:
 				WikiaLogger::instance()->error("ScribeEventProducer::not valid key");
