@@ -477,7 +477,7 @@ class ScribeEventProducer {
 	public function setMediaLinks( $oPage ) {
 		wfProfileIn(__METHOD__);
 
-		$links = [ self::IMAGE => 0, self::VIDEO => 0 ];
+		$links = [ static::IMAGE => 0, static::VIDEO => 0 ];
 		if ( isset( $oPage->mPreparedEdit ) && isset( $oPage->mPreparedEdit->output ) ) {
 			$images = $oPage->mPreparedEdit->output->getImages();
 			if ( !empty($images) ) {
@@ -485,18 +485,18 @@ class ScribeEventProducer {
 					$file = wfFindFile($iname);
 					if ($file instanceof LocalFile) {
 						$mediaType = $file->getMediaType();
-						$linkName = $mediaType === MEDIATYPE_VIDEO ? self::VIDEO : self::IMAGE;
+						$linkName = $mediaType === MEDIATYPE_VIDEO ? static::VIDEO : static::IMAGE;
 					}
 					else {
-						$linkName = substr( $iname, 0, 1 ) == ':' ? self::VIDEO : self::IMAGE;
+						$linkName = substr( $iname, 0, 1 ) == ':' ? static::VIDEO : static::IMAGE;
 					}
 					$links[ $linkName ]++;
 				}
 			}
 		}
 
-		$this->setImageLinks( $links[ self::IMAGE ] );
-		$this->setVideoLinks( $links[ self::VIDEO ] );
+		$this->setImageLinks( $links[ static::IMAGE ] );
+		$this->setVideoLinks( $links[ static::VIDEO ] );
 
 		wfProfileOut(__METHOD__);
 
