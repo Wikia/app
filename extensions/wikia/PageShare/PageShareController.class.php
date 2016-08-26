@@ -3,8 +3,11 @@
 class PageShareController extends WikiaController {
 
 	public function index() {
-		Wikia::addAssetsToOutput( 'page_share_scss' );
-		Wikia::addAssetsToOutput( 'page_share_js' );
+		// SUS-936: Only load these assets for article related pages
+		if ( $this->wg->Out->isArticleRelated() ) {
+			Wikia::addAssetsToOutput( 'page_share_scss' );
+			Wikia::addAssetsToOutput( 'page_share_js' );
+		}
 
 		$this->skipRendering();
 	}
