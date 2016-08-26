@@ -138,7 +138,7 @@ class AppPromoLandingController extends WikiaController {
 		$this->branchKey = $this->wg->memc->get( $branchKeyMemcKey );
 		if ( empty( $this->branchKey ) ){
 			$branchUrl = static::BRANCH_API_URL."{$this->config->branch_app_id}?user_id=".$this->wg->BranchUserId;
-			$req = MWHttpRequest::factory( $branchUrl, array( 'noProxy' => true ) );
+			$req = MWHttpRequest::factory( $branchUrl, [ 'noProxy' => true ] );
 			$status = $req->execute();
 			if( $status->isOK() ) {
 				$response = $req->getContent();
@@ -225,7 +225,7 @@ class AppPromoLandingController extends WikiaController {
 		$memcKey = wfMemcKey( static::$CACHE_KEY, static::$CACHE_KEY_VERSION );
 		$response = F::app()->wg->memc->get( $memcKey );
 		if ( empty( $response ) ){
-			$req = MWHttpRequest::factory( static::APP_CONFIG_SERVICE_URL, array( 'noProxy' => true ) );
+			$req = MWHttpRequest::factory( static::APP_CONFIG_SERVICE_URL, [ 'noProxy' => true ] );
 			$status = $req->execute();
 			if( $status->isOK() ) {
 				$response = $req->getContent();
