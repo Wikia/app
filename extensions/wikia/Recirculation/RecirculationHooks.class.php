@@ -32,9 +32,19 @@ class RecirculationHooks {
 		return true;
 	}
 
+	/**
+	 * Hook: BeforePageDisplay
+	 * Add Recirculation Sass styles and JSMessages package to output
+	 * @param OutputPage $out
+	 * @param Skin $skin
+	 * @return bool true to continue hook processing
+	 */
 	public static function onBeforePageDisplay( OutputPage $out, Skin $skin ) {
-		JSMessages::enqueuePackage( 'Recirculation', JSMessages::EXTERNAL );
-		Wikia::addAssetsToOutput( 'recirculation_scss' );
+		// SUS-936: Only load Recirculation assets if they're required
+		if ( static::isCorrectPageType() ) {
+			JSMessages::enqueuePackage( 'Recirculation', JSMessages::EXTERNAL );
+			Wikia::addAssetsToOutput( 'recirculation_scss' );
+		}
 		return true;
 	}
 
