@@ -22,11 +22,20 @@ class RemoveImapTags extends Maintenance {
 	 */
 	private $maps;
 
+	/**
+	 * @var Array
+	 */
+	private $mapsClientConfig;
+
 	public function __construct() {
 		parent::__construct();
 		$this->mDescription = "Removes from articles <imap /> tags for given tiles' set id.";
 		$this->addOption( 'test', 'Test mode; make no changes', $required = false, $withArg = false, 't' );
 		$this->addOption( 'verbose', 'Show extra debugging output', $required = false, $withArg = false, 'v' );
+		$this->addOption( 'maps-db-host', 'WikiaMaps DB host', $required = true, $withArg = true );
+		$this->addOption( 'maps-db-user', 'WikiaMaps DB user', $required = true, $withArg = true );
+		$this->addOption( 'maps-db-pass', 'WikiaMaps DB pass', $required = true, $withArg = true );
+		$this->addOption( 'maps-db-name', 'WikiaMaps DB name', $required = true, $withArg = true );
 		$this->addOption(
 			'tiles-set-id',
 			'Specify a tiles\' set id which leads to a group of maps which <imap /> tags should get removed',
@@ -64,6 +73,20 @@ class RemoveImapTags extends Maintenance {
 		return self::isValidInteger( $cityId );
 	}
 
+	public function getMapsIdsUsingTileset( $cityId, $tilesSetId ) {
+		$dbw = new DatabaseMysqli(
+			$this->getOption('maps-db-host'),
+			$this->getOption('maps-db-user'),
+			$this->getOption('maps-db-pass'),
+			$this->getOption('maps-db-name')
+		);
+
+		return $dbw->selectFieldValues( 'map', 'id', [
+				'city_id' => $cityId,
+				'tile_set_id' => $tilesSetId
+		] );
+	}
+
 	public function isValidTilesSetId( $tilesSetId ) {
 		if ( !self::isValidInteger( $tilesSetId ) ) {
 			return false;
@@ -82,7 +105,8 @@ class RemoveImapTags extends Maintenance {
 
 	public function execute() {
 		$this->app = F::app();
-		$this->maps = new WikiaMaps( $this->app->wg->IntMapConfig );
+		$this->mapsClientConfig = $this->app->wg->IntMapConfig;
+		$this->maps = new WikiaMaps( $this->mapsClientConfig );
 
 		self::$test = $this->hasOption( 'test' );
 		self::$verbose = $this->hasOption( 'verbose' );
@@ -102,6 +126,19 @@ class RemoveImapTags extends Maintenance {
 
 		if ( !$this->isValidTilesSetId( $tilesSetId ) ) {
 			self::debug( 'Invalid tiles-set-id. Try again.' );
+			die;
+		}
+
+		// get maps using this tiles set
+		// foreach map walk through articles and check if there is <imap /> tag with it
+		// -- if there is remove it and save page edit with a comment
+
+		$mapsUsingTheTileset = self::getMapsIdsUsingTileset( $this->app->wg->CityId, $tilesSetId );
+		$mapsUsingTheTilesetCount = count($mapsUsingTheTileset);
+		self::debug( sprintf( "Found %d maps using the tiles's set #%d", $mapsUsingTheTilesetCount, $tilesSetId ) );
+
+		if ( $mapsUsingTheTilesetCount === 0 ) {
+			echo 'No maps found.' . PHP_EOL;
 			die;
 		}
 
