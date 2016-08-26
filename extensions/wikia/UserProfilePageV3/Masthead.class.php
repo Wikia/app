@@ -518,10 +518,6 @@ class Masthead {
 		wfProfileOut( __METHOD__ );
 	}
 
-	private function getThumbPath( $dir ) {
-		return str_replace( "/avatars/", "/avatars/thumb/", $dir );
-	}
-
 	/**
 	 * While this is technically downloading the URL, the function's purpose is to be similar
 	 * to uploadFile, but instead of having the file come from the user's computer, it comes
