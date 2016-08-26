@@ -97,6 +97,29 @@ class RemoveImapTags extends Maintenance {
 		] );
 	}
 
+	public function hasImapTag( $articleId, &$foundTags, &$foundTagsMapIds ) {
+		$article = Article::newFromID( $articleId );
+
+		if ( $article->getID() ) {
+			$results = null;
+			$articleContent = $article->getContent();
+			$imapSearchRegexp = '/<imap.*map\\-id\\="(\\d{1,})".*.<\\/imap>/';
+
+			$noOfFoundTags = preg_match_all($imapSearchRegexp, $articleContent, $results);
+
+			if( $noOfFoundTags === 0 ) {
+				return false;
+			}
+
+			$foundTags = $results[0];
+			$foundTagsMapIds = $results[1];
+
+			return true;
+		} else {
+			echo sprintf( 'Article #%d does not exist anymore', $articleId ) . PHP_EOL;
+		}
+	}
+
 	public function isValidTilesSetId( $tilesSetId ) {
 		if ( !self::isValidInteger( $tilesSetId ) ) {
 			return false;
@@ -157,7 +180,19 @@ class RemoveImapTags extends Maintenance {
 			echo 'No articles using <imap/> found. Have you ran "forced" wikia/backend/bin/specials/tags_report.pl before?' . PHP_EOL;
 			die;
 		}
-		
+
+		foreach( $articlesUsingImap as $articleId ) {
+			self::debug( sprintf( "Checks article #%d", $articleId ) );
+
+			$foundTags = [];
+			$foundTagsMapIds = [];
+			if ( !$this->hasImapTag( $articleId, $foundTags, $foundTagsMapIds ) ) {
+				self::debug( sprintf( "No <imap /> tags in article #%d", $articleId ) );
+			} else {
+				// remove <imap /> as WikiaBot
+			}
+		}
+
 		echo 'Done.' . PHP_EOL;
 	}
 }
