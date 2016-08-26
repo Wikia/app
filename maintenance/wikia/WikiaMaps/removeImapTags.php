@@ -2,32 +2,39 @@
 
 /**
  * Maintenance script to remove real-world <imap /> tags from articles
+ *
+ * @usage SERVER_ID=203236 php removeImapTags.php --tiles-set-id=123 --dry-run
  */
 
 ini_set( "include_path", dirname( __FILE__ )."/../../" );
 
 require_once( "commandLine.inc" );
 
+global $wgCityId;
+
 $displayHelp = isset( $options['help'] );
-$dryRun = isset( $options['help'] );
-$cityId = $options['city-id'];
+$dryRun = isset( $options['dry-run'] );
+$tilesSetId = isset( $options['tiles-set-id'] ) ? $options['tiles-set-id'] : -1;
 
-function isValidCityId($cityId) {
-	$cityId = intval($cityId);
+function isValidTilesSetId( $tilesSetId ) {
+	$tilesSetId = intval( $tilesSetId );
 
-	if( $cityId <= 0 ) {
+	if( $tilesSetId <= 0 ) {
 		return false;
 	}
 
 	return true;
 }
 
-function run( $cityId, $displayHelp, $dryRun ) {
+function printMsg( $msg ) {
+	echo $msg . PHP_EOL;
+}
+
+function run( $tilesSetId, $displayHelp, $dryRun ) {
 	if ( $displayHelp ) {
 		die(
 		<<<TXT
-		Usage: php removeImapTags.php [--help] [--dry-run] --city-id --tiles-set-id
---city-id		wiki id on which the clean up is supposed to take place
+		Usage: php removeImapTags.php [--help] [--dry-run] --tiles-set-id
 --tiles-set-id		tiles-set-id used by maps which thumbnails are supposed to be removed
 --dry-run		dry run - prints information to the output but does not modify data
 --help			you are reading it right now
@@ -36,15 +43,18 @@ TXT
 		);
 	}
 
-	if ( !isValidCityId($cityId) ) {
-		die("Invalid city-id. Try again.");
+	if ( !isValidTilesSetId( $tilesSetId ) ) {
+		printMsg( 'Invalid tiles-set-id. Try again.' );
+		die;
 	}
 
 	if ( $dryRun ) {
-		echo 'mode: dry run' . PHP_EOL;
+		printMsg( 'Mode: dry-run' );
+	} else {
+		printMsg( 'Mode: normal' );
 	}
 
-	echo 'Done.' . PHP_EOL;
+	printMsg( 'Done.' );
 }
 
-run( $cityId, $displayHelp, $dryRun );
+run( $tilesSetId, $displayHelp, $dryRun );
