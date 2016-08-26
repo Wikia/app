@@ -1,0 +1,13 @@
+<script>
+	require([
+		'wikia.geo',
+		'wikia.instantGlobals',
+		require.optional('{{moduleName}}')
+	], function (geo, globals, bidder) {
+		var countries = globals['{{wgCountriesVariable}}'];
+
+		if (bidder && geo.isProperGeo(countries)) {
+			bidder.call();
+		}
+	});
+</script>

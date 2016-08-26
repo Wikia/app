@@ -1,8 +1,9 @@
 <?php
 
 class AnalyticsProviderRubiconVulcan implements iAnalyticsProvider {
-	const TEMPLATE = 'extensions/wikia/AnalyticsEngine/templates/rubicon_vulcan.mustache';
 	const COUNTRIES_VARIABLE = 'wgAdDriverRubiconVulcanCountries';
+	const MODULE_NAME = 'ext.wikia.adEngine.lookup.rubiconVulcan';
+	const TEMPLATE = 'extensions/wikia/AnalyticsEngine/templates/bidder.mustache';
 
 	public static function isEnabled() {
 		global $wgAdDriverEnableRubiconVulcan, $wgShowAds;
@@ -24,7 +25,10 @@ class AnalyticsProviderRubiconVulcan implements iAnalyticsProvider {
 		if ( static::isEnabled() ) {
 			return \MustacheService::getInstance()->render(
 				static::TEMPLATE,
-				[ 'wgCountriesVariable' => static::COUNTRIES_VARIABLE ]
+				[
+					'moduleName' => static::MODULE_NAME,
+					'wgCountriesVariable' => static::COUNTRIES_VARIABLE
+				]
 			);
 		}
 
