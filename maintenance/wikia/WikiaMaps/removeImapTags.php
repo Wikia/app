@@ -10,20 +10,21 @@ ini_set( "include_path", dirname( __FILE__ )."/../../" );
 
 require_once( "commandLine.inc" );
 
-global $wgCityId;
-
 $displayHelp = isset( $options['help'] );
 $dryRun = isset( $options['dry-run'] );
 $tilesSetId = isset( $options['tiles-set-id'] ) ? $options['tiles-set-id'] : -1;
 
+function isValidInteger( $int ) {
+	$int = intval( $int );
+	return ( $int <= 0 ) ? false : true;
+}
+
+function isValidCityId( $cityId ) {
+	return isValidInteger( $cityId );
+}
+
 function isValidTilesSetId( $tilesSetId ) {
-	$tilesSetId = intval( $tilesSetId );
-
-	if( $tilesSetId <= 0 ) {
-		return false;
-	}
-
-	return true;
+	return isValidInteger( $tilesSetId );
 }
 
 function printMsg( $msg ) {
@@ -31,6 +32,8 @@ function printMsg( $msg ) {
 }
 
 function run( $tilesSetId, $displayHelp, $dryRun ) {
+	global $wgCityId;
+
 	if ( $displayHelp ) {
 		die(
 		<<<TXT
@@ -41,6 +44,11 @@ function run( $tilesSetId, $displayHelp, $dryRun ) {
 
 TXT
 		);
+	}
+
+	if ( !isValidCityId( $wgCityId ) ) {
+		printMsg( 'Invalid city-id. Try again.' );
+		die;
 	}
 
 	if ( !isValidTilesSetId( $tilesSetId ) ) {
