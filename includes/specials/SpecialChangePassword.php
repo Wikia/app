@@ -256,21 +256,21 @@ class SpecialChangePassword extends UnlistedSpecialPage {
 		}
 
 		try {
-			$user->setPassword( $this->mNewpass );
+			$user->setPasswordAndClearTokens( $this->mNewpass );
 			wfRunHooks( 'PrefsPasswordAudit', array( $user, $newpass, 'success' ) );
-            $this->mNewpass = $this->mOldpass = $this->mRetypePass = '';
+			$this->mNewpass = $this->mOldpass = $this->mRetypePass = '';
 
 		} catch( PasswordError $e ) {
-			wfRunHooks( 'PrefsPasswordAudit', array( $user, $newpass, 'error' ) );
-			throw new PasswordError( $e->getMessage() );
+			wfRunHooks('PrefsPasswordAudit', array($user, $newpass, 'error'));
+			throw new PasswordError($e->getMessage());
 		}
 
 		$user->setCookies();
 		$user->saveSettings();
 
-        if(!$user->checkPassword($newpass)){
-            //This should never happen
-            throw new PasswordError( $this->msg( 'resetpass-wrong-oldpass' )->text() );
-        }
+		if(!$user->checkPassword($newpass)){
+			//This should never happen
+			throw new PasswordError( $this->msg( 'resetpass-wrong-oldpass' )->text() );
+		}
 	}
 }

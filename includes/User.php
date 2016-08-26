@@ -2167,8 +2167,6 @@ class User {
 				}
 				throw new PasswordError( wfMsgExt( $message, array( 'parsemag' ), $params ) );
 			}
-            //Delete all access tokens
-            $this->removeAllTokens();
 		}
 
 		if( !$wgAuth->setPassword( $this, $str ) ) {
@@ -2180,10 +2178,14 @@ class User {
 		return true;
 	}
 
-	public function removeAllTokens(){
-        $heliosClient = Injector::getInjector()->get(HeliosClient::class);
-        $heliosClient->forceLogout($this->getId());
-    }
+	/*
+	 * The same as above but also clear tokens in Helios after setting password
+	 */
+	public function setPasswordAndClearTokens( $str ) {
+		$this->setPassword($str);
+		//Delete all access tokens
+		wfRunHooks( 'InvalidateAllTokens', [ $this->getId() ] );
+	}
 
 	/**
 	 * Set the password and reset the random token unconditionally.

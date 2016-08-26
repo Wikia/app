@@ -344,6 +344,16 @@ class User {
 		return true;
 	}
 
+	/*
+	 * Invalidate all tokens for given user in helios service
+	 */
+	public static function onInvalidateAllTokens( $userId ) {
+		$heliosClient = self::getHeliosClient();
+		$heliosClient->forceLogout($userId);
+
+		return true;
+	}
+
 	/**
 	 * Called in ExternalUser_Wikia registers a user.
 	 *
