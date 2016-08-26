@@ -24,7 +24,20 @@ function isValidCityId( $cityId ) {
 }
 
 function isValidTilesSetId( $tilesSetId ) {
-	return isValidInteger( $tilesSetId );
+	if ( !isValidInteger( $tilesSetId ) ) {
+		return false;
+	}
+
+	$maps = new WikiaMaps( F::app()->wg->IntMapConfig );
+	$res = $maps->getTileSet( $tilesSetId );
+
+	if ( !isset( $res['success'] ) || $res['success'] !== true ) {
+		printMsg( 'API call failure when looking for a tiles set #' . $tilesSetId . '.' );
+		die;
+	}
+
+	printMsg( "Tiles' set #" . $tilesSetId . " found.") ;
+	return $res['content']->id == $tilesSetId;
 }
 
 function printMsg( $msg ) {
@@ -46,6 +59,12 @@ TXT
 		);
 	}
 
+	if ( $dryRun ) {
+		printMsg( 'Mode: dry-run' );
+	} else {
+		printMsg( 'Mode: normal' );
+	}
+
 	if ( !isValidCityId( $wgCityId ) ) {
 		printMsg( 'Invalid city-id. Try again.' );
 		die;
@@ -54,12 +73,6 @@ TXT
 	if ( !isValidTilesSetId( $tilesSetId ) ) {
 		printMsg( 'Invalid tiles-set-id. Try again.' );
 		die;
-	}
-
-	if ( $dryRun ) {
-		printMsg( 'Mode: dry-run' );
-	} else {
-		printMsg( 'Mode: normal' );
 	}
 
 	printMsg( 'Done.' );
