@@ -1,81 +1,107 @@
 <?php
 
 /**
- * Maintenance script to remove real-world <imap /> tags from articles
+ * Maintenance script to remove <imap /> tags from articles
  *
- * @usage SERVER_ID=203236 php removeImapTags.php --tiles-set-id=123 --dry-run
+ * @usage SERVER_ID=203236 php removeImapTags.php --tiles-set-id=1 --verbose --test
  */
 
 ini_set( "include_path", dirname( __FILE__ )."/../../" );
 
-require_once( "commandLine.inc" );
+ini_set('display_errors', 'stderr');
+ini_set('error_reporting', E_NOTICE);
 
-$displayHelp = isset( $options['help'] );
-$dryRun = isset( $options['dry-run'] );
-$tilesSetId = isset( $options['tiles-set-id'] ) ? $options['tiles-set-id'] : -1;
+require_once( dirname( __FILE__ ) . '/../../Maintenance.php' );
 
-function isValidInteger( $int ) {
-	$int = intval( $int );
-	return ( $int <= 0 ) ? false : true;
-}
+class RemoveImapTags extends Maintenance {
+	static protected $verbose = false;
+	static protected $test = false;
 
-function isValidCityId( $cityId ) {
-	return isValidInteger( $cityId );
-}
-
-function isValidTilesSetId( $tilesSetId ) {
-	if ( !isValidInteger( $tilesSetId ) ) {
-		return false;
-	}
-
-	$maps = new WikiaMaps( F::app()->wg->IntMapConfig );
-	$res = $maps->getTileSet( $tilesSetId );
-
-	if ( !isset( $res['success'] ) || $res['success'] !== true ) {
-		printMsg( 'API call failure when looking for a tiles set #' . $tilesSetId . '.' );
-		die;
-	}
-
-	printMsg( "Tiles' set #" . $tilesSetId . " found.") ;
-	return $res['content']->id == $tilesSetId;
-}
-
-function printMsg( $msg ) {
-	echo $msg . PHP_EOL;
-}
-
-function run( $tilesSetId, $displayHelp, $dryRun ) {
-	global $wgCityId;
-
-	if ( $displayHelp ) {
-		die(
-		<<<TXT
-		Usage: php removeImapTags.php [--help] [--dry-run] --tiles-set-id
---tiles-set-id		tiles-set-id used by maps which thumbnails are supposed to be removed
---dry-run		dry run - prints information to the output but does not modify data
---help			you are reading it right now
-
-TXT
+	public function __construct() {
+		parent::__construct();
+		$this->mDescription = "Removes from articles <imap /> tags for given tiles' set id.";
+		$this->addOption( 'test', 'Test mode; make no changes', $required = false, $withArg = false, 't' );
+		$this->addOption( 'verbose', 'Show extra debugging output', $required = false, $withArg = false, 'v' );
+		$this->addOption(
+			'tiles-set-id',
+			'Specify a tiles\' set id which leads to a group of maps which <imap /> tags should get removed',
+			$required = true,
+			$withArg = true,
+			'tsi'
 		);
 	}
 
-	if ( $dryRun ) {
-		printMsg( 'Mode: dry-run' );
-	} else {
-		printMsg( 'Mode: normal' );
+	static public function isVerbose() {
+		return self::$verbose;
 	}
 
-	if ( !isValidCityId( $wgCityId ) ) {
-		printMsg( 'Invalid city-id. Try again.' );
-		die;
+	static public function isTest() {
+		return self::$test;
 	}
 
-	if ( !isValidTilesSetId( $tilesSetId ) ) {
-		printMsg( 'Invalid tiles-set-id. Try again.' );
-		die;
+	/**
+	 * Print the message if verbose is enabled
+	 *
+	 * @param $msg - The message text to echo to STDOUT
+	 */
+	static public function debug( $msg ) {
+		if ( self::isVerbose() ) {
+			echo $msg . PHP_EOL;
+		}
 	}
 
-	printMsg( 'Done.' );
+	static public function isValidInteger( $int ) {
+		$int = intval( $int );
+		return ( $int <= 0 ) ? false : true;
+	}
+
+	static public function isValidCityId( $cityId ) {
+		return self::isValidInteger( $cityId );
+	}
+
+	static public function isValidTilesSetId( $tilesSetId ) {
+		if ( !self::isValidInteger( $tilesSetId ) ) {
+			return false;
+		}
+
+		$maps = new WikiaMaps( F::app()->wg->IntMapConfig );
+		$res = $maps->getTileSet( $tilesSetId );
+
+		if ( !isset( $res['success'] ) || $res['success'] !== true ) {
+			self::debug( 'API call failure when looking for a tiles set #' . $tilesSetId . '.' );
+			die;
+		}
+
+		self::debug( "Tiles' set #" . $tilesSetId . " found." );
+		return $res['content']->id == $tilesSetId;
+	}
+
+	public function execute() {
+		global $wgCityId;
+
+		self::$test = $this->hasOption( 'test' );
+		self::$verbose = $this->hasOption( 'verbose' );
+		$tilesSetId = $this->getOption( 'tiles-set-id' );
+
+		if ( self::isTest() ) {
+			self::debug( 'Mode: test run' );
+		} else {
+			self::debug( 'Mode: normal run' );
+		}
+
+		if ( !self::isValidCityId( $wgCityId ) ) {
+			self::debug( 'Invalid city-id. Try again.' );
+			die;
+		}
+
+		if ( !self::isValidTilesSetId( $tilesSetId ) ) {
+			self::debug( 'Invalid tiles-set-id. Try again.' );
+			die;
+		}
+
+		echo 'Done.' . PHP_EOL;
+	}
 }
 
-run( $tilesSetId, $displayHelp, $dryRun );
+$maintClass = "RemoveImapTags";
+require_once( RUN_MAINTENANCE_IF_MAIN );
