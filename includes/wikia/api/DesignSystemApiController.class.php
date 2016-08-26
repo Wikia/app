@@ -1,145 +1,6 @@
 <?php
 
 class DesignSystemApiController extends WikiaApiController {
-	private $data = [
-		'brand-logo' => [
-			'type' => 'brand-logo',
-			'href' => '#',
-			'elements' => [
-				[
-					'type' => 'line-image',
-					'image' => 'company/logo-fandom',
-					'title' => [
-						'type' => 'translatable-text',
-						'key' => 'global-navigation-logo-fandom',
-					]
-				],
-				[
-					'type' => 'line-image',
-					'image' => 'company/logo-wikia',
-					'title' => [
-						'type' => 'translatable-text',
-						'key' => 'global-navigation-logo-wikia',
-					]
-				],
-				[
-					'type' => 'translatable-text',
-					'key' => 'global-navigation-header-title',
-				],
-			],
-		],
-		'brand-links' => [
-			[
-				'type' => 'link-branded',
-				'brand' => 'tv',
-				'title' => [
-					'type' => 'translatable-text',
-					'key' => 'global-navigation-brandlink-vertical-tv'
-				],
-				'href' => 'http:\/\/tv.wikia.com'
-			],
-			[
-				'type' => 'link-branded',
-				'brand' => 'games',
-				'title' => [
-					'type' => 'translatable-text',
-					'key' => 'global-navigation-brandlink-vertical-games'
-				],
-				'href' => 'http:\/\/games.wikia.com'
-			],
-			[
-				'type' => 'link-branded',
-				'brand' => 'movies',
-				'title' => [
-					'type' => 'translatable-text',
-					'key' => 'global-navigation-brandlink-vertical-movies'
-				],
-				'href' => 'http:\/\/movies.wikia.com'
-			],
-			[
-				'type' => 'links-branded',
-				'brand' => 'wikis',
-				'title' => [
-					'type' => 'translatable-text',
-					'key' => 'global-navigation-header-title',
-				],
-				'links' => [ // not branded
-					[
-						'type' => 'link-branded',
-						'brand' => 'wikis',
-						'title' => [
-							'type' => 'translatable-text',
-							'key' => 'global-navigation-brandlink-vertical-wikis'
-						],
-						'href' => '#'
-					],
-					[
-						'type' => 'link-branded',
-						'brand' => 'communitycentral',
-						'title' => [
-							'type' => 'translatable-text',
-							'key' => 'global-navigation-brandlink-vertical-communitycentral'
-						],
-						'href' => '#'
-					]
-				]
-			]
-		],
-		'search' => [
-			[
-				'type' => 'search-endpoint',  // new_type
-				'endpoint-href' => 'some.search.link',
-				'suggestions-href' => 'suggestions.link', // make object
-				'placeholder-inactive' => [
-					'type' => 'translatable-text',
-					'key' => 'global-navigation-search-placeholder-inactive'
-				],
-				'placeholder-active' => [
-					'type' => 'translatable-text',
-					'key' => 'global-navigation-search-placeholder-active'
-				],
-				'title' => [
-					'type' => 'translatable-text',
-					'key' => 'global-navigation-search-title'
-				]
-			]
-		],
-		'user-info' => [
-			'type' => 'user-not-authenticated', // new_type
-			'avatar' => [ ],
-			'links' => [
-				[
-					'type' => 'link-text',
-					'title' => [
-						'type' => 'translatable-text',
-						'key' => 'global-navigation-userinfo-signin-title'
-					],
-					'href' => '#'
-				],
-				[
-					'type' => 'link-text',
-					'title' => [
-						'type' => 'translatable-text',
-						'key' => 'global-navigation-userinfo-register-title'
-					],
-					'description' => [  // define_new_type?
-						'type' => 'translatable-text',
-						'key' => 'global-navigation-userinfo-register-description'
-					],
-					'href' => '#'
-				]
-			]
-		],
-		'start-wikia' => [
-			'type' => 'link-text',
-			'title' => [
-				'type' => 'translatable-text',
-				'key' => 'wikia-create-wiki-link-start-wikia'
-			],
-			'href' => '#'
-		]
-	];
-
 	public function getFooter() {
 		$params = $this->checkRequestCompleteness();
 
@@ -151,10 +12,10 @@ class DesignSystemApiController extends WikiaApiController {
 
 	public function getNavigation() {
 		global $wgUser;
-		$this->checkRequestCompleteness();
+		$params = $this->checkRequestCompleteness();
 
-		// TODO: change to not mocked data
-		$this->setResponseData( $this->data );
+		$navigationModel = new DesignSystemGlobalNavigationModel( $params[ 'wikiId' ], $params[ 'lang' ] );
+		$this->setResponseData( $navigationModel->getData() );
 
 		if ( $wgUser->isLoggedIn() ) {
 			$this->response->setCachePolicy( WikiaResponse::CACHE_PRIVATE );
