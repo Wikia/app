@@ -11,18 +11,27 @@ class DesignSystemApiController extends WikiaApiController {
 	}
 
 	public function getNavigation() {
-		global $wgUser;
 		$params = $this->checkRequestCompleteness();
 
 		$navigationModel = new DesignSystemGlobalNavigationModel( $params[ 'wikiId' ], $params[ 'lang' ] );
 		$this->setResponseData( $navigationModel->getData() );
 
-		if ( $wgUser->isLoggedIn() ) {
-			$this->response->setCachePolicy( WikiaResponse::CACHE_PRIVATE );
-			$this->response->setCacheValidity( WikiaResponse::CACHE_DISABLED );
-		} else {
-			$this->response->setCacheValidity( WikiaResponse::CACHE_VERY_SHORT );
-		}
+		$this->addCachingHeaders();
+	}
+
+	/**
+	 * return all possible elements of Design System API
+	 * @throws \NotFoundApiException
+	 */
+	public function getAllElements() {
+		$params = $this->checkRequestCompleteness();
+
+		$this->setResponseData( [
+			'global-footer' => ( new DesignSystemGlobalFooterModel( $params[ 'wikiId' ], $params[ 'lang' ] ) ) ->getData(),
+			'global-navigation' => $this->data
+		] );
+
+		$this->addCachingHeaders();
 	}
 
 	private function checkRequestCompleteness() {
@@ -37,5 +46,20 @@ class DesignSystemApiController extends WikiaApiController {
 			'wikiId' => $wikiId,
 			'lang' => $lang
 		];
+	}
+
+	/**
+	 * add response headers for requests that require differing for anons
+	 * and logged in users
+	 */
+	private function addCachingHeaders() {
+		global $wgUser;
+
+		if ( $wgUser->isLoggedIn() ) {
+			$this->response->setCachePolicy( WikiaResponse::CACHE_PRIVATE );
+			$this->response->setCacheValidity( WikiaResponse::CACHE_DISABLED );
+		} else {
+			$this->response->setCacheValidity( WikiaResponse::CACHE_VERY_SHORT );
+		}
 	}
 }
