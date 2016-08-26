@@ -111,23 +111,16 @@ class ImageReviewTask extends BaseTask {
 	public function addToQueue() {
 		global $wgExternalDatawareDB;
 		$title = $this->getTitle();
-		$file = wfLocalFile( $title );
 		$wikiId = $this->getWikiId();
-
 		$latestRevId = $title->getLatestRevID( \Title::GAID_FOR_UPDATE );
-		// Get from master to make sure it is the latest data
-		$revisionTimestamp = \Revision::newFromId( $latestRevId, \Revision::READ_LATEST )->getTimestamp();
-
-		$userId = $file->getUser( 'id' );
-		$top200 = $this->isTop200( $wikiId ) ? 1 : 0;
 
 		$imageData = [
 			'wiki_id' => $wikiId,
 			'page_id' => $title->getArticleID(),
 			'revision_id' => $latestRevId,
-			'user_id' => $userId,
-			'last_edited' => $revisionTimestamp,
-			'top_200' => $top200,
+			'user_id' => wfLocalFile( $title )->getUser( 'id' ),
+			'last_edited' => \Revision::newFromId( $latestRevId, \Revision::READ_LATEST )->getTimestamp(),
+			'top_200' => $this->isTop200( $wikiId ) ? 1 : 0,
 			'state' => \ImageReviewStatuses::STATE_UNREVIEWED,
 		];
 
@@ -146,15 +139,9 @@ class ImageReviewTask extends BaseTask {
 		);
 
 		if ( $result ) {
-			$this->info(
-				'Image Review - Added uploaded file',
-				$imageData
-			);
+			$this->info( 'Image Review - Added uploaded file', $imageData );
 		} else {
-			$this->error(
-				'Image Review - Failed to add uploaded file',
-				$imageData
-			);
+			$this->error( 'Image Review - Failed to add uploaded file', $imageData );
 		}
 
 		return $result;
