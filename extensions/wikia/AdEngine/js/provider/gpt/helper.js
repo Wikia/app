@@ -59,7 +59,11 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 				recoveryHelper.isRecoverable(slot.name, recoverableSlots),
 			shouldPush = !recoveryHelper.isBlocking() || shouldPushRecoverableAd,
 			uapId = uapContext.getUapId(),
-			floatingSpace = floatingRail.getFloatingSpaceParam(slot.name);
+			floatingSpace;
+
+			if (adContext.getContext().targeting.skin === 'oasis') {
+				floatingSpace = floatingRail.getFloatingSpaceParam(slot.name);
+			}
 
 		log(['shouldPush',
 			slot.name,
