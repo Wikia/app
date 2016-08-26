@@ -817,7 +817,6 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 				}
 
 				$user->setPassword( $newPassword );
-                $user->invalidateToken();
 				wfRunHooks( 'PrefsPasswordAudit', [ $user, $newPassword, 'success' ] );
                 $user->saveSettings();
 

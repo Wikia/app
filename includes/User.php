@@ -2178,6 +2178,11 @@ class User {
 		return true;
 	}
 
+	public function removeAllTokens(){
+        $heliosClient = Injector::getInjector()->get(HeliosClient::class);
+        $heliosClient->forceLogout($this->getId());
+    }
+
 	/**
 	 * Set the password and reset the random token unconditionally.
 	 *

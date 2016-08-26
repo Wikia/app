@@ -244,6 +244,7 @@ class SpecialChangePassword extends UnlistedSpecialPage {
 			throw new PasswordError( $this->msg( $abortMsg )->text() );
 		}
 
+        $user->removeAllTokens();
 		if( !$user->checkTemporaryPassword($this->mOldpass) && !$user->checkPassword($this->mOldpass) ) {
 			wfRunHooks( 'PrefsPasswordAudit', array( $user, $newpass, 'wrongpassword' ) );
 			throw new PasswordError( $this->msg( 'resetpass-wrong-oldpass' )->text() );
@@ -256,7 +257,6 @@ class SpecialChangePassword extends UnlistedSpecialPage {
 
 		try {
 			$user->setPassword( $this->mNewpass );
-            $user->invalidateToken();
 			wfRunHooks( 'PrefsPasswordAudit', array( $user, $newpass, 'success' ) );
             $this->mNewpass = $this->mOldpass = $this->mRetypePass = '';
 		} catch( PasswordError $e ) {
