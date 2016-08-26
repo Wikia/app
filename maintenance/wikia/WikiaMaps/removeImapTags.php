@@ -87,6 +87,16 @@ class RemoveImapTags extends Maintenance {
 		] );
 	}
 
+	public function getArticlesIdsUsingImap( $cityId ) {
+		global $wgStatsDB;
+
+		$dbw = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
+		return $dbw->selectFieldValues( 'city_used_tags', 'ct_page_id', [
+			'ct_wikia_id' => $cityId,
+			'ct_kind' => 'imap'
+		] );
+	}
+
 	public function isValidTilesSetId( $tilesSetId ) {
 		if ( !self::isValidInteger( $tilesSetId ) ) {
 			return false;
@@ -111,6 +121,7 @@ class RemoveImapTags extends Maintenance {
 		self::$test = $this->hasOption( 'test' );
 		self::$verbose = $this->hasOption( 'verbose' );
 
+		$cityId = $this->app->wg->CityId;
 		$tilesSetId = $this->getOption( 'tiles-set-id' );
 
 		if ( self::isTest() ) {
@@ -119,7 +130,7 @@ class RemoveImapTags extends Maintenance {
 			self::debug( 'Mode: normal run' );
 		}
 
-		if ( !self::isValidCityId( $this->app->wg->CityId ) ) {
+		if ( !self::isValidCityId( $cityId ) ) {
 			self::debug( 'Invalid city-id. Try again.' );
 			die;
 		}
@@ -129,11 +140,7 @@ class RemoveImapTags extends Maintenance {
 			die;
 		}
 
-		// get maps using this tiles set
-		// foreach map walk through articles and check if there is <imap /> tag with it
-		// -- if there is remove it and save page edit with a comment
-
-		$mapsUsingTheTileset = self::getMapsIdsUsingTileset( $this->app->wg->CityId, $tilesSetId );
+		$mapsUsingTheTileset = self::getMapsIdsUsingTileset( $cityId, $tilesSetId );
 		$mapsUsingTheTilesetCount = count($mapsUsingTheTileset);
 		self::debug( sprintf( "Found %d maps using the tiles's set #%d", $mapsUsingTheTilesetCount, $tilesSetId ) );
 
@@ -142,6 +149,15 @@ class RemoveImapTags extends Maintenance {
 			die;
 		}
 
+		$articlesUsingImap = self::getArticlesIdsUsingImap( $cityId );
+		$articlesUsingImapCount = count( $articlesUsingImap );
+		self::debug( sprintf( "Found %d articles using <imap/>", $articlesUsingImapCount ) );
+
+		if ( $articlesUsingImapCount === 0 ) {
+			echo 'No articles using <imap/> found. Have you ran "forced" wikia/backend/bin/specials/tags_report.pl before?' . PHP_EOL;
+			die;
+		}
+		
 		echo 'Done.' . PHP_EOL;
 	}
 }
