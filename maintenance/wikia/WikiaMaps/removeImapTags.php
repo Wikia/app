@@ -119,7 +119,7 @@ class RemoveImapTags extends Maintenance {
 			echo sprintf( 'Article #%d does not exist anymore', $articleId ) . PHP_EOL;
 		}
 	}
-
+	
 	public function hasTagsToRemove( $foundTagsMapIds, $mapsUsingTheTileset, &$tagsToRemoveArrayKeyIds ) {
 		foreach( $foundTagsMapIds as $key => $mapId ) {
 			if ( in_array( $mapId, $mapsUsingTheTileset ) ) {
@@ -131,11 +131,12 @@ class RemoveImapTags extends Maintenance {
 	}
 
 	public function removeImapTagFromArticle( $articleId, $stringWithTagToRemove ) {
-		// Set the user to WikiaBot for methods that need $wgUser
-		global $wgUser;
-		$wgUser = User::newFromName( 'WikiaBot' );
-
+		$user = User::newFromName( 'WikiaBot' );
 		$article = Article::newFromID( $articleId );
+
+		if ( $user->getId() === 0 ) {
+			echo 'Failed using WikiaBot user' . PHP_EOL;
+		}
 
 		if ( $article->getID() ) {
 			$oldContent = $article->getContent();
@@ -146,7 +147,9 @@ class RemoveImapTags extends Maintenance {
 				$result = $article->doEdit(
 					$newContent,
 					'Real world maps have been discontinued by Wikia.',
-					EDIT_FORCE_BOT
+					EDIT_FORCE_BOT,
+					false,
+					$user
 				);
 			} else {
 				$result = true;
