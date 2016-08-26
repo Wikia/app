@@ -6,6 +6,11 @@ class PortableInfoboxHooks {
 	public static function onBeforePageDisplay( OutputPage $out, Skin $skin ) {
 		global $wgEnablePortableInfoboxEuropaTheme;
 
+		// SUS-936: Only load Portable Infobox assets on article related pages (not on special pages)
+		if ( !$out->isArticleRelated() ) {
+			return true;
+		}
+
 		Wikia::addAssetsToOutput( 'portable_infobox_js' );
 		if ( F::app()->checkSkin( 'monobook', $skin ) ) {
 			Wikia::addAssetsToOutput( 'portable_infobox_monobook_scss' );
