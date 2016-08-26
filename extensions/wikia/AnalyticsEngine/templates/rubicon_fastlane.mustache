@@ -1,0 +1,13 @@
+<script id="analytics-provider-rubicon-fastlane">
+	require([
+		'wikia.geo',
+		'wikia.instantGlobals',
+		require.optional('ext.wikia.adEngine.lookup.rubiconFastlane')
+	], function (geo, globals, rubiconFastlane) {
+		var ac = globals['{{wgCountriesVarName}}'];
+
+		if (rubiconFastlane && geo.isProperGeo(ac)) {
+			rubiconFastlane.call();
+		}
+	});
+</script>
