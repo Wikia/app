@@ -9,7 +9,12 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 		mocks = {
 			log: noop,
 			googleTag: function () {},
-			context: { opts: {} },
+			context: {
+				opts: {},
+				targeting: {
+					skin: 'oasis'
+				}
+			},
 			adContext: {
 				addCallback: noop,
 				getContext: function () {
@@ -113,7 +118,10 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 
 		callbacks = [];
 
-		mocks.context = { opts: {} };
+		mocks.context = { opts: {},
+			targeting: {
+				skin: 'oasis'
+			} };
 	});
 
 	it('Initialize googletag when module is not initialized yet', function () {
