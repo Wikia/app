@@ -35,7 +35,7 @@ class AppPromoLandingController extends WikiaController {
 		$this->response->setCode( static::RESPONSE_OK );
 
 		// Pull in the app-configuration (has data for all apps)
-		$appConfig = AppPromoLandingController::getAllAppConfigs();
+		$appConfig = $this->getAllAppConfigs();
 		$config = $this->getConfigForWiki( $appConfig, $this->wg->CityId );
 
 		// Create the direct-link URLs for the apps on each store.
@@ -43,10 +43,7 @@ class AppPromoLandingController extends WikiaController {
 		$this->iosUrl = $this->getIosUrl( $config );
 
 		// Inject the JS
-		$srcs = AssetsManager::getInstance()->getGroupCommonURL( 'app_promo_landing_js' );
-		foreach( $srcs as $src ) {
-			$this->wg->Out->addScript( "<script type=\"{$this->wg->JsMimeType}\" src=\"{$src}\"></script>" );
-		}
+		Wikia::addAssetsToOutput( 'app_promo_landing_js' );
 
 		// render the custom App Promo Landing body (this includes the nav bar and the custom content).
 		$body = $this->app->renderView( 'AppPromoLanding', 'content', [ ] );
@@ -162,8 +159,7 @@ class AppPromoLandingController extends WikiaController {
 		$this->trendingArticles = $trendingArticles;
 		$this->mainPageUrl = Title::newMainPage()->getFullUrl();
 		$this->larrSvgCode = "<svg width=\"22px\" height=\"16px\" viewBox=\"0 0 22 16\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">
-								<title>BB56E3FE-7480-48C0-96B3-848DAFB20649</title>
-								<desc>Created with sketchtool.</desc>
+								<title>back arrow</title>
 								<defs></defs>
 								<g id=\"Landing-Page\" stroke=\"none\" stroke-width=\"1\" fill=\"none\" fill-rule=\"evenodd\">
 									<g id=\"1064\" transform=\"translate(-267.000000, -622.000000)\">
@@ -197,7 +193,7 @@ class AppPromoLandingController extends WikiaController {
 		$desiredConfig = null;
 
 		// Gets the configs for ALL apps.
-		$appConfig = AppPromoLandingController::getAllAppConfigs();
+		$appConfig = $this->getAllAppConfigs();
 
 		// The wiki_ids are in the "languages" section of each app's config. Compare against those.
 		foreach($appConfig as $currentApp){
@@ -220,7 +216,7 @@ class AppPromoLandingController extends WikiaController {
 	 * Gets the app configs from the service URL (or memcached, if it's available there) and returns
 	 * it as a parsed object.
 	 */
-	static private function getAllAppConfigs(){
+	private function getAllAppConfigs(){
 		// Pull in the app-configuration (has data for all apps)
 		$appConfig = [];
 		$memcKey = wfMemcKey( static::$CACHE_KEY, static::$CACHE_KEY_VERSION );
