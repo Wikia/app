@@ -7,7 +7,6 @@
  * @author Sean Colombo
  */
 class AppPromoLandingController extends WikiaController {
-	use \Wikia\Logger\Loggable;
 
 	const RESPONSE_OK = 200;
 	const APP_CONFIG_SERVICE_URL = 'http://prod.deploypanel.service.sjc.consul/api/app-configuration/';
@@ -35,8 +34,12 @@ class AppPromoLandingController extends WikiaController {
 		$this->response->setCode( static::RESPONSE_OK );
 
 		// Pull in the app-configuration (has data for all apps)
-		$appConfig = $this->getAllAppConfigs();
-		$config = $this->getConfigForWiki( $appConfig, $this->wg->CityId );
+		$appConfig = AppPromoLandingController::getAllAppConfigs();
+		if( empty( $appConfig ) ){
+			// If app-config couldn't load, page is unable to render correctly and should not be cached.
+			$this->response->setCode( \WikiaResponse::RESPONSE_CODE_INTERNAL_SERVER_ERROR );
+		}
+		$config = AppPromoLandingController::getConfigForWiki( $appConfig, $this->wg->CityId );
 
 		// Create the direct-link URLs for the apps on each store.
 		$this->androidUrl = $this->getAndroidUrl( $config );
@@ -193,7 +196,7 @@ class AppPromoLandingController extends WikiaController {
 		$desiredConfig = null;
 
 		// Gets the configs for ALL apps.
-		$appConfig = $this->getAllAppConfigs();
+		$appConfig = AppPromoLandingController::getAllAppConfigs();
 
 		// The wiki_ids are in the "languages" section of each app's config. Compare against those.
 		foreach($appConfig as $currentApp){
@@ -216,7 +219,7 @@ class AppPromoLandingController extends WikiaController {
 	 * Gets the app configs from the service URL (or memcached, if it's available there) and returns
 	 * it as a parsed object.
 	 */
-	private function getAllAppConfigs(){
+	static private function getAllAppConfigs(){
 		// Pull in the app-configuration (has data for all apps)
 		$appConfig = [];
 		$memcKey = wfMemcKey( static::$CACHE_KEY, static::$CACHE_KEY_VERSION );
@@ -228,10 +231,9 @@ class AppPromoLandingController extends WikiaController {
 				$response = $req->getContent();
 				if ( empty( $response ) ) {
 					// Request failed (app config service failure). Do not cache this response.
-					$this->error(__METHOD__ . ' app config service failure.', [
+					WikiaLogger::instance()->error(__METHOD__ . ' app config service failure.', [
 						'exception' => new Exception()
 					] );
-					$this->response->setCode( \WikiaResponse::RESPONSE_CODE_INTERNAL_SERVER_ERROR );
 				} else {
 					// Request was successful. Cache it in memcached (faster than going over network-card even on our internal network).
 					F::app()->wg->memc->set( $memcKey, $response, static::$CACHE_EXPIRY );
