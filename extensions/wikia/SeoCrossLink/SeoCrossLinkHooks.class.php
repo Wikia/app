@@ -14,7 +14,9 @@ class SeoCrossLinkHooks {
 
 		$helper = new SeoCrossLinkHelper();
 		if ( $helper->canShowModule() ) {
-			$modules[1250] = [ 'SeoCrossLink', 'index', null ];
+			// Use a different position depending on whether the user is logged in
+			$pos = F::App()->wg->User->isAnon() ? 1250 : 1300;
+			$modules[$pos] = [ 'SeoCrossLink', 'index', null ];
 		}
 
 		return true;
