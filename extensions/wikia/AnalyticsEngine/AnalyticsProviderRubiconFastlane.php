@@ -1,8 +1,8 @@
 <?php
 
 class AnalyticsProviderRubiconFastlane implements iAnalyticsProvider {
-	private static $template = 'extensions/wikia/AnalyticsEngine/templates/rubicon_fastlane.mustache';
-	private static $wgCountriesVarName = 'wgAdDriverRubiconFastlaneCountries';
+	const TEMPLATE = 'extensions/wikia/AnalyticsEngine/templates/rubicon_fastlane.mustache';
+	const COUNTRIES_VARIABLE = 'wgAdDriverRubiconFastlaneCountries';
 
 	public static function isEnabled() {
 		global $wgAdDriverEnableRubiconFastlane, $wgShowAds;
@@ -23,8 +23,8 @@ class AnalyticsProviderRubiconFastlane implements iAnalyticsProvider {
 
 		if ( static::isEnabled() ) {
 			return \MustacheService::getInstance()->render(
-				static::$template,
-				[ 'wgCountriesVarName' => static::$wgCountriesVarName ]
+				static::TEMPLATE,
+				[ 'wgCountriesVarName' => static::COUNTRIES_VARIABLE ]
 			);
 		}
 
