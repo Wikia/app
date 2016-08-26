@@ -15,7 +15,7 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 
 	public function getData() {
 		$data = [
-			'brand-_ogo' => [
+			'brand_logo' => [
 				'type' => 'link-image',
 				'href' => '#',
 				'image' => 'company-fandom',
@@ -59,7 +59,7 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 						'type' => 'translatable-text',
 						'key' => 'global-navigation-brandlink-vertical-wikis',
 					],
-					'links' => [ // not branded
+					'links' => [
 						[
 							'type' => 'link-text',
 							'brand' => 'wikis',
@@ -83,7 +83,7 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 			],
 			'search' => [
 				[
-					'type' => 'search-endpoint',  // new_type
+					'type' => 'search-endpoint',
 					'results' => [
 						'type' => 'parametrized-external-resource',
 						'param' => 'query',
@@ -104,7 +104,7 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 					]
 				]
 			],
-			'user-info' => [
+			'user_info' => [
 				'type' => 'user-authenticated',
 				'notifications' => [
 					'url' => [
@@ -121,7 +121,7 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 					]
 				],
 				'avatar' => [
-					'type' => 'external-resource', // new_type
+					'type' => 'external-resource',
 					'href' => '#',
 				],
 				'username' => [
