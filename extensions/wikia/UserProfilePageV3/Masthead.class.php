@@ -7,6 +7,8 @@ class Masthead {
 	 */
 	const DEFAULT_PATH = 'http://images.wikia.com/messaging/images/';
 
+	const DEFAULT_AVATAR_FILENAME = 'Avatar.jpg';
+
 	/**
 	 * path to file, relative
 	 */
@@ -122,7 +124,7 @@ class Masthead {
 		wfProfileIn( __METHOD__ );
 
 		$this->mDefaultAvatars = array();
-		$images = getMessageForContentAsArray( 'blog-avatar-defaults' ) ?: ['Avatar.jpg']; // PLATFORM-2393: add a default value
+		$images = getMessageForContentAsArray( 'blog-avatar-defaults' ) ?: [ static::DEFAULT_AVATAR_FILENAME ]; // PLATFORM-2393: add a default value
 
 		if ( is_array( $images ) ) {
 			foreach ( $images as $image ) {
