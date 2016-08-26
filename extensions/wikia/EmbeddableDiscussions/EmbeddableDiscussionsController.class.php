@@ -19,16 +19,16 @@ class EmbeddableDiscussionsController {
 		return true;
 	}
 
-	public static function onBeforePageDisplay( \OutputPage $out, \Skin $skin ) {
+	public static function onBeforePageDisplay() {
 		\Wikia::addAssetsToOutput( 'embeddable_discussions_js' );
 		\Wikia::addAssetsToOutput( 'embeddable_discussions_scss' );
 		return true;
 	}
 
-	public static function render( $input, array $args, Parser $parser, PPFrame $frame ) {
+	public static function render( $input, array $args ) {
 		global $wgCityId;
 
-		$showLatest = empty( $args['mostrecent'] ) ? false : filter_var( $args['mostrecent'], FILTER_VALIDATE_BOOLEAN );
+		$showLatest = !empty( $args['mostrecent'] ) && filter_var( $args['mostrecent'], FILTER_VALIDATE_BOOLEAN );
 		$itemCount = empty( $args['size'] ) ? static::ITEMS_DEFAULT : intval( $args['size'] );
 		$columns = empty( $args['columns'] ) ? static::COLUMNS_DEFAULT : intval( $args['columns'] );
 
