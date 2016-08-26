@@ -7,8 +7,7 @@ class AnalyticsProviderRubiconVulcan implements iAnalyticsProvider {
 	public static function isEnabled() {
 		global $wgAdDriverEnableRubiconVulcan, $wgShowAds;
 
-		return AnalyticsProviderRubiconFastlane::isEnabled()
-			&& $wgAdDriverEnableRubiconVulcan
+		return $wgAdDriverEnableRubiconVulcan
 			&& $wgShowAds
 			&& AdEngine2Service::areAdsShowableOnPage();
 	}

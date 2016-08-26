@@ -262,6 +262,14 @@ $config['adengine2_rubicon_fastlane_js'] = [
 	],
 ];
 
+$config['adengine2_rubicon_vulcan_js'] = [
+	'skin' => [ 'oasis' ],
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => [
+		'//extensions/wikia/AdEngine/js/lookup/rubiconVulcan.js',
+	],
+];
+
 $config['adengine2_prebid_js'] = [
 	'skin' => [ 'oasis' ],
 	'type' => AssetsManager::TYPE_JS,

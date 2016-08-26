@@ -4,9 +4,9 @@
 		'wikia.instantGlobals',
 		require.optional('ext.wikia.adEngine.lookup.rubiconFastlane')
 	], function (geo, globals, rubiconFastlane) {
-		var fastlaneCountries = globals['{{wgCountriesVariable}}'];
+		var countries = globals['{{wgCountriesVariable}}'];
 
-		if (rubiconFastlane && geo.isProperGeo(fastlaneCountries)) {
+		if (rubiconFastlane && geo.isProperGeo(countries)) {
 			rubiconFastlane.call();
 		}
 	});

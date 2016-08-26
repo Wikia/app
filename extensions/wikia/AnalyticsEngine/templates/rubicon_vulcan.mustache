@@ -2,12 +2,11 @@
 	require([
 		'wikia.geo',
 		'wikia.instantGlobals',
-		require.optional('ext.wikia.adEngine.lookup.rubiconFastlane'),
 		require.optional('ext.wikia.adEngine.lookup.rubiconVulcan')
-	], function (geo, globals, rubiconFastlane, rubiconVulcan) {
-		var vulcanCountries = globals['{{wgVulcanCountriesVariable}}'];
+	], function (geo, globals, rubiconVulcan) {
+		var countries = globals['{{wgCountriesVariable}}'];
 
-		if (rubiconFastlane && rubiconFastlane.wasCalled() && rubiconVulcan && geo.isProperGeo(vulcanCountries)) {
+		if (rubiconVulcan && geo.isProperGeo(countries)) {
 			rubiconVulcan.call();
 		}
 	});
