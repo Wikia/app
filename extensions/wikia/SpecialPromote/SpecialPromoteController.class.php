@@ -22,8 +22,6 @@ class SpecialPromoteController extends WikiaSpecialPageController {
 
 	public function __construct() {
 		parent::__construct( 'Promote' );
-
-		$this->wg->Out->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/SpecialPromote/css/SpecialPromote.scss' ) );
 		$this->helper = new SpecialPromoteHelper();
 	}
 
@@ -39,6 +37,7 @@ class SpecialPromoteController extends WikiaSpecialPageController {
 			return true;
 		}
 
+		$this->response->addAsset( 'extensions/wikia/SpecialPromote/css/SpecialPromote.scss' );
 		$this->response->addAsset( 'extensions/wikia/SpecialPromote/js/SpecialPromote.js' );
 
 		JSMessages::enqueuePackage( 'SpecialPromote', JSMessages::EXTERNAL );
