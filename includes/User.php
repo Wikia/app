@@ -2167,6 +2167,8 @@ class User {
 				}
 				throw new PasswordError( wfMsgExt( $message, array( 'parsemag' ), $params ) );
 			}
+            //Delete all access tokens
+            $this->removeAllTokens();
 		}
 
 		if( !$wgAuth->setPassword( $this, $str ) ) {
