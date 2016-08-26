@@ -79,10 +79,10 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 			AdElement,
 			mocks.googleTag,
 			mocks.slotTargetingHelper,
-			mocks.floatingRail,
 			mocks.uapContext,
 			mocks.recoveryHelper,
 			mocks.slotTweaker,
+			mocks.floatingRail,
 			mocks.sraHelper
 		);
 	}

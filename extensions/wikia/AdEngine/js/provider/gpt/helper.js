@@ -8,10 +8,10 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	'ext.wikia.adEngine.provider.gpt.adElement',
 	'ext.wikia.adEngine.provider.gpt.googleTag',
 	'ext.wikia.adEngine.slot.slotTargeting',
-	'ext.wikia.adEngine.template.floating-rail',
 	'ext.wikia.adEngine.uapContext',
 	'ext.wikia.aRecoveryEngine.recovery.helper',
 	'ext.wikia.adEngine.slotTweaker',
+	require.optional('ext.wikia.adEngine.template.floating-rail'),
 	require.optional('ext.wikia.adEngine.provider.gpt.sraHelper'),
 	require.optional('ext.wikia.adEngine.slot.scrollHandler')
 ], function (
@@ -22,10 +22,10 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	AdElement,
 	GoogleTag,
 	slotTargeting,
-	floatingRail,
 	uapContext,
 	recoveryHelper,
 	slotTweaker,
+	floatingRail,
 	sraHelper,
 	scrollHandler
 ) {
