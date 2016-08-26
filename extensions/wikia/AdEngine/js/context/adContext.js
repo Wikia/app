@@ -76,11 +76,6 @@ define('ext.wikia.adEngine.adContext', [
 			}
 		}
 
-		// SourcePoint disaster recovery
-		if (w.wikiaSourcePointStatus === false) {
-			context.opts.sourcePointRecovery = false;
-		}
-
 		// SourcePoint detection integration
 		if (!noExternals && context.opts.sourcePointDetectionUrl) {
 			context.opts.sourcePointDetection = (context.targeting.skin === 'oasis' &&
