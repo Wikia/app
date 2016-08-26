@@ -130,6 +130,39 @@ class RemoveImapTags extends Maintenance {
 		return !empty( $tagsToRemoveArrayKeyIds );
 	}
 
+	public function removeImapTagFromArticle( $articleId, $stringWithTagToRemove ) {
+		// Set the user to WikiaBot for methods that need $wgUser
+		global $wgUser;
+		$wgUser = User::newFromName( 'WikiaBot' );
+
+		$article = Article::newFromID( $articleId );
+
+		if ( $article->getID() ) {
+			$oldContent = $article->getContent();
+			$newContent = str_replace( $stringWithTagToRemove, "", $oldContent );
+
+			self::debug( sprintf( 'Trying to edit article #%d', $articleId ) );
+			if( !self::isTest() ) {
+				$result = $article->doEdit(
+					$newContent,
+					'Real world maps have been discontinued by Wikia.',
+					EDIT_FORCE_BOT
+				);
+			} else {
+				$result = true;
+			}
+
+
+			if( $result ) {
+				echo sprintf( "Removed <imap/> tags from article #%d", $articleId ) . PHP_EOL;
+			} else {
+				echo sprintf( "Failed to update article #%d", $articleId ) . PHP_EOL;
+			}
+		} else {
+			echo sprintf( 'Article #%d does not exist anymore', $articleId ) . PHP_EOL;
+		}
+	}
+
 	public function isValidTilesSetId( $tilesSetId ) {
 		if ( !self::isValidInteger( $tilesSetId ) ) {
 			return false;
@@ -203,6 +236,11 @@ class RemoveImapTags extends Maintenance {
 			} else {
 				if ( !$this->hasTagsToRemove( $foundTagsMapIds, $mapsUsingTheTileset, $toRemove ) ) {
 					self::debug( "No <imap /> for the given map ids" );
+				}
+
+				foreach( $toRemove as $foundTagsKey ) {
+					$stringWithTagToRemove = $foundTags[$foundTagsKey];
+					$this->removeImapTagFromArticle( $articleId, $stringWithTagToRemove );
 				}
 			}
 		}
