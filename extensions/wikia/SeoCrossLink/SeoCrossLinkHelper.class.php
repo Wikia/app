@@ -12,7 +12,7 @@ class SeoCrossLinkHelper extends WikiaModel {
 	 * @return boolean
 	 */
 	public function canShowModule() {
-		if ( $this->wg->User->isLoggedIn() ) {
+		if ( $this->wg->User->isLoggedIn() || !$this->app->checkSkin( 'oasis' ) ) {
 			return false;
 		}
 
@@ -33,7 +33,7 @@ class SeoCrossLinkHelper extends WikiaModel {
 	 * @return array
 	 */
 	protected function getValidPages() {
-		$cacheKey = wfMemcKey( 'seo_cross_link', 'valid_pages' );
+		$cacheKey = wfMemcKey( 'seo_crosslink', 'valid_pages' );
 		$db = wfGetDB( DB_SLAVE, [], 'specials' );
 		$pages = (new WikiaSQL())->cache( self::CACHE_TTL, $cacheKey, true )
 			->SELECT( 'source_page' )
@@ -53,7 +53,7 @@ class SeoCrossLinkHelper extends WikiaModel {
 	 * @return array
 	 */
 	public function getArticles( $pageId ) {
-		$cacheKey = wfMemcKey( 'seo_cross_link', $pageId );
+		$cacheKey = wfMemcKey( 'seo_crosslink', $pageId );
 		$db = wfGetDB( DB_SLAVE, [], 'specials' );
 		$query = (new WikiaSQL())->cache( self::CACHE_TTL, $cacheKey, true )
 			->SELECT( '*' )

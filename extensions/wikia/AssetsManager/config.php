@@ -3090,7 +3090,7 @@ $config['special_admindashboard_js'] = [
 ];
 
 /* SeoCrossLink */
-$config['seo_cross_link_css'] = [
+$config['seo_crosslink_scss'] = [
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => [ 'oasis' ],
 	'assets' => [

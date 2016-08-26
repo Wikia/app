@@ -5,7 +5,7 @@ class SeoCrossLinkController extends WikiaController {
 	const DEFAULT_TEMPLATE_ENGINE = WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
 
 	/**
-	 * Cross Link Module
+	 * Crosslink Module
 	 * @responseParam string title - title of the module
 	 * @responseParam array articles - list of articles
 	 */
@@ -18,9 +18,9 @@ class SeoCrossLinkController extends WikiaController {
 
 		$articles = $helper->getArticles( $this->wg->Title->getArticleID() );
 
-		$this->response->addAsset( 'seo_cross_link_css' );
+		$this->response->addAsset( 'seo_crosslink_scss' );
 
-		$this->title = wfMessage( 'seocrosslink-module-title' )->escaped();
+		$this->title = wfMessage( 'seo-crosslink-module-title' )->escaped();
 		$this->articles = $articles;
 	}
 

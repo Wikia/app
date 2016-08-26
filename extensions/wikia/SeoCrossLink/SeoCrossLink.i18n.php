@@ -7,9 +7,9 @@
  */
 
 $messages['en'] = array(
-	'seocrosslink-module-title' => 'Related Articles',
+	'seo-crosslink-module-title' => 'Related Articles',
 );
 
 $messages['qqq'] = array(
-	'seocrosslink-module-title' => 'Title for the seo cross link module',
+	'seo-crosslink-module-title' => 'Title for the crosslink module',
 );

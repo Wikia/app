@@ -6,11 +6,11 @@
 class SeoCrossLinkHooks {
 
 	/**
-	 * Insert cross link module to the right rail
+	 * Insert crosslink module to the right rail
 	 * @param array $modules
 	 * @return bool
 	 */
-	static public function onGetRailModuleList( &$modules ) {
+	public static function onGetRailModuleList( &$modules ) {
 
 		$helper = new SeoCrossLinkHelper();
 		if ( $helper->canShowModule() ) {
