@@ -10,6 +10,9 @@ class SpecialChat extends UnlistedSpecialPage {
 		wfProfileIn( __METHOD__ );
 		global $wgUser, $wgOut;
 
+		// SUS-936: Set proper flags so that article related assets aren't loaded
+		$this->setHeaders();
+
 		// check if logged in
 		if ( $wgUser->isLoggedIn() ) {
 			if ( Chat::canChat( $wgUser ) ) {

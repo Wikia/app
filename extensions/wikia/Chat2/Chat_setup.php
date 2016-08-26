@@ -51,6 +51,8 @@ $wgHooks['ContributionsToolLinks'][] = 'ChatHooks::onContributionsToolLinks';
 $wgHooks['LogLine'][] = 'ChatHooks::onLogLine';
 $wgHooks['UserGetRights'][] = 'ChatHooks::onUserGetRights';
 $wgHooks['ParserFirstCallInit'][] = 'ChatWidget::onParserFirstCallInit';
+// needs to be prepended so that it can abort the hook before the other handlers run
+$wgHooks['BeforePageDisplay'] = [ 'ChatHooks::abortBeforePageDisplayOnSpecialChat' ] + $wgHooks['BeforePageDisplay'];
 
 // logs
 $wgLogTypes[] = 'chatban';

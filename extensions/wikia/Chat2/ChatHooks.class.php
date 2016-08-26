@@ -202,4 +202,19 @@ class ChatHooks {
 
 		return true;
 	}
+
+	/**
+	 * Hook: BeforePageDisplay
+	 * SUS-936: Abort BeforePageDisplay hook on Special:Chat so that extensions can't add redundant assets
+	 * @param OutputPage $out
+	 * @param Skin $skin
+	 * @return bool false to stop hook processing if we're on Special:Chat
+	 */
+	public static function abortBeforePageDisplayOnSpecialChat( OutputPage $out, Skin $skin ) {
+		if ( $out->getTitle()->isSpecial( 'Chat' ) ) {
+			return false;
+		}
+
+		return true;
+	}
 }
