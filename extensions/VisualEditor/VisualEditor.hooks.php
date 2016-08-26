@@ -46,7 +46,8 @@ class VisualEditorHooks {
 	 */
 	public static function onBeforePageDisplay( OutputPage &$output, Skin &$skin ) {
 		// Wikia change
-		if ( self::isAvailable( $skin ) ) {
+		// SUS-936: Only load this for article related pages (where the editor can appear)
+		if ( self::isAvailable( $skin ) && $output->isArticleRelated() ) {
 			$output->addModules( array( 'ext.visualEditor.wikia.viewPageTarget.init' ) );
 		}
 		//$output->addModules( array( 'ext.visualEditor.viewPageTarget.init' ) );
