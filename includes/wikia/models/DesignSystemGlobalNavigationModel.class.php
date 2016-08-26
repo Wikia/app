@@ -3,6 +3,13 @@
 class DesignSystemGlobalNavigationModel extends WikiaModel {
 	const DEFAULT_LANG = 'en';
 
+	private $hrefs = [
+		'default' => [
+			'brand-logo' => '#'
+		],
+		'en' => [ ]
+	];
+
 	private $wikiId;
 	private $lang;
 
@@ -14,10 +21,12 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 	}
 
 	public function getData() {
+		global $wgUser;
+
 		$data = [
 			'brand_logo' => [
 				'type' => 'link-image',
-				'href' => '#',
+				'href' => $this->getHref( 'brand-logo' ),
 				'image' => 'company-fandom',
 				'title' => [
 					'type' => 'text',
@@ -104,73 +113,7 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 					]
 				]
 			],
-			'user_info' => [
-				'type' => 'user-authenticated',
-				'notifications' => [
-					'url' => [
-						'type' => 'external-resource',
-						'href' => '#'
-					],
-					'image' => [
-						'type' => 'line-image',
-						'image' => 'notifications',
-						'title' => [
-							'type' => 'translatable-text',
-							'key' => 'global-navigation-notifications'
-						]
-					]
-				],
-				'avatar' => [
-					'type' => 'external-resource',
-					'href' => '#',
-				],
-				'username' => [
-					'type' => 'text',
-					'value' => '_username_',
-				],
-				'links' => [
-					[
-						'type' => 'link-text',
-						'href' => '#',
-						'title' => [
-							'type' => 'translatable-text',
-							'key' => 'global-navigation-userinfo-profile'
-						]
-					],
-					[
-						'type' => 'link-text',
-						'href' => '#',
-						'title' => [
-							'type' => 'translatable-text',
-							'key' => 'global-navigation-userinfo-talk'
-						]
-					],
-					[
-						'type' => 'link-text',
-						'href' => '#',
-						'title' => [
-							'type' => 'translatable-text',
-							'key' => 'global-navigation-userinfo-preferences'
-						]
-					],
-					[
-						'type' => 'link-text',
-						'href' => '#',
-						'title' => [
-							'type' => 'translatable-text',
-							'key' => 'global-navigation-userinfo-help'
-						]
-					],
-					[
-						'type' => 'link-text',
-						'href' => '#',
-						'title' => [
-							'type' => 'translatable-text',
-							'key' => 'global-navigation-userinfo-signout'
-						]
-					]
-				]
-			],
+			'user_info' => $wgUser->isLoggedIn() ? $this->getLoggedInUserData( $wgUser->getId() ) : $this->getAnonUserData(),
 			'create_wiki' => [
 				'type' => 'link-text',
 				'title' => [
@@ -182,5 +125,123 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 		];
 
 		return $data;
+	}
+
+	private function getHref( $hrefKey ) {
+		return $this->hrefs[ $this->lang ][ $hrefKey ] ?? $this->hrefs[ 'default' ][ $hrefKey ];
+	}
+
+	private function getAnonUserData() {
+		return [
+			'type' => 'user-anon',
+			'avatar' => [
+				'type' => 'line-image',
+				'image' => 'user',
+				'title' => [
+					'type' => 'translatable-text',
+					'key' => 'global-navigation-userinfo-anon-avatar-title'
+				],
+			],
+			'links' => [
+				[
+					'type' => 'parametrized-link-text',
+					'title' => [
+						'type' => 'translatable-text',
+						'key' => 'global-navigation-userinfo-signin-title'
+					],
+					'href' => '#',
+					'param' => 'redirect'
+				],
+				[
+					'type' => 'link-text-with-description',
+					'title' => [
+						'type' => 'translatable-text',
+						'key' => 'global-navigation-userinfo-register-title'
+					],
+					'description' => [
+						'type' => 'translatable-text',
+						'key' => 'global-navigation-userinfo-register-description'
+					],
+					'href' => '#'
+				]
+			]
+		];
+	}
+
+	private function getLoggedInUserData( $userId ) {
+		$user = User::newFromId( $userId );
+		$userName = $user->getName();
+
+		return [
+			'type' => 'user-authenticated',
+			'notifications' => [
+				'url' => [
+					'type' => 'external-resource',
+					'href' => '#'
+				],
+				'image' => [
+					'type' => 'line-image',
+					'image' => 'notifications',
+					'title' => [
+						'type' => 'translatable-text',
+						'key' => 'global-navigation-notifications'
+					]
+				]
+			],
+			'avatar' => [
+				'type' => 'external-resource',
+				'href' => AvatarService::getAvatarUrl( $userName, 50 ),
+			],
+			'username' => [
+				'type' => 'text',
+				'value' => $userName
+			],
+			'links' => [
+				[
+					'type' => 'link-text',
+					'href' => '#',
+					'title' => [
+						'type' => 'translatable-text',
+						'key' => 'global-navigation-userinfo-profile'
+					]
+				],
+				[
+					'type' => 'link-text',
+					'href' => '#',
+					'title' => [
+						'type' => 'translatable-text',
+						'key' => 'global-navigation-userinfo-talk'
+					]
+				],
+				[
+					'type' => 'link-text',
+					'href' => $this->getSpecialPageUrl( 'Preferences' ),
+					'title' => [
+						'type' => 'translatable-text',
+						'key' => 'global-navigation-userinfo-preferences'
+					]
+				],
+				[
+					'type' => 'link-text',
+					'href' => '#',
+					'title' => [
+						'type' => 'translatable-text',
+						'key' => 'global-navigation-userinfo-help'
+					]
+				],
+				[
+					'type' => 'link-text',
+					'href' => $this->getSpecialPageUrl( 'UserLogout' ),
+					'title' => [
+						'type' => 'translatable-text',
+						'key' => 'global-navigation-userinfo-signout'
+					]
+				]
+			]
+		];
+	}
+
+	private function getSpecialPageUrl( $specialPageTitle ) {
+		return GlobalTitle::newFromText( $specialPageTitle, NS_SPECIAL, $this->wikiId )->getFullURL();
 	}
 }
