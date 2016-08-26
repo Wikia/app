@@ -82,7 +82,8 @@ class ThemeDesignerController extends WikiaController {
 	}
 
 	public function picker() {
-
+		// SUS-797: Add edit token for background image upload
+		$this->response->setVal( 'token', $this->wg->User->getEditToken() );
 	}
 
 	public function preview() {
