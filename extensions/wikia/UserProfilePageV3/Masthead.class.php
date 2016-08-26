@@ -127,7 +127,7 @@ class Masthead {
 		if ( is_array( $images ) ) {
 			foreach ( $images as $image ) {
 				$hash = FileRepo::getHashPathForLevel( $image, 2 );
-				$this->mDefaultAvatars[] = self::DEFAULT_PATH . $thumb . $hash . $image;
+				$this->mDefaultAvatars[] = static::DEFAULT_PATH . $thumb . $hash . $image;
 			}
 		}
 
@@ -215,7 +215,7 @@ class Masthead {
 		 * default avatar, path from messaging.wikia.com
 		 */
 		$hash = FileRepo::getHashPathForLevel( $avatar, 2 );
-		return self::DEFAULT_PATH . $hash . $avatar;
+		return static::DEFAULT_PATH . $hash . $avatar;
 	}
 
 	/**
@@ -252,7 +252,7 @@ class Masthead {
 				/**
 				 * default avatar, path from messaging.wikia.com
 				 */
-				$url = self::getDefaultAvatarUrl( $url );
+				$url = static::getDefaultAvatarUrl( $url );
 			}
 		} else {
 			$defaults = $this->getDefaultAvatars( trim( $thumb, "/" ) . "/" );
