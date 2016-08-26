@@ -1,9 +1,6 @@
 <?php
 
 class DesignSystemApiController extends WikiaApiController {
-	private $wikiId;
-	private $lang;
-
 	private $data = [
 		'brand-logo' => [
 			'type' => 'brand-logo',
@@ -144,9 +141,9 @@ class DesignSystemApiController extends WikiaApiController {
 	];
 
 	public function getFooter() {
-		$this->checkRequestCompleteness();
+		$params = $this->checkRequestCompleteness();
 
-		$footerModel = new DesignSystemGlobalFooterModel( $this->wikiId, $this->lang );
+		$footerModel = new DesignSystemGlobalFooterModel( $params[ 'wikiId' ], $params[ 'lang' ] );
 
 		$this->setResponseData( $footerModel->getData() );
 		$this->response->setCacheValidity( WikiaResponse::CACHE_VERY_SHORT );
@@ -159,7 +156,7 @@ class DesignSystemApiController extends WikiaApiController {
 		// TODO: change to not mocked data
 		$this->setResponseData( $this->data );
 
-		if ( $wgUser) {
+		if ( $wgUser->isLoggedIn() ) {
 			$this->response->setCachePolicy( WikiaResponse::CACHE_PRIVATE );
 			$this->response->setCacheValidity( WikiaResponse::CACHE_DISABLED );
 		} else {
@@ -168,18 +165,16 @@ class DesignSystemApiController extends WikiaApiController {
 	}
 
 	private function checkRequestCompleteness() {
-		$wikiId = $this->request->getInt( 'wikiId' );
-		$lang = $this->request->getVal( 'lang' );
+		$wikiId = $this->getRequiredParam( 'wikiId' );
+		$lang = $this->getRequiredParam( 'lang' );
 
 		if ( WikiFactory::IDtoDB( $wikiId ) === false ) {
-			throw new NotFoundApiException( 'Unable to find wiki with ID {$wikiId}' );
+			throw new NotFoundApiException( "Unable to find wiki with ID {$wikiId}" );
 		}
 
-		if ( empty( $lang ) ) {
-			throw new MissingParameterApiException( 'lang' );
-		}
-
-		$this->wikiId = $wikiId;
-		$this->lang = $lang;
+		return [
+			'wikiId' => $wikiId,
+			'lang' => $lang
+		];
 	}
 }
