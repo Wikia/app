@@ -73,6 +73,7 @@
 <?= $dynamicYield ?>
 <?= $ivw3 ?>
 <?= $ivw2 ?>
+<?= $sourcePoint ?>
 <div class="WikiaSiteWrapper">
 	<?= $body ?>
 

@@ -7,7 +7,7 @@
  * @author Sean Colombo
  */
 class AppPromoLandingController extends WikiaController {
-	
+
 	private static $extraBodyClasses = []; // TODO: REMOVE - ONLY DURING THE TEMPORARY COPYING OF OASISCONTROLLER
 
 	const RESPONSE_OK = 200;
@@ -36,7 +36,7 @@ class AppPromoLandingController extends WikiaController {
 
 		// Since this "Community_App" article won't be found, we need to manually say it's okay so that it's not a 404.
 		$this->response->setCode( self::RESPONSE_OK );
-		
+
 		// Pull in the app-configuration (has data for all apps)
 		$appConfig = [];
 		$memcKey = wfMemcKey( static::$CACHE_KEY, static::$CACHE_KEY_VERSION );
@@ -158,7 +158,7 @@ class AppPromoLandingController extends WikiaController {
 				$trendingArticles[] = $trendingArticles[ rand(0, count( $trendingArticles )-1) ];
 			}
 		}
-		
+
 		// The app configs store the branch_app_id but not the branch_key. We need to hit the Branch API to grab that.
 		$branchKeyMemcKey = wfMemcKey( static::$CACHE_KEY_BRANCH, static::$CACHE_KEY_VERSION_BRANCH );
 		$this->branchKey = $this->wg->memc->get( $branchKeyMemcKey );
@@ -205,7 +205,7 @@ class AppPromoLandingController extends WikiaController {
 		$this->androidPhoneSrc = $this->wg->ExtensionsPath."/wikia/AppPromoLanding/images/nexus6_large.png";
 		$this->androidScreenShot = "http://wikia-mobile.nocookie.net/wikia-mobile/android-screenshots/{$this->config->app_tag}/1.png";
 		$this->androidStoreSrc = $this->wg->ExtensionsPath."/wikia/AppPromoLanding/images/playStoreButton.png";
-		
+
 		$this->iosPhoneSrc = $this->wg->ExtensionsPath."/wikia/AppPromoLanding/images/silverIphone.png";
 		$this->iosScreenShot = "http://wikia-mobile.nocookie.net/wikia-mobile/ios-screenshots/{$this->config->app_tag}/en/4.7/4.png.PNGCRUSH.png";
 		$this->iosStoreSrc = $this->wg->ExtensionsPath."/wikia/AppPromoLanding/images/appleAppStoreButton.png";
@@ -229,7 +229,7 @@ class AppPromoLandingController extends WikiaController {
 
 		// Gets the configs for ALL apps.
 		$appConfig = AppPromoLandingController::getAllAppConfigs();
-		
+
 		// The wiki_ids are in the "languages" section of each app's config. Compare against those.
 		foreach($appConfig as $currentApp){
 			foreach($currentApp->languages as $lang){
@@ -238,7 +238,7 @@ class AppPromoLandingController extends WikiaController {
 					break;
 				}
 			}
-			
+
 			if(!empty( $desiredConfig )){
 				break;
 			}
@@ -247,7 +247,7 @@ class AppPromoLandingController extends WikiaController {
 		wfProfileOut( __METHOD__ );
 		return $desiredConfig;
 	}
-	
+
 	/**
 	 * Gets the app configs from the service URL (or memcached, if it's available there) and returns
 	 * it as a parsed object.
@@ -286,16 +286,16 @@ class AppPromoLandingController extends WikiaController {
 	}
 
 	/**
-	 * @param config - associative array containing the config for a single wiki, as parsed 
+	 * @param config - associative array containing the config for a single wiki, as parsed
 	 *                 from APP_CONFIG_SERVICE_URL.
 	 * @return string containing the URL of the app for android devices (eg: on Google Play Store).
 	 */
 	private function getAndroidUrl( $config ){
 		return "https://play.google.com/store/apps/details?id={$config->android_release}&utm_source=General&utm_medium=Site&utm_campaign=AppPromoLanding";
 	}
-	
+
 	/**
-	 * @param config - associative array containing the config for a single wiki, as parsed 
+	 * @param config - associative array containing the config for a single wiki, as parsed
 	 *                 from APP_CONFIG_SERVICE_URL.
 	 * @return string containing the URL of the app for iOS devices (on the iTunes App Store).
 	 */
@@ -308,17 +308,18 @@ class AppPromoLandingController extends WikiaController {
 	 * to be done by a specific Oasis module.  However, instead of being located inside of
 	 * a special page, we are doing this by stealing the "Community_App" article title.
 	 */
-	public static function onOutputPageBeforeHTML( OutputPage &$out, &$text ){
-		// Only steal this page if the wiki has an app configured.
-		$config = AppPromoLandingController::getConfigForWiki( F::app()->wg->CityId );
-		if($config !== null){
-			$title = $out->getTitle();
-			$origTitle = $title->getDBkey();
-			
-			if($origTitle == self::PROMO_PAGE_TITLE){
+	public static function onOutputPageBeforeHTML( OutputPage &$out, &$text ) {
+		$title = $out->getTitle();
+		$origTitle = $title->getDBkey();
+
+		if( $origTitle === self::PROMO_PAGE_TITLE ){
+			// Only steal this page if the wiki has an app configured.
+			$config = AppPromoLandingController::getConfigForWiki( F::app()->wg->CityId );
+			if($config !== null){
 				Wikia::setVar( 'OasisEntryControllerName', 'AppPromoLanding' );
 			}
 		}
+
 		return $out;
 	}
 }
