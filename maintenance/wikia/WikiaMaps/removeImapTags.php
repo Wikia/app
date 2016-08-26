@@ -9,13 +9,18 @@
 ini_set( "include_path", dirname( __FILE__ )."/../../" );
 
 ini_set('display_errors', 'stderr');
-ini_set('error_reporting', E_NOTICE);
+ini_set('error_reporting', E_ALL);
 
 require_once( dirname( __FILE__ ) . '/../../Maintenance.php' );
 
 class RemoveImapTags extends Maintenance {
 	static protected $verbose = false;
 	static protected $test = false;
+
+	/**
+	 * @var WikiaMaps
+	 */
+	private $maps;
 
 	public function __construct() {
 		parent::__construct();
@@ -59,13 +64,12 @@ class RemoveImapTags extends Maintenance {
 		return self::isValidInteger( $cityId );
 	}
 
-	static public function isValidTilesSetId( $tilesSetId ) {
+	public function isValidTilesSetId( $tilesSetId ) {
 		if ( !self::isValidInteger( $tilesSetId ) ) {
 			return false;
 		}
 
-		$maps = new WikiaMaps( F::app()->wg->IntMapConfig );
-		$res = $maps->getTileSet( $tilesSetId );
+		$res = $this->maps->getTileSet( $tilesSetId );
 
 		if ( !isset( $res['success'] ) || $res['success'] !== true ) {
 			self::debug( 'API call failure when looking for a tiles set #' . $tilesSetId . '.' );
@@ -77,10 +81,12 @@ class RemoveImapTags extends Maintenance {
 	}
 
 	public function execute() {
-		global $wgCityId;
+		$this->app = F::app();
+		$this->maps = new WikiaMaps( $this->app->wg->IntMapConfig );
 
 		self::$test = $this->hasOption( 'test' );
 		self::$verbose = $this->hasOption( 'verbose' );
+
 		$tilesSetId = $this->getOption( 'tiles-set-id' );
 
 		if ( self::isTest() ) {
@@ -89,12 +95,12 @@ class RemoveImapTags extends Maintenance {
 			self::debug( 'Mode: normal run' );
 		}
 
-		if ( !self::isValidCityId( $wgCityId ) ) {
+		if ( !self::isValidCityId( $this->app->wg->CityId ) ) {
 			self::debug( 'Invalid city-id. Try again.' );
 			die;
 		}
 
-		if ( !self::isValidTilesSetId( $tilesSetId ) ) {
+		if ( !$this->isValidTilesSetId( $tilesSetId ) ) {
 			self::debug( 'Invalid tiles-set-id. Try again.' );
 			die;
 		}
