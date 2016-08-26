@@ -9,17 +9,8 @@ $(function ($) {
 		trackingMethod: 'analytics'
 	});
 
-	/**
-	 * Parent click handler for events in the DS Global Footer
-	 * @param {object} event
-	 */
-	function clickTrackingHandler(event) {
+	$('.wds-global-footer').click(function (event) {
 		var $element, label;
-
-		//Track only primary mouse button click
-		if (event.type === 'mousedown' && event.which !== 1) {
-			return;
-		}
 
 		$element = $(event.target);
 
@@ -30,7 +21,5 @@ $(function ($) {
 				label: label
 			});
 		}
-	}
-
-	$('.wds-global-footer').on('mousedown touchstart', clickTrackingHandler);
+	});
 });
