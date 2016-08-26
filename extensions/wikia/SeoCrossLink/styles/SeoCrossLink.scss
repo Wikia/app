@@ -1,0 +1,18 @@
+.WikiaRail .seo-cross-link-rail {
+
+	li {
+		padding-bottom: 10px;
+	}
+
+	.title {
+		display: block;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		word-wrap: normal;
+
+		a {
+			font-size: 15px;
+		}
+	}
+}

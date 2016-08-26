@@ -3088,3 +3088,12 @@ $config['special_admindashboard_js'] = [
 		'//extensions/wikia/AdminDashboard/js/AdminDashboard.js',
 	],
 ];
+
+/* SeoCrossLink */
+$config['seo_cross_link_css'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/SeoCrossLink/styles/SeoCrossLink.scss',
+	],
+];
