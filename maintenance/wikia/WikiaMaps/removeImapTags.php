@@ -120,6 +120,16 @@ class RemoveImapTags extends Maintenance {
 		}
 	}
 
+	public function hasTagsToRemove( $foundTagsMapIds, $mapsUsingTheTileset, &$tagsToRemoveArrayKeyIds ) {
+		foreach( $foundTagsMapIds as $key => $mapId ) {
+			if ( in_array( $mapId, $mapsUsingTheTileset ) ) {
+				$tagsToRemoveArrayKeyIds[] = $key;
+			}
+		}
+
+		return !empty( $tagsToRemoveArrayKeyIds );
+	}
+
 	public function isValidTilesSetId( $tilesSetId ) {
 		if ( !self::isValidInteger( $tilesSetId ) ) {
 			return false;
@@ -186,10 +196,14 @@ class RemoveImapTags extends Maintenance {
 
 			$foundTags = [];
 			$foundTagsMapIds = [];
+			$toRemove = [];
+
 			if ( !$this->hasImapTag( $articleId, $foundTags, $foundTagsMapIds ) ) {
 				self::debug( sprintf( "No <imap /> tags in article #%d", $articleId ) );
 			} else {
-				// remove <imap /> as WikiaBot
+				if ( !$this->hasTagsToRemove( $foundTagsMapIds, $mapsUsingTheTileset, $toRemove ) ) {
+					self::debug( "No <imap /> for the given map ids" );
+				}
 			}
 		}
 
