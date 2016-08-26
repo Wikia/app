@@ -1,13 +1,14 @@
 <?php
 
-class AnalyticsProviderRubiconFastlane implements iAnalyticsProvider {
-	const TEMPLATE = 'extensions/wikia/AnalyticsEngine/templates/rubicon_fastlane.mustache';
-	const COUNTRIES_VARIABLE = 'wgAdDriverRubiconFastlaneCountries';
+class AnalyticsProviderRubiconVulcan implements iAnalyticsProvider {
+	const TEMPLATE = 'extensions/wikia/AnalyticsEngine/templates/rubicon_vulcan.mustache';
+	const COUNTRIES_VARIABLE = 'wgAdDriverRubiconVulcanCountries';
 
 	public static function isEnabled() {
-		global $wgAdDriverEnableRubiconFastlane, $wgShowAds;
+		global $wgAdDriverEnableRubiconVulcan, $wgShowAds;
 
-		return $wgAdDriverEnableRubiconFastlane
+		return AnalyticsProviderRubiconFastlane::isEnabled()
+			&& $wgAdDriverEnableRubiconVulcan
 			&& $wgShowAds
 			&& AdEngine2Service::areAdsShowableOnPage();
 	}
@@ -28,7 +29,7 @@ class AnalyticsProviderRubiconFastlane implements iAnalyticsProvider {
 			);
 		}
 
-		return '<!-- Rubicon Fastlane disabled -->';
+		return '<!-- Rubicon Vulcan disabled -->';
 	}
 
 	public function trackEvent( $event, $eventDetails = array() ) {
