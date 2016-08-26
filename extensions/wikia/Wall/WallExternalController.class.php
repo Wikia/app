@@ -1,4 +1,5 @@
 <?php
+use \Wikia\Interfaces\IRequest;
 
 /**
  * A class which represents a user wall. A Wall is a replacement for the main part of the User_talk page.
@@ -12,10 +13,7 @@ class WallExternalController extends WikiaController {
 	/**
 	 * @var $helper WallHelper
 	 */
-	var $helper;
-	public function __construct() {
-		$this->app = F::app();
-	}
+	protected $helper;
 
 	public function init() {
 		$this->helper = new WallHelper();
@@ -72,6 +70,14 @@ class WallExternalController extends WikiaController {
 	 * @request rootMessageId - thread id
 	 */
 	public function moveThread() {
+		try {
+			// SUS-664: Validate edit token
+			$this->checkWriteRequest();
+		} catch ( BadRequestException $e ) {
+			$this->setTokenMismatchError();
+			return false;
+		}
+
 		// permission check needed here
 		if ( !$this->wg->User->isAllowed( 'wallmessagemove' ) ) {
 			$this->displayRestrictionError();
@@ -150,7 +156,7 @@ class WallExternalController extends WikiaController {
 			$user = User::newFromId( $list[$i] );
 			if ( !empty( $user ) ) {
 				$out[] = [
-					'profilepage' =>  $user->getUserPage()->getFullUrl(),
+					'profilepage' =>  $user->getUserPage()->getFullURL(),
 					'name' => $user->getName(),
 					'avatar' => AvatarService::getAvatarUrl( $user->getName(), 50 )
 				];
@@ -163,13 +169,21 @@ class WallExternalController extends WikiaController {
 	}
 
 	public function switchWatch() {
+		try {
+			// SUS-664: Validate edit token
+			$this->checkWriteRequest();
+		} catch ( BadRequestException $e ) {
+			$this->setTokenMismatchError();
+			return false;
+		}
+
 		$this->response->setVal( 'status', false );
 		$isWatched = $this->request->getVal( 'isWatched' );
 		/**
 		 * @var $title Title
 		 * @var $wallMessage WallMessage
 		 */
-		$title = Title::newFromId( $this->request->getVal( 'commentId' ) );
+		$title = Title::newFromID( $this->request->getVal( 'commentId' ) );
 
 		if ( empty( $title ) ) {
 			$this->response->setCode( 404 );
@@ -243,6 +257,14 @@ class WallExternalController extends WikiaController {
 	}
 
 	public function deleteMessage() {
+		try {
+			// SUS-664: Validate edit token
+			$this->checkWriteRequest();
+		} catch ( BadRequestException $e ) {
+			$this->setTokenMismatchError();
+			return false;
+		}
+
 		$result = false;
 		/**
 		 * @var $mw WallMessage
@@ -268,11 +290,11 @@ class WallExternalController extends WikiaController {
 		switch( $this->request->getVal( 'mode' ) ) {
 			case 'rev':
 				if ( $mw->canDelete( $this->wg->User ) ) {
-					$result = $mw->delete( wfMsgForContent( 'wall-delete-reason' ), true );
+					$result = $mw->delete( wfMessage( 'wall-delete-reason' )->inContentLanguage()->escaped(), true );
 					$this->response->setVal( 'status', $result );
 					return true;
 				} else {
-					$this->response->setVal( 'error', wfMsg( 'wall-message-no-permission' ) );
+					$this->response->setVal( 'error', wfMessage( 'wall-message-no-permission' )->escaped() );
 				}
 			break;
 
@@ -282,7 +304,7 @@ class WallExternalController extends WikiaController {
 					$this->response->setVal( 'status', $result );
 					$isDeleteOrRemove = true;
 				} else {
-					$this->response->setVal( 'error', wfMsg( 'wall-message-no-permission' ) );
+					$this->response->setVal( 'error', wfMessage( 'wall-message-no-permission' )->escaped() );
 				}
 			break;
 
@@ -292,7 +314,7 @@ class WallExternalController extends WikiaController {
 					$this->response->setVal( 'status', $result );
 					$isDeleteOrRemove = true;
 				} else {
-					$this->response->setVal( 'error', wfMsg( 'wall-message-no-permission' ) );
+					$this->response->setVal( 'error', wfMessage( 'wall-message-no-permission' )->escaped() );
 				}
 			break;
 
@@ -309,7 +331,7 @@ class WallExternalController extends WikiaController {
 					// TODO: log/save data
 					$isDeleteOrRemove = true;
 				} else {
-					$this->response->setVal( 'error', wfMsg( 'wall-message-no-permission' ) );
+					$this->response->setVal( 'error', wfMessage( 'wall-message-no-permission' )->escaped() );
 				}
 			break;
 		}
@@ -326,6 +348,14 @@ class WallExternalController extends WikiaController {
 	}
 
 	public function changeThreadStatus() {
+		try {
+			// SUS-664: Validate edit token
+			$this->checkWriteRequest();
+		} catch ( BadRequestException $e ) {
+			$this->setTokenMismatchError();
+			return false;
+		}
+
 		$result = false;
 		$newState = $this->request->getVal( 'newState', false );
 		/**
@@ -362,10 +392,10 @@ class WallExternalController extends WikiaController {
 	}
 
 	/**
-	 * @param $request WebRequest
+	 * @param IRequest $request
 	 * @return array
 	 */
-	protected function processModalForm( $request ) {
+	protected function processModalForm( IRequest $request ) {
 		/**
 		 * @var $formdata array
 		 */
@@ -496,6 +526,14 @@ class WallExternalController extends WikiaController {
 	}
 
 	public function notifyEveryoneSave() {
+		try {
+			// SUS-664: Validate edit token
+			$this->checkWriteRequest();
+		} catch ( BadRequestException $e ) {
+			$this->setTokenMismatchError();
+			return false;
+		}
+
 		$msgid = $this->request->getVal( 'msgid' );
 		$dir = $this->request->getVal( 'dir' );
 		/**
@@ -506,11 +544,11 @@ class WallExternalController extends WikiaController {
 			if ( $dir == 1 ) {
 				$mw->setNotifyEveryone( true );
 				$this->response->setVal( 'newdir', 0 );
-				$this->response->setVal( 'newmsg', wfMsg( 'wall-message-unnotifyeveryone' ) );
+				$this->response->setVal( 'newmsg', wfMessage( 'wall-message-unnotifyeveryone' )->escaped() );
 			} else {
 				$mw->setNotifyEveryone( false );
 				$this->response->setVal( 'newdir', 1 );
-				$this->response->setVal( 'newmsg', wfMsg( 'wall-message-notifyeveryone' ) );
+				$this->response->setVal( 'newmsg', wfMessage( 'wall-message-notifyeveryone' )->escaped() );
 			}
 		}
 	}
@@ -537,12 +575,12 @@ class WallExternalController extends WikiaController {
 			$newtitle = $helper->getDefaultTitle();
 		}
 
-		$title = Title::newFromId( $msgid );
+		$title = Title::newFromID( $msgid );
 
 		if ( empty( $title ) ) {
 			$this->response->setVal( 'status', false ) ;
-			$this->response->setVal( 'msgTitle', wfMsg( ' wall-delete-error-title' ) );
-			$this->response->setVal( 'msgContent', wfMsg( 'wall-deleted-msg-text' ) );
+			$this->response->setVal( 'msgTitle', wfMessage( ' wall-delete-error-title' )->escaped() );
+			$this->response->setVal( 'msgContent', wfMessage( 'wall-deleted-msg-text' )->escaped() );
 			return;
 		}
 		/** @var $wallMessage WallMessage */
@@ -558,7 +596,7 @@ class WallExternalController extends WikiaController {
 
 		$this->response->setVal( 'username', $this->wg->User->getName() );
 
-		$editorUrl = Title::newFromText( $this->wg->User->getName(), NS_USER )->getFullUrl();
+		$editorUrl = $this->wg->User->getUserPage()->getFullURL();
 
 		$this->response->setVal( 'userUrl', $editorUrl );
 
@@ -567,7 +605,7 @@ class WallExternalController extends WikiaController {
 			'oldid' => $wallMessage->getTitle()->getLatestRevID( Title::GAID_FOR_UPDATE ),
 		];
 
-		$this->response->setVal( 'historyUrl', $wallMessage->getTitle()->getFullUrl( $query ) );
+		$this->response->setVal( 'historyUrl', $wallMessage->getTitle()->getFullURL( $query ) );
 		$this->response->setVal( 'status', true );
 		$this->response->setVal( 'msgTitle', Xml::element( 'a', [ 'href' => $wallMessage->getMessagePageUrl() ], $newtitle ) );
 		$this->response->setVal( 'body', $text );
@@ -584,12 +622,12 @@ class WallExternalController extends WikiaController {
 		$this->response->setVal( 'status', true );
 
 		$parentId = $this->request->getVal( 'parent' );
-		$parentTitle = Title::newFromId( $parentId );
+		$parentTitle = Title::newFromID( $parentId );
 		$debugParentDB = 'from slave';   // tracing bug 95249
 
 		if ( empty( $parentTitle ) ) {
 			// try again from master
-			$parentTitle = Title::newFromId( $parentId, Title::GAID_FOR_UPDATE );
+			$parentTitle = Title::newFromID( $parentId, Title::GAID_FOR_UPDATE );
 			$debugParentDB = 'from master';
 		}
 
@@ -599,7 +637,7 @@ class WallExternalController extends WikiaController {
 		}
 
 		$this->debug( 'Wall::replyToMessage called', [
-			'parentTitle' => $parentTitle->getFullUrl(),
+			'parentTitle' => $parentTitle->getFullURL(),
 			'parentId' => $parentId,
 			'parentDb' => $debugParentDB,
 		] );
@@ -735,6 +773,14 @@ class WallExternalController extends WikiaController {
 	 * @return string status - success/failure
 	 */
 	public function updateTopics() {
+		try {
+			// SUS-664: Validate edit token
+			$this->checkWriteRequest();
+		} catch ( BadRequestException $e ) {
+			$this->setTokenMismatchError();
+			return false;
+		}
+
 		$messageId = $this->request->getVal( 'msgid', '' );
 		$relatedTopics = $this->request->getVal( 'relatedTopics', [ ] );
 			// place holder data, replace this with magic
@@ -767,5 +813,15 @@ class WallExternalController extends WikiaController {
 
 		$this->response->setVal( 'status', $status );
 		$this->response->setVal( 'topics', $topics );
+	}
+
+	/**
+	 * Set proper error data if the user is not allowed to perform an action
+	 */
+	protected function displayRestrictionError() {
+		$this->response->setData( [
+			'status' => 'error',
+			'errormsg' => wfMessage( 'wall-message-no-permission' )->escaped()
+		] );
 	}
 }
