@@ -31,43 +31,11 @@ class AppPromoLandingController extends WikiaController {
 	 * Render HTML for whole App Promo Landing page.
 	 */
 	public function index() {
-		wfProfileIn( __METHOD__ );
-
 		// Since this "Community_App" article won't be found, we need to manually say it's okay so that it's not a 404.
 		$this->response->setCode( static::RESPONSE_OK );
 
 		// Pull in the app-configuration (has data for all apps)
-		$appConfig = [];
-		$memcKey = wfMemcKey( static::$CACHE_KEY, static::$CACHE_KEY_VERSION );
-		$response = $this->wg->memc->get( $memcKey );
-		if ( empty( $response ) ){
-			$req = MWHttpRequest::factory( static::APP_CONFIG_SERVICE_URL, array( 'noProxy' => true ) );
-			$status = $req->execute();
-			if( $status->isOK() ) {
-				$response = $req->getContent();
-				if ( empty( $response ) ) {
-					// Request failed (app config service failure). Do not cache this response.
-					$this->error(__METHOD__ . ' app config service failure.', [
-						'exception' => new Exception()
-					] );
-					$this->response->setCode( \WikiaResponse::RESPONSE_CODE_INTERNAL_SERVER_ERROR );
-
-					wfProfileOut( __METHOD__ );
-				} else {
-					// Request was successful. Cache it in memcached (faster than going over network-card even on our internal network).
-					$this->wg->memc->set( $memcKey, $response, static::$CACHE_EXPIRY );
-				}
-			}
-		}
-
-		$appConfig = json_decode( $response );
-		if(empty($appConfig)){
-
-			// If no config was found for this wiki (which is totally normal on sites without an app) just return an empty array.
-			$appConfig = [];
-
-		}
-
+		$appConfig = AppPromoLandingController::getAllAppConfigs();
 		$config = $this->getConfigForWiki( $appConfig, $this->wg->CityId );
 
 		// Create the direct-link URLs for the apps on each store.
@@ -94,8 +62,6 @@ class AppPromoLandingController extends WikiaController {
 
 		// render Oasis module to the 'html' var which the AppPromoLanding_index template will just dump out.
 		$this->html = $this->app->renderView( 'Oasis', 'index', [ 'body' => $body ] );
-
-		wfProfileOut( __METHOD__ );
 	}
 
 	/**
@@ -103,7 +69,6 @@ class AppPromoLandingController extends WikiaController {
 	 * will include both the standard Wikia GlobalNavigation
 	 */
 	public function content( $params ){
-		wfProfileIn( __METHOD__ );
 		$this->debug = "";
 
 		// render global and user navigation
@@ -178,7 +143,6 @@ class AppPromoLandingController extends WikiaController {
 			if( $status->isOK() ) {
 				$response = $req->getContent();
 				if ( empty( $response ) ) {
-					wfProfileOut( __METHOD__ );
 					throw new EmptyResponseException( $branchUrl );
 				} else {
 					$branchData = json_decode( $response );
@@ -219,8 +183,6 @@ class AppPromoLandingController extends WikiaController {
 		$this->iosStoreSrc = $this->wg->ExtensionsPath."/wikia/AppPromoLanding/images/appleAppStoreButton.png";
 
 		$this->imgSpacing = 1; // spacing between the image-grid cells.
-
-		wfProfileOut( __METHOD__ );
 	}
 
 	/**
@@ -232,7 +194,6 @@ class AppPromoLandingController extends WikiaController {
 	 *         there is no app configured for the given wiki, then null is returned.
 	 */
 	static private function getConfigForWiki( $cityId ){
-		wfProfileIn( __METHOD__ );
 		$desiredConfig = null;
 
 		// Gets the configs for ALL apps.
@@ -252,7 +213,6 @@ class AppPromoLandingController extends WikiaController {
 			}
 		}
 
-		wfProfileOut( __METHOD__ );
 		return $desiredConfig;
 	}
 
@@ -261,7 +221,6 @@ class AppPromoLandingController extends WikiaController {
 	 * it as a parsed object.
 	 */
 	static private function getAllAppConfigs(){
-		wfProfileIn(__METHOD__);
 		// Pull in the app-configuration (has data for all apps)
 		$appConfig = [];
 		$memcKey = wfMemcKey( static::$CACHE_KEY, static::$CACHE_KEY_VERSION );
@@ -272,8 +231,11 @@ class AppPromoLandingController extends WikiaController {
 			if( $status->isOK() ) {
 				$response = $req->getContent();
 				if ( empty( $response ) ) {
-					wfProfileOut( __METHOD__ );
-					throw new EmptyResponseException( static::APP_CONFIG_SERVICE_URL );
+					// Request failed (app config service failure). Do not cache this response.
+					$this->error(__METHOD__ . ' app config service failure.', [
+						'exception' => new Exception()
+					] );
+					$this->response->setCode( \WikiaResponse::RESPONSE_CODE_INTERNAL_SERVER_ERROR );
 				} else {
 					// Request was successful. Cache it in memcached (faster than going over network-card even on our internal network).
 					F::app()->wg->memc->set( $memcKey, $response, static::$CACHE_EXPIRY );
@@ -289,7 +251,6 @@ class AppPromoLandingController extends WikiaController {
 
 		}
 
-		wfProfileOut( __METHOD__ );
 		return $appConfig;
 	}
 
