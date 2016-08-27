@@ -222,7 +222,7 @@ class AppPromoLandingController extends WikiaController {
 	static private function getAllAppConfigs(){
 		// Pull in the app-configuration (has data for all apps)
 		$appConfig = [];
-		$memcKey = wfMemcKey( static::$CACHE_KEY, static::$CACHE_KEY_VERSION );
+		$memcKey = wfSharedMemcKey( static::$CACHE_KEY, static::$CACHE_KEY_VERSION );
 		$response = F::app()->wg->memc->get( $memcKey );
 		if ( empty( $response ) ){
 			$req = MWHttpRequest::factory( static::APP_CONFIG_SERVICE_URL, [ 'noProxy' => true ] );
