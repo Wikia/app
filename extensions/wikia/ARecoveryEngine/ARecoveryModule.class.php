@@ -15,10 +15,16 @@ class ARecoveryModule {
 			return false;
 		}
 
-		$wgGlobalEnableSourcePoint = WikiFactory::getVarValueByName( 'wgGlobalEnableSourcePoint', Wikia::COMMUNITY_WIKI_ID );
-
-		return !empty( $wgEnableUsingSourcePointProxyForCSS ) || !empty( $wgGlobalEnableSourcePoint );
+		return !empty( $wgEnableUsingSourcePointProxyForCSS );
 	}
+	
+	public static function getSourcePointBootstrapCode() {
+		if ( !static::isEnabled() ) {
+			return PHP_EOL . '<!-- Recovery disabled. -->' . PHP_EOL;
+		}
+		return F::app()->sendRequest( 'ARecoveryEngineApiController', 'getBootstrap' );
+	}
+	
 
 	public static function isLockEnabled() {
 		$user = F::app()->wg->User;

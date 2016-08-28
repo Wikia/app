@@ -57,6 +57,24 @@ abstract class DiscussionController extends EmailController {
         ] );
     }
 
+    public function assertCanEmail() {
+        parent::assertCanEmail();
+        $this->assertSubscribedToDiscussionsEmail();
+    }
+
+    /**
+     * Asserts that target user is subscribed to Discussions emails.
+     *
+     * @throws \Email\Check
+     */
+    protected function assertSubscribedToDiscussionsEmail() {
+	    $wantsDiscussionEmails = ( bool ) $this->targetUser->getGlobalPreference( 'enotifdiscussions' );
+
+        if ( !$wantsDiscussionEmails ) {
+            throw new Check( 'User is not subscribed to Discussions emails.' );
+        }
+    }
+
     protected abstract function getSummary();
 
     protected function getDetails() {

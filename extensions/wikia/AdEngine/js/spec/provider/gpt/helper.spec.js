@@ -47,6 +47,13 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 			},
 			slotTargetingHelper: {
 				getWikiaSlotId: noop
+			},
+			floatingRail: {
+				getFloatingSpaceParam: function() {
+					return {
+						toString: noop
+					};
+				}
 			}
 		};
 	mocks.googleTag.prototype.isInitialized = function () {
@@ -72,6 +79,7 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 			AdElement,
 			mocks.googleTag,
 			mocks.slotTargetingHelper,
+			mocks.floatingRail,
 			mocks.uapContext,
 			mocks.recoveryHelper,
 			mocks.slotTweaker,

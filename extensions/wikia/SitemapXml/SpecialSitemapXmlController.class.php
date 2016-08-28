@@ -38,7 +38,7 @@ class SpecialSitemapXmlController extends WikiaSpecialPageController {
 		1202,
 	];
 
-	public function __construct( $name = 'BetterXmlSitemap' ) {
+	public function __construct( $name = 'SitemapXml' ) {
 		parent::__construct( $name, '', false );
 	}
 
@@ -116,7 +116,6 @@ class SpecialSitemapXmlController extends WikiaSpecialPageController {
 			__METHOD__,
 			[
 				'ORDER BY' => 'page_id',
-				'USE INDEX' => 'PRIMARY',
 				'LIMIT' => 15000,
 			]
 		);
