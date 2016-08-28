@@ -83,7 +83,7 @@ $messages['en'] = array(
 	'group-content-moderator-member' => 'Content Moderator',
 	'group-fancontributor-contributor' => 'Fan Contributors',
 	'group-fancontributor-contributor-member' => 'Fan Contributor',
-	'group-fancontributor-staff' => 'Fan Contributor Staffs',
+	'group-fancontributor-staff' => 'Fan Contributor Staff',
 	'group-fancontributor-staff-member' => 'Fan Contributor Staff',
 );
 
