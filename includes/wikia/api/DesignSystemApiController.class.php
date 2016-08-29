@@ -2,142 +2,209 @@
 
 class DesignSystemApiController extends WikiaApiController {
 	private $data = [
-		'brand-logo' => [
-			'type' => 'brand-logo',
-			'href' => '#',
-			'elements' => [
-				[
-					'type' => 'line-image',
-					'image' => 'company/logo-fandom',
-					'title' => [
-						'type' => 'translatable-text',
-						'key' => 'global-navigation-logo-fandom',
-					]
-				],
-				[
-					'type' => 'line-image',
-					'image' => 'company/logo-wikia',
-					'title' => [
-						'type' => 'translatable-text',
-						'key' => 'global-navigation-logo-wikia',
-					]
-				],
-				[
-					'type' => 'translatable-text',
-					'key' => 'global-navigation-header-title',
-				],
-			],
-		],
-		'brand-links' => [
-			[
-				'type' => 'link-branded',
-				'brand' => 'tv',
-				'title' => [
-					'type' => 'translatable-text',
-					'key' => 'global-navigation-brandlink-vertical-tv'
-				],
-				'href' => 'http:\/\/tv.wikia.com'
-			],
-			[
-				'type' => 'link-branded',
-				'brand' => 'games',
-				'title' => [
-					'type' => 'translatable-text',
-					'key' => 'global-navigation-brandlink-vertical-games'
-				],
-				'href' => 'http:\/\/games.wikia.com'
-			],
-			[
-				'type' => 'link-branded',
-				'brand' => 'movies',
-				'title' => [
-					'type' => 'translatable-text',
-					'key' => 'global-navigation-brandlink-vertical-movies'
-				],
-				'href' => 'http:\/\/movies.wikia.com'
-			],
-			[
-				'type' => 'links-branded',
-				'brand' => 'wikis',
-				'title' => [
-					'type' => 'translatable-text',
-					'key' => 'global-navigation-header-title',
-				],
-				'links' => [ // not branded
-					[
-						'type' => 'link-branded',
-						'brand' => 'wikis',
-						'title' => [
-							'type' => 'translatable-text',
-							'key' => 'global-navigation-brandlink-vertical-wikis'
-						],
-						'href' => '#'
-					],
-					[
-						'type' => 'link-branded',
-						'brand' => 'communitycentral',
-						'title' => [
-							'type' => 'translatable-text',
-							'key' => 'global-navigation-brandlink-vertical-communitycentral'
-						],
-						'href' => '#'
-					]
+		"logo" => [
+			"header" => [
+				"type" => "link-image",
+				"href" => "http://fandom.wikia.com",
+				"image" => "wds/full_fandom_logo",
+				"title" => [
+					"type" => "text",
+					"value" => "Fandom",
 				]
 			]
 		],
-		'search' => [
-			[
-				'type' => 'search-endpoint',  // new_type
-				'endpoint-href' => 'some.search.link',
-				'suggestions-href' => 'suggestions.link', // make object
-				'placeholder-inactive' => [
-					'type' => 'translatable-text',
-					'key' => 'global-navigation-search-placeholder-inactive'
-				],
-				'placeholder-active' => [
-					'type' => 'translatable-text',
-					'key' => 'global-navigation-search-placeholder-active'
-				],
-				'title' => [
-					'type' => 'translatable-text',
-					'key' => 'global-navigation-search-title'
-				]
-			]
-		],
-		'user-info' => [
-			'type' => 'user-not-authenticated', // new_type
-			'avatar' => [ ],
-			'links' => [
+		"verticals" => [
+			"links" => [
 				[
-					'type' => 'link-text',
-					'title' => [
-						'type' => 'translatable-text',
-						'key' => 'global-navigation-userinfo-signin-title'
+					"type" => "link-branded",
+					"brand" => "tv",
+					"title" => [
+						"type" => "translatable-text",
+						"key" => "global-navigation-brandlink-vertical-tv",
 					],
-					'href' => '#'
+					"href" => "http://tv.wikia.com"
 				],
 				[
-					'type' => 'link-text',
-					'title' => [
-						'type' => 'translatable-text',
-						'key' => 'global-navigation-userinfo-register-title'
+					"type" => "link-branded",
+					"brand" => "games",
+					"title" => [
+						"type" => "translatable-text",
+						"key" => "global-navigation-brandlink-vertical-games",
 					],
-					'description' => [  // define_new_type?
-						'type' => 'translatable-text',
-						'key' => 'global-navigation-userinfo-register-description'
+					"href" => "http://games.wikia.com",
+				],
+				[
+					"type" => "link-branded",
+					"brand" => "movies",
+					"title" => [
+						"type" => "translatable-text",
+						"key" => "global-navigation-brandlink-vertical-movies",
 					],
-					'href' => '#'
-				]
-			]
-		],
-		'start-wikia' => [
-			'type' => 'link-text',
-			'title' => [
-				'type' => 'translatable-text',
-				'key' => 'wikia-create-wiki-link-start-wikia'
+					"href" => "http://movies.wikia.com",
+				],
 			],
-			'href' => '#'
-		]
+		],
+		"wikis" => [
+			"header" => [
+				"type" => "link-branded",
+				"brand" => "wikis",
+				"href" => "#",
+				"title" => [
+					"type" => "translatable-text",
+					"key" => "global-navigation-brandlink-vertical-wikis",
+				],
+			],
+			"links" => [
+				[
+					"type" => "link-text",
+					"title" => [
+						"type" => "translatable-text",
+						"key" => "global-navigation-brandlink-vertical-explorewikis",
+					],
+					"href" => "#",
+				],
+				[
+					"type" => "link-text",
+					"title" => [
+						"type" => "translatable-text",
+						"key" => "global-navigation-brandlink-vertical-wikis-communitycentral",
+					],
+					"href" => "#",
+				],
+			],
+		],
+		"search" => [
+			"modules" => [
+				"type" => "search",
+				"results" => [
+					"url" => "http://wikia.com/search",
+					"param" => "query",
+				],
+				"suggestions" => [
+					"url" => "http://wikia.com/search/suggestions",
+					"param" => "query",
+				],
+				"placeholder-inactive" => [
+					"type" => "translatable-text",
+					"key" => "global-navigation-search-placeholder-inactive",
+				],
+				"placeholder-active" => [
+					"type" => "translatable-text",
+					"key" => "global-navigation-search-placeholder-active",
+				],
+			],
+		],
+		"anon" => [
+			"header" => [
+				"type" => "link-image",
+				"href" => "#",
+				"image" => "anon-avatar",
+				"title" => [
+					"type" => "translatable-text",
+					"key" => "global-navigation-userinfo-anon-avatar-title",
+				],
+			],
+			"links" => [
+				[
+					"type" => "register",
+					"title" => [
+						"type" => "translatable-text",
+						"key" => "global-navigation-userinfo-signin-title",
+					],
+					"href" => "#",
+					"param" => "redirect",
+				],
+				[
+					"type" => "link-text",
+					"title" => [
+						"type" => "translatable-text",
+						"key" => "global-navigation-userinfo-register-title",
+					],
+					"subtitle" => [
+						"type" => "translatable-text",
+						"key" => "global-navigation-userinfo-register-description",
+					],
+					"href" => "#",
+				],
+			],
+		],
+		"user" => [
+			"header" => [
+				"type" => "avatar",
+				"username" => [
+					"type" => "text",
+					"value" => "Username",
+				],
+				"url" => "http://static.wikia.nocookie.net/591dee3c-0ce9-48c4-96ee-a7bc437c238f/scale-to-width-down/50",
+			],
+			"links" => [
+				[
+					"type" => "link-text",
+					"href" => "#",
+					"title" => [
+						"type" => "translatable-text",
+						"key" => "global-navigation-userinfo-profile",
+					],
+				],
+				[
+					"type" => "link-text",
+					"href" => "#",
+					"title" => [
+						"type" => "translatable-text",
+						"key" => "global-navigation-userinfo-talk",
+					],
+				],
+				[
+					"type" => "link-text",
+					"href" => "#",
+					"title" => [
+						"type" => "translatable-text",
+						"key" => "global-navigation-userinfo-preferences",
+					],
+				],
+				[
+					"type" => "link-text",
+					"href" => "#",
+					"title" => [
+						"type" => "translatable-text",
+						"key" => "global-navigation-userinfo-help",
+					],
+				],
+				[
+					"type" => "link-text",
+					"href" => "#",
+					"title" => [
+						"type" => "translatable-text",
+						"key" => "global-navigation-userinfo-signout",
+					],
+				],
+			],
+		],
+		"notifications" => [
+			"modules" => [
+				"type" => "notifications",
+				"url" => "#",
+				"header" => [
+					"type" => "line-image",
+					"image" => "wsd/notifications",
+					"title" => [
+						"type" => "translatable-text",
+						"key" => "global-navigation-notifications",
+					],
+				],
+			],
+		],
+		"create_wiki" => [
+			"header" => [
+				"type" => "link-text",
+				"title" => [
+					"type" => "translatable-text",
+					"key" => "wikia-create-wiki-link-start-wikia",
+				],
+				"href" => "#",
+			],
+		],
+
 	];
 
 	public function getFooter() {
