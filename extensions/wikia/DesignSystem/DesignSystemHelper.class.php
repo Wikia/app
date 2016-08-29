@@ -43,9 +43,7 @@ class DesignSystemHelper {
 				$xml->addAttribute( 'alt', $alt );
 			}
 
-			// We don't use asXML() method to skip XML Declaration tag that causes warnings in browsers
-			$dom = dom_import_simplexml( $xml );
-			return $dom->ownerDocument->saveXML( $dom->ownerDocument->documentElement );
+			return $xml->asXML();
 
 		} else {
 			WikiaLogger::instance()->error(
@@ -74,7 +72,7 @@ class DesignSystemHelper {
 			self::$svgCache[$name] = $xml;
 		}
 
-		return $xml;
+		return clone $xml;
 	}
 
 	/**

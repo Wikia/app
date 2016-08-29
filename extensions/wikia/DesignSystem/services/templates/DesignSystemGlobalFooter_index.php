@@ -1,4 +1,4 @@
-<footer class="wds-global-footer <?= $model['international_header'] ? 'wds-is-international' : 'wds-is-en' ?>">
+<footer class="wds-global-footer <?= isset( $model['international_header'] ) ? 'wds-is-international' : 'wds-is-en' ?>">
 	<?php if ( isset ( $model['international_header'] ) ) : ?>
 		<div class="wds-global-footer__header-wrapper">
 			<h2 class="wds-global-footer__header">

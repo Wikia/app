@@ -88,6 +88,7 @@ $config['adengine2_desktop_js'] = [
 		'//extensions/wikia/AdEngine/js/slot/slotTargeting.js',
 		'//extensions/wikia/AdEngine/js/template/bfaa.js',
 		'//extensions/wikia/AdEngine/js/template/bfab.js',
+		'//extensions/wikia/AdEngine/js/template/floating-rail.js',
 		'//extensions/wikia/AdEngine/js/template/floor.js',
 		'//extensions/wikia/AdEngine/js/template/floorAdhesion.js',
 		'//extensions/wikia/AdEngine/js/template/interstitial.js',
@@ -100,6 +101,7 @@ $config['adengine2_desktop_js'] = [
 		'//extensions/wikia/AdEngine/js/utils/domCalculator.js',
 		'//extensions/wikia/AdEngine/js/utils/eventDispatcher.js',
 		'//extensions/wikia/AdEngine/js/utils/hooks.js',
+		'//extensions/wikia/AdEngine/js/utils/math.js',
 		'//extensions/wikia/AdEngine/js/video/playwire.js',
 		'//extensions/wikia/AdEngine/js/video/vastBuilder.js',
 		'//extensions/wikia/ARecoveryEngine/js/helper.js',
@@ -268,14 +270,6 @@ $config['adengine2_prebid_js'] = [
 	'assets' => [
 		'//extensions/wikia/AdEngine/js/lookup/prebid.js',
 		'//extensions/wikia/AdEngine/js/lookup/adapter/appnexus.js',
-	],
-];
-
-$config['adengine2_ads_recovery_message_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis', 'wikiamobile' ],
-	'assets' => [
-		'//extensions/wikia/AdEngine/js/recovery/message.js',
 	],
 ];
 
@@ -800,14 +794,6 @@ $config['wikiamobile_tables_js'] = [
 	],
 ];
 
-$config['wikiamobile_widget_iframe_unwrapper'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => 'wikiamobile',
-	'assets' => [
-		'//extensions/wikia/WikiaMobile/js/widget_iframe_unwrapper.js',
-	],
-];
-
 $config['mobile_base_ads_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => 'wikiamobile',
@@ -917,11 +903,11 @@ $config['mercury_ads_js'] = [
 		'//extensions/wikia/AdEngine/js/template/modalHandlerFactory.js',
 		'//extensions/wikia/AdEngine/js/template/modalMercuryHandler.js',
 		'//extensions/wikia/AdEngine/js/template/playwire.js',
+		'//extensions/wikia/AdEngine/js/template/interstitial.js',
 		'//extensions/wikia/AdEngine/js/utils/domCalculator.js',
 		'//extensions/wikia/AdEngine/js/utils/scriptLoader.js',
 		'//resources/wikia/modules/abTest.js',
 		'//resources/wikia/modules/krux.js',
-
 		'//extensions/wikia/AdEngine/js/run/mercury.run.js',
 	],
 ];

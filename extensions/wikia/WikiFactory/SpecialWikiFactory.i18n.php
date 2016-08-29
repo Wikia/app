@@ -63,6 +63,7 @@ $messages['en'] = [
 	'wikifactory-button-save' => 'Save changes',
 	'wikifactory-public-status-change-default-reason' => 'Status changed from the Domains tab.',
 // metrics
+	'right-wikifactorymetrics' => 'Allows access to Special:WikiFactory/metrics',
 	"awc-metrics-language-top-list" => "de,en,es,fr,it,ja,pl,pt,pt-br,zh",
 	"awc-metrics-wikis" => "Display Wikis",
 	"awc-metrics-select" => "Show Wikis:",

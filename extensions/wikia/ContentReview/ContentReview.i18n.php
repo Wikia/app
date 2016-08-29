@@ -1,8 +1,11 @@
 <?php
-$messages = array();
+$messages = [];
 
-$messages['en'] = array(
+$messages['en'] = [
 	'content-review-desc' => 'This extension creates a process by which community JavaScript is manually reviewed before it goes live for visitors.',
+	'right-content-review' => 'Allows access to content review tools',
+	'right-content-review-test-mode' => 'Allows access to content review testing environment',
+	'group-content-reviewer' => 'Content Reviewers',
 	'content-review-module-title' => 'Custom JavaScript status',
 	'content-review-module-header-latest' => 'Latest revision:',
 	'content-review-module-header-last' => 'Last reviewed revision:',
@@ -60,9 +63,9 @@ Examples:
  ExampleUsername2 | Guru
 ----
 ',
-);
+];
 
-$messages['qqq'] = array(
+$messages['qqq'] = [
 	'content-review-desc' => '{{desc}}',
 	'content-review-module-title' => 'Title of a the right rail module with information on a page status.',
 	'content-review-module-header-latest' => 'Header of a section of the right rail module with information on the latest revision submitted for a review.',
@@ -110,9 +113,9 @@ $messages['qqq'] = array(
 
     * ExampleUsername | Trainee, Newbie
     * ExampleUsername2 | Guru',
-);
+];
 
-$messages['de'] = array(
+$messages['de'] = [
 	'content-review-desc' => 'Diese Erweiterung erzeugt einen Prozess, in dem das Community-JavaScript manuell überprüft wird, bevor Besucher es live sehen können.',
 	'content-review-module-title' => 'Status des angepassten JavaScripts',
 	'content-review-module-header-latest' => 'Letzte Überprüfung:',
@@ -170,9 +173,9 @@ Namen sollten nicht das Wikia-Namensräume-Präfix enthalten. Verwende für jede
     * BeispielBenutzername2 : Guru
 ----
 ',
-);
+];
 
-$messages['es'] = array(
+$messages['es'] = [
 	'content-review-desc' => 'Esta extensión crea un proceso en el que el JavaScript comunitario es revisado manualmente antes de que sea activo para los visitantes.',
 	'content-review-module-title' => 'Estado del JavaScript personalizado',
 	'content-review-module-header-latest' => 'Última revisión:',
@@ -231,9 +234,9 @@ Los nombres no deben contener el prefijo del espacio para nombres de MediaWiki. 
 ----
 
 ',
-);
+];
 
-$messages['fr'] = array(
+$messages['fr'] = [
 	'content-review-desc' => 'Cette extension permet de lancer un processus de vérification manuelle du JavaScript de la communauté avant sa publication.',
 	'content-review-module-title' => 'État du JavaScript personnel',
 	'content-review-module-header-latest' => 'Dernière version :',
@@ -291,9 +294,9 @@ Les noms ne doivent pas comporter le préfixe d'espace de noms MediaWiki. Écriv
     * Nomutilisateur2 : Gourou
 ----
 ",
-);
+];
 
-$messages['it'] = array(
+$messages['it'] = [
 	'content-review-desc' => 'Questa estensione crea un processo attraverso il quale il JavaScript della community è controllato manualmente prima che diventi visibile ai visitatori.',
 	'content-review-module-title' => 'Stato del JavaScript personalizzato',
 	'content-review-module-header-latest' => 'Ultima revisione:',
@@ -350,9 +353,9 @@ I nomi non devono contenere il prefisso dello spazio dei nomi MediaWiki. Scrivi 
     *ExampleUsername : Trainee; Newbie
     *ExampleUsername2 : Guru
 ',
-);
+];
 
-$messages['ja'] = array(
+$messages['ja'] = [
 	'content-review-desc' => 'この拡張機能により、コミュニティのJavaScriptが公開前に手動で審査されるようになります。',
 	'content-review-module-title' => 'カスタムJavaScriptの状況',
 	'content-review-module-header-latest' => '最新版：',
@@ -410,9 +413,9 @@ MediaWikiの名前空間プレフィックスは名前に含めないでくだ�
     * ユーザー名2 : グル
 ----
 ',
-);
+];
 
-$messages['nl'] = array(
+$messages['nl'] = [
 	'content-review-desc' => 'This extension creates a process by which community JavaScript is manually reviewed before it goes live for visitors.',
 	'content-review-module-title' => 'Custom JavaScript status',
 	'content-review-module-header-latest' => 'Latest revision:',
@@ -470,9 +473,9 @@ Names should not contain the MediaWiki namespace prefix. Write each script on a 
     * ExampleUsername2 : Guru
 ----
 ',
-);
+];
 
-$messages['pl'] = array(
+$messages['pl'] = [
 	'content-review-desc' => 'To rozszerzenie tworzy proces, dzięki któremu kod JavaScript tworzony przez społeczność jest sprawdzany ręcznie zanim zobaczą go odwiedzający.',
 	'content-review-module-title' => 'Status dostosowanego kodu JavaScript',
 	'content-review-module-header-latest' => 'Ostatnia wersja:',
@@ -530,9 +533,9 @@ Nazwy nie powinny zawierać przedrostka obszaru nazw MediaWiki. Każdy skrypt na
     * PrzykładowaNazwaUżytkownika2 : Guru
 ----
 ',
-);
+];
 
-$messages['pt'] = array(
+$messages['pt'] = [
 	'content-review-desc' => 'Esta extensão cria um processo que é revisado manualmente pela comunidade JavaScript antes do lançamento para os visitantes.',
 	'content-review-module-title' => 'Status do JavaScript personalizado',
 	'content-review-module-header-latest' => 'Revisão mais recente:',
@@ -586,9 +589,9 @@ Nomes não devem conter o prefixo de namespace MediaWiki. Escreva cada script em
 
   * ExemploNomedeusuário: estagiário, novato
   * ExemploNomedeusuário2: guru',
-);
+];
 
-$messages['ru'] = array(
+$messages['ru'] = [
 	'content-review-desc' => 'Это расширение позволяет проверять пользовательский JavaScript википроекта перед тем, как он будет применён для посетителей вики.',
 	'content-review-module-title' => 'Статус пользовательского JavaScript',
 	'content-review-module-header-latest' => 'Последняя версия:',
@@ -647,9 +650,9 @@ $messages['ru'] = array(
     * ОпытныйУчастник2 : Гуру, Мастер шаблонов
 ----
 ',
-);
+];
 
-$messages['zh-hans'] = array(
+$messages['zh-hans'] = [
 	'content-review-desc' => '这个扩展功能让社区的JavaScript在完全开放给用户之前需要通过人工审核。',
 	'content-review-module-title' => '自定义JavaScript状态',
 	'content-review-module-header-latest' => '最新版本:',
@@ -704,9 +707,9 @@ JavaScript页面最近提交的变更请求(版本[$2 $3]) 未通过Wikia审核�
     * 用户名例子1: 见习，新手
     * 用户名例子2: 大师
 ----',
-);
+];
 
-$messages['zh-hant'] = array(
+$messages['zh-hant'] = [
 	'content-review-desc' => '此擴展功能讓社區的JavaScript在完全開放給使用者之前需要通過人工審核。',
 	'content-review-module-title' => '自訂JavaScript狀態',
 	'content-review-module-header-latest' => '最新版本:',
@@ -761,5 +764,5 @@ JavaScript頁最近提交的變更請求(版本[$2 $3]) 未通過Wikia審核。 
 * 用户名例子1: 見習，新手
 * 用户名例子2: 大師
 ----',
-);
+];
 

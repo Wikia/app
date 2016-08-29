@@ -48,7 +48,9 @@ $font-size-large: 16px;
 	}
 
 	.embeddable-discussions-heading-container {
-		clear: both;
+		@include flexbox();
+
+		margin-top: 10px;
 	}
 
 	.embeddable-discussions-heading {
@@ -126,15 +128,9 @@ $font-size-large: 16px;
 	}
 
 	.embeddable-discussions-post-detail-columns {
+		height: 100%;
+		margin-right: 10px;
 		width: 48%;
-	}
-
-	.embeddable-discussions-post-detail-columns:nth-child(odd) {
-		float: right;
-	}
-
-	.embeddable-discussions-post-detail-columns:nth-last-child(2) {
-		float: none;
 	}
 
 	.embeddable-discussions-reply-icon {
@@ -157,10 +153,10 @@ $font-size-large: 16px;
 	}
 
 	.embeddable-discussions-show-all {
-		float: right;
 		font-size: $font-size-small;
 		font-weight: bold;
 		line-height: 24px;
+		margin-left: auto;
 	}
 
 	.embeddable-discussions-side-spaced {
@@ -171,6 +167,11 @@ $font-size-large: 16px;
 	.embeddable-discussions-threads {
 		clear: both;
 		padding-top: 14px;
+	}
+
+	.embeddable-discussions-threads-columns {
+		@include flexbox();
+		@include flex-wrap(wrap);
 	}
 
 	.embeddable-discussions-timestamp {

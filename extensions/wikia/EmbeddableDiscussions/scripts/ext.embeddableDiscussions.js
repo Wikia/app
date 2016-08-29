@@ -53,19 +53,28 @@ require([
 
 		$('.upvote').click(function (event) {
 			var upvoteUrl = event.currentTarget.getAttribute('data-url'),
-				$svg = $($(event.currentTarget).children()[0]);
+			  hasUpvoted = event.currentTarget.getAttribute('data-hasUpvoted') === '1',
+			  $svg = $($(event.currentTarget).children()[0]),
+			  verb = hasUpvoted ? 'DELETE' : 'POST';
 
-			$svg.attr('class', 'embeddable-discussions-upvote-icon-active');
+			if (!mw.user.anonymous()) {
+				if (hasUpvoted) {
+					$svg.attr('class', 'embeddable-discussions-upvote-icon');
+					event.currentTarget.setAttribute('data-hasUpvoted', '0');
+				}
+				else {
+					$svg.attr('class', 'embeddable-discussions-upvote-icon-active');
+					event.currentTarget.setAttribute('data-hasUpvoted', '1');
+				}
 
-			$.ajax({
-				type: 'POST',
-				url: upvoteUrl,
-				xhrFields: {
-					withCredentials: true
-				},
-			}).fail(function () {
-				$svg.attr('class', 'embeddable-discussions-upvote-icon');
-			});
+				$.ajax({
+					type: verb,
+					url: upvoteUrl,
+					xhrFields: {
+						withCredentials: true
+					},
+				});
+			}
 
 			event.preventDefault();
 		});

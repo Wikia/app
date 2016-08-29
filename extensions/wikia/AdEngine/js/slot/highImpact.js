@@ -12,10 +12,7 @@ define('ext.wikia.adEngine.slot.highImpact', [
 	function init() {
 		if (context.slots.invisibleHighImpact2) {
 			win.adslots2.push({
-				slotName: slotName,
-				onSuccess: function () {
-					slotTweaker.adjustIframeByContentSize(slotName);
-				}
+				slotName: slotName
 			});
 		}
 	}
