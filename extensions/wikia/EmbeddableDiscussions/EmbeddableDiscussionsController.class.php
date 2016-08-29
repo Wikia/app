@@ -13,39 +13,39 @@ class EmbeddableDiscussionsController {
 		global $wgEnableDiscussions;
 
 		if ( $wgEnableDiscussions ) {
-			$parser->setHook( self::TAG_NAME, [ 'EmbeddableDiscussionsController', 'render' ] );
+			$parser->setHook( static::TAG_NAME, [ 'EmbeddableDiscussionsController', 'render' ] );
 		}
 
 		return true;
 	}
 
-	public static function onBeforePageDisplay( \OutputPage $out, \Skin $skin ) {
+	public static function onBeforePageDisplay() {
 		\Wikia::addAssetsToOutput( 'embeddable_discussions_js' );
 		\Wikia::addAssetsToOutput( 'embeddable_discussions_scss' );
 		return true;
 	}
 
-	public static function render( $input, array $args, Parser $parser, PPFrame $frame ) {
+	public static function render( $input, array $args ) {
 		global $wgCityId;
 
-		$showLatest = empty( $args['mostrecent'] ) ? false : filter_var( $args['mostrecent'], FILTER_VALIDATE_BOOLEAN );
-		$itemCount = empty( $args['size'] ) ? self::ITEMS_DEFAULT : intval( $args['size'] );
-		$columns = empty( $args['columns'] ) ? self::COLUMNS_DEFAULT : intval( $args['columns'] );
+		$showLatest = !empty( $args['mostrecent'] ) && filter_var( $args['mostrecent'], FILTER_VALIDATE_BOOLEAN );
+		$itemCount = empty( $args['size'] ) ? static::ITEMS_DEFAULT : intval( $args['size'] );
+		$columns = empty( $args['columns'] ) ? static::COLUMNS_DEFAULT : intval( $args['columns'] );
 
-		if ( $itemCount > self::ITEMS_MAX ) {
-			$itemCount = self::ITEMS_MAX;
+		if ( $itemCount > static::ITEMS_MAX ) {
+			$itemCount = static::ITEMS_MAX;
 		}
 
-		if ( $itemCount < self::ITEMS_MIN ) {
-			$itemCount = self::ITEMS_MIN;
+		if ( $itemCount < static::ITEMS_MIN ) {
+			$itemCount = static::ITEMS_MIN;
 		}
 
-		if ( $columns < self::COLUMNS_MIN ) {
-			$columns = self::COLUMNS_MIN;
+		if ( $columns < static::COLUMNS_MIN ) {
+			$columns = static::COLUMNS_MIN;
 		}
 
-		if ( $columns > self::COLUMNS_MAX ) {
-			$columns = self::COLUMNS_MAX;
+		if ( $columns > static::COLUMNS_MAX ) {
+			$columns = static::COLUMNS_MAX;
 		}
 
 		$templateEngine = ( new Wikia\Template\MustacheEngine )->setPrefix( __DIR__ . '/templates' );
@@ -53,8 +53,11 @@ class EmbeddableDiscussionsController {
 		if ( F::app()->checkSkin( 'wikiamobile' ) ) {
 			// In Mercury, discussions are rendered client side as an Ember component
 			$modelData = [
-				'show' => $showLatest ? 'latest' : 'trending',
-				'itemCount' => $itemCount,
+				'mercuryComponentAttrs' => json_encode( [
+					'show' => $showLatest ? 'latest' : 'trending',
+					'itemCount' => $itemCount,
+				] ),
+				'loading' => wfMessage( 'embeddable-discussions-loading' )->plain()
 			];
 
 			// In mercury, discussions app is rendered client side
