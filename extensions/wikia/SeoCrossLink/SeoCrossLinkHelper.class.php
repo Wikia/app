@@ -18,11 +18,7 @@ class SeoCrossLinkHelper extends WikiaModel {
 
 		$title = $this->wg->Title;
 		if ( $title instanceof Title && $title->getNamespace() == NS_MAIN ) {
-			$validPages = $this->getValidPages();
-			if ( in_array( $title->getArticleID(), $validPages ) ) {
-				return true;
-			}
-			return false;
+			return in_array( $title->getArticleID(), $this->getValidPages() );
 		}
 
 		return false;

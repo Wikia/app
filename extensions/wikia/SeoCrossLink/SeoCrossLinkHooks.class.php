@@ -11,12 +11,10 @@ class SeoCrossLinkHooks {
 	 * @return bool
 	 */
 	public static function onGetRailModuleList( &$modules ) {
-
-		$helper = new SeoCrossLinkHelper();
-		if ( $helper->canShowModule() ) {
-			// Use a different position depending on whether the user is logged in
-			$pos = F::App()->wg->User->isAnon() ? 1250 : 1300;
-			$modules[$pos] = [ 'SeoCrossLink', 'index', null ];
+		if ( (new SeoCrossLinkHelper())->canShowModule() ) {
+			$modules[1445] = $modules[1440];
+			$modules[1440] = [ 'SeoCrossLink', 'index', null ];
+			unset( $modules[1250] );
 		}
 
 		return true;
