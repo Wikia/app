@@ -271,6 +271,7 @@ $config['adengine2_rubicon_vulcan_js'] = [
 	'assets' => [
 		'//extensions/wikia/AdEngine/js/lookup/rubiconTargeting.js',
 		'//extensions/wikia/AdEngine/js/lookup/rubiconVulcan.js',
+		'//extensions/wikia/AdEngine/js/utils/math.js',
 	],
 ];
 
@@ -909,6 +910,7 @@ $config['mercury_ads_js'] = [
 		'//extensions/wikia/AdEngine/js/template/bfaa.js',
 		'//extensions/wikia/AdEngine/js/template/bfab.js',
 		'//extensions/wikia/AdEngine/js/template/floor.js',
+		'//extensions/wikia/AdEngine/js/template/floorAdhesion.js',
 		'//extensions/wikia/AdEngine/js/template/modal.js',
 		'//extensions/wikia/AdEngine/js/template/modalHandlerFactory.js',
 		'//extensions/wikia/AdEngine/js/template/modalMercuryHandler.js',
