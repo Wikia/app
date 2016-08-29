@@ -23,10 +23,21 @@ class DiscussionsThreadModel {
 	private function getRequestUrl( $showLatest, $limit, $category ) {
 		global $wgDevelEnvironment;
 
+		var_dump($category);
+
 		$sortKey = $showLatest ? self::SORT_LATEST : self::SORT_TRENDING;
 
 		if ( empty( $wgDevelEnvironment ) ) {
+
+			if ( is_null ( $category ) ) {
+				return self::DISCUSSIONS_API_BASE . "$this->cityId/threads?sortKey=$sortKey&limit=$limit&viewableOnly=false";
+			}
+
 			return self::DISCUSSIONS_API_BASE . "$this->cityId/threads?forumId=$category&sortKey=$sortKey&limit=$limit&viewableOnly=false";
+		}
+
+		if ( is_null ( $category ) ) {
+			return self::DISCUSSIONS_API_BASE_DEV . "$this->cityId/threads?sortKey=$sortKey&limit=$limit&viewableOnly=false";
 		}
 
 		return self::DISCUSSIONS_API_BASE_DEV . "$this->cityId/threads?forumId=$category&sortKey=$sortKey&limit=$limit&viewableOnly=false";

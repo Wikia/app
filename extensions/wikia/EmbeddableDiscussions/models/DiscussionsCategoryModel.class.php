@@ -47,7 +47,7 @@ class DiscussionsCategoryModel {
 
 		$rawData = WikiaDataAccess::cache(
 			$memcKey,
-			WikiaResponse::CACHE_VERY_SHORT,
+			WikiaResponse::CACHE_STANDARD,
 			function() {
 				return $this->apiRequest( $this->getRequestUrl() );
 			}
