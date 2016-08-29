@@ -63,10 +63,15 @@ define('ext.wikia.recirculation.utils', [
 	 * Checks if template is cached in LocalStorage and if not loads it by using loader
 	 * @returns {$.Deferred}
 	 */
-	function loadTemplate(templateLocation) {
+	function loadTemplate(templateName) {
 		var dfd = new $.Deferred(),
+			templateLocation = 'extensions/wikia/Recirculation/templates/client/' + templateName,
 			cacheKey = 'RecirculationAssets_' + templateLocation,
 			template = cache.getVersioned(cacheKey);
+
+		if (!templateName) {
+			return dfd.reject('Invalid template name');
+		}
 
 		if (template) {
 			dfd.resolve(template);
@@ -89,8 +94,6 @@ define('ext.wikia.recirculation.utils', [
 	}
 
 	function renderTemplate(templateName, data) {
-		var templateName = 'extensions/wikia/Recirculation/templates/client/' + templateName;
-
 		return loadTemplate(templateName)
 			.then(function(template) {
 				return $(Mustache.render(template, data));
