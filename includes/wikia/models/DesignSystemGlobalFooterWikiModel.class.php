@@ -2,7 +2,7 @@
 
 class DesignSystemGlobalFooterWikiModel extends DesignSystemGlobalFooterModel {
 
-	private $wikiId;
+	protected $wikiId;
 
 	public function __construct( $id, $lang = self::DEFAULT_LANG ) {
 		parent::__construct( $id, $lang = self::DEFAULT_LANG );
@@ -31,7 +31,7 @@ class DesignSystemGlobalFooterWikiModel extends DesignSystemGlobalFooterModel {
 		];
 	}
 
-	private function getVerticalData() {
+	protected function getVerticalData() {
 		$wikiFactoryInstance = WikiFactoryHub::getInstance();
 		$verticalData = $wikiFactoryInstance->getWikiVertical( $this->wikiId );
 
@@ -76,7 +76,7 @@ class DesignSystemGlobalFooterWikiModel extends DesignSystemGlobalFooterModel {
 		];
 	}
 
-	private function getLicenseUrl() {
+	protected function getLicenseUrl() {
 		$licenseUrl = WikiFactory::getVarValueByName( 'wgRightsUrl', $this->wikiId ) ?: $this->wg->RightsUrl;
 		$licensePage = WikiFactory::getVarValueByName( 'wgRightsPage', $this->wikiId ) ?: $this->wg->RightsPage;
 

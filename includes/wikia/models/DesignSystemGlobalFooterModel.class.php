@@ -3,7 +3,7 @@
 abstract class DesignSystemGlobalFooterModel extends WikiaModel {
 	const DEFAULT_LANG = 'en';
 
-	private $hrefs = [
+	protected $hrefs = [
 		'default' => [
 			'fan-communities' => 'http://fandom.wikia.com/explore',
 			'about' => 'http://www.wikia.com/about',
@@ -216,7 +216,7 @@ abstract class DesignSystemGlobalFooterModel extends WikiaModel {
 		]
 	];
 
-	private $lang;
+	protected $lang;
 
 	public function __construct( $id, $lang = self::DEFAULT_LANG ) {
 		parent::__construct();
@@ -462,7 +462,7 @@ abstract class DesignSystemGlobalFooterModel extends WikiaModel {
 
 	abstract protected function getSitenameData();
 
-	private function getVerticalData() {
+	protected function getVerticalData() {
 		return null;
 	}
 
@@ -470,7 +470,7 @@ abstract class DesignSystemGlobalFooterModel extends WikiaModel {
 		return null;
 	}
 
-	private function getFandomOverview() {
+	protected function getFandomOverview() {
 		$out = [
 			'links' => [ ]
 		];
@@ -520,7 +520,7 @@ abstract class DesignSystemGlobalFooterModel extends WikiaModel {
 		return $out;
 	}
 
-	private function getFollowUs() {
+	protected function getFollowUs() {
 		$data = [
 			'header' => [
 				'type' => 'line-text',
@@ -595,7 +595,7 @@ abstract class DesignSystemGlobalFooterModel extends WikiaModel {
 		return $data;
 	}
 
-	private function getCommunity() {
+	protected function getCommunity() {
 		$data = [
 			'header' => [
 				'type' => 'line-text',
