@@ -119,7 +119,7 @@ class Chat {
 			}
 
 			$options = array_flip( ChatBanTimeOptions::newDefault()->get() );
-            $timeLabel = $options[ $time ];
+			$timeLabel = $options[ $time ];
 			$endOn = time() + $time;
 
 			$subjectChatUser->ban( $adminUser->getId(), $endOn, $reason );
