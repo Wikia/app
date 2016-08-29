@@ -1,57 +1,71 @@
 /*global define*/
 define('ext.wikia.adEngine.lookup.rubiconVulcan', [
 	'ext.wikia.adEngine.lookup.lookupFactory',
+	'ext.wikia.adEngine.lookup.rubiconTargeting',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window'
-], function (factory, doc, log, win) {
+], function (factory, rubiconTargeting, doc, log, win) {
 	'use strict';
 
-	var accountId = 7780,
+	var accountId = 7450,
 		config = {
 			oasis: {
-				INCONTENT_BOXAD_1: {
+				INCONTENT_LEADERBOARD: {
+					siteId: 55412,
 					size: [640, 480],
-					siteId: 85282,
-					zoneId: 404144
+					sizeId: 203,
+					targeting: {
+						loc: 'hivi'
+					},
+					zoneId: 260296
 				}
 			},
-			mercury: {}
+			mercury: {
+			}
 		},
 		libraryUrl = '//ads.aws.rubiconproject.com/video/vulcan.min.js',
 		logGroup = 'ext.wikia.adEngine.lookup.rubiconVulcan',
 		priceMap = {},
-		sizeMap = {
-			'480x320': 101,
-			'640x480': 201
-		},
 		slots = {},
 		vulcanCpmKey = 'cpm',
 		vulcanUrlKey = 'depot_url';
 
+	function setupTargeting(slotName, slot, provider) {
+		var targeting = rubiconTargeting.getTargeting(slotName, provider, 'vulcan');
+
+		Object.keys(targeting).forEach(function (key) {
+			slot.targeting[key] = targeting[key];
+		});
+	}
+
 	function defineSingleSlot(slotName, slot) {
-		var size = slot.size[0] + 'x' + slot.size[1],
-			slotDefinition = {
+		var slotDefinition = {
 				'accountId': accountId,
 				'site_id': slot.siteId,
-				'size_id': sizeMap[size],
+				'size_id': slot.sizeId,
 				'zone_id': slot.zoneId,
 				'width': slot.size[0],
 				'height': slot.size[1],
-				'rand': Math.round(1000000000 * Math.random()),
-				'key1': 'value1'
+				'rand': Math.round(1000000000 * Math.random())
 			};
 
+		Object.keys(slot.targeting).forEach(function (key) {
+			slotDefinition['tg_i.' + key] = slot.targeting[key];
+		});
+
 		log(['defineSlot', slotName, slotDefinition], 'debug', logGroup);
-		win.rubicontag.video.defineSlot(slotName, slotDefinition);
+		win.rubiconVulcan.defineSlot(slotName, slotDefinition);
 	}
 
-	function defineSlots(onResponse) {
+	function defineSlots(skin, onResponse) {
+		var provider = skin === 'oasis' ? 'gpt' : 'mobile';
 		Object.keys(slots).forEach(function (slotName) {
+			setupTargeting(slotName, slots[slotName], provider);
 			defineSingleSlot(slotName, slots[slotName]);
 		});
 
-		win.rubicontag.video.run(onResponse);
+		win.rubiconVulcan.run(onResponse);
 	}
 
 	function getSlotParams(slotName) {
@@ -68,7 +82,7 @@ define('ext.wikia.adEngine.lookup.rubiconVulcan', [
 	}
 
 	function calculatePrices() {
-		var allSlots = win.rubicontag.video.getAllSlots();
+		var allSlots = win.rubiconVulcan.getAllSlots();
 
 		allSlots.forEach(function (slot) {
 			var ad = slot.getBestCpm(),
@@ -89,18 +103,19 @@ define('ext.wikia.adEngine.lookup.rubiconVulcan', [
 	}
 
 	function call(skin, onResponse) {
-		var vulcan = doc.createElement('script'),
+		var script = doc.createElement('script'),
 			node = doc.getElementsByTagName('script')[0];
 
-		vulcan.type = 'text/javascript';
-		vulcan.src = libraryUrl;
+		script.type = 'text/javascript';
+		script.src = libraryUrl;
 
 		slots = config[skin];
-		vulcan.addEventListener('load', function () {
-			defineSlots(onResponse);
+		script.addEventListener('load', function () {
+			win.rubiconVulcan = win.rubicontag.video;
+			defineSlots(skin, onResponse);
 		});
 
-		node.parentNode.insertBefore(vulcan, node);
+		node.parentNode.insertBefore(script, node);
 	}
 
 	function getPrices() {

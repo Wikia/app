@@ -268,6 +268,7 @@ $config['adengine2_rubicon_vulcan_js'] = [
 	'skin' => [ 'oasis' ],
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
+		'//extensions/wikia/AdEngine/js/lookup/rubiconTargeting.js',
 		'//extensions/wikia/AdEngine/js/lookup/rubiconVulcan.js',
 	],
 ];
