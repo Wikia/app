@@ -9,9 +9,7 @@ define('ext.wikia.recirculation.views.impactFooter', [
 
 	var logGroup = 'ext.wikia.recirculation.views.rail',
 		imageRatio = 9/16;
-		options = {
-			template: 'impactFooter.mustache'
-		};
+		options = {};
 
 	function render(data) {
 		var renderData = {};
@@ -29,7 +27,7 @@ define('ext.wikia.recirculation.views.impactFooter', [
 			wikiTag: $.msg('recirculation-impact-footer-wiki-tag')
 		};
 
-		return utils.renderTemplate(options.template, renderData).then(function($html) {
+		return utils.renderTemplate('impactFooter.mustache', renderData).then(function($html) {
 			$('#WikiaFooter').html($html).find('.discussion-timestamp').timeago();
 			adjustFeatureItem($html);
 

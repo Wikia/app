@@ -9,15 +9,13 @@ define('ext.wikia.recirculation.views.rail', [
 ], function ($, w, log, abTest, tracker, utils) {
 
 	var logGroup = 'ext.wikia.recirculation.views.rail',
-		options = {
-			template: 'rail.mustache'
-		};
+		options = {};
 
 	function render(data) {
 		data.titleHtml = options.formatTitle ? formatTitle(data.title) : data.title;
 		data.group = abTest.getGroup('RECIRCULATION_PLACEMENT');
 
-		return utils.renderTemplate(options.template, data)
+		return utils.renderTemplate('rail.mustache', data)
 			.then(utils.waitForRail)
 			.then(function($html) {
 				if (options.before) {
