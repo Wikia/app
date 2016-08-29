@@ -7,13 +7,13 @@ define('ext.wikia.adEngine.lookup.rubiconVulcan', [
 ], function (factory, doc, log, win) {
 	'use strict';
 
-	var accountId = 7450,
+	var accountId = 7780,
 		config = {
 			oasis: {
 				INCONTENT_BOXAD_1: {
-					size: [480, 320],
-					siteId: 55412,
-					zoneId: 260296
+					size: [640, 480],
+					siteId: 85282,
+					zoneId: 404144
 				}
 			},
 			mercury: {}
@@ -92,7 +92,6 @@ define('ext.wikia.adEngine.lookup.rubiconVulcan', [
 		var vulcan = doc.createElement('script'),
 			node = doc.getElementsByTagName('script')[0];
 
-		vulcan.async = true;
 		vulcan.type = 'text/javascript';
 		vulcan.src = libraryUrl;
 
