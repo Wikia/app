@@ -60,7 +60,7 @@ describe('ext.wikia.adEngine.lookup.rubiconFastlane', function () {
 						s0: 'life',
 						s1: '_dragonball',
 						s2: 'article',
-						src: mocks.targeting.skin === 'oasis' ? 'gpt' : 'mobile'
+						src: 'gpt'
 					};
 				}
 			},
@@ -119,7 +119,7 @@ describe('ext.wikia.adEngine.lookup.rubiconFastlane', function () {
 		return modules['ext.wikia.adEngine.lookup.rubiconFastlane'](
 			mocks.adContext,
 			getFactory(),
-			mocks.adLogicZoneParams,
+			mocks.rubiconTargeting,
 			mocks.doc,
 			mocks.log,
 			mocks.win
@@ -240,15 +240,6 @@ describe('ext.wikia.adEngine.lookup.rubiconFastlane', function () {
 		});
 	});
 
-	it('Sets FPI.src to mobile on mercury', function () {
-		var rubiconFastlane = getRubiconFastlane();
-		mocks.targeting.skin = 'mercury';
-
-		rubiconFastlane.call();
-
-		expect(slotParams.src).toEqual('mobile');
-	});
-
 	it('Sets FPI.src to gpt on oasis', function () {
 		var rubiconFastlane = getRubiconFastlane();
 		mocks.targeting.skin = 'oasis';
@@ -266,14 +257,6 @@ describe('ext.wikia.adEngine.lookup.rubiconFastlane', function () {
 		rubiconFastlane.call();
 
 		expect(slotParams.s1).toEqual('_dragonball');
-	});
-
-	it('Sets FPI.s1 to defined string when it is not in top1k', function () {
-		var rubiconFastlane = getRubiconFastlane();
-
-		rubiconFastlane.call('oasis');
-
-		expect(slotParams.s1).toEqual('not a top1k wiki');
 	});
 
 	it('Sets other FPI based on AdLogicZoneParams', function () {
