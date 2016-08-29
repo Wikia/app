@@ -61,9 +61,9 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 			uapId = uapContext.getUapId(),
 			floatingSpace;
 
-			if (adContext.getContext().targeting.skin === 'oasis') {
-				floatingSpace = floatingRail.getFloatingSpaceParam(slot.name);
-			}
+		if (floatingRail) {
+			floatingSpace = floatingRail.getFloatingSpaceParam(slot.name);
+		}
 
 		log(['shouldPush',
 			slot.name,

@@ -118,10 +118,12 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 
 		callbacks = [];
 
-		mocks.context = { opts: {},
+		mocks.context = {
+			opts: {},
 			targeting: {
 				skin: 'oasis'
-			} };
+			}
+		};
 	});
 
 	it('Initialize googletag when module is not initialized yet', function () {
