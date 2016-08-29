@@ -14,13 +14,15 @@ define('VisualEditorTourExperimentInit',
 		}
 
 		function isEnabled() {
-			return isJapaneseCommunity() &&
-				(isNewlyregistered() || isUserwithoutedit()) &&
-				!$.cookie('vetourdisabled');
+			var enable = isJapaneseCommunity;
+			if (mw.config.get('wgUserName') != null){
+				enable = enable && isUserLanguagePreferenceJapanese() && isUserwithoutedit();
+			}
+			return enable && !$.cookie('vetourdisabled');
 		}
 
 		function trackPublish() {
-			if (isJapaneseCommunity() && (isNewlyregistered() || isUserwithoutedit())) {
+			if (isJapaneseCommunity()) {
 				tracker.trackVerboseSuccess(experimentName, 'publish');
 			}
 		}
@@ -39,6 +41,10 @@ define('VisualEditorTourExperimentInit',
 
 		function isUserwithoutedit() {
 			return $.cookie('userwithoutedit');
+		}
+
+		function isUserLanguagePreferenceJapanese() {
+			return mw.config.get('wgUserLanguage') === 'ja';
 		}
 
 		return {
