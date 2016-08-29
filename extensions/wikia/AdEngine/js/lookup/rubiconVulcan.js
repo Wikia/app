@@ -31,8 +31,8 @@ define('ext.wikia.adEngine.lookup.rubiconVulcan', [
 		vulcanCpmKey = 'cpm',
 		vulcanUrlKey = 'depot_url';
 
-	function setupTargeting(slotName, slot, provider) {
-		var targeting = rubiconTargeting.getTargeting(slotName, provider, 'vulcan');
+	function setupTargeting(slotName, slot, skin) {
+		var targeting = rubiconTargeting.getTargeting(slotName, skin, 'vulcan');
 
 		Object.keys(targeting).forEach(function (key) {
 			slot.targeting[key] = targeting[key];
@@ -59,9 +59,8 @@ define('ext.wikia.adEngine.lookup.rubiconVulcan', [
 	}
 
 	function defineSlots(skin, onResponse) {
-		var provider = skin === 'oasis' ? 'gpt' : 'mobile';
 		Object.keys(slots).forEach(function (slotName) {
-			setupTargeting(slotName, slots[slotName], provider);
+			setupTargeting(slotName, slots[slotName], skin);
 			defineSingleSlot(slotName, slots[slotName]);
 		});
 

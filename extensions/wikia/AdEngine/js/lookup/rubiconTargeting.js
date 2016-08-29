@@ -15,8 +15,9 @@ define('ext.wikia.adEngine.lookup.rubiconTargeting', [
 		return context.targeting;
 	}
 
-	function getTargeting(slotName, provider, passback) {
-		var s1 = getContextTargeting().wikiIsTop1000 ? adLogicZoneParams.getName() : 'not a top1k wiki';
+	function getTargeting(slotName, skin, passback) {
+		var provider = skin === 'oasis' ? 'gpt' : 'mobile',
+			s1 = getContextTargeting().wikiIsTop1000 ? adLogicZoneParams.getName() : 'not a top1k wiki';
 
 		return {
 			pos: slotName,

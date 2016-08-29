@@ -260,6 +260,7 @@ $config['adengine2_rubicon_fastlane_js'] = [
 	'skin' => [ 'oasis' ],
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
+		'//extensions/wikia/AdEngine/js/lookup/rubiconTargeting.js',
 		'//extensions/wikia/AdEngine/js/lookup/rubiconFastlane.js',
 	],
 ];

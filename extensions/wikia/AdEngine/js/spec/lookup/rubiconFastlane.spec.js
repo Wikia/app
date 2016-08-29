@@ -27,20 +27,6 @@ describe('ext.wikia.adEngine.lookup.rubiconFastlane', function () {
 				},
 				track: noop
 			},
-			adLogicZoneParams: {
-				getSite: function () {
-					return 'life';
-				},
-				getName: function () {
-					return '_dragonball';
-				},
-				getPageType: function () {
-					return 'article';
-				},
-				getLanguage: function () {
-					return 'en';
-				}
-			},
 			doc: {
 				node: {
 					parentNode: {
@@ -65,6 +51,18 @@ describe('ext.wikia.adEngine.lookup.rubiconFastlane', function () {
 			log: noop,
 			recoveryHelper: {
 				addOnBlockingCallback: noop
+			},
+			rubiconTargeting: {
+				getTargeting: function () {
+					return {
+						lang: 'en',
+						passback: 'fastlane',
+						s0: 'life',
+						s1: '_dragonball',
+						s2: 'article',
+						src: mocks.targeting.skin === 'oasis' ? 'gpt' : 'mobile'
+					};
+				}
 			},
 			slot: {
 				setFPI: function (key, value) {
