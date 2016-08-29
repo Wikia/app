@@ -36,7 +36,7 @@ define('ext.wikia.recirculation.utils', [
 	   };
 	}
 
-	function Result (item, score) {
+	function createResult (item, score) {
 		return {
 			item: item,
 			score: score
@@ -47,7 +47,7 @@ define('ext.wikia.recirculation.utils', [
 		var standardDeviation = (epsilon > 1) ? Math.sqrt(Math.log(epsilon)) : Math.exp(1e-10),
 			distribution = gaussian(0, standardDeviation);
 
-		return results.map(Result)
+		return results.map(createResult)
 			.map(function(result, index) {
 				result.score = Math.log(index + 1) + distribution();
 				return result;
@@ -55,7 +55,7 @@ define('ext.wikia.recirculation.utils', [
 				return a.score - b.score;
 			}).map(function(result, index) {
 				result.item.index = index;
-				return result.item
+				return result.item;
 			});
 	}
 
@@ -86,7 +86,8 @@ define('ext.wikia.recirculation.utils', [
 
 				dfd.resolve(template);
 
-				cache.setVersioned(cacheKey, template, 86400); //1 days
+				// 1 day
+				cache.setVersioned(cacheKey, template, 86400);
 			});
 		}
 

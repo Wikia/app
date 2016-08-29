@@ -8,8 +8,7 @@ define('ext.wikia.recirculation.views.rail', [
 	'ext.wikia.recirculation.utils'
 ], function ($, w, log, abTest, tracker, utils) {
 
-	var logGroup = 'ext.wikia.recirculation.views.rail',
-		options = {};
+	var options = {};
 
 	function render(data) {
 		data.titleHtml = options.formatTitle ? formatTitle(data.title) : data.title;
@@ -37,7 +36,7 @@ define('ext.wikia.recirculation.views.rail', [
 			});
 
 			return $html;
-		}
+		};
 	}
 
 	// Format title for E3
@@ -51,6 +50,6 @@ define('ext.wikia.recirculation.views.rail', [
 		return {
 			render: render,
 			setupTracking: setupTracking
-		}
-	}
+		};
+	};
 });

@@ -2,13 +2,11 @@
 define('ext.wikia.recirculation.views.impactFooter', [
 	'jquery',
 	'wikia.window',
-	'wikia.log',
 	'ext.wikia.recirculation.tracker',
 	'ext.wikia.recirculation.utils'
-], function ($, w, log, tracker, utils) {
+], function ($, w, tracker, utils) {
 
-	var logGroup = 'ext.wikia.recirculation.views.rail',
-		imageRatio = 9/16;
+	var imageRatio = 9/16,
 		options = {};
 
 	function render(data) {
@@ -75,14 +73,14 @@ define('ext.wikia.recirculation.views.impactFooter', [
 		return function($html) {
 			tracker.trackVerboseImpression(experimentName, 'impact-footer');
 
-			$html.on('mousedown', '.track-items', function(e) {
+			$html.on('mousedown', '.track-items', function() {
 				tracker.trackVerboseClick(experimentName, utils.buildLabel(this, 'impact-footer'));
 			});
 
 			if ($html.find('.discussion-module').length) {
 				tracker.trackVerboseImpression(experimentName, 'impact-footer-discussions');
 
-				$html.on('mousedown', '.track-discussions', function(e) {
+				$html.on('mousedown', '.track-discussions', function() {
 					tracker.trackVerboseClick(experimentName, utils.buildLabel(this, 'impact-footer-discussions'));
 				});
 			}
