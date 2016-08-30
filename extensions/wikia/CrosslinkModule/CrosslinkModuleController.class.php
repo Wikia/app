@@ -10,9 +10,16 @@ class CrosslinkModuleController extends WikiaController {
 	 * @responseParam array articles - list of articles
 	 */
 	public function index() {
+		$helper = new SeoCrossLinkHelper();
+		if ( !$helper->canShowModule() ) {
+			$this->articles = [];
+			return true;
+		}
+
+		$articles = $helper->getArticles( $this->wg->Title->getArticleID() );
 		$this->response->addAsset( 'crosslink_module_scss' );
 		$this->title = wfMessage( 'crosslink-module-title' )->escaped();
-		$this->articles = [];
+		$this->articles = $articles;
 	}
 
 }
