@@ -65,8 +65,7 @@ class RemoveImapTags extends Maintenance {
 	}
 
 	static public function isValidInteger( $int ) {
-		$int = intval( $int );
-		return ( $int <= 0 ) ? false : true;
+		return intval( $int ) > 0;
 	}
 
 	static public function isValidCityId( $cityId ) {
@@ -119,7 +118,7 @@ class RemoveImapTags extends Maintenance {
 			echo sprintf( 'Article #%d does not exist anymore', $articleId ) . PHP_EOL;
 		}
 	}
-	
+
 	public function hasTagsToRemove( $foundTagsMapIds, $mapsUsingTheTileset, &$tagsToRemoveArrayKeyIds ) {
 		foreach( $foundTagsMapIds as $key => $mapId ) {
 			if ( in_array( $mapId, $mapsUsingTheTileset ) ) {
@@ -223,7 +222,7 @@ class RemoveImapTags extends Maintenance {
 		self::debug( sprintf( "Found %d articles using <imap/>", $articlesUsingImapCount ) );
 
 		if ( $articlesUsingImapCount === 0 ) {
-			echo 'No articles using <imap/> found. Have you ran "forced" wikia/backend/bin/specials/tags_report.pl before?' . PHP_EOL;
+			echo 'No articles using <imap/> found. Have you run "forced" wikia/backend/bin/specials/tags_report.pl before?' . PHP_EOL;
 			die;
 		}
 
