@@ -186,7 +186,7 @@ class DesignSystemApiController extends WikiaApiController {
 				"url" => "#",
 				"header" => [
 					"type" => "line-image",
-					"image" => "wsd/notifications",
+					"image" => "wds-icons-bell",
 					"title" => [
 						"type" => "translatable-text",
 						"key" => "global-navigation-notifications",
