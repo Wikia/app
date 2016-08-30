@@ -308,7 +308,7 @@ class EditAccount extends SpecialPage {
 		try {
 			// wrap in try/catch in case of PasswordException
 
-			if ( $this->mUser->setPasswordAndClearTokens( $pass ) ) {
+			if ( $this->mUser->setPassword( $pass ) ) {
 				global $wgUser, $wgTitle;
 
 				// Save the new settings

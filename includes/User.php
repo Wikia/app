@@ -2147,7 +2147,7 @@ class User {
 	 *
 	 * @return bool
 	 */
-	public function setPassword( $str ) {
+	public function setPassword( $str, $clearTokens=true ) {
 		global $wgAuth;
 
 		if( $str !== null ) {
@@ -2174,17 +2174,10 @@ class User {
 		}
 
 		$this->setInternalPassword( $str );
+		if($clearTokens)
+			wfRunHooks( 'SetPassword', [ $this->getId() ] );
 
 		return true;
-	}
-
-	/*
-	 * The same as above but also clear tokens in Helios after setting password
-	 */
-	public function setPasswordAndClearTokens( $str ) {
-		$this->setPassword($str);
-		//Delete all access tokens
-		wfRunHooks( 'InvalidateAllTokens', [ $this->getId() ] );
 	}
 
 	/**

@@ -47,7 +47,7 @@ class ChangePassword extends Maintenance {
 			$this->error( "No such user: " . $this->getOption( 'user' ), true );
 		}
 		try {
-			$user->setPasswordAndClearTokens( $this->getOption( 'password' ) );
+			$user->setPassword( $this->getOption( 'password' ) );
 			$user->saveSettings();
 			$this->output( "Password set for " . $user->getName() . "\n" );
 		} catch ( PasswordError $pwe ) {
