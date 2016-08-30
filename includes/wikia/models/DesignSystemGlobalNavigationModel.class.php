@@ -30,14 +30,14 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 		global $wgUser;
 
 		$data = [
-			'fandom_logo' => [
+			'logo' => [
 				'header' => [
 					'type' => 'link-image',
 					'href' => $this->getHref( 'fandom-logo' ),
 					'image' => 'wds/full_fandom_logo',
 					'title' => [
 						'type' => 'text',
-						'value' => 'Fandom'
+						'value' => 'Fandom powered by Wikia'
 					]
 				]
 			],
@@ -75,12 +75,10 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 			'wikis' => [
 				'header' => [
 					'type' => 'link-branded',
-					'brand' => 'wikis',
-					'href' => '#',
 					'title' => [
 						'type' => 'translatable-text',
-						'key' => 'global-navigation-wikis'
-					]
+						'key' => 'global-navigation-wikis',
+					],
 				],
 				'links' => [
 					[
@@ -109,23 +107,25 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 					]
 				]
 			],
-			'module' => [
-				'type' => 'search',
-				'results' => [
-					'url' => 'http://wikia.com/search',
-					'param' => 'query'
-				],
-				'suggestions' => [
-					'url' => 'http://wikia.com/search/suggestions',
-					'param' => 'query'
-				],
-				'placeholder-inactive' => [
-					'type' => 'translatable-text',
-					'key' => 'global-navigation-search-placeholder-inactive'
-				],
-				'placeholder-active' => [
-					'type' => 'translatable-text',
-					'key' => 'global-navigation-search-placeholder-active'
+			'search' => [
+				'module' => [
+					'type' => 'search',
+					'results' => [
+						'url' => 'http://starwars.wikia.com/wiki/Special:Search?fulltext=Search',
+						'param' => 'query'
+					],
+					'suggestions' => [
+						'url' => 'http://starwars.wikia.com/index.php?action=ajax&rs=getLinkSuggest&format=json',
+						'param' => 'query'
+					],
+					'placeholder-inactive' => [
+						'type' => 'translatable-text',
+						'key' => 'global-navigation-search-placeholder-inactive'
+					],
+					'placeholder-active' => [
+						'type' => 'translatable-text',
+						'key' => 'global-navigation-search-placeholder-active'
+					]
 				]
 			],
 			'create_wiki' => [
@@ -142,6 +142,7 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 
 		if ($wgUser->isLoggedIn()) {
 			$data['user'] = $this->getLoggedInUserData( $wgUser->getId() );
+			$data['notifications'] = $this->getNotifications( $wgUser->getId() );
 		} else {
 			$data['anon'] = $this->getAnonUserData();
 		}
@@ -155,45 +156,45 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 
 	private function getAnonUserData() {
 		return [
-			'type' => 'user-anon',
-			'avatar' => [
-				'type' => 'line-image',
-				'image' => 'user',
+			'header' => [
+				'type' => 'link-image',
+				'href' => '#',
+				'image' => 'wds/anon-avatar',
 				'title' => [
 					'type' => 'translatable-text',
-					'key' => 'global-navigation-userinfo-anon-avatar-title'
+					'key' => 'global-navigation-userinfo-anon-avatar-title',
 				],
 			],
 			'links' => [
 				[
-					'type' => 'parametrized-link-text',
+					'type' => 'authentication-link',
 					'title' => [
 						'type' => 'translatable-text',
-						'key' => 'global-navigation-userinfo-signin-title'
+						'key' => 'global-navigation-userinfo-signin-title',
 					],
-					'href' => '#',
-					'param' => 'redirect'
+					'href' => 'http://starwars.wikia.com/signin',
+					'param-name' => 'redirect',
 				],
 				[
-					'type' => 'link-text-with-description',
+					'type' => 'authentication-link',
 					'title' => [
 						'type' => 'translatable-text',
-						'key' => 'global-navigation-userinfo-register-title'
+						'key' => 'global-navigation-userinfo-register-title',
 					],
-					'description' => [
+					'subtitle' => [
 						'type' => 'translatable-text',
-						'key' => 'global-navigation-userinfo-register-description'
+						'key' => 'global-navigation-userinfo-register-description',
 					],
-					'href' => '#'
-				]
-			]
+					'href' => 'http://starwars.wikia.com/register',
+					"param-name" => "redirect"
+				],
+			],
 		];
 	}
 
 	private function getLoggedInUserData( $userId ) {
 		$user = User::newFromId( $userId );
 		$userName = $user->getName();
-		$wiki = 'starwars'; // FIXME: set to current wiki name
 
 		return [
 			'header' => [
@@ -238,25 +239,32 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 					]
 				],
 				[
-					'type' => 'link-text',
-					'href' => $this->getPageUrl( 'UserLogout', NS_SPECIAL ) . '?returnto=' . $wiki,
+					'type' => 'authentication-link',
+					'href' => $this->getPageUrl( 'UserLogout', NS_SPECIAL ),
 					'title' => [
 						'type' => 'translatable-text',
 						'key' => 'global-navigation-userinfo-signout'
-					]
+					],
+					'param-name' => 'returnto'
 				]
 			],
-			'notifications' => [
-				'url' => $this->getPageUrl( $userName, NS_USER_TALK ),
-				'header' => [
-					'type' => 'line-image',
-					'image' => 'notifications', // FIXME: add link to the 'bell' SVG
-					'title' => [
-						'type' => 'translatable-text',
-						'key' => 'global-navigation-notifications'
-					]
+		];
+	}
+
+	private function getNotifications( $userId ) {
+		$user = User::newFromId( $userId );
+		$userName = $user->getName();
+
+		return [
+			'url' => $this->getPageUrl( $userName, NS_USER_TALK ),
+			'header' => [
+				'type' => 'line-image',
+				'image' => 'wsd/notifications',
+				'title' => [
+					'type' => 'translatable-text',
+					'key' => 'global-navigation-notifications'
 				]
-			],
+			]
 		];
 	}
 

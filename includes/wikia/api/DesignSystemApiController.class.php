@@ -2,7 +2,7 @@
 
 class DesignSystemApiController extends WikiaApiController {
 	public function getFooter() {
-		$params = $this->checkRequestCompleteness();
+		$params = $this->getRequestParameters();
 
 		$footerModel = new DesignSystemGlobalFooterModel( $params[ 'wikiId' ], $params[ 'lang' ] );
 
@@ -11,7 +11,7 @@ class DesignSystemApiController extends WikiaApiController {
 	}
 
 	public function getNavigation() {
-		$params = $this->checkRequestCompleteness();
+		$this->getRequestParameters();
 
 		$navigationModel = new DesignSystemGlobalNavigationModel( $params[ 'wikiId' ], $params[ 'lang' ] );
 		$this->setResponseData( $navigationModel->getData() );
@@ -24,7 +24,7 @@ class DesignSystemApiController extends WikiaApiController {
 	 * @throws \NotFoundApiException
 	 */
 	public function getAllElements() {
-		$params = $this->checkRequestCompleteness();
+		$params = $this->getRequestParameters();
 
 		$this->setResponseData( [
 			'global-footer' => ( new DesignSystemGlobalFooterModel( $params[ 'wikiId' ], $params[ 'lang' ] ) )->getData(),
@@ -34,7 +34,7 @@ class DesignSystemApiController extends WikiaApiController {
 		$this->addCachingHeaders();
 	}
 
-	private function checkRequestCompleteness() {
+	private function getRequestParameters() {
 		$wikiId = $this->getRequiredParam( 'wikiId' );
 		$lang = $this->getRequiredParam( 'lang' );
 
