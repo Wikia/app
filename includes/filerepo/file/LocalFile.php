@@ -350,6 +350,18 @@ class LocalFile extends File {
 			$this->$name = $value;
 		}
 
+		/**
+		 * Check, how often is this code executed. Scope: the following if block.
+		 *
+		 * @author Mix
+		 * @see SUS-809
+		 */
+		\Wikia\Logger\WikiaLogger::instance()->debugSampled(
+			0.01,
+			'SUS-809',
+			[ 'method' => __METHOD__, 'exception' => new Exception() ]
+		);
+
 		$this->fileExists = true;
 		$this->maybeUpgradeRow();
 	}
