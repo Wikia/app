@@ -1,5 +1,10 @@
 // Platform-specific styles for DesignSystem integration
 
+.wds-global-navigation {
+	position: relative;
+	z-index: 4;
+}
+
 .wds-global-footer {
 	position: relative;
 	z-index: 2;
