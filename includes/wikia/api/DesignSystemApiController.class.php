@@ -109,7 +109,7 @@ class DesignSystemApiController extends WikiaApiController {
 						"type" => "translatable-text",
 						"key" => "global-navigation-userinfo-signin-title",
 					],
-					"href" => "http://starwars.wikia.com/signin",
+					"href" => "https://www.wikia.com/signin",
 					"param-name" => "redirect",
 				],
 				[
@@ -122,7 +122,7 @@ class DesignSystemApiController extends WikiaApiController {
 						"type" => "translatable-text",
 						"key" => "global-navigation-userinfo-register-description",
 					],
-					"href" => "http://starwars.wikia.com/register",
+					"href" => "https://www.wikia.com/register",
 					"param-name" => "redirect"
 				],
 			],
@@ -163,7 +163,7 @@ class DesignSystemApiController extends WikiaApiController {
 				],
 				[
 					"type" => "link-text",
-					"href" => "#",
+					"href" => "http://community.wikia.com/wiki/Help:Contents",
 					"title" => [
 						"type" => "translatable-text",
 						"key" => "global-navigation-userinfo-help",
@@ -201,7 +201,7 @@ class DesignSystemApiController extends WikiaApiController {
 					"type" => "translatable-text",
 					"key" => "wikia-create-wiki-link-start-wikia",
 				],
-				"href" => "#",
+				"href" => "http://www.wikia.com/Special:CreateNewWiki",
 			],
 		],
 
