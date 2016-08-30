@@ -6,7 +6,7 @@ class DesignSystemApiController extends WikiaApiController {
 			"header" => [
 				"type" => "link-image",
 				"href" => "http://fandom.wikia.com",
-				"image" => "wds/full_fandom_logo",
+				"image" => "wds-company-logo-fandom",
 				"title" => [
 					"type" => "text",
 					"value" => "Fandom powered by Wikia",
@@ -96,7 +96,7 @@ class DesignSystemApiController extends WikiaApiController {
 			"header" => [
 				"type" => "link-image",
 				"href" => "#",
-				"image" => "wds/anon-avatar",
+				"image" => "wds-icons-user",
 				"title" => [
 					"type" => "translatable-text",
 					"key" => "global-navigation-userinfo-anon-avatar-title",
