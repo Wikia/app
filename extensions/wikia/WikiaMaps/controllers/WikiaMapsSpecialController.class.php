@@ -46,7 +46,7 @@ class WikiaMapsSpecialController extends WikiaSpecialPageController {
 		$this->wg->out->setHTMLTitle( wfMessage( 'wikia-interactive-maps-title' )->escaped() );
 
 		// SUS-936: Don't load article related assets here
-		$this->getOutput()->setArticleRelated( false );
+		$this->wg->out->setArticleRelated( false );
 
 		if ( is_numeric( $this->getPar() ) ) {
 			if ( $this->getRequest()->getVal( '_escaped_fragment_' ) === null ) {
