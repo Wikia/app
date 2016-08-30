@@ -8,8 +8,8 @@
 $messages = [];
 
 $messages['en'] = [
-	'forum-desc' => 'Wikia\'s Special:Forum extension',
-	'forum-disabled-desc' => 'Wikia\'s Special:Forum extension; disabled',
+	'forum-desc' => 'Fandom\'s Special:Forum extension',
+	'forum-disabled-desc' => 'Fandom\'s Special:Forum extension; disabled',
 	'forum-forum-title' => 'Forum',
 	'forum-active-threads' => '$1 {{PLURAL:$1|Active Discussion|Active Discussions}}',
 	'forum-active-threads-on-topic' => "$1 {{PLURAL:$1|Active Discussion|Active Discussions}} about: '''[[$2]]'''",
@@ -37,14 +37,14 @@ Before contributing to the {{SITENAME}} Forums, please keep in mind a few best p
 :Please take a moment to sift through the {{SITENAME}} Forum boards to see if a discussion already exists about something you want to talk about. If you can't find what you're looking for, jump right in and start a new discussion!
 
 '''Ask for help.'''
-:Notice something that doesn't seem right? Or do you have a question? Ask for help here on the forums! If you need help from Wikia staff, please reach out on [[w:c:community|Community Central]] or via [[Special:Contact]].
+:Notice something that doesn't seem right? Or do you have a question? Ask for help here on the forums! If you need help from Fandom staff, please reach out on [[w:c:community|Community Central]] or via [[Special:Contact]].
 
 '''Have fun!'''
 :The {{SITENAME}} community is happy to have you here. We look forward to seeing you around as we discuss this topic we all love.
 
 ==Forum FAQ==
 '''How do I stay on top of discussions I'm interested in?'''
-: With a Wikia user account, you can follow specific conversations and then receive notification messages (either on-site or via email) when a discussion has more activity. Be sure to [[Special:UserSignup|sign up for a Wikia account]] if you don't already have one.
+: With a Wikia user account, you can follow specific conversations and then receive notification messages (either on-site or via email) when a discussion has more activity. Be sure to [[Special:UserSignup|sign up for a Fandom account]] if you don't already have one.
 
 '''How do I remove vandalism?'''
 : If you notice some spam or vandalism on a thread, hover your mouse over the offending text. You'll see a \"More\" button appear. Inside the \"More\" menu, you'll find \"Remove\". This will allow you to remove the vandalism and optionally inform an admin.
