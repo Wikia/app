@@ -70,17 +70,7 @@
 				</ul>
 			</div>
 		</div>
-		<div class="wds-global-navigation__content-item wds-global-navigation__notifications">
-			<div class="wds-global-navigation__notifications-counter">3</div>
-			<?= DesignSystemHelper::getSvg(
-				'wds-icons-bell',
-				'wds-icon wds-icon-small'
-			) ?>
-			<?= DesignSystemHelper::getSvg(
-				'wds-icons-dropdown-tiny',
-				'wds-icon wds-icon-tiny wds-dropdown-toggle-chevron'
-			) ?>
-		</div>
+		<?= $app->renderView( 'DesignSystemGlobalNavigationWallNotificationsService', 'index' ); ?>
 		<div class="wds-global-navigation__content-item wds-global-navigation__content-item-start-a-wiki">
 			<a href="#" class="wds-button wds-is-squished wds-is-secondary">
 				<span class="wds-global-navigation__content-item-start-a-wiki-caption">Start a wiki</span>
