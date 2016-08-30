@@ -11,7 +11,7 @@ class DesignSystemApiController extends WikiaApiController {
 	}
 
 	public function getNavigation() {
-		$this->getRequestParameters();
+		$params = $this->getRequestParameters();
 
 		$navigationModel = new DesignSystemGlobalNavigationModel( $params[ 'wikiId' ], $params[ 'lang' ] );
 		$this->setResponseData( $navigationModel->getData() );

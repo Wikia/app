@@ -34,7 +34,7 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 				'header' => [
 					'type' => 'link-image',
 					'href' => $this->getHref( 'fandom-logo' ),
-					'image' => 'wds/full_fandom_logo',
+					'image' => 'wds-company-logo-fandom',
 					'title' => [
 						'type' => 'text',
 						'value' => 'Fandom powered by Wikia'
@@ -159,7 +159,7 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 			'header' => [
 				'type' => 'link-image',
 				'href' => '#',
-				'image' => 'wds/anon-avatar',
+				'image' => 'wds-icons-user',
 				'title' => [
 					'type' => 'translatable-text',
 					'key' => 'global-navigation-userinfo-anon-avatar-title',
@@ -172,7 +172,7 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 						'type' => 'translatable-text',
 						'key' => 'global-navigation-userinfo-signin-title',
 					],
-					'href' => 'http://starwars.wikia.com/signin',
+					'href' => 'https://www.wikia.com/signin',
 					'param-name' => 'redirect',
 				],
 				[
@@ -185,7 +185,7 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 						'type' => 'translatable-text',
 						'key' => 'global-navigation-userinfo-register-description',
 					],
-					'href' => 'http://starwars.wikia.com/register',
+					'href' => 'https://www.wikia.com/register',
 					"param-name" => "redirect"
 				],
 			],
@@ -259,7 +259,7 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 			'url' => $this->getPageUrl( $userName, NS_USER_TALK ),
 			'header' => [
 				'type' => 'line-image',
-				'image' => 'wsd/notifications',
+				'image' => 'wsd-icons-bell',
 				'title' => [
 					'type' => 'translatable-text',
 					'key' => 'global-navigation-notifications'
