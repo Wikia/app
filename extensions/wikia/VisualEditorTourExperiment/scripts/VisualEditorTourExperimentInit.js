@@ -5,7 +5,6 @@ define('VisualEditorTourExperimentInit',
 
 		var experimentName = 'contribution-experiments';
 
-
 		function init() {
 			var lang = mw.config.get('wgUserLanguage');
 			if (isEnabled()) {
@@ -15,13 +14,15 @@ define('VisualEditorTourExperimentInit',
 		}
 
 		function isEnabled() {
-			return isAllowedCommunity() &&
-				(isNewlyregistered() || isUserwithoutedit()) &&
-				!$.cookie('vetourdisabled');
+			var enable = isAllowedCommunity();
+			if (mw.config.get('wgUserName') != null){
+				enable = enable && isUserLanguagePreferenceJapanese() && isUserwithoutedit();
+			}
+			return enable && !$.cookie('vetourdisabled');
 		}
 
 		function trackPublish() {
-			if (isAllowedCommunity() && (isNewlyregistered() || isUserwithoutedit())) {
+			if (isAllowedCommunity()) {
 				tracker.trackVerboseSuccess(experimentName, 'publish');
 			}
 		}
@@ -31,7 +32,7 @@ define('VisualEditorTourExperimentInit',
 		}
 
 		function isAllowedCommunity() {
-			var allowedLanguages = ['ja','es','de'];
+			var allowedLanguages = ['ja'];
 			return allowedLanguages.indexOf(mw.config.get('wgContentLanguage')) > -1;
 		}
 
@@ -41,6 +42,10 @@ define('VisualEditorTourExperimentInit',
 
 		function isUserwithoutedit() {
 			return $.cookie('userwithoutedit');
+		}
+
+		function isUserLanguagePreferenceJapanese() {
+			return mw.config.get('wgUserLanguage') === 'ja';
 		}
 
 		return {

@@ -67,22 +67,22 @@ define('VisualEditorTourExperimentConfig', [], function () {
 				selector: '#WikiaArticle',
 				placement: 'top',
 				title: 'コンテンツを作成',
-				description: 'あなたの知識をコミュニティと共有しよう！新しい書き込みや修正、リンクの追加など、' +
-				'どんどん編集して記事を盛り上げましょう！'
+				description: 'あなたの知識をコミュニティと共有しよう！新しい書き込みや修正、リンクの追加など、どんどん編集して記事を盛り' +
+				'上げましょう！'
 			},
 			{
 				selector: '.oo-ui-icon-link',
 				placement: 'bottom',
 				title: 'リンクを追加',
-				description: 'リンクを追加したいテキストをハイライトしてください。リンク先にしたいWikiページの名前を直接入力できるよう' +
-				'になりました。テキストをハイライトした後でも、[リンクを削除]ボタンをクリックすればいつでも変更することができます！'
+				description: 'リンクを追加したいテキストをハイライトしてください。リンク先にしたいWikiページの名前を直接入力できるように' +
+				'なりました。テキストをハイライトした後でも、[リンクを削除]ボタンをクリックすればいつでも変更することができます！'
 			},
 			{
 				selector: '.oo-ui-icon-video',
 				placement: 'right',
 				title: '動画を追加',
-				description: '記事内の特定箇所に動画をアップロードしましょう。現在のWikiページにすでに存在する動画を検索、もしくはYouTube、' +
-				'Vimeo、DailymotionなどからURLを指定してください。'
+				description: '記事内の特定箇所に動画をアップロードしましょう。現在のWikiページにすでに存在する動画を検索、もしくは' +
+				'YouTube、Vimeo、DailymotionなどからURLを指定してください。'
 			},
 			{
 				selector: '.oo-ui-icon-image',
@@ -114,9 +114,9 @@ define('VisualEditorTourExperimentConfig', [], function () {
 				selector: '.ve-ui-toolbar-saveButton',
 				placement: 'bottom',
 				title: '編集内容を公開',
-				description: '編集が完了しましたら、[ページを保存]をクリックして記事の変更内容を保存してください。保存した後に他のユーザーが' +
-				'参照できるよう、変更内容の説明を追加することもできますが、必須ではありません。[保存]をクリックしてそのまま他のWikiページ' +
-				'をさらに充実させましょう！'
+				description: '編集が完了しましたら、[ページを保存]をクリックして記事の変更内容を保存してください。保存した後に他の' +
+				'ユーザーが参照できるよう、変更内容の説明を追加することもできますが、必須ではありません。[保存]をクリックしてそのまま他の' +
+				'Wikiページをさらに充実させましょう！'
 			}
 		],
 		'es': [
@@ -240,6 +240,6 @@ define('VisualEditorTourExperimentConfig', [], function () {
 				"Andere Benutzer können so sehen was du bearbeitet hast. Dies ist aber keine Pflicht. Klick auf " +
 				"'Seite speichern' und verbessere eine weitere Seite in der Community! "
 			}
-		],
+		]
 	};
 });
