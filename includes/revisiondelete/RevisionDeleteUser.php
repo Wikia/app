@@ -108,7 +108,17 @@ class RevisionDeleteUser {
 			array( 'oi_user_text' => $name ),
 			__METHOD__
 		);
-
+		/**
+		 * Check, how often is this code executed. Scope: the following if block.
+		 *
+		 * @author Mix
+		 * @see SUS-810
+		 */
+		Wikia\Logger\WikiaLogger::instance()->debugSampled(
+			0.01,
+			'SUS-810',
+			[ 'method' => __METHOD__, 'exception' => new Exception() ]
+		);
 		# Hide name from deleted images
 		$dbw->update(
 			'filearchive',

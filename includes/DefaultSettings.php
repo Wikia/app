@@ -1128,6 +1128,11 @@ $wgEmailAuthentication = true;
 $wgEnotifWatchlist = false;
 
 /**
+ * Allow users to enable email notification ("enotif") on Discussions changes.
+ */
+$wgEnotifDiscussions = true;
+
+/**
  * Allow users to enable email notification ("enotif") when someone edits their
  * user talk page.
  */
@@ -2234,24 +2239,6 @@ $wgAllowMicrodataAttributes = false;
  * Cleanup as much presentational html like valign -> css vertical-align as we can
  */
 $wgCleanupPresentationalAttributes = true;
-
-/**
- * Should we try to make our HTML output well-formed XML?  If set to false,
- * output will be a few bytes shorter, and the HTML will arguably be more
- * readable.  If set to true, life will be much easier for the authors of
- * screen-scraping bots, and the HTML will arguably be more readable.
- *
- * Setting this to false may omit quotation marks on some attributes, omit
- * slashes from some self-closing tags, omit some ending tags, etc., where
- * permitted by HTML5.  Setting it to true will not guarantee that all pages
- * will be well-formed, although non-well-formed pages should be rare and it's
- * a bug if you find one.  Conversely, setting it to false doesn't mean that
- * all XML-y constructs will be omitted, just that they might be.
- *
- * Because of compatibility with screen-scraping bots, and because it's
- * controversial, this is currently left to true by default.
- */
-$wgWellFormedXml = true;
 
 /**
  * Permit other namespaces in addition to the w3.org default.
@@ -5373,8 +5360,13 @@ $wgShellLocale = 'en_US.utf8';
 
 /**
  * Timeout for HTTP requests done internally
+ *
+ * Let's use different values when running a maintenance script (that includes Wikia Tasks)
+ * and when serving HTTP request
+ *
+ * @see PLATFORM-2385
  */
-$wgHTTPTimeout = 25;
+$wgHTTPTimeout = defined( 'RUN_MAINTENANCE_IF_MAIN' ) ? 25 : 5; # Wikia change
 
 /**
  * Timeout for Asynchronous (background) HTTP requests
@@ -5404,7 +5396,7 @@ $wgJobRunRate = 1;
 /**
  * Number of rows to update per job
  */
-$wgUpdateRowsPerJob = 50;
+$wgUpdateRowsPerJob = 500;
 
 /**
  * Number of rows to update per query

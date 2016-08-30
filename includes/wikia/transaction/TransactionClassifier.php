@@ -49,7 +49,6 @@ class TransactionClassifier {
 		'Search',
 		'HealthCheck',
 		'WikiActivity',
-		'Our404Handler',
 		'Recentchanges',
 		'UserLogin',
 		'UserSignup',

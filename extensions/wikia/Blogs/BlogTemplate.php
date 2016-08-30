@@ -948,13 +948,13 @@ class BlogTemplateClass {
 		global $wgExtensionsPath, $wgStylePath, $wgRequest;
 
 		/**
-		 * Don't cache the tag. This makes the pagination work.
-		 * We rely on Varnish caching for anonymous users and bots.
-		 **/
+		 * Because this parser tag contains elements of interface we need to
+		 * inform parser to vary parser cache key by user lang option
+		 */
 
 		/* @var $parser Parser */
 		if ( ( $parser instanceof Parser ) && ( $parser->mOutput instanceof ParserOutput ) ) {
-			$parser->mOutput->updateCacheExpiry( -1 );
+			$parser->mOutput->recordOption( 'userlang' );
 		}
 
 		$result = "";
@@ -1158,6 +1158,18 @@ class BlogTemplateClass {
 								$wgOut->addHeadItem( 'Paginator', $aPager['head'] );
 								$sPager = $aPager['body'];
 							}
+
+							/**
+							 * Don't cache the tag if there's pagination.
+							 * We rely on Varnish caching for anonymous users and bots.
+							 **/
+							if ( $sPager &&
+								$parser instanceof Parser &&
+								$parser->mOutput instanceof ParserOutput
+							) {
+								$parser->mOutput->updateCacheExpiry( -1 );
+							}
+
 							if ( F::app()->checkSkin( 'oasis' ) ) {
 								wfRunHooks( 'BlogsRenderBlogArticlePage', array( &$result, $aResult, self::$aOptions, $sPager ) );
 							} else {
