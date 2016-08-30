@@ -1,13 +1,12 @@
 .wds-icon {
 	fill: currentColor;
-	height: 24px;
-	width: 24px;
-}
+	@include square(24px);
 
-.wds-icon-small {
-	height: 18px;
-}
+	&-small {
+		@include square(18px);
+	}
 
-.wds-icon-tiny {
-	height: 12px;
+	&-tiny {
+		@include square(12px);
+	}
 }

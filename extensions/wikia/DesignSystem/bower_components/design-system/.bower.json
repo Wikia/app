@@ -1,7 +1,6 @@
 {
   "name": "design-system",
   "description": "Design System developed for Wikia",
-  "license": "GPL-3.0",
   "repository": {
     "type": "git",
     "url": "git://github.com/Wikia/design-system.git"
@@ -10,15 +9,17 @@
     "**/.*",
     "gulpfile.js"
   ],
+  "dependencies": {
+    "flexboxgrid": "Wikia/flexboxgrid#v6.5.0"
+  },
   "homepage": "https://github.com/Wikia/design-system",
-  "version": "0.2.3",
-  "_release": "0.2.3",
+  "_release": "da14084215",
   "_resolution": {
-    "type": "version",
-    "tag": "0.2.3",
-    "commit": "1af65c4289f25243480d7468ad37665920401c9d"
+    "type": "branch",
+    "branch": "XW-1690",
+    "commit": "da14084215fec7c2dcb63c42c74307280e5a5885"
   },
   "_source": "git://github.com/Wikia/design-system.git",
-  "_target": "0.2.3",
+  "_target": "XW-1690",
   "_originalSource": "Wikia/design-system"
 }

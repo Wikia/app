@@ -1,0 +1,331 @@
+$border-top-width: 6px;
+$nav-height: 49px;
+$nav-background-color: $color-white;
+
+$notification-counter-size: 18px;
+
+.wds-global-navigation {
+	background-color: $nav-background-color;
+	border-image: linear-gradient(to right, $color-dark-blue-gray 40%, $color-slate-gray 40%) 1 0 0;
+	border-top: $border-top-width solid $color-slate-gray;
+	border-width: $border-top-width 0 0;
+	box-shadow: 0 1px 0 0 $color-faint-gray;
+
+	&__dropdown-toggle {
+		align-items: center;
+		display: flex;
+		justify-content: center;
+	}
+
+	&__dropdown {
+		color: $color-dark-blue-gray;
+		top: calc(100% + 1px);
+		width: 190px;
+		z-index: -1;
+	}
+
+	&__dropdown-link {
+		color: $color-dark-blue-gray;
+		text-decoration: none;
+
+		&:hover,
+		&:active,
+		&.wds-is-active {
+			color: $color-link;
+		}
+	}
+
+	&__content-bar {
+		display: flex;
+		height: $nav-height;
+		margin: 0 auto;
+		position: relative;
+		width: 768px;
+		z-index: 1;
+	}
+
+	&__content-item {
+		align-items: center;
+		background-color: $nav-background-color;
+		border-top: $border-top-width solid $color-slate-gray;
+		color: $color-dark-blue-gray;
+		display: flex;
+		font-size: $typescale-size-minus-1;
+		height: $nav-height;
+		justify-content: center;
+		margin-top: -$border-top-width;
+		padding: 0 5px;
+		text-decoration: none;
+		white-space: nowrap;
+	}
+
+	&__content-item-link,
+	&__content-item-account-menu,
+	&__content-item-user-menu,
+	&__content-item-notifications-menu {
+		&:hover {
+			color: $color-link;
+		}
+
+		&:active,
+		&.wds-is-active {
+			background-color: $color-slate-gray;
+			border-color: darken($color-slate-gray, 20%);
+			color: $color-white;
+		}
+	}
+
+	&__content-item-logo {
+		align-items: center;
+		background-color: $nav-background-color;
+		border-top: $border-top-width solid $color-dark-blue-gray;
+		color: $color-slate-gray;
+		display: flex;
+		font-size: 9px;
+		font-weight: 600;
+		justify-content: flex-end;
+		letter-spacing: .15px;
+		margin-top: -$border-top-width;
+		text-decoration: none;
+		text-transform: uppercase;
+	}
+
+	&__content-item-logo-fandom {
+		fill: $color-dark-blue-gray;
+		height: 24px;
+		padding-bottom: 4px;
+		width: 120px;
+	}
+
+	&__content-item-logo-powered-by {
+		padding: 2px 3px 0 7px;
+	}
+
+	&__content-item-logo-wikia {
+		fill: $color-dark-blue;
+		height: 12px;
+		width: 36px;
+	}
+
+	&__content-item-link {
+		flex: 1;
+
+		&.wds-is-games {
+			border-color: $color-games;
+
+			&:active,
+			&.wds-is-active {
+				background-color: $color-games;
+				border-color: darken($color-games, 10%);
+			}
+		}
+
+		&.wds-is-movies {
+			border-color: $color-movies;
+
+			&:active,
+			&.wds-is-active {
+				background-color: $color-movies;
+				border-color: darken($color-movies, 10%);
+			}
+		}
+
+		&.wds-is-tv {
+			border-color: $color-tv;
+
+			&:active,
+			&.wds-is-active {
+				background-color: $color-tv;
+				border-color: darken($color-tv, 10%);
+			}
+		}
+	}
+
+	&__content-item-search {
+		align-items: center;
+		border-top: $border-top-width solid $color-slate-gray;
+		display: flex;
+		margin-top: -$border-top-width;
+		padding-left: 16px;
+		min-width: 30px;
+	}
+
+	&__content-item-search-input-wrapper {
+		display: flex;
+		flex: 1;
+	}
+
+	&__content-item-search-label {
+		align-items: center;
+		display: flex;
+		flex: 1;
+	}
+
+	&__content-item-search-input {
+		border: 0;
+		color: $color-dark-gray;
+		display: none;
+		flex: 1;
+		font-size: $typescale-size-minus-1;
+		padding: 3px 4px;
+		width: 100%;
+
+		&:focus {
+			outline: none;
+		}
+
+		&::placeholder {
+			color: $color-dark-blue-gray;
+		}
+	}
+
+	&__content-item-search-close {
+		display: none;
+		padding: 3px;
+	}
+
+	&__content-item-search-close-icon {
+		color: $color-light-gray;
+		display: block;
+	}
+
+	&__content-item-search-submit {
+		display: none;
+		padding: 6px 9px;
+	}
+
+	&__content-item-search-submit-icon {
+		display: block;
+		transform: rotate(180deg);
+	}
+
+	&__content-item-account-menu {
+		min-width: 50px;
+	}
+
+	&__content-item-account-menu-caption {
+		display: none;
+		margin-left: 5px;
+	}
+
+	&__content-item-start-a-wiki-caption {
+		display: none;
+	}
+
+	&__content-item-start-a-wiki-icon {
+		@include square(14px);
+
+		display: block;
+	}
+
+	.wds-search-is-active.wds-global-navigation {
+		&__content-item-search {
+			flex: 2;
+		}
+
+		&__content-item-search-input-wrapper {
+			border-bottom: 1px solid $color-slate-gray;
+			margin-right: 15px;
+		}
+
+		&__content-item-search-input::placeholder {
+			color: $color-light-gray;
+		}
+
+		&__content-item-search-input,
+		&__content-item-search-submit,
+		&__content-item-search-close {
+			display: block;
+		}
+
+		&__content-item-link {
+			display: none;
+		}
+	}
+
+	//
+
+	&__user-menu {
+		width: 55px;
+	}
+
+	&__notifications {
+		margin-right: 8px;
+		padding-right: 0;
+		position: relative;
+		width: 50px;
+	}
+
+	&__notifications-counter {
+		align-items: center;
+		background-color: $color-link;
+		border: 1px solid $color-white;
+		border-radius: $notification-counter-size / 2;
+		box-sizing: border-box;
+		color: $color-white;
+		display: flex;
+		font-size: $typescale-size-minus-3;
+		height: $notification-counter-size;
+		justify-content: center;
+		left: 7px;
+		min-width: $notification-counter-size;
+		padding: 0 4px;
+		position: absolute;
+		top: 7px;
+	}
+
+	&__register-button-caption {
+		font-size: $typescale-size-minus-2;
+		padding-bottom: 10px;
+		text-align: center;
+	}
+
+	//
+
+	@media #{$breakpoint-desktop-up} {
+		&__content-bar {
+			width: 1024px;
+		}
+
+		&__content-item-search {
+			flex: 2;
+			padding-left: 8px;
+		}
+
+		&__content-item-search-input-wrapper {
+			border-bottom: 1px solid $color-slate-gray;
+		}
+
+		&__content-item-search-input {
+			display: block;
+		}
+
+		&__content-item-account-menu-caption,
+		&__content-item-start-a-wiki-caption {
+			display: inline;
+		}
+
+		&__content-item-start-a-wiki-icon {
+			display: none;
+		}
+
+		.wds-search-is-active.wds-global-navigation {
+			&__content-item-search-input-wrapper {
+				margin-right: 15px;
+			}
+
+			&__content-item-search-input::placeholder {
+				color: $color-light-gray;
+			}
+
+			&__content-item-search-submit,
+			&__content-item-search-close {
+				display: block;
+			}
+
+			&__content-item-link {
+				display: none;
+			}
+		}
+	}
+}
