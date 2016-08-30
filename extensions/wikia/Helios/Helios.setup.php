@@ -31,4 +31,4 @@ $wgHooks['ExternalUserWikiaAuthenticate'][] = 'Wikia\\Helios\\User::onUserCheckP
 $wgHooks['UserSaveSettings'][] = 'Wikia\\Helios\\User::onUserSave';
 $wgHooks['UserSaveOptions'][] = 'Wikia\\Helios\\User::onUserSave';
 $wgHooks['UserLogout'][] = 'Wikia\\Helios\\User::onUserLogout';
-$wgHooks['SetPassword'][] = 'Wikia\\Helios\\User::onUserSetPassword';
+$wgHooks['UserSetPassword'][] = 'Wikia\\Helios\\User::onUserSetPassword';

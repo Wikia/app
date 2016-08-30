@@ -2174,9 +2174,8 @@ class User {
 		}
 
 		$this->setInternalPassword( $str );
-		if($clearTokens) {
-			wfRunHooks('SetPassword', [$this->getId()]);
-		}
+		wfRunHooks('UserSetPassword', [$this->getId(), $clearTokens]);
+
 		return true;
 	}
 

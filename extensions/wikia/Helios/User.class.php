@@ -347,10 +347,11 @@ class User {
 	/*
 	 * Invalidate all tokens for given user in helios service
 	 */
-	public static function onUserSetPassword( $userId ) {
+	public static function onUserSetPassword( $userId, $forceLogout ) {
 		$heliosClient = self::getHeliosClient();
-		$heliosClient->forceLogout($userId);
-
+		if($forceLogout) {
+			$heliosClient->forceLogout($userId);
+		}
 		return true;
 	}
 
