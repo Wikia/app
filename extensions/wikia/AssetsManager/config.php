@@ -3082,3 +3082,12 @@ $config['special_admindashboard_js'] = [
 		'//extensions/wikia/AdminDashboard/js/AdminDashboard.js',
 	],
 ];
+
+/* CrosslinkModule */
+$config['crosslink_module_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/CrosslinkModule/styles/CrosslinkModule.scss',
+	],
+];
