@@ -22,7 +22,7 @@ define('VisualEditorTourExperimentInit',
 		}
 
 		function trackPublish() {
-			if (isAllowedCommunity()) {
+			if (isAllowedCommunity() && !$.cookie('vetourdisabled')) {
 				tracker.trackVerboseSuccess(experimentName, 'publish');
 			}
 		}
@@ -34,10 +34,6 @@ define('VisualEditorTourExperimentInit',
 		function isAllowedCommunity() {
 			var allowedLanguages = ['ja'];
 			return allowedLanguages.indexOf(mw.config.get('wgContentLanguage')) > -1;
-		}
-
-		function isNewlyregistered() {
-			return $.cookie('newlyregistered');
 		}
 
 		function isUserwithoutedit() {
