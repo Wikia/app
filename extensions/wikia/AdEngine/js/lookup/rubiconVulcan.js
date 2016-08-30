@@ -61,7 +61,7 @@ define('ext.wikia.adEngine.lookup.rubiconVulcan', [
 
 	function defineSingleSlot(slotName, slot) {
 		var slotDefinition = {
-				'accountId': accountId,
+				'account_id': accountId,
 				'site_id': slot.siteId,
 				'size_id': slot.sizeId,
 				'zone_id': slot.zoneId,
@@ -135,7 +135,7 @@ define('ext.wikia.adEngine.lookup.rubiconVulcan', [
 
 			log(['onResponse', slotName, ad.status, ad], 'debug', logGroup);
 			if (ad.status === 'ok' && ad.type === 'vast') {
-				cpm = ad[vulcanCpmKey];
+				cpm = ad[vulcanCpmKey] || 0;
 				tier = getTier(slotName, cpm * 100);
 				vastUrl = ad[vulcanUrlKey];
 
