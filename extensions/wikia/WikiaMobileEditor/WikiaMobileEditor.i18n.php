@@ -5,7 +5,7 @@ $messages['en'] = array(
 	'tag-mobileedit' => 'Mobile',
 	'tag-mobileedit-description' => 'Edit made using mobile skin',
 
-	'wikiamobileeditor-desc' => 'WikiaMobile Editor enhancements',
+	'wikiamobileeditor-desc' => 'WikiMobile Editor enhancements',
 	'wikiamobileeditor-cancel' => 'Cancel',
 	'wikiamobileeditor-publish' => 'Publish',
 	'wikiamobileeditor-preview' => 'Preview',

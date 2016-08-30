@@ -31,7 +31,7 @@ $PAGESUMMARY<br /><br />
 Please visit and edit often...<br /><br />
 {{SITENAME}}<br /><hr />
 <ul>
-<li><a href="http://www.wikia.com">Check out our featured wikis!</a></li>
+<li><a href="http://www.wikia.com">Check out the latest Fandom articles</a></li>
 <li>Want to control which e-mails you receive? Go to <a href="{{fullurl:{{ns:special}}:Preferences}}">User Preferences</a></li>
 </ul></p>',
 	'enotif_body_article_comment-HTML' => '<p>Dear $WATCHINGUSERNAME,<br /><br />
@@ -58,7 +58,7 @@ $PAGESUMMARY<br /><br />
 Please visit and edit often...<br /><br />
 {{SITENAME}}<br /><hr />
 <ul>
-<li>Check out our featured wikis! <a href="http://www.wikia.com">Visit Them Here!</a></li>
+<li>Check out the latest Fandom articles! <a href="http://fandom.wikia.com/">View Them Here!</a></li>
 <li>Want to control which e-mails you receive? Go to: <a href="{{fullurl:{{ns:special}}:Preferences}}"> User Preferences</a></li>
 </ul></p>',
 	'enotif_body_move-HTML' => '<p>Dear $WATCHINGUSERNAME,<br /><br />
@@ -68,7 +68,7 @@ $PAGESUMMARY<br /><br />
 Please visit and edit often...<br /><br />
 {{SITENAME}}<br /><hr />
 <ul>
-<li>Check out our featured wikis! <a href="http://www.wikia.com">Visit Them Here!</a></li>
+<li>Check out the latest Fandom articles! <a href="http://fandom.wikia.com/">View Them Here!</a></li>
 <li>Want to control which e-mails you receive? Go to: <a href="{{fullurl:{{ns:special}}:Preferences}}">User Preferences</a></li>
 </ul></p>',
 	'enotif_body_prl_chn-HTML' => '<p>Dear $WATCHINGUSERNAME,<br /><br />
@@ -98,7 +98,7 @@ $PAGESUMMARY<br /><br />
 Please visit and edit often...<br /><br />
 {{SITENAME}}<br /><hr />
 <ul>
-<li>Check out our featured wikis! <a href="http://www.wikia.com">Visit Them Here!</a></li>
+<li>Check out the latest Fandom articles! <a href="http://fandom.wikia.com/">View Them Here!</a></li>
 <li>Want to control which e-mails you receive? Go to: <a href="{{fullurl:{{ns:special}}:Preferences}}">User Preferences</a></li>
 </ul></p>',
 	'enotif_body_restore-HTML' => '<p>Dear $WATCHINGUSERNAME,<br /><br />
@@ -108,7 +108,7 @@ $PAGESUMMARY<br /><br />
 Please visit and edit often...<br /><br />
 {{SITENAME}}<br /><hr />
 <ul>
-<li>Check out our featured wikis! <a href="http://www.wikia.com">Visit Them Here!</a></li>
+<li>Check out the latest Fandom articles! <a href="http://fandom.wikia.com/">View Them Here!</a></li>
 <li>Want to control which e-mails you receive? Go to: <a href="{{fullurl:{{ns:special}}:Preferences}}"> User Preferences</a></li>
 </ul></p>',
 	'enotif_body_rights-HTML' => '<p>Dear $WATCHINGUSERNAME,<br /><br />
@@ -128,7 +128,7 @@ $PAGESUMMARY<br /><br />
 Please visit and edit often...<br /><br />
 {{SITENAME}}<br /><hr />
 <ul>
-<li>Check out our featured wikis! <a href="http://www.wikia.com">Visit Them Here!</a></li>
+<li>Check out the latest Fandom articles! <a href="http://fandom.wikia.com/">View Them Here!</a></li>
 <li>Want to control which e-mails you receive? Go to: <a href="{{fullurl:{{ns:special}}:Preferences}}">User Preferences</a></li>
 </ul></p>',
 	'enotif_body_upload-HTML' => '<p>Dear $WATCHINGUSERNAME,<br /><br />
@@ -163,7 +163,7 @@ Wikia<br /><hr />
 The login password for user "$2" is now "$3".<br /><br />
 If you did not request a new password, don’t worry. The replacement password has been sent only to you at this e-mail address. Your account is secure and you can continue to use your old password.<br /><br />
 Thanks,<br /><br />
-The Wikia Community Team<br /><br />
+The Fandom Community Team<br /><br />
 www.wikia.com<br /><hr />
 <ul>
 <li>To change your preferences or password, go to: <a href="http://community.wikia.com/wiki/Special:Preferences">User Preferences</a>.</li>

@@ -2,12 +2,12 @@
 $messages = array();
 
 $messages['en'] = array(
-	'styleguide-pagetitle' => 'Wikia Styleguide',
-	'styleguide-page-navigation-title' > 'Wikia Styleguide',
-	'styleguide-descriptionmsg' => 'Special:Styleguide is a Special page containing library of Wikia reusable components',
+	'styleguide-pagetitle' => 'Fandom Styleguide',
+	'styleguide-page-navigation-title' > 'Fandom Styleguide',
+	'styleguide-descriptionmsg' => 'Special:Styleguide is a Special page containing library of Fandom reusable components',
 
 	// Main navigation
-	'styleguide-corporate-wiki-link' => 'http://www.wikia.com/Wikia',
+	'styleguide-corporate-wiki-link' => 'http://fandom.wikia.com/',
 	'styleguide-home' => 'Home',
 	'styleguide-get-started' => 'Get started',
 	'styleguide-base-styles' => 'Base styles',
@@ -19,18 +19,18 @@ $messages['en'] = array(
 	'styleguide-changelog' => 'Changelog',
 
 	// Home page
-	'styleguide-home-header' => 'Wikia Styleguide',
-	'styleguide-home-header-tagline' => 'Wikia’s front-end framework made easy.',
-	'styleguide-home-welcome-message' => 'Meet Wikia Styleguide.',
-	'styleguide-home-welcome-tagline' => 'Easy, and useful tool for the rapid developement at Wikia.',
+	'styleguide-home-header' => 'Fandom Styleguide',
+	'styleguide-home-header-tagline' => 'Fandom’s front-end framework made easy.',
+	'styleguide-home-welcome-message' => 'Meet Fandom Styleguide.',
+	'styleguide-home-welcome-tagline' => 'Easy, and useful tool for the rapid developement at Fandom.',
 	'styleguide-home-stakeholders-header' => 'Who is it for?',
-	'styleguide-home-stakeholders-paragraph' => 'Wikia Styleguide was built with engineers,
+	'styleguide-home-stakeholders-paragraph' => 'Fandom Styleguide was built with engineers,
 	and designers in mind. This is the place where we keep track of
 	all components we use accross Wiki platform. You can easily find all of the current UI elements here,
 	and grab usable code on the future product projects you might be involved in. It’s also designed with newbies at
 	Wikia in mind. Have fun!',
 	'styleguide-home-team-header' => 'Styleguide Team',
-	'styleguide-home-team-paragraph' => 'Wikia Styleguide team was formed to help build the tool that will make our
+	'styleguide-home-team-paragraph' => 'Fandom Styleguide team was formed to help build the tool that will make our
 	 lives easier at Wikia. Contact us anytime if you have questions about the Styleguide,
 	 or suggestions on how to make this tool better.',
 	'styleguide-home-team-pm' => 'Product manager',
@@ -39,7 +39,7 @@ $messages['en'] = array(
 	
 	// Components
 	'styleguide-components-header' => 'Components',
-	'styleguide-components-header-tagline' => 'Wikia UI styleguide re-usable elements',
+	'styleguide-components-header-tagline' => 'Fandom UI styleguide re-usable elements',
 	'styleguide-examples-headline' => 'Examples',
 	'styleguide-types-headline' => 'Accepted configuration values',
 	'styleguide-types-param-cell-headline' => 'Parameter',
@@ -53,8 +53,8 @@ $messages['en'] = array(
 );
 
 $messages['pl'] = array(
-	'styleguide-pagetitle' => 'Wikia Styleguide',
-	'styleguide-page-navigation-title' > 'Wikia Styleguide',
+	'styleguide-pagetitle' => 'Fandom Styleguide',
+	'styleguide-page-navigation-title' > 'Fandom Styleguide',
 	'styleguide-descriptionmsg' => 'Special:Styleguide to strona specjalna zawierająca informacje na temat biblioteki reużywalnych komponentów interfejsu Wikii',
 
 	// Main navigation
@@ -69,12 +69,12 @@ $messages['pl'] = array(
 	'styleguide-changelog' => 'Lista zmian',
 
 	// Home page
-	'styleguide-home-header' => 'Wikia Styleguide',
+	'styleguide-home-header' => 'Fandom Styleguide',
 	'styleguide-home-header-tagline' => 'Interfejs użytkownika w Wikii. Po prostu.',
-	'styleguide-home-welcome-message' => 'Poznaj Wikia Styleguide.',
+	'styleguide-home-welcome-message' => 'Poznaj Fandom Styleguide.',
 	'styleguide-home-welcome-tagline' => 'Proste, efektywne narzędzie wspomagające szybki development w Wikii.',
 	'styleguide-home-stakeholders-header' => 'Użytkownicy Styleguide',
-	'styleguide-home-stakeholders-paragraph' => 'Wikia Styleguide stworzono z myślą o inżynierach
+	'styleguide-home-stakeholders-paragraph' => 'Fandom Styleguide stworzono z myślą o inżynierach
 	i designerach. To miejsce, gdzie ewidencjonujemy komponenty używane przez nas
 	w obrębie platformy Wikii.
 	Możesz łatwo znaleźć aktualne elementy interfejsu użytkownika i kawałki kodu,
@@ -82,7 +82,7 @@ $messages['pl'] = array(
 	To także świetna lektura dla nowych pracowników w Wikii.
 	Miłej lektury',
 	'styleguide-home-team-header' => 'Zespół Styleguide',
-	'styleguide-home-team-paragraph' => 'Zespół Wikia Styleguide został utworzony by pomóc w budowie
+	'styleguide-home-team-paragraph' => 'Zespół Fandom Styleguide został utworzony by pomóc w budowie
 	 narzędzia ułatwiającego nam wszystkim życie i zwiększającego naszą wydajność.
 	 Odezwij się do nas jeżeli masz jakieś pytania dotyczące Styleguide
 	 lub sugestie, jak możemy uczynić go lepszym.',
@@ -92,7 +92,7 @@ $messages['pl'] = array(
 	
 	// Components
 	'styleguide-components-header' => 'Komponenty',
-	'styleguide-components-header-tagline' => 'Elementy wielokrotnego użytku Wikia Styleguide',
+	'styleguide-components-header-tagline' => 'Elementy wielokrotnego użytku Fandom Styleguide',
 	'styleguide-examples-headline' => 'Przykłady użycia',
 	'styleguide-types-headline' => 'Akceptowane wartości konfiguracyjne',
 	'styleguide-types-param-cell-headline' => 'Parametr',
@@ -110,7 +110,7 @@ $messages['pl'] = array(
 $messages['qqq'] = array(
 	'styleguide-pagetitle' => 'Page Title of Styleguide page containing library of Wikia reusable components',
 	'styleguide-page-navigation-title' => 'Short version of Page Title of Styleguide page containing library of Wikia reusable components that will appear on the right of global nav',
-	'styleguide-descriptionmsg' => 'Explanatory text for the extension, explaining that Special:Styleguide is a Special page containing library of Wikia reusable components',
+	'styleguide-descriptionmsg' => 'Explanatory text for the extension, explaining that Special:Styleguide is a Special page containing library of Fandom reusable components',
 
 	// Main navigation
 	'styleguide-corporate-wiki-link' => 'link (href) to corporate wiki',

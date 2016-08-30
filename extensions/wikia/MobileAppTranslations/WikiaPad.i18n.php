@@ -14,7 +14,7 @@ $messages = array();
 $messages['en'] = array(
 	//  Tabs 
 	'main-tab-discover' => 'Discover',
-	'main-tab-personal' => 'My Wikia',
+	'main-tab-personal' => 'Fandom',
 	'main-tab-search' => 'Search',
 	'main-tab-offline' => 'Offline',
 
@@ -302,7 +302,7 @@ $messages['inh'] = array(
  */
 $messages['it'] = array(
 	'main-tab-discover' => 'Scopri',
-	'main-tab-personal' => 'My Wikia',
+	'main-tab-personal' => 'Fandom',
 	'main-tab-search' => 'Cerca',
 	'main-tab-offline' => 'Offline',
 	'tab-discover-loading-message' => 'Caricamento...',
@@ -523,7 +523,7 @@ $messages['pt-br'] = array(
  */
 $messages['ro'] = array(
 	'main-tab-discover' => 'Descoperă',
-	'main-tab-personal' => 'My Wikia',
+	'main-tab-personal' => 'Fandom',
 	'main-tab-search' => 'Căutare',
 	'main-tab-offline' => 'Off-line',
 	'tab-discover-loading-message' => 'Se încarcă...',

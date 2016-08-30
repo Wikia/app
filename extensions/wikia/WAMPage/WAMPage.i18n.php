@@ -8,7 +8,7 @@ $messages = array();
 
 $messages['en'] = array(
 	'wam-page-desc' => 'WAM Page',
-	'wam-html-title' => 'Wikia Activity Monitor (WAM)',
+	'wam-html-title' => 'Wiki Activity Monitor (WAM)',
 	'wampage-header' => 'Wam',
 	'wampage-header-faq' => 'Frequently asked questions',
 	'wam-all' => 'All',
@@ -21,8 +21,8 @@ $messages['en'] = array(
 	'wam-movies' => 'Movies',
 	'wampage-top-gainers-header' => 'Top Gainers',
 	'wampage-header-wam' => 'WAM Score',
-	'wampage-subheader-wam' => 'WAM Score is an indicator of the strength and momentum of a Wikia fan community.',
-	'wampage-content' => 'The WAM is calculated daily for the top 5,000 Wikia sites and includes an overall and vertical rank as well as a score from 0 to 100. The WAM rankings are sensitive to real-world events and change frequently, so be sure to check back regularly to see the latest trends.',
+	'wampage-subheader-wam' => 'Wiki Activity Monitor (WAM) Score is an indicator of the strength and momentum of a Fandom community.',
+	'wampage-content' => 'The WAM is calculated daily for the top 5,000 wiki sites and includes an overall rank, a vertical rank, and a score from 0 to 100. The WAM rankings are sensitive to real-world events and change frequently, capturing the latest trends from Fandom's wikis.',
 	'wampage-content-faq-link' => '[[$1|Frequently Asked Questions]]',
 	'wampage-faq' => '__NOTOC____NOEDITSECTION__===How is the WAM calculated?===
 	The WAM rank is a combination of traffic, engagement and growth. We are not able to provide the specifics because we do not want Wikis attempting to manipulate the rankings. But rest assured, we have included all the essential ingredients for a successful and thriving Wiki.
@@ -47,7 +47,7 @@ Please contact community support at [mailto:support@wikia-inc.com support@wikia-
 	',
 	'wam-index-header-rank' => 'Rank',
 	'wam-index-header-score' => 'WAM Score',
-	'wam-index-header-wiki-name' => 'Wikia URL',
+	'wam-index-header-wiki-name' => 'URL',
 	'wam-index-header-vertical' => 'Vertical',
 	'wam-index-header-vertical-rank' => 'Vertical Rank',
 	'wam-index-header-admins' => 'Admins',
@@ -270,7 +270,7 @@ Veuillez contacter le support de la communauté via [mailto:support@wikia-inc.co
 );
 
 $messages['it'] = array(
-	'wam-html-title' => 'Wikia Activity Monitor (WAM)',
+	'wam-html-title' => 'Wiki Activity Monitor (WAM)',
 	'wampage-header' => 'Wam',
 	'wampage-header-faq' => 'Domande frequenti',
 	'wam-all' => 'Tutte',
@@ -383,7 +383,7 @@ WAMスコアやランキングをウィキ上にのせることは、ウィキ�
 );
 
 $messages['nl'] = array(
-	'wam-html-title' => 'Wikia Activity Monitor (WAM)',
+	'wam-html-title' => 'Wiki Activity Monitor (WAM)',
 	'wampage-header' => 'Wam',
 	'wampage-header-faq' => 'Frequently asked questions',
 	'wam-all' => 'All',
@@ -396,8 +396,8 @@ $messages['nl'] = array(
 	'wam-movies' => 'Movies',
 	'wampage-top-gainers-header' => 'Top Gainers',
 	'wampage-header-wam' => 'WAM Score',
-	'wampage-subheader-wam' => 'WAM Score is an indicator of the strength and momentum of a Wikia fan community.',
-	'wampage-content' => 'The WAM is calculated daily for the top 5,000 Wikia sites and includes an overall and vertical rank as well as a score from 0 to 100. The WAM rankings are sensitive to real-world events and change frequently, so be sure to check back regularly to see the latest trends.',
+	'wampage-subheader-wam' => 'Wiki Activity Monitor (WAM) Score is an indicator of the strength and momentum of a Fandom community.',
+	'wampage-content' => 'The WAM is calculated daily for the top 5,000 wiki sites and includes an overall rank, a vertical rank, and a score from 0 to 100. The WAM rankings are sensitive to real-world events and change frequently, capturing the latest trends from Fandom's wikis.',
 	'wampage-content-faq-link' => '[[$1|Frequently Asked Questions]]',
 	'wampage-faq' => '__NOTOC____NOEDITSECTION__===How is the WAM calculated?===
 	The WAM rank is a combination of traffic, engagement and growth. We are not able to provide the specifics because we do not want Wikis attempting to manipulate the rankings. But rest assured, we have included all the essential ingredients for a successful and thriving Wiki.
@@ -422,7 +422,7 @@ Please contact community support at [mailto:support@wikia-inc.com support@wikia-
 	',
 	'wam-index-header-rank' => 'Rank',
 	'wam-index-header-score' => 'WAM Score',
-	'wam-index-header-wiki-name' => 'Wikia URL',
+	'wam-index-header-wiki-name' => 'URL',
 	'wam-index-header-vertical' => 'Vertical',
 	'wam-index-header-vertical-rank' => 'Vertical Rank',
 	'wam-index-header-admins' => 'Admins',
@@ -438,7 +438,7 @@ Please contact community support at [mailto:support@wikia-inc.com support@wikia-
 );
 
 $messages['pl'] = array(
-	'wam-html-title' => 'Wikia Activity Monitor (WAM)',
+	'wam-html-title' => 'Wiki Activity Monitor (WAM)',
 	'wampage-header' => 'WAM',
 	'wam-Gaming' => 'Gry',
 	'wam-Entertainment' => 'Rozrywka',
@@ -546,7 +546,7 @@ Por favor, entre em contato com a equipe de apoio pelo endereço [mailto:support
 );
 
 $messages['ru'] = array(
-	'wam-html-title' => 'Wikia Activity Monitor (WAM)',
+	'wam-html-title' => 'Wiki Activity Monitor (WAM)',
 	'wampage-header' => 'Wam',
 	'wampage-header-faq' => 'Часто задаваемые вопросы',
 	'wam-all' => 'Все',
@@ -695,7 +695,7 @@ WAM上的資料最早可以追溯到2012年1月1日
 您可以通過發信至[mailto:support@wikia-inc.com support@wikia-inc.com]獲取説明。',
 	'wam-index-header-rank' => '排名',
 	'wam-index-header-score' => 'WAM分數',
-	'wam-index-header-wiki-name' => 'Wikia URL',
+	'wam-index-header-wiki-name' => 'URL',
 	'wam-index-header-vertical' => '主題社區',
 	'wam-index-header-vertical-rank' => '主題社區排名',
 	'wam-index-header-admins' => '管理員',

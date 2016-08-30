@@ -3,19 +3,19 @@ $messages = array();
 
 $messages['en'] = array(
 	'emailext-welcome-subject' => 'Welcome to Wikia, $1!',
-	'emailext-welcome-summary' => 'Congrats, you’re a Wikian! You are now part of a universe created entirely for fans and authored by millions of other fans, just like you.',
+	'emailext-welcome-summary' => 'Welcome to Fandom! You are now part of the world’s largest collection of entertainment communities. Share your knowledge, discuss opinions, and discover great content.',
 	'emailext-welcome-summary-extended' => 'So what’s next?',
 	'emailext-welcome-profile-header' => 'Create your profile',
-	'emailext-welcome-profile-description' => "Here's your chance to build your identity on Wikia, connect with others, and discover more about what you love.",
-	'emailext-welcome-mobile-header' => 'Take Wikia everywhere',
+	'emailext-welcome-profile-description' => "Build your identity on Fandom. Connect with others, and share your fandoms.",
+	'emailext-welcome-mobile-header' => 'Take Fandom everywhere',
 	'emailext-welcome-mobile-description' => 'Download your favorite Wikia fan apps for [$1 iOS] or [$2 Android] and never, ever stop obsessing about your fandoms.',
-	'emailext-welcome-basics-url' => 'http://community.wikia.com/wiki/Special:Videos',
+	'emailext-welcome-basics-url' => 'http://community.wikia.com/wiki/Wikia_University',
 	'emailext-welcome-basics-header' => 'Learn the basics',
 	'emailext-welcome-basics-description' => 'Need a quick guide on how to edit a page, start a discussion, or upload stuff? Check out [$1 these tutorials]!',
 	'emailext-welcome-fandom-header' => 'Find your favorite fandom',
-	'emailext-welcome-fandom-description' => 'Discover thousands of wikias across movies, TV, games, and more. Follow them so you never miss one moment.',
+	'emailext-welcome-fandom-description' => 'Discover communities across movies, TV, games, and more. Leave a comment or follow your favorite discussion.',
 	'emailext-welcome-footer-community' => 'Want more information? Find additional advice, answers, and friendly faces at [http://community.wikia.com Wikia Community Central].',
-	'emailext-welcome-footer-closing' => 'Thanks for joining the fan universe!',
+	'emailext-welcome-footer-closing' => 'Thanks for joining Fandom!',
 );
 
 $messages['qqq'] = array(
@@ -122,19 +122,19 @@ $messages['ja'] = array(
 
 $messages['nl'] = array(
 	'emailext-welcome-subject' => 'Welcome to Wikia, $1!',
-	'emailext-welcome-summary' => 'Congrats, you’re a Wikian! You are now part of a universe created entirely for fans and authored by millions of other fans, just like you.',
+	'emailext-welcome-summary' => 'Welcome to Fandom! You are now part of the world’s largest collection of entertainment communities. Share your knowledge, discuss opinions, and discover great content.',
 	'emailext-welcome-summary-extended' => 'So what’s next?',
 	'emailext-welcome-profile-header' => 'Create your profile',
-	'emailext-welcome-profile-description' => "Here's your chance to build your identity on Wikia, connect with others, and discover more about what you love.",
-	'emailext-welcome-mobile-header' => 'Take Wikia everywhere',
+	'emailext-welcome-profile-description' => "Build your identity on Fandom. Connect with others, and share your fandoms.",
+	'emailext-welcome-mobile-header' => 'Take Fandom everywhere',
 	'emailext-welcome-mobile-description' => 'Download your favorite Wikia fan apps for [$1 iOS] or [$2 Android] and never, ever stop obsessing about your fandoms.',
-	'emailext-welcome-basics-url' => 'http://community.wikia.com/wiki/Special:Videos',
+	'emailext-welcome-basics-url' => 'http://community.wikia.com/wiki/Wikia_University',
 	'emailext-welcome-basics-header' => 'Learn the basics',
 	'emailext-welcome-basics-description' => 'Need a quick guide on how to edit a page, start a discussion, or upload stuff? Check out [$1 these tutorials]!',
 	'emailext-welcome-fandom-header' => 'Find your favorite fandom',
-	'emailext-welcome-fandom-description' => 'Discover thousands of wikias across movies, TV, games, and more. Follow them so you never miss one moment.',
+	'emailext-welcome-fandom-description' => 'Discover communities across movies, TV, games, and more. Leave a comment or follow your favorite discussion.',
 	'emailext-welcome-footer-community' => 'Want more information? Find additional advice, answers, and friendly faces at [http://community.wikia.com Wikia Community Central].',
-	'emailext-welcome-footer-closing' => 'Thanks for joining the fan universe!',
+	'emailext-welcome-footer-closing' => 'Thanks for joining Fandom!',
 );
 
 $messages['pl'] = array(

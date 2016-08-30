@@ -3,7 +3,7 @@
 $messages = [];
 
 $messages['en'] = [
-	'poweruser-ext-desc' => 'Manages data on PowerUsers of wikia',
+	'poweruser-ext-desc' => 'Manages data on PowerUsers of Fandom',
 	'group-powerusers' => 'Power User',
 ];
 

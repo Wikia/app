@@ -6,7 +6,7 @@
 $messages = [];
 
 $messages['en'] = [
-	'multiwikifinder-desc' => 'Staff tool to search for a specific title across Wikia ',
+	'multiwikifinder-desc' => 'Staff tool to search for a specific title across Fandom ',
 	'multidelete-desc' => 'Special Multi Wiki Delete',
 	'multiedit-desc' => 'Special Multi Wiki Edit',
 
@@ -118,7 +118,7 @@ $messages['en'] = [
 	'multiwikienterpagename' => 'Enter a pagename:',
 	'multiwikirecords' => '$1 {{PLURAL:$1|wiki|wikis}} found',
 	'multiwikifinder-redirect' => 'redirect',
-	'action-multiwikifinder' => 'search for a specific title across Wikia',
+	'action-multiwikifinder' => 'search for a specific title across Fandom',
 	'right-multidelete' => 'Delete many pages at one Wikia, or one page on many Wikia',
 	'right-multiwikifinder' => 'Find pages on many Wikia',
 	'right-multiwikiedit' => 'Edit a page on many wikis at once',

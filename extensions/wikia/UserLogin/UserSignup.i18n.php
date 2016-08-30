@@ -8,7 +8,7 @@
 $messages = array();
 
 $messages['en'] = array(
-	'usersignup-page-title' => 'Join Wikia',
+	'usersignup-page-title' => 'Join Fandom',
 	'usersignup-page-title-wikiamobile' => 'Create account',
 	'usersignup-page-captcha-label' => 'Challenge',
 	'usersignup-error-username-length' => "Oops, your username can't be more than {{PLURAL:$1|one character|$1 characters}}.",
@@ -26,7 +26,7 @@ $messages['en'] = array(
 	'usersignup-facebook-create-account' => 'Create account',
 	'usersignup-facebook-email-tooltip' => "If you'd like to use a different email address you can change it later in your Preferences.",
 	'usersignup-facebook-have-an-account-heading' => 'Already have an account?',
-	'usersignup-facebook-have-an-account' => 'Connect your existing Wikia username with Facebook instead.',
+	'usersignup-facebook-have-an-account' => 'Connect your existing Fandom username with Facebook instead.',
 	'usersignup-facebook-proxy-email' => 'Anonymous Facebook email',
 	'usersignup-user-pref-emailconfirmlink' => 'Request a new confirmation email',
 	'usersignup-user-pref-confirmemail_send' => 'Resend my confirmation email',
@@ -105,7 +105,7 @@ ___________________________________________
 
 To check out the latest happenings on Wikia, visit http://community.wikia.com
 Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Preferences}}',
-	'usersignup-heading' => 'Join Wikia Today',
+	'usersignup-heading' => 'Join Fandom Today',
 	'usersignup-heading-byemail' => 'Create an account for someone else',
 	'usersignup-marketing-wikia' => 'Start collaborating with millions of people from around the world who come together to share what they know and love.',
 	'usersignup-marketing-login' => 'Already a user? [[Special:UserLogin|Log in]]',
@@ -115,7 +115,7 @@ Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Prefer
 	'usersignup-marketing-global-heading' => 'Create',
 	'usersignup-marketing-global' => 'Start a wiki. Start small, grow big, with the help of others.',
 	'usersignup-marketing-creativity-heading' => 'Be original',
-	'usersignup-marketing-creativity' => 'Use Wikia to express your creativity with polls and top 10 lists, photo and video galleries, apps and more.',
+	'usersignup-marketing-creativity' => 'Use Fandom to express your creativity with photos, video galleries, apps and discussions.',
 	'usersignup-createaccount-byemail' => 'Create an account for someone else',
 	'usersignup-error-captcha' => 'The challenge answer failed, please try again!',
 	'usersignup-account-creation-heading' => 'Success!',
@@ -4064,7 +4064,7 @@ ___________________________________________
  * @author Rémy Lee
  */
 $messages['vi'] = array(
-	'usersignup-page-title' => 'Join Wikia',
+	'usersignup-page-title' => 'Join Fandom',
 	'usersignup-page-title-wikiamobile' => 'Create account',
 	'usersignup-page-captcha-label' => 'Challenge',
 	'usersignup-error-username-length' => "Oops, your username can't be more than {{PLURAL:$1|one character|$1 characters}}.",
@@ -4082,7 +4082,7 @@ $messages['vi'] = array(
 	'usersignup-facebook-create-account' => 'Create account',
 	'usersignup-facebook-email-tooltip' => "If you'd like to use a different email address you can change it later in your Preferences.",
 	'usersignup-facebook-have-an-account-heading' => 'Already have an account?',
-	'usersignup-facebook-have-an-account' => 'Connect your existing Wikia username with Facebook instead.',
+	'usersignup-facebook-have-an-account' => 'Connect your existing Fandom username with Facebook instead.',
 	'usersignup-facebook-proxy-email' => 'Anonymous Facebook email',
 	'usersignup-user-pref-emailconfirmlink' => 'Request a new confirmation email',
 	'usersignup-user-pref-confirmemail_send' => 'Resend my confirmation email',
@@ -4161,7 +4161,7 @@ ___________________________________________
 
 To check out the latest happenings on Wikia, visit http://community.wikia.com
 Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Preferences}}',
-	'usersignup-heading' => 'Join Wikia Today',
+	'usersignup-heading' => 'Join Fandom Today',
 	'usersignup-heading-byemail' => 'Create an account for someone else',
 	'usersignup-marketing-wikia' => 'Start collaborating with millions of people from around the world who come together to share what they know and love.',
 	'usersignup-marketing-login' => 'Already a user? [[Special:UserLogin|Log in]]',
@@ -4171,7 +4171,7 @@ Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Prefer
 	'usersignup-marketing-global-heading' => 'Create',
 	'usersignup-marketing-global' => 'Start a wiki. Start small, grow big, with the help of others.',
 	'usersignup-marketing-creativity-heading' => 'Be original',
-	'usersignup-marketing-creativity' => 'Use Wikia to express your creativity with polls and top 10 lists, photo and video galleries, apps and more.',
+	'usersignup-marketing-creativity' => 'Use Fandom to express your creativity with photos, video galleries, apps and discussions.',
 	'usersignup-createaccount-byemail' => 'Create an account for someone else',
 	'usersignup-error-captcha' => 'Đáp án trả lời thất bại, vui lòng thử lại!',
 	'usersignup-account-creation-heading' => 'Success!',

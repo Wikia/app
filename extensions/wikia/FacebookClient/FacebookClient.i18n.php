@@ -6,7 +6,7 @@ $messages['en'] = array(
 	'fbconnect-wrong-pass-msg' => 'The password you have entered is incorrect',
 	'fbconnect-graphapi-not-configured' => 'Facebook App ID and App secret missing from configuration.',
 	'prefs-fbconnect-disconnect-prefstext' => 'Disconnect from Facebook',
-	'fbconnect-error-already-connected' => 'This Wikia account is already connected to Facebook. Please disconnect the original Facebook account prior to connecting another account.',
+	'fbconnect-error-already-connected' => 'This Fandom account is already connected to Facebook. Please disconnect the original Facebook account prior to connecting another account.',
 	'fbconnect-error-fb-account-in-use' => 'This Facebook account is already connected to another Wikia user account. Please connect with a different account or log in with Facebook and disconnect the original Wikia account prior to connecting the $1 account.',
 	'fbconnect-error-fb-unavailable-title' => 'Error connecting to Facebook',
 	'fbconnect-error-fb-unavailable-text' => 'Facebook seems to be unavailable at this time. Please try again later.',
@@ -18,13 +18,13 @@ $messages['en'] = array(
 	'fbconnect-error' => 'Verification error',
 	'fbconnect-errortext' => "Yikes! It looks like that didn't work out. Please try again.",
 	'fbconnect-disconnect-account-link' => 'Your Wikia account is currently connected to Facebook. You can [[#|disconnect]] your Wikia account from Facebook. You will be able to continue using your Wikia account as usual, with your history (edits, points, achievements) intact.',
-	'fbconnect-disconnect-info' => 'Your Facebook account has been successfully disconnected from your Wikia account.',
+	'fbconnect-disconnect-info' => 'Your Facebook account has been successfully disconnected from your Fandom account.',
 	'fbconnect-disconnect-info-existing' => 'Disconnect complete. You can still log in using your user name and password, as usual.',
 	'fbconnect-unknown-error' => 'Unknown error, please try again.',
-	'fbconnect-passwordremindertitle' => 'Your Wikia account is now disconnected from Facebook!',
-	'fbconnect-passwordremindertitle-exist' => 'Your Wikia account is now disconnected from Facebook!',
+	'fbconnect-passwordremindertitle' => 'Your Fandom account is now disconnected from Facebook!',
+	'fbconnect-passwordremindertitle-exist' => 'Your Fandom account is now disconnected from Facebook!',
 	'fbconnect-passwordremindertext' => "Hi,
-It looks like you've just disconnected your Wikia account from Facebook. We've kept all of your history, edit points and achievements intact, so don't worry!
+It looks like you've just disconnected your Fandom account from Facebook. We've kept all of your history, edit points and achievements intact, so don't worry!
 
 You can use the same username as before, and we've generated a new password for you to use. Here are your details:
 
@@ -35,22 +35,22 @@ The replacement password has been sent only to you at this email address.
 
 Thanks,
 
-The Wikia Community Team",
+The Fandom Community Team",
 	'fbconnect-passwordremindertext-exist' => "Hi,
-It looks like you've just disconnected your Wikia account from Facebook. We've kept all of your history, edit points and achievements intact, so don't worry!
+It looks like you've just disconnected your Fandom account from Facebook. We've kept all of your history, edit points and achievements intact, so don't worry!
 
 You can use the same username and password as you did before you connected.
 
 Thanks,
 
-The Wikia Community Team",
+The Fandom Community Team",
 	'fbconnect-wikia-signup-w-facebook' => 'Sign up with Facebook',
 	'prefs-fbconnect-prefstext' => 'Facebook Connect',
 	'prefs-fbconnect-status-prefstext' => 'Status',
 	'fbconnect-cancel' => 'Action cancelled',
 	'fbconnect-canceltext' => 'The previous action was cancelled by the user.',
-	'fbconnect-preferences-connected' => 'Congratulations! Your Wikia and Facebook accounts are now connected.',
-	'fbconnect-connect-msg' => 'Congratulations! Your Wikia and Facebook accounts are now connected.',
+	'fbconnect-preferences-connected' => 'Congratulations! Your Fandom and Facebook accounts are now connected.',
+	'fbconnect-connect-msg' => 'Congratulations! Your Fandom and Facebook accounts are now connected.',
 );
 
 $messages['qqq'] = array(
@@ -108,13 +108,13 @@ $messages['de'] = array(
 	'fbconnect-error' => 'Verification error',
 	'fbconnect-errortext' => "Yikes! It looks like that didn't work out. Please try again.",
 	'fbconnect-disconnect-account-link' => 'Dein Wikia-Konto ist derzeit mit Facebook verbunden. Du kannst dein Wikia-Account von Facebook [[#|trennen]] und weiterhin wie gewohnt, dein Wikia-Konto benutzen. Alle Bearbeitungen, Abzeichen, usw. bleiben intakt.',
-	'fbconnect-disconnect-info' => 'Your Facebook account has been successfully disconnected from your Wikia account.',
+	'fbconnect-disconnect-info' => 'Your Facebook account has been successfully disconnected from your Fandom account.',
 	'fbconnect-disconnect-info-existing' => 'Du kannst dich nach wie vor mit deinem Benutzernamen und Passwort anmelden.',
 	'fbconnect-unknown-error' => 'Unknown error, please try again.',
-	'fbconnect-passwordremindertitle' => 'Your Wikia account is now disconnected from Facebook!',
-	'fbconnect-passwordremindertitle-exist' => 'Your Wikia account is now disconnected from Facebook!',
+	'fbconnect-passwordremindertitle' => 'Your Fandom account is now disconnected from Facebook!',
+	'fbconnect-passwordremindertitle-exist' => 'Your Fandom account is now disconnected from Facebook!',
 	'fbconnect-passwordremindertext' => "Hi,
-It looks like you've just disconnected your Wikia account from Facebook. We've kept all of your history, edit points and achievements intact, so don't worry!
+It looks like you've just disconnected your Fandom account from Facebook. We've kept all of your history, edit points and achievements intact, so don't worry!
 
 You can use the same username as before, and we've generated a new password for you to use. Here are your details:
 
@@ -125,7 +125,7 @@ The replacement password has been sent only to you at this email address.
 
 Thanks,
 
-The Wikia Community Team",
+The Fandom Community Team",
 	'fbconnect-passwordremindertext-exist' => 'Hallo,
 es scheint als hättest du gerade die Verbindung mit deinem Facebook-Account gelöst. Keine Panik! Alle deine Wikia-Daten, darunter deine Bearbeitungen, deine verdienten Auszeichnungen und alles andere sind weiterhin intakt.
 
@@ -163,13 +163,13 @@ $messages['es'] = array(
 	'fbconnect-error' => 'Verification error',
 	'fbconnect-errortext' => "Yikes! It looks like that didn't work out. Please try again.",
 	'fbconnect-disconnect-account-link' => 'Tu cuenta de Wikia está vinculada a Facebook actualmente. Puedes [[#|desvincular]] tu cuenta de Wikia de Facebook. Podrás continuar usando tu cuenta de Wikia como siempre, con tu historial (ediciones, puntos, logros) intactos.',
-	'fbconnect-disconnect-info' => 'Your Facebook account has been successfully disconnected from your Wikia account.',
+	'fbconnect-disconnect-info' => 'Your Facebook account has been successfully disconnected from your Fandom account.',
 	'fbconnect-disconnect-info-existing' => 'Puedes seguir identificándote usando tu nombre de usuario y contraseña como siempre.',
 	'fbconnect-unknown-error' => 'Unknown error, please try again.',
-	'fbconnect-passwordremindertitle' => 'Your Wikia account is now disconnected from Facebook!',
-	'fbconnect-passwordremindertitle-exist' => 'Your Wikia account is now disconnected from Facebook!',
+	'fbconnect-passwordremindertitle' => 'Your Fandom account is now disconnected from Facebook!',
+	'fbconnect-passwordremindertitle-exist' => 'Your Fandom account is now disconnected from Facebook!',
 	'fbconnect-passwordremindertext' => "Hi,
-It looks like you've just disconnected your Wikia account from Facebook. We've kept all of your history, edit points and achievements intact, so don't worry!
+It looks like you've just disconnected your Fandom account from Facebook. We've kept all of your history, edit points and achievements intact, so don't worry!
 
 You can use the same username as before, and we've generated a new password for you to use. Here are your details:
 
@@ -180,7 +180,7 @@ The replacement password has been sent only to you at this email address.
 
 Thanks,
 
-The Wikia Community Team",
+The Fandom Community Team",
 	'fbconnect-passwordremindertext-exist' => 'Hola,
 
 Hemos visto que acabas de desvincular tu cuenta de Wikia de Facebook. Para tu tranquilidad, mantendremos todo tu historial, puntos de edición y logros intactos, ¡no tienes por qué preocuparte!
@@ -221,13 +221,13 @@ $messages['fi'] = array(
 	'fbconnect-error' => 'Verification error',
 	'fbconnect-errortext' => "Yikes! It looks like that didn't work out. Please try again.",
 	'fbconnect-disconnect-account-link' => 'Wikia-tilisi on tällä hetkellä yhdistetty Facebookiin. Voit halutessasi [[#|poistaa tilisi yhteyden]]. Pystyt jatkamaan Wikai-tilisi käyttöä normaalisti muokkaushistorian (muokkaukset, pisteet ja kunniamerkit) säilyessä samalla.',
-	'fbconnect-disconnect-info' => 'Your Facebook account has been successfully disconnected from your Wikia account.',
+	'fbconnect-disconnect-info' => 'Your Facebook account has been successfully disconnected from your Fandom account.',
 	'fbconnect-disconnect-info-existing' => 'Yhteyden poistaminen on valmis. Voit silti kirjautua sisään käyttäjänimelläsi ja salasanallasi, kuten yleensä.',
 	'fbconnect-unknown-error' => 'Unknown error, please try again.',
-	'fbconnect-passwordremindertitle' => 'Your Wikia account is now disconnected from Facebook!',
-	'fbconnect-passwordremindertitle-exist' => 'Your Wikia account is now disconnected from Facebook!',
+	'fbconnect-passwordremindertitle' => 'Your Fandom account is now disconnected from Facebook!',
+	'fbconnect-passwordremindertitle-exist' => 'Your Fandom account is now disconnected from Facebook!',
 	'fbconnect-passwordremindertext' => "Hi,
-It looks like you've just disconnected your Wikia account from Facebook. We've kept all of your history, edit points and achievements intact, so don't worry!
+It looks like you've just disconnected your Fandom account from Facebook. We've kept all of your history, edit points and achievements intact, so don't worry!
 
 You can use the same username as before, and we've generated a new password for you to use. Here are your details:
 
@@ -238,7 +238,7 @@ The replacement password has been sent only to you at this email address.
 
 Thanks,
 
-The Wikia Community Team",
+The Fandom Community Team",
 	'fbconnect-passwordremindertext-exist' => 'Hei,
 Näyttää siltä, että olet juuri poistanut Wikia-tilisi yhteyden Facebookiin. Olemme säilyttäneet koko muokkaushistoriasi, pisteesi ja kunniamerkkisi, joten älä huoli!
 
@@ -278,13 +278,13 @@ $messages['fr'] = array(
 	'fbconnect-error' => 'Verification error',
 	'fbconnect-errortext' => "Yikes! It looks like that didn't work out. Please try again.",
 	'fbconnect-disconnect-account-link' => 'Votre compte Wikia est actuellement relié à Facebook. Vous pouvez [[#|supprimer le lien]] entre votre compte Wikia et Facebook. Vous pourrez continuer à utiliser votre compte Wikia normalement, avec votre historique (modifications, points, distinctions) préservée.',
-	'fbconnect-disconnect-info' => 'Your Facebook account has been successfully disconnected from your Wikia account.',
+	'fbconnect-disconnect-info' => 'Your Facebook account has been successfully disconnected from your Fandom account.',
 	'fbconnect-disconnect-info-existing' => "Le retrait de la liaison est terminé. Vous pouvez toujours vous connecter en utilisant votre nom d'utilisateur et mot de passe, comme d'habitude.",
 	'fbconnect-unknown-error' => 'Unknown error, please try again.',
-	'fbconnect-passwordremindertitle' => 'Your Wikia account is now disconnected from Facebook!',
-	'fbconnect-passwordremindertitle-exist' => 'Your Wikia account is now disconnected from Facebook!',
+	'fbconnect-passwordremindertitle' => 'Your Fandom account is now disconnected from Facebook!',
+	'fbconnect-passwordremindertitle-exist' => 'Your Fandom account is now disconnected from Facebook!',
 	'fbconnect-passwordremindertext' => "Hi,
-It looks like you've just disconnected your Wikia account from Facebook. We've kept all of your history, edit points and achievements intact, so don't worry!
+It looks like you've just disconnected your Fandom account from Facebook. We've kept all of your history, edit points and achievements intact, so don't worry!
 
 You can use the same username as before, and we've generated a new password for you to use. Here are your details:
 
@@ -295,7 +295,7 @@ The replacement password has been sent only to you at this email address.
 
 Thanks,
 
-The Wikia Community Team",
+The Fandom Community Team",
 	'fbconnect-passwordremindertext-exist' => "Bonjour,
 
 Il semble que vous ayez retiré à l'instant la liaison entre votre compte Wikia et Facebook. Nous avons conservé toute votre historique, points de modification et distinctions intacts, ne vous inquiétez pas !
@@ -336,13 +336,13 @@ $messages['it'] = array(
 	'fbconnect-error' => 'Verification error',
 	'fbconnect-errortext' => "Yikes! It looks like that didn't work out. Please try again.",
 	'fbconnect-disconnect-account-link' => 'Il tuo account Wikia è attualmente connesso a Facebook. Puoi [[#|disconnetterlo]] da Facebook e sarai in grado di continuare ad usarlo come sempre con i tuoi contributi (modifiche, punti, medaglie) intatti.',
-	'fbconnect-disconnect-info' => 'Your Facebook account has been successfully disconnected from your Wikia account.',
+	'fbconnect-disconnect-info' => 'Your Facebook account has been successfully disconnected from your Fandom account.',
 	'fbconnect-disconnect-info-existing' => 'Disconnessione completata. Puoi ancora accedere usando il tuo nome utente e la tua password come al solito.',
 	'fbconnect-unknown-error' => 'Unknown error, please try again.',
-	'fbconnect-passwordremindertitle' => 'Your Wikia account is now disconnected from Facebook!',
-	'fbconnect-passwordremindertitle-exist' => 'Your Wikia account is now disconnected from Facebook!',
+	'fbconnect-passwordremindertitle' => 'Your Fandom account is now disconnected from Facebook!',
+	'fbconnect-passwordremindertitle-exist' => 'Your Fandom account is now disconnected from Facebook!',
 	'fbconnect-passwordremindertext' => "Hi,
-It looks like you've just disconnected your Wikia account from Facebook. We've kept all of your history, edit points and achievements intact, so don't worry!
+It looks like you've just disconnected your Fandom account from Facebook. We've kept all of your history, edit points and achievements intact, so don't worry!
 
 You can use the same username as before, and we've generated a new password for you to use. Here are your details:
 
@@ -353,7 +353,7 @@ The replacement password has been sent only to you at this email address.
 
 Thanks,
 
-The Wikia Community Team",
+The Fandom Community Team",
 	'fbconnect-passwordremindertext-exist' => 'Ciao,
 sembra che tu abbia disconnesso il tuo account Wikia da Facebook. Abbiamo mantenuto tutti i tuoi contributi, punti e medaglie intatti, per cui non preoccuparti!
 
@@ -450,13 +450,13 @@ $messages['ko'] = array(
 	'fbconnect-error' => 'Verification error',
 	'fbconnect-errortext' => "Yikes! It looks like that didn't work out. Please try again.",
 	'fbconnect-disconnect-account-link' => '현재 귀하의 위키아 계정은 페이스북과 연동되어 있습니다. 페이스북에서 연동을 [[#|해제]]할 수 있으며 연동을 해제하더라도 기록(편집, 포인트, 과제) 삭제 없이 위키아 계정을 그대로 사용할 수 있습니다.',
-	'fbconnect-disconnect-info' => 'Your Facebook account has been successfully disconnected from your Wikia account.',
+	'fbconnect-disconnect-info' => 'Your Facebook account has been successfully disconnected from your Fandom account.',
 	'fbconnect-disconnect-info-existing' => '연동을 완전히 해제합니다. 위키아 계정은 그대로 계속 사용할 수 있습니다.',
 	'fbconnect-unknown-error' => 'Unknown error, please try again.',
-	'fbconnect-passwordremindertitle' => 'Your Wikia account is now disconnected from Facebook!',
-	'fbconnect-passwordremindertitle-exist' => 'Your Wikia account is now disconnected from Facebook!',
+	'fbconnect-passwordremindertitle' => 'Your Fandom account is now disconnected from Facebook!',
+	'fbconnect-passwordremindertitle-exist' => 'Your Fandom account is now disconnected from Facebook!',
 	'fbconnect-passwordremindertext' => "Hi,
-It looks like you've just disconnected your Wikia account from Facebook. We've kept all of your history, edit points and achievements intact, so don't worry!
+It looks like you've just disconnected your Fandom account from Facebook. We've kept all of your history, edit points and achievements intact, so don't worry!
 
 You can use the same username as before, and we've generated a new password for you to use. Here are your details:
 
@@ -467,7 +467,7 @@ The replacement password has been sent only to you at this email address.
 
 Thanks,
 
-The Wikia Community Team",
+The Fandom Community Team",
 	'fbconnect-passwordremindertext-exist' => '안녕하세요,
 귀하는 방금 위키아 계정과 페이스북과의 연동을 해제하셨습니다. 모든 편집 역사와 포인트, 도전 과제 등은 그대로 보존되므로 걱정하지 마세요!
 
@@ -495,7 +495,7 @@ $messages['nl'] = array(
 	'fbconnect-wrong-pass-msg' => 'Het wachtwoord dat je hebt ingevoerd is onjuist',
 	'fbconnect-graphapi-not-configured' => 'Facebook App ID and App secret missing from configuration.',
 	'prefs-fbconnect-disconnect-prefstext' => 'Verbinding met Facebook verbreken',
-	'fbconnect-error-already-connected' => 'This Wikia account is already connected to Facebook. Please disconnect the original Facebook account prior to connecting another account.',
+	'fbconnect-error-already-connected' => 'This Fandom account is already connected to Facebook. Please disconnect the original Facebook account prior to connecting another account.',
 	'fbconnect-error-fb-account-in-use' => 'This Facebook account is already connected to another Wikia user account. Please connect with a different account or log in with Facebook and disconnect the original Wikia account prior to connecting the $1 account.',
 	'fbconnect-error-fb-unavailable-title' => 'Error connecting to Facebook',
 	'fbconnect-error-fb-unavailable-text' => 'Facebook seems to be unavailable at this time. Please try again later.',
@@ -507,13 +507,13 @@ $messages['nl'] = array(
 	'fbconnect-error' => 'Verification error',
 	'fbconnect-errortext' => "Yikes! It looks like that didn't work out. Please try again.",
 	'fbconnect-disconnect-account-link' => 'Your Wikia account is currently connected to Facebook. You can [[#|disconnect]] your Wikia account from Facebook. You will be able to continue using your Wikia account as usual, with your history (edits, points, achievements) intact.',
-	'fbconnect-disconnect-info' => 'Your Facebook account has been successfully disconnected from your Wikia account.',
+	'fbconnect-disconnect-info' => 'Your Facebook account has been successfully disconnected from your Fandom account.',
 	'fbconnect-disconnect-info-existing' => 'Disconnect complete. You can still log in using your user name and password, as usual.',
 	'fbconnect-unknown-error' => 'Unknown error, please try again.',
-	'fbconnect-passwordremindertitle' => 'Your Wikia account is now disconnected from Facebook!',
-	'fbconnect-passwordremindertitle-exist' => 'Your Wikia account is now disconnected from Facebook!',
+	'fbconnect-passwordremindertitle' => 'Your Fandom account is now disconnected from Facebook!',
+	'fbconnect-passwordremindertitle-exist' => 'Your Fandom account is now disconnected from Facebook!',
 	'fbconnect-passwordremindertext' => "Hi,
-It looks like you've just disconnected your Wikia account from Facebook. We've kept all of your history, edit points and achievements intact, so don't worry!
+It looks like you've just disconnected your Fandom account from Facebook. We've kept all of your history, edit points and achievements intact, so don't worry!
 
 You can use the same username as before, and we've generated a new password for you to use. Here are your details:
 
@@ -524,24 +524,24 @@ The replacement password has been sent only to you at this email address.
 
 Thanks,
 
-The Wikia Community Team",
+The Fandom Community Team",
 	'fbconnect-passwordremindertext-exist' => "Hi,
-It looks like you've just disconnected your Wikia account from Facebook. We've kept all of your history, edit points and achievements intact, so don't worry!
+It looks like you've just disconnected your Fandom account from Facebook. We've kept all of your history, edit points and achievements intact, so don't worry!
 
 You can use the same username and password as you did before you connected.
 
 Thanks,
 
-The Wikia Community Team",
+The Fandom Community Team",
 	'fbconnect-wikia-signup-w-facebook' => 'Sign up with Facebook',
 	'fbconnect-logout-confirm' => 'Choosing to cancel will log you out of Wikia and Facebook. Do you want to continue?',
 	'prefs-fbconnect-prefstext' => 'Facebook Connect',
 	'prefs-fbconnect-status-prefstext' => 'Status',
 	'fbconnect-cancel' => 'Action cancelled',
 	'fbconnect-canceltext' => 'The previous action was cancelled by the user.',
-	'fbconnect-preferences-connected' => 'Congratulations! Your Wikia and Facebook accounts are now connected.',
+	'fbconnect-preferences-connected' => 'Congratulations! Your Fandom and Facebook accounts are now connected.',
 	'fbconnect-preferences-connected-error' => "We're sorry, we couldn't complete your connection. Please make sure you are logged in to your Wikia account and have given Wikia permission to connect with Facebook.",
-	'fbconnect-connect-msg' => 'Congratulations! Your Wikia and Facebook accounts are now connected.',
+	'fbconnect-connect-msg' => 'Congratulations! Your Fandom and Facebook accounts are now connected.',
 );
 
 $messages['pl'] = array(
@@ -564,13 +564,13 @@ $messages['pl'] = array(
 	'fbconnect-error' => 'Verification error',
 	'fbconnect-errortext' => "Yikes! It looks like that didn't work out. Please try again.",
 	'fbconnect-disconnect-account-link' => 'Twoja konto Wikia jest obecnie połączone z Facebookiem. Możesz [[#|odłączyć]] swoje konto Wikia od Facebooka. W dalszym ciągu będziesz mógł używać swojego konta, twoja historia (edycje, punkty, odznaki) zostaną nienaruszone.',
-	'fbconnect-disconnect-info' => 'Your Facebook account has been successfully disconnected from your Wikia account.',
+	'fbconnect-disconnect-info' => 'Your Facebook account has been successfully disconnected from your Fandom account.',
 	'fbconnect-disconnect-info-existing' => 'Odłączanie zakończone. Możesz nadal zalogować się wykorzystując istniejącą nazwę i hasło.',
 	'fbconnect-unknown-error' => 'Unknown error, please try again.',
-	'fbconnect-passwordremindertitle' => 'Your Wikia account is now disconnected from Facebook!',
-	'fbconnect-passwordremindertitle-exist' => 'Your Wikia account is now disconnected from Facebook!',
+	'fbconnect-passwordremindertitle' => 'Your Fandom account is now disconnected from Facebook!',
+	'fbconnect-passwordremindertitle-exist' => 'Your Fandom account is now disconnected from Facebook!',
 	'fbconnect-passwordremindertext' => "Hi,
-It looks like you've just disconnected your Wikia account from Facebook. We've kept all of your history, edit points and achievements intact, so don't worry!
+It looks like you've just disconnected your Fandom account from Facebook. We've kept all of your history, edit points and achievements intact, so don't worry!
 
 You can use the same username as before, and we've generated a new password for you to use. Here are your details:
 
@@ -581,7 +581,7 @@ The replacement password has been sent only to you at this email address.
 
 Thanks,
 
-The Wikia Community Team",
+The Fandom Community Team",
 	'fbconnect-passwordremindertext-exist' => 'Witaj,
 Twoje konto na Wikii zostało odłączone od Facebooka. Zachowaliśmy całą historię Twoich edycji, otrzymane odznaczenia i punkty.
 
@@ -621,13 +621,13 @@ $messages['pt'] = array(
 	'fbconnect-error' => 'Verification error',
 	'fbconnect-errortext' => "Yikes! It looks like that didn't work out. Please try again.",
 	'fbconnect-disconnect-account-link' => 'A sua conta da Wikia está conectada ao Facebook. Você pode [[#|desconectar]] a sua conta da Wikia do Facebook. Você poderá continuar usando a sua conta da Wikia como de costume, com o seu histórico (edições, pontos, realizações) intacto.',
-	'fbconnect-disconnect-info' => 'Your Facebook account has been successfully disconnected from your Wikia account.',
+	'fbconnect-disconnect-info' => 'Your Facebook account has been successfully disconnected from your Fandom account.',
 	'fbconnect-disconnect-info-existing' => 'A separação está completa. Você ainda pode efetuar o login usando o seu nome de usuário e senha, como de costume.',
 	'fbconnect-unknown-error' => 'Unknown error, please try again.',
-	'fbconnect-passwordremindertitle' => 'Your Wikia account is now disconnected from Facebook!',
-	'fbconnect-passwordremindertitle-exist' => 'Your Wikia account is now disconnected from Facebook!',
+	'fbconnect-passwordremindertitle' => 'Your Fandom account is now disconnected from Facebook!',
+	'fbconnect-passwordremindertitle-exist' => 'Your Fandom account is now disconnected from Facebook!',
 	'fbconnect-passwordremindertext' => "Hi,
-It looks like you've just disconnected your Wikia account from Facebook. We've kept all of your history, edit points and achievements intact, so don't worry!
+It looks like you've just disconnected your Fandom account from Facebook. We've kept all of your history, edit points and achievements intact, so don't worry!
 
 You can use the same username as before, and we've generated a new password for you to use. Here are your details:
 
@@ -638,7 +638,7 @@ The replacement password has been sent only to you at this email address.
 
 Thanks,
 
-The Wikia Community Team",
+The Fandom Community Team",
 	'fbconnect-passwordremindertext-exist' => 'Olá,
 
 Parece que você desconectou a sua conta da Wikia do Facebook. Nós salvamos toda a sua história, edições e conquistas, então não entre em pânico!
@@ -684,13 +684,13 @@ $messages['ru'] = array(
 	'fbconnect-error' => 'Verification error',
 	'fbconnect-errortext' => "Yikes! It looks like that didn't work out. Please try again.",
 	'fbconnect-disconnect-account-link' => 'Ваша учётная запись Викия подключена к Facebook. Вы можете [[#|отключить]] её и продолжать использовать как обычно, включая историю правок, очки достижений и прочее.',
-	'fbconnect-disconnect-info' => 'Your Facebook account has been successfully disconnected from your Wikia account.',
+	'fbconnect-disconnect-info' => 'Your Facebook account has been successfully disconnected from your Fandom account.',
 	'fbconnect-disconnect-info-existing' => 'Отключение завершено. Вы можете войти на Викия, используя имя участника и пароль, как обычно.',
 	'fbconnect-unknown-error' => 'Unknown error, please try again.',
-	'fbconnect-passwordremindertitle' => 'Your Wikia account is now disconnected from Facebook!',
-	'fbconnect-passwordremindertitle-exist' => 'Your Wikia account is now disconnected from Facebook!',
+	'fbconnect-passwordremindertitle' => 'Your Fandom account is now disconnected from Facebook!',
+	'fbconnect-passwordremindertitle-exist' => 'Your Fandom account is now disconnected from Facebook!',
 	'fbconnect-passwordremindertext' => "Hi,
-It looks like you've just disconnected your Wikia account from Facebook. We've kept all of your history, edit points and achievements intact, so don't worry!
+It looks like you've just disconnected your Fandom account from Facebook. We've kept all of your history, edit points and achievements intact, so don't worry!
 
 You can use the same username as before, and we've generated a new password for you to use. Here are your details:
 
@@ -701,7 +701,7 @@ The replacement password has been sent only to you at this email address.
 
 Thanks,
 
-The Wikia Community Team",
+The Fandom Community Team",
 	'fbconnect-passwordremindertext-exist' => 'Привет,
 Вы отключили вашу учётную запись Викия от Facebook. Не волнуйтесь, все ваши правки, история редактирования и очки достижений остались на своём месте.
 
@@ -741,13 +741,13 @@ $messages['vi'] = array(
 	'fbconnect-error' => 'Verification error',
 	'fbconnect-errortext' => "Yikes! It looks like that didn't work out. Please try again.",
 	'fbconnect-disconnect-account-link' => 'Tài khoản Wikia của bạn hiện đang được kết nối với Facebook. Bạn có thể [[#|ngắt kết nối]] tài khoản Wikia của bạn khỏi Facebook. Bạn sẽ có thể tiếp tục sử dụng tài khoản Wikia như thường lệ, với lịch sử (sửa đổi, điểm, thành tựu) còn nguyên vẹn.',
-	'fbconnect-disconnect-info' => 'Your Facebook account has been successfully disconnected from your Wikia account.',
+	'fbconnect-disconnect-info' => 'Your Facebook account has been successfully disconnected from your Fandom account.',
 	'fbconnect-disconnect-info-existing' => 'Ngắt kết nối hoàn tất. Bạn vẫn có thể đăng nhập bằng tên người dùng và mật khẩu của bạn như bình thường.',
 	'fbconnect-unknown-error' => 'Unknown error, please try again.',
-	'fbconnect-passwordremindertitle' => 'Your Wikia account is now disconnected from Facebook!',
-	'fbconnect-passwordremindertitle-exist' => 'Your Wikia account is now disconnected from Facebook!',
+	'fbconnect-passwordremindertitle' => 'Your Fandom account is now disconnected from Facebook!',
+	'fbconnect-passwordremindertitle-exist' => 'Your Fandom account is now disconnected from Facebook!',
 	'fbconnect-passwordremindertext' => "Hi,
-It looks like you've just disconnected your Wikia account from Facebook. We've kept all of your history, edit points and achievements intact, so don't worry!
+It looks like you've just disconnected your Fandom account from Facebook. We've kept all of your history, edit points and achievements intact, so don't worry!
 
 You can use the same username as before, and we've generated a new password for you to use. Here are your details:
 
@@ -758,7 +758,7 @@ The replacement password has been sent only to you at this email address.
 
 Thanks,
 
-The Wikia Community Team",
+The Fandom Community Team",
 	'fbconnect-passwordremindertext-exist' => 'Xin chào,
 Có vẻ như bạn vừa ngắt kết nối tài khoản Wikia của mình khỏi Facebook. Chúng tôi sẽ giữ lịch sử, số sửa đổi và điểm thành tựu của bạn, vậy nên đừng lo!
 
@@ -798,13 +798,13 @@ $messages['zh-hans'] = array(
 	'fbconnect-error' => 'Verification error',
 	'fbconnect-errortext' => "Yikes! It looks like that didn't work out. Please try again.",
 	'fbconnect-disconnect-account-link' => '你的 Wikia帐户现在连结到 Facebook。你可以选择[[#|中断]] 这个连结。你仍然可以继续使用你的Wikia帐户，你的编辑历史、成就等都不会改变。',
-	'fbconnect-disconnect-info' => 'Your Facebook account has been successfully disconnected from your Wikia account.',
+	'fbconnect-disconnect-info' => 'Your Facebook account has been successfully disconnected from your Fandom account.',
 	'fbconnect-disconnect-info-existing' => '中断连结完成。你仍然可以持续使用你的用户名和密码登入。',
 	'fbconnect-unknown-error' => 'Unknown error, please try again.',
-	'fbconnect-passwordremindertitle' => 'Your Wikia account is now disconnected from Facebook!',
-	'fbconnect-passwordremindertitle-exist' => 'Your Wikia account is now disconnected from Facebook!',
+	'fbconnect-passwordremindertitle' => 'Your Fandom account is now disconnected from Facebook!',
+	'fbconnect-passwordremindertitle-exist' => 'Your Fandom account is now disconnected from Facebook!',
 	'fbconnect-passwordremindertext' => "Hi,
-It looks like you've just disconnected your Wikia account from Facebook. We've kept all of your history, edit points and achievements intact, so don't worry!
+It looks like you've just disconnected your Fandom account from Facebook. We've kept all of your history, edit points and achievements intact, so don't worry!
 
 You can use the same username as before, and we've generated a new password for you to use. Here are your details:
 
@@ -815,7 +815,7 @@ The replacement password has been sent only to you at this email address.
 
 Thanks,
 
-The Wikia Community Team",
+The Fandom Community Team",
 	'fbconnect-passwordremindertext-exist' => '您好，
 您刚才中断了您Wikia帐户和Facebook的连结。我们已经保留了您所有的编辑纪录、编辑点数、成就等，因此不用担心！
 
@@ -855,13 +855,13 @@ $messages['zh-tw'] = array(
 	'fbconnect-error' => 'Verification error',
 	'fbconnect-errortext' => "Yikes! It looks like that didn't work out. Please try again.",
 	'fbconnect-disconnect-account-link' => '你的 Wikia帳戶現在連結到 Facebook。你可以選擇[[#|中斷]] 這個連結。你仍然可以繼續使用你的Wikia帳戶，你的編輯歷史、成就等都不會改變。',
-	'fbconnect-disconnect-info' => 'Your Facebook account has been successfully disconnected from your Wikia account.',
+	'fbconnect-disconnect-info' => 'Your Facebook account has been successfully disconnected from your Fandom account.',
 	'fbconnect-disconnect-info-existing' => '中斷連結完成。你仍然可以持續使用你的用戶名和密碼登入。',
 	'fbconnect-unknown-error' => 'Unknown error, please try again.',
-	'fbconnect-passwordremindertitle' => 'Your Wikia account is now disconnected from Facebook!',
-	'fbconnect-passwordremindertitle-exist' => 'Your Wikia account is now disconnected from Facebook!',
+	'fbconnect-passwordremindertitle' => 'Your Fandom account is now disconnected from Facebook!',
+	'fbconnect-passwordremindertitle-exist' => 'Your Fandom account is now disconnected from Facebook!',
 	'fbconnect-passwordremindertext' => "Hi,
-It looks like you've just disconnected your Wikia account from Facebook. We've kept all of your history, edit points and achievements intact, so don't worry!
+It looks like you've just disconnected your Fandom account from Facebook. We've kept all of your history, edit points and achievements intact, so don't worry!
 
 You can use the same username as before, and we've generated a new password for you to use. Here are your details:
 
@@ -872,7 +872,7 @@ The replacement password has been sent only to you at this email address.
 
 Thanks,
 
-The Wikia Community Team",
+The Fandom Community Team",
 	'fbconnect-passwordremindertext-exist' => '您好，
 您剛才中斷了您Wikia帳戶和Facebook的連結。我們已經保留了您所有的編輯紀錄、編輯點數、成就等，因此不用擔心！
 

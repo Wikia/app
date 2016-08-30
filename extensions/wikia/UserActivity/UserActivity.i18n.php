@@ -2,8 +2,8 @@
 $messages = array();
 
 $messages['en'] = array(
-	'user-activity-desc' => "Displays the current user's activity across all of Wikia",
-	'user-activity-page-description' => "This page lists all of Wikia's communities where your account has contributed! By default, the wikias are sorted by most recent contribution date.",
+	'user-activity-desc' => "Displays the current user's activity across all of Fandom",
+	'user-activity-page-description' => "This page lists all of Fandom's communities where your account has contributed! By default, the wikis are sorted by most recent contribution date.",
 	'user-activity-table-title' => 'Title',
 	'user-activity-table-edits' => '# of edits',
 	'user-activity-table-lastedit' => 'Last edited',
@@ -79,8 +79,8 @@ $messages['ja'] = array(
 );
 
 $messages['nl'] = array(
-	'user-activity-desc' => "Displays the current user's activity across all of Wikia",
-	'user-activity-page-description' => "This page lists all of Wikia's communities where your account has contributed! By default, the wikias are sorted by most recent contribution date.",
+	'user-activity-desc' => "Displays the current user's activity across all of Fandom",
+	'user-activity-page-description' => "This page lists all of Fandom's communities where your account has contributed! By default, the wikis are sorted by most recent contribution date.",
 	'user-activity-table-title' => 'Title',
 	'user-activity-table-edits' => '# of edits',
 	'user-activity-table-lastedit' => 'Last edited',

@@ -2,11 +2,11 @@
 $messages = array();
 
 $messages['en'] = array(
-	'emailext-usernamechange-subject' => 'Your username change on Wikia is complete!',
-	'emailext-usernamechange-summary' => 'Your username change on Wikia is complete.',
+	'emailext-usernamechange-subject' => 'Your username change on Fandom is complete!',
+	'emailext-usernamechange-summary' => 'Your username change on Fandom is complete.',
 	'emailext-usernamechange-changed' => '$1 is now $2',
 	'emailext-usernamechange-closing' => 'Can’t wait to see you around,',
-	'emailext-usernamechange-signature' => 'The Wikia Community Team',
+	'emailext-usernamechange-signature' => 'The Fandom Community Team',
 );
 
 $messages['qqq'] = array(
@@ -58,11 +58,11 @@ $messages['ja'] = array(
 );
 
 $messages['nl'] = array(
-	'emailext-usernamechange-subject' => 'Your username change on Wikia is complete!',
-	'emailext-usernamechange-summary' => 'Your username change on Wikia is complete.',
+	'emailext-usernamechange-subject' => 'Your username change on Fandom is complete!',
+	'emailext-usernamechange-summary' => 'Your username change on Fandom is complete.',
 	'emailext-usernamechange-changed' => '$1 is now $2',
 	'emailext-usernamechange-closing' => 'Can’t wait to see you around,',
-	'emailext-usernamechange-signature' => 'The Wikia Community Team',
+	'emailext-usernamechange-signature' => 'The Fandom Community Team',
 );
 
 $messages['pl'] = array(

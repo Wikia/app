@@ -3,7 +3,7 @@
 $messages = array();
 
 $messages['en'] = array(
-	'dataprovider-desc' => 'data provider for wikia skins',
+	'dataprovider-desc' => 'data provider for Fandom skins',
 );
 
 $messages['qqq'] = array(

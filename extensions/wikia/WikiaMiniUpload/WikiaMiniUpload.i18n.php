@@ -3,7 +3,7 @@
 $messages = array();
 
 $messages['en'] = array(
-	'wmu-desc' => 'WikiaMiniUpload extension',
+	'wmu-desc' => 'WikiMiniUpload extension',
 	'wmu-upload-image' => 'Upload Photo',
 	'wmu-title' => 'Upload Photo',
 	'wmu-upload' => 'Upload',

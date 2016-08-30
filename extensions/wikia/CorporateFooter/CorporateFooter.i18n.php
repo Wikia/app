@@ -32,7 +32,7 @@ __NOEDITSECTION__',
 *[http://api.wikia.com/wiki/Wikia_API_Wiki API]
 __NOEDITSECTION__',
 	'wikiahome-footer-partner' => "===Partner===
-*[http://www.mediakit.wikia.com Media kit]
+*[http://www.wikia.com/mediakit Advertise with us]
 *'''[http://mediakit.wikia.com/wiki/Contact Advertise with us]'''
 __NOEDITSECTION__",
 	'wikiahome-footer-community-wam' =>'*[$1 WAM Score]',

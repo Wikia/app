@@ -3,7 +3,7 @@
 $messages = array();
 
 $messages['en'] = array(
-	'widgettag-desc' => 'Adds &lt;widget&gt; tag for dynamic embedding of Wikia widgets',
+	'widgettag-desc' => 'Adds &lt;widget&gt; tag for dynamic embedding of Fandom widgets',
 );
 
 $messages['qqq'] = array(

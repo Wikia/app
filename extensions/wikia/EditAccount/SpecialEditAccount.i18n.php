@@ -79,7 +79,7 @@ $messages['en'] = array(
 
 	# logging
 	'editaccount-log' => 'User accounts log',
-	'editaccount-log-header' => 'This page lists changes made to user information by Wikia Staff.',
+	'editaccount-log-header' => 'This page lists changes made to user information by Fandom Staff.',
 	'editaccount-log-entry-email' => 'changed e-mail for user $2',
 	'editaccount-log-entry-pass' => 'changed password for user $2',
 	'editaccount-log-entry-realname' => 'changed real name for user $2',

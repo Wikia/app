@@ -116,7 +116,7 @@ Head to Wikia to check out the changes! $1
 	'toplists-create-heading' => '<em>New!</em> Create Your Own Top Ten',
 	'toplists-create-button-msg' => 'Create a list',
 
-	'toplists-oasis-only' => 'Creating and editing Top 10 lists is not available in Monobook. If you would like to use this feature, please switch your preference to the Wikia skin.',
+	'toplists-oasis-only' => 'Creating and editing Top 10 lists is not available in Monobook. If you would like to use this feature, please switch your preference to the Fandom skin.',
 );
 
 /** Message documentation (Message documentation)

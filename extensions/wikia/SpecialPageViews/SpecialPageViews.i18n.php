@@ -6,10 +6,10 @@ $messages = [];
  * @author Adam Karmiński
  */
 $messages['en'] = [
-	'special-pageviews-special-desc' => 'An extension to visually present data on page views number for a given wikia',
+	'special-pageviews-special-desc' => 'An extension to visually present data on page views number for a given wiki',
 	'special-pageviews-title' => 'Page views graph',
 	'pageviews' => 'Page views graph',
-	'special-pageviews-report-title' => 'Page views for this wikia',
+	'special-pageviews-report-title' => 'Page views for this wiki',
 	'special-pageviews-report-series' => 'Page views',
 	'special-pageviews-beta-info' => 'This is a beta version of the dashboard.',
 	'special-pageviews-redraw-link-text' => 'Redraw the chart',

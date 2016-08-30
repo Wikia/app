@@ -2,10 +2,10 @@
 $messages = array();
 
 $messages['en'] = array(
-	'emailext-reactivate-account-subject' => 'Get back on Wikia',
-	'emailext-reactivate-account-summary' => "You're one step away from reactivating your account on Wikia.  Click the link below to confirm your request and get started.",
+	'emailext-reactivate-account-subject' => 'Reactivate Your Fandom Account',
+	'emailext-reactivate-account-summary' => "You're one step away from reactivating your account on Fandom. Click the link below to confirm your request.",
 	'emailext-reactivate-account-button-text' => 'Reactivate Now',
-	'emailext-reactivate-account-welcome-back' => 'Welcome back!',
+	'emailext-reactivate-account-welcome-back' => 'Welcome back to Fandom!',
 );
 
 $messages['qqq'] = array(
@@ -51,10 +51,10 @@ $messages['ja'] = array(
 );
 
 $messages['nl'] = array(
-	'emailext-reactivate-account-subject' => 'Get back on Wikia',
-	'emailext-reactivate-account-summary' => "You're one step away from reactivating your account on Wikia.  Click the link below to confirm your request and get started.",
+	'emailext-reactivate-account-subject' => 'Reactivate Your Fandom Account',
+	'emailext-reactivate-account-summary' => "You're one step away from reactivating your account on Fandom. Click the link below to confirm your request.",
 	'emailext-reactivate-account-button-text' => 'Reactivate Now',
-	'emailext-reactivate-account-welcome-back' => 'Welcome back!',
+	'emailext-reactivate-account-welcome-back' => 'Welcome back to Fandom!',
 );
 
 $messages['pl'] = array(

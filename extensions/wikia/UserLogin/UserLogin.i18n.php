@@ -23,13 +23,13 @@ $messages['en'] = array(
 	'userlogin-error-resetpass_announce' => 'Looks like you used a temporary password. Pick a new password here to continue logging in.',
 	'userlogin-error-login-throttled' => 'You\'ve tried to log in with the wrong password too many times. Wait a while before trying again.',
 	'userlogin-error-login-userblocked' => 'Your username has been blocked and can\'t be used to log in.',
-	'userlogin-error-edit-account-closed-flag' => 'Your account has been disabled by Wikia.',
+	'userlogin-error-edit-account-closed-flag' => 'Your account has been disabled by Fandom.',
 	'userlogin-error-cantcreateaccount-text' => 'Your IP address is not allowed to create new accounts.',
 	'userlogin-error-userexists' => 'Someone already has this username. Try a different one!',
 	'userlogin-error-invalidemailaddress' => 'Please enter a valid email address.',
 	'userlogin-error-wrongcredentials' => 'This username and password combination is not correct. Please try again.',
 	'userlogin-error-invalidfacebook' => 'There was a problem detecting your Facebook account; please login to Facebook and try again.',
-	'userlogin-error-fbconnect' => 'There was a problem connecting your Wikia account to Facebook.',
+	'userlogin-error-fbconnect' => 'There was a problem connecting your Fandom account to Facebook.',
 	'userlogin-get-account' => "Don't have an account? <a href=\"$1\" tabindex=\"$2\">Sign up</a>",
 
 	// signup
@@ -41,7 +41,7 @@ $messages['en'] = array(
 	'userlogin-error-externaldberror' => 'Sorry! Our site is currently having an issue, please try again later.',
 	'userlogin-error-noemailtitle' => 'Please enter a valid email address.',
 	'userlogin-error-acct_creation_throttle_hit' => 'Sorry, this IP address has created too many accounts today. Please try again later.',
-	'userlogin-opt-in-label' => 'Email me about Wikia news and events',
+	'userlogin-opt-in-label' => 'Email me about Fandom news and events',
 
 	// mail password
 	'userlogin-error-resetpass_forbidden' => 'Passwords cannot be changed',
@@ -117,7 +117,7 @@ Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Prefer
 
 	// WikiaMobile skin
 	'wikiamobile-sendpassword-label' => 'Send new password',
-	'wikiamobile-facebook-connect-fail' => 'Sorry, your Facebook account is not currently linked with a Wikia account.',
+	'wikiamobile-facebook-connect-fail' => 'Sorry, your Facebook account is not currently linked with a Fandom account.',
 
 	// logged in view
 	'userlogin-logged-in-title' => 'Welcome to {{SITENAME}}, $1!',

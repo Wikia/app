@@ -9,7 +9,7 @@ $messages = [];
 
 $messages['en'] = [
 	'videopagetool-desc' => 'Wikia\'s Video Tool',
-	'videopagetool-page-title' => 'Wikia Video Tool',
+	'videopagetool-page-title' => 'Fandom Video Tool',
 	'right-videopagetool' => 'Access Wikia\'s Video Tool',
 	'videopagetool-error-permission' => 'You cannot access this tool.',
 	'videopagetool-error-invalid-language' => 'Invalid language',
@@ -26,7 +26,7 @@ $messages['en'] = [
 	'videopagetool-error-program-not-ready' => 'Please save all sections first',
 	'videopagetool-section-featured' => 'Featured',
 	'videopagetool-section-category' => 'Latest Video',
-	'videopagetool-section-fan' => 'Wikia Fan Media',
+	'videopagetool-section-fan' => 'Fandom Fan Media',
 	'videopagetool-publish-button' => 'Publish',
 	'videopagetool-button-add-video' => 'Add a video',
 	'videopagetool-button-add-thumbnail' => 'Add Image',
@@ -71,7 +71,7 @@ $messages['en'] = [
 
 	// Home Page Section: Header
 	'videohomepage-header-dropdown-name' => 'Discover',
-	'videohomepage-header-search-placeholder' => 'Search for Wikia videos',
+	'videohomepage-header-search-placeholder' => 'Search for Fandom videos',
 	'videohomepage-header-browse' => 'Browse',
 	'videopagetool-header-last-saved' => "'''Last saved:''' $1",
 	'videopagetool-header-publish-date' => "'''Publish date:''' $1",

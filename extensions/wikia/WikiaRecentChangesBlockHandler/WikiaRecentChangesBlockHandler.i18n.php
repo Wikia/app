@@ -3,7 +3,7 @@
 $messages = array();
 
 $messages['en'] = array(
-	'wikiarecentchangesblockhandler-desc' => 'WikiaRecentChangesBlockHandler',
+	'wikiarecentchangesblockhandler-desc' => 'WikiRecentChangesBlockHandler',
 );
 
 $messages['qqq'] = array(

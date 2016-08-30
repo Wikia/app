@@ -8,7 +8,7 @@
 $messages = array();
 
 $messages['en'] = array(
-	'recentchanges-desc' => 'Recent changes - Wikia implementation',
+	'recentchanges-desc' => 'Recent changes - Fandom implementation',
 	'recentchanges-dropdown-select-all' => 'Select All',
 );
 

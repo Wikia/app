@@ -9,7 +9,7 @@ $messages = [];
 
 $messages['en'] = [
 	'managewikiahome-desc' => 'Internal tool to manage corporate pages\'s visualization aka. remix feature',
-	'managewikiahome' => 'Manage Wikia Home',
+	'managewikiahome' => 'Manage Fandom Home',
 	'right-managewikiahome' => 'Allows access to Special:ManageWikiaHome',
 	'manage-wikia-home-wrong-rights' => "You are probably logged-out or you don't have permissions to use this special page.",
 

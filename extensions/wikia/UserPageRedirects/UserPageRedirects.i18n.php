@@ -3,7 +3,7 @@
 $messages = array();
 
 $messages['en'] = array(
-	'userpageredirects-desc' => 'redirects for UserPages for wikia.com',
+	'userpageredirects-desc' => 'redirects for UserPages for Fandom.com',
 );
 
 $messages['qqq'] = array(

@@ -290,11 +290,11 @@ Please visit [//www.mediawiki.org/wiki/Localisation MediaWiki Localisation] and 
 	'api-error-verification-error' => 'This file might be corrupt, or have the wrong extension.',
 	'adminskin_ds' => 'Default',
 	'admin_skin' => 'Admin Options',
-	'all_the_wikia' => 'All the wikia',
+	'all_the_wikia' => 'All the Fandom',
 	'already_a_member' => 'Already a member?',
 	'add_comment' => 'Leave message',
 	'achievements-leaderboard-navigation-item' => 'Wiki Leaderboard',
-	'atom' => 'Wikia Atom',
+	'atom' => 'Fandom Atom',
 	'addnewtalksection-link' => 'Add new section',
 );
 

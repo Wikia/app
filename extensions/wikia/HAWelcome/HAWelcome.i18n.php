@@ -34,16 +34,32 @@ Please leave a message on [[$2|my talk page]] if I can help with anything! $3",
 	"welcome-message-log" => "welcoming new contributor",
 	"welcome-message-user-staff" => "==Welcome==
 
-Hi,
+Hi, welcome to {{SITENAME}}! I'm a member of Fandom's Community Support team. Thank you for your edit to [[:$1]]!
 
-Welcome to {{SITENAME}} and thank you for your edit to the [[:$1]] page. If you need help, start by checking out our [[Help:Contents|help pages]]. Visit [[w:c:community|Community Central]] to stay informed with our [[w:c:community:Blog:Wikia_Staff_Blog|staff blog]], ask questions on our [[w:c:community:Special:Forum|community forum]], participate in our [[w:c:community:Help:Webinars|webinar series]], or chat live with fellow Wikians. Happy editing! $3",
+It looks as though none of the admins for this community are active right now, but if you need help, check out [[Help:Contents|help pages]] or stop by [[w:c:community:main page|Community Central]] to explore our [[w:c:community:Special:Forum|forums]].
+
+You can also follow the [[w:c:community:Blog:Wikia_Staff_Blog|Staff blog]] to keep up-to-date with the latest news and events around Wikia. And don't forget to check out [[w:c:community:Wikia_University|Fandom University]] for quick how-to videos.
+
+Please [[$2|leave me a message]] if I can help with anything.
+
+Enjoy your time at {{SITENAME}}!
+
+$2",
 	'welcome-message-anon-staff' => "==Welcome==
 
-Hi,
+Hi, welcome to {{SITENAME}}! I'm a member of Fandom's Community Support team. Thank you for your edit to [[:$1]]!
 
-Welcome to {{SITENAME}} and thank you for your edit to the [[:$1]] page. We encourage all contributors to [[Special:UserLogin|create a user name]], so you can keep track of your contributions, access more Wikia features and get to know the rest of the {{SITENAME}} community.
+'''[[Special:UserSignup|Please sign in and create a user name]]''. It's an easy way to keep track of your contributions and helps you communicate with the rest of the community.
 
-If you need help, check out our [[Help:Contents|help pages]] first and then visit [[w:c:community|Community Central]] to learn more. Happy editing! $3",
+It looks as though none of the admins for this community are active right now, but if you need help, you can look at our [[Help:Contents|help pages]] or stop by [[w:c:community:main page|Community Central]] to check out our [[w:c:community:Special:Forum|forums]].
+
+You can also follow the [[w:c:community:Blog:Wikia_Staff_Blog|Staff blog]] to keep up-to-date with the latest news and events around Fandom. And don't forget to check out [[w:c:community:Wikia_University|Fandom University]] for quick how-to videos.
+
+Please [[$2|leave me a message]] if I can help with anything.
+
+Enjoy your time at {{SITENAME}}!
+
+$2",
 	'staffsig-text' => "[[{{ns:user}}:$1|$2]]<staff /> <small>([[w:forums|help forum]] | [[w:sblog|blog]])</small>",
 	'hawelcomeedit' => "HAWelcomeEdit",
 

@@ -362,7 +362,7 @@ www.wikia.com
 	'related_wiki' => 'Add bulleted links here to display wiki related to this one in the related wiki [[Special:Widgets|widget]].
 
 * [{{FULLURL:MediaWiki:Related wiki}} No related wiki have been selected yet.]',
-	'registerintro-title' => 'When you create an account on Wikia, you become a part of the community!',
+	'registerintro-title' => 'When you create an account on Fandom, you become a part of the community!',
 	'registerintro-text' => 'You get credit for all your contributions, and you can also create your own user profile, watchlist your favorite pages, and get access to all kinds of neat tools.',
 	'rcshowhidelogs' => '$1 logs',
 ];

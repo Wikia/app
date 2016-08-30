@@ -274,9 +274,9 @@ This is probably caused by a link to a blacklisted external site.',
 	'searchtype' => 'Search frontend type',
 	'share_it' => 'Share it:',
 	'see_more' => 'See more...',
-	'specialpages-group-wikia' => 'Wikia pages',
+	'specialpages-group-wikia' => 'Fandom pages',
 	'staffsigs' => '* ?
-** Wikia
+** Fandom
 ',
 	'seeeditcount' => 'See edit count',
 	'shared-Globalnavigation' => "*homepage:Video_Games|Video Games|video-games-vertical-color
@@ -334,7 +334,7 @@ This is probably caused by a link to a blacklisted external site.',
 
 **#|Music
 ***w:c:lyrics|Song Lyrics
-***w:c:music:Music_Wiki/|Music Wikia
+***w:c:music:Music_Wiki/|Music Fandom
 ***w:c:ladygaga:Gagapedia|Lady Gaga
 ***w:c:britneyspears:Britney_Spears_Wiki|Britney Spears
 ***homepage:Entertainment|More...
@@ -342,10 +342,10 @@ This is probably caused by a link to a blacklisted external site.',
 *homepage:Lifestyle|Lifestyle|lifestyle-vertical-color
 
 **#|What's Hot
-***w:c:bookclub:Portal:Book_Club|Wikia Book Club
+***w:c:bookclub:Portal:Book_Club|Fandom Book Club
 ***w:c:recipes:Portal:Closet_Confidential|Closet Confidential
 ***w:c:recipes:Portal:Food_Fiction|Food Fiction
-***w:User_blog:TranStanley/Introducing_My_Wikia_for_iPad|My Wikia for iPad
+***w:User_blog:TranStanley/Introducing_My_Wikia_for_iPad|My Fandom for iPad
 ***w:c:weddings:Category:Wedding_Themes|Movie Wedding Themes
 ***homepage:Lifestyle|More...
 
@@ -371,10 +371,10 @@ This is probably caused by a link to a blacklisted external site.',
 ***homepage:Lifestyle|More...
 ",
 	'shared-Monobook-footer-wikia-links' => '* [http://www.wikia.com/wiki/Wikia:Privacy_Policy Privacy]
-	* [http://www.wikia.com/wiki/Wikia:About About Wikia]
-	* [http://www.wikia.com/wiki/Wikia:Terms_of_use Terms of use]
-	* [[Special:Contact|Contact]]
-	* [http://www.wikia.com/wiki/Wikia:Advertising_on_Wikia Advertise]',
+        * [http://fandom.wikia.com/about About Fandom]
+        * [http://www.wikia.com/wiki/Wikia:Terms_of_use Terms of use]
+        * [[Special:Contact|Contact]]
+        * [http://www.wikia.com/mediakit Advertise]',
 	'scarytranscludebadinterwiki' => 'Non-transcludable interwiki provided.',
 	'shared-News_box' => '[http://www.wikia.com/Hiring Wikia is now hiring for several open positions]',
 );

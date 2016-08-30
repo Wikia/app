@@ -1,6 +1,6 @@
 <?php
 /**
-* Internationalization file for the WikiaStyleGuide extension.
+* Internationalization file for the WikiStyleGuide extension.
 *
 * @addtogroup Languages
 */
@@ -8,7 +8,7 @@
 $messages = array();
 
 $messages['en'] = array(
-	'wikiastyleguide-desc' => 'WikiaStyleGuide extension',
+	'wikiastyleguide-desc' => 'WikiStyleGuide extension',
 	'wikiastyleguide-dropdown-all' => 'All',
 	'wikiastyleguide-dropdown-select-all' => 'Select All',
 	'wikiastyleguide-dropdown-selected-items-list' => '$1 and $2 more',

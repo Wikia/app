@@ -2,7 +2,7 @@
 $messages = [];
 
 $messages['en'] = [
-	'soundcloud-tag-desc' => 'SoundCloud widget integration for the Wikia platform',
+	'soundcloud-tag-desc' => 'SoundCloud widget integration for the Fandom platform',
 ];
 
 $messages['qqq'] = [

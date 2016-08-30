@@ -42,11 +42,11 @@ Are you ready to take the next steps to help {{SITENAME}}?",
 	'wikiadoption-mail-first-subject' => "We have not seen you around in a while",
 	'wikiadoption-mail-first-content' => "Hi $1,
 
-It's been a couple of weeks since we have seen an administrator on #WIKINAME. Administrators are an integral part of #WIKINAME and it's important they have a regular presence. If there are no active administrators for a long period of time, this wiki may be put up for adoption to allow another user to become an administrator.
+It's been a couple of weeks since we have seen an administrator on #WIKINAME. Administrators are an integral part of #WIKINAME and it's important they have a regular presence. If there are no active administrators for a long period of time, this community may be put up for adoption to allow another user to become an administrator.
 
-If you need help taking care of the wiki, you can also allow other community members to become administrators now by going to $2.  Hope to see you on #WIKINAME soon!
+If you need help taking care of the community, you can also allow other community members to become administrators now by going to $2.  Hope to see you on #WIKINAME soon!
 
-The Wikia Team
+The Fandom Team
 
 You can unsubscribe from changes to this list here: $3",
 	'wikiadoption-mail-first-content-HTML' => "Hi $1,<br /><br />
@@ -60,11 +60,11 @@ The Wikia Team<br /><br />
 You can <a href=\"$3\">unsubscribe</a> from changes to this list.",
 	'wikiadoption-mail-second-subject' => "#WIKINAME will be put up for adoption soon",
 	'wikiadoption-mail-second-content' => "Hi $1,
-Oh, no! It's been almost 60 days since there's been an active administrator on #WIKINAME. It's important that administrators regularly appear and contribute so the wiki can continue to run smoothly.
+It's been almost 60 days since there's been an active administrator on #WIKINAME. It's important that administrators regularly appear and contribute so the community can continue to run smoothly.
 
 Since it's been so many days since a current administrator has appeared, #WIKINAME will now be offered for adoption to other editors.
 
-The Wikia Team
+The Fandom Team
 
 You can unsubscribe from changes to this list here: $3",
 	'wikiadoption-mail-second-content-HTML' => "Hi $1,<br /><br />

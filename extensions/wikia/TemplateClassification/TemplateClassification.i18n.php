@@ -65,7 +65,7 @@ $messages['en'] = [
 	'special-templates-portable-infobox' => 'Portable',
 	'special-templates-non-portable-infobox' => 'Non-portable',
 	'logentry-templateclassification-tc-changed' => '$1 changed type of $3 from $5 to $4.',
-	'templates' => 'Templates on wikia',
+	'templates' => 'Templates on Fandom',
 	'right-template-bulk-classification' => 'Allows classifying multiple templates at once',
 ];
 
@@ -533,7 +533,7 @@ $messages['nl'] = [
 	'template-classification-description-infoicon' => 'This template is used for creating a link with a small icon.',
 	'special-templates-portable-infobox' => 'Portable',
 	'special-templates-non-portable-infobox' => 'Non-portable',
-	'templates' => 'Templates on wikia',
+	'templates' => 'Templates on Fandom',
 ];
 
 $messages['pl'] = [

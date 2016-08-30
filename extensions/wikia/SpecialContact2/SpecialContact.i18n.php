@@ -10,19 +10,19 @@ $messages = array();
 $messages['en'] = array(
 	'specialcontact-desc' => 'Wikia\'s contact [[Special:Contact]] form',
 	/* special page */
-	'contact' => 'Contact Wikia',
-	'specialcontact-wikia' => 'Contact Wikia',
-	'specialcontact-pagetitle' => 'Contact Wikia Support Staff',
+	'contact' => 'Contact Fandom',
+	'specialcontact-wikia' => 'Contact Fandom',
+	'specialcontact-pagetitle' => 'Contact Fandom Support Staff',
 
 	/* picker */
-	'specialcontact-intro-main-head' => "<big>Need help? Don't worry, the Wikia community is here to help you!</big><br/>
-Follow the links below to learn more about how to use Wikia, make changes to your wikia or modify your account.",
+	'specialcontact-intro-main-head' => "<big>Need help? Don't worry, the Fandom community is here to help you!</big><br/>
+Follow the links below to learn more about how to use Fandom, make changes to your Fandom or modify your account.",
 	'specialcontact-intro-main-local' => '', #(this is meant to be blank)
 	'specialcontact-intro-main-foot' => "'''Does this page answer your question?''' If not, please feel free to [[Special:contact/general|contact us]] to discuss your issue further. Remember you can always check out our '''[[w:c:community:Help:Index|help pages]]''', [[w:c:community:Blog:Wikia_Staff_Blog|staff blog]]  or post on our '''[[w:c:community:Special:Forum|community help forums]]'''. If you are looking for admin help and advice, stop by [[w:c:community:Admin_Central:Main_Page|Founder & Admin Central]].",
 
 
-	'specialcontact-secheader-onwiki' => "Questions about this wikia",
-		'specialcontact-seclink-content-issue' => "Issue with the wikia’s content",
+	'specialcontact-secheader-onwiki' => "Questions about this wiki",
+		'specialcontact-seclink-content-issue' => "Issue with the wiki's content",
 		'specialcontact-seclink-user-conflict' => "Problem with another user?",
 		'specialcontact-seclink-adoption' => "I want admin rights here",
 		'specialcontact-seclink-dmca-request' => 'I have a copyright complaint',
@@ -33,21 +33,21 @@ Follow the links below to learn more about how to use Wikia, make changes to you
 		'specialcontact-seclink-rename-account' => "Rename my account",
 		'specialcontact-seclink-blocked' => "My account is blocked",
 
-	'specialcontact-secheader-editing' => "Participating on Wikia",
-		'specialcontact-seclink-using-wikia' => "How do I use Wikia?",
+	'specialcontact-secheader-editing' => "Participating on Fandom",
+		'specialcontact-seclink-using-wikia' => "How do I use Fandom?",
 		'specialcontact-seclink-feedback' => "I want to offer some feedback",
 		'specialcontact-seclink-bug' => "I think I found a bug",
 		'specialcontact-seclink-bad-ad' => "I see a broken or inappropriate ad",
 		'specialcontact-seclink-security' => 'I think I found a security issue',
 
-	'specialcontact-secheader-setting' => "Changes to this wikia",
+	'specialcontact-secheader-setting' => "Changes to this wiki",
 		'specialcontact-seclink-wiki-name-change' => "Sitename or URL",
 		'specialcontact-seclink-design' => "Design",
 		'specialcontact-seclink-features' => "Add or remove Features",
-		'specialcontact-seclink-close-wiki' => "Close this wikia",
+		'specialcontact-seclink-close-wiki' => "Close this wiki",
 
 	/* titles (overrides normal page title) */
-	'specialcontact-sectitle' => "Wikia Support - $1",
+	'specialcontact-sectitle' => "Fandom Support - $1",
 		'specialcontact-sectitle-general' => "Contact form",
 		'specialcontact-sectitle-content-issue' => "Content issue",
 		'specialcontact-sectitle-user-conflict' => "User interactions",
@@ -58,16 +58,16 @@ Follow the links below to learn more about how to use Wikia, make changes to you
 		'specialcontact-sectitle-rename-account' => "Rename my account",
 		'specialcontact-sectitle-blocked' => "Account blocked",
 
-		'specialcontact-sectitle-using-wikia' => "Using Wikia",
+		'specialcontact-sectitle-using-wikia' => "Using Fandom",
 		'specialcontact-sectitle-feedback' => "Feedback",
 		'specialcontact-sectitle-bug' => "Bug Report",
 		'specialcontact-sectitle-bad-ad' => "Ad report",
 		'specialcontact-sectitle-security' => 'Security issue report',
 
-		'specialcontact-sectitle-wiki-name-change' => "Wikia name change",
-		'specialcontact-sectitle-design' => "Wikia design",
-		'specialcontact-sectitle-features' => "Wikia features",
-		'specialcontact-sectitle-close-wiki' => "Close this wikia",
+		'specialcontact-sectitle-wiki-name-change' => "Community name change",
+		'specialcontact-sectitle-design' => "Community design",
+		'specialcontact-sectitle-features' => "Fandom features",
+		'specialcontact-sectitle-close-wiki' => "Close this wiki",
 
 	/* intros (message at top of page) */
 	'specialcontact-intro-content-issue' => "The content on this wikia is created by the community here, and managed by the [[Special:ListAdmins|local admins]], not Wikia. If you wish to discuss this content, it is best to first contact the [[Special:ListAdmins|wikia's admins here]].
@@ -77,16 +77,16 @@ If you feel the content violates our [http://www.wikia.com/Terms_of_Use Terms of
 	'specialcontact-intro-content-issue-mobile' => "The content on this wikia is created by the community here and not the admins, not Wikia. If you wish to discuss this content, it is best to first contact the wikia's admins.
 
 If you feel the content violates our Terms of Use, you can contact Wikia staff.",
-	'specialcontact-intro-user-conflict' => "Wikias are community space where each and every person needs to work together with others for it to be successful. While working together conflicts can sometimes arise - and the best way to solve them is to have an open and respectful conversation on your wikia about the issue.
+	'specialcontact-intro-user-conflict' => "Wikis are community spaces where each and every person needs to work together with others for it to be successful. Conflicts can sometimes arise while working together; the best way to solve them is to have an open and respectful conversation on your community about the issue.
 
-If you need help, first contact your [[Special:ListAdmins|local admins]]. Admins are the local experts on the topic and community, so best to first chat with them further. If the admins are not able to help, or you feel the user is violating Wikia's [http://www.wikia.com/Terms_of_Use Terms of Use], you can contact Wikia staff directly [[Special:Contact/general|here]].
+If you need help, first contact your [[Special:ListAdmins|local admins]]. Admins are the local experts on the topic and community, so best to first chat with them further. If the admins are not able to help, or you feel the user is violating Wikia Inc.'s [http://www.wikia.com/Terms_of_Use Terms of Use], you can contact Fandom staff directly [[Special:Contact/general|here]].
 
 Happy editing!",
 	'specialcontact-intro-adoption' => "Are you interested in becoming an admin here? If so, please first check if the [[Special:Listusers/sysop|local admins]] are active. If they are, leave them a message with your request. It is also a good idea to talk with fellow users about your request to gather their support. You may want to start by posting in your community forum.
 
-If the local admins are not active, you can submit a request for admin status. Please visit the [[w:c:adopt|adoption wikia]] for more information, including the adoption criteria and the request page. Please remember to always provide a link to the wikia you wish to adopt.
+If the local admins are not active, you can submit a request for admin status. Please visit the [[w:c:adopt|adoption Adoptions]] for more information, including the adoption criteria and the request page. Please remember to always provide a link to the community you wish to adopt.
 
-If there's an active user community on the wikia you wish to adopt, please start a discussion on the wikia about who would make the best admins, and why you would like to become one. Please provide a link to this discussion at the [[w:c:adopt|Adoption wikia]]. Best of luck and happy editing!",
+If there's an active user community on the wiki you wish to adopt, please start a discussion on there about who would make the best admins, and why you would like to become one. Please provide a link to this discussion at the [[w:c:adopt|Adoption community]]. Best of luck and happy editing!",
 
 	'specialcontact-intro-account-issue' => "Sorry to hear you are having problems accessing your account. A couple of things to check:
 
@@ -117,13 +117,13 @@ However, if this talk page option is not available in your situation, then the b
 
 If you feel you still need to discuss this block further with Wikia staff, please contact us [[Special:Contact/general|here]].",
 
-	'specialcontact-intro-using-wikia' => "Now that you are a part of the community, you are able to edit and contribute to almost any page across Wikia. For some introductory help, check out our [[Help:Getting_Started|help pages here]]. They are a great place to learn the basics of editing, formatting and much more.
+	'specialcontact-intro-using-wikia' => "Now that you are a part of the community, you are able to edit and contribute to almost any page across Fandom. For some introductory help, check out our [[Help:Getting_Started|help pages here]]. They are a great place to learn the basics of editing, formatting and much more.
 
-If you have questions about this specific wikia, start by [[Special:ListAdmins|contacting your local admins]].
+If you have questions about this specific community, start by [[Special:ListAdmins|contacting your local admins]].
 You can also ask general questions to other community members on our [[w:c:community:Special:Forum|community help forum]].
 
-Remember, you can't break a wikia, so don't be afraid to get started. Happy editing!",
-	'specialcontact-intro-feedback' => "Got feedback? We would love to hear it! Please provide your thoughts and details below. If you have feedback on a Wikia Labs product, please provide feedback [[Special:WikiaLabs|there]].
+Remember, you can't break a community on Fandom, so don't be afraid to get started. Happy editing!",
+	'specialcontact-intro-feedback' => "Got feedback? We would love to hear it! Please provide your thoughts and details below. If you have feedback on a Fandom Labs product, please provide feedback [[Special:WikiaLabs|there]].
 
 Thanks in advance and happy editing!",
 	'specialcontact-intro-bug' => "We are sorry to hear that you found a bug on Wikia. Please provide full details of the issue you are seeing below so we can investigate further. Important details to include are:
@@ -146,34 +146,34 @@ Thank you and happy editing!",
 	'specialcontact-intro-wiki-name-change' => "If you are an admin here, you can request to change your [[Help:Title for the wiki|sitename]] or [[Help:Domain name|URL]] by filing out the form below. Please double check the spelling, and be sure of your correction, as we will not honor multiple requests. If you are not an admin here, here contact your local admins with your request [[Special:ListAdmins|here]].
 
 Happy editing!",
-	'specialcontact-intro-design' => "A wikia's design can be updated by any local admin on your wikia by using the [[Help:Theme_designer|Theme designer]]. If you are not an admin and wish to help with your wikia's design, first contact your [[Special:ListAdmins|local admins]].
+	'specialcontact-intro-design' => "A wiki's design can be updated by any local admin on your community by using the [[Help:Theme_designer|Theme designer]]. If you are not an admin and wish to help with your wiki's design, first contact your [[Special:ListAdmins|local admins]].
 
-If you would like help with creating a more customized design, you can submit a request to the Wikia Content team [[w:Community_Central:Content_Team/Requests|here]]. Please read through the guidelines before submitting a request there.
+If you would like help with creating a more customized design, you can submit a request to the Fandom Content team [[w:Community_Central:Content_Team/Requests|here]]. Please read through the guidelines before submitting a request there.
 
-If you feel you have found a bug while updating your wikia's design, please provide us with a detailed report [[Special:Contact/bug|here]].
+If you feel you have found a bug while updating your wiki's design, please provide us with a detailed report [[Special:Contact/bug|here]].
 
 Happy editing!",
-	'specialcontact-intro-features' => "Wikia offers many features, the majority of which are live on all wikias across the site by default.
+	'specialcontact-intro-features' => "Fandom offers many features, the majority of which are live on all communities across the site by default.
 
-If you are an admin and feel that specific feature is not working well for your wikia, please discuss with your wikia's community if they would also like the feature turned off. If everyone agrees, you can use the [[Special:WikiFeatures|Wiki Features]] section of the [[Special:AdminDashboard|Admin Dashboard]] to disable or re-enable features. If the feature is not list there, please [[Special:Contact/general|contact us]] with your request.
+If you are an admin and feel that specific feature is not working well for your community, please discuss with your wiki's community if they would also like the feature turned off. If everyone agrees, you can use the [[Special:WikiFeatures|Wiki Features]] section of the [[Special:AdminDashboard|Admin Dashboard]] to disable or re-enable features. If the feature is not list there, please [[Special:Contact/general|contact us]] with your request.
 
 Admins interested in testing out new features that are still in development can check out the Labs section of [[Special:WikiFeatures|Wiki Features]].
 
 Want to stay current on announcement of new features and improvements to current ones? Stop by and follow the [[w:c:community:Blog:Wikia_New_Features|staff blog new features list]]",
 
-	'specialcontact-intro-close-wiki' => "Thanks for contacting Wikia. We don't usually delete wikias once they have been created. Wikias are community-owned projects, and a wikia you are no longer interested in can wait for someone else to come along and [[Special:Contact/adoption|adopt it]].
+	'specialcontact-intro-close-wiki' => "Thanks for contacting Fandom. We don't usually delete wikis once they have been created. Wikis are community-owned projects, and a wiki you are no longer interested in can wait for someone else to come along and [[Special:Contact/adoption|adopt it]].
 
-If you wish to rename your wikia or fix spelling or grammatical issues please first consult [[Help:Rename]] for renaming pages, and [[Help:Theme designer]] for renaming the title of your wikia. Wikias can easily have their names changed, without the hassle of starting over. If you wish to change your wikia's URL [[Special:Contact/general|please write to us]] as we'd be more than happy to do so for you as there is no need to close your wikia.
+If you wish to rename your wiki or fix spelling or grammatical issues please first consult [[Help:Rename]] for renaming pages, and [[Help:Theme designer]] for renaming the title of your wiki. Wikis can easily have their names changed, without the hassle of starting over. If you wish to change your wiki's URL [[Special:Contact/general|please write to us]] as we'd be more than happy to do so for you as there is no need to close your Fandom.
 
-If you feel this wikia is on a topic that no other users may be interested in (such as a personal project), please submit a request using the form below. Please make the request from the wikia that needs closing.
+If you feel this wiki is on a topic that no other users may be interested in (such as a personal project), please submit a request using the form below. Please make the request from the wiki that needs closing.
 
-I hope you find another wikia among the many that are part of Wikia, and join in building a fantastic resource about everything you are passionate about.
+I hope you find another wiki among the many that are part of Fandom, and join in building a fantastic resource about everything you are passionate about.
 
 Happy editing!",
 
-	'specialcontact-intro-general' => "You can contact [[w:project:Staff|Wikia Staff]] using this form. Admins of this wikia can be found [[Special:ListAdmins|here]].
+	'specialcontact-intro-general' => "You can contact [[w:project:Staff|Fandom Staff]] using this form. Admins of this community can be found [[Special:ListAdmins|here]].
 
-	Additional information on how to report problems to Wikia can be found [[w:project:Report_a_problem|here]], or you can post on [[w:c:community:Special:Forum|Wikia Community Forums]] for user support.
+        Additional information on how to report problems to Fandom can be found [[w:project:Report_a_problem|here]], or you can post on [[w:c:community:Special:Forum|Fandom Community Forums]] for user support.
 
 If you prefer to use regular e-mail or have multiple attachments, you can contact us at [mailto:community@wikia.com community@wikia.com].
 ",
@@ -207,19 +207,19 @@ In response to security reports using this form, Wikia will:
 
 	/* form */
 	'specialcontact-username' => 'Your username',
-	'specialcontact-wikiname' => 'Which wikia',
+	'specialcontact-wikiname' => 'Which wiki',
 	'specialcontact-realname' => 'Your name',
 	'specialcontact-yourmail' => 'Your email',
 	'specialcontact-problem' => 'Subject',
 	'specialcontact-problemdesc' => 'Message',
-	'specialcontact-mail' => 'Send to Wikia',
+	'specialcontact-mail' => 'Send to Fandom',
 	'specialcontact-filledin' => 'This information has been filled in from your account preferences',
 	'specialcontact-ccme' => 'Send me a copy of this message',
 	'specialcontact-ccdisabled' => 'Disabled: Please [[Special:ConfirmEmail|validate]] your e-mail address to use this function',
 	'specialcontact-notyou' => 'Not you?',
 	'specialcontact-captchainfo' => 'Please enter the text in the image.',
 	'specialcontact-captchatitle' => 'Blurry word',
-	'specialcontact-formtitle' => 'Contact Wikia Support Staff',
+	'specialcontact-formtitle' => 'Contact Fandom Support Staff',
 	'specialcontact-label-screenshot' => 'Did you take a screenshot? If so, please upload here.',
 	'specialcontact-label-additionalscreenshot' => 'If you have another screenshot please upload it here.',
 	'specialcontact-label-bad-ad-description' => 'Please describe the problem with the ad',
@@ -229,13 +229,13 @@ In response to security reports using this form, Wikia will:
 	'specialcontact-label-bug-link' => 'Please provide the URL of the page where you are having the problem',
 	'specialcontact-label-bug-feature' => 'What feature is this related to?',
 	'specialcontact-label-bug-description' => 'Please describe the problem you are having',
-	'specialcontact-label-close-account-confirm' => 'I confirm that I want to disable my Wikia account',
+	'specialcontact-label-close-account-confirm' => 'I confirm that I want to disable my Fandom account',
 	'specialcontact-label-close-account-read-help' => 'I have read the [[Help:Close_my_account|help page on closing your account]]',
 	'specialcontact-label-account-issue-description' => 'Please provide a detailed description of the issue you are having.',
 	'specialcontact-label-rename-newusername' => 'Please enter the new username',
 	'specialcontact-label-rename-account-confirm' => 'I confirm that the spelling and punctuation for my new name is correct',
 	'specialcontact-label-rename-account-read-help' => 'I have read the [[Help:Changing your username|help page on renaming my account]]',
-	'specialcontact-form-header' => 'Contact Wikia',
+	'specialcontact-form-header' => 'Contact Fandom',
 	'specialcontact-logged-in-as' => 'You are logged in as $1. [[Special:UserLogout|Not you?]]',
 	'specialcontact-mail-on-file' => 'Your e-mail is set to $1. [[Special:Preferences|Do you wish to change it?]]',
 
@@ -268,9 +268,9 @@ Browser/OS: ',
 	'specialcontact-error-alreadyrenamed' => 'You have previously been renamed so you are not eligible for another one. Please [[Special:Contact/general|contact staff]] if you require further assistance.',
 
 	/* email */
-	'specialcontact-mailsub' => 'Wikia Support',
-	'specialcontact-mailsubcc' => 'Copy of Wikia Contact Mail',
-	'specialcontact-ccheader' => 'This is a copy of your message that was sent to Wikia Support',
+	'specialcontact-mailsub' => 'Fandom Support',
+	'specialcontact-mailsubcc' => 'Copy of Fandom Contact Mail',
+	'specialcontact-ccheader' => 'This is a copy of your message that was sent to Fandom Support',
 
 	/* after */
 	'specialcontact-submitcomplete' => 'Thank you for contacting Wikia. We receive and review all messages submitted here. We will do our best to get back to you in the next 2-3 business days, but please be patient as we work through all of the messages.
@@ -548,7 +548,7 @@ $messages['es'] = array(
 	/* special page */
 	'contact' => 'Contacta con Wikia',
 	'specialcontact-wikia' => 'Contacta con Wikia',
-	'specialcontact-pagetitle' => 'Contact Wikia Support Staff',
+	'specialcontact-pagetitle' => 'Contact Fandom Support Staff',
 
 	/* picker */
 	'specialcontact-intro-main-head' => "<big>¿Necesitas ayuda? ¡Que no cunda el pánico, la comunidad de Wikia está aquí para ayudarte!</big><br/>
@@ -1281,7 +1281,7 @@ Siga os links abaixo para aprender mais sobre como usar a Wikia, fazer mudanças
 		'specialcontact-seclink-close-wiki' => 'Fechar esta wikia',
 
 	/* titles (overrides normal page title) */
-	'specialcontact-sectitle' => 'Wikia Support - $1',
+	'specialcontact-sectitle' => 'Fandom Support - $1',
 		'specialcontact-sectitle-general' => 'Formulário de contato',
 		'specialcontact-sectitle-content-issue' => 'Problema com conteúdo',
 		'specialcontact-sectitle-user-conflict' => 'Interações de usuários',

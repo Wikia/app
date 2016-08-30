@@ -9,11 +9,11 @@
 $messages = array();
 
 $messages['en'] = array(
-	'promote-desc' => 'SpecialPromote page is enable for admins to add information about their wiki. After review of those informations it can show up on wikia.com',
+	'promote-desc' => 'SpecialPromote page is enable for admins to add information about their wiki. After review of those informations it can show up on Fandom.com',
 	'promote' => 'Promote',
 
 	'promote-title' => 'Promote',
-	'promote-introduction-header' => 'Promote your wiki on wikia.com',
+	'promote-introduction-header' => 'Promote your wiki on Fandom.com',
 	'promote-nocorp-introduction-header' => 'Promote $1',
 
 	'promote-introduction-copy' => "This page allows you to promote your wiki by making it eligible to appear on [http://www.wikia.com wikia.com]! Add images and a summary to introduce your wiki to visitors on Wikia's main page. Find more tips [http://help.wikia.com/wiki/Help:Promote here].",
@@ -28,7 +28,7 @@ $messages['en'] = array(
 
 	'promote-upload' => 'Add Images',
 	'promote-upload-main-photo-header' => 'Main Image',
-	'promote-upload-main-photo-explanation' => "This image defines your wiki. It will be the main image we use to represent your wiki on wikia.com so make sure it's a great one! Don't forget, you can always update this image so it's current and most represents your wiki.",
+	'promote-upload-main-photo-explanation' => "This image defines your wiki. It will be the main image we use to represent your wiki on Fandom.com so make sure it's a great one! Don't forget, you can always update this image so it's current and most represents your wiki.",
 	'promote-nocorp-upload-main-photo-explanation' => "This will be the main image we use to represent your wiki, so make sure it's a great one! This image can always be updated later so it stays current.",
 	'promote-upload-additional-photos-header' => 'Additional Images',
 	'promote-upload-additional-photos-explanation' => 'Adding more images makes your wiki look more interesting and engaging to potential visitors.You can add up to nine images here, and we strongly recommend you hit the limit!',

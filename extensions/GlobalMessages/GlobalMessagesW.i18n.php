@@ -98,8 +98,8 @@ You can also [[Special:EditWatchlist|use the standard editor]].',
 	'watchlisttools-edit' => 'View and edit watchlist',
 	'watchlisttools-raw' => 'Edit raw watchlist',
 	'wikipedia_skin' => 'Wikipedia skin',
-	'wikicitieshome' => 'Wikia Home',
-	'wikicitieshome-url' => 'http://www.wikia.com/',
+	'wikicitieshome' => 'Fandom Home',
+	'wikicitieshome-url' => 'http://fandom.wikia.com/',
 	'wikicitieshome-url/fr' => 'http://fr.wikia.com/',
 	'wikicities-nav' => 'wikia',
 	'wg_lastwikis' => 'Recently Visited',
@@ -108,7 +108,7 @@ pl
 hu',
 	'widget-title-activetalkpages' => 'Active talk pages',
 	'widget-desc-activetalkpages' => 'A list of recently edited talk pages',
-	'widget-title-advertiser' => 'Wikia Spotlight',
+	'widget-title-advertiser' => 'Fandom Spotlight',
 	'widget-desc-advertiser' => 'Showing spotlights / ads',
 	'widget-title-ancientpages' => 'Stale pages',
 	'widget-desc-ancientpages' => 'See a list of pages that have not been edited in a long time',
@@ -158,8 +158,8 @@ hu',
 	'widget-desc-topvoted' => "See the highest rated pages, as voted by this wiki's community",
 	'widget-title-watchlist' => 'Watchlist',
 	'widget-desc-watchlist' => 'Easily keep an eye on your watched pages',
-	'widget-title-wikiamessages' => 'Wikia messages',
-	'widget-desc-wikiamessages' => 'Wikia messages',
+	'widget-title-wikiamessages' => 'Fandom messages',
+	'widget-desc-wikiamessages' => 'Fandom messages',
 	'widget-title-wikiapartners' => 'Our partners',
 	'widget-desc-wikiapartners' => 'Our partners',
 	'widget-title-wikiatoolbox' => 'Toolbox',
@@ -202,7 +202,7 @@ hu',
 	'watchlist_s' => 'Watchlist',
 	'widget_name' => 'Name',
 	'widget_description' => 'Description',
-	'wikia_messages' => 'Wikia messages',
+	'wikia_messages' => 'Fandom messages',
 	'wikia-language-top-list' => 'de,en,es,he,fr,it,ja,no,pl,pt,pt-br,zh',
 	'wikia-language-top' => 'Top $1 languages',
 	'wikia-language-all' => 'All languages',
@@ -212,10 +212,10 @@ hu',
 	'wikia-days-ago' => '$1 {{PLURAL:$1|day|days}} ago',
 	'wikia-pagination-prev' => 'Prev',
 	'wikia-pagination-next' => 'Next',
-	'wikia-pagetitle-brand' => 'Wikia',
+	'wikia-pagetitle-brand' => 'Fandom',
 	'wikia-pagetitle-sitename' => '{{SITENAME}}',
 	'wikia-read-only-mode' => 'Uh-oh! Our main datacenter is currently unavailable, so this is our backup. Unfortunately, this means you may not be able to do certain things like edit, upload, or chat.
-We are working to fix the problem, thank you for your patience! If you see this for an extended period of time, feel free to contact Wikia at community@wikia.com.',
+We are working to fix the problem, thank you for your patience! If you see this for an extended period of time, feel free to contact Fandom at community@wikia.com.',
 );
 
 $messages['qqq'] = array(
@@ -314,8 +314,8 @@ Hint: the text "Remove Titles" is in {{msg-mw|watchlistedit-normal-submit}}',
 	'watchlisttools-raw' => '[[Special:Watchlist]]: Navigation link under the title. See also {{msg|watchlisttools-view}} and {{msg|watchlisttools-edit}}.
 
 {{Identical|Edit raw watchlist}}',
-	'wikia-pagetitle' => 'Wikia page title',
-	'wikia-read-only-mode' => 'A message shown to users when Wikia is in a read-only mode due to a maintenance work.',
+	'wikia-pagetitle' => 'Fandom page title',
+	'wikia-read-only-mode' => 'A message shown to users when Fandom is in a read-only mode due to a maintenance work.',
 );
 
 $messages['ab'] = array(
@@ -1810,7 +1810,7 @@ $messages['be'] = array(
 	'watchlisttools-view' => 'Паказаць змяненні',
 	'watchlisttools-edit' => 'Паказаць назіранае',
 	'watchlisttools-raw' => 'Паказаць нефарматаванае назіранае',
-	'wikia-pagetitle' => '$1 — Wikia',
+	'wikia-pagetitle' => '$1 — Fandom',
 );
 
 $messages['be-tarask'] = array(
@@ -1894,7 +1894,7 @@ $messages['be-tarask'] = array(
 	'watchlisttools-view' => 'Паказаць зьмены ў старонках зь сьпісу',
 	'watchlisttools-edit' => 'Праглядзець альбо рэдагаваць сьпіс назіраньня',
 	'watchlisttools-raw' => 'Рэдагаваць як тэкст',
-	'wikia-pagetitle' => '$1 — Wikia',
+	'wikia-pagetitle' => '$1 — Fandom',
 );
 
 $messages['be-x-old'] = array(
@@ -1978,7 +1978,7 @@ $messages['be-x-old'] = array(
 	'watchlisttools-view' => 'Паказаць зьмены ў старонках зь сьпісу',
 	'watchlisttools-edit' => 'Праглядзець альбо рэдагаваць сьпіс назіраньня',
 	'watchlisttools-raw' => 'Рэдагаваць як тэкст',
-	'wikia-pagetitle' => '$1 — Wikia',
+	'wikia-pagetitle' => '$1 — Fandom',
 );
 
 $messages['bg'] = array(
@@ -2059,7 +2059,7 @@ $messages['bg'] = array(
 	'watchlisttools-view' => 'Преглед на списъка за наблюдение',
 	'watchlisttools-edit' => 'Преглед и редактиране на списъка за наблюдение',
 	'watchlisttools-raw' => 'Редактиране на необработения списък за наблюдение',
-	'wikia-pagetitle' => '$1 — Wikia',
+	'wikia-pagetitle' => '$1 — Fandom',
 );
 
 $messages['bh'] = array(
@@ -2140,7 +2140,7 @@ $messages['bh'] = array(
 	'watchlisttools-view' => 'Преглед на списъка за наблюдение',
 	'watchlisttools-edit' => 'Преглед и редактиране на списъка за наблюдение',
 	'watchlisttools-raw' => 'Редактиране на необработения списък за наблюдение',
-	'wikia-pagetitle' => '$1 — Wikia',
+	'wikia-pagetitle' => '$1 — Fandom',
 );
 
 $messages['bho'] = array(
@@ -2796,7 +2796,7 @@ $messages['ce'] = array(
 	'watchlisttools-view' => 'Могlам чура агlонашан хийцамаш',
 	'watchlisttools-edit' => 'Хьажа/нисбé могlам',
 	'watchlisttools-raw' => 'Йоза санна нисдé',
-	'wikia-pagetitle' => '$1 — Wikia',
+	'wikia-pagetitle' => '$1 — Fandom',
 );
 
 $messages['ceb'] = array(
@@ -3262,7 +3262,7 @@ Seznam editovaných stránek můžete také [[Special:EditWatchlist|editovat ve 
 	'watchlisttools-view' => 'Zobrazit změny sledovaných stránek',
 	'watchlisttools-edit' => 'Zobrazit a editovat seznam sledovaných stránek',
 	'watchlisttools-raw' => 'Editovat textový soubor sledovaných stránek',
-	'wikia-pagetitle' => '$1 – Wikia',
+	'wikia-pagetitle' => '$1 – Fandom',
 );
 
 $messages['csb'] = array(
@@ -3322,7 +3322,7 @@ $messages['cu'] = array(
 	'whatlinkshere-hideredirs' => '$1 прѣнаправлѥниꙗ',
 	'whatlinkshere-hidelinks' => '$1 съвѧꙁи',
 	'watchlistall2' => 'вьсꙗ',
-	'wikia-pagetitle' => '$1 · Wikia',
+	'wikia-pagetitle' => '$1 · Fandom',
 );
 
 $messages['cv'] = array(
@@ -3597,9 +3597,9 @@ Du kannst auch die [[Special:EditWatchlist|Standardseite]] zum Bearbeiten benutz
 	'watchlisttools-edit' => 'normal bearbeiten',
 	'watchlisttools-raw' => 'im Listenformat bearbeiten (Import/Export)',
 	'watchlist_s' => 'Beobachtungsliste',
-	'wikia-pagetitle' => '$1 – Wikia',
+	'wikia-pagetitle' => '$1 – Fandom',
 	'wikia-read-only-mode' => 'Ohje! Unser Hauptdatenzentrum ist derzeit nicht verfügbar, darum müssen wir unser Backup verwenden. Leider bedeutet das für dich, dass du möglicherweise bestimmte Funktionen wie Bearbeiten, Hochladen oder Chatten nicht nutzen kannst.
- +Wir arbeiten daran, dieses Problem zu beheben, vielen Dank für deine Geduld! Wenn dir diese Nachricht über einen längeren Zeitraum hinweg angezeigt wird, kannst du gerne über community@wikia.com Kontakt zum Wikia-Team aufnehmen.',
+ +Wir arbeiten daran, dieses Problem zu beheben, vielen Dank für deine Geduld! Wenn dir diese Nachricht über einen längeren Zeitraum hinweg angezeigt wird, kannst du gerne über community@wikia.com Kontakt zum Fandom-Team aufnehmen.',
 );
 
 $messages['de-formal'] = array(
@@ -4226,7 +4226,7 @@ También puedes [[Special:EditWatchlist|usar el editor estándar]].',
 	'watchlisttools-edit' => 'Ver y editar tu lista de seguimiento',
 	'watchlisttools-raw' => 'Editar lista de seguimiento en crudo',
 	'wikia-read-only-mode' => 'Nuestro centro de datos principal no se encuentra disponible en estos momentos, esta es nuestra copia de seguridad. Desgraciadamente, esto significa que no puedes ser capaz de hacer ciertas cosas como editar, subir archivos o chatear.
-+ ¡Estamos trabajando para solucionar el problema, gracias por tu comprensión! Si ves este mensaje por un largo período de tiempo, no dudes en contactarte con Wikia a través de community@wikia.com.',
++ ¡Estamos trabajando para solucionar el problema, gracias por tu comprensión! Si ves este mensaje por un largo período de tiempo, no dudes en contactarte con Fandom a través de community@wikia.com.',
 );
 
 $messages['et'] = array(
@@ -4310,7 +4310,7 @@ Sa võid [[Special:EditWatchlist|kasutada ka harilikku tekstiredaktorit]].',
 	'watchlisttools-view' => 'Näita vastavaid muudatusi',
 	'watchlisttools-edit' => 'Vaata ja redigeeri jälgimisloendit',
 	'watchlisttools-raw' => 'Muuda lähteteksti',
-	'wikia-pagetitle' => '$1 – Wikia',
+	'wikia-pagetitle' => '$1 – Fandom',
 );
 
 $messages['eu'] = array(
@@ -4627,7 +4627,7 @@ Voit myös muokata listaa [[Special:EditWatchlist|tavalliseen tapaan]].',
 	'watchlisttools-view' => 'Näytä muutokset',
 	'watchlisttools-edit' => 'Muokkaa listaa',
 	'watchlisttools-raw' => 'Lista raakamuodossa',
-	'wikia-pagetitle' => '$1 – Wikia',
+	'wikia-pagetitle' => '$1 – Fandom',
 );
 
 $messages['fiu-vro'] = array(
@@ -4704,7 +4704,7 @@ Voit myös muokata listaa [[Special:EditWatchlist|tavalliseen tapaan]].',
 	'watchlisttools-view' => 'Näytä muutokset',
 	'watchlisttools-edit' => 'Muokkaa listaa',
 	'watchlisttools-raw' => 'Lista raakamuodossa',
-	'wikia-pagetitle' => '$1 – Wikia',
+	'wikia-pagetitle' => '$1 – Fandom',
 );
 
 $messages['fj'] = array(
@@ -4855,7 +4855,7 @@ Vous pouvez aussi [[Special:EditWatchlist|utiliser l’éditeur normal]].',
 	'watchlisttools-edit' => 'Voir et modifier la liste de suivi',
 	'watchlisttools-raw' => 'Modifier la liste de suivi en mode brut',
 	'wikia-read-only-mode' => "Oups. Ceci est notre sauvegarde car notre principal centre de données est actuellement indisponible. Il se peut donc que vous ne puissiez malheureusement pas effectuer certaines tâches comme apporter des modifications, importer ou tchatter.
- +Nous essayons de résoudre le problème et vous remercions de votre patience. S'il persiste pendant une période prolongée, n'hésitez pas à contacter Wikia à l'adresse e-mail community@wikia.com.",
+ +Nous essayons de résoudre le problème et vous remercions de votre patience. S'il persiste pendant une période prolongée, n'hésitez pas à contacter Fandom à l'adresse e-mail community@wikia.com.",
 );
 
 $messages['frc'] = array(
@@ -4998,7 +4998,7 @@ Wees sü gödje än fersäk dåt nuch iinjsen.',
 	'watchlisttools-view' => 'Eefterkiiklist: änringe',
 	'watchlisttools-edit' => 'normåål beårbe',
 	'watchlisttools-raw' => 'Listeformoot beårbe (import/äksport)',
-	'wikia-pagetitle' => '$1 – Wikia',
+	'wikia-pagetitle' => '$1 – Fandom',
 );
 
 $messages['fur'] = array(
@@ -6007,7 +6007,7 @@ $messages['he'] = array(
 	'watchlisttools-view' => 'הצגת השינויים הרלוונטיים',
 	'watchlisttools-edit' => 'הצגה ועריכה של רשימת המעקב',
 	'watchlisttools-raw' => 'עריכת הרשימה הגולמית',
-	'wikia-pagetitle' => '$1 – Wikia',
+	'wikia-pagetitle' => '$1 – Fandom',
 );
 
 $messages['hi'] = array(
@@ -6665,7 +6665,7 @@ $messages['hy'] = array(
 	'watchlisttools-view' => 'Փոփոխությունները հսկացանկում',
 	'watchlisttools-edit' => 'Դիտել և խմբագրել հսկացանկը',
 	'watchlisttools-raw' => 'Խմբագրել հում հսկացանկը',
-	'wikia-pagetitle' => '$1 — Wikia',
+	'wikia-pagetitle' => '$1 — Fandom',
 );
 
 $messages['ia'] = array(
@@ -7311,7 +7311,7 @@ Si noti che è anche possibile [[Special:EditWatchlist|modificare la lista con l
 	'watchlisttools-edit' => 'Visualizza e modifica la lista degli osservati speciali',
 	'watchlisttools-raw' => 'Modifica la lista in formato testo',
 	'wikia-read-only-mode' => "Oh! Il nostro centro dati principale non è al momento disponibile, così come il nostro backup. Sfortunatamente, ciò significa che non puoi fare cose come modificare, caricare o chattare.
-+Stiamo lavorando alla risoluzione del problema, ti ringraziamo per la pazienza! Se visualizzi questo messaggio per un periodo di tempo prolungato, contatta pure Wikia all'indirizzo community@wikia.com.",
++Stiamo lavorando alla risoluzione del problema, ti ringraziamo per la pazienza! Se visualizzi questo messaggio per un periodo di tempo prolungato, contatta pure Fandom all'indirizzo community@wikia.com.",
 );
 
 $messages['iu'] = array(
@@ -7395,7 +7395,7 @@ Si noti che è anche possibile [[Special:EditWatchlist|modificare la lista con l
 	'watchlisttools-edit' => 'Visualizza e modifica la lista degli osservati speciali',
 	'watchlisttools-raw' => 'Modifica la lista in formato testo',
 	'wikia-read-only-mode' => "Oh! Il nostro centro dati principale non è al momento disponibile, così come il nostro backup. Sfortunatamente, ciò significa che non puoi fare cose come modificare, caricare o chattare.
-+Stiamo lavorando alla risoluzione del problema, ti ringraziamo per la pazienza! Se visualizzi questo messaggio per un periodo di tempo prolungato, contatta pure Wikia all'indirizzo community@wikia.com.",
++Stiamo lavorando alla risoluzione del problema, ti ringraziamo per la pazienza! Se visualizzi questo messaggio per un periodo di tempo prolungato, contatta pure Fandom all'indirizzo community@wikia.com.",
 );
 
 $messages['ja'] = array(
@@ -7488,8 +7488,8 @@ $messages['ja'] = array(
 	'wysiwygcaption' => 'グラフィカルに編集する',
 	'whats_new' => '新着',
 	'watchlist_s' => 'ウォッチリスト',
-	'wikia-read-only-mode' => 'Wikiaのメイン・データセンターは現在、ご利用いただけなくなっているため、バックアップを表示しています。このため、編集、アップロード、チャットなどの特定の操作を行えない可能性があります。
- 現在、Wikiaでは問題の修正に取り組んでおりますので、もうしばらくお待ちください。しばらくたっても引き続きこのメッセージが表示される場合は、Wikia（community@wikia.com）までお気軽にお問い合わせください。',
+	'wikia-read-only-mode' => 'Fandomのメイン・データセンターは現在、ご利用いただけなくなっているため、バックアップを表示しています。このため、編集、アップロード、チャットなどの特定の操作を行えない可能性があります。
+ 現在、Fandomでは問題の修正に取り組んでおりますので、もうしばらくお待ちください。しばらくたっても引き続きこのメッセージが表示される場合は、Fandom（community@wikia.com）までお気軽にお問い合わせください。',
 );
 
 $messages['jam'] = array(
@@ -8108,7 +8108,7 @@ $messages['kk-arab'] = array(
 	'watchlisttools-view' => 'قاتىستى وزگەرىستەردى قاراۋ',
 	'watchlisttools-edit' => 'باقىلاۋ ٴتىزىمدى قاراۋ جانە وڭدەۋ',
 	'watchlisttools-raw' => 'قام باقىلاۋ ٴتىزىمدى وڭدەۋ',
-	'wikia-pagetitle' => '$1 — Wikia',
+	'wikia-pagetitle' => '$1 — Fandom',
 );
 
 $messages['kk-cn'] = array(
@@ -8184,7 +8184,7 @@ $messages['kk-cn'] = array(
 	'watchlisttools-view' => 'قاتىستى وزگەرىستەردى قاراۋ',
 	'watchlisttools-edit' => 'باقىلاۋ ٴتىزىمدى قاراۋ جانە وڭدەۋ',
 	'watchlisttools-raw' => 'قام باقىلاۋ ٴتىزىمدى وڭدەۋ',
-	'wikia-pagetitle' => '$1 — Wikia',
+	'wikia-pagetitle' => '$1 — Fandom',
 );
 
 $messages['kk-cyrl'] = array(
@@ -8262,7 +8262,7 @@ $messages['kk-cyrl'] = array(
 	'watchlisttools-view' => 'Қатысты өзгерістерді қарау',
 	'watchlisttools-edit' => 'Бақылау тізімді қарау және өңдеу',
 	'watchlisttools-raw' => 'Қам бақылау тізімді өңдеу',
-	'wikia-pagetitle' => '$1 — Wikia',
+	'wikia-pagetitle' => '$1 — Fandom',
 );
 
 $messages['kk-kz'] = array(
@@ -8340,7 +8340,7 @@ $messages['kk-kz'] = array(
 	'watchlisttools-view' => 'Қатысты өзгерістерді қарау',
 	'watchlisttools-edit' => 'Бақылау тізімді қарау және өңдеу',
 	'watchlisttools-raw' => 'Қам бақылау тізімді өңдеу',
-	'wikia-pagetitle' => '$1 — Wikia',
+	'wikia-pagetitle' => '$1 — Fandom',
 );
 
 $messages['kk-latn'] = array(
@@ -8416,7 +8416,7 @@ Tağı da [[Special:EditWatchlist|qalıpalğan öñdewişti paýdalana]] alasız
 	'watchlisttools-view' => 'Qatıstı özgeristerdi qaraw',
 	'watchlisttools-edit' => 'Baqılaw tizimdi qaraw jäne öñdew',
 	'watchlisttools-raw' => 'Qam baqılaw tizimdi öñdew',
-	'wikia-pagetitle' => '$1 — Wikia',
+	'wikia-pagetitle' => '$1 — Fandom',
 );
 
 $messages['kk-tr'] = array(
@@ -8492,7 +8492,7 @@ Tağı da [[Special:EditWatchlist|qalıpalğan öñdewişti paýdalana]] alasız
 	'watchlisttools-view' => 'Qatıstı özgeristerdi qaraw',
 	'watchlisttools-edit' => 'Baqılaw tizimdi qaraw jäne öñdew',
 	'watchlisttools-raw' => 'Qam baqılaw tizimdi öñdew',
-	'wikia-pagetitle' => '$1 — Wikia',
+	'wikia-pagetitle' => '$1 — Fandom',
 );
 
 $messages['kl'] = array(
@@ -9034,7 +9034,7 @@ De könnts Ding Oppassliss ävver och [[Special:EditWatchlist|övver e Fomulaa m
 	'watchlisttools-view' => 'Oppaßliß — Änderunge zeije',
 	'watchlisttools-edit' => 'beloore un beärbede',
 	'watchlisttools-raw' => 'rüh beärbeijde | expochteere | empochteere',
-	'wikia-pagetitle' => '$1 — Wikia',
+	'wikia-pagetitle' => '$1 — Fandom',
 );
 
 $messages['ku'] = array(
@@ -9120,7 +9120,7 @@ De könnts Ding Oppassliss ävver och [[Special:EditWatchlist|övver e Fomulaa m
 	'watchlisttools-view' => 'Oppaßliß — Änderunge zeije',
 	'watchlisttools-edit' => 'beloore un beärbede',
 	'watchlisttools-raw' => 'rüh beärbeijde | expochteere | empochteere',
-	'wikia-pagetitle' => '$1 — Wikia',
+	'wikia-pagetitle' => '$1 — Fandom',
 );
 
 $messages['ku-latn'] = array(
@@ -12202,7 +12202,7 @@ $messages['os'] = array(
 	'watchlisttools-view' => 'Баст ивдтытæ фен',
 	'watchlisttools-edit' => 'Бакæсын æмæ ивын цæстдард рæгъ',
 	'watchlisttools-raw' => 'Ивын цæстдард рæгъы бындуртекст',
-	'wikia-pagetitle' => '$1 — Wikia',
+	'wikia-pagetitle' => '$1 — Fandom',
 );
 
 $messages['pa'] = array(
@@ -12580,7 +12580,7 @@ Zmień [[Special:Preferences#prefsection-1|swoje preferencje]], aby używać wid
 	'watchlist_s' => 'Obserwowane',
 	'widget_name' => 'Nazwa',
 	'widget_description' => 'Opis',
-	'wikia-pagetitle' => '$1 – Wikia',
+	'wikia-pagetitle' => '$1 – Fandom',
 	'wikia-read-only-mode' => 'Ojej! Nasze główne centrum danych jest w tej chwili niedostępne, a to jest nasza kopia zapasowa. Niestety oznacza to, że możesz nie być w stanie wykonać niektórych czynności takich jak edycja, przesyłanie plików lub korzystanie z czatu.
  +Pracujemy właśnie nad rozwiązeniem tego problemu i dziękujemy za cierpliwość! Jeśli ta wiadomość jest widoczna przez dłuższy okres czasu, możesz skontaktować się z Wikią poprzez community@wikia.com.',
 );
@@ -13017,7 +13017,7 @@ Também pode [[Special:EditWatchlist|editar a lista da maneira convencional]].',
 	'watchlisttools-edit' => 'Ver e editar a lista de páginas vigiadas',
 	'watchlisttools-raw' => 'Editar a lista de páginas vigiadas em forma de texto',
 	'wikia-read-only-mode' => 'Nosso centro de dados principal está indisponível, então este é o nosso backup. Infelizmente, isto significa que talvez você não possa fazer certas coisas como editar, carregar ou entrar no chat.
- + Estamos trabalhando para corrigir o problema, obrigado por sua paciência! Se isso demorar muito, entre em contato com a Wikia na community@wikia.com.',
+ + Estamos trabalhando para corrigir o problema, obrigado por sua paciência! Se isso demorar muito, entre em contato com a Fandom na community@wikia.com.',
 );
 
 $messages['pt-br'] = array(
@@ -13626,7 +13626,7 @@ $messages['ru'] = array(
 	'watchlisttools-view' => 'Изменения на страницах из списка',
 	'watchlisttools-edit' => 'Смотреть/править список',
 	'watchlisttools-raw' => 'Править как текст',
-	'wikia-pagetitle' => '$1 — Wikia',
+	'wikia-pagetitle' => '$1 — Fandom',
 	'wikia-read-only-mode' => 'Оу... Наш главный дата-центр недоступен в данный момент, потому в данный момент вы подключены к резервному дата-центру. К сожалению, это означает, что некоторые функции Викия, вроде редактирования, загрузок файлов или чата, будут временно недоступны.
  +Мы работаем над устранением этой проблемы! Если у вас есть вопросы или дополнительная информация, напишите нам на эл. почту: community@wikia.com.',
 );
@@ -14672,7 +14672,7 @@ Uporabite lahko tudi [[Special:EditWatchlist|standardni urejevalnik]].',
 	'watchlisttools-view' => 'Oglej si ustrezne spremembe',
 	'watchlisttools-edit' => 'Poglej in uredi spisek nadzorov',
 	'watchlisttools-raw' => 'Uredi gol spisek nadzorov',
-	'wikia-pagetitle' => '$1 – Wikia',
+	'wikia-pagetitle' => '$1 – Fandom',
 );
 
 $messages['sli'] = array(
@@ -15067,7 +15067,7 @@ $messages['sr-ec'] = array(
 	'watchlisttools-view' => 'прикажи сродне измене',
 	'watchlisttools-edit' => 'прикажи и уреди списак надгледања',
 	'watchlisttools-raw' => 'измени сиров списак надгледања',
-	'wikia-pagetitle' => '$1 – Wikia',
+	'wikia-pagetitle' => '$1 – Fandom',
 );
 
 $messages['sr-el'] = array(
@@ -16482,7 +16482,7 @@ $messages['tt-cyrl'] = array(
 	'watchlisttools-view' => 'Соңгы үзгәртүләрне күрсәтү',
 	'watchlisttools-edit' => 'Күзәтү исемлегене карау һәм үзгәртү',
 	'watchlisttools-raw' => 'Текст сыман үзгәртү',
-	'wikia-pagetitle' => '$1 — Wikia',
+	'wikia-pagetitle' => '$1 — Fandom',
 );
 
 $messages['tt-latn'] = array(
@@ -16533,7 +16533,7 @@ Saytnıñ şäxsi [[Special:Preferences|köylänmälären]] qararğa onıtmağı
 	'watchlisttools-view' => 'Soñğı üzgärtülärne kürsätü',
 	'watchlisttools-edit' => 'Küzätü isemlegene qaraw häm üzgärtü',
 	'watchlisttools-raw' => 'Tekst sıman üzgärtü',
-	'wikia-pagetitle' => '$1 — Wikia',
+	'wikia-pagetitle' => '$1 — Fandom',
 );
 
 $messages['ty'] = array(
@@ -16764,7 +16764,7 @@ $messages['uk'] = array(
 	'watchlisttools-view' => 'Зміни на сторінках зі списку',
 	'watchlisttools-edit' => 'Переглянути/редагувати список',
 	'watchlisttools-raw' => 'Редагувати як текст',
-	'wikia-pagetitle' => '$1 — Wikia',
+	'wikia-pagetitle' => '$1 — Fandom',
 );
 
 $messages['ur'] = array(
@@ -17097,7 +17097,7 @@ Bạn cũng có thể [[Special:EditWatchlist|dùng trang sửa đổi bình th�
 	'watchlisttools-view' => 'Xem thay đổi trên các trang theo dõi',
 	'watchlisttools-edit' => 'Xem và sửa danh sách theo dõi',
 	'watchlisttools-raw' => 'Sửa danh sách theo dõi dạng thô',
-	'wikia-pagetitle' => '$1 – Wikia',
+	'wikia-pagetitle' => '$1 – Fandom',
 );
 
 $messages['vls'] = array(

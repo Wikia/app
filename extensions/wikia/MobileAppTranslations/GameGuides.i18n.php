@@ -15,7 +15,7 @@ $messages['en'] = array(
 	'activityindicator-message' => 'Loading...',
 	
 	//window-wikis.js
-	'window-wikis-title' => 'Wikia Game Guides',
+	'window-wikis-title' => 'Fandom Game Guides',
 	'window-wikis-wikilist-search-hint' => 'Search our Top Games...',
 	
 	//window-category.js
@@ -202,7 +202,7 @@ $messages['cy'] = array(
  */
 $messages['de'] = array(
 	'activityindicator-message' => 'Lade …',
-	'window-wikis-title' => 'Wikia Game Guides',
+	'window-wikis-title' => 'Fandom Game Guides',
 	'window-wikis-wikilist-search-hint' => 'Suchen unsere beliebtesten Spiele...',
 	'window-category-load-batch' => 'Mehr',
 	'window-article-button-close' => 'Schließen',
@@ -456,7 +456,7 @@ $messages['id'] = array(
  */
 $messages['it'] = array(
 	'activityindicator-message' => 'Caricamento...',
-	'window-wikis-title' => 'Wikia Game Guides',
+	'window-wikis-title' => 'Fandom Game Guides',
 	'window-wikis-wikilist-search-hint' => 'Cerca i nostri giochi migliori...',
 	'window-category-load-batch' => 'Altri',
 	'window-article-button-close' => 'Chiudi',
@@ -627,7 +627,7 @@ $messages['nb'] = array(
  */
 $messages['nl'] = array(
 	'activityindicator-message' => 'Bezig met laden…',
-	'window-wikis-title' => 'Wikia Game Guides',
+	'window-wikis-title' => 'Fandom Game Guides',
 	'window-wikis-wikilist-search-hint' => 'Bekijk onze topgames...',
 	'window-category-load-batch' => 'Meer',
 	'window-article-button-close' => 'Sluiten',
@@ -664,7 +664,7 @@ $messages['pfl'] = array(
  */
 $messages['pl'] = array(
 	'activityindicator-message' => 'Ładowanie...',
-	'window-wikis-title' => 'Przewodniki Wikia Game Guides',
+	'window-wikis-title' => 'Przewodniki Fandom Game Guides',
 	'window-wikis-wikilist-search-hint' => 'Nasze Najlepsze Gry',
 	'window-category-load-batch' => 'Więcej',
 	'window-article-button-close' => 'Zamknij',
@@ -808,7 +808,7 @@ $messages['roa-tara'] = array(
  */
 $messages['ru'] = array(
 	'activityindicator-message' => 'Загрузка...',
-	'window-wikis-title' => 'Wikia Game Guides',
+	'window-wikis-title' => 'Fandom Game Guides',
 	'window-wikis-wikilist-search-hint' => 'Поиск в Top Games...',
 	'window-category-load-batch' => 'Ещё',
 	'window-article-button-close' => 'Закрыть',
@@ -834,7 +834,7 @@ $messages['ru'] = array(
  */
 $messages['sv'] = array(
 	'activityindicator-message' => 'Läser in...',
-	'window-wikis-title' => 'Wikia Game Guides',
+	'window-wikis-title' => 'Fandom Game Guides',
 	'window-wikis-wikilist-search-hint' => 'Våra Topp-spel',
 	'window-category-load-batch' => 'Mer',
 	'window-article-button-close' => 'Stäng',
@@ -961,7 +961,7 @@ $messages['uk'] = array(
  */
 $messages['vi'] = array(
 	'activityindicator-message' => 'Đang tải…',
-	'window-wikis-title' => 'Wikia Game Guides',
+	'window-wikis-title' => 'Fandom Game Guides',
 	'window-wikis-wikilist-search-hint' => 'Tìm kiếm Top Game của chúng tôi...',
 	'window-category-load-batch' => 'Nhiều hơn',
 	'window-article-button-close' => 'Đóng',

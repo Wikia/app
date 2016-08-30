@@ -9,5 +9,5 @@
 $messages = array();
 
 $messages['en'] = array(
-	'widgetframework-desc' => 'Wikia widget framework',
+	'widgetframework-desc' => 'Fandom widget framework',
 );

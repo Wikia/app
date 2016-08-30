@@ -228,7 +228,7 @@ You can view its source',
 	'tog-showAds' => '<b>Show all advertisements</b><br/>Select this option to see pages as logged-out users see them.<br/><br/>',
 	'tog-enablerichtext' => 'Enable Rich Text Editing',
 	'tog-hidepersonalachievements' => "Hide my achievements on my user page when I visit it and don't notify me of earned badges",
-	'tog-marketingallowed' => 'Send me information about Wikia news and events ',
+	'tog-marketingallowed' => 'Send me information about Fandom news and events ',
 	'tog-enableuserjs' => 'Enable personal JavaScript ([[Help:Personal_CSS_and_JS#JavaScript|Learn more]])',
 );
 
@@ -8712,7 +8712,7 @@ Zur Information folgt der aktuelle Logbucheintrag:",
 	'tog-showAds' => '<b>Show all advertisements</b><br/>Select this option to see pages as logged-out users see them.<br/><br/>',
 	'tog-enablerichtext' => 'Enable Rich Text Editing',
 	'tog-hidepersonalachievements' => "Hide my achievements on my user page when I visit it and don't notify me of earned badges",
-	'tog-marketingallowed' => 'Send me information about Wikia news and events ',
+	'tog-marketingallowed' => 'Send me information about Fandom news and events ',
 );
 
 $messages['de-ch'] = array(
@@ -10167,7 +10167,7 @@ Permite añadir una razón al resumen de edición.',
 	'tog-showAds' => '<b>Show all advertisements</b><br/>Select this option to see pages as logged-out users see them.<br/><br/>',
 	'tog-enablerichtext' => 'Enable Rich Text Editing',
 	'tog-hidepersonalachievements' => "Hide my achievements on my user page when I visit it and don't notify me of earned badges",
-	'tog-marketingallowed' => 'Send me information about Wikia news and events ',
+	'tog-marketingallowed' => 'Send me information about Fandom news and events ',
 );
 
 $messages['et'] = array(
@@ -11688,7 +11688,7 @@ Permet de rétablir la version précédente et d’ajouter un motif dans la boî
 	'tog-showAds' => '<b>Show all advertisements</b><br/>Select this option to see pages as logged-out users see them.<br/><br/>',
 	'tog-enablerichtext' => 'Enable Rich Text Editing',
 	'tog-hidepersonalachievements' => "Hide my achievements on my user page when I visit it and don't notify me of earned badges",
-	'tog-marketingallowed' => 'Send me information about Wikia news and events ',
+	'tog-marketingallowed' => 'Send me information about Fandom news and events ',
 );
 
 $messages['frc'] = array(
@@ -17792,7 +17792,7 @@ L'ultimo elemento del registro è riportato di seguito per informazione:",
 	'tog-showAds' => '<b>Show all advertisements</b><br/>Select this option to see pages as logged-out users see them.<br/><br/>',
 	'tog-enablerichtext' => 'Enable Rich Text Editing',
 	'tog-hidepersonalachievements' => "Hide my achievements on my user page when I visit it and don't notify me of earned badges",
-	'tog-marketingallowed' => 'Send me information about Wikia news and events ',
+	'tog-marketingallowed' => 'Send me information about Fandom news and events ',
 );
 
 $messages['iu'] = array(
@@ -18209,7 +18209,7 @@ $messages['ja'] = array(
 	'tog-showAds' => '<b>Show all advertisements</b><br/>Select this option to see pages as logged-out users see them.<br/><br/>',
 	'tog-enablerichtext' => 'Enable Rich Text Editing',
 	'tog-hidepersonalachievements' => "Hide my achievements on my user page when I visit it and don't notify me of earned badges",
-	'tog-marketingallowed' => 'Send me information about Wikia news and events ',
+	'tog-marketingallowed' => 'Send me information about Fandom news and events ',
 );
 
 $messages['jam'] = array(
@@ -28909,7 +28909,7 @@ Combineer de overlegpagina's handmatig.'''",
 	'tog-showAds' => '<b>Show all advertisements</b><br/>Select this option to see pages as logged-out users see them.<br/><br/>',
 	'tog-enablerichtext' => 'Enable Rich Text Editing',
 	'tog-hidepersonalachievements' => "Hide my achievements on my user page when I visit it and don't notify me of earned badges",
-	'tog-marketingallowed' => 'Send me information about Wikia news and events ',
+	'tog-marketingallowed' => 'Send me information about Fandom news and events ',
 	'tog-enableuserjs' => 'Enable personal JavaScript ([[Help:Personal_CSS_and_JS#JavaScript|Learn more]])',
 );
 
@@ -30848,7 +30848,7 @@ Pozwala na wpisanie powodu w opisie zmian.',
 	'this_discussion' => 'This discussion',
 	'tog-showAds' => '<b>Show all advertisements</b><br/>Select this option to see pages as logged-out users see them.<br/><br/>',
 	'tog-hidepersonalachievements' => "Hide my achievements on my user page when I visit it and don't notify me of earned badges",
-	'tog-marketingallowed' => 'Send me information about Wikia news and events ',
+	'tog-marketingallowed' => 'Send me information about Fandom news and events ',
 );
 
 $messages['pms'] = array(
@@ -31906,7 +31906,7 @@ Permite colocar uma justificativa no sumário da edição.',
 	'tog-showAds' => '<b>Show all advertisements</b><br/>Select this option to see pages as logged-out users see them.<br/><br/>',
 	'tog-enablerichtext' => 'Enable Rich Text Editing',
 	'tog-hidepersonalachievements' => "Hide my achievements on my user page when I visit it and don't notify me of earned badges",
-	'tog-marketingallowed' => 'Send me information about Wikia news and events ',
+	'tog-marketingallowed' => 'Send me information about Fandom news and events ',
 );
 
 $messages['pt-br'] = array(
@@ -33463,7 +33463,7 @@ $messages['ru'] = array(
 	'tog-showAds' => '<b>Show all advertisements</b><br/>Select this option to see pages as logged-out users see them.<br/><br/>',
 	'tog-enablerichtext' => 'Enable Rich Text Editing',
 	'tog-hidepersonalachievements' => "Hide my achievements on my user page when I visit it and don't notify me of earned badges",
-	'tog-marketingallowed' => 'Send me information about Wikia news and events ',
+	'tog-marketingallowed' => 'Send me information about Fandom news and events ',
 );
 
 $messages['rue'] = array(
@@ -44236,7 +44236,7 @@ $messages['zh-hans'] = array(
 	'tog-showAds' => '<b>Show all advertisements</b><br/>Select this option to see pages as logged-out users see them.<br/><br/>',
 	'tog-enablerichtext' => 'Enable Rich Text Editing',
 	'tog-hidepersonalachievements' => "Hide my achievements on my user page when I visit it and don't notify me of earned badges",
-	'tog-marketingallowed' => 'Send me information about Wikia news and events ',
+	'tog-marketingallowed' => 'Send me information about Fandom news and events ',
 );
 
 $messages['zh-hant'] = array(
@@ -44457,7 +44457,7 @@ $messages['zh-hant'] = array(
 	'tog-showAds' => '<b>Show all advertisements</b><br/>Select this option to see pages as logged-out users see them.<br/><br/>',
 	'tog-enablerichtext' => 'Enable Rich Text Editing',
 	'tog-hidepersonalachievements' => "Hide my achievements on my user page when I visit it and don't notify me of earned badges",
-	'tog-marketingallowed' => 'Send me information about Wikia news and events ',
+	'tog-marketingallowed' => 'Send me information about Fandom news and events ',
 );
 
 $messages['zh-hk'] = array(

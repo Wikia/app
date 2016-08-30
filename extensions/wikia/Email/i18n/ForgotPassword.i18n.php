@@ -2,12 +2,12 @@
 $messages = array();
 
 $messages['en'] = array(
-	'emailext-password-subject' => 'Reset your Wikia password',
+	'emailext-password-subject' => 'Reset your Fandom password',
 	'emailext-password-summary' => 'It looks like you’re having trouble logging in. Sorry about that! As much as we’d like to just send you your password, for security reasons, we’ll need you to login with a temporary password.',
 	'emailext-password-intro' => 'Please see your temporary password below:',
-	'emailext-password-unrequested' => "If you didn't request a new password, don't worry! Your account is safe and secure. You can ignore this email and log in to Wikia with your old password.",
+	'emailext-password-unrequested' => "If you didn't request a new password, don't worry! Your account is safe and secure. You can ignore this email and log in to Fandom with your old password.",
 	'emailext-password-questions' => 'Questions or concerns? Feel free to [http://community.wikia.com/wiki/Special:Contact/account-issue contact us].',
-	'emailext-password-signature' => 'The Wikia Community Team',
+	'emailext-password-signature' => 'The Fandom Community Team',
 );
 
 $messages['qqq'] = array(
@@ -65,12 +65,12 @@ $messages['ja'] = array(
 );
 
 $messages['nl'] = array(
-	'emailext-password-subject' => 'Reset your Wikia password',
+	'emailext-password-subject' => 'Reset your Fandom password',
 	'emailext-password-summary' => 'It looks like you’re having trouble logging in. Sorry about that! As much as we’d like to just send you your password, for security reasons, we’ll need you to login with a temporary password.',
 	'emailext-password-intro' => 'Please see your temporary password below:',
-	'emailext-password-unrequested' => "If you didn't request a new password, don't worry! Your account is safe and secure. You can ignore this email and log in to Wikia with your old password.",
+	'emailext-password-unrequested' => "If you didn't request a new password, don't worry! Your account is safe and secure. You can ignore this email and log in to Fandom with your old password.",
 	'emailext-password-questions' => 'Questions or concerns? Feel free to [http://community.wikia.com/wiki/Special:Contact/account-issue contact us].',
-	'emailext-password-signature' => 'The Wikia Community Team',
+	'emailext-password-signature' => 'The Fandom Community Team',
 );
 
 $messages['pl'] = array(
@@ -79,7 +79,7 @@ $messages['pl'] = array(
 	'emailext-password-intro' => 'Poniżej znajduje się twoje tymczasowe hasło:',
 	'emailext-password-unrequested' => 'Jeśli nie prosiłeś o przesłanie nowego hasła, nie przejmuj się! Twoje konto jest bezpieczne. Zignoruj ten e-mail i loguj się do portalu Wikia używajc starego hasła.',
 	'emailext-password-questions' => 'Masz pytania lub wątpliwości? Skontaktuj się z [http://spolecznosc.wikia.com/wiki/Specjalna:Kontakt/account-issue  Nami].',
-	'emailext-password-signature' => 'The Wikia Community Team',
+	'emailext-password-signature' => 'The Fandom Community Team',
 );
 
 $messages['pt'] = array(

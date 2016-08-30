@@ -111,7 +111,7 @@ Try [[Special:Search|searching on the wiki]] for relevant new pages.',
 	'hub-Video_Games' => 'Video Games',
 	'hub-Videospiele' => 'Videospiele',
 	'hub-Lifestyle' => 'Lifestyle',
-	'hub-Wikia' => 'Wikia',
+	'hub-Fandom' => 'Fandom',
 	'hub-Food_and_Drink' => 'Food and Drink',
 );
 
@@ -5239,7 +5239,7 @@ $messages['ja'] = array(
 	'hub-Gaming' => 'ゲーム',
 	'hub-Video_Games' => 'ゲーム',
 	'hub-Lifestyle' => 'ライフスタイル',
-	'hub-Wikia' => 'Wikia',
+	'hub-Fandom' => 'Fandom',
 );
 
 $messages['jam'] = array(
@@ -8764,7 +8764,7 @@ Spróbuj [[Special:Search|poszukać]] tej strony.',
 	'hub-Gaming' => 'Gry wideo',
 	'hub-Video_Games' => 'Gry wideo',
 	'hub-Lifestyle' => 'Lifestyle',
-	'hub-Wikia' => 'Wikia',
+	'hub-Fandom' => 'Fandom',
 );
 
 $messages['pms'] = array(

@@ -302,7 +302,7 @@ Please confirm that you really want to recreate this page.",
 	'corporatepage-footer-middlecolumn' => '* http://www.facebook.com/pages/Wikia/5678222299|Become a Facebook fan|File:Icon.footer.facebook.32x32.png|new-window
 * http://twitter.com/wikia|Follow us on Twitter|File:Icon.footer.twitter.32x32.png|new-window
 * http://community.wikia.com/wiki/Blog:Wikia_Staff_Blog|Read our blog|File:Icon.footer.wikia.32x32.png',
-	'corporatepage-footer-rightcolumn' => '* About_Us|About Wikia
+	'corporatepage-footer-rightcolumn' => '* About_Us|About Fandom
 * Hiring|Jobs
 * Special:Contact|Contact
 * Advertising|Advertising
@@ -325,30 +325,30 @@ Please confirm that you really want to recreate this page.",
 	'corporatepage-rights' => '&copy; $1 Wikia, Inc. All rights reserved',
 	'corporatepage-more-link' => 'More Links',
 	'corporatepage-in-the-know' => 'In the Know',
-	'corporatepage-wikia-international' => 'Wikia International',
+	'corporatepage-wikia-international' => 'Fandom International',
 	'corporatepage-find-a-wiki' => 'Find a Wiki',
 	'corporatepage-from' => 'from',
 	'corporatepage-hide' => 'Hide Page',
 	'corporatepage-wikia-editors' => 'editors',
-	'corporatepage-wikia-hot-spots' => 'Wikia Hot Spots',
+	'corporatepage-wikia-hot-spots' => 'Fandom Hot Spots',
 	'corporatepage-update-fqr' => 'updated hourly',
 	'corporatepage-wikia-hot-spots-desc' => 'These are the hottest pages this week, ranked by most editors.',
 	'corporatepage-go-to-wiki' => 'Go to $1',
 	'corporatepage-wikia-whats-up' => "<hgroup><h1>Community Buzz</h1>
-<h2>Check out these buzzworthy Wikia communities</h2></hgroup>
-<p>Visit the<a href='http://trueblood.wikia.com/wiki/True_Blood_Wiki'>True Blood Wiki</a> and share your thoughts on<a href='http://trueblood.wikia.com/wiki/Season_3'> Season 3</a> </p>
-<p>Stop by the <a href='http://naughtybear.wikia.com/wiki/Naughty_Bear_Wiki'>Naughty Bear Wiki</a> and watch some videos that showcase a few of the misdeeds from <a href='http://naughtybear.wikia.com/wiki/The_Book_of_Naughty'>The Book of Naughty</a>.</p>
+<h2>Check out these buzzworthy Fandom communities</h2></hgroup>
+<p>Visit the<a href='http://marvel.wikia.com/wiki/Marvel_Database'>The Marvel Database</a> and share your thoughts on<a href='http://marvel.wikia.com/wiki/Infinity_Gauntlet_(Item)'>The Infinity_Gauntlet</a> </p>
+<p>Stop by<a href='http://starwars.wikia.com/wiki/Main_Page'>Wookieepedia</a>to stay up to date on<a href='http://starwars.wikia.com/wiki/Star_Wars:_Episode_VIII'>Episode VIII</a>.</p>
 <p>Eat your way to a summer beach body! Visit <a href='http://healthyrecipes.wikia.com'> Healthy Recipes Wiki </a> for nutritious food ideas!</p>",
-	'corporatepage-global-nav-headline' => 'Wikia Global Navigation',
+	'corporatepage-global-nav-headline' => 'Fandom Global Navigation',
 	'corporatepage-watchlist' => 'Watchlist',
-	'corporatepage-homepage-feature-headline' => 'Featured at Wikia',
-	'corporatepage-homepageintro' => '<div><h1>Welcome to Wikia</h1>
-<h2>Collaborate with people who love what you love.</h2></div>
+	'corporatepage-homepage-feature-headline' => 'Featured at Fandom',
+	'corporatepage-homepageintro' => '<div><h1>Welcome to Fandom</h1>
+<h2>Collaborate with fans just like you.</h2></div>
 <h2>Get started today!</h2>',
 	'corporatepage-search-title' => 'Enter search terms to search for wikis.',
 	'corporatepage-featured-wikis-headline' => 'Featured Wikis',
-	'corporatepage-wikia-overview-headline' => 'Wikia Overview',
-	'corporatepage-wikia-wide-stats-headline' => 'Wikia Wide Statistics',
+	'corporatepage-wikia-overview-headline' => 'Fandom Overview',
+	'corporatepage-wikia-wide-stats-headline' => 'Fandom Wide Statistics',
 	'corporatepage-company-info-headline' => 'Company Information',
 	'corporatepage-pages-added' => 'pages created in the last hour',
 	'corporatepage-edits-made' => 'edits made today',
@@ -363,7 +363,7 @@ Please confirm that you really want to recreate this page.",
 	'createwikinamevstitle' => 'The name for the wiki differs from the title of the wiki in that the name is what will be used to determine the default url.  For instance, a name of "starwars" would be accessible as http://starwars.wikia.com/. The title of the wiki may contain spaces, the name should only contain letters and numbers.',
 	'createwikidesc' => 'Description of the wiki',
 	'createwikiaddtnl' => 'Additional Information',
-	'createwikimailsub' => 'Request for a new Wikia',
+	'createwikimailsub' => 'Request for a new community',
 	'createwikisubmitcomplete' => 'Your submission is complete.  If you gave an email address, you will be contacted regarding the new Wiki.  Thank you for using {{SITENAME}}.',
 	'createwikilang' => 'Default language for this wiki',
 	'create_an_account' => 'Create an account',
@@ -372,7 +372,7 @@ Please confirm that you really want to recreate this page.",
 	'community' => 'Community',
 	'contris_s' => 'Contributions',
 	'cockpit_hide' => 'Hide cockpit',
-	'create-account-new' => 'Create your Wikia Account',
+	'create-account-new' => 'Create your Fandom Account',
 );
 
 $messages['qqq'] = array(
