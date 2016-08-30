@@ -42,7 +42,7 @@ $messages['en'] = [
 	'content-review-status-escalated' => 'Escalated',
 	'content-review-rejection-explanation-title' => 'Submitted script change $1 rejected',
 	'content-review-rejection-explanation' => '==$1==
-The recently submitted change to this JavaScript page (revision [$2 $3]) was rejected by the Wikia review process. Please make sure you meet the [[Help:JavaScript review process|Custom JavaScript guidelines]]. --~~~~',
+The recently submitted change to this JavaScript page (revision [$2 $3]) was rejected by the Fandom review process. Please make sure you meet the [[Help:JavaScript review process|Custom JavaScript guidelines]]. --~~~~',
 	'content-review-status-link-text' => 'Review status',
 	'content-review-special-js-pages-title' => 'JavaScript pages',
 	'content-review-special-js-description' => 'This page lists the current [[Help:JavaScript review process|review status]] of MediaWiki namespace scripts on this community.',

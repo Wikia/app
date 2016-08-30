@@ -2,7 +2,7 @@
 $messages = array();
 
 $messages['en'] = array(
-	'authmodal-registration-success' => 'Welcome, $1! Your Wikia account has been successfully created.',
+	'authmodal-registration-success' => 'Welcome, $1! Your Fandom account has been successfully created.',
 );
 
 $messages['qqq'] = array(

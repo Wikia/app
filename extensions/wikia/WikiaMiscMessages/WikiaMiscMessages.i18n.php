@@ -4,11 +4,11 @@ $messages = array();
 
 $messages['en'] = array(
 	'autocreatewiki-welcomebody-HTML' => '<p>Hello $2,<br /><br />
-The Wikia you created is now available at <a href="$1">$1</a>.  We hope to see you editing there soon!<br /><br />
-We have added some information and tips on your <a href="$5">user talk Page</a> to help you get started. If you have any questions, just reply to this e-mail or browse our help pages at <a href="http://help.wikia.com/">Wikia Help</a>.<br /><br />
+The wiki you created is now available at <a href="$1">$1</a>.  We hope to see you editing there soon!<br /><br />
+We have added some information and tips on your <a href="$5">user talk Page</a> to help you get started. If you have any questions, just reply to this e-mail or browse our help pages at <a href="http://help.wikia.com/">Fandom Help</a>.<br /><br />
 Good luck with the project,<br /><br />
 <a href="http://community.wikia.com/wiki/User:$4">$3</a><br />
-Wikia Community Team<br /></p>',
+Fandom Community Team<br /></p>',
 	'confirmemail_body-HTML' => '<p>Hello $2,<br /><br />
 Thank you for registering with Wikia.<br /><br />
 Please activate your new account by <a href="$3">confirming your e-mail address here</a>.<br /><br /><br />
@@ -78,7 +78,7 @@ For a list of recent problem reports, see <a href="{{fullurl:{{ns:special}}:Prob
 Please visit and edit often...<br /><br />
 {{SITENAME}}<br /><hr />
 <ul>
-<li>Check out our featured wikis! <a href="http://www.wikia.com">Visit Them Here!</a></li>
+<li>Check out the latest Fandom articles! <a href="http://fandom.wikia.com/">View Them Here!</a></li>
 <li>Want to control which e-mails you receive? Go to: <a href="{{fullurl:{{ns:special}}:Preferences}}">User Preferences</a></li>
 </ul></p>',
 	'enotif_body_prl_rep-HTML' => '<p>Dear $WATCHINGUSERNAME,<br /><br />
@@ -88,7 +88,7 @@ For a list of recent problem reports, see <a href="{{fullurl:{{ns:special}}:Prob
 Please visit and edit often...<br /><br />
 {{SITENAME}}<br /><hr />
 <ul>
-<li>Check out our featured wikis! <a href="http://www.wikia.com">Visit Them Here!</a></li>
+<li>Check out the latest Fandom articles! <a href="http://fandom.wikia.com/">View Them Here!</a></li>
 <li>Want to control which e-mails you receive? Go to: <a href="{{fullurl:{{ns:special}}:Preferences}}">User Preferences</a></li>
 </ul></p>',
 	'enotif_body_protect-HTML' => '<p>Dear $WATCHINGUSERNAME,<br /><br />

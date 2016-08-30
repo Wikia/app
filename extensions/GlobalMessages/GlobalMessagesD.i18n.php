@@ -108,7 +108,7 @@ This site is experiencing technical difficulties.',
 	'deletedarticle' => 'deleted "[[$1]]"',
 	'defaultskin1' => 'The admins for this wiki have chosen: <b>$1</b> as the default skin.',
 	'defaultskin2' => 'The admins for this wiki have chosen: <b>$1</b> as the default skin. Click <a href="$2">here</a> to see the code.',
-	'defaultskin3' => 'The admins for this wiki have not chosen a default skin. Using the Wikia default: <b>$1</b>.',
+	'defaultskin3' => 'The admins for this wiki have not chosen a default skin. Using the Fandom default: <b>$1</b>.',
 	'defaultskin_choose' => 'Set the default theme for this wiki: ',
 	'discuss' => 'Discuss this page',
 );
@@ -7802,7 +7802,7 @@ Basis data ngasilaké kasalahan "$3: $4".',
 Kaca-kaca iku sajatiné kuduné nyambung menyang topik-topik sing bener.<br />
 Sawijining kaca dianggep minangka kaca disambiguasi yèn kaca iku nganggo cithakan sing nyambung menyang [[MediaWiki:Disambiguationspage]].",
 	'doubleredirects' => 'Pangalihan dobel',
-	'doubleredirectstext' => 'Kaca iki ngandhut daftar kaca sing ngalih ing kaca pangalihan liyané. 
+	'doubleredirectstext' => 'Kaca iki ngandhut daftar kaca sing ngalih ing kaca pangalihan liyané.
 Saben baris ngandhut pranala menyang pangalihan kapisan lan kapindho, sarta tujuan saka pangalihan kapindho, sing biasané kaca tujuan sing "sajatiné", yakuwi pangalihan kapisan kuduné dialihaké menyang kaca tujuan iku.
 Jeneng sing wis <s>dicorèk</s> tegesé wis rampung didandani.',
 	'double-redirect-fixed-move' => '[[$1]] wis kapindhahaké, saiki dadi kaca peralihan menyang [[$2]]',
@@ -10882,7 +10882,7 @@ $messages['ml'] = array(
 	'descending_abbrev' => 'അവരോഹണം',
 	'duplicate-defaultsort' => '\'\'\'മുന്നറിയിപ്പ്:\'\'\' ക്രമപ്പെടുത്താനുള്ള ചാവിയായ "$2" മുമ്പ് ക്രമപ്പെടുത്താനുള്ള ചാവിയായിരുന്ന "$1" എന്നതിനെ അതിലംഘിക്കുന്നു.',
 	'dberr-header' => 'ഈ വിക്കിയിൽ പ്രശ്നമുണ്ട്',
-	'dberr-problems' => 'ക്ഷമിക്കണം! 
+	'dberr-problems' => 'ക്ഷമിക്കണം!
 ഈ സൈറ്റിൽ സാങ്കേതിക തകരാറുകൾ അനുഭവപ്പെടുന്നുണ്ട്.',
 	'dberr-again' => 'കുറച്ച് മിനിട്ടുകൾ കാത്തിരുന്ന് വീണ്ടും തുറക്കുവാൻ ശ്രമിക്കുക.',
 	'dberr-info' => '(വിവരശേഖര സെർവറുമായി ബന്ധപ്പെടാൻ പറ്റിയില്ല: $1)',
