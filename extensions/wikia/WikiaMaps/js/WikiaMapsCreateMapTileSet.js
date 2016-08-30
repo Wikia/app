@@ -16,15 +16,7 @@ define(
 			tileSetThumbTemplate,
 			// template data
 			templateData = {
-				chooseTypeTip: $.msg('wikia-interactive-maps-create-map-choose-type-tip'),
-				chooseTypeTipLink: $.msg('wikia-interactive-maps-create-map-choose-type-tip-link'),
 				mapType: [
-					{
-						type: 'geo',
-						name: $.msg('wikia-interactive-maps-create-map-choose-type-geo'),
-						event: 'selectTileSet',
-						image: ''
-					},
 					{
 						type: 'custom',
 						name: $.msg('wikia-interactive-maps-create-map-choose-type-custom'),
@@ -41,7 +33,7 @@ define(
 			//modal events
 			events = {
 				chooseTileSet: [
-					chooseTileSet
+					renderChooseTileSet
 				],
 				browseTileSets: [
 					function () {
@@ -65,15 +57,9 @@ define(
 			},
 			// steps for choose tile set
 			steps = {
-				selectType: {
-					id: '#intMapChooseType',
-					buttons: {}
-				},
 				browseTileSet: {
 					id: '#intMapBrowse',
-					buttons: {
-						'#intMapBack': 'previousStep'
-					},
+					buttons: {},
 					helper: loadDefaultTileSets
 				}
 			},
@@ -103,7 +89,7 @@ define(
 			utils.bindEvents(modal, events);
 
 			// set base step
-			addToStack('selectType');
+			addToStack('browseTileSet');
 
 			// TODO: figure out where is better place to place it and move it there
 			modal.$element
@@ -128,21 +114,6 @@ define(
 			$searchInput = $('#intMapTileSetSearch');
 
 			showStep(stepsStack.pop());
-		}
-
-		/**
-		 * @desc entry point for choose tile set steps
-		 */
-		function chooseTileSet() {
-			$.nirvana.getJson(
-				'WikiaMapsSpecial',
-				'getRealMapImageUrl',
-				function (data) {
-					templateData.mapType[0].image = data.url;
-					renderChooseTileSet();
-				},
-				renderChooseTileSet
-			);
 		}
 
 		/**
@@ -195,13 +166,9 @@ define(
 		 * @param {Event} event
 		 */
 		function selectTileSet(event) {
-			var $target = $(event.currentTarget),
-				mapTypeChosen = $target.data('type');
-
-			utils.track(utils.trackerActions.CLICK_LINK_IMAGE, mapTypeChosen + '-map-chosen');
+			var $target = $(event.currentTarget);
 
 			modal.trigger('previewTileSet', {
-				type: mapTypeChosen,
 				tileSetId: $target.data('id'),
 				originalImageURL: $target.data('image')
 			});
