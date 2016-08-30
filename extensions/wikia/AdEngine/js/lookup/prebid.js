@@ -16,7 +16,7 @@ define('ext.wikia.adEngine.lookup.prebid', [
 		bidderKey = 'hb_bidder',
 		bidKey = 'hb_pb',
 		sizeKey = 'hb_size',
-		url = adContext.getContext().opts.prebidBidderUrl || '//acdn.adnxs.com/prebid/prebid.js';
+		url;
 
 	function addAdUnits(adapterAdUnits) {
 		adapterAdUnits.forEach(function (adUnit) {
@@ -44,7 +44,7 @@ define('ext.wikia.adEngine.lookup.prebid', [
 
 			prebid.async = true;
 			prebid.type = 'text/javascript';
-			prebid.src = url;
+			prebid.src = adContext.getContext().opts.prebidBidderUrl || '//acdn.adnxs.com/prebid/prebid.js';
 
 			node.parentNode.insertBefore(prebid, node);
 
