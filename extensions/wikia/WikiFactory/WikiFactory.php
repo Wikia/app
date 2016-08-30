@@ -1246,6 +1246,7 @@ class WikiFactory {
 
 		$server = str_replace( '.' . $devbox . '.wikia-dev.com', '', $server );
 		$server = str_replace( static::WIKIA_TOP_DOMAIN, '', $server );
+		$server = str_replace( '.' . $wgWikiaBaseDomain, '', $server ); // PLATFORM-2400: make WF redirects work on staging
 
 		// determine the environment we want to get url for
 		$environment = (
