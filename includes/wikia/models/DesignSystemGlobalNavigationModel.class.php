@@ -111,12 +111,14 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 				'module' => [
 					'type' => 'search',
 					'results' => [
+						'type' => 'parametrized_url',
 						'url' => 'http://starwars.wikia.com/wiki/Special:Search?fulltext=Search',
-						'param' => 'query'
+						'param-name' => 'query'
 					],
 					'suggestions' => [
+						'type' => 'parametrized_url',
 						'url' => 'http://starwars.wikia.com/index.php?action=ajax&rs=getLinkSuggest&format=json',
-						'param' => 'query'
+						'param-name' => 'query'
 					],
 					'placeholder-inactive' => [
 						'type' => 'translatable-text',
@@ -140,18 +142,18 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 			]
 		];
 
-		if ($wgUser->isLoggedIn()) {
-			$data['user'] = $this->getLoggedInUserData( $wgUser->getId() );
-			$data['notifications'] = $this->getNotifications( $wgUser->getId() );
+		if ( $wgUser->isLoggedIn() ) {
+			$data[ 'user' ] = $this->getLoggedInUserData( $wgUser );
+			$data[ 'notifications' ] = $this->getNotifications( $wgUser );
 		} else {
-			$data['anon'] = $this->getAnonUserData();
+			$data[ 'anon' ] = $this->getAnonUserData();
 		}
 
 		return $data;
 	}
 
 	private function getHref( $hrefKey ) {
-		return $this->hrefs[$this->lang][$hrefKey] ?? $this->hrefs['default'][$hrefKey];
+		return $this->hrefs[ $this->lang ][ $hrefKey ] ?? $this->hrefs[ 'default' ][ $hrefKey ];
 	}
 
 	private function getAnonUserData() {
@@ -167,7 +169,7 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 			],
 			'links' => [
 				[
-					'type' => 'authentication-link',
+					'type' => 'link-authentication',
 					'title' => [
 						'type' => 'translatable-text',
 						'key' => 'global-navigation-userinfo-signin-title',
@@ -176,7 +178,7 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 					'param-name' => 'redirect',
 				],
 				[
-					'type' => 'authentication-link',
+					'type' => 'link-authentication',
 					'title' => [
 						'type' => 'translatable-text',
 						'key' => 'global-navigation-userinfo-register-title',
@@ -192,8 +194,9 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 		];
 	}
 
-	private function getLoggedInUserData( $userId ) {
-		$user = User::newFromId( $userId );
+	private function getLoggedInUserData( $user ) {
+		global $wgEnableWallExt;
+
 		$userName = $user->getName();
 
 		return [
@@ -216,7 +219,9 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 				],
 				[
 					'type' => 'link-text',
-					'href' => $this->getPageUrl( $userName, NS_USER_TALK ),
+					'href' => $wgEnableWallExt
+						? $this->getPageUrl( $userName, NS_USER_WALL )
+						: $this->getPageUrl( $userName, NS_USER_TALK ),
 					'title' => [
 						'type' => 'translatable-text',
 						'key' => 'global-navigation-userinfo-talk'
@@ -239,7 +244,7 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 					]
 				],
 				[
-					'type' => 'authentication-link',
+					'type' => 'link-authentication',
 					'href' => $this->getPageUrl( 'UserLogout', NS_SPECIAL ),
 					'title' => [
 						'type' => 'translatable-text',
@@ -251,14 +256,17 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 		];
 	}
 
-	private function getNotifications( $userId ) {
-		$user = User::newFromId( $userId );
+	private function getNotifications( $user ) {
+		global $wgEnableWallExt;
+
 		$userName = $user->getName();
 
 		return [
 			'module' => [
 				'type' => 'notifications',
-				'url' => $this->getPageUrl( $userName, NS_USER_TALK ),
+				'url' => $wgEnableWallExt
+					? $this->getPageUrl( $userName, NS_USER_WALL )
+					: $this->getPageUrl( $userName, NS_USER_TALK ),
 				'header' => [
 					'type' => 'line-image',
 					'image' => 'wsd-icons-bell',
