@@ -11,9 +11,11 @@ class CrosslinkModuleHooks {
 	 * @return bool
 	 */
 	public static function onGetRailModuleList( &$modules ) {
-		if ( (new CrosslinkModuleHelper())->canShowModule() ) {
+		if ( ( new CrosslinkModuleHelper() )->canShowModule() ) {
 			$modules[1445] = $modules[1440];
 			$modules[1440] = [ 'CrosslinkModule', 'index', null ];
+
+			// remove Recent Wiki Activity module
 			unset( $modules[1250] );
 		}
 

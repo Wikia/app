@@ -31,7 +31,7 @@ class CrosslinkModuleHelper extends WikiaModel {
 	protected function getValidPages() {
 		$cacheKey = wfMemcKey( 'crosslink_module', 'valid_pages' );
 		$db = wfGetDB( DB_SLAVE, [], 'specials' );
-		$pages = (new WikiaSQL())->cache( static::CACHE_TTL, $cacheKey, true )
+		$pages = ( new WikiaSQL() )->cache( static::CACHE_TTL, $cacheKey, true )
 			->SELECT( 'source_page' )
 			->DISTINCT( 'source_page' )
 			->FROM( 'crosslink' )
@@ -51,26 +51,25 @@ class CrosslinkModuleHelper extends WikiaModel {
 	public function getArticles( $pageId ) {
 		$cacheKey = wfMemcKey( 'crosslink_module', $pageId );
 		$db = wfGetDB( DB_SLAVE, [], 'specials' );
-		$query = (new WikiaSQL())->cache( static::CACHE_TTL, $cacheKey, true )
+		$articles = ( new WikiaSQL() )->cache( static::CACHE_TTL, $cacheKey, true )
 			->SELECT( '*' )
 			->FROM( 'crosslink' )
 			->WHERE( 'source_wiki' )->EQUAL_TO( $this->wg->CityId )
-			->AND_( 'source_page')->EQUAL_TO( $pageId );
-
-		$articles = $query->runLoop( $db, function( &$articles, $row ) {
-			$wiki = WikiFactory::getWikiByID( $row->target_wiki );
-			if ( !empty( $wiki ) ) {
-				$title = GlobalTitle::newFromId( $row->target_page, $row->target_wiki );
-				if ( $title instanceof Title && !empty( $title->exists() ) ) {
-					$articles[] = [
-						'wikiId' => $row->target_wiki,
-						'wikiTitle' => trim( $wiki->city_title ),
-						'pageTitle' => $title->getText(),
-						'pageUrl' => $title->getFullURL()
-					];
+			->AND_( 'source_page')->EQUAL_TO( $pageId )
+			->runLoop( $db, function( &$articles, $row ) {
+				$wiki = WikiFactory::getWikiByID( $row->target_wiki );
+				if ( !empty( $wiki ) ) {
+					$title = GlobalTitle::newFromId( $row->target_page, $row->target_wiki );
+					if ( $title instanceof Title && !empty( $title->exists() ) ) {
+						$articles[] = [
+							'wikiId' => $row->target_wiki,
+							'wikiTitle' => trim( $wiki->city_title ),
+							'pageTitle' => $title->getText(),
+							'pageUrl' => $title->getFullURL()
+						];
+					}
 				}
-			}
-		});
+			});
 
 		return empty( $articles ) ? [] : $articles;
 	}

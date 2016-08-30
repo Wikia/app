@@ -2,8 +2,6 @@
 
 class CrosslinkModuleController extends WikiaController {
 
-	const DEFAULT_TEMPLATE_ENGINE = WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
-
 	/**
 	 * Crosslink Module
 	 * @responseParam string title - title of the module
@@ -17,7 +15,10 @@ class CrosslinkModuleController extends WikiaController {
 		}
 
 		$articles = $helper->getArticles( $this->wg->Title->getArticleID() );
+
 		$this->response->addAsset( 'crosslink_module_scss' );
+		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
+
 		$this->title = wfMessage( 'crosslink-module-title' )->escaped();
 		$this->articles = $articles;
 	}
