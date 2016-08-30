@@ -15,8 +15,7 @@ define('ext.wikia.adEngine.lookup.prebid', [
 		priceMap = {},
 		bidderKey = 'hb_bidder',
 		bidKey = 'hb_pb',
-		sizeKey = 'hb_size',
-		url;
+		sizeKey = 'hb_size';
 
 	function addAdUnits(adapterAdUnits) {
 		adapterAdUnits.forEach(function (adUnit) {
