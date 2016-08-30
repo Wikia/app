@@ -11,9 +11,10 @@ class CrosslinkModuleHooks {
 	 * @return bool
 	 */
 	public static function onGetRailModuleList( &$modules ) {
-		$helper = new CrosslinkModuleHelper();
-		if ( $helper->canShowModule() ) {
-			$modules[1250] = [ 'CrosslinkModule', 'index', null ];
+		if ( (new CrosslinkModuleHelper())->canShowModule() ) {
+			$modules[1445] = $modules[1440];
+			$modules[1440] = [ 'CrosslinkModule', 'index', null ];
+			unset( $modules[1250] );
 		}
 
 		return true;

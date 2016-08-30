@@ -31,7 +31,7 @@ class CrosslinkModuleHelper extends WikiaModel {
 	protected function getValidPages() {
 		$cacheKey = wfMemcKey( 'crosslink_module', 'valid_pages' );
 		$db = wfGetDB( DB_SLAVE, [], 'specials' );
-		$pages = (new WikiaSQL())->cache( self::CACHE_TTL, $cacheKey, true )
+		$pages = (new WikiaSQL())->cache( static::CACHE_TTL, $cacheKey, true )
 			->SELECT( 'source_page' )
 			->DISTINCT( 'source_page' )
 			->FROM( 'crosslink' )
@@ -51,7 +51,7 @@ class CrosslinkModuleHelper extends WikiaModel {
 	public function getArticles( $pageId ) {
 		$cacheKey = wfMemcKey( 'crosslink_module', $pageId );
 		$db = wfGetDB( DB_SLAVE, [], 'specials' );
-		$query = (new WikiaSQL())->cache( self::CACHE_TTL, $cacheKey, true )
+		$query = (new WikiaSQL())->cache( static::CACHE_TTL, $cacheKey, true )
 			->SELECT( '*' )
 			->FROM( 'crosslink' )
 			->WHERE( 'source_wiki' )->EQUAL_TO( $this->wg->CityId )

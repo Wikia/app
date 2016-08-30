@@ -10,7 +10,7 @@ class CrosslinkModuleController extends WikiaController {
 	 * @responseParam array articles - list of articles
 	 */
 	public function index() {
-		$helper = new SeoCrossLinkHelper();
+		$helper = new CrosslinkModuleHelper();
 		if ( !$helper->canShowModule() ) {
 			$this->articles = [];
 			return true;
