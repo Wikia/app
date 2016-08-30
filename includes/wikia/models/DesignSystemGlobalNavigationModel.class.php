@@ -74,7 +74,7 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 			],
 			'wikis' => [
 				'header' => [
-					'type' => 'link-branded',
+					'type' => 'line-text',
 					'title' => [
 						'type' => 'translatable-text',
 						'key' => 'global-navigation-wikis',
@@ -256,13 +256,16 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 		$userName = $user->getName();
 
 		return [
-			'url' => $this->getPageUrl( $userName, NS_USER_TALK ),
-			'header' => [
-				'type' => 'line-image',
-				'image' => 'wsd-icons-bell',
-				'title' => [
-					'type' => 'translatable-text',
-					'key' => 'global-navigation-notifications'
+			'module' => [
+				'type' => 'notifications',
+				'url' => $this->getPageUrl( $userName, NS_USER_TALK ),
+				'header' => [
+					'type' => 'line-image',
+					'image' => 'wsd-icons-bell',
+					'title' => [
+						'type' => 'translatable-text',
+						'key' => 'global-navigation-notifications'
+					]
 				]
 			]
 		];
