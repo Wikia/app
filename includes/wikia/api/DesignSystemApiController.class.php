@@ -104,7 +104,7 @@ class DesignSystemApiController extends WikiaApiController {
 			],
 			"links" => [
 				[
-					"type" => "authentication",
+					"type" => "authentication-link",
 					"title" => [
 						"type" => "translatable-text",
 						"key" => "global-navigation-userinfo-signin-title",
@@ -113,7 +113,7 @@ class DesignSystemApiController extends WikiaApiController {
 					"param-name" => "redirect",
 				],
 				[
-					"type" => "authentication",
+					"type" => "authentication-link",
 					"title" => [
 						"type" => "translatable-text",
 						"key" => "global-navigation-userinfo-register-title",
@@ -170,12 +170,13 @@ class DesignSystemApiController extends WikiaApiController {
 					],
 				],
 				[
-					"type" => "link-text",
-					"href" => "#",
+					"type" => "authentication-link",
+					"href" => "http://starwars.wikia.com/wiki/Special:UserLogout",
 					"title" => [
 						"type" => "translatable-text",
 						"key" => "global-navigation-userinfo-signout",
 					],
+					"param-name" => "returnto"
 				],
 			],
 		],
