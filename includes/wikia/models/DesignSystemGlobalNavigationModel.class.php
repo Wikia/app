@@ -5,7 +5,13 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 
 	private $hrefs = [
 		'default' => [
-			'brand-logo' => '#'
+			'fandom-logo' => 'http://fandom.wikia.com',
+			'games' => 'http://fandom.wikia.com/games',
+			'movies' => 'http://fandom.wikia.com/movies',
+			'tv' => 'http://fandom.wikia.com/tv',
+			'explore-wikis' => 'http://fandom.wikia.com/explore',
+			'community-central' => 'http://community.wikia.com/wiki/Community_Central',
+			'fandom-university' => 'http://community.wikia.com/wiki/Wikia_University',
 		],
 		'en' => [ ]
 	];
@@ -24,111 +30,127 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 		global $wgUser;
 
 		$data = [
-			'brand_logo' => [
-				'type' => 'link-image',
-				'href' => $this->getHref( 'brand-logo' ),
-				'image' => 'company-fandom',
-				'title' => [
-					'type' => 'text',
-					'value' => 'some_alt_text_here',
+			'fandom_logo' => [
+				'header' => [
+					'type' => 'link-image',
+					'href' => $this->getHref( 'fandom-logo' ),
+					'image' => 'wds/full_fandom_logo',
+					'title' => [
+						'type' => 'text',
+						'value' => 'Fandom'
+					]
 				]
 			],
-			'brand_links' => [
-				[
-					'type' => 'link-branded',
-					'brand' => 'tv',
-					'title' => [
-						'type' => 'translatable-text',
-						'key' => 'global-navigation-brandlink-vertical-tv'
-					],
-					'href' => 'http:\/\/tv.wikia.com'
-				],
-				[
-					'type' => 'link-branded',
-					'brand' => 'games',
-					'title' => [
-						'type' => 'translatable-text',
-						'key' => 'global-navigation-brandlink-vertical-games'
-					],
-					'href' => 'http:\/\/games.wikia.com'
-				],
-				[
-					'type' => 'link-branded',
-					'brand' => 'movies',
-					'title' => [
-						'type' => 'translatable-text',
-						'key' => 'global-navigation-brandlink-vertical-movies'
-					],
-					'href' => 'http:\/\/movies.wikia.com'
-				],
-				[
-					'type' => 'links-list',
-					'brand' => 'wikis',
-					'title' => [
-						'type' => 'translatable-text',
-						'key' => 'global-navigation-brandlink-vertical-wikis',
-					],
-					'links' => [
-						[
-							'type' => 'link-text',
-							'brand' => 'wikis',
-							'title' => [
-								'type' => 'translatable-text',
-								'key' => 'global-navigation-brandlink-vertical-explorewikis'
-							],
-							'href' => '#'
+			'verticals' => [
+				'links' => [
+					[
+						'type' => 'link-branded',
+						'brand' => 'tv',
+						'title' => [
+							'type' => 'translatable-text',
+							'key' => 'global-navigation-brandlink-vertical-tv'
 						],
-						[
-							'type' => 'link-text',
-							'brand' => 'communitycentral',
-							'title' => [
-								'type' => 'translatable-text',
-								'key' => 'global-navigation-brandlink-vertical-communitycentral'
-							],
-							'href' => '#'
-						]
+						'href' => $this->getHref( 'tv' ),
+					],
+					[
+						'type' => 'link-branded',
+						'brand' => 'games',
+						'title' => [
+							'type' => 'translatable-text',
+							'key' => 'global-navigation-brandlink-vertical-games'
+						],
+						'href' => $this->getHref( 'games' ),
+					],
+					[
+						'type' => 'link-branded',
+						'brand' => 'movies',
+						'title' => [
+							'type' => 'translatable-text',
+							'key' => 'global-navigation-brandlink-vertical-movies'
+						],
+						'href' => $this->getHref( 'movies' ),
 					]
 				]
 			],
-			'search' => [
-				[
-					'type' => 'search-endpoint',
-					'results' => [
-						'type' => 'parametrized-external-resource',
-						'param' => 'query',
-						'href' => 'http://wikia.com/search'
-					],
-					'suggestions' => [
-						'type' => 'parametrized-external-resource',
-						'param' => 'query',
-						'href' => 'http://wikia.com/search/suggestions'
-					],
-					'placeholder-inactive' => [
+			'wikis' => [
+				'header' => [
+					'type' => 'link-branded',
+					'brand' => 'wikis',
+					'href' => '#',
+					'title' => [
 						'type' => 'translatable-text',
-						'key' => 'global-navigation-search-placeholder-inactive'
-					],
-					'placeholder-active' => [
-						'type' => 'translatable-text',
-						'key' => 'global-navigation-search-placeholder-active'
+						'key' => 'global-navigation-wikis'
 					]
-				]
-			],
-			'user_info' => $wgUser->isLoggedIn() ? $this->getLoggedInUserData( $wgUser->getId() ) : $this->getAnonUserData(),
-			'create_wiki' => [
-				'type' => 'link-text',
-				'title' => [
-					'type' => 'translatable-text',
-					'key' => 'wikia-create-wiki-link-start-wikia'
 				],
-				'href' => '#'
+				'links' => [
+					[
+						'type' => 'link-text',
+						'title' => [
+							'type' => 'translatable-text',
+							'key' => 'global-navigation-brandlink-wikis-explore'
+						],
+						'href' => $this->getHref( 'explore-wikis' ),
+					],
+					[
+						'type' => 'link-text',
+						'title' => [
+							'type' => 'translatable-text',
+							'key' => 'global-navigation-wikis-communitycentral'
+						],
+						'href' => $this->getHref( 'community-central' ),
+					],
+					[
+						'type' => 'link-text',
+						'title' => [
+							'type' => 'translatable-text',
+							'key' => 'global-navigation-wikis-fandomuniversity'
+						],
+						'href' => $this->getHref( 'fandom-university' ),
+					]
+				]
+			],
+			'module' => [
+				'type' => 'search',
+				'results' => [
+					'url' => 'http://wikia.com/search',
+					'param' => 'query'
+				],
+				'suggestions' => [
+					'url' => 'http://wikia.com/search/suggestions',
+					'param' => 'query'
+				],
+				'placeholder-inactive' => [
+					'type' => 'translatable-text',
+					'key' => 'global-navigation-search-placeholder-inactive'
+				],
+				'placeholder-active' => [
+					'type' => 'translatable-text',
+					'key' => 'global-navigation-search-placeholder-active'
+				]
+			],
+			'create_wiki' => [
+				'header' => [
+					'type' => 'link-text',
+					'title' => [
+						'type' => 'translatable-text',
+						'key' => 'wikia-create-wiki-link-start-wikia'
+					],
+					'href' => $this->getPageUrl( 'CreateNewWiki', NS_SPECIAL ),
+				]
 			]
 		];
+
+		if ($wgUser->isLoggedIn()) {
+			$data['user'] = $this->getLoggedInUserData( $wgUser->getId() );
+		} else {
+			$data['anon'] = $this->getAnonUserData();
+		}
 
 		return $data;
 	}
 
 	private function getHref( $hrefKey ) {
-		return $this->hrefs[ $this->lang ][ $hrefKey ] ?? $this->hrefs[ 'default' ][ $hrefKey ];
+		return $this->hrefs[$this->lang][$hrefKey] ?? $this->hrefs['default'][$hrefKey];
 	}
 
 	private function getAnonUserData() {
@@ -171,35 +193,21 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 	private function getLoggedInUserData( $userId ) {
 		$user = User::newFromId( $userId );
 		$userName = $user->getName();
+		$wiki = 'starwars'; // FIXME: set to current wiki name
 
 		return [
-			'type' => 'user-authenticated',
-			'notifications' => [
-				'url' => [
-					'type' => 'external-resource',
-					'href' => '#'
+			'header' => [
+				'type' => 'avatar',
+				'username' => [
+					'type' => 'text',
+					'value' => $userName
 				],
-				'image' => [
-					'type' => 'line-image',
-					'image' => 'notifications',
-					'title' => [
-						'type' => 'translatable-text',
-						'key' => 'global-navigation-notifications'
-					]
-				]
-			],
-			'avatar' => [
-				'type' => 'external-resource',
-				'href' => AvatarService::getAvatarUrl( $userName, 50 ),
-			],
-			'username' => [
-				'type' => 'text',
-				'value' => $userName
+				'url' => AvatarService::getAvatarUrl( $userName, 50 ),
 			],
 			'links' => [
 				[
 					'type' => 'link-text',
-					'href' => '#',
+					'href' => $this->getPageUrl( $userName, NS_USER ),
 					'title' => [
 						'type' => 'translatable-text',
 						'key' => 'global-navigation-userinfo-profile'
@@ -207,7 +215,7 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 				],
 				[
 					'type' => 'link-text',
-					'href' => '#',
+					'href' => $this->getPageUrl( $userName, NS_USER_TALK ),
 					'title' => [
 						'type' => 'translatable-text',
 						'key' => 'global-navigation-userinfo-talk'
@@ -215,7 +223,7 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 				],
 				[
 					'type' => 'link-text',
-					'href' => $this->getSpecialPageUrl( 'Preferences' ),
+					'href' => $this->getPageUrl( 'Preferences', NS_SPECIAL ),
 					'title' => [
 						'type' => 'translatable-text',
 						'key' => 'global-navigation-userinfo-preferences'
@@ -223,7 +231,7 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 				],
 				[
 					'type' => 'link-text',
-					'href' => '#',
+					'href' => $this->getPageUrl( 'Contents', NS_HELP ),
 					'title' => [
 						'type' => 'translatable-text',
 						'key' => 'global-navigation-userinfo-help'
@@ -231,17 +239,28 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 				],
 				[
 					'type' => 'link-text',
-					'href' => $this->getSpecialPageUrl( 'UserLogout' ),
+					'href' => $this->getPageUrl( 'UserLogout', NS_SPECIAL ) . '?returnto=' . $wiki,
 					'title' => [
 						'type' => 'translatable-text',
 						'key' => 'global-navigation-userinfo-signout'
 					]
 				]
-			]
+			],
+			'notifications' => [
+				'url' => $this->getPageUrl( $userName, NS_USER_TALK ),
+				'header' => [
+					'type' => 'line-image',
+					'image' => 'notifications', // FIXME: add link to the 'bell' SVG
+					'title' => [
+						'type' => 'translatable-text',
+						'key' => 'global-navigation-notifications'
+					]
+				]
+			],
 		];
 	}
 
-	private function getSpecialPageUrl( $specialPageTitle ) {
-		return GlobalTitle::newFromText( $specialPageTitle, NS_SPECIAL, $this->wikiId )->getFullURL();
+	private function getPageUrl( $pageTitle, $pageType ) {
+		return GlobalTitle::newFromText( $pageTitle, $pageType, $this->wikiId )->getFullURL();
 	}
 }
