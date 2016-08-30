@@ -9,7 +9,7 @@ class DesignSystemApiController extends WikiaApiController {
 				"image" => "wds/full_fandom_logo",
 				"title" => [
 					"type" => "text",
-					"value" => "Fandom",
+					"value" => "Fandom powered by Wikia",
 				]
 			]
 		],
@@ -22,7 +22,7 @@ class DesignSystemApiController extends WikiaApiController {
 						"type" => "translatable-text",
 						"key" => "global-navigation-brandlink-vertical-tv",
 					],
-					"href" => "http://tv.wikia.com"
+					"href" => "http://fandom.wikia.com/tv"
 				],
 				[
 					"type" => "link-branded",
@@ -31,7 +31,7 @@ class DesignSystemApiController extends WikiaApiController {
 						"type" => "translatable-text",
 						"key" => "global-navigation-brandlink-vertical-games",
 					],
-					"href" => "http://games.wikia.com",
+					"href" => "http://fandom.wikia.com/games",
 				],
 				[
 					"type" => "link-branded",
@@ -40,18 +40,16 @@ class DesignSystemApiController extends WikiaApiController {
 						"type" => "translatable-text",
 						"key" => "global-navigation-brandlink-vertical-movies",
 					],
-					"href" => "http://movies.wikia.com",
+					"href" => "http://fandom.wikia.com/movies",
 				],
 			],
 		],
 		"wikis" => [
 			"header" => [
-				"type" => "link-branded",
-				"brand" => "wikis",
-				"href" => "#",
+				"type" => "line-text",
 				"title" => [
 					"type" => "translatable-text",
-					"key" => "global-navigation-brandlink-vertical-wikis",
+					"key" => "global-navigation-wikis",
 				],
 			],
 			"links" => [
@@ -59,7 +57,7 @@ class DesignSystemApiController extends WikiaApiController {
 					"type" => "link-text",
 					"title" => [
 						"type" => "translatable-text",
-						"key" => "global-navigation-brandlink-vertical-explorewikis",
+						"key" => "global-navigation-wikis-explore",
 					],
 					"href" => "#",
 				],
@@ -67,7 +65,7 @@ class DesignSystemApiController extends WikiaApiController {
 					"type" => "link-text",
 					"title" => [
 						"type" => "translatable-text",
-						"key" => "global-navigation-brandlink-vertical-wikis-communitycentral",
+						"key" => "global-navigation-wikis-communitycentral",
 					],
 					"href" => "#",
 				],
@@ -77,12 +75,12 @@ class DesignSystemApiController extends WikiaApiController {
 			"module" => [
 				"type" => "search",
 				"results" => [
-					"url" => "http://wikia.com/search",
-					"param" => "query",
+					"url" => "http://starwars.wikia.com/wiki/Special:Search?fulltext=Search",
+					"param-name" => "query",
 				],
 				"suggestions" => [
-					"url" => "http://wikia.com/search/suggestions",
-					"param" => "query",
+					"url" => "http://starwars.wikia.com/index.php?action=ajax&rs=getLinkSuggest&format=json",
+					"param-name" => "query",
 				],
 				"placeholder-inactive" => [
 					"type" => "translatable-text",
@@ -98,7 +96,7 @@ class DesignSystemApiController extends WikiaApiController {
 			"header" => [
 				"type" => "link-image",
 				"href" => "#",
-				"image" => "anon-avatar",
+				"image" => "wds/anon-avatar",
 				"title" => [
 					"type" => "translatable-text",
 					"key" => "global-navigation-userinfo-anon-avatar-title",
@@ -106,16 +104,16 @@ class DesignSystemApiController extends WikiaApiController {
 			],
 			"links" => [
 				[
-					"type" => "register",
+					"type" => "authentication",
 					"title" => [
 						"type" => "translatable-text",
 						"key" => "global-navigation-userinfo-signin-title",
 					],
-					"href" => "#",
-					"param" => "redirect",
+					"href" => "http://starwars.wikia.com/signin",
+					"param-name" => "redirect",
 				],
 				[
-					"type" => "link-text",
+					"type" => "authentication",
 					"title" => [
 						"type" => "translatable-text",
 						"key" => "global-navigation-userinfo-register-title",
@@ -124,7 +122,8 @@ class DesignSystemApiController extends WikiaApiController {
 						"type" => "translatable-text",
 						"key" => "global-navigation-userinfo-register-description",
 					],
-					"href" => "#",
+					"href" => "http://starwars.wikia.com/register",
+					"param-name" => "redirect"
 				],
 			],
 		],
@@ -208,7 +207,7 @@ class DesignSystemApiController extends WikiaApiController {
 	];
 
 	public function getFooter() {
-		$params = $this->checkRequestCompleteness();
+		$params = $this->getRequestParameters();
 
 		$footerModel = new DesignSystemGlobalFooterModel( $params[ 'wikiId' ], $params[ 'lang' ] );
 
@@ -217,7 +216,7 @@ class DesignSystemApiController extends WikiaApiController {
 	}
 
 	public function getNavigation() {
-		$this->checkRequestCompleteness();
+		$this->getRequestParameters();
 
 		// TODO: change to not mocked data
 		$this->setResponseData( $this->data );
@@ -230,7 +229,7 @@ class DesignSystemApiController extends WikiaApiController {
 	 * @throws \NotFoundApiException
 	 */
 	public function getAllElements() {
-		$params = $this->checkRequestCompleteness();
+		$params = $this->getRequestParameters();
 
 		$this->setResponseData( [
 			'global-footer' => ( new DesignSystemGlobalFooterModel( $params[ 'wikiId' ], $params[ 'lang' ] ) )->getData(),
@@ -240,7 +239,7 @@ class DesignSystemApiController extends WikiaApiController {
 		$this->addCachingHeaders();
 	}
 
-	private function checkRequestCompleteness() {
+	private function getRequestParameters() {
 		$wikiId = $this->getRequiredParam( 'wikiId' );
 		$lang = $this->getRequiredParam( 'lang' );
 
