@@ -95,7 +95,7 @@ class DesignSystemGlobalFooterWikiModelTest extends WikiaBaseTest {
 	 *
 	 * @param string $lang language code to fetch
 	 * @param array $hrefs hrefs definition in different languages
-	 * @param array $expectedResult
+	 * @param string $expectedResult
 	 */
 	public function testGetHref( $lang, $hrefs, $expectedResult ) {
 		$footerModel = new DesignSystemGlobalFooterWikiModel( 1234, $lang );
