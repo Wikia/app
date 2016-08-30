@@ -30,7 +30,7 @@ $messages['en'] = array(
 	'userlogin-error-invalidfacebook' => 'There was a problem detecting your Facebook account; please login to Facebook and try again.',
 	'userlogin-error-fbconnect' => 'There was a problem connecting your Wikia account to Facebook.',
 	'userlogin-get-account' => 'Don\'t have an account? <a href="$1" tabindex="$2">Sign up</a>',
-	'userlogin-account-admin-error' => 'Oops! Something went wrong. Please contact [[Special:Contact|Wikia]]. for support.',
+	'userlogin-account-admin-error' => 'Oops! Something went wrong. Please contact [[Special:Contact|Wikia]] for support.',
 	'userlogin-error-invalid-username' => 'Invalid username',
 	'userlogin-error-userlogin-unable-info' => "Sorry, we're not able to register your account at this time.",
 	'userlogin-error-user-not-allowed' => 'This username is not allowed.',
