@@ -3,7 +3,7 @@ $messages = array();
 
 $messages['en'] = array(
 	'emailext-reactivate-account-subject' => 'Reactivate Your Fandom Account',
-	'emailext-reactivate-account-summary' => "You're one step away from reactivating your account on Fandom. Click the link below to confirm your request.",
+	'emailext-reactivate-account-summary' => "You're one step away from reactivating your account on Fandom. Click the link below to confirm your request and get started.",
 	'emailext-reactivate-account-button-text' => 'Reactivate Now',
 	'emailext-reactivate-account-welcome-back' => 'Welcome back to Fandom!',
 );

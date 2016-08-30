@@ -5,7 +5,7 @@ $messages['en'] = array(
 	'emailext-usernamechange-subject' => 'Your username change on Fandom is complete!',
 	'emailext-usernamechange-summary' => 'Your username change on Fandom is complete.',
 	'emailext-usernamechange-changed' => '$1 is now $2',
-	'emailext-usernamechange-closing' => 'Can’t wait to see you around,',
+	'emailext-usernamechange-closing' => 'Can\'t wait to see you around,',
 	'emailext-usernamechange-signature' => 'The Fandom Community Team',
 );
 

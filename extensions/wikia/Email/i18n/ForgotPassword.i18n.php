@@ -3,7 +3,7 @@ $messages = array();
 
 $messages['en'] = array(
 	'emailext-password-subject' => 'Reset your Fandom password',
-	'emailext-password-summary' => 'It looks like you’re having trouble logging in. Sorry about that! As much as we’d like to just send you your password, for security reasons, we’ll need you to login with a temporary password.',
+	'emailext-password-summary' => 'It looks like you\'re having trouble logging in. Sorry about that! As much as we\'d like to just send you your password, for security reasons, we\'ll need you to login with a temporary password.',
 	'emailext-password-intro' => 'Please see your temporary password below:',
 	'emailext-password-unrequested' => "If you didn't request a new password, don't worry! Your account is safe and secure. You can ignore this email and log in to Fandom with your old password.",
 	'emailext-password-questions' => 'Questions or concerns? Feel free to [http://community.wikia.com/wiki/Special:Contact/account-issue contact us].',
