@@ -26,7 +26,7 @@ $messages['en'] = array(
 	//WAM
 	'wikiahubs-v3-wam-header' => 'WAM Score',
 	'wikiahubs-v3-wam-see-full-wam-ranking' => 'Read more about WAM',
-	'wikiahubs-v3-wam-top-wikis-headline' => 'Top Wikia $1 Communities',
+	'wikiahubs-v3-wam-top-wikis-headline' => 'Top Fandom $1 Communities',
 	'wikiahubs-v3-wam-rank' => 'Rank',
 	'wikiahubs-v3-wam-score' => 'WAM Score',
 	'wikiahubs-v3-wam-wiki-url' => "Name",

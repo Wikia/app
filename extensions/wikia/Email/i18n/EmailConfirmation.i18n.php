@@ -3,11 +3,11 @@ $messages = array();
 
 $messages['en'] = array(
 	'emailext-emailconfirmation-subject' => 'Confirm your email and get started on Fandom!',
-	'emailext-emailconfirmation-summary' => 'You’re SO CLOSE! Click the link below to confirm your email address and get started on Fandom:',
+	'emailext-emailconfirmation-summary' => 'You\'re SO CLOSE! Click the link below to confirm your email address and get started on Fandom:',
 	'emailext-emailconfirmation-footer-1' => 'Why confirm your email, you ask? You’ll get the latest updates on any of the topics you follow, messages from your fellow fans, and lots more delivered to the comfort of your inbox.  You can also create your very own wikias and get other special permissions exclusive to fully confirmed members.',
-	'emailext-emailconfirmation-footer-2' => 'Can’t wait to see you in the community!',
+	'emailext-emailconfirmation-footer-2' => 'Can\'t wait to see you in the community!',
 	'emailext-emailconfirmation-reminder-subject' => 'Confirm your email and lock down your $1 username!',
-	'emailext-emailconfirmation-reminder-summary' => "It's been a few days, but it looks like you haven't confirmed your account on Fandom yet. We can’t wait for you to fully dive into the Fandom universe! Just click the confirmation link below and you’ll be good to go:",
+	'emailext-emailconfirmation-reminder-summary' => "It's been a few days, but it looks like you haven't confirmed your account on Fandom yet. We can't wait for you to fully dive into Fandom! Just click the confirmation link below and you'll be good to go:",
 	'emailext-emailconfirmation-reminder-footer-1' => "If you don't confirm within 23 days your username, $1, will become available again. So hurry! No one else should have that name but you!",
 	'emailext-emailconfirmation-changed-subject' => 'Confirm your email address change on Fandom',
 	'emailext-emailconfirmation-changed-summary' => 'Please click the link below to confirm your change of email address on Fandom, so you can keep getting everything to fuel your fandom.',

@@ -3,7 +3,7 @@ $messages = array();
 
 $messages['en'] = array(
 	'emailext-fbdisconnect-subject' => 'Your Fandom account is now disconnected from Facebook!',
-	'emailext-fbdisconnect-summary' => "It looks like you've just disconnected your Fandom account from Facebook. We've kept all of your history, messages and profile details intact since you’re an important part of the Fandom community.",
+	'emailext-fbdisconnect-summary' => "It looks like you've just disconnected your Fandom account from Facebook. We've kept all of your history, messages and profile details intact since you're an important part of the Fandom community.",
 	'emailext-fbdisconnect-intro' => "You can use the same username as before, and we've generated a new temporary password for you to use. Here are your details:",
 	'emailext-fbdisconnect-username' => 'Username: $1',
 	'emailext-fbdisconnect-password' => 'Password: $1',

@@ -44,10 +44,8 @@ Be Original.',
 	'wikiahome-hubs-entertainment-creative' => 'Look no further for your daily dose of entertainment buzz straight from the communities who know.',
 	'wikiahome-hubs-entertainment-more-heading' => 'More in Entertainment',
 	'wikiahome-hubs-entertainment-more-list' => '
-*[http://www.wikia.com/Movie Movies]
-*[http://www.wikia.com/TV Television]
-*[http://www.wikia.com/Music Music]
-*[http://fandom.wikia.com/movies Trending]',
+*[http://fandom.wikia.com/movies Movies]
+*[http://fandom.wikia.com/TV Television]',
 
 	'wikiahome-hubs-lifestyle-heading' => 'Lifestyle, News & Culture',
 	'wikiahome-hubs-lifestyle-url' => 'http://www.wikia.com/Lifestyle',
@@ -64,7 +62,7 @@ Be Original.',
 	'wikiahome-community-column1-creative' => 'Everything you need to start and grow your community on Fandom from tips and tools to news and access to really helpful people.',
 	'wikiahome-community-column2-heading' => 'Fan Fueled by Fandom',
 	'wikiahome-community-column2-link' => 'http://www.wikia.com/Mobile',
-	'wikiahome-community-column2-creative' => 'Wikia Proudly Introduces its First Official Mobile Apps: My Wikia and Game Guides. Each app is designed to Assemble Over 20 Million Pages of Rich, Dynamic Content Authored by Wikia Communities in a Modern, Streamlined Experience. Download [[Mobile|here]].',
+	'wikiahome-community-column2-creative' => 'Fandom Proudly Introduces its First Official Mobile Apps. Each app is designed to Assemble Over 20 Million Pages of Rich, Dynamic Content Authored by Fandom Communities in a Modern, Streamlined Experience. Download [[Mobile|here]].',
 	'wikiahome-community-column3-heading' => 'Join the Fans',
 	'wikiahome-community-social-twitter' => 'Twitter',
 	'wikiahome-community-social-facebook' => 'Facebook',
@@ -278,7 +276,7 @@ Soyez original.',
 	'wikiahome-community-social-twitter' => 'Twitter',
 	'wikiahome-community-social-facebook' => 'Facebook',
 	'wikiahome-community-social-googleplus' => '',
-	
+
 	'wikiahome-preview-stats-videos' => "'''1''' {{PLURAL:$1|vidéo|vidéos}}",
 
 	'wikiahome-preview-description-heading' => '$1',
@@ -454,7 +452,7 @@ $messages['qqq'] = array(
 
 	'wikia-home-page-preview' => 'The text on preview button; when you click the button you\'ll be presented with more detailed information about a wiki; the button is visible when you hover on a wiki image',
 	'wikia-home-page-visit' => 'The text on visit button; when you click the button you\'ll be redirected to chosen wiki; the button is visible when you hover on a wiki image',
-	
+
 	'wikia-home-parse-source-empty-exception' => 'An exception text when an attempt of loading wikis from message fails because the data is empty',
 	'wikia-home-parse-vertical-invalid-data' => 'An exception text when an attempt of loading wikis from message fails because the vertical data is invalid',
 	'wikia-home-parse-wiki-too-few-parameters' => 'An exception text when an attempt of loading wikis from message fails because the wiki data is invalid',
@@ -490,7 +488,7 @@ $messages['qqq'] = array(
 
 	'wikiahome-preview-stats-wam-empty-label' => 'Label for WAM score placeholder, when this Wiki is not included in WAM Index',
 	'wikiahome-preview-stats-wam' => "WAM Score label, 1st parameter is score - please bold it with wikitext",
-	
+
 	'wikiahome-preview-stats-page' => "Number of pages on a wiki. Could be singular or plural.  Please bold the number via wikitext or html.",
 	'wikiahome-preview-stats-photos' => "Number of photos on a wiki. Could be singular or plural.  Please bold the number via wikitext or html.",
 	'wikiahome-preview-stats-videos' => "Number of videos on a wiki. Could be singular or plural.  Please bold the number via wikitext or html.",
@@ -503,6 +501,6 @@ $messages['qqq'] = array(
 	'wikiahome-preview-go-to-wiki-label' => 'Generic link label that navigates to a wiki.',
 	'wikiahome-preview-error' => 'Interstitial error',
 	'wikiahome-preview-user-member-since' => 'Member since date',
-	
+
 	'wikiahome-import-script-no-description' => 'This message should be used only when an edge case occurs and there is no wiki description on wikis list used in importing process. This message will be place in wiki description in Interstitial if original description is not provided.',
 );
