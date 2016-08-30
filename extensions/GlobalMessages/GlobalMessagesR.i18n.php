@@ -5,9 +5,9 @@
  * @file
  * @ingroup Extensions
  */
-$messages = array();
+$messages = [];
 
-$messages['en'] = array(
+$messages['en'] = [
 	'returnto' => 'Return to $1.',
 	'redirectedfrom' => '(Redirected from $1)',
 	'redirectpagesub' => 'Redirect page',
@@ -203,6 +203,12 @@ Please check the logs.',
 	'right-override-export-depth' => 'Export pages including linked pages up to a depth of 5',
 	'right-sendemail' => 'Send e-mail to other users',
 	'right-passwordreset' => 'View password reset e-mails',
+	// Labels for rights not added via extension
+	'right-editmyoptions' => 'Can edit your own preferences', # Used with includes/api/ApiOptions.php
+	'right-loggedin' => 'Flags user as being logged in to an account',  # Protection option on CC
+	'right-mcachepurge' => 'Control memcached behaviour via request parameters', # includes/wikia/Wikia.php
+	'right-emailconfirmed' => 'User has been email confirmed', # Used on CC
+	'right-runjob' => 'Run job from the job queue via API', # extensions/wikia/WikiaApi/ApiRunJob.php
 	'rightslog' => 'User rights log',
 	'rightslogtext' => 'This is a log of changes to user rights.',
 	'rightslogentry' => 'changed group membership for $1 from $2 to $3',
@@ -359,9 +365,9 @@ www.wikia.com
 	'registerintro-title' => 'When you create an account on Wikia, you become a part of the community!',
 	'registerintro-text' => 'You get credit for all your contributions, and you can also create your own user profile, watchlist your favorite pages, and get access to all kinds of neat tools.',
 	'rcshowhidelogs' => '$1 logs',
-);
+];
 
-$messages['qqq'] = array(
+$messages['qqq'] = [
 	'returnto' => '{{Identical|Return to $1}}',
 	'redirectedfrom' => 'The text displayed when a certain page is redirected to another page. Variable <tt>$1</tt> contains the name of the page user came from.',
 	'redirectpagesub' => 'Displayed under the page title of a page which is a redirect to another page, see [{{fullurl:Project:Translators|redirect=no}} Project:Translators] for example.
@@ -766,18 +772,18 @@ In other cases the message {{msg-mw|revertpage}} is used.',
 	'recentchangesall' => '{{Identical|All}}',
 	'recentchanges-on-wikia-title' => "A legend of a fieldset that contains a message to users about recent changes across the wikia's platform.",
 	'recentchanges-on-wikia-content' => "A content of a message to users about recent changes across the wikia's platform.",
-);
+];
 
-$messages['ab'] = array(
+$messages['ab'] = [
 	'recentchanges' => 'Арҽеира ҿыцқәа',
 	'recentchangeslinked' => 'Еимадоу ариашарақәа',
 	'recentchangeslinked-feed' => 'Еимадоу ариашарақәа',
 	'recentchangeslinked-toolbox' => 'Еимадоу ариашарақәа',
 	'randompage' => 'Машәырлатәи аҩымҭа',
 	'restriction-edit' => 'Ариашамҭа',
-);
+];
 
-$messages['ace'] = array(
+$messages['ace'] = [
 	'returnto' => 'Gisa u $1.',
 	'redirectedfrom' => '(Geupeupinah nibak $1)',
 	'redirectpagesub' => 'Ôn peupinah',
@@ -826,9 +832,9 @@ Nyoë pat nakeuh log seunampôh nibak ôn nyoë:",
 	'restriction-type' => 'Lindông:',
 	'restriction-level' => 'Tingkat:',
 	'revertmove' => 'peuriwang',
-);
+];
 
-$messages['af'] = array(
+$messages['af'] = [
 	'returnto' => 'Keer terug na $1.',
 	'redirectedfrom' => '(Aangestuur vanaf $1)',
 	'redirectpagesub' => 'Aanstuurblad',
@@ -1097,13 +1103,13 @@ Bladsye op [[Special:Watchlist|u dophoulys]] word in '''vetdruk''' uitgewys.",
 	'revdelete-uname-unhid' => 'gebruikersnaam sigbaar gemaak',
 	'revdelete-restricted' => 'beperkings is aan administrateurs opgelê',
 	'revdelete-unrestricted' => 'beperkings vir administrateurs is opgehef',
-);
+];
 
-$messages['ak'] = array(
+$messages['ak'] = [
 	'red-link-title' => '$1 (krataafa nni hɔ)',
-);
+];
 
-$messages['aln'] = array(
+$messages['aln'] = [
 	'returnto' => 'Kthehu te $1.',
 	'redirectedfrom' => '(Përcjellë nga $1)',
 	'redirectpagesub' => 'Faqe përcjellëse',
@@ -1252,9 +1258,9 @@ Faqet në [[Special:Watchlist|listën tuej të mbikëqyrjes]] janë '''të theks
 	'revertmove' => 'kthe mbrapsht',
 	'revdelete-restricted' => 'u vendosën kufizime për administruesit',
 	'revdelete-unrestricted' => 'u hoqën kufizimet për administruesit',
-);
+];
 
-$messages['als'] = array(
+$messages['als'] = [
 	'returnto' => 'Kthehu te $1.',
 	'redirectedfrom' => '(Përcjellë nga $1)',
 	'redirectpagesub' => 'Faqe përcjellëse',
@@ -1403,9 +1409,9 @@ Faqet në [[Special:Watchlist|listën tuej të mbikëqyrjes]] janë '''të theks
 	'revertmove' => 'kthe mbrapsht',
 	'revdelete-restricted' => 'u vendosën kufizime për administruesit',
 	'revdelete-unrestricted' => 'u hoqën kufizimet për administruesit',
-);
+];
 
-$messages['am'] = array(
+$messages['am'] = [
 	'returnto' => '(ወደ $1 ለመመለስ)',
 	'redirectedfrom' => '(ከ$1 የተዛወረ)',
 	'redirectpagesub' => 'መምሪያ መንገድ',
@@ -1543,9 +1549,9 @@ $messages['am'] = array(
 	'rcpatroldisabled' => 'የቅርብ ለውጦች ማሳለፊያ አይኖርም',
 	'rcpatroldisabledtext' => 'የቅርብ ለውጦች ማሳለፊያ ተግባር አሁን አይሠራም።',
 	'recreate' => 'እንደገና ይፈጠር',
-);
+];
 
-$messages['an'] = array(
+$messages['an'] = [
 	'returnto' => 'Tornar ta $1.',
 	'redirectedfrom' => '(Reendrezato dende $1)',
 	'redirectpagesub' => 'Pachina reendrezata',
@@ -1809,9 +1815,9 @@ No tien acceso a ell.',
 	'revdelete-uname-unhid' => "nombre d'usuario amostrau",
 	'revdelete-restricted' => "S'han aplicato as restriccions ta administradors",
 	'revdelete-unrestricted' => "S'han borrato as restriccions ta administradors",
-);
+];
 
-$messages['ang'] = array(
+$messages['ang'] = [
 	'returnto' => 'Ȝā eft tō $1',
 	'redirectedfrom' => '(Edlǣded fram $1)',
 	'redirectpagesub' => 'Edlǣdsīde',
@@ -1887,9 +1893,9 @@ $messages['ang'] = array(
 	'restriction-level-autoconfirmed' => 'sāmborgen',
 	'restriction-level-all' => 'ǣniȝ emnet',
 	'revertmove' => 'Undōn',
-);
+];
 
-$messages['anp'] = array(
+$messages['anp'] = [
 	'returnto' => 'लौटॊ $1.',
 	'redirectedfrom' => '($1 सॆं भेजनॊ गेलॊ)',
 	'redirectpagesub' => 'पुन: निर्देशित पन्ना',
@@ -1940,9 +1946,9 @@ $2 द्वारा संपादित आखिरी अवतरण क�
 	'restriction-level-autoconfirmed' => 'अर्ध सुरक्षित',
 	'restriction-level-all' => 'कोय्यॊ लेवल(स्तर)',
 	'revertmove' => 'पुरानॊ अवतरण पर लॆ चलॊ (रिवर्ट)',
-);
+];
 
-$messages['ar'] = array(
+$messages['ar'] = [
 	'returnto' => 'ارجع إلى $1.',
 	'redirectedfrom' => '(تم التحويل من $1)',
 	'redirectpagesub' => 'صفحة تحويل',
@@ -2210,9 +2216,9 @@ $1",
 	'revdelete-uname-unhid' => 'اسم المستخدم غير مخفي',
 	'revdelete-restricted' => 'طبق الضوابط لمديري النظام',
 	'revdelete-unrestricted' => 'أزال الضوابط لمديري النظام',
-);
+];
 
-$messages['arc'] = array(
+$messages['arc'] = [
 	'returnto' => 'ܕܥܘܪ ܠ$1.',
 	'redirectedfrom' => '(ܨܝܒ ܡܢ $1)',
 	'redirectpagesub' => 'ܦܐܬܐ ܕܨܘܝܒܐ',
@@ -2306,9 +2312,9 @@ $messages['arc'] = array(
 	'restriction-level-all' => 'ܐܝܢܐ ܫܘܝܐ',
 	'revertmove' => 'ܐܦܢܝ',
 	'recreate' => 'ܒܪܝ ܙܒܢܬܐ ܐܚܪܬܐ',
-);
+];
 
-$messages['arn'] = array(
+$messages['arn'] = [
 	'returnto' => 'Amutun $1 püle.',
 	'redirectedfrom' => '(Wüñogünegey $1 mew)',
 	'redirectpagesub' => 'Wüñongünenielu wülngiñ',
@@ -2373,9 +2379,9 @@ Nagpüle wirintukuy chumngely tüfachi wülngiñ liftungey kam nengümngey.",
 	'restriction-move' => 'Pepiwiñami',
 	'restriction-create' => 'Llitun',
 	'revertmove' => 'wüñoeltun',
-);
+];
 
-$messages['ary'] = array(
+$messages['ary'] = [
 	'returnto' => 'Rjeĝ le $1',
 	'redirectedfrom' => '(Ṫḫowwlaṫ men $1)',
 	'redirectpagesub' => 'Ṣefḫa dyal ṫ-ṫeḫwil',
@@ -2574,9 +2580,9 @@ $1",
 	'recreate' => "awd li'inchaa",
 	'revdelete-restricted' => 'tḅḅq ḍ-ḍawaḅit ll-idariyyin',
 	'revdelete-unrestricted' => 'ḫyyd ḍ-ḍawaḅit ll-idariyyin',
-);
+];
 
-$messages['arz'] = array(
+$messages['arz'] = [
 	'returnto' => 'ارجع ل $1.',
 	'redirectedfrom' => '(تحويل من $1)',
 	'redirectpagesub' => 'صفحة تحويل',
@@ -2828,9 +2834,9 @@ $1",
 	'recreate' => 'ابتدى تاني',
 	'revdelete-restricted' => 'طبق التعليمات على السيسوبات',
 	'revdelete-unrestricted' => 'شيل الضوابط من على السيسوبات',
-);
+];
 
-$messages['as'] = array(
+$messages['as'] = [
 	'returnto' => '$1 লৈ ঘূৰি যাওক ।',
 	'redirectedfrom' => '($1 ৰ পৰা পুনঃনিৰ্দেশিত)',
 	'redirectpagesub' => 'পুনঃনিৰ্দেশিত পৃষ্ঠা',
@@ -3098,9 +3104,9 @@ $1",
 	'revdelete-uname-unhid' => 'সদস্যনাম মুকলি কৰা হৈছে',
 	'revdelete-restricted' => 'এই সীমাবদ্ধতা প্ৰশাসকৰ ক্ষেত্ৰত প্ৰযোজ্য',
 	'revdelete-unrestricted' => 'প্ৰশাসকৰ সীমাবদ্ধতা বাতিল কৰা হ’ল',
-);
+];
 
-$messages['ast'] = array(
+$messages['ast'] = [
 	'returnto' => 'Tornar a $1.',
 	'redirectedfrom' => '(Redirixío dende $1)',
 	'redirectpagesub' => 'Páxina de redireición',
@@ -3368,9 +3374,9 @@ Comprueba los rexistros, por favor.",
 	'revdelete-uname-unhid' => "nome d'usuariu non anubríu",
 	'revdelete-restricted' => 'aplicaes les restricciones a los alministradores',
 	'revdelete-unrestricted' => 'eliminaes les restricciones a los alministradores',
-);
+];
 
-$messages['av'] = array(
+$messages['av'] = [
 	'recentchanges' => 'ЦӀиял хиса-басал',
 	'rcshowhideminor' => '$1 гӀиси-микъинал хиса-басал',
 	'rcshowhidebots' => '$1 бот',
@@ -3381,9 +3387,9 @@ $messages['av'] = array(
 	'recentchangeslinked-feed' => 'Рухьарал хиса-басиял',
 	'recentchangeslinked-toolbox' => 'Рухьарал хиса-басиял',
 	'randompage' => 'Цебе ккараб гьумер',
-);
+];
 
-$messages['avk'] = array(
+$messages['avk'] = [
 	'returnto' => 'Dimgrablera va $1 bu.',
 	'redirectedfrom' => '(Graskan mal $1)',
 	'redirectpagesub' => 'Bugraskara',
@@ -3556,14 +3562,14 @@ Bu koe [[Special:Watchlist|rinafi suzdasiki]] tid '''vastaakorafu'''.",
 	'rcpatroldisabledtext' => "La fonctionnalité de surveillance des modifications récentes n'est pas activée.",
 	'recentchangesall' => 'kot',
 	'recreate' => 'Tolredura',
-);
+];
 
-$messages['ay'] = array(
+$messages['ay'] = [
 	'recentchanges' => 'Jichha kutikiptatanaka',
 	'restriction-move' => 'Qillqaraña',
-);
+];
 
-$messages['az'] = array(
+$messages['az'] = [
 	'returnto' => '$1 səhifəsinə qayıt.',
 	'redirectedfrom' => '($1 səhifəsindən yönləndirilmişdir)',
 	'redirectpagesub' => 'Yönləndirmə səhifəsi',
@@ -3779,9 +3785,9 @@ $1",
 	'revdelete-uname-unhid' => 'İstifadəçi adı gizli deyil',
 	'revdelete-restricted' => 'məhdudiyyətlər idarəçilərə tətbiq olunur',
 	'revdelete-unrestricted' => 'idarəçilər üçün götürülmüş məhdudiyyətlər',
-);
+];
 
-$messages['ba'] = array(
+$messages['ba'] = [
 	'returnto' => '$1 битенә ҡайтыу.',
 	'redirectedfrom' => '($1 битенән йүнәлтелде)',
 	'redirectpagesub' => 'Йүнәлтеү бите',
@@ -4048,9 +4054,9 @@ $2 өлгөһөнә ҡайтыу.',
 	'revdelete-uname-unhid' => 'ҡатнашыусы исеме күрһәтелде',
 	'revdelete-restricted' => 'хәкимдәргә ҡаршы ҡулланылған сикләүҙәр',
 	'revdelete-unrestricted' => 'хәкимдәрҙән алынған сикләүҙәр',
-);
+];
 
-$messages['bar'] = array(
+$messages['bar'] = [
 	'returnto' => 'Zruck zua da Seiten $1.',
 	'redirectedfrom' => '(Weidergloatt voh $1)',
 	'redirectpagesub' => 'Weiderloatung',
@@ -4135,9 +4141,9 @@ Details stehen im [{{fullurl:{{#Special:Log}}/suppress|page={{FULLPAGENAMEE}}}} 
 	'restriction-move' => 'vaschiam',
 	'reblock-logentry' => "hod d' Sperrn voh „[[$1]]“ fyrn Zeidraum: $2 $3 gänderd.",
 	'revertmove' => 'zruck vaschiam',
-);
+];
 
-$messages['bat-smg'] = array(
+$messages['bat-smg'] = [
 	'returnto' => 'Zruck zua da Seiten $1.',
 	'redirectedfrom' => '(Weidergloatt voh $1)',
 	'redirectpagesub' => 'Weiderloatung',
@@ -4222,9 +4228,9 @@ Details stehen im [{{fullurl:{{#Special:Log}}/suppress|page={{FULLPAGENAMEE}}}} 
 	'restriction-move' => 'vaschiam',
 	'reblock-logentry' => "hod d' Sperrn voh „[[$1]]“ fyrn Zeidraum: $2 $3 gänderd.",
 	'revertmove' => 'zruck vaschiam',
-);
+];
 
-$messages['bcc'] = array(
+$messages['bcc'] = [
 	'returnto' => 'تررگ به $1.',
 	'redirectedfrom' => '(غیر مستقیم بوتگ چه $1)',
 	'redirectpagesub' => 'صفحه غیر مستقیم',
@@ -4435,9 +4441,9 @@ $messages['bcc'] = array(
 	'recreate' => 'دگ شرکن',
 	'revdelete-restricted' => 'محدودیت آن په مدیران سیستم بوت',
 	'revdelete-unrestricted' => 'به زور چه مدیران سیستم محدودیتان',
-);
+];
 
-$messages['bcl'] = array(
+$messages['bcl'] = [
 	'returnto' => 'Magbwelta sa $1.',
 	'redirectedfrom' => '(Piglikay halì sa $1)',
 	'redirectpagesub' => 'Ilikáy an pahina',
@@ -4556,9 +4562,9 @@ An ibang mga administrador sa ining wiki pwede pang maghiling kan mga nakatagong
 	'rcpatroldisabled' => 'Pigpopogólan an mga Pagpatrolya kan mga Nakakaági pa sanáng Pagbabàgo',
 	'rcpatroldisabledtext' => 'Pigpopogólan ngùna an Pagpatrolya kan mga Nakakaági pa sanáng Pagbabàgo.',
 	'recreate' => 'Gibohón giraray',
-);
+];
 
-$messages['be'] = array(
+$messages['be'] = [
 	'returnto' => 'Вярнуцца да $1.',
 	'redirectedfrom' => '(Пасля перасылкі з $1)',
 	'redirectpagesub' => 'Старонка-перасылка',
@@ -4822,9 +4828,9 @@ $1",
 	'revdelete-uname-unhid' => 'імя ўдзельніка адкрыта',
 	'revdelete-restricted' => 'пастаўленыя абмежаванні на адміністратараў',
 	'revdelete-unrestricted' => 'знятыя абмежаванні з адміністратараў',
-);
+];
 
-$messages['be-tarask'] = array(
+$messages['be-tarask'] = [
 	'returnto' => 'Вярнуцца да старонкі $1.',
 	'redirectedfrom' => '(Перанакіравана з $1)',
 	'redirectpagesub' => 'Старонка-перанакіраваньне',
@@ -5090,9 +5096,9 @@ $1",
 	'revdelete-uname-unhid' => 'імя ўдзельніка адкрытае',
 	'revdelete-restricted' => 'ужыць абмежаваньні для адміністратараў',
 	'revdelete-unrestricted' => 'зьнятыя абмежаваньні для адміністратараў',
-);
+];
 
-$messages['be-x-old'] = array(
+$messages['be-x-old'] = [
 	'returnto' => 'Вярнуцца да старонкі $1.',
 	'redirectedfrom' => '(Перанакіравана з $1)',
 	'redirectpagesub' => 'Старонка-перанакіраваньне',
@@ -5358,9 +5364,9 @@ $1",
 	'revdelete-uname-unhid' => 'імя ўдзельніка адкрытае',
 	'revdelete-restricted' => 'ужыць абмежаваньні для адміністратараў',
 	'revdelete-unrestricted' => 'зьнятыя абмежаваньні для адміністратараў',
-);
+];
 
-$messages['bg'] = array(
+$messages['bg'] = [
 	'returnto' => 'Обратно към $1.',
 	'redirectedfrom' => '(пренасочване от $1)',
 	'redirectpagesub' => 'Пренасочваща страница',
@@ -5625,9 +5631,9 @@ $1",
 	'recreate' => 'Ново създаване',
 	'revdelete-restricted' => 'добавени ограничения за администраторите',
 	'revdelete-unrestricted' => 'премахнати ограничения за администраторите',
-);
+];
 
-$messages['bh'] = array(
+$messages['bh'] = [
 	'returnto' => 'Обратно към $1.',
 	'redirectedfrom' => '(пренасочване от $1)',
 	'redirectpagesub' => 'Пренасочваща страница',
@@ -5892,9 +5898,9 @@ $1",
 	'recreate' => 'Ново създаване',
 	'revdelete-restricted' => 'добавени ограничения за администраторите',
 	'revdelete-unrestricted' => 'премахнати ограничения за администраторите',
-);
+];
 
-$messages['bho'] = array(
+$messages['bho'] = [
 	'returnto' => 'जाईं $1 पर।',
 	'redirectedfrom' => '($1 द्वारा पुन: निर्देशित)',
 	'redirectpagesub' => 'पुन: निर्देशित पन्ना',
@@ -5925,13 +5931,13 @@ $messages['bho'] = array(
 	'revertmove' => 'पिछलका स्थिति',
 	'revdelete-restricted' => 'प्रबंधक पर प्रतिबंध लागू',
 	'revdelete-unrestricted' => 'प्रबंधक पर से प्रतिबंध समाप्त',
-);
+];
 
-$messages['bi'] = array(
+$messages['bi'] = [
 	'retrievedfrom' => 'Kam long "$1"',
-);
+];
 
-$messages['bjn'] = array(
+$messages['bjn'] = [
 	'returnto' => 'Bulik ka $1.',
 	'redirectedfrom' => '(Diugahakan matan $1)',
 	'redirectpagesub' => 'Tungkaran paugahan',
@@ -6199,13 +6205,13 @@ diubah bulik ka ralatan tauncit ulih $2.',
 	'revdelete-uname-unhid' => 'ngaran-pamuruk kada tasungkup',
 	'revdelete-restricted' => 'Talamar pambatasan hagan pambakal-pambakal',
 	'revdelete-unrestricted' => 'Buang pambatasan gasan pambakal-pambakal',
-);
+];
 
-$messages['bm'] = array(
+$messages['bm'] = [
 	'randompage' => 'Nyɛ min man ni ja',
-);
+];
 
-$messages['bn'] = array(
+$messages['bn'] = [
 	'returnto' => '$1 শিরোনামের পাতায় ফেরত যান।',
 	'redirectedfrom' => '($1 থেকে ঘুরে এসেছে)',
 	'redirectpagesub' => 'পুনর্নির্দেশ পাতা',
@@ -6415,9 +6421,9 @@ $messages['bn'] = array(
 	'recreate' => 'পুনরায় তৈরি করো',
 	'revdelete-restricted' => 'এই সীমাবদ্ধতা প্রশাসকের ক্ষেত্রে প্রয়োগ করো',
 	'revdelete-unrestricted' => 'এই সীমাবদ্ধতা প্রশাসকের ক্ষেত্রে তুলে নাও',
-);
+];
 
-$messages['bo'] = array(
+$messages['bo'] = [
 	'returnto' => '$1 ལ་བསྐྱར་ལོག་བྱེད་པ།',
 	'redirectedfrom' => '$1 ནས་ཁ་ཕྱོགས་བསྐྱར་དུ་བཟོས་པ།',
 	'redirectpagesub' => 'རིམ་འགྲེམ་ཤོག་ངོས།',
@@ -6476,9 +6482,9 @@ $messages['bo'] = array(
 	'restriction-edit' => 'རྩོམ་སྒྲིག',
 	'restriction-move' => 'སྤོར།',
 	'revertmove' => 'ཕྱིར་ལོག',
-);
+];
 
-$messages['bpy'] = array(
+$messages['bpy'] = [
 	'returnto' => '$1-ত আলথকে যাগা।',
 	'redirectedfrom' => '($1 -ত্ত পাকদিয়া আহিল)',
 	'redirectpagesub' => 'কুইপা পাতা',
@@ -6580,9 +6586,9 @@ $messages['bpy'] = array(
 	'revertmove' => 'রিভার্ট',
 	'revdelete-restricted' => 'ডান্ডিকরেকুরাগরাঙ সীমাবদ্ধতাহানি ফলা',
 	'revdelete-unrestricted' => 'ডান্ডিকরেকুরাগরাঙ সীমাবদ্ধতাহানি নেইকর',
-);
+];
 
-$messages['bqi'] = array(
+$messages['bqi'] = [
 	'returnto' => 'بازگشت به $1.',
 	'redirectedfrom' => '(تصحیح مجدداز$1)',
 	'redirectpagesub' => 'صفحه تصحیح وهدایت مجدد',
@@ -6620,9 +6626,9 @@ $messages['bqi'] = array(
 	'restriction-type' => 'اجازه:',
 	'restriction-level' => 'سطح محدودیت:',
 	'revertmove' => 'واگردانی',
-);
+];
 
-$messages['br'] = array(
+$messages['br'] = [
 	'returnto' => "Distreiñ d'ar bajenn $1.",
 	'redirectedfrom' => '(Adkaset eus $1)',
 	'redirectpagesub' => 'Pajenn adkas',
@@ -6885,9 +6891,9 @@ E '''tev''' emañ ar pajennoù zo war ho [[Special:Watchlist|roll evezhiañ]].",
 	'revdelete-uname-unhid' => 'anv implijer war wel',
 	'revdelete-restricted' => 'Lakaat ar strishadurioù da dalvezout evit ar verourien',
 	'revdelete-unrestricted' => 'dilemel ar strishadurioù evit ar verourien',
-);
+];
 
-$messages['brh'] = array(
+$messages['brh'] = [
 	'returnto' => '$1 á aŕseng.',
 	'redirectedfrom' => '($1 án aŕsok)',
 	'redirectpagesub' => 'Aŕsengoká panna',
@@ -6927,9 +6933,9 @@ $messages['brh'] = array(
 	'rollbacklink' => 'ģuŧŧ e aŕsa',
 	'restriction-type' => 'Mokal:',
 	'revertmove' => 'málav ná',
-);
+];
 
-$messages['bs'] = array(
+$messages['bs'] = [
 	'returnto' => 'Povratak na $1.',
 	'redirectedfrom' => '(Preusmjereno sa $1)',
 	'redirectpagesub' => 'Preusmjeri stranicu',
@@ -7195,9 +7201,9 @@ vraćeno na posljednju verziju koju je sačuvao $2.',
 	'revdelete-uname-unhid' => 'korisničko ime je otkriveno',
 	'revdelete-restricted' => 'primijenjena ograničenja za administratore',
 	'revdelete-unrestricted' => 'uklonjena ograničenja za administratore',
-);
+];
 
-$messages['bug'] = array(
+$messages['bug'] = [
 	'returnto' => 'Lisu ri $1.',
 	'redirectedfrom' => '(Riredirect polé $1)',
 	'redirectpagesub' => 'Leppa redirect',
@@ -7222,9 +7228,9 @@ $messages['bug'] = array(
 	'recentchangeslinked-toolbox' => 'Pappakapinra terkait',
 	'randompage' => 'Leppa random',
 	'randompage-nopages' => 'Degaga leppa rilaleŋ iyyé namespaceë.',
-);
+];
 
-$messages['ca'] = array(
+$messages['ca'] = [
 	'returnto' => 'Torna cap a $1.',
 	'redirectedfrom' => "(S'ha redirigit des de: $1)",
 	'redirectpagesub' => 'Pàgina de redirecció',
@@ -7498,16 +7504,16 @@ Les pàgines de la vostra [[Special:Watchlist|llista de seguiment]] apareixen en
 	'review_reason_3' => 'Tercer motiu per aquesta revisió',
 	'review_reason_4' => 'Quart motiu per aquesta revisió',
 	'review_reason_5' => 'Cinqué motiu per aquesta revisió',
-);
+];
 
-$messages['cbk-zam'] = array(
+$messages['cbk-zam'] = [
 	'retrievedfrom' => 'Obtenido de "$1"',
 	'red-link-title' => '$1 (jendeh ta existi el pagina)',
 	'recentchanges' => 'Maga Reciente Cambio',
 	'randompage' => 'Pagina Escujido Automatico',
-);
+];
 
-$messages['cdo'] = array(
+$messages['cdo'] = [
 	'returnto' => 'Duōng kó̤ $1.',
 	'redirectedfrom' => '(Iù $1 dêng-hióng lì gì)',
 	'redirectpagesub' => 'Dṳ̀ng-sĭng dêng-hióng hiĕk',
@@ -7557,9 +7563,9 @@ Nṳ̄ găi-dŏng sṳ̆-liòng lâ, sié lŏ̤h piĕng-cĭk ciā hiĕk-miêng �
 	'restriction-level-autoconfirmed' => 'buáng bō̤-hô',
 	'restriction-level-all' => 'sū-iū dēng-gék',
 	'recreate' => 'Dṳ̀ng-sĭng kŭi',
-);
+];
 
-$messages['ce'] = array(
+$messages['ce'] = [
 	'returnto' => 'Юхагlо оцу агlоне $1.',
 	'redirectedfrom' => '(Дlасахьажийна кху $1)',
 	'redirectpagesub' => 'Агlо-дlасахьажайар',
@@ -7628,9 +7634,9 @@ $messages['ce'] = array(
 	'restriction-upload' => 'Чуйолуш',
 	'restriction-level-all' => 'массо барам',
 	'revertmove' => 'йухаяккха',
-);
+];
 
-$messages['ceb'] = array(
+$messages['ceb'] = [
 	'returnto' => 'Balik sa $1.',
 	'redirectedfrom' => '(Naredirek gikan sa $1)',
 	'redirectpagesub' => 'Panid sa redirekta',
@@ -7745,9 +7751,9 @@ Ang mga panid sa [[Special:Watchlist|imong gibantayan]] '''nakalugom'''.",
 	'revertmove' => 'i-revert',
 	'revdelete-restricted' => 'mga na-aplay nga restriksyon sa mga tagdumala',
 	'revdelete-unrestricted' => 'gitangtang ang mga restriksyon alang sa mga tagdumala',
-);
+];
 
-$messages['ch'] = array(
+$messages['ch'] = [
 	'returnto' => 'Hånao tåtte para $1.',
 	'redirectedfrom' => '(Madirihi ginen $1)',
 	'redirectpagesub' => "Na'dirihi i påhina",
@@ -7817,17 +7823,17 @@ fana'an guåha attikulo gi [{{fullurl:{{#Special:Log}}/suppress|page={{FULLPAGEN
 	'restriction-level' => 'Nibet opbligao:',
 	'restriction-edit' => 'Tulaika',
 	'revertmove' => 'tulaika tatte',
-);
+];
 
-$messages['chr'] = array(
+$messages['chr'] = [
 	'recentchanges' => 'ᎾᏞᎬ ᏗᎦᏁᏟᏴᏍᏗ',
 	'recentchangeslinked' => 'ᎪᎱᏍᏗ ᎠᎾᏓᏛᏂ ᏗᎦᏁᏟᏴᏍᏗ',
 	'recentchangeslinked-feed' => 'ᎪᎱᏍᏗ ᎠᎾᏓᏛᏂ ᏗᎦᏁᏟᏴᏍᏗ',
 	'recentchangeslinked-toolbox' => 'ᎪᎱᏍᏗ ᎠᎾᏓᏛᏂ ᏗᎦᏁᏟᏴᏍᏗ',
 	'randompage' => 'ᎤᏍᏆᏂᎪᏗ ᎤᏆᏓᏛ',
-);
+];
 
-$messages['ckb'] = array(
+$messages['ckb'] = [
 	'returnto' => 'بگەڕێوە بۆ $1.',
 	'redirectedfrom' => '(ڕەوانەکراوە لە $1 ەوە)',
 	'redirectpagesub' => 'پەڕەی ڕەوانەکردن',
@@ -8080,9 +8086,9 @@ $1",
 	'rcpatroldisabledtext' => 'تایبەتمەندی چاودێری دوایین گۆڕانکاریەکان ئێستا لەکار خستراوە.',
 	'recentchangesall' => 'ھەموو',
 	'recreate' => 'درووست‌کردنەوە',
-);
+];
 
-$messages['co'] = array(
+$messages['co'] = [
 	'returnto' => 'Vultà à $1.',
 	'retypenew' => 'Scrive torna a nova parulla secreta:',
 	'rev-delundel' => 'mustrà/piattà',
@@ -8103,9 +8109,9 @@ $messages['co'] = array(
 	'restriction-edit' => 'Mudificà',
 	'restriction-create' => 'Creà',
 	'restriction-level-autoconfirmed' => 'mezu prutettu',
-);
+];
 
-$messages['cps'] = array(
+$messages['cps'] = [
 	'returnto' => 'Balik sa $1.',
 	'redirectedfrom' => '(Gindirekta liwat halin sa $1)',
 	'redirectpagesub' => 'Pahina sang pagdirekta',
@@ -8162,9 +8168,9 @@ Naghatag sang mini nga rason ang tagadumala nga nagkandado sini: $1',
 	'restriction-type' => 'Pahatnugot:',
 	'restriction-level' => 'Lebel sang pagbawal:',
 	'revertmove' => 'ibalik',
-);
+];
 
-$messages['crh'] = array(
+$messages['crh'] = [
 	'returnto' => 'Balik sa $1.',
 	'redirectedfrom' => '(Gindirekta liwat halin sa $1)',
 	'redirectpagesub' => 'Pahina sang pagdirekta',
@@ -8221,9 +8227,9 @@ Naghatag sang mini nga rason ang tagadumala nga nagkandado sini: $1',
 	'restriction-type' => 'Pahatnugot:',
 	'restriction-level' => 'Lebel sang pagbawal:',
 	'revertmove' => 'ibalik',
-);
+];
 
-$messages['crh-cyrl'] = array(
+$messages['crh-cyrl'] = [
 	'returnto' => '$1.',
 	'redirectedfrom' => '($1 саифесинден ёлланды)',
 	'redirectpagesub' => 'Ёллама саифеси',
@@ -8328,9 +8334,9 @@ $messages['crh-cyrl'] = array(
 	'restriction-level-autoconfirmed' => 'къысмен къорчалав алтында',
 	'revertmove' => 'Кериге ал',
 	'recreate' => 'Саифени янъыдан ярат',
-);
+];
 
-$messages['crh-latn'] = array(
+$messages['crh-latn'] = [
 	'returnto' => '$1.',
 	'redirectedfrom' => '($1 saifesinden yollandı)',
 	'redirectpagesub' => 'Yollama saifesi',
@@ -8435,9 +8441,9 @@ Saifeniñ yoq etilüv ve avuştırıluv qaydları mında berilgen:",
 	'restriction-level-autoconfirmed' => 'qısmen qorçalav altında',
 	'revertmove' => 'Kerige al',
 	'recreate' => 'Saifeni yañıdan yarat',
-);
+];
 
-$messages['cs'] = array(
+$messages['cs'] = [
 	'returnto' => 'Návrat na stránku „$1“.',
 	'redirectedfrom' => '(Přesměrováno z $1)',
 	'redirectpagesub' => 'Přesměrování',
@@ -8705,9 +8711,9 @@ $3',
 	'revdelete-uname-unhid' => 'odkryto uživatelské jméno',
 	'revdelete-restricted' => 'omezení správců použito',
 	'revdelete-unrestricted' => 'omezení správců odstraněno',
-);
+];
 
-$messages['csb'] = array(
+$messages['csb'] = [
 	'returnto' => 'Nazôd do starnë $1.',
 	'redirectedfrom' => '(Przeczerowóné z $1)',
 	'redirectpagesub' => 'Przeczerëjë starnã',
@@ -8796,9 +8802,9 @@ Starnë z [[Special:Watchlist|lëstë ùzérónëch artiklów]] są '''pògrëbi
 	'revertmove' => 'copnij',
 	'revdelete-restricted' => 'nastôwi ògrańczenia dlô sprôwników',
 	'revdelete-unrestricted' => 'rëmôj ògrańczenia dlô sprôwników',
-);
+];
 
-$messages['cu'] = array(
+$messages['cu'] = [
 	'redirectedfrom' => '(прѣнаправлѥниѥ отъ ⁖ $1 ⁖)',
 	'redirectpagesub' => 'прѣнаправлѥниѥ',
 	'retrievedfrom' => 'поѩто иꙁ ⁖ $1 ⁖',
@@ -8838,9 +8844,9 @@ $messages['cu'] = array(
 	'restriction-edit' => 'исправи',
 	'restriction-move' => 'прѣимєнованиѥ',
 	'restriction-upload' => 'положєниѥ',
-);
+];
 
-$messages['cv'] = array(
+$messages['cv'] = [
 	'returnto' => '$1 страницăна таврăн.',
 	'redirectedfrom' => '($1 çинчен куçарнă)',
 	'redirectpagesub' => 'Куçаракан страница',
@@ -8902,9 +8908,9 @@ $1',
 	'rollbacklink' => 'каялла тавăр',
 	'rollbackfailed' => 'Каялла куçарнă çухна йăнăш тухнă',
 	'recreate' => 'Çĕнĕрен пуçла',
-);
+];
 
-$messages['cy'] = array(
+$messages['cy'] = [
 	'returnto' => 'Dychwelyd at $1.',
 	'redirectedfrom' => '(Ailgyfeiriad oddi wrth $1)',
 	'redirectpagesub' => 'Tudalen ailgyfeirio',
@@ -9168,9 +9174,9 @@ wedi gwrthdroi i'r golygiad olaf gan $2.",
 	'revdelete-uname-unhid' => 'datguddiwyd yr enw defnyddiwr',
 	'revdelete-restricted' => 'cyfyngwyd ar allu gweinyddwyr i weld',
 	'revdelete-unrestricted' => 'tynnwyd y cyfyngiadau ar allu gweinyddwyr i weld',
-);
+];
 
-$messages['da'] = array(
+$messages['da'] = [
 	'returnto' => 'Tilbage til $1.',
 	'redirectedfrom' => '(Omdirigeret fra $1)',
 	'redirectpagesub' => 'Omdirigering',
@@ -9434,9 +9440,9 @@ og den seneste version af $2 er gendannet.',
 	'revdelete-uname-unhid' => 'brugernavnet er ikke længere skjult',
 	'revdelete-restricted' => 'tilføjede begrænsninger for administratorer',
 	'revdelete-unrestricted' => 'fjernede begrænsninger for administratorer',
-);
+];
 
-$messages['de'] = array(
+$messages['de'] = [
 	'returnto' => 'Zurück zur Seite $1.',
 	'redirectedfrom' => '(Weitergeleitet von $1)',
 	'redirectpagesub' => 'Weiterleitung',
@@ -9714,18 +9720,18 @@ Stand: $4, $5 Uhr.",
 	'review_reason_3' => 'Bewertungsgrund 3',
 	'review_reason_4' => 'Bewertungsgrund 4',
 	'review_reason_5' => 'Bewertungsgrund 5',
-);
+];
 
-$messages['de-ch'] = array(
+$messages['de-ch'] = [
 	'resetpass_announce' => 'Anmeldung mit dem per E-Mail zugesandten Code. Um die Anmeldung abzuschliessen, musst du jetzt ein neues Passwort wählen.',
 	'recentchangesdays' => 'Anzahl der Tage, die die Liste der „Letzten Änderungen“ standardmässig umfassen soll:',
 	'recentchangescount' => 'Anzahl der standardmässig angezeigten Bearbeitungen:',
 	'right-createpage' => 'Seiten erstellen (ausser Diskussionsseiten)',
 	'right-bigdelete' => 'Seiten mit grosser Versionsgeschichte löschen',
 	'right-override-export-depth' => 'Exportiere Seiten einschliesslich verlinkter Seiten bis zu einer Tiefe von 5',
-);
+];
 
-$messages['de-formal'] = array(
+$messages['de-formal'] = [
 	'readonlytext' => 'Die Datenbank ist vorübergehend für Neueinträge und Änderungen gesperrt. Bitte versuchen Sie es später noch einmal.
 
 Grund der Sperrung: $1',
@@ -9780,9 +9786,9 @@ Bitte prüfen Sie die Logbücher.',
 	'recentchangeslinked-summary' => "Diese Spezialseite listet die letzten Änderungen an den verlinkten Seiten auf (bzw. bei Kategorien an den Mitgliedern dieser Kategorie).
 Seiten auf Ihrer [[Special:Watchlist|Beobachtungsliste]] sind '''fett''' dargestellt.",
 	'removedwatchtext' => 'Die Seite „[[:$1]]“ wurde von Ihrer [[Special:Watchlist|Beobachtungsliste]] entfernt.',
-);
+];
 
-$messages['de-weigsbrag'] = array(
+$messages['de-weigsbrag'] = [
 	'returnto' => 'Surüg su Seid $1.',
 	'redirectedfrom' => '(Weidleid won $1)',
 	'redirectpagesub' => 'Weidleid',
@@ -9967,9 +9973,9 @@ Näheres Angabes su Löschworgang und eines Begründ gön wend in dose [{{fullur
 	'recentchangesall' => 'ales',
 	'recreate' => 'Erneudes anleg',
 	'redirectingto' => 'Weidgeleidedes nag [[$1]]',
-);
+];
 
-$messages['diq'] = array(
+$messages['diq'] = [
 	'returnto' => 'Peyser şo $1.',
 	'redirectedfrom' => '($1 ra neqıl bi)',
 	'redirectpagesub' => 'Pela berdışi',
@@ -10223,9 +10229,9 @@ $2 kesi ra cıwa ver o ke revizyon biyo no revizyon tepiya anciyayo.',
 	'revdelete-summary-hid' => 'Vurnayışi nımtey niyê',
 	'revdelete-restricted' => 'verger (vergırewtış) ê ke qey xızmkaran biye',
 	'revdelete-unrestricted' => 'verger (ver gırewtış) ê ke qey xızmkaran diyê wera (wedariyê)',
-);
+];
 
-$messages['dsb'] = array(
+$messages['dsb'] = [
 	'returnto' => 'Slědk k bokoju $1.',
 	'redirectedfrom' => '(pósrědnjone z boka „$1”)',
 	'redirectpagesub' => 'Dalejpósrědnjenje',
@@ -10489,9 +10495,9 @@ Boki na [[Special:Watchlist|wobglědowańce]] su '''tucne'''.",
 	'revdelete-uname-unhid' => 'wužywarske mě widobne',
 	'revdelete-restricted' => 'Wobgranicowanja se teke na administratorow nałožuju',
 	'revdelete-unrestricted' => 'Wobgranicowanja za administratorow wótpórane',
-);
+];
 
-$messages['dtp'] = array(
+$messages['dtp'] = [
 	'returnto' => 'Gumuli hilo $1.',
 	'redirectedfrom' => '(Pinotilombus mantad $1)',
 	'redirectpagesub' => 'Bolikon pinotilombus',
@@ -10631,9 +10637,9 @@ Bobolikon id [[Special:Watchlist|lis pintangannu]] nopo nga '''pinakapal'''.",
 	'revertmove' => 'gulio',
 	'revdelete-restricted' => 'pinokogos pogoduhan montok momuruan',
 	'revdelete-unrestricted' => 'pinoidu pogoduhan montok momuruan',
-);
+];
 
-$messages['dv'] = array(
+$messages['dv'] = [
 	'returnto' => 'އަނބުރާ $1 އަށް ވަޑައިގަންނަވާ!',
 	'redirectedfrom' => '(މިސްރާބުކުރެވުނީ $1 އިން)',
 	'redirectpagesub' => 'ޞަފްޙާގެ މިސްރާބު އައުކުރައްވާ',
@@ -10644,9 +10650,9 @@ $messages['dv'] = array(
 	'recentchangeslinked-toolbox' => 'ގުޅުންހުރި ބަދަލުތައް',
 	'randompage' => 'ކޮންމެވެސް ޞަފްޙާއެއް',
 	'restriction-edit' => 'އުނިއިތުރު ގެންނަވާ',
-);
+];
 
-$messages['dz'] = array(
+$messages['dz'] = [
 	'returnto' => '$1 ལུ་ལོག།',
 	'redirectedfrom' => '($1 ལས་ ལོག་བཏང་ཡོདཔ་)',
 	'redirectpagesub' => 'ཤོག་ལེབ་སླར་ལོག་འབད།',
@@ -10686,9 +10692,9 @@ $messages['dz'] = array(
 	'restriction-type' => 'གནང་བ:',
 	'restriction-level' => 'མི་ཆོག་པའི་གནས་རིམ:',
 	'revertmove' => 'རྒྱབ་ལོག།',
-);
+];
 
-$messages['ee'] = array(
+$messages['ee'] = [
 	'returnto' => 'Gbugbɔ yi $1.',
 	'redirectedfrom' => '(Woɖo wò ɖe afii tso $1)',
 	'retrievedfrom' => 'Nuŋɔŋlɔ sia tso "$1"',
@@ -10723,9 +10729,9 @@ $messages['ee'] = array(
 	'restriction-edit' => 'Trɔ asi le eŋu',
 	'restriction-move' => 'Ɖɔli eƒe nɔƒe',
 	'restriction-create' => 'Dze egɔme',
-);
+];
 
-$messages['el'] = array(
+$messages['el'] = [
 	'returnto' => 'Επιστροφή στη σελίδα $1.',
 	'redirectedfrom' => '(Ανακατεύθυνση από $1)',
 	'redirectpagesub' => 'Σελίδα ανακατεύθυνσης',
@@ -10984,18 +10990,18 @@ $messages['el'] = array(
 	'review_reason_3' => 'Λόγος ανασκόπησης 3',
 	'review_reason_4' => 'Λόγος ανασκόπησης 4',
 	'review_reason_5' => 'Λόγος ανασκόπησης 5',
-);
+];
 
-$messages['eml'] = array(
+$messages['eml'] = [
 	'returnto' => 'Tórna a $1.',
 	'recentchanges' => 'Ûltem cambiamèint',
 	'recentchangeslinked' => 'Mudéffic curelèdi',
 	'recentchangeslinked-feed' => 'Mudéffic curelèdi',
 	'recentchangeslinked-toolbox' => 'Mudéffic curelèdi',
 	'randompage' => 'Una pàgina a chès',
-);
+];
 
-$messages['eo'] = array(
+$messages['eo'] = [
 	'returnto' => 'Reiri al $1.',
 	'redirectedfrom' => '(Alidirektita el $1)',
 	'redirectpagesub' => 'Alidirektilo',
@@ -11265,9 +11271,9 @@ Paĝoj en [[Special:Watchlist|via atentaro]] estas '''grasaj'''.",
 	'revdelete-uname-unhid' => 'salutnomo malkaŝita',
 	'revdelete-restricted' => 'aplikis limojn al administrantoj',
 	'revdelete-unrestricted' => 'forigis limojn por administrantoj',
-);
+];
 
-$messages['es'] = array(
+$messages['es'] = [
 	'returnto' => 'Volver a $1.',
 	'redirectedfrom' => '(Redirigido desde $1)',
 	'redirectpagesub' => 'Página redirigida',
@@ -11540,9 +11546,9 @@ No tiene acceso a él.',
 	'review_reason_3' => 'Tercera razón para esta revisión',
 	'review_reason_4' => 'Cuarta razón para esta revisión',
 	'review_reason_5' => 'Quinta razón para esta revisión',
-);
+];
 
-$messages['et'] = array(
+$messages['et'] = [
 	'returnto' => 'Naase lehele $1',
 	'redirectedfrom' => '(Ümber suunatud leheküljelt $1)',
 	'redirectpagesub' => 'Ümbersuunamisleht',
@@ -11810,9 +11816,9 @@ pöörduti tagasi viimasele muudatusele, mille tegi $2.',
 	'revdelete-uname-unhid' => 'nähtavaks tehti kasutajanimi',
 	'revdelete-restricted' => 'kehtestati piirangud administraatoritele',
 	'revdelete-unrestricted' => 'eemaldati administraatoritelt piirangud',
-);
+];
 
-$messages['eu'] = array(
+$messages['eu'] = [
 	'returnto' => '$1(e)ra itzuli.',
 	'redirectedfrom' => '($1(e)tik birzuzenduta)',
 	'redirectpagesub' => 'Birzuzenketa orrialdea',
@@ -12066,9 +12072,9 @@ edukia $2 wikilariaren azken bertsiora itzuli da.',
 	'recreate' => 'Birsortu',
 	'revdelete-restricted' => 'administratzaileentzako mugak ezarri dira',
 	'revdelete-unrestricted' => 'administratzaileentzako mugak kendu dira',
-);
+];
 
-$messages['ext'] = array(
+$messages['ext'] = [
 	'returnto' => 'Gorvel a $1.',
 	'redirectedfrom' => '(Rederihiu dendi $1)',
 	'redirectpagesub' => 'Rederihil páhina',
@@ -12227,9 +12233,9 @@ Las páhinas de la tu [[Special:Watchlist|lista e seguimientu]] están en '''neg
 	'recreate' => 'Gorvel a crial',
 	'revdelete-restricted' => 'las restricionis a los çahorilis án siu apricás',
 	'revdelete-unrestricted' => 'las restricionis a los çahorilis án siu esborrás',
-);
+];
 
-$messages['fa'] = array(
+$messages['fa'] = [
 	'returnto' => 'بازگشت به $1.',
 	'redirectedfrom' => '(تغییرمسیر از $1)',
 	'redirectpagesub' => 'صفحهٔ تغییرمسیر',
@@ -12496,14 +12502,14 @@ $1",
 	'revdelete-uname-unhid' => 'نام کاربری را پنهان کرد',
 	'revdelete-restricted' => 'مدیران را محدود کرد',
 	'revdelete-unrestricted' => 'محدودیت مدیران را لغو کرد',
-);
+];
 
-$messages['ff'] = array(
+$messages['ff'] = [
 	'recentchanges' => 'Wailitooji kesi',
 	'randompage' => 'Ɗerewol kawral',
-);
+];
 
-$messages['fi'] = array(
+$messages['fi'] = [
 	'returnto' => 'Palaa sivulle $1.',
 	'redirectedfrom' => 'Ohjattu sivulta $1',
 	'redirectpagesub' => 'Ohjaussivu',
@@ -12769,9 +12775,9 @@ Sinulla ei ole oikeutta siihen.',
 	'review_reason_3' => 'Arvostelun syy 3',
 	'review_reason_4' => 'Arvostelun syy 4',
 	'review_reason_5' => 'Arvostelun syy 5',
-);
+];
 
-$messages['fiu-vro'] = array(
+$messages['fiu-vro'] = [
 	'returnto' => 'Palaa sivulle $1.',
 	'redirectedfrom' => 'Ohjattu sivulta $1',
 	'redirectpagesub' => 'Ohjaussivu',
@@ -13037,9 +13043,9 @@ Sinulla ei ole oikeutta siihen.',
 	'review_reason_3' => 'Arvostelun syy 3',
 	'review_reason_4' => 'Arvostelun syy 4',
 	'review_reason_5' => 'Arvostelun syy 5',
-);
+];
 
-$messages['fj'] = array(
+$messages['fj'] = [
 	'remembermypassword' => 'Nanuma na yacaqu ena komipiuta oqo (for a maximum of $1 {{PLURAL:$1|day|days}})',
 	'recentchanges' => 'Veisau vovou',
 	'recentchangeslinked' => 'Veisau e veiwekani',
@@ -13048,9 +13054,9 @@ $messages['fj'] = array(
 	'randompage' => 'Vakawasoma',
 	'restriction-edit' => 'Veisautaki',
 	'restriction-move' => 'Toso',
-);
+];
 
-$messages['fo'] = array(
+$messages['fo'] = [
 	'returnto' => 'Vend aftur til $1.',
 	'redirectedfrom' => '(Ávíst frá $1)',
 	'redirectpagesub' => 'Ávísingarsíða',
@@ -13212,9 +13218,9 @@ Síður á [[Special:Watchlist|tínum eftiransingarlista]] eru skrivaðar við '
 	'revertmove' => 'endurstovna',
 	'rcpatroldisabled' => 'Ansanin eftir nýkomnum broytingum er óvirkin',
 	'rcpatroldisabledtext' => 'Hentleikin við ansing eftir nýkomnum broytingum er óvirkin í løtuni.',
-);
+];
 
-$messages['fr'] = array(
+$messages['fr'] = [
 	'returnto' => 'Revenir à la page $1.',
 	'redirectedfrom' => '(Redirigé depuis $1)',
 	'redirectpagesub' => 'Page de redirection',
@@ -13485,9 +13491,9 @@ rétablissement de la dernière version par $2.',
 	'review_reason_3' => 'Motif de révision n° 3',
 	'review_reason_4' => 'Motif de révision n° 4',
 	'review_reason_5' => 'Motif de révision n° 5',
-);
+];
 
-$messages['frc'] = array(
+$messages['frc'] = [
 	'returnto' => 'Retourner back à la page $1.',
 	'redirectedfrom' => '(Envoyé ici de la page $1)',
 	'redirectpagesub' => 'Page de redirection',
@@ -13542,9 +13548,9 @@ Des autres administrateurs sus ce wiki ont la permission de voir et de rétablir
 	'recentchanges' => 'Changements récent',
 	'rcshowhidepatr' => '$1 les modifications patrouillés',
 	'randompage' => 'Page au hasard',
-);
+];
 
-$messages['frp'] = array(
+$messages['frp'] = [
 	'returnto' => 'Tornar a la pâge $1.',
 	'redirectedfrom' => '(Redirigiê dês $1)',
 	'redirectpagesub' => 'Pâge de redirèccion',
@@ -13814,9 +13820,9 @@ rètablissement de la dèrriére vèrsion per $2.',
 	'revdelete-uname-unhid' => 'nom d’usanciér pas més cachiê',
 	'revdelete-restricted' => 'at aplicâ les rèstriccions ux administrators',
 	'revdelete-unrestricted' => 'rèstriccions enlevâs por los administrators',
-);
+];
 
-$messages['frr'] = array(
+$messages['frr'] = [
 	'returnto' => 'Tubääg tu jü side $1.',
 	'redirectedfrom' => '(Widerliidjet foon $1)',
 	'redirectpagesub' => 'Widerliidjing',
@@ -13962,9 +13968,9 @@ Dü heest deeraw nåån tugraawe.',
 	'revdelete-uname-unhid' => 'brükernoome frijääwen',
 	'revdelete-restricted' => 'gränse jüle uk for administratoore',
 	'revdelete-unrestricted' => 'gränse for administratoore wächnümen',
-);
+];
 
-$messages['fur'] = array(
+$messages['fur'] = [
 	'returnto' => 'Torne a $1.',
 	'redirectedfrom' => '(Inviât ca di $1)',
 	'redirectpagesub' => 'Pagjine di redirezion',
@@ -14050,9 +14056,9 @@ Ve ca par comoditât la liste des eliminazions e dai moviments par cheste pagjin
 	'restriction-create' => 'Creazion',
 	'revertmove' => 'ripristine',
 	'recreate' => 'Torne a creâ',
-);
+];
 
-$messages['fy'] = array(
+$messages['fy'] = [
 	'returnto' => 'Werom nei "$1".',
 	'redirectedfrom' => '(Trochwiisd fan "$1")',
 	'redirectpagesub' => 'Trochferwiis-side',
@@ -14243,9 +14249,9 @@ Oare behearders fan {{SITENAME}} kinne de ferburgen ynhâld benaderje en it fuor
 	'revertmove' => 'werom sette',
 	'revdelete-restricted' => 'hat beheinings oplein oan behearders',
 	'revdelete-unrestricted' => 'hat beheinings foar behearders goedmakke',
-);
+];
 
-$messages['ga'] = array(
+$messages['ga'] = [
 	'returnto' => 'Fill ar ais go $1.',
 	'redirectedfrom' => '(Athsheolta ó $1)',
 	'redirectpagesub' => 'Lch athdhírithe',
@@ -14352,9 +14358,9 @@ Tá na leathanaigh ar do [[Special:Watchlist|liosta faire]] i '''gcló trom'''."
 	'rcpatroldisabled' => 'Mhíchumasaíodh Patról na n-Athruithe is Déanaí',
 	'rcpatroldisabledtext' => 'Tá an tréith Patról na n-Athruithe is Déanaí míchumasaithe faoi láthair.',
 	'recreate' => 'Athchruthaigh',
-);
+];
 
-$messages['gag'] = array(
+$messages['gag'] = [
 	'returnto' => '$1 dön.',
 	'redirectedfrom' => '($1 sayfasınnan yönnendirildi)',
 	'redirectpagesub' => 'Yönnendirme sayfası',
@@ -14409,9 +14415,9 @@ Sizin bakmaa [[Special:Watchlist|listasındaki]] sayfalar verildi '''kalın''' b
 	'restriction-type' => 'İzin:',
 	'restriction-level' => 'Yasaklama düzeyi:',
 	'revertmove' => 'geeri al',
-);
+];
 
-$messages['gan-hans'] = array(
+$messages['gan-hans'] = [
 	'returnto' => '回到$1。',
 	'redirectedfrom' => '（从$1跳过来）',
 	'redirectpagesub' => '跳转页',
@@ -14534,9 +14540,9 @@ $messages['gan-hans'] = array(
 	'rcpatroldisabled' => '近来修改检查拖关闭',
 	'rcpatroldisabledtext' => '该朝子改动检查𠮶功能拖关闭嘞。',
 	'recreate' => '重建',
-);
+];
 
-$messages['gan-hant'] = array(
+$messages['gan-hant'] = [
 	'returnto' => '去歸$1。',
 	'redirectedfrom' => '（從$1跳過來）',
 	'redirectpagesub' => '跳轉頁',
@@ -14659,9 +14665,9 @@ $messages['gan-hant'] = array(
 	'rcpatroldisabled' => '近來修改檢查拕關閉',
 	'rcpatroldisabledtext' => '該朝子改動檢查嗰功能拕關閉嘞。',
 	'recreate' => '重建',
-);
+];
 
-$messages['gd'] = array(
+$messages['gd'] = [
 	'returnto' => 'Till dhan duilleag a leanas: $1',
 	'redirectedfrom' => '(Air ath-sheòladh o $1)',
 	'redirectpagesub' => 'Ath-sheòl an duilleag',
@@ -14740,9 +14746,9 @@ Tha duilleagan air [[Special:Watchlist|do chlàr-faire]] ann an litrichean '''tr
 	'restriction-type' => 'Cead:',
 	'restriction-level' => 'Ìre bacaidh:',
 	'revertmove' => 'till',
-);
+];
 
-$messages['gl'] = array(
+$messages['gl'] = [
 	'returnto' => 'Volver a "$1".',
 	'redirectedfrom' => '(Redirixido desde "$1")',
 	'redirectpagesub' => 'Páxina de redirección',
@@ -15010,13 +15016,13 @@ volveuse á última edición, feita por $2.',
 	'revdelete-restricted' => 'aplicou restricións aos administradores',
 	'revdelete-unrestricted' => 'eliminou restricións aos administradores',
 	'rate_it' => 'Puntúalo:',
-);
+];
 
-$messages['glk'] = array(
+$messages['glk'] = [
 	'returnto' => 'واگرد به $1.',
-);
+];
 
-$messages['gn'] = array(
+$messages['gn'] = [
 	'redirectedfrom' => '(Oñembohapejeýva $1)',
 	'restorelink' => '$1 ediciones borradas',
 	'red-link-title' => '$1 (ndaipóri ko togue)',
@@ -15037,9 +15043,9 @@ $messages['gn'] = array(
 	'rollback_short' => 'Embojevy',
 	'rollbacklink' => 'Embojevy',
 	'revertmove' => 'embojevy',
-);
+];
 
-$messages['got'] = array(
+$messages['got'] = [
 	'returnto' => '𐌲𐌰𐍅𐌰𐌽𐌳𐌾𐌰𐌽 𐌰𐍄 $1.',
 	'redirectedfrom' => '(Náuþjan framis $1)',
 	'redirectpagesub' => '𐍄𐌰𐌹𐌺𐌾𐌰𐍃𐌴𐌹𐌳𐍉',
@@ -15063,9 +15069,9 @@ $messages['got'] = array(
 	'restriction-edit' => '𐌼𐌰𐌹𐌳𐌾𐌰𐌽',
 	'restriction-move' => '𐍃𐌺𐌹𐌿𐌱𐌰𐌽',
 	'revertmove' => 'ráidjan',
-);
+];
 
-$messages['grc'] = array(
+$messages['grc'] = [
 	'returnto' => 'Ἐπανιέναι εἰς $1.',
 	'redirectedfrom' => '(Ἀποσταλτὸν ἀπὸ $1)',
 	'redirectpagesub' => 'Ἐπανάγειν δέλτον',
@@ -15278,9 +15284,9 @@ $1",
 	'rcpatroldisabledtext' => 'Τὸ χαρακτηριστικὸν Περιπολία Προσφάτων Μεταβολῶν νῦν ἐστι ἀπενεργοποιηθέν.',
 	'recentchangesall' => 'Πᾶσαι',
 	'recreate' => 'Ἀναποιεῖν',
-);
+];
 
-$messages['gsw'] = array(
+$messages['gsw'] = [
 	'returnto' => 'Zruck zur Syte $1.',
 	'redirectedfrom' => '(Witergleitet vun $1)',
 	'redirectpagesub' => 'Umgleiteti Syte',
@@ -15544,9 +15550,9 @@ Sytene, wo zu dyre [[Special:Watchlist|Beobachtigslischte]] ghöre, erschyne '''
 	'revdelete-uname-unhid' => 'Benutzername freigee',
 	'revdelete-restricted' => 'Yyschränkige gälte au fir Ammanne',
 	'revdelete-unrestricted' => 'Yyschränkige fir Ammanne ufghobe',
-);
+];
 
-$messages['gu'] = array(
+$messages['gu'] = [
 	'returnto' => '$1 પર પાછા જાઓ.',
 	'redirectedfrom' => '($1 થી અહીં વાળેલું)',
 	'redirectpagesub' => 'પાનું અન્યત્ર વાળો',
@@ -15815,9 +15821,9 @@ $1",
 	'revdelete-uname-unhid' => 'વપરાશકર્તા નામ છુપાવેલ નથીં',
 	'revdelete-restricted' => 'પ્રબઁધકોના ફેરફાર કરવા પર પ્રતિબંધ મુકાયો',
 	'revdelete-unrestricted' => 'પ્રબંધકોના ફેરફાર કરવા પર પ્રતિબંધ હટાવાયો.',
-);
+];
 
-$messages['gv'] = array(
+$messages['gv'] = [
 	'returnto' => 'Goll er ash gys $1.',
 	'redirectedfrom' => '(Aa-enmyssit ass $1)',
 	'redirectpagesub' => 'Duillag aa-enmys',
@@ -15889,9 +15895,9 @@ Ta duillagyn er [[Special:Watchlist|dty rolley arrey]] ayns '''clou trome'''.",
 	'revertmove' => 'goll er ash',
 	'recentchangesall' => 'yn clane',
 	'recreate' => 'Aachroo',
-);
+];
 
-$messages['ha'] = array(
+$messages['ha'] = [
 	'returnto' => 'Koma $1',
 	'redirectedfrom' => '(an turo daga $1)',
 	'redirectpagesub' => 'Shafin turawa',
@@ -15932,9 +15938,9 @@ $messages['ha'] = array(
 	'restriction-move' => 'Gusarwa',
 	'restriction-create' => 'Ƙirƙira',
 	'revertmove' => 'koma',
-);
+];
 
-$messages['hak'] = array(
+$messages['hak'] = [
 	'returnto' => 'Fán-fì to $1.',
 	'redirectedfrom' => '（Chhùng-thin-hiong chhṳ $1）',
 	'redirectpagesub' => 'Chhùng-thin-hiong hong-mien',
@@ -16046,9 +16052,9 @@ Chhai [[Special:Watchlist|ngì-ke kam-sṳ lie̍t-péu]] chûng ke ya̍p fi hié
 	'recreate' => 'Chhùng-kien',
 	'revdelete-restricted' => 'yí-kîn yin-yung han-tsṳ tsṳ tshâu-tsok-yèn',
 	'revdelete-unrestricted' => 'yí-kîn yì-tshù yû-kûan tshâu-tsok-yè ke han-tsṳ',
-);
+];
 
-$messages['haw'] = array(
+$messages['haw'] = [
 	'returnto' => 'Ho‘i iā $1.',
 	'redirectedfrom' => '(Hoʻoili mai $1)',
 	'redirectpagesub' => '‘Ao‘ao e alaka‘i ai',
@@ -16082,9 +16088,9 @@ $messages['haw'] = array(
 	'restriction-type' => 'ʻAe ʻia:',
 	'restriction-edit' => 'E ho‘ololi',
 	'restriction-move' => "E ho'ololi i ka inoa",
-);
+];
 
-$messages['he'] = array(
+$messages['he'] = [
 	'returnto' => 'חזרה לדף $1.',
 	'redirectedfrom' => '(הופנה מהדף $1)',
 	'redirectpagesub' => 'דף הפניה',
@@ -16354,9 +16360,9 @@ $1",
 	'revdelete-restricted' => 'נוספו הגבלות למפעילי מערכת',
 	'revdelete-unrestricted' => 'הוסרו הגבלות ממפעילי מערכת',
 	'rate_it' => 'תנ/י לו ציון',
-);
+];
 
-$messages['hi'] = array(
+$messages['hi'] = [
 	'returnto' => 'लौटें $1.',
 	'redirectedfrom' => '($1 से भेजा गया)',
 	'redirectpagesub' => 'पुनर्निर्देश पृष्ठ',
@@ -16623,9 +16629,9 @@ $2 द्वारा संपादित आखिरी अवतरण क�
 	'rcpatroldisabledtext' => 'हाल में हुए बदलावोंपर नजर रखने की सुविधा बंद कर दी ग‍ईं हैं।',
 	'recentchangesall' => 'सभी',
 	'recreate' => 'फिरसे बनायें',
-);
+];
 
-$messages['hif'] = array(
+$messages['hif'] = [
 	'returnto' => 'लौटें $1.',
 	'redirectedfrom' => '($1 से भेजा गया)',
 	'redirectpagesub' => 'पुनर्निर्देश पृष्ठ',
@@ -16892,9 +16898,9 @@ $2 द्वारा संपादित आखिरी अवतरण क�
 	'rcpatroldisabledtext' => 'हाल में हुए बदलावोंपर नजर रखने की सुविधा बंद कर दी ग‍ईं हैं।',
 	'recentchangesall' => 'सभी',
 	'recreate' => 'फिरसे बनायें',
-);
+];
 
-$messages['hif-latn'] = array(
+$messages['hif-latn'] = [
 	'returnto' => '$1 pe lauto.',
 	'redirectedfrom' => '($1 se bheja gais)',
 	'redirectpagesub' => 'Panna ke redirect karo',
@@ -17165,9 +17171,9 @@ badal ke $2 ke aakhri version kar dewa gais hai.',
 	'rcpatroldisabledtext' => 'Nawaa badla pe abhi pahraa nai dewa jaawe hai',
 	'recentchangesall' => 'sab',
 	'recreate' => 'Fir se banao',
-);
+];
 
-$messages['hil'] = array(
+$messages['hil'] = [
 	'returnto' => 'Balik sa $1.',
 	'redirectedfrom' => '(Gindirek liwat halin $1)',
 	'redirectpagesub' => 'I-direktahon ang pahina',
@@ -17338,9 +17344,9 @@ Mga Pahina sa [[Special:Watchlist|imo lista-lantaw]] ay '''dukot'''.",
 	'revertmove' => 'nagbalik',
 	'revdelete-restricted' => 'ginapatuman nga pagbawal sa mga administrador',
 	'revdelete-unrestricted' => 'ginkakas nga pagbawal sa mga administrador',
-);
+];
 
-$messages['hr'] = array(
+$messages['hr'] = [
 	'returnto' => 'Vrati se na $1.',
 	'redirectedfrom' => '(Preusmjereno s $1)',
 	'redirectpagesub' => 'Preusmjeravanje',
@@ -17607,9 +17613,9 @@ Provjerite evidencije.',
 	'review_reason_3' => 'Razlog recenzije 3',
 	'review_reason_4' => 'Razlog recenzije 4',
 	'review_reason_5' => 'Razlog recenzije 5',
-);
+];
 
-$messages['hsb'] = array(
+$messages['hsb'] = [
 	'returnto' => 'Wróćo k stronje $1.',
 	'redirectedfrom' => '(ze strony $1 sposrědkowany)',
 	'redirectpagesub' => 'Daleposrědkowanje',
@@ -17874,9 +17880,9 @@ Strony na [[Special:Watchlist|wobkedźbowankach]] su '''tučne'''.",
 	'revdelete-uname-unhid' => 'wužiwarske mjeno widźomne',
 	'revdelete-restricted' => 'na administratorow nałožene wobmjezowanja',
 	'revdelete-unrestricted' => 'Wobmjezowanja za administratorow wotstronjene',
-);
+];
 
-$messages['ht'] = array(
+$messages['ht'] = [
 	'returnto' => 'Ritounen nan paj $1.',
 	'redirectedfrom' => '(Redirije depi $1)',
 	'redirectpagesub' => 'Paj pou redireksyon',
@@ -17967,9 +17973,9 @@ Mande ou byen si ou ap byen fè kreye li ankò.  Gade jounal paj sa a pou konnen
 	'restriction-level' => 'Nivo kontrent, restriksyon:',
 	'revertmove' => 'revoke',
 	'revdelete-restricted' => 'aplike restriksyon sa yo pou administratè yo',
-);
+];
 
-$messages['hu'] = array(
+$messages['hu'] = [
 	'returnto' => 'Vissza a(z) $1 laphoz.',
 	'redirectedfrom' => '($1 szócikkből átirányítva)',
 	'redirectpagesub' => 'Átirányító lap',
@@ -18232,9 +18238,9 @@ A [[Special:Watchlist|figyelőlistádon]] szereplő lapok '''félkövérrel''' v
 	'revdelete-uname-unhid' => 'szerkesztő megjelenítve',
 	'revdelete-restricted' => 'elrejtett az adminisztrátorok elől',
 	'revdelete-unrestricted' => 'felfedett az adminisztrátoroknak',
-);
+];
 
-$messages['hy'] = array(
+$messages['hy'] = [
 	'returnto' => 'Վերադառնալ $1։',
 	'redirectedfrom' => '(Վերահղված է $1-ից)',
 	'redirectpagesub' => 'Վերահղման էջ',
@@ -18379,9 +18385,9 @@ $1',
 	'rcpatroldisabled' => 'Վերջին Փոփոխությունների Պարեկումն անջատված է',
 	'rcpatroldisabledtext' => 'Վերջին Փոփոխությունների Պարեկման հնարավորությունը անջատված է:',
 	'recreate' => 'Վերստեղծել',
-);
+];
 
-$messages['ia'] = array(
+$messages['ia'] = [
 	'returnto' => 'Retornar a $1.',
 	'redirectedfrom' => '(Redirigite ab $1)',
 	'redirectpagesub' => 'Pagina de redirection',
@@ -18650,9 +18656,9 @@ retornava al version per $2.',
 	'revdelete-uname-unhid' => 'nomine de usator non plus celate',
 	'revdelete-restricted' => 'restrictiones applicate al administratores',
 	'revdelete-unrestricted' => 'restrictiones eliminate pro administratores',
-);
+];
 
-$messages['id'] = array(
+$messages['id'] = [
 	'returnto' => 'Kembali ke $1.',
 	'redirectedfrom' => '(Dialihkan dari $1)',
 	'redirectpagesub' => 'Halaman pengalihan',
@@ -18915,9 +18921,9 @@ Silakan periksa catatan log.',
 	'revdelete-uname-unhid' => 'nama pengguna tidak disembunyikan',
 	'revdelete-restricted' => 'akses telah dibatasi untuk opsis',
 	'revdelete-unrestricted' => 'pembatasan akses opsis dihapuskan',
-);
+];
 
-$messages['ie'] = array(
+$messages['ie'] = [
 	'returnto' => 'Retornar a $1.',
 	'redirectedfrom' => '(Redirectet de $1)',
 	'redirectpagesub' => 'Págine de redirecterion',
@@ -18973,9 +18979,9 @@ Págines in [[Special:Watchlist|tui liste de págines vigilat]] es '''nigri'''."
 	'restriction-edit' => 'Redacter',
 	'restriction-move' => 'Mover',
 	'revertmove' => 'reverter',
-);
+];
 
-$messages['ig'] = array(
+$messages['ig'] = [
 	'returnto' => 'Ganata na $1.',
 	'redirectedfrom' => '(Kufùrù shi $1)',
 	'redirectpagesub' => 'Kufù ebe ihü nka na ga',
@@ -19067,9 +19073,9 @@ Ihü nọr na [[Special:Watchlist|ndétu ihe Í ne lé]] di na mkpụrụ edemed
 	'restriction-level-all' => 'ọtú nke ȯbulà',
 	'revertmove' => 'gbanwe lá àzú',
 	'recreate' => 'Ké ya ohúrù',
-);
+];
 
-$messages['ike-cans'] = array(
+$messages['ike-cans'] = [
 	'redirectedfrom' => '(ᖃᓂᖓᓂ ᑲᒪᒋᔭᖅ ᐋᓯᑦ ᓇᑭᑦ $1)',
 	'redirectpagesub' => 'ᖃᓂᖓᓂ ᑲᒪᒋᔭᖅ ᐋᓯᑦ ᓇᑭᑦ ᒪᑉᐱᑕᖅ',
 	'remembermypassword' => 'ᐃᖅᑑ ᐅᐃᑭᐱᑎᐊ ᐊᑎᖅ ᖃᑯᒍᖅ ᐊᑐᐃᓐᓇᓯᕗᖅ ᐅᕙᓗᒪᔪᖅ ᖃᕆᑕᐅᔭᖅ (for a maximum of $1 {{PLURAL:$1|day|days}})',
@@ -19081,9 +19087,9 @@ $messages['ike-cans'] = array(
 	'randompage' => 'ᓇᑭᑐᐃᓐᓇᖅ ᖃᐅᔨᓴᕐᓂᖅ ᒪᑉᐱᑕᖅ',
 	'randomredirect' => 'ᓇᑭᑐᐃᓐᓇᖅ ᖃᐅᔨᓴᕐᓂᖅ ᖃᓂᖓᓂ ᑲᒪᒋᔭᖅ ᐋᓯᑦ ᓇᑭᑦ',
 	'restriction-move' => 'ᐅᐊᔪᖅ',
-);
+];
 
-$messages['ike-latn'] = array(
+$messages['ike-latn'] = [
 	'redirectedfrom' => '(qaningani kamagijaq aasit nakit $1)',
 	'redirectpagesub' => 'aningani kamagijaq aasit nakit mappitaq',
 	'remembermypassword' => 'iqtuu uikipitia atiq qakakuq atuinnasivuq uvalumajuq qaritaujaq (for a maximum of $1 {{PLURAL:$1|day|days}})',
@@ -19096,9 +19102,9 @@ $messages['ike-latn'] = array(
 	'randomredirect' => 'nakituinnaq qaujisarniq qaningani kamagijaq aasit nakit',
 	'restriction-edit' => 'Suqusiqpaa',
 	'restriction-move' => 'uajuq',
-);
+];
 
-$messages['ilo'] = array(
+$messages['ilo'] = [
 	'returnto' => 'Agsubli idiay $1.',
 	'redirectedfrom' => '(Naibaw-ing manipud idiay $1)',
 	'redirectpagesub' => 'Ibaw-ing ti panid',
@@ -19368,9 +19374,9 @@ naisubli manen iti naudi a panagbaliw ni $2.',
 	'revdelete-uname-unhid' => 'saan a nailemmeng ti nagan ti agar-aramat',
 	'revdelete-restricted' => 'naipakat dagiti pammarit kadagiti administrador',
 	'revdelete-unrestricted' => 'naikkat dagiti pammarit para kadagiti administrador',
-);
+];
 
-$messages['inh'] = array(
+$messages['inh'] = [
 	'returnto' => '$1 оагӀув тӀа юхавалар',
 	'redirectedfrom' => '($1 тӀера хьадейта да)',
 	'redirectpagesub' => 'ДӀа-хьа дайта оагӀув',
@@ -19442,9 +19448,9 @@ $messages['inh'] = array(
 	'restriction-create' => 'Кхоллам',
 	'restriction-upload' => 'Чудаккхар',
 	'revertmove' => 'юхаяккха',
-);
+];
 
-$messages['io'] = array(
+$messages['io'] = [
 	'returnto' => 'Retrovenar a $1.',
 	'redirectedfrom' => '(Ridirektita de $1)',
 	'redirectpagesub' => 'Ridirektanta pagino',
@@ -19539,9 +19545,9 @@ restauris ad lasta versiono da $2.',
 	'restriction-upload' => 'Adkargar',
 	'revertmove' => 'rekuperar',
 	'recreate' => 'Rikrear',
-);
+];
 
-$messages['is'] = array(
+$messages['is'] = [
 	'returnto' => 'Aftur á: $1.',
 	'redirectedfrom' => '(Tilvísað frá $1)',
 	'redirectpagesub' => 'Tilvísunarsíða',
@@ -19803,9 +19809,9 @@ Síður á [[Special:Watchlist|vaktlistanum þínum]] eru '''feitletraðar'''.",
 	'review_reason_3' => 'Prufa ástæðu 3',
 	'review_reason_4' => 'Prufa ástæðu 4',
 	'review_reason_5' => 'Prufa ástæðu 5',
-);
+];
 
-$messages['it'] = array(
+$messages['it'] = [
 	'returnto' => 'Torna a $1.',
 	'redirectedfrom' => '(Reindirizzamento da <b>$1</b>)',
 	'redirectpagesub' => 'Pagina di reindirizzamento',
@@ -20065,9 +20071,9 @@ Le pagine contenute nella propria lista degli [[Special:Watchlist|Osservati spec
 	'revdelete-uname-unhid' => 'nome utente ripristinato',
 	'revdelete-restricted' => 'limitazioni ai soli amministratori attivate',
 	'revdelete-unrestricted' => 'limitazioni ai soli amministratori rimosse',
-);
+];
 
-$messages['iu'] = array(
+$messages['iu'] = [
 	'returnto' => 'Torna a $1.',
 	'redirectedfrom' => '(Reindirizzamento da <b>$1</b>)',
 	'redirectpagesub' => 'Pagina di reindirizzamento',
@@ -20327,9 +20333,9 @@ Le pagine contenute nella propria lista degli [[Special:Watchlist|Osservati spec
 	'revdelete-uname-unhid' => 'nome utente ripristinato',
 	'revdelete-restricted' => 'limitazioni ai soli amministratori attivate',
 	'revdelete-unrestricted' => 'limitazioni ai soli amministratori rimosse',
-);
+];
 
-$messages['ja'] = array(
+$messages['ja'] = [
 	'returnto' => '$1に戻る。',
 	'redirectedfrom' => '（$1から転送）',
 	'redirectpagesub' => '転送ページ',
@@ -20633,9 +20639,9 @@ $2による最後の版へ変更されました。',
 	'review_reason_3' => 'Review reason 3',
 	'review_reason_4' => 'Review reason 4',
 	'review_reason_5' => 'Review reason 5',
-);
+];
 
-$messages['jam'] = array(
+$messages['jam'] = [
 	'returnto' => 'Ritoern a $1',
 	'redirectedfrom' => '(Riidirek frahn $1)',
 	'redirectpagesub' => 'Riidirek piej',
@@ -20692,9 +20698,9 @@ Piej pahn [[Special:Watchlist|yu wachlis]] dem '''buol'''.",
 	'restriction-type' => 'Poermishan:',
 	'restriction-level' => 'Rischrikshan lebl:',
 	'revertmove' => 'rivoert',
-);
+];
 
-$messages['jbo'] = array(
+$messages['jbo'] = [
 	'retrievedfrom' => 'cpacu fi la\'o .url. "$1" .url.',
 	'restorelink' => '{{PLURAL:$1|one deleted edit|$1 deleted edits}}',
 	'red-link-title' => '$1 (le vi kibypapri cu na zasti)',
@@ -20709,9 +20715,9 @@ $messages['jbo'] = array(
 	'rollbacklink' => 'lamxru',
 	'restriction-edit' => 'stika',
 	'revertmove' => 'xruti',
-);
+];
 
-$messages['jut'] = array(
+$messages['jut'] = [
 	'returnto' => 'Tilbage til $1.',
 	'redirectedfrom' => '(Åmstyret frå $1)',
 	'redirectpagesub' => 'Åmstyrenge',
@@ -20757,9 +20763,9 @@ denne side er vest nedenfør:",
 	'restriction-type' => 'Beskyttelsesståt',
 	'restriction-level' => 'Beskyttelseshøjde',
 	'revertmove' => 'gendan',
-);
+];
 
-$messages['jv'] = array(
+$messages['jv'] = [
 	'returnto' => 'Bali menyang $1.',
 	'redirectedfrom' => '(Dialihkan dari $1)',
 	'redirectpagesub' => 'Kaca pangalihan',
@@ -21011,9 +21017,9 @@ diowahi bali menyang vèrsi pungkasan déning $2.',
 	'rcpatroldisabledtext' => 'Fitur patroli owah-owahan pungkasan lagi dipatèni.',
 	'recentchangesall' => 'kabèh',
 	'recreate' => 'Gawé ulang',
-);
+];
 
-$messages['ka'] = array(
+$messages['ka'] = [
 	'returnto' => 'დაბრუნდი $1-ზე.',
 	'redirectedfrom' => '(გადმომისამართდა $1-დან)',
 	'redirectpagesub' => 'გადამისამართება გვერდზე',
@@ -21286,9 +21292,9 @@ $1",
 	'rcpatroldisabledtext' => 'ბოლო ცვლილებების პატრულირების შესაძლებლობა ამ მომენტისთვის გათიშულია',
 	'recentchangesall' => 'ყველა',
 	'recreate' => 'აღადგინე',
-);
+];
 
-$messages['kaa'] = array(
+$messages['kaa'] = [
 	'returnto' => '$1 betine qaytıw.',
 	'redirectedfrom' => "($1 degennen burılg'an)",
 	'redirectpagesub' => 'Burıwshı bet',
@@ -21442,9 +21448,9 @@ Qolaylıq ushın to'mende o'shiriw jurnalı keltirilgen:",
 	'recreate' => 'Qaytadan jaratıw',
 	'revdelete-restricted' => "administratorlarg'a qollanılg'an sheklewler",
 	'revdelete-unrestricted' => "administratorlardan alıp taslang'an sheklewler",
-);
+];
 
-$messages['kab'] = array(
+$messages['kab'] = [
 	'returnto' => 'Uɣal ar $1.',
 	'redirectedfrom' => '(Yettusmimeḍ seg $1)',
 	'redirectpagesub' => 'Asebter usemmimeḍ',
@@ -21538,9 +21544,9 @@ Inedbalen wiyaḍ deg wiki-yagi zemren ad ẓren imuren i yettwafren u zemren a 
 	'rcpatroldisabled' => 'Yettwakkes asenqad n ibeddlen imaynuten',
 	'rcpatroldisabledtext' => 'Yettwakkes asenqad n ibeddlen imaynuten',
 	'recreate' => 'Ɛiwed xleq',
-);
+];
 
-$messages['kbd'] = array(
+$messages['kbd'] = [
 	'returnto' => 'Uɣal ar $1.',
 	'redirectedfrom' => '(Yettusmimeḍ seg $1)',
 	'redirectpagesub' => 'Asebter usemmimeḍ',
@@ -21634,9 +21640,9 @@ Inedbalen wiyaḍ deg wiki-yagi zemren ad ẓren imuren i yettwafren u zemren a 
 	'rcpatroldisabled' => 'Yettwakkes asenqad n ibeddlen imaynuten',
 	'rcpatroldisabledtext' => 'Yettwakkes asenqad n ibeddlen imaynuten',
 	'recreate' => 'Ɛiwed xleq',
-);
+];
 
-$messages['kbd-cyrl'] = array(
+$messages['kbd-cyrl'] = [
 	'returnto' => '$1 напэкӀуэцӀым гъэзэжын.',
 	'redirectedfrom' => '($1 мыбы къыхэкIащ)',
 	'redirectpagesub' => 'НапэкӀуэцӀ-егъэкӀуэкӀа',
@@ -21790,9 +21796,9 @@ $1",
 	'revertmove' => 'гъэзэжын',
 	'revdelete-restricted' => 'теубыдыгъуэхэр тхьэмадэхэм ятохуэ',
 	'revdelete-unrestricted' => 'теубыдыгъуэхэр тхьэмадэхэм ятеха',
-);
+];
 
-$messages['kg'] = array(
+$messages['kg'] = [
 	'returnto' => 'Vutukila $1',
 	'redirectedfrom' => '(Balulama tuka $1)',
 	'retrievedfrom' => 'Receptum de "$1"',
@@ -21803,9 +21809,9 @@ $messages['kg'] = array(
 	'rcshowhideminor' => '$1 bansoba ya fyoti-fyoti',
 	'rcshowhidemine' => '$1 bansoba na munu',
 	'randompage' => 'Lukaya na kintulumukini',
-);
+];
 
-$messages['khw'] = array(
+$messages['khw'] = [
 	'returnto' => 'آچی $1۔',
 	'redirectedfrom' => "'($1 خور ژاغار گنونو ھوی)',",
 	'redirectpagesub' => 'ھیہ صفحو خور ژاغا آلونو بیتی شیر',
@@ -21879,9 +21885,9 @@ $1 (صفحہ موجود نیکی)',
 	'restriction-type' => 'اجازت',
 	'restriction-level' => 'ممنوغ لیول',
 	'revertmove' => 'رجوغ',
-);
+];
 
-$messages['kiu'] = array(
+$messages['kiu'] = [
 	'returnto' => 'Peyser so $1.',
 	'redirectedfrom' => '($1 ra ard)',
 	'redirectpagesub' => 'Pela ardene',
@@ -22021,9 +22027,9 @@ Eke şertê ilawekerdey ke niyê ro, idarekerê bini {{SITENAME}} de nêşikinê
 	'reblock-logentry' => 'kilıt-kerdena [[$1]]i hata peyê $2 $3ine vurnê',
 	'range_block_disabled' => 'Qabılıyetê idarekeri be afernaena komuna têdine qapan bi.',
 	'revertmove' => 'raçarnaene',
-);
+];
 
-$messages['kk-arab'] = array(
+$messages['kk-arab'] = [
 	'returnto' => '$1 دەگەنگە قايتا كەلۋ.',
 	'redirectedfrom' => '($1 بەتىنەن ايداتىلعان)',
 	'redirectpagesub' => 'ايداتۋ بەتى',
@@ -22199,9 +22205,9 @@ $2 سوڭعى نۇسقاسىنا وزگەرتتى.',
 	'recreate' => 'قايتا باستاۋ',
 	'revdelete-restricted' => 'اكىمشىلەرگە تىيىمدار قولدادى',
 	'revdelete-unrestricted' => 'اكىمشىلەردەن تىيىمداردى الاستادى',
-);
+];
 
-$messages['kk-cn'] = array(
+$messages['kk-cn'] = [
 	'returnto' => '$1 دەگەنگە قايتا كەلۋ.',
 	'redirectedfrom' => '($1 بەتىنەن ايداتىلعان)',
 	'redirectpagesub' => 'ايداتۋ بەتى',
@@ -22377,9 +22383,9 @@ $2 سوڭعى نۇسقاسىنا وزگەرتتى.',
 	'recreate' => 'قايتا باستاۋ',
 	'revdelete-restricted' => 'اكىمشىلەرگە تىيىمدار قولدادى',
 	'revdelete-unrestricted' => 'اكىمشىلەردەن تىيىمداردى الاستادى',
-);
+];
 
-$messages['kk-cyrl'] = array(
+$messages['kk-cyrl'] = [
 	'returnto' => '$1 дегенге қайта келу.',
 	'redirectedfrom' => '($1 бетінен айдатылған)',
 	'redirectpagesub' => 'Айдату беті',
@@ -22559,9 +22565,9 @@ $2 соңғы нұсқасына өзгертті.',
 	'recreate' => 'Қайта бастау',
 	'revdelete-restricted' => 'әкімшілерге тиымдар қолдады',
 	'revdelete-unrestricted' => 'әкімшілерден тиымдарды аластады',
-);
+];
 
-$messages['kk-kz'] = array(
+$messages['kk-kz'] = [
 	'returnto' => '$1 дегенге қайта келу.',
 	'redirectedfrom' => '($1 бетінен айдатылған)',
 	'redirectpagesub' => 'Айдату беті',
@@ -22741,9 +22747,9 @@ $2 соңғы нұсқасына өзгертті.',
 	'recreate' => 'Қайта бастау',
 	'revdelete-restricted' => 'әкімшілерге тиымдар қолдады',
 	'revdelete-unrestricted' => 'әкімшілерден тиымдарды аластады',
-);
+];
 
-$messages['kk-latn'] = array(
+$messages['kk-latn'] = [
 	'returnto' => '$1 degenge qaýta kelw.',
 	'redirectedfrom' => '($1 betinen aýdatılğan)',
 	'redirectpagesub' => 'Aýdatw beti',
@@ -22919,9 +22925,9 @@ $2 soñğı nusqasına özgertti.',
 	'recreate' => 'Qaýta bastaw',
 	'revdelete-restricted' => 'äkimşilerge tïımdar qoldadı',
 	'revdelete-unrestricted' => 'äkimşilerden tïımdardı alastadı',
-);
+];
 
-$messages['kk-tr'] = array(
+$messages['kk-tr'] = [
 	'returnto' => '$1 degenge qaýta kelw.',
 	'redirectedfrom' => '($1 betinen aýdatılğan)',
 	'redirectpagesub' => 'Aýdatw beti',
@@ -23097,9 +23103,9 @@ $2 soñğı nusqasına özgertti.',
 	'recreate' => 'Qaýta bastaw',
 	'revdelete-restricted' => 'äkimşilerge tïımdar qoldadı',
 	'revdelete-unrestricted' => 'äkimşilerden tïımdardı alastadı',
-);
+];
 
-$messages['kl'] = array(
+$messages['kl'] = [
 	'returnto' => '$1 -mut uterit',
 	'redirectedfrom' => '($1-mit nuunneq)',
 	'retrievedfrom' => 'Uannga aaneqartoq "$1"',
@@ -23126,9 +23132,9 @@ $messages['kl'] = array(
 	'recentchangeslinked-toolbox' => 'Allannguutit naleqqiussat',
 	'randompage' => 'Nalaatsornermi qupperneq',
 	'revertpage' => 'Inisseqqiineq [[User:$1|$1]]-meersoq, peerneqarpoq [[Special:Contributions/$2|$2]] ([[User talk:$2|diskussion]])-meersoq',
-);
+];
 
-$messages['km'] = array(
+$messages['km'] = [
 	'returnto' => 'ត្រឡប់ទៅ $1 វិញ ។',
 	'redirectedfrom' => '(ត្រូវបានបញ្ជូនបន្តពី $1)',
 	'redirectpagesub' => 'ទំព័របញ្ជូនបន្ត',
@@ -23368,9 +23374,9 @@ $1",
 	'recreate' => 'បង្កើតឡើងវិញ',
 	'revdelete-restricted' => 'បានអនុវត្តការដាក់កំហិតចំពោះអ្នកអភិបាល',
 	'revdelete-unrestricted' => 'បានដកការដាក់កំហិតចេញសម្រាប់អ្នកអភិបាល',
-);
+];
 
-$messages['kn'] = array(
+$messages['kn'] = [
 	'returnto' => '$1 ಗೆ ಹಿಂತಿರುಗಿ.',
 	'redirectedfrom' => '($1 ಇಂದ ಪುನರ್ನಿರ್ದೇಶಿತ)',
 	'redirectpagesub' => 'ಪುನರ್ನಿರ್ದೇಶನ ಪುಟ',
@@ -23499,9 +23505,9 @@ $messages['kn'] = array(
 	'recreate' => 'ಪುನಃ ಸೃಷ್ಟಿಸು',
 	'revdelete-restricted' => 'ನಿರ್ವಾಹಕರಿಗೆ ನಿಬಂಧನೆಗಳನ್ನು ಅನ್ವಯಿಸಲಾಯಿತು',
 	'revdelete-unrestricted' => 'ನಿರ್ವಾಹಕರ ನಿಬಂಧನೆಗಳನ್ನು ತೆಗೆಯಲಾಯಿತು',
-);
+];
 
-$messages['ko'] = array(
+$messages['ko'] = [
 	'returnto' => '$1(으)로 돌아갑니다.',
 	'redirectedfrom' => '($1에서 넘어옴)',
 	'redirectpagesub' => '넘겨주기 문서',
@@ -23766,9 +23772,9 @@ $1",
 	'revdelete-uname-unhid' => '계정 이름 숨김 해제됨',
 	'revdelete-restricted' => '관리자에게 제한을 적용함',
 	'revdelete-unrestricted' => '관리자에 대한 제한을 해제함',
-);
+];
 
-$messages['ko-kp'] = array(
+$messages['ko-kp'] = [
 	'returnto' => '$1(으)로 돌아갑니다.',
 	'redirectedfrom' => '($1에서 넘어옴)',
 	'redirectpagesub' => '넘겨주기 문서',
@@ -24033,9 +24039,9 @@ $1",
 	'revdelete-uname-unhid' => '계정 이름 숨김 해제됨',
 	'revdelete-restricted' => '관리자에게 제한을 적용함',
 	'revdelete-unrestricted' => '관리자에 대한 제한을 해제함',
-);
+];
 
-$messages['koi'] = array(
+$messages['koi'] = [
 	'returnto' => 'Бертны $1-öдз.',
 	'redirectedfrom' => '(Вештöм татчö  $1 вылiсь)',
 	'redirectpagesub' => 'Мöдлаö иньдöтан листбок',
@@ -24077,9 +24083,9 @@ $messages['koi'] = array(
 	'restriction-type' => 'Позяннэз:',
 	'restriction-level' => 'Падмöтан тшупöт:',
 	'revertmove' => 'керны важмоз',
-);
+];
 
-$messages['krc'] = array(
+$messages['krc'] = [
 	'returnto' => '«$1» бетге къайт',
 	'redirectedfrom' => '(«$1» бетден джиберилгенди)',
 	'redirectpagesub' => 'Башха бетге джибериучю бет',
@@ -24335,9 +24341,9 @@ $2 тюрлендирген алгъаракъ версиясына къайты
 	'recreate' => 'Джанландыр',
 	'revdelete-restricted' => 'администраторла ючюн этилген чеклениуле',
 	'revdelete-unrestricted' => 'администратолра ючюн этилген чеклениуле къоратылгъандыла',
-);
+];
 
-$messages['kri'] = array(
+$messages['kri'] = [
 	'returnto' => 'Go bak tu $1.',
 	'retrievedfrom' => 'Dem ritriv am na"$1"',
 	'restorelink' => '{{PLURAL:$1|wan chenj we dehm dohn ires|$1 chenj-dehm we dehm dohn ires}}',
@@ -24355,29 +24361,29 @@ Di log we dem kip foh dis pej-in dilishon de ya:",
 	'randompage' => 'Random pej',
 	'restriction-edit' => 'Edit',
 	'restriction-create' => 'Mek sohmtin',
-);
+];
 
-$messages['krj'] = array(
+$messages['krj'] = [
 	'returnto' => 'Balik sa $1.',
 	'redirectpagesub' => 'Idaho ang pahina',
 	'readonly' => "Napintalan ang ''database''",
 	'remembermypassword' => "Tandaan ang akun nga ''log-in'' sa dya nga ''computer'' (for a maximum of $1 {{PLURAL:$1|day|days}})",
 	'restriction-edit' => 'Iislan',
-);
+];
 
-$messages['ks'] = array(
+$messages['ks'] = [
 	'recentchanges' => 'نَوِ تَبَدیٖلیٖ',
-);
+];
 
-$messages['ks-arab'] = array(
+$messages['ks-arab'] = [
 	'recentchanges' => 'نَوِ تبدیلی',
-);
+];
 
-$messages['ks-deva'] = array(
+$messages['ks-deva'] = [
 	'recentchanges' => 'नवि तबदीली',
-);
+];
 
-$messages['ksh'] = array(
+$messages['ksh'] = [
 	'returnto' => 'Jangk widder noh: „$1“.',
 	'redirectedfrom' => '(Ömjeleit vun $1)',
 	'redirectpagesub' => 'Ömleitungssigg',
@@ -24643,9 +24649,9 @@ Sigge uß Dinge [[Special:Watchlist|Opaßleß]] sin '''fett''' jeschrevve.",
 	'revdelete-uname-unhid' => 'der Name vum Metmaacher öffentlesh jemaat',
 	'revdelete-restricted' => ', och för de Wiki-Köbesse',
 	'revdelete-unrestricted' => ', och för de Wiki-Köbesse',
-);
+];
 
-$messages['ku'] = array(
+$messages['ku'] = [
 	'returnto' => 'Jangk widder noh: „$1“.',
 	'redirectedfrom' => '(Ömjeleit vun $1)',
 	'redirectpagesub' => 'Ömleitungssigg',
@@ -24911,13 +24917,13 @@ Sigge uß Dinge [[Special:Watchlist|Opaßleß]] sin '''fett''' jeschrevve.",
 	'revdelete-uname-unhid' => 'der Name vum Metmaacher öffentlesh jemaat',
 	'revdelete-restricted' => ', och för de Wiki-Köbesse',
 	'revdelete-unrestricted' => ', och för de Wiki-Köbesse',
-);
+];
 
-$messages['ku-arab'] = array(
+$messages['ku-arab'] = [
 	'red-link-title' => '$1 (پەڕە بوونی نییە)',
-);
+];
 
-$messages['ku-latn'] = array(
+$messages['ku-latn'] = [
 	'returnto' => 'Bizîvire $1.',
 	'redirectedfrom' => '(ji $1 hate beralîkirin)',
 	'redirectpagesub' => 'Rûpelê beralî bike',
@@ -25036,16 +25042,16 @@ Zanibe ku nuhçêkirinê vê rûpelê hêja ye ya na.
 	'revertmove' => 'şûnde vegerîne',
 	'recreate' => 'Dîsa çêke',
 	'revdelete-uname-hid' => 'navê bikarhêneriyê yê veşartî',
-);
+];
 
-$messages['kv'] = array(
+$messages['kv'] = [
 	'red-link-title' => '$1 (гижӧд абу)',
 	'recentchanges' => 'Выль веськӧдӧмъяс',
 	'recentchangeslinked-page' => 'Гижӧдлӧн ним:',
 	'randompage' => 'Кӧсйытӧг гижӧд',
-);
+];
 
-$messages['kw'] = array(
+$messages['kw'] = [
 	'returnto' => 'Dewheles dhe $1.',
 	'redirectedfrom' => '(Daswedyes dhort $1)',
 	'redirectpagesub' => 'Folen daswedyans',
@@ -25100,9 +25106,9 @@ En '''tew''' ew folednow eus war agas [[Special:Watchlist|rol golyas]].",
 	'restriction-create' => 'Gwruthyl',
 	'restriction-upload' => 'Ughcarga',
 	'revertmove' => 'trebuchya',
-);
+];
 
-$messages['ky'] = array(
+$messages['ky'] = [
 	'returnto' => '$1 барагына кайт.',
 	'redirectedfrom' => '($1 барагындан багытталды)',
 	'retrievedfrom' => '"$1" булагындан алынды',
@@ -25152,9 +25158,9 @@ $messages['ky'] = array(
 	'rollbacklink' => 'кайтар',
 	'restriction-edit' => 'Оңдоо',
 	'revertmove' => 'кайтарып ал',
-);
+];
 
-$messages['la'] = array(
+$messages['la'] = [
 	'returnto' => 'Redire ad $1.',
 	'redirectedfrom' => '(Redirectum de $1)',
 	'redirectpagesub' => 'Pagina redirectionis',
@@ -25296,9 +25302,9 @@ ad emendationem proximam ab $2.',
 	'reblock-logentry' => 'modificavit obstructionem usoris [[$1]], exire $2 $3',
 	'revertmove' => 'reverti',
 	'recreate' => 'Recreare',
-);
+];
 
-$messages['lad'] = array(
+$messages['lad'] = [
 	'returnto' => 'Tornar a $1.',
 	'redirectedfrom' => '(Redirigido desde $1)',
 	'redirectpagesub' => 'Hoja redirigida',
@@ -25353,9 +25359,9 @@ Las hojas en tu [[Special:Watchlist|lista de akavidamiento]] son escritas '''con
 	'restriction-level' => 'Nivel de restricción:',
 	'revertmove' => 'àbolta',
 	'recreate' => 'Krear de muevo',
-);
+];
 
-$messages['lb'] = array(
+$messages['lb'] = [
 	'returnto' => 'Zréck op $1.',
 	'redirectedfrom' => '(Virugeleet vu(n) $1)',
 	'redirectpagesub' => 'Viruleedungssäit',
@@ -25621,13 +25627,13 @@ Säite vun [[Special:Watchlist|Ärer Iwwerwaachungslëscht]] si '''fett''' gesch
 	'revdelete-uname-unhid' => 'Benotzernumm net verstoppt',
 	'revdelete-restricted' => 'Limitatioune fir Administrateuren ageschalt',
 	'revdelete-unrestricted' => 'Limitatioune fir Administrateuren opgehuewen',
-);
+];
 
-$messages['lbe'] = array(
+$messages['lbe'] = [
 	'recentchanges' => 'Махъсса дахханашивурту',
-);
+];
 
-$messages['lez'] = array(
+$messages['lez'] = [
 	'returnto' => '$1 ччиниз элкъвена хтун',
 	'redirectedfrom' => '($1-кай рахкъурнава )',
 	'redirectpagesub' => 'Рахкъурунин ччин',
@@ -25693,9 +25699,9 @@ $messages['lez'] = array(
 	'restriction-level' => 'Кьадардин кьадар',
 	'restriction-edit' => 'Дегишарун',
 	'revertmove' => 'Рахкъурун',
-);
+];
 
-$messages['lfn'] = array(
+$messages['lfn'] = [
 	'returnto' => 'Restora a $1.',
 	'redirectedfrom' => '(Redirijeda de $1)',
 	'redirectpagesub' => 'Redireta la paje',
@@ -25744,9 +25750,9 @@ Pajes a [[Special:Watchlist|tu lista de pajes oservada]] es en leteras '''forte'
 	'restriction-type' => 'Permete:',
 	'restriction-level' => 'Nivel de restrinje:',
 	'revertmove' => 'retro',
-);
+];
 
-$messages['lg'] = array(
+$messages['lg'] = [
 	'returnto' => 'Dda ku $1.',
 	'redirectedfrom' => '(Oleetedwa wano okuva ku $1)',
 	'redirectpagesub' => 'Olupapula luno lukutwalabutwazi ku lunnaalwo',
@@ -25825,9 +25831,9 @@ Ebifa ku kugyibwawo kw'olupapula luno bye bino:",
 	'restriction-edit' => 'Kyusa',
 	'restriction-move' => 'Simbuliza',
 	'revertmove' => 'zaawo erinya ekkadde',
-);
+];
 
-$messages['li'] = array(
+$messages['li'] = [
 	'returnto' => 'Truuk nao $1.',
 	'redirectedfrom' => '(Doorverweze van $1)',
 	'redirectpagesub' => 'Doorverwiespazjena',
@@ -26093,9 +26099,9 @@ Controleer de logbeuk.",
 	'revdelete-uname-unhid' => 'gebroekersnaam ónthöld',
 	'revdelete-restricted' => 'haet beperkinge aan beheerders opgelag',
 	'revdelete-unrestricted' => 'haet beperkinge veur beheerders opgehaeve',
-);
+];
 
-$messages['lij'] = array(
+$messages['lij'] = [
 	'returnto' => 'Tornâ a $1.',
 	'redirectedfrom' => '(Rediritto da $1)',
 	'redirectpagesub' => 'Paggina de rindirissamento',
@@ -26160,9 +26166,9 @@ E pàgine che t'æ in oservaçion inti [[Special:Watchlist|oservæ speciâli]] s
 	'restriction-move' => 'Mescia',
 	'restriction-level-all' => 'Tutti i livelli',
 	'revertmove' => 'Ristorâ',
-);
+];
 
-$messages['liv'] = array(
+$messages['liv'] = [
 	'returnto' => 'Li tāgiž līed $1 jūrõ.',
 	'redirectedfrom' => '(Jeddõpēḑõn sōtõd līedstõ $1)',
 	'redirectpagesub' => 'Jeddõpēḑõn sōtimiz lēḑ',
@@ -26212,9 +26218,9 @@ Mõtlõgid, kas līed ūtstõ lūomi um jõvā mõtk. Līed jedmõlizt jarā ki�
 	'restriction-type' => 'Lubād:',
 	'restriction-level' => 'Kaitsõmiz ildõm:',
 	'revertmove' => 'kīerõgid tāgiž',
-);
+];
 
-$messages['lmo'] = array(
+$messages['lmo'] = [
 	'returnto' => 'Turna indré a $1.',
 	'redirectedfrom' => '(Rimandaa da $1)',
 	'redirectpagesub' => 'Pagina de redirezión',
@@ -26283,9 +26289,9 @@ I paginn dent in [[Special:Watchlist|la lista ch'it ten-e sot euj]] i resten mar
 	'restriction-level' => 'Nivel de restrizión',
 	'restriction-edit' => 'Mudifega',
 	'revertmove' => "büta indree a 'mè che l'era",
-);
+];
 
-$messages['ln'] = array(
+$messages['ln'] = [
 	'returnto' => 'Kozóngisa na $1.',
 	'redirectedfrom' => '(Eyendísí útá $1)',
 	'redirectpagesub' => 'Lonkásá la boyendisi',
@@ -26323,9 +26329,9 @@ $messages['ln'] = array(
 	'restriction-edit' => 'Kobɔngisa',
 	'restriction-move' => 'Kobóngola nkómbó',
 	'revertmove' => 'kozóngela',
-);
+];
 
-$messages['lo'] = array(
+$messages['lo'] = [
 	'returnto' => 'ກັບໄປ  $1.',
 	'redirectedfrom' => '(ໂອນມາຈາກ $1)',
 	'redirectpagesub' => 'ໜ້າໂອນ',
@@ -26368,9 +26374,9 @@ $messages['lo'] = array(
 	'restriction-edit' => 'ດັດແກ້',
 	'restriction-create' => 'ສ້າງ',
 	'recreate' => 'ສ້າງຄືນ',
-);
+];
 
-$messages['loz'] = array(
+$messages['loz'] = [
 	'returnto' => 'Kutezi $1.',
 	'redirectedfrom' => '(Petulo abezi di $1)',
 	'redirectpagesub' => 'Petulo abezi',
@@ -26429,9 +26435,9 @@ Desu dafi kulobala di petulo sa gi di informasi:",
 	'restriction-create' => 'Hloli',
 	'restriction-level-all' => 'xete',
 	'revertmove' => 'afi',
-);
+];
 
-$messages['lt'] = array(
+$messages['lt'] = [
 	'returnto' => 'Grįžti į $1.',
 	'redirectedfrom' => '(Nukreipta iš $1)',
 	'redirectpagesub' => 'Nukreipimo puslapis',
@@ -26694,9 +26700,9 @@ grąžinta prieš tai buvusi $2 versija.',
 	'recreate' => 'Atkurti',
 	'revdelete-restricted' => 'uždėti apribojimai administratoriams',
 	'revdelete-unrestricted' => 'pašalinti apribojimai administratoriams',
-);
+];
 
-$messages['ltg'] = array(
+$messages['ltg'] = [
 	'returnto' => 'Grīztīs da puslopys $1.',
 	'redirectedfrom' => '(Puoradresēts nu $1)',
 	'redirectpagesub' => 'Puoradresiešonys puslopa',
@@ -26745,9 +26751,9 @@ Lopys, kas ir tovā [[Special:Watchlist|puorraugamūs rokstu sarokstā]] ir '''r
 	'restriction-level' => 'Aizsardzeibys leimiņs:',
 	'restriction-move' => 'Puorceļt',
 	'revertmove' => 'atsaukt',
-);
+];
 
-$messages['lv'] = array(
+$messages['lv'] = [
 	'returnto' => 'Atgriezties: $1.',
 	'redirectedfrom' => '(Pāradresēts no $1)',
 	'redirectpagesub' => 'Pāradresācijas lapa',
@@ -26961,9 +26967,9 @@ un tika atjaunota iepriekšējā versija, kuru bija izveidojis $2.',
 	'revdelete-uname-unhid' => 'lietotājvārda slēpšana atcelta',
 	'revdelete-restricted' => 'piemērot administratoriem ierobežojumus',
 	'revdelete-unrestricted' => 'noņemt administratoriem ierobežojumus',
-);
+];
 
-$messages['lzh'] = array(
+$messages['lzh'] = [
 	'returnto' => '返$1。',
 	'redirectedfrom' => '（渡自$1）',
 	'redirectpagesub' => '渡',
@@ -27197,9 +27203,9 @@ $1",
 	'recreate' => '復',
 	'revdelete-restricted' => '應限至有秩',
 	'revdelete-unrestricted' => '除限自有秩',
-);
+];
 
-$messages['lzz'] = array(
+$messages['lzz'] = [
 	'returnto' => '$1 butʼkʼaşa goikti.',
 	'redirectedfrom' => '($1 butʼkʼaşen moxtu)',
 	'redirectpagesub' => 'Redirektʼiş butʼkʼa',
@@ -27240,9 +27246,9 @@ $messages['lzz'] = array(
 	'restriction-type' => 'İzini:',
 	'restriction-level' => 'Om3ikanuşi sinori:',
 	'revertmove' => 'komoiği',
-);
+];
 
-$messages['mai'] = array(
+$messages['mai'] = [
 	'returnto' => '$1 पर घुरु।',
 	'redirectedfrom' => '(एतयसँ बहटारल $1)',
 	'redirectpagesub' => 'पन्नाकेँ पठाउ',
@@ -27512,9 +27518,9 @@ $2 केर संपादित आखिरी अवतरण क पुन
 	'revdelete-uname-unhid' => 'प्रयोक्तानाम सोझाँ',
 	'revdelete-restricted' => 'संचालक लेल प्रायोगिक प्रतिबन्ध',
 	'revdelete-unrestricted' => 'संचालक लेल हटाओल प्रतिबन्ध',
-);
+];
 
-$messages['map-bms'] = array(
+$messages['map-bms'] = [
 	'returnto' => 'Bali maring $1.',
 	'redirectedfrom' => '(Dialihna sekang $1)',
 	'redirectpagesub' => 'Kaca pangalihan',
@@ -27717,9 +27723,9 @@ Kaca-kaca sing mlebu [[Special:Watchlist|pangawasane Rika]] ditandani ''kandel''
 	'rollback-success' => 'Mbalekna suntingane $1;
 dibalekna ming revisi pungkasan sekang $2.',
 	'revertmove' => 'Balekna',
-);
+];
 
-$messages['mdf'] = array(
+$messages['mdf'] = [
 	'returnto' => 'Мърдамс $1-с.',
 	'redirectedfrom' => '(Шашфтф $1ста)',
 	'redirectpagesub' => 'Шашфтф лопа',
@@ -27906,9 +27912,9 @@ $messages['mdf'] = array(
 	'recreate' => 'Тиемс одукс',
 	'revdelete-restricted' => 'нолдаф тевс кардафксне системонь вятиксненди',
 	'revdelete-unrestricted' => 'системонь вятиксненди кардафксне валхтфт',
-);
+];
 
-$messages['mg'] = array(
+$messages['mg'] = [
 	'returnto' => "Hiverina any amin'ny $1.",
 	'redirectedfrom' => "(tonga teto avy amin'ny $1)",
 	'redirectpagesub' => 'Pejy fihodinana',
@@ -28167,9 +28173,9 @@ miverina any amin'ny santiôna farany nataon'i $2.",
 	'recreate' => 'Jereo indray',
 	'revdelete-restricted' => "nametraka fanerena ho an'ny mpandrindra",
 	'revdelete-unrestricted' => "fanerena nesorina tamin'ny mpandrindra",
-);
+];
 
-$messages['mhr'] = array(
+$messages['mhr'] = [
 	'returnto' => '$1 деке пӧртылаш.',
 	'redirectedfrom' => '(Колтымо $1 гыч)',
 	'redirectpagesub' => 'Вес вереш колтышо лаштык',
@@ -28226,17 +28232,17 @@ $messages['mhr'] = array(
 	'restriction-type' => 'Кертеж:',
 	'restriction-level' => 'Тыгай шыгыремдаш:',
 	'revertmove' => 'мӧҥгешла пӧртылаш',
-);
+];
 
-$messages['mi'] = array(
+$messages['mi'] = [
 	'recentchanges' => 'Rerekētanga hōu',
 	'recentchangeslinked' => 'Rerekētanga pū tahi',
 	'recentchangeslinked-feed' => 'Rerekētanga pū tahi',
 	'recentchangeslinked-toolbox' => 'Rerekētanga pū tahi',
 	'randompage' => 'Tipihaere',
-);
+];
 
-$messages['min'] = array(
+$messages['min'] = [
 	'returnto' => 'Baliak ka $1',
 	'redirectedfrom' => '(Dialiahkan dari $1)',
 	'redirectpagesub' => 'Laman pengalihan',
@@ -28311,9 +28317,9 @@ Laman pado [[Special:Watchlist|Senarai pantauan]] ditandoi '''cetak taba'''.",
 	'restriction-type' => 'Perlindungan:',
 	'restriction-level' => 'Tingkek larangan:',
 	'revertmove' => 'kembalikan',
-);
+];
 
-$messages['mk'] = array(
+$messages['mk'] = [
 	'returnto' => 'Назад на $1.',
 	'redirectedfrom' => '(Пренасочено од $1)',
 	'redirectpagesub' => 'Страница за пренасочување',
@@ -28574,9 +28580,9 @@ $1",
 	'revdelete-uname-unhid' => 'корисничкото име е скриено',
 	'revdelete-restricted' => 'применети ограничувања на систем оператори',
 	'revdelete-unrestricted' => 'отстранети ограничувања за систем оператори',
-);
+];
 
-$messages['ml'] = array(
+$messages['ml'] = [
 	'returnto' => '$1 എന്ന താളിലേക്ക് തിരിച്ചുപോവുക.',
 	'redirectedfrom' => '($1 എന്ന താളിൽ നിന്നും തിരിച്ചുവിട്ടതു പ്രകാരം)',
 	'redirectpagesub' => 'തിരിച്ചുവിടൽ താൾ',
@@ -28840,9 +28846,9 @@ $1",
 	'revdelete-uname-unhid' => 'ഉപയോക്തൃനാമം മറച്ചത് ഒഴിവാക്കിയിരിക്കുന്നു',
 	'revdelete-restricted' => 'കാര്യനിർവാഹകർക്ക് പ്രവർത്തന അതിരുകൾ ഏർപ്പെടുത്തിയിരിക്കുന്നു',
 	'revdelete-unrestricted' => 'കാര്യനിർവാഹകർക്ക് ഏർപ്പെടുത്തിയ പ്രവർത്തന അതിരുകൾ നീക്കം ചെയ്തിരിക്കുന്നു',
-);
+];
 
-$messages['mn'] = array(
+$messages['mn'] = [
 	'returnto' => '$1 руу буцах.',
 	'redirectedfrom' => '($1-с чиглүүлэгдэв)',
 	'redirectpagesub' => 'Хуудсыг чиглүүлэх',
@@ -29103,9 +29109,9 @@ $1",
 	'recreate' => 'Дахин үүсгэх',
 	'revdelete-restricted' => 'системийн операторуудад тавигдсан хязгаарлалтууд',
 	'revdelete-unrestricted' => 'системийн операторуудаас авч хаясан хязгаарлалтууд',
-);
+];
 
-$messages['mo'] = array(
+$messages['mo'] = [
 	'returnto' => 'Ынапой ла $1.',
 	'redirectedfrom' => '(Редирекционат де ла $1)',
 	'redirectpagesub' => 'Паӂинэ де редирекционаре',
@@ -29140,9 +29146,9 @@ $messages['mo'] = array(
 	'restriction-type' => 'Пермисиуне:',
 	'restriction-level' => 'Нивел де рестрикцие:',
 	'revertmove' => 'ревино',
-);
+];
 
-$messages['mr'] = array(
+$messages['mr'] = [
 	'returnto' => '$1 कडे परत चला.',
 	'redirectedfrom' => '($1 पासून पुनर्निर्देशित)',
 	'redirectpagesub' => 'पुनर्निर्देशनाचे पान',
@@ -29410,9 +29416,9 @@ $1",
 	'revdelete-uname-unhid' => 'सदस्यनाम लपवलेले नाही',
 	'revdelete-restricted' => 'प्रबंधकांना बंधने दिली',
 	'revdelete-unrestricted' => 'प्रबंधकांची बंधने काढली',
-);
+];
 
-$messages['mrj'] = array(
+$messages['mrj'] = [
 	'returnto' => 'Мӹнгеш ӹлӹштӓшӹш $1.',
 	'redirectedfrom' => '($1 гӹц колтымы)',
 	'redirectpagesub' => 'Вес вӓр гӹц колтымы ӹлӹштӓш',
@@ -29449,9 +29455,9 @@ $messages['mrj'] = array(
 	'restriction-type' => 'Прававлӓ:',
 	'restriction-level' => 'Пыраш лимӹ кӱкшӹц:',
 	'revertmove' => 'лишӹц колтымаш',
-);
+];
 
-$messages['ms'] = array(
+$messages['ms'] = [
 	'returnto' => 'Kembali ke $1.',
 	'redirectedfrom' => '(Dilencongkan dari $1)',
 	'redirectpagesub' => 'Laman lencongan',
@@ -29717,9 +29723,9 @@ Mohon semak log.',
 	'revdelete-uname-unhid' => 'nama pengguna terdedah',
 	'revdelete-restricted' => 'mengenakan sekatan pada penyelia',
 	'revdelete-unrestricted' => 'menarik sekatan daripada penyelia',
-);
+];
 
-$messages['mt'] = array(
+$messages['mt'] = [
 	'returnto' => "Erġa' lura lejn $1.",
 	'redirectedfrom' => '(Riindirizzat minn $1)',
 	'redirectpagesub' => "Paġna ta' rindirizz",
@@ -29973,9 +29979,9 @@ Modifikata lura għall-aħħar verżjoni ta' $2.",
 	'recreate' => "Erġa' oħloq",
 	'revdelete-restricted' => "limiti applikati 'l amministraturi",
 	'revdelete-unrestricted' => "neħħi l-limiti 'l amministraturi",
-);
+];
 
-$messages['mwl'] = array(
+$messages['mwl'] = [
 	'returnto' => 'Retornar pa $1.',
 	'redirectedfrom' => '(Ancaminamiento de <b>$1</b>)',
 	'redirectpagesub' => 'Páigina de ancaminamiento',
@@ -30035,9 +30041,9 @@ Páiginas que steian ne ls [[Special:Watchlist|tous begiados]] son amostradas an
 	'restriction-edit' => 'Eiditar',
 	'restriction-move' => 'Arrastrar',
 	'revertmove' => 'poner al robés',
-);
+];
 
-$messages['my'] = array(
+$messages['my'] = [
 	'returnto' => '$1 သို့ ပြန်သွားရန်။',
 	'redirectedfrom' => '($1 မှ ပြန်ညွှန်းထားသည်)',
 	'redirectpagesub' => 'ပြန်ညွှန်းသော စာမျက်နှာ',
@@ -30189,9 +30195,9 @@ $messages['my'] = array(
 	'recreate' => 'ပြန်လည်ဖန်တီးရန်',
 	'revdelete-restricted' => 'အက်ဒမင်များသို့ ကန့်သတ်ချက်များ သက်ရောက်ရန်',
 	'revdelete-unrestricted' => 'အက်ဒမင်များအတွက် ကန့်သတ်ချက်များကို ဖယ်ရှားရန်',
-);
+];
 
-$messages['myv'] = array(
+$messages['myv'] = [
 	'returnto' => 'Велявтомс $1 лопантень.',
 	'redirectedfrom' => '(Ютавтозь $1 вельде)',
 	'redirectpagesub' => 'Лиясто ютавтозь лопа',
@@ -30323,9 +30329,9 @@ $messages['myv'] = array(
 	'restriction-level-all' => 'кода мелеть виезэ',
 	'revertmove' => 'велявтодо',
 	'recreate' => 'Шкак-тейть одов',
-);
+];
 
-$messages['mzn'] = array(
+$messages['mzn'] = [
 	'returnto' => 'بردگستن تا $1',
 	'redirectedfrom' => '($1 جه بموئه)',
 	'redirectpagesub' => 'گجگی‌بَیتـِن',
@@ -30370,14 +30376,14 @@ $messages['mzn'] = array(
 	'restriction-edit' => 'دچی‌ین',
 	'restriction-upload' => 'باربی‌یشتن',
 	'revertmove' => 'واچـیـه‌ن',
-);
+];
 
-$messages['na'] = array(
+$messages['na'] = [
 	'recentchanges' => 'Iwiwidit tsimeduw',
 	'randompage' => 'Tamo peij',
-);
+];
 
-$messages['nah'] = array(
+$messages['nah'] = [
 	'returnto' => 'Timocuepāz īhuīc $1.',
 	'redirectedfrom' => '(Ōmotlacuep īhuīcpa $1)',
 	'redirectpagesub' => 'Ōmotlacuep zāzanilli',
@@ -30467,9 +30473,9 @@ $messages['nah'] = array(
 	'restriction-upload' => 'Tlahcuilōlquetza',
 	'revertmove' => 'tlacuepāz',
 	'recreate' => 'Ticchīhuāz occeppa',
-);
+];
 
-$messages['nan'] = array(
+$messages['nan'] = [
 	'returnto' => 'Tò-tńg khì $1.',
 	'redirectedfrom' => '(Tùi $1 choán--lâi)',
 	'redirectpagesub' => 'Choán-ia̍h',
@@ -30723,9 +30729,9 @@ $1",
 	'rcpatroldisabled' => '巡最近改的功能已經關掉',
 	'revdelete-restricted' => '已經共限制用佇管裡員',
 	'revdelete-unrestricted' => '徙走對管裡員的限制',
-);
+];
 
-$messages['nap'] = array(
+$messages['nap'] = [
 	'returnto' => 'Torna a $1.',
 	'redirectedfrom' => "(Redirect 'a $1)",
 	'remembermypassword' => 'Allicuordate d"a password (for a maximum of $1 {{PLURAL:$1|day|days}})',
@@ -30749,9 +30755,9 @@ $messages['nap'] = array(
 	'randompage-nopages' => 'Nessuna pagina nel namespace selezionato.',
 	'rollback' => "Ausa na revizione 'e primma",
 	'revertpage' => "Cangiaje 'e cagnamiénte 'e [[Special:Contributions/$2|$2]] ([[User talk:$2|discussione]]), cu â verzione 'e pprimma 'e  [[User:$1|$1]]",
-);
+];
 
-$messages['nb'] = array(
+$messages['nb'] = [
 	'returnto' => 'Tilbake til $1.',
 	'redirectedfrom' => '(Omdirigert fra $1)',
 	'redirectpagesub' => 'Omdirigeringsside',
@@ -31019,9 +31025,9 @@ Sider på [[Special:Watchlist|overvåkningslisten din]] er i '''fet skrift'''.",
 	'revdelete-uname-unhid' => 'brukernavn synlig',
 	'revdelete-restricted' => 'begrensninger gjelder også administratorer',
 	'revdelete-unrestricted' => 'fjernet begrensninger for administratorer',
-);
+];
 
-$messages['nds'] = array(
+$messages['nds'] = [
 	'returnto' => 'Trüch to $1.',
 	'redirectedfrom' => '(wiederwiest vun $1)',
 	'redirectpagesub' => 'Redirectsiet',
@@ -31241,9 +31247,9 @@ $1",
 	'recreate' => 'wedder nee anleggen',
 	'revdelete-restricted' => 'Inschränkungen för Administraters instellt',
 	'revdelete-unrestricted' => 'Inschränkungen för Administraters rutnahmen',
-);
+];
 
-$messages['nds-nl'] = array(
+$messages['nds-nl'] = [
 	'returnto' => 'Weerumme naor $1.',
 	'redirectedfrom' => '(deurestuurd vanaof "$1")',
 	'redirectpagesub' => 'Deurstuurpagina',
@@ -31506,9 +31512,9 @@ Kiek de logboeken nao.',
 	'revdelete-uname-unhid' => 'gebrukersnaam zichtbaor emaakt',
 	'revdelete-restricted' => 'hef beparkingen an beheerders op-eleg',
 	'revdelete-unrestricted' => 'hef beparkingen veur beheerders deraof ehaold',
-);
+];
 
-$messages['ne'] = array(
+$messages['ne'] = [
 	'returnto' => '$1 मा फर्कनुहोस् ।',
 	'redirectedfrom' => '($1 बाट पठाइएको)',
 	'redirectpagesub' => 'रिडाइरेक्ट पृष्ठ',
@@ -31707,9 +31713,9 @@ $1",
 	'revertmove' => 'पहिलेको रुपमा फर्काउने',
 	'recentchangesall' => 'सबै',
 	'recreate' => 'पुनर्निर्माण',
-);
+];
 
-$messages['new'] = array(
+$messages['new'] = [
 	'returnto' => '$1य् लिहाँझासँ।',
 	'readonly' => 'देताबेस संरक्षित',
 	'readonlytext' => 'थ्व डेटाबेस आःया ईले, सम्भवतः नियमित डेटाबेस मेन्टेनेन्सया निंतिं, न्हूगु एन्ट्रि व मेमेगु हिलेज्याया यायेमछिंकः कुनातःगु दु। थ्व धुंका हानं डेटाबेस साधारण जुइ।
@@ -31719,9 +31725,9 @@ $messages['new'] = array(
 	'recentchanges' => 'न्हुगु हिलेज्या',
 	'randompage' => 'छगु च्वसुइ येंकादिसं',
 	'restriction-edit' => 'सम्पादन',
-);
+];
 
-$messages['niu'] = array(
+$messages['niu'] = [
 	'remembermypassword' => 'Manatu e haaku loko ini (for a maximum of $1 {{PLURAL:$1|day|days}})',
 	'recentchanges' => 'Hikihikiaga mogoia',
 	'recentchangeslinked' => 'Falu hikihiki',
@@ -31730,9 +31736,9 @@ $messages['niu'] = array(
 	'randompage' => 'Lau fifili',
 	'restriction-edit' => 'Fakahakohako',
 	'restriction-move' => 'Une',
-);
+];
 
-$messages['nl'] = array(
+$messages['nl'] = [
 	'returnto' => 'Terug naar $1.',
 	'redirectedfrom' => '(Doorverwezen vanaf $1)',
 	'redirectpagesub' => 'Doorverwijspagina',
@@ -32001,9 +32007,9 @@ De laatste versie van $2 is hersteld.',
 	'revdelete-uname-unhid' => 'gebruikersnaam zichtbaar gemaakt',
 	'revdelete-restricted' => 'heeft beperkingen aan beheerders opgelegd',
 	'revdelete-unrestricted' => 'heeft beperkingen voor beheerders opgeheven',
-);
+];
 
-$messages['nl-informal'] = array(
+$messages['nl-informal'] = [
 	'resetpass_announce' => 'Je bent aangemeld met een tijdelijke code die je per e-mail is toegezonden.
 Voer een nieuw wachtwoord in om het aanmelden te voltooien:',
 	'resetpass_success' => 'Je wachtwoord is gewijzigd.
@@ -32057,9 +32063,9 @@ Je hebt geen toegang tot dit object.',
 	'recentchangeslinked-summary' => "Deze speciale pagina geeft de laatste bewerkingen weer op pagina's waarheen verwezen wordt vanaf een aangegeven pagina of vanuit pagina's in een aangegeven pagina een categorie.
 Pagina's die op [[Special:Watchlist|je volglijst]] staan worden '''vet''' weergegeven.",
 	'removedwatchtext' => 'De pagina "[[:$1]]" is van [[Special:Watchlist|je volglijst]] verwijderd.',
-);
+];
 
-$messages['nn'] = array(
+$messages['nn'] = [
 	'returnto' => 'Attende til $1.',
 	'redirectedfrom' => '(Omdirigert frå $1)',
 	'redirectpagesub' => 'Omdirigeringsside',
@@ -32318,9 +32324,9 @@ Sjekk gjerne loggføringa.',
 	'revdelete-summary-hid' => 'endringsamandrag gøymt',
 	'revdelete-restricted' => 'la til avgrensingar for administratorar',
 	'revdelete-unrestricted' => 'fjerna avgrensingar for administratorar',
-);
+];
 
-$messages['no'] = array(
+$messages['no'] = [
 	'returnto' => 'Attende til $1.',
 	'redirectedfrom' => '(Omdirigert frå $1)',
 	'redirectpagesub' => 'Omdirigeringsside',
@@ -32585,9 +32591,9 @@ Sjekk gjerne loggføringa.',
 	'review_reason_3' => 'Anmeld grunn 3',
 	'review_reason_4' => 'Anmeld grunn 4',
 	'review_reason_5' => 'Anmeld grunn 5',
-);
+];
 
-$messages['nov'] = array(
+$messages['nov'] = [
 	'returnto' => 'Rivada a $1.',
 	'restorelink' => '{{PLURAL:$1|unu ekartati modifiko|$1 ekartati modifikos}}',
 	'red-link-title' => '$1 (pagine non exista)',
@@ -32603,9 +32609,9 @@ $messages['nov'] = array(
 	'recentchangeslinked-toolbox' => 'Afini chanjos',
 	'randompage' => 'Arbitriari pagine',
 	'revertpage' => 'Riverted modifikos da [[Special:Contributions/$2|$2]] ([[User talk:$2|Talk]]); restaurad lasti versione da [[User:$1|$1]]',
-);
+];
 
-$messages['nso'] = array(
+$messages['nso'] = [
 	'returnto' => 'Boela go $1.',
 	'redirectedfrom' => "(''Redirect'' go tšwa $1)",
 	'redirectpagesub' => "''Redirect'' letlakala",
@@ -32669,9 +32675,9 @@ Matlakala ago ba [[Special:Watchlist|lenanong la gago la matlakala ditlhapetšo]
 	'restriction-create' => 'Tlhola',
 	'revertmove' => 'bušetša',
 	'recentchangesall' => 'ka moka',
-);
+];
 
-$messages['nv'] = array(
+$messages['nv'] = [
 	'redirectedfrom' => '("$1"dę́ę́ʼ)',
 	'redirectpagesub' => 'dah astsihígíí',
 	'retrievedfrom' => '"$1" bitsʼą́ą́dę́ę́ʼ',
@@ -32693,13 +32699,13 @@ $3',
 	'recentchangeslinked-page' => 'naaltsoos:',
 	'removedwatchtext' => '"[[:$1]]" kʼad doo [[Special:Watchlist|bikʼi díníʼį́į]] da.',
 	'revertmove' => 'ńdíídleeł!',
-);
+];
 
-$messages['ny'] = array(
+$messages['ny'] = [
 	'recentchanges' => 'Kusintha kumene kwachitika posachedwa',
-);
+];
 
-$messages['oc'] = array(
+$messages['oc'] = [
 	'returnto' => 'Tornar a la pagina $1.',
 	'redirectedfrom' => '(Redirigit dempuèi $1)',
 	'redirectpagesub' => 'Pagina de redireccion',
@@ -32954,9 +32960,9 @@ Verificatz los jornals.",
 	'recreate' => 'Tornar crear',
 	'revdelete-restricted' => 'aplicar las restriccions als administrators',
 	'revdelete-unrestricted' => 'restriccions levadas pels administrators',
-);
+];
 
-$messages['or'] = array(
+$messages['or'] = [
 	'returnto' => '$1କୁ ଫେରିଯାନ୍ତୁ ।',
 	'redirectedfrom' => '($1 ରୁ ଲେଉଟି ଆସିଛି)',
 	'redirectpagesub' => 'ଆଉଥରେ ଫେରିବା ପୃଷ୍ଠା',
@@ -33223,9 +33229,9 @@ $2ଙ୍କ ଦେଇ ଶେଷଥର ହୋଇଥିବା ସଂସ୍କର�
 	'revdelete-uname-unhid' => 'ଲୁଚାଯାଇଥିବା ଇଉଜର ନାମ ଦେଖାଇବେ',
 	'revdelete-restricted' => 'ପରିଛାମାନଙ୍କ ନିମନ୍ତେ ଥିବା ବାରଣ',
 	'revdelete-unrestricted' => 'ପରିଛାମାନଙ୍କ ନିମନ୍ତେ ଥିବା ବାରଣ ବାହାର କରିଦିଆଗଲା',
-);
+];
 
-$messages['os'] = array(
+$messages['os'] = [
 	'returnto' => 'Фæстæмæ $1 фарсмæ.',
 	'redirectedfrom' => '(Ацы статьяйæ æрвыст: «$1»)',
 	'redirectpagesub' => 'Рарвысты фарс',
@@ -33297,9 +33303,9 @@ $3',
 	'restriction-type' => 'Бартæ:',
 	'restriction-edit' => 'Ивын',
 	'revertmove' => 'раивын',
-);
+];
 
-$messages['pa'] = array(
+$messages['pa'] = [
 	'returnto' => '$1 ਤੇ ਵਾਪਸ ਜਾਓ',
 	'redirectedfrom' => '($1 ਤੋਂ ਰੀ-ਡਿਰੈਕਟ)',
 	'redirectpagesub' => 'ਰੀ-ਡਿਰੈਕਟ ਪੇਜ',
@@ -33379,9 +33385,9 @@ $messages['pa'] = array(
 	'restriction-level-all' => 'ਕੋਈ ਲੈਵਲ',
 	'revertmove' => 'ਰੀਵਰਟ',
 	'recreate' => 'ਮੁੜ-ਬਣਾਓ',
-);
+];
 
-$messages['pag'] = array(
+$messages['pag'] = [
 	'returnto' => 'Impawel ed $1.',
 	'recentchanges' => 'Sampot ran binalo',
 	'recentchangeslinked' => 'Kabiangan ran binalo',
@@ -33389,9 +33395,9 @@ $messages['pag'] = array(
 	'recentchangeslinked-toolbox' => 'Kabiangan ran binalo',
 	'randompage' => 'Random ya bolong',
 	'randompage-nopages' => 'Anggapoy bolong ya wadya ed ayan namespace.',
-);
+];
 
-$messages['pam'] = array(
+$messages['pam'] = [
 	'returnto' => 'Magbalik king $1.',
 	'redirectedfrom' => '(Miyalis direksiun manibat king $1)',
 	'redirectpagesub' => 'Bulung ning pamanaliling direksiun (redirect)',
@@ -33568,9 +33574,9 @@ binalik nong $2 king sadiang bersion.',
 	'recreate' => 'Lalangan yang pasibayu',
 	'revdelete-restricted' => 'ipairal la reng limitasiun kareng sysop',
 	'revdelete-unrestricted' => 'ilako la reng makabawal kareng sysops',
-);
+];
 
-$messages['pap'] = array(
+$messages['pap'] = [
 	'returnto' => 'Bai bèk $1.',
 	'redirectedfrom' => '(Bo a yega akinan pa via di e página $1)',
 	'redirectpagesub' => 'Página ku ta sirbi komo portal',
@@ -33582,9 +33588,9 @@ $messages['pap'] = array(
 	'rcshowhidebots' => '$1 botnan',
 	'rcshowhideanons' => '$1 uzadónan anonimo',
 	'rclinks' => 'Mustra último $1 kambionan den último $2 dianan<br />$3',
-);
+];
 
-$messages['pcd'] = array(
+$messages['pcd'] = [
 	'returnto' => 'Értrouve $1.',
 	'redirectedfrom' => '(Érdirection édpis $1)',
 	'redirectpagesub' => 'Pache érdérivée',
@@ -33626,9 +33632,9 @@ $messages['pcd'] = array(
 	'restriction-type' => 'Pérmission',
 	'restriction-level' => 'Nivieu éd réstricchon:',
 	'revertmove' => 'invérser',
-);
+];
 
-$messages['pdc'] = array(
+$messages['pdc'] = [
 	'returnto' => 'Zerick zum Blatt $1.',
 	'redirectedfrom' => '(Weiterleitung vun $1)',
 	'redirectpagesub' => 'Weiderleiding',
@@ -33686,9 +33692,9 @@ $messages['pdc'] = array(
 	'restriction-upload' => 'Ufflaade',
 	'revertmove' => 'zerick ziehe',
 	'recentchangesall' => 'all',
-);
+];
 
-$messages['pdt'] = array(
+$messages['pdt'] = [
 	'returnto' => 'Trigj no $1.',
 	'redirectedfrom' => '(wieda jeleidt von $1)',
 	'redirectpagesub' => 'Sied tom Wiedaleide',
@@ -33717,9 +33723,9 @@ $messages['pdt'] = array(
 	'restriction-type' => "Er'laubniss:",
 	'reblock-logentry' => "haft dee Block-Enstalinj fe [[$1]] je'endat fe dee Tiet $2 $3",
 	'revertmove' => 'trigj dreie',
-);
+];
 
-$messages['pfl'] = array(
+$messages['pfl'] = [
 	'returnto' => 'Zrick zu $1.',
 	'redirectedfrom' => '(Wairrerglaidet vun $1)',
 	'redirectpagesub' => 'Wairerlaidungssaid',
@@ -33763,17 +33769,17 @@ Saide uff [[Special:Watchlist|Dainer Beowachdungslischt]] sin '''fett'''.",
 	'restriction-edit' => 'Bearwaide',
 	'restriction-move' => 'Verschiewe',
 	'revertmove' => 'Zerick verschiewe',
-);
+];
 
-$messages['pih'] = array(
+$messages['pih'] = [
 	'recentchanges' => 'Dem Riisent Chayng',
 	'recentchangeslinked' => 'Dem Riilated Chayng',
 	'recentchangeslinked-feed' => 'Dem Riilated Chayng',
 	'recentchangeslinked-toolbox' => 'Dem Riilated Chayng',
 	'randompage' => 'Raandum Paij',
-);
+];
 
-$messages['pl'] = array(
+$messages['pl'] = [
 	'returnto' => 'Wróć do strony $1.',
 	'redirectedfrom' => '(Przekierowano z $1)',
 	'redirectpagesub' => 'Strona przekierowująca',
@@ -34046,9 +34052,9 @@ Przywrócono ostatnią wersję autorstwa $2.',
 	'refreshpage' => 'Zawartość będzie widoczna po odświeżeniu strony',
 	'rate_it' => 'Oceń ten artykuł:',
 	'rcshowhidelogs' => '$1 logi',
-);
+];
 
-$messages['pms'] = array(
+$messages['pms'] = [
 	'returnto' => 'Torna andré a $1.',
 	'redirectedfrom' => '(Ridiression da $1)',
 	'redirectpagesub' => 'Pàgina ëd ridiression',
@@ -34312,9 +34318,9 @@ Le pàgine dzora a [[Special:Watchlist|la lista ëd lòn ch'as ten sot-euj]] a r
 	'revdelete-uname-unhid' => 'stranòm dëscoatà',
 	'revdelete-restricted' => "a l'ha aplicà le restrission a j'aministrator",
 	'revdelete-unrestricted' => "restrission për j'aministrator gavà",
-);
+];
 
-$messages['pnb'] = array(
+$messages['pnb'] = [
 	'returnto' => 'واپس $1 چلو',
 	'redirectedfrom' => '(لیایا گیا $1)',
 	'redirectpagesub' => 'صفحہ ریڈائریکٹ کرو',
@@ -34580,9 +34586,9 @@ $2 نے آخری ریوین تک واپس کیتا۔',
 	'revdelete-uname-unhid' => 'ورتن والے دا ناں ںئیں لکیا',
 	'revdelete-restricted' => 'مکھیاں تے روکاں لگیاں',
 	'revdelete-unrestricted' => 'مکھیاں تے روکاں لتھیاں',
-);
+];
 
-$messages['pnt'] = array(
+$messages['pnt'] = [
 	'returnto' => 'Επιστροφήν σο $1.',
 	'redirectedfrom' => '(Έρτεν ασό $1)',
 	'redirectpagesub' => 'Σελίδαν διπλού σύνδεσμονος',
@@ -34670,9 +34676,9 @@ $messages['pnt'] = array(
 	'restriction-upload' => "Σκώσ' ατό",
 	'revertmove' => 'κλώσιμον',
 	'recreate' => 'Ποίσον αξάν',
-);
+];
 
-$messages['prg'] = array(
+$messages['prg'] = [
 	'returnto' => 'Etwartinnais si en pāusan $1.',
 	'redirectedfrom' => '(Prawestan iz $1)',
 	'redirectpagesub' => 'Prawesnas pāusan',
@@ -34863,9 +34869,9 @@ Etwārtai wartinnā di panzdauman wersiōnin, kawīdse autōrs ast $2.',
 	'recreate' => 'Etteīkeis',
 	'revdelete-restricted' => 'ensadinnais arāikinsenins per perwaldītajans',
 	'revdelete-unrestricted' => 'āupausinais arāikinsenins per perwaldītajans',
-);
+];
 
-$messages['ps'] = array(
+$messages['ps'] = [
 	'returnto' => 'بېرته $1 ته وګرځه.',
 	'redirectedfrom' => '(له $1 نه مخ ګرځېدلی)',
 	'redirectpagesub' => 'د مخ ګرځونې مخ',
@@ -35011,9 +35017,9 @@ $messages['ps'] = array(
 	'revdelete-uname-hid' => 'کارن نوم پټ شوی',
 	'revdelete-content-unhid' => 'مېنځپانګه ښکاره شوی',
 	'revdelete-uname-unhid' => 'ښکاره کارن-نوم',
-);
+];
 
-$messages['pt'] = array(
+$messages['pt'] = [
 	'returnto' => 'Voltar para $1.',
 	'redirectedfrom' => '(Redireccionado de $1)',
 	'redirectpagesub' => 'Página de redireccionamento',
@@ -35286,9 +35292,9 @@ As suas [[Special:Watchlist|páginas vigiadas]] aparecem a '''negrito'''.",
 	'review_reason_3' => 'Motivo revisão 3',
 	'review_reason_4' => 'Motivo revisão 4',
 	'review_reason_5' => 'Motivo revisão 5',
-);
+];
 
-$messages['pt-br'] = array(
+$messages['pt-br'] = [
 	'returnto' => 'Retornar para $1.',
 	'redirectedfrom' => '(Redirecionado de $1)',
 	'redirectpagesub' => 'Página de redirecionamento',
@@ -35555,9 +35561,9 @@ Páginas de sua [[Special:Watchlist|lista de páginas vigiadas]] são exibidas e
 	'revdelete-uname-unhid' => 'nome de usuário não oculto',
 	'revdelete-restricted' => 'restrições a administradores aplicadas',
 	'revdelete-unrestricted' => 'restrições a administradores removidas',
-);
+];
 
-$messages['qu'] = array(
+$messages['qu'] = [
 	'returnto' => '$1-man kutimuy.',
 	'redirectedfrom' => '($1-manta pusampusqa)',
 	'redirectpagesub' => "Pusampusqa p'anqa",
@@ -35823,9 +35829,9 @@ Ama hina kaspa, hallch'akunapi qhaway.",
 	'revdelete-uname-unhid' => 'ruraqpa sutin rikuchisqa',
 	'revdelete-restricted' => "kamachiqkunaman llamk'achisqa saywachanakuna",
 	'revdelete-unrestricted' => 'kamachiqkunamanta qichusqa saywachanakuna',
-);
+];
 
-$messages['qug'] = array(
+$messages['qug'] = [
 	'returnto' => '$1-man tikramuna.',
 	'redirectedfrom' => '($1-manta pushashka)',
 	'redirectpagesub' => 'pushashka panka',
@@ -35877,9 +35883,9 @@ Uraypi apakunakunapa pichanakunapa kamuta rikuchiwanchik:",
 	'rollbacklink' => 'Kutichina',
 	'restriction-type' => 'Hayñi:',
 	'revertmove' => 'Kutichina',
-);
+];
 
-$messages['rgn'] = array(
+$messages['rgn'] = [
 	'returnto' => 'Torna indrì a $1.',
 	'redirectedfrom' => '(Ri-direziòn da <b>$1</b>)',
 	'redirectpagesub' => "Pàgina d're-indirezzament",
@@ -35915,9 +35921,9 @@ Al pàgin int'la lèsta dal [[Special:Watchlist|pàgin tnudi sot occ]] l' è scr
 	'restriction-type' => 'Parmess:',
 	'restriction-level' => "Livel d'restriziòn:",
 	'revertmove' => 'Métla cum era prèma',
-);
+];
 
-$messages['rif'] = array(
+$messages['rif'] = [
 	'returnto' => 'Dwl ghar $1.',
 	'redirectedfrom' => '(Itwasnnmd-d zi $1)',
 	'redirectpagesub' => 'Tasna n (Redirect)',
@@ -35960,9 +35966,9 @@ Tasniwin di [[Special:Watchlist|your watchlist]] d '''tizurarin'''.",
 	'restriction-level' => 'Aswir uskref:',
 	'restriction-edit' => 'Arri',
 	'revertmove' => 'sedwel',
-);
+];
 
-$messages['rm'] = array(
+$messages['rm'] = [
 	'returnto' => 'Enavos tar $1.',
 	'redirectedfrom' => '(renvià da $1)',
 	'redirectpagesub' => "questa pagina renviescha tar in'auter artitgel",
@@ -36179,9 +36185,9 @@ Paginas sin [[Special:Watchlist|tia glista d'observaziun]] èn '''grassas'''.",
 	'rcpatroldisabled' => 'La controlla da las ultimas midadas è deactivava',
 	'rcpatroldisabledtext' => 'La funcziun da controllar las ultimas midadas è actualmain deactivada.',
 	'recreate' => 'Crear danovamain',
-);
+];
 
-$messages['rmy'] = array(
+$messages['rmy'] = [
 	'returnto' => 'Ja palpale kai $1.',
 	'retrievedfrom' => 'Lino katar "$1"',
 	'revdelete-submit' => 'Ker kadya le alosarde paruvimatenge',
@@ -36208,9 +36214,9 @@ $messages['rmy'] = array(
 	'rollback_short' => 'Palemavilipen',
 	'rollbacklink' => 'palemavilipen',
 	'rollbackfailed' => 'O palemavilipen nashtisardyas te kerel pes.',
-);
+];
 
-$messages['ro'] = array(
+$messages['ro'] = [
 	'returnto' => 'Înapoi la $1.',
 	'redirectedfrom' => '(Redirecționat de la $1)',
 	'redirectpagesub' => 'Pagină de redirecționare',
@@ -36484,9 +36490,9 @@ revenire la ultima versiune de $2.',
 	'review_reason_3' => 'Motiv previzualizare 3',
 	'review_reason_4' => 'Motiv previzualizare 4',
 	'review_reason_5' => 'Motiv previzualizare 5',
-);
+];
 
-$messages['roa-rup'] = array(
+$messages['roa-rup'] = [
 	'remembermypassword' => 'Apurã-u ligãtura-a mea pi compiuterlu aistu',
 	'recentchanges' => 'Alãxiri',
 	'recentchangeslinked' => 'Alãxiri ligate',
@@ -36495,9 +36501,9 @@ $messages['roa-rup'] = array(
 	'randompage' => 'Frãndzã di nipandicã',
 	'restriction-edit' => 'Alãxiri',
 	'restriction-move' => 'Tradzets',
-);
+];
 
-$messages['roa-tara'] = array(
+$messages['roa-tara'] = [
 	'returnto' => 'Tuerne a $1.',
 	'redirectedfrom' => '(Riderette da $1)',
 	'redirectpagesub' => 'Pàgene de redirezione',
@@ -36765,9 +36771,9 @@ turnate rete a l'urtema versione da $2.",
 	'revdelete-uname-unhid' => "nome de l'utende fatte vedè",
 	'revdelete-restricted' => 'appliche le restriziune a le SysOps',
 	'revdelete-unrestricted' => 'live le restriziune a le SysOps',
-);
+];
 
-$messages['ru'] = array(
+$messages['ru'] = [
 	'returnto' => 'Возврат к странице $1.',
 	'redirectedfrom' => '(перенаправлено с «$1»)',
 	'redirectpagesub' => 'Страница-перенаправление',
@@ -37038,9 +37044,9 @@ $1",
 	'review_reason_3' => 'рассмотрите рассуждают 3',
 	'review_reason_4' => 'рассмотрите рассуждают 4',
 	'review_reason_5' => 'рассмотрите рассуждают 5',
-);
+];
 
-$messages['rue'] = array(
+$messages['rue'] = [
 	'returnto' => 'Навернутя до сторінкы «$1».',
 	'redirectedfrom' => '(Напрямленый з $1)',
 	'redirectpagesub' => 'Сторінка-напрямлїня',
@@ -37300,9 +37306,9 @@ $1",
 	'revdelete-uname-unhid' => 'імя хоснователя одкрыте',
 	'revdelete-restricted' => 'приданы обмеджіня про адміністраторів',
 	'revdelete-unrestricted' => 'зняты обмеджіня про адміністраторів',
-);
+];
 
-$messages['rup'] = array(
+$messages['rup'] = [
 	'remembermypassword' => 'Apurã-u ligãtura-a mea pi compiuterlu aistu (for a maximum of $1 {{PLURAL:$1|day|days}})',
 	'recentchanges' => 'Alãxiri',
 	'recentchangeslinked' => 'Alãxiri ligate',
@@ -37311,9 +37317,9 @@ $messages['rup'] = array(
 	'randompage' => 'Frãndzã di nipandicã',
 	'restriction-edit' => 'Alãxiri',
 	'restriction-move' => 'Tradzets',
-);
+];
 
-$messages['ruq'] = array(
+$messages['ruq'] = [
 	'remembermypassword' => 'Apurã-u ligãtura-a mea pi compiuterlu aistu (for a maximum of $1 {{PLURAL:$1|day|days}})',
 	'recentchanges' => 'Alãxiri',
 	'recentchangeslinked' => 'Alãxiri ligate',
@@ -37322,9 +37328,9 @@ $messages['ruq'] = array(
 	'randompage' => 'Frãndzã di nipandicã',
 	'restriction-edit' => 'Alãxiri',
 	'restriction-move' => 'Tradzets',
-);
+];
 
-$messages['ruq-cyrl'] = array(
+$messages['ruq-cyrl'] = [
 	'redirectedfrom' => '(Редирецћионат де ла $1)',
 	'retrievedfrom' => 'адусе де "$1"',
 	'revisionasof' => 'Верцион де дата $1',
@@ -37343,9 +37349,9 @@ $3',
 	'randompage' => 'алаећу',
 	'rollbacklink' => 'ревенире',
 	'revertmove' => 'ревенире',
-);
+];
 
-$messages['ruq-latn'] = array(
+$messages['ruq-latn'] = [
 	'redirectedfrom' => '(Redirecţionat de la $1)',
 	'retrievedfrom' => 'Aduse de "$1"',
 	'revisionasof' => 'Vercion de data $1',
@@ -37364,9 +37370,9 @@ $3',
 	'randompage' => 'alaeţu',
 	'rollbacklink' => 'revenire',
 	'revertmove' => 'revenire',
-);
+];
 
-$messages['sa'] = array(
+$messages['sa'] = [
 	'returnto' => '$1 इत्येतद् प्रति निवर्तताम्।',
 	'redirectedfrom' => '($1 इत्यस्मात् पुनर्निर्दिष्टम्)',
 	'redirectpagesub' => 'अनुप्रेषण-पृष्ठम्',
@@ -37481,9 +37487,9 @@ $messages['sa'] = array(
 	'restriction-level-sysop' => 'पूर्णतया संरक्षितम्',
 	'restriction-level-autoconfirmed' => 'अर्धसंरक्षितम्',
 	'revertmove' => 'प्रतिनिवर्त्यताम्',
-);
+];
 
-$messages['sah'] = array(
+$messages['sah'] = [
 	'returnto' => 'Төттөрү $1 сирэйгэ.',
 	'redirectedfrom' => '(Мантан: $1  көстө)',
 	'redirectpagesub' => 'Утаарар сирэй',
@@ -37750,9 +37756,9 @@ $1",
 	'revdelete-uname-unhid' => 'кыттааччы аата көстөр буолбут',
 	'revdelete-restricted' => 'хааччахтааһын администраатардарга сыһыаннаах',
 	'revdelete-unrestricted' => 'хааччахтааһын админстраатардартан уһулунна',
-);
+];
 
-$messages['sc'] = array(
+$messages['sc'] = [
 	'returnto' => 'Torra a $1.',
 	'redirectedfrom' => '(Reindiritzadu dae $1)',
 	'redirectpagesub' => 'Pàgina de reindiritzadura',
@@ -37850,9 +37856,9 @@ Is pàginas de sa [[Special:Watchlist|watchlist tua]] sunt in '''grassu'''.",
 	'restriction-level-autoconfirmed' => 'mesu-amparada',
 	'restriction-level-all' => 'ogni livellu',
 	'revertmove' => 'fùrria',
-);
+];
 
-$messages['scn'] = array(
+$messages['scn'] = [
 	'returnto' => 'Ritorna a $1.',
 	'redirectedfrom' => '(Rinnirizzata di $1)',
 	'redirectpagesub' => 'Pàggina di rinnirizzamentu',
@@ -38079,9 +38085,9 @@ Cuntrolla lu log.",
 	'recreate' => 'Ricrìa',
 	'revdelete-restricted' => 'ristrizzioni ai suli amministratura attivate',
 	'revdelete-unrestricted' => 'ristrizzioni pi suli amministraturi rimossi',
-);
+];
 
-$messages['sco'] = array(
+$messages['sco'] = [
 	'returnto' => 'Return tae $1.',
 	'redirectedfrom' => '(Reguidit frae $1)',
 	'redirectpagesub' => 'Redirect page',
@@ -38179,9 +38185,9 @@ Pages on [[Special:Watchlist|your watchleet]] are '''bold'''.",
 	'range_block_disabled' => 'The administrator abeility tae mak range blocks is disabled.',
 	'revertmove' => 'revert',
 	'rcpatroldisabledtext' => 'The Recent Changes Patrol feature is disabled the nou.',
-);
+];
 
-$messages['sd'] = array(
+$messages['sd'] = [
 	'returnto' => '$1 ڏانهن وَرو.',
 	'redirectedfrom' => '($1 کان چوريل)',
 	'redirectpagesub' => 'چوريل صفحو',
@@ -38223,9 +38229,9 @@ $messages['sd'] = array(
 	'restriction-level' => 'روڪ سطح:',
 	'revertmove' => 'ورايو',
 	'recreate' => 'ورسجيو',
-);
+];
 
-$messages['sdc'] = array(
+$messages['sdc'] = [
 	'returnto' => 'Turra a $1.',
 	'redirectedfrom' => '(Rinviu da $1)',
 	'redirectpagesub' => 'Pàgina di rinviu',
@@ -38342,9 +38348,9 @@ Cunsulthà lu [{{fullurl:{{#Special:Log}}/suppress|page={{FULLPAGENAMEE}}}} rigi
 	'rcpatroldisabled' => "La verìfica di l'ulthimi mudìfigghi è disattibadda.",
 	'rcpatroldisabledtext' => "La funzioni di verìfica di l'ulthimi mudìfigghi abà nò è attiba.",
 	'recreate' => 'Ricrea',
-);
+];
 
-$messages['se'] = array(
+$messages['se'] = [
 	'returnto' => 'Máhcat siidui $1.',
 	'redirectedfrom' => 'Stivrejuvvon ođđasit siiddus $1',
 	'redirectpagesub' => 'Ođđasit-stivrensiidu',
@@ -38434,9 +38440,9 @@ Eará bajasdoallit sáhtet lohkat čihkojuvvon sisdoalu ja máhcahit dan.",
 	'restriction-level-all' => 'mii beare suodjálus',
 	'revertmove' => 'šluhtte',
 	'recreate' => 'Álggat ođđasit',
-);
+];
 
-$messages['sei'] = array(
+$messages['sei'] = [
 	'returnto' => 'Jumpöx $1.',
 	'redirectedfrom' => '(Meniitomöxde $1)',
 	'redirectpagesub' => 'Meniitomöx páhina',
@@ -38501,18 +38507,18 @@ Sysop zo locköx zo xuniim jan rae': $1",
 	'removedwatchtext' => 'Páhina zo "[[:$1]]" coccebj delataj me listade cáminot.',
 	'restriction-edit' => 'Ticpatlöx',
 	'restriction-move' => 'Yacom',
-);
+];
 
-$messages['sg'] = array(
+$messages['sg'] = [
 	'returnto' => 'Kîri na ndö tî lêmbëtï $1.',
 	'retrievedfrom' => 'Awara na yâ tî "$1"',
 	'red-link-title' => '$1 (lêmbëtï sô ayeke daä äpe)',
 	'recentchanges' => 'Ndângbâ sänzëmä',
 	'recentchangeslinked-toolbox' => 'Bängö pekô tî âgbegbêe lêmbëtï',
 	'randompage' => 'Lêmbëtï waâwa',
-);
+];
 
-$messages['sgs'] = array(
+$messages['sgs'] = [
 	'returnto' => 'Grīžtė i $1.',
 	'redirectedfrom' => '(Nokreipta ėš $1)',
 	'redirectpagesub' => 'Nokreipėma poslapis',
@@ -38619,9 +38625,9 @@ Kėtė admėnėstratuorē šėtom pruojekte vėsdar galės pasėiktė pasliepta 
 	'reblock-logentry' => 'pakeistė [[$1]] bluokavėma nustatīmā, naus bluokavėma čiesos īr $2 $3',
 	'revertmove' => 'atmestė',
 	'recreate' => 'Atkortė',
-);
+];
 
-$messages['sh'] = array(
+$messages['sh'] = [
 	'returnto' => 'Povratak na $1.',
 	'redirectedfrom' => '(Preusmjereno sa $1)',
 	'redirectpagesub' => 'Preusmjeri stranicu',
@@ -38889,9 +38895,9 @@ vraćeno na posljednju verziju koju je snimio $2.',
 	'revdelete-uname-unhid' => 'korisničko ime je otkriveno',
 	'revdelete-restricted' => 'primijenjena ograničenja za administratore',
 	'revdelete-unrestricted' => 'uklonjena ograničenja za administratore',
-);
+];
 
-$messages['shi'] = array(
+$messages['shi'] = [
 	'returnto' => 'Urri s $1.',
 	'redirectedfrom' => '(Tmmuttid z $1)',
 	'redirectpagesub' => 'Tasna n-usmmattay',
@@ -38973,9 +38979,9 @@ Mel imbddeln z tisniwin li ittuyzdayni bla tasna li trit.',
 	'revertmove' => 'Rard',
 	'recentchangesall' => 'Kullu',
 	'recreate' => 'awd skr',
-);
+];
 
-$messages['si'] = array(
+$messages['si'] = [
 	'returnto' => '$1 ට නැවත යන්න.',
 	'redirectedfrom' => '($1 වෙතින් යළි-යොමු කරන ලදි)',
 	'redirectpagesub' => 'පිටුව යළි-යොමු කරන්න',
@@ -39243,9 +39249,9 @@ $2 ගේ අවසන් අනුවාදය වෙතට යළි වෙන
 	'revdelete-uname-unhid' => 'පරිශීලක-නාමය  සඟවා නොමැත',
 	'revdelete-restricted' => 'පරිපාලකයන් විෂයයෙහි ව්‍යවහාරිත පරිසීමාවන්',
 	'revdelete-unrestricted' => 'පරිපාලකයන්ගේ පරිසීමාවන් ඉවත් කරන ලදි',
-);
+];
 
-$messages['sk'] = array(
+$messages['sk'] = [
 	'returnto' => 'Späť na $1.',
 	'redirectedfrom' => '(Presmerované z $1)',
 	'redirectpagesub' => 'Presmerovacia stránka',
@@ -39513,9 +39519,9 @@ Stránky, ktoré sa nachádzajú vo vašom [[Special:Watchlist|zozname sledovan�
 	'revdelete-uname-unhid' => 'používateľské meno odkryté',
 	'revdelete-restricted' => 'obmedzenia správcov použité',
 	'revdelete-unrestricted' => 'obmedzenia správcov odstránené',
-);
+];
 
-$messages['sl'] = array(
+$messages['sl'] = [
 	'returnto' => 'Vrnite se na $1.',
 	'redirectedfrom' => '(Preusmerjeno z $1)',
 	'redirectpagesub' => 'Preusmeritvena stran',
@@ -39789,9 +39795,9 @@ vrnjeno na urejanje uporabnika $2.',
 	'review_reason_3' => 'Razlog recenzije 3',
 	'review_reason_4' => 'Razlog recenzije 4',
 	'review_reason_5' => 'Razlog recenzije 5',
-);
+];
 
-$messages['sli'] = array(
+$messages['sli'] = [
 	'returnto' => 'Zurück zur Seite $1.',
 	'redirectedfrom' => '(Weitergeleitet vo $1)',
 	'retrievedfrom' => 'voo "$1"',
@@ -39986,16 +39992,16 @@ $1",
 	'recreate' => 'Erneut oalähn',
 	'revdelete-restricted' => 'Einschränkungen gelten au fier Administratorn',
 	'revdelete-unrestricted' => 'Einschränkungen fier Administratorn uffgehobn',
-);
+];
 
-$messages['sm'] = array(
+$messages['sm'] = [
 	'recentchanges' => 'Suiga talu ai nei',
 	'recentchangeslinked' => "Suiga e a'afia ai",
 	'randompage' => "Itulau le fa'ailogaina",
 	'restriction-move' => "Si'itia",
-);
+];
 
-$messages['sma'] = array(
+$messages['sma'] = [
 	'returnto' => 'Bååstide gåajkoe $1.',
 	'redirectedfrom' => '(Bïjre-dirisjovne raejeste $1)',
 	'redirectpagesub' => 'Bïjre-dirisjovne bielie',
@@ -40035,9 +40041,9 @@ $messages['sma'] = array(
 	'restriction-create' => 'Skaepiedidh',
 	'restriction-level-sysop' => 'dïeves-vaarjelidh',
 	'revertmove' => 'jåhta bååstede',
-);
+];
 
-$messages['sn'] = array(
+$messages['sn'] = [
 	'remembermypassword' => 'Ndiyeuke (for a maximum of $1 {{PLURAL:$1|day|days}})',
 	'recentchanges' => 'Zvaba Kuchinjwa',
 	'recentchangeslinked' => 'Zvinoenderana nezvachinjwa',
@@ -40046,9 +40052,9 @@ $messages['sn'] = array(
 	'randompage' => 'Peji nhemwa',
 	'restriction-edit' => 'Chinja',
 	'restriction-move' => 'Chichinura',
-);
+];
 
-$messages['so'] = array(
+$messages['so'] = [
 	'returnto' => 'Ku noqo $1.',
 	'retrievedfrom' => 'Waxaa laga keenay "$1"',
 	'red-link-title' => '$1 (wali lama qorin)',
@@ -40069,9 +40075,9 @@ $messages['so'] = array(
 	'restriction-edit' => 'Wax ka bdel',
 	'restriction-move' => 'Wareeji',
 	'recentchangesall' => 'dhamaan',
-);
+];
 
-$messages['sq'] = array(
+$messages['sq'] = [
 	'returnto' => 'Kthehuni tek $1',
 	'redirectedfrom' => '(Përcjellë nga $1)',
 	'redirectpagesub' => 'Faqe përcjellëse',
@@ -40335,9 +40341,9 @@ Faqet [[Special:Watchlist|nën mbikqyrjen tuaj]] duken të '''theksuara'''.",
 	'revdelete-uname-unhid' => 'emri i përdoruesit jo i fshehur',
 	'revdelete-restricted' => 'u vendosën kufizime për administruesit',
 	'revdelete-unrestricted' => 'u hoqën kufizimet për administruesit',
-);
+];
 
-$messages['sr'] = array(
+$messages['sr'] = [
 	'returnto' => 'Kthehuni tek $1',
 	'redirectedfrom' => '(Përcjellë nga $1)',
 	'redirectpagesub' => 'Faqe përcjellëse',
@@ -40618,9 +40624,9 @@ Faqet [[Special:Watchlist|nën mbikqyrjen tuaj]] duken të '''theksuara'''.",
 	'review_reason_3' => 'Razlog ispravke 3',
 	'review_reason_4' => 'Razlog ispravke 4',
 	'review_reason_5' => 'Razlog ispravke 5',
-);
+];
 
-$messages['sr-ec'] = array(
+$messages['sr-ec'] = [
 	'returnto' => 'Назад на $1.',
 	'redirectedfrom' => '(преусмерено са $1)',
 	'redirectpagesub' => 'Преусмерење',
@@ -40891,9 +40897,9 @@ $1",
 	'revdelete-uname-unhid' => 'корисничко име је откривено',
 	'revdelete-restricted' => 'примењена ограничења за администраторе',
 	'revdelete-unrestricted' => 'уклоњена ограничења за администраторе',
-);
+];
 
-$messages['sr-el'] = array(
+$messages['sr-el'] = [
 	'returnto' => 'Povratak na $1.',
 	'redirectedfrom' => '(Preusmereno sa $1)',
 	'redirectpagesub' => 'Stranica preusmerenja',
@@ -41140,9 +41146,9 @@ Stranice sa [[Special:Watchlist|vašeg spiska nadgledanja]] su '''podebljane'''.
 	'rcpatroldisabledtext' => 'Patrola skorašnjih izmena je trenutno onemogućena.',
 	'recentchangesall' => 'sve',
 	'recreate' => 'Ponovo napravi',
-);
+];
 
-$messages['srn'] = array(
+$messages['srn'] = [
 	'returnto' => 'Drai baka go na $1.',
 	'redirectedfrom' => '(Seni komopo fu $1)',
 	'redirectpagesub' => 'Seni doro papira',
@@ -41199,9 +41205,9 @@ Papira ini [[Special:Watchlist|yu Tan Luku réy]] '''fatu'''.",
 	'restriction-type' => 'Den leti:',
 	'restriction-level' => 'Pelkinivo:',
 	'revertmove' => 'drai baka',
-);
+];
 
-$messages['ss'] = array(
+$messages['ss'] = [
 	'returnto' => 'Buyela ku $1.',
 	'redirectedfrom' => '(Utfunyelelwe likhasi $1)',
 	'redirectpagesub' => 'Likhasi lekutfumela',
@@ -41209,17 +41215,17 @@ $messages['ss'] = array(
 	'restriction-edit' => 'Hlela',
 	'restriction-move' => 'Khweshisa',
 	'restriction-create' => 'Create',
-);
+];
 
-$messages['st'] = array(
+$messages['st'] = [
 	'returnto' => 'Kgutlela ho $1.',
 	'retrievedfrom' => 'E tswa ho "$1"',
 	'remembermypassword' => 'O nkgopole (for a maximum of $1 {{PLURAL:$1|day|days}})',
 	'retypenew' => 'Ngola lepetjo le letjha hape:',
 	'randompage' => 'Mpontshe leqephe le leng le le leng',
-);
+];
 
-$messages['stq'] = array(
+$messages['stq'] = [
 	'returnto' => 'Tourääch tou Siede $1.',
 	'redirectedfrom' => '(Fäärelaited fon $1)',
 	'redirectpagesub' => 'Fäärelaitenge',
@@ -41476,9 +41482,9 @@ Wröigje do Logbouke.',
 	'recreate' => 'Wierhäärstaale',
 	'revdelete-restricted' => 'Einskränkengen jäilde uk foar Administratore',
 	'revdelete-unrestricted' => 'Ienskränkengen foar Administratore wächhoald',
-);
+];
 
-$messages['su'] = array(
+$messages['su'] = [
 	'returnto' => 'Balik deui ka $1.',
 	'redirectedfrom' => '(dipindahkeun ti $1)',
 	'redirectpagesub' => 'Kaca alihan',
@@ -41712,9 +41718,9 @@ Anjeun teu diwenangkeun asup.',
 	'recreate' => 'Jieun deui',
 	'revdelete-restricted' => 'akses geus dibatesan ukur keur kuncén',
 	'revdelete-unrestricted' => 'Watesan akses kuncén dihapuskeun',
-);
+];
 
-$messages['sv'] = array(
+$messages['sv'] = [
 	'returnto' => 'Tillbaka till $1.',
 	'redirectedfrom' => '(Omdirigerad från $1)',
 	'redirectpagesub' => 'Omdirigeringssida',
@@ -41989,9 +41995,9 @@ Sidor på [[Special:Watchlist|din bevakningslista]] är markerade med '''fetstil
 	'review_reason_3' => 'Anmälningsanledning 3',
 	'review_reason_4' => 'Anmälningsanledning 4',
 	'review_reason_5' => 'Anmälningsanledning 5',
-);
+];
 
-$messages['sw'] = array(
+$messages['sw'] = [
 	'returnto' => 'Rudia $1.',
 	'redirectedfrom' => '(Elekezwa kutoka $1)',
 	'redirectpagesub' => 'Ukurasa wa kuelekeza',
@@ -42206,9 +42212,9 @@ Haliwezi kufichwa.',
 	'recreate' => 'Anzisha upya',
 	'revdelete-restricted' => 'aliwazuia pia wakabidhi wasiyaone maelezo',
 	'revdelete-unrestricted' => 'aliwarudishia wakabidhi uwezo wa kuona maelezo',
-);
+];
 
-$messages['szl'] = array(
+$messages['szl'] = [
 	'returnto' => 'Nazod do zajty $1.',
 	'redirectedfrom' => '(Punkńyńto s $1)',
 	'redirectpagesub' => 'Zajta překerowujůnco',
@@ -42421,9 +42427,9 @@ Přiwrůcůno uostatńo wersyja autorstwa  $2.',
 	'recreate' => 'Wćepej nazod',
 	'revdelete-restricted' => 'naštaluj uograničyńo do administratorůw',
 	'revdelete-unrestricted' => 'wycofej uograničyńo do administratorůw',
-);
+];
 
-$messages['ta'] = array(
+$messages['ta'] = [
 	'returnto' => '$1 பக்கத்துக்குத் திரும்பு.',
 	'redirectedfrom' => '($1 இலிருந்து வழிமாற்றப்பட்டது)',
 	'redirectpagesub' => 'பக்கவழிமாற்றுப் பக்கம்',
@@ -42686,9 +42692,9 @@ $1",
 	'revdelete-uname-unhid' => 'பயனர் பெயர் மறைக்கப்பட்டது நீக்கப்பட்டுள்ளது.',
 	'revdelete-restricted' => 'நிர்வாகிகளுக்கு கட்டுப்பாடுகள் விதிக்கப்பட்டது',
 	'revdelete-unrestricted' => 'நிர்வாகிகளின் கட்டுப்பாடுகள் நீக்கப்பட்டது',
-);
+];
 
-$messages['tcy'] = array(
+$messages['tcy'] = [
 	'returnto' => '$1 ಗ್ ಪಿರ ಪೋಲೆ.',
 	'redirectedfrom' => '($1 ರ್ದ್ ಪುನರ್ನಿರ್ದೇಶಿತ)',
 	'redirectpagesub' => 'ಪುನರ್ನಿರ್ದೇಶನ ಪುಟ',
@@ -42757,9 +42763,9 @@ $messages['tcy'] = array(
 	'randompage' => 'ಯಾದೃಚ್ಛಿಕ ಪುಟ',
 	'rollbacklink' => 'ಪಿರ ಪೋಲೆ',
 	'revertmove' => 'ದುಂಬುದ ಲೆಕೆ ಮಲ್ಪುಲೆ',
-);
+];
 
-$messages['te'] = array(
+$messages['te'] = [
 	'returnto' => 'తిరిగి $1కి.',
 	'redirectedfrom' => '($1 నుండి మళ్ళించబడింది)',
 	'redirectpagesub' => 'దారిమార్పు పుట',
@@ -43017,9 +43023,9 @@ $1",
 	'revdelete-uname-hid' => 'వాడుకరి పేరుని దాచారు',
 	'revdelete-restricted' => 'నిర్వాహకులకు ఆంక్షలు విధించాను',
 	'revdelete-unrestricted' => 'నిర్వాహకులకున్న ఆంక్షలను ఎత్తేశాను',
-);
+];
 
-$messages['tet'] = array(
+$messages['tet'] = [
 	'returnto' => 'Fali ba $1.',
 	'retrievedfrom' => 'Husi "$1"',
 	'red-link-title' => '$1 (pájina la iha)',
@@ -43065,9 +43071,9 @@ $messages['tet'] = array(
 	'restriction-edit' => 'Edita',
 	'restriction-move' => 'Book',
 	'restriction-create' => 'Kria',
-);
+];
 
-$messages['tg'] = array(
+$messages['tg'] = [
 	'returnto' => 'Fali ba $1.',
 	'retrievedfrom' => 'Husi "$1"',
 	'red-link-title' => '$1 (pájina la iha)',
@@ -43113,9 +43119,9 @@ $messages['tg'] = array(
 	'restriction-edit' => 'Edita',
 	'restriction-move' => 'Book',
 	'restriction-create' => 'Kria',
-);
+];
 
-$messages['tg-cyrl'] = array(
+$messages['tg-cyrl'] = [
 	'returnto' => 'Бозгашт ба $1.',
 	'redirectedfrom' => '(Тағйири масир аз $1)',
 	'redirectpagesub' => 'Саҳифаи равонакунӣ',
@@ -43280,9 +43286,9 @@ $messages['tg-cyrl'] = array(
 	'recreate' => 'Аз нав созед',
 	'revdelete-restricted' => 'маҳдудиятҳо ба мудирон амалӣ шуданд',
 	'revdelete-unrestricted' => 'маҳдудиятҳо аз мудирон бардошта шуданд',
-);
+];
 
-$messages['tg-latn'] = array(
+$messages['tg-latn'] = [
 	'returnto' => 'Bozgaşt ba $1.',
 	'redirectedfrom' => '(Taƣjiri masir az $1)',
 	'redirectpagesub' => 'Sahifai ravonakunī',
@@ -43432,9 +43438,9 @@ Sahifahoi dar [[Special:Watchlist|fehristi nazaroti şumo]] buda  '''purrang''' 
 	'recreate' => 'Az nav sozed',
 	'revdelete-restricted' => 'mahdudijatho ba mudiron amalī şudand',
 	'revdelete-unrestricted' => 'mahdudijatho az mudiron bardoşta şudand',
-);
+];
 
-$messages['th'] = array(
+$messages['th'] = [
 	'returnto' => 'กลับไป $1',
 	'redirectedfrom' => '(เปลี่ยนทางจาก $1)',
 	'redirectpagesub' => 'หน้าเปลี่ยนทาง',
@@ -43689,9 +43695,9 @@ $1",
 	'recreate' => 'สร้างใหม่',
 	'revdelete-restricted' => 'จำกัดให้เฉพาะผู้ดูแลระบบขั้นพื้นฐาน',
 	'revdelete-unrestricted' => 'ยกเลิกการจำกัดให้เฉพาะผู้ดูแลระบบขั้นพื้นฐาน',
-);
+];
 
-$messages['tk'] = array(
+$messages['tk'] = [
 	'returnto' => '$1.',
 	'redirectedfrom' => '($1 sahypasyndan gönükdirildi)',
 	'redirectpagesub' => 'Gönükdirme sahypasy',
@@ -43948,9 +43954,9 @@ $2 tarapyndan edilen soňky wersiýa gaýdyp gelindi.',
 	'recreate' => 'Gaýtadan döret',
 	'revdelete-restricted' => 'administratorlara goýlan çäklendirmeler',
 	'revdelete-unrestricted' => 'administratorlardan aýyrylan çäklendirmeler',
-);
+];
 
-$messages['tl'] = array(
+$messages['tl'] = [
 	'returnto' => 'Bumalik sa $1.',
 	'redirectedfrom' => '(Ikinarga mula sa $1)',
 	'redirectpagesub' => 'Pahina ng pagkarga',
@@ -44206,18 +44212,18 @@ Pakitingnan ang mga talaan.',
 	'recreate' => 'Likhain muli',
 	'revdelete-restricted' => 'nilapat na mga paghihigpit sa mga tagapangasiwa',
 	'revdelete-unrestricted' => 'tinanggal ang mga pagbabawal para sa mga tagapangasiwa',
-);
+];
 
-$messages['tn'] = array(
+$messages['tn'] = [
 	'remembermypassword' => 'Gakologelwa ikwadiso yame mo khompiutareng e (for a maximum of $1 {{PLURAL:$1|day|days}})',
 	'recentchanges' => 'Diphetogo tsa sešeng',
 	'recentchangeslinked' => 'Diphetogo tse di tsamaelanang',
 	'recentchangeslinked-feed' => 'Diphetogo tse di tsamaelanang',
 	'recentchangeslinked-toolbox' => 'Diphetogo tse di tsamaelanang',
 	'randompage' => 'Tsebe e e sa tlhomamang',
-);
+];
 
-$messages['to'] = array(
+$messages['to'] = [
 	'returnto' => 'Foki ki he $1',
 	'redirectedfrom' => '(Kuo leʻei mei $1)',
 	'redirectpagesub' => 'Peesi leʻei',
@@ -44280,9 +44286,9 @@ Ko e ʻuhinga loka ko e $1 ia.",
 	'revertmove' => 'foki ki he paaki motuʻa',
 	'rcpatroldisabled' => 'ʻOku fakataʻeʻaʻongaʻi ʻa e leʻo ʻo e ngaahi toki liliu',
 	'recreate' => 'Toe fakatupu',
-);
+];
 
-$messages['tokipona'] = array(
+$messages['tokipona'] = [
 	'redirectedfrom' => '(tan $1)',
 	'retrievedfrom' => 'tan $1',
 	'recentchanges' => 'lipu seme li ante?',
@@ -44290,9 +44296,9 @@ $messages['tokipona'] = array(
 	'recentchangeslinked-feed' => 'ante sama',
 	'recentchangeslinked-toolbox' => 'ante sama',
 	'randompage' => 'mi wile lukin e lipu ante',
-);
+];
 
-$messages['tpi'] = array(
+$messages['tpi'] = [
 	'returnto' => 'Go bek long $1',
 	'redirectedfrom' => '(Nupela rot i pinis long $1)',
 	'redirectpagesub' => 'Nupela rot',
@@ -44333,9 +44339,9 @@ $messages['tpi'] = array(
 	'restriction-move' => 'Surikim',
 	'restriction-create' => 'Kirapim',
 	'revertmove' => 'go bek',
-);
+];
 
-$messages['tr'] = array(
+$messages['tr'] = [
 	'returnto' => '$1 sayfasına dön.',
 	'redirectedfrom' => '($1 sayfasından yönlendirildi)',
 	'redirectpagesub' => 'Yönlendirme sayfası',
@@ -44605,9 +44611,9 @@ $2 tarafından değiştirilmiş önceki sürüme geri dönüldü.',
 	'review_reason_3' => '3. sebebi gözden geçir',
 	'review_reason_4' => '4. sebebi gözden geçir',
 	'review_reason_5' => '5. sebebi gözden geçir',
-);
+];
 
-$messages['ts'] = array(
+$messages['ts'] = [
 	'returnto' => 'Thlelela e $1.',
 	'retrievedfrom' => 'ku suka e "$1"',
 	'restorelink' => '{{PLURAL:$1|ndzulamiso lowu suriweke|$1 mindzulamiso leyi suriweke}}',
@@ -44622,9 +44628,9 @@ $messages['ts'] = array(
 	'recentchangeslinked' => 'Kuncica loku yelanaka',
 	'recentchangeslinked-feed' => 'Kuncica loku yelanaka',
 	'recentchangeslinked-toolbox' => 'Kuncica loku yelanaka',
-);
+];
 
-$messages['tt-cyrl'] = array(
+$messages['tt-cyrl'] = [
 	'returnto' => '$1 битенә кайту.',
 	'redirectedfrom' => '($1 битеннән юнәлтелде)',
 	'redirectpagesub' => 'Башка биткә юнәлтү бите',
@@ -44787,9 +44793,9 @@ $1',
 	'revertmove' => 'кире кайту',
 	'recreate' => 'Яңадан ясау',
 	'revdelete-restricted' => 'чикләүләр идарәчеләргә дә кулланыла',
-);
+];
 
-$messages['tt-latn'] = array(
+$messages['tt-latn'] = [
 	'returnto' => '$1 bitenä qaytu.',
 	'redirectedfrom' => '($1 bitennän yünältelde)',
 	'redirectpagesub' => 'Başqa bitkä yünältü bite',
@@ -44942,16 +44948,16 @@ Sez idaräçe bulu säbäple, [$1 yäşerelgän yuramanı qarıy alasız]",
 	'revertmove' => 'kire qaytu',
 	'recreate' => 'Yañadan yasaw',
 	'revdelete-restricted' => 'çikläwlär idaräçelärgä dä qullanıla',
-);
+];
 
-$messages['ty'] = array(
+$messages['ty'] = [
 	'recentchanges' => 'Te mau fa’ahuru-’ē-ra’a ’āpī',
 	'randompage' => '’Api mā’iti-haere-noa',
 	'restriction-edit' => 'Fa’ahuru ’ē',
 	'restriction-move' => 'Tāhiti',
-);
+];
 
-$messages['tyv'] = array(
+$messages['tyv'] = [
 	'returnto' => '$1 деп арынже эглири.',
 	'retrievedfrom' => '"$1" деп арынында парлаттынган',
 	'restorelink' => '{{PLURAL:$1|$1 балаттынган өскерилгелер}}',
@@ -44995,9 +45001,9 @@ $messages['tyv'] = array(
 	'restriction-edit' => 'Өскертири',
 	'restriction-move' => 'Шимчээри',
 	'recentchangesall' => 'шупту',
-);
+];
 
-$messages['udm'] = array(
+$messages['udm'] = [
 	'retrievedfrom' => '«$1»-лэсь басьтэмын',
 	'red-link-title' => '$1 (со бам ӧвӧл на)',
 	'revdelete-radio-set' => 'Бен',
@@ -45007,9 +45013,9 @@ $messages['udm'] = array(
 	'recentchangeslinked-feed' => 'Герӟаськем тупатонъёс',
 	'recentchangeslinked-toolbox' => 'Герӟаськем тупатонъёс',
 	'randompage' => 'Олокыӵе статья',
-);
+];
 
-$messages['ug'] = array(
+$messages['ug'] = [
 	'retrievedfrom' => '«$1»-лэсь басьтэмын',
 	'red-link-title' => '$1 (со бам ӧвӧл на)',
 	'revdelete-radio-set' => 'Бен',
@@ -45019,9 +45025,9 @@ $messages['ug'] = array(
 	'recentchangeslinked-feed' => 'Герӟаськем тупатонъёс',
 	'recentchangeslinked-toolbox' => 'Герӟаськем тупатонъёс',
 	'randompage' => 'Олокыӵе статья',
-);
+];
 
-$messages['ug-arab'] = array(
+$messages['ug-arab'] = [
 	'returnto' => '$1 غا قايت.',
 	'redirectedfrom' => '(قايتا نىشان بەلگىلەش ئورنى $1)',
 	'redirectpagesub' => 'قايتا نىشان بەلگىلەنگەن بەت',
@@ -45279,9 +45285,9 @@ $2 نىڭ ئاخىرقى تۈزىتىلگەن نەشرىگە ئۆزگەرتىل�
 	'recreate' => 'قايتا قۇر',
 	'revdelete-restricted' => 'باشقۇرغۇچى چەكلىمىسىنى قوللان',
 	'revdelete-unrestricted' => 'باشقۇرغۇچىنىڭ چەكلىمىسى چىقىرىۋېتىلدى',
-);
+];
 
-$messages['ug-latn'] = array(
+$messages['ug-latn'] = [
 	'red-link-title' => '$1 (bet yoq)',
 	'recentchanges' => 'Yéngi özgirish',
 	'recentchangeslinked' => 'Yéqinqi özgirishler',
@@ -45291,9 +45297,9 @@ $messages['ug-latn'] = array(
 	'randompage' => 'Halighan Tor Beti',
 	'restriction-edit' => 'Uzgartish',
 	'restriction-move' => 'Yotkash',
-);
+];
 
-$messages['uk'] = array(
+$messages['uk'] = [
 	'returnto' => 'Повернення до сторінки «$1».',
 	'redirectedfrom' => '(Перенаправлено з $1)',
 	'redirectpagesub' => 'Сторінка-перенаправлення',
@@ -45568,9 +45574,9 @@ $1",
 	'review_reason_3' => 'Причина переглядання 3',
 	'review_reason_4' => 'Причина переглядання 4',
 	'review_reason_5' => 'Причина переглядання 5',
-);
+];
 
-$messages['ur'] = array(
+$messages['ur'] = [
 	'returnto' => 'واپس $1۔',
 	'redirectedfrom' => '($1 سے پلٹایا گیا)',
 	'redirectpagesub' => 'لوٹایا گیا صفحہ',
@@ -45670,9 +45676,9 @@ $messages['ur'] = array(
 	'rollbacklink' => 'واپس سابقہ حالت',
 	'rollbackfailed' => 'سابقہ حالت پر واپسی ناکام',
 	'revertmove' => 'رجوع',
-);
+];
 
-$messages['uz'] = array(
+$messages['uz'] = [
 	'returnto' => '$1 sahifasiga qaytish.',
 	'redirectedfrom' => '($1dan yoʻnaltirildi)',
 	'redirectpagesub' => 'Yoʻnaltiruvchi sahifa',
@@ -45707,9 +45713,9 @@ Qulaylik uchun quyida yoʻqotilish qaydlari keltirilgan:",
 	'rollbacklink' => 'eski holiga keltir',
 	'restriction-edit' => 'Tahrirlash',
 	'revertmove' => 'qaytar',
-);
+];
 
-$messages['val'] = array(
+$messages['val'] = [
 	'returnto' => 'Torna cap a $1.',
 	'redirectedfrom' => "(S'ha redirigit des de $1)",
 	'redirectpagesub' => 'Pàgina de redireccionament',
@@ -45814,9 +45820,9 @@ Atres administradors de la uep basada en wiki encara podrien accedir al contingu
 	'recentchangesall' => 'tots',
 	'recreate' => 'Recrea',
 	'redirectingto' => "S'està redirigint a [[$1]]...",
-);
+];
 
-$messages['vec'] = array(
+$messages['vec'] = [
 	'returnto' => 'Torna a $1.',
 	'redirectedfrom' => '(Rimando da <b>$1</b>)',
 	'redirectpagesub' => 'Pagina de rimando',
@@ -46072,9 +46078,9 @@ Le pagine [[Special:Watchlist|tegnùe d'ocio]] le xe in '''grosso'''.",
 	'recreate' => 'Ricrea',
 	'revdelete-restricted' => 'aplicà restrizioni ai aministradori',
 	'revdelete-unrestricted' => 'gà cavà le limitazion par i aministradori',
-);
+];
 
-$messages['vep'] = array(
+$messages['vep'] = [
 	'returnto' => 'Pörttas lehtpolele $1.',
 	'redirectedfrom' => '(Oigetud lehtpolelpäi $1)',
 	'redirectpagesub' => "Oigendai lehtpol'",
@@ -46289,9 +46295,9 @@ Tö ei voigoi kävutada sidä.',
 	'recreate' => 'Säta udes',
 	'revdelete-restricted' => 'kaidendused administratoriden täht',
 	'revdelete-unrestricted' => 'kaidendused heittud administratoriden täht',
-);
+];
 
-$messages['vi'] = array(
+$messages['vi'] = [
 	'returnto' => 'Quay lại $1.',
 	'redirectedfrom' => '(đổi hướng từ $1)',
 	'redirectpagesub' => 'Trang đổi hướng',
@@ -46559,14 +46565,14 @@ quay về phiên bản cuối của $2.',
 	'revdelete-uname-unhid' => 'đã hiện tên người dùng',
 	'revdelete-restricted' => 'đã áp dụng hạn chế cho bảo quản viên',
 	'revdelete-unrestricted' => 'đã gỡ bỏ hạn chế cho bảo quản viên',
-);
+];
 
-$messages['vls'] = array(
+$messages['vls'] = [
 	'red-link-title' => '$1 (Blad bestoat nie)',
 	'recentchanges' => 'Juste veranderd',
-);
+];
 
-$messages['vmf'] = array(
+$messages['vmf'] = [
 	'returnto' => 'Dsrig dsur sajdn $1.',
 	'redirectedfrom' => '(Wajdagschigd fo $1)',
 	'redirectpagesub' => 'Wajdalajdungs-sajdn',
@@ -46616,9 +46622,9 @@ Gschbärd is se desdâweechn: $1",
 	'restriction-type' => 'Was erlaubd is:',
 	'restriction-level' => 'Ausmôôs fom schbärn:',
 	'revertmove' => 'dsrigdaafn af an aldn nôômâ',
-);
+];
 
-$messages['vo'] = array(
+$messages['vo'] = [
 	'returnto' => 'Geikön lü $1.',
 	'redirectedfrom' => '(Pelüodükon de pad: $1)',
 	'redirectpagesub' => 'Lüodükömapad',
@@ -46838,9 +46844,9 @@ Pads [[Special:Watchlist|galädaliseda olik]] '''pakazetons'''.",
 	'review_reason_3' => 'Revidakod 3',
 	'review_reason_4' => 'Revidakod 4',
 	'review_reason_5' => 'Revidakod 5',
-);
+];
 
-$messages['vot'] = array(
+$messages['vot'] = [
 	'returnto' => 'Mee takaz tšüľľelle $1.',
 	'redirectedfrom' => '(Mešaitõttu tšüľľeltä $1)',
 	'redirectpagesub' => 'Mešaituztšültši',
@@ -46876,9 +46882,9 @@ Tšüľľed, kummad õmad teďďellä [[Special:Watchlist|kattsõspiizgalla]] on
 	'restriction-type' => 'Rajauz',
 	'restriction-level' => 'Varjauz',
 	'revertmove' => 'kummut',
-);
+];
 
-$messages['vro'] = array(
+$messages['vro'] = [
 	'returnto' => 'Tagasi lehe manoq $1.',
 	'redirectedfrom' => '(Ümbre saadõt artiklist $1)',
 	'redirectpagesub' => 'Ümbresaatmislehekülg',
@@ -47038,9 +47044,9 @@ Lisateedüst või ollaq [{{fullurl:{{#Special:Log}}/suppress|page={{FULLPAGENAME
 	'rcpatroldisabled' => 'Vahtsidõ muutmiisi ülekaemist olõ-i tüüle säet.',
 	'rcpatroldisabledtext' => 'Vahtsidõ muutmiisi ülekaemist olõ-i tüüle säet.',
 	'recreate' => 'Luuq vahtsõst',
-);
+];
 
-$messages['wa'] = array(
+$messages['wa'] = [
 	'returnto' => 'Rivni al pådje «$1».',
 	'redirectedfrom' => '(Redjiblé di $1)',
 	'redirectpagesub' => 'Pådje di redjiblaedje',
@@ -47112,9 +47118,9 @@ Les ôtes manaedjeus so ç' wiki ci pôront todi vey li contnou catchî eyet l' 
 	'range_block_disabled' => "Li possibilité po les manaedjeus di bloker des fortchetes d' adresses IP a stî dismetowe.",
 	'revertmove' => 'disfé',
 	'recreate' => 'Rifé',
-);
+];
 
-$messages['war'] = array(
+$messages['war'] = [
 	'returnto' => 'Balik ngadto ha $1.',
 	'redirectedfrom' => '(Ginredirekta tikang ha $1)',
 	'redirectpagesub' => 'Redirek nga pakli',
@@ -47206,9 +47212,9 @@ Mga pakli ha [[Special:Watchlist|imo angay timan-an]] in naka-'''bold'''.",
 	'restriction-create' => 'Himo-a',
 	'revertmove' => 'igbalik',
 	'recreate' => 'Himo-a utro',
-);
+];
 
-$messages['wo'] = array(
+$messages['wo'] = [
 	'returnto' => 'Dellu ci wii xët $1.',
 	'redirectedfrom' => '(Yoonalaat gu jóge $1)',
 	'redirectpagesub' => 'Xëtu yoonalaat',
@@ -47427,9 +47433,9 @@ Ki ko dello ci sumb mu mujj mi mooy $2.',
 	'revertmove' => 'delloowaat',
 	'revdelete-restricted' => 'doxalub digal ngir yorkat yi',
 	'revdelete-unrestricted' => 'digal ngir yorkat yi deñ na',
-);
+];
 
-$messages['wuu'] = array(
+$messages['wuu'] = [
 	'returnto' => '回转到$1。',
 	'redirectedfrom' => '（$1重定向来个）',
 	'redirectpagesub' => '重定向页',
@@ -47595,9 +47601,9 @@ $1",
 	'revertmove' => '恢复',
 	'revdelete-restricted' => '已将限制应用到管理员',
 	'revdelete-unrestricted' => '已移除对管理员个限制',
-);
+];
 
-$messages['xal'] = array(
+$messages['xal'] = [
 	'returnto' => '«$1» тал хәрү ирх.',
 	'redirectedfrom' => '($1 гидг һазрас авч одсмн)',
 	'redirectpagesub' => 'Авч оддг халх',
@@ -47660,17 +47666,17 @@ $messages['xal'] = array(
 	'restriction-edit' => 'Сольлһн',
 	'restriction-move' => 'Көндлһн',
 	'revertmove' => 'хәрүлһн',
-);
+];
 
-$messages['xh'] = array(
+$messages['xh'] = [
 	'remembermypassword' => 'Khumbula igama lam elifihlakeleyo kule Khompyutha (for a maximum of $1 {{PLURAL:$1|day|days}})',
 	'recentchanges' => 'Utshitsho olusandokwenziwa',
 	'recentchangeslinked' => 'Utsitsho olufana nolu',
 	'recentchangeslinked-feed' => 'Utsitsho olufana nolu',
 	'recentchangeslinked-toolbox' => 'Utsitsho olufana nolu',
-);
+];
 
-$messages['xmf'] = array(
+$messages['xmf'] = [
 	'returnto' => 'დირთი $1-შა',
 	'redirectedfrom' => '(გინოწურაფილი რე $1-შე)',
 	'redirectpagesub' => 'ხასჷლაშა გინოწურაფა',
@@ -47723,9 +47729,9 @@ $messages['xmf'] = array(
 	'restriction-type' => 'ალობა:',
 	'restriction-level' => 'შეზღუდვაშ დონე',
 	'revertmove' => 'გოუქვაფა',
-);
+];
 
-$messages['yi'] = array(
+$messages['yi'] = [
 	'returnto' => 'צוריקקערן צו $1.',
 	'redirectedfrom' => '(אַריבערגעפֿירט פון $1)',
 	'redirectpagesub' => 'ווייטערפירן בלאט',
@@ -47977,9 +47983,9 @@ $1",
 	'recreate' => 'שאַפֿן פֿונדאסניי',
 	'revdelete-restricted' => 'פארמערט באגרעניצונגען פאר סיסאפן',
 	'revdelete-unrestricted' => 'אוועקגענומען באגרעניצונגען פאר סיסאפן',
-);
+];
 
-$messages['yo'] = array(
+$messages['yo'] = [
 	'returnto' => 'Padà sí $1.',
 	'redirectedfrom' => '(Àtúnjúwe láti $1)',
 	'redirectpagesub' => 'Ojúewé àtúnjúwe',
@@ -48167,9 +48173,9 @@ Gẹ́gẹ́ bíi olùmójútó ẹ ṣì le wo ìyàtọ̀ yìí; ẹ̀kúnrẹ
 	'restriction-level-autoconfirmed' => 'aláàbò díẹ̀',
 	'revertmove' => 'dápadà',
 	'recentchangesall' => 'gbogbo',
-);
+];
 
-$messages['yue'] = array(
+$messages['yue'] = [
 	'returnto' => '返去$1 。',
 	'redirectedfrom' => '(由$1跳轉過來)',
 	'redirectpagesub' => '跳轉頁',
@@ -48423,17 +48429,17 @@ $1",
 	'recreate' => '重新整過',
 	'revdelete-restricted' => '已經應用限制到操作員',
 	'revdelete-unrestricted' => '已經拎走對於操作員嘅限制',
-);
+];
 
-$messages['za'] = array(
+$messages['za'] = [
 	'recentchanges' => 'Gaeqgaij seizneix',
 	'recentchangeslinked' => 'Lienh ok gaengaij',
 	'randompage' => 'Mae zaihzex',
 	'restriction-move' => 'Caen',
 	'revertmove' => 'siu',
-);
+];
 
-$messages['zea'] = array(
+$messages['zea'] = [
 	'returnto' => 'Trug nae $1.',
 	'redirectedfrom' => '(Deurverwezen vanaf $1)',
 	'redirectpagesub' => 'Deurverwiespagina',
@@ -48539,9 +48545,9 @@ Pagina's die op [[Special:Watchlist|je volglieste]] staen wòdde '''vet''' weerg
 	'revertmove' => 'terugdraejen',
 	'revdelete-restricted' => 'ei beperkiengen an beheêrders opeleid',
 	'revdelete-unrestricted' => 'ei beperkiengen voe beheêrders opeheven',
-);
+];
 
-$messages['zh-hans'] = array(
+$messages['zh-hans'] = [
 	'returnto' => '返回到$1。',
 	'redirectedfrom' => '（重定向自$1）',
 	'redirectpagesub' => '重定向页',
@@ -48789,9 +48795,9 @@ $1",
 	'revdelete-uname-unhid' => '恢复用户名',
 	'revdelete-restricted' => '已将限制应用到管理员',
 	'revdelete-unrestricted' => '已移除对管理员的限制',
-);
+];
 
-$messages['zh-hant'] = array(
+$messages['zh-hant'] = [
 	'returnto' => '返回到$1。',
 	'redirectedfrom' => '（重定向自$1）',
 	'redirectpagesub' => '重定向頁面',
@@ -49043,9 +49049,9 @@ $1",
 	'revdelete-uname-unhid' => '恢復用戶名',
 	'revdelete-restricted' => '已應用限制至操作員',
 	'revdelete-unrestricted' => '已移除對於操作員的限制',
-);
+];
 
-$messages['zh-hk'] = array(
+$messages['zh-hk'] = [
 	'red-link-title' => '$1 (頁面不存在)',
 	'rev-deleted-comment' => '（註釋已除）',
 	'rev-deleted-event' => '（日誌已除）',
@@ -49054,9 +49060,9 @@ $messages['zh-hk'] = array(
 *: ''地址、電話號碼、身份證號碼等。''",
 	'recentchanges-label-bot' => '這次編輯是由機械人進行',
 	'rcshowhidebots' => '$1機械人的編輯',
-);
+];
 
-$messages['zh-min-nan'] = array(
+$messages['zh-min-nan'] = [
 	'red-link-title' => '$1 (頁面不存在)',
 	'rev-deleted-comment' => '（註釋已除）',
 	'rev-deleted-event' => '（日誌已除）',
@@ -49065,9 +49071,9 @@ $messages['zh-min-nan'] = array(
 *: ''地址、電話號碼、身份證號碼等。''",
 	'recentchanges-label-bot' => '這次編輯是由機械人進行',
 	'rcshowhidebots' => '$1機械人的編輯',
-);
+];
 
-$messages['zh-mo'] = array(
+$messages['zh-mo'] = [
 	'red-link-title' => '$1 (頁面不存在)',
 	'rev-deleted-comment' => '（註釋已除）',
 	'rev-deleted-event' => '（日誌已除）',
@@ -49076,9 +49082,9 @@ $messages['zh-mo'] = array(
 *: ''地址、電話號碼、身份證號碼等。''",
 	'recentchanges-label-bot' => '這次編輯是由機械人進行',
 	'rcshowhidebots' => '$1機械人的編輯',
-);
+];
 
-$messages['zh-my'] = array(
+$messages['zh-my'] = [
 	'red-link-title' => '$1 (頁面不存在)',
 	'rev-deleted-comment' => '（註釋已除）',
 	'rev-deleted-event' => '（日誌已除）',
@@ -49087,9 +49093,9 @@ $messages['zh-my'] = array(
 *: ''地址、電話號碼、身份證號碼等。''",
 	'recentchanges-label-bot' => '這次編輯是由機械人進行',
 	'rcshowhidebots' => '$1機械人的編輯',
-);
+];
 
-$messages['zh-tw'] = array(
+$messages['zh-tw'] = [
 	'red-link-title' => '$1 (頁面不存在)',
 	'readonlytext' => '資料庫目前禁止輸入新內容及更改，
 這很可能是由於資料庫正在維修，之後即可復原。
@@ -49154,9 +49160,9 @@ $messages['zh-tw'] = array(
 	'range_block_disabled' => '只有管理員才能建立禁止封鎖的範圍。',
 	'revertmove' => '復原該移動',
 	'rate_it' => '打分數:',
-);
+];
 
-$messages['zh-yue'] = array(
+$messages['zh-yue'] = [
 	'red-link-title' => '$1 (頁面不存在)',
 	'readonlytext' => '資料庫目前禁止輸入新內容及更改，
 這很可能是由於資料庫正在維修，之後即可復原。
@@ -49221,9 +49227,9 @@ $messages['zh-yue'] = array(
 	'range_block_disabled' => '只有管理員才能建立禁止封鎖的範圍。',
 	'revertmove' => '復原該移動',
 	'rate_it' => '打分數:',
-);
+];
 
-$messages['zu'] = array(
+$messages['zu'] = [
 	'redirectpagesub' => 'Ikhasi likakuphambukisa',
 	'remembermypassword' => 'Ngikhumbule (for a maximum of $1 {{PLURAL:$1|day|days}})',
 	'rev-delundel' => 'bukisa/fihla',
@@ -49235,5 +49241,5 @@ $messages['zu'] = array(
 	'restriction-edit' => 'Ukuhlela',
 	'restriction-move' => 'Sunduza',
 	'recreate' => 'Dala kabusha',
-);
+];
 

@@ -10,6 +10,7 @@ class DiscussionsThreadModel {
 	const SORT_LATEST = 'creation_date';
 	const SORT_TRENDING_LINK = 'trending';
 	const SORT_LATEST_LINK = 'latest';
+	const ACCESS_TOKEN_COOKIE_NAME = 'access_token';
 
 	const MCACHE_VER = '1.0';
 
@@ -42,8 +43,28 @@ class DiscussionsThreadModel {
 		return self::DISCUSSIONS_API_BASE_DEV . "$this->cityId/votes/post/$id";
 	}
 
+	private function getBaseUrl() {
+		global $wgDevelEnvironment;
+
+		if ( empty( $wgDevelEnvironment ) ) {
+			return self::DISCUSSIONS_API_BASE;
+		}
+
+		return self::DISCUSSIONS_API_BASE_DEV;
+	}
+
 	private function apiRequest( $url ) {
-		$data = Http::get( $url );
+		$request = RequestContext::getMain()->getRequest();
+
+		$options = [
+			'returnInstance' => false,
+			'headers' => [
+				'cookie' => self::ACCESS_TOKEN_COOKIE_NAME . '=' .
+					$request->getCookie( self::ACCESS_TOKEN_COOKIE_NAME, '' ) . ';'
+			]
+		];
+
+		$data = Http::get( $url, 'default', $options );
 		$obj = json_decode( $data, true );
 		return $obj;
 	}
@@ -52,6 +73,7 @@ class DiscussionsThreadModel {
 		global $wgContLang;
 
 		$timeAgo = wfTimeFormatAgo( wfTimestamp( TS_ISO_8601, $rawPost['creationDate']['epochSecond'] ) );
+		$userData = $rawPost['_embedded']['userData'][0];
 
 		return [
 			'author' => $rawPost['createdBy']['name'],
@@ -64,9 +86,11 @@ class DiscussionsThreadModel {
 			'firstPostId' => $rawPost['firstPostId'],
 			'index' => $index,
 			'link' => '/d/p/' . $rawPost['id'],
-			'upvoteUrl' => $this->getUpvoteRequestUrl( $rawPost['firstPostId']),
+			'shareUrl' => $this->getBaseUrl() . '/d/p/' . $rawPost['id'],
+			'upvoteUrl' => $this->getUpvoteRequestUrl( $rawPost['firstPostId'] ),
 			'title' => $rawPost['title'],
 			'upvoteCount' => $rawPost['upvoteCount'],
+			'hasUpvoted' => $userData['hasUpvoted'],
 		];
 
 		return $post;

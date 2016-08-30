@@ -77,17 +77,6 @@ require([
 		if (context.opts.yavli) {
 			yavliTag.add();
 		}
-
-		if (context.opts.recoveredAdsMessage) {
-			loader({
-				type: loader.AM_GROUPS,
-				resources: ['adengine2_ads_recovery_message_js']
-			}).done(function () {
-				require(['ext.wikia.adEngine.recovery.message'], function (recoveredAdMessage) {
-					recoveredAdMessage.addRecoveryCallback();
-				});
-			});
-		}
 	});
 });
 

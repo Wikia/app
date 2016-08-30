@@ -8,6 +8,7 @@ class ParselyDataService {
 	const PARSELY_API_PAGE = 1;
 	const PARSELY_API_PUB_DAYS = 10;
 	const PARSELY_API_SORT = '_hits';
+	const PARSELY_API_TIMEOUT = 5;
 
 	const PARSELY_POSTS_LIMIT = 5;
 
@@ -32,17 +33,15 @@ class ParselyDataService {
 			return [];
 		}
 
-		$memcKey = wfSharedMemcKey( __METHOD__, $type, $metadata['key'], $count, self::MCACHE_VER );
+		$memcKey = wfSharedMemcKey( __METHOD__, $type, $metadata['key'], $count, static::MCACHE_VER );
 
-		$data = WikiaDataAccess::cache(
+		return WikiaDataAccess::cache(
 			$memcKey,
-			self::MCACHE_TIME,
+			static::MCACHE_TIME,
 			function() use ( $type, $metadata, $count ) {
 				return $this->apiRequest( $type, $metadata, $count );
 			}
 		);
-
-		return $data;
 	}
 
 	/**
@@ -52,16 +51,12 @@ class ParselyDataService {
 	 */
 	private function apiRequest( $type, $meta, $count ) {
 		$options = [];
-		$options['limit'] = $count + self::PARSELY_API_EXTRA;
+		$options['limit'] = $count + static::PARSELY_API_EXTRA;
 
 		switch ( $type ) {
 			case 'vertical':
-				$options['sort'] = self::PARSELY_API_SORT;
-				$options['pub_days'] = 30;
-				$endpoint = 'analytics/tag/' . rawurlencode( $meta['tag'] ) . '/detail';
-				break;
 			case 'community':
-				$options['sort'] = self::PARSELY_API_SORT;
+				$options['sort'] = static::PARSELY_API_SORT;
 				$options['pub_days'] = 30;
 				$endpoint = 'analytics/tag/' . rawurlencode( $meta['tag'] ) . '/detail';
 				break;
@@ -70,19 +65,19 @@ class ParselyDataService {
 				$endpoint = 'shares/posts';
 				break;
 			case 'recent_popular':
-				$options['sort'] = self::PARSELY_API_SORT;
-				$options['pub_days'] = self::PARSELY_API_PUB_DAYS;
+				$options['sort'] = static::PARSELY_API_SORT;
+				$options['pub_days'] = static::PARSELY_API_PUB_DAYS;
 				$endpoint = 'analytics/posts';
 				break;
 			case 'popular':
 			default:
-				$options['sort'] = self::PARSELY_API_SORT;
+				$options['sort'] = static::PARSELY_API_SORT;
 				$endpoint = 'analytics/posts';
 				break;
 		}
 
 		$url = $this->buildUrl( $endpoint, $options );
-		$data = ExternalHttp::get( $url );
+		$data = ExternalHttp::get( $url, static::PARSELY_API_TIMEOUT );
 
 		$posts = json_decode( $data, true );
 
@@ -105,14 +100,12 @@ class ParselyDataService {
 		$defaultParams = [
 			'apikey' => $wgParselyApiKey,
 			'secret' => $wgParselyApiSecret,
-			'page' => self::PARSELY_API_PAGE
+			'page' => static::PARSELY_API_PAGE
 		];
 
 		$params = array_merge( $defaultParams, $options );
 
-		$url = self::PARSELY_API_BASE . $endpoint . '?' . http_build_query( $params );
-
-		return $url;
+		return static::PARSELY_API_BASE . $endpoint . '?' . http_build_query( $params );
 	}
 
 	/**

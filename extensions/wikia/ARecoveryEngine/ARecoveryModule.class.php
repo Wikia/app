@@ -9,12 +9,22 @@ class ARecoveryModule {
 	 * @return bool
 	 */
 	public static function isEnabled() {
-		global $wgEnableUsingSourcePointProxyForCSS;
+		global $wgUser, $wgEnableUsingSourcePointProxyForCSS;
 
-		$wgGlobalEnableSourcePoint = WikiFactory::getVarValueByName( 'wgGlobalEnableSourcePoint', Wikia::COMMUNITY_WIKI_ID );
+		if( $wgUser instanceof User && $wgUser->isLoggedIn() ) {
+			return false;
+		}
 
-		return !empty( $wgEnableUsingSourcePointProxyForCSS ) || !empty( $wgGlobalEnableSourcePoint );
+		return !empty( $wgEnableUsingSourcePointProxyForCSS );
 	}
+	
+	public static function getSourcePointBootstrapCode() {
+		if ( !static::isEnabled() ) {
+			return PHP_EOL . '<!-- Recovery disabled. -->' . PHP_EOL;
+		}
+		return F::app()->sendRequest( 'ARecoveryEngineApiController', 'getBootstrap' );
+	}
+	
 
 	public static function isLockEnabled() {
 		$user = F::app()->wg->User;

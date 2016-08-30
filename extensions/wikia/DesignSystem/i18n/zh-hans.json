@@ -4,7 +4,7 @@
   "global-footer-follow-us-link-reddit": "Reddit",
   "global-footer-follow-us-link-twitter": "Twitter",
   "global-footer-follow-us-link-youtube": "YouTube",
-  "global-footer-follow-us-header": "关注我們",
+  "global-footer-follow-us-header": "关注我们",
   "global-footer-fandom-overview-link-fan-communities": "粉丝社区",
   "global-footer-fandom-overview-link-vertical-games": "游戏",
   "global-footer-fandom-overview-link-vertical-movies": "电影",
@@ -35,11 +35,13 @@
   "global-footer-site-overview-link-terms-of-use": "使用条款",
   "global-footer-site-overview-link-privacy-policy": "隐私政策",
   "global-footer-licensing-and-vertical-description": "$1 是一個由粉丝所建立的 $2 社区。內容允许以 $3 授权使用。",
-  "global-footer-licensing-and-vertical-description-param-vertical-games": "游戏",
-  "global-footer-licensing-and-vertical-description-param-vertical-movies": "电影",
   "global-footer-licensing-and-vertical-description-param-vertical-tv": "电视",
+  "global-footer-licensing-and-vertical-description-param-vertical-games": "游戏",
   "global-footer-licensing-and-vertical-description-param-vertical-books": "书籍",
   "global-footer-licensing-and-vertical-description-param-vertical-comics": "漫画",
   "global-footer-licensing-and-vertical-description-param-vertical-lifestyle": "生活",
-  "global-footer-licensing-and-vertical-description-param-vertical-music": "音乐"
+  "global-footer-licensing-and-vertical-description-param-vertical-music": "音乐",
+  "global-footer-licensing-and-vertical-description-param-vertical-movies": "电影",
+  "global-footer-full-site-link": "查看完整网站",
+  "global-footer-mobile-site-link": "查看移动网站"
 }

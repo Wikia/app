@@ -19,6 +19,16 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 class SitemapPage extends UnlistedSpecialPage {
 
 	const BLOBS_TABLE_NAME = 'sitemap_blobs';
+
+	/**
+	 * For video-extended sitemaps, we query Solr to find out which file pages with videos are
+	 * indexed in it. This is a limit for this query. If the limit is exceeded, the optimization
+	 * is disabled and we query Solr for each of the file pages with videos separately.
+	 *
+	 * @see SitemapPage::hasSnippet
+	 */
+	const SOLR_LIMIT = 10000;
+
 	private $mType, $mTitle, $mNamespaces, $mNamespace, $mPriorities,
 		$mSizeLimit, $mPage;
 
@@ -91,7 +101,7 @@ class SitemapPage extends UnlistedSpecialPage {
 
 		$this->mTitle = SpecialPage::getTitleFor( 'Sitemap', $subpage );
 		$this->getNamespacesList();
-		if ( $this->mType == 'namespace' ) {
+		if ( $this->mType == 'namespace' && in_array( $this->mNamespace, $this->mNamespaces ) ) {
 			$wgOut->disable();
 
 			header( 'Content-type: application/x-gzip' );
@@ -146,6 +156,8 @@ class SitemapPage extends UnlistedSpecialPage {
 				'ORDER BY' => 'page_namespace',
 			]
 		);
+
+		$this->mNamespaces = [];
 
 		while ( $row = $dbr->fetchObject( $res ) ) {
 			$this->mNamespaces[] = $row->page_namespace;
@@ -238,6 +250,7 @@ class SitemapPage extends UnlistedSpecialPage {
 				return gzencode( str_replace( 'http://localhost/', 'http://' . $_SERVER['SERVER_NAME'] . '/', gzdecode( $namespaceSitemap ) ) );
 			}
 		}
+		$startTime = microtime( true );
 
 		$dbr = wfGetDB( DB_SLAVE, 'vslow' );
 
@@ -266,6 +279,7 @@ class SitemapPage extends UnlistedSpecialPage {
 				'page_namespace',
 				'page_title',
 				'page_touched',
+				'page_id',
 			],
 			$scope,
 			__METHOD__,
@@ -275,22 +289,12 @@ class SitemapPage extends UnlistedSpecialPage {
 			]
 		);
 
-		$includeVideo = (bool) F::app()->wg->EnableVideoSitemaps;
-		if ( $includeVideo && ( $this->mNamespace != NS_FILE ) ) {
-			$includeVideo = false;
-		}
-		$startTime = microtime( true );
+		$includeVideo = F::app()->wg->EnableVideoSitemaps && $this->mNamespace == NS_FILE;
 
 		$out .= "<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\"" . ( $includeVideo ? ' xmlns:video="http://www.google.com/schemas/sitemap-video/1.1"' : '' ) . ">\n";
 		while ( $row = $dbr->fetchObject( $sth ) ) {
 			$size = strlen( $out );
-			$title = Title::makeTitle( $row->page_namespace, $row->page_title );
-			$stamp = wfTimestamp( TS_ISO_8601, $row->page_touched );
-			$prior = isset( $this->mPriorities[$row->page_namespace] )
-				? $this->mPriorities[$row->page_namespace]
-				: '0.5';
-
-			$entry = $this->titleEntry( $title, $stamp, $prior, $includeVideo );
+			$entry = $this->titleEntry( $row, $includeVideo );
 
 			/**
 			 * break if it's to big
@@ -344,20 +348,32 @@ class SitemapPage extends UnlistedSpecialPage {
 		}
 	}
 
-	private function titleEntry( Title $title, $date, $priority, $includeVideo = false ) {
+	private function titleEntry( $row, $includeVideo ) {
+		$title = Title::makeTitle( $row->page_namespace, $row->page_title );
+		$timestamp = wfTimestamp( TS_ISO_8601, $row->page_touched );
+		$priority = isset( $this->mPriorities[$row->page_namespace] )
+			? $this->mPriorities[$row->page_namespace]
+			: '0.5';
+
+		$videoEntry = '';
+		if ( $includeVideo ) {
+			$skipDescription = !$this->hasSnippet( $row->page_id );
+			$videoEntry = $this->videoEntry( $title, $skipDescription );
+		}
+
 		return
 			"\t<url>\n" .
 			"\t\t<loc>{$title->getFullURL()}</loc>\n" .
-			"\t\t<lastmod>$date</lastmod>\n" .
+			"\t\t<lastmod>$timestamp</lastmod>\n" .
 			"\t\t<priority>$priority</priority>\n" .
-			( $includeVideo ? $this->videoEntry( $title ) : "" ) .
+			$videoEntry .
 			"\t</url>\n";
 	}
 
-	private function videoEntry( Title $title ) {
+	private function videoEntry( Title $title, $skipDescription = false ) {
 		$file = wfFindFile( $title );
 
-		$videoTitleData = $this->mMediaService->getMediaData( $title, 500 );
+		$videoTitleData = $this->mMediaService->getMediaData( $title, $skipDescription ? 0 : 500 );
 
 		$isVideo = WikiaFileHelper::isFileTypeVideo( $file );
 		if ( !$isVideo ) {
@@ -476,5 +492,67 @@ class SitemapPage extends UnlistedSpecialPage {
 		}
 
 		return true;
+	}
+
+	/**
+	 * Query Solr (once) to find out which NS_FILE pages are indexed in Solr
+	 *
+	 * Later we use this information to only expect a snippet for pages that are indexed in Solr.
+	 * This means no querying Solr for information it doesn't have and no falling back to parsing
+	 * wikitext for mostly empty pages (if they weren't empty, they would be indexed).
+	 *
+	 * If more there are more than self::SOLR_LIMIT documents, we'll always return true.
+	 *
+	 * @param $pageId
+	 * @return bool
+	 */
+	private function hasSnippet( $pageId ) {
+		global $wgCityId;
+
+		static $pageIdsWithSnippets = null;
+		static $alwaysReturnTrue = false;
+
+		if ( is_null( $pageIdsWithSnippets ) ) {
+			$pageIdsWithSnippets = [];
+
+			$luceneQuery = sprintf( 'wid:%d AND is_image:false AND ns:%d', $wgCityId, NS_FILE );
+
+			$config = new Wikia\Search\Config();
+			$config->setDirectLuceneQuery( true );
+			$config->setLimit( 1 );
+			$config->setQuery( $luceneQuery );
+
+			$queryServiceFactory = new Wikia\Search\QueryService\Factory();
+			$response = $queryServiceFactory->getFromConfig( $config )->search();
+
+			$numResults = $response->getResultsFound();
+
+			if ( $numResults > self::SOLR_LIMIT ) {
+				$alwaysReturnTrue = true;
+				return true;
+			}
+
+			$limit = Wikia\Search\Config::MAX_RESULTS_PER_PAGE;
+
+			for ( $start = 0; $start < $numResults; $start += $limit ) {
+				$config->setLimit( $limit );
+				$config->setStart( $start );
+				$query = $queryServiceFactory->getFromConfig( $config );
+				$response = $query->search();
+
+				$results = (array)$response->getResults();
+
+				foreach ( $results as $result ) {
+					$pageId = $result->getFields()['pageid'];
+					$pageIdsWithSnippets[$pageId] = true;
+				}
+			}
+		}
+
+		if ( $alwaysReturnTrue ) {
+			return true;
+		}
+
+		return isset( $pageIdsWithSnippets[$pageId] );
 	}
 }
