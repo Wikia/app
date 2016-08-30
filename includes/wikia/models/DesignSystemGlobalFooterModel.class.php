@@ -1,9 +1,9 @@
 <?php
 
-class DesignSystemGlobalFooterModel extends WikiaModel {
+abstract class DesignSystemGlobalFooterModel extends WikiaModel {
 	const DEFAULT_LANG = 'en';
 
-	private $hrefs = [
+	protected $hrefs = [
 		'default' => [
 			'fan-communities' => 'http://fandom.wikia.com/explore',
 			'about' => 'http://www.wikia.com/about',
@@ -216,13 +216,11 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 		]
 	];
 
-	private $wikiId;
-	private $lang;
+	protected $lang;
 
-	public function __construct( $wikiId, $lang = self::DEFAULT_LANG ) {
+	public function __construct( $id, $lang = self::DEFAULT_LANG ) {
 		parent::__construct();
 
-		$this->wikiId = $wikiId;
 		$this->lang = $lang;
 	}
 
@@ -462,73 +460,17 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 		return $data;
 	}
 
-	private function getSitenameData() {
-		$wgSitenameForComscoreForWikiId = WikiFactory::getVarValueByName( 'wgSitenameForComscore', $this->wikiId );
+	abstract protected function getSitenameData();
 
-		if ( $wgSitenameForComscoreForWikiId ) {
-			$sitename = $wgSitenameForComscoreForWikiId;
-		} else {
-			$wgSitenameForWikiId = WikiFactory::getVarValueByName( 'wgSitename', $this->wikiId );
-
-			if ( $wgSitenameForWikiId ) {
-				$sitename = $wgSitenameForWikiId;
-			} else {
-				$sitename = $this->wg->Sitename;
-			}
-		}
-
-		return [
-			'type' => 'text',
-			'value' => $sitename
-		];
+	protected function getVerticalData() {
+		return null;
 	}
 
-	private function getVerticalData() {
-		$wikiFactoryInstance = WikiFactoryHub::getInstance();
-		$verticalData = $wikiFactoryInstance->getWikiVertical( $this->wikiId );
-
-		/**
-		 * We don't want to show vertical 'Other' instead we show vertical 'Lifestyle'
-		 * This is Comscore requirement
-		 */
-		if ( $verticalData['id'] == WikiFactoryHub::VERTICAL_ID_OTHER ) {
-			$verticalMessageKey = $wikiFactoryInstance->getAllVerticals()[WikiFactoryHub::VERTICAL_ID_LIFESTYLE]['short'];
-		} else {
-			$verticalMessageKey = $verticalData['short'];
-		}
-
-		/**
-		 * Possible outputs:
-		 * - global-footer-licensing-and-vertical-description-param-vertical-tv
-		 * - global-footer-licensing-and-vertical-description-param-vertical-games
-		 * - global-footer-licensing-and-vertical-description-param-vertical-lifestyle
-		 * - global-footer-licensing-and-vertical-description-param-vertical-books
-		 * - global-footer-licensing-and-vertical-description-param-vertical-music
-		 * - global-footer-licensing-and-vertical-description-param-vertical-comics
-		 * - global-footer-licensing-and-vertical-description-param-vertical-movies
-		 */
-		$verticalMessageKey = 'global-footer-licensing-and-vertical-description-param-vertical-' . $verticalMessageKey;
-
-		return [
-			'type' => 'translatable-text',
-			'key' => $verticalMessageKey
-		];
+	protected function getLicenseData() {
+		return null;
 	}
 
-	private function getLicenseData() {
-		$licenseText = WikiFactory::getVarValueByName( 'wgRightsText', $this->wikiId ) ?: $this->wg->RightsText;
-
-		return [
-			'type' => 'link-text',
-			'title' => [
-				'type' => 'text',
-				'value' => $licenseText
-			],
-			'href' => $this->getLicenseUrl()
-		];
-	}
-
-	private function getFandomOverview() {
+	protected function getFandomOverview() {
 		$out = [
 			'links' => [ ]
 		];
@@ -578,7 +520,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 		return $out;
 	}
 
-	private function getFollowUs() {
+	protected function getFollowUs() {
 		$data = [
 			'header' => [
 				'type' => 'line-text',
@@ -653,7 +595,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 		return $data;
 	}
 
-	private function getCommunity() {
+	protected function getCommunity() {
 		$data = [
 			'header' => [
 				'type' => 'line-text',
@@ -723,33 +665,9 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 		return $data;
 	}
 
-	private function getLocalSitemapUrl() {
-		$default = true; // $wgEnableLocalSitemapPageExt = true; in CommonSettings
-		$localSitemapAvailable = WikiFactory::getVarValueByName(
-			'wgEnableLocalSitemapPageExt', $this->wikiId, false, $default
-		);
+	abstract protected function getLocalSitemapUrl();
 
-		if ( $localSitemapAvailable ) {
-			return $this->getHref( 'local-sitemap' );
-		}
-
-		// Fall back to fandom sitemap when the local one is unavailable
-		return $this->getHref( 'local-sitemap-fandom' );
-	}
-
-	private function getLicenseUrl() {
-		$licenseUrl = WikiFactory::getVarValueByName( 'wgRightsUrl', $this->wikiId ) ?: $this->wg->RightsUrl;
-		$licensePage = WikiFactory::getVarValueByName( 'wgRightsPage', $this->wikiId ) ?: $this->wg->RightsPage;
-
-		if ( $licensePage ) {
-			$title = GlobalTitle::newFromText( $licensePage, NS_MAIN, $this->wikiId );
-			$licenseUrl = $title->getFullURL();
-		}
-
-		return $licenseUrl;
-	}
-
-	private function getHref( $hrefKey ) {
+	protected function getHref( $hrefKey ) {
 		return $this->hrefs[$this->lang][$hrefKey] ?? $this->hrefs['default'][$hrefKey];
 	}
 }

@@ -131,23 +131,23 @@ class WikiaApiController extends WikiaController {
 	 * Currently, direct requests to wikia.php allow all content (this method returns false),
 	 * while requests through /api/v1 entrypoints don't (this method returns true).
 	 */
-	
+
 	public function hideNonCommercialContent() {
 		return stripos($this->getRequest()->getScriptUrl(), "/api/v1")===0;
 	}
-		
+
 	/** Block content if this wiki is does not allow commercial use of it's content outside of Wikia
 	 * Raises WikiaHttpException
 	 *
 	 */
-	
+
 	public function blockIfNonCommercialOnly() {
 		$licensedService = new LicensedWikisService();
 		if (!$licensedService->isCommercialUseAllowedForThisWiki()) {
 			throw new ApiNonCommercialOnlyException();
 		}
 	}
-	
+
 	/** Get version of the APIs that caller is trying to use.
 	 * Currently there are 3 possible values:
 	 * - 'internal' if caller is using wikia.php entrypoint
@@ -172,7 +172,7 @@ class WikiaApiController extends WikiaController {
 		}
 		return $query;
 	}
-	
+
 	protected function getSkipMethods() {
 		return array_merge(parent::getSkipMethods(),
 			['getApiVersion', 'blockIfNonCommercialOnly', 'hideNonCommercialContent']);
@@ -338,5 +338,5 @@ class ApiNonCommercialOnlyException extends ForbiddenException {
 	protected $details = "API access to this wiki is disabled because its license disallows commercial use outside of Wikia.";
 }
 
-	
-	
+
+
