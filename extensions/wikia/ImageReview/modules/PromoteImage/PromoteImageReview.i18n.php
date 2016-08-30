@@ -5,7 +5,7 @@ $messages = array();
 $messages['en'] = array(
 	'promoteimagereview' => 'Admin Image Upload Review',
 
-	'promote-image-review-reason' => "Violation of Wikia's [[wikia:Terms of Use|Terms of Use]]",
+	'promote-image-review-reason' => "Violation of Fandom's [[wikia:Terms of Use|Terms of Use]]",
 	'promote-image-review-header' => 'Images awaiting review',
 	'promote-image-review-header-questionable' => 'Questionable images awaiting staff review',
 	'promote-image-review-noresults' => 'No images found.',

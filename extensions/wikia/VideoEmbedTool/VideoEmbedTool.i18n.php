@@ -3,7 +3,7 @@
 $messages = array();
 
 $messages['en'] = array(
-	'vet-desc' => 'Wikia\'s Video Embed Tool',
+	'vet-desc' => 'Fandom\'s Video Embed Tool',
 	'vet-add-from-preview' => 'Add video',
 	'vet-added-from-placeholder' => 'Video added from video placeholder',
 	'vet-back' => 'Back',
@@ -54,7 +54,7 @@ $messages['en'] = array(
 	'vet-update' => 'Update video',
 	'vet-upload-btn' => 'Add',
 	'vet-url-label' => 'URL',
-	'vet-video-add-intro' => 'Looking for videos for your wiki? Try searching at [http://video.wikia.com Fandom Video Library] for high quality videos licensed by Wikia.',
+	'vet-video-add-intro' => 'Looking for videos for your wiki? Try searching at [http://video.wikia.com Fandom Video Library] for high quality videos licensed by Fandom.',
 	'vet-video-replace-link' => 'To replace this video, please go to [[:$1]]',
 	'vet-video-wiki' => 'Fandom Video Library',
 	'vet-warn2' => 'Please supply URL of the video you like to add',

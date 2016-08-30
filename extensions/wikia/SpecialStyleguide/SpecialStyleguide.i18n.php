@@ -24,19 +24,19 @@ $messages['en'] = array(
 	'styleguide-home-welcome-message' => 'Meet Fandom Styleguide.',
 	'styleguide-home-welcome-tagline' => 'Easy, and useful tool for the rapid developement at Fandom.',
 	'styleguide-home-stakeholders-header' => 'Who is it for?',
-	'styleguide-home-stakeholders-paragraph' => 'Fandom Styleguide was built with engineers,
+	'styleguide-home-stakeholders-paragraph' => '"Fandom Styleguide was built with engineers,
 	and designers in mind. This is the place where we keep track of
-	all components we use accross Wiki platform. You can easily find all of the current UI elements here,
+	all components we use accross the Fandom platform. You can easily find all of the current UI elements here,
 	and grab usable code on the future product projects you might be involved in. It’s also designed with newbies at
-	Wikia in mind. Have fun!',
+	Fandom in mind. Have fun!"',
 	'styleguide-home-team-header' => 'Styleguide Team',
 	'styleguide-home-team-paragraph' => 'Fandom Styleguide team was formed to help build the tool that will make our
-	 lives easier at Wikia. Contact us anytime if you have questions about the Styleguide,
+	 lives easier at Fandom. Contact us anytime if you have questions about the Styleguide,
 	 or suggestions on how to make this tool better.',
 	'styleguide-home-team-pm' => 'Product manager',
 	'styleguide-home-team-engineer' => 'Engineer',
 	'styleguide-home-team-designer' => 'Product designer',
-	
+
 	// Components
 	'styleguide-components-header' => 'Components',
 	'styleguide-components-header-tagline' => 'Fandom UI styleguide re-usable elements',
@@ -89,7 +89,7 @@ $messages['pl'] = array(
 	'styleguide-home-team-pm' => 'Product manager',
 	'styleguide-home-team-engineer' => 'Inżynier',
 	'styleguide-home-team-designer' => 'Designer',
-	
+
 	// Components
 	'styleguide-components-header' => 'Komponenty',
 	'styleguide-components-header-tagline' => 'Elementy wielokrotnego użytku Fandom Styleguide',

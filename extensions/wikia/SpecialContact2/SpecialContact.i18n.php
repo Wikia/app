@@ -8,7 +8,7 @@
 $messages = array();
 
 $messages['en'] = array(
-	'specialcontact-desc' => 'Wikia\'s contact [[Special:Contact]] form',
+	'specialcontact-desc' => 'Fandom\'s contact [[Special:Contact]] form',
 	/* special page */
 	'contact' => 'Contact Fandom',
 	'specialcontact-wikia' => 'Contact Fandom',
@@ -111,11 +111,11 @@ If you need any more information on what an account disable actually does, you c
 Once you have read that help page and are positive on the spelling of your new username, please submit a request below. Once your username is changed, you will receive a confirmation email. You can then log in with your new user name using your old password.
 
 Happy editing!",
-	'specialcontact-intro-blocked' => "Account blocks are usually set by the local admins, and not by Wikia. The name of the blocking admin should be on the block notice you received.You may be able to contact the blocking admin by leaving a message on your user talk page. This is still editable for blocked users (on some wikias) and changes will usually be seen by the other contributors to the wikia. Your user talk page is found by following the \"my talk\" link at the top right of any page.
+	'specialcontact-intro-blocked' => "Account blocks are usually set by the local admins, and not by the Fandom staff. The name of the blocking admin should be on the block notice you received.You may be able to contact the blocking admin by leaving a message on your user talk page. This is still editable for blocked users (on some wikis) and changes will usually be seen by the other contributors to the wiki. Your user talk page is found by following the \"my talk\" link at the top right of any page.
 
-However, if this talk page option is not available in your situation, then the best advice we can give you is to wait the block out or join the community at another of the many thousand Wikia wikias available.
+However, if this talk page option is not available in your situation, then the best advice we can give you is to wait the block out or join the community at another of the many thousand Fandom communities available.
 
-If you feel you still need to discuss this block further with Wikia staff, please contact us [[Special:Contact/general|here]].",
+If you feel you still need to discuss this block further with Fandom staff, please contact us [[Special:Contact/general|here]].",
 
 	'specialcontact-intro-using-wikia' => "Now that you are a part of the community, you are able to edit and contribute to almost any page across Fandom. For some introductory help, check out our [[Help:Getting_Started|help pages here]]. They are a great place to learn the basics of editing, formatting and much more.
 

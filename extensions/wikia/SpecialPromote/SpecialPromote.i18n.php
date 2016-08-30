@@ -16,8 +16,8 @@ $messages['en'] = array(
 	'promote-introduction-header' => 'Promote your wiki on Fandom.com',
 	'promote-nocorp-introduction-header' => 'Promote $1',
 
-	'promote-introduction-copy' => "This page allows you to promote your wiki by making it eligible to appear on [http://www.wikia.com wikia.com]! Add images and a summary to introduce your wiki to visitors on Wikia's main page. Find more tips [http://help.wikia.com/wiki/Help:Promote here].",
-	'promote-nocorp-introduction-copy' => "Add images and a summary to let visitors know what this wiki is all about and encourage them to visit. We'll use this information to promote your wiki in search results, Wikia mobile apps, and more. Find more tips on how to use this tool [http://community.wikia.com/wiki/Help:Promote here].",
+	'promote-introduction-copy' => "This page allows you to promote your wiki by making it eligible to appear on [http://www.wikia.com Fandom.com]! Add images and a summary to introduce your wiki to visitors on Fandom's main page. Find more tips [http://help.wikia.com/wiki/Help:Promote here].",
+	'promote-nocorp-introduction-copy' => "Add images and a summary to let visitors know what this wiki is all about and encourage them to visit. We'll use this information to promote your wiki in search results, Fandom mobile apps, and more. Find more tips on how to use this tool [http://community.wikia.com/wiki/Help:Promote here].",
 
 	'promote-description' => 'Description',
 	'promote-description-header' => 'Headline',
@@ -65,12 +65,12 @@ $messages['en'] = array(
 	'promote-image-in-review' => 'In review',
 
 	'promote-statusbar-icon' => 'Status',
-	'promote-statusbar-inreview' => 'Some of your images are currently in review and will appear on [http://www.wikia.com wikia.com] after they\'re approved.  This can take 2-4 business days, so we\'ll update you here when we\'re done.',
-	'promote-statusbar-approved' => 'Woohoo! $1 is promoted on [http://www.wikia.com wikia.com]!',
+	'promote-statusbar-inreview' => 'Some of your images are currently in review and will appear on [http://www.wikia.com Fandom.com] after they\'re approved.  This can take 2-4 business days, so we\'ll update you here when we\'re done.',
+	'promote-statusbar-approved' => 'Woohoo! $1 is promoted on [http://www.wikia.com Fandom.com]!',
 	'promote-statusbar-rejected' => 'One or more of your images was not approved. [[Special:Contact|Find out why]]',
 	'promote-statusbar-auto-approved' => 'Woohoo! $1 is being promoted!',
 
-	'promote-error-oasis-only' => 'This page is not supported under your skin. Please [[Special:Preferences|switch to the Wikia skin]] to access this feature.',
+	'promote-error-oasis-only' => 'This page is not supported under your skin. Please [[Special:Preferences|switch to the Fandom skin]] to access this feature.',
 
 	//message included in auto-uploaded image's description fb#45624
 	'wikiahome-image-auto-uploaded-comment' => 'Auto-generated image to be used on http://wikia.com/ – stay tuned for more info on the Staff Blog: http://community.wikia.com/wiki/Blog:Wikia_Staff_Blog',

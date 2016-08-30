@@ -3,7 +3,7 @@
 $messages = array();
 
 $messages['en'] = array(
-	'wam-desc' => 'Wikia\'s WAM extension',
+	'wam-desc' => 'Fandom\'s WAM extension',
 );
 
 $messages['qqq'] = array(

@@ -45,7 +45,7 @@ $messages['en'] = array(
 
 	// mail password
 	'userlogin-error-resetpass_forbidden' => 'Passwords cannot be changed',
-	'userlogin-error-blocked-mailpassword' => 'You can\'t request a new password because this IP address is blocked by Wikia.',
+	'userlogin-error-blocked-mailpassword' => 'You can\'t request a new password because this IP address is blocked by Fandom.',
 	'userlogin-error-throttled-mailpassword' => 'We\'ve already sent a password reminder to this account in the last {{PLURAL:$1|hour|$1 hours}}. Please check your email.',
 	'userlogin-error-mail-error' => 'Oops, there was a problem sending your email. Please [[Special:Contact/general|contact us]].',
 	'userlogin-password-email-sent' => 'We\'ve sent a new password to the email address for $1.',

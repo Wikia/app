@@ -205,10 +205,10 @@ You can view its source',
 	'tags-edit' => 'edit',
 	'tags-hitcount' => '$1 {{PLURAL:$1|change|changes}}',
 	'title' => 'Title',
-	'tagline-url-interwiki' => 'From [[wikia:c:$1|{{SITENAME}}]], a [[wikia:|Wikia]] wiki.',
+	'tagline-url-interwiki' => 'From [[wikia:c:$1|{{SITENAME}}]], a [[wikia:|Fandom]] wiki.',
 	'tog-skinoverwrite' => '<b>See custom wikis</b> (recommended)<br>Some wiki administrators take a lot of time to customize the look of their wikis. Check the box above to see their wikis with full customization.',
 	'tog-searchsuggest' => 'Show suggests in search box',
-	'tagline-url' => 'From [{{SERVER}} {{SITENAME}}], a [http://www.wikia.com Wikia] wiki.',
+	'tagline-url' => 'From [{{SERVER}} {{SITENAME}}], a [http://www.wikia.com Fandom] wiki.',
 	'tabbedsearchsolr' => 'Tabbed search',
 	'tabbedsearchcse' => 'Tabbed search (Google custom search)',
 	'this_wiki' => 'this wiki',
@@ -31105,7 +31105,7 @@ $messages['pnb'] = array(
 	'thisisdeleted' => '$1 ویکھو یا واپس لاؤ',
 	'titleprotected' => 'اس ناں نوں [[User:$1|$1]] نئیں بناسکدا۔
 اس دی وجہ اے دسی گئی اے: "\'\'$2\'\'"۔',
-	'throttled-mailpassword' => 'اک کنجی بارے سنیعہ پہلے ای پیجیا جاچکیا اے، پچھلے {{PLURAL:$1|کینٹہ|$1 کینٹے}} چ۔ 
+	'throttled-mailpassword' => 'اک کنجی بارے سنیعہ پہلے ای پیجیا جاچکیا اے، پچھلے {{PLURAL:$1|کینٹہ|$1 کینٹے}} چ۔
 کوئی غلط کم ہون توں پہلے صرف اک کنجی سنیغہ {{PLURAL:$1|کینٹہ|$1 کینٹے}} پیجیا جائیکا۔',
 	'token_suffix_mismatch' => "'''تواڈی لکھت نئیں منی گئی کیوں جے تواڈے بندے نے پنکچوایشن کیریکٹر لکھت ٹوکن چ رلاۓ.'''
 ایس تبدیلی نوں لکھت چ خرابی نوں روکن لئی روکیا گیا اے۔.
@@ -43262,7 +43262,7 @@ $messages['xmf'] = array(
 	'templatesusedpreview' => '{{PLURAL:$1|თანგი|თანგეფი}} ნამუთ თე გჷწოთოლორაფას რე გიმორინაფილი',
 	'template-protected' => '(თხილერი)',
 	'template-semiprotected' => '(გვერდო თხილერი)',
-	'talkexists' => "'''ხასილაქ გინოღალირქ იყ’უ, მარა სხუნუაშ ხასილაქ ვეგნიღინუ, თიშენ ნამდა თინა უკვე არსებენს ახალ ჯოხოთ. 
+	'talkexists' => "'''ხასილაქ გინოღალირქ იყ’უ, მარა სხუნუაშ ხასილაქ ვეგნიღინუ, თიშენ ნამდა თინა უკვე არსებენს ახალ ჯოხოთ.
 ქორთხინთ, აკორტყუათ თინეფ მანუალურო.'''",
 	'thumbnail-more' => 'მორდი',
 	'thumbnail_error' => 'ესკიზიშ ქიმინუაშ ჩილათა: $1',
@@ -43276,7 +43276,7 @@ $messages['xmf'] = array(
 	'tooltip-ca-talk' => 'დინორეშ ხასილაშ სხუნუა',
 	'tooltip-ca-edit' => 'თქვა შეილებნა თე ხასილაშ რედაქტირაფა. რთხინთ, გეუნჭირით გიწოთოლორაფაშ კონჭის სოიშახ ხასილას ჩუანდათინ',
 	'tooltip-ca-addsection' => 'ქიდიჭყით ახალ სექცია',
-	'tooltip-ca-viewsource' => 'ხასილა თხილერ რე. 
+	'tooltip-ca-viewsource' => 'ხასილა თხილერ რე.
 შეგილებუნა ძირათ თეშ წყუ.',
 	'tooltip-ca-history' => 'თე ხასილაშა მიშაღალირ თირაფეფ',
 	'tooltip-ca-protect' => 'ხასილაშ თხილუა',

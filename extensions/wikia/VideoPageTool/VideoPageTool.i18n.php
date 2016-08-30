@@ -8,7 +8,7 @@
 $messages = [];
 
 $messages['en'] = [
-	'videopagetool-desc' => 'Wikia\'s Video Tool',
+	'videopagetool-desc' => 'Fandom\'s Video Tool',
 	'videopagetool-page-title' => 'Fandom Video Tool',
 	'right-videopagetool' => 'Access Wikia\'s Video Tool',
 	'videopagetool-error-permission' => 'You cannot access this tool.',
