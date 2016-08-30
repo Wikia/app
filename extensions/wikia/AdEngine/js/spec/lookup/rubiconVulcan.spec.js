@@ -123,9 +123,6 @@ describe('ext.wikia.adEngine.lookup.rubiconVulcan', function () {
 		expect(Object.keys(call).indexOf(param)).not.toEqual(-1);
 	}
 
-	beforeEach(function () {
-	});
-
 	it('Returns module name', function () {
 		var vulcan = getVulcan();
 
