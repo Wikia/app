@@ -88,6 +88,7 @@ $config['adengine2_desktop_js'] = [
 		'//extensions/wikia/AdEngine/js/slot/slotTargeting.js',
 		'//extensions/wikia/AdEngine/js/template/bfaa.js',
 		'//extensions/wikia/AdEngine/js/template/bfab.js',
+		'//extensions/wikia/AdEngine/js/template/floating-rail.js',
 		'//extensions/wikia/AdEngine/js/template/floor.js',
 		'//extensions/wikia/AdEngine/js/template/floorAdhesion.js',
 		'//extensions/wikia/AdEngine/js/template/interstitial.js',
@@ -100,6 +101,7 @@ $config['adengine2_desktop_js'] = [
 		'//extensions/wikia/AdEngine/js/utils/domCalculator.js',
 		'//extensions/wikia/AdEngine/js/utils/eventDispatcher.js',
 		'//extensions/wikia/AdEngine/js/utils/hooks.js',
+		'//extensions/wikia/AdEngine/js/utils/math.js',
 		'//extensions/wikia/AdEngine/js/video/playwire.js',
 		'//extensions/wikia/AdEngine/js/video/vastBuilder.js',
 		'//extensions/wikia/ARecoveryEngine/js/helper.js',
@@ -269,14 +271,6 @@ $config['adengine2_prebid_js'] = [
 		'//extensions/wikia/AdEngine/js/lookup/prebid.js',
 		'//extensions/wikia/AdEngine/js/lookup/adapter/appnexus.js',
 		'//extensions/wikia/AdEngine/js/lookup/adapter/index.js',
-	],
-];
-
-$config['adengine2_ads_recovery_message_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis', 'wikiamobile' ],
-	'assets' => [
-		'//extensions/wikia/AdEngine/js/recovery/message.js',
 	],
 ];
 
@@ -798,14 +792,6 @@ $config['wikiamobile_tables_js'] = [
 	'skin' => 'wikiamobile',
 	'assets' => [
 		'//extensions/wikia/WikiaMobile/js/tables.js',
-	],
-];
-
-$config['wikiamobile_widget_iframe_unwrapper'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => 'wikiamobile',
-	'assets' => [
-		'//extensions/wikia/WikiaMobile/js/widget_iframe_unwrapper.js',
 	],
 ];
 
@@ -3006,6 +2992,8 @@ $config['embeddable_discussions_js'] = [
 	'skin' => 'oasis',
 	'assets' => [
 		'//extensions/wikia/EmbeddableDiscussions/scripts/ext.embeddableDiscussions.js',
+		'//extensions/wikia/EmbeddableDiscussions/scripts/sharing.js',
+		'//extensions/wikia/EmbeddableDiscussions/scripts/templates.mustache.js',
 	],
 ];
 

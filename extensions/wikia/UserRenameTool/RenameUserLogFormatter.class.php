@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @author: Władysław Bodzek
  *
@@ -11,9 +12,9 @@ class RenameUserLogFormatter {
 		if ( is_int( $name ) )
 			$name = User::whoIs( $name );
 		$title = GlobalTitle::newFromText( $name, NS_USER, COMMUNITY_CENTRAL_CITY_ID );
-		return Xml::element( 'a', array( 'href' => $title->getFullURL(
+		return Xml::element( 'a', [ 'href' => $title->getFullURL(
 			$noRedirect ? 'redirect=no' : ''
-		) ), $name, false );
+		) ], $name, false );
 	}
 
 	static protected function getCommunityTask( $taskId ) {
@@ -21,7 +22,7 @@ class RenameUserLogFormatter {
 		return Xml::element(
 			'a',
 			[
-				'href' => $title->getFullURL( ['id' => $taskId] ),
+				'href' => $title->getFullURL( [ 'id' => $taskId ] ),
 			],
 			"#{$taskId}",
 			false
@@ -38,67 +39,66 @@ class RenameUserLogFormatter {
 			// The fallback to return anything
 			$text = "[" . WikiFactory::IDtoDB( $cityId ) . ":{$cityId}]";
 		}
-		if ( !empty( $domains ) )
-		{
-			$text = Xml::tags( 'a', array( "href" => "http://" . $domains[0] ), $text );
+		if ( !empty( $domains ) ) {
+			$text = Xml::tags( 'a', [ "href" => "http://" . $domains[0] ], $text );
 		}
 		return $text;
 	}
 
-	static public function start( $requestor, $oldUsername, $newUsername, $reason, $tasks = array() ) {
+	static public function start( $requestor, $oldUsername, $newUsername, $reason, $tasks = [ ] ) {
 		foreach ( $tasks as $k => $v ) {
 			$tasks[$k] = self::getCommunityTask( $v );
 		}
 
-		$text = wfMsgForContent( 'userrenametool-info-started',
+		$text = wfMessage( 'userrenametool-info-started',
 			self::getCommunityUser( $requestor ),
 			self::getCommunityUser( $oldUsername, true ),
 			self::getCommunityUser( $newUsername ),
 			$tasks ? implode( ', ', $tasks ) : '-',
 			$reason
-		);
+		)->inContentLanguage()->text();
 		return $text;
 	}
 
-	static public function finish( $requestor, $oldUsername, $newUsername, $reason, $tasks = array() ) {
+	static public function finish( $requestor, $oldUsername, $newUsername, $reason, $tasks = [ ] ) {
 		foreach ( $tasks as $k => $v ) {
 			$tasks[$k] = self::getCommunityTask( $v );
 		}
 
-		$text = wfMsgForContent( 'userrenametool-info-finished',
+		$text = wfMessage( 'userrenametool-info-finished',
 			self::getCommunityUser( $requestor ),
 			self::getCommunityUser( $oldUsername, true ),
 			self::getCommunityUser( $newUsername ),
 			$tasks ? implode( ', ', $tasks ) : '-',
 			$reason
-		);
+		)->inContentLanguage()->text();
 		return $text;
 	}
 
-	static public function fail( $requestor, $oldUsername, $newUsername, $reason, $tasks = array() ) {
+	static public function fail( $requestor, $oldUsername, $newUsername, $reason, $tasks = [ ] ) {
 		foreach ( $tasks as $k => $v ) {
 			$tasks[$k] = self::getCommunityTask( $v );
 		}
 
-		$text = wfMsgForContent( 'userrenametool-info-failed',
+		$text = wfMessage( 'userrenametool-info-failed',
 			self::getCommunityUser( $requestor ),
 			self::getCommunityUser( $oldUsername, true ),
 			self::getCommunityUser( $newUsername ),
 			$tasks ? implode( ', ', $tasks ) : '-',
 			$reason
-		);
+		)->inContentLanguage()->text();
 		return $text;
 	}
 
 	static public function wiki( $requestor, $oldUsername, $newUsername, $cityId, $reason, $problems = false ) {
-		$text = wfMsgForContent(
+		$text = wfMessage(
 			$problems ? 'userrenametool-info-wiki-finished-problems' : 'userrenametool-info-wiki-finished',
 			self::getCommunityUser( $requestor ),
 			self::getCommunityUser( $oldUsername, true ),
 			self::getCommunityUser( $newUsername ),
 			self::getCityLink( $cityId ),
 			$reason
-		);
+		)->inContentLanguage()->text();
 		return $text;
 	}
 }
