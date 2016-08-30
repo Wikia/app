@@ -5,7 +5,7 @@ class DesignSystemGlobalFooterWikiModel extends DesignSystemGlobalFooterModel {
 	protected $wikiId;
 
 	public function __construct( $id, $lang = self::DEFAULT_LANG ) {
-		parent::__construct( $id, $lang = self::DEFAULT_LANG );
+		parent::__construct( $id, $lang );
 
 		$this->wikiId = $id;
 	}
