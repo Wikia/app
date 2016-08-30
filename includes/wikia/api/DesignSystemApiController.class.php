@@ -74,7 +74,7 @@ class DesignSystemApiController extends WikiaApiController {
 			],
 		],
 		"search" => [
-			"modules" => [
+			"module" => [
 				"type" => "search",
 				"results" => [
 					"url" => "http://wikia.com/search",
@@ -181,7 +181,7 @@ class DesignSystemApiController extends WikiaApiController {
 			],
 		],
 		"notifications" => [
-			"modules" => [
+			"module" => [
 				"type" => "notifications",
 				"url" => "#",
 				"header" => [
@@ -233,7 +233,7 @@ class DesignSystemApiController extends WikiaApiController {
 		$params = $this->checkRequestCompleteness();
 
 		$this->setResponseData( [
-			'global-footer' => ( new DesignSystemGlobalFooterModel( $params[ 'wikiId' ], $params[ 'lang' ] ) ) ->getData(),
+			'global-footer' => ( new DesignSystemGlobalFooterModel( $params[ 'wikiId' ], $params[ 'lang' ] ) )->getData(),
 			'global-navigation' => $this->data
 		] );
 
