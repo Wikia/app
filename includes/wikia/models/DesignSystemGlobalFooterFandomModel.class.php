@@ -3,7 +3,7 @@
 class DesignSystemGlobalFooterFandomModel extends DesignSystemGlobalFooterModel {
 
 	public function __construct( $id, $lang = self::DEFAULT_LANG ) {
-		parent::__construct( $id, $lang = self::DEFAULT_LANG );
+		parent::__construct( $id, $lang );
 	}
 
 	protected function getSitenameData() {
