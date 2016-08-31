@@ -61,7 +61,7 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 			]
 		];
 
-		if ( $this->lang === 'en' ) {
+		if ( $this->lang === static::DEFAULT_LANG ) {
 			$data[ 'verticals' ] = $this->getVerticalsSection();
 			$data[ 'wikis' ] = $this->getWikisSection();
 		} else {
