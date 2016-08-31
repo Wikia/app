@@ -118,7 +118,7 @@ describe('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', function () {
 			mocks.win
 		);
 	}
-	
+
 	function assertRequestParam(call, param) {
 		expect(Object.keys(call).indexOf(param)).not.toEqual(-1);
 	}
