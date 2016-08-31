@@ -258,7 +258,7 @@ class SpecialChangePassword extends UnlistedSpecialPage {
 		try {
 			$user->setPassword( $this->mNewpass );
 			wfRunHooks( 'PrefsPasswordAudit', array( $user, $newpass, 'success' ) );
-			$this->mOldpass = $this->mRetypePass = '';
+			$this->mNewpass = $this->mOldpass = $this->mRetypePass = '';
 
 		} catch( PasswordError $e ) {
 			wfRunHooks( 'PrefsPasswordAudit', array( $user, $newpass, 'error' ) );
@@ -272,9 +272,7 @@ class SpecialChangePassword extends UnlistedSpecialPage {
 		 * We shouldn't logout user when changing password, so after deleting
 		 * all user tokens in Helios service we need to authorize user using new password
 		 */
-		$ok = $user->checkPassword( $this->mNewpass );
-		$this->mNewpass = '';
-		if( !$ok ){
+		if( !$user->checkPassword( $newpass ) ){
 			throw new PasswordError( $this->msg( 'resetpass-wrong-oldpass' )->text() );
 		}
 	}
