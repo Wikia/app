@@ -113,16 +113,16 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 				'module' => [
 					'type' => 'search',
 					'results' => [
-						'url' => 'http://starwars.wikia.com/wiki/Special:Search?fulltext=Search',
+						'url' => $this->getPageUrl( 'Search', NS_SPECIAL, 'fulltext=Search' ),
 						'param-name' => 'query'
 					],
 					'suggestions' => [
-						'url' => 'http://starwars.wikia.com/index.php?action=ajax&rs=getLinkSuggest&format=json',
+						'url' => WikiFactory::getHostById( $this->wikiId ) . '/index.php?action=ajax&rs=getLinkSuggest&format=json',
 						'param-name' => 'query'
 					],
 					'placeholder-inactive' => [
 						'type' => 'translatable-text',
-						'key' => 'global-navigation-search-placeholder-inactive'
+						'key' => 'global-navigation-search-placeholder-inac`tive'
 					],
 					'placeholder-active' => [
 						'type' => 'translatable-text',
@@ -137,7 +137,8 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 						'type' => 'translatable-text',
 						'key' => 'wikia-create-wiki-link-start-wikia'
 					],
-					'href' => $this->getPageUrl( 'CreateNewWiki', NS_SPECIAL ),
+					'href' => GlobalTitle::newFromText( 'CreateNewWiki', NS_SPECIAL, 80433 )
+						->getFullURL( 'uselang=' . $this->lang ),
 				]
 			]
 		];
@@ -278,7 +279,7 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 		];
 	}
 
-	private function getPageUrl( $pageTitle, $pageType ) {
-		return GlobalTitle::newFromText( $pageTitle, $pageType, $this->wikiId )->getFullURL();
+	private function getPageUrl( $pageTitle, $pageType, $query = '' ) {
+		return GlobalTitle::newFromText( $pageTitle, $pageType, $this->wikiId )->getFullURL( $query );
 	}
 }
