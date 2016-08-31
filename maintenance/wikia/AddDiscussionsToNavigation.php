@@ -55,12 +55,14 @@ class AddDiscussionsToNavigation extends Maintenance
 	}
 
 	private function getAllSiteIds() {
+		$id = WikiFactory::getVarIdByName( self::VAR_NAME );
+
 		$siteIds = [];
 		$db = WikiFactory::db( DB_MASTER );
 		$sql = ( new WikiaSQL() )
 			->SELECT( 'cv_city_id' )
 			->FROM( 'city_variables' )
-			->WHERE( 'cv_variable_id' )->EQUAL_TO( self::VAR_NAME );
+			->WHERE( 'cv_variable_id' )->EQUAL_TO( $id );
 
 		$sql->runLoop( $db, function( &$siteIds, $row ) {
 			$siteIds[] = $row->cv_city_id;
