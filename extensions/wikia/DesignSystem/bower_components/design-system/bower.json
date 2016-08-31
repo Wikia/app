@@ -8,8 +8,5 @@
   "ignore": [
     "**/.*",
     "gulpfile.js"
-  ],
-  "dependencies": {
-    "flexboxgrid": "Wikia/flexboxgrid#v6.5.0"
-  }
+  ]
 }

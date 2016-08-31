@@ -31,4 +31,8 @@
 			border: 0;
 		}
 	}
+
+	&.wds-has-ellipsis > li {
+		@include ellipsis;
+	}
 }
