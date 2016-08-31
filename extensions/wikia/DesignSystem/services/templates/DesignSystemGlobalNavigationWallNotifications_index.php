@@ -8,7 +8,7 @@
 		'wds-icons-dropdown-tiny',
 		'wds-icon wds-icon-tiny wds-dropdown-toggle-chevron'
 	) ?>
-	<div id="notifications" class="wds-dropdown-content wds-global-navigation__dropdown notifications-container">
+	<div id="notifications" class="wds-dropdown-content wds-is-right-aligned wds-global-navigation__dropdown notifications-container">
 		<ul id="GlobalNavigationWallNotifications" class="WallNotifications global-nav-dropdown">
 		</ul>
 	</div>
