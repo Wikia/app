@@ -111,12 +111,10 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 				'module' => [
 					'type' => 'search',
 					'results' => [
-						'type' => 'parametrized_url',
 						'url' => 'http://starwars.wikia.com/wiki/Special:Search?fulltext=Search',
 						'param-name' => 'query'
 					],
 					'suggestions' => [
-						'type' => 'parametrized_url',
 						'url' => 'http://starwars.wikia.com/index.php?action=ajax&rs=getLinkSuggest&format=json',
 						'param-name' => 'query'
 					],
