@@ -62,7 +62,6 @@ class DesignSystemSharedLinks {
 			'games' => 'http://fandom.wikia.com/games',
 			'movies' => 'http://fandom.wikia.com/movies',
 			'tv' => 'http://fandom.wikia.com/tv',
-			'explore-wikis' => 'http://fandom.wikia.com/explore',
 			'fandom-university' => 'http://community.wikia.com/wiki/Wikia_University',
 			'user-signin' => 'https://www.wikia.com/signin',
 			'user-register' => 'https://www.wikia.com/register',
