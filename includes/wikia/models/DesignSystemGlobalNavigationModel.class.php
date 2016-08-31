@@ -204,8 +204,8 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 		];
 	}
 
-	private function getPageUrl( $pageTitle, $pageType, $query = '' ) {
-		return GlobalTitle::newFromText( $pageTitle, $pageType, $this->wikiId )->getFullURL( $query );
+	private function getPageUrl( $pageTitle, $namespace, $query = '' ) {
+		return GlobalTitle::newFromText( $pageTitle, $namespace, $this->wikiId )->getFullURL( $query );
 	}
 
 	private function getVerticalsSection() {
