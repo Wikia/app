@@ -265,5 +265,13 @@ class SpecialChangePassword extends UnlistedSpecialPage {
 
 		$user->setCookies();
 		$user->saveSettings();
+
+		/*
+		 * We shouldn't logout user when changing password, so after deleting
+		 * all user tokens in Helios service we need to authorize user using new password
+		 */
+		if( !$user->checkPassword( $newpass ) ){
+			throw new PasswordError( $this->msg( 'resetpass-wrong-oldpass' )->text() );
+		}
 	}
 }
