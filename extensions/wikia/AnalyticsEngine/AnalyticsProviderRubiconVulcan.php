@@ -2,7 +2,7 @@
 
 class AnalyticsProviderRubiconVulcan implements iAnalyticsProvider {
 	const COUNTRIES_VARIABLE = 'wgAdDriverRubiconVulcanCountries';
-	const MODULE_NAME = 'ext.wikia.adEngine.lookup.rubiconVulcan';
+	const MODULE_NAME = 'ext.wikia.adEngine.lookup.rubicon.rubiconVulcan';
 	const TEMPLATE = 'extensions/wikia/AnalyticsEngine/templates/bidder.mustache';
 
 	public static function isEnabled() {

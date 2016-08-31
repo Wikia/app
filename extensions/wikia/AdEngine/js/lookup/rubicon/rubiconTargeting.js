@@ -1,5 +1,5 @@
 /*global define*/
-define('ext.wikia.adEngine.lookup.rubiconTargeting', [
+define('ext.wikia.adEngine.lookup.rubicon.rubiconTargeting', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.utils.adLogicZoneParams'
 ], function (adContext, adLogicZoneParams) {

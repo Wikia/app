@@ -14,8 +14,8 @@ define('ext.wikia.adEngine.lookup.services', [
 	require.optional('ext.wikia.adEngine.lookup.prebid'),
 	require.optional('ext.wikia.adEngine.lookup.amazonMatch'),
 	require.optional('ext.wikia.adEngine.lookup.openXBidder'),
-	require.optional('ext.wikia.adEngine.lookup.rubiconFastlane'),
-	require.optional('ext.wikia.adEngine.lookup.rubiconVulcan')
+	require.optional('ext.wikia.adEngine.lookup.rubicon.rubiconFastlane'),
+	require.optional('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan')
 ], function (log, prebid, amazonMatch, oxBidder, rubiconFastlane, rubiconVulcan) {
 	'use strict';
 	var logGroup = 'ext.wikia.adEngine.lookup.services',

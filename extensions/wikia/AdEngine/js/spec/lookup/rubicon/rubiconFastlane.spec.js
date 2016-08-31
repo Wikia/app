@@ -1,5 +1,5 @@
 /*global beforeEach, describe, it, modules, expect, spyOn*/
-describe('ext.wikia.adEngine.lookup.rubiconFastlane', function () {
+describe('ext.wikia.adEngine.lookup.rubicon.rubiconFastlane', function () {
 	'use strict';
 	function noop() {
 	}
@@ -116,7 +116,7 @@ describe('ext.wikia.adEngine.lookup.rubiconFastlane', function () {
 	}
 
 	function getRubiconFastlane() {
-		return modules['ext.wikia.adEngine.lookup.rubiconFastlane'](
+		return modules['ext.wikia.adEngine.lookup.rubicon.rubiconFastlane'](
 			mocks.adContext,
 			getFactory(),
 			mocks.rubiconTargeting,

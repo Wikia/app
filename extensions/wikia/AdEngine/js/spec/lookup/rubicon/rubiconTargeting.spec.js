@@ -1,5 +1,5 @@
 /*global beforeEach, describe, it, modules, expect, spyOn*/
-describe('ext.wikia.adEngine.lookup.rubiconTargeting', function () {
+describe('ext.wikia.adEngine.lookup.rubicon.rubiconTargeting', function () {
 	'use strict';
 
 	var mocks = {
@@ -27,7 +27,7 @@ describe('ext.wikia.adEngine.lookup.rubiconTargeting', function () {
 		};
 
 	function getModule() {
-		return modules['ext.wikia.adEngine.lookup.rubiconTargeting'](
+		return modules['ext.wikia.adEngine.lookup.rubicon.rubiconTargeting'](
 			mocks.adContext,
 			mocks.adLogicZoneParams
 		);

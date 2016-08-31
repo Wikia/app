@@ -1,7 +1,7 @@
 /*global define*/
-define('ext.wikia.adEngine.lookup.rubiconVulcan', [
+define('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', [
 	'ext.wikia.adEngine.lookup.lookupFactory',
-	'ext.wikia.adEngine.lookup.rubiconTargeting',
+	'ext.wikia.adEngine.lookup.rubicon.rubiconTargeting',
 	'ext.wikia.adEngine.utils.math',
 	'wikia.document',
 	'wikia.log',
@@ -44,7 +44,7 @@ define('ext.wikia.adEngine.lookup.rubiconVulcan', [
 			}
 		],
 		libraryUrl = '//ads.aws.rubiconproject.com/video/vulcan.min.js',
-		logGroup = 'ext.wikia.adEngine.lookup.rubiconVulcan',
+		logGroup = 'ext.wikia.adEngine.lookup.rubicon.rubiconVulcan',
 		priceMap = {},
 		rubiconVideoTierKey = 'rpfl_video',
 		slots = {},
@@ -128,7 +128,6 @@ define('ext.wikia.adEngine.lookup.rubiconVulcan', [
 		allSlots.forEach(function (slot) {
 			var ad = slot.getBestCpm(),
 				slotName = slot.id,
-
 				cpm,
 				tier,
 				vastUrl;

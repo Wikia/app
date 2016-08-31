@@ -1,5 +1,5 @@
 /*global beforeEach, describe, it, modules, expect, spyOn*/
-describe('ext.wikia.adEngine.lookup.rubiconVulcan', function () {
+describe('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', function () {
 	'use strict';
 	function noop() {
 	}
@@ -109,7 +109,7 @@ describe('ext.wikia.adEngine.lookup.rubiconVulcan', function () {
 	}
 
 	function getVulcan() {
-		return modules['ext.wikia.adEngine.lookup.rubiconVulcan'](
+		return modules['ext.wikia.adEngine.lookup.rubicon.rubiconVulcan'](
 			getFactory(),
 			mocks.rubiconTargeting,
 			modules['ext.wikia.adEngine.utils.math'](),

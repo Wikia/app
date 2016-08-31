@@ -1,8 +1,8 @@
 /*global define*/
-define('ext.wikia.adEngine.lookup.rubiconFastlane', [
+define('ext.wikia.adEngine.lookup.rubicon.rubiconFastlane', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.lookup.lookupFactory',
-	'ext.wikia.adEngine.lookup.rubiconTargeting',
+	'ext.wikia.adEngine.lookup.rubicon.rubiconTargeting',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window'
@@ -54,7 +54,7 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 			}
 		},
 		context,
-		logGroup = 'ext.wikia.adEngine.lookup.rubiconFastlane',
+		logGroup = 'ext.wikia.adEngine.lookup.rubicon.rubiconFastlane',
 		priceMap = {},
 		response,
 		rubiconSlots = [],
@@ -111,15 +111,15 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 	}
 
 	function defineSingleSlot(slotName, slot, skin) {
-		var position = slotName.indexOf('TOP') !== -1 ? 'atf' : 'btf',
-			provider = skin === 'oasis' ? 'gpt' : 'mobile';
+		var position = slotName.indexOf('TOP') !== -1 ? 'atf' : 'btf';
 		log(['defineSlot', slotName, slot], 'debug', logGroup);
+
 		win.rubicontag.cmd.push(function () {
 			var rubiconSlot = win.rubicontag.defineSlot(slotName, slot.sizes, slotName);
 			if (skin === 'oasis') {
 				rubiconSlot.setPosition(position);
 			}
-			setTargeting(slotName, slot.targeting, rubiconSlot, provider);
+			setTargeting(slotName, slot.targeting, rubiconSlot, skin);
 			rubiconSlots.push(rubiconSlot);
 		});
 	}
