@@ -1,3 +1,8 @@
+// TODO XW-1943
+// don't update this file as it's no longer being used
+// we plan to keep it only until the Design System Global Navigation proves to be stable on production
+// the logic was copied to extensions/wikia/DesignSystem/scripts/DesignSystemGlobalNavigationNotifications.js
+
 require(
 	['jquery', 'wikia.window', 'wikia.nirvana', 'wikia.delayedhover', 'wikia.globalNavigationDropdowns'],
 	function($, window, nirvana, delayedHover, dropdowns) {
