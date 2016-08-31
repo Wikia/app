@@ -19,7 +19,7 @@ class AddDiscussionsToNavigation extends Maintenance
 	const VAR_NAME = 'wgOasisGlobalNavigation';
 	const NAVIGATION_ELEMENT = '**Special:DiscussionsNavigation|Discussions';
 	const FORUM_NAVIGATION_ELEMENT = '**Special:Forum|Forum';
-	const REASON = 'SOC-2816';
+	const REASON = 'SOC-2816 add Discussion navigation to the navigation';
 	const SPLIT = '\n';
 
 	private $dryRun = false;
