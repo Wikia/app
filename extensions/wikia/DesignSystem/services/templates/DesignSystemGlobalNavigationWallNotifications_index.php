@@ -1,5 +1,5 @@
-<div class="wds-global-navigation__content-item wds-global-navigation__notifications wds-dropdown wds-is-active notifications-entry-point">
-	<div class="wds-global-navigation__notifications-counter wds-dropdown-toggle wds-global-navigation__dropdown-toggle notifications-count"></div>
+<div class="wds-global-navigation__content-item wds-global-navigation__content-item-notifications-menu wds-dropdown wds-is-active notifications-entry-point">
+	<div class="wds-global-navigation__content-item-notifications-menu-counter notifications-count"></div>
 	<?= DesignSystemHelper::getSvg(
 		'wds-icons-bell',
 		'wds-icon wds-icon-small'
