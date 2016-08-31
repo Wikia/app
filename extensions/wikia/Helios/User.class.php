@@ -349,9 +349,10 @@ class User {
 	 */
 	public static function onUserSetPassword( $userId, $forceLogout ) {
 		$heliosClient = self::getHeliosClient();
-		if($forceLogout) {
-			$heliosClient->forceLogout($userId);
+		if(!$forceLogout) {
+			return true;
 		}
+		$heliosClient->forceLogout($userId);
 		return true;
 	}
 
