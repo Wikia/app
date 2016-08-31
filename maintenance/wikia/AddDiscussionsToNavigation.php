@@ -116,7 +116,7 @@ class AddDiscussionsToNavigation extends Maintenance
 		}
 		return array_merge(
 			array_slice( $array, 0, $pos ),
-			self::NAVIGATION_ELEMENT,
+			[ self::NAVIGATION_ELEMENT ],
 			array_slice( $array, $pos )
 		);
 	}
