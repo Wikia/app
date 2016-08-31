@@ -1,4 +1,4 @@
-<div id="notificationsEntryPoint" class="wds-global-navigation__content-item wds-global-navigation__content-item-notifications-menu wds-dropdown wds-is-active">
+<div id="notificationsEntryPoint" class="wds-global-navigation__content-item wds-global-navigation__content-item-notifications-menu wds-dropdown">
 	<div class="bubbles">
 		<div class="wds-global-navigation__content-item-notifications-menu-counter notifications-count"></div>
 	</div>

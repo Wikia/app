@@ -368,8 +368,11 @@ require(
 		$(function () {
 			WallNotifications.init();
 
-			// TODO open on click
-			WallNotifications.onNotificationsOpen();
+			// TODO make it pretty
+			$('#notificationsEntryPoint').on('click', function () {
+				WallNotifications.onNotificationsOpen();
+				$(this).addClass('wds-is-active');
+			});
 		});
 	}
 );
