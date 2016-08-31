@@ -34,7 +34,7 @@
 					<? if ( $showMiniEditor ): ?>
 						<?= $app->getView( 'MiniEditorController', 'Editor_Footer' )->render() ?>
 					<? endif ?>
-					<div class="buttons" data-space-type="buttons">
+					<div class="speech-bubble-buttons" data-space-type="buttons">
 						<?php if ( $notify_everyone ): ?>
 							<label class="highlight">
 								<input type="checkbox" class="notify-everyone" name="notifyEveryone" value="1" /><?= wfMessage( 'forum-discussion-highlight' )->escaped() ?>
