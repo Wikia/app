@@ -70,13 +70,13 @@ Follow the links below to learn more about how to use Fandom, make changes to yo
 		'specialcontact-sectitle-close-wiki' => "Close this wiki",
 
 	/* intros (message at top of page) */
-	'specialcontact-intro-content-issue' => "The content on this wikia is created by the community here, and managed by the [[Special:ListAdmins|local admins]], not Wikia. If you wish to discuss this content, it is best to first contact the [[Special:ListAdmins|wikia's admins here]].
+	'specialcontact-intro-content-issue' => "The content on this wiki is created by the community here, and managed by the [[Special:ListAdmins|local admins]], not Fandom. If you wish to discuss this content, it is best to first contact the [[Special:ListAdmins|wiki's admins here]].
 
-If you feel the content violates our [http://www.wikia.com/Terms_of_Use Terms of Use], you can contact Wikia staff directly [[Special:Contact/general|here]].",
+If you feel the content violates our [http://www.wikia.com/Terms_of_Use Terms of Use], you can contact Fandom staff directly [[Special:Contact/general|here]].",
 
-	'specialcontact-intro-content-issue-mobile' => "The content on this wikia is created by the community here and not the admins, not Wikia. If you wish to discuss this content, it is best to first contact the wikia's admins.
+	'specialcontact-intro-content-issue-mobile' => "The content on this wiki is created by the community here and not the admins, not Fandom. If you wish to discuss this content, it is best to first contact the wiki's admins.
 
-If you feel the content violates our Terms of Use, you can contact Wikia staff.",
+If you feel the content violates our Terms of Use, you can contact Fandom staff.",
 	'specialcontact-intro-user-conflict' => "Wikis are community spaces where each and every person needs to work together with others for it to be successful. Conflicts can sometimes arise while working together; the best way to solve them is to have an open and respectful conversation on your community about the issue.
 
 If you need help, first contact your [[Special:ListAdmins|local admins]]. Admins are the local experts on the topic and community, so best to first chat with them further. If the admins are not able to help, or you feel the user is violating Wikia Inc.'s [http://www.wikia.com/Terms_of_Use Terms of Use], you can contact Fandom staff directly [[Special:Contact/general|here]].
@@ -101,12 +101,12 @@ If you have done all of these and are still having an issue - please send us a d
 
 
 Happy editing!",
-	'specialcontact-intro-close-account' => "We are sorry you want to disable your account. Wikia has many wikias on all sorts of subjects and we'd love for you to stick around and find the one that's right for you. If you are having a local problem with your wikia, please don't hesitate to contact your [[Special:Listusers/sysop|local admins]] for help and advice.
+	'specialcontact-intro-close-account' => "We are sorry you want to disable your account. Fandom has many wikis on all sorts of subjects and we'd love for you to stick around and find the one that's right for you. If you are having a local problem with your wiki, please don't hesitate to contact your [[Special:Listusers/sysop|local admins]] for help and advice.
 
-If you have decided you definitely want to disable your account please be aware that Wikia does not have the ability to fully remove accounts, but we can disable them. This will ensure the account is locked and can't be used. This process is NOT reversible, and you will have to create a new account if you wish to rejoin Wikia. However, this process will not remove your contributions from a given wikia as these contributions belong to the community as a whole.
+If you have decided you definitely want to disable your account please be aware that Fandom does not have the ability to fully remove accounts, but we can disable them. This will ensure the account is locked and can't be used. This process is NOT reversible, and you will have to create a new account if you wish to rejoin Fandom. However, this process will not remove your contributions from a given wiki as these contributions belong to the community as a whole.
 
 If you need any more information on what an account disable actually does, you can visit our [[Help:Close_my_account|help page on disabling your account]]. To confirm and disable your account, please fill out the form below.",
-	'specialcontact-intro-rename-account' => "Changing your username is possible on Wikia, but only once, so be sure you want to change it before you submit a request. This process cannot be reversed, and once we change your username, we cannot change it again. Please make sure you have fully read this help page before sending in a request: http://help.wikia.com/wiki/Help:Changing_your_username
+	'specialcontact-intro-rename-account' => "Changing your username is possible on Fandom, but only once, so be sure you want to change it before you submit a request. This process cannot be reversed, and once we change your username, we cannot change it again. Please make sure you have fully read this help page before sending in a request: http://help.wikia.com/wiki/Help:Changing_your_username
 
 Once you have read that help page and are positive on the spelling of your new username, please submit a request below. Once your username is changed, you will receive a confirmation email. You can then log in with your new user name using your old password.
 
@@ -126,20 +126,20 @@ Remember, you can't break a community on Fandom, so don't be afraid to get start
 	'specialcontact-intro-feedback' => "Got feedback? We would love to hear it! Please provide your thoughts and details below. If you have feedback on a Fandom Labs product, please provide feedback [[Special:WikiaLabs|there]].
 
 Thanks in advance and happy editing!",
-	'specialcontact-intro-bug' => "We are sorry to hear that you found a bug on Wikia. Please provide full details of the issue you are seeing below so we can investigate further. Important details to include are:
+	'specialcontact-intro-bug' => "We are sorry to hear that you found a bug on Fandom. Please provide full details of the issue you are seeing below so we can investigate further. Important details to include are:
 *Your username
-*Link to your wikia
+*Link to your community
 *Your browser information including type and version ([[Help:Supported_browsers|click here for our supported browser list]])
 *Screenshot
 
 For more advice on what to include in your report, please see [[w:c:community:Help:How to report bugs|our help page on bug reports]].
 
-Thanks again for the report and for using Wikia.
+Thanks again for the report and for using Fandom.
 
 Happy editing!",
-	'specialcontact-intro-bad-ad' => "We are sorry to hear you encountered a bad advertisement on Wikia. If you could provide further details below we will share them with our advertising manager, who will review the ad and may be able to remove it from the system.
+	'specialcontact-intro-bad-ad' => "We are sorry to hear you encountered a bad advertisement on Fandom. If you could provide further details below we will share them with our advertising manager, who will review the ad and may be able to remove it from the system.
 
-Be sure to tell us what wikia you're on, what ad you saw, and why it was a problem. It would also help if you could include a screenshot and the URL of the ad. Instructions for finding the URL of an ad are listed here: http://help.wikia.com/wiki/Help:Bad_advertisements
+Be sure to tell us which community you're on, which ad you saw, and why it was a problem. It would also help if you could include a screenshot and the URL of the ad. Instructions for finding the URL of an ad are listed here: http://help.wikia.com/wiki/Help:Bad_advertisements
 
 Thank you and happy editing!",
 
@@ -178,7 +178,7 @@ Happy editing!",
 If you prefer to use regular e-mail or have multiple attachments, you can contact us at [mailto:community@wikia.com community@wikia.com].
 ",
 
-	'specialcontact-intro-security' => "If you have found or believe you have found a security issue in Wikia's code or on one of Wikia's communities, please let us know. We appreciate your help in keeping Wikia safe for everyone by disclosing it to us in a [[wikipedia:Responsible disclosure|responsible manner]].
+	'specialcontact-intro-security' => "If you have found or believe you have found a security issue in Fandom's code or on one of Fandom's communities, please let us know. We appreciate your help in keeping Fandom safe for everyone by disclosing it to us in a [[wikipedia:Responsible disclosure|responsible manner]].
 
 If you are looking to report a general bug or another type of issue, please use one of the [[Special:Contact|other contact forms]].
 
@@ -196,7 +196,7 @@ When reporting a security issue, please provide full details of the issue includ
 ** Particularly for XSS or vulnerabilities that require a specific browser or plugin to reproduce
 * A short description of the vulnerability's potential security impact
 
-In response to security reports using this form, Wikia will:
+In response to security reports using this form, Fandom will:
 * Prioritize the reproduction and confirmation of any reported vulnerability
 * Identify a reasonable timeline to patch any confirmed vulnerability
 * Not pursue legal action against any reporter who complies with all of the guidelines for testing and reporting security issues
@@ -273,9 +273,9 @@ Browser/OS: ',
 	'specialcontact-ccheader' => 'This is a copy of your message that was sent to Fandom Support',
 
 	/* after */
-	'specialcontact-submitcomplete' => 'Thank you for contacting Wikia. We receive and review all messages submitted here. We will do our best to get back to you in the next 2-3 business days, but please be patient as we work through all of the messages.
+	'specialcontact-submitcomplete' => 'Thank you for contacting Fandom. We receive and review all messages submitted here. We will do our best to get back to you in the next 2-3 business days, but please be patient as we work through all of the messages.
 
-Remember, you can also find help in our [[w:c:community:Special:Forum|Community Forum]] and [[w:c:community:Help:Index|Help pages]]. You can keep up to date with the latest Wikia news on our [[w:c:community:Blog:Wikia_Staff_Blog |Staff Blog]]. Happy editing!',
+Remember, you can also find help in our [[w:c:community:Special:Forum|Community Forum]] and [[w:c:community:Help:Index|Help pages]]. You can keep up to date with the latest Fandom news on our [[w:c:community:Blog:Wikia_Staff_Blog |Staff Blog]]. Happy editing!',
 );
 
 $messages['qqq'] = array(

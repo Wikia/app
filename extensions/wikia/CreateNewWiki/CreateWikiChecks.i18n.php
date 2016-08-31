@@ -108,16 +108,16 @@ Fandom Community Support
 ___________________________________________
 * Want to receive fewer messages from us? You can unsubscribe or change your email preferences here: http://community.wikia.com/Special:Preferences',
 	'autocreatewiki-welcometalk-wall-title' => 'Welcome!',
-	'autocreatewiki-welcometalk-wall' => "Hello, We're excited to have {{subst:SITENAME}} as part of the Wikia community!
+	'autocreatewiki-welcometalk-wall' => "Hello, I'm a member of Fandom's Community Support team. We're excited to have {{subst:SITENAME}} as part of the Fandom community!
 
-There's still a lot to do; here are some helpful tips and links to get your wikia going:
-*Check out [[Special:WikiFeatures|Wiki Features]] to see which features you can enable on your wikia, including Chat, Achievements and many more.
-*Customize your wikia's look by visiting the [[Special:ThemeDesigner|Theme Designer]], where you can add color and style to your background and wordmark.
-*Stop by [[w:c:community|Community Central]] to stay informed through our [[w:c:community:Blog:Wikia_Staff_Blog|staff blog]], ask questions on our [[w:c:community:Special:Forum|community forum]], participate in our [[w:c:community:Help:Webinars|webinar series]], or [[w:c:community:Special:Chat|chat live]] with fellow Wikians.
-*Lastly, visit our [[Help:Contents|help pages]] to learn the ins and outs of using Wikia, including [[Help:New page|how to add a new page to your wikia]], [[Help:Attracting contributors|how to attract contributors]], and [[Help:User access levels|how to add other admins]].
-* You can also use all of these tools by visiting your Admin Dashboard, which can by found by clicking \"Admin\" on the bottom toolbar.
+It may seem like there’s a lot to do, but we’re here to help make getting started quick and easy. Here are some helpful tips and links to get your community going:
 
-All of the above links are a great place to start exploring, and have fun!",
+*Check out [[Special:WikiFeatures|Wiki Features]] to turn on some special features including our popular community Chat.
+*Customize your community’s color and style by visiting the [[Special:ThemeDesigner|Theme Designer]].
+*Stop by [[w:c:community|Community Central]] to check out the [[w:c:community:Blog:Wikia_Staff_Blog|staff blog]], and ask questions on our [[w:c:community:Special:Forum|community forum]].
+*Lastly, visit our [[Help:Contents|help pages]] to learn the ins and outs of using Fandom, or visit [[w:c:community:Wikia_University|Fandom University]] for quick how-to videos.
+
+Have fun!",
 	'autocreatewiki-welcometalk' => "==Welcome!==
 Hey there!
 

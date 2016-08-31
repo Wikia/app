@@ -101,7 +101,7 @@ You can also [[Special:EditWatchlist|use the standard editor]].',
 	'wikicitieshome' => 'Fandom Home',
 	'wikicitieshome-url' => 'http://fandom.wikia.com/',
 	'wikicitieshome-url/fr' => 'http://fr.wikia.com/',
-	'wikicities-nav' => 'wikia',
+	'wikicities-nav' => 'Fandom',
 	'wg_lastwikis' => 'Recently Visited',
 	'widget-languages' => 'en
 pl
@@ -12731,7 +12731,7 @@ $messages['pnb'] = array(
 	'watchlistedit-normal-title' => ' اکھ تھلے رکھی ہوئی نو تبدیل کرو',
 	'watchlistedit-normal-legend' => 'اکھ تھلیوں ہٹا لو',
 	'watchlistedit-normal-explain' => 'تواڈی اکھ تھلے رکھی لسٹ دے سرناویں تھلے دتے گۓ نیں۔
-اک سرناویں نوں ہٹان لئی، اوس توں اگلے ڈبے نوں ویکھو تے 
+اک سرناویں نوں ہٹان لئی، اوس توں اگلے ڈبے نوں ویکھو تے
 "{{int:Watchlistedit-normal-submit}}" تے کلک کرو۔
 تسیں [[Special:EditWatchlist/raw|کچی لسٹ تبدیل کرو]]',
 	'watchlistedit-normal-submit' => 'ٹائیٹلز ہٹاؤ',
@@ -15130,7 +15130,7 @@ Ne zaboravite da prilagodite sebi svoja [[Special:Preferences|{{SITENAME}} pode�
 	'watchlistedit-noitems' => 'Nema naslova u vašem spisku nadgledanja.',
 	'watchlistedit-normal-title' => 'Uredi spisak nadgledanja',
 	'watchlistedit-normal-legend' => 'Ukloni naslove sa spiska nadgledanja',
-	'watchlistedit-normal-explain' => 'Naslovi na vašem spisku nadgledanja su prikazani ispod. Da biste uklonili naslov, obeležite 
+	'watchlistedit-normal-explain' => 'Naslovi na vašem spisku nadgledanja su prikazani ispod. Da biste uklonili naslov, obeležite
 	kutijicu do njega, i kliknite na Ukloni naslove. Takođe, možete da [[Special:Watchlist/raw|izmenite sirov spisak]],
 	ili [[Special:Watchlist/clear|uklonite sve naslove]].',
 	'watchlistedit-normal-submit' => 'Ukloni naslove',

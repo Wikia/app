@@ -17,9 +17,9 @@ $messages['en'] = [
 	'dmcarequest-desc' => 'Allows the submission and management of DMCA takedown requests.',
 	'right-dmcarequestmanagement' => 'Manage DMCA requests',
 	'action-dmcarequestmanagement' => 'manage DMCA requests',
-	'dmcarequest-request-intro' => 'As a host for user-­generated content, Wikia follows the notice and takedown	provisions of the Digital Millennium Copyright Act (DMCA). If you believe that your copyrighted content is being used on Wikia in a manner that violates your rights, you may send a DMCA takedown notice. This page is a guided form that will allow you to fill out the required elements of a DMCA takedown notice. Once you click send, it will generate an email to [mailto:copyright@wikia.com copyright@wikia.com] as a full DMCA takedown notice.
+	'dmcarequest-request-intro' => 'As a host for user-­generated content, Wikia, Inc follows the notice and takedown        provisions of the Digital Millennium Copyright Act (DMCA). If you believe that your copyrighted content is being used on Fandom (powered by Wikia, Inc) in a manner that violates your rights, you may send a DMCA takedown notice. This page is a guided form that will allow you to fill out the required elements of a DMCA takedown notice. Once you click send, it will generate an email to [mailto:copyright@wikia.com copyright@wikia.com] as a full DMCA takedown notice.
 
-Please ensure the accuracy of your notice before sending it, and please note that Wikia is not in a position to provide legal advice. If you have questions, we recommend that you speak to an attorney.',
+Please ensure the accuracy of your notice before sending it, and please note that Fandom is not in a position to provide legal advice. If you have questions, we recommend that you speak to an attorney.',
 	'dmcarequest-request-type-label' => 'I am:',
 	'dmcarequest-request-type-copyrightholder' => 'The copyright holder',
 	'dmcarequest-request-type-representative' => 'The legal representative of the copyright holder',

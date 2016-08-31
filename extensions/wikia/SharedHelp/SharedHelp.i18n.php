@@ -18,9 +18,9 @@ $messages['en'] = array(
 
 	#Special:SharedHelp
 	'shared_help_info' => 'Questions? Ask in the [[w:Special:Forum|Community Forum]].',
-	'shared_help_edit_info' => 'The help text within the box is stored at [[w:Help:$1|Help:$1]] on Wikia $2. See [[Help:Shared Help]] for more info.
+	'shared_help_edit_info' => 'The help text within the box is stored at [[w:Help:$1|Help:$1]] on Fandom $2. See [[Help:Shared Help]] for more info.
 
-Any changes that apply to \'\'all\'\' wikis should be made to the Wikia $2 copy. [[w:Help_talk:$1|Suggest changes here]].
+Any changes that apply to ''all'' wikis should be made to the Fandom $2 copy. [[w:Help_talk:$1|Suggest changes here]].
 
 Text should be placed on this page if you wish to explain usage, style and policy guidelines which apply only to {{SITENAME}}. Text added in this edit box will be displayed above the boxed help text.',
 	'shared_help_search_info' => 'To search for help with editing, please visit [http://c.wikia.com/wiki/Special:Search?search=$1 Community Central]',

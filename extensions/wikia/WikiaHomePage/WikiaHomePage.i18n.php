@@ -8,7 +8,7 @@
 $messages = array();
 
 $messages['en'] = array(
-	'wikiahome-desc' => 'WikiaHomePage',
+	'wikiahome-desc' => 'FandomHomePage',
 	'wikiahome-page-header-heading' => 'Create. Collaborate. Be Original.',
 	'wikiahome-page-header-heading-mobile' => 'Create.
 Collaborate.

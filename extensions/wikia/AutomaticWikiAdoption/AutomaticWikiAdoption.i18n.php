@@ -51,11 +51,11 @@ The Fandom Team
 You can unsubscribe from changes to this list here: $3",
 	'wikiadoption-mail-first-content-HTML' => "Hi $1,<br /><br />
 
-It's been a couple of weeks since we have seen an administrator on #WIKINAME. Administrators are an integral part of #WIKINAME and it's important they have a regular presence. If there are no active administrators for a long period of time, this wiki may be put up for adoption to allow another user to become an administrator.<br /><br />
+It's been a couple of weeks since we have seen an administrator on #WIKINAME. Administrators are an integral part of #WIKINAME and it's important they have a regular presence. If there are no active administrators for a long period of time, this community may be put up for adoption to allow another user to become an administrator.<br /><br />
 
-If you need help taking care of the wiki, you can also allow other community members to become administrators now by going to <a href=\"$2\">User Rights management</a>.  Hope to see you on #WIKINAME soon!<br /><br />
+If you need help taking care of the community, you can also allow other community members to become administrators now by going to <a href=\"$2\">User Rights management</a>.  Hope to see you on #WIKINAME soon!<br /><br />
 
-The Wikia Team<br /><br />
+The Fandom Team<br /><br />
 
 You can <a href=\"$3\">unsubscribe</a> from changes to this list.",
 	'wikiadoption-mail-second-subject' => "#WIKINAME will be put up for adoption soon",
@@ -68,32 +68,32 @@ The Fandom Team
 
 You can unsubscribe from changes to this list here: $3",
 	'wikiadoption-mail-second-content-HTML' => "Hi $1,<br /><br />
-Oh, no! It's been almost 60 days since there's been an active administrator on #WIKINAME. It's important that administrators regularly appear and contribute so the wiki can continue to run smoothly.<br /><br />
+It's been almost 60 days since there's been an active administrator on #WIKINAME. It's important that administrators regularly appear and contribute so the community can continue to run smoothly.<br /><br />
 
 Since it's been so many days since a current administrator has appeared, #WIKINAME will now be offered for adoption to other editors. <br /><br />
 
-The Wikia Team<br /><br />
+The Fandom Team<br /><br />
 
 You can <a href=\"$3\">unsubscribe</a> from changes to this list.",
 	'wikiadoption-mail-adoption-subject' => '#WIKINAME has been adopted',
 	'wikiadoption-mail-adoption-content' => "Hi $1,
 
-#WIKINAME has been adopted.  Wikis are available to be adopted when none of the current administrators are active for 60 days or more.
+#WIKINAME has been adopted.  Communities are available to be adopted when none of the current administrators are active for 60 days or more.
 
-The adopting user of #WIKINAME will now have bureaucrat and admin status.  Don't worry, you'll also your retain administrator status on this wiki and are welcome to return and continue contributing at any time!
+The adopting user of #WIKINAME will now have bureaucrat and admin status.  Don't worry, you'll also your retain administrator status on this community and are welcome to return and continue contributing at any time!
 
-The Wikia Team
+The Fandom Team
 
 You can unsubscribe from changes to this list here: $3",
 	'wikiadoption-mail-adoption-content-HTML' => "Hi $1,<br /><br />
 
-#WIKINAME has been adopted.  Wikis are available to be adopted when none of the current administrators are active for 60 days or more.<br /><br />
+#WIKINAME has been adopted.  Communities are available to be adopted when none of the current administrators are active for 60 days or more.<br /><br />
 
-The adopting user of #WIKINAME will now have bureaucrat and admin status.  Don't worry, you'll also your retain administrator status on this wiki and are welcome to return and continue contributing at any time!<br /><br />
+The adopting user of #WIKINAME will now have bureaucrat and admin status.  Don't worry, you'll also your retain administrator status on this community and are welcome to return and continue contributing at any time!<br /><br />
 
-The Wikia Team<br /><br />
+The Fandom Team<br /><br />
 
-You can <a href=\"$3\">unsubscribe</a> from changes to this list.",
+You can <a href="$3">unsubscribe</a> from changes to this list.",
 	'tog-adoptionmails' => 'Email me if $1 will become available for other users to adopt',
 	'tog-adoptionmails-v2' => '...if the wiki will become available for other users to adopt',
 	'wikiadoption-pref-label' => 'Changing these preferences will only affect emails from $1.',
@@ -329,8 +329,8 @@ Kun mayo nin aktibong administrador sa sarong wiki ini maipapamugtak para sa pag
 <br /><br />
 Pantabang na mga Gamiton:
 <br /><br />
-[[Special:ThemeDesigner|Paradesinyo kan Tema]]<br /> [[Special:LayoutBuilder|Paragibo kan Panluwas na gibo nin Pahina]] 
-<br /> 
+[[Special:ThemeDesigner|Paradesinyo kan Tema]]<br /> [[Special:LayoutBuilder|Paragibo kan Panluwas na gibo nin Pahina]]
+<br />
 [[Special:ListUsers|Listahan nin paragamit]] <br /> [[Special:UserRights|Manihoon an mga katanosan]]',
 );
 
@@ -377,10 +377,10 @@ $messages['br'] = array(
 	'wikiadoption-log-reason' => 'Degemer ur wiki ez-emgefre',
 	'wikiadoption-notification' => "$1 a zo prest da vezañ degemeret ! Gellout a rit bezañ ar perc'henn nevez. '''Degemer bremañ !'''", # Fuzzy
 	'wikiadoption-mail-first-subject' => "N'hon eus ket gwelet ac'hanoc'h abaoe pell",
-	'wikiadoption-mail-first-content' => "Se a ra meur a sizhunvezh n'hon eus gwelet merour ebet war 
+	'wikiadoption-mail-first-content' => "Se a ra meur a sizhunvezh n'hon eus gwelet merour ebet war
 Demat $1,
 
-#WIKINAME. Ar verourien zo ul lod eus #WIKINAME ha pouezus eo bezañ sur e vezont gwelet ingal. Ma n'eus merour oberiant ebet e-pad ur prantad hir e c'hall ar wiki-mañ bezañ bezañ adkemeret evit ma c'hallo un implijer all dont da vezañ ur merour. 
+#WIKINAME. Ar verourien zo ul lod eus #WIKINAME ha pouezus eo bezañ sur e vezont gwelet ingal. Ma n'eus merour oberiant ebet e-pad ur prantad hir e c'hall ar wiki-mañ bezañ bezañ adkemeret evit ma c'hallo un implijer all dont da vezañ ur merour.
 
 
 M'ho peus ezhomm da vezañ skoazellet e c'hallit ober war-dro ar wiki-mañ. Gallout a rit ivez aotren izili all eusar gumuniezh da zont vezañ merourien bremañ o vont war $2.
@@ -1650,16 +1650,16 @@ $messages['kn'] = array(
 	'wikiadoption-header' => 'ಈ ವಿಕಿವನ್ನು  ದತ್ತು ಸ್ವೀಕಾರ ಮಾಡಿ',
 	'wikiadoption-button-adopt' => 'ಹವದು, ನನಗೆ {{SITENAME}} ಅನ್ನು ದತ್ತು ಸ್ವೀಕಾರ ಮಾಡಬೇಕು!',
 	'wikiadoption-adopt-inquiry' => 'ಇನ್ನೂ ಗೊತ್ತು ಮಾದೊಕೊಳ್ಳಿ!',
-	'wikiadoption-description' => '$1, {{SITENAME}}ಅನ್ನು ದತ್ತು ಮಾದಕೊಳಿಕೆ ನೀವು ತಯ್ಯಾರು ಇದ್ದೀರಾ?   
+	'wikiadoption-description' => '$1, {{SITENAME}}ಅನ್ನು ದತ್ತು ಮಾದಕೊಳಿಕೆ ನೀವು ತಯ್ಯಾರು ಇದ್ದೀರಾ?
 <br /><br />
-{{SITENAME}} ಅಲ್ಲಿ  ಸುಮಾರು ದಿನದಿಂದ ಒಂದುಸಹ  ಸಕ್ರೀಯ ನೇತಾ  ಇರಲಿಲ್ಲ, ಮತ್ತು ನಾವು ಒಂದು ಅಂತ ಹೊಸ ನೇತಾನಿಗೆ ಹುಡುಕುತ ಇದ್ದೇವೆ, ಯಾರು ಈ ವಿಕಿ ಯ  ವಿಷಯ, ಮತ್ತು ಸಾಮಾಜ, ಎರಡರಲ್ಲಿ ಸಹ  ವೃತ್ತಿ ಮಾಡಿಸಲಿಕ್ಕೆ ಸಾಮರ್ಥ್ಯ ಇದ್ದಾರೆ . ನೀವು {{SITENAME}}ಇಗೆ ಒಂದು ಕೊಡುಗೆ ಆದ ಕಾರಣ ನಾವು ಆಲೋಚನೆ ಮಾಡುತ ಇತ್ತು ಎಂತ ಅಂದರೆ ನಿಮಗೆ ಈ ಕೆಲಸ ಕುಶಿ ಆಗ ಬಹುದ ಏನೋ, ಅಂತ ಹೆಲಿ.                    
- <br /><br />  
-ಈ ವಿಕಿ ಅನ್ನು ದತ್ತು ಮಾದುದಿಂದ ನೀವು ಅಡ್ಮಿನಿಸ್ಟ್ರೇಟರ್ ಮತ್ತು ಬುರೆಔಚ್ರತ್ ಎರದುಸಹ ಆಗುತಿರಿ, ಆವಾಗ ನಿಮಗೆ ಆ ವಿಕಿ ಅನ್ನು ಪ್ರಭಂಧನೆ ಮಾಡಲಿಕ್ಕೆ ಸರಿ ಆದ ಸಲಕರಣೆ ಸಿಗುತದೆ.   ನಿಮಗೆ ಆವಾಗ ಬೇರೆ ನೆತಾಗಳನ್ನುಸಹ ನಿರ್ಮಾಣ ಮಾಡಲಿಕ್ಕೆ ಆಗುತದೆ.      
+{{SITENAME}} ಅಲ್ಲಿ  ಸುಮಾರು ದಿನದಿಂದ ಒಂದುಸಹ  ಸಕ್ರೀಯ ನೇತಾ  ಇರಲಿಲ್ಲ, ಮತ್ತು ನಾವು ಒಂದು ಅಂತ ಹೊಸ ನೇತಾನಿಗೆ ಹುಡುಕುತ ಇದ್ದೇವೆ, ಯಾರು ಈ ವಿಕಿ ಯ  ವಿಷಯ, ಮತ್ತು ಸಾಮಾಜ, ಎರಡರಲ್ಲಿ ಸಹ  ವೃತ್ತಿ ಮಾಡಿಸಲಿಕ್ಕೆ ಸಾಮರ್ಥ್ಯ ಇದ್ದಾರೆ . ನೀವು {{SITENAME}}ಇಗೆ ಒಂದು ಕೊಡುಗೆ ಆದ ಕಾರಣ ನಾವು ಆಲೋಚನೆ ಮಾಡುತ ಇತ್ತು ಎಂತ ಅಂದರೆ ನಿಮಗೆ ಈ ಕೆಲಸ ಕುಶಿ ಆಗ ಬಹುದ ಏನೋ, ಅಂತ ಹೆಲಿ.
+ <br /><br />
+ಈ ವಿಕಿ ಅನ್ನು ದತ್ತು ಮಾದುದಿಂದ ನೀವು ಅಡ್ಮಿನಿಸ್ಟ್ರೇಟರ್ ಮತ್ತು ಬುರೆಔಚ್ರತ್ ಎರದುಸಹ ಆಗುತಿರಿ, ಆವಾಗ ನಿಮಗೆ ಆ ವಿಕಿ ಅನ್ನು ಪ್ರಭಂಧನೆ ಮಾಡಲಿಕ್ಕೆ ಸರಿ ಆದ ಸಲಕರಣೆ ಸಿಗುತದೆ.   ನಿಮಗೆ ಆವಾಗ ಬೇರೆ ನೆತಾಗಳನ್ನುಸಹ ನಿರ್ಮಾಣ ಮಾಡಲಿಕ್ಕೆ ಆಗುತದೆ.
 <br /><br />
 ನೀವು {{SITENAME}} ಇಗೆ ಸಹಾಯತ ಮಾಡಲಿಕ್ಕೆ ಮುಂದಿನ ಹೆಜ್ಜೆ ಹಾಕಲಿಕ್ಕೆ ತಯ್ಯಾರು ಇದ್ದೀರಾ?',
 	'wikiadoption-know-more-header' => 'ಜಾಸ್ತಿ ಗೊತ್ತಾಗಬೇಕ?',
 	'wikiadoption-adoption-successed' => 'ಅಭಿನಂದನಗಳು! ನೀವು ಈಗ ಈ ವಿಕಿ ಅಲ್ಲಿ ಒಂದು ಅಡ್ಮಿನಿಸ್ಟ್ರೇಟರ್ ಆಗಿದ್ದೀರಿ!',
-	'wikiadoption-adoption-failed' => 'ಕ್ಷಮಿಸಿ. ನಾವು ನಿಮ್ಮನ್ನ ಅಡ್ಮಿನಿಸ್ಟ್ರೇಟರ್ ಮಾಡಲಿಕ್ಕೆ ಪ್ರಯತ್ನ ಮಾಡಿತು, ಆದರೆ ನಮಗೆ ಹಾಗೆ ಮಾಡಲಿಕ್ಕೆ ಆಗಲಿಲಿಲ್ಲ.      
+	'wikiadoption-adoption-failed' => 'ಕ್ಷಮಿಸಿ. ನಾವು ನಿಮ್ಮನ್ನ ಅಡ್ಮಿನಿಸ್ಟ್ರೇಟರ್ ಮಾಡಲಿಕ್ಕೆ ಪ್ರಯತ್ನ ಮಾಡಿತು, ಆದರೆ ನಮಗೆ ಹಾಗೆ ಮಾಡಲಿಕ್ಕೆ ಆಗಲಿಲಿಲ್ಲ.
 
 ದೈವಿತ್ತು [http://community.wikia.com/Special:Contact ನಮ್ಮಣ್ಣ ಸಂಪರ್ಕ ಮಾಡಿ], ಮತ್ತು ನಾವು ನಿಮಗೆ ಸಹಯತೆ ಮಾಡಲಿಕ್ಕೆ ಪ್ರಯತ್ನ ಮಾದುತೇವೆ!',
 	'wikiadoption-not-allowed' => 'ಕ್ಷಮಿಸಿ, ನಿಮಗೆ ಈಗ ಈ ವಿಕಿ ಅನ್ನು ದತ್ತು ಮಾಡಲಿಕ್ಕೆ ಆಗುದು ಇಲ್ಲ.',
@@ -1669,20 +1669,20 @@ $messages['kn'] = array(
 	'wikiadoption-notification' => '{{SITENAME}} ದತ್ತು ಸ್ವೀಕರಣಕ್ಕೆ  	ಯೋಗ್ಯ ಉನ್ತು. ಇಲ್ಲಿ ನೇತಾ ಆಗಲಿಕ್ಕೆ ನಿಮ್ಮಗೆ ರುಚಿ ಉಂಟಾ? ಶುರು ಮಾಡಲಿಕ್ಕೆ ಈ ವಿಕಿ ಅನ್ನು ದತ್ತು ಮಾದೊಕೊಲ್ಲಿ! $2',
 	'wikiadoption-mail-first-subject' => 'ನಾವು ನಿಮ್ಮನ್ನ ಸ್ವಲ್ಪ ಹೊತ್ತಲ್ಲಿ ನೋಡಲಿಲ್ಲ...',
 	'wikiadoption-mail-adoption-subject' => '#WIKINAME ದತ್ತು ಆಗಿ ಬಿತ್ತಿದೆ.',
-	'wikiadoption-mail-adoption-content' => 'ನಮಸ್ಕಾರ $1 
+	'wikiadoption-mail-adoption-content' => 'ನಮಸ್ಕಾರ $1
 
-#WIKINAME ದತ್ತು ಆಗಿ ಹೊಗಿದೆ.    ಸದ್ಯದ್ದು ನೆತಗಳು ೬೦ ದಿಣ್ಣ ಅಥವಾ ಜಾಸ್ತಿ ಸಕ್ರಿಯ ಅಲ್ಲ ಆದಮೇಲೆ ವಿಕಿಗಳು ದತ್ತು ಇಗೆ ಅರ್ಹ ಆಗುತದೆ.     
+#WIKINAME ದತ್ತು ಆಗಿ ಹೊಗಿದೆ.    ಸದ್ಯದ್ದು ನೆತಗಳು ೬೦ ದಿಣ್ಣ ಅಥವಾ ಜಾಸ್ತಿ ಸಕ್ರಿಯ ಅಲ್ಲ ಆದಮೇಲೆ ವಿಕಿಗಳು ದತ್ತು ಇಗೆ ಅರ್ಹ ಆಗುತದೆ.
 
-#WIKINAME ಅನ್ನು ದತ್ತು ಮಾಡಿದ ಸದಸ್ಯನಿಗೆ ಅಡ್ಮಿನಿಸ್ಟ್ರೇಟರ್ ಮತ್ತು ಬುರೆಔಚ್ರತ್ ಸ್ಟೇಟಸ್ ಸಿಕ್ಕಿದೆ.    ಚಿಂತೆ ಮಾಡಬೇಡಿ, ನೀವು ಸಹ  ಅಡ್ಮಿನಿಸ್ಟ್ರೇಟರ್ ಇರುತೀರಿ, ಮತ್ತು ಬೇಕಿದ್ದಾಗ ವಾಪುಸ್ ಬಂದು ಪುನಃ ಕೊಡುಗೆ  ಶುರು ಮಾಡ ಬಹುದು.   
+#WIKINAME ಅನ್ನು ದತ್ತು ಮಾಡಿದ ಸದಸ್ಯನಿಗೆ ಅಡ್ಮಿನಿಸ್ಟ್ರೇಟರ್ ಮತ್ತು ಬುರೆಔಚ್ರತ್ ಸ್ಟೇಟಸ್ ಸಿಕ್ಕಿದೆ.    ಚಿಂತೆ ಮಾಡಬೇಡಿ, ನೀವು ಸಹ  ಅಡ್ಮಿನಿಸ್ಟ್ರೇಟರ್ ಇರುತೀರಿ, ಮತ್ತು ಬೇಕಿದ್ದಾಗ ವಾಪುಸ್ ಬಂದು ಪುನಃ ಕೊಡುಗೆ  ಶುರು ಮಾಡ ಬಹುದು.
 
-ವಿಕಿಯ ಸಂಘ  
+ವಿಕಿಯ ಸಂಘ
 
 ಈ ಪಟ್ಟಿಯಿಗೆ ಬದಲಾವನಿಗಳಿಂದ ನೀವು ಇಲ್ಲಿ ಅನ್ಸಬ್ಸ್ಕ್ರೈಬ್ ಮಾಡ ಬಹುದು:   $3',
-	'wikiadoption-mail-adoption-content-HTML' => 'ನಮಸ್ಕಾರ $1 ,<br /><br /> 
+	'wikiadoption-mail-adoption-content-HTML' => 'ನಮಸ್ಕಾರ $1 ,<br /><br />
 
-#WIKINAME ದತ್ತು ಆಗಿ ಹೊಗಿದೆ.    ಸದ್ಯದ್ದು ನೆತಗಳು ೬೦ ದಿಣ್ಣ ಅಥವಾ ಜಾಸ್ತಿ ಸಕ್ರಿಯ ಅಲ್ಲ ಆದಮೇಲೆ ವಿಕಿಗಳು ದತ್ತು ಇಗೆ ಅರ್ಹ ಆಗುತದೆ.     <br /><br /> 
+#WIKINAME ದತ್ತು ಆಗಿ ಹೊಗಿದೆ.    ಸದ್ಯದ್ದು ನೆತಗಳು ೬೦ ದಿಣ್ಣ ಅಥವಾ ಜಾಸ್ತಿ ಸಕ್ರಿಯ ಅಲ್ಲ ಆದಮೇಲೆ ವಿಕಿಗಳು ದತ್ತು ಇಗೆ ಅರ್ಹ ಆಗುತದೆ.     <br /><br />
 
-#WIKINAME ಅನ್ನು ದತ್ತು ಮಾಡಿದ ಸದಸ್ಯನಿಗೆ ಅಡ್ಮಿನಿಸ್ಟ್ರೇಟರ್ ಮತ್ತು ಬುರೆಔಚ್ರತ್ ಸ್ಟೇಟಸ್ ಸಿಕ್ಕಿದೆ.    ಚಿಂತೆ ಮಾಡಬೇಡಿ, ನೀವು ಸಹ  ಅಡ್ಮಿನಿಸ್ಟ್ರೇಟರ್ ಇರುತೀರಿ, ಮತ್ತು ಬೇಕಿದ್ದಾಗ ವಾಪುಸ್ ಬಂದು ಪುನಃ ಕೊಡುಗೆ  ಶುರು ಮಾಡ ಬಹುದು.   <br /><br /> 
+#WIKINAME ಅನ್ನು ದತ್ತು ಮಾಡಿದ ಸದಸ್ಯನಿಗೆ ಅಡ್ಮಿನಿಸ್ಟ್ರೇಟರ್ ಮತ್ತು ಬುರೆಔಚ್ರತ್ ಸ್ಟೇಟಸ್ ಸಿಕ್ಕಿದೆ.    ಚಿಂತೆ ಮಾಡಬೇಡಿ, ನೀವು ಸಹ  ಅಡ್ಮಿನಿಸ್ಟ್ರೇಟರ್ ಇರುತೀರಿ, ಮತ್ತು ಬೇಕಿದ್ದಾಗ ವಾಪುಸ್ ಬಂದು ಪುನಃ ಕೊಡುಗೆ  ಶುರು ಮಾಡ ಬಹುದು.   <br /><br />
 
 ವಿಕಿಯ ಸಂಘ  <br /><br />
 
@@ -1691,14 +1691,14 @@ $messages['kn'] = array(
 	'tog-adoptionmails-v2' => '... ಒಂದು ಪಕ್ಷ ಈ ವಿಕಿ ಬೇರೆ ಅವರಿಗೆ ದತ್ತು ಮಾಡಲಿಕ್ಕೆ ಲಭ್ಯವಿರುವ ಆದರೆ',
 	'wikiadoption-pref-label' => 'ಈ ಆದ್ಯತೆಗಳನ್ನು ಬದಲೈಸುದರಿಂದ ಬರಿ $1 ಇಂದ ಇಮೇಲ್ ಗಳು ಬರುದು ಮುಗಿತದೆ.',
 	'wikiadoption-welcome-header' => 'ಅಭಿನಂದನೆಗಳು! ನೀವು {{SITENAME}} ಅನ್ನು ದತ್ತು ಮಾಡಿಕ್ನೋದುದಿರಿ!',
-	'wikiadoption-welcome-body' => 'ನೀವು ಈಗ ಈ ವಿಕಿ ಅಲ್ಲಿ ಒಂದು ಬುರೆಔಚ್ರತ್ ಆಗಿದ್ದಿರಿ.  ನಿಮ್ಮ ಈ ಹೊಸ ಅಂತಸ್ತು ಒಟ್ಟಿಗೆ  ನಿಮಗೆ {{SITENAME}} ಅನ್ನು ಪ್ರಭಂಧನ ಮಾಡಲಿಕ್ಕೆ ಎಲ್ಲ ಉಪಕಾರನೆಗಳು ಉನ್ತು.     
-<br /><br /> 
-{{SITENAME}}ಅನ್ನು ಬೆಳಿತ ಇರವಾಗೆ ನೋಡುಕೊಳ್ಲಿಕ್ಕೆ ನಿಮಗೆ ಎಲ್ಲಕಿಂತ  ಪ್ರಮುಖ ವಿಷಯ ಮಾಡ ಬಹುದು; ನಿಮ್ಮ ಸಂಪಾದನೆ ವನ್ನು ಮುಂದುವರಿಸುದು.    
-<br /><br /> 
-ಒಂದು ವಿಕಿ ಅಲ್ಲಿ ಒಂದು ಸಕ್ರಿಯ ನೇತಾ ಇರಲ್ಲಿಲ್ಲಿದರೆ ಅದು ದತ್ತು ಇಗೆ ಮೇಲೆ ಇತ್ತು ಹೊಗುತದೆ.     ಹಾಗಾದ ಕಾರಣ ಅದನ್ನು ಪರಿಶೀಲಿಸಿತ ಇರಿ.  
-<br /><br />  
-ಸಹಾಯತ ಮಾಡುವಂತ ಉಪಕರಣಗಳು:    
-<br /><br /> 
+	'wikiadoption-welcome-body' => 'ನೀವು ಈಗ ಈ ವಿಕಿ ಅಲ್ಲಿ ಒಂದು ಬುರೆಔಚ್ರತ್ ಆಗಿದ್ದಿರಿ.  ನಿಮ್ಮ ಈ ಹೊಸ ಅಂತಸ್ತು ಒಟ್ಟಿಗೆ  ನಿಮಗೆ {{SITENAME}} ಅನ್ನು ಪ್ರಭಂಧನ ಮಾಡಲಿಕ್ಕೆ ಎಲ್ಲ ಉಪಕಾರನೆಗಳು ಉನ್ತು.
+<br /><br />
+{{SITENAME}}ಅನ್ನು ಬೆಳಿತ ಇರವಾಗೆ ನೋಡುಕೊಳ್ಲಿಕ್ಕೆ ನಿಮಗೆ ಎಲ್ಲಕಿಂತ  ಪ್ರಮುಖ ವಿಷಯ ಮಾಡ ಬಹುದು; ನಿಮ್ಮ ಸಂಪಾದನೆ ವನ್ನು ಮುಂದುವರಿಸುದು.
+<br /><br />
+ಒಂದು ವಿಕಿ ಅಲ್ಲಿ ಒಂದು ಸಕ್ರಿಯ ನೇತಾ ಇರಲ್ಲಿಲ್ಲಿದರೆ ಅದು ದತ್ತು ಇಗೆ ಮೇಲೆ ಇತ್ತು ಹೊಗುತದೆ.     ಹಾಗಾದ ಕಾರಣ ಅದನ್ನು ಪರಿಶೀಲಿಸಿತ ಇರಿ.
+<br /><br />
+ಸಹಾಯತ ಮಾಡುವಂತ ಉಪಕರಣಗಳು:
+<br /><br />
 [[Special:ThemeDesigner|ThemeDesigner]]
 <br />
 [[Special:LayoutBuilder|Page Layout Builder]]

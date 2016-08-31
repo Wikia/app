@@ -169,11 +169,6 @@ www.wikia.com<br /><hr />
 <li>To change your preferences or password, go to: <a href="http://community.wikia.com/wiki/Special:Preferences">User Preferences</a>.</li>
 <li>This password reminder was requested from the following address: $1.</li>
 </ul></p>',
-	'reconfirmemail_body-HTML' => '<p>Hello $2,<br /><br />
-Thank you for updating the e-mail address for your Wikia account. Please confirm this is the correct e-mail address by <a href="$3">clicking here</a>.<br /><br /><br />
-We look forward to seeing you on Wikia!<br /><br />
-The Wikia Community Team<br />
-www.wikia.com<br /></p>',
 );
 
 $messages['nl-informal'] = array(

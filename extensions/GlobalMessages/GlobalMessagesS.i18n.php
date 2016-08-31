@@ -376,7 +376,7 @@ This is probably caused by a link to a blacklisted external site.',
         * [[Special:Contact|Contact]]
         * [http://www.wikia.com/mediakit Advertise]',
 	'scarytranscludebadinterwiki' => 'Non-transcludable interwiki provided.',
-	'shared-News_box' => '[http://www.wikia.com/Hiring Wikia is now hiring for several open positions]',
+	'shared-News_box' => '[http://www.wikia.com/Hiring Fandom is now hiring for several open positions]',
 );
 
 $messages['qqq'] = array(
@@ -22579,7 +22579,7 @@ $messages['liv'] = array(
 	'searchresults' => 'Vȯtšimiz rezultātõd',
 	'searchresults-title' => 'Vȯtšimiz "$1" rezultātõd',
 	'searchresulttext' => 'Mūdõ tieutõkst iļ {{SITENAME}} vȯtšimiz pierāst vaņtligid  [[{{MediaWiki:Helppage}}| opātõksõst]]',
-	'searchsubtitle' => "Vȯtšīztõ frāzõ '''[[:$1]]''' ( [[Special:Prefixindex/$1|amād sõnādõks ''$1'' irgõbõd lēḑõd]]{{int:pipe-separator}} 
+	'searchsubtitle' => "Vȯtšīztõ frāzõ '''[[:$1]]''' ( [[Special:Prefixindex/$1|amād sõnādõks ''$1'' irgõbõd lēḑõd]]{{int:pipe-separator}}
 [[Special:WhatLinksHere/$1|amād lēḑõd, mis sizzõl um siḑīmḑi kēratõks ''$1'' jūrõ]])",
 	'searchsubtitleinvalid' => "Tēg vȯtšīztõ frāzõ  '''$1'''",
 	'shown-title' => 'Nägţ līed iļ $1 {{PLURAL:$1|rezultāt|rezultātõ}}',
@@ -24766,7 +24766,7 @@ $messages['ml'] = array(
 '''ഇതു സേവ് ചെയ്തിട്ടില്ല!'''",
 	'sitejspreview' => "'''താങ്കൾ ഈ ജാവസ്ക്രിപ്റ്റ് കോഡിന്റെ പ്രിവ്യൂ കാണുക മാത്രമേ ചെയ്യുന്നുള്ളൂ എന്ന കാര്യം ഓർമ്മിക്കുക.'''
 '''ഇതു സേവ് ചെയ്തിട്ടില്ല!'''",
-	'session_fail_preview' => "'''ക്ഷമിക്കണം! സെഷൻ ഡാറ്റ നഷ്ടപ്പെട്ടതിനാൽ താങ്കളുടെ തിരുത്തലിന്റെ തുടർപ്രക്രിയ നടത്തുവാൻ സാധിച്ചില്ല.''' 
+	'session_fail_preview' => "'''ക്ഷമിക്കണം! സെഷൻ ഡാറ്റ നഷ്ടപ്പെട്ടതിനാൽ താങ്കളുടെ തിരുത്തലിന്റെ തുടർപ്രക്രിയ നടത്തുവാൻ സാധിച്ചില്ല.'''
 ദയവായി വീണ്ടും ശ്രമിക്കൂ.
 എന്നിട്ടും ശരിയാവുന്നില്ലെങ്കിൽ [[Special:UserLogout|ലോഗൗട്ട് ചെയ്തതിനു ശേഷം]] വീണ്ടും ലോഗിൻ ചെയ്തുനോക്കൂ.",
 	'session_fail_preview_html' => "'''ക്ഷമിക്കണം! സെഷൻ ഡാറ്റ നഷ്ടപ്പെട്ടതിനാൽ താങ്കളുടെ തിരുത്തലിന്റെ തുടർപ്രക്രിയ നടത്തുവാൻ സാധിച്ചില്ല.'''
@@ -29789,9 +29789,9 @@ $messages['pnb'] = array(
 	'sp-contributions-logs' => 'لاگز',
 	'sp-contributions-talk' => 'گل بات',
 	'sp-contributions-userrights' => 'ورتن والیاں دے حقاں دا سعاب کتاب',
-	'sp-contributions-blocked-notice' => 'ایس ورتن والے تے اجکل روک اے۔ 
+	'sp-contributions-blocked-notice' => 'ایس ورتن والے تے اجکل روک اے۔
 روکن لاگ چ ایدے بارے تھلے لکھیا اے۔',
-	'sp-contributions-blocked-notice-anon' => 'ایس آئی پی پتے تے اجکل روک اے۔ 
+	'sp-contributions-blocked-notice-anon' => 'ایس آئی پی پتے تے اجکل روک اے۔
 روکن لاگ چ ایدے بارے تھلے لکھیا اے۔',
 	'sp-contributions-search' => 'حصے پان آلیاں دی تلاش',
 	'sp-contributions-username' => 'آئی پی پتہ یا ورتن آلا ناں:',
@@ -36743,7 +36743,7 @@ $messages['tcy'] = array(
 	'searchrelated' => 'ಸ೦ಬ೦ಧ ಇತ್ತಿನ',
 	'searchall' => 'ಮಾತಾ',
 	'saveprefs' => 'ಒರಿಪಾಲೆ',
-	'searchresultshead' => ' 
+	'searchresultshead' => '
 ನಾಡ್’ಲೆ',
 	'show' => 'ತೊಜ್ಪಾವು',
 	'savefile' => 'ಕಡತನ್ ಒರಿಪಾಲೆ',

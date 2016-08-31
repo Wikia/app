@@ -23,7 +23,6 @@ __NOEDITSECTION__',
 *[http://www.community.wikia.com Community Central]
 *[http://community.wikia.com/wiki/Admin_Central:Main_Page Founders & Admins]
 *[http://www.wikia.com/Special:Contact Contact Support]$1
-*[http://www.wikia.com/Stars Wikia Stars]
 *[http://help.wikia.com/wiki/Help:Contents Help]
 __NOEDITSECTION__',
 	'wikiahome-footer-everywhere' => '===Fandom Everywhere===

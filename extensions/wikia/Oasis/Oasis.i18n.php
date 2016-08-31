@@ -119,8 +119,8 @@ $messages['en'] = array(
 	'oasis-related-video-by-5min' => 'by 5min Video',
 	'oasis-related-video-header' => 'Related Videos',
 	'oasis-editpage-readonlywarning' => '<h2>Sorry!</h2>
-<p>You cannot edit this page at the moment. We should be up and running again shortly. Here\'s what\'s happening:<br /><em>$1</em></p>
-<p>Please check <a href="http://twitter.com/wikia">Twitter</a> or <a href="http://facebook.com/wikia">Facebook</a> for more information.</p>',
+<p>You cannot edit this page at the moment. We should be up and running again shortly. Here's what's happening:<br /><em>$1</em></p>
+<p>Please check <a href="http://twitter.com/getfandom">Twitter</a> or <a href="http://facebook.com/getfandom">Facebook</a> for more information.</p>',
 	'oasis-upload-photos-title' => 'Upload a Photo to the Wiki',
 	'oasis-upload-photos-more-options' => 'More Options',
 	'oasis-upload-photos-fewer-options' => 'Fewer Options',
