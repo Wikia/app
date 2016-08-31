@@ -12,6 +12,8 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 			'explore-wikis' => 'http://fandom.wikia.com/explore',
 			'community-central' => 'http://community.wikia.com/wiki/Community_Central',
 			'fandom-university' => 'http://community.wikia.com/wiki/Wikia_University',
+			'user-signin' => 'https://www.wikia.com/signin',
+			'user-register' => 'https://www.wikia.com/register',
 		],
 		'en' => [ ]
 	];
@@ -157,8 +159,7 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 	private function getAnonUserData() {
 		return [
 			'header' => [
-				'type' => 'link-image',
-				'href' => '#',
+				'type' => 'line-image',
 				'image' => 'wds-icons-user',
 				'title' => [
 					'type' => 'translatable-text',
@@ -172,7 +173,7 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 						'type' => 'translatable-text',
 						'key' => 'global-navigation-userinfo-signin-title',
 					],
-					'href' => 'https://www.wikia.com/signin',
+					'href' => $this->getHref( 'user-signin' ),
 					'param-name' => 'redirect',
 				],
 				[
@@ -185,7 +186,7 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 						'type' => 'translatable-text',
 						'key' => 'global-navigation-userinfo-register-description',
 					],
-					'href' => 'https://www.wikia.com/register',
+					'href' => $this->getHref( 'user-register' ),
 					"param-name" => "redirect"
 				],
 			],
