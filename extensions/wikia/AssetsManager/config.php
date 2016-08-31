@@ -794,14 +794,6 @@ $config['wikiamobile_tables_js'] = [
 	],
 ];
 
-$config['wikiamobile_widget_iframe_unwrapper'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => 'wikiamobile',
-	'assets' => [
-		'//extensions/wikia/WikiaMobile/js/widget_iframe_unwrapper.js',
-	],
-];
-
 $config['mobile_base_ads_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => 'wikiamobile',
@@ -919,6 +911,13 @@ $config['mercury_ads_js'] = [
 		'//resources/wikia/modules/krux.js',
 		'//extensions/wikia/AdEngine/js/run/mercury.run.js',
 	],
+];
+
+$config['prebid_prod_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => [
+		'//extensions/wikia/AdEngine/resources/prebid/prebid.min.js'
+	]
 ];
 
 $config['interactivemaps_ads_js'] = [
@@ -2999,6 +2998,8 @@ $config['embeddable_discussions_js'] = [
 	'skin' => 'oasis',
 	'assets' => [
 		'//extensions/wikia/EmbeddableDiscussions/scripts/ext.embeddableDiscussions.js',
+		'//extensions/wikia/EmbeddableDiscussions/scripts/sharing.js',
+		'//extensions/wikia/EmbeddableDiscussions/scripts/templates.mustache.js',
 	],
 ];
 
