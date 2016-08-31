@@ -33,8 +33,8 @@ require(
 				this.unreadCount = parseInt(this.$notificationsCount.html(), 10);
 
 				this.$notificationsEntryPoint
-					.mouseenter(this.proxy(this.updateCounts))
-					.mouseenter(this.proxy(this.fetchForCurrentWiki));
+					.on('click', this.proxy(this.updateCounts))
+					.on('click', this.proxy(this.fetchForCurrentWiki));
 
 				this.$wallNotifications.add($('#pt-wall-notifications'))
 					.on('click', '.notifications-markasread', this.markAllAsReadAllWikis.bind(this));
