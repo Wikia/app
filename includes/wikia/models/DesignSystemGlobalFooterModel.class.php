@@ -13,10 +13,6 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 		$this->lang = $lang;
 	}
 
-	public function setHrefs( $hrefs ) {
-		$this->hrefs = $hrefs;
-	}
-
 	public function getData() {
 		$data = [
 			'company_overview' => [
@@ -537,6 +533,6 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 	}
 
 	private function getHref( $hrefKey ) {
-		return DesignSystemSharedLinks::getHref( $hrefKey, $this->lang );
+		return DesignSystemSharedLinks::getInstance()->getHref( $hrefKey, $this->lang );
 	}
 }

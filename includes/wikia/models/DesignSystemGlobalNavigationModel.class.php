@@ -79,7 +79,7 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 	}
 
 	private function getHref( $hrefKey ) {
-		return DesignSystemSharedLinks::getHref( $hrefKey, $this->lang );
+		return DesignSystemSharedLinks::getInstance()->getHref( $hrefKey, $this->lang );
 	}
 
 	private function getAnonUserData() {

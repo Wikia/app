@@ -2,16 +2,34 @@
 
 class DesignSystemSharedLinks {
 
+	/** @var DesignSystemSharedLinks */
+	private static $instance;
+
+	private function __construct() {
+	}
+
+	public static function getInstance() {
+		if ( !isset( static::$instance ) ) {
+			static::$instance = new DesignSystemSharedLinks();
+		}
+		return static::$instance;
+	}
+
+	public function setHrefs( $hrefs ) {
+		$this->hrefs = $hrefs;
+		return $this;
+	}
+
 	/**
 	 * @param $name string key for href
 	 * @param $lang string two letter language code
 	 * @return string full URL, in case of lang specific URL missing, default one is returned
 	 */
-	public static function getHref( $name, $lang ) {
-		return static::$hrefs[$lang][$name] ?? static::$hrefs['default'][$name];
+	public function getHref( $name, $lang ) {
+		return $this->hrefs[ $lang ][ $name ] ?? $this->hrefs[ 'default' ][ $name ];
 	}
 
-	private static $hrefs = [
+	private $hrefs = [
 		'default' => [
 			'fan-communities' => 'http://fandom.wikia.com/explore',
 			'about' => 'http://www.wikia.com/about',
