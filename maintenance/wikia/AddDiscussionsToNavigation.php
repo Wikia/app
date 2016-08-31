@@ -20,7 +20,7 @@ class AddDiscussionsToNavigation extends Maintenance
 	const NAVIGATION_ELEMENT = '**Special:DiscussionsNavigation|Discussions';
 	const FORUM_NAVIGATION_ELEMENT = '**Special:Forum|Forum';
 	const REASON = 'SOC-2816 add Discussion navigation to the navigation';
-	const SPLIT = '\r\n';
+	const SPLIT = "\r\n";
 
 	private $dryRun = false;
 	private $verbose = false;
@@ -38,7 +38,7 @@ class AddDiscussionsToNavigation extends Maintenance
 	public function execute() {
 		$this->dryRun = $this->hasOption( 'dry-run' );
 		$this->verbose = $this->hasOption( 'verbose' );
-		$this->rollback = $this->hasOption( 'verbose' );
+		$this->rollback = $this->hasOption( 'rollback' );
 
 
 		$total = 0;
@@ -64,6 +64,7 @@ class AddDiscussionsToNavigation extends Maintenance
 
 		$sql->runLoop( $db, function( &$siteIds, $row ) {
 			$siteIds[] = $row->cv_city_id;
+			$this->debug('Added $row->cv_city_id');
 		});
 
 		return $siteIds;
@@ -97,22 +98,22 @@ class AddDiscussionsToNavigation extends Maintenance
 		$this->debug( "Previous value:\n\n" . $previousValue );
 		$array = explode( self::SPLIT, $previousValue );
 		if ( !$this->rollback ) {
-			$array = $this->insertAfterForumOrAtTheEnd( $array );
+			$array = $this->insertBeforeForumOrAtTheEnd( $array );
 		} else {
 			$array = $this->removeNavigationElement( $array );
 		}
 		$newValue = join( self::SPLIT, $array );
-		$this->debug( "New value\n\n:" . $previousValue );
+		$this->debug( "New value\n\n:" . $newValue );
 		return $newValue;
 	}
 
-	function insertAfterForumOrAtTheEnd( &$array ) {
+	function insertBeforeForumOrAtTheEnd(&$array ) {
 		$pos = array_search( self::FORUM_NAVIGATION_ELEMENT, $array );
 		if ( $pos === false ) {
-			$pos = count( $array );
-			$this->debug( "Forum not found - appending at the end." );
+			$pos = count( $array ) - 1;
+			$this->debug( "Forum not found - appending at the end.\n" );
 		} else {
-			$this->debug( "Found forum at $pos position. ");
+			$this->debug( "Found forum at $pos position.\n");
 		}
 		return array_merge(
 			array_slice( $array, 0, $pos ),
