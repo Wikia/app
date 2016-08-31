@@ -85,9 +85,9 @@ class AddDiscussionsToNavigation extends Maintenance
 		$this->debug( "Previous value " . $previousValue );
 		$array = explode( self::SPLIT, $previousValue );
 		if ( !$this->rollback ) {
-			$this->insertAfterForumOrAtTheEnd( $array );
+			$array = $this->insertAfterForumOrAtTheEnd( $array );
 		} else {
-			$this->removeNavigationElement( $array );
+			$array = $this->removeNavigationElement( $array );
 		}
 		$newValue = join( self::SPLIT, $array );
 		$this->debug( "New value " . $previousValue );
@@ -102,7 +102,7 @@ class AddDiscussionsToNavigation extends Maintenance
 		} else {
 			$this->debug( "Found forum at $pos position. ");
 		}
-		$array = array_merge(
+		return array_merge(
 			array_slice( $array, 0, $pos ),
 			self::NAVIGATION_ELEMENT,
 			array_slice( $array, $pos )
@@ -116,7 +116,7 @@ class AddDiscussionsToNavigation extends Maintenance
 			return;
 		}
 		$this->debug( "Discussion forum at $pos position." );
-		array_splice( $array, $pos, 1 );
+		return array_splice( $array, $pos, 1 );
 	}
 
 	/**
