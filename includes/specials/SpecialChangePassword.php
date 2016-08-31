@@ -262,7 +262,7 @@ class SpecialChangePassword extends UnlistedSpecialPage {
 
 		} catch( PasswordError $e ) {
 			wfRunHooks( 'PrefsPasswordAudit', array( $user, $newpass, 'error' ) );
-			throw new PasswordError($e->getMessage());
+			throw new PasswordError( $e->getMessage() );
 		}
 
 		$user->setCookies();

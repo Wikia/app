@@ -2174,7 +2174,7 @@ class User {
 		}
 
 		$this->setInternalPassword( $str );
-		wfRunHooks('UserSetPassword', [$this->getId(), $forceLogout]);
+		wfRunHooks( 'UserSetPassword', [ $this->getId(), $forceLogout ] );
 
 		return true;
 	}
