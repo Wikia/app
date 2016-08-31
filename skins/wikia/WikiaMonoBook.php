@@ -5,7 +5,7 @@
  * Translated from gwicke's previous TAL template version to remove
  * dependency on PHPTAL.
  *
- * @author Maciej Brencz <macbre@Fandom.com>
+ * @author Maciej Brencz <macbre@wikia.com>
  * @addtogroup Skins
  */
 
@@ -47,10 +47,10 @@ abstract class WikiaSkinMonoBook extends WikiaSkin {
 	function setupSkinUserCss( OutputPage $out ) {
 		parent::setupSkinUserCss( $out );
 
-		$out->addModuleStyles( 'Fandom.monobook' );
+		$out->addModuleStyles( 'wikia.monobook' );
 
 		// add file with fixes for IE8
-		$out->addStyle( 'Fandom/css/IE80Fixes.css', 'screen', 'IE 8' );
+		$out->addStyle( 'wikia/css/IE80Fixes.css', 'screen', 'IE 8' );
 	}
 
 	public function addWikiaVars( &$obj, BaseTemplate &$tpl ) {
@@ -58,16 +58,16 @@ abstract class WikiaSkinMonoBook extends WikiaSkin {
 		$this->setupAds( $tpl );
 
 		// setup footer links
-		$tpl->set( 'footerlinks', $this->msg( 'Shared-Monobook-footer-Fandom-links' )->parse() );
+		$tpl->set( 'footerlinks', $this->msg( 'Shared-Monobook-footer-wikia-links' )->parse() );
 
 		# rt33045
-		$tpl->set( 'contact', '<a href="' . $this->makeUrl( 'Special:Contact' ) . '" title="Contact Fandom">Contact Fandom</a>' );
+		$tpl->set( 'contact', '<a href="' . $this->makeUrl( 'Special:Contact' ) . '" title="Contact Wikia">Contact Wikia</a>' );
 
 		# BAC-1036, CE-278
 		/* Replace Wikia logo path
 		   This functionality is for finding proper path of Wiki.png instead of const one from wgLogo
-		   Fandom logo should be stored under File:Wiki.png on current Fandom. If wfFindFile doesn't find it
-		   on current Fandom it tires to fallback to starter.Fandom.com where the default one is stored
+		   wikia logo should be stored under File:Wiki.png on current wikia. If wfFindFile doesn't find it
+		   on current wikia it tires to fallback to starter.wikia.com where the default one is stored
 		*/
 		$logoPage = Title::newFromText( 'Wiki.png', NS_FILE );
 		$logoFile = wfFindFile( $logoPage );
@@ -82,7 +82,7 @@ abstract class WikiaSkinMonoBook extends WikiaSkin {
 
 	public function addWikiaCss( &$out ) {
 		global $wgStylePath, $wgStyleVersion;
-		$out = '@import "' . $wgStylePath . '/Fandom/css/Monobook.css?' . $wgStyleVersion . '";' . $out;
+		$out = '@import "' . $wgStylePath . '/wikia/css/Monobook.css?' . $wgStyleVersion . '";' . $out;
 		return true;
 	}
 
@@ -101,8 +101,8 @@ abstract class WikiaSkinMonoBook extends WikiaSkin {
 	// load skin-specific JS files from MW (wikibits, user and site JS) - BugId:960
 	public function onSkinGetHeadScripts( &$scripts ) {
 		global $wgResourceBasePath;
-		$scripts .= "\n<!--[if lt IE 8]><script src=\"" . $wgResourceBasePath . "/resources/Fandom/libraries/json2/json2.js\"></script><![endif]-->";
-		$scripts .= "\n<!--[if lt IE 9]><script src=\"" . $wgResourceBasePath . "/resources/Fandom/libraries/html5/html5.min.js\"></script><![endif]-->";
+		$scripts .= "\n<!--[if lt IE 8]><script src=\"" . $wgResourceBasePath . "/resources/wikia/libraries/json2/json2.js\"></script><![endif]-->";
+		$scripts .= "\n<!--[if lt IE 9]><script src=\"" . $wgResourceBasePath . "/resources/wikia/libraries/html5/html5.min.js\"></script><![endif]-->";
 
 		$packages = [ 'monobook_js' ];
 
@@ -138,10 +138,10 @@ abstract class WikiaSkinMonoBook extends WikiaSkin {
 	/**
 	 * Return Wikia specific toolbox
 	 */
-	function FandomBox() {
+	function wikiaBox() {
 		$wikicitiesNavUrls = $this->buildWikicitiesNavUrls();
 		$toolboxTitle = $this->msg( 'wikicities-nav' )->escaped();
-		$FandomMessages = $this->getWikiaMessages();
+		$wikiaMessages = $this->getWikiaMessages();
 
 		if ( !empty( $wikicitiesNavUrls ) ) {
 			foreach ( $wikicitiesNavUrls as $navlink ) {
@@ -156,13 +156,13 @@ abstract class WikiaSkinMonoBook extends WikiaSkin {
 		} else {
 			$toolbox = '';
 		}
-		$staffBlogLinkText = $this->msg( 'Fandom_messages' )->escaped();
+		$staffBlogLinkText = $this->msg( 'wikia_messages' )->escaped();
 		$html = <<<HTML
 	<div class="portlet" id="p-wikicities-nav">
 		<h5>$toolboxTitle</h5>
 		<div class="pBody">$toolbox
 			<ul>
-				<li><a href="http://community.Fandom.com/wiki/Blog:Wikia_Staff_Blog">$staffBlogLinkText:</a><br />$FandomMessages</li>
+				<li><a href="http://community.wikia.com/wiki/Blog:Wikia_Staff_Blog">$staffBlogLinkText:</a><br />$wikiaMessages</li>
 			</ul>
 		</div>
 	</div>
@@ -196,7 +196,7 @@ HTML;
 
 		$cacheWikicitiesNavUrls = $this->getLanguage()->getCode() == $wgContLang->getCode();
 		if ( $cacheWikicitiesNavUrls ) {
-			$memcKey = wfMemcKey( 'FandomNavUrls', $this->getLanguage()->getCode() );
+			$memcKey = wfMemcKey( 'wikiaNavUrls', $this->getLanguage()->getCode() );
 			$result = $wgMemc->get( $memcKey );
 		}
 
