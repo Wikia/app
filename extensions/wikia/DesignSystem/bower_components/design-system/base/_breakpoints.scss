@@ -1,6 +1,6 @@
-$breakpoint-mobile: 320px;
 $breakpoint-tablet: 768px;
-$breakpoint-desktop: 1064px;
+$breakpoint-desktop: 1024px;
+$breakpoint-desktop-l: 1084px;
 $breakpoint-desktop-xl: 1596px;
 
 $screen: 'only screen';
@@ -16,6 +16,9 @@ $breakpoint-tablet-down: "#{$screen} and (max-width:#{$breakpoint-desktop - 1})"
 $breakpoint-tablet-only: "#{$screen} and (min-width:#{$breakpoint-tablet}) and (max-width:#{$breakpoint-desktop - 1})";
 
 $breakpoint-desktop-up: "#{$screen} and (min-width:#{$breakpoint-desktop})";
-$breakpoint-desktop-only: "#{$screen} and (min-width:#{$breakpoint-desktop}) and (max-width:#{$breakpoint-desktop-xl - 1})";
+$breakpoint-desktop-only: "#{$screen} and (min-width:#{$breakpoint-desktop}) and (max-width:#{$breakpoint-desktop-l - 1})";
+
+$breakpoint-desktop-l-up: "#{$screen} and (min-width:#{$breakpoint-desktop-l})";
+$breakpoint-desktop-l-only: "#{$screen} and (min-width:#{$breakpoint-desktop-l}) and (max-width:#{$breakpoint-desktop-xl - 1})";
 
 $breakpoint-desktop-xl-up: "#{$screen} and (min-width:#{$breakpoint-desktop-xl})";
