@@ -1,6 +1,8 @@
 <div class="wds-global-navigation__notifications-menu wds-dropdown wds-is-active notifications-entry-point">
 	<div class="wds-dropdown-toggle wds-global-navigation__dropdown-toggle">
-		<div class="wds-global-navigation__notifications-menu-counter notifications-count"></div>
+		<div class="bubbles">
+			<div class="wds-global-navigation__notifications-menu-counter notifications-count"></div>
+		</div>
 		<?= DesignSystemHelper::getSvg(
 			'wds-icons-bell',
 			'wds-icon wds-icon-small'
