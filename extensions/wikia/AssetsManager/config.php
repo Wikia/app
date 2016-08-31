@@ -2335,6 +2335,9 @@ $config['wall_notifications_global_navigation_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'oasis' ],
 	'assets' => [
+		'#group_delayed_hover_js',
+		'//skins/shared/scripts/transparent-out.js',
+		'//extensions/wikia/GlobalNavigation/scripts/GlobalNavigationDropdownsHandler.js',
 		'//extensions/wikia/GlobalNavigation/scripts/GlobalNavigationNotifications.js',
 	],
 ];

@@ -10,11 +10,6 @@
 	) ?>
 	<div id="notifications" class="wds-dropdown-content wds-global-navigation__dropdown notifications-container">
 		<ul id="GlobalNavigationWallNotifications" class="WallNotifications global-nav-dropdown">
-			<li id="notificationsContainer">
-				<ul>
-					<li class="notification empty"><?= wfMessage('wall-notifications-loading')->text() ?></li>
-				</ul>
-			</li>
 		</ul>
 	</div>
 </div>
