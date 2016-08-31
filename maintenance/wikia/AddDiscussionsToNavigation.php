@@ -56,17 +56,15 @@ class AddDiscussionsToNavigation extends Maintenance
 
 	private function getAllSiteIds() {
 		$id = WikiFactory::getVarIdByName( self::VAR_NAME );
-
-		$siteIds = [];
 		$db = WikiFactory::db( DB_MASTER );
 		$sql = ( new WikiaSQL() )
 			->SELECT( 'cv_city_id' )
 			->FROM( 'city_variables' )
 			->WHERE( 'cv_variable_id' )->EQUAL_TO( $id );
 
-		$sql->runLoop( $db, function( &$siteIds, $row ) {
+		$siteIds = $sql->runLoop( $db, function( &$siteIds, $row ) {
 			$siteIds[] = $row->cv_city_id;
-			$this->debug('Added $row->cv_city_id');
+			$this->debug("Added {$row->cv_city_id}");
 		});
 
 		return $siteIds;
@@ -84,14 +82,13 @@ class AddDiscussionsToNavigation extends Maintenance
 			die("Error: " . self::VAR_NAME . " is not a text and the script cannot append to it anything.\n");
 		}
 
-		echo "Variable: " . self::VAR_NAME . " (Id: $varData[cv_id])\n";
+		$this->debug("Variable: " . self::VAR_NAME . " (Id: $varData[cv_id])\n");
 		$this->debug( "Variable data: " . json_encode( $varData ) . "\n");
-
 		$value = $this->createNewValue( unserialize( $varData[ 'cv_value' ] ) );
 
 		$result = false;
 		if ( !$this->dryRun ) {
-//			$this->setVariable( $siteId, $value, self::REASON );
+			$this->setVariable( $siteId, $value );
 		}
 		return $result;
 	}
@@ -143,6 +140,10 @@ class AddDiscussionsToNavigation extends Maintenance
 		if ( $this->verbose ) {
 			echo $msg;
 		}
+	}
+
+	private function setVariable( $siteId, $value ) {
+		WikiFactory::setVarByName(self::VAR_NAME, $siteId, $value, self::REASON);
 	}
 
 }
