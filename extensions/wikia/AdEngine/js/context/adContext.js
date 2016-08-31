@@ -76,23 +76,12 @@ define('ext.wikia.adEngine.adContext', [
 			}
 		}
 
-		// SourcePoint disaster recovery
-		if (w.wikiaSourcePointStatus === false) {
-			context.opts.sourcePointRecovery = false;
-		}
-
 		// SourcePoint detection integration
 		if (!noExternals && context.opts.sourcePointDetectionUrl) {
 			context.opts.sourcePointDetection = (context.targeting.skin === 'oasis' &&
 				geo.isProperGeo(instantGlobals.wgAdDriverSourcePointDetectionCountries));
 			context.opts.sourcePointDetectionMobile = (context.targeting.skin === 'mercury' &&
 				geo.isProperGeo(instantGlobals.wgAdDriverSourcePointDetectionMobileCountries));
-		}
-
-		// Recoverable ads message
-		if (context.opts.sourcePointDetection && !context.opts.sourcePointRecovery && context.opts.showAds) {
-			context.opts.recoveredAdsMessage = isPageType('article') &&
-				geo.isProperGeo(instantGlobals.wgAdDriverAdsRecoveryMessageCountries);
 		}
 
 		// Google Consumer Surveys

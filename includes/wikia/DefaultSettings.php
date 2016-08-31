@@ -1179,6 +1179,7 @@ $wgPhalanxService = true;
 $wgPhalanxBaseUrl = "phalanx.service.consul:4666";
 $wgPhalanxServiceOptions = [
 	'noProxy' => true, # PLATFORM-1744: do not use the default HTTP proxy (defined in $wgHTTPProxy) for Phalanx requests
+	'timeout' => 1 # [sec] PLATFORM-2385 / SUS-890: prevent Phalanx slowness from affecting the site performance
 ];
 
 /**
@@ -1862,13 +1863,6 @@ $wgPreferenceServiceWrite = true;
  * Enables FliteTag extension which makes it possible to use <flite> tag within an article content
  */
 $wgEnableFliteTagExt = false;
-
-/**
- * @name $wgAdDriverAdsRecoveryMessageCountries
- * Enables module which displays a simple message to users with ad blockers
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverAdsRecoveryMessageCountries = null;
 
 /**
  * @name $wgARecoveryEngineCustomLog
