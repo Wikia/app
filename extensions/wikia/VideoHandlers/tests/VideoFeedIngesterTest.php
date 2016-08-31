@@ -54,6 +54,8 @@ class VideoFeedIngesterTest extends WikiaBaseTest {
 		$this->mockMessage( 'videohandler-description', 'Description' );
 		$this->mockMessage( 'videohandler-category', 'Videos' );
 
+		var_dump( __METHOD__, wfMessage('foo-bar'), wfMessage('videohandler-description'), wfMessage( 'videohandler-category'));
+
 		$feedIngester = new IgnFeedIngester();
 		$feedIngester->setVideoData( $videoData );
 		$feedIngester->setMetaData();
