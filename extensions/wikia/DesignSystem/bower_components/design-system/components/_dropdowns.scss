@@ -39,6 +39,7 @@ $dropdown-content-z-index: 1;
 	}
 
 	&.wds-is-right-aligned {
+		left: auto;
 		right: 0;
 	}
 }

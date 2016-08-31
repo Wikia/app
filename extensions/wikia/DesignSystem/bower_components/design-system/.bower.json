@@ -9,15 +9,12 @@
     "**/.*",
     "gulpfile.js"
   ],
-  "dependencies": {
-    "flexboxgrid": "Wikia/flexboxgrid#v6.5.0"
-  },
   "homepage": "https://github.com/Wikia/design-system",
-  "_release": "da14084215",
+  "_release": "c872432eec",
   "_resolution": {
     "type": "branch",
     "branch": "XW-1690",
-    "commit": "da14084215fec7c2dcb63c42c74307280e5a5885"
+    "commit": "c872432eec217c0ad0ced381347991ad0de42cef"
   },
   "_source": "git://github.com/Wikia/design-system.git",
   "_target": "XW-1690",
