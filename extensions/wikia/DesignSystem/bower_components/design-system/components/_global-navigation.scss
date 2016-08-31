@@ -67,7 +67,13 @@ $notification-counter-size: 18px;
 		z-index: 1;
 	}
 
-	&__content-item {
+	&__logo,
+	&__link,
+	&__search,
+	&__account-menu,
+	&__user-menu,
+	&__notifications-menu,
+	&__start-a-wiki {
 		align-items: center;
 		background-color: $nav-background-color;
 		border-top: $border-top-width solid $color-slate-gray;
@@ -82,10 +88,10 @@ $notification-counter-size: 18px;
 		white-space: nowrap;
 	}
 
-	&__content-item-link,
-	&__content-item-account-menu,
-	&__content-item-user-menu,
-	&__content-item-notifications-menu {
+	&__link,
+	&__account-menu,
+	&__user-menu,
+	&__notifications-menu {
 		&:hover {
 			color: $color-link;
 		}
@@ -98,39 +104,31 @@ $notification-counter-size: 18px;
 		}
 	}
 
-	&__content-item-logo {
-		align-items: center;
-		background-color: $nav-background-color;
-		border-top: $border-top-width solid $color-dark-blue-gray;
-		color: $color-slate-gray;
-		display: flex;
+	&__logo {
 		font-size: 9px;
 		font-weight: 600;
-		justify-content: flex-end;
 		letter-spacing: .15px;
-		margin-top: -$border-top-width;
-		text-decoration: none;
 		text-transform: uppercase;
 	}
 
-	&__content-item-logo-fandom {
+	&__logo-fandom {
 		fill: $color-dark-blue-gray;
 		height: 24px;
 		padding-bottom: 4px;
 		width: 120px;
 	}
 
-	&__content-item-logo-powered-by {
+	&__logo-powered-by {
 		padding: 2px 3px 0 7px;
 	}
 
-	&__content-item-logo-wikia {
+	&__logo-wikia {
 		fill: $color-dark-blue;
 		height: 12px;
 		width: 36px;
 	}
 
-	&__content-item-link {
+	&__link {
 		flex: 1;
 
 		&.wds-is-games {
@@ -164,22 +162,18 @@ $notification-counter-size: 18px;
 		}
 	}
 
-	&__content-item-search {
-		align-items: center;
-		border-top: $border-top-width solid $color-slate-gray;
-		display: flex;
-		margin-top: -$border-top-width;
+	&__search {
 		min-width: 30px;
 		padding-left: 16px;
 	}
 
-	&__content-item-search-input-wrapper {
+	&__search-input-wrapper {
 		border: 0 solid $color-slate-gray;
 		display: flex;
 		flex: 1;
 	}
 
-	&__content-item-search-label {
+	&__search-label {
 		align-items: center;
 		background-color: $color-white;
 		display: flex;
@@ -187,12 +181,13 @@ $notification-counter-size: 18px;
 		z-index: 2;
 	}
 
-	&__content-item-search-input {
+	&__search-input {
 		border: 0;
 		color: $color-dark-gray;
 		display: none;
 		flex: 1;
 		font-size: $typescale-size-minus-1;
+		min-width: 0;
 		padding: 3px 4px;
 		width: 100%;
 
@@ -210,58 +205,58 @@ $notification-counter-size: 18px;
 		}
 	}
 
-	&__content-item-search-close {
+	&__search-close {
 		display: none;
 		padding: 3px;
 		z-index: 2;
 	}
 
-	&__content-item-search-close-icon {
+	&__search-close-icon {
 		color: $color-light-gray;
 		display: block;
 	}
 
-	&__content-item-search-submit {
+	&__search-submit {
 		display: none;
 		padding: 6px 9px;
 	}
 
-	&__content-item-search-submit-icon {
+	&__search-submit-icon {
 		display: block;
 		transform: rotate(180deg);
 	}
 
-	&__content-item-search-suggestions {
+	&__search-suggestions {
 		right: 0;
 		top: calc(100% + 1px);
 	}
 
-	&__content-item-account-menu {
+	&__account-menu {
 		min-width: 50px;
 	}
 
-	&__content-item-account-menu-caption {
+	&__account-menu-caption {
 		display: none;
 		margin-left: 5px;
 	}
 
-	&__content-item-account-menu-dropdown-caption {
+	&__account-menu-dropdown-caption {
 		font-size: $typescale-size-minus-2;
 		padding-bottom: 10px;
 		text-align: center;
 	}
 
-	&__content-item-user-menu {
+	&__user-menu {
 		width: 55px;
 	}
 
-	&__content-item-notifications-menu {
+	&__notifications-menu {
 		padding-right: 0;
 		position: relative;
 		width: 50px;
 	}
 
-	&__content-item-notifications-menu-counter {
+	&__notifications-menu-counter {
 		align-items: center;
 		background-color: $color-link;
 		border: 1px solid $color-white;
@@ -272,51 +267,51 @@ $notification-counter-size: 18px;
 		font-size: $typescale-size-minus-3;
 		height: $notification-counter-size;
 		justify-content: center;
-		left: 7px;
+		left: -11px;
 		min-width: $notification-counter-size;
 		padding: 0 4px;
 		position: absolute;
-		top: 7px;
+		top: -8px;
 	}
 
-	&__content-item-start-a-wiki .wds-button {
+	&__start-a-wiki .wds-button {
 		padding: 8px 10px;
 	}
 
-	&__content-item-start-a-wiki-icon {
+	&__start-a-wiki-icon {
 		@include square(14px);
 
 		display: none;
 	}
 
 	&.wds-search-is-always-visible .wds-global-navigation {
-		&__content-item-link {
-			flex: 0;
+		&__link {
+			flex: 0 1 auto;
 		}
 
-		&__content-item-search {
+		&__search {
 			flex: 1;
 		}
 
-		&__content-item-search-input {
+		&__search-input {
 			display: block;
 		}
 
-		&__content-item-search-input-wrapper {
+		&__search-input-wrapper {
 			border-bottom-width: 1px;
 		}
 	}
 
 	&.wds-search-is-active .wds-global-navigation {
-		&__content-item-link {
+		&__link {
 			display: none;
 		}
 
-		&__content-item-search {
+		&__search {
 			flex: 1;
 		}
 
-		&__content-item-search-input-wrapper {
+		&__search-input-wrapper {
 			border-bottom-width: 1px;
 			margin-right: 15px;
 
@@ -325,75 +320,56 @@ $notification-counter-size: 18px;
 			}
 		}
 
-		&__content-item-search-input::placeholder {
+		&__search-input::placeholder {
 			color: $color-light-gray;
 		}
 
-		&__content-item-search-input,
-		&__content-item-search-submit,
-		&__content-item-search-close {
+		&__search-input,
+		&__search-submit,
+		&__search-close {
 			display: block;
 		}
 	}
 
 	.wds-user-is-logged-in {
-		.wds-global-navigation__content-item-start-a-wiki-caption {
+		.wds-global-navigation__start-a-wiki-caption {
 			display: none;
 		}
 
-		.wds-global-navigation__content-item-start-a-wiki-icon {
+		.wds-global-navigation__start-a-wiki-icon {
 			display: block;
 		}
 	}
 
 	@media #{$breakpoint-desktop-up} {
-		&__content-item-search {
+		&__search {
 			flex: 2;
 			padding-left: 8px;
 		}
 
-		&__content-item-search-input-wrapper {
+		&__search-input-wrapper {
 			border-bottom: 1px solid $color-slate-gray;
 		}
 
-		&__content-item-search-input {
+		&__search-input {
 			display: block;
 		}
 
-		&__content-item-account-menu-caption,
-		&__content-item-start-a-wiki-caption {
+		&__account-menu-caption,
+		&__start-a-wiki-caption {
 			display: inline;
 		}
 
-		&__content-item-start-a-wiki-icon {
+		&__start-a-wiki-icon {
 			display: none;
 		}
 
-		&.wds-search-is-active .wds-global-navigation {
-			&__content-item-search-input-wrapper {
-				margin-right: 15px;
-			}
-
-			&__content-item-search-input::placeholder {
-				color: $color-light-gray;
-			}
-
-			&__content-item-search-submit,
-			&__content-item-search-close {
-				display: block;
-			}
-
-			&__content-item-link {
-				display: none;
-			}
-		}
-
 		.wds-user-is-logged-in {
-			.wds-global-navigation__content-item-start-a-wiki-caption {
+			.wds-global-navigation__start-a-wiki-caption {
 				display: inline;
 			}
 
-			.wds-global-navigation__content-item-start-a-wiki-icon {
+			.wds-global-navigation__start-a-wiki-icon {
 				display: none;
 			}
 		}

@@ -1,20 +1,20 @@
 <div class="wds-global-navigation">
 	<div class="wds-global-navigation__content-bar">
-		<a href="#" class="wds-global-navigation__content-item wds-global-navigation__content-item-logo">
+		<a href="#" class="wds-global-navigation__logo">
 			<?= DesignSystemHelper::getSvg(
 				'wds-company-logo-fandom',
-				'wds-global-navigation__content-item-logo-fandom'
+				'wds-global-navigation__logo-fandom'
 			) ?>
-			<span class="wds-global-navigation__content-item-logo-powered-by">powered by</span>
+			<span class="wds-global-navigation__logo-powered-by">powered by</span>
 			<?= DesignSystemHelper::getSvg(
 				'wds-company-logo-wikia',
-				'wds-global-navigation__content-item-logo-wikia'
+				'wds-global-navigation__logo-wikia'
 			) ?>
 		</a>
-		<a href="#" class="wds-global-navigation__content-item wds-global-navigation__content-item-link wds-is-games">Games</a>
-		<a href="#" class="wds-global-navigation__content-item wds-global-navigation__content-item-link wds-is-movies">Movies</a>
-		<a href="#" class="wds-global-navigation__content-item wds-global-navigation__content-item-link wds-is-tv">TV</a>
-		<div class="wds-global-navigation__content-item wds-global-navigation__content-item-link wds-dropdown">
+		<a href="#" class="wds-global-navigation__link wds-is-games">Games</a>
+		<a href="#" class="wds-global-navigation__link wds-is-movies">Movies</a>
+		<a href="#" class="wds-global-navigation__link wds-is-tv">TV</a>
+		<div class="wds-global-navigation__link wds-dropdown">
 			<div class="wds-dropdown-toggle wds-global-navigation__dropdown-toggle">
 				<span>Wikis</span>
 				<?= DesignSystemHelper::getSvg(
@@ -29,30 +29,30 @@
 				</ul>
 			</div>
 		</div>
-		<form class="wds-global-navigation__content-item wds-global-navigation__content-item-search">
-			<div class="wds-global-navigation__content-item-search-input-wrapper">
-				<label class="wds-global-navigation__content-item-search-label">
+		<form class="wds-global-navigation__search">
+			<div class="wds-global-navigation__search-input-wrapper">
+				<label class="wds-global-navigation__search-label">
 					<?= DesignSystemHelper::getSvg(
 						'wds-icons-magnifying-glass',
 						'wds-icon wds-icon-small'
 					) ?>
-					<input class="wds-global-navigation__content-item-search-input" name="search" placeholder="Search"/>
+					<input class="wds-global-navigation__search-input" name="search" placeholder="Search"/>
 				</label>
-				<button class="wds-button wds-is-text wds-global-navigation__content-item-search-close">
+				<button class="wds-button wds-is-text wds-global-navigation__search-close">
 					<?= DesignSystemHelper::getSvg(
 						'wds-icons-cross',
-						'wds-icon wds-icon-small wds-global-navigation__content-item-search-close-icon'
+						'wds-icon wds-icon-small wds-global-navigation__search-close-icon'
 					) ?>
 				</button>
 			</div>
-			<button class="wds-button wds-global-navigation__content-item-search-submit">
+			<button class="wds-button wds-global-navigation__search-submit">
 				<?= DesignSystemHelper::getSvg(
 					'wds-icons-arrow',
-					'wds-icon wds-icon-small wds-global-navigation__content-item-search-icon'
+					'wds-icon wds-icon-small wds-global-navigation__search-icon'
 				) ?>
 			</button>
 		</form>
-		<div class="wds-global-navigation__content-item wds-dropdown wds-global-navigation__user-menu">
+		<div class="wds-dropdown wds-global-navigation__user-menu">
 			<div class="wds-dropdown-toggle wds-global-navigation__dropdown-toggle">
 				<img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" class="wds-avatar wds-is-circle" alt="user name"/>
 				<?= DesignSystemHelper::getSvg(
@@ -71,12 +71,12 @@
 			</div>
 		</div>
 		<?= $app->renderView( 'DesignSystemGlobalNavigationWallNotificationsService', 'index' ); ?>
-		<div class="wds-global-navigation__content-item wds-global-navigation__content-item-start-a-wiki">
+		<div class="wds-global-navigation__start-a-wiki">
 			<a href="#" class="wds-button wds-is-squished wds-is-secondary">
-				<span class="wds-global-navigation__content-item-start-a-wiki-caption">Start a wiki</span>
+				<span class="wds-global-navigation__start-a-wiki-caption">Start a wiki</span>
 				<?= DesignSystemHelper::getSvg(
 					'wds-icons-plus',
-					'wds-global-navigation__content-item-start-a-wiki-icon wds-icon'
+					'wds-global-navigation__start-a-wiki-icon wds-icon'
 				) ?>
 			</a>
 		</div>
