@@ -368,7 +368,7 @@ require(
 		$(function () {
 			WallNotifications.init();
 
-			// TODO make it pretty
+			// TODO refactor when implementing XW-1927
 			$('#notificationsEntryPoint').on('click', function () {
 				WallNotifications.onNotificationsOpen();
 				$(this).addClass('wds-is-active');
