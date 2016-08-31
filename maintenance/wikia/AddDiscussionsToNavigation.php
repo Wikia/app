@@ -55,13 +55,25 @@ class AddDiscussionsToNavigation extends Maintenance
 	}
 
 	private function getAllSiteIds() {
-		return [3035];
+		$siteIds = [];
+		$db = WikiFactory::db( DB_MASTER );
+		$sql = ( new WikiaSQL() )
+			->SELECT( 'cv_city_id' )
+			->FROM( 'city_variables' )
+			->WHERE( 'cv_variable_id' )->EQUAL_TO( self::VAR_NAME );
+
+		$sql->runLoop( $db, function( &$siteIds, $row ) {
+			$siteIds[] = $row->cv_city_id;
+		});
+
+		return $siteIds;
 	}
 
 	private function updateSiteId($siteId) {
 		$varData = (array)WikiFactory::getVarByName( self::VAR_NAME, $siteId, true );
 		if ( empty( $varData['cv_id'] ) ) {
 			$this->debug("Error:" . self::VAR_NAME . " not found.\n");
+			return false;
 		}
 
 		if ( $varData['cv_variable_type'] !== 'text' ) {
