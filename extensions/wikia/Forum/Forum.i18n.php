@@ -44,10 +44,10 @@ Before contributing to the {{SITENAME}} Forums, please keep in mind a few best p
 
 ==Forum FAQ==
 '''How do I stay on top of discussions I'm interested in?'''
-: With a Wikia user account, you can follow specific conversations and then receive notification messages (either on-site or via email) when a discussion has more activity. Be sure to [[Special:UserSignup|sign up for a Fandom account]] if you don't already have one.
+: With a Fandom user account, you can follow specific conversations and then receive notification messages (either on-site or via email) when a discussion has more activity. Be sure to [[Special:UserSignup|sign up for a Fandom account]] if you don't already have one.
 
 '''How do I remove vandalism?'''
-: If you notice some spam or vandalism on a thread, hover your mouse over the offending text. You'll see a \"More\" button appear. Inside the \"More\" menu, you'll find \"Remove\". This will allow you to remove the vandalism and optionally inform an admin.
+: If you notice some spam or vandalism on a thread, hover your mouse over the offending text. You'll see a ""More"" button appear. Inside the ""More"" menu, you'll find ""Remove"". This will allow you to remove the vandalism and optionally inform an admin.
 
 '''What are Kudos?'''
 : If you find a particular discussion or reply interesting, well thought out, or amusing you can show direct appreciation by giving it Kudos. They can be helpful in voting situations, too.
