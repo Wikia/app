@@ -20,7 +20,7 @@ class AddDiscussionsToNavigation extends Maintenance
 	const NAVIGATION_ELEMENT = '**Special:DiscussionsNavigation|Discussions';
 	const FORUM_NAVIGATION_ELEMENT = '**Special:Forum|Forum';
 	const REASON = 'SOC-2816 add Discussion navigation to the navigation';
-	const SPLIT = '\n';
+	const SPLIT = '\r\n';
 
 	private $dryRun = false;
 	private $verbose = false;
@@ -94,7 +94,7 @@ class AddDiscussionsToNavigation extends Maintenance
 	}
 
 	private function createNewValue( $previousValue ) {
-		$this->debug( "Previous value " . $previousValue );
+		$this->debug( "Previous value:\n\n" . $previousValue );
 		$array = explode( self::SPLIT, $previousValue );
 		if ( !$this->rollback ) {
 			$array = $this->insertAfterForumOrAtTheEnd( $array );
@@ -102,7 +102,7 @@ class AddDiscussionsToNavigation extends Maintenance
 			$array = $this->removeNavigationElement( $array );
 		}
 		$newValue = join( self::SPLIT, $array );
-		$this->debug( "New value " . $previousValue );
+		$this->debug( "New value\n\n:" . $previousValue );
 		return $newValue;
 	}
 
@@ -125,7 +125,7 @@ class AddDiscussionsToNavigation extends Maintenance
 		$pos = array_search( self::NAVIGATION_ELEMENT, $array );
 		if ( $pos === false ) {
 			$this->debug( "Discussion not found - not removing." );
-			return;
+			return $array;
 		}
 		$this->debug( "Discussion forum at $pos position." );
 		return array_splice( $array, $pos, 1 );
