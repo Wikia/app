@@ -129,7 +129,8 @@ class AddDiscussionsToNavigation extends Maintenance
 			return $array;
 		}
 		$this->debug( "Discussion forum at $pos position." );
-		return array_splice( $array, $pos, 1 );
+		array_splice( $array, $pos, 1 );
+		return $array;
 	}
 
 	/**
