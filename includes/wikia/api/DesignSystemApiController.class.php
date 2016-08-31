@@ -4,17 +4,16 @@ class DesignSystemApiController extends WikiaApiController {
 	public function getFooter() {
 		$params = $this->getRequestParameters();
 
-		$footerModel = new DesignSystemGlobalFooterModel( $params[ 'wikiId' ], $params[ 'lang' ] );
-
-		$this->setResponseData( $footerModel->getData() );
+		$this->setResponseData(
+			( new DesignSystemGlobalFooterModel( $params[ 'wikiId' ], $params[ 'lang' ] ) )->getData() );
 		$this->response->setCacheValidity( WikiaResponse::CACHE_VERY_SHORT );
 	}
 
 	public function getNavigation() {
 		$params = $this->getRequestParameters();
 
-		$navigationModel = new DesignSystemGlobalNavigationModel( $params[ 'wikiId' ], $params[ 'lang' ] );
-		$this->setResponseData( $navigationModel->getData() );
+		$this->setResponseData(
+			( new DesignSystemGlobalNavigationModel( $params[ 'wikiId' ], $params[ 'lang' ] ) )->getData() );
 
 		$this->addCachingHeaders();
 	}
