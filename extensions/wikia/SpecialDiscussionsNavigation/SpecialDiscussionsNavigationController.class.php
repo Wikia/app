@@ -6,7 +6,7 @@
 class SpecialDiscussionsNavigationController extends WikiaSpecialPageController {
 
 	public function __construct() {
-		parent::__construct( 'SpecialDiscussionsNavigation', '', false );
+		parent::__construct( 'DiscussionsNavigation', '', false );
 	}
 
 	public function index() {
