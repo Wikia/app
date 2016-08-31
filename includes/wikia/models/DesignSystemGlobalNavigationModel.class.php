@@ -66,16 +66,7 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 			$data[ 'verticals' ] = $this->getVerticalsSection();
 			$data[ 'wikis' ] = $this->getWikisSection();
 		} else {
-			$data[ 'community-central' ] = [
-				'header' => [
-					'type' => 'link-text',
-					'title' => [
-						'type' => 'translatable-text',
-						'key' => 'global-navigation-community-central-title'
-					],
-					'href' => $this->getHref( 'community-central' )
-				]
-			];
+			$data[ 'community-central' ] = $this->getCommunityCentralLink();
 		}
 
 		if ( $wgUser->isLoggedIn() ) {
@@ -270,14 +261,7 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 					],
 					'href' => $this->getHref( 'explore-wikis' ),
 				],
-				[
-					'type' => 'link-text',
-					'title' => [
-						'type' => 'translatable-text',
-						'key' => 'global-navigation-wikis-communitycentral'
-					],
-					'href' => $this->getHref( 'community-central' ),
-				],
+				$this->getCommunityCentralLink(),
 				[
 					'type' => 'link-text',
 					'title' => [
@@ -287,6 +271,17 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 					'href' => $this->getHref( 'fandom-university' ),
 				]
 			]
+		];
+	}
+
+	private function getCommunityCentralLink() {
+		return [
+			'type' => 'link-text',
+			'title' => [
+				'type' => 'translatable-text',
+				'key' => 'global-navigation-wikis-communitycentral'
+			],
+			'href' => $this->getHref( 'community-central' ),
 		];
 	}
 }
