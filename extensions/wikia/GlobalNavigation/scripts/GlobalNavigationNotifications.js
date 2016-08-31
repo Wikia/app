@@ -11,28 +11,19 @@ require(
 		var WallNotifications = {
 			init: function () {
 				this.bucky = window.Bucky('WallNotifications');
-
-				// we only want 1 update simultaneously
-				this.updateInProgress = false;
-
-				// HTML for "trays" for different Wiki ids
-				this.notificationsCache = {};
-
-				// all open "trays" (Wiki Notifications) - list of Wiki ids
-				this.wikiShown = {};
-
-				// we only want to force-fetch notifications for current Wiki once
-				this.fetchedCurrent = false;
-
-				// updated after fetching Notification counts for the 1st time
-				this.currentWikiId = 0;
-
+				this.updateInProgress = false; // we only want 1 update simultaneously
+				this.notificationsCache = {}; // HTML for "trays" for different Wiki ids
+				this.wikiShown = {}; // all open "trays" (Wiki Notifications) - list of Wiki ids
+				this.fetchedCurrent = false; // we only want to force-fetch notifications for current Wiki once
+				this.currentWikiId = 0; // updated after fetching Notification counts for the 1st time
 				this.cityId = parseInt(window.wgCityId, 10);
 
 				setTimeout(this.proxy(this.updateCounts), 300);
 
 				this.$window = $(window);
+
 				this.$notificationsCount = $('.notifications-count');
+
 				this.$notifications = $('#notifications');
 				this.$notificationsEntryPoint = $('#notificationsEntryPoint');
 				this.$wallNotifications = $('#GlobalNavigationWallNotifications');
@@ -195,6 +186,9 @@ require(
 			},
 
 			updateCountsHtml: function (data) {
+				var self = this,
+					element;
+
 				this.$wallNotifications.html(data.html);
 				this.unreadCount = data.count;
 
@@ -271,7 +265,7 @@ require(
 						this.updateWikiHtml(wikiId, data);
 						this.notificationsCache[wikiId] = data;
 					}),
-					onErrorCallback: this.proxy(function (jqXHR) {
+					onErrorCallback: this.proxy(function (jqXHR, textStatus, errorThrown) {
 						if (jqXHR !== undefined && jqXHR.status !== undefined && jqXHR.status === 501) {
 							var data = {};
 							data.html = '<li class="notifications-empty">' + $.msg('wall-notifications-wall-disabled') + '</li>';
@@ -337,8 +331,8 @@ require(
 
 			setNotificationsHeight: function () {
 				var isDropdownOpen = this.$wallNotifications.hasClass('show'),
-					height,
-					msgHeight;
+					height = 0,
+					msgHeight = 0;
 
 				if (isDropdownOpen) {
 
