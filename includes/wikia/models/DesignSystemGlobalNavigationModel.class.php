@@ -56,8 +56,7 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 						'type' => 'translatable-text',
 						'key' => 'wikia-create-wiki-link-start-wikia'
 					],
-					'href' => GlobalTitle::newFromText( 'CreateNewWiki', NS_SPECIAL, 80433 )
-						->getFullURL( 'uselang=' . $this->lang ),
+					'href' => $this->getHref( 'create-new-wiki' ),
 				]
 			]
 		];
