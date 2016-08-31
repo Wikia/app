@@ -28,6 +28,41 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 					]
 				]
 			],
+			'wikis' => [
+				'header' => [
+					'type' => 'line-text',
+					'title' => [
+						'type' => 'translatable-text',
+						'key' => 'global-navigation-wikis',
+					],
+				],
+				'links' => [
+					[
+						'type' => 'link-text',
+						'title' => [
+							'type' => 'translatable-text',
+							'key' => 'global-navigation-brandlink-wikis-explore'
+						],
+						'href' => $this->getHref( 'fan-communities' ),
+					],
+					[
+						'type' => 'link-text',
+						'title' => [
+							'type' => 'translatable-text',
+							'key' => 'global-navigation-wikis-communitycentral'
+						],
+						'href' => $this->getHref( 'community-central' ),
+					],
+					[
+						'type' => 'link-text',
+						'title' => [
+							'type' => 'translatable-text',
+							'key' => 'global-navigation-wikis-fandomuniversity'
+						],
+						'href' => $this->getHref( 'fandom-university' ),
+					]
+				]
+			],
 			'search' => [
 				'module' => [
 					'type' => 'search',
@@ -63,9 +98,6 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 
 		if ( $this->lang === static::DEFAULT_LANG ) {
 			$data[ 'verticals' ] = $this->getVerticalsSection();
-			$data[ 'wikis' ] = $this->getWikisSection();
-		} else {
-			$data[ 'community-central' ] = $this->getCommunityCentralLink();
 		}
 
 		if ( $wgUser->isLoggedIn() ) {
@@ -239,48 +271,6 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 					'href' => $this->getHref( 'movies' ),
 				]
 			]
-		];
-	}
-
-	private function getWikisSection() {
-		return [
-			'header' => [
-				'type' => 'line-text',
-				'title' => [
-					'type' => 'translatable-text',
-					'key' => 'global-navigation-wikis',
-				],
-			],
-			'links' => [
-				[
-					'type' => 'link-text',
-					'title' => [
-						'type' => 'translatable-text',
-						'key' => 'global-navigation-brandlink-wikis-explore'
-					],
-					'href' => $this->getHref( 'fan-communities' ),
-				],
-				$this->getCommunityCentralLink(),
-				[
-					'type' => 'link-text',
-					'title' => [
-						'type' => 'translatable-text',
-						'key' => 'global-navigation-wikis-fandomuniversity'
-					],
-					'href' => $this->getHref( 'fandom-university' ),
-				]
-			]
-		];
-	}
-
-	private function getCommunityCentralLink() {
-		return [
-			'type' => 'link-text',
-			'title' => [
-				'type' => 'translatable-text',
-				'key' => 'global-navigation-wikis-communitycentral'
-			],
-			'href' => $this->getHref( 'community-central' ),
 		];
 	}
 }
