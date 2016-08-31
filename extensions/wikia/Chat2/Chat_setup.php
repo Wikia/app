@@ -31,11 +31,13 @@ $wgAutoloadClasses['ChatRailController'] = "$dir/ChatRailController.class.php";
 $wgAutoloadClasses['ChatBanTimeOptions'] = "$dir/ChatBanTimeOptions.class.php";
 $wgAutoloadClasses['SpecialChat'] = "$dir/SpecialChat.class.php";
 $wgAutoloadClasses['ChatServerApiClient'] = "$dir/ChatServerApiClient.class.php";
-$wgAutoloadClasses['ChatBanListSpecialController'] = "$dir/ChatBanListSpecialController.class.php";
+$wgAutoloadClasses['ChatBanListSpecial'] = "$dir/ChatBanListSpecial.php";
+$wgAutoloadClasses['ChatBanData'] = "$dir/ChatBanListSpecial_helper.php";
+$wgAutoloadClasses['ChatBanListAjax'] = "$dir/ChatBanListSpecial_ajax.php";
 
 // special pages
 $wgSpecialPages['Chat'] = 'SpecialChat';
-$wgSpecialPages['ChatBanList'] = 'ChatBanListSpecialController';
+$wgSpecialPages['ChatBanList'] = 'ChatBanListSpecial';
 
 // i18n
 $wgExtensionMessagesFiles['Chat'] = $dir . '/Chat.i18n.php';
@@ -155,6 +157,7 @@ define( 'CHAT_TAG', 'chat' );
 define( 'CUC_TYPE_CHAT', 128 );    // for CheckUser operation type
 
 // ajax
+$wgAjaxExportList[] = 'ChatBanListAjax::axShowUsers';
 $wgAjaxExportList[] = 'ChatAjax';
 function ChatAjax() {
 	global $wgChatDebugEnabled, $wgRequest, $wgUser, $wgMemc;

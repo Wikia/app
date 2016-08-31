@@ -1,2 +1,0 @@
-<?= $formHtml; ?>
-<?= $resultsHtml; ?>
