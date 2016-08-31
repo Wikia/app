@@ -6,6 +6,7 @@ class EnableDiscussionsController extends \WikiaController {
 
 	const ENABLE_DISCUSSIONS_NAVIGATION = 'wgEnableDiscussionNavigation';
 	const ENABLE_DISCUSSIONS = 'wgEnableDiscussion';
+	const ENABLE_FORUMS = 'wgEnableForumExt';
 
 	const P_SITE_ID = 'siteId';
 	const REASON = 'Enabling discussions!';
@@ -21,11 +22,13 @@ class EnableDiscussionsController extends \WikiaController {
 
 		$discussions = $this->setVariable($siteId, self::ENABLE_DISCUSSIONS, true);
 		$navigation = $this->setVariable($siteId, self::ENABLE_DISCUSSIONS_NAVIGATION, true);
+		$forum = $this->setVariable($siteId, self::ENABLE_DISCUSSIONS_NAVIGATION, false);
 
-		$this->response->setBody( json_encode(
-			[ 'enableDiscussions'=> $discussions,
-				'enableNavigation'=> $navigation ]
-		) );
+		$this->response->setBody( json_encode( [
+			'enableDiscussions'=> $discussions,
+			'enableNavigation'=> $navigation,
+			'disableForums' => $forum
+		] ) );
 	}
 
 	/**
