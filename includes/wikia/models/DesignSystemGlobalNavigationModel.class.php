@@ -30,29 +30,7 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 					]
 				]
 			],
-			'search' => [
-				'module' => [
-					'type' => 'search',
-					'results' => [
-						'url' => $this->getPageUrl( 'Search', NS_SPECIAL, 'fulltext=Search' ),
-						'param-name' => 'query'
-					],
-					'suggestions' => [
-						'url' => WikiFactory::getHostById( $this->wikiId ) . '/index.php?action=ajax&rs=getLinkSuggest&format=json',
-						'param-name' => 'query'
-					],
-					'placeholder-inactive' => [
-						'type' => 'translatable-text',
-						'key' => 'global-navigation-search-placeholder-inactive'
-					],
-					'placeholder-active' => [
-						'type' => 'translatable-text',
-						'key' => WikiaPageType::isCorporatePage()
-							? 'global-navigation-search-placeholder-wikis'
-							: 'global-navigation-search-placeholder-in-wiki'
-					]
-				]
-			],
+			'search' => $this->getSearchData(),
 			'create_wiki' => [
 				'links' => [
 					[
@@ -119,6 +97,39 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 
 	private function getPageUrl( $pageTitle, $namespace, $query = '' ) {
 		return GlobalTitle::newFromText( $pageTitle, $namespace, $this->wikiId )->getFullURL( $query );
+	}
+
+	private function getSearchData() {
+		$isCorporatePage = WikiaPageType::isCorporatePage();
+
+		$search = [
+			'type' => 'search',
+			'results' => [
+				'url' => $isCorporatePage
+					? $this->getCorporatePageSearchUrl()
+					: $this->getPageUrl( 'Search', NS_SPECIAL, [ 'fulltext' => 'Search' ] ),
+				'param-name' => 'query'
+			],
+			'placeholder-inactive' => [
+				'type' => 'translatable-text',
+				'key' => 'global-navigation-search-placeholder-inactive'
+			],
+			'placeholder-active' => [
+				'type' => 'translatable-text',
+				'key' => $isCorporatePage
+					? 'global-navigation-search-placeholder-wikis'
+					: 'global-navigation-search-placeholder-in-wiki'
+			]
+		];
+
+		if ( !$isCorporatePage ) {
+			$search['suggestions'] = [
+				'url' => WikiFactory::getHostById( $this->wikiId ) . '/index.php?action=ajax&rs=getLinkSuggest&format=json',
+				'param-name' => 'query'
+			];
+		}
+
+		return $search;
 	}
 
 	private function getAnonUserData() {
@@ -281,6 +292,13 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 				]
 			]
 		];
+	}
+
+	private function getCorporatePageSearchUrl() {
+		return GlobalTitle::newFromText( 'Search', NS_SPECIAL, WikiService::WIKIAGLOBAL_CITY_ID )->getFullURL( [
+			'fulltext' => 'Search',
+			'resultsLang' => $this->lang
+		] );
 	}
 
 	private function getCommunityCentralLink() {
