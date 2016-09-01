@@ -72,7 +72,7 @@ class DesignSystemHelper {
 			self::$svgCache[$name] = $xml;
 		}
 
-		return clone $xml;
+		return ( $xml instanceof SimpleXMLElement ) ? clone $xml : null;
 	}
 
 	/**
