@@ -120,16 +120,18 @@
 					isDirty: (typeof this.editor.plugins.leaveconfirm === 'undefined' || this.editor.plugins.leaveconfirm.isDirty()) ? 'yes' : 'no'
 				});
 			}
+
+			this.editform.off('submit');
 			this.editor.track({
 				action: Wikia.Tracker.ACTIONS.SUBMIT,
-				label: 'publish'
+				label: 'publish',
+				callbacks: {
+					timeout: 5000,
+					complete: this.proxy(function() {
+						this.editform.submit();
+					})
+				}
 			});
-
-			// prevent submitting immediately so we can track this event
-			this.editform.off('submit');
-			setTimeout(this.proxy(function () {
-				this.editform.submit();
-			}), 100);
 
 			// block "Publish" button
 			$('#wpSave').attr('disabled', true);
