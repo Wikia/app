@@ -224,19 +224,19 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 		$userName = $user->getName();
 
 		return [
+			'header' => [
+				'type' => 'line-image',
+				'image' => 'wsd-icons-bell',
+				'title' => [
+					'type' => 'translatable-text',
+					'key' => 'global-navigation-notifications'
+				]
+			],
 			'module' => [
 				'type' => 'notifications',
 				'url' => $wgEnableWallExt
 					? $this->getPageUrl( $userName, NS_USER_WALL )
-					: $this->getPageUrl( $userName, NS_USER_TALK ),
-				'header' => [
-					'type' => 'line-image',
-					'image' => 'wsd-icons-bell',
-					'title' => [
-						'type' => 'translatable-text',
-						'key' => 'global-navigation-notifications'
-					]
-				]
+					: $this->getPageUrl( $userName, NS_USER_TALK )
 			]
 		];
 	}
