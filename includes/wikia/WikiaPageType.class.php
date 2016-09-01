@@ -228,7 +228,7 @@ class WikiaPageType {
 	/**
 	 * Check if page is Wikia hub page, for example http://www.wikia.com/Video_games
 	 *
-	 * @param int $wikiId
+	 * @param int|null $wikiId
 	 * @return bool
 	 */
 	public static function isWikiaHub( $wikiId = null ) {
@@ -265,7 +265,7 @@ class WikiaPageType {
 	/**
 	 * Check if current page is home page
 	 *
-	 * @param int $wikiId
+	 * @param int|null $wikiId
 	 * @return bool
 	 */
 	public static function isWikiaHomePage( $wikiId = null ) {
@@ -277,7 +277,7 @@ class WikiaPageType {
 	/**
 	 * Check if current page is corporate page
 	 *
-	 * @param int $wikiId
+	 * @param int|null $wikiId
 	 * @return bool
 	 */
 	public static function isCorporatePage( $wikiId = null ) {
