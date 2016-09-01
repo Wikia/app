@@ -1,12 +1,10 @@
 <div class="wds-global-navigation">
 	<div class="wds-global-navigation__content-bar">
 		<a href="<?= Sanitizer::encodeAttribute( $model['logo']['header']['href'] ); ?>" class="wds-global-navigation__logo">
-			<?= ''
-			/* Uncomment when we have the SVG
-			 * DesignSystemHelper::getSvg(
+			<?= DesignSystemHelper::getSvg(
 				$model['logo']['header']['image'],
 				'wds-global-navigation__logo-fandom'
-			)*/ ?>
+			) ?>
 		</a>
 		<?php
 		if ( isset( $model['fandom_overview'] ) ):

@@ -12,9 +12,9 @@ $breakpoint-s-up: "#{$screen}";
 $breakpoint-s-only: "#{$screen} and (max-width:#{$breakpoint-m - 1})";
 
 $breakpoint-m-up: "#{$screen} and (min-width:#{$breakpoint-m})";
-$breakpoint-m-down: "#{$screen} and (max-width:#{$breakpoint-l - 1})";
 $breakpoint-m-only: "#{$screen} and (min-width:#{$breakpoint-m}) and (max-width:#{$breakpoint-l - 1})";
 
+$breakpoint-l-down: "#{$screen} and (max-width:#{$breakpoint-xl - 1})";
 $breakpoint-l-up: "#{$screen} and (min-width:#{$breakpoint-l})";
 $breakpoint-l-only: "#{$screen} and (min-width:#{$breakpoint-l}) and (max-width:#{$breakpoint-xl - 1})";
 
