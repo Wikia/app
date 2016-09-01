@@ -11,37 +11,17 @@ $notification-counter-size: 18px;
 	border-width: $border-top-width 0 0;
 	box-shadow: 0 1px 0 0 $color-faint-gray;
 
-	@media only screen and (max-width: 1023px) {
-		&__content-bar {
-			width: 748px;
-		}
-	}
-
-	@media only screen and (min-width: 1024px) {
-		&__content-bar {
-			width: 1004px;
-		}
-	}
-
-	@media only screen and (min-width: 1084px) {
-		&__content-bar {
-			width: 1064px;
-		}
-	}
-
-	@media only screen and (min-width: 1596px) {
-		&__content-bar {
-			width: 1238px;
-		}
-	}
-
 	&__dropdown-toggle {
 		align-items: center;
 		display: flex;
+		// Safari doesn't set default flex values if we use `flex: 1;`
+		// it requires us to put these values explicitly.
+		flex: 1 1 auto;
+		height: $nav-height;
 		justify-content: center;
 	}
 
-	&__dropdown {
+	&__dropdown-content {
 		color: $color-dark-blue-gray;
 		top: calc(100% + 1px);
 		width: 190px;
@@ -64,6 +44,7 @@ $notification-counter-size: 18px;
 		height: $nav-height;
 		margin: 0 auto;
 		position: relative;
+		width: 748px;
 		z-index: 1;
 	}
 
@@ -105,6 +86,7 @@ $notification-counter-size: 18px;
 	}
 
 	&__logo {
+		border-top: $border-top-width solid $color-dark-blue-gray;
 		font-size: 9px;
 		font-weight: 600;
 		letter-spacing: .15px;
@@ -129,7 +111,9 @@ $notification-counter-size: 18px;
 	}
 
 	&__link {
-		flex: 1;
+		// Safari doesn't set default flex values if we use `flex: 1;`
+		// it requires us to put these values explicitly.
+		flex: 1 1 auto;
 
 		&.wds-is-games {
 			border-color: $color-games;
@@ -170,14 +154,18 @@ $notification-counter-size: 18px;
 	&__search-input-wrapper {
 		border: 0 solid $color-slate-gray;
 		display: flex;
-		flex: 1;
+		// Safari doesn't set default flex values if we use `flex: 1;`
+		// it requires us to put these values explicitly.
+		flex: 1 1 auto;
 	}
 
 	&__search-label {
 		align-items: center;
 		background-color: $color-white;
 		display: flex;
-		flex: 1;
+		// Safari doesn't set default flex values if we use `flex: 1;`
+		// it requires us to put these values explicitly.
+		flex: 1 1 auto;
 		z-index: 2;
 	}
 
@@ -185,8 +173,12 @@ $notification-counter-size: 18px;
 		border: 0;
 		color: $color-dark-gray;
 		display: none;
-		flex: 1;
+		// Safari doesn't set default flex values if we use `flex: 1;`
+		// it requires us to put these values explicitly.
+		flex: 1 1 auto;
 		font-size: $typescale-size-minus-1;
+		// Firefox doesn't size input properly if our input
+		// has `width` set in `%` and is inside `flexbox`.
 		min-width: 0;
 		padding: 3px 4px;
 		width: 100%;
@@ -207,6 +199,8 @@ $notification-counter-size: 18px;
 
 	&__search-close {
 		display: none;
+		// iPad Safari fix for bleeding search suggestions shadow
+		margin: 0;
 		padding: 3px;
 		z-index: 2;
 	}
@@ -267,15 +261,11 @@ $notification-counter-size: 18px;
 		font-size: $typescale-size-minus-3;
 		height: $notification-counter-size;
 		justify-content: center;
-		left: -11px;
+		left: -1px;
 		min-width: $notification-counter-size;
 		padding: 0 4px;
 		position: absolute;
-		top: -8px;
-	}
-
-	&__start-a-wiki .wds-button {
-		padding: 8px 10px;
+		top: 8px;
 	}
 
 	&__start-a-wiki-icon {
@@ -286,11 +276,15 @@ $notification-counter-size: 18px;
 
 	&.wds-search-is-always-visible .wds-global-navigation {
 		&__link {
+			// Safari doesn't set default flex values if we use `flex: 0;`
+			// it requires us to put these values explicitly.
 			flex: 0 1 auto;
 		}
 
 		&__search {
-			flex: 1;
+			// Safari doesn't set default flex values if we use `flex: 1;`
+			// it requires us to put these values explicitly.
+			flex: 1 1 auto;
 		}
 
 		&__search-input {
@@ -308,7 +302,9 @@ $notification-counter-size: 18px;
 		}
 
 		&__search {
-			flex: 1;
+			// Safari doesn't set default flex values if we use `flex: 1;`
+			// it requires us to put these values explicitly.
+			flex: 1 1 auto;
 		}
 
 		&__search-input-wrapper {
@@ -341,9 +337,15 @@ $notification-counter-size: 18px;
 		}
 	}
 
-	@media #{$breakpoint-desktop-up} {
+	@media #{$breakpoint-l-up} {
+		&__content-bar {
+			width: 1004px;
+		}
+
 		&__search {
-			flex: 2;
+			// Safari doesn't set default flex values if we use `flex: 2;`
+			// it requires us to put these values explicitly.
+			flex: 2 1 auto;
 			padding-left: 8px;
 		}
 
@@ -372,6 +374,18 @@ $notification-counter-size: 18px;
 			.wds-global-navigation__start-a-wiki-icon {
 				display: none;
 			}
+		}
+	}
+
+	@media #{$breakpoint-xl-up} {
+		&__content-bar {
+			width: 1064px;
+		}
+	}
+
+	@media #{$breakpoint-xxl-up} {
+		&__content-bar {
+			width: 1238px;
 		}
 	}
 }
