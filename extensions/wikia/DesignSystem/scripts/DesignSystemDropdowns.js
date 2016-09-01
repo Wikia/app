@@ -3,11 +3,12 @@ $(function ($) {
 
 	$('body').on('click', function(event) {
 		var eventTarget = $(event.target),
-			clickedToggle = eventTarget.closest('.wds-dropdown__toggle'),
+			clickedContent = eventTarget.closest('.wds-dropdown__content'),
 			clickedDropdown = eventTarget.closest('.wds-dropdown');
 
-		if (clickedToggle.length) {
-			$(clickedToggle).closest('.wds-dropdown').toggleClass('wds-is-active');
+		// We don't use toggle as it has disabled pointer events due to bug in IE.
+		if (clickedContent.length === 0) {
+			clickedDropdown.toggleClass('wds-is-active');
 		}
 
 		$('.wds-dropdown.wds-is-active').not(clickedDropdown).removeClass('wds-is-active');
