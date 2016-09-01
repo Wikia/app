@@ -18,29 +18,27 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 
 		$data = [
 			'logo' => [
-				'links' => [
-					[
-						'type' => 'link-image',
-						'href' => $this->getHref( 'fandom-logo' ),
-						'image' => 'wds-company-logo-fandom-powered-by-wikia',
-						'title' => [
-							'type' => 'text',
-							'value' => 'Fandom powered by Wikia'
-						]
+				'header' => [
+					'type' => 'link-image',
+					'href' => $this->getHref( 'fandom-logo' ),
+					'image' => 'wds-company-logo-fandom-powered-by-wikia',
+					'title' => [
+						'type' => 'text',
+						'value' => 'Fandom powered by Wikia'
 					]
 				]
 			],
-			'search' => $this->getSearchData(),
+			'search' => [
+				'module' => $this->getSearchData()
+			],
 			'create_wiki' => [
-				'links' => [
-					[
-						'type' => 'link-text',
-						'title' => [
-							'type' => 'translatable-text',
-							'key' => 'global-navigation-create-wiki-link-start-wikia'
-						],
-						'href' => $this->getHref( 'create-new-wiki' ),
-					]
+				'header' => [
+					'type' => 'link-text',
+					'title' => [
+						'type' => 'translatable-text',
+						'key' => 'global-navigation-create-wiki-link-start-wikia'
+					],
+					'href' => $this->getHref( 'create-new-wiki' ),
 				]
 			]
 		];
@@ -77,7 +75,9 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 			];
 		} else {
 			$data[ 'wikis' ] = [
-				'links' => $this->getCommunityCentralLink()
+				'links' => [
+					$this->getCommunityCentralLink()
+				]
 			];
 		}
 
@@ -100,7 +100,7 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 	}
 
 	private function getSearchData() {
-		$isCorporatePage = $this->isCorporatePage();
+		$isCorporatePage = WikiaPageType::isCorporatePage( $this->wikiId );
 
 		$search = [
 			'type' => 'search',
@@ -174,8 +174,7 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 	}
 
 	private function getLoggedInUserData( $user ) {
-		global $wgEnableWallExt;
-
+		$isMessageWallEnabled = $this->isMessageWallEnabled();
 		$userName = $user->getName();
 
 		return [
@@ -198,12 +197,12 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 				],
 				[
 					'type' => 'link-text',
-					'href' => $wgEnableWallExt
+					'href' => $isMessageWallEnabled
 						? $this->getPageUrl( $userName, NS_USER_WALL )
 						: $this->getPageUrl( $userName, NS_USER_TALK ),
 					'title' => [
 						'type' => 'translatable-text',
-						'key' => $wgEnableWallExt
+						'key' => $isMessageWallEnabled
 							? 'global-navigation-user-message-wall'
 							: 'global-navigation-user-my-talk'
 					]
@@ -238,14 +237,12 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 	}
 
 	private function getNotifications( $user ) {
-		global $wgEnableWallExt;
-
 		$userName = $user->getName();
 
 		return [
 			'header' => [
 				'type' => 'line-image',
-				'image' => 'wsd-icons-bell',
+				'image' => 'wds-icons-bell',
 				'title' => [
 					'type' => 'translatable-text',
 					'key' => 'global-navigation-notifications-title'
@@ -253,7 +250,7 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 			],
 			'module' => [
 				'type' => 'notifications',
-				'url' => $wgEnableWallExt
+				'url' => $this->isMessageWallEnabled()
 					? $this->getPageUrl( $userName, NS_USER_WALL )
 					: $this->getPageUrl( $userName, NS_USER_TALK )
 			]
@@ -292,6 +289,10 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 				]
 			]
 		];
+	}
+
+	private function isMessageWallEnabled() {
+		return WikiFactory::getVarValueByName( 'wgEnableWallExt', $this->wikiId );
 	}
 
 	private function isCorporatePage() {
