@@ -26,8 +26,8 @@ class DesignSystemApiController extends WikiaApiController {
 		$params = $this->getRequestParameters();
 
 		$this->setResponseData( [
-			'global-footer' => ( new DesignSystemGlobalFooterModel( $params[ 'wikiId' ], $params[ 'lang' ] ) )->getData(),
-			'global-navigation' => ( new DesignSystemGlobalNavigationModel( $params[ 'wikiId' ], $params[ 'lang' ] ) )->getData()
+			'global_footer' => ( new DesignSystemGlobalFooterModel( $params[ 'wikiId' ], $params[ 'lang' ] ) )->getData(),
+			'global_navigation' => ( new DesignSystemGlobalNavigationModel( $params[ 'wikiId' ], $params[ 'lang' ] ) )->getData()
 		] );
 
 		$this->addCachingHeaders();
