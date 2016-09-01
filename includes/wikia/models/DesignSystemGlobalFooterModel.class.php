@@ -2,6 +2,8 @@
 
 class DesignSystemGlobalFooterModel extends WikiaModel {
 	const DEFAULT_LANG = 'en';
+	const WIKI_PRODUCT = 'wikis';
+	const FANDOM_PRODUCT = 'fandoms';
 
 	private $hrefs = [
 		'default' => [
@@ -216,13 +218,22 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 		]
 	];
 
-	private $wikiId;
+	private $product;
+	private $id;
 	private $lang;
 
-	public function __construct( $wikiId, $lang = self::DEFAULT_LANG ) {
+	/**
+	 * DesignSystemGlobalFooterModel constructor.
+	 *
+	 * @param string $product Name of product, ex: fandoms, wikis
+	 * @param int $id Identifier for given product, ex: wiki id
+	 * @param string $lang
+	 */
+	public function __construct( $product, $id, $lang = self::DEFAULT_LANG ) {
 		parent::__construct();
 
-		$this->wikiId = $wikiId;
+		$this->product = $product;
+		$this->id = $id;
 		$this->lang = $lang;
 	}
 
@@ -463,17 +474,21 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 	}
 
 	private function getSitenameData() {
-		$wgSitenameForComscoreForWikiId = WikiFactory::getVarValueByName( 'wgSitenameForComscore', $this->wikiId );
-
-		if ( $wgSitenameForComscoreForWikiId ) {
-			$sitename = $wgSitenameForComscoreForWikiId;
+		if ( $this->product === self::FANDOM_PRODUCT ) {
+			$sitename = 'Fandom';
 		} else {
-			$wgSitenameForWikiId = WikiFactory::getVarValueByName( 'wgSitename', $this->wikiId );
+			$wgSitenameForComscoreForWikiId = WikiFactory::getVarValueByName( 'wgSitenameForComscore', $this->id );
 
-			if ( $wgSitenameForWikiId ) {
-				$sitename = $wgSitenameForWikiId;
+			if ( $wgSitenameForComscoreForWikiId ) {
+				$sitename = $wgSitenameForComscoreForWikiId;
 			} else {
-				$sitename = $this->wg->Sitename;
+				$wgSitenameForWikiId = WikiFactory::getVarValueByName( 'wgSitename', $this->id );
+
+				if ( $wgSitenameForWikiId ) {
+					$sitename = $wgSitenameForWikiId;
+				} else {
+					$sitename = $this->wg->Sitename;
+				}
 			}
 		}
 
@@ -484,17 +499,21 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 	}
 
 	private function getVerticalData() {
-		$wikiFactoryInstance = WikiFactoryHub::getInstance();
-		$verticalData = $wikiFactoryInstance->getWikiVertical( $this->wikiId );
-
-		/**
-		 * We don't want to show vertical 'Other' instead we show vertical 'Lifestyle'
-		 * This is Comscore requirement
-		 */
-		if ( $verticalData['id'] == WikiFactoryHub::VERTICAL_ID_OTHER ) {
-			$verticalMessageKey = $wikiFactoryInstance->getAllVerticals()[WikiFactoryHub::VERTICAL_ID_LIFESTYLE]['short'];
+		if ( $this->product === self::FANDOM_PRODUCT ) {
+			$verticalMessageKey = 'fandom';
 		} else {
-			$verticalMessageKey = $verticalData['short'];
+			$wikiFactoryInstance = WikiFactoryHub::getInstance();
+			$verticalData = $wikiFactoryInstance->getWikiVertical( $this->id );
+
+			/**
+			 * We don't want to show vertical 'Other' instead we show vertical 'Lifestyle'
+			 * This is Comscore requirement
+			 */
+			if ( $verticalData['id'] == WikiFactoryHub::VERTICAL_ID_OTHER ) {
+				$verticalMessageKey = $wikiFactoryInstance->getAllVerticals()[WikiFactoryHub::VERTICAL_ID_LIFESTYLE]['short'];
+			} else {
+				$verticalMessageKey = $verticalData['short'];
+			}
 		}
 
 		/**
@@ -506,6 +525,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 		 * - global-footer-licensing-and-vertical-description-param-vertical-music
 		 * - global-footer-licensing-and-vertical-description-param-vertical-comics
 		 * - global-footer-licensing-and-vertical-description-param-vertical-movies
+		 * - global-footer-licensing-and-vertical-description-param-vertical-fandom // TODO: add to message files
 		 */
 		$verticalMessageKey = 'global-footer-licensing-and-vertical-description-param-vertical-' . $verticalMessageKey;
 
@@ -516,13 +536,21 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 	}
 
 	private function getLicenseData() {
-		$licenseText = WikiFactory::getVarValueByName( 'wgRightsText', $this->wikiId ) ?: $this->wg->RightsText;
+		if ( $this->product === self::FANDOM_PRODUCT ) {
+			return [
+				'type' => 'line-text',
+				'title' => [
+					'type' => 'text',
+					'key' => 'global-footer-copyright-wikia', // TODO: add to message files - 'Copyright ' . date( 'Y' ) . ' Wikia, Inc.'
+				],
+			];
+		}
 
 		return [
 			'type' => 'link-text',
 			'title' => [
 				'type' => 'text',
-				'value' => $licenseText
+				'value' => WikiFactory::getVarValueByName( 'wgRightsText', $this->id ) ?: $this->wg->RightsText,
 			],
 			'href' => $this->getLicenseUrl()
 		];
@@ -724,13 +752,15 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 	}
 
 	private function getLocalSitemapUrl() {
-		$default = true; // $wgEnableLocalSitemapPageExt = true; in CommonSettings
-		$localSitemapAvailable = WikiFactory::getVarValueByName(
-			'wgEnableLocalSitemapPageExt', $this->wikiId, false, $default
-		);
+		if ( $this->product ==! self::FANDOM_PRODUCT ) {
+			$default = true; // $wgEnableLocalSitemapPageExt = true; in CommonSettings
+			$localSitemapAvailable = WikiFactory::getVarValueByName(
+				'wgEnableLocalSitemapPageExt', $this->id, false, $default
+			);
 
-		if ( $localSitemapAvailable ) {
-			return $this->getHref( 'local-sitemap' );
+			if ( $localSitemapAvailable ) {
+				return $this->getHref( 'local-sitemap' );
+			}
 		}
 
 		// Fall back to fandom sitemap when the local one is unavailable
@@ -738,11 +768,16 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 	}
 
 	private function getLicenseUrl() {
-		$licenseUrl = WikiFactory::getVarValueByName( 'wgRightsUrl', $this->wikiId ) ?: $this->wg->RightsUrl;
-		$licensePage = WikiFactory::getVarValueByName( 'wgRightsPage', $this->wikiId ) ?: $this->wg->RightsPage;
+		// no license URL for Fandom
+		if ( $this->product === self::FANDOM_PRODUCT ) {
+			return '';
+		}
+
+		$licenseUrl = WikiFactory::getVarValueByName( 'wgRightsUrl', $this->id ) ?: $this->wg->RightsUrl;
+		$licensePage = WikiFactory::getVarValueByName( 'wgRightsPage', $this->id ) ?: $this->wg->RightsPage;
 
 		if ( $licensePage ) {
-			$title = GlobalTitle::newFromText( $licensePage, NS_MAIN, $this->wikiId );
+			$title = GlobalTitle::newFromText( $licensePage, NS_MAIN, $this->id );
 			$licenseUrl = $title->getFullURL();
 		}
 

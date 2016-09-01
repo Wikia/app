@@ -210,7 +210,7 @@ class DesignSystemApiController extends WikiaApiController {
 	public function getFooter() {
 		$params = $this->getRequestParameters();
 
-		$footerModel = new DesignSystemGlobalFooterModel( $params[ 'wikiId' ], $params[ 'lang' ] );
+		$footerModel = new DesignSystemGlobalFooterModel( $params['product'], $params[ 'id' ], $params[ 'lang' ] );
 
 		$this->setResponseData( $footerModel->getData() );
 		$this->response->setCacheValidity( WikiaResponse::CACHE_VERY_SHORT );
@@ -233,7 +233,7 @@ class DesignSystemApiController extends WikiaApiController {
 		$params = $this->getRequestParameters();
 
 		$this->setResponseData( [
-			'global-footer' => ( new DesignSystemGlobalFooterModel( $params[ 'wikiId' ], $params[ 'lang' ] ) )->getData(),
+			'global-footer' => ( new DesignSystemGlobalFooterModel( $params[ 'product' ], $params[ 'id' ], $params[ 'lang' ] ) )->getData(),
 			'global-navigation' => $this->data
 		] );
 
@@ -241,15 +241,27 @@ class DesignSystemApiController extends WikiaApiController {
 	}
 
 	private function getRequestParameters() {
-		$wikiId = $this->getRequiredParam( 'wikiId' );
+		// ultimately, id will be a required param, but fall back to wikiId while transitioning
+		$id = $this->getRequest()->getVal( 'id', null );
+		if ( $id === null ) {
+			$id = $this->getRequiredParam( 'wikiId' );
+		}
+
+		// ultimately, product will be a required param, but fall back to "wikis" while transitioning
+		$product = $this->getRequest()->getVal( 'product', null );
+		if ( $product === null ) {
+			$product = 'wikis';
+		}
+
 		$lang = $this->getRequiredParam( 'lang' );
 
-		if ( WikiFactory::IDtoDB( $wikiId ) === false ) {
-			throw new NotFoundApiException( "Unable to find wiki with ID {$wikiId}" );
+		if ( $product === 'wikis' && WikiFactory::IDtoDB( $id ) === false ) {
+			throw new NotFoundApiException( "Unable to find wiki with ID {$id}" );
 		}
 
 		return [
-			'wikiId' => $wikiId,
+			'product' => $product,
+			'id' => $id,
 			'lang' => $lang
 		];
 	}
