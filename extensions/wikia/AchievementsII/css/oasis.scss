@@ -121,15 +121,8 @@
 	display: block;
 }
 
-/* rail in the right side */
-.WikiaLatestEarnedBadgesModule {
-	.clearfix { /** @todo questionable **/
-		@include clearfix;
-	}
-}
-
 .WikiaRail {
-	& > div.AchievementsModule {
+	.AchievementsModule {
 		.achievements-leaderboard-button {
 			clear: both;
 			margin: {
@@ -159,15 +152,12 @@
 			@include clearfix;
 			li {
 				display: inline-block;
-				border-bottom: none!important;
+				border-bottom: none;
 				margin: 7px 0;
 				padding: 0;
 				img {
 					float: left;
 				}
-				/* IE7 fixes - RT #72881 */
-				*clear: none;
-				*float: left;
 			}
 
 		}
@@ -190,7 +180,7 @@
 		}
 	}
 	
-	& > div.UserProfileAchievementsModule {
+	& .UserProfileAchievementsModule {
 
 		.data {
 			@include clearfix;
