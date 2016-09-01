@@ -924,6 +924,13 @@ $config['mercury_ads_js'] = [
 	],
 ];
 
+$config['prebid_prod_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => [
+		'//extensions/wikia/AdEngine/resources/prebid/prebid.min.js'
+	]
+];
+
 $config['interactivemaps_ads_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => 'interactivemaps',
@@ -3002,6 +3009,8 @@ $config['embeddable_discussions_js'] = [
 	'skin' => 'oasis',
 	'assets' => [
 		'//extensions/wikia/EmbeddableDiscussions/scripts/ext.embeddableDiscussions.js',
+		'//extensions/wikia/EmbeddableDiscussions/scripts/sharing.js',
+		'//extensions/wikia/EmbeddableDiscussions/scripts/templates.mustache.js',
 	],
 ];
 

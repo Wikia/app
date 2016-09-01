@@ -118,7 +118,8 @@ class Chat {
 				$action = self::BAN_CHANGE;
 			}
 
-			$timeLabel = self::getTimeLabel( $time );
+			$options = array_flip( ChatBanTimeOptions::newDefault()->get() );
+			$timeLabel = $options[ $time ];
 			$endOn = time() + $time;
 
 			$subjectChatUser->ban( $adminUser->getId(), $endOn, $reason );
@@ -139,7 +140,7 @@ class Chat {
 		Chat::addLogEntry(
 			$subjectUser,
 			$adminUser,
-			[ $adminUser->getId(), $subjectUser->getId(), $timeLabel, $endOn ],
+			[ $adminUser->getId(), $subjectUser->getId(), $timeLabel, $endOn, $time ],
 			'ban' . $action,
 			$reason
 		);

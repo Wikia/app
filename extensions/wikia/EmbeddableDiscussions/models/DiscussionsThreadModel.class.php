@@ -43,6 +43,16 @@ class DiscussionsThreadModel {
 		return self::DISCUSSIONS_API_BASE_DEV . "$this->cityId/votes/post/$id";
 	}
 
+	private function getBaseUrl() {
+		global $wgDevelEnvironment;
+
+		if ( empty( $wgDevelEnvironment ) ) {
+			return self::DISCUSSIONS_API_BASE;
+		}
+
+		return self::DISCUSSIONS_API_BASE_DEV;
+	}
+
 	private function apiRequest( $url ) {
 		$request = RequestContext::getMain()->getRequest();
 
@@ -76,6 +86,7 @@ class DiscussionsThreadModel {
 			'firstPostId' => $rawPost['firstPostId'],
 			'index' => $index,
 			'link' => '/d/p/' . $rawPost['id'],
+			'shareUrl' => $this->getBaseUrl() . '/d/p/' . $rawPost['id'],
 			'upvoteUrl' => $this->getUpvoteRequestUrl( $rawPost['firstPostId'] ),
 			'title' => $rawPost['title'],
 			'upvoteCount' => $rawPost['upvoteCount'],

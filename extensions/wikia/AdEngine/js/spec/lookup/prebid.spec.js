@@ -14,6 +14,9 @@ describe('ext.wikia.adEngine.lookup.prebid', function () {
 					};
 				}
 			},
+			opts: {
+				prebidBidderUrl: 'foo'
+			},
 			tracker: {
 				measureDiff: function () {
 					return mocks.tracker;
@@ -130,6 +133,7 @@ describe('ext.wikia.adEngine.lookup.prebid', function () {
 
 	function getPrebid() {
 		return modules['ext.wikia.adEngine.lookup.prebid'](
+			mocks.adContext,
 			mocks.adapters.appnexus,
 			getFactory(),
 			mocks.doc,
@@ -153,7 +157,7 @@ describe('ext.wikia.adEngine.lookup.prebid', function () {
 			parentNode: {insertBefore: insertBefore},
 			async: true,
 			type: 'text/javascript',
-			src: '//acdn.adnxs.com/prebid/prebid.js'
+			src: mocks.opts.prebidBidderUrl
 		};
 
 		prebid.call('oasis', function () {
