@@ -102,7 +102,7 @@ class RemoveImapTags extends Maintenance {
 		if ( $article->getID() ) {
 			$results = null;
 			$articleContent = $article->getContent();
-			$imapSearchRegexp = '/<imap.*map\\-id\\="(\\d{1,})".*.<\\/imap>/';
+			$imapSearchRegexp = "/<imap.*map\-id\=['\"](\d{1,})['\"].*(<\/imap|\/)>/";
 
 			$noOfFoundTags = preg_match_all($imapSearchRegexp, $articleContent, $results);
 
