@@ -1472,7 +1472,7 @@ abstract class Installer {
 			$user->addToDatabase();
 
 			try {
-				$user->setPassword( $this->getVar( '_AdminPassword' ) );
+				$user->setPassword( $this->getVar( '_AdminPassword' ), false );
 			} catch( PasswordError $pwe ) {
 				return Status::newFatal( 'config-admin-error-password', $name, $pwe->getMessage() );
 			}
