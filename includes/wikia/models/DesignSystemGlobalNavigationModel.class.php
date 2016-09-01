@@ -244,7 +244,7 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 		return [
 			'header' => [
 				'type' => 'line-image',
-				'image' => 'wsd-icons-bell',
+				'image' => 'wds-icons-bell',
 				'title' => [
 					'type' => 'translatable-text',
 					'key' => 'global-navigation-notifications-title'
