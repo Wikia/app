@@ -30,7 +30,9 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 					]
 				]
 			],
-			'search' => $this->getSearchData(),
+			'search' => [
+				'module' => $this->getSearchData()
+			],
 			'create_wiki' => [
 				'links' => [
 					[
