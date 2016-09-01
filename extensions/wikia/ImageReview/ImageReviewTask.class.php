@@ -83,6 +83,27 @@ class ImageReviewTask extends BaseTask {
 		return $success;
 	}
 
+	public function setImageReviewState( Array $aUpdateList ) {
+		global $wgExternalDatawareDB;
+
+		$oDB = wfGetDB( DB_MASTER, [], $wgExternalDatawareDB );
+
+		foreach ( $aUpdateList as $aRow ) {
+			$oDB->update(
+				'image_review',
+				[ 'state' => $aRow['state'], ],
+				[ 'wiki_id' => $aRow['wiki_id'], 'page_id' => $aRow['page_id'], ],
+				__METHOD__
+			);
+
+			WikiaLogger::instance()->info( 'ImageReviewLog', [
+				'method' => __METHOD__,
+				'message' => 'Images changed state',
+				'params' => $aRow,
+			] );
+		}
+	}
+
 	public function deleteFromQueue( Array $aDeletionList ) {
 		global $wgExternalDatawareDB;
 

@@ -202,6 +202,72 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 		return $imageList;
 	}
 
+	public static function checkImageValidity( $image ) {
+		$bValidImage = true;
+		$oImagePage = GlobalTitle::newFromId( $image->page_id, $image->wiki_id );
+		$oImageGlobalFile = null;
+		$sReason = 'unknown';
+
+		if ( $oImagePage instanceof GlobalTitle !== true ) {
+			$bValidImage = false;
+			$sReason = 'Page does not exist';
+		} elseif ( $oImagePage->isRedirect() === true ) {
+			$bValidImage = false;
+			$sReason = 'Page is a redirect';
+		} else {
+			$oImageGlobalFile = new GlobalFile( $oImagePage );
+			if ( $oImageGlobalFile->exists() === false ) {
+				$bValidImage = false;
+				$sReason = 'File does not exist';
+			}
+		}
+
+		if ( !$bValidImage ) {
+			return [
+				'wiki_id' => $image->wiki_id,
+				'page_id' => $image->page_id,
+				'reason' => $sReason,
+			];
+		}
+
+		$sThumbUrl = $oImageGlobalFile->getUrlGenerator()
+			->width( self::IMAGE_REVIEW_THUMBNAIL_SIZE )
+			->height( self::IMAGE_REVIEW_THUMBNAIL_SIZE )
+			->thumbnailDown()
+			->url();
+
+		$aImageInfo = array(
+			'src' => $sThumbUrl,
+			'page' => $oImagePage->getFullURL(),
+			'extension' => $oImageGlobalFile->getMimeType(),
+		);
+
+		if ( strpos( 'ico', $aImageInfo['extension'] ) ) {
+			return [
+				'reason' => 'ico',
+				'wiki_id' => $image->wiki_id,
+				'page_id' => $image->page_id,
+			];
+		} else {
+			$isThumb = true; // Vignette handles .gif and .svg files
+
+			$wikiRow = WikiFactory::getWikiByID( $image->wiki_id );
+
+			return [
+				'reason' => 'verified',
+				'wiki_id' => $image->wiki_id,
+				'page_id' => $image->page_id,
+				'state' => $image->state,
+				'src' => $aImageInfo['src'],
+				'url' => $aImageInfo['page'],
+				'priority' => $image->priority,
+				'flags' => $image->flags,
+				'isthumb' => $isThumb,
+				'wiki_url' => isset( $wikiRow->city_url ) ? $wikiRow->city_url : '',
+			];
+		}
+	}
+
 	/**
 	 * get image list
 	 * @return array imageList
@@ -214,9 +280,8 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 
 		$oResults = $oDatabaseHelper->selectImagesForList( $this->getOrder( $order ), self::LIMIT_IMAGES_FROM_DB, $state );
 
-		$rows = array();
-		$updateWhere = array();
-		$iconsWhere = array();
+		$rows = [];
+		$updateWhere = [];
 		while ( $row = $oDB->fetchObject($oResults) ) {
 			$rows[] = $row;
 			$updateWhere[] = "(wiki_id = {$row->wiki_id} and page_id = {$row->page_id})";
@@ -238,11 +303,11 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 					$target_state = ImageReviewStatuses::STATE_IN_REVIEW;
 			}
 
-			$values = array (
+			$values = [
 				'reviewer_id' => $this->user_id,
 				'review_start' => $review_start,
 				'state' => $target_state
-			);
+			];
 
 			if ( $state == ImageReviewStatuses::STATE_QUESTIONABLE || $state == ImageReviewStatuses::STATE_REJECTED ) {
 				$values[] = "review_end = '0000-00-00 00:00:00'";
@@ -251,96 +316,68 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 			$oDB->update(
 				'image_review',
 				$values,
-				array( implode(' OR ', $updateWhere) ),
+				[ implode(' OR ', $updateWhere) ],
 				__METHOD__
 			);
 		}
 		$oDB->commit();
 
-		$imageList = $unusedImages = $aDeleteFromQueueList = [];
+		$verifiedImages = [];
+		$unusedImages = [];
+		$invalidImages = [];
+		$iconImages = [];
 
-		foreach ( $rows as $row ) {
-			$record = "(wiki_id = {$row->wiki_id} and page_id = {$row->page_id})";
+		foreach ( $rows as $image ) {
+			$record = "(wiki_id = {$image->wiki_id} and page_id = {$image->page_id})";
 
-			if ( count( $imageList ) < self::LIMIT_IMAGES ) {
-				$bDisplayImage = true;
-				$oImagePage = GlobalTitle::newFromId( $row->page_id, $row->wiki_id );
-
-				if ( $oImagePage instanceof GlobalTitle !== true ) {
-					$bDisplayImage = false;
-					$sReason = 'Page does not exist';
-				} elseif ( $oImagePage->isRedirect() === true ) {
-					$bDisplayImage = false;
-					$sReason = 'Page is a redirect';
-				} else {
-					$oImageGlobalFile = new GlobalFile( $oImagePage );
-					if ( $oImageGlobalFile->exists() === false ) {
-						$bDisplayImage = false;
-						$sReason = 'File does not exist';
-					}
-				}
-
-				if ( $bDisplayImage === true && $oImageGlobalFile instanceof GlobalFile ) {
-					$sThumbUrl = $oImageGlobalFile->getUrlGenerator()
-						->width( self::IMAGE_REVIEW_THUMBNAIL_SIZE )
-						->height( self::IMAGE_REVIEW_THUMBNAIL_SIZE )
-						->thumbnailDown()
-						->url();
-
-					$aImageInfo = array(
-						'src' => $sThumbUrl,
-						'page' => $oImagePage->getFullUrl(),
-						'extension' => $oImageGlobalFile->getMimeType(),
-					);
-
-					if ( strpos( 'ico', $aImageInfo['extension'] ) ) {
-						$iconsWhere[] = $record;
-						continue;
-					} else {
-						$isThumb = true; // Vignette handles .gif and .svg files
-
-						$wikiRow = WikiFactory::getWikiByID( $row->wiki_id );
-
-						$imageList[] = array(
-							'wikiId' => $row->wiki_id,
-							'pageId' => $row->page_id,
-							'state' => $row->state,
-							'src' => $aImageInfo['src'],
-							'url' => $aImageInfo['page'],
-							'priority' => $row->priority,
-							'flags' => $row->flags,
-							'isthumb' => $isThumb,
-							'wiki_url' => isset( $wikiRow->city_url ) ? $wikiRow->city_url : '',
-						);
-					}
-				} else {
-					$aDeleteFromQueueList[] = [
-						'wiki_id' => $row->wiki_id,
-						'page_id' => $row->page_id,
-						'reason' => $sReason,
-					];
-					continue;
-				}
-			} else {
+			if ( count( $verifiedImages ) >= self::LIMIT_IMAGES ) {
 				$unusedImages[] = $record;
+				continue;
+			}
+
+			$imageInfo = self::checkImageValidity( $image );
+
+			switch( $imageInfo['reason'] ) {
+				case 'verified':
+					$verifiedImages[] = $imageInfo;
+					break;
+				case 'ico':
+					$iconImages[] = $record;
+					WikiaLogger::instance()->info( "ImageReviewLog", [
+						'method' => __METHOD__,
+						'message' => "Image skipped",
+						'reason' => $imageInfo['reason'],
+						'page_id' => $image->page_id,
+						'wiki_id' => $image->wiki_id,
+					] );
+					break;
+				default:
+					WikiaLogger::instance()->info( "ImageReviewLog", [
+						'method' => __METHOD__,
+						'message' => "Image skipped",
+						'reason' => $imageInfo['reason'],
+						'page_id' => $image->page_id,
+						'wiki_id' => $image->wiki_id,
+					] );
+					$invalidImages[] = $record;
 			}
 		}
 
 		/**
 		 * Invalid images
 		 */
-		if ( !empty( $aDeleteFromQueueList ) ) {
-			$this->createDeleteFromQueueTask( $aDeleteFromQueueList );
+		if ( !empty( $invalidImages ) ) {
+			$this->createDeleteFromQueueTask( $invalidImages );
 		}
 
 		/**
 		 * Icons
 		 */
-		if ( !empty( $iconsWhere ) ) {
+		if ( !empty( $iconImages ) ) {
 			$aIconsValues = [
 				'state' => ImageReviewStatuses::STATE_ICO_IMAGE,
 			];
-			$aIconsWhere = [ implode( 'OR', $iconsWhere ) ];
+			$aIconsWhere = [ implode( 'OR', $iconImages ) ];
 			$this->imageListAdditionalAction( 'icons', $oDB, $aIconsValues, $aIconsWhere );
 		}
 
@@ -361,12 +398,12 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 		 */
 		WikiaLogger::instance()->info( "ImageReviewLog", [
 			'method' => __METHOD__,
-			'message' => 'Fetched ' . count( $imageList ) . ' new images',
+			'message' => 'Fetched ' . count( $verifiedImages ) . ' new images',
 		] );
 
 		wfProfileOut( __METHOD__ );
 
-		return $imageList;
+		return $verifiedImages;
 	}
 
 	private function imageListAdditionalAction( $sType, DatabaseBase $oDB, Array $aValues, Array $aWhere ) {
@@ -415,7 +452,6 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 		];
 
 		$total = array_merge( $initial_stats, $total );
-
 		$db_helper = $this->getDatabaseHelper();
 		$counters = $db_helper->countImagesByState();
 
@@ -443,14 +479,14 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 		$startDate = $startYear . '-' . $startMonth . '-' . $startDay . ' 00:00:00';
 		$endDate = $endYear . '-' . $endMonth . '-' . $endDay . ' 23:59:59';
 
-		$summary = array(
+		$summary = [
 			'all' => 0,
 			ImageReviewStatuses::STATE_APPROVED 	=> 0,
 			ImageReviewStatuses::STATE_REJECTED 	=> 0,
 			ImageReviewStatuses::STATE_QUESTIONABLE => 0,
 			'avg' => 0,
-		);
-		$data = array();
+		];
+		$data = [];
 		$userCount = $total = $avg = 0;
 
 		$dbr = $this->getDatawareDB( DB_SLAVE );
@@ -466,17 +502,17 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 					continue;
 				}
 
-				$query = array();
+				$query = [];
 				foreach ( array_keys( $summary ) as $review_state ) {
 					# union query: mysql explain: Using where; Using index and max 150k rows
 					$query[] = $dbr->selectSQLText(
-						array( 'image_review_stats' ),
-						array( 'review_state', 'count(*) as cnt' ),
-						array(
+						[ 'image_review_stats' ],
+						[ 'review_state', 'count(*) as cnt' ],
+						[
 							"review_state"	=> $review_state,
 							"reviewer_id"	=> $reviewer,
 							"review_end between '{$startDate}' AND '{$endDate}'"
-						),
+						],
 						__METHOD__
 					);
 				}
@@ -488,13 +524,13 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 				while ( $row = $dbr->fetchObject( $res ) ) {
 					if ( !empty( $row->review_state ) ) {
 						if ( !isset( $data[ $reviewer ] ) ) {
-							$data[ $reviewer ] = array(
+							$data[ $reviewer ] = [
 								'name' => $user->getName(),
 								'total' => 0,
 								ImageReviewStatuses::STATE_APPROVED => 0,
 								ImageReviewStatuses::STATE_REJECTED => 0,
 								ImageReviewStatuses::STATE_QUESTIONABLE => 0,
-							);
+							];
 						}
 						$data[ $reviewer ][ $row->review_state ] = $row->cnt;
 						$data[ $reviewer ][ 'total' ] += $row->cnt;
@@ -518,10 +554,10 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 			$stats['toavg'] = $stats['total'] - $summary['avg'];
 		}
 
-		return array(
+		return [
 			'summary' => $summary,
 			'data' => $data,
-		);
+		];
 	}
 
 	public function getUserTsKey() {
@@ -568,16 +604,16 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 		$key = wfMemcKey( 'ImageReviewSpecialController', 'v2', __METHOD__);
 		$states = $this->wg->memc->get($key);
 		if ( empty($states) ) {
-			$states = array();
+			$states = [];
 			$db = $this->getDatawareDB( DB_SLAVE );
 
 			# MySQL explain: Using where; Using index for group-by
 			$result = $db->select(
-				array( 'image_review_stats' ),
-				array( 'review_state' ),
-				array( 'review_state > 0' ),
+				[ 'image_review_stats' ],
+				[ 'review_state' ],
+				[ 'review_state > 0' ],
 				__METHOD__,
-				array( 'GROUP BY' => 'review_state' )
+				[ 'GROUP BY' => 'review_state' ]
 			);
 
 			while( $row = $db->fetchObject($result) ) {
@@ -601,11 +637,11 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 
 			# MySQL explain: Using where; Using index for group-by
 			$result = $db->select(
-				array( 'image_review_stats' ),
-				array( 'reviewer_id' ),
-				array( 'reviewer_id > 0' ),
+				[ 'image_review_stats' ],
+				[ 'reviewer_id' ],
+				[ 'reviewer_id > 0' ],
 				__METHOD__,
-				array( 'GROUP BY' => 'reviewer_id' )
+				[ 'GROUP BY' => 'reviewer_id' ]
 			);
 
 			while( $row = $db->fetchObject($result) ) {
