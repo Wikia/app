@@ -14,7 +14,7 @@
 			'wds-icon wds-icon-tiny wds-dropdown__toggle-chevron'
 		) ?>
 	</div>
-	<div class="wds-dropdown__content wds-global-navigation__dropdown <?= $rightAligned ? 'wds-is-right-aligned' : ''; ?>">
+	<div class="wds-dropdown__content wds-global-navigation__dropdown-content <?= $rightAligned ? 'wds-is-right-aligned' : ''; ?>">
 		<ul class="wds-list">
 			<?php foreach ( $model['links'] as $link ): ?>
 				<li><?= $app->renderView( 'DesignSystemGlobalNavigationService', 'dropdownLink', [ 'model' => $link ] ); ?></li>
