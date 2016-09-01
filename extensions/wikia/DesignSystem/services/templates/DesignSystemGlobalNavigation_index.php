@@ -1,19 +1,16 @@
 <div class="wds-global-navigation">
 	<div class="wds-global-navigation__content-bar">
-		<a href="<?= Sanitizer::encodeAttribute( $model['logo']['header']['href'] ); ?>" class="wds-global-navigation__logo">
-			<?= DesignSystemHelper::getSvg(
-				$model['logo']['header']['image'],
+		<a href="<?= Sanitizer::encodeAttribute( $model['logo']['links'][0]['href'] ); ?>" class="wds-global-navigation__logo">
+			<?= ''
+			/* Uncomment when we have the SVG
+			 * DesignSystemHelper::getSvg(
+				$model['logo']['links'][0]['image'],
 				'wds-global-navigation__logo-fandom'
-			) ?>
-			<span class="wds-global-navigation__logo-powered-by">powered by</span>
-			<?= DesignSystemHelper::getSvg(
-				'wds-company-logo-wikia',
-				'wds-global-navigation__logo-wikia'
-			) ?>
+			)*/ ?>
 		</a>
 		<?php
-		if ( isset( $model['verticals'] ) ):
-			foreach ( $model['verticals']['links'] as $link ):
+		if ( isset( $model['fandom_overview'] ) ):
+			foreach ( $model['fandom_overview']['links'] as $link ):
 		?>
 				<?= $app->renderView( 'DesignSystemGlobalNavigationService', 'linkBranded', [ 'model' => $link ] ); ?>
 		<?php
@@ -21,14 +18,14 @@
 		endif;
 		?>
 		<?= $app->renderView( 'DesignSystemGlobalNavigationService', 'dropdown', [ 'model' => $model['wikis'] ] ); ?>
-		<form class="wds-global-navigation__search" action="<?= Sanitizer::encodeAttribute( $model['search']['module']['results']['url'] ); ?>">
+		<form class="wds-global-navigation__search" action="<?= Sanitizer::encodeAttribute( $model['search']['results']['url'] ); ?>">
 			<div class="wds-global-navigation__search-input-wrapper">
 				<label class="wds-global-navigation__search-label">
 					<?= DesignSystemHelper::getSvg(
 						'wds-icons-magnifying-glass',
 						'wds-icon wds-icon-small'
 					) ?>
-					<input class="wds-global-navigation__search-input" name="search" placeholder="<?= DesignSystemHelper::renderText( $model['search']['module']['placeholder-inactive'] ); ?>"/>
+					<input class="wds-global-navigation__search-input" name="search" placeholder="<?= DesignSystemHelper::renderText( $model['search']['placeholder-inactive'] ); ?>"/>
 				</label>
 				<button class="wds-button wds-is-text wds-global-navigation__search-close">
 					<?= DesignSystemHelper::getSvg(
@@ -72,8 +69,8 @@
 			</div>
 		</div>
 		<div class="wds-global-navigation__start-a-wiki">
-			<a href="<?= Sanitizer::encodeAttribute( $model['create_wiki']['header']['href'] ); ?>" class="wds-button wds-is-squished wds-is-secondary">
-				<span class="wds-global-navigation__start-a-wiki-caption"><?= DesignSystemHelper::renderText( $model['create_wiki']['header']['title'] ) ?></span>
+			<a href="<?= Sanitizer::encodeAttribute( $model['create_wiki']['links'][0]['href'] ); ?>" class="wds-button wds-is-squished wds-is-secondary">
+				<span class="wds-global-navigation__start-a-wiki-caption"><?= DesignSystemHelper::renderText( $model['create_wiki']['links'][0]['title'] ) ?></span>
 				<?= DesignSystemHelper::getSvg(
 					'wds-icons-plus',
 					'wds-global-navigation__start-a-wiki-icon wds-icon'
