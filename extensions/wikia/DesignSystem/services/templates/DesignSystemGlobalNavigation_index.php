@@ -33,7 +33,8 @@
 				<button class="wds-button wds-is-text wds-global-navigation__search-close">
 					<?= DesignSystemHelper::getSvg(
 						'wds-icons-cross',
-						'wds-icon wds-icon-small wds-global-navigation__search-close-icon'
+						'wds-icon wds-icon-small wds-global-navigation__search-close-icon',
+						wfMessage( 'global-navigation-search-cancel' )->escaped()
 					) ?>
 				</button>
 			</div>
@@ -58,7 +59,7 @@
 			<?= $app->renderView( 'DesignSystemGlobalNavigationService', 'accountNavigation', [ 'model' => $model['anon'] ] ); ?>
 		<?php endif; ?>
 		<div class="wds-global-navigation__notifications-menu wds-dropdown notifications-entry-point">
-			<div class="wds-dropdown-toggle wds-global-navigation__dropdown-toggle">
+			<div class="wds-dropdown__toggle wds-global-navigation__dropdown-toggle">
 				<div class="wds-global-navigation__notifications-counter">3</div>
 				<?= DesignSystemHelper::getSvg(
 					'wds-icons-bell',
@@ -66,7 +67,7 @@
 				) ?>
 				<?= DesignSystemHelper::getSvg(
 					'wds-icons-dropdown-tiny',
-					'wds-icon wds-icon-tiny wds-dropdown-toggle-chevron'
+					'wds-icon wds-icon-tiny wds-dropdown__toggle-chevron'
 				) ?>
 			</div>
 		</div>

@@ -14,10 +14,12 @@ $notification-counter-size: 18px;
 	&__dropdown-toggle {
 		align-items: center;
 		display: flex;
+		flex: 1;
+		height: $nav-height;
 		justify-content: center;
 	}
 
-	&__dropdown {
+	&__dropdown-content {
 		color: $color-dark-blue-gray;
 		top: calc(100% + 1px);
 		width: 190px;
@@ -247,11 +249,11 @@ $notification-counter-size: 18px;
 		font-size: $typescale-size-minus-3;
 		height: $notification-counter-size;
 		justify-content: center;
-		left: -11px;
+		left: -1px;
 		min-width: $notification-counter-size;
 		padding: 0 4px;
 		position: absolute;
-		top: -8px;
+		top: 8px;
 	}
 
 	&__start-a-wiki-icon {
@@ -319,7 +321,7 @@ $notification-counter-size: 18px;
 		}
 	}
 
-	@media #{$breakpoint-desktop-up} {
+	@media #{$breakpoint-l-up} {
 		&__content-bar {
 			width: 1004px;
 		}
@@ -357,13 +359,13 @@ $notification-counter-size: 18px;
 		}
 	}
 
-	@media #{$breakpoint-desktop-l-up} {
+	@media #{$breakpoint-xl-up} {
 		&__content-bar {
 			width: 1064px;
 		}
 	}
 
-	@media #{$breakpoint-desktop-xl-up} {
+	@media #{$breakpoint-xxl-up} {
 		&__content-bar {
 			width: 1238px;
 		}

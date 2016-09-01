@@ -5,45 +5,45 @@ $dropdown-content-z-index: 1;
 	display: inline-block;
 	position: relative;
 
-	.wds-dropdown-toggle-chevron {
+	&__toggle {
+		// In Internet Explorer `:active` pseudo-class is set only on child element,
+		// parent doesn't receive `:active` state.
+		pointer-events: none;
+		position: relative;
+		// dropdown content has shadow that should be hidden below the toggle
+		z-index: $dropdown-content-z-index + 1;
+	}
+
+	&__toggle-chevron {
 		margin-left: 5px;
 	}
 
-	&.wds-is-active {
-		.wds-dropdown-content {
+	&__content {
+		background-color: $color-white;
+		box-shadow: 0 0 10px 0 rgba($color-black, .2);
+		display: none;
+		left: 0;
+		position: absolute;
+		top: 100%;
+		z-index: $dropdown-content-z-index;
+
+		&.wds-is-dark {
+			box-shadow: 0 0 20px 0 rgba($color-black, .3);
+		}
+
+		&.wds-is-right-aligned {
+			left: auto;
+			right: 0;
+		}
+	}
+
+	&.wds-is-active .wds-dropdown {
+		&__content {
 			display: inline-block;
 		}
 
-		.wds-dropdown-toggle-chevron {
+		&__toggle-chevron {
 			transform: rotate(180deg);
 		}
-	}
-}
-
-.wds-dropdown-toggle {
-	// In Internet Explorer `:active` pseudo-class is set only on child element,
-	// parent doesn't receive `:active` state.
-	//pointer-events: none;
-	position: relative;
-	// dropdown content has shadow that should be hidden below the toggle
-	z-index: $dropdown-content-z-index + 1;
-}
-
-.wds-dropdown-content {
-	background-color: $color-white;
-	box-shadow: 0 0 10px 0 rgba($color-black, .2);
-	display: none;
-	left: 0;
-	position: absolute;
-	top: 100%;
-	z-index: $dropdown-content-z-index;
-
-	&.wds-is-dark {
-		box-shadow: 0 0 20px 0 rgba($color-black, .3);
-	}
-
-	&.wds-is-right-aligned {
-		left: auto;
-		right: 0;
 	}
 }
