@@ -18,7 +18,7 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 
 		$data = [
 			'logo' => [
-				'links' => [
+				'header' => [
 					[
 						'type' => 'link-image',
 						'href' => $this->getHref( 'fandom-logo' ),
