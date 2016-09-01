@@ -268,7 +268,7 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 					'brand' => 'tv',
 					'title' => [
 						'type' => 'translatable-text',
-						'key' => 'global-navigation-fandom-overwiew-link-vertical-tv'
+						'key' => 'global-navigation-fandom-overview-link-vertical-tv'
 					],
 					'href' => $this->getHref( 'tv' ),
 				],
@@ -277,7 +277,7 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 					'brand' => 'games',
 					'title' => [
 						'type' => 'translatable-text',
-						'key' => 'global-navigation-fandom-overwiew-link-vertical-games'
+						'key' => 'global-navigation-fandom-overview-link-vertical-games'
 					],
 					'href' => $this->getHref( 'games' ),
 				],
@@ -286,7 +286,7 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 					'brand' => 'movies',
 					'title' => [
 						'type' => 'translatable-text',
-						'key' => 'global-navigation-fandom-overwiew-link-vertical-movies'
+						'key' => 'global-navigation-fandom-overview-link-vertical-movies'
 					],
 					'href' => $this->getHref( 'movies' ),
 				]
