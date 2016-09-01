@@ -58,19 +58,7 @@
 		<?php elseif ( isset( $model['anon'] ) ): ?>
 			<?= $app->renderView( 'DesignSystemGlobalNavigationService', 'accountNavigation', [ 'model' => $model['anon'] ] ); ?>
 		<?php endif; ?>
-		<div class="wds-global-navigation__notifications-menu wds-dropdown notifications-entry-point">
-			<div class="wds-dropdown__toggle wds-global-navigation__dropdown-toggle">
-				<div class="wds-global-navigation__notifications-counter">3</div>
-				<?= DesignSystemHelper::getSvg(
-					'wds-icons-bell',
-					'wds-icon wds-icon-small'
-				) ?>
-				<?= DesignSystemHelper::getSvg(
-					'wds-icons-dropdown-tiny',
-					'wds-icon wds-icon-tiny wds-dropdown__toggle-chevron'
-				) ?>
-			</div>
-		</div>
+		<?= $app->renderView( 'DesignSystemGlobalNavigationWallNotificationsService', 'index' ); ?>
 		<div class="wds-global-navigation__start-a-wiki">
 			<a href="<?= Sanitizer::encodeAttribute( $model['create_wiki']['header']['href'] ); ?>" class="wds-button wds-is-squished wds-is-secondary">
 				<span class="wds-global-navigation__start-a-wiki-caption"><?= DesignSystemHelper::renderText( $model['create_wiki']['header']['title'] ) ?></span>

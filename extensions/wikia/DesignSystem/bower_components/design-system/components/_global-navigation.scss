@@ -14,7 +14,9 @@ $notification-counter-size: 18px;
 	&__dropdown-toggle {
 		align-items: center;
 		display: flex;
-		flex: 1;
+		// Safari doesn't set default flex values if we use `flex: 1;`
+		// it requires us to put these values explicitly.
+		flex: 1 1 auto;
 		height: $nav-height;
 		justify-content: center;
 	}
@@ -109,7 +111,9 @@ $notification-counter-size: 18px;
 	}
 
 	&__link {
-		flex: 1;
+		// Safari doesn't set default flex values if we use `flex: 1;`
+		// it requires us to put these values explicitly.
+		flex: 1 1 auto;
 
 		&.wds-is-games {
 			border-color: $color-games;
@@ -150,14 +154,18 @@ $notification-counter-size: 18px;
 	&__search-input-wrapper {
 		border: 0 solid $color-slate-gray;
 		display: flex;
-		flex: 1;
+		// Safari doesn't set default flex values if we use `flex: 1;`
+		// it requires us to put these values explicitly.
+		flex: 1 1 auto;
 	}
 
 	&__search-label {
 		align-items: center;
 		background-color: $color-white;
 		display: flex;
-		flex: 1;
+		// Safari doesn't set default flex values if we use `flex: 1;`
+		// it requires us to put these values explicitly.
+		flex: 1 1 auto;
 		z-index: 2;
 	}
 
@@ -165,7 +173,9 @@ $notification-counter-size: 18px;
 		border: 0;
 		color: $color-dark-gray;
 		display: none;
-		flex: 1;
+		// Safari doesn't set default flex values if we use `flex: 1;`
+		// it requires us to put these values explicitly.
+		flex: 1 1 auto;
 		font-size: $typescale-size-minus-1;
 		// Firefox doesn't size input properly if our input
 		// has `width` set in `%` and is inside `flexbox`.
@@ -189,6 +199,8 @@ $notification-counter-size: 18px;
 
 	&__search-close {
 		display: none;
+		// iPad Safari fix for bleeding search suggestions shadow
+		margin: 0;
 		padding: 3px;
 		z-index: 2;
 	}
@@ -270,7 +282,9 @@ $notification-counter-size: 18px;
 		}
 
 		&__search {
-			flex: 1;
+			// Safari doesn't set default flex values if we use `flex: 1;`
+			// it requires us to put these values explicitly.
+			flex: 1 1 auto;
 		}
 
 		&__search-input {
@@ -288,7 +302,9 @@ $notification-counter-size: 18px;
 		}
 
 		&__search {
-			flex: 1;
+			// Safari doesn't set default flex values if we use `flex: 1;`
+			// it requires us to put these values explicitly.
+			flex: 1 1 auto;
 		}
 
 		&__search-input-wrapper {
@@ -327,7 +343,9 @@ $notification-counter-size: 18px;
 		}
 
 		&__search {
-			flex: 2;
+			// Safari doesn't set default flex values if we use `flex: 2;`
+			// it requires us to put these values explicitly.
+			flex: 2 1 auto;
 			padding-left: 8px;
 		}
 

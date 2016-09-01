@@ -16,6 +16,7 @@ $wgExtensionMessagesFiles['DesignSystem'] = __DIR__ . '/DesignSystem.i18n.php';
 // services
 $wgAutoloadClasses[ 'DesignSystemGlobalFooterService' ] = __DIR__ . '/services/DesignSystemGlobalFooterService.class.php';
 $wgAutoloadClasses[ 'DesignSystemGlobalNavigationService' ] = __DIR__ . '/services/DesignSystemGlobalNavigationService.class.php';
+$wgAutoloadClasses[ 'DesignSystemGlobalNavigationWallNotificationsService' ] = __DIR__ . '/services/DesignSystemGlobalNavigationWallNotificationsService.class.php';
 
 // helpers
 $wgAutoloadClasses[ 'DesignSystemHelper' ] = __DIR__ . '/DesignSystemHelper.class.php';

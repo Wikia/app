@@ -14,6 +14,15 @@
 		border-radius: 0;
 		height: auto;
 	}
+
+	.notifications-container .bubbles {
+		background: none;
+		min-width: 0;
+		padding: 0;
+		position: static;
+		right: 0;
+		top: auto;
+	}
 }
 
 .wds-global-footer {
