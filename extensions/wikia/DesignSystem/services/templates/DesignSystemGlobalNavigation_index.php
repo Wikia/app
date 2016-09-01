@@ -33,7 +33,8 @@
 				<button class="wds-button wds-is-text wds-global-navigation__search-close">
 					<?= DesignSystemHelper::getSvg(
 						'wds-icons-cross',
-						'wds-icon wds-icon-small wds-global-navigation__search-close-icon'
+						'wds-icon wds-icon-small wds-global-navigation__search-close-icon',
+						wfMessage( 'global-navigation-search-cancel' )->escaped()
 					) ?>
 				</button>
 			</div>
