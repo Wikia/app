@@ -19,14 +19,12 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 		$data = [
 			'logo' => [
 				'header' => [
-					[
-						'type' => 'link-image',
-						'href' => $this->getHref( 'fandom-logo' ),
-						'image' => 'wds-company-logo-fandom-powered-by-wikia',
-						'title' => [
-							'type' => 'text',
-							'value' => 'Fandom powered by Wikia'
-						]
+					'type' => 'link-image',
+					'href' => $this->getHref( 'fandom-logo' ),
+					'image' => 'wds-company-logo-fandom-powered-by-wikia',
+					'title' => [
+						'type' => 'text',
+						'value' => 'Fandom powered by Wikia'
 					]
 				]
 			],
