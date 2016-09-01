@@ -100,7 +100,7 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 	}
 
 	private function getSearchData() {
-		$isCorporatePage = WikiaPageType::isCorporatePage();
+		$isCorporatePage = $this->isCorporatePage();
 
 		$search = [
 			'type' => 'search',
@@ -292,6 +292,11 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 				]
 			]
 		];
+	}
+
+	private function isCorporatePage() {
+		return WikiFactory::getVarValueByName( 'wgEnableWikiaHomePageExt', $this->wikiId )
+			|| WikiFactory::getVarValueByName( 'wgEnableWikiaHubsV3Ext', $this->wikiId );
 	}
 
 	private function getCorporatePageSearchUrl() {
