@@ -100,7 +100,7 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 	}
 
 	private function getSearchData() {
-		$isCorporatePage = $this->isCorporatePage();
+		$isCorporatePage = WikiaPageType::isCorporatePage( $this->wikiId );
 
 		$search = [
 			'type' => 'search',
