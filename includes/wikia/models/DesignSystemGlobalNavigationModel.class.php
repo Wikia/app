@@ -75,7 +75,9 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 			];
 		} else {
 			$data[ 'wikis' ] = [
-				'links' => $this->getCommunityCentralLink()
+				'links' => [
+					$this->getCommunityCentralLink()
+				]
 			];
 		}
 
