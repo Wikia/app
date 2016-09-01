@@ -3,7 +3,7 @@ $(function ($) {
 
 	$('body').on('click', function(event) {
 		var eventTarget = $(event.target),
-			clickedToggle = eventTarget.closest('.wds-dropdown-toggle'),
+			clickedToggle = eventTarget.closest('.wds-dropdown__toggle'),
 			clickedDropdown = eventTarget.closest('.wds-dropdown');
 
 		if (clickedToggle.length) {
