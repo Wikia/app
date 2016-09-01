@@ -15,14 +15,14 @@
 		<a href="#" class="wds-global-navigation__link wds-is-movies">Movies</a>
 		<a href="#" class="wds-global-navigation__link wds-is-tv">TV</a>
 		<div class="wds-global-navigation__link wds-dropdown">
-			<div class="wds-dropdown-toggle wds-global-navigation__dropdown-toggle">
+			<div class="wds-dropdown__toggle wds-global-navigation__dropdown-toggle">
 				<span>Wikis</span>
 				<?= DesignSystemHelper::getSvg(
 					'wds-icons-dropdown-tiny',
 					'wds-icon wds-icon-tiny wds-dropdown-toggle-chevron'
 				) ?>
 			</div>
-			<div class="wds-dropdown-content wds-global-navigation__dropdown">
+			<div class="wds-dropdown__content wds-global-navigation__dropdown-content">
 				<ul class="wds-list">
 					<li><a href="#" class="wds-global-navigation__dropdown-link">Explore Wikis</a></li>
 					<li><a href="#" class="wds-global-navigation__dropdown-link">Community Central</a></li>
@@ -53,14 +53,14 @@
 			</button>
 		</form>
 		<div class="wds-dropdown wds-global-navigation__user-menu">
-			<div class="wds-dropdown-toggle wds-global-navigation__dropdown-toggle">
+			<div class="wds-dropdown__toggle wds-global-navigation__dropdown-toggle">
 				<img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" class="wds-avatar wds-is-circle" alt="user name"/>
 				<?= DesignSystemHelper::getSvg(
 					'wds-icons-dropdown-tiny',
 					'wds-icon wds-icon-tiny wds-dropdown-toggle-chevron'
 				) ?>
 			</div>
-			<div class="wds-dropdown-content wds-global-navigation__dropdown">
+			<div class="wds-dropdown__content wds-global-navigation__dropdown-content">
 				<ul class="wds-list">
 					<li><a href="#" class="wds-global-navigation__dropdown-link">View Profile</a></li>
 					<li><a href="#" class="wds-global-navigation__dropdown-link">My Talk</a></li>
