@@ -13,7 +13,7 @@
 	<div class="wds-dropdown-content wds-global-navigation__dropdown wds-is-right-aligned">
 		<ul class="wds-list wds-has-lines-between">
 			<?php foreach ( $model['links'] as $link ): ?>
-			<li><?= $app->renderView( 'DesignSystemGlobalNavigationService', 'linkAuthentication', [ 'model' => $link ] ); ?></li>
+				<li><?= $app->renderView( 'DesignSystemGlobalNavigationService', 'linkAuthentication', [ 'model' => $link ] ); ?></li>
 			<?php endforeach; ?>
 		</ul>
 	</div>

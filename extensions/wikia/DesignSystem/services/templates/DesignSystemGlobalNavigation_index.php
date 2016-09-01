@@ -15,7 +15,7 @@
 		if ( isset( $model['verticals'] ) ):
 			foreach ( $model['verticals']['links'] as $link ):
 		?>
-		<?= $app->renderView( 'DesignSystemGlobalNavigationService', 'linkBranded', [ 'model' => $link ] ); ?>
+				<?= $app->renderView( 'DesignSystemGlobalNavigationService', 'linkBranded', [ 'model' => $link ] ); ?>
 		<?php
 			endforeach;
 		endif;
@@ -45,17 +45,17 @@
 			</button>
 		</form>
 		<?php if ( isset( $model['user'] ) ): ?>
-		<?= $app->renderView(
-			'DesignSystemGlobalNavigationService',
-			'dropdown',
-			[
-				'model' => $model['user'],
-				'type' => 'user-menu',
-				'rightAligned' => true,
-			]
-		); ?>
+			<?= $app->renderView(
+				'DesignSystemGlobalNavigationService',
+				'dropdown',
+				[
+					'model' => $model['user'],
+					'type' => 'user-menu',
+					'rightAligned' => true,
+				]
+			); ?>
 		<?php elseif ( isset( $model['anon'] ) ): ?>
-		<?= $app->renderView( 'DesignSystemGlobalNavigationService', 'accountNavigation', [ 'model' => $model['anon'] ] ); ?>
+			<?= $app->renderView( 'DesignSystemGlobalNavigationService', 'accountNavigation', [ 'model' => $model['anon'] ] ); ?>
 		<?php endif; ?>
 		<div class="wds-global-navigation__notifications-menu wds-dropdown notifications-entry-point">
 			<div class="wds-dropdown-toggle wds-global-navigation__dropdown-toggle">
