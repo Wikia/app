@@ -17,7 +17,7 @@
 			endforeach;
 		endif;
 		?>
-		<?= $app->renderView( 'DesignSystemGlobalNavigationService', 'dropdown', [ 'model' => $model['wikis'] ] ); ?>
+		<?= $app->renderView( 'DesignSystemGlobalNavigationService', 'links', [ 'model' => $model['wikis'] ] ); ?>
 		<form class="wds-global-navigation__search" action="<?= Sanitizer::encodeAttribute( $model['search']['results']['url'] ); ?>">
 			<div class="wds-global-navigation__search-input-wrapper">
 				<label class="wds-global-navigation__search-label">
@@ -45,11 +45,11 @@
 		<?php if ( isset( $model['user'] ) ): ?>
 			<?= $app->renderView(
 				'DesignSystemGlobalNavigationService',
-				'dropdown',
+				'links',
 				[
 					'model' => $model['user'],
 					'type' => 'user-menu',
-					'rightAligned' => true,
+					'dropdownRightAligned' => true,
 				]
 			); ?>
 		<?php elseif ( isset( $model['anon'] ) ): ?>

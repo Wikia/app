@@ -9,11 +9,11 @@ class DesignSystemGlobalNavigationService extends WikiaService {
 		$this->setVal( 'model', $this->getVal( 'model' ) );
 	}
 
-	public function dropdown() {
+	public function links() {
 		$this->response->setValues( [
 			'model' => $this->getVal( 'model' ),
 			'type' => $this->getVal( 'type', 'link' ),
-			'rightAligned' => $this->request->getBool( 'rightAligned' ),
+			'dropdownRightAligned' => $this->request->getBool( 'dropdownRightAligned' ),
 		] );
 	}
 
@@ -21,7 +21,11 @@ class DesignSystemGlobalNavigationService extends WikiaService {
 		$this->setVal( 'model', $this->getVal( 'model' ) );
 	}
 
-	public function dropdownLink() {
+	public function link() {
+		$this->setVal( 'model', $this->getVal( 'model' ) );
+	}
+
+	public function linkDropdown() {
 		$this->setVal( 'model', $this->getVal( 'model' ) );
 	}
 
