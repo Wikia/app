@@ -3,6 +3,13 @@
 .wds-global-navigation {
 	position: relative;
 	z-index: 4;
+
+	button,
+	button:hover {
+		background-image: none;
+		border-radius: 0;
+		height: auto;
+	}
 }
 
 .wds-global-footer {
