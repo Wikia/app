@@ -32,7 +32,7 @@ class RecirculationHooks {
 		return true;
 	}
 
-	public static function onBeforePageDisplay() {
+	public static function onBeforePageDisplay( OutputPage $out, Skin $skin ) {
 		JSMessages::enqueuePackage( 'Recirculation', JSMessages::EXTERNAL );
 		Wikia::addAssetsToOutput( 'recirculation_scss' );
 		return true;
