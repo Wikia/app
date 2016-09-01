@@ -32,15 +32,13 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 				'module' => $this->getSearchData()
 			],
 			'create_wiki' => [
-				'links' => [
-					[
-						'type' => 'link-text',
-						'title' => [
-							'type' => 'translatable-text',
-							'key' => 'global-navigation-create-wiki-link-start-wikia'
-						],
-						'href' => $this->getHref( 'create-new-wiki' ),
-					]
+				'header' => [
+					'type' => 'link-text',
+					'title' => [
+						'type' => 'translatable-text',
+						'key' => 'global-navigation-create-wiki-link-start-wikia'
+					],
+					'href' => $this->getHref( 'create-new-wiki' ),
 				]
 			]
 		];
