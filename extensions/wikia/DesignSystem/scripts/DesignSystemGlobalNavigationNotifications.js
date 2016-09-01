@@ -43,10 +43,12 @@ require(
 
 				this.$notificationsEntryPoint
 					.on('click', this.proxy(this.updateCounts))
-					.on('click', this.proxy(this.fetchForCurrentWiki));
+					.on('click', this.proxy(this.fetchForCurrentWiki))
+					.on('wds-dropdown-open', this.proxy(this.onNotificationsOpen));
 
 				this.$wallNotifications.add($('#pt-wall-notifications'))
 					.on('click', '.notifications-markasread', this.markAllAsReadAllWikis.bind(this));
+
 
 				$(window).on('resize', $.throttle(50, function () {
 					WallNotifications.setNotificationsHeight();
@@ -375,11 +377,6 @@ require(
 
 		$(function () {
 			WallNotifications.init();
-
-			// TODO refactor when implementing XW-1927
-			$('#notificationsEntryPoint').on('click', function () {
-				WallNotifications.onNotificationsOpen();
-			});
 		});
 	}
 );

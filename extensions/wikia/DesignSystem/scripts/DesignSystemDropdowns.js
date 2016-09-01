@@ -9,6 +9,12 @@ $(function ($) {
 		// We don't use toggle as it has disabled pointer events due to bug in IE.
 		if (clickedContent.length === 0) {
 			clickedDropdown.toggleClass('wds-is-active');
+
+			if (clickedDropdown.hasClass('wds-is-active')) {
+				clickedDropdown.trigger('wds-dropdown-open');
+			} else {
+				clickedDropdown.trigger('wds-dropdown-close');
+			}
 		}
 
 		$('.wds-dropdown.wds-is-active').not(clickedDropdown).removeClass('wds-is-active');
