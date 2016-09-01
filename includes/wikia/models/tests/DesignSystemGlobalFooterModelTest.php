@@ -21,7 +21,7 @@ class DesignSystemGlobalFooterModelTest extends WikiaBaseTest {
 				[ 'wgSitename', $wikiId, $sitename ]
 			] ) );
 
-		$footerModel = new DesignSystemGlobalFooterModel( $wikiId );
+		$footerModel = new DesignSystemGlobalFooterModel( 'wikis', $wikiId );
 		$result = $footerModel->getData();
 
 		$this->assertEquals( $result['licensing_and_vertical'], $expectedResult );
@@ -93,12 +93,12 @@ class DesignSystemGlobalFooterModelTest extends WikiaBaseTest {
 	/**
 	 * @dataProvider getHrefDataProvider
 	 *
-	 * @param $lang language code to fetch
-	 * @param $hrefs hrefs definition in different languages
-	 * @param $expectedResult
+	 * @param string $lang language code to fetch
+	 * @param array $hrefs hrefs definition in different languages
+	 * @param string $expectedResult
 	 */
 	public function testGetHref( $lang, $hrefs, $expectedResult ) {
-		$footerModel = new DesignSystemGlobalFooterModel( 1234, $lang );
+		$footerModel = new DesignSystemGlobalFooterModel( 'wikis', 1234, $lang );
 		$footerModel->setHrefs( $hrefs );
 
 		$result = $footerModel->getData();
@@ -166,14 +166,14 @@ class DesignSystemGlobalFooterModelTest extends WikiaBaseTest {
 	}
 
 	public function testInternationalHeader() {
-		$footerModel = new DesignSystemGlobalFooterModel( 1234, 'en' );
+		$footerModel = new DesignSystemGlobalFooterModel( 'wikis', 1234, 'en' );
 		$result = $footerModel->getData();
 
 		$this->assertNotEmpty( $result['wikia'] );
 		$this->assertNotEmpty( $result['fandom'] );
 		$this->assertArrayNotHasKey( 'international_header', $result );
 
-		$footerModel = new DesignSystemGlobalFooterModel( 1234, 'de' );
+		$footerModel = new DesignSystemGlobalFooterModel( 'wikis', 1234, 'de' );
 		$result = $footerModel->getData();
 
 		$this->assertNotEmpty( $result['international_header'] );
@@ -182,12 +182,12 @@ class DesignSystemGlobalFooterModelTest extends WikiaBaseTest {
 	}
 
 	public function testGetFandomOverview() {
-		$footerModel = new DesignSystemGlobalFooterModel( 1234, 'en' );
+		$footerModel = new DesignSystemGlobalFooterModel( 'wikis', 1234, 'en' );
 		$result = $footerModel->getData();
 
 		$this->assertCount( 4, $result['fandom_overview']['links'] );
 
-		$footerModel = new DesignSystemGlobalFooterModel( 1234, 'pl' );
+		$footerModel = new DesignSystemGlobalFooterModel( 'wikis', 1234, 'pl' );
 		$result = $footerModel->getData();
 
 		$this->assertCount( 1, $result['fandom_overview']['links'] );
@@ -201,7 +201,7 @@ class DesignSystemGlobalFooterModelTest extends WikiaBaseTest {
 	 * @param $expectedCount
 	 */
 	public function testGetFollowUs( $lang, $hrefs, $expectedCount ) {
-		$footerModel = new DesignSystemGlobalFooterModel( 1234, $lang );
+		$footerModel = new DesignSystemGlobalFooterModel( 'wikis', 1234, $lang );
 		$footerModel->setHrefs( $hrefs );
 
 		$result = $footerModel->getData();

@@ -499,21 +499,22 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 	}
 
 	private function getVerticalData() {
+		// fandom has no set vertical
 		if ( $this->product === self::FANDOM_PRODUCT ) {
-			$verticalMessageKey = 'fandom';
-		} else {
-			$wikiFactoryInstance = WikiFactoryHub::getInstance();
-			$verticalData = $wikiFactoryInstance->getWikiVertical( $this->id );
+			return [];
+		}
 
-			/**
-			 * We don't want to show vertical 'Other' instead we show vertical 'Lifestyle'
-			 * This is Comscore requirement
-			 */
-			if ( $verticalData['id'] == WikiFactoryHub::VERTICAL_ID_OTHER ) {
-				$verticalMessageKey = $wikiFactoryInstance->getAllVerticals()[WikiFactoryHub::VERTICAL_ID_LIFESTYLE]['short'];
-			} else {
-				$verticalMessageKey = $verticalData['short'];
-			}
+		$wikiFactoryInstance = WikiFactoryHub::getInstance();
+		$verticalData = $wikiFactoryInstance->getWikiVertical( $this->id );
+
+		/**
+		 * We don't want to show vertical 'Other' instead we show vertical 'Lifestyle'
+		 * This is Comscore requirement
+		 */
+		if ( $verticalData['id'] == WikiFactoryHub::VERTICAL_ID_OTHER ) {
+			$verticalMessageKey = $wikiFactoryInstance->getAllVerticals()[WikiFactoryHub::VERTICAL_ID_LIFESTYLE]['short'];
+		} else {
+			$verticalMessageKey = $verticalData['short'];
 		}
 
 		/**
@@ -525,7 +526,6 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 		 * - global-footer-licensing-and-vertical-description-param-vertical-music
 		 * - global-footer-licensing-and-vertical-description-param-vertical-comics
 		 * - global-footer-licensing-and-vertical-description-param-vertical-movies
-		 * - global-footer-licensing-and-vertical-description-param-vertical-fandom // TODO: add to message files
 		 */
 		$verticalMessageKey = 'global-footer-licensing-and-vertical-description-param-vertical-' . $verticalMessageKey;
 
@@ -541,7 +541,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 				'type' => 'line-text',
 				'title' => [
 					'type' => 'text',
-					'key' => 'global-footer-copyright-wikia', // TODO: add to message files - 'Copyright ' . date( 'Y' ) . ' Wikia, Inc.'
+					'key' => 'global-footer-copyright-wikia',
 				],
 			];
 		}
