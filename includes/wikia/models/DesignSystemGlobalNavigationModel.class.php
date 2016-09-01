@@ -18,48 +18,15 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 
 		$data = [
 			'logo' => [
-				'header' => [
-					'type' => 'link-image',
-					'href' => $this->getHref( 'fandom-logo' ),
-					'image' => 'wds-company-logo-fandom',
-					'title' => [
-						'type' => 'text',
-						'value' => 'Fandom powered by Wikia'
-					]
-				]
-			],
-			'wikis' => [
-				'header' => [
-					'type' => 'line-text',
-					'title' => [
-						'type' => 'translatable-text',
-						'key' => 'global-navigation-wikis',
-					],
-				],
 				'links' => [
 					[
-						'type' => 'link-text',
+						'type' => 'link-image',
+						'href' => $this->getHref( 'fandom-logo' ),
+						'image' => 'wds-company-logo-fandom',
 						'title' => [
-							'type' => 'translatable-text',
-							'key' => 'global-navigation-brandlink-wikis-explore'
-						],
-						'href' => $this->getHref( 'fan-communities' ),
-					],
-					[
-						'type' => 'link-text',
-						'title' => [
-							'type' => 'translatable-text',
-							'key' => 'global-navigation-wikis-communitycentral'
-						],
-						'href' => $this->getHref( 'community-central' ),
-					],
-					[
-						'type' => 'link-text',
-						'title' => [
-							'type' => 'translatable-text',
-							'key' => 'global-navigation-wikis-fandomuniversity'
-						],
-						'href' => $this->getHref( 'fandom-university' ),
+							'type' => 'text',
+							'value' => 'Fandom powered by Wikia'
+						]
 					]
 				]
 			],
@@ -85,19 +52,53 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 				]
 			],
 			'create_wiki' => [
-				'header' => [
-					'type' => 'link-text',
-					'title' => [
-						'type' => 'translatable-text',
-						'key' => 'wikia-create-wiki-link-start-wikia'
-					],
-					'href' => $this->getHref( 'create-new-wiki' ),
+				'links' => [
+					[
+						'type' => 'link-text',
+						'title' => [
+							'type' => 'translatable-text',
+							'key' => 'wikia-create-wiki-link-start-wikia'
+						],
+						'href' => $this->getHref( 'create-new-wiki' ),
+					]
 				]
 			]
 		];
 
 		if ( $this->lang === static::DEFAULT_LANG ) {
 			$data[ 'verticals' ] = $this->getVerticalsSection();
+			$data[ 'wikis' ] = [
+				'header' => [
+					'type' => 'line-text',
+					'title' => [
+						'type' => 'translatable-text',
+						'key' => 'global-navigation-wikis',
+					],
+				],
+				'links' => [
+					[
+						'type' => 'link-text',
+						'title' => [
+							'type' => 'translatable-text',
+							'key' => 'global-navigation-brandlink-wikis-explore'
+						],
+						'href' => $this->getHref( 'fan-communities' ),
+					],
+					$this->getCommunityCentralLink(),
+					[
+						'type' => 'link-text',
+						'title' => [
+							'type' => 'translatable-text',
+							'key' => 'global-navigation-wikis-fandomuniversity'
+						],
+						'href' => $this->getHref( 'fandom-university' ),
+					]
+				]
+			];
+		} else {
+			$data[ 'wikis' ] = [
+				'links' => $this->getCommunityCentralLink()
+			];
 		}
 
 		if ( $wgUser->isLoggedIn() ) {
@@ -112,6 +113,10 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 
 	private function getHref( $hrefKey ) {
 		return DesignSystemSharedLinks::getInstance()->getHref( $hrefKey, $this->lang );
+	}
+
+	private function getPageUrl( $pageTitle, $namespace, $query = '' ) {
+		return GlobalTitle::newFromText( $pageTitle, $namespace, $this->wikiId )->getFullURL( $query );
 	}
 
 	private function getAnonUserData() {
@@ -236,10 +241,6 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 		];
 	}
 
-	private function getPageUrl( $pageTitle, $namespace, $query = '' ) {
-		return GlobalTitle::newFromText( $pageTitle, $namespace, $this->wikiId )->getFullURL( $query );
-	}
-
 	private function getVerticalsSection() {
 		return [
 			'links' => [
@@ -271,6 +272,17 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 					'href' => $this->getHref( 'movies' ),
 				]
 			]
+		];
+	}
+
+	private function getCommunityCentralLink() {
+		return [
+			'type' => 'link-text',
+			'title' => [
+				'type' => 'translatable-text',
+				'key' => 'global-navigation-wikis-communitycentral'
+			],
+			'href' => $this->getHref( 'community-central' ),
 		];
 	}
 }
