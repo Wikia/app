@@ -4,6 +4,10 @@
 	position: relative;
 	z-index: 4;
 
+	a:hover {
+		text-decoration: none;
+	}
+
 	button,
 	button:hover {
 		background-image: none;
