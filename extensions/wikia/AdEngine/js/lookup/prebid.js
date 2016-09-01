@@ -1,11 +1,12 @@
 /*global define*/
 define('ext.wikia.adEngine.lookup.prebid', [
+	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.lookup.adapter.appnexus',
 	'ext.wikia.adEngine.lookup.adapter.index',
 	'ext.wikia.adEngine.lookup.lookupFactory',
 	'wikia.document',
 	'wikia.window'
-], function (appnexus, index, factory, doc, win) {
+], function (adContext, appnexus, index, factory, doc, win) {
 	'use strict';
 
 	var adapters = [
@@ -16,9 +17,7 @@ define('ext.wikia.adEngine.lookup.prebid', [
 		priceMap = {},
 		bidderKey = 'hb_bidder',
 		bidKey = 'hb_pb',
-		sizeKey = 'hb_size',
-		//@TODO figure out how to add working version
-		url = '//acdn.adnxs.com/prebid/not-for-prod/prebid.js';
+		sizeKey = 'hb_size';
 
 	function addAdUnits(adapterAdUnits) {
 		adapterAdUnits.forEach(function (adUnit) {
@@ -46,7 +45,7 @@ define('ext.wikia.adEngine.lookup.prebid', [
 
 			prebid.async = true;
 			prebid.type = 'text/javascript';
-			prebid.src = url;
+			prebid.src = adContext.getContext().opts.prebidBidderUrl || '//acdn.adnxs.com/prebid/prebid.js';
 
 			node.parentNode.insertBefore(prebid, node);
 
