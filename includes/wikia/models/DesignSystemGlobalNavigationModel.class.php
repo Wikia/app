@@ -295,11 +295,6 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 		return WikiFactory::getVarValueByName( 'wgEnableWallExt', $this->wikiId );
 	}
 
-	private function isCorporatePage() {
-		return WikiFactory::getVarValueByName( 'wgEnableWikiaHomePageExt', $this->wikiId )
-			|| WikiFactory::getVarValueByName( 'wgEnableWikiaHubsV3Ext', $this->wikiId );
-	}
-
 	private function getCorporatePageSearchUrl() {
 		return GlobalTitle::newFromText( 'Search', NS_SPECIAL, WikiService::WIKIAGLOBAL_CITY_ID )->getFullURL( [
 			'fulltext' => 'Search',
