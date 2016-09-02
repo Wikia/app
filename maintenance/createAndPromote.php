@@ -50,7 +50,7 @@ class CreateAndPromote extends Maintenance {
 
 		# Try to set the password
 		try {
-			$user->setPassword( $password );
+			$user->setPassword( $password, false );
 		} catch ( PasswordError $pwe ) {
 			$this->error( $pwe->getText(), true );
 		}

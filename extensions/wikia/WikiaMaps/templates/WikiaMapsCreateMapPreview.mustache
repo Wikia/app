@@ -5,21 +5,10 @@
 	</div>
 
 	{{#tileSetData}}
+		<img src="{{fileThumbUrl}}{{originalImageURL}}" alt="{{previewImgAlt}}" id="intMapPreviewImage" class="intMapPreviewImage" width="100%" height="auto" />
 
-	{{^geo}}
-	{{^tileSetId}}
-	<div class="input-group">
-		<label for="intMapTileSetTitle">{{tileSetTitleLabel}}</label>
-		<input type="text" class="wide" name="tile-set-title" placeholder="{{tileSetTitlePlaceholder}}" value="">
-	</div>
-	{{/tileSetId}}
-	{{/geo}}
-
-	<img src="{{fileThumbUrl}}{{originalImageURL}}" alt="{{previewImgAlt}}" id="intMapPreviewImage" class="intMapPreviewImage" width="100%" height="auto" />
-
-	{{#tileSetId}}
-	<input type="hidden" id="intMapTileSet" value="{{tileSetId}}">
-	{{/tileSetId}}
-
+		{{#tileSetId}}
+		<input type="hidden" id="intMapTileSet" value="{{tileSetId}}">
+		{{/tileSetId}}
 	{{/tileSetData}}
 </form>

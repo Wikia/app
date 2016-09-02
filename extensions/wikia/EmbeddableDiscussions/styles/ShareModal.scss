@@ -1,0 +1,174 @@
+@import 'skins/shared/color';
+@import 'skins/shared/mixins/flexbox';
+
+$social-icon-size: 26px;
+
+$facebook-icon: '/extensions/wikia/EmbeddableDiscussions/images/social/facebook.svg';
+$facebook-icon-active: '/extensions/wikia/EmbeddableDiscussions/images/social/facebook-active.svg';
+$google-icon: '/extensions/wikia/EmbeddableDiscussions/images/social/google.svg';
+$google-icon-active: '/extensions/wikia/EmbeddableDiscussions/images/social/google-active.svg';
+$line-icon: '/extensions/wikia/EmbeddableDiscussions/images/social/line.svg';
+$line-icon-active: '/extensions/wikia/EmbeddableDiscussions/images/social/line-active.svg';
+$meneame-icon: '/extensions/wikia/EmbeddableDiscussions/images/social/meneame.svg';
+$meneame-icon-active: '/extensions/wikia/EmbeddableDiscussions/images/social/meneame-active.svg';
+$nk-icon: '/extensions/wikia/EmbeddableDiscussions/images/social/nk.svg';
+$nk-icon-active: '/extensions/wikia/EmbeddableDiscussions/images/social/nk-active.svg';
+$odnoklassniki-icon: '/extensions/wikia/EmbeddableDiscussions/images/social/odnoklassniki.svg';
+$odnoklassniki-icon-active: '/extensions/wikia/EmbeddableDiscussions/images/social/odnoklassniki-active.svg';
+$qzone-icon: '/extensions/wikia/EmbeddableDiscussions/images/social/qzone.svg';
+$qzone-icon-active: '/extensions/wikia/EmbeddableDiscussions/images/social/qzone-active.svg';
+$reddit-icon: '/extensions/wikia/EmbeddableDiscussions/images/social/reddit.svg';
+$reddit-icon-active: '/extensions/wikia/EmbeddableDiscussions/images/social/reddit-active.svg';
+$tumblr-icon: '/extensions/wikia/EmbeddableDiscussions/images/social/tumblr.svg';
+$tumblr-icon-active: '/extensions/wikia/EmbeddableDiscussions/images/social/tumblr-active.svg';
+$twitter-icon: '/extensions/wikia/EmbeddableDiscussions/images/social/twitter.svg';
+$twitter-icon-active: '/extensions/wikia/EmbeddableDiscussions/images/social/twitter-active.svg';
+$vkontakte-icon: '/extensions/wikia/EmbeddableDiscussions/images/social/vkontakte.svg';
+$vkontakte-icon-active: '/extensions/wikia/EmbeddableDiscussions/images/social/vkontakte-active.svg';
+$weibo-icon: '/extensions/wikia/EmbeddableDiscussions/images/social/weibo.svg';
+$weibo-icon-active: '/extensions/wikia/EmbeddableDiscussions/images/social/weibo-active.svg';
+$wykop-icon: '/extensions/wikia/EmbeddableDiscussions/images/social/wykop.svg';
+$wykop-icon-active: '/extensions/wikia/EmbeddableDiscussions/images/social/wykop-active.svg';
+
+.embeddable-discussions-share-modal.modal {
+	align-items: center;
+	min-height: 0;
+
+	> header {
+		display: none;
+	}
+
+	> footer {
+		display: none;
+	}
+
+	> section {
+		padding: 30px 0 20px;
+		text-align: center;
+		width: 100%;
+	}
+
+	.embeddable-discussions-sharemodal-heading {
+		font-size: 16px;
+		font-weight: bold;
+	}
+
+	.embeddable-discussions-sharemodal-icons {
+		@include flexbox();
+		@include flex-direction(row);
+		@include align-items(center);
+		@include justify-content(center);
+
+		padding-top: 20px;
+	}
+
+	.embeddable-discussions-sharemodal-icon {
+		height: $social-icon-size;
+		margin: 3px;
+		width: $social-icon-size;
+	}
+
+	.embeddable-discussions-icon-facebook {
+		background: url($facebook-icon) no-repeat;
+	}
+
+	.embeddable-discussions-icon-facebook:hover {
+		background: url($facebook-icon-active) no-repeat;
+	}
+
+	.embeddable-discussions-icon-google {
+		background: url($google-icon) no-repeat;
+	}
+
+	.embeddable-discussions-icon-google:hover {
+		background: url($google-icon-active) no-repeat;
+	}
+
+	.embeddable-discussions-icon-line {
+		background: url($line-icon) no-repeat;
+	}
+
+	.embeddable-discussions-icon-line:hover {
+		background: url($line-icon-active) no-repeat;
+	}
+	
+	.embeddable-discussions-icon-meneame {
+		background: url($meneame-icon) no-repeat;
+	}
+
+	.embeddable-discussions-icon-meneame:hover {
+		background: url($meneame-icon-active) no-repeat;
+	}
+
+	.embeddable-discussions-icon-nk {
+		background: url($nk-icon) no-repeat;
+	}
+
+	.embeddable-discussions-icon-nk:hover {
+		background: url($nk-icon-active) no-repeat;
+	}
+
+	.embeddable-discussions-icon-odnoklassniki {
+		background: url($odnoklassniki-icon) no-repeat;
+	}
+
+	.embeddable-discussions-icon-odnoklassniki:hover {
+		background: url($odnoklassniki-icon-active) no-repeat;
+	}
+
+	.embeddable-discussions-icon-qzone {
+		background: url($qzone-icon) no-repeat;
+	}
+
+	.embeddable-discussions-icon-qzone:hover {
+		background: url($qzone-icon-active) no-repeat;
+	}
+
+	.embeddable-discussions-icon-reddit {
+		background: url($reddit-icon) no-repeat;
+	}
+
+	.embeddable-discussions-icon-reddit:hover {
+		background: url($reddit-icon-active) no-repeat;
+	}
+
+	.embeddable-discussions-icon-tumblr {
+		background: url($tumblr-icon) no-repeat;
+	}
+
+	.embeddable-discussions-icon-tumblr:hover {
+		background: url($tumblr-icon-active) no-repeat;
+	}
+
+	.embeddable-discussions-icon-twitter {
+		background: url($twitter-icon) no-repeat;
+	}
+
+	.embeddable-discussions-icon-twitter:hover {
+		background: url($twitter-icon-active) no-repeat;
+	}
+
+	.embeddable-discussions-icon-vkontakte {
+		background: url($vkontakte-icon) no-repeat;
+	}
+
+	.embeddable-discussions-icon-vkontakte:hover {
+		background: url($vkontakte-icon-active) no-repeat;
+	}
+
+	.embeddable-discussions-icon-weibo {
+		background: url($weibo-icon) no-repeat;
+	}
+
+	.embeddable-discussions-icon-weibo:hover {
+		background: url($weibo-icon-active) no-repeat;
+	}
+
+	.embeddable-discussions-icon-wykop {
+		background: url($wykop-icon) no-repeat;
+	}
+
+	.embeddable-discussions-icon-wykop:hover {
+		background: url($wykop-icon-active) no-repeat;
+	}
+}

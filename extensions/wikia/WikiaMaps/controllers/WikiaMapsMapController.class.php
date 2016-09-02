@@ -39,8 +39,6 @@ class WikiaMapsMapController extends WikiaMapsBaseController {
 	 * @throws InvalidParameterApiException
 	 */
 	public function createMap() {
-		$type = trim( $this->request->getVal( 'type', WikiaMaps::MAP_TYPE_GEO ) );
-
 		$this->setData( 'tileSetId', $this->request->getInt( 'tileSetId', 0 ) );
 		$this->setData( 'title', trim( $this->request->getVal( 'map-title', '' ) ) );
 		$this->setData( 'tileSetTitle', trim( $this->request->getVal( 'tile-set-title', '' ) ) );
@@ -51,13 +49,7 @@ class WikiaMapsMapController extends WikiaMapsBaseController {
 		$this->setData( 'creatorName', $this->wg->User->getName() );
 		$this->setData( 'cityId', (int) $this->wg->CityId );
 
-		if ( $type === WikiaMaps::MAP_TYPE_CUSTOM ) {
-			$results = $this->createCustomMap();
-		} else {
-			$results = $this->createGeoMap();
-		}
-
-		$this->setVal( 'results', $results );
+		$this->setVal( 'results', $this->createCustomMap() );
 	}
 
 	/**
@@ -83,16 +75,6 @@ class WikiaMapsMapController extends WikiaMapsBaseController {
 		}
 
 		return $results;
-	}
-
-	/**
-	 * Creates a map from Geo tileset
-	 *
-	 * @return Array
-	 */
-	private function createGeoMap() {
-		$this->setData( 'tileSetId', $this->mapsModel->getGeoMapTilesetId() );
-		return $this->createMapFromTilesetId();
 	}
 
 	/**

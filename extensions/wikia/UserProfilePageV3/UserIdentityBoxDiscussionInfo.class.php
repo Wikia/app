@@ -2,7 +2,6 @@
 
 use Swagger\Client\ApiException;
 use Swagger\Client\Discussion\Api\ContributionApi;
-use Swagger\Client\Discussion\Api\SitesApi;
 use Wikia\DependencyInjection\Injector;
 use Wikia\Logger\WikiaLogger;
 use Wikia\Service\Swagger\ApiProvider;
@@ -36,35 +35,12 @@ class UserIdentityBoxDiscussionInfo {
 	}
 
 	private function fetchDiscussionPostsNumber() {
-		$siteId = F::app()->wg->CityId;
 
-		$this->discussionActive = $this->checkDiscussionActive( $siteId );
+		$this->discussionActive = F::app()->wg->EnableDiscussions;
 		if ( $this->discussionActive ) {
-			$this->discussionPostsCount = $this->fetchDiscussionPostsCount( $siteId );
+			$this->discussionPostsCount = $this->fetchDiscussionPostsCount();
 			$this->discussionAllPostsByUserLink = "/d/u/{$this->userId}";
 		}
-	}
-
-	private function checkDiscussionActive( $siteId ) {
-		try {
-			$this->getDiscussionSitesApi()->getSite( $siteId );
-			return true;
-		} catch ( ApiException $e ) {
-			$this->logger->debug( 'Getting site caused an error',
-				[
-					'siteId' => $siteId,
-					'error' => $e->getMessage(),
-				] );
-		}
-
-		return false;
-	}
-
-	/**
-	 * @return SiteApi
-	 */
-	private function getDiscussionSitesApi() {
-		return $this->getDiscussionApi( SitesApi::class );
 	}
 
 	private function getDiscussionApi( $apiClass ) {
@@ -75,8 +51,9 @@ class UserIdentityBoxDiscussionInfo {
 		return $api;
 	}
 
-	private function fetchDiscussionPostsCount( $siteId ) {
+	private function fetchDiscussionPostsCount() {
 		$postCount = 0;
+		$siteId = F::app()->wg->CityId;
 
 		try {
 			$postCount = $this->getDiscussionContributionApi()->getPosts( $siteId, $this->userId )->getPostCount();
