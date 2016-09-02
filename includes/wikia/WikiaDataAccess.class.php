@@ -49,7 +49,7 @@ class WikiaDataAccess {
 	 * @author Piotr Bablok <pbablok@wikia-inc.com>
 	 * @author Jakub Olek <jolek@wikia-inc.com>
 	 */
-	static function cache( $key, $cacheTTL, callable $getData, $command = self::SKIP_CACHE ) {
+	static function cache( $key, $cacheTTL, callable $getData, $command = self::USE_CACHE ) {
 		return self::cacheWithOptions( $key, $getData, [
 			'command' => $command,
 			'cacheTTL' => $cacheTTL,

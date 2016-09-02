@@ -165,7 +165,7 @@ class CommunityPageSpecialUsersModel {
 			}
 		);
 
-		return $botIds ?: [];
+		return $botIds ?: [''];
 	}
 
 	/**
@@ -193,7 +193,7 @@ class CommunityPageSpecialUsersModel {
 			}
 		);
 
-		return $botIds ?: [];
+		return $botIds ?: [''];
 	}
 
 
