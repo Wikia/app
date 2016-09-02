@@ -10,11 +10,11 @@
     "gulpfile.js"
   ],
   "homepage": "https://github.com/Wikia/design-system",
-  "_release": "c872432eec",
+  "_release": "5a9ecd1952",
   "_resolution": {
     "type": "branch",
     "branch": "XW-1690",
-    "commit": "c872432eec217c0ad0ced381347991ad0de42cef"
+    "commit": "5a9ecd19527bd9cd8368df9e95ac602ac722adac"
   },
   "_source": "git://github.com/Wikia/design-system.git",
   "_target": "XW-1690",
