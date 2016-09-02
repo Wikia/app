@@ -10,6 +10,7 @@ use Wikia\Service\User\Auth\AuthModule;
 use Wikia\Service\User\Permissions\PermissionsModule;
 use Wikia\Service\User\Preferences\Migration\PreferenceMigrationModule;
 use Wikia\Service\User\Preferences\PreferenceModule;
+use Wikia\Service\User\Username\UsernameModule;
 
 class InjectorInitializer {
 	public static function init(CacheProvider $cacheProvider = null) {
@@ -17,6 +18,7 @@ class InjectorInitializer {
 			(new InjectorBuilder())
 				->withCache($cacheProvider)
 				->addModule(new PreferenceModule())
+				->addModule(new UsernameModule())
 				->addModule(new PreferenceMigrationModule())
 				->addModule(new AttributesModule())
 				->addModule(new PermissionsModule())
