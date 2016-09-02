@@ -9,19 +9,19 @@ class DesignSystemGlobalFooterModelTest extends WikiaBaseTest {
 	 * @param $rightsUrl license URL
 	 * @param $expectedResult
 	 */
-	public function testGetLicensingAndVertical( $sitename, $rightsText, $rightsUrl, $expectedResult ) {
-		$wikiId = 1234;
+	public function testGetLicensingAndVertical( $product, $sitename, $rightsText, $rightsUrl, $expectedResult ) {
+		$productInstanceId = 1234;
 
 		$this->getStaticMethodMock( 'WikiFactory', 'getVarValueByName' )
 			->expects( $this->any() )
 			->method( 'getVarValueByName' )
 			->will( $this->returnValueMap( [
-				[ 'wgRightsText', $wikiId, $rightsText ],
-				[ 'wgRightsUrl', $wikiId, $rightsUrl ],
-				[ 'wgSitename', $wikiId, $sitename ]
+				[ 'wgRightsText', $productInstanceId, $rightsText ],
+				[ 'wgRightsUrl', $productInstanceId, $rightsUrl ],
+				[ 'wgSitename', $productInstanceId, $sitename ]
 			] ) );
 
-		$footerModel = new DesignSystemGlobalFooterModel( DesignSystemGlobalFooterModel::PRODUCT_WIKIS, $wikiId );
+		$footerModel = new DesignSystemGlobalFooterModel( $product, $productInstanceId );
 		$result = $footerModel->getData();
 
 		$this->assertEquals( $result['licensing_and_vertical'], $expectedResult );
@@ -30,6 +30,7 @@ class DesignSystemGlobalFooterModelTest extends WikiaBaseTest {
 	public function getLicensingAndVerticalDataProvider() {
 		return [
 			[
+				DesignSystemGlobalFooterModel::PRODUCT_WIKIS,
 				'wikia',
 				'CC-BY-SA',
 				'http://www.wikia.com/Licensing',
@@ -59,6 +60,7 @@ class DesignSystemGlobalFooterModelTest extends WikiaBaseTest {
 				],
 			],
 			[
+				DesignSystemGlobalFooterModel::PRODUCT_WIKIS,
 				'memory-alpha',
 				'CC-BY-NC-SA',
 				'http://memory-alpha.wikia.com/wiki/Project:Licensing',
@@ -87,6 +89,33 @@ class DesignSystemGlobalFooterModelTest extends WikiaBaseTest {
 					],
 				],
 			],
+			[
+				DesignSystemGlobalFooterModel::PRODUCT_FANDOMS,
+				'Fandom',
+				'foo',
+				'',
+				'licensing_and_vertical' => [
+					'description' => [
+						'type' => 'translatable-text',
+						'key' => 'global-footer-licensing-and-vertical-description',
+						'params' => [
+							'sitename' => [
+								'type' => 'text',
+								'value' => 'Fandom',
+							],
+							'vertical' => [],
+							'license' => [
+								'type' => 'line-text',
+								'title' => [
+									'type' => 'text',
+									'key' => 'global-footer-copyright-wikia',
+								],
+							]
+						]
+					],
+				],
+
+			]
 		];
 	}
 
@@ -97,8 +126,8 @@ class DesignSystemGlobalFooterModelTest extends WikiaBaseTest {
 	 * @param array $hrefs hrefs definition in different languages
 	 * @param string $expectedResult
 	 */
-	public function testGetHref( $lang, $hrefs, $expectedResult ) {
-		$footerModel = new DesignSystemGlobalFooterModel( DesignSystemGlobalFooterModel::PRODUCT_WIKIS, 1234, $lang );
+	public function testGetHref( $product, $lang, $hrefs, $expectedResult ) {
+		$footerModel = new DesignSystemGlobalFooterModel( $product, 1234, $lang );
 		$footerModel->setHrefs( $hrefs );
 
 		$result = $footerModel->getData();
@@ -109,6 +138,7 @@ class DesignSystemGlobalFooterModelTest extends WikiaBaseTest {
 	public function getHrefDataProvider() {
 		return [
 			[
+				DesignSystemGlobalFooterModel::PRODUCT_WIKIS,
 				'pl',
 				[
 					'en' => [
@@ -124,6 +154,7 @@ class DesignSystemGlobalFooterModelTest extends WikiaBaseTest {
 				'http://www.wikia.pl'
 			],
 			[
+				DesignSystemGlobalFooterModel::PRODUCT_WIKIS,
 				'pl',
 				[
 					'en' => [
@@ -137,6 +168,7 @@ class DesignSystemGlobalFooterModelTest extends WikiaBaseTest {
 				'http://www.example.com'
 			],
 			[
+				DesignSystemGlobalFooterModel::PRODUCT_WIKIS,
 				'pl',
 				[
 					'en' => [
@@ -150,6 +182,7 @@ class DesignSystemGlobalFooterModelTest extends WikiaBaseTest {
 				null
 			],
 			[
+				DesignSystemGlobalFooterModel::PRODUCT_WIKIS,
 				'en',
 				[
 					'en' => [
@@ -161,6 +194,20 @@ class DesignSystemGlobalFooterModelTest extends WikiaBaseTest {
 					'pl' => [],
 				],
 				'http://www.wikia.com'
+			],
+			[
+				DesignSystemGlobalFooterModel::PRODUCT_FANDOMS,
+				'pl',
+				[
+					'en' => [
+						'create-new-wiki' => 'http://www.wikia.com'
+					],
+					'default' => [
+						'create-new-wiki' => 'http://www.example.com'
+					],
+					'pl' => [],
+				],
+				'http://www.example.com'
 			],
 		];
 	}

@@ -254,7 +254,6 @@ class DesignSystemApiController extends WikiaApiController {
 	}
 
 	private function getRequestParameters() {
-		// ultimately, id will be a required param, but fall back to wikiId while transitioning
 		$id = $this->getRequiredParam( self::PARAM_ID );
 		$product = $this->getRequiredParam( self::PARAM_PRODUCT );
 		$lang = $this->getRequiredParam( self::PARAM_LANG );
