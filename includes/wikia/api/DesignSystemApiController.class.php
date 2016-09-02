@@ -215,9 +215,9 @@ class DesignSystemApiController extends WikiaApiController {
 	public function getFooter() {
 		$params = $this->getRequestParameters();
 		$footerModel = new DesignSystemGlobalFooterModel(
-			$params[self::PARAM_PRODUCT],
-			$params[self::PARAM_ID],
-			$params[self::PARAM_LANG]
+			$params[static::PARAM_PRODUCT],
+			$params[static::PARAM_ID],
+			$params[static::PARAM_LANG]
 		);
 
 		$this->setResponseData( $footerModel->getData() );
@@ -240,9 +240,9 @@ class DesignSystemApiController extends WikiaApiController {
 	public function getAllElements() {
 		$params = $this->getRequestParameters();
 		$footerModel = new DesignSystemGlobalFooterModel(
-			$params[self::PARAM_PRODUCT],
-			$params[self::PARAM_ID],
-			$params[self::PARAM_LANG]
+			$params[static::PARAM_PRODUCT],
+			$params[static::PARAM_ID],
+			$params[static::PARAM_LANG]
 		);
 
 		$this->setResponseData( [
@@ -254,18 +254,18 @@ class DesignSystemApiController extends WikiaApiController {
 	}
 
 	private function getRequestParameters() {
-		$id = $this->getRequiredParam( self::PARAM_ID );
-		$product = $this->getRequiredParam( self::PARAM_PRODUCT );
-		$lang = $this->getRequiredParam( self::PARAM_LANG );
+		$id = $this->getRequiredParam( static::PARAM_ID );
+		$product = $this->getRequiredParam( static::PARAM_PRODUCT );
+		$lang = $this->getRequiredParam( static::PARAM_LANG );
 
-		if ( $product === self::PRODUCT_WIKIS && WikiFactory::IDtoDB( $id ) === false ) {
+		if ( $product === static::PRODUCT_WIKIS && WikiFactory::IDtoDB( $id ) === false ) {
 			throw new NotFoundApiException( "Unable to find wiki with ID {$id}" );
 		}
 
 		return [
-			self::PARAM_PRODUCT => $product,
-			self::PARAM_ID => $id,
-			self::PARAM_LANG => $lang
+			static::PARAM_PRODUCT => $product,
+			static::PARAM_ID => $id,
+			static::PARAM_LANG => $lang
 		];
 	}
 
