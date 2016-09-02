@@ -82,29 +82,36 @@ describe('ext.wikia.adEngine.lookup.prebid', function () {
 				appnexus: {
 					isEnabled: function () {
 						return true;
-					},
-					getAdUnits: function () {
-						return [
-							{
-								TOP_LEADERBOARD: {
-									sizes: [
-										[728, 90],
-										[970, 250]
-									],
-									placementId: '5823300'
-								}
-							},
-							{
-								TOP_RIGHT_BOXAD: {
-									sizes: [
-										[300, 250],
-										[300, 600]
-									],
-									placementId: '5823309'
-								}
-							}
-						];
 					}
+				},
+				indexExchange: {
+					isEnabled: function () {
+						return true;
+					}
+				}
+			},
+			prebidHelper: {
+				setupAdUnits: function () {
+					return [
+						{
+							TOP_LEADERBOARD: {
+								sizes: [
+									[728, 90],
+									[970, 250]
+								],
+								placementId: '5823300'
+							}
+						},
+						{
+							TOP_RIGHT_BOXAD: {
+								sizes: [
+									[300, 250],
+									[300, 600]
+								],
+								placementId: '5823309'
+							}
+						}
+					];
 				}
 			}
 		},
@@ -135,6 +142,8 @@ describe('ext.wikia.adEngine.lookup.prebid', function () {
 		return modules['ext.wikia.adEngine.lookup.prebid'](
 			mocks.adContext,
 			mocks.adapters.appnexus,
+			mocks.adapters.indexExchange,
+			mocks.prebidHelper,
 			getFactory(),
 			mocks.doc,
 			mocks.win

@@ -268,9 +268,10 @@ $config['adengine2_prebid_js'] = [
 	'skin' => [ 'oasis' ],
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
-		'//extensions/wikia/AdEngine/js/lookup/prebid.js',
-		'//extensions/wikia/AdEngine/js/lookup/adapter/appnexus.js',
-		'//extensions/wikia/AdEngine/js/lookup/adapter/index.js',
+		'//extensions/wikia/AdEngine/js/lookup/prebid/prebid.js',
+		'//extensions/wikia/AdEngine/js/lookup/prebid/prebidHelper.js',
+		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/appnexus.js',
+		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/indexExchange.js',
 	],
 ];
 
@@ -825,7 +826,7 @@ $config['mobile_base_ads_js'] = [
 		'//extensions/wikia/AdEngine/js/lookup/lookupFactory.js',
 		'//extensions/wikia/AdEngine/js/lookup/openx/openXBidderHelper.js',
 		'//extensions/wikia/AdEngine/js/lookup/openXBidder.js',
-		'//extensions/wikia/AdEngine/js/lookup/prebid.js',
+		'//extensions/wikia/AdEngine/js/lookup/prebid/prebid.js',
 		'//extensions/wikia/AdEngine/js/lookup/rubicon/rubiconFastlane.js',
 		'//extensions/wikia/AdEngine/js/lookup/rubicon/rubiconTargeting.js',
 		'//extensions/wikia/AdEngine/js/lookup/services.js',

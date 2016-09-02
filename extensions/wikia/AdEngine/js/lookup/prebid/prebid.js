@@ -1,12 +1,13 @@
 /*global define*/
 define('ext.wikia.adEngine.lookup.prebid', [
 	'ext.wikia.adEngine.adContext',
-	'ext.wikia.adEngine.lookup.adapter.appnexus',
-	'ext.wikia.adEngine.lookup.adapter.index',
+	'ext.wikia.adEngine.lookup.prebid.adapters.appnexus',
+	'ext.wikia.adEngine.lookup.prebid.adapters.indexExchange',
+	'ext.wikia.adEngine.lookup.prebid.prebidHelper',
 	'ext.wikia.adEngine.lookup.lookupFactory',
 	'wikia.document',
 	'wikia.window'
-], function (adContext, appnexus, index, factory, doc, win) {
+], function (adContext, appnexus, index, helper, factory, doc, win) {
 	'use strict';
 
 	var adapters = [
@@ -19,25 +20,11 @@ define('ext.wikia.adEngine.lookup.prebid', [
 		bidKey = 'hb_pb',
 		sizeKey = 'hb_size';
 
-	function addAdUnits(adapterAdUnits) {
-		adapterAdUnits.forEach(function (adUnit) {
-			adUnits.push(adUnit);
-		});
-	}
-
-	function setupAdUnits(skin) {
-		adapters.forEach(function (adapter) {
-			if (adapter && adapter.isEnabled()) {
-				addAdUnits(adapter.getAdUnits(skin));
-			}
-		});
-	}
-
 	function call(skin, onResponse) {
 		var prebid = doc.createElement('script'),
 			node = doc.getElementsByTagName('script')[0];
 
-		setupAdUnits(skin);
+		adUnits = helper.setupAdUnits(adapters, skin);
 
 		if (adUnits.length > 0) {
 			win.pbjs = win.pbjs || {};

@@ -42,7 +42,8 @@
 		 */
 		function getCountryCode() {
 			var data = getGeoData();
-			return data.country;
+			//return data.country;
+			return 'PL';
 		}
 
 		/**

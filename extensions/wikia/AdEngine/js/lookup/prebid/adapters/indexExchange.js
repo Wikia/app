@@ -1,11 +1,11 @@
 /*global define*/
-define('ext.wikia.adEngine.lookup.adapter.appnexus',[
+define('ext.wikia.adEngine.lookup.prebid.adapters.indexExchange',[
 	'wikia.geo',
 	'wikia.instantGlobals'
 ], function (geo, instantGlobals) {
 	'use strict';
 
-	var bidderName = 'appnexus',
+	var bidderName = 'indexExchange',
 		slots = {
 			oasis: {
 				TOP_LEADERBOARD: {
@@ -13,14 +13,16 @@ define('ext.wikia.adEngine.lookup.adapter.appnexus',[
 						[728, 90],
 						[970, 250]
 					],
-					placementId: '5823300'
+					id: '1',
+					siteID: 183423
 				},
 				TOP_RIGHT_BOXAD: {
 					sizes: [
 						[300, 250],
 						[300, 600]
 					],
-					placementId: '5823309'
+					id: '2',
+					siteID: 183567
 				}
 			},
 			mercury: {
@@ -28,13 +30,14 @@ define('ext.wikia.adEngine.lookup.adapter.appnexus',[
 					sizes: [
 						[320, 50]
 					],
-					placementId: '5823309'
+					id: '3',
+					siteID: 183568
 				}
 			}
 		};
 
 	function isEnabled() {
-		return geo.isProperGeo(instantGlobals.wgAdDriverAppNexusBidderCountries);
+		return geo.isProperGeo(instantGlobals.wgAdDriverIndexExchangeBidderCountries);
 	}
 
 	function prepareAdUnit(slotName, config) {
@@ -45,25 +48,21 @@ define('ext.wikia.adEngine.lookup.adapter.appnexus',[
 				{
 					bidder: bidderName,
 					params: {
-						placementId: config.placementId
+						id: config.id,
+						siteID: config.siteID
 					}
 				}
 			]
 		};
 	}
 
-	function getAdUnits(skin) {
-		var adUnits = [];
-
-		Object.keys(slots[skin]).forEach(function(slotName) {
-			adUnits.push(prepareAdUnit(slotName, slots[skin][slotName]));
-		});
-
-		return adUnits;
+	function getSlots(skin) {
+		return slots[skin];
 	}
 
 	return {
-		getAdUnits: getAdUnits,
-		isEnabled: isEnabled
+		isEnabled: isEnabled,
+		prepareAdUnit: prepareAdUnit,
+		getSlots: getSlots
 	};
 });
