@@ -5,6 +5,7 @@
  * @file
  * @ingroup FileAbstraction
  */
+use Wikia\Util\PerformanceProfilers\UsernameUseProfiler;
 
 /**
  * Class representing a row of the 'filearchive' table
@@ -117,6 +118,8 @@ class ArchivedFile {
 		}
 
 		if( !$this->title || $this->title->getNamespace() == NS_FILE ) {
+			$usernameUseProfiler = new UsernameUseProfiler( __CLASS__, __METHOD__ );
+
 			$dbr = wfGetDB( DB_SLAVE );
 			$res = $dbr->select( 'filearchive',
 				array(
@@ -163,20 +166,11 @@ class ArchivedFile {
 			$this->media_type = $row->fa_media_type;
 			$this->description = $row->fa_description;
 			$this->user = $row->fa_user;
-			/**
-			 * Check, how often is this code executed. Scope: the following if block.
-			 *
-			 * @author Mix
-			 * @see SUS-810
-			 */
-			Wikia\Logger\WikiaLogger::instance()->debugSampled(
-				0.01,
-				'SUS-810',
-				[ 'method' => __METHOD__, 'exception' => new Exception() ]
-			);
 			$this->user_text = $row->fa_user_text;
 			$this->timestamp = $row->fa_timestamp;
 			$this->deleted = $row->fa_deleted;
+
+			$usernameUseProfiler->end();
 		} else {
 			throw new MWException( 'This title does not correspond to an image page.' );
 		}
@@ -194,6 +188,8 @@ class ArchivedFile {
 	 * @return ArchivedFile
 	 */
 	public static function newFromRow( $row ) {
+		$usernameUseProfiler = new UsernameUseProfiler( __CLASS__, __METHOD__ );
+
 		$file = new ArchivedFile( Title::makeTitle( NS_FILE, $row->fa_name ) );
 
 		$file->id = intval($row->fa_id);
@@ -213,6 +209,8 @@ class ArchivedFile {
 		$file->user_text = $row->fa_user_text;
 		$file->timestamp = $row->fa_timestamp;
 		$file->deleted = $row->fa_deleted;
+
+		$usernameUseProfiler->end();
 
 		return $file;
 	}
