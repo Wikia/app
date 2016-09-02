@@ -129,8 +129,6 @@ $config['recirculation_js'] = [
 		'//extensions/wikia/Recirculation/js/utils.js',
 		'//extensions/wikia/Recirculation/js/helpers/ContentLinksHelper.js',
 		'//extensions/wikia/Recirculation/js/helpers/FandomHelper.js',
-		'//extensions/wikia/Recirculation/js/helpers/LateralHelper.js',
-		'//extensions/wikia/Recirculation/js/helpers/LiftigniterHelper.js',
 		'//extensions/wikia/Recirculation/js/helpers/DataHelper.js',
 		'//extensions/wikia/Recirculation/js/helpers/CakeRelatedContentHelper.js',
 		'//extensions/wikia/Recirculation/js/helpers/CuratedContentHelper.js',
@@ -145,15 +143,6 @@ $config['recirculation_js'] = [
 		'//extensions/wikia/Recirculation/js/experiments/placement/control.js',
 		'//extensions/wikia/Recirculation/js/scrolldepth.js',
 		'//extensions/wikia/Recirculation/js/libs/perfect-scrollbar.js',
-	],
-];
-
-$config['recirculation_trackers_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis' ],
-	'assets' => [
-		'//extensions/wikia/Recirculation/js/lateralTracker.js',
-		'//extensions/wikia/Recirculation/js/liTracker.js',
 	],
 ];
 
@@ -2099,6 +2088,7 @@ $config['design_system_js'] = [
 	'skin' => [ 'oasis' ],
 	'assets' => [
 		'//extensions/wikia/DesignSystem/scripts/DesignSystemGlobalFooterTracking.js',
+		'//extensions/wikia/DesignSystem/scripts/DesignSystemDropdowns.js',
 	],
 ];
 
@@ -3087,5 +3077,14 @@ $config['special_admindashboard_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
 		'//extensions/wikia/AdminDashboard/js/AdminDashboard.js',
+	],
+];
+
+/* CrosslinkModule */
+$config['crosslink_module_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/CrosslinkModule/styles/CrosslinkModule.scss',
 	],
 ];

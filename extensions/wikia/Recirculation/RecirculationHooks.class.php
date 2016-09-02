@@ -15,7 +15,7 @@ class RecirculationHooks {
 
 		// Check if we're on a page where we want to show a recirculation module.
 		// If we're not, stop right here.
-		if ( !self::isCorrectPageType() ) {
+		if ( !static::isCorrectPageType() ) {
 			wfProfileOut( __METHOD__ );
 			return true;
 		}
@@ -46,17 +46,12 @@ class RecirculationHooks {
 	 * @return bool
 	 */
 	public static function onOasisSkinAssetGroups( &$jsAssets ) {
-		global $wgWikiaEnvironment, $wgNoExternals, $wgRecirculationTestGroup, $wgCityId;
+		global $wgCityId;
 
-		// We only want to track this on production
-		if ( ( $wgWikiaEnvironment === WIKIA_ENV_PROD ) && empty( $wgNoExternals ) && !empty( $wgRecirculationTestGroup ) ) {
-			$jsAssets[] = 'recirculation_trackers_js';
-		}
-
-		if ( self::isCorrectPageType() ) {
+		if ( static::isCorrectPageType() ) {
 			$jsAssets[] = 'recirculation_js';
 
-			if ( self::canShowDiscussions( $wgCityId ) ) {
+			if ( static::canShowDiscussions( $wgCityId ) ) {
 				$jsAssets[] = 'recirculation_discussions_js';
 			}
 		}

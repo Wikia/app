@@ -48,8 +48,8 @@
 	// we should have class that removes defaults from UL
 	ul {
 		list-style-type: none;
-		padding: 0;
 		margin: 0;
+		padding: 0;
 	}
 
 	// main title and license
@@ -312,11 +312,11 @@
 			size: $typescale-size-plus-1;
 			weight: bold;
 		}
-		min-height: $section-header-height;
 		margin: {
 			bottom: $section-header-margin-bottom;
 			top: 0;
 		}
+		min-height: $section-header-height;
 		padding: 0;
 	}
 
@@ -328,7 +328,7 @@
 		padding: 0;
 	}
 
-	@media #{$breakpoint-tablet-down} {
+	@media #{$breakpoint-l-down} {
 		&__main {
 			margin: 0 20px;
 		}
@@ -399,8 +399,8 @@
 
 			&.wds-is-community-apps {
 				.wds-global-footer__links-list {
-					margin-top: 5px;
 					margin-bottom: 0;
+					margin-top: 5px;
 				}
 
 				.wds-global-footer__link {
@@ -420,7 +420,7 @@
 		}
 	}
 
-	@media #{$breakpoint-desktop-up} {
+	@media #{$breakpoint-xl-up} {
 		&__main {
 			flex-direction: row;
 			margin: 0 auto;

@@ -13,8 +13,6 @@ require([
 	'ext.wikia.recirculation.views.impactFooter',
 	'ext.wikia.recirculation.helpers.contentLinks',
 	'ext.wikia.recirculation.helpers.fandom',
-	'ext.wikia.recirculation.helpers.lateral',
-	'ext.wikia.recirculation.helpers.liftigniter',
 	'ext.wikia.recirculation.helpers.data',
 	'ext.wikia.recirculation.helpers.cakeRelatedContent',
 	'ext.wikia.recirculation.helpers.curatedContent',
@@ -38,8 +36,6 @@ require([
 	impactFooterView,
 	contentLinksHelper,
 	fandomHelper,
-	lateralHelper,
-	liftigniterHelper,
 	dataHelper,
 	cakeHelper,
 	curatedHelper,
@@ -57,7 +53,6 @@ require([
 		group = abTest.getGroup(experimentName),
 		isRail = false,
 		errorHandled = false,
-		footerView,
 		view,
 		helper;
 
@@ -69,28 +64,6 @@ require([
 	}
 
 	switch (group) {
-		case 'LI_RAIL':
-			renderLiftigniterFandom();
-			return;
-		case 'LI_COMMUNITY':
-			renderLiftigniterCommunity();
-			return;
-		case 'LI_BOTH':
-			renderLiftigniterFandom(true);
-			renderLiftigniterCommunity();
-			return;
-		case 'LATERAL_FANDOM':
-			helper = lateralHelper();
-			view = railView();
-			isRail = true;
-			break;
-		case 'LATERAL_COMMUNITY':
-			helper = lateralHelper({
-				type: 'community',
-				count: 3
-			});
-			view = incontentView();
-			break;
 		case 'FANDOM_RAIL':
 			helper = fandomHelper();
 			view = railView();
@@ -148,21 +121,11 @@ require([
 			});
 			view = scrollerView();
 			break;
-		case 'LATERAL_SCROLLER':
-			helper = lateralHelper({
-				type: 'community',
-				count: 12
-			});
-			view = scrollerView();
-			break;
 		case 'GOOGLE_INCONTENT':
 			renderGoogleIncontent();
 			return;
 		case 'TABOOLA':
 			renderTaboola();
-			return;
-		case 'LATERAL_BOTH':
-			renderBothLateralExperiments();
 			return;
 		case 'CAKE_RELATED_CONTENT':
 			helper = cakeHelper();
@@ -179,6 +142,7 @@ require([
 		case 'CONTROL':
 			controlExperiment.run(experimentName)
 				.fail(handleError);
+			return;
 		default:
 			return;
 	}
@@ -241,8 +205,7 @@ require([
 	function setupFallbackTracking($html) {
 		var groupName = 'CONTROL_FALLBACK',
 			position = 'rail',
-			impressionLabel = [experimentName, groupName, position].join('='),
-			abSlot = abTest.getGASlot(experimentName);
+			impressionLabel = [experimentName, groupName, position].join('=');
 
 		tracker.trackImpression(impressionLabel);
 
@@ -260,32 +223,6 @@ require([
 
 		$html.find('.trending').after(subtitle);
 		return $html;
-	}
-
-	function renderBothLateralExperiments() {
-		var incontent = incontentView(),
-			rail = railView();
-
-		lateralHelper({
-			type: 'community',
-			count: 3
-		}).loadData()
-			.then(incontent.render)
-			.then(incontent.setupTracking(experimentName))
-			.fail(function(err) {
-				// We fail silently for the in-content widget
-				if (err) {
-					log(err, 'info', logGroup);
-				}
-			});
-
-		lateralHelper({
-			type: 'fandom',
-			count: 5
-		}).loadData()
-			.then(rail.render)
-			.then(rail.setupTracking(experimentName))
-			.fail(handleError);
 	}
 
 	function renderGoogleIncontent() {
@@ -314,44 +251,6 @@ require([
 				tracker.trackVerboseClick(experimentName, label);
 			});
 		});
-	}
-
-	function renderLiftigniterFandom(waitToFetch) {
-		var view = railView(),
-			curated = curatedHelper(),
-			helper = liftigniterHelper({
-				count: 5,
-				widget: 'fandom-rec'
-			});
-
-		helper.loadData(waitToFetch)
-			.then(curated.injectContent)
-			.then(view.render)
-			.then(function($html) {
-				var elements = $html.find('.rail-item').get();
-
-				view.setupTracking(experimentName)($html);
-				curated.setupTracking($html);
-				helper.setupTracking(elements);
-			})
-			.fail(handleError);
-	}
-
-	function renderLiftigniterCommunity() {
-		var view = incontentView(),
-			helper = liftigniterHelper({
-				count: 3,
-				widget: 'in-wikia'
-			});
-
-		helper.loadData()
-			.then(view.render)
-			.then(function($html) {
-				var elements = $html.find('.item').get();
-
-				view.setupTracking(experimentName)($html);
-				helper.setupTracking(elements);
-			});
 	}
 
 });

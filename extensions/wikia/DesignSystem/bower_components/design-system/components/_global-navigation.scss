@@ -2,6 +2,7 @@ $border-top-width: 6px;
 $nav-height: 49px;
 $nav-background-color: $color-white;
 
+$logo-width: 230px;
 $notification-counter-size: 18px;
 
 .wds-global-navigation {
@@ -14,10 +15,14 @@ $notification-counter-size: 18px;
 	&__dropdown-toggle {
 		align-items: center;
 		display: flex;
+		// Safari doesn't set default flex values if we use `flex: 1;`
+		// it requires us to put these values explicitly.
+		flex: 1 1 auto;
+		height: $nav-height;
 		justify-content: center;
 	}
 
-	&__dropdown {
+	&__dropdown-content {
 		color: $color-dark-blue-gray;
 		top: calc(100% + 1px);
 		width: 190px;
@@ -46,6 +51,7 @@ $notification-counter-size: 18px;
 
 	&__logo,
 	&__link,
+	&__wikis-menu,
 	&__search,
 	&__account-menu,
 	&__user-menu,
@@ -66,6 +72,7 @@ $notification-counter-size: 18px;
 	}
 
 	&__link,
+	&__wikis-menu,
 	&__account-menu,
 	&__user-menu,
 	&__notifications-menu {
@@ -83,31 +90,21 @@ $notification-counter-size: 18px;
 
 	&__logo {
 		border-top: $border-top-width solid $color-dark-blue-gray;
-		font-size: 9px;
-		font-weight: 600;
-		letter-spacing: .15px;
-		text-transform: uppercase;
+		//Safari will still make container fluid even when content inside has static width
+		//That is why we need to set grow and shrink to 0
+		flex: 0 0 $logo-width;
 	}
 
 	&__logo-fandom {
-		fill: $color-dark-blue-gray;
-		height: 24px;
+		height: 100%;
 		padding-bottom: 4px;
-		width: 120px;
-	}
-
-	&__logo-powered-by {
-		padding: 2px 3px 0 7px;
-	}
-
-	&__logo-wikia {
-		fill: $color-dark-blue;
-		height: 12px;
-		width: 36px;
+		width: $logo-width;
 	}
 
 	&__link {
-		flex: 1;
+		// Safari doesn't set default flex values if we use `flex: 1;`
+		// it requires us to put these values explicitly.
+		flex: 1 1 auto;
 
 		&.wds-is-games {
 			border-color: $color-games;
@@ -140,22 +137,25 @@ $notification-counter-size: 18px;
 		}
 	}
 
-	&__search {
-		min-width: 30px;
-		padding-left: 16px;
+	&__wikis-menu {
+		flex: 0 1 auto;
 	}
 
 	&__search-input-wrapper {
 		border: 0 solid $color-slate-gray;
 		display: flex;
-		flex: 1;
+		// Safari doesn't set default flex values if we use `flex: 1;`
+		// it requires us to put these values explicitly.
+		flex: 1 1 auto;
 	}
 
 	&__search-label {
 		align-items: center;
 		background-color: $color-white;
 		display: flex;
-		flex: 1;
+		// Safari doesn't set default flex values if we use `flex: 1;`
+		// it requires us to put these values explicitly.
+		flex: 1 1 auto;
 		z-index: 2;
 	}
 
@@ -163,7 +163,9 @@ $notification-counter-size: 18px;
 		border: 0;
 		color: $color-dark-gray;
 		display: none;
-		flex: 1;
+		// Safari doesn't set default flex values if we use `flex: 1;`
+		// it requires us to put these values explicitly.
+		flex: 1 1 auto;
 		font-size: $typescale-size-minus-1;
 		// Firefox doesn't size input properly if our input
 		// has `width` set in `%` and is inside `flexbox`.
@@ -187,6 +189,8 @@ $notification-counter-size: 18px;
 
 	&__search-close {
 		display: none;
+		// Safari fix for bleeding search suggestions shadow
+		margin: 0;
 		padding: 3px;
 		z-index: 2;
 	}
@@ -211,10 +215,6 @@ $notification-counter-size: 18px;
 		top: calc(100% + 1px);
 	}
 
-	&__account-menu {
-		min-width: 50px;
-	}
-
 	&__account-menu-caption {
 		display: none;
 		margin-left: 5px;
@@ -224,10 +224,6 @@ $notification-counter-size: 18px;
 		font-size: $typescale-size-minus-2;
 		padding-bottom: 10px;
 		text-align: center;
-	}
-
-	&__user-menu {
-		width: 55px;
 	}
 
 	&__notifications-menu {
@@ -247,11 +243,11 @@ $notification-counter-size: 18px;
 		font-size: $typescale-size-minus-3;
 		height: $notification-counter-size;
 		justify-content: center;
-		left: -11px;
+		left: -1px;
 		min-width: $notification-counter-size;
 		padding: 0 4px;
 		position: absolute;
-		top: -8px;
+		top: 8px;
 	}
 
 	&__start-a-wiki-icon {
@@ -268,7 +264,11 @@ $notification-counter-size: 18px;
 		}
 
 		&__search {
-			flex: 1;
+			// Safari doesn't set default flex values if we use `flex: 1;`
+			// it requires us to put these values explicitly.
+			//
+			// Safari doesn't size search properly if flex-basis is set to `auto`
+			flex: 1 1 0;
 		}
 
 		&__search-input {
@@ -286,7 +286,9 @@ $notification-counter-size: 18px;
 		}
 
 		&__search {
-			flex: 1;
+			// Safari doesn't set default flex values if we use `flex: 1;`
+			// it requires us to put these values explicitly.
+			flex: 1 1 auto;
 		}
 
 		&__search-input-wrapper {
@@ -319,14 +321,21 @@ $notification-counter-size: 18px;
 		}
 	}
 
-	@media #{$breakpoint-desktop-up} {
+	@media #{$breakpoint-l-up} {
 		&__content-bar {
 			width: 1004px;
 		}
 
+		&__wikis-menu {
+			// Safari doesn't set default flex values if we use `flex: 1;`
+			// it requires us to put these values explicitly.
+			flex: 1 1 auto;
+		}
+
 		&__search {
-			flex: 2;
-			padding-left: 8px;
+			// Safari doesn't set default flex values if we use `flex: 2;`
+			// it requires us to put these values explicitly.
+			flex: 2 1 auto;
 		}
 
 		&__search-input-wrapper {
@@ -357,13 +366,13 @@ $notification-counter-size: 18px;
 		}
 	}
 
-	@media #{$breakpoint-desktop-l-up} {
+	@media #{$breakpoint-xl-up} {
 		&__content-bar {
 			width: 1064px;
 		}
 	}
 
-	@media #{$breakpoint-desktop-xl-up} {
+	@media #{$breakpoint-xxl-up} {
 		&__content-bar {
 			width: 1238px;
 		}
