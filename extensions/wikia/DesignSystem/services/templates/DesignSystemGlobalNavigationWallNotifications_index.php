@@ -5,7 +5,8 @@
 		</div>
 		<?= DesignSystemHelper::getSvg(
 			'wds-icons-bell',
-			'wds-icon wds-icon-small'
+			'wds-icon wds-icon-small',
+			wfMessage( 'global-navigation-notifications-title' )->escaped()
 		) ?>
 		<?= DesignSystemHelper::getSvg(
 			'wds-icons-dropdown-tiny',
