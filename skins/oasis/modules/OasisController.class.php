@@ -46,6 +46,7 @@ class OasisController extends WikiaController {
 		$this->prebid = null;
 		$this->rubiconFastlane = null;
 		$this->rubiconVulcan = null;
+		$this->sourcePoint = null;
 		$this->dynamicYield = null;
 		$this->ivw2 = null;
 		$this->ivw3 = null;

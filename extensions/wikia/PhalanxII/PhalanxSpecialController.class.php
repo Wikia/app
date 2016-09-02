@@ -87,6 +87,7 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 
 		/* set pager */
 		$pager = new PhalanxPager();
+		$pager->setContext( $this->getContext() );
 		$listing  = $pager->getNavigationBar();
 		$listing .= $pager->getBody();
 		$listing .= $pager->getNavigationBar();
@@ -137,6 +138,9 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 		$this->setVal( 'type', $this->wg->Request->getInt('type') );
 		$this->setVal( 'typeSections', $typeSections);
 
+		// SUS-270: preload username into filter search box
+		$this->setVal( 'checkBlocker', $data['checkBlocker'] !== '' ? $data['checkBlocker'] : $data['text'] );
+
 		wfProfileOut( __METHOD__ );
 	}
 
@@ -159,20 +163,6 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 		if ($blockText !== '') {
 			$this->setVal( 'listing', $this->handleBlockTest($blockText) );
 		}
-	}
-
-	/**
-	 * Renders navigation tabs on special page
-	 */
-	public function tabs() {
-		if ( !$this->userCanExecute( $this->wg->User ) ) {
-			$this->displayRestrictionError();
-			return;
-		}
-
-		$this->setVal('currentTab', $this->getVal('currentTab'));
-		$this->setVal('phalanxMainTitle', $this->title);
-		$this->setVal('phalanxTestTitle', SpecialPage::getTitleFor('Phalanx', 'test'));
 	}
 
 	/**
