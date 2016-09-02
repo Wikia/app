@@ -54,7 +54,7 @@
 		<?php elseif ( isset( $model['anon'] ) ): ?>
 			<?= $app->renderView( 'DesignSystemGlobalNavigationService', 'accountNavigation', [ 'model' => $model['anon'] ] ); ?>
 		<?php endif; ?>
-		<div class="wds-global-navigation__start-a-wiki">
+		<div class="wds-global-navigation__start-a-wiki <?= isset( $model['user'] ) ? ' wds-user-is-logged-in' : ''; ?>">
 			<a href="<?= Sanitizer::encodeAttribute( $model['create_wiki']['header']['href'] ); ?>" class="wds-button wds-is-squished wds-is-secondary">
 				<span class="wds-global-navigation__start-a-wiki-caption"><?= DesignSystemHelper::renderText( $model['create_wiki']['header']['title'] ) ?></span>
 				<?= DesignSystemHelper::getSvg(
