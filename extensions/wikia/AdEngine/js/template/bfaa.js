@@ -128,7 +128,7 @@ define('ext.wikia.adEngine.template.bfaa', [
 				return log(['show', 'not supported skin'], 'info', logGroup);
 		}
 
-		log(['show', page, wrapper], 'info', logGroup);
+		log(['show', page, wrapper, params], 'info', logGroup);
 
 		wrapper.style.opacity = '0';
 		slotTweaker.makeResponsive(params.slotName, params.aspectRatio);
