@@ -165,7 +165,7 @@ class CommunityPageSpecialUsersModel {
 			}
 		);
 
-		return $botIds ?: [''];
+		return $botIds ?: [];
 	}
 
 	/**
@@ -193,7 +193,7 @@ class CommunityPageSpecialUsersModel {
 			}
 		);
 
-		return $botIds ?: [''];
+		return $botIds ?: [];
 	}
 
 
@@ -458,15 +458,19 @@ class CommunityPageSpecialUsersModel {
 
 				$botIds = $this->getBotIds();
 
-				$numberOfMembers = ( new WikiaSQL() )
+				$sqlData = ( new WikiaSQL() )
 					->SELECT()
 					->COUNT( 'DISTINCT rev_user' )->AS_( 'members_count' )
 					->FROM( 'revision' )
-					->AND_( 'rev_user' )->NOT_EQUAL_TO( 0 )
-					->AND_( 'rev_user' )->NOT_IN( $botIds )
-					->runLoop( $db, function ( &$numberOfMembers, $row ) {
-						$numberOfMembers = (int)$row->members_count;
-					} );
+					->AND_( 'rev_user' )->NOT_EQUAL_TO( 0 );
+
+				if ( ! empty($botIds) ) {
+					$sqlData->AND_( 'rev_user' )->NOT_IN( $botIds );
+				}
+
+				$numberOfMembers = $sqlData->runLoop( $db, function ( &$numberOfMembers, $row ) {
+					$numberOfMembers = (int)$row->members_count;
+				} );
 
 				return $numberOfMembers;
 			}
