@@ -142,7 +142,7 @@ class CommunityPageSpecialUsersModel {
 	}
 
 	/**
-	 * @return array|null
+	 * @return array
 	 */
 	private function getGlobalBotIds() {
 		$botIds = WikiaDataAccess::cache(
@@ -165,9 +165,12 @@ class CommunityPageSpecialUsersModel {
 			}
 		);
 
-		return $botIds;
+		return $botIds ?: [];
 	}
 
+	/**
+	 * @return array
+	 */
 	private function getBotIds() {
 		$botIds = WikiaDataAccess::cache(
 			self::getMemcKey( self::ALL_BOTS_MCACHE_KEY ),
@@ -190,7 +193,7 @@ class CommunityPageSpecialUsersModel {
 			}
 		);
 
-		return $botIds;
+		return $botIds ?: [];
 	}
 
 
