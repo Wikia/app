@@ -7,7 +7,7 @@
 		<span class="wds-global-navigation__account-menu-caption"><?= DesignSystemHelper::renderText( $model['header']['title'] ); ?></span>
 		<?= DesignSystemHelper::getSvg(
 			'wds-icons-dropdown-tiny',
-			'wds-icon wds-icon-tiny wds-dropdown-toggle-chevron'
+			'wds-icon wds-icon-tiny wds-dropdown__toggle-chevron'
 		) ?>
 	</div>
 	<div class="wds-dropdown__content wds-global-navigation__dropdown-content wds-is-right-aligned">
