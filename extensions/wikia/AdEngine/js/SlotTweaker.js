@@ -130,6 +130,8 @@ define('ext.wikia.adEngine.slotTweaker', [
 	function makeResponsive(slotName, aspectRatio) {
 		var providerContainer = doc.getElementById(slotName).lastElementChild;
 
+		log(['makeResponsive', slotName, aspectRatio], 'info', logGroup);
+
 		onReady(slotName, function (iframe) {
 			log(['makeResponsive', slotName], 'debug', logGroup);
 			if (!aspectRatio) {

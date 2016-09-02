@@ -45,6 +45,8 @@ define('ext.wikia.adEngine.template.bfaa', [
 			var height = iframe.contentWindow.document.body.offsetHeight,
 				position = win.scrollY || win.pageYOffset;
 
+			log(['updateNavBar', height, position], 'info', logGroup);
+
 			if (doc.body.offsetWidth <= breakPointWidthNotSupported || position <= height) {
 				wrapper.classList.add('bfaa-pinned-nav');
 				nav.classList.add('bfaa-pinned');
@@ -58,6 +60,8 @@ define('ext.wikia.adEngine.template.bfaa', [
 			var spotlightFooter = doc.getElementById('SPOTLIGHT_FOOTER');
 			nav.style.top = '';
 			page.classList.add('bfaa-template');
+
+			log('desktopHandler::show', 'info', logGroup);
 
 			this.updateNavBar(iframe);
 			doc.addEventListener('scroll', adHelper.throttle(function () {
@@ -124,6 +128,8 @@ define('ext.wikia.adEngine.template.bfaa', [
 				return log(['show', 'not supported skin'], 'info', logGroup);
 		}
 
+		log(['show', page, wrapper], 'info', logGroup);
+
 		wrapper.style.opacity = '0';
 		slotTweaker.makeResponsive(params.slotName, params.aspectRatio);
 		slotTweaker.onReady(params.slotName, function (iframe) {
@@ -131,7 +137,7 @@ define('ext.wikia.adEngine.template.bfaa', [
 			wrapper.style.opacity = '';
 		});
 
-		log('show', 'info', logGroup);
+		log(['show', params.uap], 'info', logGroup);
 
 		uapContext.setUapId(params.uap);
 		unblockedSlots.forEach(btfBlocker.unblock);
