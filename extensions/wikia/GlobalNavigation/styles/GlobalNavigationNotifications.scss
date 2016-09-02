@@ -217,6 +217,7 @@ $wiki-header-color: #2b54b5;
 
 		.notifications-wiki-header {
 			background-color: $notifications-header-bg-color;
+			box-sizing: border-box;
 			border-top: 1px solid $notifications-divider-color;
 			color: rgb(26, 94, 184);
 			cursor: pointer;

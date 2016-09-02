@@ -2088,6 +2088,7 @@ $config['design_system_js'] = [
 	'skin' => [ 'oasis' ],
 	'assets' => [
 		'//extensions/wikia/DesignSystem/scripts/DesignSystemGlobalFooterTracking.js',
+		'//extensions/wikia/DesignSystem/scripts/DesignSystemDropdowns.js',
 	],
 ];
 
