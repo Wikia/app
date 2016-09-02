@@ -7,17 +7,17 @@
   },
   "ignore": [
     "**/.*",
-    "gulpfile.js"
+    "gulpfile.js",
+    "reference-page/",
+    "tests/"
   ],
   "homepage": "https://github.com/Wikia/design-system",
-  "version": "0.4.0",
-  "_release": "0.4.0",
+  "_release": "fa0d4d3e30",
   "_resolution": {
-    "type": "version",
-    "tag": "0.4.0",
-    "commit": "f90b810dec5f0258de9a13a3b93a90eb665873bd"
+    "type": "commit",
+    "commit": "fa0d4d3e30afafaaa1280b7027a5fc33380d3a6b"
   },
   "_source": "git://github.com/Wikia/design-system.git",
-  "_target": "0.4.0",
+  "_target": "fa0d4d3e30afafaaa1280b7027a5fc33380d3a6b",
   "_originalSource": "Wikia/design-system"
 }

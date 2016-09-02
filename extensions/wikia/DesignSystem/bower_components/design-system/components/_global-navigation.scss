@@ -45,7 +45,7 @@ $notification-counter-size: 18px;
 		height: $nav-height;
 		margin: 0 auto;
 		position: relative;
-		width: 748px;
+		width: 768px;
 		z-index: 1;
 	}
 
@@ -100,6 +100,35 @@ $notification-counter-size: 18px;
 		padding-bottom: 4px;
 		width: $logo-width;
 	}
+
+	// These are temporary styles which should be removed after 4th October 2016
+
+	&__logo-wikia {
+		flex-basis: 0;
+	}
+
+	&__logo-wikia-icon {
+		fill: $color-dark-blue;
+		height: 100%;
+		padding-bottom: 4px;
+		width: 90px;
+	}
+
+	&__logo-wikia-caption {
+		border: {
+			bottom: 1px solid;
+			top: 1px solid;
+		};
+		color: #aaa;
+		display: inline-block;
+		font-size: $typescale-size-minus-3;
+		font-weight: bold;
+		line-height: $typescale-size-base;
+		margin-left: 8px;
+		text-transform: uppercase;
+	}
+
+	// End of temporary styles
 
 	&__link {
 		// Safari doesn't set default flex values if we use `flex: 1;`
