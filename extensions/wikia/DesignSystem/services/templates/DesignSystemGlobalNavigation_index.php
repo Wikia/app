@@ -5,22 +5,17 @@
 				$model['logo']['header']['image'],
 				'wds-global-navigation__logo-fandom'
 			) ?>
-			<span class="wds-global-navigation__logo-powered-by">powered by</span>
-			<?= DesignSystemHelper::getSvg(
-				'wds-company-logo-wikia',
-				'wds-global-navigation__logo-wikia'
-			) ?>
 		</a>
 		<?php
-		if ( isset( $model['verticals'] ) ):
-			foreach ( $model['verticals']['links'] as $link ):
+		if ( isset( $model['fandom_overview'] ) ):
+			foreach ( $model['fandom_overview']['links'] as $link ):
 		?>
 				<?= $app->renderView( 'DesignSystemGlobalNavigationService', 'linkBranded', [ 'model' => $link ] ); ?>
 		<?php
 			endforeach;
 		endif;
 		?>
-		<?= $app->renderView( 'DesignSystemGlobalNavigationService', 'dropdown', [ 'model' => $model['wikis'] ] ); ?>
+		<?= $app->renderView( 'DesignSystemGlobalNavigationService', 'links', [ 'model' => $model['wikis'] ] ); ?>
 		<form class="wds-global-navigation__search" action="<?= Sanitizer::encodeAttribute( $model['search']['module']['results']['url'] ); ?>">
 			<div class="wds-global-navigation__search-input-wrapper">
 				<label class="wds-global-navigation__search-label">
@@ -48,11 +43,11 @@
 		<?php if ( isset( $model['user'] ) ): ?>
 			<?= $app->renderView(
 				'DesignSystemGlobalNavigationService',
-				'dropdown',
+				'links',
 				[
 					'model' => $model['user'],
 					'type' => 'user-menu',
-					'rightAligned' => true,
+					'dropdownRightAligned' => true,
 				]
 			); ?>
 		<?php elseif ( isset( $model['anon'] ) ): ?>

@@ -1,4 +1,5 @@
 <?php
+use Wikia\Util\PerformanceProfilers\UsernameUseProfiler;
 
 /**
  * @todo document
@@ -115,6 +116,7 @@ class Revision implements IDBAccessObject {
 	 * @return Revision
 	 */
 	public static function newFromArchiveRow( $row, $overrides = array() ) {
+		$usernameUseProfiler = new UsernameUseProfiler( __CLASS__, __METHOD__ );
 		$attribs = $overrides + array(
 			'page'       => isset( $row->ar_page_id ) ? $row->ar_page_id : null,
 			'id'         => isset( $row->ar_rev_id ) ? $row->ar_rev_id : null,
@@ -135,6 +137,7 @@ class Revision implements IDBAccessObject {
 				throw new MWException( 'Unable to load text from archive row (possibly bug 22624)' );
 			}
 		}
+		$usernameUseProfiler->end();
 		return new self( $attribs );
 	}
 
