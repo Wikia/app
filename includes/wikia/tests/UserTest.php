@@ -178,4 +178,19 @@ class UserTest extends WikiaBaseTest {
 		$this->assertEquals( "someLocalWikia1Value", $options[ "someLocalWikia1Pref" ] );
 		$this->assertArrayNotHasKey( "someLocalWikia2Pref", $options );
 	}
+
+	public function testGetUsernameShouldReturnAnonNameForUserIdZero(){
+		$this->assertEquals( 'anonName', User::getUsername( 0, 'anonName' ) );
+	}
+
+	public function testGetUsernameShouldReturnProvidedNameIfFallbackUsernameServiceIsInUse(){
+		$this->mockGlobalVariable( 'wgUsernameService', 'FallbackUsernameService' );
+		$this->assertEquals( 'someName', User::getUsername( 123, 'someName' ) );
+	}
+
+	public function testGetUsernameShouldReturnNameFromWhoIsIfMediawikiUsernameServiceIsInUse() {
+		$this->mockGlobalVariable( 'wgUsernameService', 'MediawikiUsernameService' );
+		$this->mockStaticMethod( 'User', 'whoIs', 'NameFromUserTable' );
+		$this->assertEquals( 'NameFromUserTable', User::getUsername( 123, 'notFromUserTableName' ) );
+	}
 }

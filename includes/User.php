@@ -4842,4 +4842,23 @@ class User {
 		$msg = wfMessage( $key );
 		return $msg->isBlank() ? $right : $msg->text();
 	}
+
+
+	/**
+	 * We want to use one source for username.
+	 * This function use configured *service* for that.
+	 * Check implementation for \Wikia\Service\User\Username\UsernameService interface
+	 *
+	 * @param $userId int userId
+	 * @param $name string anon username
+	 * @return string
+	 */
+	public static function getUsername( $userId, $name ) {
+		// if anon return provided name
+		if( $userId == 0 ){
+			return $name;
+		}
+		$usernameService = \Wikia\Service\User\Username\UsernameServiceFactory::createUsernameService();
+		return $usernameService->getUsername( $userId, $name );
+	}
 }
