@@ -1,4 +1,4 @@
-<div class="wds-global-navigation">
+<div class="wds-global-navigation <?= isset( $model['fandom_overview'] ) ? '' : ' wds-search-is-always-visible'; ?>">
 	<div class="wds-global-navigation__content-bar">
 		<a href="<?= Sanitizer::encodeAttribute( $model['logo']['header']['href'] ); ?>" class="wds-global-navigation__logo">
 			<?= DesignSystemHelper::getSvg(
