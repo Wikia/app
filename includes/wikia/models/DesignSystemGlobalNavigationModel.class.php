@@ -21,10 +21,14 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 				'header' => [
 					'type' => 'link-image',
 					'href' => $this->getHref( 'fandom-logo' ),
-					'image' => 'wds-company-logo-fandom-powered-by-wikia',
+					'image' => 'wds-company-logo-wikia',
 					'title' => [
-						'type' => 'text',
-						'value' => 'Fandom powered by Wikia'
+						'type' => 'translatable-text',
+						'key' => 'global-footer-wikia-header'
+					],
+					'subtitle' => [
+						'type' => 'translatable-text',
+						'key' => 'global-footer-international-header-subtitle'
 					]
 				]
 			],
