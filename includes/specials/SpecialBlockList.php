@@ -20,6 +20,8 @@
  * @file
  * @ingroup SpecialPage
  */
+use Wikia\DependencyInjection\Injector;
+use Wikia\Service\User\Username\UsernameService;
 use Wikia\Util\PerformanceProfilers\UsernameUseProfiler;
 
 /**
@@ -211,6 +213,8 @@ class SpecialBlockList extends SpecialPage {
 class BlockListPager extends TablePager {
 	protected $conds;
 	protected $page;
+	/** @var UsernameService $usernameService */
+	protected $usernameService;
 
 	/**
 	 * @param $page SpecialPage
@@ -220,6 +224,7 @@ class BlockListPager extends TablePager {
 		$this->page = $page;
 		$this->conds = $conds;
 		$this->mDefaultDirection = true;
+		$this->usernameService = Injector::getInjector()->get( UsernameService::class );
 		parent::__construct( $page->getContext() );
 	}
 
@@ -323,10 +328,11 @@ class BlockListPager extends TablePager {
 
 			case 'ipb_by':
 				if ( isset( $row->by_user_name ) ) {
-					$formatted = Linker::userLink( $value, $row->by_user_name );
-					$formatted .= Linker::userToolLinks( $value, $row->by_user_name );
+					$username = $this->usernameService->getUsername( $value, $row->by_user_name );
+					$formatted = Linker::userLink( $value, $username );
+					$formatted .= Linker::userToolLinks( $value, $username );
 				} else {
-					$formatted = htmlspecialchars( $row->ipb_by_text ); // foreign user?
+					$formatted = htmlspecialchars( $this->usernameService->getUsername( $row->ipb_id, $row->ipb_by_text ) ); // foreign user?
 				}
 				break;
 
