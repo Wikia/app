@@ -111,12 +111,27 @@ define('ext.wikia.adEngine.slotTweaker', [
 	}
 
 	function onReady(slotName, callback) {
-		var iframe = doc.getElementById(slotName).querySelector('div:not(.hidden) > div[id*="_container_"] iframe');
+		var iframe = doc.getElementById(slotName).querySelector('div:not(.hidden) > div[id*="_container_"] iframe'),
+			fallbackId;
 
-		if (!iframe) {
+		if (!iframe && !window._sp_) {
 			log('onIframeReady - iframe does not exist', 'debug', logGroup);
 			return;
 		}
+
+		if (!iframe && !!window._sp_) {
+			log('onIframeReady - trying fallback iframe', 'debug', logGroup);
+
+			fallbackId = window._sp_.getElementId(document.querySelectorAll('div[id="' + slotName + '"] div')[1].id);
+			iframe = doc.getElementById(fallbackId).querySelector('div:not(.hidden) > div[id*="_container_"] iframe');
+
+			if (!iframe) {
+				log('onIframeReady - fallback iframe does not exist', 'debug', logGroup);
+				return;
+			}
+		}
+
+
 
 		if (iframe.contentWindow.document.readyState === 'complete') {
 			callback(iframe);
