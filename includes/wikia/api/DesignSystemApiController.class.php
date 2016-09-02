@@ -39,8 +39,8 @@ class DesignSystemApiController extends WikiaApiController {
 			$params[static::PARAM_LANG]
 		);
 		$navigationModel = new DesignSystemGlobalNavigationModel(
-			// TODO: Use `product` and `id` parameters?
-			$params['wikiId'],
+			$params[static::PARAM_PRODUCT],
+			$params[static::PARAM_ID],
 			$params[static::PARAM_LANG]
 		);
 

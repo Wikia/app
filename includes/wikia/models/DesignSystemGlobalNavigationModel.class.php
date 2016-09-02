@@ -2,14 +2,25 @@
 
 class DesignSystemGlobalNavigationModel extends WikiaModel {
 	const DEFAULT_LANG = 'en';
+	const PRODUCT_WIKIS = 'wikis';
+	const PRODUCT_FANDOMS = 'fandoms';
 
-	private $wikiId;
+	private $product;
+	private $productInstanceId;
 	private $lang;
 
-	public function __construct( $wikiId, $lang = self::DEFAULT_LANG ) {
+	/**
+	 * constructor
+	 *
+	 * @param string $product Name of product, ex: fandoms, wikis
+	 * @param int $productInstanceId Identifier for given product, ex: wiki id
+	 * @param string $lang
+	 */
+	public function __construct( $product, $productInstanceId, $lang = self::DEFAULT_LANG ) {
 		parent::__construct();
 
-		$this->wikiId = $wikiId;
+		$this->product = $product;
+		$this->productInstanceId = $productInstanceId;
 		$this->lang = $lang;
 	}
 
@@ -96,11 +107,11 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 	}
 
 	private function getPageUrl( $pageTitle, $namespace, $query = '' ) {
-		return GlobalTitle::newFromText( $pageTitle, $namespace, $this->wikiId )->getFullURL( $query );
+		return GlobalTitle::newFromText( $pageTitle, $namespace, $this->productInstanceId )->getFullURL( $query );
 	}
 
 	private function getSearchData() {
-		$isCorporatePage = WikiaPageType::isCorporatePage( $this->wikiId );
+		$isCorporatePage = WikiaPageType::isCorporatePage( $this->productInstanceId );
 
 		$search = [
 			'type' => 'search',
@@ -124,7 +135,7 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 
 		if ( !$isCorporatePage ) {
 			$search['suggestions'] = [
-				'url' => WikiFactory::getHostById( $this->wikiId ) . '/index.php?action=ajax&rs=getLinkSuggest&format=json',
+				'url' => WikiFactory::getHostById( $this->productInstanceId ) . '/index.php?action=ajax&rs=getLinkSuggest&format=json',
 				'param-name' => 'query'
 			];
 		}
@@ -292,7 +303,7 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 	}
 
 	private function isMessageWallEnabled() {
-		return WikiFactory::getVarValueByName( 'wgEnableWallExt', $this->wikiId );
+		return WikiFactory::getVarValueByName( 'wgEnableWallExt', $this->productInstanceId );
 	}
 
 	private function getCorporatePageSearchUrl() {
