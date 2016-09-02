@@ -371,7 +371,6 @@ require(
 			onNotificationsOpen: function () {
 				WallNotifications.$wallNotifications.addClass('show');
 				WallNotifications.setNotificationsHeight();
-				$('#globalNavigation').trigger('notifications-menu-opened');
 			}
 		};
 
