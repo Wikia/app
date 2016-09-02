@@ -1,4 +1,6 @@
 @mixin square($size) {
 	height: $size;
+	// min-width prevents icons from squeezing
+	min-width: $size;
 	width: $size;
 }

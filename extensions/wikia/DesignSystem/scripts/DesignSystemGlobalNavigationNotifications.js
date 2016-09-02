@@ -1,29 +1,33 @@
-// TODO XW-1943
-// don't update this file as it's no longer being used
-// we plan to keep it only until the Design System Global Navigation proves to be stable on production
-// the logic was copied to extensions/wikia/DesignSystem/scripts/DesignSystemGlobalNavigationNotifications.js
-
 require(
-	['jquery', 'wikia.window', 'wikia.nirvana', 'wikia.delayedhover', 'wikia.globalNavigationDropdowns'],
-	function($, window, nirvana, delayedHover, dropdowns) {
+	['jquery', 'wikia.window', 'wikia.nirvana'],
+	function($, window, nirvana) {
 		'use strict';
 
 		var WallNotifications = {
 			init: function () {
 				this.bucky = window.Bucky('WallNotifications');
-				this.updateInProgress = false; // we only want 1 update simultaneously
-				this.notificationsCache = {}; // HTML for "trays" for different Wiki ids
-				this.wikiShown = {}; // all open "trays" (Wiki Notifications) - list of Wiki ids
-				this.fetchedCurrent = false; // we only want to force-fetch notifications for current Wiki once
-				this.currentWikiId = 0; // updated after fetching Notification counts for the 1st time
+
+				// we only want 1 update simultaneously
+				this.updateInProgress = false;
+
+				// HTML for "trays" for different Wiki ids
+				this.notificationsCache = {};
+
+				// all open "trays" (Wiki Notifications) - list of Wiki ids
+				this.wikiShown = {};
+
+				// we only want to force-fetch notifications for current Wiki once
+				this.fetchedCurrent = false;
+
+				// updated after fetching Notification counts for the 1st time
+				this.currentWikiId = 0;
+
 				this.cityId = parseInt(window.wgCityId, 10);
 
 				setTimeout(this.proxy(this.updateCounts), 300);
 
 				this.$window = $(window);
-
 				this.$notificationsCount = $('.notifications-count');
-
 				this.$notifications = $('#notifications');
 				this.$notificationsEntryPoint = $('#notificationsEntryPoint');
 				this.$wallNotifications = $('#GlobalNavigationWallNotifications');
@@ -38,11 +42,13 @@ require(
 				this.unreadCount = parseInt(this.$notificationsCount.html(), 10);
 
 				this.$notificationsEntryPoint
-					.mouseenter(this.proxy(this.updateCounts))
-					.mouseenter(this.proxy(this.fetchForCurrentWiki));
+					.on('click', this.proxy(this.updateCounts))
+					.on('click', this.proxy(this.fetchForCurrentWiki))
+					.on('wds-dropdown-open', this.proxy(this.onNotificationsOpen));
 
 				this.$wallNotifications.add($('#pt-wall-notifications'))
 					.on('click', '.notifications-markasread', this.markAllAsReadAllWikis.bind(this));
+
 
 				$(window).on('resize', $.throttle(50, function () {
 					WallNotifications.setNotificationsHeight();
@@ -135,7 +141,9 @@ require(
 				// we update them from cache for all those that still have the same
 				// amount of unread notifications and fetch all the others
 				for (var wikiId in this.notificationsCache) {
-					this.updateWiki(parseInt(wikiId, 10));
+					if (this.notificationsCache.hasOwnProperty(wikiId)) {
+						this.updateWiki(parseInt(wikiId, 10));
+					}
 				}
 			},
 
@@ -169,7 +177,7 @@ require(
 				});
 			},
 
-			markAllAsReadAllWikis: function (e) {
+			markAllAsReadAllWikis: function () {
 				this.markAllAsReadRequest('FORCE');
 				return false;
 			},
@@ -186,9 +194,6 @@ require(
 			},
 
 			updateCountsHtml: function (data) {
-				var self = this,
-					element;
-
 				this.$wallNotifications.html(data.html);
 				this.unreadCount = data.count;
 
@@ -265,7 +270,7 @@ require(
 						this.updateWikiHtml(wikiId, data);
 						this.notificationsCache[wikiId] = data;
 					}),
-					onErrorCallback: this.proxy(function (jqXHR, textStatus, errorThrown) {
+					onErrorCallback: this.proxy(function (jqXHR) {
 						if (jqXHR !== undefined && jqXHR.status !== undefined && jqXHR.status === 501) {
 							var data = {};
 							data.html = '<li class="notifications-empty">' + $.msg('wall-notifications-wall-disabled') + '</li>';
@@ -331,8 +336,8 @@ require(
 
 			setNotificationsHeight: function () {
 				var isDropdownOpen = this.$wallNotifications.hasClass('show'),
-					height = 0,
-					msgHeight = 0;
+					height,
+					msgHeight;
 
 				if (isDropdownOpen) {
 
@@ -372,23 +377,6 @@ require(
 
 		$(function () {
 			WallNotifications.init();
-
-			dropdowns.attachDropdown(
-				WallNotifications.$notificationsEntryPoint, {
-					onOpen: WallNotifications.onNotificationsOpen
-				}
-			);
-
-			delayedHover.attach(
-				document.getElementById('notificationsEntryPoint'),
-				{
-					checkInterval: 200,
-					maxActivationDistance: 20,
-					onActivate: dropdowns.openDropdown,
-					onDeactivate: dropdowns.closeDropdown,
-					activateOnClick: false
-				}
-			);
 		});
 	}
 );
