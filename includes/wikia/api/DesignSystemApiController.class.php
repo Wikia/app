@@ -1,6 +1,11 @@
 <?php
 
 class DesignSystemApiController extends WikiaApiController {
+	const PARAM_PRODUCT = 'product';
+	const PARAM_ID = 'id';
+	const PARAM_LANG = 'lang';
+	const PRODUCT_WIKIS = 'wikis';
+
 	private $data = [
 		"logo" => [
 			"header" => [
@@ -209,8 +214,11 @@ class DesignSystemApiController extends WikiaApiController {
 
 	public function getFooter() {
 		$params = $this->getRequestParameters();
-
-		$footerModel = new DesignSystemGlobalFooterModel( $params['product'], $params[ 'id' ], $params[ 'lang' ] );
+		$footerModel = new DesignSystemGlobalFooterModel(
+			$params[self::PARAM_PRODUCT],
+			$params[self::PARAM_ID],
+			$params[self::PARAM_LANG]
+		);
 
 		$this->setResponseData( $footerModel->getData() );
 		$this->response->setCacheValidity( WikiaResponse::CACHE_VERY_SHORT );
@@ -231,9 +239,14 @@ class DesignSystemApiController extends WikiaApiController {
 	 */
 	public function getAllElements() {
 		$params = $this->getRequestParameters();
+		$footerModel = new DesignSystemGlobalFooterModel(
+			$params[self::PARAM_PRODUCT],
+			$params[self::PARAM_ID],
+			$params[self::PARAM_LANG]
+		);
 
 		$this->setResponseData( [
-			'global-footer' => ( new DesignSystemGlobalFooterModel( $params[ 'product' ], $params[ 'id' ], $params[ 'lang' ] ) )->getData(),
+			'global-footer' => $footerModel->getData(),
 			'global-navigation' => $this->data
 		] );
 
@@ -242,27 +255,18 @@ class DesignSystemApiController extends WikiaApiController {
 
 	private function getRequestParameters() {
 		// ultimately, id will be a required param, but fall back to wikiId while transitioning
-		$id = $this->getRequest()->getVal( 'id', null );
-		if ( $id === null ) {
-			$id = $this->getRequiredParam( 'wikiId' );
-		}
+		$id = $this->getRequiredParam( self::PARAM_ID );
+		$product = $this->getRequiredParam( self::PARAM_PRODUCT );
+		$lang = $this->getRequiredParam( self::PARAM_LANG );
 
-		// ultimately, product will be a required param, but fall back to "wikis" while transitioning
-		$product = $this->getRequest()->getVal( 'product', null );
-		if ( $product === null ) {
-			$product = 'wikis';
-		}
-
-		$lang = $this->getRequiredParam( 'lang' );
-
-		if ( $product === 'wikis' && WikiFactory::IDtoDB( $id ) === false ) {
+		if ( $product === self::PRODUCT_WIKIS && WikiFactory::IDtoDB( $id ) === false ) {
 			throw new NotFoundApiException( "Unable to find wiki with ID {$id}" );
 		}
 
 		return [
-			'product' => $product,
-			'id' => $id,
-			'lang' => $lang
+			self::PARAM_PRODUCT => $product,
+			self::PARAM_ID => $id,
+			self::PARAM_LANG => $lang
 		];
 	}
 
