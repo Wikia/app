@@ -226,7 +226,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 	 * DesignSystemGlobalFooterModel constructor.
 	 *
 	 * @param string $product Name of product, ex: fandoms, wikis
-	 * @param int $id Identifier for given product, ex: wiki id
+	 * @param int $productInstanceId Identifier for given product, ex: wiki id
 	 * @param string $lang
 	 */
 	public function __construct( $product, $productInstanceId, $lang = self::DEFAULT_LANG ) {
@@ -474,7 +474,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 	}
 
 	private function getSitenameData() {
-		if ( $this->product === self::PRODUCT_FANDOMS ) {
+		if ( $this->product === static::PRODUCT_FANDOMS ) {
 			$sitename = 'Fandom';
 		} else {
 			$wgSitenameForComscoreForWikiId = WikiFactory::getVarValueByName( 'wgSitenameForComscore', $this->productInstanceId );
@@ -500,7 +500,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 
 	private function getVerticalData() {
 		// fandom has no set vertical
-		if ( $this->product === self::PRODUCT_FANDOMS ) {
+		if ( $this->product === static::PRODUCT_FANDOMS ) {
 			return [];
 		}
 
@@ -536,7 +536,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 	}
 
 	private function getLicenseData() {
-		if ( $this->product === self::PRODUCT_FANDOMS ) {
+		if ( $this->product === static::PRODUCT_FANDOMS ) {
 			return [
 				'type' => 'line-text',
 				'title' => [
@@ -752,7 +752,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 	}
 
 	private function getLocalSitemapUrl() {
-		if ( $this->product !== self::PRODUCT_FANDOMS ) {
+		if ( $this->product !== static::PRODUCT_FANDOMS ) {
 			$default = true; // $wgEnableLocalSitemapPageExt = true; in CommonSettings
 			$localSitemapAvailable = WikiFactory::getVarValueByName(
 				'wgEnableLocalSitemapPageExt', $this->productInstanceId, false, $default
@@ -769,7 +769,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 
 	private function getLicenseUrl() {
 		// no license URL for Fandom
-		if ( $this->product === self::PRODUCT_FANDOMS ) {
+		if ( $this->product === static::PRODUCT_FANDOMS ) {
 			return '';
 		}
 
