@@ -1,8 +1,9 @@
 /*global define*/
 define('ext.wikia.adEngine.lookup.adapter.appnexus',[
 	'wikia.geo',
-	'wikia.instantGlobals'
-], function (geo, instantGlobals) {
+	'wikia.instantGlobals',
+	'ext.wikia.adEngine.lookup.adapter.appnexusPlacements'
+], function (geo, instantGlobals, appnexusPlacements) {
 	'use strict';
 
 	var bidderName = 'appnexus',
@@ -12,23 +13,20 @@ define('ext.wikia.adEngine.lookup.adapter.appnexus',[
 					sizes: [
 						[728, 90],
 						[970, 250]
-					],
-					placementId: '5823300'
+					]
 				},
 				TOP_RIGHT_BOXAD: {
 					sizes: [
 						[300, 250],
 						[300, 600]
-					],
-					placementId: '5823309'
+					]
 				}
 			},
 			mercury: {
 				MOBILE_TOP_LEADERBOARD: {
 					sizes: [
 						[320, 50]
-					],
-					placementId: '5823309'
+					]
 				}
 			}
 		};
@@ -45,7 +43,7 @@ define('ext.wikia.adEngine.lookup.adapter.appnexus',[
 				{
 					bidder: bidderName,
 					params: {
-						placementId: config.placementId
+						placementId: appnexusPlacements.getPlacement()
 					}
 				}
 			]

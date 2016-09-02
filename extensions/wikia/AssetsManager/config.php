@@ -270,6 +270,7 @@ $config['adengine2_prebid_js'] = [
 	'assets' => [
 		'//extensions/wikia/AdEngine/js/lookup/prebid.js',
 		'//extensions/wikia/AdEngine/js/lookup/adapter/appnexus.js',
+		'//extensions/wikia/AdEngine/js/lookup/adapter/appnexusPlacements.js',
 	],
 ];
 
@@ -816,6 +817,7 @@ $config['mobile_base_ads_js'] = [
 		'//extensions/wikia/AdEngine/js/WikiaAdHelper.js',
 		'//extensions/wikia/AdEngine/js/config/mobile.js',
 		'//extensions/wikia/AdEngine/js/lookup/adapter/appnexus.js',
+		'//extensions/wikia/AdEngine/js/lookup/adapter/appnexusPlacements.js',
 		'//extensions/wikia/AdEngine/js/utils/sampler.js',
 		'//extensions/wikia/AdEngine/js/context/adContext.js',
 		'//extensions/wikia/AdEngine/js/context/uapContext.js',
