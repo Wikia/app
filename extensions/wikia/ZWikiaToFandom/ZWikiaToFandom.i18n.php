@@ -1289,7 +1289,7 @@ Parameters:
 	 'vet-desc' => '{{desc}}',
 	 'vet-description' => 'Help text for the VET form, that also contains a link to full documentation for VET [http://help.wikia.com/wiki/Help:Video_Embed_Tool Link to VET documentation]',
 	 'vet-search-results-WVL' => 'Number of results found for keyword in Wikia Video Library. $1 = number, $2 = keyword',
-	 'vet-video-add-intro' => 'Call to action to search through Wikia\',
+	 'vet-video-add-intro' => 'Call to action to search through Wikia\'s licensed video content located at http://video.wikia.com',
 	 'vet-video-wiki' => 'dropdown label for search filter - Wikia Video Library',
 	 'wam-desc' => '{{desc}}',
 	 'wam-html-title' => 'Title for the WAM pages. For information about WAM visit http://www.wikia.com/WAM',
