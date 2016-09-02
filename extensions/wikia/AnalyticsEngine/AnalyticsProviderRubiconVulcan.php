@@ -1,14 +1,14 @@
 <?php
 
-class AnalyticsProviderRubiconFastlane implements iAnalyticsProvider {
-	const COUNTRIES_VARIABLE = 'wgAdDriverRubiconFastlaneCountries';
-	const MODULE_NAME = 'ext.wikia.adEngine.lookup.rubicon.rubiconFastlane';
+class AnalyticsProviderRubiconVulcan implements iAnalyticsProvider {
+	const COUNTRIES_VARIABLE = 'wgAdDriverRubiconVulcanCountries';
+	const MODULE_NAME = 'ext.wikia.adEngine.lookup.rubicon.rubiconVulcan';
 	const TEMPLATE = 'extensions/wikia/AnalyticsEngine/templates/bidder.mustache';
 
 	public static function isEnabled() {
-		global $wgAdDriverEnableRubiconFastlane, $wgShowAds;
+		global $wgAdDriverEnableRubiconVulcan, $wgShowAds;
 
-		return $wgAdDriverEnableRubiconFastlane
+		return $wgAdDriverEnableRubiconVulcan
 			&& $wgShowAds
 			&& AdEngine2Service::areAdsShowableOnPage();
 	}
@@ -32,7 +32,7 @@ class AnalyticsProviderRubiconFastlane implements iAnalyticsProvider {
 			);
 		}
 
-		return '<!-- Rubicon Fastlane disabled -->';
+		return '<!-- Rubicon Vulcan disabled -->';
 	}
 
 	public function trackEvent( $event, $eventDetails = array() ) {

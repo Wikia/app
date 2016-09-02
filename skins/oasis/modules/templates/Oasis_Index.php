@@ -68,6 +68,7 @@
 <?= $amazonMatch ?>
 <?= $openXBidder ?>
 <?= $prebid ?>
+<?= $rubiconVulcan ?>
 <?= $krux ?>
 <?= $dynamicYield ?>
 <?= $ivw3 ?>
