@@ -58,7 +58,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.appnexus',[
 
 	return {
 		isEnabled: isEnabled,
-		prepareAdUnit: prepareAdUnit,
-		getSlots: getSlots
+		getSlots: getSlots,
+		prepareAdUnit: prepareAdUnit
 	};
 });

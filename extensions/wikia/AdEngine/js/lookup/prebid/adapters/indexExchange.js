@@ -62,7 +62,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.indexExchange',[
 
 	return {
 		isEnabled: isEnabled,
-		prepareAdUnit: prepareAdUnit,
-		getSlots: getSlots
+		getSlots: getSlots,
+		prepareAdUnit: prepareAdUnit
 	};
 });
