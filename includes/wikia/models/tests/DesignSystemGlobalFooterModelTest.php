@@ -4,6 +4,7 @@ class DesignSystemGlobalFooterModelTest extends WikiaBaseTest {
 	/**
 	 * @dataProvider getLicensingAndVerticalDataProvider
 	 *
+	 * @param string $product
 	 * @param $sitename
 	 * @param $rightsText license name
 	 * @param $rightsUrl license URL
@@ -119,99 +120,6 @@ class DesignSystemGlobalFooterModelTest extends WikiaBaseTest {
 		];
 	}
 
-	/**
-	 * @dataProvider getHrefDataProvider
-	 *
-	 * @param string $lang language code to fetch
-	 * @param array $hrefs hrefs definition in different languages
-	 * @param string $expectedResult
-	 */
-	public function testGetHref( $product, $lang, $hrefs, $expectedResult ) {
-		$footerModel = new DesignSystemGlobalFooterModel( $product, 1234, $lang );
-		$footerModel->setHrefs( $hrefs );
-
-		$result = $footerModel->getData();
-
-		$this->assertEquals( $result['create_wiki']['links'][0]['href'], $expectedResult );
-	}
-
-	public function getHrefDataProvider() {
-		return [
-			[
-				DesignSystemGlobalFooterModel::PRODUCT_WIKIS,
-				'pl',
-				[
-					'en' => [
-						'create-new-wiki' => 'http://www.wikia.com'
-					],
-					'default' => [
-						'create-new-wiki' => 'http://www.example.com'
-					],
-					'pl' => [
-						'create-new-wiki' => 'http://www.wikia.pl'
-					],
-				],
-				'http://www.wikia.pl'
-			],
-			[
-				DesignSystemGlobalFooterModel::PRODUCT_WIKIS,
-				'pl',
-				[
-					'en' => [
-						'create-new-wiki' => 'http://www.wikia.com'
-					],
-					'default' => [
-						'create-new-wiki' => 'http://www.example.com'
-					],
-					'pl' => [],
-				],
-				'http://www.example.com'
-			],
-			[
-				DesignSystemGlobalFooterModel::PRODUCT_WIKIS,
-				'pl',
-				[
-					'en' => [
-						'create-new-wiki' => 'http://www.wikia.com'
-					],
-					'default' => [
-						'create-new-wiki' => null
-					],
-					'pl' => [],
-				],
-				null
-			],
-			[
-				DesignSystemGlobalFooterModel::PRODUCT_WIKIS,
-				'en',
-				[
-					'en' => [
-						'create-new-wiki' => 'http://www.wikia.com'
-					],
-					'default' => [
-						'create-new-wiki' => null
-					],
-					'pl' => [],
-				],
-				'http://www.wikia.com'
-			],
-			[
-				DesignSystemGlobalFooterModel::PRODUCT_FANDOMS,
-				'pl',
-				[
-					'en' => [
-						'create-new-wiki' => 'http://www.wikia.com'
-					],
-					'default' => [
-						'create-new-wiki' => 'http://www.example.com'
-					],
-					'pl' => [],
-				],
-				'http://www.example.com'
-			],
-		];
-	}
-
 	public function testInternationalHeader() {
 		$footerModel = new DesignSystemGlobalFooterModel( DesignSystemGlobalFooterModel::PRODUCT_WIKIS, 1234, 'en' );
 		$result = $footerModel->getData();
@@ -238,76 +146,5 @@ class DesignSystemGlobalFooterModelTest extends WikiaBaseTest {
 		$result = $footerModel->getData();
 
 		$this->assertCount( 1, $result['fandom_overview']['links'] );
-	}
-
-	/**
-	 * @dataProvider getFollowUsDataProvider
-	 *
-	 * @param $lang language code to fetch
-	 * @param $hrefs hrefs definition in different languages
-	 * @param $expectedCount
-	 */
-	public function testGetFollowUs( $lang, $hrefs, $expectedCount ) {
-		$footerModel = new DesignSystemGlobalFooterModel( DesignSystemGlobalFooterModel::PRODUCT_WIKIS, 1234, $lang );
-		$footerModel->setHrefs( $hrefs );
-
-		$result = $footerModel->getData();
-		$this->assertCount( $expectedCount, $result['follow_us']['links'] );
-	}
-
-	public function getFollowUsDataProvider() {
-		return [
-			[
-				'de',
-				[
-					'default' => [
-						'social-facebook' => 'http://facebook.com',
-						'social-youtube' => 'http://youtube.com',
-						'social-twitter' => 'http://twitter.com',
-						'social-instagram' => 'http://instagram.com',
-						'social-reddit' => 'http://reddit.com'
-					],
-					'de' => [
-						'social-facebook' => 'http://facebook.com',
-						'social-youtube' => 'http://youtube.com',
-						'social-twitter' => 'http://twitter.com',
-					],
-				],
-				5
-			],
-			[
-				'de',
-				[
-					'default' => [
-						'social-facebook' => 'http://facebook.com',
-						'social-youtube' => 'http://youtube.com',
-						'social-twitter' => 'http://twitter.com',
-						'social-instagram' => null,
-						'social-reddit' => null
-					],
-					'de' => [
-						'social-facebook' => 'http://facebook.com',
-						'social-youtube' => 'http://youtube.com',
-						'social-twitter' => 'http://twitter.com',
-					],
-				],
-				3
-			],
-			[
-				'de',
-				[
-					'default' => [
-						'social-facebook' => null,
-						'social-youtube' => null,
-						'social-twitter' => null,
-						'social-instagram' => null,
-						'social-reddit' => null
-					],
-					'de' => [
-					],
-				],
-				0
-			],
-		];
 	}
 }

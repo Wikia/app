@@ -376,6 +376,8 @@ $wgAutoloadClasses['WikiaCollectionsModel'] = "{$IP}/includes/wikia/models/Wikia
 $wgAutoloadClasses['WikiaCorporateModel'] = "{$IP}/includes/wikia/models/WikiaCorporateModel.class.php";
 $wgAutoloadClasses['MySQLKeyValueModel'] = "{$IP}/includes/wikia/models/MySQLKeyValueModel.class.php";
 $wgAutoloadClasses['DesignSystemGlobalFooterModel'] = "{$IP}/includes/wikia/models/DesignSystemGlobalFooterModel.class.php";
+$wgAutoloadClasses['DesignSystemGlobalNavigationModel'] = "{$IP}/includes/wikia/models/DesignSystemGlobalNavigationModel.class.php";
+$wgAutoloadClasses['DesignSystemSharedLinks'] = "{$IP}/includes/wikia/models/DesignSystemSharedLinks.class.php";
 
 // modules
 $wgAutoloadClasses['OasisController'] = $IP.'/skins/oasis/modules/OasisController.class.php';
@@ -1276,6 +1278,19 @@ $wgAdDriverRubiconFastlaneProviderCountries = null;
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverRubiconFastlaneProviderSkipTier = 0;
+
+/**
+ * @name $wgAdDriverEnableRubiconVulcan
+ * Enables Rubicon Vulcan
+ */
+$wgAdDriverEnableRubiconVulcan = true;
+
+/**
+ * @name $wgAdDriverRubiconVulcanCountries
+ * Enables RubiconVulcan in these countries (given wgAdDriverEnableRubiconVulcan is also true).
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverRubiconVulcanCountries = null;
 
 /**
  * @name $wgAdDriverPrebidBidderCountries
