@@ -1,5 +1,5 @@
 <div id="notificationsEntryPoint" class="wds-global-navigation__notifications-menu wds-global-navigation__notifications-menu wds-dropdown notifications-container">
-	<div class="wds-dropdown__toggle wds-global-navigation__dropdown-toggle">
+	<div class="wds-dropdown__toggle wds-global-navigation__dropdown-toggle" title="<?=wfMessage( 'global-navigation-notifications-title' )->escaped()?>">
 		<div class="bubbles">
 			<div class="wds-global-navigation__notifications-menu-counter notifications-count"></div>
 		</div>
