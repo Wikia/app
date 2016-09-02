@@ -129,8 +129,6 @@ $config['recirculation_js'] = [
 		'//extensions/wikia/Recirculation/js/utils.js',
 		'//extensions/wikia/Recirculation/js/helpers/ContentLinksHelper.js',
 		'//extensions/wikia/Recirculation/js/helpers/FandomHelper.js',
-		'//extensions/wikia/Recirculation/js/helpers/LateralHelper.js',
-		'//extensions/wikia/Recirculation/js/helpers/LiftigniterHelper.js',
 		'//extensions/wikia/Recirculation/js/helpers/DataHelper.js',
 		'//extensions/wikia/Recirculation/js/helpers/CakeRelatedContentHelper.js',
 		'//extensions/wikia/Recirculation/js/helpers/CuratedContentHelper.js',
@@ -145,15 +143,6 @@ $config['recirculation_js'] = [
 		'//extensions/wikia/Recirculation/js/experiments/placement/control.js',
 		'//extensions/wikia/Recirculation/js/scrolldepth.js',
 		'//extensions/wikia/Recirculation/js/libs/perfect-scrollbar.js',
-	],
-];
-
-$config['recirculation_trackers_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis' ],
-	'assets' => [
-		'//extensions/wikia/Recirculation/js/lateralTracker.js',
-		'//extensions/wikia/Recirculation/js/liTracker.js',
 	],
 ];
 
@@ -260,7 +249,18 @@ $config['adengine2_rubicon_fastlane_js'] = [
 	'skin' => [ 'oasis' ],
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
-		'//extensions/wikia/AdEngine/js/lookup/rubiconFastlane.js',
+		'//extensions/wikia/AdEngine/js/lookup/rubicon/rubiconTargeting.js',
+		'//extensions/wikia/AdEngine/js/lookup/rubicon/rubiconFastlane.js',
+	],
+];
+
+$config['adengine2_rubicon_vulcan_js'] = [
+	'skin' => [ 'oasis' ],
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => [
+		'//extensions/wikia/AdEngine/js/lookup/rubicon/rubiconTargeting.js',
+		'//extensions/wikia/AdEngine/js/lookup/rubicon/rubiconVulcan.js',
+		'//extensions/wikia/AdEngine/js/utils/math.js',
 	],
 ];
 
@@ -826,7 +826,8 @@ $config['mobile_base_ads_js'] = [
 		'//extensions/wikia/AdEngine/js/lookup/openx/openXBidderHelper.js',
 		'//extensions/wikia/AdEngine/js/lookup/openXBidder.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid.js',
-		'//extensions/wikia/AdEngine/js/lookup/rubiconFastlane.js',
+		'//extensions/wikia/AdEngine/js/lookup/rubicon/rubiconFastlane.js',
+		'//extensions/wikia/AdEngine/js/lookup/rubicon/rubiconTargeting.js',
 		'//extensions/wikia/AdEngine/js/lookup/services.js',
 		'//extensions/wikia/AdEngine/js/provider/btfBlocker.js',
 		'//extensions/wikia/AdEngine/js/provider/directGptMobile.js',
@@ -3089,5 +3090,14 @@ $config['special_admindashboard_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
 		'//extensions/wikia/AdminDashboard/js/AdminDashboard.js',
+	],
+];
+
+/* CrosslinkModule */
+$config['crosslink_module_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/CrosslinkModule/styles/CrosslinkModule.scss',
 	],
 ];

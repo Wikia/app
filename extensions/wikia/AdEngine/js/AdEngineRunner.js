@@ -6,7 +6,7 @@ define('ext.wikia.adEngine.adEngineRunner', [
 	'wikia.log',
 	'wikia.window',
 	require.optional('ext.wikia.adEngine.lookup.amazonMatch'),
-	require.optional('ext.wikia.adEngine.lookup.rubiconFastlane'),
+	require.optional('ext.wikia.adEngine.lookup.rubicon.rubiconFastlane'),
 	require.optional('ext.wikia.aRecoveryEngine.recovery.sourcePointRecovery')
 ], function (adEngine, adTracker, instantGlobals, log, win, amazonMatch, rubiconFastlane, spRecovery) {
 	'use strict';
