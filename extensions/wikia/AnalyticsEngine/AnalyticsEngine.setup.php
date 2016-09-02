@@ -25,6 +25,7 @@ $wgAutoloadClasses['AnalyticsProviderOpenXBidder'] = __DIR__ . '/AnalyticsProvid
 $wgAutoloadClasses['AnalyticsProviderPrebid'] = __DIR__ . '/AnalyticsProviderPrebid.php';
 $wgAutoloadClasses['AnalyticsProviderRubiconFastlane'] = __DIR__ . '/AnalyticsProviderRubiconFastlane.php';
 $wgAutoloadClasses['AnalyticsProviderGoogleUA'] = __DIR__ . '/AnalyticsProviderGoogleUA.php';
+$wgAutoloadClasses['AnalyticsProviderUbisoft'] = __DIR__ . '/AnalyticsProviderUbisoft.php';
 
 //hooks
 //register hook to inject GA js library (MW 1.19)

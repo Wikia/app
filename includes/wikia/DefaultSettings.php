@@ -1211,6 +1211,12 @@ $wgEnableNielsen = false;
 $wgNielsenApid = 'FIXME';
 
 /**
+ * @name $wgEnableUbisoft
+ * Enables Ubisoft
+ */
+$wgEnableUbisoft = false;
+
+/**
  * @name $wgEnableAmazonMatch
  * Enables AmazonMatch new integration (id=3115)
  */

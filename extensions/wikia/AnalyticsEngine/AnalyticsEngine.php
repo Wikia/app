@@ -59,6 +59,8 @@ class AnalyticsEngine {
 				return new AnalyticsProviderIVW2();
 			case 'IVW3':
 				return new AnalyticsProviderIVW3();
+            case 'Ubisoft':
+                return new AnalyticsProviderUbisoft();
 		}
 
 		return null;

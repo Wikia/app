@@ -144,6 +144,10 @@ class MercuryApi {
 				'nielsen' => [
 					'enabled' => AnalyticsProviderNielsen::isEnabled(),
 					'apid' => AnalyticsProviderNielsen::getApid()
+				],
+				'ubisoft' => [
+					'enabled' => AnalyticsProviderUbisoft::isEnabled(),
+					'url' => AnalyticsProviderUbisoft::URL
 				]
 			],
 			'wikiCategories' => WikiFactoryHub::getInstance()->getWikiCategoryNames( $wgCityId ),

@@ -73,6 +73,7 @@
 <?= $ivw3 ?>
 <?= $ivw2 ?>
 <?= $sourcePoint ?>
+<?= $ubisoft ?>
 <div class="WikiaSiteWrapper">
 	<?= $body ?>
 
