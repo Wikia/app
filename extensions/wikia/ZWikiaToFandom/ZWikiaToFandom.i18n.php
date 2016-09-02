@@ -179,27 +179,27 @@ ___________________________________________________________________________
 
     * Want to control which emails you receive from Fandom? Go to: {{fullurl:{{ns:special}}:Preferences}}.
     * To see new wikis created this week, please visit http://www.wikia.com/wiki/New_wikis_this_week',
-	'enotif_body_article_comment' => "Hi $WATCHINGUSERNAME,
+	'enotif_body_article_comment' => 'Hi $WATCHINGUSERNAME,
 
-There's a new comment at $PAGETITLE on {{SITENAME}}. Use this link to see all of the comments: $PAGETITLE_URL#WikiaArticleComments
+There\'s a new comment at $PAGETITLE on {{SITENAME}}. Use this link to see all of the comments: $PAGETITLE_URL#WikiaArticleComments
 
 - Fandom Community Support
 
 ___________________________________________
 * Find help and advice on Community Central: http://community.wikia.com
-* Want to receive fewer messages from us? You can unsubscribe or change your email preferences here: http://community.wikia.com/Special:Preferences",
-	'enotif_body_article_comment-HTML' => "<p>Hi $WATCHINGUSERNAME,
+* Want to receive fewer messages from us? You can unsubscribe or change your email preferences here: http://community.wikia.com/Special:Preferences',
+	'enotif_body_article_comment-HTML' => '<p>Hi $WATCHINGUSERNAME,
 <br /><br />
-There's a new comment at $PAGETITLE on {{SITENAME}}. Use this link to see all of the comments: $PAGETITLE_URL#WikiaArticleComments
+There\'s a new comment at $PAGETITLE on {{SITENAME}}. Use this link to see all of the comments: $PAGETITLE_URL#WikiaArticleComments
 <br /><br />
 - Fandom Community Support
 <br /><br />
 ___________________________________________
 <ul>
-<li>Find help and advice on Community Central: <a href=\"http://community.wikia.com\">http://community.wikia.com</a><li>
-<li>Want to receive fewer messages from us? You can unsubscribe or change your email preferences here: <a href=\"http://community.wikia.com/Special:Preferences\">http://community.wikia.com/Special:Preferences</a></li>
+<li>Find help and advice on Community Central: <a href="http://community.wikia.com">http://community.wikia.com</a><li>
+<li>Want to receive fewer messages from us? You can unsubscribe or change your email preferences here: <a href="http://community.wikia.com/Special:Preferences">http://community.wikia.com/Special:Preferences</a></li>
 </ul>
-</p>",
+</p>',
 	'enotif_body_delete-HTML' => '<p>Dear $WATCHINGUSERNAME,<br /><br />
 A page you are watching on {{SITENAME}} has been deleted.<br /><br />
 The page was at <a href="$PAGETITLE_URL">$PAGETITLE</a> <br /><br />
