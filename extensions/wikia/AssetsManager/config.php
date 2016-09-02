@@ -2089,6 +2089,7 @@ $config['design_system_js'] = [
 	'assets' => [
 		'//extensions/wikia/DesignSystem/scripts/DesignSystemGlobalFooterTracking.js',
 		'//extensions/wikia/DesignSystem/scripts/DesignSystemDropdowns.js',
+		'//extensions/wikia/DesignSystem/scripts/DesignSystemGlobalNavigationSearch.js',
 	],
 ];
 

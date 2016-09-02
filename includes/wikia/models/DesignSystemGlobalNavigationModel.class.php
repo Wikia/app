@@ -127,6 +127,9 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 				'url' => WikiFactory::getHostById( $this->wikiId ) . '/index.php?action=ajax&rs=getLinkSuggest&format=json',
 				'param-name' => 'query'
 			];
+			$search['placeholder-active']['params'] = [
+				'sitename' => $this->getSitenameData(),
+			];
 		}
 
 		return $search;
@@ -310,6 +313,21 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 				'key' => 'global-navigation-wikis-community-central'
 			],
 			'href' => $this->getHref( 'community-central' ),
+		];
+	}
+
+	private function getSitenameData() {
+		$wgSitenameForWikiId = WikiFactory::getVarValueByName( 'wgSitename', $this->wikiId );
+
+		if ( $wgSitenameForWikiId ) {
+			$sitename = $wgSitenameForWikiId;
+		} else {
+			$sitename = $this->wg->Sitename;
+		}
+
+		return [
+			'type' => 'text',
+			'value' => $sitename,
 		];
 	}
 }

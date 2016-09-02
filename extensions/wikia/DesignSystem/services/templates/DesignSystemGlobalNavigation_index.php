@@ -23,9 +23,12 @@
 						'wds-icons-magnifying-glass',
 						'wds-icon wds-icon-small'
 					) ?>
-					<input class="wds-global-navigation__search-input" name="search" placeholder="<?= DesignSystemHelper::renderText( $model['search']['module']['placeholder-inactive'] ); ?>"/>
+					<input class="wds-global-navigation__search-input"
+						name="<?= Sanitizer::encodeAttribute( $model['search']['module']['results']['param-name'] ); ?>"
+						data-active-text="<?= DesignSystemHelper::renderText( $model['search']['module']['placeholder-active'] ); ?>"
+						placeholder="<?= DesignSystemHelper::renderText( $model['search']['module']['placeholder-inactive'] ); ?>"/>
 				</label>
-				<button class="wds-button wds-is-text wds-global-navigation__search-close">
+				<button class="wds-button wds-is-text wds-global-navigation__search-close" type="button">
 					<?= DesignSystemHelper::getSvg(
 						'wds-icons-cross',
 						'wds-icon wds-icon-small wds-global-navigation__search-close-icon',
@@ -33,10 +36,10 @@
 					) ?>
 				</button>
 			</div>
-			<button class="wds-button wds-global-navigation__search-submit">
+			<button class="wds-button wds-global-navigation__search-submit" disabled>
 				<?= DesignSystemHelper::getSvg(
 					'wds-icons-arrow',
-					'wds-icon wds-icon-small wds-global-navigation__search-icon'
+					'wds-icon wds-icon-small wds-global-navigation__search-submit-icon'
 				) ?>
 			</button>
 		</form>
