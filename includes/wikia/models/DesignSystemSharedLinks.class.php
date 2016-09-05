@@ -68,6 +68,7 @@ class DesignSystemSharedLinks {
 		],
 		'de' => [
 			'fan-communities' => 'http://de.wikia.com/Wikia',
+			'fandom-logo' => 'http://de.wikia.com',
 			'about' => 'http://de.wikia.com/Ueber_Wikia',
 			'press' => 'http://de.wikia.com/Presse',
 			'contact' => 'http://de.wikia.com/Spezial:Kontakt',
@@ -97,6 +98,7 @@ class DesignSystemSharedLinks {
 		],
 		'es' => [
 			'fan-communities' => 'http://es.wikia.com/Wikia',
+			'fandom-logo' => 'http://es.wikia.com',
 			'about' => 'http://es.wikia.com/Sobre_nosotros',
 			'press' => 'http://es.wikia.com/Prensa',
 			'contact' => 'http://es.wikia.com/Especial:Contactar',
@@ -118,6 +120,7 @@ class DesignSystemSharedLinks {
 		],
 		'fr' => [
 			'fan-communities' => 'http://fr.wikia.com/Wikia',
+			'fandom-logo' => 'http://fr.wikia.com',
 			'about' => 'http://fr.wikia.com/%C3%80_propos',
 			'contact' => 'http://fr.wikia.com/Sp%C3%A9cial:Contact',
 			'wikia-gives-back' => 'http://www.wikia.com/wikiagivesback?uselang=fr',
@@ -152,6 +155,7 @@ class DesignSystemSharedLinks {
 		],
 		'ja' => [
 			'fan-communities' => 'http://ja.wikia.com/',
+			'fandom-logo' => 'http://ja.wikia.com',
 			'about' => 'http://ja.wikia.com/companyinfo',
 			'contact' => 'http://ja.wikia.com/%E7%89%B9%E5%88%A5:%E3%81%8A%E5%95%8F%E3%81%84%E5%90%88%E3%82%8F%E3%81%9B',
 			'wikia-gives-back' => 'http://www.wikia.com/wikiagivesback?uselang=ja',
@@ -169,6 +173,7 @@ class DesignSystemSharedLinks {
 		],
 		'pl' => [
 			'fan-communities' => 'http://pl.wikia.com/Wikia',
+			'fandom-logo' => 'http://pl.wikia.com',
 			'about' => 'http://pl.wikia.com/O_nas',
 			'contact' => 'http://pl.wikia.com/Specjalna:Kontakt',
 			'wikia-gives-back' => 'http://www.wikia.com/wikiagivesback?uselang=pl',
@@ -186,6 +191,7 @@ class DesignSystemSharedLinks {
 		],
 		'pt-br' => [
 			'fan-communities' => 'http://pt-br.wikia.com/wiki/Wikia_em_Portugu%C3%AAs',
+			'fandom-logo' => 'http://pt-br.wikia.com',
 			'contact' => 'http://pt-br.wikia.com/wiki/Especial:Contact',
 			'wikia-gives-back' => 'http://www.wikia.com/wikiagivesback?uselang=pt-br',
 			'terms-of-use' => 'http://pt-br.wikia.com/wiki/Termos_de_Uso',
@@ -203,6 +209,7 @@ class DesignSystemSharedLinks {
 		],
 		'ru' => [
 			'fan-communities' => 'http://ru.wikia.com/wiki/%D0%92%D0%B8%D0%BA%D0%B8%D1%8F_%D0%BD%D0%B0_%D1%80%D1%83%D1%81%D1%81%D0%BA%D0%BE%D0%BC',
+			'fandom-logo' => 'http://ru.wikia.com',
 			'about' => 'http://ru.wikia.com/wiki/%D0%9E_%D0%BD%D0%B0%D1%81',
 			'contact' => 'http://ru.wikia.com/wiki/%D0%A1%D0%BB%D1%83%D0%B6%D0%B5%D0%B1%D0%BD%D0%B0%D1%8F:Contact',
 			'wikia-gives-back' => 'http://www.wikia.com/wikiagivesback?uselang=ru',
@@ -221,6 +228,7 @@ class DesignSystemSharedLinks {
 		],
 		'zh' => [
 			'fan-communities' => 'http://zh.wikia.com/wiki/Wikia%E4%B8%AD%E6%96%87',
+			'fandom-logo' => 'http://zh.wikia.com',
 			'terms-of-use' => 'http://zh.wikia.com/wiki/%E4%BD%BF%E7%94%A8%E6%9D%A1%E6%AC%BE',
 			'privacy-policy' => 'http://zh.wikia.com/wiki/Privacy_Policy',
 			'community-central' => 'http://zh.community.wikia.com/wiki/Wikia_%E4%B8%AD%E6%96%87',
@@ -234,6 +242,7 @@ class DesignSystemSharedLinks {
 		],
 		'zh-tw' => [
 			'fan-communities' => 'http://zh-tw.wikia.com/wiki/Wikia%E4%B8%AD%E6%96%87',
+			'fandom-logo' => 'http://zh-tw.wikia.com',
 			'contact' => 'http://zh-tw.wikia.com/wiki/%E7%89%B9%E6%AE%8A:Contact',
 			'wikia-gives-back' => 'http://www.wikia.com/wikiagivesback?uselang=zh-tw',
 			'terms-of-use' => 'http://zh-tw.wikia.com/wiki/%E4%BD%BF%E7%94%A8%E6%A2%9D%E6%AC%BE',

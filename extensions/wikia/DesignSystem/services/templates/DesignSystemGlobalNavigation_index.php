@@ -1,11 +1,6 @@
 <div class="wds-global-navigation <?= isset( $model['fandom_overview'] ) ? '' : ' wds-search-is-always-visible'; ?>">
 	<div class="wds-global-navigation__content-bar">
-		<a href="<?= Sanitizer::encodeAttribute( $model['logo']['header']['href'] ); ?>" class="wds-global-navigation__logo">
-			<?= DesignSystemHelper::getSvg(
-				$model['logo']['header']['image'],
-				'wds-global-navigation__logo-fandom'
-			) ?>
-		</a>
+		<?= $app->renderView( 'DesignSystemGlobalNavigationService', 'logo', [ 'model' => $model['logo'] ] ); ?>
 		<?php
 		if ( isset( $model['fandom_overview'] ) ):
 			foreach ( $model['fandom_overview']['links'] as $link ):

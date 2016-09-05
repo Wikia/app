@@ -21,6 +21,10 @@ class DesignSystemGlobalNavigationService extends WikiaService {
 		$this->setVal( 'model', $this->getVal( 'model' ) );
 	}
 
+	public function logo() {
+		$this->setVal( 'model', $this->getVal( 'model' ) );
+	}
+
 	public function link() {
 		$this->setVal( 'model', $this->getVal( 'model' ) );
 	}
