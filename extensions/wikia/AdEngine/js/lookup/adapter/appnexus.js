@@ -35,7 +35,7 @@ define('ext.wikia.adEngine.lookup.adapter.appnexus',[
 		return geo.isProperGeo(instantGlobals.wgAdDriverAppNexusBidderCountries);
 	}
 
-	function prepareAdUnit(slotName, config) {
+	function prepareAdUnit(slotName, config, skin) {
 		return {
 			code: slotName,
 			sizes: config.sizes,
@@ -43,7 +43,7 @@ define('ext.wikia.adEngine.lookup.adapter.appnexus',[
 				{
 					bidder: bidderName,
 					params: {
-						placementId: appnexusPlacements.getPlacement()
+						placementId: appnexusPlacements.getPlacement(skin)
 					}
 				}
 			]
@@ -51,10 +51,11 @@ define('ext.wikia.adEngine.lookup.adapter.appnexus',[
 	}
 
 	function getAdUnits(skin) {
-		var adUnits = [];
+		var adUnits = [],
+			skinSlots = slots[skin];
 
-		Object.keys(slots[skin]).forEach(function(slotName) {
-			adUnits.push(prepareAdUnit(slotName, slots[skin][slotName]));
+		Object.keys(skinSlots).forEach(function(slotName) {
+			adUnits.push(prepareAdUnit(slotName, skinSlots[slotName], skin));
 		});
 
 		return adUnits;

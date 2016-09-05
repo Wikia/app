@@ -4,7 +4,8 @@ describe('ext.wikia.adEngine.lookup.adapter.appnexus', function () {
 	function getAppNexus() {
 		return modules['ext.wikia.adEngine.lookup.adapter.appnexus'](
 			mocks.geo,
-			mocks.instantGlobals
+			mocks.instantGlobals,
+			mocks.appNexusPlacements
 		);
 	}
 
@@ -14,6 +15,11 @@ describe('ext.wikia.adEngine.lookup.adapter.appnexus', function () {
 		},
 		geo: {
 			isProperGeo: jasmine.createSpy('isProperGeo')
+		},
+		appNexusPlacements: {
+			getPlacement: function() {
+				return '123'
+			}
 		}
 	};
 
@@ -33,7 +39,7 @@ describe('ext.wikia.adEngine.lookup.adapter.appnexus', function () {
 					{
 						bidder: 'appnexus',
 						params: {
-							placementId: '5823300' }
+							placementId: '123' }
 					}
 				]
 			}, {
@@ -44,7 +50,7 @@ describe('ext.wikia.adEngine.lookup.adapter.appnexus', function () {
 					{
 						bidder: 'appnexus',
 						params: {
-							placementId: '5823309'
+							placementId: '123'
 						}
 					}
 				]
