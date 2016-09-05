@@ -1,1 +1,0 @@
-require('vrt').runner.run();

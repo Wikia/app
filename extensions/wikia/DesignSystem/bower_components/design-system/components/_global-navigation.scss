@@ -24,8 +24,8 @@ $notification-counter-size: 18px;
 
 	&__dropdown-content {
 		color: $color-dark-blue-gray;
+		min-width: 190px;
 		top: calc(100% + 1px);
-		width: 190px;
 		z-index: -1;
 	}
 
