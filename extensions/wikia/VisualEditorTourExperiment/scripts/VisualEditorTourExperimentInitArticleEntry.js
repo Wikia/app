@@ -18,7 +18,7 @@ require(['jquery', 'mw', 'VisualEditorTourExperimentInit', 'ext.wikia.spitfires.
 						'<h2>編集モードを開く</h2>' +
 						'<p>「編集」ボタンをクリックすると編集モードを開始し、記事が掲載されているページにコンテンツやメディアを追加する' +
 						'ことができます。</p>' +
-						'<nav class="nav-buttons"><button class="ve-tour-next">Next</button></nav>' +
+						'<nav class="nav-buttons"><button class="ve-tour-next">次へ</button></nav>' +
 						'</div>',
 						html: true,
 						placement: 'right',
