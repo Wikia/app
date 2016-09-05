@@ -56,6 +56,7 @@
 
 <?= $headItems ?>
 
+<?= $untouchableAds ?>	
 </head>
 <body class="<?= implode(' ', $bodyClasses) ?>" <?= $itemType ?>>
 <? if ( BodyController::isResponsiveLayoutEnabled() || BodyController::isOasisBreakpoints() ): ?>

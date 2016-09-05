@@ -23,10 +23,27 @@ class ARecoveryModule {
 		}
 		return F::app()->sendRequest( 'ARecoveryEngineApiController', 'getBootstrap' );
 	}
-	
 
 	public static function isLockEnabled() {
 		$user = F::app()->wg->User;
 		return !self::isDisabled() && ( $user && !$user->isLoggedIn() );
+	}
+
+	public static function isUntouchableAdsEnabled() {
+		global $wgUser;
+
+		if( $wgUser instanceof User && $wgUser->isLoggedIn() ) {
+			return false;
+		}
+		
+		//TODO: add wgVar
+		return true;
+	}
+
+	public static function getUntouchableAdsBootstrapCode() {
+		if ( !static::isUntouchableAdsEnabled() ) {
+			return PHP_EOL . '<!-- UA Recovery disabled. -->' . PHP_EOL;
+		}
+		return F::app()->sendRequest( 'ARecoveryEngineApiController', 'getUABootstrap' );
 	}
 }
