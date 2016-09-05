@@ -1535,5 +1535,5 @@ Parameters:
 	 'emailext-welcome-subject' => "Subject line of the email. $1 is the user's name",
 	 'emailext-welcome-summary' => 'Summary inside the email congratulating the user on joining Wikia.',
 	 'emailext-welcome-summary' => 'Summary inside the email congratulating the user on joining Wikia.',
-	 'emailext-welcome-summary-extended' => 'Additional part of the summary message.'
+	 'emailext-welcome-summary-extended' => 'Additional part of the summary message.',
 );
