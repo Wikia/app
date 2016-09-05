@@ -1,6 +1,6 @@
 {
   "name": "design-system",
-  "version": "0.4.1",
+  "version": "0.5.0",
   "description": "Design System developed for Wikia",
   "scripts": {
     "build": "gulp",
