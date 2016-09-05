@@ -5,7 +5,7 @@
   "scripts": {
     "build": "gulp",
     "dev": "gulp watch",
-    "test": "node test",
+    "test": "cd reference-page && node test",
     "setup": "npm install",
     "svgo": "svgo --precision 3 --config .svgo.yml assets/icons",
     "svg": "gulp",

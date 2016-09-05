@@ -8,16 +8,15 @@
   "ignore": [
     "**/.*",
     "gulpfile.js",
-    "reference-page/",
-    "tests/"
+    "reference-page/"
   ],
   "homepage": "https://github.com/Wikia/design-system",
-  "_release": "0d66b4d713",
+  "_release": "5b6541a8c9",
   "_resolution": {
     "type": "commit",
-    "commit": "0d66b4d7133866e85cbc92ea74840b7718bb5143"
+    "commit": "5b6541a8c9689dbd26ade934753a4b55c6640733"
   },
   "_source": "git://github.com/Wikia/design-system.git",
-  "_target": "0d66b4d7133866e85cbc92ea74840b7718bb5143",
+  "_target": "5b6541a8c9689dbd26ade934753a4b55c6640733",
   "_originalSource": "Wikia/design-system"
 }
