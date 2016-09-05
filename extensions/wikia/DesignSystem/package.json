@@ -4,6 +4,6 @@
     "setup": "npm install && node i18n/build && SERVER_ID=177 php ../../../maintenance/rebuildLocalisationCache.php --force --thread=2 --primary"
   },
   "dependencies": {
-    "design-system-i18n": "Wikia/design-system-i18n#14a4b0f372a3733cc62f2c3bee88edae7c230264"
+    "design-system-i18n": "Wikia/design-system-i18n#3ca870b7c0bc616f75606da61bf39fff1bb1dc35"
   }
 }

@@ -55,7 +55,7 @@
   "global-navigation-notifications-title": "Notifications",
   "global-navigation-search-cancel": "Cancel",
   "global-navigation-search-placeholder-fandom": "Search Stories and Wikis...",
-  "global-navigation-search-placeholder-in-wiki": "Search __sitename__",
+  "global-navigation-search-placeholder-in-wiki": "Search $1",
   "global-navigation-search-placeholder-inactive": "Search",
   "global-navigation-search-placeholder-wikis": "Search for a Wiki...",
   "global-navigation-search-select-fandom": "Fandom Stories and Wikis",
