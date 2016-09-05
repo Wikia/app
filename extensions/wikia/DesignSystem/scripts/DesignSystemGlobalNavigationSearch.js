@@ -31,5 +31,6 @@ $(function ($) {
 	$globalNav.find('.wds-global-navigation__search-close').on('click', function () {
 		$globalNav.removeClass(activeSearchClass);
 		$searchInput.attr('placeholder', placeHolderText);
+		$searchSubmit.prop('disabled', true);
 	});
 });
