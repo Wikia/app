@@ -25,6 +25,42 @@
 	}
 }
 
+// TODO cleanup in XW-1969
+.wds-global-navigation__search-input {
+	&::-webkit-input-placeholder {
+		color: #39424d;
+		opacity: 1;
+	}
+	&::-moz-placeholder {
+		color: #39424d;
+		opacity: 1;
+	}
+	&:-ms-input-placeholder {
+		color: #39424d;
+		opacity: 1;
+	}
+	&::placeholder {
+		color: #39424d;
+		opacity: 1;
+	}
+}
+
+.wds-global-navigation.wds-search-is-active .wds-global-navigation__search-input {
+	&::-webkit-input-placeholder {
+		color: #999;
+	}
+	&::-moz-placeholder {
+		color: #999;
+	}
+	&:-ms-input-placeholder {
+		color: #999;
+	}
+	&::placeholder {
+		color: #999;
+	}
+}
+// end TODO cleanup in XW-1969
+
 .wds-global-footer {
 	position: relative;
 	z-index: 2;
