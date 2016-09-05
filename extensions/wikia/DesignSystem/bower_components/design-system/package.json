@@ -1,10 +1,15 @@
 {
   "name": "design-system",
-  "version": "0.4.1",
+  "version": "0.5.0",
   "description": "Design System developed for Wikia",
   "scripts": {
+    "build": "gulp",
+    "dev": "gulp watch",
+    "test": "cd reference-page && node test",
+    "setup": "npm install",
     "svgo": "svgo --precision 3 --config .svgo.yml assets/icons",
-    "svg": "gulp"
+    "svg": "gulp",
+    "update-baseline": "rm -rf reference-page/visuals/* && npm run test"
   },
   "repository": {
     "type": "git",
@@ -15,11 +20,23 @@
   },
   "homepage": "https://github.com/Wikia/design-system#readme",
   "devDependencies": {
+    "chai": "3.5.0",
+    "file-url": "1.1.0",
     "gulp": "3.9.1",
+    "gulp-autoprefixer": "3.1.0",
     "gulp-cheerio": "0.6.2",
+    "gulp-clean": "0.3.2",
+    "gulp-inject": "4.1.0",
+    "gulp-livereload": "3.8.1",
     "gulp-rename": "1.2.2",
+    "gulp-sass": "2.3.2",
+    "gulp-styledown": "0.0.2",
     "gulp-svgmin": "1.2.2",
     "gulp-svgstore": "6.0.0",
-    "svgo": "0.7.0"
+    "gulp-watch": "4.3.9",
+    "mocha": "2.5.3",
+    "styledown": "1.0.2",
+    "svgo": "0.7.0",
+    "vrt": "Wikia/visual-regression-testing#0.0.4"
   }
 }
