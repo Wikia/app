@@ -1,3 +1,4 @@
+<!--TODO: Clean up this file - https://wikia-inc.atlassian.net/browse/XW-1966-->
 <? if ( !isset( $model['header']['subtitle'] ) ): ?>
 <a href="<?= Sanitizer::encodeAttribute( $model['header']['href'] ); ?>" class="wds-global-navigation__logo">
 	<?= DesignSystemHelper::getSvg(

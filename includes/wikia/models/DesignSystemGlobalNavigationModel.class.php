@@ -17,6 +17,8 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 		global $wgUser;
 
 		$data = [
+			// TODO: restore old logo before 4th October 2016
+			// https://wikia-inc.atlassian.net/browse/XW-1966
 			'logo' => [
 				'header' => [
 					'type' => 'link-image',
