@@ -1,11 +1,11 @@
 $dropdown-content-z-index: 1;
 
 .wds-dropdown {
-	cursor: pointer;
 	display: inline-block;
 	position: relative;
 
 	&__toggle {
+		cursor: pointer;
 		position: relative;
 		// dropdown content has shadow that should be hidden below the toggle
 		z-index: $dropdown-content-z-index + 1;

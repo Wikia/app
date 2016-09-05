@@ -24,8 +24,8 @@ $notification-counter-size: 18px;
 
 	&__dropdown-content {
 		color: $color-dark-blue-gray;
+		min-width: 190px;
 		top: calc(100% + 1px);
-		width: 190px;
 		z-index: -1;
 	}
 
@@ -162,7 +162,6 @@ $notification-counter-size: 18px;
 	&__search-input {
 		border: 0;
 		color: $color-dark-gray;
-		display: none;
 		// Safari doesn't set default flex values if we use `flex: 1;`
 		// it requires us to put these values explicitly.
 		flex: 1 1 auto;
@@ -171,7 +170,7 @@ $notification-counter-size: 18px;
 		// has `width` set in `%` and is inside `flexbox`.
 		min-width: 0;
 		padding: 3px 4px;
-		width: 100%;
+		width: 0;
 
 		&:focus {
 			outline: none;
@@ -304,7 +303,10 @@ $notification-counter-size: 18px;
 			color: $color-light-gray;
 		}
 
-		&__search-input,
+		&__search-input {
+			width: 100%;
+		}
+
 		&__search-submit,
 		&__search-close {
 			display: block;
