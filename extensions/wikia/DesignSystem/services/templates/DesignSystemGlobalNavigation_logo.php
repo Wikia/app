@@ -4,7 +4,7 @@
 		<?= DesignSystemHelper::getSvg(
 			$model['header']['image'],
 			'wds-global-navigation__logo-fandom',
-			wfMessage( $model['header']['title']['value'] )->escaped()
+			DesignSystemHelper::renderText( $model['header']['title'] )
 		) ?>
 	</a>
 <? else: ?>
@@ -12,7 +12,7 @@
 		<?= DesignSystemHelper::getSvg(
 			$model['header']['image'],
 			'wds-global-navigation__logo-wikia-icon',
-			wfMessage( $model['header']['title']['key'] )->escaped()
+			DesignSystemHelper::renderText( $model['header']['title'] )
 		) ?>
 		<span class="wds-global-navigation__logo-wikia-caption"><?=
 			DesignSystemHelper::renderText( $model['header']['subtitle'] )
