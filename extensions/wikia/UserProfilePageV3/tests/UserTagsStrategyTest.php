@@ -85,10 +85,10 @@ class UserTagsStrategyTest extends WikiaBaseTest {
 				[]
 			],
 			'blocked user' => [ [], [], true, false, false,
-				[ wfMessage( 'user-identity-box-blocked' )->escaped() ]
+				[ wfMessage( 'user-identity-box-group-blocked' )->escaped() ]
 			],
 			'blocked user with other rights' => [ [ 'helper' ], [ 'sysop' ], true, true, true,
-				[ wfMessage( 'user-identity-box-blocked' )->escaped() ]
+				[ wfMessage( 'user-identity-box-group-blocked' )->escaped() ]
 			],
 			'blocked staff member' => [ [ 'staff' ], [], true, false, false,
 				[ wfMessage( 'user-identity-box-group-staff' )->escaped() ]
@@ -102,13 +102,13 @@ class UserTagsStrategyTest extends WikiaBaseTest {
 			'staff founder' => [ [ 'staff' ], [ 'bureaucrat', 'sysop' ], false, false, true,
 				[
 					wfMessage( 'user-identity-box-group-staff' )->escaped(),
-					wfMessage( 'user-identity-box-founder' )->escaped()
+					wfMessage( 'user-identity-box-group-founder' )->escaped()
 				]
 			],
 			'founder with other global rights' => [ [ 'helper', 'vstf' ], [ 'bureaucrat', 'sysop' ], false, false, true,
 				[
 					wfMessage( 'user-identity-box-group-helper' )->escaped(),
-					wfMessage( 'user-identity-box-founder' )->escaped()
+					wfMessage( 'user-identity-box-group-founder' )->escaped()
 				]
 			],
 			'staff and local admin' => [ [ 'staff' ], [ 'sysop' ], false, false, false,
@@ -138,7 +138,7 @@ class UserTagsStrategyTest extends WikiaBaseTest {
 			'founder with no global and multiple local rights' => [ [], [ 'threadmoderator', 'sysop' ], false, false, true,
 				[
 					wfMessage( 'user-identity-box-group-sysop' )->escaped(),
-					wfMessage( 'user-identity-box-founder' )->escaped()
+					wfMessage( 'user-identity-box-group-founder' )->escaped()
 				]
 			],
 			'banned from chat' => [ [], [], false, true, false,

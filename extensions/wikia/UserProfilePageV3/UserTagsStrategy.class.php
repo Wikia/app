@@ -177,7 +177,7 @@ class UserTagsStrategy extends WikiaObject {
 		// The founder tag overrides the least important local tag,
 		// since it is not an user group but a wiki setting
 		if ( $this->shouldShowFounderTag() ) {
-			$tags[$count - 1] = wfMessage( 'user-identity-box-founder' )->escaped();
+			$tags[$count - 1] = wfMessage( 'user-identity-box-group-founder' )->escaped();
 		}
 
 		if ( $this->shouldShowBannedFromChatTag() ) {
@@ -196,7 +196,7 @@ class UserTagsStrategy extends WikiaObject {
 	public function getUserTags() {
 		if ( $this->shouldShowBlockedTag() ) {
 			return [
-				wfMessage( 'user-identity-box-blocked' )->escaped()
+				wfMessage( 'user-identity-box-group-blocked' )->escaped()
 			];
 		}
 
