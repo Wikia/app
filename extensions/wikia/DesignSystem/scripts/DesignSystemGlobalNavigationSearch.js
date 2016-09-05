@@ -10,17 +10,16 @@ $(function ($) {
 	$searchInput.on('focus', function () {
 		if (!$globalNav.hasClass(activeSearchClass)) {
 			$globalNav.addClass(activeSearchClass);
-			$searchInput.attr('placeholder', $searchInput.data('active-text'));
+			$searchInput.attr('placeholder', $searchInput.data('active-placeholder'));
 		}
 	});
 
-	// Make sure default state is correct when navigating back in Chrome
-	if ($searchInput.val().length > 0 && $searchSubmit.prop('disabled')) {
-		$searchSubmit.prop('disabled', false);
+	if ($searchInput.val().length === 0) {
+		$searchSubmit.prop('disabled', true);
 	}
 
 	$searchInput.on('input', function () {
-		var textLength = $(this).val().length;
+		var textLength = this.value.length;
 
 		if (textLength > 0 && $searchSubmit.prop('disabled')) {
 			$searchSubmit.prop('disabled', false);

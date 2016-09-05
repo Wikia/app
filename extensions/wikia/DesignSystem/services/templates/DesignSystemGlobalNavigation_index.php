@@ -25,10 +25,10 @@
 					) ?>
 					<input class="wds-global-navigation__search-input"
 						name="<?= Sanitizer::encodeAttribute( $model['search']['module']['results']['param-name'] ); ?>"
-						data-active-text="<?= DesignSystemHelper::renderText( $model['search']['module']['placeholder-active'] ); ?>"
+						data-active-placeholder="<?= DesignSystemHelper::renderText( $model['search']['module']['placeholder-active'] ); ?>"
 						placeholder="<?= DesignSystemHelper::renderText( $model['search']['module']['placeholder-inactive'] ); ?>"/>
 				</label>
-				<button class="wds-button wds-is-text wds-global-navigation__search-close" type="button">
+				<button class="wds-button wds-is-text wds-global-navigation__search-close" type="reset">
 					<?= DesignSystemHelper::getSvg(
 						'wds-icons-cross',
 						'wds-icon wds-icon-small wds-global-navigation__search-close-icon',
@@ -36,7 +36,7 @@
 					) ?>
 				</button>
 			</div>
-			<button class="wds-button wds-global-navigation__search-submit" disabled>
+			<button class="wds-button wds-global-navigation__search-submit">
 				<?= DesignSystemHelper::getSvg(
 					'wds-icons-arrow',
 					'wds-icon wds-icon-small wds-global-navigation__search-submit-icon'
