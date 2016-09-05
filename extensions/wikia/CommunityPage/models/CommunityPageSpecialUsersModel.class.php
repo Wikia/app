@@ -468,11 +468,9 @@ class CommunityPageSpecialUsersModel {
 					$sqlData->AND_( 'rev_user' )->NOT_IN( $botIds );
 				}
 
-				$numberOfMembers = $sqlData->runLoop( $db, function ( &$sqlData, $row ) {
+				return $sqlData->runLoop( $db, function ( &$sqlData, $row ) {
 					$sqlData = (int)$row->members_count;
 				} );
-
-				return $numberOfMembers;
 			}
 		);
 
