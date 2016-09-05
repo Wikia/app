@@ -38,4 +38,14 @@ class ARecoveryEngineApiController extends WikiaController {
 		$this->response->setBody( 'var arecoveryEngineLogInfoStatus=1;' );
 		$this->response->setCacheValidity( self::MAX_EVENT_INTERVAL );
 	}
+	
+	public function getUABootstrap() {
+		$resourceLoaderDetector = new ResourceLoaderUntouchableAdsDetector();
+		$resourceLoaderDelivery = new ResourceLoaderUntouchableAdsDelivery();
+
+		$resourceLoaderContext = new ResourceLoaderContext( new ResourceLoader(), new FauxRequest() );
+
+		$this->response->setVal( 'detector', $resourceLoaderDetector->getScript( $resourceLoaderContext ) );
+		$this->response->setVal( 'delivery', $resourceLoaderDelivery->getScript( $resourceLoaderContext ) );
+	}
 }
