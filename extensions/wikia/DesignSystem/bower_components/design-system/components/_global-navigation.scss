@@ -161,6 +161,10 @@ $notification-counter-size: 18px;
 
 	&__search-label-icon {
 		cursor: pointer;
+
+		&:hover {
+			color: $color-link;
+		}
 	}
 
 	&__search-input {
