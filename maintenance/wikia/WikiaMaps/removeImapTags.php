@@ -99,7 +99,7 @@ class RemoveImapTags extends Maintenance {
 	public function hasImapTag( $articleId, &$foundTags, &$foundTagsMapIds ) {
 		$article = Article::newFromID( $articleId );
 
-		if ( $article->getID() ) {
+		if ( $article instanceof Article && $article->getID() ) {
 			$results = null;
 			$articleContent = $article->getContent();
 			$imapSearchRegexp = "/<imap.*map\-id\=['\"](\d{1,})['\"].*(<\/imap|\/)>/";
@@ -137,7 +137,7 @@ class RemoveImapTags extends Maintenance {
 			echo 'Failed using WikiaBot user' . PHP_EOL;
 		}
 
-		if ( $article->getID() ) {
+		if ( $article instanceof Article && $article->getID() ) {
 			$oldContent = $article->getContent();
 			$newContent = str_replace( $stringWithTagToRemove, "", $oldContent );
 
@@ -145,7 +145,10 @@ class RemoveImapTags extends Maintenance {
 			if( !self::isTest() ) {
 				$result = $article->doEdit(
 					$newContent,
-					'Real world maps have been discontinued by Wikia.',
+					wfMessage(
+						'realmap-deprecated-info',
+						'[[community:User_blog:DaNASCAT/Technical_Update:_August_29,_2016]]'
+					)->text(),
 					EDIT_FORCE_BOT,
 					false,
 					$user
@@ -222,7 +225,7 @@ class RemoveImapTags extends Maintenance {
 		self::debug( sprintf( "Found %d articles using <imap/>", $articlesUsingImapCount ) );
 
 		if ( $articlesUsingImapCount === 0 ) {
-			echo 'No articles using <imap/> found. Have you run "forced" wikia/backend/bin/specials/tags_report.pl before?' . PHP_EOL;
+			echo 'No articles using <imap/> found. Have you run wikia/backend/bin/specials/tags_report.pl before?' . PHP_EOL;
 			die;
 		}
 
