@@ -1,13 +1,6 @@
 describe('ext.wikia.adEngine.lookup.prebid.adapters.appnexus', function () {
 	'use strict';
 
-	function getAppNexus() {
-		return modules['ext.wikia.adEngine.lookup.prebid.adapters.appnexus'](
-			mocks.geo,
-			mocks.instantGlobals
-		);
-	}
-
 	var mocks = {
 		instantGlobals: {
 			wgAdDriverAppNexusBidderCountries: ['PL']
@@ -16,6 +9,13 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.appnexus', function () {
 			isProperGeo: jasmine.createSpy('isProperGeo')
 		}
 	};
+
+	function getAppNexus() {
+		return modules['ext.wikia.adEngine.lookup.prebid.adapters.appnexus'](
+			mocks.geo,
+			mocks.instantGlobals
+		);
+	}
 
 	it('isEnabled checks the countries instant global', function () {
 		var appNexus = getAppNexus();

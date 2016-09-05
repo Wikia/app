@@ -1,13 +1,6 @@
 describe('ext.wikia.adEngine.lookup.prebid.adapters.indexExchange', function () {
 	'use strict';
 
-	function getIndexExchange() {
-		return modules['ext.wikia.adEngine.lookup.prebid.adapters.indexExchange'](
-			mocks.geo,
-			mocks.instantGlobals
-		);
-	}
-
 	var mocks = {
 		instantGlobals: {
 			wgAdDriverIndexExchangeBidderCountries: ['PL']
@@ -16,6 +9,13 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.indexExchange', function () 
 			isProperGeo: jasmine.createSpy('isProperGeo')
 		}
 	};
+
+	function getIndexExchange() {
+		return modules['ext.wikia.adEngine.lookup.prebid.adapters.indexExchange'](
+			mocks.geo,
+			mocks.instantGlobals
+		);
+	}
 
 	it('isEnabled checks the countries instant global', function () {
 		var indexExchange = getIndexExchange();

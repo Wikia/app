@@ -30,7 +30,7 @@ describe('ext.wikia.adEngine.lookup.prebid.prebidHelper', function () {
 								id: '1',
 								siteID: 183423
 							}
-						}
+						};
 					},
 					isEnabled: function () {
 						return true;
@@ -48,7 +48,7 @@ describe('ext.wikia.adEngine.lookup.prebid.prebidHelper', function () {
 									}
 								}
 							]
-						}
+						};
 					},
 					getSlots: function () {
 						return {
@@ -99,6 +99,6 @@ describe('ext.wikia.adEngine.lookup.prebid.prebidHelper', function () {
 					placementId: '5823300'
 				}
 			}]
-		}])
+		}]);
 	});
 });
