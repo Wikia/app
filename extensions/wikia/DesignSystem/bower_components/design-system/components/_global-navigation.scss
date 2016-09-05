@@ -90,8 +90,8 @@ $notification-counter-size: 18px;
 
 	&__logo {
 		border-top: $border-top-width solid $color-dark-blue-gray;
-		//Safari will still make container fluid even when content inside has static width
-		//That is why we need to set grow and shrink to 0
+		// Safari will still make container fluid even when content inside has static width
+		// That is why we need to set grow and shrink to 0
 		flex: 0 0 $logo-width;
 	}
 
