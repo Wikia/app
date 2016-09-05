@@ -12,12 +12,12 @@
     "tests/"
   ],
   "homepage": "https://github.com/Wikia/design-system",
-  "_release": "fa0d4d3e30",
+  "_release": "7b8c8a038a",
   "_resolution": {
     "type": "commit",
-    "commit": "fa0d4d3e30afafaaa1280b7027a5fc33380d3a6b"
+    "commit": "7b8c8a038a1332828b5f47f32207cb291ef38189"
   },
   "_source": "git://github.com/Wikia/design-system.git",
-  "_target": "fa0d4d3e30afafaaa1280b7027a5fc33380d3a6b",
+  "_target": "7b8c8a038a1332828b5f47f32207cb291ef38189",
   "_originalSource": "Wikia/design-system"
 }
