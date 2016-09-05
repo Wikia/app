@@ -1,14 +1,6 @@
 describe('ext.wikia.adEngine.lookup.adapter.appnexus', function () {
 	'use strict';
 
-	function getAppNexus() {
-		return modules['ext.wikia.adEngine.lookup.adapter.appnexus'](
-			mocks.geo,
-			mocks.instantGlobals,
-			mocks.appNexusPlacements
-		);
-	}
-
 	var mocks = {
 		instantGlobals: {
 			wgAdDriverAppNexusBidderCountries: ['PL']
@@ -17,11 +9,19 @@ describe('ext.wikia.adEngine.lookup.adapter.appnexus', function () {
 			isProperGeo: jasmine.createSpy('isProperGeo')
 		},
 		appNexusPlacements: {
-			getPlacement: function() {
-				return '123'
+			getPlacement: function () {
+				return '123';
 			}
 		}
 	};
+
+	function getAppNexus() {
+		return modules['ext.wikia.adEngine.lookup.adapter.appnexus'](
+			mocks.geo,
+			mocks.instantGlobals,
+			mocks.appNexusPlacements
+		);
+	}
 
 	it('isEnabled checks the countries instant global', function () {
 		var appNexus = getAppNexus();
@@ -29,23 +29,23 @@ describe('ext.wikia.adEngine.lookup.adapter.appnexus', function () {
 		expect(mocks.geo.isProperGeo).toHaveBeenCalledWith(['PL']);
 	});
 
-	it('getAdUnits returns adUnits correctly', function() {
+	it('getAdUnits returns adUnits correctly', function () {
 		var appNexus = getAppNexus();
 		expect(appNexus.getAdUnits('oasis')).toEqual([
 			{
 				code: 'TOP_LEADERBOARD',
-				sizes: [ [ 728, 90 ], [ 970, 250 ] ],
+				sizes: [[728, 90], [970, 250]],
 				bids: [
 					{
 						bidder: 'appnexus',
 						params: {
-							placementId: '123' }
+							placementId: '123'
+						}
 					}
 				]
 			}, {
-				code:
-					'TOP_RIGHT_BOXAD',
-				sizes: [ [ 300, 250 ], [ 300, 600 ] ],
+				code: 'TOP_RIGHT_BOXAD',
+				sizes: [[300, 250], [300, 600]],
 				bids: [
 					{
 						bidder: 'appnexus',

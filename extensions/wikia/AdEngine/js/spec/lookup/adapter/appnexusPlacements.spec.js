@@ -64,6 +64,6 @@ describe('ext.wikia.adEngine.lookup.adapter.appnexusPlacements', function () {
 				result = appNexusPlacements.getPlacement(testCase.skin);
 
 			expect(result).toEqual(testCase.expected);
-		})
+		});
 	});
 });

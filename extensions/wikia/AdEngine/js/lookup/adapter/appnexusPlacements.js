@@ -28,5 +28,5 @@ define('ext.wikia.adEngine.lookup.adapter.appnexusPlacements', [
 
 	return {
 		getPlacement: getPlacement
-	}
+	};
 });
