@@ -18,7 +18,7 @@ describe('ext.wikia.adEngine.lookup.prebid.prebidHelper', function () {
 									}
 								}
 							]
-						}
+						};
 					},
 					getSlots: function () {
 						return {
@@ -59,7 +59,7 @@ describe('ext.wikia.adEngine.lookup.prebid.prebidHelper', function () {
 								],
 								placementId: '5823300'
 							}
-						}
+						};
 					},
 					isEnabled: function () {
 						return true;
