@@ -3,6 +3,7 @@
 @import 'responsive-variables';
 @import 'breakpoints-variables';
 @import 'skins/shared/mixins/clearfix';
+@import 'skins/shared/mixins/flexbox';
 @import 'skins/shared/mixins/gradient';
 @import 'skins/shared/mixins/transform';
 @import 'ads-floor';
@@ -49,14 +50,16 @@ $taboola-small-breakpoint: "#{$screen} and (max-width: 420px)";
 }
 
 .bfaa-template {
-	.WikiaTopAds {
-		margin-top: 0;
-		padding: 0 0 $global-navigation-height 0;
-		width: 100%;
+	&.WikiaSiteWrapper {
+		@include flexbox();
+		@include flex-direction(column);
+	}
 
-		&.bfaa-pinned-nav {
-			padding: 0;
-		}
+	.WikiaTopAds {
+		@include order(-1);
+		margin-top: 0;
+		padding: 0;
+		width: 100%;
 	}
 
 	.WikiaTopAdsInner {

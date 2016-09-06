@@ -6,6 +6,10 @@
 @import 'GlobalNavigationMixins';
 @import 'GlobalNavigationVariables';
 
+.global-navigation-wrapper {
+	height: $global-navigation-height;
+}
+
 .global-navigation {
 	background-color: $global-wikia-background-color;
 	box-shadow: 0 0 0 2px rgba(0, 0, 0, .3);
@@ -156,15 +160,6 @@
 				padding-top: 1px;
 			}
 		}
-	}
-}
-
-
-.WikiaSiteWrapper {
-	padding-top: $global-navigation-height + 1px;
-
-	&.bfaa-template {
-		padding-top: 0;
 	}
 }
 

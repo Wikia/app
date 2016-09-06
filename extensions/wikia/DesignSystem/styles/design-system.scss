@@ -2,12 +2,8 @@
 $global-navigation-z-index: 5000101;
 $global-navigation-height: 55px;
 
-.WikiaSiteWrapper {
-	padding-top: $global-navigation-height;
-
-	&.bfaa-template {
-		padding-top: 0;
-	}
+.wds-global-navigation-wrapper {
+	height: $global-navigation-height;
 }
 
 .wds-global-navigation {
