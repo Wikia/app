@@ -63,8 +63,6 @@ class DesignSystemSharedLinks {
 			'movies' => 'http://fandom.wikia.com/movies',
 			'tv' => 'http://fandom.wikia.com/tv',
 			'fandom-university' => 'http://community.wikia.com/wiki/Wikia_University',
-			'user-signin' => 'https://www.wikia.com/signin',
-			'user-register' => 'https://www.wikia.com/register',
 		],
 		'de' => [
 			'fan-communities' => 'http://de.wikia.com/Wikia',
