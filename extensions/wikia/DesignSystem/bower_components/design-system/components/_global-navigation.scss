@@ -8,6 +8,7 @@ $notification-counter-size: 18px;
 
 @mixin visible-search-input {
 	&__search-input {
+		margin-left: 0;
 		padding: $search-input-padding;
 		width: 100%;
 	}
