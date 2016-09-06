@@ -1,4 +1,4 @@
-@import 'extensions/wikia/GlobalNavigation/styles/GlobalNavigationVariables';
+//@import 'extensions/wikia/GlobalNavigation/styles/GlobalNavigationVariables';
 @import 'skins/shared/color';
 @import 'skins/oasis/css/core/layout';
 @import 'skins/oasis/css/core/breakpoints-variables';
@@ -114,7 +114,8 @@
 		left: 50%;
 		margin-left: -515px;
 		position: fixed;
-		top: $global-navigation-height;
+		// TODO use variable
+		top: 55px;
 	}
 
 	// global nav doesn't scroll with the page when the page is small

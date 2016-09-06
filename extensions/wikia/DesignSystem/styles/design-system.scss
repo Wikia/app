@@ -1,8 +1,20 @@
 // Platform-specific styles for DesignSystem integration
+$global-navigation-z-index: 5000101;
+$global-navigation-height: 55px;
+
+.WikiaSiteWrapper {
+	padding-top: $global-navigation-height;
+
+	&.bfaa-template {
+		padding-top: 0;
+	}
+}
 
 .wds-global-navigation {
-	position: relative;
-	z-index: 4;
+	position: fixed;
+	top: 0;
+	width: 100%;
+	z-index: $global-navigation-z-index;
 
 	a:hover {
 		text-decoration: none;
