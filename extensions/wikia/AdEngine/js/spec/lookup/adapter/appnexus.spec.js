@@ -56,6 +56,6 @@ describe('ext.wikia.adEngine.lookup.adapter.appnexus', function () {
 				]
 			}
 		]);
-	})
+	});
 
 });
