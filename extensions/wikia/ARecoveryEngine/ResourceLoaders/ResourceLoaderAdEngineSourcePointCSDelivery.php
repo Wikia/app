@@ -6,7 +6,7 @@ class ResourceLoaderAdEngineSourcePointCSDelivery extends ResourceLoaderAdEngine
 	const REQUEST_TIMEOUT = 30;
 	const CS_BOOTSTRAP_VERSION = 1;
 	const SCRIPT_DELIVERY_URL = 'https://api.sourcepoint.com/script/cs_recovery';
-	const CS_ENDPOINT = '__are';
+	const CS_ENDPOINT = '__bre';
 
 	protected $fallbackScriptUrl = __DIR__ . '/../js/SourcePoint/deliveryScriptFallBack.js';
 

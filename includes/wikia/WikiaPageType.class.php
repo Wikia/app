@@ -228,12 +228,13 @@ class WikiaPageType {
 	/**
 	 * Check if page is Wikia hub page, for example http://www.wikia.com/Video_games
 	 *
+	 * @param int|null $wikiId
 	 * @return bool
 	 */
-	public static function isWikiaHub() {
-		global $wgEnableWikiaHubsV3Ext;
+	public static function isWikiaHub( $wikiId = null ) {
+		global $wgCityId;
 
-		return !empty( $wgEnableWikiaHubsV3Ext );
+		return WikiFactory::getVarValueByName( 'wgEnableWikiaHubsV3Ext', $wikiId ?? $wgCityId );
 	}
 
 	/**
@@ -264,20 +265,22 @@ class WikiaPageType {
 	/**
 	 * Check if current page is home page
 	 *
+	 * @param int|null $wikiId
 	 * @return bool
 	 */
-	public static function isWikiaHomePage() {
-		global $wgEnableWikiaHomePageExt;
+	public static function isWikiaHomePage( $wikiId = null ) {
+		global $wgCityId;
 
-		return !empty( $wgEnableWikiaHomePageExt );
+		return WikiFactory::getVarValueByName( 'wgEnableWikiaHomePageExt', $wikiId ?? $wgCityId );
 	}
 
 	/**
 	 * Check if current page is corporate page
 	 *
+	 * @param int|null $wikiId
 	 * @return bool
 	 */
-	public static function isCorporatePage() {
-		return self::isWikiaHub() || self::isWikiaHomePage();
+	public static function isCorporatePage( $wikiId = null ) {
+		return self::isWikiaHub( $wikiId ) || self::isWikiaHomePage( $wikiId );
 	}
 }

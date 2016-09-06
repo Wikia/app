@@ -142,7 +142,7 @@ class CommunityPageSpecialUsersModel {
 	}
 
 	/**
-	 * @return array|null
+	 * @return array
 	 */
 	private function getGlobalBotIds() {
 		$botIds = WikiaDataAccess::cache(
@@ -165,9 +165,12 @@ class CommunityPageSpecialUsersModel {
 			}
 		);
 
-		return $botIds;
+		return $botIds ?: [];
 	}
 
+	/**
+	 * @return array
+	 */
 	private function getBotIds() {
 		$botIds = WikiaDataAccess::cache(
 			self::getMemcKey( self::ALL_BOTS_MCACHE_KEY ),
@@ -190,7 +193,7 @@ class CommunityPageSpecialUsersModel {
 			}
 		);
 
-		return $botIds;
+		return $botIds ?: [];
 	}
 
 
@@ -455,17 +458,19 @@ class CommunityPageSpecialUsersModel {
 
 				$botIds = $this->getBotIds();
 
-				$numberOfMembers = ( new WikiaSQL() )
+				$sqlData = ( new WikiaSQL() )
 					->SELECT()
 					->COUNT( 'DISTINCT rev_user' )->AS_( 'members_count' )
 					->FROM( 'revision' )
-					->AND_( 'rev_user' )->NOT_EQUAL_TO( 0 )
-					->AND_( 'rev_user' )->NOT_IN( $botIds )
-					->runLoop( $db, function ( &$numberOfMembers, $row ) {
-						$numberOfMembers = (int)$row->members_count;
-					} );
+					->AND_( 'rev_user' )->NOT_EQUAL_TO( 0 );
 
-				return $numberOfMembers;
+				if ( ! empty($botIds) ) {
+					$sqlData->AND_( 'rev_user' )->NOT_IN( $botIds );
+				}
+
+				return $sqlData->runLoop( $db, function ( &$sqlData, $row ) {
+					$sqlData = (int)$row->members_count;
+				} );
 			}
 		);
 

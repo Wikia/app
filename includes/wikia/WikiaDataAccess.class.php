@@ -121,7 +121,7 @@ class WikiaDataAccess {
 	 * @param Mixed $result returned result of the callback function which gets data
 	 * @param Integer $cacheTime TTL of memcached data in seconds
 	 * @param Integer $command check description of constants above - USE_CACHE, SKIP_CACHE, REFRESH_CACHE
-	 * 
+	 *
 	 * @author Jakub Olek <jolek@wikia-inc.com>
 	 */
 	static private function setCache( $key, $result, $cacheTime, $command = self::USE_CACHE ) {

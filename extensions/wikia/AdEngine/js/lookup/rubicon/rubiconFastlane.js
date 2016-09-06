@@ -1,12 +1,12 @@
 /*global define*/
-define('ext.wikia.adEngine.lookup.rubiconFastlane', [
+define('ext.wikia.adEngine.lookup.rubicon.rubiconFastlane', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.lookup.lookupFactory',
-	'ext.wikia.adEngine.utils.adLogicZoneParams',
+	'ext.wikia.adEngine.lookup.rubicon.rubiconTargeting',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window'
-], function (adContext, factory, adLogicZoneParams, doc, log, win) {
+], function (adContext, factory, rubiconTargeting, doc, log, win) {
 	'use strict';
 
 	var config = {
@@ -54,7 +54,7 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 			}
 		},
 		context,
-		logGroup = 'ext.wikia.adEngine.lookup.rubiconFastlane',
+		logGroup = 'ext.wikia.adEngine.lookup.rubicon.rubiconFastlane',
 		priceMap = {},
 		response,
 		rubiconSlots = [],
@@ -97,32 +97,29 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 		});
 	}
 
-	function setTargeting(slotName, targeting, rubiconSlot, provider) {
-		var s1 = context.targeting.wikiIsTop1000 ? adLogicZoneParams.getName() : 'not a top1k wiki';
-		if (targeting) {
-			Object.keys(targeting).forEach(function (key) {
-				rubiconSlot.setFPI(key, targeting[key]);
+	function setTargeting(slotName, slotTargeting, rubiconSlot, skin) {
+		var targeting = rubiconTargeting.getTargeting(slotName, skin, 'fastlane');
+		if (slotTargeting) {
+			Object.keys(slotTargeting).forEach(function (key) {
+				rubiconSlot.setFPI(key, slotTargeting[key]);
 			});
 		}
-		rubiconSlot.setFPI('pos', slotName);
-		rubiconSlot.setFPI('src', provider);
-		rubiconSlot.setFPI('s0', adLogicZoneParams.getSite());
-		rubiconSlot.setFPI('s1', s1);
-		rubiconSlot.setFPI('s2', adLogicZoneParams.getPageType());
-		rubiconSlot.setFPI('lang', adLogicZoneParams.getLanguage());
-		rubiconSlot.setFPI('passback', 'fastlane');
+
+		Object.keys(targeting).forEach(function (key) {
+			rubiconSlot.setFPI(key, targeting[key]);
+		});
 	}
 
 	function defineSingleSlot(slotName, slot, skin) {
-		var position = slotName.indexOf('TOP') !== -1 ? 'atf' : 'btf',
-			provider = skin === 'oasis' ? 'gpt' : 'mobile';
+		var position = slotName.indexOf('TOP') !== -1 ? 'atf' : 'btf';
 		log(['defineSlot', slotName, slot], 'debug', logGroup);
+
 		win.rubicontag.cmd.push(function () {
 			var rubiconSlot = win.rubicontag.defineSlot(slotName, slot.sizes, slotName);
 			if (skin === 'oasis') {
 				rubiconSlot.setPosition(position);
 			}
-			setTargeting(slotName, slot.targeting, rubiconSlot, provider);
+			setTargeting(slotName, slot.targeting, rubiconSlot, skin);
 			rubiconSlots.push(rubiconSlot);
 		});
 	}

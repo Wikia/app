@@ -7,7 +7,17 @@ define('ext.wikia.adEngine.utils.math', [
 		return parseInt(number / bucketSize, 10) * bucketSize;
 	}
 
+	function leftPad(number, offset) {
+		var label = number + '';
+		while (label.length < offset) {
+			label = '0' + label;
+		}
+
+		return label;
+	}
+
 	return {
-		getBucket: getBucket
+		getBucket: getBucket,
+		leftPad: leftPad
 	};
 });

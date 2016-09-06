@@ -53,7 +53,6 @@ class JsonFormatTest extends WikiaBaseTest {
 	 * @dataProvider StructureProvider
 	 */
 	public function testStructureMatchingWithLazyLoad( $wikiText, $expectedStructure = null ) {
-		$this->markTestSkipped( "Skipping temporarly because of https://wikia-inc.atlassian.net/browse/MAIN-7626" );
 		$this->setThumbnailImageHooks( false );
 		$output = $this->getParsedOutput( $wikiText );
 
