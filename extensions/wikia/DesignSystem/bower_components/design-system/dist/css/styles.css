@@ -1,0 +1,748 @@
+.wds-icon {
+  fill: currentColor;
+  height: 24px;
+  min-width: 24px;
+  width: 24px; }
+  .wds-icon-small {
+    height: 18px;
+    min-width: 18px;
+    width: 18px; }
+  .wds-icon-tiny {
+    height: 12px;
+    min-width: 12px;
+    width: 12px; }
+
+.wds-avatar {
+  border: solid 2px currentColor;
+  height: 28px;
+  min-width: 28px;
+  width: 28px; }
+  .wds-avatar.wds-is-circle {
+    border-radius: 50%; }
+
+.wds-button {
+  background-color: #00b7e0;
+  border: 1px solid #00b7e0;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .15px;
+  line-height: 1.3em;
+  outline: none;
+  padding: 16px 18px 15px;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: background-color 300ms, border-color 300ms, color 300ms;
+  -webkit-appearance: none;
+  -webkit-border-radius: 0; }
+  .wds-button:hover:not(:disabled), .wds-button:active, .wds-button.wds-is-active {
+    background-color: #00647a;
+    border-color: #00647a; }
+  .wds-button:disabled, .wds-button.wds-is-disabled {
+    cursor: default;
+    opacity: .5; }
+  .wds-button.wds-is-secondary {
+    background-color: #fff;
+    color: #00b7e0; }
+    .wds-button.wds-is-secondary:hover:not(:disabled), .wds-button.wds-is-secondary:active, .wds-button.wds-is-secondary.wds-is-active {
+      background-color: #fff;
+      color: #00647a; }
+  .wds-button.wds-is-squished {
+    font-size: 10px;
+    padding: 10px 12px 9px; }
+  .wds-button.wds-is-stretched {
+    padding: 28px 18px 27px; }
+  .wds-button.wds-is-full-width {
+    width: 100%; }
+  .wds-button.wds-is-text {
+    background-color: #fff;
+    border: 0;
+    color: #00b7e0; }
+    .wds-button.wds-is-text:hover:not(:disabled), .wds-button.wds-is-text:active, .wds-button.wds-is-text.wds-is-active {
+      background-color: #fff;
+      color: #00647a; }
+
+.wds-dropdown {
+  display: inline-block;
+  position: relative; }
+  .wds-dropdown__toggle {
+    cursor: pointer;
+    position: relative;
+    z-index: 2; }
+  .wds-dropdown__toggle-chevron {
+    margin-left: 5px; }
+  .wds-dropdown__content {
+    background-color: #fff;
+    box-shadow: 0 0 10px 0 rgba(26, 26, 26, 0.2);
+    display: none;
+    left: 0;
+    position: absolute;
+    top: 100%;
+    z-index: 1; }
+    .wds-dropdown__content.wds-is-dark {
+      box-shadow: 0 0 20px 0 rgba(26, 26, 26, 0.3); }
+    .wds-dropdown__content.wds-is-right-aligned {
+      left: auto;
+      right: 0; }
+  .wds-dropdown.wds-is-active .wds-dropdown__content {
+    display: inline-block; }
+  .wds-dropdown.wds-is-active .wds-dropdown__toggle-chevron {
+    -webkit-transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+    transform: rotate(180deg); }
+
+.wds-global-footer {
+  background-color: #39424d;
+  box-sizing: border-box;
+  color: #fff;
+  margin-top: 30px;
+  word-wrap: break-word; }
+  .wds-global-footer * {
+    box-sizing: inherit; }
+  .wds-global-footer ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0; }
+  .wds-global-footer__header-wrapper {
+    display: block;
+    width: 100%; }
+  .wds-global-footer__header {
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    margin: 0; }
+  .wds-global-footer__bottom-bar {
+    background: rgba(38, 38, 38, 0.5);
+    font-size: 12px;
+    line-height: 1.3em;
+    min-height: 50px;
+    padding: 0 20px;
+    text-align: center;
+    /**
+		 * Note: The following rule is an exception on DS Class Naming because whole
+		 * text is user-supplied and we don't insert class names there.
+		 */ }
+    .wds-global-footer__bottom-bar a,
+    .wds-global-footer__bottom-bar a:visited {
+      color: #00b7e0;
+      text-decoration: none; }
+    .wds-global-footer__bottom-bar a:hover {
+      color: #fff; }
+  .wds-global-footer__bottom-bar-row {
+    margin: 0 auto; }
+    .wds-global-footer__bottom-bar-row.wds-has-border-top {
+      border-top: 1px solid #656e78; }
+    .wds-global-footer__bottom-bar-row.wds-has-padding {
+      padding: 16px 0; }
+  .wds-global-footer__button-link {
+    display: inline-block;
+    font-weight: bold;
+    letter-spacing: .3px;
+    line-height: 1.3em;
+    min-height: 45px;
+    padding: 14px 18px;
+    text-decoration: none;
+    text-transform: uppercase; }
+  .wds-global-footer__fandom-logo {
+    fill: #fff;
+    height: 26px;
+    width: 122px; }
+  .wds-global-footer__wikia-logo {
+    fill: #fff;
+    height: 26px;
+    width: 67px; }
+    .wds-global-footer__wikia-logo.wds-is-large {
+      height: 30px;
+      padding: 0;
+      width: 84px; }
+  .wds-global-footer__home-of-fandom {
+    border-bottom: 1px solid #c5ced9;
+    border-top: 1px solid #c5ced9;
+    color: #7f90a1;
+    display: block;
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: .5px;
+    margin-left: 13px;
+    margin-top: 5px;
+    padding: 3px 0;
+    text-transform: uppercase;
+    white-space: nowrap; }
+  .wds-global-footer__main {
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap; }
+  .wds-global-footer__fandom-header, .wds-global-footer__wikia-header {
+    margin: 0; }
+  .wds-global-footer__fandom-sections, .wds-global-footer__wikia-sections {
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap; }
+  .wds-global-footer__fandom-section, .wds-global-footer__wikia-section {
+    border-top: 4px solid #656e78;
+    margin-right: 55px;
+    padding-top: 8px; }
+  .wds-global-footer__link, .wds-global-footer__link:active, .wds-global-footer__link:visited, .wds-global-footer__link:focus {
+    color: #c5ced9;
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 1.3em;
+    text-decoration: none; }
+  .wds-global-footer__link:hover {
+    color: #fff; }
+  .wds-global-footer__links-list-item {
+    margin-bottom: 8px; }
+  .wds-global-footer__fandom-section.wds-is-fandom-overview {
+    border: 0;
+    padding: 0; }
+    .wds-global-footer__fandom-section.wds-is-fandom-overview .wds-global-footer__link {
+      -webkit-align-items: center;
+      -ms-flex-align: center;
+      align-items: center;
+      border-top: 4px solid #656e78;
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      display: flex;
+      font-size: 18px;
+      font-weight: bold;
+      -webkit-justify-content: space-between;
+      -ms-flex-pack: justify;
+      justify-content: space-between;
+      margin: 0;
+      padding: 6px 0 28px;
+      text-decoration: none; }
+      .wds-global-footer__fandom-section.wds-is-fandom-overview .wds-global-footer__link.wds-is-games {
+        border-color: #94d11f; }
+      .wds-global-footer__fandom-section.wds-is-fandom-overview .wds-global-footer__link.wds-is-movies {
+        border-color: #09d3bf; }
+      .wds-global-footer__fandom-section.wds-is-fandom-overview .wds-global-footer__link.wds-is-tv {
+        border-color: #00b7e0; }
+    .wds-global-footer__fandom-section.wds-is-fandom-overview .wds-global-footer__image {
+      -webkit-transform: rotate(180deg);
+      -ms-transform: rotate(180deg);
+      transform: rotate(180deg); }
+  .wds-global-footer__fandom-section.wds-is-follow-us .wds-global-footer__links-list {
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-flex-wrap: nowrap;
+    -ms-flex-wrap: nowrap;
+    flex-wrap: nowrap; }
+  .wds-global-footer__fandom-section.wds-is-follow-us .wds-global-footer__link {
+    background: no-repeat center;
+    background-size: 24px;
+    display: inline-block;
+    height: 24px;
+    margin-right: 20px;
+    width: 24px; }
+  .wds-global-footer__fandom-section.wds-is-follow-us .wds-global-footer__image {
+    color: #656e78; }
+    .wds-global-footer__fandom-section.wds-is-follow-us .wds-global-footer__image:hover {
+      color: #fff; }
+  .wds-global-footer__wikia-section.wds-is-create-wiki .wds-global-footer__link {
+    border: solid 1px #c5ced9;
+    color: #c5ced9;
+    display: inline-block;
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: .3px;
+    line-height: 1.3em;
+    margin-top: 13px;
+    padding: 14px 18px;
+    text-decoration: none;
+    text-transform: uppercase; }
+    .wds-global-footer__wikia-section.wds-is-create-wiki .wds-global-footer__link:hover {
+      color: #fff; }
+  .wds-global-footer__wikia-section.wds-is-community-apps .wds-global-footer__links-list {
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex; }
+  .wds-global-footer__wikia-section.wds-is-community-apps .wds-global-footer__link {
+    display: block;
+    line-height: 1.3em;
+    margin-top: 6px;
+    width: 119px; }
+  .wds-global-footer__wikia-section.wds-is-community-apps .wds-global-footer__image {
+    height: 35px;
+    width: 119px; }
+  .wds-global-footer__section-header {
+    color: #fff;
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    margin-top: 0;
+    min-height: 24px;
+    padding: 0; }
+  .wds-global-footer__section-description {
+    color: #fff;
+    font-size: 14px;
+    line-height: 1.3em;
+    margin: 0;
+    padding: 0; }
+  @media only screen and (max-width: 1083px) {
+    .wds-global-footer__main {
+      margin: 0 20px; }
+    .wds-global-footer__header-wrapper {
+      padding-bottom: 35px;
+      padding-top: 34px; }
+    .wds-global-footer__fandom-header {
+      margin-bottom: 29px;
+      margin-top: 38px; }
+    .wds-global-footer__wikia-header {
+      margin-bottom: 29px;
+      margin-top: 61px; }
+    .wds-global-footer__fandom-section, .wds-global-footer__wikia-section {
+      margin: 0;
+      width: 100%; }
+    .wds-global-footer__fandom-section.wds-is-fandom-overview .wds-global-footer__links-list-item {
+      margin-bottom: 0; }
+    .wds-global-footer__fandom-section.wds-is-follow-us .wds-global-footer__links-list-item {
+      margin-bottom: 0; }
+    .wds-global-footer__fandom-section.wds-is-follow-us .wds-global-footer__link {
+      height: 42px;
+      margin-right: 10px;
+      width: 42px; }
+    .wds-global-footer__wikia-section {
+      margin-bottom: 20px; }
+      .wds-global-footer__wikia-section.wds-is-company-overview {
+        width: 50%; }
+      .wds-global-footer__wikia-section.wds-is-site-overview {
+        padding-top: 42px;
+        width: 50%; }
+      .wds-global-footer__wikia-section.wds-is-create-wiki {
+        display: none; }
+      .wds-global-footer__wikia-section.wds-is-community-apps .wds-global-footer__links-list {
+        margin-bottom: 0;
+        margin-top: 5px; }
+      .wds-global-footer__wikia-section.wds-is-community-apps .wds-global-footer__link {
+        margin-right: 25px; }
+    .wds-global-footer.wds-is-international .wds-global-footer__fandom-section.wds-is-follow-us {
+      margin-bottom: 37px; }
+    .wds-global-footer__links-list-item {
+      margin-bottom: 20px; } }
+  @media only screen and (min-width: 1084px) {
+    .wds-global-footer__main {
+      -webkit-flex-direction: row;
+      -ms-flex-direction: row;
+      flex-direction: row;
+      margin: 0 auto;
+      padding-bottom: 40px;
+      width: 1024px; }
+    .wds-global-footer__bottom-bar {
+      padding: 0; }
+    .wds-global-footer__bottom-bar-row {
+      width: 1024px; }
+    .wds-global-footer__header-wrapper {
+      padding-bottom: 34px;
+      padding-top: 43px; }
+    .wds-global-footer__fandom-header, .wds-global-footer__wikia-header {
+      height: 26px;
+      margin-bottom: 35px;
+      margin-top: 47px; }
+    .wds-global-footer__fandom-header {
+      -webkit-order: 1;
+      -ms-flex-order: 1;
+      order: 1;
+      width: 25%; }
+    .wds-global-footer__fandom-sections {
+      -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+      flex-direction: column;
+      -webkit-order: 3;
+      -ms-flex-order: 3;
+      order: 3;
+      width: 25%; }
+    .wds-global-footer__wikia-header {
+      -webkit-order: 2;
+      -ms-flex-order: 2;
+      order: 2;
+      width: 75%; }
+    .wds-global-footer__wikia-sections {
+      -webkit-align-content: flex-start;
+      -ms-flex-line-pack: start;
+      align-content: flex-start;
+      -webkit-order: 4;
+      -ms-flex-order: 4;
+      order: 4;
+      width: 75%; }
+    .wds-global-footer__fandom-section {
+      width: 200px; }
+    .wds-global-footer__wikia-section {
+      padding-bottom: 8px; }
+      .wds-global-footer__wikia-section.wds-is-company-overview {
+        margin-right: 50px;
+        min-height: 210px;
+        -webkit-order: 1;
+        -ms-flex-order: 1;
+        order: 1;
+        width: 124px; }
+      .wds-global-footer__wikia-section.wds-is-site-overview {
+        margin-right: 50px;
+        -webkit-order: 4;
+        -ms-flex-order: 4;
+        order: 4;
+        width: 124px; }
+      .wds-global-footer__wikia-section.wds-is-community {
+        min-height: 210px;
+        -webkit-order: 2;
+        -ms-flex-order: 2;
+        order: 2;
+        width: 290px; }
+      .wds-global-footer__wikia-section.wds-is-create-wiki {
+        display: block;
+        -webkit-order: 5;
+        -ms-flex-order: 5;
+        order: 5;
+        width: 290px; }
+      .wds-global-footer__wikia-section.wds-is-community-apps {
+        margin-right: 0;
+        min-height: 210px;
+        -webkit-order: 3;
+        -ms-flex-order: 3;
+        order: 3;
+        width: 200px; }
+        .wds-global-footer__wikia-section.wds-is-community-apps .wds-global-footer__links-list {
+          -webkit-flex-direction: column;
+          -ms-flex-direction: column;
+          flex-direction: column;
+          margin-top: 5px; }
+      .wds-global-footer__wikia-section.wds-is-advertise {
+        margin-right: 0;
+        -webkit-order: 6;
+        -ms-flex-order: 6;
+        order: 6;
+        width: 200px; } }
+
+.wds-global-navigation {
+  background-color: #fff;
+  border-image: linear-gradient(to right, #39424d 40%, #656e78 40%) 1 0 0;
+  border-top: 6px solid #656e78;
+  border-width: 6px 0 0;
+  box-shadow: 0 1px 0 0 #ccc; }
+  .wds-global-navigation__dropdown-toggle {
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-flex: 1 1 auto;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    height: 49px;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center; }
+  .wds-global-navigation__dropdown-content {
+    color: #39424d;
+    min-width: 190px;
+    top: calc(100% + 1px);
+    z-index: -1; }
+  .wds-global-navigation__dropdown-link {
+    color: #39424d;
+    text-decoration: none; }
+    .wds-global-navigation__dropdown-link:hover, .wds-global-navigation__dropdown-link:active, .wds-global-navigation__dropdown-link.wds-is-active {
+      color: #00b7e0; }
+  .wds-global-navigation__content-bar {
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    height: 49px;
+    margin: 0 auto;
+    position: relative;
+    width: 768px;
+    z-index: 1; }
+  .wds-global-navigation__logo, .wds-global-navigation__link, .wds-global-navigation__wikis-menu, .wds-global-navigation__search, .wds-global-navigation__account-menu, .wds-global-navigation__user-menu, .wds-global-navigation__notifications-menu, .wds-global-navigation__start-a-wiki {
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    background-color: #fff;
+    border-top: 6px solid #656e78;
+    color: #39424d;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    font-size: 14px;
+    height: 49px;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    margin-top: -6px;
+    padding: 0 8px;
+    text-decoration: none;
+    white-space: nowrap; }
+  .wds-global-navigation__link:hover, .wds-global-navigation__wikis-menu:hover, .wds-global-navigation__account-menu:hover, .wds-global-navigation__user-menu:hover, .wds-global-navigation__notifications-menu:hover {
+    color: #00b7e0; }
+  .wds-global-navigation__link:active, .wds-global-navigation__link.wds-is-active, .wds-global-navigation__wikis-menu:active, .wds-global-navigation__wikis-menu.wds-is-active, .wds-global-navigation__account-menu:active, .wds-global-navigation__account-menu.wds-is-active, .wds-global-navigation__user-menu:active, .wds-global-navigation__user-menu.wds-is-active, .wds-global-navigation__notifications-menu:active, .wds-global-navigation__notifications-menu.wds-is-active {
+    background-color: #656e78;
+    border-color: #363b41;
+    color: #fff; }
+  .wds-global-navigation__logo {
+    border-top: 6px solid #39424d;
+    -webkit-flex: 0 0 230px;
+    -ms-flex: 0 0 230px;
+    flex: 0 0 230px; }
+  .wds-global-navigation__logo-fandom {
+    height: 100%;
+    padding-bottom: 4px;
+    width: 230px; }
+  .wds-global-navigation__logo-wikia {
+    -webkit-flex-basis: auto;
+    -ms-flex-preferred-size: auto;
+    flex-basis: auto; }
+  .wds-global-navigation__logo-wikia-icon {
+    fill: #092344;
+    height: 100%;
+    padding-bottom: 4px;
+    width: 90px; }
+  .wds-global-navigation__logo-wikia-caption {
+    border-bottom: 1px solid;
+    border-top: 1px solid;
+    color: #aaa;
+    display: inline-block;
+    font-size: 10px;
+    font-weight: bold;
+    line-height: 16px;
+    margin-left: 8px;
+    text-transform: uppercase; }
+  .wds-global-navigation__link {
+    -webkit-flex: 1 1 auto;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto; }
+    .wds-global-navigation__link.wds-is-games {
+      border-color: #94d11f; }
+      .wds-global-navigation__link.wds-is-games:active, .wds-global-navigation__link.wds-is-games.wds-is-active {
+        background-color: #94d11f;
+        border-color: #75a518; }
+    .wds-global-navigation__link.wds-is-movies {
+      border-color: #09d3bf; }
+      .wds-global-navigation__link.wds-is-movies:active, .wds-global-navigation__link.wds-is-movies.wds-is-active {
+        background-color: #09d3bf;
+        border-color: #07a293; }
+    .wds-global-navigation__link.wds-is-tv {
+      border-color: #00b7e0; }
+      .wds-global-navigation__link.wds-is-tv:active, .wds-global-navigation__link.wds-is-tv.wds-is-active {
+        background-color: #00b7e0;
+        border-color: #008dad; }
+  .wds-global-navigation__wikis-menu {
+    -webkit-flex: 0 1 auto;
+    -ms-flex: 0 1 auto;
+    flex: 0 1 auto; }
+  .wds-global-navigation__search-input-wrapper {
+    border: 0 solid #656e78;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-flex: 1 1 auto;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto; }
+  .wds-global-navigation__search-label {
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    background-color: #fff;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-flex: 1 1 auto;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    z-index: 2; }
+  .wds-global-navigation__search-input {
+    border: 0;
+    color: #333;
+    display: none;
+    -webkit-flex: 1 1 auto;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    font-size: 14px;
+    min-width: 0;
+    padding: 3px 4px;
+    width: 100%; }
+    .wds-global-navigation__search-input:focus {
+      outline: none; }
+    .wds-global-navigation__search-input::-webkit-input-placeholder {
+      color: #39424d;
+      opacity: 1; }
+    .wds-global-navigation__search-input::-moz-placeholder {
+      color: #39424d;
+      opacity: 1; }
+    .wds-global-navigation__search-input:-ms-input-placeholder {
+      color: #39424d;
+      opacity: 1; }
+    .wds-global-navigation__search-input::placeholder {
+      color: #39424d;
+      opacity: 1; }
+    .wds-global-navigation__search-input::-ms-clear {
+      display: none; }
+  .wds-global-navigation__search-close {
+    display: none;
+    margin: 0;
+    padding: 3px;
+    z-index: 2; }
+  .wds-global-navigation__search-close-icon {
+    color: #999;
+    display: block; }
+  .wds-global-navigation__search-submit {
+    display: none;
+    padding: 6px 9px; }
+  .wds-global-navigation__search-submit-icon {
+    display: block;
+    -webkit-transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+    transform: rotate(180deg); }
+  .wds-global-navigation__search-suggestions {
+    right: 0;
+    top: calc(100% + 1px); }
+  .wds-global-navigation__account-menu-caption {
+    display: none;
+    margin-left: 5px; }
+  .wds-global-navigation__account-menu-dropdown-caption {
+    font-size: 12px;
+    padding-bottom: 10px;
+    text-align: center; }
+  .wds-global-navigation__notifications-menu {
+    padding-right: 0;
+    position: relative;
+    width: 50px; }
+  .wds-global-navigation__notifications-menu-counter {
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    background-color: #00b7e0;
+    border: 1px solid #fff;
+    border-radius: 9px;
+    box-sizing: border-box;
+    color: #fff;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    font-size: 10px;
+    height: 18px;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    left: -1px;
+    min-width: 18px;
+    padding: 0 4px;
+    position: absolute;
+    top: 8px; }
+  .wds-global-navigation__start-a-wiki-icon {
+    height: 14px;
+    min-width: 14px;
+    width: 14px;
+    display: none; }
+  .wds-global-navigation.wds-search-is-always-visible .wds-global-navigation__link {
+    -webkit-flex: 0 1 auto;
+    -ms-flex: 0 1 auto;
+    flex: 0 1 auto; }
+  .wds-global-navigation.wds-search-is-always-visible .wds-global-navigation__search {
+    -webkit-flex: 1 1 0;
+    -ms-flex: 1 1 0;
+    flex: 1 1 0; }
+  .wds-global-navigation.wds-search-is-always-visible .wds-global-navigation__search-input {
+    display: block; }
+  .wds-global-navigation.wds-search-is-always-visible .wds-global-navigation__search-input-wrapper {
+    border-bottom-width: 1px; }
+  .wds-global-navigation.wds-search-is-active .wds-global-navigation__link {
+    display: none; }
+  .wds-global-navigation.wds-search-is-active .wds-global-navigation__search {
+    -webkit-flex: 1 1 auto;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto; }
+  .wds-global-navigation.wds-search-is-active .wds-global-navigation__search-input-wrapper {
+    border-bottom-width: 1px;
+    margin-right: 15px; }
+    .wds-global-navigation.wds-search-is-active .wds-global-navigation__search-input-wrapper.wds-is-active {
+      border-bottom-color: #00b7e0; }
+  .wds-global-navigation.wds-search-is-active .wds-global-navigation__search-input::-webkit-input-placeholder {
+    color: #999; }
+  .wds-global-navigation.wds-search-is-active .wds-global-navigation__search-input::-moz-placeholder {
+    color: #999; }
+  .wds-global-navigation.wds-search-is-active .wds-global-navigation__search-input:-ms-input-placeholder {
+    color: #999; }
+  .wds-global-navigation.wds-search-is-active .wds-global-navigation__search-input::placeholder {
+    color: #999; }
+  .wds-global-navigation.wds-search-is-active .wds-global-navigation__search-input, .wds-global-navigation.wds-search-is-active .wds-global-navigation__search-submit, .wds-global-navigation.wds-search-is-active .wds-global-navigation__search-close {
+    display: block; }
+  .wds-global-navigation .wds-user-is-logged-in .wds-global-navigation__start-a-wiki-caption {
+    display: none; }
+  .wds-global-navigation .wds-user-is-logged-in .wds-global-navigation__start-a-wiki-icon {
+    display: block; }
+  @media only screen and (min-width: 1024px) {
+    .wds-global-navigation__content-bar {
+      width: 1004px; }
+    .wds-global-navigation__wikis-menu {
+      -webkit-flex: 1 1 auto;
+      -ms-flex: 1 1 auto;
+      flex: 1 1 auto; }
+    .wds-global-navigation__search {
+      -webkit-flex: 2 1 auto;
+      -ms-flex: 2 1 auto;
+      flex: 2 1 auto; }
+    .wds-global-navigation__search-input-wrapper {
+      border-bottom: 1px solid #656e78; }
+    .wds-global-navigation__search-input {
+      display: block; }
+    .wds-global-navigation__account-menu-caption, .wds-global-navigation__start-a-wiki-caption {
+      display: inline; }
+    .wds-global-navigation__start-a-wiki-icon {
+      display: none; }
+    .wds-global-navigation .wds-user-is-logged-in .wds-global-navigation__start-a-wiki-caption {
+      display: inline; }
+    .wds-global-navigation .wds-user-is-logged-in .wds-global-navigation__start-a-wiki-icon {
+      display: none; } }
+  @media only screen and (min-width: 1084px) {
+    .wds-global-navigation__content-bar {
+      width: 1064px; } }
+  @media only screen and (min-width: 1596px) {
+    .wds-global-navigation__content-bar {
+      width: 1238px; } }
+
+.wds-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 7px 18px; }
+  .wds-list > li {
+    font-size: 14px;
+    line-height: 1em;
+    padding: 11px 0; }
+  .wds-list.wds-has-big-items {
+    padding-bottom: 2px;
+    padding-top: 2px; }
+    .wds-list.wds-has-big-items > li {
+      font-size: 16px;
+      padding-bottom: 16px;
+      padding-top: 16px; }
+  .wds-list.wds-has-lines-between > li {
+    border-bottom: solid 1px #e6e6e6; }
+    .wds-list.wds-has-lines-between > li:last-child {
+      border: 0; }
+  .wds-list.wds-has-ellipsis > li,
+  .wds-list.wds-has-ellipsis.wds-is-linked > li > a {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap; }
+  .wds-list.wds-is-linked > li {
+    padding: 0; }
+    .wds-list.wds-is-linked > li > a {
+      display: block;
+      padding: 11px 0; }

@@ -11,14 +11,12 @@
     "reference-page/"
   ],
   "homepage": "https://github.com/Wikia/design-system",
-  "version": "0.5.0",
-  "_release": "0.5.0",
+  "_release": "25c213c9c1",
   "_resolution": {
-    "type": "version",
-    "tag": "0.5.0",
-    "commit": "fd0e9a6ac1a9504b498c2ad6d3bc384999d2e4fb"
+    "type": "commit",
+    "commit": "25c213c9c18b1d3c741c119ea34868f8c611c78f"
   },
   "_source": "git://github.com/Wikia/design-system.git",
-  "_target": "0.5.0",
+  "_target": "25c213c9c18b1d3c741c119ea34868f8c611c78f",
   "_originalSource": "Wikia/design-system"
 }

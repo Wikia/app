@@ -3,6 +3,6 @@
   "private": true,
 
   "dependencies": {
-    "design-system": "Wikia/design-system#0.5.0"
+    "design-system": "Wikia/design-system#25c213c9c18b1d3c741c119ea34868f8c611c78f"
   }
 }

@@ -15,6 +15,7 @@ class DesignSystemHooks {
 
 		if ( F::app()->checkSkin( 'oasis', $skin ) ) {
 			\Wikia::addAssetsToOutput( 'design_system_scss' );
+			\Wikia::addAssetsToOutput( 'design_system_css' );
 		}
 
 		return true;
