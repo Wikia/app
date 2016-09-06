@@ -3,6 +3,7 @@
 require([
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adEngineRunner',
+	'ext.wikia.adEngine.adLogicPageParams',
 	'ext.wikia.adEngine.config.desktop',
 	'ext.wikia.adEngine.customAdsLoader',
 	'ext.wikia.adEngine.dartHelper',
@@ -16,10 +17,12 @@ require([
 	'ext.wikia.adEngine.provider.yavliTag',
 	'wikia.window',
 	'wikia.loader',
-	require.optional('ext.wikia.adEngine.recovery.gcs')
+	require.optional('ext.wikia.adEngine.recovery.gcs'),
+	require.optional('ext.wikia.adEngine.template.floatingRail')
 ], function (
 	adContext,
 	adEngineRunner,
+	pageLevelParams,
 	adConfigDesktop,
 	customAdsLoader,
 	dartHelper,
@@ -33,7 +36,8 @@ require([
 	yavliTag,
 	win,
 	loader,
-	gcs
+	gcs,
+	floatingRail
 ) {
 	'use strict';
 
@@ -56,6 +60,10 @@ require([
 
 	// Everything starts after content and JS
 	win.wgAfterContentAndJS.push(function () {
+		if (floatingRail) {
+			pageLevelParams.add('rrspace', floatingRail.getAvailableSpaceParameter().toString());
+		}
+
 		// Ads
 		scrollHandler.init(skin);
 		win.adslots2 = win.adslots2 || [];

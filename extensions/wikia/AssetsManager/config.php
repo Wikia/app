@@ -1790,17 +1790,6 @@ $config['universal_analytics_js'] = [
 	],
 ];
 
-$config['analytics_bluekai_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'wikiamobile' ],
-	'assets' => [
-		'//extensions/wikia/AdEngine/js/AdLogicPageParams.js',
-		'//extensions/wikia/AdEngine/js/AdLogicPageViewCounter.js',
-		'//extensions/wikia/AdEngine/js/context/adContext.js',
-		'//extensions/wikia/AdEngine/js/utils/AdLogicZoneParams.js',
-	],
-];
-
 /* Special:Leaderboard in AchievementsII extensions */
 $config['special_leaderboard_oasis_js'] = [
 	'type' => AssetsManager::TYPE_JS,

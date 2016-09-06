@@ -1,14 +1,13 @@
 /*global define*/
 define('ext.wikia.adEngine.template.floatingRail', [
 	'ext.wikia.adEngine.adContext',
-	'ext.wikia.adEngine.uapContext',
 	'ext.wikia.adEngine.utils.math',
 	'ext.wikia.adEngine.adHelper',
 	'jquery',
 	'wikia.log',
 	'wikia.document',
 	'wikia.window'
-], function (adContext, uapContext, math, adHelper, $, log, doc, win) {
+], function (adContext, math, adHelper, $, log, doc, win) {
 	'use strict';
 
 	var $medrec = $('#TOP_RIGHT_BOXAD'),
@@ -76,7 +75,7 @@ define('ext.wikia.adEngine.template.floatingRail', [
 			isPageSupported = context.targeting.skin === 'oasis' &&
 				context.targeting.pageType === 'article';
 
-		if(!isPageSupported || !uapContext.getUapId() || getAvailableSpace() === 0) {
+		if(!isPageSupported || getAvailableSpace() === 0) {
 			return;
 		}
 
@@ -86,25 +85,14 @@ define('ext.wikia.adEngine.template.floatingRail', [
 		win.addEventListener('resize', update);
 	}
 
-	function getFloatingSpaceParam(slotName) {
-		var floatingSpaceParam;
+	function getAvailableSpaceParameter() {
+		var space = getAvailableSpace();
 
-		switch (slotName) {
-			case 'TOP_RIGHT_BOXAD':
-				floatingSpaceParam = getAvailableSpace();
-				break;
-			case 'INCONTENT_BOXAD_1':
-				floatingSpaceParam = getAvailableSpace() - (floatingSpace || 0);
-				break;
-			default:
-				return -1;
-		}
-
-		return math.getBucket(floatingSpaceParam, 100);
+		return math.getBucket(space, 100);
 	}
 
 	return {
-		getFloatingSpaceParam: getFloatingSpaceParam,
+		getAvailableSpaceParameter: getAvailableSpaceParameter,
 		show: show
 	};
 });

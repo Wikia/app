@@ -16,6 +16,7 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 
 	var context = {},
 		logGroup = 'ext.wikia.adEngine.adLogicPageParams',
+		runtimeParams = {},
 		skin = adContext.getContext().targeting.skin;
 
 	function updateContext() {
@@ -63,6 +64,10 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 		}
 
 		return target;
+	}
+
+	function addParam(key, value) {
+		runtimeParams[key] = value;
 	}
 
 	/**
@@ -205,6 +210,7 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 		}
 
 		extend(params, decodeLegacyDartParams(targeting.wikiCustomKeyValues));
+		extend(params, runtimeParams);
 
 		log(params, 9, logGroup);
 		return params;
@@ -218,6 +224,7 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 	adContext.addCallback(updateContext);
 
 	return {
+		add: addParam,
 		getPageLevelParams: getPageLevelParams
 	};
 });
