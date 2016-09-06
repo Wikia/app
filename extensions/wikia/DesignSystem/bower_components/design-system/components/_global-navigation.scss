@@ -211,11 +211,14 @@ $notification-counter-size: 18px;
 		// it requires us to put these values explicitly.
 		flex: 1 1 auto;
 		font-size: $typescale-size-minus-1;
+		// Safari doesn't trigger focus on input if it has `width: 0;`
+		margin-left: -1px;
 		// Firefox doesn't size input properly if our input
 		// has `width` set in `%` and is inside `flexbox`.
 		min-width: 0;
 		padding: 0;
-		width: 0;
+		// Safari doesn't trigger focus on input if it has `width 0;`
+		width: 1px;
 
 		&:focus {
 			outline: none;
