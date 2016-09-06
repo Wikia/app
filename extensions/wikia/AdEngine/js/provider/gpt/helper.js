@@ -160,7 +160,12 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 		}
 	});
 
+	function getGoogleTag() {
+		return googleApi;
+	}
+
 	return {
+		getGoogleTag: getGoogleTag,
 		pushAd: pushAd
 	};
 });

@@ -2,15 +2,19 @@
 /*jshint maxlen:125, camelcase:false, maxdepth:7*/
 define('ext.wikia.adEngine.provider.gpt.googleTag', [
 	'ext.wikia.aRecoveryEngine.recovery.helper',
+	'ext.wikia.adEngine.adLogicPageViewCounter',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window'
-], function (helper, doc, log, window) {
+], function (helper, adLogicPageViewCounter, doc, log, window) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.gpt.googleTag',
 		registeredCallbacks = {},
+		//slot id (adUnit) => google slot
 		slots = {},
+		//slot name => google slot
+		slotsMap = {},
 		slotQueue = [],
 		pageLevelParams,
 		pubAds;
@@ -121,24 +125,25 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 
 	GoogleTag.prototype.addSlot = function (adElement) {
 		var sizes = adElement.getSizes(),
-			slot = slots[adElement.getId()];
+			slot;
 
 		log(['addSlot', adElement], 'debug', logGroup);
 
 		adElement.setPageLevelParams(pageLevelParams);
-		if (!slot) {
-			if (sizes) {
-				slot = window.googletag.defineSlot(adElement.getSlotPath(), sizes, adElement.getId());
-			} else {
-				slot = window.googletag.defineOutOfPageSlot(adElement.getSlotPath(), adElement.getId());
-			}
-			slot.addService(pubAds);
-			window.googletag.display(adElement.getId());
-			slots[adElement.getId()] = slot;
+
+		if (sizes) {
+			slot = window.googletag.defineSlot(adElement.getSlotPath(), sizes, adElement.getId());
+		} else {
+			slot = window.googletag.defineOutOfPageSlot(adElement.getSlotPath(), adElement.getId());
 		}
+
+		slot.addService(pubAds);
+		window.googletag.display(adElement.getId());
+		slots[adElement.getId()] = slot;
 
 		adElement.configureSlot(slot);
 		slotQueue.push(slot);
+		slotsMap[adElement.getSlotName()] = slot;
 
 		return slot;
 	};
@@ -153,6 +158,33 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 		var iframe = element.getNode().querySelector('div[id*="_container_"] iframe');
 
 		onAdLoadCallback(element.getId(), gptEvent, iframe);
+	};
+
+	GoogleTag.prototype.destroySlots = function (slotsNames) {
+		var slotsToDestroy = [], success;
+
+		slotsNames.forEach(function (slotName) {
+			if (slotsMap[slotName]) {
+				slotsToDestroy.push(slotsMap[slotName]);
+			}
+		});
+
+		if (slotsToDestroy.length) {
+			log(['destroySlots', slotsNames], 'debug', logGroup);
+			success = window.googletag.destroySlots(slotsToDestroy);
+
+			if (!success) {
+				log(['destroySlots', slotsNames, 'failed'], 'error', logGroup);
+			}
+		}
+	};
+
+	GoogleTag.prototype.newPageView = function () {
+		slotsMap = {};
+		slots = {};
+
+		adLogicPageViewCounter.increment();
+		window.googletag.pubads().updateCorrelator()
 	};
 
 	return GoogleTag;
