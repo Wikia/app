@@ -102,7 +102,7 @@ class Paginator {
 	 * @param array $data data to be paginated
 	 * @return array
 	 */
-	public function getCurrentPage( array $data ) {
+	public function getCurrentPageData( array $data ) {
 		$paginatedData = array_chunk( $data, $this->itemsPerPage );
 
 		$index = $this->activePage - 1;
