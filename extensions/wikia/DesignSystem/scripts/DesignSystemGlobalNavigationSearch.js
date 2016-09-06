@@ -4,8 +4,12 @@ $(function ($) {
 	var $globalNav = $('.wds-global-navigation'),
 		$searchInput = $globalNav.find('.wds-global-navigation__search-input'),
 		$searchSubmit = $globalNav.find('.wds-global-navigation__search-submit'),
-		placeHolderText = $searchInput.attr('placeholder'),
+		placeholderText = $searchInput.attr('placeholder'),
 		activeSearchClass = 'wds-search-is-active';
+
+	if ($searchInput.val().length === 0) {
+		$searchSubmit.prop('disabled', true);
+	}
 
 	$searchInput.on('focus', function () {
 		if (!$globalNav.hasClass(activeSearchClass)) {
@@ -13,10 +17,6 @@ $(function ($) {
 			$searchInput.attr('placeholder', $searchInput.data('active-placeholder'));
 		}
 	});
-
-	if ($searchInput.val().length === 0) {
-		$searchSubmit.prop('disabled', true);
-	}
 
 	$searchInput.on('input', function () {
 		var textLength = this.value.length;
@@ -30,7 +30,7 @@ $(function ($) {
 
 	$globalNav.find('.wds-global-navigation__search-close').on('click', function () {
 		$globalNav.removeClass(activeSearchClass);
-		$searchInput.attr('placeholder', placeHolderText);
+		$searchInput.attr('placeholder', placeholderText);
 		$searchSubmit.prop('disabled', true);
 	});
 });

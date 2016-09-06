@@ -323,17 +323,9 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 	}
 
 	private function getSitenameData() {
-		$wgSitenameForWikiId = WikiFactory::getVarValueByName( 'wgSitename', $this->wikiId );
-
-		if ( $wgSitenameForWikiId ) {
-			$sitename = $wgSitenameForWikiId;
-		} else {
-			$sitename = $this->wg->Sitename;
-		}
-
 		return [
 			'type' => 'text',
-			'value' => $sitename,
+			'value' => WikiFactory::getVarValueByName( 'wgSitename', $this->wikiId, false, $this->wg->Sitename ),
 		];
 	}
 }
