@@ -18,6 +18,7 @@ $(function ($) {
 		}
 
 		event.preventDefault();
+		$(event.currentTarget).closest('.wds-dropdown').removeClass('wds-is-active');
 
 		window.wikiaAuthModal.load({
 			url: url,
