@@ -97,7 +97,7 @@ define('ext.wikia.adEngine.template.floatingRail', [
 				floatingSpaceParam = getAvailableSpace() - (floatingSpace || 0);
 				break;
 			default:
-				floatingSpaceParam = -1;
+				return -1;
 		}
 
 		return math.getBucket(floatingSpaceParam, 100);
