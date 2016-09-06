@@ -108,7 +108,7 @@ class DesignSystemGlobalFooterModelTest extends WikiaBaseTest {
 							'license' => [
 								'type' => 'line-text',
 								'title' => [
-									'type' => 'text',
+									'type' => 'translatable-text',
 									'key' => 'global-footer-copyright-wikia',
 								],
 							]

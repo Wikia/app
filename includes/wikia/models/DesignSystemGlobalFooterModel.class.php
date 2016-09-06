@@ -323,7 +323,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 			return [
 				'type' => 'line-text',
 				'title' => [
-					'type' => 'text',
+					'type' => 'translatable-text',
 					'key' => 'global-footer-copyright-wikia',
 				],
 			];
