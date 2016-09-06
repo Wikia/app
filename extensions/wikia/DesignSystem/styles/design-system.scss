@@ -39,6 +39,11 @@ $global-navigation-height: 55px;
 		right: 0;
 		top: auto;
 	}
+
+	.ve & {
+		position: absolute;
+		z-index: $global-navigation-z-index - 1;
+	}
 }
 
 .wds-global-footer {
