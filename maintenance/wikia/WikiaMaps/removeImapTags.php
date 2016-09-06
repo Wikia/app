@@ -6,20 +6,16 @@
  * @usage SERVER_ID=203236 php removeImapTags.php --tiles-set-id=1 --verbose --test
  */
 
-ini_set( "include_path", dirname( __FILE__ )."/../../" );
+require_once( __DIR__ . '/../../Maintenance.php' );
 
+ini_set( "include_path", __DIR__ . "/../../" );
 ini_set('display_errors', 'stderr');
 ini_set('error_reporting', E_ALL);
-
-require_once( dirname( __FILE__ ) . '/../../Maintenance.php' );
 
 class RemoveImapTags extends Maintenance {
 	static protected $verbose = false;
 	static protected $test = false;
 
-	/**
-	 * @var WikiaMaps
-	 */
 	private $maps;
 
 	/**
@@ -55,12 +51,10 @@ class RemoveImapTags extends Maintenance {
 
 	/**
 	 * Print the message if verbose is enabled
-	 *
-	 * @param $msg - The message text to echo to STDOUT
 	 */
-	static public function debug( $msg ) {
+	public function debug( $msg ) {
 		if ( self::isVerbose() ) {
-			echo $msg . PHP_EOL;
+			$this->output( $msg . PHP_EOL );
 		}
 	}
 
@@ -115,7 +109,7 @@ class RemoveImapTags extends Maintenance {
 
 			return true;
 		} else {
-			echo sprintf( 'Article #%d does not exist anymore', $articleId ) . PHP_EOL;
+			$this->error( sprintf( 'Article #%d does not exist anymore', $articleId ) . PHP_EOL );
 		}
 	}
 
@@ -134,14 +128,14 @@ class RemoveImapTags extends Maintenance {
 		$article = Article::newFromID( $articleId );
 
 		if ( $user->getId() === 0 ) {
-			echo 'Failed using WikiaBot user' . PHP_EOL;
+			$this->error( 'Failed using WikiaBot user' . PHP_EOL );
 		}
 
 		if ( $article instanceof Article && $article->getID() ) {
 			$oldContent = $article->getContent();
 			$newContent = str_replace( $stringWithTagToRemove, "", $oldContent );
 
-			self::debug( sprintf( 'Trying to edit article #%d', $articleId ) );
+			$this->debug( sprintf( 'Trying to edit article #%d', $articleId ) );
 			if( !self::isTest() ) {
 				$result = $article->doEdit(
 					$newContent,
@@ -159,12 +153,12 @@ class RemoveImapTags extends Maintenance {
 
 
 			if( $result ) {
-				echo sprintf( "Removed <imap/> tags from article #%d", $articleId ) . PHP_EOL;
+				$this->output( sprintf( "Removed <imap/> tags from article #%d", $articleId ) . PHP_EOL );
 			} else {
-				echo sprintf( "Failed to update article #%d", $articleId ) . PHP_EOL;
+				$this->error( sprintf( "Failed to update article #%d", $articleId ) . PHP_EOL );
 			}
 		} else {
-			echo sprintf( 'Article #%d does not exist anymore', $articleId ) . PHP_EOL;
+			$this->error( sprintf( 'Article #%d does not exist anymore', $articleId ) . PHP_EOL );
 		}
 	}
 
@@ -176,11 +170,11 @@ class RemoveImapTags extends Maintenance {
 		$res = $this->maps->getTileSet( $tilesSetId );
 
 		if ( !isset( $res['success'] ) || $res['success'] !== true ) {
-			self::debug( 'API call failure when looking for a tiles set #' . $tilesSetId . '.' );
+			$this->debug( 'API call failure when looking for a tiles set #' . $tilesSetId . '.' );
 			die;
 		}
 
-		self::debug( "Tiles' set #" . $tilesSetId . " found." );
+		$this->debug( "Tiles' set #" . $tilesSetId . " found." );
 		return $res['content']->id == $tilesSetId;
 	}
 
@@ -196,51 +190,49 @@ class RemoveImapTags extends Maintenance {
 		$tilesSetId = $this->getOption( 'tiles-set-id' );
 
 		if ( self::isTest() ) {
-			self::debug( 'Mode: test run' );
+			$this->debug( 'Mode: test run' );
 		} else {
-			self::debug( 'Mode: normal run' );
+			$this->debug( 'Mode: normal run' );
 		}
 
 		if ( !self::isValidCityId( $cityId ) ) {
-			self::debug( 'Invalid city-id. Try again.' );
+			$this->debug( 'Invalid city-id. Try again.' );
 			die;
 		}
 
 		if ( !$this->isValidTilesSetId( $tilesSetId ) ) {
-			self::debug( 'Invalid tiles-set-id. Try again.' );
+			$this->debug( 'Invalid tiles-set-id. Try again.' );
 			die;
 		}
 
 		$mapsUsingTheTileset = self::getMapsIdsUsingTileset( $cityId, $tilesSetId );
 		$mapsUsingTheTilesetCount = count($mapsUsingTheTileset);
-		self::debug( sprintf( "Found %d maps using the tiles's set #%d", $mapsUsingTheTilesetCount, $tilesSetId ) );
+		$this->debug( sprintf( "Found %d maps using the tiles's set #%d", $mapsUsingTheTilesetCount, $tilesSetId ) );
 
 		if ( $mapsUsingTheTilesetCount === 0 ) {
-			echo 'No maps found.' . PHP_EOL;
-			die;
+			$this->error( 'No maps found.' . PHP_EOL , 1);
 		}
 
 		$articlesUsingImap = self::getArticlesIdsUsingImap( $cityId );
 		$articlesUsingImapCount = count( $articlesUsingImap );
-		self::debug( sprintf( "Found %d articles using <imap/>", $articlesUsingImapCount ) );
+		$this->debug( sprintf( "Found %d articles using <imap/>", $articlesUsingImapCount ) );
 
 		if ( $articlesUsingImapCount === 0 ) {
-			echo 'No articles using <imap/> found. Have you run wikia/backend/bin/specials/tags_report.pl before?' . PHP_EOL;
-			die;
+			$this->error( 'No articles using <imap/> found. Have you run wikia/backend/bin/specials/tags_report.pl before?' . PHP_EOL, 1);
 		}
 
 		foreach( $articlesUsingImap as $articleId ) {
-			self::debug( sprintf( "Checks article #%d", $articleId ) );
+			$this->debug( sprintf( "Checks article #%d", $articleId ) );
 
 			$foundTags = [];
 			$foundTagsMapIds = [];
 			$toRemove = [];
 
 			if ( !$this->hasImapTag( $articleId, $foundTags, $foundTagsMapIds ) ) {
-				self::debug( sprintf( "No <imap /> tags in article #%d", $articleId ) );
+				$this->debug( sprintf( "No <imap /> tags in article #%d", $articleId ) );
 			} else {
 				if ( !$this->hasTagsToRemove( $foundTagsMapIds, $mapsUsingTheTileset, $toRemove ) ) {
-					self::debug( "No <imap /> for the given map ids" );
+					$this->debug( "No <imap /> for the given map ids" );
 				}
 
 				foreach( $toRemove as $foundTagsKey ) {
@@ -250,7 +242,7 @@ class RemoveImapTags extends Maintenance {
 			}
 		}
 
-		echo 'Done.' . PHP_EOL;
+		$this->output( 'Done' . PHP_EOL );
 	}
 }
 
