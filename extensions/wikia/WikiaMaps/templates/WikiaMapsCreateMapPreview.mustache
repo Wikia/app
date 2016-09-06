@@ -5,6 +5,13 @@
 	</div>
 
 	{{#tileSetData}}
+		{{^tileSetId}}
+		<div class="input-group">
+			<label for="intMapTileSetTitle">{{tileSetTitleLabel}}</label>
+			<input type="text" class="wide" name="tile-set-title" placeholder="{{tileSetTitlePlaceholder}}" value="">
+		</div>
+		{{/tileSetId}}
+
 		<img src="{{fileThumbUrl}}{{originalImageURL}}" alt="{{previewImgAlt}}" id="intMapPreviewImage" class="intMapPreviewImage" width="100%" height="auto" />
 
 		{{#tileSetId}}
