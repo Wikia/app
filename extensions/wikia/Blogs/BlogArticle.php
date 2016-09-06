@@ -373,33 +373,6 @@ class BlogArticle extends Article {
 	}
 
 	/**
-	 * static method to get number of pages in category
-	 *
-	 * @param $catView
-	 * @param $rescnt
-	 * @param $dbcnt
-	 * @param $type
-	 *
-	 * @return String
-	 */
-	static public function getCountMessage( &$catView, $rescnt, $dbcnt, $type ) {
-		global $wgLang;
-		# See CategoryPage->getCountMessage() function
-		$totalrescnt = count( $catView->blogs ) + count( $catView->children ) + ( $catView->showGallery ? $catView->gallery->count() : 0 );
-		if ( $dbcnt == $rescnt || ( ( $totalrescnt == $catView->limit || $catView->from || $catView->until ) && $dbcnt > $rescnt ) ) {
-			# Case 1: seems sane.
-			$totalcnt = $dbcnt;
-		} elseif ( $totalrescnt < $catView->limit && !$catView->from && !$catView->until ) {
-			# Case 2: not sane, but salvageable.
-			$totalcnt = $rescnt;
-		} else {
-			# Case 3: hopeless.  Don't give a total count at all.
-			return wfMsgExt( "blog-subheader", 'parse', $wgLang->formatNum( $rescnt ) );
-		}
-		return wfMsgExt( "blog-subheader-all", 'parse', $wgLang->formatNum( $rescnt ), $wgLang->formatNum( $totalcnt ) );
-	}
-
-	/**
 	 * hook, add link to toolbar
 	 *
 	 * @param $skin
