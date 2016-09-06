@@ -10,7 +10,14 @@
 			endforeach;
 		endif;
 		?>
-		<?= $app->renderView( 'DesignSystemGlobalNavigationService', 'links', [ 'model' => $model['wikis'] ] ); ?>
+		<?= $app->renderView(
+			'DesignSystemGlobalNavigationService',
+			'links',
+			[
+				'model' => $model['wikis'],
+				'type' => 'wikis-menu'
+			]
+		); ?>
 		<form class="wds-global-navigation__search" action="<?= Sanitizer::encodeAttribute( $model['search']['module']['results']['url'] ); ?>">
 			<div class="wds-global-navigation__search-input-wrapper">
 				<label class="wds-global-navigation__search-label">
