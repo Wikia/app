@@ -4,7 +4,7 @@ class AnalyticsProviderUbisoft implements iAnalyticsProvider {
 
     const TEMPLATE_PATH = 'extensions/wikia/AnalyticsEngine/templates/ubisoft.mustache';
     const DISABLED_MESSAGE = '<!-- Ubisoft disabled -->';
-    const URL = 'https://ubistatic2-a.akamaihd.net/worldwide_analytics/tagcommander/wikia/tc_WikiaEMEA_1.js';
+    const URL = '//ubistatic2-a.akamaihd.net/worldwide_analytics/tagcommander/wikia/tc_WikiaEMEA_1.js';
 
     /**
      * @param array $params
