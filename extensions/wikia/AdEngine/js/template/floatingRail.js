@@ -1,5 +1,5 @@
 /*global define*/
-define('ext.wikia.adEngine.template.floating-rail', [
+define('ext.wikia.adEngine.template.floatingRail', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.uapContext',
 	'ext.wikia.adEngine.utils.math',
@@ -22,7 +22,7 @@ define('ext.wikia.adEngine.template.floating-rail', [
 		globalNavHeight = $('#globalNavigation').height(),
 		margin = 10,
 		medrecDefaultSize = 250,
-		logGroup = 'ext.wikia.adEngine.template.floating-rail',
+		logGroup = 'ext.wikia.adEngine.template.floatingRail',
 		railWidth = 300,
 
 		availableSpace,
@@ -97,7 +97,7 @@ define('ext.wikia.adEngine.template.floating-rail', [
 				floatingSpaceParam = getAvailableSpace() - (floatingSpace || 0);
 				break;
 			default:
-				floatingSpaceParam = 0;
+				floatingSpaceParam = -1;
 		}
 
 		return math.getBucket(floatingSpaceParam, 100);

@@ -11,7 +11,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	'ext.wikia.adEngine.uapContext',
 	'ext.wikia.aRecoveryEngine.recovery.helper',
 	'ext.wikia.adEngine.slotTweaker',
-	require.optional('ext.wikia.adEngine.template.floating-rail'),
+	require.optional('ext.wikia.adEngine.template.floatingRail'),
 	require.optional('ext.wikia.adEngine.provider.gpt.sraHelper'),
 	require.optional('ext.wikia.adEngine.slot.scrollHandler')
 ], function (
@@ -105,10 +105,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 
 			slotTargetingData.wsi = slotTargeting.getWikiaSlotId(slot.name, slotTargetingData.src);
 			slotTargetingData.uap = uapId ? uapId.toString() : 'none';
-
-			if (floatingSpace) {
-				slotTargetingData.floatspace = floatingSpace.toString();
-			}
+			slotTargetingData.floatspace = floatingSpace.toString();
 		}
 
 		function onAdLoadCallback(slotElementId, gptEvent, iframe) {
