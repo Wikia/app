@@ -110,7 +110,7 @@ define('ext.wikia.adEngine.template.bfaa', [
 
 		switch (skin) {
 			case 'oasis':
-				nav = doc.getElementById('globalNavigation');
+				nav = doc.getElementById('globalNavigation') || doc.querySelector('.wds-global-navigation');
 				page = doc.getElementsByClassName('WikiaSiteWrapper')[0];
 				wrapper = doc.getElementById('WikiaTopAds');
 				handler = desktopHandler;

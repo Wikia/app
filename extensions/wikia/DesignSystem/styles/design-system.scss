@@ -16,6 +16,10 @@ $global-navigation-height: 55px;
 	width: 100%;
 	z-index: $global-navigation-z-index;
 
+	&.bfaa-pinned {
+		position: relative;
+	}
+
 	a:hover {
 		text-decoration: none;
 	}
