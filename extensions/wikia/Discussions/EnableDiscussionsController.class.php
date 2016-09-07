@@ -32,14 +32,16 @@ class EnableDiscussionsController extends \WikiaController {
 	}
 
 	/**
-	 * Make sure to only allow authorized use of this extension.
+	 * Make sure to only allow authorized POST methods.
 	 * @throws \Email\Fatal
 	 */
 	public function assertCanAccessController() {
-		if ( $this->request->isInternal() ) {
-			return;
+		if ( !$this->request->isInternal() ) {
+			throw new Fatal( 'Access to this controller is restricted' );
 		}
-		throw new Fatal( 'Access to this controller is restricted' );
+		if ( !$this->wg->request->wasPosted() ) {
+			throw new MethodNotAllowedException( 'Only POST allowed' );
+		}
 	}
 
 	private function setVariable( $siteId, $name, $value ) {
