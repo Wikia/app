@@ -34,7 +34,11 @@ class DesignSystemGlobalNavigationService extends WikiaService {
 	}
 
 	public function linkAuthentication() {
-		$this->setVal( 'model', $this->getVal( 'model' ) );
+		$model = $this->getVal( 'model' );
+		$href = $model['href'] . ( new UserLoginHelper() )->getNewAuthUrl( '' );
+
+		$this->setVal( 'model', $model );
+		$this->setVal( 'href', $href );
 	}
 
 	private function getData() {

@@ -138,10 +138,6 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 		return $search;
 	}
 
-	private function getAuthUrl( $type ) {
-		return ( new UserLoginHelper() )->getNewAuthUrl( $type );
-	}
-
 	private function getAnonUserData() {
 		return [
 			'header' => [
@@ -163,7 +159,7 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 						'type' => 'translatable-text',
 						'key' => 'global-navigation-anon-sign-in',
 					],
-					'href' => $this->getAuthUrl( '/signin' ),
+					'href' => $this->getHref( 'user-signin' ),
 					'param-name' => 'redirect',
 				],
 				[
@@ -176,7 +172,7 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 						'type' => 'translatable-text',
 						'key' => 'global-navigation-anon-register-description',
 					],
-					'href' => $this->getAuthUrl( '/register' ),
+					'href' => $this->getHref( 'user-register' ),
 					"param-name" => "redirect"
 				],
 			],
