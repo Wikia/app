@@ -88,7 +88,7 @@ $config['adengine2_desktop_js'] = [
 		'//extensions/wikia/AdEngine/js/slot/slotTargeting.js',
 		'//extensions/wikia/AdEngine/js/template/bfaa.js',
 		'//extensions/wikia/AdEngine/js/template/bfab.js',
-		'//extensions/wikia/AdEngine/js/template/floating-rail.js',
+		'//extensions/wikia/AdEngine/js/template/floatingRail.js',
 		'//extensions/wikia/AdEngine/js/template/floor.js',
 		'//extensions/wikia/AdEngine/js/template/floorAdhesion.js',
 		'//extensions/wikia/AdEngine/js/template/interstitial.js',
@@ -1787,17 +1787,6 @@ $config['universal_analytics_js'] = [
 	'skin' => [ 'wikiamobile' ],
 	'assets' => [
 		'//extensions/wikia/AnalyticsEngine/js/universal_analytics.js',
-	],
-];
-
-$config['analytics_bluekai_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'wikiamobile' ],
-	'assets' => [
-		'//extensions/wikia/AdEngine/js/AdLogicPageParams.js',
-		'//extensions/wikia/AdEngine/js/AdLogicPageViewCounter.js',
-		'//extensions/wikia/AdEngine/js/context/adContext.js',
-		'//extensions/wikia/AdEngine/js/utils/AdLogicZoneParams.js',
 	],
 ];
 
