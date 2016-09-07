@@ -19,6 +19,7 @@
 		@include flexbox();
 		@include flex-direction(column);
 	}
+
 	.WikiaPage {
 		@include flex(1);
 	}
