@@ -36,7 +36,7 @@
 	li {
 		border-bottom: 1px solid $color-page-border;
 		margin: 10px 2px 7px 0;
-		padding-bottom: 0px;
+		padding-bottom: 0;
 		clear: both;
 		&:last-child {
 			border-bottom: none;
@@ -64,7 +64,7 @@
 	min-width: 270px;
 	
 	&.sponsored-hover {
-		padding: 0 0 0 0;
+		padding: 0;
 		border: {
 			color:$color-buttons;
 			style: solid;
@@ -75,7 +75,7 @@
 		}
 
 		img {
-			margin: 0 0 0 0;
+			margin: 0;
 		}
 
 		& > .earned {
@@ -86,7 +86,7 @@
 			color: $color-button-text;
 			background-color: $color-buttons;
 			line-height: 20px;
-			margin: 0 0 0 0;
+			margin: 0;
 		}
 	}
 
@@ -152,7 +152,7 @@
 			@include clearfix;
 			li {
 				display: inline-block;
-				border-bottom: none;
+				border-bottom: 0;
 				margin: 7px 0;
 				padding: 0;
 				img {
@@ -173,20 +173,15 @@
 			margin-top: 10px;
 			@include clearfix;
 		}
-
-		/* IE7 fix - RT #72881 */
-		& > div {
-			*display: inline;
-		}
 	}
 	
-	& .UserProfileAchievementsModule {
+	.UserProfileAchievementsModule {
 
 		.data {
 			@include clearfix;
 
 			.data-details, .data-details > p {
-				margin: 0px;
+				margin: 0;
 				font-size: 11px;
 				line-height: 13px;
 
@@ -232,7 +227,7 @@
 				}
 
 				.badge-icon-earnable {
-					margin-top: 0px
+					margin-top: 0;
 				}
 			}
 		}
