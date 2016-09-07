@@ -29,8 +29,7 @@ require(
 		$(function() {
 			var $win = $(win),
 				spacingBelowGlobalNav = 10,
-				$globalNavigation = $('#globalNavigation'),
-				globalNavigationHeight = $globalNavigation.outerHeight(true);
+				globalNavigationHeight = $('#globalNavigation').outerHeight(true);
 
 			// offset is negative - we want scroll BEFORE element's top offset
 			// also scroll a bit, so element won't be stuck to GlobalNavigation
