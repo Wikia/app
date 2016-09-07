@@ -817,6 +817,7 @@ $config['mobile_base_ads_js'] = [
 		'//extensions/wikia/AdEngine/js/SlotTweaker.js',
 		'//extensions/wikia/AdEngine/js/WikiaAdHelper.js',
 		'//extensions/wikia/AdEngine/js/config/mobile.js',
+		'//extensions/wikia/AdEngine/js/utils/env.js',
 		'//extensions/wikia/AdEngine/js/lookup/adapter/appnexus.js',
 		'//extensions/wikia/AdEngine/js/lookup/adapter/appnexusPlacements.js',
 		'//extensions/wikia/AdEngine/js/utils/sampler.js',
