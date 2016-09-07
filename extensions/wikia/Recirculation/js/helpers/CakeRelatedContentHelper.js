@@ -8,11 +8,7 @@ define('ext.wikia.recirculation.helpers.cakeRelatedContent', [
 
     function loadData() {
         var deferred = $.Deferred(),
-            currentArticle = window.location.pathname.replace('_', ' ');
-
-        if (currentArticle.startsWith('/wiki/')) {
-            currentArticle =  currentArticle.split('/wiki/')[1];
-        }
+            articleTitle = window.wgTitle;
 
         nirvana.sendRequest({
             controller: 'RecirculationApi',
@@ -20,7 +16,7 @@ define('ext.wikia.recirculation.helpers.cakeRelatedContent', [
             format: 'json',
             type: 'get',
             data: {
-                relatedTo: currentArticle,
+                relatedTo: articleTitle,
                 ignore: window.location.pathname,
                 limit: options.limit
             },
