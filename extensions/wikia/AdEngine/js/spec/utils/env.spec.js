@@ -53,5 +53,5 @@ describe('ext.wikia.adEngine.utils.hooks', function () {
 				expect(module.isDevEnvironment()).toBe(testCase.expected);
 			}
 		});
-	})
+	});
 });

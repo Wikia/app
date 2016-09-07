@@ -36,7 +36,7 @@ define('ext.wikia.adEngine.lookup.adapter.appnexusPlacements', [
 	};
 
 	function getPlacement(skin) {
-		var environment = env.isDevEnviroment() ? 'dev' : 'prod';
+		var environment = env.isDevEnvironment() ? 'dev' : 'prod';
 
 		return placementsMap[skin][zoneParams.getVertical()][environment];
 	}
