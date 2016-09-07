@@ -1,29 +1,44 @@
 define('ext.wikia.adEngine.lookup.adapter.appnexusPlacements', [
 	'ext.wikia.adEngine.utils.adLogicZoneParams',
-	'wikia.window'
-], function (zoneParams, win) {
+	'ext.wikia.adEngine.utils.env'
+], function (zoneParams, env) {
 	'use strict';
 
-	var placements = {
+	var placementsMap = {
 		mercury: {
-			entertainment: isDevEnviroment() ? '9412980' : '9412992',
-			gaming: isDevEnviroment() ? '9412981' : '9412993',
-			lifestyle: isDevEnviroment() ? '9412982' : '9412994'
+			entertainment: {
+				dev: '9412980',
+				prod: '9412992'
+			},
+			gaming: {
+				dev: '9412981',
+				prod: '9412993'
+			},
+			lifestyle: {
+				dev: '9412982',
+				prod: '9412994'
+			}
 		},
 		oasis: {
-			entertainment: isDevEnviroment() ? '9412971' : '9412983',
-			gaming: isDevEnviroment() ? '9412972' : '9412984',
-			lifestyle: isDevEnviroment() ? '9412973' : '9412985'
+			entertainment: {
+				dev: '9412971',
+				prod: '9412983'
+			},
+			gaming: {
+				dev: '9412972',
+				prod: '9412984'
+			},
+			lifestyle: {
+				dev: '9412973',
+				prod: '9412985'
+			}
 		}
 	};
 
 	function getPlacement(skin) {
-		return placements[skin][zoneParams.getVertical()];
-	}
+		var environment = env.isDevEnviroment() ? 'dev' : 'prod';
 
-	function isDevEnviroment() {
-		//thisis needed because all the bidding happens very early on the page - wgDevelEnvironment is not set yet
-		return /.+wikia-dev\.com$/.test(win.location.host);
+		return placementsMap[skin][zoneParams.getVertical()][environment];
 	}
 
 	return {
