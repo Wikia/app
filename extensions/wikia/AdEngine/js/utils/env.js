@@ -9,5 +9,5 @@ define('ext.wikia.adEngine.utils.env', [
 
 	return {
 		isDevEnvironment: isDevEnvironment
-	}
+	};
 });
