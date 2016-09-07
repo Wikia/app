@@ -2,9 +2,11 @@
 @import "layout";
 @import "skins/shared/mixins/box-shadow";
 @import "skins/shared/mixins/clearfix";
+@import 'skins/shared/mixins/flexbox';
 @import "skins/shared/mixins/gradient";
 
-html.full-screen-page {
+.full-screen-page {
+	&,
 	body,
 	.WikiaSiteWrapper,
 	.WikiaPageContentWrapper,
@@ -14,11 +16,11 @@ html.full-screen-page {
 	}
 
 	.WikiaSiteWrapper {
-		display: flex;
-		flex-direction: column;
+		@include flexbox();
+		@include flex-direction(column);
 	}
 	.WikiaPage {
-		flex: 1;
+		@include flex(1);
 	}
 }
 
