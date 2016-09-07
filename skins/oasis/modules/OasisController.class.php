@@ -29,7 +29,7 @@ class OasisController extends WikiaController {
 	 * @return bool - true if class name was added, false if class name was already present
 	 */
 	public static function addHtmlClass( $className ) {
-		if( !in_array( $className, self::$extraHtmlClasses ) ) {
+		if ( !in_array( $className, self::$extraHtmlClasses ) ) {
 			self::$extraHtmlClasses[] = $className;
 			return true;
 		}

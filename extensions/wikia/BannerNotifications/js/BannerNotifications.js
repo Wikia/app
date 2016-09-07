@@ -175,7 +175,7 @@
 			$pageContainer = $('#content');
 		} else {
 			$pageContainer = $('.WikiaPageContentWrapper');
-			headerHeight = $('#globalNavigation, .wds-global-navigation ').outerHeight(true);
+			headerHeight = $('#globalNavigation').outerHeight(true);
 			require(['wikia.onScroll'], function (onScroll) {
 				onScroll.bind(handleScrolling);
 			});

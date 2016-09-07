@@ -1,4 +1,4 @@
-<div class="wds-global-navigation-wrapper">
+<div class="wds-global-navigation-wrapper" id="globalNavigation">
 	<div class="wds-global-navigation <?= isset( $model['fandom_overview'] ) ? '' : ' wds-search-is-always-visible'; ?>">
 		<div class="wds-global-navigation__content-bar">
 			<?= $app->renderView( 'DesignSystemGlobalNavigationService', 'logo', [ 'model' => $model['logo'] ] ); ?>
