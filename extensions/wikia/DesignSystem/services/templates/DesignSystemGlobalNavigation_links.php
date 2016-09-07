@@ -18,7 +18,21 @@
 		<div class="wds-dropdown__content wds-global-navigation__dropdown-content <?= $dropdownRightAligned ? 'wds-is-right-aligned' : ''; ?>">
 			<ul class="wds-list">
 				<?php foreach ( $model['links'] as $link ): ?>
-					<li><?= $app->renderView( 'DesignSystemGlobalNavigationService', 'linkDropdown', [ 'model' => $link ] ); ?></li>
+					<li>
+						<?php if ( $link['type'] === 'link-authentication' ) {
+							echo $app->renderView(
+								'DesignSystemGlobalNavigationService',
+								'linkAuthentication',
+								[ 'model' => $link ]
+							);
+						} else {
+							echo $app->renderView(
+								'DesignSystemGlobalNavigationService',
+								'linkDropdown',
+								[ 'model' => $link ]
+							);
+						} ?>
+					</li>
 				<?php endforeach; ?>
 			</ul>
 		</div>

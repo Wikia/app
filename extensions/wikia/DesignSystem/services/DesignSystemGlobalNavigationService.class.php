@@ -35,9 +35,23 @@ class DesignSystemGlobalNavigationService extends WikiaService {
 
 	public function linkAuthentication() {
 		$model = $this->getVal( 'model' );
-		$href = ( new UserLoginHelper() )->getNewAuthUrl( $model['href'] );
+		$messageKey = $model['title']['key'];
+		$href = $model['href'];
+		$classNames = '';
+
+		if ( $messageKey === 'global-navigation-anon-sign-in' ) {
+			$classNames = 'wds-button wds-is-full-width';
+			$href = ( new UserLoginHelper() )->getNewAuthUrl( $href );
+		} else if ( $messageKey === 'global-navigation-anon-register' ) {
+			$classNames = 'wds-button wds-is-full-width wds-is-secondary';
+			$href = ( new UserLoginHelper() )->getNewAuthUrl( $href );
+		} else if ( $messageKey === 'global-navigation-user-sign-out' ) {
+			$classNames = 'wds-global-navigation__dropdown-link';
+			$href = $href . '?' . wfGetReturntoParam();
+		}
 
 		$this->setVal( 'model', $model );
+		$this->setVal( 'classNames', $classNames );
 		$this->setVal( 'href', $href );
 	}
 
