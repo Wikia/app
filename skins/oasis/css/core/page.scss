@@ -4,6 +4,24 @@
 @import "skins/shared/mixins/clearfix";
 @import "skins/shared/mixins/gradient";
 
+html.full-screen-page {
+	body,
+	.WikiaSiteWrapper,
+	.WikiaPageContentWrapper,
+	.WikiaArticle,
+	#mw-content-text {
+		height: 100%;
+	}
+
+	.WikiaSiteWrapper {
+		display: flex;
+		flex-direction: column;
+	}
+	.WikiaPage {
+		flex: 1;
+	}
+}
+
 .WikiaPage {
 	border: 1px solid $color-page-border;
 	margin: 0 auto;

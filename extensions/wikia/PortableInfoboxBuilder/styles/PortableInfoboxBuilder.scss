@@ -15,9 +15,13 @@ $negative-top-margin: 1px;
 
 .WikiaPage {
 	border: none;
+
 	.InfoboxBuilder {
 		display: block;
-		height: calc(100vh - #{$global-navigation-negative-top-margin} + #{$negative-top-margin});
+		height: 100%;
+		//This is needed to stretch iframe to full height
+		//Without it it takes only 150px
+		position: absolute;
 	}
 	.WikiaPageBackground {
 		height: 99%;
