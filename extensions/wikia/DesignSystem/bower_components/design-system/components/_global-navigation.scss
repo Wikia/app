@@ -338,10 +338,6 @@ $notification-counter-size: 18px;
 		&__search-input-wrapper {
 			border-bottom-width: 1px;
 		}
-
-		&__search-label-icon:hover {
-			color: $color-dark-blue-gray;
-		}
 	}
 
 	&.wds-search-is-active .wds-global-navigation {
@@ -366,10 +362,6 @@ $notification-counter-size: 18px;
 			&.wds-is-active {
 				border-bottom-color: $color-link;
 			}
-		}
-
-		&__search-label-icon:hover {
-			color: $color-dark-blue-gray;
 		}
 
 		&__search-input::placeholder {
