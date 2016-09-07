@@ -27,6 +27,10 @@ $global-navigation-height: 55px;
 		height: auto;
 	}
 
+	button:hover:disabled {
+		background-color: #00b7e0;
+	}
+
 	.notifications-container .bubbles {
 		background: none;
 		min-width: 0;

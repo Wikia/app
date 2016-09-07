@@ -3,7 +3,28 @@ $nav-height: 49px;
 $nav-background-color: $color-white;
 
 $logo-width: 230px;
+$search-input-padding: 3px 4px;
 $notification-counter-size: 18px;
+
+@mixin visible-search-input {
+	&__search-input {
+		margin-left: 0;
+		padding: $search-input-padding;
+		width: 100%;
+	}
+}
+
+@mixin search-label-icon-default-hover-color {
+	&__search-label-icon:hover {
+		color: $color-dark-blue-gray;
+	}
+}
+
+@mixin search-input-default-placeholder-color {
+	&__search-input::placeholder {
+		color: $color-dark-blue-gray;
+	}
+}
 
 .wds-global-navigation {
 	background-color: $nav-background-color;
@@ -188,26 +209,36 @@ $notification-counter-size: 18px;
 		z-index: 2;
 	}
 
+	&__search-label-icon {
+		cursor: pointer;
+
+		&:hover {
+			color: $color-link;
+		}
+	}
+
 	&__search-input {
 		border: 0;
 		color: $color-dark-gray;
-		display: none;
 		// Safari doesn't set default flex values if we use `flex: 1;`
 		// it requires us to put these values explicitly.
 		flex: 1 1 auto;
 		font-size: $typescale-size-minus-1;
+		// Safari doesn't trigger focus on input if it has `width: 0;`
+		margin-left: -1px;
 		// Firefox doesn't size input properly if our input
 		// has `width` set in `%` and is inside `flexbox`.
 		min-width: 0;
-		padding: 3px 4px;
-		width: 100%;
+		padding: 0;
+		// Safari doesn't trigger focus on input if it has `width 0;`
+		width: 1px;
 
 		&:focus {
 			outline: none;
 		}
 
 		&::placeholder {
-			color: $color-dark-blue-gray;
+			color: transparent;
 			opacity: 1;
 		}
 
@@ -286,6 +317,10 @@ $notification-counter-size: 18px;
 	}
 
 	&.wds-search-is-always-visible .wds-global-navigation {
+		@include visible-search-input;
+		@include search-label-icon-default-hover-color;
+		@include search-input-default-placeholder-color;
+
 		&__link {
 			// Safari doesn't set default flex values if we use `flex: 0;`
 			// it requires us to put these values explicitly.
@@ -300,17 +335,17 @@ $notification-counter-size: 18px;
 			flex: 1 1 0;
 		}
 
-		&__search-input {
-			display: block;
-		}
-
 		&__search-input-wrapper {
 			border-bottom-width: 1px;
 		}
 	}
 
 	&.wds-search-is-active .wds-global-navigation {
-		&__link {
+		@include visible-search-input;
+		@include search-label-icon-default-hover-color;
+
+		&__link,
+		&__wikis-menu {
 			display: none;
 		}
 
@@ -333,7 +368,6 @@ $notification-counter-size: 18px;
 			color: $color-light-gray;
 		}
 
-		&__search-input,
 		&__search-submit,
 		&__search-close {
 			display: block;
@@ -351,6 +385,10 @@ $notification-counter-size: 18px;
 	}
 
 	@media #{$breakpoint-l-up} {
+		@include visible-search-input;
+		@include search-label-icon-default-hover-color;
+		@include search-input-default-placeholder-color;
+
 		&__content-bar {
 			width: 1004px;
 		}
@@ -369,10 +407,6 @@ $notification-counter-size: 18px;
 
 		&__search-input-wrapper {
 			border-bottom: 1px solid $color-slate-gray;
-		}
-
-		&__search-input {
-			display: block;
 		}
 
 		&__account-menu-caption,
