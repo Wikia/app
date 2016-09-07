@@ -33,7 +33,7 @@ require(
 				globalNavigationHeight = $globalNavigation.outerHeight(true);
 
 			// offset is negative - we want scroll BEFORE element's top offset
-			// also scroll a bit, so element won't be sticked to GlobalNavigation
+			// also scroll a bit, so element won't be stuck to GlobalNavigation
 			offset = -(globalNavigationHeight + spacingBelowGlobalNav);
 
 			$win.on('hashchange', hashChangeHandler);
