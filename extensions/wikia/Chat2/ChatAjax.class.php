@@ -45,7 +45,7 @@ class ChatAjax {
 		}
 
 		$user = User::newFromId( $data['user_id'] );
-		if ( empty( $user ) || !$user->isLoggedIn() || $user->getName() != urldecode( $wgRequest->getVal( 'name', '' ) ) ) {
+		if ( empty( $user ) || !$user->isLoggedIn() || $user->getName() != $wgRequest->getVal( 'name', '' ) ) {
 			wfProfileOut( __METHOD__ );
 
 			return [ 'errorMsg' => self::ERROR_USER_NOT_FOUND ];
