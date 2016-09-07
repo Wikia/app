@@ -1,15 +1,12 @@
 $(function ($) {
 	'use strict';
 
-	var $signInButton = $('#global-navigation-anon-sign-in'),
-		$registerButton = $('#global-navigation-anon-register');
-
 	function onAuthSuccess() {
 		var redirect = this.url.replace(/.*?redirect=([^&]+).*/, '$1');
 		window.location.href = decodeURIComponent(redirect);
 	}
 
-	function openAuthModal(event) {
+	$('#global-navigation-anon-sign-in, #global-navigation-anon-register').click(function (event) {
 		var url = event.currentTarget.href;
 
 		//Prevent opening modal with shift / alt / ctrl / let only left mouse click
@@ -25,13 +22,5 @@ $(function ($) {
 			origin: 'global-nav',
 			onAuthSuccess: onAuthSuccess.bind({url: url})
 		});
-	}
-
-	$signInButton.click(function (event) {
-		return openAuthModal(event);
-	});
-
-	$registerButton.click(function (event) {
-		return openAuthModal(event);
 	});
 });
