@@ -9,7 +9,7 @@ $(function ($) {
 	$('#global-navigation-anon-sign-in, #global-navigation-anon-register').click(function (event) {
 		var url = event.currentTarget.href;
 
-		//Prevent opening modal with shift / alt / ctrl / let only left mouse click
+		// Prevent opening modal with shift / alt / ctrl / let only left mouse click
 		if (event.which !== 1 || event.shiftKey || event.altKey || event.metaKey || event.ctrlKey) {
 			return;
 		}
