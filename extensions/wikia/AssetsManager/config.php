@@ -2088,11 +2088,13 @@ $config['design_system_js'] = [
 	'skin' => [ 'oasis' ],
 	'assets' => [
 		'//resources/wikia/modules/scrollToLink.js',
+		'//resources/wikia/libraries/headroom/headroom.js',
 		'//extensions/wikia/DesignSystem/scripts/DesignSystemGlobalFooterTracking.js',
 		'//extensions/wikia/DesignSystem/scripts/DesignSystemDropdowns.js',
 		'//extensions/wikia/DesignSystem/scripts/DesignSystemGlobalNavigationScrollToLink.js',
 		'//extensions/wikia/DesignSystem/scripts/DesignSystemAuthenticationMenu.js',
 		'//extensions/wikia/DesignSystem/scripts/DesignSystemGlobalNavigationSearch.js',
+		'//extensions/wikia/DesignSystem/scripts/DesignSystemGlobalNavigationHeadroom.js',
 	],
 ];
 
