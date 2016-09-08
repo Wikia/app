@@ -184,7 +184,7 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 		slots = {};
 
 		adLogicPageViewCounter.increment();
-		window.googletag.pubads().updateCorrelator()
+		window.googletag.pubads().updateCorrelator();
 	};
 
 	return GoogleTag;
