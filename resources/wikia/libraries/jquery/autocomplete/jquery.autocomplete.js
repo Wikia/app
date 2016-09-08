@@ -55,6 +55,10 @@
       selectedClass: 'selected',
       appendTo: 'body',
       /* Wikia changes */
+	  fnContainerMarkup: function (mainContainerId, autocompleteElId, containerClass, width) {
+		return '<div id="' + mainContainerId + '" class="' + containerClass + '" style="position:absolute;"><div class="autocomplete-w1"><div class="autocomplete" id="' + autocompleteElId + '" style="display:none; width:' + width + ';"></div></div></div>';
+	  },
+      suggestionWrapperElement: 'div',
       queryParamName: 'query',
       fnPreprocessResults: null,
       skipBadQueries: false,
@@ -103,7 +107,11 @@
 
       this.mainContainerId = 'AutocompleteContainter_' + uid;
 
-      $('<div id="' + this.mainContainerId + '"class="autocomplete-container" style="position:absolute;"><div class="autocomplete-w1"><div class="autocomplete" id="' + autocompleteElId + '" style="display:none; width:' + this.options.width + ';"></div></div></div>').appendTo(this.options.appendTo);
+      // Wikia change: make markup configurable
+      var containerMarkup = this.options.fnContainerMarkup(
+      	this.mainContainerId, autocompleteElId, 'autocomplete-container', this.options.width
+      );
+      $(containerMarkup).appendTo(this.options.appendTo);
 
       this.container = $(this.options.appendTo).find('#' + autocompleteElId);
       this.fixPosition();
@@ -293,19 +301,28 @@
         return;
       }
 
-      var me, len, div, f, suggestion;
+      var me, len, div, f, suggestion, v, suggestionWrapperElement;
       me = this;
       len = this.options.maxSuggestions && this.options.maxSuggestions < this.suggestions.length ? this.options.maxSuggestions : this.suggestions.length;
       f = this.options.fnFormatResult;
       v = this.getQuery(this.currentValue);
+      // wikia change - start
+      suggestionWrapperElement = this.options.suggestionWrapperElement;
+      // wikia change - end
       this.container.hide().empty();
 
       for (var i = 0; i < len; i++) {
-          // wikia change - start
-          suggestion = this.suggestions[i];
-        div = $((me.selectedIndex === i ? '<div class="' + this.options.selectedClass + '"' : '<div')
-            + ' title="' + $.htmlentities(suggestion) + '">' + f($.htmlentities(suggestion), this.data[i], $.htmlentities(v))
-            + '</div>');
+        // wikia change - start
+        suggestion = this.suggestions[i];
+        div = $(
+          (
+            me.selectedIndex === i ?
+            '<' + suggestionWrapperElement + ' class="' + this.options.selectedClass + '"' :
+            '<' + suggestionWrapperElement
+          )
+          + ' title="' + $.htmlentities(suggestion) + '">' + f($.htmlentities(suggestion), this.data[i], $.htmlentities(v))
+          + '</' + suggestionWrapperElement + '>'
+        );
         // wikia change - end
         div.mouseover((function(xi) { return function() { me.activate(xi); }; })(i));
         // wikia change - start
