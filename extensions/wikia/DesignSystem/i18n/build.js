@@ -9,6 +9,9 @@ var fs = require('fs'),
 			sitename: '$1',
 			vertical: '$2',
 			license: '$3'
+		},
+		'global-navigation-search-placeholder-in-wiki': {
+			sitename: '$1'
 		}
 	};
 

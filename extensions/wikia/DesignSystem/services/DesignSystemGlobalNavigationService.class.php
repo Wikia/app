@@ -12,7 +12,7 @@ class DesignSystemGlobalNavigationService extends WikiaService {
 	public function links() {
 		$this->response->setValues( [
 			'model' => $this->getVal( 'model' ),
-			'type' => $this->getVal( 'type', 'link' ),
+			'type' => $this->getVal( 'type' ),
 			'dropdownRightAligned' => $this->request->getBool( 'dropdownRightAligned' ),
 		] );
 	}

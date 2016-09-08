@@ -10,17 +10,27 @@
 			endforeach;
 		endif;
 		?>
-		<?= $app->renderView( 'DesignSystemGlobalNavigationService', 'links', [ 'model' => $model['wikis'] ] ); ?>
+		<?= $app->renderView(
+			'DesignSystemGlobalNavigationService',
+			'links',
+			[
+				'model' => $model['wikis'],
+				'type' => 'wikis-menu'
+			]
+		); ?>
 		<form class="wds-global-navigation__search" action="<?= Sanitizer::encodeAttribute( $model['search']['module']['results']['url'] ); ?>">
 			<div class="wds-global-navigation__search-input-wrapper">
 				<label class="wds-global-navigation__search-label">
 					<?= DesignSystemHelper::getSvg(
 						'wds-icons-magnifying-glass',
-						'wds-icon wds-icon-small'
+						'wds-icon wds-icon-small wds-global-navigation__search-label-icon'
 					) ?>
-					<input class="wds-global-navigation__search-input" name="search" placeholder="<?= DesignSystemHelper::renderText( $model['search']['module']['placeholder-inactive'] ); ?>"/>
+					<input class="wds-global-navigation__search-input"
+						name="<?= Sanitizer::encodeAttribute( $model['search']['module']['results']['param-name'] ); ?>"
+						data-active-placeholder="<?= DesignSystemHelper::renderText( $model['search']['module']['placeholder-active'] ); ?>"
+						placeholder="<?= DesignSystemHelper::renderText( $model['search']['module']['placeholder-inactive'] ); ?>"/>
 				</label>
-				<button class="wds-button wds-is-text wds-global-navigation__search-close">
+				<button class="wds-button wds-is-text wds-global-navigation__search-close" type="reset">
 					<?= DesignSystemHelper::getSvg(
 						'wds-icons-cross',
 						'wds-icon wds-icon-small wds-global-navigation__search-close-icon',
@@ -31,7 +41,7 @@
 			<button class="wds-button wds-global-navigation__search-submit">
 				<?= DesignSystemHelper::getSvg(
 					'wds-icons-arrow',
-					'wds-icon wds-icon-small wds-global-navigation__search-icon'
+					'wds-icon wds-icon-small wds-global-navigation__search-submit-icon'
 				) ?>
 			</button>
 		</form>

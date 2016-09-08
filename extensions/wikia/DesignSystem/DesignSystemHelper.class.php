@@ -13,7 +13,10 @@ class DesignSystemHelper {
 			'sitename',
 			'vertical',
 			'license'
-		]
+		],
+		'global-navigation-search-placeholder-in-wiki' => [
+			'sitename',
+		],
 	];
 
 	const MAX_RECURSION_DEPTH = 10;
