@@ -44,7 +44,7 @@ class DiscussionsThreadModel {
 
 	private function categoryLookup( $category, $rawData ) {
 		$categories = $rawData['_embedded']['doc:forum'];
-		if ( is_array( $categories ) && count( $categories ) > 0 ) {
+		if ( is_array( $categories ) ) {
 			foreach ( $categories as $value ) {
 				if ( $value['name'] === $category ) {
 					return $value['id'];
