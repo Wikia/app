@@ -16,7 +16,7 @@ require(
 					deferRequestBy: 200,
 					minLength: 3,
 					maxHeight: 1000,
-					selectedClass: 'selected',
+					selectedClass: 'wds-is-active',
 					// always send the request even if previous one returned no suggestions
 					skipBadQueries: true,
 					setPosition: false,

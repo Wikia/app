@@ -28,8 +28,18 @@
 		top: auto;
 	}
 
-	&__search-suggestions strong {
-		font-weight: bold;
+	&__search-suggestions {
+		strong {
+			font-weight: bold;
+		}
+
+		a:hover {
+			color: #39424d;
+		}
+
+		.wds-is-active a {
+			color: #00b7e0;
+		}
 	}
 }
 
