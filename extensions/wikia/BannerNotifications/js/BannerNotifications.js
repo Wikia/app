@@ -223,6 +223,11 @@
 		if (containerTop < headerHeight) {
 			if (!notificationWrapper.hasClass('float')) {
 				notificationWrapper.addClass('float').css('top', headerHeight);
+				setTimeout(function() {
+					if ($('#globalNavigation').hasClass('headroom--unpinned')) {
+						notificationWrapper.css('top', 0);
+					}
+				}, 1);
 			}
 		} else {
 			notificationWrapper.removeClass('float').css('top', '');
