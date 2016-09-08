@@ -63,6 +63,7 @@
       fnPreprocessResults: null,
       skipBadQueries: false,
       positionRight: null,
+      setPosition: true,
       matchFromStart: true
     };
     if (options) {
@@ -137,11 +138,14 @@
     },
 
     fixPosition: function() {
-      var offset = this.el.offset();
-      var parentOffset = $(this.options.appendTo).offset();
-      var el = $(this.options.appendTo).find('#' + this.mainContainerId).css({ top: (offset.top + this.el.innerHeight() - parentOffset.top) + 'px', left: (offset.left - parentOffset.left) + 'px' });
-      if ( this.options.positionRight !== null ) {
-        el.css({ right: this.options.positionRight });
+      // Wikia change - setPosition option
+      if (this.options.setPosition) {
+        var offset = this.el.offset();
+        var parentOffset = $(this.options.appendTo).offset();
+        var el = $(this.options.appendTo).find('#' + this.mainContainerId).css({ top: (offset.top + this.el.innerHeight() - parentOffset.top) + 'px', left: (offset.left - parentOffset.left) + 'px' });
+        if ( this.options.positionRight !== null ) {
+          el.css({ right: this.options.positionRight });
+        }
       }
     },
 
