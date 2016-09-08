@@ -2088,7 +2088,7 @@ $config['design_system_js'] = [
 	'skin' => [ 'oasis' ],
 	'assets' => [
 		'//resources/wikia/modules/scrollToLink.js',
-		'//extensions/wikia/DesignSystem/scripts/DesignSystemGlobalFooterTracking.js',
+		'//extensions/wikia/DesignSystem/scripts/DesignSystemTracking.js',
 		'//extensions/wikia/DesignSystem/scripts/DesignSystemDropdowns.js',
 		'//extensions/wikia/DesignSystem/scripts/DesignSystemGlobalNavigationScrollToLink.js',
 		'//extensions/wikia/DesignSystem/scripts/DesignSystemAuthenticationMenu.js',
