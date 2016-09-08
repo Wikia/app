@@ -39,15 +39,18 @@ class DesignSystemGlobalNavigationService extends WikiaService {
 		$href = $model['href'];
 		$classNames = '';
 
-		if ( $messageKey === 'global-navigation-anon-sign-in' ) {
-			$classNames = 'wds-button wds-is-full-width';
-			$href = ( new UserLoginHelper() )->getNewAuthUrl( $href );
-		} else if ( $messageKey === 'global-navigation-anon-register' ) {
-			$classNames = 'wds-button wds-is-full-width wds-is-secondary';
-			$href = ( new UserLoginHelper() )->getNewAuthUrl( $href );
-		} else if ( $messageKey === 'global-navigation-user-sign-out' ) {
-			$classNames = 'wds-global-navigation__dropdown-link';
-			$href = $href . '?' . wfGetReturntoParam();
+		switch ( $messageKey ) {
+			case 'global-navigation-anon-sign-in':
+				$classNames = 'wds-button wds-is-full-width';
+				$href = ( new UserLoginHelper() )->getNewAuthUrl( $href );
+				break;
+			case 'global-navigation-anon-register':
+				$classNames = 'wds-button wds-is-full-width wds-is-secondary';
+				$href = ( new UserLoginHelper() )->getNewAuthUrl( $href );
+				break;
+			case 'global-navigation-user-sign-out':
+				$classNames = 'wds-global-navigation__dropdown-link';
+				$href = wfAppendQuery( $href, wfGetReturntoParam() );
 		}
 
 		$this->setVal( 'model', $model );
