@@ -1,9 +1,9 @@
 <? if ( $empty ): ?>
 	<?= wfMessage( 'category-empty' )->parse(); ?>
 <? else: ?>
+	<div lang="<?= htmlspecialchars( $lang->getCode() ); ?> dir="<?= htmlspecialchars( $lang->getDir() ); ?>">
 	<?= $categoryGallery; ?>
 
-	<div lang="<?= htmlspecialchars( $lang->getCode() ); ?> dir="<?= htmlspecialchars( $lang->getDir() ); ?>">
 	<? if ( !empty( $content['subcat'] ) ): ?>
 		<div id="mw-subcategories">
 			<h2><?= wfMessage( 'subcategories' )->parse(); ?></h2>

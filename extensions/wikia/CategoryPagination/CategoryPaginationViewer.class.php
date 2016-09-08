@@ -107,9 +107,8 @@ class CategoryPaginationViewer extends CategoryViewer {
 		// Set up pagination
 		$url = $cat->getTitle()->getFullURL();
 		$this->page = max( 1, $this->getRequest()->getInt( 'page', 1 ) );
-		foreach ( array_keys( $this->counts ) as $type ) {
-			// TODO: add the #mw-pages, #mw-category-media and #mw-subcategories fragments
-			$this->paginators[$type] = new Paginator( $this->counts[$type], $this->limit, $url );
+		foreach ( $this->counts as $type => $count ) {
+			$this->paginators[$type] = new Paginator( $count, $this->limit, $url );
 			$this->paginators[$type]->setActivePage( $this->page );
 		}
 
@@ -184,19 +183,17 @@ class CategoryPaginationViewer extends CategoryViewer {
 				'ORDER BY' => 'cl_sortkey',
 				'LIMIT' => $this->limit,
 				'OFFSET' => $this->limit * ( $this->paginators[$type]->getActivePage() - 1 ),
-				'USE INDEX' => array( 'categorylinks' => 'cl_sortkey' ),
+				'USE INDEX' => [ 'categorylinks' => 'cl_sortkey' ],
 			],
 			[ 'categorylinks' => [ 'INNER JOIN', 'cl_from = page_id' ] ]
 		);
 
 		$numberShown = 0;
-		if ( $result->numRows() ) {
-			while ( $row = $result->fetchObject() ) {
-				$title = Title::makeTitle( $row->page_namespace, $row->page_title );
-				$humanSortkey = $title->getCategorySortkey( $row->cl_sortkey_prefix );
-				if ( $processRow( $title, $humanSortkey, $row ) ) {
-					$numberShown += 1;
-				}
+		while ( $row = $result->fetchObject() ) {
+			$title = Title::makeTitle( $row->page_namespace, $row->page_title );
+			$humanSortkey = $title->getCategorySortkey( $row->cl_sortkey_prefix );
+			if ( $processRow( $title, $humanSortkey, $row ) ) {
+				$numberShown += 1;
 			}
 		}
 		$this->numberShown[$type] = $numberShown;
@@ -223,7 +220,6 @@ class CategoryPaginationViewer extends CategoryViewer {
 			}
 		}
 		if ( $maxPaginator ) {
-			// TODO: make sure to link without the #mw-pages, #mw-category-media and #mw-subcategories fragments
 			return $maxPaginator->getHeadItem();
 		}
 		return '';
