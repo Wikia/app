@@ -30,7 +30,7 @@
 						data-active-placeholder="<?= DesignSystemHelper::renderText( $model['search']['module']['placeholder-active'] ); ?>"
 						placeholder="<?= DesignSystemHelper::renderText( $model['search']['module']['placeholder-inactive'] ); ?>"/>
 				</label>
-				<button class="wds-button wds-is-text wds-global-navigation__search-close" type="reset">
+				<button class="wds-button wds-is-text wds-global-navigation__search-close" type="reset" data-tracking-label="global-navigation-search-close">
 					<?= DesignSystemHelper::getSvg(
 						'wds-icons-cross',
 						'wds-icon wds-icon-small wds-global-navigation__search-close-icon',
@@ -38,7 +38,7 @@
 					) ?>
 				</button>
 			</div>
-			<button class="wds-button wds-global-navigation__search-submit">
+			<button class="wds-button wds-global-navigation__search-submit" data-tracking-label="global-navigation-search-submit">
 				<?= DesignSystemHelper::getSvg(
 					'wds-icons-arrow',
 					'wds-icon wds-icon-small wds-global-navigation__search-submit-icon'
@@ -60,7 +60,7 @@
 			<?= $app->renderView( 'DesignSystemGlobalNavigationService', 'accountNavigation', [ 'model' => $model['anon'] ] ); ?>
 		<?php endif; ?>
 		<div class="wds-global-navigation__start-a-wiki <?= isset( $model['user'] ) ? ' wds-user-is-logged-in' : ''; ?>">
-			<a href="<?= Sanitizer::encodeAttribute( $model['create_wiki']['header']['href'] ); ?>" class="wds-button wds-is-squished wds-is-secondary">
+			<a href="<?= Sanitizer::encodeAttribute( $model['create_wiki']['header']['href'] ); ?>" class="wds-button wds-is-squished wds-is-secondary" data-tracking-label="<?= Sanitizer::encodeAttribute( $model['create_wiki']['header']['title']['key'] ) ?>">
 				<span class="wds-global-navigation__start-a-wiki-caption"><?= DesignSystemHelper::renderText( $model['create_wiki']['header']['title'] ) ?></span>
 				<?= DesignSystemHelper::getSvg(
 					'wds-icons-plus',
