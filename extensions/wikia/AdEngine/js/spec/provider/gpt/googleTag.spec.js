@@ -20,10 +20,12 @@ describe('ext.wikia.adEngine.provider.gpt.googleTag', function () {
 				},
 				getSlotPath: noop,
 				setPageLevelParams: noop,
-				configureSlot: noop
+				configureSlot: noop,
+				getSlotName: noop
 			},
 			elementSizes: null,
 			log: noop,
+			adLogicPageViewCounter: noop,
 			pubads: {
 				collapseEmptyDivs: noop,
 				enableSingleRequest: noop,
@@ -66,6 +68,7 @@ describe('ext.wikia.adEngine.provider.gpt.googleTag', function () {
 	beforeEach(function () {
 		var GoogleTag = modules['ext.wikia.adEngine.provider.gpt.googleTag'](
 			mocks.recoveryHelper,
+			mocks.adLogicPageViewCounter,
 			document,
 			mocks.log,
 			mocks.window
@@ -125,16 +128,6 @@ describe('ext.wikia.adEngine.provider.gpt.googleTag', function () {
 		googleApi.flush();
 
 		expect(mocks.pubads.refresh).toHaveBeenCalled();
-	});
-
-	it('Already added slot should be displayed once (called display method on googletag)', function () {
-		spyOn(mocks.window.googletag, 'display');
-		googleApi.init();
-
-		googleApi.addSlot(mocks.element);
-		googleApi.addSlot(mocks.element);
-
-		expect(mocks.window.googletag.display.calls.count()).toEqual(1);
 	});
 
 	it('Define out of page slot when element sizes are not defined', function () {
