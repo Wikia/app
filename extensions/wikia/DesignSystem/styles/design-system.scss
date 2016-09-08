@@ -1,3 +1,5 @@
+@import '../bower_components/design-system/base/colors';
+
 // Platform-specific styles for DesignSystem integration
 
 .wds-global-navigation {
@@ -16,7 +18,7 @@
 	}
 
 	button:hover:disabled {
-		background-color: #00b7e0;
+		background-color: $color-link;
 	}
 
 	.notifications-container .bubbles {
@@ -34,11 +36,11 @@
 		}
 
 		a:hover {
-			color: #39424d;
+			color: $color-dark-blue-gray;
 		}
 
 		.wds-is-active a {
-			color: #00b7e0;
+			color: $color-link;
 		}
 	}
 }
