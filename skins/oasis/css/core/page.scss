@@ -8,19 +8,17 @@
 .full-screen-page {
 	&,
 	body,
-	.WikiaSiteWrapper,
-	.WikiaPageContentWrapper,
-	.WikiaArticle,
-	#mw-content-text {
+	.WikiaSiteWrapper {
 		height: 100%;
 	}
 
+	#mw-content-text,
+	.WikiaArticle,
+	.WikiaPage,
+	.WikiaPageContentWrapper,
 	.WikiaSiteWrapper {
 		@include flexbox();
 		@include flex-direction(column);
-	}
-
-	.WikiaPage {
 		@include flex(1);
 	}
 }
