@@ -3,7 +3,8 @@ require(
 	function ($, window) {
 		'use strict';
 
-		var $searchInput = $('#searchInput');
+		var $searchInput = $('#searchInput'),
+			$searchInputWrapper = $('#searchInputWrapper');
 
 		function initSuggestions() {
 			mw.loader.using('jquery.autocomplete').then(function () {
@@ -40,8 +41,18 @@ require(
 			});
 		}
 
-		// load autosuggest code on first focus
-		$searchInput.one('focus', initSuggestions);
+		$searchInput.one('focus', function () {
+			initSuggestions();
+
+			$searchInput.bind({
+				'suggestShow': function () {
+					$searchInputWrapper.addClass('wds-is-active');
+				},
+				'suggestHide': function () {
+					$searchInputWrapper.removeClass('wds-is-active');
+				}
+			});
+		});
 
 		if ($searchInput.is(':focus')) {
 			initSuggestions();

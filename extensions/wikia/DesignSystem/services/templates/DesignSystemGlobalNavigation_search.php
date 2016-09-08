@@ -1,5 +1,5 @@
 <form class="wds-global-navigation__search" action="<?= Sanitizer::encodeAttribute( $model['module']['results']['url'] ); ?>">
-	<div class="wds-dropdown wds-is-active wds-global-navigation__search-input-wrapper">
+	<div id="searchInputWrapper" class="wds-dropdown wds-global-navigation__search-input-wrapper">
 		<label class="wds-global-navigation__search-label">
 			<?= DesignSystemHelper::getSvg(
 				'wds-icons-magnifying-glass',
