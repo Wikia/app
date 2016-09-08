@@ -61,6 +61,7 @@ class TemplateClassificationService {
 					'page_id' => intval( $pageId ),
 				] );
 			}
+			// we cache it even on failed request to keep it consistent across single article
 			$this->cache[$wikiId][$pageId] = $templateType;
 		}
 
