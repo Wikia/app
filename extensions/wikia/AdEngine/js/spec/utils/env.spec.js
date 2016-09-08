@@ -1,4 +1,4 @@
-/*global describe, it, expect, modules, beforeEach, spyOn*/
+/*global describe, it, expect, modules*/
 describe('ext.wikia.adEngine.utils.hooks', function () {
 
 	function getModule(windowMock, host) {

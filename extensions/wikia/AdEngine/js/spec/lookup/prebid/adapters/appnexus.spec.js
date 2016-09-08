@@ -17,9 +17,9 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.appnexus', function () {
 
 	function getAppNexus() {
 		return modules['ext.wikia.adEngine.lookup.prebid.adapters.appnexus'](
+			mocks.appNexusPlacements,
 			mocks.geo,
-			mocks.instantGlobals,
-			mocks.appNexusPlacements
+			mocks.instantGlobals
 		);
 	}
 

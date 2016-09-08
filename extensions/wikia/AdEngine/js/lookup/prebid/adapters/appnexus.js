@@ -1,9 +1,9 @@
 /*global define*/
 define('ext.wikia.adEngine.lookup.prebid.adapters.appnexus',[
+	'ext.wikia.adEngine.lookup.prebid.adapters.appnexusPlacements',
 	'wikia.geo',
-	'wikia.instantGlobals',
-	'ext.wikia.adEngine.lookup.prebid.adapters.appnexusPlacements'
-], function (geo, instantGlobals, appnexusPlacements) {
+	'wikia.instantGlobals'
+], function (appnexusPlacements, geo, instantGlobals) {
 	'use strict';
 
 	var bidderName = 'appnexus',

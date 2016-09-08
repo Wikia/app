@@ -268,12 +268,12 @@ $config['adengine2_prebid_js'] = [
 	'skin' => [ 'oasis' ],
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
-		'//extensions/wikia/AdEngine/js/utils/env.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/prebid.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/prebidHelper.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/appnexus.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/appnexusPlacements.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/indexExchange.js',
+		'//extensions/wikia/AdEngine/js/utils/env.js'
 	],
 ];
 
