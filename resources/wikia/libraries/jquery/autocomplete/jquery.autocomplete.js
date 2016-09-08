@@ -345,7 +345,8 @@
     processResponse: function(text) {
       var response;
       try {
-        response = eval('(' + text + ')');
+      	// Wikia change - use parseJSON instead of eval, backported from new version
+        response = (typeof text === 'string') ? $.parseJSON(text) : text;
       } catch (err) { return; }
 
       /* Wikia change - allow function to preprocess result data into a format this plugin understands*/
