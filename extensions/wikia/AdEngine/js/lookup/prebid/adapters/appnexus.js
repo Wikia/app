@@ -1,8 +1,8 @@
 /*global define*/
-define('ext.wikia.adEngine.lookup.adapter.appnexus',[
+define('ext.wikia.adEngine.lookup.prebid.adapters.appnexus',[
 	'wikia.geo',
 	'wikia.instantGlobals',
-	'ext.wikia.adEngine.lookup.adapter.appnexusPlacements'
+	'ext.wikia.adEngine.lookup.prebid.adapters.appnexusPlacements'
 ], function (geo, instantGlobals, appnexusPlacements) {
 	'use strict';
 
@@ -50,19 +50,13 @@ define('ext.wikia.adEngine.lookup.adapter.appnexus',[
 		};
 	}
 
-	function getAdUnits(skin) {
-		var adUnits = [],
-			skinSlots = slots[skin];
-
-		Object.keys(skinSlots).forEach(function(slotName) {
-			adUnits.push(prepareAdUnit(slotName, skinSlots[slotName], skin));
-		});
-
-		return adUnits;
+	function getSlots(skin) {
+		return slots[skin];
 	}
 
 	return {
-		getAdUnits: getAdUnits,
-		isEnabled: isEnabled
+		isEnabled: isEnabled,
+		getSlots: getSlots,
+		prepareAdUnit: prepareAdUnit
 	};
 });

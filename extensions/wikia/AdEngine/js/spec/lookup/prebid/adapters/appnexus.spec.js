@@ -1,4 +1,4 @@
-describe('ext.wikia.adEngine.lookup.adapter.appnexus', function () {
+describe('ext.wikia.adEngine.lookup.prebid.adapters.appnexus', function () {
 	'use strict';
 
 	var mocks = {
@@ -29,33 +29,25 @@ describe('ext.wikia.adEngine.lookup.adapter.appnexus', function () {
 		expect(mocks.geo.isProperGeo).toHaveBeenCalledWith(['PL']);
 	});
 
-	it('getAdUnits returns adUnits correctly', function () {
+	it('prepareAdUnit returns data in correct shape', function () {
 		var appNexus = getAppNexus();
-		expect(appNexus.getAdUnits('oasis')).toEqual([
-			{
-				code: 'TOP_LEADERBOARD',
-				sizes: [[728, 90], [970, 250]],
-				bids: [
-					{
-						bidder: 'appnexus',
-						params: {
-							placementId: '123'
-						}
+		expect(appNexus.prepareAdUnit('TOP_LEADERBOARD', {
+			sizes: [
+				[728, 90],
+				[970, 250]
+			],
+			placementId: '5823300'
+		})).toEqual({
+			code: 'TOP_LEADERBOARD',
+			sizes: [[728, 90], [970, 250]],
+			bids: [
+				{
+					bidder: 'appnexus',
+					params: {
+						placementId: '123'
 					}
-				]
-			}, {
-				code: 'TOP_RIGHT_BOXAD',
-				sizes: [[300, 250], [300, 600]],
-				bids: [
-					{
-						bidder: 'appnexus',
-						params: {
-							placementId: '123'
-						}
-					}
-				]
-			}
-		]);
+				}
+			]
+		});
 	});
-
 });

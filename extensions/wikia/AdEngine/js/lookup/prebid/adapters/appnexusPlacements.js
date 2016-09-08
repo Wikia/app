@@ -1,4 +1,4 @@
-define('ext.wikia.adEngine.lookup.adapter.appnexusPlacements', [
+define('ext.wikia.adEngine.lookup.prebid.adapters.appnexusPlacements', [
 	'ext.wikia.adEngine.utils.adLogicZoneParams',
 	'ext.wikia.adEngine.utils.env'
 ], function (zoneParams, env) {

@@ -1,11 +1,20 @@
 <?php
 
 class DesignSystemApiController extends WikiaApiController {
+	const PARAM_PRODUCT = 'product';
+	const PARAM_ID = 'id';
+	const PARAM_LANG = 'lang';
+	const PRODUCT_WIKIS = 'wikis';
+
 	public function getFooter() {
 		$params = $this->getRequestParameters();
+		$footerModel = new DesignSystemGlobalFooterModel(
+			$params[static::PARAM_PRODUCT],
+			$params[static::PARAM_ID],
+			$params[static::PARAM_LANG]
+		);
 
-		$this->setResponseData(
-			( new DesignSystemGlobalFooterModel( $params[ 'wikiId' ], $params[ 'lang' ] ) )->getData() );
+		$this->setResponseData( $footerModel->getData() );
 		$this->response->setCacheValidity( WikiaResponse::CACHE_VERY_SHORT );
 	}
 
@@ -24,26 +33,39 @@ class DesignSystemApiController extends WikiaApiController {
 	 */
 	public function getAllElements() {
 		$params = $this->getRequestParameters();
+		$footerModel = new DesignSystemGlobalFooterModel(
+			$params[static::PARAM_PRODUCT],
+			$params[static::PARAM_ID],
+			$params[static::PARAM_LANG]
+		);
+		$navigationModel = new DesignSystemGlobalNavigationModel(
+			$params[static::PARAM_PRODUCT],
+			$params[static::PARAM_ID],
+			$params[static::PARAM_LANG]
+		);
+
 
 		$this->setResponseData( [
-			'global_footer' => ( new DesignSystemGlobalFooterModel( $params[ 'wikiId' ], $params[ 'lang' ] ) )->getData(),
-			'global_navigation' => ( new DesignSystemGlobalNavigationModel( $params[ 'wikiId' ], $params[ 'lang' ] ) )->getData()
+			'global-footer' => $footerModel->getData(),
+			'global-navigation' => $navigationModel->getData(),
 		] );
 
 		$this->addCachingHeaders();
 	}
 
 	private function getRequestParameters() {
-		$wikiId = $this->getRequiredParam( 'wikiId' );
-		$lang = $this->getRequiredParam( 'lang' );
+		$id = $this->getRequiredParam( static::PARAM_ID );
+		$product = $this->getRequiredParam( static::PARAM_PRODUCT );
+		$lang = $this->getRequiredParam( static::PARAM_LANG );
 
-		if ( WikiFactory::IDtoDB( $wikiId ) === false ) {
-			throw new NotFoundApiException( "Unable to find wiki with ID {$wikiId}" );
+		if ( $product === static::PRODUCT_WIKIS && WikiFactory::IDtoDB( $id ) === false ) {
+			throw new NotFoundApiException( "Unable to find wiki with ID {$id}" );
 		}
 
 		return [
-			'wikiId' => $wikiId,
-			'lang' => $lang
+			static::PARAM_PRODUCT => $product,
+			static::PARAM_ID => $id,
+			static::PARAM_LANG => $lang
 		];
 	}
 

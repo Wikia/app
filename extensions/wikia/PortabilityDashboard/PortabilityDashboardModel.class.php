@@ -194,8 +194,8 @@ class PortabilityDashboardModel {
 	 * @return DatabaseMysqli|null
 	 */
 	private function connect( $type = DB_SLAVE ) {
-		global $wgExternalDatawareDB;
-		return wfGetDB( $type, array(), $wgExternalDatawareDB );
+		global $wgPortabilityDB;
+		return wfGetDB( $type, array(), $wgPortabilityDB );
 	}
 
 	/**

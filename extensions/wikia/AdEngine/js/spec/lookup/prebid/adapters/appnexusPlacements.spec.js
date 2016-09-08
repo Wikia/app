@@ -1,4 +1,4 @@
-describe('ext.wikia.adEngine.lookup.adapter.appnexusPlacements', function () {
+describe('ext.wikia.adEngine.lookup.prebid.adapters.appnexusPlacements', function () {
 	'use strict';
 
 	var mocks = {
@@ -57,7 +57,7 @@ describe('ext.wikia.adEngine.lookup.adapter.appnexusPlacements', function () {
 			return isDev;
 		};
 
-		return modules['ext.wikia.adEngine.lookup.adapter.appnexusPlacements'](
+		return modules['ext.wikia.adEngine.lookup.prebid.adapters.appnexusPlacements'](
 			mocks.adLogicZoneParams,
 			mocks.env
 		);
