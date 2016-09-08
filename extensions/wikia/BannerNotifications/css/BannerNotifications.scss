@@ -106,6 +106,7 @@
 .banner-notifications-wrapper {
 	margin: 0 auto;
 	position: relative;
+	transition: top 200ms linear;
 	width: 958px;
 	z-index: $zTop + 1;
 

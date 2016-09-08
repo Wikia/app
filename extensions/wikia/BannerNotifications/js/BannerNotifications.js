@@ -221,7 +221,9 @@
 		containerTop = $pageContainer[0].getBoundingClientRect().top;
 
 		if (containerTop < headerHeight) {
-			notificationWrapper.addClass('float').css('top', headerHeight);
+			if (!notificationWrapper.hasClass('float')) {
+				notificationWrapper.addClass('float').css('top', headerHeight);
+			}
 		} else {
 			notificationWrapper.removeClass('float').css('top', '');
 		}
