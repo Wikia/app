@@ -35,11 +35,15 @@
 			font-weight: bold;
 		}
 
+		a {
+			cursor: pointer;
+		}
+
 		a:hover {
 			color: $color-dark-blue-gray;
 		}
 
-		.wds-is-active a {
+		.wds-is-selected a {
 			color: $color-link;
 		}
 	}

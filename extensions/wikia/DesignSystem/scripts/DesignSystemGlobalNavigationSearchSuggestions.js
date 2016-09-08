@@ -19,7 +19,24 @@ require(
 					deferRequestBy: 200,
 					minLength: 3,
 					maxHeight: 1000,
-					selectedClass: 'wds-is-active',
+					onSelect: function (value, data, event) {
+						var valueEncoded = encodeURIComponent(value.replace(/ /g, '_')),
+							// slashes can't be urlencoded because they break routing
+							location = window.wgArticlePath.
+								replace(/\$1/, valueEncoded).
+								replace(encodeURIComponent('/'), '/');
+
+						// Respect modifier keys to allow opening in a new window (BugId:29401)
+						if (event.button === 1 || event.metaKey || event.ctrlKey) {
+							window.open(location);
+
+							// Prevents hiding the container
+							return false;
+						} else {
+							window.location.href = location;
+						}
+					},
+					selectedClass: 'wds-is-selected',
 					// always send the request even if previous one returned no suggestions
 					skipBadQueries: true,
 					setPosition: false,
@@ -30,12 +47,9 @@ require(
 								'</div>';
 					},
 					fnFormatResult: function (value, data, currentValue) {
-						var pattern = '(' + currentValue.replace(autocompleteReEscape, '\\$1') + ')',
-							valueEncoded = encodeURIComponent(value.replace(/ /g, '_')),
-							// slashes can't be urlencoded because they break routing
-							href = window.wgArticlePath.replace(/\$1/, valueEncoded).replace(encodeURIComponent('/'), '/');
+						var pattern = '(' + currentValue.replace(autocompleteReEscape, '\\$1') + ')';
 
-						return '<a href="' + href + '" class="wds-global-navigation__dropdown-link">' +
+						return '<a class="wds-global-navigation__dropdown-link">' +
 							value.replace(new RegExp(pattern, 'gi'), '<strong>$1<\/strong>') +
 							'</a>';
 					}
