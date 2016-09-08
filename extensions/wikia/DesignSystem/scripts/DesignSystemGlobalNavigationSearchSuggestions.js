@@ -19,6 +19,7 @@ require(
 					selectedClass: 'selected',
 					// always send the request even if previous one returned no suggestions
 					skipBadQueries: true,
+					setPosition: false,
 					suggestionWrapperElement: 'li',
 					fnContainerMarkup: function (mainContainerId, autocompleteElId) {
 						return '<div id="' + mainContainerId + '" class="wds-dropdown__content wds-global-navigation__search-suggestions">' +
