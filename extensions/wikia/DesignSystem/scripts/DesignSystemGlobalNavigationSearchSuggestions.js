@@ -33,6 +33,13 @@ require(
 							// Prevents hiding the container
 							return false;
 						} else {
+							window.Wikia.Tracker.buildTrackingFunction({
+								action: Wikia.Tracker.ACTIONS.CLICK,
+								category: 'navigation',
+								trackingMethod: 'analytics',
+								label: 'global-navigation-search-suggestion'
+							})();
+
 							window.location.href = location;
 						}
 					},
