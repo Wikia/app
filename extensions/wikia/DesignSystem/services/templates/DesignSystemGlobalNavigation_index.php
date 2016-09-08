@@ -26,7 +26,7 @@
 							'wds-icons-magnifying-glass',
 							'wds-icon wds-icon-small wds-global-navigation__search-label-icon'
 						) ?>
-						<input class="wds-global-navigation__search-input"
+						<input id="searchInput" class="wds-global-navigation__search-input"
 							name="<?= Sanitizer::encodeAttribute( $model['search']['module']['results']['param-name'] ); ?>"
 							data-active-placeholder="<?= DesignSystemHelper::renderText( $model['search']['module']['placeholder-active'] ); ?>"
 							placeholder="<?= DesignSystemHelper::renderText( $model['search']['module']['placeholder-inactive'] ); ?>"/>
