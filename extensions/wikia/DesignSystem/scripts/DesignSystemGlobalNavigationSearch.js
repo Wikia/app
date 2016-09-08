@@ -7,16 +7,14 @@ $(function ($) {
 		placeholderText = $searchInput.attr('placeholder'),
 		activeSearchClass = 'wds-search-is-active';
 
-	if ($searchInput.val().length === 0) {
-		$searchSubmit.prop('disabled', true);
-	}
-
-	$searchInput.on('focus', function () {
+	function activateSearch() {
 		if (!$globalNav.hasClass(activeSearchClass)) {
 			$globalNav.addClass(activeSearchClass);
 			$searchInput.attr('placeholder', $searchInput.data('active-placeholder'));
 		}
-	});
+	}
+
+	$searchInput.on('focus', activateSearch);
 
 	$searchInput.on('input', function () {
 		var textLength = this.value.length;
@@ -33,4 +31,12 @@ $(function ($) {
 		$searchInput.attr('placeholder', placeholderText);
 		$searchSubmit.prop('disabled', true);
 	});
+
+	if ($searchInput.is(':focus')) {
+		activateSearch();
+	}
+
+	if ($searchInput.val().length === 0) {
+		$searchSubmit.prop('disabled', true);
+	}
 });
