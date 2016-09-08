@@ -9,7 +9,7 @@
 
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
-    define([], factory);
+    define( /* Wikia change start */ 'headroom', /* Wikia change end */ [], factory);
   }
   else if (typeof exports === 'object') {
     // COMMONJS
@@ -23,14 +23,14 @@
   'use strict';
 
   /* exported features */
-  
+
   var features = {
     bind : !!(function(){}.bind),
     classList : 'classList' in document.documentElement,
     rAF : !!(window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame)
   };
   window.requestAnimationFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame;
-  
+
   /**
    * Handles debouncing of events via requestAnimationFrame
    * @see http://www.html5rocks.com/en/tutorials/speed/animations/
@@ -42,7 +42,7 @@
   }
   Debouncer.prototype = {
     constructor : Debouncer,
-  
+
     /**
      * dispatches the event to the supplied callback
      * @private
@@ -51,7 +51,7 @@
       this.callback && this.callback();
       this.ticking = false;
     },
-  
+
     /**
      * ensures events don't get stacked
      * @private
@@ -62,7 +62,7 @@
         this.ticking = true;
       }
     },
-  
+
     /**
      * Attach this as the event listeners
      */
@@ -78,7 +78,7 @@
   function isDOMElement(obj) {
     return obj && typeof window !== 'undefined' && (obj === window || obj.nodeType);
   }
-  
+
   /**
    * Helper function for extending objects
    */
@@ -86,14 +86,14 @@
     if(arguments.length <= 0) {
       throw new Error('Missing arguments in extend function');
     }
-  
+
     var result = object || {},
         key,
         i;
-  
+
     for (i = 1; i < arguments.length; i++) {
       var replacement = arguments[i] || {};
-  
+
       for (key in replacement) {
         // Recurse into object except if the object is a DOM element
         if(typeof result[key] === 'object' && ! isDOMElement(result[key])) {
@@ -104,17 +104,17 @@
         }
       }
     }
-  
+
     return result;
   }
-  
+
   /**
    * Helper function for normalizing tolerance option to object format
    */
   function normalizeTolerance (t) {
     return t === Object(t) ? t : { down : t, up : t };
   }
-  
+
   /**
    * UI enhancement for fixed headers.
    * Hides header when scrolling down
@@ -125,7 +125,7 @@
    */
   function Headroom (elem, options) {
     options = extend(options, Headroom.options);
-  
+
     this.lastKnownScrollY = 0;
     this.elem             = elem;
     this.tolerance        = normalizeTolerance(options.tolerance);
@@ -142,7 +142,7 @@
   }
   Headroom.prototype = {
     constructor : Headroom,
-  
+
     /**
      * Initialises the widget
      */
@@ -150,28 +150,28 @@
       if(!Headroom.cutsTheMustard) {
         return;
       }
-  
+
       this.debouncer = new Debouncer(this.update.bind(this));
       this.elem.classList.add(this.classes.initial);
-  
-      // defer event registration to handle browser 
+
+      // defer event registration to handle browser
       // potentially restoring previous scroll position
       setTimeout(this.attachEvent.bind(this), 100);
-  
+
       return this;
     },
-  
+
     /**
      * Unattaches events and removes any classes that were added
      */
     destroy : function() {
       var classes = this.classes;
-  
+
       this.initialised = false;
       this.elem.classList.remove(classes.unpinned, classes.pinned, classes.top, classes.notTop, classes.initial);
       this.scroller.removeEventListener('scroll', this.debouncer, false);
     },
-  
+
     /**
      * Attaches the scroll event
      * @private
@@ -181,92 +181,92 @@
         this.lastKnownScrollY = this.getScrollY();
         this.initialised = true;
         this.scroller.addEventListener('scroll', this.debouncer, false);
-  
+
         this.debouncer.handleEvent();
       }
     },
-    
+
     /**
      * Unpins the header if it's currently pinned
      */
     unpin : function() {
       var classList = this.elem.classList,
         classes = this.classes;
-      
+
       if(classList.contains(classes.pinned) || !classList.contains(classes.unpinned)) {
         classList.add(classes.unpinned);
         classList.remove(classes.pinned);
         this.onUnpin && this.onUnpin.call(this);
       }
     },
-  
+
     /**
      * Pins the header if it's currently unpinned
      */
     pin : function() {
       var classList = this.elem.classList,
         classes = this.classes;
-      
+
       if(classList.contains(classes.unpinned)) {
         classList.remove(classes.unpinned);
         classList.add(classes.pinned);
         this.onPin && this.onPin.call(this);
       }
     },
-  
+
     /**
      * Handles the top states
      */
     top : function() {
       var classList = this.elem.classList,
         classes = this.classes;
-      
+
       if(!classList.contains(classes.top)) {
         classList.add(classes.top);
         classList.remove(classes.notTop);
         this.onTop && this.onTop.call(this);
       }
     },
-  
+
     /**
      * Handles the not top state
      */
     notTop : function() {
       var classList = this.elem.classList,
         classes = this.classes;
-      
+
       if(!classList.contains(classes.notTop)) {
         classList.add(classes.notTop);
         classList.remove(classes.top);
         this.onNotTop && this.onNotTop.call(this);
       }
     },
-  
+
     bottom : function() {
       var classList = this.elem.classList,
         classes = this.classes;
-      
+
       if(!classList.contains(classes.bottom)) {
         classList.add(classes.bottom);
         classList.remove(classes.notBottom);
         this.onBottom && this.onBottom.call(this);
       }
     },
-  
+
     /**
      * Handles the not top state
      */
     notBottom : function() {
       var classList = this.elem.classList,
         classes = this.classes;
-      
+
       if(!classList.contains(classes.notBottom)) {
         classList.add(classes.notBottom);
         classList.remove(classes.bottom);
         this.onNotBottom && this.onNotBottom.call(this);
       }
     },
-  
+
     /**
      * Gets the Y scroll position
      * @see https://developer.mozilla.org/en-US/docs/Web/API/Window.scrollY
@@ -279,7 +279,7 @@
           ? this.scroller.scrollTop
           : (document.documentElement || document.body.parentNode || document.body).scrollTop;
     },
-  
+
     /**
      * Gets the height of the viewport
      * @see http://andylangton.co.uk/blog/development/get-viewport-size-width-and-height-javascript
@@ -290,7 +290,7 @@
         || document.documentElement.clientHeight
         || document.body.clientHeight;
     },
-  
+
     /**
      * Gets the physical height of the DOM element
      * @param  {Object}  elm the element to calculate the physical height of which
@@ -302,7 +302,7 @@
         elm.clientHeight
       );
     },
-  
+
     /**
      * Gets the physical height of the scroller element
      * @return {int} the physical height of the scroller element in pixels
@@ -312,7 +312,7 @@
         ? this.getViewportHeight()
         : this.getElementPhysicalHeight(this.scroller);
     },
-  
+
     /**
      * Gets the height of the document
      * @see http://james.padolsey.com/javascript/get-document-height-cross-browser/
@@ -321,14 +321,14 @@
     getDocumentHeight : function () {
       var body = document.body,
         documentElement = document.documentElement;
-    
+
       return Math.max(
         body.scrollHeight, documentElement.scrollHeight,
         body.offsetHeight, documentElement.offsetHeight,
         body.clientHeight, documentElement.clientHeight
       );
     },
-  
+
     /**
      * Gets the height of the DOM element
      * @param  {Object}  elm the element to calculate the height of which
@@ -341,7 +341,7 @@
         elm.clientHeight
       );
     },
-  
+
     /**
      * Gets the height of the scroller element
      * @return {int} the height of the scroller element in pixels
@@ -351,7 +351,7 @@
         ? this.getDocumentHeight()
         : this.getElementHeight(this.scroller);
     },
-  
+
     /**
      * determines if the scroll position is outside of document boundaries
      * @param  {int}  currentScrollY the current y scroll position
@@ -360,10 +360,10 @@
     isOutOfBounds : function (currentScrollY) {
       var pastTop  = currentScrollY < 0,
         pastBottom = currentScrollY + this.getScrollerPhysicalHeight() > this.getScrollerHeight();
-      
+
       return pastTop || pastBottom;
     },
-  
+
     /**
      * determines if the tolerance has been exceeded
      * @param  {int} currentScrollY the current scroll y position
@@ -372,7 +372,7 @@
     toleranceExceeded : function (currentScrollY, direction) {
       return Math.abs(currentScrollY-this.lastKnownScrollY) >= this.tolerance[direction];
     },
-  
+
     /**
      * determine if it is appropriate to unpin
      * @param  {int} currentScrollY the current y scroll position
@@ -382,10 +382,10 @@
     shouldUnpin : function (currentScrollY, toleranceExceeded) {
       var scrollingDown = currentScrollY > this.lastKnownScrollY,
         pastOffset = currentScrollY >= this.offset;
-  
+
       return scrollingDown && pastOffset && toleranceExceeded;
     },
-  
+
     /**
      * determine if it is appropriate to pin
      * @param  {int} currentScrollY the current y scroll position
@@ -395,10 +395,10 @@
     shouldPin : function (currentScrollY, toleranceExceeded) {
       var scrollingUp  = currentScrollY < this.lastKnownScrollY,
         pastOffset = currentScrollY <= this.offset;
-  
+
       return (scrollingUp && toleranceExceeded) || pastOffset;
     },
-  
+
     /**
      * Handles updating the state of the widget
      */
@@ -406,31 +406,31 @@
       var currentScrollY  = this.getScrollY(),
         scrollDirection = currentScrollY > this.lastKnownScrollY ? 'down' : 'up',
         toleranceExceeded = this.toleranceExceeded(currentScrollY, scrollDirection);
-  
+
       if(this.isOutOfBounds(currentScrollY)) { // Ignore bouncy scrolling in OSX
         return;
       }
-  
+
       if (currentScrollY <= this.offset ) {
         this.top();
       } else {
         this.notTop();
       }
-  
+
       if(currentScrollY + this.getViewportHeight() >= this.getScrollerHeight()) {
         this.bottom();
       }
       else {
         this.notBottom();
       }
-  
+
       if(this.shouldUnpin(currentScrollY, toleranceExceeded)) {
         this.unpin();
       }
       else if(this.shouldPin(currentScrollY, toleranceExceeded)) {
         this.pin();
       }
-  
+
       this.lastKnownScrollY = currentScrollY;
     }
   };

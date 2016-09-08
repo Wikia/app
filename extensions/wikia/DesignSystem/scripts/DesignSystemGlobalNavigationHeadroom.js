@@ -1,9 +1,16 @@
 $(function() {
 	'use strict';
 
-	console.log('headroom');
-
 	if (window.wgUserName) {
-		console.log('logged in');
+		require(['headroom'], function(Headroom) {
+			var headroom = new Headroom(
+				document.getElementById('globalNavigation'),
+				{
+					offset: 55
+				}
+			);
+
+			headroom.init();
+		});
 	}
 });
