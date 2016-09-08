@@ -2087,8 +2087,9 @@ $config['design_system_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'oasis' ],
 	'assets' => [
-		'//extensions/wikia/DesignSystem/scripts/DesignSystemGlobalFooterTracking.js',
+		'//extensions/wikia/DesignSystem/scripts/DesignSystemAuthenticationMenu.js',
 		'//extensions/wikia/DesignSystem/scripts/DesignSystemDropdowns.js',
+		'//extensions/wikia/DesignSystem/scripts/DesignSystemGlobalFooterTracking.js',
 		'//extensions/wikia/DesignSystem/scripts/DesignSystemGlobalNavigationSearch.js',
 	],
 ];
