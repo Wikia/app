@@ -14,7 +14,7 @@ $(function ($) {
 
 	function addTrackingToSelector(selector, tracker) {
 		$(selector).click(function (event) {
-			var label = $(event.target).closest('a').data('tracking-label') || false;
+			var label = $(event.target).closest('a, button').data('tracking-label') || false;
 
 			if (label !== false) {
 				tracker({
