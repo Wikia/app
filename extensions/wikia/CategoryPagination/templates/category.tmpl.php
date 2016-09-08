@@ -9,7 +9,7 @@
 			<h2><?= wfMessage( 'subcategories' )->parse(); ?></h2>
 			<?= wfMessage( 'category-subcat-count' )->numParams( $numberShown['subcat'], $counts['subcat'] )->parseAsBlock(); ?>
 			<?= $content['subcat']; ?>
-			<?= $paginator['subcat']->getBarHtml(); ?>
+			<?= $paginator['subcat']->getBarHTML(); ?>
 		</div>
 	<? endif; ?>
 
@@ -18,7 +18,7 @@
 			<h2><?= wfMessage( 'category_header' )->params( $titleEscaped )->parse(); ?></h2>
 			<?= wfMessage( 'category-article-count' )->numParams( $numberShown['page'], $counts['page'] )->parseAsBlock(); ?>
 			<?= $content['page']; ?>
-			<?= $paginator['page']->getBarHtml(); ?>
+			<?= $paginator['page']->getBarHTML(); ?>
 		</div>
 	<? endif; ?>
 
@@ -27,7 +27,7 @@
 			<h2><?= wfMessage( 'category-media-header' )->params( $titleEscaped )->parse(); ?></h2>
 			<?= wfMessage( 'category-file-count' )->numParams( $numberShown['file'], $counts['file'] )->parseAsBlock(); ?>
 			<?= $content['file']; ?>
-			<?= $paginator['file']->getBarHtml(); ?>
+			<?= $paginator['file']->getBarHTML(); ?>
 		</div>
 	<? endif; ?>
 
