@@ -11,9 +11,9 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 
 	var logGroup = 'ext.wikia.adEngine.provider.gpt.googleTag',
 		registeredCallbacks = {},
-		//slot id (adUnit) => google slot
+	//slot id (adUnit) => google slot
 		slots = {},
-		//slot name => google slot
+	//slot name => [google slots]
 		slotsMap = {},
 		slotQueue = [],
 		pageLevelParams,
@@ -124,6 +124,7 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 	};
 
 	GoogleTag.prototype.addSlot = function (adElement) {
+		console.log('bogna', 'calling addSlot', adElement.getSlotName(), window.googletag.getSlots());
 		var sizes = adElement.getSizes(),
 			slot;
 
@@ -143,7 +144,11 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 
 		adElement.configureSlot(slot);
 		slotQueue.push(slot);
-		slotsMap[adElement.getSlotName()] = slot;
+
+		if (!slotsMap[adElement.getSlotName()]) {
+			slotsMap[adElement.getSlotName()] = [];
+		}
+		slotsMap[adElement.getSlotName()].push(slot);
 
 		return slot;
 	};
@@ -165,7 +170,7 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 
 		slotsNames.forEach(function (slotName) {
 			if (slotsMap[slotName]) {
-				slotsToDestroy.push(slotsMap[slotName]);
+				slotsToDestroy = slotsToDestroy.concat(slotsMap[slotName]);
 			}
 		});
 
