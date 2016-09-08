@@ -8,6 +8,10 @@
 			<input id="searchInput"
 			       class="wds-global-navigation__search-input"
 			       name="<?= Sanitizer::encodeAttribute( $model['module']['results']['param-name'] ); ?>"
+			       <?php if ( !empty( $model['module']['suggestions'] ) ) : ?>
+			            data-suggestions-url="<?= $model['module']['suggestions']['url'] ?>"
+			            data-suggestions-param-name="<?= $model['module']['suggestions']['param-name'] ?>"
+			       <?php endif; ?>
 			       data-active-placeholder="<?= DesignSystemHelper::renderText( $model['module']['placeholder-active'] ); ?>"
 			       placeholder="<?= DesignSystemHelper::renderText( $model['module']['placeholder-inactive'] ); ?>"/>
 		</label>

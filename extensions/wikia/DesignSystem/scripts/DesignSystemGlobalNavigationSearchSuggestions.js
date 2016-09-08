@@ -4,7 +4,8 @@ require(
 		'use strict';
 
 		var $searchInput = $('#searchInput'),
-			$searchInputWrapper = $('#searchInputWrapper');
+			$searchInputWrapper = $('#searchInputWrapper'),
+			searchSuggestionsUrl = $searchInput.data('suggestions-url');
 
 		function initSuggestions() {
 			mw.loader.using('jquery.autocomplete').then(function () {
@@ -12,7 +13,8 @@ require(
 						'[', ']', '{', '}', '\\'].join('|\\') + ')', 'g');
 
 				$searchInput.autocomplete({
-					serviceUrl: window.wgServer + window.wgScript + '?action=ajax&rs=getLinkSuggest&format=json',
+					serviceUrl: searchSuggestionsUrl,
+					queryParamName: $searchInput.data('suggestions-param-name'),
 					appendTo: '.wds-global-navigation__search-input-wrapper',
 					deferRequestBy: 200,
 					minLength: 3,
@@ -41,21 +43,23 @@ require(
 			});
 		}
 
-		$searchInput.one('focus', function () {
-			initSuggestions();
+		if (searchSuggestionsUrl) {
+			$searchInput.one('focus', function () {
+				initSuggestions();
 
-			$searchInput.bind({
-				'suggestShow': function () {
-					$searchInputWrapper.addClass('wds-is-active');
-				},
-				'suggestHide': function () {
-					$searchInputWrapper.removeClass('wds-is-active');
-				}
+				$searchInput.bind({
+					'suggestShow': function () {
+						$searchInputWrapper.addClass('wds-is-active');
+					},
+					'suggestHide': function () {
+						$searchInputWrapper.removeClass('wds-is-active');
+					}
+				});
 			});
-		});
 
-		if ($searchInput.is(':focus')) {
-			initSuggestions();
+			if ($searchInput.is(':focus')) {
+				initSuggestions();
+			}
 		}
 	}
 );
