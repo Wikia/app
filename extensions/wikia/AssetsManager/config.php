@@ -2106,7 +2106,6 @@ $config['headroom_css'] = [
 	],
 ];
 
-
 /** CorporateFooter extension */
 $config['corporate_footer_js'] = [
 	'type' => AssetsManager::TYPE_JS,
