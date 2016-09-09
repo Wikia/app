@@ -7,7 +7,19 @@
 	 */
 	ThemeDesigner.init = function () {
 		$('#ThemeTab li label').remove();
+		$('#ThemeTab div.slider img').bind('click', onThemeSelect);
 	};
+
+	function onThemeSelect() {
+		require(['wikia.tracker'], function(tracker) {
+			tracker.track({
+				action: tracker.ACTIONS.CLICK,
+				category: 'create-new-wiki',
+				trackingMethod: 'analytics',
+				label: 'theme-select'
+			});
+		});
+	}
 
 	/**
 	 * @param {string} setting
@@ -36,15 +48,6 @@
 			$(ThemeDesigner.link).remove();
 			ThemeDesigner.link = link;
 		});
-
-		require(['wikia.tracker'], function(tracker) {
-			tracker.track({
-				action: tracker.ACTIONS.CLICK,
-				category: 'create-new-wiki',
-				trackingMethod: 'analytics',
-				label: 'theme-select'
-			});
-		})
 	};
 
 	/**
