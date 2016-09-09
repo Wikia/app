@@ -1,6 +1,10 @@
 <?php if ( !empty( $model['header'] ) ) : ?>
 	<div class="wds-global-navigation__<?= Sanitizer::escapeClass( $type ); ?> wds-dropdown">
-		<div class="wds-dropdown__toggle wds-global-navigation__dropdown-toggle">
+		<div class="wds-dropdown__toggle wds-global-navigation__dropdown-toggle"
+			<?php if ( $model['header']['type'] === 'avatar' ): ?>
+				title="<?= Sanitizer::encodeAttribute( $model['header']['username']['value'] ); ?>"
+			<?php endif; ?>
+		>
 			<?php if ( $model['header']['type'] === 'line-text' ): ?>
 				<span><?= DesignSystemHelper::renderText( $model['header']['title'] ) ?></span>
 			<?php elseif ( $model['header']['type'] === 'avatar' ): ?>
