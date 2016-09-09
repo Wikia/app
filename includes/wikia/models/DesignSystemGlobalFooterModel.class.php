@@ -2,14 +2,25 @@
 
 class DesignSystemGlobalFooterModel extends WikiaModel {
 	const DEFAULT_LANG = 'en';
+	const PRODUCT_WIKIS = 'wikis';
+	const PRODUCT_FANDOMS = 'fandoms';
 
-	private $wikiId;
+	private $product;
+	private $productInstanceId;
 	private $lang;
 
-	public function __construct( $wikiId, $lang = self::DEFAULT_LANG ) {
+	/**
+	 * DesignSystemGlobalFooterModel constructor.
+	 *
+	 * @param string $product Name of product, ex: fandoms, wikis
+	 * @param int $productInstanceId Identifier for given product, ex: wiki id
+	 * @param string $lang
+	 */
+	public function __construct( $product, $productInstanceId, $lang = self::DEFAULT_LANG ) {
 		parent::__construct();
 
-		$this->wikiId = $wikiId;
+		$this->product = $product;
+		$this->productInstanceId = $productInstanceId;
 		$this->lang = $lang;
 	}
 
@@ -246,17 +257,21 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 	}
 
 	private function getSitenameData() {
-		$wgSitenameForComscoreForWikiId = WikiFactory::getVarValueByName( 'wgSitenameForComscore', $this->wikiId );
-
-		if ( $wgSitenameForComscoreForWikiId ) {
-			$sitename = $wgSitenameForComscoreForWikiId;
+		if ( $this->product === static::PRODUCT_FANDOMS ) {
+			$sitename = 'Fandom';
 		} else {
-			$wgSitenameForWikiId = WikiFactory::getVarValueByName( 'wgSitename', $this->wikiId );
+			$wgSitenameForComscoreForWikiId = WikiFactory::getVarValueByName( 'wgSitenameForComscore', $this->productInstanceId );
 
-			if ( $wgSitenameForWikiId ) {
-				$sitename = $wgSitenameForWikiId;
+			if ( $wgSitenameForComscoreForWikiId ) {
+				$sitename = $wgSitenameForComscoreForWikiId;
 			} else {
-				$sitename = $this->wg->Sitename;
+				$wgSitenameForWikiId = WikiFactory::getVarValueByName( 'wgSitename', $this->productInstanceId );
+
+				if ( $wgSitenameForWikiId ) {
+					$sitename = $wgSitenameForWikiId;
+				} else {
+					$sitename = $this->wg->Sitename;
+				}
 			}
 		}
 
@@ -267,8 +282,13 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 	}
 
 	private function getVerticalData() {
+		// fandom has no set vertical
+		if ( $this->product === static::PRODUCT_FANDOMS ) {
+			return [];
+		}
+
 		$wikiFactoryInstance = WikiFactoryHub::getInstance();
-		$verticalData = $wikiFactoryInstance->getWikiVertical( $this->wikiId );
+		$verticalData = $wikiFactoryInstance->getWikiVertical( $this->productInstanceId );
 
 		/**
 		 * We don't want to show vertical 'Other' instead we show vertical 'Lifestyle'
@@ -299,13 +319,21 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 	}
 
 	private function getLicenseData() {
-		$licenseText = WikiFactory::getVarValueByName( 'wgRightsText', $this->wikiId ) ?: $this->wg->RightsText;
+		if ( $this->product === static::PRODUCT_FANDOMS ) {
+			return [
+				'type' => 'line-text',
+				'title' => [
+					'type' => 'translatable-text',
+					'key' => 'global-footer-copyright-wikia',
+				],
+			];
+		}
 
 		return [
 			'type' => 'link-text',
 			'title' => [
 				'type' => 'text',
-				'value' => $licenseText
+				'value' => WikiFactory::getVarValueByName( 'wgRightsText', $this->productInstanceId ) ?: $this->wg->RightsText,
 			],
 			'href' => $this->getLicenseUrl()
 		];
@@ -507,13 +535,15 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 	}
 
 	private function getLocalSitemapUrl() {
-		$default = true; // $wgEnableLocalSitemapPageExt = true; in CommonSettings
-		$localSitemapAvailable = WikiFactory::getVarValueByName(
-			'wgEnableLocalSitemapPageExt', $this->wikiId, false, $default
-		);
+		if ( $this->product !== static::PRODUCT_FANDOMS ) {
+			$default = true; // $wgEnableLocalSitemapPageExt = true; in CommonSettings
+			$localSitemapAvailable = WikiFactory::getVarValueByName(
+				'wgEnableLocalSitemapPageExt', $this->productInstanceId, false, $default
+			);
 
-		if ( $localSitemapAvailable ) {
-			return $this->getHref( 'local-sitemap' );
+			if ( $localSitemapAvailable ) {
+				return $this->getHref( 'local-sitemap' );
+			}
 		}
 
 		// Fall back to fandom sitemap when the local one is unavailable
@@ -521,11 +551,16 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 	}
 
 	private function getLicenseUrl() {
-		$licenseUrl = WikiFactory::getVarValueByName( 'wgRightsUrl', $this->wikiId ) ?: $this->wg->RightsUrl;
-		$licensePage = WikiFactory::getVarValueByName( 'wgRightsPage', $this->wikiId ) ?: $this->wg->RightsPage;
+		// no license URL for Fandom
+		if ( $this->product === static::PRODUCT_FANDOMS ) {
+			return '';
+		}
+
+		$licenseUrl = WikiFactory::getVarValueByName( 'wgRightsUrl', $this->productInstanceId ) ?: $this->wg->RightsUrl;
+		$licensePage = WikiFactory::getVarValueByName( 'wgRightsPage', $this->productInstanceId ) ?: $this->wg->RightsPage;
 
 		if ( $licensePage ) {
-			$title = GlobalTitle::newFromText( $licensePage, NS_MAIN, $this->wikiId );
+			$title = GlobalTitle::newFromText( $licensePage, NS_MAIN, $this->productInstanceId );
 			$licenseUrl = $title->getFullURL();
 		}
 

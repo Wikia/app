@@ -1,5 +1,5 @@
 /*global define*/
-define('ext.wikia.adEngine.lookup.adapter.appnexus',[
+define('ext.wikia.adEngine.lookup.prebid.adapters.appnexus',[
 	'wikia.geo',
 	'wikia.instantGlobals'
 ], function (geo, instantGlobals) {
@@ -52,18 +52,13 @@ define('ext.wikia.adEngine.lookup.adapter.appnexus',[
 		};
 	}
 
-	function getAdUnits(skin) {
-		var adUnits = [];
-
-		Object.keys(slots[skin]).forEach(function(slotName) {
-			adUnits.push(prepareAdUnit(slotName, slots[skin][slotName]));
-		});
-
-		return adUnits;
+	function getSlots(skin) {
+		return slots[skin];
 	}
 
 	return {
-		getAdUnits: getAdUnits,
-		isEnabled: isEnabled
+		isEnabled: isEnabled,
+		getSlots: getSlots,
+		prepareAdUnit: prepareAdUnit
 	};
 });

@@ -6,6 +6,10 @@ $recirculation-discussion-height: 348px;
 $recirculation-discussion-small-font-size: 12px;
 $recirculation-discussion-small-font-color: #999999;
 
+body.ve .discussion-module {
+	display: none;
+}
+
 .discussion-module {
 	clear: both;
 	padding-top: 20px;

@@ -217,7 +217,7 @@ abstract class Skin extends ContextSource {
 		$titles = array( $user->getUserPage(), $user->getTalkPage() );
 
 		// Other tab link
-		if ( $this->getTitle()->isSpecialPage() ) {
+		if ( $this->getTitle()->isSpecialPage() || $this->getTitle()->getNamespace() == NS_MEDIA ) {
 			// nothing
 		} elseif ( $this->getTitle()->isTalkPage() ) {
 			$titles[] = $this->getTitle()->getSubjectPage();
