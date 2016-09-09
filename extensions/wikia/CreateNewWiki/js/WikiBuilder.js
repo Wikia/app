@@ -1,6 +1,6 @@
 /*global WikiBuilderCfg, ThemeDesigner */
 
-define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'], function (helper) {
+define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'], function (helper, tracker) {
 	'use strict';
 
 	var wntimer = false,
