@@ -32,6 +32,7 @@ class TemplateClassificationService {
 	const NOT_AVAILABLE = 'not-available';
 
 	private $apiClient = null;
+	private $cache = [];
 
 	/**
 	 * Get template type
@@ -45,22 +46,26 @@ class TemplateClassificationService {
 	 * @throws \Swagger\Client\ApiException
 	 */
 	public function getType( $wikiId, $pageId ) {
-		$templateType = self::TEMPLATE_UNCLASSIFIED;
+		if ( !isset( $this->cache[$wikiId][$pageId] ) ) {
+			$templateType = self::TEMPLATE_UNCLASSIFIED;
 
-		try {
-			$type = $this->getApiClient()->getTemplateType( $wikiId, $pageId );
-			if ( !is_null( $type ) ) {
-				$templateType = $type->getType();
+			try {
+				$type = $this->getApiClient()->getTemplateType( $wikiId, $pageId );
+				if ( !is_null( $type ) ) {
+					$templateType = $type->getType();
+				}
+			} catch ( \Swagger\Client\ApiException $e ) {
+				\Wikia\Logger\WikiaLogger::instance()->error( 'Failed to contact Template Classification service', [
+					'exception' => $e,
+					'wiki_id' => intval( $wikiId ),
+					'page_id' => intval( $pageId ),
+				] );
 			}
-		} catch (\Swagger\Client\ApiException $e) {
-			\Wikia\Logger\WikiaLogger::instance()->error( 'Failed to contact Template Classification service', [
-				'exception' => $e,
-				'wiki_id' => intval($wikiId),
-				'page_id' => intval($pageId),
-			] );
+			// we cache it even on failed request to keep it consistent across single article
+			$this->cache[$wikiId][$pageId] = $templateType;
 		}
 
-		return $templateType;
+		return $this->cache[$wikiId][$pageId];
 	}
 
 	/**
