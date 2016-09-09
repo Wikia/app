@@ -13,8 +13,7 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 		registeredCallbacks = {},
 	//slot id (adUnit) => google slot
 		slots = {},
-	//slot name => [google slots]
-		slotsMap = {},
+	//slot id (adUnit) => slot name
 		adUnitsSlotsMap = {},
 		slotQueue = [],
 		pageLevelParams,
@@ -30,12 +29,12 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 		log(['dispatchEvent', event], 'info', logGroup);
 
 		for (id in registeredCallbacks) {
-			if (registeredCallbacks.hasOwnProperty(id)) {
-				if (registeredCallbacks[id] && event.slot && event.slot === slots[id]) {
-					log(['dispatchEvent', event, id, 'Launching registered callback'], 'debug', logGroup);
-					registeredCallbacks[id](event);
-					return;
-				}
+			if (registeredCallbacks.hasOwnProperty(id) &&
+				registeredCallbacks[id] && event.slot && event.slot === slots[id]
+			) {
+				log(['dispatchEvent', event, id, 'Launching registered callback'], 'debug', logGroup);
+				registeredCallbacks[id](event);
+				return;
 			}
 		}
 
@@ -165,8 +164,8 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 	GoogleTag.prototype.destroySlots = function (slotsNames) {
 		var slotsToDestroy = [], success, allSlots = window.googletag.getSlots();
 
-		slotsNames.forEach(function(slotName) {
-			allSlots.forEach(function(slot) {
+		slotsNames.forEach(function (slotName) {
+			allSlots.forEach(function (slot) {
 				if (adUnitsSlotsMap[slot.getAdUnitPath()] === slotName) {
 					slotsToDestroy.push(slot);
 				}
@@ -182,14 +181,12 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 			}
 		}
 
-		slotsToDestroy.forEach(function(slot) {
+		slotsToDestroy.forEach(function (slot) {
 			slots[slot.getAdUnitPath()] = undefined;
-		})
+		});
 	};
 
 	GoogleTag.prototype.newPageView = function () {
-		slotsMap = {};
-
 		adLogicPageViewCounter.increment();
 		window.googletag.pubads().updateCorrelator();
 	};
