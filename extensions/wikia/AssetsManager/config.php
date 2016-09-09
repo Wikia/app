@@ -3053,6 +3053,7 @@ $config['design_system_css'] = [
 	'type' => AssetsManager::TYPE_CSS,
 	'skin' => [ 'oasis' ],
 	'assets' => [
+		'#group_headroom_css',
 		'//extensions/wikia/DesignSystem/bower_components/design-system/dist/css/styles.css',
 	],
 ];
