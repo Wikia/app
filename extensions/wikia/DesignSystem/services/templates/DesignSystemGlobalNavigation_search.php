@@ -6,14 +6,14 @@
 				'wds-icon wds-icon-small wds-global-navigation__search-label-icon'
 			) ?>
 			<input id="searchInput"
-			       class="wds-global-navigation__search-input"
-			       name="<?= Sanitizer::encodeAttribute( $model['module']['results']['param-name'] ); ?>"
-			       <?php if ( !empty( $model['module']['suggestions'] ) ) : ?>
-			            data-suggestions-url="<?= $model['module']['suggestions']['url'] ?>"
-			            data-suggestions-param-name="<?= $model['module']['suggestions']['param-name'] ?>"
-			       <?php endif; ?>
-			       data-active-placeholder="<?= DesignSystemHelper::renderText( $model['module']['placeholder-active'] ); ?>"
-			       placeholder="<?= DesignSystemHelper::renderText( $model['module']['placeholder-inactive'] ); ?>"/>
+				class="wds-global-navigation__search-input"
+				name="<?= Sanitizer::encodeAttribute( $model['module']['results']['param-name'] ); ?>"
+				<?php if ( !empty( $model['module']['suggestions'] ) ) : ?>
+					data-suggestions-url="<?= $model['module']['suggestions']['url'] ?>"
+					data-suggestions-param-name="<?= $model['module']['suggestions']['param-name'] ?>"
+				<?php endif; ?>
+				data-active-placeholder="<?= DesignSystemHelper::renderText( $model['module']['placeholder-active'] ); ?>"
+				placeholder="<?= DesignSystemHelper::renderText( $model['module']['placeholder-inactive'] ); ?>"/>
 		</label>
 		<button class="wds-button wds-is-text wds-global-navigation__search-close" type="reset" data-tracking-label="global-navigation-search-close">
 			<?= DesignSystemHelper::getSvg(
