@@ -30,8 +30,8 @@ class ForumSpecialController extends WikiaSpecialPageController {
 	public function index() {
 		wfProfileIn( __METHOD__ );
 
-		if ( $this->areForumsArchivedAndDiscussionsEnabled() ) {
-			$this->redirectToDiscussions();
+		if ( ForumHelper::areForumsArchivedAndDiscussionsEnabled() ) {
+			ForumHelper::redirectToDiscussions($this->wg->out, $this->getResponse());
 			wfProfileOut( __METHOD__ );
 
 			return;
@@ -308,21 +308,6 @@ class ForumSpecialController extends WikiaSpecialPageController {
 			$this->app->renderView( 'WikiaStyleGuideForm', 'index', [ 'form' => $form ] ) );
 
 		wfProfileOut( __METHOD__ );
-	}
-
-	/**
-	 * @return bool
-	 */
-	public function areForumsArchivedAndDiscussionsEnabled() {
-		global $wgArchiveWikiForums, $wgEnableDiscussion;
-
-		return $wgArchiveWikiForums && $wgEnableDiscussion;
-	}
-
-	public function redirectToDiscussions() {
-		$this->wg->out->setArticleBodyOnly( true );
-		$this->wg->out->setSquidMaxage( WikiaResponse::CACHE_LONG );
-		$this->getResponse()->redirect( '/d' );
 	}
 
 }
