@@ -50,6 +50,10 @@ table {
 	text-transform: uppercase;
 }
 
+tr.avatar > td {
+	padding-bottom: 15px;
+}
+
 td.widest {
 	width: 100%;
 }

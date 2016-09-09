@@ -10,7 +10,7 @@ abstract class EmailController extends \WikiaController {
 
 	const TRACKED_LANGUAGES = [ 'EN', 'PL', 'DE', 'ES', 'FR', 'IT', 'JA', 'NL', 'PT', 'RU', 'ZH' ];
 
-	const AVATAR_SIZE = 50;
+	const AVATAR_SIZE = 40;
 
 	/** CSS used for the main content section of each email. Used by getContent()
 	 * and intended to be overridden by child classes. */
