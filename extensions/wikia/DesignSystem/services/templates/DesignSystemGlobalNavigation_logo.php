@@ -1,6 +1,6 @@
 <? //TODO: Clean up this file - https://wikia-inc.atlassian.net/browse/XW-1966 ?>
 <? if ( !isset( $model['header']['subtitle'] ) ): ?>
-	<a href="<?= Sanitizer::encodeAttribute( $model['header']['href'] ); ?>" class="wds-global-navigation__logo">
+	<a href="<?= Sanitizer::encodeAttribute( $model['header']['href'] ); ?>" class="wds-global-navigation__logo" data-tracking-label="global-navigation-logo">
 		<?= DesignSystemHelper::getSvg(
 			$model['header']['image'],
 			'wds-global-navigation__logo-fandom',
@@ -8,7 +8,7 @@
 		) ?>
 	</a>
 <? else: ?>
-	<a href="<?= Sanitizer::encodeAttribute( $model['header']['href'] ); ?>" class="wds-global-navigation__logo wds-global-navigation__logo-wikia">
+	<a href="<?= Sanitizer::encodeAttribute( $model['header']['href'] ); ?>" class="wds-global-navigation__logo wds-global-navigation__logo-wikia" data-tracking-label="global-navigation-logo">
 		<?= DesignSystemHelper::getSvg(
 			$model['header']['image'],
 			'wds-global-navigation__logo-wikia-icon',
