@@ -52,7 +52,7 @@ class ForumHelper {
 	) {
 		if ( !empty( $categoryId ) ) {
 			self::clearBodyAndSetMaxCache( $out );
-			$response->redirect( '/d/f' . $categoryId );
+			$response->redirect( '/d/f/' . $categoryId );
 		} else {
 			self::redirectToDiscussions( $out, $response );
 		}
