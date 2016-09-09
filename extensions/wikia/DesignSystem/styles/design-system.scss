@@ -1,3 +1,5 @@
+@import '../bower_components/design-system/base/colors';
+
 // Platform-specific styles for DesignSystem integration
 $global-navigation-z-index: 5000101;
 $global-navigation-height: 55px;
@@ -28,7 +30,7 @@ $global-navigation-height: 55px;
 	}
 
 	button:hover:disabled {
-		background-color: #00b7e0;
+		background-color: $color-link;
 	}
 
 	.notifications-container .bubbles {
@@ -43,6 +45,24 @@ $global-navigation-height: 55px;
 	.ve & {
 		position: absolute;
 		z-index: $global-navigation-z-index - 1;
+	}
+
+	&__search-suggestions {
+		strong {
+			font-weight: bold;
+		}
+
+		a {
+			cursor: pointer;
+		}
+
+		a:hover {
+			color: $color-dark-blue-gray;
+		}
+
+		.wds-is-selected a {
+			color: $color-link;
+		}
 	}
 }
 
