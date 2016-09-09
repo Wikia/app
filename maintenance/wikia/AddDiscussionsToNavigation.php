@@ -5,16 +5,15 @@
  * @author Michal 'slayful' Turek
  */
 
-ini_set('display_errors', 'stderr');
-ini_set('error_reporting', E_NOTICE);
+ini_set( 'display_errors', 'stderr' );
+ini_set( 'error_reporting', E_NOTICE );
 
-require_once(dirname(__FILE__) . '/../Maintenance.php');
+require_once( dirname( __FILE__ ) . '/../Maintenance.php' );
 
 /**
  * Class AddDiscussionsToNavigation
  */
-class AddDiscussionsToNavigation extends Maintenance
-{
+class AddDiscussionsToNavigation extends Maintenance {
 
 	const VAR_NAME = 'wgOasisGlobalNavigation';
 	const NAVIGATION_ELEMENT = '**Special:DiscussionsNavigation|Discussions';
@@ -28,8 +27,8 @@ class AddDiscussionsToNavigation extends Maintenance
 
 	public function __construct() {
 		parent::__construct();
-		$this->mDescription = "Update " . self::VAR_NAME . " with Discussions navigation "
-			. self::NAVIGATION_ELEMENT;
+		$this->mDescription =
+			"Update " . self::VAR_NAME . " with Discussions navigation " . self::NAVIGATION_ELEMENT;
 		$this->addOption( 'dry-run', 'Dry run mode', false, false, 'd' );
 		$this->addOption( 'verbose', 'Show extra debugging output', false, false, 'v' );
 		$this->addOption( 'rollback', 'Rollback the operation', false, false, 'r' );
@@ -43,53 +42,56 @@ class AddDiscussionsToNavigation extends Maintenance
 
 		$total = 0;
 		$successful = 0;
-		foreach ($this->getAllSiteIds() as $siteId) {
-			$success = $this->updateSiteId(trim($siteId));
-			if ($success) {
-				$successful++;
+		foreach ( $this->getAllSiteIds() as $siteId ) {
+			$success = $this->updateSiteId( trim( $siteId ) );
+			if ( $success ) {
+				$successful ++;
 			}
-			$total++;
+			$total ++;
 		}
 
-		echo "\nTotal sites: $total, Success: {$successful}, Failed: " . ($total - $successful) . "\n\n";
+		echo "\nTotal sites: $total, Success: {$successful}, Failed: " . ( $total - $successful ) .
+		     "\n\n";
 	}
 
 	private function getAllSiteIds() {
 		$id = WikiFactory::getVarIdByName( self::VAR_NAME );
 		$db = WikiFactory::db( DB_MASTER );
-		$sql = ( new WikiaSQL() )
-			->SELECT( 'cv_city_id' )
-			->FROM( 'city_variables' )
-			->WHERE( 'cv_variable_id' )->EQUAL_TO( $id );
+		$sql =
+			( new WikiaSQL() )->SELECT( 'cv_city_id' )
+				->FROM( 'city_variables' )
+				->WHERE( 'cv_variable_id' )
+				->EQUAL_TO( $id );
 
-		$siteIds = $sql->runLoop( $db, function( &$siteIds, $row ) {
+		return $sql->runLoop( $db, function ( &$siteIds, $row ) {
 			$siteIds[] = $row->cv_city_id;
-			$this->debug("Added {$row->cv_city_id}");
-		});
-
-		return $siteIds;
+			$this->debug( "Added {$row->cv_city_id}" );
+		} );
 	}
 
-	private function updateSiteId($siteId) {
+	private function updateSiteId( $siteId ) {
 		$varData = (array)WikiFactory::getVarByName( self::VAR_NAME, $siteId, true );
 		if ( empty( $varData['cv_id'] ) ) {
-			$this->debug("Error:" . self::VAR_NAME . " not found.\n");
+			$this->debug( "Error:" . self::VAR_NAME . " not found.\n" );
+
 			return false;
 		}
 
 		if ( $varData['cv_variable_type'] !== 'text' ) {
 			echo $varData['cv_variable_type'];
-			die("Error: " . self::VAR_NAME . " is not a text and the script cannot append to it anything.\n");
+			die( "Error: " . self::VAR_NAME .
+			     " is not a text and the script cannot append to it anything.\n" );
 		}
 
-		$this->debug("Variable: " . self::VAR_NAME . " (Id: $varData[cv_id])\n");
-		$this->debug( "Variable data: " . json_encode( $varData ) . "\n");
-		$value = $this->createNewValue( unserialize( $varData[ 'cv_value' ] ) );
+		$this->debug( "Variable: " . self::VAR_NAME . " (Id: $varData[cv_id])\n" );
+		$this->debug( "Variable data: " . json_encode( $varData ) . "\n" );
+		$value = $this->createNewValue( unserialize( $varData['cv_value'] ) );
 
 		$result = false;
 		if ( !$this->dryRun ) {
 			$this->setVariable( $siteId, $value );
 		}
+
 		return $result;
 	}
 
@@ -103,32 +105,33 @@ class AddDiscussionsToNavigation extends Maintenance
 		}
 		$newValue = join( self::SPLIT, $array );
 		$this->debug( "New value\n\n:" . $newValue );
+
 		return $newValue;
 	}
 
-	function insertBeforeForumOrAtTheEnd(&$array ) {
+	function insertBeforeForumOrAtTheEnd( &$array ) {
 		$pos = array_search( self::FORUM_NAVIGATION_ELEMENT, $array );
 		if ( $pos === false ) {
 			$pos = count( $array ) - 1;
 			$this->debug( "Forum not found - appending at the end.\n" );
 		} else {
-			$this->debug( "Found forum at $pos position.\n");
+			$this->debug( "Found forum at $pos position.\n" );
 		}
-		return array_merge(
-			array_slice( $array, 0, $pos ),
-			[ self::NAVIGATION_ELEMENT ],
-			array_slice( $array, $pos )
-		);
+
+		return array_merge( array_slice( $array, 0, $pos ), [ self::NAVIGATION_ELEMENT ],
+			array_slice( $array, $pos ) );
 	}
 
 	function removeNavigationElement( &$array ) {
 		$pos = array_search( self::NAVIGATION_ELEMENT, $array );
 		if ( $pos === false ) {
 			$this->debug( "Discussion not found - not removing." );
+
 			return $array;
 		}
 		$this->debug( "Discussion forum at $pos position." );
 		array_splice( $array, $pos, 1 );
+
 		return $array;
 	}
 
@@ -136,17 +139,17 @@ class AddDiscussionsToNavigation extends Maintenance
 	 * Print the message if verbose is enabled
 	 * @param $msg
 	 */
-	protected function debug( $msg) {
+	protected function debug( $msg ) {
 		if ( $this->verbose ) {
 			echo $msg;
 		}
 	}
 
 	private function setVariable( $siteId, $value ) {
-		WikiFactory::setVarByName(self::VAR_NAME, $siteId, $value, self::REASON);
+		WikiFactory::setVarByName( self::VAR_NAME, $siteId, $value, self::REASON );
 	}
 
 }
 
 $maintClass = "AddDiscussionsToNavigation";
-require_once(RUN_MAINTENANCE_IF_MAIN);
+require_once( RUN_MAINTENANCE_IF_MAIN );

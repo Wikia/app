@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Class SpecialDiscussionsNavigationController
  * @desc Special:DiscussionsNavigation controller
