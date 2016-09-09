@@ -26,8 +26,7 @@
 	<button class="wds-button wds-global-navigation__search-submit" data-tracking-label="global-navigation-search-submit">
 		<?= DesignSystemHelper::getSvg(
 			'wds-icons-arrow',
-			'wds-icon wds-icon-small wds-global-navigation__search-submit-icon',
-			wfMessage( 'global-navigation-search-placeholder-inactive' )->escaped()
+			'wds-icon wds-icon-small wds-global-navigation__search-submit-icon'
 		) ?>
 	</button>
 </form>
