@@ -24,9 +24,8 @@
 		classes = Object.keys(types).join(' '),
 		closeImageSource = window.stylepath + '/oasis/images/icon_close.png',
 		$pageContainer,
-		headerHeight,
+		$header = $('#globalNavigation'),
 		modal,
-		backendNotification,
 		template = '<div class="banner-notification">' +
 			'<button class="close wikia-chiclet-button"><img></button>' +
 			'<div class="msg">{{{content}}}</div>' +
@@ -175,7 +174,6 @@
 			$pageContainer = $('#content');
 		} else {
 			$pageContainer = $('.WikiaPageContentWrapper');
-			headerHeight = $('#globalNavigation').outerHeight(true);
 			require(['wikia.onScroll'], function (onScroll) {
 				onScroll.bind(handleScrolling);
 			});
@@ -211,26 +209,28 @@
 	 */
 	function handleScrolling() {
 		var containerTop,
-			notificationWrapper = $pageContainer.children('.banner-notifications-wrapper');
+			notificationWrapper = $pageContainer.children('.banner-notifications-wrapper'),
+			headerBottom;
 
 		if (!$pageContainer.length || !notificationWrapper.length) {
 			return;
 		}
 
 		// get the position of the wrapper element relative to the top of the viewport
-		containerTop = $pageContainer[0].getBoundingClientRect().top;
+		containerTop = $pageContainer.get(0).getBoundingClientRect().top;
+		headerBottom = $header.get(0).getBoundingClientRect().bottom;
 
-		if (containerTop < headerHeight) {
+		if (containerTop < headerBottom) {
 			if (!notificationWrapper.hasClass('float')) {
-				notificationWrapper.addClass('float').css('top', headerHeight);
-				setTimeout(function() {
-					if ($('#globalNavigation').hasClass('headroom--unpinned')) {
-						notificationWrapper.css('top', 0);
-					}
-				}, 1);
+				notificationWrapper.addClass('float');
+
+				// check if element has no inline top style
+				if (!notificationWrapper.prop('style').top) {
+					notificationWrapper.css('top', headerBottom);
+				}
 			}
 		} else {
-			notificationWrapper.removeClass('float').css('top', '');
+			notificationWrapper.removeClass('float');
 		}
 	}
 

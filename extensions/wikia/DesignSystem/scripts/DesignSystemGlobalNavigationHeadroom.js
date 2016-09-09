@@ -3,33 +3,34 @@ $(function() {
 
 	if (window.wgUserName) {
 		require(['headroom'], function(Headroom) {
-			var globalNavigation = document.getElementById('globalNavigation'),
-				headroom = new Headroom(
-					globalNavigation,
-					{
-						offset: 55,
-						onPin: function() {
-							// Don't cache selector because notifications can appear after page load
-							$('.banner-notifications-wrapper').css('top', 55);
-						},
-						onUnpin: function() {
-							$('.banner-notifications-wrapper').css('top', 0);
-						}
+			var globalNavigation = $('#globalNavigation'),
+				globalNavigationHeight = globalNavigation.outerHeight(true),
+				headroomConfig = {
+					offset: globalNavigationHeight,
+					onPin: function() {
+						// Don't cache selector because notifications can appear after page load
+						$('.banner-notifications-wrapper').css('top', globalNavigationHeight);
+					},
+					onUnpin: function() {
+						$('.banner-notifications-wrapper').css('top', 0);
 					}
-				);
+				},
+				headroom = new Headroom(
+					globalNavigation.get(0),
+					headroomConfig
+				),
+				globalNavMutationObserver = new MutationObserver(function(mutations) {
+					mutations.forEach(function(mutation) {
+						if (mutation.type === 'attributes' && mutation.attributeName === 'class' && mutation.target.classList.contains('bfaa-pinned')) {
+							headroom.offset = globalNavigation.get(0).offsetTop + globalNavigationHeight;
+							globalNavMutationObserver.disconnect();
+						}
+					});
+				});
 
 			headroom.init();
 
-			var observer = new MutationObserver(function(mutations) {
-				mutations.forEach(function(mutation) {
-					if (mutation.type === 'attributes' && mutation.attributeName === 'class' && globalNavigation.classList.contains('bfaa-pinned')) {
-						console.log('bfAAAA');
-					}
-				});
-			});
-
-			observer.observe(globalNavigation, { attributes: true });
-
+			globalNavMutationObserver.observe(globalNavigation.get(0), { attributes: true });
 		});
 	}
 });

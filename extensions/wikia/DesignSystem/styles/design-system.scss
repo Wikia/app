@@ -16,21 +16,6 @@ $global-navigation-height: 55px;
 		position: relative;
 	}
 
-	&:not(.bfaa-pinned) {
-		&.headroom {
-			will-change: transform;
-			transition: transform 200ms linear;
-		}
-
-		&.headroom--pinned {
-			transform: translateY(0%);
-		}
-
-		&.headroom--unpinned {
-			transform: translateY(-100%);
-		}
-	}
-
 	a:hover {
 		text-decoration: none;
 	}
